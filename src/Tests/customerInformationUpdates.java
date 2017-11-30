@@ -28,7 +28,7 @@ import Pages.setConexion;
 public class customerInformationUpdates extends TestBase {
 	
 	private WebDriver driver;
-	String accountName = "Aaa Aaa";
+	String accountName = "Aaa Asd";
 
 
 
