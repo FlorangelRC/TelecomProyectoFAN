@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
+<suite guice-stage="DEVELOPMENT" name="Failed suite [Suite]">
+  <test name="Test(failed)">
+    <groups>
+      <run>
+        <include name="Fase3"/>
+      </run>
+    </groups>
+    <classes>
+      <class name="Tests.Sales">
+        <methods>
+          <include name="setup"/>
+          <include name="deslogin"/>
+          <include name="TS38763_Perfiles_Verificar_creacion_de_perfil_Oficina_Logistica"/>
+          <include name="TS40650_Alta_Cuenta_Busqueda_Verificar_accion_boton_1"/>
+          <include name="TS39641_Alta_Contacto_Busqueda_Verificar_que_se_recuerden_los_datos_de_busqueda"/>
+          <include name="Init"/>
+          <include name="TS38762_Perfiles_Verificar_creacion_de_perfil_Oficina_Agente"/>
+          <include name="TS39554_Ventas_General_Verificar_que_se_muestre_el_estado_de_una_OV"/>
+          <include name="TS38760_Perfiles_Verificar_creacion_de_perfil_Canal_Tefonico"/>
+          <include name="TS38761_Perfiles_Verificar_creacion_de_perfil_Oficina_Comercial"/>
+          <include name="TS38803_Ventas_General_Verificar_visualizacion_de_boton_Continuar"/>
+          <include name="TS40648_Alta_Cuenta_Busqueda_Verificar_que_se_agregue_un_nivel_de_agrupamiento"/>
+        </methods>
+      </class> <!-- Tests.Sales -->
+    </classes>
+  </test> <!-- Test(failed) -->
+</suite> <!-- Failed suite [Suite] -->
