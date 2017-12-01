@@ -3,10 +3,8 @@ package Tests;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
-
 import org.openqa.selenium.By;
 import org.openqa.selenium.NoSuchElementException;
-import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.testng.Assert;
@@ -30,16 +28,16 @@ public class CustomerCare360Joaquin extends TestBase {
 	private By tablaTarjetaHistorial = By.cssSelector(".slds-table.slds-table--bordered.slds-table--resizable-cols.slds-table--fixed-layout.via-slds-table-pinned-header");
 
 	
-	@BeforeClass(groups= "CustomerCare")
+	@BeforeClass(groups= {"CustomerCare", "Problems with Refills"})
 	public void init() {
 		driver = setConexion.setupEze();
-		driver.manage().timeouts().implicitlyWait(4, TimeUnit.SECONDS);
+		driver.manage().timeouts().implicitlyWait(3, TimeUnit.SECONDS);
 
 		login();
 		ConsolaFAN();
 	}
 	
-	@AfterClass(groups= "CustomerCare")
+	@AfterClass(groups= {"CustomerCare", "Problems with Refills"})
 	public void quit() {
 		driver.switchTo().defaultContent();
 		driver.findElement(By.xpath("//span[@id='tsidLabel']")).click();
@@ -47,7 +45,7 @@ public class CustomerCare360Joaquin extends TestBase {
 		driver.quit();
 	}
 	
-	@BeforeMethod(groups= "CustomerCare")
+	@BeforeMethod(groups= {"CustomerCare", "Problems with Refills"})
 	public void before() {
 		CustomerCare Customer = new CustomerCare(driver);
 		Customer.elegirCuenta("Fernando Care");
@@ -132,10 +130,6 @@ public class CustomerCare360Joaquin extends TestBase {
 		Customer.irAHistoriales();
 		WebElement tarjeta = Customer.obtenerTarjetaHistorial("Historial de Ajustes");
 		
-		List<String> campos = new ArrayList<String>();
-		campos.add("FECHA");
-		campos.add("MOTIVO");
-		campos.add("MONTO");
 		List<WebElement> listaElementos = tarjeta.findElements(By.cssSelector(".slds-truncate.slds-th__action"));
 		List<String> textElementos = new ArrayList<String>();
 		for (WebElement elem : listaElementos) {
@@ -143,6 +137,8 @@ public class CustomerCare360Joaquin extends TestBase {
 		}
 		
 		Assert.assertTrue(textElementos.contains("FECHA"));
+		Assert.assertTrue(textElementos.contains("MOTIVO"));
+		Assert.assertTrue(textElementos.contains("MONTO"));
 	}
 
 	@Test(groups="CustomerCare")
@@ -188,10 +184,14 @@ public class CustomerCare360Joaquin extends TestBase {
 		driver.findElements(campos_TarjetaHistorial).get(2).click();
 		
 		try {
+			driver.manage().timeouts().implicitlyWait(1, TimeUnit.SECONDS);
 			driver.findElement(detalleRegistro);
 		} catch (NoSuchElementException e) {
 			Assert.assertTrue(true);
 			return;
+		}
+		finally {
+			driver.manage().timeouts().implicitlyWait(3, TimeUnit.SECONDS);
 		}
 		Assert.assertTrue(false);
 	}
@@ -205,13 +205,27 @@ public class CustomerCare360Joaquin extends TestBase {
 		driver.findElement(iconoDesplegable).click();
 		driver.findElements(campos_TarjetaHistorial).get(2).click();
 		try {
+			driver.manage().timeouts().implicitlyWait(1, TimeUnit.SECONDS);
 			driver.findElement(detalleRegistro);
 		} catch (NoSuchElementException e) {
 			Assert.assertTrue(true);
 			return;
 		}
+		finally {
+			driver.manage().timeouts().implicitlyWait(3, TimeUnit.SECONDS);
+		}
 		
 		Assert.assertTrue(false);
+	}
+	
+	@Test(groups="CustomerCare")
+	public void TS38234_Automatic_Debit_Subscriptions_Sesión_guiada_Débito_Automático_Inicial_Paso_2_Adhesión_Cuenta_Inactiva() {
+		CustomerCare Customer = new CustomerCare(driver);
+		Customer.elegirCuenta("Andres Care");
+		Customer.irAGestion("Débito automático");
+		
+		dynamicWait().until(ExpectedConditions.visibilityOf(driver.findElements(By.xpath("//h1[contains(.,'Error')]")).get(1)));
+		Assert.assertTrue(driver.findElements(By.xpath("//h1[contains(.,'Error')]")).get(1).isDisplayed());
 	}
 	
 	@Test(groups="CustomerCare")
@@ -347,7 +361,7 @@ public class CustomerCare360Joaquin extends TestBase {
 		Assert.assertTrue(accion.getText().toLowerCase().contains("mis servicios"));
 	}
 	
-	@Test(groups="CustomerCare")
+	@Test(groups= {"CustomerCare","Problems with Refills"})
 	public void TS38537_Problems_with_Refills_Problemas_con_Recargas_Medio_de_recarga_Selección_simple() {
 		CustomerCare Customer = new CustomerCare(driver);
 		Customer.irAProblemasConRecargas();
@@ -365,7 +379,7 @@ public class CustomerCare360Joaquin extends TestBase {
 		Assert.assertTrue(false);
 	}
 	
-	@Test(groups="CustomerCare")
+	@Test(groups= {"CustomerCare","Problems with Refills"})
 	public void TS38538_Problems_with_Refills_Problemas_con_Recargas_Medio_de_recarga_Selección_Múltiple() {
 		CustomerCare Customer = new CustomerCare(driver);
 		Customer.irAProblemasConRecargas();
@@ -389,7 +403,7 @@ public class CustomerCare360Joaquin extends TestBase {
 		Assert.assertTrue(false);
 	}
 	
-	@Test(groups="CustomerCare")
+	@Test(groups= {"CustomerCare","Problems with Refills"})
 	public void TS38541_Problems_with_Refills_Problemas_con_Recargas_Medio_de_recarga_Seleccionar_Tarjeta_Pre_Paga_PIN_Visible_Lote_activo() {
 		CustomerCare Customer = new CustomerCare(driver);
 		Customer.irAProblemasConRecargas();
@@ -418,7 +432,7 @@ public class CustomerCare360Joaquin extends TestBase {
 		Assert.assertTrue(driver.findElement(By.xpath("//h1[contains(.,'Confirmación')]")) != null);
 	}
 	
-	@Test(groups="CustomerCare")
+	@Test(groups= {"CustomerCare","Problems with Refills"})
 	public void TS38549_Problems_with_Refills_Problemas_con_Recargas_Medio_de_recarga_Lote_Ingresa_15_dígitos() {
 		CustomerCare Customer = new CustomerCare(driver);
 		Customer.irAProblemasConRecargas();
@@ -437,7 +451,7 @@ public class CustomerCare360Joaquin extends TestBase {
 		Assert.assertTrue(driver.findElement(By.id("lotNumber")).getAttribute("class").contains("ng-invalid-minlength"));
 	}
 	
-	@Test(groups="CustomerCare")
+	@Test(groups= {"CustomerCare","Problems with Refills"})
 	public void TS38550_Problems_with_Refills_Problemas_con_Recargas_Medio_de_recarga_Lote_Ingresa_16_dígitos() {
 		CustomerCare Customer = new CustomerCare(driver);
 		Customer.irAProblemasConRecargas();
@@ -457,7 +471,7 @@ public class CustomerCare360Joaquin extends TestBase {
 		Assert.assertTrue(driver.findElement(By.id("lotNumber")).getAttribute("class").contains("ng-valid-maxlength"));
 	}
 	
-	@Test(groups="CustomerCare")
+	@Test(groups= {"CustomerCare","Problems with Refills"})
 	public void TS38551_Problems_with_Refills_Problemas_con_Recargas_Medio_de_recarga_Lote_Ingresa_17_dígitos() {
 		CustomerCare Customer = new CustomerCare(driver);
 		Customer.irAProblemasConRecargas();
@@ -476,7 +490,7 @@ public class CustomerCare360Joaquin extends TestBase {
 		Assert.assertTrue(driver.findElement(By.id("lotNumber")).getAttribute("class").contains("ng-invalid-maxlength"));
 	}
 	
-	@Test(groups="CustomerCare")
+	@Test(groups= {"CustomerCare","Problems with Refills"})
 	public void TS38552_Problems_with_Refills_Problemas_con_Recargas_Medio_de_recarga_Lote_Ingresa_letras() {
 		CustomerCare Customer = new CustomerCare(driver);
 		Customer.irAProblemasConRecargas();
@@ -573,5 +587,4 @@ public class CustomerCare360Joaquin extends TestBase {
 		
 		Assert.assertTrue(campo.findElement(By.cssSelector(".slds-icon.slds-icon--x-small.slds-icon-text-default.slds-is-sortable__icon")).isDisplayed());
 	}
-	
 }
