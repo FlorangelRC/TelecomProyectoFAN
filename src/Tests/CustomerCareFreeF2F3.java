@@ -165,33 +165,6 @@ public class CustomerCareFreeF2F3  extends TestBase  {
 	}
 	
 	@Test(groups= "CustomerCare")
-	public void TS7208_Profile_Changes_Cambios_En_La_Informacion_Del_Cliente_Validar_Caracteres_Campo_Email(){
-		 Accounts accountPage = new Accounts(driver);
-		 goToLeftPanel2(driver, "Cuentas");
-	     driver.switchTo().defaultContent();
-	     driver.switchTo().frame(accountPage.getFrameForElement(driver, By.cssSelector(".topNav.primaryPalette")));
-	     Select field = new Select(driver.findElement(By.name("fcf")));
-	     try {field.selectByVisibleText("Todas Las cuentas");}
-			catch (org.openqa.selenium.NoSuchElementException ExM) {field.selectByVisibleText("Todas las cuentas");}
-	     try {Thread.sleep(9000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();} 
-	     CustomerCare page = new CustomerCare(driver);
-			page.cerrarultimapestaña();
-			 try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();} 
-			page.elegircuenta("Fernando Care");
-			driver.switchTo().defaultContent();
-			driver.switchTo().frame(accountPage.getFrameForElement(driver, By.cssSelector(".slds-text-body_regular.profile-links")));
-			driver.findElement(By.cssSelector(".slds-text-body_regular.profile-links")).click();
-			try {Thread.sleep(8000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();} 
-			driver.switchTo().defaultContent();
-			driver.switchTo().frame(accountPage.getFrameForElement(driver, By.id("Email")));
-			driver.findElement(By.id("Email")).clear();
-			driver.findElement(By.id("Email")).sendKeys("pruebapruebapruebapruebapruebapruebapruebapruebapruebapruebaprueb@telecom");
-			String CM = driver.findElement(By.id("Email")).getAttribute("class");
-			System.out.println("CM: "+CM);
-			assertTrue(CM.equals("slds-input form-control ng-touched ng-dirty ng-invalid ng-not-empty ng-invalid-email ng-valid-required ng-invalid-remove ng-valid-email-add ng-invalid-email-remove"));
-	}
-	
-	@Test(groups= "CustomerCare")
 	public void TS15960_360_View_Ver_Equipo_Creador_En_Case_Usuario_Cambia_De_Equipo_No_Se_Modifica_El_Campo_Equipo_Del_Creador() throws ParseException{
 		 Accounts accountPage = new Accounts(driver);
 		 Date date1 = new Date();

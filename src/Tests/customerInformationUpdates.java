@@ -1,5 +1,7 @@
 package Tests;
 
+import static org.testng.Assert.assertTrue;
+
 import java.util.List;
 
 import org.openqa.selenium.By;
@@ -427,9 +429,45 @@ public class customerInformationUpdates extends TestBase {
 		waitFor(driver, (By.id("FirstName")));
 		customerInformation page = new customerInformation(driver);
 		page.modifyCuil();
-		Assert.assertTrue(page.notchansgetopname());
-		
+		Assert.assertTrue(page.notchansgetopname());		
 	}
+	
+	
+	@Test(groups= "CustomerCare")
+		public void TS7208_Profile_Changes_Cambios_En_La_Informacion_Del_Cliente_Validar_Caracteres_Campo_Email(){
+		driver.findElement(By.id("Email")).clear();
+		driver.findElement(By.id("Email")).sendKeys("pruebapruebapruebapruebapruebapruebapruebapruebapruebapruebaprueb@telecom");
+		String CM = driver.findElement(By.id("Email")).getAttribute("class");
+		assertTrue(CM.equals("slds-input form-control ng-touched ng-dirty ng-invalid ng-not-empty ng-invalid-email ng-valid-required ng-invalid-remove ng-valid-email-add ng-invalid-email-remove"));
+	}
+	
+	@Test(groups= "CustomerCare")
+	public void TS7179_Profile_Changes_Validacion_Correo_Electronico_Creacion_De_Caso_Al_Cambiar_Correo_Electronico(){
+		driver.findElement(By.id("Email")).clear();
+		driver.findElement(By.id("Email")).sendKeys("pruebaat@gmail.com");
+		((JavascriptExecutor)driver).executeScript("window.scrollTo(0,"+driver.findElement(By.id("ClientInformation_nextBtn")).getLocation().y+")");
+		driver.findElement(By.id("ClientInformation_nextBtn")).click();
+		try {Thread.sleep(8000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		BasePage cambioFrameByID = new BasePage(driver);
+		
+		CustomerCare page = new CustomerCare(driver);
+		page.elegircaso();
+		try {Thread.sleep(8000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();} 
+		List<WebElement> camposOrden = driver.findElement(By.className("x-grid3-viewport")).findElement(By.tagName("tr")).findElements(By.tagName("td"));
+		camposOrden.remove(0);
+		for (WebElement UnCO : camposOrden) {
+			if (UnCO.findElement(By.tagName("div")).getAttribute("title").toLowerCase().equals("due date")){
+				UnCO.click();
+				try {Thread.sleep(3000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();} 
+				UnCO.click();
+				try {Thread.sleep(3000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();} 
+				break;
+			}
+		}
+		assertTrue(driver.findElement(By.cssSelector(".x-grid3-row.x-grid3-row-first")).findElements(By.tagName("td")).get(4).findElement(By.tagName("span")).getText().toLowerCase().equals("actualización de datos"));
+		assertTrue(driver.findElement(By.cssSelector(".x-grid3-row.x-grid3-row-first")).findElement(By.cssSelector(".x-grid3-cell-inner.x-grid3-col-CASES_STATUS")).getText().toLowerCase().equals("nuevo"));
+	}
+	
 	/*
 	@Test(groups= "CustomerCare")
 	public void TS7205_Cambios_en_la_Informacion_del_Cliente_Validar_Caracteres_Campo_Apellido() {
