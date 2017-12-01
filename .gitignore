@@ -1,2 +1,4 @@
 /bin/
-.classpath
+/lib/
+/test-putput/
+/.classpath
