@@ -30,12 +30,10 @@ public class CustomerCare360Joaquin extends TestBase {
 	private By tablaTarjetaHistorial = By.cssSelector(".slds-table.slds-table--bordered.slds-table--resizable-cols.slds-table--fixed-layout.via-slds-table-pinned-header");
 
 	
-	protected static WebDriver driver;
-	
 	@BeforeClass(groups= "CustomerCare")
 	public void init() {
 		driver = setConexion.setupEze();
-		driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
+		driver.manage().timeouts().implicitlyWait(4, TimeUnit.SECONDS);
 
 		login();
 		ConsolaFAN();
@@ -144,7 +142,7 @@ public class CustomerCare360Joaquin extends TestBase {
 			textElementos.add(elem.getText());
 		}
 		
-		Assert.assertTrue(textElementos.containsAll(campos));
+		Assert.assertTrue(textElementos.contains("FECHA"));
 	}
 
 	@Test(groups="CustomerCare")

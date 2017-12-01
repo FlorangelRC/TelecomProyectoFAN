@@ -24,16 +24,16 @@ public class TechnicalCare extends TestBase  {
 	private WebDriver driver;
 	private String validIMEI = "545229703256596";
 	
-	@BeforeClass(groups = "Fase2")
+	@BeforeClass(groups = "TechnicalCare")
 	public void init() throws Exception
 	{
-		this.driver = setConexion.setupPablo();
+		this.driver = setConexion.setupEze();
 		try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 		login(driver);
 		try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 	}
 
-	@BeforeMethod(groups = "Fase2")
+	@BeforeMethod(groups = "TechnicalCare")
 	public void setUp() throws Exception {
 		HomeBase homePage = new HomeBase(driver);
 	       if(driver.findElement(By.id("tsidLabel")).getText().equals("Consola FAN")) {
@@ -73,17 +73,8 @@ public class TechnicalCare extends TestBase  {
 		try {Thread.sleep(7000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 	}
 	
-	/*@AfterClass(groups = "Fase2")
-	public void tearDown() {
-		driver.switchTo().defaultContent();
-		BasePage basePage = new BasePage(driver);
-		basePage.switchAppsMenu(driver);
-		try {Thread.sleep(3000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
-		basePage.selectAppFromMenuByName("Ventas");
-		driver.close();
-	}*/
 
-	@AfterMethod(groups = "Fase2")
+	@AfterMethod(groups = "TechnicalCare")
 	public void closeTechCareTab() {
 		driver.switchTo().defaultContent();
 		try {Thread.sleep(3000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
@@ -104,12 +95,13 @@ public class TechnicalCare extends TestBase  {
 	       
 	  }
 
-	@AfterClass(groups = "Fase2")
+	@AfterClass(groups = "TechnicalCare")
 	public void tearDown() {
-		driver.close();
+		driver.quit();
+		sleep(5000);
 	}
 
-	@Test(groups = "Fase2")
+	@Test(groups = "TechnicalCare")
 	public void TS11622_SST_Servicio_Indiferente_Adjunto_Formato_invalido() {
 		Accounts accPage = new Accounts(driver);
 		String invalidFilePath = "C:\\Users\\pablo\\Desktop\\SampleFiles\\unZip.zip";
@@ -128,7 +120,7 @@ public class TechnicalCare extends TestBase  {
 		Assert.assertTrue(errMessage.trim().contains(mensajeParcialErrorEnPagina));
 	}
 	
-	@Test(groups = "Fase2")
+	@Test(groups = "TechnicalCare")
 	public void TS11620_SST_Servicio_Indiferente_Adjunto_Valido_doc() {
 		Accounts accPage = new Accounts(driver);
 		String filePath = "C:\\Users\\pablo\\Desktop\\SampleFiles\\unDoc.doc";
@@ -147,7 +139,7 @@ public class TechnicalCare extends TestBase  {
 		Assert.assertTrue(textoArchivoAdjunto.toLowerCase().trim().contains(".doc"));
 	}
 	
-	@Test(groups = "Fase2")
+	@Test(groups = "TechnicalCare")
 	public void TS11631_SST_Servicio_Indiferente_Adjunto_Valido_docx() {
 		Accounts accPage = new Accounts(driver);
 		String filePath = "C:\\Users\\pablo\\Desktop\\SampleFiles\\unDocx.docx";
@@ -166,7 +158,7 @@ public class TechnicalCare extends TestBase  {
 		Assert.assertTrue(textoArchivoAdjunto.toLowerCase().trim().contains(".docx"));
 	}
 	
-	@Test(groups = "Fase2")
+	@Test(groups = "TechnicalCare")
 	public void TS11635_SST_Servicio_Indiferente_Adjunto_Valido_jpeg() {
 		Accounts accPage = new Accounts(driver);
 		String filePath = "C:\\Users\\pablo\\Desktop\\SampleFiles\\unJpeg.jpeg";
@@ -185,7 +177,7 @@ public class TechnicalCare extends TestBase  {
 		Assert.assertTrue(textoArchivoAdjunto.toLowerCase().trim().contains(".jpeg"));
 	}
 	
-	@Test(groups = "Fase2")
+	@Test(groups = "TechnicalCare")
 	public void TS11634_SST_Servicio_Indiferente_Adjunto_Valido_jpg() {
 		Accounts accPage = new Accounts(driver);
 		String filePath = "C:\\Users\\pablo\\Desktop\\SampleFiles\\unJpg.jpg";
@@ -204,7 +196,7 @@ public class TechnicalCare extends TestBase  {
 		Assert.assertTrue(textoArchivoAdjunto.toLowerCase().trim().contains(".jpg"));
 	}
 	
-	@Test(groups = "Fase2")
+	@Test(groups = "TechnicalCare")
 	public void TS11636_SST_Servicio_Indiferente_Adjunto_Valido_pdf() {
 		Accounts accPage = new Accounts(driver);
 		String filePath = "C:\\Users\\pablo\\Desktop\\SampleFiles\\unPdf.pdf";

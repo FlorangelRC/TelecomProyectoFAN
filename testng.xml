@@ -12,6 +12,7 @@
   </groups>
       
     <classes>
+        
     <!-- Almer -->
     	<!-- CustomerCare -->
     <class name="Tests.CustomerCareCaseManagement"/>
@@ -30,7 +31,7 @@
     
     <!-- Joaquin -->
     	<!-- CustomerCare -->
-    <class name="Tests.TestsJ"/>
+    <class name="Tests.CustomerCare360Joaquin"/>
     
     
     <!-- Nicolas -->

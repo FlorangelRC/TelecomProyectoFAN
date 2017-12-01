@@ -73,7 +73,7 @@ public class BasePage {
 				driver.switchTo().frame(frame);
 
 				driver.findElement(byForElement).getText(); //each element is in the same iframe.
-				System.out.println(index); //prints the used index.
+				//System.out.println(index); //prints the used index.
 
 				driver.findElement(byForElement).isDisplayed(); //each element is in the same iframe.
 				//System.out.println(index); //prints the used index.

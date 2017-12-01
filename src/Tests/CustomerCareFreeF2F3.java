@@ -28,9 +28,9 @@ import Pages.setConexion;
 public class CustomerCareFreeF2F3  extends TestBase  {
 	private WebDriver driver;
 	
-	//@AfterClass(groups= "CustomerCare")
+	@AfterClass(groups= "CustomerCare")
 	public void tearDown2() {
-		driver.close();	
+		driver.quit();	
 	}
 	
 	@BeforeClass(groups= "CustomerCare")
