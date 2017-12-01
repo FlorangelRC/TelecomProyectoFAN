@@ -1,5 +1,7 @@
 package Tests;
 
+import static org.testng.Assert.assertTrue;
+
 import java.util.List;
 
 import org.openqa.selenium.By;
@@ -29,38 +31,79 @@ public class diagnosis extends TestBase {
 	
 	private WebDriver driver;
 
-	@AfterClass
+	@AfterClass(groups = "Fase1") 
 	public void tearDown2() {
-		//driver.close();
+		driver.switchTo().defaultContent();
+		driver.findElement(By.id("tsidButton")).click();
+		List<WebElement> options = driver.findElement(By.id("tsid-menuItems")).findElements(By.tagName("a"));
+
+		for (WebElement option : options) {
+			if(option.getText().toLowerCase().equals("Ventas".toLowerCase())){
+				option.click();
+				break;
+			}
+		}
+		try {Thread.sleep(2000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		driver.close();
 	}
 	
-	@BeforeClass
+	@BeforeClass(groups = "Fase1") 
 	public void init() throws Exception
 	{
-		this.driver = setConexion.setupEze();
+		this.driver = setConexion.setupPablo();
 		try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 		login(driver);
-		driver.get("https://crm--sit.cs14.my.salesforce.com/home/home.jsp?tsid=02u41000000QWha");
 		try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		HomeBase homePage = new HomeBase(driver);
+	     if(driver.findElement(By.id("tsidLabel")).getText().equals("Consola FAN")) {
+	    	 homePage.switchAppsMenu();
+	    	 try {Thread.sleep(2000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+	    	 homePage.selectAppFromMenuByName("Ventas");
+	    	 try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}    
+	     }
+	     homePage.switchAppsMenu();
+	     try {Thread.sleep(2000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+	     homePage.selectAppFromMenuByName("Consola FAN");
+	     try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}      
+	     goToLeftPanel2(driver, "Cuentas");
+	     try {Thread.sleep(15000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 	}
 
-	@AfterMethod
+	@AfterMethod(groups = "Fase1") 
 	public void tearDown() {
 
-		//driver.get("https://crm--sit.cs14.my.salesforce.com/home/home.jsp?tsid=02u41000000QWha");
-
-		driver.get("https://cs14.salesforce.com/home/home.jsp?tsid=02u41000000QWha");
+		driver.switchTo().defaultContent();
+		List<WebElement> ctas = driver.findElement(By.cssSelector(".x-tab-strip.x-tab-strip-top")).findElements(By.tagName("li"));
+		ctas.remove(0);
+		for (WebElement cta : ctas) {
+			if (cta.findElement(By.className("tabText")).getText().equals("Adrian Techh")) {
+				Actions action = new Actions(driver);
+				action.moveToElement(cta);
+				action.moveToElement(cta.findElement(By.className("x-tab-strip-close"))).click().build().perform();
+				break;
+			}
+				
+		}
+		try {Thread.sleep(2000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 
 	}
 
-	@BeforeMethod
+	@BeforeMethod(groups = "Fase1") 
 	public void setUp() throws Exception {
-		try {Thread.sleep(4000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
-		if (!driver.getCurrentUrl().toString().contains("/console")){
-			driver.findElement(By.id("tsidLabel")).click();
-			try {Thread.sleep(2000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
-			driver.findElement(By.xpath("//a[@href=\"/console?tsid=02uc0000000D6Hd\"]")).click();
-		}
+		 Accounts accountPage = new Accounts(driver);
+	     //Selecciono Vista Tech
+	     driver.switchTo().defaultContent();
+	     accountPage.accountSelect("Vista Tech");
+	     try {Thread.sleep(8000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+	     accountPage.selectAccountByName("Adrian Techh");
+	     try {Thread.sleep(10000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}            
+	     if(accountPage.isTabOpened("Asistencia Técnica")) {
+	         System.out.println("Tab Opened.");
+	         accountPage.goToTab("Asistencia Técnica");
+	     }else {
+	         accountPage.findAndClickButton("Asistencia Técnica");
+	     }
+	     try {Thread.sleep(10000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 	}
 	/*
 	@Test
@@ -281,32 +324,16 @@ public class diagnosis extends TestBase {
 		goToLeftPanel2(driver, "Cuentas");
 	}*/
 
-	@Test(groups="a")
+	@Test(groups = "Fase1") 
 	public void TS6256_Boton_Ejecutar_Grisado_Chequeo() {
 		//actually checks if not visible, it ist greyed out.
-		try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
-		try{ for(WebElement e : driver.findElements(By.className("x-tab-strip-close"))) {
-			((JavascriptExecutor) driver).executeScript("arguments[0].click();", e);
-		} } catch (org.openqa.selenium.StaleElementReferenceException e) {}
-		try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
-		goToLeftPanel(driver, "Cuentas");
-		clickLeftPanel(driver);
-		try {Thread.sleep(3000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 		Accounts accountPage = new Accounts(driver);
 		//Selecciono Vista Tech
-		driver.switchTo().defaultContent();
-		driver.switchTo().frame(driver.findElement(By.xpath("//iframe")));
-		accountPage.accountSelect("Vista Tech");
-		try {Thread.sleep(3000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
-		//select accountName "Robo Tech", currently has index 10.
-		accountPage.selectAccountByName("Robo Tech");
-		try {Thread.sleep(8000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
-		accountPage.clickRightPanelButtonByName("Asistencia Técnica");
 		try {Thread.sleep(8000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 		driver.switchTo().defaultContent();
-		List<WebElement> frame = driver.findElements(By.tagName("iframe"));
-		driver.switchTo().frame(frame.get(4));
-		//Service Selector
+		
+		try {Thread.sleep(8000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		driver.switchTo().frame(accountPage.getFrameForElement(driver, By.id("SelectServiceStep_nextBtn")));
 		Assert.assertFalse(accountPage.isExecuteButtonPresent());
 		driver.findElement(By.id("LookupSelectofService")).click();
 		try {Thread.sleep(7000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
@@ -315,34 +342,16 @@ public class diagnosis extends TestBase {
 	    js.executeScript("document.getElementsByClassName('slds-list__item ng-binding ng-scope')[0].click()");
 		try {Thread.sleep(1500);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 		Assert.assertFalse(accountPage.isExecuteButtonPresent());
-		goToLeftPanel2(driver, "Cuentas");
+
 	}
 	
-	@Test
+	@Test(groups = "Fase1") 
 	public void TS6269_Habilitado_Al_Seleccionar_Motivo_Y_Sintoma() {
-		try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
-		try{ for(WebElement e : driver.findElements(By.className("x-tab-strip-close"))) {
-			((JavascriptExecutor) driver).executeScript("arguments[0].click();", e);
-		} } catch (org.openqa.selenium.StaleElementReferenceException e) {}
-		try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
-		goToLeftPanel(driver, "Cuentas");
-		clickLeftPanel(driver);
-		try {Thread.sleep(3000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 		Accounts accountPage = new Accounts(driver);
-		//Selecciono Vista Tech
-		driver.switchTo().defaultContent();
-		driver.switchTo().frame(driver.findElement(By.xpath("//iframe")));
-		accountPage.accountSelect("Vista Tech");
-		try {Thread.sleep(3000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
-		//select accountName "Robo Tech", currently has index 10.
-		accountPage.selectAccountByName("Robo Tech");
-		try {Thread.sleep(8000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
-		accountPage.clickRightPanelButtonByName("Asistencia Técnica");
 		try {Thread.sleep(8000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 		driver.switchTo().defaultContent();
-		List<WebElement> frames = driver.findElements(By.tagName("iframe"));
-		driver.switchTo().frame(frames.get(4));
-		//Service Selector
+		try {Thread.sleep(8000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		driver.switchTo().frame(accountPage.getFrameForElement(driver, By.id("SelectServiceStep_nextBtn")));
 		driver.findElement(By.id("LookupSelectofService")).click();
 		try {Thread.sleep(3000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 		JavascriptExecutor js = (JavascriptExecutor)driver;
@@ -350,60 +359,24 @@ public class diagnosis extends TestBase {
 		try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 		
 		accountPage.continueFromService();//mismo error
-		try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
-		driver.switchTo().defaultContent();
-		//Contact Motive Selector
-		try {
-			driver.switchTo().defaultContent();
-			driver.findElement(By.id("SelectedMotivesLookup")).click();
-		}catch(NoSuchElementException noSuchElemExcept){
-			frames = driver.findElements(By.tagName("iframe"));
-			for(WebElement frame : frames) {
-				try {			
-					driver.findElement(By.id("SelectedMotivesLookup")).click();
-					break;
-					//System.out.println("seleccionado");
-				}catch(NoSuchElementException noSuchElemeExcept){
-					//System.out.println("NoSeleccionado");
-					driver.switchTo().defaultContent();
-					driver.switchTo().frame(frame);
-				}
-			}
-		}
+		
+		
 		try {Thread.sleep(1500);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 		// the index for "No me funciona internet" is 8, 9 elements, 
 		//some not visible (previous option elements)
 	    js.executeScript("document.getElementsByClassName('slds-list__item ng-binding ng-scope')[6].click()");
 		try {Thread.sleep(3500);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 		Assert.assertTrue(accountPage.isExecuteButtonPresent());
-		goToLeftPanel2(driver, "Cuentas");
+
 	}
 
-	@Test
+	@Test(groups = "Fase1") 
 	public void TS6320_Visualizar_Motivo_de_Contacto_Y_Sintoma() {
-		try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
-		try{ for(WebElement e : driver.findElements(By.className("x-tab-strip-close"))) {
-			((JavascriptExecutor) driver).executeScript("arguments[0].click();", e);
-		} } catch (org.openqa.selenium.StaleElementReferenceException e) {}
-		try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
-		goToLeftPanel(driver, "Cuentas");
-		clickLeftPanel(driver);
-		try {Thread.sleep(3000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 		Accounts accountPage = new Accounts(driver);
-		//Selecciono Vista Tech
-		driver.switchTo().defaultContent();
-		driver.switchTo().frame(driver.findElement(By.xpath("//iframe")));
-		accountPage.accountSelect("Vista Tech");
-		try {Thread.sleep(3000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
-		//select accountName "Robo Tech", currently has index 10.
-		accountPage.selectAccountByName("Robo Tech");
-		try {Thread.sleep(8000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
-		accountPage.clickRightPanelButtonByName("Asistencia Técnica");
 		try {Thread.sleep(8000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 		driver.switchTo().defaultContent();
-		List<WebElement> frame = driver.findElements(By.tagName("iframe"));
-		driver.switchTo().frame(frame.get(4));
-		//Service Selector
+		try {Thread.sleep(8000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		driver.switchTo().frame(accountPage.getFrameForElement(driver, By.id("SelectServiceStep_nextBtn")));
 		driver.findElement(By.id("LookupSelectofService")).click();
 		try {Thread.sleep(3000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 		JavascriptExecutor js = (JavascriptExecutor)driver;
@@ -420,40 +393,100 @@ public class diagnosis extends TestBase {
 	    js.executeScript("document.getElementsByClassName('slds-list__item ng-binding ng-scope')[5].click()");
 		try {Thread.sleep(3500);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 		Assert.assertTrue(accountPage.isExecuteButtonPresent());
-		goToLeftPanel2(driver, "Cuentas");
-	}
 
-	@Test
-	public void TS6410_Ingreso_A_Tech_Care_Desde_La_Vista_360() {
-		try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
-		try{ for(WebElement e : driver.findElements(By.className("x-tab-strip-close"))) {
-			((JavascriptExecutor) driver).executeScript("arguments[0].click();", e);
-		} } catch (org.openqa.selenium.StaleElementReferenceException e) {}
-		try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
-		goToLeftPanel(driver, "Cuentas");
-		clickLeftPanel(driver);
-		try {Thread.sleep(3000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
-		Accounts accountPage = new Accounts(driver);
-		//Selecciono Vista Tech
-		driver.switchTo().defaultContent();
-		driver.switchTo().frame(driver.findElement(By.xpath("//iframe")));
-		accountPage.accountSelect("Vista Tech");
-		try {Thread.sleep(3000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
-		//select accountName "Robo Tech", currently has index 10.
-		accountPage.selectAccountByName("Robo Tech");
-		try {Thread.sleep(8000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
-		accountPage.clickRightPanelButtonByName("Asistencia Técnica");
-		driver.switchTo().defaultContent();
-		List<WebElement> frame = driver.findElements(By.tagName("iframe"));
-		driver.switchTo().frame(frame.get(4));
-		//Service Selector
-		try {Thread.sleep(8000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
-		driver.findElement(By.id("LookupSelectofService")).click();
-		try {Thread.sleep(3000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
-		JavascriptExecutor js = (JavascriptExecutor)driver;
-		//Index 4? is for Robo TF Tech
-	    js.executeScript("document.getElementsByClassName('slds-list__item ng-binding ng-scope')[3].click()");
-		goToLeftPanel2(driver, "Cuentas");//tech service existence assured.
 	}
+	//Incidentes masivos
+	/*@Test(groups = "Fase1") 
+	public void TS6395_NoiseLine() {
+		
+	}
+	 @Test(groups = "Fase1") 
+	public void TS6396_Interrumption(){
+		
+	}*/
+	/* Rreportes-diagnostico
+	@Test(groups = "Fase1") 
+	public void TS6398_MotiveSintom(){
+		
+	}
+	
+	@Test(groups = "Fase1") 
+	public void TS6399_MotiveSintomVisulization() {
+		
+	}*/
+	
+	/*@Test(groups = "Fase1") 
+	public void TS6400_MobileServices() {
+		Accounts accountPage = new Accounts(driver);
+		try {Thread.sleep(8000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		driver.switchTo().defaultContent();
+		try {Thread.sleep(8000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		driver.switchTo().frame(accountPage.getFrameForElement(driver, By.id("SelectServiceStep_nextBtn")));
+		driver.findElement(By.id("LookupSelectofService")).click();
+		try {Thread.sleep(8000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		driver.findElement(By.cssSelector(".slds-list--vertical.vlc-slds-list--vertical")).findElements(By.cssSelector(".slds-list__item.ng-binding.ng-scope")).get(0).click();
+		try {Thread.sleep(3000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		WebElement BenBoton = driver.findElement(By.id("SelectServiceStep_nextBtn"));
+		((JavascriptExecutor)driver).executeScript("window.scrollTo(0,"+BenBoton.getLocation().y+")");
+		BenBoton.click();
+		
+	}*/
+	/*@Test(groups = "Fase1") 
+	public void TS6403_DownDownTooltip() {
+		Accounts accountPage = new Accounts(driver);
+		try {Thread.sleep(8000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		driver.switchTo().defaultContent();
+		try {Thread.sleep(8000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		driver.switchTo().frame(accountPage.getFrameForElement(driver, By.id("SelectServiceStep_nextBtn")));
+		driver.findElement(By.id("LookupSelectofService")).click();
+		try {Thread.sleep(8000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		driver.findElement(By.cssSelector(".slds-list--vertical.vlc-slds-list--vertical")).findElements(By.cssSelector(".slds-list__item.ng-binding.ng-scope")).get(0).click();
+		try {Thread.sleep(3000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		WebElement BenBoton = driver.findElement(By.id("SelectServiceStep_nextBtn"));
+		((JavascriptExecutor)driver).executeScript("window.scrollTo(0,"+BenBoton.getLocation().y+")");
+		BenBoton.click();
+		
+	}
+	@Test(groups = "Fase1") 
+	public void TS6405_LogicError() {
+		Accounts accountPage = new Accounts(driver);
+		try {Thread.sleep(8000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		driver.switchTo().defaultContent();
+		try {Thread.sleep(8000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		driver.switchTo().frame(accountPage.getFrameForElement(driver, By.id("SelectServiceStep_nextBtn")));
+		driver.findElement(By.id("LookupSelectofService")).click();
+		try {Thread.sleep(8000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		driver.findElement(By.cssSelector(".slds-list--vertical.vlc-slds-list--vertical")).findElements(By.cssSelector(".slds-list__item.ng-binding.ng-scope")).get(0).click();
+		try {Thread.sleep(3000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		WebElement BenBoton = driver.findElement(By.id("SelectServiceStep_nextBtn"));
+		((JavascriptExecutor)driver).executeScript("window.scrollTo(0,"+BenBoton.getLocation().y+")");
+		BenBoton.click();
+		
+	}*/
+
+	@Test(groups = "Fase1") 
+	public void TS6410_Ingreso_A_Tech_Care_Desde_La_Vista_360() {
+		driver.switchTo().defaultContent();
+		Accounts accPage = new Accounts(driver);
+		try {Thread.sleep(8000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		driver.switchTo().frame(accPage.getFrameForElement(driver, By.id("SelectServiceStep_nextBtn")));
+		try {Thread.sleep(2000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		assertTrue(driver.findElement(By.id("LookupSelectofService")).isDisplayed());
+		try {Thread.sleep(3000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		
+	}
+	
+	/*@Test(groups = "Fase1") 
+	public void TS6484_NoService() {
+		Accounts accountPage = new Accounts(driver);
+		try {Thread.sleep(8000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		driver.switchTo().defaultContent();
+		try {Thread.sleep(8000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		driver.switchTo().frame(accountPage.getFrameForElement(driver, By.id("SelectServiceStep_nextBtn")));
+		WebElement BenBoton = driver.findElement(By.id("SelectServiceStep_nextBtn"));
+		((JavascriptExecutor)driver).executeScript("window.scrollTo(0,"+BenBoton.getLocation().y+")");
+		BenBoton.click();
+		
+	}*/
 	
 }

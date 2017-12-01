@@ -16,40 +16,38 @@ import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
 import Pages.Accounts;
-import Pages.BasePage;
-import Pages.HomeBase;
 import Pages.RegistroEventoMasivo;
 import Pages.setConexion;
 
 public class TechCareSistemasIncidentesMasivosCreacion extends TestBase {
 	private WebDriver driver;
 	
-	@BeforeClass(groups = "Fase2") 
+	@BeforeClass
 	public void init() throws Exception
 	{
-		this.driver = setConexion.setupEze();
+		this.driver = setConexion.setupPablo();
 		try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 		login(driver);
 		try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 	}
 	
-	@BeforeMethod(groups = "Fase2") 
+	@BeforeMethod
 	  public void setUp() throws Exception {
 	    
 	    //Entrar en Velocity Telecomunication servics
-	    try {Thread.sleep(4000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+	    try {Thread.sleep(6000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 	    String a = driver.findElement(By.id("tsidLabel")).getText();
 	    if (a.contains("Vlocity Telecommunication...")){}
 	    else {
 	      driver.findElement(By.id("tsidButton")).click();
-	      try {Thread.sleep(2000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+	      try {Thread.sleep(3000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 	      driver.findElement(By.xpath("//a[@href=\"/home/home.jsp?tsid=02uc0000000D663\"]")).click();
 	    }
 	    
 	    //click +
-	    try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+	    try {Thread.sleep(8000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 	    driver.findElement(By.xpath("//a[@href=\"/home/showAllTabs.jsp\"]")).click();
-	    try {Thread.sleep(3000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+	    try {Thread.sleep(4000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 	        
 	    //click velociti omniscript designer
 	    //WebElement BenBoton = driver.findElement(By.xpath("//*[@id=\"bodyCell\"]/div[3]/div[2]/table/tbody/tr[59]/td[2]/a"));
@@ -63,21 +61,19 @@ public class TechCareSistemasIncidentesMasivosCreacion extends TestBase {
 				break;
 			}
 		}
-	    try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+	    try {Thread.sleep(8000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 	        
 	    //click techcare massive create
-	    WebElement tcmc = driver.findElement(By.id("omni-home-group-44-toggle-button"));
+	    WebElement tcmc = driver.findElement(By.xpath("//a[text()=\"TechCare/Massive Event - Create Case\"]"));
 	    ((JavascriptExecutor)driver).executeScript("window.scrollTo(0,"+tcmc.getLocation().y+")");
 	    tcmc.click();
-	    try {Thread.sleep(2000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+	    try {Thread.sleep(6000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 	        
-	    //click version 8
-	    //WebElement cv8 = driver.findElement(By.xpath("//a[text()=\"ta-techCare-MassiveIncident-CreateCase (Version 8)\"]"));
-	    //click version 9
-	    WebElement cv8 = driver.findElement(By.xpath("//a[text()=\"ta-techCare-MassiveIncident-CreateCase (Version 9)\"]"));
+	    //click version 23
+	    WebElement cv8 = driver.findElement(By.xpath("//a[text()=\"ta-techCare-MassiveIncident-CreateCase (Version 23)\"]"));
 	    ((JavascriptExecutor)driver).executeScript("window.scrollTo(0,"+cv8.getLocation().y+")");
 	    cv8.click();
-	    try {Thread.sleep(2000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+	    try {Thread.sleep(6000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 	          
 	    //click preview
 	    WebElement cpw = driver.findElement(By.xpath("//*[@id=\"bodyTable\"]/tbody/tr/td/div[2]/div[4]/div/div/div[3]/div[1]/ul/li[2]/a"));
@@ -87,7 +83,7 @@ public class TechCareSistemasIncidentesMasivosCreacion extends TestBase {
 	    
 	    }
 	
-	@AfterMethod(groups = "Fase2") 
+	@AfterMethod
 	public void closeTechCareTab() {
 		driver.switchTo().defaultContent();
 		((JavascriptExecutor)driver).executeScript("window.scrollTo(0,"+ driver.findElement(By.id("tsidButton")).getLocation().y+")");
@@ -107,22 +103,32 @@ public class TechCareSistemasIncidentesMasivosCreacion extends TestBase {
 			driver.close();
 		}
 	
-	@Test(groups = "Fase2") 
-	public void TS16336_Fecha_Estimada_De_Cierre_No_Obligatorio() {
-		 RegistroEventoMasivo REM = new RegistroEventoMasivo(driver);
+	//@Test(groups = "Fase2") 
+	public void TS16246_Canal_Formato() {
 		Accounts accPage = new Accounts(driver);
-		REM.llenarListas(By.id("EndDate"));
+		boolean estan = true;
+		String[] todos = {"web","ivr","sms","sistema de gestion","ussd","todos los medios","redes sociales"};
 		try {Thread.sleep(3000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
-		REM.llenarTextos(By.id("EndDate"));
-		try {Thread.sleep(3000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
-		driver.findElement(By.id("TextIncidentTitle")).sendKeys("Algo mas");
-		REM.ClickOnSave();
-		try {Thread.sleep(3000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
-		driver.switchTo().frame(accPage.getFrameForElement(driver, By.id("ConfirmationText")));
-		assertTrue(driver.findElement(By.id("ConfirmationText")).getText().contains("correctamente el incidente masivo"));
+		driver.switchTo().frame(accPage.getFrameForElement(driver, By.id("InputValues_nextBtn")));
+		driver.findElement(By.id("SelectChannel")).click();
+		try {Thread.sleep(2000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		List<WebElement> optns = driver.findElement(By.id("SelectChannel")).findElements(By.tagName("option"));
+		List<String> textos = new ArrayList<String>();
+		for (WebElement optn : optns)
+		{
+			textos.add(optn.getText().toLowerCase());
+		}
+		for (String uno : todos) {
+			if (!textos.contains(uno)) {
+				estan = false;
+			}
+		}
+		try {Thread.sleep(2000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		assertTrue(estan);
 	}
 	
-	@Test(groups = "Fase2") 
+	
+	//@Test(groups = "Fase2") 
 	public void TS16318_Fecha_De_Inicio_Formato() {
 		RegistroEventoMasivo REM = new RegistroEventoMasivo(driver);
 		Accounts accPage = new Accounts(driver);
@@ -148,34 +154,21 @@ public class TechCareSistemasIncidentesMasivosCreacion extends TestBase {
 		try {Thread.sleep(2000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 		driver.findElement(By.id("datepickers-container")).findElements(By.cssSelector(".datepicker--cell.datepicker--cell-day.-current-")).get(1).click();
 		try {Thread.sleep(2000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
-		assertTrue(REM.validarFecha(driver.findElement(By.id("EndDate")).getAttribute("value"), "dd/mm/yyyy HH:mm") || REM.validarFecha(driver.findElement(By.id("EndDate")).getAttribute("value"), "dd-mm-yyyy HH:mm"));
+		assertTrue(REM.validarFecha(driver.findElement(By.id("EndDate")).getAttribute("value"), "dd/mm/yyyy HH:mm"));
 	}
 	
 	@Test(groups = "Fase2") 
-	public void TS16246_Canal_Formato() {
-		RegistroEventoMasivo REM = new RegistroEventoMasivo(driver);
+	public void TS16336_Fecha_Estimada_De_Cierre_No_Obligatorio() {
+		 RegistroEventoMasivo REM = new RegistroEventoMasivo(driver);
 		Accounts accPage = new Accounts(driver);
-		boolean estan = true;
-		String[] todos = {"web","ivr","sms","sistema de gestion","ussd","todos los medios","redes sociales"};
+		REM.llenarListas(By.id("EndDate"));
 		try {Thread.sleep(3000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
-		driver.switchTo().frame(accPage.getFrameForElement(driver, By.id("InputValues_nextBtn")));
-		driver.findElement(By.id("SelectChannel")).click();
-		try {Thread.sleep(2000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
-		List<WebElement> optns = driver.findElement(By.id("SelectChannel")).findElements(By.tagName("option"));
-		List<String> textos = new ArrayList<String>();
-		for (WebElement optn : optns)
-		{
-			textos.add(optn.getText().toLowerCase());
-			System.out.println("optn: "+optn.getText());
-		}
-		for (String uno : todos) {
-			if (!textos.contains(uno)) {
-				System.out.println("uno: "+uno);
-				estan = false;
-			}
-		}
-		try {Thread.sleep(2000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
-		assertTrue(estan);
+		REM.llenarTextos(By.id("EndDate"));
+		try {Thread.sleep(3000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		driver.findElement(By.id("TextIncidentTitle")).sendKeys("Algo mas");
+		REM.ClickOnSave();
+		try {Thread.sleep(3000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		driver.switchTo().frame(accPage.getFrameForElement(driver, By.id("ConfirmationText")));
+		assertTrue(driver.findElement(By.id("ConfirmationText")).getText().contains("correctamente el incidente masivo"));
 	}
-	
 }

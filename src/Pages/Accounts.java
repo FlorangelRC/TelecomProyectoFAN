@@ -66,9 +66,6 @@ public class Accounts extends BasePage {
     private WebElement selectSymptom; //selector
 
 
-	
-
-
 	@FindBy (how = How.ID, using = "UploadFile")
 	private WebElement attachDocument; //input
 	
@@ -160,7 +157,7 @@ public class Accounts extends BasePage {
     
     public void findAndClickButton (String buttonName) {
     	deployEastPanel();
-        try {Thread.sleep(10000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}  
+        try {Thread.sleep(12000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}  
         driver.switchTo().defaultContent();
         driver.switchTo().frame(getFrameForElement(driver, By.className("actions-content")));
         try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}   
@@ -178,30 +175,32 @@ public class Accounts extends BasePage {
         accounts.get(accountIndex).findElements(By.tagName("a")).get(3).click();
     }
     
-    public void selectAccountByName(String accountName) {
-        //maybe the responsability of the page should only remain in accessing it's elements, and not assuring it can be done.
-        try {
-            accountsList = driver.findElements(By.className("x-grid3-row"));
-        }catch(NoSuchElementException noSuchElemExcept0) {
-            driver.switchTo().defaultContent();
-            List<WebElement> frames = driver.findElements(By.tagName("iframe"));
-            for (WebElement currentFrame : frames){
-                try{
-                    driver.switchTo().frame(currentFrame);
-                    accountsList = driver.findElements(By.className("x-grid3-row"));
+
+    	public void selectAccountByName(String accountName) {
+            //maybe the responsability of the page should only remain in accessing it's elements, and not assuring it can be done.
+            try {
+                accountsList = driver.findElements(By.className("x-grid3-row"));
+            }catch(NoSuchElementException noSuchElemExcept0) {
+                driver.switchTo().defaultContent();
+                List<WebElement> frames = driver.findElements(By.tagName("iframe"));
+                for (WebElement currentFrame : frames){
+                    try{
+                        driver.switchTo().frame(currentFrame);
+                        accountsList = driver.findElements(By.className("x-grid3-row"));
+                        break;
+                    }catch(NoSuchElementException noSuchElemExcept1) {
+                    }
+                }
+            }
+            for (WebElement account : accountsList) {
+                //The index for the account name is 2.
+                WebElement currentAccountName = account.findElements(By.className("x-grid3-cell-inner")).get(2);
+                if(currentAccountName.getText().equals(accountName)) {
+                    currentAccountName.findElement(By.tagName("a")).click();
                     break;
-                }catch(NoSuchElementException noSuchElemExcept1) {
                 }
             }
         }
-        for (WebElement account : accountsList) {
-            //The index for the account name is 2.
-            WebElement currentAccountName = account.findElements(By.className("x-grid3-cell-inner")).get(2);
-            if(currentAccountName.getText().equals(accountName)) {
-                currentAccountName.findElement(By.tagName("a")).click();
-            }
-        }
-    }
     
     public WebElement getServiceSelector() {
         driver.switchTo().defaultContent();
@@ -506,8 +505,5 @@ public class Accounts extends BasePage {
 		}
 	}
 	
-	
-	
-
 	
 }
