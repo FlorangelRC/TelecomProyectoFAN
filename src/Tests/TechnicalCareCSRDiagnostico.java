@@ -35,7 +35,7 @@ public class TechnicalCareCSRDiagnostico extends TestBase{
 	     if(driver.findElement(By.id("tsidLabel")).getText().equals("Consola FAN")) {
 	    	 homePage.switchAppsMenu();
 	    	 try {Thread.sleep(2000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
-	    	 homePage.selectAppFromMenuByName("Ventas");
+	    	 homePage.selectAppFromMenuByName("Ventas"); 
 	    	 try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}    
 	     }
 	     homePage.switchAppsMenu();
