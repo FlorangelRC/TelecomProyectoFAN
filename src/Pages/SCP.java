@@ -175,4 +175,19 @@ public class SCP extends BasePage {
 
 	    return flag;
 	}
+	
+	public boolean goToOportunity() {
+		try {Thread.sleep(3000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		if(driver.findElement(By.cssSelector(".dataCell.droppableTD.ui-droppable.sorting_1")).isDisplayed()) {
+			WebElement oportunidad=driver.findElement(By.cssSelector(".dataCell.droppableTD.ui-droppable.sorting_1")).findElement(By.tagName("a"));
+			oportunidad.click();
+			try {Thread.sleep(3000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+			if(driver.findElement(By.id("bodyCell")).isDisplayed())
+				return true;
+			else
+				return false;
+		}
+		else return false;
+	}
+	
 }
