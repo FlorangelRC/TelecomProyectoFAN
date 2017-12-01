@@ -7,7 +7,6 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
-import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.ui.Select;
 
 import org.testng.annotations.AfterClass;
@@ -24,7 +23,7 @@ public class PanelGuideSections extends TestBase {
 	private WebDriver driver;
 	private String cuentaName;
 
-	@AfterClass(groups = "Fase1")
+	@AfterClass(groups = "CustomerCare")
 	public void tearDown2() {
 		driver.switchTo().defaultContent();
 		try{ for(WebElement e : driver.findElements(By.className("x-tab-strip-close"))) {
@@ -42,10 +41,10 @@ public class PanelGuideSections extends TestBase {
 			}
 		}
 		try {Thread.sleep(2000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
-		driver.close();
+		driver.quit();
 	}
 	
-	@BeforeClass(groups = "Fase1")
+	@BeforeClass(groups = "CustomerCare")
 	public void Init() throws Exception
 	{
 		this.driver = setConexion.setupEze();
@@ -54,7 +53,7 @@ public class PanelGuideSections extends TestBase {
 		try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 	}
 	
-	@BeforeMethod(groups = "Fase1")
+	@BeforeMethod(groups = "CustomerCare")
 	public void setUp() throws Exception {
 		HomeBase homePage = new HomeBase(driver);
 	     if(driver.findElement(By.id("tsidLabel")).getText().equals("Consola FAN")) {
@@ -87,7 +86,7 @@ public class PanelGuideSections extends TestBase {
 			account.findElement(By.tagName("span")).click();
 	}
 	
-	@Test(groups = "Fase1")
+	@Test(groups = "CustomerCare")
 	public void TS7139_predictiveSearch()
 	{ 
 		Accounts accountPage = new Accounts(driver);
@@ -102,7 +101,7 @@ public class PanelGuideSections extends TestBase {
 		driver.switchTo().defaultContent();
 	}
 	
-	@Test(groups = "Fase1")
+	@Test(groups = "CustomerCare")
 	public void TS7134_sucessSearch()
 	{
 		
@@ -119,7 +118,7 @@ public class PanelGuideSections extends TestBase {
 		driver.switchTo().defaultContent();
 	}
 	
-	@Test(groups = "Fase1")
+	@Test(groups = "CustomerCare")
 	public void TS7135_failSearch()
 	{
 		
@@ -138,7 +137,7 @@ public class PanelGuideSections extends TestBase {
 		driver.switchTo().defaultContent();
 	}
 	
-	@Test(groups = "Fase1")
+	@Test(groups = "CustomerCare")
 	public void TS7140_placeholder()
 	{
 		Accounts accountPage = new Accounts(driver);
@@ -151,7 +150,7 @@ public class PanelGuideSections extends TestBase {
 		driver.switchTo().defaultContent();
 	}
 	
-	@Test(groups = "Fase1")
+	@Test(groups = "CustomerCare")
 	public void TS7141_resetSearch()
 	{
 		Accounts accountPage = new Accounts(driver);
@@ -176,7 +175,7 @@ public class PanelGuideSections extends TestBase {
 		List<WebElement> butons2 = driver.findElements(By.xpath("//*[text() = 'Actualizar Pago']"));
 		assertTrue(butons2.get(0).isDisplayed());
 		driver.switchTo().defaultContent();
-	}
+	 }
 
 	
 }

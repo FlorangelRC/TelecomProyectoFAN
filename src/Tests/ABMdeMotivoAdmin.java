@@ -1,7 +1,5 @@
 package Tests;
 
-import java.util.List;
-
 import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
@@ -27,7 +25,7 @@ public class ABMdeMotivoAdmin extends TestBase {
 	private String servicio = "Llamadas ilimitadas";
 	
 	
-	@BeforeClass
+	@BeforeClass(groups = "TechnicalCare")
 	public void init() throws Exception
 	{
 		this.driver = setConexion.setupEze();
@@ -36,12 +34,12 @@ public class ABMdeMotivoAdmin extends TestBase {
 		try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 	}
 
-	//@AfterClass
+	@AfterClass(groups = "TechnicalCare")
 	public void tearDown() {
-		driver.close();
+		driver.quit();
 	}
 
-	@BeforeMethod
+	@BeforeMethod(groups = "TechnicalCare")
 	public void setUp() throws Exception {
 		//TODO: add how to get to ABM de Motivo
 		HomeBase homePage = new HomeBase(driver);
@@ -72,14 +70,14 @@ public class ABMdeMotivoAdmin extends TestBase {
 	
 	//priority forces the tests order execution, and groupsDependency, guarantees the other ones finished
 	
-	@Test(groups = "fase2")
+	@Test(groups = "TechnicalCare")
 	public void TS12584_ABM_de_Motivo_Ingreso(){
 		ContactMotivesManager cMMPage = new ContactMotivesManager(driver);
 		cMMPage.getMotivesWrapper();//This should be enough.
 		cMMPage.getMotiveByName("No me funciona internet");//Could Change, but this has to be a real current MotiveName.
 	}
 	
-	@Test(groups = "fase2")
+	@Test(groups = "TechnicalCare")
 	public void TS12587_ABM_de_Motivo_Agregar_Nuevo_Motivo() {
 		driver.findElement(By.name("new")).click();
 		ContactMotiveManager contactMMPage = new ContactMotiveManager(driver);
@@ -105,7 +103,7 @@ public class ABMdeMotivoAdmin extends TestBase {
 		//this motive gets deleted in another test.
 	}
 	
-	@Test(groups = "fase2")
+	@Test(groups = "TechnicalCare")
 	public void TS12590_ABM_de_Motivo_Modificar_Motivo() {
 		TS12587_ABM_de_Motivo_Agregar_Nuevo_Motivo();
 		ContactMotivesManager contactsMMPage = new ContactMotivesManager(driver);
@@ -156,7 +154,7 @@ public class ABMdeMotivoAdmin extends TestBase {
 	}*/
 	
 	//@Test(priority = 5, groups ="c", dependsOnGroups = "b") //change to this when TS12589-MassiveIncident works.
-	@Test(groups = "fase2")
+	@Test(groups = "TechnicalCare")
 	public void TS12589_ABM_de_Motivo_Quitar_Motivo() {
 		//expected main page for ABM of motives.
 		try {Thread.sleep(6000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}

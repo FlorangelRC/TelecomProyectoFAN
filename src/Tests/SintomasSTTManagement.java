@@ -75,7 +75,7 @@ public class SintomasSTTManagement extends TestBase {
 		homePage.closeAllTabs(driver);
 		homePage.switchAppsMenu();
 		homePage.selectAppFromMenuByName("Ventas");
-		driver.close();
+		driver.quit();
 	}
 	
 	@AfterMethod(groups ="TechnicalCare")

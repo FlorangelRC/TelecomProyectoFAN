@@ -14,10 +14,8 @@ import org.openqa.selenium.support.ui.Select;
 import org.testng.Assert;
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.AfterMethod;
-import org.testng.annotations.AfterTest;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.BeforeMethod;
-import org.testng.annotations.BeforeTest;
 import org.testng.annotations.Test;
 
 import Pages.Accounts;
@@ -31,7 +29,7 @@ public class diagnosis extends TestBase {
 	
 	private WebDriver driver;
 
-	@AfterClass(groups = "Fase1") 
+	@AfterClass(groups = "TechnicalCare") 
 	public void tearDown2() {
 		driver.switchTo().defaultContent();
 		driver.findElement(By.id("tsidButton")).click();
@@ -44,10 +42,10 @@ public class diagnosis extends TestBase {
 			}
 		}
 		try {Thread.sleep(2000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
-		driver.close();
+		driver.quit();
 	}
 	
-	@BeforeClass(groups = "Fase1") 
+	@BeforeClass(groups = "TechnicalCare") 
 	public void init() throws Exception
 	{
 		this.driver = setConexion.setupPablo();
@@ -69,7 +67,7 @@ public class diagnosis extends TestBase {
 	     try {Thread.sleep(15000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 	}
 
-	@AfterMethod(groups = "Fase1") 
+	@AfterMethod(groups = "TechnicalCare") 
 	public void tearDown() {
 
 		driver.switchTo().defaultContent();
@@ -88,7 +86,7 @@ public class diagnosis extends TestBase {
 
 	}
 
-	@BeforeMethod(groups = "Fase1") 
+	@BeforeMethod(groups = "TechnicalCare") 
 	public void setUp() throws Exception {
 		 Accounts accountPage = new Accounts(driver);
 	     //Selecciono Vista Tech
@@ -324,7 +322,7 @@ public class diagnosis extends TestBase {
 		goToLeftPanel2(driver, "Cuentas");
 	}*/
 
-	@Test(groups = "Fase1") 
+	@Test(groups = "TechnicalCare") 
 	public void TS6256_Boton_Ejecutar_Grisado_Chequeo() {
 		//actually checks if not visible, it ist greyed out.
 		Accounts accountPage = new Accounts(driver);
@@ -345,7 +343,7 @@ public class diagnosis extends TestBase {
 
 	}
 	
-	@Test(groups = "Fase1") 
+	@Test(groups = "TechnicalCare") 
 	public void TS6269_Habilitado_Al_Seleccionar_Motivo_Y_Sintoma() {
 		Accounts accountPage = new Accounts(driver);
 		try {Thread.sleep(8000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
@@ -370,7 +368,7 @@ public class diagnosis extends TestBase {
 
 	}
 
-	@Test(groups = "Fase1") 
+	@Test(groups = "TechnicalCare") 
 	public void TS6320_Visualizar_Motivo_de_Contacto_Y_Sintoma() {
 		Accounts accountPage = new Accounts(driver);
 		try {Thread.sleep(8000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
@@ -396,26 +394,26 @@ public class diagnosis extends TestBase {
 
 	}
 	//Incidentes masivos
-	/*@Test(groups = "Fase1") 
+	/*@Test(groups = "TechnicalCare") 
 	public void TS6395_NoiseLine() {
 		
 	}
-	 @Test(groups = "Fase1") 
+	 @Test(groups = "TechnicalCare") 
 	public void TS6396_Interrumption(){
 		
 	}*/
 	/* Rreportes-diagnostico
-	@Test(groups = "Fase1") 
+	@Test(groups = "TechnicalCare") 
 	public void TS6398_MotiveSintom(){
 		
 	}
 	
-	@Test(groups = "Fase1") 
+	@Test(groups = "TechnicalCare") 
 	public void TS6399_MotiveSintomVisulization() {
 		
 	}*/
 	
-	/*@Test(groups = "Fase1") 
+	@Test(groups = "TechnicalCare") 
 	public void TS6400_MobileServices() {
 		Accounts accountPage = new Accounts(driver);
 		try {Thread.sleep(8000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
@@ -428,10 +426,10 @@ public class diagnosis extends TestBase {
 		try {Thread.sleep(3000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 		WebElement BenBoton = driver.findElement(By.id("SelectServiceStep_nextBtn"));
 		((JavascriptExecutor)driver).executeScript("window.scrollTo(0,"+BenBoton.getLocation().y+")");
-		BenBoton.click();
+		BenBoton.click();//debe ser terminado cuando tech sirva
 		
-	}*/
-	/*@Test(groups = "Fase1") 
+	}
+	@Test(groups = "TechnicalCare") 
 	public void TS6403_DownDownTooltip() {
 		Accounts accountPage = new Accounts(driver);
 		try {Thread.sleep(8000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
@@ -444,10 +442,10 @@ public class diagnosis extends TestBase {
 		try {Thread.sleep(3000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 		WebElement BenBoton = driver.findElement(By.id("SelectServiceStep_nextBtn"));
 		((JavascriptExecutor)driver).executeScript("window.scrollTo(0,"+BenBoton.getLocation().y+")");
-		BenBoton.click();
+		BenBoton.click(); //debe ser terminado cuando tech sirva
 		
 	}
-	@Test(groups = "Fase1") 
+	@Test(groups = "TechnicalCare") 
 	public void TS6405_LogicError() {
 		Accounts accountPage = new Accounts(driver);
 		try {Thread.sleep(8000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
@@ -460,11 +458,11 @@ public class diagnosis extends TestBase {
 		try {Thread.sleep(3000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 		WebElement BenBoton = driver.findElement(By.id("SelectServiceStep_nextBtn"));
 		((JavascriptExecutor)driver).executeScript("window.scrollTo(0,"+BenBoton.getLocation().y+")");
-		BenBoton.click();
+		BenBoton.click(); //debe ser terminado cuando tech sirva
 		
-	}*/
+	}
 
-	@Test(groups = "Fase1") 
+	@Test(groups = "TechnicalCare") 
 	public void TS6410_Ingreso_A_Tech_Care_Desde_La_Vista_360() {
 		driver.switchTo().defaultContent();
 		Accounts accPage = new Accounts(driver);
@@ -476,7 +474,7 @@ public class diagnosis extends TestBase {
 		
 	}
 	
-	/*@Test(groups = "Fase1") 
+	@Test(groups = "TechnicalCare") 
 	public void TS6484_NoService() {
 		Accounts accountPage = new Accounts(driver);
 		try {Thread.sleep(8000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
@@ -485,8 +483,8 @@ public class diagnosis extends TestBase {
 		driver.switchTo().frame(accountPage.getFrameForElement(driver, By.id("SelectServiceStep_nextBtn")));
 		WebElement BenBoton = driver.findElement(By.id("SelectServiceStep_nextBtn"));
 		((JavascriptExecutor)driver).executeScript("window.scrollTo(0,"+BenBoton.getLocation().y+")");
-		BenBoton.click();
+		BenBoton.click(); //debe ser terminado cuando tech sirva
 		
-	}*/
+	}
 	
 }

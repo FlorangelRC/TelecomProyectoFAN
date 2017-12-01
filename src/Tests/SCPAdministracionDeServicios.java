@@ -24,7 +24,7 @@ public class SCPAdministracionDeServicios extends TestBase {
 	private WebDriver driver;
 	private static String downloadPath = "C:\\Users\\Florangel\\Downloads";
 	
-	@BeforeClass
+	@BeforeClass(groups = "SCP")
 	public void init() throws Exception
 	{
 		this.driver = setConexion.setupPablo();
@@ -35,7 +35,7 @@ public class SCPAdministracionDeServicios extends TestBase {
 		
 	}
 	
-	@BeforeMethod
+	@BeforeMethod(groups = "SCP")
 	public void setup() {
 		SCP pScp = new SCP(driver);
 		pScp.goToMenu("scp");
@@ -49,12 +49,12 @@ public class SCPAdministracionDeServicios extends TestBase {
 		try {Thread.sleep(10000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 	}
 	
-	@AfterClass
+	@AfterClass(groups = "SCP")
 	public void tearDown() {
-		driver.close();
+		driver.quit();
 	}
 	
-	@Test(groups = "Fase2")
+	@Test(groups = "SCP")
 	public void TS112539_Administracion_de_Contexto_Sectorial_Agregar_Guardando() {
 		BasePage Bp = new BasePage();
 		SCP pcp = new SCP(driver);
@@ -122,7 +122,7 @@ public class SCPAdministracionDeServicios extends TestBase {
 		
 	}
 	
-	@Test(groups = "Fase2")
+	@Test(groups = "SCP")
 	public void TS112541_Administracion_de_Contexto_Sectorial_Borrar_Guardando() {
 		SCP pcp = new SCP(driver);
 		BasePage Bp = new BasePage();
@@ -185,7 +185,7 @@ public class SCPAdministracionDeServicios extends TestBase {
 		
 	}
 	
-	@Test(groups = "Fase2")
+	@Test(groups = "SCP")
 	public void TS112547_Administracion_de_Contexto_Sectorial_Ingreso_Desde_el_Contacto() {
 		SCP pcp = new SCP(driver);
 		pcp.moveToElementOnAccAndClick("quintoTitulo",1);
@@ -206,7 +206,7 @@ public class SCPAdministracionDeServicios extends TestBase {
 		assertTrue(Itabla.get(4).getText().toLowerCase().equals("descripción"));
 	}
 	
-	@Test(groups = "Fase2")
+	@Test(groups = "SCP")
 	public void TS112548_Administracion_de_Servicios_Borrar_Categoria_del_Servicio() {
 		SCP pcp = new SCP(driver);
 		pcp.moveToElementOnAccAndClick("quintoTitulo",2);
@@ -225,7 +225,7 @@ public class SCPAdministracionDeServicios extends TestBase {
 		assertTrue(enc);
 	}
 	
-	@Test(groups = "Fase2")
+	@Test(groups = "SCP")
 	public void TS112551_Administracion_de_Servicios_Borrar_Servicio() {
 		SCP pcp = new SCP(driver);
 		pcp.moveToElementOnAccAndClick("quintoTitulo",2);
@@ -249,7 +249,7 @@ public class SCPAdministracionDeServicios extends TestBase {
 		assertTrue(enc);
 	}
 	
-	@Test(groups = "Fase2")
+	@Test(groups = "SCP")
 	public void TS112554_Administracion_de_Servicios_Creacion_Crear_Categoria_de_Servicio() {
 		SCP pcp = new SCP(driver);
 		pcp.moveToElementOnAccAndClick("quintoTitulo",2);
@@ -276,7 +276,7 @@ public class SCPAdministracionDeServicios extends TestBase {
 		
 	}
 	
-	@Test(groups = "Fase2")
+	@Test(groups = "SCP")
 	public void TS112556_Administracion_de_Servicios_Creacion_Crear_Servicio() {
 		SCP pcp = new SCP(driver);
 		pcp.moveToElementOnAccAndClick("quintoTitulo",2);
@@ -304,7 +304,7 @@ public class SCPAdministracionDeServicios extends TestBase {
 
 	}
 	
-	@Test(groups = "Fase2")
+	@Test(groups = "SCP")
 	public void TS112557_Administracion_de_Servicios_Ingreso_Desde_El_Contacto() {
 		SCP pcp = new SCP(driver);
 		pcp.moveToElementOnAccAndClick("quintoTitulo",2);
@@ -337,7 +337,7 @@ public class SCPAdministracionDeServicios extends TestBase {
 		assertTrue(bbs);
 	}
 	
-	@Test(groups = "Fase2")
+	@Test(groups = "SCP")
 	public void TS112576_Configurar_Reporte_SCP_Exportar_a_Word() {
 		SCP pcp = new SCP(driver);
 		pcp.moveToElementOnAccAndClick("cuartoTitulo",3);
@@ -355,7 +355,7 @@ public class SCPAdministracionDeServicios extends TestBase {
 		assertTrue(pcp.isFileDownloaded(downloadPath, usuario), "Failed to download Expected document");
 	}
 	
-	@Test(groups = "Fase2")
+	@Test(groups = "SCP")
 	public void TS112578_Configurar_Reporte_SCP_Ingreso_Desde_El_Contacto() {
 		SCP pcp = new SCP(driver);
 		boolean botonG= false;
@@ -379,30 +379,7 @@ public class SCPAdministracionDeServicios extends TestBase {
 		
 	}
 	
-	/*@Test(groups = "Fase2")
-	public void TS112559_Asignación_De_Value_Drivers_A_Oportunidades_Chatter_Contextualizado_Escribir_Comentario() {
-		SCP pcp = new SCP(driver);
-		pcp.moveToElementOnAccAndClick("tercerTitulo",1);
-		WebElement subir = driver.findElement(By.className("publisherWrapper"));
-		  ((JavascriptExecutor)driver).executeScript("window.scrollTo(0,"+subir.getLocation().y+")");
-		subir.click();
-		try {Thread.sleep(2000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
-		driver.switchTo().defaultContent();
-		driver.switchTo().frame(0);
-		//driver.switchTo().frame(Bp.getFrameForElement(driver, By.cssSelector(".chatterPublisherRTE.cke_editable.cke_editable_themed.cke_contents_ltr.cke_show_borders")));
-		//driver.findElement(By.cssSelector(".chatterPublisherRTE.cke_editable.cke_editable_themed.cke_contents_ltr.cke_show_borders")).sendKeys("Comentario automatizado");
-		driver.findElement(By.tagName("body")).sendKeys("Comentario automatizado");
-		try {Thread.sleep(1000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
-		driver.switchTo().defaultContent();
-		subir = driver.findElement(By.className("publishersharebutton"));
-		  ((JavascriptExecutor)driver).executeScript("window.scrollTo(0,"+subir.getLocation().y+")");
-		subir.click();
-		try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
-		assertTrue(driver.findElement(By.className("cxfeeditemtextwrapper")).getText().toLowerCase().equals("comentario automatizado"));
-		
-	}*/
-	
-	@Test(groups = "Fase2")
+	@Test(groups = "SCP")
 	public void TS112787_Parque_De_Servicios_Ingreso_Desde_El_Contacto() {
 		SCP pcp = new SCP(driver);
 		List<String> tdo = new ArrayList<String>();
