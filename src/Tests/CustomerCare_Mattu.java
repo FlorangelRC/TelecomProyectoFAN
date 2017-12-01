@@ -481,6 +481,32 @@ public class CustomerCare_Mattu extends TestBase{
 			    driver.switchTo().frame(cambioFrameByID.getFrameForElement(driver, By.id("stepChooseMethod_nextBtn")));
 			    ((JavascriptExecutor)driver).executeScript("window.scrollTo(0,"+driver.findElement(By.id("stepChooseMethod_nextBtn")).getLocation().y+")");
 			    Assert.assertTrue(driver.findElement(By.id("stepChooseMethod_nextBtn")).isDisplayed());
-			}//Not reported
+			}
+			
+			//-------------------------------------------------------------------------------------------------
+		    
+			@Test(groups="CustomerCare")
+			public void TS_38553_Problems_with_Refills_UX_Tarjeta_de_Recarga_Pre_paga_Verificación_Visualizar_panel_de_Steps() {
+				CustomerCare CP = new CustomerCare (driver);
+				try {Thread.sleep(15000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();} 
+				CP.elegircuenta("Fernando Care");
+				try {Thread.sleep(15000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}  
+			    BasePage cambioFrameByID=new BasePage();
+			    driver.switchTo().defaultContent();
+			    driver.switchTo().frame(cambioFrameByID.getFrameForElement(driver, By.className("card-info")));
+			    WebElement wCardInfo = driver.findElement(By.className("card-info"));
+			    wCardInfo.click();
+			    try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+			    driver.switchTo().defaultContent();
+			    driver.switchTo().frame(cambioFrameByID.getFrameForElement(driver, By.cssSelector(".slds-small-size--3-of-12.slds-medium-size--3-of-12.slds-large-size--3-of-12.flyout-actions")));
+			    ((JavascriptExecutor)driver).executeScript("window.scrollTo(0,"+driver.findElement(By.cssSelector(".console-flyout.active.flyout")).getLocation().y+")");
+			    try {Thread.sleep(3000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();} 
+			    driver.findElement(By.cssSelector(".console-flyout.active.flyout")).findElements(By.tagName("i")).get(1).click();
+
+			    try {Thread.sleep(15000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+			    driver.switchTo().defaultContent();
+			    driver.switchTo().frame(cambioFrameByID.getFrameForElement(driver, By.cssSelector(".vlc-slds-wizard.ng-scope.ng-isolate-scope")));
+			    Assert.assertTrue(driver.findElement(By.cssSelector(".vlc-slds-wizard.ng-scope.ng-isolate-scope")).isDisplayed());
+			}
 	
 }
