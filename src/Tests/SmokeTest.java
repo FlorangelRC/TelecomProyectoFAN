@@ -16,12 +16,12 @@ public class SmokeTest extends TestBase  {
 
 	
 	private WebDriver driver;
-	@AfterTest(groups="Fase2")
+	@AfterTest(groups= {"Smoke"})
 	public void tearDown() {
 			driver.close();
 	}
 	
-	@AfterMethod(groups="Fase2")
+	@AfterMethod(groups={"Smoke"})
 	public void home(){
 		try {Thread.sleep(2000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 		String a = driver.findElement(By.id("tsidLabel")).getText();
@@ -33,14 +33,14 @@ public class SmokeTest extends TestBase  {
 
 	
 	
-	@Test(groups="Fase2")
+	@Test(groups={"Smoke"})
 	public void TS1_Login(){
 			this.driver = setConexion.setupEze();
 			try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 			login(driver);
 			System.out.println("Login = OK");}
 	
-	@Test(groups="Fase2")
+	@Test(groups={"Smoke", "Sales"})
 	public void TS2_Modulo_Ventas(){
 		try {Thread.sleep(10000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 		String a = driver.findElement(By.id("tsidLabel")).getText();
@@ -62,7 +62,7 @@ public class SmokeTest extends TestBase  {
 		System.out.println("Modulo Ventas = OK");}
 	}
 	
-	@Test(groups="Fase2")
+	@Test(groups={"Smoke", "ConsolaFAN"})
 	public void TS3_Consola_FAN(){
 		try {Thread.sleep(10000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 		String a = driver.findElement(By.id("tsidLabel")).getText();
@@ -76,7 +76,7 @@ public class SmokeTest extends TestBase  {
 		System.out.println("Modulo Consola FAN = OK");}
 	}
 	
-	@Test(groups="Fase2")
+	@Test(groups={"Smoke", "SCP"})
 	public void TS4_SCP(){
 		try {Thread.sleep(10000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 		String a = driver.findElement(By.id("tsidLabel")).getText();		
