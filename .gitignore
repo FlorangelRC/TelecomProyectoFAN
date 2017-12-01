@@ -8,3 +8,4 @@
 *.project
 *.md
 *.xml
+/classpath/
