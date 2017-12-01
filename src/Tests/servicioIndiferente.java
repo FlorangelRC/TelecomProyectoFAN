@@ -3,10 +3,11 @@ package Tests;
 import static org.testng.Assert.assertEquals;
 import static org.testng.Assert.assertTrue;
 
+import java.util.Calendar;
 import java.util.List;
-
 import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
+import org.openqa.selenium.Platform;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.Select;
@@ -16,103 +17,68 @@ import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
-
 import Pages.Accounts;
 import Pages.BasePage;
 import Pages.CustomerCare;
 import Pages.HomeBase;
 import Pages.setConexion;
+//Librerias server
+import org.openqa.selenium.chrome.ChromeOptions;
+import org.openqa.selenium.remote.DesiredCapabilities;
 
+import java.net.MalformedURLException;
+import java.net.URL;
+import org.openqa.selenium.remote.RemoteWebDriver;
 
-
-/**
- * Ejecutar desde el modulo de venta
- * @author Almer
- *
- */
 
 public class servicioIndiferente extends TestBase {
 	private WebDriver driver;
 
 	@BeforeClass(groups = "Fase2")
-	public void Init() throws Exception
+	public void Init() throws MalformedURLException
 	{
+		//DesiredCapabilities capability = DesiredCapabilities.chrome();
+		//capability.setBrowserName("chrome");
+		//capability.setPlatform(Platform.WINDOWS);
+		//driver = new RemoteWebDriver(new URL("http://10.249.36.59:5566/wd/hub"), capability);
 		this.driver = setConexion.setupEze();
-		try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		//driver.manage().window().maximize();
 		login(driver);
 		try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		Calendar Factual = Calendar.getInstance();
+		System.out.println("fecha act: "+(Integer.toString(Factual.get(Calendar.DATE))+"/"+Integer.toString(Factual.get(Calendar.MONTH))+"/"+Integer.toString(Factual.get(Calendar.YEAR))));
 	}
 	
 	@BeforeMethod(groups = "Fase2")
-	public void setUp() throws Exception {
-		try {Thread.sleep(4000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
-		HomeBase homePage = new HomeBase(driver);
-	       if(driver.findElement(By.id("tsidLabel")).getText().equals("Consola FAN")) {
-	        homePage.switchAppsMenu();
-	        try {Thread.sleep(2000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
-	        homePage.selectAppFromMenuByName("Ventas");
-	        try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}    
-	       }
-	       homePage.switchAppsMenu();
-	       try {Thread.sleep(2000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
-	       homePage.selectAppFromMenuByName("Consola FAN");
-	       
-	       CustomerCare cerrar = new CustomerCare(driver);
-			cerrar.cerrarultimapestaña();
-		}
+		public void setUp() throws Exception {
+			try {Thread.sleep(4000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+			goInitToConsolaFanF3(driver);
+		     CustomerCare cerrar = new CustomerCare(driver);
+		     cerrar.cerrarultimapestaña();
+			}
 	
 	@AfterMethod(groups = "Fase2")
 	public void afterMethod() {
 		try {Thread.sleep(3000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
-		List<WebElement> mainTabs = driver.findElements(By.className("x-tab-strip-close"));
-		  for (WebElement e : mainTabs) {
-		  try {((JavascriptExecutor) driver).executeScript("arguments[0].click();", e);} catch (org.openqa.selenium.StaleElementReferenceException b) {}
-		  }
+		CustomerCare cerrar = new CustomerCare(driver);
+	     cerrar.cerrarultimapestaña();
 	}
+
 	
 	@AfterClass(groups = "Fase2")
 	public void tearDown() {
-		driver.close();
+		driver.quit();
+		
 	}
 	
 	
 	@Test(groups = "Fase2")
 	public void TS11600_CRM_Fase_2_Technical_Care_CSR_Diagnostico_Servicio_Indiferente_Boton_ejecutar_no_disponible(){
 	try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
-	try{ for(WebElement e : driver.findElements(By.className("x-tab-strip-close"))) {
-		((JavascriptExecutor) driver).executeScript("arguments[0].click();", e);
-	} } catch (org.openqa.selenium.StaleElementReferenceException e) {}
-	try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
-	goToLeftPanel(driver, "Cuentas");
-	try {Thread.sleep(3000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
-	WebElement frame0 = driver.findElement(By.tagName("iframe"));
-	driver.switchTo().frame(frame0);
-	Select field = new Select(driver.findElement(By.name("fcf")));
-	field.selectByVisibleText("Todas Las cuentas");
-	try {Thread.sleep(2000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
-	List<WebElement> accounts = driver.findElements(By.xpath("//*[text() = 'Adrian Tech']"));
-	accounts.get(0).click();
+	seleccionCuentaPorNombre(driver, "Adrian Tech");
+	try {Thread.sleep(8000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+	searchAndClick(driver, "Asistencia Técnica");
 	
-	try {Thread.sleep(3000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
-	driver.switchTo().defaultContent();
-	try {Thread.sleep(3000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
-	if(driver.findElements(By.cssSelector(".x-layout-collapsed.x-layout-collapsed-east.x-layout-cmini-east")).size() != 0) {
-		driver.findElement(By.cssSelector(".x-layout-collapsed.x-layout-collapsed-east.x-layout-cmini-east")).click();
-		}
-	try {Thread.sleep(3000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
-	
-	//Cambia el Frame
-	BasePage sImput=new BasePage();
-	List<WebElement> frame1 = driver.findElements(By.tagName("iframe"));
-	int indexFrame = sImput.getIndexFrame(driver, By.xpath("/html/body/div/div[1]/ng-include/div/div[1]/ng-include/div/div[2]/input"));
-	driver.switchTo().frame(frame1.get(indexFrame));
-	
-	//Escribe en el search Imput y hace Click
-	WebElement  buscar = driver.findElement(By.xpath("/html/body/div/div[1]/ng-include/div/div[1]/ng-include/div/div[2]/input"));
-	buscar.sendKeys("Asisten");
-	try {Thread.sleep(3000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
-	WebElement aTecnica= driver.findElement(By.xpath("//*[text() = 'Asistencia Técnica']"));
-	aTecnica.click();
 	
 	
 	driver.switchTo().defaultContent();
@@ -149,5 +115,11 @@ public class servicioIndiferente extends TestBase {
 	driver.switchTo().defaultContent();	
 	}
 	
+	
+	@Test(groups = "Fase2")
+	public void prueba() {
+		System.out.println("Esta es una prueba");
+		assertTrue(true);
+	}
 	
 }

@@ -43,70 +43,56 @@ public class testEventosMasivos extends TestBase{
 	RegistroEventoMasivo pEM=new RegistroEventoMasivo(driver);
 	
 	
-	@BeforeClass(groups = "Fase2")
-	 public void init() throws Exception
-	 {
-	  this.driver = setConexion.setupEze();
-	  try {Thread.sleep(4000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
-	  login(driver);
-	  try {Thread.sleep(3000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
-	  HomeBase homePage = new HomeBase(driver);
-	        if(driver.findElement(By.id("tsidLabel")).getText().equals("Consola FAN")) {
-	         homePage.switchAppsMenu();
-	         try {Thread.sleep(2000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
-	         homePage.selectAppFromMenuByName("Ventas");
-	         try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}    
-	        }
+	@BeforeClass(groups= "TechnicalCare")
+	public void init() throws Exception
+	{
+		this.driver = setConexion.setupEze();
+		try {Thread.sleep(4000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		login(driver);
+		try {Thread.sleep(3000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		HomeBase homePage = new HomeBase(driver);
+	       if(driver.findElement(By.id("tsidLabel")).getText().equals("Consola FAN")) {
 	        homePage.switchAppsMenu();
 	        try {Thread.sleep(2000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
-	        homePage.selectAppFromMenuByName("Consola FAN");
-	   
-	        CustomerCare cerrar = new CustomerCare(driver);
-	   cerrar.cerrarultimapestaña();
-	 }
+	        homePage.selectAppFromMenuByName("Ventas");
+	        try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}    
+	       }
+	       homePage.switchAppsMenu();
+	       try {Thread.sleep(2000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+	       homePage.selectAppFromMenuByName("Consola FAN");
+	  
+	       CustomerCare cerrar = new CustomerCare(driver);
+			cerrar.cerrarultimapestaña();
+	}
 	
-	@BeforeMethod(groups = "Fase2")
+	@BeforeMethod(groups= "TechnicalCare")
 	public void setUp() throws Exception {
-				//Selecciona Cuentas
+		
+		//Selecciona Cuentas
 		try {Thread.sleep(4000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 		goToLeftPanel2(driver, "Cuentas");
 		
-		//Selecciona la cuenta Adrian Tech de todas las Cuentas
-		try {Thread.sleep(3000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
-		WebElement frame0 = driver.findElement(By.tagName("iframe"));
-		driver.switchTo().frame(frame0);
-		Select field = new Select(driver.findElement(By.name("fcf")));
-		field.selectByVisibleText("Todas Las cuentas");
-		try {Thread.sleep(2000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
-		List<WebElement> accounts = driver.findElements(By.xpath("//*[text() = 'Adrian Tech']"));
-		accounts.get(0).click();
+		//Selecciona Cuentas
+		seleccionCuentaPorNombre(driver, "Adrian Techh");
 		try {Thread.sleep(3000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 		driver.switchTo().defaultContent();
 		
 		//selecciona el campo donde esta la busquedad del imput y Escribe
+		searchAndClick(driver, "Eventos Masivos");
 		try {Thread.sleep(3000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
-		BasePage sImput=new BasePage();
-		List<WebElement> frame1 = driver.findElements(By.tagName("iframe"));
-		int indexFrame = sImput.getIndexFrame(driver, By.xpath("/html/body/div/div[1]/ng-include/div/div[1]/ng-include/div/div[2]/input"));
-		driver.switchTo().frame(frame1.get(indexFrame));
-		WebElement elemento = driver.findElement(By.xpath("/html/body/div/div[1]/ng-include/div/div[1]/ng-include/div/div[2]/input"));
-		elemento.sendKeys("Eve");
-		//Click en el resultado Eventos Masivos
-		try {Thread.sleep(3000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
-		WebElement eMasivos= driver.findElement(By.xpath("//*[text() = 'Eventos Masivos']"));
-		eMasivos.click();
 		
 		//Click n caso: Si falla Cambia xpath
 		try {Thread.sleep(7000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 		BasePage cambioFrameByID=new BasePage();
 		driver.switchTo().frame(cambioFrameByID.getFrameForElement(driver, By.className("slds-text-heading--label")));
+		try {Thread.sleep(4000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 		WebElement cCaso = driver.findElement(By.xpath("//*[@id=\"j_id0:j_id5\"]/div/div/ng-include/div/div/div[2]/table/tbody[1]/tr/td[6]/div/a"));
 		cCaso.click();
 		driver.switchTo().defaultContent();		
 			
 	}	
 	
-	@AfterMethod(groups = "Fase2")
+	@AfterMethod(groups= "TechnicalCare")
 	public void afterMethod() {
 		try {Thread.sleep(3000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 		List<WebElement> mainTabs = driver.findElements(By.className("x-tab-strip-close"));
@@ -115,12 +101,12 @@ public class testEventosMasivos extends TestBase{
 		  }
 	}
 	
-	@AfterClass(groups = "Fase2")
+	@AfterClass(groups= "TechnicalCare")
 	public void tearDown() {
 		driver.close();
 	}
 	//Listo
-	@Test(groups = "Fase2")
+	@Test(groups= "TechnicalCare")
 	public void TS16230_CRM_Fase_2_Technical_Care_Sistema_Incidentes_Masivos_Creación_de_Eventos_Masivos_Ingreso_a_un_evento_masivo() {
 		
 		try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
@@ -148,7 +134,7 @@ public class testEventosMasivos extends TestBase{
 			driver.switchTo().defaultContent();	
 	}
 	//Listo
-	@Test(groups = "Fase2")
+	@Test(groups= "TechnicalCare")
 	public void TS16231_CRM_Fase_2_Technical_Care_Representante_Incidentes_Eventos_Fecha_de_Inicio_Formato() {
 		
 		try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
@@ -165,7 +151,7 @@ public class testEventosMasivos extends TestBase{
 
 	}
 	//Listo
-	@Test(groups = "Fase2")
+	@Test(groups= "TechnicalCare")
 	public void TS16232_CRM_Fase_2_Technical_Care_Representante_Incidentes_Eventos_Fecha_de_Creacion_Formato() {
 		
 		try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
