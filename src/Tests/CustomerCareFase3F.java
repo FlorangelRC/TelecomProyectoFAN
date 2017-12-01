@@ -24,9 +24,9 @@ import Pages.setConexion;
 public class CustomerCareFase3F  extends TestBase {
 private WebDriver driver;
 	
-	//@AfterClass(groups= "CustomerCare")
+	@AfterClass(groups= "CustomerCare")
 	public void tearDown2() {
-		driver.close();	
+		driver.quit();	
 	}
 	
 	@BeforeClass(groups= "CustomerCare")
@@ -466,7 +466,7 @@ private WebDriver driver;
 		 }
 		 assertTrue(enc);
 		 Accounts accountPage = new Accounts(driver);
-		 //accountPage.closeAccountServiceTabByName("Problemas con Recargas");	
+		 accountPage.closeAccountServiceTabByName("Problemas con Recargas");	
 	}
 	
 	@Test(groups= "CustomerCare")

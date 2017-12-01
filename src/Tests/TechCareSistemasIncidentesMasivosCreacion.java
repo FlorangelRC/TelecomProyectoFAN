@@ -22,7 +22,7 @@ import Pages.setConexion;
 public class TechCareSistemasIncidentesMasivosCreacion extends TestBase {
 	private WebDriver driver;
 	
-	@BeforeClass
+	@BeforeClass(groups = "TechnicalCare") 
 	public void init() throws Exception
 	{
 		this.driver = setConexion.setupPablo();
@@ -31,7 +31,7 @@ public class TechCareSistemasIncidentesMasivosCreacion extends TestBase {
 		try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 	}
 	
-	@BeforeMethod
+	@BeforeMethod(groups = "TechnicalCare") 
 	  public void setUp() throws Exception {
 	    
 	    //Entrar en Velocity Telecomunication servics
@@ -83,7 +83,7 @@ public class TechCareSistemasIncidentesMasivosCreacion extends TestBase {
 	    
 	    }
 	
-	@AfterMethod
+	@AfterMethod(groups = "TechnicalCare") 
 	public void closeTechCareTab() {
 		driver.switchTo().defaultContent();
 		((JavascriptExecutor)driver).executeScript("window.scrollTo(0,"+ driver.findElement(By.id("tsidButton")).getLocation().y+")");
@@ -98,12 +98,12 @@ public class TechCareSistemasIncidentesMasivosCreacion extends TestBase {
 		}
 	}
 	
-	@AfterClass
+	@AfterClass(groups = "TechnicalCare") 
 		public void tearDown() {
-			driver.close();
+			driver.quit();
 		}
 	
-	//@Test(groups = "Fase2") 
+	@Test(groups = "TechnicalCare") 
 	public void TS16246_Canal_Formato() {
 		Accounts accPage = new Accounts(driver);
 		boolean estan = true;
@@ -128,7 +128,7 @@ public class TechCareSistemasIncidentesMasivosCreacion extends TestBase {
 	}
 	
 	
-	//@Test(groups = "Fase2") 
+	@Test(groups = "TechnicalCare") 
 	public void TS16318_Fecha_De_Inicio_Formato() {
 		RegistroEventoMasivo REM = new RegistroEventoMasivo(driver);
 		Accounts accPage = new Accounts(driver);
@@ -143,7 +143,7 @@ public class TechCareSistemasIncidentesMasivosCreacion extends TestBase {
 		assertTrue(REM.validarFecha(driver.findElement(By.id("StartDate")).getAttribute("value"), "dd/mm/yyyy HH:mm"));
 	}
 	
-	@Test(groups = "Fase2") 
+	@Test(groups = "TechnicalCare") 
 	public void TS16321_Fecha_De_Fin_Formato() {
 		RegistroEventoMasivo REM = new RegistroEventoMasivo(driver);
 		Accounts accPage = new Accounts(driver);
@@ -157,7 +157,7 @@ public class TechCareSistemasIncidentesMasivosCreacion extends TestBase {
 		assertTrue(REM.validarFecha(driver.findElement(By.id("EndDate")).getAttribute("value"), "dd/mm/yyyy HH:mm"));
 	}
 	
-	@Test(groups = "Fase2") 
+	@Test(groups = "TechnicalCare") 
 	public void TS16336_Fecha_Estimada_De_Cierre_No_Obligatorio() {
 		 RegistroEventoMasivo REM = new RegistroEventoMasivo(driver);
 		Accounts accPage = new Accounts(driver);
