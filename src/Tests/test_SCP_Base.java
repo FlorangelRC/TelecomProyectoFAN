@@ -35,7 +35,7 @@ public class test_SCP_Base extends TestBase {
 	private WebDriver driver;
 	private String Cuenta;
 
-	@BeforeClass(groups = "Fase2")
+	@BeforeClass(groups= "SCP")
 	public void Init() throws Exception
 	{
 		this.driver = setConexion.setupEze();
@@ -43,19 +43,19 @@ public class test_SCP_Base extends TestBase {
 		try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 	}
 	
-	@BeforeMethod(groups = "Fase2")
+	@BeforeMethod(groups= "SCP")
 	public void setUp() throws Exception {
 		try {Thread.sleep(2000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 		SCP page= new SCP(driver);
 		page.goToMenu("SCP");
 		page.clickOnTabByName("cuentas");
 		page.listTypeAcc("Todas Las cuentas");
-		page.clickOnFirstAccRe();
+		page.clickEnCuentaPorNombre("Florencia Di Ci");
 		Cuenta=driver.findElement(By.className("topName")).getText();
 		page.moveToElementOnAccAndClick("tercerTitulo", 1);
 		}
 	
-	@AfterMethod(groups = "Fase2")
+	@AfterMethod(groups= "SCP")
 	public void afterMethod() {
 		driver.switchTo().defaultContent();
 		SCP page= new SCP(driver);
@@ -63,7 +63,7 @@ public class test_SCP_Base extends TestBase {
 		try {Thread.sleep(1000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 	}
 	
-	@AfterClass(groups = "Fase2")
+	@AfterClass(groups= "SCP")
 	public void tearDown() {
 		driver.close();
 	}
@@ -73,7 +73,7 @@ public class test_SCP_Base extends TestBase {
 	 * Escribe un comentario y verifica que aparezca (Victor Pidio que lo Obviaramos)
 	 * By: Almer
 	 */
-	@Test(groups= "Fase2")
+	@Test(groups= "SCP")
 	public void TS112559_CRM_SCP_Asignación_de_Value_Drivers_a_Oportunidades_Chatter_contextualizado_Escribir_comentario() {
 		
 		try {Thread.sleep(3000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
@@ -100,7 +100,7 @@ public class test_SCP_Base extends TestBase {
 	 * Verifica que se muestren los comentarios de otras cuentas en la vista
 	 * By: Almer
 	 */
-	@Test(groups="Fase2")
+	@Test(groups= "SCP")
 	public void TS112560_CRM_SCP_Asignación_de_Value_Drivers_a_Oportunidades_Chatter_contextualizado_Leer_comentario_escrito_con_otro_usuario() {
 		
 		try {Thread.sleep(3000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
@@ -114,7 +114,7 @@ public class test_SCP_Base extends TestBase {
 			//System.out.println("Nombre: "+a.getText()+" ");
 			//System.out.print("Comentario: "+driver.findElement(By.cssSelector(".feeditemtext.cxfeeditemtext")).findElement(By.tagName("p")).getText());
 			if(!(a.getText().contains(Cuenta))) {
-				assertTrue(driver.findElement(By.cssSelector(".feeditemtext.cxfeeditemtext")).findElement(By.tagName("p")).isDisplayed());
+				assertTrue(driver.findElement(By.cssSelector(".feeditemtext.cxfeeditemtext")).findElement(By.tagName("span")).isDisplayed());
 				return;}
 				}
 		assertTrue(check);
@@ -125,7 +125,7 @@ public class test_SCP_Base extends TestBase {
 	 * Verifica que las tablas Oportunidades y Value Drivers tengan los Componentes deseados
 	 * By: Almer
 	 */
-	@Test(groups="Fase2")
+	@Test(groups= "SCP")
 	public void TS112562_CRM_SCP_Asignación_de_Value_Drivers_a_Oportunidades_Ingreso_Desde_el_contacto() {
 		
 		try {Thread.sleep(3000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
@@ -166,7 +166,7 @@ public class test_SCP_Base extends TestBase {
 	 * Se Verifica que al hacer en click en la primera oportunidad, pase a la siguiente pagina y se muestre toda la informacion de la oportunidad
 	 * By: Almer
 	 */
-	@Test(groups="Fase2")
+	@Test(groups= "SCP")
 	public void TS112565_CRM_SCP_Asignación_de_Value_Drivers_a_Oportunidades_Oportunidades() {
 		SCP page=new SCP(driver);
 	     assertTrue(page.goToOportunity());
@@ -176,20 +176,20 @@ public class test_SCP_Base extends TestBase {
 	 * Verifica los campos que conforman la estructura de oportunidades. El caso especifica el orden pero Victor menciono que no es necesario.
 	 * By: Almer.
 	 */
-	@Test(groups="Fase2")
+	@Test(groups= "SCP")
 	public void TS112638_CRM_SCP_Estructura_de_las_oportunidades_Bloques() {
 		boolean check=true;
 		SCP page=new SCP(driver);
 	    if(page.goToOportunity()) {
 	    	try {Thread.sleep(3000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
-	    	String[] primerBloque= {"informacion adicional de ventas","valorizado de la oportunidad","estado de proyectos en delta"};
-	    	String[] segundoBloque= {"detalle de oportunidad","productos","actividades abiertas","competidores","notas y archivos adjuntos","contactos","historial de campos de oportunidades"};
+	    	String[] primerBloque= {"información adicional de ventas","valorizado de la oportunidad","estados proyectos en delta"};
+	    	String[] segundoBloque= {"detalle de oportunidad","productos (telecom)","actividades abiertas","competidores","notas y archivos adjuntos","contactos"};
 	    	
 	    	//Se verifica que el primer bloque
 	    	List <WebElement> listA= driver.findElements(By.cssSelector(".brandTertiaryBrd.pbSubheader.tertiaryPalette"));
 	    	List<String> titleOne = new ArrayList<String>();
 	    	for(WebElement comparacion:listA) {
-	    		//System.out.println(comparacion.getText().toLowerCase());
+	    		System.out.println(comparacion.getText().toLowerCase());
 	    		titleOne.add(comparacion.getText().toLowerCase());}
 	    		
 	    	for(String a:primerBloque) {
@@ -203,6 +203,7 @@ public class test_SCP_Base extends TestBase {
 	    	List <WebElement> estructuraOp2=driver.findElements(By.className("pbTitle"));
 	    	List<String> titleTwo = new ArrayList<String>();
 	 	    for(WebElement agregar:estructuraOp2) {
+	 	    	System.out.println(agregar.getText().toLowerCase());
 	 	    	if(i==1){}
 	 	    	else
 	 	    		titleTwo.add(agregar.getText().toLowerCase()); i++;}
@@ -218,9 +219,9 @@ public class test_SCP_Base extends TestBase {
 	
 	/**
 	 * Crea un Competidor y luego verifica que se creo segun la cantidad de competidores.
-	 * By: Almer
+	 * @author Almer
 	 */
-	@Test(groups="Fase2")
+	@Test(groups= "SCP")
 	public void TS112641_CRM_SCP_Estructura_de_las_oportunidades_Bloques_Competidores_Creacion() {
 		SCP page=new SCP(driver);
 		String countBefore="", countAfter=""; //Comparadores
@@ -256,7 +257,7 @@ public class test_SCP_Base extends TestBase {
 	 * Edita un Competidor y Verifica que se mantenga la misma cantidad de competidores.
 	 * By: Almer
 	 */
-	@Test(groups="Fase2")
+	@Test(groups= "SCP")
 	public void TS112642_CRM_SCP_Estructura_de_las_oportunidades_Bloques_Competidores_Edicion() {
 		SCP page=new SCP(driver);
 		String countBefore="", countAfter=""; //Comparadores
@@ -291,7 +292,7 @@ public class test_SCP_Base extends TestBase {
 	 * Elimina un competidor y compara si fue eliminado segun la cantidad de competidores
 	 * By: Almer
 	 */
-	@Test(groups="Fase2")
+	@Test(groups= "SCP")
 	public void TS112643_CRM_SCP_Estructura_de_las_oportunidades_Bloques_Competidores_Eliminacion() {
 		SCP page=new SCP(driver);
 		String countBefore="", countAfter=""; //Comparadores
@@ -324,7 +325,7 @@ public class test_SCP_Base extends TestBase {
 	 * Crea una nota y verifica que ha sido creada comparando las cantidades.
 	 * By: Almer
 	 */
-	@Test(groups="Fase2")
+	@Test(groups= "SCP")
 	public void TS112649_CRM_SCP_Estructura_de_las_oportunidades_Bloques_Notas_y_Archivos_Adjuntos_Adjuntar_Nota() {
 		SCP page=new SCP(driver);
 		String countBefore="", countAfter=""; //Comparadores
@@ -359,7 +360,7 @@ public class test_SCP_Base extends TestBase {
 	 * Verifica que se puede visualizar las notas.
 	 * By: Almer
 	 */
-	@Test(groups="Fase2")
+	@Test(groups= "SCP")
 	public void TS112650_CRM_SCP_Estructura_de_las_oportunidades_Bloques_Notas_y_Archivos_Adjuntos_Visualizar_Nota() {
 		SCP page=new SCP(driver);
 	    if(page.goToOportunity()) {
@@ -367,7 +368,7 @@ public class test_SCP_Base extends TestBase {
 	    	for(WebElement a:compBefore) {
 	    		if(a.getText().toLowerCase().startsWith("notas")) { 
 	    			a.click();}} //hace click en notas para bajar
-	    	driver.findElement(By.xpath("//*[@id=\"0063F000001tZ4X_RelatedNoteList_body\"]/table/tbody/tr[2]/td[2]/a")).click();	
+	    	driver.findElement(By.xpath("//*[@id=\"0063F000001tZ8F_RelatedNoteList_body\"]/table/tbody/tr[2]/td[2]/a")).click();	
 	    	try {Thread.sleep(3000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 	    	List <WebElement> cuerpoNota= driver.findElements(By.className("data2Col"));
 	    	assertTrue(cuerpoNota.get(4).isDisplayed());
@@ -379,7 +380,7 @@ public class test_SCP_Base extends TestBase {
 	 * Cambia el Valor del Dolar Budget y verifica que se ha cambiado.
 	 * By: Almer
 	 */
-	@Test(groups="Fase2")
+	@Test(groups= "SCP")
 	public void TS112665_CRM_SCP_Estructura_de_las_oportunidades_Bloques_Valorizado_de_la_oportunidad_Cotizacion_del_dolar_segun_Budget() {
 		SCP page=new SCP(driver);
 	    if(page.goToOportunity()) {
@@ -389,15 +390,15 @@ public class test_SCP_Base extends TestBase {
 	    	try {Thread.sleep(500);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 	    	Actions dobleClick= new Actions(driver);
 	    	//List <WebElement> valorizacion= driver.findElements(By.cssSelector(".brandTertiaryBrd.pbSubheader.tertiaryPalette"));
-	    	WebElement dolarBudget = driver.findElement(By.id("00N3F000000JoWy_ileinner"));
+	    	WebElement dolarBudget = driver.findElement(By.id("00N3F000000HaYj_ileinner"));
 			((JavascriptExecutor)driver).executeScript("window.scrollTo(0,"+dolarBudget.getLocation().y+")");
 	    	dobleClick.doubleClick(dolarBudget).perform();
-	    	driver.findElement(By.id("00N3F000000JoWy")).clear();
-	    	driver.findElement(By.id("00N3F000000JoWy")).sendKeys("10");
+	    	driver.findElement(By.id("00N3F000000HaYj")).clear();
+	    	driver.findElement(By.id("00N3F000000HaYj")).sendKeys("10");
 	    	page.goTop();
 	    	driver.findElement(By.id("topButtonRow")).findElement(By.name("inlineEditSave")).click();
 	    	try {Thread.sleep(1000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
-	    	String valorDolar= driver.findElement(By.id("00N3F000000JoWy_ileinner")).getText();
+	    	String valorDolar= driver.findElement(By.id("00N3F000000HaYj_ileinner")).getText();
 	    	assertTrue(valorDolar.contains("10"));
 	    	
 	    }

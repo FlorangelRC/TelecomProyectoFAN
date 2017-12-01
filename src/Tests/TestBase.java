@@ -1,5 +1,6 @@
 package Tests;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.openqa.selenium.By;
@@ -8,8 +9,12 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.Select;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
+import Pages.Accounts;
+import Pages.BasePage;
+import Pages.HomeBase;
 import Pages.Login;
 
 
@@ -260,6 +265,99 @@ public class TestBase {
 						e.click();
 						}break;}
 			}
+		}
+		
+		/**Verifica el contenido de una lista, recibiendo un arreglo a "consultar" en un arreglo de string (en mininuscula) y
+		 * la "Lista" del WebElement
+		 * @param consultar
+		 * @param Lista
+		 * @return verdadero/falso
+		 * @author Almer
+		 */
+		public boolean verificarContenidoLista(String[] consultar,List <WebElement> Lista) {
+		 
+		     List<String> titleTabla = new ArrayList<String>();
+		     for(WebElement a : Lista) {
+		       titleTabla.add(a.getText().toLowerCase());
+		       //System.out.println(a.getText());//Para Verificar que este imprimiendo el texto que buscamos
+		     }     
+		     for(String a:consultar) {
+		      if(!(titleTabla.contains(a)))
+		       return false;
+		     }
+		     return true;
+		}
+		/**
+		 * Desarrollado para ir a consola Fan en F3. (primero va ventas y luego retorna a consola fan)
+		 * @param driver
+		 * @author Almer Fase 3
+		 */
+		public void goInitToConsolaFanF3(WebDriver driver) {
+			try {Thread.sleep(3000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+			HomeBase homePage = new HomeBase(driver);
+		       if(driver.findElement(By.id("tsidLabel")).getText().equals("Consola FAN")) {
+		        homePage.switchAppsMenu();
+		        try {Thread.sleep(2000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		        homePage.selectAppFromMenuByName("Ventas");
+		        try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}    
+		       }
+		       homePage.switchAppsMenu();
+		       try {Thread.sleep(2000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		       homePage.selectAppFromMenuByName("Consola FAN");
+		       try {Thread.sleep(3000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		       try {
+					driver.switchTo().alert().accept();
+					driver.switchTo().defaultContent();
+				}
+				catch(org.openqa.selenium.NoAlertPresentException e) {}
+		}
+		
+		/**
+		 * Selecciona una Cuenta segun el Nombre
+		 * @param driver
+		 * @author Almer Fase 3
+		 */
+		public void seleccionCuentaPorNombre(WebDriver driver, String nombreCuenta) {
+			try {Thread.sleep(3000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+			goToLeftPanel2(driver, "Cuentas");
+			WebElement frame0 = driver.findElement(By.tagName("iframe"));
+			driver.switchTo().frame(frame0);
+			Select field = new Select(driver.findElement(By.name("fcf")));
+			field.selectByVisibleText("Todas las cuentas");
+			try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+			List<WebElement> accounts = driver.findElements(By.xpath("//*[text() = '"+nombreCuenta+"']"));
+			accounts.get(0).click();
+			try {Thread.sleep(3000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+			driver.switchTo().defaultContent();
+		}
+		
+		/**
+		 * Selecciona una Cuenta segun el Nombre
+		 * @param driver
+		 * @author Almer Fase 3
+		 */
+		public void searchAndClick(WebDriver driver, String busqueda) {
+			
+			Accounts view=new Accounts(driver);
+			try {Thread.sleep(7000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+			view.deployEastPanel();
+			
+			BasePage searchImput=new BasePage();
+			List<WebElement> frame1 = driver.findElements(By.tagName("iframe"));
+			int indexFrame = searchImput.getIndexFrame(driver, By.xpath("/html/body/div/div[1]/ng-include/div/div[1]/ng-include/div/div[2]/input"));
+			driver.switchTo().frame(frame1.get(indexFrame));
+			WebElement elemento = driver.findElement(By.xpath("/html/body/div/div[1]/ng-include/div/div[1]/ng-include/div/div[2]/input"));
+			//Escribe en campo de busqueda
+			elemento.sendKeys(busqueda);
+			
+			//Click en el resultado buscado
+			try {Thread.sleep(3000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+			WebElement resultado= driver.findElement(By.xpath("//*[text() = '"+busqueda+"']"));
+			resultado.click();
+			driver.switchTo().defaultContent();
+			try {Thread.sleep(2000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+			
+			
 		}
 }
 
