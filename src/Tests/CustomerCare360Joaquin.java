@@ -30,8 +30,6 @@ public class CustomerCare360Joaquin extends TestBase {
 	private By tablaTarjetaHistorial = By.cssSelector(".slds-table.slds-table--bordered.slds-table--resizable-cols.slds-table--fixed-layout.via-slds-table-pinned-header");
 
 	
-	protected static WebDriver driver;
-	
 	@BeforeClass(groups= "CustomerCare")
 	public void init() {
 		driver = setConexion.setupEze();
