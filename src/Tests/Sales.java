@@ -21,6 +21,7 @@ import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.BeforeTest;
 import org.testng.annotations.Test;
 
+import Pages.BasePage;
 import Pages.Order;
 import Pages.OrdersTab;
 import Pages.SalesBase;
@@ -377,5 +378,28 @@ public class Sales extends TestBase {
 		SB.validarcrearcuenta();
 	}
 	
+	@Test 
+	public void TS39733_Verificar_que_se_ejecuten_los_procesos_de_validacion(){
+		try {Thread.sleep(10000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}				
+		SalesBase SB = new SalesBase(driver);
+		BasePage dni = new BasePage(driver);
+		SB.BtnCrearNuevoCliente();
+		dni.setSimpleDropdown(driver.findElement(By.id("DocumentTypeSearch")),"DNI");
+		WebElement num = driver.findElement(By.id("DocumentInputSearch"));
+		num.sendKeys("7323552"); 
+		try {Thread.sleep(10000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}				
+	  List<WebElement> gen = driver.findElements(By.cssSelector(".slds-radio.ng-scope"));
+	    	for(WebElement g : gen) {
+	    		if(g.getText().equals("Masculino")) {
+	    			g.click();
+	    		}
+	    	}
+		}  
+
+	@Test  // falta precio 
+	public void TS39658_Verificar_que_se_bonifique_el_costo_de_SIM_en_PlanPrepago() {
+		SalesBase SB = new SalesBase(driver);
+		SB.agregarplan("Plan con tarjeta");
+	}
 
 }

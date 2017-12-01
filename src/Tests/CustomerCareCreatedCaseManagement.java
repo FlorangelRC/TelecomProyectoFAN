@@ -32,7 +32,7 @@ public class CustomerCareCreatedCaseManagement extends TestBase {
 	private WebDriver driver;
 
 
-	@BeforeClass(groups= "Fase1")
+	@BeforeClass(groups= "CustomerCare")
 	public void mainSteup() {
 		this.driver = setConexion.setupEze();
 		login(driver);
@@ -47,33 +47,17 @@ public class CustomerCareCreatedCaseManagement extends TestBase {
        homePage.selectAppFromMenuByName("Consola FAN");
 	}
 
-	/*@BeforeTest
-	public void mainSteup() {
-		this.driver = setConexion.setupEze();	
->>>>>>> cdaf0f4bf4a99ac0526033539863b1b75abf5232
->>>>>>> 511a8e44ea0a4a95d26f83105afa7b9b60afa7a8
-	@BeforeClass
-	public void init() throws Exception
-	{
-		this.driver = setConexion.setupPablo();
-		try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
-		login(driver);
-		try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
-	}*/
 	
-	@BeforeMethod(groups= "Fase1")
+	@BeforeMethod(groups= "CustomerCare")
 	public void mainSetup() {
-		//this.driver = setConexion.setupPablo();	
-		
 
-		
 		try {Thread.sleep(10000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 		List<WebElement> mainTabs = driver.findElements(By.className("x-tab-strip-close"));
 		for (WebElement e : mainTabs) {
 		try {((JavascriptExecutor) driver).executeScript("arguments[0].click();", e);} catch (org.openqa.selenium.StaleElementReferenceException b) {}
 		}
-		List<WebElement> mainTabs1 = driver.findElements(By.className("x-tab-strip-close"));
-		((JavascriptExecutor) driver).executeScript("arguments[0].click();", mainTabs1.get(1));
+		//List<WebElement> mainTabs1 = driver.findElements(By.className("x-tab-strip-close"));
+		//((JavascriptExecutor) driver).executeScript("arguments[0].click();", mainTabs1.get(1));
 		try {Thread.sleep(10000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}	
 		goToLeftPanel2(driver, "Casos");
 		WebElement frame0 = driver.findElement(By.tagName("iframe"));
@@ -85,7 +69,7 @@ public class CustomerCareCreatedCaseManagement extends TestBase {
 		try {Thread.sleep(10000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 	}
 	
-	@AfterClass(groups= "Fase1")
+	@AfterClass(groups= "CustomerCare")
 	public void tearDown() {
 		driver.switchTo().defaultContent();
 		List<WebElement> mainTabs1 = driver.findElements(By.className("x-tab-strip-close"));
@@ -102,7 +86,7 @@ public class CustomerCareCreatedCaseManagement extends TestBase {
 	}
 	
 	
-	@AfterMethod(groups= "Fase1")
+	@AfterMethod(groups= "CustomerCare")
 	public void alert (){
 		try {Thread.sleep(2000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 		HomeBase homePage = new HomeBase(driver);
@@ -115,13 +99,9 @@ public class CustomerCareCreatedCaseManagement extends TestBase {
        homePage.selectAppFromMenuByName("Consola FAN");
 
 	}
-	/*
-	@BeforeMethod
-	public void setup() throws Exception {	
-	}
-	*/
+
 	
-	@Test(groups= "Fase1")
+	@Test(groups= "CustomerCare")
 	public void TS7202_CreatedAndDueTimeInHoursFormatCheck(){
 		
 		String dateWithHourPattern = "(\\d{2}\\/\\d{2}\\/\\d{4} \\d{2}:\\d{2})";
@@ -144,7 +124,7 @@ public class CustomerCareCreatedCaseManagement extends TestBase {
 		
 	}
 	
-	@Test(groups= "Fase1")
+	@Test(groups= "CustomerCare")
 	public void TS7082_VisualizeDueDate(){
 		
 		try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
@@ -165,7 +145,7 @@ public class CustomerCareCreatedCaseManagement extends TestBase {
 	}
 	
 	
-	@Test(groups= "Fase1")
+	@Test(groups= "CustomerCare")
 	public void TS_7202_ValidatedCreationDate(){
 		//Pre-requirement : no other cases or new cases tabs.
 		try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
@@ -188,7 +168,7 @@ public class CustomerCareCreatedCaseManagement extends TestBase {
 		
  }
 	
-	 @Test(groups= "Fase1")
+	 @Test(groups= "CustomerCare")
 		public void TS_7094_TimeResolution(){
 			//Campo Ya no existe desde el deploy 3, se realizo para fallar fecha 30/11/2017
 		 
