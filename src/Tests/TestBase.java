@@ -20,7 +20,7 @@ import Pages.Login;
 
 
 public class TestBase {
-	private static WebDriver driver;
+	protected static WebDriver driver;//
 	public void leftDropdown(WebDriver driver, String selection) {
 		driver.findElement(By.className("x-btn-mc")).click();
 		switch(selection) {
