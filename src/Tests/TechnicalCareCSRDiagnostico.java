@@ -86,7 +86,7 @@ public class TechnicalCareCSRDiagnostico extends TestBase{
 			}
 		}
 		try {Thread.sleep(2000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
-		driver.close();
+		driver.quit();
 	}
 	
 	@Test(groups = "TechnicalCare") 
