@@ -54,7 +54,7 @@ public class Sales extends TestBase {
 		driver.close();
 	}
 	
-//	@AfterMethod(groups="Fase3")
+//	@AfterMethod(groups="Sales")
 	public void deslogin(){
 		try {Thread.sleep(10000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 		driver.get("https://crm--sit.cs14.my.salesforce.com/home/home.jsp?tsid=02u41000000QWha/");
@@ -62,7 +62,7 @@ public class Sales extends TestBase {
 
 	}
 	
-	@BeforeClass(groups="Fase3")
+	@BeforeClass(groups="Sales")
 	public void Init() throws Exception
 	{
 		this.driver = setConexion.setupEze();
@@ -95,7 +95,7 @@ public class Sales extends TestBase {
 		try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 	}
 
-	@BeforeMethod(groups="Fase3")
+	@BeforeMethod(groups="Sales")
 	public void setup() throws Exception {		
 		try {Thread.sleep(10000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 		driver.findElement(By.xpath("//a[@href=\'https://crm--SIT--c.cs14.visual.force.com/apex/taClientSearch']")).click();
@@ -104,7 +104,7 @@ public class Sales extends TestBase {
 	}
 	
 	
-	@Test(groups="Fase2")
+	@Test(groups="Sales")
 	public void TS14278_Ventas_NumeroOrden_Verificar_Orden_de_Venta_Abierta_ICCID(){
 		SalesBase SB= new SalesBase(driver);
 		SB.BuscarCuenta(Type, NDNI);
