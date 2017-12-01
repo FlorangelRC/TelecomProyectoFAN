@@ -32,7 +32,7 @@ public class SCPParquedeServicios extends TestBase{
 	String categoria = "Categoria1";
 	String servicio = "Servicio 1";
 	String color = "Red";
-	@BeforeClass
+	@BeforeClass(groups= "SCP")
 	public void init() throws Exception
 	{
 		this.driver = setConexion.setupEze();
@@ -41,7 +41,7 @@ public class SCPParquedeServicios extends TestBase{
 		try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 	}
 		
-	@BeforeMethod
+	@BeforeMethod(groups= "SCP")
 	public void setup(){
 		try {Thread.sleep(4000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 		String a = driver.findElement(By.id("tsidLabel")).getText();
@@ -70,13 +70,13 @@ public class SCPParquedeServicios extends TestBase{
 		}
 	}
 	
-	@AfterMethod
+	@AfterMethod(groups= "SCP")
 	public void after(){
 		((JavascriptExecutor)driver).executeScript("window.scrollTo(0,"+driver.findElement(By.id("home_Tab")).getLocation().y+")");
 		driver.findElement(By.id("home_Tab")).click();
 	}
 	
-	@Test
+	@Test(groups= "SCP")
 	public void TS112781_Parque_de_Servicios_Agregar_Nuevo_Servicio(){
 	
 		SCP page = new SCP(driver);
@@ -88,7 +88,7 @@ public class SCPParquedeServicios extends TestBase{
 		
 	}
 	
-	@Test
+	@Test(groups= "SCP")
 	public void TS112782_Parque_de_Servicios_Borrar(){
 	
 		SCP page = new SCP(driver);
@@ -101,7 +101,7 @@ public class SCPParquedeServicios extends TestBase{
 	}
 	
 		
-	@Test
+	@Test(groups= "SCP")
 	public void TS112785_Parque_de_Servicios_Exportar_a_Excel(){
 		
 		SCP page = new SCP(driver);
@@ -111,7 +111,7 @@ public class SCPParquedeServicios extends TestBase{
 		page.moveToElementOnAccAndClick("segundoTitulo", "//*[@id='segundoTitulo']/div/ul/li[2]/a");
 		page.servicioexportarexcel();
 	}
-		@Test
+		@Test(groups= "SCP")
 		public void TS112786_Parque_de_Servicios_Guardar(){
 			SCP page = new SCP(driver);
 			page.clickOnTabByName("cuentas");
