@@ -10,6 +10,7 @@ import java.util.List;
 import java.util.Set;
 
 import org.openqa.selenium.By;
+import org.openqa.selenium.ElementNotVisibleException;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.WebDriver;
@@ -18,7 +19,9 @@ import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.How;
 import org.openqa.selenium.support.PageFactory;
+import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.Select;
+import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 
@@ -102,7 +105,218 @@ public class CustomerCare extends BasePage {
 	@FindBy(how=How.CSS, using= ".slds-input.actionSearch.ng-pristine.ng-untouched.ng-valid.ng-empty")
 	private WebElement buscargestion;
 	
+	@FindBy(css = ".x-plain-header.sd_primary_tabstrip.x-unselectable .x-tab-strip-closable")
+		private List<WebElement> pestañasPrimarias;
+	@FindBy(css = ".x-grid3-cell-inner.x-grid3-col-ACCOUNT_NAME")
+		private List<WebElement> cuentas;
+	@FindBy(css = ".x-menu-item.accountMru.standardObject.sd-nav-menu-item")
+		private List<WebElement> desplegable;
+	@FindBy(css = ".x-plain-body.sd_nav_tabpanel_body.x-tab-panel-body-top .x-tab-strip-closable")
+		private List<WebElement> pestañasSecundarias;
+	@FindBy(css = ".console-card.active")
+		private List<WebElement> lineasPrepago;
+	@FindBy(css = ".via-slds.slds-m-around--small.ng-scope")
+		private List<WebElement> tarjetasHistorial;
+	@FindBy(xpath = "//button[@class='slds-button slds-button--neutral slds-truncate']")
+		private List<WebElement> gestionesEncontradas;
+	@FindBy(css = ".x-panel.view_context.x-border-panel")
+		private List<WebElement> panelesLaterales;
+	@FindBy(css = ".sd_secondary_container.x-border-layout-ct")
+		private List<WebElement> panelesCentrales;
+	
+	@FindBy(css = ".x-btn-small.x-btn-icon-small-left")
+		private WebElement selector;
+	@FindBy(css = ".x-plain-body.sd_nav_tabpanel_body.x-tab-panel-body-top iframe")
+		private WebElement marcoCuentas;
+	@FindBy(name = "fcf")
+		private WebElement selectCuentas;
+	@FindBy(xpath = "//input[@ng-model='searchTerm']")
+		private WebElement buscadorGestiones;
+	@FindBy(css = ".console-flyout.active.flyout .icon.icon-v-troubleshoot-line")
+		private WebElement btn_ProblemaConRecargas;
+	@FindBy(css = ".x-layout-collapsed.x-layout-collapsed-east.x-layout-cmini-east")
+		private WebElement panelDerechoColapsado;
 
+
+	public void elegirCuenta(String nombreCuenta) {		
+		driver.switchTo().defaultContent();
+		Boolean flag = false;
+		if (pestañasPrimarias.size() > 0) {
+			for (WebElement t : pestañasPrimarias) {
+				if (t.getText().equals(nombreCuenta)) {
+					flag = true;
+					t.click();
+					// Verificar que exista la pestaña Servicios almenos
+				} else {
+					WebElement btn_cerrar = t.findElement(By.className("x-tab-strip-close"));
+					((JavascriptExecutor) driver).executeScript("arguments[0].click();", btn_cerrar);	
+				}
+			}
+		}
+	
+		if (flag == false) {
+			if  (!selector.getText().equalsIgnoreCase("Cuentas")) {
+				WebElement btnSplit = selector.findElement(By.className("x-btn-split"));
+				Actions builder = new Actions(driver);   
+				builder.moveToElement(btnSplit, 245, 20).click().build().perform();
+				for (WebElement op : desplegable) {
+					if (op.getText().equalsIgnoreCase("Cuentas")) op.click();
+				}
+			}
+					
+			driver.switchTo().frame(marcoCuentas);
+			Select field = new Select(selectCuentas);
+			if (!field.getFirstSelectedOption().getText().equalsIgnoreCase("Todas las cuentas"))
+				field.selectByVisibleText("Todas las cuentas");
+					
+			for (WebElement c : cuentas) {
+				if (c.getText().equalsIgnoreCase(nombreCuenta)) {
+					c.findElement(By.tagName("a")).click();
+					return;
+				}
+			}
+		}
+	}
+	
+	public void limpiarTodo() {
+		driver.switchTo().defaultContent();
+		for (WebElement t : pestañasSecundarias) {
+			if(t.getText().equals("Servicios")) t.click();
+			else {
+				WebElement btn_cerrar = t.findElement(By.className("x-tab-strip-close"));
+				((JavascriptExecutor) driver).executeScript("arguments[0].click();", btn_cerrar);
+			}
+		}
+	
+		try {
+			panelDerechoColapsado.click();
+		} catch (NoSuchElementException|ElementNotVisibleException e) { }
+		
+		cambiarAFrameActivo();
+	}
+	
+	public void panelDerecho() {
+		driver.switchTo().defaultContent();
+		WebElement panelDerecho = null;
+		try {
+			panelDerechoColapsado.click();
+		} catch (NoSuchElementException|ElementNotVisibleException e) { }
+		
+		panelDerecho = panelesLaterales.get(0);
+		driver.switchTo().frame(panelDerecho.findElement(By.cssSelector("iframe")));
+	}
+	
+	public void buscarGestion(String gest) {
+		panelDerecho();
+		buscadorGestiones.clear();
+		buscadorGestiones.sendKeys(gest);
+	}
+	
+	public WebElement obtenerTarjetaHistorial(String tituloTarjeta) {
+		(new WebDriverWait(driver, 2)).until(ExpectedConditions.visibilityOfAllElements(tarjetasHistorial));
+		for (WebElement t : tarjetasHistorial) {
+			if (t.getText().toLowerCase().contains(tituloTarjeta.toLowerCase())) {
+				return t;
+			}
+		}
+		System.err.println("ERROR: No se encontró la tarjeta \'" + tituloTarjeta + "\'");
+		return null;
+	}
+	
+	public WebElement obtenerAccionLineaPrepago(String accion) {
+		for (WebElement linea : lineasPrepago) {
+			if (!linea.getAttribute("class").contains("expired")) {
+				List<WebElement> elementos = linea.findElements(By.cssSelector(".slds-text-body_regular"));
+				for (WebElement e : elementos) {
+					if (e.getText().toLowerCase().contains(accion.toLowerCase())) {
+							return e;
+					}
+				}
+			}
+		}
+		System.err.println("ERROR: No se encontró una línea Prepago activa");
+		return null;
+	}
+	
+	public void irAGestion(String gest) {
+		buscarGestion(gest);
+		if (gestionesEncontradas.isEmpty()) {
+			System.err.println("ERROR: No existe la gestión \'" + gest + "\'");
+			Assert.assertFalse(gestionesEncontradas.isEmpty());
+		}
+		gestionesEncontradas.get(0).click();
+		cambiarAFrameActivo();
+	}
+	
+	public void irADetalleDeConsumos() {
+		obtenerAccionLineaPrepago("Detalle de Consumos").click();
+		cambiarAFrameActivo();
+	}
+	
+	public void irAHistoriales() {
+		obtenerAccionLineaPrepago("Historiales").click();
+		cambiarAFrameActivo();
+	}
+	
+	public void irAAhorrá() {
+		obtenerAccionLineaPrepago("Ahorrá").click();
+		cambiarAFrameActivo();
+	}
+	
+	public void irAMisServicios() {
+		obtenerAccionLineaPrepago("Mis Servicios").click();
+		cambiarAFrameActivo();
+	}
+	
+	public void irAProblemasConRecargas() {
+		for (WebElement linea : lineasPrepago) {
+			if (!linea.getAttribute("class").contains("expired")) {
+					linea.click();
+					btn_ProblemaConRecargas.click();
+			}
+		}
+		cambiarAFrameActivo();
+	}
+	
+	public void irAHistorialDeRecargas() {
+		verDetallesHistorial("Historial de Recargas");
+		cambiarAFrameActivo();
+	}
+	
+	public void irAHistorialDePacks() {
+		verDetallesHistorial("Historial de Packs");
+		cambiarAFrameActivo();		
+	}
+	
+	public void irAHistorialDeRecargasSOS() {
+		verDetallesHistorial("Historial de Recargas S.O.S");
+		cambiarAFrameActivo();		
+	}
+	
+	public void irAHistorialDeAjustes() {
+		verDetallesHistorial("Historial de Ajustes");
+		cambiarAFrameActivo();	
+	}
+	
+	
+	// -----------------------------------------------------------------------------------------------------
+	// 											METODOS PRIVADOS
+	// -----------------------------------------------------------------------------------------------------
+
+	private void cambiarAFrameActivo() {
+		driver.switchTo().defaultContent();
+		try {Thread.sleep(1000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		for (WebElement t : panelesCentrales) {
+			if (!t.getAttribute("class").contains("x-hide-display")) {
+				driver.switchTo().frame(t.findElement(By.cssSelector("div iframe")));
+			}
+		}
+	}
+	
+	private void verDetallesHistorial(String nombreHistorial) {
+		obtenerTarjetaHistorial(nombreHistorial).findElement(By.cssSelector(".slds-button.slds-button--brand")).click();
+		cambiarAFrameActivo();
+	}
 	
 	//method
 	public void goToLeftPanel(WebDriver driver, String selection) {

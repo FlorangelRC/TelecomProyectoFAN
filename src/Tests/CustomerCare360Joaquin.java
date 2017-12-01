@@ -2,14 +2,20 @@ package Tests;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.TimeUnit;
+
 import org.openqa.selenium.By;
 import org.openqa.selenium.NoSuchElementException;
+import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.testng.Assert;
+import org.testng.annotations.AfterClass;
+import org.testng.annotations.BeforeClass;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 import Pages.CustomerCare;
+import Pages.setConexion;
 
 public class CustomerCare360Joaquin extends TestBase {
 	
@@ -23,6 +29,25 @@ public class CustomerCare360Joaquin extends TestBase {
 	private By detalleRegistro = By.xpath("//div[@class='slds-box--small']");
 	private By tablaTarjetaHistorial = By.cssSelector(".slds-table.slds-table--bordered.slds-table--resizable-cols.slds-table--fixed-layout.via-slds-table-pinned-header");
 
+	
+	protected static WebDriver driver;
+	
+	@BeforeClass(groups= "CustomerCare")
+	public void init() {
+		driver = setConexion.setupEze();
+		driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
+
+		login();
+		ConsolaFAN();
+	}
+	
+	@AfterClass(groups= "CustomerCare")
+	public void quit() {
+		driver.switchTo().defaultContent();
+		driver.findElement(By.xpath("//span[@id='tsidLabel']")).click();
+		driver.findElement(By.xpath("//a[contains(.,'Ventas')]")).click();
+		driver.quit();
+	}
 	
 	@BeforeMethod(groups= "CustomerCare")
 	public void before() {
