@@ -55,7 +55,7 @@ public class CustomerCareFase3 extends TestBase{
 		page.cerrarultimapestaña();
 	}
 	
-	//@AfterMethod (groups = "CustomerCare")
+	@AfterMethod (groups = "CustomerCare")
 	public void alert (){
 		CustomerCare page = new CustomerCare(driver);
 		page.cerrarultimapestaña();
@@ -65,7 +65,7 @@ public class CustomerCareFase3 extends TestBase{
 		//login(driver);
 	}
 	
-	//@AfterClass (groups = "CustomerCare")
+	@AfterClass (groups = "CustomerCare")
 	public void tearDown() {
 		driver.quit();
 		try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
