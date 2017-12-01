@@ -9,6 +9,7 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
@@ -29,6 +30,7 @@ import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.BeforeTest;
 import org.testng.annotations.Test;
 
+import Pages.Accounts;
 import Pages.BasePage;
 import Pages.CasePage;
 import Pages.CustomerCare;
@@ -1021,5 +1023,171 @@ public class CustomerCareFase2 extends TestBase {
 		WebElement x = driver.findElement(By.className("slds-text-heading--large"));
 		Assert.assertTrue(x.getText().toLowerCase().contains("el proceso se canceló"));
 		driver.switchTo().defaultContent();
+	}
+	
+	
+	@Test(groups= "CustomerCare")
+	public void TS14601_Case_Management__Casos_Ordernados_Por_Tipos_Vista_Todos_Los_Casos_Abiertos(){
+		 Accounts accountPage = new Accounts(driver);
+	     driver.switchTo().defaultContent();
+	     goToLeftPanel2(driver, "Casos");
+	     accountPage.accountSelect("Todos Los Casos Abiertos");
+	     assertTrue(driver.findElement(By.cssSelector(".x-panel.x-grid-panel")).isDisplayed());
+	}
+	
+	
+	@Test(groups= "CustomerCare")
+	public void TS15850_Cost_For_Changes_Sesion_Guiada_Visualizar_Leyenda_Cargo_Gestion_Consumidor_Final_Costo_IVA(){
+		 Accounts accountPage = new Accounts(driver);
+		 goToLeftPanel2(driver, "Cuentas");
+	     driver.switchTo().defaultContent();
+	     driver.switchTo().frame(accountPage.getFrameForElement(driver, By.cssSelector(".topNav.primaryPalette")));
+	     Select field = new Select(driver.findElement(By.name("fcf")));
+	     try {field.selectByVisibleText("Todas Las cuentas");}
+			catch (org.openqa.selenium.NoSuchElementException ExM) {field.selectByVisibleText("Todas las cuentas");}
+	     try {Thread.sleep(9000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();} 
+	     CustomerCare page = new CustomerCare(driver);
+			page.cerrarultimapestaña();
+			 try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();} 
+			page.elegircuenta("Fernando Care");
+			 try {Thread.sleep(9000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}  
+			 accountPage.findAndClickButton("Cambios de condición impositiva");
+			 try {Thread.sleep(8000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}  
+			 assertTrue(false);
+			 //bug reportado, arreglar cuando se pueda visualizar
+	}
+	
+	
+	@Test(groups= "CustomerCare")
+	public void TS15851_Cost_For_Changes_Sesion_Guiada_Visualizar_Leyenda_Cargo_Gestion_Empresas_Costo_Impuestos(){
+		 Accounts accountPage = new Accounts(driver);
+		 goToLeftPanel2(driver, "Cuentas");
+	     driver.switchTo().defaultContent();
+	     driver.switchTo().frame(accountPage.getFrameForElement(driver, By.cssSelector(".topNav.primaryPalette")));
+	     Select field = new Select(driver.findElement(By.name("fcf")));
+	     try {field.selectByVisibleText("Todas Las cuentas");}
+	     catch (org.openqa.selenium.NoSuchElementException ExM) {field.selectByVisibleText("Todas las cuentas");}
+	     try {Thread.sleep(9000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();} 
+	     CustomerCare page = new CustomerCare(driver);
+	     page.cerrarultimapestaña();
+		 try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();} 
+		 page.elegircuenta("Empresa Care");
+		 try {Thread.sleep(9000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}  
+		 accountPage.findAndClickButton("Cambios de condición impositiva");
+		 try {Thread.sleep(8000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}  
+		 assertTrue(false);
+		 //bug reportado, arreglar cuando se pueda visualizar
+	}
+	
+	
+	@Test(groups= "CustomerCare")
+	public void TS14569_360_View_360_View_Capacidades_De_Busqueda_Filtrar_Por_Billing_Account(){
+		Accounts accountPage = new Accounts(driver);
+		driver.switchTo().defaultContent();
+		//driver.switchTo().frame(accountPage.getFrameForElement(driver, By.id("phSearchInput")));
+		driver.findElement(By.id("phSearchInput")).sendKeys("Fernando care Billin");
+		try {Thread.sleep(3000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		driver.switchTo().defaultContent();
+		driver.findElement(By.id("phSearchInput:group0:option0")).click();
+		try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		try {driver.switchTo().alert().accept();}catch(org.openqa.selenium.NoAlertPresentException e) {}
+		try {Thread.sleep(2000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		driver.switchTo().defaultContent();
+		driver.switchTo().frame(accountPage.getFrameForElement(driver, By.id("topButtonRow")));
+		assertTrue(driver.findElement(By.className("mainTitle")).getText().equals("Detalle de Cuenta"));		
+	}
+	
+	
+	@Test(groups= "CustomerCare")
+	public void TS15940_Consumption_Details_Mostrar_Informacion_Sobre_El_Tiempo_De_Actualizacion_Ultima_Actualizacion_Dentro_Del_Dia(){
+		 Accounts accountPage = new Accounts(driver);
+		 goToLeftPanel2(driver, "Cuentas");
+	     driver.switchTo().defaultContent();
+	     driver.switchTo().frame(accountPage.getFrameForElement(driver, By.cssSelector(".topNav.primaryPalette")));
+	     Select field = new Select(driver.findElement(By.name("fcf")));
+	     try {field.selectByVisibleText("Todas Las cuentas");}
+	     catch (org.openqa.selenium.NoSuchElementException ExM) {field.selectByVisibleText("Todas las cuentas");}
+	     try {Thread.sleep(9000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();} 
+	     CustomerCare page = new CustomerCare(driver);
+	     page.cerrarultimapestaña();
+		 try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();} 
+		 page.elegircuenta("Fernando Care");
+		 accountPage.findAndClickButton("Detalle de Consumos");
+		 try {Thread.sleep(8000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();} 
+		 driver.switchTo().defaultContent();
+		 driver.switchTo().frame(accountPage.getFrameForElement(driver, By.id("text-input-01")));
+		 driver.findElement(By.id("text-input-01")).click();
+		 driver.findElement(By.cssSelector(".slds-dropdown.slds-dropdown--left")).findElement(By.tagName("span")).click();
+		 driver.findElement(By.cssSelector(".slds-button.slds-button--brand")).click();
+		 driver.findElement(By.cssSelector(".slds-button.slds-button--brand")).click();
+		 try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();} 
+		 //driver.switchTo().defaultContent();
+		 //driver.switchTo().frame(accountPage.getFrameForElement(driver, By.className(".slds-text-title")));
+		 String fecha = driver.findElements(By.className("slds-text-title")).get(2).getText();
+		 fecha = fecha.substring(25, fecha.length()-2);
+		 System.out.println("fecha: "+fecha);
+		 Calendar Factual = Calendar.getInstance();
+		 System.out.println("fecha act: "+(Integer.toString(Factual.get(Calendar.DATE))+"/"+Integer.toString(Factual.get(Calendar.MONTH))+"/"+Integer.toString(Factual.get(Calendar.YEAR))));
+		 assertTrue(fecha.split(" ")[0].equals(Integer.toString(Factual.get(Calendar.DATE))+"/"+Integer.toString(Factual.get(Calendar.MONTH))+"/"+Integer.toString(Factual.get(Calendar.YEAR)))); 
+	}
+	
+	
+	@Test(groups= "CustomerCare")
+	public void TS15960_360_View_Ver_Equipo_Creador_En_Case_Usuario_Cambia_De_Equipo_No_Se_Modifica_El_Campo_Equipo_Del_Creador() throws ParseException{
+		 Accounts accountPage = new Accounts(driver);
+		 Date date1 = new Date();
+	     driver.switchTo().defaultContent();
+	     SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy"); 
+	     try {
+			date1 = sdf.parse("24/11/2017");
+		} catch (ParseException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	     goToLeftPanel2(driver, "Casos");
+	     accountPage.accountSelect("Mis Casos");
+	     driver.switchTo().defaultContent();
+	     driver.switchTo().frame(accountPage.getFrameForElement(driver, By.className("x-grid3-body")));
+	     List<WebElement> TodosCasos = driver.findElement(By.className("x-grid3-body")).findElements(By.className("x-grid3-row"));
+	     TodosCasos.remove(0);
+	     for (WebElement UnC : TodosCasos) {
+	    	 String fecha = UnC.findElements(By.tagName("td")).get(12).findElement(By.tagName("div")).getText();
+	    	 fecha = fecha.split(" ")[0];
+	    	 if (date1.compareTo(sdf.parse(fecha))>0) {
+	    		 System.out.println("Equipo: "+UnC.findElements(By.tagName("td")).get(10).findElement(By.tagName("div")).getText());
+	    		 assertTrue(!UnC.findElements(By.tagName("td")).get(10).findElement(By.tagName("div")).getText().equals("Cubo magico team"));
+	    		 break;
+	    	 }   	 
+	     }	     
+	}
+	
+	
+	@Test(groups= "CustomerCare")
+	public void TS15961_360_View_Ver_Equipo_Creador_En_Case_Usuario_Cambia_De_Equipo_Nuevo_Caso_Se_Modifica_El_Campo_Equipo_Del_Creador() throws ParseException{
+		 Accounts accountPage = new Accounts(driver);
+		 Date date1 = new Date();
+	     driver.switchTo().defaultContent();
+	     SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy"); 
+	     try {
+			date1 = sdf.parse("24/11/2017");
+	     } catch (ParseException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+	     }
+	     goToLeftPanel2(driver, "Casos");
+	     accountPage.accountSelect("Mis Casos");
+	     driver.switchTo().defaultContent();
+	     driver.switchTo().frame(accountPage.getFrameForElement(driver, By.className("x-grid3-body")));
+	     List<WebElement> TodosCasos = driver.findElement(By.className("x-grid3-body")).findElements(By.className("x-grid3-row"));
+	     TodosCasos.remove(0);
+	     for (WebElement UnC : TodosCasos) {
+	    	 String fecha = UnC.findElements(By.tagName("td")).get(12).findElement(By.tagName("div")).getText();
+	    	 fecha = fecha.split(" ")[0];
+	    	 if (date1.compareTo(sdf.parse(fecha))<=0) {
+	    		 System.out.println("Equipo: "+UnC.findElements(By.tagName("td")).get(10).findElement(By.tagName("div")).getText());
+	    		 assertTrue(UnC.findElements(By.tagName("td")).get(10).findElement(By.tagName("div")).getText().equals("Cubo magico team"));
+	    		 break;
+	    	 }    	 
+	     }     
 	}
 }
