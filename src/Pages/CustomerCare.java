@@ -173,6 +173,7 @@ public class CustomerCare extends BasePage {
 				field.selectByVisibleText("Todas las cuentas");
 					
 			for (WebElement c : cuentas) {
+				//MEJORAR
 				if (c.getText().equalsIgnoreCase(nombreCuenta)) {
 					c.findElement(By.tagName("a")).click();
 					return;
