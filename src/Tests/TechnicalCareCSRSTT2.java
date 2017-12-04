@@ -26,7 +26,7 @@ public class TechnicalCareCSRSTT2 extends TestBase {
 		private String validIMEI = "545229703256596";
 		private String Ngestion;
 		
-		@BeforeClass(groups = "Fase2") 
+		@BeforeClass(groups = "TechnicalCare") 
 		public void init() throws Exception
 		{
 			this.driver = setConexion.setupPablo();
@@ -50,7 +50,7 @@ public class TechnicalCareCSRSTT2 extends TestBase {
 		     try {Thread.sleep(15000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 		}
 
-		@BeforeMethod(groups = "Fase2") 
+		@BeforeMethod(groups = "TechnicalCare") 
 		public void setUp() throws Exception {
 	     Accounts accountPage = new Accounts(driver);
 	     //Selecciono Vista Tech
@@ -81,13 +81,13 @@ public class TechnicalCareCSRSTT2 extends TestBase {
 			driver.switchTo().frame(accountPage.getFrameForElement(driver, By.id("TicketCreation_prevBtn")));
 			Ngestion= driver.findElement(By.id("TicketConfirmationText")).findElement(By.tagName("Strong")).getText();
 			try {Thread.sleep(3000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
-			driver.findElement(By.id("EndingFirstFrontRadio|0")).findElements(By.cssSelector(".slds-radio.ng-scope")).get(1).click();
+			driver.findElement(By.id("EndingFirstFrontRadio|0")).findElements(By.cssSelector(".slds-radio--faux.ng-scope")).get(1).click();
 			try {Thread.sleep(3000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 			((JavascriptExecutor)driver).executeScript("window.scrollTo(0,"+driver.findElement(By.id("TicketCreation_nextBtn")).getLocation().y+")");
 			driver.findElement(By.id("TicketCreation_nextBtn")).click();
 	 }
 		
-		@AfterMethod(groups = "Fase2") 
+		@AfterMethod(groups = "TechnicalCare") 
 		 public void afterMethod() {
 			driver.switchTo().defaultContent();
 			List<WebElement> ctas = driver.findElement(By.cssSelector(".x-tab-strip.x-tab-strip-top")).findElements(By.tagName("li"));
@@ -105,7 +105,7 @@ public class TechnicalCareCSRSTT2 extends TestBase {
 			
 			  }
 		
-		@AfterClass(groups = "Fase2") 
+		@AfterClass(groups = "TechnicalCare") 
 		public void tearDown() {
 			driver.switchTo().defaultContent();
 			driver.findElement(By.id("tsidButton")).click();
@@ -118,10 +118,10 @@ public class TechnicalCareCSRSTT2 extends TestBase {
 				}
 			}
 			try {Thread.sleep(2000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
-			driver.close();
+			driver.quit();
 		}
 		
-		@Test(groups = "Fase2") 
+		@Test(groups = "TechnicalCare") 
 		public void TS16138_CRM_Fase2_TechnicalCare_CSR_STT2_Vista5_Comentario_Error() {
 			Accounts accPage = new Accounts(driver);
 			driver.switchTo().frame(accPage.getFrameForElement(driver, By.id("TicketSummaryTechnician_nextBtn"))); 
@@ -145,7 +145,7 @@ public class TechnicalCareCSRSTT2 extends TestBase {
 			assertTrue(driver.findElement(By.cssSelector(".slds-form-element.vlc-flex.vlc-slds-text-area.ng-scope.ng-valid-minlength.ng-valid-required.ng-dirty.ng-valid-parse.ng-invalid.ng-invalid-maxlength")).findElement(By.cssSelector(".vlc-slds-error-block.ng-scope")).findElement(By.cssSelector(".error.ng-scope")).getText().toLowerCase().equals("Longitud máxima de 255".toLowerCase()));
 		}
 		
-		@Test(groups = "Fase2") 
+		@Test(groups = "TechnicalCare") 
 		public void TS16141_CRM_Fase2_TechnicalCare_CSR_STT2_Vista3_Descarga() {
 			Accounts accPage = new Accounts(driver);
 			driver.switchTo().frame(accPage.getFrameForElement(driver, By.id("TicketSummaryTechnician_nextBtn"))); 
@@ -161,7 +161,7 @@ public class TechnicalCareCSRSTT2 extends TestBase {
 			assertTrue(driver.findElement(By.cssSelector(".slds-button.slds-button--neutral.TechCare-DownloadPDF-Btn")).isDisplayed());
 			driver.findElement(By.cssSelector(".slds-button.slds-button--neutral.TechCare-DownloadPDF-Btn")).click();
 		}
-		@Test(groups = "Fase2") 
+		@Test(groups = "TechnicalCare") 
 		public void TS16144_CRM_Fase2_TechnicalCare_CSR_STT2_Vista1_Resumen_De_Gesiton_creada() {
 			Accounts accPage = new Accounts(driver);
 			driver.switchTo().frame(accPage.getFrameForElement(driver, By.id("TicketSummaryTechnician_nextBtn"))); 
@@ -181,7 +181,7 @@ public class TechnicalCareCSRSTT2 extends TestBase {
 			assertTrue(campos.get(2).getText().equals("No funciona todo el tiempo"));
 		}
 		
-		@Test(groups = "Fase2") 
+		@Test(groups = "TechnicalCare") 
 		public void TS16150_CRM_Fase2_TechnicalCare_CSR_STT2_Vista5_Listar_Todas_Las_Reparaciones() {
 			Accounts accPage = new Accounts(driver);
 			driver.switchTo().frame(accPage.getFrameForElement(driver, By.id("TicketSummaryTechnician_nextBtn"))); 
@@ -215,7 +215,7 @@ public class TechnicalCareCSRSTT2 extends TestBase {
 			}
 		}
 		
-		@Test(groups = "Fase2") 
+		@Test(groups = "TechnicalCare") 
 		public void TS16160_CRM_Fase2_TechnicalCare_CSR_STT2_Vista1_Mantención_de_datos() {
 			Accounts accPage = new Accounts(driver);
 			try {Thread.sleep(2000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
@@ -234,7 +234,7 @@ public class TechnicalCareCSRSTT2 extends TestBase {
 			assertTrue(!campos.get(2).getText().isEmpty());
 		}
 		
-		@Test(groups = "Fase2") 
+		@Test(groups = "TechnicalCare") 
 		public void TS16161_CRM_Fase2_TechnicalCare_CSR_STT2_Vista1_Mantención_De_Datos_Solo_Lectura() {
 			Accounts accPage = new Accounts(driver);
 			try {Thread.sleep(2000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
@@ -253,7 +253,7 @@ public class TechnicalCareCSRSTT2 extends TestBase {
 			assertTrue(campos.get(2).findElement(By.className("ng-binding")).getTagName().equals("p"));
 		}
 		
-		@Test(groups = "Fase2") 
+		@Test(groups = "TechnicalCare") 
 		public void TS16345_CRM_Fase2_TechnicalCare_CSR_STT2_Vista1_Visualizacion_Del_Comentario_Anterior() {
 			Accounts accPage = new Accounts(driver);
 			driver.switchTo().frame(accPage.getFrameForElement(driver, By.id("TicketSummaryTechnician_nextBtn"))); 
