@@ -347,6 +347,7 @@ private WebDriver driver;
 		}	
 	}
 	
+	@Test(groups = "SCP")
 	public void TS112764_Organigrama_y_mapa_de_influencia_Guardar() {
 		SCP prueba = new SCP(driver);
 		prueba.moveToElementOnAccAndClick("primerTitulo", 3);
