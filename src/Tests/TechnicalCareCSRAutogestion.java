@@ -28,7 +28,7 @@ public class TechnicalCareCSRAutogestion extends TestBase {
 	@BeforeClass(groups = "TechnicalCare") 
 	public void init() throws Exception
 	{
-		this.driver = setConexion.setupPablo();
+		this.driver = setConexion.setupEze();
 		try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 		login(driver);
 		try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
@@ -98,7 +98,7 @@ public class TechnicalCareCSRAutogestion extends TestBase {
 			}
 		}
 		try {Thread.sleep(2000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
-		driver.close();
+		driver.quit();
 	}
 	
 	@Test(groups = "TechnicalCare")
