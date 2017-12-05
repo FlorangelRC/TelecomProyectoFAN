@@ -1534,7 +1534,7 @@ public class CustomerCareFase3 extends TestBase{
 	
 	
 	@Test (groups = "CustomerCare")
-	public void TS_38437_360_View_360_Card_Servicio_Prepago_FlyoutAccionesSuscripciones() {
+	public void TS38437_360_View_360_Card_Servicio_Prepago_FlyoutAccionesSuscripciones() {
 		CustomerCare page = new CustomerCare(driver);
 		BasePage cambioFrameByID = new BasePage(driver);
 		page.elegircuenta("Fernando Care");		
@@ -1624,7 +1624,7 @@ public class CustomerCareFase3 extends TestBase{
 	
 	
 	@Test (groups = "CustomerCare")
-	public void TS_38207_Automatic_Debit_Subscriptions_Sesión_guiada_Débito_Automático_Inicial_Paso_2_Stop_Debit_Cuenta_NO_adherida_a_Aut_Deb_Que_NO_se_vea() {
+	public void TS38207_Automatic_Debit_Subscriptions_Sesión_guiada_Débito_Automático_Inicial_Paso_2_Stop_Debit_Cuenta_NO_adherida_a_Aut_Deb_Que_NO_se_vea() {
 		CustomerCare page = new CustomerCare(driver);
 		BasePage cambioFrameByID = new BasePage(driver);
 		page.elegircuenta("Fernando Care");
@@ -1724,7 +1724,7 @@ public class CustomerCareFase3 extends TestBase{
 	
 	
 	@Test (groups = "CustomerCare")
-	public void TS_38255_Automatic_Debit_Subscriptions_Sesión_guiada_Débito_Automático_Inicial_Paso_3_Adhesión_Numero_de_TC_Ingresa_0000_No_Reconoce_Empresa() {
+	public void TS38255_Automatic_Debit_Subscriptions_Sesión_guiada_Débito_Automático_Inicial_Paso_3_Adhesión_Numero_de_TC_Ingresa_0000_No_Reconoce_Empresa() {
 		CustomerCare page = new CustomerCare(driver);
 		BasePage cambioFrameByID = new BasePage(driver);
 		page.elegircuenta("Fernando Care");
