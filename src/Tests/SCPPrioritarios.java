@@ -20,18 +20,17 @@ import Pages.setConexion;
 public class SCPPrioritarios extends TestBase{
 	private WebDriver driver;
 	
-	@BeforeClass(groups = "Fase2")
+	@BeforeClass(groups = "SCP")
 	public void init() throws Exception
 	{
-		this.driver = setConexion.setupPablo();
-		driver.get("http://www.google.com");
-		try {Thread.sleep(15000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		this.driver = setConexion.setupEze();
+		try {Thread.sleep(10000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 		loginSCPAdmin(driver);
 		try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 		
 	}
 	
-	@BeforeMethod(groups = "Fase2")
+	@BeforeMethod(groups = "SCP")
 	public void setup() {
 		SCP pScp = new SCP(driver);
 		pScp.goToMenu("scp");
@@ -40,13 +39,13 @@ public class SCPPrioritarios extends TestBase{
 		try {Thread.sleep(7000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 	}
 	
-	//@AfterClass(groups = "Fase2")
+	@AfterClass(groups = "SCP")
 	public void tearDown() {
-		driver.close();
+		driver.quit();
 	}
 	
 
-		@Test(groups = "Fase2")
+		@Test(groups = "SCP")
 		 public void TS116024_SCP_Crear_Cuenta() { 
 		  SCP prueba = new SCP(driver);
 		
