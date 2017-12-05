@@ -49,7 +49,7 @@ public class CustomerCareFase2 extends TestBase {
 		try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 	}
 
-	//@AfterMethod(groups= "CustomerCare")
+	@AfterMethod(groups= "CustomerCare")
 	public void alert() {
 		CustomerCare page = new CustomerCare(driver);
 		page.cerrarultimapestaña();
