@@ -8,6 +8,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Set;
+import java.util.concurrent.TimeUnit;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.ElementNotVisibleException;
@@ -136,6 +137,8 @@ public class CustomerCare extends BasePage {
 		private WebElement btn_ProblemaConRecargas;
 	@FindBy(css = ".x-layout-collapsed.x-layout-collapsed-east.x-layout-cmini-east")
 		private WebElement panelDerechoColapsado;
+	@FindBy(css = "icon icon-v-close")
+		private WebElement cerrarFlyout;
 
 
 	public void elegirCuenta(String nombreCuenta) {		
@@ -170,6 +173,7 @@ public class CustomerCare extends BasePage {
 				field.selectByVisibleText("Todas las cuentas");
 					
 			for (WebElement c : cuentas) {
+				//MEJORAR
 				if (c.getText().equalsIgnoreCase(nombreCuenta)) {
 					c.findElement(By.tagName("a")).click();
 					return;
@@ -188,20 +192,15 @@ public class CustomerCare extends BasePage {
 			}
 		}
 	
-		try {
-			panelDerechoColapsado.click();
-		} catch (NoSuchElementException|ElementNotVisibleException e) { }
-		
+		intentarAbrirPanelDerecho();
 		cambiarAFrameActivo();
+		cerrarFlyout();
 	}
 	
 	public void panelDerecho() {
 		driver.switchTo().defaultContent();
 		WebElement panelDerecho = null;
-		try {
-			panelDerechoColapsado.click();
-		} catch (NoSuchElementException|ElementNotVisibleException e) { }
-		
+		intentarAbrirPanelDerecho();
 		panelDerecho = panelesLaterales.get(0);
 		driver.switchTo().frame(panelDerecho.findElement(By.cssSelector("iframe")));
 	}
@@ -305,7 +304,7 @@ public class CustomerCare extends BasePage {
 
 	private void cambiarAFrameActivo() {
 		driver.switchTo().defaultContent();
-		try {Thread.sleep(1000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		TestBase.sleep(4000);
 		for (WebElement t : panelesCentrales) {
 			if (!t.getAttribute("class").contains("x-hide-display")) {
 				driver.switchTo().frame(t.findElement(By.cssSelector("div iframe")));
@@ -317,6 +316,26 @@ public class CustomerCare extends BasePage {
 		obtenerTarjetaHistorial(nombreHistorial).findElement(By.cssSelector(".slds-button.slds-button--brand")).click();
 		cambiarAFrameActivo();
 	}
+	
+	private void intentarAbrirPanelDerecho() {
+		try { 
+			driver.manage().timeouts().implicitlyWait(1, TimeUnit.SECONDS);
+			panelDerechoColapsado.click();
+		} catch (NoSuchElementException|ElementNotVisibleException e) {	}
+		finally { 
+			driver.manage().timeouts().implicitlyWait(3, TimeUnit.SECONDS);
+		}
+	}
+	
+	private void cerrarFlyout() {
+		for (WebElement l : lineasPrepago) {
+			if (l.getAttribute("class").contains("selected")) {
+				l.click();
+				TestBase.sleep(1000);
+			}
+		}
+	}
+	
 	
 	//method
 	public void goToLeftPanel(WebDriver driver, String selection) {

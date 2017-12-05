@@ -22,7 +22,7 @@ public class ABMdeMotivoAdmin extends TestBase {
 	
 	private String motiveName = "motivo Nuevo para Tests"; // needed for 12587 and 12589 (ADD and DEL motive)
 	private String descripcion = "Descripcion para el test.";
-	private String servicio = "Llamadas ilimitadas";
+	private String servicio = "Internet 1GB";
 	
 	
 	@BeforeClass(groups = "TechnicalCare")
@@ -34,7 +34,7 @@ public class ABMdeMotivoAdmin extends TestBase {
 		try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 	}
 
-	@AfterClass(groups = "TechnicalCare")
+	//@AfterClass(groups = "TechnicalCare")
 	public void tearDown() {
 		driver.quit();
 	}
@@ -112,7 +112,7 @@ public class ABMdeMotivoAdmin extends TestBase {
 		try {Thread.sleep(2000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 		motiveName = "Nombre Motivo MODIFICADO.";
 		descripcion = "Descripcion Motivo MODIFICADA.";
-		servicio = "Arnet 2";
+		servicio = "\"Internet 2GB";
 		//here all is modified.
 		ContactMotiveManager contactMMPage = new ContactMotiveManager(driver);
 		contactMMPage.clearValues(); //clears textboxes only.
