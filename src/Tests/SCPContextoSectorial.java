@@ -38,7 +38,7 @@ private WebDriver driver;
 	    try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}	
 	}
 	
-	@AfterClass(groups = "SCP")
+	//@AfterClass(groups = "SCP")
 	public void teardown() {
 		driver.quit();
 		sleep(5000);
@@ -50,7 +50,8 @@ private WebDriver driver;
 		prueba.moveToElementOnAccAndClick("cuartoTitulo", 1);
 		List <WebElement> checkbox = driver.findElements(By.className("checkboxFiltroTimeLine"));
 		checkbox.get(1).click();
-		driver.findElement(By.id("j_id0:j_id89:j_id109")).click();
+		driver.findElement(By.id("j_id0:j_id91:j_id111")).click();
+		try {Thread.sleep(3000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 		Assert.assertTrue(driver.findElement(By.className("tl-message-full")).isDisplayed());		
 	}
 	
@@ -60,7 +61,8 @@ private WebDriver driver;
 		prueba.moveToElementOnAccAndClick("cuartoTitulo", 1);
 		List <WebElement> checkbox = driver.findElements(By.className("checkboxFiltroTimeLine"));
 		checkbox.get(1).click();
-		driver.findElement(By.id("j_id0:j_id89:j_id109")).click();
+		driver.findElement(By.id("j_id0:j_id91:j_id111")).click();
+		try {Thread.sleep(3000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 		Assert.assertTrue(driver.findElement(By.cssSelector(".tl-timemarker-content.tl-timemarker-content-small")).isDisplayed());
 	}
 	
@@ -70,7 +72,8 @@ private WebDriver driver;
 		prueba.moveToElementOnAccAndClick("cuartoTitulo", 1);
 		List <WebElement> checkbox = driver.findElements(By.className("checkboxFiltroTimeLine"));
 		checkbox.get(1).click();
-		driver.findElement(By.id("j_id0:j_id89:j_id109")).click();
+		driver.findElement(By.id("j_id0:j_id91:j_id111")).click();
+		try {Thread.sleep(3000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 		Assert.assertTrue(driver.findElement(By.className("tl-message-full")).isDisplayed() 
 						  && driver.findElement(By.cssSelector(".tl-timemarker-content.tl-timemarker-content-small")).isDisplayed());
 	}
@@ -136,7 +139,13 @@ private WebDriver driver;
 	public void TS112742_Negocio_del_Cliente_Exportar_a_Excel() {
 		SCP prueba = new SCP(driver);
 		prueba.moveToElementOnAccAndClick("primerTitulo", 2);
-		driver.findElement(By.id("j_id0:Form:j_id274")).findElement(By.cssSelector(".btn.btn-default.btn-sm")).click();	
+		List <WebElement> element = driver.findElements(By.cssSelector(".btn.btn-default.btn-sm"));
+		for (WebElement x : element) {
+			if (x.getText().toLowerCase().contains("exportar a excel")) {
+				x.click();
+				break;
+			}
+		}
 	}
 	
 	@Test(groups = "SCP")
@@ -323,7 +332,7 @@ private WebDriver driver;
 	public void TS112766_Organigrama_y_mapa_de_Influencia_Ingreso_Desde_el_contacto() {
 		SCP prueba = new SCP(driver);
 		prueba.moveToElementOnAccAndClick("primerTitulo", 3);
-		Assert.assertTrue(driver.findElement(By.id("j_id0:Form:pageContent")).findElement(By.cssSelector(".table.table-striped.table-bordered.table-condensed")).isDisplayed());	
+		Assert.assertTrue(driver.findElement(By.className("jOrgChart")).isDisplayed());	
 	}
 	
 	@Test(groups = "SCP")

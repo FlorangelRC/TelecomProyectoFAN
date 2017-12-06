@@ -24,7 +24,7 @@ import Pages.setConexion;
 public class CustomerCareFase3F  extends TestBase {
 private WebDriver driver;
 	
-	@AfterClass(groups= "CustomerCare")
+	//@AfterClass(groups= "CustomerCare")
 	public void tearDown2() {
 		driver.quit();	
 	}
@@ -88,7 +88,7 @@ private WebDriver driver;
 			 if (UnH.findElement(By.cssSelector(".slds-text-heading--large.slds-size--1-of-1.slds-medium-size--1-of-1.slds-large-size--1-of-1.slds-m-bottom--small")).findElement(By.tagName("p")).getText().toLowerCase().equals("historial de recargas")) {
 				 List<WebElement> tuplas = driver.findElement(By.tagName("tbody")).findElements(By.tagName("tr"));
 				 for (WebElement UnaT : tuplas) {
-					 if (UnaT.findElements(By.tagName("td")).get(5).findElement(By.tagName("b")).getText().isEmpty())
+					 if (UnaT.findElements(By.tagName("td")).get(3).findElement(By.tagName("b")).getText().isEmpty())
 						 assertTrue(false);
 				 }
 				 break;
@@ -483,11 +483,11 @@ private WebDriver driver;
 	     ((JavascriptExecutor)driver).executeScript("window.scrollTo(0,"+driver.findElement(By.cssSelector(".console-flyout.active.flyout")).getLocation().y+")");
 	     try {Thread.sleep(3000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();} 
 	     driver.findElement(By.cssSelector(".console-flyout.active.flyout")).findElements(By.tagName("i")).get(1).click();
-	     try {Thread.sleep(8000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();} 
+	     try {Thread.sleep(10000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();} 
 	     driver.switchTo().defaultContent();
 	     driver.switchTo().frame(cambioFrameByID.getFrameForElement(driver, By.id("refillMethod")));
 	     //List<WebElement> wAsd = driver.findElements(By.id("refillMethod"));
-	     driver.findElement(By.cssSelector(".slds-radio.ng-scope")).click();
+	     driver.findElements(By.cssSelector(".slds-radio.ng-scope")).get(1).click();
 	     try {Thread.sleep(8000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 	     driver.switchTo().defaultContent();
 	     driver.switchTo().frame(cambioFrameByID.getFrameForElement(driver, By.id("stepChooseMethod_nextBtn")));
@@ -501,6 +501,8 @@ private WebDriver driver;
 	      }
 	     }
 	     try {Thread.sleep(8000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+	     driver.switchTo().defaultContent();
+	     driver.switchTo().frame(cambioFrameByID.getFrameForElement(driver, By.id("refillDate")));
 		 driver.findElement(By.id("refillDate")).sendKeys("15/11/2017");
 		 driver.findElement(By.id("refillAmount")).sendKeys("150");
 		 driver.findElement(By.id("receiptCode")).sendKeys("150");
