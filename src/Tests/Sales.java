@@ -499,7 +499,9 @@ public class Sales extends TestBase {
 		SB.error2();
 		SB.AsignarLinea();
 		SB.SimulacionDeFactura();
-		SB.verificarOrdenICCID();
+		SB.verificarOrdenICCID();		
+		Assert.assertTrue(false);
+
 	}
 	
 	@Test(groups="Sales")
@@ -508,7 +510,8 @@ public class Sales extends TestBase {
 		SB.BuscarCuenta(DNI, NDNI);
 		SB.crearnuevocliente(nombre, apellido, nacimiento);
 		SB.agregarplan(plan);
-		
+		Assert.assertTrue(false);
+
 	}
 	
 	@Test(groups="Sales")
@@ -528,7 +531,8 @@ public class Sales extends TestBase {
 		SB.error2();
 		SB.AsignarLinea();
 		SB.SimulacionDeFactura();
-		
+		Assert.assertTrue(false);
+
 	}
 	
 	@Test(groups="Sales")
@@ -555,7 +559,8 @@ public class Sales extends TestBase {
 		SB.AsignarLinea();
 		SB.SimulacionDeFactura();
 		SB.verificarOrdenICCID();
-		
+		Assert.assertTrue(false);
+
 	}
 	
 	@Test(groups="Sales")
@@ -588,7 +593,8 @@ public class Sales extends TestBase {
 		SB.BuscarCuenta(DNI, NDNI);
 		SB.crearnuevocliente(nombre, apellido, nacimiento);
 		SB.agregarplan(plan);
-		
+		Assert.assertTrue(false);
+
 	}
 	
 	@Test(groups="Sales")
@@ -608,6 +614,8 @@ public class Sales extends TestBase {
 		SB.error2();
 		SB.AsignarLinea();
 		SB.SimulacionDeFactura();
+		Assert.assertTrue(false);
+
 	}
 	
 	//************FASE 3*********************
