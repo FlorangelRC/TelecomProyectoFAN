@@ -88,7 +88,6 @@ public class createdContact extends TestBase {
 		try {Thread.sleep(10000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 		driver.findElement(By.xpath("//a[@href=\'https://crm--SIT--c.cs14.visual.force.com/apex/taClientSearch']")).click();
 		try {Thread.sleep(10000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
-		ContactInformation page = new ContactInformation(driver);
 		SalesBase SB = new SalesBase(driver);
 		SB.BuscarAvanzada(Name, LastName, "", "", "");
 		CustomerCare CC = new CustomerCare(driver);
