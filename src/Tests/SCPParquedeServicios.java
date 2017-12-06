@@ -29,9 +29,9 @@ import java.util.List;
 import org.openqa.selenium.*;
 public class SCPParquedeServicios extends TestBase{
 	private WebDriver driver;
-	String categoria = "Categoria1";
-	String servicio = "Servicio 1";
-	String color = "Red";
+	String categoria = "Servicio automatizado";
+	String servicio = "Prueba automatizada";
+	String color = "Rojo";
 	@BeforeClass(groups= "SCP")
 	public void init() throws Exception
 	{
@@ -76,6 +76,12 @@ public class SCPParquedeServicios extends TestBase{
 		driver.findElement(By.id("home_Tab")).click();
 	}
 	
+	@AfterClass(groups= "SCP")
+	public void tearDown() {
+		driver.quit();
+		sleep(4000);
+	}
+	
 	@Test(groups= "SCP")
 	public void TS112781_Parque_de_Servicios_Agregar_Nuevo_Servicio(){
 	
@@ -96,8 +102,8 @@ public class SCPParquedeServicios extends TestBase{
 		page.clickOnFirstAccRe();
 		try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 		page.moveToElementOnAccAndClick("segundoTitulo", "//*[@id='segundoTitulo']/div/ul/li[2]/a");
-		page.nuevoservicio(categoria, servicio, color);
-		Assert.assertFalse(page.validarservicioborrado(categoria, servicio, color));
+		page.nuevoservicioEspecifico(categoria, servicio, color);
+		Assert.assertTrue(page.validarservicioborrado(categoria, servicio, color));
 	}
 	
 		
