@@ -34,12 +34,12 @@ public class customerInformationUpdates extends TestBase {
 
 
 
-	//@AfterClass(groups= "CustomerCare")
+	@AfterClass(groups= "CustomerCare")
 	public void tearDown2() {
 		driver.close();	
 	}
 
-	//@AfterMethod(groups= "CustomerCare")
+	@AfterMethod(groups= "CustomerCare")
 	public void tearDown() {		
 		try {Thread.sleep(10000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 		BasePage cambioFrameByID=new BasePage();

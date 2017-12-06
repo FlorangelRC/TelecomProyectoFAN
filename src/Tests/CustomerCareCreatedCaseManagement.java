@@ -168,7 +168,7 @@ public class CustomerCareCreatedCaseManagement extends TestBase {
 		
  }
 	
-	 @Test(groups= "CustomerCare")
+	 //@Test(groups= "CustomerCare")
 		public void TS_7094_TimeResolution(){
 			//Campo Ya no existe desde el deploy 3, se realizo para fallar fecha 30/11/2017
 		 
