@@ -1,6 +1,7 @@
 package Pages;
 
 import java.io.File;
+import java.util.ArrayList;
 import java.util.List;
 
 import org.openqa.selenium.By;
@@ -16,7 +17,7 @@ import org.testng.Assert;
 
 public class SCP extends BasePage {
 	final WebDriver driver;
-	private static String downloadPath = "C:\\Users\\Sofia Chardin\\Downloads";
+	private static String downloadPath = "C:\\Users\\Pablo\\Downloads";
 	private Select listSelect;
 	 private List<WebElement> accountsList;
 	
@@ -203,46 +204,75 @@ public class SCP extends BasePage {
 		idele.findElement(By.xpath(referencia)).click();
 		try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 	}
+	
 	public boolean validarservicioborrado(String categoria, String servicio, String color){
 		boolean a = true;
-		try {Thread.sleep(10000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 
 		List<WebElement> tabla = driver.findElements(By.xpath("//*[@id='tableList']/tbody/tr"));
-	
-		Integer b;
-		for(int i=0; i<tabla.size();i++){
-			if(tabla.get(i).getText().equals("Categoria de los servicios: Categoria1")){
-				b=i+3;
+		//Baja Hasta el servicio creado y lo borra
+	for(WebElement S:tabla) {
+		//System.out.println(S.getText());
+		String D=S.getText().replaceAll(" ","").replaceAll("\r\n", "");
+		//System.out.println(D);
+		if(D.contains("01/01/2016")) {
+				((JavascriptExecutor)driver).executeScript("window.scrollTo(0,"+S.getLocation().y+")");
+				S.findElement(By.cssSelector(".btn.btn.btn-default.btn-sm")).click();
+				break;
 			}
-		}
-		//Cantidad celdas categoria1
-	List<WebElement> borrar = driver.findElements(By.cssSelector(".btn.btn.btn-default.btn-sm"));
-	((JavascriptExecutor)driver).executeScript("window.scrollTo(0,"+borrar.get((borrar.size()-2)).getLocation().y+")");
-	borrar.get((borrar.size()-2)).click();
-	try {Thread.sleep(2000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
-
-
-
-
-	try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
-	if(!driver.findElement(By.xpath("//*[@id='tableList']/tbody/tr[17]")).getText().contains(servicio+categoria+color)){
-		a = false;
 	}
-
-		return a;
+	try {Thread.sleep(3000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+	//Verifica si quedo vacia la lista y returna verdadero
+	List<WebElement> Servicios=driver.findElements(By.xpath("//*[@id=\"tableList\"]/tbody/tr"));
+	if(Servicios.isEmpty())
+		return true;
+	//Sino quedo vacia, verifica que no este disponible el que creo.
+	for(WebElement S:Servicios) {
+		//System.out.println(S.getText());
+		String D=S.getText().replaceAll(" ","").replaceAll("\r\n", "");
+		//System.out.println(D);
+		if(D.contains("01/01/2016"))
+			return false;
+		}
+	return a;
 	}
 	
 	public void nuevoservicio(String categoria, String servicio, String color){
 		try {Thread.sleep(10000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 
 		driver.switchTo().defaultContent();
-		setSimpleDropdown(driver.findElement(By.name("j_id0:j_id89:j_id110")), categoria);
+		setSimpleDropdown(driver.findElement(By.name("j_id0:j_id89:j_id106")), categoria);
 		try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 		setSimpleDropdown(driver.findElement(By.id("j_id0:j_id89:serviciosRender")), servicio);
 		try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
-		setSimpleDropdown(driver.findElement(By.id("j_id0:j_id89:j_id117")), color);
+		setSimpleDropdown(driver.findElement(By.id("j_id0:j_id89:j_id113")), color);
 		((JavascriptExecutor)driver).executeScript("window.scrollTo(0,"+driver.findElement(By.className("dateFormat")).getLocation().y+")");
 		driver.findElement(By.className("dateFormat")).click();
+		
+		try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		((JavascriptExecutor)driver).executeScript("window.scrollTo(0,"+driver.findElement(By.cssSelector(".glyphicon.glyphicon-plus")).getLocation().y+")");
+		driver.findElement(By.cssSelector(".glyphicon.glyphicon-plus")).click();
+		try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}	}
+	
+	/**
+	 * Se Creo para usar en el caso 112782 de Parque de servicio usando la fecha 01/01/16 
+	 * @param categoria
+	 * @param servicio
+	 * @param color
+	 */
+	public void nuevoservicioEspecifico(String categoria, String servicio, String color){
+		try {Thread.sleep(10000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+
+		driver.switchTo().defaultContent();
+		setSimpleDropdown(driver.findElement(By.name("j_id0:j_id89:j_id106")), categoria);
+		try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		setSimpleDropdown(driver.findElement(By.id("j_id0:j_id89:serviciosRender")), servicio);
+		try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		setSimpleDropdown(driver.findElement(By.id("j_id0:j_id89:j_id113")), color);
+		((JavascriptExecutor)driver).executeScript("window.scrollTo(0,"+driver.findElement(By.className("dateFormat")).getLocation().y+")");
+		
+		driver.findElement(By.id("j_id0:j_id89:datepicker")).sendKeys("01/01/2016");
+		
 		try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 		((JavascriptExecutor)driver).executeScript("window.scrollTo(0,"+driver.findElement(By.cssSelector(".glyphicon.glyphicon-plus")).getLocation().y+")");
 		driver.findElement(By.cssSelector(".glyphicon.glyphicon-plus")).click();
@@ -251,7 +281,7 @@ public class SCP extends BasePage {
 	public boolean validarservicionuevo(String categoria, String servicio, String color){
 		boolean a = false;
 		List<WebElement> tabla = driver.findElements(By.xpath("//*[@id='tableList']/tbody/tr"));
-		System.out.println(tabla.get((tabla.size()-1)).getText());
+		//System.out.println(tabla.get((tabla.size()-1)).getText());
 		if(!driver.findElement(By.xpath("//*[@id='tableList']/tbody/tr["+(tabla.size()-1)+"]")).getText().contains(servicio+categoria+color)){
 			a = true;
 		}

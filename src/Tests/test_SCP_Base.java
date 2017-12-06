@@ -65,7 +65,8 @@ public class test_SCP_Base extends TestBase {
 	
 	@AfterClass(groups= "SCP")
 	public void tearDown() {
-		driver.close();
+		driver.quit();
+		sleep(4000);
 	}
 	
 	
@@ -114,7 +115,7 @@ public class test_SCP_Base extends TestBase {
 			//System.out.println("Nombre: "+a.getText()+" ");
 			//System.out.print("Comentario: "+driver.findElement(By.cssSelector(".feeditemtext.cxfeeditemtext")).findElement(By.tagName("p")).getText());
 			if(!(a.getText().contains(Cuenta))) {
-				assertTrue(driver.findElement(By.cssSelector(".feeditemtext.cxfeeditemtext")).findElement(By.tagName("span")).isDisplayed());
+				assertTrue(driver.findElement(By.cssSelector(".feeditemtext.cxfeeditemtext")).findElement(By.tagName("p")).isDisplayed());
 				return;}
 				}
 		assertTrue(check);
