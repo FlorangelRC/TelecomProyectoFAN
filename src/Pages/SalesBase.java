@@ -418,19 +418,43 @@ for(WebElement e: btns){
 		agregar.get(1).click();
  }
  
- public void borrarcuenta(){
+ public void borrarcuenta(String nombre, String apellido){
 		try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 	 driver.get("https://crm--sit.cs14.my.salesforce.com/home/home.jsp");
 		try {Thread.sleep(15000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 		driver.findElement(By.id("Account_Tab")).click();
 		try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 		List<WebElement> cuentas = driver.findElements(By.cssSelector(".dataCell"));
-		System.out.println(cuentas.size());
 		for(WebElement e: cuentas){
-			System.out.println(e.getText());
-			
-		}
- }
+			if(e.getText().equals(nombre+","+apellido)){
+				e.click();
+				try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+				driver.findElement(By.xpath("//input[@name='delete' and @type='button]")).click();
+				try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+				 Alert alert = driver.switchTo().alert();
+				   alert.accept();
+					try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+				break;}}}
+ 
+ 
+ public void borrarcontacto(String nombre, String apellido){
+		try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+	 driver.get("https://crm--sit.cs14.my.salesforce.com/home/home.jsp");
+		try {Thread.sleep(15000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		driver.findElement(By.id("Contact_Tab")).click();
+		try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		List<WebElement> cuentas = driver.findElements(By.cssSelector(".dataCell"));
+		for(WebElement e: cuentas){
+			if(e.getText().equals(apellido+","+nombre)){
+				e.click();
+				try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+				driver.findElement(By.xpath("//input[@name='delete' and @type='button]")).click();
+				try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+				 Alert alert = driver.switchTo().alert();
+				   alert.accept();
+					try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+				break;}}}
+ 
  
  public void elegirvalidacion(String validacion){
 	 //DOC SMS o QA
