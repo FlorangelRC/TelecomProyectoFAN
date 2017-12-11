@@ -45,7 +45,7 @@ public class Login extends BasePage {
 	//Methods
 
 	public void ingresarAdminSCP() {
-	     Ecom_User_ID.sendKeys("u585991");
+	     Ecom_User_ID.sendKeys("u585244");
 	     Ecom_Password.sendKeys("Testa10k");
 	     loginButton2.click();
 	     try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
