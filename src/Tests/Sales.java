@@ -22,6 +22,7 @@ import org.testng.annotations.BeforeTest;
 import org.testng.annotations.Test;
 
 import Pages.BasePage;
+import Pages.ContactInformation;
 import Pages.ContactSearch;
 import Pages.CustomerCare;
 import Pages.Order;
@@ -112,7 +113,7 @@ public class Sales extends TestBase {
 		try {Thread.sleep(10000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 
 	}
-	
+
 	@Test(groups="Fase1")
 	public void TS6905_createdNewValidContact(){
 		SalesBase SB = new SalesBase(driver);
@@ -429,6 +430,311 @@ public class Sales extends TestBase {
 	Assert.assertTrue(a);
 	
 }
+	
+	
+	
+	
+	
+	@Test(groups="Fase1")
+	public void TS6901_Completar_los_campos_luego_de_una_busqueda_de_contacto_inexistente()	{
+		SalesBase SB = new SalesBase(driver);
+		SB.BuscarAvanzada(nombre, apellido, "", "", "");
+		CustomerCare CC = new CustomerCare(driver);
+		CC.obligarclick(driver.findElement(By.id("dataInput_nextBtn")));
+		try {Thread.sleep(10000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		ContactSearch contact = new ContactSearch(driver);
+		contact.searchContact(DNI, DocValue[0], "masculino");
+		driver.findElement(By.id("ContactSearch_nextBtn")).click();
+		try {Thread.sleep(20000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		
+		ContactInformation page = new ContactInformation(driver);
+		try {Thread.sleep(10000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		page.setContactInformation(nombre, apellido, nacimiento);
+		
+	}
+	
+	@Test(groups="Fase1")
+	public void TS6920_Seleccionar_opcion_de_validacion_de_identidad(){
+		SalesBase SB = new SalesBase(driver);
+		SB.BuscarAvanzada(nombre, apellido, "", "", "");
+		CustomerCare CC = new CustomerCare(driver);
+		CC.obligarclick(driver.findElement(By.id("dataInput_nextBtn")));
+		try {Thread.sleep(10000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		ContactSearch contact = new ContactSearch(driver);
+		contact.searchContact(DNI, DocValue[0], "masculino");
+		driver.findElement(By.id("ContactSearch_nextBtn")).click();
+		try {Thread.sleep(20000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		
+		ContactInformation page = new ContactInformation(driver);
+		page.setContactInformation(nombre, apellido, nacimiento);
+		driver.findElement(By.cssSelector(".slds-checkbox--faux")).click();
+		driver.findElement(By.id("Contact_nextBtn")).click();
+		
+	}
+	@Test(groups="Fase1")
+	public void TS6909_Ingresar_caracteres_numericos_en_campo_Apellido(){
+		SalesBase SB = new SalesBase(driver);
+		SB.BuscarAvanzada(nombre, apellido, "", "", "");
+		CustomerCare CC = new CustomerCare(driver);
+		CC.obligarclick(driver.findElement(By.id("dataInput_nextBtn")));
+		try {Thread.sleep(10000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		ContactSearch contact = new ContactSearch(driver);
+		contact.searchContact(DNI, DocValue[0], "masculino");
+		driver.findElement(By.id("ContactSearch_nextBtn")).click();
+		try {Thread.sleep(20000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		
+		driver.findElement(By.id("LastName")).sendKeys("123");
+		driver.findElement(By.cssSelector(".slds-form-element.vlc-flex.ng-scope.ng-invalid.ng-valid-minlength.ng-valid-maxlength.ng-dirty.ng-valid-parse.ng-invalid-pattern.ng-valid-required"));
+	}
+	
+	@Test(groups="Fase1")
+	public void TS6910_Ingresar_caracteres_numericos_en_campo_Nombre()
+	{	
+		SalesBase SB = new SalesBase(driver);
+		SB.BuscarAvanzada(nombre, apellido, "", "", "");
+		CustomerCare CC = new CustomerCare(driver);
+		CC.obligarclick(driver.findElement(By.id("dataInput_nextBtn")));
+		try {Thread.sleep(10000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		ContactSearch contact = new ContactSearch(driver);
+		contact.searchContact(DNI, DocValue[0], "masculino");
+		driver.findElement(By.id("ContactSearch_nextBtn")).click();
+		try {Thread.sleep(20000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		driver.findElement(By.id("FirstName")).clear();
+		driver.findElement(By.id("FirstName")).sendKeys("123");
+		Assert.assertTrue(driver.findElement(By.cssSelector(".slds-form-element.vlc-flex.ng-scope.ng-invalid.ng-valid-minlength.ng-valid-maxlength.ng-dirty.ng-valid-parse.ng-invalid-pattern.ng-valid-required")).isDisplayed());	
+	}	
+	
+	@Test(groups="Fase1")
+	public void TS6949_Verificar_Fecha_de_Nacimiento_con_ingreso_manual() {
+		SalesBase SB = new SalesBase(driver);
+		SB.BuscarAvanzada(nombre, apellido, "", "", "");
+		CustomerCare CC = new CustomerCare(driver);
+		CC.obligarclick(driver.findElement(By.id("dataInput_nextBtn")));
+		try {Thread.sleep(10000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		ContactSearch contact = new ContactSearch(driver);
+		contact.searchContact(DNI, DocValue[0], "masculino");
+		driver.findElement(By.id("ContactSearch_nextBtn")).click();
+		try {Thread.sleep(20000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		
+		driver.findElement(By.id("Birthdate")).sendKeys(nacimiento);
+		Assert.assertTrue(	driver.findElement(By.cssSelector(".slds-form-element.vlc-flex.ng-scope.ng-dirty.ng-valid-parse.ng-valid-required.ng-valid.ng-valid-valid")).isDisplayed());
+	}
+	
+	@Test(groups="Fase1")
+	public void TS6950_Fecha_de_Nacimiento_con_ingreso_manual_Anio_con_letras_o_mas_de_5_digitos(){
+		SalesBase SB = new SalesBase(driver);
+		SB.BuscarAvanzada(nombre, apellido, "", "", "");
+		CustomerCare CC = new CustomerCare(driver);
+		CC.obligarclick(driver.findElement(By.id("dataInput_nextBtn")));
+		try {Thread.sleep(10000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		ContactSearch contact = new ContactSearch(driver);
+		contact.searchContact(DNI, DocValue[0], "masculino");
+		driver.findElement(By.id("ContactSearch_nextBtn")).click();
+		try {Thread.sleep(20000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		
+		driver.findElement(By.id("Birthdate")).sendKeys(DateOfBirthdayWrong +"4");
+		try {Thread.sleep(1000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		Assert.assertTrue(driver.findElement(By.cssSelector(".slds-form-element.vlc-flex.ng-scope.ng-dirty.ng-valid-parse.ng-valid-required.ng-invalid.ng-invalid-valid")).isDisplayed());
+		try {Thread.sleep(1000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		driver.findElement(By.id("Birthdate")).clear();
+		driver.findElement(By.id("Birthdate")).sendKeys("agosto");
+		try {Thread.sleep(1000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		Assert.assertTrue(driver.findElement(By.cssSelector(".slds-form-element.vlc-flex.ng-scope.ng-dirty.ng-valid-parse.ng-valid-required.ng-invalid.ng-invalid-valid")).isDisplayed());
+
+	}
+	
+
+	
+	@Test(groups="Fase1")
+	public void TS6951_Verificar_Fecha_de_Nacimiento_con_ingreso_manual_Dia_Fuera_de_rango(){
+		SalesBase SB = new SalesBase(driver);
+		SB.BuscarAvanzada(nombre, apellido, "", "", "");
+		CustomerCare CC = new CustomerCare(driver);
+		CC.obligarclick(driver.findElement(By.id("dataInput_nextBtn")));
+		try {Thread.sleep(10000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		ContactSearch contact = new ContactSearch(driver);
+		contact.searchContact(DNI, DocValue[0], "masculino");
+		driver.findElement(By.id("ContactSearch_nextBtn")).click();
+		try {Thread.sleep(20000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		
+		driver.findElement(By.id("Birthdate")).sendKeys("32/08/1999");
+		Assert.assertTrue(driver.findElement(By.cssSelector(".slds-form-element.vlc-flex.ng-scope.ng-dirty.ng-valid-parse.ng-valid-required.ng-invalid.ng-invalid-valid")).isDisplayed());
+		try {Thread.sleep(1000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		driver.findElement(By.id("Birthdate")).clear();
+		try {Thread.sleep(1000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		driver.findElement(By.id("Birthdate")).sendKeys("00/08/1999");
+		Assert.assertTrue(driver.findElement(By.cssSelector(".slds-form-element.vlc-flex.ng-scope.ng-dirty.ng-valid-parse.ng-valid-required.ng-invalid.ng-invalid-valid")).isDisplayed());
+
+	}
+	
+
+	
+	@Test(groups="Fase1")
+	public void TS6952_Verificar_Fecha_de_Nacimiento_con_ingreso_manual_Mes_Fuera_de_rango() 
+	{
+		SalesBase SB = new SalesBase(driver);
+		SB.BuscarAvanzada(nombre, apellido, "", "", "");
+		CustomerCare CC = new CustomerCare(driver);
+		CC.obligarclick(driver.findElement(By.id("dataInput_nextBtn")));
+		try {Thread.sleep(10000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		ContactSearch contact = new ContactSearch(driver);
+		contact.searchContact(DNI, DocValue[0], "masculino");
+		driver.findElement(By.id("ContactSearch_nextBtn")).click();
+		try {Thread.sleep(20000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		
+		driver.findElement(By.id("Birthdate")).sendKeys("22/13/1999");
+		Assert.assertTrue(driver.findElement(By.cssSelector(".slds-form-element.vlc-flex.ng-scope.ng-dirty.ng-valid-parse.ng-valid-required.ng-invalid.ng-invalid-valid")).isDisplayed());
+		try {Thread.sleep(1000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		driver.findElement(By.id("Birthdate")).clear();
+		try {Thread.sleep(1000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		driver.findElement(By.id("Birthdate")).sendKeys("22/00/1999");
+		Assert.assertTrue(driver.findElement(By.cssSelector(".slds-form-element.vlc-flex.ng-scope.ng-dirty.ng-valid-parse.ng-valid-required.ng-invalid.ng-invalid-valid")).isDisplayed());
+
+	}
+	
+	@Test(groups="Fase1")
+	public void TS6974_Verificar_valor_del_check_de_email_por_default() 
+	{	
+		SalesBase SB = new SalesBase(driver);
+		SB.BuscarAvanzada(nombre, apellido, "", "", "");
+		CustomerCare CC = new CustomerCare(driver);
+		CC.obligarclick(driver.findElement(By.id("dataInput_nextBtn")));
+		try {Thread.sleep(10000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		ContactSearch contact = new ContactSearch(driver);
+		contact.searchContact(DNI, DocValue[0], "masculino");
+		driver.findElement(By.id("ContactSearch_nextBtn")).click();
+		try {Thread.sleep(20000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		
+		Assert.assertTrue(!driver.findElement(By.cssSelector(".slds-form-element.vlc-flex.ng-pristine.ng-scope.ng-invalid.ng-invalid-required")).isSelected());
+	}
+	
+	@Test(groups="Fase1")
+	public void TS6941_Verificar_check_de_no_tener_email() 
+	{
+		SalesBase SB = new SalesBase(driver);
+		SB.BuscarAvanzada(nombre, apellido, "", "", "");
+		CustomerCare CC = new CustomerCare(driver);
+		CC.obligarclick(driver.findElement(By.id("dataInput_nextBtn")));
+		try {Thread.sleep(10000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		ContactSearch contact = new ContactSearch(driver);
+		contact.searchContact(DNI, DocValue[0], "masculino");
+		driver.findElement(By.id("ContactSearch_nextBtn")).click();
+		try {Thread.sleep(20000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		
+		driver.findElement(By.cssSelector(".slds-checkbox--faux")).click();
+		Assert.assertTrue(driver.findElement(By.cssSelector(".slds-form-element.vlc-flex.ng-pristine.ng-scope.ng-valid.ng-valid-required")).isSelected());
+	}
+	
+
+	@Test(groups="Fase1")
+	public void TS6934_Verificar_campo_Apellido_obligatorio(){
+		boolean a= false;
+		SalesBase SB = new SalesBase(driver);
+		SB.BuscarAvanzada(nombre, apellido, "", "", "");
+		CustomerCare CC = new CustomerCare(driver);
+		CC.obligarclick(driver.findElement(By.id("dataInput_nextBtn")));
+		try {Thread.sleep(10000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		ContactSearch contact = new ContactSearch(driver);
+		contact.searchContact(DNI, DocValue[0], "masculino");
+		driver.findElement(By.id("ContactSearch_nextBtn")).click();
+		try {Thread.sleep(20000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		
+	driver.findElement(By.id("LastName")).clear();
+	try {Thread.sleep(1000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+	List<WebElement>asl=driver.findElements(By.cssSelector(".description.ng-binding"));
+	for(WebElement e: asl){
+		if(e.getText().equals("Campo Requerido")){
+			a=true;}}
+	Assert.assertTrue(a);
+	}
+	
+	@Test(groups="Fase1")
+	public void TS6936_Verificar_campo_Fecha_de_Nacimiento_obligatorio(){
+		boolean a= false;
+		SalesBase SB = new SalesBase(driver);
+		SB.BuscarAvanzada(nombre, apellido, "", "", "");
+		CustomerCare CC = new CustomerCare(driver);
+		CC.obligarclick(driver.findElement(By.id("dataInput_nextBtn")));
+		try {Thread.sleep(10000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		ContactSearch contact = new ContactSearch(driver);
+		contact.searchContact(DNI, DocValue[0], "masculino");
+		driver.findElement(By.id("ContactSearch_nextBtn")).click();
+		try {Thread.sleep(20000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		
+	driver.findElement(By.id("Birthdate")).clear();
+	try {Thread.sleep(1000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+	List<WebElement>asl=driver.findElements(By.cssSelector(".description.ng-binding"));
+	for(WebElement e: asl){
+		if(e.getText().equals("Campo Requerido")){
+			a=true;}}
+	Assert.assertTrue(a);
+	}
+	
+	@Test(groups="Fase1")
+	public void TS6938_Verificar_campo_Nombre_obligatorio(){
+		boolean a= false;
+		SalesBase SB = new SalesBase(driver);
+		SB.BuscarAvanzada(nombre, apellido, "", "", "");
+		CustomerCare CC = new CustomerCare(driver);
+		CC.obligarclick(driver.findElement(By.id("dataInput_nextBtn")));
+		try {Thread.sleep(10000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		ContactSearch contact = new ContactSearch(driver);
+		contact.searchContact(DNI, DocValue[0], "masculino");
+		driver.findElement(By.id("ContactSearch_nextBtn")).click();
+		try {Thread.sleep(20000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		
+	driver.findElement(By.id("FirstName")).clear();
+	try {Thread.sleep(1000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+	List<WebElement>asl=driver.findElements(By.cssSelector(".description.ng-binding"));
+	for(WebElement e: asl){
+		if(e.getText().equals("Campo Requerido")){
+			a=true;}}
+	Assert.assertTrue(a);	}
+	
+	@Test(groups="Fase1")
+	public void TS6931_calendarBirthDate(){
+		SalesBase SB = new SalesBase(driver);
+		SB.BuscarAvanzada(nombre, apellido, "", "", "");
+		CustomerCare CC = new CustomerCare(driver);
+		CC.obligarclick(driver.findElement(By.id("dataInput_nextBtn")));
+		try {Thread.sleep(10000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		ContactSearch contact = new ContactSearch(driver);
+		contact.searchContact(DNI, DocValue[0], "masculino");
+		driver.findElement(By.id("ContactSearch_nextBtn")).click();
+		try {Thread.sleep(20000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		
+		driver.findElement(By.id("Birthdate")).click();
+		driver.findElement(By.cssSelector(".datepicker.-bottom-left-.-from-bottom-.active"));
+	}
+
+	@Test(groups="Fase1")
+	public void TS6957_Verificar_mascara_del_campo_Fecha_de_Nacimiento() {
+
+		SalesBase SB = new SalesBase(driver);
+		SB.BuscarAvanzada(nombre, apellido, "", "", "");
+		CustomerCare CC = new CustomerCare(driver);
+		CC.obligarclick(driver.findElement(By.id("dataInput_nextBtn")));
+		try {Thread.sleep(10000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		ContactSearch contact = new ContactSearch(driver);
+		contact.searchContact(DNI, DocValue[0], "masculino");
+		driver.findElement(By.id("ContactSearch_nextBtn")).click();
+		try {Thread.sleep(20000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		
+		List<WebElement> profileinfo = driver.findElements(By.id("Birthdate")); 
+		Assert.assertTrue(driver.findElement(By.id("Birthdate")).isDisplayed());
+		 for(int i=1; i<profileinfo.size(); i+=2){
+		  String b = (profileinfo.get(i).getText());  
+		  String datePattern = "\\d{2}/\\d{2}/\\d{4}";
+		  String date1 = b;
+		  Boolean isDate1 = date1.matches(datePattern);
+		 Assert.assertTrue(isDate1);
+		 }
+
+	}
+	
+	
+	
+	
 	
 	
 	
