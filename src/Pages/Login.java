@@ -128,4 +128,13 @@ public class Login extends BasePage {
 			  loginButton2.click();
 			  try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 		}
+		
+		public void ingresarSCPAdminServices() {
+			  //logininterno.click();
+			  try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+			  Ecom_User_ID.sendKeys("uat090571");
+			  Ecom_Password.sendKeys("Testa10k");
+			  loginButton2.click();
+			  try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		}
 }

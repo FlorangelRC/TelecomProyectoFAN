@@ -135,6 +135,15 @@ public class TestBase {
 	         Login page0 = new Login(driver);
 	         page0.ingresarUsuarioSCP();
 	     }
+	     
+	     
+	     public void loginSCPAdminServices(WebDriver driver) {
+		       driver.get("https://crm--uat2.cs92.my.salesforce.com");
+		       try {Thread.sleep(6000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		         Login page0 = new Login(driver);
+		         page0.ingresarSCPAdminServices();
+		     }
+	     
 	public void login1(WebDriver driver) {
 		driver.get("https://goo.gl/ETjDYJ");
 		try {Thread.sleep(1000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}

@@ -28,9 +28,9 @@ public class SCPAdministracionDeServicios extends TestBase {
 	public void init() throws Exception
 	{
 		this.driver = setConexion.setupEze();
-		driver.get("http://www.google.com");
+		//driver.get("http://www.google.com");
 		try {Thread.sleep(15000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
-		loginSCPAdmin(driver);
+		loginSCPAdminServices(driver);
 		try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 		
 	}
