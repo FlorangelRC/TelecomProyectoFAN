@@ -63,7 +63,7 @@ private WebDriver driver;
 		checkbox.get(1).click();
 		driver.findElement(By.id("j_id0:j_id91:j_id111")).click();
 		try {Thread.sleep(3000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
-		Assert.assertTrue(driver.findElement(By.cssSelector(".tl-timemarker-content.tl-timemarker-content-small")).isDisplayed());
+		Assert.assertTrue(driver.findElement(By.className("tl-timenav-slider-background")).isDisplayed());
 	}
 	
 	@Test(groups = "SCP")
@@ -75,7 +75,7 @@ private WebDriver driver;
 		driver.findElement(By.id("j_id0:j_id91:j_id111")).click();
 		try {Thread.sleep(3000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 		Assert.assertTrue(driver.findElement(By.className("tl-message-full")).isDisplayed() 
-						  && driver.findElement(By.cssSelector(".tl-timemarker-content.tl-timemarker-content-small")).isDisplayed());
+						  && driver.findElement(By.className("tl-timenav-slider-background")).isDisplayed());
 	}
 	
 	@Test(groups = "SCP")
