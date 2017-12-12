@@ -184,13 +184,13 @@ public class test_SCP_Base extends TestBase {
 	    if(page.goToOportunity()) {
 	    	try {Thread.sleep(3000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 	    	String[] primerBloque= {"información adicional de ventas","valorizado de la oportunidad","estados proyectos en delta"};
-	    	String[] segundoBloque= {"detalle de oportunidad","productos (telecom)","actividades abiertas","competidores","notas y archivos adjuntos","contactos"};
+	    	String[] segundoBloque= {"detalle de oportunidad","productos","contactos","funciones de contactos","actividades abiertas","competidores","historial de campos de oportunidades","notas y archivos adjuntos"};
 	    	
 	    	//Se verifica que el primer bloque
 	    	List <WebElement> listA= driver.findElements(By.cssSelector(".brandTertiaryBrd.pbSubheader.tertiaryPalette"));
 	    	List<String> titleOne = new ArrayList<String>();
 	    	for(WebElement comparacion:listA) {
-	    		System.out.println(comparacion.getText().toLowerCase());
+	    		//System.out.println(comparacion.getText().toLowerCase());
 	    		titleOne.add(comparacion.getText().toLowerCase());}
 	    		
 	    	for(String a:primerBloque) {
@@ -204,7 +204,7 @@ public class test_SCP_Base extends TestBase {
 	    	List <WebElement> estructuraOp2=driver.findElements(By.className("pbTitle"));
 	    	List<String> titleTwo = new ArrayList<String>();
 	 	    for(WebElement agregar:estructuraOp2) {
-	 	    	System.out.println(agregar.getText().toLowerCase());
+	 	    	//System.out.println(agregar.getText().toLowerCase());
 	 	    	if(i==1){}
 	 	    	else
 	 	    		titleTwo.add(agregar.getText().toLowerCase()); i++;}
@@ -369,7 +369,7 @@ public class test_SCP_Base extends TestBase {
 	    	for(WebElement a:compBefore) {
 	    		if(a.getText().toLowerCase().startsWith("notas")) { 
 	    			a.click();}} //hace click en notas para bajar
-	    	driver.findElement(By.xpath("//*[@id=\"0063F000001tZ8F_RelatedNoteList_body\"]/table/tbody/tr[2]/td[2]/a")).click();	
+	    	driver.findElement(By.xpath("//*[@id=\"0063F000002UbLj_RelatedNoteList_body\"]/table/tbody/tr[2]/td[2]/a")).click();	
 	    	try {Thread.sleep(3000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 	    	List <WebElement> cuerpoNota= driver.findElements(By.className("data2Col"));
 	    	assertTrue(cuerpoNota.get(4).isDisplayed());
