@@ -107,38 +107,52 @@ public class CustomerCare extends BasePage {
 	private WebElement buscargestion;
 	
 	@FindBy(css = ".x-plain-header.sd_primary_tabstrip.x-unselectable .x-tab-strip-closable")
-		private List<WebElement> pestañasPrimarias;
+	private List<WebElement> pestañasPrimarias;
+	
 	@FindBy(css = ".x-grid3-cell-inner.x-grid3-col-ACCOUNT_NAME")
-		private List<WebElement> cuentas;
+	private List<WebElement> cuentas;
+	
 	@FindBy(css = ".x-menu-item.accountMru.standardObject.sd-nav-menu-item")
-		private List<WebElement> desplegable;
+	private List<WebElement> desplegable;
+	
 	@FindBy(css = ".x-plain-body.sd_nav_tabpanel_body.x-tab-panel-body-top .x-tab-strip-closable")
-		private List<WebElement> pestañasSecundarias;
+	private List<WebElement> pestañasSecundarias;
+	
 	@FindBy(css = ".console-card.active")
-		private List<WebElement> lineasPrepago;
+	private List<WebElement> lineasPrepago;
+	
 	@FindBy(css = ".via-slds.slds-m-around--small.ng-scope")
-		private List<WebElement> tarjetasHistorial;
+	private List<WebElement> tarjetasHistorial;
+	
 	@FindBy(xpath = "//button[@class='slds-button slds-button--neutral slds-truncate']")
-		private List<WebElement> gestionesEncontradas;
+	private List<WebElement> gestionesEncontradas;
+	
 	@FindBy(css = ".x-panel.view_context.x-border-panel")
-		private List<WebElement> panelesLaterales;
+	private List<WebElement> panelesLaterales;
+	
 	@FindBy(css = ".sd_secondary_container.x-border-layout-ct")
-		private List<WebElement> panelesCentrales;
+	private List<WebElement> panelesCentrales;
 	
 	@FindBy(css = ".x-btn-small.x-btn-icon-small-left")
-		private WebElement selector;
+	private WebElement selector;
+	
 	@FindBy(css = ".x-plain-body.sd_nav_tabpanel_body.x-tab-panel-body-top iframe")
-		private WebElement marcoCuentas;
+	private WebElement marcoCuentas;
+	
 	@FindBy(name = "fcf")
-		private WebElement selectCuentas;
+	private WebElement selectCuentas;
+	
 	@FindBy(xpath = "//input[@ng-model='searchTerm']")
-		private WebElement buscadorGestiones;
+	private WebElement buscadorGestiones;
+	
 	@FindBy(css = ".console-flyout.active.flyout .icon.icon-v-troubleshoot-line")
-		private WebElement btn_ProblemaConRecargas;
+	private WebElement btn_ProblemaConRecargas;
+	
 	@FindBy(css = ".x-layout-collapsed.x-layout-collapsed-east.x-layout-cmini-east")
-		private WebElement panelDerechoColapsado;
+	private WebElement panelDerechoColapsado;
+	
 	@FindBy(css = "icon icon-v-close")
-		private WebElement cerrarFlyout;
+	private WebElement cerrarFlyout;
 
 
 	public void elegirCuenta(String nombreCuenta) {		
