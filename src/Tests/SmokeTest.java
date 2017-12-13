@@ -31,6 +31,8 @@ public class SmokeTest extends TestBase  {
 	
 	@AfterMethod(groups={"Smoke"})
 	public void home(){
+		try {Thread.sleep(10000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		driver.get("https://crm--sit.cs14.my.salesforce.com/home/home.jsp?");
 		try {Thread.sleep(2000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 		String a = driver.findElement(By.id("tsidLabel")).getText();
 		if(!a.equals("Ventas")){
