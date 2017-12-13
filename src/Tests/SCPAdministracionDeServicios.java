@@ -28,7 +28,7 @@ public class SCPAdministracionDeServicios extends TestBase {
 	public void init() throws Exception
 	{
 		this.driver = setConexion.setupEze();
-		//driver.get("http://www.google.com");
+		driver.get("http://www.google.com");
 		try {Thread.sleep(15000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 		loginSCPAdminServices(driver);
 		try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
@@ -38,7 +38,7 @@ public class SCPAdministracionDeServicios extends TestBase {
 	@BeforeMethod(groups = "SCP")
 	public void setup() {
 		SCP pScp = new SCP(driver);
-		pScp.goToMenu("scp");
+		//pScp.goToMenu("scp");
 		try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 		pScp.clickOnTabByName("cuentas");
 		try {Thread.sleep(7000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
@@ -152,7 +152,8 @@ public class SCPAdministracionDeServicios extends TestBase {
 		}
 		try {Thread.sleep(3000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 		servicioList = driver.findElements(By.cssSelector(".btn.btn-default.btn-sm"));
-		pcp.goTop();
+		WebElement subir = driver.findElement(By.id("userNavLabel"));
+		  ((JavascriptExecutor)driver).executeScript("window.scrollTo(0,"+subir.getLocation().y+")");
 		for (WebElement UnS : servicioList) {
 			if (UnS.getText().toLowerCase().contains("guardar")) {
 				UnS.click();
@@ -373,9 +374,8 @@ public class SCPAdministracionDeServicios extends TestBase {
 		}
 		assertTrue(botonW&&botonG);
 		servicioList = driver.findElement(By.className("panel-body")).findElements(By.className("h1"));
-		List<WebElement> reportList = driver.findElements(By.xpath("//*[@id='j_id0:j_id118']/div"));
-		reportList.remove(reportList.size()-1);
-		assertEquals(servicioList.size(),reportList.size());
+		List<WebElement> reportList = driver.findElement(By.className("panel-body")).findElements(By.cssSelector(".table.table-striped.table-bordered.table-condensed"));
+		assertTrue(servicioList.size()<=reportList.size());
 		
 	}
 	

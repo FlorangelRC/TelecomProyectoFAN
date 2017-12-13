@@ -3,6 +3,7 @@ package Tests;
 import static org.testng.Assert.assertEquals;
 import static org.testng.Assert.assertTrue;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.openqa.selenium.By;
@@ -27,7 +28,7 @@ import Pages.RegistroEventoMasivo;
 import Pages.setConexion;
 
 
-public class testRegistroEventoMasico extends TestBase{
+public class testRegistroEventoMasivo extends TestBase{
 	
 	private WebDriver driver;
 	public RegistroEventoMasivo pageRegistroEventoMasivo = new RegistroEventoMasivo(driver);
@@ -127,7 +128,7 @@ public class testRegistroEventoMasico extends TestBase{
 	
 	@AfterClass(groups= "TechnicalCare")
 	public void tearDown() {
-		driver.close();
+		driver.quit();
 	}
 	
 	
@@ -145,7 +146,61 @@ public class testRegistroEventoMasico extends TestBase{
 		}
 		return null;
 	}
+	//Flor
+	@Test(groups = "TechnicalCare") 
+	public void TS16246_CRM_Fase_2_Technical_Care_Sistema_Incidentes_Masivos_Creación_de_Eventos_Masivos_Canal_Formato() {
+		Accounts accPage = new Accounts(driver);
+		boolean estan = true;
+		String[] todos = {"web","ivr","sms","sistema de gestion","ussd","todos los medios","redes sociales"};
+		try {Thread.sleep(3000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		driver.switchTo().frame(accPage.getFrameForElement(driver, By.id("InputValues_nextBtn")));
+		driver.findElement(By.id("SelectChannel")).click();
+		try {Thread.sleep(2000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		List<WebElement> optns = driver.findElement(By.id("SelectChannel")).findElements(By.tagName("option"));
+		List<String> textos = new ArrayList<String>();
+		for (WebElement optn : optns)
+		{
+			textos.add(optn.getText().toLowerCase());
+		}
+		for (String uno : todos) {
+			if (!textos.contains(uno)) {
+				estan = false;
+			}
+		}
+		try {Thread.sleep(2000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		assertTrue(estan);
+	}
 	
+	//Flor
+	@Test(groups = "TechnicalCare") 
+	public void TS16318_CRM_Fase_2_Technical_Care_Sistema_Incidentes_Masivos_Creación_de_Eventos_Masivos_Fecha_De_Inicio_Formato() {
+		RegistroEventoMasivo REM = new RegistroEventoMasivo(driver);
+		Accounts accPage = new Accounts(driver);
+		try {Thread.sleep(3000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		driver.switchTo().frame(accPage.getFrameForElement(driver, By.id("InputValues_nextBtn")));
+		((JavascriptExecutor)driver).executeScript("window.scrollTo(0,"+ driver.findElement(By.id("StartDate")).getLocation().y+")");
+		driver.findElement(By.id("StartDate")).click();
+		try {Thread.sleep(1000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		((JavascriptExecutor)driver).executeScript("window.scrollTo(0,"+ driver.findElement(By.id("datepickers-container")).findElement(By.cssSelector(".datepicker--cell.datepicker--cell-day.-current-")).getLocation().y+")");
+		driver.findElement(By.id("datepickers-container")).findElement(By.cssSelector(".datepicker--cell.datepicker--cell-day.-current-")).click();
+		try {Thread.sleep(2000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		assertTrue(REM.validarFecha(driver.findElement(By.id("StartDate")).getAttribute("value"), "dd/mm/yyyy HH:mm"));
+	}
+	
+	//Flor
+	@Test(groups = "TechnicalCare") 
+	public void TS16321_CRM_Fase_2_Technical_Care_Sistema_Incidentes_Masivos_Creación_de_Eventos_Masivos_Fecha_De_Fin_Formato() {
+		RegistroEventoMasivo REM = new RegistroEventoMasivo(driver);
+		Accounts accPage = new Accounts(driver);
+		try {Thread.sleep(3000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		driver.switchTo().frame(accPage.getFrameForElement(driver, By.id("InputValues_nextBtn")));
+		((JavascriptExecutor)driver).executeScript("window.scrollTo(0,"+ driver.findElement(By.id("EndDate")).getLocation().y+")");
+		driver.findElement(By.id("EndDate")).click();
+		try {Thread.sleep(2000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		driver.findElement(By.id("datepickers-container")).findElements(By.cssSelector(".datepicker--cell.datepicker--cell-day.-current-")).get(1).click();
+		try {Thread.sleep(2000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		assertTrue(REM.validarFecha(driver.findElement(By.id("EndDate")).getAttribute("value"), "dd/mm/yyyy HH:mm"));
+	}
 	
 	
 	//Listo
