@@ -17,6 +17,7 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.Keys;
 import org.openqa.selenium.NoSuchElementException;
+import org.openqa.selenium.SearchContext;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Action;
@@ -426,10 +427,12 @@ for(WebElement e: btns){
 		try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 		List<WebElement> cuentas = driver.findElements(By.cssSelector(".dataCell"));
 		for(WebElement e: cuentas){
-			if(e.getText().equals(nombre+","+apellido)){
-				e.click();
+
+			if(e.getText().equals(nombre+" "+apellido)){
+				e.findElement(By.tagName("a")).click();
 				try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
-				driver.findElement(By.xpath("//input[@name='delete' and @type='button]")).click();
+				WebElement btns = driver.findElement(By.className("pbButton"));
+				btns.findElement(By.name("delete")).click();
 				try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 				 Alert alert = driver.switchTo().alert();
 				   alert.accept();
@@ -437,7 +440,7 @@ for(WebElement e: btns){
 				break;}}}
  
  
- public void borrarcontacto(String nombre, String apellido){
+ public void borrarcontacto(String apellido, String nombre){
 		try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 	 driver.get("https://crm--sit.cs14.my.salesforce.com/home/home.jsp");
 		try {Thread.sleep(15000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
@@ -445,10 +448,11 @@ for(WebElement e: btns){
 		try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 		List<WebElement> cuentas = driver.findElements(By.cssSelector(".dataCell"));
 		for(WebElement e: cuentas){
-			if(e.getText().equals(apellido+","+nombre)){
-				e.click();
-				try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
-				driver.findElement(By.xpath("//input[@name='delete' and @type='button]")).click();
+			if(e.getText().equals(apellido+", "+nombre)){
+				e.findElement(By.tagName("a")).click();
+				try {Thread.sleep(10000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+				WebElement btns = driver.findElement(By.className("pbButton"));
+				btns.findElement(By.name("del")).click();
 				try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 				 Alert alert = driver.switchTo().alert();
 				   alert.accept();

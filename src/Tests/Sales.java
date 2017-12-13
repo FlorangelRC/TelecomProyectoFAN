@@ -67,9 +67,9 @@ public class Sales extends TestBase {
 		try {Thread.sleep(10000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 		driver.get("https://crm--sit.cs14.my.salesforce.com/home/home.jsp?tsid=02u41000000QWha/");
 		try {Thread.sleep(10000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
-		SalesBase SB = new SalesBase(driver);
+	SalesBase SB= new SalesBase(driver);
+		SB.borrarcuenta(nombre,apellido);
 		SB.borrarcontacto(apellido,nombre);
-		SB.borrarcuenta(nombre, apellido);
 
 	}
 	
@@ -768,10 +768,7 @@ public class Sales extends TestBase {
 	@Test(groups="Sales")
 	
 	public void TS14277_Ventas_NumeroOrden_Verificar_Orden_de_Venta_Abierta_Medio_de_Pago(){
-		SalesBase SB= new SalesBase(driver);
-		
-		SB.borrarcuenta(nombre,apellido);
-		SB.borrarcontacto(apellido,nombre);
+	
 		Assert.assertTrue(false);
 		
 	}

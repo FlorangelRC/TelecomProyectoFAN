@@ -1,13 +1,20 @@
 package Tests;
 
 
+import java.util.List;
+
 import org.openqa.selenium.By;
 
 
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
+import org.openqa.selenium.interactions.Actions;
+import org.openqa.selenium.support.ui.Select;
 import org.testng.Assert;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.AfterTest;
+import org.testng.annotations.BeforeClass;
+import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 import Pages.setConexion;
 
@@ -16,13 +23,16 @@ public class SmokeTest extends TestBase  {
 
 	
 	private WebDriver driver;
-	@AfterTest(groups= {"Smoke"})
+	
+	//@AfterTest(groups= {"Smoke"})
 	public void tearDown() {
 			driver.close();
 	}
 	
 	@AfterMethod(groups={"Smoke"})
 	public void home(){
+		try {Thread.sleep(10000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		driver.get("https://crm--sit.cs14.my.salesforce.com/home/home.jsp?");
 		try {Thread.sleep(2000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 		String a = driver.findElement(By.id("tsidLabel")).getText();
 		if(!a.equals("Ventas")){
@@ -32,13 +42,13 @@ public class SmokeTest extends TestBase  {
 	}
 
 	
-	
 	@Test(groups={"Smoke"})
 	public void TS1_Login(){
-			this.driver = setConexion.setupEze();
-			try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
-			login(driver);
-			System.out.println("Login = OK");}
+		this.driver = setConexion.setupEze();
+		try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		login(driver);
+		System.out.println("Login = OK");
+	}
 	
 	@Test(groups={"Smoke", "Sales"})
 	public void TS2_Modulo_Ventas(){
@@ -89,7 +99,75 @@ public class SmokeTest extends TestBase  {
 		String b = driver.findElement(By.id("tsidLabel")).getText();
 		Assert.assertTrue(b.equals("SCP"));
 		Assert.assertTrue(driver.findElement(By.className("wt-Strategic-Client-Plan")).isEnabled());
-		System.out.println("Modulo SCP = OK");}
-		
+		System.out.println("Modulo SCP = OK");}		
+	}
+	
+	@Test (groups= {"Smoke"})
+	public void TS5_Cuentas_Consola_FAN() {
+		TS3_Consola_FAN();		
+		WebElement selector = driver.findElement(By.cssSelector(".x-btn-small.x-btn-icon-small-left"));
+		WebElement btnSplit = selector.findElement(By.className("x-btn-split"));
+		Actions builder = new Actions(driver);   
+		builder.moveToElement(btnSplit, 245, 20).click().build().perform();
+		List <WebElement> desplegable = driver.findElements(By.cssSelector(".x-menu-item.accountMru.standardObject.sd-nav-menu-item"));
+		for (WebElement op : desplegable) {
+			if (op.getText().equalsIgnoreCase("Cuentas")) op.click();
+		}
+		try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		List <WebElement> boton = driver.findElements(By.className("btn"));
+		for (WebElement x : boton) {
+			if (x.getText().contains("Nueva cuenta")) {
+				Assert.assertTrue(x.isDisplayed());
+			}
+		}	
+	}
+	
+	@Test (groups= {"Smoke"})
+	public void TS6_Casos_Consola_FAN() {
+		TS3_Consola_FAN();		
+		WebElement selector = driver.findElement(By.cssSelector(".x-btn-small.x-btn-icon-small-left"));
+		WebElement btnSplit = selector.findElement(By.className("x-btn-split"));
+		Actions builder = new Actions(driver);   
+		builder.moveToElement(btnSplit, 245, 20).click().build().perform();
+		List <WebElement> casos = driver.findElements(By.className("x-menu-item-text"));
+		for (WebElement x : casos) {
+			if (x.getText().equals("Casos")) {
+				x.click();
+			}
+		}
+		try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		List <WebElement> boton = driver.findElements(By.className("btn"));
+		for (WebElement x : boton) {
+			if (x.getText().contains("Nuevo caso")) {
+				Assert.assertTrue(x.isDisplayed());
+			}
+		}
+	}
+	
+	@Test (groups= {"Smoke"})
+	public void TS7_Cuentas_Fernando_Care_Y_Andres_Care() {
+		TS3_Consola_FAN();		
+		WebElement selector = driver.findElement(By.cssSelector(".x-btn-small.x-btn-icon-small-left"));
+		WebElement btnSplit = selector.findElement(By.className("x-btn-split"));
+		Actions builder = new Actions(driver);   
+		builder.moveToElement(btnSplit, 245, 20).click().build().perform();
+		List <WebElement> desplegable = driver.findElements(By.cssSelector(".x-menu-item.accountMru.standardObject.sd-nav-menu-item"));
+		for (WebElement op : desplegable) {
+			if (op.getText().equalsIgnoreCase("Cuentas")) op.click();
+		}
+		try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		WebElement marcoCuentas = driver.findElement(By.cssSelector(".x-plain-body.sd_nav_tabpanel_body.x-tab-panel-body-top iframe"));
+		driver.switchTo().frame(marcoCuentas);
+		WebElement selectCuentas = driver.findElement(By.name("fcf"));
+		Select field = new Select(selectCuentas);
+		if (!field.getFirstSelectedOption().getText().equalsIgnoreCase("Todas las cuentas"))
+			field.selectByVisibleText("Todas las cuentas");
+		try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		List <WebElement> cuenta = driver.findElements(By.cssSelector(".x-grid3-col.x-grid3-cell.x-grid3-td-ACCOUNT_NAME"));
+		for (WebElement x : cuenta) {
+			if (x.getText().equals("Fernando Care") && x.getText().equals("Andres Care")) {
+				Assert.assertTrue(x.isDisplayed());
+			}
+		}
 	}
 }
