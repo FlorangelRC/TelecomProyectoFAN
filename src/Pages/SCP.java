@@ -316,4 +316,22 @@ private boolean isFileDownloaded_Ext(String dirPath, String ext){
     }
     return flag;
 }
+
+public void comentarycompartir(String comentario){
+	WebElement element = driver.findElement(By.cssSelector(".publisherTextAreaInner"));
+	try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+	((JavascriptExecutor)driver).executeScript("window.scrollTo(0,"+element.getLocation().y+")");
+	//driver.findElement(By.id("publishereditablearea")).click();
+	//try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+	BasePage cambioFrameByID = new BasePage();
+	driver.switchTo().frame(cambioFrameByID.getFrameForElement(driver, By.tagName("iframe")));
+	WebElement description= driver.findElement(By.xpath("//body[@class='cke_editable cke_editable_themed cke_contents_ltr']"));
+	description.click();
+	try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+	description.sendKeys(comentario);
+	driver.switchTo().defaultContent();
+	try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+	driver.findElement(By.cssSelector(".publishersharebutton")).click();
+	
+}
 }
