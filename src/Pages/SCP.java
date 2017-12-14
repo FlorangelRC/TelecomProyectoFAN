@@ -321,17 +321,16 @@ public void comentarycompartir(String comentario){
 	WebElement element = driver.findElement(By.cssSelector(".publisherTextAreaInner"));
 	try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 	((JavascriptExecutor)driver).executeScript("window.scrollTo(0,"+element.getLocation().y+")");
-	//driver.findElement(By.id("publishereditablearea")).click();
-	//try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
-	BasePage cambioFrameByID = new BasePage();
-	driver.switchTo().frame(cambioFrameByID.getFrameForElement(driver, By.tagName("iframe")));
-	WebElement description= driver.findElement(By.xpath("//body[@class='cke_editable cke_editable_themed cke_contents_ltr']"));
-	description.click();
+	driver.findElement(By.id("publishereditablearea")).click();
+	try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+	WebElement iframe =driver.findElement(By.tagName("iframe"));
+	driver.switchTo().frame(iframe);
+	WebElement description=driver.findElement(By.xpath("//body[@class='chatterPublisherRTE cke_editable cke_editable_themed cke_contents_ltr cke_show_borders']"));
 	try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 	description.sendKeys(comentario);
 	driver.switchTo().defaultContent();
 	try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
-	driver.findElement(By.cssSelector(".publishersharebutton")).click();
+	driver.findElement(By.id("publishersharebutton")).click();
 	
 }
 }
