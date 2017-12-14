@@ -135,5 +135,6 @@ public class SCPParquedeServicios extends TestBase{
 			try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 			page.moveToElementOnAccAndClick("segundoTitulo", "//*[@id='segundoTitulo']/div/ul/li[2]/a");
 			page.comentarycompartir("Esto es un comentario");
+			page.validarcomentario("Esto es un comentario");
 	}
 }

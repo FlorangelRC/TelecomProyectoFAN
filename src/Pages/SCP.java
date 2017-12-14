@@ -333,4 +333,11 @@ public void comentarycompartir(String comentario){
 	driver.findElement(By.id("publishersharebutton")).click();
 	
 }
+
+public void validarcomentario(String comentario){
+	try {Thread.sleep(10000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+	List <WebElement> comentarios = driver.findElements(By.cssSelector("cxfeeditemtextwrapper"));
+	Assert.assertTrue(comentarios.get(0).equals(comentario));
+	Assert.assertEquals(driver.findElement(By.cssSelector("topics.init")), "Haga clic para agregar temas:   Sin sugerencias. Añada sus propios temas.");
+}
 }
