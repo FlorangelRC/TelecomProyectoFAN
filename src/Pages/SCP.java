@@ -15,6 +15,8 @@ import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.Select;
 import org.testng.Assert;
 
+import Tests.TestBase;
+
 public class SCP extends BasePage {
 	final WebDriver driver;
 	private static String downloadPath = "C:\\Users\\Pablo\\Downloads";
@@ -316,4 +318,51 @@ private boolean isFileDownloaded_Ext(String dirPath, String ext){
     }
     return flag;
 }
+
+	public void Desloguear_Loguear(String usuario) {
+		driver.findElement(By.id("userNav")).click();
+		TestBase TB = new TestBase();
+		List<WebElement> opcionesMenu = driver.findElement(By.id("userNav-menuItems")).findElements(By.tagName("a"));
+		for (WebElement UnaO : opcionesMenu) {
+			if(UnaO.getText().toLowerCase().contains("finalizar sesión")) {
+				UnaO.click();
+				break;
+			}
+		}
+		try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		if (usuario.toLowerCase().contains("fabiana"))
+			TB.loginSCPUsuario(driver);
+		else
+			TB.loginSCPAdminServices(driver);
+	}
+	
+	public void comentarycompartir(String comentario){
+		 WebElement element = driver.findElement(By.cssSelector(".publisherTextAreaInner"));
+		 try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		 ((JavascriptExecutor)driver).executeScript("window.scrollTo(0,"+element.getLocation().y+")");
+		 driver.findElement(By.id("publishereditablearea")).click();
+		 try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		 WebElement iframe =driver.findElement(By.tagName("iframe"));
+		 driver.switchTo().frame(iframe);
+		 WebElement description=driver.findElement(By.xpath("//body[@class='chatterPublisherRTE cke_editable cke_editable_themed cke_contents_ltr cke_show_borders']"));
+		 try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		 description.sendKeys(comentario);
+		 driver.switchTo().defaultContent();
+		 try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		 driver.findElement(By.id("publishersharebutton")).click();
+		 
+		}
+	
+	public void Desloguear_Loguear_Comentar(String usuario, String otroUsuario, String comentario, String identificador, int indice) {
+		Desloguear_Loguear(otroUsuario);
+		try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		clickOnTabByName("cuentas");
+		try {Thread.sleep(7000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		try {Thread.sleep(7000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		clickEnCuentaPorNombre("Florencia Di Ci");
+		try {Thread.sleep(10000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		moveToElementOnAccAndClick(identificador,indice);
+		comentarycompartir(comentario);
+		Desloguear_Loguear(usuario);
+	}
 }
