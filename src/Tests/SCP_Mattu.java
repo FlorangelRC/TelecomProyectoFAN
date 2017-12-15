@@ -74,12 +74,42 @@ private WebDriver driver;
 	//-------------------------------------------------------------------------------------------------
     //TCC = 3
 	@Test(groups = "SCP")
-	public void TS_Mosaico_de_Relacionamiento_por_Oportunidad_Nombre_de_la_oportunidad() {
+	public void TS112724_Mosaico_de_Relacionamiento_por_Oportunidad_Search() {
 		SCP prueba = new SCP(driver);
-		prueba.moveToElementOnAccAndClick("tercerTitulo", 4);
-		List <WebElement> wOportunity = driver.findElement(By.className("odd")).findElements(By.tagName("a"));
-		wOportunity.get(1).click();
+		prueba.moveToElementOnAccAndClick("tercerTitulo", 3);
+		try {Thread.sleep(8000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+	    driver.findElement(By.xpath("//*[@id=\"mainTable_filter\"]/label/input")).sendKeys("Oportunidad 2");
 		try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
-		Assert.assertTrue(driver.findElement(By.className("pageType")).isDisplayed());
+		
+		List<WebElement> wOportunity = driver.findElements(By.xpath("//*[@id=\"mainTable\"]/tbody/tr"));
+		boolean bAssert = true;
+		
+		for(WebElement wText:wOportunity) {
+			if (!(wText.getText().toLowerCase().contains("oportunidad 2"))) {
+				bAssert=false;
+				break;
+			}
+		}
+		Assert.assertTrue(bAssert);
+	}
+	
+	//-------------------------------------------------------------------------------------------------
+    //TCC = 4
+	/*@Test(groups = "SCP")
+	public void TS112725_Mosaico_de_Relacionamiento_por_Oportunidad_Triangulo_Ordenador() {
+		SCP prueba = new SCP(driver);
+		prueba.moveToElementOnAccAndClick("tercerTitulo", 3);
+		try {Thread.sleep(8000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		List <WebElement> wNombreDeLaOportunidad = driver.findElements(By.cssSelector(""));
+	}*/
+	
+	//-------------------------------------------------------------------------------------------------
+    //TCC = 4
+	@Test(groups = "SCP")
+	public void TS112725_Mosaico_de_Relacionamiento_por_Oportunidad_Triangulo_Ordenador() {
+		SCP prueba = new SCP(driver);
+		prueba.moveToElementOnAccAndClick("tercerTitulo", 3);
+		try {Thread.sleep(8000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		
 	}
 }
