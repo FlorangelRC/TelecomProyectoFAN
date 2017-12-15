@@ -651,12 +651,12 @@ private WebDriver driver;
 		Assert.assertTrue(!(b.get(1).getText().contains(c)));
 	}
 	
-	@Test(groups = "SCP") //rompe porque falta la columna Borrar
+	@Test(groups = "SCP")
 	public void TS112677_Hitos_Relevantes_Ingreso_Desde_el_contacto() {
 		SCP prueba = new SCP(driver);
 		prueba.moveToElementOnAccAndClick("segundoTitulo", 3);
 		boolean check=true;
-	    String[] datosOp = {"Descripción", "Fecha", "Categoría", "Borrar"};
+	    String[] datosOp = {"Descripción", "Fecha", "Categoría"};
 	    List<String> titleTabla = new ArrayList<String>();
 	    WebElement oportunidad = driver.findElement(By.xpath("//*[@id=\"j_id0:j_id89:hitosRelevantes:j_id97\"]/div[2]/table/tbody/tr[2]/td/table/thead"));
 	    List<WebElement> composicion= oportunidad.findElement(By.tagName("tr")).findElements(By.tagName("th"));	    
@@ -669,5 +669,83 @@ private WebDriver driver;
 	    		check=false;
 	    }
 	    Assert.assertTrue(check);
+	    Assert.assertTrue(driver.findElement(By.cssSelector(".btn.btn.btn-default.btn-sm")).getAttribute("value").equals("Borrar"));
+	    
+	}
+	
+	@Test(groups = "SCP")
+	public void TS112750_Opportunity_Snapshot_Chatter_contextualizado_Escribir_comentario() {
+		SCP prueba = new SCP(driver);
+		prueba.moveToElementOnAccAndClick("tercerTitulo", 4);
+		String a = "comentario de opportunity snapshot";
+		prueba.comentarycompartir(a);
+		prueba.validarcomentario(a);
+	}
+	
+	@Test(groups = "SCP")
+	public void TS112752_Opportunity_Snapshot_enviar() {
+		SCP prueba = new SCP(driver);
+		prueba.moveToElementOnAccAndClick("tercerTitulo", 4);
+		WebElement element = driver.findElement(By.name("j_id0:j_id111:j_id112:FastTaskForm:j_id117"));
+		String a = element.getAttribute("value");		
+		String b = "asd";
+		element.sendKeys(b);
+		driver.findElement(By.cssSelector(".btn.btnPrimary.publishersharebutton.btn.btn-default.btn-sm")).click();
+		Assert.assertTrue(!(a.equals(b)));
+	}
+	
+	@Test(groups = "SCP")
+	public void TS112800_Share_of_Wallet_Chatter_contextualizado_Escribir_comentario() {
+		SCP prueba = new SCP(driver);
+		prueba.moveToElementOnAccAndClick("segundoTitulo", 1);
+		String a = "comentario de share of wallet";
+		prueba.comentarycompartir(a);
+		prueba.validarcomentario(a);
+	}
+	
+	@Test(groups = "SCP")
+	public void TS112761_Organigrama_y_mapa_de_influencia_Chatter_contextualizado_Escribir_comentario() {
+		SCP prueba = new SCP(driver);
+		prueba.moveToElementOnAccAndClick("primerTitulo", 3);
+		String a = "comentario";
+		prueba.comentarycompartir(a);
+		prueba.validarcomentario(a);
+	}
+	
+	@Test(groups = "SCP")
+	public void TS112674_Hitos_Relevantes_Chatter_contextualizado_Escribir_comentario() {
+		SCP prueba = new SCP(driver);
+		prueba.moveToElementOnAccAndClick("segundoTitulo", 3);
+		String a = "comentario de hitos relevantes";
+		prueba.comentarycompartir(a);
+		prueba.validarcomentario(a);
+	}
+	
+	@Test(groups = "SCP")
+	public void TS112628_Estrategia_de_Crecimiento_Agregar_Negocio_Potencial() {
+		SCP prueba = new SCP(driver);
+		prueba.moveToElementOnAccAndClick("tercerTitulo", 5);
+		List <WebElement> boton = driver.findElements(By.cssSelector(".btn.btn-default.btn-sm"));
+		for (WebElement x : boton) {
+			if (x.getText().toLowerCase().contains("agregar negocio potencial")) {
+				x.click();
+				break;
+			}
+		}
+		try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		String a = "nuevo negocio de prueba";
+		driver.findElement(By.xpath("//*[@id=\"j_id0:j_id123:j_id219\"]")).sendKeys(a);
+		driver.findElement(By.cssSelector(".btn.btn-primary")).click();
+		List <WebElement> tabla = driver.findElements(By.className("ScrollingDiv"));
+		Assert.assertTrue(tabla.get(1).getText().contains("nuevo negocio de prueba"));
+	}
+	
+	@Test(groups = "SCP")
+	public void TS112629_Estrategia_de_Crecimiento_Chatter_contextualizado_Escribir_comentario() {
+		SCP prueba = new SCP(driver);
+		prueba.moveToElementOnAccAndClick("tercerTitulo", 5);
+		String a = "comentario de estrategia de crecimiento";
+		prueba.comentarycompartir(a);
+		prueba.validarcomentario(a);
 	}
 }
