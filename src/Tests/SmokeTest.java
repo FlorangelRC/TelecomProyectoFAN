@@ -102,7 +102,7 @@ public class SmokeTest extends TestBase  {
 		System.out.println("Modulo SCP = OK");}		
 	}
 	
-	@Test (groups= {"Smoke"})
+	@Test (groups= {"Smoke", "CustomerCare"})
 	public void TS5_Cuentas_Consola_FAN() {
 		TS3_Consola_FAN();		
 		WebElement selector = driver.findElement(By.cssSelector(".x-btn-small.x-btn-icon-small-left"));
@@ -122,7 +122,7 @@ public class SmokeTest extends TestBase  {
 		}	
 	}
 	
-	@Test (groups= {"Smoke"})
+	@Test (groups= {"Smoke", "CustomerCare"})
 	public void TS6_Casos_Consola_FAN() {
 		TS3_Consola_FAN();		
 		WebElement selector = driver.findElement(By.cssSelector(".x-btn-small.x-btn-icon-small-left"));
@@ -144,7 +144,7 @@ public class SmokeTest extends TestBase  {
 		}
 	}
 	
-	@Test (groups= {"Smoke"})
+	@Test (groups= {"Smoke", "CustomerCare"})
 	public void TS7_Cuentas_Fernando_Care_Y_Andres_Care() {
 		TS3_Consola_FAN();		
 		WebElement selector = driver.findElement(By.cssSelector(".x-btn-small.x-btn-icon-small-left"));
@@ -164,10 +164,16 @@ public class SmokeTest extends TestBase  {
 			field.selectByVisibleText("Todas las cuentas");
 		try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 		List <WebElement> cuenta = driver.findElements(By.cssSelector(".x-grid3-col.x-grid3-cell.x-grid3-td-ACCOUNT_NAME"));
-		for (WebElement x : cuenta) {
-			if (x.getText().equals("Fernando Care") && x.getText().equals("Andres Care")) {
-				Assert.assertTrue(x.isDisplayed());
+		boolean fernando = false;
+		boolean andres = false;
+		for (WebElement x : cuenta) {		
+			if (x.getText().equals("Fernando Care")) {
+				fernando = true;				
+			}
+			if (x.getText().equals("Andres Care")) {
+				andres = true;				
 			}
 		}
+		Assert.assertTrue(fernando && andres);
 	}
 }

@@ -319,6 +319,7 @@ private boolean isFileDownloaded_Ext(String dirPath, String ext){
     return flag;
 }
 
+
 	public void Desloguear_Loguear(String usuario) {
 		driver.findElement(By.id("userNav")).click();
 		TestBase TB = new TestBase();
@@ -336,22 +337,7 @@ private boolean isFileDownloaded_Ext(String dirPath, String ext){
 			TB.loginSCPAdminServices(driver);
 	}
 	
-	public void comentarycompartir(String comentario){
-		 WebElement element = driver.findElement(By.cssSelector(".publisherTextAreaInner"));
-		 try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
-		 ((JavascriptExecutor)driver).executeScript("window.scrollTo(0,"+element.getLocation().y+")");
-		 driver.findElement(By.id("publishereditablearea")).click();
-		 try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
-		 WebElement iframe =driver.findElement(By.tagName("iframe"));
-		 driver.switchTo().frame(iframe);
-		 WebElement description=driver.findElement(By.xpath("//body[@class='chatterPublisherRTE cke_editable cke_editable_themed cke_contents_ltr cke_show_borders']"));
-		 try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
-		 description.sendKeys(comentario);
-		 driver.switchTo().defaultContent();
-		 try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
-		 driver.findElement(By.id("publishersharebutton")).click();
-		 
-		}
+	
 	
 	public void Desloguear_Loguear_Comentar(String usuario, String otroUsuario, String comentario, String identificador, int indice) {
 		Desloguear_Loguear(otroUsuario);
@@ -362,7 +348,7 @@ private boolean isFileDownloaded_Ext(String dirPath, String ext){
 		clickEnCuentaPorNombre("Florencia Di Ci");
 		try {Thread.sleep(10000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 		moveToElementOnAccAndClick(identificador,indice);
-		comentarycompartir(comentario);
+		//comentarycompartir(comentario);
 		Desloguear_Loguear(usuario);
 	}
 }

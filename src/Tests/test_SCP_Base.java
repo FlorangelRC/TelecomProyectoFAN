@@ -55,7 +55,7 @@ public class test_SCP_Base extends TestBase {
 		page.moveToElementOnAccAndClick("tercerTitulo", 1);
 		}
 	
-	@AfterMethod(groups= "SCP")
+	//@AfterMethod(groups= "SCP")
 	public void afterMethod() {
 		driver.switchTo().defaultContent();
 		SCP page= new SCP(driver);
@@ -63,7 +63,7 @@ public class test_SCP_Base extends TestBase {
 		try {Thread.sleep(1000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 	}
 	
-	@AfterClass(groups= "SCP")
+	//@AfterClass(groups= "SCP")
 	public void tearDown() {
 		driver.quit();
 		sleep(4000);
@@ -406,4 +406,104 @@ public class test_SCP_Base extends TestBase {
 	    else {System.out.println("Oportunidad no disponible, prueba no ejecutada");assertTrue(false);}	
 	}
 	
+	//---------------------------------------FASE 4-------------------------------------------------------------------------------------//
+	
+	
+	/**
+	 * Se verifica que se pueda crear una nueva Tarea.
+	 */
+	@Test(groups= "SCP")
+	public void TS112639_CRM_SCP_Estructura_de_las_oportunidades_Bloques_Actividades_abiertas_Tareas() {
+		SCP page=new SCP(driver);
+		String countBefore="", countAfter=""; //Comparadores
+	    if(page.goToOportunity()) {
+	    	List <WebElement> compBefore = driver.findElements(By.className("listTitle")); //Lista los Elementos de arriba
+	    	for(WebElement a:compBefore) {
+	    		if(a.getText().toLowerCase().startsWith("actividades abier")) { 
+	    			countBefore=a.findElement(By.className("count")).getText();//guarda la cantidad
+	    			a.click();}} //Click para bajar
+	    	
+	    	//Crea un nuevo competidor
+	    	try {Thread.sleep(500);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+	    	driver.findElement(By.name("task")).click();
+	    	
+	    	try {Thread.sleep(3000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+	    	driver.findElement(By.name("tsk5")).sendKeys("Prueba Automatizada");
+
+	    	driver.findElement(By.id("bottomButtonRow")).findElement(By.name("save")).click();
+	    	try {Thread.sleep(4000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+	    	
+	    	//lista nuevamente para conocer la cantidad de competidores actual.
+	    	List <WebElement> compAfter = driver.findElements(By.className("listTitle"));
+	    	for(WebElement a:compAfter) {
+	    		if(a.getText().toLowerCase().startsWith("actividades abier")) {
+	    			countAfter=a.findElement(By.className("count")).getText();}}
+	    	
+	    	assertTrue(!(countBefore.equals(countAfter))); //compara
+	    }
+	    else {System.out.println("Oportunidad no disponible, prueba no ejecutada");assertTrue(false);}	
+	}
+	
+	
+	/**
+	 * Se verifica que dentro del bloque de detalle de la oportunidad, se encuentren todos los campos correspondientes:
+	 * - Contactos de la oportunidad - Probabilidad - Grado de avance - TMI - Nombre de la oportunidad - Nombre de la cuenta
+	   - Licitación - Retroactiva - Fecha probable de venta - Fecha probable de instalación - Etapa - Fecha real de venta- Fecha real Instalación
+	 */
+	@Test(groups= "SCP")
+	public void TS112644_CRM_SCP_Estructura_de_las_oportunidades_Bloques_Detalle_de_la_oportunidad() {
+		SCP page=new SCP(driver);
+		Boolean co=false, pro=false, grado=false, tmi=false, nombreOp=false,
+				nombreCu=false, lici=false, retro=false, fProventa=false, fproInst=false, etapa=false,
+				fRealVen=false, fRealInst=false;
+	    if(page.goToOportunity()) {
+	    	List <WebElement> compBefore = driver.findElements(By.className("labelCol")); //Lista los Elementos de arriba
+	    	for(WebElement a:compBefore) {
+	    		System.out.println(a.getText());
+	    		if(a.getText().toLowerCase().startsWith("contacto"))
+	    			co=true;
+	    		if(a.getText().toLowerCase().startsWith("probabilidad"))
+	    			pro=true;
+	    		if(a.getText().toLowerCase().startsWith("grado"))
+	    			grado=true;
+	    		if(a.getText().toLowerCase().startsWith("tmi"))
+	    			tmi=true;
+	    		if(a.getText().toLowerCase().startsWith("nombre de la oportunidad"))
+	    			nombreOp=true;
+	    		if(a.getText().toLowerCase().startsWith("nombre de la cuenta"))
+	    			nombreCu=true;
+	    		if(a.getText().toLowerCase().startsWith("licitac"))
+	    			lici=true;
+	    		if(a.getText().toLowerCase().startsWith("retroactiva"))
+	    			retro=true;
+	    		if(a.getText().toLowerCase().startsWith("fecha probable de venta"))
+	    			fProventa=true;
+	    		if(a.getText().toLowerCase().startsWith("fecha probable de inst"))
+	    			fproInst=true;
+	    		if(a.getText().toLowerCase().startsWith("etapa"))
+	    			etapa=true;
+	    		if(a.getText().toLowerCase().startsWith("fecha real de venta"))
+	    			fRealVen=true;
+	    		if(a.getText().toLowerCase().startsWith("fecha real inst"))
+	    			fRealInst=true;
+	    		if(co&&pro&&grado&&tmi&&nombreOp&&nombreCu&&lici&&retro&&fProventa&&fproInst&&etapa&&fRealVen&&fRealInst)
+	    			break;
+	    	}
+	    	assertTrue(co);
+	    	assertTrue(pro);
+	    	assertTrue(grado);
+	    	assertTrue(tmi);
+	    	assertTrue(nombreOp);
+	    	assertTrue(nombreCu);
+	    	assertTrue(lici);
+	    	assertTrue(retro);
+	    	assertTrue(fProventa);
+	    	assertTrue(fproInst);
+	    	assertTrue(etapa);
+	    	assertTrue(fRealVen);
+	    	assertTrue(fRealInst);	
+	    }
+	    else {System.out.println("Oportunidad no disponible, prueba no ejecutada");assertTrue(false);}	
+	}
 }
+
