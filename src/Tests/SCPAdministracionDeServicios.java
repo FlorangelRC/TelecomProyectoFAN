@@ -578,7 +578,7 @@ public class SCPAdministracionDeServicios extends TestBase {
 		}
 	}
 	
-	 @Test(groups = "SCP") 
+	// @Test(groups = "SCP") 
 	  public void TS112791_Plan_de_accion_Doble_Click_Para_Editar() { 
 	    SCP pcp = new SCP(driver); 
 	    List<String> tdo = new ArrayList<String>(); 
@@ -596,4 +596,26 @@ public class SCPAdministracionDeServicios extends TestBase {
 	      } 
 	    }*/ 
 	 }
+	 
+	 //@Test(groups = "SCP") 
+	  public void TS112799_Plan_Accion_Ver_Video() { 
+	    SCP pcp = new SCP(driver); 
+	    boolean botonG = false; 
+	    pcp.moveToElementOnAccAndClick("cuartoTitulo",2); 
+	    List<WebElement> botones = driver.findElements(By.cssSelector(".btn.btn-xs.btn-default")); 
+	    for (WebElement UnS : botones) { 
+	      if (UnS.getText().toLowerCase().contains("ver video")) { 
+	        botonG = true; 
+	        UnS.click(); 
+	        try {Thread.sleep(10000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();} 
+	      } 
+	    } 
+	    assertTrue(botonG); 
+	    ArrayList<String> allTabs = new ArrayList<String>(driver.getWindowHandles()); 
+	      driver.switchTo().window(allTabs.get(1)); 
+	    assertTrue(driver.findElement(By.id("player-container")).isDisplayed()); 
+	    driver.close(); 
+	    driver.switchTo().window(allTabs.get(0)); 
+	    try {Thread.sleep(2000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();} 
+	  } 
 }
