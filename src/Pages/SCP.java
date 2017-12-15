@@ -319,7 +319,7 @@ private boolean isFileDownloaded_Ext(String dirPath, String ext){
     return flag;
 }
 
-<<<<<<< HEAD
+
 public void comentarycompartir(String comentario){
 	WebElement element = driver.findElement(By.cssSelector(".publishersharebutton"));
 	try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
@@ -362,7 +362,7 @@ public boolean cuentalogeada(String cuenta){
 	return a;}
 
 
-=======
+
 
 	public void Desloguear_Loguear(String usuario) {
 		driver.findElement(By.id("userNav")).click();
@@ -393,5 +393,5 @@ public boolean cuentalogeada(String cuenta){
 		//comentarycompartir(comentario);
 		Desloguear_Loguear(usuario);
 	}
->>>>>>> master
+
 }
