@@ -319,6 +319,7 @@ private boolean isFileDownloaded_Ext(String dirPath, String ext){
     return flag;
 }
 
+<<<<<<< HEAD
 public void comentarycompartir(String comentario){
 	WebElement element = driver.findElement(By.cssSelector(".publishersharebutton"));
 	try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
@@ -361,4 +362,36 @@ public boolean cuentalogeada(String cuenta){
 	return a;}
 
 
+=======
+
+	public void Desloguear_Loguear(String usuario) {
+		driver.findElement(By.id("userNav")).click();
+		TestBase TB = new TestBase();
+		List<WebElement> opcionesMenu = driver.findElement(By.id("userNav-menuItems")).findElements(By.tagName("a"));
+		for (WebElement UnaO : opcionesMenu) {
+			if(UnaO.getText().toLowerCase().contains("finalizar sesión")) {
+				UnaO.click();
+				break;
+			}
+		}
+		try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		if (usuario.toLowerCase().contains("fabiana"))
+			TB.loginSCPUsuario(driver);
+		else
+			TB.loginSCPAdminServices(driver);
+	}
+	
+	public void Desloguear_Loguear_Comentar(String usuario, String otroUsuario, String comentario, String identificador, int indice) {
+		Desloguear_Loguear(otroUsuario);
+		try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		clickOnTabByName("cuentas");
+		try {Thread.sleep(7000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		try {Thread.sleep(7000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		clickEnCuentaPorNombre("Florencia Di Ci");
+		try {Thread.sleep(10000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		moveToElementOnAccAndClick(identificador,indice);
+		//comentarycompartir(comentario);
+		Desloguear_Loguear(usuario);
+	}
+>>>>>>> master
 }
