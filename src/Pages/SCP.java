@@ -200,8 +200,10 @@ public class SCP extends BasePage {
 		
 		driver.switchTo().defaultContent();
 		driver.switchTo().frame(Bp.getFrameForElement(driver, By.id(identificador)));
+		
 		WebElement idele= driver.findElement(By.id(identificador));
-		idele.click();
+		if (!identificador.equals("primerTitulo"))
+			idele.click();
 		try {Thread.sleep(3000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 		idele.findElement(By.xpath(referencia)).click();
 		try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
