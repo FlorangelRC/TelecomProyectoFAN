@@ -15,6 +15,7 @@ import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
 import Pages.BasePage;
+import Pages.CustomerCare;
 import Pages.SCP;
 import Pages.setConexion;
 
@@ -22,48 +23,63 @@ public class SCP_Mattu extends TestBase {
 
 private WebDriver driver;
 	
+	//-------------------------------------------------------------------------------------------------
+	//@Befor&After
 	@BeforeClass(groups = "SCP")
-	  public void Init() throws Exception
-	  {
-	    this.driver = setConexion.setupEze();
-	    loginSCPAdmin(driver);
-	    try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
-	  }
-	
-	@BeforeMethod(groups = "SCP")
-	  public void setUp() throws Exception {
-	    try {Thread.sleep(3000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
-	    SCP prueba= new SCP(driver);
-	    prueba.goToMenu("SCP");
-	    prueba.clickOnTabByName("cuentas");
-	    prueba.clickOnFirstAccRe();
-	    try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}	
+	public void Init() throws Exception
+	{
+	  this.driver = setConexion.setupEze();
+	  loginSCPAdmin(driver);
+	  try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 	}
-	
+	@BeforeMethod(groups = "SCP")
+	public void setUp() throws Exception {
+	  try {Thread.sleep(3000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+	  SCP prueba= new SCP(driver);
+	  prueba.goToMenu("SCP");
+	  prueba.clickOnTabByName("cuentas");
+	  prueba.clickOnFirstAccRe();
+	  try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}	
+	}
 	//@AfterClass(groups = "SCP")
 	public void teardown() {
 		driver.quit();
 		sleep(5000);
 	}
 	
+	//-------------------------------------------------------------------------------------------------
+    //TCC = 1
 	@Test(groups = "SCP")
-	public void TS112613_Cronograma_de_cuenta_Agregar_Vencimiento_Contrato_del_Servicio() {
-		SCP prueba = new SCP(driver);
-		prueba.moveToElementOnAccAndClick("cuartoTitulo", 1);
-		List <WebElement> checkbox = driver.findElements(By.className("checkboxFiltroTimeLine"));
-		checkbox.get(1).click();
-		driver.findElement(By.id("j_id0:j_id91:j_id111")).click();
-		try {Thread.sleep(3000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
-		Assert.assertTrue(driver.findElement(By.className("tl-message-full")).isDisplayed());		
-	}
-	
-	@Test(groups = "SCP")
-	public void TS() {
+	public void TS112722_Mosaico_de_Relacionamiento_por_Oportunidad_Ir_al_mosaico() {
 		SCP prueba = new SCP(driver);
 		prueba.moveToElementOnAccAndClick("tercerTitulo", 3);
 		List <WebElement> wIrAlMosaico = driver.findElements(By.cssSelector(".sorting_1"));
 		wIrAlMosaico.get(1).click();
-		try {Thread.sleep(3000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
-		Assert.assertTrue(driver.findElement(By.cssSelector(".col-md-4_col-md-offset-1")).isDisplayed());
+		try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		Assert.assertTrue(driver.findElement(By.cssSelector(".row.conteinerDiv")).isDisplayed());
+	}
+	
+	//-------------------------------------------------------------------------------------------------
+    //TCC = 2
+	@Test(groups = "SCP")
+	public void TS112723_Mosaico_de_Relacionamiento_por_Oportunidad_Nombre_de_la_oportunidad() {
+		SCP prueba = new SCP(driver);
+		prueba.moveToElementOnAccAndClick("tercerTitulo", 4);
+		List <WebElement> wOportunity = driver.findElement(By.className("odd")).findElements(By.tagName("a"));
+		wOportunity.get(1).click();
+		try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		Assert.assertTrue(driver.findElement(By.className("pageType")).isDisplayed());
+	}
+	
+	//-------------------------------------------------------------------------------------------------
+    //TCC = 3
+	@Test(groups = "SCP")
+	public void TS_Mosaico_de_Relacionamiento_por_Oportunidad_Nombre_de_la_oportunidad() {
+		SCP prueba = new SCP(driver);
+		prueba.moveToElementOnAccAndClick("tercerTitulo", 4);
+		List <WebElement> wOportunity = driver.findElement(By.className("odd")).findElements(By.tagName("a"));
+		wOportunity.get(1).click();
+		try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		Assert.assertTrue(driver.findElement(By.className("pageType")).isDisplayed());
 	}
 }
