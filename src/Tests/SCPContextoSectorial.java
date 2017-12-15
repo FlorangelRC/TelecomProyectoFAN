@@ -4,8 +4,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.openqa.selenium.By;
+import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.interactions.Actions;
 import org.testng.Assert;
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;
@@ -375,5 +377,277 @@ private WebDriver driver;
 					break; 
 			}
 		}
+	}
+	
+	@Test(groups = "SCP")
+	public void TS112592_Contexto_Sectorial_Exportar_a_Excel() {
+		SCP prueba = new SCP(driver);
+		prueba.moveToElementOnAccAndClick("primerTitulo", 1);
+		List <WebElement> element = driver.findElements(By.cssSelector(".btn.btn-default.btn-sm"));
+		for (WebElement x : element) {
+			if (x.getText().toLowerCase().contains("exportar a excel")) {
+				x.click();
+				break;
+			}
+		}
+	}
+	
+	@Test(groups = "SCP")
+	public void TS112751_Opportunity_Snapshot_Chatter_contextualizado_Leer_comentario_escrito_con_otro_usuario() {
+		SCP prueba = new SCP(driver);
+		prueba.moveToElementOnAccAndClick("tercerTitulo", 4);
+		List <WebElement> cuentas = driver.findElements(By.cssSelector(".cxfeeditem.feeditem"));
+		boolean a = false;
+		for (WebElement x : cuentas) {
+			if (!(x.getText().toLowerCase().contains("fabiana vaccotti"))) {
+				if (x.getText().toLowerCase().contains(" ")) {
+					a = true;
+				}
+			}
+		}
+		Assert.assertTrue(a);
+	}
+	
+	@Test(groups = "SCP") //falta terminar
+	public void TS112752_Opportunity_Snapshot_Enviar() {
+		SCP prueba = new SCP(driver);
+		prueba.moveToElementOnAccAndClick("tercerTitulo", 4);
+		driver.findElement(By.cssSelector(".btn.btnPrimary.publishersharebutton.btn.btn-default.btn-sm")).click();
+		Assert.assertTrue(false);
+	}
+	
+	@Test(groups = "SCP")
+	public void TS112755_Opportunity_Snapshot_Ir_al_Snapshot_Ingreso() {
+		SCP prueba = new SCP(driver);
+		prueba.moveToElementOnAccAndClick("tercerTitulo", 4);
+		List <WebElement> snapshot = driver.findElements(By.cssSelector(".btn.btn-default.btn-sm"));
+		snapshot.get(0).click();
+		try {Thread.sleep(10000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		List <WebElement> element = driver.findElements(By.cssSelector(".pbSubheader.brandTertiaryBgr.first.tertiaryPalette"));
+		Assert.assertTrue(element.get(0).getText().contains("Campos de la Oportunidad"));
+		Assert.assertTrue(element.get(1).getText().contains("Soluciones Para el Sector"));
+		Assert.assertTrue(element.get(2).getText().contains("Value Drivers"));
+		Assert.assertTrue(element.get(3).getText().contains("Propuesta de Valor"));
+		Assert.assertTrue(element.get(4).getText().contains("Mosaico de Relacionamiento por Oportunidad"));
+		Assert.assertTrue(element.get(5).getText().contains("Criterios de Decisión por Oportunidad"));		
+	}
+	
+	@Test(groups = "SCP")
+	public void TS112757_Opportunity_Snapshot_Search() {
+		SCP prueba = new SCP(driver);
+		prueba.moveToElementOnAccAndClick("tercerTitulo", 4);
+		String a = "oportunidad";
+		driver.findElement(By.xpath("//*[@id=\"mainTable_filter\"]/label/input")).sendKeys(a);
+		WebElement element = driver.findElement(By.xpath("//*[@id=\"mainTable\"]/tbody/tr[1]/td[2]"));
+		Assert.assertTrue(element.getText().toLowerCase().contains(a));
+	}
+	
+	@Test(groups = "SCP")
+	public void TS112759_Opportunity_Snapshot_Ver_video() {
+		SCP prueba = new SCP(driver);
+		prueba.moveToElementOnAccAndClick("tercerTitulo", 4);
+		driver.findElement(By.cssSelector(".btn.btn-xs.btn-default")).click();
+		try {Thread.sleep(10000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+	    ArrayList<String> tabs2 = new ArrayList<String> (driver.getWindowHandles());
+	    driver.switchTo().window(tabs2.get(1));
+		Assert.assertTrue(driver.findElement(By.cssSelector(".video-stream.html5-main-video")).isDisplayed());
+		driver.close();
+	    driver.switchTo().window(tabs2.get(0));
+	}
+	
+	@Test(groups = "SCP")
+	public void TS112762_Organigrama_y_mapa_de_influencia_Chatter_contextualizado_Leer_comentario_escrito_con_otro_usuario() {
+		SCP prueba = new SCP(driver);
+		prueba.moveToElementOnAccAndClick("primerTitulo", 3);
+		List <WebElement> cuentas = driver.findElements(By.cssSelector(".cxfeeditem.feeditem"));
+		boolean a = false;
+		for (WebElement x : cuentas) {
+			if (!(x.getText().toLowerCase().contains("fabiana vaccotti"))) {
+				if (x.getText().toLowerCase().contains(" ")) {
+					a = true;
+				}
+			}
+		}
+		Assert.assertTrue(a);
+	}
+	
+	@Test(groups = "SCP")
+	public void TS112768_Organigrama_y_mapa_de_influencia_Search() {
+		SCP prueba = new SCP(driver);
+		prueba.moveToElementOnAccAndClick("primerTitulo", 3);
+		String a = "javier";
+		driver.findElement(By.xpath("//*[@id=\"mainTable_filter\"]/label/input")).sendKeys(a);
+		try {Thread.sleep(3000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		Assert.assertTrue(driver.findElement(By.className("odd")).getText().toLowerCase().contains(a));
+	}
+	
+	@Test(groups = "SCP")
+	public void TS112769_Organigrama_y_mapa_de_influencia_Ver_Video() {
+		SCP prueba = new SCP(driver);
+		prueba.moveToElementOnAccAndClick("primerTitulo", 3);
+		driver.findElement(By.cssSelector(".btn.btn-xs.btn-default")).click();
+		try {Thread.sleep(10000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+	    ArrayList<String> tabs2 = new ArrayList<String> (driver.getWindowHandles());
+	    driver.switchTo().window(tabs2.get(1));
+		Assert.assertTrue(driver.findElement(By.cssSelector(".video-stream.html5-main-video")).isDisplayed());
+		driver.close();
+	    driver.switchTo().window(tabs2.get(0));		
+	}
+	
+	@Test(groups = "SCP")
+	public void TS112771_Organigrama_y_mapa_de_influencia_zoom() {
+		SCP prueba = new SCP(driver);
+		prueba.moveToElementOnAccAndClick("primerTitulo", 3);
+		Assert.assertTrue(driver.findElement(By.id("zoomOut")).isDisplayed());
+		Assert.assertTrue(driver.findElement(By.id("zoomIn")).isDisplayed());
+	}
+	
+	@Test(groups = "SCP")
+	public void TS112588_Contexto_Sectorial_Chatter_contextualizado_Leer_comentario_escrito_con_otro_usuario() {
+		SCP prueba = new SCP(driver);
+		prueba.moveToElementOnAccAndClick("primerTitulo", 1);
+		List <WebElement> cuentas = driver.findElements(By.cssSelector(".cxfeeditem.feeditem"));
+		boolean a = false;
+		for (WebElement x : cuentas) {
+			if (!(x.getText().toLowerCase().contains("fabiana vaccotti"))) {
+				if (x.getText().toLowerCase().contains(" ")) {
+					a = true;
+				}
+			}
+		}
+		Assert.assertTrue(a);
+	}
+	
+	@Test(groups = "SCP")
+	public void TS112801_Share_of_Wallet_Chatter_contextualizado_Leer_comentario_escrito_con_otro_usuario() {
+		SCP prueba = new SCP(driver);
+		prueba.moveToElementOnAccAndClick("segundoTitulo", 1);
+		List <WebElement> cuentas = driver.findElements(By.cssSelector(".cxfeeditem.feeditem"));
+		boolean a = false;
+		for (WebElement x : cuentas) {
+			if (!(x.getText().toLowerCase().contains("fabiana vaccotti"))) {
+				if (x.getText().toLowerCase().contains(" ")) {
+					a = true;
+				}
+			}
+		}
+		Assert.assertTrue(a);
+	}
+	
+	@Test(groups = "SCP")
+	public void TS112805_Share_of_Wallet_Ver_Video() {
+		SCP prueba = new SCP(driver);
+		prueba.moveToElementOnAccAndClick("segundoTitulo", 1);
+		driver.findElement(By.cssSelector(".btn.btn-xs.btn-default")).click();
+		try {Thread.sleep(10000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+	    ArrayList<String> tabs2 = new ArrayList<String> (driver.getWindowHandles());
+	    driver.switchTo().window(tabs2.get(1));
+		Assert.assertTrue(driver.findElement(By.cssSelector(".video-stream.html5-main-video")).isDisplayed());
+		driver.close();
+	    driver.switchTo().window(tabs2.get(0));
+	}
+	
+	@Test(groups = "SCP")
+	public void TS112803_Share_of_Wallet_Guardar() {
+		SCP prueba = new SCP(driver);
+		prueba.moveToElementOnAccAndClick("segundoTitulo", 1);
+		Actions action = new Actions(driver);
+		List <WebElement> element = driver.findElements(By.className("inlineEditWrite"));
+		String a = "250";
+		action.doubleClick(element.get(0)).perform();
+		driver.findElement(By.xpath("//*[@id=\"j_id0_Form_j_id122\"]")).clear();
+		driver.findElement(By.xpath("//*[@id=\"j_id0_Form_j_id122\"]")).sendKeys(a);
+		driver.findElement(By.xpath("//*[@id=\"j_id0_Form_j_id122\"]")).sendKeys("\uE007");
+		List <WebElement> b = driver.findElements(By.cssSelector(".btn.btn-default.btn-sm"));
+		for (WebElement x : b) {
+			if (x.getText().toLowerCase().contains("guardar")) {
+				x.click();
+				break;
+			}
+		}
+		try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}		
+		int cant = 0;
+		while (cant < 2) {
+			try {
+				Assert.assertTrue(element.get(0).getText().contains(a));
+				break;
+			} catch(org.openqa.selenium.StaleElementReferenceException e) {}
+			cant++;
+		}
+	}
+	
+	@Test(groups = "SCP")
+	public void TS112748_Negocio_del_Cliente_Ver_Video() {
+		SCP prueba = new SCP(driver);
+		prueba.moveToElementOnAccAndClick("primerTitulo", 2);
+		driver.findElement(By.cssSelector(".btn.btn-xs.btn-default")).click();
+		try {Thread.sleep(10000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+	    ArrayList<String> tabs2 = new ArrayList<String> (driver.getWindowHandles());
+	    driver.switchTo().window(tabs2.get(1));
+		Assert.assertTrue(driver.findElement(By.cssSelector(".video-stream.html5-main-video")).isDisplayed());
+		driver.close();
+	    driver.switchTo().window(tabs2.get(0));
+	}
+	
+	@Test(groups = "SCP")
+	public void TS112681_Hitos_Relevantes_Ver_Video() {
+		SCP prueba = new SCP(driver);
+		prueba.moveToElementOnAccAndClick("segundoTitulo", 3);
+		driver.findElement(By.cssSelector(".btn.btn-xs.btn-default")).click();
+		try {Thread.sleep(10000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+	    ArrayList<String> tabs2 = new ArrayList<String> (driver.getWindowHandles());
+	    driver.switchTo().window(tabs2.get(1));
+		Assert.assertTrue(driver.findElement(By.cssSelector(".video-stream.html5-main-video")).isDisplayed());
+		driver.close();
+	    driver.switchTo().window(tabs2.get(0));
+	}
+	
+	@Test(groups = "SCP")
+	public void TS112679_Hitos_Relevantes_Nuevo_Hito_Relevante_Agregar() {
+		SCP prueba = new SCP(driver);
+		prueba.moveToElementOnAccAndClick("segundoTitulo", 3);
+		List <WebElement> boton = driver.findElements(By.cssSelector(".btn.btn-default.btn-sm"));
+		for (WebElement x : boton) {
+			if (x.getText().toLowerCase().contains("nuevo hito relevante")) {
+				x.click();
+				break;
+			}
+		}
+		try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		String c = "nuevo test";
+		List <WebElement> a = driver.findElements(By.className("resetHito"));
+		a.get(0).sendKeys(c);
+		a.get(1).click();
+		driver.findElement(By.xpath("//*[text() = 'Otro']")).click();
+		driver.findElement(By.className("dateFormat")).click();
+		driver.findElement(By.cssSelector(".btn.btn-primary")).click();
+		try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		List <WebElement> b = driver.findElements(By.className("data2Col"));
+		Assert.assertTrue(b.get(1).getText().contains(c));
+	}
+	
+	@Test(groups = "SCP")
+	public void TS112680_Hitos_Relevantes_Nuevo_Hito_Relevante_Cancelar() {
+		SCP prueba = new SCP(driver);
+		prueba.moveToElementOnAccAndClick("segundoTitulo", 3);
+		List <WebElement> boton = driver.findElements(By.cssSelector(".btn.btn-default.btn-sm"));
+		for (WebElement x : boton) {
+			if (x.getText().toLowerCase().contains("nuevo hito relevante")) {
+				x.click();
+				break;
+			}
+		}
+		try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		String c = "cancelacion de hito";
+		List <WebElement> a = driver.findElements(By.className("resetHito"));
+		a.get(0).sendKeys(c);
+		a.get(1).click();
+		driver.findElement(By.xpath("//*[text() = 'Otro']")).click();
+		driver.findElement(By.className("dateFormat")).click();
+		try {Thread.sleep(3000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		driver.findElement(By.xpath("//*[@id=\"myModalHito\"]/div[2]/div/div[3]/button[1]")).click();
+		try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		List <WebElement> b = driver.findElements(By.className("data2Col"));
+		Assert.assertTrue(!(b.get(1).getText().contains(c)));
 	}
 }
