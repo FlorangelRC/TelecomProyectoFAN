@@ -505,5 +505,27 @@ public class test_SCP_Base extends TestBase {
 	    }
 	    else {System.out.println("Oportunidad no disponible, prueba no ejecutada");assertTrue(false);}	
 	}
+	
+	
+	/**
+	 * 
+	 * 
+	 */
+	@Test(groups= "SCP")
+	public void TS112647_CRM_SCP_Estructura_de_las_oportunidades_Bloques_Historial_de_Campos() {
+		boolean check=true;
+		SCP page=new SCP(driver);
+	    if(page.goToOportunity()) {
+	    	try {Thread.sleep(3000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+	    	driver.findElement(By.name("edit")).click();
+	    	try {Thread.sleep(3000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+	    	List<WebElement> date=driver.findElements(By.className("dateFormat"));
+	    	for(WebElement imp:date)
+	    		System.out.println(imp.getText());
+	    	
+	    	}
+	   
+	    else {System.out.println("Oportunidad no disponible, prueba no ejecutada");assertTrue(false);}	
+	}
 }
 
