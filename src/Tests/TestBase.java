@@ -162,12 +162,8 @@ public class TestBase {
 
 	}
 	    
-	public void waitFor2(WebDriver driver, By element) {
-		WebElement myDynamicElement = (new WebDriverWait(driver, 10))
-				  .until(ExpectedConditions.presenceOfElementLocated(element));
-	}
 	public void waitFor(WebDriver driver, By element) {
-		WebElement myDynamicElement = (new WebDriverWait(driver, 10)).until(ExpectedConditions.presenceOfElementLocated(element));
+		(new WebDriverWait(driver, 5)).until(ExpectedConditions.visibilityOfElementLocated(element));
 	}
 
 
@@ -189,10 +185,10 @@ public class TestBase {
 	    
 /*public void waitFor(WebDriver driver, By element) {
 		WebElement myDynamicElement = (new WebDriverWait(driver, 10))
-<<<<<<< HEAD
+
 				  .until(ExpectedConditions.presenceOfElementLocated(element));}
 
-	public void waitFor2(WebDriver driver, By element) {
+	/*public void waitFor2(WebDriver driver, By element) {
 		WebElement myDynamicElement = (new WebDriverWait(driver, 10)).until(ExpectedConditions.presenceOfElementLocated(element));
 	}
 =======
