@@ -92,24 +92,4 @@ private WebDriver driver;
 		}
 		Assert.assertTrue(bAssert);
 	}
-	
-	//-------------------------------------------------------------------------------------------------
-    //TCC = 4
-	/*@Test(groups = "SCP")
-	public void TS112725_Mosaico_de_Relacionamiento_por_Oportunidad_Triangulo_Ordenador() {
-		SCP prueba = new SCP(driver);
-		prueba.moveToElementOnAccAndClick("tercerTitulo", 3);
-		try {Thread.sleep(8000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
-		List <WebElement> wNombreDeLaOportunidad = driver.findElements(By.cssSelector(""));
-	}*/
-	
-	//-------------------------------------------------------------------------------------------------
-    //TCC = 4
-	@Test(groups = "SCP")
-	public void TS112725_Mosaico_de_Relacionamiento_por_Oportunidad_Triangulo_Ordenador() {
-		SCP prueba = new SCP(driver);
-		prueba.moveToElementOnAccAndClick("tercerTitulo", 3);
-		try {Thread.sleep(8000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
-		
-	}
 }
