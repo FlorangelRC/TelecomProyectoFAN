@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.openqa.selenium.By;
+import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Actions;
@@ -649,6 +650,7 @@ private WebDriver driver;
 		List <WebElement> b = driver.findElements(By.className("data2Col"));
 		Assert.assertTrue(!(b.get(1).getText().contains(c)));
 	}
+<<<<<<< HEAD
 	
 	@Test(groups = "SCP")
 	public void TS112677_Hitos_Relevantes_Ingreso_Desde_el_contacto() {
@@ -747,4 +749,6 @@ private WebDriver driver;
 		prueba.comentarycompartir(a);
 		prueba.validarcomentario(a);
 	}
+=======
+>>>>>>> master
 }

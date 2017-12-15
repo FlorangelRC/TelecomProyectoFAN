@@ -398,5 +398,48 @@ public class SCPAdministracionDeServicios extends TestBase {
 		}
 	}
 	
+<<<<<<< HEAD
+	// @Test(groups = "SCP") 
+	  public void TS112791_Plan_de_accion_Doble_Click_Para_Editar() { 
+	    SCP pcp = new SCP(driver); 
+	    List<String> tdo = new ArrayList<String>(); 
+	    pcp.Desloguear_Loguear_Comentar("admin", "fabiana", "Mati <3 Nico", "cuartoTitulo", 2); 
+	    /*pcp.moveToElementOnAccAndClick("segundoTitulo",2); 
+	    List<WebElement> servicioList = driver.findElement(By.xpath("//*[@id='tableList']/tbody/tr[2]")).findElements(By.tagName("th"));  
+	    for (int i = 0 ; i<=7 ; i++) { 
+	      tdo.add(todos[i]); 
+	    } 
+	    assertTrue(servicioList.get(0).getText().isEmpty()); 
+	    servicioList.remove(0); 
+	    for (WebElement UnS : servicioList) { 
+	      if(!UnS.getText().equals("Pais")) { 
+	        assertTrue(tdo.contains(UnS.getText().toLowerCase())); 
+	      } 
+	    }*/ 
+	 }
+	 
+	 //@Test(groups = "SCP") 
+	  public void TS112799_Plan_Accion_Ver_Video() { 
+	    SCP pcp = new SCP(driver); 
+	    boolean botonG = false; 
+	    pcp.moveToElementOnAccAndClick("cuartoTitulo",2); 
+	    List<WebElement> botones = driver.findElements(By.cssSelector(".btn.btn-xs.btn-default")); 
+	    for (WebElement UnS : botones) { 
+	      if (UnS.getText().toLowerCase().contains("ver video")) { 
+	        botonG = true; 
+	        UnS.click(); 
+	        try {Thread.sleep(10000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();} 
+	      } 
+	    } 
+	    assertTrue(botonG); 
+	    ArrayList<String> allTabs = new ArrayList<String>(driver.getWindowHandles()); 
+	      driver.switchTo().window(allTabs.get(1)); 
+	    assertTrue(driver.findElement(By.id("player-container")).isDisplayed()); 
+	    driver.close(); 
+	    driver.switchTo().window(allTabs.get(0)); 
+	    try {Thread.sleep(2000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();} 
+	  } 
+=======
 	
+>>>>>>> master
 }
