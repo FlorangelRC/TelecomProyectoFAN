@@ -337,8 +337,6 @@ private boolean isFileDownloaded_Ext(String dirPath, String ext){
 			TB.loginSCPAdminServices(driver);
 	}
 	
-	
-	
 	public void Desloguear_Loguear_Comentar(String usuario, String otroUsuario, String comentario, String identificador, int indice) {
 		Desloguear_Loguear(otroUsuario);
 		try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
