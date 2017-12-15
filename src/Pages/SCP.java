@@ -336,8 +336,67 @@ public void comentarycompartir(String comentario){
 
 public void validarcomentario(String comentario){
 	try {Thread.sleep(15000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+<<<<<<< HEAD
+	List <WebElement> comentarios = driver.findElements(By.cssSelector(".feeditemtext.cxfeeditemtextr"));
+	System.out.println(comentarios.size());
+	Assert.assertTrue(comentarios.get(0).equals(comentario));
+	Assert.assertEquals(driver.findElement(By.cssSelector("topics.init")), "Haga clic para agregar temas:   Sin sugerencias. Añada sus propios temas.");
+}
+=======
 	List <WebElement> comentarios = driver.findElements(By.cssSelector(".feeditembodyandfooter"));
 	Assert.assertTrue(comentarios.get(0).findElement(By.cssSelector(".cxfeeditemtextwrapper")).getText().equals(comentario));
-	Assert.assertEquals(comentarios.get(0).findElement(By.cssSelector(".topics.init")).getText(), "Haga clic para agregar temas:   Sin sugerencias. Añada sus propios temas.");
+	Assert.assertEquals(comentarios.get(0).findElement(By.cssSelector(".topics.init")).getText(), "Haga clic para agregar temas:   Sin sugerencias. Aï¿½ada sus propios temas.");
 }
+public void validarcomentarioajeno(String comentario){
+	try {Thread.sleep(15000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+	String cuentaactiva = driver.findElement(By.id("userNavLabel")).getText();
+	List <WebElement> comentarios = driver.findElements(By.cssSelector(".feeditembodyandfooter"));
+	Assert.assertTrue(comentarios.get(0).findElement(By.cssSelector(".cxfeeditemtextwrapper")).getText().equals(comentario));
+	Assert.assertFalse(comentarios.get(0).findElement(By.cssSelector(".feeditemfirstentity")).getText().equals(cuentaactiva));
+
+}
+
+public boolean cuentalogeada(String cuenta){
+	boolean a=false;
+  TestBase TB = new TestBase();
+  TB.waitFor(driver, By.id("userNavLabel"));
+	String cuentaactiva = driver.findElement(By.id("userNavLabel")).getText();
+	if(cuentaactiva.equals(cuenta)){
+		a=true;}
+	return a;}
+
+
+
+
+	public void Desloguear_Loguear(String usuario) {
+		driver.findElement(By.id("userNav")).click();
+		TestBase TB = new TestBase();
+		List<WebElement> opcionesMenu = driver.findElement(By.id("userNav-menuItems")).findElements(By.tagName("a"));
+		for (WebElement UnaO : opcionesMenu) {
+			if(UnaO.getText().toLowerCase().contains("finalizar sesiï¿½n")) {
+				UnaO.click();
+				break;
+			}
+		}
+		try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		if (usuario.toLowerCase().contains("fabiana"))
+			TB.loginSCPUsuario(driver);
+		else
+			TB.loginSCPAdminServices(driver);
+	}
+	
+	public void Desloguear_Loguear_Comentar(String usuario, String otroUsuario, String comentario, String identificador, int indice) {
+		Desloguear_Loguear(otroUsuario);
+		try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		clickOnTabByName("cuentas");
+		try {Thread.sleep(7000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		try {Thread.sleep(7000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		clickEnCuentaPorNombre("Florencia Di Ci");
+		try {Thread.sleep(10000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		moveToElementOnAccAndClick(identificador,indice);
+		comentarycompartir(comentario);
+		Desloguear_Loguear(usuario);
+	}
+
+>>>>>>> master
 }
