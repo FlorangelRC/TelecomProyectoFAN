@@ -172,5 +172,16 @@ public class SCPParquedeServicios extends TestBase{
 		page.validarcomentario("Esto es un comentario");
 	}
 	
+	@Test(groups= "SCP")
+	public void TS112614_Cronograma_de_Cuenta_contextualizado_Escribir_comentario(){
+		SCP page = new SCP(driver);
+		page.clickOnTabByName("cuentas");
+		page.clickOnFirstAccRe();
+		try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		page.moveToElementOnAccAndClick("cuartoTitulo", "//*[@id='cuartoTitulo']/div/ul/li[1]/a");
+		page.comentarycompartir("Esto es un comentario");
+		page.validarcomentario("Esto es un comentario");
+	}
+	
 	
 }
