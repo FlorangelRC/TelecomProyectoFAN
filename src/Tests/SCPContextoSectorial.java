@@ -650,4 +650,24 @@ private WebDriver driver;
 		List <WebElement> b = driver.findElements(By.className("data2Col"));
 		Assert.assertTrue(!(b.get(1).getText().contains(c)));
 	}
+	
+	@Test(groups = "SCP") //rompe porque falta la columna Borrar
+	public void TS112677_Hitos_Relevantes_Ingreso_Desde_el_contacto() {
+		SCP prueba = new SCP(driver);
+		prueba.moveToElementOnAccAndClick("segundoTitulo", 3);
+		boolean check=true;
+	    String[] datosOp = {"Descripción", "Fecha", "Categoría", "Borrar"};
+	    List<String> titleTabla = new ArrayList<String>();
+	    WebElement oportunidad = driver.findElement(By.xpath("//*[@id=\"j_id0:j_id89:hitosRelevantes:j_id97\"]/div[2]/table/tbody/tr[2]/td/table/thead"));
+	    List<WebElement> composicion= oportunidad.findElement(By.tagName("tr")).findElements(By.tagName("th"));	    
+	    for(WebElement a : composicion) {
+	      titleTabla.add(a.getText());
+	      //System.out.println(a.getText());//Para Verificar que este imprimiendo el texto que buscamos
+	    }	    
+	    for(String a:datosOp) {
+	    	if(!(titleTabla.contains(a)))
+	    		check=false;
+	    }
+	    Assert.assertTrue(check);
+	}
 }
