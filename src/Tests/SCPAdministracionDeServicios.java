@@ -398,7 +398,6 @@ public class SCPAdministracionDeServicios extends TestBase {
 		}
 	}
 	
-<<<<<<< HEAD
 	// @Test(groups = "SCP") 
 	  public void TS112791_Plan_de_accion_Doble_Click_Para_Editar() { 
 	    SCP pcp = new SCP(driver); 
@@ -439,7 +438,4 @@ public class SCPAdministracionDeServicios extends TestBase {
 	    driver.switchTo().window(allTabs.get(0)); 
 	    try {Thread.sleep(2000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();} 
 	  } 
-=======
-	
->>>>>>> master
 }
