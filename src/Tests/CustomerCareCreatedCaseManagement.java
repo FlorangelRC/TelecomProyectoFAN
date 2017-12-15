@@ -124,6 +124,26 @@ public class CustomerCareCreatedCaseManagement extends TestBase {
 		
 	}
 	
+	@Test(groups= "CustomerCare")
+	public void TS7082_VisualizeDueDate(){
+		
+		try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		driver.switchTo().defaultContent(); 
+
+		CustomerCasesManager customerCasesManagerPage = new CustomerCasesManager(driver);
+
+		customerCasesManagerPage.clickCase("00001372");
+		CasePage page = new CasePage(driver);
+		try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		driver.switchTo().defaultContent();
+
+		List<WebElement> frames = driver.findElements(By.tagName("iframe"));
+		driver.switchTo().frame(frames.get(1));
+		
+		page.getCaseDueDate();
+		
+	}
+	
 	
 	@Test(groups= "CustomerCare")
 	public void TS_7202_ValidatedCreationDate(){

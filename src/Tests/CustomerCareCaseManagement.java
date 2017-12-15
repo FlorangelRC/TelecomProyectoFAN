@@ -205,6 +205,21 @@ public class CustomerCareCaseManagement extends TestBase {
 	}
 	
 	
+	@Test(groups= "CustomerCare")
+	public void TS_7082_SeeDueDate(){
+		//Pre-requirement : no other cases or new cases tabss.
+		try {Thread.sleep(10000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		driver.switchTo().defaultContent();
+		List<WebElement> frames = driver.findElements(By.tagName("iframe"));
+		driver.switchTo().frame(frames.get(1));//CaseCreation frame
+		//CasePage page = new CasePage(driver);
+		try {
+		assertTrue(driver.findElement(By.id("00Nc0000001pWcs")).isDisplayed());}
+		catch(org.openqa.selenium.NoSuchElementException e) {assertTrue(false);}
+		
+	
+	}
+	
 	public void checkAlert() {
 	     try {
 	         WebDriverWait wait = new WebDriverWait(driver, 2);
