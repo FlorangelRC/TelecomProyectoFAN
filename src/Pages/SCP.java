@@ -316,4 +316,29 @@ private boolean isFileDownloaded_Ext(String dirPath, String ext){
     }
     return flag;
 }
+
+public void comentarycompartir(String comentario){
+	WebElement element = driver.findElement(By.cssSelector(".publisherTextAreaInner"));
+	try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+	((JavascriptExecutor)driver).executeScript("window.scrollTo(0,"+element.getLocation().y+")");
+	driver.findElement(By.id("publishereditablearea")).click();
+	try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+	WebElement iframe =driver.findElement(By.tagName("iframe"));
+	driver.switchTo().frame(iframe);
+	WebElement description=driver.findElement(By.xpath("//body[@class='chatterPublisherRTE cke_editable cke_editable_themed cke_contents_ltr cke_show_borders']"));
+	try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+	description.sendKeys(comentario);
+	driver.switchTo().defaultContent();
+	try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+	driver.findElement(By.id("publishersharebutton")).click();
+	
+}
+
+public void validarcomentario(String comentario){
+	try {Thread.sleep(15000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+	List <WebElement> comentarios = driver.findElements(By.cssSelector(".feeditemtext.cxfeeditemtextr"));
+	System.out.println(comentarios.size());
+	Assert.assertTrue(comentarios.get(0).equals(comentario));
+	Assert.assertEquals(driver.findElement(By.cssSelector("topics.init")), "Haga clic para agregar temas:   Sin sugerencias. Añada sus propios temas.");
+}
 }

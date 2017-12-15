@@ -70,13 +70,13 @@ public class SCPParquedeServicios extends TestBase{
 		}
 	}
 	
-	@AfterMethod(groups= "SCP")
+//	@AfterMethod(groups= "SCP")
 	public void after(){
 		((JavascriptExecutor)driver).executeScript("window.scrollTo(0,"+driver.findElement(By.id("home_Tab")).getLocation().y+")");
 		driver.findElement(By.id("home_Tab")).click();
 	}
 	
-	@AfterClass(groups= "SCP")
+	//@AfterClass(groups= "SCP")
 	public void tearDown() {
 		driver.quit();
 		sleep(4000);
@@ -127,5 +127,14 @@ public class SCPParquedeServicios extends TestBase{
 			page.servicioguardar();
 		}
 		
-	
+	@Test(groups= "SCP")
+	public void TS112783_Parque_de_Servicios_Chatter_contextualizado_Escribir_comentario(){
+			SCP page = new SCP(driver);
+			page.clickOnTabByName("cuentas");
+			page.clickOnFirstAccRe();
+			try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+			page.moveToElementOnAccAndClick("segundoTitulo", "//*[@id='segundoTitulo']/div/ul/li[2]/a");
+			page.comentarycompartir("Esto es un comentario");
+			page.validarcomentario("Esto es un comentario");
+	}
 }
