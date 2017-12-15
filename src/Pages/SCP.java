@@ -15,6 +15,8 @@ import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.Select;
 import org.testng.Assert;
 
+import Tests.TestBase;
+
 public class SCP extends BasePage {
 	final WebDriver driver;
 	private static String downloadPath = "C:\\Users\\Pablo\\Downloads";
@@ -318,7 +320,7 @@ private boolean isFileDownloaded_Ext(String dirPath, String ext){
 }
 
 public void comentarycompartir(String comentario){
-	WebElement element = driver.findElement(By.cssSelector(".publisherTextAreaInner"));
+	WebElement element = driver.findElement(By.cssSelector(".publishersharebutton"));
 	try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 	((JavascriptExecutor)driver).executeScript("window.scrollTo(0,"+element.getLocation().y+")");
 	driver.findElement(By.id("publishereditablearea")).click();
@@ -340,4 +342,23 @@ public void validarcomentario(String comentario){
 	Assert.assertTrue(comentarios.get(0).findElement(By.cssSelector(".cxfeeditemtextwrapper")).getText().equals(comentario));
 	Assert.assertEquals(comentarios.get(0).findElement(By.cssSelector(".topics.init")).getText(), "Haga clic para agregar temas:   Sin sugerencias. Añada sus propios temas.");
 }
+public void validarcomentarioajeno(String comentario){
+	try {Thread.sleep(15000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+	String cuentaactiva = driver.findElement(By.id("userNavLabel")).getText();
+	List <WebElement> comentarios = driver.findElements(By.cssSelector(".feeditembodyandfooter"));
+	Assert.assertTrue(comentarios.get(0).findElement(By.cssSelector(".cxfeeditemtextwrapper")).getText().equals(comentario));
+	Assert.assertFalse(comentarios.get(0).findElement(By.cssSelector(".feeditemfirstentity")).getText().equals(cuentaactiva));
+
+}
+
+public boolean cuentalogeada(String cuenta){
+	boolean a=false;
+  TestBase TB = new TestBase();
+  TB.waitFor(driver, By.id("userNavLabel"));
+	String cuentaactiva = driver.findElement(By.id("userNavLabel")).getText();
+	if(cuentaactiva.equals(cuenta)){
+		a=true;}
+	return a;}
+
+
 }
