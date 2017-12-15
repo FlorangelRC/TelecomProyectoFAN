@@ -200,8 +200,10 @@ public class SCP extends BasePage {
 		
 		driver.switchTo().defaultContent();
 		driver.switchTo().frame(Bp.getFrameForElement(driver, By.id(identificador)));
+		
 		WebElement idele= driver.findElement(By.id(identificador));
-		idele.click();
+		if (!identificador.equals("primerTitulo"))
+			idele.click();
 		try {Thread.sleep(3000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 		idele.findElement(By.xpath(referencia)).click();
 		try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
@@ -320,12 +322,56 @@ private boolean isFileDownloaded_Ext(String dirPath, String ext){
 }
 
 
+public void comentarycompartir(String comentario){
+	WebElement element = driver.findElement(By.cssSelector(".publishersharebutton"));
+	try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+	((JavascriptExecutor)driver).executeScript("window.scrollTo(0,"+element.getLocation().y+")");
+	driver.findElement(By.id("publishereditablearea")).click();
+	try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+	WebElement iframe =driver.findElement(By.tagName("iframe"));
+	driver.switchTo().frame(iframe);
+	WebElement description=driver.findElement(By.xpath("//body[@class='chatterPublisherRTE cke_editable cke_editable_themed cke_contents_ltr cke_show_borders']"));
+	try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+	description.sendKeys(comentario);
+	driver.switchTo().defaultContent();
+	try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+	driver.findElement(By.id("publishersharebutton")).click();
+	
+}
+
+public void validarcomentario(String comentario){
+	try {Thread.sleep(15000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+	List <WebElement> comentarios = driver.findElements(By.cssSelector(".feeditembodyandfooter"));
+	Assert.assertTrue(comentarios.get(0).findElement(By.cssSelector(".cxfeeditemtextwrapper")).getText().equals(comentario));
+	Assert.assertEquals(comentarios.get(0).findElement(By.cssSelector(".topics.init")).getText(), "Haga clic para agregar temas:   Sin sugerencias. Aï¿½ada sus propios temas.");
+}
+public void validarcomentarioajeno(String comentario){
+	try {Thread.sleep(15000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+	String cuentaactiva = driver.findElement(By.id("userNavLabel")).getText();
+	List <WebElement> comentarios = driver.findElements(By.cssSelector(".feeditembodyandfooter"));
+	Assert.assertTrue(comentarios.get(0).findElement(By.cssSelector(".cxfeeditemtextwrapper")).getText().equals(comentario));
+	Assert.assertFalse(comentarios.get(0).findElement(By.cssSelector(".feeditemfirstentity")).getText().equals(cuentaactiva));
+
+}
+
+public boolean cuentalogeada(String cuenta){
+	boolean a=false;
+  TestBase TB = new TestBase();
+  TB.waitFor(driver, By.id("userNavLabel"));
+	String cuentaactiva = driver.findElement(By.id("userNavLabel")).getText();
+	if(cuentaactiva.equals(cuenta)){
+		a=true;}
+	return a;}
+
+
+
+
 	public void Desloguear_Loguear(String usuario) {
 		driver.findElement(By.id("userNav")).click();
 		TestBase TB = new TestBase();
 		List<WebElement> opcionesMenu = driver.findElement(By.id("userNav-menuItems")).findElements(By.tagName("a"));
 		for (WebElement UnaO : opcionesMenu) {
-			if(UnaO.getText().toLowerCase().contains("finalizar sesión")) {
+			if(UnaO.getText().toLowerCase().contains("finalizar sesiï¿½n")) {
 				UnaO.click();
 				break;
 			}
@@ -337,8 +383,6 @@ private boolean isFileDownloaded_Ext(String dirPath, String ext){
 			TB.loginSCPAdminServices(driver);
 	}
 	
-	
-	
 	public void Desloguear_Loguear_Comentar(String usuario, String otroUsuario, String comentario, String identificador, int indice) {
 		Desloguear_Loguear(otroUsuario);
 		try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
@@ -348,7 +392,8 @@ private boolean isFileDownloaded_Ext(String dirPath, String ext){
 		clickEnCuentaPorNombre("Florencia Di Ci");
 		try {Thread.sleep(10000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 		moveToElementOnAccAndClick(identificador,indice);
-		//comentarycompartir(comentario);
+		comentarycompartir(comentario);
 		Desloguear_Loguear(usuario);
 	}
+
 }

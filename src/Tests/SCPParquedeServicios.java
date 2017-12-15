@@ -25,6 +25,7 @@ import static org.testng.Assert.assertTrue;
 
 import java.awt.Button;
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 
 import org.openqa.selenium.*;
 public class SCPParquedeServicios extends TestBase{
@@ -36,6 +37,8 @@ public class SCPParquedeServicios extends TestBase{
 	public void init() throws Exception
 	{
 		this.driver = setConexion.setupEze();
+		driver.manage().timeouts().implicitlyWait(5, TimeUnit.SECONDS);
+
 		try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 	loginSCPAdmin(driver);
 		try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
@@ -137,4 +140,48 @@ public class SCPParquedeServicios extends TestBase{
 			page.comentarycompartir("Esto es un comentario");
 			page.validarcomentario("Esto es un comentario");
 	}
+	@Test(groups= "SCP")
+	public void TS112789_Plan_de_Acción_Chatter_contextualizado_Escribir_comentario(){
+		SCP page = new SCP(driver);
+		page.clickOnTabByName("cuentas");
+		page.clickOnFirstAccRe();
+		try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		page.moveToElementOnAccAndClick("cuartoTitulo", "//*[@id='cuartoTitulo']/div/ul/li[2]/a");
+		page.comentarycompartir("Esto es un comentario");
+		page.validarcomentario("Esto es un comentario");
+	}
+	@Test(groups= "SCP")
+	public void TS112727_Negocio_del_cliente_contextualizado_Escribir_comentario(){
+		SCP page = new SCP(driver);
+		page.clickOnTabByName("cuentas");
+		page.clickOnFirstAccRe();
+		try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		page.moveToElementOnAccAndClick("primerTitulo", "//*[@id='primerTitulo']/div/ul/li[2]/a");
+		page.comentarycompartir("Esto es un comentario");
+		page.validarcomentario("Esto es un comentario");
+	}
+	
+	@Test(groups= "SCP")
+	public void TS112587_Contexto_ectorial_contextualizado_Escribir_comentario(){
+		SCP page = new SCP(driver);
+		page.clickOnTabByName("cuentas");
+		page.clickOnFirstAccRe();
+		try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		page.moveToElementOnAccAndClick("primerTitulo", "//*[@id='primerTitulo']/div/ul/li[1]/a");
+		page.comentarycompartir("Esto es un comentario");
+		page.validarcomentario("Esto es un comentario");
+	}
+	
+	@Test(groups= "SCP")
+	public void TS112614_Cronograma_de_Cuenta_contextualizado_Escribir_comentario(){
+		SCP page = new SCP(driver);
+		page.clickOnTabByName("cuentas");
+		page.clickOnFirstAccRe();
+		try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		page.moveToElementOnAccAndClick("cuartoTitulo", "//*[@id='cuartoTitulo']/div/ul/li[1]/a");
+		page.comentarycompartir("Esto es un comentario");
+		page.validarcomentario("Esto es un comentario");
+	}
+	
+	
 }
