@@ -123,19 +123,6 @@ public class CustomerCareFase2 extends TestBase {
 	}
 
 	
-	//@Test(groups = "CustomerCare")
-	// terminar
-	public void TS16061_Line_Movements_Paso_0_Error_por_cliente_inactivo() {
-		CustomerCare page = new CustomerCare(driver);
-		goToLeftPanel(driver, "Cuentas");
-		page.elegircuenta("Andres Care");
-		page.openrightpanel();
-		page.SelectGestion("Cambio de ciclo");
-		// page.validacion
-		driver.switchTo().defaultContent();
-	}
-
-	
 	@Test(groups = "CustomerCare")
 	public void TS14567_Capacidades_de_Busqueda_Filtrar_Por_DNI() {
 		CustomerCare page = new CustomerCare(driver);
@@ -626,17 +613,6 @@ public class CustomerCareFase2 extends TestBase {
 		CustomerCare page = new CustomerCare(driver);
 		page.elegircuenta("Andres Care");
 		page.ValidarBtnsGestion("Cambio de ciclo");
-	}
-
-	
-	//@Test(groups = "CustomerCare")
-	public void TS16061_Line_Movements_Paso_0_Caso_Cliente_activo() {
-		CustomerCare page = new CustomerCare(driver);
-		goToLeftPanel(driver, "Cuentas");
-		page.editarcuenta("Fernando Care", "no", "inactive");
-		page.elegircuenta("Fernando Care");
-		page.SelectGestion("Cambio de ciclo");
-		Assert.assertTrue(page.validarpaso0clienteinactivo());
 	}
 
 	
