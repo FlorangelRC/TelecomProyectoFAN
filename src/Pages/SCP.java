@@ -321,7 +321,7 @@ private boolean isFileDownloaded_Ext(String dirPath, String ext){
     return flag;
 }
 
-<<<<<<< HEAD
+
 public void comentarycompartir(String comentario){
 	WebElement element = driver.findElement(By.cssSelector(".publishersharebutton"));
 	try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
@@ -364,7 +364,6 @@ public boolean cuentalogeada(String cuenta){
 	return a;}
 
 
-=======
 
 	public void Desloguear_Loguear(String usuario) {
 		driver.findElement(By.id("userNav")).click();
@@ -392,8 +391,8 @@ public boolean cuentalogeada(String cuenta){
 		clickEnCuentaPorNombre("Florencia Di Ci");
 		try {Thread.sleep(10000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 		moveToElementOnAccAndClick(identificador,indice);
-		//comentarycompartir(comentario);
+		comentarycompartir(comentario);
 		Desloguear_Loguear(usuario);
 	}
->>>>>>> master
+
 }
