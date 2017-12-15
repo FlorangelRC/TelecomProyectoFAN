@@ -6,6 +6,7 @@ import java.util.List;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.interactions.Actions;
 import org.testng.Assert;
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;
@@ -376,7 +377,6 @@ private WebDriver driver;
 			}
 		}
 	}
-<<<<<<< HEAD
 	
 	@Test(groups = "SCP")
 	public void TS112592_Contexto_Sectorial_Exportar_a_Excel() {
@@ -747,6 +747,4 @@ private WebDriver driver;
 		prueba.comentarycompartir(a);
 		prueba.validarcomentario(a);
 	}
-=======
->>>>>>> master
 }
