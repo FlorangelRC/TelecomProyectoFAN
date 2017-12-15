@@ -343,7 +343,7 @@ public void validarcomentario(String comentario){
 	try {Thread.sleep(15000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 	List <WebElement> comentarios = driver.findElements(By.cssSelector(".feeditembodyandfooter"));
 	Assert.assertTrue(comentarios.get(0).findElement(By.cssSelector(".cxfeeditemtextwrapper")).getText().equals(comentario));
-	Assert.assertEquals(comentarios.get(0).findElement(By.cssSelector(".topics.init")).getText(), "Haga clic para agregar temas:   Sin sugerencias. Añada sus propios temas.");
+	Assert.assertEquals(comentarios.get(0).findElement(By.cssSelector(".topics.init")).getText(), "Haga clic para agregar temas:   Sin sugerencias. Aï¿½ada sus propios temas.");
 }
 public void validarcomentarioajeno(String comentario){
 	try {Thread.sleep(15000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
@@ -365,12 +365,13 @@ public boolean cuentalogeada(String cuenta){
 
 
 
+
 	public void Desloguear_Loguear(String usuario) {
 		driver.findElement(By.id("userNav")).click();
 		TestBase TB = new TestBase();
 		List<WebElement> opcionesMenu = driver.findElement(By.id("userNav-menuItems")).findElements(By.tagName("a"));
 		for (WebElement UnaO : opcionesMenu) {
-			if(UnaO.getText().toLowerCase().contains("finalizar sesión")) {
+			if(UnaO.getText().toLowerCase().contains("finalizar sesiï¿½n")) {
 				UnaO.click();
 				break;
 			}
