@@ -752,4 +752,101 @@ private WebDriver driver;
 		prueba.comentarycompartir(a);
 		prueba.validarcomentario(a);
 	}
+	
+	@Test(groups = "SCP")
+	public void TS112700_Mosaico_de_Relacionamiento_General_Descargar_imagen() {
+		SCP prueba = new SCP(driver);
+		prueba.moveToElementOnAccAndClick("segundoTitulo", 4);
+		List <WebElement> element = driver.findElements(By.cssSelector(".btn.btn-default.btn-sm"));
+		for (WebElement x : element) {
+			if (x.getText().toLowerCase().contains("ver mosaico ordenado por rol")) {
+				x.click();
+				break;
+			}
+		}
+		try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		List <WebElement> b = driver.findElements(By.cssSelector(".btn.btn-default.btn-sm"));
+		boolean a = false;
+		for (WebElement x : b) {
+			if (x.getText().contains("Descargar Imagen")) {
+				a = true;
+			}
+		}
+		Assert.assertTrue(a);
+	}
+	
+	@Test(groups = "SCP")
+	public void TS112716_Mosaico_de_Relacionamiento_General_Ver_Video() {
+		SCP prueba = new SCP(driver);
+		prueba.moveToElementOnAccAndClick("segundoTitulo", 4);
+		driver.findElement(By.cssSelector(".btn.btn-xs.btn-default")).click();
+		try {Thread.sleep(10000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+	    ArrayList<String> tabs2 = new ArrayList<String> (driver.getWindowHandles());
+	    driver.switchTo().window(tabs2.get(1));
+	    BasePage cambioFrameByID = new BasePage();
+		driver.switchTo().frame(cambioFrameByID.getFrameForElement(driver, By.className("ytp-cued-thumbnail-overlay")));
+		Assert.assertTrue(driver.findElement(By.className("ytp-cued-thumbnail-overlay")).isDisplayed());
+		driver.close();
+	    driver.switchTo().window(tabs2.get(0));
+	}
+	
+	@Test(groups = "SCP")
+	public void TS112707_Mosaico_de_Relacionamiento_General_Ordenar_por_Actitud() {
+		SCP prueba = new SCP(driver);
+		prueba.moveToElementOnAccAndClick("segundoTitulo", 4);
+		List <WebElement> element = driver.findElements(By.cssSelector(".btn.btn-default.btn-sm"));
+		for (WebElement x : element) {
+			if (x.getText().toLowerCase().contains("ver mosaico ordenado por actitud")) {
+				x.click();
+				break;
+			}
+		}
+		try {Thread.sleep(10000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		Assert.assertTrue(driver.findElement(By.cssSelector(".tablaMosaico.tablaUser")).isDisplayed());
+		Assert.assertTrue(driver.findElement(By.cssSelector(".tablaMosaico.tablaTecnico")).isDisplayed());
+	}
+	
+	@Test(groups = "SCP")
+	public void TS112711_Mosaico_de_Relacionamiento_General_Ordenar_por_ROL() {
+		SCP prueba = new SCP(driver);
+		prueba.moveToElementOnAccAndClick("segundoTitulo", 4);
+		List <WebElement> element = driver.findElements(By.cssSelector(".btn.btn-default.btn-sm"));
+		for (WebElement x : element) {
+			if (x.getText().toLowerCase().contains("ver mosaico ordenado por rol")) {
+				x.click();
+				break;
+			}
+		}
+		try {Thread.sleep(10000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		List <WebElement> a = driver.findElements(By.className("tablaMosaico"));
+		Assert.assertTrue(a.get(0).isDisplayed() && a.get(1).isDisplayed());
+	}
+	
+	@Test(groups = "SCP")
+	public void TS112715_Mosaico_de_Relacionamiento_General_Ver_organigrama() {
+		SCP prueba = new SCP(driver);
+		prueba.moveToElementOnAccAndClick("segundoTitulo", 4);
+		List <WebElement> a = driver.findElements(By.cssSelector(".btn.btn-default.btn-sm"));
+		for (WebElement x : a) {
+			if (x.getText().toLowerCase().contains("ver mosaico ordenado por rol")) {
+				x.click();
+				break;
+			}
+		}
+		try {Thread.sleep(10000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		List <WebElement> b = driver.findElements(By.cssSelector(".btn.btn-default.btn-sm"));
+		for (WebElement x : b) {
+			if (x.getText().toLowerCase().contains("ver organigrama")) {
+				x.click();
+				break;
+			}
+		}
+		try {Thread.sleep(10000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+	    ArrayList<String> tabs2 = new ArrayList<String> (driver.getWindowHandles());
+	    driver.switchTo().window(tabs2.get(1));
+		WebElement element = driver.findElement(By.className("panel-heading"));
+		Assert.assertTrue(element.getText().contains("Organigrama y Mapa de Influencia"));
+		driver.close();
+	    driver.switchTo().window(tabs2.get(0));
+	}
 }
