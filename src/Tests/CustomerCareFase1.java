@@ -69,7 +69,7 @@ public class CustomerCareFase1 extends TestBase {
 		}
 		try {Thread.sleep(10000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 		CustomerCare page = new CustomerCare(driver);
-		page.elegircuenta("Fernando Care");
+		page.elegircuenta("aaaaFernando Care");
 		try {Thread.sleep(10000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 	}
 
@@ -413,7 +413,7 @@ public class CustomerCareFase1 extends TestBase {
 		try {Thread.sleep(10000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 		CustomerCare page = new CustomerCare(driver);
 		page.cerrarultimapestaña();
-		page.elegircuenta("Andres Care");
+		page.elegircuenta("aaaaAndres Care");
 		List<WebElement> profileinfo = driver.findElements(By.className("acct-info"));
 		for (WebElement x : profileinfo) {
 			Assert.assertTrue(x.getText().toLowerCase().contains("básico"));
@@ -440,7 +440,7 @@ public class CustomerCareFase1 extends TestBase {
 		try {Thread.sleep(10000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 		CustomerCare page = new CustomerCare(driver);
 		page.cerrarultimapestaña();
-		page.elegircuenta("Andres Care");
+		page.elegircuenta("aaaaAndres Care");
 		List<WebElement> profileinfo = driver.findElements(By.className("acct-info"));
 		for (WebElement x : profileinfo) {
 			Assert.assertTrue(x.getText().toLowerCase().contains("premium"));

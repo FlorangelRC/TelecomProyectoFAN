@@ -66,7 +66,7 @@ public class customerInformationUpdates extends TestBase {
 	 	}
 	 	try {Thread.sleep(20000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 		CustomerCare page = new CustomerCare(driver);
-		page.elegircuenta("Fernando Care");
+		page.elegircuenta("aaaaFernando Care");
 		BasePage cambioFrameByID=new BasePage();
 	    driver.switchTo().frame(cambioFrameByID.getFrameForElement(driver, By.className("profile-edit")));
 		List <WebElement> actualizar = driver.findElements(By.className("profile-edit"));
