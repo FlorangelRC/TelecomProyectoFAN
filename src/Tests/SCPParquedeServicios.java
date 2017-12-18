@@ -193,4 +193,14 @@ public class SCPParquedeServicios extends TestBase{
 		page.comentarycompartir("Esto es un comentario");
 		page.validarcomentario("Esto es un comentario");
 	}
+	@Test(groups= "SCP")
+	public void TS112614_Cronograma_de_Cuenta_Chatter_contextualizado_Escribir_comentario(){
+		SCP page = new SCP(driver);
+		page.clickOnTabByName("cuentas");
+		page.clickOnFirstAccRe();//*[@id="tercerTitulo"]/div/ul/li[2]/a
+		try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		page.moveToElementOnAccAndClick("tercerTitulo", 1);
+		page.comentarycompartir("Esto es un comentario");
+		page.validarcomentario("Esto es un comentario");
+	}
 }
