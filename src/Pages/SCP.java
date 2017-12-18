@@ -341,7 +341,7 @@ public void validarcomentario(String comentario){
 
 	List <WebElement> comentarios = driver.findElements(By.cssSelector(".feeditembodyandfooter"));
 	Assert.assertTrue(comentarios.get(0).findElement(By.cssSelector(".cxfeeditemtextwrapper")).getText().equals(comentario));
-	Assert.assertEquals(comentarios.get(0).findElement(By.cssSelector(".topics.init")).getText(), "Haga clic para agregar temas:   Sin sugerencias. Aï¿½ada sus propios temas.");
+	Assert.assertEquals(comentarios.get(0).findElement(By.cssSelector(".topics.init")).getText(), "Haga clic para agregar temas:   Sin sugerencias. Añada sus propios temas.");
 }
 public void validarcomentarioajeno(String comentario){
 	try {Thread.sleep(15000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
