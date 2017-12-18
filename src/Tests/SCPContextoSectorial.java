@@ -645,7 +645,8 @@ private WebDriver driver;
 		List <WebElement> a = driver.findElements(By.className("resetHito"));
 		a.get(0).sendKeys(c);
 		a.get(1).click();
-		driver.findElement(By.xpath("//*[text() = 'Otro']")).click();
+		CustomerCare page = new CustomerCare(driver);
+		page.setSimpleDropdown(a.get(1), "Otro");
 		driver.findElement(By.className("dateFormat")).click();
 		try {Thread.sleep(3000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 		driver.findElement(By.xpath("//*[@id=\"myModalHito\"]/div[2]/div/div[3]/button[1]")).click();
