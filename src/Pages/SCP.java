@@ -2,6 +2,7 @@ package Pages;
 
 import java.io.File;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import org.openqa.selenium.By;
@@ -339,6 +340,7 @@ public void comentarycompartir(String comentario){
 public void validarcomentario(String comentario){
 	try {Thread.sleep(15000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 
+<<<<<<< HEAD
 	List <WebElement> comentarios = driver.findElements(By.cssSelector(".feeditemtext.cxfeeditemtextr"));
 	System.out.println(comentarios.size());
 	Assert.assertTrue(comentarios.get(0).equals(comentario));
@@ -346,6 +348,12 @@ public void validarcomentario(String comentario){
 }
 
 	
+=======
+	List <WebElement> comentarios = driver.findElements(By.cssSelector(".feeditembodyandfooter"));
+	Assert.assertTrue(comentarios.get(0).findElement(By.cssSelector(".cxfeeditemtextwrapper")).getText().equals(comentario));
+	Assert.assertEquals(comentarios.get(0).findElement(By.cssSelector(".topics.init")).getText(), "Haga clic para agregar temas:   Sin sugerencias. Añada sus propios temas.");
+}
+>>>>>>> master
 public void validarcomentarioajeno(String comentario){
 	try {Thread.sleep(15000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 	String cuentaactiva = driver.findElement(By.id("userNavLabel")).getText();
@@ -396,5 +404,35 @@ public boolean cuentalogeada(String cuenta){
 		comentarycompartir(comentario);
 		Desloguear_Loguear(usuario);
 	}
+	
+	public boolean Triangulo_Ordenador_Validador() {
+		TestBase TB = new TestBase();
+		TB.waitFor(driver, By.xpath("//*[@id=\"mainTable\"]/tbody/tr"));
+		
+		List<WebElement> wOportunityByUs = driver.findElements(By.xpath("//*[@id=\"mainTable\"]/tbody/tr"));
+		ArrayList<String> sOportunityByUs = new ArrayList<String>();
+		
+		driver.findElement(By.xpath("//*[@id=\"mainTable\"]/thead/tr/th[2]")).click();
+		List<WebElement> wOportunityByThem = driver.findElements(By.xpath("//*[@id=\"mainTable\"]/tbody/tr"));
+		ArrayList<String> sOportunityByThem = new ArrayList<String>();
+		
+		for (int a = 0; a < wOportunityByUs.size(); a++) {
+			sOportunityByUs.add(wOportunityByUs.get(a).getText().toLowerCase());
+			sOportunityByThem.add(wOportunityByThem.get(a).getText().toLowerCase());
+		}
+		
+		Collections.sort(sOportunityByUs);
+		boolean bBoolean = true;
+		
+		for(int i = 0; i < sOportunityByUs.size(); i++) { 
+			if (!sOportunityByUs.get(i).equals(sOportunityByThem.get(i))) {
+			 bBoolean = false;
+		 }
+		}
+		
+		return bBoolean;
+		
+	}
+
 
 }

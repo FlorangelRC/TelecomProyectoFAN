@@ -66,7 +66,7 @@ private WebDriver driver;
 		try {Thread.sleep(6000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();} 
 	     page.cerrarultimapestaña();
 		 try {Thread.sleep(12000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();} 
-			 page.elegircuenta("Fernando Care");
+			 page.elegircuenta("aaaaFernando Care");
 			 try {Thread.sleep(12000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}  
 			 BasePage cambioFrameByID=new BasePage();
 			 driver.switchTo().frame(cambioFrameByID.getFrameForElement(driver, By.cssSelector(".console-card.active")));
