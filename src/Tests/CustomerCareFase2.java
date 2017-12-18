@@ -90,7 +90,7 @@ public class CustomerCareFase2 extends TestBase {
 	public void TS7137_BusinessDataPanelQuickAccessButtonsAccount() {
 		CustomerCare page = new CustomerCare(driver);
 		goToLeftPanel(driver, "Cuentas");
-		page.elegircuenta("Andres Care");
+		page.elegircuenta("aaaaAndres Care");
 		page.openleftpanel();
 		try {Thread.sleep(10000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 		BasePage cambioFrameByID = new BasePage();
@@ -104,7 +104,7 @@ public class CustomerCareFase2 extends TestBase {
 	public void TS7138_BusinessDataPanelPicklistCommercialDataAccount() {
 		CustomerCare page = new CustomerCare(driver);
 		goToLeftPanel(driver, "Cuentas");
-		page.elegircuenta("Andres Care");
+		page.elegircuenta("aaaaAndres Care");
 		page.openleftpanel();
 		try {Thread.sleep(10000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 		BasePage cambioFrameByID = new BasePage();
@@ -117,7 +117,7 @@ public class CustomerCareFase2 extends TestBase {
 	public void TS15962_Sesion_Guiada_Para_Cambios_en_Condicion_Impositiva_Boton_de_sesion_guiada() {
 		CustomerCare page = new CustomerCare(driver);
 		goToLeftPanel(driver, "Cuentas");
-		page.elegircuenta("Andres Care");
+		page.elegircuenta("aaaaAndres Care");
 		page.openrightpanel();
 		page.ValidarBtnsGestion("Cambios de condición impositiva");
 	}
@@ -127,7 +127,7 @@ public class CustomerCareFase2 extends TestBase {
 	public void TS14567_Capacidades_de_Busqueda_Filtrar_Por_DNI() {
 		CustomerCare page = new CustomerCare(driver);
 		page.usarbuscadorsalesforce("30303030");
-		page.validarlabusqueda("Andres Care");
+		page.validarlabusqueda("aaaaAndres Care");
 		driver.switchTo().defaultContent();
 	}
 
@@ -156,7 +156,7 @@ public class CustomerCareFase2 extends TestBase {
 	@Test(groups = "CustomerCare")
 	public void TS12244_Positive_Feedback_Suggestions_Generic_Interaction_No_Follow_up_Required_Creacion_de_los_Casos_Crear_Caso() {
 		CustomerCare page = new CustomerCare(driver);
-		page.elegircuenta("Fernando Care");
+		page.elegircuenta("aaaaFernando Care");
 		page.SelectGestion("sugerencia");
 		page.crearsugerencia("Sugerencias", "Publicidad", "crear");
 		List<WebElement> element = driver.findElements(By.className("ta-care-omniscript-done"));
@@ -173,7 +173,7 @@ public class CustomerCareFase2 extends TestBase {
 	public void TS12245_Positive_Feedback_Suggestions_Generic_Interaction_No_Follow_up_Required_Creacion_de_los_Casos_Crear_y_Cancelar_Gestion() {
 		CustomerCare page = new CustomerCare(driver);
 		CasePage page1 = new CasePage(driver);
-		page.elegircuenta("Fernando Care");
+		page.elegircuenta("aaaaFernando Care");
 		page.SelectGestion("sugerencia");
 		page.crearsugerencia("Sugerencias", "Productos/Servicios", "cancel");
 		page.cerrarultimapestaña();
@@ -185,7 +185,7 @@ public class CustomerCareFase2 extends TestBase {
 	@Test(groups = "CustomerCare")
 	public void TS12302_Positive_Feedback_Suggestions_Generic_Interaction_No_Follow_up_Required_Detalle_de_Atributos_Feedback_Positivo_Generar_Gestion_Subcategoria_Atencion_Ejecutivos() {
 		CustomerCare page = new CustomerCare(driver);
-		page.elegircuenta("Fernando Care");
+		page.elegircuenta("aaaaFernando Care");
 		page.SelectGestion("sugerencia");
 		page.crearsugerencia("Sugerencias", "Atención Ejecutivos", "crear");
 		List<WebElement> element = driver.findElements(By.className("ta-care-omniscript-done"));
@@ -201,7 +201,7 @@ public class CustomerCareFase2 extends TestBase {
 	@Test(groups = "CustomerCare")
 	public void TS15962_Tax_Condition_Changes_Sesion_Guiada_Para_Cambios_en_Condicion_Impositiva_Boton_de_sesion_guiada() {
 		CustomerCare page = new CustomerCare(driver);
-		page.elegircuenta("Fernando Care");
+		page.elegircuenta("aaaaFernando Care");
 		page.ValidarBtnsGestion("Cambios de condi");
 		driver.switchTo().defaultContent();
 	}
@@ -210,7 +210,7 @@ public class CustomerCareFase2 extends TestBase {
 	@Test(groups = "CustomerCare")
 	public void TS15966_Tax_Condition_Changes_Sesion_Guiada_Para_Cambios_en_Condicion_Impositiva_Paso_1_Escenario_1() {
 		CustomerCare page = new CustomerCare(driver);
-		page.elegircuenta("Fernando Care");
+		page.elegircuenta("aaaaFernando Care");
 		page.SelectGestion("cambios de condi");
 		try {Thread.sleep(30000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 		page.validarCheckBox();
@@ -227,7 +227,7 @@ public class CustomerCareFase2 extends TestBase {
 	@Test(groups = "CustomerCare")
 	public void TS15976_Tax_Condition_Changes_Sesion_Guiada_Para_Cambios_en_Condicion_Impositiva_Paso_2_Seleccion_DNI_a_CUIT() {
 		CustomerCare page = new CustomerCare(driver);
-		page.elegircuenta("Fernando Care");
+		page.elegircuenta("aaaaFernando Care");
 		page.SelectGestion("cambios de condi");
 		try {Thread.sleep(30000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 		BasePage cambioFrameByID = new BasePage();
@@ -245,7 +245,7 @@ public class CustomerCareFase2 extends TestBase {
 	@Test(groups = "CustomerCare")
 	public void TS15977_Tax_Condition_Changes_Sesion_Guiada_Para_Cambios_en_Condicion_Impositiva_Paso_2_Sin_seleccion_DNI_a_CUIT() {
 		CustomerCare page = new CustomerCare(driver);
-		page.elegircuenta("Fernando Care");
+		page.elegircuenta("aaaaFernando Care");
 		page.SelectGestion("cambios de condi");
 		try {Thread.sleep(30000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 		BasePage cambioFrameByID = new BasePage();
@@ -262,7 +262,7 @@ public class CustomerCareFase2 extends TestBase {
 	@Test(groups = "CustomerCare")
 	public void TS15974_Tax_Condition_Changes_Sesion_Guiada_Para_Cambios_en_Condicion_Impositiva_Paso_2_Visualizar_DNI_a_CUIT() {
 		CustomerCare page = new CustomerCare(driver);
-		page.elegircuenta("Fernando Care");
+		page.elegircuenta("aaaaFernando Care");
 		page.SelectGestion("cambios de condi");
 		try {Thread.sleep(30000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 		BasePage cambioFrameByID = new BasePage();
@@ -284,7 +284,7 @@ public class CustomerCareFase2 extends TestBase {
 	public void TS15993_Tax_Condition_Changes_Sesion_Guiada_Para_Cambios_en_Condicion_Impositiva_Paso_4_Valores_IVA_No_ejecutivo() {
 		BasePage pagina = new BasePage(driver);
 		CustomerCare page = new CustomerCare(driver);
-		page.elegircuenta("Fernando Care");
+		page.elegircuenta("aaaaFernando Care");
 		page.SelectGestion("cambios de condi");
 		try {Thread.sleep(30000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 		BasePage cambioFrameByID = new BasePage();
@@ -313,7 +313,7 @@ public class CustomerCareFase2 extends TestBase {
 	@Test(groups = "CustomerCare")
 	public void TS15999_Tax_Condition_Changes_Sesion_Guiada_Para_Cambios_en_Condicion_Impositiva_Paso_4_Visualizar_Exencion_IVA() {
 		CustomerCare page = new CustomerCare(driver);
-		page.elegircuenta("Fernando Care");
+		page.elegircuenta("aaaaFernando Care");
 		page.SelectGestion("cambios de condi");
 		try {Thread.sleep(30000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 		BasePage cambioFrameByID = new BasePage();
@@ -336,7 +336,7 @@ public class CustomerCareFase2 extends TestBase {
 	@Test(groups = "CustomerCare")
 	public void TS16015_Tax_Condition_Changes_Sesion_Guiada_Para_Cambios_en_Condicion_Impositiva_Paso_4_Visualizar_Percepcion_IIBB() {
 		CustomerCare page = new CustomerCare(driver);
-		page.elegircuenta("Fernando Care");
+		page.elegircuenta("aaaaFernando Care");
 		page.SelectGestion("cambios de condi");
 		try {Thread.sleep(30000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 		BasePage cambioFrameByID = new BasePage();
@@ -359,7 +359,7 @@ public class CustomerCareFase2 extends TestBase {
 	@Test(groups = "CustomerCare")
 	public void TS16017_Tax_Condition_Changes_Sesion_Guiada_Para_Cambios_en_Condicion_Impositiva_Paso_4_Visualizar_Picklist_Jurisdicciones_Percepcion_IIBB() {
 		CustomerCare page = new CustomerCare(driver);
-		page.elegircuenta("Fernando Care");
+		page.elegircuenta("aaaaFernando Care");
 		page.SelectGestion("cambios de condi");
 		try {Thread.sleep(30000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 		BasePage cambioFrameByID = new BasePage();
@@ -382,7 +382,7 @@ public class CustomerCareFase2 extends TestBase {
 	@Test(groups = "CustomerCare")
 	public void TS15965_Tax_Condition_Changes_Sesion_Guiada_Para_Cambios_en_Condicion_Impositiva_Validaciones_negativas() {
 		CustomerCare page = new CustomerCare(driver);
-		page.elegircuenta("Fernando Care");
+		page.elegircuenta("aaaaFernando Care");
 		page.SelectGestion("cambios de condi");
 		try {Thread.sleep(30000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 		BasePage cambioFrameByID = new BasePage();
@@ -401,7 +401,7 @@ public class CustomerCareFase2 extends TestBase {
 	public void TS16052_Tax_Condition_Changes_Sesion_Guiada_Para_Cambios_en_Condicion_Impositiva_Paso_6_Confirmacion() {
 		CustomerCare page = new CustomerCare(driver);
 		BasePage cambioFrameByID = new BasePage(driver);
-		page.elegircuenta("Fernando Care");
+		page.elegircuenta("aaaaFernando Care");
 		page.SelectGestion("cambios de condi");
 		try {Thread.sleep(30000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 		driver.switchTo().frame(cambioFrameByID.getFrameForElement(driver, By.cssSelector(".slds-radio--faux.ng-scope")));
@@ -439,7 +439,7 @@ public class CustomerCareFase2 extends TestBase {
 	@Test(groups = "CustomerCare")
 	public void TS16054_Tax_Condition_Changes_Sesion_Guiada_Para_Cambios_en_Condicion_Impositiva_Paso_6_Caso_creado() {
 		CustomerCare page = new CustomerCare(driver);
-		page.elegircuenta("Fernando Care");
+		page.elegircuenta("aaaaFernando Care");
 		page.SelectGestion("cambios de condi");
 		try {Thread.sleep(25000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 		BasePage cambioFrameByID = new BasePage();
@@ -481,7 +481,7 @@ public class CustomerCareFase2 extends TestBase {
 	@Test(groups = "CustomerCare")
 	public void TS15905_Consumption_Details_Definicion_de_Filtros_Filtro_Lista_de_Servicios_Servicio_que_lo_tiene_el_cliente() {
 		CustomerCare page = new CustomerCare(driver);
-		page.elegircuenta("Fernando Care");
+		page.elegircuenta("aaaaFernando Care");
 		page.SelectGestion("detalle de consumo");
 		BasePage cambioFrameByID = new BasePage();
 		try {Thread.sleep(15000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
@@ -498,7 +498,7 @@ public class CustomerCareFase2 extends TestBase {
 	@Test(groups = "CustomerCare")
 	public void TS15906_Consumption_Details_Definicion_de_Filtros_Filtro_Lista_de_Servicios_Servicio_que_no_tiene_el_cliente() {
 		CustomerCare page = new CustomerCare(driver);
-		page.elegircuenta("Fernando Care");
+		page.elegircuenta("aaaaFernando Care");
 		page.SelectGestion("detalle de consumo");
 		BasePage cambioFrameByID = new BasePage();
 		try {Thread.sleep(15000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
@@ -516,7 +516,7 @@ public class CustomerCareFase2 extends TestBase {
 	public void TS15964_Tax_Condition_Changes_Sesion_Guiada_Para_Cambios_en_Condicion_Impositiva_Guardar_para_Despues_Sesion_Guiada() {
 		CustomerCare page = new CustomerCare(driver);
 		BasePage cambioFrameByID = new BasePage(driver);
-		page.elegircuenta("Fernando Care");
+		page.elegircuenta("aaaaFernando Care");
 		page.SelectGestion("cambios de condi");
 		try {Thread.sleep(25000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 		driver.switchTo().frame(cambioFrameByID.getFrameForElement(driver,By.cssSelector(".vlc-slds-button--tertiary.ng-binding.ng-scope")));
@@ -534,7 +534,7 @@ public class CustomerCareFase2 extends TestBase {
 	@Test(groups = "CustomerCare")
 	public void TS15954_360_View_Ver_Equipo_Creador_en_Case_Visualizar_campo_Equipo_del_Creador() {
 		CustomerCare page = new CustomerCare(driver);
-		page.elegircuenta("Fernando Care");
+		page.elegircuenta("aaaaFernando Care");
 		page.elegircaso();
 		try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 		page.ElementPresent(driver.findElement(By.cssSelector(".x-grid3-hd-inner.x-grid3-hd-00Nc0000001iLah")));
@@ -545,7 +545,7 @@ public class CustomerCareFase2 extends TestBase {
 	@Test(groups = "CustomerCare")
 	public void TS16069_Billing_Cycle_Changes_Sesion_Guiada_para_Cambios_de_Inicio_de_Ciclo_de_Facturacion_Paso_1_Seleccion_Billing_accounts() {
 		CustomerCare page = new CustomerCare(driver);
-		page.elegircuenta("Fernando Care");
+		page.elegircuenta("aaaaFernando Care");
 		page.SelectGestion("cambio de ciclo");
 		try {Thread.sleep(25000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 		BasePage cambioFrameByID = new BasePage();
@@ -562,7 +562,7 @@ public class CustomerCareFase2 extends TestBase {
 	@Test(groups = "CustomerCare")
 	public void TS16062_Billing_Cycle_Changes_Sesion_Guiada_para_Cambios_de_Inicio_de_Ciclo_de_Facturacion_Paso_1_Visualizar_Billing_accounts() {
 		CustomerCare page = new CustomerCare(driver);
-		page.elegircuenta("Fernando Care");
+		page.elegircuenta("aaaaFernando Care");
 		page.SelectGestion("cambio de ciclo");
 		try {Thread.sleep(30000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 		BasePage cambioFrameByID = new BasePage();
@@ -577,7 +577,7 @@ public class CustomerCareFase2 extends TestBase {
 	public void TS16077_Billing_Cycle_Changes_Sesion_Guiada_para_Cambios_de_Inicio_de_Ciclo_de_Facturacion_Paso_2_Valores_Picklist_Ciclo_de_facturacion() {
 		CustomerCare page = new CustomerCare(driver);
 		BasePage pagina = new BasePage(driver);
-		page.elegircuenta("Fernando Care");
+		page.elegircuenta("aaaaFernando Care");
 		page.SelectGestion("cambio de ciclo");
 		try {Thread.sleep(30000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 		BasePage cambioFrameByID = new BasePage();
@@ -601,7 +601,7 @@ public class CustomerCareFase2 extends TestBase {
 	@Test(groups = "CustomerCare")
 	public void TS16056_Sesion_Guiada_para_Cambios_de_Inicio_de_Ciclo_de_Facturacion_Funcionamiento_Boton_Sesion_Guiada() {
 		CustomerCare page = new CustomerCare(driver);
-		page.elegircuenta("Andres Care");
+		page.elegircuenta("aaaaAndres Care");
 		page.SelectGestion("Cambio de ciclo");
 		try {Thread.sleep(30000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 		page.ValidarCambioDeCiclo();
@@ -611,7 +611,7 @@ public class CustomerCareFase2 extends TestBase {
 	@Test(groups = "CustomerCare")
 	public void TS16055_Sesion_Guiada_para_Cambios_de_Inicio_de_Ciclo_de_Facturacion__Boton_Sesion_Guiada() {
 		CustomerCare page = new CustomerCare(driver);
-		page.elegircuenta("Andres Care");
+		page.elegircuenta("aaaaAndres Care");
 		page.ValidarBtnsGestion("Cambio de ciclo");
 	}
 
@@ -620,8 +620,8 @@ public class CustomerCareFase2 extends TestBase {
 	public void TS12252_Billing_Group_User_Line_Movements_Paso_0_Error_por_cliente_inactivo() {
 		CustomerCare page = new CustomerCare(driver);
 		goToLeftPanel(driver, "Cuentas");
-		page.editarcuenta("Fernando Care", "no", "inactive");
-		page.elegircuenta("Fernando Care");
+		page.editarcuenta("aaaaFernando Care", "no", "inactive");
+		page.elegircuenta("aaaaFernando Care");
 		page.SelectGestion("Movimientos de cuenta de facturaci");
 		page.validarerrorpaso0();
 		driver.switchTo().defaultContent();
@@ -632,8 +632,8 @@ public class CustomerCareFase2 extends TestBase {
 	public void TS12251_Billing_Group_User_Line_Movements_Paso_0_Error_por_fraude_Cliente_inactivo() {
 		CustomerCare page = new CustomerCare(driver);
 		goToLeftPanel(driver, "Cuentas");
-		page.editarcuenta("Fernando Care", "si", "inactive");
-		page.elegircuenta("Fernando Care");
+		page.editarcuenta("aaaaFernando Care", "si", "inactive");
+		page.elegircuenta("aaaaFernando Care");
 		page.SelectGestion("Movimientos de cuenta de facturaci");
 		page.validarerrorpaso0();
 	}
@@ -643,7 +643,7 @@ public class CustomerCareFase2 extends TestBase {
 	public void TS12262_Billing_Group_User_Line_Movements_Paso_1_Billing_Account_suspendida_por_fraude_No_se_visualiza() {
 		CustomerCare page = new CustomerCare(driver);
 		BasePage cambioFrameByID = new BasePage();
-		page.elegircuenta("Andres Care");
+		page.elegircuenta("aaaaAndres Care");
 		page.SelectGestion("movimiento");
 		try {Thread.sleep(30000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 		driver.switchTo().frame(cambioFrameByID.getFrameForElement(driver, By.id("Validaciones_nextBtn")));
@@ -661,9 +661,9 @@ public class CustomerCareFase2 extends TestBase {
 	public void TS12261_Billing_Group_User_Line_Movements_Paso_1_Mover_Bundle_Se_mueven_todos_los_servicios() {
 		CustomerCare page = new CustomerCare(driver);
 		goToLeftPanel(driver, "Cuentas");
-		page.editarcuenta("Fernando Care", "no", "active");
-		page.editarcuenta("Fernando Care Billing 1", "no", "active");
-		page.elegircuenta("Fernando Care");
+		page.editarcuenta("aaaaFernando Care", "no", "active");
+		page.editarcuenta("aaaaaaaaFernando Care Billing 1", "no", "active");
+		page.elegircuenta("aaaaFernando Care");
 		page.SelectGestion("Movimientos de cuenta de facturaci");
 		try {Thread.sleep(10000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 		driver.findElement(By.id("Validaciones_nextBtn")).click();
@@ -677,7 +677,7 @@ public class CustomerCareFase2 extends TestBase {
 		driver.findElement(By.id("BillingAccountToStep_nextBtn")).click();
 		try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 		driver.findElement(By.id("Summary_nextBtn")).click();
-		//page.serviciocambiadecuenta("Arnet 10 MB (Prueba)", "Fernando Care Billing 2");
+		//page.serviciocambiadecuenta("Arnet 10 MB (Prueba)", "aaaaaaaaFernando Care Billing 2");
 		//page.SelectGestion("Movimientos de cuenta de facturacion");
 		//page.validarerrorpaso1("servicio cambia de cuenta billing");
 	}
@@ -686,7 +686,7 @@ public class CustomerCareFase2 extends TestBase {
 	@Test(groups = "CustomerCare")
 	public void TS15953_Billing_Cycle_Changes_Rastreo_de_los_Cambios_del_Inicio_del_Ciclo_de_Facturacion_Visualizar_Datos_Anteriores_Ciclo_Facturacion() {
 		CustomerCare page = new CustomerCare(driver);
-		page.elegircuenta("Fernando Care");
+		page.elegircuenta("aaaaFernando Care");
 		page.usarpanelcentral("Detalles");
 		page.validarhistorialdecuentas();
 	}
@@ -695,8 +695,8 @@ public class CustomerCareFase2 extends TestBase {
 	@Test(groups = "CustomerCare")
 	public void TS16061_Billing_Cycle_Changes_Sesion_Guiada_para_Cambios_de_Inicio_de_Ciclo_de_Facturacion_Paso_0_Caso_Cliente_activo() {
 		CustomerCare page = new CustomerCare(driver);
-		page.editarcuenta("Fernando Care", "no", "inactive");
-		page.elegircuenta("Fernando Care");
+		page.editarcuenta("aaaaFernando Care", "no", "inactive");
+		page.elegircuenta("aaaaFernando Care");
 		page.SelectGestion("ciclo");
 		try {Thread.sleep(30000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 		BasePage cambioFrameByID = new BasePage();
@@ -708,8 +708,8 @@ public class CustomerCareFase2 extends TestBase {
 	@Test(groups = "CustomerCare")
 	public void TS15959_Billing_Cycle_Changes_Sesion_Guiada_para_Cambios_de_Inicio_de_Ciclo_de_Facturacion_Paso_0_Caso_fraude() {
 		CustomerCare page = new CustomerCare(driver);
-		page.editarcuenta("Fernando Care", "si", "active");
-		page.elegircuenta("Fernando Care");
+		page.editarcuenta("aaaaFernando Care", "si", "active");
+		page.elegircuenta("aaaaFernando Care");
 		page.SelectGestion("ciclo");
 		page.validarerrorpaso0();
 		CasePage page1 = new CasePage(driver);
@@ -720,8 +720,8 @@ public class CustomerCareFase2 extends TestBase {
 	@Test(groups = "CustomerCare")
 	public void TS16060_Billing_Cycle_Changes_Sesion_Guiada_para_Cambios_de_Inicio_de_Ciclo_de_Facturacion_Paso_0_Validaciones_Cliente_activo() {
 		CustomerCare page = new CustomerCare(driver);
-		page.editarcuenta("Fernando Care", "si", "inactive");
-		page.elegircuenta("Fernando Care");
+		page.editarcuenta("aaaaFernando Care", "si", "inactive");
+		page.elegircuenta("aaaaFernando Care");
 		page.SelectGestion("ciclo");		
 		try {Thread.sleep(20000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 		BasePage cambioFrameByID=new BasePage();
@@ -735,8 +735,8 @@ public class CustomerCareFase2 extends TestBase {
 	@Test(groups = "CustomerCare")
 	public void TS16057_Billing_Cycle_Changes_Sesion_Guiada_para_Cambios_de_Inicio_de_Ciclo_de_Facturacion_Paso_0_Validaciones_correctas() {
 		CustomerCare page = new CustomerCare(driver);
-		page.editarcuenta("Fernando Care", "no", "active");
-		page.elegircuenta("Fernando Care");
+		page.editarcuenta("aaaaFernando Care", "no", "active");
+		page.elegircuenta("aaaaFernando Care");
 		page.SelectGestion("ciclo");
 		try {Thread.sleep(10000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 		List<WebElement> a = driver.findElements(By.className("slds-form-element__control"));
@@ -752,8 +752,8 @@ public class CustomerCareFase2 extends TestBase {
 	@Test(groups = "CustomerCare")
 	public void TS16065_Billing_Cycle_Changes_Sesion_Guiada_para_Cambios_de_Inicio_de_Ciclo_de_Facturacion_Paso_1_Ciclo_Billing_accounts() {
 		CustomerCare page = new CustomerCare(driver);
-		page.editarcuenta("Fernando Care", "no", "active");
-		page.elegircuenta("Fernando Care");
+		page.editarcuenta("aaaaFernando Care", "no", "active");
+		page.elegircuenta("aaaaFernando Care");
 		page.SelectGestion("ciclo");
 		page.validarpaso1cambiodeciclo();
 	}
@@ -762,8 +762,8 @@ public class CustomerCareFase2 extends TestBase {
 	@Test(groups = "CustomerCare")
 	public void TS16064_Billing_Cycle_Changes_Sesion_Guiada_para_Cambios_de_Inicio_de_Ciclo_de_Facturacion_Paso_1_Funcionamiento_Boton_Servicios_Billing_accounts() {
 		CustomerCare page = new CustomerCare(driver);
-		page.editarcuenta("Fernando Care", "no", "active");
-		page.elegircuenta("Fernando Care");
+		page.editarcuenta("aaaaFernando Care", "no", "active");
+		page.elegircuenta("aaaaFernando Care");
 		page.SelectGestion("ciclo");
 		try {Thread.sleep(20000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 		List<WebElement> a = driver.findElements(By.id("tree0-node1__label"));
@@ -779,8 +779,8 @@ public class CustomerCareFase2 extends TestBase {
 	@Test(groups = "CustomerCare")
 	public void TS16078_Billing_Cycle_Changes_Sesion_Guiada_para_Cambios_de_Inicio_de_Ciclo_de_Facturacion_Paso_2_Mandatorio_Picklist_Ciclo_de_facturacion() {
 		CustomerCare page = new CustomerCare(driver);
-		page.editarcuenta("Fernando Care", "no", "active");
-		page.elegircuenta("Fernando Care");
+		page.editarcuenta("aaaaFernando Care", "no", "active");
+		page.elegircuenta("aaaaFernando Care");
 		page.SelectGestion("ciclo");
 		try {Thread.sleep(30000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 		BasePage cambioFrameByID = new BasePage();
@@ -804,7 +804,7 @@ public class CustomerCareFase2 extends TestBase {
 	public void TS16080_Billing_Cycle_Changes_Sesion_Guiada_para_Cambios_Inicio_Ciclo_Facturacion_Paso3_Visualizar_Datos_Antiguos_Resumen() {
 		CustomerCare page = new CustomerCare(driver);
 		BasePage Bp = new BasePage();
-		page.elegircuenta("Fernando Care");
+		page.elegircuenta("aaaaFernando Care");
 		page.SelectGestion("ciclo");
 		page.clickContinueError();
 		page.clickContinueError();
@@ -843,7 +843,7 @@ public class CustomerCareFase2 extends TestBase {
 	public void TS16081_Billing_Cycle_Changes_Sesion_Guiada_para_Cambios_de_Inicio_de_Ciclo_de_Facturacion_Paso_3_Visualizar_Datos_Nuevos_Resumen() {
 		CustomerCare page = new CustomerCare(driver);
 		BasePage Bp = new BasePage();
-		page.elegircuenta("Fernando Care");
+		page.elegircuenta("aaaaFernando Care");
 		page.SelectGestion("ciclo");
 		page.clickContinueError();
 		page.clickContinueError();
@@ -875,7 +875,7 @@ public class CustomerCareFase2 extends TestBase {
 	public void TS12254_Billing_Group_User_Line_Movements_Paso_1_Seleccion_de_Billing_Account_sin_seleccionar_servicios() {
 		CustomerCare page = new CustomerCare(driver);
 		BasePage cambioFrameByID = new BasePage();
-		page.elegircuenta("Fernando Care");
+		page.elegircuenta("aaaaFernando Care");
 		page.SelectGestion("movimiento");
 		try {Thread.sleep(30000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 		driver.switchTo().frame(cambioFrameByID.getFrameForElement(driver, By.id("Validaciones_nextBtn")));
@@ -893,7 +893,7 @@ public class CustomerCareFase2 extends TestBase {
 	public void TS12255_Billing_Group_User_Line_Movements_Paso_1_Seleccion_de_Billing_Account_y_un_servicio() {
 		CustomerCare page = new CustomerCare(driver);
 		BasePage cambioFrameByID = new BasePage();
-		page.elegircuenta("Fernando Care");
+		page.elegircuenta("aaaaFernando Care");
 		page.SelectGestion("movimiento");
 		try {Thread.sleep(30000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 		driver.switchTo().frame(cambioFrameByID.getFrameForElement(driver, By.id("Validaciones_nextBtn")));
@@ -917,7 +917,7 @@ public class CustomerCareFase2 extends TestBase {
 	public void TS12260_Billing_Group_User_Line_Movements_Paso_1_Visualizacion_Bundle() {
 		CustomerCare page = new CustomerCare(driver);
 		BasePage cambioFrameByID = new BasePage();
-		page.elegircuenta("Fernando Care");
+		page.elegircuenta("aaaaFernando Care");
 		page.SelectGestion("movimiento");
 		try {Thread.sleep(30000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 		driver.switchTo().frame(cambioFrameByID.getFrameForElement(driver, By.id("Validaciones_nextBtn")));
@@ -932,7 +932,7 @@ public class CustomerCareFase2 extends TestBase {
 	public void TS12268_Billing_Group_User_Line_Movements_Paso_2_Billing_Account_suspendida_por_fraude_No_se_visualiza() {
 		CustomerCare page = new CustomerCare(driver);
 		BasePage cambioFrameByID = new BasePage();
-		page.elegircuenta("Andres Care");
+		page.elegircuenta("aaaaAndres Care");
 		page.SelectGestion("movimiento");
 		try {Thread.sleep(30000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 		driver.switchTo().frame(cambioFrameByID.getFrameForElement(driver, By.id("Validaciones_nextBtn")));
@@ -950,7 +950,7 @@ public class CustomerCareFase2 extends TestBase {
 	public void TS12264_Billing_Group_User_Line_Movements_Paso_2_Expansion_de_servicios() {
 		CustomerCare page = new CustomerCare(driver);
 		BasePage cambioFrameByID = new BasePage();
-		page.elegircuenta("Fernando Care");
+		page.elegircuenta("aaaaFernando Care");
 		page.SelectGestion("movimiento");
 		try {Thread.sleep(30000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 		driver.switchTo().frame(cambioFrameByID.getFrameForElement(driver, By.id("Validaciones_nextBtn")));
@@ -962,7 +962,7 @@ public class CustomerCareFase2 extends TestBase {
 		try {Thread.sleep(7000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 		List <WebElement> x = driver.findElements(By.className("slds-radio__label"));
 		for (WebElement a : x) {
-			if (a.getText().toLowerCase().contains("fernando care billing 1")) {
+			if (a.getText().toLowerCase().contains("aaaaaaaaFernando Care Billing 1")) {
 				a.click();
 			}
 		}
@@ -980,7 +980,7 @@ public class CustomerCareFase2 extends TestBase {
 	public void TS12273_Billing_Group_User_Line_Movements_Cancelacion_de_omniscript_Caso_con_estado_cancelado() {
 		CustomerCare page = new CustomerCare(driver);
 		BasePage cambioFrameByID = new BasePage();
-		page.elegircuenta("Fernando Care");
+		page.elegircuenta("aaaaFernando Care");
 		page.SelectGestion("movimiento");
 		try {Thread.sleep(30000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 		driver.switchTo().frame(cambioFrameByID.getFrameForElement(driver, By.id("Validaciones_nextBtn")));
@@ -1025,7 +1025,7 @@ public class CustomerCareFase2 extends TestBase {
 	     CustomerCare page = new CustomerCare(driver);
 			page.cerrarultimapestaña();
 			 try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();} 
-			page.elegircuenta("Fernando Care");
+			page.elegircuenta("aaaaFernando Care");
 			 try {Thread.sleep(9000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}  
 			 accountPage.findAndClickButton("Cambios de condición impositiva");
 			 try {Thread.sleep(8000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}  
@@ -1061,7 +1061,7 @@ public class CustomerCareFase2 extends TestBase {
 		Accounts accountPage = new Accounts(driver);
 		driver.switchTo().defaultContent();
 		//driver.switchTo().frame(accountPage.getFrameForElement(driver, By.id("phSearchInput")));
-		driver.findElement(By.id("phSearchInput")).sendKeys("Fernando care Billin");
+		driver.findElement(By.id("phSearchInput")).sendKeys("aaaaFernando Care Billin");
 		try {Thread.sleep(3000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 		driver.switchTo().defaultContent();
 		driver.findElement(By.id("phSearchInput:group0:option0")).click();
@@ -1087,7 +1087,7 @@ public class CustomerCareFase2 extends TestBase {
 	     CustomerCare page = new CustomerCare(driver);
 	     page.cerrarultimapestaña();
 		 try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();} 
-		 page.elegircuenta("Fernando Care");
+		 page.elegircuenta("aaaaFernando Care");
 		 accountPage.findAndClickButton("Detalle de Consumos");
 		 try {Thread.sleep(8000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();} 
 		 driver.switchTo().defaultContent();
