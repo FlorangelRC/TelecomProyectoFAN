@@ -145,7 +145,7 @@ public class SmokeTest extends TestBase  {
 	}
 	
 	@Test (groups= {"Smoke", "CustomerCare"})
-	public void TS7_Cuentas_Fernando_Care_Y_Andres_Care() {
+	public void TS7_Cuentas_Fernando_Care_Y_Andres_Care_Y_Raul_Care() {
 		TS3_Consola_FAN();		
 		WebElement selector = driver.findElement(By.cssSelector(".x-btn-small.x-btn-icon-small-left"));
 		WebElement btnSplit = selector.findElement(By.className("x-btn-split"));
@@ -166,14 +166,18 @@ public class SmokeTest extends TestBase  {
 		List <WebElement> cuenta = driver.findElements(By.cssSelector(".x-grid3-col.x-grid3-cell.x-grid3-td-ACCOUNT_NAME"));
 		boolean fernando = false;
 		boolean andres = false;
+		boolean raul = false;
 		for (WebElement x : cuenta) {		
-			if (x.getText().equals("Fernando Care")) {
+			if (x.getText().equals("aaaaFernando Care")) {
 				fernando = true;				
 			}
-			if (x.getText().equals("Andres Care")) {
+			if (x.getText().equals("aaaaAndres Care")) {
 				andres = true;				
 			}
+			if (x.getText().equals("aaaaRaul Care")) {
+				raul = true;
+			}
 		}
-		Assert.assertTrue(fernando && andres);
+		Assert.assertTrue(fernando && andres && raul);
 	}
 }

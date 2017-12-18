@@ -151,7 +151,7 @@ public class SCPParquedeServicios extends TestBase{
 		page.validarcomentario("Esto es un comentario");
 	}
 	@Test(groups= "SCP")
-	public void TS112727_Negocio_del_cliente_contextualizado_Escribir_comentario(){
+	public void TS112727_Negocio_del_cliente_Chatter_contextualizado_Escribir_comentario(){
 		SCP page = new SCP(driver);
 		page.clickOnTabByName("cuentas");
 		page.clickOnFirstAccRe();
@@ -162,7 +162,7 @@ public class SCPParquedeServicios extends TestBase{
 	}
 	
 	@Test(groups= "SCP")
-	public void TS112587_Contexto_ectorial_contextualizado_Escribir_comentario(){
+	public void TS112587_Contexto_ectorial_Chatter_contextualizado_Escribir_comentario(){
 		SCP page = new SCP(driver);
 		page.clickOnTabByName("cuentas");
 		page.clickOnFirstAccRe();
@@ -172,5 +172,35 @@ public class SCPParquedeServicios extends TestBase{
 		page.validarcomentario("Esto es un comentario");
 	}
 	
+	@Test(groups= "SCP")
+	public void TS112718_Mosaico_de_Relacionamiento_por_Oportunidad_Chatter_contextualizado_Escribir_comentario(){
+		SCP page = new SCP(driver);
+		page.clickOnTabByName("cuentas");
+		page.clickOnFirstAccRe();
+		try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		page.moveToElementOnAccAndClick("tercerTitulo", "//*[@id='tercerTitulo']/div/ul/li[3]/a");
+		page.comentarycompartir("Esto es un comentario");
+		page.validarcomentario("Esto es un comentario");
+	}
 	
+	@Test(groups= "SCP")
+	public void TS112683_Matriz_de_Criterios_de_Decisión_Chatter_contextualizado_Escribir_comentario(){
+		SCP page = new SCP(driver);
+		page.clickOnTabByName("cuentas");
+		page.clickOnFirstAccRe();
+		try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		page.moveToElementOnAccAndClick("tercerTitulo", "//*[@id='tercerTitulo']/div/ul/li[2]/a");
+		page.comentarycompartir("Esto es un comentario");
+		page.validarcomentario("Esto es un comentario");
+	}
+	@Test(groups= "SCP")
+	public void TS112614_Cronograma_de_Cuenta_Chatter_contextualizado_Escribir_comentario(){
+		SCP page = new SCP(driver);
+		page.clickOnTabByName("cuentas");
+		page.clickOnFirstAccRe();//*[@id="tercerTitulo"]/div/ul/li[2]/a
+		try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		page.moveToElementOnAccAndClick("tercerTitulo", 1);
+		page.comentarycompartir("Esto es un comentario");
+		page.validarcomentario("Esto es un comentario");
+	}
 }

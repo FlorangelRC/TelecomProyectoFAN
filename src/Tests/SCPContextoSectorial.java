@@ -15,6 +15,7 @@ import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
 import Pages.BasePage;
+import Pages.CustomerCare;
 import Pages.SCP;
 import Pages.setConexion;
 
@@ -618,7 +619,9 @@ private WebDriver driver;
 		List <WebElement> a = driver.findElements(By.className("resetHito"));
 		a.get(0).sendKeys(c);
 		a.get(1).click();
-		driver.findElement(By.xpath("//*[text() = 'Otro']")).click();
+		CustomerCare page = new CustomerCare(driver);
+		page.setSimpleDropdown(a.get(1), "Otro");
+		try {Thread.sleep(2000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 		driver.findElement(By.className("dateFormat")).click();
 		driver.findElement(By.cssSelector(".btn.btn-primary")).click();
 		try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
@@ -642,7 +645,8 @@ private WebDriver driver;
 		List <WebElement> a = driver.findElements(By.className("resetHito"));
 		a.get(0).sendKeys(c);
 		a.get(1).click();
-		driver.findElement(By.xpath("//*[text() = 'Otro']")).click();
+		CustomerCare page = new CustomerCare(driver);
+		page.setSimpleDropdown(a.get(1), "Otro");
 		driver.findElement(By.className("dateFormat")).click();
 		try {Thread.sleep(3000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 		driver.findElement(By.xpath("//*[@id=\"myModalHito\"]/div[2]/div/div[3]/button[1]")).click();
@@ -650,7 +654,6 @@ private WebDriver driver;
 		List <WebElement> b = driver.findElements(By.className("data2Col"));
 		Assert.assertTrue(!(b.get(1).getText().contains(c)));
 	}
-<<<<<<< HEAD
 	
 	@Test(groups = "SCP")
 	public void TS112677_Hitos_Relevantes_Ingreso_Desde_el_contacto() {
@@ -749,6 +752,4 @@ private WebDriver driver;
 		prueba.comentarycompartir(a);
 		prueba.validarcomentario(a);
 	}
-=======
->>>>>>> master
 }

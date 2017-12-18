@@ -3,27 +3,13 @@
 <suite guice-stage="DEVELOPMENT" name="Failed suite [Default suite]">
   <test name="Default test(failed)">
     <classes>
-      <class name="Tests.testRegistroEventoMasico">
+      <class name="Tests.SCPParquedeServicios">
         <methods>
-          <include name="tearDown"/>
-          <include name="TS16339_CRM_Fase_2_Technical_Care_Sistema_Incidentes_Masivos_Creación_de_Eventos_Masivos_Cliente_afectado_Obligatorio"/>
+          <include name="TS112718_Mosaico_de_Relacionamiento_por_Oportunidad_contextualizado_Escribir_comentario"/>
           <include name="init"/>
-          <include name="TS16331_CRM_Fase_2_Technical_Care_Sistema_Incidentes_Masivos_Creación_de_Eventos_Masivos_Canal_Obligatorio"/>
-          <include name="closeTechCareTab"/>
-          <include name="TS16337_CRM_Fase_2_Technical_Care_Sistema_Incidentes_Masivos_Creación_de_Eventos_Masivos_Estado_Obligatorio"/>
-          <include name="TS16338_CRM_Fase_2_Technical_Care_Sistema_Incidentes_Masivos_Creación_de_Eventos_Masivos_Detalle_del_Incidente_Obligatorio"/>
-          <include name="setUp"/>
-          <include name="TS16330_CRM_Fase_2_Technical_Care_Sistema_Incidentes_Masivos_Creación_de_Eventos_Masivos_Subtipo_Obligatorio"/>
-          <include name="TS16334_CRM_Fase_2_Technical_Care_Sistema_Incidentes_Masivos_Creación_de_Eventos_Masivos_Impacto_Obligatorio"/>
-          <include name="TS16341_CRM_Fase_2_Technical_Care_Sistema_Incidentes_Masivos_Creación_de_Eventos_Masivos_Speech_Obligatorio"/>
-          <include name="TS16333_CRM_Fase_2_Technical_Care_Sistema_Incidentes_Masivos_Creación_de_Eventos_Masivos_Titulo_Obligatorio"/>
-          <include name="TS16335_CRM_Fase_2_Technical_Care_Sistema_Incidentes_Masivos_Creación_de_Eventos_Masivos_Fecha_de_Inicio_Obligatorio"/>
-          <include name="TS16329_CRM_Fase_2_Technical_Care_Sistema_Incidentes_Masivos_Creación_de_Eventos_Masivos_Tipo_Obligatorio"/>
-          <include name="TS16332_CRM_Fase_2_Technical_Care_Sistema_Incidentes_Masivos_Creación_de_Eventos_Masivos_Incidente_Obligatorio"/>
-          <include name="TS16336_CRM_Fase_2_Technical_Care_Sistema_Incidentes_Masivos_Creación_de_Eventos_Masivos_Fecha_Estimada_De_Cierre_No_Obligatorio"/>
-          <include name="TS16340_CRM_Fase_2_Technical_Care_Sistema_Incidentes_Masivos_Creación_de_Eventos_Masivos_Cliente_Procedimiento_Obligatorio"/>
+          <include name="setup"/>
         </methods>
-      </class> <!-- Tests.testRegistroEventoMasico -->
+      </class> <!-- Tests.SCPParquedeServicios -->
     </classes>
   </test> <!-- Default test(failed) -->
 </suite> <!-- Failed suite [Default suite] -->
