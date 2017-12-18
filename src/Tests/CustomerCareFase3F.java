@@ -24,7 +24,7 @@ import Pages.setConexion;
 public class CustomerCareFase3F  extends TestBase {
 private WebDriver driver;
 	
-	//@AfterClass(groups= "CustomerCare")
+	@AfterClass(groups= "CustomerCare")
 	public void tearDown2() {
 		driver.quit();	
 	}
