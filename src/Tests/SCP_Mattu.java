@@ -1,9 +1,11 @@
 package Tests;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import org.openqa.selenium.By;
+import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.testng.Assert;
@@ -64,7 +66,7 @@ private WebDriver driver;
 	  List <WebElement> wOportunity = driver.findElement(By.className("odd")).findElements(By.tagName("a")); 
 	  wOportunity.get(1).click(); 
 	  try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();} 
-	  Assert.assertTrue(driver.findElement(By.className("pageType")).isDisplayed()); 
+	  Assert.assertTrue(driver.findElement(By.className("pageType")).isDisplayed());
 	} 
 	 
 	//------------------------------------------------------------------------------------------------- 
@@ -87,6 +89,44 @@ private WebDriver driver;
 	    } 
 	  } 
 	  Assert.assertTrue(bAssert);
+	}
+	
+	//------------------------------------------------------------------------------------------------- 
+	//TCC = 4 
+	@Test(groups = "SCP") 
+	public void TS112725_Mosaico_de_Relacionamiento_por_Oportunidad_Triangulo_Ordenador() {
+		SCP prueba = new SCP(driver); 
+		prueba.moveToElementOnAccAndClick("tercerTitulo", 3);
+		Assert.assertTrue(prueba.Triangulo_Ordenador_Validador());
+	}
+	
+	//------------------------------------------------------------------------------------------------- 
+	//TCC = 5
+	@Test(groups = "SCP")
+	public void TS112726_Mosaico_de_Relacionamiento_por_Oportunidad_Ver_video() {
+		TestBase TB = new TestBase();
+		SCP prueba = new SCP(driver);
+		prueba.moveToElementOnAccAndClick("tercerTitulo", 3);
+		TB.waitFor(driver, By.cssSelector(".btn.btn-xs.btn-default"));
+		driver.findElement(By.cssSelector(".btn.btn-xs.btn-default")).click();
+		
+		ArrayList<String> tabs2 = new ArrayList<String> (driver.getWindowHandles());
+		driver.switchTo().window(tabs2.get(1));
+		BasePage cambioFrameByID=new BasePage();
+	    driver.switchTo().defaultContent();
+	    driver.switchTo().frame(cambioFrameByID.getFrameForElement(driver, By.className("ytp-cued-thumbnail-overlay-image")));
+		TB.waitFor(driver, By.className("ytp-cued-thumbnail-overlay-image"));
+		((JavascriptExecutor)driver).executeScript("window.scrollTo(0,"+driver.findElement(By.className("ytp-cued-thumbnail-overlay-image")).getLocation().y+")");
+		Assert.assertTrue(driver.findElement(By.className("ytp-cued-thumbnail-overlay-image")).isDisplayed());
+		driver.close();
+		driver.switchTo().window(tabs2.get(0));
+	}
+	
+	//------------------------------------------------------------------------------------------------- 
+	//TCC = 6
+	@Test(groups = "SCP")
+	public void TS() {
+		
 	}
     
 }
