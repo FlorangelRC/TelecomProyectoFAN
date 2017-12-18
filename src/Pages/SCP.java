@@ -15,6 +15,8 @@ import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.Select;
 import org.testng.Assert;
 
+import Tests.TestBase;
+
 public class SCP extends BasePage {
 	final WebDriver driver;
 	private static String downloadPath = "C:\\Users\\Pablo\\Downloads";
@@ -336,13 +338,7 @@ public void comentarycompartir(String comentario){
 
 public void validarcomentario(String comentario){
 	try {Thread.sleep(15000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
-<<<<<<< HEAD
-	List <WebElement> comentarios = driver.findElements(By.cssSelector(".feeditemtext.cxfeeditemtextr"));
-	System.out.println(comentarios.size());
-	Assert.assertTrue(comentarios.get(0).equals(comentario));
-	Assert.assertEquals(driver.findElement(By.cssSelector("topics.init")), "Haga clic para agregar temas:   Sin sugerencias. Añada sus propios temas.");
-}
-=======
+
 	List <WebElement> comentarios = driver.findElements(By.cssSelector(".feeditembodyandfooter"));
 	Assert.assertTrue(comentarios.get(0).findElement(By.cssSelector(".cxfeeditemtextwrapper")).getText().equals(comentario));
 	Assert.assertEquals(comentarios.get(0).findElement(By.cssSelector(".topics.init")).getText(), "Haga clic para agregar temas:   Sin sugerencias. Aï¿½ada sus propios temas.");
@@ -398,5 +394,5 @@ public boolean cuentalogeada(String cuenta){
 		Desloguear_Loguear(usuario);
 	}
 
->>>>>>> master
+
 }
