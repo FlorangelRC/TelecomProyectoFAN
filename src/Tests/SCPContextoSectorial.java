@@ -849,4 +849,12 @@ private WebDriver driver;
 		driver.close();
 	    driver.switchTo().window(tabs2.get(0));
 	}
+	
+	@Test(groups = "SCP")
+	public void TS112758_Opportunity_Snapshot_Triangulo_Ordenador() {
+		SCP prueba = new SCP(driver);
+		prueba.moveToElementOnAccAndClick("tercerTitulo", 4);
+		Assert.assertTrue(prueba.Triangulo_Ordenador_Validador());
+		
+	}
 }
