@@ -80,6 +80,28 @@ public class SCP_Joaquin extends TestBase{
 	}
 	
 	@Test(groups = "SCP")
+	public void TS112729_Negocio_del_cliente_Contexto_Estratégico_del_Cliente() {
+		SCP prueba= new SCP(driver);
+		prueba.moveToElementOnAccAndClick("primerTitulo", 2);
+		WebElement label = driver.findElements(By.cssSelector(".botones")).get(1);
+		label.click();
+		sleep(2000);
+		
+		Assert.assertTrue(label.getText().contains("Contexto Estratégico del Cliente"));
+	}
+	
+	@Test(groups = "SCP")
+	public void TS112732_Negocio_del_cliente_Desafios_Iniciativas_de_negocio_del_cliente() {
+		SCP prueba= new SCP(driver);
+		prueba.moveToElementOnAccAndClick("primerTitulo", 2);
+		WebElement label = driver.findElements(By.cssSelector(".botones")).get(2);
+		label.click();
+		sleep(2000);
+		
+		Assert.assertTrue(label.getText().contains("Desafíos | Iniciativas de Negocio del Cliente"));
+	}
+	
+	@Test(groups = "SCP")
 	public void TS112735_Negocio_del_cliente_Descripción_del_Cliente() {
 		SCP prueba= new SCP(driver);
 		prueba.moveToElementOnAccAndClick("primerTitulo", 2);
@@ -88,6 +110,17 @@ public class SCP_Joaquin extends TestBase{
 		sleep(2000);
 		
 		Assert.assertTrue(label.getText().contains("Descripción del Cliente"));
+	}
+	
+	@Test(groups = "SCP")
+	public void TS112739_Negocio_del_cliente_Evolución_de_la_satisfacción_del_cliente() {
+		SCP prueba= new SCP(driver);
+		prueba.moveToElementOnAccAndClick("primerTitulo", 2);
+		WebElement label = driver.findElements(By.cssSelector(".botones")).get(4);
+		label.click();
+		sleep(2000);
+		
+		Assert.assertTrue(label.getText().contains("Evolución de la Satisfacción del Cliente"));
 	}
 	
 	@Test(groups = "SCP")
