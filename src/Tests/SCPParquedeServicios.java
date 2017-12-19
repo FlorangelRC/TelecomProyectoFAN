@@ -24,6 +24,7 @@ import Pages.setConexion;
 import static org.testng.Assert.assertTrue;
 
 import java.awt.Button;
+import java.util.Date;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 
@@ -215,6 +216,115 @@ public class SCPParquedeServicios extends TestBase{
 		page.validarcomentario("Esto es un comentario");
 	}
 	
+	@Test(groups = "SCP") 
+    public void TS112630_Estrategia_de_Crecimiento_Chatter_Contextualizado_Leer_Comentario_Escrito_Con_Otro_Usuario() { 
+      SCP pcp = new SCP(driver); 
+      java.util.Date fecha = new Date();
+      System.out.println (fecha);
+      pcp.Desloguear_Loguear_Comentar("admin", "fabiana", fecha.toString(), "tercerTitulo", 5); 
+      try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+   pcp.clickOnTabByName("cuentas");
+   try {Thread.sleep(7000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+   try {Thread.sleep(7000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+   pcp.clickEnCuentaPorNombre("Florencia Di Ci");
+   try {Thread.sleep(10000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+   pcp.moveToElementOnAccAndClick("tercerTitulo", 5);
+      pcp.validarcomentarioajeno(fecha.toString());
+ }
 	
+	@Test(groups = "SCP") 
+    public void TS112615_Cronograma_de_Cuenta_Chatter_Contextualizado_Leer_Comentario_Escrito_Con_Otro_Usuario() { 
+      SCP pcp = new SCP(driver); 
+      java.util.Date fecha = new Date();
+      System.out.println (fecha);
+      pcp.Desloguear_Loguear_Comentar("admin", "fabiana", fecha.toString(), "cuartoTitulo", 1); 
+      try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+   pcp.clickOnTabByName("cuentas");
+   try {Thread.sleep(7000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+   try {Thread.sleep(7000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+   pcp.clickEnCuentaPorNombre("Florencia Di Ci");
+   try {Thread.sleep(10000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+   pcp.moveToElementOnAccAndClick("cuartoTitulo", 1);
+      pcp.validarcomentarioajeno(fecha.toString());
+ }
 	
+	@Test(groups = "SCP") 
+    public void TS112675_Hitos_Relevantes_Chatter_Contextualizado_Leer_Comentario_Escrito_Con_Otro_Usuario() { 
+      SCP pcp = new SCP(driver); 
+      java.util.Date fecha = new Date();
+      System.out.println (fecha);
+      pcp.Desloguear_Loguear_Comentar("admin", "fabiana", fecha.toString(), "segundoTitulo", 3); 
+      try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+   pcp.clickOnTabByName("cuentas");
+   try {Thread.sleep(7000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+   try {Thread.sleep(7000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+   pcp.clickEnCuentaPorNombre("Florencia Di Ci");
+   try {Thread.sleep(10000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+   pcp.moveToElementOnAccAndClick("segundoTitulo", 3);
+      pcp.validarcomentarioajeno(fecha.toString());
+ }
+	
+	@Test(groups = "SCP") 
+    public void TS112684_Matriz_de_Criterios_de_Decisión_Chatter_Contextualizado_Leer_Comentario_Escrito_Con_Otro_Usuario() { 
+      SCP pcp = new SCP(driver); 
+      java.util.Date fecha = new Date();
+      System.out.println (fecha);
+      pcp.Desloguear_Loguear_Comentar("admin", "fabiana", fecha.toString(), "tercerTitulo", 2); 
+      try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+   pcp.clickOnTabByName("cuentas");
+   try {Thread.sleep(7000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+   try {Thread.sleep(7000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+   pcp.clickEnCuentaPorNombre("Florencia Di Ci");
+   try {Thread.sleep(10000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+   pcp.moveToElementOnAccAndClick("tercerTitulo", 2);
+      pcp.validarcomentarioajeno(fecha.toString());
+ }
+	
+	@Test(groups = "SCP") 
+    public void TS112699_Mosaico_de_Relacionamiento_General_Chatter_Contextualizado_Leer_Comentario_Escrito_Con_Otro_Usuario() { 
+      SCP pcp = new SCP(driver); 
+      java.util.Date fecha = new Date();
+      System.out.println (fecha);
+      pcp.Desloguear_Loguear_Comentar("admin", "fabiana", fecha.toString(), "segundoTitulo", 4); 
+      try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+   pcp.clickOnTabByName("cuentas");
+   try {Thread.sleep(7000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+   try {Thread.sleep(7000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+   pcp.clickEnCuentaPorNombre("Florencia Di Ci");
+   try {Thread.sleep(10000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+   pcp.moveToElementOnAccAndClick("segundoTitulo", 4);
+      pcp.validarcomentarioajeno(fecha.toString());
+ }
+	
+	@Test(groups = "SCP") 
+    public void TS112719_Mosaico_de_Relacionamiento_por_Oportunidad_Chatter_Contextualizado_Leer_Comentario_Escrito_Con_Otro_Usuario() { 
+      SCP pcp = new SCP(driver); 
+      java.util.Date fecha = new Date();
+      System.out.println (fecha);
+      pcp.Desloguear_Loguear_Comentar("admin", "fabiana", fecha.toString(), "tercerTitulo", 3); 
+      try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+   pcp.clickOnTabByName("cuentas");
+   try {Thread.sleep(7000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+   try {Thread.sleep(7000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+   pcp.clickEnCuentaPorNombre("Florencia Di Ci");
+   try {Thread.sleep(10000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+   pcp.moveToElementOnAccAndClick("tercerTitulo", 3);
+      pcp.validarcomentarioajeno(fecha.toString());
+ }
+	
+	@Test(groups = "SCP") 
+    public void TS112728_Negocio_del_cliente_Chatter_Contextualizado_Leer_Comentario_Escrito_Con_Otro_Usuario() { 
+      SCP pcp = new SCP(driver); 
+      java.util.Date fecha = new Date();
+      System.out.println (fecha);
+      pcp.Desloguear_Loguear_Comentar("admin", "fabiana", fecha.toString(), "primerTitulo", 2); 
+      try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+   pcp.clickOnTabByName("cuentas");
+   try {Thread.sleep(7000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+   try {Thread.sleep(7000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+   pcp.clickEnCuentaPorNombre("Florencia Di Ci");
+   try {Thread.sleep(10000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+   pcp.moveToElementOnAccAndClick("primerTitulo", 2);
+      pcp.validarcomentarioajeno(fecha.toString());
+ }
 }
