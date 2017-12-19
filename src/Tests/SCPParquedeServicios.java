@@ -214,4 +214,7 @@ public class SCPParquedeServicios extends TestBase{
 		page.comentarycompartir("Esto es un comentario");
 		page.validarcomentario("Esto es un comentario");
 	}
+	
+	
+	
 }
