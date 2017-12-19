@@ -1,5 +1,6 @@
 package Tests;
 
+import static org.testng.Assert.assertEquals;
 import static org.testng.Assert.assertTrue;
 
 import java.io.BufferedReader;
@@ -94,25 +95,42 @@ private WebDriver driver;
 	Actions action = new Actions(driver);   
 	action.moveToElement(reg).doubleClick().perform();
 	waitFor(driver, By.id("00N3F000000HaUe"));
-	Select rego = new Select (driver.findElement(By.id("00N3F000000HaUe")));
-	rego.selectByVisibleText("Gobierno");	
-	waitFor(driver, By.id("00N3F000000HaUj"));
-	List<WebElement> region = driver.findElements(By.id("00N3F000000HaUj"));
-	ArrayList<String> ter = new ArrayList<String>();
-	ArrayList<String> terri = new ArrayList<String>();
-	ter.add("--Ninguno--");
-	ter.add("Gobierno ambaaa 1");
-	ter.add("Gobierno amba 2");
-	ter.add("Gobierno litoral");
-	ter.add("Gobierno mediterraneo");
-	sleep(5000);
-	boolean f = false;
-	for(WebElement r : region) {
-		terri.add(r.getText());
-		ter.contains(r.getAttribute("value"));
-		f=true;
-	}
-	System.out.println(f);
+	Select regio = new Select (driver.findElement(By.id("00N3F000000HaUe")));
+	regio.selectByVisibleText("Privado");	
+	Select terr = new Select (driver.findElement(By.id("00N3F000000HaUj")));
+	terr.selectByVisibleText("--Ninguno--");
+	assertEquals(terr.getFirstSelectedOption().getText(),"--Ninguno--");
+	terr.selectByVisibleText("Industria");
+	assertEquals(terr.getFirstSelectedOption().getText(),"Industria");
+	terr.selectByVisibleText("Financias");
+	assertEquals(terr.getFirstSelectedOption().getText(),"Financias");
+	terr.selectByVisibleText("Servicios");
+	assertEquals(terr.getFirstSelectedOption().getText(),"Servicios");
+	terr.selectByVisibleText("Privado litoral");
+	assertEquals(terr.getFirstSelectedOption().getText(),"Privado litoral");
+	terr.selectByVisibleText("Privado mediterraneo");
+	assertEquals(terr.getFirstSelectedOption().getText(),"Privado mediterraneo");
+	regio.selectByVisibleText("Gobierno");
+	sleep(3000);
+	Select terri = new Select (driver.findElement(By.id("00N3F000000HaUj")));
+	terri.selectByVisibleText("--Ninguno--");
+	assertEquals(terri.getFirstSelectedOption().getText(),"--Ninguno--");
+	terri.selectByVisibleText("Gobierno amba 1");
+	assertEquals(terri.getFirstSelectedOption().getText(),"Gobierno amba 1");
+	terri.selectByVisibleText("Gobierno amba 2");
+	assertEquals(terri.getFirstSelectedOption().getText(),"Gobierno amba 2");
+	terri.selectByVisibleText("Gobierno litoral");
+	assertEquals(terri.getFirstSelectedOption().getText(),"Gobierno litoral");
+	terri.selectByVisibleText("Gobierno mediterraneo");
+	assertEquals(terri.getFirstSelectedOption().getText(),"Gobierno mediterraneo");
+	
+	
 	}
 	
+	@Test(groups = "SCP") 
+	public void TS110247_Estructura_del_cliente_GGCC_Campos_Territorio() {
+		Assert.assertTrue(true);
+	
+	// =============== INGRESAR COMO WH QUE CHUCHA ES WH ===============
+	}
 }
