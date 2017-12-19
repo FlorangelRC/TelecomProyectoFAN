@@ -86,9 +86,33 @@ private WebDriver driver;
 		action.moveToElement(reg).doubleClick().perform();
 		waitFor(driver, By.id("00N3F000000HaUe"));
 		Select dropdown = new Select (driver.findElement(By.id("00N3F000000HaUe")));
-		dropdown.selectByVisibleText("Gobierno");
-		
-		
-				
+		dropdown.selectByVisibleText("Gobierno");	
 	}
+	@Test(groups = "SCP")
+	public void TS110246_Estructura_del_cliente_GGCC_Campos_Territorio() {
+	WebElement reg = driver.findElement(By.id("00N3F000000HaUe_ileinner"));
+	Actions action = new Actions(driver);   
+	action.moveToElement(reg).doubleClick().perform();
+	waitFor(driver, By.id("00N3F000000HaUe"));
+	Select rego = new Select (driver.findElement(By.id("00N3F000000HaUe")));
+	rego.selectByVisibleText("Gobierno");	
+	waitFor(driver, By.id("00N3F000000HaUj"));
+	List<WebElement> region = driver.findElements(By.id("00N3F000000HaUj"));
+	ArrayList<String> ter = new ArrayList<String>();
+	ArrayList<String> terri = new ArrayList<String>();
+	ter.add("--Ninguno--");
+	ter.add("Gobierno ambaaa 1");
+	ter.add("Gobierno amba 2");
+	ter.add("Gobierno litoral");
+	ter.add("Gobierno mediterraneo");
+	sleep(5000);
+	boolean f = false;
+	for(WebElement r : region) {
+		terri.add(r.getText());
+		ter.contains(r.getAttribute("value"));
+		f=true;
+	}
+	System.out.println(f);
+	}
+	
 }

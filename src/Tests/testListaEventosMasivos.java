@@ -82,6 +82,7 @@ public class testListaEventosMasivos extends TestBase{
 		  try {((JavascriptExecutor) driver).executeScript("arguments[0].click();", e);} 
 		  catch (org.openqa.selenium.StaleElementReferenceException b) {}
 		  }
+		  driver.switchTo().defaultContent();	
 	}
 	
 	@AfterClass(groups= "TechnicalCare")
@@ -100,7 +101,8 @@ public class testListaEventosMasivos extends TestBase{
 		List <WebElement> listaA= driver.findElement(By.cssSelector(".slds-table.slds-table--bordered.slds-no-row-hover.slds-table--cell-buffer")).findElements(By.cssSelector(".ng-pristine.ng-untouched.ng-valid.ng-empty"));
 		//System.out.println(listaA.get(0).findElement(By.tagName("div")).getText());
 		boolean verificacion=false;
-		verificacion = pEM.validarFecha(listaA.get(0).findElement(By.tagName("div")).getText(), "HH:mm dd/mm/yyyy");
+		verificacion = pEM.validarFecha(listaA.get(1).findElement(By.tagName("div")).getText(), "HH:mm dd/mm/yyyy");
+		
 		assertTrue(verificacion);
 		driver.switchTo().defaultContent();	
 	}
