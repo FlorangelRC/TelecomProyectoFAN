@@ -327,4 +327,20 @@ public class SCPParquedeServicios extends TestBase{
    pcp.moveToElementOnAccAndClick("primerTitulo", 2);
       pcp.validarcomentarioajeno(fecha.toString());
  }
+	
+	@Test(groups = "SCP") 
+    public void TS112784_Parque_de_Servicios_Chatter_Contextualizado_Leer_Comentario_Escrito_Con_Otro_Usuario() { 
+      SCP pcp = new SCP(driver); 
+      java.util.Date fecha = new Date();
+      System.out.println (fecha);
+      pcp.Desloguear_Loguear_Comentar("admin", "fabiana", fecha.toString(), "segundoTitulo", 2); 
+      try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+   pcp.clickOnTabByName("cuentas");
+   try {Thread.sleep(7000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+   try {Thread.sleep(7000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+   pcp.clickEnCuentaPorNombre("Florencia Di Ci");
+   try {Thread.sleep(10000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+   pcp.moveToElementOnAccAndClick("segundoTitulo", 2);
+      pcp.validarcomentarioajeno(fecha.toString());
+ }
 }
