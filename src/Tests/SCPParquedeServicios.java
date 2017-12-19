@@ -74,19 +74,19 @@ public class SCPParquedeServicios extends TestBase{
 		}
 	}
 	
-//	@AfterMethod(groups= "SCP")
+ @AfterMethod(groups= "SCP")
 	public void after(){
 		((JavascriptExecutor)driver).executeScript("window.scrollTo(0,"+driver.findElement(By.id("home_Tab")).getLocation().y+")");
 		driver.findElement(By.id("home_Tab")).click();
 	}
 	
-	//@AfterClass(groups= "SCP")
+	@AfterClass(groups= "SCP")
 	public void tearDown() {
 		driver.quit();
 		sleep(4000);
 	}
 	
-	@Test(groups= "SCP")
+/*	@Test(groups= "SCP")
 	public void TS112781_Parque_de_Servicios_Agregar_Nuevo_Servicio(){
 	
 		SCP page = new SCP(driver);
@@ -130,7 +130,7 @@ public class SCPParquedeServicios extends TestBase{
 			page.moveToElementOnAccAndClick("segundoTitulo", "//*[@id='segundoTitulo']/div/ul/li[2]/a");
 			page.servicioguardar();
 		}
-		
+		*/
 	@Test(groups= "SCP")
 	public void TS112783_Parque_de_Servicios_Chatter_contextualizado_Escribir_comentario(){
 			SCP page = new SCP(driver);
@@ -221,7 +221,7 @@ public class SCPParquedeServicios extends TestBase{
       SCP pcp = new SCP(driver); 
       java.util.Date fecha = new Date();
       System.out.println (fecha);
-      pcp.Desloguear_Loguear_Comentar("admin", "fabiana", fecha.toString(), "tercerTitulo", 5); 
+      pcp.Desloguear_Loguear_Comentar("fabiana", "admin", fecha.toString(), "tercerTitulo", 5); 
       try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
    pcp.clickOnTabByName("cuentas");
    try {Thread.sleep(7000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
@@ -237,7 +237,7 @@ public class SCPParquedeServicios extends TestBase{
       SCP pcp = new SCP(driver); 
       java.util.Date fecha = new Date();
       System.out.println (fecha);
-      pcp.Desloguear_Loguear_Comentar("admin", "fabiana", fecha.toString(), "cuartoTitulo", 1); 
+      pcp.Desloguear_Loguear_Comentar("fabiana", "admin", fecha.toString(), "cuartoTitulo", 1); 
       try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
    pcp.clickOnTabByName("cuentas");
    try {Thread.sleep(7000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
@@ -253,7 +253,7 @@ public class SCPParquedeServicios extends TestBase{
       SCP pcp = new SCP(driver); 
       java.util.Date fecha = new Date();
       System.out.println (fecha);
-      pcp.Desloguear_Loguear_Comentar("admin", "fabiana", fecha.toString(), "segundoTitulo", 3); 
+      pcp.Desloguear_Loguear_Comentar("fabiana", "admin", fecha.toString(), "segundoTitulo", 3); 
       try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
    pcp.clickOnTabByName("cuentas");
    try {Thread.sleep(7000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
@@ -269,7 +269,7 @@ public class SCPParquedeServicios extends TestBase{
       SCP pcp = new SCP(driver); 
       java.util.Date fecha = new Date();
       System.out.println (fecha);
-      pcp.Desloguear_Loguear_Comentar("admin", "fabiana", fecha.toString(), "tercerTitulo", 2); 
+      pcp.Desloguear_Loguear_Comentar("fabiana", "admin", fecha.toString(), "tercerTitulo", 2); 
       try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
    pcp.clickOnTabByName("cuentas");
    try {Thread.sleep(7000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
@@ -285,7 +285,7 @@ public class SCPParquedeServicios extends TestBase{
       SCP pcp = new SCP(driver); 
       java.util.Date fecha = new Date();
       System.out.println (fecha);
-      pcp.Desloguear_Loguear_Comentar("admin", "fabiana", fecha.toString(), "segundoTitulo", 4); 
+      pcp.Desloguear_Loguear_Comentar("fabiana", "admin", fecha.toString(), "segundoTitulo", 4); 
       try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
    pcp.clickOnTabByName("cuentas");
    try {Thread.sleep(7000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
@@ -301,7 +301,7 @@ public class SCPParquedeServicios extends TestBase{
       SCP pcp = new SCP(driver); 
       java.util.Date fecha = new Date();
       System.out.println (fecha);
-      pcp.Desloguear_Loguear_Comentar("admin", "fabiana", fecha.toString(), "tercerTitulo", 3); 
+      pcp.Desloguear_Loguear_Comentar("fabiana", "admin", fecha.toString(), "tercerTitulo", 3); 
       try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
    pcp.clickOnTabByName("cuentas");
    try {Thread.sleep(7000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
@@ -317,7 +317,7 @@ public class SCPParquedeServicios extends TestBase{
       SCP pcp = new SCP(driver); 
       java.util.Date fecha = new Date();
       System.out.println (fecha);
-      pcp.Desloguear_Loguear_Comentar("admin", "fabiana", fecha.toString(), "primerTitulo", 2); 
+      pcp.Desloguear_Loguear_Comentar("fabiana", "admin", fecha.toString(), "primerTitulo", 2); 
       try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
    pcp.clickOnTabByName("cuentas");
    try {Thread.sleep(7000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
@@ -333,7 +333,7 @@ public class SCPParquedeServicios extends TestBase{
       SCP pcp = new SCP(driver); 
       java.util.Date fecha = new Date();
       System.out.println (fecha);
-      pcp.Desloguear_Loguear_Comentar("admin", "fabiana", fecha.toString(), "segundoTitulo", 2); 
+      pcp.Desloguear_Loguear_Comentar("fabiana", "admin", fecha.toString(), "segundoTitulo", 2); 
       try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
    pcp.clickOnTabByName("cuentas");
    try {Thread.sleep(7000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
