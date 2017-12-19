@@ -321,8 +321,9 @@ private boolean isFileDownloaded_Ext(String dirPath, String ext){
 }
 
 public void comentarycompartir(String comentario){
+	TestBase TB = new TestBase();
+	TB.waitFor(driver, By.cssSelector(".publisherTextAreaInner"));
 	WebElement element = driver.findElement(By.cssSelector(".publisherTextAreaInner"));
-	try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 	((JavascriptExecutor)driver).executeScript("window.scrollTo(0,"+element.getLocation().y+")");
 	driver.findElement(By.id("publishereditablearea")).click();
 	try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
