@@ -203,4 +203,18 @@ public class SCPParquedeServicios extends TestBase{
 		page.comentarycompartir("Esto es un comentario");
 		page.validarcomentario("Esto es un comentario");
 	}
+	
+	@Test(groups= "SCP")
+	public void TS112698_Mosaico_de_Relacionamiento_General_Chatter_contextualizado_Escribir_comentario(){
+		SCP page = new SCP(driver);
+		page.clickOnTabByName("cuentas");
+		page.clickOnFirstAccRe();
+		try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		page.moveToElementOnAccAndClick("tercerTitulo", 4);
+		page.comentarycompartir("Esto es un comentario");
+		page.validarcomentario("Esto es un comentario");
+	}
+	
+	
+	
 }

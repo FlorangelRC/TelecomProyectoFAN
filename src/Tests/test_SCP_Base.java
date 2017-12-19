@@ -35,7 +35,7 @@ public class test_SCP_Base extends TestBase {
 	private WebDriver driver;
 	private String Cuenta;
 
-	@BeforeClass(groups= "SCP")
+	@BeforeClass(groups= {"SCP", "Almer", "Prueba"})
 	public void Init() throws Exception
 	{
 		this.driver = setConexion.setupEze();
@@ -43,7 +43,7 @@ public class test_SCP_Base extends TestBase {
 		try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 	}
 	
-	@BeforeMethod(groups= "SCP")
+	@BeforeMethod(groups= {"SCP", "Almer", "Prueba"})
 	public void setUp() throws Exception {
 		try {Thread.sleep(2000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 		SCP page= new SCP(driver);
@@ -55,7 +55,7 @@ public class test_SCP_Base extends TestBase {
 		page.moveToElementOnAccAndClick("tercerTitulo", 1);
 		}
 	
-	//@AfterMethod(groups= "SCP")
+	@AfterMethod(groups= {"SCP", "Almer", "Prueba"})
 	public void afterMethod() {
 		driver.switchTo().defaultContent();
 		SCP page= new SCP(driver);
@@ -63,7 +63,7 @@ public class test_SCP_Base extends TestBase {
 		try {Thread.sleep(1000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 	}
 	
-	//@AfterClass(groups= "SCP")
+	@AfterClass(groups= {"SCP", "Almer", "Prueba"})
 	public void tearDown() {
 		driver.quit();
 		sleep(4000);
@@ -74,7 +74,7 @@ public class test_SCP_Base extends TestBase {
 	 * Escribe un comentario y verifica que aparezca (Victor Pidio que lo Obviaramos)
 	 * By: Almer
 	 */
-	@Test(groups= "SCP")
+	@Test(groups= {"SCP", "Almer"})
 	public void TS112559_CRM_SCP_Asignación_de_Value_Drivers_a_Oportunidades_Chatter_contextualizado_Escribir_comentario() {
 		
 		try {Thread.sleep(3000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
@@ -101,7 +101,7 @@ public class test_SCP_Base extends TestBase {
 	 * Verifica que se muestren los comentarios de otras cuentas en la vista
 	 * By: Almer
 	 */
-	@Test(groups= "SCP")
+	@Test(groups= {"SCP", "Prueba"})
 	public void TS112560_CRM_SCP_Asignación_de_Value_Drivers_a_Oportunidades_Chatter_contextualizado_Leer_comentario_escrito_con_otro_usuario() {
 		
 		try {Thread.sleep(3000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
@@ -503,6 +503,28 @@ public class test_SCP_Base extends TestBase {
 	    	assertTrue(fRealVen);
 	    	assertTrue(fRealInst);	
 	    }
+	    else {System.out.println("Oportunidad no disponible, prueba no ejecutada");assertTrue(false);}	
+	}
+	
+	
+	/**
+	 * 
+	 * 
+	 */
+	@Test(groups= "SCP")
+	public void TS112647_CRM_SCP_Estructura_de_las_oportunidades_Bloques_Historial_de_Campos() {
+		boolean check=true;
+		SCP page=new SCP(driver);
+	    if(page.goToOportunity()) {
+	    	try {Thread.sleep(3000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+	    	driver.findElement(By.name("edit")).click();
+	    	try {Thread.sleep(3000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+	    	List<WebElement> date=driver.findElements(By.className("dateFormat"));
+	    	for(WebElement imp:date)
+	    		System.out.println(imp.getText());
+	    	
+	    	}
+	   
 	    else {System.out.println("Oportunidad no disponible, prueba no ejecutada");assertTrue(false);}	
 	}
 }

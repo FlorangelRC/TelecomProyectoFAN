@@ -346,7 +346,7 @@ public void validarcomentario(String comentario){
 	Assert.assertEquals(driver.findElement(By.cssSelector("topics.init")), "Haga clic para agregar temas:   Sin sugerencias. Añada sus propios temas.");
 }
 
-	
+
 public void validarcomentarioajeno(String comentario){
 	try {Thread.sleep(15000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 	String cuentaactiva = driver.findElement(By.id("userNavLabel")).getText();
