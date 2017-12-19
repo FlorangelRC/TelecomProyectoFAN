@@ -573,8 +573,7 @@ public class SCPAdministracionDeServicios extends TestBase {
 			}
 		}
 	}
-	
-<<<<<<< HEAD
+
 	@Test(groups = "SCP") 
 		  public void TS112790_Plan_de_accion_Chatter_Contextualizado_Leer_Comentario_Escrito_Con_Otro_Usuario() { 
 		    SCP pcp = new SCP(driver); 
@@ -590,8 +589,7 @@ public class SCPAdministracionDeServicios extends TestBase {
 			pcp.moveToElementOnAccAndClick("cuartoTitulo", 2);
 		    pcp.validarcomentarioajeno(fecha.toString());
 	}
-=======
->>>>>>> master
+
 	// @Test(groups = "SCP") 
 	  public void TS112791_Plan_de_accion_Doble_Click_Para_Editar() { 
 	    SCP pcp = new SCP(driver); 
@@ -633,8 +631,5 @@ public class SCPAdministracionDeServicios extends TestBase {
 	    driver.switchTo().window(allTabs.get(0)); 
 	    try {Thread.sleep(2000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();} 
 	  } 
-<<<<<<< HEAD
 
-=======
->>>>>>> master
 }
