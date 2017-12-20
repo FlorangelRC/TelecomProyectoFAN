@@ -114,7 +114,7 @@ public class Sales extends TestBase {
 
 	}
 
-	@Test(groups="Fase1")
+	@Test(groups="les")
 	public void TS6905_createdNewValidContact(){
 		SalesBase SB = new SalesBase(driver);
 		SB.BuscarAvanzada(nombre, apellido, "", "", "");
