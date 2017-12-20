@@ -1069,4 +1069,53 @@ public class SCPContextoSectorial extends TestBase {
 	    }
 	    Assert.assertTrue(b && c && check);
 	}
+	
+	@Test(groups = "SCP")
+	public void TS112692_Matriz_de_Criterios_de_desicion_Ingreso_desde_el_contacto() {
+		SCP prueba = new SCP(driver);
+		prueba.moveToElementOnAccAndClick("tercerTitulo", 2);
+		List <WebElement> element = driver.findElements(By.cssSelector(".btn.btn-default.btn-sm"));
+		for (WebElement x : element) {
+			if (x.getText().toLowerCase().contains("ir a los criterios")) {
+				x.click();
+				break;
+			}
+		}
+		try {Thread.sleep(10000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		List <WebElement> elim = driver.findElements(By.xpath("//*[@id=\"j_id0:j_id143:j_id158:0:j_id174\"]"));
+		boolean a = false;
+		for (WebElement x : elim) {
+			if (x.getAttribute("value").toLowerCase().contains("eliminar")) {
+				x.click();
+				a = true;
+				break;
+			}
+		}
+		Assert.assertTrue(a);
+	}
+	
+	@Test(groups = "SCP")
+	public void TS112682_Matriz_de_Criterios_de_Decisión_Agregar_Criterio() {
+		SCP prueba = new SCP(driver);
+		prueba.moveToElementOnAccAndClick("tercerTitulo", 2);
+		List <WebElement> element = driver.findElements(By.cssSelector(".btn.btn-default.btn-sm"));
+		for (WebElement x : element) {
+			if (x.getText().toLowerCase().contains("ir a los criterios")) {
+				x.click();
+				break;
+			}
+		}
+		try {Thread.sleep(10000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		driver.findElement(By.xpath("//*[@id=\"j_id0:j_id128:j_id140\"]")).click();
+		try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		WebElement ventana = driver.findElement(By.className("modal-header"));
+		Assert.assertTrue(ventana.getText().contains("Evaluación del Criterio"));		
+		List <WebElement> cerrar = driver.findElements(By.cssSelector(".btn.btn-default"));
+		for (WebElement x : cerrar) {
+			if (x.getText().toLowerCase().contains("cerrar")) {
+				x.click();
+				break;
+			}
+		}
+	}
 }
