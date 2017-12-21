@@ -141,7 +141,7 @@ public class SCPParquedeServicios extends TestBase{
 			page.validarcomentario("Esto es un comentario");
 	}
 	@Test(groups= "SCP")
-	public void TS112789_Plan_de_Acción_Chatter_contextualizado_Escribir_comentario(){
+	public void TS112789_Plan_de_Acciï¿½n_Chatter_contextualizado_Escribir_comentario(){
 		SCP page = new SCP(driver);
 		page.clickOnTabByName("cuentas");
 		page.clickOnFirstAccRe();
@@ -264,7 +264,7 @@ public class SCPParquedeServicios extends TestBase{
  }
 	
 	@Test(groups = "SCP") 
-    public void TS112684_Matriz_de_Criterios_de_Decisión_Chatter_Contextualizado_Leer_Comentario_Escrito_Con_Otro_Usuario() { 
+    public void TS112684_Matriz_de_Criterios_de_Decisiï¿½n_Chatter_Contextualizado_Leer_Comentario_Escrito_Con_Otro_Usuario() { 
       SCP pcp = new SCP(driver); 
       java.util.Date fecha = new Date();
       System.out.println (fecha);
