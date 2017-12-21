@@ -178,13 +178,23 @@ private WebDriver driver;
 		SCP prueba = new SCP(driver); 
 	    prueba.moveToElementOnAccAndClick("cuartoTitulo", 2);
 	    String de;
-	    WebElement dat = driver.findElement(By.id("j_id0:Form:j_id143:0:j_id147"));
-	    String lala = dat.getText();
-	    //System.out.println(lala);
-	    WebElement box = driver.findElement(By.xpath("//*[@id=\"mainTable\"]/tbody/tr[1]/td[1]/input"));
-	    box.isSelected();
-	    box.click();
 	    boolean bot= false;
+	    WebElement dat = driver.findElement(By.id("j_id0:Form:j_id143:0:j_id147"));
+	    WebElement box = driver.findElement(By.xpath("//*[@id=\"mainTable\"]/tbody/tr[1]/td[1]/input"));
+	    WebElement gua = driver.findElement(By.id("j_id0_Form_j_id143_0_j_id152_ileinner"));
+	    Actions action = new Actions(driver);   
+		action.moveToElement(gua).doubleClick().perform();
+		WebElement vent = driver.findElement(By.id("j_id0_Form_j_id143_0_j_id152"));
+		waitFor(driver, By.id("j_id0_Form_j_id143_0_j_id152"));
+		vent.sendKeys("TestGuardar");
+		WebElement acep = driver.findElement(By.xpath("//*[@id=\"InlineEditDialog_buttons\"]/input[1]"));
+		acep.equals("Aceptar");
+		acep.click();
+	
+	box.isSelected();
+	    box.click();
+	    String lala = gua.getText();
+		System.out.println(gua);
 	    List<WebElement> btn = driver.findElements(By.cssSelector(".btn.btn-default.btn-sm"));
 	     for(WebElement b :btn) {
 	    	if (b.getText().toLowerCase().contains(" guardar")) {  
@@ -194,6 +204,7 @@ private WebDriver driver;
 	    sleep(20000);
 	    WebElement busc = driver.findElement(By.xpath("//*[@id=\"mainTable_filter\"]/label/input"));
 	    busc.sendKeys(lala);
-	    	
+	   
+		 	
 	}
 }

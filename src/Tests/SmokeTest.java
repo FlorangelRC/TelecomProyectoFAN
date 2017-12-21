@@ -145,7 +145,7 @@ public class SmokeTest extends TestBase  {
 	}
 	
 	@Test (groups= {"Smoke", "CustomerCare"})
-	public void TS7_Cuentas_Fernando_Care_Y_Andres_Care_Y_Raul_Care() {
+	public void TS7_Cuentas_Con_Precondiciones_Customer_Care() {
 		TS3_Consola_FAN();		
 		WebElement selector = driver.findElement(By.cssSelector(".x-btn-small.x-btn-icon-small-left"));
 		WebElement btnSplit = selector.findElement(By.className("x-btn-split"));
@@ -167,6 +167,10 @@ public class SmokeTest extends TestBase  {
 		boolean fernando = false;
 		boolean andres = false;
 		boolean raul = false;
+		boolean FCBilling1 = false;
+		boolean FCBilling2 = false;
+		boolean cuentaActServInact = false;
+		boolean cuentaActSinServ = false;
 		for (WebElement x : cuenta) {		
 			if (x.getText().equals("aaaaFernando Care")) {
 				fernando = true;				
@@ -177,7 +181,19 @@ public class SmokeTest extends TestBase  {
 			if (x.getText().equals("aaaaRaul Care")) {
 				raul = true;
 			}
+			if (x.getText().equals("aaaaFernando Care Billing 1")) {
+				FCBilling1 = true;
+			}
+			if (x.getText().equals("aaaaFernando Care Billing 2")) {
+				FCBilling2 = true;
+			}
+			if (x.getText().equals("aaaaCuenta Activa Serv Inact")) {
+				cuentaActServInact = true;
+			}
+			if (x.getText().equals("aaaaCuenta Activa S/Serv")) {
+				cuentaActSinServ = true;
+			}
 		}
-		Assert.assertTrue(fernando && andres && raul);
+		Assert.assertTrue(fernando && andres && raul && FCBilling1 && FCBilling2 && cuentaActServInact && cuentaActSinServ);
 	}
 }
