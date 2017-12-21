@@ -109,6 +109,7 @@ public class TechnicalCareCSRAutogestionF4 extends TestBase{
 	
 //------------------------------------- Autogestion Fase4------------------------------------------------------------//
 	
+	//Revisar
 	@Test(groups= {"Fase4","TechnicalCare", "Autogestion"})
 	public void TS73819_CRM_Fase_4_Technical_Care_CSR_Autogestion_Verificacion_de_que_la_autogestion_del_servicio_asterisco_533_Pauta_On_Line_corresponde_a_TP() {
 		
@@ -117,6 +118,7 @@ public class TechnicalCareCSRAutogestionF4 extends TestBase{
 		assertTrue(verificar());	
 	}
 	
+	//Revisar
 	@Test(groups= {"Fase4","TechnicalCare", "Autogestion"})
 	public void TS73822_CRM_Fase_4_Technical_Care_CSR_Autogestion_Verificacion_de_que_la_autogestion_del_servicio_asterisco_567_SMS_mas_Push_corresponde_a_TP() {
 		
@@ -125,6 +127,7 @@ public class TechnicalCareCSRAutogestionF4 extends TestBase{
 		assertTrue(verificar());	
 	}
 	
+	//Revisar
 	@Test(groups= {"Fase4","TechnicalCare", "Autogestion"})
 	public void TS73815_CRM_Fase_4_Technical_Care_CSR_Autogestion_Verificacion_de_que_la_autogestion_del_servicio_asterisco_762_ROAMERS_corresponde_a_TP() {
 		
@@ -133,6 +136,14 @@ public class TechnicalCareCSRAutogestionF4 extends TestBase{
 		assertTrue(verificar());	
 	}
 	
+	//Revisar
+	@Test(groups= {"Fase4","TechnicalCare", "Autogestion"})
+	public void TS73870_CRM_Fase_4_Technical_Care_CSR_Autogestion_Verificacion_de_que_la_autogestion_del_Canal_0800_0800_888_7382_Repro_corresponde_a_un_servicio_de_Telecom() {
+		
+		elegirOpciones("0800","0800-888-7382 (Repro)","");
+		continuar();
+		assertTrue(verificar());	
+	}
 	
 }
 
