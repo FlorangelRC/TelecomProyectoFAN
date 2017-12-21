@@ -51,7 +51,7 @@ public void setContactInformation(String nombre, String apellido, String fechaDe
 	lastName.sendKeys(apellido);
 	birthDate.sendKeys(fechaDeNacimiento);
 
-		doesNotPossesEmail.click();
+		//doesNotPossesEmail.click();
 }
 public void nextPage() {
 	NextBtn.click();
