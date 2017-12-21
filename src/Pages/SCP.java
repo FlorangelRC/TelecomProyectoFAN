@@ -340,7 +340,7 @@ public void comentarycompartir(String comentario){
 public void validarcomentario(String comentario){
 	try {Thread.sleep(15000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 
-<<<<<<< HEAD
+
 	List <WebElement> comentarios = driver.findElements(By.cssSelector(".feeditemtext.cxfeeditemtextr"));
 	System.out.println(comentarios.size());
 	Assert.assertTrue(comentarios.get(0).equals(comentario));
@@ -348,12 +348,7 @@ public void validarcomentario(String comentario){
 }
 
 	
-=======
-	List <WebElement> comentarios = driver.findElements(By.cssSelector(".feeditembodyandfooter"));
-	Assert.assertTrue(comentarios.get(0).findElement(By.cssSelector(".cxfeeditemtextwrapper")).getText().equals(comentario));
-	Assert.assertEquals(comentarios.get(0).findElement(By.cssSelector(".topics.init")).getText(), "Haga clic para agregar temas:   Sin sugerencias. Añada sus propios temas.");
-}
->>>>>>> master
+
 public void validarcomentarioajeno(String comentario){
 	try {Thread.sleep(15000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 	String cuentaactiva = driver.findElement(By.id("userNavLabel")).getText();

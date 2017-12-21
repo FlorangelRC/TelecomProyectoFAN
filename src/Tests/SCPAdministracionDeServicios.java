@@ -11,6 +11,7 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.ui.Select;
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;
@@ -49,7 +50,7 @@ public class SCPAdministracionDeServicios extends TestBase {
 		try {Thread.sleep(10000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 	}
 	
-	@AfterClass(groups = "SCP")
+	//@AfterClass(groups = "SCP")
 	public void tearDown() {
 		driver.quit();
 	}
@@ -574,7 +575,7 @@ public class SCPAdministracionDeServicios extends TestBase {
 		}
 	}
 	
-<<<<<<< HEAD
+
 	@Test(groups = "SCP") 
 		  public void TS112790_Plan_de_accion_Chatter_Contextualizado_Leer_Comentario_Escrito_Con_Otro_Usuario() { 
 		    SCP pcp = new SCP(driver); 
@@ -590,27 +591,42 @@ public class SCPAdministracionDeServicios extends TestBase {
 			pcp.moveToElementOnAccAndClick("cuartoTitulo", 2);
 		    pcp.validarcomentarioajeno(fecha.toString());
 	}
-=======
->>>>>>> master
-	// @Test(groups = "SCP") 
+
+	@Test(groups = "SCP") 
 	  public void TS112791_Plan_de_accion_Doble_Click_Para_Editar() { 
 	    SCP pcp = new SCP(driver); 
-	    List<String> tdo = new ArrayList<String>(); 
 	    pcp.Desloguear_Loguear("fabiana");
-	    pcp.Desloguear_Loguear_Comentar("admin", "fabiana", "Mati <3 Nico", "cuartoTitulo", 2); 
-	    /*pcp.moveToElementOnAccAndClick("segundoTitulo",2); 
-	    List<WebElement> servicioList = driver.findElement(By.xpath("//*[@id='tableList']/tbody/tr[2]")).findElements(By.tagName("th"));  
-	    for (int i = 0 ; i<=7 ; i++) { 
-	      tdo.add(todos[i]); 
-	    } 
-	    assertTrue(servicioList.get(0).getText().isEmpty()); 
-	    servicioList.remove(0); 
-	    for (WebElement UnS : servicioList) { 
-	      if(!UnS.getText().equals("Pais")) { 
-	        assertTrue(tdo.contains(UnS.getText().toLowerCase())); 
-	      } 
-	    }*/ 
+	    try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		pcp.clickOnTabByName("cuentas");
+		try {Thread.sleep(7000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		try {Thread.sleep(7000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		pcp.clickEnCuentaPorNombre("Florencia Di Ci");
+		try {Thread.sleep(10000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		pcp.moveToElementOnAccAndClick("cuartoTitulo", 2);
+		WebElement modificar= driver.findElement(By.id("mainTable")).findElement(By.className("odd")).findElements(By.tagName("td")).get(2);
+		Actions action = new Actions(driver);   
+		action.moveToElement(modificar.findElement(By.tagName("span")).findElement(By.tagName("span"))).doubleClick().perform();
+		assertTrue(modificar.findElement(By.className("inlineEditDiv")).isDisplayed());
+		
 	 }
+	
+	@Test(groups = "SCP")  
+    public void TS112793_Plan_De_Accion_Exportar_A_Excel() {  
+      SCP pcp = new SCP(driver);  
+      pcp.moveToElementOnAccAndClick("cuartoTitulo",2);  
+      String usuario = driver.findElements(By.cssSelector(".nav.navbar-nav.navbar-right")).get(1).findElement(By.tagName("a")).getText();  
+      List<WebElement> servicioList = driver.findElements(By.cssSelector(".btn.btn-default.btn-sm"));  
+      for (WebElement UnS : servicioList) {  
+        if (UnS.getText().toLowerCase().contains("export to excel")||UnS.getText().toLowerCase().contains("exportar a excel")) {  
+          UnS.click();  
+          break;  
+        }  
+      }  
+      try {Thread.sleep(8000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}  
+      usuario=usuario.replace(' ', '_');  
+      usuario=usuario.concat("-Plan_de_Acción.xls");  
+      assertTrue(pcp.isFileDownloaded(downloadPath, usuario), "Failed to download Expected document");  
+    }  
 	 
 	 @Test(groups = "SCP") 
 	  public void TS112799_Plan_Accion_Ver_Video() { 
@@ -633,8 +649,5 @@ public class SCPAdministracionDeServicios extends TestBase {
 	    driver.switchTo().window(allTabs.get(0)); 
 	    try {Thread.sleep(2000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();} 
 	  } 
-<<<<<<< HEAD
 
-=======
->>>>>>> master
 }
