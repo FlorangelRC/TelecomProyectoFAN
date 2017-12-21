@@ -73,8 +73,9 @@ public class SCPParquedeServicios extends TestBase{
 					}break;}
 		}
 	}
-	
-// @AfterMethod(groups= "SCP")
+
+
+ @AfterMethod(groups= "SCP")
 	public void after(){
 		((JavascriptExecutor)driver).executeScript("window.scrollTo(0,"+driver.findElement(By.id("home_Tab")).getLocation().y+")");
 		driver.findElement(By.id("home_Tab")).click();
