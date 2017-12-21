@@ -97,7 +97,7 @@ private WebDriver driver;
 	public void TS112725_Mosaico_de_Relacionamiento_por_Oportunidad_Triangulo_Ordenador() {
 		SCP prueba = new SCP(driver); 
 		prueba.moveToElementOnAccAndClick("tercerTitulo", 3);
-		Assert.assertTrue(prueba.Triangulo_Ordenador_Validador());
+		Assert.assertTrue(prueba.Triangulo_Ordenador_Validador("//*[@id=\"mainTable\"]/thead/tr", "//*[@id=\"mainTable\"]/tbody", 4, 2));
 	}
 	
 	//------------------------------------------------------------------------------------------------- 
@@ -124,9 +124,40 @@ private WebDriver driver;
 	
 	//------------------------------------------------------------------------------------------------- 
 	//TCC = 6
+	/*@Test(groups = "SCP")
+	public void TS112563_Asignación_de_Value_Drivers_a_Oportunidades_MÁS() {
+		SCP prueba = new SCP(driver); 
+		prueba.moveToElementOnAccAndClick("tercerTitulo", 1);
+		((JavascriptExecutor)driver).executeScript("window.scrollTo(0,"+driver.findElement(By.xpath("//*[@id=\"a0l3F0000005ipnQAA\"]/td[2]/span[2]/button")).getLocation().y+")");
+		driver.findElement(By.cssSelector(".btn.btn-default.btn-xs.showMore")).click();
+		((JavascriptExecutor)driver).executeScript("window.scrollTo(0,"+driver.findElement(By.id("j_id0:j_id112:j_id451:0:j_id540")).getLocation().y+")");
+		BasePage cambioFrameByID=new BasePage();
+		((JavascriptExecutor)driver).executeScript("window.scrollTo(0,"+driver.findElement(By.id("mainTable_wrapper")).getLocation().y+")");
+		Assert.assertTrue(driver.findElement(By.id("j_id0:j_id112:j_id451:0:j_id540")).isDisplayed());
+	}*/
+	
+	//------------------------------------------------------------------------------------------------- 
+	//TCC = 7
 	@Test(groups = "SCP")
-	public void TS() {
-		
+	public void TS112565_Asignación_de_Value_Drivers_a_Oportunidades_Oportunidades() {
+		SCP prueba = new SCP(driver); 
+		prueba.moveToElementOnAccAndClick("tercerTitulo", 1);
+		driver.findElement(By.xpath("//*[@id=\"0063F000002UbLjQAK\"]/td[1]/a")).click();
 	}
-    
+	
+	//------------------------------------------------------------------------------------------------- 
+	//TCC = 8
+	@Test(groups = "SCP")
+	public void TS112566_Asignación_de_Value_Drivers_a_Oportunidades_Ordenar_por_columnas() {
+		SCP prueba = new SCP(driver); 
+		prueba.moveToElementOnAccAndClick("tercerTitulo", 1);
+		
+		driver.findElement(By.xpath("//*[@id=\"mainOppsTable\"]/thead/tr/th[1]"));
+		Assert.assertTrue(prueba.Triangulo_Ordenador_Validador("//*[@id=\"mainOppsTable\"]/thead/tr", "//*[@id=\"mainOppsTable\"]/tbody", 6, 2));
+		Assert.assertTrue(prueba.Triangulo_Ordenador_Validador("//*[@id=\"mainOppsTable\"]/thead/tr", "//*[@id=\"mainOppsTable\"]/tbody", 6, 3));
+		Assert.assertTrue(prueba.Triangulo_Ordenador_Validador("//*[@id=\"mainOppsTable\"]/thead/tr", "//*[@id=\"mainOppsTable\"]/tbody", 6, 4));
+		Assert.assertTrue(prueba.Triangulo_Ordenador_Validador("//*[@id=\"mainOppsTable\"]/thead/tr", "//*[@id=\"mainOppsTable\"]/tbody", 6, 5));
+		Assert.assertTrue(prueba.Triangulo_Ordenador_Validador("//*[@id=\"mainOppsTable\"]/thead/tr", "//*[@id=\"mainOppsTable\"]/tbody", 6, 6));
+	}
+	
 }
