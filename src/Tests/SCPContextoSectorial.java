@@ -6,12 +6,14 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.openqa.selenium.By;
+import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Actions;
 
 import org.testng.Assert;
 import org.testng.annotations.AfterClass;
+import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
@@ -27,8 +29,7 @@ public class SCPContextoSectorial extends TestBase {
 	private static String downloadPath = "C:\\Users\\Nicolas\\Downloads";
 	
 	@BeforeClass(groups = "SCP")
-	  public void Init() throws Exception
-	  {
+	  public void Init() throws Exception {
 	    this.driver = setConexion.setupEze();
 	    loginSCPAdmin(driver);
 	    try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
@@ -44,7 +45,14 @@ public class SCPContextoSectorial extends TestBase {
 	    try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}	
 	}
 	
-	@AfterClass(groups = "SCP")
+	@AfterMethod(groups= "SCP")
+	public void after(){
+		try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		((JavascriptExecutor)driver).executeScript("window.scrollTo(0,"+driver.findElement(By.id("home_Tab")).getLocation().y+")");
+		driver.findElement(By.id("home_Tab")).click();
+	}
+	
+	//@AfterClass(groups = "SCP")
 	public void teardown() {
 		driver.quit();
 		sleep(5000);
@@ -139,6 +147,7 @@ public class SCPContextoSectorial extends TestBase {
 		Assert.assertTrue(driver.findElement(By.className("modal-content")).isDisplayed());
 		try {Thread.sleep(2000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 		driver.findElement(By.className("modal-footer")).findElement(By.cssSelector(".btn.btn-default")).click();
+		
 	}
 	
 	@Test(groups = "SCP")
@@ -872,7 +881,7 @@ public class SCPContextoSectorial extends TestBase {
 	public void TS112758_Opportunity_Snapshot_Triangulo_Ordenador() {
 		SCP prueba = new SCP(driver);
 		prueba.moveToElementOnAccAndClick("tercerTitulo", 4);
-		Assert.assertTrue(prueba.Triangulo_Ordenador_Validador());		
+		Assert.assertTrue(prueba.Triangulo_Ordenador_Validador("//*[@id=\"mainTable\"]/thead/tr", "//*[@id=\"mainTable\"]/tbody", 5, 2));		
 	}
 	
 	@Test(groups = "SCP")
@@ -1118,5 +1127,4 @@ public class SCPContextoSectorial extends TestBase {
 			}
 		}
 	}
-
 }
