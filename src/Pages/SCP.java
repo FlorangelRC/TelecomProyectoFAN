@@ -321,15 +321,18 @@ private boolean isFileDownloaded_Ext(String dirPath, String ext){
 }
 
 public void comentarycompartir(String comentario){
+	TestBase TB = new TestBase();
+	TB.waitFor(driver, By.cssSelector(".publisherTextAreaInner"));
 	WebElement element = driver.findElement(By.cssSelector(".publisherTextAreaInner"));
-	try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 	((JavascriptExecutor)driver).executeScript("window.scrollTo(0,"+element.getLocation().y+")");
+	TB.waitFor(driver, By.id("publishereditablearea"));
 	driver.findElement(By.id("publishereditablearea")).click();
-	try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+	TB.waitFor(driver, By.tagName("iframe"));
 	WebElement iframe =driver.findElement(By.tagName("iframe"));
 	driver.switchTo().frame(iframe);
 	WebElement description=driver.findElement(By.xpath("//body[@class='chatterPublisherRTE cke_editable cke_editable_themed cke_contents_ltr cke_show_borders']"));
 	try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+	description.click();
 	description.sendKeys(comentario);
 	driver.switchTo().defaultContent();
 	try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
@@ -340,14 +343,12 @@ public void comentarycompartir(String comentario){
 public void validarcomentario(String comentario){
 	try {Thread.sleep(15000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 
-
-	List <WebElement> comentarios = driver.findElements(By.cssSelector(".feeditemtext.cxfeeditemtextr"));
+	List <WebElement> comentarios = driver.findElements(By.cssSelector(".feeditemtext.cxfeeditemtext"));
 	System.out.println(comentarios.size());
-	Assert.assertTrue(comentarios.get(0).equals(comentario));
-	Assert.assertEquals(driver.findElement(By.cssSelector("topics.init")), "Haga clic para agregar temas:   Sin sugerencias. Añada sus propios temas.");
+	Assert.assertTrue(comentarios.get(0).getText().equals(comentario));
+	Assert.assertEquals(driver.findElement(By.cssSelector(".topics.init")).getText(), "Haga clic para agregar temas:   Sin sugerencias. Aï¿½ada sus propios temas.");
 }
 
-	
 
 public void validarcomentarioajeno(String comentario){
 	try {Thread.sleep(15000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
@@ -375,7 +376,7 @@ public boolean cuentalogeada(String cuenta){
 		TestBase TB = new TestBase();
 		List<WebElement> opcionesMenu = driver.findElement(By.id("userNav-menuItems")).findElements(By.tagName("a"));
 		for (WebElement UnaO : opcionesMenu) {
-			if(UnaO.getText().toLowerCase().contains("finalizar sesión")) {
+			if(UnaO.getText().toLowerCase().contains("finalizar sesiï¿½n")) {
 				UnaO.click();
 				break;
 			}
@@ -400,33 +401,82 @@ public boolean cuentalogeada(String cuenta){
 		Desloguear_Loguear(usuario);
 	}
 	
-	public boolean Triangulo_Ordenador_Validador() {
-		TestBase TB = new TestBase();
-		TB.waitFor(driver, By.xpath("//*[@id=\"mainTable\"]/tbody/tr"));
-		
-		List<WebElement> wOportunityByUs = driver.findElements(By.xpath("//*[@id=\"mainTable\"]/tbody/tr"));
-		ArrayList<String> sOportunityByUs = new ArrayList<String>();
-		
-		driver.findElement(By.xpath("//*[@id=\"mainTable\"]/thead/tr/th[2]")).click();
-		List<WebElement> wOportunityByThem = driver.findElements(By.xpath("//*[@id=\"mainTable\"]/tbody/tr"));
-		ArrayList<String> sOportunityByThem = new ArrayList<String>();
-		
-		for (int a = 0; a < wOportunityByUs.size(); a++) {
-			sOportunityByUs.add(wOportunityByUs.get(a).getText().toLowerCase());
-			sOportunityByThem.add(wOportunityByThem.get(a).getText().toLowerCase());
+	public List<String> TraerColumna(String sBody, int iColumnas, int iColumna) {
+		//sBody = xpath del cuerpo de la lista
+		//iColumnas = cantidad de columnas
+		//iColumna = columna requerida
+		WebElement wBody = driver.findElement(By.xpath(sBody));
+		List<WebElement> wRows = wBody.findElements(By.tagName("tr"));
+		List<WebElement> wElements =   new ArrayList<WebElement>();
+		for (int i = 0; i < wRows.size(); i++) {
+			wElements.clear();
+			wElements = wRows.get(i).findElements(By.tagName("td"));
+			if (wElements.size() < iColumnas) {
+				wRows.remove(i);
+			}
+			
+		}
+		List<String> sElements =  new ArrayList<String>();
+		for (WebElement wAux:wRows) {
+			if (!wAux.getText().isEmpty()) {
+				List<WebElement> wColumns = wAux.findElements(By.tagName("td"));
+				sElements.add(wColumns.get(iColumna - 1).getText());
+			}
 		}
 		
-		Collections.sort(sOportunityByUs);
+		return sElements;
+	}
+	
+	public boolean Triangulo_Ordenador_Validador(String sMenu, String sBody, int iColumnas, int iColumna) {
+		//sMenu = xpath de la fila del menï¿½
+		//sBody = xpath del cuerpo de la lista
+		//iColumnas = cantidad de columnas
+		//iColumna = columna a ordenar
+		TestBase TB = new TestBase();
+		TB.waitFor(driver, By.xpath(sBody));
+		
+		List<String> wElements = TraerColumna(sBody, iColumnas, iColumna);
+		
+		WebElement wHeader = driver.findElement(By.xpath(sMenu));
+		List <WebElement> wMenu = wHeader.findElements(By.tagName("th"));
+		wMenu.get(iColumna - 1).click();
+		List<String> wElementsOrdenados = TraerColumna(sBody, iColumnas, iColumna);
+		
+		Collections.sort(wElements);
 		boolean bBoolean = true;
 		
-		for(int i = 0; i < sOportunityByUs.size(); i++) { 
-			if (!sOportunityByUs.get(i).equals(sOportunityByThem.get(i))) {
+		for(int i = 0; i < wElements.size(); i++) { 
+			if (!wElements.get(i).equals(wElementsOrdenados.get(i))) {
 			 bBoolean = false;
-		 }
+			}
 		}
 		
 		return bBoolean;
 		
+	}
+	
+	public String SelectorMasUno(String sTexto, int iPosiciï¿½n, int iIndex) {
+		//sTexto = texto completo
+		//iPosiciï¿½n = posiciï¿½n en string sTexto donde tiene que cambiar el valor
+		//iIndex = nuevo valor
+		sTexto = sTexto.substring(0,iPosiciï¿½n) + iIndex + sTexto.substring(iPosiciï¿½n + 1,sTexto.length());
+		return sTexto;
+	}
+	
+	public String[][] ListaById(By element, String sId, int iPosiciï¿½n) {
+		List<WebElement> wAuxList = driver.findElements(element);
+		
+		String[][] sList = new String [wAuxList.size()][wAuxList.size()];
+		
+		int i;
+		for (i = 0; i < wAuxList.size(); i++) {
+			sId = SelectorMasUno(sId, iPosiciï¿½n, i);
+			sList[i][0] = sId;
+			sList[i][1] = driver.findElement(By.id(sId)).getText();
+			
+		}
+		
+		return sList;
 	}
 
 

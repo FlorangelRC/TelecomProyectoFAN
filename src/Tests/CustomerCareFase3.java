@@ -1,16 +1,11 @@
 package Tests;
 
-import static org.testng.Assert.assertTrue;
-
 import java.util.List;
 
 import org.openqa.selenium.By;
-import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
-import org.openqa.selenium.interactions.Actions;
 import org.testng.Assert;
-import org.testng.annotations.AfterClass;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.BeforeMethod;
@@ -22,7 +17,6 @@ import Pages.CustomerCare;
 import Pages.setConexion;
 
 public class CustomerCareFase3 extends TestBase{
-
 	
 	private WebDriver driver;
 	
@@ -95,7 +89,7 @@ public class CustomerCareFase3 extends TestBase{
 	}
 	
 	
-	@Test (groups = "CustomerCare")
+	@Test(groups = {"CustomerCare", "DebitoAutomatico"})
 	public void TS38195_Automatic_Debit_Subscriptions_Sesión_guiada_Débito_Automático_Inicial_Paso_0_Cliente_Activo_Billing_account_activa_con_servicios_activos() {
 		CustomerCare page = new CustomerCare (driver);
 		page.elegircuenta("aaaaFernando Care");
@@ -135,7 +129,7 @@ public class CustomerCareFase3 extends TestBase{
 	}
 	
 	
-	@Test (groups = "CustomerCare")
+	@Test(groups = {"CustomerCare", "DebitoAutomatico"})
 	public void TS38199_Automatic_Debit_Subscriptions_Sesión_guiada_Débito_Automático_Inicial_Paso_1_Visualizar_botones() {
 		CustomerCare page = new CustomerCare (driver);
 		page.elegircuenta("aaaaFernando Care");
@@ -151,7 +145,7 @@ public class CustomerCareFase3 extends TestBase{
 	}
 	
 	
-	@Test (groups = "CustomerCare")
+	@Test(groups = {"CustomerCare", "Vista360Layout"})
 	public void TS38407_360_View_Vista_360_de_facturación_clientes_individuos_Billing_Account_Activa() {
 		CustomerCare cc = new CustomerCare(driver);
 		cc.elegircuenta("aaaaFernando Care");
@@ -163,7 +157,7 @@ public class CustomerCareFase3 extends TestBase{
 	}
 	
 	
-	@Test (groups = "CustomerCare")
+	@Test(groups = {"CustomerCare", "Vista360Layout"})
 	public void TS38423_360_View_Buscador_para_vistas_de_facturación_Buscar_por_Número_de_cuenta() {
 		Accounts accountPage = new Accounts(driver);
 		CustomerCare page = new CustomerCare(driver);
@@ -181,7 +175,7 @@ public class CustomerCareFase3 extends TestBase{
 	}
 	
 	
-	@Test (groups = "CustomerCare")
+	@Test(groups = {"CustomerCare", "Vista360Layout"})
 	public void TS38424_360_View_Buscador_para_vistas_de_facturación_Buscar_por_Nombre_de_cuenta() {
 		Accounts accountPage = new Accounts(driver);
 		CustomerCare page = new CustomerCare(driver);
@@ -199,7 +193,7 @@ public class CustomerCareFase3 extends TestBase{
 	}
 	
 	
-	@Test (groups = "CustomerCare")
+	@Test(groups = {"CustomerCare", "Vista360Layout"})
 	public void TS38425_360_View_Buscador_para_vistas_de_facturación_Buscar_por_Ciclo_de_facturación() {
 		Accounts accountPage = new Accounts(driver);
 		CustomerCare page = new CustomerCare(driver);
@@ -220,7 +214,7 @@ public class CustomerCareFase3 extends TestBase{
 	}
 	
 	
-	@Test (groups = "CustomerCare")
+	@Test(groups = {"CustomerCare", "Vista360Layout"})
 	public void TS38428_360_View_Buscador_para_vistas_de_facturación_Buscar_por_Medio_de_pago() {
 		Accounts accountPage = new Accounts(driver);
 		CustomerCare page = new CustomerCare(driver);
@@ -241,7 +235,7 @@ public class CustomerCareFase3 extends TestBase{
 	}
 	
 	
-	@Test (groups = "CustomerCare")
+	@Test(groups = {"CustomerCare", "Vista360Layout"})
 	public void TS38431_360_View_Buscador_para_vistas_de_facturación_Botón_refrescar() {
 		CustomerCare page = new CustomerCare (driver);
 		page.elegircuenta("aaaaFernando Care");
@@ -255,7 +249,7 @@ public class CustomerCareFase3 extends TestBase{
 	}
 	
 	
-	@Test (groups = "CustomerCare")
+	@Test(groups = {"CustomerCare", "Vista360Layout"})
 	public void TS38183_360_View_Historial_de_Recargas_Pre_pago_Recarga_SOS_Campo_cancelacion_sin_cargo() {
 		CustomerCare page = new CustomerCare(driver);
 		page.elegircuenta("aaaaFernando Care");
@@ -270,7 +264,7 @@ public class CustomerCareFase3 extends TestBase{
 	}
 	
 	
-	@Test (groups = "CustomerCare")
+	@Test(groups = {"CustomerCare", "Vista360Layout"})
 	public void TS38184_360_View_Historial_de_Recargas_Pre_pago_Recarga_SOS_Campo_Fecha_de_pago() {
 		CustomerCare page = new CustomerCare(driver);
 		page.elegircuenta("aaaaFernando Care");
@@ -285,7 +279,7 @@ public class CustomerCareFase3 extends TestBase{
 	}
 	
 	
-	@Test (groups = "CustomerCare")
+	@Test(groups = {"CustomerCare", "Vista360Layout"})
 	public void TS38175_360_View_Historial_de_Recargas_Pre_pago_Recarga_SOS_Fecha_Desde_antigüedad_6_meses() {
 		CustomerCare page = new CustomerCare(driver);
 		page.elegircuenta("aaaaFernando Care");
@@ -302,7 +296,7 @@ public class CustomerCareFase3 extends TestBase{
 	}
 	
 	
-	@Test (groups = "CustomerCare")
+	@Test(groups = {"CustomerCare", "Vista360Layout"})
 	public void TS38176_360_View_Historial_de_Recargas_Pre_pago_Recarga_SOS_Fecha_Desde_calendario_grisado() {
 		CustomerCare page = new CustomerCare(driver);
 		page.elegircuenta("aaaaFernando Care");
@@ -319,7 +313,7 @@ public class CustomerCareFase3 extends TestBase{
 	}
 	
 	
-	@Test (groups = "CustomerCare")
+	@Test(groups = {"CustomerCare", "Vista360Layout"})
 	public void TS38177_360_View_Historial_de_Recargas_Pre_pago_Recarga_SOS_Fecha_Desde_Consulta_exitosa() {
 		CustomerCare page = new CustomerCare(driver);
 		page.elegircuenta("aaaaFernando Care");
@@ -337,7 +331,7 @@ public class CustomerCareFase3 extends TestBase{
 	}
 	
 	
-	@Test (groups = "CustomerCare")
+	@Test(groups = {"CustomerCare", "Vista360Layout"})
 	public void TS38182_360_View_Historial_de_Recargas_Pre_pago_Recarga_SOS_Fecha_Desde_y_Hasta_consulta_exitosa() {
 		CustomerCare page = new CustomerCare(driver);
 		page.elegircuenta("aaaaFernando Care");
@@ -356,7 +350,7 @@ public class CustomerCareFase3 extends TestBase{
 	}
 	
 	
-	@Test (groups = "CustomerCare")
+	@Test(groups = {"CustomerCare", "Vista360Layout"})
 	public void TS38181_360_View_Historial_de_Recargas_Pre_pago_Recarga_SOS_Fecha_Desde_y_Hasta_no_superan_los_90_dias() {
 		CustomerCare page = new CustomerCare(driver);
 		page.elegircuenta("aaaaFernando Care");
@@ -379,7 +373,7 @@ public class CustomerCareFase3 extends TestBase{
 	}
 	
 		
-	@Test (groups = "CustomerCare")
+	@Test(groups = {"CustomerCare", "Vista360Layout"})
 	public void TS38178_360_View_Historial_de_Recargas_Pre_pago_Recarga_SOS_Fecha_Hasta_no_mayor_a_fecha_actual() {
 		CustomerCare page = new CustomerCare(driver);
 		page.elegircuenta("aaaaFernando Care");
@@ -394,7 +388,7 @@ public class CustomerCareFase3 extends TestBase{
 	}
 	
 	
-	@Test (groups = "CustomerCare")
+	@Test(groups = {"CustomerCare", "Vista360Layout"})
 	public void TS38180_360_View_Historial_de_Recargas_Pre_pago_Recarga_SOS_Fecha_Hasta_consulta_exitosa() {
 		CustomerCare page = new CustomerCare(driver);
 		page.elegircuenta("aaaaFernando Care");
@@ -409,7 +403,7 @@ public class CustomerCareFase3 extends TestBase{
 	}
 	
 	
-	@Test (groups = "CustomerCare")
+	@Test(groups = {"CustomerCare", "Vista360Layout"})
 	public void TS38450_360_View_Historial_de_Recargas_Pre_pago_Grilla_Colapsar_registro() {
 		CustomerCare page = new CustomerCare(driver);
 		page.elegircuenta("aaaaFernando Care");
@@ -433,7 +427,7 @@ public class CustomerCareFase3 extends TestBase{
 	}
 	
 	
-	@Test (groups = "CustomerCare")
+	@Test(groups = {"CustomerCare", "Vista360Layout"})
 	public void TS38448_360_View_Historial_de_Recargas_Pre_pago_Grilla_Columna_Beneficios() {
 		CustomerCare page = new CustomerCare(driver);
 		page.elegircuenta("aaaaFernando Care");
@@ -460,7 +454,7 @@ public class CustomerCareFase3 extends TestBase{
 	}
 	
 	
-	@Test (groups = "CustomerCare")
+	@Test(groups = {"CustomerCare", "Vista360Layout"})
 	public void TS38442_360_View_Historial_de_Recargas_Pre_pago_Grilla_Columna_Canal() {
 		CustomerCare page = new CustomerCare(driver);
 		page.elegircuenta("aaaaFernando Care");
@@ -487,7 +481,7 @@ public class CustomerCareFase3 extends TestBase{
 	}
 	
 	
-	@Test (groups = "CustomerCare")
+	@Test(groups = {"CustomerCare", "Vista360Layout"})
 	public void TS38443_360_View_Historial_de_Recargas_Pre_pago_Grilla_Columna_Descripción() {
 		CustomerCare page = new CustomerCare(driver);
 		page.elegircuenta("aaaaFernando Care");
@@ -514,7 +508,7 @@ public class CustomerCareFase3 extends TestBase{
 	}
 	
 	
-	@Test (groups = "CustomerCare")
+	@Test(groups = {"CustomerCare", "Vista360Layout"})
 	public void TS38444_360_View_Historial_de_Recargas_Pre_pago_Grilla_Columna_Fecha_y_Hora() {
 		CustomerCare page = new CustomerCare(driver);
 		page.elegircuenta("aaaaFernando Care");
@@ -541,7 +535,7 @@ public class CustomerCareFase3 extends TestBase{
 	}
 	
 	
-	@Test (groups = "CustomerCare")
+	@Test(groups = {"CustomerCare", "Vista360Layout"})
 	public void TS38446_360_View_Historial_de_Recargas_Pre_pago_Grilla_Column_Monto() {
 		CustomerCare page = new CustomerCare(driver);
 		page.elegircuenta("aaaaFernando Care");
@@ -568,7 +562,7 @@ public class CustomerCareFase3 extends TestBase{
 	}
 	
 	
-	@Test (groups = "CustomerCare")
+	@Test(groups = {"CustomerCare", "Vista360Layout"})
 	public void TS38447_360_View_Historial_de_Recargas_Pre_pago_Grilla_Columna_Vencimiento() {
 		CustomerCare page = new CustomerCare(driver);
 		page.elegircuenta("aaaaFernando Care");
@@ -595,7 +589,7 @@ public class CustomerCareFase3 extends TestBase{
 	}
 	
 	
-	@Test (groups = "CustomerCare")
+	@Test(groups = {"CustomerCare", "Vista360Layout"})
 	public void TS38449_360_View_Historial_de_Recargas_Pre_pago_Grilla_Expandir_registro() {
 		CustomerCare page = new CustomerCare(driver);
 		page.elegircuenta("aaaaFernando Care");
@@ -624,7 +618,7 @@ public class CustomerCareFase3 extends TestBase{
 	}
 	
 	
-	@Test (groups = "CustomerCare")
+	@Test(groups = {"CustomerCare", "Vista360Layout"})
 	public void TS38409_360_View_Vista_360_de_facturación_clientes_individuos_Header_Cards_Visualizar_campos() {
 		CustomerCare page = new CustomerCare(driver);
 		Accounts accountPage = new Accounts(driver);
@@ -640,7 +634,7 @@ public class CustomerCareFase3 extends TestBase{
 	}
 	
 	
-	@Test (groups = "CustomerCare")
+	@Test(groups = {"CustomerCare", "Vista360Layout"})
 	public void TS38500_360_View_Historial_de_Recargas_Pre_pago_Filtros_Botón_CONSULTAR() {
 		CustomerCare page = new CustomerCare(driver);
 		BasePage cambioFrameByID = new BasePage(driver);
@@ -668,7 +662,7 @@ public class CustomerCareFase3 extends TestBase{
 	}
 	
 	
-	@Test (groups = "CustomerCare")
+	@Test(groups = {"CustomerCare", "Vista360Layout"})
 	public void TS38496_360_View_Historial_de_Recargas_Pre_pago_Filtros_Filtro_Canal_IVR() {
 		CustomerCare page = new CustomerCare(driver);
 		BasePage cambioFrameByID = new BasePage(driver);
@@ -701,7 +695,7 @@ public class CustomerCareFase3 extends TestBase{
 	}
 	
 	
-	@Test (groups = "CustomerCare")
+	@Test(groups = {"CustomerCare", "Vista360Layout"})
 	public void TS38493_360_View_Historial_de_Recargas_Pre_pago_Filtros_Filtro_Canal_Rol() {
 		CustomerCare page = new CustomerCare(driver);
 		BasePage cambioFrameByID = new BasePage(driver);
@@ -733,7 +727,7 @@ public class CustomerCareFase3 extends TestBase{
 	}
 	
 	
-	@Test (groups = "CustomerCare")
+	@Test(groups = {"CustomerCare", "Vista360Layout"})
 	public void TS38495_360_View_Historial_de_Recargas_Pre_pago_Filtros_Filtro_Canal_SMS() {
 		CustomerCare page = new CustomerCare(driver);
 		BasePage cambioFrameByID = new BasePage(driver);
@@ -765,7 +759,7 @@ public class CustomerCareFase3 extends TestBase{
 	}
 	
 	
-	@Test (groups = "CustomerCare")
+	@Test(groups = {"CustomerCare", "Vista360Layout"})
 	public void TS38497_360_View_Historial_de_Recargas_Pre_pago_Filtros_Filtro_Canal_TODOS() {
 		CustomerCare page = new CustomerCare(driver);
 		BasePage cambioFrameByID = new BasePage(driver);
@@ -789,7 +783,7 @@ public class CustomerCareFase3 extends TestBase{
 	}
 	
 	
-	@Test (groups = "CustomerCare")
+	@Test(groups = {"CustomerCare", "Vista360Layout"})
 	public void TS38494_360_View_Historial_de_Recargas_Pre_pago_Filtros_Filtro_Canal_WEB() {
 		CustomerCare page = new CustomerCare(driver);
 		BasePage cambioFrameByID = new BasePage(driver);
@@ -821,7 +815,7 @@ public class CustomerCareFase3 extends TestBase{
 	}
 	
 	
-	@Test (groups = "CustomerCare")
+	@Test(groups = {"CustomerCare", "Vista360Layout"})
 	public void TS38498_360_View_Historial_de_Recargas_Pre_pago_Filtros_Filtro_Con_beneficios() {
 		CustomerCare page = new CustomerCare(driver);
 		BasePage cambioFrameByID = new BasePage(driver);
@@ -853,7 +847,7 @@ public class CustomerCareFase3 extends TestBase{
 	}
 	
 	
-	@Test (groups = "CustomerCare")
+	@Test(groups = {"CustomerCare", "Vista360Layout"})
 	public void TS38499_360_View_Historial_de_Recargas_Pre_pago_Filtros_Filtro_SIN_beneficios() {
 		CustomerCare page = new CustomerCare(driver);
 		BasePage cambioFrameByID = new BasePage(driver);
@@ -885,7 +879,7 @@ public class CustomerCareFase3 extends TestBase{
 	}
 	
 	
-	@Test (groups = "CustomerCare")
+	@Test(groups = {"CustomerCare", "Vista360Layout"})
 	public void TS38481_360_View_Historial_de_Recargas_Pre_pago_Filtros_Filtro_Fecha() {
 		CustomerCare page = new CustomerCare(driver);
 		BasePage cambioFrameByID = new BasePage(driver);
@@ -909,7 +903,7 @@ public class CustomerCareFase3 extends TestBase{
 	}
 	
 	
-	@Test (groups = "CustomerCare")
+	@Test(groups = {"CustomerCare", "Vista360Layout"})
 	public void TS38489_360_View_Historial_de_Recargas_Pre_pago_Filtros_Filtro_Fecha_Fecha_Hasta_y_Fecha_desde_dentro_de_90_días() {
 		CustomerCare page = new CustomerCare(driver);
 		BasePage cambioFrameByID = new BasePage(driver);
@@ -944,7 +938,7 @@ public class CustomerCareFase3 extends TestBase{
 	}
 	
 	
-	@Test (groups = "CustomerCare")
+	@Test(groups = {"CustomerCare", "Vista360Layout"})
 	public void TS38490_360_View_Historial_de_Recargas_Pre_pago_Filtros_Filtro_Fecha_Fecha_Hasta_y_Fecha_desde_fuera_de_90_días() {
 		CustomerCare page = new CustomerCare(driver);
 		BasePage cambioFrameByID = new BasePage(driver);
@@ -978,7 +972,7 @@ public class CustomerCareFase3 extends TestBase{
 	}
 	
 	
-	@Test (groups = "CustomerCare")
+	@Test(groups = {"CustomerCare", "Vista360Layout"})
 	public void TS38485_360_View_Historial_de_Recargas_Pre_pago_Filtros_Filtro_Fecha_Fecha_igual_a_fecha_actual() {
 		CustomerCare page = new CustomerCare(driver);
 		BasePage cambioFrameByID = new BasePage(driver);
@@ -1010,7 +1004,7 @@ public class CustomerCareFase3 extends TestBase{
 	}
 	
 	
-	@Test (groups = "CustomerCare")
+	@Test(groups = {"CustomerCare", "Vista360Layout"})
 	public void TS38486_360_View_Historial_de_Recargas_Pre_pago_Filtros_Filtro_Fecha_Fecha_mayor_a_fecha_actual() {
 		CustomerCare page = new CustomerCare(driver);
 		BasePage cambioFrameByID = new BasePage(driver);
@@ -1044,7 +1038,7 @@ public class CustomerCareFase3 extends TestBase{
 	}
 	
 	
-	@Test (groups = "CustomerCare")
+	@Test(groups = {"CustomerCare", "Vista360Layout"})
 	public void TS38484_360_View_Historial_de_Recargas_Pre_pago_Filtros_Filtro_Fecha_Fecha_menor_a_fecha_actual() {
 		CustomerCare page = new CustomerCare(driver);
 		BasePage cambioFrameByID = new BasePage(driver);
@@ -1078,7 +1072,7 @@ public class CustomerCareFase3 extends TestBase{
 	}
 	
 	
-	@Test (groups = "CustomerCare")
+	@Test(groups = {"CustomerCare", "Vista360Layout"})
 	public void TS38482_360_View_Historial_de_Recargas_Pre_pago_Filtros_Filtro_Fecha_Seleccionar_Fecha_desde_supera_los_6_meses_de_antiguedad() {
 		CustomerCare page = new CustomerCare(driver);
 		BasePage cambioFrameByID = new BasePage(driver);
@@ -1112,7 +1106,7 @@ public class CustomerCareFase3 extends TestBase{
 	}
 	
 	
-	@Test (groups = "CustomerCare")
+	@Test(groups = {"CustomerCare", "Vista360Layout"})
 	public void TS38483_360_View_Historial_de_Recargas_Pre_pago_Filtros_Filtro_Fecha_Visualizar_grisado_Fecha_desde_supera_los_6_meses_de_antiguedad() {
 		CustomerCare page = new CustomerCare(driver);
 		BasePage cambioFrameByID = new BasePage(driver);
@@ -1146,7 +1140,7 @@ public class CustomerCareFase3 extends TestBase{
 	}
 	
 	
-	@Test (groups = "CustomerCare")
+	@Test(groups = {"CustomerCare", "Vista360Layout"})
 	public void TS38515_360_View_Historial_de_Recargas_Pre_pago_Grilla_Expandir_registro_Asset_Prepago_Expandir_nuevo_registro_El_anterior_queda_abierto() {
 		CustomerCare page = new CustomerCare(driver);
 		BasePage cambioFrameByID = new BasePage(driver);
@@ -1178,7 +1172,7 @@ public class CustomerCareFase3 extends TestBase{
 	}
 	
 	
-	@Test (groups = "CustomerCare")
+	@Test(groups = {"CustomerCare", "Vista360Layout"})
 	public void TS38514_360_View_Historial_de_Recargas_Pre_pago_Grilla_Expandir_registro_Asset_Prepago_Beneficios_de_Unidades_Visualizar_datos() {
 		CustomerCare page = new CustomerCare(driver);
 		BasePage cambioFrameByID = new BasePage(driver);
@@ -1211,7 +1205,7 @@ public class CustomerCareFase3 extends TestBase{
 	}
 	
 	
-	@Test (groups = "CustomerCare")
+	@Test(groups = {"CustomerCare", "Vista360Layout"})
 	public void TS38513_360_View_Historial_de_Recargas_Pre_pago_Grilla_Expandir_registro_Asset_Prepago_Beneficios_de_Credito_Visualizar_datos() {
 		CustomerCare page = new CustomerCare(driver);
 		BasePage cambioFrameByID = new BasePage(driver);
@@ -1244,7 +1238,7 @@ public class CustomerCareFase3 extends TestBase{
 	}
 	
 	
-	@Test (groups = "CustomerCare")
+	@Test(groups = {"CustomerCare", "Vista360Layout"})
 	public void TS38516_360_View_Historial_de_Recargas_Pre_pago_Grilla_Expandir_registro_Asset_Prepago_Expande_registro_que_No_tiene_beneficios() {
 		CustomerCare page = new CustomerCare(driver);
 		BasePage cambioFrameByID = new BasePage(driver);
@@ -1276,7 +1270,7 @@ public class CustomerCareFase3 extends TestBase{
 	}
 	
 	
-	@Test (groups = "CustomerCare")
+	@Test(groups = {"CustomerCare", "Vista360Layout"})
 	public void TS38512_360_View_Historial_de_Recargas_Pre_pago_Grilla_Expandir_registro_Asset_Prepago_Expandir_registro() {
 		CustomerCare page = new CustomerCare(driver);
 		BasePage cambioFrameByID = new BasePage(driver);
@@ -1309,7 +1303,7 @@ public class CustomerCareFase3 extends TestBase{
 	}
 	
 	
-	@Test (groups = "CustomerCare")
+	@Test(groups = {"CustomerCare", "Vista360Layout"})
 	public void TS38408_360_View_Vista_360_de_facturación_clientes_individuos_Billing_Account_Inactiva() {
 		CustomerCare page = new CustomerCare(driver);
 		BasePage cambioFrameByID = new BasePage(driver);
@@ -1330,7 +1324,7 @@ public class CustomerCareFase3 extends TestBase{
 	}
 	
 	
-	@Test (groups = "CustomerCare")
+	@Test (groups = {"CustomerCare", "Vista360Layout"})
 	public void TS38067_360_View_360_View_Acciones_Vlocity_Limitante_Verifica_que_en_el_buscador_figuran_todas_las_acciones_a_pesar_de_que_no_figuren_por_defecto() {
 		CustomerCare page = new CustomerCare(driver);
 		page.elegircuenta("aaaaFernando Care");
@@ -1353,7 +1347,7 @@ public class CustomerCareFase3 extends TestBase{
 	}
 	
 	
-	@Test (groups = "CustomerCare")
+	@Test (groups = {"CustomerCare", "DetalleDeConsumos"})
 	public void TS38069_Consumption_Details_Definicion_de_Filtros_sobre_Calendario_Fecha_Hasta_No_se_puede_ingresar_una_fecha_posterior_a_día_de_consulta() {
 		CustomerCare page = new CustomerCare(driver);
 		BasePage cambioFrameByID = new BasePage(driver);
@@ -1370,7 +1364,7 @@ public class CustomerCareFase3 extends TestBase{
 	}
 	
 	
-	@Test (groups = "CustomerCare")
+	@Test(groups = {"CustomerCare", "DetalleDeConsumos"})
 	public void TS38071_Consumption_Details_Definicion_de_Filtros_sobre_Calendario_Fecha_Hasta_dentro_de_rango_de_15_días_respecto_a_Fecha_Desde() {
 		CustomerCare page = new CustomerCare(driver);
 		BasePage cambioFrameByID = new BasePage(driver);
@@ -1388,7 +1382,7 @@ public class CustomerCareFase3 extends TestBase{
 	}
 	
 	
-	@Test (groups = "CustomerCare")
+	@Test(groups = {"CustomerCare", "DetalleDeConsumos"})
 	public void TS38070_Consumption_Details_Definicion_de_Filtros_sobre_Calendario_Ingresar_Fecha_Hasta_posterior_a_Fecha_Desde_con_más_de_15_días_de_diferencia() {
 		CustomerCare page = new CustomerCare(driver);
 		BasePage cambioFrameByID = new BasePage(driver);
@@ -1407,7 +1401,7 @@ public class CustomerCareFase3 extends TestBase{
 	}
 	
 	
-	@Test (groups = "CustomerCare")
+	@Test(groups = {"CustomerCare", "DetalleDeConsumos"})
 	public void TS38339_Consumption_Details_Detalle_consumos_Pre_pago_apertura_de_detalle_Consumo_Prepago_Ver_detalle() {
 		CustomerCare page = new CustomerCare(driver);
 		BasePage cambioFrameByID = new BasePage(driver);
@@ -1423,7 +1417,7 @@ public class CustomerCareFase3 extends TestBase{
 	}
 	
 	
-	@Test (groups = "CustomerCare")
+	@Test(groups = {"CustomerCare", "DetalleDeConsumos"})
 	public void TS38345_Consumption_Details_Styling_detalle_de_consumos_Mostrado_de_campos_Prepago_Visualizar_columnas() {
 		CustomerCare page = new CustomerCare(driver);
 		BasePage cambioFrameByID = new BasePage(driver);
@@ -1444,7 +1438,7 @@ public class CustomerCareFase3 extends TestBase{
 	}
 	
 	
-	@Test (groups = "CustomerCare")
+	@Test(groups = {"CustomerCare", "DetalleDeConsumos"})
 	public void TS38340_Consumption_Details_Detalle_consumos_Pre_pago_apertura_de_detalle_Consumo_Prepago_Visualizar_campos() {
 		CustomerCare page = new CustomerCare(driver);
 		BasePage cambioFrameByID = new BasePage(driver);
@@ -1463,7 +1457,7 @@ public class CustomerCareFase3 extends TestBase{
 	}
 	
 	
-	@Test (groups = "CustomerCare")
+	@Test(groups = {"CustomerCare", "DebitoAutomatico"})
 	public void TS38193_Automatic_Debit_Subscriptions_Sesión_guiada_Débito_Automático_Inicial_Paso_0_Cuenta_con_Fraude() {
 		CustomerCare page = new CustomerCare(driver);
 		BasePage cambioFrameByID = new BasePage(driver);
@@ -1476,7 +1470,7 @@ public class CustomerCareFase3 extends TestBase{
 	}
 	
 	
-	@Test (groups = "CustomerCare")
+	@Test(groups = {"CustomerCare", "DebitoAutomatico"})
 	public void TS38194_Automatic_Debit_Subscriptions_Sesión_guiada_Débito_Automático_Inicial_Paso_0_Cuenta_sin_Fraude() {
 		CustomerCare page = new CustomerCare(driver);
 		BasePage cambioFrameByID = new BasePage(driver);
@@ -1488,7 +1482,7 @@ public class CustomerCareFase3 extends TestBase{
 	}
 	
 	
-	@Test (groups = "CustomerCare")
+	@Test(groups = {"CustomerCare", "DebitoAutomatico"})
 	public void TS38200_Automatic_Debit_Subscriptions_Sesión_guiada_Débito_Automático_Inicial_Paso_1_Funcionamiento_botones() {
 		CustomerCare page = new CustomerCare(driver);
 		BasePage cambioFrameByID = new BasePage(driver);
@@ -1518,7 +1512,7 @@ public class CustomerCareFase3 extends TestBase{
 	}
 	
 	
-	@Test (groups = "CustomerCare")
+	@Test(groups = {"CustomerCare", "Vista360Layout"})
 	public void TS38433_360_View_360_Card_Servicio_Prepago_Flyout_Acciones_Productos_Activos() {
 		CustomerCare page = new CustomerCare(driver);
 		BasePage cambioFrameByID = new BasePage(driver);
@@ -1533,7 +1527,7 @@ public class CustomerCareFase3 extends TestBase{
 	}
 	
 	
-	@Test (groups = "CustomerCare")
+	@Test(groups = {"CustomerCare", "Vista360Layout"})
 	public void TS38437_360_View_360_Card_Servicio_Prepago_FlyoutAccionesSuscripciones() {
 		CustomerCare page = new CustomerCare(driver);
 		BasePage cambioFrameByID = new BasePage(driver);
@@ -1548,7 +1542,7 @@ public class CustomerCareFase3 extends TestBase{
 	}
 	
 	
-	@Test (groups = "CustomerCare")
+	@Test(groups = {"CustomerCare", "DebitoAutomatico"})
 	public void TS38223_Automatic_Debit_Subscriptions_Sesión_guiada_Débito_Automático_Inicial_Paso_2_Adhesión_Seleccion_multiple_de_BA() {
 		CustomerCare page = new CustomerCare(driver);
 		BasePage cambioFrameByID = new BasePage(driver);
@@ -1570,7 +1564,7 @@ public class CustomerCareFase3 extends TestBase{
 	}
 	
 	
-	@Test (groups = "CustomerCare")
+	@Test(groups = {"CustomerCare", "DebitoAutomatico"})
 	public void TS38219_Automatic_Debit_Subscriptions_Sesión_guiada_Débito_Automático_Inicial_Paso_2_Adhesión_Seleccion_simple_de_BA() {
 		CustomerCare page = new CustomerCare(driver);
 		BasePage cambioFrameByID = new BasePage(driver);
@@ -1591,7 +1585,7 @@ public class CustomerCareFase3 extends TestBase{
 	}
 	
 	
-	@Test (groups = "CustomerCare")
+	@Test(groups = {"CustomerCare", "DebitoAutomatico"})
 	public void TS38208_Automatic_Debit_Subscriptions_Sesión_guiada_Débito_Automático_Inicial_Paso_2_Baja_Cuenta_NO_adherida_a_Aut_Deb_Que_NO_se_vea() {
 		CustomerCare page = new CustomerCare(driver);
 		BasePage cambioFrameByID = new BasePage(driver);
@@ -1607,7 +1601,7 @@ public class CustomerCareFase3 extends TestBase{
 	}
 	
 	
-	@Test (groups = "CustomerCare")
+	@Test(groups = {"CustomerCare", "DebitoAutomatico"})
 	public void TS38206_Automatic_Debit_Subscriptions_Sesión_guiada_Débito_Automático_Inicial_Paso_2_Modificación_Cuenta_NO_adherida_a_Aut_Deb_Que_NO_se_vea() {
 		CustomerCare page = new CustomerCare(driver);
 		BasePage cambioFrameByID = new BasePage(driver);
@@ -1623,7 +1617,7 @@ public class CustomerCareFase3 extends TestBase{
 	}
 	
 	
-	@Test (groups = "CustomerCare")
+	@Test(groups = {"CustomerCare", "DebitoAutomatico"})
 	public void TS38207_Automatic_Debit_Subscriptions_Sesión_guiada_Débito_Automático_Inicial_Paso_2_Stop_Debit_Cuenta_NO_adherida_a_Aut_Deb_Que_NO_se_vea() {
 		CustomerCare page = new CustomerCare(driver);
 		BasePage cambioFrameByID = new BasePage(driver);
@@ -1639,7 +1633,7 @@ public class CustomerCareFase3 extends TestBase{
 	}
 	
 	
-	@Test (groups = "CustomerCare")
+	@Test(groups = {"CustomerCare", "DebitoAutomatico"})
 	public void TS38244_Automatic_Debit_Subscriptions_Sesión_guiada_Débito_Automático_Inicial_Paso_3_Adhesión_Formato_Tarjetas_Credito() {
 		CustomerCare page = new CustomerCare(driver);
 		BasePage cambioFrameByID = new BasePage(driver);
@@ -1665,7 +1659,7 @@ public class CustomerCareFase3 extends TestBase{
 	}
 	
 	
-	@Test (groups = "CustomerCare")
+	@Test(groups = {"CustomerCare", "DebitoAutomatico"})
 	public void TS38229_Automatic_Debit_Subscriptions_Sesión_guiada_Débito_Automático_Inicial_Paso_2_Adhesión_Cuenta_con_Fraude() {
 		CustomerCare page = new CustomerCare(driver);
 		BasePage cambioFrameByID = new BasePage(driver);
@@ -1687,7 +1681,7 @@ public class CustomerCareFase3 extends TestBase{
 	}
 	
 	
-	@Test (groups = "CustomerCare")
+	@Test(groups = {"CustomerCare", "DebitoAutomatico"})
 	public void TS38256_Automatic_Debit_Subscriptions_Sesión_guiada_Débito_Automático_Inicial_Paso_3_Adhesión_Adhiere_tarjeta_que_no_estaba_adherida() {
 		CustomerCare page = new CustomerCare(driver);
 		BasePage cambioFrameByID = new BasePage(driver);
@@ -1723,7 +1717,7 @@ public class CustomerCareFase3 extends TestBase{
 	}
 	
 	
-	@Test (groups = "CustomerCare")
+	@Test(groups = {"CustomerCare", "DebitoAutomatico"})
 	public void TS38255_Automatic_Debit_Subscriptions_Sesión_guiada_Débito_Automático_Inicial_Paso_3_Adhesión_Numero_de_TC_Ingresa_0000_No_Reconoce_Empresa() {
 		CustomerCare page = new CustomerCare(driver);
 		BasePage cambioFrameByID = new BasePage(driver);

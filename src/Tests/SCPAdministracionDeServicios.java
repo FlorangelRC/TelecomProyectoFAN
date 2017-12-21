@@ -250,9 +250,9 @@ public class SCPAdministracionDeServicios extends TestBase {
 		//columna tipo
 		assertTrue(Itabla.get(2).getText().toLowerCase().equals("tipo"));
 		//columna titulo
-		assertTrue(Itabla.get(3).getText().toLowerCase().equals("título"));
+		assertTrue(Itabla.get(3).getText().toLowerCase().equals("tï¿½tulo"));
 		//columna descripcion
-		assertTrue(Itabla.get(4).getText().toLowerCase().equals("descripción"));
+		assertTrue(Itabla.get(4).getText().toLowerCase().equals("descripciï¿½n"));
 	}
 	
 	@Test(groups = "SCP")
@@ -304,7 +304,7 @@ public class SCPAdministracionDeServicios extends TestBase {
 		pcp.moveToElementOnAccAndClick("quintoTitulo",2);
 		List<WebElement> servicioList = driver.findElements(By.cssSelector(".btn.btn-default.btn-sm"));
 		for (WebElement UnS : servicioList) {
-			if (UnS.getText().contains("Crear Categoría de Servicio")) {
+			if (UnS.getText().contains("Crear Categorï¿½a de Servicio")) {
 				UnS.click();
 				break;
 			}	
@@ -366,7 +366,7 @@ public class SCPAdministracionDeServicios extends TestBase {
 			if (UnS.getText().contains("Nuevo Servicio")) {
 				ns = true;
 			}else {
-				if (UnS.getText().contains("Crear Categoría de Servicio")) {
+				if (UnS.getText().contains("Crear Categorï¿½a de Servicio")) {
 					ccs = true;
 				}
 			}
@@ -560,7 +560,7 @@ public class SCPAdministracionDeServicios extends TestBase {
 	public void TS112787_Parque_De_Servicios_Ingreso_Desde_El_Contacto() {
 		SCP pcp = new SCP(driver);
 		List<String> tdo = new ArrayList<String>();
-		String[] todos = {"servicios","editar estado","proveedor actual","gastos anuales","tomar acción antes de", "compra a nivel","decision maker","otra información"};
+		String[] todos = {"servicios","editar estado","proveedor actual","gastos anuales","tomar acciï¿½n antes de", "compra a nivel","decision maker","otra informaciï¿½n"};
 		pcp.moveToElementOnAccAndClick("segundoTitulo",2);
 		List<WebElement> servicioList = driver.findElement(By.xpath("//*[@id='tableList']/tbody/tr[2]")).findElements(By.tagName("th")); 
 		for (int i = 0 ; i<=7 ; i++) {
@@ -624,7 +624,7 @@ public class SCPAdministracionDeServicios extends TestBase {
       }  
       try {Thread.sleep(8000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}  
       usuario=usuario.replace(' ', '_');  
-      usuario=usuario.concat("-Plan_de_Acción.xls");  
+      usuario=usuario.concat("-Plan_de_Acciï¿½n.xls");  
       assertTrue(pcp.isFileDownloaded(downloadPath, usuario), "Failed to download Expected document");  
     }  
 	 

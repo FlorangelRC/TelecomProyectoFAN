@@ -1,22 +1,13 @@
 package Tests;
 
-import static org.testng.Assert.assertTrue;
-
-import java.io.BufferedReader;
 import java.io.File;
-import java.io.FileFilter;
-import java.io.FileReader;
-import java.util.ArrayList;
 import java.util.List;
-import java.util.Random;
 
 import org.openqa.selenium.By;
-import org.openqa.selenium.StaleElementReferenceException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Actions;
-import org.openqa.selenium.support.ui.ExpectedConditions;
-import org.openqa.selenium.support.ui.Select;
+
 import org.testng.Assert;
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;
@@ -50,18 +41,8 @@ public class SCP_Joaquin extends TestBase{
 	@AfterClass(groups = "SCP")
 	public void teardown() {
 		driver.quit();
-		sleep(5000);
+		sleep(3000);
 	}
-	
-	/*@Test(groups = "SCP")
-	public void TS112727_Negocio_del_cliente_Chatter_contextualizado_Escribir_comentario() {
-		SCP prueba= new SCP(driver);
-		prueba.moveToElementOnAccAndClick("primerTitulo", 2);
-		WebElement chatter = driver.findElement(By.xpath("//textarea[@id='publishereditablearea']"));
-		chatter.click();
-		sleep(8000);
-		driver.findElement(By.xpath("//div[@class='publisherTextAreaInner']")).findElement(By.tagName("input")).sendKeys("Comentario para TS112727");
-	}*/
 	
 	private boolean isFileDownloaded_Ext(String dirPath, String ext){
 		boolean flag=false;
@@ -80,6 +61,43 @@ public class SCP_Joaquin extends TestBase{
 	}
 	
 	@Test(groups = "SCP")
+	public void TS112619_Cronograma_de_cuenta_Filtros_Otros() {
+		SCP prueba= new SCP(driver);
+		prueba.moveToElementOnAccAndClick("cuartoTitulo", 1);
+		driver.findElements(By.className("checkboxFiltroTimeLine")).get(7).click();
+		driver.findElements(By.cssSelector(".btn.btn.btn-default.btn-xs")).get(1).click();
+		sleep(3000);
+		List<WebElement> elementos = driver.findElements(By.cssSelector(".tl-timemarker-content-container-small"));
+		
+		System.out.println(elementos.get(0).getText());
+		for (WebElement e : elementos) {
+			Assert.assertTrue(e.getAttribute("class").contains("Otros"));
+		}
+	}
+	
+	@Test(groups = "SCP")
+	public void TS112729_Negocio_del_cliente_Contexto_Estratégico_del_Cliente() {
+		SCP prueba= new SCP(driver);
+		prueba.moveToElementOnAccAndClick("primerTitulo", 2);
+		WebElement label = driver.findElements(By.cssSelector(".botones")).get(1);
+		label.click();
+		sleep(2000);
+		
+		Assert.assertTrue(label.getText().contains("Contexto Estratégico del Cliente"));
+	}
+	
+	@Test(groups = "SCP")
+	public void TS112732_Negocio_del_cliente_Desafios_Iniciativas_de_negocio_del_cliente() {
+		SCP prueba= new SCP(driver);
+		prueba.moveToElementOnAccAndClick("primerTitulo", 2);
+		WebElement label = driver.findElements(By.cssSelector(".botones")).get(2);
+		label.click();
+		sleep(2000);
+		
+		Assert.assertTrue(label.getText().contains("Desafíos | Iniciativas de Negocio del Cliente"));
+	}
+	
+	@Test(groups = "SCP")
 	public void TS112735_Negocio_del_cliente_Descripción_del_Cliente() {
 		SCP prueba= new SCP(driver);
 		prueba.moveToElementOnAccAndClick("primerTitulo", 2);
@@ -88,6 +106,17 @@ public class SCP_Joaquin extends TestBase{
 		sleep(2000);
 		
 		Assert.assertTrue(label.getText().contains("Descripción del Cliente"));
+	}
+	
+	@Test(groups = "SCP")
+	public void TS112739_Negocio_del_cliente_Evolución_de_la_satisfacción_del_cliente() {
+		SCP prueba= new SCP(driver);
+		prueba.moveToElementOnAccAndClick("primerTitulo", 2);
+		WebElement label = driver.findElements(By.cssSelector(".botones")).get(4);
+		label.click();
+		sleep(2000);
+		
+		Assert.assertTrue(label.getText().contains("Evolución de la Satisfacción del Cliente"));
 	}
 	
 	@Test(groups = "SCP")

@@ -1,5 +1,7 @@
 package Tests;
 
+import static org.testng.Assert.assertTrue;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -8,8 +10,10 @@ import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Actions;
+
 import org.testng.Assert;
 import org.testng.annotations.AfterClass;
+import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
@@ -21,11 +25,11 @@ import Pages.setConexion;
 
 public class SCPContextoSectorial extends TestBase {
 
-private WebDriver driver;
+	private WebDriver driver;
+	private static String downloadPath = "C:\\Users\\Nicolas\\Downloads";
 	
 	@BeforeClass(groups = "SCP")
-	  public void Init() throws Exception
-	  {
+	  public void Init() throws Exception {
 	    this.driver = setConexion.setupEze();
 	    loginSCPAdmin(driver);
 	    try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
@@ -39,6 +43,13 @@ private WebDriver driver;
 	    prueba.clickOnTabByName("cuentas");
 	    prueba.clickOnFirstAccRe();
 	    try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}	
+	}
+	
+	@AfterMethod(groups= "SCP")
+	public void after(){
+		try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		((JavascriptExecutor)driver).executeScript("window.scrollTo(0,"+driver.findElement(By.id("home_Tab")).getLocation().y+")");
+		driver.findElement(By.id("home_Tab")).click();
 	}
 	
 	//@AfterClass(groups = "SCP")
@@ -136,12 +147,14 @@ private WebDriver driver;
 		Assert.assertTrue(driver.findElement(By.className("modal-content")).isDisplayed());
 		try {Thread.sleep(2000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 		driver.findElement(By.className("modal-footer")).findElement(By.cssSelector(".btn.btn-default")).click();
+		
 	}
 	
 	@Test(groups = "SCP")
 	public void TS112742_Negocio_del_Cliente_Exportar_a_Excel() {
 		SCP prueba = new SCP(driver);
 		prueba.moveToElementOnAccAndClick("primerTitulo", 2);
+		String usuario = driver.findElement(By.cssSelector(".nav.navbar-nav.navbar-right")).findElement(By.tagName("a")).getText();
 		List <WebElement> element = driver.findElements(By.cssSelector(".btn.btn-default.btn-sm"));
 		for (WebElement x : element) {
 			if (x.getText().toLowerCase().contains("exportar a excel")) {
@@ -149,6 +162,10 @@ private WebDriver driver;
 				break;
 			}
 		}
+		try {Thread.sleep(8000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		usuario=usuario.replace(' ', '_');
+		usuario=usuario.concat("-Negocio_del_Cliente.xls");
+		assertTrue(prueba.isFileDownloaded(downloadPath, usuario), "Failed to download Expected document");
 	}
 	
 	@Test(groups = "SCP")
@@ -175,13 +192,18 @@ private WebDriver driver;
 	public void TS112802_Share_of_Wallet_Exportar_a_Excel() {
 		SCP prueba = new SCP(driver);
 		prueba.moveToElementOnAccAndClick("segundoTitulo", 1);
-		List<WebElement> servicioList = driver.findElements(By.cssSelector(".btn.btn-default.btn-sm"));
-		  for (WebElement UnS : servicioList) {
-			  if (UnS.getText().toLowerCase().contains("export to excel")) {
-				  	UnS.click();
-				  	break;
-			  }
-		  }	
+		String usuario = driver.findElement(By.cssSelector(".nav.navbar-nav.navbar-right")).findElement(By.tagName("a")).getText();
+		List<WebElement> element = driver.findElements(By.cssSelector(".btn.btn-default.btn-sm"));
+		for (WebElement x : element) {
+			if (x.getText().toLowerCase().contains("exportar a excel")) {
+				x.click();
+				break;
+			}
+		}
+		try {Thread.sleep(8000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		usuario=usuario.replace(' ', '_');
+		usuario=usuario.concat("-Share_of_Wallet.xls");
+		assertTrue(prueba.isFileDownloaded(downloadPath, usuario), "Failed to download Expected document");
 	}
 	
 	@Test(groups = "SCP")
@@ -384,6 +406,7 @@ private WebDriver driver;
 	public void TS112592_Contexto_Sectorial_Exportar_a_Excel() {
 		SCP prueba = new SCP(driver);
 		prueba.moveToElementOnAccAndClick("primerTitulo", 1);
+		String usuario = driver.findElement(By.cssSelector(".nav.navbar-nav.navbar-right")).findElement(By.tagName("a")).getText();
 		List <WebElement> element = driver.findElements(By.cssSelector(".btn.btn-default.btn-sm"));
 		for (WebElement x : element) {
 			if (x.getText().toLowerCase().contains("exportar a excel")) {
@@ -391,6 +414,10 @@ private WebDriver driver;
 				break;
 			}
 		}
+		try {Thread.sleep(8000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		usuario=usuario.replace(' ', '_');
+		usuario=usuario.concat("-Contexto_Sectorial.xls");
+		assertTrue(prueba.isFileDownloaded(downloadPath, usuario), "Failed to download Expected document");
 	}
 	
 	@Test(groups = "SCP")
@@ -654,7 +681,7 @@ private WebDriver driver;
 		List <WebElement> b = driver.findElements(By.className("data2Col"));
 		Assert.assertTrue(!(b.get(1).getText().contains(c)));
 	}
-	
+
 	@Test(groups = "SCP")
 	public void TS112677_Hitos_Relevantes_Ingreso_Desde_el_contacto() {
 		SCP prueba = new SCP(driver);
@@ -751,5 +778,353 @@ private WebDriver driver;
 		String a = "comentario de estrategia de crecimiento";
 		prueba.comentarycompartir(a);
 		prueba.validarcomentario(a);
+	}
+
+	@Test(groups = "SCP")
+	public void TS112700_Mosaico_de_Relacionamiento_General_Descargar_imagen() {
+		SCP prueba = new SCP(driver);
+		prueba.moveToElementOnAccAndClick("segundoTitulo", 4);
+		List <WebElement> element = driver.findElements(By.cssSelector(".btn.btn-default.btn-sm"));
+		for (WebElement x : element) {
+			if (x.getText().toLowerCase().contains("ver mosaico ordenado por rol")) {
+				x.click();
+				break;
+			}
+		}
+		try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		List <WebElement> b = driver.findElements(By.cssSelector(".btn.btn-default.btn-sm"));
+		boolean a = false;
+		for (WebElement x : b) {
+			if (x.getText().contains("Descargar Imagen")) {
+				a = true;
+			}
+		}
+		Assert.assertTrue(a);
+	}
+	
+	@Test(groups = "SCP")
+	public void TS112716_Mosaico_de_Relacionamiento_General_Ver_Video() {
+		SCP prueba = new SCP(driver);
+		prueba.moveToElementOnAccAndClick("segundoTitulo", 4);
+		driver.findElement(By.cssSelector(".btn.btn-xs.btn-default")).click();
+		try {Thread.sleep(10000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+	    ArrayList<String> tabs2 = new ArrayList<String> (driver.getWindowHandles());
+	    driver.switchTo().window(tabs2.get(1));
+	    BasePage cambioFrameByID = new BasePage();
+		driver.switchTo().frame(cambioFrameByID.getFrameForElement(driver, By.className("ytp-cued-thumbnail-overlay")));
+		Assert.assertTrue(driver.findElement(By.className("ytp-cued-thumbnail-overlay")).isDisplayed());
+		driver.close();
+	    driver.switchTo().window(tabs2.get(0));
+	}
+	
+	@Test(groups = "SCP")
+	public void TS112707_Mosaico_de_Relacionamiento_General_Ordenar_por_Actitud() {
+		SCP prueba = new SCP(driver);
+		prueba.moveToElementOnAccAndClick("segundoTitulo", 4);
+		List <WebElement> element = driver.findElements(By.cssSelector(".btn.btn-default.btn-sm"));
+		for (WebElement x : element) {
+			if (x.getText().toLowerCase().contains("ver mosaico ordenado por actitud")) {
+				x.click();
+				break;
+			}
+		}
+		try {Thread.sleep(10000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		Assert.assertTrue(driver.findElement(By.cssSelector(".tablaMosaico.tablaUser")).isDisplayed());
+		Assert.assertTrue(driver.findElement(By.cssSelector(".tablaMosaico.tablaTecnico")).isDisplayed());
+	}
+	
+	@Test(groups = "SCP")
+	public void TS112711_Mosaico_de_Relacionamiento_General_Ordenar_por_ROL() {
+		SCP prueba = new SCP(driver);
+		prueba.moveToElementOnAccAndClick("segundoTitulo", 4);
+		List <WebElement> element = driver.findElements(By.cssSelector(".btn.btn-default.btn-sm"));
+		for (WebElement x : element) {
+			if (x.getText().toLowerCase().contains("ver mosaico ordenado por rol")) {
+				x.click();
+				break;
+			}
+		}
+		try {Thread.sleep(10000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		List <WebElement> a = driver.findElements(By.className("tablaMosaico"));
+		Assert.assertTrue(a.get(0).isDisplayed() && a.get(1).isDisplayed());
+	}
+	
+	@Test(groups = "SCP")
+	public void TS112715_Mosaico_de_Relacionamiento_General_Ver_organigrama() {
+		SCP prueba = new SCP(driver);
+		prueba.moveToElementOnAccAndClick("segundoTitulo", 4);
+		List <WebElement> a = driver.findElements(By.cssSelector(".btn.btn-default.btn-sm"));
+		for (WebElement x : a) {
+			if (x.getText().toLowerCase().contains("ver mosaico ordenado por rol")) {
+				x.click();
+				break;
+			}
+		}
+		try {Thread.sleep(10000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		List <WebElement> b = driver.findElements(By.cssSelector(".btn.btn-default.btn-sm"));
+		for (WebElement x : b) {
+			if (x.getText().toLowerCase().contains("ver organigrama")) {
+				x.click();
+				break;
+			}
+		}
+		try {Thread.sleep(10000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+	    ArrayList<String> tabs2 = new ArrayList<String> (driver.getWindowHandles());
+	    driver.switchTo().window(tabs2.get(1));
+		WebElement element = driver.findElement(By.className("panel-heading"));
+		Assert.assertTrue(element.getText().contains("Organigrama y Mapa de Influencia"));
+		driver.close();
+	    driver.switchTo().window(tabs2.get(0));
+	}
+	
+	@Test(groups = "SCP")
+	public void TS112758_Opportunity_Snapshot_Triangulo_Ordenador() {
+		SCP prueba = new SCP(driver);
+		prueba.moveToElementOnAccAndClick("tercerTitulo", 4);
+		Assert.assertTrue(prueba.Triangulo_Ordenador_Validador("//*[@id=\"mainTable\"]/thead/tr", "//*[@id=\"mainTable\"]/tbody", 5, 2));		
+	}
+	
+	@Test(groups = "SCP")
+	public void TS112561_Asignación_de_Value_Drivers_a_Oportunidades_Exportar_a_Excel() {
+		SCP prueba = new SCP(driver);
+		prueba.moveToElementOnAccAndClick("tercerTitulo", 1);
+		String usuario = driver.findElement(By.cssSelector(".nav.navbar-nav.navbar-right")).findElement(By.tagName("a")).getText();
+		List <WebElement> element = driver.findElements(By.cssSelector(".btn.btn-default.btn-sm"));
+		for (WebElement x : element) {
+			if (x.getText().toLowerCase().contains("exportar a excel")) {
+				x.click();
+				break;
+			}
+		}
+		try {Thread.sleep(8000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		usuario=usuario.replace(' ', '_');
+		usuario=usuario.concat("-Asignación_de_Value_Drivers_a_Oportunidades.xls");
+		assertTrue(prueba.isFileDownloaded(downloadPath, usuario), "Failed to download Expected document");
+	}
+	
+	@Test(groups = "SCP")
+	public void TS112686_Matriz_de_Criterios_de_Decisión_Exportar_a_Excel() {
+		SCP prueba = new SCP(driver);
+		prueba.moveToElementOnAccAndClick("tercerTitulo", 2);
+		List <WebElement> element = driver.findElements(By.cssSelector(".btn.btn-default.btn-sm"));
+		for (WebElement x : element) {
+			if (x.getText().toLowerCase().contains("ir a los criterios")) {
+				x.click();
+				break;
+			}
+		}
+		try {Thread.sleep(10000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		String usuario = driver.findElement(By.cssSelector(".nav.navbar-nav.navbar-right")).findElement(By.tagName("a")).getText();
+		List <WebElement> element1 = driver.findElements(By.cssSelector(".btn.btn-default.btn-sm"));
+		for (WebElement x : element1) {
+			if (x.getText().toLowerCase().contains("exportar a excel")) {
+				x.click();
+				break;
+			}
+		}
+		try {Thread.sleep(8000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		usuario=usuario.replace(' ', '_');
+		usuario=usuario.concat("-Criterios_de_Decisión_por_Oportunidad.xls");
+		assertTrue(prueba.isFileDownloaded(downloadPath, usuario), "Failed to download Expected document");		
+	}
+	
+	@Test(groups = "SCP")
+	public void TS112687_Matriz_de_Criterios_de_Decisión_Guardar() {
+		SCP prueba = new SCP(driver);
+		prueba.moveToElementOnAccAndClick("tercerTitulo", 2);
+		List <WebElement> element = driver.findElements(By.cssSelector(".btn.btn-default.btn-sm"));
+		for (WebElement x : element) {
+			if (x.getText().toLowerCase().contains("ir a los criterios")) {
+				x.click();
+				break;
+			}
+		}
+		try {Thread.sleep(10000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		List <WebElement> element1 = driver.findElements(By.cssSelector(".btn.btn-default.btn-sm"));
+		boolean a = false;
+		for (WebElement x : element1) {
+			if (x.getText().toLowerCase().contains("guardar")) {
+				x.click();
+				a = true;
+				break;
+			}
+		}
+		Assert.assertTrue(a);
+	}
+	
+	@Test(groups = "SCP")
+	public void TS112688_Matriz_de_Criterios_de_Decisión_Ir_al_mosaico() {
+		SCP prueba = new SCP(driver);
+		prueba.moveToElementOnAccAndClick("tercerTitulo", 2);
+		List <WebElement> element = driver.findElements(By.cssSelector(".btn.btn-default.btn-sm"));
+		for (WebElement x : element) {
+			if (x.getText().toLowerCase().contains("ir a los criterios")) {
+				x.click();
+				break;
+			}
+		}
+		try {Thread.sleep(10000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		List <WebElement> element1 = driver.findElements(By.cssSelector(".btn.btn-default.btn-sm"));
+		for (WebElement x : element1) {
+			if (x.getText().toLowerCase().contains("ir al mosaico")) {
+				x.click();
+				break;
+			}
+		}
+		try {Thread.sleep(10000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		Assert.assertTrue(driver.findElement(By.className("panel-heading")).getText().contains("Mosaico de Relacionamiento"));
+	}
+	
+	@Test(groups = "SCP")
+	public void TS112689_Matriz_de_Criterios_de_Decisión_Ir_al_Snapshot() {
+		SCP prueba = new SCP(driver);
+		prueba.moveToElementOnAccAndClick("tercerTitulo", 2);
+		List <WebElement> element = driver.findElements(By.cssSelector(".btn.btn-default.btn-sm"));
+		for (WebElement x : element) {
+			if (x.getText().toLowerCase().contains("ir a los criterios")) {
+				x.click();
+				break;
+			}
+		}
+		try {Thread.sleep(10000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		List <WebElement> element1 = driver.findElements(By.cssSelector(".btn.btn-default.btn-sm"));
+		for (WebElement x : element1) {
+			if (x.getText().toLowerCase().contains("ir al snapshot")) {
+				x.click();
+				break;
+			}
+		}
+		try {Thread.sleep(10000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		Assert.assertTrue(driver.findElement(By.className("panel-heading")).getText().contains("Opportunity Snapshot"));
+	}
+	
+	@Test(groups = "SCP")
+	public void TS112690_Matriz_de_Criterios_de_Decisión_Ver_Gráficos_de_Criterio() {
+		SCP prueba = new SCP(driver);
+		prueba.moveToElementOnAccAndClick("tercerTitulo", 2);
+		List <WebElement> element = driver.findElements(By.cssSelector(".btn.btn-default.btn-sm"));
+		for (WebElement x : element) {
+			if (x.getText().toLowerCase().contains("ir a los criterios")) {
+				x.click();
+				break;
+			}
+		}
+		try {Thread.sleep(10000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		List <WebElement> element1 = driver.findElements(By.cssSelector(".btn.btn-default.btn-sm"));
+		for (WebElement x : element1) {
+			if (x.getText().toLowerCase().contains("ver gráfico de criterios")) {
+				x.click();
+				break;
+			}
+		}
+		try {Thread.sleep(10000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		List <WebElement> element2 = driver.findElements(By.cssSelector(".btn.btn-default.btn-sm"));
+		boolean a = false;
+		for (WebElement x : element2) {
+			if (x.getText().contains("Modificar Criterios")) {
+				a = true;
+			}
+		}
+		Assert.assertTrue(a);	
+	}
+	
+	@Test(groups = "SCP")
+	public void TS112691_Matriz_de_Criterios_de_Decisión_Ver_Video() {
+		SCP prueba = new SCP(driver);
+		prueba.moveToElementOnAccAndClick("tercerTitulo", 2);
+		driver.findElement(By.cssSelector(".btn.btn-xs.btn-default")).click();
+		try {Thread.sleep(10000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+	    ArrayList<String> tabs2 = new ArrayList<String> (driver.getWindowHandles());
+	    driver.switchTo().window(tabs2.get(1));
+		Assert.assertTrue(driver.findElement(By.cssSelector(".video-stream.html5-main-video")).isDisplayed());
+		driver.close();
+	    driver.switchTo().window(tabs2.get(0));
+	}
+	
+	@Test(groups = "SCP")  //Rompe porque no esta la columna "Posición Competitiva de la Competencia", dice "Competidores competitivos de pie"
+	public void TS112692_Matriz_de_Criterios_de_desicion_Ingreso_Desde_el_contacto() {
+		SCP prueba = new SCP(driver);
+		prueba.moveToElementOnAccAndClick("tercerTitulo", 2);
+		List <WebElement> element = driver.findElements(By.cssSelector(".btn.btn-default.btn-sm"));
+		for (WebElement x : element) {
+			if (x.getText().toLowerCase().contains("ir a los criterios")) {
+				x.click();
+				break;
+			}
+		}
+		try {Thread.sleep(10000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		WebElement boton = driver.findElement(By.xpath("//*[@id=\"j_id0:j_id128:j_id140\"]"));
+		boolean b = false;
+		if (boton.getAttribute("value").contains("Agregar Criterio")) {
+			b = true;
+		}
+		WebElement eliminar = driver.findElement(By.id("j_id0:j_id143:j_id158:0:j_id174"));
+		boolean c = false;
+		if (eliminar.getAttribute("value").contains("Eliminar")) {
+			c = true;
+		}
+		boolean check=true;
+	    String[] datosOp = {"Criterio", "Consideración del cliente", "Nuestra posición competitiva", "Posición Competitiva de la Competencia", "Enfoque"};
+	    List<String> titleTabla = new ArrayList<String>();
+	    WebElement oportunidad = driver.findElement(By.id("j_id0:j_id143:j_id146"));
+	    List<WebElement> composicion= oportunidad.findElement(By.tagName("tr")).findElements(By.tagName("th"));	    
+	    for(WebElement a : composicion) {
+	      titleTabla.add(a.getText());
+	      //System.out.println(a.getText());//Para Verificar que este imprimiendo el texto que buscamos
+	    }	    
+	    for(String a:datosOp) {
+	    	if(!(titleTabla.contains(a)))
+	    		check=false;
+	    }
+	    Assert.assertTrue(b && c && check);
+	}
+
+	@Test(groups = "SCP")
+	public void TS112692_Matriz_de_Criterios_de_desicion_Ingreso_desde_el_contacto() {
+		SCP prueba = new SCP(driver);
+		prueba.moveToElementOnAccAndClick("tercerTitulo", 2);
+		List <WebElement> element = driver.findElements(By.cssSelector(".btn.btn-default.btn-sm"));
+		for (WebElement x : element) {
+			if (x.getText().toLowerCase().contains("ir a los criterios")) {
+				x.click();
+				break;
+			}
+		}
+		try {Thread.sleep(10000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		List <WebElement> elim = driver.findElements(By.xpath("//*[@id=\"j_id0:j_id143:j_id158:0:j_id174\"]"));
+		boolean a = false;
+		for (WebElement x : elim) {
+			if (x.getAttribute("value").toLowerCase().contains("eliminar")) {
+				x.click();
+				a = true;
+				break;
+			}
+		}
+		Assert.assertTrue(a);
+	}
+	
+	@Test(groups = "SCP")
+	public void TS112682_Matriz_de_Criterios_de_Decisión_Agregar_Criterio() {
+		SCP prueba = new SCP(driver);
+		prueba.moveToElementOnAccAndClick("tercerTitulo", 2);
+		List <WebElement> element = driver.findElements(By.cssSelector(".btn.btn-default.btn-sm"));
+		for (WebElement x : element) {
+			if (x.getText().toLowerCase().contains("ir a los criterios")) {
+				x.click();
+				break;
+			}
+		}
+		try {Thread.sleep(10000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		driver.findElement(By.xpath("//*[@id=\"j_id0:j_id128:j_id140\"]")).click();
+		try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		WebElement ventana = driver.findElement(By.className("modal-header"));
+		Assert.assertTrue(ventana.getText().contains("Evaluación del Criterio"));		
+		List <WebElement> cerrar = driver.findElements(By.cssSelector(".btn.btn-default"));
+		for (WebElement x : cerrar) {
+			if (x.getText().toLowerCase().contains("cerrar")) {
+				x.click();
+				break;
+			}
+		}
 	}
 }
