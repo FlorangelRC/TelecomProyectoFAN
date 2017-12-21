@@ -9,6 +9,7 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.testng.Assert;
 import org.testng.annotations.AfterClass;
+import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
@@ -32,54 +33,63 @@ public class CustomerCare360Joaquin extends TestBase {
 	
 	@BeforeClass(groups= {"CustomerCare", "Problems with Refills"})
 	public void init() {
-		driver = setConexion.setupEze();
-		driver.manage().timeouts().implicitlyWait(3, TimeUnit.SECONDS);
+		inicializarDriver();
 		Customer = new CustomerCare(driver);
-		
 		login();
-		ConsolaFAN();
+		IrA.CajonDeAplicaciones.ConsolaFAN();
 	}
 	
 	@AfterClass(groups= {"CustomerCare", "Problems with Refills"})
 	public void quit() {
-		driver.switchTo().defaultContent();
-		driver.findElement(By.xpath("//span[@id='tsidLabel']")).click();
-		driver.findElement(By.xpath("//a[contains(.,'Ventas')]")).click();
-		driver.quit();
+		IrA.CajonDeAplicaciones.Ventas();
+		cerrarTodo();
 	}
 	
 	@BeforeMethod(groups= {"CustomerCare", "Problems with Refills"})
-	public void before() {
-		Customer.elegirCuenta("Fernando Care");
-		Customer.limpiarTodo();
+	public void after() {
+		Customer.cerrarTodasLasPestañas();
 	}
 	
 	@Test(groups= "CustomerCare")
 	public void TS38068_Consumption_Details_Definicion_de_Filtros_sobre_Calendario_Fecha_Desde_No_se_puede_ingresar_una_fecha_posterior_a_día_de_consulta() {
-		sleep(1000);
+		Customer.elegirCuenta("aaaaFernando Care");
 		Customer.irADetalleDeConsumos();
 		
-		driver.findElement(By.xpath("//input[@ng-model='ptc.filterOption']")).click();
-		driver.findElements(By.cssSelector(".slds-picklist.slds-dropdown-trigger.slds-dropdown-trigger--click.slds-is-open .slds-truncate")).get(2).click();
-		driver.findElement(fechaDesde).click();
-		List<WebElement> diasCalendario = driver.findElements(By.className("slds-day"));
-		diasCalendario.get(diasCalendario.size()-1).click(); //Último día visible del calendario
+		Customer.selectorPeriodo.click();
+		for (WebElement opcion : Customer.opcionesSelectorPeriodo) {
+			if (opcion.getText().contains("Un rango personalizado")) {
+				opcion.click();
+				break;
+			}
+		}
+
+		Customer.calendarioFechaInicio.click();
+		// Solo basta con intentar clickear el último día que figura que es posterior al día actual
+		int ultimoDiaDelCalendario = Customer.diasCalendario.size() - 1;
+		Customer.diasCalendario.get(ultimoDiaDelCalendario).click();
 		
-		Assert.assertTrue(driver.findElement(fechaDesde).getAttribute("value").equals(""));
+		Assert.assertTrue(Customer.calendarioFechaInicio.getAttribute("value").equals(""));
 	}
 	
 	@Test(groups="CustomerCare")
 	public void TS38164_360_View_UX_360_Card_Historiales_Visualizar_HISTORIAL_DE_PACKS() {
+		Customer.elegirCuenta("aaaaFernando Care");
 		Customer.buscarGestion("Historial de Packs");
 		
-		List<WebElement> gestionesEncontradas = driver.findElements(btn_GestionesEncontradas);
-		
-		Assert.assertTrue(gestionesEncontradas.get(0).getText().contains("Historial de Packs"));
+		for (WebElement gestion : Customer.gestionesEncontradas) {
+			if (gestion.getText().contains("Historial de Packs")) {
+				Assert.assertTrue(true);
+				return;
+			}
+		}
+		Assert.assertTrue(false);
 	}
 	
 	@Test(groups="CustomerCare")
 	public void TS38166_360_View_UX_360_Card_Historiales_Visualizar_HISTORIAL_DE_AJUSTES() {
+		Customer.elegirCuenta("aaaaFernando Care");
 		Customer.irAHistoriales();
+		
 		WebElement tarjeta = Customer.obtenerTarjetaHistorial("Historial de Ajustes");
 		
 		Assert.assertTrue(tarjeta.getText().toLowerCase().contains("historial de ajustes"));
@@ -87,7 +97,9 @@ public class CustomerCare360Joaquin extends TestBase {
 	
 	@Test(groups="CustomerCare")
 	public void TS38169_360_View_UX_360_Card_Historiales_Visualizar_botón_Ver_Detalle_HISTORIAL_DE_RECARGAS_SOS() {
+		Customer.elegirCuenta("aaaaFernando Care");
 		Customer.irAHistoriales();
+		
 		WebElement tarjeta = Customer.obtenerTarjetaHistorial("Historial de Recargas S.O.S");
 		
 		Assert.assertTrue(tarjeta.findElement(btn_VerDetalles).isDisplayed());
@@ -95,7 +107,9 @@ public class CustomerCare360Joaquin extends TestBase {
 	
 	@Test(groups="CustomerCare")
 	public void TS38170_360_View_UX_360_Card_Historiales_Visualizar_botón_Ver_Detalle_HISTORIAL_DE_AJUSTES() {
+		Customer.elegirCuenta("aaaaFernando Care");
 		Customer.irAHistoriales();
+		
 		WebElement tarjeta = Customer.obtenerTarjetaHistorial("Historial de Ajustes");
 		
 		Assert.assertTrue(tarjeta.findElement(btn_VerDetalles).isDisplayed());
@@ -103,42 +117,43 @@ public class CustomerCare360Joaquin extends TestBase {
 	
 	@Test(groups="CustomerCare")
 	public void TS38172_360_View_UX_360_Card_Historiales_Campos_Historial_de_Packs() {
+		Customer.elegirCuenta("aaaaFernando Care");
 		Customer.irAGestion("Historial de Packs");
-		
-		List<String> campos = new ArrayList<String>();
-		campos.add("FECHA");
-		campos.add("VENCIMIENTO");
-		campos.add("NOMBRE DEL PACK");
-		campos.add("MONTO");
 
-		driver.findElement(By.xpath("//button[contains(.,'Consultar')]")).click();
-		List<WebElement> listaElementos = driver.findElements(By.cssSelector(".slds-truncate.slds-th__action"));
-		List<String> textElementos = new ArrayList<String>();
-		for (WebElement elem : listaElementos) {
-			textElementos.add(elem.getText());
+		Customer.botonConsultar.click();
+		List<String> textoColumna = new ArrayList<String>();
+		for (WebElement columna : Customer.columnasHistorial) {
+			textoColumna.add(columna.getText());
 		}
 		
-		Assert.assertTrue(textElementos.containsAll(campos));
+		Assert.assertTrue(textoColumna.contains("FECHA"));
+		Assert.assertTrue(textoColumna.contains("VENCIMIENTO"));
+		Assert.assertTrue(textoColumna.contains("NOMBRE DEL PACK"));
+		Assert.assertTrue(textoColumna.contains("MONTO"));	
 	}
 	
 	@Test(groups="CustomerCare")
 	public void TS38174_360_View_UX_360_Card_Historiales_Campos_Historial_de_Ajustes() {
+		Customer.elegirCuenta("aaaaFernando Care");
 		Customer.irAHistoriales();
+		
 		WebElement tarjeta = Customer.obtenerTarjetaHistorial("Historial de Ajustes");
 		
-		List<WebElement> listaElementos = tarjeta.findElements(By.cssSelector(".slds-truncate.slds-th__action"));
-		List<String> textElementos = new ArrayList<String>();
-		for (WebElement elem : listaElementos) {
-			textElementos.add(elem.getText());
+		List<WebElement> columnas = tarjeta.findElements(By.cssSelector(".slds-truncate.slds-th__action"));
+		List<String> textoColumna = new ArrayList<String>();
+		for (WebElement columna : columnas) {
+			textoColumna.add(columna.getText());
 		}
 		
-		Assert.assertTrue(textElementos.contains("FECHA"));
-		Assert.assertTrue(textElementos.contains("MOTIVO"));
-		Assert.assertTrue(textElementos.contains("MONTO"));
+		Assert.assertTrue(textoColumna.contains("FECHA"));
+		Assert.assertTrue(textoColumna.contains("MOTIVO"));
+		Assert.assertTrue(textoColumna.contains("MONTO"));
 	}
 
 	@Test(groups="CustomerCare")
 	public void TS38185_360_View_360_View_Historial_de_Packs_Desplegable_nombre_Historial_Packs() {
+		Customer.elegirCuenta("aaaaFernando Care");
+
 		Customer.irAGestion("Historial de Packs");
 
 		Assert.assertTrue(driver.findElement(By.id("text-input-03")).isDisplayed());
@@ -146,6 +161,8 @@ public class CustomerCare360Joaquin extends TestBase {
 	
 	@Test(groups="CustomerCare")
 	public void TS38186_360_View_360_View_Historial_de_Packs_Fecha_Desde_y_Hasta_no_superan_los_30_dias() {
+		Customer.elegirCuenta("aaaaFernando Care");
+
 		Customer.irAGestion("Historial de Packs");
 
 		String actual = driver.findElement(fechaHasta).getAttribute("value");
@@ -158,6 +175,8 @@ public class CustomerCare360Joaquin extends TestBase {
 	
 	@Test(groups="CustomerCare")
 	public void TS38187_360_View_360_View_Historial_de_Packs_Detalle_Aperturar_registro_Detalle() {
+		Customer.elegirCuenta("aaaaFernando Care");
+
 		Customer.irAGestion("Historial de Packs");
 
 		driver.findElement(btn_VerDetalles).click();
@@ -169,6 +188,8 @@ public class CustomerCare360Joaquin extends TestBase {
 	
 	@Test(groups="CustomerCare")
 	public void TS38188_360_View_360_View_Historial_de_Packs_Detalle_Ordenamiento_columna_cierra_registros() {
+		Customer.elegirCuenta("aaaaFernando Care");
+
 		Customer.irAGestion("Historial de Packs");
 
 		driver.findElement(btn_VerDetalles).click();
@@ -190,6 +211,8 @@ public class CustomerCare360Joaquin extends TestBase {
 	
 	@Test(groups="CustomerCare")
 	public void TS38189_360_View_Historial_de_Recargas_Pre_pago_Visualización_de_registros_y_criterios_de_ordenamiento_Ordenamiento_columna() {
+		Customer.elegirCuenta("aaaaFernando Care");
+
 		Customer.irAHistoriales();
 		Customer.irAHistorialDeRecargas();
 
@@ -211,6 +234,8 @@ public class CustomerCare360Joaquin extends TestBase {
 	
 	@Test(groups="CustomerCare")
 	public void TS38205_Automatic_Debit_Subscriptions_Sesión_guiada_Débito_Automático_Inicial_Paso_2_Adhesión_Cuenta_NO_adherida_a_Aut_Deb_Que_se_vea() {
+		Customer.elegirCuenta("aaaaFernando Care");
+
 		Customer.irAGestion("Débito automático");
 		
 		dynamicWait().until(ExpectedConditions.presenceOfAllElementsLocatedBy(By.className("borderOverlay")));
@@ -221,8 +246,20 @@ public class CustomerCare360Joaquin extends TestBase {
 	}
 	
 	@Test(groups="CustomerCare")
+	public void TS38233_Automatic_Debit_Subscriptions_Sesión_guiada_Débito_Automático_Inicial_Paso_2_Adhesión_Cuenta_activa_pero_con_servicios_inactivos() {
+		Customer.elegirCuenta("aaaaCuenta Activa Serv Inact");
+		Customer.irAGestion("Débito automático");
+		
+		sleep(1000);
+		dynamicWait().until(ExpectedConditions.presenceOfAllElementsLocatedBy(By.xpath("//h1[contains(.,'Error')]")));
+
+		Assert.assertTrue(driver.findElements(By.xpath("//h1[contains(.,'Error')]")).get(1).isDisplayed());
+		Assert.assertTrue(driver.findElement(By.cssSelector(".slds-form-element.vlc-flex.vlc-slds-text-block")).getText().contains("no tiene cuentas/servicios activos"));
+	}
+	
+	@Test(groups="CustomerCare")
 	public void TS38234_Automatic_Debit_Subscriptions_Sesión_guiada_Débito_Automático_Inicial_Paso_2_Adhesión_Cuenta_Inactiva() {
-		Customer.elegirCuenta("Andres Care");
+		Customer.elegirCuenta("aaaaAndres Care");
 		Customer.irAGestion("Débito automático");
 		
 		sleep(1000);
@@ -231,10 +268,22 @@ public class CustomerCare360Joaquin extends TestBase {
 		Assert.assertTrue(driver.findElements(By.xpath("//h1[contains(.,'Error')]")).get(1).isDisplayed());
 	}
 	
-	//
+	@Test(groups="CustomerCare")
+	public void TS38235_Automatic_Debit_Subscriptions_Sesión_guiada_Débito_Automático_Inicial_Paso_2_Adhesión_Cuenta_sin_servicios () {
+		Customer.elegirCuenta("aaaaCuenta Activa S/Serv");
+		Customer.irAGestion("Débito automático");
+		
+		sleep(2000);
+		dynamicWait().until(ExpectedConditions.presenceOfAllElementsLocatedBy(By.xpath("//h1[contains(.,'Error')]")));
+
+		Assert.assertTrue(driver.findElements(By.xpath("//h1[contains(.,'Error')]")).get(1).isDisplayed());
+		Assert.assertTrue(driver.findElement(By.cssSelector(".slds-form-element.vlc-flex.vlc-slds-text-block")).getText().contains("no tiene cuentas/servicios activos"));
+	}
 	
 	@Test(groups="CustomerCare")
 	public void TS38416_360_View_360_card_servicio_prepago_Header_Visualizar_campos() {
+		Customer.elegirCuenta("aaaaFernando Care");
+
 		WebElement elementoIzq = driver.findElement(tarjetaServicios360).findElement(By.className("header-left"));
 		WebElement elementoDer = driver.findElement(tarjetaServicios360).findElement(By.className("header-right"));
 		
@@ -244,6 +293,8 @@ public class CustomerCare360Joaquin extends TestBase {
 	
 	@Test(groups="CustomerCare")
 	public void TS38417_360_View_360_card_servicio_prepago_Información_de_la_card_Visualizar_campos() {
+		Customer.elegirCuenta("aaaaFernando Care");
+
 		List<String> campos = new ArrayList<String>();
 		campos.add("Estado");
 		campos.add("Crédito recarga");
@@ -260,6 +311,8 @@ public class CustomerCare360Joaquin extends TestBase {
 	
 	@Test(groups="CustomerCare")
 	public void TS38418_360_View_360_card_servicio_prepago_Acciones_Detalle_de_consumos() {
+		Customer.elegirCuenta("aaaaFernando Care");
+
 		WebElement accion = Customer.obtenerAccionLineaPrepago("Detalle de Consumos");
 		
 		Assert.assertTrue(accion.getText().toLowerCase().contains("detalle de consumos"));
@@ -267,6 +320,8 @@ public class CustomerCare360Joaquin extends TestBase {
 	
 	@Test(groups="CustomerCare")
 	public void TS38419_360_View_360_card_servicio_prepago_Acciones_Historial_de_Recargas() {
+		Customer.elegirCuenta("aaaaFernando Care");
+
 		Customer.irAHistoriales();
 		WebElement tarjeta = Customer.obtenerTarjetaHistorial("Historial de Recargas");
 		
@@ -275,6 +330,8 @@ public class CustomerCare360Joaquin extends TestBase {
 	
 	@Test(groups="CustomerCare")
 	public void TS38421_360_View_360_card_servicio_prepago_Mis_Servicios() {
+		Customer.elegirCuenta("aaaaFernando Care");
+
 		WebElement accion = Customer.obtenerAccionLineaPrepago("Mis Servicios");
 		
 		Assert.assertTrue(accion.getText().toLowerCase().contains("mis servicios"));
@@ -282,6 +339,8 @@ public class CustomerCare360Joaquin extends TestBase {
 	
 	@Test(groups="CustomerCare")
 	public void TS38471_360_View_360_card_servicio_prepago_Persistencia_Visualizar_Nombre_del_producto() {
+		Customer.elegirCuenta("aaaaFernando Care");
+
 		WebElement elementoIzq = driver.findElement(tarjetaServicios360).findElement(By.className("header-left"));
 		
 		Assert.assertTrue(elementoIzq.findElement(By.xpath("//h2[@class='slds-text-heading_medium']")).getText().length() > 0);
@@ -289,12 +348,16 @@ public class CustomerCare360Joaquin extends TestBase {
 	
 	@Test(groups="CustomerCare")
 	public void TS38472_360_View_360_card_servicio_prepago_Persistencia_Visualizar_Fecha_de_activación() {
+		Customer.elegirCuenta("aaaaFernando Care");
+
 		WebElement elementoIzq = driver.findElement(tarjetaServicios360).findElement(By.className("header-left"));
 		Assert.assertTrue(elementoIzq.findElement(By.className("slds-text-body_regular")).getText().length() > 0); 
 	}
 	
 	@Test(groups="CustomerCare")
 	public void TS38473_360_View_360_card_servicio_prepago_Persistencia_Visualizar_Estado() {
+		Customer.elegirCuenta("aaaaFernando Care");
+
 		List<WebElement> elementos = driver.findElement(tarjetaServicios360).findElements(By.cssSelector(".slds-text-body_regular.detail-label"));
 		
 		for (WebElement e : elementos) {
@@ -308,6 +371,8 @@ public class CustomerCare360Joaquin extends TestBase {
 	
 	@Test(groups="CustomerCare")
 	public void TS38474_360_View_360_card_servicio_prepago_Persistencia_Visualizar_Numero_de_línea() {
+		Customer.elegirCuenta("aaaaFernando Care");
+
 		WebElement elementoDer = driver.findElement(tarjetaServicios360).findElement(By.className("header-right"));
 		
 		Assert.assertTrue(elementoDer.getText().length() > 0);
@@ -315,6 +380,8 @@ public class CustomerCare360Joaquin extends TestBase {
 	
 	@Test(groups="CustomerCare")
 	public void TS38475_360_View_360_card_servicio_prepago_Persistencia_Visualizar_Crédito_de_Recarga() {
+		Customer.elegirCuenta("aaaaFernando Care");
+
 		List<WebElement> elementos = driver.findElement(tarjetaServicios360).findElements(By.cssSelector(".slds-text-body_regular.detail-label"));
 		
 		for (WebElement e : elementos) {
@@ -328,6 +395,8 @@ public class CustomerCare360Joaquin extends TestBase {
 	
 	@Test(groups="CustomerCare")
 	public void TS38476_360_View_360_card_servicio_prepago_Persistencia_Visualizar_Internet_Disponible() {
+		Customer.elegirCuenta("aaaaFernando Care");
+
 		List<WebElement> elementos = driver.findElement(tarjetaServicios360).findElements(By.cssSelector(".slds-text-body_regular.detail-label"));
 		
 		for (WebElement e : elementos) {
@@ -341,6 +410,8 @@ public class CustomerCare360Joaquin extends TestBase {
 	
 	@Test(groups="CustomerCare")
 	public void TS38477_360_View_360_card_servicio_prepago_Persistencia_Visualizar_Acciones_Detalle_de_consumos() {
+		Customer.elegirCuenta("aaaaFernando Care");
+
 		WebElement accion = Customer.obtenerAccionLineaPrepago("Detalle de Consumos");
 		
 		Assert.assertTrue(accion.getText().toLowerCase().contains("detalle de consumos"));
@@ -348,6 +419,8 @@ public class CustomerCare360Joaquin extends TestBase {
 	
 	@Test(groups="CustomerCare")
 	public void TS38479_360_View_360_card_servicio_prepago_Persistencia_Visualizar_Acciones_Ahorrá() {
+		Customer.elegirCuenta("aaaaFernando Care");
+
 		WebElement accion = Customer.obtenerAccionLineaPrepago("Ahorrá");
 		
 		Assert.assertTrue(accion.getText().toLowerCase().contains("ahorrá"));
@@ -355,6 +428,8 @@ public class CustomerCare360Joaquin extends TestBase {
 	
 	@Test(groups="CustomerCare")
 	public void TS38480_360_View_360_card_servicio_prepago_Persistencia_Visualizar_Acciones_Mis_Servicios() {
+		Customer.elegirCuenta("aaaaFernando Care");
+
 		WebElement accion = Customer.obtenerAccionLineaPrepago("Mis servicios");
 		
 		Assert.assertTrue(accion.getText().toLowerCase().contains("mis servicios"));
@@ -362,6 +437,8 @@ public class CustomerCare360Joaquin extends TestBase {
 	
 	@Test(groups= {"CustomerCare","Problems with Refills"})
 	public void TS38537_Problems_with_Refills_Problemas_con_Recargas_Medio_de_recarga_Selección_simple() {
+		Customer.elegirCuenta("aaaaFernando Care");
+
 		Customer.irAProblemasConRecargas();
 		
 		List<WebElement> elementos = driver.findElements(By.cssSelector(".slds-radio.ng-scope"));
@@ -380,6 +457,8 @@ public class CustomerCare360Joaquin extends TestBase {
 	
 	@Test(groups= {"CustomerCare","Problems with Refills"})
 	public void TS38538_Problems_with_Refills_Problemas_con_Recargas_Medio_de_recarga_Selección_Múltiple() {
+		Customer.elegirCuenta("aaaaFernando Care");
+
 		Customer.irAProblemasConRecargas();
 		
 		List<WebElement> elementos = driver.findElements(By.cssSelector(".slds-radio.ng-scope"));
@@ -403,6 +482,8 @@ public class CustomerCare360Joaquin extends TestBase {
 	
 	@Test(groups= {"CustomerCare","Problems with Refills"})
 	public void TS38541_Problems_with_Refills_Problemas_con_Recargas_Medio_de_recarga_Seleccionar_Tarjeta_Pre_Paga_PIN_Visible_Lote_activo() {
+		Customer.elegirCuenta("aaaaFernando Care");
+
 		Customer.irAProblemasConRecargas();
 		
 		List<WebElement> elementos = driver.findElements(By.cssSelector(".slds-radio.ng-scope"));
@@ -431,6 +512,8 @@ public class CustomerCare360Joaquin extends TestBase {
 	
 	@Test(groups= {"CustomerCare","Problems with Refills"})
 	public void TS38549_Problems_with_Refills_Problemas_con_Recargas_Medio_de_recarga_Lote_Ingresa_15_dígitos() {
+		Customer.elegirCuenta("aaaaFernando Care");
+
 		Customer.irAProblemasConRecargas();
 		
 		List<WebElement> elementos = driver.findElements(By.cssSelector(".slds-radio.ng-scope"));
@@ -449,6 +532,8 @@ public class CustomerCare360Joaquin extends TestBase {
 	
 	@Test(groups= {"CustomerCare","Problems with Refills"})
 	public void TS38550_Problems_with_Refills_Problemas_con_Recargas_Medio_de_recarga_Lote_Ingresa_16_dígitos() {
+		Customer.elegirCuenta("aaaaFernando Care");
+
 		Customer.irAProblemasConRecargas();
 		
 		List<WebElement> elementos = driver.findElements(By.cssSelector(".slds-radio.ng-scope"));
@@ -468,6 +553,8 @@ public class CustomerCare360Joaquin extends TestBase {
 	
 	@Test(groups= {"CustomerCare","Problems with Refills"})
 	public void TS38551_Problems_with_Refills_Problemas_con_Recargas_Medio_de_recarga_Lote_Ingresa_17_dígitos() {
+		Customer.elegirCuenta("aaaaFernando Care");
+
 		Customer.irAProblemasConRecargas();
 		
 		List<WebElement> elementos = driver.findElements(By.cssSelector(".slds-radio.ng-scope"));
@@ -486,6 +573,8 @@ public class CustomerCare360Joaquin extends TestBase {
 	
 	@Test(groups= {"CustomerCare","Problems with Refills"})
 	public void TS38552_Problems_with_Refills_Problemas_con_Recargas_Medio_de_recarga_Lote_Ingresa_letras() {
+		Customer.elegirCuenta("aaaaFernando Care");
+
 		Customer.irAProblemasConRecargas();
 
 		List<WebElement> elementos = driver.findElements(By.cssSelector(".slds-radio.ng-scope"));
@@ -504,6 +593,8 @@ public class CustomerCare360Joaquin extends TestBase {
 	
 	@Test(groups="CustomerCare")
 	public void TS38628_360_View_360_View_Card_Pre_pago_Acción_sobre_Historiales_Visualizar_Ultimas_5_recargas_desde_el_dia_de_la_fecha() {
+		Customer.elegirCuenta("aaaaFernando Care");
+
 		Customer.irAHistoriales();
 		WebElement tarjeta = Customer.obtenerTarjetaHistorial("Historial de Recargas");
 		
@@ -518,6 +609,8 @@ public class CustomerCare360Joaquin extends TestBase {
 	
 	@Test(groups="CustomerCare")
 	public void TS38629_360_View_360_View_Card_Pre_pago_Acción_sobre_Historiales_Visualizar_Ultimas_5_recargas_SOS_desde_el_dia_de_la_fecha() {
+		Customer.elegirCuenta("aaaaFernando Care");
+
 		Customer.irAHistoriales();
 		WebElement tarjeta = Customer.obtenerTarjetaHistorial("Historial de Recargas S.O.S");
 		
@@ -532,6 +625,8 @@ public class CustomerCare360Joaquin extends TestBase {
 	
 	@Test(groups="CustomerCare")
 	public void TS38630_360_View_360_View_Card_Pre_pago_Acción_sobre_Historiales_Visualizar_Ultimas_5_compras_de_Packs_desde_el_dia_de_la_fecha() {
+		Customer.elegirCuenta("aaaaFernando Care");
+
 		Customer.irAHistoriales();
 		WebElement tarjeta = Customer.obtenerTarjetaHistorial("Historial de Packs");
 		
@@ -546,6 +641,8 @@ public class CustomerCare360Joaquin extends TestBase {
 	
 	@Test(groups="CustomerCare")
 	public void TS38631_360_View_360_View_Card_Pre_pago_Acción_sobre_Historiales_Visualizar_Ultimos_5_ajustes_desde_el_dia_de_la_fecha() {
+		Customer.elegirCuenta("aaaaFernando Care");
+
 		Customer.irAHistoriales();
 		WebElement tarjeta = Customer.obtenerTarjetaHistorial("Historial de Ajustes");
 		
@@ -560,6 +657,8 @@ public class CustomerCare360Joaquin extends TestBase {
 	
 	@Test(groups="CustomerCare")
 	public void TS38637_360_View_360_View_Card_Pre_pago_Acción_sobre_Historiales_Ordenar_ajustes_por_Monto() {
+		Customer.elegirCuenta("aaaaFernando Care");
+
 		Customer.irAHistoriales();
 		WebElement tarjeta = Customer.obtenerTarjetaHistorial("Historial de Ajustes");
 		

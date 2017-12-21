@@ -331,7 +331,7 @@ private WebDriver driver;
 		((JavascriptExecutor)driver).executeScript("window.scrollTo(0,"+sTD.getLocation().y+")");
 		sleep(500);
 		try {
-			tipoDevolucion.selectByIndex(5);
+			tipoDevolucion.selectByIndex(1);
 			assertTrue(true);
 		}catch(Exception e) {System.out.println("No se puede seleccionar tipo de devolucion");assertTrue(false);}
 	}
@@ -548,5 +548,7 @@ private WebDriver driver;
 		sleep(3000);
 		assertTrue(driver.findElement(By.id("DocumentNumber")).isDisplayed());//Verifica que el campo Genero de la pantalla siguiente este disponible
 	}
-		
+	
+	
+	
 }

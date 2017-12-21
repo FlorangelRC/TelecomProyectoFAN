@@ -325,12 +325,14 @@ public void comentarycompartir(String comentario){
 	TB.waitFor(driver, By.cssSelector(".publisherTextAreaInner"));
 	WebElement element = driver.findElement(By.cssSelector(".publisherTextAreaInner"));
 	((JavascriptExecutor)driver).executeScript("window.scrollTo(0,"+element.getLocation().y+")");
+	TB.waitFor(driver, By.id("publishereditablearea"));
 	driver.findElement(By.id("publishereditablearea")).click();
-	try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+	TB.waitFor(driver, By.tagName("iframe"));
 	WebElement iframe =driver.findElement(By.tagName("iframe"));
 	driver.switchTo().frame(iframe);
 	WebElement description=driver.findElement(By.xpath("//body[@class='chatterPublisherRTE cke_editable cke_editable_themed cke_contents_ltr cke_show_borders']"));
 	try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+	description.click();
 	description.sendKeys(comentario);
 	driver.switchTo().defaultContent();
 	try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
