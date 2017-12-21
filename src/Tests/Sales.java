@@ -57,12 +57,13 @@ public class Sales extends TestBase {
 	String[] genero = {"masculino","femenino"};
 	String[] DocValue = {"52698547","3569874563","365","ssss"};
 	
-	//@AfterClass
+	@AfterClass(groups="Sales")
 	public void tearDown() {
 		driver.close();
+		driver.quit();
 	}
 	
-//	@AfterMethod(groups="Sales")
+	@AfterMethod(groups="Sales")
 	public void deslogin(){
 		try {Thread.sleep(10000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 		driver.get("https://crm--sit.cs14.my.salesforce.com/home/home.jsp?tsid=02u41000000QWha/");
@@ -114,7 +115,7 @@ public class Sales extends TestBase {
 
 	}
 
-	@Test(groups="les")
+	@Test(groups={"sales", "AltaDeContacto"})
 	public void TS6905_createdNewValidContact(){
 		SalesBase SB = new SalesBase(driver);
 		SB.BuscarAvanzada(nombre, apellido, "", "", "");
@@ -129,7 +130,7 @@ public class Sales extends TestBase {
 		
 	}
 	
-	@Test(groups="Fase1")
+	@Test(groups={"sales", "AltaDeContacto"})
 	public void TS6965_Verificar_que_el_campo_Numero_de_documento_no_tenga_menos_de_7_digitos()	{
 		boolean a = false;
 		SalesBase SB = new SalesBase(driver);
@@ -150,8 +151,8 @@ public class Sales extends TestBase {
 
 	Assert.assertTrue(a);
 	}
-	
-	@Test(groups="Fase1")
+	/*
+	@Test(groups={"sales", "AltaDeContacto"})
 	public void TS6918_Seleccionar_Femenino_en_campo_Genero(){
 		SalesBase SB = new SalesBase(driver);
 		SB.BuscarAvanzada(nombre, apellido, "", "", "");
@@ -167,7 +168,7 @@ public class Sales extends TestBase {
 		Assert.assertTrue(genero.get(0).isSelected());
 	}
 	
-	@Test(groups="Fase1")
+	@Test(groups={"sales", "AltaDeContacto"})
 	public void TS6919_Seleccionar_Masculino_en_campo_Genero(){
 		boolean a= false;
 		SalesBase SB = new SalesBase(driver);
@@ -184,7 +185,7 @@ public class Sales extends TestBase {
 		Assert.assertTrue(genero.get(1).isSelected());
 	}
 	
-	@Test(groups="Fase1")
+	@Test(groups={"sales", "AltaDeContacto"})
 	public void TS6964_Verificar_que_el_campo_Numero_de_documento_no_tenga_mas_de_8_digitos(){
 		boolean a = false;
 		SalesBase SB = new SalesBase(driver);
@@ -207,7 +208,7 @@ public class Sales extends TestBase {
 	Assert.assertTrue(a);
 	}
 	
-	@Test(groups="Fase1")
+	@Test(groups={"sales", "AltaDeContacto"})
 	public void TS6967_Verificar_que_el_campo_tipo_de_documento_sea_obligatorio(){
 		boolean a= false;
 		SalesBase SB = new SalesBase(driver);
@@ -247,7 +248,7 @@ public class Sales extends TestBase {
 		
 			}
 	
-	@Test(groups="Fase1")
+	@Test(groups={"sales", "AltaDeContacto"})
 	public void TS6966_Verificar_que_el_campo_Numero_de_Documento_sea_obligatorio(){
 		boolean a= false;
 		SalesBase SB = new SalesBase(driver);
@@ -269,7 +270,7 @@ public class Sales extends TestBase {
 	Assert.assertTrue(a);
 	}
 	
-	@Test(groups="Fase1")
+	@Test(groups={"sales", "AltaDeContacto"})
 	public void TS6914_Ingresar_mas_de_9_caracteres_en_el_campo_Pasaporte(){
 		boolean a= false;
 		SalesBase SB = new SalesBase(driver);
@@ -289,7 +290,7 @@ public class Sales extends TestBase {
 	
 	}
 	
-	@Test(groups="Fase1")
+	@Test(groups={"sales", "AltaDeContacto"})
 	public void TS6915_Ingresar_menos_de_9_caracteres_en_el_pasaporte(){
 		boolean a= false;
 		SalesBase SB = new SalesBase(driver);
@@ -308,7 +309,7 @@ public class Sales extends TestBase {
 		Assert.assertTrue(a);
 	}
 	
-	@Test(groups="Fase1")
+	@Test(groups={"sales", "AltaDeContacto"})
 	public void TS6916_Ingresar_pasaporte_en_el_campo_Numero_de_Documento(){
 		String PASA = "123456789";
 		SalesBase SB = new SalesBase(driver);
@@ -325,7 +326,7 @@ public class Sales extends TestBase {
 
 	}
 	
-	@Test(groups="Fase1")
+	@Test(groups={"sales", "AltaDeContacto"})
 	public void TS6912_Ingresar_DNI_en_el_campo_Numero_de_Documento(){
 		String PASA = "1234567";
 		SalesBase SB = new SalesBase(driver);
@@ -341,7 +342,7 @@ public class Sales extends TestBase {
 		Assert.assertTrue(PASA.equals(PASA2));
 	}
 	
-	//@Test(groups="Fase2")
+	//@Test(groups={"sales", "AltaDeContacto"})
 	public void TS6911_CUITNumber(){
 		BasePage base = new BasePage();
 		SalesBase SB = new SalesBase(driver);
@@ -354,7 +355,7 @@ public class Sales extends TestBase {
 		driver.findElement(By.id("CuitDocument")).sendKeys("22-35689987-4");
 	}
 	
-	@Test(groups="Fase1")
+	@Test(groups={"sales", "AltaDeContacto"})
 	public void TS6943_Verificar_el_ingreso_de_caracteres_alfanumericos_en_Pasaporte(){
 		String PASA = "123ASD1";
 		SalesBase SB = new SalesBase(driver);
@@ -372,7 +373,7 @@ public class Sales extends TestBase {
 	}
 	
 	
-	@Test(groups="Fase1")
+	@Test(groups={"sales", "AltaDeContacto"})
 	public void TS6945_Verificar_error_al_ingresar_CUIT_con_cero_al_inicio(){
 		boolean a= false;
 		SalesBase SB = new SalesBase(driver);
@@ -391,7 +392,7 @@ public class Sales extends TestBase {
 		Assert.assertTrue(a);
 	}
 	
-	@Test(groups="Fase1")
+	@Test(groups={"sales", "AltaDeContacto"})
 	public void TS6944_Verificar_error_al_ingresar_caracteres_alfanumericos_en_el_CUIT(){
 		String PASA =  "AAAA";
 		SalesBase SB = new SalesBase(driver);
@@ -408,7 +409,7 @@ public class Sales extends TestBase {
 		Assert.assertFalse(PASA.equals(PASA2));
 	}
 	
-	@Test(groups="Fase1")
+	@Test(groups={"sales", "AltaDeContacto"})
 	public void TS6935_Verificar_campo_CUIT_obligatorio(){
 		boolean a= false;
 		SalesBase SB = new SalesBase(driver);
@@ -435,7 +436,7 @@ public class Sales extends TestBase {
 	
 	
 	
-	@Test(groups="Fase1")
+	@Test(groups={"sales", "AltaDeContacto"})
 	public void TS6901_Completar_los_campos_luego_de_una_busqueda_de_contacto_inexistente()	{
 		SalesBase SB = new SalesBase(driver);
 		SB.BuscarAvanzada(nombre, apellido, "", "", "");
@@ -453,7 +454,7 @@ public class Sales extends TestBase {
 		
 	}
 	
-	@Test(groups="Fase1")
+	@Test(groups={"sales", "AltaDeContacto"})
 	public void TS6920_Seleccionar_opcion_de_validacion_de_identidad(){
 		SalesBase SB = new SalesBase(driver);
 		SB.BuscarAvanzada(nombre, apellido, "", "", "");
@@ -471,7 +472,7 @@ public class Sales extends TestBase {
 		driver.findElement(By.id("Contact_nextBtn")).click();
 		
 	}
-	@Test(groups="Fase1")
+	@Test(groups={"sales", "AltaDeContacto"})
 	public void TS6909_Ingresar_caracteres_numericos_en_campo_Apellido(){
 		SalesBase SB = new SalesBase(driver);
 		SB.BuscarAvanzada(nombre, apellido, "", "", "");
@@ -487,7 +488,7 @@ public class Sales extends TestBase {
 		driver.findElement(By.cssSelector(".slds-form-element.vlc-flex.ng-scope.ng-invalid.ng-valid-minlength.ng-valid-maxlength.ng-dirty.ng-valid-parse.ng-invalid-pattern.ng-valid-required"));
 	}
 	
-	@Test(groups="Fase1")
+	@Test(groups={"sales", "AltaDeContacto"})
 	public void TS6910_Ingresar_caracteres_numericos_en_campo_Nombre()
 	{	
 		SalesBase SB = new SalesBase(driver);
@@ -504,7 +505,7 @@ public class Sales extends TestBase {
 		Assert.assertTrue(driver.findElement(By.cssSelector(".slds-form-element.vlc-flex.ng-scope.ng-invalid.ng-valid-minlength.ng-valid-maxlength.ng-dirty.ng-valid-parse.ng-invalid-pattern.ng-valid-required")).isDisplayed());	
 	}	
 	
-	@Test(groups="Fase1")
+	@Test(groups={"sales", "AltaDeContacto"})
 	public void TS6949_Verificar_Fecha_de_Nacimiento_con_ingreso_manual() {
 		SalesBase SB = new SalesBase(driver);
 		SB.BuscarAvanzada(nombre, apellido, "", "", "");
@@ -520,7 +521,7 @@ public class Sales extends TestBase {
 		Assert.assertTrue(	driver.findElement(By.cssSelector(".slds-form-element.vlc-flex.ng-scope.ng-dirty.ng-valid-parse.ng-valid-required.ng-valid.ng-valid-valid")).isDisplayed());
 	}
 	
-	@Test(groups="Fase1")
+	@Test(groups={"sales", "AltaDeContacto"})
 	public void TS6950_Fecha_de_Nacimiento_con_ingreso_manual_Anio_con_letras_o_mas_de_5_digitos(){
 		SalesBase SB = new SalesBase(driver);
 		SB.BuscarAvanzada(nombre, apellido, "", "", "");
@@ -545,7 +546,7 @@ public class Sales extends TestBase {
 	
 
 	
-	@Test(groups="Fase1")
+	@Test(groups={"sales", "AltaDeContacto"})
 	public void TS6951_Verificar_Fecha_de_Nacimiento_con_ingreso_manual_Dia_Fuera_de_rango(){
 		SalesBase SB = new SalesBase(driver);
 		SB.BuscarAvanzada(nombre, apellido, "", "", "");
@@ -569,7 +570,7 @@ public class Sales extends TestBase {
 	
 
 	
-	@Test(groups="Fase1")
+	@Test(groups={"sales", "AltaDeContacto"})
 	public void TS6952_Verificar_Fecha_de_Nacimiento_con_ingreso_manual_Mes_Fuera_de_rango() 
 	{
 		SalesBase SB = new SalesBase(driver);
@@ -592,7 +593,7 @@ public class Sales extends TestBase {
 
 	}
 	
-	@Test(groups="Fase1")
+	//@Test(groups={"sales", "AltaDeContacto"})
 	public void TS6974_Verificar_valor_del_check_de_email_por_default() 
 	{	
 		SalesBase SB = new SalesBase(driver);
@@ -608,7 +609,7 @@ public class Sales extends TestBase {
 		Assert.assertTrue(!driver.findElement(By.cssSelector(".slds-form-element.vlc-flex.ng-pristine.ng-scope.ng-invalid.ng-invalid-required")).isSelected());
 	}
 	
-	@Test(groups="Fase1")
+	//@Test(groups={"sales", "AltaDeContacto"})
 	public void TS6941_Verificar_check_de_no_tener_email() 
 	{
 		SalesBase SB = new SalesBase(driver);
@@ -626,7 +627,7 @@ public class Sales extends TestBase {
 	}
 	
 
-	@Test(groups="Fase1")
+	@Test(groups={"sales", "AltaDeContacto"})
 	public void TS6934_Verificar_campo_Apellido_obligatorio(){
 		boolean a= false;
 		SalesBase SB = new SalesBase(driver);
@@ -648,7 +649,7 @@ public class Sales extends TestBase {
 	Assert.assertTrue(a);
 	}
 	
-	@Test(groups="Fase1")
+	@Test(groups={"sales", "AltaDeContacto"})
 	public void TS6936_Verificar_campo_Fecha_de_Nacimiento_obligatorio(){
 		boolean a= false;
 		SalesBase SB = new SalesBase(driver);
@@ -670,7 +671,7 @@ public class Sales extends TestBase {
 	Assert.assertTrue(a);
 	}
 	
-	@Test(groups="Fase1")
+	@Test(groups={"sales", "AltaDeContacto"})
 	public void TS6938_Verificar_campo_Nombre_obligatorio(){
 		boolean a= false;
 		SalesBase SB = new SalesBase(driver);
@@ -691,7 +692,7 @@ public class Sales extends TestBase {
 			a=true;}}
 	Assert.assertTrue(a);	}
 	
-	@Test(groups="Fase1")
+	@Test(groups={"sales", "AltaDeContacto"})
 	public void TS6931_calendarBirthDate(){
 		SalesBase SB = new SalesBase(driver);
 		SB.BuscarAvanzada(nombre, apellido, "", "", "");
@@ -707,7 +708,7 @@ public class Sales extends TestBase {
 		driver.findElement(By.cssSelector(".datepicker.-bottom-left-.-from-bottom-.active"));
 	}
 
-	@Test(groups="Fase1")
+	@Test(groups={"sales", "AltaDeContacto"})
 	public void TS6957_Verificar_mascara_del_campo_Fecha_de_Nacimiento() {
 
 		SalesBase SB = new SalesBase(driver);
@@ -764,7 +765,7 @@ public class Sales extends TestBase {
 		
 		
 	}
-	
+	*/
 	@Test(groups="Sales")
 	
 	public void TS14277_Ventas_NumeroOrden_Verificar_Orden_de_Venta_Abierta_Medio_de_Pago(){
@@ -772,7 +773,7 @@ public class Sales extends TestBase {
 		Assert.assertTrue(false);
 		
 	}
-	
+	/*
 	@Test(groups="Sales")
 	public void TS14275_Ventas_NumeroOrden_Verificar_Orden_de_Venta_Abierta_Modo_de_Entrega(){
 		Assert.assertTrue(false);
@@ -1092,6 +1093,6 @@ public class Sales extends TestBase {
 	public void TS39658_Verificar_que_se_bonifique_el_costo_de_SIM_en_PlanPrepago() {
 		SalesBase SB = new SalesBase(driver);
 		SB.agregarplan("Plan con tarjeta");
-	}
+	}*/
 
 }
