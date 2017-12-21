@@ -30,16 +30,16 @@ import Pages.setConexion;
 
 public class CustomerCareFase1 extends TestBase {
 
-
 	private WebDriver driver;
 
-	@AfterClass(groups= "CustomerCare")
+	
+	//@AfterClass(groups= "CustomerCare")
 	public void tearDown() {
 		driver.quit();
 		try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 	}
 
-	@AfterMethod(groups= "CustomerCare")
+	//@AfterMethod(groups= "CustomerCare")
 	public void alert() {
 		CustomerCare page = new CustomerCare(driver);
 		page.cerrarultimapestaña();
@@ -93,7 +93,14 @@ public class CustomerCareFase1 extends TestBase {
 	@Test(groups= "CustomerCare")
 	public void TS7058_Visualizar_Panel_Servicios_Activos() {
 		try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
-		driver.findElement(By.xpath("//*[text() ='Servicios']")).click();
+		List <WebElement> element = driver.findElements(By.className("x-tab-right"));
+		boolean a = false;
+		for (WebElement x : element) {
+			if (x.getText().contains("Servicios")) {
+				a = true;
+			}
+		}
+		Assert.assertTrue(a);
 	}
 
 	
@@ -104,14 +111,13 @@ public class CustomerCareFase1 extends TestBase {
 	}
 
 	
-	// @Test(groups= "CustomerCare")
+	@Test(groups= "CustomerCare")
 	public void TS7060_Visualizar_Panel_Alertas() {
-		try {Thread.sleep(10000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
-		List<WebElement> frame1 = driver.findElements(By.tagName("iframe"));
-		driver.findElement(By.xpath("//*[text() ='Servicios']")).click();
-		driver.switchTo().frame(frame1.get(2));
-		driver.findElement(By.className("ta-alertMessage-content"));
-		driver.switchTo().defaultContent();
+		try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		BasePage cambioFrameByID = new BasePage();
+		driver.switchTo().frame(cambioFrameByID.getFrameForElement(driver, By.className("ta-alertMessage-content")));
+		WebElement element = driver.findElement(By.className("ta-alertMessage-content"));
+		Assert.assertTrue(element.getText().contains("Se aproxima la fecha de pago"));
 	}
 
 	
@@ -134,7 +140,7 @@ public class CustomerCareFase1 extends TestBase {
 		page.openleftpanel();
 		BasePage cambioFrameByID = new BasePage();
 		driver.switchTo().frame(cambioFrameByID.getFrameForElement(driver, By.className("account-select-container")));
-		driver.findElement(By.className("account-select-container")).click();
+		Assert.assertTrue(driver.findElement(By.className("account-select-container")).isDisplayed());
 		driver.switchTo().defaultContent();
 	}
 
@@ -161,10 +167,17 @@ public class CustomerCareFase1 extends TestBase {
 	
 	@Test(groups= "CustomerCare")
 	public void TS7062_Visualizar_Panel_Gestiones_abandonadas() {
-		CustomerCare page = new CustomerCare(driver);
-		page.openrightpanel();
-		page.GestionAbandonadapanel();
-		driver.switchTo().defaultContent();
+		try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		BasePage cambioFrameByID = new BasePage();
+		driver.switchTo().frame(cambioFrameByID.getFrameForElement(driver, By.cssSelector(".via-slds-story-cards--header.spacer")));
+		List <WebElement> element = driver.findElements(By.cssSelector(".via-slds-story-cards--header.spacer"));
+		boolean a = false;
+		for (WebElement x : element) {
+			if (x.getText().contains("Gestiones Abandonadas")) {
+				a = true;
+			}
+		}
+		Assert.assertTrue(a);
 	}
 
 	
@@ -175,7 +188,10 @@ public class CustomerCareFase1 extends TestBase {
 		driver.findElement(By.cssSelector(".slds-p-right--x-small.spacer")).click();
 		List <WebElement> element = driver.findElements(By.cssSelector(".slds-grid.slds-p-around--small.slds-wrap.via-slds-story-cards--header.slds-theme--shade.profile-tags-header"));
 		element.get(1).click();
-		driver.findElement(By.cssSelector(".slds-grid.slds-p-around--small.slds-wrap.via-slds-story-cards--header.slds-theme--shade.story-header.customerStory-header")).click();
+		List <WebElement> ua = driver.findElements(By.cssSelector(".slds-p-right--x-small.via-slds-story-cards--header-title"));
+		if (ua.get(1).getText().contains("Últimas Gestiones")) {
+			ua.get(1).click();
+		}
 		driver.switchTo().frame(cambioFrameByID.getFrameForElement(driver,By.className("actions-content")));
 		List <WebElement> x = driver.findElements(By.cssSelector(".via-slds-story-cards--header.spacer"));
 		x.get(0).click();
@@ -203,11 +219,14 @@ public class CustomerCareFase1 extends TestBase {
 		BasePage cambioFrameByID = new BasePage();
 		driver.switchTo().frame(cambioFrameByID.getFrameForElement(driver,By.cssSelector(".slds-p-right--x-small.via-slds-story-cards--header-title")));
 		driver.findElement(By.cssSelector(".slds-p-right--x-small.spacer")).click();
+		driver.findElement(By.cssSelector(".slds-p-right--x-small.spacer")).click();
 		List <WebElement> element = driver.findElements(By.cssSelector(".slds-grid.slds-p-around--small.slds-wrap.via-slds-story-cards--header.slds-theme--shade.profile-tags-header"));
 		element.get(1).click();
-		element.get(1).click();
-		driver.findElement(By.cssSelector(".slds-grid.slds-p-around--small.slds-wrap.via-slds-story-cards--header.slds-theme--shade.story-header.customerStory-header")).click();
-		driver.findElement(By.cssSelector(".slds-grid.slds-p-around--small.slds-wrap.via-slds-story-cards--header.slds-theme--shade.story-header.customerStory-header")).click();
+		List <WebElement> ua = driver.findElements(By.cssSelector(".slds-p-right--x-small.via-slds-story-cards--header-title"));
+		if (ua.get(1).getText().contains("Últimas Gestiones")) {
+			ua.get(1).click();
+			ua.get(1).click();
+		}
 		driver.switchTo().frame(cambioFrameByID.getFrameForElement(driver,By.className("actions-content")));
 		List <WebElement> x = driver.findElements(By.cssSelector(".via-slds-story-cards--header.spacer"));
 		x.get(0).click();
@@ -216,6 +235,8 @@ public class CustomerCareFase1 extends TestBase {
 		x.get(1).click();
 		x.get(2).click();
 		x.get(2).click();
+		driver.switchTo().defaultContent();
+		driver.switchTo().frame(cambioFrameByID.getFrameForElement(driver,By.className("actions-content")));
 		Assert.assertTrue(driver.findElement(By.className("actions-content")).isDisplayed());
 		driver.switchTo().defaultContent();
 	}
@@ -370,16 +391,16 @@ public class CustomerCareFase1 extends TestBase {
 	public void TS7144_Customer_Account_Management_Customer_Segmentation_Estado_Activo_Usuario_Externo() {
 		CustomerCare page = new CustomerCare(driver);
 		page.usarpanelcentral("Detalles");
-		page.validarstatus("Active");
+		page.validarStatus("Active");
 	}
-
+	
 	
 	@Test(groups= "CustomerCare")
-	public void TS7144_Customer_Account_Management_Customer_Segmentation_Estado_inactivo_Usuario_Externo() {
-		CustomerCare page = new CustomerCare(driver);
-		page.usarpanelcentral("Detalles");
-		page.validarstatus("Active");
-	}
+    public void TS7148_Customer_Account_Management_Customer_Segmentation_Estado_inactivo_Usuario_Externo() {
+        CustomerCare page = new CustomerCare(driver);
+        page.usarpanelcentral("Detalles");
+        page.validarStatus("Inactive");
+    }
 	
 	
 	@Test(groups = "CustomerCare")
@@ -445,6 +466,8 @@ public class CustomerCareFase1 extends TestBase {
 		for (WebElement x : profileinfo) {
 			Assert.assertTrue(x.getText().toLowerCase().contains("premium"));
 		}
+		page.cerrarultimapestaña();
+		page.elegircuenta("aaaaFernando Care");
 		driver.switchTo().defaultContent();
 	}
 
@@ -462,23 +485,18 @@ public class CustomerCareFase1 extends TestBase {
 	public void TS7106_ValidationNumberEstatus (){
 		BasePage cambioFrameByID=new BasePage();
 	    driver.switchTo().frame(cambioFrameByID.getFrameForElement(driver, By.className("story-field")));
-		List<WebElement> profileinfo = driver.findElements(By.className("story-field"));
-		try {Thread.sleep(10000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
-		List<String> expected = new ArrayList<String>();
-		expected.add("New");
-		expected.add("Closed");
-		for(int i=0; i<profileinfo.size(); i+=2){
-			String b = (profileinfo.get(i).getText());
-			b = b.replaceAll("[0-9]","");
-			b = b.replaceAll("-","");
-			b = b.replaceAll(" ","");
-    	Assert.assertTrue(expected.contains(b));
+		List<WebElement> profileInfo = driver.findElements(By.className("story-field"));
+		boolean a = false;
+		boolean b = false;
+		for (WebElement x : profileInfo) {
+			if (x.getText().toLowerCase().contains("new")) {
+				a = true;
+			}
+			if (x.getText().toLowerCase().contains("closed")) {
+				b = true;
+			}
 		}
-		for(int i=0; i<profileinfo.size(); i+=2){
-			String b = (profileinfo.get(i).getText());
-    		Assert.assertTrue(b.contains("0"));
-		}
-		driver.switchTo().defaultContent();
+		Assert.assertTrue(a && b);
 	}
 	
 	
