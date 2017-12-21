@@ -55,14 +55,14 @@ private WebDriver driver;
 	}
 	
 	
-	//@AfterMethod(groups= "TechnicalCare")
+	@AfterMethod(groups= "TechnicalCare")
 	public void after() {
 		try {Thread.sleep(2000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 		CustomerCare cerrar = new CustomerCare(driver);
 		cerrar.cerrarultimapestaña();
 	}
 	
-	//@AfterClass(groups= "TechnicalCare")
+	@AfterClass(groups= "TechnicalCare")
 	public void tearDown() {
 		try {Thread.sleep(1000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 		CustomerCare cerrar = new CustomerCare(driver);
