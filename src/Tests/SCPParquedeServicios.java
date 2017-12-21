@@ -48,11 +48,10 @@ public class SCPParquedeServicios extends TestBase{
 	@BeforeMethod(groups= "SCP")
 	public void setup(){
 		try {Thread.sleep(4000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		((JavascriptExecutor)driver).executeScript("window.scrollTo(0,"+driver.findElement(By.id("tsidLabel")).getLocation().y+")");
 		String a = driver.findElement(By.id("tsidLabel")).getText();
 		driver.findElement(By.id("tsidLabel")).click();
-		
 		List <WebElement> mdls = driver.findElements(By.cssSelector(".menuButtonMenuLink"));
-
 		if(a.equals("Ventas"))
 		{			try {Thread.sleep(4000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 
@@ -73,9 +72,8 @@ public class SCPParquedeServicios extends TestBase{
 					}break;}
 		}
 	}
-
-
- @AfterMethod(groups= "SCP")
+	
+@AfterMethod(groups= "SCP")
 	public void after(){
 		((JavascriptExecutor)driver).executeScript("window.scrollTo(0,"+driver.findElement(By.id("home_Tab")).getLocation().y+")");
 		driver.findElement(By.id("home_Tab")).click();
@@ -93,7 +91,7 @@ public class SCPParquedeServicios extends TestBase{
 		SCP page = new SCP(driver);
 		page.clickOnTabByName("cuentas");
 		page.clickOnFirstAccRe();
-		page.moveToElementOnAccAndClick("segundoTitulo", "//*[@id='segundoTitulo']/div/ul/li[2]/a");
+		page.moveToElementOnAccAndClick("segundoTitulo", 2);
 		page.nuevoservicio(categoria, servicio, color);
 		Assert.assertTrue(page.validarservicionuevo(categoria, servicio, color));
 		
@@ -106,7 +104,7 @@ public class SCPParquedeServicios extends TestBase{
 		page.clickOnTabByName("cuentas");
 		page.clickOnFirstAccRe();
 		try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
-		page.moveToElementOnAccAndClick("segundoTitulo", "//*[@id='segundoTitulo']/div/ul/li[2]/a");
+		page.moveToElementOnAccAndClick("segundoTitulo", 2);
 		page.nuevoservicioEspecifico(categoria, servicio, color);
 		Assert.assertTrue(page.validarservicioborrado(categoria, servicio, color));
 	}
@@ -119,7 +117,7 @@ public class SCPParquedeServicios extends TestBase{
 		page.clickOnTabByName("cuentas");
 		page.clickOnFirstAccRe();
 		try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
-		page.moveToElementOnAccAndClick("segundoTitulo", "//*[@id='segundoTitulo']/div/ul/li[2]/a");
+		page.moveToElementOnAccAndClick("segundoTitulo",2);
 		page.servicioexportarexcel();
 	}
 		@Test(groups= "SCP")
@@ -128,7 +126,7 @@ public class SCPParquedeServicios extends TestBase{
 			page.clickOnTabByName("cuentas");
 			page.clickOnFirstAccRe();
 			try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
-			page.moveToElementOnAccAndClick("segundoTitulo", "//*[@id='segundoTitulo']/div/ul/li[2]/a");
+			page.moveToElementOnAccAndClick("segundoTitulo",2);
 			page.servicioguardar();
 		}
 		
@@ -138,17 +136,17 @@ public class SCPParquedeServicios extends TestBase{
 			page.clickOnTabByName("cuentas");
 			page.clickOnFirstAccRe();
 			try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
-			page.moveToElementOnAccAndClick("segundoTitulo", "//*[@id='segundoTitulo']/div/ul/li[2]/a");
+			page.moveToElementOnAccAndClick("segundoTitulo",2);
 			page.comentarycompartir("Esto es un comentario");
 			page.validarcomentario("Esto es un comentario");
 	}
 	@Test(groups= "SCP")
-	public void TS112789_Plan_de_Acción_Chatter_contextualizado_Escribir_comentario(){
+	public void TS112789_Plan_de_Acciï¿½n_Chatter_contextualizado_Escribir_comentario(){
 		SCP page = new SCP(driver);
 		page.clickOnTabByName("cuentas");
 		page.clickOnFirstAccRe();
 		try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
-		page.moveToElementOnAccAndClick("cuartoTitulo", "//*[@id='cuartoTitulo']/div/ul/li[2]/a");
+		page.moveToElementOnAccAndClick("cuartoTitulo", 2);
 		page.comentarycompartir("Esto es un comentario");
 		page.validarcomentario("Esto es un comentario");
 	}
@@ -164,12 +162,12 @@ public class SCPParquedeServicios extends TestBase{
 	}
 	
 	@Test(groups= "SCP")
-	public void TS112587_Contexto_ectorial_Chatter_contextualizado_Escribir_comentario(){
+	public void TS112587_Contexto_sectorial_Chatter_contextualizado_Escribir_comentario(){
 		SCP page = new SCP(driver);
 		page.clickOnTabByName("cuentas");
 		page.clickOnFirstAccRe();
 		try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
-		page.moveToElementOnAccAndClick("primerTitulo", "//*[@id='primerTitulo']/div/ul/li[1]/a");
+		page.moveToElementOnAccAndClick("primerTitulo", 1);
 		page.comentarycompartir("Esto es un comentario");
 		page.validarcomentario("Esto es un comentario");
 	}
@@ -180,18 +178,18 @@ public class SCPParquedeServicios extends TestBase{
 		page.clickOnTabByName("cuentas");
 		page.clickOnFirstAccRe();
 		try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
-		page.moveToElementOnAccAndClick("tercerTitulo", "//*[@id='tercerTitulo']/div/ul/li[3]/a");
+		page.moveToElementOnAccAndClick("tercerTitulo", 3);
 		page.comentarycompartir("Esto es un comentario");
 		page.validarcomentario("Esto es un comentario");
 	}
 	
 	@Test(groups= "SCP")
-	public void TS112683_Matriz_de_Criterios_de_Decisión_Chatter_contextualizado_Escribir_comentario(){
+	public void TS112683_Matriz_de_Criterios_de_Decision_Chatter_contextualizado_Escribir_comentario(){
 		SCP page = new SCP(driver);
 		page.clickOnTabByName("cuentas");
 		page.clickOnFirstAccRe();
 		try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
-		page.moveToElementOnAccAndClick("tercerTitulo", "//*[@id='tercerTitulo']/div/ul/li[2]/a");
+		page.moveToElementOnAccAndClick("tercerTitulo", 2);
 		page.comentarycompartir("Esto es un comentario");
 		page.validarcomentario("Esto es un comentario");
 	}
@@ -266,7 +264,7 @@ public class SCPParquedeServicios extends TestBase{
  }
 	
 	@Test(groups = "SCP") 
-    public void TS112684_Matriz_de_Criterios_de_Decisión_Chatter_Contextualizado_Leer_Comentario_Escrito_Con_Otro_Usuario() { 
+    public void TS112684_Matriz_de_Criterios_de_Decisiï¿½n_Chatter_Contextualizado_Leer_Comentario_Escrito_Con_Otro_Usuario() { 
       SCP pcp = new SCP(driver); 
       java.util.Date fecha = new Date();
       System.out.println (fecha);
