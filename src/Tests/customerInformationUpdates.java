@@ -26,7 +26,7 @@ public class customerInformationUpdates extends TestBase {
 	private WebDriver driver;
 
 
-	@AfterClass(groups = {"CustomerCare", "ActualizarDatos"})
+	//@AfterClass(groups = {"CustomerCare", "ActualizarDatos"})
 	public void tearDown2() {
 		driver.close();	
 	}
@@ -44,8 +44,7 @@ public class customerInformationUpdates extends TestBase {
 		this.driver = setConexion.setupEze();
 		try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 		login(driver);
-		try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
-		try {Thread.sleep(4000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		try {Thread.sleep(10000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 	 	String a = driver.findElement(By.id("tsidLabel")).getText();
 	 	driver.findElement(By.id("tsidLabel")).click();
 	 	if(a.equals("Ventas")){
@@ -56,8 +55,9 @@ public class customerInformationUpdates extends TestBase {
 	 		driver.findElement(By.id("tsidLabel")).click();
 	 		driver.findElement(By.xpath("//a[@href=\'/console?tsid=02uc0000000D6Hd\']")).click();	 		
 	 	}
-	 	try {Thread.sleep(20000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+	 	try {Thread.sleep(10000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 		CustomerCare page = new CustomerCare(driver);
+		page.cerrarultimapestaña();
 		page.elegircuenta("aaaaFernando Care");
 		BasePage cambioFrameByID=new BasePage();
 	    driver.switchTo().frame(cambioFrameByID.getFrameForElement(driver, By.className("profile-edit")));
@@ -67,12 +67,11 @@ public class customerInformationUpdates extends TestBase {
 				x.click();
 			}
 		}
-		try {Thread.sleep(10000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 	 } 
 	 
 	 @BeforeMethod(groups = {"CustomerCare", "ActualizarDatos"})
 	 public void setup(){
-		 try {Thread.sleep(15000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		 try {Thread.sleep(10000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 		 BasePage cambioFrameByID=new BasePage();
 		 driver.switchTo().frame(cambioFrameByID.getFrameForElement(driver, By.id("LastName")));
 	 }
@@ -221,7 +220,7 @@ public class customerInformationUpdates extends TestBase {
 	@Test(groups = {"CustomerCare", "ActualizarDatos"})
 	public void TS7098_cancelUpdateInformation() {
 		BasePage cambioFrameByID=new BasePage();
-		driver.switchTo().frame(cambioFrameByID.getFrameForElement(driver, By.id("ClientInformation_nextBtn")));
+		driver.switchTo().frame(cambioFrameByID.getFrameForElement(driver, By.cssSelector(".vlc-slds-button--tertiary.ng-binding.ng-scope")));
 		List <WebElement> cancelar = driver.findElements(By.cssSelector(".vlc-slds-button--tertiary.ng-binding.ng-scope"));
 		for (WebElement x : cancelar) {
 			if (x.getText().toLowerCase().contains("cancelar")) {
@@ -230,13 +229,13 @@ public class customerInformationUpdates extends TestBase {
 		}
 	    driver.switchTo().frame(cambioFrameByID.getFrameForElement(driver, By.id("alert-ok-button")));
 		driver.findElement(By.id("alert-ok-button")).click();
-		try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		/*try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 		driver.switchTo().frame(cambioFrameByID.getFrameForElement(driver, By.className("profile-box")));
 		List <WebElement> actualizar = driver.findElements(By.className("profile-edit"));
 		actualizar.get(0).click();
 		try {Thread.sleep(10000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 		driver.switchTo().frame(cambioFrameByID.getFrameForElement(driver, By.id("ClientInformation_nextBtn")));
-		driver.findElement(By.id("ClientInformation_nextBtn")).click();
+		driver.findElement(By.id("ClientInformation_nextBtn")).click();*/
 	}
 	
 	//@Test(groups = {"CustomerCare", "ActualizarDatos"})	//BUG EN celular
