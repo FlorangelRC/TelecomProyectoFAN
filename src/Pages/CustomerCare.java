@@ -673,24 +673,24 @@ public class CustomerCare extends BasePage {
 	}
 	
 	
-	public void validarstatus(String status) {
+	public void validarStatus(String status) {
 		driver.findElement(By.xpath("//*[@id=\'00Nc0000001pSW6_ileinner\']"));	
-		List <WebElement> asl = driver.findElements(By.xpath("//*[@id=\'00Nc0000001pSW6_ileinner\']"));
+		WebElement asl = driver.findElement(By.xpath("//*[@id=\"ep_Account_View_j_id4\"]/div[2]/div[2]/table/tbody/tr[2]/td[4]"));
 		switch(status) {
 		case "Active":
-			Assert.assertEquals(asl.get(0).getText(), status);	
+			Assert.assertEquals(asl.getText(), status);	
 			break;
 		case "Inactive":
-			Assert.assertEquals(asl.get(0).getText(), status);	
+			Assert.assertEquals(asl.getText(), status);	
 			break;	
 		case "Expired":
-			Assert.assertEquals(asl.get(0).getText(), status);	
+			Assert.assertEquals(asl.getText(), status);	
 			break;
 		case "Pending":
-			Assert.assertEquals(asl.get(0).getText(), status);	
+			Assert.assertEquals(asl.getText(), status);	
 			break;
 		case "Suspended":
-			Assert.assertEquals(asl.get(0).getText(), status);	
+			Assert.assertEquals(asl.getText(), status);	
 			break;
 		}
 	}
