@@ -52,7 +52,7 @@ public class SCPContextoSectorial extends TestBase {
 		driver.findElement(By.id("home_Tab")).click();
 	}
 	
-	//@AfterClass(groups = "SCP")
+	@AfterClass(groups = "SCP")
 	public void teardown() {
 		driver.quit();
 		sleep(5000);
@@ -436,14 +436,6 @@ public class SCPContextoSectorial extends TestBase {
 		Assert.assertTrue(a);
 	}
 	
-	@Test(groups = "SCP") //falta terminar
-	public void TS112752_Opportunity_Snapshot_Enviar() {
-		SCP prueba = new SCP(driver);
-		prueba.moveToElementOnAccAndClick("tercerTitulo", 4);
-		driver.findElement(By.cssSelector(".btn.btnPrimary.publishersharebutton.btn.btn-default.btn-sm")).click();
-		Assert.assertTrue(false);
-	}
-	
 	@Test(groups = "SCP")
 	public void TS112755_Opportunity_Snapshot_Ir_al_Snapshot_Ingreso() {
 		SCP prueba = new SCP(driver);
@@ -470,7 +462,7 @@ public class SCPContextoSectorial extends TestBase {
 		Assert.assertTrue(element.getText().toLowerCase().contains(a));
 	}
 	
-	@Test(groups = "SCP")
+	//@Test(groups = "SCP")
 	public void TS112759_Opportunity_Snapshot_Ver_video() {
 		SCP prueba = new SCP(driver);
 		prueba.moveToElementOnAccAndClick("tercerTitulo", 4);
@@ -509,7 +501,7 @@ public class SCPContextoSectorial extends TestBase {
 		Assert.assertTrue(driver.findElement(By.className("odd")).getText().toLowerCase().contains(a));
 	}
 	
-	@Test(groups = "SCP")
+	//@Test(groups = "SCP")
 	public void TS112769_Organigrama_y_mapa_de_influencia_Ver_Video() {
 		SCP prueba = new SCP(driver);
 		prueba.moveToElementOnAccAndClick("primerTitulo", 3);
@@ -562,7 +554,7 @@ public class SCPContextoSectorial extends TestBase {
 		Assert.assertTrue(a);
 	}
 	
-	@Test(groups = "SCP")
+	//@Test(groups = "SCP")
 	public void TS112805_Share_of_Wallet_Ver_Video() {
 		SCP prueba = new SCP(driver);
 		prueba.moveToElementOnAccAndClick("segundoTitulo", 1);
@@ -604,7 +596,7 @@ public class SCPContextoSectorial extends TestBase {
 		}
 	}
 	
-	@Test(groups = "SCP")
+	//@Test(groups = "SCP")
 	public void TS112748_Negocio_del_Cliente_Ver_Video() {
 		SCP prueba = new SCP(driver);
 		prueba.moveToElementOnAccAndClick("primerTitulo", 2);
@@ -617,7 +609,7 @@ public class SCPContextoSectorial extends TestBase {
 	    driver.switchTo().window(tabs2.get(0));
 	}
 	
-	@Test(groups = "SCP")
+	//@Test(groups = "SCP")
 	public void TS112681_Hitos_Relevantes_Ver_Video() {
 		SCP prueba = new SCP(driver);
 		prueba.moveToElementOnAccAndClick("segundoTitulo", 3);
@@ -802,7 +794,7 @@ public class SCPContextoSectorial extends TestBase {
 		Assert.assertTrue(a);
 	}
 	
-	@Test(groups = "SCP")
+	//@Test(groups = "SCP")
 	public void TS112716_Mosaico_de_Relacionamiento_General_Ver_Video() {
 		SCP prueba = new SCP(driver);
 		prueba.moveToElementOnAccAndClick("segundoTitulo", 4);
@@ -811,6 +803,7 @@ public class SCPContextoSectorial extends TestBase {
 	    ArrayList<String> tabs2 = new ArrayList<String> (driver.getWindowHandles());
 	    driver.switchTo().window(tabs2.get(1));
 	    BasePage cambioFrameByID = new BasePage();
+	    try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 		driver.switchTo().frame(cambioFrameByID.getFrameForElement(driver, By.className("ytp-cued-thumbnail-overlay")));
 		Assert.assertTrue(driver.findElement(By.className("ytp-cued-thumbnail-overlay")).isDisplayed());
 		driver.close();
@@ -1028,7 +1021,7 @@ public class SCPContextoSectorial extends TestBase {
 		Assert.assertTrue(a);	
 	}
 	
-	@Test(groups = "SCP")
+	//@Test(groups = "SCP")
 	public void TS112691_Matriz_de_Criterios_de_Decisión_Ver_Video() {
 		SCP prueba = new SCP(driver);
 		prueba.moveToElementOnAccAndClick("tercerTitulo", 2);
@@ -1080,7 +1073,7 @@ public class SCPContextoSectorial extends TestBase {
 	}
 
 	@Test(groups = "SCP")
-	public void TS112692_Matriz_de_Criterios_de_desicion_Ingreso_desde_el_contacto() {
+	public void TS112685_Matriz_de_Criterios_de_desicion_Eliminar() {
 		SCP prueba = new SCP(driver);
 		prueba.moveToElementOnAccAndClick("tercerTitulo", 2);
 		List <WebElement> element = driver.findElements(By.cssSelector(".btn.btn-default.btn-sm"));

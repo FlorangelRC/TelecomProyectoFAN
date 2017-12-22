@@ -34,13 +34,13 @@ public class CustomerCareFase2 extends TestBase {
 	private WebDriver driver;
 
 	
-	@AfterClass(groups = "CustomerCare")
+	//@AfterClass(groups = "CustomerCare")
 	public void tearDown() {
 		driver.quit();
 		try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 	}
 
-	@AfterMethod(groups = "CustomerCare")
+	//@AfterMethod(groups = "CustomerCare")
 	public void alert() {
 		CustomerCare page = new CustomerCare(driver);
 		page.cerrarultimapestaña();
@@ -622,11 +622,13 @@ public class CustomerCareFase2 extends TestBase {
 	@Test(groups = {"CustomerCare", "MovimientoDeCuentasDeFacturación"})
 	public void TS12251_Billing_Group_User_Line_Movements_Paso_0_Error_por_fraude_Cliente_inactivo() {
 		CustomerCare page = new CustomerCare(driver);
-		goToLeftPanel(driver, "Cuentas");
-		page.editarcuenta("aaaaFernando Care", "si", "inactive");
-		page.elegircuenta("aaaaFernando Care");
+		page.elegircuenta("aaaaAndres Care");
 		page.SelectGestion("Movimientos de cuenta de facturaci");
-		page.validarerrorpaso0();
+		try {Thread.sleep(20000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		BasePage cambioFrameByID = new BasePage();
+		driver.switchTo().frame(cambioFrameByID.getFrameForElement(driver, By.cssSelector(".slds-form-element.vlc-flex.vlc-slds-text-block.vlc-slds-rte.ng-pristine.ng-valid.ng-scope")));
+		WebElement element = driver.findElement(By.cssSelector(".slds-form-element.vlc-flex.vlc-slds-text-block.vlc-slds-rte.ng-pristine.ng-valid.ng-scope"));
+		Assert.assertTrue(element.getText().contains("El cliente no está activo"));
 	}
 
 	
@@ -650,7 +652,8 @@ public class CustomerCareFase2 extends TestBase {
 	
 	@Test(groups = {"CustomerCare", "MovimientoDeCuentasDeFacturación"})
 	public void TS12261_Billing_Group_User_Line_Movements_Paso_1_Mover_Bundle_Se_mueven_todos_los_servicios() {
-		CustomerCare page = new CustomerCare(driver);
+		Assert.assertTrue(false);
+		/*CustomerCare page = new CustomerCare(driver);
 		goToLeftPanel(driver, "Cuentas");
 		page.editarcuenta("aaaaFernando Care", "no", "active");
 		page.editarcuenta("aaaaaaaaFernando Care Billing 1", "no", "active");
@@ -668,9 +671,9 @@ public class CustomerCareFase2 extends TestBase {
 		driver.findElement(By.id("BillingAccountToStep_nextBtn")).click();
 		try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 		driver.findElement(By.id("Summary_nextBtn")).click();
-		//page.serviciocambiadecuenta("Arnet 10 MB (Prueba)", "aaaaaaaaFernando Care Billing 2");
-		//page.SelectGestion("Movimientos de cuenta de facturacion");
-		//page.validarerrorpaso1("servicio cambia de cuenta billing");
+		page.serviciocambiadecuenta("Arnet 10 MB (Prueba)", "aaaaaaaaFernando Care Billing 2");
+		page.SelectGestion("Movimientos de cuenta de facturacion");
+		page.validarerrorpaso1("servicio cambia de cuenta billing");*/
 	}
 
 	
@@ -686,13 +689,20 @@ public class CustomerCareFase2 extends TestBase {
 	@Test(groups = {"CustomerCare", "CambioDeCiclo"})
 	public void TS16061_Billing_Cycle_Changes_Sesion_Guiada_para_Cambios_de_Inicio_de_Ciclo_de_Facturacion_Paso_0_Caso_Cliente_activo() {
 		CustomerCare page = new CustomerCare(driver);
-		page.editarcuenta("aaaaFernando Care", "no", "inactive");
 		page.elegircuenta("aaaaFernando Care");
-		page.SelectGestion("ciclo");
-		try {Thread.sleep(30000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		page.SelectGestion("ciclo");		
+		try {Thread.sleep(20000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 		BasePage cambioFrameByID = new BasePage();
-		driver.switchTo().frame(cambioFrameByID.getFrameForElement(driver, By.className("vlc-control-wrapper")));
-		Assert.assertTrue(driver.findElement(By.cssSelector(".slds-form-element.vlc-flex.slds-clearfix.vlc-slds-block.ng-scope.ng-invalid.ng-invalid-vlc-val-error.ng-dirty")).isDisplayed());
+		driver.switchTo().frame(cambioFrameByID.getFrameForElement(driver, By.cssSelector(".slds-button.slds-button--neutral.ng-binding.ng-scope")));	
+		List <WebElement> error = driver.findElements(By.cssSelector(".slds-button.slds-button--neutral.ng-binding.ng-scope"));
+		for (int i=0; i<2; i++) {
+			try {
+				error.get(1).click();
+			} catch (org.openqa.selenium.NoSuchElementException e) {}
+		}
+		//BasePage cambioFrameByID = new BasePage();
+		//driver.switchTo().frame(cambioFrameByID.getFrameForElement(driver, By.className("vlc-control-wrapper")));
+		Assert.assertTrue(driver.findElement(By.cssSelector(".message.description.ng-binding.ng-scope")).isDisplayed());
 	}
 
 	
