@@ -3,11 +3,11 @@ package Tests;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
-
 import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.By.ByXPath;
 import org.testng.Assert;
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;
@@ -124,17 +124,21 @@ private WebDriver driver;
 	
 	//------------------------------------------------------------------------------------------------- 
 	//TCC = 6
-	/*@Test(groups = "SCP")
+	@Test(groups = "SCP")
 	public void TS112563_Asignación_de_Value_Drivers_a_Oportunidades_MÁS() {
 		SCP prueba = new SCP(driver); 
 		prueba.moveToElementOnAccAndClick("tercerTitulo", 1);
 		((JavascriptExecutor)driver).executeScript("window.scrollTo(0,"+driver.findElement(By.xpath("//*[@id=\"a0l3F0000005ipnQAA\"]/td[2]/span[2]/button")).getLocation().y+")");
 		driver.findElement(By.cssSelector(".btn.btn-default.btn-xs.showMore")).click();
 		((JavascriptExecutor)driver).executeScript("window.scrollTo(0,"+driver.findElement(By.id("j_id0:j_id112:j_id451:0:j_id540")).getLocation().y+")");
-		BasePage cambioFrameByID=new BasePage();
-		((JavascriptExecutor)driver).executeScript("window.scrollTo(0,"+driver.findElement(By.id("mainTable_wrapper")).getLocation().y+")");
-		Assert.assertTrue(driver.findElement(By.id("j_id0:j_id112:j_id451:0:j_id540")).isDisplayed());
-	}*/
+		WebElement wBody = driver.findElement(By.cssSelector(".StrategicInitiativeRow.DraggableRow.dataRow.hasOpportunityAndPotencial.ui-draggable.odd"));
+		List<WebElement> wElementos = wBody.findElements(By.tagName("td"));
+		List<WebElement> wSubElementos = wElementos.get(1).findElements(By.className("moreSpan"));
+		System.out.println(wSubElementos.get(0).getText());
+		//List<WebElement> wSubSubElementos = wSubElementos.get(0).findElements(By.tagName("span"));
+		//System.out.println("Texto: " + wSubSubElementos.get(1).);//findElement(By.className("moreSpan")).getText());
+		//Assert.assertTrue(driver.findElement(By.xpath("//*[@id=\"a0l3F0000005ipnQAA\"]/td[2]/span[2]/button/span")).isDisplayed());
+	}
 	
 	//------------------------------------------------------------------------------------------------- 
 	//TCC = 7
