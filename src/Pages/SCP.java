@@ -428,7 +428,7 @@ public boolean cuentalogeada(String cuenta){
 	}
 	
 	public boolean Triangulo_Ordenador_Validador(String sMenu, String sBody, int iColumns, int iColumn) {
-		//sMenu = xpath de la fila del menú
+		//sMenu = xpath de la fila del menï¿½
 		//sBody = xpath del cuerpo de la lista
 		//iColumnas = cantidad de columnas
 		//iColumna = columna a ordenar
@@ -457,7 +457,7 @@ public boolean cuentalogeada(String cuenta){
 	
 	public String SelectorMasUno(String sText, int iPosition, int iIndex) {
 		//sTexto = texto completo
-		//iPosición = posición en string sTexto donde tiene que cambiar el valor
+		//iPosiciï¿½n = posiciï¿½n en string sTexto donde tiene que cambiar el valor
 		//iIndex = nuevo valor
 		sText = sText.substring(0,iPosition) + iIndex + sText.substring(iPosition + 1,sText.length());
 		return sText;
