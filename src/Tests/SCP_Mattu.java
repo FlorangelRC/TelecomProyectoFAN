@@ -43,7 +43,6 @@ private WebDriver driver;
 	public void teardown() {
 		driver.quit();
 		sleep(5000);
-		driver.close();
 	}
 	
 	//------------------------------------------------------------------------------------------------- 
