@@ -55,15 +55,15 @@ public class Sales extends TestBase {
 	String Email = "RobertoCarlos@gmail.com";
 	String DateOfBirthdayWrong = "06/07/1890";
 	String[] genero = {"masculino","femenino"};
-	String[] DocValue = {"52698547","3569874563","365","ssss"};
+	String[] DocValue = {"52698550","3569874563","365","ssss"};
 	
-	@AfterClass(groups="Sales")
+	@AfterClass(groups={"sales", "AltaDeContacto"})
 	public void tearDown() {
 		driver.close();
 		driver.quit();
 	}
 	
-	@AfterMethod(groups="Sales")
+	//@AfterMethod(groups={"sales", "AltaDeContacto"})
 	public void deslogin(){
 		try {Thread.sleep(10000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 		driver.get("https://crm--sit.cs14.my.salesforce.com/home/home.jsp?tsid=02u41000000QWha/");
@@ -74,7 +74,7 @@ public class Sales extends TestBase {
 
 	}
 	
-	@BeforeClass(groups="Sales")
+	@BeforeClass(groups={"sales", "AltaDeContacto"})
 	public void Init() throws Exception
 	{
 		this.driver = setConexion.setupEze();
@@ -107,7 +107,7 @@ public class Sales extends TestBase {
 		try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 	}
 
-	@BeforeMethod(groups="Sales")
+	@BeforeMethod(groups={"sales", "AltaDeContacto"})
 	public void setup() throws Exception {		
 		try {Thread.sleep(10000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 		driver.findElement(By.xpath("//a[@href=\'https://crm--SIT--c.cs14.visual.force.com/apex/taClientSearch']")).click();
@@ -129,7 +129,7 @@ public class Sales extends TestBase {
 		driver.findElement(By.id("ContactInfo_nextBtn")).click();
 		
 	}
-	
+	/*
 	@Test(groups={"sales", "AltaDeContacto"})
 	public void TS6965_Verificar_que_el_campo_Numero_de_documento_no_tenga_menos_de_7_digitos()	{
 		boolean a = false;
@@ -151,7 +151,7 @@ public class Sales extends TestBase {
 
 	Assert.assertTrue(a);
 	}
-	/*
+	
 	@Test(groups={"sales", "AltaDeContacto"})
 	public void TS6918_Seleccionar_Femenino_en_campo_Genero(){
 		SalesBase SB = new SalesBase(driver);
