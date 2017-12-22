@@ -427,26 +427,26 @@ public boolean cuentalogeada(String cuenta){
 		return sElements;
 	}
 	
-	public boolean Triangulo_Ordenador_Validador(String sMenu, String sBody, int iColumnas, int iColumna) {
-		//sMenu = xpath de la fila del menï¿½
+	public boolean Triangulo_Ordenador_Validador(String sMenu, String sBody, int iColumns, int iColumn) {
+		//sMenu = xpath de la fila del menú
 		//sBody = xpath del cuerpo de la lista
 		//iColumnas = cantidad de columnas
 		//iColumna = columna a ordenar
 		TestBase TB = new TestBase();
 		TB.waitFor(driver, By.xpath(sBody));
 		
-		List<String> wElements = TraerColumna(sBody, iColumnas, iColumna);
+		List<String> wElements = TraerColumna(sBody, iColumns, iColumn);
 		
 		WebElement wHeader = driver.findElement(By.xpath(sMenu));
 		List <WebElement> wMenu = wHeader.findElements(By.tagName("th"));
-		wMenu.get(iColumna - 1).click();
-		List<String> wElementsOrdenados = TraerColumna(sBody, iColumnas, iColumna);
+		wMenu.get(iColumn - 1).click();
+		List<String> wOrderedElements = TraerColumna(sBody, iColumns, iColumn);
 		
 		Collections.sort(wElements);
 		boolean bBoolean = true;
 		
 		for(int i = 0; i < wElements.size(); i++) { 
-			if (!wElements.get(i).equals(wElementsOrdenados.get(i))) {
+			if (!wElements.get(i).equals(wOrderedElements.get(i))) {
 			 bBoolean = false;
 			}
 		}
@@ -455,22 +455,22 @@ public boolean cuentalogeada(String cuenta){
 		
 	}
 	
-	public String SelectorMasUno(String sTexto, int iPosiciï¿½n, int iIndex) {
+	public String SelectorMasUno(String sText, int iPosition, int iIndex) {
 		//sTexto = texto completo
-		//iPosiciï¿½n = posiciï¿½n en string sTexto donde tiene que cambiar el valor
+		//iPosición = posición en string sTexto donde tiene que cambiar el valor
 		//iIndex = nuevo valor
-		sTexto = sTexto.substring(0,iPosiciï¿½n) + iIndex + sTexto.substring(iPosiciï¿½n + 1,sTexto.length());
-		return sTexto;
+		sText = sText.substring(0,iPosition) + iIndex + sText.substring(iPosition + 1,sText.length());
+		return sText;
 	}
 	
-	public String[][] ListaById(By element, String sId, int iPosiciï¿½n) {
+	public String[][] ListaById(By element, String sId, int iPosition) {
 		List<WebElement> wAuxList = driver.findElements(element);
 		
 		String[][] sList = new String [wAuxList.size()][wAuxList.size()];
 		
 		int i;
 		for (i = 0; i < wAuxList.size(); i++) {
-			sId = SelectorMasUno(sId, iPosiciï¿½n, i);
+			sId = SelectorMasUno(sId, iPosition, i);
 			sList[i][0] = sId;
 			sList[i][1] = driver.findElement(By.id(sId)).getText();
 			
@@ -478,6 +478,5 @@ public boolean cuentalogeada(String cuenta){
 		
 		return sList;
 	}
-
 
 }

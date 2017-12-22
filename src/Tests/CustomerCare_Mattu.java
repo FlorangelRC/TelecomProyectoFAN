@@ -58,7 +58,7 @@ public class CustomerCare_Mattu extends TestBase{
     
     //-------------------------------------------------------------------------------------------------
     //TCC = 1
-	@Test(groups = "CustomerCare")
+	@Test(groups = {"CustomerCare", "ProblemasConRecargas"})
 	public void TS_38553_Problems_with_Refills_Problemas_con_Recargas_Medio_de_recarga_PIN_Ingresa_15_dígitos() {
 		CustomerCare CP = new CustomerCare (driver);
 		try {Thread.sleep(15000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();} 
@@ -100,8 +100,8 @@ public class CustomerCare_Mattu extends TestBase{
 	
 	//---------------------------------------------------------------------------------------------------------------------------------------------
 	//TCC = 2
-	@Test(groups = "CustomerCare")
-	public void TS_38553_Problems_with_Refills_Problemas_con_Recargas_Medio_de_recarga_PIN_Ingresa_16_dígitos() {
+	@Test(groups = {"CustomerCare", "ProblemasConRecargas"})
+	public void TS_37554_Problems_with_Refills_Problemas_con_Recargas_Medio_de_recarga_PIN_Ingresa_16_dígitos() {
 		CustomerCare CP = new CustomerCare (driver);
 		try {Thread.sleep(15000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();} 
 		CP.elegircuenta("Fernando Care");
@@ -142,50 +142,50 @@ public class CustomerCare_Mattu extends TestBase{
 	
 	//---------------------------------------------------------------------------------------------------------------------------------------------
 	//TCC = 3
-		@Test(groups = "CustomerCare")
-		public void TS_38553_Problems_with_Refills_Problemas_con_Recargas_Medio_de_recarga_PIN_Ingresa_17_dígitos() {
-			CustomerCare CP = new CustomerCare (driver);
-			try {Thread.sleep(15000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();} 
-			CP.elegircuenta("Fernando Care");
-			try {Thread.sleep(15000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}  
-		    BasePage cambioFrameByID=new BasePage();
-		    driver.switchTo().defaultContent();
-		    driver.switchTo().frame(cambioFrameByID.getFrameForElement(driver, By.className("card-info")));
-		    WebElement wCardInfo = driver.findElement(By.className("card-info"));
-		    wCardInfo.click();
-		    try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
-		    driver.switchTo().defaultContent();
-		    driver.switchTo().frame(cambioFrameByID.getFrameForElement(driver, By.cssSelector(".slds-small-size--3-of-12.slds-medium-size--3-of-12.slds-large-size--3-of-12.flyout-actions")));
-		    ((JavascriptExecutor)driver).executeScript("window.scrollTo(0,"+driver.findElement(By.cssSelector(".console-flyout.active.flyout")).getLocation().y+")");
-		    try {Thread.sleep(3000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();} 
-		    driver.findElement(By.cssSelector(".console-flyout.active.flyout")).findElements(By.tagName("i")).get(1).click();
-		    List<WebElement> wAsd = driver.findElements(By.id("refillMethod"));
-		    for (WebElement x:wAsd) {
-		    	if (x.getText().toLowerCase().contains("tarjeta prepaga")) {
-		    		x.click();
-		    	}
-		    }
-		    try {Thread.sleep(8000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
-		    driver.switchTo().defaultContent();
-		    driver.switchTo().frame(cambioFrameByID.getFrameForElement(driver, By.id("stepChooseMethod_nextBtn")));
-		    try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
-		    ((JavascriptExecutor)driver).executeScript("window.scrollTo(0,"+driver.findElement(By.cssSelector(".vlc-slds-button--tertiary.ng-binding.ng-scope")).getLocation().y+")");
-		    List <WebElement> wX = driver.findElements(By.className("slds-form-element__control"));
-		    for (WebElement x : wX) {
-		    	if (x.getText().toLowerCase().contains("siguiente")) {
-		    		x.click();
-		    		break;
-		    	}
-		    }
-		    try {Thread.sleep(8000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
-		    driver.findElement(By.id("pinNumber")).sendKeys("12345678901234567");
-		    Assert.assertTrue(!driver.findElement(By.cssSelector(".error.ng-scope")).getText().isEmpty());
-		}
+	@Test(groups = {"CustomerCare", "ProblemasConRecargas"})
+	public void TS_37555_Problems_with_Refills_Problemas_con_Recargas_Medio_de_recarga_PIN_Ingresa_17_dígitos() {
+		CustomerCare CP = new CustomerCare (driver);
+		try {Thread.sleep(15000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();} 
+		CP.elegircuenta("Fernando Care");
+		try {Thread.sleep(15000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}  
+	    BasePage cambioFrameByID=new BasePage();
+	    driver.switchTo().defaultContent();
+	    driver.switchTo().frame(cambioFrameByID.getFrameForElement(driver, By.className("card-info")));
+	    WebElement wCardInfo = driver.findElement(By.className("card-info"));
+	    wCardInfo.click();
+	    try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+	    driver.switchTo().defaultContent();
+	    driver.switchTo().frame(cambioFrameByID.getFrameForElement(driver, By.cssSelector(".slds-small-size--3-of-12.slds-medium-size--3-of-12.slds-large-size--3-of-12.flyout-actions")));
+	    ((JavascriptExecutor)driver).executeScript("window.scrollTo(0,"+driver.findElement(By.cssSelector(".console-flyout.active.flyout")).getLocation().y+")");
+	    try {Thread.sleep(3000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();} 
+	    driver.findElement(By.cssSelector(".console-flyout.active.flyout")).findElements(By.tagName("i")).get(1).click();
+	    List<WebElement> wAsd = driver.findElements(By.id("refillMethod"));
+	    for (WebElement x:wAsd) {
+	    	if (x.getText().toLowerCase().contains("tarjeta prepaga")) {
+	    		x.click();
+	    	}
+	    }
+	    try {Thread.sleep(8000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+	    driver.switchTo().defaultContent();
+	    driver.switchTo().frame(cambioFrameByID.getFrameForElement(driver, By.id("stepChooseMethod_nextBtn")));
+	    try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+	    ((JavascriptExecutor)driver).executeScript("window.scrollTo(0,"+driver.findElement(By.cssSelector(".vlc-slds-button--tertiary.ng-binding.ng-scope")).getLocation().y+")");
+	    List <WebElement> wX = driver.findElements(By.className("slds-form-element__control"));
+	    for (WebElement x : wX) {
+	    	if (x.getText().toLowerCase().contains("siguiente")) {
+	    		x.click();
+	    		break;
+	    	}
+	    }
+	    try {Thread.sleep(8000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+	    driver.findElement(By.id("pinNumber")).sendKeys("12345678901234567");
+	    Assert.assertTrue(!driver.findElement(By.cssSelector(".error.ng-scope")).getText().isEmpty());
+	}
 		
 	//---------------------------------------------------------------------------------------------------------------------------------------------
 	//TCC = 4
-	@Test(groups = "CustomerCare")
-	public void TS_38553_Problems_with_Refills_Problemas_con_Recargas_Medio_de_recarga_PIN_Ingresa_letras() {
+	@Test(groups = {"CustomerCare", "ProblemasConRecargas"})
+	public void TS_37556_Problems_with_Refills_Problemas_con_Recargas_Medio_de_recarga_PIN_Ingresa_letras() {
 		CustomerCare CP = new CustomerCare (driver);
 		try {Thread.sleep(15000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();} 
 		CP.elegircuenta("Fernando Care");
@@ -226,8 +226,8 @@ public class CustomerCare_Mattu extends TestBase{
 	
 	//---------------------------------------------------------------------------------------------------------------------------------------------
 	//TCC = 5
-	@Test(groups = "CustomerCare")
-	public void TS_38553_Problems_with_Refills_Problemas_con_Recargas_Medio_de_recarga_Seleccionar_Tarjeta_Pre_Paga_PIN_Invisible() {
+	@Test(groups = {"CustomerCare", "ProblemasConRecargas"})
+	public void TS_37536_Problems_with_Refills_Problemas_con_Recargas_Medio_de_recarga_Seleccionar_Tarjeta_Pre_Paga_PIN_Invisible() {
 		CustomerCare CP = new CustomerCare (driver);
 		try {Thread.sleep(15000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();} 
 		CP.elegircuenta("Fernando Care");
@@ -271,8 +271,8 @@ public class CustomerCare_Mattu extends TestBase{
 	
 	//-------------------------------------------------------------------------------------------------
 	//TCC = 6
-	@Test(groups = "CustomerCare")
-	public void TS_38553_Problems_with_Refills_Problemas_con_Recargas_Recarga_sin_PIN_Gestión_pendiente_Recarga_sin_PIN_Lote_Ingresa_15_dígitos() {
+	@Test(groups = {"CustomerCare", "ProblemasConRecargas"})
+	public void TS_37549_Problems_with_Refills_Problemas_con_Recargas_Recarga_sin_PIN_Gestión_pendiente_Recarga_sin_PIN_Lote_Ingresa_15_dígitos() {
 		CustomerCare CP = new CustomerCare (driver);
 		try {Thread.sleep(15000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();} 
 		CP.elegircuenta("Fernando Care");
@@ -313,8 +313,8 @@ public class CustomerCare_Mattu extends TestBase{
 	
 	//-------------------------------------------------------------------------------------------------
 	//TCC = 7
-	@Test(groups = "CustomerCare")
-	public void TS_38553_Problems_with_Refills_Problemas_con_Recargas_Recarga_sin_PIN_Gestión_pendiente_Recarga_sin_PIN_Lote_Ingresa_16_dígitos() {
+	@Test(groups = {"CustomerCare", "ProblemasConRecargas"})
+	public void TS_37550_Problems_with_Refills_Problemas_con_Recargas_Recarga_sin_PIN_Gestión_pendiente_Recarga_sin_PIN_Lote_Ingresa_16_dígitos() {
 		CustomerCare CP = new CustomerCare (driver);
 		try {Thread.sleep(15000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();} 
 		CP.elegircuenta("Fernando Care");
@@ -355,8 +355,8 @@ public class CustomerCare_Mattu extends TestBase{
 	
 	//-------------------------------------------------------------------------------------------------
 	//TCC = 8
-	@Test(groups = "CustomerCare")
-	public void TS_38553_Problems_with_Refills_Problemas_con_Recargas_Recarga_sin_PIN_Gestión_pendiente_Recarga_sin_PIN_Lote_Ingresa_17_dígitos() {
+	@Test(groups = {"CustomerCare", "ProblemasConRecargas"})
+	public void TS_37551_Problems_with_Refills_Problemas_con_Recargas_Recarga_sin_PIN_Gestión_pendiente_Recarga_sin_PIN_Lote_Ingresa_17_dígitos() {
 		CustomerCare CP = new CustomerCare (driver);
 		try {Thread.sleep(15000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();} 
 		CP.elegircuenta("Fernando Care");
@@ -397,8 +397,8 @@ public class CustomerCare_Mattu extends TestBase{
 	
 	//-------------------------------------------------------------------------------------------------
 	//TCC = 9
-	@Test(groups = "CustomerCare")
-	public void TS_38553_Problems_with_Refills_Problemas_con_Recargas_Recarga_sin_PIN_Gestión_pendiente_Recarga_sin_PIN_Lote_Ingresa_Letras() {
+	@Test(groups = {"CustomerCare", "ProblemasConRecargas"})
+	public void TS_37552_Problems_with_Refills_Problemas_con_Recargas_Recarga_sin_PIN_Gestión_pendiente_Recarga_sin_PIN_Lote_Ingresa_Letras() {
 		CustomerCare CP = new CustomerCare (driver);
 		try {Thread.sleep(15000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();} 
 		CP.elegircuenta("Fernando Care");
@@ -439,8 +439,8 @@ public class CustomerCare_Mattu extends TestBase{
 	
 	//-------------------------------------------------------------------------------------------------
 	//TCC = 10
-	@Test(groups = "CustomerCare")
-	public void TS_38553_Problems_with_Refills_UX_Tarjeta_de_Recarga_Pre_paga_Verificación_Visualizar_Botón_Cancelar() {
+	@Test(groups = {"CustomerCare", "ProblemasConRecargas"})
+	public void TS_37331_Problems_with_Refills_UX_Tarjeta_de_Recarga_Pre_paga_Verificación_Visualizar_Botón_Cancelar() {
 		CustomerCare CP = new CustomerCare (driver);
 		try {Thread.sleep(15000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();} 
 		CP.elegircuenta("Fernando Care");
@@ -466,8 +466,8 @@ public class CustomerCare_Mattu extends TestBase{
 	
 	//-------------------------------------------------------------------------------------------------
 	//TCC = 11
-	@Test(groups = "CustomerCare")
-	public void TS_38553_Problems_with_Refills_UX_Tarjeta_de_Recarga_Pre_paga_Verificación_Visualizar_Botón_Consultar() {
+	@Test(groups = {"CustomerCare", "ProblemasConRecargas"})
+	public void TS_37338_Problems_with_Refills_UX_Tarjeta_de_Recarga_Pre_paga_Verificación_Visualizar_Botón_Consultar() {
 		CustomerCare CP = new CustomerCare (driver);
 		try {Thread.sleep(15000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();} 
 		CP.elegircuenta("Fernando Care");
@@ -493,8 +493,8 @@ public class CustomerCare_Mattu extends TestBase{
 	
 	//-------------------------------------------------------------------------------------------------
 	//TCC = 12
-	@Test(groups = "CustomerCare")
-	public void TS_38553_Problems_with_Refills_UX_Tarjeta_de_Recarga_Pre_paga_Verificación_Visualizar_panel_de_Steps() {
+	@Test(groups = {"CustomerCare", "ProblemasConRecargas"})
+	public void TS_37330_Problems_with_Refills_UX_Tarjeta_de_Recarga_Pre_paga_Verificación_Visualizar_panel_de_Steps() {
 		CustomerCare CP = new CustomerCare (driver);
 		try {Thread.sleep(15000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();} 
 		CP.elegircuenta("Fernando Care");
@@ -519,7 +519,7 @@ public class CustomerCare_Mattu extends TestBase{
 	
 	//-------------------------------------------------------------------------------------------------
 	//@Test
-	@Test (groups = "CustomerCare")
+	@Test(groups = {"CustomerCare", "ActualizarDatos"})
 	public void TS38042_Profile_Changes_Validación_Correo_Electronico_Cuenta_Email_Existente(){
 	CustomerCare CP = new CustomerCare (driver);
 	try {Thread.sleep(10000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}	
@@ -552,7 +552,7 @@ public class CustomerCare_Mattu extends TestBase{
 		  }
 }
  
-	@Test (groups = "CustomerCare")
+	@Test(groups = {"CustomerCare", "ActualizarDatos"})
 	public void TS38043_Profile_Changes_Validación_Correo_Electronico_Cuenta_Email_No_existente(){
 	 CustomerCare CP = new CustomerCare (driver);
 		try {Thread.sleep(10000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}	
@@ -580,7 +580,7 @@ public class CustomerCare_Mattu extends TestBase{
 
 }
 
- @Test (groups = "CustomerCare")
+	@Test(groups = {"CustomerCare", "DetalleDeConsumos"})
 	public void TS38346_Consumption_Details_Detalle_de_consumos_Servicio_Pre_pago_Prepago_Muestra_los_ultimos_3_días() {
 		 CustomerCare CP = new CustomerCare (driver);
 			try {Thread.sleep(10000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}	
@@ -602,7 +602,7 @@ public class CustomerCare_Mattu extends TestBase{
 			Assert.assertTrue(driver.findElement(By.id("text-input-02")).getAttribute("value").toLowerCase().contains("los últimos 3 días"));
 	}
 
-	@Test (groups = "CustomerCare")
+	@Test(groups = {"CustomerCare", "DetalleDeConsumos"})
 	public void TS38347_Consumption_Details_Detalle_de_consumos_Servicio_Pre_pago_Prepago_Visualizar_leyenda_Los_ultimos_3_días() {
 		 CustomerCare CP = new CustomerCare (driver);
 			try {Thread.sleep(10000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}	
@@ -626,7 +626,7 @@ public class CustomerCare_Mattu extends TestBase{
 			Assert.assertTrue(driver.findElement(By.id("text-input-01")).isDisplayed());
 	}
 	
-	@Test (groups = "CustomerCare")
+	@Test(groups = {"CustomerCare", "Vista360Layout"})
 	public void TS38410_360_View_Vista_360_de_facturación_clientes_individuos_Información_de_las_Cards_Visualizar_campos(){
 		 CustomerCare CP = new CustomerCare (driver);
 			try {Thread.sleep(10000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}	
@@ -649,7 +649,7 @@ public class CustomerCare_Mattu extends TestBase{
 	 Assert.assertTrue(asd.getText().toLowerCase().contains("servicios"));
 	}
 
-	@Test (groups = "CustomerCare")
+	@Test(groups = {"CustomerCare", "Vista360Layout"})
 	public void TS38440_360_View_360_Card_Servicio_Prepago_Flyout_AccionesCampañas() {
 		CustomerCare CP = new CustomerCare (driver);
 		try {Thread.sleep(10000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}	
@@ -665,7 +665,7 @@ public class CustomerCare_Mattu extends TestBase{
 		Assert.assertTrue(wElement.getText().toLowerCase().contains("campañas"));
 	}
 	 
-	@Test (groups = "CustomerCare")
+	@Test(groups = {"CustomerCare", "Vista360Layout"})
 	public void TS38434_360_View_360_Card_Servicio_Prepago_Flyoutv_AccionesRecargar() {
 		 CustomerCare CP = new CustomerCare (driver);
 		try {Thread.sleep(10000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}	
@@ -681,7 +681,7 @@ public class CustomerCare_Mattu extends TestBase{
 		Assert.assertTrue(wElement.getText().toLowerCase().contains("recargar"));
 	}
 		
-	@Test (groups = "CustomerCare")
+	@Test(groups = {"CustomerCare", "Vista360Layout"})
 	public void TS38436_360_View_360_Card_Servicio_Prepago_Flyoutv_AccionesGestiones() {
 		CustomerCare CP = new CustomerCare (driver);
 		try {Thread.sleep(10000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}	
@@ -697,7 +697,7 @@ public class CustomerCare_Mattu extends TestBase{
 		Assert.assertTrue(wElement.getText().toLowerCase().contains("gestiones"));
 	}
 	
-	@Test (groups = "CustomerCare")
+	@Test(groups = {"CustomerCare", "Vista360Layout"})
 	public void TS38612_Diseño_Seleccion_asset_Numero_de_linea_como_identificador_principal() {
 		CustomerCare CP = new CustomerCare (driver);
 		try {Thread.sleep(10000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}	
