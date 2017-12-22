@@ -39,10 +39,11 @@ private WebDriver driver;
 		prueba.clickOnFirstAccRe();
 		try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}	
 	}
-	//@AfterClass(groups = "SCP")
+	@AfterClass(groups = "SCP")
 	public void teardown() {
 		driver.quit();
 		sleep(5000);
+		driver.close();
 	}
 	
 	//------------------------------------------------------------------------------------------------- 
@@ -75,7 +76,7 @@ private WebDriver driver;
 	public void TS112724_Mosaico_de_Relacionamiento_por_Oportunidad_Search() { 
 	  SCP prueba = new SCP(driver); 
 	  prueba.moveToElementOnAccAndClick("tercerTitulo", 3); 
-	  try {Thread.sleep(8000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();} 
+	  try {Thread.sleep(8000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 	  driver.findElement(By.xpath("//*[@id=\"mainTable_filter\"]/label/input")).sendKeys("Oportunidad 2"); 
 	  try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();} 
 	
@@ -130,14 +131,14 @@ private WebDriver driver;
 		prueba.moveToElementOnAccAndClick("tercerTitulo", 1);
 		((JavascriptExecutor)driver).executeScript("window.scrollTo(0,"+driver.findElement(By.xpath("//*[@id=\"a0l3F0000005ipnQAA\"]/td[2]/span[2]/button")).getLocation().y+")");
 		driver.findElement(By.cssSelector(".btn.btn-default.btn-xs.showMore")).click();
+		
+		try {Thread.sleep(10000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 		((JavascriptExecutor)driver).executeScript("window.scrollTo(0,"+driver.findElement(By.id("j_id0:j_id112:j_id451:0:j_id540")).getLocation().y+")");
 		WebElement wBody = driver.findElement(By.cssSelector(".StrategicInitiativeRow.DraggableRow.dataRow.hasOpportunityAndPotencial.ui-draggable.odd"));
 		List<WebElement> wElementos = wBody.findElements(By.tagName("td"));
 		List<WebElement> wSubElementos = wElementos.get(1).findElements(By.className("moreSpan"));
-		System.out.println(wSubElementos.get(0).getText());
-		//List<WebElement> wSubSubElementos = wSubElementos.get(0).findElements(By.tagName("span"));
-		//System.out.println("Texto: " + wSubSubElementos.get(1).);//findElement(By.className("moreSpan")).getText());
-		//Assert.assertTrue(driver.findElement(By.xpath("//*[@id=\"a0l3F0000005ipnQAA\"]/td[2]/span[2]/button/span")).isDisplayed());
+		List<WebElement> wSubSubElementos = wSubElementos.get(0).findElements(By.tagName("span"));
+		Assert.assertTrue(wSubSubElementos.get(2).isDisplayed());
 	}
 	
 	//------------------------------------------------------------------------------------------------- 
