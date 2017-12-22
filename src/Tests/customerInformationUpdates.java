@@ -180,10 +180,10 @@ public class customerInformationUpdates extends TestBase {
 	
 	@Test(groups = {"CustomerCare", "ActualizarDatos"})
 	public void TS7153_verifyBirthDateHasValidDateFormat() {
-		CustomerCare page = new CustomerCare (driver);
 		WebElement element = driver.findElement(By.id("Birthdate"));
-		System.out.println(element.getAttribute("vlc-slds-model-date-format"));
-		Assert.assertTrue(page.validarFecha(element.getAttribute("value"), "dd/MM/yyyy"));
+		String fecha = element.getAttribute("vlc-slds-model-date-format");
+		Assert.assertTrue(fecha.contains("dd/MM/yyyy"));
+		driver.findElement(By.id("ClientInformation_nextBtn")).click();
 	}
 	
 	@Test(groups = {"CustomerCare", "ActualizarDatos"})
@@ -220,6 +220,7 @@ public class customerInformationUpdates extends TestBase {
 	@Test(groups = {"CustomerCare", "ActualizarDatos"})
 	public void TS7098_cancelUpdateInformation() {
 		BasePage cambioFrameByID=new BasePage();
+		CustomerCare page = new CustomerCare(driver);
 		driver.switchTo().frame(cambioFrameByID.getFrameForElement(driver, By.cssSelector(".vlc-slds-button--tertiary.ng-binding.ng-scope")));
 		List <WebElement> cancelar = driver.findElements(By.cssSelector(".vlc-slds-button--tertiary.ng-binding.ng-scope"));
 		for (WebElement x : cancelar) {
@@ -229,13 +230,22 @@ public class customerInformationUpdates extends TestBase {
 		}
 	    driver.switchTo().frame(cambioFrameByID.getFrameForElement(driver, By.id("alert-ok-button")));
 		driver.findElement(By.id("alert-ok-button")).click();
-		/*try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
-		driver.switchTo().frame(cambioFrameByID.getFrameForElement(driver, By.className("profile-box")));
+		page.cerrarultimapestaña();
+		page.elegircuenta("aaaaFernando Care");
+	    driver.switchTo().frame(cambioFrameByID.getFrameForElement(driver, By.className("profile-edit")));
 		List <WebElement> actualizar = driver.findElements(By.className("profile-edit"));
-		actualizar.get(0).click();
+		for (WebElement x : actualizar) {
+			if (x.getText().toLowerCase().contains("actualizar datos")) {
+				x.click();
+			}
+		}
+		try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		driver.switchTo().frame(cambioFrameByID.getFrameForElement(driver, By.className("profile-box")));
+		List <WebElement> actualizar1 = driver.findElements(By.className("profile-edit"));
+		actualizar1.get(0).click();
 		try {Thread.sleep(10000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 		driver.switchTo().frame(cambioFrameByID.getFrameForElement(driver, By.id("ClientInformation_nextBtn")));
-		driver.findElement(By.id("ClientInformation_nextBtn")).click();*/
+		driver.findElement(By.id("ClientInformation_nextBtn")).click();
 	}
 	
 	//@Test(groups = {"CustomerCare", "ActualizarDatos"})	//BUG EN celular

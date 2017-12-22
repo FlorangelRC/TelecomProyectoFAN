@@ -161,6 +161,9 @@ public class CustomerCare extends BasePage {
 	@FindBy(id = "text-input-id-1")
 	public WebElement calendarioFechaInicio;
 	
+	@FindBy(id = "text-input-id-2")
+	public WebElement calendarioFechaFin;
+	
 	@FindBy(className = "slds-day")
 	public List<WebElement> diasCalendario;
 	
@@ -173,6 +176,17 @@ public class CustomerCare extends BasePage {
 	@FindBy(css = ".slds-truncate.slds-th__action")
 	public List<WebElement> columnasHistorial;
 	
+	@FindBy(id = "text-input-03")
+	public WebElement selectorNombrePack;
+	
+	@FindBy(css = ".slds-input__icon--left.slds-icon.slds-icon--x-small.slds-input__icon")
+	public List<WebElement> registrosHistorial;
+	
+	@FindBy(xpath = "//div[@class='slds-grid']")
+	public List<WebElement> detalleRegistrosHistorial;
+	
+	@FindBy(css = ".console-card.active")
+	public List<WebElement> tarjetaServiciosActivos;
 
 
 	public void elegirCuenta(String nombreCuenta) {		
@@ -208,6 +222,7 @@ public class CustomerCare extends BasePage {
 				TestBase.sleep(1000);
 			}
 			
+			TestBase.dynamicWait().until(ExpectedConditions.numberOfElementsToBe(By.cssSelector(".x-grid3-cell-inner.x-grid3-col-ACCOUNT_NAME"), 200));
 			for (WebElement c : cuentas) {
 				//MEJORAR
 				if (c.getText().equalsIgnoreCase(nombreCuenta)) {
@@ -222,6 +237,7 @@ public class CustomerCare extends BasePage {
 	
 	private void esperarAQueCargueLaCuenta() {
 		driver.switchTo().defaultContent();
+		TestBase.sleep(4000);
 		TestBase.dynamicWait().until(ExpectedConditions.numberOfElementsToBe(By.cssSelector(".sd_secondary_container.x-border-layout-ct"), 2));
 		cambiarAFrameActivo();
 		TestBase.dynamicWait().until(ExpectedConditions.visibilityOfElementLocated(By.cssSelector(".btn.btn-primary")));
