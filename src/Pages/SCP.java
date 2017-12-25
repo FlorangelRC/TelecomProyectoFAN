@@ -376,7 +376,7 @@ public boolean cuentalogeada(String cuenta){
 		TestBase TB = new TestBase();
 		List<WebElement> opcionesMenu = driver.findElement(By.id("userNav-menuItems")).findElements(By.tagName("a"));
 		for (WebElement UnaO : opcionesMenu) {
-			if(UnaO.getText().toLowerCase().contains("finalizar sesi�n")) {
+			if(UnaO.getText().toLowerCase().contains("finalizar sesi\u00f3n")) {
 				UnaO.click();
 				break;
 			}
@@ -455,22 +455,22 @@ public boolean cuentalogeada(String cuenta){
 		
 	}
 	
-	public String SelectorMasUno(String sTexto, int iPosici�n, int iIndex) {
+	public String SelectorMasUno(String sTexto, int iPosicion, int iIndex) {
 		//sTexto = texto completo
 		//iPosici�n = posici�n en string sTexto donde tiene que cambiar el valor
 		//iIndex = nuevo valor
-		sTexto = sTexto.substring(0,iPosici�n) + iIndex + sTexto.substring(iPosici�n + 1,sTexto.length());
+		sTexto = sTexto.substring(0,iPosicion) + iIndex + sTexto.substring(iPosicion + 1,sTexto.length());
 		return sTexto;
 	}
 	
-	public String[][] ListaById(By element, String sId, int iPosici�n) {
+	public String[][] ListaById(By element, String sId, int iPosicion) {
 		List<WebElement> wAuxList = driver.findElements(element);
 		
 		String[][] sList = new String [wAuxList.size()][wAuxList.size()];
 		
 		int i;
 		for (i = 0; i < wAuxList.size(); i++) {
-			sId = SelectorMasUno(sId, iPosici�n, i);
+			sId = SelectorMasUno(sId, iPosicion, i);
 			sList[i][0] = sId;
 			sList[i][1] = driver.findElement(By.id(sId)).getText();
 			
