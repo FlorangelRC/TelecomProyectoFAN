@@ -742,7 +742,7 @@ public class Sales extends TestBase {
 	
 	
 	
-	
+	*/
 	@Test(groups="Sales")
 	public void TS14278_Ventas_NumeroOrden_Verificar_Orden_de_Venta_Abierta_ICCID(){
 		SalesBase SB= new SalesBase(driver);
@@ -765,7 +765,7 @@ public class Sales extends TestBase {
 		
 		
 	}
-	*/
+	/*
 	@Test(groups="Sales")
 	
 	public void TS14277_Ventas_NumeroOrden_Verificar_Orden_de_Venta_Abierta_Medio_de_Pago(){
