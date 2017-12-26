@@ -316,11 +316,12 @@ public class CustomerCare extends BasePage {
 			if (!linea.getAttribute("class").contains("expired")) {
 					linea.findElement(By.cssSelector(".card-top")).click();
 					//linea.click();
+					TestBase.dynamicWait().until(ExpectedConditions.visibilityOf(btn_ProblemaConRecargas));
 					btn_ProblemaConRecargas.click();
 					break;
 			}
 		}
-		TestBase.sleep(3000);
+		TestBase.sleep(4000);
 		cambiarAFrameActivo();
 	}
 	
