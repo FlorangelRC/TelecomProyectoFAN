@@ -525,5 +525,5 @@ public class customerInformationUpdates extends TestBase {
 		page.EntrarEditarPerfil();
 		page.ValidarDigitosDelMovil();	
 	}
-	*/
+	*/ //sajsadjsadjsad
 }
