@@ -36,7 +36,7 @@ public class CustomerCareCaseResolutionTime extends TestBase {
 		try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 	}*/
 	
-	@BeforeMethod(groups= "CustomerCare")
+	@BeforeMethod(groups={"Fase1", "CustomerCare","AdministraccionDeCasos"})
 	public void mainSetup() {
 		this.driver = setConexion.setupEze();	
 		login(driver);
@@ -70,19 +70,19 @@ public class CustomerCareCaseResolutionTime extends TestBase {
 		}
 	}
 	
-	@AfterClass(groups= "CustomerCare")
+	@AfterClass(groups={"Fase1", "CustomerCare","AdministraccionDeCasos"})
 	public void tearDown() {
 		driver.quit();
 		sleep(5000);
 	}
 	
 	
-	@Test(groups= "CustomerCare")
+	@Test(groups={"Fase1", "CustomerCare","AdministraccionDeCasos"})
 	public void TS7094_checkCaseResolutionTimeExistence(){
 		driver.findElement(By.className("x-grid3-row-table")); //Only CRT have this className in this frame.
 	}
 	
-	@Test(groups= "CustomerCare")
+	@Test(groups={"Fase1", "CustomerCare","AdministraccionDeCasos"})
 	public void TS7095_CaseResolTimeAdminConfig(){
 		WebElement modifyButton = null;
 		for (WebElement a : driver.findElement(By.id("00Bc0000001K9hh_filterLinks")).findElements(By.tagName("a"))){

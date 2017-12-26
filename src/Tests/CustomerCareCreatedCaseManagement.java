@@ -32,7 +32,7 @@ public class CustomerCareCreatedCaseManagement extends TestBase {
 	private WebDriver driver;
 
 
-	@BeforeClass(groups= "CustomerCare")
+	@BeforeClass(groups={"Fase1", "CustomerCare","AdministraccionDeCasos"})
 	public void mainSteup() {
 		this.driver = setConexion.setupEze();
 		login(driver);
@@ -48,7 +48,7 @@ public class CustomerCareCreatedCaseManagement extends TestBase {
 	}
 
 	
-	@BeforeMethod(groups= "CustomerCare")
+	@BeforeMethod(groups={"Fase1", "CustomerCare","AdministraccionDeCasos"})
 	public void mainSetup() {
 
 		try {Thread.sleep(10000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
@@ -69,7 +69,7 @@ public class CustomerCareCreatedCaseManagement extends TestBase {
 		try {Thread.sleep(10000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 	}
 	
-	@AfterClass(groups= "CustomerCare")
+	@AfterClass(groups={"Fase1", "CustomerCare","AdministraccionDeCasos"})
 	public void tearDown() {
 		driver.switchTo().defaultContent();
 		List<WebElement> mainTabs1 = driver.findElements(By.className("x-tab-strip-close"));
@@ -82,11 +82,12 @@ public class CustomerCareCreatedCaseManagement extends TestBase {
 			System.out.println(alert.getText());
 			alert.accept();
 		}catch(org.openqa.selenium.NoAlertPresentException e){}
-		driver.close();
+		driver.quit();
+		sleep(2000);
 	}
 	
 	
-	@AfterMethod(groups= "CustomerCare")
+	@AfterMethod(groups={"Fase1", "CustomerCare","AdministraccionDeCasos"})
 	public void alert (){
 		try {Thread.sleep(2000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 		HomeBase homePage = new HomeBase(driver);
@@ -101,7 +102,7 @@ public class CustomerCareCreatedCaseManagement extends TestBase {
 	}
 
 	
-	@Test(groups= "CustomerCare")
+	@Test(groups={"Fase1", "CustomerCare","AdministraccionDeCasos"})
 	public void TS7202_CreatedAndDueTimeInHoursFormatCheck(){
 		
 		String dateWithHourPattern = "(\\d{2}\\/\\d{2}\\/\\d{4} \\d{2}:\\d{2})";
@@ -125,7 +126,7 @@ public class CustomerCareCreatedCaseManagement extends TestBase {
 	}
 	
 	
-	@Test(groups= "CustomerCare")
+	@Test(groups={"Fase1", "CustomerCare","AdministraccionDeCasos"})
 	public void TS_7202_ValidatedCreationDate(){
 		//Pre-requirement : no other cases or new cases tabs.
 		try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
@@ -148,7 +149,7 @@ public class CustomerCareCreatedCaseManagement extends TestBase {
 		
  }
 	
-	 //@Test(groups= "CustomerCare")
+	 //@Test(groups={"Fase1", "CustomerCare","AdministraccionDeCasos"})
 		public void TS_7094_TimeResolution(){
 			//Campo Ya no existe desde el deploy 3, se realizo para fallar fecha 30/11/2017
 		 

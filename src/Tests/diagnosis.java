@@ -29,7 +29,7 @@ public class diagnosis extends TestBase {
 	
 	private WebDriver driver;
 
-	@AfterClass(groups = "TechnicalCare") 
+	@AfterClass(groups = {"Fase1","TechnicalCare","Diagnostico"}) 
 	public void tearDown2() {
 		driver.switchTo().defaultContent();
 		driver.findElement(By.id("tsidButton")).click();
@@ -45,7 +45,7 @@ public class diagnosis extends TestBase {
 		driver.quit();
 	}
 	
-	@BeforeClass(groups = "TechnicalCare") 
+	@BeforeClass(groups = {"Fase1","TechnicalCare","Diagnostico"}) 
 	public void init() throws Exception
 	{
 		this.driver = setConexion.setupEze();
@@ -67,7 +67,7 @@ public class diagnosis extends TestBase {
 	     try {Thread.sleep(15000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 	}
 
-	@AfterMethod(groups = "TechnicalCare") 
+	@AfterMethod(groups = {"Fase1","TechnicalCare","Diagnostico"}) 
 	public void tearDown() {
 
 		driver.switchTo().defaultContent();
@@ -86,7 +86,7 @@ public class diagnosis extends TestBase {
 
 	}
 
-	@BeforeMethod(groups = "TechnicalCare") 
+	@BeforeMethod(groups = {"Fase1","TechnicalCare","Diagnostico"}) 
 	public void setUp() throws Exception {
 		 Accounts accountPage = new Accounts(driver);
 	     //Selecciono Vista Tech
@@ -322,7 +322,7 @@ public class diagnosis extends TestBase {
 		goToLeftPanel2(driver, "Cuentas");
 	}*/
 
-	@Test(groups = "TechnicalCare") 
+	@Test(groups = {"Fase1","TechnicalCare","Diagnostico"}) 
 	public void TS6256_Boton_Ejecutar_Grisado_Chequeo() {
 		//actually checks if not visible, it ist greyed out.
 		Accounts accountPage = new Accounts(driver);
@@ -343,7 +343,7 @@ public class diagnosis extends TestBase {
 
 	}
 	
-	@Test(groups = "TechnicalCare") 
+	@Test(groups = {"Fase1","TechnicalCare","Diagnostico"}) 
 	public void TS6269_Habilitado_Al_Seleccionar_Motivo_Y_Sintoma() {
 		Accounts accountPage = new Accounts(driver);
 		try {Thread.sleep(8000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
@@ -368,7 +368,7 @@ public class diagnosis extends TestBase {
 
 	}
 
-	@Test(groups = "TechnicalCare") 
+	@Test(groups = {"Fase1","TechnicalCare","Diagnostico"}) 
 	public void TS6320_Visualizar_Motivo_de_Contacto_Y_Sintoma() {
 		Accounts accountPage = new Accounts(driver);
 		try {Thread.sleep(8000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
@@ -394,26 +394,26 @@ public class diagnosis extends TestBase {
 
 	}
 	//Incidentes masivos
-	/*@Test(groups = "TechnicalCare") 
+	/*@Test(groups = {"Fase1","TechnicalCare","Diagnostico"}) 
 	public void TS6395_NoiseLine() {
 		
 	}
-	 @Test(groups = "TechnicalCare") 
+	 @Test(groups = {"Fase1","TechnicalCare","Diagnostico"}) 
 	public void TS6396_Interrumption(){
 		
 	}*/
 	/* Rreportes-diagnostico
-	@Test(groups = "TechnicalCare") 
+	@Test(groups = {"Fase1","TechnicalCare","Diagnostico"}) 
 	public void TS6398_MotiveSintom(){
 		
 	}
 	
-	@Test(groups = "TechnicalCare") 
+	@Test(groups = {"Fase1","TechnicalCare","Diagnostico"}) 
 	public void TS6399_MotiveSintomVisulization() {
 		
 	}*/
 	
-	@Test(groups = "TechnicalCare") 
+	@Test(groups = {"Fase1","TechnicalCare","Diagnostico"}) 
 	public void TS6400_MobileServices() {
 		Accounts accountPage = new Accounts(driver);
 		try {Thread.sleep(8000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
@@ -429,7 +429,7 @@ public class diagnosis extends TestBase {
 		BenBoton.click();//debe ser terminado cuando tech sirva
 		
 	}
-	@Test(groups = "TechnicalCare") 
+	@Test(groups = {"Fase1","TechnicalCare","Diagnostico"}) 
 	public void TS6403_DownDownTooltip() {
 		Accounts accountPage = new Accounts(driver);
 		try {Thread.sleep(8000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
@@ -445,7 +445,7 @@ public class diagnosis extends TestBase {
 		BenBoton.click(); //debe ser terminado cuando tech sirva
 		
 	}
-	@Test(groups = "TechnicalCare") 
+	@Test(groups = {"Fase1","TechnicalCare","Diagnostico"}) 
 	public void TS6405_LogicError() {
 		Accounts accountPage = new Accounts(driver);
 		try {Thread.sleep(8000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
@@ -462,7 +462,7 @@ public class diagnosis extends TestBase {
 		
 	}
 
-	@Test(groups = "TechnicalCare") 
+	@Test(groups = {"Fase1","TechnicalCare","Diagnostico"}) 
 	public void TS6410_Ingreso_A_Tech_Care_Desde_La_Vista_360() {
 		driver.switchTo().defaultContent();
 		Accounts accPage = new Accounts(driver);
@@ -474,7 +474,7 @@ public class diagnosis extends TestBase {
 		
 	}
 	
-	@Test(groups = "TechnicalCare") 
+	@Test(groups = {"Fase1","TechnicalCare","Diagnostico"}) 
 	public void TS6484_NoService() {
 		Accounts accountPage = new Accounts(driver);
 		try {Thread.sleep(8000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}

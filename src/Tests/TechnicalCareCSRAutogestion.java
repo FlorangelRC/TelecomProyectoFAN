@@ -109,7 +109,7 @@ public class TechnicalCareCSRAutogestion extends TestBase {
 		 try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}   
 		 driver.findElement(By.cssSelector(".slds-input.actionSearch.ng-pristine.ng-untouched.ng-valid.ng-empty")).clear();
 		 driver.findElement(By.cssSelector(".slds-input.actionSearch.ng-pristine.ng-untouched.ng-valid.ng-empty")).sendKeys("autogesti");
-		List<WebElement> butons = driver.findElements(By.xpath("//*[text() = 'Diagnóstico de Autogestión']"));
+		List<WebElement> butons = driver.findElements(By.xpath("//*[text() = 'Diagn\u00f3stico de Autogesti\u00f3n']"));
 		assertTrue(butons.get(0).isDisplayed());
 		driver.switchTo().defaultContent();
 	}
@@ -117,7 +117,7 @@ public class TechnicalCareCSRAutogestion extends TestBase {
 	@Test(groups = {"TechnicalCare", "Autogestion"})
 	public void TS51150_Autogestion_Verificacion_De_La_Existencia_Interfaz_De_Autogestion() {
 		Accounts accountPage = new Accounts(driver);
-		accountPage.findAndClickButton("autogestión");
+		accountPage.findAndClickButton("autogesti\u00f3n");
 		try {Thread.sleep(8000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 		driver.switchTo().defaultContent();
 		driver.switchTo().frame(accountPage.getFrameForElement(driver, By.id("SelfManagementStep_nextBtn")));
@@ -140,7 +140,7 @@ public class TechnicalCareCSRAutogestion extends TestBase {
 	@Test(groups = {"TechnicalCare", "Autogestion"})
 	public void TS51151_Autogestion_Verificacion_Del_Canal() {
 		Accounts accountPage = new Accounts(driver);
-		accountPage.findAndClickButton("autogestión");
+		accountPage.findAndClickButton("autogesti\u00f3n");
 		try {Thread.sleep(8000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 		driver.switchTo().defaultContent();
 		driver.switchTo().frame(accountPage.getFrameForElement(driver, By.id("SelfManagementStep_nextBtn")));
@@ -150,7 +150,7 @@ public class TechnicalCareCSRAutogestion extends TestBase {
 	@Test(groups = {"TechnicalCare", "Autogestion"})
 	public void TS51152_Autogestion_Verificacion_Del_Servicio() {
 		Accounts accountPage = new Accounts(driver);
-		accountPage.findAndClickButton("autogestión");
+		accountPage.findAndClickButton("autogesti\u00f3n");
 		try {Thread.sleep(8000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 		driver.switchTo().defaultContent();
 		driver.switchTo().frame(accountPage.getFrameForElement(driver, By.id("SelfManagementStep_nextBtn")));
@@ -160,7 +160,7 @@ public class TechnicalCareCSRAutogestion extends TestBase {
 	@Test(groups = {"TechnicalCare", "Autogestion"})
 	public void TS51153_Autogestion_Verificacion_De_Lista_Canal_Y_Servicios() {
 		Accounts accountPage = new Accounts(driver);
-		accountPage.findAndClickButton("autogestión");
+		accountPage.findAndClickButton("autogesti\u00f3n");
 		try {Thread.sleep(10000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 		driver.switchTo().defaultContent();
 		driver.switchTo().frame(accountPage.getFrameForElement(driver, By.id("SelfManagementStep_nextBtn")));
@@ -175,7 +175,7 @@ public class TechnicalCareCSRAutogestion extends TestBase {
 	@Test(groups = {"TechnicalCare", "Autogestion"})
 	public void TS51154_Autogestion_Verificacion_Del_Servicio_Asterisco_111() {
 		Accounts accountPage = new Accounts(driver);
-		accountPage.findAndClickButton("autogestión");
+		accountPage.findAndClickButton("autogesti\u00f3n");
 		try {Thread.sleep(8000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 		driver.switchTo().defaultContent();
 		driver.switchTo().frame(accountPage.getFrameForElement(driver, By.id("SelfManagementStep_nextBtn")));
@@ -190,7 +190,7 @@ public class TechnicalCareCSRAutogestion extends TestBase {
 	@Test(groups = {"TechnicalCare", "Autogestion"})
 	public void TS51155_Autogestion_Verificacion_Del_Servicio_Asterisco_878() {
 		Accounts accountPage = new Accounts(driver);
-		accountPage.findAndClickButton("autogestión");
+		accountPage.findAndClickButton("autogesti\u00f3n");
 		try {Thread.sleep(8000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 		driver.switchTo().defaultContent();
 		driver.switchTo().frame(accountPage.getFrameForElement(driver, By.id("SelfManagementStep_nextBtn")));
@@ -205,7 +205,7 @@ public class TechnicalCareCSRAutogestion extends TestBase {
 	@Test(groups = {"TechnicalCare", "Autogestion"})
 	public void TS51156_Autogestion_Verificacion_Del_Servicio_Asterisco_150() {
 		Accounts accountPage = new Accounts(driver);
-		accountPage.findAndClickButton("autogestión");
+		accountPage.findAndClickButton("autogesti\u00f3n");
 		try {Thread.sleep(8000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 		driver.switchTo().defaultContent();
 		driver.switchTo().frame(accountPage.getFrameForElement(driver, By.id("SelfManagementStep_nextBtn")));
@@ -220,7 +220,7 @@ public class TechnicalCareCSRAutogestion extends TestBase {
 	@Test(groups = {"TechnicalCare", "Autogestion"})
 	public void TS51157_Autogestion_Verificacion_Del_Servicio_Asterisco_152() {
 		Accounts accountPage = new Accounts(driver);
-		accountPage.findAndClickButton("autogestión");
+		accountPage.findAndClickButton("autogesti\u00f3n");
 		try {Thread.sleep(10000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 		driver.switchTo().defaultContent();
 		driver.switchTo().frame(accountPage.getFrameForElement(driver, By.id("SelfManagementStep_nextBtn")));
@@ -235,7 +235,7 @@ public class TechnicalCareCSRAutogestion extends TestBase {
 	@Test(groups = {"TechnicalCare", "Autogestion"})
 	public void TS51158_Autogestion_Verificacion_Del_Servicio_Asterisco_2582() {
 		Accounts accountPage = new Accounts(driver);
-		accountPage.findAndClickButton("autogestión");
+		accountPage.findAndClickButton("autogesti\u00f3n");
 		try {Thread.sleep(12000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 		driver.switchTo().defaultContent();
 		driver.switchTo().frame(accountPage.getFrameForElement(driver, By.id("SelfManagementStep_nextBtn")));
@@ -250,7 +250,7 @@ public class TechnicalCareCSRAutogestion extends TestBase {
 	@Test(groups = {"TechnicalCare", "Autogestion"})
 	public void TS51159_Autogestion_Verificacion_Del_Servicio_Asterisco_25225() {
 		Accounts accountPage = new Accounts(driver);
-		accountPage.findAndClickButton("autogestión");
+		accountPage.findAndClickButton("autogesti\u00f3n");
 		try {Thread.sleep(12000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 		driver.switchTo().defaultContent();
 		driver.switchTo().frame(accountPage.getFrameForElement(driver, By.id("SelfManagementStep_nextBtn")));
@@ -265,7 +265,7 @@ public class TechnicalCareCSRAutogestion extends TestBase {
 	@Test(groups = {"TechnicalCare", "Autogestion"})
 	public void TS51160_Autogestion_Verificacion_Del_Servicio_Asterisco_25283() {
 		Accounts accountPage = new Accounts(driver);
-		accountPage.findAndClickButton("autogestión");
+		accountPage.findAndClickButton("autogesti\u00f3n");
 		try {Thread.sleep(12000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 		driver.switchTo().defaultContent();
 		driver.switchTo().frame(accountPage.getFrameForElement(driver, By.id("SelfManagementStep_nextBtn")));
@@ -280,7 +280,7 @@ public class TechnicalCareCSRAutogestion extends TestBase {
 	@Test(groups = {"TechnicalCare", "Autogestion"})
 	public void TS51161_Autogestion_Verificacion_Del_Servicio_Asterisco_77666() {
 		Accounts accountPage = new Accounts(driver);
-		accountPage.findAndClickButton("autogestión");
+		accountPage.findAndClickButton("autogesti\u00f3n");
 		try {Thread.sleep(12000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 		driver.switchTo().defaultContent();
 		driver.switchTo().frame(accountPage.getFrameForElement(driver, By.id("SelfManagementStep_nextBtn")));
@@ -295,7 +295,7 @@ public class TechnicalCareCSRAutogestion extends TestBase {
 	@Test(groups = {"TechnicalCare", "Autogestion"})
 	public void TS51163_Autogestion_Verificacion_Del_Servicio_Asterisco_7526() {
 		Accounts accountPage = new Accounts(driver);
-		accountPage.findAndClickButton("autogestión");
+		accountPage.findAndClickButton("autogesti\u00f3n");
 		try {Thread.sleep(10000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 		driver.switchTo().defaultContent();
 		driver.switchTo().frame(accountPage.getFrameForElement(driver, By.id("SelfManagementStep_nextBtn")));
@@ -310,7 +310,7 @@ public class TechnicalCareCSRAutogestion extends TestBase {
 	@Test(groups = {"TechnicalCare", "Autogestion"})
 	public void TS51164_Autogestion_Verificacion_Del_Servicio_Asterisco_2447() {
 		Accounts accountPage = new Accounts(driver);
-		accountPage.findAndClickButton("autogestión");
+		accountPage.findAndClickButton("autogesti\u00f3n");
 		try {Thread.sleep(12000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 		driver.switchTo().defaultContent();
 		driver.switchTo().frame(accountPage.getFrameForElement(driver, By.id("SelfManagementStep_nextBtn")));
@@ -325,7 +325,7 @@ public class TechnicalCareCSRAutogestion extends TestBase {
 	@Test(groups = {"TechnicalCare", "Autogestion"})
 	public void TS51165_Autogestion_Verificacion_Del_Servicio_Asterisco_333() {
 		Accounts accountPage = new Accounts(driver);
-		accountPage.findAndClickButton("autogestión");
+		accountPage.findAndClickButton("autogesti\u00f3n");
 		try {Thread.sleep(12000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 		driver.switchTo().defaultContent();
 		driver.switchTo().frame(accountPage.getFrameForElement(driver, By.id("SelfManagementStep_nextBtn")));
@@ -340,7 +340,7 @@ public class TechnicalCareCSRAutogestion extends TestBase {
 	@Test(groups = {"TechnicalCare", "Autogestion"})
 	public void TS51166_Autogestion_Verificacion_Del_Servicio_Asterisco_151() {
 		Accounts accountPage = new Accounts(driver);
-		accountPage.findAndClickButton("autogestión");
+		accountPage.findAndClickButton("autogesti\u00f3n");
 		try {Thread.sleep(12000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 		driver.switchTo().defaultContent();
 		driver.switchTo().frame(accountPage.getFrameForElement(driver, By.id("SelfManagementStep_nextBtn")));
@@ -355,7 +355,7 @@ public class TechnicalCareCSRAutogestion extends TestBase {
 	@Test(groups = {"TechnicalCare", "Autogestion"})
 	public void TS51167_Autogestion_Verificacion_Del_Servicio_Asterisco_767() {
 		Accounts accountPage = new Accounts(driver);
-		accountPage.findAndClickButton("autogestión");
+		accountPage.findAndClickButton("autogesti\u00f3n");
 		try {Thread.sleep(12000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 		driver.switchTo().defaultContent();
 		driver.switchTo().frame(accountPage.getFrameForElement(driver, By.id("SelfManagementStep_nextBtn")));
@@ -370,7 +370,7 @@ public class TechnicalCareCSRAutogestion extends TestBase {
 	@Test(groups = {"TechnicalCare", "Autogestion"})
 	public void TS51168_Autogestion_Verificacion_Del_Servicio_Asterisco_555() {
 		Accounts accountPage = new Accounts(driver);
-		accountPage.findAndClickButton("autogestión");
+		accountPage.findAndClickButton("autogesti\u00f3n");
 		try {Thread.sleep(10000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 		driver.switchTo().defaultContent();
 		driver.switchTo().frame(accountPage.getFrameForElement(driver, By.id("SelfManagementStep_nextBtn")));
@@ -385,7 +385,7 @@ public class TechnicalCareCSRAutogestion extends TestBase {
 	@Test(groups = {"TechnicalCare", "Autogestion"})
 	public void TS51169_Autogestion_Verificacion_Del_Servicio_Asterisco_99999() {
 		Accounts accountPage = new Accounts(driver);
-		accountPage.findAndClickButton("autogestión");
+		accountPage.findAndClickButton("autogesti\u00f3n");
 		try {Thread.sleep(10000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 		driver.switchTo().defaultContent();
 		driver.switchTo().frame(accountPage.getFrameForElement(driver, By.id("SelfManagementStep_nextBtn")));
@@ -400,7 +400,7 @@ public class TechnicalCareCSRAutogestion extends TestBase {
 	@Test(groups = {"TechnicalCare", "Autogestion"})
 	public void TS51170_Autogestion_Verificacion_Del_Servicio_Asterisco_88988() {
 		Accounts accountPage = new Accounts(driver);
-		accountPage.findAndClickButton("autogestión");
+		accountPage.findAndClickButton("autogesti\u00f3n");
 		try {Thread.sleep(10000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 		driver.switchTo().defaultContent();
 		driver.switchTo().frame(accountPage.getFrameForElement(driver, By.id("SelfManagementStep_nextBtn")));
@@ -415,7 +415,7 @@ public class TechnicalCareCSRAutogestion extends TestBase {
 	@Test(groups = {"TechnicalCare", "Autogestion"})
 	public void TS51171_Autogestion_Verificacion_Del_Servicio_Asterisco_910() {
 		Accounts accountPage = new Accounts(driver);
-		accountPage.findAndClickButton("autogestión");
+		accountPage.findAndClickButton("autogesti\u00f3n");
 		try {Thread.sleep(10000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 		driver.switchTo().defaultContent();
 		driver.switchTo().frame(accountPage.getFrameForElement(driver, By.id("SelfManagementStep_nextBtn")));
@@ -430,7 +430,7 @@ public class TechnicalCareCSRAutogestion extends TestBase {
 	@Test(groups = {"TechnicalCare", "Autogestion"})
 	public void TS51172_Autogestion_Asterisco_Verificacion_De_Opciones_De_Inconvenientes() {
 		Accounts accountPage = new Accounts(driver);
-		accountPage.findAndClickButton("autogestión");
+		accountPage.findAndClickButton("autogesti\u00f3n");
 		try {Thread.sleep(8000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 		driver.switchTo().defaultContent();
 		driver.switchTo().frame(accountPage.getFrameForElement(driver, By.id("SelfManagementStep_nextBtn")));
@@ -450,8 +450,8 @@ public class TechnicalCareCSRAutogestion extends TestBase {
 	@Test(groups = {"TechnicalCare", "Autogestion"})
 	public void TS51173_Autogestion_Verificacion_Lista_De_Inconvenientes_Asterisco_111() {
 		Accounts accountPage = new Accounts(driver);
-		accountPage.findAndClickButton("autogestión");
-		String[] todos = {"otros","la caracteristica no existe","la linea esta muda","llamada fallo","tono ocupado","la llamada se cae","informa sistema fuera de servicio","informacion incorrecta","inconv con derivación a representante"};
+		accountPage.findAndClickButton("autogesti\u00f3n");
+		String[] todos = {"otros","la caracteristica no existe","la linea esta muda","llamada fallo","tono ocupado","la llamada se cae","informa sistema fuera de servicio","informacion incorrecta","inconv con derivaci\u00f3n a representante"};
 		try {Thread.sleep(8000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 		driver.switchTo().defaultContent();
 		driver.switchTo().frame(accountPage.getFrameForElement(driver, By.id("SelfManagementStep_nextBtn")));
@@ -476,7 +476,7 @@ public class TechnicalCareCSRAutogestion extends TestBase {
 	@Test(groups = {"TechnicalCare", "Autogestion"})
 	public void TS51174_Autogestion_Verificacion_Lista_De_Inconvenientes_Asterisco_878() {
 		Accounts accountPage = new Accounts(driver);
-		accountPage.findAndClickButton("autogestión");
+		accountPage.findAndClickButton("autogesti\u00f3n");
 		String[] todos = {"otros","la caracteristica no existe","la linea esta muda","llamada fallo","tono ocupado","la llamada se cae","informa sistema fuera de servicio","informacion incorrecta"};
 		try {Thread.sleep(8000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 		driver.switchTo().defaultContent();
@@ -495,7 +495,7 @@ public class TechnicalCareCSRAutogestion extends TestBase {
 	@Test(groups = {"TechnicalCare", "Autogestion"})
 	public void TS51175_Autogestion_Verificacion_Lista_De_Inconvenientes_Asterisco_150() {
 		Accounts accountPage = new Accounts(driver);
-		accountPage.findAndClickButton("autogestión");
+		accountPage.findAndClickButton("autogesti\u00f3n");
 		String[] todos = {"otros","la caracteristica no existe","la linea esta muda","llamada fallo","tono ocupado","la llamada se cae","informa sistema fuera de servicio","informacion incorrecta"};
 		try {Thread.sleep(8000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 		driver.switchTo().defaultContent();
@@ -515,7 +515,7 @@ public class TechnicalCareCSRAutogestion extends TestBase {
 	@Test(groups = {"TechnicalCare", "Autogestion"})
 	public void TS51176_Autogestion_Verificacion_Lista_De_Inconvenientes_Asterisco_152() {
 		Accounts accountPage = new Accounts(driver);
-		accountPage.findAndClickButton("autogestión");
+		accountPage.findAndClickButton("autogesti\u00f3n");
 		String[] todos = {"la caracteristica no existe","la linea esta muda","llamada fallo","tono ocupado","la llamada se cae","inconv. compra de packs","inconv alta nro. amigos","inconv datos de nr. amigos","informa sistema fuera de servicio","informacion incorrecta","otros ( para completar campo)"};//falta otros************
 		try {Thread.sleep(14000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 		driver.switchTo().defaultContent();
@@ -535,8 +535,8 @@ public class TechnicalCareCSRAutogestion extends TestBase {
 	@Test(groups = {"TechnicalCare", "Autogestion"})
 	public void TS51177_Autogestion_Verificacion_Lista_De_Inconvenientes_Asterisco_2582() {
 		Accounts accountPage = new Accounts(driver);
-		accountPage.findAndClickButton("autogestión");
-		String[] todos = {"la caracteristica no existe","la linea esta muda","llamada fallo","tono ocupado","la llamada se cae","inconv con derivación a representante","informa sistema fuera de servicio","informacion incorrecta","otros ( para completar campo)"};//falta otros************
+		accountPage.findAndClickButton("autogesti\u00f3n");
+		String[] todos = {"la caracteristica no existe","la linea esta muda","llamada fallo","tono ocupado","la llamada se cae","inconv con derivaci\u00f3n a representante","informa sistema fuera de servicio","informacion incorrecta","otros ( para completar campo)"};//falta otros************
 		try {Thread.sleep(14000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 		driver.switchTo().defaultContent();
 		driver.switchTo().frame(accountPage.getFrameForElement(driver, By.id("SelfManagementStep_nextBtn")));
@@ -556,8 +556,8 @@ public class TechnicalCareCSRAutogestion extends TestBase {
 	@Test(groups = {"TechnicalCare", "Autogestion"})
 	public void TS51179_Autogestion_Verificacion_Lista_De_Inconvenientes_Asterisco_25225() {
 		Accounts accountPage = new Accounts(driver);
-		accountPage.findAndClickButton("autogestión");
-		String[] todos = {"la caracteristica no existe","la linea esta muda","llamada fallo","tono ocupado","la llamada se cae","inconv con derivación a representante","informa sistema fuera de servicio","informacion incorrecta"};//falta otros************
+		accountPage.findAndClickButton("autogesti\u00f3n");
+		String[] todos = {"la caracteristica no existe","la linea esta muda","llamada fallo","tono ocupado","la llamada se cae","inconv con derivaci\u00f3n a representante","informa sistema fuera de servicio","informacion incorrecta"};//falta otros************
 		try {Thread.sleep(14000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 		driver.switchTo().defaultContent();
 		driver.switchTo().frame(accountPage.getFrameForElement(driver, By.id("SelfManagementStep_nextBtn")));
@@ -576,7 +576,7 @@ public class TechnicalCareCSRAutogestion extends TestBase {
 	@Test(groups = {"TechnicalCare", "Autogestion"})
 	public void TS51180_Autogestion_Verificacion_Lista_De_Inconvenientes_Asterisco_25283() {
 		Accounts accountPage = new Accounts(driver);
-		accountPage.findAndClickButton("autogestión");
+		accountPage.findAndClickButton("autogesti\u00f3n");
 		String[] todos = {"la caracteristica no existe","la linea esta muda","llamada fallo","tono ocupado","la llamada se cae","no valida contraseña","informa sistema fuera de servicio","informacion incorrecta","otros ( para completar campo)"};//falta otros************
 		try {Thread.sleep(14000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 		driver.switchTo().defaultContent();
@@ -596,7 +596,7 @@ public class TechnicalCareCSRAutogestion extends TestBase {
 	@Test(groups = {"TechnicalCare", "Autogestion"})
 	public void TS51181_Autogestion_Verificacion_Lista_De_Inconvenientes_Asterisco_77666() {
 		Accounts accountPage = new Accounts(driver);
-		accountPage.findAndClickButton("autogestión");
+		accountPage.findAndClickButton("autogesti\u00f3n");
 		String[] todos = {"la caracteristica no existe","la linea esta muda","llamada fallo","tono ocupado","la llamada se cae","informa sistema fuera de servicio","informacion incorrecta","otros ( para completar campo)"};//falta otros************
 		try {Thread.sleep(14000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 		driver.switchTo().defaultContent();
@@ -615,7 +615,7 @@ public class TechnicalCareCSRAutogestion extends TestBase {
 	@Test(groups = {"TechnicalCare", "Autogestion"})
 	public void TS51182_Autogestion_Verificacion_Lista_De_Inconvenientes_Asterisco_7526() {
 		Accounts accountPage = new Accounts(driver);
-		accountPage.findAndClickButton("autogestión");
+		accountPage.findAndClickButton("autogesti\u00f3n");
 		String[] todos = {"la caracteristica no existe","la linea esta muda","llamada fallo","tono ocupado","la llamada se cae","informa sistema fuera de servicio","informacion incorrecta","otros ( para completar campo)"};//falta otros************
 		try {Thread.sleep(14000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 		driver.switchTo().defaultContent();
@@ -634,7 +634,7 @@ public class TechnicalCareCSRAutogestion extends TestBase {
 	@Test(groups = {"TechnicalCare", "Autogestion"})
 	public void TS51183_Autogestion_Verificacion_Lista_De_Inconvenientes_Asterisco_2447() {
 		Accounts accountPage = new Accounts(driver);
-		accountPage.findAndClickButton("autogestión");
+		accountPage.findAndClickButton("autogesti\u00f3n");
 		String[] todos = {"la caracteristica no existe","la linea esta muda","llamada fallo","tono ocupado","la llamada se cae","informa sistema fuera de servicio","informacion incorrecta","otros ( para completar campo)"};//falta otros************
 		try {Thread.sleep(14000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 		driver.switchTo().defaultContent();
@@ -653,7 +653,7 @@ public class TechnicalCareCSRAutogestion extends TestBase {
 	@Test(groups = {"TechnicalCare", "Autogestion"})
 	public void TS51184_Autogestion_Verificacion_Lista_De_Inconvenientes_Asterisco_333() {
 		Accounts accountPage = new Accounts(driver);
-		accountPage.findAndClickButton("autogestión");
+		accountPage.findAndClickButton("autogesti\u00f3n");
 		String[] todos = {"la caracteristica no existe","la linea esta muda","llamada fallo","tono ocupado","la llamada se cae","inconv recarga delivery","informa sistema fuera de servicio","informacion incorrecta","otros ( para completar campo)"};//falta otros************
 		try {Thread.sleep(14000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 		driver.switchTo().defaultContent();
@@ -672,7 +672,7 @@ public class TechnicalCareCSRAutogestion extends TestBase {
 	@Test(groups = {"TechnicalCare", "Autogestion"})
 	public void TS51185_Autogestion_Verificacion_Lista_De_Inconvenientes_Asterisco_151() {
 		Accounts accountPage = new Accounts(driver);
-		accountPage.findAndClickButton("autogestión");
+		accountPage.findAndClickButton("autogesti\u00f3n");
 		String[] todos = {"la caracteristica no existe","la linea esta muda","llamada fallo","tono ocupado","la llamada se cae","inconv quema de pin saldo","inconv quema de pin sms","inconv recarga con tc","informa sistema fuera de servicio","informacion incorrecta","otros ( para completar campo)"};//falta otros************
 		try {Thread.sleep(14000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 		driver.switchTo().defaultContent();
@@ -692,7 +692,7 @@ public class TechnicalCareCSRAutogestion extends TestBase {
 	@Test(groups = {"TechnicalCare", "Autogestion"})
 	public void TS51186_Autogestion_Verificacion_Lista_De_Inconvenientes_Asterisco_767() {
 		Accounts accountPage = new Accounts(driver);
-		accountPage.findAndClickButton("autogestión");
+		accountPage.findAndClickButton("autogesti\u00f3n");
 		String[] todos = {"la caracteristica no existe","la linea esta muda","llamada fallo","tono ocupado","la llamada se cae","inconv con recarga sos","informa sistema fuera de servicio","informacion incorrecta","otros ( para completar campo)"};//falta otros************
 		try {Thread.sleep(14000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 		driver.switchTo().defaultContent();
@@ -712,7 +712,7 @@ public class TechnicalCareCSRAutogestion extends TestBase {
 	@Test(groups = {"TechnicalCare", "Autogestion"})
 	public void TS51187_Autogestion_Verificacion_Lista_De_Inconvenientes_Asterisco_555() {
 		Accounts accountPage = new Accounts(driver);
-		accountPage.findAndClickButton("autogestión");
+		accountPage.findAndClickButton("autogesti\u00f3n");
 		String[] todos = {"la caracteristica no existe","la linea esta muda","llamada fallo","tono ocupado","la llamada se cae","informa sistema fuera de servicio","informacion incorrecta","otros ( para completar campo)"};//falta otros************
 		try {Thread.sleep(14000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 		driver.switchTo().defaultContent();
@@ -732,8 +732,8 @@ public class TechnicalCareCSRAutogestion extends TestBase {
 	@Test(groups = {"TechnicalCare", "Autogestion"})
 	public void TS51188_Autogestion_Verificacion_Lista_De_Inconvenientes_Asterisco_99999() {
 		Accounts accountPage = new Accounts(driver);
-		accountPage.findAndClickButton("autogestión");
-		String[] todos = {"la caracteristica no existe","la linea esta muda","llamada fallo","tono ocupado","la llamada se cae","informa sistema fuera de servicio","inconv con derivación a representante","informacion incorrecta","otros ( para completar campo)"};//falta otros************
+		accountPage.findAndClickButton("autogesti\u00f3n");
+		String[] todos = {"la caracteristica no existe","la linea esta muda","llamada fallo","tono ocupado","la llamada se cae","informa sistema fuera de servicio","inconv con derivaci\u00f3n a representante","informacion incorrecta","otros ( para completar campo)"};//falta otros************
 		try {Thread.sleep(14000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 		driver.switchTo().defaultContent();
 		driver.switchTo().frame(accountPage.getFrameForElement(driver, By.id("SelfManagementStep_nextBtn")));
@@ -752,8 +752,8 @@ public class TechnicalCareCSRAutogestion extends TestBase {
 	@Test(groups = {"TechnicalCare", "Autogestion"})
 	public void TS51189_Autogestion_Verificacion_Lista_De_Inconvenientes_Asterisco_88988() {
 		Accounts accountPage = new Accounts(driver);
-		accountPage.findAndClickButton("autogestión");
-		String[] todos = {"la caracteristica no existe","la linea esta muda","llamada fallo","tono ocupado","la llamada se cae","informa sistema fuera de servicio","inconv con derivación a representante","informacion incorrecta","otros ( para completar campo)"};//falta otros************
+		accountPage.findAndClickButton("autogesti\u00f3n");
+		String[] todos = {"la caracteristica no existe","la linea esta muda","llamada fallo","tono ocupado","la llamada se cae","informa sistema fuera de servicio","inconv con derivaci\u00f3n a representante","informacion incorrecta","otros ( para completar campo)"};//falta otros************
 		try {Thread.sleep(14000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 		driver.switchTo().defaultContent();
 		driver.switchTo().frame(accountPage.getFrameForElement(driver, By.id("SelfManagementStep_nextBtn")));
@@ -772,8 +772,8 @@ public class TechnicalCareCSRAutogestion extends TestBase {
 	@Test(groups = {"TechnicalCare", "Autogestion"})
 	public void TS51190_Autogestion_Verificacion_Lista_De_Inconvenientes_910() {
 		Accounts accountPage = new Accounts(driver);
-		accountPage.findAndClickButton("autogestión");
-		String[] todos = {"otros","la caracteristica no existe","la linea esta muda","llamada fallo","tono ocupado","la llamada se cae","informa sistema fuera de servicio","informacion incorrecta","inconv con derivación a representante"};
+		accountPage.findAndClickButton("autogesti\u00f3n");
+		String[] todos = {"otros","la caracteristica no existe","la linea esta muda","llamada fallo","tono ocupado","la llamada se cae","informa sistema fuera de servicio","informacion incorrecta","inconv con derivaci\u00f3n a representante"};
 		try {Thread.sleep(8000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 		driver.switchTo().defaultContent();
 		driver.switchTo().frame(accountPage.getFrameForElement(driver, By.id("SelfManagementStep_nextBtn")));
@@ -798,7 +798,7 @@ public class TechnicalCareCSRAutogestion extends TestBase {
 	@Test(groups = {"TechnicalCare", "Autogestion"})
 	public void TS51191_Autogestion_Verificacion_De_La_Seleccion_Canal_Asterisco_Y_Servicio_288() {
 		Accounts accountPage = new Accounts(driver);
-		accountPage.findAndClickButton("autogestión");
+		accountPage.findAndClickButton("autogesti\u00f3n");
 		try {Thread.sleep(8000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 		driver.switchTo().defaultContent();
 		driver.switchTo().frame(accountPage.getFrameForElement(driver, By.id("SelfManagementStep_nextBtn")));
@@ -813,7 +813,7 @@ public class TechnicalCareCSRAutogestion extends TestBase {
 	@Test(groups = {"TechnicalCare", "Autogestion"})
 	public void TS51195_Autogestion_Verificacion_Lista_De_Inconvenientes_288() {
 		Accounts accountPage = new Accounts(driver);
-		accountPage.findAndClickButton("autogestión");
+		accountPage.findAndClickButton("autogesti\u00f3n");
 		String[] todos = {"la caracteristica no existe","la linea esta muda","llamada fallo","tono ocupado","la llamada se cae","informa sistema fuera de servicio"};
 		try {Thread.sleep(14000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 		driver.switchTo().defaultContent();
@@ -833,8 +833,8 @@ public class TechnicalCareCSRAutogestion extends TestBase {
 	@Test(groups = {"TechnicalCare", "Autogestion"})
 	public void TS51196_Autogestion_Verificacion_De_La_Seleccion_Canal_Asterisco_Y_Servicio_788() {
 		Accounts accountPage = new Accounts(driver);
-		accountPage.findAndClickButton("autogestión");
-		try {Thread.sleep(8000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		accountPage.findAndClickButton("autogesti\u00f3n");
+		try {Thread.sleep(14000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 		driver.switchTo().defaultContent();
 		driver.switchTo().frame(accountPage.getFrameForElement(driver, By.id("SelfManagementStep_nextBtn")));
 		Select listSelect = new Select(driver.findElement(By.id("ChannelSelection")));
@@ -846,9 +846,69 @@ public class TechnicalCareCSRAutogestion extends TestBase {
 	}
 	
 	@Test(groups = {"TechnicalCare", "Autogestion"})
+	public void TS51198_Autogestion_Verificacion_De_La_Seleccion_Canal_Asterisco_Y_Servicio_120() {
+		Accounts accountPage = new Accounts(driver);
+		accountPage.findAndClickButton("autogesti\u00f3n");
+		try {Thread.sleep(14000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		driver.switchTo().defaultContent();
+		driver.switchTo().frame(accountPage.getFrameForElement(driver, By.id("SelfManagementStep_nextBtn")));
+		Select listSelect = new Select(driver.findElement(By.id("ChannelSelection")));
+		listSelect.selectByVisibleText("Otros Asteriscos");
+		try {Thread.sleep(2000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		listSelect = new Select(driver.findElement(By.id("ServiceSelection")));
+		listSelect.selectByVisibleText("*120 (cambio de numeracion)");
+	    assertTrue(listSelect.getFirstSelectedOption().getText().contains("*120"));
+	}
+	
+	@Test(groups = {"TechnicalCare", "Autogestion"})
+	public void TS51202_Autogestion_Verificacion_De_Inconveniente_Asterisco_237() {
+		Accounts accountPage = new Accounts(driver);
+		accountPage.findAndClickButton("autogesti\u00f3n");
+		try {Thread.sleep(14000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		driver.switchTo().defaultContent();
+		driver.switchTo().frame(accountPage.getFrameForElement(driver, By.id("SelfManagementStep_nextBtn")));
+		Select listSelect = new Select(driver.findElement(By.id("ChannelSelection")));
+		listSelect.selectByVisibleText("Otros Asteriscos");
+		try {Thread.sleep(2000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		listSelect = new Select(driver.findElement(By.id("ServiceSelection")));
+		listSelect.selectByVisibleText("*237 (Aerolineas Argentinas)");
+	    assertTrue(listSelect.getFirstSelectedOption().getText().contains("*237"));
+	}
+	
+	@Test(groups = {"TechnicalCare", "Autogestion"})
+	public void TS51208_Autogestion_Verificacion_De_Inconveniente_Asterisco_2484() {
+		Accounts accountPage = new Accounts(driver);
+		accountPage.findAndClickButton("autogesti\u00f3n");
+		try {Thread.sleep(14000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		driver.switchTo().defaultContent();
+		driver.switchTo().frame(accountPage.getFrameForElement(driver, By.id("SelfManagementStep_nextBtn")));
+		Select listSelect = new Select(driver.findElement(By.id("ChannelSelection")));
+		listSelect.selectByVisibleText("Otros Asteriscos");
+		try {Thread.sleep(2000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		listSelect = new Select(driver.findElement(By.id("ServiceSelection")));
+		listSelect.selectByVisibleText("*2484 (Citi)");
+	    assertTrue(listSelect.getFirstSelectedOption().getText().contains("*2484"));
+	}
+	
+	@Test(groups = {"TechnicalCare", "Autogestion"})
+	public void TS51210_Autogestion_Verificacion_De_La_Seleccion_Canal_Asterisco_Y_Servicio_272() {
+		Accounts accountPage = new Accounts(driver);
+		accountPage.findAndClickButton("autogesti\u00f3n");
+		try {Thread.sleep(14000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		driver.switchTo().defaultContent();
+		driver.switchTo().frame(accountPage.getFrameForElement(driver, By.id("SelfManagementStep_nextBtn")));
+		Select listSelect = new Select(driver.findElement(By.id("ChannelSelection")));
+		listSelect.selectByVisibleText("Otros Asteriscos");
+		try {Thread.sleep(2000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		listSelect = new Select(driver.findElement(By.id("ServiceSelection")));
+		listSelect.selectByVisibleText("*272 (Buquebus)");
+	    assertTrue(listSelect.getFirstSelectedOption().getText().contains("*272"));
+	}
+	
+	@Test(groups = {"TechnicalCare", "Autogestion"})
 	public void TS51211_Autogestion_Verificacion_De_Inconveniente_Asterisco_272() {
 		Accounts accountPage = new Accounts(driver);
-		accountPage.findAndClickButton("autogestión");
+		accountPage.findAndClickButton("autogesti\u00f3n");
 		String[] todos = {"la caracteristica no existe","la linea esta muda","llamada fallo","tono ocupado","la llamada se cae","informa sistema fuera de servicio"};
 		try {Thread.sleep(14000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 		driver.switchTo().defaultContent();
@@ -866,9 +926,24 @@ public class TechnicalCareCSRAutogestion extends TestBase {
 	}
 	
 	@Test(groups = {"TechnicalCare", "Autogestion"})
+	public void TS51212_Autogestion_Verificacion_De_Inconveniente_Asterisco_27638() {
+		Accounts accountPage = new Accounts(driver);
+		accountPage.findAndClickButton("autogesti\u00f3n");
+		try {Thread.sleep(14000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		driver.switchTo().defaultContent();
+		driver.switchTo().frame(accountPage.getFrameForElement(driver, By.id("SelfManagementStep_nextBtn")));
+		Select listSelect = new Select(driver.findElement(By.id("ChannelSelection")));
+		listSelect.selectByVisibleText("Otros Asteriscos");
+		try {Thread.sleep(2000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		listSelect = new Select(driver.findElement(By.id("ServiceSelection")));
+		listSelect.selectByVisibleText("*27638 (Arnet)");
+	    assertTrue(listSelect.getFirstSelectedOption().getText().contains("*27638"));
+	}
+	
+	@Test(groups = {"TechnicalCare", "Autogestion"})
 	public void TS51224_Autogestion_Verificacion_De_La_Seleccion_Canal_Nros_De_Emergencia_Y_Servicio_100() {
 		Accounts accountPage = new Accounts(driver);
-		accountPage.findAndClickButton("autogestión");
+		accountPage.findAndClickButton("autogesti\u00f3n");
 		try {Thread.sleep(8000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 		driver.switchTo().defaultContent();
 		driver.switchTo().frame(accountPage.getFrameForElement(driver, By.id("SelfManagementStep_nextBtn")));
@@ -883,7 +958,7 @@ public class TechnicalCareCSRAutogestion extends TestBase {
 	@Test(groups = {"TechnicalCare", "Autogestion"})
 	public void TS51226_Autogestion_Verificacion_De_La_Seleccion_Canal_Nros_De_Emergencia_Y_Servicio_101() {
 		Accounts accountPage = new Accounts(driver);
-		accountPage.findAndClickButton("autogestión");
+		accountPage.findAndClickButton("autogesti\u00f3n");
 		try {Thread.sleep(8000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 		driver.switchTo().defaultContent();
 		driver.switchTo().frame(accountPage.getFrameForElement(driver, By.id("SelfManagementStep_nextBtn")));
@@ -898,7 +973,7 @@ public class TechnicalCareCSRAutogestion extends TestBase {
 	@Test(groups = {"TechnicalCare", "Autogestion"})
 	public void TS51228_Autogestion_Verificacion_De_La_Seleccion_Canal_Nros_De_Emergencia_Y_Servicio_102() {
 		Accounts accountPage = new Accounts(driver);
-		accountPage.findAndClickButton("autogestión");
+		accountPage.findAndClickButton("autogesti\u00f3n");
 		try {Thread.sleep(8000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 		driver.switchTo().defaultContent();
 		driver.switchTo().frame(accountPage.getFrameForElement(driver, By.id("SelfManagementStep_nextBtn")));
@@ -913,7 +988,7 @@ public class TechnicalCareCSRAutogestion extends TestBase {
 	@Test(groups = {"TechnicalCare", "Autogestion"})
 	public void TS51230_Autogestion_Verificacion_De_La_Seleccion_Canal_Nros_De_Emergencia_Y_Servicio_103() {
 		Accounts accountPage = new Accounts(driver);
-		accountPage.findAndClickButton("autogestión");
+		accountPage.findAndClickButton("autogesti\u00f3n");
 		try {Thread.sleep(14000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 		driver.switchTo().defaultContent();
 		driver.switchTo().frame(accountPage.getFrameForElement(driver, By.id("SelfManagementStep_nextBtn")));
@@ -928,7 +1003,7 @@ public class TechnicalCareCSRAutogestion extends TestBase {
 	@Test(groups = {"TechnicalCare", "Autogestion"})
 	public void TS51232_Autogestion_Verificacion_De_La_Seleccion_Canal_Nros_De_Emergencia_Y_Servicio_106() {
 		Accounts accountPage = new Accounts(driver);
-		accountPage.findAndClickButton("autogestión");
+		accountPage.findAndClickButton("autogesti\u00f3n");
 		try {Thread.sleep(14000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 		driver.switchTo().defaultContent();
 		driver.switchTo().frame(accountPage.getFrameForElement(driver, By.id("SelfManagementStep_nextBtn")));
@@ -943,7 +1018,7 @@ public class TechnicalCareCSRAutogestion extends TestBase {
 	@Test(groups = {"TechnicalCare", "Autogestion"})
 	public void TS51234_Autogestion_Verificacion_De_La_Seleccion_Canal_Nros_De_Emergencia_Y_Servicio_107() {
 		Accounts accountPage = new Accounts(driver);
-		accountPage.findAndClickButton("autogestión");
+		accountPage.findAndClickButton("autogesti\u00f3n");
 		try {Thread.sleep(14000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 		driver.switchTo().defaultContent();
 		driver.switchTo().frame(accountPage.getFrameForElement(driver, By.id("SelfManagementStep_nextBtn")));
@@ -958,7 +1033,7 @@ public class TechnicalCareCSRAutogestion extends TestBase {
 	@Test(groups = {"TechnicalCare", "Autogestion"})
 	public void TS51236_Autogestion_Verificacion_De_La_Seleccion_Canal_Nros_De_Emergencia_Y_Servicio_131() {
 		Accounts accountPage = new Accounts(driver);
-		accountPage.findAndClickButton("autogestión");
+		accountPage.findAndClickButton("autogesti\u00f3n");
 		try {Thread.sleep(8000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 		driver.switchTo().defaultContent();
 		driver.switchTo().frame(accountPage.getFrameForElement(driver, By.id("SelfManagementStep_nextBtn")));
@@ -973,7 +1048,7 @@ public class TechnicalCareCSRAutogestion extends TestBase {
 	@Test(groups = {"TechnicalCare", "Autogestion"})
 	public void TS51238_Autogestion_Verificacion_De_La_Seleccion_Canal_Nros_De_Emergencia_Y_Servicio_136() {
 		Accounts accountPage = new Accounts(driver);
-		accountPage.findAndClickButton("autogestión");
+		accountPage.findAndClickButton("autogesti\u00f3n");
 		try {Thread.sleep(8000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 		driver.switchTo().defaultContent();
 		driver.switchTo().frame(accountPage.getFrameForElement(driver, By.id("SelfManagementStep_nextBtn")));
@@ -988,7 +1063,7 @@ public class TechnicalCareCSRAutogestion extends TestBase {
 	@Test(groups = {"TechnicalCare", "Autogestion"})
 	public void TS51240_Autogestion_Verificacion_De_La_Seleccion_Canal_Nros_De_Emergencia_Y_Servicio_911() {
 		Accounts accountPage = new Accounts(driver);
-		accountPage.findAndClickButton("autogestión");
+		accountPage.findAndClickButton("autogesti\u00f3n");
 		try {Thread.sleep(14000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 		driver.switchTo().defaultContent();
 		driver.switchTo().frame(accountPage.getFrameForElement(driver, By.id("SelfManagementStep_nextBtn")));
@@ -1001,10 +1076,30 @@ public class TechnicalCareCSRAutogestion extends TestBase {
 	}
 	
 	@Test(groups = {"TechnicalCare", "Autogestion"})
+	public void TS51245_Autogestion_Verificacion_Lista_De_Inconvenientes_Canal_0800_Servicio_08004444434() {
+		Accounts accountPage = new Accounts(driver);
+		accountPage.findAndClickButton("autogesti\u00f3n");
+		String[] todos = {"informacion incorrecta","la caracteristica no existe","la linea esta muda","llamada fallo","tono ocupado","la llamada se cae","informa sistema fuera de servicio","inconv con derivaci\u00f3n a representante","no valida contraseña","otros ( para completar este campo)"};//falta ,"otros ( para completar este campo)"
+		try {Thread.sleep(14000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		driver.switchTo().defaultContent();
+		driver.switchTo().frame(accountPage.getFrameForElement(driver, By.id("SelfManagementStep_nextBtn")));
+		Select listSelect = new Select(driver.findElement(By.id("ChannelSelection")));
+		listSelect.selectByVisibleText("0800");
+		try {Thread.sleep(1000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		listSelect = new Select(driver.findElement(By.id("ServiceSelection")));
+		listSelect.selectByVisibleText("0800-444-4434 (BAM)");
+		try {Thread.sleep(1000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+	    listSelect = new Select(driver.findElement(By.id("MotiveSelection")));
+	    List<WebElement> motivos = listSelect.getOptions();
+	    assertTrue(verificarContenidoLista(todos,motivos));
+
+	}
+	
+	@Test(groups = {"TechnicalCare", "Autogestion"})
 	public void TS51252_Autogestion_Verificacion_Lista_De_Inconvenientes_Canal_Web_Servicio_Servicios() {
 		Accounts accountPage = new Accounts(driver);
-		accountPage.findAndClickButton("autogestión");
-		String[] todos = {"modulo caído","sitio caído","información incompleta","informacion incorrecta","inconveniente para alta de fol","incon.  alta de nros. amigos","inconveniente para alta da","no envía configuración","no informa pin y puk","inconveniente con informe de pago", "incon.con compra de packs","otros"};//falta ,"otros"
+		accountPage.findAndClickButton("autogesti\u00f3n");
+		String[] todos = {"modulo caído","sitio caído","informaci\u00f3n incompleta","informacion incorrecta","inconveniente para alta de fol","incon.  alta de nros. amigos","inconveniente para alta da","no envía configuraci\u00f3n","no informa pin y puk","inconveniente con informe de pago", "incon.con compra de packs","otros"};//falta ,"otros"
 		try {Thread.sleep(14000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 		driver.switchTo().defaultContent();
 		driver.switchTo().frame(accountPage.getFrameForElement(driver, By.id("SelfManagementStep_nextBtn")));
@@ -1023,8 +1118,8 @@ public class TechnicalCareCSRAutogestion extends TestBase {
 	@Test(groups = {"TechnicalCare", "Autogestion"})
 	public void TS51266_Autogestion_Verificacion_Lista_De_Inconvenientes_Canal_Web_Servicio_Tienda_On_Line() {
 		Accounts accountPage = new Accounts(driver);
-		accountPage.findAndClickButton("autogestión");
-		String[] todos = {"modulo caído","sitio caído","información incompleta","informacion incorrecta","inconveniente para alta de fol","incon.  alta de nros. amigos","inconveniente para alta da","no envía configuración","no informa pin y puk","inconveniente con informe de pago", "incon.con compra de packs","otros"};//falta ,"otros"
+		accountPage.findAndClickButton("autogesti\u00f3n");
+		String[] todos = {"modulo caído","sitio caído","informaci\u00f3n incompleta","informacion incorrecta","inconveniente para alta de fol","incon.  alta de nros. amigos","inconveniente para alta da","no envía configuraci\u00f3n","no informa pin y puk","inconveniente con informe de pago", "incon.con compra de packs","otros"};//falta ,"otros"
 		try {Thread.sleep(14000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 		driver.switchTo().defaultContent();
 		driver.switchTo().frame(accountPage.getFrameForElement(driver, By.id("SelfManagementStep_nextBtn")));
@@ -1043,8 +1138,8 @@ public class TechnicalCareCSRAutogestion extends TestBase {
 	@Test(groups = {"TechnicalCare", "Autogestion"})
 	public void TS51280_Autogestion_Verificacion_Lista_De_Inconvenientes_Canal_Web_Servicio_Personal_Black() {
 		Accounts accountPage = new Accounts(driver);
-		accountPage.findAndClickButton("autogestión");
-		String[] todos = {"modulo caído","sitio caído","información incompleta","informacion incorrecta","inconveniente para alta de fol","incon.  alta de nros. amigos","inconveniente para alta da","no envía configuración","no informa pin y puk","inconveniente con informe de pago", "incon.con compra de packs","otros"};//falta ,"otros"
+		accountPage.findAndClickButton("autogesti\u00f3n");
+		String[] todos = {"modulo caído","sitio caído","informaci\u00f3n incompleta","informacion incorrecta","inconveniente para alta de fol","incon.  alta de nros. amigos","inconveniente para alta da","no envía configuraci\u00f3n","no informa pin y puk","inconveniente con informe de pago", "incon.con compra de packs","otros"};//falta ,"otros"
 		try {Thread.sleep(14000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 		driver.switchTo().defaultContent();
 		driver.switchTo().frame(accountPage.getFrameForElement(driver, By.id("SelfManagementStep_nextBtn")));
@@ -1063,8 +1158,8 @@ public class TechnicalCareCSRAutogestion extends TestBase {
 	@Test(groups = {"TechnicalCare", "Autogestion"})
 	public void TS51282_Autogestion_Verificacion_Lista_De_Inconvenientes_Canal_Web_Servicio_Contacto_Chat() {
 		Accounts accountPage = new Accounts(driver);
-		accountPage.findAndClickButton("autogestión");
-		String[] todos = {"modulo caído","sitio caído","información incompleta","inconveniente para alta de fol","incon.  alta de nros. amigos","inconv con derivación a representante","inconveniente para alta da","no envía configuración","no informa pin y puk","inconveniente con informe de pago","incon.con compra de packs","informacion incorrecta","otros"};//falta ,"informacion incorrecta","otros"
+		accountPage.findAndClickButton("autogesti\u00f3n");
+		String[] todos = {"modulo caído","sitio caído","informaci\u00f3n incompleta","inconveniente para alta de fol","incon.  alta de nros. amigos","inconv con derivaci\u00f3n a representante","inconveniente para alta da","no envía configuraci\u00f3n","no informa pin y puk","inconveniente con informe de pago","incon.con compra de packs","informacion incorrecta","otros"};//falta ,"informacion incorrecta","otros"
 		try {Thread.sleep(15000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 		driver.switchTo().defaultContent();
 		driver.switchTo().frame(accountPage.getFrameForElement(driver, By.id("SelfManagementStep_nextBtn")));
@@ -1083,8 +1178,8 @@ public class TechnicalCareCSRAutogestion extends TestBase {
 	@Test(groups = {"TechnicalCare", "Autogestion"})
 	public void TS51284_Autogestion_Verificacion_Lista_De_Inconvenientes_Canal_App_Servicio_Mi_Facturacion() {
 		Accounts accountPage = new Accounts(driver);
-		accountPage.findAndClickButton("autogestión");
-		String[] todos = {"abre aplicación y cierra automáticamente","información incompleta","informacion incorrecta","inconvenientes con informa pago","inconv. compra de packs","otros"};//falta "otros"
+		accountPage.findAndClickButton("autogesti\u00f3n");
+		String[] todos = {"abre aplicaci\u00f3n y cierra automáticamente","informaci\u00f3n incompleta","informacion incorrecta","inconvenientes con informa pago","inconv. compra de packs","otros"};//falta "otros"
 		try {Thread.sleep(14000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 		driver.switchTo().defaultContent();
 		driver.switchTo().frame(accountPage.getFrameForElement(driver, By.id("SelfManagementStep_nextBtn")));
@@ -1103,8 +1198,8 @@ public class TechnicalCareCSRAutogestion extends TestBase {
 	@Test(groups = {"TechnicalCare", "Autogestion"})
 	public void TS51286_Autogestion_APP_Mi_Linea_Visualizacion_De_Lista_De_Inconvenientes() {
 		Accounts accountPage = new Accounts(driver);
-		accountPage.findAndClickButton("autogestión");
-		String[] todos = {"otros","inconvenientes con informa pago","informacion incorrecta","información incompleta","inconv. compra de packs","abre aplicación y cierra automáticamente"};
+		accountPage.findAndClickButton("autogesti\u00f3n");
+		String[] todos = {"otros","inconvenientes con informa pago","informacion incorrecta","informaci\u00f3n incompleta","inconv. compra de packs","abre aplicaci\u00f3n y cierra automáticamente"};
 		try {Thread.sleep(8000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 		driver.switchTo().defaultContent();
 		driver.switchTo().frame(accountPage.getFrameForElement(driver, By.id("SelfManagementStep_nextBtn")));
@@ -1125,7 +1220,7 @@ public class TechnicalCareCSRAutogestion extends TestBase {
 		}
 	}
 	
-	@Test(groups = "TechnicalCare")
+	@Test(groups = {"TechnicalCare","Muleto"})
 	public void TS51071_Muleto_Verificacion_De_La_Seleccion_Entrega_De_Muleto() {
 		Accounts accountPage = new Accounts(driver);
 		accountPage.findAndClickButton("muleto");
@@ -1138,7 +1233,7 @@ public class TechnicalCareCSRAutogestion extends TestBase {
 		
 	}
 	
-	@Test(groups = "TechnicalCare")
+	@Test(groups = {"TechnicalCare","Muleto"})
 	public void TS51072_Muleto_Verificacion_De_La_Seleccion_Devolucion_De_Muleto() {
 		Accounts accountPage = new Accounts(driver);
 		accountPage.findAndClickButton("muleto");
@@ -1151,7 +1246,7 @@ public class TechnicalCareCSRAutogestion extends TestBase {
 		
 	}
 	
-	@Test(groups = "TechnicalCare")
+	@Test(groups = {"TechnicalCare","Muleto"})
 	public void TS51073_Muleto_Visualizacion_Campo_DNI_Para_Entrega_De_Muleto() {
 		Accounts accountPage = new Accounts(driver);
 		accountPage.findAndClickButton("muleto");
@@ -1169,7 +1264,7 @@ public class TechnicalCareCSRAutogestion extends TestBase {
 		assertTrue(driver.findElement(By.id("DocumentNumber")).isDisplayed());
 	}
 	
-	@Test(groups = "TechnicalCare")
+	@Test(groups = {"TechnicalCare","Muleto"})
 	public void TS51112_Muleto_Verificacion_Ingreso_Del_DNI_Para_Entrega_De_Muleto() {
 		Accounts accountPage = new Accounts(driver);
 		accountPage.findAndClickButton("muleto");
@@ -1205,7 +1300,7 @@ public class TechnicalCareCSRAutogestion extends TestBase {
 		driver.findElement(By.id("DocumentNumber")).sendKeys("37373737");
 	}*/
 	
-	@Test(groups = "TechnicalCare")
+	@Test(groups = {"TechnicalCare","Muleto"})
 	public void TS51107_Muleto_Verificacion_Del_Ingreso_De_Un_Texto_No_Mayor_A_255_Caracteres() {
 		Accounts accountPage = new Accounts(driver);
 		accountPage.findAndClickButton("muleto");
@@ -1236,7 +1331,7 @@ public class TechnicalCareCSRAutogestion extends TestBase {
 		assertTrue(driver.findElement(By.cssSelector(".slds-form-element.vlc-flex.vlc-slds-text-area.ng-scope.ng-valid-minlength.ng-valid-required.ng-dirty.ng-valid-parse.ng-invalid.ng-invalid-maxlength")).findElement(By.cssSelector(".error.ng-scope")).getText().toLowerCase().equals("longitud máxima de 255"));
 	}
 	
-	@Test(groups = "TechnicalCare")
+	@Test(groups = {"TechnicalCare","Muleto"})
 	public void TS51113_Muleto_Verificacion_Ingreso_Del_DNI_Para_Devolucion_De_Muleto() {
 		Accounts accountPage = new Accounts(driver);
 		accountPage.findAndClickButton("muleto");
