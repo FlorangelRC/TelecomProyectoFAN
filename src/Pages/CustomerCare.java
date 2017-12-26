@@ -428,6 +428,7 @@ public class CustomerCare extends BasePage {
 		driver.switchTo().frame(cambioFrameByID.getFrameForElement(driver, By.name("fcf")));
 		driver.findElement(By.id("00B41000001CfyR_listSelect")).click();
 		field.selectByVisibleText("Mis Casos");
+		try {Thread.sleep(10000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}	
 	}
 	
 	

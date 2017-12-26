@@ -14,6 +14,7 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.ui.Select;
 
 import org.testng.Assert;
@@ -134,6 +135,8 @@ public class CustomerCareFase2 extends TestBase {
 	@Test(groups = {"CustomerCare", "Vista360Layout"})
 	public void TS14570_Busqueda_de_Transacciones_Filtrar_Por_Numero_de_Caso() {
 		CustomerCare page = new CustomerCare(driver);
+		driver.findElement(By.id("phSearchInput")).clear();
+		try {Thread.sleep(3000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 		page.usarbuscadorsalesforce("00003035");
 		try {Thread.sleep(10000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 		BasePage cambioFrameByID = new BasePage();
@@ -528,7 +531,7 @@ public class CustomerCareFase2 extends TestBase {
 		page.elegircuenta("aaaaFernando Care");
 		page.elegircaso();
 		try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
-		page.ElementPresent(driver.findElement(By.cssSelector(".x-grid3-hd-inner.x-grid3-hd-00Nc0000001iLah")));
+		Assert.assertTrue(driver.findElement(By.cssSelector(".x-grid3-hd-inner.x-grid3-hd-00Nc0000001iLah")).isDisplayed());
 		driver.switchTo().defaultContent();
 	}
 
@@ -1097,9 +1100,12 @@ public class CustomerCareFase2 extends TestBase {
 	@Test(groups = {"CustomerCare", "AdministraciónDeCasos"})
 	public void TS14601_Case_Management__Casos_Ordernados_Por_Tipos_Vista_Todos_Los_Casos_Abiertos(){
 		 Accounts accountPage = new Accounts(driver);
+		 CustomerCare page = new CustomerCare(driver);
+		 page.cerrarultimapestaña();
 	     driver.switchTo().defaultContent();
 	     goToLeftPanel2(driver, "Casos");
 	     accountPage.accountSelect("Todos Los Casos Abiertos");
+	     try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 	     assertTrue(driver.findElement(By.cssSelector(".x-panel.x-grid-panel")).isDisplayed());
 	}
 	
@@ -1152,17 +1158,18 @@ public class CustomerCareFase2 extends TestBase {
 	public void TS14569_360_View_360_View_Capacidades_De_Busqueda_Filtrar_Por_Billing_Account(){
 		Accounts accountPage = new Accounts(driver);
 		driver.switchTo().defaultContent();
-		//driver.switchTo().frame(accountPage.getFrameForElement(driver, By.id("phSearchInput")));
-		driver.findElement(By.id("phSearchInput")).sendKeys("aaaaFernando Care Billin");
+		driver.findElement(By.id("phSearchInput")).clear();
 		try {Thread.sleep(3000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		driver.findElement(By.id("phSearchInput")).sendKeys("aaaaFernando Care Billin");
+		try {Thread.sleep(10000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 		driver.switchTo().defaultContent();
 		driver.findElement(By.id("phSearchInput:group0:option0")).click();
-		try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		try {Thread.sleep(10000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 		try {driver.switchTo().alert().accept();}catch(org.openqa.selenium.NoAlertPresentException e) {}
-		try {Thread.sleep(2000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 		driver.switchTo().defaultContent();
 		driver.switchTo().frame(accountPage.getFrameForElement(driver, By.id("topButtonRow")));
-		assertTrue(driver.findElement(By.className("mainTitle")).getText().equals("Detalle de Cuenta"));		
+		assertTrue(driver.findElement(By.className("mainTitle")).getText().equals("Detalle de Cuenta"));
 	}
 	
 	
@@ -1232,30 +1239,18 @@ public class CustomerCareFase2 extends TestBase {
 	
 	@Test(groups = {"CustomerCare", "AdministraciónDeCasos"})
 	public void TS15961_360_View_Ver_Equipo_Creador_En_Case_Usuario_Cambia_De_Equipo_Nuevo_Caso_Se_Modifica_El_Campo_Equipo_Del_Creador() throws ParseException{
-		 Accounts accountPage = new Accounts(driver);
-		 Date date1 = new Date();
-	     driver.switchTo().defaultContent();
-	     SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy"); 
-	     try {
-			date1 = sdf.parse("24/11/2017");
-	     } catch (ParseException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-	     }
-	     goToLeftPanel2(driver, "Casos");
-	     accountPage.accountSelect("Mis Casos");
-	     driver.switchTo().defaultContent();
-	     driver.switchTo().frame(accountPage.getFrameForElement(driver, By.className("x-grid3-body")));
-	     List<WebElement> TodosCasos = driver.findElement(By.className("x-grid3-body")).findElements(By.className("x-grid3-row"));
-	     TodosCasos.remove(0);
-	     for (WebElement UnC : TodosCasos) {
-	    	 String fecha = UnC.findElements(By.tagName("td")).get(12).findElement(By.tagName("div")).getText();
-	    	 fecha = fecha.split(" ")[0];
-	    	 if (date1.compareTo(sdf.parse(fecha))<=0) {
-	    		 System.out.println("Equipo: "+UnC.findElements(By.tagName("td")).get(10).findElement(By.tagName("div")).getText());
-	    		 assertTrue(UnC.findElements(By.tagName("td")).get(10).findElement(By.tagName("div")).getText().equals("Cubo magico team"));
-	    		 break;
-	    	 }    	 
-	     }     
+		CustomerCare page = new CustomerCare(driver);
+		page.cerrarultimapestaña();
+		page.elegircaso();
+		BasePage cambioFrameByID = new BasePage();
+		driver.switchTo().frame(cambioFrameByID.getFrameForElement(driver, By.cssSelector(".x-grid3-col.x-grid3-cell.x-grid3-td-CASES_CASE_NUMBER")));
+		List <WebElement> caso = driver.findElements(By.cssSelector(".x-grid3-col.x-grid3-cell.x-grid3-td-CASES_CASE_NUMBER"));
+		caso.get(0).click();
+		try {Thread.sleep(10000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();} 
+		driver.switchTo().defaultContent();
+		Actions action = new Actions(driver);
+		WebElement element = driver.findElement(By.cssSelector(".dataCol.col02.inlineEditWrite"));
+		action.doubleClick(element).perform();
+		
 	}
 }
