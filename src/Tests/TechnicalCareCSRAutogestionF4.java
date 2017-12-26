@@ -29,7 +29,7 @@ public class TechnicalCareCSRAutogestionF4 extends TestBase{
 	{
 		this.driver = setConexion.setupEze();
 		try {Thread.sleep(4000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
-		login(driver);
+		loginMarcela(driver);
 		try {Thread.sleep(3000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 		goInitToConsolaFanF3(driver);
 	    try {Thread.sleep(3000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
@@ -56,7 +56,7 @@ public class TechnicalCareCSRAutogestionF4 extends TestBase{
 		sleep(1000);
 	}
 	
-	//@AfterMethod(groups= {"Fase4","TechnicalCare", "Autogestion"})
+	@AfterMethod(groups= {"Fase4","TechnicalCare", "Autogestion"})
 	public void after() {
 		try {Thread.sleep(2000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 		driver.switchTo().defaultContent(); 
@@ -65,7 +65,7 @@ public class TechnicalCareCSRAutogestionF4 extends TestBase{
 	    driver.switchTo().defaultContent(); 
 	}
 	
-	//@AfterClass(groups= {"Fase4","TechnicalCare", "Autogestion"})
+	@AfterClass(groups= {"Fase4","TechnicalCare", "Autogestion"})
 	public void tearDown() {
 		HomeBase homePage = new HomeBase(driver);
 		sleep(1000);
