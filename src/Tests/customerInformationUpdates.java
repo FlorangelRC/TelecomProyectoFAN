@@ -189,6 +189,7 @@ public class customerInformationUpdates extends TestBase {
 	@Test(groups = {"CustomerCare", "ActualizarDatos"})
 	public void TS7155_validateBirthDateHasAYearPicker() {
 		driver.findElement(By.id("Birthdate")).click();
+		try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 		Assert.assertTrue(driver.findElement(By.cssSelector(".datepicker.-bottom-left-.-from-bottom-")).isDisplayed());
 		driver.findElement(By.id("ClientInformation_nextBtn")).click();
 	}
@@ -432,14 +433,14 @@ public class customerInformationUpdates extends TestBase {
 		page.modifyCuil();
 		Assert.assertTrue(page.notchansgetopname());		
 	}
-	
-	
+		
 	@Test(groups = {"CustomerCare", "ActualizarDatos"})
 		public void TS7208_Profile_Changes_Cambios_En_La_Informacion_Del_Cliente_Validar_Caracteres_Campo_Email(){
 		driver.findElement(By.id("Email")).clear();
 		driver.findElement(By.id("Email")).sendKeys("pruebapruebapruebapruebapruebapruebapruebapruebapruebapruebaprueb@telecom");
 		String CM = driver.findElement(By.id("Email")).getAttribute("class");
 		assertTrue(CM.equals("slds-input form-control ng-touched ng-dirty ng-invalid ng-not-empty ng-invalid-email ng-valid-required ng-invalid-remove ng-valid-email-add ng-invalid-email-remove"));
+		driver.findElement(By.id("ClientInformation_nextBtn")).click();
 	}
 	
 	@Test(groups = {"CustomerCare", "ActualizarDatos"})
@@ -466,64 +467,63 @@ public class customerInformationUpdates extends TestBase {
 		assertTrue(driver.findElement(By.cssSelector(".x-grid3-row.x-grid3-row-first")).findElements(By.tagName("td")).get(4).findElement(By.tagName("span")).getText().toLowerCase().equals("actualización de datos"));
 		assertTrue(driver.findElement(By.cssSelector(".x-grid3-row.x-grid3-row-first")).findElement(By.cssSelector(".x-grid3-cell-inner.x-grid3-col-CASES_STATUS")).getText().toLowerCase().equals("nuevo"));
 	}
-	
-	/*
+		
 	@Test(groups = {"CustomerCare", "ActualizarDatos"})
 	public void TS7205_Cambios_en_la_Informacion_del_Cliente_Validar_Caracteres_Campo_Apellido() {
-		driver.switchTo().defaultContent();
-		try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
-		List<WebElement> frame6 = driver.findElements(By.tagName("iframe"));		
-		driver.switchTo().frame(frame6.get(4));
-		waitFor(driver, (By.id("FirstName")));
-		customerInformation page = new customerInformation(driver);
-		Assert.assertTrue(page.validarlimitecaracterapellido());
+		driver.findElement(By.id("LastName")).clear();
+		driver.findElement(By.id("LastName")).sendKeys("aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa");
+		try {Thread.sleep(3000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();} 
+		Assert.assertTrue(driver.findElement(By.xpath("//*[@id=\"a1zc0000003XKPMAA4-4\"]/div[1]/div/child[3]/div/ng-form/div[2]/div[2]/div/div[2]/small[8]")).isDisplayed());
+		driver.findElement(By.id("ClientInformation_nextBtn")).click();
 	}
 	
 	@Test(groups = {"CustomerCare", "ActualizarDatos"})
 	public void TS7210_Cambios_en_la_Informacion_del_Cliente_Telefono_Alternativo_No_permite_letras() {
-		driver.switchTo().defaultContent();
-		try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
-		List<WebElement> frame6 = driver.findElements(By.tagName("iframe"));		
-		driver.switchTo().frame(frame6.get(4));
-		waitFor(driver, (By.id("FirstName")));
-		customerInformation page = new customerInformation(driver);
-		Assert.assertTrue(page.validarcaractertelefonoalternativo());
-
+		driver.findElement(By.id("OtherPhone")).clear();
+		driver.findElement(By.id("OtherPhone")).sendKeys("aaaaaaaaaa");
+		Assert.assertTrue(driver.findElement(By.xpath("//*[@id=\"a1zc0000003XKPMAA4-4\"]/div[1]/div/child[14]/div/ng-form/div[2]/div[2]/div/div[2]")).isDisplayed());
+		driver.findElement(By.id("ClientInformation_nextBtn")).click();
 	}
+	
 	@Test(groups = {"CustomerCare", "ActualizarDatos"})
 	public void TS7209_Cambios_en_la_Informacion_del_Cliente_Telefono_Movil_No_permite_letras() {
-		driver.switchTo().defaultContent();
-		try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
-		List<WebElement> frame6 = driver.findElements(By.tagName("iframe"));		
-		driver.switchTo().frame(frame6.get(4));
-		customerInformation page = new customerInformation(driver);
-		Assert.assertTrue(page.validarcaractermovilalternativo());
-
+		driver.findElement(By.id("MobilePhone")).clear();
+		driver.findElement(By.id("MobilePhone")).sendKeys("aaaaaaaaaaa");
+		Assert.assertTrue(driver.findElement(By.xpath("//*[@id=\"a1zc0000003XKPMAA4-4\"]/div[1]/div/child[11]/div/ng-form/div[2]/div[2]/div/div[2]")).isDisplayed());
+		driver.findElement(By.id("ClientInformation_nextBtn")).click();
 	}
 	
-	@Test(groups = {"CustomerCare", "ActualizarDatos"})
-	public void TS7151_Cambios_en_la_Informacion_del_Cliente_Validar_Nombre_Apellido_Que_tengan_caracteres_especiales() {
-		driver.switchTo().defaultContent();
-		try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
-		List<WebElement> frame6 = driver.findElements(By.tagName("iframe"));		
-		driver.switchTo().frame(frame6.get(4));
-		customerInformation page = new customerInformation(driver);
-		Assert.assertTrue(page.validarcaracterespecialesNyA());
-
-	}
 	@Test(groups = {"CustomerCare", "ActualizarDatos"})
 	public void TS12282_Reseteo_de_Claves_Manejo_de_la_Clave_Visualizar_Boton_Reseteo_Clave() {
-		driver.switchTo().defaultContent();
-		customerInformation page = new customerInformation(driver);
-		page.validacionbtnreseteodeclave();
+		BasePage cambioFrameByID=new BasePage();
+	    driver.switchTo().frame(cambioFrameByID.getFrameForElement(driver, By.className("profile-edit")));
+		List <WebElement> element = driver.findElements(By.className("profile-edit"));
+		boolean a = false;
+		for (WebElement x : element) {
+			if (x.getText().toLowerCase().contains("reseteo clave")) {
+				a = true;
+			}
+		}
+		Assert.assertTrue(a);
+		driver.switchTo().frame(cambioFrameByID.getFrameForElement(driver, By.id("LastName")));
+		driver.findElement(By.id("ClientInformation_nextBtn")).click();
 	}
 	
-	@Test(groups = {"CustomerCare", "ActualizarDatos"})//noterminado
+	/*@Test(groups = {"CustomerCare", "ActualizarDatos"}) //No reconoce los 5 digitos de codigo de area
 	public void TS7161_Cambios_en_la_Informacion_del_Cliente_Validar_Teléfono_Movil_5_digitos_Codigo_de_area() {
-		driver.switchTo().defaultContent();
-		customerInformation page = new customerInformation(driver);
-		page.EntrarEditarPerfil();
-		page.ValidarDigitosDelMovil();	
+		BasePage cambioFrameByID=new BasePage();
+	    driver.switchTo().frame(cambioFrameByID.getFrameForElement(driver, By.id("ClientInformation_nextBtn")));
+	    Assert.assertTrue(false);
+	    driver.findElement(By.id("ClientInformation_nextBtn")).click();
 	}
-	*/
+	
+	@Test(groups = {"CustomerCare", "ActualizarDatos"}) //No valida el error de los caracteres especiales
+	public void TS7151_Cambios_en_la_Informacion_del_Cliente_Validar_Nombre_Apellido_Que_tengan_caracteres_especiales() {
+		driver.findElement(By.id("FirstName")).clear();
+	    driver.findElement(By.id("LastName")).clear();
+		driver.findElement(By.id("FirstName")).sendKeys("/*!#$");
+	    driver.findElement(By.id("LastName")).sendKeys("/*!#$");
+	    Assert.assertTrue(false);
+	    driver.findElement(By.id("ClientInformation_nextBtn")).click();
+	}*/
 }

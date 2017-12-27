@@ -14,7 +14,6 @@ import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
-
 import Pages.Accounts;
 import Pages.BasePage;
 import Pages.CustomerCare;
@@ -26,7 +25,7 @@ public class CustomerCare_Mattu extends TestBase{
 	
 	//-------------------------------------------------------------------------------------------------
 	//@Befor&After
-	@BeforeClass (groups = "CustomerCare")
+	@BeforeClass (groups = {"CustomerCare", "ProblemasConRecargas", "ActualizarDatos", "DetalleDeConsumos", "Vista360Layout"})
     public void init() throws Exception
     {
         this.driver = setConexion.setupEze();
@@ -44,17 +43,17 @@ public class CustomerCare_Mattu extends TestBase{
             driver.findElement(By.xpath("//a[@href=\'/console?tsid=02uc0000000D6Hd\']")).click();
         }
     }    
-    @BeforeMethod (groups= "Fase2")
+    @BeforeMethod (groups = {"CustomerCare", "ProblemasConRecargas", "ActualizarDatos", "DetalleDeConsumos", "Vista360Layout"})
     public void setup(){
         try {Thread.sleep(4000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
         CustomerCare page = new CustomerCare(driver);
         page.cerrarultimapestaña();
     }
-    @AfterClass(groups = "CustomerCare")
+    /*@AfterClass (groups = {"CustomerCare", "ProblemasConRecargas", "ActualizarDatos", "DetalleDeConsumos", "Vista360Layout"})
     public void quit() {
       driver.quit();
       sleep(4000);
-    }
+    }*/
     
     //-------------------------------------------------------------------------------------------------
     //TCC = 1
@@ -62,7 +61,7 @@ public class CustomerCare_Mattu extends TestBase{
 	public void TS_38553_Problems_with_Refills_Problemas_con_Recargas_Medio_de_recarga_PIN_Ingresa_15_dígitos() {
 		CustomerCare CP = new CustomerCare (driver);
 		try {Thread.sleep(15000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();} 
-		CP.elegircuenta("Fernando Care");
+		CP.elegircuenta("aaaaFernando Care");
 		try {Thread.sleep(15000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}  
 	    BasePage cambioFrameByID=new BasePage();
 	    driver.switchTo().defaultContent();
@@ -104,7 +103,7 @@ public class CustomerCare_Mattu extends TestBase{
 	public void TS_37554_Problems_with_Refills_Problemas_con_Recargas_Medio_de_recarga_PIN_Ingresa_16_dígitos() {
 		CustomerCare CP = new CustomerCare (driver);
 		try {Thread.sleep(15000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();} 
-		CP.elegircuenta("Fernando Care");
+		CP.elegircuenta("aaaaFernando Care");
 		try {Thread.sleep(15000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}  
 	    BasePage cambioFrameByID=new BasePage();
 	    driver.switchTo().defaultContent();
@@ -146,7 +145,7 @@ public class CustomerCare_Mattu extends TestBase{
 	public void TS_37555_Problems_with_Refills_Problemas_con_Recargas_Medio_de_recarga_PIN_Ingresa_17_dígitos() {
 		CustomerCare CP = new CustomerCare (driver);
 		try {Thread.sleep(15000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();} 
-		CP.elegircuenta("Fernando Care");
+		CP.elegircuenta("aaaaFernando Care");
 		try {Thread.sleep(15000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}  
 	    BasePage cambioFrameByID=new BasePage();
 	    driver.switchTo().defaultContent();
@@ -188,7 +187,7 @@ public class CustomerCare_Mattu extends TestBase{
 	public void TS_37556_Problems_with_Refills_Problemas_con_Recargas_Medio_de_recarga_PIN_Ingresa_letras() {
 		CustomerCare CP = new CustomerCare (driver);
 		try {Thread.sleep(15000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();} 
-		CP.elegircuenta("Fernando Care");
+		CP.elegircuenta("aaaaFernando Care");
 		try {Thread.sleep(15000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}  
 	    BasePage cambioFrameByID=new BasePage();
 	    driver.switchTo().defaultContent();
@@ -230,7 +229,7 @@ public class CustomerCare_Mattu extends TestBase{
 	public void TS_37536_Problems_with_Refills_Problemas_con_Recargas_Medio_de_recarga_Seleccionar_Tarjeta_Pre_Paga_PIN_Invisible() {
 		CustomerCare CP = new CustomerCare (driver);
 		try {Thread.sleep(15000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();} 
-		CP.elegircuenta("Fernando Care");
+		CP.elegircuenta("aaaaFernando Care");
 		try {Thread.sleep(15000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}  
 	    BasePage cambioFrameByID=new BasePage();
 	    driver.switchTo().defaultContent();
@@ -275,7 +274,7 @@ public class CustomerCare_Mattu extends TestBase{
 	public void TS_37549_Problems_with_Refills_Problemas_con_Recargas_Recarga_sin_PIN_Gestión_pendiente_Recarga_sin_PIN_Lote_Ingresa_15_dígitos() {
 		CustomerCare CP = new CustomerCare (driver);
 		try {Thread.sleep(15000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();} 
-		CP.elegircuenta("Fernando Care");
+		CP.elegircuenta("aaaaFernando Care");
 		try {Thread.sleep(15000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}  
 	    BasePage cambioFrameByID=new BasePage();
 	    driver.switchTo().defaultContent();
@@ -317,7 +316,7 @@ public class CustomerCare_Mattu extends TestBase{
 	public void TS_37550_Problems_with_Refills_Problemas_con_Recargas_Recarga_sin_PIN_Gestión_pendiente_Recarga_sin_PIN_Lote_Ingresa_16_dígitos() {
 		CustomerCare CP = new CustomerCare (driver);
 		try {Thread.sleep(15000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();} 
-		CP.elegircuenta("Fernando Care");
+		CP.elegircuenta("aaaaFernando Care");
 		try {Thread.sleep(15000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}  
 	    BasePage cambioFrameByID=new BasePage();
 	    driver.switchTo().defaultContent();
@@ -359,7 +358,7 @@ public class CustomerCare_Mattu extends TestBase{
 	public void TS_37551_Problems_with_Refills_Problemas_con_Recargas_Recarga_sin_PIN_Gestión_pendiente_Recarga_sin_PIN_Lote_Ingresa_17_dígitos() {
 		CustomerCare CP = new CustomerCare (driver);
 		try {Thread.sleep(15000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();} 
-		CP.elegircuenta("Fernando Care");
+		CP.elegircuenta("aaaaFernando Care");
 		try {Thread.sleep(15000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}  
 	    BasePage cambioFrameByID=new BasePage();
 	    driver.switchTo().defaultContent();
@@ -401,7 +400,7 @@ public class CustomerCare_Mattu extends TestBase{
 	public void TS_37552_Problems_with_Refills_Problemas_con_Recargas_Recarga_sin_PIN_Gestión_pendiente_Recarga_sin_PIN_Lote_Ingresa_Letras() {
 		CustomerCare CP = new CustomerCare (driver);
 		try {Thread.sleep(15000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();} 
-		CP.elegircuenta("Fernando Care");
+		CP.elegircuenta("aaaaFernando Care");
 		try {Thread.sleep(15000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}  
 	    BasePage cambioFrameByID=new BasePage();
 	    driver.switchTo().defaultContent();
@@ -443,7 +442,7 @@ public class CustomerCare_Mattu extends TestBase{
 	public void TS_37331_Problems_with_Refills_UX_Tarjeta_de_Recarga_Pre_paga_Verificación_Visualizar_Botón_Cancelar() {
 		CustomerCare CP = new CustomerCare (driver);
 		try {Thread.sleep(15000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();} 
-		CP.elegircuenta("Fernando Care");
+		CP.elegircuenta("aaaaFernando Care");
 		try {Thread.sleep(15000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}  
 	    BasePage cambioFrameByID=new BasePage();
 	    driver.switchTo().defaultContent();
@@ -470,7 +469,7 @@ public class CustomerCare_Mattu extends TestBase{
 	public void TS_37338_Problems_with_Refills_UX_Tarjeta_de_Recarga_Pre_paga_Verificación_Visualizar_Botón_Consultar() {
 		CustomerCare CP = new CustomerCare (driver);
 		try {Thread.sleep(15000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();} 
-		CP.elegircuenta("Fernando Care");
+		CP.elegircuenta("aaaaFernando Care");
 		try {Thread.sleep(15000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}  
 	    BasePage cambioFrameByID=new BasePage();
 	    driver.switchTo().defaultContent();
@@ -497,7 +496,7 @@ public class CustomerCare_Mattu extends TestBase{
 	public void TS_37330_Problems_with_Refills_UX_Tarjeta_de_Recarga_Pre_paga_Verificación_Visualizar_panel_de_Steps() {
 		CustomerCare CP = new CustomerCare (driver);
 		try {Thread.sleep(15000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();} 
-		CP.elegircuenta("Fernando Care");
+		CP.elegircuenta("aaaaFernando Care");
 		try {Thread.sleep(15000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}  
 	    BasePage cambioFrameByID=new BasePage();
 	    driver.switchTo().defaultContent();
@@ -523,7 +522,7 @@ public class CustomerCare_Mattu extends TestBase{
 	public void TS38042_Profile_Changes_Validación_Correo_Electronico_Cuenta_Email_Existente(){
 	CustomerCare CP = new CustomerCare (driver);
 	try {Thread.sleep(10000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}	
-	CP.elegircuenta("Fernando Care");
+	CP.elegircuenta("aaaaFernando Care");
 	BasePage cambioFrameByID=new BasePage();
 	driver.switchTo().frame(cambioFrameByID.getFrameForElement(driver, By.className("profile-edit")));
 	List <WebElement> actualizar = driver.findElements(By.className("profile-edit"));
@@ -556,7 +555,7 @@ public class CustomerCare_Mattu extends TestBase{
 	public void TS38043_Profile_Changes_Validación_Correo_Electronico_Cuenta_Email_No_existente(){
 	 CustomerCare CP = new CustomerCare (driver);
 		try {Thread.sleep(10000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}	
-		CP.elegircuenta("Fernando Care");
+		CP.elegircuenta("aaaaFernando Care");
 	BasePage cambioFrameByID=new BasePage();
 	driver.switchTo().frame(cambioFrameByID.getFrameForElement(driver, By.className("profile-edit")));
 	List <WebElement> actualizar = driver.findElements(By.className("profile-edit"));
@@ -584,7 +583,7 @@ public class CustomerCare_Mattu extends TestBase{
 	public void TS38346_Consumption_Details_Detalle_de_consumos_Servicio_Pre_pago_Prepago_Muestra_los_ultimos_3_días() {
 		 CustomerCare CP = new CustomerCare (driver);
 			try {Thread.sleep(10000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}	
-			CP.elegircuenta("Fernando Care");
+			CP.elegircuenta("aaaaFernando Care");
 			try {Thread.sleep(10000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}	
 			BasePage cambioFrameByID=new BasePage();
 			driver.switchTo().defaultContent();
@@ -606,7 +605,7 @@ public class CustomerCare_Mattu extends TestBase{
 	public void TS38347_Consumption_Details_Detalle_de_consumos_Servicio_Pre_pago_Prepago_Visualizar_leyenda_Los_ultimos_3_días() {
 		 CustomerCare CP = new CustomerCare (driver);
 			try {Thread.sleep(10000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}	
-			CP.elegircuenta("Fernando Care");
+			CP.elegircuenta("aaaaFernando Care");
 			try {Thread.sleep(10000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}	
 			BasePage cambioFrameByID=new BasePage();
 			driver.switchTo().defaultContent();
@@ -630,7 +629,7 @@ public class CustomerCare_Mattu extends TestBase{
 	public void TS38410_360_View_Vista_360_de_facturación_clientes_individuos_Información_de_las_Cards_Visualizar_campos(){
 		 CustomerCare CP = new CustomerCare (driver);
 			try {Thread.sleep(10000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}	
-			CP.elegircuenta("Fernando Care");
+			CP.elegircuenta("aaaaFernando Care");
 			try {Thread.sleep(15000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}	
 			Accounts aAcc = new Accounts (driver);
 			aAcc.closeAccountServiceTabByName("Servicios");
@@ -653,7 +652,7 @@ public class CustomerCare_Mattu extends TestBase{
 	public void TS38440_360_View_360_Card_Servicio_Prepago_Flyout_AccionesCampañas() {
 		CustomerCare CP = new CustomerCare (driver);
 		try {Thread.sleep(10000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}	
-		CP.elegircuenta("Fernando Care");
+		CP.elegircuenta("aaaaFernando Care");
 		try {Thread.sleep(15000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}	
 		BasePage cambioFrameByID=new BasePage();
 		driver.switchTo().frame(cambioFrameByID.getFrameForElement(driver, By.cssSelector(".console-card.active")));
@@ -669,7 +668,7 @@ public class CustomerCare_Mattu extends TestBase{
 	public void TS38434_360_View_360_Card_Servicio_Prepago_Flyoutv_AccionesRecargar() {
 		 CustomerCare CP = new CustomerCare (driver);
 		try {Thread.sleep(10000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}	
-		CP.elegircuenta("Fernando Care");
+		CP.elegircuenta("aaaaFernando Care");
 		try {Thread.sleep(15000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}	
 		BasePage cambioFrameByID=new BasePage();
 		driver.switchTo().frame(cambioFrameByID.getFrameForElement(driver, By.cssSelector(".console-card.active")));
@@ -685,7 +684,7 @@ public class CustomerCare_Mattu extends TestBase{
 	public void TS38436_360_View_360_Card_Servicio_Prepago_Flyoutv_AccionesGestiones() {
 		CustomerCare CP = new CustomerCare (driver);
 		try {Thread.sleep(10000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}	
-		CP.elegircuenta("Fernando Care");
+		CP.elegircuenta("aaaaFernando Care");
 		try {Thread.sleep(15000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}	
 		BasePage cambioFrameByID=new BasePage();
 		driver.switchTo().frame(cambioFrameByID.getFrameForElement(driver, By.cssSelector(".console-card.active")));
@@ -701,7 +700,7 @@ public class CustomerCare_Mattu extends TestBase{
 	public void TS38612_Diseño_Seleccion_asset_Numero_de_linea_como_identificador_principal() {
 		CustomerCare CP = new CustomerCare (driver);
 		try {Thread.sleep(10000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}	
-		CP.elegircuenta("Fernando Care");
+		CP.elegircuenta("aaaaFernando Care");
 		try {Thread.sleep(10000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}	
 		BasePage cambioFrameByID=new BasePage();
 		driver.switchTo().frame(cambioFrameByID.getFrameForElement(driver, By.cssSelector(".header-right")));
