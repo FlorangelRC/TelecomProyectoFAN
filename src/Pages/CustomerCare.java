@@ -243,6 +243,13 @@ public class CustomerCare extends BasePage {
 		driver.switchTo().frame(panelDerecho.findElement(By.cssSelector("iframe")));
 	}
 	
+	public void panelIzquierdo() {
+		driver.switchTo().defaultContent();
+		WebElement panelIzquierdo = null;
+		panelIzquierdo = panelesLaterales.get(1);
+		driver.switchTo().frame(panelIzquierdo.findElement(By.cssSelector("iframe")));
+	}
+	
 	public void buscarGestion(String gest) {
 		panelDerecho();
 		buscadorGestiones.clear();
@@ -284,6 +291,7 @@ public class CustomerCare extends BasePage {
 		gestionesEncontradas.get(0).click();
 		if (gest.equals("Débito automático")) TestBase.sleep(6500);
 		else TestBase.sleep(3000);
+		if (gest.equals("Historial de Packs")) TestBase.sleep(1500);
 		cambiarAFrameActivo();
 	}
 	
@@ -349,6 +357,11 @@ public class CustomerCare extends BasePage {
 		cambiarAFrameActivo();	
 	}
 	
+	public WebElement obtenerPestañaActiva() {
+		driver.switchTo().defaultContent();
+		TestBase.sleep(3000);
+		return driver.findElement(By.cssSelector(".sd_secondary_tabstrip .x-tab-strip-closable.x-tab-strip-active"));
+	}
 	
 	// -----------------------------------------------------------------------------------------------------
 	// 											METODOS PRIVADOS
@@ -373,7 +386,8 @@ public class CustomerCare extends BasePage {
 			driver.manage().timeouts().implicitlyWait(1, TimeUnit.SECONDS);
 			panelDerechoColapsado.click();
 		} catch (NoSuchElementException|ElementNotVisibleException e) {	}
-		finally { 
+		finally {
+			TestBase.sleep(2000);
 			driver.manage().timeouts().implicitlyWait(3, TimeUnit.SECONDS);
 		}
 	}

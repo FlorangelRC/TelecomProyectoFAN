@@ -58,15 +58,15 @@ public class CustomerCare360Joaquin extends TestBase {
 			}
 		}
 		
-		sleep(1000);
-		WebElement calendarioFechaInicio = driver.findElement(By.id("text-input-id-1"));
-		calendarioFechaInicio.click();
+		WebElement fechaInicio = driver.findElement(By.id("text-input-id-1"));
+		waitFor.elementToBeClickable(fechaInicio);
+		fechaInicio.click();
 		
 		List<WebElement> diasCalendario = driver.findElements(By.className("slds-day"));
 		int ultimoDiaDelCalendario = diasCalendario.size() - 1;
 		diasCalendario.get(ultimoDiaDelCalendario).click();
 		
-		Assert.assertTrue(calendarioFechaInicio.getAttribute("value").equals(""));
+		Assert.assertTrue(fechaInicio.getAttribute("value").equals(""));
 	}
 	
 	@Test(groups="CustomerCare")
@@ -193,7 +193,6 @@ public class CustomerCare360Joaquin extends TestBase {
 
 		WebElement botonConsultar = driver.findElement(By.xpath("//button[contains(.,'Consultar')]"));
 		botonConsultar.click();
-		sleep(1500);
 		
 		List<WebElement> registrosHistorial = driver.findElements(By.cssSelector(".slds-input__icon--left.slds-icon.slds-icon--x-small.slds-input__icon"));
 		registrosHistorial.get(0).click();
@@ -216,16 +215,13 @@ public class CustomerCare360Joaquin extends TestBase {
 
 		WebElement botonConsultar = driver.findElement(By.xpath("//button[contains(.,'Consultar')]"));
 		botonConsultar.click();
-		sleep(1500);
 
 		List<WebElement> registrosHistorial = driver.findElements(By.cssSelector(".slds-input__icon--left.slds-icon.slds-icon--x-small.slds-input__icon"));
 		registrosHistorial.get(0).click();
 		
-		sleep(500);
 		List<WebElement> columnasHistorial = driver.findElements(By.cssSelector(".slds-truncate.slds-th__action"));
 		columnasHistorial.get(3).click();
 		
-		sleep(500);
 		Assert.assertTrue(false); // DESDE EL DEPLOY DE FASE 4 NO SE CIERRAN LOS REGISTROS ABIERTOS DESPUES DE ORDENAR
 		List<WebElement> detalleRegistrosHistorial = driver.findElements(By.xpath("//div[@class='slds-grid']"));
 		for (WebElement registro : detalleRegistrosHistorial) {
@@ -264,11 +260,13 @@ public class CustomerCare360Joaquin extends TestBase {
 		Customer.elegirCuenta("aaaaFernando Care");
 		Customer.irAGestion("Débito automático");
 		
-		dynamicWait().until(ExpectedConditions.presenceOfAllElementsLocatedBy(By.className("borderOverlay")));
-		driver.findElements(By.className("borderOverlay")).get(0).click();
-		dynamicWait().until(ExpectedConditions.visibilityOfAllElementsLocatedBy(By.xpath("//label[@class='slds-checkbox__label']")));
+		WebElement adhesion = driver.findElement(By.className("borderOverlay"));
+		adhesion.click();
 		
-		Assert.assertTrue(driver.findElement(By.xpath("//label[@class='slds-checkbox__label']")).isDisplayed());
+		List<WebElement> cuentas = driver.findElements(By.xpath("//label[@class='slds-checkbox__label']"));
+		waitFor.visibilityOfAllElements(cuentas);
+		
+		Assert.assertTrue(cuentas.get(0).isDisplayed());
 	}
 	
 	@Test(groups={"CustomerCare", "Debito Automatico"})
@@ -276,11 +274,10 @@ public class CustomerCare360Joaquin extends TestBase {
 		Customer.elegirCuenta("aaaaCuenta Activa Serv Inact");
 		Customer.irAGestion("Débito automático");
 		
-		sleep(1000);
-		dynamicWait().until(ExpectedConditions.presenceOfAllElementsLocatedBy(By.xpath("//h1[contains(.,'Error')]")));
+		WebElement msgError = driver.findElement(By.cssSelector(".slds-page-header.vlc-slds-page--header.ng-scope h1"));
+		waitFor.visibilityOfElement(msgError);
 
-		Assert.assertTrue(driver.findElements(By.xpath("//h1[contains(.,'Error')]")).get(1).isDisplayed());
-		Assert.assertTrue(driver.findElement(By.cssSelector(".slds-form-element.vlc-flex.vlc-slds-text-block")).getText().contains("no tiene cuentas/servicios activos"));
+		Assert.assertTrue(msgError.getText().contains("Error"));
 	}
 	
 	@Test(groups={"CustomerCare", "Debito Automatico"})
@@ -288,10 +285,10 @@ public class CustomerCare360Joaquin extends TestBase {
 		Customer.elegirCuenta("aaaaAndres Care");
 		Customer.irAGestion("Débito automático");
 		
-		sleep(1000);
-		dynamicWait().until(ExpectedConditions.presenceOfAllElementsLocatedBy(By.xpath("//h1[contains(.,'Error')]")));
+		WebElement msgError = driver.findElement(By.cssSelector(".slds-page-header.vlc-slds-page--header.ng-scope h1"));
+		waitFor.visibilityOfElement(msgError);
 
-		Assert.assertTrue(driver.findElements(By.xpath("//h1[contains(.,'Error')]")).get(1).isDisplayed());
+		Assert.assertTrue(msgError.getText().contains("Error"));
 	}
 	
 	@Test(groups={"CustomerCare", "Debito Automatico"})
@@ -299,11 +296,10 @@ public class CustomerCare360Joaquin extends TestBase {
 		Customer.elegirCuenta("aaaaCuenta Activa S/Serv");
 		Customer.irAGestion("Débito automático");
 		
-		sleep(2000);
-		dynamicWait().until(ExpectedConditions.presenceOfAllElementsLocatedBy(By.xpath("//h1[contains(.,'Error')]")));
+		WebElement msgError = driver.findElement(By.cssSelector(".slds-page-header.vlc-slds-page--header.ng-scope h1"));
+		waitFor.visibilityOfElement(msgError);
 
-		Assert.assertTrue(driver.findElements(By.xpath("//h1[contains(.,'Error')]")).get(1).isDisplayed());
-		Assert.assertTrue(driver.findElement(By.cssSelector(".slds-form-element.vlc-flex.vlc-slds-text-block")).getText().contains("no tiene cuentas/servicios activos"));
+		Assert.assertTrue(msgError.getText().contains("Error"));
 	}
 	
 	@Test(groups="CustomerCare")
@@ -453,12 +449,12 @@ public class CustomerCare360Joaquin extends TestBase {
 		Customer.irAProblemasConRecargas();
 		
 		List<WebElement> elementos = driver.findElements(By.cssSelector(".slds-radio.ng-scope"));
-		dynamicWait().until(ExpectedConditions.visibilityOfAllElements(elementos));
+		waitFor.visibilityOfAllElements(elementos);
 		
 		for (WebElement e : elementos) {
 			if (!e.getAttribute("class").contains("itemSelected")) {
 				e.click();
-				sleep(1000);
+				waitFor.attributeContains(e, "class", "itemSelected");
 				Assert.assertTrue(e.getAttribute("class").contains("itemSelected"));
 				return;
 			}
@@ -473,11 +469,11 @@ public class CustomerCare360Joaquin extends TestBase {
 		Customer.irAProblemasConRecargas();
 		
 		List<WebElement> elementos = driver.findElements(By.cssSelector(".slds-radio.ng-scope"));
-		dynamicWait().until(ExpectedConditions.visibilityOfAllElements(elementos));
+		waitFor.visibilityOfAllElements(elementos);
 		for (WebElement e : elementos) {
 			if (!e.getAttribute("class").contains("itemSelected")) {
 				e.click();
-				sleep(1000);
+				waitFor.attributeContains(e, "class", "itemSelected");
 				break;
 			}
 		}
@@ -498,7 +494,7 @@ public class CustomerCare360Joaquin extends TestBase {
 		Customer.irAProblemasConRecargas();
 		
 		List<WebElement> elementos = driver.findElements(By.cssSelector(".slds-radio.ng-scope"));
-		dynamicWait().until(ExpectedConditions.visibilityOfAllElements(elementos));
+		waitFor.visibilityOfAllElements(elementos);
 		for (WebElement e : elementos) {
 			if (e.getText().contains("Tarjeta Prepaga")) {
 				e.click();
@@ -534,17 +530,21 @@ public class CustomerCare360Joaquin extends TestBase {
 		Customer.irAProblemasConRecargas();
 		
 		List<WebElement> elementos = driver.findElements(By.cssSelector(".slds-radio.ng-scope"));
-		dynamicWait().until(ExpectedConditions.visibilityOfAllElements(elementos));
+		waitFor.visibilityOfAllElements(elementos);
 		for (WebElement e : elementos) {
 			if (e.getText().contains("Tarjeta Prepaga")) {
 				e.click();
 				break;
 			}
 		}
-		driver.findElement(By.xpath("//div[@id='stepChooseMethod_nextBtn']")).findElement(By.tagName("p")).click();
-		driver.findElement(By.id("lotNumber")).sendKeys("123456789012345");
 		
-		Assert.assertTrue(driver.findElement(By.id("lotNumber")).getAttribute("class").contains("ng-invalid-minlength"));
+		WebElement btnSiguiente = driver.findElement(By.xpath("//div[@id='stepChooseMethod_nextBtn']/p"));
+		btnSiguiente.click();
+		
+		WebElement numeroLote = driver.findElement(By.id("lotNumber"));
+		numeroLote.sendKeys("123456789012345");
+		
+		Assert.assertTrue(numeroLote.getAttribute("class").contains("ng-invalid-minlength"));
 	}
 	
 	@Test(groups= {"CustomerCare","Problems with Refills"})
@@ -554,18 +554,22 @@ public class CustomerCare360Joaquin extends TestBase {
 		Customer.irAProblemasConRecargas();
 		
 		List<WebElement> elementos = driver.findElements(By.cssSelector(".slds-radio.ng-scope"));
-		dynamicWait().until(ExpectedConditions.visibilityOfAllElements(elementos));
+		waitFor.visibilityOfAllElements(elementos);
 		for (WebElement e : elementos) {
 			if (e.getText().contains("Tarjeta Prepaga")) {
 				e.click();
 				break;
 			}
 		}
-		driver.findElement(By.xpath("//div[@id='stepChooseMethod_nextBtn']")).findElement(By.tagName("p")).click();
-		driver.findElement(By.id("lotNumber")).sendKeys("1234567890123456");
+
+		WebElement btnSiguiente = driver.findElement(By.xpath("//div[@id='stepChooseMethod_nextBtn']/p"));
+		btnSiguiente.click();
 		
-		Assert.assertTrue(driver.findElement(By.id("lotNumber")).getAttribute("class").contains("ng-valid-minlength"));
-		Assert.assertTrue(driver.findElement(By.id("lotNumber")).getAttribute("class").contains("ng-valid-maxlength"));
+		WebElement numeroLote = driver.findElement(By.id("lotNumber"));
+		numeroLote.sendKeys("1234567890123456");
+		
+		Assert.assertTrue(numeroLote.getAttribute("class").contains("ng-valid-minlength"));
+		Assert.assertTrue(numeroLote.getAttribute("class").contains("ng-valid-maxlength"));
 	}
 	
 	@Test(groups= {"CustomerCare","Problems with Refills"})
@@ -582,10 +586,14 @@ public class CustomerCare360Joaquin extends TestBase {
 				break;
 			}
 		}
-		driver.findElement(By.xpath("//div[@id='stepChooseMethod_nextBtn']")).findElement(By.tagName("p")).click();
-		driver.findElement(By.id("lotNumber")).sendKeys("12345678901234567");
 		
-		Assert.assertTrue(driver.findElement(By.id("lotNumber")).getAttribute("class").contains("ng-invalid-maxlength"));
+		WebElement btnSiguiente = driver.findElement(By.xpath("//div[@id='stepChooseMethod_nextBtn']/p"));
+		btnSiguiente.click();
+		
+		WebElement numeroLote = driver.findElement(By.id("lotNumber"));
+		numeroLote.sendKeys("12345678901234567");
+		
+		Assert.assertTrue(numeroLote.getAttribute("class").contains("ng-invalid-maxlength"));
 	}
 	
 	@Test(groups= {"CustomerCare","Problems with Refills"})
@@ -602,10 +610,14 @@ public class CustomerCare360Joaquin extends TestBase {
 				break;
 			}
 		}
-		driver.findElement(By.xpath("//div[@id='stepChooseMethod_nextBtn']")).findElement(By.tagName("p")).click();
-		driver.findElement(By.id("lotNumber")).sendKeys("abcde");
+
+		WebElement btnSiguiente = driver.findElement(By.xpath("//div[@id='stepChooseMethod_nextBtn']/p"));
+		btnSiguiente.click();
 		
-		Assert.assertTrue(driver.findElement(By.id("lotNumber")).getAttribute("class").contains("ng-invalid-pattern"));
+		WebElement numeroLote = driver.findElement(By.id("lotNumber"));
+		numeroLote.sendKeys("abcde");
+		
+		Assert.assertTrue(numeroLote.getAttribute("class").contains("ng-invalid-pattern"));
 	}
 	
 	@Test(groups="CustomerCare")
@@ -704,7 +716,7 @@ public class CustomerCare360Joaquin extends TestBase {
 		
 		WebElement panelPasos = driver.findElement(By.cssSelector(".vlc-slds-wizard"));
 		WebElement listaPasos = driver.findElement(By.cssSelector(".list-group.vertical-steps"));
-		dynamicWait().until(ExpectedConditions.visibilityOf(listaPasos));
+		waitFor.visibilityOfElement(listaPasos);
 		
 		Assert.assertTrue(panelPasos.getText().contains("Pasos"));
 		Assert.assertTrue(listaPasos.isDisplayed());
@@ -716,7 +728,7 @@ public class CustomerCare360Joaquin extends TestBase {
 		Customer.irAProblemasConRecargas();
 		
 		WebElement botonCancelar = driver.findElement(By.cssSelector(".vlc-slds-button--tertiary"));
-		dynamicWait().until(ExpectedConditions.visibilityOf(botonCancelar));
+		waitFor.visibilityOfElement(botonCancelar);
 		
 		Assert.assertTrue(botonCancelar.getText().contains("Cancelar"));
 		Assert.assertTrue(botonCancelar.isDisplayed());
@@ -728,7 +740,7 @@ public class CustomerCare360Joaquin extends TestBase {
 		Customer.irAProblemasConRecargas();
 		
 		WebElement titulo = driver.findElement(By.cssSelector(".slds-page-header__title"));
-		dynamicWait().until(ExpectedConditions.visibilityOf(titulo));
+		waitFor.visibilityOfElement(titulo);
 		
 		Assert.assertTrue(titulo.isDisplayed());		
 	}
@@ -756,15 +768,12 @@ public class CustomerCare360Joaquin extends TestBase {
 		Customer.elegirCuenta("aaaaFernando Care");
 		Customer.irAGestion("Historial de Packs");
 		
-		sleep(2000);
 		WebElement botonConsultar = driver.findElement(By.xpath("//button[contains(.,'Consultar')]"));
 		botonConsultar.click();
-		sleep(1500);
 		
 		List<WebElement> columnasHistorial = driver.findElements(By.cssSelector(".slds-truncate.slds-th__action"));
 		columnasHistorial.get(0).click();
 		
-		sleep(500);
 		List<WebElement> flechasOrdenamiento = driver.findElements(By.cssSelector(".slds-icon-text-default.slds-is-sortable__icon"));
 		
 		Assert.assertTrue(flechasOrdenamiento.get(0).isDisplayed());
@@ -798,6 +807,102 @@ public class CustomerCare360Joaquin extends TestBase {
 	}
 	
 	@Test(groups= {"CustomerCare", "Fase4"})
+	public void TS69096_360_View_360_VIEW_Ubicacion_de_Accion_Enlace_Acceso_TAB_Facturacion_Visualizar_boton_de_acceso_al_TAB_de_FACTURACION() {
+		Customer.elegirCuenta("aaaaFernando Care");
+		Customer.panelIzquierdo();
+		
+		WebElement btn_Facturacion = driver.findElement(By.cssSelector(".profile-tags-header .slds-p-right--x-small"));
+		
+		Assert.assertTrue(btn_Facturacion.getText().contains("Facturación"));
+		Assert.assertTrue(btn_Facturacion.isDisplayed());
+	}
+	
+	@Test(groups= {"CustomerCare", "Fase4"})
+	public void TS69146_Consumption_Details_Criterios_de_Filtro_Temporal_Visualizar_calendario_en_filtro_Inicio() {
+		Customer.elegirCuenta("aaaaFernando Care");
+		Customer.irAGestion("Detalle de Consumos");
+		
+		WebElement selectorPeriodo = driver.findElement(By.xpath("//input[@ng-model='ptc.filterOption']"));
+		selectorPeriodo.click();
+		
+		List<WebElement> opciones = driver.findElements(By.cssSelector(".slds-dropdown.slds-dropdown--left li"));
+		for (WebElement opcion : opciones) {
+			if (opcion.getText().contains("Un rango personalizado")) {
+				opcion.click();
+				break;
+			}
+		}
+		
+		WebElement fechaInicio = driver.findElement(By.id("text-input-id-1"));
+		fechaInicio.click();
+		WebElement calendario = driver.findElement(By.xpath("//table[@class='slds-datepicker__month']"));
+		
+		Assert.assertTrue(calendario.isDisplayed());
+	}
+	
+	@Test(groups= {"CustomerCare", "Fase4"})
+	public void TS69147_Consumption_Details_Criterios_de_Filtro_Temporal_Visualizar_fecha_mayor_a_la_actual_grisada_en_filtro_Inicio() {
+		Customer.elegirCuenta("aaaaFernando Care");
+		Customer.irAGestion("Detalle de Consumos");
+		
+		WebElement selectorPeriodo = driver.findElement(By.xpath("//input[@ng-model='ptc.filterOption']"));
+		selectorPeriodo.click();
+		
+		List<WebElement> opciones = driver.findElements(By.cssSelector(".slds-dropdown.slds-dropdown--left li"));
+		for (WebElement opcion : opciones) {
+			if (opcion.getText().contains("Un rango personalizado")) {
+				opcion.click();
+				break;
+			}
+		}
+		
+		WebElement fechaInicio = driver.findElement(By.id("text-input-id-1"));
+		waitFor.elementToBeClickable(fechaInicio);
+		fechaInicio.click();
+		
+		List<WebElement> dias = driver.findElements(By.cssSelector(".slds-datepicker__month td"));
+		int indice = -1;
+		for (WebElement dia : dias) {
+			if (dia.getAttribute("class").contains("slds-is-today")) {
+				indice = dias.indexOf(dia);
+			}
+		}
+		
+		if (indice < 0) {
+			System.err.println("ERROR: No se encontró el día en el calendario");
+			Assert.assertTrue(false);
+		}
+		
+		WebElement fechaMayorActual = dias.get(indice + 1);
+
+		Assert.assertTrue(fechaMayorActual.getAttribute("class").contains("slds-disabled-text"));
+	}
+	
+	@Test(groups= {"CustomerCare", "Fase4"})
+	public void TS69151_Consumption_Details_Criterios_de_Filtro_Temporal_Visualizar_calendario_en_filtro_Fin() {
+		Customer.elegirCuenta("aaaaFernando Care");
+		Customer.irAGestion("Detalle de Consumos");
+		
+		WebElement selectorPeriodo = driver.findElement(By.xpath("//input[@ng-model='ptc.filterOption']"));
+		selectorPeriodo.click();
+		
+		List<WebElement> opciones = driver.findElements(By.cssSelector(".slds-dropdown.slds-dropdown--left li"));
+		for (WebElement opcion : opciones) {
+			if (opcion.getText().contains("Un rango personalizado")) {
+				opcion.click();
+				break;
+			}
+		}
+		
+		WebElement fechaFin = driver.findElement(By.id("text-input-id-2"));
+		waitFor.elementToBeClickable(fechaFin);
+		fechaFin.click();
+		WebElement calendario = driver.findElement(By.xpath("//table[@class='slds-datepicker__month']"));
+		
+		Assert.assertTrue(calendario.isDisplayed());
+	}
+	
+	@Test(groups= {"CustomerCare", "Fase4"})
 	public void TS69191_360_View_360_View_Acceso_a_Gestiones_desde_el_Asset_Asset_Mobile_Prepago_Flyout_Acceso_Gestiones() {
 		Customer.elegirCuenta("aaaaFernando Care");
 		
@@ -813,4 +918,21 @@ public class CustomerCare360Joaquin extends TestBase {
 		Assert.assertTrue(false);
 	}
 	
+	@Test(groups= {"CustomerCare", "Fase4"})
+	public void TS69192_360_View_360_View_Acceso_a_Gestiones_desde_el_Asset_Asset_Mobile_Prepago_Flyout_Acceso_Gestiones_Titulo() {
+		Customer.elegirCuenta("aaaaFernando Care");
+		
+		driver.findElement(By.cssSelector(".console-card.active .card-top")).click();
+
+		List<WebElement> accionesFlyout = driver.findElements(By.cssSelector(".community-flyout-actions-card li"));
+		for (WebElement accion : accionesFlyout) {
+			if (accion.getText().contains("Gestiones")) {
+				accion.click();
+				break;
+			}
+		}
+		
+		WebElement pestaña = Customer.obtenerPestañaActiva();
+		Assert.assertTrue(pestaña.getText().contains("Gestiones"));
+	}
 }
