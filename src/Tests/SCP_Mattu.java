@@ -13,6 +13,7 @@ import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
+
 import Pages.BasePage;
 import Pages.SCP;
 import Pages.setConexion;
@@ -38,11 +39,11 @@ private WebDriver driver;
 		prueba.clickOnFirstAccRe();
 		try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}	
 	}
-	/*@AfterClass(groups = "SCP")
+	@AfterClass(groups = "SCP")
 	public void teardown() {
 		driver.quit();
 		sleep(5000);
-	}*/
+	}
 	
 	//------------------------------------------------------------------------------------------------- 
     //TCC = 1 
@@ -161,24 +162,6 @@ private WebDriver driver;
 		Assert.assertTrue(prueba.Triangulo_Ordenador_Validador("//*[@id=\"mainOppsTable\"]/thead/tr", "//*[@id=\"mainOppsTable\"]/tbody", 6, 4));
 		Assert.assertTrue(prueba.Triangulo_Ordenador_Validador("//*[@id=\"mainOppsTable\"]/thead/tr", "//*[@id=\"mainOppsTable\"]/tbody", 6, 5));
 		Assert.assertTrue(prueba.Triangulo_Ordenador_Validador("//*[@id=\"mainOppsTable\"]/thead/tr", "//*[@id=\"mainOppsTable\"]/tbody", 6, 6));
-	}
-	
-	//------------------------------------------------------------------------------------------------- 
-	//TCC = 9
-	@Test(groups = "SCP")
-	public void TS112772_Panel_de_control_Busqueda_Anterior_pagina() {
-		WebElement wNavBar = driver.findElement(By.cssSelector(".zen-inlineList.zen-tabMenu"));
-		List<WebElement> wMenu = wNavBar.findElements(By.tagName("li"));
-		wMenu.get(4).click();
-		WebElement wMenuSiguiente = driver.findElement(By.cssSelector(".btn-group.pull-right"));
-		List<WebElement> wMenu2 = wMenuSiguiente.findElements(By.tagName("input"));
-		wMenu2.get(2).click();
-		//TestBase TB = new TestBase();
-		//TB.waitFor(driver, By.cssSelector(".btn-group.pull-right"));
-		//WebElement wMenuAnterior = driver.findElement(By.cssSelector(".btn-group.pull-right"));
-		//List<WebElement> wMenu3 = wMenuAnterior.findElements(By.tagName("input"));
-		//wMenu3.get(1).click();
-		driver.findElement(By.id("j_id0:pageForm:anterior")).click();
 	}
 	
 }
