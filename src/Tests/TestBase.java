@@ -43,7 +43,7 @@ public class TestBase {
 		driver.findElement(By.id("nav-tab-0")).click();
 		break;
 		case "Casos":
-			driver.findElement(By.id("nav-tab-9")).click();
+			driver.findElement(By.id("nav-tab-2")).click();
 			break;
 		}
 	}

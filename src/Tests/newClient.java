@@ -11,6 +11,7 @@ import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Actions;
+import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.AfterTest;
@@ -20,6 +21,7 @@ import org.testng.annotations.BeforeTest;
 import org.testng.annotations.Test;
 
 import Pages.ContactSearch;
+import Pages.SalesBase;
 import Pages.ValidationMethodSelection;
 import Pages.setConexion;
 import Pages.BasePage;
@@ -28,8 +30,11 @@ import Tests.ValidationByDni;
 
 
 public class newClient extends TestBase {
-	
+	protected String perfil = "agente";
+	protected  WebDriverWait wait;
 	private WebDriver driver;
+	String plan="Plan con tarjeta";
+
 	String Name = "lolaasd";
 	String LastName = "velasd";
 	String DateOfBirthday = "07/06/1987";
@@ -38,20 +43,43 @@ public class newClient extends TestBase {
 	int i = 0;
 	private String validationType = "document";
 	
-	@AfterClass(groups="Fase2")
+	//@AfterClass(groups="Fase2")
 	public void tearDown2() {
 		//driver.close();
 	}
 	
 	@BeforeClass(groups="Fase2")
-	public void init() throws Exception
+	public void Init() throws Exception
 	{
 		this.driver = setConexion.setupEze();
-		try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
-		login(driver);
+		 wait = new WebDriverWait(driver, 10);
+		//try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		 switch(perfil){
+		 case "dani":
+			login(driver);
+			break;
+		 case "agente":
+			 loginAndres(driver);
+			 break;
+		 case "call":
+			 loginElena(driver);
+			 break;
+		 case "venta":
+			 loginFranciso(driver);
+			 break;
+		 case "logistica":
+			 loginNicolas(driver);
+			 break;
+		 case "entregas":
+			 loginMarcela(driver);
+			 break;
+		 case "fabiana":
+			 loginFabiana(driver);
+			 break;
+		 }
+	
 		try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 	}
-	
 	/*@AfterMethod
 	public void tearDown() throws Exception {
 		login1(driver);
@@ -82,28 +110,23 @@ public class newClient extends TestBase {
 		conts.sex("femenino");
 		driver.findElement(By.id("ContactSearch_nextBtn")).click();
 		try {Thread.sleep(8000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
-		if(driver.findElement(By.id("Name")).getText().isEmpty()) {
+		if(driver.findElement(By.id("FirstName")).getAttribute("value").isEmpty()) {
 		ContactInformation page = new ContactInformation(driver);
 		page.setContactInformation(Name, LastName, DateOfBirthday);}
-		try {Thread.sleep(2000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
-		driver.findElement(By.cssSelector(".slds-checkbox--faux")).click();
+
 		try {Thread.sleep(6000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 		WebElement BenBoton = driver.findElement(By.id("Contact_nextBtn"));
 		((JavascriptExecutor)driver).executeScript("window.scrollTo(0,"+BenBoton.getLocation().y+")");
 		BenBoton.click();
 		try {Thread.sleep(4000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 		try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
-		ValidationMethodSelection validation = new ValidationMethodSelection(driver);
-		validation.setValidationType(validationType);
-		try {Thread.sleep(2000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
-		driver.findElement(By.id("FileDocumentImage")).sendKeys("C:\\Users\\Florangel\\Downloads\\usuaria.PNG");
-		try {Thread.sleep(8000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
-		BenBoton = driver.findElement(By.id("DocumentMethod_nextBtn"));
-		((JavascriptExecutor)driver).executeScript("window.scrollTo(0,"+BenBoton.getLocation().y+")");
-		BenBoton.click();
-		try {Thread.sleep(6000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
-		driver.findElement(By.id("Contact_nextBtn")).click();
-		try {Thread.sleep(2000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		SalesBase SB = new SalesBase(driver);
+	
+		SB.agregarplan(plan);
+		SB.continuar();
+		SB.elegirvalidacion("DOC");
+		SB.subirdoc();
+		SB.error();
 	  }
 	}
 	

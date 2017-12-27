@@ -36,7 +36,7 @@ public class CustomerCareCaseManagement extends TestBase {
 	private WebDriver driver;
 	
 	
-	@BeforeClass(groups= "CustomerCare")
+	@BeforeClass(groups={"Fase1", "CustomerCare","AdministraccionDeCasos"})
 	public void init() throws Exception
 	{
 		this.driver = setConexion.setupEze();
@@ -56,7 +56,7 @@ public class CustomerCareCaseManagement extends TestBase {
 	       homePage.selectAppFromMenuByName("Consola FAN");
 	}
 
-	@BeforeMethod(groups= "CustomerCare")
+	@BeforeMethod(groups={"Fase1", "CustomerCare","AdministraccionDeCasos"})
 	public void mainSteup() {
 	       
 	       
@@ -89,7 +89,7 @@ public class CustomerCareCaseManagement extends TestBase {
 		driver.switchTo().frame(frame1.get(0));
 	}
 	
-	@AfterClass(groups= "CustomerCare")
+	@AfterClass(groups={"Fase1", "CustomerCare","AdministraccionDeCasos"})
 	public void tearDown() {
 		/*driver.switchTo().defaultContent();
 		List<WebElement> mainTabs1 = driver.findElements(By.className("x-tab-strip-close"));
@@ -102,7 +102,7 @@ public class CustomerCareCaseManagement extends TestBase {
 		sleep(5000);
 	}
 	
-	@AfterMethod(groups= "CustomerCare")
+	@AfterMethod(groups={"Fase1", "CustomerCare","AdministraccionDeCasos"})
 	public void alert (){
 		HomeBase homePage = new HomeBase(driver);
 		try {Thread.sleep(2000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
@@ -119,7 +119,7 @@ public class CustomerCareCaseManagement extends TestBase {
         homePage.selectAppFromMenuByName("Consola FAN");
 	}
 
-	@Test(groups= "CustomerCare")
+	@Test(groups={"Fase1", "CustomerCare","AdministraccionDeCasos"})
 	public void TS7193_CaseRelatedFieldsValuesCanalClosing(){
 		try {Thread.sleep(10000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 		driver.switchTo().defaultContent();
@@ -129,7 +129,7 @@ public class CustomerCareCaseManagement extends TestBase {
 		page.ValidChannelClosing();
 	}
 
-	@Test(groups= "CustomerCare")
+	@Test(groups={"Fase1", "CustomerCare","AdministraccionDeCasos"})
 	public void TS7090_CaseRelatedFieldsValuesSubArea(){
 
 		try {Thread.sleep(10000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
@@ -140,7 +140,7 @@ public class CustomerCareCaseManagement extends TestBase {
 		page.FieldsValuesSubArea();
 	}
 
-	@Test(groups= "CustomerCare")
+	@Test(groups={"Fase1", "CustomerCare","AdministraccionDeCasos"})
 	public void TS7088_CaseRelatedFieldsValuesType(){
 		try {Thread.sleep(10000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 		driver.switchTo().defaultContent();
@@ -150,7 +150,7 @@ public class CustomerCareCaseManagement extends TestBase {
 		page.FieldsValuesType();
 	}
 
-	@Test(groups= "CustomerCare")
+	@Test(groups={"Fase1", "CustomerCare","AdministraccionDeCasos"})
 	public void TS7195_CaseRelatedCreateValuesCheck(){
 		try {Thread.sleep(10000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 		driver.switchTo().defaultContent();
@@ -167,7 +167,7 @@ public class CustomerCareCaseManagement extends TestBase {
 		}
 	}
 
-	@Test(groups= "CustomerCare")
+	@Test(groups={"Fase1", "CustomerCare","AdministraccionDeCasos"})
 	public void TS7083_ValidateDueTimeLogic(){
 		//Pre-requirement : no other cases or new cases tabss.
 		try {Thread.sleep(10000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
@@ -218,7 +218,7 @@ public class CustomerCareCaseManagement extends TestBase {
 	 }
 	
 	//Falla seleccionando campo
-	@Test(groups= "CustomerCare")
+	@Test(groups={"Fase1", "CustomerCare","AdministraccionDeCasos"})
 	 public void TS7085_DeleteCasesAdminRestrictedMessage() {
 	  String adminRestrictedMsg = "El primer error de validación encontrado fue \"Solo el administrador puede eliminar casos generados.\"";
 	  try {Thread.sleep(4000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
@@ -245,7 +245,7 @@ public class CustomerCareCaseManagement extends TestBase {
 	  Assert.assertTrue(errorMsgInPage.contains(adminRestrictedMsg));
 	 }
 	
-	@Test(groups= "CustomerCare")
+	@Test(groups={"Fase1", "CustomerCare","AdministraccionDeCasos"})
 	 public void TS7092_Case_Related_Field_Valores_del_Canal_de_inicio(){
 	  try {Thread.sleep(10000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 	  driver.switchTo().defaultContent();
@@ -256,7 +256,7 @@ public class CustomerCareCaseManagement extends TestBase {
 	  driver.switchTo().defaultContent();
 	 }
 	
-	@Test(groups= "CustomerCare")
+	@Test(groups={"Fase1", "CustomerCare","AdministraccionDeCasos"})
 	 public void TS7198_Estados_de_la_Entidad_Caso_Visualizar_picklist_Estado(){
 	  try {Thread.sleep(10000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 	  driver.switchTo().defaultContent();
@@ -267,7 +267,7 @@ public class CustomerCareCaseManagement extends TestBase {
 	  driver.switchTo().defaultContent();
 	 }
 	 
-	 @Test(groups= "CustomerCare")
+	 @Test(groups={"Fase1", "CustomerCare","AdministraccionDeCasos"})
 	 public void TS7212_Case_Management_Detalles_del_caso_Descripcion() {
 	  driver.switchTo().defaultContent();
 	  List<WebElement> frame2 = driver.findElements(By.tagName("iframe"));

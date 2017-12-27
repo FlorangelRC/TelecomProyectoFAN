@@ -346,14 +346,14 @@ public void validarcomentario(String comentario){
 	List <WebElement> comentarios = driver.findElements(By.cssSelector(".feeditemtext.cxfeeditemtext"));
 	System.out.println(comentarios.size());
 	Assert.assertTrue(comentarios.get(0).getText().equals(comentario));
-	Assert.assertEquals(driver.findElement(By.cssSelector(".topics.init")).getText(), "Haga clic para agregar temas:   Sin sugerencias. Añada sus propios temas.");
+	Assert.assertEquals(driver.findElement(By.cssSelector(".feeditemtopics")).getText(), "Haga clic para agregar temas:   Sin sugerencias. Añada sus propios temas.");
 }
 
 
 public void validarcomentarioajeno(String comentario){
 	try {Thread.sleep(15000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 	String cuentaactiva = driver.findElement(By.id("userNavLabel")).getText();
-	List <WebElement> comentarios = driver.findElements(By.cssSelector(".feeditembodyandfooter"));
+	List <WebElement> comentarios = driver.findElements(By.cssSelector(".feeditemtext.cxfeeditemtext"));
 	Assert.assertTrue(comentarios.get(0).findElement(By.cssSelector(".cxfeeditemtextwrapper")).getText().equals(comentario));
 	Assert.assertFalse(comentarios.get(0).findElement(By.cssSelector(".feeditemfirstentity")).getText().equals(cuentaactiva));
 
@@ -376,7 +376,7 @@ public boolean cuentalogeada(String cuenta){
 		TestBase TB = new TestBase();
 		List<WebElement> opcionesMenu = driver.findElement(By.id("userNav-menuItems")).findElements(By.tagName("a"));
 		for (WebElement UnaO : opcionesMenu) {
-			if(UnaO.getText().toLowerCase().contains("finalizar sesión")) {
+			if(UnaO.getText().toLowerCase().contains("finalizar sesi\u00f3n")) {
 				UnaO.click();
 				break;
 			}
@@ -401,34 +401,82 @@ public boolean cuentalogeada(String cuenta){
 		Desloguear_Loguear(usuario);
 	}
 	
-	public boolean Triangulo_Ordenador_Validador() {
-		TestBase TB = new TestBase();
-		TB.waitFor(driver, By.xpath("//*[@id=\"mainTable\"]/tbody/tr"));
-		
-		List<WebElement> wOportunityByUs = driver.findElements(By.xpath("//*[@id=\"mainTable\"]/tbody/tr"));
-		ArrayList<String> sOportunityByUs = new ArrayList<String>();
-		
-		driver.findElement(By.xpath("//*[@id=\"mainTable\"]/thead/tr/th[2]")).click();
-		List<WebElement> wOportunityByThem = driver.findElements(By.xpath("//*[@id=\"mainTable\"]/tbody/tr"));
-		ArrayList<String> sOportunityByThem = new ArrayList<String>();
-		
-		for (int a = 0; a < wOportunityByUs.size(); a++) {
-			sOportunityByUs.add(wOportunityByUs.get(a).getText().toLowerCase());
-			sOportunityByThem.add(wOportunityByThem.get(a).getText().toLowerCase());
+	public List<String> TraerColumna(String sBody, int iColumnas, int iColumna) {
+		//sBody = xpath del cuerpo de la lista
+		//iColumnas = cantidad de columnas
+		//iColumna = columna requerida
+		WebElement wBody = driver.findElement(By.xpath(sBody));
+		List<WebElement> wRows = wBody.findElements(By.tagName("tr"));
+		List<WebElement> wElements =   new ArrayList<WebElement>();
+		for (int i = 0; i < wRows.size(); i++) {
+			wElements.clear();
+			wElements = wRows.get(i).findElements(By.tagName("td"));
+			if (wElements.size() < iColumnas) {
+				wRows.remove(i);
+			}
+			
+		}
+		List<String> sElements =  new ArrayList<String>();
+		for (WebElement wAux:wRows) {
+			if (!wAux.getText().isEmpty()) {
+				List<WebElement> wColumns = wAux.findElements(By.tagName("td"));
+				sElements.add(wColumns.get(iColumna - 1).getText());
+			}
 		}
 		
-		Collections.sort(sOportunityByUs);
+		return sElements;
+	}
+	
+	public boolean Triangulo_Ordenador_Validador(String sMenu, String sBody, int iColumns, int iColumn) {
+		//sMenu = xpath de la fila del menï¿½
+		//sBody = xpath del cuerpo de la lista
+		//iColumnas = cantidad de columnas
+		//iColumna = columna a ordenar
+		TestBase TB = new TestBase();
+		TB.waitFor(driver, By.xpath(sBody));
+		
+		List<String> wElements = TraerColumna(sBody, iColumns, iColumn);
+		
+		WebElement wHeader = driver.findElement(By.xpath(sMenu));
+		List <WebElement> wMenu = wHeader.findElements(By.tagName("th"));
+		wMenu.get(iColumn - 1).click();
+		List<String> wOrderedElements = TraerColumna(sBody, iColumns, iColumn);
+		
+		Collections.sort(wElements);
 		boolean bBoolean = true;
 		
-		for(int i = 0; i < sOportunityByUs.size(); i++) { 
-			if (!sOportunityByUs.get(i).equals(sOportunityByThem.get(i))) {
+		for(int i = 0; i < wElements.size(); i++) { 
+			if (!wElements.get(i).equals(wOrderedElements.get(i))) {
 			 bBoolean = false;
-		 }
+			}
 		}
 		
 		return bBoolean;
 		
 	}
-
+	
+	public String SelectorMasUno(String sText, int iPosition, int iIndex) {
+		//sTexto = texto completo
+		//iPosiciï¿½n = posiciï¿½n en string sTexto donde tiene que cambiar el valor
+		//iIndex = nuevo valor
+		sText = sText.substring(0,iPosition) + iIndex + sText.substring(iPosition + 1,sText.length());
+		return sText;
+	}
+	
+	public String[][] ListaById(By element, String sId, int iPosition) {
+		List<WebElement> wAuxList = driver.findElements(element);
+		
+		String[][] sList = new String [wAuxList.size()][wAuxList.size()];
+		
+		int i;
+		for (i = 0; i < wAuxList.size(); i++) {
+			sId = SelectorMasUno(sId, iPosition, i);
+			sList[i][0] = sId;
+			sList[i][1] = driver.findElement(By.id(sId)).getText();
+			
+		}
+		
+		return sList;
+	}
 
 }

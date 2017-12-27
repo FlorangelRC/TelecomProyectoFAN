@@ -151,28 +151,8 @@ public class CustomerCare extends BasePage {
 	@FindBy(css = "icon icon-v-close")
 	private WebElement cerrarFlyout;
 
-	///////////////////////////////////// ELEMENTOS PUBLICOS ///////////////////////////////////////
-	@FindBy(xpath = "//input[@ng-model='ptc.filterOption']")
-	public WebElement selectorPeriodo;
-	
-	@FindBy(css = ".slds-dropdown.slds-dropdown--left li")
-	public List<WebElement> opcionesSelectorPeriodo;
-	
-	@FindBy(id = "text-input-id-1")
-	public WebElement calendarioFechaInicio;
-	
-	@FindBy(className = "slds-day")
-	public List<WebElement> diasCalendario;
-	
 	@FindBy(xpath = "//button[@class='slds-button slds-button--neutral slds-truncate']")
 	public List<WebElement> gestionesEncontradas;
-	
-	@FindBy(xpath = "//button[contains(.,'Consultar')]")
-	public WebElement botonConsultar;
-	
-	@FindBy(css = ".slds-truncate.slds-th__action")
-	public List<WebElement> columnasHistorial;
-	
 
 
 	public void elegirCuenta(String nombreCuenta) {		
@@ -208,6 +188,7 @@ public class CustomerCare extends BasePage {
 				TestBase.sleep(1000);
 			}
 			
+			TestBase.dynamicWait().until(ExpectedConditions.numberOfElementsToBe(By.cssSelector(".x-grid3-cell-inner.x-grid3-col-ACCOUNT_NAME"), 200));
 			for (WebElement c : cuentas) {
 				//MEJORAR
 				if (c.getText().equalsIgnoreCase(nombreCuenta)) {
@@ -222,8 +203,10 @@ public class CustomerCare extends BasePage {
 	
 	private void esperarAQueCargueLaCuenta() {
 		driver.switchTo().defaultContent();
+		TestBase.sleep(4000);
 		TestBase.dynamicWait().until(ExpectedConditions.numberOfElementsToBe(By.cssSelector(".sd_secondary_container.x-border-layout-ct"), 2));
 		cambiarAFrameActivo();
+		TestBase.sleep(1000);
 		TestBase.dynamicWait().until(ExpectedConditions.visibilityOfElementLocated(By.cssSelector(".btn.btn-primary")));
 	}
 	
@@ -299,7 +282,8 @@ public class CustomerCare extends BasePage {
 			Assert.assertFalse(gestionesEncontradas.isEmpty());
 		}
 		gestionesEncontradas.get(0).click();
-		TestBase.sleep(3000);
+		if (gest.equals("Débito automático")) TestBase.sleep(6500);
+		else TestBase.sleep(3000);
 		cambiarAFrameActivo();
 	}
 	
@@ -330,11 +314,14 @@ public class CustomerCare extends BasePage {
 	public void irAProblemasConRecargas() {
 		for (WebElement linea : lineasPrepago) {
 			if (!linea.getAttribute("class").contains("expired")) {
-					linea.click();
+					linea.findElement(By.cssSelector(".card-top")).click();
+					//linea.click();
+					TestBase.dynamicWait().until(ExpectedConditions.visibilityOf(btn_ProblemaConRecargas));
 					btn_ProblemaConRecargas.click();
+					break;
 			}
 		}
-		TestBase.sleep(3000);
+		TestBase.sleep(4000);
 		cambiarAFrameActivo();
 	}
 	
@@ -442,6 +429,7 @@ public class CustomerCare extends BasePage {
 		driver.switchTo().frame(cambioFrameByID.getFrameForElement(driver, By.name("fcf")));
 		driver.findElement(By.id("00B41000001CfyR_listSelect")).click();
 		field.selectByVisibleText("Mis Casos");
+		try {Thread.sleep(10000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}	
 	}
 	
 	
