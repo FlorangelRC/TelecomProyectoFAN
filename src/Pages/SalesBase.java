@@ -618,8 +618,9 @@ try{	driver.findElement(By.id("alert-ok-button")).click();	} catch (NoSuchElemen
 			System.out.println(bsqda.size());
 			for(WebElement e: bsqda){
 				System.out.println(e.getText());
-				if(e.getText().equals("Parametros de Busqueda")){
-					e.click();}}
+				if(e.getText().equals("Modificar búsqueda")){
+					e.click();
+					break;}}
 		driver.findElement(By.id("LineAssignment_nextBtn")).click();
 		try {Thread.sleep(50000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 }
