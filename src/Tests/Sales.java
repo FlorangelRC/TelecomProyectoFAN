@@ -57,7 +57,7 @@ public class Sales extends TestBase {
 	String[] genero = {"masculino","femenino"};
 	String[] DocValue = {"52698550","3569874563","365","ssss"};
 	
-	@AfterClass(groups={"sales", "AltaDeContacto"})
+	//@AfterClass(groups={"sales", "AltaDeContacto"})
 	public void tearDown() {
 		driver.close();
 		driver.quit();
@@ -129,7 +129,7 @@ public class Sales extends TestBase {
 		driver.findElement(By.id("ContactInfo_nextBtn")).click();
 		
 	}
-	/*
+	
 	@Test(groups={"sales", "AltaDeContacto"})
 	public void TS6965_Verificar_que_el_campo_Numero_de_documento_no_tenga_menos_de_7_digitos()	{
 		boolean a = false;
@@ -742,7 +742,7 @@ public class Sales extends TestBase {
 	
 	
 	
-	*/
+	
 	@Test(groups="Sales")
 	public void TS14278_Ventas_NumeroOrden_Verificar_Orden_de_Venta_Abierta_ICCID(){
 		SalesBase SB= new SalesBase(driver);
@@ -765,7 +765,7 @@ public class Sales extends TestBase {
 		
 		
 	}
-	/*
+	
 	@Test(groups="Sales")
 	
 	public void TS14277_Ventas_NumeroOrden_Verificar_Orden_de_Venta_Abierta_Medio_de_Pago(){
@@ -773,7 +773,7 @@ public class Sales extends TestBase {
 		Assert.assertTrue(false);
 		
 	}
-	/*
+	
 	@Test(groups="Sales")
 	public void TS14275_Ventas_NumeroOrden_Verificar_Orden_de_Venta_Abierta_Modo_de_Entrega(){
 		Assert.assertTrue(false);
@@ -1093,6 +1093,6 @@ public class Sales extends TestBase {
 	public void TS39658_Verificar_que_se_bonifique_el_costo_de_SIM_en_PlanPrepago() {
 		SalesBase SB = new SalesBase(driver);
 		SB.agregarplan("Plan con tarjeta");
-	}*/
+	}
 
 }
