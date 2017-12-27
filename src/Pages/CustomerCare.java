@@ -316,11 +316,12 @@ public class CustomerCare extends BasePage {
 			if (!linea.getAttribute("class").contains("expired")) {
 					linea.findElement(By.cssSelector(".card-top")).click();
 					//linea.click();
+					TestBase.dynamicWait().until(ExpectedConditions.visibilityOf(btn_ProblemaConRecargas));
 					btn_ProblemaConRecargas.click();
 					break;
 			}
 		}
-		TestBase.sleep(3000);
+		TestBase.sleep(4000);
 		cambiarAFrameActivo();
 	}
 	
@@ -428,6 +429,7 @@ public class CustomerCare extends BasePage {
 		driver.switchTo().frame(cambioFrameByID.getFrameForElement(driver, By.name("fcf")));
 		driver.findElement(By.id("00B41000001CfyR_listSelect")).click();
 		field.selectByVisibleText("Mis Casos");
+		try {Thread.sleep(10000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}	
 	}
 	
 	

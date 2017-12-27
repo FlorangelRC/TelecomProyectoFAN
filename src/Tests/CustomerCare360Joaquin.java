@@ -1,7 +1,5 @@
 package Tests;
 
-import static org.junit.Assert.assertTrue;
-
 import java.util.ArrayList;
 import java.util.List;
 import org.openqa.selenium.By;
@@ -47,9 +45,8 @@ public class CustomerCare360Joaquin extends TestBase {
 	@Test(groups= "CustomerCare")
 	public void TS38068_Consumption_Details_Definicion_de_Filtros_sobre_Calendario_Fecha_Desde_No_se_puede_ingresar_una_fecha_posterior_a_día_de_consulta() {
 		Customer.elegirCuenta("aaaaFernando Care");
-		Customer.irADetalleDeConsumos();
+		Customer.irAGestion("Detalle de Consumos");
 		
-		// ESTA ROTO ACTUALMENTE DETALLE DE CONSUMOS
 		WebElement selectorPeriodo = driver.findElement(By.xpath("//input[@ng-model='ptc.filterOption']"));
 		selectorPeriodo.click();
 		
@@ -61,6 +58,7 @@ public class CustomerCare360Joaquin extends TestBase {
 			}
 		}
 		
+		sleep(1000);
 		WebElement calendarioFechaInicio = driver.findElement(By.id("text-input-id-1"));
 		calendarioFechaInicio.click();
 		
@@ -700,9 +698,54 @@ public class CustomerCare360Joaquin extends TestBase {
 	}
 	
 	@Test(groups= {"CustomerCare", "Fase4"})
+	public void TS68976_Problems_with_Refills_UX_Tarjeta_de_Recarga_Pre_paga_Verificacion_Visualizar_panel_de_Steps() {
+		Customer.elegirCuenta("aaaaFernando Care");
+		Customer.irAProblemasConRecargas();
+		
+		WebElement panelPasos = driver.findElement(By.cssSelector(".vlc-slds-wizard"));
+		WebElement listaPasos = driver.findElement(By.cssSelector(".list-group.vertical-steps"));
+		dynamicWait().until(ExpectedConditions.visibilityOf(listaPasos));
+		
+		Assert.assertTrue(panelPasos.getText().contains("Pasos"));
+		Assert.assertTrue(listaPasos.isDisplayed());
+	}
+	
+	@Test(groups= {"CustomerCare", "Fase4"})
+	public void TS68977_Problems_with_Refills_UX_Tarjeta_de_Recarga_Pre_paga_Verificacion_Visualizar_Boton_Cancelar() {
+		Customer.elegirCuenta("aaaaFernando Care");
+		Customer.irAProblemasConRecargas();
+		
+		WebElement botonCancelar = driver.findElement(By.cssSelector(".vlc-slds-button--tertiary"));
+		dynamicWait().until(ExpectedConditions.visibilityOf(botonCancelar));
+		
+		Assert.assertTrue(botonCancelar.getText().contains("Cancelar"));
+		Assert.assertTrue(botonCancelar.isDisplayed());
+	}
+	
+	@Test(groups= {"CustomerCare", "Fase4"})
+	public void TS68982_Problems_with_Refills_UX_Tarjeta_de_Recarga_Pre_paga_Verificacion_Visualizar_Titulo() {
+		Customer.elegirCuenta("aaaaFernando Care");
+		Customer.irAProblemasConRecargas();
+		
+		WebElement titulo = driver.findElement(By.cssSelector(".slds-page-header__title"));
+		dynamicWait().until(ExpectedConditions.visibilityOf(titulo));
+		
+		Assert.assertTrue(titulo.isDisplayed());		
+	}
+	
+	@Test(groups= {"CustomerCare", "Fase4"})
 	public void TS68996_360_View_360_View_Mis_servicios_Visualizar_numero_de_linea_asociada_al_asset() {
 		Customer.elegirCuenta("aaaaFernando Care");
 		Customer.irAMisServicios();
+		
+		WebElement numeroLinea = driver.findElement(By.cssSelector(".lineNumber.via-slds b"));
+		Assert.assertTrue(numeroLinea.isDisplayed());
+	}
+
+	@Test(groups= {"CustomerCare", "Fase4"})
+	public void TS69025_360_View_360_View_Historiales_Datos_Visualizar_Numero_de_linea() {
+		Customer.elegirCuenta("aaaaFernando Care");
+		Customer.irAHistoriales();
 		
 		WebElement numeroLinea = driver.findElement(By.cssSelector(".lineNumber.via-slds b"));
 		Assert.assertTrue(numeroLinea.isDisplayed());
@@ -713,6 +756,7 @@ public class CustomerCare360Joaquin extends TestBase {
 		Customer.elegirCuenta("aaaaFernando Care");
 		Customer.irAGestion("Historial de Packs");
 		
+		sleep(2000);
 		WebElement botonConsultar = driver.findElement(By.xpath("//button[contains(.,'Consultar')]"));
 		botonConsultar.click();
 		sleep(1500);
@@ -724,15 +768,6 @@ public class CustomerCare360Joaquin extends TestBase {
 		List<WebElement> flechasOrdenamiento = driver.findElements(By.cssSelector(".slds-icon-text-default.slds-is-sortable__icon"));
 		
 		Assert.assertTrue(flechasOrdenamiento.get(0).isDisplayed());
-	}
-	
-	@Test(groups= {"CustomerCare", "Fase4"})
-	public void TS69025_360_View_360_View_Historiales_Datos_Visualizar_Numero_de_linea() {
-		Customer.elegirCuenta("aaaaFernando Care");
-		Customer.irAHistoriales();
-		
-		WebElement numeroLinea = driver.findElement(By.cssSelector(".lineNumber.via-slds b"));
-		Assert.assertTrue(numeroLinea.isDisplayed());
 	}
 	
 	@Test(groups= {"CustomerCare", "Fase4"})

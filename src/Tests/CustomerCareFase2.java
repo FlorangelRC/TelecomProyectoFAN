@@ -14,6 +14,7 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.ui.Select;
 
 import org.testng.Assert;
@@ -134,6 +135,8 @@ public class CustomerCareFase2 extends TestBase {
 	@Test(groups = {"CustomerCare", "Vista360Layout"})
 	public void TS14570_Busqueda_de_Transacciones_Filtrar_Por_Numero_de_Caso() {
 		CustomerCare page = new CustomerCare(driver);
+		driver.findElement(By.id("phSearchInput")).clear();
+		try {Thread.sleep(3000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 		page.usarbuscadorsalesforce("00003035");
 		try {Thread.sleep(10000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 		BasePage cambioFrameByID = new BasePage();
@@ -528,7 +531,7 @@ public class CustomerCareFase2 extends TestBase {
 		page.elegircuenta("aaaaFernando Care");
 		page.elegircaso();
 		try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
-		page.ElementPresent(driver.findElement(By.cssSelector(".x-grid3-hd-inner.x-grid3-hd-00Nc0000001iLah")));
+		Assert.assertTrue(driver.findElement(By.cssSelector(".x-grid3-hd-inner.x-grid3-hd-00Nc0000001iLah")).isDisplayed());
 		driver.switchTo().defaultContent();
 	}
 
@@ -610,11 +613,14 @@ public class CustomerCareFase2 extends TestBase {
 	@Test(groups = {"CustomerCare", "MovimientoDeCuentasDeFacturación"})
 	public void TS12252_Billing_Group_User_Line_Movements_Paso_0_Error_por_cliente_inactivo() {
 		CustomerCare page = new CustomerCare(driver);
+		BasePage cambioFrameByID = new BasePage();
 		goToLeftPanel(driver, "Cuentas");
-		page.editarcuenta("aaaaFernando Care", "no", "inactive");
-		page.elegircuenta("aaaaFernando Care");
+		page.elegircuenta("aaaaAndres Care");
 		page.SelectGestion("Movimientos de cuenta de facturaci");
-		page.validarerrorpaso0();
+		try {Thread.sleep(20000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		driver.switchTo().frame(cambioFrameByID.getFrameForElement(driver, By.cssSelector(".slds-form-element.vlc-flex.vlc-slds-text-block.vlc-slds-rte.ng-pristine.ng-valid.ng-scope")));
+		WebElement element = driver.findElement(By.cssSelector(".slds-form-element.vlc-flex.vlc-slds-text-block.vlc-slds-rte.ng-pristine.ng-valid.ng-scope"));
+		Assert.assertTrue(element.getText().contains("El cliente no está activo"));
 		driver.switchTo().defaultContent();
 	}
 
@@ -695,33 +701,39 @@ public class CustomerCareFase2 extends TestBase {
 		BasePage cambioFrameByID = new BasePage();
 		driver.switchTo().frame(cambioFrameByID.getFrameForElement(driver, By.cssSelector(".slds-button.slds-button--neutral.ng-binding.ng-scope")));	
 		List <WebElement> error = driver.findElements(By.cssSelector(".slds-button.slds-button--neutral.ng-binding.ng-scope"));
-		for (int i=0; i<2; i++) {
+		error.get(1).click();
+		try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		List <WebElement> error2 = driver.findElements(By.cssSelector(".slds-button.slds-button--neutral.ng-binding.ng-scope"));
+		int cant = 0;
+		while (cant < 2) {
 			try {
-				error.get(1).click();
-			} catch (org.openqa.selenium.NoSuchElementException e) {}
+				error2.get(1).click();
+			} catch(org.openqa.selenium.StaleElementReferenceException e) {
+				cant++;
+			}
 		}
-		//BasePage cambioFrameByID = new BasePage();
-		//driver.switchTo().frame(cambioFrameByID.getFrameForElement(driver, By.className("vlc-control-wrapper")));
-		Assert.assertTrue(driver.findElement(By.cssSelector(".message.description.ng-binding.ng-scope")).isDisplayed());
+		try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		Assert.assertTrue(false);
+		//Assert.assertTrue(driver.findElement(By.cssSelector(".message.description.ng-binding.ng-scope")).isDisplayed());
 	}
 
 	
 	@Test(groups = {"CustomerCare", "CambioDeCiclo"})
 	public void TS15959_Billing_Cycle_Changes_Sesion_Guiada_para_Cambios_de_Inicio_de_Ciclo_de_Facturacion_Paso_0_Caso_fraude() {
 		CustomerCare page = new CustomerCare(driver);
-		page.editarcuenta("aaaaFernando Care", "si", "active");
-		page.elegircuenta("aaaaFernando Care");
+		BasePage cambioFrameByID = new BasePage();
+		page.elegircuenta("aaaaRaul Care");
 		page.SelectGestion("ciclo");
-		page.validarerrorpaso0();
-		CasePage page1 = new CasePage(driver);
-		page1.validarcasocerrado("categoria", "subcategoria"," ", "leo");
+		try {Thread.sleep(15000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		driver.switchTo().frame(cambioFrameByID.getFrameForElement(driver, By.cssSelector(".message.description.ng-binding.ng-scope")));
+		WebElement element = driver.findElement(By.cssSelector(".message.description.ng-binding.ng-scope"));
+		Assert.assertTrue(element.getText().contains("En este momento no se puede efectuar este tipo de gestión porque su cuenta está en un estado de fraude"));
 	}
 
 	
 	@Test(groups = {"CustomerCare", "CambioDeCiclo"})
 	public void TS16060_Billing_Cycle_Changes_Sesion_Guiada_para_Cambios_de_Inicio_de_Ciclo_de_Facturacion_Paso_0_Validaciones_Cliente_activo() {
 		CustomerCare page = new CustomerCare(driver);
-		page.editarcuenta("aaaaFernando Care", "si", "inactive");
 		page.elegircuenta("aaaaFernando Care");
 		page.SelectGestion("ciclo");		
 		try {Thread.sleep(20000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
@@ -736,66 +748,148 @@ public class CustomerCareFase2 extends TestBase {
 	@Test(groups = {"CustomerCare", "CambioDeCiclo"})
 	public void TS16057_Billing_Cycle_Changes_Sesion_Guiada_para_Cambios_de_Inicio_de_Ciclo_de_Facturacion_Paso_0_Validaciones_correctas() {
 		CustomerCare page = new CustomerCare(driver);
-		page.editarcuenta("aaaaFernando Care", "no", "active");
 		page.elegircuenta("aaaaFernando Care");
-		page.SelectGestion("ciclo");
-		try {Thread.sleep(10000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
-		List<WebElement> a = driver.findElements(By.className("slds-form-element__control"));
-		for (WebElement x : a) {
-			if (x.getText().toLowerCase().contains("en este formulario podrás cambiar la fecha en la cual se te empieza a facturar cada mes.")) {
-				Assert.assertTrue(x.isDisplayed());
+		page.SelectGestion("ciclo");		
+		try {Thread.sleep(20000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		BasePage cambioFrameByID = new BasePage();
+		driver.switchTo().frame(cambioFrameByID.getFrameForElement(driver, By.cssSelector(".slds-button.slds-button--neutral.ng-binding.ng-scope")));	
+		List <WebElement> error = driver.findElements(By.cssSelector(".slds-button.slds-button--neutral.ng-binding.ng-scope"));
+		error.get(1).click();
+		try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		List <WebElement> error2 = driver.findElements(By.cssSelector(".slds-button.slds-button--neutral.ng-binding.ng-scope"));
+		int cant = 0;
+		while (cant < 2) {
+			try {
+				error2.get(1).click();
+			} catch(org.openqa.selenium.StaleElementReferenceException e) {
+				cant++;
 			}
 		}
-		driver.switchTo().defaultContent();
+		try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		driver.findElement(By.id("CostReview_nextBtn")).click();
+		try {Thread.sleep(10000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		driver.switchTo().frame(cambioFrameByID.getFrameForElement(driver, By.cssSelector(".slds-form-element.vlc-flex.vlc-slds-text-block.vlc-slds-rte.ng-pristine.ng-valid.ng-scope")));
+		boolean a = false;
+		List <WebElement> element = driver.findElements(By.cssSelector(".slds-form-element.vlc-flex.vlc-slds-text-block.vlc-slds-rte.ng-pristine.ng-valid.ng-scope"));
+		for (WebElement x : element) {
+			if (x.getText().toLowerCase().contains("en este formulario podrás cambiar la fecha en la cual se te empieza a facturar cada mes")) {
+				a = true;
+			}
+		}
+		Assert.assertTrue(false);
+		//Assert.assertTrue(a);
 	}
 
 	
 	@Test(groups = {"CustomerCare", "CambioDeCiclo"})
 	public void TS16065_Billing_Cycle_Changes_Sesion_Guiada_para_Cambios_de_Inicio_de_Ciclo_de_Facturacion_Paso_1_Ciclo_Billing_accounts() {
 		CustomerCare page = new CustomerCare(driver);
-		page.editarcuenta("aaaaFernando Care", "no", "active");
 		page.elegircuenta("aaaaFernando Care");
 		page.SelectGestion("ciclo");
-		page.validarpaso1cambiodeciclo();
+		try {Thread.sleep(20000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		BasePage cambioFrameByID = new BasePage();
+		driver.switchTo().frame(cambioFrameByID.getFrameForElement(driver, By.cssSelector(".slds-button.slds-button--neutral.ng-binding.ng-scope")));	
+		List <WebElement> error = driver.findElements(By.cssSelector(".slds-button.slds-button--neutral.ng-binding.ng-scope"));
+		error.get(1).click();
+		try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		List <WebElement> error2 = driver.findElements(By.cssSelector(".slds-button.slds-button--neutral.ng-binding.ng-scope"));
+		int cant = 0;
+		while (cant < 2) {
+			try {
+				error2.get(1).click();
+			} catch(org.openqa.selenium.StaleElementReferenceException e) {
+				cant++;
+			}
+		}
+		try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		driver.findElement(By.id("CostReview_nextBtn")).click();
+		try {Thread.sleep(10000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		List <WebElement> accounts = driver.findElements(By.className("slds-checkbox__label"));
+		boolean a = false;
+		boolean b = false;
+		for (WebElement x : accounts) {
+			if (x.getText().contains("aaaaFernando Care")) {
+				a = true;
+			}
+			if (x.getText().contains("aaaaFernando Care Billing 1")) {
+				b = true;
+			}
+		}
+		Assert.assertTrue(false);
+		//Assert.assertTrue(a && b);
 	}
 
 	
 	@Test(groups = {"CustomerCare", "CambioDeCiclo"})
 	public void TS16064_Billing_Cycle_Changes_Sesion_Guiada_para_Cambios_de_Inicio_de_Ciclo_de_Facturacion_Paso_1_Funcionamiento_Boton_Servicios_Billing_accounts() {
 		CustomerCare page = new CustomerCare(driver);
-		page.editarcuenta("aaaaFernando Care", "no", "active");
 		page.elegircuenta("aaaaFernando Care");
 		page.SelectGestion("ciclo");
 		try {Thread.sleep(20000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
-		List<WebElement> a = driver.findElements(By.id("tree0-node1__label"));
-		for (WebElement x : a) {
-			if (x.getText().toLowerCase().contains("ver servicios contratados")) {
-				Assert.assertTrue(x.isDisplayed());
+		BasePage cambioFrameByID = new BasePage();
+		driver.switchTo().frame(cambioFrameByID.getFrameForElement(driver, By.cssSelector(".slds-button.slds-button--neutral.ng-binding.ng-scope")));	
+		List <WebElement> error = driver.findElements(By.cssSelector(".slds-button.slds-button--neutral.ng-binding.ng-scope"));
+		error.get(1).click();
+		try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		List <WebElement> error2 = driver.findElements(By.cssSelector(".slds-button.slds-button--neutral.ng-binding.ng-scope"));
+		int cant = 0;
+		while (cant < 2) {
+			try {
+				error2.get(1).click();
+			} catch(org.openqa.selenium.StaleElementReferenceException e) {
+				cant++;
 			}
 		}
-		driver.switchTo().defaultContent();
+		try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		driver.findElement(By.id("CostReview_nextBtn")).click();
+		try {Thread.sleep(10000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		List<WebElement> element = driver.findElements(By.id("tree0-node1__label"));
+		boolean a = false;
+		for (WebElement x : element) {
+			if (x.getText().toLowerCase().contains("ver servicios contratados")) {
+				a = true;
+			}
+		}
+		Assert.assertTrue(false);
+		//Assert.assertTrue(a);
 	}
 
 	
 	@Test(groups = {"CustomerCare", "CambioDeCiclo"})
 	public void TS16078_Billing_Cycle_Changes_Sesion_Guiada_para_Cambios_de_Inicio_de_Ciclo_de_Facturacion_Paso_2_Mandatorio_Picklist_Ciclo_de_facturacion() {
 		CustomerCare page = new CustomerCare(driver);
-		page.editarcuenta("aaaaFernando Care", "no", "active");
+		BasePage cambioFrameByID = new BasePage();
 		page.elegircuenta("aaaaFernando Care");
 		page.SelectGestion("ciclo");
-		try {Thread.sleep(30000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
-		BasePage cambioFrameByID = new BasePage();
+		try {Thread.sleep(20000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		driver.switchTo().frame(cambioFrameByID.getFrameForElement(driver, By.cssSelector(".slds-button.slds-button--neutral.ng-binding.ng-scope")));	
+		List <WebElement> error = driver.findElements(By.cssSelector(".slds-button.slds-button--neutral.ng-binding.ng-scope"));
+		error.get(1).click();
+		try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		List <WebElement> error2 = driver.findElements(By.cssSelector(".slds-button.slds-button--neutral.ng-binding.ng-scope"));
+		int cant = 0;
+		while (cant < 2) {
+			try {
+				error2.get(1).click();
+			} catch(org.openqa.selenium.StaleElementReferenceException e) {
+				cant++;
+			}
+		}
+		try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		driver.findElement(By.id("CostReview_nextBtn")).click();
+		try {Thread.sleep(10000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		
 		driver.switchTo().frame(cambioFrameByID.getFrameForElement(driver, By.id("BillingCycle_nextBtn")));
 		List<WebElement> checkbox = driver.findElements(By.className("slds-checkbox--faux"));
 		checkbox.get(0).click();
 		checkbox.get(1).click();
-		checkbox.get(2).click();
 		driver.findElement(By.id("BillingCycle_nextBtn")).click();
 		try {Thread.sleep(10000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 		driver.findElement(By.id("NewBillingCycle_nextBtn")).click();
 		try {Thread.sleep(2000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 		WebElement x = driver.findElement(By.cssSelector(".slds-modal__content.slds-p-around--medium"));
-		Assert.assertTrue(x.getText().toLowerCase().contains("error: por favor complete todos los campos requeridos"));
+		Assert.assertTrue(false);
+		//Assert.assertTrue(x.getText().toLowerCase().contains("error: por favor complete todos los campos requeridos"));
 		driver.findElement(By.id("alert-ok-button")).click();
 		driver.switchTo().defaultContent();
 	}
@@ -1006,9 +1100,12 @@ public class CustomerCareFase2 extends TestBase {
 	@Test(groups = {"CustomerCare", "AdministraciónDeCasos"})
 	public void TS14601_Case_Management__Casos_Ordernados_Por_Tipos_Vista_Todos_Los_Casos_Abiertos(){
 		 Accounts accountPage = new Accounts(driver);
+		 CustomerCare page = new CustomerCare(driver);
+		 page.cerrarultimapestaña();
 	     driver.switchTo().defaultContent();
 	     goToLeftPanel2(driver, "Casos");
 	     accountPage.accountSelect("Todos Los Casos Abiertos");
+	     try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 	     assertTrue(driver.findElement(By.cssSelector(".x-panel.x-grid-panel")).isDisplayed());
 	}
 	
@@ -1061,17 +1158,18 @@ public class CustomerCareFase2 extends TestBase {
 	public void TS14569_360_View_360_View_Capacidades_De_Busqueda_Filtrar_Por_Billing_Account(){
 		Accounts accountPage = new Accounts(driver);
 		driver.switchTo().defaultContent();
-		//driver.switchTo().frame(accountPage.getFrameForElement(driver, By.id("phSearchInput")));
-		driver.findElement(By.id("phSearchInput")).sendKeys("aaaaFernando Care Billin");
+		driver.findElement(By.id("phSearchInput")).clear();
 		try {Thread.sleep(3000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		driver.findElement(By.id("phSearchInput")).sendKeys("aaaaFernando Care Billin");
+		try {Thread.sleep(10000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 		driver.switchTo().defaultContent();
 		driver.findElement(By.id("phSearchInput:group0:option0")).click();
-		try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		try {Thread.sleep(10000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 		try {driver.switchTo().alert().accept();}catch(org.openqa.selenium.NoAlertPresentException e) {}
-		try {Thread.sleep(2000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 		driver.switchTo().defaultContent();
 		driver.switchTo().frame(accountPage.getFrameForElement(driver, By.id("topButtonRow")));
-		assertTrue(driver.findElement(By.className("mainTitle")).getText().equals("Detalle de Cuenta"));		
+		assertTrue(driver.findElement(By.className("mainTitle")).getText().equals("Detalle de Cuenta"));
 	}
 	
 	
@@ -1141,30 +1239,18 @@ public class CustomerCareFase2 extends TestBase {
 	
 	@Test(groups = {"CustomerCare", "AdministraciónDeCasos"})
 	public void TS15961_360_View_Ver_Equipo_Creador_En_Case_Usuario_Cambia_De_Equipo_Nuevo_Caso_Se_Modifica_El_Campo_Equipo_Del_Creador() throws ParseException{
-		 Accounts accountPage = new Accounts(driver);
-		 Date date1 = new Date();
-	     driver.switchTo().defaultContent();
-	     SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy"); 
-	     try {
-			date1 = sdf.parse("24/11/2017");
-	     } catch (ParseException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-	     }
-	     goToLeftPanel2(driver, "Casos");
-	     accountPage.accountSelect("Mis Casos");
-	     driver.switchTo().defaultContent();
-	     driver.switchTo().frame(accountPage.getFrameForElement(driver, By.className("x-grid3-body")));
-	     List<WebElement> TodosCasos = driver.findElement(By.className("x-grid3-body")).findElements(By.className("x-grid3-row"));
-	     TodosCasos.remove(0);
-	     for (WebElement UnC : TodosCasos) {
-	    	 String fecha = UnC.findElements(By.tagName("td")).get(12).findElement(By.tagName("div")).getText();
-	    	 fecha = fecha.split(" ")[0];
-	    	 if (date1.compareTo(sdf.parse(fecha))<=0) {
-	    		 System.out.println("Equipo: "+UnC.findElements(By.tagName("td")).get(10).findElement(By.tagName("div")).getText());
-	    		 assertTrue(UnC.findElements(By.tagName("td")).get(10).findElement(By.tagName("div")).getText().equals("Cubo magico team"));
-	    		 break;
-	    	 }    	 
-	     }     
+		CustomerCare page = new CustomerCare(driver);
+		page.cerrarultimapestaña();
+		page.elegircaso();
+		BasePage cambioFrameByID = new BasePage();
+		driver.switchTo().frame(cambioFrameByID.getFrameForElement(driver, By.cssSelector(".x-grid3-col.x-grid3-cell.x-grid3-td-CASES_CASE_NUMBER")));
+		List <WebElement> caso = driver.findElements(By.cssSelector(".x-grid3-col.x-grid3-cell.x-grid3-td-CASES_CASE_NUMBER"));
+		caso.get(0).click();
+		try {Thread.sleep(10000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();} 
+		driver.switchTo().defaultContent();
+		Actions action = new Actions(driver);
+		WebElement element = driver.findElement(By.cssSelector(".dataCol.col02.inlineEditWrite"));
+		action.doubleClick(element).perform();
+		
 	}
 }
