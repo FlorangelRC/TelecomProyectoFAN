@@ -407,7 +407,7 @@ public class TestBase {
 					driver.findElement(By.xpath("//a[contains(.,'Consola FAN')]")).click();
 				} catch (TimeoutException e) {}
 				
-				driver.manage().timeouts().implicitlyWait(3, TimeUnit.SECONDS);
+				driver.manage().timeouts().implicitlyWait(5, TimeUnit.SECONDS);
 				try {driver.switchTo().alert().accept();} catch (org.openqa.selenium.NoAlertPresentException e) {}
 			}
 			
@@ -420,8 +420,30 @@ public class TestBase {
 	}
 		
 	public static WebDriverWait dynamicWait() {
-		WebDriverWait ed = new WebDriverWait(driver, 5);
+		WebDriverWait ed = new WebDriverWait(driver, 7);
 		return ed;
+	}
+	
+	public static class waitFor {
+		public static void visibilityOfAllElements(List<WebElement> elems) {
+			dynamicWait().until(ExpectedConditions.visibilityOfAllElements(elems));
+		}
+		
+		public static void visibilityOfElement(WebElement elem) {
+			dynamicWait().until(ExpectedConditions.visibilityOf(elem));
+		}
+		
+		public static void elementToBeSelected(WebElement elem) {
+			dynamicWait().until(ExpectedConditions.elementToBeSelected(elem));
+		}
+		
+		public static void attributeContains(WebElement elem, String atrib, String valor) {
+			dynamicWait().until(ExpectedConditions.attributeContains(elem, atrib, valor));
+		}
+		
+		public static void elementToBeClickable(WebElement elem) {
+			dynamicWait().until(ExpectedConditions.elementToBeClickable(elem));
+		}
 	}
 		
 	public static void sleep(int miliseconds) {
