@@ -54,7 +54,7 @@ private WebDriver driver;
 		try {Thread.sleep(10000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 	}
 	
-//	@AfterClass(groups = "SCP")
+	//@AfterClass(groups = "SCP")
 	public void teardown() {
 		driver.quit();
 		sleep(10000);
@@ -66,7 +66,7 @@ private WebDriver driver;
 		 ArrayList<String> camp1 = new ArrayList<String>();
 		 ArrayList<String> txt2 = new ArrayList<String>();
 		 txt2.add("CUIT");
-		 txt2.add("Razón Social");
+		 //txt2.add("Razón Social");
 		 txt2.add("Holding");
 		 txt2.add("Segmento");
 		 txt2.add("Region");
@@ -161,13 +161,16 @@ private WebDriver driver;
 	    
 	}
 	
-/*	@Test(groups = "SCP") // ESTEEEEEEE
+	@Test(groups = "SCP") // ESTEEEEEEE
 	public void TS112794_Plan_de_acción_Plan_de_acción_Fusionar_tareas() {
 		SCP prueba = new SCP(driver); 
 	    prueba.moveToElementOnAccAndClick("cuartoTitulo", 2);
 	    java.util.Date fechaCompleta = new Date();
+	    boolean bien = false;
 	    String fech = fechaCompleta.getDate()+"/"+(fechaCompleta.getMonth()+1);
-	    System.out.println(fech);
+	    int hora = fechaCompleta.getHours();
+	    int min	=	fechaCompleta.getMinutes();
+	   // System.out.println(fech);
 	    List<WebElement> box = driver.findElement(By.id("mainTable")).findElements(By.className("odd"));
 	    box.get(0).findElement(By.tagName("td")).findElement(By.tagName("input")).click();
 	    box.get(1).findElement(By.tagName("td")).findElement(By.tagName("input")).click();
@@ -185,9 +188,21 @@ private WebDriver driver;
 	     sleep(10000);
 	     WebElement busc = driver.findElement(By.id("mainTable_filter")).findElement(By.tagName("input"));
 		 busc.sendKeys(fech); 
-	   WebElement tabla= driver.findElement(By.id("mainTable_wrapper")).findElement(By.className("odd")).findElement(By.tagName("td"));
-	   Assert.assertTrue(texto1.equals(tabla));   
-	}	*/
+		List<WebElement> tabla= driver.findElement(By.id("mainTable_wrapper")).findElements(By.className("odd"));
+		tabla.addAll(driver.findElement(By.id("mainTable_wrapper")).findElements(By.className("even")));//.findElements(By.tagName("td"));
+		for(WebElement UnaL : tabla) {
+			if (UnaL.findElements(By.tagName("td")).get(3).getText().equals(texto1)){
+				if(Integer.parseInt(UnaL.findElements(By.tagName("td")).get(1).getText().split(" ")[1].split(":")[0])>hora) {
+					bien = true;
+				}else {
+					if (Integer.parseInt(UnaL.findElements(By.tagName("td")).get(1).getText().split(" ")[1].split(":")[0])==hora && Integer.parseInt(UnaL.findElements(By.tagName("td")).get(1).getText().split(" ")[1].split(":")[1])>=min)
+						bien = true;
+				}
+			}
+		}
+		 System.out.println(texto1);
+		 Assert.assertTrue(bien);   
+	}	
 	
 	@Test(groups = "SCP") 
 	public void TS112795_Plan_de_acción_Guardar() {
@@ -280,5 +295,10 @@ private WebDriver driver;
 	    busc.sendKeys(lala);
 	    Assert.assertTrue(lala.contains(tabla.getText()));
 	}
-	
+	@Test(groups = "SCP") 
+	public void TS112798_Plan_de_acción_Triangulo_ordenador() {
+		SCP prueba = new SCP(driver); 
+	    prueba.moveToElementOnAccAndClick("cuartoTitulo", 2);
+	    prueba.Triangulo_Ordenador_Validador("//*[@id='mainTable']/thead/tr", "//*[@id=\"mainTable\"]/tbody", 7, 2);
+	}
 }
