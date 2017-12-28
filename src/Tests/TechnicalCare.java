@@ -21,6 +21,7 @@ import Pages.setConexion;
 
 
 public class TechnicalCare extends TestBase  {
+	private static final boolean WebElement = false;
 	private WebDriver driver;
 	private String validIMEI = "545229703256596";
 	
@@ -107,6 +108,7 @@ public class TechnicalCare extends TestBase  {
 		String invalidFilePath = "C:\\Users\\pablo\\Desktop\\SampleFiles\\unZip.zip";
 		String mensajeParcialErrorEnPagina = "Solo se pueden adjuntar archivos de tipo";
 		//Literal en pagina: " Solo se pueden adjuntar archivos de tipo .doc, .docx, .xls, .xlsx, .pdf, .jpg, .jpeg "
+		//imgItem ng-binding ng-scope
 		accPage.fillIMEI(validIMEI);
 		accPage.continueFromImeiInput();
 		try {Thread.sleep(10000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}			
