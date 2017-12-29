@@ -55,7 +55,7 @@ public class test_SCP_Base extends TestBase {
 		page.moveToElementOnAccAndClick("tercerTitulo", 1);
 		}
 	
-	//@AfterMethod(groups= {"SCP", "Almer", "Prueba"})
+	@AfterMethod(groups= {"SCP", "Almer", "Prueba"})
 	public void afterMethod() {
 		driver.switchTo().defaultContent();
 		SCP page= new SCP(driver);
@@ -63,7 +63,7 @@ public class test_SCP_Base extends TestBase {
 		try {Thread.sleep(1000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 	}
 	
-	//@AfterClass(groups= {"SCP", "Almer", "Prueba"})
+	@AfterClass(groups= {"SCP", "Almer", "Prueba"})
 	public void tearDown() {
 		driver.quit();
 		sleep(4000);
@@ -542,9 +542,51 @@ public class test_SCP_Base extends TestBase {
 //-------------------------------------------------Este Metodo va a una oportunidad especifica que tiene un producto----------------------------------------------------------------//
 	@Test(groups= "SCP")
 	public void TS112651_CRM_SCP_Estructura_de_las_oportunidades_Bloques_Productos_de_la_oportunidad() {
-		SCP page=new SCP(driver);
-		page.clickOnTabByName("oportunidades");
+	SCP page=new SCP(driver);
+	page.clickOnTabByName("oportunidades");
+	sleep(3000);
+	Select sOp=new Select(driver.findElement(By.id("fcf")));
+	sOp.selectByVisibleText("Todas las oportunidades");
+	sleep(200);
+	driver.findElement(By.name("go")).click();
+	sleep(2000);
+	List<WebElement> lOp=driver.findElements(By.className("x-grid3-row"));
+	lOp.add(driver.findElement(By.cssSelector(".x-grid3-row.x-grid3-row-first")));
+	boolean flag=false;
+	for(WebElement nOp: lOp) {
+		List<WebElement> tagsOp=nOp.findElements(By.tagName("a"));
+		for(WebElement nombre:tagsOp) {
+		if(nombre.getText().toLowerCase().contains("alta sucursal entre rios")) {
+			nombre.click();
+			flag=true;
+			break;}
+			}
+		if(flag)
+			break;
+		}
+	sleep(2000);
+	List <WebElement> compBefore = driver.findElements(By.className("listTitle")); //Lista los Elementos de arriba
+	for(WebElement a:compBefore) {
+		if(a.getText().toLowerCase().startsWith("productos")) { 
+			a.click();}} //Baja hasta productos.
+	sleep(1000);
+	//campos a Verificar
+	String[] camposaVerificar= {"Acción","Producto","Cantidad","Moneda","Precio de venta","Cargos Totales por Mes","Plazo (meses)",
+			"Total Mes por Plazo","Cargo unica vez","Cargo por única vez total","Precio Total Contrato"};
+	List<String> listaComparativa = new ArrayList<String>();
+	boolean check=true;
+	//Elemento con el campo
+	List<WebElement> campos= driver.findElement(By.xpath("//*[@id=\"0063F000002UkUu_RelatedLineItemList_body\"]/table/tbody/tr[1]")).
+			findElements(By.tagName("th"));
+	for(WebElement a:campos) {
+		System.out.println(a.getText());
+		listaComparativa.add(a.getText());
+		}
+	for(String a:camposaVerificar) {
+		if(!(listaComparativa.contains(a)))
+			check=false;
+		}
+	assertTrue(check);
 	}
-
 }
 
