@@ -386,7 +386,10 @@ public boolean cuentalogeada(String cuenta){
 		if (usuario.toLowerCase().contains("fabiana"))
 			TB.loginSCPUsuario(driver);
 		else
-			TB.loginSCPAdminServices(driver);
+			if (usuario.toLowerCase().contains("isabel"))
+				TB.loginSCPAdminServices(driver);
+			else
+				TB.loginSCPConPermisos(driver);
 	}
 	
 	public void Desloguear_Loguear_Comentar(String usuario, String otroUsuario, String comentario, String identificador, int indice) {

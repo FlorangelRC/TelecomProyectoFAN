@@ -1194,6 +1194,21 @@ public class TechnicalCareCSRAutogestion extends TestBase {
 	}
 	
 	@Test(groups = {"TechnicalCare", "Autogestion"})
+	public void TS51220_Autogestion_Verificacion_De_La_Seleccion_Canal_Asterisco_Y_Servicio_8742() {
+		Accounts accountPage = new Accounts(driver);
+		accountPage.findAndClickButton("autogesti\u00f3n");
+		try {Thread.sleep(8000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		driver.switchTo().defaultContent();
+		driver.switchTo().frame(accountPage.getFrameForElement(driver, By.id("SelfManagementStep_nextBtn")));
+		Select listSelect = new Select(driver.findElement(By.id("ChannelSelection")));
+		listSelect.selectByVisibleText("Otros Asteriscos");
+		try {Thread.sleep(2000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		listSelect = new Select(driver.findElement(By.id("ServiceSelection")));
+		listSelect.selectByVisibleText("*8742");
+	    assertTrue(listSelect.getFirstSelectedOption().getText().contains("*8742"));
+	}
+	
+	@Test(groups = {"TechnicalCare", "Autogestion"})
 	public void TS51221_Autogestion_Verificacion_De_Lista_De_Opciones_Asterisco_8472() {
 		Accounts accountPage = new Accounts(driver);
 		accountPage.findAndClickButton("autogesti\u00f3n");
