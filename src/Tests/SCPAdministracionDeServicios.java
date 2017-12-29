@@ -50,7 +50,7 @@ public class SCPAdministracionDeServicios extends TestBase {
 		try {Thread.sleep(10000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 	}
 	
-	//@AfterClass(groups = "SCP")
+	@AfterClass(groups = "SCP")
 	public void tearDown() {
 		driver.quit();
 	}
@@ -62,7 +62,31 @@ public class SCPAdministracionDeServicios extends TestBase {
       pcp.clickOnTabByName("cuentas");
 		try {Thread.sleep(7000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 		try {Thread.sleep(7000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
-		
+		pcp.clickEnCuentaPorNombre("AIR S.R.L");
+		try {Thread.sleep(7000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		pcp.elegiroportunidad("Integra y SPV");
+		try {Thread.sleep(7000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		WebElement TMI = driver.findElement(By.className("detailList")).findElements(By.tagName("tr")).get(4).findElements(By.tagName("td")).get(3);
+		int numTMI = Integer.parseInt(TMI.getText())+1;
+	    System.out.println(Integer.toString(numTMI));
+		Actions action = new Actions(driver); 
+		action.moveToElement(TMI).doubleClick().perform();
+	    TMI.findElement(By.tagName("input")).sendKeys(Integer.toString(numTMI));
+	    driver.findElement(By.id("topButtonRow")).findElement(By.tagName("input")).click();
+	    try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();} 
+	    TMI = driver.findElement(By.className("detailList")).findElements(By.tagName("tr")).get(4).findElements(By.tagName("td")).get(3);
+	    assertTrue(TMI.getText().equals(Integer.toString(numTMI)));
+		try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}  
+		pcp.Desloguear_Loguear("isabel");
+    }  
+	
+	@Test(groups = "SCP")  
+    public void TS110251_Estructura_De_Los_Proyectos_TMI_Fecha_Pasada() {  
+      SCP pcp = new SCP(driver);  
+      pcp.Desloguear_Loguear("permisos");
+      pcp.clickOnTabByName("cuentas");
+		try {Thread.sleep(7000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		try {Thread.sleep(7000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 		pcp.clickEnCuentaPorNombre("AIR S.R.L");
 		try {Thread.sleep(7000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 		pcp.elegiroportunidad("Integra y SPV");
@@ -70,11 +94,15 @@ public class SCPAdministracionDeServicios extends TestBase {
 		WebElement TMI = driver.findElement(By.className("detailList")).findElements(By.tagName("tr")).get(4).findElements(By.tagName("td")).get(3);
 		Actions action = new Actions(driver); 
 		action.moveToElement(TMI).doubleClick().perform();
-	    int numTMI = Integer.parseInt(TMI.getText());
-		assertTrue(TMI.findElement(By.className("inlineEditDiv")).isDisplayed());
-		try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}  
-          
+	    TMI.findElement(By.tagName("input")).sendKeys("-100");
+	    driver.findElement(By.id("topButtonRow")).findElement(By.tagName("input")).click();
+	    try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}  
+	    assertTrue(driver.findElement(By.id("errorDiv_ep")).getText().contains("Error:El valor del TMI debe ser un n\u00famero positivo."));
+
+		try {Thread.sleep(2000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}  
+		pcp.Desloguear_Loguear("isabel");
     }  
+	
 	
 	@Test(groups = "SCP")  
     public void TS110254_Estructura_De_Los_Servicios_Servicios_Nuestros() {  
