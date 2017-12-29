@@ -50,12 +50,12 @@ public class test_SCP_Base extends TestBase {
 		page.goToMenu("SCP");
 		page.clickOnTabByName("cuentas");
 		page.listTypeAcc("Todas Las cuentas");
-		page.clickEnCuentaPorNombre("Florencia Di Ci");
+		page.clickEnCuentaPorNombre("Florencia Di Cio");
 		Cuenta=driver.findElement(By.className("topName")).getText();
 		page.moveToElementOnAccAndClick("tercerTitulo", 1);
 		}
 	
-	@AfterMethod(groups= {"SCP", "Almer", "Prueba"})
+	//@AfterMethod(groups= {"SCP", "Almer", "Prueba"})
 	public void afterMethod() {
 		driver.switchTo().defaultContent();
 		SCP page= new SCP(driver);
@@ -63,7 +63,7 @@ public class test_SCP_Base extends TestBase {
 		try {Thread.sleep(1000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 	}
 	
-	@AfterClass(groups= {"SCP", "Almer", "Prueba"})
+	//@AfterClass(groups= {"SCP", "Almer", "Prueba"})
 	public void tearDown() {
 		driver.quit();
 		sleep(4000);
@@ -508,24 +508,43 @@ public class test_SCP_Base extends TestBase {
 	
 	
 	/**
-	 * 
-	 * 
+	 * Modifica la oportunidad y verifica 
+	 * que se haya cambiado el nombre y la fecha en el historial de campos de la oportunidad.
 	 */
 	@Test(groups= "SCP")
 	public void TS112647_CRM_SCP_Estructura_de_las_oportunidades_Bloques_Historial_de_Campos() {
-		boolean check=true;
 		SCP page=new SCP(driver);
+		String fecha="";
 	    if(page.goToOportunity()) {
 	    	try {Thread.sleep(3000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 	    	driver.findElement(By.name("edit")).click();
 	    	try {Thread.sleep(3000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 	    	List<WebElement> date=driver.findElements(By.className("dateFormat"));
-	    	for(WebElement imp:date)
-	    		System.out.println(imp.getText());
-	    	
+	    	fecha=date.get(1).getText();
+	    	fecha=fecha.substring(2, fecha.length()-2);
+	    	//System.out.println(fecha);
+	    	date.get(1).click();
+	    	//for(WebElement imp:date)
+	    		//System.out.println(imp.getText());
+	    	driver.findElement(By.id("opp3")).clear();
+	    	sleep(200);
+	    	driver.findElement(By.id("opp3")).sendKeys("opAut");
+	    	sleep(1000);
+	    	driver.findElement(By.name("save")).click();
+	    	WebElement modificacion=driver.findElement(By.xpath("//*[@id=\"0063F000002UbLj_RelatedEntityHistoryList_body\"]/table/tbody/tr[2]"));
+	    	//System.out.println(modificacion.getText());
+	    	assertTrue(modificacion.getText().contains(fecha)&&modificacion.getText().contains("opAut"));
 	    	}
 	   
 	    else {System.out.println("Oportunidad no disponible, prueba no ejecutada");assertTrue(false);}	
 	}
+	
+//-------------------------------------------------Este Metodo va a una oportunidad especifica que tiene un producto----------------------------------------------------------------//
+	@Test(groups= "SCP")
+	public void TS112651_CRM_SCP_Estructura_de_las_oportunidades_Bloques_Productos_de_la_oportunidad() {
+		SCP page=new SCP(driver);
+		page.clickOnTabByName("oportunidades");
+	}
+
 }
 
