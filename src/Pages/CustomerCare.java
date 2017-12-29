@@ -151,42 +151,8 @@ public class CustomerCare extends BasePage {
 	@FindBy(css = "icon icon-v-close")
 	private WebElement cerrarFlyout;
 
-	///////////////////////////////////// ELEMENTOS PUBLICOS ///////////////////////////////////////
-	@FindBy(xpath = "//input[@ng-model='ptc.filterOption']")
-	public WebElement selectorPeriodo;
-	
-	@FindBy(css = ".slds-dropdown.slds-dropdown--left li")
-	public List<WebElement> opcionesSelectorPeriodo;
-	
-	@FindBy(id = "text-input-id-1")
-	public WebElement calendarioFechaInicio;
-	
-	@FindBy(id = "text-input-id-2")
-	public WebElement calendarioFechaFin;
-	
-	@FindBy(className = "slds-day")
-	public List<WebElement> diasCalendario;
-	
 	@FindBy(xpath = "//button[@class='slds-button slds-button--neutral slds-truncate']")
 	public List<WebElement> gestionesEncontradas;
-	
-	@FindBy(xpath = "//button[contains(.,'Consultar')]")
-	public WebElement botonConsultar;
-	
-	@FindBy(css = ".slds-truncate.slds-th__action")
-	public List<WebElement> columnasHistorial;
-	
-	@FindBy(id = "text-input-03")
-	public WebElement selectorNombrePack;
-	
-	@FindBy(css = ".slds-input__icon--left.slds-icon.slds-icon--x-small.slds-input__icon")
-	public List<WebElement> registrosHistorial;
-	
-	@FindBy(xpath = "//div[@class='slds-grid']")
-	public List<WebElement> detalleRegistrosHistorial;
-	
-	@FindBy(css = ".console-card.active")
-	public List<WebElement> tarjetaServiciosActivos;
 
 
 	public void elegirCuenta(String nombreCuenta) {		
@@ -240,6 +206,7 @@ public class CustomerCare extends BasePage {
 		TestBase.sleep(4000);
 		TestBase.dynamicWait().until(ExpectedConditions.numberOfElementsToBe(By.cssSelector(".sd_secondary_container.x-border-layout-ct"), 2));
 		cambiarAFrameActivo();
+		TestBase.sleep(1000);
 		TestBase.dynamicWait().until(ExpectedConditions.visibilityOfElementLocated(By.cssSelector(".btn.btn-primary")));
 	}
 	
@@ -274,6 +241,13 @@ public class CustomerCare extends BasePage {
 		intentarAbrirPanelDerecho();
 		panelDerecho = panelesLaterales.get(0);
 		driver.switchTo().frame(panelDerecho.findElement(By.cssSelector("iframe")));
+	}
+	
+	public void panelIzquierdo() {
+		driver.switchTo().defaultContent();
+		WebElement panelIzquierdo = null;
+		panelIzquierdo = panelesLaterales.get(1);
+		driver.switchTo().frame(panelIzquierdo.findElement(By.cssSelector("iframe")));
 	}
 	
 	public void buscarGestion(String gest) {
@@ -315,7 +289,9 @@ public class CustomerCare extends BasePage {
 			Assert.assertFalse(gestionesEncontradas.isEmpty());
 		}
 		gestionesEncontradas.get(0).click();
-		TestBase.sleep(3000);
+		if (gest.equals("Débito automático")) TestBase.sleep(6500);
+		else TestBase.sleep(3000);
+		if (gest.equals("Historial de Packs")) TestBase.sleep(1500);
 		cambiarAFrameActivo();
 	}
 	
@@ -346,11 +322,14 @@ public class CustomerCare extends BasePage {
 	public void irAProblemasConRecargas() {
 		for (WebElement linea : lineasPrepago) {
 			if (!linea.getAttribute("class").contains("expired")) {
-					linea.click();
+					linea.findElement(By.cssSelector(".card-top")).click();
+					//linea.click();
+					TestBase.dynamicWait().until(ExpectedConditions.visibilityOf(btn_ProblemaConRecargas));
 					btn_ProblemaConRecargas.click();
+					break;
 			}
 		}
-		TestBase.sleep(3000);
+		TestBase.sleep(4000);
 		cambiarAFrameActivo();
 	}
 	
@@ -378,6 +357,11 @@ public class CustomerCare extends BasePage {
 		cambiarAFrameActivo();	
 	}
 	
+	public WebElement obtenerPestañaActiva() {
+		driver.switchTo().defaultContent();
+		TestBase.sleep(3000);
+		return driver.findElement(By.cssSelector(".sd_secondary_tabstrip .x-tab-strip-closable.x-tab-strip-active"));
+	}
 	
 	// -----------------------------------------------------------------------------------------------------
 	// 											METODOS PRIVADOS
@@ -402,7 +386,8 @@ public class CustomerCare extends BasePage {
 			driver.manage().timeouts().implicitlyWait(1, TimeUnit.SECONDS);
 			panelDerechoColapsado.click();
 		} catch (NoSuchElementException|ElementNotVisibleException e) {	}
-		finally { 
+		finally {
+			TestBase.sleep(2000);
 			driver.manage().timeouts().implicitlyWait(3, TimeUnit.SECONDS);
 		}
 	}
@@ -458,6 +443,7 @@ public class CustomerCare extends BasePage {
 		driver.switchTo().frame(cambioFrameByID.getFrameForElement(driver, By.name("fcf")));
 		driver.findElement(By.id("00B41000001CfyR_listSelect")).click();
 		field.selectByVisibleText("Mis Casos");
+		try {Thread.sleep(10000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}	
 	}
 	
 	
@@ -469,26 +455,25 @@ public class CustomerCare extends BasePage {
 		driver.switchTo().frame(frame0);
 		Select field = new Select(driver.findElement(By.name("fcf")));
 		field.selectByVisibleText("Todas las cuentas");		
-		try {Thread.sleep(10000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}	
-		List<WebElement> accounts2 = driver.findElements(By.xpath("//*[text() ='"+cuenta+"']"));
 		try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}	
+		List<WebElement> accounts2 = driver.findElements(By.xpath("//*[text() ='"+cuenta+"']"));
 		accounts2.get(0).click();
 		accounts2.get(0).click();
-		try {Thread.sleep(10000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
-		//try {driver.switchTo().alert().accept();} catch (org.openqa.selenium.UnhandledAlertException e) {}
-		driver.switchTo().defaultContent();	
+		try {Thread.sleep(4000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		try {driver.switchTo().alert().accept();} catch (org.openqa.selenium.NoAlertPresentException e) {}
+		driver.switchTo().defaultContent();
 	}
 	
 	
 	public void openrightpanel() {		
-		try {Thread.sleep(10000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 		driver.switchTo().defaultContent();
 		if(driver.findElements(By.cssSelector(".x-layout-collapsed.x-layout-collapsed-east.x-layout-cmini-east")).size() != 0) {
 			panelder.click();
 		}
 		List<WebElement> frame1 = driver.findElements(By.tagName("iframe"));
 		driver.switchTo().frame(frame1.get(3));
-		try {Thread.sleep(10000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 	}
 	
 	
@@ -768,7 +753,7 @@ public class CustomerCare extends BasePage {
 		BasePage cambioFrameByID = new BasePage(driver);
 		driver.switchTo().frame(cambioFrameByID.getFrameForElement(driver, By.cssSelector(".slds-input.actionSearch.ng-pristine.ng-untouched.ng-valid.ng-empty")));
 		driver.findElement(By.cssSelector(".slds-input.actionSearch.ng-pristine.ng-untouched.ng-valid.ng-empty")).sendKeys(gestion);
-		try {Thread.sleep(10000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		try {Thread.sleep(3000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 		List <WebElement> btns = driver.findElements(By.cssSelector(".slds-button.slds-button--neutral.slds-truncate"));
 		((JavascriptExecutor)driver).executeScript("window.scrollTo(0,"+btns.get(0).getLocation().y+")");
 		btns.get(0).click();
@@ -921,7 +906,7 @@ public class CustomerCare extends BasePage {
 		}
 		List<WebElement> mainTabs1 = driver.findElements(By.className("x-tab-strip-close"));
 		((JavascriptExecutor) driver).executeScript("arguments[0].click();", mainTabs1.get(1));
-		try {Thread.sleep(10000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 	}
 	
 	
@@ -1344,5 +1329,13 @@ public class CustomerCare extends BasePage {
 		}
 		driver.findElement(By.id("OrderReview_nextBtn")).click();
 		try {Thread.sleep(10000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+	}
+	
+	public void irAFacturacion() {
+		BasePage cambioFrameByID = new BasePage(driver);
+		driver.switchTo().frame(cambioFrameByID.getFrameForElement(driver, By.cssSelector(".slds-grid.slds-p-around--small.slds-wrap.via-slds-story-cards--header.slds-theme--shade.profile-tags-header")));
+		List <WebElement> fact = driver.findElements(By.cssSelector(".slds-grid.slds-p-around--small.slds-wrap.via-slds-story-cards--header.slds-theme--shade.profile-tags-header"));
+		fact.get(0).click();
+		try {Thread.sleep(7000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 	}
 }

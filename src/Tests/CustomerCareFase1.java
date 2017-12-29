@@ -27,13 +27,13 @@ public class CustomerCareFase1 extends TestBase {
 	private WebDriver driver;
 
 	
-	@AfterClass(groups = "CustomerCare")
+	@AfterClass(groups = {"CustomerCare", "Vista360Layout"})
 	public void tearDown() {
 		driver.quit();
 		try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 	}
 
-	//@AfterMethod(groups = "CustomerCare")
+	//@AfterMethod(groups = {"CustomerCare", "Vista360Layout"})
 	public void alert() {
 		CustomerCare page = new CustomerCare(driver);
 		page.cerrarultimapestaña();
@@ -45,7 +45,7 @@ public class CustomerCareFase1 extends TestBase {
 		} catch (org.openqa.selenium.NoAlertPresentException e) {}
 	}
 
-	@BeforeClass(groups = "CustomerCare")
+	@BeforeClass(groups = {"CustomerCare", "Vista360Layout"})
 	public void init() throws Exception {
 		this.driver = setConexion.setupEze();
 		try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
@@ -67,7 +67,7 @@ public class CustomerCareFase1 extends TestBase {
 		try {Thread.sleep(10000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 	}
 
-	@BeforeMethod(groups = "CustomerCare")
+	@BeforeMethod(groups = {"CustomerCare", "Vista360Layout"})
 	public void setup() {
 		try {Thread.sleep(10000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 	}

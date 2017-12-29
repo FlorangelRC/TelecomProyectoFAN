@@ -24,7 +24,7 @@ public class SmokeTest extends TestBase  {
 	
 	private WebDriver driver;
 	
-	//@AfterTest(groups= {"Smoke"})
+	@AfterTest(groups= {"Smoke"})
 	public void tearDown() {
 			driver.close();
 	}

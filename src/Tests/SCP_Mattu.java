@@ -3,6 +3,7 @@ package Tests;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import org.omg.Messaging.SyncScopeHelper;
 import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
@@ -13,7 +14,6 @@ import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
-
 import Pages.BasePage;
 import Pages.SCP;
 import Pages.setConexion;
@@ -95,7 +95,7 @@ private WebDriver driver;
 	//TCC = 4 
 	@Test(groups = "SCP") 
 	public void TS112725_Mosaico_de_Relacionamiento_por_Oportunidad_Triangulo_Ordenador() {
-		SCP prueba = new SCP(driver); 
+		SCP prueba = new SCP(driver);
 		prueba.moveToElementOnAccAndClick("tercerTitulo", 3);
 		Assert.assertTrue(prueba.Triangulo_Ordenador_Validador("//*[@id=\"mainTable\"]/thead/tr", "//*[@id=\"mainTable\"]/tbody", 4, 2));
 	}
@@ -163,5 +163,67 @@ private WebDriver driver;
 		Assert.assertTrue(prueba.Triangulo_Ordenador_Validador("//*[@id=\"mainOppsTable\"]/thead/tr", "//*[@id=\"mainOppsTable\"]/tbody", 6, 5));
 		Assert.assertTrue(prueba.Triangulo_Ordenador_Validador("//*[@id=\"mainOppsTable\"]/thead/tr", "//*[@id=\"mainOppsTable\"]/tbody", 6, 6));
 	}
+	
+	//------------------------------------------------------------------------------------------------- 
+	//TCC = 9
+	@Test(groups = "SCP")
+	public void TS112772_Panel_de_control_Busqueda_Anterior_pagina() {
+		WebElement wNavBar = driver.findElement(By.cssSelector(".zen-inlineList.zen-tabMenu"));
+		List<WebElement> wMenu = wNavBar.findElements(By.tagName("li"));
+		wMenu.get(4).click();
+		WebElement wMenuSiguiente = driver.findElement(By.cssSelector(".btn-group.pull-right"));
+		List<WebElement> wMenu2 = wMenuSiguiente.findElements(By.tagName("input"));
+		wMenu2.get(2).click();
+		try {Thread.sleep(7000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		WebElement wMenuAnterior = driver.findElement(By.cssSelector(".btn-group.pull-right"));
+		List<WebElement> wMenu3 = wMenuAnterior.findElements(By.tagName("input"));
+		wMenu3.get(1).click();
+		try {Thread.sleep(7000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		WebElement wMenuSiguiente2 = driver.findElement(By.cssSelector(".btn-group.pull-right"));
+		Assert.assertTrue(wMenuSiguiente2.findElement(By.tagName("b")).getText().contains("Página: 1"));
+	}
+	
+	//------------------------------------------------------------------------------------------------- 
+	//TCC = 10
+	/*@Test(groups = "SCP")
+	public void TS112773_Panel_de_control_Busqueda_Con_varios_resultados() {
+		WebElement wNavBar = driver.findElement(By.cssSelector(".zen-inlineList.zen-tabMenu"));
+		List<WebElement> wMenu = wNavBar.findElements(By.tagName("li"));
+		wMenu.get(4).click();
+		WebElement wFiltro = driver.findElement(By.id("filterDiv"));
+		wFiltro.findElement(By.tagName("input")).sendKeys("APER\n");
+		SCP prueba = new SCP(driver);
+		boolean bContains = true;
+		TestBase TB = new TestBase();
+		TB.waitFor(driver, By.cssSelector(".table.table-striped.table-bordered.table-condensed.dataTablePrincipal"));
+		List <String> sColumna = prueba.TraerColumna("//*[@id=\"mainOppsTable\"]/tbody", 3, 1);
+		for (String sNombreDeLaCuenta:sColumna) {
+			if (!sNombreDeLaCuenta.contains("APER")) {
+				bContains = false;
+				break;
+			}
+		}
+		WebElement wMenuSiguiente = driver.findElement(By.cssSelector(".btn-group.pull-right"));
+		List<WebElement> wMenu2 = wMenuSiguiente.findElements(By.tagName("input"));
+		boolean bSiguiente = wMenu2.get(2).isEnabled();
+		if(bSiguiente)wMenu2.get(2).click();
+		while (bSiguiente) { 
+			System.out.println("Is enable");
+			TB.waitFor(driver, By.cssSelector(".table.table-striped.table-bordered.table-condensed.dataTablePrincipal"));
+			sColumna = prueba.TraerColumna("//*[@id=\"mainOppsTable\"]/tbody", 3, 1);
+			System.out.println("Paso 1 vez");
+			for (String sNombreDeLaCuenta:sColumna) {
+				if (!sNombreDeLaCuenta.contains("APER")) {
+					bContains = false;
+					break;
+				}
+			}
+			wMenuSiguiente = driver.findElement(By.cssSelector(".btn-group.pull-right"));
+			wMenu = wMenuSiguiente.findElements(By.tagName("input"));
+			bSiguiente = wMenu.get(2).isEnabled();
+			if(bSiguiente)wMenu2.get(2).click();
+		}
+		System.out.println(bContains);
+	}*/
 	
 }

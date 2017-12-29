@@ -495,6 +495,18 @@ public class Accounts extends BasePage {
 	//Servicio Tecnico Methods
 	
 	public void fillIMEI(String IMEI) {
+		try {Thread.sleep(1000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		BasePage cambioFrameByID=new BasePage();
+		driver.switchTo().frame(cambioFrameByID.getFrameForElement(driver, By.cssSelector(".vlc-slds-button--tertiary.ng-binding.ng-scope")));
+		try {Thread.sleep(1000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		List<WebElement> elegir=driver.findElements(By.cssSelector(".imgItemContainer.ng-scope"));
+		try {Thread.sleep(500);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		//elegir.get(1).click();
+		for(WebElement xx:elegir){
+			//System.out.println(xx.getText());
+			if(xx.getText().toLowerCase().endsWith("imei"))
+				xx.click();}
+		
 		By findImeiCode = (By.id("ImeiCode"));
 		try {
 			driver.switchTo().defaultContent();

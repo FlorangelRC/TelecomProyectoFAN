@@ -346,15 +346,16 @@ public void validarcomentario(String comentario){
 	List <WebElement> comentarios = driver.findElements(By.cssSelector(".feeditemtext.cxfeeditemtext"));
 	System.out.println(comentarios.size());
 	Assert.assertTrue(comentarios.get(0).getText().equals(comentario));
-	Assert.assertEquals(driver.findElement(By.cssSelector(".topics.init")).getText(), "Haga clic para agregar temas:   Sin sugerencias. Aï¿½ada sus propios temas.");
+	Assert.assertEquals(driver.findElement(By.cssSelector(".feeditemtopics")).getText(), "Haga clic para agregar temas:   Sin sugerencias. Añada sus propios temas.");
 }
 
 
 public void validarcomentarioajeno(String comentario){
 	try {Thread.sleep(15000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 	String cuentaactiva = driver.findElement(By.id("userNavLabel")).getText();
-	List <WebElement> comentarios = driver.findElements(By.cssSelector(".feeditembodyandfooter"));
-	Assert.assertTrue(comentarios.get(0).findElement(By.cssSelector(".cxfeeditemtextwrapper")).getText().equals(comentario));
+	List <WebElement> comentarios = driver.findElements(By.cssSelector(".feeditemcontent.cxfeeditemcontent"));
+	((JavascriptExecutor)driver).executeScript("window.scrollTo(0,"+comentarios.get(0).getLocation().y+")");
+	Assert.assertTrue(comentarios.get(0).findElement(By.cssSelector(".feeditemtext.cxfeeditemtext")).getText().equals(comentario));
 	Assert.assertFalse(comentarios.get(0).findElement(By.cssSelector(".feeditemfirstentity")).getText().equals(cuentaactiva));
 
 }
