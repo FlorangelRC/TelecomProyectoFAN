@@ -17,6 +17,7 @@ import org.openqa.selenium.support.ui.Select;
 import org.testng.Assert;
 
 import Tests.TestBase;
+import Tests.TestBase.waitFor;
 
 public class SCP extends BasePage {
 	final WebDriver driver;
@@ -101,6 +102,8 @@ public class SCP extends BasePage {
 			System.out.println(e.getText());
 			if(e.getText().equals(oportunidad)){
 				e.click();
+				Actions action = new Actions(driver);   
+				action.moveToElement(e).doubleClick().perform();
 				break;}}
 	}
 	
@@ -504,5 +507,20 @@ public boolean cuentalogeada(String cuenta){
 		
 		return sList;
 	}
+public void ValidarEstadosDELTA(){
+	TestBase TB = new TestBase();
+	try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+
+	TB.waitFor(driver, By.cssSelector(".brandTertiaryBrd.pbSubheader.tertiaryPalette"));
+	WebElement element = driver.findElement(By.cssSelector(".brandTertiaryBrd.pbSubheader.tertiaryPalette"));
+	  ((JavascriptExecutor)driver).executeScript("window.scrollTo(0,"+element.getLocation().y+")");
+	  System.out.println(driver.findElement(By.xpath("/html/body/table/tbody/tr[1]/th[1]")).getText());
+	  System.out.println(driver.findElement(By.xpath("/html/body/table/tbody/tr[1]/th[2]")).getText());
+
+	Assert.assertEquals(driver.findElement(By.xpath("/html/body/table/tbody/tr[1]/th[1]")).getText(), "Precio Total Contrato (Oportunidad - ARG)");
+	Assert.assertEquals(driver.findElement(By.xpath("/html/body/table/tbody/tr[1]/th[2]")).getText(), "Precio Total Contrato (Proyectos - ARG)");
+
+}
+
 
 }
