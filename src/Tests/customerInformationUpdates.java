@@ -26,7 +26,7 @@ public class customerInformationUpdates extends TestBase {
 	private WebDriver driver;
 
 
-	//@AfterClass(groups = {"CustomerCare", "ActualizarDatos"})
+	@AfterClass(groups = {"CustomerCare", "ActualizarDatos"})
 	public void tearDown2() {
 		driver.close();	
 	}

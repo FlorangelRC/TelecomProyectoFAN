@@ -1338,4 +1338,5 @@ public class CustomerCare extends BasePage {
 		fact.get(0).click();
 		try {Thread.sleep(7000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 	}
+	//asdasd
 }

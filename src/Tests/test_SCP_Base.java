@@ -50,7 +50,7 @@ public class test_SCP_Base extends TestBase {
 		page.goToMenu("SCP");
 		page.clickOnTabByName("cuentas");
 		page.listTypeAcc("Todas Las cuentas");
-		page.clickEnCuentaPorNombre("Florencia Di Ci");
+		page.clickEnCuentaPorNombre("Florencia Di Cio");
 		Cuenta=driver.findElement(By.className("topName")).getText();
 		page.moveToElementOnAccAndClick("tercerTitulo", 1);
 		}
@@ -508,24 +508,85 @@ public class test_SCP_Base extends TestBase {
 	
 	
 	/**
-	 * 
-	 * 
+	 * Modifica la oportunidad y verifica 
+	 * que se haya cambiado el nombre y la fecha en el historial de campos de la oportunidad.
 	 */
 	@Test(groups= "SCP")
 	public void TS112647_CRM_SCP_Estructura_de_las_oportunidades_Bloques_Historial_de_Campos() {
-		boolean check=true;
 		SCP page=new SCP(driver);
+		String fecha="";
 	    if(page.goToOportunity()) {
 	    	try {Thread.sleep(3000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 	    	driver.findElement(By.name("edit")).click();
 	    	try {Thread.sleep(3000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 	    	List<WebElement> date=driver.findElements(By.className("dateFormat"));
-	    	for(WebElement imp:date)
-	    		System.out.println(imp.getText());
-	    	
+	    	fecha=date.get(1).getText();
+	    	fecha=fecha.substring(2, fecha.length()-2);
+	    	//System.out.println(fecha);
+	    	date.get(1).click();
+	    	//for(WebElement imp:date)
+	    		//System.out.println(imp.getText());
+	    	driver.findElement(By.id("opp3")).clear();
+	    	sleep(200);
+	    	driver.findElement(By.id("opp3")).sendKeys("opAut");
+	    	sleep(1000);
+	    	driver.findElement(By.name("save")).click();
+	    	WebElement modificacion=driver.findElement(By.xpath("//*[@id=\"0063F000002UbLj_RelatedEntityHistoryList_body\"]/table/tbody/tr[2]"));
+	    	//System.out.println(modificacion.getText());
+	    	assertTrue(modificacion.getText().contains(fecha)&&modificacion.getText().contains("opAut"));
 	    	}
 	   
 	    else {System.out.println("Oportunidad no disponible, prueba no ejecutada");assertTrue(false);}	
+	}
+	
+//-------------------------------------------------Este Metodo va a una oportunidad especifica que tiene un producto----------------------------------------------------------------//
+	@Test(groups= "SCP")
+	public void TS112651_CRM_SCP_Estructura_de_las_oportunidades_Bloques_Productos_de_la_oportunidad() {
+	SCP page=new SCP(driver);
+	page.clickOnTabByName("oportunidades");
+	sleep(3000);
+	Select sOp=new Select(driver.findElement(By.id("fcf")));
+	sOp.selectByVisibleText("Todas las oportunidades");
+	sleep(200);
+	driver.findElement(By.name("go")).click();
+	sleep(2000);
+	List<WebElement> lOp=driver.findElements(By.className("x-grid3-row"));
+	lOp.add(driver.findElement(By.cssSelector(".x-grid3-row.x-grid3-row-first")));
+	boolean flag=false;
+	for(WebElement nOp: lOp) {
+		List<WebElement> tagsOp=nOp.findElements(By.tagName("a"));
+		for(WebElement nombre:tagsOp) {
+		if(nombre.getText().toLowerCase().contains("alta sucursal entre rios")) {
+			nombre.click();
+			flag=true;
+			break;}
+			}
+		if(flag)
+			break;
+		}
+	sleep(2000);
+	List <WebElement> compBefore = driver.findElements(By.className("listTitle")); //Lista los Elementos de arriba
+	for(WebElement a:compBefore) {
+		if(a.getText().toLowerCase().startsWith("productos")) { 
+			a.click();}} //Baja hasta productos.
+	sleep(1000);
+	//campos a Verificar
+	String[] camposaVerificar= {"Acción","Producto","Cantidad","Moneda","Precio de venta","Cargos Totales por Mes","Plazo (meses)",
+			"Total Mes por Plazo","Cargo unica vez","Cargo por única vez total","Precio Total Contrato"};
+	List<String> listaComparativa = new ArrayList<String>();
+	boolean check=true;
+	//Elemento con el campo
+	List<WebElement> campos= driver.findElement(By.xpath("//*[@id=\"0063F000002UkUu_RelatedLineItemList_body\"]/table/tbody/tr[1]")).
+			findElements(By.tagName("th"));
+	for(WebElement a:campos) {
+		System.out.println(a.getText());
+		listaComparativa.add(a.getText());
+		}
+	for(String a:camposaVerificar) {
+		if(!(listaComparativa.contains(a)))
+			check=false;
+		}
+	assertTrue(check);
 	}
 }
 
