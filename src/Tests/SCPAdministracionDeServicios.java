@@ -77,7 +77,7 @@ public class SCPAdministracionDeServicios extends TestBase {
 	    TMI = driver.findElement(By.className("detailList")).findElements(By.tagName("tr")).get(4).findElements(By.tagName("td")).get(3);
 	    assertTrue(TMI.getText().equals(Integer.toString(numTMI)));
 		try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}  
-          
+		pcp.Desloguear_Loguear("isabel");
     }  
 	
 	@Test(groups = "SCP")  
@@ -100,7 +100,7 @@ public class SCPAdministracionDeServicios extends TestBase {
 	    assertTrue(driver.findElement(By.id("errorDiv_ep")).getText().contains("Error:El valor del TMI debe ser un n\u00famero positivo."));
 
 		try {Thread.sleep(2000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}  
-          
+		pcp.Desloguear_Loguear("isabel");
     }  
 	
 	
