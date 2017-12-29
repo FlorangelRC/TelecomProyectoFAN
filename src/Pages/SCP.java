@@ -100,7 +100,7 @@ public class SCP extends BasePage {
 		for(WebElement e : op){
 			System.out.println(e.getText());
 			if(e.getText().equals(oportunidad)){
-				e.click();
+				e.findElement(By.tagName("a")).click();
 				break;}}
 	}
 	

@@ -65,13 +65,13 @@ public class SCPAdministracionDeServicios extends TestBase {
 		
 		pcp.clickEnCuentaPorNombre("AIR S.R.L");
 		try {Thread.sleep(7000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
-		/*List<WebElement> oportunidades = driver.findElement(By.cssSelector(".listRelatedObject.opportunityBlock")).findElements(By.tagName("table")).get(1).findElements(By.cssSelector(".dataRow.even.first"));
-		oportunidades.addAll(driver.findElement(By.cssSelector(".listRelatedObject.opportunityBlock")).findElements(By.tagName("table")).get(1).findElements(By.cssSelector(".dataRow.even")));
-		oportunidades.addAll(driver.findElement(By.cssSelector(".listRelatedObject.opportunityBlock")).findElements(By.tagName("table")).get(1).findElements(By.cssSelector(".dataRow.odd")));
-		for (WebElement UnaO : oportunidades) {
-			UnaO.
-		}*/
-		
+		pcp.elegiroportunidad("Integra y SPV");
+		try {Thread.sleep(7000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		WebElement TMI = driver.findElement(By.className("detailList")).findElements(By.tagName("tr")).get(4).findElements(By.tagName("td")).get(3);
+		Actions action = new Actions(driver); 
+		action.moveToElement(TMI).doubleClick().perform();
+	    int numTMI = Integer.parseInt(TMI.getText());
+		assertTrue(TMI.findElement(By.className("inlineEditDiv")).isDisplayed());
 		try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}  
           
     }  
