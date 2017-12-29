@@ -505,20 +505,63 @@ public boolean cuentalogeada(String cuenta){
 		
 		return sList;
 	}
-public void ValidarEstadosDELTA(){
+public void ValidarEstadosDELTA(String DELTA){
 	TestBase TB = new TestBase();
 	try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 
 	TB.waitFor(driver, By.cssSelector(".brandTertiaryBrd.pbSubheader.tertiaryPalette"));
 	WebElement element = driver.findElement(By.cssSelector(".brandTertiaryBrd.pbSubheader.tertiaryPalette"));
 	  ((JavascriptExecutor)driver).executeScript("window.scrollTo(0,"+element.getLocation().y+")");
-	  System.out.println(driver.findElement(By.xpath("/html/body/table/tbody/tr[1]/th[1]")).getText());
-	  System.out.println(driver.findElement(By.xpath("/html/body/table/tbody/tr[1]/th[2]")).getText());
-
-	Assert.assertEquals(driver.findElement(By.xpath("/html/body/table/tbody/tr[1]/th[1]")).getText(), "Precio Total Contrato (Oportunidad - ARG)");
-	Assert.assertEquals(driver.findElement(By.xpath("/html/body/table/tbody/tr[1]/th[2]")).getText(), "Precio Total Contrato (Proyectos - ARG)");
+		BasePage cambioFrameByID = new BasePage();
+		driver.switchTo().frame(cambioFrameByID.getFrameForElement(driver, By.xpath("/html/body/table/tbody/tr[1]")));		  
+		switch(DELTA){
+		case "oportunidad":
+			Assert.assertEquals(driver.findElement(By.xpath("/html/body/table/tbody/tr[1]/th[1]")).getText(), "Precio Total Contrato (Oportunidad - ARG)");
+			break;
+		case"proyecto":
+			Assert.assertEquals(driver.findElement(By.xpath("/html/body/table/tbody/tr[1]/th[2]")).getText(), "Precio Total Contrato (Proyectos - ARG)");
+			break;
+		}
+	driver.switchTo().defaultContent();
 
 }
 
+public void validarcompetidores(){
+	try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+	boolean acc = false; //Accion
+	boolean nmbre = false; //Nombre del competidoor
+	boolean pntf = false;  //Puntos Fuertes
+	boolean pntd = false;  //Puntos Debiles
+	WebElement element = driver.findElement(By.cssSelector(".listRelatedObject.opportunityCompetitorBlock"));
+	((JavascriptExecutor)driver).executeScript("window.scrollTo(0,"+element.getLocation().y+")");
+	List<WebElement> col = element.findElements(By.tagName("th"));
+	for(WebElement e: col){
+		if(e.getText().equals("Acci\u00f3n")){
+			acc = true;
+			System.out.println(e.getText());}
+		
+		if(e.getText().equals("Nombre del competidor")){
+			nmbre = true;
+			System.out.println(e.getText());}
+		
+		if(e.getText().equals("Puntos fuertes")){
+			pntf = true;
+			System.out.println(e.getText());}
+		
+		if(e.getText().equals("Puntos débiles")){
+			pntd= true;
+			System.out.println(e.getText());}}	
+Assert.assertTrue(acc&&nmbre&&pntf&&pntd);
+	}
+
+	public void validarinfoventas(){
+		List<WebElement> secc = driver.findElements(By.cssSelector(".pbSubsection"));
+		WebElement element = secc.get(1);
+		((JavascriptExecutor)driver).executeScript("window.scrollTo(0,"+element.getLocation().y+")");
+		List<WebElement> vnts = element.findElements(By.cssSelector(".labelCol"));
+		for(WebElement e: vnts){
+		System.out.println(e.getText());
+		}
+	}
 
 }

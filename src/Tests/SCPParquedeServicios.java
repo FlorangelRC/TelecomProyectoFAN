@@ -351,9 +351,35 @@ public class SCPParquedeServicios extends TestBase{
 		page.clickEnCuentaPorNombre("Florencia Di Ciocco SRL");
 		try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 		page.elegiroportunidad("Oportunidad creada desde el chatter");
-		//page.ValidarEstadosDELTA();
-		
+		page.ValidarEstadosDELTA("oportunidad");
+	}
+	@Test(groups = "SCP") 
+	public void TS112646_Estructura_de_las_oportunidades_Bloques_Estado_de_Proyecto_DELTA_Proyectos(){
+		SCP page = new SCP(driver);
+		page.clickOnTabByName("cuentas");
+		page.clickEnCuentaPorNombre("Florencia Di Ciocco SRL");
+		try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		page.elegiroportunidad("Oportunidad creada desde el chatter");
+		page.ValidarEstadosDELTA("proyectos");
 	}
 	
+	@Test(groups = "SCP") 
+	public void TS112640_Estructura_de_las_oportunidades_Bloques_Competidores(){
+		SCP page = new SCP(driver);
+		page.clickOnTabByName("cuentas");
+		page.clickEnCuentaPorNombre("Florencia Di Ciocco SRL");
+		try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		page.elegiroportunidad("Red Nacional - ex Oportunidad 1");
+		page.validarcompetidores();
+	}
+	@Test(groups = "SCP") 
+public void TS112648_Estructura_de_las_oportunidades_Bloques_Informacion_Adicional_de_Ventas(){
+		SCP page = new SCP(driver);
+		page.clickOnTabByName("cuentas");
+		page.clickEnCuentaPorNombre("Florencia Di Ciocco SRL");
+		try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		page.elegiroportunidad("Red Nacional - ex Oportunidad 1");
+		page.validarinfoventas();
+	}
 	
 }
