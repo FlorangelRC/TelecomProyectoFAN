@@ -56,6 +56,27 @@ public class SCPAdministracionDeServicios extends TestBase {
 	}
 	
 	@Test(groups = "SCP")  
+    public void TS110250_Estructura_De_Los_Proyectos_TMI() {  
+      SCP pcp = new SCP(driver);  
+      pcp.Desloguear_Loguear("permisos");
+      pcp.clickOnTabByName("cuentas");
+		try {Thread.sleep(7000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		try {Thread.sleep(7000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		
+		pcp.clickEnCuentaPorNombre("AIR S.R.L");
+		try {Thread.sleep(7000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		/*List<WebElement> oportunidades = driver.findElement(By.cssSelector(".listRelatedObject.opportunityBlock")).findElements(By.tagName("table")).get(1).findElements(By.cssSelector(".dataRow.even.first"));
+		oportunidades.addAll(driver.findElement(By.cssSelector(".listRelatedObject.opportunityBlock")).findElements(By.tagName("table")).get(1).findElements(By.cssSelector(".dataRow.even")));
+		oportunidades.addAll(driver.findElement(By.cssSelector(".listRelatedObject.opportunityBlock")).findElements(By.tagName("table")).get(1).findElements(By.cssSelector(".dataRow.odd")));
+		for (WebElement UnaO : oportunidades) {
+			UnaO.
+		}*/
+		
+		try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}  
+          
+    }  
+	
+	@Test(groups = "SCP")  
     public void TS110254_Estructura_De_Los_Servicios_Servicios_Nuestros() {  
       SCP pcp = new SCP(driver);  
       pcp.moveToElementOnAccAndClick("segundoTitulo",2);  
