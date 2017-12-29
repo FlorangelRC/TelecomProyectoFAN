@@ -46,6 +46,7 @@ public class TestBase {
 			driver.findElement(By.id("nav-tab-2")).click();
 			break;
 		}
+		try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 	}
 	
 	public void goToLeftPanel2(WebDriver driver, String selection) {
