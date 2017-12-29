@@ -22,6 +22,7 @@ import Pages.Accounts;
 import Pages.diagnosisTab;
 import Pages.setConexion;
 import Pages.BasePage;
+import Pages.CustomerCare;
 import Pages.HomeBase;
 import Pages.TechCareDiagnostic;
 
@@ -74,7 +75,7 @@ public class diagnosis extends TestBase {
 		List<WebElement> ctas = driver.findElement(By.cssSelector(".x-tab-strip.x-tab-strip-top")).findElements(By.tagName("li"));
 		ctas.remove(0);
 		for (WebElement cta : ctas) {
-			if (cta.findElement(By.className("tabText")).getText().equals("Adrian Techh")) {
+			if (cta.findElement(By.className("tabText")).getText().equals("Adrian Tech")) {
 				Actions action = new Actions(driver);
 				action.moveToElement(cta);
 				action.moveToElement(cta.findElement(By.className("x-tab-strip-close"))).click().build().perform();
@@ -93,8 +94,11 @@ public class diagnosis extends TestBase {
 	     driver.switchTo().defaultContent();
 	     accountPage.accountSelect("Vista Tech");
 	     try {Thread.sleep(8000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
-	     accountPage.selectAccountByName("Adrian Techh");
-	     try {Thread.sleep(10000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}            
+	     accountPage.selectAccountByName("Adrian Tech");
+	     try {Thread.sleep(10000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}     
+	     CustomerCare page = new CustomerCare(driver);
+	     page.openleftpanel();
+	     try {Thread.sleep(2000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();} 
 	     if(accountPage.isTabOpened("Asistencia Técnica")) {
 	         System.out.println("Tab Opened.");
 	         accountPage.goToTab("Asistencia Técnica");

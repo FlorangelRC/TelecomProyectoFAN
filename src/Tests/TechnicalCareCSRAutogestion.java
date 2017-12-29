@@ -1,5 +1,6 @@
 package Tests;
 
+import static org.testng.Assert.assertFalse;
 import static org.testng.Assert.assertTrue;
 
 import java.util.ArrayList;
@@ -24,10 +25,12 @@ import Pages.setConexion;
 public class TechnicalCareCSRAutogestion extends TestBase {
 	private WebDriver driver;
 	private String cuentaNombre;
+	private int bandera;
 	
-	@BeforeClass(groups = "TechnicalCare") 
+	@BeforeClass(groups = {"TechnicalCare", "Autogestion", "Muleto"}) 
 	public void init() throws Exception
 	{
+		bandera =0;
 		this.driver = setConexion.setupEze();
 		try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 		login(driver);
@@ -49,7 +52,7 @@ public class TechnicalCareCSRAutogestion extends TestBase {
 	     try {Thread.sleep(12000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 	}
 	
-	@BeforeMethod(groups = "TechnicalCare") 
+	@BeforeMethod(groups = {"TechnicalCare", "Autogestion", "Muleto"})  
 	public void setUp() throws Exception {
 	     Accounts accountPage = new Accounts(driver);
 	     driver.switchTo().defaultContent();
@@ -62,7 +65,7 @@ public class TechnicalCareCSRAutogestion extends TestBase {
 		
 	}
 	
-	//@AfterMethod(groups = "TechnicalCare") 
+	@AfterMethod(groups = {"TechnicalCare", "Autogestion", "Muleto"}) 
 	 public void afterMethod() {
 		driver.switchTo().defaultContent();
 		List<WebElement> ctas = driver.findElement(By.cssSelector(".x-tab-strip.x-tab-strip-top")).findElements(By.tagName("li"));
@@ -80,7 +83,7 @@ public class TechnicalCareCSRAutogestion extends TestBase {
 		
 		  }
 	
-	//@AfterClass(groups = "TechnicalCare")
+	//@AfterClass(groups = {"TechnicalCare", "Autogestion", "Muleto"}) 
 	public void tearDown2() {
 		driver.switchTo().defaultContent();
 		try{ for(WebElement e : driver.findElements(By.className("x-tab-strip-close"))) {
@@ -861,6 +864,25 @@ public class TechnicalCareCSRAutogestion extends TestBase {
 	}
 	
 	@Test(groups = {"TechnicalCare", "Autogestion"})
+	public void TS51201_Autogestion_Verificacion_De_Lista_De_Opciones_Asterisco_222() {
+		Accounts accountPage = new Accounts(driver);
+		accountPage.findAndClickButton("autogesti\u00f3n");
+		String[] todos = {"la caracteristica no existe","la linea esta muda","llamada fallo","tono ocupado","la llamada se cae","informa sistema fuera de servicio"};
+		try {Thread.sleep(14000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		driver.switchTo().defaultContent();
+		driver.switchTo().frame(accountPage.getFrameForElement(driver, By.id("SelfManagementStep_nextBtn")));
+		Select listSelect = new Select(driver.findElement(By.id("ChannelSelection")));
+		listSelect.selectByVisibleText("Otros Asteriscos");
+		try {Thread.sleep(2000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		listSelect = new Select(driver.findElement(By.id("ServiceSelection")));
+		listSelect.selectByVisibleText("*222 (ACA)");
+		try {Thread.sleep(1000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+	    listSelect = new Select(driver.findElement(By.id("MotiveSelection")));
+	    List<WebElement> motivos = listSelect.getOptions();
+	    assertTrue(verificarContenidoLista(todos,motivos));
+	}
+	
+	@Test(groups = {"TechnicalCare", "Autogestion"})
 	public void TS51202_Autogestion_Verificacion_De_Inconveniente_Asterisco_237() {
 		Accounts accountPage = new Accounts(driver);
 		accountPage.findAndClickButton("autogesti\u00f3n");
@@ -876,6 +898,96 @@ public class TechnicalCareCSRAutogestion extends TestBase {
 	}
 	
 	@Test(groups = {"TechnicalCare", "Autogestion"})
+	public void TS51203_Autogestion_Verificacion_De_Lista_De_Opciones_Asterisco_237() {
+		Accounts accountPage = new Accounts(driver);
+		accountPage.findAndClickButton("autogesti\u00f3n");
+		String[] todos = {"la caracteristica no existe","la linea esta muda","llamada fallo","tono ocupado","la llamada se cae","informa sistema fuera de servicio"};
+		try {Thread.sleep(14000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		driver.switchTo().defaultContent();
+		driver.switchTo().frame(accountPage.getFrameForElement(driver, By.id("SelfManagementStep_nextBtn")));
+		Select listSelect = new Select(driver.findElement(By.id("ChannelSelection")));
+		listSelect.selectByVisibleText("Otros Asteriscos");
+		try {Thread.sleep(2000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		listSelect = new Select(driver.findElement(By.id("ServiceSelection")));
+		listSelect.selectByVisibleText("*237 (Aerolineas Argentinas)");
+		try {Thread.sleep(1000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+	    listSelect = new Select(driver.findElement(By.id("MotiveSelection")));
+	    List<WebElement> motivos = listSelect.getOptions();
+	    assertTrue(verificarContenidoLista(todos,motivos));
+	}
+	
+	@Test(groups = {"TechnicalCare", "Autogestion"})
+	public void TS51204_Autogestion_Verificacion_De_La_Seleccion_Canal_Asterisco_Y_Servicio_242643() {
+		Accounts accountPage = new Accounts(driver);
+		accountPage.findAndClickButton("autogesti\u00f3n");
+		try {Thread.sleep(14000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		driver.switchTo().defaultContent();
+		driver.switchTo().frame(accountPage.getFrameForElement(driver, By.id("SelfManagementStep_nextBtn")));
+		Select listSelect = new Select(driver.findElement(By.id("ChannelSelection")));
+		listSelect.selectByVisibleText("Otros Asteriscos");
+		try {Thread.sleep(2000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		listSelect = new Select(driver.findElement(By.id("ServiceSelection")));
+		listSelect.selectByVisibleText("*242643 (Banco Piano)");
+	    assertTrue(listSelect.getFirstSelectedOption().getText().contains("*242643"));
+	}
+	
+	@Test(groups = {"TechnicalCare", "Autogestion"})
+	public void TS51205_Autogestion_Verificacion_De_Lista_De_Opciones_Asterisco_242643() {
+		Accounts accountPage = new Accounts(driver);
+		accountPage.findAndClickButton("autogesti\u00f3n");
+		String[] todos = {"la caracteristica no existe","la linea esta muda","llamada fallo","tono ocupado","la llamada se cae","informa sistema fuera de servicio"};
+		try {Thread.sleep(14000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		driver.switchTo().defaultContent();
+		driver.switchTo().frame(accountPage.getFrameForElement(driver, By.id("SelfManagementStep_nextBtn")));
+		Select listSelect = new Select(driver.findElement(By.id("ChannelSelection")));
+		listSelect.selectByVisibleText("Otros Asteriscos");
+		try {Thread.sleep(2000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		listSelect = new Select(driver.findElement(By.id("ServiceSelection")));
+		listSelect.selectByVisibleText("*242643 (Banco Piano)");
+		try {Thread.sleep(1000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+	    listSelect = new Select(driver.findElement(By.id("MotiveSelection")));
+	    List<WebElement> motivos = listSelect.getOptions();
+	    assertTrue(verificarContenidoLista(todos,motivos));
+	}
+	
+	@Test(groups = {"TechnicalCare", "Autogestion"})
+	public void TS51206_Autogestion_Verificacion_De_La_Seleccion_Canal_Asterisco_Y_Servicio_2463() {
+		Accounts accountPage = new Accounts(driver);
+		accountPage.findAndClickButton("autogesti\u00f3n");
+		try {Thread.sleep(14000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		driver.switchTo().defaultContent();
+		driver.switchTo().frame(accountPage.getFrameForElement(driver, By.id("SelfManagementStep_nextBtn")));
+		Select listSelect = new Select(driver.findElement(By.id("ChannelSelection")));
+		listSelect.selectByVisibleText("Otros Asteriscos");
+		try {Thread.sleep(2000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		listSelect = new Select(driver.findElement(By.id("ServiceSelection")));
+		listSelect.selectByVisibleText("*2463");
+	    assertTrue(listSelect.getFirstSelectedOption().getText().contains("*2463"));
+	}
+	
+	@Test(groups = {"TechnicalCare", "Autogestion"})
+	public void TS51207_Autogestion_Verificacion_De_Lista_De_Opciones_Asterisco_2463() {
+		Accounts accountPage = new Accounts(driver);
+		accountPage.findAndClickButton("autogesti\u00f3n");
+		String[] todos = {"la caracteristica no existe","la linea esta muda","llamada fallo","tono ocupado","la llamada se cae","informa sistema fuera de servicio"};
+		try {Thread.sleep(14000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		driver.switchTo().defaultContent();
+		driver.switchTo().frame(accountPage.getFrameForElement(driver, By.id("SelfManagementStep_nextBtn")));
+		Select listSelect = new Select(driver.findElement(By.id("ChannelSelection")));
+		listSelect.selectByVisibleText("Otros Asteriscos");
+		try {Thread.sleep(2000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		listSelect = new Select(driver.findElement(By.id("ServiceSelection")));
+		listSelect.selectByVisibleText("*2463");
+		try {Thread.sleep(1000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+	    listSelect = new Select(driver.findElement(By.id("MotiveSelection")));
+	    List<WebElement> motivos = listSelect.getOptions();
+	    assertTrue(verificarContenidoLista(todos,motivos));
+	}
+	
+	
+	
+	
+	@Test(groups = {"TechnicalCare", "Autogestion"})
 	public void TS51208_Autogestion_Verificacion_De_Inconveniente_Asterisco_2484() {
 		Accounts accountPage = new Accounts(driver);
 		accountPage.findAndClickButton("autogesti\u00f3n");
@@ -889,6 +1001,26 @@ public class TechnicalCareCSRAutogestion extends TestBase {
 		listSelect.selectByVisibleText("*2484 (Citi)");
 	    assertTrue(listSelect.getFirstSelectedOption().getText().contains("*2484"));
 	}
+	
+	@Test(groups = {"TechnicalCare", "Autogestion"})
+	public void TS51209_Autogestion_Verificacion_De_Lista_De_Opciones_Asterisco_2484() {
+		Accounts accountPage = new Accounts(driver);
+		accountPage.findAndClickButton("autogesti\u00f3n");
+		String[] todos = {"la caracteristica no existe","la linea esta muda","llamada fallo","tono ocupado","la llamada se cae","informa sistema fuera de servicio"};
+		try {Thread.sleep(14000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		driver.switchTo().defaultContent();
+		driver.switchTo().frame(accountPage.getFrameForElement(driver, By.id("SelfManagementStep_nextBtn")));
+		Select listSelect = new Select(driver.findElement(By.id("ChannelSelection")));
+		listSelect.selectByVisibleText("Otros Asteriscos");
+		try {Thread.sleep(2000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		listSelect = new Select(driver.findElement(By.id("ServiceSelection")));
+		listSelect.selectByVisibleText("*2484 (Citi)");
+		try {Thread.sleep(1000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+	    listSelect = new Select(driver.findElement(By.id("MotiveSelection")));
+	    List<WebElement> motivos = listSelect.getOptions();
+	    assertTrue(verificarContenidoLista(todos,motivos));
+	}
+	
 	
 	@Test(groups = {"TechnicalCare", "Autogestion"})
 	public void TS51210_Autogestion_Verificacion_De_La_Seleccion_Canal_Asterisco_Y_Servicio_272() {
@@ -941,6 +1073,192 @@ public class TechnicalCareCSRAutogestion extends TestBase {
 	}
 	
 	@Test(groups = {"TechnicalCare", "Autogestion"})
+	public void TS51213_Autogestion_Verificacion_De_Lista_De_Opciones_Asterisco_27638() {
+		Accounts accountPage = new Accounts(driver);
+		accountPage.findAndClickButton("autogesti\u00f3n");
+		String[] todos = {"la caracteristica no existe","la linea esta muda","llamada fallo","tono ocupado","la llamada se cae","informa sistema fuera de servicio"};
+		try {Thread.sleep(14000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		driver.switchTo().defaultContent();
+		driver.switchTo().frame(accountPage.getFrameForElement(driver, By.id("SelfManagementStep_nextBtn")));
+		Select listSelect = new Select(driver.findElement(By.id("ChannelSelection")));
+		listSelect.selectByVisibleText("Otros Asteriscos");
+		try {Thread.sleep(2000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		listSelect = new Select(driver.findElement(By.id("ServiceSelection")));
+		listSelect.selectByVisibleText("*27638 (Arnet)");
+		try {Thread.sleep(1000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+	    listSelect = new Select(driver.findElement(By.id("MotiveSelection")));
+	    List<WebElement> motivos = listSelect.getOptions();
+	    assertTrue(verificarContenidoLista(todos,motivos));
+	}
+	
+	@Test(groups = {"TechnicalCare", "Autogestion"})
+	public void TS51214_Autogestion_Verificacion_De_La_Seleccion_Canal_Asterisco_Y_Servicio_347() {
+		Accounts accountPage = new Accounts(driver);
+		accountPage.findAndClickButton("autogesti\u00f3n");
+		try {Thread.sleep(14000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		driver.switchTo().defaultContent();
+		driver.switchTo().frame(accountPage.getFrameForElement(driver, By.id("SelfManagementStep_nextBtn")));
+		Select listSelect = new Select(driver.findElement(By.id("ChannelSelection")));
+		listSelect.selectByVisibleText("Otros Asteriscos");
+		try {Thread.sleep(2000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		listSelect = new Select(driver.findElement(By.id("ServiceSelection")));
+		listSelect.selectByVisibleText("*347");
+	    assertTrue(listSelect.getFirstSelectedOption().getText().contains("*347"));
+	}
+	
+	@Test(groups = {"TechnicalCare", "Autogestion"})
+	public void TS51215_Autogestion_Verificacion_De_Lista_De_Opciones_Asterisco_347() {
+		Accounts accountPage = new Accounts(driver);
+		accountPage.findAndClickButton("autogesti\u00f3n");
+		String[] todos = {"la caracteristica no existe","la linea esta muda","llamada fallo","tono ocupado","la llamada se cae","informa sistema fuera de servicio"};
+		try {Thread.sleep(14000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		driver.switchTo().defaultContent();
+		driver.switchTo().frame(accountPage.getFrameForElement(driver, By.id("SelfManagementStep_nextBtn")));
+		Select listSelect = new Select(driver.findElement(By.id("ChannelSelection")));
+		listSelect.selectByVisibleText("Otros Asteriscos");
+		try {Thread.sleep(2000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		listSelect = new Select(driver.findElement(By.id("ServiceSelection")));
+		listSelect.selectByVisibleText("*347");
+		try {Thread.sleep(1000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+	    listSelect = new Select(driver.findElement(By.id("MotiveSelection")));
+	    List<WebElement> motivos = listSelect.getOptions();
+	    assertTrue(verificarContenidoLista(todos,motivos));
+	}
+	
+	@Test(groups = {"TechnicalCare", "Autogestion"})
+	public void TS51216_Autogestion_Verificacion_De_La_Seleccion_Canal_Asterisco_Y_Servicio_380() {
+		Accounts accountPage = new Accounts(driver);
+		accountPage.findAndClickButton("autogesti\u00f3n");
+		try {Thread.sleep(14000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		driver.switchTo().defaultContent();
+		driver.switchTo().frame(accountPage.getFrameForElement(driver, By.id("SelfManagementStep_nextBtn")));
+		Select listSelect = new Select(driver.findElement(By.id("ChannelSelection")));
+		listSelect.selectByVisibleText("Otros Asteriscos");
+		try {Thread.sleep(2000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		listSelect = new Select(driver.findElement(By.id("ServiceSelection")));
+		listSelect.selectByVisibleText("*380");
+	    assertTrue(listSelect.getFirstSelectedOption().getText().contains("*380"));
+	}
+	
+	@Test(groups = {"TechnicalCare", "Autogestion"})
+	public void TS51217_Autogestion_Verificacion_De_Lista_De_Opciones_Asterisco_380() {
+		Accounts accountPage = new Accounts(driver);
+		accountPage.findAndClickButton("autogesti\u00f3n");
+		String[] todos = {"la caracteristica no existe","la linea esta muda","llamada fallo","tono ocupado","la llamada se cae","informa sistema fuera de servicio"};
+		try {Thread.sleep(14000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		driver.switchTo().defaultContent();
+		driver.switchTo().frame(accountPage.getFrameForElement(driver, By.id("SelfManagementStep_nextBtn")));
+		Select listSelect = new Select(driver.findElement(By.id("ChannelSelection")));
+		listSelect.selectByVisibleText("Otros Asteriscos");
+		try {Thread.sleep(2000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		listSelect = new Select(driver.findElement(By.id("ServiceSelection")));
+		listSelect.selectByVisibleText("*380");
+		try {Thread.sleep(1000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+	    listSelect = new Select(driver.findElement(By.id("MotiveSelection")));
+	    List<WebElement> motivos = listSelect.getOptions();
+	    assertTrue(verificarContenidoLista(todos,motivos));
+	}
+	
+	@Test(groups = {"TechnicalCare", "Autogestion"})
+	public void TS51218_Autogestion_Verificacion_De_La_Seleccion_Canal_Asterisco_Y_Servicio_746() {
+		Accounts accountPage = new Accounts(driver);
+		accountPage.findAndClickButton("autogesti\u00f3n");
+		try {Thread.sleep(14000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		driver.switchTo().defaultContent();
+		driver.switchTo().frame(accountPage.getFrameForElement(driver, By.id("SelfManagementStep_nextBtn")));
+		Select listSelect = new Select(driver.findElement(By.id("ChannelSelection")));
+		listSelect.selectByVisibleText("Otros Asteriscos");
+		try {Thread.sleep(2000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		listSelect = new Select(driver.findElement(By.id("ServiceSelection")));
+		listSelect.selectByVisibleText("*746");
+	    assertTrue(listSelect.getFirstSelectedOption().getText().contains("*746"));
+	}
+	
+	@Test(groups = {"TechnicalCare", "Autogestion"})
+	public void TS51219_Autogestion_Verificacion_De_Lista_De_Opciones_Asterisco_746() {
+		Accounts accountPage = new Accounts(driver);
+		accountPage.findAndClickButton("autogesti\u00f3n");
+		String[] todos = {"la caracteristica no existe","la linea esta muda","llamada fallo","tono ocupado","la llamada se cae","informa sistema fuera de servicio"};
+		try {Thread.sleep(14000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		driver.switchTo().defaultContent();
+		driver.switchTo().frame(accountPage.getFrameForElement(driver, By.id("SelfManagementStep_nextBtn")));
+		Select listSelect = new Select(driver.findElement(By.id("ChannelSelection")));
+		listSelect.selectByVisibleText("Otros Asteriscos");
+		try {Thread.sleep(2000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		listSelect = new Select(driver.findElement(By.id("ServiceSelection")));
+		listSelect.selectByVisibleText("*746 (Banco Rio, super linea)");
+		try {Thread.sleep(1000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+	    listSelect = new Select(driver.findElement(By.id("MotiveSelection")));
+	    List<WebElement> motivos = listSelect.getOptions();
+	    assertTrue(verificarContenidoLista(todos,motivos));
+	}
+	
+	@Test(groups = {"TechnicalCare", "Autogestion"})
+	public void TS51220_Autogestion_Verificacion_De_La_Seleccion_Canal_Asterisco_Y_Servicio_8742() {
+		Accounts accountPage = new Accounts(driver);
+		accountPage.findAndClickButton("autogesti\u00f3n");
+		try {Thread.sleep(8000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		driver.switchTo().defaultContent();
+		driver.switchTo().frame(accountPage.getFrameForElement(driver, By.id("SelfManagementStep_nextBtn")));
+		Select listSelect = new Select(driver.findElement(By.id("ChannelSelection")));
+		listSelect.selectByVisibleText("Otros Asteriscos");
+		try {Thread.sleep(2000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		listSelect = new Select(driver.findElement(By.id("ServiceSelection")));
+		listSelect.selectByVisibleText("*8742");
+	    assertTrue(listSelect.getFirstSelectedOption().getText().contains("*8742"));
+	}
+	
+	@Test(groups = {"TechnicalCare", "Autogestion"})
+	public void TS51221_Autogestion_Verificacion_De_Lista_De_Opciones_Asterisco_8472() {
+		Accounts accountPage = new Accounts(driver);
+		accountPage.findAndClickButton("autogesti\u00f3n");
+		String[] todos = {"la caracteristica no existe","la linea esta muda","llamada fallo","tono ocupado","la llamada se cae","informa sistema fuera de servicio"};
+		try {Thread.sleep(14000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		driver.switchTo().defaultContent();
+		driver.switchTo().frame(accountPage.getFrameForElement(driver, By.id("SelfManagementStep_nextBtn")));
+		Select listSelect = new Select(driver.findElement(By.id("ChannelSelection")));
+		listSelect.selectByVisibleText("Otros Asteriscos");
+		try {Thread.sleep(2000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		listSelect = new Select(driver.findElement(By.id("ServiceSelection")));
+		listSelect.selectByVisibleText("*8472/*847");
+		try {Thread.sleep(1000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+	    listSelect = new Select(driver.findElement(By.id("MotiveSelection")));
+	    List<WebElement> motivos = listSelect.getOptions();
+	    assertTrue(verificarContenidoLista(todos,motivos));
+	}
+	
+	@Test(groups = {"TechnicalCare", "Autogestion"})
+	public void TS51222_Autogestion_Verificacion_De_La_Seleccion_Canal_Asterisco_Y_Servicio_874() {
+		Accounts accountPage = new Accounts(driver);
+		accountPage.findAndClickButton("autogesti\u00f3n");
+		try {Thread.sleep(8000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		driver.switchTo().defaultContent();
+		driver.switchTo().frame(accountPage.getFrameForElement(driver, By.id("SelfManagementStep_nextBtn")));
+		Select listSelect = new Select(driver.findElement(By.id("ChannelSelection")));
+		listSelect.selectByVisibleText("Otros Asteriscos");
+		try {Thread.sleep(2000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		listSelect = new Select(driver.findElement(By.id("ServiceSelection")));
+		listSelect.selectByVisibleText("*8472/*847");
+	    assertTrue(listSelect.getFirstSelectedOption().getText().contains("*847"));
+	}
+	
+	@Test(groups = {"TechnicalCare", "Autogestion"})
+	public void TS51223_Autogestion_Verificacion_De_La_Seleccion_Canal_Asterisco_Y_Servicio_746() {
+		Accounts accountPage = new Accounts(driver);
+		accountPage.findAndClickButton("autogesti\u00f3n");
+		try {Thread.sleep(8000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		driver.switchTo().defaultContent();
+		driver.switchTo().frame(accountPage.getFrameForElement(driver, By.id("SelfManagementStep_nextBtn")));
+		Select listSelect = new Select(driver.findElement(By.id("ChannelSelection")));
+		listSelect.selectByVisibleText("Otros Asteriscos");
+		try {Thread.sleep(2000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		listSelect = new Select(driver.findElement(By.id("ServiceSelection")));
+		listSelect.selectByVisibleText("*746 (Banco Rio, super linea)");
+	    assertTrue(listSelect.getFirstSelectedOption().getText().contains("*746"));
+	}
+	
+	
+	@Test(groups = {"TechnicalCare", "Autogestion"})
 	public void TS51224_Autogestion_Verificacion_De_La_Seleccion_Canal_Nros_De_Emergencia_Y_Servicio_100() {
 		Accounts accountPage = new Accounts(driver);
 		accountPage.findAndClickButton("autogesti\u00f3n");
@@ -953,6 +1271,22 @@ public class TechnicalCareCSRAutogestion extends TestBase {
 		listSelect = new Select(driver.findElement(By.id("ServiceSelection")));
 		listSelect.selectByVisibleText("100");
 	    assertTrue(listSelect.getFirstSelectedOption().getText().contains("100"));
+	}
+	
+	@Test(groups = {"TechnicalCare", "Autogestion"})
+	public void TS51225_Autogestion_Verificacion_De_La_Seleccion_Canal_Nros_De_Emergencia_Y_Servicio_746() {
+		Accounts accountPage = new Accounts(driver);
+		accountPage.findAndClickButton("autogesti\u00f3n");
+		try {Thread.sleep(12000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		driver.switchTo().defaultContent();
+		driver.switchTo().frame(accountPage.getFrameForElement(driver, By.id("SelfManagementStep_nextBtn")));
+		Select listSelect = new Select(driver.findElement(By.id("ChannelSelection")));
+		listSelect.selectByVisibleText("Nros. emergencia");
+		try {Thread.sleep(2000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		listSelect = new Select(driver.findElement(By.id("ServiceSelection")));
+		try {listSelect.selectByVisibleText("746");}
+		catch(org.openqa.selenium.NoSuchElementException exne) {assertTrue(true);}
+	    assertFalse(listSelect.getFirstSelectedOption().getText().contains("746"));
 	}
 	
 	@Test(groups = {"TechnicalCare", "Autogestion"})
@@ -971,6 +1305,25 @@ public class TechnicalCareCSRAutogestion extends TestBase {
 	}
 	
 	@Test(groups = {"TechnicalCare", "Autogestion"})
+	public void TS51227_Autogestion_Verificacion_De_Lista_De_Opciones_Canal_Nros_De_Emergencia_Y_Servicio_101() {
+		Accounts accountPage = new Accounts(driver);
+		accountPage.findAndClickButton("autogesti\u00f3n");
+		String[] todos = {"la caracteristica no existe","la linea esta muda","llamada fallo","tono ocupado","la llamada se cae","informa sistema fuera de servicio"};
+		try {Thread.sleep(14000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		driver.switchTo().defaultContent();
+		driver.switchTo().frame(accountPage.getFrameForElement(driver, By.id("SelfManagementStep_nextBtn")));
+		Select listSelect = new Select(driver.findElement(By.id("ChannelSelection")));
+		listSelect.selectByVisibleText("Nros. emergencia");
+		try {Thread.sleep(2000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		listSelect = new Select(driver.findElement(By.id("ServiceSelection")));
+		listSelect.selectByVisibleText("101");
+		try {Thread.sleep(1000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+	    listSelect = new Select(driver.findElement(By.id("MotiveSelection")));
+	    List<WebElement> motivos = listSelect.getOptions();
+	    assertTrue(verificarContenidoLista(todos,motivos));
+	}
+	
+	@Test(groups = {"TechnicalCare", "Autogestion"})
 	public void TS51228_Autogestion_Verificacion_De_La_Seleccion_Canal_Nros_De_Emergencia_Y_Servicio_102() {
 		Accounts accountPage = new Accounts(driver);
 		accountPage.findAndClickButton("autogesti\u00f3n");
@@ -983,6 +1336,25 @@ public class TechnicalCareCSRAutogestion extends TestBase {
 		listSelect = new Select(driver.findElement(By.id("ServiceSelection")));
 		listSelect.selectByVisibleText("102");
 	    assertTrue(listSelect.getFirstSelectedOption().getText().contains("102"));
+	}
+	
+	@Test(groups = {"TechnicalCare", "Autogestion"})
+	public void TS51229_Autogestion_Verificacion_De_Lista_De_Inconvenientes_Canal_Nros_De_Emergencia_Y_Servicio_102() {
+		Accounts accountPage = new Accounts(driver);
+		accountPage.findAndClickButton("autogesti\u00f3n");
+		String[] todos = {"la caracteristica no existe","la linea esta muda","llamada fallo","tono ocupado","la llamada se cae","informa sistema fuera de servicio"};
+		try {Thread.sleep(14000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		driver.switchTo().defaultContent();
+		driver.switchTo().frame(accountPage.getFrameForElement(driver, By.id("SelfManagementStep_nextBtn")));
+		Select listSelect = new Select(driver.findElement(By.id("ChannelSelection")));
+		listSelect.selectByVisibleText("Nros. emergencia");
+		try {Thread.sleep(2000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		listSelect = new Select(driver.findElement(By.id("ServiceSelection")));
+		listSelect.selectByVisibleText("102");
+		try {Thread.sleep(1000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+	    listSelect = new Select(driver.findElement(By.id("MotiveSelection")));
+	    List<WebElement> motivos = listSelect.getOptions();
+	    assertTrue(verificarContenidoLista(todos,motivos));
 	}
 	
 	@Test(groups = {"TechnicalCare", "Autogestion"})
@@ -1001,6 +1373,25 @@ public class TechnicalCareCSRAutogestion extends TestBase {
 	}
 	
 	@Test(groups = {"TechnicalCare", "Autogestion"})
+	public void TS51231_Autogestion_Verificacion_De_Lista_De_Inconvenientes_Canal_Nros_De_Emergencia_Y_Servicio_103() {
+		Accounts accountPage = new Accounts(driver);
+		accountPage.findAndClickButton("autogesti\u00f3n");
+		String[] todos = {"la caracteristica no existe","la linea esta muda","llamada fallo","tono ocupado","la llamada se cae","informa sistema fuera de servicio"};
+		try {Thread.sleep(14000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		driver.switchTo().defaultContent();
+		driver.switchTo().frame(accountPage.getFrameForElement(driver, By.id("SelfManagementStep_nextBtn")));
+		Select listSelect = new Select(driver.findElement(By.id("ChannelSelection")));
+		listSelect.selectByVisibleText("Nros. emergencia");
+		try {Thread.sleep(2000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		listSelect = new Select(driver.findElement(By.id("ServiceSelection")));
+		listSelect.selectByVisibleText("103");
+		try {Thread.sleep(1000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+	    listSelect = new Select(driver.findElement(By.id("MotiveSelection")));
+	    List<WebElement> motivos = listSelect.getOptions();
+	    assertTrue(verificarContenidoLista(todos,motivos));
+	}
+	
+	@Test(groups = {"TechnicalCare", "Autogestion"})
 	public void TS51232_Autogestion_Verificacion_De_La_Seleccion_Canal_Nros_De_Emergencia_Y_Servicio_106() {
 		Accounts accountPage = new Accounts(driver);
 		accountPage.findAndClickButton("autogesti\u00f3n");
@@ -1013,6 +1404,25 @@ public class TechnicalCareCSRAutogestion extends TestBase {
 		listSelect = new Select(driver.findElement(By.id("ServiceSelection")));
 		listSelect.selectByVisibleText("106");
 	    assertTrue(listSelect.getFirstSelectedOption().getText().contains("106"));
+	}
+	
+	@Test(groups = {"TechnicalCare", "Autogestion"})
+	public void TS51233_Autogestion_Verificacion_De_Lista_De_Inconvenientes_Canal_Nros_De_Emergencia_Y_Servicio_106() {
+		Accounts accountPage = new Accounts(driver);
+		accountPage.findAndClickButton("autogesti\u00f3n");
+		String[] todos = {"la caracteristica no existe","la linea esta muda","llamada fallo","tono ocupado","la llamada se cae","informa sistema fuera de servicio"};
+		try {Thread.sleep(14000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		driver.switchTo().defaultContent();
+		driver.switchTo().frame(accountPage.getFrameForElement(driver, By.id("SelfManagementStep_nextBtn")));
+		Select listSelect = new Select(driver.findElement(By.id("ChannelSelection")));
+		listSelect.selectByVisibleText("Nros. emergencia");
+		try {Thread.sleep(2000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		listSelect = new Select(driver.findElement(By.id("ServiceSelection")));
+		listSelect.selectByVisibleText("106");
+		try {Thread.sleep(1000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+	    listSelect = new Select(driver.findElement(By.id("MotiveSelection")));
+	    List<WebElement> motivos = listSelect.getOptions();
+	    assertTrue(verificarContenidoLista(todos,motivos));
 	}
 	
 	@Test(groups = {"TechnicalCare", "Autogestion"})
@@ -1031,6 +1441,26 @@ public class TechnicalCareCSRAutogestion extends TestBase {
 	}
 	
 	@Test(groups = {"TechnicalCare", "Autogestion"})
+	public void TS51235_Autogestion_Verificacion_De_Lista_De_Inconvenientes_Canal_Nros_De_Emergencia_Y_Servicio_107() {
+		Accounts accountPage = new Accounts(driver);
+		accountPage.findAndClickButton("autogesti\u00f3n");
+		String[] todos = {"la caracteristica no existe","la linea esta muda","llamada fallo","tono ocupado","la llamada se cae","informa sistema fuera de servicio"};
+		try {Thread.sleep(14000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		driver.switchTo().defaultContent();
+		driver.switchTo().frame(accountPage.getFrameForElement(driver, By.id("SelfManagementStep_nextBtn")));
+		Select listSelect = new Select(driver.findElement(By.id("ChannelSelection")));
+		listSelect.selectByVisibleText("Nros. emergencia");
+		try {Thread.sleep(2000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		listSelect = new Select(driver.findElement(By.id("ServiceSelection")));
+		listSelect.selectByVisibleText("107");
+		try {Thread.sleep(1000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+	    listSelect = new Select(driver.findElement(By.id("MotiveSelection")));
+	    List<WebElement> motivos = listSelect.getOptions();
+	    assertTrue(verificarContenidoLista(todos,motivos));
+	}
+	
+	
+	@Test(groups = {"TechnicalCare", "Autogestion"})
 	public void TS51236_Autogestion_Verificacion_De_La_Seleccion_Canal_Nros_De_Emergencia_Y_Servicio_131() {
 		Accounts accountPage = new Accounts(driver);
 		accountPage.findAndClickButton("autogesti\u00f3n");
@@ -1043,6 +1473,25 @@ public class TechnicalCareCSRAutogestion extends TestBase {
 		listSelect = new Select(driver.findElement(By.id("ServiceSelection")));
 		listSelect.selectByVisibleText("131");
 	    assertTrue(listSelect.getFirstSelectedOption().getText().contains("131"));
+	}
+	
+	@Test(groups = {"TechnicalCare", "Autogestion"})
+	public void TS51237_Autogestion_Verificacion_De_Lista_De_Inconvenientes_Canal_Nros_De_Emergencia_Y_Servicio_131() {
+		Accounts accountPage = new Accounts(driver);
+		accountPage.findAndClickButton("autogesti\u00f3n");
+		String[] todos = {"la caracteristica no existe","la linea esta muda","llamada fallo","tono ocupado","la llamada se cae","informa sistema fuera de servicio"};
+		try {Thread.sleep(14000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		driver.switchTo().defaultContent();
+		driver.switchTo().frame(accountPage.getFrameForElement(driver, By.id("SelfManagementStep_nextBtn")));
+		Select listSelect = new Select(driver.findElement(By.id("ChannelSelection")));
+		listSelect.selectByVisibleText("Nros. emergencia");
+		try {Thread.sleep(2000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		listSelect = new Select(driver.findElement(By.id("ServiceSelection")));
+		listSelect.selectByVisibleText("131");
+		try {Thread.sleep(1000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+	    listSelect = new Select(driver.findElement(By.id("MotiveSelection")));
+	    List<WebElement> motivos = listSelect.getOptions();
+	    assertTrue(verificarContenidoLista(todos,motivos));
 	}
 	
 	@Test(groups = {"TechnicalCare", "Autogestion"})
@@ -1061,6 +1510,25 @@ public class TechnicalCareCSRAutogestion extends TestBase {
 	}
 	
 	@Test(groups = {"TechnicalCare", "Autogestion"})
+	public void TS51239_Autogestion_Verificacion_De_Lista_De_Inconvenientes_Canal_Nros_De_Emergencia_Y_Servicio_136() {
+		Accounts accountPage = new Accounts(driver);
+		accountPage.findAndClickButton("autogesti\u00f3n");
+		String[] todos = {"la caracteristica no existe","la linea esta muda","llamada fallo","tono ocupado","la llamada se cae","informa sistema fuera de servicio"};
+		try {Thread.sleep(14000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		driver.switchTo().defaultContent();
+		driver.switchTo().frame(accountPage.getFrameForElement(driver, By.id("SelfManagementStep_nextBtn")));
+		Select listSelect = new Select(driver.findElement(By.id("ChannelSelection")));
+		listSelect.selectByVisibleText("Nros. emergencia");
+		try {Thread.sleep(2000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		listSelect = new Select(driver.findElement(By.id("ServiceSelection")));
+		listSelect.selectByVisibleText("136");
+		try {Thread.sleep(1000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+	    listSelect = new Select(driver.findElement(By.id("MotiveSelection")));
+	    List<WebElement> motivos = listSelect.getOptions();
+	    assertTrue(verificarContenidoLista(todos,motivos));
+	}
+	
+	@Test(groups = {"TechnicalCare", "Autogestion"})
 	public void TS51240_Autogestion_Verificacion_De_La_Seleccion_Canal_Nros_De_Emergencia_Y_Servicio_911() {
 		Accounts accountPage = new Accounts(driver);
 		accountPage.findAndClickButton("autogesti\u00f3n");
@@ -1073,6 +1541,55 @@ public class TechnicalCareCSRAutogestion extends TestBase {
 		listSelect = new Select(driver.findElement(By.id("ServiceSelection")));
 		listSelect.selectByVisibleText("911");
 	    assertTrue(listSelect.getFirstSelectedOption().getText().contains("911"));
+	}
+	
+	@Test(groups = {"TechnicalCare", "Autogestion"})
+	public void TS51241_Autogestion_Verificacion_De_Lista_De_Inconvenientes_Canal_Nros_De_Emergencia_Y_Servicio_911() {
+		Accounts accountPage = new Accounts(driver);
+		accountPage.findAndClickButton("autogesti\u00f3n");
+		String[] todos = {"la caracteristica no existe","la linea esta muda","llamada fallo","tono ocupado","la llamada se cae","informa sistema fuera de servicio"};
+		try {Thread.sleep(14000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		driver.switchTo().defaultContent();
+		driver.switchTo().frame(accountPage.getFrameForElement(driver, By.id("SelfManagementStep_nextBtn")));
+		Select listSelect = new Select(driver.findElement(By.id("ChannelSelection")));
+		listSelect.selectByVisibleText("Nros. emergencia");
+		try {Thread.sleep(2000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		listSelect = new Select(driver.findElement(By.id("ServiceSelection")));
+		listSelect.selectByVisibleText("911");
+		try {Thread.sleep(1000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+	    listSelect = new Select(driver.findElement(By.id("MotiveSelection")));
+	    List<WebElement> motivos = listSelect.getOptions();
+	    assertTrue(verificarContenidoLista(todos,motivos));
+	}
+	
+	@Test(groups = {"TechnicalCare", "Autogestion"})
+	public void TS51242_Autogestion_Verificacion_De_La_Seleccion_Canal_0800_Y_Servicio_08004440800() {
+		Accounts accountPage = new Accounts(driver);
+		accountPage.findAndClickButton("autogesti\u00f3n");
+		try {Thread.sleep(8000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		driver.switchTo().defaultContent();
+		driver.switchTo().frame(accountPage.getFrameForElement(driver, By.id("SelfManagementStep_nextBtn")));
+		Select listSelect = new Select(driver.findElement(By.id("ChannelSelection")));
+		listSelect.selectByVisibleText("0800");
+		try {Thread.sleep(2000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		listSelect = new Select(driver.findElement(By.id("ServiceSelection")));
+		listSelect.selectByVisibleText("0800-444-0800 (AC)");
+	    assertTrue(listSelect.getFirstSelectedOption().getText().contains("0800-444-0800"));
+	}
+	
+	@Test(groups = {"TechnicalCare", "Autogestion"})
+	public void TS51244_Autogestion_Verificacion_De_La_Seleccion_Canal_0800_Y_Servicio_08004444434() {
+		Accounts accountPage = new Accounts(driver);
+		accountPage.findAndClickButton("autogesti\u00f3n");
+		try {Thread.sleep(8000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		driver.switchTo().defaultContent();
+		driver.switchTo().frame(accountPage.getFrameForElement(driver, By.id("SelfManagementStep_nextBtn")));
+		Select listSelect = new Select(driver.findElement(By.id("ChannelSelection")));
+		listSelect.selectByVisibleText("0800");
+		try {Thread.sleep(2000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		listSelect = new Select(driver.findElement(By.id("ServiceSelection")));
+		listSelect.selectByVisibleText("0800-444-4434 (Placas)");
+	    assertTrue(listSelect.getFirstSelectedOption().getText().contains("0800-444-4434"));
 	}
 	
 	@Test(groups = {"TechnicalCare", "Autogestion"})
@@ -1093,6 +1610,36 @@ public class TechnicalCareCSRAutogestion extends TestBase {
 	    List<WebElement> motivos = listSelect.getOptions();
 	    assertTrue(verificarContenidoLista(todos,motivos));
 
+	}
+	
+	@Test(groups = {"TechnicalCare", "Autogestion"})
+	public void TS51246_Autogestion_Verificacion_De_La_Seleccion_Canal_0800_Y_Servicio_08000800888422() {
+		Accounts accountPage = new Accounts(driver);
+		accountPage.findAndClickButton("autogesti\u00f3n");
+		try {Thread.sleep(8000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		driver.switchTo().defaultContent();
+		driver.switchTo().frame(accountPage.getFrameForElement(driver, By.id("SelfManagementStep_nextBtn")));
+		Select listSelect = new Select(driver.findElement(By.id("ChannelSelection")));
+		listSelect.selectByVisibleText("0800");
+		try {Thread.sleep(2000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		listSelect = new Select(driver.findElement(By.id("ServiceSelection")));
+		listSelect.selectByVisibleText("0800-888-4422 (Atenci\u00f3n Pymes)");
+	    assertTrue(listSelect.getFirstSelectedOption().getText().contains("0800-888-4422"));
+	}
+	
+	@Test(groups = {"TechnicalCare", "Autogestion"})
+	public void TS51248_Autogestion_Verificacion_De_La_Seleccion_Canal_0800_Y_Servicio_08008887382() {
+		Accounts accountPage = new Accounts(driver);
+		accountPage.findAndClickButton("autogesti\u00f3n");
+		try {Thread.sleep(8000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		driver.switchTo().defaultContent();
+		driver.switchTo().frame(accountPage.getFrameForElement(driver, By.id("SelfManagementStep_nextBtn")));
+		Select listSelect = new Select(driver.findElement(By.id("ChannelSelection")));
+		listSelect.selectByVisibleText("0800");
+		try {Thread.sleep(2000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		listSelect = new Select(driver.findElement(By.id("ServiceSelection")));
+		listSelect.selectByVisibleText("0800-888-7382 (Activaciones)");
+	    assertTrue(listSelect.getFirstSelectedOption().getText().contains("0800-888-7382"));
 	}
 	
 	@Test(groups = {"TechnicalCare", "Autogestion"})
@@ -1176,6 +1723,22 @@ public class TechnicalCareCSRAutogestion extends TestBase {
 	}
 	
 	@Test(groups = {"TechnicalCare", "Autogestion"})
+	public void TS51283_Autogestion_Verificacion_La_Seleccion_Canal_App_Y_Servicio_Mi_Facturacion() {
+		Accounts accountPage = new Accounts(driver);
+		accountPage.findAndClickButton("autogesti\u00f3n");
+		try {Thread.sleep(8000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		driver.switchTo().defaultContent();
+		driver.switchTo().frame(accountPage.getFrameForElement(driver, By.id("SelfManagementStep_nextBtn")));
+		Select listSelect = new Select(driver.findElement(By.id("ChannelSelection")));
+		listSelect.selectByVisibleText("APP");
+		try {Thread.sleep(2000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		listSelect = new Select(driver.findElement(By.id("ServiceSelection")));
+		listSelect.selectByVisibleText("Mi Facturacion");
+	    assertTrue(listSelect.getFirstSelectedOption().getText().contains("Mi Facturacion"));
+	}
+	
+	
+	@Test(groups = {"TechnicalCare", "Autogestion"})
 	public void TS51284_Autogestion_Verificacion_Lista_De_Inconvenientes_Canal_App_Servicio_Mi_Facturacion() {
 		Accounts accountPage = new Accounts(driver);
 		accountPage.findAndClickButton("autogesti\u00f3n");
@@ -1193,6 +1756,21 @@ public class TechnicalCareCSRAutogestion extends TestBase {
 	    List<WebElement> motivos = listSelect.getOptions();
 	    assertTrue(verificarContenidoLista(todos,motivos));
 
+	}
+	
+	@Test(groups = {"TechnicalCare", "Autogestion"})
+	public void TS51285_Autogestion_Verificacion_La_Seleccion_Canal_App_Y_Servicio_Mi_Linea() {
+		Accounts accountPage = new Accounts(driver);
+		accountPage.findAndClickButton("autogesti\u00f3n");
+		try {Thread.sleep(12000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		driver.switchTo().defaultContent();
+		driver.switchTo().frame(accountPage.getFrameForElement(driver, By.id("SelfManagementStep_nextBtn")));
+		Select listSelect = new Select(driver.findElement(By.id("ChannelSelection")));
+		listSelect.selectByVisibleText("APP");
+		try {Thread.sleep(2000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		listSelect = new Select(driver.findElement(By.id("ServiceSelection")));
+		listSelect.selectByVisibleText("Mi Linea");
+	    assertTrue(listSelect.getFirstSelectedOption().getText().contains("Mi Linea"));
 	}
 	
 	@Test(groups = {"TechnicalCare", "Autogestion"})
@@ -1218,6 +1796,22 @@ public class TechnicalCareCSRAutogestion extends TestBase {
 	    for (String uno : todos) {
 			assertTrue(motNoms.contains(uno));
 		}
+	    
+	}
+	
+	@Test(groups = {"TechnicalCare", "Autogestion"})
+	public void TS51291_Autogestion_Verificacion_La_Seleccion_Canal_App_Y_Servicio_Club_Personal() {
+		Accounts accountPage = new Accounts(driver);
+		accountPage.findAndClickButton("autogesti\u00f3n");
+		try {Thread.sleep(8000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		driver.switchTo().defaultContent();
+		driver.switchTo().frame(accountPage.getFrameForElement(driver, By.id("SelfManagementStep_nextBtn")));
+		Select listSelect = new Select(driver.findElement(By.id("ChannelSelection")));
+		listSelect.selectByVisibleText("APP");
+		try {Thread.sleep(2000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		listSelect = new Select(driver.findElement(By.id("ServiceSelection")));
+		listSelect.selectByVisibleText("Club Personal");
+	    assertTrue(listSelect.getFirstSelectedOption().getText().contains("Club Personal"));
 	}
 	
 	@Test(groups = {"TechnicalCare","Muleto"})
@@ -1282,7 +1876,8 @@ public class TechnicalCareCSRAutogestion extends TestBase {
 		assertTrue(driver.findElement(By.id("DocumentNumber")).getAttribute("value").equals("37431150"));
 	}
 	
-	/*public void TS51081_Muleto_Verificacion_De_Gestion_Con_Devolucion_De_Muleto() {
+	/*@Test(groups = {"TechnicalCare","Muleto"})
+	public void TS51081_Muleto_Verificacion_De_Gestion_Con_Devolucion_De_Muleto() {
 		Accounts accountPage = new Accounts(driver);
 		accountPage.findAndClickButton("muleto");
 		try {Thread.sleep(8000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
@@ -1320,12 +1915,15 @@ public class TechnicalCareCSRAutogestion extends TestBase {
 		((JavascriptExecutor)driver).executeScript("window.scrollTo(0,"+driver.findElement(By.id("ClientIdentification_nextBtn")).getLocation().y+")");
 		driver.findElement(By.id("ClientIdentification_nextBtn")).click();
 		try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
-		((JavascriptExecutor)driver).executeScript("window.scrollTo(0,"+driver.findElement(By.id("ClientInformation21_nextBtn")).getLocation().y+")");
-		driver.findElement(By.id("ClientInformation21_nextBtn")).click();
-		try {Thread.sleep(6000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
-		driver.findElement(By.className("slds-radio--faux")).click();
-		((JavascriptExecutor)driver).executeScript("window.scrollTo(0,"+driver.findElement(By.id("TerminalsAvailable_nextBtn")).getLocation().y+")");
-		driver.findElement(By.id("TerminalsAvailable_nextBtn")).click();
+		try {
+			((JavascriptExecutor)driver).executeScript("window.scrollTo(0,"+driver.findElement(By.id("ClientInformation21_nextBtn")).getLocation().y+")");
+			driver.findElement(By.id("ClientInformation21_nextBtn")).click();
+			try {Thread.sleep(6000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+			driver.findElement(By.className("slds-radio--faux")).click();
+			((JavascriptExecutor)driver).executeScript("window.scrollTo(0,"+driver.findElement(By.id("TerminalsAvailable_nextBtn")).getLocation().y+")");
+			driver.findElement(By.id("TerminalsAvailable_nextBtn")).click();
+		}catch (org.openqa.selenium.NoSuchElementException ex1) {((JavascriptExecutor)driver).executeScript("window.scrollTo(0,"+driver.findElement(By.id("NewClient_nextBtn")).getLocation().y+")");
+			driver.findElement(By.id("NewClient_nextBtn")).click();}
 		try {Thread.sleep(4000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 		driver.findElement(By.id("AccesoriesField")).sendKeys("Roberto is a veteran who is characterised by orderliness and a firm belief in the value of control. He runs his own hardware store accordingly. If a supplier sells him boxes with 100 screws each, he counts all the screws and files a complaint if just a single one is missing. He feels that the world around his isle of neatness has gone mad");
 		assertTrue(driver.findElement(By.cssSelector(".slds-form-element.vlc-flex.vlc-slds-text-area.ng-scope.ng-valid-minlength.ng-valid-required.ng-dirty.ng-valid-parse.ng-invalid.ng-invalid-maxlength")).findElement(By.cssSelector(".error.ng-scope")).getText().toLowerCase().equals("longitud máxima de 255"));

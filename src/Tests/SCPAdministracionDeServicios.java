@@ -56,6 +56,27 @@ public class SCPAdministracionDeServicios extends TestBase {
 	}
 	
 	@Test(groups = "SCP")  
+    public void TS110250_Estructura_De_Los_Proyectos_TMI() {  
+      SCP pcp = new SCP(driver);  
+      pcp.Desloguear_Loguear("permisos");
+      pcp.clickOnTabByName("cuentas");
+		try {Thread.sleep(7000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		try {Thread.sleep(7000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		
+		pcp.clickEnCuentaPorNombre("AIR S.R.L");
+		try {Thread.sleep(7000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		pcp.elegiroportunidad("Integra y SPV");
+		try {Thread.sleep(7000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		WebElement TMI = driver.findElement(By.className("detailList")).findElements(By.tagName("tr")).get(4).findElements(By.tagName("td")).get(3);
+		Actions action = new Actions(driver); 
+		action.moveToElement(TMI).doubleClick().perform();
+	    int numTMI = Integer.parseInt(TMI.getText());
+		assertTrue(TMI.findElement(By.className("inlineEditDiv")).isDisplayed());
+		try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}  
+          
+    }  
+	
+	@Test(groups = "SCP")  
     public void TS110254_Estructura_De_Los_Servicios_Servicios_Nuestros() {  
       SCP pcp = new SCP(driver);  
       pcp.moveToElementOnAccAndClick("segundoTitulo",2);  
