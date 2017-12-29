@@ -348,11 +348,10 @@ public class SCPParquedeServicios extends TestBase{
 	public void TS112645_Estructura_de_las_oportunidades_Bloques_Estado_de_Proyecto_DELTA_Oportunidad(){
 		SCP page = new SCP(driver);
 		page.clickOnTabByName("cuentas");
-		page.clickOnFirstAccRe();
+		page.clickEnCuentaPorNombre("Florencia Di Ciocco SRL");
 		try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
-	//	page.firstoportunidad();
-		page.elegiroportunidad("a");
-		
+		page.elegiroportunidad("Oportunidad creada desde el chatter");
+		//page.ValidarEstadosDELTA();
 		
 	}
 	
