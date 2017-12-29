@@ -24,7 +24,7 @@ import Pages.setConexion;
 public class CustomerCareFase3F  extends TestBase {
 private WebDriver driver;
 	
-	@AfterClass(groups= "CustomerCare")
+	//@AfterClass(groups= "CustomerCare")
 	public void tearDown2() {
 		driver.quit();	
 	}
@@ -503,7 +503,7 @@ private WebDriver driver;
 	     try {Thread.sleep(8000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 	     driver.switchTo().defaultContent();
 	     driver.switchTo().frame(cambioFrameByID.getFrameForElement(driver, By.id("refillDate")));
-		 driver.findElement(By.id("refillDate")).sendKeys("15/11/2017");
+		 driver.findElement(By.id("refillDate")).sendKeys("12-15-2017");
 		 driver.findElement(By.id("refillAmount")).sendKeys("150");
 		 driver.findElement(By.id("receiptCode")).sendKeys("150");
 		 ((JavascriptExecutor)driver).executeScript("window.scrollTo(0,"+driver.findElement(By.id("stepInternetRefill_nextBtn")).getLocation().y+")");

@@ -61,6 +61,52 @@ public class SCP_Joaquin extends TestBase{
 	}
 	
 	@Test(groups = "SCP")
+	public void TS112616_Cronograma_de_cuenta_Filtros_Evento_Para_Nuestros_Clientes() {
+		SCP prueba= new SCP(driver);
+		prueba.moveToElementOnAccAndClick("cuartoTitulo", 1);
+		driver.findElements(By.className("checkboxFiltroTimeLine")).get(5).click();
+		driver.findElements(By.cssSelector(".btn.btn.btn-default.btn-xs")).get(1).click();
+		sleep(3000);
+		List<WebElement> elementos = driver.findElements(By.cssSelector(".tl-timemarker-content-container-small"));
+		
+		System.out.println(elementos.get(0).getText());
+		for (WebElement e : elementos) {
+			Assert.assertTrue(e.getAttribute("class").contains("colorEvento"));
+		}
+	}
+	
+	@Test(groups = "SCP")
+	public void TS112617_Cronograma_de_cuenta_Filtros_Evento_Relevante_de_la_Industria() {
+		SCP prueba= new SCP(driver);
+		prueba.moveToElementOnAccAndClick("cuartoTitulo", 1);
+		driver.findElements(By.className("checkboxFiltroTimeLine")).get(3).click();
+		driver.findElements(By.cssSelector(".btn.btn.btn-default.btn-xs")).get(1).click();
+		sleep(3000);
+		List<WebElement> elementos = driver.findElements(By.cssSelector(".tl-timemarker-content-container-small"));
+		
+		System.out.println(elementos.get(0).getText());
+		for (WebElement e : elementos) {
+			Assert.assertTrue(e.getAttribute("class").contains("eventoRelevante"));
+		}
+	}
+	
+	@Test(groups = "SCP")
+	public void TS112618_Cronograma_de_cuenta_Filtros_Multiples() {
+		SCP prueba= new SCP(driver);
+		prueba.moveToElementOnAccAndClick("cuartoTitulo", 1);
+		driver.findElements(By.className("checkboxFiltroTimeLine")).get(7).click();
+		driver.findElements(By.className("checkboxFiltroTimeLine")).get(0).click();
+		driver.findElements(By.cssSelector(".btn.btn.btn-default.btn-xs")).get(1).click();
+		sleep(3000);
+		List<WebElement> elementos = driver.findElements(By.cssSelector(".tl-timemarker-content-container-small"));
+		
+		System.out.println(elementos.get(0).getText());
+		for (WebElement e : elementos) {
+			Assert.assertTrue(e.getAttribute("class").contains("Otros") || e.getAttribute("class").contains("Vencimiento"));
+		}
+	}
+	
+	@Test(groups = "SCP")
 	public void TS112619_Cronograma_de_cuenta_Filtros_Otros() {
 		SCP prueba= new SCP(driver);
 		prueba.moveToElementOnAccAndClick("cuartoTitulo", 1);
@@ -72,6 +118,82 @@ public class SCP_Joaquin extends TestBase{
 		System.out.println(elementos.get(0).getText());
 		for (WebElement e : elementos) {
 			Assert.assertTrue(e.getAttribute("class").contains("Otros"));
+		}
+	}
+	
+	@Test(groups = "SCP")
+	public void TS112620_Cronograma_de_cuenta_Filtros_Publicación_RFP_Comunicaciones() {
+		SCP prueba= new SCP(driver);
+		prueba.moveToElementOnAccAndClick("cuartoTitulo", 1);
+		driver.findElements(By.className("checkboxFiltroTimeLine")).get(4).click();
+		driver.findElements(By.cssSelector(".btn.btn.btn-default.btn-xs")).get(1).click();
+		sleep(3000);
+		List<WebElement> elementos = driver.findElements(By.cssSelector(".tl-timemarker-content-container-small"));
+		
+		System.out.println(elementos.get(0).getText());
+		for (WebElement e : elementos) {
+			Assert.assertTrue(e.getAttribute("class").contains("RFPComunicaciones"));
+		}
+	}
+	
+	@Test(groups = "SCP")
+	public void TS112621_Cronograma_de_cuenta_Filtros_Publicación_RFP_TI() {
+		SCP prueba= new SCP(driver);
+		prueba.moveToElementOnAccAndClick("cuartoTitulo", 1);
+		driver.findElements(By.className("checkboxFiltroTimeLine")).get(6).click();
+		driver.findElements(By.cssSelector(".btn.btn.btn-default.btn-xs")).get(1).click();
+		sleep(3000);
+		List<WebElement> elementos = driver.findElements(By.cssSelector(".tl-timemarker-content-container-small"));
+		
+		System.out.println(elementos.get(0).getText());
+		for (WebElement e : elementos) {
+			Assert.assertTrue(e.getAttribute("class").contains("RFPTI"));
+		}
+	}
+	
+	@Test(groups = "SCP")
+	public void TS112623_Cronograma_de_cuenta_Filtros_Todos() {
+		Assert.assertTrue(false); //**************************************************************************************
+		SCP prueba= new SCP(driver);
+		prueba.moveToElementOnAccAndClick("cuartoTitulo", 1);
+		driver.findElements(By.className("checkboxFiltroTimeLine")).get(7).click();
+		driver.findElements(By.cssSelector(".btn.btn.btn-default.btn-xs")).get(1).click();
+		sleep(3000);
+		List<WebElement> elementos = driver.findElements(By.cssSelector(".tl-timemarker-content-container-small"));
+		
+		System.out.println(elementos.get(0).getText());
+		for (WebElement e : elementos) {
+			Assert.assertTrue(e.getAttribute("class").contains("Otros"));
+		}
+	}
+	
+	@Test(groups = "SCP")
+	public void TS112624_Cronograma_de_cuenta_Filtros_Vencimiento() {
+		SCP prueba= new SCP(driver);
+		prueba.moveToElementOnAccAndClick("cuartoTitulo", 1);
+		driver.findElements(By.className("checkboxFiltroTimeLine")).get(0).click();
+		driver.findElements(By.cssSelector(".btn.btn.btn-default.btn-xs")).get(1).click();
+		sleep(3000);
+		List<WebElement> elementos = driver.findElements(By.cssSelector(".tl-timemarker-content-container-small"));
+		
+		System.out.println(elementos.get(0).getText());
+		for (WebElement e : elementos) {
+			Assert.assertTrue(e.getAttribute("class").contains("Vencimiento"));
+		}
+	}
+	
+	@Test(groups = "SCP")
+	public void TS112625_Cronograma_de_cuenta_Filtros_Vencimiento_Contrato_Activo_con_la_Competencia() {
+		SCP prueba= new SCP(driver);
+		prueba.moveToElementOnAccAndClick("cuartoTitulo", 1);
+		driver.findElements(By.className("checkboxFiltroTimeLine")).get(2).click();
+		driver.findElements(By.cssSelector(".btn.btn.btn-default.btn-xs")).get(1).click();
+		sleep(3000);
+		List<WebElement> elementos = driver.findElements(By.cssSelector(".tl-timemarker-content-container-small"));
+		
+		System.out.println(elementos.get(0).getText());
+		for (WebElement e : elementos) {
+			Assert.assertTrue(e.getAttribute("class").contains("colorVencimientoSecundario"));
 		}
 	}
 	
