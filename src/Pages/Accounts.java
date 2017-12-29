@@ -509,21 +509,17 @@ public class Accounts extends BasePage {
 		
 		By findImeiCode = (By.id("ImeiCode"));
 		try {
-			driver.switchTo().defaultContent();
+			/*driver.switchTo().defaultContent();
 			driver.findElement(By.xpath("//*[@id=\"SearchType|0\"]/div/div[1]/label[2]/span/div[1]/span")).click();
 			//driver.switchTo().frame(getFrameForElement(driver, driver.findElement(By.id("ImeiInput_nextBtn"))));
-			driver.findElements(By.className("borderOverlay")).get(1).click();
+			driver.findElements(By.className("borderOverlay")).get(1).click();*/
 			driver.findElement(findImeiCode).sendKeys(IMEI);
-			
-		}catch(java.lang.IndexOutOfBoundsException ex2) {
-			driver.switchTo().frame(getFrameForElement(driver, driver.findElement(By.id("ImeiInput"))));
-			driver.findElements(By.className("borderOverlay")).get(1).click();
-			imeiCode.sendKeys(IMEI);
+		
 
 		}
 		catch(NoSuchElementException noSuchElemExcept) {
+			driver.switchTo().defaultContent();
 			driver.switchTo().frame(getFrameForElement(driver, driver.findElement(By.id("ImeiInput"))));
-			driver.findElements(By.className("borderOverlay")).get(1).click();
 			imeiCode.sendKeys(IMEI);
 		}
 	}

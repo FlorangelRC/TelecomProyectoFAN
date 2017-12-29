@@ -67,15 +67,12 @@ public class TechnicalCareCSRSTT2 extends TestBase {
 	         accountPage.findAndClickButton("Servicio Técnico");
 	     }
 	     try {Thread.sleep(18000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
-	     driver.switchTo().defaultContent();
-	     driver.switchTo().frame(accountPage.getFrameForElement(driver, driver.findElement(By.id("SearchType"))));
-	     driver.findElements(By.cssSelector(".slds-radio.ng-scope")).get(1).click();
-			//accountPage.fillIMEI(validIMEI);
-			try {Thread.sleep(8000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+	     	accountPage.fillIMEI(validIMEI);
+			try {Thread.sleep(10000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 			accountPage.continueFromImeiInput();
 			try {Thread.sleep(10000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 			accountPage.continueFromClientInfo();
-			try {Thread.sleep(8000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+			try {Thread.sleep(10000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 			accountPage.selectOperationType("Consulta");
 			accountPage.selectSymptomByIndex(2);
 			driver.findElement(By.id("TextAreaNotes")).sendKeys("No funciona todo el tiempo");

@@ -83,7 +83,7 @@ public class TechnicalCareCSRAutogestion extends TestBase {
 		
 		  }
 	
-	//@AfterClass(groups = {"TechnicalCare", "Autogestion", "Muleto"}) 
+	@AfterClass(groups = {"TechnicalCare", "Autogestion", "Muleto"}) 
 	public void tearDown2() {
 		driver.switchTo().defaultContent();
 		try{ for(WebElement e : driver.findElements(By.className("x-tab-strip-close"))) {
