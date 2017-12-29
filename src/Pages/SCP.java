@@ -91,6 +91,18 @@ public class SCP extends BasePage {
 		((JavascriptExecutor)driver).executeScript("window.scrollTo(0,"+element.getLocation().y+")");
 		driver.findElement(By.id("0013F00000300bV_RelatedOpportunityList_body")).findElement(By.cssSelector(".dataRow.even.first")).findElement(By.tagName("a")).click();
 	}
+	
+	public void elegiroportunidad(String oportunidad) {
+		  try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		WebElement element = driver.findElement(By.cssSelector(".bRelatedList.first"));
+		((JavascriptExecutor)driver).executeScript("window.scrollTo(0,"+element.getLocation().y+")");
+		List<WebElement> op = driver.findElements(By.cssSelector(".dataCell"));
+		for(WebElement e : op){
+			System.out.println(e.getText());
+			if(e.getText().equals(oportunidad)){
+				e.click();
+				break;}}
+	}
 	public void clickEnCuentaPorNombre(String name)
 	{
 		boolean enc = false;

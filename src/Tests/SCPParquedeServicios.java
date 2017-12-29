@@ -350,7 +350,8 @@ public class SCPParquedeServicios extends TestBase{
 		page.clickOnTabByName("cuentas");
 		page.clickOnFirstAccRe();
 		try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
-		page.firstoportunidad();
+	//	page.firstoportunidad();
+		page.elegiroportunidad("a");
 		
 		
 	}
