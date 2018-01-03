@@ -49,11 +49,11 @@ public class CustomerCare_Mattu extends TestBase{
         CustomerCare page = new CustomerCare(driver);
         page.cerrarultimapestaña();
     }
-    /*@AfterClass (groups = {"CustomerCare", "ProblemasConRecargas", "ActualizarDatos", "DetalleDeConsumos", "Vista360Layout"})
+    @AfterClass (groups = {"CustomerCare", "ProblemasConRecargas", "ActualizarDatos", "DetalleDeConsumos", "Vista360Layout"})
     public void quit() {
       driver.quit();
       sleep(4000);
-    }*/
+    }
     
     //-------------------------------------------------------------------------------------------------
     //TCC = 1
@@ -517,7 +517,7 @@ public class CustomerCare_Mattu extends TestBase{
 	}
 	
 	//-------------------------------------------------------------------------------------------------
-	//@Test
+	//TestCases Alan
 	@Test(groups = {"CustomerCare", "ActualizarDatos"})
 	public void TS38042_Profile_Changes_Validación_Correo_Electronico_Cuenta_Email_Existente(){
 	CustomerCare CP = new CustomerCare (driver);
@@ -619,7 +619,8 @@ public class CustomerCare_Mattu extends TestBase{
 			driver.switchTo().defaultContent();
 			driver.switchTo().frame(cambioFrameByID.getFrameForElement(driver, By.cssSelector(".slds-grid.slds-wrap.slds-card.slds-m-bottom--small.slds-p-around--medium")));
 			WebElement wed = driver.findElement(By.id("text-input-02"));
-			//System.out.println(wed.getAttribute("value"));
+			
+			System.out.println(wed.getAttribute("value"));
 			wed.click();
 			driver.findElement(By.xpath("//*[text() = 'Los últimos 3 días']")).click();
 			Assert.assertTrue(driver.findElement(By.id("text-input-01")).isDisplayed());
