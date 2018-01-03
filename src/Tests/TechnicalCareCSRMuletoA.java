@@ -516,7 +516,7 @@ private WebDriver driver;
 		sleep(1000);
 		clickContinuar();
 		sleep(3000);
-		//System.out.println(driver.findElement(By.xpath("//*[@id=\"ClientInfoList\"]/div/p/p[10]")).getText());
+		System.out.println(driver.findElement(By.xpath("//*[@id=\"ClientInfoList\"]/div/p/p[10]")).getText());
 		assertTrue(driver.findElement(By.xpath("//*[@id=\"ClientInfoList\"]/div/p/p[10]")).getText().endsWith("36686926"));
 	}
 	
