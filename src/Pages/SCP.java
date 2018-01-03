@@ -431,107 +431,107 @@ public boolean cuentalogeada(String cuenta){
 		Desloguear_Loguear(usuario);
 	}
 	
-		public List<String> TraerColumna(String sBody, int iColumnas, int iColumna) {
-			//sBody = xpath del cuerpo de la lista
-			//iColumnas = cantidad de columnas
-			//iColumna = columna requerida
-			WebElement wBody = driver.findElement(By.xpath(sBody));
-			List<WebElement> wRows = wBody.findElements(By.tagName("tr"));
-			List<WebElement> wElements =   new ArrayList<WebElement>();
-			for (int i = 0; i < wRows.size(); i++) {
-				wElements.clear();
-				wElements = wRows.get(i).findElements(By.tagName("td"));
-				if (wElements.size() < iColumnas) {
-					wRows.remove(i);
-				}
-				
-			}
-			List<String> sElements =  new ArrayList<String>();
-			for (WebElement wAux:wRows) {
-				if (!wAux.getText().isEmpty()) {
-					List<WebElement> wColumns = wAux.findElements(By.tagName("td"));
-					sElements.add(wColumns.get(iColumna - 1).getText().toLowerCase());
-				}
+	public List<String> TraerColumna(WebElement wBody, int iColumnas, int iColumna) {
+		//wBody = WebElement del cuerpo completo del cuadro
+		//iColumnas = cantidad de columnas
+		//iColumna = columna requerida
+		WebElement wSubBody = wBody.findElement(By.tagName("tbody"));
+		List<WebElement> wRows = wSubBody.findElements(By.tagName("tr"));
+		List<WebElement> wElements =   new ArrayList<WebElement>();
+		for (int i = 0; i < wRows.size(); i++) {
+			wElements.clear();
+			wElements = wRows.get(i).findElements(By.tagName("td"));
+			if (wElements.size() < iColumnas) {
+				wRows.remove(i);
 			}
 			
-			return sElements;
+		}
+		List<String> sElements =  new ArrayList<String>();
+		for (WebElement wAux:wRows) {
+			if (!wAux.getText().isEmpty()) {
+				List<WebElement> wColumns = wAux.findElements(By.tagName("td"));
+				sElements.add(wColumns.get(iColumna - 1).getText().toLowerCase());
+			}
 		}
 		
-		public boolean Triangulo_Ordenador_Validador(String sMenu, String sBody, int iColumns, int iColumn) throws ParseException {
-			//sMenu = xpath de la fila del men�
-			//sBody = xpath del cuerpo de la lista
-			//iColumnas = cantidad de columnas
-			//iColumna = columna a ordenar
-			TestBase TB = new TestBase();
-			TB.waitFor(driver, By.xpath(sBody));
+		return sElements;
+	}
+	
+	public boolean Triangulo_Ordenador_Validador(WebDriver driver, By eBody, int iColumns, int iColumn) throws ParseException {
+		//eBody = selector del cuerpo completo del cuadro
+		//iColumnas = cantidad de columnas
+		//iColumna = columna a ordenar
+		TestBase TB = new TestBase();
+		TB.waitFor(driver, eBody);
+		WebElement wBody = driver.findElement(eBody);
+		List<String> sElements = TraerColumna(wBody, iColumns, iColumn);
+		WebElement wHeader = driver.findElement(eBody).findElement(By.tagName("thead"));
+		List <WebElement> wMenu = wHeader.findElements(By.tagName("th"));
+		wMenu.get(iColumn - 1).click();
+		List<String> wOrderedElements = TraerColumna(wBody, iColumns, iColumn);
+		boolean bBoolean = true;
+		if (!wMenu.get(iColumn - 1).getText().contains("Fecha")) {
+			Collections.sort(sElements);
 			
-			List<String> sElements = TraerColumna(sBody, iColumns, iColumn);
-			WebElement wHeader = driver.findElement(By.xpath(sMenu));
-			List <WebElement> wMenu = wHeader.findElements(By.tagName("th"));
-			wMenu.get(iColumn - 1).click();
-			List<String> wOrderedElements = TraerColumna(sBody, iColumns, iColumn);
-			boolean bBoolean = true;
-			if (!wMenu.get(iColumn - 1).getText().contains("Fecha")) {
-				Collections.sort(sElements);
-				
-				for(int i = 0; i < sElements.size(); i++) { 
-					if (!sElements.get(i).toLowerCase().equals(wOrderedElements.get(i).toLowerCase())) {
-						System.out.println("'" + sElements.get(i) + "'\tes igual a\t'" + wOrderedElements.get(i) + "'");
-					 bBoolean = false;
-					}
+			for(int i = 0; i < sElements.size(); i++) { 
+				if (!sElements.get(i).toLowerCase().equals(wOrderedElements.get(i).toLowerCase())) {
+					System.out.println("'" + sElements.get(i) + "'\tes igual a\t'" + wOrderedElements.get(i) + "'");
+				 bBoolean = false;
 				}
 			}
-			else {
-				SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
-				ArrayList<String> fechas = new ArrayList<String>();
-				for (String sAux:sElements) {
-					fechas.add(sAux.split(" ")[0]);
-				}
-				
-				  String fech = new String();
-				     String fecha2= new String();
-				     Date date1 = new Date();//sdf.parse(fech); 
-				     Date date2 = new Date(); //sdf.parse(fecha2); 
-				     for(int i = 0; i<=fechas.size()-1;i++) {
-				      fech=fechas.get(i);
-				      fecha2=fechas.get(i+1);
-				      date1 = sdf.parse(fech);
-				      date2 = sdf.parse(fecha2);
-				      if(date1.compareTo(date2)>0) {
-				          System.out.println(date2+" es menor que "+date1);
-				          Assert.assertTrue(false);
-				      }
-				     }
-				       Assert.assertTrue(true);
+		}
+		else {
+			SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+			ArrayList<String> fechas = new ArrayList<String>();
+			for (String sAux:sElements) {
+				fechas.add(sAux.split(" ")[0]);
 			}
 			
-			return bBoolean;
+			  String fech = new String();
+			     String fecha2= new String();
+			     Date date1 = new Date();//sdf.parse(fech); 
+			     Date date2 = new Date(); //sdf.parse(fecha2); 
+			     for(int i = 0; i<=fechas.size()-1;i++) {
+			      fech=fechas.get(i);
+			      fecha2=fechas.get(i+1);
+			      date1 = sdf.parse(fech);
+			      date2 = sdf.parse(fecha2);
+			      if(date1.compareTo(date2)>0) {
+			          System.out.println(date2+" es menor que "+date1);
+			          Assert.assertTrue(false);
+			      }
+			     }
+			       Assert.assertTrue(true);
+		}
+		
+		return bBoolean;
+		
+	}
+	
+	public String SelectorMasUno(String sText, int iPosition, int iIndex) {
+		//sTexto = texto completo
+		//iPosici�n = posici�n en string sTexto donde tiene que cambiar el valor
+		//iIndex = nuevo valor
+		sText = sText.substring(0,iPosition) + iIndex + sText.substring(iPosition + 1,sText.length());
+		return sText;
+	}
+	
+	public String[][] ListaById(By element, String sId, int iPosition) {
+		List<WebElement> wAuxList = driver.findElements(element);
+		
+		String[][] sList = new String [wAuxList.size()][wAuxList.size()];
+		
+		int i;
+		for (i = 0; i < wAuxList.size(); i++) {
+			sId = SelectorMasUno(sId, iPosition, i);
+			sList[i][0] = sId;
+			sList[i][1] = driver.findElement(By.id(sId)).getText();
 			
 		}
 		
-		public String SelectorMasUno(String sText, int iPosition, int iIndex) {
-			//sTexto = texto completo
-			//iPosici�n = posici�n en string sTexto donde tiene que cambiar el valor
-			//iIndex = nuevo valor
-			sText = sText.substring(0,iPosition) + iIndex + sText.substring(iPosition + 1,sText.length());
-			return sText;
-		}
-		
-		public String[][] ListaById(By element, String sId, int iPosition) {
-			List<WebElement> wAuxList = driver.findElements(element);
-			
-			String[][] sList = new String [wAuxList.size()][wAuxList.size()];
-			
-			int i;
-			for (i = 0; i < wAuxList.size(); i++) {
-				sId = SelectorMasUno(sId, iPosition, i);
-				sList[i][0] = sId;
-				sList[i][1] = driver.findElement(By.id(sId)).getText();
-				
-			}
-			
-			return sList;
-		}
+		return sList;
+	}
+	
 public void ValidarEstadosDELTA(String DELTA){
 	TestBase TB = new TestBase();
 	try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
