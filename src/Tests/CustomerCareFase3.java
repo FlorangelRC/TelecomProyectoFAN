@@ -48,15 +48,7 @@ public class CustomerCareFase3 extends TestBase{
 		page.cerrarultimapestaña();
 	}
 	
-	@AfterMethod (groups = {"CustomerCare", "DebitoAutomatico", "Vista360Layout", "DetalleDeConsumos"})
-	public void alert (){
-		CustomerCare page = new CustomerCare(driver);
-		page.cerrarultimapestaña();
-		driver.switchTo().defaultContent();
-		try {Thread.sleep(10000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
-	}
-	
-	@AfterClass (groups = {"CustomerCare", "DebitoAutomatico", "Vista360Layout", "DetalleDeConsumos"})
+	//@AfterClass (groups = {"CustomerCare", "DebitoAutomatico", "Vista360Layout", "DetalleDeConsumos"})
 	public void tearDown() {
 		driver.quit();
 		try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
@@ -1355,10 +1347,13 @@ public class CustomerCareFase3 extends TestBase{
 		driver.switchTo().frame(cambioFrameByID.getFrameForElement(driver, By.cssSelector(".slds-button.slds-button--brand")));
 		driver.findElement(By.id("text-input-02")).click();
 		driver.findElement(By.xpath("//*[text() = 'Un rango personalizado']")).click();
+		try {Thread.sleep(3000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 		driver.findElement(By.id("text-input-id-1")).click();
-		driver.findElement(By.xpath("//*[@id=\"week-1\"]/td[1]/span")).click();
+		driver.findElement(By.xpath("//*[@id=\"j_id0:j_id5\"]/div/div/ng-include/div/div[1]/ng-include/div/div[2]/div[5]/div/label/div/div[2]/div/div[1]/div[1]/button")).click();
+		driver.findElement(By.xpath("//*[@id=\"week-1\"]/td[3]/span")).click();
 		driver.findElement(By.id("text-input-id-2")).click();
-		driver.findElement(By.xpath("//*[@id=\"week-2\"]/td[6]/span")).click();
+		driver.findElement(By.xpath("//*[@id=\"j_id0:j_id5\"]/div/div/ng-include/div/div[1]/ng-include/div/div[2]/div[6]/div/label/div/div[2]/div/div[1]/div[1]/button")).click();
+		driver.findElement(By.xpath("//*[@id=\"week-2\"]/td[3]/span")).click();
 		Assert.assertTrue(!(driver.findElement(By.id("text-input-id-2")).getAttribute("value").isEmpty()));
 	}
 
@@ -1373,11 +1368,13 @@ public class CustomerCareFase3 extends TestBase{
 		driver.switchTo().frame(cambioFrameByID.getFrameForElement(driver, By.cssSelector(".slds-button.slds-button--brand")));
 		driver.findElement(By.id("text-input-02")).click();
 		driver.findElement(By.xpath("//*[text() = 'Un rango personalizado']")).click();
+		try {Thread.sleep(3000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 		driver.findElement(By.id("text-input-id-1")).click();
+		driver.findElement(By.xpath("//*[@id=\"j_id0:j_id5\"]/div/div/ng-include/div/div[1]/ng-include/div/div[2]/div[5]/div/label/div/div[2]/div/div[1]/div[1]/button")).click();
 		driver.findElement(By.xpath("//*[@id=\"week-1\"]/td[3]/span")).click();
 		driver.findElement(By.id("text-input-id-2")).click();
-		driver.findElement(By.xpath("//*[@id=\"j_id0:j_id5\"]/div/div/ng-include/div/div[1]/ng-include/div/div[2]/div[6]/div/label/div/div[2]/div/div[1]/div[2]/button")).click();
-		driver.findElement(By.xpath("//*[@id=\"week-1\"]/td[3]/span")).click();
+		driver.findElement(By.xpath("//*[@id=\"j_id0:j_id5\"]/div/div/ng-include/div/div[1]/ng-include/div/div[2]/div[6]/div/label/div/div[2]/div/div[1]/div[1]/button")).click();
+		driver.findElement(By.xpath("//*[@id=\"week-4\"]/td[6]/span")).click();
 		Assert.assertTrue((driver.findElement(By.id("text-input-id-2")).getAttribute("value").isEmpty()));
 	}
 	

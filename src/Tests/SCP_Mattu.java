@@ -1,5 +1,6 @@
 package Tests;
 
+import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -94,7 +95,7 @@ private WebDriver driver;
 	//------------------------------------------------------------------------------------------------- 
 	//TCC = 4 
 	@Test(groups = "SCP") 
-	public void TS112725_Mosaico_de_Relacionamiento_por_Oportunidad_Triangulo_Ordenador() {
+	public void TS112725_Mosaico_de_Relacionamiento_por_Oportunidad_Triangulo_Ordenador() throws ParseException {
 		SCP prueba = new SCP(driver);
 		prueba.moveToElementOnAccAndClick("tercerTitulo", 3);
 		Assert.assertTrue(prueba.Triangulo_Ordenador_Validador("//*[@id=\"mainTable\"]/thead/tr", "//*[@id=\"mainTable\"]/tbody", 4, 2));
@@ -133,7 +134,7 @@ private WebDriver driver;
 		
 		try {Thread.sleep(10000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 		((JavascriptExecutor)driver).executeScript("window.scrollTo(0,"+driver.findElement(By.id("j_id0:j_id112:j_id451:0:j_id540")).getLocation().y+")");
-		WebElement wBody = driver.findElement(By.cssSelector(".StrategicInitiativeRow.DraggableRow.dataRow.hasOpportunityAndPotencial.ui-draggable.odd"));
+		WebElement wBody = driver.findElement(By.xpath("//*[@id=\"mainTable\"]/tbody"));
 		List<WebElement> wElementos = wBody.findElements(By.tagName("td"));
 		List<WebElement> wSubElementos = wElementos.get(1).findElements(By.className("moreSpan"));
 		List<WebElement> wSubSubElementos = wSubElementos.get(0).findElements(By.tagName("span"));
@@ -152,7 +153,7 @@ private WebDriver driver;
 	//------------------------------------------------------------------------------------------------- 
 	//TCC = 8
 	@Test(groups = "SCP")
-	public void TS112566_Asignación_de_Value_Drivers_a_Oportunidades_Ordenar_por_columnas() {
+	public void TS112566_Asignación_de_Value_Drivers_a_Oportunidades_Ordenar_por_columnas() throws ParseException {
 		SCP prueba = new SCP(driver); 
 		prueba.moveToElementOnAccAndClick("tercerTitulo", 1);
 		

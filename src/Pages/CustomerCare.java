@@ -1338,5 +1338,33 @@ public class CustomerCare extends BasePage {
 		fact.get(0).click();
 		try {Thread.sleep(7000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 	}
-	//asdasd
+	
+	public void crearCaso(String contacto) {
+		BasePage cambioFrameByID = new BasePage();
+		driver.switchTo().frame(cambioFrameByID.getFrameForElement(driver, By.className("piped")));
+		driver.findElement(By.name("newCase")).click();
+		try {Thread.sleep(15000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		driver.switchTo().frame(cambioFrameByID.getFrameForElement(driver, By.id("bottomButtonRow")));
+		List <WebElement> dc = driver.findElements(By.name("save"));
+		for (WebElement x : dc) {
+			if (x.getAttribute("value").contains("¿Desea continuar?")) {
+				x.click();
+				break;
+			}
+		}
+		try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		driver.switchTo().frame(cambioFrameByID.getFrameForElement(driver, By.xpath("//*[@id=\"cas3\"]")));
+		driver.findElement(By.xpath("//*[@id=\"cas3\"]")).sendKeys(contacto);
+		driver.findElement(By.xpath("//*[@id=\"cas7\"]")).click();
+		driver.findElement(By.xpath("//*[text() = 'Nuevo']")).click();
+		driver.switchTo().frame(cambioFrameByID.getFrameForElement(driver, By.id("topButtonRow")));
+		List <WebElement> save = driver.findElements(By.name("save"));
+		for (WebElement x : save) {
+			if (x.getAttribute("value").contains("Guardar")) {
+				x.click();
+				break;
+			}
+		}
+		try {Thread.sleep(10000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+	}
 }
