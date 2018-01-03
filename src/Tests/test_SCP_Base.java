@@ -55,7 +55,7 @@ public class test_SCP_Base extends TestBase {
 		page.moveToElementOnAccAndClick("tercerTitulo", 1);
 		}
 	
-	@AfterMethod(groups= {"SCP", "Almer", "Prueba"})
+	//@AfterMethod(groups= {"SCP", "Almer", "Prueba"})
 	public void afterMethod() {
 		driver.switchTo().defaultContent();
 		SCP page= new SCP(driver);
@@ -63,12 +63,23 @@ public class test_SCP_Base extends TestBase {
 		try {Thread.sleep(1000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 	}
 	
-	@AfterClass(groups= {"SCP", "Almer", "Prueba"})
+	//@AfterClass(groups= {"SCP", "Almer", "Prueba"})
 	public void tearDown() {
 		driver.quit();
 		sleep(4000);
 	}
 	
+//--------------------------------------------METODOS----------------------------------------------------------------//
+	public String limpiarValor(String valor) {
+		//System.out.println(valor);
+		valor=valor.replace("$", "");
+		//System.out.println(valor);
+		valor=valor.replace(".", "");
+		//System.out.println(valor);
+		valor=valor.replaceAll(",", ".");
+		//System.out.println(valor);
+		return valor;
+	}
 	
 	/**
 	 * Escribe un comentario y verifica que aparezca (Victor Pidio que lo Obviaramos)
@@ -532,14 +543,15 @@ public class test_SCP_Base extends TestBase {
 	    	sleep(1000);
 	    	driver.findElement(By.name("save")).click();
 	    	WebElement modificacion=driver.findElement(By.xpath("//*[@id=\"0063F000002UbLj_RelatedEntityHistoryList_body\"]/table/tbody/tr[2]"));
-	    	//System.out.println(modificacion.getText());
-	    	assertTrue(modificacion.getText().contains(fecha)&&modificacion.getText().contains("opAut"));
+	    	System.out.println(modificacion.getText());
+	    	System.out.println(fecha);
+	    	assertTrue(modificacion.getText().startsWith(fecha)&&modificacion.getText().endsWith("opAut."));
 	    	}
 	   
 	    else {System.out.println("Oportunidad no disponible, prueba no ejecutada");assertTrue(false);}	
 	}
 	
-//-------------------------------------------------Este Metodo va a una oportunidad especifica que tiene un producto----------------------------------------------------------------//
+//-------------------------------------------------Este Test  va a una oportunidad especifica que tiene un producto----------------------------------------------------------------//
 	@Test(groups= "SCP")
 	public void TS112651_CRM_SCP_Estructura_de_las_oportunidades_Bloques_Productos_de_la_oportunidad() {
 	SCP page=new SCP(driver);
@@ -587,6 +599,93 @@ public class test_SCP_Base extends TestBase {
 			check=false;
 		}
 	assertTrue(check);
+	}
+	/**
+	 * Verifica que en oportunidades, en el bloque Valorizado de la oportunidad, se muestren los campos.
+	 */
+	@Test(groups= "SCP")
+	public void TS112664_CRM_SCP_Estructura_de_las_oportunidades_Bloques_Valorizado_de_la_oportunidad() {
+		SCP page=new SCP(driver);
+	    if(page.goToOportunity()) {
+	    	sleep(3000);
+	    	boolean tAP=false, tAD=false,tCuP=false,tCuD,mCP=false,mCD=false,mtc=false,impE=false,cDB=false;
+	    	//List<WebElement> valorizado=driver.findElements(By.cssSelector(".brandTertiaryBrd.pbSubheader.tertiaryPalette"));
+	    	List <WebElement> valorizado = driver.findElements(By.className("labelCol")); //Lista los Elementos de arriba
+	    	valorizado.addAll(driver.findElements(By.cssSelector(".last.labelCol")));
+	    	for(WebElement a:valorizado) {
+	    		System.out.println(a.getText());
+	    		if(a.getText().toLowerCase().startsWith("total abono (arg)"))
+	    			tAP=true;
+	    		if(a.getText().toLowerCase().startsWith("total abono (usd)"))
+	    			tAD=true;
+	    		if(a.getText().toLowerCase().startsWith("total cuv (arg)"))
+	    			tCuP=true;
+	    		if(a.getText().toLowerCase().startsWith("monto contrato (arg)"))
+	    			mCP=true;
+	    		if(a.getText().toLowerCase().startsWith("monto contrato (usd)"))
+	    			mCD=true;
+	    		if(a.getText().toLowerCase().startsWith("monto total contrato (arg)"))
+	    			mtc=true;
+	    		if(a.getText().toLowerCase().startsWith("impacto ejercicio actual (arg)"))
+	    			impE=true;
+	    		if(a.getText().toLowerCase().startsWith("dolar budget"))
+	    			cDB=true;
+	    		if(tAP&&tAD&&tCuP&&mCP&&mCD&&mtc&&impE&&cDB)
+	    			break;
+	    	}
+	    	assertTrue(tAP);
+	    	assertTrue(tAD);
+	    	assertTrue(tCuP);
+	    	assertTrue(mCP);
+	    	assertTrue(mCD);
+	    	assertTrue(mtc);
+	    	assertTrue(impE);
+	    	assertTrue(cDB);
+	    }
+	    else {System.out.println("Oportunidad no disponible, prueba no ejecutada");assertTrue(false);}	
+	}
+	
+	@Test(groups= "SCP")
+	public void TS112651_CRM_SCP_Estructura_de_las_oportunidades_Bloques_Valorizado_de_la_oportunidad_Monto_Contrato_USD() {
+	SCP page=new SCP(driver);
+	page.clickOnTabByName("oportunidades");
+	sleep(3000);
+	Select sOp=new Select(driver.findElement(By.id("fcf")));
+	sOp.selectByVisibleText("Todas las oportunidades");
+	sleep(200);
+	driver.findElement(By.name("go")).click();
+	sleep(2000);
+	List<WebElement> lOp=driver.findElements(By.className("x-grid3-row"));
+	lOp.add(driver.findElement(By.cssSelector(".x-grid3-row.x-grid3-row-first")));
+	boolean flag=false;
+	for(WebElement nOp: lOp) {
+		List<WebElement> tagsOp=nOp.findElements(By.tagName("a"));
+		for(WebElement nombre:tagsOp) {
+		if(nombre.getText().toLowerCase().contains("alta sucursal jujuy")) {
+			nombre.click();
+			flag=true;
+			break;}
+			}
+		if(flag)
+			break;
+		}
+	sleep(3000);
+	
+	WebElement prueba;
+	
+	double totalCuvD, cantidad, plazo, cargopormes, montoContratoD;
+	
+	//prueba=driver.findElement(By.xpath("//*[@id=\"0063F000002UjvW_RelatedLineItemList_body\"]/table/tbody/tr[2]/td[6]"));
+	//System.out.println(prueba.getText());
+	
+	montoContratoD=Double.parseDouble(limpiarValor(driver.findElement(By.xpath("//*[@id=\"ep\"]/div[2]/div[6]/table/tbody/tr[3]/td[4]")).getText()));
+	
+	totalCuvD=Double.parseDouble(limpiarValor(driver.findElement(By.xpath("//*[@id=\"0063F000002UjvW_RelatedLineItemList_body\"]/table/tbody/tr[2]/td[9]")).getText()));
+	cantidad=Double.parseDouble(limpiarValor(driver.findElement(By.xpath("//*[@id=\"0063F000002UjvW_RelatedLineItemList_body\"]/table/tbody/tr[2]/td[2]")).getText()));
+	plazo=Double.parseDouble(limpiarValor(driver.findElement(By.xpath("//*[@id=\"0063F000002UjvW_RelatedLineItemList_body\"]/table/tbody/tr[2]/td[6]")).getText()));
+	cargopormes=Double.parseDouble(limpiarValor(driver.findElement(By.xpath("//*[@id=\"0063F000002UjvW_RelatedLineItemList_body\"]/table/tbody/tr[2]/td[5]")).getText()));
+	
+	assertTrue(((cantidad*plazo*cargopormes)+totalCuvD)==montoContratoD);
 	}
 }
 
