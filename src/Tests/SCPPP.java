@@ -7,6 +7,8 @@ import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileFilter;
 import java.io.FileReader;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -131,10 +133,25 @@ private WebDriver driver;
 	
 	@Test(groups = "SCP") 
 	public void TS110247_Estructura_del_cliente_GGCC_Campos_Territorio() {
-		
+		SCP pScp = new SCP(driver);
+		driver.findElement(By.id("tabContainer")).findElement(By.id("tabBar")).findElements(By.tagName("li")).get(1).click();
+		pScp.clickEnCuentaPorNombre("PruebaWH");
+		 ArrayList<String> camp1 = new ArrayList<String>();
+		 ArrayList<String> txt2 = new ArrayList<String>();
+		 txt2.add("CUIT");
+		 txt2.add("Razón Social");  // falta
+		 txt2.add("Numero de clientes"); //falta 
+		 txt2.add("Numero de Holding");
+		 txt2.add("Categoría WH");
+		 txt2.add("Domicilio de recepción de notificaciones");
+		 List<WebElement> campos = driver.findElements(By.className("labelCol"));
+		 System.out.println(campos.size());
+		 for(WebElement c: campos){
+			 camp1.add(c.getText());
+			 }
+			 Assert.assertTrue(camp1.containsAll(txt2));
 	}
-		//que es  WH
-	
+
 	@Test(groups = "SCP") 
 	public void TS112605_Cronograma_de_cuenta_Agregar_Evento_Para_Nuestros_Clientes() {
 		SCP prueba = new SCP(driver);
@@ -142,22 +159,20 @@ private WebDriver driver;
 		driver.findElement(By.id("Account_Tab")).click();
 		prueba.clickOnFirstAccRe();
 		prueba.moveToElementOnAccAndClick("segundoTitulo", 3);
-		
-		
+
 	}
-	//@Test(groups = "SCP") 
-	public void TS112673_Estructura_de_los_contactos_Detalle_de_Contacto() {
 	
-	}
 	@Test(groups = "SCP") 
 	public void TS_112767_Organigrama_y_mapa_de_influencia_Modificar_mapa_de_influencias() {
 	SCP prueba = new SCP(driver); 
-	 prueba.moveToElementOnAccAndClick("primerTitulo", 3);
-	 WebElement pag = driver.findElement(By.className("panel-heading")).findElement(By.tagName("span"));
-	System.out.println(pag.getText());
-	Assert.assertTrue(pag.isDisplayed());
-			
-			
+	prueba.moveToElementOnAccAndClick("primerTitulo", 3);
+	WebElement pag = driver.findElement(By.cssSelector(".btn.btn-default.btn-sm.myBtn.influenceBtn"));
+	//System.out.println(pag.getText());
+	pag.click();
+	WebElement msg = driver.findElement(By.className("messageText"));
+	waitFor(driver, By.className("messageText"));
+	Assert.assertTrue((msg.getText().toLowerCase().equals("Para agregar o para quitar una Influencia: 1) Arrastrar la caja del contacto influyente 2) Soltarla sobre la caja del contacto influenciado 3) Clickear el botón de \"Guardar cambios\" antes de abandonar la página!")));
+	//System.out.println(msg.getText());
 	}
 	@Test(groups = "SCP") 
 	public void TS112792_Plan_de_acción_Eliminar_tareas() {
@@ -323,22 +338,38 @@ private WebDriver driver;
 	    Assert.assertTrue(lala.contains(tabla.getText()));
 	}
 	@Test(groups = "SCP") 
-	public void TS112798_Plan_de_acción_Triangulo_ordenador() {
+	public void TS112798_Plan_de_acción_Triangulo_ordenador() throws ParseException {
 		SCP prueba = new SCP(driver); 
 	    prueba.moveToElementOnAccAndClick("cuartoTitulo", 2);
-	    prueba.Triangulo_Ordenador_Validador("//*[@id='mainTable']/thead/tr", "//*[@id=\"mainTable\"]/tbody", 7, 3);
+	    prueba.Triangulo_Ordenador_Validador("//*[@id='mainTable']/thead/tr", "//*[@id=\"mainTable\"]/tbody", 7, 2);
 	    List<WebElement> tod= driver.findElement(By.id("mainTable_wrapper")).findElements(By.className("odd"));
 	    tod.addAll(driver.findElement(By.id("mainTable_wrapper")).findElements(By.className("even")));
 	    ArrayList<String> todo = new ArrayList<String>();
 		ArrayList<String> fechas = new ArrayList<String>();
 		todo.add("tod");
-		for(WebElement t : tod) {
+			for(WebElement t : tod) {
 				fechas.add(t.findElements(By.tagName("td")).get(1).getText().split(" ")[0]);
-		}
-		for(String f :fechas) {
-			System.out.println(f);
-			
-		}
+			}
+			for(String f :fechas) {
+				System.out.println(f);
+			}
+		SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy"); 
+		String fech = new String();
+	    String fecha2= new String();
+	    Date date1 = new Date();//sdf.parse(fech); 
+	    Date date2 = new Date(); //sdf.parse(fecha2); 
+	    	for(int i = 0; i<=fechas.size()-1;i++) {
+	    		fech=fechas.get(i);
+	    		fecha2=fechas.get(i+1);
+	    		date1 = sdf.parse(fech);
+	    		date2 = sdf.parse(fecha2);
+	    			if(date1.compareTo(date2)>0) {
+	    				System.out.println(date2+" es menor que "+date1);
+	    				Assert.assertTrue(false);
+	    			}
+	    	}
+	    Assert.assertTrue(true);
 	}
+	
 
 }
