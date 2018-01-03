@@ -373,7 +373,7 @@ public class CasePage extends BasePage {
 	      //driver.switchTo().frame(frame2.get(1));
 	      BasePage Bp = new BasePage();
 	      driver.switchTo().frame(Bp.getFrameForElement(driver, By.id("cas7_ileinner")));
-	      Assert.assertTrue(driver.findElement(By.id("cas7_ileinner")).getText().equals("Cerrado"));
+	      Assert.assertTrue(driver.findElement(By.id("cas7_ileinner")).getText().equals("Nuevo"));
 	      switch (caso) {
 	       case "nico":
 	        Assert.assertTrue(driver.findElement(By.id("cas14_ileinner")).getText().equals(asunto));

@@ -172,7 +172,7 @@ public class CustomerCareFase2 extends TestBase {
 		page.crearsugerencia("Sugerencias", "Productos/Servicios", "cancel");
 		page.cerrarultimapestaña();
 		page.elegircaso();
-		page1.validarcasocerrado("", "", " ", " ");
+		page1.validarcasocerrado("", "", "Sugerencias", "nico");
 	}
 
 	
@@ -1240,19 +1240,23 @@ public class CustomerCareFase2 extends TestBase {
 	@Test(groups = {"CustomerCare", "AdministraciónDeCasos"})
 	public void TS15961_360_View_Ver_Equipo_Creador_En_Case_Usuario_Cambia_De_Equipo_Nuevo_Caso_Se_Modifica_El_Campo_Equipo_Del_Creador() throws ParseException{
 		CustomerCare page = new CustomerCare(driver);
-		page.cerrarultimapestaña();
 		page.elegircaso();
-		BasePage cambioFrameByID = new BasePage();
-		driver.switchTo().frame(cambioFrameByID.getFrameForElement(driver, By.cssSelector(".x-grid3-col.x-grid3-cell.x-grid3-td-CASES_CASE_NUMBER")));
-		List <WebElement> caso = driver.findElements(By.cssSelector(".x-grid3-col.x-grid3-cell.x-grid3-td-CASES_CASE_NUMBER"));
-		caso.get(0).click();
-		try {Thread.sleep(10000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();} 
-		driver.switchTo().defaultContent();
-		Accounts accountPage = new Accounts(driver);
-		List <WebElement> element = driver.findElements(By.cssSelector(".dataCol.col02.inlineEditWrite"));
-		driver.switchTo().frame(accountPage.getFrameForElement(driver, element.get(11)));
+		page.crearCaso("Fernandoasd Careeeeee");
+		List <WebElement> ec = driver.findElements(By.cssSelector(".dataCol.col02.inlineEditWrite"));
+		String equipoCreador = ec.get(11).getText();
 		Actions action = new Actions(driver);
-		action.doubleClick(element.get(11)).perform();
-		
+		action.moveToElement(ec.get(11)).doubleClick().build().perform();
+		driver.findElement(By.xpath("//*[@id=\"00Nc0000001iLah\"]")).sendKeys("cambio de equipo");
+		List <WebElement> save = driver.findElements(By.name("inlineEditSave"));
+		for (WebElement x : save) {
+			if (x.getAttribute("value").contains("Guardar")) {
+				x.click();
+				break;
+			}
+		}
+		try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		List <WebElement> nec = driver.findElements(By.cssSelector(".dataCol.col02.inlineEditWrite"));
+		String NequipoCreador = nec.get(11).getText();
+		Assert.assertTrue(equipoCreador != NequipoCreador);
 	}
 }
