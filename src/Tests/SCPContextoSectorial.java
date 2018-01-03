@@ -28,6 +28,7 @@ public class SCPContextoSectorial extends TestBase {
 	private WebDriver driver;
 	private static String downloadPath = "C:\\Users\\Nicolas\\Downloads";
 	
+	
 	@BeforeClass(groups = "SCP")
 	  public void Init() throws Exception {
 	    this.driver = setConexion.setupEze();
@@ -52,11 +53,12 @@ public class SCPContextoSectorial extends TestBase {
 		driver.findElement(By.id("home_Tab")).click();
 	}
 	
-	@AfterClass(groups = "SCP")
+	//@AfterClass(groups = "SCP")
 	public void teardown() {
 		driver.quit();
 		sleep(5000);
 	}
+	
 	
 	@Test(groups = "SCP")
 	public void TS112613_Cronograma_de_cuenta_Agregar_Vencimiento_Contrato_del_Servicio() {

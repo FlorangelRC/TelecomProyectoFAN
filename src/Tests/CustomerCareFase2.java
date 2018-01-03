@@ -35,7 +35,7 @@ public class CustomerCareFase2 extends TestBase {
 	private WebDriver driver;
 
 	
-	@AfterClass(groups = {"CustomerCare", "Vista360Layout", "CambiosDeCondiciónImpositiva", "Sugerencias", "DetalleDeConsumos", "CambioDeCiclo", "MovimientoDeCuentasDeFacturación", "AdministraciónDeCasos", "CostoDeCambios"})
+	//@AfterClass(groups = {"CustomerCare", "Vista360Layout", "CambiosDeCondiciónImpositiva", "Sugerencias", "DetalleDeConsumos", "CambioDeCiclo", "MovimientoDeCuentasDeFacturación", "AdministraciónDeCasos", "CostoDeCambios"})
 	public void tearDown() {
 		driver.quit();
 		try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
@@ -1248,9 +1248,11 @@ public class CustomerCareFase2 extends TestBase {
 		caso.get(0).click();
 		try {Thread.sleep(10000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();} 
 		driver.switchTo().defaultContent();
+		Accounts accountPage = new Accounts(driver);
+		List <WebElement> element = driver.findElements(By.cssSelector(".dataCol.col02.inlineEditWrite"));
+		driver.switchTo().frame(accountPage.getFrameForElement(driver, element.get(11)));
 		Actions action = new Actions(driver);
-		WebElement element = driver.findElement(By.cssSelector(".dataCol.col02.inlineEditWrite"));
-		action.doubleClick(element).perform();
+		action.doubleClick(element.get(11)).perform();
 		
 	}
 }

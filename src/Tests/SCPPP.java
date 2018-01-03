@@ -66,7 +66,7 @@ private WebDriver driver;
 		 ArrayList<String> camp1 = new ArrayList<String>();
 		 ArrayList<String> txt2 = new ArrayList<String>();
 		 txt2.add("CUIT");
-		 //txt2.add("Razón Social");
+		 txt2.add("Razón Social");  // falta razon social
 		 txt2.add("Holding");
 		 txt2.add("Segmento");
 		 txt2.add("Region");
@@ -131,10 +131,33 @@ private WebDriver driver;
 	
 	@Test(groups = "SCP") 
 	public void TS110247_Estructura_del_cliente_GGCC_Campos_Territorio() {
-		Assert.assertTrue(true);
-	
-	// =============== INGRESAR COMO WH QUE CHUCHA ES WH ===============
 		
+	}
+		//que es  WH
+	
+	@Test(groups = "SCP") 
+	public void TS112605_Cronograma_de_cuenta_Agregar_Evento_Para_Nuestros_Clientes() {
+		SCP prueba = new SCP(driver);
+		prueba.Desloguear_Loguear("permisos");
+		driver.findElement(By.id("Account_Tab")).click();
+		prueba.clickOnFirstAccRe();
+		prueba.moveToElementOnAccAndClick("segundoTitulo", 3);
+		
+		
+	}
+	//@Test(groups = "SCP") 
+	public void TS112673_Estructura_de_los_contactos_Detalle_de_Contacto() {
+	
+	}
+	@Test(groups = "SCP") 
+	public void TS_112767_Organigrama_y_mapa_de_influencia_Modificar_mapa_de_influencias() {
+	SCP prueba = new SCP(driver); 
+	 prueba.moveToElementOnAccAndClick("primerTitulo", 3);
+	 WebElement pag = driver.findElement(By.className("panel-heading")).findElement(By.tagName("span"));
+	System.out.println(pag.getText());
+	Assert.assertTrue(pag.isDisplayed());
+			
+			
 	}
 	@Test(groups = "SCP") 
 	public void TS112792_Plan_de_acción_Eliminar_tareas() {
@@ -161,16 +184,20 @@ private WebDriver driver;
 	    
 	}
 	
-	@Test(groups = "SCP") // ESTEEEEEEE
+	@Test(groups = "SCP") 
 	public void TS112794_Plan_de_acción_Plan_de_acción_Fusionar_tareas() {
 		SCP prueba = new SCP(driver); 
 	    prueba.moveToElementOnAccAndClick("cuartoTitulo", 2);
 	    java.util.Date fechaCompleta = new Date();
 	    boolean bien = false;
-	    String fech = fechaCompleta.getDate()+"/"+(fechaCompleta.getMonth()+1);
+	    String fech =  fechaCompleta.getDate()+"/"+(fechaCompleta.getMonth()+1);
 	    int hora = fechaCompleta.getHours();
 	    int min	=	fechaCompleta.getMinutes();
-	   // System.out.println(fech);
+	    	if((fechaCompleta.getDate()<10) || (fechaCompleta.getMonth()<10)) {
+	    		fech= "0"+fechaCompleta.getDate()+"/0"+(fechaCompleta.getMonth()+1);
+	    }
+	    	
+	    System.out.println(fech);
 	    List<WebElement> box = driver.findElement(By.id("mainTable")).findElements(By.className("odd"));
 	    box.get(0).findElement(By.tagName("td")).findElement(By.tagName("input")).click();
 	    box.get(1).findElement(By.tagName("td")).findElement(By.tagName("input")).click();
@@ -299,6 +326,19 @@ private WebDriver driver;
 	public void TS112798_Plan_de_acción_Triangulo_ordenador() {
 		SCP prueba = new SCP(driver); 
 	    prueba.moveToElementOnAccAndClick("cuartoTitulo", 2);
-	    prueba.Triangulo_Ordenador_Validador("//*[@id='mainTable']/thead/tr", "//*[@id=\"mainTable\"]/tbody", 7, 2);
+	    prueba.Triangulo_Ordenador_Validador("//*[@id='mainTable']/thead/tr", "//*[@id=\"mainTable\"]/tbody", 7, 3);
+	    List<WebElement> tod= driver.findElement(By.id("mainTable_wrapper")).findElements(By.className("odd"));
+	    tod.addAll(driver.findElement(By.id("mainTable_wrapper")).findElements(By.className("even")));
+	    ArrayList<String> todo = new ArrayList<String>();
+		ArrayList<String> fechas = new ArrayList<String>();
+		todo.add("tod");
+		for(WebElement t : tod) {
+				fechas.add(t.findElements(By.tagName("td")).get(1).getText().split(" ")[0]);
+		}
+		for(String f :fechas) {
+			System.out.println(f);
+			
+		}
 	}
+
 }

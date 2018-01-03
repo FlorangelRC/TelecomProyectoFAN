@@ -7,13 +7,15 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Actions;
-
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.Select;
 import org.testng.Assert;
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
+import Pages.BasePage;
 import Pages.SCP;
 import Pages.setConexion;
 
@@ -58,6 +60,34 @@ public class SCP_Joaquin extends TestBase{
 	    	}
 	    }
 	    return flag;
+	}
+	
+	
+	@Test(groups = "SCP")
+	public void TS112605_Cronograma_de_cuenta_Agregar_Evento_Para_Nuestros_Clientes() {
+		SCP prueba= new SCP(driver);
+		prueba.moveToElementOnAccAndClick("segundoTitulo", 3);
+		
+		sleep(1000);
+		driver.findElement(By.xpath("//button[@class='btn btn-default btn-sm']")).click();
+		
+		sleep(1000);
+		driver.findElement(By.xpath("//span[@class='dateFormat']/a")).click();
+		
+		Select categoria = new Select(driver.findElement(By.xpath("//select[@class='resetHito']")));
+		categoria.selectByVisibleText("Evento Para Nuestros Clientes");
+		driver.findElement(By.xpath("//textarea[@class='resetHito']")).sendKeys("Agregar filtro");
+		driver.findElement(By.cssSelector(".btn-primary")).click();
+		
+		sleep(2500);
+		List<WebElement> elementos = driver.findElements(By.xpath("//td[@class='data2Col']//tr[contains(.,'Evento Para Nuestros Clientes')]"));
+		for (WebElement elem : elementos) {
+			if (elem.getText().contains("Agregar filtro")) {
+				Assert.assertTrue(true);
+				return;
+			}
+		}
+		Assert.assertTrue(false);
 	}
 	
 	@Test(groups = "SCP")
