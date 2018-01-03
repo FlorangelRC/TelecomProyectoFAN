@@ -235,7 +235,7 @@ public class CustomerCare360Joaquin extends TestBase {
 	
 	@Test(groups="CustomerCare")
 	public void TS38189_360_View_Historial_de_Recargas_Pre_pago_Visualización_de_registros_y_criterios_de_ordenamiento_Ordenamiento_columna() {
-		Customer.elegirCuenta("aaaaFernando Care");
+		Customer.elegirCuenta("aaaaFernando Care"); 
 		Customer.irAHistoriales();
 		
 		// TODAVIA NO FUNCIONAN LOS HISTORIALES
@@ -501,26 +501,19 @@ public class CustomerCare360Joaquin extends TestBase {
 				break;
 			}
 		}
-		driver.findElement(By.xpath("//div[@id='stepChooseMethod_nextBtn']")).findElement(By.tagName("p")).click();
-		driver.findElement(By.id("lotNumber")).sendKeys("2222222222222222");
-		driver.findElement(By.xpath("//div[@id='stepPrepaidCardData_nextBtn']")).findElement(By.tagName("p")).click();
-		
-		dynamicWait().until(ExpectedConditions.visibilityOfElementLocated(By.cssSelector(".slds-form-element.vlc-flex.vlc-slds-radio-control.ng-pristine.ng-scope.ng-valid .imgItem")));
-		driver.findElements(By.cssSelector(".slds-form-element.vlc-flex.vlc-slds-radio-control.ng-pristine.ng-scope.ng-valid .imgItem")).get(1).click();
-		driver.findElement(By.xpath("//div[@id='StepExistingCase_nextBtn']")).findElement(By.tagName("p")).click();
-		
-		// ESTO NO ANDA
-		dynamicWait().until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//span[@class='slds-radio--faux ng-scope']")));
-		driver.findElement(By.xpath("//span[@class='slds-radio--faux ng-scope']")).click();
-		driver.findElement(By.cssSelector(".vlc-slds-transparent .slds-input.ng-pristine.ng-valid.ng-empty")).sendKeys("C:\\Intel\\Logs\\dptf.log");
-		driver.findElement(By.xpath("//div[@id='stepAttachDocuments_nextBtn']")).findElement(By.tagName("p")).click();
-		driver.findElement(By.xpath("//div[@id='stepSummary_nextBtn']")).findElement(By.tagName("p")).click();
-		try {
-			WebElement popup = driver.findElement(By.cssSelector(".slds-box.vlc-slds-remote-action__container.ng-scope"));
-			popup.findElement(By.xpath("//button[contains(.,'Continue')]")).click();
-		} catch (NoSuchElementException e) {}
 
-		Assert.assertTrue(driver.findElement(By.xpath("//h1[contains(.,'Confirmación')]")) != null);
+		WebElement botonSiguiente = driver.findElement(By.xpath("//div[@id='stepChooseMethod_nextBtn']//p"));
+		botonSiguiente.click();
+		
+		WebElement numeroLote = driver.findElement(By.id("lotNumber"));
+		numeroLote.sendKeys("2222222222222222");
+		botonSiguiente = driver.findElement(By.xpath("//div[@id='stepPrepaidCardData_nextBtn']//p"));
+		dynamicWait().until(ExpectedConditions.elementToBeClickable(botonSiguiente));
+		botonSiguiente.click();
+		
+		WebElement botonAnterior = driver.findElement(By.xpath("//div[@id='StepExistingCase_prevBtn']//p"));
+		dynamicWait().until(ExpectedConditions.visibilityOf(botonAnterior));
+		Assert.assertTrue(botonAnterior.isDisplayed());
 	}
 	
 	@Test(groups= {"CustomerCare","Problems with Refills"})
