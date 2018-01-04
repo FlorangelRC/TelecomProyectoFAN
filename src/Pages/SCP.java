@@ -369,7 +369,7 @@ public void validarcomentario(String comentario){
 	List <WebElement> comentarios = driver.findElements(By.cssSelector(".feeditemtext.cxfeeditemtext"));
 	System.out.println(comentarios.size());
 	Assert.assertTrue(comentarios.get(0).getText().equals(comentario));
-	Assert.assertEquals(driver.findElement(By.cssSelector(".feeditemtopics")).getText(), "Haga clic para agregar temas:   Sin sugerencias. A�ada sus propios temas.");
+	Assert.assertEquals(driver.findElement(By.cssSelector(".feeditemtopics")).getText(), "Haga clic para agregar temas:   Sin sugerencias. A\u00f1ada sus propios temas.");
 }
 
 

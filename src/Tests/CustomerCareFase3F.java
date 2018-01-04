@@ -9,6 +9,7 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.ui.Select;
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;
@@ -24,7 +25,7 @@ import Pages.setConexion;
 public class CustomerCareFase3F  extends TestBase {
 private WebDriver driver;
 	
-	@AfterClass(groups= "CustomerCare")
+	//@AfterClass(groups= "CustomerCare")
 	public void tearDown2() {
 		driver.quit();	
 	}
@@ -67,14 +68,14 @@ private WebDriver driver;
 	     page.cerrarultimapestaña();
 		 try {Thread.sleep(12000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();} 
 			 page.elegircuenta("aaaaFernando Care");
-			 try {Thread.sleep(12000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}  
+			 try {Thread.sleep(14000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}  
 			 BasePage cambioFrameByID=new BasePage();
 			 driver.switchTo().frame(cambioFrameByID.getFrameForElement(driver, By.cssSelector(".console-card.active")));
 		 try {Thread.sleep(9000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}  
 		 
 	}
 	
-	@Test(groups= "CustomerCare")
+	@Test(groups= {"CustomerCare","HistorialDeRecargas"})
 	public void TS37501_Historial_De_Recargas_PrePago_Monto_Total_De_Recargas_Visualizar_Monto_Total_De_Recargas() {
 		BasePage cambioFrameByID=new BasePage(); 
 		driver.switchTo().defaultContent();
@@ -517,8 +518,11 @@ private WebDriver driver;
 	     }
 	     ((JavascriptExecutor)driver).executeScript("window.scrollTo(0,"+driver.findElement(By.id("StepExistingCase_nextBtn")).getLocation().y+")");
 		 driver.findElement(By.id("StepExistingCase_nextBtn")).click();
-		 try {Thread.sleep(8000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
-		 driver.findElement(By.id("HasVoucher")).click();
+		 try {Thread.sleep(10000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		 driver.switchTo().frame(cambioFrameByID.getFrameForElement(driver, By.id("HasVoucher")));
+		 /*Actions action = new Actions(driver); 
+		 action.moveToElement(driver.findElement(By.id("HasVoucher"))).doubleClick().build().perform();*/
+		 driver.findElement(By.cssSelector(".slds-radio--faux.ng-scope")).click();
 		 try {Thread.sleep(2000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 		 driver.findElement(By.id("FileAttach")).sendKeys(filePath);
 		 try {Thread.sleep(2000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}

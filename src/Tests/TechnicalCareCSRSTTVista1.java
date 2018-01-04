@@ -89,6 +89,7 @@ public class TechnicalCareCSRSTTVista1  extends TestBase {
 		}
 		try {Thread.sleep(2000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 		driver.quit();
+		try {Thread.sleep(2000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 	}
 	
 	@AfterMethod(groups = {"Fase2","TechnicalCare","ServicioTecnico"})

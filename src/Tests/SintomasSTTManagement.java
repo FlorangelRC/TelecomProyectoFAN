@@ -68,7 +68,7 @@ public class SintomasSTTManagement extends TestBase {
 		try {Thread.sleep(7000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 	}
 
-	@AfterClass(groups = {"Fase2","TechnicalCare","ABMAdministrador"})
+	//@AfterClass(groups = {"Fase2","TechnicalCare","ABMAdministrador"})
 	public void tearDown() {
 
 		HomeBase homePage = new HomeBase(driver);
@@ -78,7 +78,7 @@ public class SintomasSTTManagement extends TestBase {
 		driver.quit();
 	}
 	
-	@AfterMethod(groups = {"Fase2","TechnicalCare","ABMAdministrador"})
+	//@AfterMethod(groups = {"Fase2","TechnicalCare","ABMAdministrador"})
 	public void goToConsolaFAN() {
 		HomeBase homePage = new HomeBase(driver);
 		homePage.switchAppsMenu();

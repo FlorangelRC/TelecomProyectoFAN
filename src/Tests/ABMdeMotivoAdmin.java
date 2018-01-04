@@ -112,7 +112,7 @@ public class ABMdeMotivoAdmin extends TestBase {
 		try {Thread.sleep(2000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 		motiveName = "Nombre Motivo MODIFICADO.";
 		descripcion = "Descripcion Motivo MODIFICADA.";
-		servicio = "\"Internet 2GB";
+		servicio = "Internet 2GB";
 		//here all is modified.
 		ContactMotiveManager contactMMPage = new ContactMotiveManager(driver);
 		contactMMPage.clearValues(); //clears textboxes only.
