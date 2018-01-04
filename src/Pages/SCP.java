@@ -1,8 +1,11 @@
 package Pages;
 
 import java.io.File;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Date;
 import java.util.List;
 
 import org.openqa.selenium.Alert;
@@ -429,12 +432,12 @@ public boolean cuentalogeada(String cuenta){
 		Desloguear_Loguear(usuario);
 	}
 	
-	public List<String> TraerColumna(String sBody, int iColumnas, int iColumna) {
-		//sBody = xpath del cuerpo de la lista
+	public List<String> TraerColumna(WebElement wBody, int iColumnas, int iColumna) {
+		//wBody = WebElement del cuerpo completo del cuadro
 		//iColumnas = cantidad de columnas
 		//iColumna = columna requerida
-		WebElement wBody = driver.findElement(By.xpath(sBody));
-		List<WebElement> wRows = wBody.findElements(By.tagName("tr"));
+		WebElement wSubBody = wBody.findElement(By.tagName("tbody"));
+		List<WebElement> wRows = wSubBody.findElements(By.tagName("tr"));
 		List<WebElement> wElements =   new ArrayList<WebElement>();
 		for (int i = 0; i < wRows.size(); i++) {
 			wElements.clear();
@@ -448,35 +451,58 @@ public boolean cuentalogeada(String cuenta){
 		for (WebElement wAux:wRows) {
 			if (!wAux.getText().isEmpty()) {
 				List<WebElement> wColumns = wAux.findElements(By.tagName("td"));
-				sElements.add(wColumns.get(iColumna - 1).getText());
+				sElements.add(wColumns.get(iColumna - 1).getText().toLowerCase());
 			}
 		}
 		
 		return sElements;
 	}
 	
-	public boolean Triangulo_Ordenador_Validador(String sMenu, String sBody, int iColumns, int iColumn) {
-		//sMenu = xpath de la fila del men�
-		//sBody = xpath del cuerpo de la lista
+	public boolean Triangulo_Ordenador_Validador(WebDriver driver, By eBody, int iColumns, int iColumn) throws ParseException {
+		//eBody = selector del cuerpo completo del cuadro
 		//iColumnas = cantidad de columnas
 		//iColumna = columna a ordenar
 		TestBase TB = new TestBase();
-		TB.waitFor(driver, By.xpath(sBody));
-		
-		List<String> wElements = TraerColumna(sBody, iColumns, iColumn);
-		
-		WebElement wHeader = driver.findElement(By.xpath(sMenu));
+		TB.waitFor(driver, eBody);
+		WebElement wBody = driver.findElement(eBody);
+		List<String> sElements = TraerColumna(wBody, iColumns, iColumn);
+		WebElement wHeader = driver.findElement(eBody).findElement(By.tagName("thead"));
 		List <WebElement> wMenu = wHeader.findElements(By.tagName("th"));
 		wMenu.get(iColumn - 1).click();
-		List<String> wOrderedElements = TraerColumna(sBody, iColumns, iColumn);
-		
-		Collections.sort(wElements);
+		List<String> wOrderedElements = TraerColumna(wBody, iColumns, iColumn);
 		boolean bBoolean = true;
-		
-		for(int i = 0; i < wElements.size(); i++) { 
-			if (!wElements.get(i).equals(wOrderedElements.get(i))) {
-			 bBoolean = false;
+		if (!wMenu.get(iColumn - 1).getText().contains("Fecha")) {
+			Collections.sort(sElements);
+			
+			for(int i = 0; i < sElements.size(); i++) { 
+				if (!sElements.get(i).toLowerCase().equals(wOrderedElements.get(i).toLowerCase())) {
+					System.out.println("'" + sElements.get(i) + "'\tes igual a\t'" + wOrderedElements.get(i) + "'");
+				 bBoolean = false;
+				}
 			}
+		}
+		else {
+			SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+			ArrayList<String> fechas = new ArrayList<String>();
+			for (String sAux:sElements) {
+				fechas.add(sAux.split(" ")[0]);
+			}
+			
+			  String fech = new String();
+			     String fecha2= new String();
+			     Date date1 = new Date();//sdf.parse(fech); 
+			     Date date2 = new Date(); //sdf.parse(fecha2); 
+			     for(int i = 0; i<=fechas.size()-1;i++) {
+			      fech=fechas.get(i);
+			      fecha2=fechas.get(i+1);
+			      date1 = sdf.parse(fech);
+			      date2 = sdf.parse(fecha2);
+			      if(date1.compareTo(date2)>0) {
+			          System.out.println(date2+" es menor que "+date1);
+			          Assert.assertTrue(false);
+			      }
+			     }
+			       Assert.assertTrue(true);
 		}
 		
 		return bBoolean;
@@ -506,6 +532,7 @@ public boolean cuentalogeada(String cuenta){
 		
 		return sList;
 	}
+	
 public void ValidarEstadosDELTA(String DELTA){
 	TestBase TB = new TestBase();
 	try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}

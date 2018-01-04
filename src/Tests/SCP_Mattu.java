@@ -1,5 +1,6 @@
 package Tests;
 
+import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -39,11 +40,11 @@ private WebDriver driver;
 		prueba.clickOnFirstAccRe();
 		try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}	
 	}
-	@AfterClass(groups = "SCP")
+	/*@AfterClass(groups = "SCP")
 	public void teardown() {
 		driver.quit();
 		sleep(5000);
-	}
+	}*/
 	
 	//------------------------------------------------------------------------------------------------- 
     //TCC = 1 
@@ -94,10 +95,10 @@ private WebDriver driver;
 	//------------------------------------------------------------------------------------------------- 
 	//TCC = 4 
 	@Test(groups = "SCP") 
-	public void TS112725_Mosaico_de_Relacionamiento_por_Oportunidad_Triangulo_Ordenador() {
+	public void TS112725_Mosaico_de_Relacionamiento_por_Oportunidad_Triangulo_Ordenador() throws ParseException {
 		SCP prueba = new SCP(driver);
 		prueba.moveToElementOnAccAndClick("tercerTitulo", 3);
-		Assert.assertTrue(prueba.Triangulo_Ordenador_Validador("//*[@id=\"mainTable\"]/thead/tr", "//*[@id=\"mainTable\"]/tbody", 4, 2));
+		Assert.assertTrue(prueba.Triangulo_Ordenador_Validador(driver, By.cssSelector(".table.table-striped.table-bordered.table-condensed.dataTable"), 4, 2));
 	}
 	
 	//------------------------------------------------------------------------------------------------- 
@@ -133,7 +134,7 @@ private WebDriver driver;
 		
 		try {Thread.sleep(10000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 		((JavascriptExecutor)driver).executeScript("window.scrollTo(0,"+driver.findElement(By.id("j_id0:j_id112:j_id451:0:j_id540")).getLocation().y+")");
-		WebElement wBody = driver.findElement(By.cssSelector(".StrategicInitiativeRow.DraggableRow.dataRow.hasOpportunityAndPotencial.ui-draggable.odd"));
+		WebElement wBody = driver.findElement(By.xpath("//*[@id=\"mainTable\"]/tbody"));
 		List<WebElement> wElementos = wBody.findElements(By.tagName("td"));
 		List<WebElement> wSubElementos = wElementos.get(1).findElements(By.className("moreSpan"));
 		List<WebElement> wSubSubElementos = wSubElementos.get(0).findElements(By.tagName("span"));
@@ -152,16 +153,16 @@ private WebDriver driver;
 	//------------------------------------------------------------------------------------------------- 
 	//TCC = 8
 	@Test(groups = "SCP")
-	public void TS112566_Asignación_de_Value_Drivers_a_Oportunidades_Ordenar_por_columnas() {
+	public void TS112566_Asignación_de_Value_Drivers_a_Oportunidades_Ordenar_por_columnas() throws ParseException {
 		SCP prueba = new SCP(driver); 
 		prueba.moveToElementOnAccAndClick("tercerTitulo", 1);
 		
 		driver.findElement(By.xpath("//*[@id=\"mainOppsTable\"]/thead/tr/th[1]"));
-		Assert.assertTrue(prueba.Triangulo_Ordenador_Validador("//*[@id=\"mainOppsTable\"]/thead/tr", "//*[@id=\"mainOppsTable\"]/tbody", 6, 2));
-		Assert.assertTrue(prueba.Triangulo_Ordenador_Validador("//*[@id=\"mainOppsTable\"]/thead/tr", "//*[@id=\"mainOppsTable\"]/tbody", 6, 3));
-		Assert.assertTrue(prueba.Triangulo_Ordenador_Validador("//*[@id=\"mainOppsTable\"]/thead/tr", "//*[@id=\"mainOppsTable\"]/tbody", 6, 4));
-		Assert.assertTrue(prueba.Triangulo_Ordenador_Validador("//*[@id=\"mainOppsTable\"]/thead/tr", "//*[@id=\"mainOppsTable\"]/tbody", 6, 5));
-		Assert.assertTrue(prueba.Triangulo_Ordenador_Validador("//*[@id=\"mainOppsTable\"]/thead/tr", "//*[@id=\"mainOppsTable\"]/tbody", 6, 6));
+		Assert.assertTrue(prueba.Triangulo_Ordenador_Validador(driver, By.cssSelector(".table.table-striped.table-bordered.table-condensed.dataTable"), 6, 2));
+		Assert.assertTrue(prueba.Triangulo_Ordenador_Validador(driver, By.cssSelector(".table.table-striped.table-bordered.table-condensed.dataTable"), 6, 3));
+		Assert.assertTrue(prueba.Triangulo_Ordenador_Validador(driver, By.cssSelector(".table.table-striped.table-bordered.table-condensed.dataTable"), 6, 4));
+		Assert.assertTrue(prueba.Triangulo_Ordenador_Validador(driver, By.cssSelector(".table.table-striped.table-bordered.table-condensed.dataTable"), 6, 5));
+		Assert.assertTrue(prueba.Triangulo_Ordenador_Validador(driver, By.cssSelector(".table.table-striped.table-bordered.table-condensed.dataTable"), 6, 6));
 	}
 	
 	//------------------------------------------------------------------------------------------------- 
@@ -190,13 +191,13 @@ private WebDriver driver;
 		WebElement wNavBar = driver.findElement(By.cssSelector(".zen-inlineList.zen-tabMenu"));
 		List<WebElement> wMenu = wNavBar.findElements(By.tagName("li"));
 		wMenu.get(4).click();
-		WebElement wFiltro = driver.findElement(By.id("filterDiv"));
-		wFiltro.findElement(By.tagName("input")).sendKeys("APER\n");
+		driver.findElement(By.id("filterDiv")).findElement(By.tagName("input")).sendKeys("APER\n\n");
 		SCP prueba = new SCP(driver);
 		boolean bContains = true;
 		TestBase TB = new TestBase();
 		TB.waitFor(driver, By.cssSelector(".table.table-striped.table-bordered.table-condensed.dataTablePrincipal"));
-		List <String> sColumna = prueba.TraerColumna("//*[@id=\"mainOppsTable\"]/tbody", 3, 1);
+		WebElement wBody = driver.findElement(By.cssSelector(".table.table-striped.table-bordered.table-condensed.dataTablePrincipal.dataTable"));
+		List <String> sColumna = prueba.TraerColumna(wBody, 3, 1);
 		for (String sNombreDeLaCuenta:sColumna) {
 			if (!sNombreDeLaCuenta.contains("APER")) {
 				bContains = false;
@@ -205,12 +206,15 @@ private WebDriver driver;
 		}
 		WebElement wMenuSiguiente = driver.findElement(By.cssSelector(".btn-group.pull-right"));
 		List<WebElement> wMenu2 = wMenuSiguiente.findElements(By.tagName("input"));
-		boolean bSiguiente = wMenu2.get(2).isEnabled();
-		if(bSiguiente)wMenu2.get(2).click();
+		boolean bSiguiente = driver.findElement(By.id("j_id0:pageForm:siguiente")).isEnabled();
+		if(bSiguiente)driver.findElement(By.id("j_id0:pageForm:siguiente")).click();
 		while (bSiguiente) { 
 			System.out.println("Is enable");
 			TB.waitFor(driver, By.cssSelector(".table.table-striped.table-bordered.table-condensed.dataTablePrincipal"));
-			sColumna = prueba.TraerColumna("//*[@id=\"mainOppsTable\"]/tbody", 3, 1);
+			wBody = driver.findElement(By.cssSelector(".table.table-striped.table-bordered.table-condensed.dataTablePrincipal.dataTable"));
+			System.out.println("Texto wBody: " + wBody.getText());
+			sColumna = prueba.TraerColumna(wBody, 3, 1);
+			
 			System.out.println("Paso 1 vez");
 			for (String sNombreDeLaCuenta:sColumna) {
 				if (!sNombreDeLaCuenta.contains("APER")) {
@@ -218,12 +222,29 @@ private WebDriver driver;
 					break;
 				}
 			}
+			wMenuSiguiente.clear();
 			wMenuSiguiente = driver.findElement(By.cssSelector(".btn-group.pull-right"));
+			wMenu.clear();
 			wMenu = wMenuSiguiente.findElements(By.tagName("input"));
-			bSiguiente = wMenu.get(2).isEnabled();
-			if(bSiguiente)wMenu2.get(2).click();
+			bSiguiente = driver.findElement(By.id("j_id0:pageForm:siguiente")).isEnabled();
+			if(bSiguiente)driver.findElement(By.id("j_id0:pageForm:siguiente")).click();
 		}
 		System.out.println(bContains);
 	}*/
+	
+	//------------------------------------------------------------------------------------------------- 
+	//TCC = 11
+	@Test(groups = "SCP")
+	public void TS112636_Estrategia_de_Crecimiento_Triangulo_ordenador() throws ParseException {
+		SCP prueba = new SCP(driver); 
+		prueba.moveToElementOnAccAndClick("tercerTitulo", 5);
+		driver.findElement(By.xpath("//*[@id=\"mainTable\"]/thead/tr/th[1]")).click();
+		Assert.assertTrue(prueba.Triangulo_Ordenador_Validador(driver, By.id("mainTable"), 5, 1));
+		Assert.assertTrue(prueba.Triangulo_Ordenador_Validador(driver, By.id("mainTable"), 5, 2));
+		Assert.assertTrue(prueba.Triangulo_Ordenador_Validador(driver, By.id("mainTable"), 5, 3));
+		Assert.assertTrue(prueba.Triangulo_Ordenador_Validador(driver, By.id("mainTable"), 5, 4));
+		Assert.assertTrue(prueba.Triangulo_Ordenador_Validador(driver, By.id("mainTable"), 5, 5));
+		
+	}
 	
 }

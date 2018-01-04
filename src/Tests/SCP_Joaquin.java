@@ -7,20 +7,22 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Actions;
-
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.Select;
 import org.testng.Assert;
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
+import Pages.BasePage;
 import Pages.SCP;
 import Pages.setConexion;
 
 public class SCP_Joaquin extends TestBase{
 	private WebDriver driver;
 	
-	@BeforeClass(groups = "SCP")
+	@BeforeClass(groups = {"SCP", "Filtros"})
 	  public void Init() throws Exception
 	  {
 	    this.driver = setConexion.setupEze();
@@ -28,7 +30,7 @@ public class SCP_Joaquin extends TestBase{
 	    try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 	  }
 	
-	@BeforeMethod(groups = "SCP")
+	@BeforeMethod(groups = {"SCP", "Filtros"})
 	  public void setUp() throws Exception {
 	    try {Thread.sleep(3000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 	    SCP prueba= new SCP(driver);
@@ -38,7 +40,7 @@ public class SCP_Joaquin extends TestBase{
 	    try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}	
 	}
 	
-	@AfterClass(groups = "SCP")
+	@AfterClass(groups = {"SCP", "Filtros"})
 	public void teardown() {
 		driver.quit();
 		sleep(3000);
@@ -60,14 +62,204 @@ public class SCP_Joaquin extends TestBase{
 	    return flag;
 	}
 	
+	
 	@Test(groups = "SCP")
+	public void TS112605_Cronograma_de_cuenta_Agregar_Evento_Para_Nuestros_Clientes() {
+		SCP prueba= new SCP(driver);
+		prueba.moveToElementOnAccAndClick("segundoTitulo", 3);
+		
+		sleep(1000);
+		driver.findElement(By.xpath("//button[@class='btn btn-default btn-sm']")).click();
+		
+		sleep(1000);
+		driver.findElement(By.xpath("//span[@class='dateFormat']/a")).click();
+		
+		Select categoria = new Select(driver.findElement(By.xpath("//select[@class='resetHito']")));
+		categoria.selectByVisibleText("Evento Para Nuestros Clientes");
+		driver.findElement(By.xpath("//textarea[@class='resetHito']")).sendKeys("Agregar filtro");
+		driver.findElement(By.cssSelector(".btn-primary")).click();
+		
+		sleep(2500);
+		List<WebElement> elementos = driver.findElements(By.xpath("//td[@class='data2Col']//tr[contains(.,'Evento Para Nuestros Clientes')]"));
+		for (WebElement elem : elementos) {
+			if (elem.getText().contains("Agregar filtro")) {
+				Assert.assertTrue(true);
+				return;
+			}
+		}
+		Assert.assertTrue(false);
+	}
+	
+	@Test(groups = "SCP")
+	public void TS112606_Cronograma_de_cuenta_Agregar_Evento_Relevante_de_la_Industria() {
+		SCP prueba= new SCP(driver);
+		prueba.moveToElementOnAccAndClick("segundoTitulo", 3);
+		
+		sleep(1000);
+		driver.findElement(By.xpath("//button[@class='btn btn-default btn-sm']")).click();
+		
+		sleep(1000);
+		driver.findElement(By.xpath("//span[@class='dateFormat']/a")).click();
+		
+		Select categoria = new Select(driver.findElement(By.xpath("//select[@class='resetHito']")));
+		categoria.selectByVisibleText("Evento Relevante de la Industria");
+		driver.findElement(By.xpath("//textarea[@class='resetHito']")).sendKeys("Agregar filtro");
+		driver.findElement(By.cssSelector(".btn-primary")).click();
+		
+		sleep(2500);
+		List<WebElement> elementos = driver.findElements(By.xpath("//td[@class='data2Col']//tr[contains(.,'Evento Relevante de la Industria')]"));
+		for (WebElement elem : elementos) {
+			if (elem.getText().contains("Agregar filtro")) {
+				Assert.assertTrue(true);
+				return;
+			}
+		}
+		Assert.assertTrue(false);
+	}
+	
+	@Test(groups = "SCP")
+	public void TS112607_Cronograma_de_cuenta_Agregar_Otros() {
+		SCP prueba= new SCP(driver);
+		prueba.moveToElementOnAccAndClick("segundoTitulo", 3);
+		
+		sleep(1000);
+		driver.findElement(By.xpath("//button[@class='btn btn-default btn-sm']")).click();
+		
+		sleep(1000);
+		driver.findElement(By.xpath("//span[@class='dateFormat']/a")).click();
+		
+		Select categoria = new Select(driver.findElement(By.xpath("//select[@class='resetHito']")));
+		categoria.selectByVisibleText("Otro");
+		driver.findElement(By.xpath("//textarea[@class='resetHito']")).sendKeys("Agregar filtro");
+		driver.findElement(By.cssSelector(".btn-primary")).click();
+		
+		sleep(2500);
+		List<WebElement> elementos = driver.findElements(By.xpath("//td[@class='data2Col']//tr[contains(.,'Otro')]"));
+		for (WebElement elem : elementos) {
+			if (elem.getText().contains("Agregar filtro")) {
+				Assert.assertTrue(true);
+				return;
+			}
+		}
+		Assert.assertTrue(false);
+	}
+	
+	@Test(groups = "SCP")
+	public void TS112608_Cronograma_de_cuenta_Agregar_Publicacion_RFP_Comunicaciones() {
+		SCP prueba= new SCP(driver);
+		prueba.moveToElementOnAccAndClick("segundoTitulo", 3);
+		
+		sleep(1000);
+		driver.findElement(By.xpath("//button[@class='btn btn-default btn-sm']")).click();
+		
+		sleep(1000);
+		driver.findElement(By.xpath("//span[@class='dateFormat']/a")).click();
+		
+		Select categoria = new Select(driver.findElement(By.xpath("//select[@class='resetHito']")));
+		categoria.selectByVisibleText("Publicación RFP Comunicaciones");
+		driver.findElement(By.xpath("//textarea[@class='resetHito']")).sendKeys("Agregar filtro");
+		driver.findElement(By.cssSelector(".btn-primary")).click();
+		
+		sleep(2500);
+		List<WebElement> elementos = driver.findElements(By.xpath("//td[@class='data2Col']//tr[contains(.,'Publicación RFP Comunicaciones')]"));
+		for (WebElement elem : elementos) {
+			if (elem.getText().contains("Agregar filtro")) {
+				Assert.assertTrue(true);
+				return;
+			}
+		}
+		Assert.assertTrue(false);
+	}
+	
+	@Test(groups = "SCP")
+	public void TS112609_Cronograma_de_cuenta_Agregar_Publicacion_RFP_TI() {
+		SCP prueba= new SCP(driver);
+		prueba.moveToElementOnAccAndClick("segundoTitulo", 3);
+		
+		sleep(1000);
+		driver.findElement(By.xpath("//button[@class='btn btn-default btn-sm']")).click();
+		
+		sleep(1000);
+		driver.findElement(By.xpath("//span[@class='dateFormat']/a")).click();
+		
+		Select categoria = new Select(driver.findElement(By.xpath("//select[@class='resetHito']")));
+		categoria.selectByVisibleText("Publicación RFP TI");
+		driver.findElement(By.xpath("//textarea[@class='resetHito']")).sendKeys("Agregar filtro");
+		driver.findElement(By.cssSelector(".btn-primary")).click();
+		
+		sleep(2500);
+		List<WebElement> elementos = driver.findElements(By.xpath("//td[@class='data2Col']//tr[contains(.,'Publicación RFP TI')]"));
+		for (WebElement elem : elementos) {
+			if (elem.getText().contains("Agregar filtro")) {
+				Assert.assertTrue(true);
+				return;
+			}
+		}
+		Assert.assertTrue(false);
+	}
+	
+	@Test(groups = "SCP")
+	public void TS112611_Cronograma_de_cuenta_Agregar_Vencimiento() {
+		SCP prueba= new SCP(driver);
+		prueba.moveToElementOnAccAndClick("segundoTitulo", 3);
+		
+		sleep(1000);
+		driver.findElement(By.xpath("//button[@class='btn btn-default btn-sm']")).click();
+		
+		sleep(1000);
+		driver.findElement(By.xpath("//span[@class='dateFormat']/a")).click();
+		
+		Select categoria = new Select(driver.findElement(By.xpath("//select[@class='resetHito']")));
+		categoria.selectByVisibleText("Vencimiento Contrato Activo con Nosotros");
+		driver.findElement(By.xpath("//textarea[@class='resetHito']")).sendKeys("Agregar filtro");
+		driver.findElement(By.cssSelector(".btn-primary")).click();
+		
+		sleep(2500);
+		List<WebElement> elementos = driver.findElements(By.xpath("//td[@class='data2Col']//tr[contains(.,'Vencimiento Contrato Activo con Nosotros')]"));
+		for (WebElement elem : elementos) {
+			if (elem.getText().contains("Agregar filtro")) {
+				Assert.assertTrue(true);
+				return;
+			}
+		}
+		Assert.assertTrue(false);
+	}
+	
+	@Test(groups = "SCP")
+	public void TS112612_Cronograma_de_cuenta_Agregar_Vencimiento_Contrato_Activo_con_la_Competencia() {
+		SCP prueba= new SCP(driver);
+		prueba.moveToElementOnAccAndClick("segundoTitulo", 3);
+		
+		sleep(1000);
+		driver.findElement(By.xpath("//button[@class='btn btn-default btn-sm']")).click();
+		
+		sleep(1000);
+		driver.findElement(By.xpath("//span[@class='dateFormat']/a")).click();
+		
+		Select categoria = new Select(driver.findElement(By.xpath("//select[@class='resetHito']")));
+		categoria.selectByVisibleText("Vencimiento Contrato Activo con la Competencia");
+		driver.findElement(By.xpath("//textarea[@class='resetHito']")).sendKeys("Agregar filtro");
+		driver.findElement(By.cssSelector(".btn-primary")).click();
+		
+		sleep(2500);
+		List<WebElement> elementos = driver.findElements(By.xpath("//td[@class='data2Col']//tr[contains(.,'Vencimiento Contrato Activo con la Competencia')]"));
+		for (WebElement elem : elementos) {
+			if (elem.getText().contains("Agregar filtro")) {
+				Assert.assertTrue(true);
+				return;
+			}
+		}
+		Assert.assertTrue(false);
+	}
+	
+	@Test(groups = {"SCP", "Filtros"})
 	public void TS112616_Cronograma_de_cuenta_Filtros_Evento_Para_Nuestros_Clientes() {
 		SCP prueba= new SCP(driver);
 		prueba.moveToElementOnAccAndClick("cuartoTitulo", 1);
 		driver.findElements(By.className("checkboxFiltroTimeLine")).get(5).click();
 		driver.findElements(By.cssSelector(".btn.btn.btn-default.btn-xs")).get(1).click();
 		sleep(3000);
-		List<WebElement> elementos = driver.findElements(By.cssSelector(".tl-timemarker-content-container-small"));
+		List<WebElement> elementos = driver.findElements(By.cssSelector(".tl-timemarker-content-container"));
 		
 		System.out.println(elementos.get(0).getText());
 		for (WebElement e : elementos) {
@@ -75,14 +267,14 @@ public class SCP_Joaquin extends TestBase{
 		}
 	}
 	
-	@Test(groups = "SCP")
+	@Test(groups = {"SCP", "Filtros"})
 	public void TS112617_Cronograma_de_cuenta_Filtros_Evento_Relevante_de_la_Industria() {
 		SCP prueba= new SCP(driver);
 		prueba.moveToElementOnAccAndClick("cuartoTitulo", 1);
 		driver.findElements(By.className("checkboxFiltroTimeLine")).get(3).click();
 		driver.findElements(By.cssSelector(".btn.btn.btn-default.btn-xs")).get(1).click();
 		sleep(3000);
-		List<WebElement> elementos = driver.findElements(By.cssSelector(".tl-timemarker-content-container-small"));
+		List<WebElement> elementos = driver.findElements(By.cssSelector(".tl-timemarker-content-container"));
 		
 		System.out.println(elementos.get(0).getText());
 		for (WebElement e : elementos) {
@@ -90,7 +282,7 @@ public class SCP_Joaquin extends TestBase{
 		}
 	}
 	
-	@Test(groups = "SCP")
+	@Test(groups = {"SCP", "Filtros"})
 	public void TS112618_Cronograma_de_cuenta_Filtros_Multiples() {
 		SCP prueba= new SCP(driver);
 		prueba.moveToElementOnAccAndClick("cuartoTitulo", 1);
@@ -98,7 +290,7 @@ public class SCP_Joaquin extends TestBase{
 		driver.findElements(By.className("checkboxFiltroTimeLine")).get(0).click();
 		driver.findElements(By.cssSelector(".btn.btn.btn-default.btn-xs")).get(1).click();
 		sleep(3000);
-		List<WebElement> elementos = driver.findElements(By.cssSelector(".tl-timemarker-content-container-small"));
+		List<WebElement> elementos = driver.findElements(By.cssSelector(".tl-timemarker-content-container"));
 		
 		System.out.println(elementos.get(0).getText());
 		for (WebElement e : elementos) {
@@ -106,14 +298,14 @@ public class SCP_Joaquin extends TestBase{
 		}
 	}
 	
-	@Test(groups = "SCP")
+	@Test(groups = {"SCP", "Filtros"})
 	public void TS112619_Cronograma_de_cuenta_Filtros_Otros() {
 		SCP prueba= new SCP(driver);
 		prueba.moveToElementOnAccAndClick("cuartoTitulo", 1);
 		driver.findElements(By.className("checkboxFiltroTimeLine")).get(7).click();
 		driver.findElements(By.cssSelector(".btn.btn.btn-default.btn-xs")).get(1).click();
 		sleep(3000);
-		List<WebElement> elementos = driver.findElements(By.cssSelector(".tl-timemarker-content-container-small"));
+		List<WebElement> elementos = driver.findElements(By.cssSelector(".tl-timemarker-content-container"));
 		
 		System.out.println(elementos.get(0).getText());
 		for (WebElement e : elementos) {
@@ -121,14 +313,14 @@ public class SCP_Joaquin extends TestBase{
 		}
 	}
 	
-	@Test(groups = "SCP")
+	@Test(groups = {"SCP", "Filtros"})
 	public void TS112620_Cronograma_de_cuenta_Filtros_Publicación_RFP_Comunicaciones() {
 		SCP prueba= new SCP(driver);
 		prueba.moveToElementOnAccAndClick("cuartoTitulo", 1);
 		driver.findElements(By.className("checkboxFiltroTimeLine")).get(4).click();
 		driver.findElements(By.cssSelector(".btn.btn.btn-default.btn-xs")).get(1).click();
 		sleep(3000);
-		List<WebElement> elementos = driver.findElements(By.cssSelector(".tl-timemarker-content-container-small"));
+		List<WebElement> elementos = driver.findElements(By.cssSelector(".tl-timemarker-content-container"));
 		
 		System.out.println(elementos.get(0).getText());
 		for (WebElement e : elementos) {
@@ -136,14 +328,14 @@ public class SCP_Joaquin extends TestBase{
 		}
 	}
 	
-	@Test(groups = "SCP")
+	@Test(groups = {"SCP", "Filtros"})
 	public void TS112621_Cronograma_de_cuenta_Filtros_Publicación_RFP_TI() {
 		SCP prueba= new SCP(driver);
 		prueba.moveToElementOnAccAndClick("cuartoTitulo", 1);
 		driver.findElements(By.className("checkboxFiltroTimeLine")).get(6).click();
 		driver.findElements(By.cssSelector(".btn.btn.btn-default.btn-xs")).get(1).click();
 		sleep(3000);
-		List<WebElement> elementos = driver.findElements(By.cssSelector(".tl-timemarker-content-container-small"));
+		List<WebElement> elementos = driver.findElements(By.cssSelector(".tl-timemarker-content-container"));
 		
 		System.out.println(elementos.get(0).getText());
 		for (WebElement e : elementos) {
@@ -151,7 +343,7 @@ public class SCP_Joaquin extends TestBase{
 		}
 	}
 	
-	@Test(groups = "SCP")
+	@Test(groups = {"SCP", "Filtros"})
 	public void TS112623_Cronograma_de_cuenta_Filtros_Todos() {
 		Assert.assertTrue(false); //**************************************************************************************
 		SCP prueba= new SCP(driver);
@@ -159,7 +351,7 @@ public class SCP_Joaquin extends TestBase{
 		driver.findElements(By.className("checkboxFiltroTimeLine")).get(7).click();
 		driver.findElements(By.cssSelector(".btn.btn.btn-default.btn-xs")).get(1).click();
 		sleep(3000);
-		List<WebElement> elementos = driver.findElements(By.cssSelector(".tl-timemarker-content-container-small"));
+		List<WebElement> elementos = driver.findElements(By.cssSelector(".tl-timemarker-content-container"));
 		
 		System.out.println(elementos.get(0).getText());
 		for (WebElement e : elementos) {
@@ -167,14 +359,14 @@ public class SCP_Joaquin extends TestBase{
 		}
 	}
 	
-	@Test(groups = "SCP")
+	@Test(groups = {"SCP", "Filtros"})
 	public void TS112624_Cronograma_de_cuenta_Filtros_Vencimiento() {
 		SCP prueba= new SCP(driver);
 		prueba.moveToElementOnAccAndClick("cuartoTitulo", 1);
 		driver.findElements(By.className("checkboxFiltroTimeLine")).get(0).click();
 		driver.findElements(By.cssSelector(".btn.btn.btn-default.btn-xs")).get(1).click();
 		sleep(3000);
-		List<WebElement> elementos = driver.findElements(By.cssSelector(".tl-timemarker-content-container-small"));
+		List<WebElement> elementos = driver.findElements(By.cssSelector(".tl-timemarker-content-container"));
 		
 		System.out.println(elementos.get(0).getText());
 		for (WebElement e : elementos) {
@@ -182,18 +374,18 @@ public class SCP_Joaquin extends TestBase{
 		}
 	}
 	
-	@Test(groups = "SCP")
+	@Test(groups = {"SCP", "Filtros"})
 	public void TS112625_Cronograma_de_cuenta_Filtros_Vencimiento_Contrato_Activo_con_la_Competencia() {
 		SCP prueba= new SCP(driver);
 		prueba.moveToElementOnAccAndClick("cuartoTitulo", 1);
 		driver.findElements(By.className("checkboxFiltroTimeLine")).get(2).click();
 		driver.findElements(By.cssSelector(".btn.btn.btn-default.btn-xs")).get(1).click();
 		sleep(3000);
-		List<WebElement> elementos = driver.findElements(By.cssSelector(".tl-timemarker-content-container-small"));
+		List<WebElement> elementos = driver.findElements(By.cssSelector(".tl-timemarker-content-container"));
 		
 		System.out.println(elementos.get(0).getText());
 		for (WebElement e : elementos) {
-			Assert.assertTrue(e.getAttribute("class").contains("colorVencimientoSecundario"));
+			Assert.assertTrue(e.getAttribute("class").contains("colorVencimientoCompetencia"));
 		}
 	}
 	

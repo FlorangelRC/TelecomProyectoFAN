@@ -69,6 +69,17 @@ public class test_SCP_Base extends TestBase {
 		sleep(4000);
 	}
 	
+//--------------------------------------------METODOS----------------------------------------------------------------//
+	public String limpiarValor(String valor) {
+		//System.out.println(valor);
+		valor=valor.replace("$", "");
+		//System.out.println(valor);
+		valor=valor.replace(".", "");
+		//System.out.println(valor);
+		valor=valor.replaceAll(",", ".");
+		//System.out.println(valor);
+		return valor;
+	}
 	
 	/**
 	 * Escribe un comentario y verifica que aparezca (Victor Pidio que lo Obviaramos)
@@ -532,14 +543,18 @@ public class test_SCP_Base extends TestBase {
 	    	sleep(1000);
 	    	driver.findElement(By.name("save")).click();
 	    	WebElement modificacion=driver.findElement(By.xpath("//*[@id=\"0063F000002UbLj_RelatedEntityHistoryList_body\"]/table/tbody/tr[2]"));
-	    	//System.out.println(modificacion.getText());
-	    	assertTrue(modificacion.getText().contains(fecha)&&modificacion.getText().contains("opAut"));
+	    	System.out.println(modificacion.getText());
+	    	System.out.println(fecha);
+	    	assertTrue(modificacion.getText().startsWith(fecha)&&modificacion.getText().endsWith("opAut."));
 	    	}
 	   
 	    else {System.out.println("Oportunidad no disponible, prueba no ejecutada");assertTrue(false);}	
 	}
 	
-//-------------------------------------------------Este Metodo va a una oportunidad especifica que tiene un producto----------------------------------------------------------------//
+//-------------------------------------------------Este Test  va a una oportunidad especifica que tiene un producto----------------------------------------------------------------//
+	/**
+	 * Verifica que en el bloque productos contenga los campos que se validan en el test
+	 */
 	@Test(groups= "SCP")
 	public void TS112651_CRM_SCP_Estructura_de_las_oportunidades_Bloques_Productos_de_la_oportunidad() {
 	SCP page=new SCP(driver);
@@ -587,6 +602,369 @@ public class test_SCP_Base extends TestBase {
 			check=false;
 		}
 	assertTrue(check);
+	}
+	
+	/**
+	 * Verifica que en oportunidades, en el bloque Valorizado de la oportunidad, se muestren los campos.
+	 */
+	@Test(groups= "SCP")
+	public void TS112664_CRM_SCP_Estructura_de_las_oportunidades_Bloques_Valorizado_de_la_oportunidad() {
+		SCP page=new SCP(driver);
+	    if(page.goToOportunity()) {
+	    	sleep(3000);
+	    	boolean tAP=false, tAD=false,tCuP=false,tCuD,mCP=false,mCD=false,mtc=false,impE=false,cDB=false;
+	    	//List<WebElement> valorizado=driver.findElements(By.cssSelector(".brandTertiaryBrd.pbSubheader.tertiaryPalette"));
+	    	List <WebElement> valorizado = driver.findElements(By.className("labelCol")); //Lista los Elementos de arriba
+	    	valorizado.addAll(driver.findElements(By.cssSelector(".last.labelCol")));
+	    	for(WebElement a:valorizado) {
+	    		System.out.println(a.getText());
+	    		if(a.getText().toLowerCase().startsWith("total abono (arg)"))
+	    			tAP=true;
+	    		if(a.getText().toLowerCase().startsWith("total abono (usd)"))
+	    			tAD=true;
+	    		if(a.getText().toLowerCase().startsWith("total cuv (arg)"))
+	    			tCuP=true;
+	    		if(a.getText().toLowerCase().startsWith("monto contrato (arg)"))
+	    			mCP=true;
+	    		if(a.getText().toLowerCase().startsWith("monto contrato (usd)"))
+	    			mCD=true;
+	    		if(a.getText().toLowerCase().startsWith("monto total contrato (arg)"))
+	    			mtc=true;
+	    		if(a.getText().toLowerCase().startsWith("impacto ejercicio actual (arg)"))
+	    			impE=true;
+	    		if(a.getText().toLowerCase().startsWith("dolar budget"))
+	    			cDB=true;
+	    		if(tAP&&tAD&&tCuP&&mCP&&mCD&&mtc&&impE&&cDB)
+	    			break;
+	    	}
+	    	assertTrue(tAP);
+	    	assertTrue(tAD);
+	    	assertTrue(tCuP);
+	    	assertTrue(mCP);
+	    	assertTrue(mCD);
+	    	assertTrue(mtc);
+	    	assertTrue(impE);
+	    	assertTrue(cDB);
+	    }
+	    else {System.out.println("Oportunidad no disponible, prueba no ejecutada");assertTrue(false);}	
+	}
+	
+	/**
+	 * Verifica que el monto total del contrato total en dolares, se igual a la formula
+	 * totalcuv+(cantidad*plazo*cargopormes)
+	 */
+	@Test(groups= "SCP")
+	public void TS112667_CRM_SCP_Estructura_de_las_oportunidades_Bloques_Valorizado_de_la_oportunidad_Monto_Contrato_USD() {
+	SCP page=new SCP(driver);
+	page.clickOnTabByName("oportunidades");
+	sleep(3000);
+	Select sOp=new Select(driver.findElement(By.id("fcf")));
+	sOp.selectByVisibleText("Todas las oportunidades");
+	sleep(200);
+	driver.findElement(By.name("go")).click();
+	sleep(2000);
+	List<WebElement> lOp=driver.findElements(By.className("x-grid3-row"));
+	lOp.add(driver.findElement(By.cssSelector(".x-grid3-row.x-grid3-row-first")));
+	boolean flag=false;
+	for(WebElement nOp: lOp) {
+		List<WebElement> tagsOp=nOp.findElements(By.tagName("a"));
+		for(WebElement nombre:tagsOp) {
+		if(nombre.getText().toLowerCase().contains("alta sucursal jujuy")) {
+			nombre.click();
+			flag=true;
+			break;}
+			}
+		if(flag)
+			break;
+		}
+	sleep(3000);
+		
+	double totalCuvD, cantidad, plazo, cargopormes, montoContratoD;
+	//WebElement temporal;
+	//temporal=driver.findElement(By.xpath("//*[@id=\"0063F000002UjvW_RelatedLineItemList_body\"]/table/tbody/tr[2]/td[6]"));
+	//System.out.println(temporal.getText());
+	
+	montoContratoD=Double.parseDouble(limpiarValor(driver.findElement(By.xpath("//*[@id=\"ep\"]/div[2]/div[6]/table/tbody/tr[3]/td[4]")).getText()));
+	
+	totalCuvD=Double.parseDouble(limpiarValor(driver.findElement(By.xpath("//*[@id=\"0063F000002UjvW_RelatedLineItemList_body\"]/table/tbody/tr[2]/td[9]")).getText()));
+	cantidad=Double.parseDouble(limpiarValor(driver.findElement(By.xpath("//*[@id=\"0063F000002UjvW_RelatedLineItemList_body\"]/table/tbody/tr[2]/td[2]")).getText()));
+	plazo=Double.parseDouble(limpiarValor(driver.findElement(By.xpath("//*[@id=\"0063F000002UjvW_RelatedLineItemList_body\"]/table/tbody/tr[2]/td[6]")).getText()));
+	cargopormes=Double.parseDouble(limpiarValor(driver.findElement(By.xpath("//*[@id=\"0063F000002UjvW_RelatedLineItemList_body\"]/table/tbody/tr[2]/td[5]")).getText()));
+	
+	assertTrue(((cantidad*plazo*cargopormes)+totalCuvD)==montoContratoD);
+	}
+	
+	/**
+	 * Se Verifica que el monto total del contrato en peso, se igual a la formula
+	 * montocontrato en pesos + (monto contrado en dolares *dolar budget)
+	 */
+	@Test(groups= "SCP")
+	public void TS112670_CRM_SCP_Estructura_de_las_oportunidades_Bloques_Valorizado_de_la_oportunidad_Total_Contrato_Pesos() {
+	SCP page=new SCP(driver);
+	page.clickOnTabByName("oportunidades");
+	sleep(3000);
+	Select sOp=new Select(driver.findElement(By.id("fcf")));
+	sOp.selectByVisibleText("Todas las oportunidades");
+	sleep(200);
+	driver.findElement(By.name("go")).click();
+	sleep(2000);
+	List<WebElement> lOp=driver.findElements(By.className("x-grid3-row"));
+	lOp.add(driver.findElement(By.cssSelector(".x-grid3-row.x-grid3-row-first")));
+	boolean flag=false;
+	for(WebElement nOp: lOp) {
+		List<WebElement> tagsOp=nOp.findElements(By.tagName("a"));
+		for(WebElement nombre:tagsOp) {
+		if(nombre.getText().toLowerCase().contains("alta sucursal jujuy")) {
+			nombre.click();
+			flag=true;
+			break;}
+			}
+		if(flag)
+			break;
+		}
+	sleep(3000);
+	double montoContratoTotalP, montoContratoP, MontoContratoD, dolar;
+	
+	//WebElement temporal;
+	//temporal=driver.findElement(By.xpath("//*[@id=\"0063F000002UjvW_RelatedLineItemList_body\"]/table/tbody/tr[2]/td[6]"));
+	//System.out.println(temporal.getText());
+	
+	montoContratoTotalP=Double.parseDouble(limpiarValor(driver.findElement(By.xpath("//*[@id=\"ep\"]/div[2]/div[6]/table/tbody/tr[4]/td[2]")).getText()));
+	
+	montoContratoP=Double.parseDouble(limpiarValor(driver.findElement(By.xpath("//*[@id=\"ep\"]/div[2]/div[6]/table/tbody/tr[3]/td[2]")).getText()));
+	MontoContratoD=Double.parseDouble(limpiarValor(driver.findElement(By.xpath("//*[@id=\"ep\"]/div[2]/div[6]/table/tbody/tr[3]/td[4]")).getText()));
+	dolar=Double.parseDouble(limpiarValor(driver.findElement(By.xpath("//*[@id=\"ep\"]/div[2]/div[6]/table/tbody/tr[5]/td[2]")).getText()));
+	
+	assertTrue(((MontoContratoD*dolar)+montoContratoP)==montoContratoTotalP);
+	}
+	
+	/**
+	 * Verifica que el monto total del contrato total en dolares, se igual a la formula
+	 * totalcuv+(cantidad*plazo*cargopormes)
+	 */
+	@Test(groups= "SCP")
+	public void TS112666_CRM_SCP_Estructura_de_las_oportunidades_Bloques_Valorizado_de_la_oportunidad_Monto_Contrato_Pesos() {
+	SCP page=new SCP(driver);
+	page.clickOnTabByName("oportunidades");
+	sleep(3000);
+	Select sOp=new Select(driver.findElement(By.id("fcf")));
+	sOp.selectByVisibleText("Todas las oportunidades");
+	sleep(200);
+	driver.findElement(By.name("go")).click();
+	sleep(2000);
+	List<WebElement> lOp=driver.findElements(By.className("x-grid3-row"));
+	lOp.add(driver.findElement(By.cssSelector(".x-grid3-row.x-grid3-row-first")));
+	boolean flag=false;
+	for(WebElement nOp: lOp) {
+		List<WebElement> tagsOp=nOp.findElements(By.tagName("a"));
+		for(WebElement nombre:tagsOp) {
+		if(nombre.getText().toLowerCase().contains("alta sucursal jujuy")) {
+			nombre.click();
+			flag=true;
+			break;}
+			}
+		if(flag)
+			break;
+		}
+	sleep(3000);
+		
+	double totalCuvP, cantidad, plazo, cargopormes, montoContratoP;
+	//WebElement temporal;
+	//temporal=driver.findElement(By.xpath("//*[@id=\"0063F000002UjvW_RelatedLineItemList_body\"]/table/tbody/tr[2]/td[6]"));
+	//System.out.println(temporal.getText());
+
+	montoContratoP=Double.parseDouble(limpiarValor(driver.findElement(By.xpath("//*[@id=\"ep\"]/div[2]/div[6]/table/tbody/tr[3]/td[2]")).getText()));
+
+	totalCuvP=Double.parseDouble(limpiarValor(driver.findElement(By.xpath("//*[@id=\"0063F000002UjvW_RelatedLineItemList_body\"]/table/tbody/tr[3]/td[9]")).getText()));
+	cantidad=Double.parseDouble(limpiarValor(driver.findElement(By.xpath("//*[@id=\"0063F000002UjvW_RelatedLineItemList_body\"]/table/tbody/tr[3]/td[2]")).getText()));
+	plazo=Double.parseDouble(limpiarValor(driver.findElement(By.xpath("//*[@id=\"0063F000002UjvW_RelatedLineItemList_body\"]/table/tbody/tr[3]/td[6]")).getText()));
+	cargopormes=Double.parseDouble(limpiarValor(driver.findElement(By.xpath("//*[@id=\"0063F000002UjvW_RelatedLineItemList_body\"]/table/tbody/tr[3]/td[5]")).getText()));
+	
+	assertTrue(((cantidad*plazo*cargopormes)+totalCuvP)==montoContratoP);
+	}
+	
+
+	/**
+	 * Verifica que la suma de precio de venta (abono) en PESOS que aparece en producto, sea igual al total abono en PESOS
+	 * en el bloque de Valorizado de la oportunidad
+	 */
+	@Test(groups= "SCP")
+	public void TS112669_CRM_SCP_Estructura_de_las_oportunidades_Bloques_Valorizado_de_la_oportunidad_Total_Abono_PESOS() {
+	SCP page=new SCP(driver);
+	page.clickOnTabByName("oportunidades");
+	sleep(3000);
+	Select sOp=new Select(driver.findElement(By.id("fcf")));
+	sOp.selectByVisibleText("Todas las oportunidades");
+	sleep(200);
+	driver.findElement(By.name("go")).click();
+	sleep(2000);
+	List<WebElement> lOp=driver.findElements(By.className("x-grid3-row"));
+	lOp.add(driver.findElement(By.cssSelector(".x-grid3-row.x-grid3-row-first")));
+	boolean flag=false;
+	for(WebElement nOp: lOp) {
+		List<WebElement> tagsOp=nOp.findElements(By.tagName("a"));
+		for(WebElement nombre:tagsOp) {
+		if(nombre.getText().toLowerCase().contains("alta sucursal tucuman")) {
+			nombre.click();
+			flag=true;
+			break;}
+			}
+		if(flag)
+			break;
+		}
+	sleep(3000);
+	double montoAbono=0.0;
+	double totalAbonoP=Double.parseDouble(limpiarValor(driver.findElement(By.xpath("//*[@id=\"ep\"]/div[2]/div[6]/table/tbody/tr[1]/td[2]")).getText()));
+	List<WebElement> abono=driver.findElements(By.xpath("//*[@id=\"0063F000002Uk8Q_RelatedLineItemList_body\"]/table/tbody/tr"));
+	abono.remove(0);
+	for(WebElement ab:abono) {
+			//System.out.println(ab.getText());
+			//System.out.println(ab.findElements(By.tagName("td")).get(2).getText());
+			if(ab.findElements(By.tagName("td")).get(2).getText().startsWith("ARG")) {
+				//System.out.println(ab.findElements(By.tagName("td")).get(3).getText());
+				montoAbono=montoAbono+Double.parseDouble(limpiarValor(ab.findElements(By.tagName("td")).get(3).getText()));
+				}
+		}
+	//System.out.println("Suma de Montos: "+montoAbono+" TotalAbono: "+totalAbonoP);
+	assertTrue(montoAbono==totalAbonoP);
+	}
+	
+	/**
+	 * Verifica que la suma de precio de venta (abono) en USD que aparece en producto, sea igual al total abono en USD
+	 * en el bloque de Valorizado de la oportunidad
+	 */
+	@Test(groups= "SCP")
+	public void TS112668_CRM_SCP_Estructura_de_las_oportunidades_Bloques_Valorizado_de_la_oportunidad_Total_Abono_Dolares() {
+	SCP page=new SCP(driver);
+	page.clickOnTabByName("oportunidades");
+	sleep(3000);
+	Select sOp=new Select(driver.findElement(By.id("fcf")));
+	sOp.selectByVisibleText("Todas las oportunidades");
+	sleep(200);
+	driver.findElement(By.name("go")).click();
+	sleep(2000);
+	List<WebElement> lOp=driver.findElements(By.className("x-grid3-row"));
+	lOp.add(driver.findElement(By.cssSelector(".x-grid3-row.x-grid3-row-first")));
+	boolean flag=false;
+	for(WebElement nOp: lOp) {
+		List<WebElement> tagsOp=nOp.findElements(By.tagName("a"));
+		for(WebElement nombre:tagsOp) {
+		if(nombre.getText().toLowerCase().contains("alta sucursal tucuman")) {
+			nombre.click();
+			flag=true;
+			break;}
+			}
+		if(flag)
+			break;
+		}
+	sleep(3000);
+	double montoAbono=0.0;
+	double totalAbonoD=Double.parseDouble(limpiarValor(driver.findElement(By.xpath("//*[@id=\"ep\"]/div[2]/div[6]/table/tbody/tr[1]/td[4]")).getText()));
+	List<WebElement> abono=driver.findElements(By.xpath("//*[@id=\"0063F000002Uk8Q_RelatedLineItemList_body\"]/table/tbody/tr"));
+	abono.remove(0);
+	for(WebElement ab:abono) {
+			//System.out.println(ab.getText());
+			//System.out.println(ab.findElements(By.tagName("td")).get(2).getText());
+			if(ab.findElements(By.tagName("td")).get(2).getText().startsWith("USD")) {
+				//System.out.println(ab.findElements(By.tagName("td")).get(3).getText());
+				montoAbono=montoAbono+Double.parseDouble(limpiarValor(ab.findElements(By.tagName("td")).get(3).getText()));
+				}
+		}
+	//System.out.println("Suma de Montos: "+montoAbono+" TotalAbono: "+totalAbonoP);
+	assertTrue(montoAbono==totalAbonoD);
+	}
+
+	
+	/**
+	 * Verifica que la sumatoria de todos los CUVS (cargos unica venta) en dolares sea igual al total CUVs del apartado
+	 * Valorizado de la oportunidad.
+	 */
+	@Test(groups= "SCP")
+	public void TS112671_CRM_SCP_Estructura_de_las_oportunidades_Bloques_Valorizado_de_la_oportunidad_Total_CUV_Dolares() {
+	SCP page=new SCP(driver);
+	page.clickOnTabByName("oportunidades");
+	sleep(3000);
+	Select sOp=new Select(driver.findElement(By.id("fcf")));
+	sOp.selectByVisibleText("Todas las oportunidades");
+	sleep(200);
+	driver.findElement(By.name("go")).click();
+	sleep(2000);
+	List<WebElement> lOp=driver.findElements(By.className("x-grid3-row"));
+	lOp.add(driver.findElement(By.cssSelector(".x-grid3-row.x-grid3-row-first")));
+	boolean flag=false;
+	for(WebElement nOp: lOp) {
+		List<WebElement> tagsOp=nOp.findElements(By.tagName("a"));
+		for(WebElement nombre:tagsOp) {
+		if(nombre.getText().toLowerCase().contains("alta sucursal tucuman")) {
+			nombre.click();
+			flag=true;
+			break;}
+			}
+		if(flag)
+			break;
+		}
+	sleep(3000);
+	
+	double totalCuv=Double.parseDouble(limpiarValor(driver.findElement(By.xpath("//*[@id=\"ep\"]/div[2]/div[6]/table/tbody/tr[2]/td[4]")).getText()));
+	double cuvs=0.0;
+	List<WebElement> abono=driver.findElements(By.xpath("//*[@id=\"0063F000002Uk8Q_RelatedLineItemList_body\"]/table/tbody/tr"));
+	abono.remove(0);
+	for(WebElement ab:abono) {
+			//System.out.println(ab.getText());
+			//System.out.println(ab.findElements(By.tagName("td")).get(2).getText());
+			if(ab.findElements(By.tagName("td")).get(2).getText().startsWith("USD")) {
+				//System.out.println(ab.findElements(By.tagName("td")).get(3).getText());
+				cuvs=cuvs+Double.parseDouble(limpiarValor(ab.findElements(By.tagName("td")).get(8).getText()));
+				}
+		}
+	
+	assertTrue(totalCuv==cuvs);
+	}
+
+	/**
+	 * Verifica que la sumatoria de todos los CUVS (cargos unica venta) en Pesos sea igual al total CUVs del apartado
+	 * Valorizado de la oportunidad.
+	 */
+	@Test(groups= "SCP")
+	public void TS112672_CRM_SCP_Estructura_de_las_oportunidades_Bloques_Valorizado_de_la_oportunidad_Total_CUV_Pesos() {
+	SCP page=new SCP(driver);
+	page.clickOnTabByName("oportunidades");
+	sleep(3000);
+	Select sOp=new Select(driver.findElement(By.id("fcf")));
+	sOp.selectByVisibleText("Todas las oportunidades");
+	sleep(200);
+	driver.findElement(By.name("go")).click();
+	sleep(2000);
+	List<WebElement> lOp=driver.findElements(By.className("x-grid3-row"));
+	lOp.add(driver.findElement(By.cssSelector(".x-grid3-row.x-grid3-row-first")));
+	boolean flag=false;
+	for(WebElement nOp: lOp) {
+		List<WebElement> tagsOp=nOp.findElements(By.tagName("a"));
+		for(WebElement nombre:tagsOp) {
+		if(nombre.getText().toLowerCase().contains("alta sucursal tucuman")) {
+			nombre.click();
+			flag=true;
+			break;}
+			}
+		if(flag)
+			break;
+		}
+	sleep(3000);
+	
+	double totalCuv=Double.parseDouble(limpiarValor(driver.findElement(By.xpath("//*[@id=\"ep\"]/div[2]/div[6]/table/tbody/tr[2]/td[2]")).getText()));
+	double cuvs=0.0;
+	List<WebElement> abono=driver.findElements(By.xpath("//*[@id=\"0063F000002Uk8Q_RelatedLineItemList_body\"]/table/tbody/tr"));
+	abono.remove(0);
+	for(WebElement ab:abono) {
+			//System.out.println(ab.getText());
+			//System.out.println(ab.findElements(By.tagName("td")).get(2).getText());
+			if(ab.findElements(By.tagName("td")).get(2).getText().startsWith("ARG")) {
+				//System.out.println(ab.findElements(By.tagName("td")).get(3).getText());
+				cuvs=cuvs+Double.parseDouble(limpiarValor(ab.findElements(By.tagName("td")).get(8).getText()));
+				}
+		}
+	
+	assertTrue(totalCuv==cuvs);
 	}
 }
 

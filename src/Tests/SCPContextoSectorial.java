@@ -2,6 +2,7 @@ package Tests;
 
 import static org.testng.Assert.assertTrue;
 
+import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -28,6 +29,7 @@ public class SCPContextoSectorial extends TestBase {
 	private WebDriver driver;
 	private static String downloadPath = "C:\\Users\\Nicolas\\Downloads";
 	
+	
 	@BeforeClass(groups = "SCP")
 	  public void Init() throws Exception {
 	    this.driver = setConexion.setupEze();
@@ -52,11 +54,12 @@ public class SCPContextoSectorial extends TestBase {
 		driver.findElement(By.id("home_Tab")).click();
 	}
 	
-	@AfterClass(groups = "SCP")
+	//@AfterClass(groups = "SCP")
 	public void teardown() {
 		driver.quit();
 		sleep(5000);
 	}
+	
 	
 	@Test(groups = "SCP")
 	public void TS112613_Cronograma_de_cuenta_Agregar_Vencimiento_Contrato_del_Servicio() {
@@ -871,7 +874,7 @@ public class SCPContextoSectorial extends TestBase {
 	}
 	
 	@Test(groups = "SCP")
-	public void TS112758_Opportunity_Snapshot_Triangulo_Ordenador() {
+	public void TS112758_Opportunity_Snapshot_Triangulo_Ordenador() throws ParseException {
 		SCP prueba = new SCP(driver);
 		prueba.moveToElementOnAccAndClick("tercerTitulo", 4);
 		Assert.assertTrue(prueba.Triangulo_Ordenador_Validador("//*[@id=\"mainTable\"]/thead/tr", "//*[@id=\"mainTable\"]/tbody", 5, 2));		
