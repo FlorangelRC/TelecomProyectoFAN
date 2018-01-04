@@ -2,6 +2,7 @@ package Tests;
 
 import static org.testng.Assert.assertTrue;
 
+import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -873,7 +874,7 @@ public class SCPContextoSectorial extends TestBase {
 	}
 	
 	@Test(groups = "SCP")
-	public void TS112758_Opportunity_Snapshot_Triangulo_Ordenador() {
+	public void TS112758_Opportunity_Snapshot_Triangulo_Ordenador() throws ParseException {
 		SCP prueba = new SCP(driver);
 		prueba.moveToElementOnAccAndClick("tercerTitulo", 4);
 		Assert.assertTrue(prueba.Triangulo_Ordenador_Validador("//*[@id=\"mainTable\"]/thead/tr", "//*[@id=\"mainTable\"]/tbody", 5, 2));		
