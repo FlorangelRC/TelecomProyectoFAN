@@ -2,6 +2,7 @@ package Tests;
 
 import static org.testng.Assert.assertTrue;
 
+import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -28,6 +29,7 @@ public class SCPContextoSectorial extends TestBase {
 	private WebDriver driver;
 	private static String downloadPath = "C:\\Users\\Nicolas\\Downloads";
 	
+	
 	@BeforeClass(groups = "SCP")
 	  public void Init() throws Exception {
 	    this.driver = setConexion.setupEze();
@@ -47,16 +49,19 @@ public class SCPContextoSectorial extends TestBase {
 	
 	@AfterMethod(groups= "SCP")
 	public void after(){
+		try {Thread.sleep(3000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		driver.switchTo().defaultContent();
 		try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 		((JavascriptExecutor)driver).executeScript("window.scrollTo(0,"+driver.findElement(By.id("home_Tab")).getLocation().y+")");
 		driver.findElement(By.id("home_Tab")).click();
 	}
 	
-	@AfterClass(groups = "SCP")
+	//@AfterClass(groups = "SCP")
 	public void teardown() {
 		driver.quit();
 		sleep(5000);
 	}
+	
 	
 	@Test(groups = "SCP")
 	public void TS112613_Cronograma_de_cuenta_Agregar_Vencimiento_Contrato_del_Servicio() {
@@ -803,10 +808,12 @@ public class SCPContextoSectorial extends TestBase {
 	    ArrayList<String> tabs2 = new ArrayList<String> (driver.getWindowHandles());
 	    driver.switchTo().window(tabs2.get(1));
 	    BasePage cambioFrameByID = new BasePage();
-	    try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+	    try {Thread.sleep(10000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 		driver.switchTo().frame(cambioFrameByID.getFrameForElement(driver, By.className("ytp-cued-thumbnail-overlay")));
-		Assert.assertTrue(driver.findElement(By.className("ytp-cued-thumbnail-overlay")).isDisplayed());
+		Assert.assertTrue(driver.findElement(By.id("player-container")).isDisplayed());
+		try {Thread.sleep(3000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 		driver.close();
+		try {Thread.sleep(3000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 	    driver.switchTo().window(tabs2.get(0));
 	}
 	
@@ -871,10 +878,10 @@ public class SCPContextoSectorial extends TestBase {
 	}
 	
 	@Test(groups = "SCP")
-	public void TS112758_Opportunity_Snapshot_Triangulo_Ordenador() {
+	public void TS112758_Opportunity_Snapshot_Triangulo_Ordenador() throws ParseException {
 		SCP prueba = new SCP(driver);
 		prueba.moveToElementOnAccAndClick("tercerTitulo", 4);
-		Assert.assertTrue(prueba.Triangulo_Ordenador_Validador("//*[@id=\"mainTable\"]/thead/tr", "//*[@id=\"mainTable\"]/tbody", 5, 2));		
+		Assert.assertTrue(prueba.Triangulo_Ordenador_Validador(driver, By.id("mainTable_wrapper"), 5, 2));	
 	}
 	
 	@Test(groups = "SCP")

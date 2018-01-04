@@ -190,7 +190,7 @@ public class customerInformationUpdates extends TestBase {
 	public void TS7155_validateBirthDateHasAYearPicker() {
 		driver.findElement(By.id("Birthdate")).click();
 		try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
-		Assert.assertTrue(driver.findElement(By.cssSelector(".datepicker.-bottom-left-.-from-bottom-")).isDisplayed());
+		Assert.assertTrue(driver.findElement(By.className("datepicker--content")).isDisplayed());
 		driver.findElement(By.id("ClientInformation_nextBtn")).click();
 	}
 	
@@ -246,6 +246,7 @@ public class customerInformationUpdates extends TestBase {
 		actualizar1.get(0).click();
 		try {Thread.sleep(10000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 		driver.switchTo().frame(cambioFrameByID.getFrameForElement(driver, By.id("ClientInformation_nextBtn")));
+		driver.findElement(By.id("LastName")).clear();
 		driver.findElement(By.id("ClientInformation_nextBtn")).click();
 	}
 	
@@ -443,7 +444,7 @@ public class customerInformationUpdates extends TestBase {
 		driver.findElement(By.id("ClientInformation_nextBtn")).click();
 	}
 	
-	@Test(groups = {"CustomerCare", "ActualizarDatos"})
+	//@Test(groups = {"CustomerCare", "ActualizarDatos"})
 	public void TS7179_Profile_Changes_Validacion_Correo_Electronico_Creacion_De_Caso_Al_Cambiar_Correo_Electronico(){
 		driver.findElement(By.id("Email")).clear();
 		driver.findElement(By.id("Email")).sendKeys("pruebaat@gmail.com");
@@ -473,7 +474,7 @@ public class customerInformationUpdates extends TestBase {
 		driver.findElement(By.id("LastName")).clear();
 		driver.findElement(By.id("LastName")).sendKeys("aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa");
 		try {Thread.sleep(3000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();} 
-		Assert.assertTrue(driver.findElement(By.xpath("//*[@id=\"a1zc0000003XKPMAA4-4\"]/div[1]/div/child[3]/div/ng-form/div[2]/div[2]/div/div[2]/small[8]")).isDisplayed());
+		Assert.assertTrue(driver.findElement(By.cssSelector(".vlc-slds-error-block.ng-scope")).isDisplayed());
 		driver.findElement(By.id("ClientInformation_nextBtn")).click();
 	}
 	
@@ -481,7 +482,9 @@ public class customerInformationUpdates extends TestBase {
 	public void TS7210_Cambios_en_la_Informacion_del_Cliente_Telefono_Alternativo_No_permite_letras() {
 		driver.findElement(By.id("OtherPhone")).clear();
 		driver.findElement(By.id("OtherPhone")).sendKeys("aaaaaaaaaa");
-		Assert.assertTrue(driver.findElement(By.xpath("//*[@id=\"a1zc0000003XKPMAA4-4\"]/div[1]/div/child[14]/div/ng-form/div[2]/div[2]/div/div[2]")).isDisplayed());
+		Assert.assertTrue(driver.findElement(By.cssSelector(".vlc-slds-error-block.ng-scope")).isDisplayed());
+		
+		//Assert.assertTrue(driver.findElement(By.xpath("//*[@id=\"a1zc0000003XKPMAA4-4\"]/div[1]/div/child[14]/div/ng-form/div[2]/div[2]/div/div[2]")).isDisplayed());
 		driver.findElement(By.id("ClientInformation_nextBtn")).click();
 	}
 	
@@ -489,7 +492,8 @@ public class customerInformationUpdates extends TestBase {
 	public void TS7209_Cambios_en_la_Informacion_del_Cliente_Telefono_Movil_No_permite_letras() {
 		driver.findElement(By.id("MobilePhone")).clear();
 		driver.findElement(By.id("MobilePhone")).sendKeys("aaaaaaaaaaa");
-		Assert.assertTrue(driver.findElement(By.xpath("//*[@id=\"a1zc0000003XKPMAA4-4\"]/div[1]/div/child[11]/div/ng-form/div[2]/div[2]/div/div[2]")).isDisplayed());
+		Assert.assertTrue(driver.findElement(By.cssSelector(".vlc-slds-error-block.ng-scope")).isDisplayed());
+		//Assert.assertTrue(driver.findElement(By.xpath("//*[@id=\"a1zc0000003XKPMAA4-4\"]/div[1]/div/child[11]/div/ng-form/div[2]/div[2]/div/div[2]")).isDisplayed());
 		driver.findElement(By.id("ClientInformation_nextBtn")).click();
 	}
 	
@@ -506,6 +510,7 @@ public class customerInformationUpdates extends TestBase {
 		}
 		Assert.assertTrue(a);
 		driver.switchTo().frame(cambioFrameByID.getFrameForElement(driver, By.id("LastName")));
+		driver.findElement(By.id("FirstName")).clear();
 		driver.findElement(By.id("ClientInformation_nextBtn")).click();
 	}
 	
@@ -526,4 +531,26 @@ public class customerInformationUpdates extends TestBase {
 	    Assert.assertTrue(false);
 	    driver.findElement(By.id("ClientInformation_nextBtn")).click();
 	}*/
+	
+	
+	
+	/*
+		TS7149_fieldsWhichDontTriggerIdentityValidationProcess
+		TS7176_modifyTwoFieldsWhichDontTriggerIdentityValidationProcess
+		TS7177_modifyThreeFieldsWhichTriggerIdentityValidationProcess
+		TS7183_modifyDocumentTwiceInAMonth
+		TS7103_updateMobilePhone
+		TS7102_updateOtherPhone
+		TS7099_updateFirstName
+		TS7104_updateBirthDate
+		TS7101_updateEmail
+		TS7100_updateLastName
+		TS7150_verifyNumbersAreNotAllowedInFirstNameAndLastName
+		TS7182_modifyDniByTwoDigits
+		TS7186_modifyDniByOneDigits
+		TS7097_verifyNonOwnershipChange
+		TS7161_Cambios_en_la_Informacion_del_Cliente_Validar_Teléfono_Movil_5_digitos_Codigo_de_area
+		TS7151_Cambios_en_la_Informacion_del_Cliente_Validar_Nombre_Apellido_Que_tengan_caracteres_especiales
+		TS7179_Profile_Changes_Validacion_Correo_Electronico_Creacion_De_Caso_Al_Cambiar_Correo_Electronico
+	 */
 }

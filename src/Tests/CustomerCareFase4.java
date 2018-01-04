@@ -25,7 +25,7 @@ public class CustomerCareFase4 extends TestBase{
 	CustomerCare page;
 
 	
-	@BeforeClass (groups = {"CustomerCare", "Vista360Layout", "DetalleDeConsumos"})
+	@BeforeClass (groups = {"CustomerCare", "Vista360Layout", "DetalleDeConsumos", "ActualizarDatos"})
 	public void init() {
 		inicializarDriver();
 		page = new CustomerCare(driver);
@@ -33,14 +33,14 @@ public class CustomerCareFase4 extends TestBase{
 		IrA.CajonDeAplicaciones.ConsolaFAN();
 	}
 	
-	@AfterClass (groups = {"CustomerCare", "Vista360Layout", "DetalleDeConsumos"})
+	//@AfterClass (groups = {"CustomerCare", "Vista360Layout", "DetalleDeConsumos", "ActualizarDatos"})
 	public void quit() {
 		page.cerrarTodasLasPestañas();
 		IrA.CajonDeAplicaciones.Ventas();
 		cerrarTodo();
 	}
 	
-	@BeforeMethod (groups = {"CustomerCare", "Vista360Layout", "DetalleDeConsumos"})
+	@BeforeMethod (groups = {"CustomerCare", "Vista360Layout", "DetalleDeConsumos", "ActualizarDatos"})
 	public void after() {
 		page.cerrarTodasLasPestañas();
 	}
@@ -135,6 +135,21 @@ public class CustomerCareFase4 extends TestBase{
 		}
 		WebElement element = page.obtenerPestañaActiva();
 		Assert.assertTrue(element.getText().equals("Historiales"));
+	}
+	
+	@Test (groups = {"CustomerCare", "ActualizarDatos"})
+	public void TS69038_Profile_Changes_Perfil_del_cliente_Modificacion_DNI_CUIL_Verificar_Imposibilidad_de_modificar_DNI_y_CUIL_al_mismo_tiempo(){
+		page.elegirCuenta("aaaaFernando Care");
+		BasePage cambioFrameByID = new BasePage();
+		driver.switchTo().frame(cambioFrameByID.getFrameForElement(driver, By.className("profile-edit")));
+		List <WebElement> act = driver.findElements(By.className("profile-edit"));
+		act.get(0).click();
+		try {Thread.sleep(10000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		driver.switchTo().frame(cambioFrameByID.getFrameForElement(driver, By.id("LastName")));
+		WebElement dni = driver.findElement(By.id("DocumentType"));
+		WebElement cuil = driver.findElement(By.id("Cuil"));
+		Assert.assertTrue(dni.getAttribute("disabled").equals("true"));
+		Assert.assertTrue(cuil.getAttribute("required").equals("true"));
 	}
 	
 	@Test (groups = {"CustomerCare", "DetalleDeConsumos"})
