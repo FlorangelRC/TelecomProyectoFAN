@@ -56,7 +56,7 @@ private WebDriver driver;
 		try {Thread.sleep(10000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 	}
 	
-	//@AfterClass(groups = "SCP")
+	@AfterClass(groups = "SCP")
 	public void teardown() {
 		driver.quit();
 		sleep(10000);
@@ -150,30 +150,22 @@ private WebDriver driver;
 			 camp1.add(c.getText());
 			 }
 			 Assert.assertTrue(camp1.containsAll(txt2));
-	}
-
-	@Test(groups = "SCP") 
-	public void TS112605_Cronograma_de_cuenta_Agregar_Evento_Para_Nuestros_Clientes() {
-		SCP prueba = new SCP(driver);
-		prueba.Desloguear_Loguear("permisos");
-		driver.findElement(By.id("Account_Tab")).click();
-		prueba.clickOnFirstAccRe();
-		prueba.moveToElementOnAccAndClick("segundoTitulo", 3);
 
 	}
 	
-	@Test(groups = "SCP") 
+	@Test(groups = "SCP")
 	public void TS_112767_Organigrama_y_mapa_de_influencia_Modificar_mapa_de_influencias() {
 	SCP prueba = new SCP(driver); 
 	prueba.moveToElementOnAccAndClick("primerTitulo", 3);
 	WebElement pag = driver.findElement(By.cssSelector(".btn.btn-default.btn-sm.myBtn.influenceBtn"));
-	//System.out.println(pag.getText());
 	pag.click();
 	WebElement msg = driver.findElement(By.className("messageText"));
 	waitFor(driver, By.className("messageText"));
-	Assert.assertTrue((msg.getText().toLowerCase().equals("Para agregar o para quitar una Influencia: 1) Arrastrar la caja del contacto influyente 2) Soltarla sobre la caja del contacto influenciado 3) Clickear el botón de \"Guardar cambios\" antes de abandonar la página!")));
-	//System.out.println(msg.getText());
+	System.out.println(msg.getText());
+	Assert.assertTrue((msg.getText().equals("Para agregar o para quitar una Influencia: 1) Arrastrar la caja del contacto influyente 2) Soltarla sobre la caja del contacto influenciado 3) Clickear el botón de \"Guardar cambios\" antes de abandonar la página!")));
 	}
+	
+	
 	@Test(groups = "SCP") 
 	public void TS112792_Plan_de_acción_Eliminar_tareas() {
 		SCP prueba = new SCP(driver); 
@@ -341,7 +333,7 @@ private WebDriver driver;
 	public void TS112798_Plan_de_acción_Triangulo_ordenador() throws ParseException {
 		SCP prueba = new SCP(driver); 
 	    prueba.moveToElementOnAccAndClick("cuartoTitulo", 2);
-	    prueba.Triangulo_Ordenador_Validador("//*[@id='mainTable']/thead/tr", "//*[@id=\"mainTable\"]/tbody", 7, 2);
+	    prueba.Triangulo_Ordenador_Validador(driver, By.cssSelector(".table.table-striped.table-bordered.table-condensed.dataTable"), 7, 2);
 	    List<WebElement> tod= driver.findElement(By.id("mainTable_wrapper")).findElements(By.className("odd"));
 	    tod.addAll(driver.findElement(By.id("mainTable_wrapper")).findElements(By.className("even")));
 	    ArrayList<String> todo = new ArrayList<String>();
@@ -356,8 +348,8 @@ private WebDriver driver;
 		SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy"); 
 		String fech = new String();
 	    String fecha2= new String();
-	    Date date1 = new Date();//sdf.parse(fech); 
-	    Date date2 = new Date(); //sdf.parse(fecha2); 
+	    Date date1 = new Date();
+	    Date date2 = new Date();  
 	    	for(int i = 0; i<=fechas.size()-1;i++) {
 	    		fech=fechas.get(i);
 	    		fecha2=fechas.get(i+1);
