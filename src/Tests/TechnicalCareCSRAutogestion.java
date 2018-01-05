@@ -2065,7 +2065,7 @@ public class TechnicalCareCSRAutogestion extends TestBase {
 		driver.findElement(By.id("DocumentNumber")).sendKeys("37373737");
 		((JavascriptExecutor)driver).executeScript("window.scrollTo(0,"+driver.findElement(By.id("ClientIdentification_nextBtn")).getLocation().y+")");
 		driver.findElement(By.id("ClientIdentification_nextBtn")).click();
-		try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		try {Thread.sleep(8000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 		try {
 			((JavascriptExecutor)driver).executeScript("window.scrollTo(0,"+driver.findElement(By.id("ClientInformation21_nextBtn")).getLocation().y+")");
 			driver.findElement(By.id("ClientInformation21_nextBtn")).click();
