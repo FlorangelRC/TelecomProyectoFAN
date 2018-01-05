@@ -8,6 +8,7 @@ import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 
+import org.openqa.selenium.Alert;
 import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
@@ -372,7 +373,7 @@ public void validarcomentario(String comentario){
 	List <WebElement> comentarios = driver.findElements(By.cssSelector(".feeditemtext.cxfeeditemtext"));
 	System.out.println(comentarios.size());
 	Assert.assertTrue(comentarios.get(0).getText().equals(comentario));
-	Assert.assertEquals(driver.findElement(By.cssSelector(".feeditemtopics")).getText(), "Haga clic para agregar temas:   Sin sugerencias. Aï¿½ada sus propios temas.");
+	Assert.assertEquals(driver.findElement(By.cssSelector(".feeditemtopics")).getText(), "Haga clic para agregar temas:   Sin sugerencias. A\u00f1ada sus propios temas.");
 }
 
 
@@ -431,107 +432,106 @@ public boolean cuentalogeada(String cuenta){
 		Desloguear_Loguear(usuario);
 	}
 	
-		public List<String> TraerColumna(String sBody, int iColumnas, int iColumna) {
-			//sBody = xpath del cuerpo de la lista
-			//iColumnas = cantidad de columnas
-			//iColumna = columna requerida
-			WebElement wBody = driver.findElement(By.xpath(sBody));
-			List<WebElement> wRows = wBody.findElements(By.tagName("tr"));
-			List<WebElement> wElements =   new ArrayList<WebElement>();
-			for (int i = 0; i < wRows.size(); i++) {
-				wElements.clear();
-				wElements = wRows.get(i).findElements(By.tagName("td"));
-				if (wElements.size() < iColumnas) {
-					wRows.remove(i);
-				}
-				
+	public List<String> TraerColumna(WebElement wBody, int iColumnas, int iColumna) {
+		//wBody = WebElement del cuerpo completo del cuadro
+		//iColumnas = cantidad de columnas
+		//iColumna = columna requerida
+		WebElement wSubBody = wBody.findElement(By.tagName("tbody"));
+		List<WebElement> wRows = wSubBody.findElements(By.tagName("tr"));
+		List<WebElement> wElements =   new ArrayList<WebElement>();
+		for (int i = 0; i < wRows.size(); i++) {
+			wElements.clear();
+			wElements = wRows.get(i).findElements(By.tagName("td"));
+			if (wElements.size() < iColumnas) {
+				wRows.remove(i);
 			}
-			List<String> sElements =  new ArrayList<String>();
-			for (WebElement wAux:wRows) {
-				if (!wAux.getText().isEmpty()) {
-					List<WebElement> wColumns = wAux.findElements(By.tagName("td"));
-					sElements.add(wColumns.get(iColumna - 1).getText().toLowerCase());
-				}
+		}
+		List<String> sElements =  new ArrayList<String>();
+		for (WebElement wAux:wRows) {
+			if (!wAux.getText().isEmpty()) {
+				List<WebElement> wColumns = wAux.findElements(By.tagName("td"));
+				sElements.add(wColumns.get(iColumna - 1).getText().toLowerCase());
 			}
-			
-			return sElements;
 		}
 		
-		public boolean Triangulo_Ordenador_Validador(String sMenu, String sBody, int iColumns, int iColumn) throws ParseException {
-			//sMenu = xpath de la fila del menï¿½
-			//sBody = xpath del cuerpo de la lista
-			//iColumnas = cantidad de columnas
-			//iColumna = columna a ordenar
-			TestBase TB = new TestBase();
-			TB.waitFor(driver, By.xpath(sBody));
+		return sElements;
+	}
+	
+	public boolean Triangulo_Ordenador_Validador(WebDriver driver, By eBody, int iColumns, int iColumn) throws ParseException {
+		//eBody = selector del cuerpo completo del cuadro
+		//iColumnas = cantidad de columnas
+		//iColumna = columna a ordenar
+		TestBase TB = new TestBase();
+		TB.waitFor(driver, eBody);
+		WebElement wBody = driver.findElement(eBody);
+		List<String> sElements = TraerColumna(wBody, iColumns, iColumn);
+		WebElement wHeader = driver.findElement(eBody).findElement(By.tagName("thead"));
+		List <WebElement> wMenu = wHeader.findElements(By.tagName("th"));
+		wMenu.get(iColumn - 1).click();
+		List<String> wOrderedElements = TraerColumna(wBody, iColumns, iColumn);
+		boolean bBoolean = true;
+		if (!wMenu.get(iColumn - 1).getText().contains("Fecha")) {
+			Collections.sort(sElements);
 			
-			List<String> sElements = TraerColumna(sBody, iColumns, iColumn);
-			WebElement wHeader = driver.findElement(By.xpath(sMenu));
-			List <WebElement> wMenu = wHeader.findElements(By.tagName("th"));
-			wMenu.get(iColumn - 1).click();
-			List<String> wOrderedElements = TraerColumna(sBody, iColumns, iColumn);
-			boolean bBoolean = true;
-			if (!wMenu.get(iColumn - 1).getText().contains("Fecha")) {
-				Collections.sort(sElements);
-				
-				for(int i = 0; i < sElements.size(); i++) { 
-					if (!sElements.get(i).toLowerCase().equals(wOrderedElements.get(i).toLowerCase())) {
-						System.out.println("'" + sElements.get(i) + "'\tes igual a\t'" + wOrderedElements.get(i) + "'");
-					 bBoolean = false;
-					}
+			for(int i = 0; i < sElements.size(); i++) { 
+				if (!sElements.get(i).toLowerCase().equals(wOrderedElements.get(i).toLowerCase())) {
+					System.out.println("'" + sElements.get(i) + "'\tes igual a\t'" + wOrderedElements.get(i) + "'");
+				 bBoolean = false;
 				}
 			}
-			else {
-				SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
-				ArrayList<String> fechas = new ArrayList<String>();
-				for (String sAux:sElements) {
-					fechas.add(sAux.split(" ")[0]);
-				}
-				
-				  String fech = new String();
-				     String fecha2= new String();
-				     Date date1 = new Date();//sdf.parse(fech); 
-				     Date date2 = new Date(); //sdf.parse(fecha2); 
-				     for(int i = 0; i<=fechas.size()-1;i++) {
-				      fech=fechas.get(i);
-				      fecha2=fechas.get(i+1);
-				      date1 = sdf.parse(fech);
-				      date2 = sdf.parse(fecha2);
-				      if(date1.compareTo(date2)>0) {
-				          System.out.println(date2+" es menor que "+date1);
-				          Assert.assertTrue(false);
-				      }
-				     }
-				       Assert.assertTrue(true);
+		}
+		else {
+			SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+			ArrayList<String> fechas = new ArrayList<String>();
+			for (String sAux:sElements) {
+				fechas.add(sAux.split(" ")[0]);
 			}
 			
-			return bBoolean;
+			  String fech = new String();
+			     String fecha2= new String();
+			     Date date1 = new Date();//sdf.parse(fech); 
+			     Date date2 = new Date(); //sdf.parse(fecha2); 
+			     for(int i = 0; i<=fechas.size()-1;i++) {
+			      fech=fechas.get(i);
+			      fecha2=fechas.get(i+1);
+			      date1 = sdf.parse(fech);
+			      date2 = sdf.parse(fecha2);
+			      if(date1.compareTo(date2)>0) {
+			          System.out.println(date2+" es menor que "+date1);
+			          Assert.assertTrue(false);
+			      }
+			     }
+			       Assert.assertTrue(true);
+		}
+		
+		return bBoolean;
+		
+	}
+	
+	public String SelectorMasUno(String sText, int iPosition, int iIndex) {
+		//sTexto = texto completo
+		//iPosiciï¿½n = posiciï¿½n en string sTexto donde tiene que cambiar el valor
+		//iIndex = nuevo valor
+		sText = sText.substring(0,iPosition) + iIndex + sText.substring(iPosition + 1,sText.length());
+		return sText;
+	}
+	
+	public String[][] ListaById(By element, String sId, int iPosition) {
+		List<WebElement> wAuxList = driver.findElements(element);
+		
+		String[][] sList = new String [wAuxList.size()][wAuxList.size()];
+		
+		int i;
+		for (i = 0; i < wAuxList.size(); i++) {
+			sId = SelectorMasUno(sId, iPosition, i);
+			sList[i][0] = sId;
+			sList[i][1] = driver.findElement(By.id(sId)).getText();
 			
 		}
 		
-		public String SelectorMasUno(String sText, int iPosition, int iIndex) {
-			//sTexto = texto completo
-			//iPosiciï¿½n = posiciï¿½n en string sTexto donde tiene que cambiar el valor
-			//iIndex = nuevo valor
-			sText = sText.substring(0,iPosition) + iIndex + sText.substring(iPosition + 1,sText.length());
-			return sText;
-		}
-		
-		public String[][] ListaById(By element, String sId, int iPosition) {
-			List<WebElement> wAuxList = driver.findElements(element);
-			
-			String[][] sList = new String [wAuxList.size()][wAuxList.size()];
-			
-			int i;
-			for (i = 0; i < wAuxList.size(); i++) {
-				sId = SelectorMasUno(sId, iPosition, i);
-				sList[i][0] = sId;
-				sList[i][1] = driver.findElement(By.id(sId)).getText();
-				
-			}
-			
-			return sList;
-		}
+		return sList;
+	}
+	
 public void ValidarEstadosDELTA(String DELTA){
 	TestBase TB = new TestBase();
 	try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
@@ -584,11 +584,143 @@ Assert.assertTrue(acc&&nmbre&&pntf&&pntd);
 	public void validarinfoventas(){
 		List<WebElement> secc = driver.findElements(By.cssSelector(".pbSubsection"));
 		WebElement element = secc.get(1);
+		 ArrayList<String> txt1 = new ArrayList<String>();
+		 ArrayList<String> txt2 = new ArrayList<String>();
+		 txt2.add("Tipo");
+		 txt2.add("Razón perdida");
+		 txt2.add("Estado de la oportunidad");
+		 txt2.add("Creado por");
+		 txt2.add("Propietario de oportunidad");
+		 txt2.add("Última modificación por");
+		 txt2.add("Descripci\u00f3n");
+
 		((JavascriptExecutor)driver).executeScript("window.scrollTo(0,"+element.getLocation().y+")");
 		List<WebElement> vnts = element.findElements(By.cssSelector(".labelCol"));
 		for(WebElement e: vnts){
-		System.out.println(e.getText());
-		}
+			System.out.println(e.getText());
+			 txt1.add(e.getText());
+		 }
+		 Assert.assertTrue(txt1.containsAll(txt2));
 	}
 
+		//Entra desde una cuenta > oportunidad > productos
+	public void IngresarAlProductos(String producto){
+		WebElement element = driver.findElement(By.cssSelector(".listRelatedObject.opportunityLineItemBlock"));
+		((JavascriptExecutor)driver).executeScript("window.scrollTo(0,"+element.getLocation().y+")");
+		List<WebElement> op = element.findElements((By.cssSelector(".dataCell")));
+		for(WebElement e : op){
+			System.out.println(e.getText());
+			if(e.getText().equals(producto)){
+				e.findElement(By.tagName("a")).click();
+				break;}}
+	}
+	
+	//Entra desde una cuenta > oportunidad > productos
+	public void ModificarProducto(String ModificarEliminar, String campo , String dato, String GuardarCancelar){
+		List<WebElement> btns = driver.findElements(By.cssSelector(".btn"));
+		for(WebElement e: btns){
+			if(e.getAttribute("value").toLowerCase().equals(ModificarEliminar.toLowerCase())){
+				e.click();
+				if(ModificarEliminar.toLowerCase().equals("eliminar")){
+					 Alert alert = driver.switchTo().alert();
+					   alert.accept();}
+				break;}}
+		Actions action = new Actions(driver);   
+		switch(campo.toLowerCase()){
+		case "precio":
+			driver.findElement(By.id("UnitPrice_ileinner")).click();
+			action.moveToElement(driver.findElement(By.id("UnitPrice_ileinner"))).doubleClick().perform();
+			driver.findElement(By.id("UnitPrice")).clear();
+			driver.findElement(By.id("UnitPrice")).sendKeys(dato);
+				break;
+		case "cantidad":
+			driver.findElement(By.id("Quantity")).clear();
+			driver.findElement(By.id("Quantity")).sendKeys(dato);
+				break;
+		case "plazo":
+		
+			driver.findElement(By.id("00N3F000000HaZN")).clear();
+			driver.findElement(By.id("00N3F000000HaZN")).sendKeys(dato);
+				break;
+		case "cargo unico":			  
+		
+			driver.findElement(By.id("00N3F000000HaZH")).clear();
+			driver.findElement(By.id("00N3F000000HaZH")).sendKeys(dato);
+				break;
+		case "moneda":
+	
+			setSimpleDropdown(driver.findElement(By.id("00N3F000000HaZL")), dato);
+				break;
+		case "descripcion":			  
+		
+			driver.findElement(By.id("Description_ileinneredit")).clear();
+			driver.findElement(By.id("Description_ileinneredit")).sendKeys(dato);
+				break;
+		case "comentarios":			  
+		
+			driver.findElement(By.id("00N3F000000HaZJ")).clear();
+			driver.findElement(By.id("00N3F000000HaZJ")).sendKeys(dato);
+				break;}
+		
+		List<WebElement> btns2 = driver.findElements(By.cssSelector(".btn"));
+		for(WebElement e: btns2){
+			if(e.getAttribute("value").toLowerCase().equals(GuardarCancelar.toLowerCase())){
+				e.click();
+			break;}
+			}
+	}
+	
+	public void VerificarCampoModificado(String campo , String dato){
+		switch(campo.toLowerCase()){
+		case "precio":
+		Assert.assertTrue(driver.findElement(By.id("UnitPrice_ileinner")).getText().contains(dato));
+				break;
+		case "cantidad":
+			Assert.assertTrue(driver.findElement(By.id("Quantity_ileinner")).getText().contains(dato));
+				break;
+		case "plazo":
+			Assert.assertTrue(driver.findElement(By.id("00N3F000000HaZN_ileinner")).getText().contains(dato));
+				break;
+		case "cargo unico":		
+			Assert.assertTrue(driver.findElement(By.id("00N3F000000HaZH_ileinner")).getText().contains(dato));
+				break;
+		case "moneda":
+			Assert.assertTrue(driver.findElement(By.id("00N3F000000HaZL_ileinner")).getText().contains(dato));
+				break;
+		case "descripcion":			  
+			Assert.assertTrue(	driver.findElement(By.id("Description_ileinner")).getText().contains(dato));
+				break;
+		case "comentarios":			  
+			Assert.assertTrue(driver.findElement(By.id("00N3F000000HaZJ_ileinner")).getText().contains(dato));
+				break;}
+	}
+	
+	public String CargosTotalesPorMes(){
+		TestBase TB = new TestBase();
+		TB.waitFor(driver, By.id("00N3F000000HaZI_ileinner"));
+		String a;
+		a = driver.findElement(By.id("00N3F000000HaZI_ileinner")).getText();
+		return a;
+	}
+	
+	public void ValidarMontoContrato(){
+		String CUV0 = driver.findElement(By.id("00N3F000000HaZH_ileinner")).getText().substring(1).replaceAll(",", ".");
+		double CUV= Integer.parseInt(CUV0); 
+		String cant0 = driver.findElement(By.id("Quantity_ileinner")).getText().substring(1).replaceAll(",", ".");
+		int cant = Integer.parseInt(cant0);
+		int plazo = Integer.parseInt(driver.findElement(By.id("00N3F000000HaZN_ileinner")).getText()); 
+		String abono0 =driver.findElement(By.id("UnitPrice_ileinner")).getText().substring(1).replaceAll(",", ".");
+		int abono = Integer.parseInt(abono0); 
+		String TC = driver.findElement(By.id("00N3F000000HaZK_ileinner")).getText().substring(1).replaceAll(",","." );
+		double TotalContrato = Integer.parseInt(TC); 
+		double FORMULA = CUV+(cant*plazo*abono);
+		String contrato = Double.toString(TotalContrato);
+		String resultado = Double.toString(FORMULA);
+		System.out.println(resultado);
+		System.out.println(contrato);
+
+		Assert.assertEquals(contrato, resultado);
+		
+
+	}
 }

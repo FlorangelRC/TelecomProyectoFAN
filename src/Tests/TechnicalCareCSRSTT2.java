@@ -119,6 +119,7 @@ public class TechnicalCareCSRSTT2 extends TestBase {
 			}
 			try {Thread.sleep(2000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 			driver.quit();
+			try {Thread.sleep(2000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 		}
 		
 		@Test(groups = {"Fase2","TechnicalCare","ServicioTecnico"}) 

@@ -42,6 +42,7 @@ public class PanelGuideSections extends TestBase {
 		}
 		try {Thread.sleep(2000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 		driver.quit();
+		try {Thread.sleep(2000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 	}
 	
 	@BeforeClass(groups = "CustomerCare")
