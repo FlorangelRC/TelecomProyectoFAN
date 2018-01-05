@@ -92,7 +92,7 @@ public class TechnicalCareCSRSTT2 extends TestBase {
 			driver.findElement(By.id("TicketCreation_nextBtn")).click();
 	 }
 		
-		//@AfterMethod(groups = {"Fase2","TechnicalCare","ServicioTecnico"}) 
+		@AfterMethod(groups = {"Fase2","TechnicalCare","ServicioTecnico"}) 
 		 public void afterMethod() {
 			driver.switchTo().defaultContent();
 			List<WebElement> ctas = driver.findElement(By.cssSelector(".x-tab-strip.x-tab-strip-top")).findElements(By.tagName("li"));
@@ -110,7 +110,7 @@ public class TechnicalCareCSRSTT2 extends TestBase {
 			
 			  }
 		
-		//@AfterClass(groups = {"Fase2","TechnicalCare","ServicioTecnico"}) 
+		@AfterClass(groups = {"Fase2","TechnicalCare","ServicioTecnico"}) 
 		public void tearDown() {
 			driver.switchTo().defaultContent();
 			driver.findElement(By.id("tsidButton")).click();
