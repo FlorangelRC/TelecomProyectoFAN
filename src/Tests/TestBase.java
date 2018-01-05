@@ -43,7 +43,7 @@ public class TestBase {
 		driver.findElement(By.id("nav-tab-0")).click();
 		break;
 		case "Casos":
-			driver.findElement(By.id("nav-tab-2")).click();
+			driver.findElement(By.id("nav-tab-1")).click();
 			break;
 		}
 		try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
