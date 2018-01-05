@@ -2,6 +2,7 @@ package Tests;
 
 import static org.testng.Assert.assertTrue;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.openqa.selenium.By;
@@ -91,7 +92,7 @@ public class TechnicalCareCSRSTT2 extends TestBase {
 			driver.findElement(By.id("TicketCreation_nextBtn")).click();
 	 }
 		
-		@AfterMethod(groups = {"Fase2","TechnicalCare","ServicioTecnico"}) 
+		//@AfterMethod(groups = {"Fase2","TechnicalCare","ServicioTecnico"}) 
 		 public void afterMethod() {
 			driver.switchTo().defaultContent();
 			List<WebElement> ctas = driver.findElement(By.cssSelector(".x-tab-strip.x-tab-strip-top")).findElements(By.tagName("li"));
@@ -109,7 +110,7 @@ public class TechnicalCareCSRSTT2 extends TestBase {
 			
 			  }
 		
-		@AfterClass(groups = {"Fase2","TechnicalCare","ServicioTecnico"}) 
+		//@AfterClass(groups = {"Fase2","TechnicalCare","ServicioTecnico"}) 
 		public void tearDown() {
 			driver.switchTo().defaultContent();
 			driver.findElement(By.id("tsidButton")).click();
@@ -134,14 +135,12 @@ public class TechnicalCareCSRSTT2 extends TestBase {
 			((JavascriptExecutor)driver).executeScript("window.scrollTo(0,"+driver.findElement(By.id("TicketSummaryTechnician_nextBtn")).getLocation().y+")");
 			driver.findElement(By.id("TicketSummaryTechnician_nextBtn")).click();
 			try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
-			driver.findElement(By.id("RadioRepairType|0")).findElements(By.cssSelector(".slds-radio.ng-scope")).get(1).click();
-			try {Thread.sleep(2000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
-			((JavascriptExecutor)driver).executeScript("window.scrollTo(0,"+driver.findElement(By.id("DeferredRepair_nextBtn")).getLocation().y+")");
-			driver.findElement(By.id("DeferredRepair_nextBtn")).click();
-			try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 			((JavascriptExecutor)driver).executeScript("window.scrollTo(0,"+driver.findElement(By.id("PDFTicketSummary_nextBtn")).getLocation().y+")");
 			driver.findElement(By.id("PDFTicketSummary_nextBtn")).click();
 			try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+			WebElement camp= driver.findElement(By.cssSelector(".slds-table.slds-table--bordered.slds-table--cell-buffer.techCare-PriceListSelection.ng-scope")).findElement(By.className("slds-checkbox"));
+				((JavascriptExecutor)driver).executeScript("window.scrollTo(0,"+camp.getLocation().y+")");
+				camp.click();
 			((JavascriptExecutor)driver).executeScript("window.scrollTo(0,"+driver.findElement(By.id("SolutionList_nextBtn")).getLocation().y+")");
 			driver.findElement(By.id("SolutionList_nextBtn")).click();
 			try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
@@ -158,13 +157,17 @@ public class TechnicalCareCSRSTT2 extends TestBase {
 			((JavascriptExecutor)driver).executeScript("window.scrollTo(0,"+driver.findElement(By.id("TicketSummaryTechnician_nextBtn")).getLocation().y+")");
 			driver.findElement(By.id("TicketSummaryTechnician_nextBtn")).click();
 			try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
-			driver.findElement(By.id("RadioRepairType|0")).findElements(By.cssSelector(".slds-radio.ng-scope")).get(1).click();
-			try {Thread.sleep(2000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
-			((JavascriptExecutor)driver).executeScript("window.scrollTo(0,"+driver.findElement(By.id("DeferredRepair_nextBtn")).getLocation().y+")");
-			driver.findElement(By.id("DeferredRepair_nextBtn")).click();
-			try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 			assertTrue(driver.findElement(By.cssSelector(".slds-button.slds-button--neutral.TechCare-DownloadPDF-Btn")).isDisplayed());
 			driver.findElement(By.cssSelector(".slds-button.slds-button--neutral.TechCare-DownloadPDF-Btn")).click();
+			try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+			  ArrayList<String> allTabs = new ArrayList<String>(driver.getWindowHandles());  
+		        driver.switchTo().window(allTabs.get(1));  
+		       //agregar aqui el booleano del pdf que aun no anda
+		        boolean descargado = driver.getCurrentUrl().contains("pdf");
+		      driver.close();  
+		      driver.switchTo().window(allTabs.get(0));  
+		      assertTrue(descargado); 
+		      try {Thread.sleep(2000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}  
 		}
 		@Test(groups = {"Fase2","TechnicalCare","ServicioTecnico"}) 
 		public void TS16144_CRM_Fase2_TechnicalCare_CSR_STT2_Vista1_Resumen_De_Gesiton_creada() {
@@ -194,11 +197,6 @@ public class TechnicalCareCSRSTT2 extends TestBase {
 			((JavascriptExecutor)driver).executeScript("window.scrollTo(0,"+driver.findElement(By.id("TicketSummaryTechnician_nextBtn")).getLocation().y+")");
 			driver.findElement(By.id("TicketSummaryTechnician_nextBtn")).click();
 			try {Thread.sleep(7000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
-			driver.findElement(By.id("RadioRepairType|0")).findElements(By.cssSelector(".slds-radio.ng-scope")).get(1).click();
-			try {Thread.sleep(2000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
-			((JavascriptExecutor)driver).executeScript("window.scrollTo(0,"+driver.findElement(By.id("DeferredRepair_nextBtn")).getLocation().y+")");
-			driver.findElement(By.id("DeferredRepair_nextBtn")).click();
-			try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 			((JavascriptExecutor)driver).executeScript("window.scrollTo(0,"+driver.findElement(By.id("PDFTicketSummary_nextBtn")).getLocation().y+")");
 			driver.findElement(By.id("PDFTicketSummary_nextBtn")).click();
 			try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
