@@ -25,12 +25,12 @@ import Pages.setConexion;
 public class CustomerCareFase3F  extends TestBase {
 private WebDriver driver;
 	
-	//@AfterClass(groups= "CustomerCare")
+	@AfterClass(groups = {"CustomerCare", "Vista360Layout","ProblemasConRecargas"})
 	public void tearDown2() {
 		driver.quit();	
 	}
 	
-	@BeforeClass(groups= "CustomerCare")
+	@BeforeClass(groups = {"CustomerCare", "Vista360Layout","ProblemasConRecargas"})
 	public void init() throws Exception
 	
 	{
@@ -61,7 +61,7 @@ private WebDriver driver;
 			
 	}	
 	
-	@BeforeMethod(groups = "CustomerCare") 
+	@BeforeMethod(groups = {"CustomerCare", "Vista360Layout","ProblemasConRecargas"})
 	public void setUp() throws Exception {
 		CustomerCare page = new CustomerCare(driver);
 		try {Thread.sleep(6000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();} 
@@ -75,7 +75,7 @@ private WebDriver driver;
 		 
 	}
 	
-	@Test(groups= {"CustomerCare","HistorialDeRecargas"})
+	@Test(groups = {"CustomerCare", "Vista360Layout"})
 	public void TS37501_Historial_De_Recargas_PrePago_Monto_Total_De_Recargas_Visualizar_Monto_Total_De_Recargas() {
 		BasePage cambioFrameByID=new BasePage(); 
 		driver.switchTo().defaultContent();
@@ -99,7 +99,7 @@ private WebDriver driver;
 		 accountPage.closeAccountServiceTabByName("Historiales");	
 	}
 	
-	@Test(groups= "CustomerCare")
+	@Test(groups = {"CustomerCare", "Vista360Layout"})
 	public void TS37508_Historial_De_Recargas_PrePago_Ordenamiento_Y_Paginado_De_Grilla_Ordenar_Por_Beneficios() {
 		boolean enc = false;
 		BasePage cambioFrameByID=new BasePage();
@@ -128,7 +128,7 @@ private WebDriver driver;
 		 accountPage.closeAccountServiceTabByName("Historiales");	
 	}
 	
-	@Test(groups= "CustomerCare")
+	@Test(groups = {"CustomerCare", "Vista360Layout"})
 	public void TS37504_Historial_De_Recargas_PrePago_Ordenamiento_Y_Paginado_De_Grilla_Ordenar_Por_Canal() {
 		boolean enc = false;
 		BasePage cambioFrameByID=new BasePage();
@@ -157,7 +157,7 @@ private WebDriver driver;
 		 accountPage.closeAccountServiceTabByName("Historiales");	
 	}
 	
-	@Test(groups= "CustomerCare")
+	@Test(groups = {"CustomerCare", "Vista360Layout"})
 	public void TS37505_Historial_De_Recargas_PrePago_Ordenamiento_Y_Paginado_De_Grilla_Ordenar_Por_Descripcion() {
 		boolean enc = false;
 		BasePage cambioFrameByID=new BasePage();
@@ -186,7 +186,7 @@ private WebDriver driver;
 		 accountPage.closeAccountServiceTabByName("Historiales");	
 	}
 	
-	@Test(groups= "CustomerCare")
+	@Test(groups = {"CustomerCare", "Vista360Layout"})
 	public void TS37503_Historial_De_Recargas_PrePago_Ordenamiento_Y_Paginado_De_Grilla_Ordenar_Por_Fecha_Y_Hora() {
 		boolean enc = false;
 		BasePage cambioFrameByID=new BasePage();
@@ -215,7 +215,7 @@ private WebDriver driver;
 		 accountPage.closeAccountServiceTabByName("Historiales");	
 	}
 	
-	@Test(groups= "CustomerCare")
+	@Test(groups = {"CustomerCare", "Vista360Layout"})
 	public void TS37506_Historial_De_Recargas_PrePago_Ordenamiento_Y_Paginado_De_Grilla_Ordenar_Por_Monto() {
 		boolean enc = false;
 		BasePage cambioFrameByID=new BasePage();
@@ -244,7 +244,7 @@ private WebDriver driver;
 		 accountPage.closeAccountServiceTabByName("Historiales");	
 	}
 	
-	@Test(groups= "CustomerCare")
+	@Test(groups = {"CustomerCare", "Vista360Layout"})
 	public void TS37507_Historial_De_Recargas_PrePago_Ordenamiento_Y_Paginado_De_Grilla_Ordenar_Por_Vencimiento() {
 		boolean enc = false;
 		BasePage cambioFrameByID=new BasePage();
@@ -273,7 +273,7 @@ private WebDriver driver;
 		 accountPage.closeAccountServiceTabByName("Historiales");	
 	}
 	
-	@Test(groups= "CustomerCare")
+	@Test(groups= {"CustomerCare","ProblemasConRecargas"})
 	public void TS37326_Problems_With_Refills_Tarjeta_De_Recarga_Prepaga_Verificación_Numero_De_Lote_Ingresa_15_Dígitos() {
 		try {Thread.sleep(10000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}  
 	     BasePage cambioFrameByID=new BasePage();
@@ -316,7 +316,7 @@ private WebDriver driver;
 		 accountPage.closeAccountServiceTabByName("Problemas con Recargas");	
 	}
 	
-	@Test(groups= "CustomerCare")
+	@Test(groups= {"CustomerCare","ProblemasConRecargas"})
 	public void TS37328_Problems_With_Refills_Tarjeta_De_Recarga_Prepaga_Verificación_Numero_De_Lote_Ingresa_Letras() {
 		try {Thread.sleep(10000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}  
 	     BasePage cambioFrameByID=new BasePage();
@@ -370,7 +370,7 @@ private WebDriver driver;
 		 accountPage.closeAccountServiceTabByName("Problemas con Recargas");	
 	}
 	
-	@Test(groups= "CustomerCare")
+	@Test(groups= {"CustomerCare","ProblemasConRecargas"})
 	public void TS37327_Problems_With_Refills_Tarjeta_De_Recarga_Prepaga_Verificación_Numero_De_Lote_Ingresa_17_Dígitos() {
 		try {Thread.sleep(10000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}  
 	     BasePage cambioFrameByID=new BasePage();
@@ -422,7 +422,7 @@ private WebDriver driver;
 		 accountPage.closeAccountServiceTabByName("Problemas con Recargas");	
 	}
 	
-	@Test(groups= "CustomerCare")
+	@Test(groups= {"CustomerCare","ProblemasConRecargas"})
 	public void TS37325_Problems_With_Refills_Tarjeta_De_Recarga_Prepaga_Verificación_Numero_De_Lote_Ingresa_16_Dígitos() {
 		
 		try {Thread.sleep(10000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}  
@@ -470,7 +470,7 @@ private WebDriver driver;
 		 accountPage.closeAccountServiceTabByName("Problemas con Recargas");	
 	}
 	
-	@Test(groups= "CustomerCare")
+	@Test(groups= {"CustomerCare","ProblemasConRecargas"})
 	public void TS37534_Problems_With_Refills_Problemas_Con_Recargas_Medio_De_Recarga_Seleccionar_ROL() {
 		try {Thread.sleep(10000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}  
 	     BasePage cambioFrameByID=new BasePage();
