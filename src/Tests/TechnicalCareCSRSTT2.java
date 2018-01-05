@@ -78,6 +78,10 @@ public class TechnicalCareCSRSTT2 extends TestBase {
 			driver.findElement(By.id("TextAreaNotes")).sendKeys("No funciona todo el tiempo");
 			accountPage.continueFromSymptoms();
 			try {Thread.sleep(3000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+			accountPage.continuarDesdeReparacionDiferida(1);
+			try {Thread.sleep(3000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+			accountPage.continuarDesdeMedioDeContacto(0);
+			try {Thread.sleep(3000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 			driver.switchTo().frame(accountPage.getFrameForElement(driver, By.id("TicketCreation_prevBtn")));
 			Ngestion= driver.findElement(By.id("TicketConfirmationText")).findElement(By.tagName("Strong")).getText();
 			try {Thread.sleep(3000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}

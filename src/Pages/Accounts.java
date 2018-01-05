@@ -69,6 +69,12 @@ public class Accounts extends BasePage {
 	@FindBy (how = How.ID, using = "UploadFile")
 	private WebElement attachDocument; //input
 	
+	@FindBy (how = How.ID, using = "DeferredRepair_nextBtn")
+    private WebElement diferida_continuar; //button
+	
+	@FindBy (how = How.ID, using = "ContactChannel_nextBtn")
+    private WebElement contacto_continuar; //button
+	
 	@FindBy (how = How.CSS, using = ".message.description")
 	private WebElement messageDescription; //text
 	
@@ -124,7 +130,7 @@ public class Accounts extends BasePage {
     @FindBy (how = How.CSS, using = ".x-tab-strip-wrap")
     private List<WebElement> tabsWrappers; //div, contains detalles, servicios, facturacion
     
- 
+    
     //Methods
 
     
@@ -447,6 +453,22 @@ public class Accounts extends BasePage {
         driver.switchTo().frame(getFrameForElement(driver, Symptom_nextBtn));
         ((JavascriptExecutor)driver).executeScript("window.scrollTo(0,"+Symptom_nextBtn.getLocation().y+")");
         Symptom_nextBtn.click();
+    }
+    
+    public void continuarDesdeReparacionDiferida(int tipo) {//NUEVOOOOOOOOOOOOOOOOOOO
+        driver.switchTo().frame(getFrameForElement(driver, diferida_continuar));
+        driver.findElements(By.cssSelector(".slds-radio--faux.ng-scope")).get(tipo).click();
+        ((JavascriptExecutor)driver).executeScript("window.scrollTo(0,"+diferida_continuar.getLocation().y+")");
+        diferida_continuar.click();
+        try {Thread.sleep(7000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+    }
+
+    public void continuarDesdeMedioDeContacto(int tipo) {//NUEVOOOOOOOOOOOOOOOOOOO
+        driver.switchTo().frame(getFrameForElement(driver, By.cssSelector(".vlc-slds-button--tertiary.ng-binding.ng-scope")));
+        driver.findElement(By.id("ContactChannelType|0")).findElements(By.tagName("label")).get(tipo+1).click();
+        ((JavascriptExecutor)driver).executeScript("window.scrollTo(0,"+contacto_continuar.getLocation().y+")");
+        contacto_continuar.click();
+        try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
     }
 
 	
