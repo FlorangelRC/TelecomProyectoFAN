@@ -65,7 +65,7 @@ public class TechnicalCareCSRAutogestion extends TestBase {
 		
 	}
 	
-	//@AfterMethod(groups = {"TechnicalCare", "Autogestion", "Muleto"}) 
+	@AfterMethod(groups = {"TechnicalCare", "Autogestion", "Muleto"}) 
 	 public void afterMethod() {
 		driver.switchTo().defaultContent();
 		List<WebElement> ctas = driver.findElement(By.cssSelector(".x-tab-strip.x-tab-strip-top")).findElements(By.tagName("li"));
@@ -83,7 +83,7 @@ public class TechnicalCareCSRAutogestion extends TestBase {
 		
 		  }
 	
-	//@AfterClass(groups = {"TechnicalCare", "Autogestion", "Muleto"}) 
+	@AfterClass(groups = {"TechnicalCare", "Autogestion", "Muleto"}) 
 	public void tearDown2() {
 		driver.switchTo().defaultContent();
 		try{ for(WebElement e : driver.findElements(By.className("x-tab-strip-close"))) {
