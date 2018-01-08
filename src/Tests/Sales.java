@@ -4,6 +4,8 @@ import static org.testng.Assert.assertFalse;
 import static org.testng.Assert.assertTrue;
 
 import java.sql.Driver;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 
 import org.openqa.selenium.By;
@@ -110,7 +112,12 @@ public class Sales extends TestBase {
 	@BeforeMethod(groups={"sales", "AltaDeContacto"})
 	public void setup() throws Exception {		
 		try {Thread.sleep(10000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
-		driver.findElement(By.xpath("//a[@href=\'https://crm--SIT--c.cs14.visual.force.com/apex/taClientSearch']")).click();
+		List<WebElement> gest = driver.findElements(By.xpath("//*[@id=\"sidebarDiv\"]/div[1]/div[2]/ul/li[1]/a"));
+		for (WebElement g : gest) {
+			if(g.getText().toLowerCase().equals("gesti\u00f3n de clientes")) {
+				g.click();
+			}
+		}
 		try {Thread.sleep(10000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 
 	}
@@ -1094,5 +1101,35 @@ public class Sales extends TestBase {
 		SalesBase SB = new SalesBase(driver);
 		SB.agregarplan("Plan con tarjeta");
 	}
-
+	 	
+	@Test(groups = "SCP") 
+	public void TS76235_Alta_Cuenta_Consumer_Valida_alta_mayor_o_igual_16anios() {
+	SalesBase SB = new SalesBase(driver);
+	BasePage dni = new BasePage(driver);
+	driver.findElement(By.id("dataInput_nextBtn")).click();
+	sleep(5000);	
+	dni.setSimpleDropdown(driver.findElement(By.id("DocumentTypeSearch")),"DNI");
+	driver.findElement(By.id("DocumentInputSearch")).click();
+	driver.findElement(By.id("DocumentInputSearch")).sendKeys("1234591");
+	try {Thread.sleep(10000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}				
+	List<WebElement> gen = driver.findElements(By.cssSelector(".slds-radio.ng-scope"));
+    	for(WebElement g : gen) {
+    		if(g.getText().equals("Masculino")) {
+    			g.click();}}
+    driver.findElement(By.id("ContactSearch_nextBtn")).click();
+    sleep(5000);
+	WebElement nac = driver.findElement(By.id("Birthdate"));
+	nac.clear();
+	nac.sendKeys("12/12/2005");
+	boolean error = false;
+	List<WebElement> cart = driver.findElements(By.cssSelector(".message.description.ng-binding.ng-scope"));
+		for(WebElement c: cart) {
+			if(c.getText().contains("Fecha de nacimiento inválida")) {
+				c.isDisplayed();
+				error= true;
+				System.out.println(c.getText());
+			}
+		}
+		Assert.assertTrue(error);
+	}
 }
