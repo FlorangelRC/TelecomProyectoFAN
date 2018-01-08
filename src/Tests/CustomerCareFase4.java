@@ -172,8 +172,14 @@ public class CustomerCareFase4 extends TestBase{
 	public void TS69098_Consumption_Details_Detalle_de_Consumo_Modificacion_de_Tabla_Nuevas_Columnas_Visualizar_encabezado() {
 		page.elegirCuenta("aaaaFernando Care");
 		page.irAGestion("detalle de consu");
-		WebElement title = driver.findElement(By.className("big_title"));
-		Assert.assertTrue(title.getText().equals("Detalle de Consumos"));
+		List <WebElement> title = driver.findElements(By.cssSelector(".slds-size--11-of-12.slds-medium-size--11-of-12.slds-large-size--11-of-12"));
+		boolean a = false;
+		for (WebElement x : title) {
+			if (x.getText().equals("Detalle de Consumos")) {
+				a = true;
+			}
+		}
+		Assert.assertTrue(a);
 	}
 	
 	@Test (groups = {"CustomerCare", "DetalleDeConsumos"})
