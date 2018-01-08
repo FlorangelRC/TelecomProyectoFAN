@@ -1,6 +1,7 @@
 package Tests;
 
 import static org.testng.Assert.assertEquals;
+import static org.testng.Assert.assertFalse;
 import static org.testng.Assert.assertTrue;
 
 import java.util.ArrayList;
@@ -53,7 +54,71 @@ public class SCPAdministracionDeServicios extends TestBase {
 	@AfterClass(groups = "SCP")
 	public void tearDown() {
 		driver.quit();
+		try {Thread.sleep(2000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 	}
+	
+	@Test(groups = "SCP")  
+    public void TS110248_Estructura_De_Los_Productos_Moneda() {  
+      SCP pcp = new SCP(driver);  
+      boolean estaMon= false;
+      pcp.Desloguear_Loguear("permisos");
+      pcp.clickOnTabByName("cuentas");
+		try {Thread.sleep(7000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		try {Thread.sleep(7000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		pcp.clickEnCuentaPorNombre("AIR S.R.L");
+		try {Thread.sleep(7000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		pcp.elegiroportunidad("ALta suc. Jujuy");
+		try {Thread.sleep(7000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		WebElement Producto = driver.findElement(By.cssSelector(".listRelatedObject.opportunityLineItemBlock")).findElement(By.cssSelector(".dataRow.even.last.first")).findElement(By.tagName("th"));
+		((JavascriptExecutor)driver).executeScript("window.scrollTo(0,"+Producto.getLocation().y+")");
+		Producto.findElement(By.tagName("a")).click();
+		try {Thread.sleep(7000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		WebElement Detalles = driver.findElement(By.className("detailList")).findElements(By.tagName("tr")).get(8);
+		assertTrue(Detalles.findElement(By.tagName("td")).getText().toLowerCase().equals("moneda"));
+		String MonActual = Detalles.findElements(By.tagName("td")).get(1).getText();
+		System.out.println("Actual: "+MonActual);
+		Actions action = new Actions(driver); 
+		action.moveToElement(Detalles.findElements(By.tagName("td")).get(1)).doubleClick().perform();
+		try {Thread.sleep(2000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		Select listSelect = new Select(Detalles.findElements(By.tagName("td")).get(1).findElement(By.tagName("select")));
+		if(MonActual.equals("USD"))
+			listSelect.selectByVisibleText("ARG");
+		else
+			listSelect.selectByVisibleText("USD");
+		driver.findElement(By.id("topButtonRow")).findElement(By.tagName("input")).click();
+		try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		Detalles = driver.findElement(By.className("detailList")).findElements(By.tagName("tr")).get(8);
+		String MonNuev = Detalles.findElements(By.tagName("td")).get(1).getText();
+		assertFalse(MonActual.equals(MonNuev));
+		pcp.Desloguear_Loguear("isabel");
+    }  
+	
+	@Test(groups = "SCP")  
+    public void TS110249_Estructura_De_Las_Oportunidades_Moneda() {  
+      SCP pcp = new SCP(driver);  
+      boolean estaMon= false;
+      pcp.Desloguear_Loguear("permisos");
+      pcp.clickOnTabByName("cuentas");
+		try {Thread.sleep(7000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		try {Thread.sleep(7000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		pcp.clickEnCuentaPorNombre("AIR S.R.L");
+		try {Thread.sleep(7000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		pcp.elegiroportunidad("Integra y SPV");
+		try {Thread.sleep(7000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		List<WebElement> Detalles = driver.findElement(By.className("detailList")).findElements(By.tagName("tr"));
+		for(WebElement UnaL : Detalles) {
+			List<WebElement> campos = UnaL.findElements(By.tagName("td"));
+			for(WebElement UnC : campos) {
+				if (UnC.getText().toLowerCase().equals("moneda"))
+					estaMon = true;
+			}
+		}
+		assertTrue(estaMon);
+		assertTrue(false);
+		/*Actions action = new Actions(driver); 
+		action.moveToElement(TMI).doubleClick().perform();*/
+		pcp.Desloguear_Loguear("isabel");
+    }  
 	
 	@Test(groups = "SCP")  
     public void TS110250_Estructura_De_Los_Proyectos_TMI() {  
@@ -101,6 +166,63 @@ public class SCPAdministracionDeServicios extends TestBase {
 
 		try {Thread.sleep(2000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}  
 		pcp.Desloguear_Loguear("isabel");
+    }  
+	
+	@Test(groups = "SCP")  
+    public void TS110252_Estructura_De_Las_Oportunidades_Probabilidad() {  
+      SCP pcp = new SCP(driver);  
+      pcp.Desloguear_Loguear("permisos");
+      pcp.clickOnTabByName("cuentas");
+		try {Thread.sleep(7000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		try {Thread.sleep(7000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		pcp.clickEnCuentaPorNombre("AIR S.R.L");
+		try {Thread.sleep(7000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		pcp.elegiroportunidad("Integra y SPV");
+		try {Thread.sleep(7000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		WebElement prob = driver.findElement(By.className("detailList")).findElements(By.tagName("tr")).get(2).findElements(By.tagName("td")).get(3);
+		Actions action = new Actions(driver); 
+		action.moveToElement(prob).doubleClick().perform();
+		String[] todos = {"alta","media","baja"};
+	    try {Thread.sleep(2000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();} 
+	    Select listSelect = new Select(prob.findElement(By.tagName("select")));
+	    List<WebElement> motivos = listSelect.getOptions();
+	    assertTrue(verificarContenidoLista(todos,motivos));
+	    try {Thread.sleep(2000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}  
+		pcp.Desloguear_Loguear("isabel");
+    }  
+	
+	@Test(groups = "SCP")  
+    public void TS110253_Estructura_De_Los_Contactos_Estado() {  
+      SCP pcp = new SCP(driver);  
+      boolean estaMon= false;
+      pcp.Desloguear_Loguear("permisos");
+      pcp.clickOnTabByName("cuentas");
+		try {Thread.sleep(7000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		try {Thread.sleep(7000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		pcp.clickEnCuentaPorNombre("AIR S.R.L");
+		try {Thread.sleep(7000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		WebElement Producto = driver.findElement(By.cssSelector(".listRelatedObject.accountContactRelationBlock")).findElement(By.cssSelector(".dataRow.even.first")).findElement(By.tagName("th"));
+		((JavascriptExecutor)driver).executeScript("window.scrollTo(0,"+Producto.getLocation().y+")");
+		Producto.findElement(By.tagName("a")).click();
+		try {Thread.sleep(7000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		WebElement Detalles = driver.findElement(By.className("detailList")).findElements(By.tagName("tr")).get(5);
+		assertTrue(Detalles.findElement(By.tagName("td")).getText().toLowerCase().equals("activo"));
+		Actions action = new Actions(driver); 
+		action.moveToElement(Detalles.findElements(By.tagName("td")).get(1)).doubleClick().perform();
+		try {Thread.sleep(2000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		Detalles.findElements(By.tagName("td")).get(1).findElement(By.tagName("input")).click();
+		try {Thread.sleep(2000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		driver.findElement(By.id("topButtonRow")).findElement(By.tagName("input")).click();
+		try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		Detalles = driver.findElement(By.className("detailList")).findElements(By.tagName("tr")).get(5);
+		action.moveToElement(Detalles.findElements(By.tagName("td")).get(1)).doubleClick().perform();
+		try {Thread.sleep(1000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		assertTrue(Detalles.findElements(By.tagName("td")).get(1).findElement(By.tagName("input")).isSelected());
+		Detalles.findElements(By.tagName("td")).get(1).findElement(By.tagName("input")).click();
+		driver.findElement(By.id("topButtonRow")).findElement(By.tagName("input")).click();
+		try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		
+		//pcp.Desloguear_Loguear("isabel");
     }  
 	
 	
@@ -514,6 +636,144 @@ public class SCPAdministracionDeServicios extends TestBase {
       try {Thread.sleep(2000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}  
     }  
       
+	@Test(groups = "SCP")
+	public void TS112580_Contexto_Sectorial_Cadena_De_Valor_Y_Procesos() {
+		BasePage Bp = new BasePage();
+		SCP pcp = new SCP(driver);
+		java.util.Date fecha = new Date();
+		String sector = new String();
+		List<WebElement> servicioList = driver.findElement(By.className("detailList")).findElements(By.tagName("tr"));
+		servicioList.remove(0);
+		for (WebElement UnS : servicioList) {
+			if (UnS.findElements(By.tagName("td")).get(2).getText().toLowerCase().contains("segmento vertical")) {
+				sector = UnS.findElements(By.tagName("td")).get(3).getText();
+				System.out.println("Sector: "+sector);
+				break;
+			}	
+		}
+		pcp.moveToElementOnAccAndClick("quintoTitulo",1);
+		Select listSelect = new Select(driver.findElement(By.className("panel-body")).findElement(By.tagName("select")));
+		listSelect.selectByVisibleText(sector);
+		driver.findElement(By.className("panel-body")).findElement(By.cssSelector(".btn.btn.btn-default.btn-sm")).click();
+		try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		servicioList = driver.findElements(By.cssSelector(".btn.btn-default.btn-sm"));
+		for (WebElement UnS : servicioList) {
+			if (UnS.getText().toLowerCase().contains("agregar")) {
+				UnS.click();
+				break;
+			}	
+		}
+		try {Thread.sleep(3000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		driver.findElement(By.className("modal-body")).findElement(By.tagName("input")).sendKeys("Contexto sectorial automatizado");
+		listSelect = new Select(driver.findElement(By.className("modal-body")).findElement(By.tagName("select")));
+		listSelect.selectByVisibleText("Cadena de Valor y Procesos");
+		try {Thread.sleep(1000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		driver.findElement(By.className("modal-body")).findElement(By.tagName("textarea")).sendKeys(fecha.toString());
+		try {Thread.sleep(1000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		driver.findElements(By.className("modal-footer")).get(0).findElement(By.cssSelector(".btn.btn-primary")).click();
+		try {Thread.sleep(4000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		servicioList = driver.findElements(By.cssSelector(".btn.btn-default.btn-sm"));
+		for (WebElement UnS : servicioList) {
+			if (UnS.getText().toLowerCase().contains("guardar")) {
+				UnS.click();
+				break;
+			}	
+		}
+		try {Thread.sleep(2000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		SCP pScp = new SCP(driver);
+		pScp.clickOnTabByName("cuentas");
+		try {Thread.sleep(7000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		pScp.listTypeAcc("Todas Las cuentas");
+		try {Thread.sleep(7000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		pScp.clickOnFirstAccRe();
+		try {Thread.sleep(10000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		driver.switchTo().defaultContent();
+		driver.switchTo().frame(Bp.getFrameForElement(driver, By.id("primerTitulo")));
+		pcp.moveToElementOnAccAndClick("primerTitulo",1);
+		driver.switchTo().defaultContent();
+		driver.findElement(By.id("hidden-Cad")).click();
+		boolean enc = false;
+		try {Thread.sleep(3000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		servicioList = driver.findElements(By.cssSelector(".table.table-striped.table-bordered.table-condensed")).get(3).findElements(By.tagName("tr"));
+		servicioList.remove(0);
+		for (WebElement UnaC : servicioList) {
+			if ((UnaC.findElements(By.tagName("td")).get(1).getText().toLowerCase().contains("contexto sectorial automatizado"))&&(UnaC.findElements(By.tagName("td")).get(2).getText().equals(fecha.toString()))) {
+				enc = true;
+			}	
+		}
+		assertTrue(enc);
+		
+	}
+	
+	@Test(groups = "SCP")
+	public void TS112583_Contexto_Sectorial_Casos_De_Exito_Sectorial() {
+		BasePage Bp = new BasePage();
+		SCP pcp = new SCP(driver);
+		java.util.Date fecha = new Date();
+		String sector = new String();
+		List<WebElement> servicioList = driver.findElement(By.className("detailList")).findElements(By.tagName("tr"));
+		servicioList.remove(0);
+		for (WebElement UnS : servicioList) {
+			if (UnS.findElements(By.tagName("td")).get(2).getText().toLowerCase().contains("segmento vertical")) {
+				sector = UnS.findElements(By.tagName("td")).get(3).getText();
+				System.out.println("Sector: "+sector);
+				break;
+			}	
+		}
+		pcp.moveToElementOnAccAndClick("quintoTitulo",1);
+		Select listSelect = new Select(driver.findElement(By.className("panel-body")).findElement(By.tagName("select")));
+		listSelect.selectByVisibleText(sector);
+		driver.findElement(By.className("panel-body")).findElement(By.cssSelector(".btn.btn.btn-default.btn-sm")).click();
+		try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		servicioList = driver.findElements(By.cssSelector(".btn.btn-default.btn-sm"));
+		for (WebElement UnS : servicioList) {
+			if (UnS.getText().toLowerCase().contains("agregar")) {
+				UnS.click();
+				break;
+			}	
+		}
+		try {Thread.sleep(3000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		driver.findElement(By.className("modal-body")).findElement(By.tagName("input")).sendKeys("Contexto sectorial automatizado");
+		listSelect = new Select(driver.findElement(By.className("modal-body")).findElement(By.tagName("select")));
+		listSelect.selectByVisibleText("Casos de \u00e9xito Sectorial");
+		try {Thread.sleep(1000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		driver.findElement(By.className("modal-body")).findElement(By.tagName("textarea")).sendKeys(fecha.toString());
+		try {Thread.sleep(1000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		driver.findElements(By.className("modal-footer")).get(0).findElement(By.cssSelector(".btn.btn-primary")).click();
+		try {Thread.sleep(4000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		servicioList = driver.findElements(By.cssSelector(".btn.btn-default.btn-sm"));
+		for (WebElement UnS : servicioList) {
+			if (UnS.getText().toLowerCase().contains("guardar")) {
+				UnS.click();
+				break;
+			}	
+		}
+		try {Thread.sleep(2000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		SCP pScp = new SCP(driver);
+		pScp.clickOnTabByName("cuentas");
+		try {Thread.sleep(7000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		pScp.listTypeAcc("Todas Las cuentas");
+		try {Thread.sleep(7000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		pScp.clickOnFirstAccRe();
+		try {Thread.sleep(10000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		driver.switchTo().defaultContent();
+		driver.switchTo().frame(Bp.getFrameForElement(driver, By.id("primerTitulo")));
+		pcp.moveToElementOnAccAndClick("primerTitulo",1);
+		driver.switchTo().defaultContent();
+		driver.findElement(By.id("hidden-Cas")).click();
+		boolean enc = false;
+		try {Thread.sleep(3000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		servicioList = driver.findElements(By.cssSelector(".table.table-striped.table-bordered.table-condensed")).get(5).findElements(By.tagName("tr"));
+		servicioList.remove(0);
+		for (WebElement UnaC : servicioList) {
+			if ((UnaC.findElements(By.tagName("td")).get(1).getText().toLowerCase().contains("contexto sectorial automatizado"))&&(UnaC.findElements(By.tagName("td")).get(2).getText().equals(fecha.toString()))) {
+				enc = true;
+			}	
+		}
+		assertTrue(enc);
+		
+	}
+	
     @Test(groups = "SCP")  
     public void TS112631_Estrategia_De_Crecimiento_Exportar_A_Excel() {  
       SCP pcp = new SCP(driver);  
@@ -532,6 +792,50 @@ public class SCPAdministracionDeServicios extends TestBase {
       assertTrue(pcp.isFileDownloaded(downloadPath, usuario), "Failed to download Expected document");  
     }  
       
+    @Test(groups = "SCP")  
+    public void TS112632_Estrategia_De_Crecimiento_Guardar() {  
+      SCP pcp = new SCP(driver);  
+      boolean botonG = false;  
+      java.util.Date fecha = new Date();
+      pcp.Desloguear_Loguear("fabiana");
+      try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		pcp.clickOnTabByName("cuentas");
+		try {Thread.sleep(7000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		try {Thread.sleep(7000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		pcp.clickEnCuentaPorNombre("Florencia Di Ci");
+		try {Thread.sleep(10000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+      pcp.moveToElementOnAccAndClick("tercerTitulo",5);  
+      try {Thread.sleep(10000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+      Actions action = new Actions(driver);   
+		action.moveToElement(driver.findElement(By.id("mainBnpTable")).findElements(By.tagName("tr")).get(1).findElement(By.className("inlineEditWrite"))).doubleClick().perform();
+		try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		driver.findElement(By.className("inlineEditCompoundDiv")).findElement(By.tagName("textarea")).clear();
+		driver.findElement(By.className("inlineEditCompoundDiv")).findElement(By.tagName("textarea")).sendKeys("a"+fecha.toString());
+		driver.findElement(By.id("InlineEditDialog_buttons")).findElement(By.className("zen-btn")).click();
+		try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+	      
+      List<WebElement> servicioList = driver.findElements(By.cssSelector(".btn.btn-default.btn-sm"));  
+      for (WebElement UnS : servicioList) {  
+        if (UnS.getText().toLowerCase().contains("guardar")) {  
+          botonG = true;  
+          UnS.click();  
+        }  
+      }  
+      assertTrue(botonG); 
+      try {Thread.sleep(7000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+      servicioList = driver.findElement(By.id("mainBnpTable")).findElements(By.tagName("tr"));
+      servicioList.remove(0);
+      botonG=false;
+      for (WebElement UnS : servicioList) { 
+    	  System.out.println(UnS.findElement(By.tagName("td")).getText());
+          if (UnS.findElement(By.cssSelector(".dataCell.sorting_1")).findElement(By.tagName("span")).getText().equals("a"+fecha.toString())) {  
+            botonG = true;  
+            break;
+          }  
+        }  
+       assertTrue(botonG);	 
+    }  
+    
     @Test(groups = "SCP")  
     public void TS112635_Estrategia_De_Crecimiento_Search() {  
       SCP pcp = new SCP(driver);  
@@ -581,8 +885,38 @@ public class SCPAdministracionDeServicios extends TestBase {
       driver.close();  
       driver.switchTo().window(allTabs.get(0));  
       try {Thread.sleep(2000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}  
+      
     }  
       
+    @Test(groups = "SCP")  
+    public void TS112673_Estructura_De_Los_Contactos_Detalle_De_Contacto() {  
+      SCP pcp = new SCP(driver);  
+      boolean estaMon= false;
+      
+      pcp.clickOnTabByName("cuentas");
+		try {Thread.sleep(7000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		try {Thread.sleep(7000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		pcp.clickEnCuentaPorNombre("AIR S.R.L");
+		try {Thread.sleep(7000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		driver.findElement(By.cssSelector(".listRelatedObject.accountContactRelationBlock")).findElement(By.className("pShowMore")).findElements(By.tagName("a")).get(1).click();
+		try {Thread.sleep(7000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		driver.findElement(By.cssSelector(".listRelatedObject.accountContactRelationBlock")).findElement(By.cssSelector(".dataRow.even.first")).findElement(By.tagName("a")).click();
+		try {Thread.sleep(7000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		String[] campos = {"propietario del contacto","tel\u00e9fono","nombre","m\u00f3vil","nombre de la cuenta","correo electr\u00f3nico","fecha de nacimiento","pictureurl","t\u00edtulo","picture","activo","domicilio","creado por","descripci\u00f3n","ejecutivo de cuenta"};//
+		List<WebElement> Detalles = driver.findElement(By.className("detailList")).findElements(By.tagName("tr"));
+		List<WebElement> cReales = new ArrayList<WebElement>();
+		for(WebElement UnaL : Detalles) {
+			cReales.add(UnaL.findElements(By.tagName("td")).get(0));
+			try {
+			cReales.add(UnaL.findElements(By.tagName("td")).get(2));
+			}catch(IndexOutOfBoundsException ex1) {
+				
+			}
+		}
+		assertTrue(verificarContenidoLista(campos,cReales));
+		assertTrue(driver.findElement(By.className("noStandardTab")).findElement(By.tagName("h3")).getText().toLowerCase().contains("notas"));
+    }
+    
     @Test(groups = "SCP")  
     public void TS112788_Parque_De_Servicios_Ver_Video() {  
       SCP pcp = new SCP(driver);  
@@ -656,7 +990,7 @@ public class SCPAdministracionDeServicios extends TestBase {
 		Actions action = new Actions(driver);   
 		action.moveToElement(modificar.findElement(By.tagName("span")).findElement(By.tagName("span"))).doubleClick().perform();
 		assertTrue(modificar.findElement(By.className("inlineEditDiv")).isDisplayed());
-		
+		pcp.Desloguear_Loguear("isabel");
 	 }
 	
 	@Test(groups = "SCP")  

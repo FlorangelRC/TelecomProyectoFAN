@@ -261,7 +261,6 @@ public class SCP_Joaquin extends TestBase{
 		sleep(3000);
 		List<WebElement> elementos = driver.findElements(By.cssSelector(".tl-timemarker-content-container"));
 		
-		System.out.println(elementos.get(0).getText());
 		for (WebElement e : elementos) {
 			Assert.assertTrue(e.getAttribute("class").contains("colorEvento"));
 		}
@@ -276,7 +275,6 @@ public class SCP_Joaquin extends TestBase{
 		sleep(3000);
 		List<WebElement> elementos = driver.findElements(By.cssSelector(".tl-timemarker-content-container"));
 		
-		System.out.println(elementos.get(0).getText());
 		for (WebElement e : elementos) {
 			Assert.assertTrue(e.getAttribute("class").contains("eventoRelevante"));
 		}
@@ -292,7 +290,6 @@ public class SCP_Joaquin extends TestBase{
 		sleep(3000);
 		List<WebElement> elementos = driver.findElements(By.cssSelector(".tl-timemarker-content-container"));
 		
-		System.out.println(elementos.get(0).getText());
 		for (WebElement e : elementos) {
 			Assert.assertTrue(e.getAttribute("class").contains("Otros") || e.getAttribute("class").contains("Vencimiento"));
 		}
@@ -307,7 +304,6 @@ public class SCP_Joaquin extends TestBase{
 		sleep(3000);
 		List<WebElement> elementos = driver.findElements(By.cssSelector(".tl-timemarker-content-container"));
 		
-		System.out.println(elementos.get(0).getText());
 		for (WebElement e : elementos) {
 			Assert.assertTrue(e.getAttribute("class").contains("Otros"));
 		}
@@ -322,7 +318,6 @@ public class SCP_Joaquin extends TestBase{
 		sleep(3000);
 		List<WebElement> elementos = driver.findElements(By.cssSelector(".tl-timemarker-content-container"));
 		
-		System.out.println(elementos.get(0).getText());
 		for (WebElement e : elementos) {
 			Assert.assertTrue(e.getAttribute("class").contains("RFPComunicaciones"));
 		}
@@ -337,7 +332,6 @@ public class SCP_Joaquin extends TestBase{
 		sleep(3000);
 		List<WebElement> elementos = driver.findElements(By.cssSelector(".tl-timemarker-content-container"));
 		
-		System.out.println(elementos.get(0).getText());
 		for (WebElement e : elementos) {
 			Assert.assertTrue(e.getAttribute("class").contains("RFPTI"));
 		}
@@ -345,17 +339,19 @@ public class SCP_Joaquin extends TestBase{
 	
 	@Test(groups = {"SCP", "Filtros"})
 	public void TS112623_Cronograma_de_cuenta_Filtros_Todos() {
-		Assert.assertTrue(false); //**************************************************************************************
 		SCP prueba= new SCP(driver);
 		prueba.moveToElementOnAccAndClick("cuartoTitulo", 1);
-		driver.findElements(By.className("checkboxFiltroTimeLine")).get(7).click();
+		driver.findElement(By.className("todos")).click();
 		driver.findElements(By.cssSelector(".btn.btn.btn-default.btn-xs")).get(1).click();
 		sleep(3000);
 		List<WebElement> elementos = driver.findElements(By.cssSelector(".tl-timemarker-content-container"));
 		
-		System.out.println(elementos.get(0).getText());
 		for (WebElement e : elementos) {
-			Assert.assertTrue(e.getAttribute("class").contains("Otros"));
+			String atributoClass = e.getAttribute("class");
+			Assert.assertTrue(atributoClass.contains("Otros") || atributoClass.contains("colorEvento") ||
+							  atributoClass.contains("eventoRelevante") || atributoClass.contains("RFPComunicaciones") ||
+							  atributoClass.contains("RFPTI") || atributoClass.contains("Vencimiento") ||
+							  atributoClass.contains("colorVencimientoCompetencia"));
 		}
 	}
 	
@@ -368,7 +364,6 @@ public class SCP_Joaquin extends TestBase{
 		sleep(3000);
 		List<WebElement> elementos = driver.findElements(By.cssSelector(".tl-timemarker-content-container"));
 		
-		System.out.println(elementos.get(0).getText());
 		for (WebElement e : elementos) {
 			Assert.assertTrue(e.getAttribute("class").contains("Vencimiento"));
 		}
@@ -383,7 +378,6 @@ public class SCP_Joaquin extends TestBase{
 		sleep(3000);
 		List<WebElement> elementos = driver.findElements(By.cssSelector(".tl-timemarker-content-container"));
 		
-		System.out.println(elementos.get(0).getText());
 		for (WebElement e : elementos) {
 			Assert.assertTrue(e.getAttribute("class").contains("colorVencimientoCompetencia"));
 		}

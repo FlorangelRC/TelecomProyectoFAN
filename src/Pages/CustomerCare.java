@@ -295,6 +295,19 @@ public class CustomerCare extends BasePage {
 		cambiarAFrameActivo();
 	}
 	
+	public void irAGestiones() {
+		driver.findElement(By.cssSelector(".console-card.active .card-top")).click();
+		List<WebElement> accionesFlyout = driver.findElements(By.cssSelector(".community-flyout-actions-card li"));
+		for (WebElement accion : accionesFlyout) {
+			if (accion.getText().contains("Gestiones")) {
+				accion.click();
+				break;
+			}
+		}
+		TestBase.sleep(4000);
+		cambiarAFrameActivo();
+	}
+	
 	public void irADetalleDeConsumos() {
 		obtenerAccionLineaPrepago("Detalle de Consumos").click();
 		TestBase.sleep(3000);

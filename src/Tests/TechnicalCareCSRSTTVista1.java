@@ -89,6 +89,7 @@ public class TechnicalCareCSRSTTVista1  extends TestBase {
 		}
 		try {Thread.sleep(2000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 		driver.quit();
+		try {Thread.sleep(2000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 	}
 	
 	@AfterMethod(groups = {"Fase2","TechnicalCare","ServicioTecnico"})
@@ -131,7 +132,11 @@ public class TechnicalCareCSRSTTVista1  extends TestBase {
 		accPage.selectSymptomByIndex(2);
 		driver.findElement(By.id("TextAreaNotes")).sendKeys("problemas con el servicio");
 		accPage.continueFromSymptoms();
-		try {Thread.sleep(8000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		try {Thread.sleep(3000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		accPage.continuarDesdeReparacionDiferida(1);
+		try {Thread.sleep(3000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		accPage.continuarDesdeMedioDeContacto(0);
+		try {Thread.sleep(3000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 		driver.switchTo().frame(accPage.getFrameForElement(driver, By.id("TicketCreation_prevBtn")));
 		assertTrue(driver.findElement(By.id("TicketCreation_prevBtn")).isDisplayed());
 	}
@@ -152,7 +157,11 @@ public class TechnicalCareCSRSTTVista1  extends TestBase {
 		accPage.attachFile(filePath);
 		accPage.attachFile(filePath2);
 		accPage.continueFromSymptoms();
-		try {Thread.sleep(7000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		try {Thread.sleep(3000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		accPage.continuarDesdeReparacionDiferida(1);
+		try {Thread.sleep(3000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		accPage.continuarDesdeMedioDeContacto(0);
+		try {Thread.sleep(3000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 		driver.switchTo().frame(accPage.getFrameForElement(driver, By.id("TicketCreation_prevBtn")));
 		try {Thread.sleep(2000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 		assertTrue(driver.findElement(By.id("TicketConfirmationText")).isDisplayed());
@@ -183,9 +192,13 @@ public class TechnicalCareCSRSTTVista1  extends TestBase {
 		accPage.selectSymptomByIndex(2);
 		accPage.continueFromSymptoms();
 		try {Thread.sleep(3000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		accPage.continuarDesdeReparacionDiferida(1);
+		try {Thread.sleep(3000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		accPage.continuarDesdeMedioDeContacto(0);
+		try {Thread.sleep(3000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 		driver.switchTo().frame(accPage.getFrameForElement(driver, By.id("TicketCreation_prevBtn")));
 		try {Thread.sleep(3000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
-		driver.findElements(By.cssSelector(".slds-radio.ng-scope")).get(0).click();
+		driver.findElement(By.id("EndingFirstFrontRadio|0")).findElements(By.tagName("label")).get(1).click();
 		try {Thread.sleep(3000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 		((JavascriptExecutor)driver).executeScript("window.scrollTo(0,"+driver.findElement(By.id("TicketCreation_nextBtn")).getLocation().y+")");
 	    driver.findElement(By.id("TicketCreation_nextBtn")).click();
@@ -206,9 +219,13 @@ public class TechnicalCareCSRSTTVista1  extends TestBase {
 		accPage.selectSymptomByIndex(2);
 		accPage.continueFromSymptoms();
 		try {Thread.sleep(3000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		accPage.continuarDesdeReparacionDiferida(1);
+		try {Thread.sleep(3000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		accPage.continuarDesdeMedioDeContacto(0);
+		try {Thread.sleep(3000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 		driver.switchTo().frame(accPage.getFrameForElement(driver, By.id("TicketCreation_prevBtn")));
 		try {Thread.sleep(3000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
-		driver.findElement(By.id("EndingFirstFrontRadio|0")).findElements(By.cssSelector(".slds-radio.ng-scope")).get(1).click();
+		driver.findElement(By.id("EndingFirstFrontRadio|0")).findElements(By.tagName("label")).get(2).click();
 		try {Thread.sleep(3000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 		((JavascriptExecutor)driver).executeScript("window.scrollTo(0,"+driver.findElement(By.id("TicketCreation_nextBtn")).getLocation().y+")");
 	    driver.findElement(By.id("TicketCreation_nextBtn")).click();
@@ -230,9 +247,13 @@ public class TechnicalCareCSRSTTVista1  extends TestBase {
 		accPage.selectSymptomByIndex(2);
 		accPage.continueFromSymptoms();
 		try {Thread.sleep(3000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		accPage.continuarDesdeReparacionDiferida(1);
+		try {Thread.sleep(3000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		accPage.continuarDesdeMedioDeContacto(0);
+		try {Thread.sleep(3000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 		driver.switchTo().frame(accPage.getFrameForElement(driver, By.id("TicketCreation_prevBtn")));
 		try {Thread.sleep(3000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
-		driver.findElements(By.cssSelector(".slds-radio.ng-scope")).get(2).click();
+		driver.findElement(By.id("EndingFirstFrontRadio|0")).findElements(By.tagName("label")).get(2+1).click();
 		try {Thread.sleep(3000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 		((JavascriptExecutor)driver).executeScript("window.scrollTo(0,"+driver.findElement(By.id("TicketCreation_nextBtn")).getLocation().y+")");
 	    driver.findElement(By.id("TicketCreation_nextBtn")).click();
@@ -429,9 +450,13 @@ public class TechnicalCareCSRSTTVista1  extends TestBase {
 		accPage.selectSymptomByIndex(2);
 		accPage.continueFromSymptoms();
 		try {Thread.sleep(3000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		accPage.continuarDesdeReparacionDiferida(1);
+		try {Thread.sleep(3000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		accPage.continuarDesdeMedioDeContacto(0);
+		try {Thread.sleep(3000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 		driver.switchTo().frame(accPage.getFrameForElement(driver, By.id("TicketCreation_prevBtn")));
 		try {Thread.sleep(3000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
-		driver.findElement(By.id("TicketCreationInfoBlock")).click();
+		driver.findElements(By.cssSelector(".slds-form-element__label--toggleText.ng-binding")).get(2).click();
 		try {Thread.sleep(1000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 		List<WebElement> campos = driver.findElement(By.id("SelectableItemsCreationClient")).findElement(By.cssSelector(".slds-grid.slds-wrap.slds-theme--default.taOScard-content")).findElements(By.cssSelector(".slds-tile__detail.slds-text-heading--small"));
 		//email
@@ -454,6 +479,7 @@ public class TechnicalCareCSRSTTVista1  extends TestBase {
 		try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 		driver.switchTo().frame(accPage.getFrameForElement(driver, By.id("ClientInformation_nextBtn")));
 		try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		driver.findElement(By.id("AlternativeEmail")).sendKeys("unAlternativo@gmail.com");
 		driver.findElement(By.id("AlternativePhone")).sendKeys("1125116113");
 		try {Thread.sleep(2000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 		accPage.continueFromClientInfo();
@@ -464,9 +490,14 @@ public class TechnicalCareCSRSTTVista1  extends TestBase {
 		accPage.selectSymptomByIndex(2);
 		accPage.continueFromSymptoms();
 		try {Thread.sleep(3000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		accPage.continuarDesdeReparacionDiferida(1);
+		try {Thread.sleep(3000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		
+		accPage.continuarDesdeMedioDeContacto(0);
+		try {Thread.sleep(3000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 		driver.switchTo().frame(accPage.getFrameForElement(driver, By.id("TicketCreation_prevBtn")));
 		try {Thread.sleep(3000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
-		driver.findElement(By.id("TicketCreationInfoBlock")).click();
+		driver.findElements(By.cssSelector(".slds-form-element__label--toggleText.ng-binding")).get(2).click();
 		try {Thread.sleep(1000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 		List<WebElement> campos = driver.findElement(By.id("SelectableItemsCreationClient")).findElement(By.cssSelector(".slds-grid.slds-wrap.slds-theme--default.taOScard-content")).findElements(By.cssSelector(".slds-tile__detail.slds-text-heading--small"));
 		//tlf
@@ -485,7 +516,7 @@ public class TechnicalCareCSRSTTVista1  extends TestBase {
 		try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 		accPage.continueFromClientInfo();
 		try {Thread.sleep(15000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
-		assertTrue(accPage.getFrameForElement(driver, By.id("ExtractPriceList")).isDisplayed());
+		assertTrue(accPage.getFrameForElement(driver, By.id("SymptomExplanation_nextBtn")).isDisplayed());
 	}
 	
 	@Test(groups = {"Fase2","TechnicalCare","ServicioTecnico"}) 
@@ -531,7 +562,7 @@ public class TechnicalCareCSRSTTVista1  extends TestBase {
 		WebElement BenBoton = driver.findElement(By.id("ExtractRepairHistory"));
 		((JavascriptExecutor)driver).executeScript("window.scrollTo(0,"+BenBoton.getLocation().y+")");
 		BenBoton.click();
-		try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}	
+		try {Thread.sleep(7000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}	
 		driver.switchTo().defaultContent();
 		driver.switchTo().frame(accPage.getFrameForElement(driver, By.cssSelector(".slds-table.slds-table--bordered.slds-table--cell-buffer.techCare-RepairHistory.ng-scope")));
 		WebElement rep = driver.findElement(By.cssSelector(".slds-table.slds-table--bordered.slds-table--cell-buffer.techCare-RepairHistory.ng-scope"));
@@ -553,7 +584,7 @@ public class TechnicalCareCSRSTTVista1  extends TestBase {
 	@Test(groups = {"Fase2","TechnicalCare","ServicioTecnico"})
 	public void TS16344_STT_Ingreso() {
 		Accounts accPage = new Accounts(driver);
-		driver.switchTo().frame(accPage.getFrameForElement(driver, By.id("ImeiCode")));
+		accPage.fillIMEI(validIMEI);
 		assertTrue(driver.findElement(By.id("ImeiCode")).isDisplayed());
 	}
 	

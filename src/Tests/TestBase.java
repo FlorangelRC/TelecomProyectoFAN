@@ -43,7 +43,7 @@ public class TestBase {
 		driver.findElement(By.id("nav-tab-0")).click();
 		break;
 		case "Casos":
-			driver.findElement(By.id("nav-tab-2")).click();
+			driver.findElement(By.id("nav-tab-1")).click();
 			break;
 		}
 		try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
@@ -296,11 +296,13 @@ public class TestBase {
 		     List<String> titleTabla = new ArrayList<String>();
 		     for(WebElement a : Lista) {
 		       titleTabla.add(a.getText().toLowerCase());
-		       //System.out.println(a.getText());//Para Verificar que este imprimiendo el texto que buscamos
+		       System.out.println(a.getText());//Para Verificar que este imprimiendo el texto que buscamos
 		     }     
 		     for(String a:consultar) {
-		      if(!(titleTabla.contains(a)))
-		       return false;
+		      if(!(titleTabla.contains(a))) {
+		    	  System.out.println("fallo en "+a);
+		    	  return false;
+		      }
 		     }
 		     return true;
 		}
