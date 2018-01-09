@@ -1,22 +1,20 @@
 package Tests;
 
-import static org.testng.Assert.assertTrue;
-
+import java.text.ParseException;
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
-
-
 import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.testng.Assert;
-import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
-import Pages.Accounts;
 import Pages.BasePage;
 import Pages.CustomerCare;
+import Pages.SCP;
 import Pages.setConexion;
 
 public class CustomerCare_Mattu extends TestBase{
@@ -49,7 +47,7 @@ public class CustomerCare_Mattu extends TestBase{
         CustomerCare page = new CustomerCare(driver);
         page.cerrarultimapestaña();
     }
-    @AfterClass (groups = {"CustomerCare", "ProblemasConRecargas", "ActualizarDatos", "DetalleDeConsumos", "Vista360Layout"})
+    //@AfterClass (groups = {"CustomerCare", "ProblemasConRecargas", "ActualizarDatos", "DetalleDeConsumos", "Vista360Layout"})
     public void quit() {
       driver.quit();
       sleep(4000);
@@ -178,6 +176,7 @@ public class CustomerCare_Mattu extends TestBase{
 	    }
 	    try {Thread.sleep(8000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 	    driver.findElement(By.id("pinNumber")).sendKeys("12345678901234567");
+	    System.out.println(driver.findElement(By.cssSelector(".vlc-slds-error-block.ng-scope")).getText());
 	    Assert.assertTrue(!driver.findElement(By.cssSelector(".error.ng-scope")).getText().isEmpty());
 	}
 		
@@ -335,11 +334,11 @@ public class CustomerCare_Mattu extends TestBase{
 	    		x.click();
 	    	}
 	    }
-	    try {Thread.sleep(8000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+	    /*try {Thread.sleep(8000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 	    driver.switchTo().defaultContent();
 	    driver.switchTo().frame(cambioFrameByID.getFrameForElement(driver, By.id("stepChooseMethod_nextBtn")));
 	    
-	    ((JavascriptExecutor)driver).executeScript("window.scrollTo(0,"+driver.findElement(By.cssSelector(".vlc-slds-button--tertiary.ng-binding.ng-scope")).getLocation().y+")");
+	    ((JavascriptExecutor)driver).executeScript("window.scrollTo(0,"+driver.findElement(By.className("slds-form-element__control")).getLocation().y+")");
 	    List <WebElement> wX = driver.findElements(By.className("slds-form-element__control"));
 	    for (WebElement x : wX) {
 	    	if (x.getText().toLowerCase().contains("siguiente")) {
@@ -349,7 +348,7 @@ public class CustomerCare_Mattu extends TestBase{
 	    }
 	    try {Thread.sleep(8000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 	    driver.findElement(By.id("lotNumber")).sendKeys("1234567890123456");
-	    Assert.assertTrue(driver.findElement(By.cssSelector(".error.ng-scope")).getText().isEmpty());
+	    Assert.assertTrue(driver.findElement(By.cssSelector(".error.ng-scope")).getText().isEmpty());*/
 	}
 	
 	//-------------------------------------------------------------------------------------------------
@@ -391,6 +390,7 @@ public class CustomerCare_Mattu extends TestBase{
 	    }
 	    try {Thread.sleep(8000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 	    driver.findElement(By.id("lotNumber")).sendKeys("12345678901234567");
+	    System.out.println(driver.findElement(By.cssSelector(".vlc-slds-error-block.ng-scope")).getText());
 	    Assert.assertTrue(!driver.findElement(By.cssSelector(".error.ng-scope")).getText().isEmpty());
 	}
 	
@@ -517,6 +517,119 @@ public class CustomerCare_Mattu extends TestBase{
 	}
 	
 	//-------------------------------------------------------------------------------------------------
+	//TCC = 13
+	@Test(groups = {"CustomerCare", "ProblemasConRecargas"})
+	public void TS_69190_360_View_Visualizacion_de_gestiones_desde_el_asset_Detalles_Gestion_Columna_numero() {
+		CustomerCare CP = new CustomerCare (driver);
+		try {Thread.sleep(15000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();} 
+		CP.elegircuenta("aaaaFernando Care");
+		try {Thread.sleep(15000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}  
+	    BasePage cambioFrameByID=new BasePage();
+	    driver.switchTo().defaultContent();
+	    driver.switchTo().frame(cambioFrameByID.getFrameForElement(driver, By.className("card-info")));
+	    WebElement wCardInfo = driver.findElement(By.className("card-info"));
+	    wCardInfo.click();
+	    try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+	    driver.switchTo().defaultContent();
+	    driver.switchTo().frame(cambioFrameByID.getFrameForElement(driver, By.className("community-flyout-actions-card")));
+	    ((JavascriptExecutor)driver).executeScript("window.scrollTo(0,"+driver.findElement(By.className("community-flyout-actions-card")).getLocation().y+")");
+	    try {Thread.sleep(3000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+	    WebElement wBody = driver.findElement(By.className("community-flyout-actions-card"));
+	    WebElement wFlyCard = wBody.findElement(By.tagName("ul"));
+	    List<WebElement> wMenu = wFlyCard.findElements(By.tagName("li"));
+	    wMenu.get(4).click();
+	    try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+	    driver.switchTo().defaultContent();
+	    driver.switchTo().frame(cambioFrameByID.getFrameForElement(driver, By.className("slds-p-bottom--small")));
+	    WebElement wGestion = driver.findElement(By.cssSelector(".ng-pristine.ng-untouched.ng-valid.ng-empty"));
+	    List<WebElement> wElements = wGestion.findElements(By.tagName("td"));
+	    String sGestion = wElements.get(2).getText();
+	    wElements.get(2).click();
+	    try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+	    driver.switchTo().defaultContent();
+	    driver.switchTo().frame(cambioFrameByID.getFrameForElement(driver, By.cssSelector(".hasMotif.caseTab.detailPage.ext-webkit.ext-chrome.sfdcBody.brandQuaternaryBgr")));
+	    ((JavascriptExecutor)driver).executeScript("window.scrollTo(0,"+driver.findElement(By.cssSelector(".hasMotif.caseTab.detailPage.ext-webkit.ext-chrome.sfdcBody.brandQuaternaryBgr")).getLocation().y+")");
+	    Assert.assertTrue(driver.findElement(By.className("pageDescription")).getText().equals(sGestion));
+	}
+	
+	//-------------------------------------------------------------------------------------------------
+	//TCC = 14
+	@Test(groups = {"CustomerCare", "ProblemasConRecargas"})
+	public void TS_69182_360_View_Visualizacion_de_gestiones_desde_el_asset_Estado_Ordenar_ascendente() throws ParseException {
+		CustomerCare CP = new CustomerCare (driver);
+		try {Thread.sleep(15000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();} 
+		CP.elegircuenta("aaaaFernando Care");
+		try {Thread.sleep(15000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}  
+	    BasePage cambioFrameByID=new BasePage();
+	    driver.switchTo().defaultContent();
+	    driver.switchTo().frame(cambioFrameByID.getFrameForElement(driver, By.className("card-info")));
+	    WebElement wCardInfo = driver.findElement(By.className("card-info"));
+	    wCardInfo.click();
+	    try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+	    driver.switchTo().defaultContent();
+	    driver.switchTo().frame(cambioFrameByID.getFrameForElement(driver, By.className("community-flyout-actions-card")));
+	    ((JavascriptExecutor)driver).executeScript("window.scrollTo(0,"+driver.findElement(By.className("community-flyout-actions-card")).getLocation().y+")");
+	    try {Thread.sleep(3000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+	    WebElement wBody = driver.findElement(By.className("community-flyout-actions-card"));
+	    WebElement wFlyCard = wBody.findElement(By.tagName("ul"));
+	    List<WebElement> wMenu = wFlyCard.findElements(By.tagName("li"));
+	    wMenu.get(4).click();
+	    try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+	    driver.switchTo().defaultContent();
+	    driver.switchTo().frame(cambioFrameByID.getFrameForElement(driver, By.cssSelector(".slds-table.slds-table--bordered.slds-table--resizable-cols.slds-table--fixed-layout.via-slds-table-pinned-header")));
+	    SCP sSCP = new SCP(driver);
+	    Assert.assertTrue(sSCP.Triangulo_Ordenador_Validador(driver, By.cssSelector(".slds-table.slds-table--bordered.slds-table--resizable-cols.slds-table--fixed-layout.via-slds-table-pinned-header"), 5, 5));
+	}
+	
+	//-------------------------------------------------------------------------------------------------
+	//TCC = 15
+	@Test(groups = {"CustomerCare", "ProblemasConRecargas"})
+	public void TS_69187_360_View_Visualizacion_de_gestiones_desde_el_asset_Estado_Ordenar_descendente() throws ParseException {
+		CustomerCare CP = new CustomerCare (driver);
+		try {Thread.sleep(15000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();} 
+		CP.elegircuenta("aaaaFernando Care");
+		try {Thread.sleep(15000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}  
+	    BasePage cambioFrameByID=new BasePage();
+	    driver.switchTo().defaultContent();
+	    driver.switchTo().frame(cambioFrameByID.getFrameForElement(driver, By.className("card-info")));
+	    WebElement wCardInfo = driver.findElement(By.className("card-info"));
+	    wCardInfo.click();
+	    try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+	    driver.switchTo().defaultContent();
+	    driver.switchTo().frame(cambioFrameByID.getFrameForElement(driver, By.className("community-flyout-actions-card")));
+	    ((JavascriptExecutor)driver).executeScript("window.scrollTo(0,"+driver.findElement(By.className("community-flyout-actions-card")).getLocation().y+")");
+	    try {Thread.sleep(3000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+	    WebElement wBody = driver.findElement(By.className("community-flyout-actions-card"));
+	    WebElement wFlyCard = wBody.findElement(By.tagName("ul"));
+	    List<WebElement> wMenu = wFlyCard.findElements(By.tagName("li"));
+	    wMenu.get(4).click();
+	    try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+	    driver.switchTo().defaultContent();
+	    driver.switchTo().frame(cambioFrameByID.getFrameForElement(driver, By.cssSelector(".slds-table.slds-table--bordered.slds-table--resizable-cols.slds-table--fixed-layout.via-slds-table-pinned-header")));
+	    SCP sSCP = new SCP(driver);
+	    WebElement wTable = driver.findElement(By.cssSelector(".slds-table.slds-table--bordered.slds-table--resizable-cols.slds-table--fixed-layout.via-slds-table-pinned-header"));
+	    WebElement wMenuTable = wTable.findElement(By.tagName("thead"));
+	    List<WebElement> wMenuList = wMenuTable.findElements(By.tagName("th"));
+	    List<String> sList = sSCP.TraerColumna(wTable, 5, 5);
+	    //System.out.println("sList size: " + sList.size());
+	    Collections.sort(sList);
+	    List<String> sListOrdered = new ArrayList<String>();
+	    for (int i = sList.size() - 1; i >= 0; i--) {
+	    	sListOrdered.add(sList.get(i));
+	    }
+	    wMenuList.get(4).click();
+	    wMenuList.get(4).click();
+	    List<String> sListOrderedOnPage = sSCP.TraerColumna(wTable, 5, 5);
+	    boolean bAssertTrue = true;
+	    for (int a = 0; a < sList.size(); a++) {
+	    	if(sListOrdered.get(a) != sListOrderedOnPage.get(a)) {
+	    		bAssertTrue = false;
+	    	}
+	    }
+	    Assert.assertTrue(bAssertTrue);
+	}
+	
+	//-------------------------------------------------------------------------------------------------
 	//TestCases Alan
 	@Test(groups = {"CustomerCare", "ActualizarDatos"})
 	public void TS38042_Profile_Changes_Validación_Correo_Electronico_Cuenta_Email_Existente(){
@@ -626,7 +739,7 @@ public class CustomerCare_Mattu extends TestBase{
 			Assert.assertTrue(driver.findElement(By.id("text-input-01")).isDisplayed());
 	}
 	
-	@Test(groups = {"CustomerCare", "Vista360Layout"})
+	/*@Test(groups = {"CustomerCare", "Vista360Layout"})
 	public void TS38410_360_View_Vista_360_de_facturación_clientes_individuos_Información_de_las_Cards_Visualizar_campos(){
 		 CustomerCare CP = new CustomerCare (driver);
 			try {Thread.sleep(10000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}	
@@ -647,7 +760,7 @@ public class CustomerCare_Mattu extends TestBase{
 	 Assert.assertTrue(asd.getText().toLowerCase().contains("recepción de factura"));
 	 Assert.assertTrue(asd.getText().toLowerCase().contains("ciclo de facturación"));
 	 Assert.assertTrue(asd.getText().toLowerCase().contains("servicios"));
-	}
+	}*/
 
 	@Test(groups = {"CustomerCare", "Vista360Layout"})
 	public void TS38440_360_View_360_Card_Servicio_Prepago_Flyout_AccionesCampañas() {

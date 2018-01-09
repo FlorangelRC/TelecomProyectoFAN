@@ -149,7 +149,7 @@ public class Sales extends TestBase {
 		contact.searchContact(DNI, "123", "femenino");
 		List <WebElement> error = driver.findElements(By.cssSelector(".description.ng-binding"));
 		for(WebElement e: error){
-			if(e.getText().equals("Longitud Mínima De 7")){
+			if(e.getText().equals("Longitud Mï¿½nima De 7")){
 				a=true;
 				break;
 			}
@@ -205,7 +205,7 @@ public class Sales extends TestBase {
 		List <WebElement> error = driver.findElements(By.cssSelector(".description.ng-binding"));
 		for(WebElement e: error){
 			
-			if(e.getText().equals("Longitud Máxima De 8")){
+			if(e.getText().equals("Longitud Mï¿½xima De 8")){
 				a=true;
 				break;
 			}
@@ -289,7 +289,7 @@ public class Sales extends TestBase {
 		contact.searchContact("Pasaporte", "1234567890", "femenino");
 		List <WebElement> error = driver.findElements(By.cssSelector(".description.ng-binding"));
 		for(WebElement e: error){
-			if(e.getText().equals("Longitud Máxima De 9")){
+			if(e.getText().equals("Longitud Mï¿½xima De 9")){
 				a=true;
 				break;}}
 		try {Thread.sleep(1000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
@@ -392,7 +392,7 @@ public class Sales extends TestBase {
 		contact.searchContact("CUIT", "05698957425", "femenino");
 		List <WebElement> error = driver.findElements(By.cssSelector(".description.ng-binding"));
 		for(WebElement e: error){
-			if(e.getText().equals("Mínimo 7 Caracteres Y Máximo 8 And El Primer Dígito No Debe Ser 0.")){
+			if(e.getText().equals("Mï¿½nimo 7 Caracteres Y Mï¿½ximo 8 And El Primer Dï¿½gito No Debe Ser 0.")){
 				a=true;
 				break;}}
 		try {Thread.sleep(1000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
@@ -983,7 +983,7 @@ public class Sales extends TestBase {
 		  List<WebElement> gst = driver.findElements(By.cssSelector(".slds-page-header__title.vlc-slds-page-header__title.slds-truncate.ng-binding"));
 		   for (WebElement e : gst){
 		    System.out.println(e.getText());
-		    if  (e.getText().equals("Gestión de clientes")){
+		    if  (e.getText().equals("Gestiï¿½n de clientes")){
 		     f= true;}}
 		  Assert.assertTrue(f);}
 			
@@ -1000,7 +1000,7 @@ public class Sales extends TestBase {
 		  Boolean f = false;
 		  List<WebElement> busqadv=driver.findElements(By.cssSelector(".slds-form-element__label.slds-clearfix.ng-scope"));
 		   for (WebElement e : busqadv){
-		    if  (e.getText().equals("Búsqueda avanzada")){
+		    if  (e.getText().equals("Bï¿½squeda avanzada")){
 		     f= true;}}
 		  Assert.assertTrue(f);}
 	
@@ -1124,7 +1124,7 @@ public class Sales extends TestBase {
 	boolean error = false;
 	List<WebElement> cart = driver.findElements(By.cssSelector(".message.description.ng-binding.ng-scope"));
 		for(WebElement c: cart) {
-			if(c.getText().contains("Fecha de nacimiento inválida")) {
+			if(c.getText().contains("Fecha de nacimiento invï¿½lida")) {
 				c.isDisplayed();
 				error= true;
 				System.out.println(c.getText());
