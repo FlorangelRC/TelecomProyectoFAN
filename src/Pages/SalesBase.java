@@ -371,8 +371,8 @@ for(WebElement e: btns){
 		try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 		driver.findElement(By.id("dataInput_nextBtn")).click();
 		try {Thread.sleep(15000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
-	//	setSimpleDropdown(driver.findElement(By.id("DocumentTypeSearch")), "DNI");
-	//	try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		//	setSimpleDropdown(driver.findElement(By.id("DocumentTypeSearch")), "DNI");
+		//	try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 		driver.findElement(By.id("FirstName")).sendKeys(nombre);
 		driver.findElement(By.id("LastName")).sendKeys(apellido);
 		ContactSearch contact = new ContactSearch(driver);
