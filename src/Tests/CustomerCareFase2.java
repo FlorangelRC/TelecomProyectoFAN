@@ -41,18 +41,6 @@ public class CustomerCareFase2 extends TestBase {
 		try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 	}
 
-	//@AfterMethod(groups = {"CustomerCare", "Vista360Layout", "CambiosDeCondiciónImpositiva", "Sugerencias", "DetalleDeConsumos", "CambioDeCiclo", "MovimientoDeCuentasDeFacturación", "AdministraciónDeCasos", "CostoDeCambios"})
-	public void alert() {
-		CustomerCare page = new CustomerCare(driver);
-		page.cerrarultimapestaña();
-		driver.switchTo().defaultContent();
-		try {Thread.sleep(10000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
-		try {
-			Alert alert = driver.switchTo().alert();
-			System.out.println(alert.getText());
-		} catch (org.openqa.selenium.NoAlertPresentException e) {}
-	}
-
 	@BeforeClass(groups = {"CustomerCare", "Vista360Layout", "CambiosDeCondiciónImpositiva", "Sugerencias", "DetalleDeConsumos", "CambioDeCiclo", "MovimientoDeCuentasDeFacturación", "AdministraciónDeCasos", "CostoDeCambios"})
 	public void init() throws Exception {
 		this.driver = setConexion.setupEze();
@@ -73,11 +61,11 @@ public class CustomerCareFase2 extends TestBase {
 
 	@BeforeMethod(groups = {"CustomerCare", "Vista360Layout", "CambiosDeCondiciónImpositiva", "Sugerencias", "DetalleDeConsumos", "CambioDeCiclo", "MovimientoDeCuentasDeFacturación", "AdministraciónDeCasos", "CostoDeCambios"})
 	public void setup() {
-		try {Thread.sleep(10000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 		CustomerCare page = new CustomerCare(driver);
 		page.cerrarultimapestaña();
 	}
 
+	
 	@Test(groups = {"CustomerCare", "Vista360Layout"})
 	public void TS7137_BusinessDataPanelQuickAccessButtonsAccount() {
 		CustomerCare page = new CustomerCare(driver);

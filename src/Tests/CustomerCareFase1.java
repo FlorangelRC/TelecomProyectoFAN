@@ -6,7 +6,6 @@ import java.text.ParseException;
 
 import java.util.List;
 
-import org.openqa.selenium.Alert;
 import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
@@ -31,18 +30,6 @@ public class CustomerCareFase1 extends TestBase {
 	public void tearDown() {
 		driver.quit();
 		try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
-	}
-
-	//@AfterMethod(groups = {"CustomerCare", "Vista360Layout"})
-	public void alert() {
-		CustomerCare page = new CustomerCare(driver);
-		page.cerrarultimapestaña();
-		driver.switchTo().defaultContent();
-		try {Thread.sleep(10000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
-		try {
-			Alert alert = driver.switchTo().alert();
-			System.out.println(alert.getText());
-		} catch (org.openqa.selenium.NoAlertPresentException e) {}
 	}
 
 	@BeforeClass(groups = {"CustomerCare", "Vista360Layout"})
@@ -378,17 +365,28 @@ public class CustomerCareFase1 extends TestBase {
 	
 	@Test(groups = {"CustomerCare", "Vista360Layout"})
 	public void TS7144_Customer_Account_Management_Customer_Segmentation_Estado_Activo_Usuario_Externo() {
-		CustomerCare page = new CustomerCare(driver);
-		page.usarpanelcentral("Detalles");
-		page.validarStatus("Active");
+		List <WebElement> pest = driver.findElements(By.className("x-tab-left"));
+        pest.get(3).click();
+		BasePage cambioFrameByID = new BasePage(driver);
+		driver.switchTo().frame(cambioFrameByID.getFrameForElement(driver, By.className("detailList")));
+		WebElement status = driver.findElement(By.xpath("//*[@id=\"ep_Account_View_j_id4\"]/div[2]/div[2]/table/tbody/tr[2]/td[4]"));
+		Assert.assertTrue(status.getText().equals("Active"));
 	}
 	
 	
 	@Test(groups = {"CustomerCare", "Vista360Layout"})
     public void TS7148_Customer_Account_Management_Customer_Segmentation_Estado_inactivo_Usuario_Externo() {
         CustomerCare page = new CustomerCare(driver);
-        page.usarpanelcentral("Detalles");
-        page.validarStatus("Inactive");
+        page.cerrarTodasLasPestañas();
+        page.elegircuenta("aaaaAndres Care");
+        List <WebElement> pest = driver.findElements(By.className("x-tab-left"));
+        pest.get(3).click();
+		BasePage cambioFrameByID = new BasePage(driver);
+		driver.switchTo().frame(cambioFrameByID.getFrameForElement(driver, By.className("detailList")));
+		WebElement status = driver.findElement(By.xpath("//*[@id=\"ep_Account_View_j_id4\"]/div[2]/div[2]/table/tbody/tr[2]/td[4]"));
+		Assert.assertTrue(status.getText().equals("Inactive"));
+		page.cerrarTodasLasPestañas();
+		page.elegircuenta("aaaaFernando Care");
     }
 	
 	
