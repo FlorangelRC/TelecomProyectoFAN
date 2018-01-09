@@ -99,8 +99,12 @@ public class SCP extends BasePage {
 	
 	public void elegiroportunidad(String oportunidad) {
 		  try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+
 		WebElement element = driver.findElement(By.cssSelector(".bRelatedList.first"));
 		((JavascriptExecutor)driver).executeScript("window.scrollTo(0,"+element.getLocation().y+")");
+		 List<WebElement> btns = driver.findElement(By.cssSelector(".pShowMore")).findElements(By.tagName("a"));
+		 btns.get(1).click();
+		  try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 		List<WebElement> op = element.findElements((By.cssSelector(".dataCell")));
 		for(WebElement e : op){
 			System.out.println(e.getText());
@@ -605,6 +609,7 @@ Assert.assertTrue(acc&&nmbre&&pntf&&pntd);
 
 		//Entra desde una cuenta > oportunidad > productos
 	public void IngresarAlProductos(String producto){
+		boolean exist = false;
 		WebElement element = driver.findElement(By.cssSelector(".listRelatedObject.opportunityLineItemBlock"));
 		((JavascriptExecutor)driver).executeScript("window.scrollTo(0,"+element.getLocation().y+")");
 		List<WebElement> op = element.findElements((By.cssSelector(".dataCell")));
