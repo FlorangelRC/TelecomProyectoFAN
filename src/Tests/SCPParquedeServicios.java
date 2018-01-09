@@ -441,7 +441,7 @@ public void TS112648_Estructura_de_las_oportunidades_Bloques_Informacion_Adicion
 		page.clickOnTabByName("cuentas");
 		page.clickEnCuentaPorNombre("AIR S.R.L");
 		try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
-		page.elegiroportunidad("ALta suc. Jujuy");
+		page.elegiroportunidad("ALTA Sucursal Jujuy");
 		page.IngresarAlProductos("HYPERWAY HEAD QUARTER");
 		page.ModificarProducto("modificar","cargo unico", "900,00", "guardar");
 		page.VerificarCampoModificado("cargo unico", "900,00");
