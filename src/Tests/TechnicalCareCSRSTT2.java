@@ -92,7 +92,7 @@ public class TechnicalCareCSRSTT2 extends TestBase {
 			driver.findElement(By.id("TicketCreation_nextBtn")).click();
 	 }
 		
-		@AfterMethod(groups = {"Fase2","TechnicalCare","ServicioTecnico"}) 
+		//@AfterMethod(groups = {"Fase2","TechnicalCare","ServicioTecnico"}) 
 		 public void afterMethod() {
 			driver.switchTo().defaultContent();
 			List<WebElement> ctas = driver.findElement(By.cssSelector(".x-tab-strip.x-tab-strip-top")).findElements(By.tagName("li"));
@@ -110,7 +110,7 @@ public class TechnicalCareCSRSTT2 extends TestBase {
 			
 			  }
 		
-		@AfterClass(groups = {"Fase2","TechnicalCare","ServicioTecnico"}) 
+		//@AfterClass(groups = {"Fase2","TechnicalCare","ServicioTecnico"}) 
 		public void tearDown() {
 			driver.switchTo().defaultContent();
 			driver.findElement(By.id("tsidButton")).click();
@@ -254,6 +254,18 @@ public class TechnicalCareCSRSTT2 extends TestBase {
 			assertTrue(campos.get(1).findElement(By.className("ng-binding")).getTagName().equals("p"));	
 			//comentarios
 			assertTrue(campos.get(2).findElement(By.className("ng-binding")).getTagName().equals("p"));
+		}
+		
+		@Test(groups = {"Fase2","TechnicalCare","ServicioTecnico"}) 
+		public void TS16226_CRM_Fase2_TechnicalCare_CSR_STT2_Vista1_Regresar_Step_Anterior_Omniscript_De_STT2() {
+			Accounts accPage = new Accounts(driver);
+			try {Thread.sleep(2000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+			driver.switchTo().frame(accPage.getFrameForElement(driver, By.id("TicketSummaryTechnician_nextBtn"))); 
+			driver.findElement(By.id("TicketSummaryTechnician_prevBtn")).click();
+			try {Thread.sleep(3000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+			driver.switchTo().frame(accPage.getFrameForElement(driver, By.id("TicketCreation")));
+			assertTrue(driver.findElement(By.id("TicketCreation")).isDisplayed());
+			
 		}
 		
 		@Test(groups = {"Fase2","TechnicalCare","ServicioTecnico"}) 

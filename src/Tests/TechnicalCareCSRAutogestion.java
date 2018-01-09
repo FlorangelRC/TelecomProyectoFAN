@@ -65,7 +65,7 @@ public class TechnicalCareCSRAutogestion extends TestBase {
 		
 	}
 	
-	@AfterMethod(groups = {"TechnicalCare", "Autogestion", "Muleto"}) 
+	//@AfterMethod(groups = {"TechnicalCare", "Autogestion", "Muleto"}) 
 	 public void afterMethod() {
 		driver.switchTo().defaultContent();
 		List<WebElement> ctas = driver.findElement(By.cssSelector(".x-tab-strip.x-tab-strip-top")).findElements(By.tagName("li"));
@@ -83,7 +83,7 @@ public class TechnicalCareCSRAutogestion extends TestBase {
 		
 		  }
 	
-	@AfterClass(groups = {"TechnicalCare", "Autogestion", "Muleto"}) 
+	//@AfterClass(groups = {"TechnicalCare", "Autogestion", "Muleto"}) 
 	public void tearDown2() {
 		driver.switchTo().defaultContent();
 		try{ for(WebElement e : driver.findElements(By.className("x-tab-strip-close"))) {
@@ -1965,7 +1965,7 @@ public class TechnicalCareCSRAutogestion extends TestBase {
 	    assertTrue(listSelect.getFirstSelectedOption().getText().contains("Club Personal"));
 	}
 	
-	@Test(groups = {"TechnicalCare","Muleto"})
+	/*@Test(groups = {"TechnicalCare","Muleto"})
 	public void TS51071_Muleto_Verificacion_De_La_Seleccion_Entrega_De_Muleto() {
 		Accounts accountPage = new Accounts(driver);
 		accountPage.findAndClickButton("muleto");
@@ -1989,7 +1989,7 @@ public class TechnicalCareCSRAutogestion extends TestBase {
 		try {Thread.sleep(1000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 		assertTrue(driver.findElement(By.id("ProcessingType_nextBtn")).isDisplayed());
 		
-	}
+	}*/
 	
 	@Test(groups = {"TechnicalCare","Muleto"})
 	public void TS51073_Muleto_Visualizacion_Campo_DNI_Para_Entrega_De_Muleto() {

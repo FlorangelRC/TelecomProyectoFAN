@@ -67,9 +67,9 @@ public class SCPAdministracionDeServicios extends TestBase {
 		try {Thread.sleep(7000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 		pcp.clickEnCuentaPorNombre("AIR S.R.L");
 		try {Thread.sleep(7000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
-		pcp.elegiroportunidad("ALta suc. Jujuy");
+		pcp.elegiroportunidad("ALTA Sucursal Jujuy");
 		try {Thread.sleep(7000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
-		WebElement Producto = driver.findElement(By.cssSelector(".listRelatedObject.opportunityLineItemBlock")).findElement(By.cssSelector(".dataRow.even.last.first")).findElement(By.tagName("th"));
+		WebElement Producto = driver.findElement(By.cssSelector(".listRelatedObject.opportunityLineItemBlock")).findElement(By.cssSelector(".dataRow.even.first")).findElement(By.tagName("th"));
 		((JavascriptExecutor)driver).executeScript("window.scrollTo(0,"+Producto.getLocation().y+")");
 		Producto.findElement(By.tagName("a")).click();
 		try {Thread.sleep(7000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
@@ -79,7 +79,7 @@ public class SCPAdministracionDeServicios extends TestBase {
 		System.out.println("Actual: "+MonActual);
 		Actions action = new Actions(driver); 
 		action.moveToElement(Detalles.findElements(By.tagName("td")).get(1)).doubleClick().perform();
-		try {Thread.sleep(2000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		try {Thread.sleep(3000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 		Select listSelect = new Select(Detalles.findElements(By.tagName("td")).get(1).findElement(By.tagName("select")));
 		if(MonActual.equals("USD"))
 			listSelect.selectByVisibleText("ARG");
@@ -115,8 +115,7 @@ public class SCPAdministracionDeServicios extends TestBase {
 		}
 		assertTrue(estaMon);
 		assertTrue(false);
-		/*Actions action = new Actions(driver); 
-		action.moveToElement(TMI).doubleClick().perform();*/
+		
 		pcp.Desloguear_Loguear("isabel");
     }  
 	
@@ -630,7 +629,7 @@ public class SCPAdministracionDeServicios extends TestBase {
       assertTrue(botonG);  
       ArrayList<String> allTabs = new ArrayList<String>(driver.getWindowHandles());  
         driver.switchTo().window(allTabs.get(1));  
-      assertTrue(driver.findElement(By.id("player-container")).isDisplayed());  
+      assertTrue(driver.findElement(By.cssSelector(".video-stream.html5-main-video")).isDisplayed());  
       driver.close();  
       driver.switchTo().window(allTabs.get(0));  
       try {Thread.sleep(2000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}  
@@ -850,7 +849,7 @@ public class SCPAdministracionDeServicios extends TestBase {
       primeros = driver.findElement(By.id("mainTable")).findElements(By.tagName("tr"));  
       primeros.remove(0);  
       for (WebElement uno : primeros) {  
-        if (uno.getAttribute("class").equals("StrategicInitiativeRow DraggableRow dataRow hasPotentialBussiness odd") || (uno.getAttribute("class").equals("StrategicInitiativeRow DraggableRow dataRow hasPotentialBussiness even"))) {  
+        if (uno.getAttribute("class").equals("StrategicInitiativeRow DraggableRow dataRow NotUsed odd") || (uno.getAttribute("class").equals("StrategicInitiativeRow DraggableRow dataRow NotUsed even"))) {  
           if(uno.findElement(By.tagName("td")).getText().equals(textoBuscar))   
             estaBuscado = true;  
           else   
