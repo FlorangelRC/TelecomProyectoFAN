@@ -56,7 +56,7 @@ private WebDriver driver;
 		try {Thread.sleep(10000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 	}
 	
-	@AfterClass(groups = "SCP")
+	//@AfterClass(groups = "SCP")
 	public void teardown() {
 		driver.quit();
 		sleep(10000);
@@ -361,7 +361,7 @@ private WebDriver driver;
 	    			}
 	    	}
 	    Assert.assertTrue(true);
+		
 	}
-	
 
 }

@@ -76,6 +76,7 @@ public class SintomasSTTManagement extends TestBase {
 		homePage.switchAppsMenu();
 		homePage.selectAppFromMenuByName("Ventas");
 		driver.quit();
+		try {Thread.sleep(2000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 	}
 	
 	@AfterMethod(groups = {"Fase2","TechnicalCare","ABMAdministrador"})
@@ -306,7 +307,7 @@ public class SintomasSTTManagement extends TestBase {
 	@Test(groups = {"Fase2","TechnicalCare","ABMAdministrador"})
 	public void TS11551_Creacion_De_Sintoma_Fecha_De_Modificacion_verificacion(){
 		//Condition : There must be only one symptom with this name.
-		String nombreSintomaModificar = "TS11551: Fecha de modificacion. Ya creado.";
+		String nombreSintomaModificar = "TS11546: Sintoma ACTIVADO";
 		TestUtils testUtils = new TestUtils();
 		String fechaActualConHoras = testUtils.getCurrentDateWithHoursString();
 		String activadoDescripcion = "Se modifico con fecha " + fechaActualConHoras;

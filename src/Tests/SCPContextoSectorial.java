@@ -47,7 +47,7 @@ public class SCPContextoSectorial extends TestBase {
 	    try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}	
 	}
 	
-	@AfterMethod(groups= "SCP")
+	@AfterMethod(groups = "SCP")
 	public void after(){
 		try {Thread.sleep(3000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 		driver.switchTo().defaultContent();
@@ -56,7 +56,7 @@ public class SCPContextoSectorial extends TestBase {
 		driver.findElement(By.id("home_Tab")).click();
 	}
 	
-	//@AfterClass(groups = "SCP")
+	@AfterClass(groups = "SCP")
 	public void teardown() {
 		driver.quit();
 		sleep(5000);
@@ -799,7 +799,7 @@ public class SCPContextoSectorial extends TestBase {
 		Assert.assertTrue(a);
 	}
 	
-	@Test(groups = "SCP")
+	//@Test(groups = "SCP")
 	public void TS112716_Mosaico_de_Relacionamiento_General_Ver_Video() {
 		SCP prueba = new SCP(driver);
 		prueba.moveToElementOnAccAndClick("segundoTitulo", 4);
@@ -1095,7 +1095,6 @@ public class SCPContextoSectorial extends TestBase {
 		boolean a = false;
 		for (WebElement x : elim) {
 			if (x.getAttribute("value").toLowerCase().contains("eliminar")) {
-				x.click();
 				a = true;
 				break;
 			}

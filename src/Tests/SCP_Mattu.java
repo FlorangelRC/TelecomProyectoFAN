@@ -40,11 +40,11 @@ private WebDriver driver;
 		prueba.clickOnFirstAccRe();
 		try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}	
 	}
-	/*@AfterClass(groups = "SCP")
+	@AfterClass(groups = "SCP")
 	public void teardown() {
 		driver.quit();
 		sleep(5000);
-	}*/
+	}
 	
 	//------------------------------------------------------------------------------------------------- 
     //TCC = 1 
@@ -186,51 +186,38 @@ private WebDriver driver;
 	
 	//------------------------------------------------------------------------------------------------- 
 	//TCC = 10
-	/*@Test(groups = "SCP")
+	@Test(groups = "SCP")
 	public void TS112773_Panel_de_control_Busqueda_Con_varios_resultados() {
 		WebElement wNavBar = driver.findElement(By.cssSelector(".zen-inlineList.zen-tabMenu"));
 		List<WebElement> wMenu = wNavBar.findElements(By.tagName("li"));
 		wMenu.get(4).click();
+		TestBase TB = new TestBase();
+		TB.waitFor(driver, By.id("filterDiv"));
 		driver.findElement(By.id("filterDiv")).findElement(By.tagName("input")).sendKeys("APER\n\n");
 		SCP prueba = new SCP(driver);
 		boolean bContains = true;
-		TestBase TB = new TestBase();
-		TB.waitFor(driver, By.cssSelector(".table.table-striped.table-bordered.table-condensed.dataTablePrincipal"));
-		WebElement wBody = driver.findElement(By.cssSelector(".table.table-striped.table-bordered.table-condensed.dataTablePrincipal.dataTable"));
-		List <String> sColumna = prueba.TraerColumna(wBody, 3, 1);
-		for (String sNombreDeLaCuenta:sColumna) {
-			if (!sNombreDeLaCuenta.contains("APER")) {
-				bContains = false;
-				break;
-			}
-		}
-		WebElement wMenuSiguiente = driver.findElement(By.cssSelector(".btn-group.pull-right"));
-		List<WebElement> wMenu2 = wMenuSiguiente.findElements(By.tagName("input"));
-		boolean bSiguiente = driver.findElement(By.id("j_id0:pageForm:siguiente")).isEnabled();
-		if(bSiguiente)driver.findElement(By.id("j_id0:pageForm:siguiente")).click();
-		while (bSiguiente) { 
-			System.out.println("Is enable");
-			TB.waitFor(driver, By.cssSelector(".table.table-striped.table-bordered.table-condensed.dataTablePrincipal"));
-			wBody = driver.findElement(By.cssSelector(".table.table-striped.table-bordered.table-condensed.dataTablePrincipal.dataTable"));
-			System.out.println("Texto wBody: " + wBody.getText());
-			sColumna = prueba.TraerColumna(wBody, 3, 1);
-			
-			System.out.println("Paso 1 vez");
+		try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		boolean bSiguiente;
+		int i = 0;
+		do { 
+			TB.waitFor(driver, By.id("mainOppsTable"));
+			WebElement wBody = driver.findElement(By.id("mainOppsTable"));
+			List <String> sColumna = prueba.TraerColumna(wBody, 3, 1);
+			i++;
 			for (String sNombreDeLaCuenta:sColumna) {
-				if (!sNombreDeLaCuenta.contains("APER")) {
+				if (!sNombreDeLaCuenta.contains("aper")) {
 					bContains = false;
-					break;
+					Assert.assertTrue(bContains);
 				}
 			}
-			wMenuSiguiente.clear();
-			wMenuSiguiente = driver.findElement(By.cssSelector(".btn-group.pull-right"));
-			wMenu.clear();
-			wMenu = wMenuSiguiente.findElements(By.tagName("input"));
+			
 			bSiguiente = driver.findElement(By.id("j_id0:pageForm:siguiente")).isEnabled();
 			if(bSiguiente)driver.findElement(By.id("j_id0:pageForm:siguiente")).click();
-		}
-		System.out.println(bContains);
-	}*/
+			try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		} while (bSiguiente);
+		
+		Assert.assertTrue(bContains);
+	}
 	
 	//------------------------------------------------------------------------------------------------- 
 	//TCC = 11
@@ -244,7 +231,90 @@ private WebDriver driver;
 		Assert.assertTrue(prueba.Triangulo_Ordenador_Validador(driver, By.id("mainTable"), 5, 3));
 		Assert.assertTrue(prueba.Triangulo_Ordenador_Validador(driver, By.id("mainTable"), 5, 4));
 		Assert.assertTrue(prueba.Triangulo_Ordenador_Validador(driver, By.id("mainTable"), 5, 5));
-		
 	}
 	
+	//------------------------------------------------------------------------------------------------- 
+	//TCC = 12
+		@Test(groups = "SCP")
+		public void TS112775_Panel_de_control_Busqueda_Primera_pagina() {
+			WebElement wNavBar = driver.findElement(By.cssSelector(".zen-inlineList.zen-tabMenu"));
+			List<WebElement> wMenu = wNavBar.findElements(By.tagName("li"));
+			wMenu.get(4).click();
+			
+			try {Thread.sleep(2000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+			driver.findElement(By.id("j_id0:pageForm:Ultima")).click();
+			try {Thread.sleep(2000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+			driver.findElement(By.id("j_id0:pageForm:Primera")).click();
+			try {Thread.sleep(2000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+			Assert.assertTrue(!driver.findElement(By.id("j_id0:pageForm:Primera")).isEnabled());
+	}
+	
+	//------------------------------------------------------------------------------------------------- 
+	//TCC = 13
+	@Test(groups = "SCP")
+	public void TS112777_Panel_de_control_Busqueda_Ultima_pagina() {
+		WebElement wNavBar = driver.findElement(By.cssSelector(".zen-inlineList.zen-tabMenu"));
+		List<WebElement> wMenu = wNavBar.findElements(By.tagName("li"));
+		wMenu.get(4).click();
+		
+		try {Thread.sleep(2000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		driver.findElement(By.id("j_id0:pageForm:Ultima")).click();
+		try {Thread.sleep(2000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		Assert.assertTrue(!driver.findElement(By.id("j_id0:pageForm:Ultima")).isEnabled());
+	}
+	
+	//------------------------------------------------------------------------------------------------- 
+	//TCC = 14
+	@Test(groups = "SCP")
+	public void TS112776_Panel_de_control_Busqueda_Siguiente_pagina() {
+		WebElement wNavBar = driver.findElement(By.cssSelector(".zen-inlineList.zen-tabMenu"));
+		List<WebElement> wMenu = wNavBar.findElements(By.tagName("li"));
+		wMenu.get(4).click();
+		
+		try {Thread.sleep(2000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		driver.findElement(By.id("j_id0:pageForm:siguiente")).click();
+		try {Thread.sleep(2000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		Assert.assertTrue(driver.findElement(By.id("j_id0:pageForm:anterior")).isEnabled());
+	}
+	
+	//------------------------------------------------------------------------------------------------- 
+	//TCC = 15
+	@Test(groups = "SCP")
+	public void TS112778_Panel_de_control_Hipervinculos_Ir_a_Detalle_de_la_Cuenta() {
+		WebElement wNavBar = driver.findElement(By.cssSelector(".zen-inlineList.zen-tabMenu"));
+		List<WebElement> wMenu = wNavBar.findElements(By.tagName("li"));
+		wMenu.get(4).click();
+		
+		try {Thread.sleep(2000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		SCP prueba = new SCP(driver);
+		WebElement wBody = driver.findElement(By.id("mainOppsTable"));
+		String sCliente = prueba.TraerColumna(wBody, 3, 1).get(0);
+		driver.findElement(By.xpath("//*[@id=\"mainOppsTable\"]/tbody/tr[1]/td[3]/a")).click();
+		try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		Assert.assertTrue(driver.findElement(By.className("topName")).getText().toLowerCase().equals(sCliente));
+	}
+	
+	//------------------------------------------------------------------------------------------------- 
+	//TCC = 16
+	@Test(groups = "SCP")
+	public void TS112779_Panel_de_control_Ingreso_Desde_salesforce() {
+		WebElement wNavBar = driver.findElement(By.cssSelector(".zen-inlineList.zen-tabMenu"));
+		List<WebElement> wMenu = wNavBar.findElements(By.tagName("li"));
+		wMenu.get(4).click();
+		
+		Assert.assertTrue(driver.findElement(By.cssSelector(".table.table-striped.table-bordered.table-condensed.dataTablePrincipal.dataTable")).isDisplayed());
+		List <WebElement> wGraph = driver.findElements(By.cssSelector(".plot-container.plotly"));
+		Assert.assertTrue(wGraph.get(0).isDisplayed());
+		Assert.assertTrue(wGraph.get(1).isDisplayed());
+	}
+	
+	//------------------------------------------------------------------------------------------------- 
+	//TCC = 17
+	/*@Test(groups = "SCP")
+	public void TS112567_Asignación_de_Value_Drivers_a_Oportunidades_Related_value_drivers() {
+		SCP prueba= new SCP(driver);
+		prueba.moveToElementOnAccAndClick("tercerTitulo", 1);
+		sleep(3000);
+		boolean a = prueba.goToOportunity();
+	}*/
 }

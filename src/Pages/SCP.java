@@ -449,7 +449,6 @@ public boolean cuentalogeada(String cuenta){
 			if (wElements.size() < iColumnas) {
 				wRows.remove(i);
 			}
-			
 		}
 		List<String> sElements =  new ArrayList<String>();
 		for (WebElement wAux:wRows) {

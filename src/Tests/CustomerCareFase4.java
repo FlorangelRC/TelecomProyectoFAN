@@ -33,7 +33,7 @@ public class CustomerCareFase4 extends TestBase{
 		IrA.CajonDeAplicaciones.ConsolaFAN();
 	}
 	
-	//@AfterClass (groups = {"CustomerCare", "Vista360Layout", "DetalleDeConsumos", "ActualizarDatos"})
+	@AfterClass (groups = {"CustomerCare", "Vista360Layout", "DetalleDeConsumos", "ActualizarDatos"})
 	public void quit() {
 		page.cerrarTodasLasPestañas();
 		IrA.CajonDeAplicaciones.Ventas();
@@ -108,6 +108,22 @@ public class CustomerCareFase4 extends TestBase{
 	}
 	
 	@Test (groups = {"CustomerCare", "Vista360Layout"})
+	public void TS37469_360_View_Vista_360_de_facturación_clientes_individuos_Persistencia_Visualizar_Convenios_de_Pago() {
+		page.elegirCuenta("aaaaFernando Care");
+		page.irAFacturacion();
+		BasePage cambioFrameByID = new BasePage();
+		driver.switchTo().frame(cambioFrameByID.getFrameForElement(driver, By.cssSelector(".icon.icon-v-modify-contract")));
+		List <WebElement> element = driver.findElements(By.className("slds-text-body_regular"));
+		boolean a = false;
+		for (WebElement x : element) {
+			if (x.getText().equals("Convenios de pago")) {
+				a = true;
+			}
+		}
+		Assert.assertTrue(a);
+	}
+	
+	@Test (groups = {"CustomerCare", "Vista360Layout"})
 	public void TS69033_360_View_360_View_Historiales_Formulario_Historiales_Ver_detalle_Historial_de_Recargas_Verificar_nombre_Historico() {
 		page.elegirCuenta("aaaaFernando Care");
 		page.irAHistoriales();		
@@ -156,8 +172,14 @@ public class CustomerCareFase4 extends TestBase{
 	public void TS69098_Consumption_Details_Detalle_de_Consumo_Modificacion_de_Tabla_Nuevas_Columnas_Visualizar_encabezado() {
 		page.elegirCuenta("aaaaFernando Care");
 		page.irAGestion("detalle de consu");
-		WebElement title = driver.findElement(By.className("big_title"));
-		Assert.assertTrue(title.getText().equals("Detalle de Consumos"));
+		List <WebElement> title = driver.findElements(By.cssSelector(".slds-size--11-of-12.slds-medium-size--11-of-12.slds-large-size--11-of-12"));
+		boolean a = false;
+		for (WebElement x : title) {
+			if (x.getText().equals("Detalle de Consumos")) {
+				a = true;
+			}
+		}
+		Assert.assertTrue(a);
 	}
 	
 	@Test (groups = {"CustomerCare", "DetalleDeConsumos"})
@@ -380,6 +402,57 @@ public class CustomerCareFase4 extends TestBase{
 			}
 		}
 		Assert.assertTrue(a);
+	}
+	
+	@Test (groups = {"CustomerCare", "Vista360Layout"})
+	public void TS69164_360_View_360_View_Visualizacion_de_gestiones_desde_el_asset_Visualizar_todas_las_ordenes() {
+		page.elegirCuenta("aaaaFernando Care");
+		driver.findElement(By.cssSelector(".console-card.active")).click();
+		waitFor(driver, By.cssSelector(".icon.icon-v-troubleshoot-line"));
+		List <WebElement> gest = driver.findElements(By.cssSelector(".icon.icon-v-troubleshoot-line"));
+		gest.get(1).click();
+		try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		BasePage cambioFrameByID = new BasePage();
+		driver.switchTo().frame(cambioFrameByID.getFrameForElement(driver, By.id("text-input-id-1")));
+		Assert.assertTrue(driver.findElement(By.className("slds-m-around--medium")).isDisplayed());
+	}
+	
+	@Test (groups = {"CustomerCare", "Vista360Layout"})
+	public void TS69165_360_View_360_View_Visualizacion_de_gestiones_desde_el_asset_Visualizar_todos_los_casos() {
+		page.elegirCuenta("aaaaFernando Care");
+		driver.findElement(By.cssSelector(".console-card.active")).click();
+		waitFor(driver, By.cssSelector(".icon.icon-v-troubleshoot-line"));
+		List <WebElement> gest = driver.findElements(By.cssSelector(".icon.icon-v-troubleshoot-line"));
+		gest.get(1).click();
+		try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		BasePage cambioFrameByID = new BasePage();
+		driver.switchTo().frame(cambioFrameByID.getFrameForElement(driver, By.id("text-input-id-1")));
+		List <WebElement> element = driver.findElements(By.cssSelector(".slds-truncate.slds-p-vertical--medium.clickablerow"));
+		boolean a = false;
+		boolean b = false;
+		for (WebElement x : element) {
+			if (x.getText().equals("Case")) {
+				a = true;
+			}
+			if (x.getText().startsWith("000")) {
+				b = true;
+			}
+		}
+		Assert.assertTrue(a && b);
+	}
+	
+	@Test (groups = {"CustomerCare", "Vista360Layout"})
+	public void TS69168_360_View_360_View_Visualizacion_de_gestiones_desde_el_asset_Fitlro_Fecha_Verificar_Calendario() {
+		page.elegirCuenta("aaaaFernando Care");
+		driver.findElement(By.cssSelector(".console-card.active")).click();
+		waitFor(driver, By.cssSelector(".icon.icon-v-troubleshoot-line"));
+		List <WebElement> gest = driver.findElements(By.cssSelector(".icon.icon-v-troubleshoot-line"));
+		gest.get(1).click();
+		try {Thread.sleep(7000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		BasePage cambioFrameByID = new BasePage();
+		driver.switchTo().frame(cambioFrameByID.getFrameForElement(driver, By.id("text-input-id-1")));
+		Assert.assertTrue(driver.findElement(By.id("text-input-id-1")).isDisplayed());
+		Assert.assertTrue(driver.findElement(By.id("text-input-id-2")).isDisplayed());
 	}
 	
 	@Test (groups = {"CustomerCare", "Vista360Layout"})

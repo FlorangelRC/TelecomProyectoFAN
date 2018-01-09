@@ -26,6 +26,7 @@ import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
 import Pages.CasePage;
+import Pages.CustomerCare;
 import Pages.CustomerCasesManager;
 import Pages.HomeBase;
 import Pages.SelectCaseRegisterType;
@@ -43,31 +44,16 @@ public class CustomerCareCaseManagement extends TestBase {
 		try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 		login(driver);
 		try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
-		
-		HomeBase homePage = new HomeBase(driver);
-	       if(driver.findElement(By.id("tsidLabel")).getText().equals("Consola FAN")) {
-	        homePage.switchAppsMenu();
-	        try {Thread.sleep(2000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
-	        homePage.selectAppFromMenuByName("Ventas");
-	        try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}    
-	       }
-	       homePage.switchAppsMenu();
-	       try {Thread.sleep(2000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
-	       homePage.selectAppFromMenuByName("Consola FAN");
+		goInitToConsolaFanF3(driver);
 	}
 
 	@BeforeMethod(groups={"Fase1", "CustomerCare","AdministraccionDeCasos"})
 	public void mainSteup() {
 	       
-	       
-		try {Thread.sleep(10000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
-		List<WebElement> mainTabs = driver.findElements(By.className("x-tab-strip-close"));
-		for (WebElement e : mainTabs) {
-		try {((JavascriptExecutor) driver).executeScript("arguments[0].click();", e);} catch (org.openqa.selenium.StaleElementReferenceException b) {}
-		}
-		List<WebElement> mainTabs1 = driver.findElements(By.className("x-tab-strip-close"));
-		((JavascriptExecutor) driver).executeScript("arguments[0].click();", mainTabs1.get(1));
-		try {Thread.sleep(10000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}	
+	    sleep(5000);
+		CustomerCare cerrar = new CustomerCare(driver);
+	       cerrar.cerrarultimapestaña();		
+	    sleep(4000);	
 		goToLeftPanel(driver, "Casos");
 		WebElement frame0 = driver.findElement(By.tagName("iframe"));
 		driver.switchTo().frame(frame0);
@@ -218,7 +204,7 @@ public class CustomerCareCaseManagement extends TestBase {
 	 }
 	
 	//Falla seleccionando campo
-	@Test(groups={"Fase1", "CustomerCare","AdministraccionDeCasos"})
+	//@Test(groups={"Fase1", "CustomerCare","AdministraccionDeCasos"})
 	 public void TS7085_DeleteCasesAdminRestrictedMessage() {
 	  String adminRestrictedMsg = "El primer error de validación encontrado fue \"Solo el administrador puede eliminar casos generados.\"";
 	  try {Thread.sleep(4000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}

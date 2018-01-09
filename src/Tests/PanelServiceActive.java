@@ -32,6 +32,7 @@ public class PanelServiceActive extends TestBase {
 	@AfterClass(groups= "CustomerCare")
 	public void tearDown2() {
 		driver.quit();	
+		try {Thread.sleep(2000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 	}
 	
 	

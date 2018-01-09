@@ -238,10 +238,16 @@ public class CustomerCareFase3 extends TestBase{
 		try {Thread.sleep(20000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 		BasePage cambioFrameByID = new BasePage();
 		driver.switchTo().frame(cambioFrameByID.getFrameForElement(driver, By.cssSelector(".slds-button.slds-button--brand")));
-		driver.findElement(By.cssSelector(".slds-button.slds-button--brand")).click();
+		driver.findElement(By.cssSelector(".slds-button.slds-button--brand.filterNegotiations.slds-p-horizontal--x-large.slds-p-vertical--x-small")).click();
 		try {Thread.sleep(2000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
-		List <WebElement> element = driver.findElements(By.cssSelector(".slds-truncate.slds-p-vertical--medium"));
-		Assert.assertTrue(page.validarFecha(element.get(2).getAttribute("title"), "dd/mm/yyyy HH:mm"));
+		List <WebElement> element = driver.findElements(By.cssSelector(".slds-truncate.slds-th__action"));
+		boolean a = false;
+		for (WebElement x : element) {
+			if (x.getText().toLowerCase().contains("cancelación sin cargo")) {
+				a = true;
+			}
+		}
+		Assert.assertTrue(a);
 	}
 	
 	
@@ -250,13 +256,19 @@ public class CustomerCareFase3 extends TestBase{
 		CustomerCare page = new CustomerCare(driver);
 		page.elegircuenta("aaaaFernando Care");
 		page.SelectGestion("historial de recarga");
-		try {Thread.sleep(10000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		try {Thread.sleep(20000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 		BasePage cambioFrameByID = new BasePage();
-		driver.switchTo().frame(cambioFrameByID.getFrameForElement(driver, By.cssSelector(".slds-button.slds-button--brand.filterNegotiations.slds-p-horizontal--x-large.slds-p-vertical--x-small")));
-		driver.findElement(By.cssSelector(".slds-button.slds-button--brand")).click();
-		try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
-		List <WebElement> element = driver.findElements(By.cssSelector(".slds-truncate.slds-p-vertical--medium"));
-		Assert.assertTrue(page.validarFecha(element.get(3).getAttribute("title"), "dd/mm/yyyy HH:mm"));
+		driver.switchTo().frame(cambioFrameByID.getFrameForElement(driver, By.cssSelector(".slds-button.slds-button--brand")));
+		driver.findElement(By.cssSelector(".slds-button.slds-button--brand.filterNegotiations.slds-p-horizontal--x-large.slds-p-vertical--x-small")).click();
+		try {Thread.sleep(2000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		List <WebElement> element = driver.findElements(By.cssSelector(".slds-truncate.slds-th__action"));
+		boolean a = false;
+		for (WebElement x : element) {
+			if (x.getText().toLowerCase().contains("fecha de pago")) {
+				a = true;
+			}
+		}
+		Assert.assertTrue(a);
 	}
 	
 	
