@@ -156,15 +156,9 @@ public class TechnicalCareCSRAutogestionF4 extends TestBase{
 				//System.out.println(i);
 				}
 			}
-			catch (org.openqa.selenium.NoSuchElementException a){
-				sleep(2000);
-				driver.switchTo().frame(cambioFrameByID.getFrameForElement(driver, By.cssSelector(".listRelatedObject.caseBlock")));
-				i=4;
-				System.out.println("Primer Catch");
-			}
 			catch (java.lang.NullPointerException a){
 				sleep(3000);
-				driver.switchTo().frame(cambioFrameByID.getFrameForElement(driver, By.cssSelector(".listRelatedObject.caseBlock")));
+				driver.switchTo().frame(cambioFrameByID.getFrameForElement(driver, By.id("searchPageHolderDiv")));
 				i=4;
 				System.out.println("Segundo Catch");
 			}
@@ -454,10 +448,10 @@ public class TechnicalCareCSRAutogestionF4 extends TestBase{
 		assertTrue(verificarServiceOwner("Telecom"));	
 	}
 	
-	//@Test(groups= {"Fase4","TechnicalCare", "Autogestion"})
-	public void TS_CRM_Fase_4_Technical_Care_CSR_Autogestion_Verificacion_de_que_la_autogestion_del_Canal_0800_servicio_0800_444_0800_0800_Clientes_corresponde_a_un_servicio_de_Telecom() {
+	@Test(groups= {"Fase4","TechnicalCare", "Autogestion"})
+	public void TS73873_CRM_Fase_4_Technical_Care_CSR_Autogestion_Verificacion_de_que_la_autogestion_del_Canal_0800_servicio_0800_555_9999_Cliente_Arnet_corresponde_a_un_servicio_de_Telecom() {
 		String caso;
-		elegirOpciones("0800","0800-444-0800 (0800 Clientes)","Llamada fallo");
+		elegirOpciones("0800","0800-555-9999 (Cliente Arnet)","Llamada fallo");
 		continuar();
 		saltarPantallas();
 		sleep(4000);
@@ -465,6 +459,129 @@ public class TechnicalCareCSRAutogestionF4 extends TestBase{
 		buscarCaso(caso);
 		irDetalleDeCaso();
 		assertTrue(verificarServiceOwner("Telecom"));	
+	}
+	
+	@Test(groups= {"Fase4","TechnicalCare", "Autogestion"})
+	public void TS73875_CRM_Fase_4_Technical_Care_CSR_Autogestion_Verificacion_de_que_la_autogestion_del_Canal_0800_servicio_0800_777_7246_Pago_con_TC_corresponde_a_un_servicio_de_Telecom() {
+		String caso;
+		elegirOpciones("0800","0800-777-7246 (Pago con TC)","Llamada fallo");
+		continuar();
+		saltarPantallas();
+		sleep(4000);
+		caso=getCaso();
+		buscarCaso(caso);
+		irDetalleDeCaso();
+		assertTrue(verificarServiceOwner("Telecom"));	
+	}
+	
+	
+	@Test(groups= {"Fase4","TechnicalCare", "Autogestion"})
+	public void TS73876_CRM_Fase_4_Technical_Care_CSR_Autogestion_Verificacion_de_que_la_autogestion_del_Canal_0800_servicio_0800_7770328_Fax_Server_corresponde_a_un_servicio_de_Telecom() {
+		String caso;
+		elegirOpciones("0800","0800-7770328 (Fax Server)","Llamada fallo");
+		continuar();
+		saltarPantallas();
+		sleep(4000);
+		caso=getCaso();
+		buscarCaso(caso);
+		irDetalleDeCaso();
+		assertTrue(verificarServiceOwner("Telecom"));	
+	}
+	
+	@Test(groups= {"Fase4","TechnicalCare", "Autogestion"})
+	public void TS73871_CRM_Fase_4_Technical_Care_CSR_Autogestion_Verificacion_de_que_la_autogestion_del_Canal_0800_servicio_0800_888_0112_Cliente_112_corresponde_a_un_servicio_de_Telecom() {
+		String caso;
+		elegirOpciones("0800","0800-888-0112 (Cliente 112)","Llamada fallo");
+		continuar();
+		saltarPantallas();
+		sleep(4000);
+		caso=getCaso();
+		buscarCaso(caso);
+		irDetalleDeCaso();
+		assertTrue(verificarServiceOwner("Telecom"));	
+	}
+	
+	
+	@Test(groups= {"Fase4","TechnicalCare", "Autogestion"})
+	public void TS73855_CRM_Fase_4_Technical_Care_CSR_Autogestion_Verificacion_de_que_la_autogestion_del_Canal_0800_servicio_0800_888_888_0800_Executive_corresponde_a_un_servicio_de_Telecom() {
+		String caso;
+		elegirOpciones("0800","0800-888-0800 (Executive)","Llamada fallo");
+		continuar();
+		saltarPantallas();
+		sleep(4000);
+		caso=getCaso();
+		buscarCaso(caso);
+		irDetalleDeCaso();
+		assertTrue(verificarServiceOwner("Telecom"));	
+	}
+	
+	
+	@Test(groups= {"Fase4","TechnicalCare", "Autogestion"})
+	public void TS73854_CRM_Fase_4_Technical_Care_CSR_Autogestion_Verificacion_de_que_la_autogestion_del_Canal_0800_servicio_0800_888_888_1010_Convergente_corresponde_a_un_servicio_de_Telecom() {
+		String caso;
+		elegirOpciones("0800","0800-888-1010 (Convergente)","Llamada fallo");
+		continuar();
+		saltarPantallas();
+		sleep(4000);
+		caso=getCaso();
+		buscarCaso(caso);
+		irDetalleDeCaso();
+		assertTrue(verificarServiceOwner("Telecom"));	
+	}
+	
+	
+	@Test(groups= {"Fase4","TechnicalCare", "Autogestion"})
+	public void TS73869_CRM_Fase_4_Technical_Care_CSR_Autogestion_Verificacion_de_que_la_autogestion_del_Canal_0800_servicio_0800_888_1010_Convergente4422_CUIT_corresponde_a_un_servicio_de_Telecom() {
+		String caso;
+		elegirOpciones("0800","0800-888-4422 (CUIT)","Llamada fallo");
+		continuar();
+		saltarPantallas();
+		sleep(4000);
+		caso=getCaso();
+		buscarCaso(caso);
+		irDetalleDeCaso();
+		assertTrue(verificarServiceOwner("Telecom"));	
+	}
+	
+	@Test(groups= {"Fase4","TechnicalCare", "Autogestion"})
+	public void TS73853_CRM_Fase_4_Technical_Care_CSR_Autogestion_Verificacion_de_que_la_autogestion_del_Canal_0800_servicio_0800_888_7382_Activaciones_corresponde_a_un_servicio_de_Telecom() {
+		String caso;
+		elegirOpciones("0800","0800-888-7382 (Activaciones)","Llamada fallo");
+		continuar();
+		saltarPantallas();
+		sleep(4000);
+		caso=getCaso();
+		buscarCaso(caso);
+		irDetalleDeCaso();
+		assertTrue(verificarServiceOwner("Telecom"));	
+	}
+	
+	
+	@Test(groups= {"Fase4","TechnicalCare", "Autogestion"})
+	public void TS73856_CRM_Fase_4_Technical_Care_CSR_Autogestion_Verificacion_de_que_la_autogestion_del_Canal_0800_servicio_0800_888_8872_Medios_Impresos_corresponde_a_un_servicio_de_Telecom() {
+		String caso;
+		elegirOpciones("0800","0800-888-8872 (Medios Impresos)","Llamada fallo");
+		continuar();
+		saltarPantallas();
+		sleep(4000);
+		caso=getCaso();
+		buscarCaso(caso);
+		irDetalleDeCaso();
+		assertTrue(verificarServiceOwner("Telecom"));	
+	}
+	
+	
+	@Test(groups= {"Fase4","TechnicalCare", "Autogestion"})
+	public void TS73839_CRM_Fase_4_Technical_Care_CSR_Autogestion_Verificacion_de_que_la_autogestion_del_Canal_Otros_Asteriscos_servicio_asterisco_Otros_corresponde_a_un_servicio_de_Terceros() {
+		String caso;
+		elegirOpciones("Otros Asteriscos","Otros","Llamada fallo");
+		continuar();
+		saltarPantallas();
+		sleep(4000);
+		caso=getCaso();
+		buscarCaso(caso);
+		irDetalleDeCaso();
+		assertTrue(verificarServiceOwner("Terceros"));	
 	}
 }
 
