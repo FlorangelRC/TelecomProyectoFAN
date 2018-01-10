@@ -33,14 +33,17 @@ private WebDriver driver;
 	}
 	@BeforeMethod(groups = "SCP")
 	public void setUp() throws Exception {
-		try {Thread.sleep(3000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
-		SCP prueba= new SCP(driver);
-		prueba.goToMenu("SCP");
-		prueba.clickOnTabByName("cuentas");
-		prueba.clickOnFirstAccRe();
-		try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}	
+		SCP pScp = new SCP(driver);
+		
+		try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		pScp.clickOnTabByName("cuentas");
+		try {Thread.sleep(7000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		try {Thread.sleep(7000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		
+		pScp.clickEnCuentaPorNombre("Florencia Di Ci");
+		try {Thread.sleep(10000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 	}
-	@AfterClass(groups = "SCP")
+	//@AfterClass(groups = "SCP")
 	public void teardown() {
 		driver.quit();
 		sleep(5000);
@@ -235,18 +238,18 @@ private WebDriver driver;
 	
 	//------------------------------------------------------------------------------------------------- 
 	//TCC = 12
-		@Test(groups = "SCP")
-		public void TS112775_Panel_de_control_Busqueda_Primera_pagina() {
-			WebElement wNavBar = driver.findElement(By.cssSelector(".zen-inlineList.zen-tabMenu"));
-			List<WebElement> wMenu = wNavBar.findElements(By.tagName("li"));
-			wMenu.get(4).click();
-			
-			try {Thread.sleep(2000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
-			driver.findElement(By.id("j_id0:pageForm:Ultima")).click();
-			try {Thread.sleep(2000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
-			driver.findElement(By.id("j_id0:pageForm:Primera")).click();
-			try {Thread.sleep(2000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
-			Assert.assertTrue(!driver.findElement(By.id("j_id0:pageForm:Primera")).isEnabled());
+	@Test(groups = "SCP")
+	public void TS112775_Panel_de_control_Busqueda_Primera_pagina() {
+		WebElement wNavBar = driver.findElement(By.cssSelector(".zen-inlineList.zen-tabMenu"));
+		List<WebElement> wMenu = wNavBar.findElements(By.tagName("li"));
+		wMenu.get(4).click();
+		
+		try {Thread.sleep(2000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		driver.findElement(By.id("j_id0:pageForm:Ultima")).click();
+		try {Thread.sleep(2000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		driver.findElement(By.id("j_id0:pageForm:Primera")).click();
+		try {Thread.sleep(2000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		Assert.assertTrue(!driver.findElement(By.id("j_id0:pageForm:Primera")).isEnabled());
 	}
 	
 	//------------------------------------------------------------------------------------------------- 
@@ -310,11 +313,11 @@ private WebDriver driver;
 	
 	//------------------------------------------------------------------------------------------------- 
 	//TCC = 17
-	/*@Test(groups = "SCP")
+	@Test(groups = "SCP")
 	public void TS112567_Asignación_de_Value_Drivers_a_Oportunidades_Related_value_drivers() {
 		SCP prueba= new SCP(driver);
 		prueba.moveToElementOnAccAndClick("tercerTitulo", 1);
 		sleep(3000);
-		boolean a = prueba.goToOportunity();
-	}*/
+		
+	}
 }
