@@ -17,7 +17,7 @@ import org.testng.ITestResult;
  */
 public class retry implements IRetryAnalyzer
 {
-    private int maxRetries = 2;
+    private int maxRetries = 1;
     private int sleepBetweenRetries = 2000;
     private final Map<String, Integer> retryMap;
 
@@ -43,12 +43,8 @@ public class retry implements IRetryAnalyzer
         setMaxRetriesForTest(result);
         setSleepBetweenRetriesForTest(result);
 
-        final String currentTest =
-            result.getTestContext().getCurrentXmlTest().getName();
-        final int currentTry =
-            retryMap.get(currentTest) == null
-                ? 0
-                : (retryMap.get(currentTest) + 1);
+        final String currentTest = result.getTestContext().getCurrentXmlTest().getName();
+        final int currentTry = retryMap.get(currentTest) == null?0:(retryMap.get(currentTest) + 1);
         retryMap.put(currentTest, currentTry);
 
         System.out.println("currentTest: " + currentTest);

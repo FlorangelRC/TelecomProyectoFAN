@@ -37,12 +37,12 @@ public class servicioIndiferente extends TestBase {
 	@BeforeClass(groups = "Fase2")
 	public void Init() throws MalformedURLException
 	{
-		DesiredCapabilities capability = DesiredCapabilities.chrome();
-		capability.setBrowserName("chrome");
-		capability.setPlatform(Platform.WINDOWS);
-		driver = new RemoteWebDriver(new URL("http://10.249.36.59:5566/wd/hub"), capability);
-		//this.driver = setConexion.setupEze();
-		driver.manage().window().maximize();
+		//DesiredCapabilities capability = DesiredCapabilities.chrome();
+		//capability.setBrowserName("chrome");
+		//capability.setPlatform(Platform.WINDOWS);
+		//driver = new RemoteWebDriver(new URL("http://10.249.36.59:5566/wd/hub"), capability);
+		this.driver = setConexion.setupEze();
+		//driver.manage().window().maximize();
 		login(driver);
 		try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 		Calendar Factual = Calendar.getInstance();
