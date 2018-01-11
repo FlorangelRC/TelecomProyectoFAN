@@ -30,7 +30,7 @@ public class diagnosis extends TestBase {
 	
 	private WebDriver driver;
 
-	@AfterClass(groups = {"Fase1","TechnicalCare","Diagnostico"}) 
+	//@AfterClass(groups = {"Fase1","TechnicalCare","Diagnostico"}) 
 	public void tearDown2() {
 		driver.switchTo().defaultContent();
 		driver.findElement(By.id("tsidButton")).click();
@@ -68,7 +68,7 @@ public class diagnosis extends TestBase {
 	     try {Thread.sleep(15000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 	}
 
-	@AfterMethod(groups = {"Fase1","TechnicalCare","Diagnostico"}) 
+	//@AfterMethod(groups = {"Fase1","TechnicalCare","Diagnostico"}) 
 	public void tearDown() {
 
 		driver.switchTo().defaultContent();
@@ -92,18 +92,19 @@ public class diagnosis extends TestBase {
 		 Accounts accountPage = new Accounts(driver);
 	     //Selecciono Vista Tech
 	     driver.switchTo().defaultContent();
-	     accountPage.accountSelect("Vista Tech");
+	     accountPage.accountSelect("Todas las cuentas");
 	     try {Thread.sleep(8000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+	     //accountPage.selectJuanPerez();
 	     accountPage.selectAccountByName("Adrian Tech");
 	     try {Thread.sleep(10000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}     
 	     CustomerCare page = new CustomerCare(driver);
 	     page.openleftpanel();
 	     try {Thread.sleep(2000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();} 
-	     if(accountPage.isTabOpened("Asistencia Técnica")) {
+	     if(accountPage.isTabOpened("Asistencia T\u00e9cnica")) {
 	         System.out.println("Tab Opened.");
-	         accountPage.goToTab("Asistencia Técnica");
+	         accountPage.goToTab("Asistencia T\u00e9cnica");
 	     }else {
-	         accountPage.findAndClickButton("Asistencia Técnica");
+	         accountPage.findAndClickButton("Asistencia T\u00e9cnica");
 	     }
 	     try {Thread.sleep(10000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 	}

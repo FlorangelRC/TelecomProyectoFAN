@@ -130,12 +130,13 @@ public class PanelServiceActive extends TestBase {
 		try {Thread.sleep(10000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 		page.usarpanelcentral("aaaaFernando Care");
 		 BasePage cambioFrameByID=new BasePage();
-	     driver.switchTo().frame(cambioFrameByID.getFrameForElement(driver, By.xpath("//*[@id='contactHeaderRow']/div[2]")));
+		 driver.switchTo().defaultContent();
+	     driver.switchTo().frame(cambioFrameByID.getFrameForElement(driver, By.id("ext-comp-1036")));
 		JavascriptExecutor javascript = (JavascriptExecutor) driver;
 		Boolean VertscrollStatus = (Boolean) javascript.executeScript("return document.documentElement.scrollHeight>document.documentElement.clientHeight;");
 		assertTrue(VertscrollStatus);
 		try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
-		
+
 		driver.switchTo().defaultContent();
 	}
 	

@@ -92,7 +92,7 @@ public class TechnicalCareCSRSTT2 extends TestBase {
 			driver.findElement(By.id("TicketCreation_nextBtn")).click();
 	 }
 		
-		//@AfterMethod(groups = {"Fase2","TechnicalCare","ServicioTecnico"}) 
+		@AfterMethod(groups = {"Fase2","TechnicalCare","ServicioTecnico"}) 
 		 public void afterMethod() {
 			driver.switchTo().defaultContent();
 			List<WebElement> ctas = driver.findElement(By.cssSelector(".x-tab-strip.x-tab-strip-top")).findElements(By.tagName("li"));
@@ -110,7 +110,7 @@ public class TechnicalCareCSRSTT2 extends TestBase {
 			
 			  }
 		
-		//@AfterClass(groups = {"Fase2","TechnicalCare","ServicioTecnico"}) 
+		@AfterClass(groups = {"Fase2","TechnicalCare","ServicioTecnico"}) 
 		public void tearDown() {
 			driver.switchTo().defaultContent();
 			driver.findElement(By.id("tsidButton")).click();
@@ -265,7 +265,6 @@ public class TechnicalCareCSRSTT2 extends TestBase {
 			try {Thread.sleep(3000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 			driver.switchTo().frame(accPage.getFrameForElement(driver, By.id("TicketCreation")));
 			assertTrue(driver.findElement(By.id("TicketCreation")).isDisplayed());
-			
 		}
 		
 		@Test(groups = {"Fase2","TechnicalCare","ServicioTecnico"}) 
@@ -277,6 +276,17 @@ public class TechnicalCareCSRSTT2 extends TestBase {
 			campos= driver.findElement(By.id("TicketSummaryGrid")).findElement(By.cssSelector(".slds-grid.slds-wrap.slds-theme--default.taOScard-content")).findElements(By.cssSelector(".slds-tile__detail.slds-text-heading--small"));
 			//comentarios
 			assertTrue(campos.get(2).getText().equals("No funciona todo el tiempo"));
+		}
+		
+		@Test(groups = {"Fase2","TechnicalCare","ServicioTecnico"}) 
+		public void TS16349_CRM_Fase2_TechnicalCare_CSR_STT2_Vista1_Visualizacion_Del_Comentario_Anterior_Fecha_En_La_Que_Se_Realizo_El_Comentario_Previo() {
+			Accounts accPage = new Accounts(driver);
+			driver.switchTo().frame(accPage.getFrameForElement(driver, By.id("TicketSummaryTechnician_nextBtn"))); 
+			try {Thread.sleep(2000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+			List<WebElement> campos= driver.findElement(By.id("TicketSummaryGrid")).findElement(By.cssSelector(".slds-grid.slds-wrap.slds-theme--default.taOScard-header")).findElements(By.cssSelector(".slds-tile__detail.slds-text-heading--small"));
+			campos= driver.findElement(By.id("TicketSummaryGrid")).findElement(By.cssSelector(".slds-grid.slds-wrap.slds-theme--default.taOScard-content")).findElements(By.cssSelector(".slds-tile__detail.slds-text-heading--small"));
+			//comentarios
+			assertTrue(false);//no tiene la fecha en la que se realizo el comentario arreglar cuando se vea
 		}
 		
 }
