@@ -421,6 +421,17 @@ public class CustomerCare360Joaquin extends TestBase {
 	
 		Assert.assertTrue(textoTarjeta.contains("Detalle de Consumos"));
 	}
+
+	@Test(groups= {"CustomerCare", "Vista360Layout"})
+	public void TS38477_360_View_360_card_servicio_prepago_Persistencia_Visualizar_Acciones_Recargas_y_Packs() {
+		Customer.elegirCuenta("aaaaFernando Care");
+
+		WebElement accionesServicioActivo = driver.findElement(By.cssSelector(".console-card.active .actions"));
+		String textoTarjeta = accionesServicioActivo.getText();
+	
+		Assert.assertTrue(textoTarjeta.contains("Historiales"));
+	}
+	
 	
 	@Test(groups= {"CustomerCare", "Vista360Layout"})
 	public void TS38479_360_View_360_card_servicio_prepago_Persistencia_Visualizar_Acciones_Ahorrá() {
@@ -796,6 +807,31 @@ public class CustomerCare360Joaquin extends TestBase {
 		Customer.buscarGestion("Debito automatico");
 
 		Assert.assertTrue(Customer.gestionesEncontradas.get(0).getText().contains("Débito automático"));
+	}
+	
+	
+	@Test(groups= {"CustomerCare", "ProblemasConRecargas"})
+	public void TS69091_Problems_with_Refills_Problemas_con_Recargas_Base_de_Conocimiento_Tarjeta_Prepaga_Panel_Visualizar_base_de_conocimiento_paso_omniscript() {
+		Customer.elegirCuenta("aaaaFernando Care");
+
+		Customer.irAProblemasConRecargas();
+
+		List<WebElement> elementos = driver.findElements(By.cssSelector(".slds-radio.ng-scope"));
+		dynamicWait().until(ExpectedConditions.visibilityOfAllElements(elementos));
+		for (WebElement e : elementos) {
+			if (e.getText().contains("Tarjeta Prepaga")) {
+				e.click();
+				break;
+			}
+		}
+
+		WebElement btnSiguiente = driver.findElement(By.xpath("//div[@id='stepChooseMethod_nextBtn']/p"));
+		btnSiguiente.click();
+		sleep(1000);
+		WebElement baseConocimiento = driver.findElement(By.cssSelector(".slds-form-element.slds-lookup.vlc-slds-knowledge-component"));
+		
+		Assert.assertTrue(baseConocimiento.isDisplayed());
+		Assert.assertTrue(baseConocimiento.getText().contains("Información De Recargas"));
 	}
 	
 	@Test(groups= {"CustomerCare", "Vista360Layout"})

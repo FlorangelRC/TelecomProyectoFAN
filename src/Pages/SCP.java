@@ -98,20 +98,19 @@ public class SCP extends BasePage {
 	}
 	
 	public void elegiroportunidad(String oportunidad) {
-		  try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
-
-		WebElement element = driver.findElement(By.cssSelector(".bRelatedList.first"));
-		((JavascriptExecutor)driver).executeScript("window.scrollTo(0,"+element.getLocation().y+")");
-		 List<WebElement> btns = driver.findElement(By.cssSelector(".pShowMore")).findElements(By.tagName("a"));
-		 btns.get(1).click();
-		  try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
-		List<WebElement> op = element.findElements((By.cssSelector(".dataCell")));
-		for(WebElement e : op){
-			System.out.println(e.getText());
-			if(e.getText().equals(oportunidad)){
-				e.findElement(By.tagName("a")).click();
-				break;}}
-	}
+	    try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+	  WebElement element = driver.findElement(By.cssSelector(".bRelatedList.first"));
+	  ((JavascriptExecutor)driver).executeScript("window.scrollTo(0,"+element.getLocation().y+")");
+	  driver.findElement(By.cssSelector(".pShowMore")).findElements(By.tagName("a")).get(1).click();
+	  try {Thread.sleep(3000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+	  element = driver.findElement(By.cssSelector(".listRelatedObject.opportunityBlock"));
+	  List<WebElement> op = element.findElements((By.cssSelector(".dataCell")));
+	  for(WebElement e : op){
+	   System.out.println(e.getText());
+	   if(e.getText().equals(oportunidad)){
+	    e.findElement(By.tagName("a")).click();
+	    break;}}
+	 }
 	
 	
 	public void clickEnCuentaPorNombre(String name)
