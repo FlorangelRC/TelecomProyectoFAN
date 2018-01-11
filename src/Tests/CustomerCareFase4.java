@@ -3,29 +3,23 @@ package Tests;
 import java.util.List;
 
 import org.openqa.selenium.By;
-import org.openqa.selenium.Point;
-import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Actions;
 import org.testng.Assert;
 import org.testng.annotations.AfterClass;
-import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
-import Pages.Accounts;
 import Pages.BasePage;
 import Pages.CustomerCare;
-import Pages.setConexion;
-import Tests.TestBase.IrA;
 
 public class CustomerCareFase4 extends TestBase{
 
 	CustomerCare page;
 
 	
-	@BeforeClass (groups = {"CustomerCare", "Vista360Layout", "DetalleDeConsumos", "ActualizarDatos"})
+	@BeforeClass (groups = {"CustomerCare", "Vista360Layout", "DetalleDeConsumos", "ActualizarDatos", "ProblemasConRecargas", "DebitoAutomatico"})
 	public void init() {
 		inicializarDriver();
 		page = new CustomerCare(driver);
@@ -33,14 +27,14 @@ public class CustomerCareFase4 extends TestBase{
 		IrA.CajonDeAplicaciones.ConsolaFAN();
 	}
 	
-	@AfterClass (groups = {"CustomerCare", "Vista360Layout", "DetalleDeConsumos", "ActualizarDatos"})
+	//@AfterClass (groups = {"CustomerCare", "Vista360Layout", "DetalleDeConsumos", "ActualizarDatos", "ProblemasConRecargas", "DebitoAutomatico"})
 	public void quit() {
 		page.cerrarTodasLasPestañas();
 		IrA.CajonDeAplicaciones.Ventas();
 		cerrarTodo();
 	}
 	
-	@BeforeMethod (groups = {"CustomerCare", "Vista360Layout", "DetalleDeConsumos", "ActualizarDatos"})
+	@BeforeMethod (groups = {"CustomerCare", "Vista360Layout", "DetalleDeConsumos", "ActualizarDatos", "ProblemasConRecargas", "DebitoAutomatico"})
 	public void after() {
 		page.cerrarTodasLasPestañas();
 	}
@@ -107,6 +101,21 @@ public class CustomerCareFase4 extends TestBase{
 		Assert.assertTrue(casoCerrado.get(11).getText().equals(equipoCreador));
 	}
 	
+	@Test (groups = {"CustomerCare", "DebitoAutomatico"})
+	public void TS37230_Automatic_Debit_Subscriptions_Sesión_guiada_Débito_Automático_Inicial_Paso_2_Adhesión_Cuenta_con_Mora() {
+		page.elegirCuenta("aaaaCuenta ConMora");
+		page.irAGestion("débito auto");
+		BasePage cambioFrameByID = new BasePage();
+		driver.switchTo().frame(cambioFrameByID.getFrameForElement(driver, By.className("borderOverlay")));
+		List <WebElement> element = driver.findElements(By.className("borderOverlay"));
+		element.get(0).click();
+		try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		driver.findElement(By.className("slds-checkbox--faux")).click();
+		try {Thread.sleep(7000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		WebElement error = driver.findElement(By.cssSelector(".message.description.ng-binding.ng-scope"));
+		Assert.assertTrue(error.getText().toLowerCase().contains("la cuenta de facturación aaaacuenta conmora está suspendida por mora"));
+	}
+	
 	@Test (groups = {"CustomerCare", "Vista360Layout"})
 	public void TS37469_360_View_Vista_360_de_facturación_clientes_individuos_Persistencia_Visualizar_Convenios_de_Pago() {
 		page.elegirCuenta("aaaaFernando Care");
@@ -121,6 +130,20 @@ public class CustomerCareFase4 extends TestBase{
 			}
 		}
 		Assert.assertTrue(a);
+	}
+	
+	@Test (groups = {"CustomerCare", "ProblemasConRecargas"})
+	public void TS69021_Problems_with_Refills_Problemas_con_Recargas_Base_de_Conocimiento_Tarjeta_Prepaga_OS_Verificar_articulo_en_Base_de_conocimiento() {
+		page.elegirCuenta("aaaaFernando Care");
+		page.irAProblemasConRecargas();
+		driver.switchTo().defaultContent();
+		List <WebElement> know = driver.findElements(By.className("sd_widget_btn_text"));
+		know.get(0).click();
+		try {Thread.sleep(3000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		BasePage cambioFrameByID = new BasePage();
+		driver.switchTo().frame(cambioFrameByID.getFrameForElement(driver, By.className("blocksettings")));
+		Assert.assertTrue(driver.findElement(By.className("blocksettings")).isDisplayed());
+		Assert.assertTrue(driver.findElement(By.className("articleListItem")).isDisplayed());
 	}
 	
 	@Test (groups = {"CustomerCare", "Vista360Layout"})
@@ -480,5 +503,13 @@ public class CustomerCareFase4 extends TestBase{
 		}
 		Assert.assertTrue(a && b && c && d);
 		Assert.assertTrue(driver.findElement(By.cssSelector(".console-flyout.active.flyout")).isDisplayed());
+	}
+	
+	@Test (groups = {"CustomerCare", "ProblemasConRecargas"})
+	public void TS68984_Problems_with_Refills_UX_Tarjeta_de_Recarga_Pre_paga_Verificacion_Visualizar_Boton_Consultar() {
+		page.elegirCuenta("aaaaFernando Care");
+		page.irAGestion("estado de tarjeta");
+		WebElement boton = driver.findElement(By.cssSelector(".slds-form-element.vlc-flex.vlc-form-group.vlc-slds-remote-action--button.ng-pristine.ng-valid.ng-scope"));
+		Assert.assertTrue(boton.getText().equals("Consultar"));
 	}
 }

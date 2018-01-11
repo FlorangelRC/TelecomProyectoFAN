@@ -29,7 +29,7 @@ public class PanelServiceActive extends TestBase {
 	private WebDriver driver;
 	
 	
-	@AfterClass(groups= "CustomerCare")
+	//@AfterClass(groups= "CustomerCare")
 	public void tearDown2() {
 		driver.quit();	
 		try {Thread.sleep(2000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
@@ -128,14 +128,15 @@ public class PanelServiceActive extends TestBase {
 		CustomerCare page = new CustomerCare(driver);
 
 		try {Thread.sleep(10000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
-		page.usarpanelcentral("Detalles");
+		page.usarpanelcentral("aaaaFernando Care");
 		 BasePage cambioFrameByID=new BasePage();
-	     driver.switchTo().frame(cambioFrameByID.getFrameForElement(driver, By.xpath("//*[@id='contactHeaderRow']/div[2]")));
+		 driver.switchTo().defaultContent();
+	     driver.switchTo().frame(cambioFrameByID.getFrameForElement(driver, By.id("ext-comp-1036")));
 		JavascriptExecutor javascript = (JavascriptExecutor) driver;
 		Boolean VertscrollStatus = (Boolean) javascript.executeScript("return document.documentElement.scrollHeight>document.documentElement.clientHeight;");
 		assertTrue(VertscrollStatus);
 		try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
-		
+
 		driver.switchTo().defaultContent();
 	}
 	

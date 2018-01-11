@@ -284,13 +284,7 @@ public class TestBase {
 			}
 		}
 		
-		/**Verifica el contenido de una lista, recibiendo un arreglo a "consultar" en un arreglo de string (en mininuscula) y
-		 * la "Lista" del WebElement
-		 * @param consultar
-		 * @param Lista
-		 * @return verdadero/falso
-		 * @author Almer
-		 */
+		
 		public boolean verificarContenidoLista(String[] consultar,List <WebElement> Lista) {
 		 
 		     List<String> titleTabla = new ArrayList<String>();

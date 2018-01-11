@@ -4,6 +4,7 @@ import static org.testng.Assert.assertFalse;
 import static org.testng.Assert.assertTrue;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import org.openqa.selenium.By;
@@ -105,7 +106,7 @@ public class TechnicalCareCSRAutogestion extends TestBase {
 		try {Thread.sleep(2000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 	}
 	
-	@Test(groups = {"TechnicalCare", "Autogestion"})
+	@Test(groups = {"Fase3","TechnicalCare", "Autogestion"})
 	public void TS51149_Autogestion_Verificacion_De_Que_Exista_La_Opcion_De_Autogestion() {
 		 driver.switchTo().defaultContent();
 		 Accounts accountPage = new Accounts(driver);
@@ -118,7 +119,7 @@ public class TechnicalCareCSRAutogestion extends TestBase {
 		driver.switchTo().defaultContent();
 	}
 	
-	@Test(groups = {"TechnicalCare", "Autogestion"})
+	@Test(groups = {"Fase3","TechnicalCare", "Autogestion"})
 	public void TS51150_Autogestion_Verificacion_De_La_Existencia_Interfaz_De_Autogestion() {
 		Accounts accountPage = new Accounts(driver);
 		accountPage.findAndClickButton("autogesti\u00f3n");
@@ -1965,7 +1966,198 @@ public class TechnicalCareCSRAutogestion extends TestBase {
 	    assertTrue(listSelect.getFirstSelectedOption().getText().contains("Club Personal"));
 	}
 	
-	@Test(groups = {"TechnicalCare","Muleto"})
+	@Test(groups = {"Fase4","TechnicalCare", "Autogestion"})
+	public void TS73990_Autogestion_Asteriscos_Otros_Visualizacion_De_Campo() {
+		Accounts accountPage = new Accounts(driver);
+		accountPage.findAndClickButton("autogesti\u00f3n");
+		try {Thread.sleep(8000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		driver.switchTo().defaultContent();
+		driver.switchTo().frame(accountPage.getFrameForElement(driver, By.id("SelfManagementStep_nextBtn")));
+		Select listSelect = new Select(driver.findElement(By.id("ChannelSelection")));
+		listSelect.selectByVisibleText("Asteriscos TP");
+		try {Thread.sleep(2000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		listSelect = new Select(driver.findElement(By.id("ServiceSelection")));
+		listSelect.selectByVisibleText("Otros");
+		sleep(1000);
+		assertTrue(driver.findElement(By.id("Other")).isDisplayed());
+	}
+	
+	@Test(groups = {"Fase4","TechnicalCare", "Autogestion"})
+	public void TS73991_Autogestion_Otros_Asteriscos_Otros_Visualizacion_De_Campo() {
+		Accounts accountPage = new Accounts(driver);
+		accountPage.findAndClickButton("autogesti\u00f3n");
+		try {Thread.sleep(10000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		driver.switchTo().defaultContent();
+		driver.switchTo().frame(accountPage.getFrameForElement(driver, By.id("SelfManagementStep_nextBtn")));
+		Select listSelect = new Select(driver.findElement(By.id("ChannelSelection")));
+		listSelect.selectByVisibleText("Otros Asteriscos");
+		try {Thread.sleep(2000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		listSelect = new Select(driver.findElement(By.id("ServiceSelection")));
+		listSelect.selectByVisibleText("Otros");
+		sleep(1000);
+		assertTrue(driver.findElement(By.id("Other")).isDisplayed());
+	}
+	
+	@Test(groups = {"Fase4","TechnicalCare", "Autogestion"})
+	public void TS73992_Autogestion_nros_Emergencia_Otros_Visualizacion_De_Campo() {
+		Accounts accountPage = new Accounts(driver);
+		accountPage.findAndClickButton("autogesti\u00f3n");
+		try {Thread.sleep(8000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		driver.switchTo().defaultContent();
+		driver.switchTo().frame(accountPage.getFrameForElement(driver, By.id("SelfManagementStep_nextBtn")));
+		Select listSelect = new Select(driver.findElement(By.id("ChannelSelection")));
+		listSelect.selectByVisibleText("Nros. emergencia");
+		try {Thread.sleep(2000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		listSelect = new Select(driver.findElement(By.id("ServiceSelection")));
+		listSelect.selectByVisibleText("Otros");
+		sleep(1000);
+		assertTrue(driver.findElement(By.id("Other")).isDisplayed());
+	}
+	
+	@Test(groups = {"Fase4","TechnicalCare", "Autogestion"})
+	public void TS73993_Autogestion_0800_Otros_Visualizacion_De_Campo() {
+		Accounts accountPage = new Accounts(driver);
+		accountPage.findAndClickButton("autogesti\u00f3n");
+		try {Thread.sleep(8000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		driver.switchTo().defaultContent();
+		driver.switchTo().frame(accountPage.getFrameForElement(driver, By.id("SelfManagementStep_nextBtn")));
+		Select listSelect = new Select(driver.findElement(By.id("ChannelSelection")));
+		listSelect.selectByVisibleText("0800");
+		try {Thread.sleep(2000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		listSelect = new Select(driver.findElement(By.id("ServiceSelection")));
+		listSelect.selectByVisibleText("Otros");
+		sleep(1000);
+		assertTrue(driver.findElement(By.id("Other")).isDisplayed());
+	}
+	
+	@Test(groups = {"Fase4","TechnicalCare", "Autogestion"})
+	public void TS73994_Autogestion_WEB_Otros_Visualizacion_De_Campo() {
+		Accounts accountPage = new Accounts(driver);
+		accountPage.findAndClickButton("autogesti\u00f3n");
+		try {Thread.sleep(8000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		driver.switchTo().defaultContent();
+		driver.switchTo().frame(accountPage.getFrameForElement(driver, By.id("SelfManagementStep_nextBtn")));
+		Select listSelect = new Select(driver.findElement(By.id("ChannelSelection")));
+		listSelect.selectByVisibleText("WAP");
+		try {Thread.sleep(2000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		listSelect = new Select(driver.findElement(By.id("ServiceSelection")));
+		listSelect.selectByVisibleText("Otros");
+		sleep(1000);
+		assertTrue(driver.findElement(By.id("Other")).isDisplayed());
+	}
+	
+	@Test(groups = {"Fase4","TechnicalCare", "Autogestion"})
+	public void TS73995_Autogestion_APP_Otros_Visualizacion_De_Campo() {
+		Accounts accountPage = new Accounts(driver);
+		accountPage.findAndClickButton("autogesti\u00f3n");
+		try {Thread.sleep(8000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		driver.switchTo().defaultContent();
+		driver.switchTo().frame(accountPage.getFrameForElement(driver, By.id("SelfManagementStep_nextBtn")));
+		Select listSelect = new Select(driver.findElement(By.id("ChannelSelection")));
+		listSelect.selectByVisibleText("APP");
+		try {Thread.sleep(2000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		listSelect = new Select(driver.findElement(By.id("ServiceSelection")));
+		listSelect.selectByVisibleText("Otros");
+		sleep(1000);
+		assertTrue(driver.findElement(By.id("Other")).isDisplayed());
+	}
+	
+	@Test(groups = {"Fase4","TechnicalCare", "Autogestion"})
+	public void TS73996_Autogestion_WAP_Otros_Visualizacion_De_Campo() {
+		Accounts accountPage = new Accounts(driver);
+		accountPage.findAndClickButton("autogesti\u00f3n");
+		try {Thread.sleep(8000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		driver.switchTo().defaultContent();
+		driver.switchTo().frame(accountPage.getFrameForElement(driver, By.id("SelfManagementStep_nextBtn")));
+		Select listSelect = new Select(driver.findElement(By.id("ChannelSelection")));
+		listSelect.selectByVisibleText("WAP");
+		try {Thread.sleep(2000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		listSelect = new Select(driver.findElement(By.id("ServiceSelection")));
+		listSelect.selectByVisibleText("Otros");
+		sleep(1000);
+		assertTrue(driver.findElement(By.id("Other")).isDisplayed());
+	}
+	
+	@Test(groups = {"Fase4","TechnicalCare", "Autogestion"})
+	public void TS73997_Autogestion_USSD_Otros_Visualizacion_De_Campo() {
+		Accounts accountPage = new Accounts(driver);
+		accountPage.findAndClickButton("autogesti\u00f3n");
+		try {Thread.sleep(8000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		driver.switchTo().defaultContent();
+		driver.switchTo().frame(accountPage.getFrameForElement(driver, By.id("SelfManagementStep_nextBtn")));
+		Select listSelect = new Select(driver.findElement(By.id("ChannelSelection")));
+		listSelect.selectByVisibleText("USSD");
+		try {Thread.sleep(2000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		listSelect = new Select(driver.findElement(By.id("ServiceSelection")));
+		listSelect.selectByVisibleText("Otros");
+		sleep(1000);
+		assertTrue(driver.findElement(By.id("Other")).isDisplayed());
+	}
+	
+	@Test(groups = {"Fase4","TechnicalCare", "Autogestion"})
+	public void TS73998_Autogestion_Mi_Personal_Otros_Visualizacion_De_Campo() {
+		Accounts accountPage = new Accounts(driver);
+		accountPage.findAndClickButton("autogesti\u00f3n");
+		try {Thread.sleep(8000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		driver.switchTo().defaultContent();
+		driver.switchTo().frame(accountPage.getFrameForElement(driver, By.id("SelfManagementStep_nextBtn")));
+		Select listSelect = new Select(driver.findElement(By.id("ChannelSelection")));
+		listSelect.selectByVisibleText("Mi Personal (SIM)");
+		try {Thread.sleep(2000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		listSelect = new Select(driver.findElement(By.id("ServiceSelection")));
+		listSelect.selectByVisibleText("Otros");
+		sleep(1000);
+		assertTrue(driver.findElement(By.id("Other")).isDisplayed());
+	}
+	
+	@Test(groups = {"Fase4","TechnicalCare", "Autogestion"})
+	public void TS74001_Autogestion_APP_Otros_Verificacion_De_Caso_Valido() {
+		Accounts accountPage = new Accounts(driver);
+		accountPage.findAndClickButton("autogesti\u00f3n");
+		try {Thread.sleep(8000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		driver.switchTo().defaultContent();
+		driver.switchTo().frame(accountPage.getFrameForElement(driver, By.id("SelfManagementStep_nextBtn")));
+		Select listSelect = new Select(driver.findElement(By.id("ChannelSelection")));
+		listSelect.selectByVisibleText("APP");
+		try {Thread.sleep(2000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		listSelect = new Select(driver.findElement(By.id("ServiceSelection")));
+		listSelect.selectByVisibleText("Otros");
+		sleep(1000);
+		driver.findElement(By.id("Other")).sendKeys("Prueba automatizada");
+		listSelect = new Select(driver.findElement(By.id("MotiveSelection")));
+		listSelect.selectByIndex(1);
+		driver.findElement(By.id("SelfManagementStep_nextBtn")).click();
+		sleep(5000);
+		driver.switchTo().defaultContent();
+		driver.switchTo().frame(accountPage.getFrameForElement(driver, By.id("KnowledgeBaseResults_nextBtn")));
+		driver.findElements(By.className("borderOverlay")).get(1).click();
+		driver.findElement(By.id("KnowledgeBaseResults_nextBtn")).click();
+		sleep(4000);
+		System.out.println(driver.findElement(By.id("CreatedClosedCaseText")).findElement(By.tagName("strong")).getText());
+	}
+	
+	@Test(groups = {"Fase4","TechnicalCare", "Autogestion"})
+	public void TS74002_Autogestion_WAP_Otros_Verificacion_La_No_Visualizacion_Del_Campo_Otros() {
+		Accounts accountPage = new Accounts(driver);
+		accountPage.findAndClickButton("autogesti\u00f3n");
+		try {Thread.sleep(8000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		driver.switchTo().defaultContent();
+		driver.switchTo().frame(accountPage.getFrameForElement(driver, By.id("SelfManagementStep_nextBtn")));
+		Select listSelect = new Select(driver.findElement(By.id("ChannelSelection")));
+		listSelect.selectByVisibleText("WAP");
+		try {Thread.sleep(2000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		listSelect = new Select(driver.findElement(By.id("ServiceSelection")));
+		listSelect.selectByVisibleText("Otros");
+		sleep(1000);
+		assertTrue(driver.findElement(By.id("Other")).isDisplayed());
+		listSelect.selectByIndex(2);
+		sleep(1000);
+		try{driver.findElement(By.id("Other")).isDisplayed();
+			assertTrue(false);
+		}catch (org.openqa.selenium.NoSuchElementException ex1) {assertTrue(true);}
+	}
+	
+	/*@Test(groups = {"TechnicalCare","Muleto"})
 	public void TS51071_Muleto_Verificacion_De_La_Seleccion_Entrega_De_Muleto() {
 		Accounts accountPage = new Accounts(driver);
 		accountPage.findAndClickButton("muleto");
@@ -1989,7 +2181,7 @@ public class TechnicalCareCSRAutogestion extends TestBase {
 		try {Thread.sleep(1000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 		assertTrue(driver.findElement(By.id("ProcessingType_nextBtn")).isDisplayed());
 		
-	}
+	}*/
 	
 	@Test(groups = {"TechnicalCare","Muleto"})
 	public void TS51073_Muleto_Visualizacion_Campo_DNI_Para_Entrega_De_Muleto() {
@@ -2007,6 +2199,122 @@ public class TechnicalCareCSRAutogestion extends TestBase {
 		listSelect.selectByVisibleText("DNI");
 		assertTrue(listSelect.getFirstSelectedOption().getText().equals("DNI"));
 		assertTrue(driver.findElement(By.id("DocumentNumber")).isDisplayed());
+	}
+	
+	@Test(groups = {"Fase3","TechnicalCare","Muleto"})
+	public void TS51075_Muleto_Visualizacion_De_DNI_Para_Entrega_De_Muleto() {
+		Accounts accountPage = new Accounts(driver);
+		accountPage.findAndClickButton("muleto");
+		try {Thread.sleep(8000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		driver.switchTo().defaultContent();
+		driver.switchTo().frame(accountPage.getFrameForElement(driver, By.cssSelector(".imgItem.ng-binding.ng-scope")));
+		driver.findElement(By.className("borderOverlay")).click();
+		try {Thread.sleep(1000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		((JavascriptExecutor)driver).executeScript("window.scrollTo(0,"+driver.findElement(By.id("ProcessingType_nextBtn")).getLocation().y+")");
+		driver.findElement(By.id("ProcessingType_nextBtn")).click();
+		try {Thread.sleep(4000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		driver.findElement(By.id("Gender"));
+		Select listSelect = new Select(driver.findElement(By.id("DocumentType")));
+		listSelect.selectByVisibleText("DNI");
+		listSelect = new Select (driver.findElement(By.id("Gender")));
+		listSelect.selectByVisibleText("Femenino");
+		driver.findElement(By.id("DocumentNumber")).sendKeys("37431150");
+		driver.findElement(By.id("ClientIdentification_nextBtn")).click();
+		assertTrue(driver.findElement(By.cssSelector(".slds-form-element.vlc-flex.vlc-slds-text-block.vlc-slds-rte.ng-pristine.ng-valid.ng-scope")).isEnabled());
+	}
+	
+	@Test(groups = {"Fase3","TechnicalCare","Muleto"})
+	public void TS51083_Muleto_Visualizacion_Los_Datos_Del_Cliente() {
+		Accounts accountPage = new Accounts(driver);
+		accountPage.findAndClickButton("muleto");
+		try {Thread.sleep(8000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		driver.switchTo().defaultContent();
+		driver.switchTo().frame(accountPage.getFrameForElement(driver, By.cssSelector(".imgItem.ng-binding.ng-scope")));
+		driver.findElement(By.className("borderOverlay")).click();
+		try {Thread.sleep(1000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		((JavascriptExecutor)driver).executeScript("window.scrollTo(0,"+driver.findElement(By.id("ProcessingType_nextBtn")).getLocation().y+")");
+		driver.findElement(By.id("ProcessingType_nextBtn")).click();
+		try {Thread.sleep(4000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		driver.findElement(By.id("Gender"));
+		Select listSelect = new Select(driver.findElement(By.id("DocumentType")));
+		listSelect.selectByVisibleText("DNI");
+		listSelect = new Select (driver.findElement(By.id("Gender")));
+		listSelect.selectByVisibleText("Femenino");
+		driver.findElement(By.id("DocumentNumber")).sendKeys("37431150");
+		driver.findElement(By.id("ClientIdentification_nextBtn")).click();
+		sleep(5000);
+		assertTrue(driver.findElement(By.id("ClientInfoHeader")).getText().toLowerCase().contains("datos del cliente"));
+		List<WebElement> datos = driver.findElement(By.id("ClientInfoList")).findElements(By.tagName("p"));
+		List<WebElement> titulos = new ArrayList<WebElement>();
+		List<String> contenidos = new ArrayList<String>();
+		for (WebElement unD : datos) {
+			contenidos.add(unD.getText().split(":")[1]);
+		}
+		 for (String unC : contenidos) {
+			 assertFalse(unC.isEmpty() || unC.equals(" "));
+		 } 
+	}
+	
+	@Test(groups = {"Fase3","TechnicalCare","Muleto"})
+	public void TS51084_Muleto_Visualizacion_Lista_De_Datos_Del_Cliente() {
+		Accounts accountPage = new Accounts(driver);
+		String[] todos = {"nombre:","apellido:","razon social:","tel\u00e9fono m\u00f3vil:","tel\u00e9fono de contacto:","email:","segmento:"};
+		accountPage.findAndClickButton("muleto");
+		try {Thread.sleep(8000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		driver.switchTo().defaultContent();
+		driver.switchTo().frame(accountPage.getFrameForElement(driver, By.cssSelector(".imgItem.ng-binding.ng-scope")));
+		driver.findElement(By.className("borderOverlay")).click();
+		try {Thread.sleep(1000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		((JavascriptExecutor)driver).executeScript("window.scrollTo(0,"+driver.findElement(By.id("ProcessingType_nextBtn")).getLocation().y+")");
+		driver.findElement(By.id("ProcessingType_nextBtn")).click();
+		try {Thread.sleep(4000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		driver.findElement(By.id("Gender"));
+		Select listSelect = new Select(driver.findElement(By.id("DocumentType")));
+		listSelect.selectByVisibleText("DNI");
+		listSelect = new Select (driver.findElement(By.id("Gender")));
+		listSelect.selectByVisibleText("Femenino");
+		driver.findElement(By.id("DocumentNumber")).sendKeys("37431150");
+		driver.findElement(By.id("ClientIdentification_nextBtn")).click();
+		sleep(5000);
+		List<WebElement> datos = driver.findElement(By.id("ClientInfoList")).findElements(By.tagName("p"));
+		List<WebElement> titulos = new ArrayList<WebElement>();
+		List<String> contenidos = new ArrayList<String>();
+		for (WebElement unD : datos) {
+			titulos.add(unD.findElement(By.tagName("span")));
+			System.out.println(unD.getText());
+			contenidos.add(unD.getText().split(":")[1]);
+		}
+		 assertTrue(verificarContenidoLista(todos,titulos));
+		 for (String unC : contenidos) {
+			 assertFalse(unC.isEmpty() || unC.equals(" "));
+		 }
+		 
+		 
+	}
+	
+	@Test(groups = {"Fase3","TechnicalCare","Muleto"})
+	public void TS51085_Muleto_Visualizacion_Validacion_De_Blacklist_De_Fraude_Si() {
+		Accounts accountPage = new Accounts(driver);
+		String[] todos = {"nombre:","apellido:","razon social:","tel\u00e9fono m\u00f3vil:","tel\u00e9fono de contacto:","email:","segmento:"};
+		accountPage.findAndClickButton("muleto");
+		try {Thread.sleep(8000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		driver.switchTo().defaultContent();
+		driver.switchTo().frame(accountPage.getFrameForElement(driver, By.cssSelector(".imgItem.ng-binding.ng-scope")));
+		driver.findElement(By.className("borderOverlay")).click();
+		try {Thread.sleep(1000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		((JavascriptExecutor)driver).executeScript("window.scrollTo(0,"+driver.findElement(By.id("ProcessingType_nextBtn")).getLocation().y+")");
+		driver.findElement(By.id("ProcessingType_nextBtn")).click();
+		try {Thread.sleep(4000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		driver.findElement(By.id("Gender"));
+		Select listSelect = new Select(driver.findElement(By.id("DocumentType")));
+		listSelect.selectByVisibleText("DNI");
+		listSelect = new Select (driver.findElement(By.id("Gender")));
+		listSelect.selectByVisibleText("Femenino");
+		driver.findElement(By.id("DocumentNumber")).sendKeys("37431150");
+		driver.findElement(By.id("ClientIdentification_nextBtn")).click();
+		sleep(5000);
+		WebElement validDNI = driver.findElement(By.id("ValidationResults")).findElements(By.tagName("p")).get(2);
+		assertTrue(validDNI.getText().toLowerCase().equals("dni en blacklist de fraude: si"));
 	}
 	
 	@Test(groups = {"TechnicalCare","Muleto"})
