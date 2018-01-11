@@ -578,7 +578,7 @@ public void validarcompetidores(){
 			pntf = true;
 			System.out.println(e.getText());}
 		
-		if(e.getText().equals("Puntos débiles")){
+		if(e.getText().equals("Puntos dï¿½biles")){
 			pntd= true;
 			System.out.println(e.getText());}}	
 Assert.assertTrue(acc&&nmbre&&pntf&&pntd);
@@ -590,11 +590,11 @@ Assert.assertTrue(acc&&nmbre&&pntf&&pntd);
 		 ArrayList<String> txt1 = new ArrayList<String>();
 		 ArrayList<String> txt2 = new ArrayList<String>();
 		 txt2.add("Tipo");
-		 txt2.add("Razón perdida");
+		 txt2.add("Razï¿½n perdida");
 		 txt2.add("Estado de la oportunidad");
 		 txt2.add("Creado por");
 		 txt2.add("Propietario de oportunidad");
-		 txt2.add("Última modificación por");
+		 txt2.add("ï¿½ltima modificaciï¿½n por");
 		 txt2.add("Descripci\u00f3n");
 
 		((JavascriptExecutor)driver).executeScript("window.scrollTo(0,"+element.getLocation().y+")");
@@ -608,6 +608,7 @@ Assert.assertTrue(acc&&nmbre&&pntf&&pntd);
 
 		//Entra desde una cuenta > oportunidad > productos
 	public void IngresarAlProductos(String producto){
+		boolean exist = false;
 		WebElement element = driver.findElement(By.cssSelector(".listRelatedObject.opportunityLineItemBlock"));
 		((JavascriptExecutor)driver).executeScript("window.scrollTo(0,"+element.getLocation().y+")");
 		List<WebElement> op = element.findElements((By.cssSelector(".dataCell")));

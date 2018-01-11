@@ -2,14 +2,13 @@ package Tests;
 
 import java.text.ParseException;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
-import org.omg.Messaging.SyncScopeHelper;
 import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
-import org.openqa.selenium.By.ByXPath;
+import org.openqa.selenium.interactions.Action;
+import org.openqa.selenium.interactions.Actions;
 import org.testng.Assert;
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;
@@ -33,12 +32,15 @@ private WebDriver driver;
 	}
 	@BeforeMethod(groups = "SCP")
 	public void setUp() throws Exception {
-		try {Thread.sleep(3000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
-		SCP prueba= new SCP(driver);
-		prueba.goToMenu("SCP");
-		prueba.clickOnTabByName("cuentas");
-		prueba.clickOnFirstAccRe();
-		try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}	
+		SCP pScp = new SCP(driver);
+		
+		try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		pScp.clickOnTabByName("cuentas");
+		try {Thread.sleep(7000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		try {Thread.sleep(7000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		
+		pScp.clickEnCuentaPorNombre("Florencia Di Ci");
+		try {Thread.sleep(10000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 	}
 	@AfterClass(groups = "SCP")
 	public void teardown() {
@@ -198,12 +200,10 @@ private WebDriver driver;
 		boolean bContains = true;
 		try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 		boolean bSiguiente;
-		int i = 0;
 		do { 
 			TB.waitFor(driver, By.id("mainOppsTable"));
 			WebElement wBody = driver.findElement(By.id("mainOppsTable"));
 			List <String> sColumna = prueba.TraerColumna(wBody, 3, 1);
-			i++;
 			for (String sNombreDeLaCuenta:sColumna) {
 				if (!sNombreDeLaCuenta.contains("aper")) {
 					bContains = false;
@@ -235,18 +235,18 @@ private WebDriver driver;
 	
 	//------------------------------------------------------------------------------------------------- 
 	//TCC = 12
-		@Test(groups = "SCP")
-		public void TS112775_Panel_de_control_Busqueda_Primera_pagina() {
-			WebElement wNavBar = driver.findElement(By.cssSelector(".zen-inlineList.zen-tabMenu"));
-			List<WebElement> wMenu = wNavBar.findElements(By.tagName("li"));
-			wMenu.get(4).click();
-			
-			try {Thread.sleep(2000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
-			driver.findElement(By.id("j_id0:pageForm:Ultima")).click();
-			try {Thread.sleep(2000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
-			driver.findElement(By.id("j_id0:pageForm:Primera")).click();
-			try {Thread.sleep(2000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
-			Assert.assertTrue(!driver.findElement(By.id("j_id0:pageForm:Primera")).isEnabled());
+	@Test(groups = "SCP")
+	public void TS112775_Panel_de_control_Busqueda_Primera_pagina() {
+		WebElement wNavBar = driver.findElement(By.cssSelector(".zen-inlineList.zen-tabMenu"));
+		List<WebElement> wMenu = wNavBar.findElements(By.tagName("li"));
+		wMenu.get(4).click();
+		
+		try {Thread.sleep(2000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		driver.findElement(By.id("j_id0:pageForm:Ultima")).click();
+		try {Thread.sleep(2000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		driver.findElement(By.id("j_id0:pageForm:Primera")).click();
+		try {Thread.sleep(2000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		Assert.assertTrue(!driver.findElement(By.id("j_id0:pageForm:Primera")).isEnabled());
 	}
 	
 	//------------------------------------------------------------------------------------------------- 
@@ -310,11 +310,51 @@ private WebDriver driver;
 	
 	//------------------------------------------------------------------------------------------------- 
 	//TCC = 17
-	/*@Test(groups = "SCP")
+	@Test(groups = "SCP")
 	public void TS112567_Asignación_de_Value_Drivers_a_Oportunidades_Related_value_drivers() {
 		SCP prueba= new SCP(driver);
+		TestBase tTB = new TestBase();
+		try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 		prueba.moveToElementOnAccAndClick("tercerTitulo", 1);
-		sleep(3000);
-		boolean a = prueba.goToOportunity();
-	}*/
+		try {Thread.sleep(10000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		
+		WebElement wBody = driver.findElement(By.cssSelector(".table.table-striped.table-bordered.table-condensed.dataTable"));
+		WebElement wSubBody = wBody.findElement(By.tagName("tbody"));
+		List<WebElement> wRows = wSubBody.findElements(By.tagName("tr"));
+		List<WebElement> wElements = wRows.get(0).findElements(By.tagName("td"));
+		if (wElements.get(5).getText().isEmpty()) {
+			Actions builder = new Actions(driver);
+			
+			Action dragAndDrop = builder.clickAndHold(driver.findElement(By.cssSelector(".StrategicInitiativeRow.DraggableRow.dataRow.NotUsed.ui-draggable.odd")))
+			   .moveToElement(driver.findElement(By.id("0063F000002UbLjQAK")))
+			   .release(driver.findElement(By.id("0063F000002UbLjQAK")))
+			   .build();
+
+			dragAndDrop.perform();
+		}
+		try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		
+		Actions action = new Actions(driver);
+		WebElement we = driver.findElement(By.className("PopupHolder"));
+		action.moveToElement(we).build().perform();
+		tTB.waitFor(driver, By.className("pbButton"));
+		WebElement wDesvincular = driver.findElement(By.className("pbButton"));
+		wDesvincular.findElement(By.className("btn")).click();
+		try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		wBody = driver.findElement(By.cssSelector(".table.table-striped.table-bordered.table-condensed.dataTable"));
+		List<String> sRelatedValueDrivers = prueba.TraerColumna(wBody, 6, 6);
+		Assert.assertTrue(sRelatedValueDrivers.get(0).isEmpty());
+	}
+	
+	//-------------------------------------------------------------------------------------------------
+	//Cambio de cuenta
+	/*prueba.Desloguear_Loguear("permisos");
+	try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+	SCP pScp = new SCP(driver);
+	try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+	pScp.clickOnTabByName("cuentas");
+	try {Thread.sleep(7000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+	pScp.clickEnCuentaPorNombre("Florencia Di Ci");
+	try {Thread.sleep(10000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}*/
+	
 }

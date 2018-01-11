@@ -44,19 +44,20 @@ private WebDriver driver;
 	
 	@BeforeMethod(groups = "SCP")
 	public void setup() {
+		
 		SCP pScp = new SCP(driver);
-		pScp.goToMenu("scp");
+	
 		try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 		pScp.clickOnTabByName("cuentas");
 		try {Thread.sleep(7000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
-		//pScp.listTypeAcc("Todas Las cuentas");
 		try {Thread.sleep(7000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
-		//pScp.clickOnFirstAccRe();
+		
 		pScp.clickEnCuentaPorNombre("Florencia Di Ci");
 		try {Thread.sleep(10000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 	}
 	
-	@AfterClass(groups = "SCP")
+	
+	//@AfterClass(groups = "SCP")
 	public void teardown() {
 		driver.quit();
 		sleep(10000);
@@ -200,9 +201,16 @@ private WebDriver driver;
 	    String fech =  fechaCompleta.getDate()+"/"+(fechaCompleta.getMonth()+1);
 	    int hora = fechaCompleta.getHours();
 	    int min	=	fechaCompleta.getMinutes();
-	    	if((fechaCompleta.getDate()<10) || (fechaCompleta.getMonth()<10)) {
+	    	if((fechaCompleta.getDate()<10) && (fechaCompleta.getMonth()<10)) {
 	    		fech= "0"+fechaCompleta.getDate()+"/0"+(fechaCompleta.getMonth()+1);
-	    }
+	    	}else {
+	    		if(fechaCompleta.getDate()<10) {
+	    			fech= "0"+fechaCompleta.getDate()+"/"+(fechaCompleta.getMonth()+1);
+	    		}else {
+	    			if (fechaCompleta.getMonth()<10)
+	    			fech= fechaCompleta.getDate()+"/0"+(fechaCompleta.getMonth()+1);
+	    		}
+	    	}
 	    	
 	    System.out.println(fech);
 	    List<WebElement> box = driver.findElement(By.id("mainTable")).findElements(By.className("odd"));
@@ -224,13 +232,18 @@ private WebDriver driver;
 		 busc.sendKeys(fech); 
 		List<WebElement> tabla= driver.findElement(By.id("mainTable_wrapper")).findElements(By.className("odd"));
 		tabla.addAll(driver.findElement(By.id("mainTable_wrapper")).findElements(By.className("even")));//.findElements(By.tagName("td"));
+		System.out.println(hora);
+		System.out.println(min);
 		for(WebElement UnaL : tabla) {
-			if (UnaL.findElements(By.tagName("td")).get(3).getText().equals(texto1)){
+			if (UnaL.findElements(By.tagName("td")).get(3).getText().equals(texto1)||UnaL.findElements(By.tagName("td")).get(3).getText().equals(texto1+" null")){
+				System.out.println("entre 1");
 				if(Integer.parseInt(UnaL.findElements(By.tagName("td")).get(1).getText().split(" ")[1].split(":")[0])>hora) {
 					bien = true;
+					System.out.println("entre 2");
 				}else {
-					if (Integer.parseInt(UnaL.findElements(By.tagName("td")).get(1).getText().split(" ")[1].split(":")[0])==hora && Integer.parseInt(UnaL.findElements(By.tagName("td")).get(1).getText().split(" ")[1].split(":")[1])>=min)
+					if (Integer.parseInt(UnaL.findElements(By.tagName("td")).get(1).getText().split(" ")[1].split(":")[0])==hora && Integer.parseInt(UnaL.findElements(By.tagName("td")).get(1).getText().split(" ")[1].split(":")[1])>=min) {
 						bien = true;
+					System.out.println("entre 3");}
 				}
 			}
 		}
@@ -361,7 +374,7 @@ private WebDriver driver;
 	    			}
 	    	}
 	    Assert.assertTrue(true);
+		
 	}
-	
 
 }
