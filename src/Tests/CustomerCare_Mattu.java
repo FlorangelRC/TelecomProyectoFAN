@@ -9,6 +9,7 @@ import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.testng.Assert;
+import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
@@ -47,7 +48,7 @@ public class CustomerCare_Mattu extends TestBase{
         CustomerCare page = new CustomerCare(driver);
         page.cerrarultimapestaña();
     }
-    //@AfterClass (groups = {"CustomerCare", "ProblemasConRecargas", "ActualizarDatos", "DetalleDeConsumos", "Vista360Layout"})
+    @AfterClass(groups = {"CustomerCare", "ProblemasConRecargas", "ActualizarDatos", "DetalleDeConsumos", "Vista360Layout"})
     public void quit() {
       driver.quit();
       sleep(4000);
@@ -334,7 +335,7 @@ public class CustomerCare_Mattu extends TestBase{
 	    		x.click();
 	    	}
 	    }
-	    /*try {Thread.sleep(8000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+	    try {Thread.sleep(8000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 	    driver.switchTo().defaultContent();
 	    driver.switchTo().frame(cambioFrameByID.getFrameForElement(driver, By.id("stepChooseMethod_nextBtn")));
 	    
@@ -348,7 +349,7 @@ public class CustomerCare_Mattu extends TestBase{
 	    }
 	    try {Thread.sleep(8000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 	    driver.findElement(By.id("lotNumber")).sendKeys("1234567890123456");
-	    Assert.assertTrue(driver.findElement(By.cssSelector(".error.ng-scope")).getText().isEmpty());*/
+	    Assert.assertTrue(driver.findElement(By.cssSelector(".error.ng-scope")).getText().isEmpty());
 	}
 	
 	//-------------------------------------------------------------------------------------------------
