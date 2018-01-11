@@ -47,7 +47,7 @@ public class test_SCP_Base extends TestBase {
 	public void setUp() throws Exception {
 		try {Thread.sleep(2000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 		SCP page= new SCP(driver);
-		page.goToMenu("SCP");
+		//page.goToMenu("SCP");
 		page.clickOnTabByName("cuentas");
 		page.listTypeAcc("Todas Las cuentas");
 		page.clickEnCuentaPorNombre("Florencia Di Cio");
