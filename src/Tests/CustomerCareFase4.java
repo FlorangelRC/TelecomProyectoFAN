@@ -27,7 +27,7 @@ public class CustomerCareFase4 extends TestBase{
 		IrA.CajonDeAplicaciones.ConsolaFAN();
 	}
 	
-	//@AfterClass (groups = {"CustomerCare", "Vista360Layout", "DetalleDeConsumos", "ActualizarDatos", "ProblemasConRecargas", "DebitoAutomatico"})
+	@AfterClass (groups = {"CustomerCare", "Vista360Layout", "DetalleDeConsumos", "ActualizarDatos", "ProblemasConRecargas", "DebitoAutomatico"})
 	public void quit() {
 		page.cerrarTodasLasPestañas();
 		IrA.CajonDeAplicaciones.Ventas();

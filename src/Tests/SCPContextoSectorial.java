@@ -41,7 +41,7 @@ public class SCPContextoSectorial extends TestBase {
 	  public void setUp() throws Exception {
 	    try {Thread.sleep(3000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 	    SCP prueba= new SCP(driver);
-	    prueba.goToMenu("SCP");
+	    //prueba.goToMenu("SCP");
 	    prueba.clickOnTabByName("cuentas");
 	    prueba.clickOnFirstAccRe();
 	    try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}	
