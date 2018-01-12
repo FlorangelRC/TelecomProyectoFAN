@@ -725,7 +725,7 @@ Assert.assertTrue(acc&&nmbre&&pntf&&pntd);
 		TC = (TC.replaceAll(",", "."));
 		System.out.println("totalcontrato: "+TC);
 		double TotalContrato = Double.parseDouble(TC); 
-		double FORMULA = (cant*plazo*abono);
+		double FORMULA = (cant*plazo*abono)+CUV;
 		String contrato = Double.toString(TotalContrato);
 		String resultado = Double.toString(FORMULA);
 		System.out.println("resultado formula: "+resultado);
