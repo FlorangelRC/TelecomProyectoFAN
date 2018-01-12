@@ -51,7 +51,7 @@ public class SCPAdministracionDeServicios extends TestBase {
 		try {Thread.sleep(10000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 	}
 	
-	@AfterClass(groups = "SCP")
+	//@AfterClass(groups = "SCP")
 	public void tearDown() {
 		driver.quit();
 		try {Thread.sleep(2000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
@@ -61,7 +61,7 @@ public class SCPAdministracionDeServicios extends TestBase {
     public void TS110248_Estructura_De_Los_Productos_Moneda() {  
       SCP pcp = new SCP(driver);  
       boolean estaMon= false;
-      pcp.Desloguear_Loguear("permisos");
+      pcp.Desloguear_Loguear("fabiana");
       pcp.clickOnTabByName("cuentas");
 		try {Thread.sleep(7000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 		try {Thread.sleep(7000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
@@ -122,7 +122,7 @@ public class SCPAdministracionDeServicios extends TestBase {
 	@Test(groups = "SCP")  
     public void TS110250_Estructura_De_Los_Proyectos_TMI() {  
       SCP pcp = new SCP(driver);  
-      pcp.Desloguear_Loguear("permisos");
+      pcp.Desloguear_Loguear("fabiana");
       pcp.clickOnTabByName("cuentas");
 		try {Thread.sleep(7000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 		try {Thread.sleep(7000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
@@ -147,7 +147,7 @@ public class SCPAdministracionDeServicios extends TestBase {
 	@Test(groups = "SCP")  
     public void TS110251_Estructura_De_Los_Proyectos_TMI_Fecha_Pasada() {  
       SCP pcp = new SCP(driver);  
-      pcp.Desloguear_Loguear("permisos");
+      pcp.Desloguear_Loguear("fabiana");
       pcp.clickOnTabByName("cuentas");
 		try {Thread.sleep(7000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 		try {Thread.sleep(7000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
@@ -170,7 +170,7 @@ public class SCPAdministracionDeServicios extends TestBase {
 	@Test(groups = "SCP")  
     public void TS110252_Estructura_De_Las_Oportunidades_Probabilidad() {  
       SCP pcp = new SCP(driver);  
-      pcp.Desloguear_Loguear("permisos");
+      pcp.Desloguear_Loguear("fabiana");
       pcp.clickOnTabByName("cuentas");
 		try {Thread.sleep(7000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 		try {Thread.sleep(7000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
@@ -194,7 +194,7 @@ public class SCPAdministracionDeServicios extends TestBase {
     public void TS110253_Estructura_De_Los_Contactos_Estado() {  
       SCP pcp = new SCP(driver);  
       boolean estaMon= false;
-      pcp.Desloguear_Loguear("permisos");
+      pcp.Desloguear_Loguear("fabiana");
       pcp.clickOnTabByName("cuentas");
 		try {Thread.sleep(7000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 		try {Thread.sleep(7000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
@@ -221,7 +221,7 @@ public class SCPAdministracionDeServicios extends TestBase {
 		driver.findElement(By.id("topButtonRow")).findElement(By.tagName("input")).click();
 		try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 		
-		//pcp.Desloguear_Loguear("isabel");
+		pcp.Desloguear_Loguear("isabel");
     }  
 	
 	
@@ -932,7 +932,9 @@ public class SCPAdministracionDeServicios extends TestBase {
       assertTrue(botonG);  
       ArrayList<String> allTabs = new ArrayList<String>(driver.getWindowHandles());  
         driver.switchTo().window(allTabs.get(1));  
-      assertTrue(driver.findElement(By.id("player-container")).isDisplayed());  
+        sleep(1000);
+        assertTrue(driver.getCurrentUrl().contains("youtube.com"));
+        assertTrue(driver.getTitle().contains("Telecom")); 
       driver.close();  
       driver.switchTo().window(allTabs.get(0));  
       try {Thread.sleep(2000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}  
@@ -1026,7 +1028,8 @@ public class SCPAdministracionDeServicios extends TestBase {
 	    assertTrue(botonG); 
 	    ArrayList<String> allTabs = new ArrayList<String>(driver.getWindowHandles()); 
 	      driver.switchTo().window(allTabs.get(1)); 
-	    assertTrue(driver.findElement(By.id("player-container")).isDisplayed()); 
+	      assertTrue(driver.getCurrentUrl().contains("youtube.com"));
+	        assertTrue(driver.getTitle().contains("Telecom")); 
 	    driver.close(); 
 	    driver.switchTo().window(allTabs.get(0)); 
 	    try {Thread.sleep(2000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();} 

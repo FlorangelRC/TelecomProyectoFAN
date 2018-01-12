@@ -709,7 +709,7 @@ Assert.assertTrue(acc&&nmbre&&pntf&&pntd);
 	
 	public void ValidarMontoContrato(){
 		String CUV0 = driver.findElement(By.id("00N3F000000HaZH_ileinner")).getText().substring(1).replaceAll(",", ".");
-		double CUV= Integer.parseInt(CUV0); 
+		double CUV= Double.parseDouble(CUV0); 
 		String cant0 = driver.findElement(By.id("Quantity_ileinner")).getText().substring(1).replaceAll(",", ".");
 		int cant = Integer.parseInt(cant0);
 		int plazo = Integer.parseInt(driver.findElement(By.id("00N3F000000HaZN_ileinner")).getText()); 
