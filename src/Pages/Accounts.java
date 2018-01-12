@@ -181,7 +181,12 @@ public class Accounts extends BasePage {
         accounts.get(accountIndex).findElements(By.tagName("a")).get(3).click();
     }
     
+    
 
+    public void selectJuanPerez() {
+    	clickOnLetter("j");
+    }
+    
     	public void selectAccountByName(String accountName) {
             //maybe the responsability of the page should only remain in accessing it's elements, and not assuring it can be done.
             try {

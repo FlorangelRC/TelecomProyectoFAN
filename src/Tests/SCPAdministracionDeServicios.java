@@ -61,15 +61,15 @@ public class SCPAdministracionDeServicios extends TestBase {
     public void TS110248_Estructura_De_Los_Productos_Moneda() {  
       SCP pcp = new SCP(driver);  
       boolean estaMon= false;
-      pcp.Desloguear_Loguear("permisos");
+      pcp.Desloguear_Loguear("fabiana");
       pcp.clickOnTabByName("cuentas");
 		try {Thread.sleep(7000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 		try {Thread.sleep(7000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 		pcp.clickEnCuentaPorNombre("AIR S.R.L");
 		try {Thread.sleep(7000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
-		pcp.elegiroportunidad("ALta suc. Jujuy");
+		pcp.elegiroportunidad("ALTA Sucursal Jujuy");
 		try {Thread.sleep(7000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
-		WebElement Producto = driver.findElement(By.cssSelector(".listRelatedObject.opportunityLineItemBlock")).findElement(By.cssSelector(".dataRow.even.last.first")).findElement(By.tagName("th"));
+		WebElement Producto = driver.findElement(By.cssSelector(".listRelatedObject.opportunityLineItemBlock")).findElement(By.cssSelector(".dataRow.even.first")).findElement(By.tagName("th"));
 		((JavascriptExecutor)driver).executeScript("window.scrollTo(0,"+Producto.getLocation().y+")");
 		Producto.findElement(By.tagName("a")).click();
 		try {Thread.sleep(7000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
@@ -79,7 +79,7 @@ public class SCPAdministracionDeServicios extends TestBase {
 		System.out.println("Actual: "+MonActual);
 		Actions action = new Actions(driver); 
 		action.moveToElement(Detalles.findElements(By.tagName("td")).get(1)).doubleClick().perform();
-		try {Thread.sleep(2000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		try {Thread.sleep(3000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 		Select listSelect = new Select(Detalles.findElements(By.tagName("td")).get(1).findElement(By.tagName("select")));
 		if(MonActual.equals("USD"))
 			listSelect.selectByVisibleText("ARG");
@@ -115,15 +115,14 @@ public class SCPAdministracionDeServicios extends TestBase {
 		}
 		assertTrue(estaMon);
 		assertTrue(false);
-		/*Actions action = new Actions(driver); 
-		action.moveToElement(TMI).doubleClick().perform();*/
+		
 		pcp.Desloguear_Loguear("isabel");
     }  
 	
 	@Test(groups = "SCP")  
     public void TS110250_Estructura_De_Los_Proyectos_TMI() {  
       SCP pcp = new SCP(driver);  
-      pcp.Desloguear_Loguear("permisos");
+      pcp.Desloguear_Loguear("fabiana");
       pcp.clickOnTabByName("cuentas");
 		try {Thread.sleep(7000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 		try {Thread.sleep(7000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
@@ -148,7 +147,7 @@ public class SCPAdministracionDeServicios extends TestBase {
 	@Test(groups = "SCP")  
     public void TS110251_Estructura_De_Los_Proyectos_TMI_Fecha_Pasada() {  
       SCP pcp = new SCP(driver);  
-      pcp.Desloguear_Loguear("permisos");
+      pcp.Desloguear_Loguear("fabiana");
       pcp.clickOnTabByName("cuentas");
 		try {Thread.sleep(7000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 		try {Thread.sleep(7000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
@@ -171,7 +170,7 @@ public class SCPAdministracionDeServicios extends TestBase {
 	@Test(groups = "SCP")  
     public void TS110252_Estructura_De_Las_Oportunidades_Probabilidad() {  
       SCP pcp = new SCP(driver);  
-      pcp.Desloguear_Loguear("permisos");
+      pcp.Desloguear_Loguear("fabiana");
       pcp.clickOnTabByName("cuentas");
 		try {Thread.sleep(7000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 		try {Thread.sleep(7000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
@@ -195,7 +194,7 @@ public class SCPAdministracionDeServicios extends TestBase {
     public void TS110253_Estructura_De_Los_Contactos_Estado() {  
       SCP pcp = new SCP(driver);  
       boolean estaMon= false;
-      pcp.Desloguear_Loguear("permisos");
+      pcp.Desloguear_Loguear("fabiana");
       pcp.clickOnTabByName("cuentas");
 		try {Thread.sleep(7000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 		try {Thread.sleep(7000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
@@ -222,7 +221,7 @@ public class SCPAdministracionDeServicios extends TestBase {
 		driver.findElement(By.id("topButtonRow")).findElement(By.tagName("input")).click();
 		try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 		
-		//pcp.Desloguear_Loguear("isabel");
+		pcp.Desloguear_Loguear("isabel");
     }  
 	
 	
@@ -630,7 +629,7 @@ public class SCPAdministracionDeServicios extends TestBase {
       assertTrue(botonG);  
       ArrayList<String> allTabs = new ArrayList<String>(driver.getWindowHandles());  
         driver.switchTo().window(allTabs.get(1));  
-      assertTrue(driver.findElement(By.id("player-container")).isDisplayed());  
+      assertTrue(driver.findElement(By.cssSelector(".video-stream.html5-main-video")).isDisplayed());  
       driver.close();  
       driver.switchTo().window(allTabs.get(0));  
       try {Thread.sleep(2000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}  
@@ -850,7 +849,7 @@ public class SCPAdministracionDeServicios extends TestBase {
       primeros = driver.findElement(By.id("mainTable")).findElements(By.tagName("tr"));  
       primeros.remove(0);  
       for (WebElement uno : primeros) {  
-        if (uno.getAttribute("class").equals("StrategicInitiativeRow DraggableRow dataRow hasPotentialBussiness odd") || (uno.getAttribute("class").equals("StrategicInitiativeRow DraggableRow dataRow hasPotentialBussiness even"))) {  
+        if (uno.getAttribute("class").equals("StrategicInitiativeRow DraggableRow dataRow NotUsed odd") || (uno.getAttribute("class").equals("StrategicInitiativeRow DraggableRow dataRow NotUsed even"))) {  
           if(uno.findElement(By.tagName("td")).getText().equals(textoBuscar))   
             estaBuscado = true;  
           else   
@@ -933,7 +932,9 @@ public class SCPAdministracionDeServicios extends TestBase {
       assertTrue(botonG);  
       ArrayList<String> allTabs = new ArrayList<String>(driver.getWindowHandles());  
         driver.switchTo().window(allTabs.get(1));  
-      assertTrue(driver.findElement(By.id("player-container")).isDisplayed());  
+        sleep(1000);
+        assertTrue(driver.getCurrentUrl().contains("youtube.com"));
+        assertTrue(driver.getTitle().contains("Telecom")); 
       driver.close();  
       driver.switchTo().window(allTabs.get(0));  
       try {Thread.sleep(2000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}  
@@ -964,7 +965,8 @@ public class SCPAdministracionDeServicios extends TestBase {
 		    SCP pcp = new SCP(driver); 
 		    java.util.Date fecha = new Date();
 		    System.out.println (fecha);
-		    pcp.Desloguear_Loguear_Comentar("admin", "fabiana", fecha.toString(), "cuartoTitulo", 2); 
+		    pcp.Desloguear_Loguear("fabiana");
+		    pcp.Desloguear_Loguear_Comentar("fabiana", "admin", fecha.toString(), "cuartoTitulo", 2); 
 		    try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 			pcp.clickOnTabByName("cuentas");
 			try {Thread.sleep(7000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
@@ -973,6 +975,7 @@ public class SCPAdministracionDeServicios extends TestBase {
 			try {Thread.sleep(10000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 			pcp.moveToElementOnAccAndClick("cuartoTitulo", 2);
 		    pcp.validarcomentarioajeno(fecha.toString());
+		    pcp.Desloguear_Loguear("isabel");
 	}
 
 	@Test(groups = "SCP") 
@@ -1027,7 +1030,8 @@ public class SCPAdministracionDeServicios extends TestBase {
 	    assertTrue(botonG); 
 	    ArrayList<String> allTabs = new ArrayList<String>(driver.getWindowHandles()); 
 	      driver.switchTo().window(allTabs.get(1)); 
-	    assertTrue(driver.findElement(By.id("player-container")).isDisplayed()); 
+	      assertTrue(driver.getCurrentUrl().contains("youtube.com"));
+	        assertTrue(driver.getTitle().contains("Telecom")); 
 	    driver.close(); 
 	    driver.switchTo().window(allTabs.get(0)); 
 	    try {Thread.sleep(2000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();} 
