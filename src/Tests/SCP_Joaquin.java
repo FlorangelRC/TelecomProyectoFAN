@@ -34,13 +34,13 @@ public class SCP_Joaquin extends TestBase{
 	  public void setUp() throws Exception {
 	    try {Thread.sleep(3000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 	    SCP prueba= new SCP(driver);
-	    prueba.goToMenu("SCP");
+	   // prueba.goToMenu("SCP");
 	    prueba.clickOnTabByName("cuentas");
 	    prueba.clickOnFirstAccRe();
 	    try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}	
 	}
 	
-	@AfterClass(groups = {"SCP", "Filtros"})
+	//@AfterClass(groups = {"SCP", "Filtros"})
 	public void teardown() {
 		driver.quit();
 		sleep(3000);
@@ -351,7 +351,7 @@ public class SCP_Joaquin extends TestBase{
 			Assert.assertTrue(atributoClass.contains("Otros") || atributoClass.contains("colorEvento") ||
 							  atributoClass.contains("eventoRelevante") || atributoClass.contains("RFPComunicaciones") ||
 							  atributoClass.contains("RFPTI") || atributoClass.contains("Vencimiento") ||
-							  atributoClass.contains("colorVencimientoCompetencia"));
+							  atributoClass.contains("colorVencimientoCompetencia") || atributoClass.contains("colorServicio"));
 		}
 	}
 	
