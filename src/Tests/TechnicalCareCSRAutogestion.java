@@ -19,6 +19,7 @@ import org.testng.annotations.BeforeClass;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 import Pages.Accounts;
+import Pages.BasePage;
 import Pages.CustomerCare;
 import Pages.HomeBase;
 import Pages.setConexion;
@@ -27,6 +28,53 @@ public class TechnicalCareCSRAutogestion extends TestBase {
 	private WebDriver driver;
 	private String cuentaNombre;
 	private int bandera;
+	
+	public void buscarCaso(String nCaso) {
+		driver.switchTo().defaultContent();
+		sleep(1000);
+		WebElement Buscador=driver.findElement(By.xpath("//input[@id='phSearchInput']"));
+		Buscador.sendKeys(nCaso);
+		sleep(2000);
+		try {
+		driver.findElement(By.className("autoCompleteRowLink")).click();
+		sleep(2000);
+		Buscador.clear();}
+		catch(org.openqa.selenium.NoSuchElementException e) {
+			sleep(7000);
+		Buscador.submit();
+		sleep(1000);
+		Buscador.clear();
+		sleep(2000);
+		BasePage cambioFrameByID=new BasePage();
+		int i=0;
+		
+		while(i<3) {
+			try {
+			driver.switchTo().frame(cambioFrameByID.getFrameForElement(driver, By.id("searchResultsWarningMessageBox")));
+			if(driver.findElement(By.id("searchResultsWarningMessageBox")).isDisplayed()) {
+				driver.navigate().refresh();
+				sleep(2000);
+				i++;
+				//System.out.println(i);
+				}
+			}
+			catch (java.lang.NullPointerException a){
+				sleep(3000);
+				driver.switchTo().frame(cambioFrameByID.getFrameForElement(driver, By.id("searchPageHolderDiv")));
+				i=4;
+				System.out.println("Segundo Catch");
+			}
+		}
+		sleep(2000);
+		WebElement Caso=driver.findElement(By.cssSelector(".listRelatedObject.caseBlock")).
+				findElement(By.cssSelector(".bPageBlock.brandSecondaryBrd.secondaryPalette")).
+				findElement(By.className("pbBody")).findElement(By.className("list")).
+				findElements(By.tagName("tr")).get(1).
+				findElement(By.tagName("th")).findElement(By.tagName("a"));
+		Caso.click();
+		}
+		sleep(2000);
+	}
 	
 	@BeforeClass(groups = {"TechnicalCare", "Autogestion", "Muleto"}) 
 	public void init() throws Exception
@@ -2113,6 +2161,7 @@ public class TechnicalCareCSRAutogestion extends TestBase {
 	@Test(groups = {"Fase4","TechnicalCare", "Autogestion"})
 	public void TS74001_Autogestion_APP_Otros_Verificacion_De_Caso_Valido() {
 		Accounts accountPage = new Accounts(driver);
+		String nCaso = new String();
 		accountPage.findAndClickButton("autogesti\u00f3n");
 		try {Thread.sleep(8000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 		driver.switchTo().defaultContent();
@@ -2128,12 +2177,26 @@ public class TechnicalCareCSRAutogestion extends TestBase {
 		listSelect.selectByIndex(1);
 		driver.findElement(By.id("SelfManagementStep_nextBtn")).click();
 		sleep(5000);
+		try {
 		driver.switchTo().defaultContent();
 		driver.switchTo().frame(accountPage.getFrameForElement(driver, By.id("KnowledgeBaseResults_nextBtn")));
 		driver.findElements(By.className("borderOverlay")).get(1).click();
 		driver.findElement(By.id("KnowledgeBaseResults_nextBtn")).click();
 		sleep(4000);
-		System.out.println(driver.findElement(By.id("CreatedClosedCaseText")).findElement(By.tagName("strong")).getText());
+		nCaso = driver.findElement(By.id("CreatedClosedCaseText")).findElement(By.tagName("strong")).getText();
+		}catch(java.lang.NullPointerException ex1) {
+			driver.switchTo().defaultContent();
+			driver.switchTo().frame(accountPage.getFrameForElement(driver, By.id("SimilCaseInformation")));
+			nCaso =driver.findElement(By.id("SimilCaseInformation")).findElement(By.tagName("strong")).getText();
+		}
+		CustomerCare cCP = new CustomerCare(driver);
+		driver.switchTo().defaultContent();
+		cCP.elegircaso();
+		buscarCaso(nCaso);
+		sleep(4000);
+		driver.switchTo().defaultContent();
+		driver.switchTo().frame(accountPage.getFrameForElement(driver, By.id("cas15_ileinner")));
+		assertTrue(driver.findElement(By.id("cas15_ileinner")).getText().toLowerCase().equals("prueba automatizada"));
 	}
 	
 	@Test(groups = {"Fase4","TechnicalCare", "Autogestion"})
