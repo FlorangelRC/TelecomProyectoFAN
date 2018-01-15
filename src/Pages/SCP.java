@@ -118,6 +118,7 @@ public class SCP extends BasePage {
 		boolean enc = false;
 		List<WebElement> cuentas = driver.findElement(By.className("hotListElement")).findElements(By.cssSelector(".dataRow.odd"));
 		cuentas.add(driver.findElement(By.className("hotListElement")).findElement(By.cssSelector(".dataRow.even.first")));
+		cuentas.add(driver.findElement(By.className("hotListElement")).findElement(By.cssSelector(".dataRow.even")));
 		for (WebElement unaCuenta : cuentas) {
 			System.out.println("Cuenta:"+ unaCuenta.findElement(By.tagName("a")).getText());
 			if(unaCuenta.findElement(By.tagName("a")).getText().toLowerCase().contains(name.toLowerCase())) {

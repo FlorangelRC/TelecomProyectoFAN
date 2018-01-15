@@ -38,7 +38,7 @@ public class ABMdeMotivoAdmin extends TestBase {
 		try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 	}
 
-	//@AfterClass(groups = {"Fase2","TechnicalCare","ABMAdministrador"})
+	@AfterClass(groups = {"Fase2","TechnicalCare","ABMAdministrador"})
 	public void tearDown() {
 		driver.quit();
 	}
@@ -113,6 +113,7 @@ public class ABMdeMotivoAdmin extends TestBase {
 		try {Thread.sleep(4000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 		contactMMPage.getContactMotiveName().sendKeys(motiveName);
 		contactMMPage.getDescripcion().sendKeys(descripcion);
+		//driver.findElements(By.cssSelector(".dataCol.col02")).get(1).findElement(By.tagName("textarea")).sendKeys(descripcion);
 		contactMMPage.getActivoCheck().click();
 		contactMMPage.getServicio().sendKeys(servicio);
 		try {Thread.sleep(4000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
