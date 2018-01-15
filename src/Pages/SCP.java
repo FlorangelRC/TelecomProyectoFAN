@@ -732,7 +732,19 @@ Assert.assertTrue(acc&&nmbre&&pntf&&pntd);
 		System.out.println("aparece en la app: "+contrato);
 
 		Assert.assertEquals(contrato, resultado);
-		
-
+		}
+	//   
+	public String SacarTotalMesXPlazo(){
+		try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		String antes = driver.findElement(By.id("00N3F000000HaZK_ileinner")).getText().substring(1).replace(".","");
+		System.out.println("Antes: "+antes);
+		return antes;
+	}
+	
+	public void ValidarTotalMesXPlazo(String antes){
+		try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		String despues = driver.findElement(By.id("00N3F000000HaZK_ileinner")).getText().substring(1).replace(".","");
+		System.out.println("Antes: "+antes);
+		Assert.assertFalse(despues.equals(antes));
 	}
 }
