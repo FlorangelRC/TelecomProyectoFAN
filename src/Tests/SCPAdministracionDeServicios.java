@@ -51,7 +51,7 @@ public class SCPAdministracionDeServicios extends TestBase {
 		try {Thread.sleep(10000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 	}
 	
-	//@AfterClass(groups = "SCP")
+	@AfterClass(groups = "SCP")
 	public void tearDown() {
 		driver.quit();
 		try {Thread.sleep(2000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
@@ -965,7 +965,8 @@ public class SCPAdministracionDeServicios extends TestBase {
 		    SCP pcp = new SCP(driver); 
 		    java.util.Date fecha = new Date();
 		    System.out.println (fecha);
-		    pcp.Desloguear_Loguear_Comentar("admin", "fabiana", fecha.toString(), "cuartoTitulo", 2); 
+		    pcp.Desloguear_Loguear("fabiana");
+		    pcp.Desloguear_Loguear_Comentar("fabiana", "admin", fecha.toString(), "cuartoTitulo", 2); 
 		    try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 			pcp.clickOnTabByName("cuentas");
 			try {Thread.sleep(7000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
@@ -974,6 +975,7 @@ public class SCPAdministracionDeServicios extends TestBase {
 			try {Thread.sleep(10000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 			pcp.moveToElementOnAccAndClick("cuartoTitulo", 2);
 		    pcp.validarcomentarioajeno(fecha.toString());
+		    pcp.Desloguear_Loguear("isabel");
 	}
 
 	@Test(groups = "SCP") 
