@@ -118,6 +118,7 @@ public class SCP extends BasePage {
 		boolean enc = false;
 		List<WebElement> cuentas = driver.findElement(By.className("hotListElement")).findElements(By.cssSelector(".dataRow.odd"));
 		cuentas.add(driver.findElement(By.className("hotListElement")).findElement(By.cssSelector(".dataRow.even.first")));
+		cuentas.add(driver.findElement(By.className("hotListElement")).findElement(By.cssSelector(".dataRow.even")));
 		for (WebElement unaCuenta : cuentas) {
 			System.out.println("Cuenta:"+ unaCuenta.findElement(By.tagName("a")).getText());
 			if(unaCuenta.findElement(By.tagName("a")).getText().toLowerCase().contains(name.toLowerCase())) {
@@ -732,7 +733,19 @@ Assert.assertTrue(acc&&nmbre&&pntf&&pntd);
 		System.out.println("aparece en la app: "+contrato);
 
 		Assert.assertEquals(contrato, resultado);
-		
-
+		}
+	//   
+	public String SacarTotalMesXPlazo(){
+		try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		String antes = driver.findElement(By.id("00N3F000000HaZK_ileinner")).getText().substring(1).replace(".","");
+		System.out.println("Antes: "+antes);
+		return antes;
+	}
+	
+	public void ValidarTotalMesXPlazo(String antes){
+		try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		String despues = driver.findElement(By.id("00N3F000000HaZK_ileinner")).getText().substring(1).replace(".","");
+		System.out.println("Antes: "+antes);
+		Assert.assertFalse(despues.equals(antes));
 	}
 }
