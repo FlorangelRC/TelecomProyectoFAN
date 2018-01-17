@@ -51,7 +51,7 @@ public class SCPAdministracionDeServicios extends TestBase {
 		try {Thread.sleep(10000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 	}
 	
-	//@AfterClass(groups = "SCP")
+	@AfterClass(groups = "SCP")
 	public void tearDown() {
 		driver.quit();
 		try {Thread.sleep(2000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
@@ -158,6 +158,7 @@ public class SCPAdministracionDeServicios extends TestBase {
 		WebElement TMI = driver.findElement(By.className("detailList")).findElements(By.tagName("tr")).get(4).findElements(By.tagName("td")).get(3);
 		Actions action = new Actions(driver); 
 		action.moveToElement(TMI).doubleClick().perform();
+		  TMI.findElement(By.tagName("input")).clear();
 	    TMI.findElement(By.tagName("input")).sendKeys("-100");
 	    driver.findElement(By.id("topButtonRow")).findElement(By.tagName("input")).click();
 	    try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}  
