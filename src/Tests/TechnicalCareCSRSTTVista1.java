@@ -75,7 +75,7 @@ public class TechnicalCareCSRSTTVista1  extends TestBase {
     
  }
 	
-	//@AfterClass(groups = {"Fase2","TechnicalCare","ServicioTecnico"})
+	@AfterClass(groups = {"Fase2","TechnicalCare","ServicioTecnico"})
 	public void tearDown() {
 		driver.switchTo().defaultContent();
 		driver.findElement(By.id("tsidButton")).click();
@@ -92,7 +92,7 @@ public class TechnicalCareCSRSTTVista1  extends TestBase {
 		try {Thread.sleep(2000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 	}
 	
-	//@AfterMethod(groups = {"Fase2","TechnicalCare","ServicioTecnico"})
+	@AfterMethod(groups = {"Fase2","TechnicalCare","ServicioTecnico"})
 	public void closeTechCareTab() {
 		Accounts accountPage = new Accounts(driver);
 		 accountPage.closeAccountServiceTabByName("Servicio Técnico");	
@@ -581,7 +581,7 @@ public class TechnicalCareCSRSTTVista1  extends TestBase {
 		WebElement BenBoton = driver.findElement(By.id("ExtractRepairHistory"));
 		((JavascriptExecutor)driver).executeScript("window.scrollTo(0,"+BenBoton.getLocation().y+")");
 		BenBoton.click();
-		try {Thread.sleep(7000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}	
+		try {Thread.sleep(10000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}	
 		driver.switchTo().defaultContent();
 		driver.switchTo().frame(accPage.getFrameForElement(driver, By.cssSelector(".slds-table.slds-table--bordered.slds-table--cell-buffer.techCare-RepairHistory.ng-scope")));
 		WebElement rep = driver.findElement(By.cssSelector(".slds-table.slds-table--bordered.slds-table--cell-buffer.techCare-RepairHistory.ng-scope"));
