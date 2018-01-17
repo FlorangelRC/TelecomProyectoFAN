@@ -583,5 +583,162 @@ public class TechnicalCareCSRAutogestionF4 extends TestBase{
 		irDetalleDeCaso();
 		assertTrue(verificarServiceOwner("Terceros"));	
 	}
+	
+	@Test(groups= {"Fase4","TechnicalCare", "Autogestion"})
+	public void TS73888_CRM_Fase_4_Technical_Care_CSR_Autogestion_Verificacion_de_que_la_autogestion_del_Canal_Web_servicio_Servicios_corresponde_a_un_servicio_de_Telecom() {
+		String caso;
+		elegirOpciones("WEB","Servicios","Información Incompleta");
+		continuar();
+		saltarPantallas();
+		sleep(4000);
+		caso=getCaso();
+		buscarCaso(caso);
+		irDetalleDeCaso();
+		assertTrue(verificarServiceOwner("Telecom"));	
+	}
+	
+	@Test(groups= {"Fase4","TechnicalCare", "Autogestion"})
+	public void TS73886_CRM_Fase_4_Technical_Care_CSR_Autogestion_Verificacion_de_que_la_autogestion_del_Canal_Web_servicio_Promociones_corresponde_a_un_servicio_de_Telecom() {
+		String caso;
+		elegirOpciones("WEB","Promociones","Información Incompleta");
+		continuar();
+		saltarPantallas();
+		sleep(4000);
+		caso=getCaso();
+		buscarCaso(caso);
+		irDetalleDeCaso();
+		assertTrue(verificarServiceOwner("Telecom"));	
+	}
+	
+	@Test(groups= {"Fase4","TechnicalCare", "Autogestion"})
+	public void TS73884_CRM_Fase_4_Technical_Care_CSR_Autogestion_Verificacion_de_que_la_autogestion_del_Canal_Web_servicio_Planes_corresponde_a_un_servicio_de_Telecom() {
+		String caso;
+		elegirOpciones("WEB","Planes","Información Incompleta");
+		continuar();
+		saltarPantallas();
+		sleep(4000);
+		caso=getCaso();
+		buscarCaso(caso);
+		irDetalleDeCaso();
+		assertTrue(verificarServiceOwner("Telecom"));	
+	}
+	
+	@Test(groups= {"Fase4","TechnicalCare", "Autogestion"})
+	public void TS73893_CRM_Fase_4_Technical_Care_CSR_Autogestion_Verificacion_de_que_la_autogestion_del_Canal_Web_servicio_Personal_Black_corresponde_a_un_servicio_de_Telecom() {
+		String caso;
+		elegirOpciones("WEB","Personal Black","Información Incompleta");
+		continuar();
+		saltarPantallas();
+		sleep(4000);
+		caso=getCaso();
+		buscarCaso(caso);
+		irDetalleDeCaso();
+		assertTrue(verificarServiceOwner("Telecom"));	
+	}
+	
+	@Test(groups= {"Fase4","TechnicalCare", "Autogestion"})
+	public void TS73885_CRM_Fase_4_Technical_Care_CSR_Autogestion_Verificacion_de_que_la_autogestion_del_Canal_Web_servicio_Packs_corresponde_a_un_servicio_de_Telecom() {
+		String caso;
+		elegirOpciones("WEB","Packs","Información Incompleta");
+		continuar();
+		saltarPantallas();
+		sleep(4000);
+		caso=getCaso();
+		buscarCaso(caso);
+		irDetalleDeCaso();
+		assertTrue(verificarServiceOwner("Telecom"));	
+	}
+	
+	@Test(groups= {"Fase4","TechnicalCare", "Autogestion"})
+	public void TS73892_CRM_Fase_4_Technical_Care_CSR_Autogestion_Verificacion_de_que_la_autogestion_del_Canal_Web_servicio_Internacional_corresponde_a_un_servicio_de_Telecom() {
+		String caso;
+		elegirOpciones("WEB","Internacional","Información Incompleta");
+		continuar();
+		saltarPantallas();
+		sleep(4000);
+		caso=getCaso();
+		buscarCaso(caso);
+		irDetalleDeCaso();
+		assertTrue(verificarServiceOwner("Telecom"));	
+	}
+	
+	@Test(groups= {"Fase4","TechnicalCare", "Autogestion"})
+	public void TS73894_CRM_Fase_4_Technical_Care_CSR_Autogestion_Verificacion_de_que_la_autogestion_del_Canal_Web_servicio_Contacto_CHAT_corresponde_a_un_servicio_de_Telecom() {
+		String caso;
+		elegirOpciones("WEB","Contacto (CHAT)","Información Incompleta");
+		continuar();
+		saltarPantallas();
+		sleep(4000);
+		caso=getCaso();
+		buscarCaso(caso);
+		irDetalleDeCaso();
+		assertTrue(verificarServiceOwner("Telecom"));	
+	}
+	
+	@Test(groups= {"Fase4","TechnicalCare", "Autogestion"})
+	public void TS73904_CRM_Fase_4_Technical_Care_CSR_Autogestion_Verificacion_de_que_la_autogestion_del_Canal_WAP_servicio_Estado_de_la_cuenta_corresponde_a_un_servicio_de_Telecom() {
+		String caso;
+		elegirOpciones("WAP","Estado de la cuenta","Información Incompleta");
+		continuar();
+		saltarPantallas();
+		sleep(4000);
+		caso=getCaso();
+		buscarCaso(caso);
+		irDetalleDeCaso();
+		assertTrue(verificarServiceOwner("Telecom"));	
+	}
+	
+	@Test(groups= {"Fase4","TechnicalCare", "Autogestion"})
+	public void TS73908_CRM_Fase_4_Technical_Care_CSR_Autogestion_Verificacion_de_que_la_autogestion_del_Canal_WAP_servicio_Email_corresponde_a_un_servicio_de_Telecom() {
+		String caso;
+		elegirOpciones("WAP","Email","Información Incompleta");
+		continuar();
+		saltarPantallas();
+		sleep(4000);
+		caso=getCaso();
+		buscarCaso(caso);
+		irDetalleDeCaso();
+		assertTrue(verificarServiceOwner("Telecom"));	
+	}
+	
+	//Pertenece a Terceros por eso falla
+	@Test(groups= {"Fase4","TechnicalCare", "Autogestion"})
+	public void TS73922_CRM_Fase_4_Technical_Care_CSR_Autogestion_Verificacion_de_que_la_autogestion_del_Canal_USSD_servicio_Otros_corresponde_a_un_servicio_de_Telecom() {
+		String caso;
+		elegirOpciones("USSD","Otros","Tono ocupado");
+		continuar();
+		saltarPantallas();
+		sleep(4000);
+		caso=getCaso();
+		buscarCaso(caso);
+		irDetalleDeCaso();
+		assertTrue(verificarServiceOwner("Telecom"));	
+	}
+	
+	@Test(groups= {"Fase4","TechnicalCare", "Autogestion"})
+	public void TS73912_CRM_Fase_4_Technical_Care_CSR_Autogestion_Verificacion_de_que_la_autogestion_del_Canal_USSD_servicio_724_IPago_corresponde_a_un_servicio_de_Telecom() {
+		String caso;
+		elegirOpciones("USSD","*724# (IPago)","No Interactúa");
+		continuar();
+		saltarPantallas();
+		sleep(4000);
+		caso=getCaso();
+		buscarCaso(caso);
+		irDetalleDeCaso();
+		assertTrue(verificarServiceOwner("Telecom"));	
+	}
+	
+	@Test(groups= {"Fase4","TechnicalCare", "Autogestion"})
+	public void TS73913_CRM_Fase_4_Technical_Care_CSR_Autogestion_Verificacion_de_que_la_autogestion_del_Canal_USSD_servicio_234_Nominatividad_corresponde_a_un_servicio_de_Telecom() {
+		String caso;
+		elegirOpciones("USSD","*234# Nominatividad","No Interactúa");
+		continuar();
+		saltarPantallas();
+		sleep(4000);
+		caso=getCaso();
+		buscarCaso(caso);
+		irDetalleDeCaso();
+		assertTrue(verificarServiceOwner("Telecom"));	
+	}
 }
 

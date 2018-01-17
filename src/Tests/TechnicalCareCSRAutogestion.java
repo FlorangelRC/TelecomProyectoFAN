@@ -114,7 +114,7 @@ public class TechnicalCareCSRAutogestion extends TestBase {
 		
 	}
 	
-	@AfterMethod(groups = {"TechnicalCare", "Autogestion", "Muleto"}) 
+	//@AfterMethod(groups = {"TechnicalCare", "Autogestion", "Muleto"}) 
 	 public void afterMethod() {
 		driver.switchTo().defaultContent();
 		List<WebElement> ctas = driver.findElement(By.cssSelector(".x-tab-strip.x-tab-strip-top")).findElements(By.tagName("li"));
@@ -132,7 +132,7 @@ public class TechnicalCareCSRAutogestion extends TestBase {
 		
 		  }
 	
-	@AfterClass(groups = {"TechnicalCare", "Autogestion", "Muleto"}) 
+	//@AfterClass(groups = {"TechnicalCare", "Autogestion", "Muleto"}) 
 	public void tearDown2() {
 		driver.switchTo().defaultContent();
 		try{ for(WebElement e : driver.findElements(By.className("x-tab-strip-close"))) {
@@ -2287,6 +2287,64 @@ public class TechnicalCareCSRAutogestion extends TestBase {
 	}
 	
 	@Test(groups = {"Fase3","TechnicalCare","Muleto"})
+	public void TS51077_Muleto_Verificacion_DNI_Supere_La_Validacion_De_Fraude() {
+		Accounts accountPage = new Accounts(driver);
+		accountPage.findAndClickButton("muleto");
+		try {Thread.sleep(8000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		driver.switchTo().defaultContent();
+		driver.switchTo().frame(accountPage.getFrameForElement(driver, By.cssSelector(".imgItem.ng-binding.ng-scope")));
+		driver.findElement(By.className("borderOverlay")).click();
+		try {Thread.sleep(1000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		((JavascriptExecutor)driver).executeScript("window.scrollTo(0,"+driver.findElement(By.id("ProcessingType_nextBtn")).getLocation().y+")");
+		driver.findElement(By.id("ProcessingType_nextBtn")).click();
+		try {Thread.sleep(4000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		driver.findElement(By.id("Gender"));
+		Select listSelect = new Select(driver.findElement(By.id("DocumentType")));
+		listSelect.selectByVisibleText("DNI");
+		listSelect = new Select (driver.findElement(By.id("Gender")));
+		listSelect.selectByVisibleText("Femenino");
+		driver.findElement(By.id("DocumentNumber")).sendKeys("37431150");
+		driver.findElement(By.id("ClientIdentification_nextBtn")).click();
+		sleep(5000);
+		WebElement validDNI = driver.findElement(By.id("ValidationResults")).findElements(By.tagName("p")).get(2);
+		assertTrue(validDNI.getText().toLowerCase().equals("dni en blacklist de fraude: no"));
+		((JavascriptExecutor)driver).executeScript("window.scrollTo(0,"+driver.findElement(By.id("ClientInformation21_nextBtn")).getLocation().y+")");
+		driver.findElement(By.id("ClientInformation21_nextBtn")).click();
+		sleep(7000);
+		assertTrue(driver.findElement(By.id("TerminalsSelection")).isEnabled());
+	}
+	
+	@Test(groups = {"Fase3","TechnicalCare","Muleto"})
+	public void TS51082_Muleto_Verificar_Gestion_Sin_Devolucion_De_Muleto() {
+		Accounts accountPage = new Accounts(driver);
+		accountPage.findAndClickButton("muleto");
+		try {Thread.sleep(8000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		driver.switchTo().defaultContent();
+		driver.switchTo().frame(accountPage.getFrameForElement(driver, By.cssSelector(".imgItem.ng-binding.ng-scope")));
+		driver.findElement(By.className("borderOverlay")).click();
+		try {Thread.sleep(1000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		((JavascriptExecutor)driver).executeScript("window.scrollTo(0,"+driver.findElement(By.id("ProcessingType_nextBtn")).getLocation().y+")");
+		driver.findElement(By.id("ProcessingType_nextBtn")).click();
+		try {Thread.sleep(4000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		driver.findElement(By.id("Gender"));
+		Select listSelect = new Select(driver.findElement(By.id("DocumentType")));
+		listSelect.selectByVisibleText("DNI");
+		listSelect = new Select (driver.findElement(By.id("Gender")));
+		listSelect.selectByVisibleText("Femenino");
+		driver.findElement(By.id("DocumentNumber")).sendKeys("37431150");
+		driver.findElement(By.id("ClientIdentification_nextBtn")).click();
+		sleep(5000);
+		WebElement validDNI = driver.findElement(By.id("ValidationResults")).findElements(By.tagName("p")).get(3);
+		assertTrue(validDNI.getText().toLowerCase().equals("cliente posee muleto pendiente de entrega: no"));
+		
+		((JavascriptExecutor)driver).executeScript("window.scrollTo(0,"+driver.findElement(By.id("ClientInformation21_nextBtn")).getLocation().y+")");
+		driver.findElement(By.id("ClientInformation21_nextBtn")).click();
+		sleep(7000);
+		assertTrue(driver.findElement(By.id("TerminalsSelection")).isEnabled());
+		
+	}
+	
+	@Test(groups = {"Fase3","TechnicalCare","Muleto"})
 	public void TS51083_Muleto_Visualizacion_Los_Datos_Del_Cliente() {
 		Accounts accountPage = new Accounts(driver);
 		accountPage.findAndClickButton("muleto");
@@ -2378,6 +2436,31 @@ public class TechnicalCareCSRAutogestion extends TestBase {
 		sleep(5000);
 		WebElement validDNI = driver.findElement(By.id("ValidationResults")).findElements(By.tagName("p")).get(2);
 		assertTrue(validDNI.getText().toLowerCase().equals("dni en blacklist de fraude: si"));
+	}
+	
+	@Test(groups = {"Fase3","TechnicalCare","Muleto"})
+	public void TS51087_Muleto_Visualizacion_Validacion_De_Blacklist_De_Fraude_No() {
+		Accounts accountPage = new Accounts(driver);
+		String[] todos = {"nombre:","apellido:","razon social:","tel\u00e9fono m\u00f3vil:","tel\u00e9fono de contacto:","email:","segmento:"};
+		accountPage.findAndClickButton("muleto");
+		try {Thread.sleep(8000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		driver.switchTo().defaultContent();
+		driver.switchTo().frame(accountPage.getFrameForElement(driver, By.cssSelector(".imgItem.ng-binding.ng-scope")));
+		driver.findElement(By.className("borderOverlay")).click();
+		try {Thread.sleep(1000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		((JavascriptExecutor)driver).executeScript("window.scrollTo(0,"+driver.findElement(By.id("ProcessingType_nextBtn")).getLocation().y+")");
+		driver.findElement(By.id("ProcessingType_nextBtn")).click();
+		try {Thread.sleep(4000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		driver.findElement(By.id("Gender"));
+		Select listSelect = new Select(driver.findElement(By.id("DocumentType")));
+		listSelect.selectByVisibleText("DNI");
+		listSelect = new Select (driver.findElement(By.id("Gender")));
+		listSelect.selectByVisibleText("Femenino");
+		driver.findElement(By.id("DocumentNumber")).sendKeys("37431150");
+		driver.findElement(By.id("ClientIdentification_nextBtn")).click();
+		sleep(5000);
+		WebElement validDNI = driver.findElement(By.id("ValidationResults")).findElements(By.tagName("p")).get(2);
+		assertTrue(validDNI.getText().toLowerCase().equals("dni en blacklist de fraude: no"));
 	}
 	
 	@Test(groups = {"TechnicalCare","Muleto"})

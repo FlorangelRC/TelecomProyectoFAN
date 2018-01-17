@@ -1,5 +1,7 @@
 package Tests;
 
+import static org.testng.Assert.assertTrue;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -15,6 +17,10 @@ import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
+
+import Pages.Accounts;
+import Pages.BasePage;
+import Pages.diagnosisTab;
 
 
 public class TechJoaquin extends TestBase {
@@ -117,7 +123,7 @@ public class TechJoaquin extends TestBase {
 		IrA.CajonDeAplicaciones.ConsolaFAN();
 	}
 	
-	@AfterClass(groups= {"TechnicalCare"})
+	//@AfterClass(groups= {"TechnicalCare"})
 	public void quit() {
 		cerrarTodasLasPestañas();
 		IrA.CajonDeAplicaciones.Ventas();
@@ -182,11 +188,86 @@ public class TechJoaquin extends TestBase {
 		for (WebElement c : columnas) {
 			texto.add(c.getText());
 		}
-		
 		Assert.assertTrue(texto.contains("SERVICIO"));
 		Assert.assertTrue(texto.contains("FECHA"));
 		Assert.assertTrue(texto.contains("ESTADO"));
 	}
 	
+	@Test(groups= {"TechnicalCare", "MisServicios"})
+	public void TS51459_CSR_Mis_Servicios_Visualizacion_De_Pregunta() {
+		BasePage cambioFrameByID=new BasePage();
+		diagnosisTab dT = new diagnosisTab(driver);
+		elegirCuenta("Adrian Tech");
+		WebElement asset = obtenerAsset("1122334456");
+		irAAccion(asset, "Mis servicios");
+		irAVerMasDetalles();
+		dT.abrirListaDeServicio(driver, "SMS");
+		driver.findElement(By.cssSelector(".addedValueServices-row.serviceGroup.activeGroup")).findElement(By.cssSelector(".slds-dropdown-trigger.slds-dropdown-trigger--click")).click();
+		driver.findElement(By.cssSelector(".addedValueServices-row.serviceGroup.activeGroup")).findElement(By.cssSelector(".icon.big.icon-v-troubleshoot-line")).click();
+		sleep(5000);
+		driver.switchTo().defaultContent();
+	     driver.switchTo().frame(cambioFrameByID.getFrameForElement(driver, By.id("IssueSelectStep_nextBtn")));
+	     dT.seleccionarMotivo(driver, "particular");
+		((JavascriptExecutor)driver).executeScript("window.scrollTo(0,"+driver.findElement(By.id("IssueSelectStep_nextBtn")).getLocation().y+")");
+		 driver.findElement(By.id("IssueSelectStep_nextBtn")).click();
+		 sleep(5000);
+		 System.out.println(driver.findElement(By.id("SolutionValidationRadio|0")).findElement(By.tagName("label")).getText());
+		 assertTrue(driver.findElement(By.id("SolutionValidationRadio|0")).findElement(By.tagName("label")).getText().toLowerCase().contains("el art\u00edculo ofrecido soluciona su inconveniente"));
+	}
+	
+	@Test(groups= {"TechnicalCare", "MisServicios"})
+	public void TS51461_CSR_Mis_Servicios_Visualizacion_Documento_Base_De_Conocimiento_Respuesta_No() {
+		BasePage cambioFrameByID=new BasePage();
+		diagnosisTab dT = new diagnosisTab(driver);
+		elegirCuenta("Adrian Tech");
+		WebElement asset = obtenerAsset("1122334456");
+		irAAccion(asset, "Mis servicios");
+		irAVerMasDetalles();
+		dT.abrirListaDeServicio(driver, "SMS");
+		driver.findElement(By.cssSelector(".addedValueServices-row.serviceGroup.activeGroup")).findElement(By.cssSelector(".slds-dropdown-trigger.slds-dropdown-trigger--click")).click();
+		driver.findElement(By.cssSelector(".addedValueServices-row.serviceGroup.activeGroup")).findElement(By.cssSelector(".icon.big.icon-v-troubleshoot-line")).click();
+		sleep(5000);
+		driver.switchTo().defaultContent();
+	     driver.switchTo().frame(cambioFrameByID.getFrameForElement(driver, By.id("IssueSelectStep_nextBtn")));
+	     dT.seleccionarMotivo(driver, "particular");
+		((JavascriptExecutor)driver).executeScript("window.scrollTo(0,"+driver.findElement(By.id("IssueSelectStep_nextBtn")).getLocation().y+")");
+		 driver.findElement(By.id("IssueSelectStep_nextBtn")).click();
+		 sleep(5000);
+		 dT.seleccionarMotivo(driver, "no");
+		 ((JavascriptExecutor)driver).executeScript("window.scrollTo(0,"+driver.findElement(By.id("KnowledgeBaseResults_nextBtn")).getLocation().y+")");
+		 driver.findElement(By.id("KnowledgeBaseResults_nextBtn")).click();
+		 driver.switchTo().defaultContent();
+	     driver.switchTo().frame(cambioFrameByID.getFrameForElement(driver, By.id("NetworkCategory_nextBtn")));
+	    assertTrue(driver.findElement(By.id("NetworkCategory_nextBtn")).isEnabled());
+	}
+	
+	@Test(groups= {"TechnicalCare", "MisServicios"})
+	public void TS51460_CSR_Mis_Servicios_Visualizacion_Documento_Base_De_Conocimiento_Respuesta_Si() {
+		BasePage cambioFrameByID=new BasePage();
+		diagnosisTab dT = new diagnosisTab(driver);
+		elegirCuenta("Adrian Tech");
+		WebElement asset = obtenerAsset("1122334456");
+		irAAccion(asset, "Mis servicios");
+		irAVerMasDetalles();
+		dT.abrirListaDeServicio(driver, "SMS");
+		driver.findElement(By.cssSelector(".addedValueServices-row.serviceGroup.activeGroup")).findElement(By.cssSelector(".slds-dropdown-trigger.slds-dropdown-trigger--click")).click();
+		driver.findElement(By.cssSelector(".addedValueServices-row.serviceGroup.activeGroup")).findElement(By.cssSelector(".icon.big.icon-v-troubleshoot-line")).click();
+		sleep(5000);
+		driver.switchTo().defaultContent();
+	     driver.switchTo().frame(cambioFrameByID.getFrameForElement(driver, By.id("IssueSelectStep_nextBtn")));
+	     dT.seleccionarMotivo(driver, "particular");
+		((JavascriptExecutor)driver).executeScript("window.scrollTo(0,"+driver.findElement(By.id("IssueSelectStep_nextBtn")).getLocation().y+")");
+		 driver.findElement(By.id("IssueSelectStep_nextBtn")).click();
+		 sleep(5000);
+		 dT.seleccionarMotivo(driver, "si");
+		 ((JavascriptExecutor)driver).executeScript("window.scrollTo(0,"+driver.findElement(By.id("KnowledgeBaseResults_nextBtn")).getLocation().y+")");
+		 driver.findElement(By.id("KnowledgeBaseResults_nextBtn")).click();
+		 sleep(6000);
+		 driver.switchTo().defaultContent();
+	     driver.switchTo().frame(cambioFrameByID.getFrameForElement(driver, By.id("ClosedCaseKnowledgeBase")));
+	     System.out.println("texto "+driver.findElement(By.id("ClosedCaseKnowledgeBase")).findElement(By.tagName("Strong")).getText());
+	    assertTrue(driver.findElement(By.id("ClosedCaseKnowledgeBase")).findElement(By.tagName("Strong")).getText().contains("Se ha creado la gesti\u00f3n n\u00famero"));
+	    assertTrue(driver.findElement(By.id("ClosedCaseKnowledgeBase")).findElements(By.tagName("Strong")).get(1).getText().contains("se procedi\u00f3 a su cierre"));
+	}
 
 }

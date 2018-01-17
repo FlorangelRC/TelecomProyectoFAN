@@ -2,6 +2,7 @@ package Pages;
 
 import java.util.List;
 
+import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -38,4 +39,26 @@ public Boolean isExecuteButtonPresent() {
 public void clickOnExeccute() {
 	buttons.get(14).click();
 }
+
+	public void abrirListaDeServicio(WebDriver driver, String serv) {
+		List<WebElement> servicios = driver.findElements(By.cssSelector(".addedValueServices-row.ng-pristine.ng-untouched.ng-valid.ng-empty"));
+		for (WebElement UnS : servicios) {
+			if(UnS.findElement(By.className("addedValueServices-card-td")).getText().equals(serv)) {
+				UnS.findElement(By.className("addedValueServices-arrowWrapper")).click();
+				break;
+			}
+		}
+	}
+	
+	public void seleccionarMotivo(WebDriver driver, String motiv) {
+		List<WebElement> wAsd = driver.findElements(By.cssSelector(".slds-radio.ng-scope"));
+	     for (WebElement x:wAsd) {
+	    	if (x.findElement(By.tagName("span")).getText().toLowerCase().contains(motiv)) {
+	    		x.click();
+	    		break;
+	      }
+	     }
+	}
+	
+	
 }
