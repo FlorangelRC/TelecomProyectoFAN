@@ -269,5 +269,150 @@ public class TechJoaquin extends TestBase {
 	    assertTrue(driver.findElement(By.id("ClosedCaseKnowledgeBase")).findElement(By.tagName("Strong")).getText().contains("Se ha creado la gesti\u00f3n n\u00famero"));
 	    assertTrue(driver.findElement(By.id("ClosedCaseKnowledgeBase")).findElements(By.tagName("Strong")).get(1).getText().contains("se procedi\u00f3 a su cierre"));
 	}
+	
+	@Test(groups= {"TechnicalCare", "MisServicios"})
+	public void TS74013_CSR_Diagnostico_Seleccion_De_La_Opcion_No_Tiene_Cuota_Disponible() {
+		BasePage cambioFrameByID=new BasePage();
+		diagnosisTab dT = new diagnosisTab(driver);
+		elegirCuenta("Adrian Tech");
+		WebElement asset = obtenerAsset("1122334456");
+		sleep(4000);
+		dT.irADiagnostico(driver, "diagn\u00f3stico", asset);
+		sleep(5000);
+		driver.switchTo().defaultContent();
+	    driver.switchTo().frame(cambioFrameByID.getFrameForElement(driver, By.id("MotiveIncidentSelect_nextBtn")));
+		assertTrue(dT.seleccionarMotivoPorSelect(driver, "No puedo navegar"));
+		driver.findElement(By.id("MotiveIncidentSelect_nextBtn")).click();
+		sleep(5000);
+		driver.switchTo().defaultContent();
+	    driver.switchTo().frame(cambioFrameByID.getFrameForElement(driver, By.id("KnowledgeBaseResults_nextBtn")));
+		dT.funcionoConfiguracion(driver, "no");
+		 ((JavascriptExecutor)driver).executeScript("window.scrollTo(0,"+driver.findElement(By.id("KnowledgeBaseResults_nextBtn")).getLocation().y+")");
+		 driver.findElement(By.id("KnowledgeBaseResults_nextBtn")).click();
+		 sleep(5000);
+		 driver.switchTo().defaultContent();
+		 driver.switchTo().frame(cambioFrameByID.getFrameForElement(driver, By.id("DataQuotaQuery_nextBtn")));
+		 ((JavascriptExecutor)driver).executeScript("window.scrollTo(0,"+driver.findElement(By.id("AvailableDataQuota|0")).getLocation().y+")");
+		 driver.findElement(By.id("AvailableDataQuota|0")).findElements(By.cssSelector(".slds-radio--faux.ng-scope")).get(1).click();
+		 driver.findElement(By.id("DataQuotaQuery_nextBtn")).click();
+		 sleep(5000);
+		 driver.switchTo().defaultContent();
+		 driver.switchTo().frame(cambioFrameByID.getFrameForElement(driver, By.id("UnavailableQuotaMessage")));
+		 driver.findElement(By.id("UnavailableQuotaMessage")).isDisplayed();
+		
+	}
+	
+	@Test(groups= {"TechnicalCare", "MisServicios"})
+	public void TS74018_CSR_Diagnostico_Seleccion_De_La_Opcion_Navega_Lento() {
+		BasePage cambioFrameByID=new BasePage();
+		diagnosisTab dT = new diagnosisTab(driver);
+		elegirCuenta("Adrian Tech");
+		WebElement asset = obtenerAsset("1122334456");
+		sleep(4000);
+		dT.irADiagnostico(driver, "diagn\u00f3stico", asset);
+		sleep(5000);
+		driver.switchTo().defaultContent();
+	    driver.switchTo().frame(cambioFrameByID.getFrameForElement(driver, By.id("MotiveIncidentSelect_nextBtn")));
+		assertTrue(dT.seleccionarMotivoPorSelect(driver, "Navega lento"));
+	}
+	
+	@Test(groups= {"TechnicalCare", "MisServicios"})
+	public void TS74020_CSR_Diagnostico_Seleccion_Opcion_Navega_Lento_Visualizar_La_Informacion_De_Saldo_Datos() {
+		BasePage cambioFrameByID=new BasePage();
+		diagnosisTab dT = new diagnosisTab(driver);
+		elegirCuenta("Adrian Tech");
+		WebElement asset = obtenerAsset("1122334456");
+		sleep(4000);
+		dT.irADiagnostico(driver, "diagn\u00f3stico", asset);
+		sleep(5000);
+		driver.switchTo().defaultContent();
+	    driver.switchTo().frame(cambioFrameByID.getFrameForElement(driver, By.id("MotiveIncidentSelect_nextBtn")));
+		assertTrue(dT.seleccionarMotivoPorSelect(driver, "Navega lento"));
+		driver.findElement(By.id("MotiveIncidentSelect_nextBtn")).click();
+		sleep(5000);
+		driver.switchTo().defaultContent();
+	    driver.switchTo().frame(cambioFrameByID.getFrameForElement(driver, By.id("KnowledgeBaseResults_nextBtn")));
+		dT.funcionoConfiguracion(driver, "no");
+		 ((JavascriptExecutor)driver).executeScript("window.scrollTo(0,"+driver.findElement(By.id("KnowledgeBaseResults_nextBtn")).getLocation().y+")");
+		 driver.findElement(By.id("KnowledgeBaseResults_nextBtn")).click();
+		 sleep(5000);
+		 driver.switchTo().defaultContent();
+		 driver.switchTo().frame(cambioFrameByID.getFrameForElement(driver, By.id("DataQuotaQuery_nextBtn")));
+		 ((JavascriptExecutor)driver).executeScript("window.scrollTo(0,"+driver.findElement(By.id("AvailableDataQuota|0")).getLocation().y+")");
+		 driver.findElement(By.id("AvailableDataQuota|0")).findElements(By.cssSelector(".slds-radio--faux.ng-scope")).get(1).click();
+		 driver.findElement(By.id("DataQuotaQuery_nextBtn")).click();
+		
+	}
+	
+	
+	@Test(groups= {"TechnicalCare", "MisServicios"})
+	public void TS74048_CSR_Diagnostico_Seleccion_De_Motivo_De_Datos_No_Puedo_Navegar() {
+		BasePage cambioFrameByID=new BasePage();
+		diagnosisTab dT = new diagnosisTab(driver);
+		elegirCuenta("Adrian Tech");
+		WebElement asset = obtenerAsset("1122334456");
+		sleep(4000);
+		dT.irADiagnostico(driver, "diagn\u00f3stico", asset);
+		sleep(5000);
+		driver.switchTo().defaultContent();
+	    driver.switchTo().frame(cambioFrameByID.getFrameForElement(driver, By.id("MotiveIncidentSelect_nextBtn")));
+		assertTrue(dT.seleccionarMotivoPorSelect(driver, "No puedo navegar"));
+	}
+	
+	@Test(groups= {"TechnicalCare", "MisServicios"})
+	public void TS74051_CSR_Diagnostico_Seleccion_De_Motivo_De_Voz_No_Puedo_Realizar_Llamadas() {
+		BasePage cambioFrameByID=new BasePage();
+		diagnosisTab dT = new diagnosisTab(driver);
+		elegirCuenta("Adrian Tech");
+		WebElement asset = obtenerAsset("1122334456");
+		sleep(4000);
+		dT.irADiagnostico(driver, "diagn\u00f3stico", asset);
+		sleep(5000);
+		driver.switchTo().defaultContent();
+	    driver.switchTo().frame(cambioFrameByID.getFrameForElement(driver, By.id("MotiveIncidentSelect_nextBtn")));
+		assertTrue(dT.seleccionarMotivoPorSelect(driver, "No puedo realizar llamadas"));
+	}
+	
+	@Test(groups= {"TechnicalCare", "MisServicios"})
+	public void TS74052_CSR_Diagnostico_Seleccion_De_Motivo_De_Voz_No_Puedo_Recibir_Llamadas() {
+		BasePage cambioFrameByID=new BasePage();
+		diagnosisTab dT = new diagnosisTab(driver);
+		elegirCuenta("Adrian Tech");
+		WebElement asset = obtenerAsset("1122334456");
+		sleep(4000);
+		dT.irADiagnostico(driver, "diagn\u00f3stico", asset);
+		sleep(5000);
+		driver.switchTo().defaultContent();
+	    driver.switchTo().frame(cambioFrameByID.getFrameForElement(driver, By.id("MotiveIncidentSelect_nextBtn")));
+		assertTrue(dT.seleccionarMotivoPorSelect(driver, "No puedo recibir llamadas"));
+	}
+	
+	@Test(groups= {"TechnicalCare", "MisServicios"})
+	public void TS74053_CSR_Diagnostico_Seleccion_De_Motivo_De_Voz_No_Puedo_Realizar_Ni_Recibir_Llamadas() {
+		BasePage cambioFrameByID=new BasePage();
+		diagnosisTab dT = new diagnosisTab(driver);
+		elegirCuenta("Adrian Tech");
+		WebElement asset = obtenerAsset("1122334456");
+		sleep(4000);
+		dT.irADiagnostico(driver, "diagn\u00f3stico", asset);
+		sleep(5000);
+		driver.switchTo().defaultContent();
+	    driver.switchTo().frame(cambioFrameByID.getFrameForElement(driver, By.id("MotiveIncidentSelect_nextBtn")));
+		assertTrue(dT.seleccionarMotivoPorSelect(driver, "No puedo realizar ni recibir llamadas"));
+	}
+	
+	@Test(groups= {"TechnicalCare", "MisServicios"})
+	public void TS74054_CSR_Diagnostico_Seleccion_De_Motivo_De_Voz_No_Puedo_Llamar_Desde_Otro_Pais() {
+		BasePage cambioFrameByID=new BasePage();
+		diagnosisTab dT = new diagnosisTab(driver);
+		elegirCuenta("Adrian Tech");
+		WebElement asset = obtenerAsset("1122334456");
+		sleep(4000);
+		dT.irADiagnostico(driver, "diagn\u00f3stico", asset);
+		sleep(5000);
+		driver.switchTo().defaultContent();
+	    driver.switchTo().frame(cambioFrameByID.getFrameForElement(driver, By.id("MotiveIncidentSelect_nextBtn")));
+		assertTrue(dT.seleccionarMotivoPorSelect(driver, "No puedo llamar desde otro pa\u00eds"));
+	}
 
 }
