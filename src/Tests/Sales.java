@@ -1133,7 +1133,7 @@ public class Sales extends TestBase {
 	}
 	
 	@Test(groups = "Sales") 
-	public void TS76134_Verificar_DNI_inexistente_y_creacion_de_contacto() {
+	public void TS76134_Alta_Cuenta_Busqueda_Verificar_DNI_inexistente_y_creacion_de_contacto() {
 	driver.findElement(By.id("SearchClientDocumentNumber")).sendKeys("7878785");
 	driver.findElement(By.id("SearchClientsDummy")).click();
 	sleep(3000);
@@ -1162,7 +1162,7 @@ public class Sales extends TestBase {
 	}
 
 	@Test(groups = "Sales") 
-	public void TS76132_Verificar_busqueda_combinada_DNI_con_NyAp_DNI_Existe_NyAP_No_Existe() {
+	public void TS76132_Alta_Cuenta_Busqueda_Verificar_busqueda_combinada_DNI_con_NyAp_DNI_Existe_NyAP_No_Existe() {
 		BasePage dni = new BasePage(driver);
 		sleep(5000);	
 		dni.setSimpleDropdown(driver.findElement(By.id("SearchClientDocumentType")),"DNI");
@@ -1186,7 +1186,7 @@ public class Sales extends TestBase {
 		}
 	
 	@Test(groups = "Sales") 
-	public void TS76140_Validar_nombres_de_los_campos() {
+	public void TS76140_Alta_Cuenta_Business_Validar_nombres_de_los_campos() {
 		BasePage dni = new BasePage(driver);
 		dni.setSimpleDropdown(driver.findElement(By.id("SearchClientDocumentType")),"DNI");
 		driver.findElement(By.id("SearchClientsDummy")).click();
@@ -1212,7 +1212,7 @@ public class Sales extends TestBase {
 		Assert.assertTrue(titu.isDisplayed());
 	}
 	 @Test(groups = "Sales") 
-	  public void TS76115_Verificar_alta_de_contacto_con_cuenta_generica() {
+	  public void TS76115_Alta_Contacto_Creacion_Verificar_alta_de_contacto_con_cuenta_generica() {
 	    SalesBase SB = new SalesBase(driver);
 	    SB.BuscarCuenta(DNI, "1112225");
 	    SB.crearnuevocliente("cuenta", "generica", nacimiento);
@@ -1245,7 +1245,7 @@ public class Sales extends TestBase {
 	 }
 	 
 	 	@Test(groups = "Sales") 
-	  public void TS76116_Verificar_busqueda_modificacion_de_contacto(){
+	  public void TS76116_Alta_Contacto_Creacion_Verificar_busqueda_modificacion_de_contacto(){
 	 		SalesBase SB = new SalesBase(driver);
 	 		 SB.BuscarCuenta(DNI, "1212125");
 	 	    SB.crearnuevocliente("contacto", "modifica", nacimiento);
@@ -1289,7 +1289,7 @@ public class Sales extends TestBase {
 	 	
 
 	 	@Test(groups = "Sales") 
-	  public void TS76138_Verificar_descripcion_al_dejar_mail_vacio(){
+	  public void TS76138_Alta_Contacto_Creacion_Verificar_descripcion_al_dejar_mail_vacio(){
 	 	SalesBase SB = new SalesBase(driver);
 	 	BasePage dni = new BasePage(driver);
 	 	SB.BtnCrearNuevoCliente();
@@ -1303,10 +1303,48 @@ public class Sales extends TestBase {
 	    WebElement sig = driver.findElement(By.id("ContactSearch_nextBtn"));
 	    sig.click();
 	    sleep(5000);
-	 	List<WebElement> mail = driver.findElements(By.cssSelector(".slds-form-element.label.ng-binding"));
-	 	for(WebElement m :mail) {
-	 		if(m.equals("E-mail")) {
-	 		System.out.println(m.getAttribute("value"));
-	 	}}
-	 	}
+		WebElement mail = driver.findElements(By.cssSelector(".slds-form-element__control.slds-input-has-icon.slds-input-has-icon--right")).get(2).findElement(By.tagName("label"));
+	    WebElement in = driver.findElements(By.cssSelector(".slds-form-element__control.slds-input-has-icon.slds-input-has-icon--right")).get(2).findElement(By.tagName("input"));
+	    sleep (5000);	
+	   Assert.assertTrue(mail.getText().toLowerCase().equals("e-mail"));
+	   Assert.assertTrue(in.getAttribute("value").isEmpty());
+	        
+	    //System.out.println(in.getAttribute("value"));
+	    //System.out.println(mail.getText());
+	    	}
+		@Test(groups = "Sales") 
+		  public void TS76117_Alta_Contacto_Creacion_Verificar_creacion_de_cliente(){
+			SalesBase SB = new SalesBase(driver);
+			SB.BuscarCuenta(DNI, "1111111");
+			SB.acciondecontacto("nueva cuenta");
+			sleep(10000);
+			ArrayList<String> allTabs = new ArrayList<String>(driver.getWindowHandles());  
+		    driver.switchTo().window(allTabs.get(1));
+		   WebElement telalt = driver.findElement(By.id("AlternativePhone"));
+		   System.out.println(telalt.getText());
+		}
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
