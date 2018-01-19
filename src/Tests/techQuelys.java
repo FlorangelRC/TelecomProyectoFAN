@@ -79,7 +79,7 @@ public class techQuelys extends TestBase{
 	}
 	
 	
-	@Test
+	@Test(groups= {"Fase4","TechnicalCare", "Autogestion"})
 	public void TS73882_CRM_Fase4_TechnicalCare_CSR_Autogestion_Verificacion_de_que_la_autogestion_del_Canal_Web_servicio_Mi_cuenta_corresponde_a_un_servicio_de_Telecom() throws InterruptedException {
 		sleep(5000);
 		BasePage cambioFrameByID=new BasePage();
@@ -99,7 +99,7 @@ public class techQuelys extends TestBase{
 		}
 	
 	
-	@Test
+	@Test(groups= {"Fase4","TechnicalCare", "Autogestion"})
 	public void TS73795_CRM_Fase_4_Technical_Care_CSR_Autogestion_Verificacion_de_que_la_autogestion_del_servicio_asterisco_111_corresponde_a_Telecom() throws InterruptedException{
 		sleep (3000);
 			BasePage cambioFrameByID=new BasePage();
@@ -118,7 +118,7 @@ public class techQuelys extends TestBase{
 				assertTrue(tech.getVerificar().getText().equalsIgnoreCase("Telecom"));						
 	}
 			
-	@Test
+	@Test(groups= {"Fase4","TechnicalCare", "Autogestion"})
 	public void TS73813_CRM_Fase_4_Technical_Care_CSR_Autogestion_Verificacion_de_que_la_autogestion_del_servicio_asterisco_112_accede_al_112_fija_corresponde_a_TP_Telecom() throws InterruptedException {
 		BasePage cambioFrameByID=new BasePage();
 		driver.switchTo().frame(cambioFrameByID.getFrameForElement(driver, By.id("ChannelSelection")));
@@ -137,7 +137,7 @@ public class techQuelys extends TestBase{
 			
 	}
 	
-	@Test
+	@Test(groups= {"Fase4","TechnicalCare", "Autogestion"})
 	public void TS73797_CRM_Fase_4_Technical_Care_CSR_Autogestion_Verificacion_de_que_la_autogestion_del_servicio_asterisco_150_saldo_corresponde_a_TP_Telecom() throws InterruptedException {
 		
 		BasePage cambioFrameByID=new BasePage();
@@ -158,7 +158,7 @@ public class techQuelys extends TestBase{
 		}
 		
 			
-	@Test
+	@Test(groups= {"Fase4","TechnicalCare", "Autogestion"})
 	public void TS73806_CRM_Fase_4_Technical_Care_CSR_Autogestion_Verificacion_de_que_la_autogestion_del_servicio_asterisco_151_recargas_corresponde_a_TP_Telecom() throws InterruptedException {
 		BasePage cambioFrameByID=new BasePage();
 		driver.switchTo().frame(cambioFrameByID.getFrameForElement(driver, By.id("ChannelSelection")));
@@ -177,7 +177,7 @@ public class techQuelys extends TestBase{
 	
 	}
 	
-	@Test
+	@Test(groups= {"Fase4","TechnicalCare", "Autogestion"})
 	public void TS73798_CRM_Fase_4_Technical_Care_CSR_Autogestion_Verificacion_de_que_la_autogestion_del_servicio_asterisco_152_packs_nros_amigos_corresponde_a_TP_Telecom() throws InterruptedException {
 		BasePage cambioFrameByID=new BasePage();
 		driver.switchTo().frame(cambioFrameByID.getFrameForElement(driver, By.id("ChannelSelection")));
@@ -196,7 +196,7 @@ public class techQuelys extends TestBase{
 			
 	}
 	
-	@Test
+	@Test(groups= {"Fase4","TechnicalCare", "Autogestion"})
 	public void TS73817_CRM_Fase_4_Technical_Care_CSR_Autogestion_Verificacion_de_que_la_autogestion_del_servicio_asterisco_211_Tienda_Personal_corresponde_a_TP_Telecom() throws InterruptedException {
 		BasePage cambioFrameByID=new BasePage();
 		driver.switchTo().frame(cambioFrameByID.getFrameForElement(driver, By.id("ChannelSelection")));
@@ -214,7 +214,7 @@ public class techQuelys extends TestBase{
 			assertTrue(tech.getVerificar().getText().equalsIgnoreCase("Telecom"));
 	}
 	
-	@Test
+	@Test(groups= {"Fase4","TechnicalCare", "Autogestion"})
 	public void TS73816_CRM_Fase_4_Technical_Care_CSR_Autogestion_Verificacion_de_que_la_autogestion_del_servicio_asterisco_211_Ventas_corresponde_a_TP_Telecom() throws InterruptedException {
 		BasePage cambioFrameByID=new BasePage();
 		driver.switchTo().frame(cambioFrameByID.getFrameForElement(driver, By.id("ChannelSelection")));
@@ -232,7 +232,7 @@ public class techQuelys extends TestBase{
 			assertTrue(tech.getVerificar().getText().equalsIgnoreCase("Telecom"));
 	}
 	
-	@Test
+	@Test(groups= {"Fase4","TechnicalCare", "Autogestion"})
 	public void TS73828_CRM_Fase_4_Technical_Care_CSR_Autogestion_Verificacion_de_que_la_autogestion_del_servicio_asterisco_222_ACA_corresponde_a_un_servicio_de_Terceros() throws InterruptedException {
 		BasePage cambioFrameByID=new BasePage();
 		driver.switchTo().frame(cambioFrameByID.getFrameForElement(driver, By.id("ChannelSelection")));
@@ -250,7 +250,7 @@ public class techQuelys extends TestBase{
 			assertTrue(tech.getVerificar().getText().equalsIgnoreCase("Terceros"));
 	}
 	
-	@Test
+	@Test(groups= {"Fase4","TechnicalCare", "Autogestion"})
 	public void TS73830_CRM_Fase_4_Technical_Care_CSR_Autogestion_Verificacion_de_que_la_autogestion_del_servicio_asterisco_242643_Banco_Piano_corresponde_a_un_servicio_de_Terceros() throws InterruptedException {
 		BasePage cambioFrameByID=new BasePage();
 		driver.switchTo().frame(cambioFrameByID.getFrameForElement(driver, By.id("ChannelSelection")));
@@ -269,7 +269,7 @@ public class techQuelys extends TestBase{
 		
 	}
 	
-	@Test
+	@Test(groups= {"Fase4","TechnicalCare", "Autogestion"})
 	public void TS73804_CRM_Fase_4_Technical_Care_CSR_Autogestion_Verificacion_de_que_la_autogestion_del_servicio_asterisco_2447_Chip_corresponde_a_TP_Telecom() throws InterruptedException {
 		BasePage cambioFrameByID=new BasePage();
 		driver.switchTo().frame(cambioFrameByID.getFrameForElement(driver, By.id("ChannelSelection")));
@@ -288,7 +288,7 @@ public class techQuelys extends TestBase{
 			
 	}
 	
-	@Test
+	@Test(groups= {"Fase4","TechnicalCare", "Autogestion"})
 	public void TS73831_CRM_Fase_4_Technical_Care_CSR_Autogestion_Verificacion_de_que_la_autogestion_del_servicio_asterisco_2463_corresponde_a_un_servicio_de_Terceros() throws InterruptedException {
 		BasePage cambioFrameByID=new BasePage();
 		driver.switchTo().frame(cambioFrameByID.getFrameForElement(driver, By.id("ChannelSelection")));
@@ -306,7 +306,7 @@ public class techQuelys extends TestBase{
 		assertTrue(tech.getVerificar().getText().equalsIgnoreCase("Terceros"));
 	}
 	
-	@Test
+	@Test(groups= {"Fase4","TechnicalCare", "Autogestion"})
 	public void TS73832_CRM_Fase_4_Technical_Care_CSR_Autogestion_Verificacion_de_que_la_autogestion_del_servicio_asterisco_2484_Citi_corresponde_a_un_servicio_de_Terceros() throws InterruptedException {	
 		BasePage cambioFrameByID=new BasePage();
 		driver.switchTo().frame(cambioFrameByID.getFrameForElement(driver, By.id("ChannelSelection")));
@@ -324,7 +324,7 @@ public class techQuelys extends TestBase{
 		assertTrue(tech.getVerificar().getText().equalsIgnoreCase("Terceros"));
 	}
 	
-	@Test
+	@Test(groups= {"Fase4","TechnicalCare", "Autogestion"})
 	public void TS73800_CRM_Fase_4_Technical_Care_CSR_Autogestion_Verificacion_de_que_la_autogestion_del_servicio_asterisco_25225_Black_corresponde_a_TP()throws InterruptedException {	
 		BasePage cambioFrameByID=new BasePage();
 		driver.switchTo().frame(cambioFrameByID.getFrameForElement(driver, By.id("ChannelSelection")));
@@ -342,7 +342,7 @@ public class techQuelys extends TestBase{
 		assertTrue(tech.getVerificar().getText().equalsIgnoreCase("Telecom"));
 	}
 
-	@Test
+	@Test(groups= {"Fase4","TechnicalCare", "Autogestion"})
 	public void TS73801_CRM_Fase_4_Technical_Care_CSR_Autogestion_Verificacion_de_que_la_autogestion_del_servicio_asterisco_25283_Clave_corresponde_a_TP()throws InterruptedException {	
 		BasePage cambioFrameByID=new BasePage();
 		driver.switchTo().frame(cambioFrameByID.getFrameForElement(driver, By.id("ChannelSelection")));
@@ -360,7 +360,7 @@ public class techQuelys extends TestBase{
 		assertTrue(tech.getVerificar().getText().equalsIgnoreCase("Telecom"));
 	}
 	
-	@Test
+	@Test(groups= {"Fase4","TechnicalCare", "Autogestion"})
 	public void TS73833_CRM_Fase_4_Technical_Care_CSR_Autogestion_Verificacion_de_que_la_autogestion_del_servicio_asterisco_272_Buquebus_corresponde_a_un_servicio_de_Terceros()throws InterruptedException {	
 		BasePage cambioFrameByID=new BasePage();
 		driver.switchTo().frame(cambioFrameByID.getFrameForElement(driver, By.id("ChannelSelection")));
@@ -378,7 +378,7 @@ public class techQuelys extends TestBase{
 		assertTrue(tech.getVerificar().getText().equalsIgnoreCase("Terceros"));
 	}
 	
-	@Test
+	@Test(groups= {"Fase4","TechnicalCare", "Autogestion"})
 	public void TS73834_CRM_Fase_4_Technical_Care_CSR_Autogestion_Verificacion_de_que_la_autogestion_del_servicio_asterisco_27638_Arnet_corresponde_a_un_servicio_de_Terceros()throws InterruptedException {	
 		BasePage cambioFrameByID=new BasePage();
 		driver.switchTo().frame(cambioFrameByID.getFrameForElement(driver, By.id("ChannelSelection")));
@@ -395,7 +395,7 @@ public class techQuelys extends TestBase{
 		menu.get(4).click();
 		assertTrue(tech.getVerificar().getText().equalsIgnoreCase("Terceros"));
 	}
-	@Test
+	@Test(groups= {"Fase4","TechnicalCare", "Autogestion"})
 	public void TS73826_CRM_Fase_4_Technical_Care_CSR_Autogestion_Verificacion_de_que_la_autogestion_del_servicio_asterisco_288_788_asistencia_en_ruta_corresponde_a_un_servicio_de_Terceros()throws InterruptedException {	
 		BasePage cambioFrameByID=new BasePage();
 		driver.switchTo().frame(cambioFrameByID.getFrameForElement(driver, By.id("ChannelSelection")));
@@ -415,7 +415,7 @@ public class techQuelys extends TestBase{
 	}
 
 
-	@Test
+	@Test(groups= {"Fase4","TechnicalCare", "Autogestion"})
 	public void TS73835_CRM_Fase_4_Technical_Care_CSR_Autogestion_Verificacion_de_que_la_autogestion_del_servicio_asterisco_347_corresponde_a_un_servicio_de_Terceross()throws InterruptedException {
 		BasePage cambioFrameByID=new BasePage();
 		driver.switchTo().frame(cambioFrameByID.getFrameForElement(driver, By.id("ChannelSelection")));
@@ -433,7 +433,7 @@ public class techQuelys extends TestBase{
 		assertTrue(tech.getVerificar().getText().equalsIgnoreCase("Terceros"));
 	}
 	
-	@Test
+	@Test(groups= {"Fase4","TechnicalCare", "Autogestion"})
 	public void TS73836_CRM_Fase_4_Technical_Care_CSR_Autogestion_Verificacion_de_que_la_autogestion_del_servicio_asterisco_380_corresponde_a_un_servicio_de_Terceros()throws InterruptedException {
 		BasePage cambioFrameByID=new BasePage();
 		driver.switchTo().frame(cambioFrameByID.getFrameForElement(driver, By.id("ChannelSelection")));
@@ -451,7 +451,7 @@ public class techQuelys extends TestBase{
 		assertTrue(tech.getVerificar().getText().equalsIgnoreCase("Terceros"));
 	}
 	
-	@Test
+	@Test(groups= {"Fase4","TechnicalCare", "Autogestion"})
 	public void TS73818_CRM_Fase_4_Technical_Care_CSR_Autogestion_Verificacion_de_que_la_autogestion_del_servicio_asterisco_531_Tienda_Planes_corresponde_a_TP() throws InterruptedException {
 		BasePage cambioFrameByID=new BasePage();
 		driver.switchTo().frame(cambioFrameByID.getFrameForElement(driver, By.id("ChannelSelection")));
@@ -469,7 +469,7 @@ public class techQuelys extends TestBase{
 		assertTrue(tech.getVerificar().getText().equalsIgnoreCase("Telecom"));
 	}
 	
-	@Test
+	@Test(groups= {"Fase4","TechnicalCare", "Autogestion"})
 	public void TS73805_CRM_Fase_4_Technical_Care_CSR_Autogestion_Verificacion_de_que_la_autogestion_del_servicio_asterisco_333_recarga_delivery_corresponde_a_TP() throws Exception {
 		BasePage cambioFrameByID=new BasePage();
 		driver.switchTo().frame(cambioFrameByID.getFrameForElement(driver, By.id("ChannelSelection")));
@@ -487,7 +487,7 @@ public class techQuelys extends TestBase{
 		assertTrue(tech.getVerificar().getText().equalsIgnoreCase("Telecom"));
 	}
 	
-	@Test
+	@Test(groups= {"Fase4","TechnicalCare", "Autogestion"})
 	public void TS73820_CRM_Fase_4_Technical_Care_CSR_Autogestion_Verificacion_de_que_la_autogestion_del_servicio_asterisco_534_EMail_Marketing_corresponde_a_TP() throws Exception {
 		BasePage cambioFrameByID=new BasePage();
 		driver.switchTo().frame(cambioFrameByID.getFrameForElement(driver, By.id("ChannelSelection")));
