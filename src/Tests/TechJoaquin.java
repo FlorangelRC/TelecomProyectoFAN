@@ -123,7 +123,7 @@ public class TechJoaquin extends TestBase {
 		IrA.CajonDeAplicaciones.ConsolaFAN();
 	}
 	
-	//@AfterClass(groups= {"TechnicalCare"})
+	@AfterClass(groups= {"TechnicalCare"})
 	public void quit() {
 		cerrarTodasLasPestañas();
 		IrA.CajonDeAplicaciones.Ventas();
