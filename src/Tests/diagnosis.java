@@ -30,7 +30,7 @@ public class diagnosis extends TestBase {
 	
 	private WebDriver driver;
 
-	@AfterClass(groups = {"Fase1","TechnicalCare","Diagnostico"}) 
+	//@AfterClass(groups = {"Fase1","TechnicalCare","Diagnostico"}) 
 	public void tearDown2() {
 		driver.switchTo().defaultContent();
 		driver.findElement(By.id("tsidButton")).click();
@@ -63,12 +63,14 @@ public class diagnosis extends TestBase {
 	     homePage.switchAppsMenu();
 	     try {Thread.sleep(2000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 	     homePage.selectAppFromMenuByName("Consola FAN");
-	     try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}      
+	     try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();} 
+	     CustomerCare cerrar = new CustomerCare(driver);
+	     cerrar.cerrarultimapestaña();
 	     goToLeftPanel2(driver, "Cuentas");
 	     try {Thread.sleep(15000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 	}
 
-	@AfterMethod(groups = {"Fase1","TechnicalCare","Diagnostico"}) 
+	//@AfterMethod(groups = {"Fase1","TechnicalCare","Diagnostico"}) 
 	public void tearDown() {
 
 		driver.switchTo().defaultContent();
@@ -92,18 +94,19 @@ public class diagnosis extends TestBase {
 		 Accounts accountPage = new Accounts(driver);
 	     //Selecciono Vista Tech
 	     driver.switchTo().defaultContent();
-	     accountPage.accountSelect("Vista Tech");
+	     accountPage.accountSelect("Todas las cuentas");
 	     try {Thread.sleep(8000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+	     //accountPage.selectJuanPerez();
 	     accountPage.selectAccountByName("Adrian Tech");
 	     try {Thread.sleep(10000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}     
 	     CustomerCare page = new CustomerCare(driver);
 	     page.openleftpanel();
 	     try {Thread.sleep(2000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();} 
-	     if(accountPage.isTabOpened("Asistencia Técnica")) {
+	     if(accountPage.isTabOpened("Asistencia T\u00e9cnica")) {
 	         System.out.println("Tab Opened.");
-	         accountPage.goToTab("Asistencia Técnica");
+	         accountPage.goToTab("Asistencia T\u00e9cnica");
 	     }else {
-	         accountPage.findAndClickButton("Asistencia Técnica");
+	         accountPage.findAndClickButton("Asistencia T\u00e9cnica");
 	     }
 	     try {Thread.sleep(10000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 	}
@@ -361,14 +364,15 @@ public class diagnosis extends TestBase {
 		try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 		
 		accountPage.continueFromService();//mismo error
-		
-		
+		try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		driver.findElement(By.id("SelectedMotivesLookup")).click();
 		try {Thread.sleep(1500);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		
 		// the index for "No me funciona internet" is 8, 9 elements, 
 		//some not visible (previous option elements)
-	    js.executeScript("document.getElementsByClassName('slds-list__item ng-binding ng-scope')[6].click()");
+	    js.executeScript("document.getElementsByClassName('slds-list__item ng-binding ng-scope')[7].click()");
 		try {Thread.sleep(3500);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
-		Assert.assertTrue(accountPage.isExecuteButtonPresent());
+		Assert.assertTrue(driver.findElement(By.id("IntegProc_Diagn\u00f3stico")).isDisplayed());
 
 	}
 
@@ -383,7 +387,7 @@ public class diagnosis extends TestBase {
 		try {Thread.sleep(3000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 		JavascriptExecutor js = (JavascriptExecutor)driver;
 		//Index 4? is for Robo TF Tech
-	    js.executeScript("document.getElementsByClassName('slds-list__item ng-binding ng-scope')[4].click()");
+	    js.executeScript("document.getElementsByClassName('slds-list__item ng-binding ng-scope')[0].click()");
 	    try {Thread.sleep(3000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 	    accountPage.continueFromService();
 	    try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
@@ -392,9 +396,10 @@ public class diagnosis extends TestBase {
 		try {Thread.sleep(1500);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 		// the index for "No funciona mi telefono" is 5
 		//some not visible (previous option elements)
-	    js.executeScript("document.getElementsByClassName('slds-list__item ng-binding ng-scope')[5].click()");
+	    js.executeScript("document.getElementsByClassName('slds-list__item ng-binding ng-scope')[7].click()");
 		try {Thread.sleep(3500);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
-		Assert.assertTrue(accountPage.isExecuteButtonPresent());
+		//Assert.assertTrue(accountPage.isExecuteButtonPresent());
+		Assert.assertTrue(driver.findElement(By.id("IntegProc_Diagn\u00f3stico")).isDisplayed());
 
 	}
 	//Incidentes masivos
@@ -431,6 +436,7 @@ public class diagnosis extends TestBase {
 		WebElement BenBoton = driver.findElement(By.id("SelectServiceStep_nextBtn"));
 		((JavascriptExecutor)driver).executeScript("window.scrollTo(0,"+BenBoton.getLocation().y+")");
 		BenBoton.click();//debe ser terminado cuando tech sirva
+		assertTrue(false);
 		
 	}
 	@Test(groups = {"Fase1","TechnicalCare","Diagnostico"}) 
@@ -441,13 +447,40 @@ public class diagnosis extends TestBase {
 		try {Thread.sleep(8000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 		driver.switchTo().frame(accountPage.getFrameForElement(driver, By.id("SelectServiceStep_nextBtn")));
 		driver.findElement(By.id("LookupSelectofService")).click();
-		try {Thread.sleep(8000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
-		driver.findElement(By.cssSelector(".slds-list--vertical.vlc-slds-list--vertical")).findElements(By.cssSelector(".slds-list__item.ng-binding.ng-scope")).get(0).click();
 		try {Thread.sleep(3000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
-		WebElement BenBoton = driver.findElement(By.id("SelectServiceStep_nextBtn"));
+		JavascriptExecutor js = (JavascriptExecutor)driver;
+	    js.executeScript("document.getElementsByClassName('slds-list__item ng-binding ng-scope')[0].click()");
+		try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		accountPage.continueFromService();//mismo error
+		try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		driver.findElement(By.id("SelectedMotivesLookup")).click();
+		try {Thread.sleep(1500);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+	    js.executeScript("document.getElementsByClassName('slds-list__item ng-binding ng-scope')[7].click()");
+		try {Thread.sleep(3500);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		WebElement BenBoton = driver.findElement(By.id("IntegProc_Diagn\u00f3stico"));
 		((JavascriptExecutor)driver).executeScript("window.scrollTo(0,"+BenBoton.getLocation().y+")");
 		BenBoton.click(); //debe ser terminado cuando tech sirva
-		
+		sleep(7000);
+		assertTrue(driver.findElement(By.id("TestScenario")).findElement(By.tagName("strong")).getText().toLowerCase().contains("down/down"));
+		List<WebElement> diagnos = driver.findElements(By.cssSelector(".slds-grid.slds-wrap.ioWrapper.ioWrapper-Rojo"));
+		assertTrue(diagnos.size()==3);
+		Actions action = new Actions(driver);
+		action.moveToElement(diagnos.get(0));
+		action.moveToElement(diagnos.get(0)).click().build().perform();
+		sleep(1000);
+		assertTrue(diagnos.get(0).findElement(By.cssSelector(".slds-popover__body.ng-binding")).isDisplayed());
+		assertTrue(diagnos.get(0).findElement(By.cssSelector(".slds-popover__body.ng-binding")).getText().toLowerCase().equals("no se ha detectado el m\u00f3dem"));
+		//action.moveToElement(diagnos.get(1));
+		action.moveToElement(diagnos.get(1)).click().build().perform();
+		sleep(1000);
+		assertTrue(diagnos.get(1).findElement(By.cssSelector(".slds-popover__body.ng-binding")).isDisplayed());
+		assertTrue(diagnos.get(1).findElement(By.cssSelector(".slds-popover__body.ng-binding")).getText().toLowerCase().equals("se ha detectado que el puerto de la central se encuentra deshabilitado, por favor ejecute las acciones indicadas mas abajo para solucionar el inconveniente."));
+		action.moveToElement(diagnos.get(2)).click().build().perform();
+		sleep(1000);
+		assertTrue(diagnos.get(2).findElement(By.cssSelector(".slds-popover__body.ng-binding")).isDisplayed());
+		assertTrue(diagnos.get(2).findElement(By.cssSelector(".slds-popover__body.ng-binding")).getText().toLowerCase().equals("no se ha detectado una conexi\u00f3n"));
+	
+	
 	}
 	@Test(groups = {"Fase1","TechnicalCare","Diagnostico"}) 
 	public void TS6405_LogicError() {
@@ -463,6 +496,7 @@ public class diagnosis extends TestBase {
 		WebElement BenBoton = driver.findElement(By.id("SelectServiceStep_nextBtn"));
 		((JavascriptExecutor)driver).executeScript("window.scrollTo(0,"+BenBoton.getLocation().y+")");
 		BenBoton.click(); //debe ser terminado cuando tech sirva
+		assertTrue(false);
 		
 	}
 
@@ -488,6 +522,7 @@ public class diagnosis extends TestBase {
 		WebElement BenBoton = driver.findElement(By.id("SelectServiceStep_nextBtn"));
 		((JavascriptExecutor)driver).executeScript("window.scrollTo(0,"+BenBoton.getLocation().y+")");
 		BenBoton.click(); //debe ser terminado cuando tech sirva
+		assertTrue(false);
 		
 	}
 	

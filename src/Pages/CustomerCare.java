@@ -731,6 +731,10 @@ public class CustomerCare extends BasePage {
 			driver.findElement(By.xpath("//*[text() ='Cambio de ciclo']")).click();
 			driver.findElement(By.xpath("//*[text() ='Cambio de ciclo']")).click();
 			break;
+		case "aaaaFernando Care":
+			driver.findElements(By.xpath("//*[text() ='aaaaFernando Care']")).get(1).click();
+			//driver.findElement(By.cssSelector(".x-tab-right.primaryPalette")).click();
+			break;
 		}	
 		List<WebElement> frame1 = driver.findElements(By.tagName("iframe"));
 		driver.switchTo().frame(frame1.get(1));

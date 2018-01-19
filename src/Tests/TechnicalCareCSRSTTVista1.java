@@ -141,6 +141,25 @@ public class TechnicalCareCSRSTTVista1  extends TestBase {
 		assertTrue(driver.findElement(By.id("TicketCreation_prevBtn")).isDisplayed());
 	}
 	
+	@Test(groups = {"Fase2","TechnicalCare","ServicioTecnico"})
+	public void TS11621_SST_Servicio_Indiferente_Adjunto_Mayor_A_4Mb() {
+		Accounts accPage = new Accounts(driver);
+		String filePath = "C:\\Users\\Florangel\\Downloads\\arbolito.jpg";
+		accPage.fillIMEI(validIMEI);
+		accPage.continueFromImeiInput();
+		try {Thread.sleep(10000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}			
+		accPage.continueFromClientInfo();
+		try {Thread.sleep(10000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		accPage.selectOperationType("Consulta");
+		accPage.selectSymptomByIndex(2);
+		accPage.attachFile(filePath);
+		accPage.continueFromSymptoms();
+		assertTrue(driver.findElement(By.id("alert-container")).isDisplayed());
+		driver.findElement(By.id("alert-ok-button")).click();
+		try {Thread.sleep(1000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		assertTrue(driver.findElement(By.cssSelector(".message.description.ng-binding.ng-scope")).getText().toLowerCase().contains("el archivo supera los 4mb"));
+		
+}
 	
 	@Test(groups = {"Fase2","TechnicalCare","ServicioTecnico"})
 	public void TS11625_SST_Servicio_Indiferente_Adjuntar_Dos_Archivos() {
@@ -556,13 +575,13 @@ public class TechnicalCareCSRSTTVista1  extends TestBase {
 		accPage.fillIMEI(validIMEI);
 		try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 		accPage.continueFromImeiInput();
-		try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		try {Thread.sleep(8000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 		driver.switchTo().frame(accPage.getFrameForElement(driver, By.id("ClientInformation_nextBtn")));
 		try {Thread.sleep(2000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 		WebElement BenBoton = driver.findElement(By.id("ExtractRepairHistory"));
 		((JavascriptExecutor)driver).executeScript("window.scrollTo(0,"+BenBoton.getLocation().y+")");
 		BenBoton.click();
-		try {Thread.sleep(7000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}	
+		try {Thread.sleep(10000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}	
 		driver.switchTo().defaultContent();
 		driver.switchTo().frame(accPage.getFrameForElement(driver, By.cssSelector(".slds-table.slds-table--bordered.slds-table--cell-buffer.techCare-RepairHistory.ng-scope")));
 		WebElement rep = driver.findElement(By.cssSelector(".slds-table.slds-table--bordered.slds-table--cell-buffer.techCare-RepairHistory.ng-scope"));

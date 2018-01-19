@@ -87,7 +87,8 @@ public class testListaEventosMasivos extends TestBase{
 	
 	@AfterClass(groups= {"Fase2","TechnicalCare","IncidenteMasivo"})
 	public void tearDown() {
-		driver.close();
+		driver.quit();
+		sleep(1000);
 	}
 	
 	@Test(groups= {"Fase2","TechnicalCare","IncidenteMasivo"})
@@ -217,7 +218,7 @@ public class testListaEventosMasivos extends TestBase{
 		try {Thread.sleep(2000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 		
 		List <WebElement> listaA= driver.findElement(By.cssSelector(".slds-grid.slds-m-bottom--small.slds-wrap.cards-container")).findElements(By.cssSelector(".slds-tile__detail.slds-text-heading--small"));
-		//System.out.println(listaA.get(5).getText());
+		System.out.println(listaA.get(5).getText());
 		boolean verificacion=false;
 		verificacion = pEM.validarFecha(listaA.get(5).getText(), "HH:mm dd/mm/yyyy");
 		assertTrue(verificacion);

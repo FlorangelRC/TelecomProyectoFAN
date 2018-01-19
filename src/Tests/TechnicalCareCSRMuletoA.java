@@ -550,6 +550,134 @@ private WebDriver driver;
 		assertTrue(driver.findElement(By.id("DocumentNumber")).isDisplayed());//Verifica que el campo Genero de la pantalla siguiente este disponible
 	}
 	
+	/**
+	 * Se verifica que en el listado de muleto aparezcan los campos
+	 * -nmu -Descripcion -marca -cantidad en stock
+	 */
+	@Test(groups= {"Fase3","TechnicalCare","Muleto"})
+	public void TS51096_CRM_Fase_3_Technical_Care_CSR_Muleto_Verificacion_informacion_del_listado_de_terminales_muletos() {
+	//Cambio al Frame
+		Accounts accPage = new Accounts(driver);
+		driver.switchTo().frame(accPage.getFrameForElement(driver, By.className("borderOverlay")));
+	//Click Entrega de Muleto
+		driver.findElements(By.className("borderOverlay")).get(0).click();
+		clickContinuar();
+		sleep(3000);
+		llenarDatos();
+		sleep(1000);
+		clickContinuar();
+		sleep(3000);
+		clickContinuar();
+		sleep(2000);
+		WebElement campos=driver.findElement(By.xpath("//*[@id=\"TerminalsSelection\"]/div/ng-include/div/table/thead/tr"));
+		//System.out.println(campos.getText());
+		if(campos.getText().toLowerCase().contains("nmu")&&campos.getText().toLowerCase().contains("descripción")
+				&&campos.getText().toLowerCase().contains("marca")&&campos.getText().toLowerCase().contains("cantidad en stock")) {
+			assertTrue(true);
+		}else
+			assertTrue(false);
+	}
 	
+	/**
+	 * se verifica q en entrega de muleto, si el cliente no posee muelto pendiente para devolucion, se pueda continuar.
+	 */
+	@Test(groups= {"Fase3","TechnicalCare","Muleto"})
+	public void TS51091_CRM_Fase_3_Technical_Care_CSR_Muleto_Verificacion_Muleto_pendiente_de_entrega_NO() {
+	//Cambio al Frame
+		Accounts accPage = new Accounts(driver);
+		driver.switchTo().frame(accPage.getFrameForElement(driver, By.className("borderOverlay")));
+	//Click Entrega de Muleto
+		driver.findElements(By.className("borderOverlay")).get(0).click();
+		clickContinuar();
+		sleep(3000);
+		llenarDatos();
+		sleep(1000);
+		clickContinuar();
+		sleep(3000);
+		WebElement NO=driver.findElement(By.xpath("//*[@id=\"ValidationResults\"]/div/p/p[3]"));
+		boolean noposee=false;
+		if(NO.getText().toLowerCase().endsWith("no"))
+			noposee=true;
+		clickContinuar();
+		sleep(3000);
+		assertTrue(driver.findElement(By.cssSelector(".slds-table.slds-table--bordered.slds-table--cell-buffer.vlc-slds-table")).isDisplayed()&&noposee);
+	}
 	
+	/**
+	 * Se verifica que en devolucion, no se posea un Muleto para devolucion
+	 */
+	@Test(groups= {"Fase3","TechnicalCare","Muleto"})
+	public void TS51116_CRM_Fase_3_Technical_Care_CSR_Muleto_Verificacion_que_NO_POSEE_un_muleto_para_devolucion() {
+	//Cambio al Frame
+		Accounts accPage = new Accounts(driver);
+		driver.switchTo().frame(accPage.getFrameForElement(driver, By.className("borderOverlay")));
+	//Click Entrega de Muleto
+		driver.findElements(By.className("borderOverlay")).get(1).click();
+		clickContinuar();
+		sleep(3000);
+		driver.findElements(By.className("borderOverlay")).get(2).click();
+		sleep(1000);
+		llenarDatos();
+		sleep(1000);
+		clickContinuar();
+		sleep(1000);
+		driver.findElement(By.id("alert-ok-button")).click();
+		sleep(1000);
+		boolean check=false;
+		List<WebElement> a=driver.findElements(By.className("error"));
+		for(WebElement b:a)
+		//System.out.println(b.getText());
+			if(b.getText().contains("No Posee Terminal Para Devolución."))
+				check=true;
+		
+		assertTrue(check);
+	}
+	
+	/**
+	 * Se Verifica que no se pueda seleccionar mas de dos muletos en ka lista
+	 */
+	@Test(groups= {"Fase3","TechnicalCare","Muleto"})
+	public void TS51098_CRM_Fase_3_Technical_Care_CSR_Muleto_Verificacion_que_NO_pueda_seleccionarse_mas_de_uN_muleto() {
+	//Cambio al Frame
+		Accounts accPage = new Accounts(driver);
+		driver.switchTo().frame(accPage.getFrameForElement(driver, By.className("borderOverlay")));
+	//Click Entrega de Muleto
+		driver.findElements(By.className("borderOverlay")).get(0).click();
+		clickContinuar();
+		sleep(3000);
+		llenarDatos();
+		sleep(1000);
+		clickContinuar();
+		sleep(3000);
+		clickContinuar();
+		sleep(3000);
+		List <WebElement> Celda=driver.findElements(By.xpath("//*[@id=\"TerminalsSelection\"]/div/ng-include/div/table/tbody/tr"));
+		Celda.get(0).findElement(By.className("slds-radio--faux")).click();
+		sleep(100);
+		Celda.get(1).findElement(By.className("slds-radio--faux")).click();
+		//System.out.println(Celda.get(0).findElement(By.xpath("//th/label/input")).getAttribute("class"));
+		assertTrue(Celda.get(0).findElement(By.xpath("//th/label/input")).getAttribute("class").endsWith("ng-touched"));
+	}
+	
+	/**
+	 * Se verifica que se muestre el listado de muletos.
+	 */
+	@Test(groups= {"Fase3","TechnicalCare","Muleto"})
+	public void TS51095_CRM_Fase_3_Technical_Care_CSR_Muleto_Visualizacion_estado_de_terminales() {
+	//Cambio al Frame
+		Accounts accPage = new Accounts(driver);
+		driver.switchTo().frame(accPage.getFrameForElement(driver, By.className("borderOverlay")));
+	//Click Entrega de Muleto
+		driver.findElements(By.className("borderOverlay")).get(0).click();
+		clickContinuar();
+		sleep(3000);
+		llenarDatos();
+		sleep(1000);
+		clickContinuar();
+		sleep(3000);
+		clickContinuar();
+		sleep(3000);
+		List <WebElement> Celda=driver.findElements(By.xpath("//*[@id=\"TerminalsSelection\"]/div/ng-include/div/table/tbody/tr"));
+		assertTrue(!(Celda.isEmpty()));
+	}
 }

@@ -45,7 +45,6 @@ public class SintomasSTTManagement extends TestBase {
 	public void init() throws Exception
 	{
 		this.driver = setConexion.setupEze();
-		driver.get("http://www.google.com");
 		try {Thread.sleep(12000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 		login(driver);
 		try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}

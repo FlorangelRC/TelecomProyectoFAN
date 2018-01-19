@@ -98,19 +98,19 @@ public class SCP extends BasePage {
 	}
 	
 	public void elegiroportunidad(String oportunidad) {
-	    try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
-	  WebElement element = driver.findElement(By.cssSelector(".bRelatedList.first"));
-	  ((JavascriptExecutor)driver).executeScript("window.scrollTo(0,"+element.getLocation().y+")");
-	  driver.findElement(By.cssSelector(".pShowMore")).findElements(By.tagName("a")).get(1).click();
-	  try {Thread.sleep(3000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
-	  element = driver.findElement(By.cssSelector(".listRelatedObject.opportunityBlock"));
-	  List<WebElement> op = element.findElements((By.cssSelector(".dataCell")));
-	  for(WebElement e : op){
-	   System.out.println(e.getText());
-	   if(e.getText().equals(oportunidad)){
-	    e.findElement(By.tagName("a")).click();
-	    break;}}
-	 }
+		  try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		WebElement element = driver.findElement(By.cssSelector(".bRelatedList.first"));
+		((JavascriptExecutor)driver).executeScript("window.scrollTo(0,"+element.getLocation().y+")");
+		driver.findElement(By.cssSelector(".pShowMore")).findElements(By.tagName("a")).get(1).click();
+		try {Thread.sleep(3000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		element = driver.findElement(By.cssSelector(".listRelatedObject.opportunityBlock"));
+		List<WebElement> op = element.findElements((By.cssSelector(".dataCell")));
+		for(WebElement e : op){
+			System.out.println(e.getText());
+			if(e.getText().equals(oportunidad)){
+				e.findElement(By.tagName("a")).click();
+				break;}}
+	}
 	
 	
 	public void clickEnCuentaPorNombre(String name)
@@ -118,6 +118,7 @@ public class SCP extends BasePage {
 		boolean enc = false;
 		List<WebElement> cuentas = driver.findElement(By.className("hotListElement")).findElements(By.cssSelector(".dataRow.odd"));
 		cuentas.add(driver.findElement(By.className("hotListElement")).findElement(By.cssSelector(".dataRow.even.first")));
+		cuentas.add(driver.findElement(By.className("hotListElement")).findElement(By.cssSelector(".dataRow.even")));
 		for (WebElement unaCuenta : cuentas) {
 			System.out.println("Cuenta:"+ unaCuenta.findElement(By.tagName("a")).getText());
 			if(unaCuenta.findElement(By.tagName("a")).getText().toLowerCase().contains(name.toLowerCase())) {
@@ -578,7 +579,7 @@ public void validarcompetidores(){
 			pntf = true;
 			System.out.println(e.getText());}
 		
-		if(e.getText().equals("Puntos débiles")){
+		if(e.getText().equals("Puntos dï¿½biles")){
 			pntd= true;
 			System.out.println(e.getText());}}	
 Assert.assertTrue(acc&&nmbre&&pntf&&pntd);
@@ -590,11 +591,11 @@ Assert.assertTrue(acc&&nmbre&&pntf&&pntd);
 		 ArrayList<String> txt1 = new ArrayList<String>();
 		 ArrayList<String> txt2 = new ArrayList<String>();
 		 txt2.add("Tipo");
-		 txt2.add("Razón perdida");
+		 txt2.add("Razï¿½n perdida");
 		 txt2.add("Estado de la oportunidad");
 		 txt2.add("Creado por");
 		 txt2.add("Propietario de oportunidad");
-		 txt2.add("Última modificación por");
+		 txt2.add("ï¿½ltima modificaciï¿½n por");
 		 txt2.add("Descripci\u00f3n");
 
 		((JavascriptExecutor)driver).executeScript("window.scrollTo(0,"+element.getLocation().y+")");
@@ -708,23 +709,43 @@ Assert.assertTrue(acc&&nmbre&&pntf&&pntd);
 	}
 	
 	public void ValidarMontoContrato(){
+		try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 		String CUV0 = driver.findElement(By.id("00N3F000000HaZH_ileinner")).getText().substring(1).replaceAll(",", ".");
-		double CUV= Integer.parseInt(CUV0); 
-		String cant0 = driver.findElement(By.id("Quantity_ileinner")).getText().substring(1).replaceAll(",", ".");
-		int cant = Integer.parseInt(cant0);
+		System.out.println("Cargo unico: "+CUV0);
+
+		double CUV= Double.parseDouble(CUV0); 
+		String cant0 = driver.findElement(By.id("Quantity_ileinner")).getText().replaceAll(",", ".");
+		System.out.println("cantidad: "+cant0);
+		double cant = Double.parseDouble(cant0);
 		int plazo = Integer.parseInt(driver.findElement(By.id("00N3F000000HaZN_ileinner")).getText()); 
+		System.out.println("plazo: "+ plazo);
 		String abono0 =driver.findElement(By.id("UnitPrice_ileinner")).getText().substring(1).replaceAll(",", ".");
-		int abono = Integer.parseInt(abono0); 
-		String TC = driver.findElement(By.id("00N3F000000HaZK_ileinner")).getText().substring(1).replaceAll(",","." );
-		double TotalContrato = Integer.parseInt(TC); 
-		double FORMULA = CUV+(cant*plazo*abono);
+		System.out.println("abono: "+abono0);
+		double abono = Double.parseDouble(abono0);	 
+		String TC = driver.findElement(By.id("00N3F000000HaZK_ileinner")).getText().substring(1).replace(".","");
+		TC = (TC.replaceAll(",", "."));
+		System.out.println("totalcontrato: "+TC);
+		double TotalContrato = Double.parseDouble(TC); 
+		double FORMULA = (cant*plazo*abono)+CUV;
 		String contrato = Double.toString(TotalContrato);
 		String resultado = Double.toString(FORMULA);
-		System.out.println(resultado);
-		System.out.println(contrato);
+		System.out.println("resultado formula: "+resultado);
+		System.out.println("aparece en la app: "+contrato);
 
 		Assert.assertEquals(contrato, resultado);
-		
-
+		}
+	//   
+	public String SacarTotalMesXPlazo(){
+		try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		String antes = driver.findElement(By.id("00N3F000000HaZK_ileinner")).getText().substring(1).replace(".","");
+		System.out.println("Antes: "+antes);
+		return antes;
+	}
+	
+	public void ValidarTotalMesXPlazo(String antes){
+		try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		String despues = driver.findElement(By.id("00N3F000000HaZK_ileinner")).getText().substring(1).replace(".","");
+		System.out.println("Antes: "+antes);
+		Assert.assertFalse(despues.equals(antes));
 	}
 }

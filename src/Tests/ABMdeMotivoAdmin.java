@@ -1,5 +1,8 @@
 package Tests;
 
+import java.util.List;
+import java.util.Random;
+
 import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
@@ -23,6 +26,7 @@ public class ABMdeMotivoAdmin extends TestBase {
 	private String motiveName = "motivo Nuevo para Tests"; // needed for 12587 and 12589 (ADD and DEL motive)
 	private String descripcion = "Descripcion para el test.";
 	private String servicio = "Internet 1GB";
+	private int bandera = 1;
 	
 	
 	@BeforeClass(groups = {"Fase2","TechnicalCare","ABMAdministrador"})
@@ -42,6 +46,7 @@ public class ABMdeMotivoAdmin extends TestBase {
 	@BeforeMethod(groups = {"Fase2","TechnicalCare","ABMAdministrador"})
 	public void setUp() throws Exception {
 		//TODO: add how to get to ABM de Motivo
+		
 		HomeBase homePage = new HomeBase(driver);
 		try {Thread.sleep(6000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 	    String a = driver.findElement(By.id("tsidLabel")).getText();
@@ -58,7 +63,9 @@ public class ABMdeMotivoAdmin extends TestBase {
 	    driver.findElement(By.xpath("//a[@href=\"/home/showAllTabs.jsp\"]")).click();
 	    
 	    try {Thread.sleep(8000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
-	    WebElement BenBoton= driver.findElement(By.xpath("//a[@href=\"/a41/o\"]"));
+	    WebElement BenBoton = driver.findElement(By.xpath("//a[@href=\"/a41/o\"]"));
+	    if (bandera ==1) 
+	    	BenBoton = driver.findElement(By.xpath("//a[@href=\"/a44/o\"]"));
 	    ((JavascriptExecutor)driver).executeScript("window.scrollTo(0,"+BenBoton.getLocation().y+")");
 	    BenBoton.click();
 	    try {Thread.sleep(4000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
@@ -69,6 +76,28 @@ public class ABMdeMotivoAdmin extends TestBase {
 	}
 	
 	//priority forces the tests order execution, and groupsDependency, guarantees the other ones finished
+	
+	@Test(groups = {"Fase2","TechnicalCare","ABMAdministrador"})
+	public void TS11560_ABM_de_Sintomas_De_STT_Activacion_De_Sintoma(){
+		ContactMotivesManager cMMPage = new ContactMotivesManager(driver);
+		try {Thread.sleep(8000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		 Random aleatorio = new Random(System.currentTimeMillis());
+		     aleatorio.setSeed(System.currentTimeMillis());
+		  int intAleatorio = aleatorio.nextInt(8999)+1000;
+		String motivoN="Motivo"+Integer.toString(intAleatorio);
+		cMMPage.crearMotivoDeContacto(motivoN);
+		try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		cMMPage.activarMotivoDesdeDetalle();
+		sleep(5000);
+		driver.findElement(By.className("ptBreadcrumb")).findElement(By.tagName("a")).click();
+		cMMPage.seleccionarListado("All");
+		sleep(5000);
+		List<WebElement> columna = driver.findElement(By.cssSelector(".x-grid3-row.x-grid3-row-first")).findElements(By.tagName("td"));
+		Assert.assertTrue(columna.get(5).findElement(By.tagName("span")).getText().equals(motivoN));
+		Assert.assertTrue(columna.get(7).findElement(By.tagName("img")).getAttribute("title").equals("Seleccionado"));
+		bandera = 2;
+		cMMPage.eliminarPrimerSintoma();
+	}
 	
 	@Test(groups = {"Fase2","TechnicalCare","ABMAdministrador"})
 	public void TS12584_ABM_de_Motivo_Ingreso(){
@@ -84,6 +113,7 @@ public class ABMdeMotivoAdmin extends TestBase {
 		try {Thread.sleep(4000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 		contactMMPage.getContactMotiveName().sendKeys(motiveName);
 		contactMMPage.getDescripcion().sendKeys(descripcion);
+		//driver.findElements(By.cssSelector(".dataCol.col02")).get(1).findElement(By.tagName("textarea")).sendKeys(descripcion);
 		contactMMPage.getActivoCheck().click();
 		contactMMPage.getServicio().sendKeys(servicio);
 		try {Thread.sleep(4000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}

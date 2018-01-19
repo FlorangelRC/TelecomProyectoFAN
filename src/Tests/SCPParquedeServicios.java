@@ -390,7 +390,7 @@ public void TS112648_Estructura_de_las_oportunidades_Bloques_Informacion_Adicion
 		page.clickOnTabByName("cuentas");
 		page.clickEnCuentaPorNombre("AIR S.R.L");
 		try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
-		page.elegiroportunidad("ALta suc. Jujuy");
+		page.elegiroportunidad("ALTA Sucursal Jujuy");
 		page.IngresarAlProductos("HYPERWAY HEAD QUARTER");
 		page.ModificarProducto("modificar","cantidad", "5,00", "guardar");
 		page.VerificarCampoModificado("cantidad", "5,00");
@@ -402,7 +402,7 @@ public void TS112648_Estructura_de_las_oportunidades_Bloques_Informacion_Adicion
 		page.clickOnTabByName("cuentas");
 		page.clickEnCuentaPorNombre("AIR S.R.L");
 		try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
-		page.elegiroportunidad("ALta suc. Jujuy");
+		page.elegiroportunidad("ALTA Sucursal Jujuy");
 		page.IngresarAlProductos("HYPERWAY HEAD QUARTER");
 		page.ModificarProducto("modificar","cargo unico", "600,00", "guardar");
 		page.VerificarCampoModificado("cargo unico", "600,00");
@@ -414,7 +414,7 @@ public void TS112648_Estructura_de_las_oportunidades_Bloques_Informacion_Adicion
 		page.clickOnTabByName("cuentas");
 		page.clickEnCuentaPorNombre("AIR S.R.L");
 		try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
-		page.elegiroportunidad("ALta suc. Jujuy");
+		page.elegiroportunidad("ALTA Sucursal Jujuy");
 		page.IngresarAlProductos("HYPERWAY HEAD QUARTER");
 		page.ModificarProducto("modificar","cantidad", "8", "guardar");
 		String a = page.CargosTotalesPorMes();
@@ -429,7 +429,7 @@ public void TS112648_Estructura_de_las_oportunidades_Bloques_Informacion_Adicion
 		page.clickOnTabByName("cuentas");
 		page.clickEnCuentaPorNombre("AIR S.R.L");
 		try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
-		page.elegiroportunidad("ALta suc. Jujuy");
+		page.elegiroportunidad("ALTA Sucursal Jujuy");
 		page.IngresarAlProductos("HYPERWAY HEAD QUARTER");
 		page.ModificarProducto("modificar","plazo", "50", "guardar");
 		page.VerificarCampoModificado("plazo", "50");
@@ -446,6 +446,21 @@ public void TS112648_Estructura_de_las_oportunidades_Bloques_Informacion_Adicion
 		page.ModificarProducto("modificar","cargo unico", "900,00", "guardar");
 		page.VerificarCampoModificado("cargo unico", "900,00");
 		page.ValidarMontoContrato();
+		
+	}
+	
+	@Test(groups = "SCP") 
+	public void TS112663_Estructura_de_las_oportunidades_Bloques_Productos_de_la_oportunidad_Total_mes_por_plazo(){
+		SCP page = new SCP(driver);
+		page.clickOnTabByName("cuentas");
+		page.clickEnCuentaPorNombre("AIR S.R.L");
+		try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		page.elegiroportunidad("ALTA Sucursal Jujuy");
+		page.IngresarAlProductos("HYPERWAY HEAD QUARTER");
+		String antes = page.SacarTotalMesXPlazo();
+		page.ModificarProducto("modificar","cargo unico", "500", "guardar");
+		page.VerificarCampoModificado("cargo unico", "500,00");
+		page.ValidarTotalMesXPlazo(antes);
 		
 	}
 }

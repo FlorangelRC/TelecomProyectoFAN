@@ -47,7 +47,7 @@ public class test_SCP_Base extends TestBase {
 	public void setUp() throws Exception {
 		try {Thread.sleep(2000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 		SCP page= new SCP(driver);
-		page.goToMenu("SCP");
+		//page.goToMenu("SCP");
 		page.clickOnTabByName("cuentas");
 		page.listTypeAcc("Todas Las cuentas");
 		page.clickEnCuentaPorNombre("Florencia Di Cio");
@@ -55,7 +55,7 @@ public class test_SCP_Base extends TestBase {
 		page.moveToElementOnAccAndClick("tercerTitulo", 1);
 		}
 	
-	@AfterMethod(groups= {"SCP", "Almer", "Prueba"})
+	//@AfterMethod(groups= {"SCP", "Almer", "Prueba"})
 	public void afterMethod() {
 		driver.switchTo().defaultContent();
 		SCP page= new SCP(driver);
@@ -63,7 +63,7 @@ public class test_SCP_Base extends TestBase {
 		try {Thread.sleep(1000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 	}
 	
-	@AfterClass(groups= {"SCP", "Almer", "Prueba"})
+	//@AfterClass(groups= {"SCP", "Almer", "Prueba"})
 	public void tearDown() {
 		driver.quit();
 		sleep(4000);
@@ -534,7 +534,9 @@ public class test_SCP_Base extends TestBase {
 	    	fecha=date.get(1).getText();
 	    	fecha=fecha.substring(2, fecha.length()-2);
 	    	//System.out.println(fecha);
+	    	date.get(0).click();
 	    	date.get(1).click();
+	    	date.get(2).click();
 	    	//for(WebElement imp:date)
 	    		//System.out.println(imp.getText());
 	    	driver.findElement(By.id("opp3")).clear();
