@@ -336,7 +336,7 @@ public class TestBase {
 			WebElement frame0 = driver.findElement(By.tagName("iframe"));
 			driver.switchTo().frame(frame0);
 			Select field = new Select(driver.findElement(By.name("fcf")));
-			field.selectByVisibleText("Todas las cuentas");
+			field.selectByVisibleText("Vista Tech");
 			try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 			List<WebElement> accounts = driver.findElements(By.xpath("//*[text() = '"+nombreCuenta+"']"));
 			accounts.get(0).click();
@@ -452,5 +452,10 @@ public class TestBase {
 	public static void sleep(int miliseconds) {
 		try {Thread.sleep(miliseconds);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 	}
+	
+	public void selectByText(WebElement element, String data){
+		Select select = new Select(element);
+		select.selectByVisibleText(data);
+		}
 }
 

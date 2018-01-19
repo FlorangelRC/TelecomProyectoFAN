@@ -647,6 +647,28 @@ try{	driver.findElement(By.id("alert-ok-button")).click();	} catch (NoSuchElemen
 			
 		}
 		
+		public void selectMatrix(String letra, String matrix) {
+			List <WebElement> letras = driver.findElements(By.className("listItemPad"));
+			for (WebElement x : letras) {
+				if (x.getText().toLowerCase().equals(letra.toLowerCase())) {
+					x.click();
+					break;
+				}
+			}
+			try {Thread.sleep(3000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+			WebElement body = driver.findElement(By.className("x-grid3-body"));
+			List <WebElement> lista = body.findElements(By.tagName("tr"));
+			WebElement leo= lista.get(0);
+			for (WebElement x : lista) {
+				//System.out.println("fffff"+x.findElements(By.tagName("td")).get(3).getText());
+				((JavascriptExecutor)driver).executeScript("window.scrollTo(0,"+lista.get(lista.size()-1).getLocation().y+")");
+				if (x.findElements(By.tagName("td")).get(3).getText().toLowerCase().contains(matrix.toLowerCase())) {
+					leo = x;
+				}
+			}
+			leo.findElements(By.tagName("td")).get(3).findElement(By.tagName("span")).click();
+			try {Thread.sleep(10000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		}
  }
  
 
