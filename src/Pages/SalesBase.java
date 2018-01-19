@@ -650,7 +650,7 @@ try{	driver.findElement(By.id("alert-ok-button")).click();	} catch (NoSuchElemen
 		public void selectMatrix(String letra, String matrix) {
 			List <WebElement> letras = driver.findElements(By.className("listItemPad"));
 			for (WebElement x : letras) {
-				if (x.getText().toLowerCase().contains(letra.toLowerCase())) {
+				if (x.getText().toLowerCase().equals(letra.toLowerCase())) {
 					x.click();
 					break;
 				}
