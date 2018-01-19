@@ -30,7 +30,7 @@ public class diagnosis extends TestBase {
 	
 	private WebDriver driver;
 
-	//@AfterClass(groups = {"Fase1","TechnicalCare","Diagnostico"}) 
+	@AfterClass(groups = {"Fase1","TechnicalCare","Diagnostico"}) 
 	public void tearDown2() {
 		driver.switchTo().defaultContent();
 		driver.findElement(By.id("tsidButton")).click();
@@ -70,7 +70,7 @@ public class diagnosis extends TestBase {
 	     try {Thread.sleep(15000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 	}
 
-	//@AfterMethod(groups = {"Fase1","TechnicalCare","Diagnostico"}) 
+	@AfterMethod(groups = {"Fase1","TechnicalCare","Diagnostico"}) 
 	public void tearDown() {
 
 		driver.switchTo().defaultContent();

@@ -29,7 +29,6 @@ public class SCPPrioritarios extends TestBase{
 	{
 		this.driver = setConexion.setupEze();
 		try {Thread.sleep(10000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
-		driver.get("http://google.com");
 		try {Thread.sleep(10000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 		loginSCPAdmin(driver);
 		try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
