@@ -269,6 +269,24 @@ public class CustomerCare360Joaquin extends TestBase {
 	}
 	
 	@Test(groups= {"CustomerCare", "DebitoAutomatico"})
+	public void TS38231_Automatic_Debit_Subscriptions_Sesión_guiada_Débito_Automático_Inicial_Paso_2_Adhesión_Cuenta_con_Financiamiento_de_deuda() {
+		Customer.elegirCuenta("aaaaCuenta FinancDeuda");
+		Customer.irAGestion("Débito automático");
+		
+		WebElement adhesion = driver.findElement(By.className("borderOverlay"));
+		adhesion.click();
+		sleep(1000);
+		
+		WebElement inputs = driver.findElement(By.xpath("//span[@class='slds-checkbox']"));
+		inputs.findElement(By.tagName("span")).click();
+		sleep(500);
+		
+		WebElement msg = driver.findElement(By.cssSelector(".message.description"));
+		
+		Assert.assertTrue(msg.getText().contains("suspendida por financiación vigente"));
+	}
+	
+	@Test(groups= {"CustomerCare", "DebitoAutomatico"})
 	public void TS38233_Automatic_Debit_Subscriptions_Sesión_guiada_Débito_Automático_Inicial_Paso_2_Adhesión_Cuenta_activa_pero_con_servicios_inactivos() {
 		Customer.elegirCuenta("aaaaCuenta Activa Serv Inact");
 		Customer.irAGestion("Débito automático");
