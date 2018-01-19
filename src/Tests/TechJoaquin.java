@@ -123,7 +123,7 @@ public class TechJoaquin extends TestBase {
 		IrA.CajonDeAplicaciones.ConsolaFAN();
 	}
 	
-	//@AfterClass(groups= {"TechnicalCare"})
+	@AfterClass(groups= {"TechnicalCare"})
 	public void quit() {
 		cerrarTodasLasPestañas();
 		IrA.CajonDeAplicaciones.Ventas();
@@ -412,5 +412,76 @@ public class TechJoaquin extends TestBase {
 	    driver.switchTo().frame(cambioFrameByID.getFrameForElement(driver, By.id("MotiveIncidentSelect_nextBtn")));
 		assertTrue(dT.seleccionarMotivoPorSelect(driver, "No puedo llamar desde otro pa\u00eds"));
 	}
-
+	
+	/**
+	 * Verifica que en los motivos se muestren las opciones 
+	 * -No puedo navegar -Navega lento
+	 */
+	@Test(groups= {"TechnicalCare", "MisServicios"})
+	public void TS74047_CSR_Diagnostico_Visualizacion_de_motivos_de_Datos() {
+		BasePage cambioFrameByID=new BasePage();
+		diagnosisTab dT = new diagnosisTab(driver);
+		elegirCuenta("Adrian Tech");
+		WebElement asset = obtenerAsset("1122334456");
+		sleep(4000);
+		dT.irADiagnostico(driver, "diagn\u00f3stico", asset);
+		sleep(5000);
+		driver.switchTo().defaultContent();
+	    driver.switchTo().frame(cambioFrameByID.getFrameForElement(driver, By.id("MotiveIncidentSelect_nextBtn")));
+		assertTrue(dT.seleccionarMotivoPorSelect(driver, "No puedo navegar"));
+		assertTrue(dT.seleccionarMotivoPorSelect(driver, "Navega lento"));
+	}
+	
+	/**
+	 * Verifica que pueda visualizar los siguientes motivos de voz: 
+	- No puedo realizar llamadas - No puedo recibir llamadas 
+	- No puedo realizar ni recibir llamadas - No puedo llamar desde otro país
+	 */
+	@Test(groups= {"TechnicalCare", "MisServicios"})
+	public void TS74050_CSR_Diagnostico_Visualizacion_de_motivos_de_Voz() {
+		BasePage cambioFrameByID=new BasePage();
+		diagnosisTab dT = new diagnosisTab(driver);
+		elegirCuenta("Adrian Tech");
+		WebElement asset = obtenerAsset("1122334456");
+		sleep(4000);
+		dT.irADiagnostico(driver, "diagn\u00f3stico", asset);
+		sleep(5000);
+		driver.switchTo().defaultContent();
+	    driver.switchTo().frame(cambioFrameByID.getFrameForElement(driver, By.id("MotiveIncidentSelect_nextBtn")));
+		assertTrue(dT.seleccionarMotivoPorSelect(driver, "No puedo realizar llamadas"));
+		assertTrue(dT.seleccionarMotivoPorSelect(driver, "No puedo recibir llamadas"));
+		assertTrue(dT.seleccionarMotivoPorSelect(driver, "No puedo realizar ni recibir llamadas"));
+		assertTrue(dT.seleccionarMotivoPorSelect(driver, "No puedo llamar desde otro país"));
+	}
+	
+	/**
+	 * verifica que al seleccionar la opcion no puedo navegar, se muestre la siguiente pregunta: 
+ 	 *"Posee cuota disponible?" 
+	 */
+	@Test(groups= {"TechnicalCare", "MisServicios"})
+	public void TS74012_CSR_Diagnostico_Visualizacion_pregunta_si_tiene_cuota() {
+		BasePage cambioFrameByID=new BasePage();
+		diagnosisTab dT = new diagnosisTab(driver);
+		elegirCuenta("Adrian Tech");
+		WebElement asset = obtenerAsset("1122334456");
+		sleep(4000);
+		dT.irADiagnostico(driver, "diagn\u00f3stico", asset);
+		sleep(5000);
+		driver.switchTo().defaultContent();
+	    driver.switchTo().frame(cambioFrameByID.getFrameForElement(driver, By.id("MotiveIncidentSelect_nextBtn")));
+		dT.seleccionarMotivoPorSelect(driver, "No puedo navegar");
+		driver.findElement(By.id("MotiveIncidentSelect_nextBtn")).click();
+		sleep(5000);
+		driver.switchTo().defaultContent();
+	    driver.switchTo().frame(cambioFrameByID.getFrameForElement(driver, By.id("KnowledgeBaseResults_nextBtn")));
+		dT.funcionoConfiguracion(driver, "no");
+		 ((JavascriptExecutor)driver).executeScript("window.scrollTo(0,"+driver.findElement(By.id("KnowledgeBaseResults_nextBtn")).getLocation().y+")");
+		 driver.findElement(By.id("KnowledgeBaseResults_nextBtn")).click();
+		 sleep(5000);
+		 WebElement pregunta=driver.findElements(By.cssSelector(".slds-form-element__label.vlc-slds-inline-control__label.ng-binding")).get(1);
+		assertTrue(pregunta.getText().toLowerCase().contains("¿posee cuota disponible?"));
+	}
+	
+	
+	
 }

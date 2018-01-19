@@ -214,5 +214,9 @@ public class BasePage {
 		  return optionsNames;
 		 }
 	
+	public void selectByText(WebElement element, String data){
+		Select select = new Select(element);
+		select.selectByVisibleText(data);
+		}
 	
 }
