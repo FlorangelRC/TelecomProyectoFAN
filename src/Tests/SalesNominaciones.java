@@ -91,9 +91,10 @@ public class SalesNominaciones extends TestBase{
 		List<WebElement> gen = driver.findElements(By.id("GenderSearch"));
   	for(WebElement g : gen) {
   		if(g.getText().equals("Masculino")) {
-  			g.click();}} 
+  			g.click();}}
+	}
   	
-	@Test
+	@Test(groups = "Sales")
 	public void TS76062_SalesCPQ_Nominacion_Argentino_Verificar_Formulario_De_Documentacion_Adjunto(){
 		boolean a= false;
 		SalesBase SB = new SalesBase(driver);
@@ -106,7 +107,7 @@ public class SalesNominaciones extends TestBase{
 		CC.obligarclick(driver.findElement(By.id("Contact_nextBtn")));
 	}
 	
-	}
+	
 }
   	//DONDE APARECEN LAS LINEAS PREPAGAS DEL CLIENTE
 	
