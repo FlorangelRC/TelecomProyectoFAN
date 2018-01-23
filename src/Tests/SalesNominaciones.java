@@ -70,15 +70,28 @@ public class SalesNominaciones extends TestBase{
 		
 	}
 	
-	@AfterMethod
+	//@AfterMethod
 	public void IceB() {
 		driver.navigate().refresh();
 	}
 	
-	@AfterClass
+	//@AfterClass
 	public void Exit() {
 		driver.quit();
 		sleep(2000);
+	}
+	
+	@Test
+	public void TS76062_SalesCPQ_Nominacion_Argentino_Verificar_Formulario_De_Documentacion_Adjunto(){
+		boolean a= false;
+		SalesBase SB = new SalesBase(driver);
+		CustomerCare CC = new CustomerCare(driver);
+		ContactSearch contact = new ContactSearch(driver);
+		contact.searchContact("DNI", "10000018", "femenino");
+		
+		sleep(6000);
+		driver.findElement(By.cssSelector(".slds-form-element.vlc-flex.ng-pristine.ng-valid.ng-scope")).findElement(By.tagName("input")).sendKeys("algoaqui@yahoo.com.ar");
+		CC.obligarclick(driver.findElement(By.id("Contact_nextBtn")));
 	}
 	
 	@Test
