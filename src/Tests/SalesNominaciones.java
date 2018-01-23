@@ -70,7 +70,7 @@ public class SalesNominaciones extends TestBase{
 		
 	}
 
-	@AfterMethod
+	//@AfterMethod
 	public void IceB() {
 		driver.navigate().refresh();
 	}
@@ -83,31 +83,34 @@ public class SalesNominaciones extends TestBase{
 	
 	@Test(groups = "Sales") 
 	  public void TS75995_Nominacion_Argentino_Validar_cantidad_de_lineas(){
-		BasePage dni = new BasePage(driver);
-		dni.setSimpleDropdown(driver.findElement(By.id("DocumentTypeSearch")),"DNI");
-		sleep (2000);
-		WebElement ddd = driver.findElement(By.id("DocumentInputSearch"));
-		ddd.sendKeys("10000019");
-		List<WebElement> gen = driver.findElements(By.id("GenderSearch"));
-  	for(WebElement g : gen) {
-  		if(g.getText().equals("Masculino")) {
-  			g.click();}}
-	}
-  	
-	@Test(groups = "Sales")
-	public void TS76062_SalesCPQ_Nominacion_Argentino_Verificar_Formulario_De_Documentacion_Adjunto(){
 		boolean a= false;
 		SalesBase SB = new SalesBase(driver);
 		CustomerCare CC = new CustomerCare(driver);
 		ContactSearch contact = new ContactSearch(driver);
 		contact.searchContact("DNI", "10000018", "femenino");
-		
 		sleep(6000);
-		driver.findElement(By.cssSelector(".slds-form-element.vlc-flex.ng-pristine.ng-valid.ng-scope")).findElement(By.tagName("input")).sendKeys("algoaqui@yahoo.com.ar");
+		driver.findElement(By.cssSelector(".slds-input.form-control.ng-pristine.ng-untouched.ng-valid.ng-empty")).click();
+		  sleep(2000);
+		  driver.findElement(By.xpath("//*[@id=\"EmailSelectableItems\"]/div/ng-include/div/ng-form/div[1]/div[1]/input")).sendKeys("algo@gmail.com");
 		CC.obligarclick(driver.findElement(By.id("Contact_nextBtn")));
+		sleep(5000);
+		driver.findElement(By.cssSelector(".slds-form-element__label.ng-binding.ng-scope")).equals("Validaci\u00f3n por Documento de Identidad");
+		driver.findElement(By.id("ValidationMethod_nextBtn")).click();
+		SB.subirdoc();
 	}
-	
-	
+	@Test(groups = "Sales") 
+	  public void TS76150_Nominacion_Argentino_Nominar_personas_mayores_a_16_anios_cliente_mayor_de_edad_con_linea_existente_plan_repro(){
+				SalesBase SB = new SalesBase(driver);
+				CustomerCare CC = new CustomerCare(driver);
+				ContactSearch contact = new ContactSearch(driver);
+				contact.searchContact("DNI", "10000018", "femenino");
+				sleep(6000);
+				driver.findElement(By.cssSelector(".slds-input.form-control.ng-pristine.ng-untouched.ng-valid.ng-empty")).click();
+				  sleep(2000);
+				  driver.findElement(By.xpath("//*[@id=\"EmailSelectableItems\"]/div/ng-include/div/ng-form/div[1]/div[1]/input")).sendKeys("algo@gmail.com");
+				  CC.obligarclick(driver.findElement(By.id("Contact_nextBtn")));
+				  sleep(5000);
+	}
 }
   	//DONDE APARECEN LAS LINEAS PREPAGAS DEL CLIENTE
 	
