@@ -2,13 +2,11 @@ package Tests;
 import static org.testng.Assert.assertEquals;
 import static org.testng.Assert.assertFalse;
 import static org.testng.Assert.assertTrue;
-
 import java.sql.Driver;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
-
 import org.openqa.selenium.Alert;
 import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
@@ -25,7 +23,6 @@ import org.testng.annotations.BeforeClass;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.BeforeTest;
 import org.testng.annotations.Test;
-
 import Pages.BasePage;
 import Pages.ContactInformation;
 import Pages.ContactSearch;
@@ -146,7 +143,7 @@ public class Sales extends TestBase {
 		contact.searchContact(DNI, "123", "femenino");
 		List <WebElement> error = driver.findElements(By.cssSelector(".description.ng-binding"));
 		for(WebElement e: error){
-			if(e.getText().equals("Longitud M�nima De 7")){
+			if(e.getText().equals("Longitud M\u00ednima De 7")){
 				a=true;
 				break;
 			}
@@ -202,7 +199,7 @@ public class Sales extends TestBase {
 		List <WebElement> error = driver.findElements(By.cssSelector(".description.ng-binding"));
 		for(WebElement e: error){
 			
-			if(e.getText().equals("Longitud M�xima De 8")){
+			if(e.getText().equals("Longitud M\u00e1xima De 8")){
 				a=true;
 				break;
 			}
@@ -286,7 +283,7 @@ public class Sales extends TestBase {
 		contact.searchContact("Pasaporte", "1234567890", "femenino");
 		List <WebElement> error = driver.findElements(By.cssSelector(".description.ng-binding"));
 		for(WebElement e: error){
-			if(e.getText().equals("Longitud M�xima De 9")){
+			if(e.getText().equals("Longitud M\u00e1xima De 9")){
 				a=true;
 				break;}}
 		try {Thread.sleep(1000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
@@ -389,7 +386,7 @@ public class Sales extends TestBase {
 		contact.searchContact("CUIT", "05698957425", "femenino");
 		List <WebElement> error = driver.findElements(By.cssSelector(".description.ng-binding"));
 		for(WebElement e: error){
-			if(e.getText().equals("M�nimo 7 Caracteres Y M�ximo 8 And El Primer D�gito No Debe Ser 0.")){
+			if(e.getText().equals("M\u00ednimo 7 Caracteres Y M\u00e1ximo 8 And El Primer D\u00edgito No Debe Ser 0.")){
 				a=true;
 				break;}}
 		try {Thread.sleep(1000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
@@ -1309,4 +1306,32 @@ public class Sales extends TestBase {
 	 		System.out.println(m.getAttribute("value"));
 	 	}}
 	 	}
+	 	
+	 	@Test(groups={"sales", "AltaDeContacto"})
+		public void TS76148_SalesCPQ_Nominacion_Argentino_Nominar_Personas_Mayores_A_16_Anios_Cliente_Mayor_De_Edad_Sin_Linea_Existente_Plan_Repro(){
+			boolean a= false;
+			SalesBase SB = new SalesBase(driver);
+			SB.BuscarAvanzada("", "Wholesale", "", "", "");
+			CustomerCare CC = new CustomerCare(driver);
+			WebElement cli = driver.findElement(By.id("tab-scoped-2"));
+			   if(cli.getText().contains("Cliente Wholesale")){
+			    cli.click();
+			   }
+			   sleep(3000);
+			   WebElement cua = driver.findElement(By.id("tab-scoped-2")).findElement(By.tagName("tbody")).findElements(By.tagName("tr")).get(1).findElements(By.tagName("td")).get(6);
+			   cua.click();
+			   sleep(5000);
+			/*ContactSearch contact = new ContactSearch(driver);
+			contact.searchContact(DNI, DocValue[0], "masculino");
+			driver.findElement(By.id("ContactSearch_nextBtn")).click();
+			try {Thread.sleep(20000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+			
+		driver.findElement(By.id("FirstName")).clear();
+		try {Thread.sleep(1000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		List<WebElement>asl=driver.findElements(By.cssSelector(".description.ng-binding"));
+		for(WebElement e: asl){
+			if(e.getText().equals("Campo Requerido")){
+				a=true;}}
+		Assert.assertTrue(a);	*/}
+		
 }
