@@ -2,13 +2,11 @@ package Tests;
 import static org.testng.Assert.assertEquals;
 import static org.testng.Assert.assertFalse;
 import static org.testng.Assert.assertTrue;
-
 import java.sql.Driver;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
-
 import org.openqa.selenium.Alert;
 import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
@@ -25,7 +23,6 @@ import org.testng.annotations.BeforeClass;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.BeforeTest;
 import org.testng.annotations.Test;
-
 import Pages.BasePage;
 import Pages.ContactInformation;
 import Pages.ContactSearch;
@@ -146,7 +143,7 @@ public class Sales extends TestBase {
 		contact.searchContact(DNI, "123", "femenino");
 		List <WebElement> error = driver.findElements(By.cssSelector(".description.ng-binding"));
 		for(WebElement e: error){
-			if(e.getText().equals("Longitud Mï¿½nima De 7")){
+			if(e.getText().equals("Longitud M\u00ednima De 7")){
 				a=true;
 				break;
 			}
@@ -202,7 +199,7 @@ public class Sales extends TestBase {
 		List <WebElement> error = driver.findElements(By.cssSelector(".description.ng-binding"));
 		for(WebElement e: error){
 			
-			if(e.getText().equals("Longitud Mï¿½xima De 8")){
+			if(e.getText().equals("Longitud M\u00e1xima De 8")){
 				a=true;
 				break;
 			}
@@ -286,7 +283,7 @@ public class Sales extends TestBase {
 		contact.searchContact("Pasaporte", "1234567890", "femenino");
 		List <WebElement> error = driver.findElements(By.cssSelector(".description.ng-binding"));
 		for(WebElement e: error){
-			if(e.getText().equals("Longitud Mï¿½xima De 9")){
+			if(e.getText().equals("Longitud M\u00e1xima De 9")){
 				a=true;
 				break;}}
 		try {Thread.sleep(1000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
@@ -389,7 +386,7 @@ public class Sales extends TestBase {
 		contact.searchContact("CUIT", "05698957425", "femenino");
 		List <WebElement> error = driver.findElements(By.cssSelector(".description.ng-binding"));
 		for(WebElement e: error){
-			if(e.getText().equals("Mï¿½nimo 7 Caracteres Y Mï¿½ximo 8 And El Primer Dï¿½gito No Debe Ser 0.")){
+			if(e.getText().equals("M\u00ednimo 7 Caracteres Y M\u00e1ximo 8 And El Primer D\u00edgito No Debe Ser 0.")){
 				a=true;
 				break;}}
 		try {Thread.sleep(1000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
@@ -1170,7 +1167,7 @@ public class Sales extends TestBase {
 		driver.findElement(By.id("SearchClientDocumentNumber")).sendKeys("17856969");	
 		List<WebElement> busqueda = driver.findElements(By.className("slds-form-element__control"));	
 		for(WebElement e: busqueda){
-			if(e.getText().equals("Búsqueda avanzada")){
+			if(e.getText().equals("Bï¿½squeda avanzada")){
 				e.click();
 				e.click();
 				break;}}
@@ -1272,7 +1269,7 @@ public class Sales extends TestBase {
 	    sleep(10000);
 	 	WebElement modi = driver.findElement(By.id("bodyCell"));
 	 	WebElement name = driver.findElement(By.id("name_lastcon2"));
-	 	Assert.assertTrue(modi.getText().contains("Modificación de contacto"));
+	 	Assert.assertTrue(modi.getText().contains("Modificaciï¿½n de contacto"));
 	 	Assert.assertTrue(name.isEnabled());
 	 	WebElement btn = driver.findElement(By.id("topButtonRow"));
 	    btn.findElement(By.name("cancel")).click();
