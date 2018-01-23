@@ -36,6 +36,7 @@ import Pages.Order;
 import Pages.OrdersTab;
 import Pages.SalesBase;
 import Pages.setConexion;
+import Tests.TestBase.waitFor;
 
 public class SalesNominaciones extends TestBase{
 
@@ -67,6 +68,17 @@ public class SalesNominaciones extends TestBase{
 		cua.click();
 		sleep(10000);
 		
+	}
+	
+	@AfterMethod
+	public void IceB() {
+		driver.navigate().refresh();
+	}
+	
+	@AfterClass
+	public void Exit() {
+		driver.quit();
+		sleep(2000);
 	}
 	
 	@Test

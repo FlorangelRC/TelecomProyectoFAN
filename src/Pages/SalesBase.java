@@ -669,6 +669,37 @@ try{	driver.findElement(By.id("alert-ok-button")).click();	} catch (NoSuchElemen
 			leo.findElements(By.tagName("td")).get(3).findElement(By.tagName("span")).click();
 			try {Thread.sleep(10000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 		}
+		
+		public void volverEnNominaciones(WebDriver driver, int cant) {
+			WebElement ant = driver.findElement(By.id("Contact_prevBtn"));
+			CustomerCare CC = new CustomerCare(driver);
+			if (cant >= 5) {
+				driver.findElement(By.id("FinishProcess_prevBtn")).click();
+				try {Thread.sleep(3000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}	
+			}
+			if (cant >= 4) {
+				driver.findElement(By.id("AccountData_prevBtn")).click();
+				try {Thread.sleep(3000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}	
+			}
+			if (cant >= 3) {
+				driver.findElement(By.id("DocumentMethod_prevBtn")).click();
+				try {Thread.sleep(3000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}	
+			}
+			if (cant >= 2) {
+				driver.findElement(By.id("ValidationMethod_prevBtn")).click();
+				try {Thread.sleep(3000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+			}
+			if (cant >= 1) {
+				CC.obligarclick(ant);
+				try {Thread.sleep(3000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+			}
+			driver.findElement(By.id("DocumentInputSearch")).clear();
+		}
+		
+		public void refrescar(WebDriver driver) {
+			driver.navigate().refresh();
+		}
  }
+
  
 
