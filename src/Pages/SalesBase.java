@@ -605,8 +605,8 @@ try{	driver.findElement(By.id("alert-ok-button")).click();	} catch (NoSuchElemen
 	
 	public void BtnCrearNuevoCliente(){
 		try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
-		((JavascriptExecutor)driver).executeScript("window.scrollTo(0,"+driver.findElement(By.id("AccountData_nextBtn")).getLocation().y+")");
-		driver.findElement(By.id("AccountData_nextBtn")).click();
+		((JavascriptExecutor)driver).executeScript("window.scrollTo(0,"+driver.findElement(By.id("dataInput_nextBtn")).getLocation().y+")");
+		driver.findElement(By.id("dataInput_nextBtn")).click();
 		try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 	}
 	
@@ -650,7 +650,7 @@ try{	driver.findElement(By.id("alert-ok-button")).click();	} catch (NoSuchElemen
 		public void selectMatrix(String letra, String matrix) {
 			List <WebElement> letras = driver.findElements(By.className("listItemPad"));
 			for (WebElement x : letras) {
-				if (x.getText().toLowerCase().contains(letra.toLowerCase())) {
+				if (x.getText().toLowerCase().equals(letra.toLowerCase())) {
 					x.click();
 					break;
 				}
