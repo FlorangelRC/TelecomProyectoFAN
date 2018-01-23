@@ -64,12 +64,12 @@ public class SalesNominaciones extends TestBase{
 			cli.click();
 		}
 		sleep(3000);
-		WebElement cua = driver.findElement(By.id("tab-scoped-2")).findElement(By.tagName("tbody")).findElements(By.tagName("tr")).get(1).findElements(By.tagName("td")).get(6);
+		WebElement cua = driver.findElement(By.id("tab-scoped-2")).findElement(By.tagName("tbody")).findElements(By.tagName("tr")).get(1).findElements(By.tagName("td")).get(6).findElement(By.tagName("svg"));
 		cua.click();
 		sleep(10000);
 		
 	}
-	
+
 	@AfterMethod
 	public void IceB() {
 		driver.navigate().refresh();
@@ -81,8 +81,24 @@ public class SalesNominaciones extends TestBase{
 		sleep(2000);
 	}
 	
-	@Test
-	public void asd() {
-		
+	@Test(groups = "Sales") 
+	  public void TS75995_Nominacion_Argentino_Validar_cantidad_de_lineas(){
+		BasePage dni = new BasePage(driver);
+		dni.setSimpleDropdown(driver.findElement(By.id("DocumentTypeSearch")),"DNI");
+		sleep (2000);
+		WebElement ddd = driver.findElement(By.id("DocumentInputSearch"));
+		ddd.sendKeys("10000019");
+		List<WebElement> gen = driver.findElements(By.id("GenderSearch"));
+  	for(WebElement g : gen) {
+  		if(g.getText().equals("Masculino")) {
+  			g.click();}} 
+  	
 	}
 }
+  	//DONDE APARECEN LAS LINEAS PREPAGAS DEL CLIENTE
+	
+
+	
+	
+	
+		
