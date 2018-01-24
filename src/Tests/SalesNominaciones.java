@@ -7,6 +7,7 @@ import java.util.List;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
+import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Actions;
@@ -183,7 +184,7 @@ public class SalesNominaciones extends TestBase{
 		sleep(7000);
 		List <WebElement> valdni = driver.findElements(By.cssSelector(".slds-form-element__label.ng-binding.ng-scope"));
 		for (WebElement x : valdni) {
-			if (x.getText().toLowerCase().contains("validaciï¿½n por documento de identidad")) {
+			if (x.getText().toLowerCase().contains("por documento de identidad")) {
 				x.click();
 				break;
 			}
@@ -191,16 +192,22 @@ public class SalesNominaciones extends TestBase{
 		driver.findElement(By.id("ValidationMethod_nextBtn")).click();
 		sleep(7000);
 		driver.findElement(By.id("FileDocumentImage")).sendKeys("C:\\Users\\Nicolas\\Desktop\\descarga.jpg");
+		sleep(3000);
 		driver.findElement(By.id("DocumentMethod_nextBtn")).click();
 		sleep(7000);
+		SalesBase page = new SalesBase(driver);
 		BasePage bp = new BasePage(driver);
 		bp.setSimpleDropdown(driver.findElement(By.id("ImpositiveCondition")), "IVA Consumidor Final");
-		bp.setSimpleDropdown(driver.findElement(By.id("State")), "Ciudad Autï¿½noma de Buenos Aires");
-		driver.findElement(By.id("CityTypeAhead")).click();
-		driver.findElement(By.id("CityTypeAhead")).sendKeys("f");
-		sleep(3000);
-		driver.findElement(By.cssSelector(".typeahead.dropdown-menu.ng-scope.am-fade.bottom-left")).click();
-		
+		page.Crear_DomicilioLegal("Buenos Aires", "aba", "falsa", "", "1000", "", "", "1549");
+		sleep(20000);
+		List <WebElement> element = driver.findElements(By.cssSelector(".slds-form-element.vlc-flex.vlc-slds-text-block.vlc-slds-rte.ng-pristine.ng-valid.ng-scope"));
+		boolean a = false;
+		for (WebElement x : element) {
+			if (x.getText().toLowerCase().contains("¡nominaci\u00f3n exitosa!")) {
+				a = true;
+			}
+		}
+		Assert.assertTrue(a);
 		
 	}
 	
