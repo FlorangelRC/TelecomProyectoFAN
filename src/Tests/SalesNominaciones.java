@@ -72,15 +72,22 @@ public class SalesNominaciones extends TestBase{
 	
 	@Test(groups = "Sales") 
 	  public void TS75995_Nominacion_Argentino_Validar_cantidad_de_lineas(){
-		BasePage dni = new BasePage(driver);
-		dni.setSimpleDropdown(driver.findElement(By.id("DocumentTypeSearch")),"DNI");
-		sleep (2000);
-		WebElement ddd = driver.findElement(By.id("DocumentInputSearch"));
-		ddd.sendKeys("10000019");
-		List<WebElement> gen = driver.findElements(By.id("GenderSearch"));
-  	for(WebElement g : gen) {
-  		if(g.getText().equals("Masculino")) {
-  			g.click();}}
+		CustomerCare CC = new CustomerCare(driver);
+		ContactSearch contact = new ContactSearch(driver);
+		boolean b = false;
+		contact.searchContact("DNI", "10000018", "femenino");
+		sleep(6000);
+		driver.findElement(By.cssSelector(".slds-input.form-control.ng-pristine.ng-untouched.ng-valid.ng-empty")).sendKeys("algoaqui@yahoo.com.ar");
+		CC.obligarclick(driver.findElement(By.id("Contact_nextBtn")));
+		sleep(3000);
+		List<WebElement> vali = driver.findElements(By.cssSelector(".slds-page-header__title.vlc-slds-page-header__title.slds-truncate.ng-binding"));
+		for(WebElement v : vali){
+			if(v.getText().toLowerCase().contains("validaci\u00f3n de identidad")){
+				b = true;
+				System.out.println(v.getText());
+			}
+		}
+		Assert.assertTrue(b);
 	}
   	
 	@Test(groups = "Sales")
