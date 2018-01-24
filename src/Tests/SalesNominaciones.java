@@ -97,6 +97,56 @@ public class SalesNominaciones extends TestBase{
 		SB.seleccionarMetodoValidacion("DOC");
 	}
 	
+	@Test(groups = "Sales")
+	public void TS76058_Nominacion_Argentino_Verificar_solicitud_de_datos_para_la_nominacion() {
+		sleep(5000);
+		boolean a = false;
+		List <WebElement> element = driver.findElements(By.cssSelector(".slds-form-element__label.vlc-slds-inline-control__label.ng-binding"));
+		for (WebElement x : element) {
+			if (x.getText().toLowerCase().contains("género")) {
+				a = true;
+			}
+		}
+		Assert.assertTrue(driver.findElement(By.id("DocumentTypeSearch")).isEnabled());
+		Assert.assertTrue(driver.findElement(By.id("DocumentInputSearch")).isEnabled());
+		Assert.assertTrue(a);
+	}
+	
+	@Test(groups = "Sales")
+	public void TS76344_Nominacion_Argentino_Verificar_creacion_de_la_cuenta() {
+		ContactSearch contact = new ContactSearch(driver);
+		contact.searchContact("DNI", "10000019", "masculino");
+		sleep(5000);
+		driver.findElement(By.cssSelector(".slds-input.form-control.ng-pristine.ng-untouched.ng-valid.ng-empty")).click();
+		sleep(2000);
+		driver.findElement(By.xpath("//*[@id=\"EmailSelectableItems\"]/div/ng-include/div/ng-form/div[1]/div[1]/input")).sendKeys("asdasd@gmail.com");
+		driver.findElement(By.id("Contact_nextBtn")).click();
+		sleep(7000);
+		List <WebElement> valdni = driver.findElements(By.cssSelector(".slds-form-element__label.ng-binding.ng-scope"));
+		for (WebElement x : valdni) {
+			if (x.getText().toLowerCase().contains("validación por documento de identidad")) {
+				x.click();
+				break;
+			}
+		}
+		driver.findElement(By.id("ValidationMethod_nextBtn")).click();
+		sleep(7000);
+		driver.findElement(By.id("FileDocumentImage")).sendKeys("C:\\Users\\Nicolas\\Desktop\\descarga.jpg");
+		driver.findElement(By.id("DocumentMethod_nextBtn")).click();
+		sleep(7000);
+		BasePage bp = new BasePage(driver);
+		bp.setSimpleDropdown(driver.findElement(By.id("ImpositiveCondition")), "IVA Consumidor Final");
+		bp.setSimpleDropdown(driver.findElement(By.id("State")), "Ciudad Autónoma de Buenos Aires");
+		driver.findElement(By.id("CityTypeAhead")).click();
+		driver.findElement(By.id("CityTypeAhead")).sendKeys("f");
+		sleep(3000);
+		driver.findElement(By.cssSelector(".typeahead.dropdown-menu.ng-scope.am-fade.bottom-left")).click();
+		/*driver.findElement(By.id("LegalStreetTypeAhead")).click();
+		driver.findElement(By.id("LegalStreetTypeAhead")).sendKeys("f");
+		sleep(3000);
+		driver.findElement(By.xpath("//*[text() = '+ Nueva Calle']")).click();*/
+		
+	}
 	
 }
   	//DONDE APARECEN LAS LINEAS PREPAGAS DEL CLIENTE
