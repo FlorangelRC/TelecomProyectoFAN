@@ -148,10 +148,7 @@ public class SalesNominaciones extends TestBase{
 		driver.findElement(By.id("CityTypeAhead")).sendKeys("f");
 		sleep(3000);
 		driver.findElement(By.cssSelector(".typeahead.dropdown-menu.ng-scope.am-fade.bottom-left")).click();
-		/*driver.findElement(By.id("LegalStreetTypeAhead")).click();
-		driver.findElement(By.id("LegalStreetTypeAhead")).sendKeys("f");
-		sleep(3000);
-		driver.findElement(By.xpath("//*[text() = '+ Nueva Calle']")).click();*/
+		
 		
 	}
 	
