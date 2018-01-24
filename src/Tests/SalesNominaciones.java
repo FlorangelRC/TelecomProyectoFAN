@@ -71,7 +71,7 @@ public class SalesNominaciones extends TestBase{
 	}
 	
 	@Test(groups = "Sales") 
-	  public void TS75995_Nominacion_Argentino_Validar_cantidad_de_lineas(){
+	  public void TS76150_Nominacion_Argentino_Nominar_personas_mayores_a_16_anios_cliente_mayor_de_edad_con_linea_existente_plan_repro(){
 		CustomerCare CC = new CustomerCare(driver);
 		ContactSearch contact = new ContactSearch(driver);
 		boolean b = false;
@@ -89,7 +89,59 @@ public class SalesNominaciones extends TestBase{
 		}
 		Assert.assertTrue(b);
 	}
-  	
+	
+	@Test(groups = "Sales")
+	public void TS76149_Nominacion_Argentino_Nominar_personas_mayores_a_16_anios_cliente_menor_de_edad_sin_linea_existente_plan_repro(){
+		CustomerCare CC = new CustomerCare(driver);
+		ContactSearch contact = new ContactSearch(driver);
+		boolean b = false;
+		contact.searchContact("DNI", "1600000", "femenino");
+		sleep(6000);
+		//driver.findElement(By.cssSelector(".slds-input.form-control.ng-pristine.ng-untouched.ng-valid.ng-empty")).sendKeys("menoredad@gmail.com");
+		CC.obligarclick(driver.findElement(By.id("Contact_nextBtn")));
+		sleep(3000);
+		List<WebElement> vali = driver.findElements(By.cssSelector(".slds-page-header__title.vlc-slds-page-header__title.slds-truncate.ng-binding"));
+		for(WebElement v : vali){
+			if(v.getText().toLowerCase().contains("validaci\u00f3n de identidad")){
+				b = true;
+				System.out.println(v.getText());
+			}
+		}
+		Assert.assertTrue(b);
+	}
+	@Test(groups = "Sales")
+	public void TS75962_Nominacion_Argentino_Verificar_que_se_solicite_adjuntar_img_del_Doc_de_identidad(){
+		ContactSearch contact = new ContactSearch(driver);
+		contact.searchContact("DNI", "10000019", "masculino");
+		sleep(5000);
+		driver.findElement(By.cssSelector(".slds-input.form-control.ng-pristine.ng-untouched.ng-valid.ng-empty")).click();
+		sleep(2000);
+		driver.findElement(By.xpath("//*[@id=\"EmailSelectableItems\"]/div/ng-include/div/ng-form/div[1]/div[1]/input")).sendKeys("asdasd@gmail.com");
+		driver.findElement(By.id("Contact_nextBtn")).click();
+		sleep(7000);
+		List <WebElement> valdni = driver.findElements(By.cssSelector(".slds-form-element__label.ng-binding.ng-scope"));
+		for (WebElement x : valdni) {
+			if (x.getText().toLowerCase().contains("validaci\u00f3n por documento de identidad")) {
+				x.click();
+				break;
+			}
+		}
+		driver.findElement(By.id("ValidationMethod_nextBtn")).click();
+		sleep(7000);
+		driver.findElement(By.id("FileDocumentImage")).sendKeys("C:\\Users\\Sofia Chardin\\Desktop\\DNI.png");
+		driver.findElement(By.id("DocumentMethod_nextBtn")).click();
+		sleep(7000);
+		boolean b = false;
+		List<WebElement> vali = driver.findElements(By.cssSelector(".slds-page-header__title.vlc-slds-page-header__title.slds-truncate.ng-binding"));
+		for(WebElement v : vali){
+			if(v.getText().toLowerCase().contains("datos de la cuenta")){
+				b = true;
+				System.out.println(v.getText());
+			}
+		}
+		Assert.assertTrue(b);
+	}
+	
 	@Test(groups = "Sales")
 	public void TS76061_SalesCPQ_Nominacion_Argentino_Verificar_Formulario_De_Documentacion(){
 		boolean a= false;
