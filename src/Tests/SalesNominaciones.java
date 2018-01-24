@@ -1,19 +1,12 @@
 package Tests;
-
-import static org.testng.Assert.assertEquals;
-import static org.testng.Assert.assertFalse;
-import static org.testng.Assert.assertTrue;
-
 import java.sql.Driver;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-import org.openqa.selenium.Alert;
 import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
-import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Actions;
@@ -21,10 +14,8 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.Assert;
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.AfterMethod;
-import org.testng.annotations.AfterTest;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.BeforeMethod;
-import org.testng.annotations.BeforeTest;
 import org.testng.annotations.Test;
 
 import Pages.BasePage;
@@ -32,8 +23,6 @@ import Pages.ContactInformation;
 import Pages.ContactSearch;
 import Pages.CustomerCare;
 import Pages.HomeBase;
-import Pages.Order;
-import Pages.OrdersTab;
 import Pages.SalesBase;
 import Pages.setConexion;
 import Tests.TestBase.waitFor;
@@ -44,7 +33,7 @@ public class SalesNominaciones extends TestBase{
 	public void Init() {
 		this.driver = setConexion.setupEze();
 		try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
-		login(driver);
+		loginFranciso(driver);
 		try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 		HomeBase homePage = new HomeBase(driver);
 		try {Thread.sleep(6000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
@@ -70,7 +59,7 @@ public class SalesNominaciones extends TestBase{
 		
 	}
 
-	@AfterMethod
+	//@AfterMethod
 	public void IceB() {
 		driver.navigate().refresh();
 	}
@@ -95,16 +84,17 @@ public class SalesNominaciones extends TestBase{
 	}
   	
 	@Test(groups = "Sales")
-	public void TS76062_SalesCPQ_Nominacion_Argentino_Verificar_Formulario_De_Documentacion_Adjunto(){
+	public void TS76061_SalesCPQ_Nominacion_Argentino_Verificar_Formulario_De_Documentacion(){
 		boolean a= false;
 		SalesBase SB = new SalesBase(driver);
 		CustomerCare CC = new CustomerCare(driver);
 		ContactSearch contact = new ContactSearch(driver);
 		contact.searchContact("DNI", "10000018", "femenino");
-		
 		sleep(6000);
-		driver.findElement(By.cssSelector(".slds-form-element.vlc-flex.ng-pristine.ng-valid.ng-scope")).findElement(By.tagName("input")).sendKeys("algoaqui@yahoo.com.ar");
+		driver.findElement(By.cssSelector(".slds-input.form-control.ng-pristine.ng-untouched.ng-valid.ng-empty")).sendKeys("algoaqui@yahoo.com.ar");
 		CC.obligarclick(driver.findElement(By.id("Contact_nextBtn")));
+		sleep(5000);
+		SB.seleccionarMetodoValidacion("DOC");
 	}
 	
 	
