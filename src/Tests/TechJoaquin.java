@@ -123,7 +123,7 @@ public class TechJoaquin extends TestBase {
 		IrA.CajonDeAplicaciones.ConsolaFAN();
 	}
 	
-	//@AfterClass(groups= {"TechnicalCare"})
+	@AfterClass(groups= {"TechnicalCare"})
 	public void quit() {
 		cerrarTodasLasPestañas();
 		IrA.CajonDeAplicaciones.Ventas();
@@ -338,9 +338,7 @@ public class TechJoaquin extends TestBase {
 		 sleep(5000);
 		 driver.switchTo().defaultContent();
 		 driver.switchTo().frame(cambioFrameByID.getFrameForElement(driver, By.id("DataQuotaQuery_nextBtn")));
-		 ((JavascriptExecutor)driver).executeScript("window.scrollTo(0,"+driver.findElement(By.id("AvailableDataQuota|0")).getLocation().y+")");
-		 driver.findElement(By.id("AvailableDataQuota|0")).findElements(By.cssSelector(".slds-radio--faux.ng-scope")).get(1).click();
-		 driver.findElement(By.id("DataQuotaQuery_nextBtn")).click();
+		 assertTrue(driver.findElement(By.id("AvailableDataBalanceDisplay")).findElement(By.tagName("strong")).getText().toLowerCase().equals("saldo"));
 		
 	}
 	
