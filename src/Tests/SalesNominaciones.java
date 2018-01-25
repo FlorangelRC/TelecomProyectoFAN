@@ -167,19 +167,8 @@ public class SalesNominaciones extends TestBase{
 		SalesBase SB = new SalesBase(driver);
 		contact.searchContact("DNI", "10000019", "masculino");
 		contact.ingresarMail("asdads@gmail.com", "si");
-		List<WebElement> valdni = driver.findElements(By.cssSelector(".slds-form-element__label.ng-binding.ng-scope"));
-		for (WebElement x : valdni) {
-			if (x.getText().toLowerCase().contains("por documento de identidad")) {
-				x.click();
-				break;
-			}
-		}
-		driver.findElement(By.id("ValidationMethod_nextBtn")).click();
-		sleep(7000);
-		driver.findElement(By.id("FileDocumentImage")).sendKeys("C:\\Users\\Nicolas\\Desktop\\descarga.jpg");
-		sleep(3000);
-		driver.findElement(By.id("DocumentMethod_nextBtn")).click();
-		sleep(7000);
+		contact.tipoValidacion("documento");
+		contact.subirArchivo("C:\\Users\\Nicolas\\Desktop\\descarga.jpg", "si");
 		BasePage bp = new BasePage(driver);
 		bp.setSimpleDropdown(driver.findElement(By.id("ImpositiveCondition")), "IVA Consumidor Final");
 		SB.Crear_DomicilioLegal("Buenos Aires", "aba", "falsa", "", "1000", "", "", "1549");
