@@ -59,7 +59,7 @@ public class techQuelys extends TestBase{
 		sleep(1000);
 	}
 	
-	@AfterMethod(groups= {"Fase4","TechnicalCare", "Autogestion"})
+	//@AfterMethod(groups= {"Fase4","TechnicalCare", "Autogestion"})
 	public void after() {
 		try {Thread.sleep(2000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 		driver.switchTo().defaultContent(); 
@@ -68,7 +68,7 @@ public class techQuelys extends TestBase{
 	    driver.switchTo().defaultContent(); 
 	}
 	
-	@AfterClass(groups= {"Fase4","TechnicalCare", "Autogestion"})
+	//@AfterClass(groups= {"Fase4","TechnicalCare", "Autogestion"})
 	public void tearDown() {
 		HomeBase homePage = new HomeBase(driver);
 		sleep(1000);
@@ -506,7 +506,7 @@ public class techQuelys extends TestBase{
 	}
 	
 	@Test(groups= {"Fase4","TechnicalCare", "Autogestion"})
-	public void TS73821_CRM_Fase_4_Technical_Care_CSR_Autogestion_Verificacion_de_que_la_autogestion_del_servicio_asterisco_539_Home_Personal_corresponde_a_TP() throws Exception {
+	public void TS73821_RM_Fase_4_Technical_Care_CSR_Autogestion_Verificacion_de_que_la_autogestion_del_servicio_asterisco_539_Home_Personal_corresponde_a_TP() throws Exception {
 		BasePage cambioFrameByID=new BasePage();
 		driver.switchTo().frame(cambioFrameByID.getFrameForElement(driver, By.id("ChannelSelection")));
 		TechQuelysPage tech = new TechQuelysPage(driver);
@@ -522,6 +522,43 @@ public class techQuelys extends TestBase{
 		menu.get(4).click();
 		assertTrue(tech.getVerificar().getText().equalsIgnoreCase("Telecom"));
 	}
+	
+	@Test(groups= {"Fase4","TechnicalCare", "Autogestion"})
+	public void TS73824_RM_Fase_4_Technical_Care_CSR_Autogestion_Verificacion_de_que_la_autogestion_del_servicio_asterisco_554_Facebook_Personal_corresponde_a_TP() throws Exception {
+		BasePage cambioFrameByID=new BasePage();
+		driver.switchTo().frame(cambioFrameByID.getFrameForElement(driver, By.id("ChannelSelection")));
+		TechQuelysPage tech = new TechQuelysPage(driver);
+		tech.listadoDeSeleccion("Asteriscos TP", "*554 (Facebook Personal)", "Tono ocupado");  
+		tech.clickOnButtons();
+		sleep(4000);
+		tech.verificarCaso();
+		driver.switchTo().frame(cambioFrameByID.getFrameForElement(driver, By.id("srchErrorDiv_Case")));
+		tech.getCaseBody().click();		
+		sleep(5000);
+		driver.switchTo().frame(cambioFrameByID.getFrameForElement(driver, By.className("optionLabel")));
+		List<WebElement>menu=tech.getOptionContainer();
+		menu.get(4).click();
+		assertTrue(tech.getVerificar().getText().equalsIgnoreCase("Telecom"));
+	}
+	
+	@Test(groups= {"Fase4","TechnicalCare", "Autogestion"})
+	public void TS73808_RM_Fase_4_Technical_Care_CSR_Autogestion_Verificacion_de_que_la_autogestion_del_servicio_asterisco_555_contestador_corresponde_a_TP() throws Exception {
+		BasePage cambioFrameByID=new BasePage();
+		driver.switchTo().frame(cambioFrameByID.getFrameForElement(driver, By.id("ChannelSelection")));
+		TechQuelysPage tech = new TechQuelysPage(driver);
+		tech.listadoDeSeleccion("Asteriscos TP", "*555 (contestador)", "Tono ocupado");  
+		tech.clickOnButtons();
+		sleep(4000);
+		tech.verificarCaso();
+		driver.switchTo().frame(cambioFrameByID.getFrameForElement(driver, By.id("srchErrorDiv_Case")));
+		tech.getCaseBody().click();		
+		sleep(5000);
+		driver.switchTo().frame(cambioFrameByID.getFrameForElement(driver, By.className("optionLabel")));
+		List<WebElement>menu=tech.getOptionContainer();
+		menu.get(4).click();
+		assertTrue(tech.getVerificar().getText().equalsIgnoreCase("Telecom"));
+	}
+	
 	
 	@Test(groups= {"Fase4","TechnicalCare", "Autogestion"})
 	public void TS73824_CRM_Fase_4_Technical_Care_CSR_Autogestion_Verificacion_de_que_la_autogestion_del_servicio_asterisco_554_Facebook_Personal_corresponde_a_TP() throws Exception {
@@ -758,6 +795,185 @@ public class techQuelys extends TestBase{
 		assertTrue(tech.getVerificar().getText().equalsIgnoreCase("Telecom"));
 	}
 	
+	@Test(groups= {"Fase4","TechnicalCare", "Autogestion"})
+	public void TS73821_CRM_Fase_4_Technical_Care_CSR_Autogestion_Verificacion_de_que_la_autogestion_del_servicio_asterisco_539_Home_Personal_corresponde_a_TP() throws Exception {
+		BasePage cambioFrameByID=new BasePage();
+		driver.switchTo().frame(cambioFrameByID.getFrameForElement(driver, By.id("ChannelSelection")));
+		TechQuelysPage tech = new TechQuelysPage(driver);
+		tech.listadoDeSeleccion("Asteriscos TP", "*539 (Home Personal)", "Tono ocupado");  
+		tech.clickOnButtons();
+		sleep(4000);
+		tech.verificarCaso();
+		driver.switchTo().frame(cambioFrameByID.getFrameForElement(driver, By.id("srchErrorDiv_Case")));
+		tech.getCaseBody().click();		
+		sleep(5000);
+		driver.switchTo().frame(cambioFrameByID.getFrameForElement(driver, By.className("optionLabel")));
+		List<WebElement>menu=tech.getOptionContainer();
+		menu.get(4).click();
+		assertTrue(tech.getVerificar().getText().equalsIgnoreCase("Telecom"));
+	}
+	
+	@Test(groups= {"Fase4","TechnicalCare", "Autogestion"})
+	public void TS73825_CRM_Fase_4_Technical_Care_CSR_Autogestion_Verificacion_de_que_la_autogestion_del_servicio_asterisco_Otros_corresponde_a_TP() throws Exception {
+		BasePage cambioFrameByID=new BasePage();
+		driver.switchTo().frame(cambioFrameByID.getFrameForElement(driver, By.id("ChannelSelection")));
+		TechQuelysPage tech = new TechQuelysPage(driver);
+		tech.listadoDeSeleccion("Asteriscos TP", "Otros", "Tono ocupado");  
+		tech.clickOnButtons();
+		sleep(4000);
+		tech.verificarCaso();
+		driver.switchTo().frame(cambioFrameByID.getFrameForElement(driver, By.id("srchErrorDiv_Case")));
+		tech.getCaseBody().click();		
+		sleep(5000);
+		driver.switchTo().frame(cambioFrameByID.getFrameForElement(driver, By.className("optionLabel")));
+		List<WebElement>menu=tech.getOptionContainer();
+		menu.get(4).click();
+		assertTrue(tech.getVerificar().getText().equalsIgnoreCase("Telecom"));
+	}
+	
+	@Test(groups= {"Fase4","TechnicalCare", "Autogestion"})
+	public void TS75922_CRM_Fase_4_Technical_Care_CSR_Autogestion_Verificacion_de_que_la_autogestion_del_Canal_0800_servicio_0800_444_0554_Facebok_Personal_corresponde_a_un_servicio_de_Telecom() throws Exception {
+		BasePage cambioFrameByID=new BasePage();
+		driver.switchTo().frame(cambioFrameByID.getFrameForElement(driver, By.id("ChannelSelection")));
+		TechQuelysPage tech = new TechQuelysPage(driver);
+		tech.listadoDeSeleccion("0800", "0800-444-0554 (Facebook Personal)", "Tono ocupado");  
+		tech.clickOnButtons();
+		sleep(4000);
+		tech.verificarCaso();
+		driver.switchTo().frame(cambioFrameByID.getFrameForElement(driver, By.id("srchErrorDiv_Case")));
+		tech.getCaseBody().click();		
+		sleep(5000);
+		driver.switchTo().frame(cambioFrameByID.getFrameForElement(driver, By.className("optionLabel")));
+		List<WebElement>menu=tech.getOptionContainer();
+		menu.get(4).click();
+		assertTrue(tech.getVerificar().getText().equalsIgnoreCase("Telecom"));
+	}
+	
+	@Test(groups= {"Fase4","TechnicalCare", "Autogestion"})
+	public void TS75540_CRM_Fase_4_Technical_Care_CSR_Autogestion_Verificacion_de_que_la_autogestion_del_Canal_0800_servicio_0800_444_4100_Ventas_desde_la_Web_corresponde_a_un_servicio_de_Telecom() throws Exception {
+		BasePage cambioFrameByID=new BasePage();
+		driver.switchTo().frame(cambioFrameByID.getFrameForElement(driver, By.id("ChannelSelection")));
+		TechQuelysPage tech = new TechQuelysPage(driver);
+		tech.listadoDeSeleccion("0800", "0800-444-4100 (Asistencia Tienda Online)", "Tono ocupado");  
+		tech.clickOnButtons();
+		sleep(4000);
+		tech.verificarCaso();
+		driver.switchTo().frame(cambioFrameByID.getFrameForElement(driver, By.id("srchErrorDiv_Case")));
+		tech.getCaseBody().click();		
+		sleep(5000);
+		driver.switchTo().frame(cambioFrameByID.getFrameForElement(driver, By.className("optionLabel")));
+		List<WebElement>menu=tech.getOptionContainer();
+		menu.get(4).click();
+		assertTrue(tech.getVerificar().getText().equalsIgnoreCase("Telecom"));
+	}
+	
+	@Test(groups= {"Fase4","TechnicalCare", "Autogestion"})
+	public void TS73900_CRM_Fase_4_Technical_Care_CSR_Autogestion_Verificacion_de_que_la_autogestion_del_Canal_APP_servicio_Centros_de_Atencion_corresponde_a_un_servicio_de_Telecom() throws Exception {
+		BasePage cambioFrameByID=new BasePage();
+		driver.switchTo().frame(cambioFrameByID.getFrameForElement(driver, By.id("ChannelSelection")));
+		TechQuelysPage tech = new TechQuelysPage(driver);
+		tech.listadoDeSeleccion("APP", "Centros de Atención", "Información Incorrecta");  
+		tech.clickOnButtons();
+		sleep(4000);
+		tech.verificarCaso();
+		driver.switchTo().frame(cambioFrameByID.getFrameForElement(driver, By.id("srchErrorDiv_Case")));
+		tech.getCaseBody().click();		
+		sleep(5000);
+		driver.switchTo().frame(cambioFrameByID.getFrameForElement(driver, By.className("optionLabel")));
+		List<WebElement>menu=tech.getOptionContainer();
+		menu.get(4).click();
+		assertTrue(tech.getVerificar().getText().equalsIgnoreCase("Telecom"));
+	}
+	
+	@Test(groups= {"Fase4","TechnicalCare", "Autogestion"})
+	public void TS73901_CRM_Fase_4_Technical_Care_CSR_Autogestion_Verificacion_de_que_la_autogestion_del_Canal_APP_servicio_Club_Personal_corresponde_a_un_servicio_de_Telecom() throws Exception {
+		BasePage cambioFrameByID=new BasePage();
+		driver.switchTo().frame(cambioFrameByID.getFrameForElement(driver, By.id("ChannelSelection")));
+		TechQuelysPage tech = new TechQuelysPage(driver);
+		tech.listadoDeSeleccion("APP", "Club Personal", "Información Incorrecta");  
+		tech.clickOnButtons();
+		sleep(4000);
+		tech.verificarCaso();
+		driver.switchTo().frame(cambioFrameByID.getFrameForElement(driver, By.id("srchErrorDiv_Case")));
+		tech.getCaseBody().click();		
+		sleep(5000);
+		driver.switchTo().frame(cambioFrameByID.getFrameForElement(driver, By.className("optionLabel")));
+		List<WebElement>menu=tech.getOptionContainer();
+		menu.get(4).click();
+		assertTrue(tech.getVerificar().getText().equalsIgnoreCase("Telecom"));
+	}
+	
+	@Test(groups= {"Fase4","TechnicalCare", "Autogestion"})
+	public void TS73902_CRM_Fase_4_Technical_Care_CSR_Autogestion_Verificacion_de_que_la_autogestion_del_Canal_APP_servicio_Compra_Packs_corresponde_a_un_servicio_de_Telecom() throws Exception {
+		BasePage cambioFrameByID=new BasePage();
+		driver.switchTo().frame(cambioFrameByID.getFrameForElement(driver, By.id("ChannelSelection")));
+		TechQuelysPage tech = new TechQuelysPage(driver);
+		tech.listadoDeSeleccion("APP", "Compra Packs", "Información Incorrecta");  
+		tech.clickOnButtons();
+		sleep(4000);
+		tech.verificarCaso();
+		driver.switchTo().frame(cambioFrameByID.getFrameForElement(driver, By.id("srchErrorDiv_Case")));
+		tech.getCaseBody().click();		
+		sleep(5000);
+		driver.switchTo().frame(cambioFrameByID.getFrameForElement(driver, By.className("optionLabel")));
+		List<WebElement>menu=tech.getOptionContainer();
+		menu.get(4).click();
+		assertTrue(tech.getVerificar().getText().equalsIgnoreCase("Telecom"));
+	}
+	
+	@Test(groups= {"Fase4","TechnicalCare", "Autogestion"})
+	public void TS73897_CRM_Fase_4_Technical_Care_CSR_Autogestion_Verificacion_de_que_la_autogestion_del_Canal_APP_servicio_Mi_Fracturacion_corresponde_a_un_servicio_de_Telecom() throws Exception {
+		BasePage cambioFrameByID=new BasePage();
+		driver.switchTo().frame(cambioFrameByID.getFrameForElement(driver, By.id("ChannelSelection")));
+		TechQuelysPage tech = new TechQuelysPage(driver);
+		tech.listadoDeSeleccion("APP", "Mi Facturación", "Información Incorrecta");  
+		tech.clickOnButtons();
+		sleep(4000);
+		tech.verificarCaso();
+		driver.switchTo().frame(cambioFrameByID.getFrameForElement(driver, By.id("srchErrorDiv_Case")));
+		tech.getCaseBody().click();		
+		sleep(5000);
+		driver.switchTo().frame(cambioFrameByID.getFrameForElement(driver, By.className("optionLabel")));
+		List<WebElement>menu=tech.getOptionContainer();
+		menu.get(4).click();
+		assertTrue(tech.getVerificar().getText().equalsIgnoreCase("Telecom"));
+	}
+	
+	@Test(groups= {"Fase4","TechnicalCare", "Autogestion"})
+	public void TS73898_CRM_Fase_4_Technical_Care_CSR_Autogestion_Verificacion_de_que_la_autogestion_del_Canal_APP_servicio_Mi_Linea_corresponde_a_un_servicio_de_Telecom() throws Exception {
+		BasePage cambioFrameByID=new BasePage();
+		driver.switchTo().frame(cambioFrameByID.getFrameForElement(driver, By.id("ChannelSelection")));
+		TechQuelysPage tech = new TechQuelysPage(driver);
+		tech.listadoDeSeleccion("APP", "Mi Línea", "Información Incorrecta");  
+		tech.clickOnButtons();
+		sleep(4000);
+		tech.verificarCaso();
+		driver.switchTo().frame(cambioFrameByID.getFrameForElement(driver, By.id("srchErrorDiv_Case")));
+		tech.getCaseBody().click();		
+		sleep(5000);
+		driver.switchTo().frame(cambioFrameByID.getFrameForElement(driver, By.className("optionLabel")));
+		List<WebElement>menu=tech.getOptionContainer();
+		menu.get(4).click();
+		assertTrue(tech.getVerificar().getText().equalsIgnoreCase("Telecom"));
+	}
+	
+	@Test(groups= {"Fase4","TechnicalCare", "Autogestion"})
+	public void TS73899_CRM_Fase_4_Technical_Care_CSR_Autogestion_Verificacion_de_que_la_autogestion_del_Canal_APP_servicio_Mis_Consumos_corresponde_a_un_servicio_de_Telecom() throws Exception {
+		BasePage cambioFrameByID=new BasePage();
+		driver.switchTo().frame(cambioFrameByID.getFrameForElement(driver, By.id("ChannelSelection")));
+		TechQuelysPage tech = new TechQuelysPage(driver);
+		tech.listadoDeSeleccion("APP", "Mis Consumos", "Información Incorrecta");  
+		tech.clickOnButtons();
+		sleep(4000);
+		tech.verificarCaso();
+		driver.switchTo().frame(cambioFrameByID.getFrameForElement(driver, By.id("srchErrorDiv_Case")));
+		tech.getCaseBody().click();		
+		sleep(5000);
+		driver.switchTo().frame(cambioFrameByID.getFrameForElement(driver, By.className("optionLabel")));
+		List<WebElement>menu=tech.getOptionContainer();
+		menu.get(4).click();
+		assertTrue(tech.getVerificar().getText().equalsIgnoreCase("Telecom"));
+	}
 
 	@Test(groups= {"Fase4","TechnicalCare", "Autogestion"})
 		public void TS73993_CRM_Fase_4_Technical_Care_CSR_AutoGestion_0800_Otros_Visualizacion_de_campo() throws Exception {
@@ -767,8 +983,7 @@ public class techQuelys extends TestBase{
 		tech.listadoDeSeleccion("0800","Otros","Tono ocupado" );
 		assertTrue(tech.verificarOpciones(tech.getServiceSelection(), "Otros"));
 		
-		/*tech.getServiceSelection().getText().equalsIgnoreCase("Otros");*/
-	
+			
 	}
 	
 	@Test(groups= {"Fase4","TechnicalCare", "Autogestion"})
@@ -798,6 +1013,243 @@ public class techQuelys extends TestBase{
 		TechQuelysPage tech = new TechQuelysPage(driver);
 		tech.listadoDeSeleccion("Otros Asteriscos","Otros","Tono ocupado" );
 		assertTrue(tech.verificarOpciones(tech.getServiceSelection(), "Otros"));
+	}
+	
+	@Test(groups= {"Fase4","TechnicalCare", "Autogestion"})
+	public void TS73903_CRM_Fase_4_Technical_Care_CSR_Autogestion_Verificacion_de_que_la_autogestion_del_Canal_APP_servicio_Otros_corresponde_a_un_servicio_de_Telecom() throws Exception {
+		BasePage cambioFrameByID=new BasePage();
+		driver.switchTo().frame(cambioFrameByID.getFrameForElement(driver, By.id("ChannelSelection")));
+		TechQuelysPage tech = new TechQuelysPage(driver);
+		tech.listadoDeSeleccion("APP", "Otros", "Tono ocupado");  
+		tech.clickOnButtons();
+		sleep(4000);
+		tech.verificarCaso();
+		driver.switchTo().frame(cambioFrameByID.getFrameForElement(driver, By.id("srchErrorDiv_Case")));
+		tech.getCaseBody().click();		
+		sleep(5000);
+		driver.switchTo().frame(cambioFrameByID.getFrameForElement(driver, By.className("optionLabel")));
+		List<WebElement>menu=tech.getOptionContainer();
+		menu.get(4).click();
+		assertTrue(tech.getVerificar().getText().equalsIgnoreCase("Telecom"));
+	}
+	
+	@Test(groups= {"Fase4","TechnicalCare", "Autogestion"})
+	public void TS73923_CRM_Fase_4_Technical_Care_CSR_Autogestion_Verificacion_de_que_la_autogestion_del_Canal_Mi_Personal_SIM_servicio_Comprar_Packs_corresponde_a_un_servicio_de_Telecom() throws Exception {
+		BasePage cambioFrameByID=new BasePage();
+		driver.switchTo().frame(cambioFrameByID.getFrameForElement(driver, By.id("ChannelSelection")));
+		TechQuelysPage tech = new TechQuelysPage(driver);
+		tech.listadoDeSeleccion("Mi Personal (SIM)", "Comprar Packs", "Tono ocupado");  
+		tech.clickOnButtons();
+		sleep(4000);
+		tech.verificarCaso();
+		driver.switchTo().frame(cambioFrameByID.getFrameForElement(driver, By.id("srchErrorDiv_Case")));
+		tech.getCaseBody().click();		
+		sleep(5000);
+		driver.switchTo().frame(cambioFrameByID.getFrameForElement(driver, By.className("optionLabel")));
+		List<WebElement>menu=tech.getOptionContainer();
+		menu.get(4).click();
+		assertTrue(tech.getVerificar().getText().equalsIgnoreCase("Telecom"));
+	}
+	
+	@Test(groups= {"Fase4","TechnicalCare", "Autogestion"})
+	public void TS73928_CRM_Fase_4_Technical_Care_CSR_Autogestion_Verificacion_de_que_la_autogestion_del_Canal_Mi_Personal_SIM_servicio_Otros_corresponde_a_un_servicio_de_Telecom() throws Exception {
+		BasePage cambioFrameByID=new BasePage();
+		driver.switchTo().frame(cambioFrameByID.getFrameForElement(driver, By.id("ChannelSelection")));
+		TechQuelysPage tech = new TechQuelysPage(driver);
+		tech.listadoDeSeleccion("Mi Personal (SIM)", "Otros", "Tono ocupado");  
+		tech.clickOnButtons();
+		sleep(4000);
+		tech.verificarCaso();
+		driver.switchTo().frame(cambioFrameByID.getFrameForElement(driver, By.id("srchErrorDiv_Case")));
+		tech.getCaseBody().click();		
+		sleep(5000);
+		driver.switchTo().frame(cambioFrameByID.getFrameForElement(driver, By.className("optionLabel")));
+		List<WebElement>menu=tech.getOptionContainer();
+		menu.get(4).click();
+		assertTrue(tech.getVerificar().getText().equalsIgnoreCase("Telecom"));
+	}
+	
+	@Test(groups= {"Fase4","TechnicalCare", "Autogestion"})
+	public void TS73927_CRM_Fase_4_Technical_Care_CSR_Autogestion_Verificacion_de_que_la_autogestion_del_Canal_Mi_Personal_SIM_servicio_Promociones_corresponde_a_un_servicio_de_Telecom() throws Exception {
+		BasePage cambioFrameByID=new BasePage();
+		driver.switchTo().frame(cambioFrameByID.getFrameForElement(driver, By.id("ChannelSelection")));
+		TechQuelysPage tech = new TechQuelysPage(driver);
+		tech.listadoDeSeleccion("Mi Personal (SIM)", "Promociones", "Tono ocupado");  
+		tech.clickOnButtons();
+		sleep(4000);
+		tech.verificarCaso();
+		driver.switchTo().frame(cambioFrameByID.getFrameForElement(driver, By.id("srchErrorDiv_Case")));
+		tech.getCaseBody().click();		
+		sleep(5000);
+		driver.switchTo().frame(cambioFrameByID.getFrameForElement(driver, By.className("optionLabel")));
+		List<WebElement>menu=tech.getOptionContainer();
+		menu.get(4).click();
+		assertTrue(tech.getVerificar().getText().equalsIgnoreCase("Telecom"));
+	}
+	
+	
+	
+	@Test(groups= {"Fase4","TechnicalCare", "Autogestion"})
+	public void TS73916_CRM_Fase_4_Technical_Care_CSR_Autogestion_Verificacion_de_que_la_autogestion_del_Canal_USSD_servicio_111_ABM_Números_Amigos_corresponde_a_un_servicio_de_Telecom() throws Exception {
+		BasePage cambioFrameByID=new BasePage();
+		driver.switchTo().frame(cambioFrameByID.getFrameForElement(driver, By.id("ChannelSelection")));
+		TechQuelysPage tech = new TechQuelysPage(driver);
+		tech.listadoDeSeleccion("USSD", "*111# (ABM Números Amigos)", "Otros");  
+		tech.clickOnButtons();
+		sleep(4000);
+		tech.verificarCaso();
+		driver.switchTo().frame(cambioFrameByID.getFrameForElement(driver, By.id("srchErrorDiv_Case")));
+		tech.getCaseBody().click();		
+		sleep(5000);
+		driver.switchTo().frame(cambioFrameByID.getFrameForElement(driver, By.className("optionLabel")));
+		List<WebElement>menu=tech.getOptionContainer();
+		menu.get(4).click();
+		assertTrue(tech.getVerificar().getText().equalsIgnoreCase("Telecom"));
+	}
+	
+	@Test(groups= {"Fase4","TechnicalCare", "Autogestion"})
+	public void TS73920_CRM_Fase_4_Technical_Care_CSR_Autogestion_Verificacion_de_que_la_autogestion_del_Canal_USSD_servicio_111_Consulta_de_Recargas_corresponde_a_un_servicio_de_Telecom() throws Exception {
+		BasePage cambioFrameByID=new BasePage();
+		driver.switchTo().frame(cambioFrameByID.getFrameForElement(driver, By.id("ChannelSelection")));
+		TechQuelysPage tech = new TechQuelysPage(driver);
+		tech.listadoDeSeleccion("USSD", "*111# (Consulta de Recargas)", "Otros");  
+		tech.clickOnButtons();
+		sleep(4000);
+		tech.verificarCaso();
+		driver.switchTo().frame(cambioFrameByID.getFrameForElement(driver, By.id("srchErrorDiv_Case")));
+		tech.getCaseBody().click();		
+		sleep(5000);
+		driver.switchTo().frame(cambioFrameByID.getFrameForElement(driver, By.className("optionLabel")));
+		List<WebElement>menu=tech.getOptionContainer();
+		menu.get(4).click();
+		assertTrue(tech.getVerificar().getText().equalsIgnoreCase("Telecom"));
+	}
+	
+	@Test(groups= {"Fase4","TechnicalCare", "Autogestion"})
+	public void TS73919_CRM_Fase_4_Technical_Care_CSR_Autogestion_Verificacion_de_que_la_autogestion_del_Canal_USSD_servicio_111_Consulta_de_Saldo_corresponde_a_un_servicio_de_Telecom() throws Exception {
+		BasePage cambioFrameByID=new BasePage();
+		driver.switchTo().frame(cambioFrameByID.getFrameForElement(driver, By.id("ChannelSelection")));
+		TechQuelysPage tech = new TechQuelysPage(driver);
+		tech.listadoDeSeleccion("USSD", "*111# (Consulta de Saldo)", "Otros");  
+		tech.clickOnButtons();
+		sleep(4000);
+		tech.verificarCaso();
+		driver.switchTo().frame(cambioFrameByID.getFrameForElement(driver, By.id("srchErrorDiv_Case")));
+		tech.getCaseBody().click();		
+		sleep(5000);
+		driver.switchTo().frame(cambioFrameByID.getFrameForElement(driver, By.className("optionLabel")));
+		List<WebElement>menu=tech.getOptionContainer();
+		menu.get(4).click();
+		assertTrue(tech.getVerificar().getText().equalsIgnoreCase("Telecom"));
+	}
+	
+	@Test(groups= {"Fase4","TechnicalCare", "Autogestion"})
+	public void TS73915_CRM_Fase_4_Technical_Care_CSR_Autogestion_Verificacion_de_que_la_autogestion_del_Canal_USSD_servicio_111_Consulta_Puntos_Club_corresponde_a_un_servicio_de_Telecom() throws Exception {
+		BasePage cambioFrameByID=new BasePage();
+		driver.switchTo().frame(cambioFrameByID.getFrameForElement(driver, By.id("ChannelSelection")));
+		TechQuelysPage tech = new TechQuelysPage(driver);
+		tech.listadoDeSeleccion("USSD", "*111# (Consulta Puntos Club)", "Otros");  
+		tech.clickOnButtons();
+		sleep(4000);
+		tech.verificarCaso();
+		driver.switchTo().frame(cambioFrameByID.getFrameForElement(driver, By.id("srchErrorDiv_Case")));
+		tech.getCaseBody().click();		
+		sleep(5000);
+		driver.switchTo().frame(cambioFrameByID.getFrameForElement(driver, By.className("optionLabel")));
+		List<WebElement>menu=tech.getOptionContainer();
+		menu.get(4).click();
+		assertTrue(tech.getVerificar().getText().equalsIgnoreCase("Telecom"));
+	}
+	
+	@Test(groups= {"Fase4","TechnicalCare", "Autogestion"})
+	public void TS73917_CRM_Fase_4_Technical_Care_CSR_Autogestion_Verificacion_de_que_la_autogestion_del_Canal_USSD_servicio_111_Consulta_Activación_de_Packs_corresponde_a_un_servicio_de_Telecom() throws Exception {
+		BasePage cambioFrameByID=new BasePage();
+		driver.switchTo().frame(cambioFrameByID.getFrameForElement(driver, By.id("ChannelSelection")));
+		TechQuelysPage tech = new TechQuelysPage(driver);
+		tech.listadoDeSeleccion("USSD", "*111# (Consulta, Activación de Packs)", "Otros");  
+		tech.clickOnButtons();
+		sleep(4000);
+		tech.verificarCaso();
+		driver.switchTo().frame(cambioFrameByID.getFrameForElement(driver, By.id("srchErrorDiv_Case")));
+		tech.getCaseBody().click();		
+		sleep(5000);
+		driver.switchTo().frame(cambioFrameByID.getFrameForElement(driver, By.className("optionLabel")));
+		List<WebElement>menu=tech.getOptionContainer();
+		menu.get(4).click();
+		assertTrue(tech.getVerificar().getText().equalsIgnoreCase("Telecom"));
+	}
+	
+	@Test(groups= {"Fase4","TechnicalCare", "Autogestion"})
+	public void TS73921_CRM_Fase_4_Technical_Care_CSR_Autogestion_Verificacion_de_que_la_autogestion_del_Canal_USSD_servicio_111_Detalle_de_Consumo_corresponde_a_un_servicio_de_Telecom() throws Exception {
+		BasePage cambioFrameByID=new BasePage();
+		driver.switchTo().frame(cambioFrameByID.getFrameForElement(driver, By.id("ChannelSelection")));
+		TechQuelysPage tech = new TechQuelysPage(driver);
+		tech.listadoDeSeleccion("USSD", "*111# (Detalle de Consumo)", "Otros");  
+		tech.clickOnButtons();
+		sleep(4000);
+		tech.verificarCaso();
+		driver.switchTo().frame(cambioFrameByID.getFrameForElement(driver, By.id("srchErrorDiv_Case")));
+		tech.getCaseBody().click();		
+		sleep(5000);
+		driver.switchTo().frame(cambioFrameByID.getFrameForElement(driver, By.className("optionLabel")));
+		List<WebElement>menu=tech.getOptionContainer();
+		menu.get(4).click();
+		assertTrue(tech.getVerificar().getText().equalsIgnoreCase("Telecom"));
+	}
+	
+	
+	@Test(groups= {"Fase4","TechnicalCare", "Autogestion"})
+	public void TS73914_CRM_Fase_4_Technical_Care_CSR_Autogestion_Verificacion_de_que_la_autogestion_del_Canal_USSD_servicio_111_Consulta_Promociones_y_Beneficios_corresponde_a_un_servicio_de_Telecom() throws Exception {
+		BasePage cambioFrameByID=new BasePage();
+		driver.switchTo().frame(cambioFrameByID.getFrameForElement(driver, By.id("ChannelSelection")));
+		TechQuelysPage tech = new TechQuelysPage(driver);
+		tech.listadoDeSeleccion("USSD", "*111# (Consulta Promociones y Beneficios)", "Otros");  
+		tech.clickOnButtons();
+		sleep(4000);
+		tech.verificarCaso();
+		driver.switchTo().frame(cambioFrameByID.getFrameForElement(driver, By.id("srchErrorDiv_Case")));
+		tech.getCaseBody().click();		
+		sleep(5000);
+		driver.switchTo().frame(cambioFrameByID.getFrameForElement(driver, By.className("optionLabel")));
+		List<WebElement>menu=tech.getOptionContainer();
+		menu.get(4).click();
+		assertTrue(tech.getVerificar().getText().equalsIgnoreCase("Telecom"));
+	}
+	
+	@Test(groups= {"Fase4","TechnicalCare", "Autogestion"})
+	public void TS73911_CRM_Fase_4_Technical_Care_CSR_Autogestion_Verificacion_de_que_la_autogestion_del_Canal_USSD_servicio_150_saldo_corresponde_a_un_servicio_de_Telecom() throws Exception {
+		BasePage cambioFrameByID=new BasePage();
+		driver.switchTo().frame(cambioFrameByID.getFrameForElement(driver, By.id("ChannelSelection")));
+		TechQuelysPage tech = new TechQuelysPage(driver);
+		tech.listadoDeSeleccion("USSD", "*150# (saldo)", "Otros");  
+		tech.clickOnButtons();
+		sleep(4000);
+		tech.verificarCaso();
+		driver.switchTo().frame(cambioFrameByID.getFrameForElement(driver, By.id("srchErrorDiv_Case")));
+		tech.getCaseBody().click();		
+		sleep(5000);
+		driver.switchTo().frame(cambioFrameByID.getFrameForElement(driver, By.className("optionLabel")));
+		List<WebElement>menu=tech.getOptionContainer();
+		menu.get(4).click();
+		assertTrue(tech.getVerificar().getText().equalsIgnoreCase("Telecom"));
+	}
+	
+	@Test(groups= {"Fase4","TechnicalCare", "Autogestion"})
+	public void TS73910_CRM_Fase_4_Technical_Care_CSR_Autogestion_Verificacion_de_que_la_autogestion_del_Canal_USSD_servicio_156_roaming_corresponde_a_un_servicio_de_Telecom() throws Exception {
+		BasePage cambioFrameByID=new BasePage();
+		driver.switchTo().frame(cambioFrameByID.getFrameForElement(driver, By.id("ChannelSelection")));
+		TechQuelysPage tech = new TechQuelysPage(driver);
+		tech.listadoDeSeleccion("USSD", "*156# (roaming)", "Otros");  
+		tech.clickOnButtons();
+		sleep(4000);
+		tech.verificarCaso();
+		driver.switchTo().frame(cambioFrameByID.getFrameForElement(driver, By.id("srchErrorDiv_Case")));
+		tech.getCaseBody().click();		
+		sleep(5000);
+		driver.switchTo().frame(cambioFrameByID.getFrameForElement(driver, By.className("optionLabel")));
+		List<WebElement>menu=tech.getOptionContainer();
+		menu.get(4).click();
+		assertTrue(tech.getVerificar().getText().equalsIgnoreCase("Telecom"));
 	}
 }
 
