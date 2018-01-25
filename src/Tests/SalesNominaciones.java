@@ -182,6 +182,29 @@ public class SalesNominaciones extends TestBase{
 		}
 		Assert.assertTrue(a);
 	}
+	
+	@Test(groups = "Sales")
+	public void TS95415_Nominacion_General_Verificar_envio_de_SMS_Nomi_Exitosa() {
+		ContactSearch contact = new ContactSearch(driver);
+		contact.searchContact("DNI", "10000019", "masculino");
+		contact.ingresarMail("asdads@gmail.com", "si");
+		contact.tipoValidacion("documento");
+		contact.subirArchivo("C:\\Users\\Nicolas\\Desktop\\descarga.jpg", "si");
+		List <WebElement> sms = driver.findElements(By.cssSelector(".slds-form-element__control.ng-scope"));
+		boolean a = false;
+		for (WebElement x : sms) {
+			if (x.getText().contains("SMS")) {
+				a = true;
+			}
+		}
+		Assert.assertTrue(a);
+	}
+	
+	@Test(groups = "Sales")
+	public void TS95282_Nominacion_General_Verifica_autocomplete_de_campos() {
+		//ContactSearch contact = new ContactSearch(driver);
+		//contact.searchContact("DNI", "10000019", "masculino");
+	}
 }
   	//DONDE APARECEN LAS LINEAS PREPAGAS DEL CLIENTE
 	
