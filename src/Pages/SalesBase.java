@@ -468,7 +468,20 @@ for(WebElement e: btns){
 	for(int i=0; i<valid.size();i++){
 		String value=valid.get(i).getAttribute("value");
 		if(value.equals(validacion)){
-			radio.get(i).click();
+			valid.get(i).click();
+			break;}}
+	try {Thread.sleep(3000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+	 driver.findElement(By.id("MethodSelection_nextBtn")).click();
+ }
+ 
+ public void seleccionarMetodoValidacion(String validacion){
+	try {Thread.sleep(15000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+	List<WebElement> valid =driver.findElements(By.id("MethodSelection"));
+	List<WebElement> radio = driver.findElements(By.cssSelector(".slds-radio--faux.ng-scope"));
+	for(WebElement UnV: valid){
+		System.out.println(UnV.getAttribute("value"));
+		if(UnV.getAttribute("value").equals(validacion)){
+			UnV.click();
 			break;}}
 	try {Thread.sleep(3000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 	 driver.findElement(By.id("MethodSelection_nextBtn")).click();
@@ -515,7 +528,6 @@ try{	driver.findElement(By.id("alert-ok-button")).click();	} catch (NoSuchElemen
 	driver.findElement(By.id("CityTypeAhead")).sendKeys(localidad);
 	try {Thread.sleep(10000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 	driver.findElement(By.id("CityTypeAhead")).sendKeys(Keys.ARROW_DOWN);
-	driver.findElement(By.id("CityTypeAhead")).sendKeys(Keys.ARROW_DOWN);
 	driver.findElement(By.id("CityTypeAhead")).sendKeys(Keys.ENTER);
 	driver.findElement(By.id("LegalStreetTypeAhead")).sendKeys(calle);
 	try {Thread.sleep(10000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
@@ -543,7 +555,9 @@ try{	driver.findElement(By.id("alert-ok-button")).click();	} catch (NoSuchElemen
 	driver.findElement(By.id("PostalCodeTypeAhead")).sendKeys(Keys.ENTER);
 	try {Thread.sleep(10000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 	driver.findElement(By.id("NewPostalCodeName")).sendKeys(CP);
-
+	driver.findElement(By.id("btnSameAsLegalAddress")).click();
+	try {Thread.sleep(3000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+	driver.findElement(By.id("AccountData_nextBtn")).click();
  }
  
  
