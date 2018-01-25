@@ -72,7 +72,7 @@ public class SalesNominaciones extends TestBase{
 	}
 	
 	@Test(groups = "Sales") 
-	  public void TS76150_Nominacion_Argentino_Nominar_personas_mayores_a_16_anios_cliente_mayor_de_edad_con_linea_existente_plan_repro(){
+	  public void TS95215_Nominacion_Argentino_Nominar_personas_mayores_a_16_anios_cliente_mayor_de_edad_con_linea_existente_plan_repro(){
 		CustomerCare CC = new CustomerCare(driver);
 		ContactSearch contact = new ContactSearch(driver);
 		boolean b = false;
@@ -92,13 +92,12 @@ public class SalesNominaciones extends TestBase{
 	}
 	
 	@Test(groups = "Sales")
-	public void TS76149_Nominacion_Argentino_Nominar_personas_mayores_a_16_anios_cliente_menor_de_edad_sin_linea_existente_plan_repro(){
+	public void TS95213_Nominacion_Argentino_Nominar_personas_mayores_a_16_anios_cliente_mayor_de_edad_sin_linea_existente_plan_repro(){
 		CustomerCare CC = new CustomerCare(driver);
 		ContactSearch contact = new ContactSearch(driver);
 		boolean b = false;
 		contact.searchContact("DNI", "1600000", "femenino");
 		sleep(6000);
-		//driver.findElement(By.cssSelector(".slds-input.form-control.ng-pristine.ng-untouched.ng-valid.ng-empty")).sendKeys("menoredad@gmail.com");
 		CC.obligarclick(driver.findElement(By.id("Contact_nextBtn")));
 		sleep(3000);
 		List<WebElement> vali = driver.findElements(By.cssSelector(".slds-page-header__title.vlc-slds-page-header__title.slds-truncate.ng-binding"));
@@ -110,8 +109,40 @@ public class SalesNominaciones extends TestBase{
 		}
 		Assert.assertTrue(b);
 	}
+	
 	@Test(groups = "Sales")
-	public void TS75962_Nominacion_Argentino_Verificar_que_se_solicite_adjuntar_img_del_Doc_de_identidad(){
+	public void TS95214_Nominacion_Argentino_Nominar_personas_mayores_a_16_anios_cliente_menor_de_edad_sin_linea_existente_plan_repro(){
+		CustomerCare CC = new CustomerCare(driver);
+		ContactSearch contact = new ContactSearch(driver);
+		boolean b = false;
+		contact.searchContact("DNI", "16000001", "femenino");
+		sleep(6000);
+		driver.findElement(By.cssSelector(".slds-input.form-control.ng-pristine.ng-untouched.ng-valid.ng-empty")).sendKeys("menoredad@gmail.com");
+		driver.findElement(By.id("FirstName")).sendKeys("menor");
+		driver.findElement(By.id("LastName")).sendKeys("edad");
+		driver.findElement(By.id("Birthdate")).sendKeys("04/07/2017");
+		List<WebElement> erro = driver.findElements(By.cssSelector(".message.description.ng-binding.ng-scope"));
+		for(WebElement e : erro){
+			if(e.getText().toLowerCase().contains("fecha de nacimiento inv\u00e1lida")){
+				e.isDisplayed();
+				//System.out.println(e.getText());
+				b=true;
+			}
+		}
+		Assert.assertTrue(b);
+	}
+	
+	@Test(groups = "Sales")
+	public void TS95076_Nominacion_Argentino_Validar_cantidad_de_lineas(){
+		driver.navigate().back();
+		SalesBase SB = new SalesBase(driver);
+		sleep(3000);
+		SB.BuscarCuenta("DNI", "10000019");
+		WebElement lis = driver.findElement(By.id("tab-scoped-2")).findElement(By.tagName("div")).findElement(By.tagName("tbody"));
+		System.out.println(lis.getSize());
+	}
+	@Test(groups = "Sales")
+	public void TS95078_Nominacion_Argentino_Validar_metodo_Ident_por_DNI(){
 		ContactSearch contact = new ContactSearch(driver);
 		contact.searchContact("DNI", "10000019", "masculino");
 		sleep(5000);
@@ -208,11 +239,9 @@ public class SalesNominaciones extends TestBase{
 			}
 		}
 		Assert.assertTrue(a);
-		
 	}
-	
 }
-  	//DONDE APARECEN LAS LINEAS PREPAGAS DEL CLIENTE
+
 	
 
 	
