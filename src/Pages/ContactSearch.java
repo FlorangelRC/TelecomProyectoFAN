@@ -10,63 +10,74 @@ import org.openqa.selenium.support.How;
 import org.openqa.selenium.support.PageFactory;
 
 public class ContactSearch extends BasePage {
-	
-final WebDriver driver;
-	
-	@FindBy (how = How.ID, using = "DocumentTypeSearch")
+
+	final WebDriver driver;
+
+	@FindBy(how = How.ID, using = "DocumentTypeSearch")
 	private WebElement documentType;
-	
-	@FindBy (how = How.ID, using = "DocumentInputSearch")
+
+	@FindBy(how = How.ID, using = "DocumentInputSearch")
 	private WebElement document;
-	
-	@FindBy (how = How.CSS, using = ".slds-radio--faux.ng-scope")
+
+	@FindBy(how = How.CSS, using = ".slds-radio--faux.ng-scope")
 	private List<WebElement> gender;
-	
-	@FindBy (how = How.ID, using = "ContactInfo_nextBtn")
+
+	@FindBy(how = How.ID, using = "ContactInfo_nextBtn")
 	private WebElement next;
-	
-	@FindBy (how = How.CSS, using = ".vlc-slds-button--tertiary.ng-binding.ng-scope")
+
+	@FindBy(how = How.CSS, using = ".vlc-slds-button--tertiary.ng-binding.ng-scope")
 	private WebElement cancel;
-	
-public ContactSearch(WebDriver driver){
+
+	public ContactSearch(WebDriver driver) {
 		this.driver = driver;
-        PageFactory.initElements(driver, this);
-}
-
-public void searchContact(String docType, String docValue, String genero) {
-	try {Thread.sleep(10000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
-
-	setSimpleDropdown(documentType, docType);
-	document.click();
-	document.sendKeys(docValue);
-	try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
-
-	switch(genero) {
-	case "femenino":
-		gender.get(0).click();
-		break;
-	case "masculino":
-		gender.get(1).click();
-		break;
+		PageFactory.initElements(driver, this);
 	}
-	driver.findElement(By.cssSelector(".OSradioButton.ng-scope.only-buttom")).click();
-}
 
-public void DNI(String DNI)
-{
-	document.sendKeys(DNI);
-}
-public void sex(String genero){
-	switch(genero) {
-	case "femenino":
-		gender.get(0).click();
-		break;
-	case "masculino":
-		gender.get(1).click();
-		break;
+	public void searchContact(String docType, String docValue, String genero) {
+		try {Thread.sleep(10000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		setSimpleDropdown(documentType, docType);
+		document.click();
+		document.sendKeys(docValue);
+		try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		switch (genero) {
+		case "femenino":
+			gender.get(0).click();
+			break;
+		case "masculino":
+			gender.get(1).click();
+			break;
+		}
+		driver.findElement(By.cssSelector(".OSradioButton.ng-scope.only-buttom")).click();
+		try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 	}
-	
-}
 
+	public void DNI(String DNI) {
+		document.sendKeys(DNI);
+	}
 
+	public void sex(String genero) {
+		switch (genero) {
+		case "femenino":
+			gender.get(0).click();
+			break;
+		case "masculino":
+			gender.get(1).click();
+			break;
+		}
+	}
+
+	public void ingresarMail(String mail, String continuar) {
+		driver.findElement(By.cssSelector(".slds-input.form-control.ng-pristine.ng-untouched.ng-valid.ng-empty")).click();
+		try {Thread.sleep(2000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		driver.findElement(By.xpath("//*[@id=\"EmailSelectableItems\"]/div/ng-include/div/ng-form/div[1]/div[1]/input")).sendKeys(mail);
+		switch (continuar) {
+		case "si":
+			try {Thread.sleep(2000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+			driver.findElement(By.id("Contact_nextBtn")).click();
+			break;
+		case "no":
+			//Nada
+		}
+		try {Thread.sleep(7000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+	}
 }
