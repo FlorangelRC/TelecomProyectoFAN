@@ -1290,7 +1290,7 @@ public class Sales extends TestBase {
 	 	SalesBase SB = new SalesBase(driver);
 	 	BasePage dni = new BasePage(driver);
 	 	SB.BtnCrearNuevoCliente();
-	 	dni.setSimpleDropdown(driver.findElement(By.id("DocumentTypeSearch")),"DNI");
+	 	/*dni.setSimpleDropdown(driver.findElement(By.id("DocumentTypeSearch")),"DNI");
 		driver.findElement(By.id("DocumentInputSearch")).click();
 		driver.findElement(By.id("DocumentInputSearch")).sendKeys("1235591");
 		List<WebElement> gen = driver.findElements(By.cssSelector(".slds-radio.ng-scope"));
@@ -1304,50 +1304,43 @@ public class Sales extends TestBase {
 	    WebElement in = driver.findElements(By.cssSelector(".slds-form-element__control.slds-input-has-icon.slds-input-has-icon--right")).get(2).findElement(By.tagName("input"));
 	    sleep (5000);	
 	   Assert.assertTrue(mail.getText().toLowerCase().equals("e-mail"));
-	   Assert.assertTrue(in.getAttribute("value").isEmpty());
+	   Assert.assertTrue(in.getAttribute("value").isEmpty());*/
 	        
 	    //System.out.println(in.getAttribute("value"));
 	    //System.out.println(mail.getText());
 	    	}
 	 	
-	 	@Test(groups = "Sales") 
-		  public void TS76116_Alta_Contacto_Creacion_Verificar_creacion_de_cliente(){
-			SalesBase SB = new SalesBase(driver);
-			SB.BuscarCuenta(DNI, "1111111");
-			SB.acciondecontacto("nueva cuenta");
-			sleep(5000);
-			List<WebElement> dat = driver.findElements(By.cssSelector(".slds-page-header__title.vlc-slds-page-header__title.slds-truncate.ng-binding"));
-			boolean as = false;
-			for(WebElement d: dat){
-				if (d.getText().toLowerCase().contains("datos de la cuenta")){
-					as=true;
-					System.out.println(d.getText());
-				}
+	@Test(groups = "Sales")
+	public void TS76116_Alta_Contacto_Creacion_Verificar_creacion_de_cliente() {
+		SalesBase SB = new SalesBase(driver);
+		SB.BuscarCuenta(DNI, "1111111");
+		SB.acciondecontacto("nueva cuenta");
+		sleep(5000);
+		List<WebElement> dat = driver.findElements(By.cssSelector(".slds-page-header__title.vlc-slds-page-header__title.slds-truncate.ng-binding"));
+		boolean as = false;
+		for (WebElement d : dat) {
+			if (d.getText().toLowerCase().contains("datos de la cuenta")) {
+				as = true;
 			}
-			Assert.assertTrue(as);
-	 	}
-	 	
-		@Test(groups = "Sales") 
-		  public void TS76117_Alta_Contacto_Creacion_Verificar_creacion_de_cliente(){
-			SalesBase SB = new SalesBase(driver);
-			SB.BuscarCuenta(DNI, "1111111");
-			SB.acciondecontacto("nueva cuenta");
-			sleep(10000);
-		   //ArrayList<String> allTabs = new ArrayList<String>(driver.getWindowHandles());  
-		   //driver.switchTo().window(allTabs.get(1));
-		   WebElement telalt = driver.findElement(By.id("AlternativePhone"));
-		   //telalt.sendKeys("1165485486");
-		   sleep(3000);
-		   Assert.assertTrue(telalt.isDisplayed());
-		  // System.out.println(telalt.getAttribute("value"));
-		   List<WebElement> sdf = driver.findElements(By.cssSelector(".slds-form-element__control"));
-		   for(WebElement s : sdf){
-			  if( s.getText().contains("El cliente quiere ser contactado por")){
-				  System.out.println(s.getText());
-				 Assert.assertTrue(s.isDisplayed());
-			  }
-		   }
 		}
+		Assert.assertTrue(as);
+	}
+	 	
+	@Test(groups = "Sales")
+	public void TS76117_Alta_Contacto_Creacion_Verificar_creacion_de_cliente() {
+		SalesBase SB = new SalesBase(driver);
+		SB.BuscarCuenta(DNI, "1111111");
+		SB.acciondecontacto("nueva cuenta");
+		WebElement telalt = driver.findElement(By.id("AlternativePhone"));
+		sleep(3000);
+		Assert.assertTrue(telalt.isDisplayed());
+		List<WebElement> sdf = driver.findElements(By.cssSelector(".slds-form-element__control"));
+		for (WebElement s : sdf) {
+			if (s.getText().contains("El cliente quiere ser contactado por")) {
+				Assert.assertTrue(s.isDisplayed());
+			}
+		}
+	}
 }
 
 
