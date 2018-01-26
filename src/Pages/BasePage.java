@@ -34,9 +34,9 @@ public class BasePage {
 	}
 	
 	public BasePage(WebDriver newDriver) {
-		System.out.println(newDriver.getCurrentUrl());
+		//System.out.println(newDriver.getCurrentUrl());
 		this.driver = newDriver;
-		System.out.println(this.driver.getCurrentUrl());
+		//System.out.println(this.driver.getCurrentUrl());
 	}
 	
 	public void setSimpleDropdown(WebElement element, String value) {
