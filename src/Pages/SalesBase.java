@@ -477,14 +477,17 @@ for(WebElement e: btns){
  public void seleccionarMetodoValidacion(String validacion){
 	try {Thread.sleep(15000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 	List<WebElement> valid =driver.findElements(By.id("MethodSelection"));
-	List<WebElement> radio = driver.findElements(By.cssSelector(".slds-radio--faux.ng-scope"));
+	List<WebElement> radio = driver.findElement(By.id("MethodSelection|0")).findElements(By.cssSelector(".slds-radio--faux.ng-scope"));
+	int i = -1;
 	for(WebElement UnV: valid){
 		System.out.println(UnV.getAttribute("value"));
+		i++;
 		if(UnV.getAttribute("value").equals(validacion)){
-			UnV.click();
+			((JavascriptExecutor)driver).executeScript("window.scrollTo(0,"+radio.get(i).getLocation().y+")");
+			radio.get(i).click();
 			break;}}
 	try {Thread.sleep(3000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
-	 driver.findElement(By.id("MethodSelection_nextBtn")).click();
+	 driver.findElement(By.id("ValidationMethod_nextBtn")).click();
  }
  
  public void subirdoc(){

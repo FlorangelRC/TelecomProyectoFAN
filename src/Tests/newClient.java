@@ -5,6 +5,7 @@ import static org.testng.Assert.assertFalse;
 import static org.testng.Assert.assertTrue;
 
 import java.sql.Driver;
+import java.util.Random;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
@@ -21,6 +22,7 @@ import org.testng.annotations.BeforeTest;
 import org.testng.annotations.Test;
 
 import Pages.ContactSearch;
+import Pages.CustomerCare;
 import Pages.SalesBase;
 import Pages.ValidationMethodSelection;
 import Pages.setConexion;
@@ -34,7 +36,6 @@ public class newClient extends TestBase {
 	protected  WebDriverWait wait;
 	private WebDriver driver;
 	String plan="Plan con tarjeta";
-
 	String Name = "lolaasd";
 	String LastName = "velasd";
 	String DateOfBirthday = "07/06/1987";
@@ -80,40 +81,43 @@ public class newClient extends TestBase {
 	
 		try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 	}
-	/*@AfterMethod
+	@AfterMethod
 	public void tearDown() throws Exception {
 		login1(driver);
 		IngresarCred(driver);
-	}*/
+	}
 	
 	@BeforeMethod(groups="Fase2")
 	public void setup() throws Exception {
-		
+		BasePage Bp= new BasePage();
+		CustomerCare CC = new CustomerCare(driver);
 		try {Thread.sleep(4000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 		if (!driver.findElement(By.id("tsidLabel")).getText().equals("Ventas")){
 			driver.findElement(By.id("tsidLabel")).click();
 			driver.findElement(By.xpath("//a[@href=\"/home/home.jsp?tsid=02u41000000QWha\"]")).click();
 		}
-		
-		driver.findElement(By.xpath("//a[@href=\'https://crm--SIT--c.cs14.visual.force.com/apex/taClientSearch']")).click();
-
-		try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
-		 driver.findElement(By.id("dataInput_nextBtn")).click();
-			try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
-
+		driver.findElement(By.id("sidebarDiv")).findElement(By.tagName("a")).click();
+		sleep(8000);
 	  if(i==0) {
 		  i++;
 		try {Thread.sleep(3000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 		ContactSearch conts = new ContactSearch(driver);
 		try {Thread.sleep(6000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
-		conts.searchContact(DNI, DocValue[4], "femenino");
-		conts.sex("femenino");
-		driver.findElement(By.id("ContactSearch_nextBtn")).click();
+		Random aleatorio = new Random(System.currentTimeMillis());
+		aleatorio.setSeed(System.currentTimeMillis());
+		int intAletorio = aleatorio.nextInt(8999999)+1000000;
+		Bp.setSimpleDropdown(driver.findElement(By.id("SearchClientDocumentType")),"DNI");
+		driver.findElement(By.id("SearchClientDocumentNumber")).sendKeys(Integer.toString(intAletorio));
+		driver.findElement(By.id("SearchClientsDummy")).click();
+		sleep(5000);
+		CC.obligarclick(driver.findElement(By.id("rdbNewClient0")).findElement(By.tagName("input")));
+		//conts.searchContact(DNI, DocValue[4], "femenino");
+		//conts.sex("femenino");
+		//driver.findElement(By.id("ContactSearch_nextBtn")).click();
 		try {Thread.sleep(8000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 		if(driver.findElement(By.id("FirstName")).getAttribute("value").isEmpty()) {
 		ContactInformation page = new ContactInformation(driver);
 		page.setContactInformation(Name, LastName, DateOfBirthday);}
-
 		try {Thread.sleep(6000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 		WebElement BenBoton = driver.findElement(By.id("Contact_nextBtn"));
 		((JavascriptExecutor)driver).executeScript("window.scrollTo(0,"+BenBoton.getLocation().y+")");
