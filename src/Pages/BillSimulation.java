@@ -25,7 +25,7 @@ public class BillSimulation extends BasePage {
 	
 public BillSimulation(WebDriver driver) {
 		this.driver = driver;
-		wait = new WebDriverWait (driver,10);
+		wait = new WebDriverWait (driver,15);
 	    PageFactory.initElements(driver, this);	
 }
 
