@@ -6,6 +6,7 @@ import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 import java.util.Set;
 import java.util.concurrent.TimeUnit;
 
@@ -531,7 +532,6 @@ try{	driver.findElement(By.id("alert-ok-button")).click();	} catch (NoSuchElemen
 	driver.findElement(By.id("CityTypeAhead")).sendKeys(localidad);
 	try {Thread.sleep(10000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 	driver.findElement(By.id("CityTypeAhead")).sendKeys(Keys.ARROW_DOWN);
-	driver.findElement(By.id("CityTypeAhead")).sendKeys(Keys.ARROW_DOWN);
 	driver.findElement(By.id("CityTypeAhead")).sendKeys(Keys.ENTER);
 	driver.findElement(By.id("LegalStreetTypeAhead")).sendKeys(calle);
 	try {Thread.sleep(10000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
@@ -559,7 +559,9 @@ try{	driver.findElement(By.id("alert-ok-button")).click();	} catch (NoSuchElemen
 	driver.findElement(By.id("PostalCodeTypeAhead")).sendKeys(Keys.ENTER);
 	try {Thread.sleep(10000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 	driver.findElement(By.id("NewPostalCodeName")).sendKeys(CP);
-
+	driver.findElement(By.id("btnSameAsLegalAddress")).click();
+	try {Thread.sleep(3000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+	driver.findElement(By.id("AccountData_nextBtn")).click();
  }
  
  
@@ -621,9 +623,23 @@ try{	driver.findElement(By.id("alert-ok-button")).click();	} catch (NoSuchElemen
 	
 	public void BtnCrearNuevoCliente(){
 		try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
-		((JavascriptExecutor)driver).executeScript("window.scrollTo(0,"+driver.findElement(By.id("dataInput_nextBtn")).getLocation().y+")");
-		driver.findElement(By.id("dataInput_nextBtn")).click();
-		try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		BasePage dni = new BasePage(driver);
+		Random aleatorio = new Random(System.currentTimeMillis());
+		aleatorio.setSeed(System.currentTimeMillis());
+		int intAleatorio = aleatorio.nextInt(8999999)+1000000;
+		dni.setSimpleDropdown(driver.findElement(By.id("SearchClientDocumentType")),"DNI");
+		driver.findElement(By.id("SearchClientDocumentNumber")).click();
+		driver.findElement(By.id("SearchClientDocumentNumber")).sendKeys(Integer.toString(intAleatorio));
+		driver.findElement(By.id("SearchClientsDummy")).click();
+		try {Thread.sleep(3000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		List <WebElement> cc = driver.findElements(By.cssSelector(".slds-form-element__label.ng-binding"));
+		for (WebElement x : cc) {
+			if (x.getText().toLowerCase().contains("+ crear nuevo cliente")) {
+				x.click();
+				break;
+			}
+		}
+		try {Thread.sleep(7000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 	}
 	
 	
@@ -717,5 +733,5 @@ try{	driver.findElement(By.id("alert-ok-button")).click();	} catch (NoSuchElemen
 		}
  }
 
- 
+ //asd
 
