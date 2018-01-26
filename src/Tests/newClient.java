@@ -5,6 +5,7 @@ import static org.testng.Assert.assertFalse;
 import static org.testng.Assert.assertTrue;
 
 import java.sql.Driver;
+import java.util.List;
 import java.util.Random;
 
 import org.openqa.selenium.By;
@@ -110,14 +111,23 @@ public class newClient extends TestBase {
 		driver.findElement(By.id("SearchClientDocumentNumber")).sendKeys(Integer.toString(intAletorio));
 		driver.findElement(By.id("SearchClientsDummy")).click();
 		sleep(5000);
-		CC.obligarclick(driver.findElement(By.id("rdbNewClient0")).findElement(By.tagName("input")));
+		List <WebElement> cc = driver.findElements(By.cssSelector(".slds-form-element__label.ng-binding"));
+		for (WebElement x : cc) {
+			if (x.getText().toLowerCase().contains("+ crear nuevo cliente")) {
+				x.click();
+				break;
+			}
+		}
+		sleep(5000);
+		driver.findElement(By.cssSelector(".slds-radio--faux.ng-scope")).click();
 		//conts.searchContact(DNI, DocValue[4], "femenino");
 		//conts.sex("femenino");
 		//driver.findElement(By.id("ContactSearch_nextBtn")).click();
 		try {Thread.sleep(8000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 		if(driver.findElement(By.id("FirstName")).getAttribute("value").isEmpty()) {
-		ContactInformation page = new ContactInformation(driver);
-		page.setContactInformation(Name, LastName, DateOfBirthday);}
+			ContactInformation page = new ContactInformation(driver);
+			page.setContactInformation(Name, LastName, DateOfBirthday);
+		}
 		try {Thread.sleep(6000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 		WebElement BenBoton = driver.findElement(By.id("Contact_nextBtn"));
 		((JavascriptExecutor)driver).executeScript("window.scrollTo(0,"+BenBoton.getLocation().y+")");

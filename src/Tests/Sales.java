@@ -135,12 +135,12 @@ public class Sales extends TestBase {
 	public void TS6965_Verificar_que_el_campo_Numero_de_documento_no_tenga_menos_de_7_digitos()	{
 		boolean a = false;
 		SalesBase SB = new SalesBase(driver);
-		SB.BuscarAvanzada(nombre, apellido, "", "", "");
+		/*SB.BuscarAvanzada(nombre, apellido, "", "", "");
 		CustomerCare CC = new CustomerCare(driver);
-		CC.obligarclick(driver.findElement(By.id("dataInput_nextBtn")));
+		CC.obligarclick(driver.findElement(By.id("dataInput_nextBtn")));*/
 		try {Thread.sleep(10000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 		ContactSearch contact = new ContactSearch(driver);
-		contact.searchContact(DNI, "123", "femenino");
+		contact.searchContact(DNI, "123", "");
 		List <WebElement> error = driver.findElements(By.cssSelector(".description.ng-binding"));
 		for(WebElement e: error){
 			if(e.getText().equals("Longitud M\u00ednima De 7")){
@@ -210,7 +210,7 @@ public class Sales extends TestBase {
 	}
 	
 	@Test(groups={"sales", "AltaDeContacto"})
-	public void TS6967_Verificar_que_el_campo_tipo_de_documento_sea_obligatorio(){
+	public void TS6967_Verificar_que_el_campo_tipo_de_documento_sea_obligatorio(){//por cambios en el sistema, no se puede verificar
 		boolean a= false;
 		SalesBase SB = new SalesBase(driver);
 		SB.BuscarAvanzada(nombre, apellido, "", "", "");
@@ -250,7 +250,7 @@ public class Sales extends TestBase {
 			}
 	
 	@Test(groups={"sales", "AltaDeContacto"})
-	public void TS6966_Verificar_que_el_campo_Numero_de_Documento_sea_obligatorio(){
+	public void TS6966_Verificar_que_el_campo_Numero_de_Documento_sea_obligatorio(){//por cambios en el sistema no se puede validar
 		boolean a= false;
 		SalesBase SB = new SalesBase(driver);
 		SB.BuscarAvanzada(nombre, apellido, "", "", "");
@@ -272,7 +272,7 @@ public class Sales extends TestBase {
 	}
 	
 	@Test(groups={"sales", "AltaDeContacto"})
-	public void TS6914_Ingresar_mas_de_9_caracteres_en_el_campo_Pasaporte(){
+	public void TS6914_Ingresar_mas_de_9_caracteres_en_el_campo_Pasaporte(){ //la longitud maxima es de 8
 		boolean a= false;
 		SalesBase SB = new SalesBase(driver);
 		SB.BuscarAvanzada(nombre, apellido, "", "", "");
@@ -292,7 +292,7 @@ public class Sales extends TestBase {
 	}
 	
 	@Test(groups={"sales", "AltaDeContacto"})
-	public void TS6915_Ingresar_menos_de_9_caracteres_en_el_pasaporte(){
+	public void TS6915_Ingresar_menos_de_9_caracteres_en_el_pasaporte(){//la nueva longitud minima es 7
 		boolean a= false;
 		SalesBase SB = new SalesBase(driver);
 		SB.BuscarAvanzada(nombre, apellido, "", "", "");
@@ -312,48 +312,46 @@ public class Sales extends TestBase {
 	
 	@Test(groups={"sales", "AltaDeContacto"})
 	public void TS6916_Ingresar_pasaporte_en_el_campo_Numero_de_Documento(){
-		String PASA = "123456789";
+		String PASA = "4651327";
+		boolean esta = false;
 		SalesBase SB = new SalesBase(driver);
-		SB.BuscarAvanzada(nombre, apellido, "", "", "");
-		CustomerCare CC = new CustomerCare(driver);
-		CC.obligarclick(driver.findElement(By.id("dataInput_nextBtn")));
-		try {Thread.sleep(10000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
-		ContactSearch contact = new ContactSearch(driver);
-		contact.searchContact("Pasaporte", PASA, "femenino");
-		try {Thread.sleep(1000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
-		String PASA2=driver.findElement(By.id("DocumentInputSearch")).getAttribute("value");
-		try {Thread.sleep(1000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
-		Assert.assertTrue(PASA.equals(PASA2));
-
+		SB.BuscarCuenta("Pasaporte", PASA);
+		assertTrue(driver.findElement(By.id("SearchClientDocumentNumber")).getAttribute("value").equals(PASA));
+		List <WebElement> cc = driver.findElements(By.cssSelector(".slds-form-element__label.ng-binding"));
+		for (WebElement x : cc) {
+			if (x.getText().toLowerCase().contains("+ crear nuevo cliente")) {
+				esta = true;
+				break;
+			}
+		}
+		assertTrue(esta);
 	}
 	
 	@Test(groups={"sales", "AltaDeContacto"})
 	public void TS6912_Ingresar_DNI_en_el_campo_Numero_de_Documento(){
-		String PASA = "1234567";
+		String DNI = "4651327";
+		boolean esta = false;
 		SalesBase SB = new SalesBase(driver);
-		SB.BuscarAvanzada(nombre, apellido, "", "", "");
-		CustomerCare CC = new CustomerCare(driver);
-		CC.obligarclick(driver.findElement(By.id("dataInput_nextBtn")));
-		try {Thread.sleep(10000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
-		ContactSearch contact = new ContactSearch(driver);
-		contact.searchContact(DNI, PASA, "femenino");
-		try {Thread.sleep(1000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
-		String PASA2=driver.findElement(By.id("DocumentInputSearch")).getAttribute("value");
-		try {Thread.sleep(1000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
-		Assert.assertTrue(PASA.equals(PASA2));
+		SB.BuscarCuenta("DNI", DNI);
+		assertTrue(driver.findElement(By.id("SearchClientDocumentNumber")).getAttribute("value").equals(DNI));
+		List <WebElement> cc = driver.findElements(By.cssSelector(".slds-form-element__label.ng-binding"));
+		for (WebElement x : cc) {
+			if (x.getText().toLowerCase().contains("+ crear nuevo cliente")) {
+				esta = true;
+				break;
+			}
+		}
+		assertTrue(esta);
 	}
 	
-	//@Test(groups={"sales", "AltaDeContacto"})
-	public void TS6911_CUITNumber(){
-		BasePage base = new BasePage();
+	@Test(groups={"sales", "AltaDeContacto"})
+	public void TS6911_Numero_De_Cuit_Con_Guiones(){
+		String CUIT = "22-35689987-4";
+		boolean esta = false;
 		SalesBase SB = new SalesBase(driver);
-		SB.BuscarAvanzada(nombre, apellido, "", "", "");
-		CustomerCare CC = new CustomerCare(driver);
-		CC.obligarclick(driver.findElement(By.id("dataInput_nextBtn")));
-		try {Thread.sleep(10000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
-		WebElement type = driver.findElement(By.id("DocumentType"));
-		base.setSimpleDropdown(type, "CUIT");
-		driver.findElement(By.id("CuitDocument")).sendKeys("22-35689987-4");
+		SB.BuscarCuenta("CUIT", CUIT);
+		driver.findElement(By.id("alert-container")).isDisplayed();
+		
 	}
 	
 	@Test(groups={"sales", "AltaDeContacto"})
@@ -935,8 +933,6 @@ public class Sales extends TestBase {
 		  WebElement ina = driver.findElement(By.id("tab-scoped-2__item"));
 		  Assert.assertTrue(ina.getText().equals("Cliente Inactivos"));
 		  try {Thread.sleep(10000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
-
-
 	}
 	
 	@Test(groups="Sales")
@@ -944,8 +940,6 @@ public class Sales extends TestBase {
 		SalesBase SB = new SalesBase(driver);
 		SB.gestiondeusuarios();
 		SB.validarperfil("Medina, Elena", "CC Venta y Atencion a Clientes");
-		
-		
 			
 	}
 	@Test(groups="Sales")
@@ -966,6 +960,8 @@ public class Sales extends TestBase {
 	public void TS38763_Perfiles_Verificar_creacion_de_perfil_Oficina_Logistica(){
 		SalesBase SB = new SalesBase(driver);
 		SB.gestiondeusuarios();
+		driver.findElements(By.className("listItemPad")).get(13).click();
+		sleep(4000);
 		SB.validarperfil("Sit, Nicolas", "Logistica B");
 			perfil="agente";
 			
@@ -977,9 +973,10 @@ public class Sales extends TestBase {
 		  List<WebElement> gst = driver.findElements(By.cssSelector(".slds-page-header__title.vlc-slds-page-header__title.slds-truncate.ng-binding"));
 		   for (WebElement e : gst){
 		    System.out.println(e.getText());
-		    if  (e.getText().equals("Gesti�n de clientes")){
+		    if  (e.getText().equals("Gesti\u00f3n de clientes")){
 		     f= true;}}
-		  Assert.assertTrue(f);}
+		  Assert.assertTrue(f);
+	}
 			
 	
 	@Test(groups="Sales")
@@ -994,27 +991,28 @@ public class Sales extends TestBase {
 		  Boolean f = false;
 		  List<WebElement> busqadv=driver.findElements(By.cssSelector(".slds-form-element__label.slds-clearfix.ng-scope"));
 		   for (WebElement e : busqadv){
-		    if  (e.getText().equals("B�squeda avanzada")){
-		     f= true;}}
-		  Assert.assertTrue(f);}
+		    if  (e.getText().equals("B\u00fasqueda avanzada")){
+		     f= true;
+		     }
+		    }
+		  Assert.assertTrue(f);
+		  }
 	
 	@Test(groups="Sales")
 	public void TS38792_Alta_Cuenta_Busqueda_Verificar_campos_de_la_busqueda_avanzada(){
 		SalesBase SB = new SalesBase(driver);
 		SB.BusquedaAvanzada();
 		SB.validarcamposbusqueda();
-			
 	}
+	
 	@Test(groups="Sales")
 	public void TS38793_Alta_Cuenta_Busqueda_Verificar_Nombre_y_Apellido_separado(){
 		SalesBase SB = new SalesBase(driver);
 		SB.BusquedaAvanzada();
-		SB.BuscarAvanzada("pepe","", "", "", "");
+		SB.BuscarAvanzada("pepeasd","argentoasd", "", "", "");
 		SB.validarespacio();
-		
-			
-		
 	}
+	
 	@Test(groups="Sales")
 	public void TS38803_Ventas_General_Verificar_visualizacion_de_boton_Continuar(){
 		SalesBase SB= new SalesBase(driver);
@@ -1034,13 +1032,18 @@ public class Sales extends TestBase {
 		SB.validarpasos();			
 	}
 	
-	
 	@Test(groups="Sales")
 	public void TS39641_Alta_Contacto_Busqueda_Verificar_que_se_recuerden_los_datos_de_busqueda(){
 		SalesBase SB= new SalesBase(driver);
-		SB.BuscarCuenta(DNI, NDNI);
-		SB.nuevocliente();
-		SB.validarnuevocliente(DNI, NDNI);
+		SB.BuscarCuenta(DNI, "5423156");
+		List <WebElement> cc = driver.findElements(By.cssSelector(".slds-form-element__label.ng-binding"));
+		for (WebElement x : cc) {
+			if (x.getText().toLowerCase().contains("+ crear nuevo cliente")) {
+				x.click();
+				break;
+			}
+		}
+		SB.validarnuevocliente(DNI, "5423156");
 	}
 	
 	@Test(groups="Sales")
