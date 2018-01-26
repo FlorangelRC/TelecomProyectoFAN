@@ -92,6 +92,14 @@ public class TestBase {
 			//driver.findElement(By.id("chooser")).click();
 	//	}
 	}
+	
+	public void loginMarketing(WebDriver driver) {
+		driver.get("https://crm--sit.cs14.my.salesforce.com/");
+		try {Thread.sleep(4000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+	    Login lLogin = new Login(driver);
+	    lLogin.ingresarMarketing();
+	}
+	
 	public void loginSCPAdmin(WebDriver driver) {
 	     driver.get("https://crm--uat2.cs92.my.salesforce.com");
 	     try {Thread.sleep(6000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}

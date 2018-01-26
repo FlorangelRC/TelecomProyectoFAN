@@ -30,8 +30,8 @@ public class Marketing_Mattu extends TestBase{
 	public void readySteady() throws Exception {
 		this.driver = setConexion.setupEze();
 		try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
-		//loginMarketing(driver);
-		login(driver);
+		loginMarketing(driver);
+		//login(driver);
 		try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 		driver.findElement(By.id("tsidLabel")).click();
 		WebElement wMenu = driver.findElement(By.id("tsid-menuItems"));
@@ -203,7 +203,7 @@ public class Marketing_Mattu extends TestBase{
 	}
 	
 	//-------------------------------------------------------------------------------------------------
-	//TCC = 
+	//TCC = 3
 	@Test(groups = "Marketing")
 	public void TS50001_Funcionamiento_boton_Baja_ABM_del_CP() {
 		Marketing mMenuABM = new Marketing(driver);
@@ -217,7 +217,7 @@ public class Marketing_Mattu extends TestBase{
 	}
 	
 	//-------------------------------------------------------------------------------------------------
-	//TCC = 
+	//TCC = 4
 	@Test(groups = "Marketing")
 	public void TS50009_Separacion_de_cuentas_Alta_CP() {
 		Marketing mMenuABM = new Marketing(driver);
@@ -238,7 +238,7 @@ public class Marketing_Mattu extends TestBase{
 	}
 	
 	//-------------------------------------------------------------------------------------------------
-	//TCC = 
+	//TCC = 5
 	@Test(groups = "Marketing")
 	public void TS50035_Separacion_Baja_CP() {
 		Marketing mMenuABM = new Marketing(driver);
@@ -259,7 +259,7 @@ public class Marketing_Mattu extends TestBase{
 	}
 	
 	//-------------------------------------------------------------------------------------------------
-	//TCC = 3
+	//TCC = 6
 	@Test(groups = "Marketing")
 	public void TS50013_Boton_Cancelar_Alta_CP() {
 		Marketing mMenuABM = new Marketing(driver);
@@ -274,7 +274,7 @@ public class Marketing_Mattu extends TestBase{
 	}
 	
 	//-------------------------------------------------------------------------------------------------
-	//TCC = 4
+	//TCC = 7
 	@Test(groups = "Marketing")
 	public void TS50014_Boton_Continuar_Alta_CP() {
 		Marketing mMenuABM = new Marketing(driver);
@@ -289,7 +289,7 @@ public class Marketing_Mattu extends TestBase{
 	}
 	
 	//-------------------------------------------------------------------------------------------------
-	//TCC = 
+	//TCC = 8
 	@Test(groups = "Marketing")
 	public void TS50037_Visualizar_cuentas_costumer_Baja_CP() {
 		Marketing mMenuABM = new Marketing(driver);
@@ -306,7 +306,7 @@ public class Marketing_Mattu extends TestBase{
 	}
 	
 	//-------------------------------------------------------------------------------------------------
-	//TCC = 
+	//TCC = 9
 	@Test(groups = "Marketing")
 	public void TS50038_Visualizar_cuentas_business_Baja_CP() {
 		Marketing mMenuABM = new Marketing(driver);
@@ -323,7 +323,7 @@ public class Marketing_Mattu extends TestBase{
 	}
 	
 	//-------------------------------------------------------------------------------------------------
-	//TCC = 
+	//TCC = 10
 	@Test(groups = "Marketing")
 	public void TS50043_Verificar_seleccion_del_motivo_otro_Baja_CP() {
 		Marketing mMenuABM = new Marketing(driver);
@@ -344,7 +344,7 @@ public class Marketing_Mattu extends TestBase{
 	}
 	
 	//-------------------------------------------------------------------------------------------------
-	//TCC = 
+	//TCC = 11
 	@Test(groups = "Marketing")
 	public void TS50044_Verificar_seleccion_del_motivo_otro_vacio_Baja_CP() {
 		Marketing mMenuABM = new Marketing(driver);
@@ -367,7 +367,7 @@ public class Marketing_Mattu extends TestBase{
 	}
 	
 	//-------------------------------------------------------------------------------------------------
-	//TCC = 5
+	//TCC = 12
 	@Test(groups = "Marketing")
 	public void TS50045_Visualizar_botones_Baja_CP() {
 		Marketing mMenuABM = new Marketing(driver);
@@ -382,7 +382,50 @@ public class Marketing_Mattu extends TestBase{
 	}
 	
 	//-------------------------------------------------------------------------------------------------
-	//TCC = 6
+	//TCC = 13
+	@Test(groups = "Marketing")
+	public void TS50055_No_visualizar_error_de_Mora_Alta_CP() {
+		Marketing mMenuABM = new Marketing(driver);
+		mMenuABM.ClubPersonal("alta");
+		try {Thread.sleep(10000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		BasePage cambioFrame=new BasePage();
+		driver.switchTo().defaultContent();
+		driver.switchTo().frame(cambioFrame.getFrameForElement(driver, By.cssSelector(".slds-form-element.vlc-flex.vlc-slds-text-block.vlc-slds-rte.ng-pristine.ng-valid.ng-scope")));
+		try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		WebElement wMessage = driver.findElement(By.cssSelector(".slds-form-element.vlc-flex.vlc-slds-text-block.vlc-slds-rte.ng-pristine.ng-valid.ng-scope"));
+		List<WebElement> lText = wMessage.findElements(By.tagName("p"));
+		try{
+			Assert.assertTrue(!lText.get(1).isEnabled());
+			Assert.assertTrue(false);
+		} catch (IndexOutOfBoundsException e) {
+			Assert.assertTrue(true);
+		}
+	}
+	
+	//-------------------------------------------------------------------------------------------------
+	//TCC = 14
+	@Test(groups = "Marketing")
+	public void TS50057_Visualizar_boton_Canje() {
+		Marketing mMenuABM = new Marketing(driver);
+		mMenuABM.ClubPersonal("alta");
+		BasePage cambioFrame=new BasePage();
+		driver.switchTo().defaultContent();
+		driver.switchTo().frame(cambioFrame.getFrameForElement(driver, By.cssSelector(".slds-input.actionSearch.ng-valid.ng-not-empty.ng-dirty.ng-valid-parse.ng-touched")));
+		driver.findElement(By.cssSelector(".slds-input.actionSearch.ng-valid.ng-not-empty.ng-dirty.ng-valid-parse.ng-touched")).clear();
+		List<WebElement> wGestiones = driver.findElements(By.cssSelector(".slds-button.slds-button--neutral.slds-truncate"));
+		boolean bCanjeIsDisplayed = false;
+		for (WebElement wAux2:wGestiones) {
+			WebElement wContenido = wAux2.findElement(By.cssSelector(".slds-text-body_regular.ta-button-font"));
+			if (wContenido.getText().toLowerCase().contains("canje")) {
+				bCanjeIsDisplayed = true;
+				break;
+			}
+		}
+		Assert.assertTrue(bCanjeIsDisplayed);
+	}
+		
+	//-------------------------------------------------------------------------------------------------
+	//TCC = 15
 	@Test(groups = "Marketing")
 	public void TS50060_Visualizar_boton_Solapa_CP() {
 		Assert.assertTrue(true);
@@ -391,7 +434,7 @@ public class Marketing_Mattu extends TestBase{
 	}
 	
 	//-------------------------------------------------------------------------------------------------
-	//TCC = 
+	//TCC = 16
 	@Test(groups = "Marketing")
 	public void TS50061_Funcionamiento_boton_Solapa_CP() {
 		Assert.assertTrue(true);
@@ -400,7 +443,7 @@ public class Marketing_Mattu extends TestBase{
 	}
 	
 	//-------------------------------------------------------------------------------------------------
-	//TCC = 
+	//TCC = 17
 	@Test(groups = "Marketing")
 	public void TS50062_Visualizar_Categoria_CP_Solapa_CP() {
 		//try {Thread.sleep(10000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
@@ -412,10 +455,13 @@ public class Marketing_Mattu extends TestBase{
 	}
 	
 	//-------------------------------------------------------------------------------------------------
-	//TCC = Check login to start
-	@Test(groups = "Marketing")
+	//TCC = 
+	//Check login to start
+	//https://crm--sit.cs14.my.salesforce.com/
+	//No podemos loguearnos de la forma que lo hace allí, porque pide verificación cada vez que abre el chrome
+	/*@Test(groups = "Marketing")
 	public void TS90286_Asignacion_de_Perfil_para_Aplicacion_Atributos() {
 		
-	}
+	}*/
 	
 }
