@@ -62,20 +62,18 @@ public class Sales extends TestBase {
 	String[] genero = {"masculino","femenino"};
 	String[] DocValue = {"52698550","3569874563","365","ssss"};
 	
-	//@AfterClass(groups={"sales", "AltaDeContacto"})
+	@AfterClass(groups={"sales", "AltaDeContacto"})
 	public void tearDown() {
 		driver.close();
 		driver.quit();
 	}
 	
-	//@AfterMethod(groups={"sales", "AltaDeContacto"})
+	@AfterMethod(groups={"sales", "AltaDeContacto"})
 	public void deslogin(){
 		try {Thread.sleep(10000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 		driver.get("https://crm--sit.cs14.my.salesforce.com/home/home.jsp?tsid=02u41000000QWha/");
 		try {Thread.sleep(10000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
-	SalesBase SB= new SalesBase(driver);
-		SB.borrarcuenta(nombre,apellido);
-		SB.borrarcontacto(apellido,nombre);
+	
 
 	}
 	
