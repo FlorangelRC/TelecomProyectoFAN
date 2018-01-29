@@ -11,7 +11,7 @@ import org.openqa.selenium.support.PageFactory;
 public class PaymentMethod extends BasePage{
 	final WebDriver driver;
 
-	@FindBy (how = How.ID, using = "SelectPM")
+	@FindBy (how = How.ID, using = "PaymentMethodRadio")
 	private List<WebElement> paymentMethod;
 	
 	@FindBy (how = How.CSS, using = ".vlc-slds-button--tertiary.ng-binding.ng-scope")

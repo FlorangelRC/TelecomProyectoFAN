@@ -99,9 +99,9 @@ public class Ta_CPQ extends BasePage {
 	}
 	
 	public void clickOnDelete() {
-		((JavascriptExecutor) driver).executeScript("arguments[0].click();", planButtons.get(3));
+		((JavascriptExecutor) driver).executeScript("arguments[0].click();", planButtons.get(1));
 		try {Thread.sleep(2000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
-		WebElement buttonDeteleFinish = driver.findElement(By.cssSelector(".slds-button.slds-button--destructive"));
+		//WebElement buttonDeteleFinish = driver.findElement(By.cssSelector(".slds-button.slds-button--destructive"));
 	}
 	
 	public Boolean isPlanPresent() {
