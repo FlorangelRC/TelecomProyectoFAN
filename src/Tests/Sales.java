@@ -1,4 +1,5 @@
 package Tests;
+
 import static org.testng.Assert.assertEquals;
 import static org.testng.Assert.assertFalse;
 import static org.testng.Assert.assertTrue;
@@ -1092,7 +1093,7 @@ public class Sales extends TestBase {
 		Assert.assertTrue(apel.getAttribute("value").equals("Generica"));
 	}
 
-	@Test(groups="Sales")    // rOtO
+	@Test(groups="Sales")
 	public void TS39658_Verificar_que_se_bonifique_el_costo_de_SIM_en_PlanPrepago() {
 		SalesBase SB = new SalesBase(driver);
 		SB.BuscarCuenta(DNI, "");
@@ -1107,6 +1108,7 @@ public class Sales extends TestBase {
 			}
 		}
 		List <WebElement> precio = driver.findElements(By.cssSelector(".slds-col.slds-shrink.slds-text-align--center"));
+		Assert.assertTrue(a);
 		Assert.assertTrue(precio.get(3).getText().contains("0,00"));
 	}
 	
@@ -1229,57 +1231,11 @@ public class Sales extends TestBase {
 		WebElement element = driver.findElement(By.className("textBlock"));
 		Assert.assertTrue(element.getText().contains("Cuenta Generica"));
 	}
-	 
-	 	@Test(groups = "Sales") 
-	  public void TS76116_Alta_Contacto_Creacion_Verificar_busqueda_modificacion_de_contacto(){
-	 		SalesBase SB = new SalesBase(driver);
-	 		 SB.BuscarCuenta(DNI, "1212125");
-	 	   // SB.crearnuevocliente("contacto", "modifica", nacimiento);
-	 	   sleep(15000);
-	 	  List<WebElement> gen = driver.findElements(By.cssSelector(".slds-page-header__title.slds-m-right--small.slds-truncate.slds-align-middle"));
-		    for(WebElement g:gen) {
-		    	Assert.assertTrue((g.getText().toLowerCase().equals("contacto, modifica")));
-		    	System.out.println(g.getText());
-		    	}
-		    driver.get("https://crm--sit.cs14.my.salesforce.com/home/home.jsp");
-		    driver.findElement(By.xpath("//a[@href=\'https://crm--sit--c.cs14.visual.force.com/apex/taClientSearch']")).click();
-		    SB.BuscarAvanzada("contacto", "modifica", "", "", "");
-		   List<WebElement> borra = driver.findElements(By.cssSelector(".slds-button.slds-button.slds-button--icon"));
-		   for(WebElement b : borra) {
-			  if(b.getText().equals("Ver Contacto")) {
-				  b.click();
-			  }
-		   }
-	 	sleep(15000);
-		ArrayList<String> allTabs = new ArrayList<String>(driver.getWindowHandles());  
-	    driver.switchTo().window(allTabs.get(1));
-	    WebElement btns = driver.findElement(By.id("topButtonRow"));
-	    btns.findElement(By.name("edit")).click();
-	    sleep(10000);
-	 	WebElement modi = driver.findElement(By.id("bodyCell"));
-	 	WebElement name = driver.findElement(By.id("name_lastcon2"));
-	 	Assert.assertTrue(modi.getText().contains("Modificaci�n de contacto"));
-	 	Assert.assertTrue(name.isEnabled());
-	 	WebElement btn = driver.findElement(By.id("topButtonRow"));
-	    btn.findElement(By.name("cancel")).click();
-	    sleep(10000);
-	    WebElement btndel = driver.findElement(By.id("topButtonRow"));
-		btndel.findElement(By.name("del")).click();
-		try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
-		 Alert alert = driver.switchTo().alert();
-		   alert.accept();
-			try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
-			driver.close();  
-		      driver.switchTo().window(allTabs.get(0));
-	 	}
-	 	
-
+	 	 	
 	 	@Test(groups = "Sales") 
 	  public void TS76138_Alta_Contacto_Creacion_Verificar_descripcion_al_dejar_mail_vacio(){
 	 	SalesBase SB = new SalesBase(driver);
-	 	BasePage dni = new BasePage(driver);
 	 	SB.BtnCrearNuevoCliente();
-	 	/*dni.setSimpleDropdown(driver.findElement(By.id("DocumentTypeSearch")),"DNI");
 		driver.findElement(By.id("DocumentInputSearch")).click();
 		driver.findElement(By.id("DocumentInputSearch")).sendKeys("1235591");
 		List<WebElement> gen = driver.findElements(By.cssSelector(".slds-radio.ng-scope"));
