@@ -125,8 +125,8 @@ public class Sales extends TestBase {
 		CustomerCare CC = new CustomerCare(driver);
 		ContactSearch contact = new ContactSearch(driver);
 		try {Thread.sleep(10000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
-		driver.findElement(By.id("FirstName")).sendKeys("aaa");
-		driver.findElement(By.id("LastName")).sendKeys("bbb");
+		driver.findElement(By.id("FirstName")).sendKeys("yy");
+		driver.findElement(By.id("LastName")).sendKeys("z");
 		driver.findElement(By.id("Birthdate")).sendKeys("28/12/1999");
 		contact.sex("masculino");
 		driver.findElement(By.id("Contact_nextBtn")).click();
@@ -770,7 +770,7 @@ public class Sales extends TestBase {
 	public void TS38761_Perfiles_Verificar_creacion_de_perfil_Oficina_Comercial(){
 		SalesBase SB = new SalesBase(driver);
 		SB.gestiondeusuarios();
-		SB.validarperfil("Sit, Francisco", "Oficina Comercial");		
+		SB.validarperfil("Sit, Francisco", "TA - OFCOM Venta y Atencion a Clientes");		
 	}
 	
 	@Test(groups="Sales")
