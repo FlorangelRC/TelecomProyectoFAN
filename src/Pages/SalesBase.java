@@ -6,6 +6,7 @@ import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 import java.util.Set;
 import java.util.concurrent.TimeUnit;
 
@@ -210,11 +211,11 @@ public void validarespacio(){
 }
 
 public void validarcamposbusqueda(){
-	firstname.isSelected();
-	lastname.isSelected();
-	razonsocial.isSelected();
-	numerodecuenta.isSelected();
-	Email.isSelected();
+	firstname.isDisplayed();
+	lastname.isDisplayed();
+	razonsocial.isDisplayed();
+	numerodecuenta.isDisplayed();
+	Email.isDisplayed();
 }
 
 public void BuscarCuenta(String Type, String NDNI){
@@ -258,7 +259,8 @@ public boolean btnnoexiste(String boton){
 	 List<WebElement> filas = driver.findElements(By.cssSelector(".dataCell"));
 	 for(int i=0; i<filas.size();i++){
 		 if (filas.get(i).getText().equals(nombre)){
-			 //System.out.println(filas.get(i+5).getText());
+			 a = true;
+			 System.out.println(filas.get(i+5).getText());
 			Assert.assertTrue(filas.get(i+5).getText().contains(perfil));
 			break;}} 
 	 Assert.assertTrue(a);}
@@ -296,14 +298,11 @@ public boolean btnnoexiste(String boton){
 	try {Thread.sleep(10000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 	 ArrayList<String> txt1 = new ArrayList<String>();
 	 ArrayList<String> txt2 = new ArrayList<String>();
-	 txt2.add("ASIGNACIÓN DE LINEA");
-	 txt2.add("SELECCIÓN DE MEDIO DE PAGO");
-	 txt2.add("VALIDACIÓN DE IDENTIDAD");
-	 txt2.add("INFORMACIÓN DEL CONTACTO");
-	 txt2.add("INGRESO DE SERIAL");
-	 txt2.add("SELECCIÓN DE LÍNEA DECISORA");
-	 txt2.add("SELECCIÓN DE USUARIO DE LA LINEA");
-	 txt2.add("INFORMACIÓN");
+	 txt2.add("ASIGNACI\u00d3N DE L\u00cdNEA");
+	 txt2.add("SELECCI\u00d3N DE MEDIO DE PAGO");
+	 txt2.add("RESUMEN DE LA ORDEN DE VENTA");
+	 txt2.add("ENV\u00cdO FACTURA Y DATOS DE COBRO");
+	 txt2.add("INFORMACI\u00d3N");
 
 	 List<WebElement> pasos = driver.findElements(By.cssSelector(".slds-form-element__label.ng-binding"));
 	 System.out.println(pasos.size());
@@ -322,10 +321,10 @@ public boolean btnnoexiste(String boton){
  }
  public void validarnuevocliente(String DNIType, String DNINumber){
 		try {Thread.sleep(10000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
-		Select DNI = new Select( driver.findElement(By.id("DocumentTypeSearch")));
+		Select DNI = new Select( driver.findElement(By.id("DocumentType")));
 		
 		
-	WebElement NDNI = driver.findElement(By.cssSelector(".vlc-control-wrapper.ng-scope")).findElement(By.id("DocumentInputSearch"));
+	WebElement NDNI = driver.findElement(By.id("DocumentNumber"));
 	String Type =DNI.getFirstSelectedOption().getText();
 	String numero=NDNI.getAttribute("value");
 	System.out.println(Type);
@@ -336,7 +335,7 @@ public boolean btnnoexiste(String boton){
  }
  public void validarentrarcatalogo(){
 		try {Thread.sleep(50000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
-	 Assert.assertTrue(driver.findElement(By.cssSelector(".slds-tabs--default__nav cpq-product-cart-tabs")).isDisplayed());
+	 Assert.assertTrue(driver.findElement(By.cssSelector(".slds-grid.slds-grid--vertical-align-center.slds-grid--align-center.cpq-no-cart-items-msg")).isDisplayed());
  }
  public void validaragrupados(){
 	List<WebElement> lista = driver.findElements(By.className("ng-binding"));
@@ -477,14 +476,17 @@ for(WebElement e: btns){
  public void seleccionarMetodoValidacion(String validacion){
 	try {Thread.sleep(15000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 	List<WebElement> valid =driver.findElements(By.id("MethodSelection"));
-	List<WebElement> radio = driver.findElements(By.cssSelector(".slds-radio--faux.ng-scope"));
+	List<WebElement> radio = driver.findElement(By.id("MethodSelection|0")).findElements(By.cssSelector(".slds-radio--faux.ng-scope"));
+	int i = -1;
 	for(WebElement UnV: valid){
 		System.out.println(UnV.getAttribute("value"));
+		i++;
 		if(UnV.getAttribute("value").equals(validacion)){
-			UnV.click();
+			((JavascriptExecutor)driver).executeScript("window.scrollTo(0,"+radio.get(i).getLocation().y+")");
+			radio.get(i).click();
 			break;}}
 	try {Thread.sleep(3000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
-	 driver.findElement(By.id("MethodSelection_nextBtn")).click();
+	 driver.findElement(By.id("ValidationMethod_nextBtn")).click();
  }
  
  public void subirdoc(){
@@ -619,9 +621,23 @@ try{	driver.findElement(By.id("alert-ok-button")).click();	} catch (NoSuchElemen
 	
 	public void BtnCrearNuevoCliente(){
 		try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
-		((JavascriptExecutor)driver).executeScript("window.scrollTo(0,"+driver.findElement(By.id("dataInput_nextBtn")).getLocation().y+")");
-		driver.findElement(By.id("dataInput_nextBtn")).click();
-		try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		BasePage dni = new BasePage(driver);
+		Random aleatorio = new Random(System.currentTimeMillis());
+		aleatorio.setSeed(System.currentTimeMillis());
+		int intAleatorio = aleatorio.nextInt(8999999)+1000000;
+		dni.setSimpleDropdown(driver.findElement(By.id("SearchClientDocumentType")),"DNI");
+		driver.findElement(By.id("SearchClientDocumentNumber")).click();
+		driver.findElement(By.id("SearchClientDocumentNumber")).sendKeys(Integer.toString(intAleatorio));
+		driver.findElement(By.id("SearchClientsDummy")).click();
+		try {Thread.sleep(3000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		List <WebElement> cc = driver.findElements(By.cssSelector(".slds-form-element__label.ng-binding"));
+		for (WebElement x : cc) {
+			if (x.getText().toLowerCase().contains("+ crear nuevo cliente")) {
+				x.click();
+				break;
+			}
+		}
+		try {Thread.sleep(7000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 	}
 	
 	
@@ -715,5 +731,5 @@ try{	driver.findElement(By.id("alert-ok-button")).click();	} catch (NoSuchElemen
 		}
  }
 
- 
+ //asd
 

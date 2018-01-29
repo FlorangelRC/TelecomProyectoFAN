@@ -70,7 +70,7 @@ public class Ta_CPQ extends BasePage {
 	}
 	
 	public void openArrow() {
-		arrowPlan.get(0).click();
+		arrowPlan.get(2).click();
 	}
 	
 	public String getSimCardValue() {
@@ -99,9 +99,9 @@ public class Ta_CPQ extends BasePage {
 	}
 	
 	public void clickOnDelete() {
-		((JavascriptExecutor) driver).executeScript("arguments[0].click();", planButtons.get(3));
+		((JavascriptExecutor) driver).executeScript("arguments[0].click();", planButtons.get(1));
 		try {Thread.sleep(2000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
-		WebElement buttonDeteleFinish = driver.findElement(By.cssSelector(".slds-button.slds-button--destructive"));
+		//WebElement buttonDeteleFinish = driver.findElement(By.cssSelector(".slds-button.slds-button--destructive"));
 	}
 	
 	public Boolean isPlanPresent() {
@@ -154,7 +154,8 @@ public class Ta_CPQ extends BasePage {
 		return (divProduct.findElements(By.className("prefaseablitiyLabel")).size() > 0);
 	}
 	
-	public void addAnyProductToCart() {
+	///Viejo
+	/*public void addAnyProductToCart() {
 		divsProducts = driver.findElements(By.cssSelector(".slds-tile.cpq-product-item"));
 		for (WebElement div: divsProducts) {
 			if (!requiresPrefactibility(div)) {
@@ -163,8 +164,20 @@ public class Ta_CPQ extends BasePage {
 				break;
 			}
 		}
-	}
+	}*/
 	
+	//Quelys
+	public WebElement addAnyProductToCart() throws Exception {
+	    divsProducts = driver.findElements(By.cssSelector(".slds-tile.cpq-product-item"));
+	    for (WebElement div: divsProducts) {
+	      if (!requiresPrefactibility(div)) {
+	        WebElement addToCartButton = div.findElement(By.cssSelector(".slds-button.slds-button--neutral.add-button"));
+	        addToCartButton.click();
+	        return div;
+	      }
+	    }
+	    throw new Exception("No se encontro el elemento");
+	}
 	/**
 	 * 
 	 * @return devuelve el producto del menú de la izquierda 
@@ -302,6 +315,16 @@ public class Ta_CPQ extends BasePage {
 		return valor;
 	}
 	
+	public boolean verifyAddition(List<String> list, String value) {
+	    if (!list.isEmpty() && !value.isEmpty()) {
+	      for (String element : list) {
+	        if(element.contains(value.substring(0, element.length()))) {
+	          return true;
+	        }
+	      }
+	    }
+	    return false;
+	  }
 	
 	
 }	

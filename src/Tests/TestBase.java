@@ -92,6 +92,14 @@ public class TestBase {
 			//driver.findElement(By.id("chooser")).click();
 	//	}
 	}
+	
+	public void loginMarketing(WebDriver driver) {
+		driver.get("https://crm--sit.cs14.my.salesforce.com/");
+		try {Thread.sleep(4000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+	    Login lLogin = new Login(driver);
+	    lLogin.ingresarMarketing();
+	}
+	
 	public void loginSCPAdmin(WebDriver driver) {
 	     driver.get("https://crm--uat2.cs92.my.salesforce.com");
 	     try {Thread.sleep(6000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
@@ -378,7 +386,7 @@ public class TestBase {
 	
 	public static void inicializarDriver() {
 		driver = setConexion.setupEze();
-		driver.manage().timeouts().implicitlyWait(1, TimeUnit.SECONDS);
+		driver.manage().timeouts().implicitlyWait(5, TimeUnit.SECONDS);
 	}
 	
 	public static void cerrarTodo() {
@@ -453,9 +461,27 @@ public class TestBase {
 		try {Thread.sleep(miliseconds);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 	}
 	
+	public List<String> obtenerElAtributoDeLosElementos(String atributo, List<WebElement> elementos) {
+		List<String> valores = new ArrayList<String>();
+		for (WebElement elem : elementos) {
+			valores.add(elem.getAttribute(atributo));
+		}
+		
+		return valores;
+	}
+	
+	public Boolean esObligatorio(WebElement campo) {
+		return campo.getAttribute("class").contains("ng-invalid-required");
+	}
+	
+	public Boolean esValido(WebElement campo) {
+		sleep(300);
+		return (!campo.getAttribute("class").contains("invalid"));
+	}
+	
 	public void selectByText(WebElement element, String data){
 		Select select = new Select(element);
 		select.selectByVisibleText(data);
-		}
+	}
 }
 

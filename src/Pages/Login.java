@@ -12,6 +12,15 @@ public class Login extends BasePage {
 	
 	//Fields
 	
+	@FindBy (how = How.NAME, using = "username")
+	private WebElement userMarketing;
+	
+	@FindBy (how = How.NAME, using = "pw")
+	private WebElement passwordMarketing;
+	
+	@FindBy (how = How.ID, using = "Login")
+	private WebElement loginMarketing;
+	
 	@FindBy (how = How.NAME, using = "Ecom_User_ID")
 	private WebElement username;
 	
@@ -66,6 +75,14 @@ public class Login extends BasePage {
 			password.sendKeys("Testa10k");
 	    	//rememberMe.click();
 			login.click();
+			try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		}
+		
+		public void ingresarMarketing() {
+			try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+			userMarketing.sendKeys("usit@telecom.sit");
+			passwordMarketing.sendKeys("pruebas09");
+			loginMarketing.click();
 			try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 		}
 		
