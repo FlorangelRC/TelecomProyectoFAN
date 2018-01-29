@@ -116,34 +116,39 @@ public class Sales extends TestBase {
 		try {Thread.sleep(10000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 	}
 
-	@Test(groups={"sales", "AltaDeContacto"})
+	@Test(groups={"sales", "AltaDeContacto"}) 
 	public void TS6905_createdNewValidContact(){
 		SalesBase SB = new SalesBase(driver);
-		SB.BuscarAvanzada(nombre, apellido, "", "", "");
+		SB.BtnCrearNuevoCliente();
+		String asd = driver.findElement(By.id("SearchClientDocumentNumber")).getAttribute("value");
 		CustomerCare CC = new CustomerCare(driver);
-		CC.obligarclick(driver.findElement(By.id("dataInput_nextBtn")));
-		try {Thread.sleep(10000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 		ContactSearch contact = new ContactSearch(driver);
+		try {Thread.sleep(10000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		driver.findElement(By.id("FirstName")).sendKeys("aaa");
+		driver.findElement(By.id("LastName")).sendKeys("bbb");
+		driver.findElement(By.id("Birthdate")).sendKeys("28/12/1999");
+		contact.sex("masculino");
+		driver.findElement(By.id("Contact_nextBtn")).click();
 		try {Thread.sleep(8000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
-		contact.searchContact(DNI, DocValue[0], "femenino");
-		try {Thread.sleep(1000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
-		driver.findElement(By.id("ContactInfo_nextBtn")).click();
-		
-	}
+		driver.get("https://crm--sit--c.cs14.visual.force.com/apex/taClientSearch#/");
+		try {Thread.sleep(8000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		contact.searchContact(DNI, asd, "");
+		driver.findElement(By.id("SearchClientsDummy")).click();
+		sleep(5000);
+		WebElement coldni = driver.findElement(By.id("tab-scoped-2")).findElement(By.tagName("section")).findElement(By.tagName("tbody")).findElements(By.tagName("td")).get(3);
+		System.out.println(coldni.getText());
+		Assert.assertTrue(coldni.getText().equals(asd));	
+		}
 	
 	@Test(groups={"sales", "AltaDeContacto"})
 	public void TS6965_Verificar_que_el_campo_Numero_de_documento_no_tenga_menos_de_7_digitos()	{
 		boolean a = false;
-		SalesBase SB = new SalesBase(driver);
-		SB.BuscarAvanzada(nombre, apellido, "", "", "");
-		CustomerCare CC = new CustomerCare(driver);
-		CC.obligarclick(driver.findElement(By.id("dataInput_nextBtn")));
 		try {Thread.sleep(10000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 		ContactSearch contact = new ContactSearch(driver);
-		contact.searchContact(DNI, "123", "femenino");
+		contact.searchContact(DNI, "123", "");
 		List <WebElement> error = driver.findElements(By.cssSelector(".description.ng-binding"));
 		for(WebElement e: error){
-			if(e.getText().equals("Longitud M\u00ednima De 7")){
+			if(e.getText().toLowerCase().equals("longitud m\u00ednima de 7")){
 				a=true;
 				break;
 			}
@@ -156,14 +161,13 @@ public class Sales extends TestBase {
 	@Test(groups={"sales", "AltaDeContacto"})
 	public void TS6918_Seleccionar_Femenino_en_campo_Genero(){
 		SalesBase SB = new SalesBase(driver);
-		SB.BuscarAvanzada(nombre, apellido, "", "", "");
 		CustomerCare CC = new CustomerCare(driver);
-		CC.obligarclick(driver.findElement(By.id("dataInput_nextBtn")));
+		SB.BtnCrearNuevoCliente();
 		try {Thread.sleep(10000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 		ContactSearch contact = new ContactSearch(driver);
 		contact.sex("femenino");
 		try {Thread.sleep(3000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
-		List<WebElement> genero = driver.findElements(By.id("GenderSearch"));
+		List<WebElement> genero = driver.findElements(By.id("Gender"));
 		System.out.println(genero.size());
 		genero.get(0).isSelected();
 		Assert.assertTrue(genero.get(0).isSelected());
@@ -171,16 +175,14 @@ public class Sales extends TestBase {
 	
 	@Test(groups={"sales", "AltaDeContacto"})
 	public void TS6919_Seleccionar_Masculino_en_campo_Genero(){
-		boolean a= false;
 		SalesBase SB = new SalesBase(driver);
-		SB.BuscarAvanzada(nombre, apellido, "", "", "");
 		CustomerCare CC = new CustomerCare(driver);
-		CC.obligarclick(driver.findElement(By.id("dataInput_nextBtn")));
+		SB.BtnCrearNuevoCliente();
 		try {Thread.sleep(10000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 		ContactSearch contact = new ContactSearch(driver);
 		contact.sex("masculino");
 		try {Thread.sleep(3000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
-		List<WebElement> genero = driver.findElements(By.id("GenderSearch"));
+		List<WebElement> genero = driver.findElements(By.id("Gender"));
 		System.out.println(genero.size());
 		genero.get(0).isSelected();
 		Assert.assertTrue(genero.get(1).isSelected());
@@ -189,17 +191,13 @@ public class Sales extends TestBase {
 	@Test(groups={"sales", "AltaDeContacto"})
 	public void TS6964_Verificar_que_el_campo_Numero_de_documento_no_tenga_mas_de_8_digitos(){
 		boolean a = false;
-		SalesBase SB = new SalesBase(driver);
-		SB.BuscarAvanzada(nombre, apellido, "", "", "");
-		CustomerCare CC = new CustomerCare(driver);
-		CC.obligarclick(driver.findElement(By.id("dataInput_nextBtn")));
 		try {Thread.sleep(10000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 		ContactSearch contact = new ContactSearch(driver);
-		contact.searchContact(DNI, "123456789", "femenino");
+		contact.searchContact(DNI, "123456789", "");
 		List <WebElement> error = driver.findElements(By.cssSelector(".description.ng-binding"));
 		for(WebElement e: error){
 			
-			if(e.getText().equals("Longitud M\u00e1xima De 8")){
+			if(e.getText().toLowerCase().equals("longitud m\u00e1xima de 8")){
 				a=true;
 				break;
 			}
@@ -209,14 +207,9 @@ public class Sales extends TestBase {
 	Assert.assertTrue(a);
 	}
 	
-	@Test(groups={"sales", "AltaDeContacto"})
+//	@Test(groups={"sales", "AltaDeContacto"}) //no es obligatorio
 	public void TS6967_Verificar_que_el_campo_tipo_de_documento_sea_obligatorio(){
 		boolean a= false;
-		SalesBase SB = new SalesBase(driver);
-		SB.BuscarAvanzada(nombre, apellido, "", "", "");
-		CustomerCare CC = new CustomerCare(driver);
-		CC.obligarclick(driver.findElement(By.id("dataInput_nextBtn")));
-		try {Thread.sleep(10000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 		ContactSearch contact = new ContactSearch(driver);
 		contact.searchContact( "DNI","","");
 		try {Thread.sleep(1000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
@@ -234,22 +227,20 @@ public class Sales extends TestBase {
 	Assert.assertTrue(a);
 	}
 	
-	//@Test(groups="Fase2")
+	@Test(groups="Fase2")
 	public void TS6937_Verificar_campo_Genero_obligatorio(){
 		SalesBase SB = new SalesBase(driver);
-		SB.BuscarAvanzada(nombre, apellido, "", "", "");
-		CustomerCare CC = new CustomerCare(driver);
-		CC.obligarclick(driver.findElement(By.id("dataInput_nextBtn")));
+		SB.BtnCrearNuevoCliente();
 		try {Thread.sleep(10000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
-		ContactSearch contact = new ContactSearch(driver);
-		contact.searchContact(DNI, "12345678", "");
-		try {Thread.sleep(1000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
-
-		System.out.println(driver.findElement(By.id("GenderSearch|0")).findElement(By.cssSelector(".slds-form-element.vlc-flex.vlc-slds-radio-control.ng-scope.ng-dirty.ng-invalid.ng-invalid-required")).isEnabled());
+		driver.findElement(By.id("FirstName")).sendKeys("a");
+		driver.findElement(By.id("LastName")).sendKeys("b");
+		driver.findElement(By.id("Birthdate")).sendKeys("28/12/1999");
+		WebElement gen = driver.findElement(By.cssSelector(".slds-form-element.vlc-flex.vlc-slds-radio-control.ng-pristine.ng-scope.ng-invalid.ng-invalid-required")).findElement(By.id("Gender|0"));
+		Assert.assertTrue(gen.isEnabled());
 		
 			}
 	
-	@Test(groups={"sales", "AltaDeContacto"})
+	@Test(groups={"sales", "AltaDeContacto"}) //no es obligatorio
 	public void TS6966_Verificar_que_el_campo_Numero_de_Documento_sea_obligatorio(){
 		boolean a= false;
 		SalesBase SB = new SalesBase(driver);
@@ -273,44 +264,37 @@ public class Sales extends TestBase {
 	
 	@Test(groups={"sales", "AltaDeContacto"})
 	public void TS6914_Ingresar_mas_de_9_caracteres_en_el_campo_Pasaporte(){
-		boolean a= false;
-		SalesBase SB = new SalesBase(driver);
-		SB.BuscarAvanzada(nombre, apellido, "", "", "");
-		CustomerCare CC = new CustomerCare(driver);
-		CC.obligarclick(driver.findElement(By.id("dataInput_nextBtn")));
+		boolean a = false;
 		try {Thread.sleep(10000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 		ContactSearch contact = new ContactSearch(driver);
-		contact.searchContact("Pasaporte", "1234567890", "femenino");
+		contact.searchContact("Pasaporte", "1234567890", "");
 		List <WebElement> error = driver.findElements(By.cssSelector(".description.ng-binding"));
 		for(WebElement e: error){
-			if(e.getText().equals("Longitud M\u00e1xima De 9")){
+			if(e.getText().toLowerCase().equals("longitud m\u00e1xima de 9")){
 				a=true;
 				break;}}
 		try {Thread.sleep(1000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
-		Assert.assertTrue(a);
+		Assert.assertTrue(a);	
 	
 	}
 	
 	@Test(groups={"sales", "AltaDeContacto"})
 	public void TS6915_Ingresar_menos_de_9_caracteres_en_el_pasaporte(){
-		boolean a= false;
-		SalesBase SB = new SalesBase(driver);
-		SB.BuscarAvanzada(nombre, apellido, "", "", "");
-		CustomerCare CC = new CustomerCare(driver);
-		CC.obligarclick(driver.findElement(By.id("dataInput_nextBtn")));
+		boolean a = false;
 		try {Thread.sleep(10000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 		ContactSearch contact = new ContactSearch(driver);
-		contact.searchContact("Pasaporte", "1234567890", "femenino");
+		contact.searchContact("Pasaporte", "1234567890", "");
 		List <WebElement> error = driver.findElements(By.cssSelector(".description.ng-binding"));
 		for(WebElement e: error){
-			if(e.getText().equals("Longitud Minima De 9")){
+			if(e.getText().toLowerCase().equals("longitud minima de 9")){
 				a=true;
 				break;}}
 		try {Thread.sleep(1000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
-		Assert.assertTrue(a);
+		Assert.assertTrue(a);	
+	
 	}
 	
-	@Test(groups={"sales", "AltaDeContacto"})
+	 @Test(groups={"sales", "AltaDeContacto"})   //verify
 	public void TS6916_Ingresar_pasaporte_en_el_campo_Numero_de_Documento(){
 		String PASA = "123456789";
 		SalesBase SB = new SalesBase(driver);
@@ -327,7 +311,7 @@ public class Sales extends TestBase {
 
 	}
 	
-	@Test(groups={"sales", "AltaDeContacto"})
+	@Test(groups={"sales", "AltaDeContacto"}) //verify 
 	public void TS6912_Ingresar_DNI_en_el_campo_Numero_de_Documento(){
 		String PASA = "1234567";
 		SalesBase SB = new SalesBase(driver);
@@ -360,12 +344,8 @@ public class Sales extends TestBase {
 	public void TS6943_Verificar_el_ingreso_de_caracteres_alfanumericos_en_Pasaporte(){
 		String PASA = "123ASD1";
 		SalesBase SB = new SalesBase(driver);
-		SB.BuscarAvanzada(nombre, apellido, "", "", "");
-		CustomerCare CC = new CustomerCare(driver);
-		CC.obligarclick(driver.findElement(By.id("dataInput_nextBtn")));
-		try {Thread.sleep(10000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 		ContactSearch contact = new ContactSearch(driver);
-		contact.searchContact("Pasaporte", PASA, "femenino");
+		contact.searchContact("Pasaporte", PASA, "");
 		try {Thread.sleep(1000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 		String PASA2=driver.findElement(By.id("DocumentInputSearch")).getAttribute("value");
 		try {Thread.sleep(1000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
@@ -374,7 +354,7 @@ public class Sales extends TestBase {
 	}
 	
 	
-	@Test(groups={"sales", "AltaDeContacto"})
+	@Test(groups={"sales", "AltaDeContacto"})  // no da error
 	public void TS6945_Verificar_error_al_ingresar_CUIT_con_cero_al_inicio(){
 		boolean a= false;
 		SalesBase SB = new SalesBase(driver);
@@ -1245,7 +1225,7 @@ public class Sales extends TestBase {
 	  public void TS76116_Alta_Contacto_Creacion_Verificar_busqueda_modificacion_de_contacto(){
 	 		SalesBase SB = new SalesBase(driver);
 	 		 SB.BuscarCuenta(DNI, "1212125");
-	 	    SB.crearnuevocliente("contacto", "modifica", nacimiento);
+	 	   // SB.crearnuevocliente("contacto", "modifica", nacimiento);
 	 	   sleep(15000);
 	 	  List<WebElement> gen = driver.findElements(By.cssSelector(".slds-page-header__title.slds-m-right--small.slds-truncate.slds-align-middle"));
 		    for(WebElement g:gen) {
