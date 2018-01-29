@@ -70,7 +70,7 @@ public class Ta_CPQ extends BasePage {
 	}
 	
 	public void openArrow() {
-		arrowPlan.get(0).click();
+		arrowPlan.get(2).click();
 	}
 	
 	public String getSimCardValue() {

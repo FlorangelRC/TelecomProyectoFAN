@@ -130,7 +130,7 @@ public class ta_CPQ extends TestBase {
 		Assert.assertEquals("1", page3.getSimCardValue()); 	
 	}
 	
-	//Verificando
+	//Revisado 29-01-18 Ya el Tacho de Basura no se muestra Mas
 	@Test
 	public void TS6830_checkPaperCanIsPresent() {
 		System.out.println("Empiezan el caso");
@@ -163,6 +163,7 @@ public class ta_CPQ extends TestBase {
 		Assert.assertFalse(page3.isPlanPresent());
 	}
 	
+	//Revisado 29-01-18 Ya el Tacho de Basura no se muestra Mas
 	@Test
 	public void TS6831_checkPaperCanLabel() {
 		Ta_CPQ page3 = new Ta_CPQ(driver);
@@ -379,10 +380,15 @@ public class ta_CPQ extends TestBase {
 		DeliveryMethod page5 = new DeliveryMethod(driver);
 		page5.clickOnNext();
 		try {Thread.sleep(3000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
-		BillSimulation page6 = new BillSimulation(driver);
-		page6.clickOnNext();
+		//BillSimulation page6 = new BillSimulation(driver);
+		//page6.clickOnNext();
 		try {Thread.sleep(3000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 		PaymentMethod page7 = new PaymentMethod(driver);
+		page7.selectDebitoAProximaFactura();
+		page7.clickOnNext();
+		try {Thread.sleep(3000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		driver.findElement(By.id("alert-ok-button")).click();
+		try {Thread.sleep(2000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 		page7.clickOnNext();
 		try {Thread.sleep(3000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 		SerialInput page8 = new SerialInput(driver);
@@ -461,6 +467,7 @@ public class ta_CPQ extends TestBase {
 		Assert.assertEquals("Presencial", page5.getCurrentValueForDeliveryMethod());
 	}
 	
+	//Listo 29-01-18
 	@Test
 	public void TS6821_CRM_Fase_1_SalesCPQ_Alta_Linea_Buscar_Cliente_Buscar_por_Nombre_del_plan_V360() {
 		Ta_CPQ cart = new Ta_CPQ(driver);
@@ -471,7 +478,8 @@ public class ta_CPQ extends TestBase {
 		
 		try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 		
-		WebElement result = driver.findElement(By.xpath(".//p"));
+		WebElement result = driver.findElement(By.cssSelector(".slds-tile__title.slds-truncate.product-name"));
+		System.out.println(result.getText());
 		Assert.assertEquals(result.getText(), "Plan Prepago Nacional");
 			
 	}
@@ -497,11 +505,13 @@ public class ta_CPQ extends TestBase {
 		Assert.assertEquals (productNameAdded, productName);
 	}
 
-
+	//Listo 29-01-018
 	@Test
 	public void TS6827_CRM_Fase_1_SalesCPQ_Alta_Linea_Configurar_Nueva_Linea_Boton_Siguiente() {
 		Ta_CPQ cart = new Ta_CPQ(driver);
 		cart.addAnyProductToCart();
+		sleep(4000);
+		//System.out.println(cart.getCartStatus());
 		Assert.assertNotEquals(cart.getCartStatus(),"Incomplete");
 	}
 	//Listo 26-01-18
@@ -531,7 +541,7 @@ public class ta_CPQ extends TestBase {
 		Assert.assertEquals("Cart is empty.", cart.getEmptyCartMessage());
 	}
 	
-	//Listo 26-01-18 falta darle continuar, pero al darle continuar no hay privilegios.
+	//Listo 26-01-18 Falla
 	@Test
 	public void TS6845_CRM_Fase_1_SalesCPQ_Alta_Linea_Configurar_Nueva_Linea_Buscar_nuevo_lote_de_lineas_pre_asignadas() {
 		Ta_CPQ cart = new Ta_CPQ(driver);
@@ -548,6 +558,7 @@ public class ta_CPQ extends TestBase {
 		try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 		
 		//Debería mostrarse una vista en la que se muestran los planes preasignados, pero hay cargado un bug dado que no se está mostrando esa descripción de los planes.
+	assertTrue(false); //No hay lineas pre-asignadas.
 	}
 	
 	@Test
@@ -564,7 +575,8 @@ public class ta_CPQ extends TestBase {
 	
 	@Test
 	public void TS6852_CRM_Fase_1_SalesCPQ_Alta_Linea_Configurar_Nueva_Linea_Visualizar_filtros_de_localidad_y_provincia_al_modificar_linea_XX(){
-		//Ídem TS6849		
+		//Ídem TS6849	
+		assertTrue(false); 
 	}
 	
 	@Test
