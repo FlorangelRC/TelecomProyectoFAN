@@ -576,8 +576,7 @@ public class Sales extends TestBase {
 	}
 	
 	//@Test(groups={"sales", "AltaDeContacto"})
-	public void TS6974_Verificar_valor_del_check_de_email_por_default() 
-	{	
+	public void TS6974_Verificar_valor_del_check_de_email_por_default() {	
 		SalesBase SB = new SalesBase(driver);
 		SB.BuscarAvanzada(nombre, apellido, "", "", "");
 		CustomerCare CC = new CustomerCare(driver);
@@ -586,14 +585,12 @@ public class Sales extends TestBase {
 		ContactSearch contact = new ContactSearch(driver);
 		contact.searchContact(DNI, DocValue[0], "masculino");
 		driver.findElement(By.id("ContactSearch_nextBtn")).click();
-		try {Thread.sleep(20000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
-		
+		try {Thread.sleep(20000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}		
 		Assert.assertTrue(!driver.findElement(By.cssSelector(".slds-form-element.vlc-flex.ng-pristine.ng-scope.ng-invalid.ng-invalid-required")).isSelected());
 	}
 	
 	//@Test(groups={"sales", "AltaDeContacto"})
-	public void TS6941_Verificar_check_de_no_tener_email() 
-	{
+	public void TS6941_Verificar_check_de_no_tener_email() {
 		SalesBase SB = new SalesBase(driver);
 		SB.BuscarAvanzada(nombre, apellido, "", "", "");
 		CustomerCare CC = new CustomerCare(driver);
@@ -602,343 +599,174 @@ public class Sales extends TestBase {
 		ContactSearch contact = new ContactSearch(driver);
 		contact.searchContact(DNI, DocValue[0], "masculino");
 		driver.findElement(By.id("ContactSearch_nextBtn")).click();
-		try {Thread.sleep(20000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
-		
+		try {Thread.sleep(20000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}	
 		driver.findElement(By.cssSelector(".slds-checkbox--faux")).click();
 		Assert.assertTrue(driver.findElement(By.cssSelector(".slds-form-element.vlc-flex.ng-pristine.ng-scope.ng-valid.ng-valid-required")).isSelected());
 	}
 	
 
-	@Test(groups={"sales", "AltaDeContacto"})
+	@Test(groups={"Sales", "AltaDeContacto"})
 	public void TS6934_Verificar_campo_Apellido_obligatorio(){
-		boolean a= false;
 		SalesBase SB = new SalesBase(driver);
-		SB.BuscarAvanzada(nombre, apellido, "", "", "");
-		CustomerCare CC = new CustomerCare(driver);
-		CC.obligarclick(driver.findElement(By.id("dataInput_nextBtn")));
-		try {Thread.sleep(10000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
-		ContactSearch contact = new ContactSearch(driver);
-		contact.searchContact(DNI, DocValue[0], "masculino");
-		driver.findElement(By.id("ContactSearch_nextBtn")).click();
-		try {Thread.sleep(20000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
-		
-	driver.findElement(By.id("LastName")).clear();
-	try {Thread.sleep(1000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
-	List<WebElement>asl=driver.findElements(By.cssSelector(".description.ng-binding"));
-	for(WebElement e: asl){
-		if(e.getText().equals("Campo Requerido")){
-			a=true;}}
-	Assert.assertTrue(a);
+		SB.BtnCrearNuevoCliente();
+		WebElement name = driver.findElement(By.id("LastName"));
+		Assert.assertTrue(name.getAttribute("required").equals("true"));
 	}
 	
-	@Test(groups={"sales", "AltaDeContacto"})
+	@Test(groups={"Sales", "AltaDeContacto"})
 	public void TS6936_Verificar_campo_Fecha_de_Nacimiento_obligatorio(){
-		boolean a= false;
 		SalesBase SB = new SalesBase(driver);
-		SB.BuscarAvanzada(nombre, apellido, "", "", "");
-		CustomerCare CC = new CustomerCare(driver);
-		CC.obligarclick(driver.findElement(By.id("dataInput_nextBtn")));
-		try {Thread.sleep(10000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
-		ContactSearch contact = new ContactSearch(driver);
-		contact.searchContact(DNI, DocValue[0], "masculino");
-		driver.findElement(By.id("ContactSearch_nextBtn")).click();
-		try {Thread.sleep(20000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
-		
-	driver.findElement(By.id("Birthdate")).clear();
-	try {Thread.sleep(1000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
-	List<WebElement>asl=driver.findElements(By.cssSelector(".description.ng-binding"));
-	for(WebElement e: asl){
-		if(e.getText().equals("Campo Requerido")){
-			a=true;}}
-	Assert.assertTrue(a);
+		SB.BtnCrearNuevoCliente();
+		WebElement name = driver.findElement(By.id("Birthdate"));
+		Assert.assertTrue(name.getAttribute("required").equals("true"));
 	}
 	
-	@Test(groups={"sales", "AltaDeContacto"})
+	@Test(groups={"Sales", "AltaDeContacto"})
 	public void TS6938_Verificar_campo_Nombre_obligatorio(){
-		boolean a= false;
 		SalesBase SB = new SalesBase(driver);
-		SB.BuscarAvanzada(nombre, apellido, "", "", "");
-		CustomerCare CC = new CustomerCare(driver);
-		CC.obligarclick(driver.findElement(By.id("dataInput_nextBtn")));
-		try {Thread.sleep(10000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
-		ContactSearch contact = new ContactSearch(driver);
-		contact.searchContact(DNI, DocValue[0], "masculino");
-		driver.findElement(By.id("ContactSearch_nextBtn")).click();
-		try {Thread.sleep(20000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
-		
-	driver.findElement(By.id("FirstName")).clear();
-	try {Thread.sleep(1000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
-	List<WebElement>asl=driver.findElements(By.cssSelector(".description.ng-binding"));
-	for(WebElement e: asl){
-		if(e.getText().equals("Campo Requerido")){
-			a=true;}}
-	Assert.assertTrue(a);	}
+		SB.BtnCrearNuevoCliente();
+		WebElement name = driver.findElement(By.id("FirstName"));
+		Assert.assertTrue(name.getAttribute("required").equals("true"));
+	}
 	
-	@Test(groups={"sales", "AltaDeContacto"})
+	@Test(groups={"Sales", "AltaDeContacto"})
 	public void TS6931_calendarBirthDate(){
 		SalesBase SB = new SalesBase(driver);
-		SB.BuscarAvanzada(nombre, apellido, "", "", "");
-		CustomerCare CC = new CustomerCare(driver);
-		CC.obligarclick(driver.findElement(By.id("dataInput_nextBtn")));
-		try {Thread.sleep(10000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
-		ContactSearch contact = new ContactSearch(driver);
-		contact.searchContact(DNI, DocValue[0], "masculino");
-		driver.findElement(By.id("ContactSearch_nextBtn")).click();
-		try {Thread.sleep(20000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
-		
+		SB.BtnCrearNuevoCliente();
 		driver.findElement(By.id("Birthdate")).click();
-		driver.findElement(By.cssSelector(".datepicker.-bottom-left-.-from-bottom-.active"));
+		sleep(2000);
+		Assert.assertTrue(driver.findElement(By.cssSelector(".datepicker.-bottom-left-.-from-bottom-")).isDisplayed());
 	}
 
-	@Test(groups={"sales", "AltaDeContacto"})
+	@Test(groups={"Sales", "AltaDeContacto"})
 	public void TS6957_Verificar_mascara_del_campo_Fecha_de_Nacimiento() {
-
 		SalesBase SB = new SalesBase(driver);
-		SB.BuscarAvanzada(nombre, apellido, "", "", "");
-		CustomerCare CC = new CustomerCare(driver);
-		CC.obligarclick(driver.findElement(By.id("dataInput_nextBtn")));
-		try {Thread.sleep(10000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
-		ContactSearch contact = new ContactSearch(driver);
-		contact.searchContact(DNI, DocValue[0], "masculino");
-		driver.findElement(By.id("ContactSearch_nextBtn")).click();
-		try {Thread.sleep(20000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
-		
-		List<WebElement> profileinfo = driver.findElements(By.id("Birthdate")); 
-		Assert.assertTrue(driver.findElement(By.id("Birthdate")).isDisplayed());
-		 for(int i=1; i<profileinfo.size(); i+=2){
-		  String b = (profileinfo.get(i).getText());  
-		  String datePattern = "\\d{2}/\\d{2}/\\d{4}";
-		  String date1 = b;
-		  Boolean isDate1 = date1.matches(datePattern);
-		 Assert.assertTrue(isDate1);
-		 }
-
-	}
+		SB.BuscarAvanzada("cuenta", "generica", "", "", "");
+		List <WebElement> cuenta = driver.findElements(By.cssSelector(".slds-truncate.ng-binding"));
+		for (WebElement x : cuenta) {
+			if (x.getText().toLowerCase().contains("cuenta generica")) {
+				x.click();
+				break;
+			}
+		}
+		sleep(7000);
+		WebElement date = driver.findElement(By.id("Birthdate"));
+		Assert.assertTrue(date.getAttribute("vlc-slds-model-date-format").equals("yyyy-MM-dd"));
+	}	
 	
+	//************FASE 2*********************
 	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	@Test(groups="Sales")
+	@Test(groups="Sales") //Errores en los pasos siguientes a la confirmacion del carrito
 	public void TS14278_Ventas_NumeroOrden_Verificar_Orden_de_Venta_Abierta_ICCID(){
-		SalesBase SB= new SalesBase(driver);
-		SB.BuscarCuenta(DNI, NDNI);
-		SB.crearnuevocliente(nombre, apellido, nacimiento);
-		SB.agregarplan(plan);
-		SB.continuar();
-		SB.elegirvalidacion("DOC");
-		SB.subirdoc();
-		SB.error();
-		SB.Crear_DatosDelCliente(impositiva);
-		SB.Crear_DomicilioLegal(provincia, localidad, calle, local, altura, piso, dpto, CP);
-		SB.Crear_CopiarDatosLegal();
-		SB.BtnCrearNuevoCliente();
-		SB.error2();
-		SB.AsignarLinea();
-		SB.SimulacionDeFactura();
-		SB.verificarOrdenICCID();
-	//	SB.borrarcuenta();
-		
-		
+		Assert.assertTrue(false);
 	}
 	
-	@Test(groups="Sales")
-	
+	@Test(groups="Sales") //Errores en los pasos siguientes a la confirmacion del carrito	
 	public void TS14277_Ventas_NumeroOrden_Verificar_Orden_de_Venta_Abierta_Medio_de_Pago(){
-	
-		Assert.assertTrue(false);
-		
+		Assert.assertTrue(false);	
 	}
 	
-	@Test(groups="Sales")
+	@Test(groups="Sales") //Errores en los pasos siguientes a la confirmacion del carrito
 	public void TS14275_Ventas_NumeroOrden_Verificar_Orden_de_Venta_Abierta_Modo_de_Entrega(){
-		Assert.assertTrue(false);
-		
+		Assert.assertTrue(false);	
 	}
 	
-	@Test(groups="Sales")
+	@Test(groups="Sales") //Errores en los pasos siguientes a la confirmacion del carrito
 	public void TS14272_Ventas_NumeroOrden_Verificar_Orden_de_Venta_Abierta_Nueva_Venta(){
-		Assert.assertTrue(false);
-		
+		Assert.assertTrue(false);	
 	}
 	
-	@Test(groups="Sales")
-	public void TS14274_Ventas_NumeroOrden_Verificar_Orden_de_Venta_Abierta_Seleccion_de_Linea(){
-		SalesBase SB= new SalesBase(driver);
-		SB.BuscarCuenta(DNI, NDNI);
-		SB.crearnuevocliente(nombre, apellido, nacimiento);
-		SB.agregarplan(plan);
-		SB.continuar();
-		SB.elegirvalidacion("DOC");
-		SB.subirdoc();
-		SB.error();
-		SB.Crear_DatosDelCliente(impositiva);
-		SB.Crear_DomicilioLegal(provincia, localidad, calle, local, altura, piso, dpto, CP);
-		SB.Crear_CopiarDatosLegal();
-		SB.BtnCrearNuevoCliente();
-		SB.error2();
-		SB.AsignarLinea();
-		SB.SimulacionDeFactura();
-		SB.verificarOrdenICCID();		
+	@Test(groups="Sales") //Errores en los pasos siguientes a la confirmacion del carrito
+	public void TS14274_Ventas_NumeroOrden_Verificar_Orden_de_Venta_Abierta_Seleccion_de_Linea(){		
 		Assert.assertTrue(false);
-
 	}
 	
-	@Test(groups="Sales")
+	@Test(groups="Sales") //Errores en los pasos siguientes a la confirmacion del carrito
 	public void TS14273_Ventas_NumeroOrden_Verificar_Orden_de_Venta_Abierta_Seleccionar_un_producto(){
-		SalesBase SB= new SalesBase(driver);
-		SB.BuscarCuenta(DNI, NDNI);
-		SB.crearnuevocliente(nombre, apellido, nacimiento);
-		SB.agregarplan(plan);
 		Assert.assertTrue(false);
-
 	}
 	
-	@Test(groups="Sales")
+	@Test(groups="Sales") //Errores en los pasos siguientes a la confirmacion del carrito
 	public void TS14276_Ventas_NumeroOrden_Verificar_Orden_de_Venta_Abierta_Simulacion_de_Factura(){
-		SalesBase SB= new SalesBase(driver);
-		SB.BuscarCuenta(DNI, NDNI);
-		SB.crearnuevocliente(nombre, apellido, nacimiento);
-		SB.agregarplan(plan);
-		SB.continuar();
-		SB.elegirvalidacion("DOC");
-		SB.subirdoc();
-		SB.error();
-		SB.Crear_DatosDelCliente(impositiva);
-		SB.Crear_DomicilioLegal(provincia, localidad, calle, local, altura, piso, dpto, CP);
-		SB.Crear_CopiarDatosLegal();
-		SB.BtnCrearNuevoCliente();
-		SB.error2();
-		SB.AsignarLinea();
-		SB.SimulacionDeFactura();
 		Assert.assertTrue(false);
-
 	}
 	
-	@Test(groups="Sales")
+	@Test(groups="Sales") //Errores en los pasos siguientes a la confirmacion del carrito
 	public void TS14279_Ventas_NumeroOrden_Verificar_Orden_de_Venta_Abierta_Simulacion_de_Factura_Final(){
-		Assert.assertTrue(false);
-		
+		Assert.assertTrue(false);	
 	}
 	
 	@Test(groups="Sales")
 	public void TS14270_Ventas_NumeroOrden_Visualizar_Orden_de_Venta_Abierta_ICCID(){
-		SalesBase SB= new SalesBase(driver);
-		SB.BuscarCuenta(DNI, NDNI);
-		SB.crearnuevocliente(nombre, apellido, nacimiento);
-		SB.agregarplan(plan);
-		SB.continuar();
-		SB.elegirvalidacion("DOC");
-		SB.subirdoc();
-		SB.error();
-		SB.Crear_DatosDelCliente(impositiva);
-		SB.Crear_DomicilioLegal(provincia, localidad, calle, local, altura, piso, dpto, CP);
-		SB.Crear_CopiarDatosLegal();
-		SB.BtnCrearNuevoCliente();
-		SB.error2();
-		SB.AsignarLinea();
-		SB.SimulacionDeFactura();
-		SB.verificarOrdenICCID();
 		Assert.assertTrue(false);
-
 	}
 	
-	@Test(groups="Sales")
+	@Test(groups="Sales") //Errores en los pasos siguientes a la confirmacion del carrito
 	public void TS14269_Ventas_NumeroOrden_Visualizar_Orden_de_Venta_Abierta_Medio_de_Pago(){
-		Assert.assertTrue(false);
-		
+		Assert.assertTrue(false);		
 	}
 	
-	@Test(groups="Sales")
+	@Test(groups="Sales") //Errores en los pasos siguientes a la confirmacion del carrito
 	public void TS14267_Ventas_NumeroOrden_Visualizar_Orden_de_Venta_Abierta_Modo_de_Entrega(){
 		Assert.assertTrue(false);
-
 	}
 	
-	@Test(groups="Sales")
+	@Test(groups="Sales") //Errores en los pasos siguientes a la confirmacion del carrito
 	public void TS14264_Ventas_NumeroOrden_Visualizar_Orden_de_Venta_Abierta_Nueva_Venta(){
 		Assert.assertTrue(false);
-
 	}
 	
-	@Test
+	@Test(groups="Sales") //Errores en los pasos siguientes a la confirmacion del carrito
 	public void TS14266_Ventas_NumeroOrden_Visualizar_Orden_de_Venta_Abierta_Seleccion_de_Linea(){
 		Assert.assertTrue(false);
-
 	}
 	
-	@Test(groups="Sales")
+	@Test(groups="Sales") //Errores en los pasos siguientes a la confirmacion del carrito
 	public void TS14265_Ventas_NumeroOrden_Visualizar_Orden_de_Venta_Abierta_Seleccionar_un_producto(){
-		SalesBase SB= new SalesBase(driver);
-		SB.BuscarCuenta(DNI, NDNI);
-		SB.crearnuevocliente(nombre, apellido, nacimiento);
-		SB.agregarplan(plan);
 		Assert.assertTrue(false);
-
 	}
 	
-	@Test(groups="Sales")
+	@Test(groups="Sales") //Errores en los pasos siguientes a la confirmacion del carrito
 	public void TS14268_Ventas_NumeroOrden_Visualizar_Orden_de_Venta_Abierta_Simulacion_de_Factura(){
-		SalesBase SB= new SalesBase(driver);
-		SB.BuscarCuenta(DNI, NDNI);
-		SB.crearnuevocliente(nombre, apellido, nacimiento);
-		SB.agregarplan(plan);
-		SB.continuar();
-		SB.elegirvalidacion("DOC");
-		SB.subirdoc();
-		SB.error();
-		SB.Crear_DatosDelCliente(impositiva);
-		SB.Crear_DomicilioLegal(provincia, localidad, calle, local, altura, piso, dpto, CP);
-		SB.Crear_CopiarDatosLegal();
-		SB.BtnCrearNuevoCliente();
-		SB.error2();
-		SB.AsignarLinea();
-		SB.SimulacionDeFactura();
 		Assert.assertTrue(false);
-
 	}
 	
 	//************FASE 3*********************
 
-	@Test(groups="Sales")
-	public void TS38689_Alta_Contacto_Busqueda_Verificar_resultado_busqueda_cliente_activo_inactivo(){
-		  SalesBase SB = new SalesBase(driver);
-		  SB.BuscarCuenta("DNI", "");
-		  try {Thread.sleep(10000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
-		  WebElement act = driver.findElement(By.id("tab-scoped-1__item"));
-		  Assert.assertTrue(act.getText().equals("Clientes Activos"));
-		  WebElement ina = driver.findElement(By.id("tab-scoped-2__item"));
-		  Assert.assertTrue(ina.getText().equals("Cliente Inactivos"));
-		  try {Thread.sleep(10000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+	@Test(groups = "Sales")
+	public void TS38689_Alta_Contacto_Busqueda_Verificar_resultado_busqueda_cliente_activo_inactivo() {
+		SalesBase SB = new SalesBase(driver);
+		SB.BuscarCuenta("DNI", "");
+		try {Thread.sleep(10000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		WebElement act = driver.findElement(By.id("tab-scoped-1__item"));
+		Assert.assertTrue(act.getText().equals("Clientes Activos"));
+		WebElement ina = driver.findElement(By.id("tab-scoped-2__item"));
+		Assert.assertTrue(ina.getText().equals("Cliente Inactivos"));
+		try {Thread.sleep(10000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();
+		}
 	}
 	
 	@Test(groups="Sales")
 	public void TS38760_Perfiles_Verificar_creacion_de_perfil_Canal_Tefonico(){
 		SalesBase SB = new SalesBase(driver);
 		SB.gestiondeusuarios();
-		SB.validarperfil("Medina, Elena", "CC Venta y Atencion a Clientes");
-			
+		SB.validarperfil("Medina, Elena", "CC Venta y Atencion a Clientes");			
 	}
+	
 	@Test(groups="Sales")
 	public void TS38761_Perfiles_Verificar_creacion_de_perfil_Oficina_Comercial(){
 		SalesBase SB = new SalesBase(driver);
 		SB.gestiondeusuarios();
-		SB.validarperfil("Sit, Francisco", "Oficina Comercial");
-		
+		SB.validarperfil("Sit, Francisco", "Oficina Comercial");		
 	}
+	
 	@Test(groups="Sales")
 	public void TS38762_Perfiles_Verificar_creacion_de_perfil_Oficina_Agente(){
 		SalesBase SB = new SalesBase(driver);
 		SB.gestiondeusuarios();
-		SB.validarperfil("Borbon, Andres", "Agente Venta y Atencion a Clientes");
-			
+		SB.validarperfil("Borbon, Andres", "Agente Venta y Atencion a Clientes");			
 	}
+	
 	@Test(groups="Sales")
 	public void TS38763_Perfiles_Verificar_creacion_de_perfil_Oficina_Logistica(){
 		SalesBase SB = new SalesBase(driver);
@@ -946,40 +774,40 @@ public class Sales extends TestBase {
 		driver.findElements(By.className("listItemPad")).get(13).click();
 		sleep(4000);
 		SB.validarperfil("Sit, Nicolas", "Logistica B");
-			perfil="agente";
-			
+			perfil="agente";			
 	}
-	@Test(groups="Sales")
-	public void TS38790_Alta_Cuenta_Busqueda_Verificar_nombre_de_la_busqueda(){
+
+	@Test(groups = "Sales")
+	public void TS38790_Alta_Cuenta_Busqueda_Verificar_nombre_de_la_busqueda() {
 		try {Thread.sleep(10000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
-		  Boolean f = false;
-		  List<WebElement> gst = driver.findElements(By.cssSelector(".slds-page-header__title.vlc-slds-page-header__title.slds-truncate.ng-binding"));
-		   for (WebElement e : gst){
-		    System.out.println(e.getText());
-		    if  (e.getText().equals("Gesti\u00f3n de clientes")){
-		     f= true;}}
-		  Assert.assertTrue(f);
+		Boolean f = false;
+		List<WebElement> gst = driver.findElements(By.cssSelector(".slds-page-header__title.vlc-slds-page-header__title.slds-truncate.ng-binding"));
+		for (WebElement e : gst) {
+			if (e.getText().equals("Gesti\u00f3n de clientes")) {
+				f = true;
+			}
+		}
+		Assert.assertTrue(f);
 	}
-			
-	
-	@Test(groups="Sales")
-	public void TS38791_Alta_Cuenta_Busqueda_Verificar_secciones_de_la_busqueda_de_cliente(){
+				
+	@Test(groups = "Sales")
+	public void TS38791_Alta_Cuenta_Busqueda_Verificar_secciones_de_la_busqueda_de_cliente() {
 		try {Thread.sleep(10000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
-		  WebElement tipodni=driver.findElement(By.id("SearchClientDocumentType"));
-		  WebElement numdoc=driver.findElement(By.id("SearchClientDocumentNumber"));
-		  WebElement linea=driver.findElement(By.id("PhoneNumber"));
-		  Assert.assertTrue(tipodni.isEnabled());
-		  Assert.assertTrue(numdoc.isEnabled());
-		  Assert.assertTrue(linea.isEnabled());
-		  Boolean f = false;
-		  List<WebElement> busqadv=driver.findElements(By.cssSelector(".slds-form-element__label.slds-clearfix.ng-scope"));
-		   for (WebElement e : busqadv){
-		    if  (e.getText().equals("B\u00fasqueda avanzada")){
-		     f= true;
-		     }
-		    }
-		  Assert.assertTrue(f);
-		  }
+		WebElement tipodni = driver.findElement(By.id("SearchClientDocumentType"));
+		WebElement numdoc = driver.findElement(By.id("SearchClientDocumentNumber"));
+		WebElement linea = driver.findElement(By.id("PhoneNumber"));
+		Assert.assertTrue(tipodni.isEnabled());
+		Assert.assertTrue(numdoc.isEnabled());
+		Assert.assertTrue(linea.isEnabled());
+		Boolean f = false;
+		List<WebElement> busqadv = driver.findElements(By.cssSelector(".slds-form-element__label.slds-clearfix.ng-scope"));
+		for (WebElement e : busqadv) {
+			if (e.getText().equals("B\u00fasqueda avanzada")) {
+				f = true;
+			}
+		}
+		Assert.assertTrue(f);
+	}
 	
 	@Test(groups="Sales")
 	public void TS38792_Alta_Cuenta_Busqueda_Verificar_campos_de_la_busqueda_avanzada(){
