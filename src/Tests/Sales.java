@@ -1161,6 +1161,98 @@ public class Sales extends TestBase {
 	  }
 	 Assert.assertTrue(t);  
 	 }
-
+	 @Test (groups = "Sales") 
+	  public void TS94734_Alta_de_Contacto_Persona_Fisica_Verificar_seleccion_de_localidad_existente(){ 
+	    SalesBase SB = new SalesBase(driver); 
+	    SB.BuscarCuenta(DNI, "11111111"); 
+	    SB.acciondecontacto("nueva cuenta"); 
+	    boolean h = false; 
+	    sleep(5000); 
+	    Select regio = new Select (driver.findElement(By.id("State"))); 
+	    regio.selectByVisibleText("Buenos Aires");   
+	    driver.findElement(By.id("CityTypeAhead")).sendKeys("a"); 
+	    List<WebElement> est = driver.findElements(By.cssSelector(".slds-input.ng-scope.ng-valid-minlength.ng-valid-maxlength.ng-valid.ng-valid-required.ng-not-empty.ng-dirty.ng-animate.ng-touched-add.ng-untouched-remove.ng-touched.ng-touched-add-active.ng-untouched-remove-active")); 
+	    sleep(5000); 
+	    List<WebElement> loc = driver.findElements(By.cssSelector(".typeahead.dropdown-menu.ng-scope.am-fade.bottom-left")); 
+	    for(WebElement l : loc){ 
+	      if(l.getText().toLowerCase().contains("abasto")){ 
+	      h=true; 
+	      } 
+	    } 
+	    Assert.assertTrue(h); 
+	   } 
+	  @Test (groups = "Sales") 
+	  public void TS94737_Alta_de_Contacto_Persona_Fisica_Verificar_seleccion_de_calle_existente(){ 
+	    SalesBase SB = new SalesBase(driver); 
+	    SB.BuscarCuenta(DNI, "11111111"); 
+	    SB.acciondecontacto("nueva cuenta"); 
+	    boolean h = false; 
+	    sleep(5000); 
+	    Select regio = new Select (driver.findElement(By.id("State"))); 
+	    regio.selectByVisibleText("Buenos Aires");   
+	    driver.findElement(By.id("CityTypeAhead")).sendKeys("VILLA LUZURIAGA"); 
+	    sleep(5000);   
+	    driver.findElement(By.cssSelector(".typeahead.dropdown-menu.ng-scope.am-fade.bottom-left")).click(); 
+	        sleep(5000); 
+	    List<WebElement> cal = driver.findElements(By.id("LegalStreetTypeAhead")); 
+	    for(WebElement c : cal){ 
+	      if(c.getText().toLowerCase().contains("atenas")){ 
+	      h=true; 
+	      } 
+	    } 
+	    Assert.assertTrue(h); 
+	   } 
+	  @Test (groups = "sales") 
+	  public void TS94735_Alta_de_Contacto_Persona_Fisica_Verificar_ingreso_manual_de_localidad_inexistente(){ 
+	    SalesBase SB = new SalesBase(driver); 
+	    SB.BuscarCuenta(DNI, "11111111"); 
+	    SB.acciondecontacto("nueva cuenta"); 
+	    sleep(5000); 
+	    Select regio = new Select (driver.findElement(By.id("State"))); 
+	    regio.selectByVisibleText("Buenos Aires");   
+	    WebElement loc = driver.findElement(By.id("CityTypeAhead")); 
+	    loc.sendKeys("VILLA LUZURIAGA"); 
+	    sleep(5000);   
+	    driver.findElement(By.cssSelector(".typeahead.dropdown-menu.ng-scope.am-fade.bottom-left")).click(); 
+	    Assert.assertTrue(loc.getAttribute("value").equals("VILLA LUZURIAGA")); 
+	  } 
+	  @Test(groups = "sales") 
+	  public void TS94739_Alta_de_Contacto_Persona_Fisica_Verificar_ingreso_manual_de_cod_postal_inexistente(){ 
+	    SalesBase SB = new SalesBase(driver); 
+	    SB.BuscarCuenta(DNI, "11111111"); 
+	    SB.acciondecontacto("nueva cuenta"); 
+	    sleep(5000); 
+	    Select regio = new Select (driver.findElement(By.id("State"))); 
+	    regio.selectByVisibleText("Buenos Aires");   
+	    WebElement loc = driver.findElement(By.id("CityTypeAhead")); 
+	    loc.sendKeys("VILLA LUZURIAGA"); 
+	    sleep(5000);   
+	    driver.findElement(By.cssSelector(".typeahead.dropdown-menu.ng-scope.am-fade.bottom-left")).click(); 
+	      driver.findElement(By.id("PostalCodeTypeAhead")).sendKeys("1"); 
+	    sleep(4000); 
+	    driver.findElement(By.cssSelector(".typeahead.dropdown-menu.ng-scope.am-fade.bottom-left")).click(); 
+	    WebElement cod = driver.findElement(By.id("NewPostalCodeName")); 
+	    cod.sendKeys("1765"); 
+	    Assert.assertTrue(cod.getAttribute("value").equals("1765")); 
+	  } 
+	  @Test(groups = "sales") 
+	  public void TS94736_Alta_de_Contacto_Persona_Fisica_Verificar_ingreso_manual_de_calle_inexistente(){ 
+	    SalesBase SB = new SalesBase(driver); 
+	    SB.BuscarCuenta(DNI, "11111111"); 
+	    SB.acciondecontacto("nueva cuenta"); 
+	    sleep(5000); 
+	    Select regio = new Select (driver.findElement(By.id("State"))); 
+	    regio.selectByVisibleText("Buenos Aires");   
+	    WebElement loc = driver.findElement(By.id("CityTypeAhead")); 
+	    loc.sendKeys("VILLA LUZURIAGA"); 
+	    sleep(5000);   
+	    driver.findElement(By.cssSelector(".typeahead.dropdown-menu.ng-scope.am-fade.bottom-left")).click(); 
+	    driver.findElement(By.id("LegalStreetTypeAhead")).sendKeys("a"); 
+	    sleep(5000); 
+	    driver.findElement(By.cssSelector(".typeahead.dropdown-menu.ng-scope.am-fade.bottom-left")).click(); 
+	    WebElement cal = driver.findElement(By.id("NewStreetName")); 
+	    cal.sendKeys("ATENAS"); 
+	    Assert.assertTrue(cal.getAttribute("value").equals("ATENAS")); 
+	  } 
 
 }
