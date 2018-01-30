@@ -101,6 +101,20 @@ public class CustomerCareFase4 extends TestBase{
 		Assert.assertTrue(casoCerrado.get(11).getText().equals(equipoCreador));
 	}
 	
+	@Test (groups = {"CustomerCare", "Vista360Layout"})
+	public void TS37166_360_View_UX_360_Card_Historiales_Visualizar_HISTORIAL_DE_AJUSTES() {
+		page.elegirCuenta("aaaaFernando Care");
+		page.irAHistoriales();
+		List <WebElement> element = driver.findElements(By.cssSelector(".slds-p-around--large.slds-text-body--regular.labelFont"));
+		boolean a = false;
+		for (WebElement x : element) {
+			if (x.getText().toLowerCase().contains("historial de ajustes")) {
+				a = true;
+			}
+		}
+		Assert.assertTrue(a);
+	}
+	
 	@Test (groups = {"CustomerCare", "DebitoAutomatico"})
 	public void TS37230_Automatic_Debit_Subscriptions_Sesión_guiada_Débito_Automático_Inicial_Paso_2_Adhesión_Cuenta_con_Mora() {
 		page.elegirCuenta("aaaaCuenta ConMora");
@@ -195,7 +209,7 @@ public class CustomerCareFase4 extends TestBase{
 	public void TS69098_Consumption_Details_Detalle_de_Consumo_Modificacion_de_Tabla_Nuevas_Columnas_Visualizar_encabezado() {
 		page.elegirCuenta("aaaaFernando Care");
 		page.irAGestion("detalle de consu");
-		List <WebElement> title = driver.findElements(By.cssSelector(".slds-size--11-of-12.slds-medium-size--11-of-12.slds-large-size--11-of-12"));
+		List <WebElement> title = driver.findElements(By.className("big_title"));
 		boolean a = false;
 		for (WebElement x : title) {
 			if (x.getText().equals("Detalle de Consumos")) {
@@ -216,14 +230,7 @@ public class CustomerCareFase4 extends TestBase{
 				a = true;
 			}
 		}
-		List <WebElement> cons = driver.findElements(By.id("text-input-01"));
-		boolean b = false;
-		for (WebElement x : cons) {
-			if (x.getAttribute("placeholder").isEmpty()) {
-				b = true;
-			}
-		}
-		Assert.assertTrue(a && b);
+		Assert.assertTrue(a);
 	}
 	
 	@Test (groups = {"CustomerCare", "DetalleDeConsumos"})
@@ -231,8 +238,7 @@ public class CustomerCareFase4 extends TestBase{
 		page.elegirCuenta("aaaaFernando Care");
 		page.irAGestion("detalle de consu");
 		List <WebElement> filtro = driver.findElements(By.id("text-input-01"));
-		filtro.get(0).click();
-		Assert.assertTrue(filtro.get(0).getAttribute("placeholder").isEmpty());
+		Assert.assertTrue(filtro.get(0).getAttribute("ng-model").contains("ptc.filterServiceOption"));
 	}
 	
 	@Test (groups = {"CustomerCare", "DetalleDeConsumos"})
@@ -249,7 +255,7 @@ public class CustomerCareFase4 extends TestBase{
 		List <WebElement> cons = driver.findElements(By.id("text-input-02"));
 		boolean b = false;
 		for (WebElement x : cons) {
-			if (x.getAttribute("placeholder").equals("Los últimos 15 días")) {
+			if (x.getAttribute("placeholder").equals("Los \u00faltimos 15 d\u00edas")) {
 				b = true;
 			}
 		}
@@ -260,10 +266,11 @@ public class CustomerCareFase4 extends TestBase{
 	public void TS69102_Consumption_Details_Detalle_de_Consumo_Modificacion_de_Tabla_Nuevas_Columnas_Visualizar_menu_desplegable_del_filtro_Periodo() {
 		page.elegirCuenta("aaaaFernando Care");
 		page.irAGestion("detalle de consu");
+		sleep(3000);
 		List <WebElement> filtro = driver.findElements(By.id("text-input-02"));
 		filtro.get(0).click();
-		Assert.assertTrue(driver.findElement(By.xpath("//*[text() = 'Los últimos 15 días']")).isDisplayed());
-		Assert.assertTrue(driver.findElement(By.xpath("//*[text() = 'Una factura']")).isDisplayed());
+		Assert.assertTrue(driver.findElement(By.xpath("//*[text() = 'Los \u00faltimos 3 d\u00edas']")).isDisplayed());
+		Assert.assertTrue(driver.findElement(By.xpath("//*[text() = 'Los \u00faltimos 15 d\u00edas']")).isDisplayed());
 		Assert.assertTrue(driver.findElement(By.xpath("//*[text() = 'Un rango personalizado']")).isDisplayed());
 	}
 	
@@ -271,6 +278,7 @@ public class CustomerCareFase4 extends TestBase{
 	public void TS69104_Consumption_Details_Detalle_de_Consumo_Modificacion_de_Tabla_Nuevas_Columnas_Visualizar_calendario_en_filtro_Inicio() {
 		page.elegirCuenta("aaaaFernando Care");
 		page.irAGestion("detalle de consu");
+		sleep(3000);
 		driver.findElement(By.id("text-input-02")).click();
 		driver.findElement(By.xpath("//*[text() = 'Un rango personalizado']")).click();
 		driver.findElement(By.id("text-input-id-1")).click();
@@ -282,6 +290,7 @@ public class CustomerCareFase4 extends TestBase{
 		TestBase TB = new TestBase();
 		page.elegirCuenta("aaaaFernando Care");
 		page.irAGestion("detalle de consu");
+		sleep(3000);
 		driver.findElement(By.id("text-input-02")).click();
 		driver.findElement(By.xpath("//*[text() = 'Un rango personalizado']")).click();
 		TB.waitFor(driver, By.id("text-input-id-2"));
@@ -294,6 +303,7 @@ public class CustomerCareFase4 extends TestBase{
 	public void TS69107_Consumption_Details_Detalle_de_Consumo_Modificacion_de_Tabla_Nuevas_Columnas_Visualizar_boton_Consultar() {
 		page.elegirCuenta("aaaaFernando Care");
 		page.irAGestion("detalle de consu");
+		sleep(3000);
 		Assert.assertTrue(driver.findElement(By.cssSelector(".slds-button.slds-button--brand")).isDisplayed());
 	}
 	
@@ -301,6 +311,7 @@ public class CustomerCareFase4 extends TestBase{
 	public void TS69108_Consumption_Details_Detalle_de_Consumo_Modificacion_de_Tabla_Nuevas_Columnas_Visualizar_desplegable_Filtros_Avanzados() {
 		page.elegirCuenta("aaaaFernando Care");
 		page.irAGestion("detalle de consu");
+		sleep(3000);
 		List <WebElement> element = driver.findElements(By.className("slds-text-heading--small"));
 		boolean a = false;
 		for (WebElement x : element) {
@@ -315,12 +326,13 @@ public class CustomerCareFase4 extends TestBase{
 	public void TS69110_Consumption_Details_Detalle_de_Consumo_Modificacion_de_Tabla_Nuevas_Columnas_Visualizar_filtro_avanzado_Numero_de_origen_o_destino() {
 		page.elegirCuenta("aaaaFernando Care");
 		page.irAGestion("detalle de consu");
+		sleep(3000);
 		List<WebElement> filtro = driver.findElements(By.className("slds-text-heading--x-small"));
 		filtro.get(0).click();
 		List <WebElement> element = driver.findElements(By.className("slds-text-heading--small"));
 		boolean a = false;
 		for (WebElement x : element) {
-			if (x.getText().equals("Número de origen o destino")) {
+			if (x.getText().equals("N\u00famero de origen o destino")) {
 				a = true;
 			}
 		}
@@ -336,6 +348,7 @@ public class CustomerCareFase4 extends TestBase{
 	public void TS69111_Consumption_Details_Detalle_de_Consumo_Modificacion_de_Tabla_Nuevas_Columnas_Visualizar_filtro_avanzado_Tipo_de_consumo() {
 		page.elegirCuenta("aaaaFernando Care");
 		page.irAGestion("detalle de consu");
+		sleep(3000);
 		List<WebElement> filtro = driver.findElements(By.className("slds-text-heading--x-small"));
 		filtro.get(0).click();
 		List <WebElement> element = driver.findElements(By.className("slds-text-heading--small"));
@@ -359,6 +372,7 @@ public class CustomerCareFase4 extends TestBase{
 	public void TS69112_Consumption_Details_Detalle_de_Consumo_Modificacion_de_Tabla_Nuevas_Columnas_Visualizar_filtro_avanzado_Con_o_sin_cargo() {
 		page.elegirCuenta("aaaaFernando Care");
 		page.irAGestion("detalle de consu");
+		sleep(3000);
 		List<WebElement> filtro = driver.findElements(By.className("slds-text-heading--x-small"));
 		filtro.get(0).click();
 		List <WebElement> element = driver.findElements(By.className("slds-text-heading--small"));
@@ -450,18 +464,14 @@ public class CustomerCareFase4 extends TestBase{
 		try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 		BasePage cambioFrameByID = new BasePage();
 		driver.switchTo().frame(cambioFrameByID.getFrameForElement(driver, By.id("text-input-id-1")));
-		List <WebElement> element = driver.findElements(By.cssSelector(".slds-truncate.slds-p-vertical--medium.clickablerow"));
+		driver.findElement(By.cssSelector(".slds-button.slds-button--brand.filterNegotiations.slds-p-horizontal--x-large.slds-p-vertical--x-small")).click();
+		sleep(3000);
+		WebElement tipo = driver.findElement(By.xpath("//*[@id=\"j_id0:j_id5\"]/div/div/ng-include/div/div/div[3]/div[1]/div/table/tbody/tr[1]/td[2]"));
 		boolean a = false;
-		boolean b = false;
-		for (WebElement x : element) {
-			if (x.getText().equals("Case")) {
-				a = true;
-			}
-			if (x.getText().startsWith("000")) {
-				b = true;
-			}
+		if (tipo.getText().contains("Case")) {
+			a = true;
 		}
-		Assert.assertTrue(a && b);
+		Assert.assertTrue(a);
 	}
 	
 	@Test (groups = {"CustomerCare", "Vista360Layout"})
