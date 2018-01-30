@@ -61,13 +61,13 @@ public class Sales extends TestBase {
 	String[] genero = {"masculino","femenino"};
 	String[] DocValue = {"52698550","3569874563","365","ssss"};
 	
-	//@AfterClass(groups={"sales", "AltaDeContacto"})
+	//@AfterClass(alwaysRun=true)
 	public void tearDown() {
 		driver.close();
 		driver.quit();
 	}
 	
-	//@AfterMethod(groups={"sales", "AltaDeContacto"})
+	//@AfterMethod(alwaysRun=true)
 	public void deslogin(){
 		try {Thread.sleep(10000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 		driver.get("https://crm--sit.cs14.my.salesforce.com/home/home.jsp?tsid=02u41000000QWha/");
@@ -116,8 +116,8 @@ public class Sales extends TestBase {
 		try {Thread.sleep(10000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 	}
 
-	@Test(groups={"sales", "AltaDeContacto"}) 
-	public void TS6905_createdNewValidContact(){
+	@Test(groups={"Sales", "AltaDeContacto", "Ola1"}) 
+	public void TS94544_createdNewValidContact(){
 		SalesBase SB = new SalesBase(driver);
 		SB.BtnCrearNuevoCliente();
 		String asd = driver.findElement(By.id("SearchClientDocumentNumber")).getAttribute("value");
@@ -141,8 +141,8 @@ public class Sales extends TestBase {
 		Assert.assertTrue(coldni.getText().equals(asd));	
 		}
 	
-	@Test(groups={"sales", "AltaDeContacto"})
-	public void TS6965_Verificar_que_el_campo_Numero_de_documento_no_tenga_menos_de_7_digitos()	{
+	@Test(groups={"Sales", "AltaDeContacto","Ola1"})
+	public void TS94570_Verificar_que_el_campo_Numero_de_documento_no_tenga_menos_de_7_digitos()	{
 		boolean a = false;
 		try {Thread.sleep(10000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 		ContactSearch contact = new ContactSearch(driver);
@@ -159,8 +159,8 @@ public class Sales extends TestBase {
 	Assert.assertTrue(a);
 	}
 	
-	@Test(groups={"sales", "AltaDeContacto"})
-	public void TS6918_Seleccionar_Femenino_en_campo_Genero(){
+	@Test(groups={"Sales", "AltaDeContacto","Ola1"})
+	public void TS94542_Seleccionar_Femenino_en_campo_Genero(){
 		SalesBase SB = new SalesBase(driver);
 		CustomerCare CC = new CustomerCare(driver);
 		SB.BtnCrearNuevoCliente();
@@ -174,8 +174,8 @@ public class Sales extends TestBase {
 		Assert.assertTrue(genero.get(0).isSelected());
 	}
 	
-	@Test(groups={"sales", "AltaDeContacto"})
-	public void TS6919_Seleccionar_Masculino_en_campo_Genero(){
+	@Test(groups={"Sales", "AltaDeContacto","Ola1"})
+	public void TS94543_Seleccionar_Masculino_en_campo_Genero(){
 		SalesBase SB = new SalesBase(driver);
 		CustomerCare CC = new CustomerCare(driver);
 		SB.BtnCrearNuevoCliente();
@@ -189,8 +189,8 @@ public class Sales extends TestBase {
 		Assert.assertTrue(genero.get(1).isSelected());
 	}
 	
-	@Test(groups={"sales", "AltaDeContacto"})
-	public void TS6964_Verificar_que_el_campo_Numero_de_documento_no_tenga_mas_de_8_digitos(){
+	@Test(groups={"Sales", "AltaDeContacto","Ola1"})
+	public void TS94569_Verificar_que_el_campo_Numero_de_documento_no_tenga_mas_de_8_digitos(){
 		boolean a = false;
 		try {Thread.sleep(10000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 		ContactSearch contact = new ContactSearch(driver);
@@ -208,8 +208,8 @@ public class Sales extends TestBase {
 	Assert.assertTrue(a);
 	}
 	
-	@Test(groups={"sales", "AltaDeContacto"}) //no es obligatorio
-	public void TS6967_Verificar_que_el_campo_tipo_de_documento_sea_obligatorio(){
+	@Test(groups={"Sales", "AltaDeContacto","Ola1"}) //no es obligatorio
+	public void TS94572_Verificar_que_el_campo_tipo_de_documento_sea_obligatorio(){
 		boolean a= false;
 		ContactSearch contact = new ContactSearch(driver);
 		contact.searchContact( "DNI","","");
@@ -228,8 +228,8 @@ public class Sales extends TestBase {
 	Assert.assertTrue(a);
 	}
 	
-	@Test(groups="Fase2")
-	public void TS6937_Verificar_campo_Genero_obligatorio(){
+	@Test(groups={"Sales", "AltaDeContacto","Ola1"})
+	public void TS94552_Verificar_campo_Genero_obligatorio(){
 		SalesBase SB = new SalesBase(driver);
 		SB.BtnCrearNuevoCliente();
 		try {Thread.sleep(10000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
@@ -241,8 +241,8 @@ public class Sales extends TestBase {
 		
 			}
 	
-	@Test(groups={"sales", "AltaDeContacto"}) //no es obligatorio
-	public void TS6966_Verificar_que_el_campo_Numero_de_Documento_sea_obligatorio(){
+	@Test(groups={"Sales", "AltaDeContacto", "Ola1"}) //no es obligatorio
+	public void TS94571_Verificar_que_el_campo_Numero_de_Documento_sea_obligatorio(){
 		boolean a= false;
 		SalesBase SB = new SalesBase(driver);
 		SB.BuscarAvanzada(nombre, apellido, "", "", "");
@@ -263,8 +263,8 @@ public class Sales extends TestBase {
 	Assert.assertTrue(a);
 	}
 	
-	@Test(groups={"sales", "AltaDeContacto"})
-	public void TS6914_Ingresar_mas_de_9_caracteres_en_el_campo_Pasaporte(){
+	@Test(groups={"Sales", "AltaDeContacto", "Ola1"})
+	public void TS94539_Ingresar_mas_de_9_caracteres_en_el_campo_Pasaporte(){
 		boolean a = false;
 		try {Thread.sleep(10000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 		ContactSearch contact = new ContactSearch(driver);
@@ -279,8 +279,8 @@ public class Sales extends TestBase {
 	
 	}
 	
-	@Test(groups={"sales", "AltaDeContacto"})
-	public void TS6915_Ingresar_menos_de_9_caracteres_en_el_pasaporte(){
+	@Test(groups={"Sales", "AltaDeContacto","Ola1"})
+	public void TS94540_Ingresar_menos_de_9_caracteres_en_el_pasaporte(){
 		boolean a = false;
 		try {Thread.sleep(10000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 		ContactSearch contact = new ContactSearch(driver);
@@ -295,8 +295,8 @@ public class Sales extends TestBase {
 	
 	}
 	
-	 @Test(groups={"sales", "AltaDeContacto"})   //verify
-	public void TS6916_Ingresar_pasaporte_en_el_campo_Numero_de_Documento(){
+	 @Test(groups={"Sales", "AltaDeContacto","Ola1"})   //verify
+	public void TS94541_Ingresar_pasaporte_en_el_campo_Numero_de_Documento(){
 		String PASA = "4651327";
 		boolean esta = false;
 		SalesBase SB = new SalesBase(driver);
@@ -312,8 +312,8 @@ public class Sales extends TestBase {
 		assertTrue(esta);
 	}
 	
-	@Test(groups={"sales", "AltaDeContacto"}) //verify 
-	public void TS6912_Ingresar_DNI_en_el_campo_Numero_de_Documento(){
+	@Test(groups={"Sales", "AltaDeContacto", "Ola1"}) //verify 
+	public void TS94537_Ingresar_DNI_en_el_campo_Numero_de_Documento(){
 		String DNI = "4651327";
 		boolean esta = false;
 		SalesBase SB = new SalesBase(driver);
@@ -329,19 +329,19 @@ public class Sales extends TestBase {
 		assertTrue(esta);
 	}
 	
-	@Test(groups={"sales", "AltaDeContacto"})
-	public void TS6911_Numero_De_Cuit_Con_Guiones(){
+	@Test(groups={"Sales", "AltaDeContacto","Ola1"})
+	public void TS94536_Numero_De_Cuit_Con_Guiones(){
 		String CUIT = "22-35689987-4";
 		boolean esta = false;
 		SalesBase SB = new SalesBase(driver);
 		SB.BuscarCuenta("CUIT", CUIT);
-		driver.findElement(By.id("alert-container")).isDisplayed();
+		assertTrue(driver.findElement(By.id("alert-container")).isDisplayed());
 		
 	}
 	
 					// ACA
-	@Test(groups={"sales", "AltaDeContacto"})
-	public void TS6943_Verificar_el_ingreso_de_caracteres_alfanumericos_en_Pasaporte(){
+	@Test(groups={"Sales", "AltaDeContacto", "Ola1"})
+	public void TS94556_Verificar_el_ingreso_de_caracteres_alfanumericos_en_Pasaporte(){
 		try {Thread.sleep(10000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 		boolean as = false;
 		ContactSearch contact = new ContactSearch(driver);
@@ -356,8 +356,8 @@ public class Sales extends TestBase {
 		Assert.assertTrue(as);
 	}
 	
-	@Test(groups={"sales", "AltaDeContacto"})  // ALFANUMERICO
-	public void TS6945_Verificar_error_al_ingresar_CUIT_con_cero_al_inicio(){
+	@Test(groups={"Sales", "AltaDeContacto","Ola1"})  // ALFANUMERICO
+	public void TS94558_Verificar_error_al_ingresar_CUIT_con_cero_al_inicio(){
 		try {Thread.sleep(10000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 		boolean as = false;
 		ContactSearch contact = new ContactSearch(driver);
@@ -371,8 +371,8 @@ public class Sales extends TestBase {
 		Assert.assertTrue(as);
 	}
 	
-	@Test(groups={"sales", "AltaDeContacto"})
-	public void TS6944_Verificar_error_al_ingresar_caracteres_alfanumericos_en_el_CUIT(){
+	@Test(groups={"Sales", "AltaDeContacto","Ola1"})
+	public void TS94557_Verificar_error_al_ingresar_caracteres_alfanumericos_en_el_CUIT(){
 		try {Thread.sleep(10000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 		boolean as = false;
 		ContactSearch contact = new ContactSearch(driver);
@@ -386,8 +386,8 @@ public class Sales extends TestBase {
 		Assert.assertTrue(as);
 	}
 	
-	@Test(groups={"sales", "AltaDeContacto"})
-	public void TS6935_Verificar_campo_CUIT_obligatorio(){
+	@Test(groups={"Sales", "AltaDeContacto", "Ola1"})
+	public void TS94550_Verificar_campo_CUIT_obligatorio(){
 		try {Thread.sleep(10000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 		ContactSearch contact = new ContactSearch(driver);
 		contact.searchContact("CUIT", "", "");
@@ -401,8 +401,8 @@ public class Sales extends TestBase {
 	
 	
 	
-	@Test(groups={"sales", "AltaDeContacto"})
-	public void TS6901_Completar_los_campos_luego_de_una_busqueda_de_contacto_inexistente()	{
+	@Test(groups={"Sales", "AltaDeContacto", "Ola1"})
+	public void TS94526_Completar_los_campos_luego_de_una_busqueda_de_contacto_inexistente()	{
 		ContactSearch contact = new ContactSearch(driver);
 		contact.searchContact(DNI, "1234657", "");
 		driver.findElement(By.id("SearchClientsDummy")).click();
@@ -426,8 +426,8 @@ public class Sales extends TestBase {
 		
 	}
 	
-	@Test(groups={"sales", "AltaDeContacto"})
-	public void TS6920_Seleccionar_opcion_de_validacion_de_identidad(){//la validacion de identidad no esta mas
+	@Test(groups={"Sales", "AltaDeContacto", "Ola1"})
+	public void TS94588_Seleccionar_opcion_de_validacion_de_identidad(){//la validacion de identidad no esta mas
 		SalesBase SB = new SalesBase(driver);
 		BasePage Bp= new BasePage();
 		Random aleatorio = new Random(System.currentTimeMillis());
@@ -456,8 +456,8 @@ public class Sales extends TestBase {
 		SB.elegirvalidacion("DOC");
 		
 	}
-	@Test(groups={"sales", "AltaDeContacto"})
-	public void TS6909_Ingresar_caracteres_numericos_en_campo_Apellido(){
+	@Test(groups={"Sales", "AltaDeContacto","Ola1"})
+	public void TS94534_Ingresar_caracteres_numericos_en_campo_Apellido(){
 		ContactSearch contact = new ContactSearch(driver);
 		contact.searchContact(DNI, "1234657", "");
 		driver.findElement(By.id("SearchClientsDummy")).click();
@@ -474,8 +474,8 @@ public class Sales extends TestBase {
 		assertTrue(driver.findElement(By.cssSelector(".slds-form-element.vlc-flex.ng-scope.ng-invalid.ng-valid-minlength.ng-valid-maxlength.ng-dirty.ng-valid-parse.ng-invalid-pattern.ng-valid-required")).isDisplayed());
 	}
 	
-	@Test(groups={"sales", "AltaDeContacto"})
-	public void TS6910_Ingresar_caracteres_numericos_en_campo_Nombre()
+	@Test(groups={"Sales", "AltaDeContacto","Ola1"})
+	public void TS94535_Ingresar_caracteres_numericos_en_campo_Nombre()
 	{	
 		ContactSearch contact = new ContactSearch(driver);
 		contact.searchContact(DNI, "1234657", "");
@@ -494,8 +494,8 @@ public class Sales extends TestBase {
 	}
 	
 	
-	@Test(groups={"sales", "AltaDeContacto"})
-	public void TS6949_Verificar_Fecha_de_Nacimiento_con_ingreso_manual() {
+	@Test(groups={"Sales", "AltaDeContacto","Ola1"})
+	public void TS94560_Verificar_Fecha_de_Nacimiento_con_ingreso_manual() {
 		ContactSearch contact = new ContactSearch(driver);
 		contact.searchContact(DNI, "1234675", "");
 		driver.findElement(By.id("SearchClientsDummy")).click();
@@ -512,8 +512,8 @@ public class Sales extends TestBase {
 		assertTrue(driver.findElement(By.cssSelector(".slds-form-element.vlc-flex.ng-scope.ng-dirty.ng-valid-parse.ng-valid-required.ng-valid.ng-valid-valid")).isDisplayed());
 	}
 	
-	@Test(groups={"sales", "AltaDeContacto"})
-	public void TS6950_Fecha_de_Nacimiento_con_ingreso_manual_Anio_con_letras_o_mas_de_5_digitos(){
+	@Test(groups={"Sales", "AltaDeContacto","Ola1"})
+	public void TS94561_Fecha_de_Nacimiento_con_ingreso_manual_Anio_con_letras_o_mas_de_5_digitos(){
 		ContactSearch contact = new ContactSearch(driver);
 		contact.searchContact(DNI, "1234657", "");
 		driver.findElement(By.id("SearchClientsDummy")).click();
@@ -536,8 +536,8 @@ public class Sales extends TestBase {
 
 	}
 	
-	@Test(groups={"sales", "AltaDeContacto"})
-	public void TS6951_Verificar_Fecha_de_Nacimiento_con_ingreso_manual_Dia_Fuera_de_rango(){
+	@Test(groups={"Sales", "AltaDeContacto","Ola1"})
+	public void TS94562_Verificar_Fecha_de_Nacimiento_con_ingreso_manual_Dia_Fuera_de_rango(){
 		ContactSearch contact = new ContactSearch(driver);
 		contact.searchContact(DNI, "1234657", "");
 		driver.findElement(By.id("SearchClientsDummy")).click();
@@ -562,8 +562,8 @@ public class Sales extends TestBase {
 	
 
 	
-	@Test(groups={"sales", "AltaDeContacto"})
-	public void TS6952_Verificar_Fecha_de_Nacimiento_con_ingreso_manual_Mes_Fuera_de_rango() 
+	@Test(groups={"Sales", "AltaDeContacto","Ola1"})
+	public void TS94563_Verificar_Fecha_de_Nacimiento_con_ingreso_manual_Mes_Fuera_de_rango() 
 	{
 		ContactSearch contact = new ContactSearch(driver);
 		contact.searchContact(DNI, "1234657", "");
@@ -587,8 +587,8 @@ public class Sales extends TestBase {
 
 	}
 	
-	//@Test(groups={"sales", "AltaDeContacto"})
-	public void TS6974_Verificar_valor_del_check_de_email_por_default() {	
+	//@Test(groups={"Sales", "AltaDeContacto","Ola1"})
+	public void TS94575_Verificar_valor_del_check_de_email_por_default() {	
 		SalesBase SB = new SalesBase(driver);
 		SB.BuscarAvanzada(nombre, apellido, "", "", "");
 		CustomerCare CC = new CustomerCare(driver);
@@ -601,8 +601,8 @@ public class Sales extends TestBase {
 		Assert.assertTrue(!driver.findElement(By.cssSelector(".slds-form-element.vlc-flex.ng-pristine.ng-scope.ng-invalid.ng-invalid-required")).isSelected());
 	}
 	
-	//@Test(groups={"sales", "AltaDeContacto"})
-	public void TS6941_Verificar_check_de_no_tener_email() {
+	//@Test(groups={"Sales", "AltaDeContacto","Ola1"})
+	public void TS94555_Verificar_check_de_no_tener_email() {
 		SalesBase SB = new SalesBase(driver);
 		SB.BuscarAvanzada(nombre, apellido, "", "", "");
 		CustomerCare CC = new CustomerCare(driver);
@@ -617,32 +617,32 @@ public class Sales extends TestBase {
 	}
 	
 
-	@Test(groups={"Sales", "AltaDeContacto"})
-	public void TS6934_Verificar_campo_Apellido_obligatorio(){
+	@Test(groups={"Sales", "AltaDeContacto","Ola1"})
+	public void TS94549_Verificar_campo_Apellido_obligatorio(){
 		SalesBase SB = new SalesBase(driver);
 		SB.BtnCrearNuevoCliente();
 		WebElement name = driver.findElement(By.id("LastName"));
 		Assert.assertTrue(name.getAttribute("required").equals("true"));
 	}
 	
-	@Test(groups={"Sales", "AltaDeContacto"})
-	public void TS6936_Verificar_campo_Fecha_de_Nacimiento_obligatorio(){
+	@Test(groups={"Sales", "AltaDeContacto","Ola1"})
+	public void TS94551_Verificar_campo_Fecha_de_Nacimiento_obligatorio(){
 		SalesBase SB = new SalesBase(driver);
 		SB.BtnCrearNuevoCliente();
 		WebElement name = driver.findElement(By.id("Birthdate"));
 		Assert.assertTrue(name.getAttribute("required").equals("true"));
 	}
 	
-	@Test(groups={"Sales", "AltaDeContacto"})
-	public void TS6938_Verificar_campo_Nombre_obligatorio(){
+	@Test(groups={"Sales", "AltaDeContacto","Ola1"})
+	public void TS94553_Verificar_campo_Nombre_obligatorio(){
 		SalesBase SB = new SalesBase(driver);
 		SB.BtnCrearNuevoCliente();
 		WebElement name = driver.findElement(By.id("FirstName"));
 		Assert.assertTrue(name.getAttribute("required").equals("true"));
 	}
 	
-	@Test(groups={"Sales", "AltaDeContacto"})
-	public void TS6931_calendarBirthDate(){
+	@Test(groups={"Sales", "AltaDeContacto","Ola1"})
+	public void TS94548_calendarBirthDate(){
 		SalesBase SB = new SalesBase(driver);
 		SB.BtnCrearNuevoCliente();
 		driver.findElement(By.id("Birthdate")).click();
@@ -650,8 +650,8 @@ public class Sales extends TestBase {
 		Assert.assertTrue(driver.findElement(By.cssSelector(".datepicker.-bottom-left-.-from-bottom-")).isDisplayed());
 	}
 
-	@Test(groups={"Sales", "AltaDeContacto"})
-	public void TS6957_Verificar_mascara_del_campo_Fecha_de_Nacimiento() {
+	@Test(groups={"Sales", "AltaDeContacto","Ola1"})
+	public void TS94567_Verificar_mascara_del_campo_Fecha_de_Nacimiento() {
 		SalesBase SB = new SalesBase(driver);
 		SB.BuscarAvanzada("cuenta", "generica", "", "", "");
 		List <WebElement> cuenta = driver.findElements(By.cssSelector(".slds-truncate.ng-binding"));
@@ -745,8 +745,8 @@ public class Sales extends TestBase {
 	
 	//************FASE 3*********************
 
-	@Test(groups = "Sales")
-	public void TS38689_Alta_Contacto_Busqueda_Verificar_resultado_busqueda_cliente_activo_inactivo() {
+	@Test(groups={"Sales", "AltaDeContacto","Ola1"})
+	public void TS94887_Alta_Contacto_Busqueda_Verificar_resultado_busqueda_cliente_activo_inactivo() {
 		SalesBase SB = new SalesBase(driver);
 		SB.BuscarCuenta("DNI", "");
 		try {Thread.sleep(10000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
@@ -758,29 +758,29 @@ public class Sales extends TestBase {
 		}
 	}
 	
-	@Test(groups="Sales")
-	public void TS38760_Perfiles_Verificar_creacion_de_perfil_Canal_Tefonico(){
+	@Test(groups={"Sales", "Perfiles","Ola1"})
+	public void TS94872_Perfiles_Verificar_creacion_de_perfil_Canal_Tefonico(){
 		SalesBase SB = new SalesBase(driver);
 		SB.gestiondeusuarios();
 		SB.validarperfil("Medina, Elena", "CC Venta y Atencion a Clientes");			
 	}
 	
-	@Test(groups="Sales")
-	public void TS38761_Perfiles_Verificar_creacion_de_perfil_Oficina_Comercial(){
+	@Test(groups={"Sales", "Perfiles","Ola1"})
+	public void TS94873_Perfiles_Verificar_creacion_de_perfil_Oficina_Comercial(){
 		SalesBase SB = new SalesBase(driver);
 		SB.gestiondeusuarios();
 		SB.validarperfil("Sit, Francisco", "TA - OFCOM Venta y Atencion a Clientes");		
 	}
 	
-	@Test(groups="Sales")
-	public void TS38762_Perfiles_Verificar_creacion_de_perfil_Oficina_Agente(){
+	@Test(groups={"Sales", "Perfiles","Ola1"})
+	public void TS94874_Perfiles_Verificar_creacion_de_perfil_Oficina_Agente(){
 		SalesBase SB = new SalesBase(driver);
 		SB.gestiondeusuarios();
 		SB.validarperfil("Borbon, Andres", "Agente Venta y Atencion a Clientes");			
 	}
 	
-	@Test(groups="Sales")
-	public void TS38763_Perfiles_Verificar_creacion_de_perfil_Oficina_Logistica(){
+	@Test(groups={"Sales", "Perfiles","Ola1"})
+	public void TS94875_Perfiles_Verificar_creacion_de_perfil_Oficina_Logistica(){
 		SalesBase SB = new SalesBase(driver);
 		SB.gestiondeusuarios();
 		driver.findElements(By.className("listItemPad")).get(13).click();
@@ -789,8 +789,8 @@ public class Sales extends TestBase {
 			perfil="agente";			
 	}
 
-	@Test(groups = "Sales")
-	public void TS38790_Alta_Cuenta_Busqueda_Verificar_nombre_de_la_busqueda() {
+	@Test(groups={"Sales", "AltaCuenta","Ola1"})
+	public void TS94882_Alta_Cuenta_Busqueda_Verificar_nombre_de_la_busqueda() {
 		try {Thread.sleep(10000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 		Boolean f = false;
 		List<WebElement> gst = driver.findElements(By.cssSelector(".slds-page-header__title.vlc-slds-page-header__title.slds-truncate.ng-binding"));
@@ -802,8 +802,8 @@ public class Sales extends TestBase {
 		Assert.assertTrue(f);
 	}
 				
-	@Test(groups = "Sales")
-	public void TS38791_Alta_Cuenta_Busqueda_Verificar_secciones_de_la_busqueda_de_cliente() {
+	@Test(groups={"Sales", "AltaCuenta","Ola1"})
+	public void TS94883_Alta_Cuenta_Busqueda_Verificar_secciones_de_la_busqueda_de_cliente() {
 		try {Thread.sleep(10000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 		WebElement tipodni = driver.findElement(By.id("SearchClientDocumentType"));
 		WebElement numdoc = driver.findElement(By.id("SearchClientDocumentNumber"));
@@ -821,23 +821,23 @@ public class Sales extends TestBase {
 		Assert.assertTrue(f);
 	}
 	
-	@Test(groups="Sales")
-	public void TS38792_Alta_Cuenta_Busqueda_Verificar_campos_de_la_busqueda_avanzada(){
+	@Test(groups={"Sales", "AltaCuenta","Ola1"})
+	public void TS94884_Alta_Cuenta_Busqueda_Verificar_campos_de_la_busqueda_avanzada(){
 		SalesBase SB = new SalesBase(driver);
 		SB.BusquedaAvanzada();
 		SB.validarcamposbusqueda();
 	}
 	
-	@Test(groups="Sales")
-	public void TS38793_Alta_Cuenta_Busqueda_Verificar_Nombre_y_Apellido_separado(){
+	@Test(groups={"Sales", "AltaCuenta","Ola1"})
+	public void TS94885_Alta_Cuenta_Busqueda_Verificar_Nombre_y_Apellido_separado(){
 		SalesBase SB = new SalesBase(driver);
 		SB.BusquedaAvanzada();
 		SB.BuscarAvanzada("pepeasd","argentoasd", "", "", "");
 		SB.validarespacio();
 	}
 	
-	@Test(groups="Sales")
-	public void TS38803_Ventas_General_Verificar_visualizacion_de_boton_Continuar(){
+	@Test(groups={"Sales", "Ventas","Ola1"})
+	public void TS94889_Ventas_General_Verificar_visualizacion_de_boton_Continuar(){
 		SalesBase SB= new SalesBase(driver);
 		SB.BuscarCuenta("DNI", "");;
 		SB.acciondecontacto("catalogo");
@@ -845,8 +845,8 @@ public class Sales extends TestBase {
 		Assert.assertTrue(SB.validartxtbtn("Continuar"));
 	}
 	
-	@Test(groups="Sales")
-	public void TS39554_Ventas_General_Verificar_que_se_muestre_el_estado_de_una_OV(){
+	@Test(groups={"Sales", "Ventas","Ola1"})
+	public void TS94912_Ventas_General_Verificar_que_se_muestre_el_estado_de_una_OV(){
 		SalesBase SB= new SalesBase(driver);
 		SB.BuscarCuenta("DNI", "");
 		SB.acciondecontacto("catalogo");
@@ -878,8 +878,8 @@ public class Sales extends TestBase {
 		
 	}
 	
-	@Test(groups="Sales")
-	public void TS39641_Alta_Contacto_Busqueda_Verificar_que_se_recuerden_los_datos_de_busqueda(){
+	@Test(groups={"Sales", "AltaDeContacto","Ola1"})
+	public void TS94958_Alta_Contacto_Busqueda_Verificar_que_se_recuerden_los_datos_de_busqueda(){
 		SalesBase SB= new SalesBase(driver);
 		SB.BuscarCuenta(DNI, "5423156");
 		List <WebElement> cc = driver.findElements(By.cssSelector(".slds-form-element__label.ng-binding"));
@@ -892,16 +892,16 @@ public class Sales extends TestBase {
 		SB.validarnuevocliente(DNI, "5423156");
 	}
 	
-	@Test(groups="Sales")
-	public void TS40650_Alta_Cuenta_Busqueda_Verificar_accion_boton_1(){
+	@Test(groups={"Sales", "AltaCuenta","Ola1"})
+	public void TS94967_Alta_Cuenta_Busqueda_Verificar_accion_boton_1(){
 		SalesBase SB= new SalesBase(driver);
 		SB.BuscarCuenta("DNI", "");;
 		SB.acciondecontacto("catalogo");
 		SB.validarentrarcatalogo();
 	}
 	
-	@Test(groups="Sales")
-	public void TS40648_Alta_Cuenta_Busqueda_Verificar_que_se_agregue_un_nivel_de_agrupamiento(){
+	@Test(groups={"Sales", "AltaCuenta","Ola1"})
+	public void TS94965_Alta_Cuenta_Busqueda_Verificar_que_se_agregue_un_nivel_de_agrupamiento(){
 		SalesBase SB = new SalesBase(driver);
 		SB.BuscarAvanzada("cuenta", "generica", "", "", "");
 		List <WebElement> lista = driver.findElements(By.cssSelector(".slds-truncate.ng-binding"));
@@ -914,8 +914,8 @@ public class Sales extends TestBase {
 		Assert.assertTrue(a >= 2);
 	}
 	
-	@Test(groups = "Sales")
-	public void TS38688_Alta_Contacto_Busqueda_Verificar_resultado_busqueda_contacto_Sin_cuenta_asociada() {
+	@Test(groups={"Sales", "AltaDeContacto","Ola1"})
+	public void TS94796_Alta_Contacto_Busqueda_Verificar_resultado_busqueda_contacto_Sin_cuenta_asociada() {
 		SalesBase SB = new SalesBase(driver);
 		SB.BuscarCuenta("DNI", "");
 		sleep(5000);
@@ -923,8 +923,8 @@ public class Sales extends TestBase {
 		Assert.assertTrue(cont.getText().equals("Contactos"));
 	}
 		  		 
-	@Test(groups="Sales")
-	public void TS39798_Alta_Contacto_Busqueda_Verificar_accion_de_Crear_Cuenta(){
+	@Test(groups={"Sales", "AltaDeContacto","Ola1"})
+	public void TS94878_Alta_Contacto_Busqueda_Verificar_accion_de_Crear_Cuenta(){
 		SalesBase SB = new SalesBase(driver);
 		SB.BuscarAvanzada("cuenta", "generica", "", "", "");
 		List <WebElement> nc = driver.findElements(By.cssSelector(".slds-button.slds-button.slds-button--icon"));
@@ -938,8 +938,8 @@ public class Sales extends TestBase {
 		Assert.assertTrue(driver.findElement(By.id("AccountData_nextBtn")).isDisplayed());
 	}
 	
-	@Test(groups = "Sales")
-	public void TS39733_Verificar_que_se_ejecuten_los_procesos_de_validacion() {
+	@Test(groups={"Sales", "AltaDeContacto","Ola1"})
+	public void TS94820_Verificar_que_se_ejecuten_los_procesos_de_validacion() {
 		BasePage dni = new BasePage(driver);
 		String a = "1112225";
 		dni.setSimpleDropdown(driver.findElement(By.id("SearchClientDocumentType")), "DNI");
@@ -956,8 +956,8 @@ public class Sales extends TestBase {
 		Assert.assertTrue(apel.getAttribute("value").equals("Generica"));
 	}
 
-	@Test(groups="Sales")
-	public void TS39658_Verificar_que_se_bonifique_el_costo_de_SIM_en_PlanPrepago() {
+	@Test(groups={"Sales", "Ventas","Ola1"})
+	public void TS94975_Verificar_que_se_bonifique_el_costo_de_SIM_en_PlanPrepago() {
 		SalesBase SB = new SalesBase(driver);
 		SB.BuscarCuenta(DNI, "");
 		SB.acciondecontacto("catalogo");
@@ -977,8 +977,8 @@ public class Sales extends TestBase {
 	
 //	============================ Fase 4 ============================= 	
 	
-	@Test(groups = "Sales") 
-	public void TS76235_Alta_Cuenta_Consumer_Valida_alta_mayor_o_igual_16anios() {
+	@Test(groups={"Sales", "AltaCuenta","Ola1"}) 
+	public void TS95279_Alta_Cuenta_Consumer_Valida_alta_mayor_o_igual_16anios() {
 		Random aleatorio = new Random(System.currentTimeMillis());
 		aleatorio.setSeed(System.currentTimeMillis());
 		int intAleatorio = aleatorio.nextInt(8999999) + 1000000;
@@ -999,8 +999,8 @@ public class Sales extends TestBase {
 		Assert.assertTrue(error.getText().toLowerCase().contains("fecha de nacimiento inv\u00e1lida"));
 	}
 	
-	@Test(groups = "Sales")
-	public void TS76134_Alta_Cuenta_Busqueda_Verificar_DNI_inexistente_y_creacion_de_contacto() {
+	@Test(groups={"Sales", "AltaCuenta","Ola1"})
+	public void TS95199_Alta_Cuenta_Busqueda_Verificar_DNI_inexistente_y_creacion_de_contacto() {
 		Random aleatorio = new Random(System.currentTimeMillis());
 		aleatorio.setSeed(System.currentTimeMillis());
 		int intAleatorio = aleatorio.nextInt(8999999) + 1000000;
@@ -1036,8 +1036,8 @@ public class Sales extends TestBase {
 		Assert.assertTrue(cump.isDisplayed());
 	}
 
-	@Test(groups = "Sales")
-	public void TS76132_Alta_Cuenta_Busqueda_Verificar_busqueda_combinada_DNI_con_NyAp_DNI_Existe_NyAP_No_Existe() {
+	@Test(groups={"Sales", "AltaCuenta","Ola1"})
+	public void TS95197_Alta_Cuenta_Busqueda_Verificar_busqueda_combinada_DNI_con_NyAp_DNI_Existe_NyAP_No_Existe() {
 		BasePage dni = new BasePage(driver);
 		dni.setSimpleDropdown(driver.findElement(By.id("SearchClientDocumentType")), "DNI");
 		driver.findElement(By.id("SearchClientDocumentNumber")).click();
@@ -1050,8 +1050,8 @@ public class Sales extends TestBase {
 		Assert.assertFalse(tNom.getText().equals("papa" + " " + "nata"));
 	}
 	
-	@Test(groups = "Sales") 
-	public void TS76140_Alta_Cuenta_Business_Validar_nombres_de_los_campos() {
+	@Test(groups={"Sales", "AltaCuenta","Ola1"}) 
+	public void TS95205_Alta_Cuenta_Business_Validar_nombres_de_los_campos() {
 		SalesBase SB = new SalesBase(driver);
 		SB.BuscarAvanzada("", "generica", "", "", "");
 		driver.findElement(By.id("SearchClientsDummy")).click();
@@ -1070,8 +1070,8 @@ public class Sales extends TestBase {
 		Assert.assertTrue(driver.findElement(By.id("Owner")).isDisplayed());
 	}
 	
-	@Test(groups = "Sales")
-	public void TS76115_Alta_Contacto_Creacion_Verificar_alta_de_contacto_con_cuenta_generica() {
+	@Test(groups={"Sales", "AltaDeContacto","Ola1"})
+	public void TS95184_Alta_Contacto_Creacion_Verificar_alta_de_contacto_con_cuenta_generica() {
 		SalesBase SB = new SalesBase(driver);
 		SB.BtnCrearNuevoCliente();
 		ContactSearch contact = new ContactSearch(driver);
@@ -1095,8 +1095,8 @@ public class Sales extends TestBase {
 		Assert.assertTrue(element.getText().contains("Cuenta Generica"));
 	}
 	 	 	
-	 	@Test(groups = "Sales") 
-	  public void TS76138_Alta_Contacto_Creacion_Verificar_descripcion_al_dejar_mail_vacio(){
+	@Test(groups={"Sales", "AltaDeContacto","Ola1"})
+	  public void TS95203_Alta_Contacto_Creacion_Verificar_descripcion_al_dejar_mail_vacio(){
 	 	SalesBase SB = new SalesBase(driver);
 	 	SB.BtnCrearNuevoCliente();
 		try {Thread.sleep(10000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
@@ -1129,8 +1129,8 @@ public class Sales extends TestBase {
 		Assert.assertTrue(as);
 	}
 	 	
-	@Test(groups = "Sales")
-	public void TS76117_Alta_Contacto_Creacion_Verificar_creacion_de_cliente() {
+	@Test(groups={"Sales", "AltaDeContacto","Ola1"})
+	public void TS95186_Alta_Contacto_Creacion_Verificar_creacion_de_cliente() {
 		SalesBase SB = new SalesBase(driver);
 		SB.BuscarCuenta(DNI, "1111111");
 		SB.acciondecontacto("nueva cuenta");
@@ -1145,4 +1145,22 @@ public class Sales extends TestBase {
 			}
 		}
 	}
+	
+	@Test(groups = "Sales")
+	 public void TS76153_Blacklist_Validacion_de_cliente_en_blacklist_Cliente_DNI(){
+	  SalesBase SB = new SalesBase(driver);
+	  Boolean t = false;
+	  SB.BuscarCuenta(DNI, "28672141");
+	  SB.acciondecontacto("catalogo");
+	  List <WebElement> pp = driver.findElements(By.cssSelector(".slds-radio--faux"));
+	  for(WebElement p : pp){
+	   if (p.getText().toLowerCase().equals("products")){
+	   p.isDisplayed();
+	   t=true;
+	   }
+	  }
+	 Assert.assertTrue(t);  
+	 }
+
+
 }
