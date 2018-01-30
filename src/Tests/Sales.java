@@ -17,6 +17,7 @@ import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Actions;
+import org.openqa.selenium.support.ui.Select;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.Assert;
 import org.testng.annotations.AfterClass;
@@ -30,8 +31,6 @@ import Pages.BasePage;
 import Pages.ContactInformation;
 import Pages.ContactSearch;
 import Pages.CustomerCare;
-import Pages.Order;
-import Pages.OrdersTab;
 import Pages.SalesBase;
 import Pages.setConexion;
 
@@ -62,13 +61,13 @@ public class Sales extends TestBase {
 	String[] genero = {"masculino","femenino"};
 	String[] DocValue = {"52698550","3569874563","365","ssss"};
 	
-	@AfterClass(groups={"sales", "AltaDeContacto"})
+	//@AfterClass(groups={"sales", "AltaDeContacto"})
 	public void tearDown() {
 		driver.close();
 		driver.quit();
 	}
 	
-	@AfterMethod(groups={"sales", "AltaDeContacto"})
+	//@AfterMethod(groups={"sales", "AltaDeContacto"})
 	public void deslogin(){
 		try {Thread.sleep(10000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 		driver.get("https://crm--sit.cs14.my.salesforce.com/home/home.jsp?tsid=02u41000000QWha/");
@@ -269,10 +268,10 @@ public class Sales extends TestBase {
 		boolean a = false;
 		try {Thread.sleep(10000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 		ContactSearch contact = new ContactSearch(driver);
-		contact.searchContact("Pasaporte", "1234567890", "");
+		contact.searchContact("Pasaporte", "1234568709", "");
 		List <WebElement> error = driver.findElements(By.cssSelector(".description.ng-binding"));
 		for(WebElement e: error){
-			if(e.getText().toLowerCase().equals("longitud m\u00e1xima de 9")){
+			if(e.getText().toLowerCase().equals("longitud m\u00e1xima de 8")){
 				a=true;
 				break;}}
 		try {Thread.sleep(1000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
@@ -285,10 +284,10 @@ public class Sales extends TestBase {
 		boolean a = false;
 		try {Thread.sleep(10000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 		ContactSearch contact = new ContactSearch(driver);
-		contact.searchContact("Pasaporte", "1234567890", "");
+		contact.searchContact("Pasaporte", "59801234", "");
 		List <WebElement> error = driver.findElements(By.cssSelector(".description.ng-binding"));
 		for(WebElement e: error){
-			if(e.getText().toLowerCase().equals("longitud minima de 9")){
+			if(e.getText().toLowerCase().equals("longitud m\u00ednima de 7")){
 				a=true;
 				break;}}
 		try {Thread.sleep(1000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
@@ -498,7 +497,7 @@ public class Sales extends TestBase {
 	@Test(groups={"sales", "AltaDeContacto"})
 	public void TS6949_Verificar_Fecha_de_Nacimiento_con_ingreso_manual() {
 		ContactSearch contact = new ContactSearch(driver);
-		contact.searchContact(DNI, "1234657", "");
+		contact.searchContact(DNI, "1234675", "");
 		driver.findElement(By.id("SearchClientsDummy")).click();
 		sleep(4000);
 		List <WebElement> cc = driver.findElements(By.cssSelector(".slds-form-element__label.ng-binding"));
@@ -508,7 +507,7 @@ public class Sales extends TestBase {
 				break;
 			}
 		}
-		sleep(5000);
+		sleep(6000);
 		driver.findElement(By.id("Birthdate")).sendKeys(nacimiento);
 		assertTrue(driver.findElement(By.cssSelector(".slds-form-element.vlc-flex.ng-scope.ng-dirty.ng-valid-parse.ng-valid-required.ng-valid.ng-valid-valid")).isDisplayed());
 	}
@@ -849,11 +848,34 @@ public class Sales extends TestBase {
 	@Test(groups="Sales")
 	public void TS39554_Ventas_General_Verificar_que_se_muestre_el_estado_de_una_OV(){
 		SalesBase SB= new SalesBase(driver);
-		SB.BuscarCuenta("DNI", "");;
+		SB.BuscarCuenta("DNI", "");
 		SB.acciondecontacto("catalogo");
 		SB.agregarproductos();
 		SB.continuar();
 		SB.validarpasos();			
+	}
+	
+	@Test(groups= {"Fase2", "Sales"})
+	public void TS7005_mandatoryTaxCondition()
+	{
+		BasePage page = new BasePage();
+		SalesBase SB= new SalesBase(driver);
+		SB.BuscarCuenta("DNI", "65987659");
+		List <WebElement> cc = driver.findElements(By.cssSelector(".slds-form-element__label.ng-binding"));
+		for (WebElement x : cc) {
+			if (x.getText().toLowerCase().contains("+ crear nuevo cliente")) {
+				x.click();
+				break;
+			}
+		}
+		sleep(5000);
+		SB.acciondecontacto("nueva cuenta");
+		sleep(8000);
+		Select listSelect = new Select (driver.findElement(By.id("ImpositiveCondition")));
+		String[] todos = {"iva consumidor final","iva monotributista"};
+		List<WebElement> motivos = listSelect.getOptions();
+	    assertTrue(verificarContenidoLista(todos,motivos));
+		
 	}
 	
 	@Test(groups="Sales")
