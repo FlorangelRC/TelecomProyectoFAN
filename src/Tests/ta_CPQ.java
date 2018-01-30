@@ -379,10 +379,15 @@ public class ta_CPQ extends TestBase {
 		DeliveryMethod page5 = new DeliveryMethod(driver);
 		page5.clickOnNext();
 		try {Thread.sleep(3000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
-		BillSimulation page6 = new BillSimulation(driver);
-		page6.clickOnNext();
+		//BillSimulation page6 = new BillSimulation(driver);
+		//page6.clickOnNext();
 		try {Thread.sleep(3000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 		PaymentMethod page7 = new PaymentMethod(driver);
+		page7.selectDebitoAProximaFactura();
+		page7.clickOnNext();
+		try {Thread.sleep(3000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		driver.findElement(By.id("alert-ok-button")).click();
+		try {Thread.sleep(2000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 		page7.clickOnNext();
 		try {Thread.sleep(3000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 		SerialInput page8 = new SerialInput(driver);
@@ -470,13 +475,14 @@ public class ta_CPQ extends TestBase {
 		
 		try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 		
-		WebElement result = driver.findElement(By.xpath(".//p"));
+		WebElement result = driver.findElement(By.cssSelector(".slds-tile__title.slds-truncate.product-name"));
+		System.out.println(result.getText());
 		Assert.assertEquals(result.getText(), "Plan Prepago Nacional");
 			
 	}
 	
 	@Test
-	public void TS6826_CRM_Fase_1_SalesCPQ_Alta_Linea_Carrito_Verificar_selección_de_productos() {
+	public void TS6826_CRM_Fase_1_SalesCPQ_Alta_Linea_Carrito_Verificar_selecciï¿½n_de_productos() {
 		Ta_CPQ cart = new Ta_CPQ (driver);
 		String productName ="productName"; //productName
 		String productNameAdded = "true"; //productNameAdded
@@ -496,11 +502,13 @@ public class ta_CPQ extends TestBase {
 		Assert.assertEquals (productNameAdded, productName);
 	}
 
-
+	//Listo 29-01-018
 	@Test
-	public void TS6827_CRM_Fase_1_SalesCPQ_Alta_Linea_Configurar_Nueva_Linea_Boton_Siguiente() {
+	public void TS6827_CRM_Fase_1_SalesCPQ_Alta_Linea_Configurar_Nueva_Linea_Boton_Siguiente() throws Exception {
 		Ta_CPQ cart = new Ta_CPQ(driver);
 		cart.addAnyProductToCart();
+		sleep(4000);
+		//System.out.println(cart.getCartStatus());
 		Assert.assertNotEquals(cart.getCartStatus(),"Incomplete");
 	}
 	//Listo 26-01-18
@@ -546,35 +554,37 @@ public class ta_CPQ extends TestBase {
 		
 		try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 		
-		//Debería mostrarse una vista en la que se muestran los planes preasignados, pero hay cargado un bug dado que no se está mostrando esa descripción de los planes.
+		//Deberï¿½a mostrarse una vista en la que se muestran los planes preasignados, pero hay cargado un bug dado que no se estï¿½ mostrando esa descripciï¿½n de los planes.
+	assertTrue(false); //No hay lineas pre-asignadas.
 	}
 	
 	@Test(groups={"Sales", "AltaLinea", "Ola1"})
 	public void TS94498_CRM_Fase_1_SalesCPQ_Alta_Linea_Configurar_Nueva_Linea_Modificar_linea_pre_asignada_ultimos_cuatro_digitos() {
-		//Mismo bug que el TS6845. Se pueden tomar ese test  como base para automatizar éste hasta el Step 4 inclusive.
+		//Mismo bug que el TS6845. Se pueden tomar ese test  como base para automatizar ï¿½ste hasta el Step 4 inclusive.
 		assertTrue(false);
 	}
 	
 	@Test(groups={"Sales", "AltaLinea", "Ola1"})
 	public void TS94499_CRM_Fase_1_SalesCPQ_Alta_Linea_Configurar_Nueva_Linea_Presionar_el_boton_Buscar() {
-		//Ídem TS6849
+		//ï¿½dem TS6849
 		assertTrue(false);
 	}
 	
 	@Test(groups={"Sales", "AltaLinea", "Ola1"})
 	public void TS94501_CRM_Fase_1_SalesCPQ_Alta_Linea_Configurar_Nueva_Linea_Visualizar_filtros_de_localidad_y_provincia_al_modificar_linea_XX(){
-		//Ídem TS6849		
+		//ï¿½dem TS6849		
+		assertTrue(false); 
 	}
 	
 	@Test(groups={"Sales", "AltaLinea", "Ola1"})
 	public void TS94504_CRM_Fase_1_SalesCPQ_Alta_Linea_Configurar_Nueva_Linea_Visualizar_mensaje_y_opciones_de_lineas_no_disponibles() {
-		//Ídem TS6849
+		//ï¿½dem TS6849
 		assertTrue(false);
 	}
 	
 	@Test(groups={"Sales", "AltaLinea", "Ola1"})
 	public void TS94506_CRM_Fase_1_SalesCPQ_Alta_Linea_Configurar_Nueva_Linea_Visualizar_una_descripcion_por_varios_productos_iguales() {
-		//Ídem TS6849
+		//ï¿½dem TS6849
 		assertTrue(false);
 	}
 	
@@ -602,7 +612,7 @@ public class ta_CPQ extends TestBase {
 	
 	//Listo 26-01-18 
 	@Test
-	public void TS6883_CRM_Fase_1_SalesCPQ_Alta_Linea_Costo_Operacion_Verificar_el_detalle_de_los_impuestos_aplicados_a_la_venta() {
+	public void TS6883_CRM_Fase_1_SalesCPQ_Alta_Linea_Costo_Operacion_Verificar_el_detalle_de_los_impuestos_aplicados_a_la_venta() throws Exception {
 		Ta_CPQ cart = new Ta_CPQ(driver);
 		try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 		cart.selectFromRightPanel(RightPanel.DISPOSITIVOS);
@@ -614,7 +624,7 @@ public class ta_CPQ extends TestBase {
 		
 		//WebElement waiter = wait.until(ExpectedConditions.elementToBeClickable(By.id("LineAssignment_nextBtn")));
 		//BillSimulation bill = new BillSimulation (driver);
-		//presiono Siguiente 3 veces para llegar al paso "Simulación de Factura"
+		//presiono Siguiente 3 veces para llegar al paso "Simulaciï¿½n de Factura"
 		
 		driver.findElement(By.id("LineAssignment_nextBtn")).click();
 		sleep(7000);
@@ -631,8 +641,8 @@ public class ta_CPQ extends TestBase {
 	}
 	//LIsto 26-01-18
 	/*
-	 * TODO: el assert debería verificar que el dropdown con id "DeliveryMethod" ofrezca varios métodos de entrega.
-	 * Actualmente el botón está bloqueado, y no se puede ver qué opciones contiene.
+	 * TODO: el assert deberï¿½a verificar que el dropdown con id "DeliveryMethod" ofrezca varios mï¿½todos de entrega.
+	 * Actualmente el botï¿½n estï¿½ bloqueado, y no se puede ver quï¿½ opciones contiene.
 	 * */
 	@Test(groups={"Sales", "AltaLinea", "Ola1"})
 	public void TS94518_CRM_Fase_1_SalesCPQ_Alta_Linea_Costo_Operacion_Verificar_opciones_del_carrito_Boton_Siguiente() {
@@ -660,7 +670,7 @@ public class ta_CPQ extends TestBase {
 	}
 	
 	@Test
-	public void TS6893_CRM_Fase_1_SalesCPQ_Alta_Linea_Modo_de_Entrega_Seleccionar_modo_de_entrega_presencial_Producto_Tangible () {
+	public void TS6893_CRM_Fase_1_SalesCPQ_Alta_Linea_Modo_de_Entrega_Seleccionar_modo_de_entrega_presencial_Producto_Tangible () throws Exception {
 		Ta_CPQ cart = new Ta_CPQ(driver);
 		try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 		cart.selectFromRightPanel(RightPanel.DISPOSITIVOS);
@@ -698,7 +708,8 @@ public class ta_CPQ extends TestBase {
 		TS6836_CRM_Fase_1_SalesCPQ_Alta_Linea_Configurar_Nueva_Linea_Nueva_Cuenta();
 	}
 	
-	/**Se verifica que el sistema muestra disponibles los ciclos de facturacion 1, 7, 14 y 21*
+	/**Se verifica que el sistema muestra disponibles los ciclos de facturacion 1, 7, 14 y 21
+	 * @throws Exception *
 	 * 
 	 */
 	@Test(groups={"Sales", "NuevaVenta", "Ola1"})
@@ -756,16 +767,17 @@ public class ta_CPQ extends TestBase {
 		cart.deleteAddedProducts();
 		cart.selectFromRightPanel(RightPanel.BUNDLES);
 		cart.addAnyProductToCartThatNeedsPrefactibility();
-		
+		sleep(4000);
 		Assert.assertNotEquals(cart.getCartStatus(),"Incomplete");
 	}
 	
 	/**
 	 * Se verifica que, cuando no se selecciona un producto para linea movil del 
 	 * Bundle Convergente, no se agrega a la vista previa del carrito, no se encuentra habilitado el boton Siguiente
+	 * @throws Exception 
 	 */
 	@Test(groups = {"Fase2-1"})
-	public void TS15423_CRM_Fase_2_SalesCPQ_Nueva_Venta_Seleccion_Dispositivos_Verificar_boton_siguiente_inhabilitado() {
+	public void TS15423_CRM_Fase_2_SalesCPQ_Nueva_Venta_Seleccion_Dispositivos_Verificar_boton_siguiente_inhabilitado() throws Exception {
 		Ta_CPQ cart = new Ta_CPQ(driver);
 		cart.deleteAddedProducts();
 		cart.addAnyProductToCart();
@@ -776,21 +788,23 @@ public class ta_CPQ extends TestBase {
 	/**
 	 * Se visualiza que el producto movil se incorpora en forma automatica 
 	 * dentro de la familia Dispositivos cuando se agrega a la vista previa del carrito
+	 * @throws Exception 
 	 */
 	@Test(groups = {"Fase2-1"})
-	public void TS15422_CRM_Fase_2_SalesCPQ_Nueva_Venta_Seleccion_Dispositivos_Verificar_producto_incorporado_Autom_Familia_Dispositivos() {
+	public void TS15422_CRM_Fase_2_SalesCPQ_Nueva_Venta_Seleccion_Dispositivos_Verificar_producto_incorporado_Autom_Familia_Dispositivos() throws Exception {
 		Ta_CPQ cart = new Ta_CPQ(driver);
 		cart.deleteAddedProducts();
 		cart.selectFromRightPanel(RightPanel.DISPOSITIVOS);
 		cart.addAnyProductToCart();
-		try {Thread.sleep(4000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		sleep(4000);
+				
+		//WebElement leftProductDiv = cart.getAddableDivProduct(1);
+		//leftProductDiv = leftProductDiv.findElement(By.cssSelector(".slds-tile__title.slds-truncate.product-name"));
+		String leftProductName = cart.addAnyProductToCart().getText();
+		//String leftProductName = leftProductDiv.getText().trim();
+		Assert.assertTrue(cart.verifyAddition(cart.getAddedProducts(), leftProductName));
 		
-		
-		WebElement leftProductDiv = cart.getAddableDivProduct(1);
-		leftProductDiv = leftProductDiv.findElement(By.cssSelector(".slds-tile__title.slds-truncate.product-name"));
-		String leftProductName = leftProductDiv.getText().trim();
-		
-		Assert.assertTrue(cart.getAddedProducts().contains(leftProductName));
+		//Assert.assertTrue(cart.getAddedProducts().contains(leftProductName));
 	}
 	
  	//Almer:listo. detalles:faltan planes para comparar
@@ -877,18 +891,16 @@ public class ta_CPQ extends TestBase {
 	
 	//Almer:listo
 	@Test(groups={"Fase2-1"})
-	public void TS14331_CRM_Fase_2_SalesCPQ_Ventas_ProductosEPC_Verificar_producto_incorporado_Automaticamente() {
+	public void TS14331_CRM_Fase_2_SalesCPQ_Ventas_ProductosEPC_Verificar_producto_incorporado_Automaticamente() throws Exception {
 		Ta_CPQ cart = new Ta_CPQ(driver);
 		cart.deleteAddedProducts();
-		try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
-		cart.addAnyProductToCart();
-		try {Thread.sleep(4000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
-		
-		WebElement leftProductDiv = cart.getAddableDivProduct(1);
-		leftProductDiv = leftProductDiv.findElement(By.cssSelector(".slds-tile__title.slds-truncate.product-name"));
-		String leftProductName = leftProductDiv.getText().trim();
-		
-		Assert.assertTrue(cart.getAddedProducts().contains(leftProductName));
+		sleep(5000);
+		String leftProductName = cart.addAnyProductToCart().getText();
+		sleep(4000);		
+		//WebElement leftProductDiv = cart.getAddableDivProduct(1);
+	//	leftProductDiv = leftProductDiv.findElement(By.cssSelector(".slds-tile__title.slds-truncate.product-name"));
+		Assert.assertTrue(cart.verifyAddition(cart.getAddedProducts(), leftProductName));
+		//Assert.assertTrue(cart.getAddedProducts().get(0).contains(leftProductName.substring(0, cart.getAddedProducts().get(0).length())));
 	}
 	
 	//Ultimo de Nacho
