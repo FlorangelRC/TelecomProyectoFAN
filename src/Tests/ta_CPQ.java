@@ -56,12 +56,13 @@ public class ta_CPQ extends TestBase {
 	protected WebDriver driver;
 	protected  WebDriverWait wait;
 
-	//@AfterClass(groups = {"Fase2"})
+	//@AfterClass(alwaysRun=true)
 	public void tearDown() {
-		driver.close();
+		driver.quit();
+		sleep(1000);
 	}
 	
-	@BeforeClass(groups = {"Fase2"})
+	@BeforeClass(alwaysRun=true)
 	public void Init() throws Exception
 	{
 		this.driver = setConexion.setupEze();
@@ -79,7 +80,7 @@ public class ta_CPQ extends TestBase {
 		//driver.findElement(By.xpath("//a[@href=\'https://crm--sit--c.cs14.visual.force.com/apex/taClientSearch']")).click();
 	}
 
-	@BeforeMethod
+	@BeforeMethod(alwaysRun=true)
 	public void setup() throws Exception {		
 		/*try {Thread.sleep(4000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 		if (!driver.findElement(By.id("tsidLabel")).getText().equals("Ventas")){
@@ -99,7 +100,7 @@ public class ta_CPQ extends TestBase {
 
 	}
 	
-	//@AfterMethod(groups = {"Fase2"})
+	//@AfterMethod(alwaysRun=true)
 	public void returnToSales() {
 		try {Thread.sleep(2000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 		driver.get("https://crm--sit.cs14.my.salesforce.com/801c0000000Ec64");
@@ -482,7 +483,7 @@ public class ta_CPQ extends TestBase {
 	}
 	
 	@Test
-	public void TS6826_CRM_Fase_1_SalesCPQ_Alta_Linea_Carrito_Verificar_selecci�n_de_productos() {
+	public void TS6826_CRM_Fase_1_SalesCPQ_Alta_Linea_Carrito_Verificar_seleccion_de_productos() {
 		Ta_CPQ cart = new Ta_CPQ (driver);
 		String productName ="productName"; //productName
 		String productNameAdded = "true"; //productNameAdded
@@ -540,7 +541,7 @@ public class ta_CPQ extends TestBase {
 	
 	//Listo 26-01-18 falta darle continuar, pero al darle continuar no hay privilegios.
 	@Test(groups={"Sales", "AltaLinea", "Ola1"})
-	public void TS94494_CRM_Fase_1_SalesCPQ_Alta_Linea_Configurar_Nueva_Linea_Buscar_nuevo_lote_de_lineas_pre_asignadas() {
+	public void TS94494_CRM_Fase_1_SalesCPQ_Alta_Linea_Configurar_Nueva_Linea_Buscar_nuevo_lote_de_lineas_pre_asignadas() throws Exception {
 		Ta_CPQ cart = new Ta_CPQ(driver);
 		try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 		List<WebElement> buttonsRightPanel = driver.findElements(By.xpath("//a[@ng-class=\"{'cpq-category-item-selected' : isSelectedCategory(category.catalogName), 'cat-icon': !isSelectedCategory(category.catalogName)}\"]"));
@@ -558,33 +559,40 @@ public class ta_CPQ extends TestBase {
 	assertTrue(false); //No hay lineas pre-asignadas.
 	}
 	
+
 	@Test(groups={"Sales", "AltaLinea", "Ola1"})
 	public void TS94498_CRM_Fase_1_SalesCPQ_Alta_Linea_Configurar_Nueva_Linea_Modificar_linea_pre_asignada_ultimos_cuatro_digitos() {
+
 		//Mismo bug que el TS6845. Se pueden tomar ese test  como base para automatizar �ste hasta el Step 4 inclusive.
 		assertTrue(false);
 	}
 	
+
 	@Test(groups={"Sales", "AltaLinea", "Ola1"})
 	public void TS94499_CRM_Fase_1_SalesCPQ_Alta_Linea_Configurar_Nueva_Linea_Presionar_el_boton_Buscar() {
-		//�dem TS6849
+		//Mismo TS6849
 		assertTrue(false);
 	}
 	
+
 	@Test(groups={"Sales", "AltaLinea", "Ola1"})
 	public void TS94501_CRM_Fase_1_SalesCPQ_Alta_Linea_Configurar_Nueva_Linea_Visualizar_filtros_de_localidad_y_provincia_al_modificar_linea_XX(){
-		//�dem TS6849		
+		//Mismo TS6849		
 		assertTrue(false); 
 	}
 	
 	@Test(groups={"Sales", "AltaLinea", "Ola1"})
 	public void TS94504_CRM_Fase_1_SalesCPQ_Alta_Linea_Configurar_Nueva_Linea_Visualizar_mensaje_y_opciones_de_lineas_no_disponibles() {
-		//�dem TS6849
-		assertTrue(false);
+		//Mismo TS6849	
+		assertTrue(false); 
 	}
 	
+	
+
 	@Test(groups={"Sales", "AltaLinea", "Ola1"})
 	public void TS94506_CRM_Fase_1_SalesCPQ_Alta_Linea_Configurar_Nueva_Linea_Visualizar_una_descripcion_por_varios_productos_iguales() {
-		//�dem TS6849
+
+		//Mismo TS6849
 		assertTrue(false);
 	}
 	
@@ -645,7 +653,7 @@ public class ta_CPQ extends TestBase {
 	 * Actualmente el bot�n est� bloqueado, y no se puede ver qu� opciones contiene.
 	 * */
 	@Test(groups={"Sales", "AltaLinea", "Ola1"})
-	public void TS94518_CRM_Fase_1_SalesCPQ_Alta_Linea_Costo_Operacion_Verificar_opciones_del_carrito_Boton_Siguiente() {
+	public void TS94518_CRM_Fase_1_SalesCPQ_Alta_Linea_Costo_Operacion_Verificar_opciones_del_carrito_Boton_Siguiente() throws Exception {
 		Ta_CPQ cart = new Ta_CPQ(driver);
 		try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 		cart.selectFromRightPanel(RightPanel.DISPOSITIVOS);
@@ -713,7 +721,7 @@ public class ta_CPQ extends TestBase {
 	 * 
 	 */
 	@Test(groups={"Sales", "NuevaVenta", "Ola1"})
-	public void TS94708_CRM_Fase_2_SalesCPQ_Nueva_Venta_Orden_Venta_Verficar_ciclos_de_facturacion_disponibles(){
+	public void TS94708_CRM_Fase_2_SalesCPQ_Nueva_Venta_Orden_Venta_Verficar_ciclos_de_facturacion_disponibles() throws Exception{
 		Ta_CPQ cart = new Ta_CPQ(driver);
 		cart.deleteAddedProducts();
 		cart.addAnyProductToCart();	
@@ -734,7 +742,7 @@ public class ta_CPQ extends TestBase {
 	}
 	
 	@Test(groups={"Sales", "NuevaVenta", "Ola1"})
-	public void TS94707_CRM_Fase_2_SalesCPQ_Nueva_Venta_Orden_Venta_Verficar_que_se_puede_modificar_el_ciclo_de_facturacion() {
+	public void TS94707_CRM_Fase_2_SalesCPQ_Nueva_Venta_Orden_Venta_Verficar_que_se_puede_modificar_el_ciclo_de_facturacion() throws Exception {
 		/*Se verifica que el sistema permite modificar el ciclo de facturacion*/
 		
 		Ta_CPQ cart = new Ta_CPQ(driver);
@@ -905,7 +913,7 @@ public class ta_CPQ extends TestBase {
 	
 	//Ultimo de Nacho
 	@Test(groups = {"Sales", "NuevaVenta", "Ola1"})
-	public void TS94706_CRM_Fase_2_SalesCPQ_Nueva_Venta_Orden_Venta_Verficar_ciclo_de_facturacion_asignado_por_default() {
+	public void TS94706_CRM_Fase_2_SalesCPQ_Nueva_Venta_Orden_Venta_Verficar_ciclo_de_facturacion_asignado_por_default() throws Exception {
 		Ta_CPQ cart = new Ta_CPQ(driver);
 		cart.deleteAddedProducts();
 		cart.addAnyProductToCart();
