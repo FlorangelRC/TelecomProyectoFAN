@@ -479,6 +479,10 @@ public class TestBase {
 		return (!campo.getAttribute("class").contains("invalid"));
 	}
 	
+	public String obtenerValorDelCampo(WebElement campo) {
+		return campo.getAttribute("value");
+	}
+	
 	public void selectByText(WebElement element, String data){
 		Select select = new Select(element);
 		select.selectByVisibleText(data);
