@@ -62,13 +62,13 @@ public class Sales extends TestBase {
 	String[] genero = {"masculino","femenino"};
 	String[] DocValue = {"52698550","3569874563","365","ssss"};
 	
-	@AfterClass(groups={"sales", "AltaDeContacto"})
+	//@AfterClass(groups={"sales", "AltaDeContacto"})
 	public void tearDown() {
 		driver.close();
 		driver.quit();
 	}
 	
-	@AfterMethod(groups={"sales", "AltaDeContacto"})
+	//@AfterMethod(groups={"sales", "AltaDeContacto"})
 	public void deslogin(){
 		try {Thread.sleep(10000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 		driver.get("https://crm--sit.cs14.my.salesforce.com/home/home.jsp?tsid=02u41000000QWha/");
@@ -125,8 +125,8 @@ public class Sales extends TestBase {
 		CustomerCare CC = new CustomerCare(driver);
 		ContactSearch contact = new ContactSearch(driver);
 		try {Thread.sleep(10000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
-		driver.findElement(By.id("FirstName")).sendKeys("aaa");
-		driver.findElement(By.id("LastName")).sendKeys("bbb");
+		driver.findElement(By.id("FirstName")).sendKeys("yy");
+		driver.findElement(By.id("LastName")).sendKeys("z");
 		driver.findElement(By.id("Birthdate")).sendKeys("28/12/1999");
 		contact.sex("masculino");
 		driver.findElement(By.id("Contact_nextBtn")).click();
@@ -770,7 +770,7 @@ public class Sales extends TestBase {
 	public void TS38761_Perfiles_Verificar_creacion_de_perfil_Oficina_Comercial(){
 		SalesBase SB = new SalesBase(driver);
 		SB.gestiondeusuarios();
-		SB.validarperfil("Sit, Francisco", "Oficina Comercial");		
+		SB.validarperfil("Sit, Francisco", "TA - OFCOM Venta y Atencion a Clientes");		
 	}
 	
 	@Test(groups="Sales")
@@ -1077,8 +1077,7 @@ public class Sales extends TestBase {
 	  public void TS76138_Alta_Contacto_Creacion_Verificar_descripcion_al_dejar_mail_vacio(){
 	 	SalesBase SB = new SalesBase(driver);
 	 	SB.BtnCrearNuevoCliente();
-		driver.findElement(By.id("DocumentInputSearch")).click();
-		driver.findElement(By.id("DocumentInputSearch")).sendKeys("1235591");
+		try {Thread.sleep(10000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 		List<WebElement> gen = driver.findElements(By.cssSelector(".slds-radio.ng-scope"));
 		for (WebElement g : gen) {
 			if (g.getText().equals("Masculino")) {
@@ -1113,6 +1112,7 @@ public class Sales extends TestBase {
 		SalesBase SB = new SalesBase(driver);
 		SB.BuscarCuenta(DNI, "1111111");
 		SB.acciondecontacto("nueva cuenta");
+		sleep(5000);
 		WebElement telalt = driver.findElement(By.id("AlternativePhone"));
 		sleep(3000);
 		Assert.assertTrue(telalt.isDisplayed());
