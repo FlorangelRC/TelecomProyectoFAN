@@ -27,7 +27,7 @@ public class CustomerCareFase4 extends TestBase{
 		IrA.CajonDeAplicaciones.ConsolaFAN();
 	}
 	
-	//@AfterClass (groups = {"CustomerCare", "Vista360Layout", "DetalleDeConsumos", "ActualizarDatos", "ProblemasConRecargas", "DebitoAutomatico"})
+	@AfterClass (groups = {"CustomerCare", "Vista360Layout", "DetalleDeConsumos", "ActualizarDatos", "ProblemasConRecargas", "DebitoAutomatico"})
 	public void quit() {
 		page.cerrarTodasLasPestañas();
 		IrA.CajonDeAplicaciones.Ventas();
@@ -39,7 +39,7 @@ public class CustomerCareFase4 extends TestBase{
 		page.cerrarTodasLasPestañas();
 	}
 	
-	//@Test (groups = {"CustomerCare", "Vista360Layout"})
+	@Test (groups = {"CustomerCare", "Vista360Layout"})
 	public void TS15955_360_View_Ver_Equipo_Creador_en_Case_Caso_Creado_Cerrar_Caso_Campo_Equipo_del_Creador_no_cambia_valor() {
 		WebElement selector = driver.findElement(By.cssSelector(".x-btn-small.x-btn-icon-small-left"));
 		WebElement btnSplit = selector.findElement(By.className("x-btn-split"));
@@ -99,6 +99,20 @@ public class CustomerCareFase4 extends TestBase{
 		}
 		List <WebElement> casoCerrado = driver.findElements(By.cssSelector(".dataCol.col02.inlineEditWrite"));
 		Assert.assertTrue(casoCerrado.get(11).getText().equals(equipoCreador));
+	}
+	
+	@Test (groups = {"CustomerCare", "Vista360Layout"})
+	public void TS37166_360_View_UX_360_Card_Historiales_Visualizar_HISTORIAL_DE_AJUSTES() {
+		page.elegirCuenta("aaaaFernando Care");
+		page.irAHistoriales();
+		List <WebElement> element = driver.findElements(By.cssSelector(".slds-p-around--large.slds-text-body--regular.labelFont"));
+		boolean a = false;
+		for (WebElement x : element) {
+			if (x.getText().toLowerCase().contains("historial de ajustes")) {
+				a = true;
+			}
+		}
+		Assert.assertTrue(a);
 	}
 	
 	@Test (groups = {"CustomerCare", "DebitoAutomatico"})
@@ -453,16 +467,11 @@ public class CustomerCareFase4 extends TestBase{
 		driver.findElement(By.cssSelector(".slds-button.slds-button--brand.filterNegotiations.slds-p-horizontal--x-large.slds-p-vertical--x-small")).click();
 		sleep(3000);
 		WebElement tipo = driver.findElement(By.xpath("//*[@id=\"j_id0:j_id5\"]/div/div/ng-include/div/div/div[3]/div[1]/div/table/tbody/tr[1]/td[2]"));
-		WebElement num = driver.findElement(By.xpath("//*[@id=\"j_id0:j_id5\"]/div/div/ng-include/div/div/div[3]/div[1]/div/table/tbody/tr[1]/td[2]"));
 		boolean a = false;
-		boolean b = false;
 		if (tipo.getText().contains("Case")) {
 			a = true;
 		}
-		if (num.getText().contains("000")) {
-			b = true;
-		}
-		Assert.assertTrue(a && b);
+		Assert.assertTrue(a);
 	}
 	
 	@Test (groups = {"CustomerCare", "Vista360Layout"})
