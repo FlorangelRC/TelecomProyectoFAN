@@ -195,8 +195,8 @@ public class SalesMatrix extends TestBase {
 		Assert.assertTrue(a && b && c);
 	}
 	
-	@Test (groups = {"Sales", "AltaDeCuenta"})
-	public void TS76129_Alta_Cuenta_Validaciones_Verificar_creacion_de_matriz_de_validacion_de_identidad() {
+	@Test (groups = {"Sales", "AltaDeCuenta","Ola1"})
+	public void TS95194_Alta_Cuenta_Validaciones_Verificar_creacion_de_matriz_de_validacion_de_identidad() {
 		SalesBase sb = new SalesBase(driver);
 		sb.selectMatrix("m", "manageableidentityvalidation");
 		BasePage cambioFrameByID = new BasePage();
