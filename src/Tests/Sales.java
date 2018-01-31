@@ -175,6 +175,18 @@ public class Sales extends TestBase {
 	}
 	
 	@Test(groups={"Sales", "AltaDeContacto","Ola1"})
+	public void TS94671_Alta_De_Contacto_Persona_Fisica_Verificar_FechaNac_Futura(){
+		SalesBase SB = new SalesBase(driver);
+		CustomerCare CC = new CustomerCare(driver);
+		SB.BtnCrearNuevoCliente();
+		sleep(6000);
+		driver.findElement(By.id("Birthdate")).sendKeys("11/01/2020");
+		Assert.assertTrue(driver.findElement(By.cssSelector(".message.description.ng-binding.ng-scope")).getText().toLowerCase().contains("fecha de nacimiento inv\u00e1lida"));
+		
+	}
+	
+
+	@Test(groups={"Sales", "AltaDeContacto","Ola1"})
 	public void TS94543_Seleccionar_Masculino_en_campo_Genero(){
 		SalesBase SB = new SalesBase(driver);
 		CustomerCare CC = new CustomerCare(driver);
@@ -277,6 +289,41 @@ public class Sales extends TestBase {
 		try {Thread.sleep(1000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 		Assert.assertTrue(a);	
 	
+	}
+	
+	@Test(groups={"Sales", "AltaDeContacto", "Ola1"})
+	public void TS94673_Alta_De_Contacto_Persona_Fisica_Verificar_Campo_Numero_De_Documento(){
+		boolean a = false;
+		try {Thread.sleep(10000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		ContactSearch contact = new ContactSearch(driver);
+		driver.findElement(By.id("SearchClientDocumentNumber")).sendKeys("875321499");
+		List <WebElement> error = driver.findElements(By.cssSelector(".description.ng-binding"));
+		for(WebElement e: error){
+			if(e.getText().toLowerCase().equals("longitud m\u00e1xima de 8")){
+				a=true;
+				break;}}
+		try {Thread.sleep(1000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		Assert.assertTrue(a);	
+	
+	}
+	
+	@Test(groups={"Sales", "AltaDeContacto", "Ola1"})
+	public void TS94668_Alta_De_Contacto_Persona_Fisica_Verificar_Eliminacion_Valor_CI(){
+		SalesBase SB = new SalesBase(driver);
+		sleep(8000);
+		SB.BuscarCuenta("Cedula de Identidad", "1487569");
+		List <WebElement> cc = driver.findElements(By.cssSelector(".slds-form-element__label.ng-binding"));
+		for (WebElement x : cc) {
+			if (x.getText().toLowerCase().contains("+ crear nuevo cliente")) {
+				x.click();
+			}
+		}
+		try {
+			SB.setSimpleDropdown(driver.findElement(By.id("DocumentType")),"Cedula de Identidad");
+			assertTrue(false);
+		}catch(org.openqa.selenium.ElementNotVisibleException Ex1) {
+			assertTrue(true);
+		}
 	}
 	
 	@Test(groups={"Sales", "AltaDeContacto","Ola1"})
@@ -743,10 +790,10 @@ public class Sales extends TestBase {
 		Assert.assertTrue(false);
 	}
 	
-	//************FASE 3*********************
+	//******************FASE 3*********************
 
 	@Test(groups={"Sales", "AltaDeContacto","Ola1"})
-	public void TS94887_Alta_Contacto_Busqueda_Verificar_resultado_busqueda_cliente_activo_inactivo() {
+	public void TS94713_Alta_Contacto_Busqueda_Verificar_resultado_busqueda_cliente_activo_inactivo() {
 		SalesBase SB = new SalesBase(driver);
 		SB.BuscarCuenta("DNI", "");
 		try {Thread.sleep(10000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}

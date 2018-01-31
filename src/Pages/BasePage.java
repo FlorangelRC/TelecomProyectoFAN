@@ -45,6 +45,7 @@ public class BasePage {
 	public void setSimpleDropdown(WebElement element, String value) {
 		Select field = new Select(element);
 		element.click();
+		System.out.println(field.getOptions().get(6).getText());
 		field.selectByVisibleText(value);
 	}
 	
