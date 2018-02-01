@@ -1427,4 +1427,268 @@ public class Sales extends TestBase {
 		  Assert.assertTrue(driver.findElement(By.cssSelector(".slds-picklist.slds-dropdown-trigger.slds-dropdown-trigger--click.slds-is-open.slds-col--padded.slds-size--6-of-12.ng-scope")).isDisplayed());
 	  }
 
+	  @Test(groups = {"Sales", "AltaDeContacto"})
+	  public void TS94583_Alta_de_Contacto_Persona_Fisica_Verificar_estado_fallido_de_la_validacion_de_identidad_por_DNI_con_documentacion_invalida_XX() {
+		  Select dni = new Select (driver.findElement(By.id("SearchClientDocumentType"))); 
+		  dni.selectByVisibleText("DNI");
+		  driver.findElement(By.id("SearchClientDocumentNumber")).sendKeys("1");
+		  sleep(2000);
+		  boolean a = false;
+		  boolean b = false;
+		  List <WebElement> error1 = driver.findElements(By.cssSelector(".error.ng-scope"));
+		  for (WebElement x : error1) {
+			  if (x.getText().toLowerCase().contains("longitud m\u00ednima de 7")) {
+				  a = true;
+			  }
+		  }
+		  driver.findElement(By.id("SearchClientDocumentNumber")).clear();
+		  driver.findElement(By.id("SearchClientDocumentNumber")).sendKeys("1111111111");
+		  sleep(2000);
+		  List <WebElement> error2 = driver.findElements(By.cssSelector(".error.ng-scope"));
+		  for (WebElement x : error2) {
+			  if (x.getText().toLowerCase().contains("longitud m\u00e1xima de 8")) {
+				  b = true;
+			  }
+		  }
+		  Assert.assertTrue(a && b);
+	  }
+	  
+	  @Test(groups = {"Sales", "AltaDeContacto"})
+	  public void TS945281_Alta_de_Contacto_Persona_Fisica_Confirmar_creacion_de_contacto_con_un_campo_obligatorio_incompleto_47() {
+		  SalesBase SB = new SalesBase(driver);
+		  SB.BtnCrearNuevoCliente();
+		  Select dni = new Select(driver.findElement(By.id("DocumentType")));
+		  dni.selectByVisibleText("DNI");
+		  driver.findElement(By.id("FirstName")).sendKeys("asdasdasd");
+		  driver.findElement(By.id("LastName")).sendKeys("sarasa");
+		  driver.findElement(By.id("Birthdate")).sendKeys("15/05/1982");
+		  driver.findElements(By.cssSelector(".slds-form-element__control.slds-input-has-icon.slds-input-has-icon--right")).get(2).findElement(By.tagName("input")).sendKeys("asdasd@gmail.com");
+		  driver.findElement(By.id("Contact_nextBtn")).click();
+		  sleep(2000);
+		  WebElement error = driver.findElement(By.cssSelector(".slds-modal__content.slds-p-around--medium"));
+		  Assert.assertTrue(error.getText().toLowerCase().contains("error: por favor complete todos los campos requeridos"));
+		  driver.findElement(By.id("alert-ok-button")).click();  
+	  }
+	  
+	  @Test(groups = {"Sales", "AltaDeCuenta"})
+	  public void TS95278_Alta_Cuenta_Consumer_Valida_alta_menor_16anios() {
+		  SalesBase SB = new SalesBase(driver);
+		  SB.BtnCrearNuevoCliente();
+		  driver.findElement(By.id("Birthdate")).sendKeys("07/05/2005");
+		  sleep(2000);
+		  WebElement error = driver.findElement(By.cssSelector(".message.description.ng-binding.ng-scope"));
+		  Assert.assertTrue(error.getText().toLowerCase().contains("fecha de nacimiento inv\u00e1lida"));
+	  }
+	  
+	  @Test(groups = {"Sales", "AltaDeLinea"})
+	  public void TS94627_Alta_Linea_Carrito_Seleccionar_producto_Agregar_cantidad() {
+		  SalesBase SB = new SalesBase(driver);
+		  SB.BuscarCuenta(DNI, "11111111");
+		  SB.acciondecontacto("catalogo");
+		  SB.agregarplan("plan con tarjeta");
+		  sleep(25000);
+		  List <WebElement> mas = driver.findElements(By.cssSelector(".slds-button.slds-p-horizontal--xx-small"));
+		  boolean a = false;
+		  for (WebElement x : mas) {
+			  if (x.getText().toLowerCase().contains("clone")) {
+				  a = true;
+			  }
+		  }
+		  Assert.assertTrue(a);
+	  }
+	  
+	  @Test(groups = {"Sales", "AltaDeLinea"})
+	  public void TS94628_Alta_Linea_Carrito_Seleccionar_producto_Restar_cantidad() {
+		  SalesBase SB = new SalesBase(driver);
+		  SB.BuscarCuenta(DNI, "11111111");
+		  SB.acciondecontacto("catalogo");
+		  SB.agregarplan("plan con tarjeta");
+		  sleep(25000);
+		  List <WebElement> mas = driver.findElements(By.cssSelector(".slds-button.slds-p-horizontal--xx-small"));
+		  boolean a = false;
+		  for (WebElement x : mas) {
+			  if (x.getText().toLowerCase().contains("delete")) {
+				  a = true;
+			  }
+		  }
+		  Assert.assertTrue(a);
+	  }
+	  
+	  @Test(groups = {"Sales", "AltaDeLinea"})
+	  public void TS94629_Alta_Linea_Configurar_Nueva_Linea_Boton_Siguiente() {
+		  SalesBase SB = new SalesBase(driver);
+		  SB.BuscarCuenta(DNI, "11111111");
+		  SB.acciondecontacto("catalogo");
+		  SB.agregarplan("plan con tarjeta");
+		  sleep(15000);
+		  Assert.assertTrue(driver.findElement(By.cssSelector(".slds-button.slds-m-left--large.slds-button--brand.ta-button-brand")).getText().contains("Continuar"));
+	  }
+	  
+	  @Test(groups = {"Sales", "AltaDeCuenta"})
+	  public void TS94969_Alta_Cuenta_Busqueda_Verificar_accion_boton_2_con_datos_heredados() {
+		  SalesBase SB = new SalesBase(driver);
+		  SB.BuscarCuenta(DNI, "11111111");
+		  sleep(7000);
+		  String name = "";
+		  List <WebElement> cuenta = driver.findElements(By.cssSelector(".slds-truncate.ng-binding"));
+		  for (WebElement x : cuenta) {
+			  if (x.getText().contains("Adela Sales")) {
+				  name = "Adela Sales";
+			  } 
+		  }
+		  SB.acciondecontacto("nueva cuenta");
+		  sleep(7000);
+		  WebElement titu = driver.findElement(By.id("Owner"));
+		  Assert.assertTrue(titu.getAttribute("value").contains(name));
+	  }
+	  
+	  @Test(groups = {"Sales", "AltaDeCuenta"})
+	  public void TS94971_Alta_Cuenta_Busqueda_Verificar_que_no_se_completen_datos_boton_accion_cliente() {
+		  SalesBase SB = new SalesBase(driver);
+		  SB.BuscarCuenta(DNI, "11111111");
+		  sleep(7000);
+		  String name = "";
+		  List <WebElement> cuenta = driver.findElements(By.cssSelector(".slds-truncate.ng-binding"));
+		  for (WebElement x : cuenta) {
+			  if (x.getText().contains("Adela Sales")) {
+				  name = "Adela Sales";
+			  } 
+		  }
+		  SB.acciondecontacto("nueva cuenta");
+		  sleep(7000);
+		  List <WebElement> prov = driver.findElements(By.cssSelector(".slds-form-element__label.ng-binding"));
+		  boolean a = false;
+		  for (WebElement x : prov) {
+			  if (x.getText().toLowerCase().contains("provincia")) {
+				  a = true;
+			  }
+		  }
+		  WebElement titu = driver.findElement(By.id("Owner"));
+		  Assert.assertTrue(driver.findElement(By.id("CityTypeAhead")).getText().isEmpty());
+		  Assert.assertTrue(titu.getAttribute("value").contains(name));
+		  Assert.assertTrue(a);		  
+	  }
+	  
+	  @Test(groups = {"Sales", "AltaDeContacto"})
+	  public void TS94527_Alta_de_Contacto_Persona_Fisica_Confirmar_creacion_de_contacto_con_mas_de_un_campo_obligatorio_incompleto_46() {
+		  SalesBase SB = new SalesBase(driver);
+		  SB.BtnCrearNuevoCliente();
+		  driver.findElement(By.id("FirstName")).sendKeys("asdasdasd");
+		  driver.findElement(By.id("LastName")).sendKeys("sarasa");
+		  driver.findElement(By.id("Contact_nextBtn")).click();
+		  sleep(2000);
+		  WebElement error = driver.findElement(By.cssSelector(".slds-modal__content.slds-p-around--medium"));
+		  Assert.assertTrue(error.getText().toLowerCase().contains("error: por favor complete todos los campos requeridos"));
+		  driver.findElement(By.id("alert-ok-button")).click();		  
+	  }
+	  
+	  @Test(groups = {"Sales", "AltaDeContacto"})
+	  public void TS94893_Alta_Contacto_Verificar_que_aparezca_boton_confirmar() {
+		  SalesBase SB = new SalesBase(driver);
+		  SB.BtnCrearNuevoCliente();
+		  Assert.assertTrue(driver.findElement(By.id("Contact_nextBtn")).getText().contains("Confirmar"));
+		  Assert.assertTrue(driver.findElement(By.id("Contact_nextBtn")).isDisplayed());
+	  }
+	  
+	  @Test(groups = {"Sales", "Ventas"})
+	  public void TS95062_Ventas_General_Visualizar_accion_Agregar() {
+		  SalesBase SB = new SalesBase(driver);
+		  SB.BuscarCuenta(DNI, "11111111");
+		  SB.acciondecontacto("catalogo");
+		  SB.agregarplan("plan con tarjeta");
+		  sleep(15000);
+		  List <WebElement> mas = driver.findElements(By.cssSelector(".slds-button.slds-p-horizontal--xx-small"));
+		  for (WebElement x : mas) {
+			  if (x.getText().toLowerCase().contains("clone")) {
+				  x.click();
+				  break;
+			  }
+		  }
+		  sleep(15000);
+		  int a = 0;
+		  List <WebElement> plan = driver.findElements(By.cssSelector(".slds-button.cpq-item-has-children"));
+		  for (WebElement x : plan) {
+			  if (x.getText().toLowerCase().contains("plan con tarjeta")) {
+				  a++;
+			  }
+		  }
+		  Assert.assertTrue(a == 2);
+	  }
+	  
+	  @Test(groups = {"Sales", "Ventas"})
+	  public void TS95063_Ventas_General_Visualizar_accion_Eliminar() {
+		  SalesBase SB = new SalesBase(driver);
+		  SB.BuscarCuenta(DNI, "11111111");
+		  SB.acciondecontacto("catalogo");
+		  SB.agregarplan("plan con tarjeta");
+		  sleep(15000);
+		  List <WebElement> mas = driver.findElements(By.cssSelector(".slds-button.slds-p-horizontal--xx-small"));
+		  for (WebElement x : mas) {
+			  if (x.getText().toLowerCase().contains("delete")) {
+				  x.click();
+				  break;
+			  }
+		  }
+		  sleep(15000);
+		  List <WebElement> plan = driver.findElements(By.cssSelector(".slds-button.cpq-item-has-children"));
+		  int a = 0;
+		  for (WebElement x : plan) {
+			  if (x.getText().toLowerCase().contains("plan con tarjeta")) {
+				  a++;
+			  }
+		  }
+		  Assert.assertTrue(a == 0);
+	  }
+	  
+	  @Test(groups = {"Sales", "Ventas"})
+	  public void TS95061_Ventas_General_Visualizar_botones_Agregar_Eliminar() {
+		  SalesBase SB = new SalesBase(driver);
+		  SB.BuscarCuenta(DNI, "11111111");
+		  SB.acciondecontacto("catalogo");
+		  SB.agregarplan("plan con tarjeta");
+		  sleep(15000);
+		  boolean a = false;
+		  boolean b = false;
+		  List <WebElement> mas = driver.findElements(By.cssSelector(".slds-button.slds-p-horizontal--xx-small"));	 
+		  for (WebElement x : mas) {
+			  if (x.getText().toLowerCase().contains("clone")) {
+				  a = true;
+			  }
+		  }
+		  List <WebElement> menos = driver.findElements(By.cssSelector(".slds-button.slds-p-horizontal--xx-small"));
+		  for (WebElement x : menos) {
+			  if (x.getText().toLowerCase().contains("delete")) {
+				  b = true;
+			  }
+		  }
+		  Assert.assertTrue(a && b);
+	  }
+	  
+	  @Test(groups = {"Sales", "Ventas"})
+	  public void TS94888_Ventas_General_Verificar_no_visualizacion_de_boton_Crear_Cuenta() {
+		  SalesBase SB = new SalesBase(driver);
+		  SB.BuscarCuenta(DNI, "11111111");
+		  SB.acciondecontacto("catalogo");
+		  sleep(10000);
+		  WebElement page = driver.findElement(By.cssSelector(".vlocity.via-slds"));
+		  if (page.findElement(By.tagName("button")).getText().toLowerCase().contains("crear cuenta")) {
+			  Assert.assertTrue(false);
+		  }
+		  if (page.findElement(By.tagName("button")).getAttribute("value").toLowerCase().contains("crear cuenta")) {
+			  Assert.assertTrue(false);
+		  }
+	  }
+	  
+	  @Test(groups = {"Sales", "AltaDeCuenta"})
+	  public void TS95513_Alta_de_Cuenta_Consumer_Verificar_Consumidor_final_por_defecto() {
+		  SalesBase SB = new SalesBase(driver);
+		  SB.BuscarCuenta(DNI, "11111111");
+		  SB.acciondecontacto("catalogo");
+		  SB.agregarplan("plan con tarjeta");
+		  sleep(15000);
+		  driver.findElement(By.cssSelector(".slds-button.slds-m-left--large.slds-button--brand.ta-button-brand")).click();
+		  sleep(7000);
+		  WebElement iva = driver.findElement(By.id("ImpositiveCondition"));
+		  Assert.assertTrue(iva.getAttribute("value").equals("IVA_CF"));
+	  }	  
 }
