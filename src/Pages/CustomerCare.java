@@ -43,6 +43,7 @@ public class CustomerCare extends BasePage {
 	
 	
 	//Case information
+
 	
 	@FindBy (how = How.CSS, using = ".x-layout-collapsed.x-layout-collapsed-east.x-layout-cmini-east")
 	private WebElement panelder;
@@ -129,7 +130,7 @@ public class CustomerCare extends BasePage {
 	private List<WebElement> panelesLaterales;
 	
 	@FindBy(css = ".sd_secondary_container.x-border-layout-ct")
-	private List<WebElement> panelesCentrales;
+	protected List<WebElement> panelesCentrales;
 	
 	@FindBy(css = ".x-btn-small.x-btn-icon-small-left")
 	private WebElement selector;
@@ -141,7 +142,7 @@ public class CustomerCare extends BasePage {
 	private WebElement selectCuentas;
 	
 	@FindBy(xpath = "//input[@ng-model='searchTerm']")
-	private WebElement buscadorGestiones;
+	protected WebElement buscadorGestiones;
 	
 	@FindBy(css = ".console-flyout.active.flyout .icon.icon-v-troubleshoot-line")
 	private WebElement btn_ProblemaConRecargas;
@@ -187,6 +188,12 @@ public class CustomerCare extends BasePage {
 			if (!field.getFirstSelectedOption().getText().equalsIgnoreCase("Todas las cuentas")) {
 				field.selectByVisibleText("Todas las cuentas");
 				TestBase.sleep(1000);
+			}
+			
+			char char0 = nombreCuenta.charAt(0);
+			if (char0 != 'a' || char0 != 'A') {
+				driver.findElement(By.xpath("//div[@class='rolodex']//span[contains(.,'" + char0 + "')]")).click();
+				sleep(500);
 			}
 			
 			TestBase.dynamicWait().until(ExpectedConditions.numberOfElementsToBe(By.cssSelector(".x-grid3-cell-inner.x-grid3-col-ACCOUNT_NAME"), 200));

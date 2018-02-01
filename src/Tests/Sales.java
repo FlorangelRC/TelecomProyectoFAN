@@ -1493,5 +1493,130 @@ public class Sales extends TestBase {
 	    cal.sendKeys("ATENAS"); 
 	    Assert.assertTrue(cal.getAttribute("value").equals("ATENAS")); 
 	  } 
+	  
+	  @Test(groups = {"Sales", "Configuracion"}) 
+	  public void TS94610_Configuracion_CondicionImpositiva_Verificar_categoria_frente_al_IVA_para_clientes_con_DNI_Pasaporte() {
+		  SalesBase SB = new SalesBase(driver); 
+		  SB.BuscarCuenta(DNI, "11111111"); 
+		  SB.acciondecontacto("nueva cuenta");
+		  sleep(7000);
+		  driver.findElement(By.id("ImpositiveCondition")).click();
+		  sleep(2000);
+		  Assert.assertTrue(driver.findElement(By.xpath("//*[text() = 'IVA Consumidor Final']")).isDisplayed());
+	  }
+	  
+	  @Test(groups = {"Sales", "Ventas"})
+	  public void TS94709_Ventas_BuscarCliente_Verificar_cliente_activo_por_numero_de_linea() {
+		  String tel = "1157602860";
+		  driver.findElement(By.id("PhoneNumber")).sendKeys(tel);
+		  driver.findElement(By.id("SearchClientsDummy")).click();
+		  sleep(5000);
+		  WebElement linea = driver.findElement(By.xpath("//*[@id=\"tab-scoped-1\"]/section/div/table/tbody/tr[1]/td[2]"));
+		  Assert.assertTrue(linea.getText().equals(tel));		  
+	  }
+	  
+	  @Test(groups = {"Sales", "Ventas"})
+	  public void TS94715_Ventas_BuscarCliente_Verificar_linea_sin_cliente_asociado() {
+		  driver.findElement(By.id("PhoneNumber")).sendKeys("1157602861");
+		  driver.findElement(By.id("SearchClientsDummy")).click();
+		  sleep(5000);
+		  List <WebElement> cai = driver.findElement(By.className("slds-tabs--scoped__nav")).findElements(By.tagName("li"));
+		  if (cai.get(0).isDisplayed() && cai.get(1).isDisplayed()) {
+			  Assert.assertTrue(false);
+		  }
+	  }
+	  
+	  @Test(groups = {"Sales", "AltaDeContacto"})
+	  public void TS94887_Alta_de_Contacto_Busqueda_Verificar_boton_de_Crear_Contacto_en_cualquier_resultado_de_busqueda_con_contacto_inexistente() {
+		  SalesBase SB = new SalesBase(driver); 
+		  SB.BuscarCuenta(DNI, "78421962");
+		  Assert.assertTrue(driver.findElement(By.cssSelector(".OSradioButton.ng-scope.only-buttom")).isDisplayed());
+	  }
+	  
+	  @Test(groups = {"Sales", "AltaDeContacto"})
+	  public void TS94945_Alta_de_Contacto_Busqueda_Verificar_boton_1_sobre_contactos() {
+		  SalesBase SB = new SalesBase(driver); 
+		  SB.BuscarCuenta(DNI, "11111111");
+		  List <WebElement> nc = driver.findElements(By.cssSelector(".slds-button.slds-button.slds-button--icon"));
+		  boolean a = false;
+		  for (WebElement x : nc) {
+			  if (x.getText().contains("Nueva Cuenta")) {
+				  a = true;
+			  }
+		  }
+		  Assert.assertTrue(a);
+	  }
+	  
+	  @Test(groups = {"Sales", "AltaDeContacto"})
+	  public void TS94878_Alta_de_Contacto_Busqueda_Verificar_accion_de_Crear_Cuenta() {
+		  SalesBase SB = new SalesBase(driver); 
+		  SB.BuscarCuenta(DNI, "11111111"); 
+		  SB.acciondecontacto("nueva cuenta");
+		  sleep(7000);
+		  Assert.assertTrue(driver.findElement(By.id("ContactName")).isDisplayed());
+	  }
+	  
+	  @Test(groups = {"Sales", "AltaDeContacto"})
+	  public void TS94896_Alta_Contacto_Verificar_contacto_existente_sin_cuenta_asociada_muestra_datos_de_contacto() {
+		  SalesBase SB = new SalesBase(driver); 
+		  SB.BuscarCuenta(DNI, "11111111");
+		  sleep(7000);
+		  List <WebElement> cuenta = driver.findElements(By.cssSelector(".slds-truncate.ng-binding"));
+		  for (WebElement x : cuenta) {
+			  if (x.getText().toLowerCase().contains("adela sales")) {
+				  x.click();
+				  break;
+			  }
+		  }		  
+		  sleep(5000);
+		  WebElement dni = driver.findElement(By.id("DocumentNumber"));
+		  WebElement name = driver.findElement(By.id("FirstName"));
+		  WebElement apel = driver.findElement(By.id("LastName"));
+		  Assert.assertTrue(dni.getAttribute("value").contains("11111111") && name.getAttribute("value").contains("Adela") && apel.getAttribute("value").contains("Sales"));
+	  }
+	  
+	  @Test(groups = {"Sales", "AltaDeContacto"})
+	  public void TS94795_Alta_Contacto_Busqueda_Verificar_Op1_tercer_TAB_de_visualizacion() {
+		  SalesBase SB = new SalesBase(driver); 
+		  SB.BuscarCuenta(DNI, "74195213");
+		  sleep(3000);
+		  WebElement msj = driver.findElement(By.id("txtNoRegistryMsg"));
+		  Assert.assertTrue(msj.getText().contains("No hay ning\u00fan cliente con este tipo y n\u00famero de documento. Busc\u00e1 con otro dato o cre\u00e1 un nuevo cliente"));
+	  }
+	  
+	  @Test(groups = {"Sales", "AltaDeContacto"})
+	  public void TS94799_Alta_Contacto_Busqueda_Verificar_accion_Crear_Nuevo_Contacto() {
+		  SalesBase SB = new SalesBase(driver); 
+		  SB.BuscarCuenta(DNI, "74195213");
+		  sleep(3000);
+		  driver.findElement(By.cssSelector(".OSradioButton.ng-scope.only-buttom")).click();
+		  sleep(7000);
+		  WebElement msj = driver.findElement(By.id("TextBlock1"));
+		  Assert.assertTrue(msj.getText().contains("El contacto no existe. Complet\u00e1 los datos para crear un nuevo cliente"));
+	  }
+	  
+	  @Test(groups = {"Sales", "AltaDeContacto"})
+	  public void TS94891_Alta_Contacto_Verificar_que_por_defecto_aparezca_DNI() {
+		  SalesBase SB = new SalesBase(driver); 
+		  SB.BuscarCuenta(DNI, "12587963");
+		  sleep(3000);
+		  driver.findElement(By.cssSelector(".OSradioButton.ng-scope.only-buttom")).click();
+		  sleep(7000);
+		  WebElement dni = driver.findElement(By.id("DocumentType"));
+		  Assert.assertTrue(dni.getAttribute("value").equals("DNI"));
+	  }
+	  
+	  @Test(groups = {"Sales", "AltaDeContacto"})
+	  public void TS94892_Alta_Contacto_Verificar_que_los_datos_del_contacto_nuevo_se_soliciten_en_la_misma_pantalla() {
+		  SalesBase SB = new SalesBase(driver); 
+		  SB.BuscarCuenta(DNI, "12587967");
+		  sleep(3000);
+		  driver.findElement(By.cssSelector(".OSradioButton.ng-scope.only-buttom")).click();
+		  sleep(7000);
+		  Assert.assertTrue(driver.findElement(By.id("FirstName")).isDisplayed());
+		  Assert.assertTrue(driver.findElement(By.id("LastName")).isDisplayed());
+		  Assert.assertTrue(driver.findElement(By.id("Birthdate")).isDisplayed());
+		  Assert.assertTrue(driver.findElement(By.cssSelector(".slds-picklist.slds-dropdown-trigger.slds-dropdown-trigger--click.slds-is-open.slds-col--padded.slds-size--6-of-12.ng-scope")).isDisplayed());
+	  }
 
 }
