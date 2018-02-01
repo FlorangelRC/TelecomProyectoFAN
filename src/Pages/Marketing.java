@@ -27,12 +27,15 @@ public class Marketing extends CustomerCare {
 	}
 	
 	public void clubPersonal (String sAltaBajaModificacion) {
+		waitForVisibilityOfElementLocated(By.cssSelector(".slds-grid.slds-wrap.via-slds-action-grid-card"));
 		WebElement wMenuABM = driver.findElement(By.cssSelector(".slds-grid.slds-wrap.via-slds-action-grid-card"));
 		List<WebElement> lMenuesABM = wMenuABM.findElements(By.cssSelector(".slds-size--1-of-2.slds-x-small-size--1-of-3.slds-medium-size--1-of-4.slds-large-size--1-of-6.slds-align--absolute-center.slds-m-bottom--xx-small.slds-m-top--xx-small.slds-p-left--xx-small.slds-p-right--xx-small.slds-grid"));
 		
 		switch (sAltaBajaModificacion.toLowerCase()) {
 			case "alta":
 				lMenuesABM.get(0).click();
+				sleep(3000);
+				cambiarAFrameActivo();
 				break;
 			case "baja":
 				lMenuesABM.get(1).click();
@@ -70,9 +73,7 @@ public class Marketing extends CustomerCare {
 			Assert.assertFalse(gestionesEncontradas.isEmpty());
 		}
 		gestionesEncontradas.get(1).click();
-		//if (gest.equals("Débito automático")) TestBase.sleep(6500);
-		//else TestBase.sleep(3000);
-		//if (gest.equals("Historial de Packs")) TestBase.sleep(1500);
+		TestBase.sleep(3000);
 		cambiarAFrameActivo();
 	}
 	
@@ -115,6 +116,10 @@ public class Marketing extends CustomerCare {
 		}
 		
 		return wElementsExtrated;
+	}
+	
+	public List<WebElement> obtenerBotonesClubPersonal() {
+		return driver.findElements(By.cssSelector(".slds-align--absolute-center.slds-m-bottom--xx-small"));
 	}
 	
 	public void seleccionarFecha (int iCantidadColumnas, int iColumna, int iDias, String sId, String sTiempo) {
@@ -188,6 +193,19 @@ public class Marketing extends CustomerCare {
 		try {Thread.sleep(10000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 		driver.switchTo().defaultContent();
 		driver.switchTo().frame(cambioFrame.getFrameForElement(driver, By.cssSelector(".slds-panel__section.slds-p-around--small")));
+	}
+	
+	public Boolean verificarMensajeDeErrorCuentaFraude() {
+		waitForVisibilityOfElementLocated(By.xpath("//ng-form[@id='TxtError']"));
+		String msg = driver.findElement(By.xpath("//ng-form[@id='TxtError']")).getText();
+		return msg.contains("Para continuar es necesario regularizar su estado de cuenta");
+	}
+	
+	public String obtenerNumeroCasoCuentaFraude() {
+		String msg = driver.findElement(By.xpath("//ng-form[@id='TxtError']")).getText();
+		int i = 0;
+		while(msg.charAt(i++) != '0') {	}
+		return msg.substring(i, msg.length()-1);
 	}
 	
 }

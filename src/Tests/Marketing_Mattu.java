@@ -468,6 +468,26 @@ public class Marketing_Mattu extends TestBase{
 	//-------------------------------------------------------------------------------------------------
 	//TCC = 
 	@Test(groups = "Marketing")
+	public void TS98020_Boton_ABM_del_CP() {
+		BasePage cambioFrame=new BasePage();
+		driver.switchTo().defaultContent();
+		driver.switchTo().frame(cambioFrame.getFrameForElement(driver, By.className("actions-content")));
+		WebElement wResultadosGestiones = driver.findElement(By.className("actions-content"));
+		List<WebElement> wButtons = wResultadosGestiones.findElements(By.tagName("button"));
+		List<WebElement> wSpans = new ArrayList<WebElement>();
+		boolean bAssert = false;
+		for(WebElement wAux : wButtons) {
+			wSpans = wAux.findElements(By.tagName("span"));
+			if(wSpans.get(1).getText().toLowerCase().equals("club personal abm")) {
+				bAssert = true;
+			}
+		}
+		Assert.assertTrue(bAssert);
+	}
+	
+	//-------------------------------------------------------------------------------------------------
+	//TCC = 
+	@Test(groups = "Marketing")
 	public void TS98027_No_visualizar_error_Fraude_Alta_CP() {
 		TS98023_Funcionamiento_boton_Alta_ABM_del_CP();
 	}
@@ -503,6 +523,51 @@ public class Marketing_Mattu extends TestBase{
 		Boolean bAssert = wEstado.get(0).getText().toLowerCase().equals("closed");
 		mMarketing.cambioCuenta("Vista Marketing", "Florencia Marketing");
 		Assert.assertTrue(bAssert);
+	}
+	
+	//-------------------------------------------------------------------------------------------------
+	//TCC = 
+	@Test(groups = "Marketing")
+	public void TS98056_Verificar_seleccion_de_un_unico_valor_en_el_campo_motivo_de_baja_Baja_CP() {
+		Marketing mMarketing = new Marketing(driver);
+		mMarketing.clubPersonal("baja");
+		try {Thread.sleep(10000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		BasePage cambioFrame=new BasePage();
+		driver.switchTo().defaultContent();
+		driver.switchTo().frame(cambioFrame.getFrameForElement(driver, By.id("consumerAccounts")));
+		try {Thread.sleep(10000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		WebElement wConsumerBox = driver.findElement(By.id("consumerAccounts"));
+		WebElement wConsumerTable= wConsumerBox.findElement(By.tagName("tbody"));
+		List<WebElement> wConsumerTableRows = wConsumerTable.findElements(By.tagName("tr"));
+		WebElement wCTCheckBox = wConsumerTableRows.get(0).findElement(By.tagName("th"));
+		wCTCheckBox.findElement(By.tagName("label")).click();
+		
+		List <String> sCorrectOptions = new ArrayList<String>();
+		sCorrectOptions.add("-- clear --");
+		sCorrectOptions.add("no puedo acceder a los descuentos");
+		sCorrectOptions.add("no puedo acceder a los premios");
+		sCorrectOptions.add("demasiada publicidad");
+		sCorrectOptions.add("pocos beneficios en mi zona");
+		sCorrectOptions.add("no me gusta");
+		sCorrectOptions.add("no lo uso");
+		sCorrectOptions.add("otro");
+		
+		driver.findElement(By.cssSelector(".slds-form-element__control.slds-input-has-icon.slds-has-input-has-icon--right")).click();
+		WebElement wDropDown = driver.findElement(By.id("SelectReason"));
+		List <WebElement> wOptions = wDropDown.findElements(By.tagName("option"));
+		
+		List<String> bAssert = new ArrayList<String>();
+		
+		for (WebElement wAux : wOptions) {
+			for (String sAux : sCorrectOptions) {
+				if (wAux.getText().toLowerCase().equals(sAux)) {
+					bAssert.add("true");
+					break;
+				}
+			}
+		}
+		
+		Assert.assertTrue(bAssert.size() == 8);
 	}
 	
 	/*Fecha del sistema
