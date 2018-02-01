@@ -191,12 +191,12 @@ public class CustomerCare extends BasePage {
 			}
 			
 			char char0 = nombreCuenta.charAt(0);
-			if (char0 != 'a' || char0 != 'A') {
+			if (char0 != 'a' && char0 != 'A') {
 				driver.findElement(By.xpath("//div[@class='rolodex']//span[contains(.,'" + char0 + "')]")).click();
 				sleep(500);
 			}
 			
-			TestBase.dynamicWait().until(ExpectedConditions.numberOfElementsToBe(By.cssSelector(".x-grid3-cell-inner.x-grid3-col-ACCOUNT_NAME"), 200));
+			waitForVisibilityOfElementLocated(By.cssSelector(".x-grid3-cell-inner.x-grid3-col-ACCOUNT_NAME"));
 			for (WebElement c : cuentas) {
 				//MEJORAR
 				if (c.getText().equalsIgnoreCase(nombreCuenta)) {
