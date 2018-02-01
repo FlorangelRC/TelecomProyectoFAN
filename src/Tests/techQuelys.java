@@ -1,21 +1,15 @@
 package Tests;
 
 import static org.testng.Assert.assertTrue;
-
 import java.util.List;
-
 import org.openqa.selenium.By;
-import org.openqa.selenium.JavascriptExecutor;
-import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
-import org.openqa.selenium.support.ui.Select;
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
-
 import Pages.BasePage;
 import Pages.CustomerCare;
 import Pages.HomeBase;
@@ -59,7 +53,7 @@ public class techQuelys extends TestBase{
 		sleep(1000);
 	}
 	
-	//@AfterMethod(groups= {"Fase4","TechnicalCare", "Autogestion"})
+	@AfterMethod(groups= {"Fase4","TechnicalCare", "Autogestion"})
 	public void after() {
 		try {Thread.sleep(2000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 		driver.switchTo().defaultContent(); 
@@ -68,7 +62,7 @@ public class techQuelys extends TestBase{
 	    driver.switchTo().defaultContent(); 
 	}
 	
-	//@AfterClass(groups= {"Fase4","TechnicalCare", "Autogestion"})
+	@AfterClass(groups= {"Fase4","TechnicalCare", "Autogestion"})
 	public void tearDown() {
 		HomeBase homePage = new HomeBase(driver);
 		sleep(1000);

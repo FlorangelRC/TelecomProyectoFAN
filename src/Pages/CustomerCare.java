@@ -32,10 +32,11 @@ import Tests.TestBase;
 
 public class CustomerCare extends BasePage {
 
-	final WebDriver driver;
+	//final WebDriver driver;
 	
 	public CustomerCare(WebDriver driver){
-		this.driver = driver;
+		setupNuevaPage(driver);
+	
         PageFactory.initElements(driver, this);
 	}
 	
@@ -192,6 +193,7 @@ public class CustomerCare extends BasePage {
 			for (WebElement c : cuentas) {
 				//MEJORAR
 				if (c.getText().equalsIgnoreCase(nombreCuenta)) {
+					(new Actions(driver)).click(c.findElement(By.tagName("a"))).build().perform();
 					c.findElement(By.tagName("a")).click();
 					TestBase.sleep(1000);
 					esperarAQueCargueLaCuenta();
@@ -1383,5 +1385,50 @@ public class CustomerCare extends BasePage {
 			}
 		}
 		try {Thread.sleep(10000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+	}
+	
+	public WebElement botonSiguiente() {
+		List<WebElement> botones = driver.findElements(By.xpath("//div[contains(@id,'nextBtn')]/p"));
+		for (WebElement boton : botones) {
+			if (boton.isDisplayed()) return boton;
+		}
+		
+		System.out.println("ERROR: No se encontró botón siguiente");
+		return null;
+	}
+	
+	public void avanzarAConfigurarAjuste() {
+		driver.findElement(By.xpath("//label//span[contains(.,'Un servicio')]")).click();
+		botonSiguiente().click();
+		waitForVisibilityOfElementLocated(By.xpath("//section[@id='Step-AssetSelection']/section"));
+		botonSiguiente().click();
+		waitForVisibilityOfElementLocated(By.xpath("//section[@id='Step-TipodeAjuste']/section"));
+		
+		WebElement concepto = driver.findElement(By.xpath("//select[@id='CboConcepto']"));
+		WebElement tipoDeCargo = driver.findElement(By.xpath("//select[@id='CboTipo']"));
+		WebElement item = driver.findElement(By.xpath("//select[@id='CboItem']"));
+		WebElement motivo = driver.findElement(By.xpath("//select[@id='CboMotivo']"));
+		(new Select(concepto)).selectByIndex(1);
+		(new Select(tipoDeCargo)).selectByIndex(1);
+		(new Select(item)).selectByIndex(1);
+		(new Select(motivo)).selectByIndex(1);
+		botonSiguiente().click();
+		
+		try {
+			driver.findElement(By.xpath("//div[@id='RAGetAdjustmentHistory']")).isDisplayed();
+			Assert.assertTrue(false); // SE DEBE CORREGIR EL MENSAJE DE ERROR QUE APARECE ACA
+			driver.findElement(By.xpath("//button[contains(.,'Continue')]")).click();
+		}
+		catch (NoSuchElementException e) {}
+		
+		waitForVisibilityOfElementLocated(By.xpath("//section[@id='Step-HistoricalAdjustments']/section"));
+		driver.findElement(By.xpath("//label//span[contains(.,'Si, ajustar')]")).click();
+		botonSiguiente().click();
+		waitForVisibilityOfElementLocated(By.xpath("//section[@id='Step-adjustmentConfiguration']/section"));
+	}
+	
+	public void unidad(String texto) {
+		WebElement unidad = driver.findElement(By.xpath("//select[@id='Unidad']"));
+		(new Select(unidad)).selectByVisibleText(texto);
 	}
 }

@@ -13,10 +13,10 @@ public class ContactSearch extends BasePage {
 
 	final WebDriver driver;
 
-	@FindBy(how = How.ID, using = "DocumentTypeSearch")
+	@FindBy(how = How.ID, using = "SearchClientDocumentType")
 	private WebElement documentType;
 
-	@FindBy(how = How.ID, using = "DocumentInputSearch")
+	@FindBy(how = How.ID, using = "SearchClientDocumentNumber")
 	private WebElement document;
 
 	@FindBy(how = How.CSS, using = ".slds-radio--faux.ng-scope")
@@ -47,6 +47,7 @@ public class ContactSearch extends BasePage {
 			gender.get(1).click();
 			break;
 		}
+		if(!genero.equals(""))
 		driver.findElement(By.cssSelector(".OSradioButton.ng-scope.only-buttom")).click();
 		try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 	}

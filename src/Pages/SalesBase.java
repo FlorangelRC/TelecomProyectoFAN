@@ -211,11 +211,11 @@ public void validarespacio(){
 }
 
 public void validarcamposbusqueda(){
-	firstname.isSelected();
-	lastname.isSelected();
-	razonsocial.isSelected();
-	numerodecuenta.isSelected();
-	Email.isSelected();
+	firstname.isDisplayed();
+	lastname.isDisplayed();
+	razonsocial.isDisplayed();
+	numerodecuenta.isDisplayed();
+	Email.isDisplayed();
 }
 
 public void BuscarCuenta(String Type, String NDNI){
@@ -259,7 +259,8 @@ public boolean btnnoexiste(String boton){
 	 List<WebElement> filas = driver.findElements(By.cssSelector(".dataCell"));
 	 for(int i=0; i<filas.size();i++){
 		 if (filas.get(i).getText().equals(nombre)){
-			 //System.out.println(filas.get(i+5).getText());
+			 a = true;
+			 System.out.println(filas.get(i+5).getText());
 			Assert.assertTrue(filas.get(i+5).getText().contains(perfil));
 			break;}} 
 	 Assert.assertTrue(a);}
@@ -297,14 +298,11 @@ public boolean btnnoexiste(String boton){
 	try {Thread.sleep(10000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 	 ArrayList<String> txt1 = new ArrayList<String>();
 	 ArrayList<String> txt2 = new ArrayList<String>();
-	 txt2.add("ASIGNACIÓN DE LINEA");
-	 txt2.add("SELECCIÓN DE MEDIO DE PAGO");
-	 txt2.add("VALIDACIÓN DE IDENTIDAD");
-	 txt2.add("INFORMACIÓN DEL CONTACTO");
-	 txt2.add("INGRESO DE SERIAL");
-	 txt2.add("SELECCIÓN DE LÍNEA DECISORA");
-	 txt2.add("SELECCIÓN DE USUARIO DE LA LINEA");
-	 txt2.add("INFORMACIÓN");
+	 txt2.add("ASIGNACI\u00d3N DE L\u00cdNEA");
+	 txt2.add("SELECCI\u00d3N DE MEDIO DE PAGO");
+	 txt2.add("RESUMEN DE LA ORDEN DE VENTA");
+	 txt2.add("ENV\u00cdO FACTURA Y DATOS DE COBRO");
+	 txt2.add("INFORMACI\u00d3N");
 
 	 List<WebElement> pasos = driver.findElements(By.cssSelector(".slds-form-element__label.ng-binding"));
 	 System.out.println(pasos.size());
@@ -323,10 +321,10 @@ public boolean btnnoexiste(String boton){
  }
  public void validarnuevocliente(String DNIType, String DNINumber){
 		try {Thread.sleep(10000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
-		Select DNI = new Select( driver.findElement(By.id("DocumentTypeSearch")));
+		Select DNI = new Select( driver.findElement(By.id("DocumentType")));
 		
 		
-	WebElement NDNI = driver.findElement(By.cssSelector(".vlc-control-wrapper.ng-scope")).findElement(By.id("DocumentInputSearch"));
+	WebElement NDNI = driver.findElement(By.id("DocumentNumber"));
 	String Type =DNI.getFirstSelectedOption().getText();
 	String numero=NDNI.getAttribute("value");
 	System.out.println(Type);
@@ -337,7 +335,7 @@ public boolean btnnoexiste(String boton){
  }
  public void validarentrarcatalogo(){
 		try {Thread.sleep(50000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
-	 Assert.assertTrue(driver.findElement(By.cssSelector(".slds-tabs--default__nav cpq-product-cart-tabs")).isDisplayed());
+	 Assert.assertTrue(driver.findElement(By.cssSelector(".slds-grid.slds-grid--vertical-align-center.slds-grid--align-center.cpq-no-cart-items-msg")).isDisplayed());
  }
  public void validaragrupados(){
 	List<WebElement> lista = driver.findElements(By.className("ng-binding"));

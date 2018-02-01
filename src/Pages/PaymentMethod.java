@@ -2,6 +2,7 @@ package Pages;
 
 import java.util.List;
 
+import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -11,7 +12,7 @@ import org.openqa.selenium.support.PageFactory;
 public class PaymentMethod extends BasePage{
 	final WebDriver driver;
 
-	@FindBy (how = How.ID, using = "SelectPM")
+	@FindBy (how = How.ID, using = "PaymentMethodRadio")
 	private List<WebElement> paymentMethod;
 	
 	@FindBy (how = How.CSS, using = ".vlc-slds-button--tertiary.ng-binding.ng-scope")
@@ -43,5 +44,17 @@ public Boolean isPaymentMethodPresent() {
 		a = true;
 	}
 	return a;
+}
+
+public boolean selectDebitoAProximaFactura() {
+	driver.findElement(By.id("PaymentMethodRadio")).click();
+	try {Thread.sleep(2000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+	try {
+		driver.findElement(By.xpath("//*[@id=\"PaymentMethods\"]/div/div/div[2]/child[1]/div/div/ng-form/div[2]/div[1]/ul/li[2]")).click();
+		return true;
+	}
+	catch(Exception e) {
+		return false;
+	}
 }
 }

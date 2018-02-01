@@ -1,6 +1,5 @@
 package Tests;
 
-
 import java.util.List;
 
 import org.openqa.selenium.By;
@@ -16,13 +15,12 @@ import Pages.HomeBase;
 import Pages.SalesBase;
 import Pages.setConexion;
 
-
 public class SalesMatrix extends TestBase {
 	
 	
 	@BeforeClass (groups = {"Sales", "Ventas", "AltaDeCuenta", "AltaDeLinea"})
 	public void init() throws Exception{
-		this.driver = setConexion.setupEze();
+		driver = setConexion.setupEze();
 		try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 		login(driver);
 		try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
@@ -39,10 +37,10 @@ public class SalesMatrix extends TestBase {
 	    try {Thread.sleep(8000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 	    driver.findElement(By.xpath("//a[@href=\"/home/showAllTabs.jsp\"]")).click();
 	    try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
-	    driver.findElement(By.xpath("//*[@id=\"bodyCell\"]/div[3]/div[2]/table/tbody/tr[36]/td[2]/a")).click();
+	    driver.findElement(By.xpath("//*[@id=\"bodyCell\"]/div[3]/div[2]/table/tbody/tr[39]/td[2]/a/img")).click();
 	    try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 	    driver.findElement(By.name("go")).click();
-	    try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}    
+	    try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 	}
 	
 	@AfterMethod (groups = {"Sales", "Ventas", "AltaDeCuenta", "AltaDeLinea"})
@@ -197,8 +195,8 @@ public class SalesMatrix extends TestBase {
 		Assert.assertTrue(a && b && c);
 	}
 	
-	@Test (groups = {"Sales", "AltaDeCuenta"})
-	public void TS76129_Alta_Cuenta_Validaciones_Verificar_creacion_de_matriz_de_validacion_de_identidad() {
+	@Test (groups = {"Sales", "AltaDeCuenta","Ola1"})
+	public void TS95194_Alta_Cuenta_Validaciones_Verificar_creacion_de_matriz_de_validacion_de_identidad() {
 		SalesBase sb = new SalesBase(driver);
 		sb.selectMatrix("m", "manageableidentityvalidation");
 		BasePage cambioFrameByID = new BasePage();

@@ -5,6 +5,7 @@ import static org.testng.Assert.assertFalse;
 import static org.testng.Assert.assertTrue;
 
 import java.sql.Driver;
+import java.util.List;
 import java.util.Random;
 
 import org.openqa.selenium.By;
@@ -13,6 +14,7 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.ui.WebDriverWait;
+import org.testng.Assert;
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.AfterTest;
@@ -23,7 +25,10 @@ import org.testng.annotations.Test;
 
 import Pages.ContactSearch;
 import Pages.CustomerCare;
+import Pages.DeliveryMethod;
+import Pages.LineAssignment;
 import Pages.SalesBase;
+import Pages.Ta_CPQ;
 import Pages.ValidationMethodSelection;
 import Pages.setConexion;
 import Pages.BasePage;
@@ -81,10 +86,11 @@ public class newClient extends TestBase {
 	
 		try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 	}
-	@AfterMethod
+	//@AfterMethod
 	public void tearDown() throws Exception {
-		login1(driver);
-		IngresarCred(driver);
+		try {Thread.sleep(4000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		driver.get("https://crm--sit.cs14.my.salesforce.com/home/home.jsp?tsid=02u41000000QWha/");
+		try {Thread.sleep(10000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 	}
 	
 	@BeforeMethod(groups="Fase2")
@@ -98,7 +104,10 @@ public class newClient extends TestBase {
 		}
 		driver.findElement(By.id("sidebarDiv")).findElement(By.tagName("a")).click();
 		sleep(8000);
-	  if(i==0) {
+		SalesBase SB = new SalesBase(driver);
+		SB.BuscarCuenta("DNI", "32323232");
+		SB.acciondecontacto("catalogo");
+	  /*if(i==0) {
 		  i++;
 		try {Thread.sleep(3000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 		ContactSearch conts = new ContactSearch(driver);
@@ -110,33 +119,45 @@ public class newClient extends TestBase {
 		driver.findElement(By.id("SearchClientDocumentNumber")).sendKeys(Integer.toString(intAletorio));
 		driver.findElement(By.id("SearchClientsDummy")).click();
 		sleep(5000);
-		CC.obligarclick(driver.findElement(By.id("rdbNewClient0")).findElement(By.tagName("input")));
+		List <WebElement> cc = driver.findElements(By.cssSelector(".slds-form-element__label.ng-binding"));
+		for (WebElement x : cc) {
+			if (x.getText().toLowerCase().contains("+ crear nuevo cliente")) {
+				x.click();
+				break;
+			}
+		}
+		sleep(5000);
+		driver.findElement(By.cssSelector(".slds-radio--faux.ng-scope")).click();
 		//conts.searchContact(DNI, DocValue[4], "femenino");
 		//conts.sex("femenino");
 		//driver.findElement(By.id("ContactSearch_nextBtn")).click();
 		try {Thread.sleep(8000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 		if(driver.findElement(By.id("FirstName")).getAttribute("value").isEmpty()) {
-		ContactInformation page = new ContactInformation(driver);
-		page.setContactInformation(Name, LastName, DateOfBirthday);}
+			ContactInformation page = new ContactInformation(driver);
+			page.setContactInformation(Name, LastName, DateOfBirthday);
+		}
 		try {Thread.sleep(6000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 		WebElement BenBoton = driver.findElement(By.id("Contact_nextBtn"));
 		((JavascriptExecutor)driver).executeScript("window.scrollTo(0,"+BenBoton.getLocation().y+")");
-		BenBoton.click();
-		try {Thread.sleep(4000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
-		try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
-		SalesBase SB = new SalesBase(driver);
-	
+		BenBoton.click();*/
+		sleep(12000);
+		Ta_CPQ page3 = new Ta_CPQ(driver);
 		SB.agregarplan(plan);
+		try {Thread.sleep(4000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 		SB.continuar();
-		SB.elegirvalidacion("DOC");
-		SB.subirdoc();
-		SB.error();
-	  }
+		//page3.clickOnSalesConfig();
+		try {Thread.sleep(10000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		LineAssignment page4 = new LineAssignment(driver);
+		page4.clickOnNext();
+		try {Thread.sleep(3000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+	  //}
 	}
 	
 	@Test(groups="Fase2")
 	public void TS15412_CRM_Fase_2_SalesCPQ_Alta_de_linea_Verificar_default_de_modalidad_entrega_para_Canal_Ecommerce_Telefonico()
 	{
+		DeliveryMethod page5 = new DeliveryMethod(driver);
+		Assert.assertEquals("Presencial", page5.getCurrentValueForDeliveryMethod());
 		assertTrue(driver.findElement(By.id("Department")).getAttribute("value").isEmpty());
 	}
 	
@@ -194,14 +215,6 @@ public class newClient extends TestBase {
 		try {Thread.sleep(2000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 	}
 	
-	@Test(groups="Fase2")
-	public void TS7005_mandatoryTaxCondition()
-	{
-		BasePage page = new BasePage();
-		WebElement CI = driver.findElement(By.id("ImpositiveCondition"));
-		page.setSimpleDropdown(CI, "IVA Consumidor final");
-		page.setSimpleDropdown(CI, "IVA Monotributista");
-		try {Thread.sleep(2000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
-	}
+	
 	
 }

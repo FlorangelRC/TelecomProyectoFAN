@@ -39,7 +39,7 @@ public class moduloOM extends TestBase {
 	
 	private WebDriver driver;
 	
-	@BeforeClass(groups = "OM")
+	@BeforeClass(alwaysRun=true)
 	public void init() throws Exception
 	{
 		this.driver = setConexion.setupEze();
@@ -50,7 +50,7 @@ public class moduloOM extends TestBase {
 		
 	}
 
-	@BeforeMethod(groups = "OM")
+	@BeforeMethod(alwaysRun=true)
 	public void setUp() throws Exception {
 		driver.switchTo().defaultContent();
 		try {Thread.sleep(2000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
@@ -76,7 +76,7 @@ public class moduloOM extends TestBase {
 		try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 	}
 	
-	@AfterClass(groups="OM")
+	@AfterClass(alwaysRun=true)
 	public void tearDown() {
 		try {Thread.sleep(2000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 		driver.quit();
