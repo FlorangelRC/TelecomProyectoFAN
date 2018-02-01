@@ -15,30 +15,22 @@ import org.testng.Assert;
 
 import Tests.TestBase;
 
-public class Marketing extends BasePage {
+public class Marketing extends CustomerCare {
 	
-	@FindBy(xpath = "//input[@ng-model='searchTerm']")
-	private WebElement buscadorGestiones;
+
 	
-	@FindBy(xpath = "//button[@class='slds-button slds-button--neutral slds-truncate']")
-	public List<WebElement> gestionesEncontradas;
-	
-	@FindBy(css = ".sd_secondary_container.x-border-layout-ct")
-	private List<WebElement> panelesCentrales;
-	
-	final WebDriver driver;
+	//final WebDriver driver;
 	
 	//Constructor
 	public Marketing(WebDriver driver){
-		this.driver = driver;
-		PageFactory.initElements(driver, this);
+		super(driver);
 	}
 	
-	public void clubPersonal (String sAltaBajaModificación) {
+	public void clubPersonal (String sAltaBajaModificacion) {
 		WebElement wMenuABM = driver.findElement(By.cssSelector(".slds-grid.slds-wrap.via-slds-action-grid-card"));
 		List<WebElement> lMenuesABM = wMenuABM.findElements(By.cssSelector(".slds-size--1-of-2.slds-x-small-size--1-of-3.slds-medium-size--1-of-4.slds-large-size--1-of-6.slds-align--absolute-center.slds-m-bottom--xx-small.slds-m-top--xx-small.slds-p-left--xx-small.slds-p-right--xx-small.slds-grid"));
 		
-		switch (sAltaBajaModificación.toLowerCase()) {
+		switch (sAltaBajaModificacion.toLowerCase()) {
 			case "alta":
 				lMenuesABM.get(0).click();
 				break;
