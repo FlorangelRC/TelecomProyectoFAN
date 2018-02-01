@@ -111,7 +111,7 @@ public class Sales extends TestBase {
 
 	@BeforeMethod(groups={"sales", "AltaDeContacto"})
 	public void setup() throws Exception {		
-		try {Thread.sleep(10000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		try {Thread.sleep(12000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 		driver.findElement(By.xpath("//a[@href=\'https://crm--sit--c.cs14.visual.force.com/apex/taClientSearch']")).click();
 		try {Thread.sleep(10000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 	}
@@ -1113,7 +1113,7 @@ public class Sales extends TestBase {
 		Assert.assertTrue(in.getAttribute("value").isEmpty());
 	}
 	 	
-	@Test(groups = "Sales")
+	@Test(groups={"Sales", "AltaDeContacto","Ola1"})
 	public void TS76117_Alta_Contacto_Creacion_Verificar_creacion_de_cliente() {
 		SalesBase SB = new SalesBase(driver);
 		SB.BuscarCuenta(DNI, "1111111");
@@ -1161,7 +1161,7 @@ public class Sales extends TestBase {
 	  }
 	 Assert.assertTrue(t);  
 	 }
-	 @Test (groups = "Sales") 
+	@Test(groups={"Sales", "AltaDeContacto","Ola1"})
 	  public void TS94734_Alta_de_Contacto_Persona_Fisica_Verificar_seleccion_de_localidad_existente(){ 
 	    SalesBase SB = new SalesBase(driver); 
 	    SB.BuscarCuenta(DNI, "11111111"); 
@@ -1181,7 +1181,7 @@ public class Sales extends TestBase {
 	    } 
 	    Assert.assertTrue(h); 
 	   } 
-	  @Test (groups = "Sales") 
+	@Test(groups={"Sales", "AltaDeContacto","Ola1"})
 	  public void TS94737_Alta_de_Contacto_Persona_Fisica_Verificar_seleccion_de_calle_existente(){ 
 	    SalesBase SB = new SalesBase(driver); 
 	    SB.BuscarCuenta(DNI, "11111111"); 
@@ -1202,7 +1202,7 @@ public class Sales extends TestBase {
 	    } 
 	    Assert.assertTrue(h); 
 	   } 
-	  @Test (groups = "sales") 
+	@Test(groups={"Sales", "AltaDeContacto","Ola1"}) 
 	  public void TS94735_Alta_de_Contacto_Persona_Fisica_Verificar_ingreso_manual_de_localidad_inexistente(){ 
 	    SalesBase SB = new SalesBase(driver); 
 	    SB.BuscarCuenta(DNI, "11111111"); 
@@ -1216,7 +1216,7 @@ public class Sales extends TestBase {
 	    driver.findElement(By.cssSelector(".typeahead.dropdown-menu.ng-scope.am-fade.bottom-left")).click(); 
 	    Assert.assertTrue(loc.getAttribute("value").equals("VILLA LUZURIAGA")); 
 	  } 
-	  @Test(groups = "sales") 
+	@Test(groups={"Sales", "AltaDeContacto","Ola1"})
 	  public void TS94739_Alta_de_Contacto_Persona_Fisica_Verificar_ingreso_manual_de_cod_postal_inexistente(){ 
 	    SalesBase SB = new SalesBase(driver); 
 	    SB.BuscarCuenta(DNI, "11111111"); 
@@ -1235,7 +1235,7 @@ public class Sales extends TestBase {
 	    cod.sendKeys("1765"); 
 	    Assert.assertTrue(cod.getAttribute("value").equals("1765")); 
 	  } 
-	  @Test(groups = "sales") 
+	@Test(groups={"Sales", "AltaDeContacto","Ola1"})
 	  public void TS94736_Alta_de_Contacto_Persona_Fisica_Verificar_ingreso_manual_de_calle_inexistente(){ 
 	    SalesBase SB = new SalesBase(driver); 
 	    SB.BuscarCuenta(DNI, "11111111"); 
@@ -1254,5 +1254,143 @@ public class Sales extends TestBase {
 	    cal.sendKeys("ATENAS"); 
 	    Assert.assertTrue(cal.getAttribute("value").equals("ATENAS")); 
 	  } 
-
+	  
+	@Test(groups={"Sales", "AltaDeContacto","Ola1"})
+	  public void TS94545_Alta_de_Contacto_Persona_Fisica_Validar_que_NO_exista_contacto_24(){
+		 SalesBase SB = new SalesBase(driver);
+		 SB.BtnCrearNuevoCliente();
+		 boolean o = false;
+			try {Thread.sleep(10000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+			List <WebElement> cc = driver.findElements(By.cssSelector(".slds-form-element__control"));
+			for (WebElement x : cc) {
+				if (x.getText().toLowerCase().contains("el contacto no existe. complet\u00e1 los datos para crear un nuevo cliente.")) {
+					x.isDisplayed();
+					o = true;
+				}
+			}
+		Assert.assertTrue(o);
+	  }
+	@Test(groups={"Sales", "AltaDeContacto","Ola1"})
+	  public void TS94546_Alta_de_Contacto_Persona_Fisica_Validar_que_se_muestre_la_barra_39(){
+		  SalesBase SB = new SalesBase(driver);
+			 SB.BtnCrearNuevoCliente();
+			 WebElement birt = driver.findElement(By.id("Birthdate"));
+			 birt.sendKeys("13/08/1994");
+			 Assert.assertTrue(birt.getAttribute("value").contains("/"));
+	  }
+	@Test(groups={"Sales", "AltaDeContacto","Ola1"})
+	  public void TS94538_Ingresar_dominio_de_email_inexistente_32(){
+		  SalesBase SB = new SalesBase(driver);
+		  SB.BtnCrearNuevoCliente();
+		  sleep(8000); 
+		  
+		  WebElement in = driver.findElements(By.cssSelector(".slds-form-element__control.slds-input-has-icon.slds-input-has-icon--right")).get(2).findElement(By.tagName("input"));
+		  in.sendKeys("asd@Q");
+		  Boolean y = false;
+		 List<WebElement> inv = driver.findElements(By.cssSelector(".message.description.ng-binding.ng-scope"));
+			for(WebElement i : inv){
+				if(i.getText().toLowerCase().equals("ingresar un email v\u00e1lido")){
+					i.isDisplayed();
+					y=true;
+				}
+			}
+		  Assert.assertTrue(y);
+	  }
+	@Test(groups={"Sales", "AltaDeContacto","Ola1"})
+	  public void TS94532_Alta_de_Contacto_Persona_Fisica_Ingresar_DNI_en_el_campo_Numero_de_Documento_05(){
+		  SalesBase SB = new SalesBase (driver);
+		  WebElement doc = driver.findElement(By.id("SearchClientDocumentNumber"));
+		  doc.sendKeys("46331352");
+		  Assert.assertFalse(doc.getAttribute("value").isEmpty());
+		  
+	  }
+	@Test(groups={"Sales", "AltaDeContacto","Ola1"})
+	  public void TS94533_Alta_de_Contacto_Persona_Fisica_Ingresar_a_la_vista_de_alta_de_contacto_01(){
+		SalesBase SB = new SalesBase(driver);
+		SB.BtnCrearNuevoCliente();
+		Assert.assertTrue(driver.findElement(By.id("DocumentType")).getAttribute("value").equals("DNI"));
+		Boolean x = false;
+		List<WebElement> mail = driver.findElements(By.cssSelector(".slds-form-element__label.ng-binding"));
+		for(WebElement m :mail){
+			if (m.getText().equals("E-MAIL")){
+				m.isDisplayed();
+				x=true;
+			}
+		}
+		List<WebElement> fech = driver.findElements(By.cssSelector(".slds-form-element__label.ng-binding"));
+		for(WebElement f :fech){
+			if (f.getText().equals("FECHA DE NACIMIENTO")){
+				f.isDisplayed();
+				x=true;
+			}
+		}
+		List<WebElement> ape = driver.findElements(By.cssSelector(".slds-form-element__label.ng-binding"));
+		for(WebElement a :ape){
+			if (a.getText().equals("APELLIDO")){
+				a.isDisplayed();
+				x=true;
+			}
+		}
+		List<WebElement> nom = driver.findElements(By.cssSelector(".slds-form-element__label.ng-binding"));
+		for(WebElement n :nom){
+			if (n.getText().equals("NOMBRE")){
+				n.isDisplayed();
+				x=true;
+			}
+		}
+		List<WebElement> docu = driver.findElements(By.cssSelector(".slds-form-element__label.ng-binding"));
+		for(WebElement d :docu){
+			if (d.getText().equals("DOCUMENTO")){
+				d.isDisplayed();
+				x=true;
+			}
+		}
+		List<WebElement> gen = driver.findElements(By.cssSelector(".vlc-slds-control-action__container"));
+		for(WebElement g :gen){
+			if (g.getText().equals("G\u00e9nero")){
+				g.isDisplayed();
+				x=true;
+			}
+		}
+		Assert.assertTrue(x);
+	  }
+	  
+	@Test(groups={"Sales", "AltaDeContacto","Ola1"})
+	  public void TS94879_Alta_de_Contacto_Busqueda_Verificar_accion_de_proceso_de_Venta(){
+		  SalesBase SB = new SalesBase(driver);
+		  SB.BuscarCuenta(DNI, "11111111"); 
+		  SB.acciondecontacto("catalogo"); 
+		  sleep(15000); 
+		  WebElement asd = driver.findElement(By.className("taHeaderInfoContainer"));
+		 // System.out.println(asd.getText());
+		Assert.assertTrue(asd.isDisplayed());
+	  }
+	
+	
+	@Test(groups={"Sales", "AltaDeContacto","Ola1"})
+	  public void TS94822_Alta_Contacto_Busqueda_Verificar_Consumer_Account_Contacto_existente_CRM(){
+		  SalesBase SB = new SalesBase(driver);
+		  SB.BuscarCuenta(DNI, "11111111");
+		  sleep(5000);
+		WebElement nomb = driver.findElement(By.id("tab-scoped-3")).findElement(By.tagName("section")).findElement(By.tagName("div")).findElement(By.tagName("table")).findElement(By.tagName("tbody")).findElements(By.tagName("td")).get(0);
+		System.out.println(nomb.getText());
+		Assert.assertTrue(nomb.getText().equals("Adela Sales"));
+	  }
+	
+	
+	@Test(groups={"Sales", "AltaDeContacto","Ola1"})
+	  public void TS94824_Alta_Contacto_Busqueda_Verificar_Consumer_Account_Contacto_inexistente_CRM(){
+	  SalesBase SB = new SalesBase(driver);
+	  SB.BuscarCuenta(DNI, "14472788");
+	  boolean o = false;
+	  List<WebElement> nw = driver.findElements(By.cssSelector(".slds-form-element__label.ng-binding"));
+	     for(WebElement n:nw){
+	    	 if(n.getText().equals("+ Crear nuevo cliente")){
+	    		n.isDisplayed();
+	    		o=true;
+	    	 }
+	     }
+	Assert.assertTrue(o);
+	}
+		  
 }
