@@ -61,13 +61,13 @@ public class Sales extends TestBase {
 	String[] genero = {"masculino","femenino"};
 	String[] DocValue = {"52698550","3569874563","365","ssss"};
 	
-	@AfterClass(alwaysRun=true)
+//	@AfterClass(alwaysRun=true)
 	public void tearDown() {
 		driver.close();
 		driver.quit();
 	}
 	
-	@AfterMethod(alwaysRun=true)
+//	@AfterMethod(alwaysRun=true)
 	public void deslogin(){
 		try {Thread.sleep(10000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 		driver.get("https://crm--sit.cs14.my.salesforce.com/home/home.jsp?tsid=02u41000000QWha/");
@@ -2191,11 +2191,52 @@ public class Sales extends TestBase {
 					c.click();
 				}
 			}
-		sleep(10000);			
+		sleep(20000);			
 		WebElement sig = driver.findElement(By.id("LineAssignment_nextBtn"));
 		sig.click();
-		
-		
+		sleep(5000);
+		Select deliv = new Select (driver.findElement(By.id("DeliveryServiceType")));
+		deliv.selectByVisibleText("Env\u00edo Est\u00e1ndar");
+		Assert.assertEquals(deliv.getFirstSelectedOption().getText(),"Env\u00edo Est\u00e1ndar");
 	}	
-
+	
+	
+	@Test(groups={"Sales", "Nueva Venta", "Ola1"})
+	public void TS94687_Nueva_Venta_Modo_de_Entrega_Verificar_Valor_por_Default_Modo_de_Entrega_Delivery(){
+		SalesBase SB = new SalesBase(driver);
+		SB.BuscarCuenta(DNI, "34073329");
+		SB.acciondecontacto("catalogo");
+		boolean x = false;
+		sleep(15000);
+		List<WebElement> cam = driver.findElements(By.cssSelector(".slds-m-left--x-small.slds-button.slds-button--brand"));
+		for(WebElement c : cam ){	
+			if(c.getText().toLowerCase().equals("cambiar")){
+				c.click();
+			}
+		sleep(7000);	
+		List<WebElement> frame2 = driver.findElements(By.tagName("iframe"));
+		driver.switchTo().frame(frame2.get(0));
+		Select env = new Select (driver.findElement(By.id("DeliveryMethodSelection")));
+		env.selectByVisibleText("Delivery");
+		driver.findElement(By.id("SalesChannelConfiguration_nextBtn")).click();
+		sleep(7000);
+		driver.switchTo().defaultContent();
+		}
+		SB.elegirplan("Plan con Tarjeta Repro");
+		sleep(15000);
+		List<WebElement> cont = driver.findElements(By.cssSelector(".slds-button.slds-m-left--large.slds-button--brand.ta-button-brand"));
+			for(WebElement c : cont){
+				if(c.getText().equals("Continuar")){
+					c.click();
+				}
+			}
+		sleep(20000);			
+		WebElement sig = driver.findElement(By.id("LineAssignment_nextBtn"));
+		sig.click();
+		sleep(5000);
+		Select deliv = new Select (driver.findElement(By.id("DeliveryMethod")));
+		deliv.selectByVisibleText("Delivery");
+		Assert.assertEquals(deliv.getFirstSelectedOption().getText(),"Delivery");
+	}		
+	
 }
