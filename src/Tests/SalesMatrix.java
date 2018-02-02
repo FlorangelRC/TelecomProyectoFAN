@@ -243,4 +243,26 @@ public class SalesMatrix extends TestBase {
 			}
 		}
 	}
+	
+	@Test (groups = {"Sales", "AltaDeLinea", "Ola1"})
+	public void TS94963_Verificar_que_se_configuren_criterios_Stock() {
+		SalesBase sb = new SalesBase(driver);
+		sb.selectMatrix("s", "stockmovementoperation");
+		BasePage cambioFrameByID = new BasePage();
+		driver.switchTo().frame(cambioFrameByID.getFrameForElement(driver, By.className("edit-columns")));
+		WebElement fila = driver.findElement(By.className("edit-columns"));
+		boolean a = false;
+		boolean b = false;
+		boolean c = false;
+		if (fila.getText().toLowerCase().contains("operationtype")) {
+			a = true;
+		}
+		if (fila.getText().toLowerCase().contains("instance")) {
+			b = true;
+		}
+		if (fila.getText().toLowerCase().contains("deliverymode")) {
+			c = true;
+		}
+		Assert.assertTrue(a && b && c);
+	}
 }
