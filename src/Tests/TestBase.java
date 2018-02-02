@@ -423,9 +423,20 @@ public class TestBase {
 			}
 			
 			public static void Ventas() {
-				driver.switchTo().defaultContent();
-				driver.findElement(By.xpath("//span[@id='tsidLabel']")).click();
-				driver.findElement(By.xpath("//a[contains(.,'Ventas')]")).click();
+				HomeBase homePage = new HomeBase(driver);
+			    String a = driver.findElement(By.id("tsidLabel")).getText();
+				if (a.contains("Ventas")){}
+			    else {
+			    	homePage.switchAppsMenu();
+			    	try {Thread.sleep(2000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+			    	homePage.selectAppFromMenuByName("Ventas");
+			    	try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}            
+			    }	    
+				
+				
+				//driver.switchTo().defaultContent();
+				//driver.findElement(By.xpath("//span[@id='tsidLabel']")).click();
+				//driver.findElement(By.xpath("//a[contains(.,'Ventas')]")).click();
 			}
 		}
 	}
