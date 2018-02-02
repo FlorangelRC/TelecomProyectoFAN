@@ -27,7 +27,7 @@ public class CustomerCareFase4 extends TestBase{
 		IrA.CajonDeAplicaciones.ConsolaFAN();
 	}
 	
-	@AfterClass (groups = {"CustomerCare", "Vista360Layout", "DetalleDeConsumos", "ActualizarDatos", "ProblemasConRecargas", "DebitoAutomatico"})
+	//@AfterClass (groups = {"CustomerCare", "Vista360Layout", "DetalleDeConsumos", "ActualizarDatos", "ProblemasConRecargas", "DebitoAutomatico"})
 	public void quit() {
 		page.cerrarTodasLasPestañas();
 		IrA.CajonDeAplicaciones.Ventas();
@@ -39,7 +39,7 @@ public class CustomerCareFase4 extends TestBase{
 		page.cerrarTodasLasPestañas();
 	}
 	
-	@Test (groups = {"CustomerCare", "Vista360Layout"})
+	//@Test (groups = {"CustomerCare", "Vista360Layout"})
 	public void TS15955_360_View_Ver_Equipo_Creador_en_Case_Caso_Creado_Cerrar_Caso_Campo_Equipo_del_Creador_no_cambia_valor() {
 		WebElement selector = driver.findElement(By.cssSelector(".x-btn-small.x-btn-icon-small-left"));
 		WebElement btnSplit = selector.findElement(By.className("x-btn-split"));

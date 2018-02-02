@@ -28,7 +28,7 @@ public class CustomerCareOla1 extends TestBase {
 		IrA.CajonDeAplicaciones.ConsolaFAN();
 	}
 	
-	//@AfterClass (groups = {"CustomerCare", "AjustesYEscalamiento", "SuspensionYRehabilitacion(Online)"})
+	@AfterClass (groups = {"CustomerCare", "AjustesYEscalamiento", "SuspensionYRehabilitacion(Online)"})
 	public void quit() {
 		page.cerrarTodasLasPestañas();
 		IrA.CajonDeAplicaciones.Ventas();
