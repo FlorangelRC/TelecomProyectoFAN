@@ -200,6 +200,7 @@ public class SalesNominaciones extends TestBase{
 		Assert.assertTrue(a);
 	}
 	
+	//***************************************************************************************************************************
 	@Test(groups = "Sales")
 	public void TS95140_Nominacion_Argentino_Verificar_creacion_de_la_cuenta() {
 		ContactSearch contact = new ContactSearch(driver);
@@ -215,7 +216,7 @@ public class SalesNominaciones extends TestBase{
 		List <WebElement> element = driver.findElements(By.cssSelector(".slds-form-element.vlc-flex.vlc-slds-text-block.vlc-slds-rte.ng-pristine.ng-valid.ng-scope"));
 		boolean a = false;
 		for (WebElement x : element) {
-			if (x.getText().toLowerCase().contains("�nominaci\u00f3n exitosa!")) {
+			if (x.getText().toLowerCase().contains("nominaci\u00f3n exitosa!")) {
 				a = true;
 			}
 		}
@@ -239,7 +240,7 @@ public class SalesNominaciones extends TestBase{
 		Assert.assertTrue(a);
 	}
 	
-	@Test(groups = "Sales")
+	//@Test(groups = "Sales")
 	public void TS95282_Nominacion_General_Verifica_autocomplete_de_campos() {
 		//ContactSearch contact = new ContactSearch(driver);
 		//contact.searchContact("DNI", "10000019", "masculino");
@@ -253,7 +254,7 @@ public class SalesNominaciones extends TestBase{
 		assertTrue(!driver.findElement(By.id("FirstName")).getAttribute("value").isEmpty());
 		
 	}
-	
+	//***********************************************************************************************************************
 	@Test(groups = "Sales")
 	public void TS95094_SalesCPQ_Nominacion_Extranjero_Verificar_Confirmacion_Exitosa(){
 		String FilePath = "C:\\Users\\florangel\\Downloads\\mapache.jpg";

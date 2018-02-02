@@ -208,8 +208,8 @@ public class Sales extends TestBase {
 		ContactSearch contact = new ContactSearch(driver);
 		contact.searchContact(DNI, "123456789", "");
 		List <WebElement> error = driver.findElements(By.cssSelector(".description.ng-binding"));
-		for(WebElement e: error){
-			
+		for(WebElement e: error)
+		{	
 			if(e.getText().toLowerCase().equals("longitud m\u00e1xima de 8")){
 				a=true;
 				break;
@@ -1877,6 +1877,23 @@ public class Sales extends TestBase {
 		  sleep(5000);
 		  List <WebElement> cai = driver.findElement(By.className("slds-tabs--scoped__nav")).findElements(By.tagName("li"));
 		  if (cai.get(0).isDisplayed() || !cai.get(1).isDisplayed()) {
+			  Assert.assertTrue(false);
+		  }
+	  }
+	  
+	  @Test(groups = {"Sales", "Ventas","Ola1"})
+	  public void TS94713_Ventas_BuscarCliente_Verificar_Clientes_Activos_Y_No_Activos() {
+		  driver.findElement(By.id("PhoneNumber")).sendKeys("1157572274");
+		  driver.findElement(By.id("SearchClientsDummy")).click();
+		  sleep(5000);
+		  List <WebElement> cai = driver.findElement(By.className("slds-tabs--scoped__nav")).findElements(By.tagName("li"));
+		  if (cai.get(0).isDisplayed() || !cai.get(1).isDisplayed()) {
+			  Assert.assertTrue(false);
+		  }
+		  driver.findElement(By.id("PhoneNumber")).clear();
+		  driver.findElement(By.id("PhoneNumber")).sendKeys("1157602860");
+		  driver.findElement(By.id("SearchClientsDummy")).click();
+		  if (!cai.get(0).isDisplayed() || cai.get(1).isDisplayed()) {
 			  Assert.assertTrue(false);
 		  }
 	  }
