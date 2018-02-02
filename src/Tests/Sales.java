@@ -2234,9 +2234,9 @@ public class Sales extends TestBase {
 		WebElement sig = driver.findElement(By.id("LineAssignment_nextBtn"));
 		sig.click();
 		sleep(5000);
-		Select deliv = new Select (driver.findElement(By.id("DeliveryMethod")));
-		deliv.selectByVisibleText("Delivery");
-		Assert.assertEquals(deliv.getFirstSelectedOption().getText(),"Delivery");
+		WebElement deliv = driver.findElement(By.id("DeliveryMethod"));
+		Assert.assertTrue(deliv.getText().equals("Delivery"));
 	}		
+	
 	
 }
