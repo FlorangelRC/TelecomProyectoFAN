@@ -230,7 +230,7 @@ public class CustomerCareOla1 extends TestBase {
 			if (x.getText().toLowerCase().contains("hurto")) {
 				b = true;
 			}
-			if (x.getText().toLowerCase().contains("extravío")) {
+			if (x.getText().toLowerCase().contains("extrav\u00edo")) {
 				c = true;
 			}
 		}
