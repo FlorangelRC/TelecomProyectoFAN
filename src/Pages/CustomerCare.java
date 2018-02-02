@@ -114,7 +114,7 @@ public class CustomerCare extends BasePage {
 	@FindBy(css = ".x-grid3-cell-inner.x-grid3-col-ACCOUNT_NAME")
 	private List<WebElement> cuentas;
 	
-	@FindBy(css = ".x-menu-item.accountMru.standardObject.sd-nav-menu-item")
+	@FindBy(css = ".x-menu-item.standardObject.sd-nav-menu-item")
 	private List<WebElement> desplegable;
 	
 	@FindBy(css = ".x-plain-body.sd_nav_tabpanel_body.x-tab-panel-body-top .x-tab-strip-closable")
@@ -208,6 +208,33 @@ public class CustomerCare extends BasePage {
 				}
 			}
 		}
+	}
+	
+	public void irACasos() {
+		driver.switchTo().defaultContent();
+		if  (!selector.getText().equalsIgnoreCase("Casos")) {
+			WebElement btnSplit = selector.findElement(By.className("x-btn-split"));
+			Actions builder = new Actions(driver);   
+			builder.moveToElement(btnSplit, 245, 20).click().build().perform();
+			for (WebElement op : desplegable) {
+				if (op.getText().equalsIgnoreCase("Casos")) {
+					op.click();
+					break;
+				}
+			}
+		}
+
+		driver.switchTo().frame(marcoCuentas);
+	}
+	
+	public String obtenerEstadoDelCaso(String numCaso) {
+		List<WebElement> registros = driver.findElements(By.cssSelector(".x-grid3-row-table tr"));
+		for (WebElement reg : registros) {
+			if (reg.findElement(By.cssSelector(".x-grid3-col-CASES_CASE_NUMBER")).getText().contains(numCaso)) {
+				return reg.findElement(By.cssSelector(".x-grid3-td-CASES_STATUS")).getText();
+			}
+		}
+		return null;
 	}
 	
 	private void esperarAQueCargueLaCuenta() {
