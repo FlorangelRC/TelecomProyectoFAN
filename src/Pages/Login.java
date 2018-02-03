@@ -80,9 +80,10 @@ public class Login extends BasePage {
 		
 		public void ingresarMarketing() {
 			try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
-			userMarketing.sendKeys("usit@telecom.sit");
-			passwordMarketing.sendKeys("pruebas09");
-			loginMarketing.click();
+			logininterno.click();
+			username.sendKeys("u198427");
+			password.sendKeys("Testa10k");
+			login.click();
 			try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 		}
 		

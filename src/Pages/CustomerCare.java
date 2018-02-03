@@ -32,16 +32,18 @@ import Tests.TestBase;
 
 public class CustomerCare extends BasePage {
 
-	final WebDriver driver;
+	//final WebDriver driver;
 	
 	public CustomerCare(WebDriver driver){
-		this.driver = driver;
+		setupNuevaPage(driver);
+	
         PageFactory.initElements(driver, this);
 	}
 	
 	
 	
 	//Case information
+
 	
 	@FindBy (how = How.CSS, using = ".x-layout-collapsed.x-layout-collapsed-east.x-layout-cmini-east")
 	private WebElement panelder;
@@ -112,7 +114,7 @@ public class CustomerCare extends BasePage {
 	@FindBy(css = ".x-grid3-cell-inner.x-grid3-col-ACCOUNT_NAME")
 	private List<WebElement> cuentas;
 	
-	@FindBy(css = ".x-menu-item.accountMru.standardObject.sd-nav-menu-item")
+	@FindBy(css = ".x-menu-item.standardObject.sd-nav-menu-item")
 	private List<WebElement> desplegable;
 	
 	@FindBy(css = ".x-plain-body.sd_nav_tabpanel_body.x-tab-panel-body-top .x-tab-strip-closable")
@@ -128,7 +130,7 @@ public class CustomerCare extends BasePage {
 	private List<WebElement> panelesLaterales;
 	
 	@FindBy(css = ".sd_secondary_container.x-border-layout-ct")
-	private List<WebElement> panelesCentrales;
+	protected List<WebElement> panelesCentrales;
 	
 	@FindBy(css = ".x-btn-small.x-btn-icon-small-left")
 	private WebElement selector;
@@ -140,7 +142,7 @@ public class CustomerCare extends BasePage {
 	private WebElement selectCuentas;
 	
 	@FindBy(xpath = "//input[@ng-model='searchTerm']")
-	private WebElement buscadorGestiones;
+	protected WebElement buscadorGestiones;
 	
 	@FindBy(css = ".console-flyout.active.flyout .icon.icon-v-troubleshoot-line")
 	private WebElement btn_ProblemaConRecargas;
@@ -188,7 +190,13 @@ public class CustomerCare extends BasePage {
 				TestBase.sleep(1000);
 			}
 			
-			TestBase.dynamicWait().until(ExpectedConditions.numberOfElementsToBe(By.cssSelector(".x-grid3-cell-inner.x-grid3-col-ACCOUNT_NAME"), 200));
+			char char0 = nombreCuenta.charAt(0);
+			if (char0 != 'a' && char0 != 'A') {
+				driver.findElement(By.xpath("//div[@class='rolodex']//span[contains(.,'" + char0 + "')]")).click();
+				sleep(500);
+			}
+			
+			waitForVisibilityOfElementLocated(By.cssSelector(".x-grid3-cell-inner.x-grid3-col-ACCOUNT_NAME"));
 			for (WebElement c : cuentas) {
 				//MEJORAR
 				if (c.getText().equalsIgnoreCase(nombreCuenta)) {
@@ -200,6 +208,33 @@ public class CustomerCare extends BasePage {
 				}
 			}
 		}
+	}
+	
+	public void irACasos() {
+		driver.switchTo().defaultContent();
+		if  (!selector.getText().equalsIgnoreCase("Casos")) {
+			WebElement btnSplit = selector.findElement(By.className("x-btn-split"));
+			Actions builder = new Actions(driver);   
+			builder.moveToElement(btnSplit, 245, 20).click().build().perform();
+			for (WebElement op : desplegable) {
+				if (op.getText().equalsIgnoreCase("Casos")) {
+					op.click();
+					break;
+				}
+			}
+		}
+
+		driver.switchTo().frame(marcoCuentas);
+	}
+	
+	public String obtenerEstadoDelCaso(String numCaso) {
+		List<WebElement> registros = driver.findElements(By.cssSelector(".x-grid3-row-table tr"));
+		for (WebElement reg : registros) {
+			if (reg.findElement(By.cssSelector(".x-grid3-col-CASES_CASE_NUMBER")).getText().contains(numCaso)) {
+				return reg.findElement(By.cssSelector(".x-grid3-td-CASES_STATUS")).getText();
+			}
+		}
+		return null;
 	}
 	
 	private void esperarAQueCargueLaCuenta() {
@@ -1384,5 +1419,50 @@ public class CustomerCare extends BasePage {
 			}
 		}
 		try {Thread.sleep(10000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+	}
+	
+	public WebElement botonSiguiente() {
+		List<WebElement> botones = driver.findElements(By.xpath("//div[contains(@id,'nextBtn')]/p"));
+		for (WebElement boton : botones) {
+			if (boton.isDisplayed()) return boton;
+		}
+		
+		System.out.println("ERROR: No se encontró botón siguiente");
+		return null;
+	}
+	
+	public void avanzarAConfigurarAjuste() {
+		driver.findElement(By.xpath("//label//span[contains(.,'Un servicio')]")).click();
+		botonSiguiente().click();
+		waitForVisibilityOfElementLocated(By.xpath("//section[@id='Step-AssetSelection']/section"));
+		botonSiguiente().click();
+		waitForVisibilityOfElementLocated(By.xpath("//section[@id='Step-TipodeAjuste']/section"));
+		
+		WebElement concepto = driver.findElement(By.xpath("//select[@id='CboConcepto']"));
+		WebElement tipoDeCargo = driver.findElement(By.xpath("//select[@id='CboTipo']"));
+		WebElement item = driver.findElement(By.xpath("//select[@id='CboItem']"));
+		WebElement motivo = driver.findElement(By.xpath("//select[@id='CboMotivo']"));
+		(new Select(concepto)).selectByIndex(1);
+		(new Select(tipoDeCargo)).selectByIndex(1);
+		(new Select(item)).selectByIndex(1);
+		(new Select(motivo)).selectByIndex(1);
+		botonSiguiente().click();
+		
+		try {
+			driver.findElement(By.xpath("//div[@id='RAGetAdjustmentHistory']")).isDisplayed();
+			Assert.assertTrue(false); // SE DEBE CORREGIR EL MENSAJE DE ERROR QUE APARECE ACA
+			driver.findElement(By.xpath("//button[contains(.,'Continue')]")).click();
+		}
+		catch (NoSuchElementException e) {}
+		
+		waitForVisibilityOfElementLocated(By.xpath("//section[@id='Step-HistoricalAdjustments']/section"));
+		driver.findElement(By.xpath("//label//span[contains(.,'Si, ajustar')]")).click();
+		botonSiguiente().click();
+		waitForVisibilityOfElementLocated(By.xpath("//section[@id='Step-adjustmentConfiguration']/section"));
+	}
+	
+	public void unidad(String texto) {
+		WebElement unidad = driver.findElement(By.xpath("//select[@id='Unidad']"));
+		(new Select(unidad)).selectByVisibleText(texto);
 	}
 }

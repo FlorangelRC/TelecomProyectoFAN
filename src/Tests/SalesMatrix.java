@@ -195,8 +195,8 @@ public class SalesMatrix extends TestBase {
 		Assert.assertTrue(a && b && c);
 	}
 	
-	@Test (groups = {"Sales", "AltaDeCuenta"})
-	public void TS76129_Alta_Cuenta_Validaciones_Verificar_creacion_de_matriz_de_validacion_de_identidad() {
+	@Test (groups = {"Sales", "AltaDeCuenta","Ola1"})
+	public void TS95194_Alta_Cuenta_Validaciones_Verificar_creacion_de_matriz_de_validacion_de_identidad() {
 		SalesBase sb = new SalesBase(driver);
 		sb.selectMatrix("m", "manageableidentityvalidation");
 		BasePage cambioFrameByID = new BasePage();
@@ -242,5 +242,27 @@ public class SalesMatrix extends TestBase {
 				Assert.assertTrue(false);
 			}
 		}
+	}
+	
+	@Test (groups = {"Sales", "AltaDeLinea", "Ola1"})
+	public void TS94963_Verificar_que_se_configuren_criterios_Stock() {
+		SalesBase sb = new SalesBase(driver);
+		sb.selectMatrix("s", "stockmovementoperation");
+		BasePage cambioFrameByID = new BasePage();
+		driver.switchTo().frame(cambioFrameByID.getFrameForElement(driver, By.className("edit-columns")));
+		WebElement fila = driver.findElement(By.className("edit-columns"));
+		boolean a = false;
+		boolean b = false;
+		boolean c = false;
+		if (fila.getText().toLowerCase().contains("operationtype")) {
+			a = true;
+		}
+		if (fila.getText().toLowerCase().contains("instance")) {
+			b = true;
+		}
+		if (fila.getText().toLowerCase().contains("deliverymode")) {
+			c = true;
+		}
+		Assert.assertTrue(a && b && c);
 	}
 }

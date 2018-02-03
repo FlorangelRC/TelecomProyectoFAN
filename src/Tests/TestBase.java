@@ -423,9 +423,20 @@ public class TestBase {
 			}
 			
 			public static void Ventas() {
-				driver.switchTo().defaultContent();
-				driver.findElement(By.xpath("//span[@id='tsidLabel']")).click();
-				driver.findElement(By.xpath("//a[contains(.,'Ventas')]")).click();
+				HomeBase homePage = new HomeBase(driver);
+			    String a = driver.findElement(By.id("tsidLabel")).getText();
+				if (a.contains("Ventas")){}
+			    else {
+			    	homePage.switchAppsMenu();
+			    	try {Thread.sleep(2000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+			    	homePage.selectAppFromMenuByName("Ventas");
+			    	try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}            
+			    }	    
+				
+				
+				//driver.switchTo().defaultContent();
+				//driver.findElement(By.xpath("//span[@id='tsidLabel']")).click();
+				//driver.findElement(By.xpath("//a[contains(.,'Ventas')]")).click();
 			}
 		}
 	}
@@ -479,9 +490,48 @@ public class TestBase {
 		return (!campo.getAttribute("class").contains("invalid"));
 	}
 	
+	public String obtenerValorDelCampo(WebElement campo) {
+		return campo.getAttribute("value");
+	}
+	
 	public void selectByText(WebElement element, String data){
 		Select select = new Select(element);
 		select.selectByVisibleText(data);
+	}
+	
+	public int getIndexFrame(WebDriver driver, By byForElement) { //working correctly
+		//TODO: Do the same for a WebElement instead of a By.
+		int index = 0;
+		driver.switchTo().defaultContent();
+		List<WebElement> frames = driver.findElements(By.tagName("iframe"));
+		for(WebElement frame : frames) {
+			try {
+				driver.switchTo().frame(frame);
+
+				driver.findElement(byForElement).getText(); //each element is in the same iframe.
+				//System.out.println(index); //prints the used index.
+
+				driver.findElement(byForElement).isDisplayed(); //each element is in the same iframe.
+				//System.out.println(index); //prints the used index.
+
+				driver.switchTo().defaultContent();
+				return index;
+			}catch(NoSuchElementException noSuchElemExcept) {
+				index++;
+				driver.switchTo().defaultContent();
+			}
+		}
+		return -1; //if this is called, the element wasnt found.
+	}
+	
+	public WebElement cambioFrame(WebDriver driver, By byForElement) {
+		driver.switchTo().defaultContent();
+		List<WebElement> frames = driver.findElements(By.tagName("iframe"));
+		try {return frames.get(getIndexFrame(driver, byForElement));
+		}catch(ArrayIndexOutOfBoundsException iobExcept) {System.out.println("Elemento no encontrado en ningun frame.");
+			return null;
+		}
+
 	}
 }
 

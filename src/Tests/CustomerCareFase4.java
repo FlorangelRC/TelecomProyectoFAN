@@ -101,6 +101,20 @@ public class CustomerCareFase4 extends TestBase{
 		Assert.assertTrue(casoCerrado.get(11).getText().equals(equipoCreador));
 	}
 	
+	@Test (groups = {"CustomerCare", "Vista360Layout"})
+	public void TS37166_360_View_UX_360_Card_Historiales_Visualizar_HISTORIAL_DE_AJUSTES() {
+		page.elegirCuenta("aaaaFernando Care");
+		page.irAHistoriales();
+		List <WebElement> element = driver.findElements(By.cssSelector(".slds-p-around--large.slds-text-body--regular.labelFont"));
+		boolean a = false;
+		for (WebElement x : element) {
+			if (x.getText().toLowerCase().contains("historial de ajustes")) {
+				a = true;
+			}
+		}
+		Assert.assertTrue(a);
+	}
+	
 	@Test (groups = {"CustomerCare", "DebitoAutomatico"})
 	public void TS37230_Automatic_Debit_Subscriptions_Sesión_guiada_Débito_Automático_Inicial_Paso_2_Adhesión_Cuenta_con_Mora() {
 		page.elegirCuenta("aaaaCuenta ConMora");
@@ -453,16 +467,11 @@ public class CustomerCareFase4 extends TestBase{
 		driver.findElement(By.cssSelector(".slds-button.slds-button--brand.filterNegotiations.slds-p-horizontal--x-large.slds-p-vertical--x-small")).click();
 		sleep(3000);
 		WebElement tipo = driver.findElement(By.xpath("//*[@id=\"j_id0:j_id5\"]/div/div/ng-include/div/div/div[3]/div[1]/div/table/tbody/tr[1]/td[2]"));
-		WebElement num = driver.findElement(By.xpath("//*[@id=\"j_id0:j_id5\"]/div/div/ng-include/div/div/div[3]/div[1]/div/table/tbody/tr[1]/td[2]"));
 		boolean a = false;
-		boolean b = false;
 		if (tipo.getText().contains("Case")) {
 			a = true;
 		}
-		if (num.getText().contains("000")) {
-			b = true;
-		}
-		Assert.assertTrue(a && b);
+		Assert.assertTrue(a);
 	}
 	
 	@Test (groups = {"CustomerCare", "Vista360Layout"})

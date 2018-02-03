@@ -42,6 +42,10 @@ public class BasePage {
 		//System.out.println(this.driver.getCurrentUrl());
 	}
 	
+	public WebElement obtenerCampo(String nombre) {
+		return driver.findElement(By.xpath("//input[@id='" + nombre + "']|//select[@id='" + nombre + "']|//textarea[@id='" + nombre + "']"));
+	}
+	
 	public void setSimpleDropdown(WebElement element, String value) {
 		Select field = new Select(element);
 		element.click();
