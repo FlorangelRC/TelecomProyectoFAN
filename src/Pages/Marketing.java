@@ -204,7 +204,7 @@ public class Marketing extends CustomerCare {
 		String msg = driver.findElement(By.xpath("//ng-form[@id='TxtError']")).getText();
 		int i = 0;
 		while(msg.charAt(i++) != '0') {	}
-		return msg.substring(i, msg.length()-1);
+		return msg.substring(i-1, msg.length());
 	}
 	
 	public void estadoAltaBaja (String sAltaBaja, String sMotivo, String sOtros) {

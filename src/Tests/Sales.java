@@ -61,13 +61,13 @@ public class Sales extends TestBase {
 	String[] genero = {"masculino","femenino"};
 	String[] DocValue = {"52698550","3569874563","365","ssss"};
 	
-	//@AfterClass(alwaysRun=true)
+//	@AfterClass(alwaysRun=true)
 	public void tearDown() {
 		driver.close();
 		driver.quit();
 	}
 	
-	//@AfterMethod(alwaysRun=true)
+//	@AfterMethod(alwaysRun=true)
 	public void deslogin(){
 		try {Thread.sleep(10000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 		driver.get("https://crm--sit.cs14.my.salesforce.com/home/home.jsp?tsid=02u41000000QWha/");
@@ -208,8 +208,8 @@ public class Sales extends TestBase {
 		ContactSearch contact = new ContactSearch(driver);
 		contact.searchContact(DNI, "123456789", "");
 		List <WebElement> error = driver.findElements(By.cssSelector(".description.ng-binding"));
-		for(WebElement e: error){
-			
+		for(WebElement e: error)
+		{	
 			if(e.getText().toLowerCase().equals("longitud m\u00e1xima de 8")){
 				a=true;
 				break;
@@ -1430,32 +1430,7 @@ public class Sales extends TestBase {
 		Assert.assertTrue(in.getAttribute("value").isEmpty());
 	}
 	
-	 @Test(groups = {"Sales", "AltaDeContacto"}) 
-	    public void TS94583_Alta_de_Contacto_Persona_Fisica_Verificar_estado_fallido_de_la_validacion_de_identidad_por_DNI_con_documentacion_invalida_XX() { 
-	      Select dni = new Select (driver.findElement(By.id("SearchClientDocumentType")));  
-	      dni.selectByVisibleText("DNI"); 
-	      driver.findElement(By.id("SearchClientDocumentNumber")).sendKeys("1"); 
-	      sleep(2000); 
-	      boolean a = false; 
-	      boolean b = false; 
-	      List <WebElement> error1 = driver.findElements(By.cssSelector(".error.ng-scope")); 
-	      for (WebElement x : error1) { 
-	        if (x.getText().toLowerCase().contains("longitud m\u00ednima de 7")) { 
-	          a = true; 
-	        } 
-	      } 
-	      driver.findElement(By.id("SearchClientDocumentNumber")).clear(); 
-	      driver.findElement(By.id("SearchClientDocumentNumber")).sendKeys("1111111111"); 
-	      sleep(2000); 
-	      List <WebElement> error2 = driver.findElements(By.cssSelector(".error.ng-scope")); 
-	      for (WebElement x : error2) { 
-	        if (x.getText().toLowerCase().contains("longitud m\u00e1xima de 8")) { 
-	          b = true; 
-	        } 
-	      } 
-	      Assert.assertTrue(a && b); 
-	    } 
-	     
+
 	    @Test(groups = {"Sales", "AltaDeContacto"}) 
 	    public void TS945281_Alta_de_Contacto_Persona_Fisica_Confirmar_creacion_de_contacto_con_un_campo_obligatorio_incompleto_47() { 
 	      SalesBase SB = new SalesBase(driver); 
@@ -1881,7 +1856,67 @@ public class Sales extends TestBase {
 		  }
 	  }
 	  
+	  @Test(groups = {"Sales", "Ventas","Ola1"})
+	  public void TS94713_Ventas_BuscarCliente_Verificar_Clientes_Activos_Y_No_Activos() {
+		  driver.findElement(By.id("PhoneNumber")).sendKeys("1157572274");
+		  driver.findElement(By.id("SearchClientsDummy")).click();
+		  sleep(5000);
+		  List <WebElement> cai = driver.findElement(By.className("slds-tabs--scoped__nav")).findElements(By.tagName("li"));
+		  if (cai.get(0).isDisplayed() || !cai.get(1).isDisplayed()) {
+			  Assert.assertTrue(false);
+		  }
+		  sleep(2000);
+		  driver.findElement(By.id("PhoneNumber")).clear();
+		  driver.findElement(By.id("PhoneNumber")).sendKeys("1157602860");
+		  driver.findElement(By.id("SearchClientsDummy")).click();
+		  sleep(5000);
+		  cai = driver.findElement(By.className("slds-tabs--scoped__nav")).findElements(By.tagName("li"));
+		  if (!cai.get(0).isDisplayed() || cai.get(1).isDisplayed()) {
+			  Assert.assertTrue(false);
+		  }
+	  }
+	  
 	  //1157524452 activo  
+	  
+	  @Test(groups = {"Sales", "Ventas","Ola1"})
+	  public void TS95040_Ventas_General_Verificar_Que_Se_Visualice_FamiliaPacks_LineaMovilActiva() {
+		  SalesBase SB = new SalesBase(driver); 
+		  boolean enc = false;
+		  SB.BuscarCuenta("DNI", "");;
+			SB.acciondecontacto("catalogo");
+			sleep(12000);
+			List<WebElement> opcs = driver.findElement(By.className("cpq-main-categories-container")).findElements(By.tagName("a"));
+			for(WebElement UnaO : opcs) {
+				if(UnaO.findElement(By.tagName("span")).getText().equalsIgnoreCase("packs")) {
+					enc = true;
+				}
+			}
+			assertTrue(enc);
+			//1157602860
+	  }
+	  
+	  @Test(groups = {"Sales", "Ventas","Ola1"})
+	  public void TS94724_Ventas_VentasEntregas_Verificar_Que_Se_Permita_La_Seleccion_De_La_Modalidad_De_Entrega() {
+		  SalesBase SB = new SalesBase(driver); 
+		  SB.BuscarCuenta("DNI", "");;
+			SB.acciondecontacto("catalogo");
+			sleep(14000);
+			List<WebElement> botones = driver.findElements(By.cssSelector(".slds-m-left--x-small.slds-button.slds-button--brand"));
+			for(WebElement UnB : botones) {
+				System.out.println("UnBoton= "+UnB.getText());
+				if(UnB.getText().equalsIgnoreCase("cambiar")) {
+					UnB.click();
+					break;
+				}
+			}
+			sleep(12000);
+			Select MdE= new Select(driver.findElement(By.id("DeliveryMethodSelection")));
+			MdE.selectByVisibleText("Presencial");
+			assertTrue(MdE.getFirstSelectedOption().getText().equalsIgnoreCase("presencial"));
+			MdE.selectByVisibleText("Delivery");
+			assertTrue(MdE.getFirstSelectedOption().getText().equalsIgnoreCase("delivery"));
+			//1157602860
+	  }
 	  
 	  @Test(groups = {"Sales", "AltaDeContacto","Ola1"})
 	  public void TS94887_Alta_de_Contacto_Busqueda_Verificar_boton_de_Crear_Contacto_en_cualquier_resultado_de_busqueda_con_contacto_inexistente() {
@@ -1976,4 +2011,232 @@ public class Sales extends TestBase {
 		  Assert.assertTrue(driver.findElement(By.cssSelector(".slds-picklist.slds-dropdown-trigger.slds-dropdown-trigger--click.slds-is-open.slds-col--padded.slds-size--6-of-12.ng-scope")).isDisplayed());
 	  }
 
+	  @Test(groups = {"Sales", "AltaDeContacto"})
+	  public void TS94583_Alta_de_Contacto_Persona_Fisica_Verificar_estado_fallido_de_la_validacion_de_identidad_por_DNI_con_documentacion_invalida_XX() {
+		  Select dni = new Select (driver.findElement(By.id("SearchClientDocumentType"))); 
+		  dni.selectByVisibleText("DNI");
+		  driver.findElement(By.id("SearchClientDocumentNumber")).sendKeys("1");
+		  sleep(2000);
+		  boolean a = false;
+		  boolean b = false;
+		  List <WebElement> error1 = driver.findElements(By.cssSelector(".error.ng-scope"));
+		  for (WebElement x : error1) {
+			  if (x.getText().toLowerCase().contains("longitud m\u00ednima de 7")) {
+				  a = true;
+			  }
+		  }
+		  driver.findElement(By.id("SearchClientDocumentNumber")).clear();
+		  driver.findElement(By.id("SearchClientDocumentNumber")).sendKeys("1111111111");
+		  sleep(2000);
+		  List <WebElement> error2 = driver.findElements(By.cssSelector(".error.ng-scope"));
+		  for (WebElement x : error2) {
+			  if (x.getText().toLowerCase().contains("longitud m\u00e1xima de 8")) {
+				  b = true;
+			  }
+		  }
+		  Assert.assertTrue(a && b);
+	  }
+	  
+
+	
+	@Test(groups={"Sales", "AltaDeContacto","Ola1"})
+	  public void TS94546_Alta_de_Contacto_Persona_Fisica_Validar_que_se_muestre_la_barra_39(){
+		  SalesBase SB = new SalesBase(driver);
+			 SB.BtnCrearNuevoCliente();
+			 WebElement birt = driver.findElement(By.id("Birthdate"));
+			 birt.sendKeys("13/08/1994");
+			 Assert.assertTrue(birt.getAttribute("value").contains("/"));
+	  }
+	@Test(groups={"Sales", "AltaDeContacto","Ola1"})
+	  public void TS94538_Ingresar_dominio_de_email_inexistente_32(){
+		  SalesBase SB = new SalesBase(driver);
+		  SB.BtnCrearNuevoCliente();
+		  sleep(8000); 
+		  
+		  WebElement in = driver.findElements(By.cssSelector(".slds-form-element__control.slds-input-has-icon.slds-input-has-icon--right")).get(2).findElement(By.tagName("input"));
+		  in.sendKeys("asd@Q");
+		  Boolean y = false;
+		 List<WebElement> inv = driver.findElements(By.cssSelector(".message.description.ng-binding.ng-scope"));
+			for(WebElement i : inv){
+				if(i.getText().toLowerCase().equals("ingresar un email v\u00e1lido")){
+					i.isDisplayed();
+					y=true;
+				}
+			}
+		  Assert.assertTrue(y);
+	  }
+	@Test(groups={"Sales", "AltaDeContacto","Ola1"})
+	  public void TS94532_Alta_de_Contacto_Persona_Fisica_Ingresar_DNI_en_el_campo_Numero_de_Documento_05(){
+		  SalesBase SB = new SalesBase (driver);
+		  WebElement doc = driver.findElement(By.id("SearchClientDocumentNumber"));
+		  doc.sendKeys("46331352");
+		  Assert.assertFalse(doc.getAttribute("value").isEmpty());
+		  
+	  }
+	@Test(groups={"Sales", "AltaDeContacto","Ola1"})
+	  public void TS94533_Alta_de_Contacto_Persona_Fisica_Ingresar_a_la_vista_de_alta_de_contacto_01(){
+		SalesBase SB = new SalesBase(driver);
+		SB.BtnCrearNuevoCliente();
+		Assert.assertTrue(driver.findElement(By.id("DocumentType")).getAttribute("value").equals("DNI"));
+		Boolean x = false;
+		List<WebElement> mail = driver.findElements(By.cssSelector(".slds-form-element__label.ng-binding"));
+		for(WebElement m :mail){
+			if (m.getText().equals("E-MAIL")){
+				m.isDisplayed();
+				x=true;
+			}
+		}
+		List<WebElement> fech = driver.findElements(By.cssSelector(".slds-form-element__label.ng-binding"));
+		for(WebElement f :fech){
+			if (f.getText().equals("FECHA DE NACIMIENTO")){
+				f.isDisplayed();
+				x=true;
+			}
+		}
+		List<WebElement> ape = driver.findElements(By.cssSelector(".slds-form-element__label.ng-binding"));
+		for(WebElement a :ape){
+			if (a.getText().equals("APELLIDO")){
+				a.isDisplayed();
+				x=true;
+			}
+		}
+		List<WebElement> nom = driver.findElements(By.cssSelector(".slds-form-element__label.ng-binding"));
+		for(WebElement n :nom){
+			if (n.getText().equals("NOMBRE")){
+				n.isDisplayed();
+				x=true;
+			}
+		}
+		List<WebElement> docu = driver.findElements(By.cssSelector(".slds-form-element__label.ng-binding"));
+		for(WebElement d :docu){
+			if (d.getText().equals("DOCUMENTO")){
+				d.isDisplayed();
+				x=true;
+			}
+		}
+		List<WebElement> gen = driver.findElements(By.cssSelector(".vlc-slds-control-action__container"));
+		for(WebElement g :gen){
+			if (g.getText().equals("G\u00e9nero")){
+				g.isDisplayed();
+				x=true;
+			}
+		}
+		Assert.assertTrue(x);
+	  }
+	  
+	@Test(groups={"Sales", "AltaDeContacto","Ola1"})
+	  public void TS94879_Alta_de_Contacto_Busqueda_Verificar_accion_de_proceso_de_Venta(){
+		  SalesBase SB = new SalesBase(driver);
+		  SB.BuscarCuenta(DNI, "11111111"); 
+		  SB.acciondecontacto("catalogo"); 
+		  sleep(15000); 
+		  WebElement asd = driver.findElement(By.className("taHeaderInfoContainer"));
+		 // System.out.println(asd.getText());
+		Assert.assertTrue(asd.isDisplayed());
+	  }
+	
+	
+	@Test(groups={"Sales", "AltaDeContacto","Ola1"})
+	  public void TS94822_Alta_Contacto_Busqueda_Verificar_Consumer_Account_Contacto_existente_CRM(){
+		  SalesBase SB = new SalesBase(driver);
+		  SB.BuscarCuenta(DNI, "11111111");
+		  sleep(5000);
+		WebElement nomb = driver.findElement(By.id("tab-scoped-3")).findElement(By.tagName("section")).findElement(By.tagName("div")).findElement(By.tagName("table")).findElement(By.tagName("tbody")).findElements(By.tagName("td")).get(0);
+		System.out.println(nomb.getText());
+		Assert.assertTrue(nomb.getText().equals("Adela Sales"));
+	  }
+	
+	
+	@Test(groups={"Sales", "AltaDeContacto","Ola1"})
+	  public void TS94824_Alta_Contacto_Busqueda_Verificar_Consumer_Account_Contacto_inexistente_CRM(){
+	  SalesBase SB = new SalesBase(driver);
+	  SB.BuscarCuenta(DNI, "14472788");
+	  boolean o = false;
+	  List<WebElement> nw = driver.findElements(By.cssSelector(".slds-form-element__label.ng-binding"));
+	     for(WebElement n:nw){
+	    	 if(n.getText().equals("+ Crear nuevo cliente")){
+	    		n.isDisplayed();
+	    		o=true;
+	    	 }
+	     }
+	Assert.assertTrue(o);
+	}
+	
+	@Test(groups={"Sales", "Nueva Venta", "Ola1"})
+	public void TS94697_Nueva_Venta_Modo_de_Entrega_Verificar_Valor_por_Default_Tipo_de_Delivery(){
+		SalesBase SB = new SalesBase(driver);
+		SB.BuscarCuenta(DNI, "34073329");
+		SB.acciondecontacto("catalogo");
+		boolean x = false;
+		sleep(15000);
+		List<WebElement> cam = driver.findElements(By.cssSelector(".slds-m-left--x-small.slds-button.slds-button--brand"));
+		for(WebElement c : cam ){	
+			if(c.getText().toLowerCase().equals("cambiar")){
+				c.click();
+			}
+		sleep(7000);	
+		List<WebElement> frame2 = driver.findElements(By.tagName("iframe"));
+		driver.switchTo().frame(frame2.get(0));
+		Select env = new Select (driver.findElement(By.id("DeliveryMethodSelection")));
+		env.selectByVisibleText("Delivery");
+		driver.findElement(By.id("SalesChannelConfiguration_nextBtn")).click();
+		sleep(7000);
+		driver.switchTo().defaultContent();
+		}
+		SB.elegirplan("Plan con Tarjeta Repro");
+		sleep(15000);
+		List<WebElement> cont = driver.findElements(By.cssSelector(".slds-button.slds-m-left--large.slds-button--brand.ta-button-brand"));
+			for(WebElement c : cont){
+				if(c.getText().equals("Continuar")){
+					c.click();
+				}
+			}
+		sleep(20000);			
+		WebElement sig = driver.findElement(By.id("LineAssignment_nextBtn"));
+		sig.click();
+		sleep(5000);
+		Select deliv = new Select (driver.findElement(By.id("DeliveryServiceType")));
+		deliv.selectByVisibleText("Env\u00edo Est\u00e1ndar");
+		Assert.assertEquals(deliv.getFirstSelectedOption().getText(),"Env\u00edo Est\u00e1ndar");
+	}	
+	
+	
+	@Test(groups={"Sales", "Nueva Venta", "Ola1"})
+	public void TS94687_Nueva_Venta_Modo_de_Entrega_Verificar_Valor_por_Default_Modo_de_Entrega_Delivery(){
+		SalesBase SB = new SalesBase(driver);
+		SB.BuscarCuenta(DNI, "34073329");
+		SB.acciondecontacto("catalogo");
+		boolean x = false;
+		sleep(15000);
+		List<WebElement> cam = driver.findElements(By.cssSelector(".slds-m-left--x-small.slds-button.slds-button--brand"));
+		for(WebElement c : cam ){	
+			if(c.getText().toLowerCase().equals("cambiar")){
+				c.click();
+			}
+		sleep(7000);	
+		List<WebElement> frame2 = driver.findElements(By.tagName("iframe"));
+		driver.switchTo().frame(frame2.get(0));
+		Select env = new Select (driver.findElement(By.id("DeliveryMethodSelection")));
+		env.selectByVisibleText("Delivery");
+		driver.findElement(By.id("SalesChannelConfiguration_nextBtn")).click();
+		sleep(7000);
+		driver.switchTo().defaultContent();
+		}
+		SB.elegirplan("Plan con Tarjeta Repro");
+		sleep(15000);
+		List<WebElement> cont = driver.findElements(By.cssSelector(".slds-button.slds-m-left--large.slds-button--brand.ta-button-brand"));
+			for(WebElement c : cont){
+				if(c.getText().equals("Continuar")){
+					c.click();
+				}
+			}
+		sleep(20000);			
+		WebElement sig = driver.findElement(By.id("LineAssignment_nextBtn"));
+		sig.click();
+		sleep(5000);
+		WebElement deliv = driver.findElement(By.id("DeliveryMethod"));
+		Assert.assertTrue(deliv.getText().equals("Delivery"));
+	}		
+	
+	
 }
