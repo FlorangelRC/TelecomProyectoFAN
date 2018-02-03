@@ -2,7 +2,6 @@ package Pages;
 
 import java.util.ArrayList;
 import java.util.List;
-
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -206,6 +205,133 @@ public class Marketing extends CustomerCare {
 		int i = 0;
 		while(msg.charAt(i++) != '0') {	}
 		return msg.substring(i, msg.length()-1);
+	}
+	
+	public void estadoAltaBaja (String sAltaBaja, String sMotivo, String sOtros) {
+		BasePage cambioFrame=new BasePage();
+		WebElement wConsumerBox;
+		WebElement wConsumerTable;
+		List<WebElement> wConsumerTableRows;
+		WebElement wCTCheckBox;
+		WebElement wCTCheckBoxLabel;
+		WebElement wCTCheckBoxDisable;
+		switch (sAltaBaja.toLowerCase()) {
+			case "alta":
+				clubPersonal("Alta");
+				try {Thread.sleep(10000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+				cambioFrame=new BasePage();
+				driver.switchTo().defaultContent();
+				driver.switchTo().frame(cambioFrame.getFrameForElement(driver, By.id("consumerAccounts")));
+				//try {Thread.sleep(10000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+				wConsumerBox = driver.findElement(By.id("consumerAccounts"));
+				wConsumerTable = wConsumerBox.findElement(By.tagName("tbody"));
+				wConsumerTableRows = wConsumerTable.findElements(By.tagName("tr"));
+				wCTCheckBox = wConsumerTableRows.get(0).findElement(By.tagName("th"));
+				wCTCheckBoxLabel = wCTCheckBox.findElement(By.tagName("label"));
+				wCTCheckBoxDisable = wCTCheckBoxLabel.findElement(By.tagName("input"));
+				if (wCTCheckBoxDisable.getAttribute("ng-disabled").equals("true")) {
+					closeActiveTab();
+					darDeBajaCP(sMotivo, sOtros);
+					try {Thread.sleep(10000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+					closeActiveTab();
+					try {Thread.sleep(10000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+					driver.switchTo().defaultContent();
+					driver.switchTo().frame(cambioFrame.getFrameForElement(driver, By.cssSelector(".slds-panel__section.slds-p-around--small")));
+					clubPersonal("Alta");
+					try {Thread.sleep(10000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+					cambioFrame=new BasePage();
+					driver.switchTo().defaultContent();
+					driver.switchTo().frame(cambioFrame.getFrameForElement(driver, By.cssSelector(".slds-page-header.vlc-slds-page--header.ng-scope")));
+				}
+				break;
+			case "baja":
+				clubPersonal("Baja");
+				try {Thread.sleep(10000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+				cambioFrame=new BasePage();
+				driver.switchTo().defaultContent();
+				driver.switchTo().frame(cambioFrame.getFrameForElement(driver, By.id("consumerAccounts")));
+				//try {Thread.sleep(10000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+				wConsumerBox = driver.findElement(By.id("consumerAccounts"));
+				wConsumerTable = wConsumerBox.findElement(By.tagName("tbody"));
+				wConsumerTableRows = wConsumerTable.findElements(By.tagName("tr"));
+				wCTCheckBox = wConsumerTableRows.get(0).findElement(By.tagName("th"));
+				wCTCheckBoxLabel = wCTCheckBox.findElement(By.tagName("label"));
+				wCTCheckBoxDisable = wCTCheckBoxLabel.findElement(By.tagName("input"));
+				if (wCTCheckBoxDisable.getAttribute("ng-disabled").equals("true")) {
+					closeActiveTab();
+					darDeAltaCP();
+					try {Thread.sleep(10000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+					closeActiveTab();
+					try {Thread.sleep(10000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+					driver.switchTo().defaultContent();
+					driver.switchTo().frame(cambioFrame.getFrameForElement(driver, By.cssSelector(".slds-panel__section.slds-p-around--small")));
+					clubPersonal("baja");
+					try {Thread.sleep(10000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+					cambioFrame=new BasePage();
+					driver.switchTo().defaultContent();
+					driver.switchTo().frame(cambioFrame.getFrameForElement(driver, By.cssSelector(".slds-page-header.vlc-slds-page--header.ng-scope")));
+				}
+				break;
+			default:
+				System.out.println("Selección incorrecta, por favor selecciona 'Alta' o 'baja'");
+		}
+	}
+	
+	public void bajaMotivo(String sMotivo) {
+		try {Thread.sleep(10000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		BasePage cambioFrame=new BasePage();
+		driver.switchTo().defaultContent();
+		driver.switchTo().frame(cambioFrame.getFrameForElement(driver, By.cssSelector(".slds-panel__section.slds-p-around--small")));
+		clubPersonal("baja");
+		try {Thread.sleep(10000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		seleccionarCuenta("consumerAccounts");
+		seleccionarCuenta("businessAccounts");
+		BasePage bBP = new BasePage(driver);
+		bBP.setSimpleDropdown(driver.findElement(By.id("SelectReason")), sMotivo);
+		try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		
+	}
+	
+	public void darDeBajaCP (String sMotivo, String sOtros) {
+		bajaMotivo(sMotivo);
+		if (!sOtros.isEmpty()) {
+			driver.findElement(By.id("Others")).sendKeys(sOtros);
+		}
+		driver.findElement(By.id("CPMembershipCancellation_nextBtn")).click();
+		driver.findElement(By.id("ConfirmStep_nextBtn")).click();
+	}
+	
+	public void darDeAltaCP () {
+		try {Thread.sleep(10000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		BasePage cambioFrame=new BasePage();
+		driver.switchTo().defaultContent();
+		driver.switchTo().frame(cambioFrame.getFrameForElement(driver, By.cssSelector(".slds-panel__section.slds-p-around--small")));
+		clubPersonal("alta");
+		try {Thread.sleep(10000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		driver.switchTo().defaultContent();
+		driver.switchTo().frame(cambioFrame.getFrameForElement(driver, By.id("consumerAccounts")));
+		try {Thread.sleep(10000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		seleccionarCuenta("consumerAccounts");
+		seleccionarCuenta("businessAccounts");
+		driver.findElement(By.id("AltaClubPersonal_nextBtn")).click();
+		driver.findElement(By.id("ConfirmStep_nextBtn")).click();
+	}
+	
+	public void seleccionarCuenta(String sTable) {
+		BasePage cambioFrame=new BasePage();
+		driver.switchTo().defaultContent();
+		driver.switchTo().frame(cambioFrame.getFrameForElement(driver, By.id(sTable)));
+		try {Thread.sleep(10000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		WebElement wConsumerBox = driver.findElement(By.id("consumerAccounts"));
+		WebElement wConsumerTable= wConsumerBox.findElement(By.tagName("tbody"));
+		List<WebElement> wConsumerTableRows = wConsumerTable.findElements(By.tagName("tr"));
+		List<WebElement> wCTCheckBox = new ArrayList<WebElement>();
+		for (WebElement wAux : wConsumerTableRows) {
+			wCTCheckBox.add(wAux.findElement(By.tagName("th")));
+		}
+		for (WebElement wAux : wCTCheckBox) {
+			wAux.findElement(By.tagName("label")).click();
+		}
 	}
 	
 }
