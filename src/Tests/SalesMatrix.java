@@ -17,11 +17,14 @@ import Pages.setConexion;
 
 public class SalesMatrix extends TestBase {
 	
+	public static SalesBase sb;
 	
+		
 	@BeforeClass (groups = {"Sales", "Ventas", "AltaDeCuenta", "AltaDeLinea"})
 	public void init() throws Exception{
 		driver = setConexion.setupEze();
 		try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		sb = new SalesBase(driver);
 		login(driver);
 		try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 		HomeBase homePage = new HomeBase(driver);
@@ -59,7 +62,6 @@ public class SalesMatrix extends TestBase {
 	
 	@Test (groups = {"Sales", "Ventas"})
 	public void TS38033_Ventas_Entregas_General_Verificar_Plazo_de_Envio_para_ModoRetiroSuc_ZonaAmba() {
-		SalesBase sb = new SalesBase(driver);
 		sb.selectMatrix("s", "shippingtimeconfiguration");	
 		BasePage cambioFrameByID = new BasePage();
 		driver.switchTo().frame(cambioFrameByID.getFrameForElement(driver, By.cssSelector(".rowsTbody.ng-scope")));
@@ -82,7 +84,6 @@ public class SalesMatrix extends TestBase {
 	
 	@Test (groups = {"Sales", "Ventas"})
 	public void TS38034_Ventas_Entregas_General_Verificar_Plazo_de_Envio_para_ModoRetiroSuc_ZonaCiudadPrinInt() {
-		SalesBase sb = new SalesBase(driver);
 		sb.selectMatrix("s", "shippingtimeconfiguration");	
 		BasePage cambioFrameByID = new BasePage();
 		driver.switchTo().frame(cambioFrameByID.getFrameForElement(driver, By.cssSelector(".rowsTbody.ng-scope")));
@@ -105,7 +106,6 @@ public class SalesMatrix extends TestBase {
 	
 	@Test (groups = {"Sales", "Ventas"})
 	public void TS38035_Ventas_Entregas_General_Verificar_Plazo_de_Envio_para_ModoEnvEst_ZonaAmba() {
-		SalesBase sb = new SalesBase(driver);
 		sb.selectMatrix("s", "shippingtimeconfiguration");	
 		BasePage cambioFrameByID = new BasePage();
 		driver.switchTo().frame(cambioFrameByID.getFrameForElement(driver, By.cssSelector(".rowsTbody.ng-scope")));
@@ -128,7 +128,6 @@ public class SalesMatrix extends TestBase {
 	
 	@Test (groups = {"Sales", "Ventas"})
 	public void TS38036_Ventas_Entregas_General_Verificar_Plazo_de_Envio_para_ModoEnvEst_ZonaCiudadPrinInt() {
-		SalesBase sb = new SalesBase(driver);
 		sb.selectMatrix("s", "shippingtimeconfiguration");	
 		BasePage cambioFrameByID = new BasePage();
 		driver.switchTo().frame(cambioFrameByID.getFrameForElement(driver, By.cssSelector(".rowsTbody.ng-scope")));
@@ -151,7 +150,6 @@ public class SalesMatrix extends TestBase {
 	
 	@Test (groups = {"Sales", "Ventas"})
 	public void TS38037_Ventas_Entregas_General_Verificar_Plazo_de_Envio_para_ModoEnvExp_ZonaAmba() {
-		SalesBase sb = new SalesBase(driver);
 		sb.selectMatrix("s", "shippingtimeconfiguration");	
 		BasePage cambioFrameByID = new BasePage();
 		driver.switchTo().frame(cambioFrameByID.getFrameForElement(driver, By.cssSelector(".rowsTbody.ng-scope")));
@@ -174,7 +172,6 @@ public class SalesMatrix extends TestBase {
 	
 	@Test (groups = {"Sales", "Ventas"})
 	public void TS38038_Ventas_Entregas_General_Verificar_Plazo_de_Envio_para_ModoEnvExp_ZonaCiudadPrinInt() {
-		SalesBase sb = new SalesBase(driver);
 		sb.selectMatrix("s", "shippingtimeconfiguration");	
 		BasePage cambioFrameByID = new BasePage();
 		driver.switchTo().frame(cambioFrameByID.getFrameForElement(driver, By.cssSelector(".rowsTbody.ng-scope")));
@@ -197,7 +194,6 @@ public class SalesMatrix extends TestBase {
 	
 	@Test (groups = {"Sales", "AltaDeCuenta","Ola1"})
 	public void TS95194_Alta_Cuenta_Validaciones_Verificar_creacion_de_matriz_de_validacion_de_identidad() {
-		SalesBase sb = new SalesBase(driver);
 		sb.selectMatrix("m", "manageableidentityvalidation");
 		BasePage cambioFrameByID = new BasePage();
 		driver.switchTo().frame(cambioFrameByID.getFrameForElement(driver, By.cssSelector(".table.pricingMatrixTable")));
@@ -206,7 +202,6 @@ public class SalesMatrix extends TestBase {
 	
 	@Test (groups = {"Sales", "AltaDeLinea"})
 	public void TS76266_Ventas_Seriales_Verificar_instancia_de_Factura_en_la_matriz_StockMovementOperation() {
-		SalesBase sb = new SalesBase(driver);
 		sb.selectMatrix("s", "stockmovementoperation");
 		BasePage cambioFrameByID = new BasePage();
 		driver.switchTo().frame(cambioFrameByID.getFrameForElement(driver, By.cssSelector(".table.pricingMatrixTable")));
@@ -231,7 +226,6 @@ public class SalesMatrix extends TestBase {
 	
 	@Test (groups = {"Sales", "AltaDeLinea"})
 	public void TS76267_Ventas_Seriales_Verificar_instancia_de_Entrega_eliminada_en_la_matriz_StockMovementOperation() {
-		SalesBase sb = new SalesBase(driver);
 		sb.selectMatrix("s", "stockmovementoperation");
 		BasePage cambioFrameByID = new BasePage();
 		driver.switchTo().frame(cambioFrameByID.getFrameForElement(driver, By.cssSelector(".table.pricingMatrixTable")));
@@ -246,7 +240,6 @@ public class SalesMatrix extends TestBase {
 	
 	@Test (groups = {"Sales", "AltaDeLinea", "Ola1"})
 	public void TS94963_Verificar_que_se_configuren_criterios_Stock() {
-		SalesBase sb = new SalesBase(driver);
 		sb.selectMatrix("s", "stockmovementoperation");
 		BasePage cambioFrameByID = new BasePage();
 		driver.switchTo().frame(cambioFrameByID.getFrameForElement(driver, By.className("edit-columns")));
