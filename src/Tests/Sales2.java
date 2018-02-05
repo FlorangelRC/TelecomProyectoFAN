@@ -51,9 +51,8 @@ public class Sales2 extends TestBase{
 	}
 	@Test(groups={"Sales", "Nueva Venta", "Ola1"})
 	public void TS94699_Nueva_Venta_Modo_de_Entrega_Verificar_Solicitud_de_Domicilio_de_envio_Envio_Express(){
-		SalesBase SB = new SalesBase(driver);
-		SB.BuscarCuenta(DNI, "34073329");
-		SB.acciondecontacto("catalogo");
+		sb.BuscarCuenta(DNI, "34073329");
+		sb.acciondecontacto("catalogo");
 		boolean x = false;
 		sleep(15000);
 		List<WebElement> cam = driver.findElements(By.cssSelector(".slds-m-left--x-small.slds-button.slds-button--brand"));
@@ -67,25 +66,27 @@ public class Sales2 extends TestBase{
 		Select env = new Select (driver.findElement(By.id("DeliveryMethodSelection")));
 		env.selectByVisibleText("Delivery");
 		driver.findElement(By.id("SalesChannelConfiguration_nextBtn")).click();
-		sleep(7000);
+		sleep(10000);
 		driver.switchTo().defaultContent();
 		}
-		SB.elegirplan("Plan con Tarjeta Repro");
+		sb.elegirplan("Plan con Tarjeta Repro");
 		sleep(15000);
-		List<WebElement> cont = driver.findElements(By.cssSelector(".slds-button.slds-m-left--large.slds-button--brand.ta-button-brand"));
+		List<WebElement> cont = driver.findElements(By.cssSelector(".slds-form-element__label--toggleText.ng-binding"));
 			for(WebElement c : cont){
 				if(c.getText().equals("Continuar")){
 					c.click();
 				}
 			}
-		/*sleep(20000);			
-		WebElement sig = driver.findElement(By.id("LineAssignment_nextBtn"));
-		sig.click();
 		sleep(5000);
-		WebElement deliv = driver.findElement(By.id("DeliveryMethod"));
-		Assert.assertTrue(deliv.getText().equals("Delivery"));*/
-	}	
-	
-	
+		List<WebElement> direc = driver.findElements(By.cssSelector(".slds-form-element__label--toggleText.ng-binding"));
+			for(WebElement d : direc){
+				if(d.getText().equals("Modificar b\u00fasqueda")){
+					//d.click();
+					System.out.println(d.getText());
+					System.out.println(d.getAttribute("value"));
+				}
+			}
+			//Assert.assertTrue(driver.findElement(By.id("SelectProvincia")).isDisplayed());	
+		}
 	
 }
