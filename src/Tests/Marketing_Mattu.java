@@ -102,7 +102,7 @@ public class Marketing_Mattu extends TestBase{
 		driver.switchTo().defaultContent();
 		driver.switchTo().frame(cambioFrame.getFrameForElement(driver, By.cssSelector(".slds-panel__section.slds-p-around--small")));
 	}
-	@AfterMethod
+	//@AfterMethod
 	public void byeByeTab() {
 		try {
 			CustomerCare cCC = new CustomerCare(driver);
@@ -114,7 +114,7 @@ public class Marketing_Mattu extends TestBase{
 			//AllwaysEmpty
 		}
 	}
-	@AfterClass
+	//@AfterClass
 	public void tearDown() {
 		driver.close();
 	}
@@ -500,18 +500,8 @@ public class Marketing_Mattu extends TestBase{
 		try {Thread.sleep(10000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 		WebElement wMessage = driver.findElement(By.cssSelector(".slds-form-element.vlc-flex.vlc-slds-text-block.vlc-slds-rte.ng-pristine.ng-valid.ng-scope"));
 		List <WebElement> wMessageBox = wMessage.findElements(By.tagName("p"));
-		String sMessage = wMessageBox.get(1).getText().substring(71, 79);
-		BasePage cambioFrame=new BasePage();
-		driver.switchTo().defaultContent();
-		//driver.switchTo().frame(cambioFrame.getFrameForElement(driver, By.id("phSearchForm")));
-		try {Thread.sleep(10000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
-		driver.findElement(By.id("phSearchInput")).sendKeys(sMessage + "\n");
-		try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
-		driver.switchTo().defaultContent();
-		driver.switchTo().frame(cambioFrame.getFrameForElement(driver, By.id("searchResultsHolderDiv")));
-		WebElement wBody = driver.findElement(By.id("Case_body")).findElement(By.tagName("table"));
-		List <WebElement> wEstado = mMarketing.traerColumnaElement(wBody, 5, 3);
-		Boolean bAssert = wEstado.get(0).getText().toLowerCase().equals("closed");
+		String sCaso = wMessageBox.get(1).getText().substring(71, 79);
+		boolean bAssert = mMarketing.corroborarCasoCerrado(sCaso);
 		mMarketing.cambioCuenta("Vista Marketing", "Florencia Marketing");
 		Assert.assertTrue(bAssert);
 	}
@@ -520,7 +510,7 @@ public class Marketing_Mattu extends TestBase{
 	//TCC = 27
 	@Test(groups = "Marketing")
 	public void TS98050_Multiple_seleccion_Baja_CP() {
-		mMarketing.estadoAltaBaja("Baja", "", "");
+		mMarketing.estadoAltaBaja("Baja");
 		mMarketing.seleccionarCuenta("consumerAccounts");
 		mMarketing.seleccionarCuenta("businessAccounts");
 		Assert.assertTrue(true);
@@ -574,6 +564,7 @@ public class Marketing_Mattu extends TestBase{
 	//Abrir Página
 	//@Test
 	public void AbrirPagina() {
+		
 	}
 	
 	/*Fecha del sistema
