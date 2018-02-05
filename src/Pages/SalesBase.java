@@ -12,7 +12,6 @@ import java.util.concurrent.TimeUnit;
 
 import javax.swing.plaf.synth.SynthScrollBarUI;
 
-import org.junit.Assert;
 import org.openqa.selenium.Alert;
 import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
@@ -28,6 +27,7 @@ import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.How;
 import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.Select;
+import org.testng.Assert;
 
 import javafx.scene.control.Accordion;
 
@@ -222,6 +222,7 @@ public void BuscarCuenta(String Type, String NDNI){
 	try {Thread.sleep(10000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 	setSimpleDropdown(DNIbuscador, Type);
 	DNI.sendKeys(NDNI);
+	sleep(2000);
 	btnbuscar.click();
 	try {Thread.sleep(10000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 
