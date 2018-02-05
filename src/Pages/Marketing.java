@@ -345,6 +345,9 @@ public class Marketing extends CustomerCare {
 		BasePage cambioFrame=new BasePage();
 		driver.switchTo().defaultContent();
 		driver.switchTo().frame(cambioFrame.getFrameForElement(driver, By.cssSelector(".slds-panel__section.slds-p-around--small")));
+		closeActiveTab();
+		driver.switchTo().defaultContent();
+		driver.switchTo().frame(cambioFrame.getFrameForElement(driver, By.cssSelector(".slds-panel__section.slds-p-around--small")));
 		clubPersonal("alta");
 		sleepShort(0);
 		driver.switchTo().defaultContent();
