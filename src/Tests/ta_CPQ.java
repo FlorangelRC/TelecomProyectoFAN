@@ -66,48 +66,35 @@ public class ta_CPQ extends TestBase {
 	public void Init() throws Exception
 	{
 		this.driver = setConexion.setupEze();
-		 wait = new WebDriverWait(driver, 10);
-		//try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
-		 loginFranciso(driver);
-		try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
-		
+		wait = new WebDriverWait(driver, 10);
+		loginFranciso(driver);
+		sleep(5000);
+		//Ir a Ventas:
 		if (!driver.findElement(By.id("tsidLabel")).getText().equals("Ventas")){
 			driver.findElement(By.id("tsidLabel")).click();
 			driver.findElement(By.xpath("//a[@href=\"/home/home.jsp?tsid=02u41000000QWha\"]")).click();
 		}
-		
-		//driver.findElement(By.xpath("//a[@href=\'https://crm--SIT--c.cs14.visual.force.com/apex/taClientSearch']")).click();
-		//driver.findElement(By.xpath("//a[@href=\'https://crm--sit--c.cs14.visual.force.com/apex/taClientSearch']")).click();
 	}
 
 	@BeforeMethod(alwaysRun=true)
 	public void setup() throws Exception {		
-		/*try {Thread.sleep(4000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
-		if (!driver.findElement(By.id("tsidLabel")).getText().equals("Ventas")){
-			driver.findElement(By.id("tsidLabel")).click();
-			driver.findElement(By.xpath("//a[@href=\"/home/home.jsp?tsid=02u41000000QWha\"]")).click();
-		}
-		
-		//driver.findElement(By.xpath("//a[@href=\'https://crm--SIT--c.cs14.visual.force.com/apex/taClientSearch']")).click();*/
-		
+		//Ir a Busqueda de Cliente
 		driver.get("https://crm--sit--c.cs14.visual.force.com/apex/taClientSearch");
-		
-		try {Thread.sleep(10000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		sleep(10000);
 		SalesBase SB = new SalesBase(driver);
 		SB.BuscarCuenta("DNI", "32323232");
 		SB.acciondecontacto("catalogo");
-		try {Thread.sleep(30000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		sleep(30000);
 
 	}
-	
-	//@AfterMethod(alwaysRun=true)
-	public void returnToSales() {
-		try {Thread.sleep(2000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
-		driver.get("https://crm--sit.cs14.my.salesforce.com/801c0000000Ec64");
-	      }
 	    
-	       
-	//No reparado
+//------------------------------------------------- Casos de Prueba ---------------------------------------------------//      
+	/*
+	 * Verifica que se cargue la SimCard cuando se agregue el plan
+	 * 
+	 * SimCard no disponible, require actualizacion cuando este disponible
+	 * Ultima revision 30-01-18
+	 */
 	@Test
 	public void TS6816_checkSimCardAssignment() {
 		System.out.println("Empiezan el caso");
@@ -131,13 +118,14 @@ public class ta_CPQ extends TestBase {
 		Assert.assertEquals("1", page3.getSimCardValue()); 	
 	}
 	
-	//Verificando
+	/*
+	 * Verifica que se muestre la papelera
+	 * Papelera no esta disponible.
+	 * Ultima Revision 30-01-18
+	 */
 	@Test(groups={"Sales", "AltaLinea", "Ola1"})
 	public void TS94480_checkPaperCanIsPresent() {
-		System.out.println("Empiezan el caso");
-		sleep(30000);
-		System.out.println("Pasaron 30 Segundos.");
-		
+		sleep(10000);
 		Ta_CPQ page3 = new Ta_CPQ(driver);
 		try { for(WebElement e : driver.findElements(By.className("cpq-product-name"))) {
 			page3.clickOnDelete();
@@ -146,10 +134,14 @@ public class ta_CPQ extends TestBase {
 		try {Thread.sleep(10000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 
 		page3.addPlan();
-		try {Thread.sleep(4000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 		Assert.assertTrue(page3.isPaperCanPresent());
 	}
 	
+	/**
+	 * Verifica que al agregar un plan que no requiere prefactibilidad, se pueda borrar.
+	 * Passed Ultima revision 30-01-18
+	 */
 	@Test(groups={"Sales", "AltaLinea", "Ola1"})
 	public void TS94479_checkPlanIsDeleted() {
 		Ta_CPQ page3 = new Ta_CPQ(driver);
@@ -164,6 +156,12 @@ public class ta_CPQ extends TestBase {
 		Assert.assertFalse(page3.isPlanPresent());
 	}
 	
+	/**
+	 * Verifica que aparezca "Quitar el producto del carrito" en la etiqueta de la papelera.
+	 * 
+	 * Papelera ya no existe
+	 * Ultima revision 30-01-18
+	 */
 	@Test(groups={"Sales", "AltaLinea", "Ola1"})
 	public void TS94481_checkPaperCanLabel() {
 		Ta_CPQ page3 = new Ta_CPQ(driver);
@@ -177,7 +175,12 @@ public class ta_CPQ extends TestBase {
 		Assert.assertEquals("Quitar el producto del carrito", page3.getPaperCanLabel());
 	}
 	
-	//Listo 246-01-18 Falla por privilegios
+	/**
+	 * Verifica que si no se encuentre linea disponible y se pueda cancelar la orden.
+	 * 
+	 * no Anda.
+	 * Ultima revision 30-01-18
+	 */
 	@Test(groups={"Sales", "AltaLinea", "Ola1"})
 	public void TS94495_checkNoLineAvailableMessageAndCancelPlan() {
 		Ta_CPQ page3 = new Ta_CPQ(driver);
@@ -195,6 +198,12 @@ public class ta_CPQ extends TestBase {
 		page4.cancelLineAssignment();
 	}
 	
+	/**
+	 * Verifica informacion del plan haciendole click a la flecha.
+	 * 
+	 * Flecha no Existe
+	 * Ultima Revision 30-01-18
+	 */
 	@Test(groups={"Sales", "AltaLinea", "Ola1"})
 	public void TS94496_checkPlanInformation() {
 		Ta_CPQ page3 = new Ta_CPQ(driver);
@@ -209,7 +218,10 @@ public class ta_CPQ extends TestBase {
 		Assert.assertTrue(page3.getPlanInformation());
 	}
 
-	
+	/**
+	 * Flujo no se completa, por factura
+	 * ultima revision 30-01-18
+	 */
 	@Test(groups={"Sales", "AltaLinea", "Ola1"})
 	public void TS94486_wrongICCDFormat() {
 		Ta_CPQ page3 = new Ta_CPQ(driver);
@@ -240,6 +252,10 @@ public class ta_CPQ extends TestBase {
 		Assert.assertEquals("Error de formato", page8.getValidationMessage("wrong"));
 	}
 	
+	/**
+	 * Flujo no se completa, por factura
+	 * ultima revision 30-01-18
+	 */
 	@Test(groups={"Sales", "AltaLinea", "Ola1"})
 	public void TS94488_rightICCDFormat() {
 		Ta_CPQ page3 = new Ta_CPQ(driver);
@@ -274,7 +290,10 @@ public class ta_CPQ extends TestBase {
 		Assert.assertEquals("El ICCID fue asignado", page8.getValidationMessage("right"));
 	}
 
-    
+	/**
+	 * Flujo no se completa, por factura
+	 * ultima revision 30-01-18
+	 */
 	@Test(groups={"Sales", "AltaLinea", "Ola1"})
 	public void TS94491_checkAssignButtonIsAvailable() {
 		Ta_CPQ page3 = new Ta_CPQ(driver);
@@ -303,6 +322,10 @@ public class ta_CPQ extends TestBase {
 		Assert.assertEquals("Asignar", page8.getAssignButtonLabel());
 	}
 	
+	/**
+	 * Flujo no se completa, por factura
+	 * ultima revision 30-01-18
+	 */
 	@Test(groups={"Sales", "AltaLinea", "Ola1"})
 	public void TS94487_checkOrderStatusIsPending() {
 		Ta_CPQ page3 = new Ta_CPQ(driver);
@@ -335,7 +358,10 @@ public class ta_CPQ extends TestBase {
 		Assert.assertEquals("Estado de la orden : Pendiente de pago", page9.getOrderStatus());
 	}
 	
-	//Listo  26-01-18
+	/**
+	 * Verifica que se puedan borrar varios planes.
+	 * Ultima Revision 30-01-18
+	 */
 	@Test(groups={"Sales", "AltaLinea", "Ola1"})
 	public void TS94482_deleteAllPlans() {
 		Ta_CPQ page3 = new Ta_CPQ(driver);
@@ -363,6 +389,10 @@ public class ta_CPQ extends TestBase {
 		Assert.assertEquals("Cart is empty.", page3.getEmptyCartMessage());
 	}
 	
+	/**
+	 * Flujo no se completa, por factura
+	 * ultima revision 30-01-18
+	 */
 	@Test
 	public void TS7007_checkCancelOrder() {
 		Ta_CPQ page3 = new Ta_CPQ(driver);
@@ -401,6 +431,10 @@ public class ta_CPQ extends TestBase {
 		Assert.assertEquals("Ventas", driver.findElement(By.id("tsidLabel")).getText());
 	}
 	
+	/**
+	 * Flujo no se completa, por factura
+	 * ultima revision 30-01-18
+	 */
 	@Test
 	public void TS6890_checkCashAsValueForPaymentMethod() {
 		Ta_CPQ page3 = new Ta_CPQ(driver);
@@ -425,6 +459,11 @@ public class ta_CPQ extends TestBase {
 		Assert.assertTrue(page7.getPaymentMethod());
 	}
 	
+	/**
+	 * Verifica que los metodos de pago esten disponible.
+	 * 
+	 * ultima revision 30-01-18
+	 */
 	@Test
 	public void TS6889_checkPaymentMethodIsPresent() {
 		Ta_CPQ page3 = new Ta_CPQ(driver);
@@ -449,6 +488,11 @@ public class ta_CPQ extends TestBase {
 		Assert.assertTrue(page7.isPaymentMethodPresent());
 	}
 	
+	/**
+	 * Verifica que el metodo de entrega por default sea "Presencial".
+	 * 
+	 * ultima revision 30-01-18
+	 */
 	@Test
 	public void TS6895_checkDefaultValueForDeliveryMethod() {
 		Ta_CPQ page3 = new Ta_CPQ(driver);
@@ -467,6 +511,11 @@ public class ta_CPQ extends TestBase {
 		Assert.assertEquals("Presencial", page5.getCurrentValueForDeliveryMethod());
 	}
 	
+	/**
+	 * Verifica que se pueda buscar un plan por el nombre y que aparezca en los resultados.
+	 * 
+	 * ultima revision 30-01-18
+	 */
 	@Test(groups={"Sales", "AltaLinea", "Ola1"})
 	public void TS94617_CRM_Fase_1_SalesCPQ_Alta_Linea_Buscar_Cliente_Buscar_por_Nombre_del_plan_V360() {
 		try {Thread.sleep(4000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
@@ -482,6 +531,11 @@ public class ta_CPQ extends TestBase {
 			
 	}
 	
+	/**
+	 * Agrega un plan y verifica que el plan que aparece en el carrito corresponde al agregado.
+	 * 
+	 * Ultima revision 30-01-18
+	 */
 	@Test
 	public void TS6826_CRM_Fase_1_SalesCPQ_Alta_Linea_Carrito_Verificar_seleccion_de_productos() {
 		Ta_CPQ cart = new Ta_CPQ (driver);
@@ -503,7 +557,11 @@ public class ta_CPQ extends TestBase {
 		Assert.assertEquals (productNameAdded, productName);
 	}
 
-	//Listo 29-01-018
+	/**
+	 * Verifica que al agregar un producto al carrito el boton Incomplete cambie de nombre.
+	 * 
+	 * Ultima revision 30-01-18
+	 */
 	@Test
 	public void TS6827_CRM_Fase_1_SalesCPQ_Alta_Linea_Configurar_Nueva_Linea_Boton_Siguiente() throws Exception {
 		Ta_CPQ cart = new Ta_CPQ(driver);
@@ -512,19 +570,27 @@ public class ta_CPQ extends TestBase {
 		//System.out.println(cart.getCartStatus());
 		Assert.assertNotEquals(cart.getCartStatus(),"Incomplete");
 	}
+	
 	//Listo 26-01-18
 	@Test
 	public void TS6835_CRM_Fase_SalesCPQ_Alta_Linea_Configurar_Nueva_Linea_Lista_de_cuentas_del_cliente() {
 		Ta_CPQ cart = new Ta_CPQ(driver);
 		Assert.assertTrue(cart.getAccountSelector() != null);
 	}
+	
 	//Listo 26-01-18
 	@Test
 	public void TS6836_CRM_Fase_1_SalesCPQ_Alta_Linea_Configurar_Nueva_Linea_Nueva_Cuenta() {
 		Ta_CPQ cart = new Ta_CPQ(driver);
 		Assert.assertTrue(cart.getButtonNewAccount() != null);
 	}
-	//Listo 26-01-18
+	
+	/**
+	 * Verifica que despues de eliminar los productos del carrito se muestre el mensaje
+	 * "Cart is empty."
+	 * 
+	 * Ultima revision 30-01-18
+	 */
 	@Test(groups={"Sales", "AltaLinea", "Ola1"})
 	public void TS94522_CRM_Fase_1_SalesCPQ_Alta_Linea_Carrito_Verificar_el_mensaje_al_vaciar_el_carrito_XX() {
 		Ta_CPQ cart = new Ta_CPQ(driver);
@@ -618,7 +684,11 @@ public class ta_CPQ extends TestBase {
 		Assert.assertEquals(precissionCounter[1].length(), 2);
 	}
 	
-	//Listo 26-01-18 
+	/**
+	 * Verifica que se muestren los impuestos, en simulacion de factura
+	 * 
+	 * Ultima revision 30-01-18.
+	 */
 	@Test
 	public void TS6883_CRM_Fase_1_SalesCPQ_Alta_Linea_Costo_Operacion_Verificar_el_detalle_de_los_impuestos_aplicados_a_la_venta() throws Exception {
 		Ta_CPQ cart = new Ta_CPQ(driver);
@@ -630,27 +700,23 @@ public class ta_CPQ extends TestBase {
 		cart.getButtonNext().click();
 		sleep(10000);
 		
-		//WebElement waiter = wait.until(ExpectedConditions.elementToBeClickable(By.id("LineAssignment_nextBtn")));
-		//BillSimulation bill = new BillSimulation (driver);
-		//presiono Siguiente 3 veces para llegar al paso "Simulaci�n de Factura"
 		
 		driver.findElement(By.id("LineAssignment_nextBtn")).click();
 		sleep(7000);
-		driver.findElement(By.xpath("//*[@id=\"DeliveryMethodConfiguration_nextBtn\"]/p")).click();
+		//driver.findElement(By.xpath("//*[@id=\"DeliveryMethodConfiguration_nextBtn\"]/p")).click();
 		sleep(7000);
-		/*for (int i=0; i<1; i++) {
-			bill.clickOnNext();
-			try {Thread.sleep(3000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
-		}*/
 		
 		assertTrue(driver.findElement(By.xpath("//*[@id=\"Invoice\"]/div/ng-include/div/div[2]/div[2]/div[2]")).isDisplayed());
 		//verificar impuestos
 		
 	}
-	//LIsto 26-01-18
+	
+	
 	/*
 	 * TODO: el assert deber�a verificar que el dropdown con id "DeliveryMethod" ofrezca varios m�todos de entrega.
 	 * Actualmente el bot�n est� bloqueado, y no se puede ver qu� opciones contiene.
+	 * 
+	 * Ultima revision 30-01-18
 	 * */
 	@Test(groups={"Sales", "AltaLinea", "Ola1"})
 	public void TS94518_CRM_Fase_1_SalesCPQ_Alta_Linea_Costo_Operacion_Verificar_opciones_del_carrito_Boton_Siguiente() throws Exception {
@@ -677,6 +743,9 @@ public class ta_CPQ extends TestBase {
 		assertTrue(false);
 	}
 	
+	/**
+	 * Verifica que aparezca la opcion "Presencial" como un metodo de entrega.
+	 */
 	@Test
 	public void TS6893_CRM_Fase_1_SalesCPQ_Alta_Linea_Modo_de_Entrega_Seleccionar_modo_de_entrega_presencial_Producto_Tangible () throws Exception {
 		Ta_CPQ cart = new Ta_CPQ(driver);

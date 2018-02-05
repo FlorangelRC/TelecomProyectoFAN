@@ -6,6 +6,7 @@ import java.util.Date;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 import org.openqa.selenium.By;
+import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver; 
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.Select; 
@@ -24,6 +25,7 @@ import Pages.setConexion;
 public class Marketing_Mattu extends TestBase{
 	
 	private WebDriver driver;
+	Marketing mMarketing;
 	
 	//-------------------------------------------------------------------------------------------------
 	//@Befor&After
@@ -31,6 +33,7 @@ public class Marketing_Mattu extends TestBase{
 	public void readySteady() throws Exception {
 		this.driver = setConexion.setupEze();
 		try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		mMarketing = new Marketing(driver);
 		loginMarketing(driver);
 		//login(driver);
 		try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
@@ -77,7 +80,6 @@ public class Marketing_Mattu extends TestBase{
 		}
 		
 		try {Thread.sleep(8000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
-		Marketing mMarketing = new Marketing(driver);
 		mMarketing.irAGestionMarketing();//Checkear
 		/*BasePage cambioFrame=new BasePage();
 		driver.switchTo().defaultContent();
@@ -106,7 +108,6 @@ public class Marketing_Mattu extends TestBase{
 			CustomerCare cCC = new CustomerCare(driver);
 			WebElement wActiveTab = cCC.obtenerPestañaActiva();
 			if (!wActiveTab.findElement(By.className("tabText")).getText().toLowerCase().equals("club personal")) {
-				Marketing mMarketing = new Marketing(driver);
 				mMarketing.closeActiveTab();
 			}
 		} catch (IndexOutOfBoundsException e) {
@@ -122,7 +123,6 @@ public class Marketing_Mattu extends TestBase{
 	//TCC = 1
 	@Test(groups = "Marketing")
 	public void TS4176_Visualizar_error_Mora_Alta_CP() {
-		Marketing mMarketing = new Marketing(driver);
 		mMarketing.cambioCuenta("Todas las cuentas", "aaaacuenta conmora");
 		BasePage cambioFrame=new BasePage();
 		try {Thread.sleep(10000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
@@ -141,8 +141,8 @@ public class Marketing_Mattu extends TestBase{
 	}
 	
 	//-------------------------------------------------------------------------------------------------
-	//TCC = 98023
-	@Test(groups = "Marketing")
+	//TCC = 2
+	@Test(groups = {"Marketing", "Ola1"})
 	public void TS98023_Funcionamiento_boton_Alta_ABM_del_CP() {
 		Marketing mMenuABM = new Marketing(driver);
 		mMenuABM.clubPersonal("alta");
@@ -155,8 +155,8 @@ public class Marketing_Mattu extends TestBase{
 	}
 	
 	//-------------------------------------------------------------------------------------------------
-	//TCC = 98024
-	@Test(groups = "Marketing")
+	//TCC = 3
+	@Test(groups = {"Marketing", "Ola1"})
 	public void TS98024_Funcionamiento_boton_Baja_ABM_del_CP() {
 		Marketing mMenuABM = new Marketing(driver);
 		mMenuABM.clubPersonal("baja");
@@ -169,8 +169,8 @@ public class Marketing_Mattu extends TestBase{
 	}
 	
 	//-------------------------------------------------------------------------------------------------
-	//TCC = 98032
-	@Test(groups = "Marketing")
+	//TCC = 4
+	@Test(groups = {"Marketing", "Ola1"})
 	public void TS98032_Separacion_de_cuentas_Alta_CP() {
 		Marketing mMenuABM = new Marketing(driver);
 		mMenuABM.clubPersonal("alta");
@@ -190,8 +190,8 @@ public class Marketing_Mattu extends TestBase{
 	}
 	
 	//-------------------------------------------------------------------------------------------------
-	//TCC = 98049
-	@Test(groups = "Marketing")
+	//TCC = 5
+	@Test(groups = {"Marketing", "Ola1"})
 	public void TS98049_Separacion_Baja_CP() {
 		Marketing mMenuABM = new Marketing(driver);
 		mMenuABM.clubPersonal("baja");
@@ -211,8 +211,8 @@ public class Marketing_Mattu extends TestBase{
 	}
 	
 	//-------------------------------------------------------------------------------------------------
-	//TCC = 98036
-	@Test(groups = "Marketing")
+	//TCC = 6
+	@Test(groups = {"Marketing", "Ola1"})
 	public void TS98036_Boton_Cancelar_Alta_CP() {
 		Marketing mMenuABM = new Marketing(driver);
 		mMenuABM.clubPersonal("alta");
@@ -226,24 +226,20 @@ public class Marketing_Mattu extends TestBase{
 	}
 	
 	//-------------------------------------------------------------------------------------------------
-	//TCC = 98037
-	@Test(groups = "Marketing")
+	//TCC = 7
+	@Test(groups = {"Marketing", "Ola1"})
 	public void TS98037_Boton_Continuar_Alta_CP() {
 		Marketing mMenuABM = new Marketing(driver);
 		mMenuABM.clubPersonal("alta");
 		try {Thread.sleep(10000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
-		BasePage cambioFrame=new BasePage();
-		driver.switchTo().defaultContent();
-		try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
-		driver.switchTo().frame(cambioFrame.getFrameForElement(driver, By.id("AltaclubPersonal_nextBtn")));
-		WebElement wSiguiente = driver.findElement(By.id("AltaclubPersonal_nextBtn"));
+		WebElement wSiguiente = driver.findElement(By.className("slds-box"));
 		Assert.assertTrue(wSiguiente.findElement(By.tagName("p")).getText().toLowerCase().equals("siguiente"));
 	}
 	
 	//-------------------------------------------------------------------------------------------------
 	//TCC = 8
-	@Test(groups = "Marketing")
-	public void TS50037_Visualizar_cuentas_costumer_Baja_CP() {
+	@Test(groups = {"Marketing", "Ola1"})
+	public void TS98051_Visualizar_cuentas_costumer_Baja_CP() {
 		Marketing mMenuABM = new Marketing(driver);
 		mMenuABM.clubPersonal("baja");
 		try {Thread.sleep(10000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
@@ -259,8 +255,8 @@ public class Marketing_Mattu extends TestBase{
 	
 	//-------------------------------------------------------------------------------------------------
 	//TCC = 9
-	@Test(groups = "Marketing")
-	public void TS50038_Visualizar_cuentas_business_Baja_CP() {
+	@Test(groups = {"Marketing", "Ola1"})
+	public void TS98052_Visualizar_cuentas_business_Baja_CP() {
 		Marketing mMenuABM = new Marketing(driver);
 		mMenuABM.clubPersonal("alta");
 		try {Thread.sleep(10000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
@@ -275,8 +271,8 @@ public class Marketing_Mattu extends TestBase{
 	}
 	
 	//-------------------------------------------------------------------------------------------------
-	//TCC = 98057
-	@Test(groups = "Marketing")
+	//TCC = 10
+	@Test(groups = {"Marketing", "Ola1"})
 	public void TS98057_Verificar_seleccion_del_motivo_otro_Baja_CP() {
 		Marketing mMenuABM = new Marketing(driver);
 		mMenuABM.clubPersonal("baja");
@@ -296,8 +292,8 @@ public class Marketing_Mattu extends TestBase{
 	}
 	
 	//-------------------------------------------------------------------------------------------------
-	//TCC = 98058
-	@Test(groups = "Marketing")
+	//TCC = 11
+	@Test(groups = {"Marketing", "Ola1"})
 	public void TS98058_Verificar_seleccion_del_motivo_otro_vacio_Baja_CP() {
 		Marketing mMenuABM = new Marketing(driver);
 		mMenuABM.clubPersonal("baja");
@@ -320,7 +316,7 @@ public class Marketing_Mattu extends TestBase{
 	
 	//-------------------------------------------------------------------------------------------------
 	//TCC = 12
-	@Test(groups = "Marketing")
+	@Test(groups = {"Marketing", "Ola1"})
 	public void TS98059_Visualizar_botones_Baja_CP() {
 		Marketing mMenuABM = new Marketing(driver);
 		mMenuABM.clubPersonal("baja");
@@ -377,15 +373,15 @@ public class Marketing_Mattu extends TestBase{
 	}
 		
 	//-------------------------------------------------------------------------------------------------
-	//TCC = 98069
-	@Test(groups = "Marketing")
+	//TCC = 15
+	@Test(groups = {"Marketing","Ola1"})
 	public void TS98069_Visualizar_boton_Solapa_CP() {
 		Assert.assertTrue(true);
 	}
 	
 	//-------------------------------------------------------------------------------------------------
-	//TCC = 98070
-	@Test(groups = "Marketing")
+	//TCC = 16
+	@Test(groups = {"Marketing", "Ola1"})
 	public void TS98070_Funcionamiento_boton_Solapa_CP() {
 		Assert.assertTrue(true);
 	}
@@ -400,12 +396,11 @@ public class Marketing_Mattu extends TestBase{
 	}
 	
 	//-------------------------------------------------------------------------------------------------
-	//TCC = 
+	//TCC = 18
 	@Test(groups = "Marketing")
 	public void TS50070_Visualizar_campo_Fecha_desde_Solapa_CP() {
 		List <WebElement> wBodyComplete = driver.findElements(By.cssSelector(".slds-media.slds-media--center.slds-has-flexi-truncate"));
 		WebElement wBody = wBodyComplete.get(5);
-		Marketing mMarketing = new Marketing(driver);
 		List <WebElement> wColumna = mMarketing.traerColumnaElement(wBody, 7, 4);
 		String sFechaDesde = wColumna.get(0).findElement(By.tagName("a")).getText().toLowerCase();
 		Assert.assertTrue(sFechaDesde.equals("fecha desde:"));
@@ -414,12 +409,11 @@ public class Marketing_Mattu extends TestBase{
 	}
 	
 	//-------------------------------------------------------------------------------------------------
-	//TCC = 98071
-	@Test(groups = "Marketing")
+	//TCC = 19
+	@Test(groups = {"Marketing", "Ola1"})
 	public void TS98071_Visualizar_campo_Fecha_hasta_Solapa_CP() {
 		List <WebElement> wBodyComplete = driver.findElements(By.cssSelector(".slds-media.slds-media--center.slds-has-flexi-truncate"));
 		WebElement wBody = wBodyComplete.get(5);
-		Marketing mMarketing = new Marketing(driver);
 		List <WebElement> wColumna = mMarketing.traerColumnaElement(wBody, 7, 6);
 		String sFechaHasta = wColumna.get(0).findElement(By.tagName("a")).getText().toLowerCase();
 		Assert.assertTrue(sFechaHasta.equals("fecha hasta:"));
@@ -428,10 +422,9 @@ public class Marketing_Mattu extends TestBase{
 	}
 	
 	//-------------------------------------------------------------------------------------------------
-	//TCC = 
+	//TCC = 20
 	@Test(groups = "Marketing")
 	public void TS50072_Campo_fecha_Mayor_al_actual_Solapa_CP() {
-		Marketing mMarketing = new Marketing(driver);
 		mMarketing.seleccionarFecha(7, 5, 1, "text-input-id-1", "Futuro");
 		mMarketing.seleccionarFecha(7, 7, 2, "text-input-id-2", "Futuro");
 		
@@ -449,26 +442,25 @@ public class Marketing_Mattu extends TestBase{
 	}
 	
 	//-------------------------------------------------------------------------------------------------
-	//TCC = 90241
-	@Test(groups = "Marketing")
+	//TCC = 21
+	@Test(groups = {"Marketing", "Ola1"})
 	public void TS90241_Sucripcion_CP_Validacion_de_Mail() {
 		TS98023_Funcionamiento_boton_Alta_ABM_del_CP();
 	}
 	
 	//-------------------------------------------------------------------------------------------------
-	//TCC = 
-	//Check login to start
-	//https://crm--sit.cs14.my.salesforce.com/
-	//No podemos loguearnos de la forma que lo hace allí, porque pide verificación cada vez que abre el chrome
-	@Test(groups = "Marketing")
+	//TCC = 22
+	/*@Test(groups = "Marketing")
 	public void TS90286_Asignacion_de_Perfil_para_Aplicacion_Atributos() {
 		
-	}
+	}*/
 	
 	//-------------------------------------------------------------------------------------------------
-	//TCC = 
-	@Test(groups = "Marketing")
+	//TCC = 23
+	@Test(groups = {"Marketing", "Ola1"})
 	public void TS98020_Boton_ABM_del_CP() {
+		Marketing mMarketing = new Marketing(driver);
+		mMarketing.buscarGestion("club personal");
 		BasePage cambioFrame=new BasePage();
 		driver.switchTo().defaultContent();
 		driver.switchTo().frame(cambioFrame.getFrameForElement(driver, By.className("actions-content")));
@@ -486,50 +478,48 @@ public class Marketing_Mattu extends TestBase{
 	}
 	
 	//-------------------------------------------------------------------------------------------------
-	//TCC = 
-	@Test(groups = "Marketing")
+	//TCC = 24
+	@Test(groups = {"Marketing","Ola1"})
 	public void TS98027_No_visualizar_error_Fraude_Alta_CP() {
 		TS98023_Funcionamiento_boton_Alta_ABM_del_CP();
 	}
 	
 	//-------------------------------------------------------------------------------------------------
-	//TCC = 
-	@Test(groups = "Marketing")
+	//TCC = 25
+	@Test(groups = {"Marketing", "Ola1"})
 	public void TS98047_No_visualizar_error_Fraude_Baja_CP() {
 		TS98024_Funcionamiento_boton_Baja_ABM_del_CP();
 	}
 	
 	//-------------------------------------------------------------------------------------------------
-	//TCC = 98048
-	@Test(groups = "Marketing")
+	//TCC = 26
+	@Test(groups = {"Marketing", "Ola1"})
 	public void TS98048_Generar_Caso_error_Fraude_Baja_CP() {
-		Marketing mMarketing = new Marketing(driver);
 		mMarketing.cambioCuenta("Todas las cuentas", "aaaaCuenta Fraude");
 		mMarketing.clubPersonal("Baja");
 		try {Thread.sleep(10000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 		WebElement wMessage = driver.findElement(By.cssSelector(".slds-form-element.vlc-flex.vlc-slds-text-block.vlc-slds-rte.ng-pristine.ng-valid.ng-scope"));
 		List <WebElement> wMessageBox = wMessage.findElements(By.tagName("p"));
-		String sMessage = wMessageBox.get(1).getText().substring(71, 79);
-		BasePage cambioFrame=new BasePage();
-		driver.switchTo().defaultContent();
-		//driver.switchTo().frame(cambioFrame.getFrameForElement(driver, By.id("phSearchForm")));
-		try {Thread.sleep(10000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
-		driver.findElement(By.id("phSearchInput")).sendKeys(sMessage + "\n");
-		try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
-		driver.switchTo().defaultContent();
-		driver.switchTo().frame(cambioFrame.getFrameForElement(driver, By.id("searchResultsHolderDiv")));
-		WebElement wBody = driver.findElement(By.id("Case_body")).findElement(By.tagName("table"));
-		List <WebElement> wEstado = mMarketing.traerColumnaElement(wBody, 5, 3);
-		Boolean bAssert = wEstado.get(0).getText().toLowerCase().equals("closed");
+		String sCaso = wMessageBox.get(1).getText().substring(71, 79);
+		boolean bAssert = mMarketing.corroborarCasoCerrado(sCaso);
 		mMarketing.cambioCuenta("Vista Marketing", "Florencia Marketing");
 		Assert.assertTrue(bAssert);
 	}
 	
 	//-------------------------------------------------------------------------------------------------
-	//TCC = 
+	//TCC = 27
 	@Test(groups = "Marketing")
+	public void TS98050_Multiple_seleccion_Baja_CP() {
+		mMarketing.estadoAltaBaja("Baja");
+		mMarketing.seleccionarCuenta("consumerAccounts");
+		mMarketing.seleccionarCuenta("businessAccounts");
+		Assert.assertTrue(true);
+	}
+	
+	//-------------------------------------------------------------------------------------------------
+	//TCC = 28
+	@Test(groups = {"Marketing", "Ola1"})
 	public void TS98056_Verificar_seleccion_de_un_unico_valor_en_el_campo_motivo_de_baja_Baja_CP() {
-		Marketing mMarketing = new Marketing(driver);
 		mMarketing.clubPersonal("baja");
 		try {Thread.sleep(10000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 		BasePage cambioFrame=new BasePage();
@@ -568,6 +558,13 @@ public class Marketing_Mattu extends TestBase{
 		}
 		
 		Assert.assertTrue(bAssert.size() == 8);
+	}
+	
+	//-------------------------------------------------------------------------------------------------
+	//Abrir Página
+	//@Test
+	public void AbrirPagina() {
+		
 	}
 	
 	/*Fecha del sistema

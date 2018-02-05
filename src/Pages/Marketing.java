@@ -2,7 +2,6 @@ package Pages;
 
 import java.util.ArrayList;
 import java.util.List;
-
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -17,7 +16,7 @@ import Tests.TestBase;
 
 public class Marketing extends CustomerCare {
 	
-
+	
 	
 	//final WebDriver driver;
 	
@@ -25,6 +24,36 @@ public class Marketing extends CustomerCare {
 	public Marketing(WebDriver driver){
 		super(driver);
 	}
+	
+	//Sleep
+	
+	//Working
+	public void sleepShort(int diferencia) {
+		try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+	}
+	
+	public void sleepMedium(int diferencia) {
+		try {Thread.sleep(10000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+	}
+	
+	public void sleepLong(int diferencia) {
+		try {Thread.sleep(15000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+	}
+	
+	//Weekends
+	/*
+	public void sleepShort(int diferencia) {
+		try {Thread.sleep(8000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+	}
+	
+	public void sleepMedium(int diferencia) {
+		try {Thread.sleep(12000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+	}
+	
+	public void sleepLong(int diferencia) {
+		try {Thread.sleep(18000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+	} 
+	*/
 	
 	public void clubPersonal (String sAltaBajaModificacion) {
 		waitForVisibilityOfElementLocated(By.cssSelector(".slds-grid.slds-wrap.via-slds-action-grid-card"));
@@ -39,7 +68,7 @@ public class Marketing extends CustomerCare {
 				break;
 			case "baja":
 				lMenuesABM.get(1).click();
-				try {Thread.sleep(10000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+				sleepShort(0);
 				BasePage cambioFrame=new BasePage();
 				driver.switchTo().defaultContent();
 				driver.switchTo().frame(cambioFrame.getFrameForElement(driver, By.cssSelector(".slds-page-header.vlc-slds-page--header.ng-scope")));
@@ -163,7 +192,7 @@ public class Marketing extends CustomerCare {
 		tTB.waitFor(driver, (By.name("fcf")));
 		Select field = new Select(driver.findElement(By.name("fcf")));
 		field.selectByVisibleText(sVista);
-		try {Thread.sleep(10000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		sleepMedium(0);
 		WebElement wBody = driver.findElement(By.className("x-grid3-body"));
 		List<WebElement> wAccountName = wBody.findElements(By.cssSelector(".x-grid3-col.x-grid3-cell.x-grid3-td-ACCOUNT_NAME"));
 		
@@ -175,7 +204,7 @@ public class Marketing extends CustomerCare {
 				break;
 			}
 		}
-		try {Thread.sleep(8000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		sleepShort(3);
 		BasePage cambioFrame=new BasePage();
 		driver.switchTo().defaultContent();
 		driver.switchTo().frame(cambioFrame.getFrameForElement(driver, By.cssSelector(".slds-input.actionSearch.ng-pristine.ng-untouched.ng-valid.ng-empty")));
@@ -190,7 +219,7 @@ public class Marketing extends CustomerCare {
 				break;
 			}
 		}
-		try {Thread.sleep(10000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		sleepMedium(0);
 		driver.switchTo().defaultContent();
 		driver.switchTo().frame(cambioFrame.getFrameForElement(driver, By.cssSelector(".slds-panel__section.slds-p-around--small")));
 	}
@@ -206,6 +235,161 @@ public class Marketing extends CustomerCare {
 		int i = 0;
 		while(msg.charAt(i++) != '0') {	}
 		return msg.substring(i-1, msg.length());
+	}
+	
+	public String estadoAltaBaja (String sAltaBaja) {
+		BasePage cambioFrame=new BasePage();
+		WebElement wConsumerBox;
+		WebElement wConsumerTable;
+		List<WebElement> wConsumerTableRows;
+		WebElement wCTCheckBox;
+		WebElement wCTCheckBoxLabel;
+		WebElement wCTCheckBoxDisable;
+		String sCaso = "";
+		switch (sAltaBaja.toLowerCase()) {
+			case "alta":
+				clubPersonal("Alta");
+				sleepMedium(0);
+				cambioFrame=new BasePage();
+				driver.switchTo().defaultContent();
+				driver.switchTo().frame(cambioFrame.getFrameForElement(driver, By.id("consumerAccounts")));
+				wConsumerBox = driver.findElement(By.id("consumerAccounts"));
+				wConsumerTable = wConsumerBox.findElement(By.tagName("tbody"));
+				wConsumerTableRows = wConsumerTable.findElements(By.tagName("tr"));
+				wCTCheckBox = wConsumerTableRows.get(0).findElement(By.tagName("th"));
+				wCTCheckBoxLabel = wCTCheckBox.findElement(By.tagName("label"));
+				wCTCheckBoxDisable = wCTCheckBoxLabel.findElement(By.tagName("input"));
+				if (wCTCheckBoxDisable.getAttribute("ng-disabled").equals("true")) {
+					closeActiveTab();
+					sCaso = darDeBajaCP("No lo uso", "");
+					sleepShort(3);
+					closeActiveTab();
+					sleepShort(0);
+					driver.switchTo().defaultContent();
+					driver.switchTo().frame(cambioFrame.getFrameForElement(driver, By.cssSelector(".slds-panel__section.slds-p-around--small")));
+					clubPersonal("Alta");
+					sleepMedium(3);
+					cambioFrame=new BasePage();
+					driver.switchTo().defaultContent();
+					driver.switchTo().frame(cambioFrame.getFrameForElement(driver, By.cssSelector(".slds-page-header.vlc-slds-page--header.ng-scope")));
+				}
+				break;
+			case "baja":
+				clubPersonal("Baja");
+				sleepShort(3);
+				cambioFrame=new BasePage();
+				driver.switchTo().defaultContent();
+				driver.switchTo().frame(cambioFrame.getFrameForElement(driver, By.id("consumerAccounts")));
+				wConsumerBox = driver.findElement(By.id("consumerAccounts"));
+				wConsumerTable = wConsumerBox.findElement(By.tagName("tbody"));
+				wConsumerTableRows = wConsumerTable.findElements(By.tagName("tr"));
+				wCTCheckBox = wConsumerTableRows.get(0).findElement(By.tagName("th"));
+				wCTCheckBoxLabel = wCTCheckBox.findElement(By.tagName("label"));
+				wCTCheckBoxDisable = wCTCheckBoxLabel.findElement(By.tagName("input"));
+				if (wCTCheckBoxDisable.getAttribute("ng-disabled").equals("true")) {
+					closeActiveTab();
+					sCaso = darDeAltaCP();
+					sleepShort(3);
+					closeActiveTab();
+					sleepShort(0);
+					driver.switchTo().defaultContent();
+					driver.switchTo().frame(cambioFrame.getFrameForElement(driver, By.cssSelector(".slds-panel__section.slds-p-around--small")));
+					clubPersonal("baja");
+					sleepShort(3);
+					cambioFrame=new BasePage();
+					driver.switchTo().defaultContent();
+					driver.switchTo().frame(cambioFrame.getFrameForElement(driver, By.cssSelector(".slds-page-header.vlc-slds-page--header.ng-scope")));
+				}
+				break;
+			default:
+				System.out.println("Selección incorrecta, por favor selecciona 'Alta' o 'baja'");
+		}
+		return sCaso;
+	}
+	
+	public void bajaMotivo(String sMotivo, String sOtros) {
+		sleepShort(0);
+		BasePage cambioFrame=new BasePage();
+		driver.switchTo().defaultContent();
+		driver.switchTo().frame(cambioFrame.getFrameForElement(driver, By.cssSelector(".slds-panel__section.slds-p-around--small")));
+		clubPersonal("baja");
+		sleepShort(0);
+		seleccionarCuenta("consumerAccounts");
+		seleccionarCuenta("businessAccounts");
+		sleepShort(0);
+		BasePage bBP = new BasePage(driver);
+		bBP.setSimpleDropdown(driver.findElement(By.id("SelectReason")), sMotivo);
+		sleepShort(0);
+		if (!sOtros.isEmpty()) {
+			driver.findElement(By.id("Others")).sendKeys(sOtros);
+		}
+		sleepShort(0);
+	}
+	
+	public String darDeBajaCP (String sMotivo, String sOtros) {
+		bajaMotivo(sMotivo, sOtros);
+		driver.findElement(By.id("CPMembershipCancellation_nextBtn")).click();
+		sleepShort(0);
+		driver.findElement(By.id("ConfirmStep_nextBtn")).click();
+		sleepMedium(0);
+		BasePage cambioFrame = new BasePage();
+		driver.switchTo().defaultContent();
+		driver.switchTo().frame(cambioFrame.getFrameForElement(driver, By.id("Headline")));
+		String sCaso = driver.findElement(By.id("Headline")).findElement(By.tagName("p")).getText();
+		sCaso = sCaso.substring(44);
+		return sCaso;
+	}
+	
+	public String darDeAltaCP () {
+		sleepShort(0);
+		BasePage cambioFrame=new BasePage();
+		driver.switchTo().defaultContent();
+		driver.switchTo().frame(cambioFrame.getFrameForElement(driver, By.cssSelector(".slds-panel__section.slds-p-around--small")));
+		clubPersonal("alta");
+		sleepShort(0);
+		driver.switchTo().defaultContent();
+		driver.switchTo().frame(cambioFrame.getFrameForElement(driver, By.id("consumerAccounts")));
+		seleccionarCuenta("consumerAccounts");
+		seleccionarCuenta("businessAccounts");
+		driver.findElement(By.id("AltaClubPersonal_nextBtn")).click();
+		sleepShort(0);
+		driver.findElement(By.id("ConfirmStep_nextBtn")).click();
+		sleepMedium(0);
+		driver.switchTo().defaultContent();
+		driver.switchTo().frame(cambioFrame.getFrameForElement(driver, By.id("Headline")));
+		String sCaso = driver.findElement(By.id("Headline")).findElement(By.tagName("strong")).getText();
+		return sCaso;
+	}
+	
+	public void seleccionarCuenta(String sTable) {
+		BasePage cambioFrame=new BasePage();
+		driver.switchTo().defaultContent();
+		driver.switchTo().frame(cambioFrame.getFrameForElement(driver, By.id(sTable)));
+		sleepShort(0);
+		WebElement wConsumerBox = driver.findElement(By.id(sTable));
+		WebElement wConsumerTable= wConsumerBox.findElement(By.tagName("tbody"));
+		List<WebElement> wConsumerTableRows = wConsumerTable.findElements(By.tagName("tr"));
+		List<WebElement> wCTCheckBox = new ArrayList<WebElement>();
+		for (WebElement wAux : wConsumerTableRows) {
+			wCTCheckBox.add(wAux.findElement(By.tagName("th")));
+		}
+		for (WebElement wAux : wCTCheckBox) {
+			wAux.findElement(By.tagName("label")).click();
+		}
+	} 
+	
+	public boolean corroborarCasoCerrado(String sCaso) {
+		BasePage cambioFrame=new BasePage();
+		driver.switchTo().defaultContent();
+		sleepShort(0);
+		driver.findElement(By.id("phSearchInput")).sendKeys(sCaso + "\n");
+		sleepShort(0);
+		driver.switchTo().defaultContent();
+		driver.switchTo().frame(cambioFrame.getFrameForElement(driver, By.id("searchResultsHolderDiv")));
+		WebElement wBody = driver.findElement(By.id("Case_body")).findElement(By.tagName("table"));
+		List <WebElement> wEstado = traerColumnaElement(wBody, 5, 3);
+		Boolean bAssert = wEstado.get(0).getText().toLowerCase().equals("closed");
+		return bAssert;
 	}
 	
 }
