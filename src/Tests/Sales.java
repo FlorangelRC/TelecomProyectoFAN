@@ -1944,7 +1944,7 @@ public class Sales extends TestBase {
 	  @Test(groups = {"Sales", "Ventas","Ola1"})
 	  public void TS94724_Ventas_VentasEntregas_Verificar_Que_Se_Permita_La_Seleccion_De_La_Modalidad_De_Entrega() {
 		  SalesBase SB = new SalesBase(driver); 
-		  SB.BuscarCuenta("DNI", "");;
+		  SB.BuscarCuenta("DNI", ""); 
 			SB.acciondecontacto("catalogo");
 			sleep(14000);
 			List<WebElement> botones = driver.findElements(By.cssSelector(".slds-m-left--x-small.slds-button.slds-button--brand"));
@@ -2079,34 +2079,6 @@ public class Sales extends TestBase {
 		  Assert.assertTrue(driver.findElement(By.id("Birthdate")).isDisplayed());
 		  Assert.assertTrue(driver.findElement(By.cssSelector(".slds-picklist.slds-dropdown-trigger.slds-dropdown-trigger--click.slds-is-open.slds-col--padded.slds-size--6-of-12.ng-scope")).isDisplayed());
 	  }
-
-	  @Test(groups = {"Sales", "AltaDeContacto"})
-	  public void TS94583_Alta_de_Contacto_Persona_Fisica_Verificar_estado_fallido_de_la_validacion_de_identidad_por_DNI_con_documentacion_invalida_XX() {
-		  Select dni = new Select (driver.findElement(By.id("SearchClientDocumentType"))); 
-		  dni.selectByVisibleText("DNI");
-		  driver.findElement(By.id("SearchClientDocumentNumber")).sendKeys("1");
-		  sleep(2000);
-		  boolean a = false;
-		  boolean b = false;
-		  List <WebElement> error1 = driver.findElements(By.cssSelector(".error.ng-scope"));
-		  for (WebElement x : error1) {
-			  if (x.getText().toLowerCase().contains("longitud m\u00ednima de 7")) {
-				  a = true;
-			  }
-		  }
-		  driver.findElement(By.id("SearchClientDocumentNumber")).clear();
-		  driver.findElement(By.id("SearchClientDocumentNumber")).sendKeys("1111111111");
-		  sleep(2000);
-		  List <WebElement> error2 = driver.findElements(By.cssSelector(".error.ng-scope"));
-		  for (WebElement x : error2) {
-			  if (x.getText().toLowerCase().contains("longitud m\u00e1xima de 8")) {
-				  b = true;
-			  }
-		  }
-		  Assert.assertTrue(a && b);
-	  }
-	  
-
 	
 	@Test(groups={"Sales", "AltaDeContacto","Ola1"})
 	  public void TS94546_Alta_de_Contacto_Persona_Fisica_Validar_que_se_muestre_la_barra_39(){
@@ -2229,6 +2201,35 @@ public class Sales extends TestBase {
 	    	 }
 	     }
 	Assert.assertTrue(o);
+	perfil = "call";
+	}
+	
+	@Test(groups={"Sales", "Ventas", "Ola1"})
+	public void TS94830_Ventas_General_Verificar_Metodo_De_Entrega_Por_Default_Perfil_Representante_Telefonico(){
+		perfil = "agente";
+		SalesBase SB = new SalesBase(driver);
+		SB.BuscarCuenta(DNI, "34073329");
+		SB.acciondecontacto("catalogo");
+		boolean x = false;
+		sleep(15000);
+		assertTrue(driver.findElement(By.cssSelector(".slds-col.taChangeDeliveryMethod.slds-text-body--small.slds-m-left--large")).findElement(By.tagName("strong")).getText().contains("Delivery"));
+		List<WebElement> cam = driver.findElements(By.cssSelector(".slds-m-left--x-small.slds-button.slds-button--brand"));
+		for(WebElement c : cam ){	
+			if(c.getText().toLowerCase().equals("cambiar")){
+				c.click();
+			}
+		}
+		sleep(7000);	
+		List<WebElement> frame2 = driver.findElements(By.tagName("iframe"));
+		driver.switchTo().frame(frame2.get(0));
+		Select env = new Select (driver.findElement(By.id("DeliveryMethodSelection")));
+		try {
+			env.selectByVisibleText("Presencial");
+			assertTrue(false);
+		}catch(org.openqa.selenium.NoSuchElementException ex1) {
+			assertTrue(true);
+		}
+		
 	}
 	
 	@Test(groups={"Sales", "Nueva Venta", "Ola1"})
@@ -2242,7 +2243,7 @@ public class Sales extends TestBase {
 		for(WebElement c : cam ){	
 			if(c.getText().toLowerCase().equals("cambiar")){
 				c.click();
-			}
+			}}
 		sleep(7000);	
 		List<WebElement> frame2 = driver.findElements(By.tagName("iframe"));
 		driver.switchTo().frame(frame2.get(0));
@@ -2251,7 +2252,7 @@ public class Sales extends TestBase {
 		driver.findElement(By.id("SalesChannelConfiguration_nextBtn")).click();
 		sleep(7000);
 		driver.switchTo().defaultContent();
-		}
+		
 		SB.elegirplan("Plan con Tarjeta Repro");
 		sleep(15000);
 		List<WebElement> cont = driver.findElements(By.cssSelector(".slds-button.slds-m-left--large.slds-button--brand.ta-button-brand"));

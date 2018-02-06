@@ -49,6 +49,7 @@ public class Sales2 extends TestBase{
 		driver.findElement(By.xpath("//a[@href=\'https://crm--sit--c.cs14.visual.force.com/apex/taClientSearch']")).click();
 		sleep(7000);
 	}
+	
 	@Test(groups={"Sales", "Nueva Venta", "Ola1"})
 	public void TS94699_Nueva_Venta_Modo_de_Entrega_Verificar_Solicitud_de_Domicilio_de_envio_Envio_Express(){
 		sb.BuscarCuenta(DNI, "34073329");
@@ -89,4 +90,41 @@ public class Sales2 extends TestBase{
 			//Assert.assertTrue(driver.findElement(By.id("SelectProvincia")).isDisplayed());	
 		}
 	
+	@Test(groups={"Sales", "AltaDeContacto", "Ola1"})
+	public void TS94830_Alta_De_Contacto_Busqueda_Verificar_Accion_De_Ver_Detalle_De_Contacto(){
+		SalesBase SB = new SalesBase(driver);
+		SB.BuscarCuenta(DNI, "34073329");
+		driver.findElement(By.id("tab-scoped-3__item")).click();
+		SB.acciondecontacto("ver contacto");
+		Assert.assertTrue(false);
+	}
+	
+	@Test(groups={"Sales", "AltaDeContacto", "Ola1"})
+	public void TS94590_Alta_De_Contacto_Persona_Fisica_Verificar_Categoria_Impositiva_Por_Default(){
+		sb.BuscarCuenta(DNI, "");
+		driver.findElement(By.id("tab-scoped-3__item")).click();
+		sb.acciondecontacto("catalogo");
+		boolean x = false;
+		sleep(15000);
+		List<WebElement> cam = driver.findElements(By.cssSelector(".slds-m-left--x-small.slds-button.slds-button--brand"));
+		for(WebElement c : cam ){	
+			if(c.getText().toLowerCase().equals("cambiar")){
+				c.click();
+			}
+		sleep(7000);	
+		List<WebElement> frame2 = driver.findElements(By.tagName("iframe"));
+		driver.switchTo().frame(frame2.get(0));
+		Select env = new Select (driver.findElement(By.id("DeliveryMethodSelection")));
+		env.selectByVisibleText("Delivery");
+		driver.findElement(By.id("SalesChannelConfiguration_nextBtn")).click();
+		sleep(10000);
+		driver.switchTo().defaultContent();
+		}
+		sb.elegirplan("Plan con Tarjeta Repro");
+		sleep(15000);
+		sb.continuar();
+		sleep(5000);
+		Select condI = new Select(driver.findElement(By.id("ImpositiveCondition")));
+		Assert.assertTrue(condI.getFirstSelectedOption().getText().equalsIgnoreCase("iva consumidor final"));
+	}
 }
