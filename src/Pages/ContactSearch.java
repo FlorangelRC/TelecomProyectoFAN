@@ -15,6 +15,9 @@ public class ContactSearch extends BasePage {
 
 	@FindBy(how = How.ID, using = "SearchClientDocumentType")
 	private WebElement documentType;
+	
+	@FindBy(how = How.ID, using = "DocumentTypeSearch")
+	private WebElement documentType2;
 
 	@FindBy(how = How.ID, using = "SearchClientDocumentNumber")
 	private WebElement document;
@@ -52,6 +55,26 @@ public class ContactSearch extends BasePage {
 		try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 	}
 
+	public void searchContact2(String docType, String docValue, String genero) {
+		try {Thread.sleep(10000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		setSimpleDropdown(documentType2, docType);
+		driver.findElement(By.id("DocumentInputSearch")).click();
+		driver.findElement(By.id("DocumentInputSearch")).sendKeys(docValue);
+		try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		switch (genero) {
+		case "femenino":
+			gender.get(0).click();
+			break;
+		case "masculino":
+			gender.get(1).click();
+			break;
+		}
+		if(!genero.equals(""))
+		driver.findElement(By.cssSelector(".OSradioButton.ng-scope.only-buttom")).click();
+		try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+	}
+	
+	
 	public void DNI(String DNI) {
 		document.sendKeys(DNI);
 	}
