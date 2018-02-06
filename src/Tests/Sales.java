@@ -37,7 +37,7 @@ import Pages.setConexion;
 
 public class Sales extends TestBase {
 	
-	protected String perfil = "agente";
+	protected String perfil = "call";
 	protected WebDriver driver;
 	protected  WebDriverWait wait;
 	String nombre="Roberto";
@@ -61,13 +61,13 @@ public class Sales extends TestBase {
 	String[] genero = {"masculino","femenino"};
 	String[] DocValue = {"52698550","3569874563","365","ssss"};
 	
-	@AfterClass(alwaysRun=true)
+	//@AfterClass(alwaysRun=true)
 	public void tearDown() {
 		driver.close();
 		driver.quit();
 	}
 	
-	@AfterMethod(alwaysRun=true)
+	//@AfterMethod(alwaysRun=true)
 	public void deslogin(){
 		try {Thread.sleep(10000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 		driver.get("https://crm--sit.cs14.my.salesforce.com/home/home.jsp?tsid=02u41000000QWha/");
@@ -168,10 +168,7 @@ public class Sales extends TestBase {
 		ContactSearch contact = new ContactSearch(driver);
 		contact.sex("femenino");
 		try {Thread.sleep(3000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
-		List<WebElement> genero = driver.findElements(By.id("Gender"));
-		System.out.println(genero.size());
-		genero.get(0).isSelected();
-		Assert.assertTrue(genero.get(0).isSelected());
+		assertTrue(driver.findElement(By.id("Gender")).isSelected());
 	}
 	
 	@Test(groups={"Sales", "AltaDeContacto","Ola1"})
@@ -867,7 +864,7 @@ public class Sales extends TestBase {
 	@Test(groups={"Sales", "AltaDeContacto","Ola1"})
 	public void TS94792_Alta_Contacto_Busqueda_Verificar_Primer_TAB_De_Visualizacion() {
 		SalesBase SB = new SalesBase(driver);
-		SB.BuscarCuenta("DNI", "32323232");
+		SB.BuscarCuenta("DNI", "34073329");
 		try {Thread.sleep(6000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 		List<WebElement> solapas = driver.findElement(By.className("slds-tabs--scoped__nav")).findElements(By.tagName("li"));
 		assertTrue(solapas.get(0).findElement(By.tagName("a")).getText().equals("Clientes Activos") && solapas.get(0).isDisplayed());
@@ -875,6 +872,16 @@ public class Sales extends TestBase {
 	
 	@Test(groups={"Sales", "AltaDeContacto","Ola1"})
 	public void TS94793_Alta_Contacto_Busqueda_Verificar_segundo_TAB_De_Visualizacion() {
+		SalesBase SB = new SalesBase(driver);
+		SB.BuscarCuenta("DNI", "");
+		try {Thread.sleep(6000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		List<WebElement> solapas = driver.findElement(By.className("slds-tabs--scoped__nav")).findElements(By.tagName("li"));
+		assertTrue(solapas.get(1).findElement(By.tagName("a")).getText().equals("Clientes Inactivos"));
+		assertTrue(solapas.get(1).isDisplayed());
+	}
+	
+	@Test(groups={"Sales", "Ventas","Ola1"})
+	public void TS94712_Ventas_BuscarCliente_Verificar_Que_El_Sistema_Agrupe_Los_Clientes_Inactivos() {
 		SalesBase SB = new SalesBase(driver);
 		SB.BuscarCuenta("DNI", "");
 		try {Thread.sleep(6000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
@@ -1361,9 +1368,9 @@ public class Sales extends TestBase {
 		driver.findElement(By.id("SearchClientDocumentNumber")).sendKeys("17856969");
 		SalesBase SB = new SalesBase(driver);
 		SB.BuscarAvanzada("papa", "nata", "", "", "");
-		WebElement tTel = driver.findElement(By.id("tab-scoped-1")).findElement(By.tagName("tbody")).findElements(By.tagName("td")).get(3);
+		WebElement tTel = driver.findElement(By.id("tab-scoped-3")).findElement(By.tagName("tbody")).findElements(By.tagName("td")).get(2);
 		Assert.assertTrue(tTel.getText().equals("17856969"));
-		WebElement tNom = driver.findElement(By.id("tab-scoped-1")).findElement(By.tagName("tbody")).findElements(By.tagName("td")).get(0);
+		WebElement tNom = driver.findElement(By.id("tab-scoped-3")).findElement(By.tagName("tbody")).findElements(By.tagName("td")).get(0);
 		Assert.assertFalse(tNom.getText().equals("papa" + " " + "nata"));
 	}
 	
@@ -1457,7 +1464,7 @@ public class Sales extends TestBase {
 	    } 
 	     
 	    @Test(groups = {"Sales", "AltaDeContacto"}) 
-	    public void TS945281_Alta_de_Contacto_Persona_Fisica_Confirmar_creacion_de_contacto_con_un_campo_obligatorio_incompleto_47() { 
+	    public void TS94528_Alta_de_Contacto_Persona_Fisica_Confirmar_creacion_de_contacto_con_un_campo_obligatorio_incompleto_47() { 
 	      SalesBase SB = new SalesBase(driver); 
 	      SB.BtnCrearNuevoCliente(); 
 	      Select dni = new Select(driver.findElement(By.id("DocumentType"))); 
@@ -1799,6 +1806,8 @@ public class Sales extends TestBase {
 	    driver.findElement(By.cssSelector(".typeahead.dropdown-menu.ng-scope.am-fade.bottom-left")).click(); 
 	    Assert.assertTrue(loc.getAttribute("value").equals("VILLA LUZURIAGA")); 
 	  } 
+	  
+	  
 	  @Test(groups = {"Sales", "AltaDeContacto","Ola1"}) 
 	  public void TS94739_Alta_de_Contacto_Persona_Fisica_Verificar_ingreso_manual_de_cod_postal_inexistente(){ 
 	    SalesBase SB = new SalesBase(driver); 
@@ -1860,6 +1869,30 @@ public class Sales extends TestBase {
 	  }
 	  
 	  @Test(groups = {"Sales", "Ventas","Ola1"})
+	  public void TS94710_Ventas_BuscarCliente_Verificar_Los_Datos_Del_Cliente_Activo() { 
+		  boolean ok = false;
+		  driver.findElement(By.id("PhoneNumber")).sendKeys("1158433883");
+		  driver.findElement(By.id("SearchClientsDummy")).click();
+		  sleep(5000);
+		  List<WebElement> campos = driver.findElement(By.id("tab-scoped-1")).findElement(By.cssSelector(".slds-table.slds-table--bordered.slds-tree.slds-table--tree.table.tableCSS")).findElement(By.tagName("tr")).findElements(By.tagName("th"));
+		  assertTrue(campos.get(0).getText().equalsIgnoreCase("razon social"));	  
+		  assertTrue(campos.get(1).getText().equalsIgnoreCase("nombre"));	
+		  assertTrue(campos.get(2).getText().equalsIgnoreCase("linea"));	
+		  assertTrue(campos.get(3).getText().equalsIgnoreCase("tipo documento"));	
+		  assertTrue(campos.get(4).getText().equalsIgnoreCase("documento"));	
+		  assertTrue(campos.get(5).getText().equalsIgnoreCase("mail"));	
+		  assertTrue(campos.get(6).getText().equalsIgnoreCase("nro de cuenta"));	
+		  assertTrue(campos.get(7).getText().equalsIgnoreCase("acciones"));	
+		  driver.findElement(By.id("tab-scoped-1")).click();
+		  sleep(1000);
+		  if (driver.findElement(By.id("tab-scoped-1")).findElement(By.tagName("tbody")).findElements(By.tagName("tr")).get(1).findElements(By.tagName("td")).get(2).findElement(By.tagName("span")).getAttribute("class").equals("color-row ng-hide"))
+			  ok = true;
+		  else if (driver.findElement(By.id("tab-scoped-1")).findElement(By.tagName("tbody")).findElements(By.tagName("tr")).get(1).findElements(By.tagName("td")).get(2).findElement(By.tagName("span")).getText().toLowerCase().contains("nominado"))
+			  ok = true;
+		  assertTrue(ok);
+	  }
+	  
+	  @Test(groups = {"Sales", "Ventas","Ola1"})
 	  public void TS94715_Ventas_BuscarCliente_Verificar_linea_sin_cliente_asociado() {
 		  driver.findElement(By.id("PhoneNumber")).sendKeys("1157602861");
 		  driver.findElement(By.id("SearchClientsDummy")).click();
@@ -1909,7 +1942,7 @@ public class Sales extends TestBase {
 		  boolean enc = false;
 		  SB.BuscarCuenta("DNI", "");;
 			SB.acciondecontacto("catalogo");
-			sleep(12000);
+			sleep(14000);
 			List<WebElement> opcs = driver.findElement(By.className("cpq-main-categories-container")).findElements(By.tagName("a"));
 			for(WebElement UnaO : opcs) {
 				if(UnaO.findElement(By.tagName("span")).getText().equalsIgnoreCase("packs")) {
@@ -1935,11 +1968,34 @@ public class Sales extends TestBase {
 				}
 			}
 			sleep(12000);
-			Select MdE= new Select(driver.findElement(By.id("DeliveryMethodSelection")));
+			driver.switchTo().frame(SB.getFrameForElement(driver, By.id("DeliveryMethodSelection")));
+			Select MdE= new Select(driver.findElement(By.id("SalesChannelConfiguration")).findElement(By.id("DeliveryMethodSelection")));
 			MdE.selectByVisibleText("Presencial");
 			assertTrue(MdE.getFirstSelectedOption().getText().equalsIgnoreCase("presencial"));
 			MdE.selectByVisibleText("Delivery");
 			assertTrue(MdE.getFirstSelectedOption().getText().equalsIgnoreCase("delivery"));
+			//1157602860
+	  }
+	  
+	  @Test(groups = {"Sales", "Ventas","Ola1"})
+	  public void TS94725_Ventas_VentasEntregas_Verificar_Que_Se_Permita_La_Seleccion_De_La_Modalidad_De_Entrega_Store_Pick_Up() {
+		  SalesBase SB = new SalesBase(driver); 
+		  SB.BuscarCuenta("DNI", "");;
+			SB.acciondecontacto("catalogo");
+			sleep(14000);
+			List<WebElement> botones = driver.findElements(By.cssSelector(".slds-m-left--x-small.slds-button.slds-button--brand"));
+			for(WebElement UnB : botones) {
+				System.out.println("UnBoton= "+UnB.getText());
+				if(UnB.getText().equalsIgnoreCase("cambiar")) {
+					UnB.click();
+					break;
+				}
+			}
+			sleep(14000);
+			driver.switchTo().frame(SB.getFrameForElement(driver, By.id("DeliveryMethodSelection")));
+			Select MdE= new Select(driver.findElement(By.id("SalesChannelConfiguration")).findElement(By.id("DeliveryMethodSelection")));
+			MdE.selectByVisibleText("Store Pick Up");
+			assertTrue(MdE.getFirstSelectedOption().getText().equalsIgnoreCase("Store Pick Up"));
 			//1157602860
 	  }
 	  
