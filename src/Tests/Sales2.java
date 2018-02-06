@@ -50,7 +50,7 @@ public class Sales2 extends TestBase{
 		sleep(7000);
 	}
 	@Test(groups={"Sales", "Nueva Venta", "Ola1"})
-	public void TS94699_Nueva_Venta_Modo_de_Entrega_Verificar_Solicitud_de_Domicilio_de_envio_Envio_Express(){
+	public void TS94698_Nueva_Venta_Modo_de_Entrega_Verificar_Solicitud_de_Domicilio_de_envio_Envio_Estandar(){
 		sb.BuscarCuenta(DNI, "34073329");
 		sb.acciondecontacto("catalogo");
 		boolean x = false;
@@ -70,23 +70,60 @@ public class Sales2 extends TestBase{
 		driver.switchTo().defaultContent();
 		}
 		sb.elegirplan("Plan con Tarjeta Repro");
-		sleep(15000);
-		List<WebElement> cont = driver.findElements(By.cssSelector(".slds-form-element__label--toggleText.ng-binding"));
+		sb.continuar();
+		sleep(10000);
+		List<WebElement> cont = driver.findElements(By.cssSelector(".slds-button.slds-m-left--large.slds-button--brand.ta-button-brand"));
 			for(WebElement c : cont){
-				if(c.getText().equals("Continuar")){
+				c.getText().equals("Continuar");
 					c.click();
-				}
+				
 			}
 		sleep(5000);
-		List<WebElement> direc = driver.findElements(By.cssSelector(".slds-form-element__label--toggleText.ng-binding"));
-			for(WebElement d : direc){
-				if(d.getText().equals("Modificar b\u00fasqueda")){
-					//d.click();
-					System.out.println(d.getText());
-					System.out.println(d.getAttribute("value"));
-				}
-			}
-			//Assert.assertTrue(driver.findElement(By.id("SelectProvincia")).isDisplayed());	
+		CustomerCare page = new CustomerCare(driver);
+		WebElement sig = driver.findElement(By.id("LineAssignment_nextBtn"));
+		page.obligarclick(sig);
+		Select delir= new Select (driver.findElement(By.id("DeliveryServiceType")));
+		delir.selectByVisibleText("Env\u00edo Est\u00e1ndar");	
+		Assert.assertEquals(delir.getFirstSelectedOption().getText(),"Env\u00edo Est\u00e1ndar");
 		}
 	
+
+
+		@Test(groups={"Sales", "Nueva Venta", "Ola1"})
+		public void TS94699_Nueva_Venta_Modo_de_Entrega_Verificar_Solicitud_de_Domicilio_de_envio_Envio_Express(){
+			sb.BuscarCuenta(DNI, "34073329");
+			sb.acciondecontacto("catalogo");
+			boolean x = false;
+			sleep(15000);
+			List<WebElement> cam = driver.findElements(By.cssSelector(".slds-m-left--x-small.slds-button.slds-button--brand"));
+			for(WebElement c : cam ){	
+				if(c.getText().toLowerCase().equals("cambiar")){
+					c.click();
+				}
+			sleep(7000);	
+			List<WebElement> frame2 = driver.findElements(By.tagName("iframe"));
+			driver.switchTo().frame(frame2.get(0));
+			Select env = new Select (driver.findElement(By.id("DeliveryMethodSelection")));
+			env.selectByVisibleText("Delivery");
+			driver.findElement(By.id("SalesChannelConfiguration_nextBtn")).click();
+			sleep(10000);
+			driver.switchTo().defaultContent();
+			}
+			sb.elegirplan("Plan con Tarjeta Repro");
+			sb.continuar();
+			sleep(10000);
+			List<WebElement> cont = driver.findElements(By.cssSelector(".slds-button.slds-m-left--large.slds-button--brand.ta-button-brand"));
+				for(WebElement c : cont){
+					c.getText().equals("Continuar");
+						c.click();
+					
+				}
+			sleep(5000);
+			CustomerCare page = new CustomerCare(driver);
+			WebElement sig = driver.findElement(By.id("LineAssignment_nextBtn"));
+			page.obligarclick(sig);
+			Select delir= new Select (driver.findElement(By.id("DeliveryServiceType")));
+			delir.selectByVisibleText("Env\u00edo Express");	
+			Assert.assertEquals(delir.getFirstSelectedOption().getText(),"Env\u00edo Express");
+		}
 }
