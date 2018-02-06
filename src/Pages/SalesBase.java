@@ -402,7 +402,7 @@ for(WebElement e: btns){
 		
 }
  public void agregarplan(String plan){
-		try {Thread.sleep(50000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		try {Thread.sleep(30000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 		driver.findElement(By.cssSelector(".slds-picklist.slds-dropdown-trigger.slds-dropdown-trigger--click.slds-is-open")).click();
 		try {Thread.sleep(3000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 		List<WebElement> list = driver.findElements(By.className("slds-dropdown__item"));
