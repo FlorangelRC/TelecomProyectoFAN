@@ -587,5 +587,116 @@ public class Sales2 extends TestBase{
 		Assert.assertTrue(!a.equals(b));
 	}
 	
+	@Test(groups={"Sales", "Ventas", "Ola1"})  
+	public void TS94762_Ventas_Modo_De_Pago_General_Verificar_LOV_Modalidad_De_Pago() {
+		sb.BuscarCuenta(DNI, "34073329");
+		boolean DPF = false;
+		boolean E = false;
+		boolean TC = false;
+		sb.acciondecontacto("catalogo");
+		sleep(15000);
+		sb.elegirplan("Plan con Tarjeta Repro");
+		sb.continuar();
+		sleep(10000);
+		List<WebElement> cont = driver.findElements(By.cssSelector(".slds-button.slds-m-left--large.slds-button--brand.ta-button-brand"));
+			for(WebElement c : cont){
+				c.getText().equals("Continuar");
+					c.click();
+			}
+		sleep(5000);
+		CustomerCare page = new CustomerCare(driver);
+		WebElement sig = driver.findElement(By.id("LineAssignment_nextBtn"));
+		page.obligarclick(sig);
+		sleep(10000);
+		page.obligarclick(driver.findElement(By.id("ICCDAssignment_nextBtn")));
+		sleep(10000);
+		page.obligarclick(driver.findElement(By.id("InvoicePreview_nextBtn")));
+		sleep(10000);
+		driver.findElement(By.id("PaymentMethodRadio")).click();
+		sleep(4000);
+		List<WebElement> mediosP = driver.findElements(By.cssSelector(".slds-list__item.ng-binding.ng-scope"));
+		for (WebElement UnMP : mediosP) {
+			if(UnMP.getText().toLowerCase().contains("debito a proxima factura"))
+				DPF = true;
+			if (UnMP.getText().toLowerCase().contains("efectivo"))
+				E = true;
+			if (UnMP.getText().toLowerCase().contains("tarjeta de credito"))
+				TC = true;
+		}
+		Assert.assertTrue(DPF&&E&&TC);
+		
+	}
+	
+	@Test(groups={"Sales", "Ventas", "Ola1"})  //falta validar los campos porque los campos no son opcionales
+	public void TS94935_Ventas_Modo_De_Pago_Tarjeta_Verificar_Campos_Opcionales_Medio_De_Pago_TC() {
+		sb.BuscarCuenta(DNI, "34073329");
+		sb.acciondecontacto("catalogo");
+		sleep(15000);
+		sb.elegirplan("Plan con Tarjeta Repro");
+		sb.continuar();
+		sleep(10000);
+		List<WebElement> cont = driver.findElements(By.cssSelector(".slds-button.slds-m-left--large.slds-button--brand.ta-button-brand"));
+			for(WebElement c : cont){
+				c.getText().equals("Continuar");
+					c.click();
+			}
+		sleep(5000);
+		CustomerCare page = new CustomerCare(driver);
+		WebElement sig = driver.findElement(By.id("LineAssignment_nextBtn"));
+		page.obligarclick(sig);
+		sleep(10000);
+		page.obligarclick(driver.findElement(By.id("ICCDAssignment_nextBtn")));
+		sleep(10000);
+		page.obligarclick(driver.findElement(By.id("InvoicePreview_nextBtn")));
+		sleep(10000);
+		driver.findElement(By.id("PaymentMethodRadio")).click();
+		sleep(4000);
+		List<WebElement> mediosP = driver.findElements(By.cssSelector(".slds-list__item.ng-binding.ng-scope"));
+		for (WebElement UnMP : mediosP) {
+			if (UnMP.getText().toLowerCase().contains("tarjeta de credito"))
+				UnMP.click();
+		}
+		sleep(4000);
+		System.out.println(driver.findElement(By.id("CardBankingEntity")).getAttribute("required"));
+		Assert.assertTrue(false);
+		//Assert.assertTrue(driver.findElement(By.id("CardBankingEntity")).getAttribute("required"));
+	}
+	
+	@Test(groups={"Sales", "Ventas", "Ola1"})  //falta validar los campos porque el campo requerido no existe
+	public void TS94936_Ventas_Modo_De_Pago_Tarjeta_Verificar_Campos_requeridos_Medio_De_Pago_TC() {
+		sb.BuscarCuenta(DNI, "34073329");
+		sb.acciondecontacto("catalogo");
+		sleep(15000);
+		sb.elegirplan("Plan con Tarjeta Repro");
+		sb.continuar();
+		sleep(10000);
+		List<WebElement> cont = driver.findElements(By.cssSelector(".slds-button.slds-m-left--large.slds-button--brand.ta-button-brand"));
+			for(WebElement c : cont){
+				c.getText().equals("Continuar");
+					c.click();
+			}
+		sleep(5000);
+		CustomerCare page = new CustomerCare(driver);
+		WebElement sig = driver.findElement(By.id("LineAssignment_nextBtn"));
+		page.obligarclick(sig);
+		sleep(10000);
+		page.obligarclick(driver.findElement(By.id("ICCDAssignment_nextBtn")));
+		sleep(10000);
+		page.obligarclick(driver.findElement(By.id("InvoicePreview_nextBtn")));
+		sleep(10000);
+		driver.findElement(By.id("PaymentMethodRadio")).click();
+		sleep(4000);
+		List<WebElement> mediosP = driver.findElements(By.cssSelector(".slds-list__item.ng-binding.ng-scope"));
+		for (WebElement UnMP : mediosP) {
+			if (UnMP.getText().toLowerCase().contains("tarjeta de credito"))
+				UnMP.click();
+		}
+		sleep(5000);
+		driver.findElement(By.id("CreditCardData")).click();
+		sleep(1000);
+		Assert.assertTrue(false);
+		Assert.assertTrue(driver.findElement(By.id("CardBankingEntity")).getAttribute("required").equals("true"));
+		//Assert.assertTrue(driver.findElement(By.id("CardBankingEntity")).getAttribute("required"));
+	}
 	
 }
