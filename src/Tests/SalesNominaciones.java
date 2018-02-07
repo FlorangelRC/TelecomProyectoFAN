@@ -56,12 +56,12 @@ public class SalesNominaciones extends TestBase{
 		
 	}
 
-	@AfterMethod
+	//@AfterMethod
 	public void IceB() {
 		driver.navigate().refresh();
 	}
 	
-	@AfterClass
+	//@AfterClass
 	public void Exit() {
 		driver.quit();
 		sleep(2000);
@@ -72,11 +72,11 @@ public class SalesNominaciones extends TestBase{
 		CustomerCare CC = new CustomerCare(driver);
 		ContactSearch contact = new ContactSearch(driver);
 		boolean b = false;
-		contact.searchContact("DNI", "10000018", "femenino");
+		contact.searchContact2("DNI", "10000018", "femenino");
 		sleep(6000);
 		driver.findElement(By.cssSelector(".slds-input.form-control.ng-pristine.ng-untouched.ng-valid.ng-empty")).sendKeys("algoaqui@yahoo.com.ar");
 		CC.obligarclick(driver.findElement(By.id("Contact_nextBtn")));
-		sleep(3000);
+		sleep(5000);
 		List<WebElement> vali = driver.findElements(By.cssSelector(".slds-page-header__title.vlc-slds-page-header__title.slds-truncate.ng-binding"));
 		for(WebElement v : vali){
 			if(v.getText().toLowerCase().contains("validaci\u00f3n de identidad")){
@@ -92,7 +92,8 @@ public class SalesNominaciones extends TestBase{
 		CustomerCare CC = new CustomerCare(driver);
 		ContactSearch contact = new ContactSearch(driver);
 		boolean b = false;
-		contact.searchContact("DNI", "1600000", "femenino");
+		sleep(5000);
+		contact.searchContact2("DNI", "1600000", "femenino");
 		sleep(6000);
 		CC.obligarclick(driver.findElement(By.id("Contact_nextBtn")));
 		sleep(3000);
@@ -141,7 +142,7 @@ public class SalesNominaciones extends TestBase{
 	@Test(groups = "Sales")//si
 	public void TS95078_Nominacion_Argentino_Validar_metodo_Ident_por_DNI(){
 		ContactSearch contact = new ContactSearch(driver);
-		contact.searchContact("DNI", "10000019", "masculino");
+		contact.searchContact2("DNI", "10000019", "masculino");
 		sleep(5000);
 		driver.findElement(By.cssSelector(".slds-input.form-control.ng-pristine.ng-untouched.ng-valid.ng-empty")).click();
 		sleep(2000);
@@ -157,7 +158,8 @@ public class SalesNominaciones extends TestBase{
 		}
 		driver.findElement(By.id("ValidationMethod_nextBtn")).click();
 		sleep(7000);
-		driver.findElement(By.id("FileDocumentImage")).sendKeys("C:\\Users\\Sofia Chardin\\Desktop\\DNI.png");
+		driver.findElement(By.id("FileDocumentImage")).sendKeys("C:\\Users\\florangel\\Downloads\\mapache.jpg");
+		sleep(2000);
 		driver.findElement(By.id("DocumentMethod_nextBtn")).click();
 		sleep(7000);
 		boolean b = false;
@@ -261,7 +263,7 @@ public class SalesNominaciones extends TestBase{
 		SalesBase SB = new SalesBase(driver);
 		CustomerCare CC = new CustomerCare(driver);
 		ContactSearch contact = new ContactSearch(driver);
-		contact.searchContact("Pasaporte", "1324567", "femenino");
+		contact.searchContact2("Pasaporte", "1324567", "femenino");
 		sleep(6000);
 		driver.findElement(By.id("PermanencyDueDate")).sendKeys("30/06/2018");
 		CC.obligarclick(driver.findElement(By.id("Contact_nextBtn")));
@@ -292,7 +294,7 @@ public class SalesNominaciones extends TestBase{
 		SalesBase SB = new SalesBase(driver);
 		CustomerCare CC = new CustomerCare(driver);
 		ContactSearch contact = new ContactSearch(driver);
-		contact.searchContact("Pasaporte", "1324567", "femenino");
+		contact.searchContact2("Pasaporte", "1324567", "femenino");
 		sleep(6000);
 		driver.findElement(By.id("PermanencyDueDate")).sendKeys("30/06/2021");
 		assertTrue(driver.findElement(By.cssSelector(".message.description.ng-binding.ng-scope")).getText().contains("La permanencia no puede ser mayor a 2 años a partir de la fecha o menor a la fecha actual"));
@@ -311,7 +313,7 @@ public class SalesNominaciones extends TestBase{
 		SalesBase SB = new SalesBase(driver);
 		CustomerCare CC = new CustomerCare(driver);
 		ContactSearch contact = new ContactSearch(driver);
-		contact.searchContact("Pasaporte", "1324567", "femenino");
+		contact.searchContact2("Pasaporte", "1324567", "femenino");
 		sleep(6000);
 		driver.findElement(By.id("PermanencyDueDate")).sendKeys("30/06/2018");
 		//driver.findElement(By.cssSelector(".slds-input.form-control.ng-pristine.ng-untouched.ng-valid.ng-empty")).sendKeys("algoaqui@yahoo.com.ar");
@@ -349,9 +351,12 @@ public class SalesNominaciones extends TestBase{
 		Random aleatorio = new Random(System.currentTimeMillis());
 		aleatorio.setSeed(System.currentTimeMillis());
 		int intAletorio = aleatorio.nextInt(8999999)+1000000;
-		contact.searchContact("Pasaporte", Integer.toString(intAletorio), "femenino");
+		contact.searchContact2("Pasaporte", Integer.toString(intAletorio), "femenino");
 		sleep(6000);
 		driver.findElement(By.id("PermanencyDueDate")).sendKeys("30/06/2018");
+		driver.findElement(By.id("FirstName")).sendKeys("Malan");
+		driver.findElement(By.id("LastName")).sendKeys("Faretto");
+		driver.findElement(By.id("Birthdate")).sendKeys("30/06/1980");
 		//driver.findElement(By.cssSelector(".slds-input.form-control.ng-pristine.ng-untouched.ng-valid.ng-empty")).sendKeys("algoaqui@yahoo.com.ar");
 		CC.obligarclick(driver.findElement(By.id("Contact_nextBtn")));
 		sleep(5000);

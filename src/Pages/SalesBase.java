@@ -362,10 +362,10 @@ Assert.assertTrue(driver.findElement(By.cssSelector(".slds-page-header__title.vl
 		try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 	List<WebElement> btns = driver.findElements(By.cssSelector(".slds-button.slds-button.slds-button--icon"));
 for(WebElement e: btns){
-	if(e.getText().toLowerCase().equals(accion)){
+	if(e.getText().toLowerCase().equals(accion)){ 
 		e.click();
 		break;}}
- }
+ } 
  
  public void crearnuevocliente(String nombre, String apellido, String nacimiento){
 		try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
@@ -402,7 +402,7 @@ for(WebElement e: btns){
 		
 }
  public void agregarplan(String plan){
-		try {Thread.sleep(50000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		try {Thread.sleep(30000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 		driver.findElement(By.cssSelector(".slds-picklist.slds-dropdown-trigger.slds-dropdown-trigger--click.slds-is-open")).click();
 		try {Thread.sleep(3000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 		List<WebElement> list = driver.findElements(By.className("slds-dropdown__item"));

@@ -97,7 +97,7 @@ public class Marketing_Mattu extends TestBase{
 	}
 	@BeforeMethod
 	public void go() throws Exception {
-		try {Thread.sleep(10000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		mMarketing.sleepMedium(0);
 		BasePage cambioFrame=new BasePage();
 		driver.switchTo().defaultContent();
 		driver.switchTo().frame(cambioFrame.getFrameForElement(driver, By.cssSelector(".slds-panel__section.slds-p-around--small")));
@@ -485,6 +485,24 @@ public class Marketing_Mattu extends TestBase{
 	}
 	
 	//-------------------------------------------------------------------------------------------------
+	//TCC = 24
+	@Test(groups = {"Marketing","Ola1"})
+	public void TS98042_Numero_de_caso_Alta_CP() {
+		mMarketing.estadoAltaBaja("Alta");
+		String sCaso = mMarketing.darDeAltaCP();
+		Assert.assertTrue(!sCaso.isEmpty());
+	}
+	
+	//-------------------------------------------------------------------------------------------------
+	//TCC = 24
+	@Test(groups = {"Marketing","Ola1"})
+	public void TS98044_Caso_cerrado_Alta_CP() {
+		mMarketing.estadoAltaBaja("Alta");
+		String sCaso = mMarketing.darDeAltaCP();
+		Assert.assertTrue(mMarketing.corroborarCasoCerrado(sCaso));
+	}
+	
+	//-------------------------------------------------------------------------------------------------
 	//TCC = 25
 	@Test(groups = {"Marketing", "Ola1"})
 	public void TS98047_No_visualizar_error_Fraude_Baja_CP() {
@@ -514,6 +532,72 @@ public class Marketing_Mattu extends TestBase{
 		mMarketing.seleccionarCuenta("consumerAccounts");
 		mMarketing.seleccionarCuenta("businessAccounts");
 		Assert.assertTrue(true);
+	}
+	
+	//-------------------------------------------------------------------------------------------------
+	//TCC = 24
+	@Test(groups = {"Marketing","Ola1"})
+	public void TS98043_Caso_creado_Alta_CP() {
+		mMarketing.estadoAltaBaja("Alta");
+		List<String> sCuentasSeleccionadas = new ArrayList<String>();
+		WebElement wBody = driver.findElement(By.id("consumerAccounts")).findElement(By.tagName("table"));
+		List<WebElement> wCuentasConsumer = mMarketing.traerColumnaElement(wBody, 2, 1);
+		wBody = driver.findElement(By.id("businessAccounts")).findElement(By.tagName("table"));
+		List<WebElement> wCuentasBusiness = mMarketing.traerColumnaElement(wBody, 2, 1);
+		
+		for(WebElement wAux : wCuentasConsumer) {
+			sCuentasSeleccionadas.add(wAux.getText());
+		}
+		
+		for(WebElement wAux : wCuentasBusiness) {
+			sCuentasSeleccionadas.add(wAux.getText());
+		}
+		
+		String sCaso = mMarketing.darDeAltaCP();
+		Assert.assertTrue(mMarketing.corroborarCasoCerrado(sCaso));
+		WebElement wTable = driver.findElement(By.id("Case_body"));
+		wBody = wTable.findElement(By.tagName("table"));
+		List<WebElement> wAsuntoCaso = mMarketing.traerColumnaElement(wBody, 5, 2);
+		wAsuntoCaso.get(0).click();
+		mMarketing.sleepShort(3);
+		BasePage cambioFrame=new BasePage();
+		driver.switchTo().defaultContent();
+		driver.switchTo().frame(cambioFrame.getFrameForElement(driver, By.id("cas15_ileinner")));
+		WebElement wDescripcion = driver.findElement(By.id("cas15_ileinner"));
+		
+		for (String sAux : sCuentasSeleccionadas) {
+			Assert.assertTrue(wDescripcion.getText().contains(sAux));
+		}
+	}
+	
+	//-------------------------------------------------------------------------------------------------
+	//TCC = 24
+	@Test(groups = {"Marketing","Ola1"})
+	public void TS98053_Visualizar_cuentas_no_adheridas_Baja_CP() {
+		mMarketing.estadoAltaBaja("Alta");
+		mMarketing.closeActiveTab();
+		mMarketing.sleepMedium(0);
+		BasePage cambioFrame=new BasePage();
+		driver.switchTo().defaultContent();
+		driver.switchTo().frame(cambioFrame.getFrameForElement(driver, By.cssSelector(".slds-panel__section.slds-p-around--small")));
+		mMarketing.clubPersonal("Baja");
+		driver.switchTo().defaultContent();
+		driver.switchTo().frame(cambioFrame.getFrameForElement(driver, By.id("consumerAccounts")));
+		WebElement wConsumerBox = driver.findElement(By.id("consumerAccounts"));
+		WebElement wConsumerTable = wConsumerBox.findElement(By.tagName("tbody"));
+		List<WebElement> wConsumerTableRows = wConsumerTable.findElements(By.tagName("tr"));
+		WebElement wCTCheckBox = wConsumerTableRows.get(0).findElement(By.tagName("th"));
+		WebElement wCTCheckBoxLabel = wCTCheckBox.findElement(By.tagName("label"));
+		WebElement wCTCheckBoxDisable = wCTCheckBoxLabel.findElement(By.tagName("input"));
+		Assert.assertTrue(wCTCheckBoxDisable.getAttribute("ng-disabled").equals("true"));
+		
+		wConsumerBox = driver.findElement(By.id("businessAccounts"));
+		wConsumerTable = wConsumerBox.findElement(By.tagName("tbody"));
+		wConsumerTableRows = wConsumerTable.findElements(By.tagName("tr"));
+		wCTCheckBox = wConsumerTableRows.get(0).findElement(By.tagName("th"));
+		wCTCheckBoxLabel = wCTCheckBox.findElement(By.tagName("label"));
+		wCTCheckBoxDisable = wCTCheckBoxLabel.findElement(By.tagName("input"));
+		Assert.assertTrue(wCTCheckBoxDisable.getAttribute("ng-disabled").equals("true"));
 	}
 	
 	//-------------------------------------------------------------------------------------------------
