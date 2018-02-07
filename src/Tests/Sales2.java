@@ -1,10 +1,12 @@
 package Tests;
 
 import java.util.List;
+import java.util.NoSuchElementException;
 import java.util.Random;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
+import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.ui.Select;
@@ -204,12 +206,52 @@ public class Sales2 extends TestBase{
 		Assert.assertTrue(false);
 	}
 	
-	@Test(groups={"Sales", "Ventas", "Ola1"})  //Falta terminar los pasos despues del carrito
+	@Test(groups={"Sales", "Ventas", "Ola1"})  
 	public void TS94650_Ventas_NumeroOrden_Verificar_Orden_de_Venta_Abierta_Seleccionar_un_producto() {
-		sb.BuscarCuenta(DNI, "11111111");
+		sb.BuscarCuenta(DNI, "34073329");
 		sb.acciondecontacto("catalogo");
-		sb.agregarplan("plan con tarjeta");
-		Assert.assertTrue(false);
+		sleep(15000);
+		List<WebElement> cam = driver.findElements(By.cssSelector(".slds-m-left--x-small.slds-button.slds-button--brand"));
+			for(WebElement c : cam ){	
+				if(c.getText().toLowerCase().equals("cambiar")){
+				c.click();
+			}
+		sleep(7000);	
+		List<WebElement> frame2 = driver.findElements(By.tagName("iframe"));
+		driver.switchTo().frame(frame2.get(0));
+		Select env = new Select (driver.findElement(By.id("DeliveryMethodSelection")));
+		env.selectByVisibleText("Store Pick Up");
+		sleep(2000);
+		Select sta = new Select (driver.findElement(By.id("State")));
+		sta.selectByVisibleText("Ciudad Aut\u00f3noma de Buenos Aires");
+		sleep(2000);
+		Select cit = new Select(driver.findElement(By.id("City")));
+		cit.selectByVisibleText("CIUD AUTON D BUENOS AIRES");
+		sleep(3000);
+		driver.findElement(By.id("Store")).click();
+		driver.findElements(By.cssSelector(".slds-list__item.ng-binding.ng-scope")).get(1).click();
+		sleep(2000);
+		driver.findElement(By.id("SalesChannelConfiguration_nextBtn")).click();
+		sleep(10000);
+		driver.switchTo().defaultContent();
+		}
+		sb.elegirplan("Plan con Tarjeta Repro");
+		sb.continuar();
+		sleep(10000);
+		List<WebElement> cont = driver.findElements(By.cssSelector(".slds-button.slds-m-left--large.slds-button--brand.ta-button-brand"));
+			for(WebElement c : cont){
+				c.getText().equals("Continuar");
+					c.click();
+			}
+		sleep(5000);
+		CustomerCare page = new CustomerCare(driver);
+		WebElement sig = driver.findElement(By.id("LineAssignment_nextBtn"));
+		page.obligarclick(sig);
+		sleep(7000);
+		Assert.assertFalse(driver.findElement(By.id("DeliveryMethod")).isEnabled());
+		
+	
+		
 	}
 	
 	@Test(groups={"Sales", "Ventas", "Ola1"})  //Falta terminar los pasos despues del carrito
