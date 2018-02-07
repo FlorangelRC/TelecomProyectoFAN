@@ -386,7 +386,7 @@ for(WebElement e: btns){
  }
  
  public void elegirplan(String plan){
-		try {Thread.sleep(40000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		try {Thread.sleep(15000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 		driver.findElement(By.id("cpq-custom-view-button")).click();
 		try {Thread.sleep(3000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 		List<WebElement> list = driver.findElements(By.className("slds-dropdown__item"));

@@ -5,6 +5,7 @@ import java.util.Random;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
+import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.ui.Select;
@@ -188,20 +189,51 @@ public class Sales2 extends TestBase{
 		Assert.assertTrue(false);
 	}
 	
-	@Test(groups={"Sales", "Ventas", "Ola1"})  //Falta terminar los pasos despues del carrito
+	@Test(groups={"Sales", "Ventas", "Ola1"})
 	public void TS94652_Ventas_NumeroOrden_Verificar_Orden_de_Venta_Abierta_Modo_de_Entrega() {
-		sb.BuscarCuenta(DNI, "11111111");
+		sb.BuscarCuenta(DNI, "34073329");
 		sb.acciondecontacto("catalogo");
-		sb.agregarplan("plan con tarjeta");
-		Assert.assertTrue(false);
+		sleep(15000);
+		driver.findElement(By.cssSelector(".slds-m-left--x-small.slds-button.slds-button--brand")).click();
+		sleep(7000);
+		driver.switchTo().frame(cambioFrame(driver, By.id("DeliveryMethodSelection")));
+		Select env = new Select (driver.findElement(By.id("DeliveryMethodSelection")));
+		env.selectByVisibleText("Delivery");
+		driver.findElement(By.id("SalesChannelConfiguration_nextBtn")).click();
+		sleep(10000);
+		driver.switchTo().defaultContent();
+		sb.elegirplan("Plan con Tarjeta Repro");
+		sleep(15000);
+		driver.findElement(By.cssSelector(".slds-button.slds-m-left--large.slds-button--brand.ta-button-brand")).click();
+		sleep(15000);
+		driver.findElement(By.id("LineAssignment_nextBtn")).click();
+		sleep(10000);
+		List <WebElement> num = driver.findElements(By.className("slds-form-element__control"));
+		boolean a = false;
+		for (WebElement x : num) {
+			if (x.getText().contains("Nro. orden:")) {
+				a = true;
+			}
+		}
+		Assert.assertTrue(a);
 	}
 	
-	@Test(groups={"Sales", "Ventas", "Ola1"})  //Falta terminar los pasos despues del carrito
+	@Test(groups={"Sales", "Ventas", "Ola1"})
 	public void TS94651_Ventas_NumeroOrden_Verificar_Orden_de_Venta_Abierta_Seleccion_de_Linea() {
-		sb.BuscarCuenta(DNI, "11111111");
+		sb.BuscarCuenta(DNI, "34073329");
 		sb.acciondecontacto("catalogo");
-		sb.agregarplan("plan con tarjeta");
-		Assert.assertTrue(false);
+		sb.elegirplan("Plan con Tarjeta Repro");
+		sleep(15000);
+		driver.findElement(By.cssSelector(".slds-button.slds-m-left--large.slds-button--brand.ta-button-brand")).click();
+		sleep(15000);
+		List <WebElement> num = driver.findElements(By.className("slds-form-element__control"));
+		boolean a = false;
+		for (WebElement x : num) {
+			if (x.getText().contains("Nro. orden:")) {
+				a = true;
+			}
+		}
+		Assert.assertTrue(a);
 	}
 	
 	@Test(groups={"Sales", "Ventas", "Ola1"})  //Falta terminar los pasos despues del carrito
@@ -394,6 +426,124 @@ public class Sales2 extends TestBase{
 		WebElement verdni = driver.findElement(By.xpath("//*[@id=\"tab-scoped-3\"]/section/div/table/tbody/tr/td[3]"));
 		Assert.assertTrue(b);
 		Assert.assertTrue(verdni.getText().toLowerCase().contains(a));
+	}
+	
+	@Test(groups={"Sales", "Ventas", "Ola1"})
+	public void TS94696_Nueva_Venta_Modo_de_Entrega_Verificar_LOV_Tipo_de_Delivery() {
+		sb.BuscarCuenta(DNI, "34073329");
+		sb.acciondecontacto("catalogo");
+		sleep(15000);
+		driver.findElement(By.cssSelector(".slds-m-left--x-small.slds-button.slds-button--brand")).click();
+		sleep(7000);
+		driver.switchTo().frame(cambioFrame(driver, By.id("DeliveryMethodSelection")));
+		Select env = new Select (driver.findElement(By.id("DeliveryMethodSelection")));
+		env.selectByVisibleText("Delivery");
+		driver.findElement(By.id("SalesChannelConfiguration_nextBtn")).click();
+		sleep(10000);
+		driver.switchTo().defaultContent();
+		sb.elegirplan("Plan con Tarjeta Repro");
+		sleep(15000);
+		driver.findElement(By.cssSelector(".slds-button.slds-m-left--large.slds-button--brand.ta-button-brand")).click();
+		sleep(15000);
+		driver.findElement(By.id("LineAssignment_nextBtn")).click();
+		sleep(10000);
+		driver.findElement(By.id("DeliveryServiceType")).click();
+		Assert.assertTrue(driver.findElement(By.xpath("//*[text() = 'Env\u00edo Est\u00e1ndar']")).isDisplayed());
+		Assert.assertTrue(driver.findElement(By.xpath("//*[text() = 'Env\u00edo Express']")).isDisplayed());
+		Assert.assertTrue(driver.findElement(By.xpath("//*[text() = 'Retiro en Sucursal de Correo']")).isDisplayed());
+		
+	}
+	
+	@Test(groups={"Sales", "Ventas", "Ola1"})
+	public void TS94690_Nueva_Venta_Modo_de_Entrega_Verificar_que_no_se_puede_cambiar_el_Modo_de_Entrega_Delivery() {
+		sb.BuscarCuenta(DNI, "34073329");
+		sb.acciondecontacto("catalogo");
+		sleep(15000);
+		driver.findElement(By.cssSelector(".slds-m-left--x-small.slds-button.slds-button--brand")).click();
+		sleep(7000);
+		driver.switchTo().frame(cambioFrame(driver, By.id("DeliveryMethodSelection")));
+		Select env = new Select (driver.findElement(By.id("DeliveryMethodSelection")));
+		env.selectByVisibleText("Delivery");
+		driver.findElement(By.id("SalesChannelConfiguration_nextBtn")).click();
+		sleep(10000);
+		driver.switchTo().defaultContent();
+		sb.elegirplan("Plan con Tarjeta Repro");
+		sleep(15000);
+		driver.findElement(By.cssSelector(".slds-button.slds-m-left--large.slds-button--brand.ta-button-brand")).click();
+		sleep(15000);
+		driver.findElement(By.id("LineAssignment_nextBtn")).click();
+		sleep(10000);
+		WebElement mde = driver.findElement(By.id("DeliveryMethod"));
+		Assert.assertTrue(mde.getAttribute("disabled").equals("true"));
+	}
+	
+	@Test(groups={"Sales", "Ventas", "Ola1"})
+	public void TS94691_Nueva_Venta_Modo_de_Entrega_Verificar_que_no_se_puede_cambiar_el_Modo_de_Entrega_Store_Pick_Up() {
+		sb.BuscarCuenta(DNI, "34073329");
+		sb.acciondecontacto("catalogo");
+		sleep(15000);
+		driver.findElement(By.cssSelector(".slds-m-left--x-small.slds-button.slds-button--brand")).click();
+		sleep(7000);
+		driver.switchTo().frame(cambioFrame(driver, By.id("DeliveryMethodSelection")));
+		Select env = new Select (driver.findElement(By.id("DeliveryMethodSelection")));
+		env.selectByVisibleText("Store Pick Up");
+		Select prov = new Select (driver.findElement(By.id("State")));
+		prov.selectByVisibleText("Ciudad Aut\u00f3noma de Buenos Aires");
+		Select loc = new Select (driver.findElement(By.id("City")));
+		loc.selectByVisibleText("CIUD AUTON D BUENOS AIRES");
+		driver.findElement(By.id("Store")).click();
+		driver.findElements(By.cssSelector(".slds-list__item.ng-binding.ng-scope")).get(1).click();
+		driver.findElement(By.id("SalesChannelConfiguration_nextBtn")).click();
+		sleep(10000);
+		driver.switchTo().defaultContent();
+		sb.elegirplan("Plan con Tarjeta Repro");
+		sleep(15000);
+		driver.findElement(By.cssSelector(".slds-button.slds-m-left--large.slds-button--brand.ta-button-brand")).click();
+		sleep(15000);
+		driver.findElement(By.id("LineAssignment_nextBtn")).click();
+		sleep(10000);
+		WebElement mde = driver.findElement(By.id("DeliveryMethod"));
+		Assert.assertTrue(mde.getAttribute("disabled").equals("true"));
+	}
+	
+	@Test(groups={"Sales", "Ventas", "Ola1"})
+	public void TS94694_Nueva_Venta_Modo_de_Entrega_Verificar_que_se_habilite_Tipo_de_Delivery() {
+		sb.BuscarCuenta(DNI, "34073329");
+		sb.acciondecontacto("catalogo");
+		sleep(15000);
+		driver.findElement(By.cssSelector(".slds-m-left--x-small.slds-button.slds-button--brand")).click();
+		sleep(7000);
+		driver.switchTo().frame(cambioFrame(driver, By.id("DeliveryMethodSelection")));
+		Select env = new Select (driver.findElement(By.id("DeliveryMethodSelection")));
+		env.selectByVisibleText("Delivery");
+		driver.findElement(By.id("SalesChannelConfiguration_nextBtn")).click();
+		sleep(10000);
+		driver.switchTo().defaultContent();
+		sb.elegirplan("Plan con Tarjeta Repro");
+		sleep(15000);
+		driver.findElement(By.cssSelector(".slds-button.slds-m-left--large.slds-button--brand.ta-button-brand")).click();
+		sleep(15000);
+		driver.findElement(By.id("LineAssignment_nextBtn")).click();
+		sleep(10000);
+		Assert.assertTrue(driver.findElement(By.id("DeliveryServiceType")).isEnabled());
+	}
+	
+	@Test(groups={"Sales", "Ventas", "Ola1"})
+	public void TS94763_Ventas_Entregas_General_Modificar_el_lugar_de_entrega() {
+		sb.BuscarCuenta(DNI, "11111111");
+		sb.acciondecontacto("catalogo");
+		sb.agregarplan("plan con tarjeta");
+		sleep(15000);
+		String a = driver.findElement(By.cssSelector(".slds-col.taChangeDeliveryMethod.slds-text-body--small.slds-m-left--large")).getText();
+		driver.findElement(By.cssSelector(".slds-m-left--x-small.slds-button.slds-button--brand")).click();
+		sleep(7000);
+		driver.switchTo().frame(cambioFrame(driver, By.id("DeliveryMethodSelection")));
+		Select env = new Select (driver.findElement(By.id("DeliveryMethodSelection")));
+		env.selectByVisibleText("Delivery");
+		driver.findElement(By.id("SalesChannelConfiguration_nextBtn")).click();
+		sleep(7000);
+		String b = driver.findElement(By.cssSelector(".slds-col.taChangeDeliveryMethod.slds-text-body--small.slds-m-left--large")).getText();
+		Assert.assertTrue(!a.equals(b));
 	}
 	
 	
