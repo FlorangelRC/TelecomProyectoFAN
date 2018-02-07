@@ -206,7 +206,7 @@ public class Sales2 extends TestBase{
 		sleep(5000);
 		IrA.CajonDeAplicaciones.ConsolaFAN();
 		CustomerCare cc = new CustomerCare(driver);
-		cc.cerrarTodasLasPesta�as();
+		sb.cerrarTodasLasPestanias();
 		cc.elegirCuenta("aaaaRaul Care");
 		Assert.assertTrue(false);
 	}
@@ -219,7 +219,7 @@ public class Sales2 extends TestBase{
 		sleep(5000);
 		IrA.CajonDeAplicaciones.ConsolaFAN();
 		CustomerCare cc = new CustomerCare(driver);
-		cc.cerrarTodasLasPesta�as();
+		sb.cerrarTodasLasPestanias();
 		cc.elegirCuenta("aaaaRaul Care");
 		driver.switchTo().frame(cambioFrame(driver, By.cssSelector(".slds-media.slds-media--timeline.slds-timeline__media--custom-custom91")));
 		List <WebElement> gest = driver.findElements(By.cssSelector(".slds-media.slds-media--timeline.slds-timeline__media--custom-custom91"));
@@ -244,7 +244,7 @@ public class Sales2 extends TestBase{
 		sleep(5000);
 		IrA.CajonDeAplicaciones.ConsolaFAN();
 		CustomerCare cc = new CustomerCare(driver);
-		cc.cerrarTodasLasPesta�as();
+		sb.cerrarTodasLasPestanias();
 		cc.elegirCuenta("aaaaRaul Care");
 		WebElement nv = driver.findElement(By.cssSelector(".console-card.open"));
 		Assert.assertTrue(nv.getText().toLowerCase().contains("nueva venta"));

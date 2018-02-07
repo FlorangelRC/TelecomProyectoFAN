@@ -169,6 +169,9 @@ final WebDriver driver;
 	@FindBy(how=How.ID, using="SearchClientDocumentNumber")
 	private WebElement DNI;
 	
+	@FindBy(css = ".x-plain-header.sd_primary_tabstrip.x-unselectable .x-tab-strip-closable")
+	private List<WebElement> pestaniasPrimarias;
+	
 public SalesBase(WebDriver driver){
 		this.driver = driver;
         PageFactory.initElements(driver, this);
@@ -730,7 +733,14 @@ try{	driver.findElement(By.id("alert-ok-button")).click();	} catch (NoSuchElemen
 		public void refrescar(WebDriver driver) {
 			driver.navigate().refresh();
 		}
+		
+		public void cerrarTodasLasPestanias() {
+			driver.switchTo().defaultContent();
+			if (pestaniasPrimarias.size() > 0) {
+				for (WebElement t : pestaniasPrimarias) {
+						WebElement btn_cerrar = t.findElement(By.className("x-tab-strip-close"));
+						((JavascriptExecutor) driver).executeScript("arguments[0].click();", btn_cerrar);	
+				}
+			}
+		}
  }
-
- //asd
-
