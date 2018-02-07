@@ -131,7 +131,7 @@ public class Sales2 extends TestBase{
 		}
 	
 	@Test(groups={"Sales", "AltaDeContacto", "Ola1"})
-	public void TS94830_Alta_De_Contacto_Busqueda_Verificar_Accion_De_Ver_Detalle_De_Contacto(){
+	public void TS94880_Alta_De_Contacto_Busqueda_Verificar_Accion_De_Ver_Detalle_De_Contacto(){//dentro del ver detalles no se muestran las opciones de actualizar ni lanzar carrito
 		SalesBase SB = new SalesBase(driver);
 		SB.BuscarCuenta(DNI, "34073329");
 		driver.findElement(By.id("tab-scoped-3__item")).click();
