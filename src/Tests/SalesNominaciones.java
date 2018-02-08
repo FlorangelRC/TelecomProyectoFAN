@@ -7,6 +7,7 @@ import java.util.ArrayList;
 import java.util.Date;
 
 import java.util.List;
+import java.util.NoSuchElementException;
 import java.util.Random;
 
 import org.openqa.selenium.By;
@@ -34,7 +35,7 @@ public class SalesNominaciones extends TestBase{
 		try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 		HomeBase homePage = new HomeBase(driver);
 		try {Thread.sleep(6000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
-	    String a = driver.findElement(By.id("tsidLabel")).getText();
+	    String a = driver.findElement(By.id("tsidLabel")).getText(); 
 	    if (a.contains("Ventas")){}
 	    else {
 	    	homePage.switchAppsMenu();
@@ -46,11 +47,12 @@ public class SalesNominaciones extends TestBase{
 		SalesBase SB = new SalesBase(driver);
 		SB.BuscarAvanzada("Cliente", "Wholesale", "", "", "");
 		WebElement cli = driver.findElement(By.id("tab-scoped-1"));
-		if (cli.getText().contains("Cliente Wholesale")) {
-			cli.click();
+		if (cli.findElement(By.tagName("tbody")).findElement(By.tagName("tr")).findElement(By.tagName("div")).getText().equals("Cliente Wholesale")) {
+			cli.findElement(By.tagName("tbody")).findElement(By.tagName("tr")).click();
 		}
 		sleep(3000);
-		WebElement cua = driver.findElement(By.id("tab-scoped-1")).findElement(By.tagName("tbody")).findElements(By.tagName("tr")).get(1).findElements(By.tagName("td")).get(6).findElement(By.tagName("svg"));
+		WebElement cua = driver.findElement(By.id("tab-scoped-1")).findElement(By.tagName("tbody")).findElements(By.tagName("tr")).get(2).findElements(By.tagName("td")).get(6).findElement(By.tagName("svg"));
+		System.out.println("1: "+driver.findElement(By.id("tab-scoped-1")).findElement(By.tagName("tbody")).findElements(By.tagName("tr")).get(2).findElements(By.tagName("td")).get(1).getText());
 		cua.click();
 		sleep(10000);
 		
@@ -67,7 +69,7 @@ public class SalesNominaciones extends TestBase{
 		sleep(2000);
 	}
 	
-	@Test(groups = "Sales") //si 215 213 078 135 094 114 119 118 157
+	//@Test(groups = "Sales") //si 215 213 078 135 094 114 119 118 157
 	  public void TS95215_Nominacion_Argentino_Nominar_personas_mayores_a_16_anios_cliente_mayor_de_edad_con_linea_existente_plan_repro(){
 		CustomerCare CC = new CustomerCare(driver);
 		ContactSearch contact = new ContactSearch(driver);
@@ -87,7 +89,7 @@ public class SalesNominaciones extends TestBase{
 		Assert.assertTrue(b);
 	}
 	
-	@Test(groups = "Sales")
+	//@Test(groups = "Sales")
 	public void TS95213_Nominacion_Argentino_Nominar_personas_mayores_a_16_anios_cliente_mayor_de_edad_sin_linea_existente_plan_repro(){
 		CustomerCare CC = new CustomerCare(driver);
 		ContactSearch contact = new ContactSearch(driver);
@@ -139,7 +141,7 @@ public class SalesNominaciones extends TestBase{
 		WebElement lis = driver.findElement(By.id("tab-scoped-2")).findElement(By.tagName("div")).findElement(By.tagName("tbody"));
 		System.out.println(lis.getSize());
 	}
-	@Test(groups = "Sales")//si
+	//@Test(groups = "Sales")//si
 	public void TS95078_Nominacion_Argentino_Validar_metodo_Ident_por_DNI(){
 		ContactSearch contact = new ContactSearch(driver);
 		contact.searchContact2("DNI", "10000019", "masculino");
@@ -187,7 +189,7 @@ public class SalesNominaciones extends TestBase{
 		SB.seleccionarMetodoValidacion("DOC");
 	}
 	
-	@Test(groups = "Sales")//si
+	//@Test(groups = "Sales")//si
 	public void TS95135_Nominacion_Argentino_Verificar_solicitud_de_datos_para_la_nominacion() {
 		sleep(5000);
 		boolean a = false;
@@ -203,18 +205,27 @@ public class SalesNominaciones extends TestBase{
 	}
 	
 	//***************************************************************************************************************************
-	//@Test(groups = "Sales")
-	public void TS95140_Nominacion_Argentino_Verificar_creacion_de_la_cuenta() {
+	@Test(groups = "Sales")
+	public void TS95140_Nominacion_Argentino_Verificar_creacion_de_la_cuenta() { 
 		ContactSearch contact = new ContactSearch(driver);
 		SalesBase SB = new SalesBase(driver);
-		contact.searchContact("DNI", "10000019", "masculino");
+		/*WebElement cua = driver.findElement(By.id("tab-scoped-1")).findElement(By.tagName("tbody")).findElements(By.tagName("tr")).get(26).findElements(By.tagName("td")).get(6).findElement(By.tagName("svg"));
+		System.out.println("1: "+driver.findElement(By.id("tab-scoped-1")).findElement(By.tagName("tbody")).findElements(By.tagName("tr")).get(26).findElements(By.tagName("td")).get(1).getText());
+		cua.click();
+		sleep(10000);*/
+		contact.searchContact2("DNI", "10000024", "femenino");
 		contact.ingresarMail("asdads@gmail.com", "si");
 		contact.tipoValidacion("documento");
-		contact.subirArchivo("C:\\Users\\Nicolas\\Desktop\\descarga.jpg", "si");
+		contact.subirArchivo("C:\\Users\\florangel\\Downloads\\mapache.jpg", "si");
 		BasePage bp = new BasePage(driver);
 		bp.setSimpleDropdown(driver.findElement(By.id("ImpositiveCondition")), "IVA Consumidor Final");
 		SB.Crear_DomicilioLegal("Buenos Aires", "aba", "falsa", "", "1000", "", "", "1549");
 		sleep(20000);
+		driver.findElement(By.id("Step_Error_Huawei_S202_nextBtn")).click();
+		sleep(8000);
+		try {driver.findElement(By.id("Step_Error_Huawei_S015_nextBtn")).click();
+		}catch(NoSuchElementException ex1) {}
+		sleep(8000);
 		List <WebElement> element = driver.findElements(By.cssSelector(".slds-form-element.vlc-flex.vlc-slds-text-block.vlc-slds-rte.ng-pristine.ng-valid.ng-scope"));
 		boolean a = false;
 		for (WebElement x : element) {
@@ -223,6 +234,9 @@ public class SalesNominaciones extends TestBase{
 			}
 		}
 		Assert.assertTrue(a);
+		driver.findElement(By.id("FinishProcess_nextBtn")).click();
+		
+		
 	}
 	
 	//@Test(groups = "Sales")
@@ -257,7 +271,7 @@ public class SalesNominaciones extends TestBase{
 		
 	}
 	//***********************************************************************************************************************
-	@Test(groups = "Sales")//si
+	//@Test(groups = "Sales")//si
 	public void TS95094_SalesCPQ_Nominacion_Extranjero_Verificar_Confirmacion_Exitosa(){
 		String FilePath = "C:\\Users\\florangel\\Downloads\\mapache.jpg";
 		SalesBase SB = new SalesBase(driver);
@@ -280,7 +294,7 @@ public class SalesNominaciones extends TestBase{
 		
 	}
 	
-	@Test(groups = "Sales")//si
+	//@Test(groups = "Sales")//si
 	public void TS95114_SalesCPQ_Nominacion_Extranjero_Verificar_Datos_Nominar_Cliente_Extranjero(){
 		assertTrue((driver.findElement(By.id("DocumentTypeSearch")).isEnabled()));
 		assertTrue((driver.findElement(By.cssSelector(".slds-select_container.vlc-control-wrapper.vlc-slds__border.vlc-slds__border--primary")).findElement(By.tagName("label")).getText().contains("TIPO DE DOCUMENTO")));
@@ -288,7 +302,7 @@ public class SalesNominaciones extends TestBase{
 		assertTrue(driver.findElement(By.id("GenderSearch|0")).isEnabled()&&(driver.findElement(By.id("GenderSearch|0")).findElement(By.tagName("label")).getText().contains("G\u00e9nero")));
 	}
 	
-	@Test(groups = "Sales")//si
+	//@Test(groups = "Sales")//si
 	public void TS95118_SalesCPQ_Nominacion_Extranjero_Verificar_Formato_De_Fecha_PlazoPermanencia(){
 		String FilePath = "C:\\Users\\florangel\\Downloads\\mapache.jpg";
 		SalesBase SB = new SalesBase(driver);
@@ -307,7 +321,7 @@ public class SalesNominaciones extends TestBase{
 		assertTrue(driver.findElement(By.id("MethodSelectionPassport|0")).isEnabled());
 	}
 	
-	@Test(groups = "Sales")//si
+	//@Test(groups = "Sales")//si
 	public void TS95119_SalesCPQ_Nominacion_Extranjero_Verificar_Documento_Adjunto_Pasaporte(){
 		String FilePath = "C:\\Users\\florangel\\Downloads\\mapache.jpg";
 		SalesBase SB = new SalesBase(driver);
@@ -343,7 +357,7 @@ public class SalesNominaciones extends TestBase{
 	}
 	
 	
-	@Test(groups = "Sales")//si
+	//@Test(groups = "Sales")//si
 	public void TS95157_SalesCPQ_Nominacion_Extranjero_Verificar_Solicitud_De_Ingreso_Pasaporte_Cliente_Nuevo(){
 		String FilePath = "C:\\Users\\florangel\\Downloads\\mapache.jpg";
 		CustomerCare CC = new CustomerCare(driver);

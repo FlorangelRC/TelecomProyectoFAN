@@ -63,7 +63,7 @@ public class Marketing extends CustomerCare {
 		switch (sAltaBajaModificacion.toLowerCase()) {
 			case "alta":
 				lMenuesABM.get(0).click();
-				sleep(3000);
+				sleep(5000);
 				cambiarAFrameActivo();
 				break;
 			case "baja":
@@ -393,6 +393,28 @@ public class Marketing extends CustomerCare {
 		List <WebElement> wEstado = traerColumnaElement(wBody, 5, 3);
 		Boolean bAssert = wEstado.get(0).getText().toLowerCase().equals("closed");
 		return bAssert;
+	}
+	
+	public Boolean visualizarCuentasBusinessUsuarioCP() {
+		waitForVisibilityOfElementLocated(By.xpath("//ng-form[@id='businessAccounts']//tbody"));
+		List<WebElement> listaCuentas = driver.findElements(By.xpath("//ng-form[@id='businessAccounts']//tbody//tr"));
+		return (listaCuentas.size() > 0 && listaCuentas.get(0).isDisplayed());
+	}
+	
+	public Boolean visualizarCuentasConsumerUsuarioCP() {
+		waitForVisibilityOfElementLocated(By.xpath("//ng-form[@id='consumerAccounts']//tbody"));
+		List<WebElement> listaCuentas = driver.findElements(By.xpath("//ng-form[@id='consumerAccounts']//tbody//tr"));
+		return (listaCuentas.size() > 0 && listaCuentas.get(0).isDisplayed());
+	}
+	
+	public Boolean visualizarCuentasSeleccionadasConsumerCP() {
+		waitForVisibilityOfElementLocated(By.xpath("//ng-form[@id='consumerResult']//tbody"));
+		return (driver.findElement(By.xpath("//ng-form[@id='consumerResult']//tbody")).getText().length() > 0);
+	}
+	
+	public Boolean visualizarCuentasSeleccionadasBusinessCP() {
+		waitForVisibilityOfElementLocated(By.xpath("//ng-form[@id='businessResult']//tbody"));
+		return (driver.findElement(By.xpath("//ng-form[@id='businessResult']//tbody")).getText().length() > 0);
 	}
 	
 }
