@@ -17,7 +17,7 @@ import Pages.setConexion;
 
 public class SalesMatrix extends TestBase {
 	
-	public static SalesBase sb;
+	private SalesBase sb;
 	
 		
 	@BeforeClass (groups = {"Sales", "Ventas", "AltaDeCuenta", "AltaDeLinea"})
