@@ -98,7 +98,7 @@ public class ContactSearch extends BasePage {
 		case "si":
 			try {Thread.sleep(2000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 			driver.findElement(By.id("Contact_nextBtn")).click();
-			break;
+			break; 
 		case "no":
 			//Nada
 		}

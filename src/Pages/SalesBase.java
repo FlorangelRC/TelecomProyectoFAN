@@ -169,6 +169,9 @@ final WebDriver driver;
 	@FindBy(how=How.ID, using="SearchClientDocumentNumber")
 	private WebElement DNI;
 	
+	@FindBy(css = ".x-plain-header.sd_primary_tabstrip.x-unselectable .x-tab-strip-closable")
+	private List<WebElement> pestaniasPrimarias;
+	
 public SalesBase(WebDriver driver){
 		this.driver = driver;
         PageFactory.initElements(driver, this);
@@ -362,10 +365,10 @@ Assert.assertTrue(driver.findElement(By.cssSelector(".slds-page-header__title.vl
 		try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 	List<WebElement> btns = driver.findElements(By.cssSelector(".slds-button.slds-button.slds-button--icon"));
 for(WebElement e: btns){
-	if(e.getText().toLowerCase().equals(accion)){
+	if(e.getText().toLowerCase().equals(accion)){ 
 		e.click();
 		break;}}
- }
+ } 
  
  public void crearnuevocliente(String nombre, String apellido, String nacimiento){
 		try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
@@ -383,7 +386,7 @@ for(WebElement e: btns){
  }
  
  public void elegirplan(String plan){
-		try {Thread.sleep(40000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		try {Thread.sleep(15000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 		driver.findElement(By.id("cpq-custom-view-button")).click();
 		try {Thread.sleep(3000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 		List<WebElement> list = driver.findElements(By.className("slds-dropdown__item"));
@@ -402,7 +405,7 @@ for(WebElement e: btns){
 		
 }
  public void agregarplan(String plan){
-		try {Thread.sleep(50000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		try {Thread.sleep(30000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 		driver.findElement(By.cssSelector(".slds-picklist.slds-dropdown-trigger.slds-dropdown-trigger--click.slds-is-open")).click();
 		try {Thread.sleep(3000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 		List<WebElement> list = driver.findElements(By.className("slds-dropdown__item"));
@@ -529,10 +532,10 @@ try{	driver.findElement(By.id("alert-ok-button")).click();	} catch (NoSuchElemen
 	 setSimpleDropdown(driver.findElement(By.id("State")), provincia);
 
 	driver.findElement(By.id("CityTypeAhead")).sendKeys(localidad);
-	try {Thread.sleep(10000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+	try {Thread.sleep(10000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();} 
 	driver.findElement(By.id("CityTypeAhead")).sendKeys(Keys.ARROW_DOWN);
 	driver.findElement(By.id("CityTypeAhead")).sendKeys(Keys.ENTER);
-	driver.findElement(By.id("LegalStreetTypeAhead")).sendKeys(calle);
+	driver.findElement(By.id("LegalStreetTypeAhead")).sendKeys(calle); 
 	try {Thread.sleep(10000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 	driver.findElement(By.id("LegalStreetTypeAhead")).sendKeys(Keys.ARROW_DOWN);
 	driver.findElement(By.id("LegalStreetTypeAhead")).sendKeys(Keys.ENTER);
@@ -730,7 +733,14 @@ try{	driver.findElement(By.id("alert-ok-button")).click();	} catch (NoSuchElemen
 		public void refrescar(WebDriver driver) {
 			driver.navigate().refresh();
 		}
+		
+		public void cerrarTodasLasPestanias() {
+			driver.switchTo().defaultContent();
+			if (pestaniasPrimarias.size() > 0) {
+				for (WebElement t : pestaniasPrimarias) {
+						WebElement btn_cerrar = t.findElement(By.className("x-tab-strip-close"));
+						((JavascriptExecutor) driver).executeScript("arguments[0].click();", btn_cerrar);	
+				}
+			}
+		}
  }
-
- //asd
-

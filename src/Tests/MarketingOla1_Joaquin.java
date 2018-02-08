@@ -47,6 +47,15 @@ public class MarketingOla1_Joaquin extends TestBase {
 	}
 	
 	@Test(groups = {"Marketing", "Ola1"})
+	public void TS98025_Visualizar_error_Fraude_Alta_CP() {
+		Page.elegirCuenta("aaaaCuenta Fraude");
+		Page.irAGestionMarketing();
+		Page.clubPersonal("alta");
+		
+		Assert.assertTrue(Page.verificarMensajeDeErrorCuentaFraude());
+	}
+	
+	@Test(groups = {"Marketing", "Ola1"})
 	public void TS98028_Generar_Caso_error_Fraude_Alta_CP() {
 		Page.elegirCuenta("aaaaCuenta Fraude");
 		Page.irAGestionMarketing();
@@ -62,4 +71,24 @@ public class MarketingOla1_Joaquin extends TestBase {
 		Page.irACasos();
 		Assert.assertTrue(Page.obtenerEstadoDelCaso(numeroCaso).contentEquals("Closed"));
 	}
+	
+	@Test(groups = {"Marketing", "Ola1"})
+	public void TS98029_Visualizar_cuentas_Customer_Alta_CP() {
+		Page.elegirCuenta("Florencia Marketing");
+		Page.irAGestionMarketing();
+		Page.clubPersonal("alta");
+		
+		Assert.assertTrue(Page.visualizarCuentasConsumerUsuarioCP());
+	}
+	
+	@Test(groups = {"Marketing", "Ola1"})
+	public void TS98030_Visualizar_cuentas_Business_Alta_CP() {
+		Page.elegirCuenta("Florencia Marketing");
+		Page.irAGestionMarketing();
+		Page.clubPersonal("alta");
+		
+		Assert.assertTrue(Page.visualizarCuentasBusinessUsuarioCP());
+	}
+	
+
 }
