@@ -24,43 +24,47 @@ import Pages.setConexion;
 public class customerInformationUpdates extends TestBase {
 	
 	private WebDriver driver;
+	private CustomerCare cc;
+	private customerInformation ci;
+	private BasePage bp;
 
 
 	@AfterClass(groups = {"CustomerCare", "ActualizarDatos"})
 	public void tearDown2() {
-		driver.close();	
+		driver.quit();	
 	}
 
 	@AfterMethod(groups = {"CustomerCare", "ActualizarDatos"})
 	public void tearDown() {		
-		try {Thread.sleep(10000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
-		BasePage cambioFrameByID=new BasePage();
-	    driver.switchTo().frame(cambioFrameByID.getFrameForElement(driver, By.id("alert-ok-button")));
+		sleep(10000);
+		driver.switchTo().frame(cambioFrame(driver, By.id("alert-ok-button")));
 		driver.findElement(By.id("alert-ok-button")).click();
 	}
 	
 	@BeforeClass(groups = {"CustomerCare", "ActualizarDatos"})
 	public void init() throws Exception{
 		this.driver = setConexion.setupEze();
-		try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		sleep(5000);
+		cc = new CustomerCare(driver);
+		ci = new customerInformation(driver);
+		bp = new BasePage(driver);
 		login(driver);
-		try {Thread.sleep(10000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		sleep(10000);
 	 	String a = driver.findElement(By.id("tsidLabel")).getText();
 	 	driver.findElement(By.id("tsidLabel")).click();
 	 	if(a.equals("Ventas")){
 	 		driver.findElement(By.xpath("//a[@href=\'/console?tsid=02uc0000000D6Hd\']")).click();
 	 	}else{   
 	 		driver.findElement(By.xpath("//a[@href=\'/home/home.jsp?tsid=02u41000000QWha\']")).click();
-	 		try {Thread.sleep(4000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+	 		sleep(4000);
 	 		driver.findElement(By.id("tsidLabel")).click();
 	 		driver.findElement(By.xpath("//a[@href=\'/console?tsid=02uc0000000D6Hd\']")).click();	 		
 	 	}
-	 	try {Thread.sleep(10000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
-		CustomerCare page = new CustomerCare(driver);
-		page.cerrarultimapestaña();
-		page.elegircuenta("aaaaFernando Care");
-		BasePage cambioFrameByID=new BasePage();
-	    driver.switchTo().frame(cambioFrameByID.getFrameForElement(driver, By.className("profile-edit")));
+	 	sleep(10000);
+		//CustomerCare page = new CustomerCare(driver);
+		cc.cerrarultimapestaña();
+		cc.elegircuenta("aaaaFernando Care");
+		driver.switchTo().frame(cambioFrame(driver, By.className("profile-edit")));
 		List <WebElement> actualizar = driver.findElements(By.className("profile-edit"));
 		for (WebElement x : actualizar) {
 			if (x.getText().toLowerCase().contains("actualizar datos")) {
@@ -71,9 +75,8 @@ public class customerInformationUpdates extends TestBase {
 	 
 	 @BeforeMethod(groups = {"CustomerCare", "ActualizarDatos"})
 	 public void setup(){
-		 try {Thread.sleep(10000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
-		 BasePage cambioFrameByID=new BasePage();
-		 driver.switchTo().frame(cambioFrameByID.getFrameForElement(driver, By.id("LastName")));
+		 sleep(10000);
+		 driver.switchTo().frame(cambioFrame(driver, By.id("LastName")));
 	 }
 
 	 
@@ -84,8 +87,7 @@ public class customerInformationUpdates extends TestBase {
 		Assert.assertTrue(element.get(1).isDisplayed());
 		driver.findElement(By.id("ClientInformation_nextBtn")).click();		
 	}
-	
-	
+		
 	@Test(groups = {"CustomerCare", "ActualizarDatos"})	
 	public void TS7174_isFirstNameMandatory() {
 		driver.findElement(By.id("FirstName")).clear();
@@ -93,8 +95,7 @@ public class customerInformationUpdates extends TestBase {
 		Assert.assertTrue(element.get(0).isDisplayed());
 		driver.findElement(By.id("ClientInformation_nextBtn")).click();		
 	}
-	
-	
+		
 	@Test(groups = {"CustomerCare", "ActualizarDatos"})	
 	public void TS7173_isEmailMandatory() {
 		driver.findElement(By.id("Email")).clear();
@@ -103,13 +104,11 @@ public class customerInformationUpdates extends TestBase {
 		driver.findElement(By.id("ClientInformation_nextBtn")).click();
 	}
 
-	
 	@Test(groups = {"CustomerCare", "ActualizarDatos"})	
 	public void TS7170_isDocumentMandatory() {
 		Assert.assertTrue(driver.findElement(By.id("DocumentNumber")).isDisplayed());
 		driver.findElement(By.id("ClientInformation_nextBtn")).click();
 	}
-
 	
 	@Test(groups = {"CustomerCare", "ActualizarDatos"})	
 	public void TS7171_isBirthDateMandatory() {
@@ -119,17 +118,14 @@ public class customerInformationUpdates extends TestBase {
 		driver.findElement(By.id("ClientInformation_nextBtn")).click();
 	}
 	
-	
 	@Test(groups = {"CustomerCare", "ActualizarDatos"})	
 	public void TS7169_isGenderMandatory() {
-		BasePage x = new BasePage(driver);
-		x.setSimpleDropdown(driver.findElement(By.id("Gender")), "-- Clear --");
+		bp.setSimpleDropdown(driver.findElement(By.id("Gender")), "-- Clear --");
 		List <WebElement> element = driver.findElements(By.cssSelector(".error.ng-scope"));
 		Assert.assertTrue(element.get(6).isDisplayed());
 		driver.findElement(By.id("ClientInformation_nextBtn")).click();
 	}
 	
-
 	@Test(groups = {"CustomerCare", "ActualizarDatos"})
 	public void TS7172_isMobilePhoneMandatory() {
 		driver.findElement(By.id("MobilePhone")).clear();
@@ -137,19 +133,16 @@ public class customerInformationUpdates extends TestBase {
 		Assert.assertTrue(element.get(8).isDisplayed());
 		driver.findElement(By.id("ClientInformation_nextBtn")).click();
 	}
-	
-	
+		
 	//@Test(groups = {"CustomerCare", "ActualizarDatos"})	//BUG EN DNI
 	public void TS7149_fieldsWhichDontTriggerIdentityValidationProcess() {
-		customerInformation page = new customerInformation(driver);	
-		page.setDefaultValues();
+		ci.setDefaultValues();
 		waitFor(driver, (By.className("panel-heading")));		
 	}
 	
 	//@Test(groups = {"CustomerCare", "ActualizarDatos"})	//BUG EN DNI
 	public void TS7176_modifyTwoFieldsWhichDontTriggerIdentityValidationProcess() {
-		customerInformation page = new customerInformation(driver);
-		page.setTwoFieldsWhichDontTriggerIdentityValidationProcess();
+		ci.setTwoFieldsWhichDontTriggerIdentityValidationProcess();
 		waitFor(driver, (By.className("panel-heading")));		
 		List<WebElement> text = driver.findElements(By.className("panel-heading"));
 		Assert.assertTrue(text.get(0).getText().contains("Confirmación"));
@@ -161,19 +154,18 @@ public class customerInformationUpdates extends TestBase {
 		List<WebElement> profileEdit1 = driver.findElements(By.className("profile-edit"));
 		profileEdit1.get(0).click();
 		driver.switchTo().defaultContent();
-		try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		sleep(5000);
 		List<WebElement> frame5 = driver.findElements(By.tagName("iframe"));		
 		driver.switchTo().frame(frame5.get(4));
 		waitFor(driver, (By.id("FirstName")));		
-		page.setDefaultValues();
+		ci.setDefaultValues();
 		waitFor(driver, (By.className("panel-heading")));		
 	}
 	
 	//@Test(groups = {"CustomerCare", "ActualizarDatos"})	//BUG EN DNI
 	public void TS7177_modifyThreeFieldsWhichTriggerIdentityValidationProcess() {
-		customerInformation page = new customerInformation(driver);
-		page.setThreeFieldsWhichTriggerIdentityValidationProcess();
-		try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		ci.setThreeFieldsWhichTriggerIdentityValidationProcess();
+		sleep(5000);
 		List<WebElement> text = driver.findElements(By.cssSelector(".ng-binding.ng-scope"));
 		Assert.assertEquals("No se pueden modificar Género, Número de documento y Fecha de Nacimiento al mismo tiempo.", text.get(3).getText());
 	}
@@ -189,19 +181,16 @@ public class customerInformationUpdates extends TestBase {
 	@Test(groups = {"CustomerCare", "ActualizarDatos"})
 	public void TS7155_validateBirthDateHasAYearPicker() {
 		driver.findElement(By.id("Birthdate")).click();
-		try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		sleep(5000);
 		Assert.assertTrue(driver.findElement(By.className("datepicker--content")).isDisplayed());
 		driver.findElement(By.id("ClientInformation_nextBtn")).click();
 	}
 	
 	//@Test(groups = {"CustomerCare", "ActualizarDatos"})	//NO SE PUEDE HACER POR DNI
 	public void TS7183_modifyDocumentTwiceInAMonth() {
-		customerInformation page = new customerInformation(driver);
-		try{Assert.assertFalse(page.isDocumentModifyable());} catch (Exception e){}
-		page.modifyDocument("32645423");
+		try{Assert.assertFalse(ci.isDocumentModifyable());} catch (Exception e){}
+		ci.modifyDocument("32645423");
 		waitFor(driver, (By.className("panel-heading")));		
-		//List<WebElement> text = driver.findElements(By.className("panel-heading"));
-		//Assert.assertTrue(text.get(0).getText().contains("Confirmación"));
 		driver.switchTo().defaultContent();
 		List<WebElement> tabs = driver.findElements(By.className("x-tab-strip-close"));
 		((JavascriptExecutor) driver).executeScript("arguments[0].click();", tabs.get(6));
@@ -210,50 +199,46 @@ public class customerInformationUpdates extends TestBase {
 		List<WebElement> profileEdit1 = driver.findElements(By.className("profile-edit"));
 		profileEdit1.get(0).click();
 		driver.switchTo().defaultContent();
-		try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		sleep(5000);
 		List<WebElement> frame5 = driver.findElements(By.tagName("iframe"));		
 		driver.switchTo().frame(frame5.get(4));
 		waitFor(driver, (By.id("FirstName")));
-		Assert.assertFalse(page.isDocumentModifyable()); 
+		Assert.assertFalse(ci.isDocumentModifyable()); 
 	}
-	
-	
+		
 	@Test(groups = {"CustomerCare", "ActualizarDatos"})
 	public void TS7098_cancelUpdateInformation() {
-		BasePage cambioFrameByID=new BasePage();
-		CustomerCare page = new CustomerCare(driver);
-		driver.switchTo().frame(cambioFrameByID.getFrameForElement(driver, By.cssSelector(".vlc-slds-button--tertiary.ng-binding.ng-scope")));
+		driver.switchTo().frame(cambioFrame(driver, By.cssSelector(".vlc-slds-button--tertiary.ng-binding.ng-scope")));
 		List <WebElement> cancelar = driver.findElements(By.cssSelector(".vlc-slds-button--tertiary.ng-binding.ng-scope"));
 		for (WebElement x : cancelar) {
 			if (x.getText().toLowerCase().contains("cancelar")) {
 				x.click();
 			}
 		}
-	    driver.switchTo().frame(cambioFrameByID.getFrameForElement(driver, By.id("alert-ok-button")));
+		driver.switchTo().frame(cambioFrame(driver, By.id("alert-ok-button")));
 		driver.findElement(By.id("alert-ok-button")).click();
-		page.cerrarultimapestaña();
-		page.elegircuenta("aaaaFernando Care");
-	    driver.switchTo().frame(cambioFrameByID.getFrameForElement(driver, By.className("profile-edit")));
+		cc.cerrarultimapestaña();
+		cc.elegircuenta("aaaaFernando Care");
+		driver.switchTo().frame(cambioFrame(driver, By.className("profile-edit")));
 		List <WebElement> actualizar = driver.findElements(By.className("profile-edit"));
 		for (WebElement x : actualizar) {
 			if (x.getText().toLowerCase().contains("actualizar datos")) {
 				x.click();
 			}
 		}
-		try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
-		driver.switchTo().frame(cambioFrameByID.getFrameForElement(driver, By.className("profile-box")));
+		sleep(5000);
+		driver.switchTo().frame(cambioFrame(driver, By.className("profile-box")));
 		List <WebElement> actualizar1 = driver.findElements(By.className("profile-edit"));
 		actualizar1.get(0).click();
-		try {Thread.sleep(10000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
-		driver.switchTo().frame(cambioFrameByID.getFrameForElement(driver, By.id("ClientInformation_nextBtn")));
+		sleep(10000);
+		driver.switchTo().frame(cambioFrame(driver, By.id("ClientInformation_nextBtn")));
 		driver.findElement(By.id("LastName")).clear();
 		driver.findElement(By.id("ClientInformation_nextBtn")).click();
 	}
 	
 	//@Test(groups = {"CustomerCare", "ActualizarDatos"})	//BUG EN celular
 	public void TS7103_updateMobilePhone() {
-		customerInformation page = new customerInformation(driver);
-		page.modifyMobilePhone();
+		ci.modifyMobilePhone();
 		waitFor(driver, (By.className("panel-heading")));
 		List<WebElement> text = driver.findElements(By.className("panel-heading"));
 		Assert.assertTrue(text.get(0).getText().contains("Confirmación"));
@@ -265,18 +250,17 @@ public class customerInformationUpdates extends TestBase {
 		List<WebElement> profileEdit1 = driver.findElements(By.className("profile-edit"));
 		profileEdit1.get(0).click();
 		driver.switchTo().defaultContent();
-		try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		sleep(5000);
 		List<WebElement> frame5 = driver.findElements(By.tagName("iframe"));		
 		driver.switchTo().frame(frame5.get(4));
 		waitFor(driver, (By.id("FirstName")));		
-		page.setDefaultValues();
+		ci.setDefaultValues();
 		waitFor(driver, (By.className("panel-heading")));
 	}
 	
 	//@Test(groups = {"CustomerCare", "ActualizarDatos"})	//BUG EN EMAIL
 	public void TS7102_updateOtherPhone() {
-		customerInformation page = new customerInformation(driver);
-		page.modifyOtherPhone();
+		ci.modifyOtherPhone();
 		waitFor(driver, (By.className("panel-heading")));		
 		List<WebElement> text = driver.findElements(By.className("panel-heading"));
 		Assert.assertTrue(text.get(0).getText().contains("Confirmación"));
@@ -288,18 +272,17 @@ public class customerInformationUpdates extends TestBase {
 		List<WebElement> profileEdit1 = driver.findElements(By.className("profile-edit"));
 		profileEdit1.get(0).click();
 		driver.switchTo().defaultContent();
-		try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		sleep(5000);
 		List<WebElement> frame5 = driver.findElements(By.tagName("iframe"));		
 		driver.switchTo().frame(frame5.get(4));
 		waitFor(driver, (By.id("FirstName")));		
-		page.setDefaultValues();
+		ci.setDefaultValues();
 		waitFor(driver, (By.className("panel-heading")));
 	}
 	
 	//@Test(groups = {"CustomerCare", "ActualizarDatos"})	//BUG EN EMAIL
 	public void TS7099_updateFirstName() {
-		customerInformation page = new customerInformation(driver);
-		page.modifyFirstName();
+		ci.modifyFirstName();
 		waitFor(driver, (By.className("panel-heading")));		
 		List<WebElement> text = driver.findElements(By.className("panel-heading"));
 		Assert.assertTrue(text.get(0).getText().contains("Confirmación"));
@@ -311,18 +294,17 @@ public class customerInformationUpdates extends TestBase {
 		List<WebElement> profileEdit1 = driver.findElements(By.className("profile-edit"));
 		profileEdit1.get(0).click();
 		driver.switchTo().defaultContent();
-		try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		sleep(5000);
 		List<WebElement> frame5 = driver.findElements(By.tagName("iframe"));		
 		driver.switchTo().frame(frame5.get(4));
 		waitFor(driver, (By.id("FirstName")));		
-		page.setDefaultValues();
+		ci.setDefaultValues();
 		waitFor(driver, (By.className("panel-heading")));
 	}
 	
 	//@Test(groups = {"CustomerCare", "ActualizarDatos"})	//BUG EN EMAIL
 	public void TS7104_updateBirthDate() {
-		customerInformation page = new customerInformation(driver);
-		page.modifyBirthDate();
+		ci.modifyBirthDate();
 		waitFor(driver, (By.className("panel-heading")));		
 		List<WebElement> text = driver.findElements(By.className("panel-heading"));
 		Assert.assertTrue(text.get(0).getText().contains("Confirmación"));
@@ -334,18 +316,17 @@ public class customerInformationUpdates extends TestBase {
 		List<WebElement> profileEdit1 = driver.findElements(By.className("profile-edit"));
 		profileEdit1.get(0).click();
 		driver.switchTo().defaultContent();
-		try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		sleep(5000);
 		List<WebElement> frame5 = driver.findElements(By.tagName("iframe"));		
 		driver.switchTo().frame(frame5.get(4));
 		waitFor(driver, (By.id("FirstName")));		
-		page.setDefaultValues();
+		ci.setDefaultValues();
 		waitFor(driver, (By.className("panel-heading")));
 	}
 	
 	//@Test(groups = {"CustomerCare", "ActualizarDatos"})	//BUG EN EMAIL
 	public void TS7101_updateEmail() {
-		customerInformation page = new customerInformation(driver);
-		page.modifyEmail();
+		ci.modifyEmail();
 		waitFor(driver, (By.className("panel-heading")));		
 		List<WebElement> text = driver.findElements(By.className("panel-heading"));
 		Assert.assertTrue(text.get(0).getText().contains("Confirmación"));
@@ -357,18 +338,17 @@ public class customerInformationUpdates extends TestBase {
 		List<WebElement> profileEdit1 = driver.findElements(By.className("profile-edit"));
 		profileEdit1.get(0).click();
 		driver.switchTo().defaultContent();
-		try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		sleep(5000);
 		List<WebElement> frame5 = driver.findElements(By.tagName("iframe"));		
 		driver.switchTo().frame(frame5.get(4));
 		waitFor(driver, (By.id("FirstName")));		
-		page.setDefaultValues();
+		ci.setDefaultValues();
 		waitFor(driver, (By.className("panel-heading")));
 	}
 	
 	//@Test(groups = {"CustomerCare", "ActualizarDatos"})	
 	public void TS7100_updateLastName() {
-		customerInformation page = new customerInformation(driver);
-		page.modifyLastName();
+		ci.modifyLastName();
 		waitFor(driver, (By.className("panel-heading")));		
 		List<WebElement> text = driver.findElements(By.className("panel-heading"));
 		Assert.assertTrue(text.get(0).getText().contains("Confirmación"));
@@ -380,25 +360,23 @@ public class customerInformationUpdates extends TestBase {
 		List<WebElement> profileEdit1 = driver.findElements(By.className("profile-edit"));
 		profileEdit1.get(0).click();
 		driver.switchTo().defaultContent();
-		try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		sleep(5000);
 		List<WebElement> frame5 = driver.findElements(By.tagName("iframe"));		
 		driver.switchTo().frame(frame5.get(4));
 		waitFor(driver, (By.id("FirstName")));		
-		page.setDefaultValues();
+		ci.setDefaultValues();
 		waitFor(driver, (By.className("panel-heading")));
 	}
 	
 	//@Test(groups = {"CustomerCare", "ActualizarDatos"})
 	public void TS7150_verifyNumbersAreNotAllowedInFirstNameAndLastName() {
-		customerInformation page = new customerInformation(driver);
-		page.areNumbersAllowedInFirstNameAndLastName();
+		ci.areNumbersAllowedInFirstNameAndLastName();
 		driver.findElement(By.id("ClientInformation_nextBtn")).click();	
 	}
 	
 	//@Test(groups = {"CustomerCare", "ActualizarDatos"})	//BUG EN EMAIL
 	public void TS7182_modifyDniByTwoDigits() {
-		customerInformation page = new customerInformation(driver);
-		page.modifyDniBy("32645423");
+		ci.modifyDniBy("32645423");
 		waitFor(driver, (By.className("panel-heading")));		
 		List<WebElement> text = driver.findElements(By.className("panel-heading"));
 		Assert.assertTrue(text.get(0).getText().contains("Confirmación"));
@@ -406,8 +384,7 @@ public class customerInformationUpdates extends TestBase {
 	
 	//@Test(groups = {"CustomerCare", "ActualizarDatos"})	//BUG EN EMAIL
 	public void TS7186_modifyDniByOneDigits() {
-		customerInformation page = new customerInformation(driver);
-		page.modifyDniBy("32645422");
+		ci.modifyDniBy("32645422");
 		waitFor(driver, (By.className("panel-heading")));		
 		List<WebElement> text = driver.findElements(By.className("panel-heading"));
 		Assert.assertTrue(text.get(0).getText().contains("Confirmación"));
@@ -422,17 +399,15 @@ public class customerInformationUpdates extends TestBase {
 		driver.findElement(By.id("ClientInformation_nextBtn")).click();
 	}
 	
-
 	//@Test(groups = {"CustomerCare", "ActualizarDatos"})
 	public void TS7097_verifyNonOwnershipChange() {
 		driver.switchTo().defaultContent();
-		try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		sleep(5000);
 		List<WebElement> frame6 = driver.findElements(By.tagName("iframe"));		
 		driver.switchTo().frame(frame6.get(4));
 		waitFor(driver, (By.id("FirstName")));
-		customerInformation page = new customerInformation(driver);
-		page.modifyCuil();
-		Assert.assertTrue(page.notchansgetopname());		
+		ci.modifyCuil();
+		Assert.assertTrue(ci.notchansgetopname());		
 	}
 		
 	@Test(groups = {"CustomerCare", "ActualizarDatos"})
@@ -450,18 +425,17 @@ public class customerInformationUpdates extends TestBase {
 		driver.findElement(By.id("Email")).sendKeys("pruebaat@gmail.com");
 		((JavascriptExecutor)driver).executeScript("window.scrollTo(0,"+driver.findElement(By.id("ClientInformation_nextBtn")).getLocation().y+")");
 		driver.findElement(By.id("ClientInformation_nextBtn")).click();
-		try {Thread.sleep(8000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
-		CustomerCare page = new CustomerCare(driver);
-		page.elegircaso();
-		try {Thread.sleep(8000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();} 
+		sleep(8000);
+		cc.elegircaso();
+		sleep(8000); 
 		List<WebElement> camposOrden = driver.findElement(By.className("x-grid3-viewport")).findElement(By.tagName("tr")).findElements(By.tagName("td"));
 		camposOrden.remove(0);
 		for (WebElement UnCO : camposOrden) {
 			if (UnCO.findElement(By.tagName("div")).getAttribute("title").toLowerCase().equals("due date")){
 				UnCO.click();
-				try {Thread.sleep(3000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();} 
+				sleep(3000);
 				UnCO.click();
-				try {Thread.sleep(3000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();} 
+				sleep(3000);
 				break;
 			}
 		}
@@ -473,7 +447,7 @@ public class customerInformationUpdates extends TestBase {
 	public void TS7205_Cambios_en_la_Informacion_del_Cliente_Validar_Caracteres_Campo_Apellido() {
 		driver.findElement(By.id("LastName")).clear();
 		driver.findElement(By.id("LastName")).sendKeys("aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa");
-		try {Thread.sleep(3000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();} 
+		sleep(3000);
 		Assert.assertTrue(driver.findElement(By.cssSelector(".vlc-slds-error-block.ng-scope")).isDisplayed());
 		driver.findElement(By.id("ClientInformation_nextBtn")).click();
 	}
@@ -483,8 +457,6 @@ public class customerInformationUpdates extends TestBase {
 		driver.findElement(By.id("OtherPhone")).clear();
 		driver.findElement(By.id("OtherPhone")).sendKeys("aaaaaaaaaa");
 		Assert.assertTrue(driver.findElement(By.cssSelector(".vlc-slds-error-block.ng-scope")).isDisplayed());
-		
-		//Assert.assertTrue(driver.findElement(By.xpath("//*[@id=\"a1zc0000003XKPMAA4-4\"]/div[1]/div/child[14]/div/ng-form/div[2]/div[2]/div/div[2]")).isDisplayed());
 		driver.findElement(By.id("ClientInformation_nextBtn")).click();
 	}
 	
@@ -493,14 +465,12 @@ public class customerInformationUpdates extends TestBase {
 		driver.findElement(By.id("MobilePhone")).clear();
 		driver.findElement(By.id("MobilePhone")).sendKeys("aaaaaaaaaaa");
 		Assert.assertTrue(driver.findElement(By.cssSelector(".vlc-slds-error-block.ng-scope")).isDisplayed());
-		//Assert.assertTrue(driver.findElement(By.xpath("//*[@id=\"a1zc0000003XKPMAA4-4\"]/div[1]/div/child[11]/div/ng-form/div[2]/div[2]/div/div[2]")).isDisplayed());
 		driver.findElement(By.id("ClientInformation_nextBtn")).click();
 	}
 	
 	@Test(groups = {"CustomerCare", "ActualizarDatos"})
 	public void TS12282_Reseteo_de_Claves_Manejo_de_la_Clave_Visualizar_Boton_Reseteo_Clave() {
-		BasePage cambioFrameByID=new BasePage();
-	    driver.switchTo().frame(cambioFrameByID.getFrameForElement(driver, By.className("profile-edit")));
+		driver.switchTo().frame(cambioFrame(driver, By.className("profile-edit")));
 		List <WebElement> element = driver.findElements(By.className("profile-edit"));
 		boolean a = false;
 		for (WebElement x : element) {
@@ -509,15 +479,14 @@ public class customerInformationUpdates extends TestBase {
 			}
 		}
 		Assert.assertTrue(a);
-		driver.switchTo().frame(cambioFrameByID.getFrameForElement(driver, By.id("LastName")));
+		driver.switchTo().frame(cambioFrame(driver, By.id("LastName")));
 		driver.findElement(By.id("FirstName")).clear();
 		driver.findElement(By.id("ClientInformation_nextBtn")).click();
 	}
 	
 	/*@Test(groups = {"CustomerCare", "ActualizarDatos"}) //No reconoce los 5 digitos de codigo de area
 	public void TS7161_Cambios_en_la_Informacion_del_Cliente_Validar_Teléfono_Movil_5_digitos_Codigo_de_area() {
-		BasePage cambioFrameByID=new BasePage();
-	    driver.switchTo().frame(cambioFrameByID.getFrameForElement(driver, By.id("ClientInformation_nextBtn")));
+		driver.switchTo().frame(cambioFrame(driver, By.id("ClientInformation_nextBtn")));
 	    Assert.assertTrue(false);
 	    driver.findElement(By.id("ClientInformation_nextBtn")).click();
 	}
@@ -535,22 +504,22 @@ public class customerInformationUpdates extends TestBase {
 	
 	
 	/*
-		TS7149_fieldsWhichDontTriggerIdentityValidationProcess
-		TS7176_modifyTwoFieldsWhichDontTriggerIdentityValidationProcess
-		TS7177_modifyThreeFieldsWhichTriggerIdentityValidationProcess
-		TS7183_modifyDocumentTwiceInAMonth
-		TS7103_updateMobilePhone
-		TS7102_updateOtherPhone
-		TS7099_updateFirstName
-		TS7104_updateBirthDate
-		TS7101_updateEmail
-		TS7100_updateLastName
-		TS7150_verifyNumbersAreNotAllowedInFirstNameAndLastName
-		TS7182_modifyDniByTwoDigits
-		TS7186_modifyDniByOneDigits
-		TS7097_verifyNonOwnershipChange
-		TS7161_Cambios_en_la_Informacion_del_Cliente_Validar_Teléfono_Movil_5_digitos_Codigo_de_area
-		TS7151_Cambios_en_la_Informacion_del_Cliente_Validar_Nombre_Apellido_Que_tengan_caracteres_especiales
-		TS7179_Profile_Changes_Validacion_Correo_Electronico_Creacion_De_Caso_Al_Cambiar_Correo_Electronico
+TS7149_fieldsWhichDontTriggerIdentityValidationProcess
+TS7176_modifyTwoFieldsWhichDontTriggerIdentityValidationProcess
+TS7177_modifyThreeFieldsWhichTriggerIdentityValidationProcess
+TS7183_modifyDocumentTwiceInAMonth
+TS7103_updateMobilePhone
+TS7102_updateOtherPhone
+TS7099_updateFirstName
+TS7104_updateBirthDate
+TS7101_updateEmail
+TS7100_updateLastName
+TS7150_verifyNumbersAreNotAllowedInFirstNameAndLastName
+TS7182_modifyDniByTwoDigits
+TS7186_modifyDniByOneDigits
+TS7097_verifyNonOwnershipChange
+TS7161_Cambios_en_la_Informacion_del_Cliente_Validar_Teléfono_Movil_5_digitos_Codigo_de_area
+TS7151_Cambios_en_la_Informacion_del_Cliente_Validar_Nombre_Apellido_Que_tengan_caracteres_especiales
+TS7179_Profile_Changes_Validacion_Correo_Electronico_Creacion_De_Caso_Al_Cambiar_Correo_Electronico
 	 */
 }
