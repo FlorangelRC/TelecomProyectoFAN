@@ -27,7 +27,7 @@ public class Sales2 extends TestBase{
 
 	SalesBase sb;
 	String DNI = "DNI";
-	String provincia="Buenos Aires" ;
+	String provincia="Tucuman" ;
 	String localidad="SAN ISIDRO";
 	
 	//@AfterClass
@@ -871,7 +871,7 @@ public class Sales2 extends TestBase{
 		}
 	}	
 	
-	@Test(groups={"Sales","Alta Linea","Ola1"}) 	
+	//@Test(groups={"Sales","Alta Linea","Ola1"}) 	
 	public void TS94502_Alta_Linea_Configurar_Nueva_Linea_Visualizar_home_de_la_linea_pre_asignada_correspondiente_a_direccion_de_facturacion_XX(){
 		sb.BtnCrearNuevoCliente();
 		CustomerCare CC = new CustomerCare(driver);
@@ -882,16 +882,13 @@ public class Sales2 extends TestBase{
 		driver.findElement(By.id("Birthdate")).sendKeys("28/12/1999");
 		contact.sex("masculino");
 		driver.findElement(By.id("Contact_nextBtn")).click();
-		//String prov = driver.findElement(By.id("SearchClientDocumentNumber")).getAttribute("value");
-				//String loc = driver.findElement(By.id("SearchClientDocumentNumber")).getAttribute("value");
-	/*	sb.elegirplan("Plan con Tarjeta Repro");
+		sleep(3000);
+		sb.elegirplan("Plan con Tarjeta Repro");
 		sb.continuar();
 		sleep(10000);
-		List<WebElement> modi = driver.findElements(By.cssSelector(".slds-form-element__label--toggleText.ng-binding"));
-			for(WebElement m : modi){
-				m.getText().equals("Modificar b\u00fasqueda");
-					m.click();}
-		sleep(3000);*/
+		sb.Crear_DomicilioLegal(provincia, localidad, "falsa", "", "1000", "", "", "1549");
+		sleep(5000);
+	
 		
 	
 	
