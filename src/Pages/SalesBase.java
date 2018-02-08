@@ -557,7 +557,7 @@ try{	driver.findElement(By.id("alert-ok-button")).click();	} catch (NoSuchElemen
 	driver.findElement(By.id("PostalCodeTypeAhead")).sendKeys(CP);
 	try {Thread.sleep(10000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 	driver.findElement(By.id("PostalCodeTypeAhead")).sendKeys(Keys.ARROW_DOWN);
-	driver.findElement(By.id("PostalCodeTypeAhead")).sendKeys(Keys.ARROW_DOWN);
+	driver.findElement(By.id("PostalCodeTypeAhead")).sendKeys(Keys.ARROW_DOWN); 
 	driver.findElement(By.id("PostalCodeTypeAhead")).sendKeys(Keys.ENTER);
 	try {Thread.sleep(10000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 	driver.findElement(By.id("NewPostalCodeName")).sendKeys(CP);

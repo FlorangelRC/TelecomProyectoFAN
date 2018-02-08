@@ -1,5 +1,7 @@
 package Tests;
 
+import static org.testng.Assert.assertTrue;
+
 import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.Random;
@@ -29,20 +31,19 @@ public class Sales2 extends TestBase{
 	String DNI = "DNI";
 	String provincia="Tucuman" ;
 	String localidad="SAN ISIDRO";
-	
-	//@AfterClass
+	@AfterClass(alwaysRun=true)
 	public void tearDown() {
 		driver.quit();
 	}
 	
-	//@AfterMethod
+	@AfterMethod(alwaysRun=true)
 	public void deslogin() {
 		sleep(3000);
 		driver.get("https://crm--sit.cs14.my.salesforce.com/home/home.jsp?tsid=02u41000000QWha/");
 		sleep(10000);
 	}
 		
-	@BeforeClass
+	@BeforeClass(alwaysRun=true)
 	public void init() {
 		inicializarDriver();
 		sb = new SalesBase(driver);
@@ -50,7 +51,7 @@ public class Sales2 extends TestBase{
 		IrA.CajonDeAplicaciones.Ventas();
 	}
 	
-	@BeforeMethod
+	@BeforeMethod(alwaysRun=true)
 	public void setup() throws Exception {
 		sleep(5000);
 		driver.findElement(By.xpath("//a[@href=\'https://crm--sit--c.cs14.visual.force.com/apex/taClientSearch']")).click();
@@ -609,6 +610,112 @@ public class Sales2 extends TestBase{
 	}
 	
 	@Test(groups={"Sales", "Ventas", "Ola1"})
+	public void TS94730_Alta_De_Linea_Verificar_LOV_De_Modalidad_Entrega_Para_Canal_Presencial_Agentes() {
+		boolean Pr = false;
+		boolean Dl = false;
+		boolean St = false;
+		sb.BuscarCuenta(DNI, "34073329");
+		sb.acciondecontacto("catalogo");
+		sleep(15000);
+		driver.findElement(By.cssSelector(".slds-m-left--x-small.slds-button.slds-button--brand")).click();
+		sleep(7000);
+		driver.switchTo().frame(sb.getFrameForElement(driver, By.id("DeliveryMethodSelection")));
+		List<WebElement> OMdE = new Select(driver.findElement(By.id("SalesChannelConfiguration")).findElement(By.id("DeliveryMethodSelection"))).getOptions();
+		for (WebElement UnM : OMdE) {
+			if (UnM.getText().equalsIgnoreCase("presencial"))
+				Pr = true;
+			if (UnM.getText().equalsIgnoreCase("delivery"))
+				Dl = true;
+			if (UnM.getText().equalsIgnoreCase("store pick up"))
+				St = true;
+		}
+		Assert.assertTrue(Pr&&Dl&&St);
+	}
+	
+	@Test(groups={"Sales", "AltaDeLinea", "Ola1"})
+	public void TS94733_Alta_De_Linea_Verificar_Default_De_Modalidad_Entrega_Para_Canal_Presencial_Agentes(){
+		SalesBase SB = new SalesBase(driver);
+		SB.BuscarCuenta(DNI, "34073329");
+		SB.acciondecontacto("catalogo");
+		sleep(15000);
+		assertTrue(driver.findElement(By.cssSelector(".slds-col.taChangeDeliveryMethod.slds-text-body--small.slds-m-left--large")).findElement(By.tagName("strong")).getText().contains("Presencial"));
+	}
+	
+	 @Test(groups = {"Sales", "Ventas","Ola1"})
+	  public void TS94714_Ventas_BuscarCliente_Verificar_Solo_Clientes_No_Activos() {
+		  driver.findElement(By.id("PhoneNumber")).sendKeys("1157572274");
+		  driver.findElement(By.id("SearchClientsDummy")).click();
+		  sleep(5000);
+		  List <WebElement> cai = driver.findElement(By.className("slds-tabs--scoped__nav")).findElements(By.tagName("li"));
+		  if (cai.get(0).isDisplayed() || !cai.get(1).isDisplayed()) {
+			  Assert.assertTrue(false);
+		  }
+		  Assert.assertTrue(cai.get(1).findElement(By.tagName("a")).getText().contains("Inactivos"));
+	 }
+	
+	@Test(groups={"Sales", "Ventas", "Ola1"})
+	public void TS95111_Ventas_General_Verificar_Que_No_Se_Puede_Seleccionar_Una_Linea_Decisora_ProcesoVenta() {
+		boolean esta = false;
+		ContactSearch contact = new ContactSearch(driver);
+		sb.BuscarCuenta(DNI, "34073329");
+		sb.acciondecontacto("catalogo");
+		sleep(15000);
+		sb.elegirplan("Plan con Tarjeta Repro");
+		sleep(15000);
+		driver.findElement(By.cssSelector(".slds-button.slds-m-left--large.slds-button--brand.ta-button-brand")).click();
+		sleep(15000);
+		List<WebElement> LD = driver.findElements(By.tagName("a"));
+		for (WebElement UnLD : LD) {
+			System.out.println(UnLD.getText());
+			if (UnLD.getText().equalsIgnoreCase("elegir como l\u00ednea decisora"))
+				esta = true;
+		}
+		Assert.assertFalse(esta);
+	}
+	
+	@Test(groups={"Sales", "AltaDeContacto", "Ola1"})
+	public void TS94554_Alta_De_Contacto_Persona_Fisica_Verificar_Campo_Tipo_De_Documento_Por_Default() {
+		boolean esta = false;
+		Random aleatorio = new Random(System.currentTimeMillis());
+		aleatorio.setSeed(System.currentTimeMillis());
+		int intAleatorio = aleatorio.nextInt(8999999)+1000000;
+		ContactSearch contact = new ContactSearch(driver);
+		driver.findElement(By.id("SearchClientDocumentNumber")).sendKeys(Integer.toString(intAleatorio));
+		driver.findElement(By.id("SearchClientsDummy")).click();
+		sleep(5000);
+		List <WebElement> cc = driver.findElements(By.cssSelector(".slds-form-element__label.ng-binding"));
+		for (WebElement x : cc) {
+			if (x.getText().toLowerCase().contains("+ crear nuevo cliente")) {
+				x.click();
+				break;
+			}
+		}
+		sleep(5000);
+		System.out.println(new Select(driver.findElement(By.id("DocumentType"))).getFirstSelectedOption().getText());
+		Assert.assertTrue(new Select(driver.findElement(By.id("DocumentType"))).getFirstSelectedOption().getText().equalsIgnoreCase("DNI"));
+		
+	}
+	
+	@Test(groups={"Sales", "AltaDeContacto","Ola1"})  // verificar
+	public void TS94566_Alta_De_Contacto_Persona_Fisica_Verificar_Mascara_Del_Campo_CUIT(){
+		try {Thread.sleep(10000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		boolean as = false;
+		ContactSearch contact = new ContactSearch(driver);
+		contact.searchContact("CUIT", "22458954", "");
+		WebElement num = driver.findElement(By.id("SearchClientDocumentNumber"));
+		Assert.assertTrue(num.getText().matches("\\d{2}-\\d{8}-\\d{1}"));
+		List <WebElement> cc = driver.findElements(By.cssSelector(".slds-form-element__label.ng-binding"));
+		for (WebElement x : cc) {
+			if (x.getText().toLowerCase().contains("+ crear nuevo cliente")) {
+				x.click();
+				break;
+			}
+		}
+		sleep(5000);
+		Assert.assertTrue(driver.findElement(By.id("DocumentNumber")).getAttribute("value").matches("\\d{2}-\\d{8}-\\d{1}"));
+	}
+	
+	@Test(groups={"Sales", "Ventas", "Ola1"})
 	public void TS94763_Ventas_Entregas_General_Modificar_el_lugar_de_entrega() {
 		sb.BuscarCuenta(DNI, "11111111");
 		sb.acciondecontacto("catalogo");
@@ -649,6 +756,44 @@ public class Sales2 extends TestBase{
 		System.out.println(ultnum.getText());
 		Assert.assertTrue(ultnum.getText().contains("7354"));
  	}
+	
+	@Test(groups={"Sales", "Configuracion", "Ola1"})  
+	public void TS94807_Configuracion_Verificar_Asignacion_De_Seriales_AgentePresencial() {
+		sb.BuscarCuenta(DNI, "34073329");
+		sb.acciondecontacto("catalogo");
+		sleep(15000);
+		sb.elegirplan("Plan con Tarjeta Repro");
+		sb.continuar();
+		sleep(10000);
+		CustomerCare page = new CustomerCare(driver);
+		WebElement sig = driver.findElement(By.id("LineAssignment_nextBtn"));
+		page.obligarclick(sig);
+		sleep(10000);
+		WebElement serial = driver.findElement(By.id("ICCIDConfiguration")).findElement(By.tagName("tbody")).findElement(By.tagName("tr")).findElements(By.tagName("td")).get(1);
+		Assert.assertTrue(!serial.findElement(By.tagName("input")).getAttribute("value").isEmpty());
+	}
+	
+	@Test(groups={"Sales", "Ventas", "Ola1"})
+	public void TS94777_Ventas_Entregas_General_Store_Pickup_Consulta_stock_por_PDV_Visualizar_campos_filtro_de_la_consulta() {
+		sb.BuscarCuenta(DNI, "34073329");
+		sb.acciondecontacto("catalogo");
+		sleep(15000);
+		driver.findElement(By.cssSelector(".slds-m-left--x-small.slds-button.slds-button--brand")).click();
+		sleep(7000);
+		driver.switchTo().frame(cambioFrame(driver, By.id("DeliveryMethodSelection")));
+		Select env = new Select (driver.findElement(By.id("DeliveryMethodSelection")));
+		env.selectByVisibleText("Store Pick Up");
+		sleep(2000);
+		Select prov = new Select (driver.findElement(By.id("State")));
+		prov.selectByVisibleText("Ciudad Aut\u00f3noma de Buenos Aires");
+		sleep(2000);
+		Select loc = new Select(driver.findElement(By.id("City")));
+		loc.selectByVisibleText("CIUD AUTON D BUENOS AIRES");
+		sleep(3000);
+		Assert.assertTrue(driver.findElement(By.id("State")).isEnabled());
+		Assert.assertTrue(driver.findElement(By.id("City")).isEnabled());
+		Assert.assertTrue(driver.findElement(By.id("Store")).isEnabled());
+	}
 	
 	@Test(groups={"Sales", "Ventas", "Ola1"})  //falta validar los campos porque los campos no son opcionales
 	public void TS94935_Ventas_Modo_De_Pago_Tarjeta_Verificar_Campos_Opcionales_Medio_De_Pago_TC() {
