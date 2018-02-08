@@ -37,7 +37,7 @@ import Pages.setConexion;
 
 public class Sales extends TestBase {
 	
-	protected String perfil = "call";
+	protected String perfil = "agente";
 	protected WebDriver driver;
 	protected  WebDriverWait wait;
 	String nombre="Roberto";
@@ -61,13 +61,13 @@ public class Sales extends TestBase {
 	String[] genero = {"masculino","femenino"};
 	String[] DocValue = {"52698550","3569874563","365","ssss"};
 	
-	//@AfterClass(alwaysRun=true)
+	@AfterClass(alwaysRun=true)
 	public void tearDown() {
 		driver.close();
 		driver.quit();
 	}
 	
-	//@AfterMethod(alwaysRun=true)
+	@AfterMethod(alwaysRun=true)
 	public void deslogin(){
 		try {Thread.sleep(10000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 		driver.get("https://crm--sit.cs14.my.salesforce.com/home/home.jsp?tsid=02u41000000QWha/");
@@ -76,7 +76,7 @@ public class Sales extends TestBase {
 
 	}
 	
-	@BeforeClass(groups={"sales", "AltaDeContacto"})
+	@BeforeClass(alwaysRun=true)
 	public void Init() throws Exception
 	{
 		this.driver = setConexion.setupEze();
@@ -109,7 +109,7 @@ public class Sales extends TestBase {
 		try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 	}
 
-	@BeforeMethod(groups={"sales", "AltaDeContacto"})
+	@BeforeMethod(alwaysRun=true)
 	public void setup() throws Exception {		
 		try {Thread.sleep(10000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 		driver.findElement(By.xpath("//a[@href=\'https://crm--sit--c.cs14.visual.force.com/apex/taClientSearch']")).click();
@@ -459,8 +459,8 @@ public class Sales extends TestBase {
 		WebElement num = driver.findElement(By.id("SearchClientDocumentNumber"));
 		List<WebElement> er = driver.findElements(By.cssSelector(".error.ng-scope"));
 		for(WebElement e : er){
-			e.getText().toLowerCase().equals("longitud m\u00ednima de 7 m\u00ednimo 7 caracteres y m\u00e1ximo 8 y el primer d\u00edgito no debe ser 0.");
-		as=true;
+			if (e.getText().toLowerCase().equals("longitud m\u00ednima de 7 m\u00ednimo 7 caracteres y m\u00e1ximo 8 y el primer d\u00edgito no debe ser 0."))
+				as=true;
 		}
 		Assert.assertTrue(as);
 	}
@@ -480,7 +480,7 @@ public class Sales extends TestBase {
 		Assert.assertTrue(as);
 	}
 	
-	//@Test(groups={"Sales", "AltaDeContacto", "Ola1"})
+	@Test(groups={"Sales", "AltaDeContacto", "Ola1"})
 	public void TS94550_Verificar_campo_CUIT_obligatorio(){
 		try {Thread.sleep(10000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 		ContactSearch contact = new ContactSearch(driver);

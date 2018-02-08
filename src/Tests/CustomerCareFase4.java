@@ -11,7 +11,6 @@ import org.testng.annotations.BeforeClass;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
-import Pages.BasePage;
 import Pages.CustomerCare;
 
 public class CustomerCareFase4 extends TestBase{
@@ -27,7 +26,7 @@ public class CustomerCareFase4 extends TestBase{
 		IrA.CajonDeAplicaciones.ConsolaFAN();
 	}
 	
-	//@AfterClass (groups = {"CustomerCare", "Vista360Layout", "DetalleDeConsumos", "ActualizarDatos", "ProblemasConRecargas", "DebitoAutomatico"})
+	@AfterClass (groups = {"CustomerCare", "Vista360Layout", "DetalleDeConsumos", "ActualizarDatos", "ProblemasConRecargas", "DebitoAutomatico"})
 	public void quit() {
 		page.cerrarTodasLasPestañas();
 		IrA.CajonDeAplicaciones.Ventas();
@@ -46,12 +45,11 @@ public class CustomerCareFase4 extends TestBase{
 		Actions builder = new Actions(driver);   
 		builder.moveToElement(btnSplit, 245, 20).click().build().perform();
 		driver.findElement(By.xpath("//*[text() = 'Casos']")).click();
-		try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
-		BasePage cambioFrameByID = new BasePage();
-		driver.switchTo().frame(cambioFrameByID.getFrameForElement(driver, By.className("piped")));
+		sleep(5000);
+		driver.switchTo().frame(cambioFrame(driver, By.className("piped")));
 		driver.findElement(By.name("newCase")).click();
-		try {Thread.sleep(10000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
-		driver.switchTo().frame(cambioFrameByID.getFrameForElement(driver, By.id("bottomButtonRow")));
+		sleep(10000);
+		driver.switchTo().frame(cambioFrame(driver, By.id("bottomButtonRow")));
 		List <WebElement> dc = driver.findElements(By.name("save"));
 		for (WebElement x : dc) {
 			if (x.getAttribute("value").contains("¿Desea continuar?")) {
@@ -59,12 +57,12 @@ public class CustomerCareFase4 extends TestBase{
 				break;
 			}
 		}
-		try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
-		driver.switchTo().frame(cambioFrameByID.getFrameForElement(driver, By.xpath("//*[@id=\"cas3\"]")));
+		sleep(5000);
+		driver.switchTo().frame(cambioFrame(driver, By.xpath("//*[@id=\"cas3\"]")));
 		driver.findElement(By.xpath("//*[@id=\"cas3\"]")).sendKeys("Fernandoasd Careeeeee");
 		driver.findElement(By.xpath("//*[@id=\"cas7\"]")).click();
 		driver.findElement(By.xpath("//*[text() = 'Nuevo']")).click();
-		driver.switchTo().frame(cambioFrameByID.getFrameForElement(driver, By.id("topButtonRow")));
+		driver.switchTo().frame(cambioFrame(driver, By.id("topButtonRow")));
 		List <WebElement> save = driver.findElements(By.name("save"));
 		for (WebElement x : save) {
 			if (x.getAttribute("value").contains("Guardar")) {
@@ -72,7 +70,7 @@ public class CustomerCareFase4 extends TestBase{
 				break;
 			}
 		}
-		try {Thread.sleep(10000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		sleep(10000);
 		WebElement cc = driver.findElement(By.cssSelector(".preamblecontainer.displayblock"));
 		Assert.assertTrue(cc.getText().toLowerCase().contains("creó este caso"));
 		List <WebElement> ec = driver.findElements(By.cssSelector(".dataCol.col02.inlineEditWrite"));
@@ -84,11 +82,11 @@ public class CustomerCareFase4 extends TestBase{
 				break;
 			}
 		}
-		try {Thread.sleep(10000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		sleep(10000);
 		driver.findElement(By.xpath("//*[@id=\"cas7\"]")).click();
 		driver.findElement(By.xpath("//*[text() = 'Cerrado']")).click();
 		driver.findElement(By.xpath("//*[@id=\"cas6\"]")).click();
-		try {Thread.sleep(2000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		sleep(2000);
 		driver.findElement(By.xpath("//*[text() = 'Complex functionality']")).click();
 		List <WebElement> cerrar = driver.findElements(By.className("btn"));
 		for (WebElement x : cerrar) {
@@ -119,13 +117,12 @@ public class CustomerCareFase4 extends TestBase{
 	public void TS37230_Automatic_Debit_Subscriptions_Sesión_guiada_Débito_Automático_Inicial_Paso_2_Adhesión_Cuenta_con_Mora() {
 		page.elegirCuenta("aaaaCuenta ConMora");
 		page.irAGestion("débito auto");
-		BasePage cambioFrameByID = new BasePage();
-		driver.switchTo().frame(cambioFrameByID.getFrameForElement(driver, By.className("borderOverlay")));
+		driver.switchTo().frame(cambioFrame(driver, By.className("borderOverlay")));
 		List <WebElement> element = driver.findElements(By.className("borderOverlay"));
 		element.get(0).click();
-		try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		sleep(5000);
 		driver.findElement(By.className("slds-checkbox--faux")).click();
-		try {Thread.sleep(7000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		sleep(7000);
 		WebElement error = driver.findElement(By.cssSelector(".message.description.ng-binding.ng-scope"));
 		Assert.assertTrue(error.getText().toLowerCase().contains("la cuenta de facturación aaaacuenta conmora está suspendida por mora"));
 	}
@@ -134,8 +131,7 @@ public class CustomerCareFase4 extends TestBase{
 	public void TS37469_360_View_Vista_360_de_facturación_clientes_individuos_Persistencia_Visualizar_Convenios_de_Pago() {
 		page.elegirCuenta("aaaaFernando Care");
 		page.irAFacturacion();
-		BasePage cambioFrameByID = new BasePage();
-		driver.switchTo().frame(cambioFrameByID.getFrameForElement(driver, By.cssSelector(".icon.icon-v-modify-contract")));
+		driver.switchTo().frame(cambioFrame(driver, By.cssSelector(".icon.icon-v-modify-contract")));
 		List <WebElement> element = driver.findElements(By.className("slds-text-body_regular"));
 		boolean a = false;
 		for (WebElement x : element) {
@@ -153,9 +149,8 @@ public class CustomerCareFase4 extends TestBase{
 		driver.switchTo().defaultContent();
 		List <WebElement> know = driver.findElements(By.className("sd_widget_btn_text"));
 		know.get(0).click();
-		try {Thread.sleep(3000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
-		BasePage cambioFrameByID = new BasePage();
-		driver.switchTo().frame(cambioFrameByID.getFrameForElement(driver, By.className("blocksettings")));
+		sleep(3000);
+		driver.switchTo().frame(cambioFrame(driver, By.className("blocksettings")));
 		Assert.assertTrue(driver.findElement(By.className("blocksettings")).isDisplayed());
 		Assert.assertTrue(driver.findElement(By.className("articleListItem")).isDisplayed());
 	}
@@ -193,12 +188,11 @@ public class CustomerCareFase4 extends TestBase{
 	@Test (groups = {"CustomerCare", "ActualizarDatos"})
 	public void TS69038_Profile_Changes_Perfil_del_cliente_Modificacion_DNI_CUIL_Verificar_Imposibilidad_de_modificar_DNI_y_CUIL_al_mismo_tiempo(){
 		page.elegirCuenta("aaaaFernando Care");
-		BasePage cambioFrameByID = new BasePage();
-		driver.switchTo().frame(cambioFrameByID.getFrameForElement(driver, By.className("profile-edit")));
+		driver.switchTo().frame(cambioFrame(driver, By.className("profile-edit")));
 		List <WebElement> act = driver.findElements(By.className("profile-edit"));
 		act.get(0).click();
-		try {Thread.sleep(10000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
-		driver.switchTo().frame(cambioFrameByID.getFrameForElement(driver, By.id("LastName")));
+		sleep(10000);
+		driver.switchTo().frame(cambioFrame(driver, By.id("LastName")));
 		WebElement dni = driver.findElement(By.id("DocumentType"));
 		WebElement cuil = driver.findElement(By.id("Cuil"));
 		Assert.assertTrue(dni.getAttribute("disabled").equals("true"));
@@ -448,9 +442,8 @@ public class CustomerCareFase4 extends TestBase{
 		waitFor(driver, By.cssSelector(".icon.icon-v-troubleshoot-line"));
 		List <WebElement> gest = driver.findElements(By.cssSelector(".icon.icon-v-troubleshoot-line"));
 		gest.get(1).click();
-		try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
-		BasePage cambioFrameByID = new BasePage();
-		driver.switchTo().frame(cambioFrameByID.getFrameForElement(driver, By.id("text-input-id-1")));
+		sleep(5000);
+		driver.switchTo().frame(cambioFrame(driver, By.id("text-input-id-1")));
 		Assert.assertTrue(driver.findElement(By.className("slds-m-around--medium")).isDisplayed());
 	}
 	
@@ -461,9 +454,8 @@ public class CustomerCareFase4 extends TestBase{
 		waitFor(driver, By.cssSelector(".icon.icon-v-troubleshoot-line"));
 		List <WebElement> gest = driver.findElements(By.cssSelector(".icon.icon-v-troubleshoot-line"));
 		gest.get(1).click();
-		try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
-		BasePage cambioFrameByID = new BasePage();
-		driver.switchTo().frame(cambioFrameByID.getFrameForElement(driver, By.id("text-input-id-1")));
+		sleep(5000);
+		driver.switchTo().frame(cambioFrame(driver, By.id("text-input-id-1")));
 		driver.findElement(By.cssSelector(".slds-button.slds-button--brand.filterNegotiations.slds-p-horizontal--x-large.slds-p-vertical--x-small")).click();
 		sleep(3000);
 		WebElement tipo = driver.findElement(By.xpath("//*[@id=\"j_id0:j_id5\"]/div/div/ng-include/div/div/div[3]/div[1]/div/table/tbody/tr[1]/td[2]"));
@@ -481,9 +473,8 @@ public class CustomerCareFase4 extends TestBase{
 		waitFor(driver, By.cssSelector(".icon.icon-v-troubleshoot-line"));
 		List <WebElement> gest = driver.findElements(By.cssSelector(".icon.icon-v-troubleshoot-line"));
 		gest.get(1).click();
-		try {Thread.sleep(7000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
-		BasePage cambioFrameByID = new BasePage();
-		driver.switchTo().frame(cambioFrameByID.getFrameForElement(driver, By.id("text-input-id-1")));
+		sleep(7000);
+		driver.switchTo().frame(cambioFrame(driver, By.id("text-input-id-1")));
 		Assert.assertTrue(driver.findElement(By.id("text-input-id-1")).isDisplayed());
 		Assert.assertTrue(driver.findElement(By.id("text-input-id-2")).isDisplayed());
 	}

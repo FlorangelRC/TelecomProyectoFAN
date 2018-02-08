@@ -1,5 +1,7 @@
 package Tests;
 
+import static org.testng.Assert.assertTrue;
+
 import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.Random;
@@ -18,6 +20,7 @@ import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
 import Pages.BasePage;
+import Pages.ContactSearch;
 import Pages.CustomerCare;
 import Pages.SalesBase;
 import Tests.TestBase.IrA;
@@ -26,20 +29,21 @@ public class Sales2 extends TestBase{
 
 	SalesBase sb;
 	String DNI = "DNI";
-
-	//@AfterClass
+	String provincia="Tucuman" ;
+	String localidad="SAN ISIDRO";
+	@AfterClass(alwaysRun=true)
 	public void tearDown() {
 		driver.quit();
 	}
 	
-	//@AfterMethod
+	@AfterMethod(alwaysRun=true)
 	public void deslogin() {
 		sleep(3000);
 		driver.get("https://crm--sit.cs14.my.salesforce.com/home/home.jsp?tsid=02u41000000QWha/");
 		sleep(10000);
 	}
 		
-	@BeforeClass
+	@BeforeClass(alwaysRun=true)
 	public void init() {
 		inicializarDriver();
 		sb = new SalesBase(driver);
@@ -47,7 +51,7 @@ public class Sales2 extends TestBase{
 		IrA.CajonDeAplicaciones.Ventas();
 	}
 	
-	@BeforeMethod
+	@BeforeMethod(alwaysRun=true)
 	public void setup() throws Exception {
 		sleep(5000);
 		driver.findElement(By.xpath("//a[@href=\'https://crm--sit--c.cs14.visual.force.com/apex/taClientSearch']")).click();
@@ -284,12 +288,37 @@ public class Sales2 extends TestBase{
 		
 	}
 	
-	@Test(groups={"Sales", "Ventas", "Ola1"})  //Falta terminar los pasos despues del carrito
+	@Test(groups={"Sales", "Ventas", "Ola1"})  
 	public void TS94646_Ventas_NumeroOrden_Verificar_Orden_de_Venta_Abierta_Medio_de_Pago() {
-		sb.BuscarCuenta(DNI, "11111111");
+		sb.BuscarCuenta(DNI, "34073329");
 		sb.acciondecontacto("catalogo");
-		sb.agregarplan("plan con tarjeta");
-		Assert.assertTrue(false);
+		sb.elegirplan("Plan con Tarjeta Repro");
+		sb.continuar();
+		sleep(10000);
+		List<WebElement> cont = driver.findElements(By.cssSelector(".slds-button.slds-m-left--large.slds-button--brand.ta-button-brand"));
+			for(WebElement c : cont){
+				c.getText().equals("Continuar");
+					c.click();
+			}
+		sleep(5000);
+		CustomerCare page = new CustomerCare(driver);
+		WebElement sig = driver.findElement(By.id("LineAssignment_nextBtn"));
+		page.obligarclick(sig);
+		sleep(8000);
+		driver.findElement(By.id("ICCDAssignment_nextBtn")).click();
+		sleep(8000);
+		WebElement sigue = driver.findElement(By.id("InvoicePreview_nextBtn"));
+		page.obligarclick(sigue);
+		sleep(15000);
+		boolean x = false;
+		List<WebElement> ord = driver.findElements(By.cssSelector(".ng-binding"));
+			for(WebElement o : ord){
+				if(	o.getText().contains("Nro. orden")){
+				o.isDisplayed();
+				x=true;
+				}
+			}
+		Assert.assertTrue(x);
 	}
 	
 	@Test(groups={"Sales", "Ventas", "Ola1"})
@@ -581,6 +610,112 @@ public class Sales2 extends TestBase{
 	}
 	
 	@Test(groups={"Sales", "Ventas", "Ola1"})
+	public void TS94730_Alta_De_Linea_Verificar_LOV_De_Modalidad_Entrega_Para_Canal_Presencial_Agentes() {
+		boolean Pr = false;
+		boolean Dl = false;
+		boolean St = false;
+		sb.BuscarCuenta(DNI, "34073329");
+		sb.acciondecontacto("catalogo");
+		sleep(15000);
+		driver.findElement(By.cssSelector(".slds-m-left--x-small.slds-button.slds-button--brand")).click();
+		sleep(7000);
+		driver.switchTo().frame(sb.getFrameForElement(driver, By.id("DeliveryMethodSelection")));
+		List<WebElement> OMdE = new Select(driver.findElement(By.id("SalesChannelConfiguration")).findElement(By.id("DeliveryMethodSelection"))).getOptions();
+		for (WebElement UnM : OMdE) {
+			if (UnM.getText().equalsIgnoreCase("presencial"))
+				Pr = true;
+			if (UnM.getText().equalsIgnoreCase("delivery"))
+				Dl = true;
+			if (UnM.getText().equalsIgnoreCase("store pick up"))
+				St = true;
+		}
+		Assert.assertTrue(Pr&&Dl&&St);
+	}
+	
+	@Test(groups={"Sales", "AltaDeLinea", "Ola1"})
+	public void TS94733_Alta_De_Linea_Verificar_Default_De_Modalidad_Entrega_Para_Canal_Presencial_Agentes(){
+		SalesBase SB = new SalesBase(driver);
+		SB.BuscarCuenta(DNI, "34073329");
+		SB.acciondecontacto("catalogo");
+		sleep(15000);
+		assertTrue(driver.findElement(By.cssSelector(".slds-col.taChangeDeliveryMethod.slds-text-body--small.slds-m-left--large")).findElement(By.tagName("strong")).getText().contains("Presencial"));
+	}
+	
+	 @Test(groups = {"Sales", "Ventas","Ola1"})
+	  public void TS94714_Ventas_BuscarCliente_Verificar_Solo_Clientes_No_Activos() {
+		  driver.findElement(By.id("PhoneNumber")).sendKeys("1157572274");
+		  driver.findElement(By.id("SearchClientsDummy")).click();
+		  sleep(5000);
+		  List <WebElement> cai = driver.findElement(By.className("slds-tabs--scoped__nav")).findElements(By.tagName("li"));
+		  if (cai.get(0).isDisplayed() || !cai.get(1).isDisplayed()) {
+			  Assert.assertTrue(false);
+		  }
+		  Assert.assertTrue(cai.get(1).findElement(By.tagName("a")).getText().contains("Inactivos"));
+	 }
+	
+	@Test(groups={"Sales", "Ventas", "Ola1"})
+	public void TS95111_Ventas_General_Verificar_Que_No_Se_Puede_Seleccionar_Una_Linea_Decisora_ProcesoVenta() {
+		boolean esta = false;
+		ContactSearch contact = new ContactSearch(driver);
+		sb.BuscarCuenta(DNI, "34073329");
+		sb.acciondecontacto("catalogo");
+		sleep(15000);
+		sb.elegirplan("Plan con Tarjeta Repro");
+		sleep(15000);
+		driver.findElement(By.cssSelector(".slds-button.slds-m-left--large.slds-button--brand.ta-button-brand")).click();
+		sleep(15000);
+		List<WebElement> LD = driver.findElements(By.tagName("a"));
+		for (WebElement UnLD : LD) {
+			System.out.println(UnLD.getText());
+			if (UnLD.getText().equalsIgnoreCase("elegir como l\u00ednea decisora"))
+				esta = true;
+		}
+		Assert.assertFalse(esta);
+	}
+	
+	@Test(groups={"Sales", "AltaDeContacto", "Ola1"})
+	public void TS94554_Alta_De_Contacto_Persona_Fisica_Verificar_Campo_Tipo_De_Documento_Por_Default() {
+		boolean esta = false;
+		Random aleatorio = new Random(System.currentTimeMillis());
+		aleatorio.setSeed(System.currentTimeMillis());
+		int intAleatorio = aleatorio.nextInt(8999999)+1000000;
+		ContactSearch contact = new ContactSearch(driver);
+		driver.findElement(By.id("SearchClientDocumentNumber")).sendKeys(Integer.toString(intAleatorio));
+		driver.findElement(By.id("SearchClientsDummy")).click();
+		sleep(5000);
+		List <WebElement> cc = driver.findElements(By.cssSelector(".slds-form-element__label.ng-binding"));
+		for (WebElement x : cc) {
+			if (x.getText().toLowerCase().contains("+ crear nuevo cliente")) {
+				x.click();
+				break;
+			}
+		}
+		sleep(5000);
+		System.out.println(new Select(driver.findElement(By.id("DocumentType"))).getFirstSelectedOption().getText());
+		Assert.assertTrue(new Select(driver.findElement(By.id("DocumentType"))).getFirstSelectedOption().getText().equalsIgnoreCase("DNI"));
+		
+	}
+	
+	@Test(groups={"Sales", "AltaDeContacto","Ola1"})  // verificar
+	public void TS94566_Alta_De_Contacto_Persona_Fisica_Verificar_Mascara_Del_Campo_CUIT(){
+		try {Thread.sleep(10000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		boolean as = false;
+		ContactSearch contact = new ContactSearch(driver);
+		contact.searchContact("CUIT", "22458954", "");
+		WebElement num = driver.findElement(By.id("SearchClientDocumentNumber"));
+		Assert.assertTrue(num.getText().matches("\\d{2}-\\d{8}-\\d{1}"));
+		List <WebElement> cc = driver.findElements(By.cssSelector(".slds-form-element__label.ng-binding"));
+		for (WebElement x : cc) {
+			if (x.getText().toLowerCase().contains("+ crear nuevo cliente")) {
+				x.click();
+				break;
+			}
+		}
+		sleep(5000);
+		Assert.assertTrue(driver.findElement(By.id("DocumentNumber")).getAttribute("value").matches("\\d{2}-\\d{8}-\\d{1}"));
+	}
+	
+	@Test(groups={"Sales", "Ventas", "Ola1"})
 	public void TS94763_Ventas_Entregas_General_Modificar_el_lugar_de_entrega() {
 		sb.BuscarCuenta(DNI, "11111111");
 		sb.acciondecontacto("catalogo");
@@ -598,45 +733,46 @@ public class Sales2 extends TestBase{
 		Assert.assertTrue(!a.equals(b));
 	}
 	
-	@Test(groups={"Sales", "Ventas", "Ola1"})  
-	public void TS94762_Ventas_Modo_De_Pago_General_Verificar_LOV_Modalidad_De_Pago() {
+	@Test(groups={"Sales","Alta Linea","Ola1"})
+	public void TS94498_Alta_Linea_Configurar_Nueva_Linea_Modificar_linea_pre_asignada_ultimos_cuatro_digitos_XX(){
+		CustomerCare CC = new CustomerCare(driver);
 		sb.BuscarCuenta(DNI, "34073329");
-		boolean DPF = false;
-		boolean E = false;
-		boolean TC = false;
 		sb.acciondecontacto("catalogo");
 		sleep(15000);
 		sb.elegirplan("Plan con Tarjeta Repro");
 		sb.continuar();
 		sleep(10000);
-		List<WebElement> cont = driver.findElements(By.cssSelector(".slds-button.slds-m-left--large.slds-button--brand.ta-button-brand"));
-			for(WebElement c : cont){
-				c.getText().equals("Continuar");
-					c.click();
-			}
-		sleep(5000);
+		List<WebElement> modi = driver.findElements(By.cssSelector(".slds-form-element__label--toggleText.ng-binding"));
+			for(WebElement m : modi){
+				m.getText().equals("Modificar b\u00fasqueda");
+					m.click();}
+		WebElement digit = driver.findElement(By.id("Sufijo"));
+		digit.sendKeys("7354");
+		sleep(1500);
+		WebElement cont = driver.findElement(By.id("ChangeNumber"));
+		CC.obligarclick(cont);
+		sleep(8000);
+		WebElement ultnum = driver.findElement(By.cssSelector(".slds-checkbox__label.ta-cyan-color-dark")).findElements(By.tagName("span")).get(1);
+		System.out.println(ultnum.getText());
+		Assert.assertTrue(ultnum.getText().contains("7354"));
+ 	}
+	
+	@Test(groups={"Sales", "Configuracion", "Ola1"})  
+	public void TS94807_Configuracion_Verificar_Asignacion_De_Seriales_AgentePresencial() {
+		sb.BuscarCuenta(DNI, "34073329");
+		sb.acciondecontacto("catalogo");
+		sleep(15000);
+		sb.elegirplan("Plan con Tarjeta Repro");
+		sb.continuar();
+		sleep(10000);
 		CustomerCare page = new CustomerCare(driver);
 		WebElement sig = driver.findElement(By.id("LineAssignment_nextBtn"));
 		page.obligarclick(sig);
 		sleep(10000);
-		page.obligarclick(driver.findElement(By.id("ICCDAssignment_nextBtn")));
-		sleep(10000);
-		page.obligarclick(driver.findElement(By.id("InvoicePreview_nextBtn")));
-		sleep(10000);
-		driver.findElement(By.id("PaymentMethodRadio")).click();
-		sleep(4000);
-		List<WebElement> mediosP = driver.findElements(By.cssSelector(".slds-list__item.ng-binding.ng-scope"));
-		for (WebElement UnMP : mediosP) {
-			if(UnMP.getText().toLowerCase().contains("debito a proxima factura"))
-				DPF = true;
-			if (UnMP.getText().toLowerCase().contains("efectivo"))
-				E = true;
-			if (UnMP.getText().toLowerCase().contains("tarjeta de credito"))
-				TC = true;
-		}
-		Assert.assertTrue(DPF&&E&&TC);
-		
+		WebElement serial = driver.findElement(By.id("ICCIDConfiguration")).findElement(By.tagName("tbody")).findElement(By.tagName("tr")).findElements(By.tagName("td")).get(1);
+		Assert.assertTrue(!serial.findElement(By.tagName("input")).getAttribute("value").isEmpty());
 	}
+	
 	@Test(groups={"Sales", "Ventas", "Ola1"})
 	public void TS94777_Ventas_Entregas_General_Store_Pickup_Consulta_stock_por_PDV_Visualizar_campos_filtro_de_la_consulta() {
 		sb.BuscarCuenta(DNI, "34073329");
@@ -775,4 +911,132 @@ public class Sales2 extends TestBase{
 	}
 	
 	
+	@Test(groups={"Sales","Alta Linea","Ola1"})  //Continua aunque no se asigne las lianeas
+	public void TS94497_Alta_Linea_Configurar_Nueva_Linea_Intentar_pasar_al_siguiente_paso_lineas_incompletas_XX(){
+		CustomerCare CC = new CustomerCare(driver);
+		sb.BuscarCuenta(DNI, "34073329");
+		sb.acciondecontacto("catalogo");
+		sleep(15000);
+		sb.elegirplan("Plan con Tarjeta Repro");
+		sb.continuar();
+		sleep(10000);
+		WebElement bx = driver.findElement(By.id("tree0-node1__label"));
+		CC.obligarclick(bx);
+		sleep(3000);
+		WebElement sig = driver.findElement(By.id("LineAssignment_nextBtn"));
+		CC.obligarclick(sig);
+		sleep(8000);
+		boolean x = true;
+		List<WebElement> serial = driver.findElements(By.cssSelector(".slds-page-header__title.vlc-slds-page-header__title.slds-truncate.ng-binding"));
+			for(WebElement s : serial){
+				s.getText().equals("Ingreso de serial");
+				System.out.println(s.getText());
+				s.isDisplayed();
+				x=false;
+			}
+		Assert.assertTrue(x);
+	}
+	
+	@Test(groups={"Sales","Alta Linea","Ola1"}) // No figura el lote de lineas
+	public void TS94494_Alta_Linea_Configurar_Nueva_Linea_Buscar_nuevo_lote_de_lineas_pre_asignadas_XX(){
+		CustomerCare CC = new CustomerCare(driver);
+		sb.BuscarCuenta(DNI, "34073329");
+		sb.acciondecontacto("catalogo");
+		sleep(15000);
+		sb.elegirplan("Plan con Tarjeta Repro");
+		sb.continuar();
+		sleep(10000);
+		WebElement bx = driver.findElement(By.id("tree0-node1__label"));
+		CC.obligarclick(bx);
+		sleep(3000);
+		Assert.assertTrue(false);
+	}
+	
+	@Test(groups={"Sales","Alta Linea","Ola1"}) 	
+	public void TS94503_Alta_Linea_Configurar_Nueva_Linea_Visualizar_lineas_pre_asignadas_automaticamente_XX(){
+		sb.BuscarCuenta(DNI, "34073329");
+		sb.acciondecontacto("catalogo");
+		sleep(15000);
+		sb.elegirplan("Plan con Tarjeta Repro");
+		sb.continuar();
+		sleep(10000);
+		WebElement bx = driver.findElement(By.id("tree0-node1"));
+		Assert.assertTrue(bx.isDisplayed());
+	}
+	
+	@Test(groups={"Sales","Alta Linea","Ola1"}) 	
+	public void TS94499_Alta_Linea_Configurar_Nueva_Linea_Presionar_el_boton_Buscar_XX(){
+		CustomerCare CC = new CustomerCare(driver);
+		sb.BuscarCuenta(DNI, "34073329");
+		sb.acciondecontacto("catalogo");
+		sleep(15000);
+		sb.elegirplan("Plan con Tarjeta Repro");
+		sb.continuar();
+		sleep(10000);
+		List<WebElement> modi = driver.findElements(By.cssSelector(".slds-form-element__label--toggleText.ng-binding"));
+			for(WebElement m : modi){
+				m.getText().equals("Modificar b\u00fasqueda");
+					m.click();}
+		Select prov = new Select (driver.findElement(By.id("SelectProvincia")));
+		prov.selectByVisibleText("Catamarca");
+		sleep(3000);
+		Select loc = new Select (driver.findElement(By.id("SelectLocalidad")));
+		loc.selectByVisibleText("ACHALCO");
+		WebElement digit = driver.findElement(By.id("Sufijo"));
+		digit.sendKeys("7354");
+		sleep(1500);
+		WebElement cont = driver.findElement(By.id("ChangeNumber"));
+		CC.obligarclick(cont);
+		sleep(8000);
+		WebElement txt = driver.findElement(By.id("LineAssingmentMessage")).findElement(By.tagName("div")).findElements(By.tagName("strong")).get(0);
+		Assert.assertTrue((txt.getText().equals("Catamarca")));
+		WebElement txt2 = driver.findElement(By.id("LineAssingmentMessage")).findElement(By.tagName("div")).findElements(By.tagName("strong")).get(1);
+		Assert.assertTrue(txt2.getText().equals("ACHALCO"));
+	}
+	
+	@Test(groups={"Sales","Alta Linea","Ola1"}) 	
+	public void TS94501_Alta_Linea_Configurar_Nueva_Linea_Visualizar_filtros_de_localidad_y_provincia_al_modificar_linea_XX(){
+		CustomerCare CC = new CustomerCare(driver);
+		sb.BuscarCuenta(DNI, "34073329");
+		sb.acciondecontacto("catalogo");
+		sleep(15000);
+		sb.elegirplan("Plan con Tarjeta Repro");
+		sb.continuar();
+		sleep(10000);
+		List<WebElement> modi = driver.findElements(By.cssSelector(".slds-form-element__label--toggleText.ng-binding"));
+			for(WebElement m : modi){
+				m.getText().equals("Modificar b\u00fasqueda");
+					m.click();}
+		sleep(3000);
+		try{ driver.findElement(By.id("SelectProvincia")).click();
+		driver.findElement(By.id("SelectLocalidad")).click();
+		Assert.assertTrue(true);}
+		catch(org.openqa.selenium.ElementNotVisibleException ex1){
+		Assert.assertTrue(false);	
+		}
+	}	
+	
+	//@Test(groups={"Sales","Alta Linea","Ola1"}) 	
+	public void TS94502_Alta_Linea_Configurar_Nueva_Linea_Visualizar_home_de_la_linea_pre_asignada_correspondiente_a_direccion_de_facturacion_XX(){
+		sb.BtnCrearNuevoCliente();
+		CustomerCare CC = new CustomerCare(driver);
+		ContactSearch contact = new ContactSearch(driver);
+		try {Thread.sleep(10000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		driver.findElement(By.id("FirstName")).sendKeys("yy");
+		driver.findElement(By.id("LastName")).sendKeys("z");
+		driver.findElement(By.id("Birthdate")).sendKeys("28/12/1999");
+		contact.sex("masculino");
+		driver.findElement(By.id("Contact_nextBtn")).click();
+		sleep(3000);
+		sb.elegirplan("Plan con Tarjeta Repro");
+		sb.continuar();
+		sleep(10000);
+		sb.Crear_DomicilioLegal(provincia, localidad, "falsa", "", "1000", "", "", "1549");
+		sleep(5000);
+	
+		
+	
+	
+	
+	}
 }
