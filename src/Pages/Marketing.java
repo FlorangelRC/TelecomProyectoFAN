@@ -402,8 +402,19 @@ public class Marketing extends CustomerCare {
 	}
 	
 	public Boolean visualizarCuentasConsumerUsuarioCP() {
-		waitForVisibilityOfElementLocated(By.xpath("//ng-form[@id='businessAccounts']//tbody"));
+		waitForVisibilityOfElementLocated(By.xpath("//ng-form[@id='consumerAccounts']//tbody"));
 		List<WebElement> listaCuentas = driver.findElements(By.xpath("//ng-form[@id='consumerAccounts']//tbody//tr"));
 		return (listaCuentas.size() > 0 && listaCuentas.get(0).isDisplayed());
 	}
+	
+	public Boolean visualizarCuentasSeleccionadasConsumerCP() {
+		waitForVisibilityOfElementLocated(By.xpath("//ng-form[@id='consumerResult']//tbody"));
+		return (driver.findElement(By.xpath("//ng-form[@id='consumerResult']//tbody")).getText().length() > 0);
+	}
+	
+	public Boolean visualizarCuentasSeleccionadasBusinessCP() {
+		waitForVisibilityOfElementLocated(By.xpath("//ng-form[@id='businessResult']//tbody"));
+		return (driver.findElement(By.xpath("//ng-form[@id='businessResult']//tbody")).getText().length() > 0);
+	}
+	
 }

@@ -90,5 +90,27 @@ public class MarketingOla1_Joaquin extends TestBase {
 		Assert.assertTrue(Page.visualizarCuentasBusinessUsuarioCP());
 	}
 	
+	@Test(groups = {"Marketing", "Ola1"})
+	public void TS98039_Visualizacion_de_cuentas_seleccionadas_Alta_CP() {
+		Page.elegirCuenta("Florencia Marketing");
+		Page.irAGestionMarketing();
+		Page.clubPersonal("alta");
+		Page.seleccionarCuenta("consumerAccounts");
+		Page.botonSiguiente().click();
+
+		Assert.assertTrue(Page.visualizarCuentasSeleccionadasConsumerCP());
+	}
+	
+	@Test(groups = {"Marketing", "Ola1"})
+	public void TS98040_No_visualizacion_de_cuentas_sin_seleccionar_Alta_CP() {
+		Page.elegirCuenta("Florencia Marketing");
+		Page.irAGestionMarketing();
+		Page.clubPersonal("alta");
+		Page.seleccionarCuenta("consumerAccounts");
+		Page.botonSiguiente().click();
+		
+		Assert.assertTrue(!Page.visualizarCuentasSeleccionadasBusinessCP());
+	}
+	
 
 }
