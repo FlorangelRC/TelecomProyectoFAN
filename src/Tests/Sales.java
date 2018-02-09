@@ -38,7 +38,7 @@ import Pages.setConexion;
 
 public class Sales extends TestBase {
 	
-	protected String perfil = "call";
+	protected String perfil = "agente";
 	protected WebDriver driver;
 	protected  WebDriverWait wait;
 	String nombre="Roberto";
@@ -62,13 +62,13 @@ public class Sales extends TestBase {
 	String[] genero = {"masculino","femenino"};
 	String[] DocValue = {"52698550","3569874563","365","ssss"};
 	
-	@AfterClass(alwaysRun=true)
+	//@AfterClass(alwaysRun=true)
 	public void tearDown() {
 		driver.close();
 		driver.quit();
 	}
 	
-	@AfterMethod(alwaysRun=true)
+	//@AfterMethod(alwaysRun=true)
 	public void deslogin(){
 		try {Thread.sleep(10000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 		driver.get("https://crm--sit.cs14.my.salesforce.com/home/home.jsp?tsid=02u41000000QWha/");
@@ -413,7 +413,7 @@ public class Sales extends TestBase {
 		SalesBase sb = new SalesBase(driver);
 		sb.BuscarCuenta(DNI, "34073329");
 		sb.acciondecontacto("catalogo");
-		sleep(15000);
+		sleep(18000);
 		sb.elegirplan("Plan con Tarjeta Repro");
 		sb.continuar();
 		sleep(10000);
@@ -1803,21 +1803,19 @@ public class Sales extends TestBase {
 		}
 	}
 	
-	@Test(groups = "Sales")
-	 public void TS76153_Blacklist_Validacion_de_cliente_en_blacklist_Cliente_DNI(){
+	@Test(groups = {"Sales","AltaDeContacto","Ola1"})
+	 public void TS95218_Blacklist_Validacion_de_cliente_en_blacklist_Cliente_DNI(){
 	  SalesBase SB = new SalesBase(driver);
 	  Boolean t = false;
-	  SB.BuscarCuenta(DNI, "28672141");
+	  SB.BuscarCuenta(DNI, "22355504");
 	  SB.acciondecontacto("catalogo");
-	  List <WebElement> pp = driver.findElements(By.cssSelector(".slds-radio--faux"));
-	  for(WebElement p : pp){
-	   if (p.getText().toLowerCase().equals("products")){
-	   p.isDisplayed();
-	   t=true;
-	   }
-	  }
-	 Assert.assertTrue(t);  
-	 }
+	  sleep(18000);
+	  WebElement pp = driver.findElement(By.cssSelector(".slds-grid.slds-grid--vertical-align-center.slds-grid--align-center.cpq-no-products-msg"));
+	   assertTrue(pp.getText().toLowerCase().contains("no products available")); 
+	  
+	 }  
+	
+	
 	 @Test(groups = {"Sales", "AltaDeContacto","Ola1"})
 	  public void TS94734_Alta_de_Contacto_Persona_Fisica_Verificar_seleccion_de_localidad_existente(){ 
 	    SalesBase SB = new SalesBase(driver); 
