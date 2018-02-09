@@ -29,14 +29,15 @@ public class Sales2 extends TestBase{
 
 	SalesBase sb;
 	String DNI = "DNI";
-	String provincia="Buenos Aires" ;
+	String provincia="Tucuman" ;
 	String localidad="SAN ISIDRO";
-	@AfterClass(alwaysRun=true)
+	
+	//@AfterClass(alwaysRun=true)
 	public void tearDown() {
 		driver.quit();
 	}
 	
-	@AfterMethod(alwaysRun=true)
+	//@AfterMethod(alwaysRun=true)
 	public void deslogin() {
 		sleep(3000);
 		driver.get("https://crm--sit.cs14.my.salesforce.com/home/home.jsp?tsid=02u41000000QWha/");
@@ -910,6 +911,179 @@ public class Sales2 extends TestBase{
 		Assert.assertTrue(a);
 	}
 	
+	@Test(groups={"Sales", "AltaDeLinea", "Ola1"})
+	public void TS94496_Alta_Linea_Configurar_Nueva_Linea_Desplegar_desde_la_descripcion_del_plan_todas_las_lineas_XX() {
+		sb.BuscarCuenta(DNI, "34073329");
+		sb.acciondecontacto("catalogo");
+		sleep(15000);
+		sb.elegirplan("Plan con Tarjeta Repro");
+		sleep(15000);
+		driver.findElement(By.cssSelector(".slds-button.slds-m-left--large.slds-button--brand.ta-button-brand")).click();
+		sleep(10000);
+		WebElement line = driver.findElement(By.cssSelector(".slds-tree__container.ng-scope"));
+		boolean a = false;
+		boolean b = false;
+		if (line.getText().toLowerCase().contains("lineas disponibles")) {
+			a = true;
+		}
+		if (line.getText().toLowerCase().contains("011")) {
+			b = true;
+		}
+		Assert.assertTrue(a && b);
+	}
+	
+	@Test(groups={"Sales", "AltaDeLinea", "Ola1"})
+	public void TS94495_Alta_Linea_Configurar_Nueva_Linea_Cancelar_la_venta_al_no_tener_lineas_disponibles_XX() {
+		sb.BuscarCuenta(DNI, "34073329");
+		sb.acciondecontacto("catalogo");
+		sleep(15000);
+		sb.elegirplan("Plan con Tarjeta Repro");
+		sleep(15000);
+		driver.findElement(By.cssSelector(".slds-button.slds-m-left--large.slds-button--brand.ta-button-brand")).click();
+		sleep(10000);
+		driver.findElement(By.cssSelector(".slds-form-element__label--toggleText.ng-binding")).click();
+		Select loc = new Select(driver.findElement(By.id("SelectLocalidad")));
+		loc.selectByVisibleText("JUAN BLAQUIER");
+		driver.findElement(By.id("ChangeNumber")).click();
+		sleep(5000);
+		WebElement line = driver.findElement(By.cssSelector(".slds-tree__container.ng-scope"));
+		boolean a = false;
+		if (line.getText().toLowerCase().contains("no se encontro linea disponible")) {
+			a = true;
+		}
+		List <WebElement> canc = driver.findElements(By.cssSelector(".vlc-slds-button--tertiary.ng-binding.ng-scope"));
+		Assert.assertTrue(a);
+		Assert.assertTrue(canc.get(0).isDisplayed());
+	}
+	
+	@Test(groups={"Sales", "AltaDeLinea", "Ola1"})
+	public void TS94508_Alta_Linea_Modo_de_Entrega_Seleccionar_modo_de_entrega_presencial_Producto_Tangible_52() {
+		sb.BuscarCuenta(DNI, "34073329");
+		sb.acciondecontacto("catalogo");
+		sleep(15000);
+		driver.findElement(By.cssSelector(".slds-m-left--x-small.slds-button.slds-button--brand")).click();
+		sleep(7000);
+		driver.switchTo().frame(cambioFrame(driver, By.id("DeliveryMethodSelection")));
+		Select env = new Select (driver.findElement(By.id("DeliveryMethodSelection")));
+		env.selectByVisibleText("Presencial");
+		driver.findElement(By.id("SalesChannelConfiguration_nextBtn")).click();
+		sleep(7000);
+		WebElement mde = driver.findElement(By.cssSelector(".slds-col.taChangeDeliveryMethod.slds-text-body--small.slds-m-left--large"));
+		Assert.assertTrue(mde.getText().contains("Presencial"));
+	}
+	
+	@Test(groups={"Sales", "AltaDeLinea", "Ola1"})
+	public void TS94625_Alta_Linea_Asignar_SIMCARD_Verificar_que_se_agrege_la_seleccion_al_carrito() {
+		sb.BuscarCuenta(DNI, "34073329");
+		sb.acciondecontacto("catalogo");
+		sleep(15000);
+		sb.elegirplan("Plan con Tarjeta Repro");
+		sleep(15000);
+		List <WebElement> plan = driver.findElements(By.cssSelector(".slds-button.cpq-item-has-children"));
+		for (WebElement x : plan) {
+			if (x.getText().toLowerCase().contains("plan con tarjeta repro")) {
+				x.click();
+				break;
+			}
+		}
+		sleep(5000);
+		List <WebElement> sim = driver.findElements(By.className("cpq-item-no-children"));
+		boolean a = false;
+		for (WebElement x : sim) {
+			if (x.getText().toLowerCase().contains("simcard")) {
+				a = true;
+			}
+		}
+		Assert.assertTrue(a);
+	}
+	
+	@Test(groups={"Sales", "Ventas", "Ola1"})
+	public void TS94642_Ventas_NumeroOrden_Visualizar_Orden_de_Venta_Abierta_Seleccionar_un_producto() {
+		sb.BuscarCuenta(DNI, "34073329");
+		sb.acciondecontacto("catalogo");
+		sleep(15000);
+		sb.elegirplan("Plan con Tarjeta Repro");
+		sleep(15000);
+		WebElement num = driver.findElement(By.cssSelector(".slds-list--horizontal.slds-col.slds-no-flex.slds-align-top"));
+		Assert.assertTrue(num.getText().contains("Nro. de Orden:"));
+	}
+	
+	@Test(groups={"Sales", "Ventas", "Ola1"})
+	public void TS94644_Ventas_NumeroOrden_Visualizar_Orden_de_Venta_Abierta_Modo_de_Entrega() {
+		sb.BuscarCuenta(DNI, "34073329");
+		sb.acciondecontacto("catalogo");
+		sleep(15000);
+		sb.elegirplan("Plan con Tarjeta Repro");
+		sleep(15000);
+		driver.findElement(By.cssSelector(".slds-button.slds-m-left--large.slds-button--brand.ta-button-brand")).click();
+		sleep(10000);
+		driver.findElement(By.id("LineAssignment_nextBtn")).click();
+		sleep(15000);
+		driver.findElement(By.id("ICCDAssignment_nextBtn")).click();
+		sleep(10000);
+		List <WebElement> num = driver.findElements(By.cssSelector(".slds-form-element.vlc-flex.vlc-slds-text-block.vlc-slds-rte.ng-pristine.ng-valid.ng-scope"));
+		boolean a = false;
+		for (WebElement x : num) {
+			if (x.getText().contains("Nro. orden:")) {
+				a = true;
+			}
+		}
+		Assert.assertTrue(a);
+	}
+	
+	@Test(groups={"Sales", "Ventas", "Ola1"})
+	public void TS94647_Ventas_NumeroOrden_Visualizar_Orden_de_Venta_Abierta_ICCID() {
+		sb.BuscarCuenta(DNI, "34073329");
+		sb.acciondecontacto("catalogo");
+		sleep(15000);
+		sb.elegirplan("Plan con Tarjeta Repro");
+		sleep(15000);
+		driver.findElement(By.cssSelector(".slds-button.slds-m-left--large.slds-button--brand.ta-button-brand")).click();
+		sleep(10000);
+		driver.findElement(By.id("LineAssignment_nextBtn")).click();
+		sleep(15000);
+		List <WebElement> num = driver.findElements(By.cssSelector(".slds-form-element.vlc-flex.vlc-slds-text-block.vlc-slds-rte.ng-pristine.ng-valid.ng-scope"));
+		boolean a = false;
+		for (WebElement x : num) {
+			if (x.getText().contains("Nro. orden:")) {
+				a = true;
+			}
+		}
+		Assert.assertTrue(a);
+	}
+	
+	@Test(groups={"Sales", "AltaDeCuenta", "Ola1"})
+	public void TS95207_Alta_de_Cuenta_Usuario_Verificar_usuario_del_asset_por_default() {
+		sb.BuscarCuenta(DNI, "34073329");
+		String a = driver.findElement(By.xpath("//*[@id=\"tab-scoped-1\"]/section/div/table/tbody/tr[1]/th/div")).getText();
+		sb.acciondecontacto("catalogo");
+		sleep(10000);
+		WebElement name = driver.findElement(By.cssSelector(".slds-page-header__title.slds-m-right--small.slds-truncate.slds-align-middle"));
+		Assert.assertTrue(name.getText().equals(a));	
+	}
+	
+	@Test(groups={"Sales", "AltaDeCuenta", "Ola1"})
+	public void TS95208_Alta_de_Cuenta_Usuario_Verificar_datos_para_la_creacion_de_usuarios() {
+		sb.BtnCrearNuevoCliente();
+		boolean masc = false;
+		boolean fem = false;
+		List <WebElement> genero = driver.findElements(By.cssSelector(".slds-form-element__label.ng-binding.ng-scope"));
+		for (WebElement x : genero) {
+			if (x.getText().toLowerCase().contains("femenino")) {
+				fem = true;
+			}
+			if (x.getText().toLowerCase().contains("masculino")) {
+				masc = true;
+			}
+		}
+		Assert.assertTrue(fem && masc);
+		Assert.assertTrue(driver.findElement(By.id("DocumentType")).isEnabled());
+		Assert.assertTrue(driver.findElement(By.id("DocumentNumber")).getAttribute("disabled").equals("true"));
+		Assert.assertTrue(driver.findElement(By.id("FirstName")).isEnabled());
+		Assert.assertTrue(driver.findElement(By.id("LastName")).isEnabled());
+		Assert.assertTrue(driver.findElement(By.id("Birthdate")).isEnabled());
+	}
+	
 	
 	@Test(groups={"Sales","Alta Linea","Ola1"})  //Continua aunque no se asigne las lianeas
 	public void TS94497_Alta_Linea_Configurar_Nueva_Linea_Intentar_pasar_al_siguiente_paso_lineas_incompletas_XX(){
@@ -1016,7 +1190,7 @@ public class Sales2 extends TestBase{
 		}
 	}	
 	
-	@Test(groups={"Sales","Alta Linea","Ola1"}) 	
+	//@Test(groups={"Sales","Alta Linea","Ola1"}) 	
 	public void TS94502_Alta_Linea_Configurar_Nueva_Linea_Visualizar_home_de_la_linea_pre_asignada_correspondiente_a_direccion_de_facturacion_XX(){
 		sb.BtnCrearNuevoCliente();
 		CustomerCare CC = new CustomerCare(driver);
@@ -1027,20 +1201,97 @@ public class Sales2 extends TestBase{
 		driver.findElement(By.id("Birthdate")).sendKeys("28/12/1999");
 		contact.sex("masculino");
 		driver.findElement(By.id("Contact_nextBtn")).click();
-		//String prov = driver.findElement(By.id("SearchClientDocumentNumber")).getAttribute("value");
-				//String loc = driver.findElement(By.id("SearchClientDocumentNumber")).getAttribute("value");
-	/*	sb.elegirplan("Plan con Tarjeta Repro");
+		sleep(3000);
+		sb.elegirplan("Plan con Tarjeta Repro");
 		sb.continuar();
 		sleep(10000);
-		List<WebElement> modi = driver.findElements(By.cssSelector(".slds-form-element__label--toggleText.ng-binding"));
-			for(WebElement m : modi){
-				m.getText().equals("Modificar b\u00fasqueda");
-					m.click();}
-		sleep(3000);*/
+		sb.Crear_DomicilioLegal(provincia, localidad, "falsa", "", "1000", "", "", "1549");
+		sleep(5000);
+	
 		
 	
 	
 	
+	}
+	
+	@Test(groups={"Sales", "AltaDeContacto", "Ola1"})
+	public void TS94590_Alta_de_Contacto_Persona_Fisica_Verificar_campos_inhabilitados_hasta_la_validacion_existosa_del_contacto_XX() {
+		BasePage Bp= new BasePage();
+		Random aleatorio = new Random(System.currentTimeMillis());
+		aleatorio.setSeed(System.currentTimeMillis());
+		int intAletorio = aleatorio.nextInt(8999999)+1000000;
+		Bp.setSimpleDropdown(driver.findElement(By.id("SearchClientDocumentType")),"DNI");
+		driver.findElement(By.id("SearchClientDocumentNumber")).sendKeys(Integer.toString(intAletorio));
+		driver.findElement(By.id("SearchClientsDummy")).click();
+		sleep(5000);
+		Assert.assertTrue(driver.findElement(By.cssSelector(".OSradioButton.ng-scope.only-buttom")).isEnabled());
+	}
+	
+	@Test(groups={"Sales", "Ventas", "Ola1"})
+	public void TS94782_Ventas_Entregas_General_Store_Pickup_Consulta_stock_por_PDV_Verificar_que_se_hablilite_solo_las_localidades_con_punto_de_venta_para_Store_Pickup() {
+		sb.BuscarCuenta(DNI, "34073329");
+		sb.acciondecontacto("catalogo");
+		sleep(15000);
+		driver.findElement(By.cssSelector(".slds-m-left--x-small.slds-button.slds-button--brand")).click();
+		sleep(7000);
+		driver.switchTo().frame(cambioFrame(driver, By.id("DeliveryMethodSelection")));
+		Select env = new Select (driver.findElement(By.id("DeliveryMethodSelection")));
+		env.selectByVisibleText("Store Pick Up");
+		Select prov = new Select (driver.findElement(By.id("State")));
+		prov.selectByVisibleText("Ciudad Aut\u00f3noma de Buenos Aires");
+		Select loc = new Select (driver.findElement(By.id("City")));
+		loc.selectByVisibleText("CIUD AUTON D BUENOS AIRES");
+		driver.findElement(By.id("Store")).click();
+		List <WebElement> pdv = driver.findElements(By.cssSelector(".slds-list__item.ng-binding.ng-scope"));
+		boolean a = false;
+		boolean b = false;
+		for (WebElement x : pdv) {
+			if (x.getText().toLowerCase().contains("centro de servicio santa fe - juan de garay null")) {
+				a = true;
+			}
+			if (x.getText().toLowerCase().contains("centro de servicio santa fe - rivadavia null")) {
+				b = true;
+			}
+		}
+		Assert.assertTrue(a && b);
+	}
+	
+	@Test(groups={"Sales", "Ventas", "Ola1"})
+	public void TS94785_Ventas_Entregas_General_Verificar_que_se_pueda_seleccionar_ModEntrega_Tangible() {
+		sb.BuscarCuenta(DNI, "34073329");
+		sb.acciondecontacto("catalogo");
+		sleep(15000);
+		driver.findElement(By.cssSelector(".slds-m-left--x-small.slds-button.slds-button--brand")).click();
+		sleep(7000);
+		driver.switchTo().frame(cambioFrame(driver, By.id("DeliveryMethodSelection")));
+		Select env = new Select (driver.findElement(By.id("DeliveryMethodSelection")));
+		env.selectByVisibleText("Store Pick Up");
+		Select prov = new Select (driver.findElement(By.id("State")));
+		prov.selectByVisibleText("Ciudad Aut\u00f3noma de Buenos Aires");
+		Select loc = new Select (driver.findElement(By.id("City")));
+		loc.selectByVisibleText("CIUD AUTON D BUENOS AIRES");
+		driver.findElement(By.id("Store")).click();
+		driver.findElements(By.cssSelector(".slds-list__item.ng-binding.ng-scope")).get(0).click();
+		driver.findElement(By.id("SalesChannelConfiguration_nextBtn")).click();
+		sleep(7000);
+		Assert.assertTrue(driver.findElement(By.cssSelector(".slds-col.taChangeDeliveryMethod.slds-text-body--small.slds-m-left--large")).getText().contains("Store Pick Up"));
+		driver.findElement(By.cssSelector(".slds-m-left--x-small.slds-button.slds-button--brand")).click();
+		sleep(7000);
+		driver.switchTo().frame(cambioFrame(driver, By.id("DeliveryMethodSelection")));
+		Select nenv = new Select (driver.findElement(By.id("DeliveryMethodSelection")));
+		nenv.selectByVisibleText("Delivery");
+		driver.findElement(By.id("SalesChannelConfiguration_nextBtn")).click();
+		sleep(7000);
+		Assert.assertTrue(driver.findElement(By.cssSelector(".slds-col.taChangeDeliveryMethod.slds-text-body--small.slds-m-left--large")).getText().contains("Delivery"));		
+	}
+	
+	@Test
+	public void TS94903_Venta_Medio_de_pago_Verificar_LOV_para_canal_Presencial_Oficinas_Comerciales_POC() {
+		sb.BuscarCuenta(DNI, "34073329");
+		sb.acciondecontacto("catalogo");
+		sleep(15000);
+		sb.elegirplan("Plan con Tarjeta Repro");
+		
 	}
 	
 	@Test(groups={"Sales","Ventas","Ola1"})
