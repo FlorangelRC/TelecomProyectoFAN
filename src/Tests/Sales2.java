@@ -31,12 +31,13 @@ public class Sales2 extends TestBase{
 	String DNI = "DNI";
 	String provincia="Tucuman" ;
 	String localidad="SAN ISIDRO";
-	@AfterClass(alwaysRun=true)
+	
+	//@AfterClass(alwaysRun=true)
 	public void tearDown() {
 		driver.quit();
 	}
 	
-	@AfterMethod(alwaysRun=true)
+	//@AfterMethod(alwaysRun=true)
 	public void deslogin() {
 		sleep(3000);
 		driver.get("https://crm--sit.cs14.my.salesforce.com/home/home.jsp?tsid=02u41000000QWha/");
@@ -1211,5 +1212,85 @@ public class Sales2 extends TestBase{
 	
 	
 	
+	}
+	
+	@Test(groups={"Sales", "AltaDeContacto", "Ola1"})
+	public void TS94590_Alta_de_Contacto_Persona_Fisica_Verificar_campos_inhabilitados_hasta_la_validacion_existosa_del_contacto_XX() {
+		BasePage Bp= new BasePage();
+		Random aleatorio = new Random(System.currentTimeMillis());
+		aleatorio.setSeed(System.currentTimeMillis());
+		int intAletorio = aleatorio.nextInt(8999999)+1000000;
+		Bp.setSimpleDropdown(driver.findElement(By.id("SearchClientDocumentType")),"DNI");
+		driver.findElement(By.id("SearchClientDocumentNumber")).sendKeys(Integer.toString(intAletorio));
+		driver.findElement(By.id("SearchClientsDummy")).click();
+		sleep(5000);
+		Assert.assertTrue(driver.findElement(By.cssSelector(".OSradioButton.ng-scope.only-buttom")).isEnabled());
+	}
+	
+	@Test(groups={"Sales", "Ventas", "Ola1"})
+	public void TS94782_Ventas_Entregas_General_Store_Pickup_Consulta_stock_por_PDV_Verificar_que_se_hablilite_solo_las_localidades_con_punto_de_venta_para_Store_Pickup() {
+		sb.BuscarCuenta(DNI, "34073329");
+		sb.acciondecontacto("catalogo");
+		sleep(15000);
+		driver.findElement(By.cssSelector(".slds-m-left--x-small.slds-button.slds-button--brand")).click();
+		sleep(7000);
+		driver.switchTo().frame(cambioFrame(driver, By.id("DeliveryMethodSelection")));
+		Select env = new Select (driver.findElement(By.id("DeliveryMethodSelection")));
+		env.selectByVisibleText("Store Pick Up");
+		Select prov = new Select (driver.findElement(By.id("State")));
+		prov.selectByVisibleText("Ciudad Aut\u00f3noma de Buenos Aires");
+		Select loc = new Select (driver.findElement(By.id("City")));
+		loc.selectByVisibleText("CIUD AUTON D BUENOS AIRES");
+		driver.findElement(By.id("Store")).click();
+		List <WebElement> pdv = driver.findElements(By.cssSelector(".slds-list__item.ng-binding.ng-scope"));
+		boolean a = false;
+		boolean b = false;
+		for (WebElement x : pdv) {
+			if (x.getText().toLowerCase().contains("centro de servicio santa fe - juan de garay null")) {
+				a = true;
+			}
+			if (x.getText().toLowerCase().contains("centro de servicio santa fe - rivadavia null")) {
+				b = true;
+			}
+		}
+		Assert.assertTrue(a && b);
+	}
+	
+	@Test(groups={"Sales", "Ventas", "Ola1"})
+	public void TS94785_Ventas_Entregas_General_Verificar_que_se_pueda_seleccionar_ModEntrega_Tangible() {
+		sb.BuscarCuenta(DNI, "34073329");
+		sb.acciondecontacto("catalogo");
+		sleep(15000);
+		driver.findElement(By.cssSelector(".slds-m-left--x-small.slds-button.slds-button--brand")).click();
+		sleep(7000);
+		driver.switchTo().frame(cambioFrame(driver, By.id("DeliveryMethodSelection")));
+		Select env = new Select (driver.findElement(By.id("DeliveryMethodSelection")));
+		env.selectByVisibleText("Store Pick Up");
+		Select prov = new Select (driver.findElement(By.id("State")));
+		prov.selectByVisibleText("Ciudad Aut\u00f3noma de Buenos Aires");
+		Select loc = new Select (driver.findElement(By.id("City")));
+		loc.selectByVisibleText("CIUD AUTON D BUENOS AIRES");
+		driver.findElement(By.id("Store")).click();
+		driver.findElements(By.cssSelector(".slds-list__item.ng-binding.ng-scope")).get(0).click();
+		driver.findElement(By.id("SalesChannelConfiguration_nextBtn")).click();
+		sleep(7000);
+		Assert.assertTrue(driver.findElement(By.cssSelector(".slds-col.taChangeDeliveryMethod.slds-text-body--small.slds-m-left--large")).getText().contains("Store Pick Up"));
+		driver.findElement(By.cssSelector(".slds-m-left--x-small.slds-button.slds-button--brand")).click();
+		sleep(7000);
+		driver.switchTo().frame(cambioFrame(driver, By.id("DeliveryMethodSelection")));
+		Select nenv = new Select (driver.findElement(By.id("DeliveryMethodSelection")));
+		nenv.selectByVisibleText("Delivery");
+		driver.findElement(By.id("SalesChannelConfiguration_nextBtn")).click();
+		sleep(7000);
+		Assert.assertTrue(driver.findElement(By.cssSelector(".slds-col.taChangeDeliveryMethod.slds-text-body--small.slds-m-left--large")).getText().contains("Delivery"));		
+	}
+	
+	@Test
+	public void TS94903_Venta_Medio_de_pago_Verificar_LOV_para_canal_Presencial_Oficinas_Comerciales_POC() {
+		sb.BuscarCuenta(DNI, "34073329");
+		sb.acciondecontacto("catalogo");
+		sleep(15000);
+		sb.elegirplan("Plan con Tarjeta Repro");
+		
 	}
 }

@@ -20,7 +20,7 @@ public class SalesMatrix extends TestBase {
 	private SalesBase sb;
 	
 		
-	@BeforeClass (groups = {"Sales", "Ventas", "AltaDeCuenta", "AltaDeLinea"})
+	@BeforeClass (alwaysRun = true)
 	public void init() throws Exception{
 		driver = setConexion.setupEze();
 		try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
@@ -46,7 +46,7 @@ public class SalesMatrix extends TestBase {
 	    try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 	}
 	
-	@AfterMethod (groups = {"Sales", "Ventas", "AltaDeCuenta", "AltaDeLinea"})
+	@AfterMethod (alwaysRun = true)
 	public void goBack(){
 		try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 		driver.switchTo().defaultContent();
@@ -54,7 +54,7 @@ public class SalesMatrix extends TestBase {
 		try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 	}
 
-	@AfterClass (groups = {"Sales", "Ventas", "AltaDeCuenta", "AltaDeLinea"})
+	@AfterClass (alwaysRun = true)
 	public void tearDown() {
 		driver.quit();
 	}
