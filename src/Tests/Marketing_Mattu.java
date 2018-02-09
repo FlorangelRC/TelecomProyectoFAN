@@ -418,7 +418,7 @@ public class Marketing_Mattu extends TestBase{
 		for(WebElement wAux : wCuentasBusiness) {
 			sCuentasSeleccionadas.add(wAux.getText());
 		}
-		
+		mMarketing.closeActiveTab();
 		String sCaso = mMarketing.darDeAltaCP();
 		boolean bAssertCerrado = mMarketing.corroborarCasoCerrado(sCaso);
 		WebElement wTable = driver.findElement(By.id("Case_body"));
