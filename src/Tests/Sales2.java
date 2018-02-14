@@ -1285,7 +1285,7 @@ public class Sales2 extends TestBase{
 		Assert.assertTrue(driver.findElement(By.cssSelector(".slds-col.taChangeDeliveryMethod.slds-text-body--small.slds-m-left--large")).getText().contains("Delivery"));		
 	}
 	
-	@Test
+	@Test(groups={"Sales", "Ventas", "Ola1"})
 	public void TS94903_Venta_Medio_de_pago_Verificar_LOV_para_canal_Presencial_Oficinas_Comerciales_POC() {
 		sb.BuscarCuenta(DNI, "34073329");
 		sb.acciondecontacto("catalogo");
@@ -1359,5 +1359,18 @@ public class Sales2 extends TestBase{
 		}
 		Assert.assertTrue(DPF&&E&&TC);
 		
+	}
+	
+	@Test(groups={"Sales", "AltaDeContacto", "Ola1"})
+	public void TS94947_Alta_de_Contacto_Busqueda_Verificar_boton_3_sobre_contactos() {
+		sb.BuscarCuenta(DNI, "11111111");
+		List <WebElement> btn = driver.findElements(By.cssSelector(".slds-button.slds-button.slds-button--icon"));
+		boolean a = false;
+		for (WebElement x : btn) {
+			if (x.getText().toLowerCase().equals("ver contacto")) {
+				a = true;
+			}
+		}
+		Assert.assertTrue(a);
 	}
 }

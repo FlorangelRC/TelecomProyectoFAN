@@ -61,7 +61,6 @@ public class customerInformationUpdates extends TestBase {
 	 		driver.findElement(By.xpath("//a[@href=\'/console?tsid=02uc0000000D6Hd\']")).click();	 		
 	 	}
 	 	sleep(10000);
-		//CustomerCare page = new CustomerCare(driver);
 		cc.cerrarultimapestaña();
 		cc.elegircuenta("aaaaFernando Care");
 		driver.switchTo().frame(cambioFrame(driver, By.className("profile-edit")));
