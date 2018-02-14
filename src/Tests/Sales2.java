@@ -1291,6 +1291,32 @@ public class Sales2 extends TestBase{
 		sb.acciondecontacto("catalogo");
 		sleep(15000);
 		sb.elegirplan("Plan con Tarjeta Repro");
-		
+		sleep(15000);
+		driver.findElement(By.cssSelector(".slds-button.slds-m-left--large.slds-button--brand.ta-button-brand")).click();
+		sleep(15000);
+		driver.findElement(By.id("LineAssignment_nextBtn")).click();
+		sleep(10000);
+		driver.findElement(By.id("ICCDAssignment_nextBtn")).click();
+		sleep(10000);
+		driver.findElement(By.id("InvoicePreview_nextBtn")).click();
+		sleep(10000);
+		driver.findElement(By.id("PaymentMethodRadio")).click();
+		sleep(3000);
+		List <WebElement> list = driver.findElements(By.cssSelector(".slds-list__item.ng-binding.ng-scope"));
+		boolean a = false;
+		boolean b = false;
+		boolean c = false;
+		for (WebElement x : list) {
+			if (x.getText().toLowerCase().contains("debito a proxima factura")) {
+				a = true;
+			}
+			if (x.getText().toLowerCase().contains("efectivo")) {
+				b = true;
+			}
+			if (x.getText().toLowerCase().contains("tarjeta de credito")) {
+				c = true;
+			}
+		}
+		Assert.assertTrue(a && b && c);
 	}
 }
