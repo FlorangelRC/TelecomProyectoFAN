@@ -97,21 +97,7 @@ public class TechCareOla1Almer extends TestBase {
 		page.clickOpcionEnAsset("1100000075", "mis servicios");
 		sleep(7000);
 		page.clickVerDetalle();
-		sleep(5000);
-		page.clickDiagnosticarServicio("Promocion WhatsApp Mensual");
 		
-		/*Accounts accPage = new Accounts(driver);
-		driver.switchTo().frame(accPage.getFrameForElement(driver, By.cssSelector(".slds-card__body.cards-container")));
-		List<WebElement> tablas=driver.findElements(By.cssSelector(".slds-card__body.cards-container"));
-		//Listado de opciones
-		System.out.println(tablas.get(0).findElement(By.xpath("//table//tbody//tr")).getText());
-		//Click en la flechita derecha del servicio
-		tablas.get(0).findElement(By.xpath("//table//tbody//tr")).findElement(By.className("slds-cell-shrink")).click();
-		sleep(2000);
-		//click en diagnoticar
-		tablas.get(0).findElement(By.xpath("//table//tbody//tr")).findElement(By.className("slds-cell-shrink")).
-		findElement(By.xpath("//div//div//ul//li//a//p")).click();
-		sleep(3000);*/
 	}
 
 	
