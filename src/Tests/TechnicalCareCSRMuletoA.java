@@ -27,7 +27,7 @@ public class TechnicalCareCSRMuletoA extends TestBase{
 	
 private WebDriver driver;
 	
-	@BeforeClass(groups= {"Fase3","TechnicalCare","Muleto"})
+	@BeforeClass(alwaysRun=true)
 	public void init() throws Exception
 	{
 		this.driver = setConexion.setupEze();
@@ -46,7 +46,7 @@ private WebDriver driver;
 	}
 	
 	
-	@BeforeMethod(groups= {"Fase3","TechnicalCare","Muleto"})
+	@BeforeMethod(alwaysRun=true)
 	public void setUp() throws Exception {
 		//Selecciona la cuenta Adrian Tech de todas las Cuentas
 				seleccionCuentaPorNombre(driver, "Adrian Techh");
@@ -55,14 +55,14 @@ private WebDriver driver;
 	}
 	
 	
-	@AfterMethod(groups= {"Fase3","TechnicalCare","Muleto"})
+	@AfterMethod(alwaysRun=true)
 	public void after() {
 		try {Thread.sleep(2000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 		CustomerCare cerrar = new CustomerCare(driver);
 		cerrar.cerrarultimapestaña();
 	}
 	
-	@AfterClass(groups= {"Fase3","TechnicalCare","Muleto"})
+	@AfterClass(alwaysRun=true)
 	public void tearDown() {
 		try {Thread.sleep(1000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 		CustomerCare cerrar = new CustomerCare(driver);
@@ -111,7 +111,7 @@ private WebDriver driver;
 	 * @author Almer
 	 * 
 	 */
-	@Test(groups= {"Fase3","TechnicalCare","Muleto"})
+	@Test(groups= {"Fase3","TechnicalCare","Muleto","Ola3"})
 	public void TS51111_CRM_Fase_3_Technical_Care_CSR_Muleto_Verificacion_contenido_campo_Accesorios() {
 	
 	//Cambio al Frame
@@ -152,7 +152,7 @@ private WebDriver driver;
 	 * apareza el mensaje  "No Posee Terminal Para Devolución"
 	 * @author Almer
 	 */
-	@Test(groups= {"Fase3","TechnicalCare","Muleto"})
+	@Test(groups= {"Fase3","TechnicalCare","Muleto","Ola3"})
 	public void TS51117_CRM_Fase_3_Technical_Care_CSR_Muleto_Visualizacion_mensaje_en_caso_de_No_poseer_Muleto() {
 		
 		Accounts accPage = new Accounts(driver);
@@ -184,7 +184,7 @@ private WebDriver driver;
 	 * se verifica que se pueda continuar sin escribir en el campo accesorio
 	 * @author Almer
 	 */
-	@Test(groups= {"Fase3","TechnicalCare","Muleto"})
+	@Test(groups= {"Fase3","TechnicalCare","Muleto","Ola3"})
 	public void TS51109_CRM_Fase_3_Technical_Care_CSR_Muleto_Verificacion_si_no_se_ingresa_un_texto_puede_continuar_con_la_gestion() {
 	
 	//Cambio al Frame
@@ -214,7 +214,7 @@ private WebDriver driver;
 	 *Se Verifica que en Entrega de muleto se pueda seleccionar un  muleto(Dispositivos) de la lista.
 	 * @author Almer
 	 */
-	@Test(groups= {"Fase3","TechnicalCare","Muleto"})
+	@Test(groups= {"Fase3","TechnicalCare","Muleto","Ola3"})
 	public void TS51097_CRM_Fase_3_Technical_Care_CSR_Muleto_Verificacion_seleccion_de_uNO_del_listado() {
 	
 	//Cambio al Frame
@@ -240,7 +240,7 @@ private WebDriver driver;
 	/**
 	 * Se verifica que al seleccionar "Numero de Caso" se pueda ingresar el numero de caso.
 	 */
-	@Test(groups= {"Fase3","TechnicalCare","Muleto"})
+	@Test(groups= {"Fase3","TechnicalCare","Muleto","Ola3"})
 	public void TS51114_CRM_Fase_3_Technical_Care_CSR_Muleto_Verificacion_ingreso_del_NuMERO_de_Caso_para_Devolucion_de_muleto() {
 		
 		Accounts accPage = new Accounts(driver);
@@ -260,7 +260,7 @@ private WebDriver driver;
 	/**
 	 * Se verifica que al ingresar un dni que NO este en blacklist, se pueda continuar con la gestion.
 	 */
-	@Test(groups= {"Fase3","TechnicalCare","Muleto"})
+	@Test(groups= {"Fase3","TechnicalCare","Muleto","Ola3"})
 	public void TS51088_CRM_Fase_3_Technical_Care_CSR_Muleto_Verificacion_Blacklist_negativo() {
 	
 	//Cambio al Frame
@@ -281,7 +281,7 @@ private WebDriver driver;
 		catch(Exception e) {assertTrue(false);}
 	}
 	
-	@Test(groups= {"Fase3","TechnicalCare","Muleto"})
+	@Test(groups= {"Fase3","TechnicalCare","Muleto","Ola3"})
 	public void TS51110_CRM_Fase_3_Technical_Care_CSR_Muleto_Verificacion_si_no_se_ingresa_un_texto_puede_continuar_con_la_gestion() {
 	
 	//Cambio al Frame
@@ -312,7 +312,7 @@ private WebDriver driver;
 	 * Ingresa a devolucion de muleto, llena los datos segun el numero de caso, y verifica que se pueda seleccionar una opcion
 	 * en el select "TIPO DE DEVOLUCIOM"
 	 */
-	@Test(groups= {"Fase3","TechnicalCare","Muleto"})
+	@Test(groups= {"Fase3","TechnicalCare","Muleto","Ola3"})
 	public void TS51121_CRM_Fase_3_Technical_Care_CSR_Muleto_Seleccion_de_uN_dato_de_la_lista() {
 	
 	//Cambio al Frame
@@ -340,7 +340,7 @@ private WebDriver driver;
 	 * Selecciona entrega de muleto, ingresa el dni, pasa las validaciones del cliente, selecciona un terminal y verifica que
 	 * se pueda ingresar texto alfanumerico en el campo accesorios.
 	 */
-	@Test(groups= {"Fase3","TechnicalCare","Muleto"})
+	@Test(groups= {"Fase3","TechnicalCare","Muleto","Ola3"})
 	public void TS51102_CRM_Fase_3_Technical_Care_CSR_Muleto_Verificacion_el_ingreso_de_un_texto_ALFANuMERICO() {
 	
 	//Cambio al Frame
@@ -367,7 +367,7 @@ private WebDriver driver;
 	 * Selecciona entrega de muleto, ingresa el dni, pasa las validaciones del cliente, selecciona un terminal y verifica que
 	 * se pueda ingresar solo texto en el campo accesorios.
 	 */
-	@Test(groups= {"Fase3","TechnicalCare","Muleto"})
+	@Test(groups= {"Fase3","TechnicalCare","Muleto","Ola3"})
 	public void TS51103_CRM_Fase_3_Technical_Care_CSR_Muleto_Verificacion_el_ingreso_de_un_texto_de_LETRAS() {
 	
 	//Cambio al Frame
@@ -395,7 +395,7 @@ private WebDriver driver;
 	 * Selecciona entrega de muleto, ingresa el dni, pasa las validaciones del cliente, selecciona un terminal y verifica que
 	 * se pueda ingresar solo Numeros en el campo accesorios.
 	 */
-	@Test(groups= {"Fase3","TechnicalCare","Muleto"})
+	@Test(groups= {"Fase3","TechnicalCare","Muleto","Ola3"})
 	public void TS51104_CRM_Fase_3_Technical_Care_CSR_Muleto_Verificacion_el_ingreso_de_un_texto_DE_NuMEROS() {
 	
 	//Cambio al Frame
@@ -423,7 +423,7 @@ private WebDriver driver;
 	 * Selecciona entrega de muleto, ingresa el dni, pasa las validaciones del cliente, selecciona un terminal y verifica que
 	 * se pueda ingresar un texto menor o igual a 255 caracteres en el campo accesorios.
 	 */
-	@Test(groups= {"Fase3","TechnicalCare","Muleto"})
+	@Test(groups= {"Fase3","TechnicalCare","Muleto","Ola3"})
 	public void TS51106_CRM_Fase_3_Technical_Care_CSR_Muleto_Verificacion_el_ingreso_de_un_texto_limitado_a_255_caracteres() {
 	
 	//Cambio al Frame
@@ -447,7 +447,7 @@ private WebDriver driver;
 		assertTrue(driver.findElement(By.cssSelector(".slds-button.slds-button--neutral.TechCare-DownloadPDF-Btn")).isDisplayed());
 	}
 	
-	@Test(groups= {"Fase3","TechnicalCare","Muleto"})
+	@Test(groups= {"Fase3","TechnicalCare","Muleto","Ola3"})
 	public void TS51119_CRM_Fase_3_Technical_Care_CSR_Muleto_Visualizacion_datos_de_Terminal_en_devolucion_de_muleto() {
 	
 	//Cambio al Frame
@@ -467,7 +467,7 @@ private WebDriver driver;
 	/**
 	 * Se Verifica que el campo(Aceesorios) para ingresar texto, este disponible.
 	 */
-	@Test(groups= {"Fase3","TechnicalCare","Muleto"})
+	@Test(groups= {"Fase3","TechnicalCare","Muleto","Ola3"})
 	public void TS51101_CRM_Fase_3_Technical_Care_CSR_Muleto_Visualizacion_de_campo_para_ingresar_texto() {
 	//Cambio al Frame
 		Accounts accPage = new Accounts(driver);
@@ -490,7 +490,7 @@ private WebDriver driver;
 	/**
 	 * Se Verifica que La pantalla Entrega-Devolucion de Muleto este disponble
 	 */
-	@Test(groups= {"Fase3","TechnicalCare","Muleto"})
+	@Test(groups= {"Fase3","TechnicalCare","Muleto","Ola3"})
 	public void TS51138_CRM_Fase_3_Technical_Care_CSR_Muleto_Visualizacion_de_campo_para_ingresar_texto() {
 	//Cambio al Frame
 		Accounts accPage = new Accounts(driver);
@@ -503,7 +503,7 @@ private WebDriver driver;
 	/**
 	 * Se Verifica que se pueda Ingresar DNI en la entrega de Muleto
 	 */
-	@Test(groups= {"Fase3","TechnicalCare","Muleto"})
+	@Test(groups= {"Fase3","TechnicalCare","Muleto","Ola3"})
 	public void TS51074_CRM_Fase_3_Technical_Care_CSR_Muleto_Verificacion_de_ingreso_del_DNI_para_entrega_de_muleto() {
 	//Cambio al Frame
 		Accounts accPage = new Accounts(driver);
@@ -523,7 +523,7 @@ private WebDriver driver;
 	/**
 	 * Se verifica que se puede seleccionar devolucion de muleto
 	 */
-	@Test(groups= {"Fase3","TechnicalCare","Muleto"})
+	@Test(groups= {"Fase3","TechnicalCare","Muleto","Ola3"})
 	public void TS51072_CRM_Fase_3_Technical_Care_CSR_Muleto_Verificacion_de_la_seleccion_DEVOLuCION_DE_MuLETO() {
 	//Cambio al Frame
 		Accounts accPage = new Accounts(driver);
@@ -538,7 +538,7 @@ private WebDriver driver;
 	/**
 	 * Se verifica que se puede seleccionar Entrega de muleto
 	 */
-	@Test(groups= {"Fase3","TechnicalCare","Muleto"})
+	@Test(groups= {"Fase3","TechnicalCare","Muleto","Ola3"})
 	public void TS51071_CRM_Fase_3_Technical_Care_CSR_Muleto_Verificacion_de_la_seleccion_ENTREGA_DE_MuLETO() {
 	//Cambio al Frame
 		Accounts accPage = new Accounts(driver);
@@ -554,7 +554,7 @@ private WebDriver driver;
 	 * Se verifica que en el listado de muleto aparezcan los campos
 	 * -nmu -Descripcion -marca -cantidad en stock
 	 */
-	@Test(groups= {"Fase3","TechnicalCare","Muleto"})
+	@Test(groups= {"Fase3","TechnicalCare","Muleto","Ola3"})
 	public void TS51096_CRM_Fase_3_Technical_Care_CSR_Muleto_Verificacion_informacion_del_listado_de_terminales_muletos() {
 	//Cambio al Frame
 		Accounts accPage = new Accounts(driver);
@@ -581,7 +581,7 @@ private WebDriver driver;
 	/**
 	 * se verifica q en entrega de muleto, si el cliente no posee muelto pendiente para devolucion, se pueda continuar.
 	 */
-	@Test(groups= {"Fase3","TechnicalCare","Muleto"})
+	@Test(groups= {"Fase3","TechnicalCare","Muleto","Ola3"})
 	public void TS51091_CRM_Fase_3_Technical_Care_CSR_Muleto_Verificacion_Muleto_pendiente_de_entrega_NO() {
 	//Cambio al Frame
 		Accounts accPage = new Accounts(driver);
@@ -606,7 +606,7 @@ private WebDriver driver;
 	/**
 	 * Se verifica que en devolucion, no se posea un Muleto para devolucion
 	 */
-	@Test(groups= {"Fase3","TechnicalCare","Muleto"})
+	@Test(groups= {"Fase3","TechnicalCare","Muleto","Ola3"})
 	public void TS51116_CRM_Fase_3_Technical_Care_CSR_Muleto_Verificacion_que_NO_POSEE_un_muleto_para_devolucion() {
 	//Cambio al Frame
 		Accounts accPage = new Accounts(driver);
@@ -636,7 +636,7 @@ private WebDriver driver;
 	/**
 	 * Se Verifica que no se pueda seleccionar mas de dos muletos en ka lista
 	 */
-	@Test(groups= {"Fase3","TechnicalCare","Muleto"})
+	@Test(groups= {"Fase3","TechnicalCare","Muleto","Ola3"})
 	public void TS51098_CRM_Fase_3_Technical_Care_CSR_Muleto_Verificacion_que_NO_pueda_seleccionarse_mas_de_uN_muleto() {
 	//Cambio al Frame
 		Accounts accPage = new Accounts(driver);
@@ -662,7 +662,7 @@ private WebDriver driver;
 	/**
 	 * Se verifica que se muestre el listado de muletos.
 	 */
-	@Test(groups= {"Fase3","TechnicalCare","Muleto"})
+	@Test(groups= {"Fase3","TechnicalCare","Muleto","Ola3"})
 	public void TS51095_CRM_Fase_3_Technical_Care_CSR_Muleto_Visualizacion_estado_de_terminales() {
 	//Cambio al Frame
 		Accounts accPage = new Accounts(driver);

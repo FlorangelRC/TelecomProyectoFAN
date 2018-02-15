@@ -116,26 +116,26 @@ public class TechJoaquin extends TestBase {
 	// **********************************************************************************
 	// **********************************************************************************
 	
-	@BeforeClass(groups= {"TechnicalCare"})
+	@BeforeClass(alwaysRun=true)
 	public void init() {
 		inicializarDriver();
 		login();
 		IrA.CajonDeAplicaciones.ConsolaFAN();
 	}
 	
-	@AfterClass(groups= {"TechnicalCare"})
+	@AfterClass(alwaysRun=true)
 	public void quit() {
 		cerrarTodasLasPestañas();
 		IrA.CajonDeAplicaciones.Ventas();
 		cerrarTodo();
 	}
 	
-	@BeforeMethod(groups= {"TechnicalCare"})
+	@BeforeMethod(alwaysRun=true)
 	public void after() {
 		cerrarTodasLasPestañas();
 	}
 	
-	@Test(groups= {"TechnicalCare", "MisServicios"})
+	@Test(groups= {"TechnicalCare", "MisServicios","Ola1"})
 	public void TS51322_CSR_Mis_Servicios_Visualizacion_mayor_informacion() {
 		elegirCuenta("Adrian Tech");
 		WebElement asset = obtenerAsset("1122334456");
@@ -147,7 +147,7 @@ public class TechJoaquin extends TestBase {
 		Assert.assertTrue(headerServiciosDeValorAgregado.isDisplayed());
 	}
 	
-	@Test(groups= {"TechnicalCare", "MisServicios"})
+	@Test(groups= {"TechnicalCare", "MisServicios","Ola1"})
 	public void TS51323_CSR_Mis_Servicios_Visualizacion_estado_de_los_Servicios() {
 		elegirCuenta("Adrian Tech");
 		WebElement asset = obtenerAsset("1122334456");
@@ -160,7 +160,7 @@ public class TechJoaquin extends TestBase {
 		}
 	}
 	
-	@Test(groups= {"TechnicalCare", "MisServicios"})
+	@Test(groups= {"TechnicalCare", "MisServicios","Ola1"})
 	public void TS51524_CSR_Mis_Servicios_Visualizacion_Servicios_Activos_Inactivos_y_Pendientes() {
 		elegirCuenta("Adrian Tech");
 		WebElement asset = obtenerAsset("1122334456");
@@ -176,7 +176,7 @@ public class TechJoaquin extends TestBase {
 		Assert.assertTrue(estados.contains("Inactivo") || estados.contains("En activación") || estados.contains("Activo") || estados.contains("Limitado") || estados.contains("Pendiente"));
 	}
 	
-	@Test(groups= {"TechnicalCare", "MisServicios"})
+	@Test(groups= {"TechnicalCare", "MisServicios","Ola1"})
 	public void TS51327_CSR_Mis_Servicios_Visualizacion_Servicio_Fecha_Estado() {
 		elegirCuenta("Adrian Tech");
 		WebElement asset = obtenerAsset("1122334456");
@@ -193,7 +193,7 @@ public class TechJoaquin extends TestBase {
 		Assert.assertTrue(texto.contains("ESTADO"));
 	}
 	
-	@Test(groups= {"TechnicalCare", "MisServicios"})
+	@Test(groups= {"TechnicalCare", "MisServicios","Ola1"})
 	public void TS51459_CSR_Mis_Servicios_Visualizacion_De_Pregunta() {
 		BasePage cambioFrameByID=new BasePage();
 		diagnosisTab dT = new diagnosisTab(driver);
@@ -215,7 +215,7 @@ public class TechJoaquin extends TestBase {
 		 assertTrue(driver.findElement(By.id("SolutionValidationRadio|0")).findElement(By.tagName("label")).getText().toLowerCase().contains("el art\u00edculo ofrecido soluciona su inconveniente"));
 	}
 	
-	@Test(groups= {"TechnicalCare", "MisServicios"})
+	@Test(groups= {"TechnicalCare", "MisServicios","Ola1"})
 	public void TS51461_CSR_Mis_Servicios_Visualizacion_Documento_Base_De_Conocimiento_Respuesta_No() {
 		BasePage cambioFrameByID=new BasePage();
 		diagnosisTab dT = new diagnosisTab(driver);
@@ -241,7 +241,7 @@ public class TechJoaquin extends TestBase {
 	    assertTrue(driver.findElement(By.id("NetworkCategory_nextBtn")).isEnabled());
 	}
 	
-	@Test(groups= {"TechnicalCare", "MisServicios"})
+	@Test(groups= {"TechnicalCare", "MisServicios","Ola1"})
 	public void TS51460_CSR_Mis_Servicios_Visualizacion_Documento_Base_De_Conocimiento_Respuesta_Si() {
 		BasePage cambioFrameByID=new BasePage();
 		diagnosisTab dT = new diagnosisTab(driver);
@@ -270,7 +270,7 @@ public class TechJoaquin extends TestBase {
 	    assertTrue(driver.findElement(By.id("ClosedCaseKnowledgeBase")).findElements(By.tagName("Strong")).get(1).getText().contains("se procedi\u00f3 a su cierre"));
 	}
 	
-	@Test(groups= {"TechnicalCare", "MisServicios"})
+	@Test(groups= {"TechnicalCare", "MisServicios","Ola2"})
 	public void TS74013_CSR_Diagnostico_Seleccion_De_La_Opcion_No_Tiene_Cuota_Disponible() {
 		BasePage cambioFrameByID=new BasePage();
 		diagnosisTab dT = new diagnosisTab(driver);
@@ -302,7 +302,7 @@ public class TechJoaquin extends TestBase {
 		
 	}
 	
-	@Test(groups= {"TechnicalCare", "MisServicios"})
+	@Test(groups= {"TechnicalCare", "MisServicios","Ola2"})
 	public void TS74018_CSR_Diagnostico_Seleccion_De_La_Opcion_Navega_Lento() {
 		BasePage cambioFrameByID=new BasePage();
 		diagnosisTab dT = new diagnosisTab(driver);
@@ -316,7 +316,7 @@ public class TechJoaquin extends TestBase {
 		assertTrue(dT.seleccionarMotivoPorSelect(driver, "Navega lento"));
 	}
 	
-	@Test(groups= {"TechnicalCare", "MisServicios"})
+	@Test(groups= {"TechnicalCare", "MisServicios","Ola2"})
 	public void TS74020_CSR_Diagnostico_Seleccion_Opcion_Navega_Lento_Visualizar_La_Informacion_De_Saldo_Datos() {
 		BasePage cambioFrameByID=new BasePage();
 		diagnosisTab dT = new diagnosisTab(driver);
@@ -343,7 +343,7 @@ public class TechJoaquin extends TestBase {
 	}
 	
 	
-	@Test(groups= {"TechnicalCare", "MisServicios"})
+	@Test(groups= {"TechnicalCare", "MisServicios","Ola2"})
 	public void TS74048_CSR_Diagnostico_Seleccion_De_Motivo_De_Datos_No_Puedo_Navegar() {
 		BasePage cambioFrameByID=new BasePage();
 		diagnosisTab dT = new diagnosisTab(driver);
@@ -357,7 +357,7 @@ public class TechJoaquin extends TestBase {
 		assertTrue(dT.seleccionarMotivoPorSelect(driver, "No puedo navegar"));
 	}
 	
-	@Test(groups= {"TechnicalCare", "MisServicios"})
+	@Test(groups= {"TechnicalCare", "MisServicios","Ola2"})
 	public void TS74051_CSR_Diagnostico_Seleccion_De_Motivo_De_Voz_No_Puedo_Realizar_Llamadas() {
 		BasePage cambioFrameByID=new BasePage();
 		diagnosisTab dT = new diagnosisTab(driver);
@@ -371,7 +371,7 @@ public class TechJoaquin extends TestBase {
 		assertTrue(dT.seleccionarMotivoPorSelect(driver, "No puedo realizar llamadas"));
 	}
 	
-	@Test(groups= {"TechnicalCare", "MisServicios"})
+	@Test(groups= {"TechnicalCare", "MisServicios","Ola2"})
 	public void TS74052_CSR_Diagnostico_Seleccion_De_Motivo_De_Voz_No_Puedo_Recibir_Llamadas() {
 		BasePage cambioFrameByID=new BasePage();
 		diagnosisTab dT = new diagnosisTab(driver);
@@ -385,7 +385,7 @@ public class TechJoaquin extends TestBase {
 		assertTrue(dT.seleccionarMotivoPorSelect(driver, "No puedo recibir llamadas"));
 	}
 	
-	@Test(groups= {"TechnicalCare", "MisServicios"})
+	@Test(groups= {"TechnicalCare", "MisServicios","Ola2"})
 	public void TS74053_CSR_Diagnostico_Seleccion_De_Motivo_De_Voz_No_Puedo_Realizar_Ni_Recibir_Llamadas() {
 		BasePage cambioFrameByID=new BasePage();
 		diagnosisTab dT = new diagnosisTab(driver);
@@ -399,7 +399,7 @@ public class TechJoaquin extends TestBase {
 		assertTrue(dT.seleccionarMotivoPorSelect(driver, "No puedo realizar ni recibir llamadas"));
 	}
 	
-	@Test(groups= {"TechnicalCare", "MisServicios"})
+	@Test(groups= {"TechnicalCare", "MisServicios","Ola2"})
 	public void TS74054_CSR_Diagnostico_Seleccion_De_Motivo_De_Voz_No_Puedo_Llamar_Desde_Otro_Pais() {
 		BasePage cambioFrameByID=new BasePage();
 		diagnosisTab dT = new diagnosisTab(driver);
@@ -417,7 +417,7 @@ public class TechJoaquin extends TestBase {
 	 * Verifica que en los motivos se muestren las opciones 
 	 * -No puedo navegar -Navega lento
 	 */
-	@Test(groups= {"TechnicalCare", "MisServicios"})
+	@Test(groups= {"TechnicalCare", "MisServicios","Ola2"})
 	public void TS74047_CSR_Diagnostico_Visualizacion_de_motivos_de_Datos() {
 		BasePage cambioFrameByID=new BasePage();
 		diagnosisTab dT = new diagnosisTab(driver);
@@ -437,7 +437,7 @@ public class TechJoaquin extends TestBase {
 	- No puedo realizar llamadas - No puedo recibir llamadas 
 	- No puedo realizar ni recibir llamadas - No puedo llamar desde otro país
 	 */
-	@Test(groups= {"TechnicalCare", "MisServicios"})
+	@Test(groups= {"TechnicalCare", "MisServicios","Ola2"})
 	public void TS74050_CSR_Diagnostico_Visualizacion_de_motivos_de_Voz() {
 		BasePage cambioFrameByID=new BasePage();
 		diagnosisTab dT = new diagnosisTab(driver);
@@ -458,7 +458,7 @@ public class TechJoaquin extends TestBase {
 	 * verifica que al seleccionar la opcion no puedo navegar, se muestre la siguiente pregunta: 
  	 *"Posee cuota disponible?" 
 	 */
-	@Test(groups= {"TechnicalCare", "MisServicios"})
+	@Test(groups= {"TechnicalCare", "MisServicios","Ola2"})
 	public void TS74012_CSR_Diagnostico_Visualizacion_pregunta_si_tiene_cuota() {
 		BasePage cambioFrameByID=new BasePage();
 		diagnosisTab dT = new diagnosisTab(driver);

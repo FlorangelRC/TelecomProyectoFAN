@@ -41,7 +41,7 @@ public class testListaEventosMasivos extends TestBase{
 	RegistroEventoMasivo pEM=new RegistroEventoMasivo(driver);
 	
 	
-	@BeforeClass(groups= {"Fase2","TechnicalCare","IncidenteMasivo"})
+	@BeforeClass(alwaysRun=true)
 	public void init() throws Exception
 	{
 		this.driver = setConexion.setupEze();
@@ -50,7 +50,7 @@ public class testListaEventosMasivos extends TestBase{
 		try {Thread.sleep(3000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 	}
 	
-	@BeforeMethod(groups= {"Fase2","TechnicalCare","IncidenteMasivo"})
+	@BeforeMethod(alwaysRun=true)
 	public void setUp() throws Exception {
 		
 		//Entra a Ventas y luego a consola Fan de regreso
@@ -74,7 +74,7 @@ public class testListaEventosMasivos extends TestBase{
 			
 	}	
 	
-	@AfterMethod(groups= {"Fase2","TechnicalCare","IncidenteMasivo"})
+	@AfterMethod(alwaysRun=true)
 	public void afterMethod() {
 		try {Thread.sleep(3000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 		List<WebElement> mainTabs = driver.findElements(By.className("x-tab-strip-close"));
@@ -85,13 +85,13 @@ public class testListaEventosMasivos extends TestBase{
 		  driver.switchTo().defaultContent();	
 	}
 	
-	@AfterClass(groups= {"Fase2","TechnicalCare","IncidenteMasivo"})
+	@AfterClass(alwaysRun=true)
 	public void tearDown() {
 		driver.quit();
 		sleep(1000);
 	}
 	
-	@Test(groups= {"Fase2","TechnicalCare","IncidenteMasivo"})
+	@Test(groups= {"Fase2","TechnicalCare","IncidenteMasivo","Ola2"})
 	public void TS16240_CRM_Fase_2_Technical_Care_Representante_Incidentes_Masivos_Eventos_Datos_de_los_eventos_masivos_Fecha_de_inicio_Formato() {
 		
 		//try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
@@ -108,7 +108,7 @@ public class testListaEventosMasivos extends TestBase{
 		driver.switchTo().defaultContent();	
 	}
 	
-	@Test(groups= {"Fase2","TechnicalCare","IncidenteMasivo"})
+	@Test(groups= {"Fase2","TechnicalCare","IncidenteMasivo","Ola2"})
 	public void TS16237_CRM_Fase_2_Technical_Care_Representante_Incidentes_Masivos_Eventos_Procedimiento_Link_a_maxima_cantidad_de_archivos() {
 		
 		try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
@@ -138,7 +138,7 @@ public class testListaEventosMasivos extends TestBase{
 		
 	}
 	
-	@Test(groups= {"Fase2","TechnicalCare","IncidenteMasivo"})
+	@Test(groups= {"Fase2","TechnicalCare","IncidenteMasivo","Ola2"})
 	public void TS16238_CRM_Fase_2_Technical_Care_Representante_Incidentes_Masivos_Eventos_Procedimiento_Sin_link() {
 		
 		try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
@@ -171,7 +171,7 @@ public class testListaEventosMasivos extends TestBase{
 	}
 	//------------------------------------Eventos Masivos-------------------------------------//
 	
-	@Test(groups= {"Fase2","TechnicalCare","IncidenteMasivo"})
+	@Test(groups= {"Fase2","TechnicalCare","IncidenteMasivo","Ola2"})
 	public void TS16230_CRM_Fase_2_Technical_Care_Sistema_Incidentes_Masivos_Creación_de_Eventos_Masivos_Ingreso_a_un_evento_masivo() {
 		
 		try {Thread.sleep(4000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
@@ -204,7 +204,7 @@ public class testListaEventosMasivos extends TestBase{
 			driver.switchTo().defaultContent();	
 	}
 	//Listo
-	@Test(groups= {"Fase2","TechnicalCare","IncidenteMasivo"})
+	@Test(groups= {"Fase2","TechnicalCare","IncidenteMasivo","Ola2"})
 	public void TS16231_CRM_Fase_2_Technical_Care_Representante_Incidentes_Eventos_Fecha_de_Inicio_Formato() {
 		
 		try {Thread.sleep(4000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
@@ -226,7 +226,7 @@ public class testListaEventosMasivos extends TestBase{
 
 	}
 	//Listo
-	@Test(groups= {"Fase2","TechnicalCare","IncidenteMasivo"})
+	@Test(groups= {"Fase2","TechnicalCare","IncidenteMasivo","Ola2"})
 	public void TS16232_CRM_Fase_2_Technical_Care_Representante_Incidentes_Eventos_Fecha_de_Creacion_Formato() {
 		
 		try {Thread.sleep(4000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}

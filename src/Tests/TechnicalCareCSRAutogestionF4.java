@@ -25,7 +25,7 @@ public class TechnicalCareCSRAutogestionF4 extends TestBase{
 	
 	private WebDriver driver;
 	
-	@BeforeClass(groups= {"Fase4","TechnicalCare", "Autogestion"})
+	@BeforeClass(alwaysRun=true)
 	public void init() throws Exception
 	{
 		this.driver = setConexion.setupEze();
@@ -46,7 +46,7 @@ public class TechnicalCareCSRAutogestionF4 extends TestBase{
 	}
 	
 	
-	@BeforeMethod(groups= {"Fase4","TechnicalCare", "Autogestion"})
+	@BeforeMethod(alwaysRun=true)
 	public void setUp() throws Exception {
 		//Selecciona la cuenta Adrian Tech de todas las Cuentas
 		seleccionCuentaPorNombre(driver, "Adrian Techh");
@@ -57,7 +57,7 @@ public class TechnicalCareCSRAutogestionF4 extends TestBase{
 		sleep(1000);
 	}
 	
-	@AfterMethod(groups= {"Fase4","TechnicalCare", "Autogestion"})
+	@AfterMethod(alwaysRun=true)
 	public void after() {
 		try {Thread.sleep(2000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 		driver.switchTo().defaultContent(); 
@@ -66,7 +66,7 @@ public class TechnicalCareCSRAutogestionF4 extends TestBase{
 	    driver.switchTo().defaultContent(); 
 	}
 	
-	@AfterClass(groups= {"Fase4","TechnicalCare", "Autogestion"})
+	@AfterClass(alwaysRun=true)
 	public void tearDown() {
 		HomeBase homePage = new HomeBase(driver);
 		sleep(1000);
@@ -199,7 +199,7 @@ public class TechnicalCareCSRAutogestionF4 extends TestBase{
 //------------------------------------- Autogestion Fase4------------------------------------------------------------//
 	
 	
-	@Test(groups= {"Fase4","TechnicalCare", "Autogestion"})
+	@Test(groups= {"Fase4","TechnicalCare", "Autogestion","Ola2"})
 	public void TS73819_CRM_Fase_4_Technical_Care_CSR_Autogestion_Verificacion_de_que_la_autogestion_del_servicio_asterisco_533_Pauta_On_Line_corresponde_a_TP() {
 		String caso;
 		elegirOpciones("Asteriscos TP","*533 (Pauta On Line)","Inconv Recarga delivery");
@@ -213,7 +213,7 @@ public class TechnicalCareCSRAutogestionF4 extends TestBase{
 	}
 	
 	//Revisar
-	@Test(groups= {"Fase4","TechnicalCare", "Autogestion"})
+	@Test(groups= {"Fase4","TechnicalCare", "Autogestion","Ola2"})
 	public void TS73822_CRM_Fase_4_Technical_Care_CSR_Autogestion_Verificacion_de_que_la_autogestion_del_servicio_asterisco_567_SMS_mas_Push_corresponde_a_TP() {
 		String caso;
 		elegirOpciones("Asteriscos TP","*567 (SMS + Push)","Inconv Recarga delivery");
@@ -226,7 +226,7 @@ public class TechnicalCareCSRAutogestionF4 extends TestBase{
 		assertTrue(verificarServiceOwner("Telecom"));
 	}
 	
-	@Test(groups= {"Fase4","TechnicalCare", "Autogestion"})
+	@Test(groups= {"Fase4","TechnicalCare", "Autogestion","Ola2"})
 	public void TS73815_CRM_Fase_4_Technical_Care_CSR_Autogestion_Verificacion_de_que_la_autogestion_del_servicio_asterisco_762_ROAMERS_corresponde_a_TP() {
 		String caso;
 		elegirOpciones("Asteriscos TP","*762 (ROAMERS)","Inconv Recarga delivery");
@@ -239,7 +239,7 @@ public class TechnicalCareCSRAutogestionF4 extends TestBase{
 		assertTrue(verificarServiceOwner("Telecom"));	
 	}
 	
-	@Test(groups= {"Fase4","TechnicalCare", "Autogestion"})
+	@Test(groups= {"Fase4","TechnicalCare", "Autogestion","Ola2"})
 	public void TS73870_CRM_Fase_4_Technical_Care_CSR_Autogestion_Verificacion_de_que_la_autogestion_del_Canal_0800_0800_888_7382_Repro_corresponde_a_un_servicio_de_Telecom() {
 		String caso;
 		elegirOpciones("0800","0800-888-7382 (Repro)","Llamada fallo");
@@ -252,7 +252,7 @@ public class TechnicalCareCSRAutogestionF4 extends TestBase{
 		assertTrue(verificarServiceOwner("Telecom"));	
 	}
 	//aqui
-	@Test(groups= {"Fase4","TechnicalCare", "Autogestion"})
+	@Test(groups= {"Fase4","TechnicalCare", "Autogestion","Ola2"})
 	public void TS73865_CRM_Fase_4_Technical_Care_CSR_Autogestion_Verificacion_de_que_la_autogestion_del_Canal_0800_servicio_0800_444_0531_Tienda_Planes_corresponde_a_un_servicio_de_Telecom() {
 		String caso;
 		elegirOpciones("0800","0800-444-0531 (Tienda Planes)","Llamada fallo");
@@ -265,7 +265,7 @@ public class TechnicalCareCSRAutogestionF4 extends TestBase{
 		assertTrue(verificarServiceOwner("Telecom"));	
 	}
 	//aqui
-	@Test(groups= {"Fase4","TechnicalCare", "Autogestion"})
+	@Test(groups= {"Fase4","TechnicalCare", "Autogestion","Ola2"})
 	public void TS73864_CRM_Fase_4_Technical_Care_CSR_Autogestion_Verificacion_de_que_la_autogestion_del_Canal_0800_servicio_0800_444_0533_Pautas_Online_corresponde_a_un_servicio_de_Telecom() {
 		String caso;
 		elegirOpciones("0800","0800-444-0533 (Pautas Online)","Llamada fallo");
@@ -278,7 +278,7 @@ public class TechnicalCareCSRAutogestionF4 extends TestBase{
 		assertTrue(verificarServiceOwner("Telecom"));	
 	}
 	//aqui
-	@Test(groups= {"Fase4","TechnicalCare", "Autogestion"})
+	@Test(groups= {"Fase4","TechnicalCare", "Autogestion","Ola2"})
 	public void TS73863_CRM_Fase_4_Technical_Care_CSR_Autogestion_Verificacion_de_que_la_autogestion_del_Canal_0800_servicio_0800_444_0534_EMail_Marketing_corresponde_a_un_servicio_de_Telecom() {
 		String caso;
 		elegirOpciones("0800","0800-444-0534 (E-Mail Marketing)","Llamada fallo");
@@ -292,7 +292,7 @@ public class TechnicalCareCSRAutogestionF4 extends TestBase{
 	}
 
 	//aqui
-	@Test(groups= {"Fase4","TechnicalCare", "Autogestion"})
+	@Test(groups= {"Fase4","TechnicalCare", "Autogestion","Ola2"})
 	public void TS73862_CRM_Fase_4_Technical_Care_CSR_Autogestion_Verificacion_de_que_la_autogestion_del_Canal_0800_servicio_0800_444_0536_Pauta_Online_corresponde_a_un_servicio_de_Telecom() {
 		String caso;
 		elegirOpciones("0800","0800-444-0536 (Pauta Online)","Llamada fallo");
@@ -305,7 +305,7 @@ public class TechnicalCareCSRAutogestionF4 extends TestBase{
 		assertTrue(verificarServiceOwner("Telecom"));	
 	}
 	//aqui
-	@Test(groups= {"Fase4","TechnicalCare", "Autogestion"})
+	@Test(groups= {"Fase4","TechnicalCare", "Autogestion","Ola2"})
 	public void TS73861_CRM_Fase_4_Technical_Care_CSR_Autogestion_Verificacion_de_que_la_autogestion_del_Canal_0800_servicio_0800_444_00538_SMS_Push_Arnet_corresponde_a_un_servicio_de_Telecom() {
 		String caso;
 		elegirOpciones("0800","0800-444-0538 (SMS Push Arnet)","Llamada fallo");
@@ -318,7 +318,7 @@ public class TechnicalCareCSRAutogestionF4 extends TestBase{
 		assertTrue(verificarServiceOwner("Telecom"));	
 	}
 	//aqui
-	@Test(groups= {"Fase4","TechnicalCare", "Autogestion"})
+	@Test(groups= {"Fase4","TechnicalCare", "Autogestion","Ola2"})
 	public void TS73880_CRM_Fase_4_Technical_Care_CSR_Autogestion_Verificacion_de_que_la_autogestion_del_Canal_0800_servicio_0800_444_0539_Home_Personal_corresponde_a_un_servicio_de_Telecom() {
 		String caso;
 		elegirOpciones("0800","0800-444-0539 (Home Personal)","Llamada fallo");
@@ -331,7 +331,7 @@ public class TechnicalCareCSRAutogestionF4 extends TestBase{
 		assertTrue(verificarServiceOwner("Telecom"));	
 	}
 	//aqui
-	@Test(groups= {"Fase4","TechnicalCare", "Autogestion"})
+	@Test(groups= {"Fase4","TechnicalCare", "Autogestion","Ola2"})
 	public void TS73878_CRM_Fase_4_Technical_Care_CSR_Autogestion_Verificacion_de_que_la_autogestion_del_Canal_0800_servicio_0800_444_0561_Facebook_Arnet_corresponde_a_un_servicio_de_Telecom() {
 		String caso;
 		elegirOpciones("0800","0800-444-0561 (Facebook Arnet)","Llamada fallo");
@@ -344,7 +344,7 @@ public class TechnicalCareCSRAutogestionF4 extends TestBase{
 		assertTrue(verificarServiceOwner("Telecom"));	
 	}
 	//aqui
-	@Test(groups= {"Fase4","TechnicalCare", "Autogestion"})
+	@Test(groups= {"Fase4","TechnicalCare", "Autogestion","Ola2"})
 	public void TS73879_CRM_Fase_4_Technical_Care_CSR_Autogestion_Verificacion_de_que_la_autogestion_del_Canal_0800_servicio_0800_444_0567_SMS_Push_Personal_corresponde_a_un_servicio_de_Telecom() {
 		String caso;
 		elegirOpciones("0800","0800-444-0567 (SMS Push Personal)","Llamada fallo");
@@ -357,7 +357,7 @@ public class TechnicalCareCSRAutogestionF4 extends TestBase{
 		assertTrue(verificarServiceOwner("Telecom"));	
 	}
 	//aqui
-	@Test(groups= {"Fase4","TechnicalCare", "Autogestion"})
+	@Test(groups= {"Fase4","TechnicalCare", "Autogestion","Ola2"})
 	public void TS73867_CRM_Fase_4_Technical_Care_CSR_Autogestion_Verificacion_de_que_la_autogestion_del_Canal_0800_servicio_0800_444_0800_0800_Clientes_corresponde_a_un_servicio_de_Telecom() {
 		String caso;
 		elegirOpciones("0800","0800-444-0800 (0800 Clientes)","Llamada fallo");
@@ -370,7 +370,7 @@ public class TechnicalCareCSRAutogestionF4 extends TestBase{
 		assertTrue(verificarServiceOwner("Telecom"));	
 	}
 	//aqui
-	@Test(groups= {"Fase4","TechnicalCare", "Autogestion"})
+	@Test(groups= {"Fase4","TechnicalCare", "Autogestion","Ola2"})
 	public void TS73859_CRM_Fase_4_Technical_Care_CSR_Autogestion_Verificacion_de_que_la_autogestion_del_Canal_0800_servicio_0800_444_4929_Adultos_Mayores_corresponde_a_un_servicio_de_Telecom() {
 		String caso;
 		elegirOpciones("0800","0800-444-4929 (Adultos Mayores)","Llamada fallo");
@@ -383,7 +383,7 @@ public class TechnicalCareCSRAutogestionF4 extends TestBase{
 		assertTrue(verificarServiceOwner("Telecom"));	
 	}
 	//aqui
-	@Test(groups= {"Fase4","TechnicalCare", "Autogestion"})
+	@Test(groups= {"Fase4","TechnicalCare", "Autogestion","Ola2"})
 	public void TS73860_CRM_Fase_4_Technical_Care_CSR_Autogestion_Verificacion_de_que_la_autogestion_del_Canal_0800_servicio_0800_444_6673_Nordelta_corresponde_a_un_servicio_de_Telecom() {
 		String caso;
 		elegirOpciones("0800","0800-444-6673 (Nordelta)","Llamada fallo");
@@ -396,7 +396,7 @@ public class TechnicalCareCSRAutogestionF4 extends TestBase{
 		assertTrue(verificarServiceOwner("Telecom"));	
 	}
 	//aqui
-	@Test(groups= {"Fase4","TechnicalCare", "Autogestion"})
+	@Test(groups= {"Fase4","TechnicalCare", "Autogestion","Ola2"})
 	public void TS73868_CRM_Fase_4_Technical_Care_CSR_Autogestion_Verificacion_de_que_la_autogestion_del_Canal_0800_servicio_0800_555_0018_Ventas_desde_la_Web_corresponde_a_un_servicio_de_Telecom() {
 		String caso;
 		elegirOpciones("0800","0800-555-0018 (Ventas desde la Web)","Llamada fallo");
@@ -409,7 +409,7 @@ public class TechnicalCareCSRAutogestionF4 extends TestBase{
 		assertTrue(verificarServiceOwner("Telecom"));	
 	}
 	//aqui
-	@Test(groups= {"Fase4","TechnicalCare", "Autogestion"})
+	@Test(groups= {"Fase4","TechnicalCare", "Autogestion","Ola2"})
 	public void TS73858_CRM_Fase_4_Technical_Care_CSR_Autogestion_Verificacion_de_que_la_autogestion_del_Canal_0800_servicio_0800_555_0800_0035_GPON_corresponde_a_un_servicio_de_Telecom() {
 		String caso;
 		elegirOpciones("0800","0800-555-0035 (GPON)","Llamada fallo");
@@ -422,7 +422,7 @@ public class TechnicalCareCSRAutogestionF4 extends TestBase{
 		assertTrue(verificarServiceOwner("Telecom"));	
 	}
 	
-	@Test(groups= {"Fase4","TechnicalCare", "Autogestion"})
+	@Test(groups= {"Fase4","TechnicalCare", "Autogestion","Ola2"})
 	public void TS73874_CRM_Fase_4_Technical_Care_CSR_Autogestion_Verificacion_de_que_la_autogestion_del_Canal_0800_servicio_0800_555_0112_Tarjetas_de_Telecom_corresponde_a_un_servicio_de_Telecom() {
 		String caso;
 		elegirOpciones("0800","0800-555-0112 (Tarjetas de Telecom)","Llamada fallo");
@@ -435,7 +435,7 @@ public class TechnicalCareCSRAutogestionF4 extends TestBase{
 		assertTrue(verificarServiceOwner("Telecom"));	
 	}
 	
-	@Test(groups= {"Fase4","TechnicalCare", "Autogestion"})
+	@Test(groups= {"Fase4","TechnicalCare", "Autogestion","Ola2"})
 	public void TS73857_CRM_Fase_4_Technical_Care_CSR_Autogestion_Verificacion_de_que_la_autogestion_del_Canal_0800_servicio_0800_555_4532_Medios_Digitales_corresponde_a_un_servicio_de_Telecom() {
 		String caso;
 		elegirOpciones("0800","0800-555-4532 (Medios Digitales)","Llamada fallo");
@@ -448,7 +448,7 @@ public class TechnicalCareCSRAutogestionF4 extends TestBase{
 		assertTrue(verificarServiceOwner("Telecom"));	
 	}
 	
-	@Test(groups= {"Fase4","TechnicalCare", "Autogestion"})
+	@Test(groups= {"Fase4","TechnicalCare", "Autogestion","Ola2"})
 	public void TS73873_CRM_Fase_4_Technical_Care_CSR_Autogestion_Verificacion_de_que_la_autogestion_del_Canal_0800_servicio_0800_555_9999_Cliente_Arnet_corresponde_a_un_servicio_de_Telecom() {
 		String caso;
 		elegirOpciones("0800","0800-555-9999 (Cliente Arnet)","Llamada fallo");
@@ -461,7 +461,7 @@ public class TechnicalCareCSRAutogestionF4 extends TestBase{
 		assertTrue(verificarServiceOwner("Telecom"));	
 	}
 	
-	@Test(groups= {"Fase4","TechnicalCare", "Autogestion"})
+	@Test(groups= {"Fase4","TechnicalCare", "Autogestion","Ola2"})
 	public void TS73875_CRM_Fase_4_Technical_Care_CSR_Autogestion_Verificacion_de_que_la_autogestion_del_Canal_0800_servicio_0800_777_7246_Pago_con_TC_corresponde_a_un_servicio_de_Telecom() {
 		String caso;
 		elegirOpciones("0800","0800-777-7246 (Pago con TC)","Llamada fallo");
@@ -475,7 +475,7 @@ public class TechnicalCareCSRAutogestionF4 extends TestBase{
 	}
 	
 	
-	@Test(groups= {"Fase4","TechnicalCare", "Autogestion"})
+	@Test(groups= {"Fase4","TechnicalCare", "Autogestion","Ola2"})
 	public void TS73876_CRM_Fase_4_Technical_Care_CSR_Autogestion_Verificacion_de_que_la_autogestion_del_Canal_0800_servicio_0800_7770328_Fax_Server_corresponde_a_un_servicio_de_Telecom() {
 		String caso;
 		elegirOpciones("0800","0800-7770328 (Fax Server)","Llamada fallo");
@@ -488,7 +488,7 @@ public class TechnicalCareCSRAutogestionF4 extends TestBase{
 		assertTrue(verificarServiceOwner("Telecom"));	
 	}
 	
-	@Test(groups= {"Fase4","TechnicalCare", "Autogestion"})
+	@Test(groups= {"Fase4","TechnicalCare", "Autogestion","Ola2"})
 	public void TS73871_CRM_Fase_4_Technical_Care_CSR_Autogestion_Verificacion_de_que_la_autogestion_del_Canal_0800_servicio_0800_888_0112_Cliente_112_corresponde_a_un_servicio_de_Telecom() {
 		String caso;
 		elegirOpciones("0800","0800-888-0112 (Cliente 112)","Llamada fallo");
@@ -502,7 +502,7 @@ public class TechnicalCareCSRAutogestionF4 extends TestBase{
 	}
 	
 	
-	@Test(groups= {"Fase4","TechnicalCare", "Autogestion"})
+	@Test(groups= {"Fase4","TechnicalCare", "Autogestion","Ola2"})
 	public void TS73855_CRM_Fase_4_Technical_Care_CSR_Autogestion_Verificacion_de_que_la_autogestion_del_Canal_0800_servicio_0800_888_888_0800_Executive_corresponde_a_un_servicio_de_Telecom() {
 		String caso;
 		elegirOpciones("0800","0800-888-0800 (Executive)","Llamada fallo");
@@ -516,7 +516,7 @@ public class TechnicalCareCSRAutogestionF4 extends TestBase{
 	}
 	
 	
-	@Test(groups= {"Fase4","TechnicalCare", "Autogestion"})
+	@Test(groups= {"Fase4","TechnicalCare", "Autogestion","Ola2"})
 	public void TS73854_CRM_Fase_4_Technical_Care_CSR_Autogestion_Verificacion_de_que_la_autogestion_del_Canal_0800_servicio_0800_888_888_1010_Convergente_corresponde_a_un_servicio_de_Telecom() {
 		String caso;
 		elegirOpciones("0800","0800-888-1010 (Convergente)","Llamada fallo");
@@ -530,7 +530,7 @@ public class TechnicalCareCSRAutogestionF4 extends TestBase{
 	}
 	
 	
-	@Test(groups= {"Fase4","TechnicalCare", "Autogestion"})
+	@Test(groups= {"Fase4","TechnicalCare", "Autogestion","Ola2"})
 	public void TS73869_CRM_Fase_4_Technical_Care_CSR_Autogestion_Verificacion_de_que_la_autogestion_del_Canal_0800_servicio_0800_888_1010_Convergente4422_CUIT_corresponde_a_un_servicio_de_Telecom() {
 		String caso;
 		elegirOpciones("0800","0800-888-4422 (CUIT)","Llamada fallo");
@@ -543,7 +543,7 @@ public class TechnicalCareCSRAutogestionF4 extends TestBase{
 		assertTrue(verificarServiceOwner("Telecom"));	
 	}
 	
-	@Test(groups= {"Fase4","TechnicalCare", "Autogestion"})
+	@Test(groups= {"Fase4","TechnicalCare", "Autogestion","Ola2"})
 	public void TS73853_CRM_Fase_4_Technical_Care_CSR_Autogestion_Verificacion_de_que_la_autogestion_del_Canal_0800_servicio_0800_888_7382_Activaciones_corresponde_a_un_servicio_de_Telecom() {
 		String caso;
 		elegirOpciones("0800","0800-888-7382 (Activaciones)","Llamada fallo");
@@ -557,7 +557,7 @@ public class TechnicalCareCSRAutogestionF4 extends TestBase{
 	}
 	
 	
-	@Test(groups= {"Fase4","TechnicalCare", "Autogestion"})
+	@Test(groups= {"Fase4","TechnicalCare", "Autogestion","Ola2"})
 	public void TS73856_CRM_Fase_4_Technical_Care_CSR_Autogestion_Verificacion_de_que_la_autogestion_del_Canal_0800_servicio_0800_888_8872_Medios_Impresos_corresponde_a_un_servicio_de_Telecom() {
 		String caso;
 		elegirOpciones("0800","0800-888-8872 (Medios Impresos)","Llamada fallo");
@@ -571,7 +571,7 @@ public class TechnicalCareCSRAutogestionF4 extends TestBase{
 	}
 	
 	
-	@Test(groups= {"Fase4","TechnicalCare", "Autogestion"})
+	@Test(groups= {"Fase4","TechnicalCare", "Autogestion","Ola2"})
 	public void TS73839_CRM_Fase_4_Technical_Care_CSR_Autogestion_Verificacion_de_que_la_autogestion_del_Canal_Otros_Asteriscos_servicio_asterisco_Otros_corresponde_a_un_servicio_de_Terceros() {
 		String caso;
 		elegirOpciones("Otros Asteriscos","Otros","Llamada fallo");
@@ -584,7 +584,7 @@ public class TechnicalCareCSRAutogestionF4 extends TestBase{
 		assertTrue(verificarServiceOwner("Terceros"));	
 	}
 	
-	@Test(groups= {"Fase4","TechnicalCare", "Autogestion"})
+	@Test(groups= {"Fase4","TechnicalCare", "Autogestion","Ola2"})
 	public void TS73888_CRM_Fase_4_Technical_Care_CSR_Autogestion_Verificacion_de_que_la_autogestion_del_Canal_Web_servicio_Servicios_corresponde_a_un_servicio_de_Telecom() {
 		String caso;
 		elegirOpciones("WEB","Servicios","Información Incompleta");
@@ -597,7 +597,7 @@ public class TechnicalCareCSRAutogestionF4 extends TestBase{
 		assertTrue(verificarServiceOwner("Telecom"));	
 	}
 	
-	@Test(groups= {"Fase4","TechnicalCare", "Autogestion"})
+	@Test(groups= {"Fase4","TechnicalCare", "Autogestion","Ola2"})
 	public void TS73886_CRM_Fase_4_Technical_Care_CSR_Autogestion_Verificacion_de_que_la_autogestion_del_Canal_Web_servicio_Promociones_corresponde_a_un_servicio_de_Telecom() {
 		String caso;
 		elegirOpciones("WEB","Promociones","Información Incompleta");
@@ -610,7 +610,7 @@ public class TechnicalCareCSRAutogestionF4 extends TestBase{
 		assertTrue(verificarServiceOwner("Telecom"));	
 	}
 	
-	@Test(groups= {"Fase4","TechnicalCare", "Autogestion"})
+	@Test(groups= {"Fase4","TechnicalCare", "Autogestion","Ola2"})
 	public void TS73884_CRM_Fase_4_Technical_Care_CSR_Autogestion_Verificacion_de_que_la_autogestion_del_Canal_Web_servicio_Planes_corresponde_a_un_servicio_de_Telecom() {
 		String caso;
 		elegirOpciones("WEB","Planes","Información Incompleta");
@@ -623,7 +623,7 @@ public class TechnicalCareCSRAutogestionF4 extends TestBase{
 		assertTrue(verificarServiceOwner("Telecom"));	
 	}
 	
-	@Test(groups= {"Fase4","TechnicalCare", "Autogestion"})
+	@Test(groups= {"Fase4","TechnicalCare", "Autogestion","Ola2"})
 	public void TS73893_CRM_Fase_4_Technical_Care_CSR_Autogestion_Verificacion_de_que_la_autogestion_del_Canal_Web_servicio_Personal_Black_corresponde_a_un_servicio_de_Telecom() {
 		String caso;
 		elegirOpciones("WEB","Personal Black","Información Incompleta");
@@ -636,7 +636,7 @@ public class TechnicalCareCSRAutogestionF4 extends TestBase{
 		assertTrue(verificarServiceOwner("Telecom"));	
 	}
 	
-	@Test(groups= {"Fase4","TechnicalCare", "Autogestion"})
+	@Test(groups= {"Fase4","TechnicalCare", "Autogestion","Ola2"})
 	public void TS73885_CRM_Fase_4_Technical_Care_CSR_Autogestion_Verificacion_de_que_la_autogestion_del_Canal_Web_servicio_Packs_corresponde_a_un_servicio_de_Telecom() {
 		String caso;
 		elegirOpciones("WEB","Packs","Información Incompleta");
@@ -649,7 +649,7 @@ public class TechnicalCareCSRAutogestionF4 extends TestBase{
 		assertTrue(verificarServiceOwner("Telecom"));	
 	}
 	
-	@Test(groups= {"Fase4","TechnicalCare", "Autogestion"})
+	@Test(groups= {"Fase4","TechnicalCare", "Autogestion","Ola2"})
 	public void TS73892_CRM_Fase_4_Technical_Care_CSR_Autogestion_Verificacion_de_que_la_autogestion_del_Canal_Web_servicio_Internacional_corresponde_a_un_servicio_de_Telecom() {
 		String caso;
 		elegirOpciones("WEB","Internacional","Información Incompleta");
@@ -662,7 +662,7 @@ public class TechnicalCareCSRAutogestionF4 extends TestBase{
 		assertTrue(verificarServiceOwner("Telecom"));	
 	}
 	
-	@Test(groups= {"Fase4","TechnicalCare", "Autogestion"})
+	@Test(groups= {"Fase4","TechnicalCare", "Autogestion","Ola2"})
 	public void TS73894_CRM_Fase_4_Technical_Care_CSR_Autogestion_Verificacion_de_que_la_autogestion_del_Canal_Web_servicio_Contacto_CHAT_corresponde_a_un_servicio_de_Telecom() {
 		String caso;
 		elegirOpciones("WEB","Contacto (CHAT)","Información Incompleta");
@@ -675,7 +675,7 @@ public class TechnicalCareCSRAutogestionF4 extends TestBase{
 		assertTrue(verificarServiceOwner("Telecom"));	
 	}
 	
-	@Test(groups= {"Fase4","TechnicalCare", "Autogestion"})
+	@Test(groups= {"Fase4","TechnicalCare", "Autogestion","Ola2"})
 	public void TS73904_CRM_Fase_4_Technical_Care_CSR_Autogestion_Verificacion_de_que_la_autogestion_del_Canal_WAP_servicio_Estado_de_la_cuenta_corresponde_a_un_servicio_de_Telecom() {
 		String caso;
 		elegirOpciones("WAP","Estado de la cuenta","Información Incompleta");
@@ -688,7 +688,7 @@ public class TechnicalCareCSRAutogestionF4 extends TestBase{
 		assertTrue(verificarServiceOwner("Telecom"));	
 	}
 	
-	@Test(groups= {"Fase4","TechnicalCare", "Autogestion"})
+	@Test(groups= {"Fase4","TechnicalCare", "Autogestion","Ola2"})
 	public void TS73908_CRM_Fase_4_Technical_Care_CSR_Autogestion_Verificacion_de_que_la_autogestion_del_Canal_WAP_servicio_Email_corresponde_a_un_servicio_de_Telecom() {
 		String caso;
 		elegirOpciones("WAP","Email","Información Incompleta");
@@ -702,7 +702,7 @@ public class TechnicalCareCSRAutogestionF4 extends TestBase{
 	}
 	
 	//Pertenece a Terceros por eso falla
-	@Test(groups= {"Fase4","TechnicalCare", "Autogestion"})
+	@Test(groups= {"Fase4","TechnicalCare", "Autogestion","Ola2"})
 	public void TS73922_CRM_Fase_4_Technical_Care_CSR_Autogestion_Verificacion_de_que_la_autogestion_del_Canal_USSD_servicio_Otros_corresponde_a_un_servicio_de_Telecom() {
 		String caso;
 		elegirOpciones("USSD","Otros","Tono ocupado");
@@ -715,7 +715,7 @@ public class TechnicalCareCSRAutogestionF4 extends TestBase{
 		assertTrue(verificarServiceOwner("Telecom"));	
 	}
 	
-	@Test(groups= {"Fase4","TechnicalCare", "Autogestion"})
+	@Test(groups= {"Fase4","TechnicalCare", "Autogestion","Ola2"})
 	public void TS73912_CRM_Fase_4_Technical_Care_CSR_Autogestion_Verificacion_de_que_la_autogestion_del_Canal_USSD_servicio_724_IPago_corresponde_a_un_servicio_de_Telecom() {
 		String caso;
 		elegirOpciones("USSD","*724# (IPago)","No Interactúa");
@@ -728,7 +728,7 @@ public class TechnicalCareCSRAutogestionF4 extends TestBase{
 		assertTrue(verificarServiceOwner("Telecom"));	
 	}
 	
-	@Test(groups= {"Fase4","TechnicalCare", "Autogestion"})
+	@Test(groups= {"Fase4","TechnicalCare", "Autogestion","Ola2"})
 	public void TS73913_CRM_Fase_4_Technical_Care_CSR_Autogestion_Verificacion_de_que_la_autogestion_del_Canal_USSD_servicio_234_Nominatividad_corresponde_a_un_servicio_de_Telecom() {
 		String caso;
 		elegirOpciones("USSD","*234# Nominatividad","No Interactúa");

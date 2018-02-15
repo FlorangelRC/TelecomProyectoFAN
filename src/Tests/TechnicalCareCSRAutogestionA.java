@@ -23,7 +23,7 @@ public class TechnicalCareCSRAutogestionA extends TestBase{
 
 	private WebDriver driver;
 	
-	@BeforeClass(groups= {"Fase3","TechnicalCare","Autogestion"})
+	@BeforeClass(alwaysRun=true)
 	public void init() throws Exception
 	{
 		this.driver = setConexion.setupEze();
@@ -56,29 +56,30 @@ public class TechnicalCareCSRAutogestionA extends TestBase{
 	}
 	
 	
-	@BeforeMethod(groups= {"Fase3","TechnicalCare","Autogestion"})
+	@BeforeMethod(alwaysRun=true)
 	public void setUp() throws Exception {
 		
 		
 	}
 	
 	
-	@AfterMethod(groups= {"Fase3","TechnicalCare","Autogestion"})
+	@AfterMethod(alwaysRun=true)
 	public void after() {
-		try {Thread.sleep(2000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		sleep(2000);
 		
 	}
 	
-	@AfterClass(groups= {"Fase3","TechnicalCare","Autogestion"})
+	@AfterClass(alwaysRun=true)
 	public void tearDown() {
-		try {Thread.sleep(1000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		sleep(1000);
 		CustomerCare cerrar = new CustomerCare(driver);
 		cerrar.cerrarultimapestaña();
 		HomeBase homePage = new HomeBase(driver);
-		try {Thread.sleep(1000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		sleep(1000);
 		homePage.selectAppFromMenuByName("Ventas");
-		try {Thread.sleep(1000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
-		driver.close();
+		sleep(1000);
+		driver.quit();
+		sleep(1000);
 	}
 	
 	/**Verificar que al seleccionar canal (web) servicio (Internet Movil). el Inconveniente, pueda contar con la siguiente lista de opciones:
@@ -95,7 +96,7 @@ public class TechnicalCareCSRAutogestionA extends TestBase{
 - Otros ( para completar campo)
 	 * @author Almer
 	 */
-	@Test(retryAnalyzer = Tests.retry.class , groups= {"Fase3","TechnicalCare","Autogestion"})
+	@Test(groups= {"Fase3","TechnicalCare","Autogestion","Ola2"})
 	public void TS51276_CRM_Fase_3_Technical_Care_CSR_Autogestion_Visualizacion_de_Lista_de_Inconvenientes_Canal_WEB_Servicio_Internet_Movil() {
 		//
 		String[] consultar= {"otros","modulo caído","informacion incorrecta","información incompleta",
@@ -131,7 +132,7 @@ public class TechnicalCareCSRAutogestionA extends TestBase{
 	- Otros ( para completar campo)
 		 * @author Almer
 		 */
-		@Test(retryAnalyzer = Tests.retry.class , groups= {"Fase3","TechnicalCare","Autogestion"})
+		@Test(groups= {"Fase3","TechnicalCare","Autogestion","Ola2"})
 		public void TS51278_CRM_Fase_3_Technical_Care_CSR_Autogestion_Visualizacion_de_Lista_de_Inconvenientes_Canal_WEB_Servicio_Internacional() {
 			//
 			String[] consultar= {"otros","modulo caído","informacion incorrecta","información incompleta",
@@ -169,7 +170,7 @@ public class TechnicalCareCSRAutogestionA extends TestBase{
 	- Otros ( para completar campo)
 		 * @author Almer
 		 */
-		@Test(retryAnalyzer = Tests.retry.class , groups= {"Fase3","TechnicalCare","Autogestion"})
+		@Test(groups= {"Fase3","TechnicalCare","Autogestion","Ola2"})
 		public void TS51273_CRM_Fase_3_Technical_Care_CSR_Autogestion_Visualizacion_de_Lista_de_Inconvenientes_Canal_WEB_Servicio_Apps_Musica_y_mas() {
 			//
 			String[] consultar= {"otros","modulo caído","informacion incorrecta","información incompleta",
@@ -203,7 +204,7 @@ public class TechnicalCareCSRAutogestionA extends TestBase{
 		- Otros ( para completar campo)
 			 * @author Almer
 			 */
-		@Test(retryAnalyzer = Tests.retry.class , groups= {"Fase3","TechnicalCare","Autogestion"})
+		@Test(groups= {"Fase3","TechnicalCare","Autogestion","Ola2"})
 		public void TS51249_CRM_Fase_3_Technical_Care_CSR_Autogestion_Visualizacion_de_Lista_de_Inconvenientes_Canal_0800_y_Servicio_0800_888_7382() {
 				//
 				String[] consultar= {"la caracteristica no existe","la linea esta muda","llamada fallo","tono ocupado",
@@ -240,7 +241,7 @@ public class TechnicalCareCSRAutogestionA extends TestBase{
 			- Otros ( para completar campo)
 				 * @author Almer
 				 */
-		@Test(retryAnalyzer = Tests.retry.class , groups= {"Fase3","TechnicalCare","Autogestion"})
+		@Test(groups= {"Fase3","TechnicalCare","Autogestion","Ola2"})
 		public void TS51247_CRM_Fase_3_Technical_Care_CSR_Autogestion_Visualizacion_de_Lista_de_Inconvenientes_Canal_0800_y_Servicio_0800_888_4422() {
 					//
 		String[] consultar= {"la caracteristica no existe","la linea esta muda","llamada fallo","tono ocupado",
@@ -276,7 +277,7 @@ public class TechnicalCareCSRAutogestionA extends TestBase{
 		- Otros ( para completar campo)
 		* @author Almer
 		 */
-		@Test(retryAnalyzer = Tests.retry.class , groups= {"Fase3","TechnicalCare","Autogestion"})
+		@Test(groups= {"Fase3","TechnicalCare","Autogestion","Ola2"})
 		public void TS51243_CRM_Fase_3_Technical_Care_CSR_Autogestion_Visualizacion_de_Lista_de_Inconvenientes_Canal_0800_y_Servicio_0800() {
 						//
 		String[] consultar= {"la caracteristica no existe","la linea esta muda","llamada fallo","tono ocupado",
@@ -303,7 +304,7 @@ public class TechnicalCareCSRAutogestionA extends TestBase{
 		- No Interactúa
 		* @author Almer
 		 */
-		@Test(retryAnalyzer = Tests.retry.class , groups= {"Fase3","TechnicalCare","Autogestion"})
+		@Test(groups= {"Fase3","TechnicalCare","Autogestion","Ola2"})
 		public void TS51311_CRM_Fase_3_Technical_Care_CSR_uSSD_Visualizacion_de_Lista_de_Inconvenientes_Asterisco_724() {
 						//
 		String[] consultar= {"no interactúa"};
@@ -329,7 +330,7 @@ public class TechnicalCareCSRAutogestionA extends TestBase{
 		- No Interactúa
 		* @author Almer
 		 */
-		@Test(retryAnalyzer = Tests.retry.class , groups= {"Fase3","TechnicalCare","Autogestion"})
+		@Test(groups= {"Fase3","TechnicalCare","Autogestion","Ola2"})
 		public void TS51307_CRM_Fase_3_Technical_Care_CSR_uSSD_Visualizacion_de_Lista_de_Inconvenientes_Asterisco_156() {
 						//
 		String[] consultar= {"no interactúa"};
@@ -354,7 +355,7 @@ public class TechnicalCareCSRAutogestionA extends TestBase{
 		- No Interactúa
 		* @author Almer
 		 */
-		@Test(retryAnalyzer = Tests.retry.class , groups= {"Fase3","TechnicalCare","Autogestion"})
+		@Test(groups= {"Fase3","TechnicalCare","Autogestion","Ola2"})
 		public void TS51309_CRM_Fase_3_Technical_Care_CSR_uSSD_Visualizacion_de_Lista_de_Inconvenientes_Asterisco_150() {
 						//
 		String[] consultar= {"no interactúa"};
@@ -383,7 +384,7 @@ public class TechnicalCareCSRAutogestionA extends TestBase{
 		-sitio caído/ no carga información
 		* @author Almer
 		 */
-		@Test(retryAnalyzer = Tests.retry.class , groups= {"Fase3","TechnicalCare","Autogestion"})
+		@Test(groups= {"Fase3","TechnicalCare","Autogestion","Ola2"})
 		public void TS51297_CRM_Fase_3_Technical_Care_CSR_Autogestion_WAP_Visualizacion_de_Lista_de_Inconvenientes_Estado_de_la_Cuenta() {
 						//
 		String[] consultar= {"informacion incorrecta","información incompleta","abre aplicación y cierra automáticamente","sitio caído/ no carga información"};
@@ -411,7 +412,7 @@ public class TechnicalCareCSRAutogestionA extends TestBase{
 		-sitio caído/ no carga información
 		* @author Almer
 		 */
-		@Test(retryAnalyzer = Tests.retry.class , groups= {"Fase3","TechnicalCare","Autogestion"})
+		@Test(groups= {"Fase3","TechnicalCare","Autogestion","Ola2"})
 		public void TS51305_CRM_Fase_3_Technical_Care_CSR_Autogestion_WAP_Email_Visualizacion_de_Lista_de_Inconvenientes() {
 						//
 		String[] consultar= {"informacion incorrecta","información incompleta","abre aplicación y cierra automáticamente","sitio caído/ no carga información"};
@@ -439,7 +440,7 @@ public class TechnicalCareCSRAutogestionA extends TestBase{
 		-sitio caído/ no carga información
 		* @author Almer
 		 */
-		@Test(retryAnalyzer = Tests.retry.class , groups= {"Fase3","TechnicalCare","Autogestion"})
+		@Test(groups= {"Fase3","TechnicalCare","Autogestion","Ola2"})
 		public void TS51303_CRM_Fase_3_Technical_Care_CSR_Autogestion_WAP_Domicilio_de_acturacion_Visualizacion_de_Lista_de_Inconvenientes() {
 						//
 		String[] consultar= {"informacion incorrecta","información incompleta","abre aplicación y cierra automáticamente","sitio caído/ no carga información"};
@@ -463,7 +464,7 @@ public class TechnicalCareCSRAutogestionA extends TestBase{
 		/**Verificar que al seleccionar canal(APP) servicio (Centros de Atencion). el Inconveniente, pueda contar con al menos una opcion
 		* @author Almer
 		 */
-		@Test(retryAnalyzer = Tests.retry.class , groups= {"Fase3","TechnicalCare","Autogestion"})
+		@Test(groups= {"Fase3","TechnicalCare","Autogestion","Ola2"})
 		public void TS51289_CRM_Fase_3_Technical_Care_CSR_Autogestion_Verificacion_de_la_seleccion_Canal_App_y_Servicio_Centros_de_Atencion() {
 	
 		try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
@@ -486,7 +487,7 @@ public class TechnicalCareCSRAutogestionA extends TestBase{
 		/**Verificar que al seleccionar canal(APP) servicio (Mis Consumos). el Inconveniente, pueda contar con al menos una opcion
 		* @author Almer
 		 */
-		@Test(retryAnalyzer = Tests.retry.class , groups= {"Fase3","TechnicalCare","Autogestion"})
+		@Test(groups= {"Fase3","TechnicalCare","Autogestion","Ola2"})
 		public void TS51288_CRM_Fase_3_Technical_Care_CSR_Autogestion_APP_Mis_Consumos_Visualizacion_de_Lista_de_Inconvenientes() {
 	
 		try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
@@ -509,7 +510,7 @@ public class TechnicalCareCSRAutogestionA extends TestBase{
 		/**Verificar que al seleccionar canal(WEB) servicio (Mis Consumos). el Inconveniente, pueda contar con al menos una opcion
 		* @author Almer
 		 */
-		@Test(retryAnalyzer = Tests.retry.class , groups= {"Fase3","TechnicalCare","Autogestion"})
+		@Test(groups= {"Fase3","TechnicalCare","Autogestion","Ola2"})
 		public void TS51287_CRM_Fase_3_Technical_Care_CSR_Autogestion_Visualizacion_de_Lista_de_Inconvenientes_Canal_WEB_Servicio_Mis_Consumos() {
 	
 		try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
@@ -532,7 +533,7 @@ public class TechnicalCareCSRAutogestionA extends TestBase{
 		/**Verificar que al seleccionar canal(APP) servicio (Club Personal). el Inconveniente, pueda contar con al menos una opcion
 		* @author Almer
 		 */
-		@Test(retryAnalyzer = Tests.retry.class , groups= {"Fase3","TechnicalCare","Autogestion"})
+		@Test(groups= {"Fase3","TechnicalCare","Autogestion","Ola2"})
 		public void TS51292_CRM_Fase_3_Technical_Care_CSR_Autogestion_APP_Club_Personal_Visualizacion_de_Lista_de_Inconvenientes() {
 	
 		try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
@@ -555,7 +556,7 @@ public class TechnicalCareCSRAutogestionA extends TestBase{
 		/**Verificar que al seleccionar canal(APP) servicio (Centros de Atencion). el Inconveniente, pueda contar con al menos una opcion
 		* @author Almer
 		 */
-		@Test(retryAnalyzer = Tests.retry.class , groups= {"Fase3","TechnicalCare","Autogestion"})
+		@Test(groups= {"Fase3","TechnicalCare","Autogestion","Ola2"})
 		public void TS51290_CRM_Fase_3_Technical_Care_CSR_Autogestion_APP_Centros_de_Atencion_Visualizacion_de_Lista_de_Inconvenientes() {
 	
 		try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}

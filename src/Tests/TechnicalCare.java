@@ -25,7 +25,7 @@ public class TechnicalCare extends TestBase  {
 	private WebDriver driver;
 	private String validIMEI = "545229703256596";
 	
-	@BeforeClass(groups = {"Fase2","TechnicalCare","ServicioTecnico"})
+	@BeforeClass(alwaysRun=true)
 	public void init() throws Exception
 	{
 		this.driver = setConexion.setupEze();
@@ -34,7 +34,7 @@ public class TechnicalCare extends TestBase  {
 		try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 	}
 
-	@BeforeMethod(groups = {"Fase2","TechnicalCare","ServicioTecnico"})
+	@BeforeMethod(alwaysRun=true)
 	public void setUp() throws Exception {
 		HomeBase homePage = new HomeBase(driver);
 	       if(driver.findElement(By.id("tsidLabel")).getText().equals("Consola FAN")) {
@@ -75,7 +75,7 @@ public class TechnicalCare extends TestBase  {
 	}
 	
 
-	@AfterMethod(groups = {"Fase2","TechnicalCare","ServicioTecnico"})
+	@AfterMethod(alwaysRun=true)
 	public void closeTechCareTab() {
 		driver.switchTo().defaultContent();
 		try {Thread.sleep(3000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
@@ -96,13 +96,13 @@ public class TechnicalCare extends TestBase  {
 	       
 	  }
 
-	@AfterClass(groups = {"Fase2","TechnicalCare","ServicioTecnico"})
+	@AfterClass(alwaysRun=true)
 	public void tearDown() {
 		driver.quit();
-		sleep(5000);
+		sleep(2000);
 	}
 
-	@Test(groups = {"Fase2","TechnicalCare","ServicioTecnico"})
+	@Test(groups = {"Fase2","TechnicalCare","ServicioTecnico","Ola2"})
 	public void TS11622_SST_Servicio_Indiferente_Adjunto_Formato_invalido() {
 		Accounts accPage = new Accounts(driver);
 		String invalidFilePath = "C:\\Users\\pablo\\Desktop\\SampleFiles\\unZip.zip";
@@ -122,7 +122,7 @@ public class TechnicalCare extends TestBase  {
 		Assert.assertTrue(errMessage.trim().contains(mensajeParcialErrorEnPagina));
 	}
 	
-	@Test(groups = {"Fase2","TechnicalCare","ServicioTecnico"})
+	@Test(groups = {"Fase2","TechnicalCare","ServicioTecnico","Ola2"})
 	public void TS11620_SST_Servicio_Indiferente_Adjunto_Valido_doc() {
 		Accounts accPage = new Accounts(driver);
 		String filePath = "C:\\Users\\pablo\\Desktop\\SampleFiles\\unDoc.doc";
@@ -141,7 +141,7 @@ public class TechnicalCare extends TestBase  {
 		Assert.assertTrue(textoArchivoAdjunto.toLowerCase().trim().contains(".doc"));
 	}
 	
-	@Test(groups = {"Fase2","TechnicalCare","ServicioTecnico"})
+	@Test(groups = {"Fase2","TechnicalCare","ServicioTecnico","Ola2"})
 	public void TS11631_SST_Servicio_Indiferente_Adjunto_Valido_docx() {
 		Accounts accPage = new Accounts(driver);
 		String filePath = "C:\\Users\\pablo\\Desktop\\SampleFiles\\unDocx.docx";
@@ -160,7 +160,7 @@ public class TechnicalCare extends TestBase  {
 		Assert.assertTrue(textoArchivoAdjunto.toLowerCase().trim().contains(".docx"));
 	}
 	
-	@Test(groups = {"Fase2","TechnicalCare","ServicioTecnico"})
+	@Test(groups = {"Fase2","TechnicalCare","ServicioTecnico","Ola2"})
 	public void TS11635_SST_Servicio_Indiferente_Adjunto_Valido_jpeg() {
 		Accounts accPage = new Accounts(driver);
 		String filePath = "C:\\Users\\pablo\\Desktop\\SampleFiles\\unJpeg.jpeg";
@@ -179,7 +179,7 @@ public class TechnicalCare extends TestBase  {
 		Assert.assertTrue(textoArchivoAdjunto.toLowerCase().trim().contains(".jpeg"));
 	}
 	
-	@Test(groups = {"Fase2","TechnicalCare","ServicioTecnico"})
+	@Test(groups = {"Fase2","TechnicalCare","ServicioTecnico","Ola2"})
 	public void TS11634_SST_Servicio_Indiferente_Adjunto_Valido_jpg() {
 		Accounts accPage = new Accounts(driver);
 		String filePath = "C:\\Users\\pablo\\Desktop\\SampleFiles\\unJpg.jpg";
@@ -198,7 +198,7 @@ public class TechnicalCare extends TestBase  {
 		Assert.assertTrue(textoArchivoAdjunto.toLowerCase().trim().contains(".jpg"));
 	}
 	
-	@Test(groups = {"Fase2","TechnicalCare","ServicioTecnico"})
+	@Test(groups = {"Fase2","TechnicalCare","ServicioTecnico","Ola2"})
 	public void TS11636_SST_Servicio_Indiferente_Adjunto_Valido_pdf() {
 		Accounts accPage = new Accounts(driver);
 		String filePath = "C:\\Users\\pablo\\Desktop\\SampleFiles\\unPdf.pdf";
