@@ -47,9 +47,6 @@ public class TechnicalCareCSRDiagnosticoPage extends BasePage{
 		return planConTarjeta2;
 	}
 	
-	private  void sleep(int miliseconds) throws InterruptedException {
-		Thread.sleep(miliseconds);
-		}
 	
 	public void scrollToElement(WebElement element) {
 		((JavascriptExecutor)driver)

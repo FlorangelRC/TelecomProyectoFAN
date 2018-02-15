@@ -181,11 +181,6 @@ public class TechQuelysPage extends BasePage {
 		return verificar;
 	}
 	
-	
-	
-	private  void sleep(int miliseconds) throws InterruptedException {
-	Thread.sleep(miliseconds);
-	}
 		
 	public void scrollToElement(WebElement element) {
 		((JavascriptExecutor)driver)
