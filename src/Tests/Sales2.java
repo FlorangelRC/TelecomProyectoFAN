@@ -12,6 +12,7 @@ import org.testng.Assert;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.AfterMethod;
+import org.testng.annotations.BeforeClass;  
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
@@ -26,6 +27,7 @@ public class Sales2 extends TestBase{
 	String DNI = "DNI";
 	String provincia="Chaco" ;
 	String localidad="BASAIL";
+
 	
 	//@AfterClass(alwaysRun=true)
 	public void tearDown() {
@@ -139,7 +141,7 @@ public class Sales2 extends TestBase{
 	}
 	
 	@Test(groups={"Sales", "AltaDeContacto", "Ola1"})
-	public void TS94590_Alta_De_Contacto_Persona_Fisica_Verificar_Categoria_Impositiva_Por_Default(){
+	public void TS94661_Alta_De_Contacto_Persona_Fisica_Verificar_Categoria_Impositiva_Por_Default(){
 		sb.BuscarCuenta(DNI, "");
 		driver.findElement(By.id("tab-scoped-3__item")).click();
 		sb.acciondecontacto("catalogo");
@@ -1232,14 +1234,25 @@ public class Sales2 extends TestBase{
 		catch(org.openqa.selenium.ElementNotVisibleException ex1){
 		Assert.assertTrue(false);}
 	}
+
 		
 	@Test(groups={"Sales","AltaDeLinea","Ola1"})
 	public void TS94505_Alta_Linea_Configurar_Nueva_Linea_Visualizar_misma_cantidad_de_lineas_que_planes_XX(){
-		
+
+		sb.BuscarCuenta(DNI, "34073329");
+		sb.acciondecontacto("catalogo");
+		sleep(15000);
+		sb.elegirplan("Plan con Tarjeta Repro");
+		sleep(3000);
+		//List<WebElement> agregar = driver.findElements(By.cssSelector(".slds-button.slds-button--neutral.add-button")); 
+		//agregar.get(0).click();
+
 	}
 	
-	@Test(groups={"Sales", "AltaDeContacto", "Ola1"})
-	public void TS94590_Alta_de_Contacto_Persona_Fisica_Verificar_campos_inhabilitados_hasta_la_validacion_existosa_del_contacto_XX() {
+
+	
+	@Test(groups={"Sales", "AltaDeContacto","Ola1"})
+	public void TS94590_Alta_de_Contacto_Persona_Fisica_Verificar_campos_inhabilitados_hasta_la_validacion_existosa_del_contacto_XX(){
 		BasePage Bp= new BasePage();
 		Random aleatorio = new Random(System.currentTimeMillis());
 		aleatorio.setSeed(System.currentTimeMillis());
