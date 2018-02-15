@@ -6,17 +6,12 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Actions;
-import org.openqa.selenium.support.FindBy;
-import org.openqa.selenium.support.How;
-import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.Select;
 import org.testng.Assert;
 
 import Tests.TestBase;
 
 public class Marketing extends CustomerCare {
-	
-	
 	
 	//final WebDriver driver;
 	
@@ -237,6 +232,19 @@ public class Marketing extends CustomerCare {
 		return msg.substring(i-1, msg.length());
 	}
 	
+	public String obtenerNumeroCasoAltaOBaja() {
+		waitForVisibilityOfElementLocated(By.xpath("//ng-form[@id='Headline']"));
+		String msg = driver.findElement(By.xpath("//ng-form[@id='Headline']")).getText();
+		int i = 0;
+		while(msg.charAt(i++) != '0') {	}
+		return msg.substring(i-1, msg.length());
+	}
+	
+	public String obtenerTextoCasoGeneradoAltaOBaja() {
+		waitForVisibilityOfElementLocated(By.xpath("//ng-form[@id='Headline']"));
+		return driver.findElement(By.xpath("//ng-form[@id='Headline']")).getText();
+	}
+	
 	public String estadoAltaBaja (String sAltaBaja) {
 		BasePage cambioFrame=new BasePage();
 		WebElement wConsumerBox;
@@ -417,4 +425,15 @@ public class Marketing extends CustomerCare {
 		return (driver.findElement(By.xpath("//ng-form[@id='businessResult']//tbody")).getText().length() > 0);
 	}
 	
+	public Boolean verificarMensajeDeErrorEmail() {
+		waitForVisibilityOfElementLocated(By.xpath("//ng-form[@id='TextEmailValidation']"));
+		Boolean p = driver.findElement(By.xpath("//ng-form[@id='TextEmailValidation']")).isDisplayed();
+		Boolean q = driver.findElement(By.xpath("//ng-form[@id='TextEmailValidation']")).getText().contains("es necesario indicar un email válido");
+		return (p && q);
+	}
+	
+	public void seleccionarMotivo(int num) {
+		Select motivo = new Select(driver.findElement(By.xpath("//select[@id='SelectReason']")));
+		motivo.selectByIndex(num);
+	}
 }
