@@ -83,48 +83,16 @@ public class TechCare_Ola1 {
 		if(!opcion) System.out.println("asset encontrado, Opcion No encontrada");
 	}
 	
-	public void clickDiagnosticarServicio(String Servicio) {
+	public void clickDiagnosticarServicio(String servicio, String subServicio) {
 		sleep(5000);
 		boolean sEncontrado=true;
 		Accounts accPage = new Accounts(driver);
 		driver.switchTo().frame(accPage.getFrameForElement(driver, By.cssSelector(".slds-card__body.cards-container")));
 		List<WebElement> tablas=driver.findElements(By.cssSelector(".slds-card__body.cards-container"));
 		//Listado de opciones
-		//System.out.println(tablas.get(0).findElement(By.xpath("//table//tbody//tr")).getText());
 		List<WebElement> servicios=tablas.get(0).findElements(By.xpath("//table//tbody//tr"));
 		for(WebElement S:servicios) {
-			System.out.println(S.getText());
-			if(S.getText().toLowerCase().contains(Servicio.toLowerCase())) {
-				((JavascriptExecutor)driver).executeScript("window.scrollTo(0,"+S.getLocation().y+")");
-				sleep(100);
-				S.findElement(By.className("slds-cell-shrink")).click();
-				sleep(2000);
-				System.out.println(S.findElement(By.className("slds-cell-shrink")).findElement(By.xpath("//div//div//ul")).getText());
-				try {S.findElement(By.className("slds-cell-shrink")).findElement(By.xpath("//div//div//ul//li")).click();
-				}
-				catch(org.openqa.selenium.ElementNotVisibleException e) {
-					sleep(2000);
-					driver.findElement(By.xpath("//*[text() = 'Diagnosticar']")).click();
-				}
-				sleep(3000);
-				sEncontrado=false;
-				break;
-			}
-		}
-		if(sEncontrado) System.out.println("Servicio no encontrado.");	
-	}
-	
-	public void clickDiagnosticarServicio(String Servicio, String subServicio) {
-		sleep(5000);
-		boolean sEncontrado=true;
-		Accounts accPage = new Accounts(driver);
-		driver.switchTo().frame(accPage.getFrameForElement(driver, By.cssSelector(".slds-card__body.cards-container")));
-		List<WebElement> tablas=driver.findElements(By.cssSelector(".slds-card__body.cards-container"));
-		//Listado de opciones
-		System.out.println(tablas.get(0).findElement(By.xpath("//table//tbody//tr")).getText());
-		List<WebElement> servicios=tablas.get(0).findElements(By.xpath("//table//tbody//tr"));
-		for(WebElement S:servicios) {
-			if(S.getText().toLowerCase().contains(Servicio.toLowerCase())) {
+			if(S.getText().toLowerCase().contains(servicio.toLowerCase())) {
 				S.findElement(By.className("addedValueServices-arrowWrapper")).click();
 				sleep(2000);
 				sEncontrado=false;
@@ -132,9 +100,72 @@ public class TechCare_Ola1 {
 			}
 		}
 		if(sEncontrado) { System.out.println("Servicio no encontrado."); return;}
-		System.out.println("No salio");
+		
+		List<WebElement> sServicios=tablas.get(selectionTable(servicio)).findElements(By.xpath("//table//tbody//tr"));
+	      for(WebElement S:sServicios) {
+	        //System.out.println(S.getText());
+	        if(S.getText().toLowerCase().contains(subServicio.toLowerCase())) {
+	          ((JavascriptExecutor)driver).executeScript("window.scrollTo(0,"+S.getLocation().y+")");
+	          sleep(100);
+	          S.findElement(By.className("slds-cell-shrink")).click();
+	          sleep(2000);
+	          try {
+	            S.findElement(By.className("slds-cell-shrink")).findElement(By.xpath("//div//div//ul//li")).click();
+	          }catch(org.openqa.selenium.ElementNotVisibleException e) {
+	          sleep(2000);
+	          List<WebElement> actions=  S.findElement(By.className("slds-cell-shrink")).findElements(By.xpath("//*[@class='dropdown__list']//li"));
+	               //S.findElements(By.xpath("//*[@class='dropdown__list']//li"));
+	           for (WebElement opt : actions) {
+	        	   if (opt.isDisplayed()) {
+	        		   opt.click();
+	        		   break;} }
+	          }
+	        }
+	  
+	      }
+		
 	}
 	
 	
+	public void clickDiagnosticarServicio(String servicio) {
+	      sleep(5000);
+	      Accounts accPage = new Accounts(driver);
+	      driver.switchTo().frame(accPage.getFrameForElement(driver, By.cssSelector(".slds-card__body.cards-container")));
+	      List<WebElement> tablas=driver.findElements(By.cssSelector(".slds-card__body.cards-container"));
+	      //Listado de opciones
+	      List<WebElement> servicios=tablas.get(selectionTable(servicio)).findElements(By.xpath("//table//tbody//tr"));
+	      for(WebElement S:servicios) {
+	        //System.out.println(S.getText());
+	        if(S.getText().toLowerCase().contains(servicio.toLowerCase())) {
+	          ((JavascriptExecutor)driver).executeScript("window.scrollTo(0,"+S.getLocation().y+")");
+	          sleep(100);
+	          S.findElement(By.className("slds-cell-shrink")).click();
+	          sleep(2000);
+	          try {
+	            S.findElement(By.className("slds-cell-shrink")).findElement(By.xpath("//div//div//ul//li")).click();
+	          }catch(org.openqa.selenium.ElementNotVisibleException e) {
+	          sleep(2000);
+	          List<WebElement> actions=  S.findElement(By.className("slds-cell-shrink")).findElements(By.xpath("//*[@class='dropdown__list']//li"));
+	               //S.findElements(By.xpath("//*[@class='dropdown__list']//li"));
+	           for (WebElement opt : actions) {
+	        	   if (opt.isDisplayed()) {
+	        		   opt.click();
+	        		   break;} }
+	          }
+	        }
+	  
+	      } 
+	  
+	  }
 	
+	
+	private int selectionTable(String serviceName) {
+	    switch (serviceName.toUpperCase()) {
+	    case "SMS":
+	      return 1;
+	    case "VOZ":
+	      return 2;
+	    default:
+	      return 0;
+	    }}
 }

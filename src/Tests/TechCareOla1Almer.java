@@ -98,7 +98,7 @@ public class TechCareOla1Almer extends TestBase {
 		sleep(7000);
 		page.clickVerDetalle();
 		sleep(5000);
-		page.clickDiagnosticarServicio("Promocion WhatsApp Mensual");
+		page.clickDiagnosticarServicio("voz","Voz Entrante");
 		
 		/*Accounts accPage = new Accounts(driver);
 		driver.switchTo().frame(accPage.getFrameForElement(driver, By.cssSelector(".slds-card__body.cards-container")));
