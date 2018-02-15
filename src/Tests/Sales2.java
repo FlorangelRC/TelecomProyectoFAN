@@ -3,16 +3,13 @@ package Tests;
 import static org.testng.Assert.assertTrue;
 
 import java.util.List;
-import java.util.NoSuchElementException;
 import java.util.Random;
 
 import org.openqa.selenium.By;
-import org.openqa.selenium.JavascriptExecutor;
-import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebElement;
-import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.ui.Select;
 import org.testng.Assert;
+import org.testng.annotations.BeforeClass;
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeMethod;
@@ -22,7 +19,6 @@ import Pages.BasePage;
 import Pages.ContactSearch;
 import Pages.CustomerCare;
 import Pages.SalesBase;
-import Tests.TestBase.IrA;
 
 public class Sales2 extends TestBase{
 
@@ -100,7 +96,6 @@ public class Sales2 extends TestBase{
 	public void TS94699_Nueva_Venta_Modo_de_Entrega_Verificar_Solicitud_de_Domicilio_de_envio_Envio_Express() {
 		sb.BuscarCuenta(DNI, "34073329");
 		sb.acciondecontacto("catalogo");
-		boolean x = false;
 		sleep(15000);
 		List<WebElement> cam = driver.findElements(By.cssSelector(".slds-m-left--x-small.slds-button.slds-button--brand"));
 		for (WebElement c : cam) {
@@ -148,7 +143,6 @@ public class Sales2 extends TestBase{
 		sb.BuscarCuenta(DNI, "");
 		driver.findElement(By.id("tab-scoped-3__item")).click();
 		sb.acciondecontacto("catalogo");
-		boolean x = false;
 		sleep(15000);
 		List<WebElement> cam = driver.findElements(By.cssSelector(".slds-m-left--x-small.slds-button.slds-button--brand"));
 		for(WebElement c : cam ){	
@@ -656,7 +650,6 @@ public class Sales2 extends TestBase{
 	@Test(groups={"Sales", "Ventas", "Ola1"})
 	public void TS95111_Ventas_General_Verificar_Que_No_Se_Puede_Seleccionar_Una_Linea_Decisora_ProcesoVenta() {
 		boolean esta = false;
-		ContactSearch contact = new ContactSearch(driver);
 		sb.BuscarCuenta(DNI, "34073329");
 		sb.acciondecontacto("catalogo");
 		sleep(15000);
@@ -675,11 +668,9 @@ public class Sales2 extends TestBase{
 	
 	@Test(groups={"Sales", "AltaDeContacto", "Ola1"})
 	public void TS94554_Alta_De_Contacto_Persona_Fisica_Verificar_Campo_Tipo_De_Documento_Por_Default() {
-		boolean esta = false;
 		Random aleatorio = new Random(System.currentTimeMillis());
 		aleatorio.setSeed(System.currentTimeMillis());
 		int intAleatorio = aleatorio.nextInt(8999999)+1000000;
-		ContactSearch contact = new ContactSearch(driver);
 		driver.findElement(By.id("SearchClientDocumentNumber")).sendKeys(Integer.toString(intAleatorio));
 		driver.findElement(By.id("SearchClientsDummy")).click();
 		sleep(5000);
@@ -699,7 +690,6 @@ public class Sales2 extends TestBase{
 	@Test(groups={"Sales", "AltaDeContacto","Ola1"})  // verificar
 	public void TS94566_Alta_De_Contacto_Persona_Fisica_Verificar_Mascara_Del_Campo_CUIT(){
 		try {Thread.sleep(10000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
-		boolean as = false;
 		ContactSearch contact = new ContactSearch(driver);
 		contact.searchContact("CUIT", "22458954", "");
 		WebElement num = driver.findElement(By.id("SearchClientDocumentNumber"));
@@ -1169,7 +1159,6 @@ public class Sales2 extends TestBase{
 	
 	@Test(groups={"Sales","AltaDeLinea","Ola1"}) 	
 	public void TS94501_Alta_Linea_Configurar_Nueva_Linea_Visualizar_filtros_de_localidad_y_provincia_al_modificar_linea_XX(){
-		CustomerCare CC = new CustomerCare(driver);
 		sb.BuscarCuenta(DNI, "34073329");
 		sb.acciondecontacto("catalogo");
 		sleep(15000);
@@ -1192,7 +1181,6 @@ public class Sales2 extends TestBase{
 	@Test(groups={"Sales","AltaDeLinea","Ola1"}) 	
 	public void TS94502_Alta_Linea_Configurar_Nueva_Linea_Visualizar_home_de_la_linea_pre_asignada_correspondiente_a_direccion_de_facturacion_XX(){
 		sb.BtnCrearNuevoCliente();
-		CustomerCare CC = new CustomerCare(driver);
 		ContactSearch contact = new ContactSearch(driver);
 		try {Thread.sleep(10000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 		driver.findElement(By.id("FirstName")).sendKeys("yy");
@@ -1216,7 +1204,6 @@ public class Sales2 extends TestBase{
 	@Test(groups={"Sales","AltaDeLinea","Ola1"})
 	public void TS94504_Alta_Linea_Configurar_Nueva_Linea_Visualizar_mensaje_y_opciones_de_lineas_no_disponibles_XX(){
 		sb.BtnCrearNuevoCliente();
-		CustomerCare CC = new CustomerCare(driver);
 		ContactSearch contact = new ContactSearch(driver);
 		try {Thread.sleep(10000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 		driver.findElement(By.id("FirstName")).sendKeys("yy");
@@ -1230,7 +1217,6 @@ public class Sales2 extends TestBase{
 		sleep(10000);
 		sb.Crear_DomicilioLegal(provincia, localidad, "falsa", "", "1000", "", "", "1549");
 		sleep(7000);
-		boolean x = false;
 		WebElement lindec = driver.findElement(By.id("tree0-node1")).findElement(By.tagName("ul")).findElements(By.tagName("div")).get(0);
 		System.out.println(lindec.getText());
 		System.out.println(lindec.getAttribute("value"));
@@ -1249,6 +1235,8 @@ public class Sales2 extends TestBase{
 		
 	@Test(groups={"Sales","AltaDeLinea","Ola1"})
 	public void TS94505_Alta_Linea_Configurar_Nueva_Linea_Visualizar_misma_cantidad_de_lineas_que_planes_XX(){
+		
+	}
 	
 	@Test(groups={"Sales", "AltaDeContacto", "Ola1"})
 	public void TS94590_Alta_de_Contacto_Persona_Fisica_Verificar_campos_inhabilitados_hasta_la_validacion_existosa_del_contacto_XX() {
@@ -1361,7 +1349,6 @@ public class Sales2 extends TestBase{
 		boolean DPF = false;
 		boolean E = false;
 		boolean TC = false;
-		CustomerCare CC = new CustomerCare(driver);
 		sb.BuscarCuenta(DNI, "34073329");
 		sb.acciondecontacto("catalogo");
 		sleep(15000);
@@ -1372,18 +1359,13 @@ public class Sales2 extends TestBase{
 		sleep(8000);
 		List<WebElement> plan = driver.findElements(By.id("tab-default-1"));
 		System.out.println(plan.size());
-		}
-		
-		//sb.continuar();
-		//sleep(10000);
-	
 		sb.continuar();
 		sleep(10000);
 		List<WebElement> cont = driver.findElements(By.cssSelector(".slds-button.slds-m-left--large.slds-button--brand.ta-button-brand"));
-			for(WebElement c : cont){
-				c.getText().equals("Continuar");
-					c.click();
-			}
+		for(WebElement c : cont){
+			c.getText().equals("Continuar");
+			c.click();
+		}
 		sleep(5000);
 		CustomerCare page = new CustomerCare(driver);
 		WebElement sig = driver.findElement(By.id("LineAssignment_nextBtn"));
@@ -1404,8 +1386,7 @@ public class Sales2 extends TestBase{
 			if (UnMP.getText().toLowerCase().contains("tarjeta de credito"))
 				TC = true;
 		}
-		Assert.assertTrue(DPF&&E&&TC);
-		
+		Assert.assertTrue(DPF&&E&&TC);	
 	}
 	
 	@Test(groups={"Sales", "AltaDeContacto", "Ola1"})
