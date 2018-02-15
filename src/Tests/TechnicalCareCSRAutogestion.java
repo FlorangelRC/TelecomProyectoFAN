@@ -76,7 +76,7 @@ public class TechnicalCareCSRAutogestion extends TestBase {
 		sleep(2000);
 	}
 	
-	@BeforeClass(groups = {"TechnicalCare", "Autogestion", "Muleto"}) 
+	@BeforeClass(alwaysRun=true) 
 	public void init() throws Exception
 	{
 		bandera =0;
@@ -101,7 +101,7 @@ public class TechnicalCareCSRAutogestion extends TestBase {
 	     try {Thread.sleep(12000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 	}
 	
-	@BeforeMethod(groups = {"TechnicalCare", "Autogestion", "Muleto"})  
+	@BeforeMethod(alwaysRun=true)  
 	public void setUp() throws Exception {
 	     Accounts accountPage = new Accounts(driver);
 	     driver.switchTo().defaultContent();
@@ -114,7 +114,7 @@ public class TechnicalCareCSRAutogestion extends TestBase {
 		
 	}
 	
-	@AfterMethod(groups = {"TechnicalCare", "Autogestion", "Muleto"}) 
+	@AfterMethod(alwaysRun=true) 
 	 public void afterMethod() {
 		driver.switchTo().defaultContent();
 		List<WebElement> ctas = driver.findElement(By.cssSelector(".x-tab-strip.x-tab-strip-top")).findElements(By.tagName("li"));
@@ -132,7 +132,7 @@ public class TechnicalCareCSRAutogestion extends TestBase {
 		
 		  }
 	
-	@AfterClass(groups = {"TechnicalCare", "Autogestion", "Muleto"}) 
+	@AfterClass(alwaysRun=true) 
 	public void tearDown2() {
 		driver.switchTo().defaultContent();
 		try{ for(WebElement e : driver.findElements(By.className("x-tab-strip-close"))) {
@@ -154,7 +154,7 @@ public class TechnicalCareCSRAutogestion extends TestBase {
 		try {Thread.sleep(2000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 	}
 	
-	@Test(groups = {"Fase3","TechnicalCare", "Autogestion"})
+	@Test(groups = {"Fase3","TechnicalCare", "Autogestion","Ola2"})
 	public void TS51149_Autogestion_Verificacion_De_Que_Exista_La_Opcion_De_Autogestion() {
 		 driver.switchTo().defaultContent();
 		 Accounts accountPage = new Accounts(driver);
@@ -167,7 +167,7 @@ public class TechnicalCareCSRAutogestion extends TestBase {
 		driver.switchTo().defaultContent();
 	}
 	
-	@Test(groups = {"Fase3","TechnicalCare", "Autogestion"})
+	@Test(groups = {"Fase3","TechnicalCare", "Autogestion","Ola2"})
 	public void TS51150_Autogestion_Verificacion_De_La_Existencia_Interfaz_De_Autogestion() {
 		Accounts accountPage = new Accounts(driver);
 		accountPage.findAndClickButton("autogesti\u00f3n");
@@ -190,7 +190,7 @@ public class TechnicalCareCSRAutogestion extends TestBase {
 		
 	}*/
 	
-	@Test(groups = {"TechnicalCare", "Autogestion"})
+	@Test(groups = {"TechnicalCare", "Autogestion","Ola2"})
 	public void TS51151_Autogestion_Verificacion_Del_Canal() {
 		Accounts accountPage = new Accounts(driver);
 		accountPage.findAndClickButton("autogesti\u00f3n");
@@ -200,7 +200,7 @@ public class TechnicalCareCSRAutogestion extends TestBase {
 		assertTrue(driver.findElement(By.cssSelector(".slds-form-element__label.ng-binding")).getText().toLowerCase().equals("canal"));
 	}
 	
-	@Test(groups = {"TechnicalCare", "Autogestion"})
+	@Test(groups = {"TechnicalCare", "Autogestion","Ola2"})
 	public void TS51152_Autogestion_Verificacion_Del_Servicio() {
 		Accounts accountPage = new Accounts(driver);
 		accountPage.findAndClickButton("autogesti\u00f3n");
@@ -210,7 +210,7 @@ public class TechnicalCareCSRAutogestion extends TestBase {
 		assertTrue(driver.findElements(By.cssSelector(".slds-form-element__label.ng-binding")).get(1).getText().toLowerCase().equals("servicio"));
 	}
 	
-	@Test(groups = {"TechnicalCare", "Autogestion"})
+	@Test(groups = {"TechnicalCare", "Autogestion","Ola2"})
 	public void TS51153_Autogestion_Verificacion_De_Lista_Canal_Y_Servicios() {
 		Accounts accountPage = new Accounts(driver);
 		accountPage.findAndClickButton("autogesti\u00f3n");
@@ -225,7 +225,7 @@ public class TechnicalCareCSRAutogestion extends TestBase {
 	    assertTrue(!listSelect.getFirstSelectedOption().getText().isEmpty());
 	}
 	
-	@Test(groups = {"TechnicalCare", "Autogestion"})
+	@Test(groups = {"TechnicalCare", "Autogestion","Ola2"})
 	public void TS51154_Autogestion_Verificacion_Del_Servicio_Asterisco_111() {
 		Accounts accountPage = new Accounts(driver);
 		accountPage.findAndClickButton("autogesti\u00f3n");
@@ -240,7 +240,7 @@ public class TechnicalCareCSRAutogestion extends TestBase {
 	    assertTrue(listSelect.getFirstSelectedOption().getText().contains("*111"));
 	}
 	
-	@Test(groups = {"TechnicalCare", "Autogestion"})
+	@Test(groups = {"TechnicalCare", "Autogestion","Ola2"})
 	public void TS51155_Autogestion_Verificacion_Del_Servicio_Asterisco_878() {
 		Accounts accountPage = new Accounts(driver);
 		accountPage.findAndClickButton("autogesti\u00f3n");
@@ -255,7 +255,7 @@ public class TechnicalCareCSRAutogestion extends TestBase {
 	    assertTrue(listSelect.getFirstSelectedOption().getText().contains("*878"));
 	}
 	
-	@Test(groups = {"TechnicalCare", "Autogestion"})
+	@Test(groups = {"TechnicalCare", "Autogestion","Ola2"})
 	public void TS51156_Autogestion_Verificacion_Del_Servicio_Asterisco_150() {
 		Accounts accountPage = new Accounts(driver);
 		accountPage.findAndClickButton("autogesti\u00f3n");
@@ -270,7 +270,7 @@ public class TechnicalCareCSRAutogestion extends TestBase {
 	    assertTrue(listSelect.getFirstSelectedOption().getText().contains("*150"));
 	}
 	
-	@Test(groups = {"TechnicalCare", "Autogestion"})
+	@Test(groups = {"TechnicalCare", "Autogestion","Ola2"})
 	public void TS51157_Autogestion_Verificacion_Del_Servicio_Asterisco_152() {
 		Accounts accountPage = new Accounts(driver);
 		accountPage.findAndClickButton("autogesti\u00f3n");
@@ -285,7 +285,7 @@ public class TechnicalCareCSRAutogestion extends TestBase {
 	    assertTrue(listSelect.getFirstSelectedOption().getText().toLowerCase().contains("*152 (packs, nros amigos)"));
 	}
 	
-	@Test(groups = {"TechnicalCare", "Autogestion"})
+	@Test(groups = {"TechnicalCare", "Autogestion","Ola2"})
 	public void TS51158_Autogestion_Verificacion_Del_Servicio_Asterisco_2582() {
 		Accounts accountPage = new Accounts(driver);
 		accountPage.findAndClickButton("autogesti\u00f3n");
@@ -300,7 +300,7 @@ public class TechnicalCareCSRAutogestion extends TestBase {
 	    assertTrue(listSelect.getFirstSelectedOption().getText().toLowerCase().contains("*club (*2582)"));
 	}
 	
-	@Test(groups = {"TechnicalCare", "Autogestion"})
+	@Test(groups = {"TechnicalCare", "Autogestion","Ola2"})
 	public void TS51159_Autogestion_Verificacion_Del_Servicio_Asterisco_25225() {
 		Accounts accountPage = new Accounts(driver);
 		accountPage.findAndClickButton("autogesti\u00f3n");
@@ -315,7 +315,7 @@ public class TechnicalCareCSRAutogestion extends TestBase {
 	    assertTrue(listSelect.getFirstSelectedOption().getText().toLowerCase().contains("*25225 (black)"));
 	}
 
-	@Test(groups = {"TechnicalCare", "Autogestion"})
+	@Test(groups = {"TechnicalCare", "Autogestion","Ola2"})
 	public void TS51160_Autogestion_Verificacion_Del_Servicio_Asterisco_25283() {
 		Accounts accountPage = new Accounts(driver);
 		accountPage.findAndClickButton("autogesti\u00f3n");
@@ -330,7 +330,7 @@ public class TechnicalCareCSRAutogestion extends TestBase {
 	    assertTrue(listSelect.getFirstSelectedOption().getText().toLowerCase().contains("*25283 (clave)"));
 	}
 	
-	@Test(groups = {"TechnicalCare", "Autogestion"})
+	@Test(groups = {"TechnicalCare", "Autogestion","Ola2"})
 	public void TS51161_Autogestion_Verificacion_Del_Servicio_Asterisco_77666() {
 		Accounts accountPage = new Accounts(driver);
 		accountPage.findAndClickButton("autogesti\u00f3n");
@@ -345,7 +345,7 @@ public class TechnicalCareCSRAutogestion extends TestBase {
 	    assertTrue(listSelect.getFirstSelectedOption().getText().toLowerCase().contains("*77666 (promo)"));
 	}
 	
-	@Test(groups = {"TechnicalCare", "Autogestion"})
+	@Test(groups = {"TechnicalCare", "Autogestion","Ola2"})
 	public void TS51163_Autogestion_Verificacion_Del_Servicio_Asterisco_7526() {
 		Accounts accountPage = new Accounts(driver);
 		accountPage.findAndClickButton("autogesti\u00f3n");
@@ -360,7 +360,7 @@ public class TechnicalCareCSRAutogestion extends TestBase {
 	    assertTrue(listSelect.getFirstSelectedOption().getText().toLowerCase().contains("*7526 (plan)"));
 	}
 	
-	@Test(groups = {"TechnicalCare", "Autogestion"})
+	@Test(groups = {"TechnicalCare", "Autogestion","Ola2"})
 	public void TS51164_Autogestion_Verificacion_Del_Servicio_Asterisco_2447() {
 		Accounts accountPage = new Accounts(driver);
 		accountPage.findAndClickButton("autogesti\u00f3n");
@@ -375,7 +375,7 @@ public class TechnicalCareCSRAutogestion extends TestBase {
 	    assertTrue(listSelect.getFirstSelectedOption().getText().toLowerCase().contains("*2447 (chip)"));
 	}
 	
-	@Test(groups = {"TechnicalCare", "Autogestion"})
+	@Test(groups = {"TechnicalCare", "Autogestion","Ola2"})
 	public void TS51165_Autogestion_Verificacion_Del_Servicio_Asterisco_333() {
 		Accounts accountPage = new Accounts(driver);
 		accountPage.findAndClickButton("autogesti\u00f3n");
@@ -390,7 +390,7 @@ public class TechnicalCareCSRAutogestion extends TestBase {
 	    assertTrue(listSelect.getFirstSelectedOption().getText().toLowerCase().contains("*333 (recarga delivery)"));
 	}
 	
-	@Test(groups = {"TechnicalCare", "Autogestion"})
+	@Test(groups = {"TechnicalCare", "Autogestion","Ola2"})
 	public void TS51166_Autogestion_Verificacion_Del_Servicio_Asterisco_151() {
 		Accounts accountPage = new Accounts(driver);
 		accountPage.findAndClickButton("autogesti\u00f3n");
@@ -405,7 +405,7 @@ public class TechnicalCareCSRAutogestion extends TestBase {
 	    assertTrue(listSelect.getFirstSelectedOption().getText().toLowerCase().contains("*151 (recargas)"));
 	}
 	
-	@Test(groups = {"TechnicalCare", "Autogestion"})
+	@Test(groups = {"TechnicalCare", "Autogestion","Ola2"})
 	public void TS51167_Autogestion_Verificacion_Del_Servicio_Asterisco_767() {
 		Accounts accountPage = new Accounts(driver);
 		accountPage.findAndClickButton("autogesti\u00f3n");
@@ -420,7 +420,7 @@ public class TechnicalCareCSRAutogestion extends TestBase {
 	    assertTrue(listSelect.getFirstSelectedOption().getText().toLowerCase().contains("*767 (sos)"));
 	}
 	
-	@Test(groups = {"TechnicalCare", "Autogestion"})
+	@Test(groups = {"TechnicalCare", "Autogestion","Ola2"})
 	public void TS51168_Autogestion_Verificacion_Del_Servicio_Asterisco_555() {
 		Accounts accountPage = new Accounts(driver);
 		accountPage.findAndClickButton("autogesti\u00f3n");
@@ -435,7 +435,7 @@ public class TechnicalCareCSRAutogestion extends TestBase {
 	    assertTrue(listSelect.getFirstSelectedOption().getText().toLowerCase().contains("*555 (contestador)"));
 	}
 	
-	@Test(groups = {"TechnicalCare", "Autogestion"})
+	@Test(groups = {"TechnicalCare", "Autogestion","Ola2"})
 	public void TS51169_Autogestion_Verificacion_Del_Servicio_Asterisco_99999() {
 		Accounts accountPage = new Accounts(driver);
 		accountPage.findAndClickButton("autogesti\u00f3n");
@@ -450,7 +450,7 @@ public class TechnicalCareCSRAutogestion extends TestBase {
 	    assertTrue(listSelect.getFirstSelectedOption().getText().toLowerCase().contains("*99999 (pbp)"));
 	}
 	
-	@Test(groups = {"TechnicalCare", "Autogestion"})
+	@Test(groups = {"TechnicalCare", "Autogestion","Ola2"})
 	public void TS51170_Autogestion_Verificacion_Del_Servicio_Asterisco_88988() {
 		Accounts accountPage = new Accounts(driver);
 		accountPage.findAndClickButton("autogesti\u00f3n");
@@ -465,7 +465,7 @@ public class TechnicalCareCSRAutogestion extends TestBase {
 	    assertTrue(listSelect.getFirstSelectedOption().getText().toLowerCase().contains("*88988 (saec)"));
 	}
 	
-	@Test(groups = {"TechnicalCare", "Autogestion"})
+	@Test(groups = {"TechnicalCare", "Autogestion","Ola2"})
 	public void TS51171_Autogestion_Verificacion_Del_Servicio_Asterisco_910() {
 		Accounts accountPage = new Accounts(driver);
 		accountPage.findAndClickButton("autogesti\u00f3n");
@@ -480,7 +480,7 @@ public class TechnicalCareCSRAutogestion extends TestBase {
 	    assertTrue(listSelect.getFirstSelectedOption().getText().toLowerCase().contains("*910"));
 	}
 	
-	@Test(groups = {"TechnicalCare", "Autogestion"})
+	@Test(groups = {"TechnicalCare", "Autogestion","Ola2"})
 	public void TS51172_Autogestion_Asterisco_Verificacion_De_Opciones_De_Inconvenientes() {
 		Accounts accountPage = new Accounts(driver);
 		accountPage.findAndClickButton("autogesti\u00f3n");
@@ -500,7 +500,7 @@ public class TechnicalCareCSRAutogestion extends TestBase {
 	
 	
 	
-	@Test(groups = {"TechnicalCare", "Autogestion"})
+	@Test(groups = {"TechnicalCare", "Autogestion","Ola2"})
 	public void TS51173_Autogestion_Verificacion_Lista_De_Inconvenientes_Asterisco_111() {
 		Accounts accountPage = new Accounts(driver);
 		accountPage.findAndClickButton("autogesti\u00f3n");
@@ -526,7 +526,7 @@ public class TechnicalCareCSRAutogestion extends TestBase {
 
 	}
 	
-	@Test(groups = {"TechnicalCare", "Autogestion"})
+	@Test(groups = {"TechnicalCare", "Autogestion","Ola2"})
 	public void TS51174_Autogestion_Verificacion_Lista_De_Inconvenientes_Asterisco_878() {
 		Accounts accountPage = new Accounts(driver);
 		accountPage.findAndClickButton("autogesti\u00f3n");
@@ -545,7 +545,7 @@ public class TechnicalCareCSRAutogestion extends TestBase {
 	    assertTrue(verificarContenidoLista(todos,motivos));
 	}
 	
-	@Test(groups = {"TechnicalCare", "Autogestion"})
+	@Test(groups = {"TechnicalCare", "Autogestion","Ola2"})
 	public void TS51175_Autogestion_Verificacion_Lista_De_Inconvenientes_Asterisco_150() {
 		Accounts accountPage = new Accounts(driver);
 		accountPage.findAndClickButton("autogesti\u00f3n");
@@ -565,7 +565,7 @@ public class TechnicalCareCSRAutogestion extends TestBase {
 
 	}
 	
-	@Test(groups = {"TechnicalCare", "Autogestion"})
+	@Test(groups = {"TechnicalCare", "Autogestion","Ola2"})
 	public void TS51176_Autogestion_Verificacion_Lista_De_Inconvenientes_Asterisco_152() {
 		Accounts accountPage = new Accounts(driver);
 		accountPage.findAndClickButton("autogesti\u00f3n");
@@ -585,7 +585,7 @@ public class TechnicalCareCSRAutogestion extends TestBase {
 
 	}
 	
-	@Test(groups = {"TechnicalCare", "Autogestion"})
+	@Test(groups = {"TechnicalCare", "Autogestion","Ola2"})
 	public void TS51177_Autogestion_Verificacion_Lista_De_Inconvenientes_Asterisco_2582() {
 		Accounts accountPage = new Accounts(driver);
 		accountPage.findAndClickButton("autogesti\u00f3n");
@@ -606,7 +606,7 @@ public class TechnicalCareCSRAutogestion extends TestBase {
 	}
 	
 	
-	@Test(groups = {"TechnicalCare", "Autogestion"})
+	@Test(groups = {"TechnicalCare", "Autogestion","Ola2"})
 	public void TS51179_Autogestion_Verificacion_Lista_De_Inconvenientes_Asterisco_25225() {
 		Accounts accountPage = new Accounts(driver);
 		accountPage.findAndClickButton("autogesti\u00f3n");
@@ -626,7 +626,7 @@ public class TechnicalCareCSRAutogestion extends TestBase {
 
 	}
 	
-	@Test(groups = {"TechnicalCare", "Autogestion"})
+	@Test(groups = {"TechnicalCare", "Autogestion","Ola2"})
 	public void TS51180_Autogestion_Verificacion_Lista_De_Inconvenientes_Asterisco_25283() {
 		Accounts accountPage = new Accounts(driver);
 		accountPage.findAndClickButton("autogesti\u00f3n");
@@ -646,7 +646,7 @@ public class TechnicalCareCSRAutogestion extends TestBase {
 
 	}
 	
-	@Test(groups = {"TechnicalCare", "Autogestion"})
+	@Test(groups = {"TechnicalCare", "Autogestion","Ola2"})
 	public void TS51181_Autogestion_Verificacion_Lista_De_Inconvenientes_Asterisco_77666() {
 		Accounts accountPage = new Accounts(driver);
 		accountPage.findAndClickButton("autogesti\u00f3n");
@@ -665,7 +665,7 @@ public class TechnicalCareCSRAutogestion extends TestBase {
 	    assertTrue(verificarContenidoLista(todos,motivos));
 	}
 	
-	@Test(groups = {"TechnicalCare", "Autogestion"})
+	@Test(groups = {"TechnicalCare", "Autogestion","Ola2"})
 	public void TS51182_Autogestion_Verificacion_Lista_De_Inconvenientes_Asterisco_7526() {
 		Accounts accountPage = new Accounts(driver);
 		accountPage.findAndClickButton("autogesti\u00f3n");
@@ -684,7 +684,7 @@ public class TechnicalCareCSRAutogestion extends TestBase {
 	    assertTrue(verificarContenidoLista(todos,motivos));
 	}
 	
-	@Test(groups = {"TechnicalCare", "Autogestion"})
+	@Test(groups = {"TechnicalCare", "Autogestion","Ola2"})
 	public void TS51183_Autogestion_Verificacion_Lista_De_Inconvenientes_Asterisco_2447() {
 		Accounts accountPage = new Accounts(driver);
 		accountPage.findAndClickButton("autogesti\u00f3n");
@@ -703,7 +703,7 @@ public class TechnicalCareCSRAutogestion extends TestBase {
 	    assertTrue(verificarContenidoLista(todos,motivos));
 	}
 	
-	@Test(groups = {"TechnicalCare", "Autogestion"})
+	@Test(groups = {"TechnicalCare", "Autogestion","Ola2"})
 	public void TS51184_Autogestion_Verificacion_Lista_De_Inconvenientes_Asterisco_333() {
 		Accounts accountPage = new Accounts(driver);
 		accountPage.findAndClickButton("autogesti\u00f3n");
@@ -722,7 +722,7 @@ public class TechnicalCareCSRAutogestion extends TestBase {
 	    assertTrue(verificarContenidoLista(todos,motivos));
 	}
 	
-	@Test(groups = {"TechnicalCare", "Autogestion"})
+	@Test(groups = {"TechnicalCare", "Autogestion","Ola2"})
 	public void TS51185_Autogestion_Verificacion_Lista_De_Inconvenientes_Asterisco_151() {
 		Accounts accountPage = new Accounts(driver);
 		accountPage.findAndClickButton("autogesti\u00f3n");
@@ -742,7 +742,7 @@ public class TechnicalCareCSRAutogestion extends TestBase {
 
 	}
 	
-	@Test(groups = {"TechnicalCare", "Autogestion"})
+	@Test(groups = {"TechnicalCare", "Autogestion","Ola2"})
 	public void TS51186_Autogestion_Verificacion_Lista_De_Inconvenientes_Asterisco_767() {
 		Accounts accountPage = new Accounts(driver);
 		accountPage.findAndClickButton("autogesti\u00f3n");
@@ -762,7 +762,7 @@ public class TechnicalCareCSRAutogestion extends TestBase {
 
 	}
 	
-	@Test(groups = {"TechnicalCare", "Autogestion"})
+	@Test(groups = {"TechnicalCare", "Autogestion","Ola2"})
 	public void TS51187_Autogestion_Verificacion_Lista_De_Inconvenientes_Asterisco_555() {
 		Accounts accountPage = new Accounts(driver);
 		accountPage.findAndClickButton("autogesti\u00f3n");
@@ -782,7 +782,7 @@ public class TechnicalCareCSRAutogestion extends TestBase {
 
 	}
 	
-	@Test(groups = {"TechnicalCare", "Autogestion"})
+	@Test(groups = {"TechnicalCare", "Autogestion","Ola2"})
 	public void TS51188_Autogestion_Verificacion_Lista_De_Inconvenientes_Asterisco_99999() {
 		Accounts accountPage = new Accounts(driver);
 		accountPage.findAndClickButton("autogesti\u00f3n");
@@ -802,7 +802,7 @@ public class TechnicalCareCSRAutogestion extends TestBase {
 
 	}
 	
-	@Test(groups = {"TechnicalCare", "Autogestion"})
+	@Test(groups = {"TechnicalCare", "Autogestion","Ola2"})
 	public void TS51189_Autogestion_Verificacion_Lista_De_Inconvenientes_Asterisco_88988() {
 		Accounts accountPage = new Accounts(driver);
 		accountPage.findAndClickButton("autogesti\u00f3n");
@@ -822,7 +822,7 @@ public class TechnicalCareCSRAutogestion extends TestBase {
 
 	}
 	
-	@Test(groups = {"TechnicalCare", "Autogestion"})
+	@Test(groups = {"TechnicalCare", "Autogestion","Ola2"})
 	public void TS51190_Autogestion_Verificacion_Lista_De_Inconvenientes_910() {
 		Accounts accountPage = new Accounts(driver);
 		accountPage.findAndClickButton("autogesti\u00f3n");
@@ -848,7 +848,7 @@ public class TechnicalCareCSRAutogestion extends TestBase {
 
 	}
 	
-	@Test(groups = {"TechnicalCare", "Autogestion"})
+	@Test(groups = {"TechnicalCare", "Autogestion","Ola2"})
 	public void TS51191_Autogestion_Verificacion_De_La_Seleccion_Canal_Asterisco_Y_Servicio_288() {
 		Accounts accountPage = new Accounts(driver);
 		accountPage.findAndClickButton("autogesti\u00f3n");
@@ -863,7 +863,7 @@ public class TechnicalCareCSRAutogestion extends TestBase {
 	    assertTrue(listSelect.getFirstSelectedOption().getText().contains("*288"));
 	}
 	
-	@Test(groups = {"TechnicalCare", "Autogestion"})
+	@Test(groups = {"TechnicalCare", "Autogestion","Ola2"})
 	public void TS51195_Autogestion_Verificacion_Lista_De_Inconvenientes_288() {
 		Accounts accountPage = new Accounts(driver);
 		accountPage.findAndClickButton("autogesti\u00f3n");
@@ -883,7 +883,7 @@ public class TechnicalCareCSRAutogestion extends TestBase {
 
 	}
 	
-	@Test(groups = {"TechnicalCare", "Autogestion"})
+	@Test(groups = {"TechnicalCare", "Autogestion","Ola2"})
 	public void TS51196_Autogestion_Verificacion_De_La_Seleccion_Canal_Asterisco_Y_Servicio_788() {
 		Accounts accountPage = new Accounts(driver);
 		accountPage.findAndClickButton("autogesti\u00f3n");
@@ -898,7 +898,7 @@ public class TechnicalCareCSRAutogestion extends TestBase {
 	    assertTrue(listSelect.getFirstSelectedOption().getText().contains("*788"));
 	}
 	
-	@Test(groups = {"TechnicalCare", "Autogestion"})
+	@Test(groups = {"TechnicalCare", "Autogestion","Ola2"})
 	public void TS51198_Autogestion_Verificacion_De_La_Seleccion_Canal_Asterisco_Y_Servicio_120() {
 		Accounts accountPage = new Accounts(driver);
 		accountPage.findAndClickButton("autogesti\u00f3n");
@@ -913,7 +913,7 @@ public class TechnicalCareCSRAutogestion extends TestBase {
 	    assertTrue(listSelect.getFirstSelectedOption().getText().contains("*120"));
 	}
 	
-	@Test(groups = {"TechnicalCare", "Autogestion"})
+	@Test(groups = {"TechnicalCare", "Autogestion","Ola2"})
 	public void TS51201_Autogestion_Verificacion_De_Lista_De_Opciones_Asterisco_222() {
 		Accounts accountPage = new Accounts(driver);
 		accountPage.findAndClickButton("autogesti\u00f3n");
@@ -932,7 +932,7 @@ public class TechnicalCareCSRAutogestion extends TestBase {
 	    assertTrue(verificarContenidoLista(todos,motivos));
 	}
 	
-	@Test(groups = {"TechnicalCare", "Autogestion"})
+	@Test(groups = {"TechnicalCare", "Autogestion","Ola2"})
 	public void TS51202_Autogestion_Verificacion_De_Inconveniente_Asterisco_237() {
 		Accounts accountPage = new Accounts(driver);
 		accountPage.findAndClickButton("autogesti\u00f3n");
@@ -947,7 +947,7 @@ public class TechnicalCareCSRAutogestion extends TestBase {
 	    assertTrue(listSelect.getFirstSelectedOption().getText().contains("*237"));
 	}
 	
-	@Test(groups = {"TechnicalCare", "Autogestion"})
+	@Test(groups = {"TechnicalCare", "Autogestion","Ola2"})
 	public void TS51203_Autogestion_Verificacion_De_Lista_De_Opciones_Asterisco_237() {
 		Accounts accountPage = new Accounts(driver);
 		accountPage.findAndClickButton("autogesti\u00f3n");
@@ -966,7 +966,7 @@ public class TechnicalCareCSRAutogestion extends TestBase {
 	    assertTrue(verificarContenidoLista(todos,motivos));
 	}
 	
-	@Test(groups = {"TechnicalCare", "Autogestion"})
+	@Test(groups = {"TechnicalCare", "Autogestion","Ola2"})
 	public void TS51204_Autogestion_Verificacion_De_La_Seleccion_Canal_Asterisco_Y_Servicio_242643() {
 		Accounts accountPage = new Accounts(driver);
 		accountPage.findAndClickButton("autogesti\u00f3n");
@@ -981,7 +981,7 @@ public class TechnicalCareCSRAutogestion extends TestBase {
 	    assertTrue(listSelect.getFirstSelectedOption().getText().contains("*242643"));
 	}
 	
-	@Test(groups = {"TechnicalCare", "Autogestion"})
+	@Test(groups = {"TechnicalCare", "Autogestion","Ola2"})
 	public void TS51205_Autogestion_Verificacion_De_Lista_De_Opciones_Asterisco_242643() {
 		Accounts accountPage = new Accounts(driver);
 		accountPage.findAndClickButton("autogesti\u00f3n");
@@ -1000,7 +1000,7 @@ public class TechnicalCareCSRAutogestion extends TestBase {
 	    assertTrue(verificarContenidoLista(todos,motivos));
 	}
 	
-	@Test(groups = {"TechnicalCare", "Autogestion"})
+	@Test(groups = {"TechnicalCare", "Autogestion","Ola2"})
 	public void TS51206_Autogestion_Verificacion_De_La_Seleccion_Canal_Asterisco_Y_Servicio_2463() {
 		Accounts accountPage = new Accounts(driver);
 		accountPage.findAndClickButton("autogesti\u00f3n");
@@ -1015,7 +1015,7 @@ public class TechnicalCareCSRAutogestion extends TestBase {
 	    assertTrue(listSelect.getFirstSelectedOption().getText().contains("*2463"));
 	}
 	
-	@Test(groups = {"TechnicalCare", "Autogestion"})
+	@Test(groups = {"TechnicalCare", "Autogestion","Ola2"})
 	public void TS51207_Autogestion_Verificacion_De_Lista_De_Opciones_Asterisco_2463() {
 		Accounts accountPage = new Accounts(driver);
 		accountPage.findAndClickButton("autogesti\u00f3n");
@@ -1037,7 +1037,7 @@ public class TechnicalCareCSRAutogestion extends TestBase {
 	
 	
 	
-	@Test(groups = {"TechnicalCare", "Autogestion"})
+	@Test(groups = {"TechnicalCare", "Autogestion","Ola2"})
 	public void TS51208_Autogestion_Verificacion_De_Inconveniente_Asterisco_2484() {
 		Accounts accountPage = new Accounts(driver);
 		accountPage.findAndClickButton("autogesti\u00f3n");
@@ -1052,7 +1052,7 @@ public class TechnicalCareCSRAutogestion extends TestBase {
 	    assertTrue(listSelect.getFirstSelectedOption().getText().contains("*2484"));
 	}
 	
-	@Test(groups = {"TechnicalCare", "Autogestion"})
+	@Test(groups = {"TechnicalCare", "Autogestion","Ola2"})
 	public void TS51209_Autogestion_Verificacion_De_Lista_De_Opciones_Asterisco_2484() {
 		Accounts accountPage = new Accounts(driver);
 		accountPage.findAndClickButton("autogesti\u00f3n");
@@ -1072,7 +1072,7 @@ public class TechnicalCareCSRAutogestion extends TestBase {
 	}
 	
 	
-	@Test(groups = {"TechnicalCare", "Autogestion"})
+	@Test(groups = {"TechnicalCare", "Autogestion","Ola2"})
 	public void TS51210_Autogestion_Verificacion_De_La_Seleccion_Canal_Asterisco_Y_Servicio_272() {
 		Accounts accountPage = new Accounts(driver);
 		accountPage.findAndClickButton("autogesti\u00f3n");
@@ -1087,7 +1087,7 @@ public class TechnicalCareCSRAutogestion extends TestBase {
 	    assertTrue(listSelect.getFirstSelectedOption().getText().contains("*272"));
 	}
 	
-	@Test(groups = {"TechnicalCare", "Autogestion"})
+	@Test(groups = {"TechnicalCare", "Autogestion","Ola2"})
 	public void TS51211_Autogestion_Verificacion_De_Inconveniente_Asterisco_272() {
 		Accounts accountPage = new Accounts(driver);
 		accountPage.findAndClickButton("autogesti\u00f3n");
@@ -1107,7 +1107,7 @@ public class TechnicalCareCSRAutogestion extends TestBase {
 
 	}
 	
-	@Test(groups = {"TechnicalCare", "Autogestion"})
+	@Test(groups = {"TechnicalCare", "Autogestion","Ola2"})
 	public void TS51212_Autogestion_Verificacion_De_Inconveniente_Asterisco_27638() {
 		Accounts accountPage = new Accounts(driver);
 		accountPage.findAndClickButton("autogesti\u00f3n");
@@ -1122,7 +1122,7 @@ public class TechnicalCareCSRAutogestion extends TestBase {
 	    assertTrue(listSelect.getFirstSelectedOption().getText().contains("*27638"));
 	}
 	
-	@Test(groups = {"TechnicalCare", "Autogestion"})
+	@Test(groups = {"TechnicalCare", "Autogestion","Ola2"})
 	public void TS51213_Autogestion_Verificacion_De_Lista_De_Opciones_Asterisco_27638() {
 		Accounts accountPage = new Accounts(driver);
 		accountPage.findAndClickButton("autogesti\u00f3n");
@@ -1141,7 +1141,7 @@ public class TechnicalCareCSRAutogestion extends TestBase {
 	    assertTrue(verificarContenidoLista(todos,motivos));
 	}
 	
-	@Test(groups = {"TechnicalCare", "Autogestion"})
+	@Test(groups = {"TechnicalCare", "Autogestion","Ola2"})
 	public void TS51214_Autogestion_Verificacion_De_La_Seleccion_Canal_Asterisco_Y_Servicio_347() {
 		Accounts accountPage = new Accounts(driver);
 		accountPage.findAndClickButton("autogesti\u00f3n");
@@ -1156,7 +1156,7 @@ public class TechnicalCareCSRAutogestion extends TestBase {
 	    assertTrue(listSelect.getFirstSelectedOption().getText().contains("*347"));
 	}
 	
-	@Test(groups = {"TechnicalCare", "Autogestion"})
+	@Test(groups = {"TechnicalCare", "Autogestion","Ola2"})
 	public void TS51215_Autogestion_Verificacion_De_Lista_De_Opciones_Asterisco_347() {
 		Accounts accountPage = new Accounts(driver);
 		accountPage.findAndClickButton("autogesti\u00f3n");
@@ -1175,7 +1175,7 @@ public class TechnicalCareCSRAutogestion extends TestBase {
 	    assertTrue(verificarContenidoLista(todos,motivos));
 	}
 	
-	@Test(groups = {"TechnicalCare", "Autogestion"})
+	@Test(groups = {"TechnicalCare", "Autogestion","Ola2"})
 	public void TS51216_Autogestion_Verificacion_De_La_Seleccion_Canal_Asterisco_Y_Servicio_380() {
 		Accounts accountPage = new Accounts(driver);
 		accountPage.findAndClickButton("autogesti\u00f3n");
@@ -1190,7 +1190,7 @@ public class TechnicalCareCSRAutogestion extends TestBase {
 	    assertTrue(listSelect.getFirstSelectedOption().getText().contains("*380"));
 	}
 	
-	@Test(groups = {"TechnicalCare", "Autogestion"})
+	@Test(groups = {"TechnicalCare", "Autogestion","Ola2"})
 	public void TS51217_Autogestion_Verificacion_De_Lista_De_Opciones_Asterisco_380() {
 		Accounts accountPage = new Accounts(driver);
 		accountPage.findAndClickButton("autogesti\u00f3n");
@@ -1209,7 +1209,7 @@ public class TechnicalCareCSRAutogestion extends TestBase {
 	    assertTrue(verificarContenidoLista(todos,motivos));
 	}
 	
-	@Test(groups = {"TechnicalCare", "Autogestion"})
+	@Test(groups = {"TechnicalCare", "Autogestion","Ola2"})
 	public void TS51218_Autogestion_Verificacion_De_La_Seleccion_Canal_Asterisco_Y_Servicio_746() {
 		Accounts accountPage = new Accounts(driver);
 		accountPage.findAndClickButton("autogesti\u00f3n");
@@ -1224,7 +1224,7 @@ public class TechnicalCareCSRAutogestion extends TestBase {
 	    assertTrue(listSelect.getFirstSelectedOption().getText().contains("*746"));
 	}
 	
-	@Test(groups = {"TechnicalCare", "Autogestion"})
+	@Test(groups = {"TechnicalCare", "Autogestion","Ola2"})
 	public void TS51219_Autogestion_Verificacion_De_Lista_De_Opciones_Asterisco_746() {
 		Accounts accountPage = new Accounts(driver);
 		accountPage.findAndClickButton("autogesti\u00f3n");
@@ -1243,7 +1243,7 @@ public class TechnicalCareCSRAutogestion extends TestBase {
 	    assertTrue(verificarContenidoLista(todos,motivos));
 	}
 	
-	@Test(groups = {"TechnicalCare", "Autogestion"})
+	@Test(groups = {"TechnicalCare", "Autogestion","Ola2"})
 	public void TS51220_Autogestion_Verificacion_De_La_Seleccion_Canal_Asterisco_Y_Servicio_8742() {
 		Accounts accountPage = new Accounts(driver);
 		accountPage.findAndClickButton("autogesti\u00f3n");
@@ -1258,7 +1258,7 @@ public class TechnicalCareCSRAutogestion extends TestBase {
 	    assertTrue(listSelect.getFirstSelectedOption().getText().contains("*8742"));
 	}
 	
-	@Test(groups = {"TechnicalCare", "Autogestion"})
+	@Test(groups = {"TechnicalCare", "Autogestion","Ola2"})
 	public void TS51221_Autogestion_Verificacion_De_Lista_De_Opciones_Asterisco_8472() {
 		Accounts accountPage = new Accounts(driver);
 		accountPage.findAndClickButton("autogesti\u00f3n");
@@ -1277,7 +1277,7 @@ public class TechnicalCareCSRAutogestion extends TestBase {
 	    assertTrue(verificarContenidoLista(todos,motivos));
 	}
 	
-	@Test(groups = {"TechnicalCare", "Autogestion"})
+	@Test(groups = {"TechnicalCare", "Autogestion","Ola2"})
 	public void TS51222_Autogestion_Verificacion_De_La_Seleccion_Canal_Asterisco_Y_Servicio_874() {
 		Accounts accountPage = new Accounts(driver);
 		accountPage.findAndClickButton("autogesti\u00f3n");
@@ -1292,7 +1292,7 @@ public class TechnicalCareCSRAutogestion extends TestBase {
 	    assertTrue(listSelect.getFirstSelectedOption().getText().contains("*847"));
 	}
 	
-	@Test(groups = {"TechnicalCare", "Autogestion"})
+	@Test(groups = {"TechnicalCare", "Autogestion","Ola2"})
 	public void TS51223_Autogestion_Verificacion_De_La_Seleccion_Canal_Asterisco_Y_Servicio_746() {
 		Accounts accountPage = new Accounts(driver);
 		accountPage.findAndClickButton("autogesti\u00f3n");
@@ -1308,7 +1308,7 @@ public class TechnicalCareCSRAutogestion extends TestBase {
 	}
 	
 	
-	@Test(groups = {"TechnicalCare", "Autogestion"})
+	@Test(groups = {"TechnicalCare", "Autogestion","Ola2"})
 	public void TS51224_Autogestion_Verificacion_De_La_Seleccion_Canal_Nros_De_Emergencia_Y_Servicio_100() {
 		Accounts accountPage = new Accounts(driver);
 		accountPage.findAndClickButton("autogesti\u00f3n");
@@ -1323,7 +1323,7 @@ public class TechnicalCareCSRAutogestion extends TestBase {
 	    assertTrue(listSelect.getFirstSelectedOption().getText().contains("100"));
 	}
 	
-	@Test(groups = {"TechnicalCare", "Autogestion"})
+	@Test(groups = {"TechnicalCare", "Autogestion","Ola2"})
 	public void TS51225_Autogestion_Verificacion_De_La_Seleccion_Canal_Nros_De_Emergencia_Y_Servicio_746() {
 		Accounts accountPage = new Accounts(driver);
 		accountPage.findAndClickButton("autogesti\u00f3n");
@@ -1339,7 +1339,7 @@ public class TechnicalCareCSRAutogestion extends TestBase {
 	    assertFalse(listSelect.getFirstSelectedOption().getText().contains("746"));
 	}
 	
-	@Test(groups = {"TechnicalCare", "Autogestion"})
+	@Test(groups = {"TechnicalCare", "Autogestion","Ola2"})
 	public void TS51226_Autogestion_Verificacion_De_La_Seleccion_Canal_Nros_De_Emergencia_Y_Servicio_101() {
 		Accounts accountPage = new Accounts(driver);
 		accountPage.findAndClickButton("autogesti\u00f3n");
@@ -1354,7 +1354,7 @@ public class TechnicalCareCSRAutogestion extends TestBase {
 	    assertTrue(listSelect.getFirstSelectedOption().getText().contains("101"));
 	}
 	
-	@Test(groups = {"TechnicalCare", "Autogestion"})
+	@Test(groups = {"TechnicalCare", "Autogestion","Ola2"})
 	public void TS51227_Autogestion_Verificacion_De_Lista_De_Opciones_Canal_Nros_De_Emergencia_Y_Servicio_101() {
 		Accounts accountPage = new Accounts(driver);
 		accountPage.findAndClickButton("autogesti\u00f3n");
@@ -1373,7 +1373,7 @@ public class TechnicalCareCSRAutogestion extends TestBase {
 	    assertTrue(verificarContenidoLista(todos,motivos));
 	}
 	
-	@Test(groups = {"TechnicalCare", "Autogestion"})
+	@Test(groups = {"TechnicalCare", "Autogestion","Ola2"})
 	public void TS51228_Autogestion_Verificacion_De_La_Seleccion_Canal_Nros_De_Emergencia_Y_Servicio_102() {
 		Accounts accountPage = new Accounts(driver);
 		accountPage.findAndClickButton("autogesti\u00f3n");
@@ -1388,7 +1388,7 @@ public class TechnicalCareCSRAutogestion extends TestBase {
 	    assertTrue(listSelect.getFirstSelectedOption().getText().contains("102"));
 	}
 	
-	@Test(groups = {"TechnicalCare", "Autogestion"})
+	@Test(groups = {"TechnicalCare", "Autogestion","Ola2"})
 	public void TS51229_Autogestion_Verificacion_De_Lista_De_Inconvenientes_Canal_Nros_De_Emergencia_Y_Servicio_102() {
 		Accounts accountPage = new Accounts(driver);
 		accountPage.findAndClickButton("autogesti\u00f3n");
@@ -1407,7 +1407,7 @@ public class TechnicalCareCSRAutogestion extends TestBase {
 	    assertTrue(verificarContenidoLista(todos,motivos));
 	}
 	
-	@Test(groups = {"TechnicalCare", "Autogestion"})
+	@Test(groups = {"TechnicalCare", "Autogestion","Ola2"})
 	public void TS51230_Autogestion_Verificacion_De_La_Seleccion_Canal_Nros_De_Emergencia_Y_Servicio_103() {
 		Accounts accountPage = new Accounts(driver);
 		accountPage.findAndClickButton("autogesti\u00f3n");
@@ -1422,7 +1422,7 @@ public class TechnicalCareCSRAutogestion extends TestBase {
 	    assertTrue(listSelect.getFirstSelectedOption().getText().contains("103"));
 	}
 	
-	@Test(groups = {"TechnicalCare", "Autogestion"})
+	@Test(groups = {"TechnicalCare", "Autogestion","Ola2"})
 	public void TS51231_Autogestion_Verificacion_De_Lista_De_Inconvenientes_Canal_Nros_De_Emergencia_Y_Servicio_103() {
 		Accounts accountPage = new Accounts(driver);
 		accountPage.findAndClickButton("autogesti\u00f3n");
@@ -1441,7 +1441,7 @@ public class TechnicalCareCSRAutogestion extends TestBase {
 	    assertTrue(verificarContenidoLista(todos,motivos));
 	}
 	
-	@Test(groups = {"TechnicalCare", "Autogestion"})
+	@Test(groups = {"TechnicalCare", "Autogestion","Ola2"})
 	public void TS51232_Autogestion_Verificacion_De_La_Seleccion_Canal_Nros_De_Emergencia_Y_Servicio_106() {
 		Accounts accountPage = new Accounts(driver);
 		accountPage.findAndClickButton("autogesti\u00f3n");
@@ -1456,7 +1456,7 @@ public class TechnicalCareCSRAutogestion extends TestBase {
 	    assertTrue(listSelect.getFirstSelectedOption().getText().contains("106"));
 	}
 	
-	@Test(groups = {"TechnicalCare", "Autogestion"})
+	@Test(groups = {"TechnicalCare", "Autogestion","Ola2"})
 	public void TS51233_Autogestion_Verificacion_De_Lista_De_Inconvenientes_Canal_Nros_De_Emergencia_Y_Servicio_106() {
 		Accounts accountPage = new Accounts(driver);
 		accountPage.findAndClickButton("autogesti\u00f3n");
@@ -1475,7 +1475,7 @@ public class TechnicalCareCSRAutogestion extends TestBase {
 	    assertTrue(verificarContenidoLista(todos,motivos));
 	}
 	
-	@Test(groups = {"TechnicalCare", "Autogestion"})
+	@Test(groups = {"TechnicalCare", "Autogestion","Ola2"})
 	public void TS51234_Autogestion_Verificacion_De_La_Seleccion_Canal_Nros_De_Emergencia_Y_Servicio_107() {
 		Accounts accountPage = new Accounts(driver);
 		accountPage.findAndClickButton("autogesti\u00f3n");
@@ -1490,7 +1490,7 @@ public class TechnicalCareCSRAutogestion extends TestBase {
 	    assertTrue(listSelect.getFirstSelectedOption().getText().contains("107"));
 	}
 	
-	@Test(groups = {"TechnicalCare", "Autogestion"})
+	@Test(groups = {"TechnicalCare", "Autogestion","Ola2"})
 	public void TS51235_Autogestion_Verificacion_De_Lista_De_Inconvenientes_Canal_Nros_De_Emergencia_Y_Servicio_107() {
 		Accounts accountPage = new Accounts(driver);
 		accountPage.findAndClickButton("autogesti\u00f3n");
@@ -1510,7 +1510,7 @@ public class TechnicalCareCSRAutogestion extends TestBase {
 	}
 	
 	
-	@Test(groups = {"TechnicalCare", "Autogestion"})
+	@Test(groups = {"TechnicalCare", "Autogestion","Ola2"})
 	public void TS51236_Autogestion_Verificacion_De_La_Seleccion_Canal_Nros_De_Emergencia_Y_Servicio_131() {
 		Accounts accountPage = new Accounts(driver);
 		accountPage.findAndClickButton("autogesti\u00f3n");
@@ -1525,7 +1525,7 @@ public class TechnicalCareCSRAutogestion extends TestBase {
 	    assertTrue(listSelect.getFirstSelectedOption().getText().contains("131"));
 	}
 	
-	@Test(groups = {"TechnicalCare", "Autogestion"})
+	@Test(groups = {"TechnicalCare", "Autogestion","Ola2"})
 	public void TS51237_Autogestion_Verificacion_De_Lista_De_Inconvenientes_Canal_Nros_De_Emergencia_Y_Servicio_131() {
 		Accounts accountPage = new Accounts(driver);
 		accountPage.findAndClickButton("autogesti\u00f3n");
@@ -1544,7 +1544,7 @@ public class TechnicalCareCSRAutogestion extends TestBase {
 	    assertTrue(verificarContenidoLista(todos,motivos));
 	}
 	
-	@Test(groups = {"TechnicalCare", "Autogestion"})
+	@Test(groups = {"TechnicalCare", "Autogestion","Ola2"})
 	public void TS51238_Autogestion_Verificacion_De_La_Seleccion_Canal_Nros_De_Emergencia_Y_Servicio_136() {
 		Accounts accountPage = new Accounts(driver);
 		accountPage.findAndClickButton("autogesti\u00f3n");
@@ -1559,7 +1559,7 @@ public class TechnicalCareCSRAutogestion extends TestBase {
 	    assertTrue(listSelect.getFirstSelectedOption().getText().contains("136"));
 	}
 	
-	@Test(groups = {"TechnicalCare", "Autogestion"})
+	@Test(groups = {"TechnicalCare", "Autogestion","Ola2"})
 	public void TS51239_Autogestion_Verificacion_De_Lista_De_Inconvenientes_Canal_Nros_De_Emergencia_Y_Servicio_136() {
 		Accounts accountPage = new Accounts(driver);
 		accountPage.findAndClickButton("autogesti\u00f3n");
@@ -1578,7 +1578,7 @@ public class TechnicalCareCSRAutogestion extends TestBase {
 	    assertTrue(verificarContenidoLista(todos,motivos));
 	}
 	
-	@Test(groups = {"TechnicalCare", "Autogestion"})
+	@Test(groups = {"TechnicalCare", "Autogestion","Ola2"})
 	public void TS51240_Autogestion_Verificacion_De_La_Seleccion_Canal_Nros_De_Emergencia_Y_Servicio_911() {
 		Accounts accountPage = new Accounts(driver);
 		accountPage.findAndClickButton("autogesti\u00f3n");
@@ -1593,7 +1593,7 @@ public class TechnicalCareCSRAutogestion extends TestBase {
 	    assertTrue(listSelect.getFirstSelectedOption().getText().contains("911"));
 	}
 	
-	@Test(groups = {"TechnicalCare", "Autogestion"})
+	@Test(groups = {"TechnicalCare", "Autogestion","Ola2"})
 	public void TS51241_Autogestion_Verificacion_De_Lista_De_Inconvenientes_Canal_Nros_De_Emergencia_Y_Servicio_911() {
 		Accounts accountPage = new Accounts(driver);
 		accountPage.findAndClickButton("autogesti\u00f3n");
@@ -1612,7 +1612,7 @@ public class TechnicalCareCSRAutogestion extends TestBase {
 	    assertTrue(verificarContenidoLista(todos,motivos));
 	}
 	
-	@Test(groups = {"TechnicalCare", "Autogestion"})
+	@Test(groups = {"TechnicalCare", "Autogestion","Ola2"})
 	public void TS51242_Autogestion_Verificacion_De_La_Seleccion_Canal_0800_Y_Servicio_08004440800() {
 		Accounts accountPage = new Accounts(driver);
 		accountPage.findAndClickButton("autogesti\u00f3n");
@@ -1627,7 +1627,7 @@ public class TechnicalCareCSRAutogestion extends TestBase {
 	    assertTrue(listSelect.getFirstSelectedOption().getText().contains("0800-444-0800"));
 	}
 	
-	@Test(groups = {"TechnicalCare", "Autogestion"})
+	@Test(groups = {"TechnicalCare", "Autogestion","Ola2"})
 	public void TS51244_Autogestion_Verificacion_De_La_Seleccion_Canal_0800_Y_Servicio_08004444434() {
 		Accounts accountPage = new Accounts(driver);
 		accountPage.findAndClickButton("autogesti\u00f3n");
@@ -1642,7 +1642,7 @@ public class TechnicalCareCSRAutogestion extends TestBase {
 	    assertTrue(listSelect.getFirstSelectedOption().getText().contains("0800-444-4434"));
 	}
 	
-	@Test(groups = {"TechnicalCare", "Autogestion"})
+	@Test(groups = {"TechnicalCare", "Autogestion","Ola2"})
 	public void TS51245_Autogestion_Verificacion_Lista_De_Inconvenientes_Canal_0800_Servicio_08004444434() {
 		Accounts accountPage = new Accounts(driver);
 		accountPage.findAndClickButton("autogesti\u00f3n");
@@ -1662,7 +1662,7 @@ public class TechnicalCareCSRAutogestion extends TestBase {
 
 	}
 	
-	@Test(groups = {"TechnicalCare", "Autogestion"})
+	@Test(groups = {"TechnicalCare", "Autogestion","Ola2"})
 	public void TS51246_Autogestion_Verificacion_De_La_Seleccion_Canal_0800_Y_Servicio_08000800888422() {
 		Accounts accountPage = new Accounts(driver);
 		accountPage.findAndClickButton("autogesti\u00f3n");
@@ -1677,7 +1677,7 @@ public class TechnicalCareCSRAutogestion extends TestBase {
 	    assertTrue(listSelect.getFirstSelectedOption().getText().contains("0800-888-4422"));
 	}
 	
-	@Test(groups = {"TechnicalCare", "Autogestion"})
+	@Test(groups = {"TechnicalCare", "Autogestion","Ola2"})
 	public void TS51248_Autogestion_Verificacion_De_La_Seleccion_Canal_0800_Y_Servicio_08008887382() {
 		Accounts accountPage = new Accounts(driver);
 		accountPage.findAndClickButton("autogesti\u00f3n");
@@ -1692,7 +1692,7 @@ public class TechnicalCareCSRAutogestion extends TestBase {
 	    assertTrue(listSelect.getFirstSelectedOption().getText().contains("0800-888-7382"));
 	}
 	
-	@Test(groups = {"TechnicalCare", "Autogestion"})
+	@Test(groups = {"TechnicalCare", "Autogestion","Ola2"})
 	public void TS51252_Autogestion_Verificacion_Lista_De_Inconvenientes_Canal_Web_Servicio_Servicios() {
 		Accounts accountPage = new Accounts(driver);
 		accountPage.findAndClickButton("autogesti\u00f3n");
@@ -1712,7 +1712,7 @@ public class TechnicalCareCSRAutogestion extends TestBase {
 
 	}
 	
-	@Test(groups = {"TechnicalCare", "Autogestion"})
+	@Test(groups = {"TechnicalCare", "Autogestion","Ola2"})
 	public void TS51254_Autogestion_Verificacion_La_Seleccion_Canal_Web_Y_Servicio_Mi_Cuenta() {
 		Accounts accountPage = new Accounts(driver);
 		accountPage.findAndClickButton("autogesti\u00f3n");
@@ -1727,7 +1727,7 @@ public class TechnicalCareCSRAutogestion extends TestBase {
 	    assertTrue(listSelect.getFirstSelectedOption().getText().contains("Mi cuenta"));
 	}
 	
-	@Test(groups = {"TechnicalCare", "Autogestion"})
+	@Test(groups = {"TechnicalCare", "Autogestion","Ola2"})
 	public void TS51257_Autogestion_Verificacion_La_Seleccion_Canal_Web_Y_Servicio_Club_Personal() {
 		Accounts accountPage = new Accounts(driver);
 		accountPage.findAndClickButton("autogesti\u00f3n");
@@ -1742,7 +1742,7 @@ public class TechnicalCareCSRAutogestion extends TestBase {
 	    assertTrue(listSelect.getFirstSelectedOption().getText().contains("Club Personal"));
 	}
 	
-	@Test(groups = {"TechnicalCare", "Autogestion"})
+	@Test(groups = {"TechnicalCare", "Autogestion","Ola2"})
 	public void TS51259_Autogestion_Verificacion_La_Seleccion_Canal_Web_Y_Servicio_Planes() {
 		Accounts accountPage = new Accounts(driver);
 		accountPage.findAndClickButton("autogesti\u00f3n");
@@ -1757,7 +1757,7 @@ public class TechnicalCareCSRAutogestion extends TestBase {
 	    assertTrue(listSelect.getFirstSelectedOption().getText().contains("Planes"));
 	}
 	
-	@Test(groups = {"TechnicalCare", "Autogestion"})
+	@Test(groups = {"TechnicalCare", "Autogestion","Ola2"})
 	public void TS51261_Autogestion_Verificacion_La_Seleccion_Canal_Web_Y_Servicio_Packs() {
 		Accounts accountPage = new Accounts(driver);
 		accountPage.findAndClickButton("autogesti\u00f3n");
@@ -1772,7 +1772,7 @@ public class TechnicalCareCSRAutogestion extends TestBase {
 	    assertTrue(listSelect.getFirstSelectedOption().getText().contains("Packs"));
 	}
 	
-	@Test(groups = {"TechnicalCare", "Autogestion"})
+	@Test(groups = {"TechnicalCare", "Autogestion","Ola2"})
 	public void TS51263_Autogestion_Verificacion_La_Seleccion_Canal_Web_Y_Servicio_Promociones() {
 		Accounts accountPage = new Accounts(driver);
 		accountPage.findAndClickButton("autogesti\u00f3n");
@@ -1787,7 +1787,7 @@ public class TechnicalCareCSRAutogestion extends TestBase {
 	    assertTrue(listSelect.getFirstSelectedOption().getText().contains("Promociones"));
 	}
 	
-	@Test(groups = {"TechnicalCare", "Autogestion"})
+	@Test(groups = {"TechnicalCare", "Autogestion","Ola2"})
 	public void TS51266_Autogestion_Verificacion_Lista_De_Inconvenientes_Canal_Web_Servicio_Tienda_On_Line() {
 		Accounts accountPage = new Accounts(driver);
 		accountPage.findAndClickButton("autogesti\u00f3n");
@@ -1807,7 +1807,7 @@ public class TechnicalCareCSRAutogestion extends TestBase {
 
 	}
 	
-	@Test(groups = {"TechnicalCare", "Autogestion"})
+	@Test(groups = {"TechnicalCare", "Autogestion","Ola2"})
 	public void TS51268_Autogestion_Verificacion_La_Seleccion_Canal_Web_Y_Servicio_App_Musica_Y_Mas() {
 		Accounts accountPage = new Accounts(driver);
 		accountPage.findAndClickButton("autogesti\u00f3n");
@@ -1822,7 +1822,7 @@ public class TechnicalCareCSRAutogestion extends TestBase {
 	    assertTrue(listSelect.getFirstSelectedOption().getText().contains("Apps, Musica"));
 	}
 	
-	@Test(groups = {"TechnicalCare", "Autogestion"})
+	@Test(groups = {"TechnicalCare", "Autogestion","Ola2"})
 	public void TS51275_Autogestion_Verificacion_La_Seleccion_Canal_Web_Y_Servicio_Internet_Movil() {
 		Accounts accountPage = new Accounts(driver);
 		accountPage.findAndClickButton("autogesti\u00f3n");
@@ -1837,7 +1837,7 @@ public class TechnicalCareCSRAutogestion extends TestBase {
 	    assertTrue(listSelect.getFirstSelectedOption().getText().contains("Internet Movil"));
 	}
 	
-	@Test(groups = {"TechnicalCare", "Autogestion"})
+	@Test(groups = {"TechnicalCare", "Autogestion","Ola2"})
 	public void TS51277_Autogestion_Verificacion_La_Seleccion_Canal_Web_Y_Servicio_Internacional() {
 		Accounts accountPage = new Accounts(driver);
 		accountPage.findAndClickButton("autogesti\u00f3n");
@@ -1852,7 +1852,7 @@ public class TechnicalCareCSRAutogestion extends TestBase {
 	    assertTrue(listSelect.getFirstSelectedOption().getText().contains("Internacional"));
 	}
 	
-	@Test(groups = {"TechnicalCare", "Autogestion"})
+	@Test(groups = {"TechnicalCare", "Autogestion","Ola2"})
 	public void TS51279_Autogestion_Verificacion_La_Seleccion_Canal_Web_Y_Servicio_Personal_Black() {
 		Accounts accountPage = new Accounts(driver);
 		accountPage.findAndClickButton("autogesti\u00f3n");
@@ -1867,7 +1867,7 @@ public class TechnicalCareCSRAutogestion extends TestBase {
 	    assertTrue(listSelect.getFirstSelectedOption().getText().contains("Personal Black"));
 	}
 	
-	@Test(groups = {"TechnicalCare", "Autogestion"})
+	@Test(groups = {"TechnicalCare", "Autogestion","Ola2"})
 	public void TS51280_Autogestion_Verificacion_Lista_De_Inconvenientes_Canal_Web_Servicio_Personal_Black() {
 		Accounts accountPage = new Accounts(driver);
 		accountPage.findAndClickButton("autogesti\u00f3n");
@@ -1887,7 +1887,7 @@ public class TechnicalCareCSRAutogestion extends TestBase {
 
 	}
 	
-	@Test(groups = {"TechnicalCare", "Autogestion"})
+	@Test(groups = {"TechnicalCare", "Autogestion","Ola2"})
 	public void TS51281_Autogestion_Verificacion_La_Seleccion_Canal_Web_Y_Servicio_Contacto() {
 		Accounts accountPage = new Accounts(driver);
 		accountPage.findAndClickButton("autogesti\u00f3n");
@@ -1902,7 +1902,7 @@ public class TechnicalCareCSRAutogestion extends TestBase {
 	    assertTrue(listSelect.getFirstSelectedOption().getText().contains("Contacto"));
 	}
 	
-	@Test(groups = {"TechnicalCare", "Autogestion"})
+	@Test(groups = {"TechnicalCare", "Autogestion","Ola2"})
 	public void TS51282_Autogestion_Verificacion_Lista_De_Inconvenientes_Canal_Web_Servicio_Contacto_Chat() {
 		Accounts accountPage = new Accounts(driver);
 		accountPage.findAndClickButton("autogesti\u00f3n");
@@ -1922,7 +1922,7 @@ public class TechnicalCareCSRAutogestion extends TestBase {
 
 	}
 	
-	@Test(groups = {"TechnicalCare", "Autogestion"})
+	@Test(groups = {"TechnicalCare", "Autogestion","Ola2"})
 	public void TS51283_Autogestion_Verificacion_La_Seleccion_Canal_App_Y_Servicio_Mi_Facturacion() {
 		Accounts accountPage = new Accounts(driver);
 		accountPage.findAndClickButton("autogesti\u00f3n");
@@ -1938,7 +1938,7 @@ public class TechnicalCareCSRAutogestion extends TestBase {
 	}
 	
 	
-	@Test(groups = {"TechnicalCare", "Autogestion"})
+	@Test(groups = {"TechnicalCare", "Autogestion","Ola2"})
 	public void TS51284_Autogestion_Verificacion_Lista_De_Inconvenientes_Canal_App_Servicio_Mi_Facturacion() {
 		Accounts accountPage = new Accounts(driver);
 		accountPage.findAndClickButton("autogesti\u00f3n");
@@ -1958,7 +1958,7 @@ public class TechnicalCareCSRAutogestion extends TestBase {
 
 	}
 	
-	@Test(groups = {"TechnicalCare", "Autogestion"})
+	@Test(groups = {"TechnicalCare", "Autogestion","Ola2"})
 	public void TS51285_Autogestion_Verificacion_La_Seleccion_Canal_App_Y_Servicio_Mi_Linea() {
 		Accounts accountPage = new Accounts(driver);
 		accountPage.findAndClickButton("autogesti\u00f3n");
@@ -1973,7 +1973,7 @@ public class TechnicalCareCSRAutogestion extends TestBase {
 	    assertTrue(listSelect.getFirstSelectedOption().getText().contains("Mi Linea"));
 	}
 	
-	@Test(groups = {"TechnicalCare", "Autogestion"})
+	@Test(groups = {"TechnicalCare", "Autogestion","Ola2"})
 	public void TS51286_Autogestion_APP_Mi_Linea_Visualizacion_De_Lista_De_Inconvenientes() {
 		Accounts accountPage = new Accounts(driver);
 		accountPage.findAndClickButton("autogesti\u00f3n");
@@ -1999,7 +1999,7 @@ public class TechnicalCareCSRAutogestion extends TestBase {
 	    
 	}
 	
-	@Test(groups = {"TechnicalCare", "Autogestion"})
+	@Test(groups = {"TechnicalCare", "Autogestion","Ola2"})
 	public void TS51291_Autogestion_Verificacion_La_Seleccion_Canal_App_Y_Servicio_Club_Personal() {
 		Accounts accountPage = new Accounts(driver);
 		accountPage.findAndClickButton("autogesti\u00f3n");
@@ -2014,7 +2014,7 @@ public class TechnicalCareCSRAutogestion extends TestBase {
 	    assertTrue(listSelect.getFirstSelectedOption().getText().contains("Club Personal"));
 	}
 	
-	@Test(groups = {"Fase4","TechnicalCare", "Autogestion"})
+	@Test(groups = {"Fase4","TechnicalCare", "Autogestion","Ola2"})
 	public void TS73990_Autogestion_Asteriscos_Otros_Visualizacion_De_Campo() {
 		Accounts accountPage = new Accounts(driver);
 		accountPage.findAndClickButton("autogesti\u00f3n");
@@ -2030,7 +2030,7 @@ public class TechnicalCareCSRAutogestion extends TestBase {
 		assertTrue(driver.findElement(By.id("Other")).isDisplayed());
 	}
 	
-	@Test(groups = {"Fase4","TechnicalCare", "Autogestion"})
+	@Test(groups = {"Fase4","TechnicalCare", "Autogestion","Ola2"})
 	public void TS73991_Autogestion_Otros_Asteriscos_Otros_Visualizacion_De_Campo() {
 		Accounts accountPage = new Accounts(driver);
 		accountPage.findAndClickButton("autogesti\u00f3n");
@@ -2046,7 +2046,7 @@ public class TechnicalCareCSRAutogestion extends TestBase {
 		assertTrue(driver.findElement(By.id("Other")).isDisplayed());
 	}
 	
-	@Test(groups = {"Fase4","TechnicalCare", "Autogestion"})
+	@Test(groups = {"Fase4","TechnicalCare", "Autogestion","Ola2"})
 	public void TS73992_Autogestion_nros_Emergencia_Otros_Visualizacion_De_Campo() {
 		Accounts accountPage = new Accounts(driver);
 		accountPage.findAndClickButton("autogesti\u00f3n");
@@ -2062,7 +2062,7 @@ public class TechnicalCareCSRAutogestion extends TestBase {
 		assertTrue(driver.findElement(By.id("Other")).isDisplayed());
 	}
 	
-	@Test(groups = {"Fase4","TechnicalCare", "Autogestion"})
+	@Test(groups = {"Fase4","TechnicalCare", "Autogestion","Ola2"})
 	public void TS73993_Autogestion_0800_Otros_Visualizacion_De_Campo() {
 		Accounts accountPage = new Accounts(driver);
 		accountPage.findAndClickButton("autogesti\u00f3n");
@@ -2078,7 +2078,7 @@ public class TechnicalCareCSRAutogestion extends TestBase {
 		assertTrue(driver.findElement(By.id("Other")).isDisplayed());
 	}
 	
-	@Test(groups = {"Fase4","TechnicalCare", "Autogestion"})
+	@Test(groups = {"Fase4","TechnicalCare", "Autogestion","Ola2"})
 	public void TS73994_Autogestion_WEB_Otros_Visualizacion_De_Campo() {
 		Accounts accountPage = new Accounts(driver);
 		accountPage.findAndClickButton("autogesti\u00f3n");
@@ -2094,7 +2094,7 @@ public class TechnicalCareCSRAutogestion extends TestBase {
 		assertTrue(driver.findElement(By.id("Other")).isDisplayed());
 	}
 	
-	@Test(groups = {"Fase4","TechnicalCare", "Autogestion"})
+	@Test(groups = {"Fase4","TechnicalCare", "Autogestion","Ola2"})
 	public void TS73995_Autogestion_APP_Otros_Visualizacion_De_Campo() {
 		Accounts accountPage = new Accounts(driver);
 		accountPage.findAndClickButton("autogesti\u00f3n");
@@ -2110,7 +2110,7 @@ public class TechnicalCareCSRAutogestion extends TestBase {
 		assertTrue(driver.findElement(By.id("Other")).isDisplayed());
 	}
 	
-	@Test(groups = {"Fase4","TechnicalCare", "Autogestion"})
+	@Test(groups = {"Fase4","TechnicalCare", "Autogestion","Ola2"})
 	public void TS73996_Autogestion_WAP_Otros_Visualizacion_De_Campo() {
 		Accounts accountPage = new Accounts(driver);
 		accountPage.findAndClickButton("autogesti\u00f3n");
@@ -2126,7 +2126,7 @@ public class TechnicalCareCSRAutogestion extends TestBase {
 		assertTrue(driver.findElement(By.id("Other")).isDisplayed());
 	}
 	
-	@Test(groups = {"Fase4","TechnicalCare", "Autogestion"})
+	@Test(groups = {"Fase4","TechnicalCare", "Autogestion","Ola2"})
 	public void TS73997_Autogestion_USSD_Otros_Visualizacion_De_Campo() {
 		Accounts accountPage = new Accounts(driver);
 		accountPage.findAndClickButton("autogesti\u00f3n");
@@ -2142,7 +2142,7 @@ public class TechnicalCareCSRAutogestion extends TestBase {
 		assertTrue(driver.findElement(By.id("Other")).isDisplayed());
 	}
 	
-	@Test(groups = {"Fase4","TechnicalCare", "Autogestion"})
+	@Test(groups = {"Fase4","TechnicalCare", "Autogestion","Ola2"})
 	public void TS73998_Autogestion_Mi_Personal_Otros_Visualizacion_De_Campo() {
 		Accounts accountPage = new Accounts(driver);
 		accountPage.findAndClickButton("autogesti\u00f3n");
@@ -2158,7 +2158,7 @@ public class TechnicalCareCSRAutogestion extends TestBase {
 		assertTrue(driver.findElement(By.id("Other")).isDisplayed());
 	}
 	
-	@Test(groups = {"Fase4","TechnicalCare", "Autogestion"})
+	@Test(groups = {"Fase4","TechnicalCare", "Autogestion","Ola2"})
 	public void TS74001_Autogestion_APP_Otros_Verificacion_De_Caso_Valido() {
 		Accounts accountPage = new Accounts(driver);
 		String nCaso = new String();
@@ -2199,7 +2199,7 @@ public class TechnicalCareCSRAutogestion extends TestBase {
 		assertTrue(driver.findElement(By.id("cas15_ileinner")).getText().toLowerCase().equals("prueba automatizada"));
 	}
 	
-	@Test(groups = {"Fase4","TechnicalCare", "Autogestion"})
+	@Test(groups = {"Fase4","TechnicalCare", "Autogestion","Ola2"})
 	public void TS74002_Autogestion_WAP_Otros_Verificacion_La_No_Visualizacion_Del_Campo_Otros() {
 		Accounts accountPage = new Accounts(driver);
 		accountPage.findAndClickButton("autogesti\u00f3n");
@@ -2246,7 +2246,7 @@ public class TechnicalCareCSRAutogestion extends TestBase {
 		
 	}*/
 	
-	@Test(groups = {"TechnicalCare","Muleto"})
+	@Test(groups = {"TechnicalCare","Muleto","Ola3"})
 	public void TS51073_Muleto_Visualizacion_Campo_DNI_Para_Entrega_De_Muleto() {
 		Accounts accountPage = new Accounts(driver);
 		accountPage.findAndClickButton("muleto");
@@ -2264,7 +2264,7 @@ public class TechnicalCareCSRAutogestion extends TestBase {
 		assertTrue(driver.findElement(By.id("DocumentNumber")).isDisplayed());
 	}
 	
-	@Test(groups = {"Fase3","TechnicalCare","Muleto"})
+	@Test(groups = {"Fase3","TechnicalCare","Muleto","Ola3"})
 	public void TS51075_Muleto_Visualizacion_De_DNI_Para_Entrega_De_Muleto() {
 		Accounts accountPage = new Accounts(driver);
 		accountPage.findAndClickButton("muleto");
@@ -2286,7 +2286,7 @@ public class TechnicalCareCSRAutogestion extends TestBase {
 		assertTrue(driver.findElement(By.cssSelector(".slds-form-element.vlc-flex.vlc-slds-text-block.vlc-slds-rte.ng-pristine.ng-valid.ng-scope")).isEnabled());
 	}
 	
-	@Test(groups = {"Fase3","TechnicalCare","Muleto"})
+	@Test(groups = {"Fase3","TechnicalCare","Muleto","Ola3"})
 	public void TS51077_Muleto_Verificacion_DNI_Supere_La_Validacion_De_Fraude() {
 		Accounts accountPage = new Accounts(driver);
 		accountPage.findAndClickButton("muleto");
@@ -2314,7 +2314,7 @@ public class TechnicalCareCSRAutogestion extends TestBase {
 		assertTrue(driver.findElement(By.id("TerminalsSelection")).isEnabled());
 	}
 	
-	@Test(groups = {"Fase3","TechnicalCare","Muleto"})
+	@Test(groups = {"Fase3","TechnicalCare","Muleto","Ola3"})
 	public void TS51082_Muleto_Verificar_Gestion_Sin_Devolucion_De_Muleto() {
 		Accounts accountPage = new Accounts(driver);
 		accountPage.findAndClickButton("muleto");
@@ -2344,7 +2344,7 @@ public class TechnicalCareCSRAutogestion extends TestBase {
 		
 	}
 	
-	@Test(groups = {"Fase3","TechnicalCare","Muleto"})
+	@Test(groups = {"Fase3","TechnicalCare","Muleto","Ola3"})
 	public void TS51083_Muleto_Visualizacion_Los_Datos_Del_Cliente() {
 		Accounts accountPage = new Accounts(driver);
 		accountPage.findAndClickButton("muleto");
@@ -2376,7 +2376,7 @@ public class TechnicalCareCSRAutogestion extends TestBase {
 		 } 
 	}
 	
-	@Test(groups = {"Fase3","TechnicalCare","Muleto"})
+	@Test(groups = {"Fase3","TechnicalCare","Muleto","Ola3"})
 	public void TS51084_Muleto_Visualizacion_Lista_De_Datos_Del_Cliente() {
 		Accounts accountPage = new Accounts(driver);
 		String[] todos = {"nombre:","apellido:","razon social:","tel\u00e9fono m\u00f3vil:","tel\u00e9fono de contacto:","email:","segmento:"};
@@ -2413,7 +2413,7 @@ public class TechnicalCareCSRAutogestion extends TestBase {
 		 
 	}
 	
-	@Test(groups = {"Fase3","TechnicalCare","Muleto"})
+	@Test(groups = {"Fase3","TechnicalCare","Muleto","Ola3"})
 	public void TS51085_Muleto_Visualizacion_Validacion_De_Blacklist_De_Fraude_Si() {
 		Accounts accountPage = new Accounts(driver);
 		String[] todos = {"nombre:","apellido:","razon social:","tel\u00e9fono m\u00f3vil:","tel\u00e9fono de contacto:","email:","segmento:"};
@@ -2438,7 +2438,7 @@ public class TechnicalCareCSRAutogestion extends TestBase {
 		assertTrue(validDNI.getText().toLowerCase().equals("dni en blacklist de fraude: si"));
 	}
 	
-	@Test(groups = {"Fase3","TechnicalCare","Muleto"})
+	@Test(groups = {"Fase3","TechnicalCare","Muleto","Ola3"})
 	public void TS51087_Muleto_Visualizacion_Validacion_De_Blacklist_De_Fraude_No() {
 		Accounts accountPage = new Accounts(driver);
 		String[] todos = {"nombre:","apellido:","razon social:","tel\u00e9fono m\u00f3vil:","tel\u00e9fono de contacto:","email:","segmento:"};
@@ -2463,7 +2463,7 @@ public class TechnicalCareCSRAutogestion extends TestBase {
 		assertTrue(validDNI.getText().toLowerCase().equals("dni en blacklist de fraude: no"));
 	}
 	
-	@Test(groups = {"TechnicalCare","Muleto"})
+	@Test(groups = {"TechnicalCare","Muleto","Ola3"})
 	public void TS51112_Muleto_Verificacion_Ingreso_Del_DNI_Para_Entrega_De_Muleto() {
 		Accounts accountPage = new Accounts(driver);
 		accountPage.findAndClickButton("muleto");
@@ -2500,7 +2500,7 @@ public class TechnicalCareCSRAutogestion extends TestBase {
 		driver.findElement(By.id("DocumentNumber")).sendKeys("37373737");
 	}*/
 	
-	@Test(groups = {"TechnicalCare","Muleto"})
+	@Test(groups = {"TechnicalCare","Muleto","Ola3"})
 	public void TS51107_Muleto_Verificacion_Del_Ingreso_De_Un_Texto_No_Mayor_A_255_Caracteres() {
 		Accounts accountPage = new Accounts(driver);
 		accountPage.findAndClickButton("muleto");
@@ -2534,7 +2534,7 @@ public class TechnicalCareCSRAutogestion extends TestBase {
 		assertTrue(driver.findElement(By.cssSelector(".slds-form-element.vlc-flex.vlc-slds-text-area.ng-scope.ng-valid-minlength.ng-valid-required.ng-dirty.ng-valid-parse.ng-invalid.ng-invalid-maxlength")).findElement(By.cssSelector(".error.ng-scope")).getText().toLowerCase().equals("longitud máxima de 255"));
 	}
 	
-	@Test(groups = {"TechnicalCare","Muleto"})
+	@Test(groups = {"TechnicalCare","Muleto","Ola3"})
 	public void TS51113_Muleto_Verificacion_Ingreso_Del_DNI_Para_Devolucion_De_Muleto() {
 		Accounts accountPage = new Accounts(driver);
 		accountPage.findAndClickButton("muleto");
