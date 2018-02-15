@@ -37,16 +37,17 @@ public class Marketing_Mattu extends TestBase{
 		loginMarketing(driver);
 		//login(driver);
 		try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
-		if (driver.findElement(By.id("tsidLabel")).getText().toLowerCase().equals("consola fan")) {
+		driver.get("https://crm--sit.cs14.my.salesforce.com/console?tsid=02uc0000000D6Hd");
+		/*if (driver.findElement(By.id("tsidLabel")).getText().toLowerCase().equals("consola fan")) {
 			driver.findElement(By.id("BackToServiceDesk_Tab")).click();
-			/*driver.findElement(By.id("tsidLabel")).click();
+			driver.findElement(By.id("tsidLabel")).click();
 			WebElement wMenu = driver.findElement(By.id("tsid-menuItems"));
 			List<WebElement> wMenuOptions = wMenu.findElements(By.tagName("a"));
 			for (WebElement wAux:wMenuOptions) {
 				if(wAux.getText().toLowerCase().equals("marketing")) {
 					wAux.click();
 				}
-			}*/
+			}
 		} else {
 			driver.findElement(By.id("tsidLabel")).click();
 			WebElement wMenu = driver.findElement(By.id("tsid-menuItems"));
@@ -57,7 +58,7 @@ public class Marketing_Mattu extends TestBase{
 					break;
 				}
 			}
-		}
+		}*/
 		CustomerCare cCC = new CustomerCare(driver);
 		cCC.cerrarTodasLasPestañas();
 		goToLeftPanel(driver, "Cuentas");
