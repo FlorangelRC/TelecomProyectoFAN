@@ -36,6 +36,15 @@ public class MarketingOla1_Joaquin extends TestBase {
 	}
 	
 	@Test(groups = {"Marketing", "Ola1"})
+	public void TS90242_Sucripcion_CP_No_Validacion_de_Mail() {
+		Page.elegirCuenta("aaaaCuenta Activa S/Serv");
+		Page.irAGestionMarketing();
+		Page.clubPersonal("alta");
+		
+		Assert.assertTrue(Page.verificarMensajeDeErrorEmail());
+	}
+	
+	@Test(groups = {"Marketing", "Ola1"})
 	public void TS98022_Visualizar_botones_ABM_del_CP() {
 		Page.elegirCuenta("Florencia Marketing");
 		Page.irAGestionMarketing();
@@ -112,5 +121,37 @@ public class MarketingOla1_Joaquin extends TestBase {
 		Assert.assertTrue(!Page.visualizarCuentasSeleccionadasBusinessCP());
 	}
 	
-
+	@Test(groups = {"Marketing", "Ola1"})
+	public void TS98063_Verificar_creacion_de_caso_cerrado_Notificacion_Baja_CP() {
+		Page.elegirCuenta("Florencia Marketing");
+		Page.irAGestionMarketing();
+		Page.clubPersonal("baja");
+		Page.seleccionarCuenta("consumerAccounts");
+		Page.seleccionarMotivo(1);
+		Page.botonSiguiente().click();
+		sleep(1000);
+		Page.botonSiguiente().click();
+		sleep(1500);
+		
+		String numeroCaso = Page.obtenerNumeroCasoAltaOBaja();
+		Page.cerrarTodasLasPestañas();
+		Page.irACasos();
+		
+		Assert.assertTrue(Page.obtenerEstadoDelCaso(numeroCaso).contentEquals("Closed"));
+	}
+	
+	@Test(groups = {"Marketing", "Ola1"})
+	public void TS98064_Visualizar_mensaje_al_cerrar_el_caso_Notificacion_Baja_CP() {
+		Page.elegirCuenta("Florencia Marketing");
+		Page.irAGestionMarketing();
+		Page.clubPersonal("baja");
+		Page.seleccionarCuenta("businessAccounts");
+		Page.seleccionarMotivo(1);
+		Page.botonSiguiente().click();
+		sleep(1000);
+		Page.botonSiguiente().click();
+		sleep(1500);
+		
+		Assert.assertTrue(Page.obtenerTextoCasoGeneradoAltaOBaja().contains("Su gestión ha sido procesada, el número es:"));
+	}
 }

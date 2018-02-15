@@ -187,12 +187,12 @@ public class CustomerCare extends BasePage {
 			Select field = new Select(selectCuentas);
 			if (!field.getFirstSelectedOption().getText().equalsIgnoreCase("Todas las cuentas")) {
 				field.selectByVisibleText("Todas las cuentas");
-				TestBase.sleep(1000);
+				TestBase.sleep(1500);
 			}
 			
 			char char0 = nombreCuenta.toUpperCase().charAt(0);
 			driver.findElement(By.xpath("//div[@class='rolodex']//span[contains(.,'" + char0 + "')]")).click();
-			sleep(1500);
+			sleep(1800);
 			
 			//waitForVisibilityOfElementLocated(By.cssSelector(".x-grid3-cell-inner.x-grid3-col-ACCOUNT_NAME"));
 			for (WebElement c : cuentas) {

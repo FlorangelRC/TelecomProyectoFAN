@@ -6,17 +6,12 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Actions;
-import org.openqa.selenium.support.FindBy;
-import org.openqa.selenium.support.How;
-import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.Select;
 import org.testng.Assert;
 
 import Tests.TestBase;
 
 public class Marketing extends CustomerCare {
-	
-	
 	
 	//final WebDriver driver;
 	
@@ -63,7 +58,7 @@ public class Marketing extends CustomerCare {
 		switch (sAltaBajaModificacion.toLowerCase()) {
 			case "alta":
 				lMenuesABM.get(0).click();
-				sleep(3000);
+				sleep(5000);
 				cambiarAFrameActivo();
 				break;
 			case "baja":
@@ -237,6 +232,19 @@ public class Marketing extends CustomerCare {
 		return msg.substring(i-1, msg.length());
 	}
 	
+	public String obtenerNumeroCasoAltaOBaja() {
+		waitForVisibilityOfElementLocated(By.xpath("//ng-form[@id='Headline']"));
+		String msg = driver.findElement(By.xpath("//ng-form[@id='Headline']")).getText();
+		int i = 0;
+		while(msg.charAt(i++) != '0') {	}
+		return msg.substring(i-1, msg.length());
+	}
+	
+	public String obtenerTextoCasoGeneradoAltaOBaja() {
+		waitForVisibilityOfElementLocated(By.xpath("//ng-form[@id='Headline']"));
+		return driver.findElement(By.xpath("//ng-form[@id='Headline']")).getText();
+	}
+	
 	public String estadoAltaBaja (String sAltaBaja) {
 		BasePage cambioFrame=new BasePage();
 		WebElement wConsumerBox;
@@ -321,7 +329,6 @@ public class Marketing extends CustomerCare {
 		bBP.setSimpleDropdown(driver.findElement(By.id("SelectReason")), sMotivo);
 		sleepShort(0);
 		if (!sOtros.isEmpty()) {
-			driver.findElement(By.id("Others")).clear();
 			driver.findElement(By.id("Others")).sendKeys(sOtros);
 		}
 		sleepShort(0);
@@ -344,6 +351,9 @@ public class Marketing extends CustomerCare {
 	public String darDeAltaCP () {
 		sleepShort(0);
 		BasePage cambioFrame=new BasePage();
+		driver.switchTo().defaultContent();
+		driver.switchTo().frame(cambioFrame.getFrameForElement(driver, By.cssSelector(".slds-panel__section.slds-p-around--small")));
+		closeActiveTab();
 		driver.switchTo().defaultContent();
 		driver.switchTo().frame(cambioFrame.getFrameForElement(driver, By.cssSelector(".slds-panel__section.slds-p-around--small")));
 		clubPersonal("alta");
@@ -383,7 +393,6 @@ public class Marketing extends CustomerCare {
 		BasePage cambioFrame=new BasePage();
 		driver.switchTo().defaultContent();
 		sleepShort(0);
-		driver.findElement(By.id("phSearchInput")).clear();
 		driver.findElement(By.id("phSearchInput")).sendKeys(sCaso + "\n");
 		sleepShort(0);
 		driver.switchTo().defaultContent();
@@ -395,41 +404,36 @@ public class Marketing extends CustomerCare {
 	}
 	
 	public Boolean visualizarCuentasBusinessUsuarioCP() {
-	    waitForVisibilityOfElementLocated(By.xpath("//ng-form[@id='businessAccounts']//tbody"));
-	    List<WebElement> listaCuentas = driver.findElements(By.xpath("//ng-form[@id='businessAccounts']//tbody//tr"));
+		waitForVisibilityOfElementLocated(By.xpath("//ng-form[@id='businessAccounts']//tbody"));
+		List<WebElement> listaCuentas = driver.findElements(By.xpath("//ng-form[@id='businessAccounts']//tbody//tr"));
 		return (listaCuentas.size() > 0 && listaCuentas.get(0).isDisplayed());
 	}
-		 
+	
 	public Boolean visualizarCuentasConsumerUsuarioCP() {
 		waitForVisibilityOfElementLocated(By.xpath("//ng-form[@id='consumerAccounts']//tbody"));
 		List<WebElement> listaCuentas = driver.findElements(By.xpath("//ng-form[@id='consumerAccounts']//tbody//tr"));
 		return (listaCuentas.size() > 0 && listaCuentas.get(0).isDisplayed());
 	}
-		  
+	
 	public Boolean visualizarCuentasSeleccionadasConsumerCP() {
 		waitForVisibilityOfElementLocated(By.xpath("//ng-form[@id='consumerResult']//tbody"));
 		return (driver.findElement(By.xpath("//ng-form[@id='consumerResult']//tbody")).getText().length() > 0);
 	}
-		 
+	
 	public Boolean visualizarCuentasSeleccionadasBusinessCP() {
 		waitForVisibilityOfElementLocated(By.xpath("//ng-form[@id='businessResult']//tbody"));
 		return (driver.findElement(By.xpath("//ng-form[@id='businessResult']//tbody")).getText().length() > 0);
 	}
-		  
-	public void closeActiveUpperTab () {
-		driver.switchTo().defaultContent();
-		WebElement wTabBox = driver.findElement(By.id("ext-gen25"));
-		List<WebElement> wTabs = wTabBox.findElements(By.tagName("li"));
-		for(WebElement wAux : wTabs) {
-			if (wAux.getAttribute("class").contains("x-tab-strip-active")) {
-				Actions aAction = new Actions(driver);
-				WebElement wCloseMovment = wAux.findElement(By.className("x-tab-strip-close"));
-				aAction.moveToElement(wCloseMovment).perform();
-				WebElement wClose = wAux.findElement(By.className("x-tab-strip-close"));
-				wClose.click();
-				break;
-			}
-		}
+	
+	public Boolean verificarMensajeDeErrorEmail() {
+		waitForVisibilityOfElementLocated(By.xpath("//ng-form[@id='TextEmailValidation']"));
+		Boolean p = driver.findElement(By.xpath("//ng-form[@id='TextEmailValidation']")).isDisplayed();
+		Boolean q = driver.findElement(By.xpath("//ng-form[@id='TextEmailValidation']")).getText().contains("es necesario indicar un email válido");
+		return (p && q);
 	}
 	
+	public void seleccionarMotivo(int num) {
+		Select motivo = new Select(driver.findElement(By.xpath("//select[@id='SelectReason']")));
+		motivo.selectByIndex(num);
+	}
 }

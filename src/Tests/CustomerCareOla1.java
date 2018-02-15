@@ -17,7 +17,7 @@ public class CustomerCareOla1 extends TestBase {
 	CustomerCare page;
 	
 	
-	@BeforeClass (alwaysRun = true)
+	@BeforeClass (groups = {"CustomerCare", "AjustesYEscalamiento", "SuspensionYRehabilitacion(Online)", "Ola1"})
 	public void init() {
 		inicializarDriver();
 		page = new CustomerCare(driver);
@@ -25,14 +25,14 @@ public class CustomerCareOla1 extends TestBase {
 		IrA.CajonDeAplicaciones.ConsolaFAN();
 	}
 	
-	@AfterClass (alwaysRun = true)
+	@AfterClass (groups = {"CustomerCare", "AjustesYEscalamiento", "SuspensionYRehabilitacion(Online)", "Ola1"})
 	public void quit() {
 		page.cerrarTodasLasPestañas();
 		IrA.CajonDeAplicaciones.Ventas();
 		cerrarTodo();
 	}
 	
-	@BeforeMethod (alwaysRun = true)
+	@BeforeMethod (groups = {"CustomerCare", "AjustesYEscalamiento", "SuspensionYRehabilitacion(Online)", "Ola1"})
 	public void after() {
 		page.cerrarTodasLasPestañas();
 	}

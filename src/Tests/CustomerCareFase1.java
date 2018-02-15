@@ -17,7 +17,6 @@ import org.testng.annotations.BeforeClass;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
-import Pages.BasePage;
 import Pages.CustomerCare;
 import Pages.setConexion;
 
@@ -58,6 +57,7 @@ public class CustomerCareFase1 extends TestBase {
 	@BeforeMethod(groups = {"CustomerCare", "Vista360Layout"})
 	public void setup() {
 		sleep(10000);
+		driver.switchTo().defaultContent();
 	}
 
 	
@@ -103,7 +103,6 @@ public class CustomerCareFase1 extends TestBase {
 		driver.switchTo().frame(cambioFrame(driver, By.className("account-select-table")));
 		List<WebElement> filtro = driver.findElements(By.className("account-select-table"));
 		Assert.assertTrue(filtro.get(0).isDisplayed());
-		driver.switchTo().defaultContent();
 	}
 	
 	@Test(groups = {"CustomerCare", "Vista360Layout"})
@@ -111,7 +110,6 @@ public class CustomerCareFase1 extends TestBase {
 		cc.openleftpanel();
 		driver.switchTo().frame(cambioFrame(driver, By.className("account-select-container")));
 		Assert.assertTrue(driver.findElement(By.className("account-select-container")).isDisplayed());
-		driver.switchTo().defaultContent();
 	}
 	
 	@Test(groups = {"CustomerCare", "Vista360Layout"})
@@ -119,14 +117,12 @@ public class CustomerCareFase1 extends TestBase {
 		cc.openleftpanel();
 		driver.switchTo().frame(cambioFrame(driver, By.className("profile-box")));
 		driver.findElement(By.className("profile-box"));
-		driver.switchTo().defaultContent();
 	}
 
 	@Test(groups = {"CustomerCare", "Vista360Layout"})
 	public void TS7061_Visualizar_Panel_Sesiones_Guiadas() {
 		driver.switchTo().frame(cambioFrame(driver, By.className("actions-content")));
 		Assert.assertTrue(driver.findElement(By.className("actions-content")).isDisplayed());
-		driver.switchTo().defaultContent();
 	}
 
 	@Test(groups = {"CustomerCare", "Vista360Layout"})
@@ -169,7 +165,6 @@ public class CustomerCareFase1 extends TestBase {
 	public void TS7064_Contraccion_Panel_Datos_Comerciales() {
 		driver.switchTo().frame(cambioFrame(driver, By.className("profile-box")));
 		Assert.assertTrue(driver.findElement(By.className("profile-box")).isDisplayed());
-		driver.switchTo().defaultContent();
 	}
 	
 	@Test(groups = {"CustomerCare", "Vista360Layout"})
@@ -194,14 +189,12 @@ public class CustomerCareFase1 extends TestBase {
 		driver.switchTo().defaultContent();
 		driver.switchTo().frame(cambioFrame(driver, By.className("actions-content")));
 		Assert.assertTrue(driver.findElement(By.className("actions-content")).isDisplayed());
-		driver.switchTo().defaultContent();
 	}
 	
 	@Test(groups = {"CustomerCare", "Vista360Layout"})
 	public void TS7074_Key_Metrics_Visualizar_Picklist() {
 		driver.switchTo().frame(cambioFrame(driver, By.id("text-input-01")));
 		Assert.assertTrue(driver.findElement(By.id("text-input-01")).isDisplayed());
-		driver.switchTo().defaultContent();
 	}
 	
 	@Test(groups = {"CustomerCare", "Vista360Layout"})
@@ -217,7 +210,6 @@ public class CustomerCareFase1 extends TestBase {
 		}
 		WebElement element = driver.findElement(By.className("profile-tags-container"));
 		Assert.assertTrue(element.getText().toLowerCase().contains("preocupaciones"));
-		driver.switchTo().defaultContent();
 	}
 	
 	@Test(groups = {"CustomerCare", "Vista360Layout"})
@@ -233,7 +225,6 @@ public class CustomerCareFase1 extends TestBase {
 		sleep(3000);
 		List <WebElement> element = driver.findElements(By.cssSelector(".slds-button.slds-button--neutral.profile-tags-btn"));
 		Assert.assertTrue(element.get(5).isDisplayed());
-		driver.switchTo().defaultContent();
 	}
 
 	@Test(groups = {"CustomerCare", "Vista360Layout"})
@@ -249,7 +240,6 @@ public class CustomerCareFase1 extends TestBase {
 		sleep(3000);
 		List <WebElement> element = driver.findElements(By.cssSelector(".slds-button.slds-button--neutral.profile-tags-btn"));
 		Assert.assertTrue(element.get(3).isDisplayed());
-		driver.switchTo().defaultContent();
 	}
 	
 	@Test(groups = {"CustomerCare", "Vista360Layout"})
@@ -265,7 +255,6 @@ public class CustomerCareFase1 extends TestBase {
 		sleep(3000);
 		List <WebElement> element = driver.findElements(By.cssSelector(".slds-button.slds-button--neutral.profile-tags-btn"));
 		Assert.assertTrue(element.get(4).isDisplayed());
-		driver.switchTo().defaultContent();
 	}
 	
 	@Test(groups = {"CustomerCare", "Vista360Layout"})
@@ -281,7 +270,6 @@ public class CustomerCareFase1 extends TestBase {
 		sleep(3000);
 		List <WebElement> element = driver.findElements(By.cssSelector(".slds-button.slds-button--neutral.profile-tags-btn"));
 		Assert.assertTrue(element.get(1).isDisplayed());
-		driver.switchTo().defaultContent();
 	}
 
 	@Test(groups = {"CustomerCare", "Vista360Layout"})
@@ -297,7 +285,6 @@ public class CustomerCareFase1 extends TestBase {
 		sleep(3000);
 		List <WebElement> element = driver.findElements(By.cssSelector(".slds-button.slds-button--neutral.profile-tags-btn"));
 		Assert.assertTrue(element.get(0).isDisplayed());
-		driver.switchTo().defaultContent();
 	}
 	
 	@Test(groups = {"CustomerCare", "Vista360Layout"})
@@ -349,7 +336,6 @@ public class CustomerCareFase1 extends TestBase {
 			Assert.assertTrue(x.getText().toLowerCase().contains("actualizar datos"));
 			Assert.assertTrue(x.getText().toLowerCase().contains("reseteo clave"));
 		}
-		driver.switchTo().defaultContent();
 	}
 	
 	@Test(groups = {"CustomerCare", "Vista360Layout"})
@@ -361,7 +347,6 @@ public class CustomerCareFase1 extends TestBase {
 			Assert.assertTrue(x.getText().toLowerCase().contains("club personal"));
 			Assert.assertTrue(x.getText().toLowerCase().contains("categoría"));
 		}
-		driver.switchTo().defaultContent();
 	}
 	
 	@Test(groups = {"CustomerCare", "Vista360Layout"})
@@ -373,7 +358,6 @@ public class CustomerCareFase1 extends TestBase {
 		for (WebElement x : profileinfo) {
 			Assert.assertTrue(x.getText().toLowerCase().contains("básico"));
 		}
-		driver.switchTo().defaultContent();
 	}
 	
 	@Test(groups = {"CustomerCare", "Vista360Layout"})
@@ -384,7 +368,6 @@ public class CustomerCareFase1 extends TestBase {
 			String b = Integer.toString(i);
 			Assert.assertFalse(profileinfo.get(0).getText().contains("-"+b));
 		}
-		driver.switchTo().defaultContent();
 	}
 	
 	@Test(groups = {"CustomerCare", "Vista360Layout"})
@@ -398,14 +381,12 @@ public class CustomerCareFase1 extends TestBase {
 		}
 		cc.cerrarultimapestaña();
 		cc.elegircuenta("aaaaFernando Care");
-		driver.switchTo().defaultContent();
 	}
 	
 	@Test(groups = {"CustomerCare", "Vista360Layout"})
 	public void TS7126_ValidationPerfilPanel (){
 		driver.switchTo().frame(cambioFrame(driver, By.className("profile-box-details")));
 		Assert.assertTrue(driver.findElement(By.className("profile-box-details")).isDisplayed());
-	    driver.switchTo().defaultContent();
 	}
 		
 	@Test(groups = {"CustomerCare", "Vista360Layout"})
@@ -435,7 +416,6 @@ public class CustomerCareFase1 extends TestBase {
 			Boolean isDate1 = date1.matches(datePattern);
 			Assert.assertTrue(isDate1);	
 		}
-		driver.switchTo().defaultContent();
 	}
 		
 	@Test(groups = {"CustomerCare", "Vista360Layout"})
@@ -452,13 +432,11 @@ public class CustomerCareFase1 extends TestBase {
 	    JavascriptExecutor javascript = (JavascriptExecutor) driver;
 	    Boolean VertscrollStatus = (Boolean) javascript.executeScript("return document.documentElement.scrollHeight>document.documentElement.clientHeight;");
 	    assertTrue(VertscrollStatus);
-	    driver.switchTo().defaultContent();
 	}
 	
 	@Test(groups = {"CustomerCare", "Vista360Layout"})
 	public void TS7113_ValidationCustomerTransactionsIconType(){
 		driver.switchTo().frame(cambioFrame(driver, By.className("profile-box-details")));
 		driver.findElement(By.className("slds-icon_container"));
-		driver.switchTo().defaultContent();
 	}
 }
