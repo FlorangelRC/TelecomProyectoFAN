@@ -102,7 +102,7 @@ public class Marketing_Mattu extends TestBase{
 		driver.switchTo().defaultContent();
 		driver.switchTo().frame(cambioFrame.getFrameForElement(driver, By.cssSelector(".slds-panel__section.slds-p-around--small")));
 	}
-	//@AfterMethod
+	@AfterMethod
 	public void byeByeTab() {
 		try {
 			CustomerCare cCC = new CustomerCare(driver);
@@ -114,7 +114,7 @@ public class Marketing_Mattu extends TestBase{
 			//AllwaysEmpty
 		}
 	}
-	//@AfterClass
+	@AfterClass
 	public void tearDown() {
 		driver.close();
 	}
