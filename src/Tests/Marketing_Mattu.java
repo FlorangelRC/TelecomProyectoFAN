@@ -275,8 +275,7 @@ public class Marketing_Mattu extends TestBase{
 	//TCC = 10
 	@Test(groups = {"Marketing", "Ola1"})
 	public void TS98057_Verificar_seleccion_del_motivo_otro_Baja_CP() {
-		Marketing mMenuABM = new Marketing(driver);
-		mMenuABM.clubPersonal("baja");
+		mMarketing.estadoAltaBaja("Baja");
 		try {Thread.sleep(10000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 		BasePage cambioFrame=new BasePage();
 		driver.switchTo().defaultContent();
@@ -296,8 +295,7 @@ public class Marketing_Mattu extends TestBase{
 	//TCC = 11
 	@Test(groups = {"Marketing", "Ola1"})
 	public void TS98058_Verificar_seleccion_del_motivo_otro_vacio_Baja_CP() {
-		Marketing mMenuABM = new Marketing(driver);
-		mMenuABM.clubPersonal("baja");
+		mMarketing.estadoAltaBaja("Baja");
 		try {Thread.sleep(10000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 		BasePage cambioFrame=new BasePage();
 		driver.switchTo().defaultContent();
@@ -605,7 +603,8 @@ public class Marketing_Mattu extends TestBase{
 	//TCC = 28
 	@Test(groups = {"Marketing", "Ola1"})
 	public void TS98056_Verificar_seleccion_de_un_unico_valor_en_el_campo_motivo_de_baja_Baja_CP() {
-		mMarketing.clubPersonal("baja");
+		//mMarketing.clubPersonal("baja");
+		mMarketing.estadoAltaBaja("Baja");
 		try {Thread.sleep(10000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 		BasePage cambioFrame=new BasePage();
 		driver.switchTo().defaultContent();
