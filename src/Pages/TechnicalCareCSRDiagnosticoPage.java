@@ -9,6 +9,7 @@ import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.Select;  
 
 
+
 public class TechnicalCareCSRDiagnosticoPage extends BasePage{
 	
 	final WebDriver driver;
@@ -37,8 +38,8 @@ public class TechnicalCareCSRDiagnosticoPage extends BasePage{
 	@FindBy(className="vlc-slds-button--tertiary ng-binding ng-scope")
 	private List<WebElement> cancelar;
 	
-	@FindBy(xpath="//*[@class='imgItemContainer ng-scope']") // escoger entre SI o NO
-	private List<WebElement> borderOverlay;
+	@FindBy(xpath="//*[@class='imgItemContainer ng-scope']") //
+	private List<WebElement> listaDeInconvenientes;
 	
 	@FindBy(id="KnowledgeBaseResults_prevBtn") // escoger entre coninuar o anterior
 	private WebElement continuarOanterior;
@@ -98,13 +99,16 @@ public class TechnicalCareCSRDiagnosticoPage extends BasePage{
 	@FindBy(xpath="//*[@id='j_id0:j_id5']/div/div/ng-include/div/div[2]/div[1]/ng-include/section/div[1]")
 	private WebElement planConTarjeta2;
 	
-	
+	private boolean validateInconvenient = false;
 
 	public TechnicalCareCSRDiagnosticoPage(WebDriver driver){
 		this.driver = driver;
 			PageFactory.initElements(driver, this);
 
 	}
+	public boolean validarInconvenient(){
+		  return validateInconvenient;
+		  }
 	
 		
 	public boolean elementExists(WebElement element) throws InterruptedException {
@@ -190,58 +194,70 @@ public class TechnicalCareCSRDiagnosticoPage extends BasePage{
 	      } 
 	  }
 	public void clickDiagnosticarServicio(String servicio, String subServicio, boolean clickOnSubServicio) {
-		sleep(5000);
-		boolean sEncontrado=true;
-		Accounts accPage = new Accounts(driver);
-		driver.switchTo().frame(accPage.getFrameForElement(driver, By.cssSelector(".slds-card__body.cards-container")));
-		List<WebElement> tablas=driver.findElements(By.cssSelector(".slds-card__body.cards-container"));
-		//Listado de opciones
-		List<WebElement> servicios=tablas.get(0).findElements(By.xpath("//table//tbody//tr"));
-		for(WebElement S:servicios) {
-			if(S.getText().toLowerCase().contains(servicio.toLowerCase())) {
-				S.findElement(By.className("addedValueServices-arrowWrapper")).click();
-				sleep(2000);
-				sEncontrado=false;
-				break;
-			}
-		}
-		if(sEncontrado) { System.out.println("Servicio no encontrado."); return;}
-		
-		List<WebElement> sServicios=tablas.get(selectionTable(servicio)).findElements(By.xpath("//table//tbody//tr"));
-	      for(WebElement service:sServicios) {
-	        //System.out.println(S.getText());
-	        if(service.getText().toLowerCase().contains(subServicio.toLowerCase()) ) {
-	          ((JavascriptExecutor)driver).executeScript("window.scrollTo(0,"+service.getLocation().y+")");
-	          sleep(100);
-	          service.findElement(By.className("slds-cell-shrink")).click();
-	          sleep(2000);
-	          
-	          try {
-		           sleep(2000);
-		           List<WebElement> actions= service.findElement(By.className("slds-cell-shrink")).findElements(By.xpath("//*[@class='dropdown__list']//li"));
-		        for (WebElement opt : actions) {
-		         if (opt.isDisplayed()) {
-		          opt.click();
-		          break;
-		            }
-		          }
-		        }
-		          catch(org.openqa.selenium.ElementNotVisibleException e) {
-		            System.out.println("No es posible seleccionar el boton diagnosticar... Verifique!!");
-		            e.printStackTrace();
+	    sleep(5000);
+	    boolean sEncontrado=true;
+	    Accounts accPage = new Accounts(driver);
+	    driver.switchTo().frame(accPage.getFrameForElement(driver, By.cssSelector(".slds-card__body.cards-container")));
+	    List<WebElement> tablas=driver.findElements(By.cssSelector(".slds-card__body.cards-container"));
+	    //Listado de opciones
+	    List<WebElement> servicios=tablas.get(0).findElements(By.xpath("//table//tbody//tr"));
+	    for(WebElement S:servicios) {
+	      if(S.getText().toLowerCase().contains(servicio.toLowerCase())) {
+	        S.findElement(By.className("addedValueServices-arrowWrapper")).click();
+	        sleep(2000);
+	        sEncontrado=false;
+	        break;
+	      }
+	    }
+	    if(sEncontrado) { System.out.println("Servicio no encontrado."); return;}
+	    
+	    List<WebElement> sServicios=tablas.get(selectionTable(servicio)).findElements(By.xpath("//table//tbody//tr"));
+	        for(WebElement service:sServicios) {
+	          //System.out.println(S.getText());
+	          if(service.getText().toLowerCase().contains(subServicio.toLowerCase()) ) {
+	            ((JavascriptExecutor)driver).executeScript("window.scrollTo(0,"+service.getLocation().y+")");
+	            sleep(100);
+	            service.findElement(By.className("slds-cell-shrink")).click();
+	            sleep(2000);
+	            if (clickOnSubServicio) {
+	              
+	            try {
+	               sleep(2000);
+	               List<WebElement> actions= service.findElement(By.className("slds-cell-shrink")).findElements(By.xpath("//*[@class='dropdown__list']//li"));
+	            for (WebElement opt : actions) {
+	             if (opt.isDisplayed()) {
+	              opt.click();
+	              break;
+	                }
+	              }
+	            }
+	              catch(org.openqa.selenium.ElementNotVisibleException e) {
+	                System.out.println("No es posible seleccionar el boton diagnosticar... Verifique!!");
+	                e.printStackTrace();
 
-		          }
+	              }
+	            }
 	          }
-	        } 
+	          }    
+	  }
+	public void selectionInconvenient(String inconvenientName) {
+	      driver.switchTo().frame(getFrameForElement(driver, By.id("IssueSelectStep")));
+	      for (WebElement opt : getlistaDeInconvenientes()) {
+	     // validateInconvenient= true;
+	        if (opt.getText().equalsIgnoreCase(inconvenientName)) {
+	          opt.click();
+	          break;
+	        }
+	      }
 	      
-	}
+	      sleep(4000);
+	     
+	  }
 	
 
-		public void selectionInconvenient(String inconvenientName) {
+		/*public void selectionInconvenient(String inconvenientName) {
 			driver.switchTo().frame(getFrameForElement(driver, By.id("IssueSelectStep")));
-			//WebElement test = driver.findElement(By.xpath("//*[@class='imgItemContainer ng-scope']"));
-			//System.out.println(test.getText());
-			for (WebElement opt : getBorderOverlay()) {
+			for (WebElement opt : getlistaDeInconvenientes()) {
 				if (opt.getText().equalsIgnoreCase(inconvenientName)) {
 					opt.click();
 					break;
@@ -250,7 +266,8 @@ public class TechnicalCareCSRDiagnosticoPage extends BasePage{
 			
 			sleep(4000);
 		 
-	}
+	}*/
+		
 		
 	
 	
@@ -355,8 +372,8 @@ public class TechnicalCareCSRDiagnosticoPage extends BasePage{
 	}
 
 
-	public List< WebElement> getBorderOverlay() {
-		return borderOverlay;
+	public List< WebElement> getlistaDeInconvenientes() {
+		return listaDeInconvenientes;
 	}
 
 

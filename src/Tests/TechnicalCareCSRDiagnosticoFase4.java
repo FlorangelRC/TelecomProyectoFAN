@@ -4,6 +4,7 @@ import static org.testng.Assert.assertTrue;
 
 import java.util.List;
 
+import org.hamcrest.core.Is;
 import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
@@ -76,7 +77,7 @@ private WebDriver driver;
 
  	
  	
- 	@Test
+ 	/*@Test
  	public void TS7027_CRM_Fase_4_Technical_Technical_Care_CSR_Diagnostico_Seleccion_de_la_opcion_Navega_Lento() throws InterruptedException {
  		BasePage cambioFrameByID=new BasePage();
 		TechnicalCareCSRDiagnosticoPage tech = new TechnicalCareCSRDiagnosticoPage(driver);
@@ -97,10 +98,10 @@ private WebDriver driver;
 	    tech.motivoDeContacto("Navega lento");
 	    assertTrue(tech.verificarOpciones(tech.getMotive(), "Navega lento"));
 	
- 	}
+ 	}*/
 	    
  
-	@Test
+	/*@Test
  	public void TS74093_CRM_Fase_4_Technical_Care_CSR_Diagnostico_Verificacion_de_consulta_al_HLR_despues_de_desregistrar() throws InterruptedException {
  		BasePage cambioFrameByID=new BasePage();
 		TechnicalCareCSRDiagnosticoPage tech = new TechnicalCareCSRDiagnosticoPage(driver);
@@ -115,9 +116,7 @@ private WebDriver driver;
  		driver.switchTo().frame(cambioFrameByID.getFrameForElement(driver, By.cssSelector(".slds-col--padded.slds-size--1-of-1")));
  		//assertTrue(!tech.verificarCaso().equals(tech.getNumeroCaso()));
  		
-  
- 		
-	}
+  	}*/
 	
 
 	@Test
@@ -141,6 +140,87 @@ private WebDriver driver;
     tech.clickDiagnosticarServicio("sms", "SMS Entrante", false);
     
 	}
+	
+	@Test
+	public void TS94439() throws Exception {
+	TechnicalCareCSRDiagnosticoPage tech = new TechnicalCareCSRDiagnosticoPage(driver);
+	sleep (4000);
+	driver.switchTo().defaultContent();
+    tech.clickOpcionEnAsset("1100000075", "mis servicios");
+    tech.verDetalles();
+    tech.clickDiagnosticarServicio("Transferencia de Llamadas");
+    
+	}
+	
+	@Test
+	public void TS94440() throws Exception {
+	TechnicalCareCSRDiagnosticoPage tech = new TechnicalCareCSRDiagnosticoPage(driver);
+	sleep (4000);
+	driver.switchTo().defaultContent();
+    tech.clickOpcionEnAsset("1100000075", "mis servicios");
+    tech.verDetalles();
+    tech.clickDiagnosticarServicio("Llamada en espera");
+    
+	}
+	
+	@Test
+	public void TS94441() throws Exception {
+	TechnicalCareCSRDiagnosticoPage tech = new TechnicalCareCSRDiagnosticoPage(driver);
+	sleep (4000);
+	driver.switchTo().defaultContent();
+    tech.clickOpcionEnAsset("1100000075", "mis servicios");
+    tech.verDetalles();
+    tech.clickDiagnosticarServicio("Llamada Tripartita");
+    
+	}
+	
+	@Test
+	public void TS94459() throws Exception {
+	TechnicalCareCSRDiagnosticoPage tech = new TechnicalCareCSRDiagnosticoPage(driver);
+	sleep (4000);
+	driver.switchTo().defaultContent();
+    tech.clickOpcionEnAsset("1100000075", "mis servicios");
+    tech.verDetalles();
+    tech.clickDiagnosticarServicio("Llamada Tripartita");
+    
+	}
+	
+	@Test(groups= {"TechnicalCare", "SVA", "Ola1"})
+	public void TS94464_CRM_Ola_1_Technical_Care_CSR_SVA_Visualizacion_de_Servicio_Mensajes_Multimedia_Personal_MMS_e_inconveniente_MMS_Emisión_Cliente_informa_que_no_puede_enviar_Archivo_Imagen_Audio() throws Exception {
+	TechnicalCareCSRDiagnosticoPage tech = new TechnicalCareCSRDiagnosticoPage(driver);
+	sleep (4000);
+	driver.switchTo().defaultContent();
+    tech.clickOpcionEnAsset("1100000075", "mis servicios");
+    tech.verDetalles();
+    tech.clickDiagnosticarServicio("MMS");
+    tech.selectionInconvenient("MMS Emisión Cliente informa que no puede enviar Imagen");
+    //assertTrue(tech.validarInconvenient());
+    
+	}
+	
+	@Test
+	public void TS94467() throws Exception {
+	TechnicalCareCSRDiagnosticoPage tech = new TechnicalCareCSRDiagnosticoPage(driver);
+	sleep (4000);
+	driver.switchTo().defaultContent();
+    tech.clickOpcionEnAsset("1100000075", "mis servicios");
+    tech.verDetalles();
+    tech.clickDiagnosticarServicio("sms", "SMS Saliente", false);
+    
+    }
+	@Test
+	public void TS94276() throws Exception {
+	TechnicalCareCSRDiagnosticoPage tech = new TechnicalCareCSRDiagnosticoPage(driver);
+	sleep (4000);
+	driver.switchTo().defaultContent();
+    tech.clickOpcionEnAsset("1100000075", "mis servicios");
+    tech.verDetalles();
+    tech.clickDiagnosticarServicio("sms", "SMS Entrante", true);
+    tech.selectionInconvenient("No recibe de un número particular");
+	
+	}
+	
+	
 }
 	
 
