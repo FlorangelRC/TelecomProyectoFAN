@@ -12,7 +12,7 @@ import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.Select;
 
 
-public class TechQuelysPage extends BasePage {
+public class TechnicalCareCSRAutogestionPage extends BasePage {
 	
 	private WebDriver driver;
 	
@@ -58,7 +58,7 @@ public class TechQuelysPage extends BasePage {
 	
 
 	
-	public TechQuelysPage(WebDriver driver) {
+	public TechnicalCareCSRAutogestionPage(WebDriver driver) {
 		this.driver = driver;
 		PageFactory.initElements(driver,this);
 	}
