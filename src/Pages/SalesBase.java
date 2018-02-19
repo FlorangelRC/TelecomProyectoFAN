@@ -339,7 +339,7 @@ public boolean btnnoexiste(String boton){
  }
  public void validarentrarcatalogo(){
 		try {Thread.sleep(50000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
-	 Assert.assertTrue(driver.findElement(By.cssSelector(".slds-grid.slds-grid--vertical-align-center.slds-grid--align-center.cpq-no-cart-items-msg")).isDisplayed());
+	 Assert.assertTrue(driver.findElement(By.cssSelector(".slds-col.cpq-product-cart-items.js-cpq-cart-scroll-container.scroll")).isDisplayed());
  }
  public void validaragrupados(){
 	List<WebElement> lista = driver.findElements(By.className("ng-binding"));
@@ -401,8 +401,6 @@ for(WebElement e: btns){
 		try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 		List<WebElement> agregar = driver.findElements(By.cssSelector(".slds-button.slds-button--neutral.add-button")); 
 		agregar.get(0).click();
-		
-		
 }
  public void agregarplan(String plan){
 		try {Thread.sleep(30000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
