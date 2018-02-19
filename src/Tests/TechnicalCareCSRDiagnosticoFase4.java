@@ -209,8 +209,7 @@ private WebDriver driver;
     tech.clickOpcionEnAsset("1100000075", "mis servicios");
     tech.verDetalles();
     tech.clickDiagnosticarServicio("sms", "SMS Saliente", false);
-    List<WebElement> servicios=driver.findElements(By.xpath("//table//tbody//tr"));
-    assertTrue(servicios.get(0).isDisplayed());
+    assertTrue(tech.validarOpcionesXSubServicio("SMS Saliente"));
     
     }
 	@Test (groups= {"TechnicalCare", "SVA", "Ola1"}) //Listo

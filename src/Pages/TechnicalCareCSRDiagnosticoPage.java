@@ -213,7 +213,6 @@ public class TechnicalCareCSRDiagnosticoPage extends BasePage{
 	    
 	    List<WebElement> sServicios=tablas.get(selectionTable(servicio)).findElements(By.xpath("//table//tbody//tr"));
 	        for(WebElement service:sServicios) {
-	          //System.out.println(S.getText());
 	          if(service.getText().toLowerCase().contains(subServicio.toLowerCase()) ) {
 	            ((JavascriptExecutor)driver).executeScript("window.scrollTo(0,"+service.getLocation().y+")");
 	            sleep(100);
@@ -240,6 +239,30 @@ public class TechnicalCareCSRDiagnosticoPage extends BasePage{
 	          }
 	          }    
 	  }
+	
+	public boolean validarOpcionesXSubServicio(String subServicio ) {
+	    List<WebElement> tablas=driver.findElements(By.cssSelector(".slds-card__body.cards-container"));
+	
+		 List<WebElement> sServicios=tablas.get(0).findElements(By.xpath("//table//tbody//tr"));
+	        for(WebElement service:sServicios) {
+	          if(service.getText().toLowerCase().contains(subServicio.toLowerCase()) ) {
+	            ((JavascriptExecutor)driver).executeScript("window.scrollTo(0,"+service.getLocation().y+")");
+	               sleep(2000);
+	               List<WebElement> actions= service.findElement(By.className("slds-cell-shrink")).findElements(By.xpath("//*[@class='dropdown__list']//li"));
+	            for (WebElement opt : actions) {
+	             if (opt.isDisplayed()) {
+	            	 System.out.println("*********"+opt.getText());
+	            	 return true;
+	                }
+	              }
+	          	}
+	        }
+	        return false;
+	  }
+
+	
+	
+	
 	public void selectionInconvenient(String inconvenientName) {
 		sleep(4000);
 	      driver.switchTo().frame(getFrameForElement(driver, By.id("IssueSelectStep")));
