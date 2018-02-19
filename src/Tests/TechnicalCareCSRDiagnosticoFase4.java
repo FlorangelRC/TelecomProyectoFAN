@@ -21,6 +21,7 @@ import Pages.Accounts;
 import Pages.BasePage;
 import Pages.CustomerCare;
 import Pages.HomeBase;
+import Pages.TechCare_Ola1;
 import Pages.TechnicalCareCSRAutogestionPage;
 import Pages.TechnicalCareCSRDiagnosticoPage;
 import Pages.setConexion;
@@ -75,48 +76,6 @@ private WebDriver driver;
      accountPage.selectAccountByName("Adrian Tech");
  	}
 
- 	
- 	
- 	/*@Test
- 	public void TS7027_CRM_Fase_4_Technical_Technical_Care_CSR_Diagnostico_Seleccion_de_la_opcion_Navega_Lento() throws InterruptedException {
- 		BasePage cambioFrameByID=new BasePage();
-		TechnicalCareCSRDiagnosticoPage tech = new TechnicalCareCSRDiagnosticoPage(driver);
- 		sleep (4000); 
- 	    driver.switchTo().defaultContent();
- 		driver.switchTo().frame(cambioFrameByID.getFrameForElement(driver, By.cssSelector(".console-card.active")));
- 	    sleep(5000);
- 		driver.findElements(By.className("card-info")).get(1).findElement(By.className("details")).click();
- 		sleep(5000);
- 		driver.switchTo().defaultContent();
-	    driver.switchTo().frame(cambioFrameByID.getFrameForElement(driver, By.className("community-flyout-actions-card")));
-	    ((JavascriptExecutor)driver).executeScript("window.scrollTo(0,"+driver.findElement(By.cssSelector(".console-flyout.active.flyout")).getLocation().y+")");
-	    sleep(3000);
-	    driver.findElement(By.cssSelector(".console-flyout.active.flyout")).findElements(By.tagName("i")).get(2).click();
-	    sleep(3000);
-	    driver.switchTo().frame(cambioFrameByID.getFrameForElement(driver, By.id("a1zc0000003XOMiAAO-4")));
-	    sleep(3000);
-	    tech.motivoDeContacto("Navega lento");
-	    assertTrue(tech.verificarOpciones(tech.getMotive(), "Navega lento"));
-	
- 	}*/
-	    
- 
-	/*@Test
- 	public void TS74093_CRM_Fase_4_Technical_Care_CSR_Diagnostico_Verificacion_de_consulta_al_HLR_despues_de_desregistrar() throws InterruptedException {
- 		BasePage cambioFrameByID=new BasePage();
-		TechnicalCareCSRDiagnosticoPage tech = new TechnicalCareCSRDiagnosticoPage(driver);
-		sleep (4000);
-		//tech.ingresarAcuenta();
- 	    tech.motivoDeContacto("No puedo navegar");
-		sleep(3000);
- 		tech.getContinuar().click();
- 		driver.switchTo().frame(cambioFrameByID.getFrameForElement(driver, By.className("slds-form-element__control")));
- 		driver.findElements(By.className("ng-scope")).get(1).click();
- 		String caso =tech.verificarCaso();
- 		driver.switchTo().frame(cambioFrameByID.getFrameForElement(driver, By.cssSelector(".slds-col--padded.slds-size--1-of-1")));
- 		//assertTrue(!tech.verificarCaso().equals(tech.getNumeroCaso()));
- 		
-  	}*/
 	
 
 	@Test (groups= {"TechnicalCare", "SVA", "Ola1"})//listo
@@ -139,6 +98,7 @@ private WebDriver driver;
     tech.clickOpcionEnAsset("1100000075", "mis servicios");
     tech.verDetalles();
     tech.clickDiagnosticarServicio("sms", "SMS Entrante", false);
+    assertTrue(tech.validarOpcionesXSubServicio("SMS Entrante"));
     
 	}
 	
@@ -162,7 +122,7 @@ private WebDriver driver;
     tech.clickOpcionEnAsset("1100000075", "mis servicios");
     tech.verDetalles();
     tech.clickDiagnosticarServicio("Llamada en espera");
-    assertTrue(tech.validarInconveniente("Llamada en espera"));
+    assertTrue(tech.validarInconveniente("No funciona llamada en espera"));
     
 	}
 	
@@ -210,6 +170,7 @@ private WebDriver driver;
     tech.verDetalles();
     tech.clickDiagnosticarServicio("sms", "SMS Saliente", false);
     assertTrue(tech.validarOpcionesXSubServicio("SMS Saliente"));
+
     
     }
 	@Test (groups= {"TechnicalCare", "SVA", "Ola1"}) //Listo
@@ -221,6 +182,42 @@ private WebDriver driver;
     tech.clickDiagnosticarServicio("sms", "SMS Entrante", true);
     tech.selectionInconvenient("No recibe de un número particular");
     assertTrue(tech.validarInconveniente("No recibe de un número particular"));
+	
+	}
+	
+	@Test (groups= {"TechnicalCare", "SVA", "Ola1"}) //Listo
+	public void TS94277_CRM_Ola_1_Technical_Care_CSR_SVA_Validacion_SMS_saliente_no_emite_a_ningun_numero() throws Exception {
+	TechnicalCareCSRDiagnosticoPage tech = new TechnicalCareCSRDiagnosticoPage(driver);
+	sleep (4000);
+    tech.clickOpcionEnAsset("1100000075", "mis servicios");
+    tech.verDetalles();
+    tech.clickDiagnosticarServicio("sms", "SMS Saliente", true);
+    tech.selectionInconvenient("SMS a fijo");
+    assertTrue(tech.validarInconveniente("SMS a fijo"));
+	
+	}
+	
+	@Test (groups= {"TechnicalCare", "SVA", "Ola1"}) //Listo
+	public void TS94278_CRM_Ola_1_Technical_Care_CSR_SVA_Validacion_SMS_saliente_no_emite_a_algun_destino() throws Exception {
+	TechnicalCareCSRDiagnosticoPage tech = new TechnicalCareCSRDiagnosticoPage(driver);
+	sleep (4000);
+    tech.clickOpcionEnAsset("1100000075", "mis servicios");
+    tech.verDetalles();
+    tech.clickDiagnosticarServicio("sms", "SMS Saliente", true);
+    tech.selectionInconvenient("SMS Emisión a algún destino en particular");
+    assertTrue(tech.validarInconveniente("SMS Emisión a algún destino en particular"));
+	
+	}
+	
+	@Test (groups= {"TechnicalCare", "SVA", "Ola1"}) //Listo
+	public void TS94309_CRM_Ola_1_Technical_Care_CSR_SVA_Visualizacion_de_buscador_para_servicios_agrupados() throws Exception {
+	TechnicalCareCSRDiagnosticoPage tech = new TechnicalCareCSRDiagnosticoPage(driver);
+	//TechCare_Ola1 page=new TechCare_Ola1(driver);
+	sleep (4000);
+    tech.clickOpcionEnAsset("1100000075", "mis servicios");
+    tech.verDetalles();
+    tech.buscarServicio("sms");
+    //page.buscarServicio("sms");
 	
 	}
 	
