@@ -14,34 +14,32 @@ import Pages.CustomerCare;
 
 public class CustomerCareOla1 extends TestBase {
 
-	CustomerCare page;
+	CustomerCare cc;
 	
 	
 	@BeforeClass (alwaysRun = true)
 	public void init() {
 		inicializarDriver();
-		page = new CustomerCare(driver);
+		cc = new CustomerCare(driver);
 		login();
 		IrA.CajonDeAplicaciones.ConsolaFAN();
 	}
 	
 	//@AfterClass (alwaysRun = true)
 	public void quit() {
-		page.cerrarTodasLasPestañas();
-		IrA.CajonDeAplicaciones.Ventas();
-		cerrarTodo();
+		driver.quit();
 	}
 	
 	@BeforeMethod (alwaysRun = true)
 	public void after() {
-		page.cerrarTodasLasPestañas();
+		cc.cerrarTodasLasPestañas();
 	}
 	
 	
 	@Test (groups = {"CustomerCare", "AjustesYEscalamiento", "Ola1"})  //popUp en el 4° paso no deja terminar el caso
 	public void TS90442_Adjustments_and_Escalations_Configurar_Ajuste_Formato_dd_mm_yyyy_fecha_hasta_desde() {
-		page.elegirCuenta("aaaaFernando Care");
-		page.irAGestion("ajuste");
+		cc.elegirCuenta("aaaaFernando Care");
+		cc.irAGestion("ajuste");
 		List <WebElement> serv = driver.findElements(By.cssSelector(".slds-form-element__label.ng-binding.ng-scope"));
 		for (WebElement x : serv) {
 			if (x.getText().toLowerCase().contains("un servicio")) {
@@ -80,8 +78,8 @@ public class CustomerCareOla1 extends TestBase {
 	
 	@Test (groups = {"CustomerCare", "AjustesYEscalamiento", "Ola1"})  //popUp en el 4° paso no deja terminar el caso
 	public void TS90444_Adjustments_and_Escalations_Configurar_Ajuste_Tipos_Unidades_a_Ajustar() {
-		page.elegirCuenta("aaaaFernando Care");
-		page.irAGestion("ajuste");
+		cc.elegirCuenta("aaaaFernando Care");
+		cc.irAGestion("ajuste");
 		List <WebElement> serv = driver.findElements(By.cssSelector(".slds-form-element__label.ng-binding.ng-scope"));
 		for (WebElement x : serv) {
 			if (x.getText().toLowerCase().contains("un servicio")) {
@@ -132,16 +130,16 @@ public class CustomerCareOla1 extends TestBase {
 	
 	@Test (groups = {"CustomerCare", "AjustesYEscalamiento", "Ola1"})
 	public void TS90461_Adjustments_and_Escalations_Sesión_guiada_Visualizar_Gestion_Ajustes() {
-		page.elegirCuenta("aaaaFernando Care");
-		page.buscarGestion("ajustes");
+		cc.elegirCuenta("aaaaFernando Care");
+		cc.buscarGestion("ajustes");
 		List <WebElement> list = driver.findElements(By.cssSelector(".slds-button.slds-button--neutral.slds-truncate"));
 		Assert.assertTrue(list.get(0).getText().toLowerCase().contains("ajustes"));
 	}
 	
 	@Test (groups = {"CustomerCare", "SuspensionYRehabilitacion(Online)", "Ola1"})
 	public void TS90462_360_VIEW_Suspensiones_and_Reconexiones_Visualizar_pantalla_para_seleccionar_el_tipo_de_acción_a_realizar_Suspensión_Rehabilitación() {
-		page.elegirCuenta("aaaaFernando Care");
-		page.irAGestion("suspensiones");
+		cc.elegirCuenta("aaaaFernando Care");
+		cc.irAGestion("suspensiones");
 		List <WebElement> gest = driver.findElements(By.cssSelector(".slds-form-element__label.ng-binding.ng-scope"));
 		boolean a = false;
 		boolean b = false;
@@ -158,8 +156,8 @@ public class CustomerCareOla1 extends TestBase {
 	
 	@Test (groups = {"CustomerCare", "AjustesYEscalamiento", "Ola1"})
 	public void TS90469_360_VIEW_Ajustes_y_Escalaciones_Selección_de_Concepto_Tipo_de_Cargo_Item_Motivo_Visualizar_parametro_Concepto() {
-		page.elegirCuenta("aaaaFernando Care");
-		page.irAGestion("ajuste");
+		cc.elegirCuenta("aaaaFernando Care");
+		cc.irAGestion("ajuste");
 		List <WebElement> serv = driver.findElements(By.cssSelector(".slds-form-element__label.ng-binding.ng-scope"));
 		for (WebElement x : serv) {
 			if (x.getText().toLowerCase().contains("un servicio")) {
@@ -177,8 +175,8 @@ public class CustomerCareOla1 extends TestBase {
 	
 	@Test (groups = {"CustomerCare", "AjustesYEscalamiento", "Ola1"})
 	public void TS90481_360_VIEW_Adjustments_and_scalations_Visualizacion_Ajustes_y_Casos_Relacionados_Visualizar_un_botón_Siguiente_que_me_permita_avanzar_al_siguiente_paso_del_proceso() {
-		page.elegirCuenta("aaaaFernando Care");
-		page.irAGestion("ajuste");
+		cc.elegirCuenta("aaaaFernando Care");
+		cc.irAGestion("ajuste");
 		boolean a = false;
 		if (driver.findElement(By.id("Step-ApplyAdjustToAccountOrService_nextBtn")).isDisplayed()) {
 			a = true;
@@ -188,16 +186,103 @@ public class CustomerCareOla1 extends TestBase {
 	
 	@Test (groups = {"CustomerCare", "SuspensionYRehabilitacion(Online)", "Ola1"})
 	public void TS90498_360_VIEW_Suspensiones_and_Reconexiones_Session_Guiada_Visualizar_la_opción_Suspensión_en_el_panel_de_gestiones() {
-		page.elegirCuenta("aaaaFernando Care");
-		page.buscarGestion("suspensiones");
+		cc.elegirCuenta("aaaaFernando Care");
+		cc.buscarGestion("suspensiones");
 		List <WebElement> list = driver.findElements(By.cssSelector(".slds-button.slds-button--neutral.slds-truncate"));
 		Assert.assertTrue(list.get(0).getText().toLowerCase().contains("suspensiones y reconexion"));
 	}
 	
 	@Test (groups = {"CustomerCare", "SuspensionYRehabilitacion(Online)", "Ola1"})
+	public void TS90499_360_VIEW_Suspensiones_and_Reconexiones_Session_Guiada_Visualizar_la_opción_Habilitación_en_el_panel_de_gestiones() {
+		cc.elegirCuenta("aaaaFernando Care");
+		cc.irAGestion("suspensiones");
+		List <WebElement> hab = driver.findElements(By.cssSelector(".slds-form-element__label.ng-binding.ng-scope"));
+		boolean a = false;
+		for (WebElement x : hab) {
+			if (x.getText().toLowerCase().contains("habilitaci\u00f3n")) {
+				a = true;
+			}
+		}
+		Assert.assertTrue(a);
+	}
+	
+	@Test (groups = {"CustomerCare", "SuspensionYRehabilitacion(Online)", "Ola1"})
+	public void TS95647_Suspensiones_and_Reconexiones_Creación_del_Caso_Creación_caso_habilitacion_Líneas_y_o_equipos_seleccionados() {
+		cc.elegirCuenta("aaaaFernando Care");
+		cc.irAGestion("suspensiones");
+		List <WebElement> hab = driver.findElements(By.cssSelector(".slds-form-element__label.ng-binding.ng-scope"));
+		for (WebElement x : hab) {
+			if (x.getText().toLowerCase().contains("habilitaci\u00f3n")) {
+				x.click();
+				break;
+			}
+		}
+		driver.findElement(By.id("Step1-SuspensionOrReconnection_nextBtn")).click();
+		sleep(3000);
+		List <WebElement> eq = driver.findElements(By.cssSelector(".slds-form-element__label.ng-binding.ng-scope"));
+		for (WebElement x : eq) {
+			if (x.getText().toLowerCase().equals("equipo")) {
+				x.click();
+				break;
+			}
+		}
+		driver.findElement(By.id("Step2-AssetTypeSelection_nextBtn")).click();
+		sleep(3000);
+		List <WebElement> num = driver.findElements(By.cssSelector(".slds-form-element__label.ng-binding"));
+		for (WebElement x : num) {
+			if (x.getText().toLowerCase().contains("543343344409154")) {
+				x.click();
+				break;
+			}
+		}
+		driver.findElement(By.id("Step3.5B-DeviceForLine_nextBtn")).click();
+		sleep(5000);
+		driver.findElement(By.id("Step6-Summary_nextBtn")).click();
+		sleep(3000);
+		driver.findElements(By.cssSelector(".slds-button.slds-button--neutral.ng-binding.ng-scope")).get(1).click();
+		sleep(3000);	
+		String msg = driver.findElement(By.cssSelector(".vlc-slds-inline-control__label.ng-binding")).getText();
+		int i = 0;
+		while(msg.charAt(i++) != '0') {	}
+		String caso = msg.substring(i-1, msg.length());
+		System.out.println(caso);
+		cc.buscarCaso(caso);
+		driver.switchTo().frame(cambioFrame(driver, By.cssSelector(".feeditemaux.cxfeeditemaux.CreateRecordAuxBody")));
+		WebElement vc = driver.findElement(By.cssSelector(".feeditemaux.cxfeeditemaux.CreateRecordAuxBody"));
+		Assert.assertTrue(vc.getText().toLowerCase().contains("suspensiones & reconexiones"));
+	}
+	
+	@Test (groups = {"CustomerCare", "SuspensionYRehabilitacion(Online)", "Ola1"})
+	public void TS95927_360_VIEW_Suspensiones_and_Reconexiones_Seleccionar_tipo_Siniestro_Back_Office_Verificar_que_si_selecciono_Suspension_pueda_ser_de_DNI_CUIT() {
+		cc.elegirCuenta("aaaaFernando Care");
+		cc.irAGestion("suspensiones y reconexion back");
+		List <WebElement> sus = driver.findElements(By.cssSelector(".slds-form-element__label.ng-binding.ng-scope"));
+		for (WebElement x : sus) {
+			if (x.getText().toLowerCase().contains("suspensi\u00f3n")) {
+				x.click();
+				break;
+			}
+		}
+		sleep(3000);
+		List <WebElement> dni = driver.findElements(By.cssSelector(".slds-form-element__label.ng-binding.ng-scope"));
+		boolean a = false;
+		for (WebElement x : dni) {
+			if (x.getText().toLowerCase().contains("dni/cuit")) {
+				a = true;
+			}
+		}
+		Assert.assertTrue(a);
+	}
+	
+	@Test (groups = {"CustomerCare", "AjustesYEscalamiento", "Ola1"})  //popUp en el 4° paso no deja terminar el caso
+	public void TS96020_Adjustments_and_Escalations_Consulta_de_Ajuste_Historicos_Visualizar_Ajuste_historico_de_la_cuenta() {
+		Assert.assertTrue(false);
+	}
+	
+	@Test (groups = {"CustomerCare", "SuspensionYRehabilitacion(Online)", "Ola1"})
 	public void TS96074_360_VIEW_Suspensiones_and_Reconexiones_Seleccionar_tipo_Siniestro_Visualizar_opcion_Tipo_de_Siniestro() {
-		page.elegirCuenta("aaaaFernando Care");
-		page.irAGestion("suspensiones");
+		cc.elegirCuenta("aaaaFernando Care");
+		cc.irAGestion("suspensiones");
 		List <WebElement> sus = driver.findElements(By.cssSelector(".slds-form-element__label.ng-binding.ng-scope"));
 		for (WebElement x : sus) {
 			if (x.getText().toLowerCase().contains("suspensión")) {
