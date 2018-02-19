@@ -225,6 +225,11 @@ public class CustomerCare extends BasePage {
 		driver.switchTo().frame(marcoCuentas);
 	}
 	
+	public WebElement obtenerFechaHasta() {
+		waitForVisibilityOfElementLocated(By.xpath("//input[@name='maxDate']"));
+		return driver.findElement(By.xpath("//input[@name='maxDate']"));
+	}
+	
 	public String obtenerEstadoDelCaso(String numCaso) {
 		List<WebElement> registros = driver.findElements(By.cssSelector(".x-grid3-row-table tr"));
 		for (WebElement reg : registros) {
@@ -404,6 +409,12 @@ public class CustomerCare extends BasePage {
 		cambiarAFrameActivo();	
 	}
 	
+	public void irAResumenDeCuenta() {
+		driver.findElement(By.xpath("//ul[@class='actions']//a[contains(.,'Resumen de Cuenta')]")).click();
+		TestBase.sleep(4000);
+		cambiarAFrameActivo();
+	}
+	
 	public WebElement obtenerPestañaActiva() {
 		driver.switchTo().defaultContent();
 		TestBase.sleep(3000);
@@ -488,8 +499,8 @@ public class CustomerCare extends BasePage {
 		Select field = new Select(driver.findElement(By.name("fcf")));
 		BasePage cambioFrameByID=new BasePage();
 		driver.switchTo().frame(cambioFrameByID.getFrameForElement(driver, By.name("fcf")));
-		driver.findElement(By.id("00B41000001CfyR_listSelect")).click();
-		field.selectByVisibleText("Mis Casos");
+		driver.findElement(By.id("00Bc0000001NxcT_listSelect")).click();
+		field.selectByVisibleText("Todos los casos");
 		try {Thread.sleep(10000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}	
 	}
 	
@@ -1387,7 +1398,8 @@ public class CustomerCare extends BasePage {
 		driver.switchTo().frame(cambioFrameByID.getFrameForElement(driver, By.cssSelector(".slds-grid.slds-p-around--small.slds-wrap.via-slds-story-cards--header.slds-theme--shade.profile-tags-header")));
 		List <WebElement> fact = driver.findElements(By.cssSelector(".slds-grid.slds-p-around--small.slds-wrap.via-slds-story-cards--header.slds-theme--shade.profile-tags-header"));
 		fact.get(0).click();
-		try {Thread.sleep(7000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		try {Thread.sleep(6000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		cambiarAFrameActivo();
 	}
 	
 	public void crearCaso(String contacto) {
@@ -1463,4 +1475,50 @@ public class CustomerCare extends BasePage {
 		WebElement unidad = driver.findElement(By.xpath("//select[@id='Unidad']"));
 		(new Select(unidad)).selectByVisibleText(texto);
 	}
+	
+	public void buscarCaso(String nCaso) {
+	    driver.switchTo().defaultContent();
+	    sleep(1000);
+	    WebElement Buscador=driver.findElement(By.xpath("//input[@id='phSearchInput']"));
+	    Buscador.sendKeys(nCaso);
+	    sleep(2000);
+	    try {
+	    	driver.findElement(By.className("autoCompleteRowLink")).click();
+	    	sleep(2000);
+	    	Buscador.clear();
+	    } catch(org.openqa.selenium.NoSuchElementException e) {
+	    	sleep(7000);
+	    	Buscador.submit();
+	    	sleep(1000);
+	    	Buscador.clear();
+	    	sleep(2000);
+	    	BasePage cambioFrameByID=new BasePage();
+	    	int i=0;    
+	    	while(i < 3) {
+	    		try {
+	    			driver.switchTo().frame(cambioFrameByID.getFrameForElement(driver, By.id("searchResultsWarningMessageBox")));
+	    			if(driver.findElement(By.id("searchResultsWarningMessageBox")).isDisplayed()) {
+	    				driver.navigate().refresh();
+	    				sleep(2000);
+	    				i++;
+	    				//System.out.println(i);
+	    			}
+	    		}
+	    		catch (java.lang.NullPointerException a){
+	    			sleep(3000);
+	    			driver.switchTo().frame(cambioFrameByID.getFrameForElement(driver, By.id("searchPageHolderDiv")));
+	    			i=4;
+	    			System.out.println("Segundo Catch");
+	    		}
+	    	}
+	    	sleep(2000);
+	    	WebElement Caso=driver.findElement(By.cssSelector(".listRelatedObject.caseBlock")).
+	    			findElement(By.cssSelector(".bPageBlock.brandSecondaryBrd.secondaryPalette")).
+	    			findElement(By.className("pbBody")).findElement(By.className("list")).
+	    			findElements(By.tagName("tr")).get(1).
+	    			findElement(By.tagName("th")).findElement(By.tagName("a"));
+	    	Caso.click();
+	    }
+	    sleep(5000);
+	  }
 }
