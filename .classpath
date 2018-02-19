@@ -3,38 +3,41 @@
 	<classpathentry kind="src" path="src"/>
 	<classpathentry kind="con" path="org.testng.TESTNG_CONTAINER"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
-	<classpathentry kind="lib" path="C:/Users/Sofia Chardin/Downloads/Selenium/lib/cglib-nodep-3.2.4.jar"/>
-	<classpathentry kind="lib" path="C:/Users/Sofia Chardin/Downloads/Selenium/lib/commons-codec-1.10.jar"/>
-	<classpathentry kind="lib" path="C:/Users/Sofia Chardin/Downloads/Selenium/lib/commons-exec-1.3.jar"/>
-	<classpathentry kind="lib" path="C:/Users/Sofia Chardin/Downloads/Selenium/lib/commons-io-2.5.jar"/>
-	<classpathentry kind="lib" path="C:/Users/Sofia Chardin/Downloads/Selenium/lib/commons-lang3-3.5.jar"/>
-	<classpathentry kind="lib" path="C:/Users/Sofia Chardin/Downloads/Selenium/lib/commons-logging-1.2.jar"/>
-	<classpathentry kind="lib" path="C:/Users/Sofia Chardin/Downloads/Selenium/lib/cssparser-0.9.22.jar"/>
-	<classpathentry kind="lib" path="C:/Users/Sofia Chardin/Downloads/Selenium/lib/gson-2.8.0.jar"/>
-	<classpathentry kind="lib" path="C:/Users/Sofia Chardin/Downloads/Selenium/lib/guava-21.0.jar" sourcepath="C:/Users/Sofia Chardin/.m2/repository/com/google/guava/guava/21.0/guava-21.0-sources.jar"/>
-	<classpathentry kind="lib" path="C:/Users/Sofia Chardin/Downloads/Selenium/lib/hamcrest-core-1.3.jar"/>
-	<classpathentry kind="lib" path="C:/Users/Sofia Chardin/Downloads/Selenium/lib/htmlunit-2.26.jar"/>
-	<classpathentry kind="lib" path="C:/Users/Sofia Chardin/Downloads/Selenium/lib/htmlunit-core-js-2.26.jar"/>
-	<classpathentry kind="lib" path="C:/Users/Sofia Chardin/Downloads/Selenium/lib/htmlunit-driver-2.26.jar"/>
-	<classpathentry kind="lib" path="C:/Users/Sofia Chardin/Downloads/Selenium/lib/httpclient-4.5.3.jar"/>
-	<classpathentry kind="lib" path="C:/Users/Sofia Chardin/Downloads/Selenium/lib/httpcore-4.4.6.jar"/>
-	<classpathentry kind="lib" path="C:/Users/Sofia Chardin/Downloads/Selenium/lib/httpmime-4.5.3.jar"/>
-	<classpathentry kind="lib" path="C:/Users/Sofia Chardin/Downloads/Selenium/lib/javax.servlet-api-3.1.0.jar"/>
-	<classpathentry kind="lib" path="C:/Users/Sofia Chardin/Downloads/Selenium/lib/jetty-io-9.4.1.v20170120.jar"/>
-	<classpathentry kind="lib" path="C:/Users/Sofia Chardin/Downloads/Selenium/lib/jetty-util-9.4.1.v20170120.jar"/>
-	<classpathentry kind="lib" path="C:/Users/Sofia Chardin/Downloads/Selenium/lib/jna-4.1.0.jar"/>
-	<classpathentry kind="lib" path="C:/Users/Sofia Chardin/Downloads/Selenium/lib/jna-platform-4.1.0.jar"/>
-	<classpathentry kind="lib" path="C:/Users/Sofia Chardin/Downloads/Selenium/lib/junit-4.12.jar"/>
-	<classpathentry kind="lib" path="C:/Users/Sofia Chardin/Downloads/Selenium/lib/neko-htmlunit-2.25.jar"/>
-	<classpathentry kind="lib" path="C:/Users/Sofia Chardin/Downloads/Selenium/lib/phantomjsdriver-1.4.0.jar"/>
-	<classpathentry kind="lib" path="C:/Users/Sofia Chardin/Downloads/Selenium/lib/sac-1.3.jar"/>
-	<classpathentry kind="lib" path="C:/Users/Sofia Chardin/Downloads/Selenium/lib/serializer-2.7.2.jar"/>
-	<classpathentry kind="lib" path="C:/Users/Sofia Chardin/Downloads/Selenium/lib/websocket-api-9.4.3.v20170317.jar"/>
-	<classpathentry kind="lib" path="C:/Users/Sofia Chardin/Downloads/Selenium/lib/websocket-client-9.4.3.v20170317.jar"/>
-	<classpathentry kind="lib" path="C:/Users/Sofia Chardin/Downloads/Selenium/lib/websocket-common-9.4.3.v20170317.jar"/>
-	<classpathentry kind="lib" path="C:/Users/Sofia Chardin/Downloads/Selenium/lib/xalan-2.7.2.jar"/>
-	<classpathentry kind="lib" path="C:/Users/Sofia Chardin/Downloads/Selenium/lib/xercesImpl-2.11.0.jar"/>
-	<classpathentry kind="lib" path="C:/Users/Sofia Chardin/Downloads/Selenium/lib/xml-apis-1.4.01.jar"/>
-	<classpathentry kind="lib" path="C:/Users/Sofia Chardin/Downloads/Selenium/client-combined-3.4.0-nodeps.jar"/>
+	<classpathentry kind="lib" path="C:/Users/Quelys/Documents/Telecom/TelecomFAN/lib/cglib-nodep-3.2.4.jar"/>
+	<classpathentry kind="lib" path="C:/Users/Quelys/Documents/Telecom/TelecomFAN/lib/client-combined-3.4.0-nodeps.jar"/>
+	<classpathentry kind="lib" path="C:/Users/Quelys/Documents/Telecom/TelecomFAN/lib/commons-codec-1.10.jar"/>
+	<classpathentry kind="lib" path="C:/Users/Quelys/Documents/Telecom/TelecomFAN/lib/commons-exec-1.3.jar"/>
+	<classpathentry kind="lib" path="C:/Users/Quelys/Documents/Telecom/TelecomFAN/lib/commons-io-2.5.jar"/>
+	<classpathentry kind="lib" path="C:/Users/Quelys/Documents/Telecom/TelecomFAN/lib/commons-lang3-3.5.jar"/>
+	<classpathentry kind="lib" path="C:/Users/Quelys/Documents/Telecom/TelecomFAN/lib/commons-logging-1.2.jar"/>
+	<classpathentry kind="lib" path="C:/Users/Quelys/Documents/Telecom/TelecomFAN/lib/cssparser-0.9.22.jar"/>
+	<classpathentry kind="lib" path="C:/Users/Quelys/Documents/Telecom/TelecomFAN/lib/gson-2.8.0.jar"/>
+	<classpathentry kind="lib" path="C:/Users/Quelys/Documents/Telecom/TelecomFAN/lib/guava-21.0.jar"/>
+	<classpathentry kind="lib" path="C:/Users/Quelys/Documents/Telecom/TelecomFAN/lib/hamcrest-core-1.3.jar"/>
+	<classpathentry kind="lib" path="C:/Users/Quelys/Documents/Telecom/TelecomFAN/lib/htmlunit-2.26.jar"/>
+	<classpathentry kind="lib" path="C:/Users/Quelys/Documents/Telecom/TelecomFAN/lib/htmlunit-core-js-2.26.jar"/>
+	<classpathentry kind="lib" path="C:/Users/Quelys/Documents/Telecom/TelecomFAN/lib/htmlunit-driver-2.26.jar"/>
+	<classpathentry kind="lib" path="C:/Users/Quelys/Documents/Telecom/TelecomFAN/lib/httpclient-4.5.3.jar"/>
+	<classpathentry kind="lib" path="C:/Users/Quelys/Documents/Telecom/TelecomFAN/lib/httpcore-4.4.6.jar"/>
+	<classpathentry kind="lib" path="C:/Users/Quelys/Documents/Telecom/TelecomFAN/lib/httpmime-4.5.3.jar"/>
+	<classpathentry kind="lib" path="C:/Users/Quelys/Documents/Telecom/TelecomFAN/lib/java-client-5.0.0-BETA9.jar"/>
+	<classpathentry kind="lib" path="C:/Users/Quelys/Documents/Telecom/TelecomFAN/lib/javax.servlet-api-3.1.0.jar"/>
+	<classpathentry kind="lib" path="C:/Users/Quelys/Documents/Telecom/TelecomFAN/lib/jcommander-1.27.jar"/>
+	<classpathentry kind="lib" path="C:/Users/Quelys/Documents/Telecom/TelecomFAN/lib/jetty-io-9.4.1.v20170120.jar"/>
+	<classpathentry kind="lib" path="C:/Users/Quelys/Documents/Telecom/TelecomFAN/lib/jetty-util-9.4.1.v20170120.jar"/>
+	<classpathentry kind="lib" path="C:/Users/Quelys/Documents/Telecom/TelecomFAN/lib/jna-4.1.0.jar"/>
+	<classpathentry kind="lib" path="C:/Users/Quelys/Documents/Telecom/TelecomFAN/lib/jna-platform-4.1.0.jar"/>
+	<classpathentry kind="lib" path="C:/Users/Quelys/Documents/Telecom/TelecomFAN/lib/junit-4.12.jar"/>
+	<classpathentry kind="lib" path="C:/Users/Quelys/Documents/Telecom/TelecomFAN/lib/neko-htmlunit-2.25.jar"/>
+	<classpathentry kind="lib" path="C:/Users/Quelys/Documents/Telecom/TelecomFAN/lib/phantomjsdriver-1.4.0.jar"/>
+	<classpathentry kind="lib" path="C:/Users/Quelys/Documents/Telecom/TelecomFAN/lib/sac-1.3.jar"/>
+	<classpathentry kind="lib" path="C:/Users/Quelys/Documents/Telecom/TelecomFAN/lib/serializer-2.7.2.jar"/>
+	<classpathentry kind="lib" path="C:/Users/Quelys/Documents/Telecom/TelecomFAN/lib/testng-6.11.jar"/>
+	<classpathentry kind="lib" path="C:/Users/Quelys/Documents/Telecom/TelecomFAN/lib/websocket-api-9.4.3.v20170317.jar"/>
+	<classpathentry kind="lib" path="C:/Users/Quelys/Documents/Telecom/TelecomFAN/lib/websocket-client-9.4.3.v20170317.jar"/>
+	<classpathentry kind="lib" path="C:/Users/Quelys/Documents/Telecom/TelecomFAN/lib/websocket-common-9.4.3.v20170317.jar"/>
+	<classpathentry kind="lib" path="C:/Users/Quelys/Documents/Telecom/TelecomFAN/lib/xalan-2.7.2.jar"/>
+	<classpathentry kind="lib" path="C:/Users/Quelys/Documents/Telecom/TelecomFAN/lib/xercesImpl-2.11.0.jar"/>
+	<classpathentry kind="lib" path="C:/Users/Quelys/Documents/Telecom/TelecomFAN/lib/xml-apis-1.4.01.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
