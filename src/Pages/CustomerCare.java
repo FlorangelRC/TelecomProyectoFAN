@@ -225,6 +225,11 @@ public class CustomerCare extends BasePage {
 		driver.switchTo().frame(marcoCuentas);
 	}
 	
+	public WebElement obtenerFechaHasta() {
+		waitForVisibilityOfElementLocated(By.xpath("//input[@name='maxDate']"));
+		return driver.findElement(By.xpath("//input[@name='maxDate']"));
+	}
+	
 	public String obtenerEstadoDelCaso(String numCaso) {
 		List<WebElement> registros = driver.findElements(By.cssSelector(".x-grid3-row-table tr"));
 		for (WebElement reg : registros) {
@@ -402,6 +407,12 @@ public class CustomerCare extends BasePage {
 		verDetallesHistorial("Historial de Ajustes");
 		TestBase.sleep(3000);
 		cambiarAFrameActivo();	
+	}
+	
+	public void irAResumenDeCuenta() {
+		driver.findElement(By.xpath("//ul[@class='actions']//a[contains(.,'Resumen de Cuenta')]")).click();
+		TestBase.sleep(4000);
+		cambiarAFrameActivo();
 	}
 	
 	public WebElement obtenerPestañaActiva() {
@@ -1387,7 +1398,8 @@ public class CustomerCare extends BasePage {
 		driver.switchTo().frame(cambioFrameByID.getFrameForElement(driver, By.cssSelector(".slds-grid.slds-p-around--small.slds-wrap.via-slds-story-cards--header.slds-theme--shade.profile-tags-header")));
 		List <WebElement> fact = driver.findElements(By.cssSelector(".slds-grid.slds-p-around--small.slds-wrap.via-slds-story-cards--header.slds-theme--shade.profile-tags-header"));
 		fact.get(0).click();
-		try {Thread.sleep(7000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		try {Thread.sleep(6000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		cambiarAFrameActivo();
 	}
 	
 	public void crearCaso(String contacto) {
