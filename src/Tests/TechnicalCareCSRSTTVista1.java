@@ -29,7 +29,7 @@ public class TechnicalCareCSRSTTVista1  extends TestBase {
 	private String validIMEI = "545229703256596";
 	private String sinTniE = "356514072350581";
 	
-	@BeforeClass(groups = {"Fase2","TechnicalCare","ServicioTecnico"})
+	@BeforeClass(alwaysRun=true)
 	public void init() throws Exception
 	{ 
 		this.driver = setConexion.setupEze();
@@ -69,13 +69,13 @@ public class TechnicalCareCSRSTTVista1  extends TestBase {
 	     try {Thread.sleep(10000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 	}
 
-	@BeforeMethod(groups = {"Fase2","TechnicalCare","ServicioTecnico"})
+	@BeforeMethod(alwaysRun=true)
 	public void setUp() throws Exception {
 		try {Thread.sleep(10000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}  
     
  }
 	
-	@AfterClass(groups = {"Fase2","TechnicalCare","ServicioTecnico"})
+	@AfterClass(alwaysRun=true)
 	public void tearDown() {
 		driver.switchTo().defaultContent();
 		driver.findElement(By.id("tsidButton")).click();
@@ -92,7 +92,7 @@ public class TechnicalCareCSRSTTVista1  extends TestBase {
 		try {Thread.sleep(2000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 	}
 	
-	@AfterMethod(groups = {"Fase2","TechnicalCare","ServicioTecnico"})
+	@AfterMethod(alwaysRun=true)
 	public void closeTechCareTab() {
 		Accounts accountPage = new Accounts(driver);
 		 accountPage.closeAccountServiceTabByName("Servicio Técnico");	
@@ -106,7 +106,7 @@ public class TechnicalCareCSRSTTVista1  extends TestBase {
 		
 	}
 	
-	@Test(groups = {"Fase2","TechnicalCare","ServicioTecnico"})
+	@Test(groups = {"Fase2","TechnicalCare","ServicioTecnico","Ola2"})
 	public void TS11618_SST_Servicio_Indiferente_Comentario_Error() {
 		Accounts accPage = new Accounts(driver);
 		accPage.fillIMEI(validIMEI);
@@ -120,7 +120,7 @@ public class TechnicalCareCSRSTTVista1  extends TestBase {
 		assertTrue(driver.findElements(By.cssSelector(".vlc-slds-error-block.ng-scope")).get(5).findElements(By.tagName("small")).get(2).getText().equals("Longitud Máxima De 255"));
 	}
 	
-	@Test(groups = {"Fase2","TechnicalCare","ServicioTecnico"})
+	@Test(groups = {"Fase2","TechnicalCare","ServicioTecnico","Ola2"})
 	public void TS11619_SST_Servicio_Indiferente_Comentario_valido() {
 		Accounts accPage = new Accounts(driver);
 		accPage.fillIMEI(validIMEI);
@@ -141,7 +141,7 @@ public class TechnicalCareCSRSTTVista1  extends TestBase {
 		assertTrue(driver.findElement(By.id("TicketCreation_prevBtn")).isDisplayed());
 	}
 	
-	@Test(groups = {"Fase2","TechnicalCare","ServicioTecnico"})
+	@Test(groups = {"Fase2","TechnicalCare","ServicioTecnico","Ola2"})
 	public void TS11621_SST_Servicio_Indiferente_Adjunto_Mayor_A_4Mb() {
 		Accounts accPage = new Accounts(driver);
 		String filePath = "C:\\Users\\Florangel\\Downloads\\arbolito.jpg";
@@ -161,7 +161,7 @@ public class TechnicalCareCSRSTTVista1  extends TestBase {
 		
 }
 	
-	@Test(groups = {"Fase2","TechnicalCare","ServicioTecnico"})
+	@Test(groups = {"Fase2","TechnicalCare","ServicioTecnico","Ola2"})
 	public void TS11625_SST_Servicio_Indiferente_Adjuntar_Dos_Archivos() {
 		Accounts accPage = new Accounts(driver);
 		String filePath = "C:\\Users\\Florangel\\Downloads\\nosignal.jpg";
@@ -186,7 +186,7 @@ public class TechnicalCareCSRSTTVista1  extends TestBase {
 		assertTrue(driver.findElement(By.id("TicketConfirmationText")).isDisplayed());
 }
 	
-	@Test(groups = {"Fase2","TechnicalCare","ServicioTecnico"}) 
+	@Test(groups = {"Fase2","TechnicalCare","ServicioTecnico","Ola2"}) 
 	public void TS16173_STT_Vista0_Invalido_Caracteres_Especiales() {
 		Accounts accPage = new Accounts(driver);
 		accPage.fillIMEI("120*+3%-");
@@ -198,7 +198,7 @@ public class TechnicalCareCSRSTTVista1  extends TestBase {
 	}
 	
 	
-	@Test(groups = {"Fase2","TechnicalCare","ServicioTecnico"}) 
+	@Test(groups = {"Fase2","TechnicalCare","ServicioTecnico","Ola2"}) 
 	public void TS16178_STT_Vista_3_Opcion_1_verificacion_Obligatorio() {
 		Accounts accPage = new Accounts(driver);
 		accPage.fillIMEI(validIMEI);
@@ -225,7 +225,7 @@ public class TechnicalCareCSRSTTVista1  extends TestBase {
 		assertTrue(driver.findElement(By.id("alert-container")).isDisplayed());
 	}
 	
-	@Test(groups = {"Fase2","TechnicalCare","ServicioTecnico"}) 
+	@Test(groups = {"Fase2","TechnicalCare","ServicioTecnico","Ola2"}) 
 	public void TS16181_STT_Vista_3_Opcion_2_NO_Obligatorio() {
 		Accounts accPage = new Accounts(driver);
 		accPage.fillIMEI(validIMEI);
@@ -253,7 +253,7 @@ public class TechnicalCareCSRSTTVista1  extends TestBase {
 		assertTrue(driver.findElement(By.id("TicketSummaryTechnician_nextBtn")).isDisplayed());
 	}
 	
-	@Test(groups = {"Fase2","TechnicalCare","ServicioTecnico"}) 
+	@Test(groups = {"Fase2","TechnicalCare","ServicioTecnico","Ola2"}) 
 	public void TS16184_STT_Vista_3_Opcion_3_NO_Obligatorio() {
 		Accounts accPage = new Accounts(driver);
 		accPage.fillIMEI(validIMEI);
@@ -331,7 +331,7 @@ public class TechnicalCareCSRSTTVista1  extends TestBase {
 		assertTrue(campos.get(10).getText().equals("NO POSEE") || !campos.get(10).getText().isEmpty());
 	}*/
 		
-	@Test(groups = {"Fase2","TechnicalCare","ServicioTecnico"}) 
+	@Test(groups = {"Fase2","TechnicalCare","ServicioTecnico","Ola2"}) 
 	public void TS16170_STT_Cliente() {
 		Accounts accPage = new Accounts(driver);
 		accPage.fillIMEI(validIMEI);
@@ -357,7 +357,7 @@ public class TechnicalCareCSRSTTVista1  extends TestBase {
 	}
 	
 	
-	@Test(groups = {"Fase2","TechnicalCare","ServicioTecnico"}) 
+	@Test(groups = {"Fase2","TechnicalCare","ServicioTecnico","Ola2"}) 
 	public void TS16189_STT_Mail_Alternativo_Vista() {
 		Accounts accPage = new Accounts(driver);
 		accPage.fillIMEI(validIMEI);
@@ -369,7 +369,7 @@ public class TechnicalCareCSRSTTVista1  extends TestBase {
 		assertTrue(driver.findElement(By.id("AlternativeEmail")).isDisplayed());
 	}
 	
-	@Test(groups = {"Fase2","TechnicalCare","ServicioTecnico"}) 
+	@Test(groups = {"Fase2","TechnicalCare","ServicioTecnico","Ola2"}) 
 	public void TS16190_STT_Mail_Valido() {
 		Accounts accPage = new Accounts(driver);
 		accPage.fillIMEI(validIMEI);
@@ -384,7 +384,7 @@ public class TechnicalCareCSRSTTVista1  extends TestBase {
 		driver.findElement(By.cssSelector(".slds-form-element.vlc-flex.ng-scope.ng-valid-required.ng-dirty.ng-valid.ng-valid-email"));
 	}
 	
-	@Test(groups = {"Fase2","TechnicalCare","ServicioTecnico"}) 
+	@Test(groups = {"Fase2","TechnicalCare","ServicioTecnico","Ola2"}) 
 	public void TS16191_STT_Mail_Invalido_Sin_Dominio() {
 		Accounts accPage = new Accounts(driver);
 		accPage.fillIMEI(validIMEI);
@@ -400,7 +400,7 @@ public class TechnicalCareCSRSTTVista1  extends TestBase {
 		assertTrue(driver.findElement(By.id("alert-container")).isDisplayed());
 	}
 	
-	@Test(groups = {"Fase2","TechnicalCare","ServicioTecnico"}) 
+	@Test(groups = {"Fase2","TechnicalCare","ServicioTecnico","Ola2"}) 
 	public void TS16192_STT_Mail_Invalido_Con_Dominio() {
 		Accounts accPage = new Accounts(driver);
 		accPage.fillIMEI(validIMEI);
@@ -417,7 +417,7 @@ public class TechnicalCareCSRSTTVista1  extends TestBase {
 		assertTrue(driver.findElement(By.id("alert-container")).isDisplayed());
 	}
 	
-	@Test(groups = {"Fase2","TechnicalCare","ServicioTecnico"}) 
+	@Test(groups = {"Fase2","TechnicalCare","ServicioTecnico","Ola2"}) 
 	public void TS16196_STT_Telefono_Alternativo_Vista() {
 		Accounts accPage = new Accounts(driver);
 		accPage.fillIMEI(validIMEI);
@@ -429,7 +429,7 @@ public class TechnicalCareCSRSTTVista1  extends TestBase {
 		assertTrue(driver.findElement(By.id("AlternativePhone")).isDisplayed());
 	}
 	
-	@Test(groups = {"Fase2","TechnicalCare","ServicioTecnico"}) 
+	@Test(groups = {"Fase2","TechnicalCare","ServicioTecnico","Ola2"}) 
 	public void TS16198_STT_Telefono_Alternativo_Valido() {
 		Accounts accPage = new Accounts(driver);
 		accPage.fillIMEI(validIMEI);
@@ -443,7 +443,7 @@ public class TechnicalCareCSRSTTVista1  extends TestBase {
 		driver.findElement(By.cssSelector(".slds-form-element.vlc-flex.vlc-slds-tel.ng-scope.ng-valid-minlength.ng-valid-maxlength.ng-valid-required.ng-dirty.ng-valid-parse.ng-valid.ng-valid-pattern"));
 	}
 	
-	@Test(groups = {"Fase2","TechnicalCare","ServicioTecnico"}) 
+	@Test(groups = {"Fase2","TechnicalCare","ServicioTecnico","Ola2"}) 
 	public void TS16199_STT_No_Agrega_Mail_Alternativo() {
 		Accounts accPage = new Accounts(driver);
 		accPage.fillIMEI(sinTniE);
@@ -483,7 +483,7 @@ public class TechnicalCareCSRSTTVista1  extends TestBase {
 		
 	}
 	
-	@Test(groups = {"Fase2","TechnicalCare","ServicioTecnico"}) 
+	@Test(groups = {"Fase2","TechnicalCare","ServicioTecnico","Ola2"}) 
 	public void TS16200_STT_No_Agrega_Telefono_Alternativo() {
 		Accounts accPage = new Accounts(driver);
 		accPage.fillIMEI(sinTniE);
@@ -524,7 +524,7 @@ public class TechnicalCareCSRSTTVista1  extends TestBase {
 		
 	}
 	
-	@Test(groups = {"Fase2","TechnicalCare","ServicioTecnico"}) 
+	@Test(groups = {"Fase2","TechnicalCare","ServicioTecnico","Ola2"}) 
 	public void TS16202_STT_Telefono_Alternativo_Vacio_No_Obligatorio() {
 		Accounts accPage = new Accounts(driver);
 		accPage.fillIMEI(validIMEI);
@@ -538,7 +538,7 @@ public class TechnicalCareCSRSTTVista1  extends TestBase {
 		assertTrue(accPage.getFrameForElement(driver, By.id("SymptomExplanation_nextBtn")).isDisplayed());
 	}
 	
-	@Test(groups = {"Fase2","TechnicalCare","ServicioTecnico"}) 
+	@Test(groups = {"Fase2","TechnicalCare","ServicioTecnico","Ola2"}) 
 	public void TS16203_STT_Telefono_Alternativo_Invalido_Letras() {
 		Accounts accPage = new Accounts(driver);
 		accPage.fillIMEI(validIMEI);
@@ -553,7 +553,7 @@ public class TechnicalCareCSRSTTVista1  extends TestBase {
 		assertTrue(driver.findElement(By.id("alert-container")).isDisplayed());
 	}
 	
-	@Test(groups = {"Fase2","TechnicalCare","ServicioTecnico"}) 
+	@Test(groups = {"Fase2","TechnicalCare","ServicioTecnico","Ola2"}) 
 	public void TS16204_STT_Telefono_Alternativo_Invalido_Caracter_Especial() {
 		Accounts accPage = new Accounts(driver);
 		accPage.fillIMEI(validIMEI);
@@ -568,7 +568,7 @@ public class TechnicalCareCSRSTTVista1  extends TestBase {
 		assertTrue(driver.findElement(By.id("alert-container")).isDisplayed());
 	}
 	
-	@Test(groups = {"Fase2","TechnicalCare","ServicioTecnico"}) 
+	@Test(groups = {"Fase2","TechnicalCare","ServicioTecnico","Ola2"}) 
 	public void TS16208_STT_Vista_Historial_De_Visitas() {
 		String datePattern = "\\d{2}/\\d{2}/\\d{4}";
 		Accounts accPage = new Accounts(driver);
@@ -600,7 +600,7 @@ public class TechnicalCareCSRSTTVista1  extends TestBase {
 		assertTrue(DethRep.get(2).isDisplayed());
 	}
 	
-	@Test(groups = {"Fase2","TechnicalCare","ServicioTecnico"})
+	@Test(groups = {"Fase2","TechnicalCare","ServicioTecnico","Ola2"})
 	public void TS16344_STT_Ingreso() {
 		Accounts accPage = new Accounts(driver);
 		accPage.fillIMEI(validIMEI);
@@ -608,7 +608,7 @@ public class TechnicalCareCSRSTTVista1  extends TestBase {
 	}
 	
 	
-	@Test(groups = {"Fase2","TechnicalCare","ServicioTecnico"}) 
+	@Test(groups = {"Fase2","TechnicalCare","ServicioTecnico","Ola2"}) 
 	public void TS16350_Vista1_Garantia() {
 		Accounts accPage = new Accounts(driver);
 		accPage.fillIMEI(validIMEI);

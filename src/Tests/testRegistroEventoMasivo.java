@@ -33,7 +33,7 @@ public class testRegistroEventoMasivo extends TestBase{
 	private WebDriver driver;
 	public RegistroEventoMasivo pageRegistroEventoMasivo = new RegistroEventoMasivo(driver);
 	
-	@BeforeClass(groups= {"Fase2","TechnicalCare","IncidenteMasivo"})
+	@BeforeClass(alwaysRun=true)
 	public void init() throws Exception
 	{
 		this.driver = setConexion.setupEze();
@@ -42,7 +42,7 @@ public class testRegistroEventoMasivo extends TestBase{
 		try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 	}
 	
-	@BeforeMethod(groups= {"Fase2","TechnicalCare","IncidenteMasivo"})
+	@BeforeMethod(alwaysRun=true)
 	public void setUp() throws Exception {
 		
 		//Entrar en Velocity Telecomunication servics
@@ -109,7 +109,7 @@ public class testRegistroEventoMasivo extends TestBase{
 		try {Thread.sleep(2000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 		}
 	
-	@AfterMethod(groups= {"Fase2","TechnicalCare","IncidenteMasivo"})
+	@AfterMethod(alwaysRun=true)
 	public void closeTechCareTab() {
 		driver.switchTo().defaultContent();
 		((JavascriptExecutor)driver).executeScript("window.scrollTo(0,"+ driver.findElement(By.id("tsidButton")).getLocation().y+")");
@@ -126,9 +126,10 @@ public class testRegistroEventoMasivo extends TestBase{
 	  }
 	
 	
-	@AfterClass(groups= {"Fase2","TechnicalCare","IncidenteMasivo"})
+	@AfterClass(alwaysRun=true)
 	public void tearDown() {
 		driver.quit();
+		sleep(1000);
 	}
 	
 	
@@ -147,7 +148,7 @@ public class testRegistroEventoMasivo extends TestBase{
 		return null;
 	}
 	//Flor
-	@Test(retryAnalyzer = Tests.retry.class , groups= {"Fase2","TechnicalCare","IncidenteMasivo"})
+	@Test(groups= {"Fase","TechnicalCare","IncidenteMasivo","Ola2"})
 	public void TS16246_CRM_Fase_2_Technical_Care_Sistema_Incidentes_Masivos_Creación_de_Eventos_Masivos_Canal_Formato() {
 		Accounts accPage = new Accounts(driver);
 		boolean estan = true;
@@ -172,7 +173,7 @@ public class testRegistroEventoMasivo extends TestBase{
 	}
 	
 	//Flor
-	@Test(retryAnalyzer = Tests.retry.class , groups= {"Fase2","TechnicalCare","IncidenteMasivo"})
+	@Test(groups= {"Fase","TechnicalCare","IncidenteMasivo","Ola2"})
 	public void TS16318_CRM_Fase_2_Technical_Care_Sistema_Incidentes_Masivos_Creación_de_Eventos_Masivos_Fecha_De_Inicio_Formato() {
 		RegistroEventoMasivo REM = new RegistroEventoMasivo(driver);
 		Accounts accPage = new Accounts(driver);
@@ -188,7 +189,7 @@ public class testRegistroEventoMasivo extends TestBase{
 	}
 	
 	//Flor
-	@Test(retryAnalyzer = Tests.retry.class , groups= {"Fase2","TechnicalCare","IncidenteMasivo"})
+	@Test(groups= {"Fase","TechnicalCare","IncidenteMasivo","Ola2"})
 	public void TS16321_CRM_Fase_2_Technical_Care_Sistema_Incidentes_Masivos_Creación_de_Eventos_Masivos_Fecha_De_Fin_Formato() {
 		RegistroEventoMasivo REM = new RegistroEventoMasivo(driver);
 		Accounts accPage = new Accounts(driver);
@@ -204,19 +205,19 @@ public class testRegistroEventoMasivo extends TestBase{
 	
 	
 	//Listo
-	@Test(retryAnalyzer = Tests.retry.class , groups= {"Fase","TechnicalCare","IncidenteMasivo"})
+	@Test(groups= {"Fase","TechnicalCare","IncidenteMasivo","Ola2"})
 	public void TS16329_CRM_Fase_2_Technical_Care_Sistema_Incidentes_Masivos_Creación_de_Eventos_Masivos_Tipo_Obligatorio(){
 			assertTrue(pageRegistroEventoMasivo.VerificarObligatorio(By.id("SelectType")));
 	}
 		
 	//Listo
-	@Test(retryAnalyzer = Tests.retry.class , groups= {"Fase","TechnicalCare","IncidenteMasivo"})
+	@Test(groups= {"Fase","TechnicalCare","IncidenteMasivo","Ola2"})
 	public void TS16330_CRM_Fase_2_Technical_Care_Sistema_Incidentes_Masivos_Creación_de_Eventos_Masivos_Subtipo_Obligatorio(){
 		assertTrue(pageRegistroEventoMasivo.VerificarObligatorio(By.id("SelectSubType")));
 	}
 	
 	//Listo
-	@Test(retryAnalyzer = Tests.retry.class , groups= {"Fase","TechnicalCare","IncidenteMasivo"})
+	@Test(groups= {"Fase","TechnicalCare","IncidenteMasivo","Ola2"})
 	public void TS16331_CRM_Fase_2_Technical_Care_Sistema_Incidentes_Masivos_Creación_de_Eventos_Masivos_Canal_Obligatorio() {
 			
 	pageRegistroEventoMasivo.registrarExcepto(By.id("SelectChannel"));
@@ -227,7 +228,7 @@ public class testRegistroEventoMasivo extends TestBase{
 	}
 		
 	//Listo
-	@Test(retryAnalyzer = Tests.retry.class , groups= {"Fase","TechnicalCare","IncidenteMasivo"})
+	@Test(groups= {"Fase","TechnicalCare","IncidenteMasivo","Ola2"})
 	public void TS16332_CRM_Fase_2_Technical_Care_Sistema_Incidentes_Masivos_Creación_de_Eventos_Masivos_Incidente_Obligatorio(){
 			
 	pageRegistroEventoMasivo.registrarExceptoIncidente(By.id("SelectIncident"));
@@ -238,32 +239,32 @@ public class testRegistroEventoMasivo extends TestBase{
 	}
 	
 	//Listo
-	@Test(retryAnalyzer = Tests.retry.class , groups= {"Fase","TechnicalCare","IncidenteMasivo"})
+	@Test(groups= {"Fase","TechnicalCare","IncidenteMasivo","Ola2"})
 	public void TS16333_CRM_Fase_2_Technical_Care_Sistema_Incidentes_Masivos_Creación_de_Eventos_Masivos_Titulo_Obligatorio() {
 		assertTrue(pageRegistroEventoMasivo.VerificarObligatorio(By.id("TextIncidentTitle")));
 	}
 	
 	//Listo
-	@Test(retryAnalyzer = Tests.retry.class , groups= {"Fase","TechnicalCare","IncidenteMasivo"})
+	@Test(groups= {"Fase","TechnicalCare","IncidenteMasivo","Ola2"})
 	public void TS16334_CRM_Fase_2_Technical_Care_Sistema_Incidentes_Masivos_Creación_de_Eventos_Masivos_Impacto_Obligatorio() {
 		assertTrue(pageRegistroEventoMasivo.VerificarObligatorio(By.id("SelectImpact")));
 	}
 	
 	//Listo
-	@Test(retryAnalyzer = Tests.retry.class , groups= {"Fase","TechnicalCare","IncidenteMasivo"})
+	@Test(groups= {"Fase","TechnicalCare","IncidenteMasivo","Ola2"})
 	public void TS16335_CRM_Fase_2_Technical_Care_Sistema_Incidentes_Masivos_Creación_de_Eventos_Masivos_Fecha_de_Inicio_Obligatorio() {
 		assertTrue(pageRegistroEventoMasivo.VerificarObligatorio(By.id("StartDate")));
 	}
 	
 	//Listo
-	@Test(retryAnalyzer = Tests.retry.class , groups= {"Fase","TechnicalCare","IncidenteMasivo"})
+	@Test(groups= {"Fase","TechnicalCare","IncidenteMasivo","Ola2"})
 	public void TS16337_CRM_Fase_2_Technical_Care_Sistema_Incidentes_Masivos_Creación_de_Eventos_Masivos_Estado_Obligatorio() {
 		assertTrue(pageRegistroEventoMasivo.VerificarObligatorio(By.id("SelectStatus")));
 	}
 	
 	
 	//Flor
-	@Test(retryAnalyzer = Tests.retry.class , groups= {"Fase","TechnicalCare","IncidenteMasivo"}) 
+	@Test(groups= {"Fase","TechnicalCare","IncidenteMasivo","Ola2"}) 
 	public void TS16336_CRM_Fase_2_Technical_Care_Sistema_Incidentes_Masivos_Creación_de_Eventos_Masivos_Fecha_Estimada_De_Cierre_No_Obligatorio() {
 	RegistroEventoMasivo REM = new RegistroEventoMasivo(driver);
 	Accounts accPage = new Accounts(driver);
@@ -279,25 +280,25 @@ public class testRegistroEventoMasivo extends TestBase{
 	 }
 	
 	//Listo
-	@Test(retryAnalyzer = Tests.retry.class , groups= {"Fase","TechnicalCare","IncidenteMasivo"})
+	@Test(groups= {"Fase","TechnicalCare","IncidenteMasivo","Ola2"})
 	public void TS16338_CRM_Fase_2_Technical_Care_Sistema_Incidentes_Masivos_Creación_de_Eventos_Masivos_Detalle_del_Incidente_Obligatorio() {
 		assertTrue(pageRegistroEventoMasivo.VerificarObligatorio(By.id("TextDetailIncident")));
 	}
 	
 	//Listo
-	@Test(retryAnalyzer = Tests.retry.class , groups= {"Fase","TechnicalCare","IncidenteMasivo"})
+	@Test(groups= {"Fase","TechnicalCare","IncidenteMasivo","Ola2"})
 	public void TS16339_CRM_Fase_2_Technical_Care_Sistema_Incidentes_Masivos_Creación_de_Eventos_Masivos_Cliente_afectado_Obligatorio() {
 		assertTrue(pageRegistroEventoMasivo.VerificarObligatorio(By.id("TextAffectedCustomer")));
 	}
 	
 	//Listo
-	@Test(retryAnalyzer = Tests.retry.class , groups= {"Fase","TechnicalCare","IncidenteMasivo"})
+	@Test(groups= {"Fase","TechnicalCare","IncidenteMasivo","Ola2"})
 	public void TS16340_CRM_Fase_2_Technical_Care_Sistema_Incidentes_Masivos_Creación_de_Eventos_Masivos_Cliente_Procedimiento_Obligatorio() {
 		assertTrue(pageRegistroEventoMasivo.VerificarObligatorio(By.id("TextProcedure")));
 	}
 	
 	//Listo
-	@Test(retryAnalyzer = Tests.retry.class , groups= {"Fase","TechnicalCare","IncidenteMasivo"})
+	@Test(groups= {"Fase","TechnicalCare","IncidenteMasivo","Ola2"})
 	public void TS16341_CRM_Fase_2_Technical_Care_Sistema_Incidentes_Masivos_Creación_de_Eventos_Masivos_Speech_Obligatorio() {
 		assertTrue(pageRegistroEventoMasivo.VerificarObligatorio(By.id("TextSpeech")));
 	}

@@ -13,7 +13,7 @@ public class CustomerOla1_Joaquin extends TestBase {
 	
 	protected CustomerCare Page;
 	
-	@BeforeClass(groups = {"CustomerCare", "AjustesYEscalamiento", "SuspensionYRehabilitacion(Online)"})
+	@BeforeClass(groups = {"CustomerCare", "Ola1", "AjustesYEscalamiento", "SuspensionYRehabilitacion(Online)"})
 	public void init() {
 		inicializarDriver();
 		Page = new CustomerCare(driver);
@@ -21,19 +21,19 @@ public class CustomerOla1_Joaquin extends TestBase {
 		Page.cajonDeAplicaciones("Consola FAN");
 	}
 	
-	@AfterClass(groups = {"CustomerCare", "AjustesYEscalamiento", "SuspensionYRehabilitacion(Online)"})
+	@AfterClass(groups = {"CustomerCare", "Ola1", "AjustesYEscalamiento", "SuspensionYRehabilitacion(Online)"})
 	public void exit() {
 		Page.cerrarTodasLasPestañas();
 		Page.cajonDeAplicaciones("Ventas");
 		cerrarTodo();
 	}
 	
-	@BeforeMethod(groups = {"CustomerCare", "AjustesYEscalamiento", "SuspensionYRehabilitacion(Online)"})
+	@BeforeMethod(groups = {"CustomerCare", "Ola1", "AjustesYEscalamiento", "SuspensionYRehabilitacion(Online)"})
 	public void before() {
 		Page.cerrarTodasLasPestañas();
 	}
 	
-	@Test(groups = {"CustomerCare", "AjustesYEscalamiento"})
+	@Test(groups = {"CustomerCare", "Ola1", "AjustesYEscalamiento"})
 	public void TS90443_Adjustments_and_Esccalations_Adjustments_and_Escalations_Configurar_Ajuste_Formato_monto_con_2_decimales() {
 		Page.elegirCuenta("aaaaFernando Care");
 		Page.irAGestion("Ajustes");
@@ -47,7 +47,7 @@ public class CustomerOla1_Joaquin extends TestBase {
 		Assert.assertTrue(valorCampo.contentEquals("555.11"));
 	}
 	
-	@Test(groups = {"CustomerCare", "AjustesYEscalamiento"})
+	@Test(groups = {"CustomerCare", "Ola1", "AjustesYEscalamiento"})
 	public void TS90446_Adjustments_and_Esccalations_Adjustments_and_Escalations_Configurar_Ajuste_Tipos_Unidades_VOZ_HH_MM_SS() {
 		Page.elegirCuenta("aaaaFernando Care");
 		Page.irAGestion("Ajustes");
@@ -61,7 +61,7 @@ public class CustomerOla1_Joaquin extends TestBase {
 		Assert.assertTrue(valorCampo.contentEquals("04:20:50"));
 	}
 	
-	@Test(groups = {"CustomerCare", "AjustesYEscalamiento"})
+	@Test(groups = {"CustomerCare", "Ola1", "AjustesYEscalamiento"})
 	public void TS90454_Adjustments_and_Esccalations_Adjustments_and_Escalations_UX_Visualizacion_Ajustes_y_Casos_Relacionados_Visualizar_botón_siguiente_OS() {
 		Page.elegirCuenta("aaaaFernando Care");
 		Page.irAGestion("Ajustes");
