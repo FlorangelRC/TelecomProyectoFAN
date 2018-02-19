@@ -54,7 +54,7 @@ public class TechnicalCareCSRDiagnosticoPage extends BasePage{
 	private WebElement next;
 	
 	
-	@FindBy(xpath="//*[@id=\'SimilCaseExistCommentUpdateMessage\']/div/p/p[2]/span/strong")
+	@FindBy(xpath="//*[@id='SimilCaseExistCommentUpdateMessage']/div/p/p[2]/span/strong")
 	private WebElement numCaso;
 	
 	
@@ -177,7 +177,7 @@ public class TechnicalCareCSRDiagnosticoPage extends BasePage{
 	          sleep(2000);
 	          try {
 	             sleep(2000);
-	           List<WebElement> actions= service.findElement(By.className("slds-cell-shrink")).findElements(By.xpath("//*[@class='dropdown__list']//li"));
+	           List<WebElement> actions=  service.findElement(By.className("slds-cell-shrink")).findElements(By.xpath("//*[@class='dropdown__list']//li"));
 	        for (WebElement opt : actions) {
 	         if (opt.isDisplayed()) {
 	          opt.click();
@@ -241,33 +241,30 @@ public class TechnicalCareCSRDiagnosticoPage extends BasePage{
 	          }    
 	  }
 	public void selectionInconvenient(String inconvenientName) {
+		sleep(4000);
 	      driver.switchTo().frame(getFrameForElement(driver, By.id("IssueSelectStep")));
+	      sleep(2000);
 	      for (WebElement opt : getlistaDeInconvenientes()) {
 	     // validateInconvenient= true;
 	        if (opt.getText().equalsIgnoreCase(inconvenientName)) {
 	          opt.click();
 	          break;
 	        }
-	      }
-	      
-	      sleep(4000);
-	     
+	        
+	      }	     
 	  }
 	
 
-		/*public void selectionInconvenient(String inconvenientName) {
+	public boolean validarInconveniente(String inconvenientName) {
 			driver.switchTo().frame(getFrameForElement(driver, By.id("IssueSelectStep")));
 			for (WebElement opt : getlistaDeInconvenientes()) {
-				if (opt.getText().equalsIgnoreCase(inconvenientName)) {
-					opt.click();
-					break;
+				if(opt.getText().contains(inconvenientName)) {
+		        	return true;
 				}
-			}
-			
-			sleep(4000);
-		 
-	}*/
-		
+		}
+			return false;
+	}		
+
 		
 	
 	

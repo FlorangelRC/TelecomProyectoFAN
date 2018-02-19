@@ -30,7 +30,7 @@ public class TechnicalCareCSRDiagnosticoFase4 extends TestBase{
 	
 private WebDriver driver;
 	
- 	@BeforeClass(groups= {"Fase4","TechnicalCare", "Diagnostico"})
+ 	@BeforeClass(groups= {"TechnicalCare", "SVA", "Ola1"})
  	public void init() throws InterruptedException{
 	
 	this.driver = setConexion.setupEze();
@@ -65,7 +65,7 @@ private WebDriver driver;
 	
  	}
  	
- 	@BeforeMethod(groups = {"Fase 4","TechnicalCare", "Diagnostico"}) 
+ 	@BeforeMethod(groups= {"TechnicalCare", "SVA", "Ola1"}) 
 	public void setUp() throws Exception {
 	 Accounts accountPage = new Accounts(driver);
      //Selecciono Vista Tech
@@ -119,8 +119,8 @@ private WebDriver driver;
   	}*/
 	
 
-	@Test
-	public void TS94226() throws Exception {
+	@Test (groups= {"TechnicalCare", "SVA", "Ola1"})//listo
+	public void TS94226_CRM_Ola_1_Technical_Care_CSR_SVA_Actualización_de_matriz_Servicio_Transferencia_de_llamadas_inconveniente_No_funciona_transferencia_de_llamadas_No_funciona_transferencia_de_llamadas_No_puede_configurar() throws Exception {
 	TechnicalCareCSRDiagnosticoPage tech = new TechnicalCareCSRDiagnosticoPage(driver);
 	sleep (4000);
 	driver.switchTo().defaultContent();
@@ -128,10 +128,11 @@ private WebDriver driver;
     tech.verDetalles();
     tech.clickDiagnosticarServicio("Transferencia de Llamadas");
     tech.selectionInconvenient("No puede configurar");
+    assertTrue(tech.validarInconveniente("No puede configurar"));
 	}
 	
-	@Test
-	public void TS94368() throws Exception {
+	@Test (groups= {"TechnicalCare", "SVA", "Ola1"})
+	public void TS94368_CRM_Ola_1_Technical_Care_CSR_SVA_Visualizacion_de_lista_de_servicios_AGRUPADOR() throws Exception {
 	TechnicalCareCSRDiagnosticoPage tech = new TechnicalCareCSRDiagnosticoPage(driver);
 	sleep (4000);
 	driver.switchTo().defaultContent();
@@ -141,88 +142,88 @@ private WebDriver driver;
     
 	}
 	
-	@Test
-	public void TS94439() throws Exception {
+	@Test (groups= {"TechnicalCare", "SVA", "Ola1"}) //listo
+	public void TS94439_CRM_Ola_1_Technical_Care_CSR_SVA_Visualizacion_de_Servicio_Transferencia_de_llamadas_e_inconveniente_No_funciona_transferencia_de_llamadas_No_puede_configurar() throws Exception {
 	TechnicalCareCSRDiagnosticoPage tech = new TechnicalCareCSRDiagnosticoPage(driver);
 	sleep (4000);
 	driver.switchTo().defaultContent();
     tech.clickOpcionEnAsset("1100000075", "mis servicios");
     tech.verDetalles();
     tech.clickDiagnosticarServicio("Transferencia de Llamadas");
+    assertTrue(tech.validarInconveniente("Transferencia de Llamadas"));
     
 	}
 	
-	@Test
-	public void TS94440() throws Exception {
+	@Test (groups= {"TechnicalCare", "SVA", "Ola1"})//listo
+	public void TS94440_CRM_Ola_1_Technical_Care_CSR_SVA_Visualizacion_de_Servicio_Llamada_en_espera_e_inconveniente_No_funciona_llamada_en_espera() throws Exception {
 	TechnicalCareCSRDiagnosticoPage tech = new TechnicalCareCSRDiagnosticoPage(driver);
 	sleep (4000);
 	driver.switchTo().defaultContent();
     tech.clickOpcionEnAsset("1100000075", "mis servicios");
     tech.verDetalles();
     tech.clickDiagnosticarServicio("Llamada en espera");
+    assertTrue(tech.validarInconveniente("Llamada en espera"));
     
 	}
 	
-	@Test
-	public void TS94441() throws Exception {
+	@Test (groups= {"TechnicalCare", "SVA", "Ola1"})//listo
+	public void TS94441_CRM_Ola_1_Technical_Care_CSR_SVA_Visualizacion_de_Servicio_Llamada_tripartita_e_inconveniente_No_funciona_Llamada_tripartita() throws Exception {
 	TechnicalCareCSRDiagnosticoPage tech = new TechnicalCareCSRDiagnosticoPage(driver);
 	sleep (4000);
 	driver.switchTo().defaultContent();
     tech.clickOpcionEnAsset("1100000075", "mis servicios");
     tech.verDetalles();
     tech.clickDiagnosticarServicio("Llamada Tripartita");
+    tech.selectionInconvenient("No funciona Llamada tripartita");
+    assertTrue(tech.validarInconveniente("No funciona Llamada tripartita"));
     
 	}
 	
-	@Test
-	public void TS94459() throws Exception {
+	@Test (groups= {"TechnicalCare", "SVA", "Ola1"})//listo
+	public void TS94459_CRM_Ola_1_Technical_Care_CSR_SVA_Visualizacion_de_Servicio_Conferencia_tripartita_e_inconveniente_No_funciona_Conferencia_Tripartita() throws Exception {
 	TechnicalCareCSRDiagnosticoPage tech = new TechnicalCareCSRDiagnosticoPage(driver);
 	sleep (4000);
-	driver.switchTo().defaultContent();
     tech.clickOpcionEnAsset("1100000075", "mis servicios");
     tech.verDetalles();
     tech.clickDiagnosticarServicio("Llamada Tripartita");
-    
+    tech.selectionInconvenient("No funciona Llamada tripartita");
+    assertTrue(tech.validarInconveniente("No funciona Llamada tripartita"));
 	}
 	
-	@Test(groups= {"TechnicalCare", "SVA", "Ola1"})
+	@Test(groups= {"TechnicalCare", "SVA", "Ola1"}) //Listo
 	public void TS94464_CRM_Ola_1_Technical_Care_CSR_SVA_Visualizacion_de_Servicio_Mensajes_Multimedia_Personal_MMS_e_inconveniente_MMS_Emisión_Cliente_informa_que_no_puede_enviar_Archivo_Imagen_Audio() throws Exception {
 	TechnicalCareCSRDiagnosticoPage tech = new TechnicalCareCSRDiagnosticoPage(driver);
 	sleep (4000);
-	driver.switchTo().defaultContent();
     tech.clickOpcionEnAsset("1100000075", "mis servicios");
     tech.verDetalles();
     tech.clickDiagnosticarServicio("MMS");
     tech.selectionInconvenient("MMS Emisión Cliente informa que no puede enviar Imagen");
-    //assertTrue(tech.validarInconvenient());
+    assertTrue(tech.validarInconveniente("MMS Emisión Cliente informa que no puede enviar Imagen"));
     
 	}
 	
-	@Test
-	public void TS94467() throws Exception {
+	@Test (groups= {"TechnicalCare", "SVA", "Ola1"})
+	public void TS94467_CRM_Ola_1_Technical_Care_CSR_SVA_Visualizacion_de_Servicio_SMS_saliente_e_inconveniente_SMS_Emisión_a_algun_destino_en_particular() throws Exception {
 	TechnicalCareCSRDiagnosticoPage tech = new TechnicalCareCSRDiagnosticoPage(driver);
 	sleep (4000);
-	driver.switchTo().defaultContent();
     tech.clickOpcionEnAsset("1100000075", "mis servicios");
     tech.verDetalles();
     tech.clickDiagnosticarServicio("sms", "SMS Saliente", false);
+    List<WebElement> servicios=driver.findElements(By.xpath("//table//tbody//tr"));
+    assertTrue(servicios.get(0).isDisplayed());
     
     }
-	@Test
-	public void TS94276() throws Exception {
+	@Test (groups= {"TechnicalCare", "SVA", "Ola1"}) //Listo
+	public void TS94276_CRM_Ola_1_Technical_Care_CSR_SVA_Validacion_SMS_entrante_no_recibe_ningun_numero() throws Exception {
 	TechnicalCareCSRDiagnosticoPage tech = new TechnicalCareCSRDiagnosticoPage(driver);
 	sleep (4000);
-	driver.switchTo().defaultContent();
     tech.clickOpcionEnAsset("1100000075", "mis servicios");
     tech.verDetalles();
     tech.clickDiagnosticarServicio("sms", "SMS Entrante", true);
     tech.selectionInconvenient("No recibe de un número particular");
+    assertTrue(tech.validarInconveniente("No recibe de un número particular"));
 	
 	}
 	
 	
 }
-	
-
-
-
