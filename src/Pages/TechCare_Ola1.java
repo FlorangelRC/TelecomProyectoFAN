@@ -4,10 +4,13 @@ import java.util.List;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
+import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.How;
+import org.openqa.selenium.support.ui.Select;
 
 public class TechCare_Ola1 {
 	
@@ -168,4 +171,35 @@ public class TechCare_Ola1 {
 	    default:
 	      return 0;
 	    }}
+	
+	public final void seleccionarCualquierCuenta(WebDriver driver, String vista, String Cuenta) {
+System.out.println("Entra al metodo");
+/////////////////////////////////Selecciono VIsta///////////////////////////////////////////////
+		
+		WebElement frame0 = driver.findElement(By.tagName("iframe"));
+		driver.switchTo().frame(frame0);
+		Select field = new Select(driver.findElement(By.name("fcf")));
+		field.selectByVisibleText(vista);
+		
+/////////////////////////////////Selecciono Cuentas en la vista///////////////////////////////////
+		Accounts accPage = new Accounts(driver);
+		accPage.accountSelect(vista);
+	    sleep(4000);
+	    try {accPage.selectAccountByName(Cuenta);}
+	    catch(NoSuchElementException ex) {
+	    	System.out.println("entro al catch");
+		    driver.switchTo().frame(accPage.getFrameForElement(driver, By.className("listItem")));
+		    List<WebElement> Iniciales=driver.findElements(By.className("listItem"));
+		    for(WebElement letras:Iniciales) {
+		    	System.out.println("Entro a las letras");
+		    	System.out.println("-"+letras.getText()+"-");
+		    	if(letras.getText().toLowerCase().startsWith(Cuenta, 0)) {
+		    		letras.click();
+		    		break;
+		    	}
+		    }
+		    accPage.selectAccountByName(Cuenta);
+	    }
+	    System.out.println("sale del metodo");
+	}
 }
