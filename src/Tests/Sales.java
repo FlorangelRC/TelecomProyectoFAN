@@ -61,13 +61,13 @@ public class Sales extends TestBase {
 	String[] genero = {"masculino","femenino"};
 	String[] DocValue = {"52698550","3569874563","365","ssss"};
 	
-	@AfterClass(alwaysRun=true)
+	//@AfterClass(alwaysRun=true)
 	public void tearDown() {
 		driver.close();
 		driver.quit();
 	}
 	
-	@AfterMethod(alwaysRun=true)
+	//@AfterMethod(alwaysRun=true)
 	public void deslogin(){
 		try {Thread.sleep(10000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 		driver.get("https://crm--sit.cs14.my.salesforce.com/home/home.jsp?tsid=02u41000000QWha/");
@@ -90,7 +90,7 @@ public class Sales extends TestBase {
 			 loginAndres(driver);
 			 break;
 		 case "call":
-			 loginElena(driver);
+			 loginElena(driver);  
 			 break;
 		 case "venta":
 			 loginFranciso(driver);
@@ -105,14 +105,14 @@ public class Sales extends TestBase {
 			 loginFabiana(driver);
 			 break;
 		 }
-	
+		
 		try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 	}
 
 	@BeforeMethod(alwaysRun=true)
 	public void setup() throws Exception {		
 		try {Thread.sleep(10000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
-		driver.findElement(By.xpath("//a[@href=\'https://crm--sit--c.cs14.visual.force.com/apex/taClientSearch']")).click();
+		 driver.findElement(By.xpath("//a[@href=\'https://crm--sit--c.cs14.visual.force.com/apex/taClientSearch']")).click();
 		try {Thread.sleep(10000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 	}
 
@@ -405,7 +405,7 @@ public class Sales extends TestBase {
 	}
 	
 	@Test(groups={"Sales", "Ventas","Ola1"})
-	public void TS9514_Ventas_General_Verificar_LOV_Campo_Status_En_La_Orden(){
+	public void TS95147_Ventas_General_Verificar_LOV_Campo_Status_En_La_Orden(){
 		boolean esta = false;
 		String[] todos = {"draft","cancelled","activated"};
 		driver.findElement(By.cssSelector(".vlc-slds-button--tertiary.ng-binding.ng-scope")).click();
@@ -624,13 +624,13 @@ public class Sales extends TestBase {
 		}
 		sleep(5000);		
 		driver.findElement(By.id("Birthdate")).sendKeys("11/04/19894");
-		assertTrue(driver.findElement(By.id("Birthdate")).getAttribute("value").equals("11/04/1989"));
 		sleep(1000);
+		Assert.assertTrue(driver.findElement(By.cssSelector(".slds-input.ng-untouched.ng-invalid.ng-not-empty.ng-dirty.ng-invalid-date.ng-invalid-parse")).isDisplayed());
 		driver.findElement(By.id("Birthdate")).clear();
 		driver.findElement(By.id("Birthdate")).sendKeys("11/04/198p");
 		try {Thread.sleep(1000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
-		Assert.assertTrue(driver.findElement(By.cssSelector(".slds-form-element.vlc-flex.ng-scope.ng-dirty.ng-valid-parse.ng-valid-required.ng-invalid.ng-invalid-valid")).isDisplayed());
-
+		Assert.assertTrue(driver.findElement(By.cssSelector(".slds-input.ng-untouched.ng-invalid.ng-not-empty.ng-dirty.ng-invalid-date.ng-invalid-parse")).isDisplayed());
+		
 	}
 	
 	@Test(groups={"Sales", "AltaDeContacto","Ola1"})
@@ -646,15 +646,17 @@ public class Sales extends TestBase {
 				break;
 			}
 		}
-		sleep(5000);	
+		sleep(10000);	
 		driver.findElement(By.id("Birthdate")).sendKeys("32/08/1999");
-		Assert.assertTrue(driver.findElement(By.cssSelector(".slds-form-element.vlc-flex.ng-scope.ng-dirty.ng-valid-parse.ng-valid-required.ng-invalid.ng-invalid-valid")).isDisplayed());
+		sleep(1000);
+		System.out.println(driver.findElement(By.id("Birthdate")).getAttribute("class"));
+		Assert.assertTrue(driver.findElement(By.cssSelector(".slds-input.ng-untouched.ng-invalid.ng-not-empty.ng-dirty.ng-invalid-date.ng-invalid-parse")).isDisplayed());
 		try {Thread.sleep(1000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 		driver.findElement(By.id("Birthdate")).clear();
 		try {Thread.sleep(1000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 		driver.findElement(By.id("Birthdate")).sendKeys("00/08/1999");
-		Assert.assertTrue(driver.findElement(By.cssSelector(".slds-form-element.vlc-flex.ng-scope.ng-dirty.ng-valid-parse.ng-valid-required.ng-invalid.ng-invalid-valid")).isDisplayed());
-
+		Assert.assertTrue(driver.findElement(By.cssSelector(".slds-input.ng-untouched.ng-invalid.ng-not-empty.ng-dirty.ng-invalid-date.ng-invalid-parse")).isDisplayed());
+		
 	}
 	
 
@@ -675,13 +677,14 @@ public class Sales extends TestBase {
 		}
 		sleep(5000);	
 		driver.findElement(By.id("Birthdate")).sendKeys("22/13/1999");
-		Assert.assertTrue(driver.findElement(By.cssSelector(".slds-form-element.vlc-flex.ng-scope.ng-dirty.ng-valid-parse.ng-valid-required.ng-invalid.ng-invalid-valid")).isDisplayed());
+		sleep(1000);
+		Assert.assertTrue(driver.findElement(By.cssSelector(".slds-input.ng-untouched.ng-invalid.ng-not-empty.ng-dirty.ng-invalid-date.ng-invalid-parse")).isDisplayed());
 		try {Thread.sleep(1000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 		driver.findElement(By.id("Birthdate")).clear();
 		try {Thread.sleep(1000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 		driver.findElement(By.id("Birthdate")).sendKeys("22/00/1999");
-		Assert.assertTrue(driver.findElement(By.cssSelector(".slds-form-element.vlc-flex.ng-scope.ng-dirty.ng-valid-parse.ng-valid-required.ng-invalid.ng-invalid-valid")).isDisplayed());
-
+		Assert.assertTrue(driver.findElement(By.cssSelector(".slds-input.ng-untouched.ng-invalid.ng-not-empty.ng-dirty.ng-invalid-date.ng-invalid-parse")).isDisplayed());
+		
 	}
 	
 	//@Test(groups={"Sales", "AltaDeContacto","Ola1"})
@@ -744,7 +747,7 @@ public class Sales extends TestBase {
 		SB.BtnCrearNuevoCliente();
 		driver.findElement(By.id("Birthdate")).click();
 		sleep(2000);
-		Assert.assertTrue(driver.findElement(By.cssSelector(".datepicker.-bottom-left-.-from-bottom-")).isDisplayed());
+		Assert.assertTrue(driver.findElement(By.cssSelector(".slds-datepicker.slds-dropdown.slds-dropdown--left.ng-scope")).isDisplayed());
 	}
 
 	@Test(groups={"Sales", "AltaDeContacto","Ola1"})
@@ -760,7 +763,7 @@ public class Sales extends TestBase {
 		}
 		sleep(7000);
 		WebElement date = driver.findElement(By.id("Birthdate"));
-		Assert.assertTrue(date.getAttribute("vlc-slds-model-date-format").equals("yyyy-MM-dd"));
+		Assert.assertTrue(date.getAttribute("data-date-format").equals("dd/MM/yyyy"));
 	}	
 	
 	//************FASE 2*********************
@@ -1859,7 +1862,7 @@ public class Sales extends TestBase {
 	  @Test(groups = {"Sales", "Ventas","Ola1"})
 	  public void TS94710_Ventas_BuscarCliente_Verificar_Los_Datos_Del_Cliente_Activo() { 
 		  boolean ok = false;
-		  driver.findElement(By.id("PhoneNumber")).sendKeys("1158433883");
+		  driver.findElement(By.id("PhoneNumber")).sendKeys("1160444719");
 		  driver.findElement(By.id("SearchClientsDummy")).click();
 		  sleep(5000);
 		  List<WebElement> campos = driver.findElement(By.id("tab-scoped-1")).findElement(By.cssSelector(".slds-table.slds-table--bordered.slds-tree.slds-table--tree.table.tableCSS")).findElement(By.tagName("tr")).findElements(By.tagName("th"));
