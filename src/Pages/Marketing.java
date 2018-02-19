@@ -13,6 +13,11 @@ import Tests.TestBase;
 
 public class Marketing extends CustomerCare {
 	
+	/*Datos login Marketing:s
+	Username: usit@telecom.sit
+	Password: pruebas09
+	 */
+	
 	//final WebDriver driver;
 	
 	//Constructor
@@ -84,11 +89,6 @@ public class Marketing extends CustomerCare {
 		aAction.moveToElement(wClose).perform();
 		wClose.click();
 	}
-	
-	/*Datos login Marketing:s
-		Username: usit@telecom.sit
-		Password: pruebas09
-	*/
 	
 	public void irAGestionMarketing() {
 		buscarGestion("Club Personal");

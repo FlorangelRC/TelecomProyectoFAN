@@ -37,16 +37,17 @@ public class Marketing_Mattu extends TestBase{
 		loginMarketing(driver);
 		//login(driver);
 		try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
-		if (driver.findElement(By.id("tsidLabel")).getText().toLowerCase().equals("consola fan")) {
+		driver.get("https://crm--sit.cs14.my.salesforce.com/console?tsid=02uc0000000D6Hd");
+		/*if (driver.findElement(By.id("tsidLabel")).getText().toLowerCase().equals("consola fan")) {
 			driver.findElement(By.id("BackToServiceDesk_Tab")).click();
-			/*driver.findElement(By.id("tsidLabel")).click();
+			driver.findElement(By.id("tsidLabel")).click();
 			WebElement wMenu = driver.findElement(By.id("tsid-menuItems"));
 			List<WebElement> wMenuOptions = wMenu.findElements(By.tagName("a"));
 			for (WebElement wAux:wMenuOptions) {
 				if(wAux.getText().toLowerCase().equals("marketing")) {
 					wAux.click();
 				}
-			}*/
+			}
 		} else {
 			driver.findElement(By.id("tsidLabel")).click();
 			WebElement wMenu = driver.findElement(By.id("tsid-menuItems"));
@@ -57,7 +58,7 @@ public class Marketing_Mattu extends TestBase{
 					break;
 				}
 			}
-		}
+		}*/
 		CustomerCare cCC = new CustomerCare(driver);
 		cCC.cerrarTodasLasPestañas();
 		goToLeftPanel(driver, "Cuentas");
@@ -274,8 +275,7 @@ public class Marketing_Mattu extends TestBase{
 	//TCC = 10
 	@Test(groups = {"Marketing", "Ola1"})
 	public void TS98057_Verificar_seleccion_del_motivo_otro_Baja_CP() {
-		Marketing mMenuABM = new Marketing(driver);
-		mMenuABM.clubPersonal("baja");
+		mMarketing.estadoAltaBaja("Baja");
 		try {Thread.sleep(10000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 		BasePage cambioFrame=new BasePage();
 		driver.switchTo().defaultContent();
@@ -295,8 +295,7 @@ public class Marketing_Mattu extends TestBase{
 	//TCC = 11
 	@Test(groups = {"Marketing", "Ola1"})
 	public void TS98058_Verificar_seleccion_del_motivo_otro_vacio_Baja_CP() {
-		Marketing mMenuABM = new Marketing(driver);
-		mMenuABM.clubPersonal("baja");
+		mMarketing.estadoAltaBaja("Baja");
 		try {Thread.sleep(10000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 		BasePage cambioFrame=new BasePage();
 		driver.switchTo().defaultContent();
@@ -604,7 +603,8 @@ public class Marketing_Mattu extends TestBase{
 	//TCC = 28
 	@Test(groups = {"Marketing", "Ola1"})
 	public void TS98056_Verificar_seleccion_de_un_unico_valor_en_el_campo_motivo_de_baja_Baja_CP() {
-		mMarketing.clubPersonal("baja");
+		//mMarketing.clubPersonal("baja");
+		mMarketing.estadoAltaBaja("Baja");
 		try {Thread.sleep(10000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 		BasePage cambioFrame=new BasePage();
 		driver.switchTo().defaultContent();
