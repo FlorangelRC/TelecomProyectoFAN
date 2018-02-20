@@ -2,9 +2,11 @@ package Pages;
 import java.util.List;
 import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
+import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
+import org.openqa.selenium.support.How;
 import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.Select;  
 
@@ -54,7 +56,7 @@ public class TechnicalCareCSRDiagnosticoPage extends BasePage{
 	private WebElement next;
 	
 	
-	@FindBy(xpath="//*[@id=\'SimilCaseExistCommentUpdateMessage\']/div/p/p[2]/span/strong")
+	@FindBy(xpath="//*[@id='SimilCaseExistCommentUpdateMessage']/div/p/p[2]/span/strong")
 	private WebElement numCaso;
 	
 	
@@ -96,19 +98,29 @@ public class TechnicalCareCSRDiagnosticoPage extends BasePage{
 	@FindBy(className="card-top")
 	private WebElement planConTarjeta;
 	
-	@FindBy(xpath="//*[@id='j_id0:j_id5']/div/div/ng-include/div/div[2]/div[1]/ng-include/section/div[1]")
-	private WebElement planConTarjeta2;
+	@FindBy (how= How.CSS, using = ".slds-input.ng-valid.ng-touched.ng-dirty.ng-valid-parse.ng-empty")
+	private WebElement search;
 	
-	private boolean validateInconvenient = false;
+
+		
+
 
 	public TechnicalCareCSRDiagnosticoPage(WebDriver driver){
 		this.driver = driver;
 			PageFactory.initElements(driver, this);
 
 	}
-	public boolean validarInconvenient(){
-		  return validateInconvenient;
-		  }
+	
+	public void buscarServicio(String servicio)throws InterruptedException {
+		sleep(8000);
+		search.click();
+		search.sendKeys(servicio);
+		search.submit();
+		sleep(2000);
+	}
+			  
+		      
+
 	
 		
 	public boolean elementExists(WebElement element) throws InterruptedException {
@@ -120,7 +132,6 @@ public class TechnicalCareCSRDiagnosticoPage extends BasePage{
 		         return false;
 		  }
 	}
-		
 	
 	
 	public void clickOpcionEnAsset(String Asset,String Opcion) {
@@ -177,7 +188,7 @@ public class TechnicalCareCSRDiagnosticoPage extends BasePage{
 	          sleep(2000);
 	          try {
 	             sleep(2000);
-	           List<WebElement> actions= service.findElement(By.className("slds-cell-shrink")).findElements(By.xpath("//*[@class='dropdown__list']//li"));
+	           List<WebElement> actions=  service.findElement(By.className("slds-cell-shrink")).findElements(By.xpath("//*[@class='dropdown__list']//li"));
 	        for (WebElement opt : actions) {
 	         if (opt.isDisplayed()) {
 	          opt.click();
@@ -213,7 +224,6 @@ public class TechnicalCareCSRDiagnosticoPage extends BasePage{
 	    
 	    List<WebElement> sServicios=tablas.get(selectionTable(servicio)).findElements(By.xpath("//table//tbody//tr"));
 	        for(WebElement service:sServicios) {
-	          //System.out.println(S.getText());
 	          if(service.getText().toLowerCase().contains(subServicio.toLowerCase()) ) {
 	            ((JavascriptExecutor)driver).executeScript("window.scrollTo(0,"+service.getLocation().y+")");
 	            sleep(100);
@@ -240,34 +250,55 @@ public class TechnicalCareCSRDiagnosticoPage extends BasePage{
 	          }
 	          }    
 	  }
+	
+	public boolean validarOpcionesXSubServicio(String subServicio ) {
+	    List<WebElement> tablas=driver.findElements(By.cssSelector(".slds-card__body.cards-container"));
+	
+		 List<WebElement> sServicios=tablas.get(0).findElements(By.xpath("//table//tbody//tr"));
+	        for(WebElement service:sServicios) {
+	          if(service.getText().toLowerCase().contains(subServicio.toLowerCase()) ) {
+	            ((JavascriptExecutor)driver).executeScript("window.scrollTo(0,"+service.getLocation().y+")");
+	               sleep(2000);
+	               List<WebElement> actions= service.findElement(By.className("slds-cell-shrink")).findElements(By.xpath("//*[@class='dropdown__list']//li"));
+	            for (WebElement opt : actions) {
+	             if (opt.isDisplayed()) {
+	            	 System.out.println("*********"+opt.getText());
+	            	 return true;
+	                }
+	              }
+	          	}
+	        }
+	        return false;
+	  }
+
+	
+	
+	
 	public void selectionInconvenient(String inconvenientName) {
+		sleep(4000);
 	      driver.switchTo().frame(getFrameForElement(driver, By.id("IssueSelectStep")));
+	      sleep(2000);
 	      for (WebElement opt : getlistaDeInconvenientes()) {
 	     // validateInconvenient= true;
 	        if (opt.getText().equalsIgnoreCase(inconvenientName)) {
 	          opt.click();
 	          break;
 	        }
-	      }
-	      
-	      sleep(4000);
-	     
+	        
+	      }	     
 	  }
 	
 
-		/*public void selectionInconvenient(String inconvenientName) {
+	public boolean validarInconveniente(String inconvenientName) {
 			driver.switchTo().frame(getFrameForElement(driver, By.id("IssueSelectStep")));
 			for (WebElement opt : getlistaDeInconvenientes()) {
-				if (opt.getText().equalsIgnoreCase(inconvenientName)) {
-					opt.click();
-					break;
+				if(opt.getText().contains(inconvenientName)) {
+		        	return true;
 				}
-			}
-			
-			sleep(4000);
-		 
-	}*/
-		
+		}
+			return false;
+	}		
+
 		
 	
 	
@@ -308,10 +339,6 @@ public class TechnicalCareCSRDiagnosticoPage extends BasePage{
 			    	
 	public WebElement getPlanConTarjeta() {
 		return planConTarjeta;
-	}
-
-	public WebElement getPlanConTarjeta2() {
-		return planConTarjeta2;
 	}
 
 	
@@ -457,7 +484,12 @@ public class TechnicalCareCSRDiagnosticoPage extends BasePage{
 			return 0;
 		}
 	}
-}
+	
+
+	}
+	
+		
+	
 	
 	
 
