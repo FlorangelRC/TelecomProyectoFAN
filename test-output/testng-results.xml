@@ -1,28 +1,34 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<testng-results skipped="0" failed="0" ignored="9" total="10" passed="1">
+<testng-results skipped="0" failed="0" ignored="60" total="61" passed="1">
   <reporter-output>
   </reporter-output>
-  <suite name="Default suite" duration-ms="135033" started-at="2017-12-18T13:21:01Z" finished-at="2017-12-18T13:23:16Z">
+  <suite name="Default suite" duration-ms="163575" started-at="2018-02-16T18:30:01Z" finished-at="2018-02-16T18:32:45Z">
     <groups>
-      <group name="SCP">
-        <method signature="SCPParquedeServicios.TS112683_Matriz_de_Criterios_de_Decisión_Chatter_contextualizado_Escribir_comentario()[pri:0, instance:Tests.SCPParquedeServicios@3a8624]" name="TS112683_Matriz_de_Criterios_de_Decisión_Chatter_contextualizado_Escribir_comentario" class="Tests.SCPParquedeServicios"/>
-      </group> <!-- SCP -->
+      <group name="Sales">
+        <method signature="Sales2.TS94716_Ventas_VentasGestiones_Visualizar_un_historico_de_gestiones_realizadas()[pri:0, instance:Tests.Sales2@5f341870]" name="TS94716_Ventas_VentasGestiones_Visualizar_un_historico_de_gestiones_realizadas" class="Tests.Sales2"/>
+      </group> <!-- Sales -->
+      <group name="Ventas">
+        <method signature="Sales2.TS94716_Ventas_VentasGestiones_Visualizar_un_historico_de_gestiones_realizadas()[pri:0, instance:Tests.Sales2@5f341870]" name="TS94716_Ventas_VentasGestiones_Visualizar_un_historico_de_gestiones_realizadas" class="Tests.Sales2"/>
+      </group> <!-- Ventas -->
+      <group name="Ola1">
+        <method signature="Sales2.TS94716_Ventas_VentasGestiones_Visualizar_un_historico_de_gestiones_realizadas()[pri:0, instance:Tests.Sales2@5f341870]" name="TS94716_Ventas_VentasGestiones_Visualizar_un_historico_de_gestiones_realizadas" class="Tests.Sales2"/>
+      </group> <!-- Ola1 -->
     </groups>
-    <test name="Default test" duration-ms="135033" started-at="2017-12-18T13:21:01Z" finished-at="2017-12-18T13:23:16Z">
-      <class name="Tests.SCPParquedeServicios">
-        <test-method status="PASS" signature="init()[pri:0, instance:Tests.SCPParquedeServicios@3a8624]" name="init" is-config="true" duration-ms="40210" started-at="2017-12-18T10:21:01Z" finished-at="2017-12-18T10:21:41Z">
+    <test name="Default test" duration-ms="163575" started-at="2018-02-16T18:30:01Z" finished-at="2018-02-16T18:32:45Z">
+      <class name="Tests.Sales2">
+        <test-method status="PASS" signature="init()[pri:0, instance:Tests.Sales2@5f341870]" name="init" is-config="true" duration-ms="43753" started-at="2018-02-16T15:30:01Z" finished-at="2018-02-16T15:30:45Z">
           <reporter-output>
           </reporter-output>
         </test-method> <!-- init -->
-        <test-method status="PASS" signature="setup()[pri:0, instance:Tests.SCPParquedeServicios@3a8624]" name="setup" is-config="true" duration-ms="14202" started-at="2017-12-18T10:21:41Z" finished-at="2017-12-18T10:21:55Z">
+        <test-method status="PASS" signature="setup()[pri:0, instance:Tests.Sales2@5f341870]" name="setup" is-config="true" duration-ms="28778" started-at="2018-02-16T15:30:45Z" finished-at="2018-02-16T15:31:14Z">
           <reporter-output>
           </reporter-output>
         </test-method> <!-- setup -->
-        <test-method status="PASS" signature="TS112683_Matriz_de_Criterios_de_Decisión_Chatter_contextualizado_Escribir_comentario()[pri:0, instance:Tests.SCPParquedeServicios@3a8624]" name="TS112683_Matriz_de_Criterios_de_Decisión_Chatter_contextualizado_Escribir_comentario" duration-ms="80605" started-at="2017-12-18T10:21:55Z" finished-at="2017-12-18T10:23:16Z">
+        <test-method status="PASS" signature="TS94716_Ventas_VentasGestiones_Visualizar_un_historico_de_gestiones_realizadas()[pri:0, instance:Tests.Sales2@5f341870]" name="TS94716_Ventas_VentasGestiones_Visualizar_un_historico_de_gestiones_realizadas" duration-ms="91019" started-at="2018-02-16T15:31:14Z" finished-at="2018-02-16T15:32:45Z">
           <reporter-output>
           </reporter-output>
-        </test-method> <!-- TS112683_Matriz_de_Criterios_de_Decisión_Chatter_contextualizado_Escribir_comentario -->
-      </class> <!-- Tests.SCPParquedeServicios -->
+        </test-method> <!-- TS94716_Ventas_VentasGestiones_Visualizar_un_historico_de_gestiones_realizadas -->
+      </class> <!-- Tests.Sales2 -->
     </test> <!-- Default test -->
   </suite> <!-- Default suite -->
 </testng-results>

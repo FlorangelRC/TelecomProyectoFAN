@@ -1171,7 +1171,7 @@ public class Sales extends TestBase {
 		SalesBase SB= new SalesBase(driver);
 		SB.BuscarCuenta("DNI", "");;
 		SB.acciondecontacto("catalogo");
-		SB.agregarproductos();
+		SB.agregarplan("plan con tarjeta");
 		Assert.assertTrue(SB.validartxtbtn("Continuar"));
 	}
 	
@@ -1180,7 +1180,7 @@ public class Sales extends TestBase {
 		SalesBase SB= new SalesBase(driver);
 		SB.BuscarCuenta("DNI", "");
 		SB.acciondecontacto("catalogo");
-		SB.agregarproductos();
+		SB.agregarplan("plan con tarjeta");
 		SB.continuar();
 		SB.validarpasos();			
 	}
@@ -1488,7 +1488,9 @@ public class Sales extends TestBase {
 	      SB.acciondecontacto("catalogo"); 
 	      SB.agregarplan("plan con tarjeta"); 
 	      sleep(25000); 
-	      List <WebElement> mas = driver.findElements(By.cssSelector(".slds-button.slds-p-horizontal--xx-small")); 
+	      driver.findElement(By.cssSelector(".slds-button.slds-button_icon-border-filled.cpq-item-actions-dropdown-button")).click();
+	      sleep(1000);
+	      List <WebElement> mas = driver.findElement(By.cssSelector(".slds-dropdown__list.cpq-item-actions-dropdown__list")).findElements(By.tagName("span"));
 	      boolean a = false; 
 	      for (WebElement x : mas) { 
 	        if (x.getText().toLowerCase().contains("clone")) { 
@@ -1496,6 +1498,10 @@ public class Sales extends TestBase {
 	        } 
 	      } 
 	      Assert.assertTrue(a); 
+	      WebElement cant = driver.findElement(By.cssSelector(".slds-input.cpq-item-input.ng-pristine.ng-untouched.ng-valid.ng-not-empty.ng-valid-min.ng-valid-step.ng-valid-required"));
+	      cant.click();
+	      cant.sendKeys(Keys.ARROW_UP);
+	      Assert.assertTrue(cant.getAttribute("value").contains("2"));
 	    } 
 	     
 	    @Test(groups = {"Sales", "AltaDeLinea","Ola1"}) 
@@ -1505,7 +1511,9 @@ public class Sales extends TestBase {
 	      SB.acciondecontacto("catalogo"); 
 	      SB.agregarplan("plan con tarjeta"); 
 	      sleep(25000); 
-	      List <WebElement> mas = driver.findElements(By.cssSelector(".slds-button.slds-p-horizontal--xx-small")); 
+	      driver.findElement(By.cssSelector(".slds-button.slds-button_icon-border-filled.cpq-item-actions-dropdown-button")).click();
+	      sleep(1000);
+	      List <WebElement> mas = driver.findElement(By.cssSelector(".slds-dropdown__list.cpq-item-actions-dropdown__list")).findElements(By.tagName("span"));
 	      boolean a = false; 
 	      for (WebElement x : mas) { 
 	        if (x.getText().toLowerCase().contains("delete")) { 
@@ -1513,6 +1521,12 @@ public class Sales extends TestBase {
 	        } 
 	      } 
 	      Assert.assertTrue(a); 
+	      WebElement cant = driver.findElement(By.cssSelector(".slds-input.cpq-item-input.ng-pristine.ng-untouched.ng-valid.ng-not-empty.ng-valid-min.ng-valid-step.ng-valid-required"));
+	      cant.click();
+	      cant.sendKeys(Keys.ARROW_UP);
+	      Assert.assertTrue(cant.getAttribute("value").contains("2"));
+	      cant.sendKeys(Keys.ARROW_DOWN);
+	      Assert.assertTrue(cant.getAttribute("value").contains("1"));
 	    } 
 	     
 	    @Test(groups = {"Sales", "AltaDeLinea","Ola1"}) 
@@ -1597,8 +1611,11 @@ public class Sales extends TestBase {
 	      SB.BuscarCuenta(DNI, "11111111"); 
 	      SB.acciondecontacto("catalogo"); 
 	      SB.agregarplan("plan con tarjeta"); 
-	      sleep(15000); 
-	      List <WebElement> mas = driver.findElements(By.cssSelector(".slds-button.slds-p-horizontal--xx-small")); 
+	      Assert.assertTrue(driver.findElements(By.cssSelector(".slds-button.slds-button_neutral.cpq-add-button")).get(1).getText().equalsIgnoreCase("agregar")); 
+	      sleep(20000); 
+	      driver.findElement(By.cssSelector(".slds-button.slds-button_icon-border-filled.cpq-item-actions-dropdown-button")).click();
+	      sleep(1000);
+	      List <WebElement> mas = driver.findElement(By.cssSelector(".slds-dropdown__list.cpq-item-actions-dropdown__list")).findElements(By.tagName("span"));
 	      for (WebElement x : mas) { 
 	        if (x.getText().toLowerCase().contains("clone")) { 
 	          x.click(); 
@@ -1623,7 +1640,9 @@ public class Sales extends TestBase {
 	      SB.acciondecontacto("catalogo"); 
 	      SB.agregarplan("plan con tarjeta"); 
 	      sleep(15000); 
-	      List <WebElement> mas = driver.findElements(By.cssSelector(".slds-button.slds-p-horizontal--xx-small")); 
+	      driver.findElement(By.cssSelector(".slds-button.slds-button_icon-border-filled.cpq-item-actions-dropdown-button")).click();
+	      sleep(1000);
+	      List <WebElement> mas = driver.findElement(By.cssSelector(".slds-dropdown__list.cpq-item-actions-dropdown__list")).findElements(By.tagName("span"));
 	      for (WebElement x : mas) { 
 	        if (x.getText().toLowerCase().contains("delete")) { 
 	          x.click(); 
@@ -1650,18 +1669,18 @@ public class Sales extends TestBase {
 	      sleep(15000); 
 	      boolean a = false; 
 	      boolean b = false; 
-	      List <WebElement> mas = driver.findElements(By.cssSelector(".slds-button.slds-p-horizontal--xx-small"));    
+	      driver.findElement(By.cssSelector(".slds-button.slds-button_icon-border-filled.cpq-item-actions-dropdown-button")).click();
+	      sleep(1000);
+	      List <WebElement> mas = driver.findElement(By.cssSelector(".slds-dropdown__list.cpq-item-actions-dropdown__list")).findElements(By.tagName("span"));
 	      for (WebElement x : mas) { 
 	        if (x.getText().toLowerCase().contains("clone")) { 
 	          a = true; 
 	        } 
-	      } 
-	      List <WebElement> menos = driver.findElements(By.cssSelector(".slds-button.slds-p-horizontal--xx-small")); 
-	      for (WebElement x : menos) { 
 	        if (x.getText().toLowerCase().contains("delete")) { 
-	          b = true; 
-	        } 
+		          b = true; 
+		        } 
 	      } 
+	      
 	      Assert.assertTrue(a && b); 
 	    } 
 	     
@@ -1792,10 +1811,11 @@ public class Sales extends TestBase {
 	    Select regio = new Select (driver.findElement(By.id("State"))); 
 	    regio.selectByVisibleText("Buenos Aires");   
 	    WebElement loc = driver.findElement(By.id("CityTypeAhead")); 
-	    loc.sendKeys("VILLA LUZURIAGA"); 
+	    loc.sendKeys("TACARIGUA"); 
 	    sleep(5000);   
 	    driver.findElement(By.cssSelector(".typeahead.dropdown-menu.ng-scope.am-fade.bottom-left")).click(); 
-	    Assert.assertTrue(loc.getAttribute("value").equals("VILLA LUZURIAGA")); 
+	    driver.findElement(By.id("NewCityName")).sendKeys("TACARIGUA");
+	    Assert.assertTrue(driver.findElement(By.id("NewCityName")).getAttribute("value").equals("TACARIGUA")); 
 	  } 
 	  
 	  
@@ -2194,6 +2214,7 @@ public class Sales extends TestBase {
 	@Test(groups={"Sales", "AltaDeContacto","Ola1"})
 	  public void TS94824_Alta_Contacto_Busqueda_Verificar_Consumer_Account_Contacto_inexistente_CRM(){
 	  SalesBase SB = new SalesBase(driver);
+	  perfil = "call";
 	  SB.BuscarCuenta(DNI, "14472788");
 	  boolean o = false;
 	  List<WebElement> nw = driver.findElements(By.cssSelector(".slds-form-element__label.ng-binding"));
@@ -2204,7 +2225,7 @@ public class Sales extends TestBase {
 	    	 }
 	     }
 	Assert.assertTrue(o);
-	perfil = "call";
+	
 	}
 	
 	@Test(groups={"Sales", "Ventas", "Ola1"})
@@ -2214,7 +2235,7 @@ public class Sales extends TestBase {
 		SB.BuscarCuenta(DNI, "34073329");
 		SB.acciondecontacto("catalogo");
 		boolean x = false;
-		sleep(15000);
+		sleep(18000);
 		assertTrue(driver.findElement(By.cssSelector(".slds-col.taChangeDeliveryMethod.slds-text-body--small.slds-m-left--large")).findElement(By.tagName("strong")).getText().contains("Delivery"));
 		List<WebElement> cam = driver.findElements(By.cssSelector(".slds-m-left--x-small.slds-button.slds-button--brand"));
 		for(WebElement c : cam ){	
@@ -2241,7 +2262,7 @@ public class Sales extends TestBase {
 		SB.BuscarCuenta(DNI, "34073329");
 		SB.acciondecontacto("catalogo");
 		boolean x = false;
-		sleep(15000);
+		sleep(20000);
 		List<WebElement> cam = driver.findElements(By.cssSelector(".slds-m-left--x-small.slds-button.slds-button--brand"));
 		for(WebElement c : cam ){	
 			if(c.getText().toLowerCase().equals("cambiar")){
@@ -2280,7 +2301,7 @@ public class Sales extends TestBase {
 		SB.BuscarCuenta(DNI, "34073329");
 		SB.acciondecontacto("catalogo");
 		boolean x = false;
-		sleep(15000);
+		sleep(18000);
 		List<WebElement> cam = driver.findElements(By.cssSelector(".slds-m-left--x-small.slds-button.slds-button--brand"));
 		for(WebElement c : cam ){	
 			if(c.getText().toLowerCase().equals("cambiar")){
@@ -2296,7 +2317,7 @@ public class Sales extends TestBase {
 		driver.switchTo().defaultContent();
 		}
 		SB.elegirplan("Plan con Tarjeta Repro");
-		sleep(15000);
+		sleep(20000);
 		List<WebElement> cont = driver.findElements(By.cssSelector(".slds-button.slds-m-left--large.slds-button--brand.ta-button-brand"));
 			for(WebElement c : cont){
 				if(c.getText().equals("Continuar")){
