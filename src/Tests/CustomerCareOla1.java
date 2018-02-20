@@ -25,7 +25,11 @@ public class CustomerCareOla1 extends TestBase {
 		IrA.CajonDeAplicaciones.ConsolaFAN();
 	}
 	
+<<<<<<< Updated upstream
 	//@AfterClass (alwaysRun = true)
+=======
+	@AfterClass (alwaysRun = true)
+>>>>>>> Stashed changes
 	public void quit() {
 		driver.quit();
 	}
