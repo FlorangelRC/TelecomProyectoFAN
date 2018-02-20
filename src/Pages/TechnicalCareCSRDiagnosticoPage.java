@@ -2,6 +2,7 @@ package Pages;
 import java.util.List;
 import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
+import org.openqa.selenium.Keys;
 import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -98,9 +99,9 @@ public class TechnicalCareCSRDiagnosticoPage extends BasePage{
 	@FindBy(className="card-top")
 	private WebElement planConTarjeta;
 	
-	@FindBy (how= How.CSS, using = ".slds-input.ng-valid.ng-touched.ng-dirty.ng-valid-parse.ng-empty")
+	@FindBy (how= How.CSS, using = ".slds-form-element__control.slds-input-has-icon.slds-input-has-icon--left")
 	private WebElement search;
-	
+	//.slds-input.ng-valid.ng-touched.ng-dirty.ng-valid-parse.ng-empty
 
 		
 
@@ -113,10 +114,21 @@ public class TechnicalCareCSRDiagnosticoPage extends BasePage{
 	
 	public void buscarServicio(String servicio)throws InterruptedException {
 		sleep(8000);
-		search.click();
-		search.sendKeys(servicio);
-		search.submit();
-		sleep(2000);
+		Accounts accPage = new Accounts(driver);
+		driver.switchTo().frame(accPage.getFrameForElement(driver, By.cssSelector(".via-slds.addedValueServices-container")));
+		sleep(8000);
+		driver.findElement(By.cssSelector(".slds-form-element__control.slds-input-has-icon.slds-input-has-icon--left")).click();
+		sleep(8000);
+		driver.switchTo().activeElement().sendKeys(servicio);
+		//WebElement searchBox =  driver.findElement(By.cssSelector(".slds-form-element__control.slds-input-has-icon.slds-input-has-icon--left"));
+		//JavascriptExecutor myExecutor = ((JavascriptExecutor) driver);
+		//myExecutor.executeScript("arguments[0].setAttribute('innerHTML','SMS')", searchBox);
+		//driver.findElement(By.cssSelector(".slds-form-element__control.slds-input-has-icon.slds-input-has-icon--left")).sendKeys(servicio , Keys.ENTER);
+	
+	//	search.click();
+		//search.sendKeys(servicio);
+		//search.submit();
+	
 	}
 			  
 		      
@@ -483,6 +495,10 @@ public class TechnicalCareCSRDiagnosticoPage extends BasePage{
 		default:
 			return 0;
 		}
+	}
+
+	public WebElement getSearch() {
+		return search;
 	}
 	
 

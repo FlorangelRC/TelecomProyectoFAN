@@ -212,12 +212,11 @@ private WebDriver driver;
 	@Test (groups= {"TechnicalCare", "SVA", "Ola1"}) //Listo
 	public void TS94309_CRM_Ola_1_Technical_Care_CSR_SVA_Visualizacion_de_buscador_para_servicios_agrupados() throws Exception {
 	TechnicalCareCSRDiagnosticoPage tech = new TechnicalCareCSRDiagnosticoPage(driver);
-	//TechCare_Ola1 page=new TechCare_Ola1(driver);
 	sleep (4000);
     tech.clickOpcionEnAsset("1100000075", "mis servicios");
     tech.verDetalles();
-    tech.buscarServicio("sms");
-    //page.buscarServicio("sms");
+    tech.buscarServicio("SMS");
+  
 	
 	}
 	
