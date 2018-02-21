@@ -386,7 +386,7 @@ for(WebElement e: btns){
  }
  
  public void elegirplan(String plan){
-		try {Thread.sleep(15000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		/*try {Thread.sleep(15000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 		driver.findElement(By.id("cpq-custom-view-button")).click();
 		try {Thread.sleep(3000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 		List<WebElement> list = driver.findElements(By.className("slds-dropdown__item"));
@@ -395,11 +395,11 @@ for(WebElement e: btns){
 			if(e.getText().equals("Telecom Price List")){
 				System.out.println(e.getText());
 				e.click();
-				break;}}
+				break;}}*/
 		try {Thread.sleep(3000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 		driver.findElement(By.cssSelector(".slds-input.ng-pristine.ng-untouched.ng-valid")).sendKeys(plan);		
-		try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
-		List<WebElement> agregar = driver.findElements(By.cssSelector(".slds-button.slds-button--neutral.add-button")); 
+		try {Thread.sleep(8000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		List<WebElement> agregar = driver.findElements(By.cssSelector(".slds-button.slds-button_neutral.cpq-add-button")); 
 		agregar.get(0).click();
 }
  public void agregarplan(String plan){
