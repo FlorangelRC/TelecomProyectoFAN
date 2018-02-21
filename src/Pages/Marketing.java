@@ -63,7 +63,7 @@ public class Marketing extends CustomerCare {
 		switch (sAltaBajaModificacion.toLowerCase()) {
 			case "alta":
 				lMenuesABM.get(0).click();
-				sleep(5000);
+				sleep(3000);
 				cambiarAFrameActivo();
 				break;
 			case "baja":
@@ -329,6 +329,7 @@ public class Marketing extends CustomerCare {
 		bBP.setSimpleDropdown(driver.findElement(By.id("SelectReason")), sMotivo);
 		sleepShort(0);
 		if (!sOtros.isEmpty()) {
+			driver.findElement(By.id("Others")).clear();
 			driver.findElement(By.id("Others")).sendKeys(sOtros);
 		}
 		sleepShort(0);
@@ -351,9 +352,6 @@ public class Marketing extends CustomerCare {
 	public String darDeAltaCP () {
 		sleepShort(0);
 		BasePage cambioFrame=new BasePage();
-		driver.switchTo().defaultContent();
-		driver.switchTo().frame(cambioFrame.getFrameForElement(driver, By.cssSelector(".slds-panel__section.slds-p-around--small")));
-		closeActiveTab();
 		driver.switchTo().defaultContent();
 		driver.switchTo().frame(cambioFrame.getFrameForElement(driver, By.cssSelector(".slds-panel__section.slds-p-around--small")));
 		clubPersonal("alta");
@@ -393,6 +391,7 @@ public class Marketing extends CustomerCare {
 		BasePage cambioFrame=new BasePage();
 		driver.switchTo().defaultContent();
 		sleepShort(0);
+		driver.findElement(By.id("phSearchInput")).clear();
 		driver.findElement(By.id("phSearchInput")).sendKeys(sCaso + "\n");
 		sleepShort(0);
 		driver.switchTo().defaultContent();
@@ -404,25 +403,41 @@ public class Marketing extends CustomerCare {
 	}
 	
 	public Boolean visualizarCuentasBusinessUsuarioCP() {
-		waitForVisibilityOfElementLocated(By.xpath("//ng-form[@id='businessAccounts']//tbody"));
-		List<WebElement> listaCuentas = driver.findElements(By.xpath("//ng-form[@id='businessAccounts']//tbody//tr"));
+	    waitForVisibilityOfElementLocated(By.xpath("//ng-form[@id='businessAccounts']//tbody"));
+	    List<WebElement> listaCuentas = driver.findElements(By.xpath("//ng-form[@id='businessAccounts']//tbody//tr"));
 		return (listaCuentas.size() > 0 && listaCuentas.get(0).isDisplayed());
 	}
-	
+		 
 	public Boolean visualizarCuentasConsumerUsuarioCP() {
 		waitForVisibilityOfElementLocated(By.xpath("//ng-form[@id='consumerAccounts']//tbody"));
 		List<WebElement> listaCuentas = driver.findElements(By.xpath("//ng-form[@id='consumerAccounts']//tbody//tr"));
 		return (listaCuentas.size() > 0 && listaCuentas.get(0).isDisplayed());
 	}
-	
+		  
 	public Boolean visualizarCuentasSeleccionadasConsumerCP() {
 		waitForVisibilityOfElementLocated(By.xpath("//ng-form[@id='consumerResult']//tbody"));
 		return (driver.findElement(By.xpath("//ng-form[@id='consumerResult']//tbody")).getText().length() > 0);
 	}
-	
+		 
 	public Boolean visualizarCuentasSeleccionadasBusinessCP() {
 		waitForVisibilityOfElementLocated(By.xpath("//ng-form[@id='businessResult']//tbody"));
 		return (driver.findElement(By.xpath("//ng-form[@id='businessResult']//tbody")).getText().length() > 0);
+	}
+		  
+	public void closeActiveUpperTab () {
+		driver.switchTo().defaultContent();
+		WebElement wTabBox = driver.findElement(By.id("ext-gen25"));
+		List<WebElement> wTabs = wTabBox.findElements(By.tagName("li"));
+		for(WebElement wAux : wTabs) {
+			if (wAux.getAttribute("class").contains("x-tab-strip-active")) {
+				Actions aAction = new Actions(driver);
+				WebElement wCloseMovment = wAux.findElement(By.className("x-tab-strip-close"));
+				aAction.moveToElement(wCloseMovment).perform();
+				WebElement wClose = wAux.findElement(By.className("x-tab-strip-close"));
+				wClose.click();
+				break;
+			}
+		}
 	}
 	
 	public Boolean verificarMensajeDeErrorEmail() {

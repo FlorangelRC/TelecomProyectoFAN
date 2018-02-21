@@ -230,6 +230,24 @@ public class CustomerCare extends BasePage {
 		return driver.findElement(By.xpath("//input[@name='maxDate']"));
 	}
 	
+	public void SeleccionarClienteOCuenta(String sel) {
+		waitForVisibilityOfElementLocated(By.xpath("//label[contains(.,'" + sel + "')]//span[contains(@class,'radio')]"));
+		driver.findElement(By.xpath("//label[contains(.,'" + sel + "')]//span[contains(@class,'radio')]")).click();
+		if (sel.contentEquals("Cuenta")) {
+			driver.findElement(By.xpath("//ng-form[@id='BillingAccs']//span[@class='slds-radio--faux']")).click();
+		}
+	}
+	
+	public void seleccionarMarca(int index) {
+		Select marca = new Select(driver.findElement(By.xpath("//select[@id='MarksList']")));
+		marca.selectByIndex(index);
+	}
+	
+	public Boolean verificarBaseConocimientoMarcas() {
+		WebElement knowledge = driver.findElement(By.xpath("//ng-include[@id='vlcKnowledge']"));
+		return (knowledge.isDisplayed() && knowledge.getText().contains("Informaci"));
+	}
+	
 	public String obtenerEstadoDelCaso(String numCaso) {
 		List<WebElement> registros = driver.findElements(By.cssSelector(".x-grid3-row-table tr"));
 		for (WebElement reg : registros) {
@@ -1439,6 +1457,14 @@ public class CustomerCare extends BasePage {
 		
 		System.out.println("ERROR: No se encontró botón siguiente");
 		return null;
+	}
+	
+	public WebElement botonConsultar() {
+		return driver.findElement(By.xpath("//div[@title='Consultar']/p"));
+	}
+	
+	public WebElement campoComentarios() {
+		return driver.findElement(By.xpath("//textarea[@id='Comment']"));
 	}
 	
 	public void avanzarAConfigurarAjuste() {
