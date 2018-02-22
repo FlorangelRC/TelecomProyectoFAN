@@ -98,33 +98,13 @@ public class TechCareOla1Almer extends TestBase {
 		page.clickOpcionEnAsset("543416869777", "mis servicios");
 		sleep(7000);
 		page.clickVerDetalle();
-<<<<<<< Updated upstream
 		sleep(5000);
-<<<<<<< Updated upstream
 		page.clickDiagnosticarServicio("Transferencia de Llamadas");
 		sleep(5000);
 		Accounts accPage = new Accounts(driver);
 	    driver.switchTo().frame(accPage.getFrameForElement(driver, By.cssSelector(".imgItemContainer.ng-scope")));
 		assertEquals(driver.findElements(By.cssSelector(".imgItemContainer.ng-scope")).get(1).getText().toLowerCase(),"no puede configurar");
-=======
 		page.clickDiagnosticarServicio("voz","Voz Entrante");
-		
-		/*Accounts accPage = new Accounts(driver);
-		driver.switchTo().frame(accPage.getFrameForElement(driver, By.cssSelector(".slds-card__body.cards-container")));
-		List<WebElement> tablas=driver.findElements(By.cssSelector(".slds-card__body.cards-container"));
-		//Listado de opciones
-		System.out.println(tablas.get(0).findElement(By.xpath("//table//tbody//tr")).getText());
-		//Click en la flechita derecha del servicio
-		tablas.get(0).findElement(By.xpath("//table//tbody//tr")).findElement(By.className("slds-cell-shrink")).click();
-		sleep(2000);
-		//click en diagnoticar
-		tablas.get(0).findElement(By.xpath("//table//tbody//tr")).findElement(By.className("slds-cell-shrink")).
-		findElement(By.xpath("//div//div//ul//li//a//p")).click();
-		sleep(3000);*/
-=======
-		
->>>>>>> Stashed changes
->>>>>>> Stashed changes
 	}
 
 	/**

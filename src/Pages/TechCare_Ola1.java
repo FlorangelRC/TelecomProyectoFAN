@@ -65,14 +65,8 @@ public class TechCare_Ola1 {
 	public void clickVerDetalle() {
 		Accounts accPage = new Accounts(driver);
 		driver.switchTo().frame(accPage.getFrameForElement(driver, By.cssSelector(".slds-button.slds-button--brand")));
-		
 		WebElement vD=driver.findElement(By.cssSelector(".slds-button.slds-button--brand"));
-<<<<<<< Updated upstream
-		//System.out.println(vD.getText());
-=======
 		System.out.println(vD.getText());
->>>>>>> Stashed changes
-		
 		((JavascriptExecutor)driver).executeScript("window.scrollTo(0,"+driver.findElement(By.cssSelector(".slds-button.slds-button--brand")).getLocation().y+")");
 		sleep(1000);
 		driver.findElement(By.cssSelector(".slds-button.slds-button--brand")).click();
@@ -113,7 +107,7 @@ public class TechCare_Ola1 {
 		if(!assetEncontrado) System.out.println("Asset No encontrado");
 		if(!opcion) System.out.println("asset encontrado, Opcion No encontrada");
 	}
-<<<<<<< Updated upstream
+
 	
 	public void clickDiagnosticarServicio(String servicio, String subServicio) {
 		sleep(5000);
@@ -200,8 +194,7 @@ public class TechCare_Ola1 {
 	    default:
 	      return 0;
 	    }}
-<<<<<<< Updated upstream
-	
+
 	public final void seleccionarCualquierCuenta(WebDriver driver, String vista, String Cuenta) {
 		String selection="cuentas";
 		String inicialCuenta=Cuenta.substring(0, 1);
@@ -359,9 +352,4 @@ public class TechCare_Ola1 {
 		//System.out.println("Segundo Click");
 		buscar.click();
 	}
-=======
-=======
-
->>>>>>> Stashed changes
->>>>>>> Stashed changes
 }
