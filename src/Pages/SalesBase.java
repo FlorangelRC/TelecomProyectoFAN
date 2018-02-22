@@ -396,7 +396,7 @@ for(WebElement e: btns){
 			if(e.getText().equals("Telecom Price List")){
 				System.out.println(e.getText());
 				e.click();
-				break;}}*/
+				break;}}
 		try {Thread.sleep(3000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 		driver.findElement(By.cssSelector(".slds-input.ng-pristine.ng-untouched.ng-valid")).sendKeys(plan);		
 		try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
