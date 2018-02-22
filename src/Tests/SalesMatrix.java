@@ -200,8 +200,8 @@ public class SalesMatrix extends TestBase {
 		Assert.assertTrue(driver.findElement(By.cssSelector(".table.pricingMatrixTable")).isDisplayed());
 	}
 	
-	@Test (groups = {"Sales", "AltaDeLinea"})
-	public void TS76266_Ventas_Seriales_Verificar_instancia_de_Factura_en_la_matriz_StockMovementOperation() {
+	@Test (groups = {"Sales", "AltaDeLinea","Ola1"})
+	public void TS95293_Ventas_Seriales_Verificar_instancia_de_Factura_en_la_matriz_StockMovementOperation() {
 		sb.selectMatrix("s", "stockmovementoperation");
 		BasePage cambioFrameByID = new BasePage();
 		driver.switchTo().frame(cambioFrameByID.getFrameForElement(driver, By.cssSelector(".table.pricingMatrixTable")));
@@ -224,8 +224,8 @@ public class SalesMatrix extends TestBase {
 		Assert.assertTrue(a && b && c);
 	}
 	
-	@Test (groups = {"Sales", "AltaDeLinea"})
-	public void TS76267_Ventas_Seriales_Verificar_instancia_de_Entrega_eliminada_en_la_matriz_StockMovementOperation() {
+	@Test (groups = {"Sales", "AltaDeLinea","Ola1"})
+	public void TS95294_Ventas_Seriales_Verificar_instancia_de_Entrega_eliminada_en_la_matriz_StockMovementOperation() {
 		sb.selectMatrix("s", "stockmovementoperation");
 		BasePage cambioFrameByID = new BasePage();
 		driver.switchTo().frame(cambioFrameByID.getFrameForElement(driver, By.cssSelector(".table.pricingMatrixTable")));

@@ -69,7 +69,7 @@ public class SalesNominaciones extends TestBase{
 		sleep(2000);
 	}
 	
-	//@Test(groups = "Sales") //si 215 213 078 135 094 114 119 118 157
+	@Test(groups = "Sales") //si 215 213 078 135 094 114 119 118 157
 	  public void TS95215_Nominacion_Argentino_Nominar_personas_mayores_a_16_anios_cliente_mayor_de_edad_con_linea_existente_plan_repro(){
 		CustomerCare CC = new CustomerCare(driver);
 		ContactSearch contact = new ContactSearch(driver);
@@ -89,7 +89,7 @@ public class SalesNominaciones extends TestBase{
 		Assert.assertTrue(b);
 	}
 	
-	//@Test(groups = "Sales")
+	@Test(groups = "Sales")
 	public void TS95213_Nominacion_Argentino_Nominar_personas_mayores_a_16_anios_cliente_mayor_de_edad_sin_linea_existente_plan_repro(){
 		CustomerCare CC = new CustomerCare(driver);
 		ContactSearch contact = new ContactSearch(driver);
@@ -209,10 +209,6 @@ public class SalesNominaciones extends TestBase{
 	public void TS95140_Nominacion_Argentino_Verificar_creacion_de_la_cuenta() { 
 		ContactSearch contact = new ContactSearch(driver);
 		SalesBase SB = new SalesBase(driver);
-		/*WebElement cua = driver.findElement(By.id("tab-scoped-1")).findElement(By.tagName("tbody")).findElements(By.tagName("tr")).get(26).findElements(By.tagName("td")).get(6).findElement(By.tagName("svg"));
-		System.out.println("1: "+driver.findElement(By.id("tab-scoped-1")).findElement(By.tagName("tbody")).findElements(By.tagName("tr")).get(26).findElements(By.tagName("td")).get(1).getText());
-		cua.click();
-		sleep(10000);*/
 		contact.searchContact2("DNI", "10000024", "femenino");
 		contact.ingresarMail("asdads@gmail.com", "si");
 		contact.tipoValidacion("documento");
@@ -256,11 +252,7 @@ public class SalesNominaciones extends TestBase{
 		Assert.assertTrue(a);
 	}
 	
-	//@Test(groups = "Sales")
-	public void TS95282_Nominacion_General_Verifica_autocomplete_de_campos() {
-		//ContactSearch contact = new ContactSearch(driver);
-		//contact.searchContact("DNI", "10000019", "masculino");
-	}
+	
 	
 	//@Test(groups = "Sales")
 	public void TS95075_SalesCPQ_Nominacion_Argentino_Verificar_Datos_Para_Nominar_Cliente_Existente(){
@@ -319,6 +311,17 @@ public class SalesNominaciones extends TestBase{
 		CC.obligarclick(driver.findElement(By.id("Contact_nextBtn")));
 		sleep(5000);
 		assertTrue(driver.findElement(By.id("MethodSelectionPassport|0")).isEnabled());
+	}
+	
+	@Test(groups={"Sales","Nominacion","Ola1"})
+	public void TS95116_SalesCPQ_Nominacion_Extranjero_Verificar_Blacklist_Cliente_Existente(){
+		SalesBase SB = new SalesBase(driver);
+		CustomerCare CC = new CustomerCare(driver);
+		ContactSearch contact = new ContactSearch(driver);
+		contact.searchContact2("Pasaporte", "1324567", "femenino");
+		sleep(6000);
+		//CC.obligarclick(driver.findElement(By.id("Contact_nextBtn")));
+		
 	}
 	
 	//@Test(groups = "Sales")//si
