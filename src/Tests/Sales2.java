@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.Random;
 
 import org.openqa.selenium.By;
+import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.Select;
 import org.testng.Assert;
@@ -92,6 +93,42 @@ public class Sales2 extends TestBase{
 		Select delir= new Select (driver.findElement(By.id("DeliveryServiceType")));
 		delir.selectByVisibleText("Env\u00edo Est\u00e1ndar");	
 		Assert.assertEquals(delir.getFirstSelectedOption().getText(),"Env\u00edo Est\u00e1ndar");
+	}
+	
+	@Test(groups={"Sales", "NuevaVenta", "Ola1"})
+	public void TS95246_Ventas_General_Verificar_Que_Este_El_Paso_En_Metodo_De_Entrega_Distinto_A_Presencial(){
+		sb.BuscarCuenta(DNI, "34073329");
+		sb.acciondecontacto("catalogo");
+		boolean x = false;
+		sleep(20000);
+		List<WebElement> cam = driver.findElements(By.cssSelector(".slds-m-left--x-small.slds-button.slds-button--brand"));
+		for(WebElement c : cam ){	
+			if(c.getText().toLowerCase().equals("cambiar")){
+				c.click();
+			}
+		sleep(7000);	
+		List<WebElement> frame2 = driver.findElements(By.tagName("iframe"));
+		driver.switchTo().frame(frame2.get(0));
+		Select env = new Select (driver.findElement(By.id("DeliveryMethodSelection")));
+		env.selectByVisibleText("Delivery");
+		driver.findElement(By.id("SalesChannelConfiguration_nextBtn")).click();
+		sleep(10000);
+		driver.switchTo().defaultContent();
+		}
+		sb.elegirplan("Plan con Tarjeta Repro");
+		sb.continuar();
+		sleep(18000);
+		CustomerCare page = new CustomerCare(driver);
+		WebElement sig = driver.findElement(By.id("LineAssignment_nextBtn"));
+		page.obligarclick(sig);
+		sleep(10000);
+		boolean esta = false;
+		List<WebElement> titulos = driver.findElements(By.cssSelector(".slds-page-header__title.vlc-slds-page-header__title.slds-truncate.ng-binding"));
+		for(WebElement UnT : titulos) {
+			if(UnT.getText().toLowerCase().contains("modo de entrega"))
+				esta = true;
+		}
+		Assert.assertTrue(esta);
 	}
 	
 	@Test(groups = { "Sales", "NuevaVenta", "Ola1" })
@@ -696,7 +733,7 @@ public class Sales2 extends TestBase{
 		
 	}
 	
-	@Test(groups={"Sales", "AltaDeContacto","Ola1"})  // verificar
+	@Test(groups={"Sales", "AltaDeContacto","Ola1"})  
 	public void TS94566_Alta_De_Contacto_Persona_Fisica_Verificar_Mascara_Del_Campo_CUIT(){
 		try {Thread.sleep(10000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 		ContactSearch contact = new ContactSearch(driver);
@@ -864,6 +901,221 @@ public class Sales2 extends TestBase{
 		Assert.assertTrue(false);
 		Assert.assertTrue(driver.findElement(By.id("CardBankingEntity")).getAttribute("required").equals("true"));
 		//Assert.assertTrue(driver.findElement(By.id("CardBankingEntity")).getAttribute("required"));
+	}
+	
+	@Test(groups={"Sales", "Ventas", "Ola1"})  
+	public void TS94937_Ventas_Modo_De_Pago_Tarjeta_Verificar_Datos_Del_Campo_Entidad_De_Tarjeta() {
+		sb.BuscarCuenta(DNI, "34073329");
+		sb.acciondecontacto("catalogo");
+		sleep(15000);
+		sb.elegirplan("Plan con Tarjeta Repro");
+		sb.continuar();
+		sleep(25000);
+		CustomerCare page = new CustomerCare(driver);
+		try {
+			driver.findElement(By.id("Step_Error_Huawei_S013_nextBtn")).click();
+		}catch(NoSuchElementException ex1) {
+			sleep(10000);
+			WebElement sig = driver.findElement(By.id("LineAssignment_nextBtn"));
+			page.obligarclick(sig);
+			sleep(10000);
+			page.obligarclick(driver.findElement(By.id("ICCDAssignment_nextBtn")));
+			sleep(10000);
+			page.obligarclick(driver.findElement(By.id("InvoicePreview_nextBtn")));
+		}
+
+		sleep(10000);
+		List<WebElement> mediosP = driver.findElements(By.cssSelector(".slds-radio.ng-scope"));
+		for (WebElement UnMP : mediosP) {
+			if (UnMP.findElement(By.cssSelector(".slds-form-element__label.ng-binding")).getText().toLowerCase().contains("tarjeta de credito")) {
+				UnMP.click();
+				break;
+			}
+		}
+		sleep(5000);
+		driver.findElement(By.id("BankingEntity-0")).click();
+		sleep(1000);
+		driver.findElement(By.id("BankingEntity-0")).findElements(By.tagName("option")).get(1).click();
+		sleep(1000);
+		driver.findElement(By.id("CardBankingEntity-0")).click();
+		sleep(1000);
+		Assert.assertTrue(driver.findElement(By.id("CardBankingEntity-0")).findElements(By.tagName("option")).size()>1);
+	}
+	
+	@Test(groups={"Sales", "Ventas", "Ola1"})  
+	public void TS94938_Ventas_Modo_De_Pago_Tarjeta_Verificar_Datos_Del_Campo_Entidad_Banco_Emisor_Tarjeta() {
+		sb.BuscarCuenta(DNI, "34073329");
+		sb.acciondecontacto("catalogo");
+		sleep(15000);
+		sb.elegirplan("Plan con Tarjeta Repro");
+		sb.continuar();
+		sleep(20000);
+		CustomerCare page = new CustomerCare(driver);
+		try {
+			driver.findElement(By.id("Step_Error_Huawei_S013_nextBtn")).click();
+		}catch(NoSuchElementException ex1) {
+			sleep(10000);
+			WebElement sig = driver.findElement(By.id("LineAssignment_nextBtn"));
+			page.obligarclick(sig);
+			sleep(10000);
+			page.obligarclick(driver.findElement(By.id("ICCDAssignment_nextBtn")));
+			sleep(10000);
+			page.obligarclick(driver.findElement(By.id("InvoicePreview_nextBtn")));
+		}
+
+		sleep(10000);
+		List<WebElement> mediosP = driver.findElements(By.cssSelector(".slds-radio.ng-scope"));
+		for (WebElement UnMP : mediosP) {
+			if (UnMP.findElement(By.cssSelector(".slds-form-element__label.ng-binding")).getText().toLowerCase().contains("tarjeta de credito")) {
+				UnMP.click();
+				break;
+			}
+		}
+		sleep(5000);
+		driver.findElement(By.id("BankingEntity-0")).click();
+		sleep(1000);
+		Assert.assertTrue(driver.findElement(By.id("BankingEntity-0")).findElements(By.tagName("option")).size()>1);
+	}
+	
+	@Test(groups={"Sales", "Ventas", "Ola1"})  
+	public void TS94939_Ventas_Modo_De_Pago_Tarjeta_Verificar_Datos_Del_Campo_Codigo_Promo_Bancaria() {
+		sb.BuscarCuenta(DNI, "34073329");
+		sb.acciondecontacto("catalogo");
+		sleep(15000);
+		sb.elegirplan("Plan con Tarjeta Repro");
+		sb.continuar();
+		sleep(20000);
+		CustomerCare page = new CustomerCare(driver);
+		try {
+			driver.findElement(By.id("Step_Error_Huawei_S013_nextBtn")).click();
+		}catch(NoSuchElementException ex1) {
+			sleep(10000);
+			WebElement sig = driver.findElement(By.id("LineAssignment_nextBtn"));
+			page.obligarclick(sig);
+			sleep(10000);
+			page.obligarclick(driver.findElement(By.id("ICCDAssignment_nextBtn")));
+			sleep(10000);
+			page.obligarclick(driver.findElement(By.id("InvoicePreview_nextBtn")));
+		}
+
+		sleep(10000);
+		List<WebElement> mediosP = driver.findElements(By.cssSelector(".slds-radio.ng-scope"));
+		for (WebElement UnMP : mediosP) {
+			if (UnMP.findElement(By.cssSelector(".slds-form-element__label.ng-binding")).getText().toLowerCase().contains("tarjeta de credito")) {
+				UnMP.click();
+				break;
+			}
+		}
+		sleep(5000);
+		driver.findElement(By.id("BankingEntity-0")).click();
+		sleep(1000);
+		driver.findElement(By.id("BankingEntity-0")).findElements(By.tagName("option")).get(1).click();
+		sleep(1000);
+		driver.findElement(By.id("CardBankingEntity-0")).click();
+		sleep(1000);
+		driver.findElement(By.id("CardBankingEntity-0")).findElements(By.tagName("option")).get(1).click();
+		sleep(1500);
+		driver.findElement(By.id("promotionsByCardsBank-0")).click();
+		sleep(1500);
+		Assert.assertTrue(driver.findElement(By.id("promotionsByCardsBank-0")).findElements(By.tagName("option")).size()>1);
+	}
+	
+	@Test(groups={"Sales", "Ventas", "Ola1"})  
+	public void TS94941_Ventas_Modo_De_Pago_Tarjeta_Verificar_Datos_Del_Campo_Cuotas_TC() {
+		sb.BuscarCuenta(DNI, "34073329");
+		sb.acciondecontacto("catalogo");
+		sleep(15000);
+		sb.elegirplan("Plan con Tarjeta Repro");
+		sb.continuar();
+		sleep(20000);
+		CustomerCare page = new CustomerCare(driver);
+		try {
+			driver.findElement(By.id("Step_Error_Huawei_S013_nextBtn")).click();
+		}catch(NoSuchElementException ex1) {
+			sleep(10000);
+			WebElement sig = driver.findElement(By.id("LineAssignment_nextBtn"));
+			page.obligarclick(sig);
+			sleep(10000);
+			page.obligarclick(driver.findElement(By.id("ICCDAssignment_nextBtn")));
+			sleep(10000);
+			page.obligarclick(driver.findElement(By.id("InvoicePreview_nextBtn")));
+		}
+
+		sleep(10000);
+		List<WebElement> mediosP = driver.findElements(By.cssSelector(".slds-radio.ng-scope"));
+		for (WebElement UnMP : mediosP) {
+			if (UnMP.findElement(By.cssSelector(".slds-form-element__label.ng-binding")).getText().toLowerCase().contains("tarjeta de credito")) {
+				UnMP.click();
+				break;
+			}
+		}
+		sleep(5000);
+		driver.findElement(By.id("BankingEntity-0")).click();
+		sleep(1000);
+		driver.findElement(By.id("BankingEntity-0")).findElements(By.tagName("option")).get(1).click();
+		sleep(1000);
+		driver.findElement(By.id("CardBankingEntity-0")).click();
+		sleep(1000);
+		driver.findElement(By.id("CardBankingEntity-0")).findElements(By.tagName("option")).get(1).click();
+		sleep(1500);
+		driver.findElement(By.id("promotionsByCardsBank-0")).click();
+		sleep(1000);
+		driver.findElement(By.id("promotionsByCardsBank-0")).findElements(By.tagName("option")).get(1).click();
+		sleep(1500);
+		driver.findElement(By.id("Installment-0")).click();
+		sleep(1500);
+		Assert.assertTrue(driver.findElement(By.id("Installment-0")).findElements(By.tagName("option")).size()>1);
+	}
+	
+	@Test(groups={"Sales", "Ventas", "Ola1"})  
+	public void TS94942_Ventas_Modo_De_Pago_Tarjeta_Verificar_Datos_Del_Campo_Cuotas_CFT() {
+		sb.BuscarCuenta(DNI, "34073329");
+		sb.acciondecontacto("catalogo");
+		sleep(15000);
+		sb.elegirplan("Plan con Tarjeta Repro");
+		sb.continuar();
+		sleep(20000);
+		CustomerCare page = new CustomerCare(driver);
+		try {
+			driver.findElement(By.id("Step_Error_Huawei_S013_nextBtn")).click();
+		}catch(NoSuchElementException ex1) {
+			sleep(10000);
+			WebElement sig = driver.findElement(By.id("LineAssignment_nextBtn"));
+			page.obligarclick(sig);
+			sleep(10000);
+			page.obligarclick(driver.findElement(By.id("ICCDAssignment_nextBtn")));
+			sleep(10000);
+			page.obligarclick(driver.findElement(By.id("InvoicePreview_nextBtn")));
+		}
+
+		sleep(10000);
+		List<WebElement> mediosP = driver.findElements(By.cssSelector(".slds-radio.ng-scope"));
+		for (WebElement UnMP : mediosP) {
+			if (UnMP.findElement(By.cssSelector(".slds-form-element__label.ng-binding")).getText().toLowerCase().contains("tarjeta de credito")) {
+				UnMP.click();
+				break;
+			}
+		}
+		sleep(5000);
+		driver.findElement(By.id("BankingEntity-0")).click();
+		sleep(1000);
+		driver.findElement(By.id("BankingEntity-0")).findElements(By.tagName("option")).get(1).click();
+		sleep(1000);
+		driver.findElement(By.id("CardBankingEntity-0")).click();
+		sleep(1000);
+		driver.findElement(By.id("CardBankingEntity-0")).findElements(By.tagName("option")).get(1).click();
+		sleep(1500);
+		driver.findElement(By.id("promotionsByCardsBank-0")).click();
+		sleep(1000);
+		driver.findElement(By.id("promotionsByCardsBank-0")).findElements(By.tagName("option")).get(1).click();
+		sleep(1500);
+		driver.findElement(By.id("Installment-0")).click();
+		sleep(1500);
+		driver.findElement(By.id("Installment-0")).findElements(By.tagName("option")).get(2).click();
+		sleep(2000);
+		driver.findElement(By.id("Installment-0")).click();
+		sleep(1500);
+		Assert.assertTrue(driver.findElement(By.cssSelector(".padding-custom.ng-binding")).getText().toLowerCase().contains("costo financiero"));
 	}
 	
 	@Test(groups={"Sales", "Ventas", "Ola1"})
@@ -1363,6 +1615,82 @@ public class Sales2 extends TestBase{
 		Assert.assertTrue(a && b && c);
 	}
 	
+	@Test(groups={"Sales", "Ventas", "Ola1"})
+	public void TS95260_Venta_General_Visualizar_Packs_Plan() {
+		sb.BuscarCuenta(DNI, "34073329");
+		sb.acciondecontacto("catalogo");
+		sleep(15000);
+		sb.elegirplan("Plan con Tarjeta Repro");
+		sleep(25000);
+		 driver.findElement(By.cssSelector(".slds-button.slds-button_icon-border-filled.cpq-item-actions-dropdown-button")).click();
+	      sleep(1000);
+	      List <WebElement> mas = driver.findElement(By.cssSelector(".slds-dropdown__list.cpq-item-actions-dropdown__list")).findElements(By.tagName("span"));
+	      boolean a = false; 
+	      for (WebElement x : mas) { 
+	        if (x.getText().toLowerCase().contains("inspect")) { 
+	          x.click();
+	          sleep(5000);
+	          break;
+	        } 
+	      } 
+	      driver.findElement(By.id("js-cpq-lineitem-details-modal-content")).findElement(By.className("cpq-product-name")).click();
+	      sleep(3000);
+	     mas = driver.findElement(By.id("js-cpq-lineitem-details-modal-content")).findElements(By.className("cpq-item-base-product"));
+	      for (WebElement UnaM : mas) {
+	    	  if (UnaM.getText().toLowerCase().contains("packs opcionales")) {
+	    		  UnaM.findElement(By.tagName("button")).click();
+	    		  sleep(3000);
+	    		  mas = driver.findElement(By.id("js-cpq-lineitem-details-modal-content")).findElements(By.cssSelector(".cpq-item-base-product-name-field.cpq-item-text-value.cpq-item-product-title"));
+	    		  for(WebElement x : mas) {
+	    			 if( x.getText().toLowerCase().contains("10 sms")) {
+	    			  a = true;
+	    			  break;
+	    			 }
+	    		  }
+	    		  break;
+	    	  }
+	      }
+	     Assert.assertTrue(a);
+	}
+	
+	@Test(groups={"Sales","Ventas","Ola1"})
+	public void TS95048_Ventas_Acciones_Verificar_accion_detalle_Plan_Movil(){
+		sb.BuscarCuenta(DNI, "34073329");
+		sb.acciondecontacto("catalogo");
+		sleep(15000);
+		List<WebElement> opcs = driver.findElements(By.cssSelector(".categoryLabel.slds-text-align--center"));
+		for(WebElement UnaO : opcs) {
+			if(UnaO.getText().equalsIgnoreCase("planes")) {
+				UnaO.click();
+				break;
+			}
+		}
+		sleep(5000);
+		Assert.assertTrue(driver.findElement(By.cssSelector(".cpq-product-link.slds-text-body_small.slds-float_right")).getText().equalsIgnoreCase("more"));
+		driver.findElement(By.cssSelector(".cpq-product-link.slds-text-body_small.slds-float_right")).click();
+		sleep(8000);
+		Assert.assertTrue(driver.findElement(By.cssSelector(".slds-modal.slds-fade-in-open.slds-modal--large")).findElement(By.tagName("h2")).getText().equalsIgnoreCase("product details"));
+	}
+	
+	@Test(groups={"Sales","Ventas","Ola1"})
+	public void TS95050_Ventas_Acciones_Verificar_accion_detalle_Packs(){
+		sb.BuscarCuenta(DNI, "34073329");
+		sb.acciondecontacto("catalogo");
+		sleep(15000);
+		List<WebElement> opcs = driver.findElements(By.cssSelector(".categoryLabel.slds-text-align--center"));
+		for(WebElement UnaO : opcs) {
+			if(UnaO.getText().equalsIgnoreCase("packs")) {
+				UnaO.click();
+				break;
+			}
+		}
+		sleep(5000);
+		Assert.assertTrue(driver.findElement(By.cssSelector(".cpq-product-link.slds-text-body_small.slds-float_right")).getText().equalsIgnoreCase("more"));
+		driver.findElement(By.cssSelector(".cpq-product-link.slds-text-body_small.slds-float_right")).click();
+		sleep(8000);
+		Assert.assertTrue(driver.findElement(By.cssSelector(".slds-modal.slds-fade-in-open.slds-modal--large")).findElement(By.tagName("h2")).getText().equalsIgnoreCase("product details"));
+	}
+	
 	@Test(groups={"Sales","Ventas","Ola1"})
 	public void TS94762_Ventas_Modo_De_Pago_General_Verificar_LOV_Modalidad_De_Pago(){
 		boolean DPF = false;
@@ -1372,41 +1700,36 @@ public class Sales2 extends TestBase{
 		sb.acciondecontacto("catalogo");
 		sleep(15000);
 		sb.elegirplan("Plan con Tarjeta Repro");
-		sleep(8000);
-		List<WebElement> agregar = driver.findElements(By.cssSelector(".slds-button.slds-button--neutral.add-button")); 
-		agregar.get(0).click();
-		sleep(8000);
-		List<WebElement> plan = driver.findElements(By.id("tab-default-1"));
-		System.out.println(plan.size());
-
 		sb.continuar();
-		sleep(10000);
-		List<WebElement> cont = driver.findElements(By.cssSelector(".slds-button.slds-m-left--large.slds-button--brand.ta-button-brand"));
-		for(WebElement c : cont){
-			c.getText().equals("Continuar");
-			c.click();
-		}
-		sleep(5000);
+		sleep(25000);
+		Assert.assertTrue(false);
 		CustomerCare page = new CustomerCare(driver);
-		WebElement sig = driver.findElement(By.id("LineAssignment_nextBtn"));
-		page.obligarclick(sig);
+	}
+	
+	@Test(groups={"Sales","Ventas","Ola1"})
+	public void TS95261_Ventas_General_Asignar_Una_Linea_Como_Decisora_Durante_La_Venta_En_Misma_Pantalla_De_Asignacion_De_Lineas(){
+		boolean estaM = false;
+		sb.BtnCrearNuevoCliente();
+		ContactSearch contact = new ContactSearch(driver);
+		try {Thread.sleep(10000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		driver.findElement(By.id("FirstName")).sendKeys("yy");
+		driver.findElement(By.id("LastName")).sendKeys("z");
+		driver.findElement(By.id("Birthdate")).sendKeys("28/12/1999");
+		contact.sex("masculino");
+		driver.findElement(By.id("Contact_nextBtn")).click();
 		sleep(10000);
-		page.obligarclick(driver.findElement(By.id("ICCDAssignment_nextBtn")));
-		sleep(10000);
-		page.obligarclick(driver.findElement(By.id("InvoicePreview_nextBtn")));
-		sleep(10000);
-		driver.findElement(By.id("PaymentMethodRadio")).click();
-		sleep(4000);
-		List<WebElement> mediosP = driver.findElements(By.cssSelector(".slds-list__item.ng-binding.ng-scope"));
-		for (WebElement UnMP : mediosP) {
-			if(UnMP.getText().toLowerCase().contains("debito a proxima factura"))
-				DPF = true;
-			if (UnMP.getText().toLowerCase().contains("efectivo"))
-				E = true;
-			if (UnMP.getText().toLowerCase().contains("tarjeta de credito"))
-				TC = true;
+		sb.elegirplan("Plan con Tarjeta Repro");
+		sb.continuar();
+		sleep(25000);
+		sb.Crear_DomicilioLegal(provincia, localidad, "falsa", "", "1000", "", "", "1549");
+		sleep(7000);
+		List<WebElement> mns = driver.findElements(By.cssSelector(".message.description.ng-binding.ng-scope"));
+		for(WebElement UnM : mns) {
+			if(UnM.getText().toLowerCase().contains("sin l\u00ednea decisoria"))
+				estaM = true;
 		}
-		Assert.assertTrue(DPF&&E&&TC);	
+		Assert.assertTrue(estaM);
+		Assert.assertTrue(driver.findElement(By.id("text-input-01")).isDisplayed());
 	}
 	
 	@Test(groups={"Sales", "AltaDeContacto", "Ola1"})
@@ -1420,5 +1743,81 @@ public class Sales2 extends TestBase{
 			}
 		}
 		Assert.assertTrue(a);
+	}
+	
+	@Test(groups={"Sales", "AltaCuenta","Ola1"})
+	public void TS95198_Alta_Cuenta_Busqueda_Verificar_busqueda_combinada_DNI_con_NyAp_DNI_No_Existe_NyAP_Existe() {
+		BasePage dni = new BasePage(driver);
+		dni.setSimpleDropdown(driver.findElement(By.id("SearchClientDocumentType")), "DNI");
+		driver.findElement(By.id("SearchClientDocumentNumber")).click();
+		driver.findElement(By.id("SearchClientDocumentNumber")).sendKeys("59876345");
+		SalesBase SB = new SalesBase(driver);
+		SB.BuscarAvanzada("lino", "acosta", "", "", "");
+		WebElement tTel = driver.findElement(By.id("tab-scoped-3")).findElement(By.tagName("tbody")).findElements(By.tagName("td")).get(2);
+		Assert.assertTrue(!tTel.getText().equals("59876345"));
+		WebElement tNom = driver.findElement(By.id("tab-scoped-3")).findElement(By.tagName("tbody")).findElements(By.tagName("td")).get(0);
+		Assert.assertFalse(tNom.getText().equalsIgnoreCase("lino" + " " + "acosta"));
+	}
+
+	@Test(groups={"Sales", "Ventas", "Ola1"})
+	public void TS95302_Ventas_General_Visualizar_Datos_De_La_Pantalla_De_Resumen_De_Venta(){
+		boolean nOrden = false, nyA = false, pago = false, dni = false, entrega = false, modelo = false, serial = false, linea = false, plan = false;
+		sb.BuscarCuenta(DNI, "34073329");
+		sb.acciondecontacto("catalogo");
+		boolean x = false;
+		sleep(18000);
+		sb.elegirplan("J2 prime");
+		driver.findElement(By.cssSelector(".slds-input.ng-valid.ng-not-empty.ng-dirty.ng-valid-parse.ng-touched")).clear();
+		driver.findElement(By.cssSelector(".slds-input.ng-valid.ng-dirty.ng-valid-parse.ng-touched.ng-empty")).sendKeys("plan con tarjeta repro");		
+		try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		List<WebElement> agregar = driver.findElements(By.cssSelector(".slds-button.slds-button_neutral.cpq-add-button")); 
+		agregar.get(0).click();
+		sb.continuar();
+		sleep(25000);
+		CustomerCare page = new CustomerCare(driver);
+		try {
+			driver.findElement(By.id("Step_Error_Huawei_S013_nextBtn")).click();
+			sleep(8000);
+		}catch(NoSuchElementException ex1) {}
+		WebElement sig = driver.findElement(By.id("PaymentMethod_nextBtn"));
+		page.obligarclick(sig);
+		sleep(5000);
+		sb.validacionProcesoVenta("qa");
+		sig = driver.findElement(By.id("QAContactData_nextBtn"));
+		page.obligarclick(sig);
+		sleep(5000);
+		sb.praguntasRespuestasLino("no", "13/09/1988");
+		sig = driver.findElement(By.id("QAResult_nextBtn"));
+		page.obligarclick(sig);
+		sleep(5000);
+		sig = driver.findElement(By.id("QAError_nextBtn"));
+		page.obligarclick(sig);
+		sleep(5000);
+		sig = driver.findElement(By.id("ValidationResult_nextBtn"));
+		page.obligarclick(sig);
+		sleep(5000);
+		List<WebElement> datos = driver.findElement(By.id("DetailsOrderSummary")).findElements(By.className("ng-binding"));
+		for(WebElement UnD : datos) {
+			System.out.println(UnD.getText());
+			if (UnD.getText().toLowerCase().contains("nro de orden"))
+				nOrden = true;
+			if (UnD.getText().toLowerCase().matches("titular de producto\\/servicio\\s\\w[a-z]*\\s\\w[a-z]*"))
+				nyA = true;
+			if (UnD.getText().toLowerCase().matches("dni\\s\\w[0-9]*"))
+				dni = true;
+			if (UnD.getText().toLowerCase().contains("efectivo")||UnD.getText().toLowerCase().contains("credito")||UnD.getText().toLowerCase().contains("factura"))
+				pago = true;
+			if (UnD.getText().toLowerCase().contains("entrega"))
+				entrega = true;
+		}
+		Assert.assertTrue(nOrden&&nyA&&dni&&pago&&entrega&&modelo&&serial&&linea&&plan);
+		
+		/*sig = driver.findElement(By.id("LineAssignment_nextBtn"));
+		page.obligarclick(sig);
+		sleep(5000);*/
+		/*sig = driver.findElement(By.id("DeliveryMethodConfiguration_nextBtn"));
+		page.obligarclick(sig);
+		sleep(5000);*/
+		
 	}
 }

@@ -292,10 +292,11 @@ public boolean btnnoexiste(String boton){
  
  public void continuar(){
 		try {Thread.sleep(30000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
-		((JavascriptExecutor)driver).executeScript("window.scrollTo(0,"+ driver.findElement(By.cssSelector(".slds-button.slds-m-left--large.slds-button--brand.ta-button-brand")).getLocation().y+")");
-		driver.findElement(By.cssSelector(".slds-button.slds-m-left--large.slds-button--brand.ta-button-brand")).click();
-		try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
-
+		List<WebElement> cont = driver.findElements(By.cssSelector(".slds-button.slds-m-left--large.slds-button--brand.ta-button-brand"));
+		for(WebElement c : cont){
+			c.getText().equals("Continuar");
+				c.click();
+		}
  }
  
  public void validarpasos(){
@@ -491,6 +492,49 @@ for(WebElement e: btns){
 	 driver.findElement(By.id("ValidationMethod_nextBtn")).click();
  }
  
+ public void validacionProcesoVenta(String validacion){
+	try {Thread.sleep(15000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+	List<WebElement> valid =driver.findElements(By.id("ValidationMethodValidContact"));
+	List<WebElement> radio = driver.findElement(By.id("ValidationMethodValidContact|0")).findElements(By.cssSelector(".slds-radio--faux.ng-scope"));
+	int i = -1;
+	for(WebElement UnV: valid){
+		System.out.println(UnV.getAttribute("value"));
+		i++;
+		if(UnV.getAttribute("value").toLowerCase().contains(validacion)){
+			((JavascriptExecutor)driver).executeScript("window.scrollTo(0,"+radio.get(i).getLocation().y+")");
+			radio.get(i).click();
+			break;}}
+	try {Thread.sleep(3000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+	 driver.findElement(By.id("MethodSelection_nextBtn")).click();
+	 sleep(8000);
+ }
+ 
+ public void praguntasRespuestasLino(String resp1, String resp2){
+		try {Thread.sleep(15000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		WebElement valid =driver.findElement(By.id("tree0-node1"));
+		List<WebElement> radio = valid.findElements(By.className("slds-radio"));
+		for(WebElement UnV: radio){
+			System.out.println(UnV.findElement(By.cssSelector(".slds-form-element__label.ng-binding")).getText());
+			if(UnV.findElement(By.cssSelector(".slds-form-element__label.ng-binding")).getText().equalsIgnoreCase(resp1)){	
+				UnV.findElement(By.className("slds-radio--faux")).click();
+				break;}
+		}
+		
+		valid =driver.findElements(By.id("tree0-node1")).get(1);
+		radio = valid.findElements(By.className("slds-radio"));
+		for(WebElement UnV: radio){
+			System.out.println(UnV.findElement(By.cssSelector(".slds-form-element__label.ng-binding")).getText());
+			if(UnV.findElement(By.cssSelector(".slds-form-element__label.ng-binding")).getText().equalsIgnoreCase(resp2)){	
+				UnV.findElement(By.className("slds-radio--faux")).click();
+				break;}
+		}
+		
+		try {Thread.sleep(3000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		 driver.findElement(By.id("QAQuestions_nextBtn")).click();
+		 sleep(6000);
+	 }
+ 
+
  public void subirdoc(){
 		try {Thread.sleep(15000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 	//driver.findElement(By.id("FileDocumentImage")).click();

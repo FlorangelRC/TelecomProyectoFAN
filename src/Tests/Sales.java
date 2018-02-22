@@ -433,6 +433,37 @@ public class Sales extends TestBase {
 		assertTrue(esta);
 	}
 	
+	@Test(groups={"Sales", "Ventas","Ola1"})
+	public void TS95148_Ventas_General_Verificar_LOV_Campo_TrackingStatus_En_La_Orden(){
+		boolean esta = false;
+		String[] todos = {"pendiente de pago","preparar pedido","pendiente de entrega","entregado"};
+		driver.findElement(By.cssSelector(".vlc-slds-button--tertiary.ng-binding.ng-scope")).click();
+		driver.findElement(By.id("alert-ok-button")).click();
+		sleep(8000);
+		BasePage BP = new BasePage();
+		driver.switchTo().defaultContent();
+		driver.switchTo().frame(BP.getFrameForElement(driver, By.cssSelector(".slds-table.slds-table--bordered.slds-no-row-hover.slds-table--cell-buffer.slds-max-medium-table--stacked-horizontal")));
+		driver.findElement(By.cssSelector(".slds-table.slds-table--bordered.slds-no-row-hover.slds-table--cell-buffer.slds-max-medium-table--stacked-horizontal")).findElement(By.className("slds-truncate")).findElement(By.tagName("a")).click();
+		sleep(5000);
+		List<WebElement> campos = driver.findElement(By.className("detailList")).findElements(By.tagName("td"));
+		for (WebElement UnC : campos) {
+			if(esta == true) {
+				Actions action = new Actions(driver);
+				action.moveToElement(UnC).doubleClick().build().perform();
+				sleep(2000);
+			    List<WebElement> motivos = new Select(UnC.findElement(By.tagName("select"))).getOptions();
+			    assertTrue(verificarContenidoLista(todos,motivos));
+			    assertTrue(motivos.size()<6);
+				break;
+			}
+			if (UnC.getText().equalsIgnoreCase("tracking status")) {
+				esta = true;
+			}
+		}
+		assertTrue(esta);
+	}
+	
+	
 					// ACA
 	@Test(groups={"Sales", "AltaDeContacto", "Ola1"})
 	public void TS94556_Verificar_el_ingreso_de_caracteres_alfanumericos_en_Pasaporte(){
@@ -2030,6 +2061,26 @@ public class Sales extends TestBase {
 		  }
 		  Assert.assertTrue(a);
 	  }
+	  
+	  @Test(groups = {"Sales", "AltaDeContacto", "Ola1"})
+	  public void TS94946_Alta_de_Contacto_Busqueda_Verificar_boton_2_sobre_contactos() {
+		  SalesBase SB = new SalesBase(driver); 
+		  SB.BuscarCuenta(DNI, "11111111");
+		  List <WebElement> nc = driver.findElements(By.cssSelector(".slds-button.slds-button.slds-button--icon"));
+		  boolean a = false;
+		  for (WebElement x : nc) {
+			  if (x.getText().contains("Catalogo")) {
+				  a = true;
+				  x.click();
+				  break;
+			  }
+		  }
+		  Assert.assertTrue(a);
+		  sleep(15000);
+		  Assert.assertTrue(driver.findElement(By.cssSelector(".slds-col.cpq-product-cart-items.js-cpq-cart-scroll-container.scroll")).isDisplayed());
+	  }
+	  
+	  
 	  
 	  @Test(groups = {"Sales", "AltaDeContacto", "Ola1"})
 	  public void TS94878_Alta_de_Contacto_Busqueda_Verificar_accion_de_Crear_Cuenta() {
