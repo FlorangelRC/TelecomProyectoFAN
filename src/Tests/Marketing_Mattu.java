@@ -56,7 +56,7 @@ public class Marketing_Mattu extends TestBase{
 			}
 		}*/
 		CustomerCare cCC = new CustomerCare(driver);
-		cCC.cerrarTodasLasPestañas();
+		cCC.cerrarTodasLasPestaï¿½as();
 		goToLeftPanel(driver, "Cuentas");
 		WebElement frame0 = driver.findElement(By.tagName("iframe"));
 		driver.switchTo().frame(frame0);
@@ -107,7 +107,7 @@ public class Marketing_Mattu extends TestBase{
 	public void byeByeTab() {
 		try {
 			CustomerCare cCC = new CustomerCare(driver);
-			WebElement wActiveTab = cCC.obtenerPestañaActiva();
+			WebElement wActiveTab = cCC.obtenerPestaï¿½aActiva();
 			if (!wActiveTab.findElement(By.className("tabText")).getText().toLowerCase().equals("club personal")) {
 				mMarketing.closeActiveTab();
 			}
@@ -246,7 +246,6 @@ public class Marketing_Mattu extends TestBase{
 	//TCC = 9
 	@Test(groups = {"Marketing", "Ola1"})
 	public void TS98020_Boton_ABM_del_CP() {
-		Marketing mMarketing = new Marketing(driver);
 		mMarketing.buscarGestion("club personal");
 		BasePage cambioFrame=new BasePage();
 		driver.switchTo().defaultContent();
@@ -731,7 +730,7 @@ public class Marketing_Mattu extends TestBase{
 	}
 	
 	//-------------------------------------------------------------------------------------------------
-	//Abrir Página
+	//Abrir Pï¿½gina
 	//@Test
 	public void AbrirPagina() {
 		
