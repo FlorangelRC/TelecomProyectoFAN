@@ -696,16 +696,16 @@ public class Marketing_Mattu extends TestBase{
 	}
 	
 	//-------------------------------------------------------------------------------------------------
-	//Abrir P�gina
+	//Abrir Pagina
 	//@Test
 	public void AbrirPagina() {
 		
 	}
 	
 	/*Fecha del sistema
-	java.util.Date fechaCompleta = new Date();
-    boolean bien = false;
-    String fech =  fechaCompleta.getDate()+"/"+(fechaCompleta.getMonth()+1);
+	java.util.Date dFechaCompleta = new Date();
+    boolean bAssert = false;
+    String sFecha =  fechaCompleta.getDate()+"/"+(fechaCompleta.getMonth()+1);
 	int iFechaActual = Integer.parseInt(wFechaDesde.findElement(By.className("slds-is-today")).findElement(By.tagName("span")).getText());
 	*/
 	
