@@ -1,5 +1,6 @@
 package Tests;
 
+import static org.testng.Assert.assertEquals;
 import static org.testng.Assert.assertTrue;
 
 import java.util.ArrayList;
@@ -53,20 +54,28 @@ public class TechCareOla1Almer extends TestBase {
 		
 		//Selecciona Cuentas
 		sleep(4000);
+		//TechCare_Ola1 page=new TechCare_Ola1(driver);
+		//page.seleccionarCualquierCuenta(driver, "Todas las cuentas", "Adrian Tech");
+		System.out.println("Cuentas");
 		goToLeftPanel2(driver, "Cuentas"	);
 		Accounts accPage = new Accounts(driver);
 		accPage.accountSelect("Vista Tech");
+		System.out.println("Vista Tech");
 	    sleep(4000);
 	    accPage.selectAccountByName("Adrian Tech");
+	    System.out.println("Adrian Tech");
 		sleep(3000);
 		driver.switchTo().defaultContent();
-       
+		System.out.println("fin");
 	}
 	
 	
 	@BeforeMethod(alwaysRun=true)
 	public void setUp() throws Exception {
-		
+		System.out.println("a");
+		//Selecciona la cuenta Adrian Tech de todas las Cuentas
+				//seleccionCuentaPorNombre(driver, "Adrian Techh");
+				sleep(3000);
 		
 	}
 	
@@ -89,15 +98,25 @@ public class TechCareOla1Almer extends TestBase {
 		driver.quit();
 	}
 	
-	
-	@Test(groups= {"TechnicalCare","","Ola1"})
-	public void TS() {
+	/**
+	 * Verifica que aparezca el inconveniente "no puede configurar" luego de diagnosticar el servicio.
+	 */
+	@Test(groups= {"TechnicalCare","SVA","Ola1"})
+	public void TS94226_CRM_Ola1_Technical_Care_CSR_SVA_Actualización_de_matriz_Servicio_Transferencia_de_llamadas_inconveniente_No_funciona_transferencia_de_llamadas_No_funciona_transferencia_de_llamadas_No_puede_configurar() {
 		sleep(5000);
 		TechCare_Ola1 page=new TechCare_Ola1(driver);
 		page.clickOpcionEnAsset("1100000075", "mis servicios");
 		sleep(7000);
 		page.clickVerDetalle();
+<<<<<<< Updated upstream
 		sleep(5000);
+<<<<<<< Updated upstream
+		page.clickDiagnosticarServicio("Transferencia de Llamadas");
+		sleep(5000);
+		Accounts accPage = new Accounts(driver);
+	    driver.switchTo().frame(accPage.getFrameForElement(driver, By.cssSelector(".imgItemContainer.ng-scope")));
+		assertEquals(driver.findElements(By.cssSelector(".imgItemContainer.ng-scope")).get(1).getText().toLowerCase(),"no puede configurar");
+=======
 		page.clickDiagnosticarServicio("voz","Voz Entrante");
 		
 		/*Accounts accPage = new Accounts(driver);
@@ -112,7 +131,24 @@ public class TechCareOla1Almer extends TestBase {
 		tablas.get(0).findElement(By.xpath("//table//tbody//tr")).findElement(By.className("slds-cell-shrink")).
 		findElement(By.xpath("//div//div//ul//li//a//p")).click();
 		sleep(3000);*/
+=======
+		
+>>>>>>> Stashed changes
+>>>>>>> Stashed changes
 	}
 
-	
+	@Test(groups= {"TechnicalCare","SVA","Ola1"})
+	public void TS94226_CRM_Ola1_Technical_Care_CSR_SVA_Visualizacion_de_Servicio_Llamada_tripartita_e_inconveniente_No_funciona_Llamada_tripartita() {
+		sleep(5000);
+		TechCare_Ola1 page=new TechCare_Ola1(driver);
+		page.clickOpcionEnAsset("1100000075", "mis servicios");
+		sleep(7000);
+		page.clickVerDetalle();
+		sleep(5000);
+		page.clickDiagnosticarServicio("Transferencia de Llamadas");
+		sleep(5000);
+		Accounts accPage = new Accounts(driver);
+	    driver.switchTo().frame(accPage.getFrameForElement(driver, By.cssSelector(".imgItemContainer.ng-scope")));
+		
+	}
 }
