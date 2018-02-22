@@ -364,7 +364,7 @@ public class TechnicalCareCSRDiagnosticoPage extends BasePage{
 		scrollToElement(getContinuar());
 		sleep(2000);
 		continuar.click();
-		sleep(5000);
+		sleep(8000);
 		
 	}
 	
@@ -389,7 +389,19 @@ public class TechnicalCareCSRDiagnosticoPage extends BasePage{
 	 }
 	
 	public void categoriaRed(String categoria) {
-		  sleep(5000);
+		sleep(4000);
+	      driver.switchTo().frame(getFrameForElement(driver, By.cssSelector(".imgItemContainer.ng-scope")));
+	      	sleep(2000);
+	      		for (WebElement opt : getPreguntas()) {
+	      			if (opt.getText().equalsIgnoreCase(categoria)) {
+	      				opt.click();
+	      					sleep(2000);
+	      						break;
+	        }
+	    
+	      }	     
+	  }
+		/*sleep(5000);
 		Accounts accPage = new Accounts(driver);
 			 driver.switchTo().frame(accPage.getFrameForElement(driver, By.cssSelector(".imgItemContainer.ng-scope")));
 	    		List<WebElement> opc=driver.findElements(By.cssSelector(".imgItemContainer.ng-scope"));
@@ -397,14 +409,17 @@ public class TechnicalCareCSRDiagnosticoPage extends BasePage{
 	    				if(o.getText().toLowerCase().contains(categoria)) {
 	    	      				o.click();
 	    	      					sleep(2000);
-	    	      						return;
-	    	      					
-	    			}
-	    		
+	    	      						return;*/
+	    
+	public boolean speech(String speechMessage) {
+		driver.switchTo().frame(getFrameForElement(driver, By.id("IssueSelectStep")));
+		for (WebElement opt : getSpeechMessage()) {
+			if(opt.getText().contains(speechMessage)) {
+	        	return true;
+			}
 	}
-	}
-	
-	
+		return false;
+}	
 	public String verificarCaso() throws InterruptedException {
 		String caso="";
 		if(elementExists(existCaso)) {
@@ -419,9 +434,6 @@ public class TechnicalCareCSRDiagnosticoPage extends BasePage{
 			
 		return caso;			
 	}
-	
-	
-
 	
 	
 	public  boolean verificarOpciones(WebElement element,String data){
@@ -573,6 +585,10 @@ public class TechnicalCareCSRDiagnosticoPage extends BasePage{
 
 	public WebElement getSearch() {
 		return search;
+	}
+
+	public WebElement getSpeechMessage() {
+		return SpeechMessage;
 	}
 	
 

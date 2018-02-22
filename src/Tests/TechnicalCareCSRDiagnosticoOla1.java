@@ -76,6 +76,18 @@ private WebDriver driver;
      accountPage.selectAccountByName("Adrian Tech");
  	}
 
+	//@AfterClass(alwaysRun=true)
+	public void tearDown() {
+		try {Thread.sleep(1000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		CustomerCare cerrar = new CustomerCare(driver);
+		cerrar.cerrarultimapestaña();
+		HomeBase homePage = new HomeBase(driver);
+		try {Thread.sleep(1000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		homePage.selectAppFromMenuByName("Ventas");
+		try {Thread.sleep(1000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		driver.quit();
+	}
+
 	
 
 	@Test (groups= {"TechnicalCare", "SVA", "Ola1"})//listo
