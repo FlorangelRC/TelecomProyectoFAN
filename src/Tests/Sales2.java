@@ -683,7 +683,7 @@ public class Sales2 extends TestBase{
 	
 	 @Test(groups = {"Sales", "Ventas","Ola1"})
 	  public void TS94714_Ventas_BuscarCliente_Verificar_Solo_Clientes_No_Activos() {
-		  driver.findElement(By.id("PhoneNumber")).sendKeys("1157572274");
+		  driver.findElement(By.id("PhoneNumber")).sendKeys("1111111111");
 		  driver.findElement(By.id("SearchClientsDummy")).click();
 		  sleep(5000);
 		  List <WebElement> cai = driver.findElement(By.className("slds-tabs--scoped__nav")).findElements(By.tagName("li"));
@@ -1369,7 +1369,7 @@ public class Sales2 extends TestBase{
 		sleep(15000);
 		sb.elegirplan("Plan con Tarjeta Repro");
 		sb.continuar();
-		sleep(10000);
+		sleep(30000);
 		WebElement bx = driver.findElement(By.id("tree0-node1__label"));
 		CC.obligarclick(bx);
 		sleep(3000);
@@ -1423,6 +1423,14 @@ public class Sales2 extends TestBase{
 		sb.BuscarCuenta(DNI, "34073329");
 		sb.acciondecontacto("catalogo");
 		sleep(15000);
+		driver.findElement(By.cssSelector(".slds-m-left--x-small.slds-button.slds-button--brand")).click();
+		sleep(7000);
+		driver.switchTo().frame(cambioFrame(driver, By.id("DeliveryMethodSelection")));
+		Select env = new Select (driver.findElement(By.id("DeliveryMethodSelection")));
+		env.selectByVisibleText("Delivery");
+		driver.findElement(By.id("SalesChannelConfiguration_nextBtn")).click();
+		sleep(7000);
+		driver.switchTo().defaultContent();
 		sb.elegirplan("Plan con Tarjeta Repro");
 		sb.continuar();
 		sleep(10000);
@@ -1449,14 +1457,14 @@ public class Sales2 extends TestBase{
 		driver.findElement(By.id("Birthdate")).sendKeys("28/12/1999");
 		contact.sex("masculino");
 		driver.findElement(By.id("Contact_nextBtn")).click();
-		sleep(3000);
+		sleep(15000);
 		sb.elegirplan("Plan con Tarjeta Repro");
 		sb.continuar();
 		sleep(10000);
 		sb.Crear_DomicilioLegal(provincia, localidad, "falsa", "", "1000", "", "", "1549");
 		sleep(7000);
-		WebElement text = driver.findElement(By.id("LineAssingmentMessage")).findElement(By.tagName("div")).findElements(By.tagName("strong")).get(0);
-		WebElement text2 = driver.findElement(By.id("LineAssingmentMessage")).findElement(By.tagName("div")).findElements(By.tagName("strong")).get(1);
+		WebElement text = driver.findElement(By.id("LineAssingmentMessage")).findElement(By.tagName("div")).findElements(By.tagName("p")).get(1).findElements(By.tagName("strong")).get(0);
+		WebElement text2 = driver.findElement(By.id("LineAssingmentMessage")).findElement(By.tagName("div")).findElements(By.tagName("p")).get(1).findElements(By.tagName("strong")).get(1);
 		Assert.assertTrue(text.getText().equals(provincia));
 		Assert.assertTrue(text2.getText().equals(localidad));
 	
@@ -1472,7 +1480,7 @@ public class Sales2 extends TestBase{
 		driver.findElement(By.id("Birthdate")).sendKeys("28/12/1999");
 		contact.sex("masculino");
 		driver.findElement(By.id("Contact_nextBtn")).click();
-		sleep(3000);
+		sleep(10000);
 		sb.elegirplan("Plan con Tarjeta Repro");
 		sb.continuar();
 		sleep(10000);

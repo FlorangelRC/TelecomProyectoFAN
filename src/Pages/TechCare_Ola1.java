@@ -4,13 +4,17 @@ import java.util.List;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
+import org.openqa.selenium.Keys;
 import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.How;
+import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.Select;
+
+import Tests.TestBase;
 
 public class TechCare_Ola1 {
 	
@@ -19,6 +23,7 @@ public class TechCare_Ola1 {
 	//*************************** CONSTRUCTOR *****************************//
 	public TechCare_Ola1(WebDriver driver) {
 		this.driver=driver;
+		PageFactory.initElements(driver, this);
 	}
 	
 	//**************************** VARIABLES ******************************//
@@ -29,22 +34,39 @@ public class TechCare_Ola1 {
 	@FindBy (how= How.CSS, using = ".slds-input.ng-valid.ng-touched.ng-dirty.ng-valid-parse.ng-empty")
 	private WebElement campoBusqueda;
 	
+	//----------------------------- Busqueda Cuenta ----------------------------//
+	@FindBy(css = ".x-plain-header.sd_primary_tabstrip.x-unselectable .x-tab-strip-closable")
+	private List<WebElement> pestañasPrimarias;
 	
+	@FindBy(css = ".x-btn-small.x-btn-icon-small-left")
+	private WebElement selector;
 	
+	@FindBy(css = ".x-menu-item.standardObject.sd-nav-menu-item")
+	private List<WebElement> desplegable;
 	
+	@FindBy(name = "fcf")
+	private WebElement selectCuentas;
 	
+	@FindBy(css = ".x-plain-body.sd_nav_tabpanel_body.x-tab-panel-body-top iframe")
+	private WebElement marcoCuentas;
 	
+	@FindBy(css = ".x-grid3-cell-inner.x-grid3-col-ACCOUNT_NAME")
+	private List<WebElement> cuentas;
 	
+	//---------------------------- Busqueda GEO ---------------------------//
+	@FindBy(id="AdressInput")
+	private WebElement direccion;
+	
+	@FindBy(id="GeoMock")
+	private WebElement buscar;
 	
 	//***************************** METODOS *******************************//
 	
 	public void clickVerDetalle() {
 		Accounts accPage = new Accounts(driver);
 		driver.switchTo().frame(accPage.getFrameForElement(driver, By.cssSelector(".slds-button.slds-button--brand")));
-		
 		WebElement vD=driver.findElement(By.cssSelector(".slds-button.slds-button--brand"));
-		//System.out.println(vD.getText());
-		
+		System.out.println(vD.getText());
 		((JavascriptExecutor)driver).executeScript("window.scrollTo(0,"+driver.findElement(By.cssSelector(".slds-button.slds-button--brand")).getLocation().y+")");
 		sleep(1000);
 		driver.findElement(By.cssSelector(".slds-button.slds-button--brand")).click();
@@ -85,6 +107,7 @@ public class TechCare_Ola1 {
 		if(!assetEncontrado) System.out.println("Asset No encontrado");
 		if(!opcion) System.out.println("asset encontrado, Opcion No encontrada");
 	}
+
 	
 	public void clickDiagnosticarServicio(String servicio, String subServicio) {
 		sleep(5000);
@@ -171,9 +194,38 @@ public class TechCare_Ola1 {
 	    default:
 	      return 0;
 	    }}
-	
+
 	public final void seleccionarCualquierCuenta(WebDriver driver, String vista, String Cuenta) {
-System.out.println("Entra al metodo");
+		String selection="cuentas";
+		String inicialCuenta=Cuenta.substring(0, 1);
+		System.out.println(inicialCuenta);
+		driver.switchTo().defaultContent();
+		try {
+			driver.findElement(By.className("x-btn-split"));
+		}catch(NoSuchElementException noSuchElemExcept) {
+			List<WebElement> frames = driver.findElements(By.tagName("iframe"));
+			for (WebElement frame : frames) {
+				try {
+					driver.findElement(By.className("x-btn-split"));
+					break;
+				}catch(NoSuchElementException noSuchElemExceptInside) {
+					driver.switchTo().defaultContent();
+					driver.switchTo().frame(frame);
+				}
+			}
+		}
+		WebElement dropDown = driver.findElement(By.className("x-btn-split"));
+		Actions builder = new Actions(driver);   
+		builder.moveToElement(dropDown, 245, 20).click().build().perform();
+		List<WebElement> options = driver.findElements(By.tagName("li"));
+		for(WebElement option : options) {
+			if(option.findElement(By.tagName("span")).getText().toLowerCase().equals(selection.toLowerCase())) {
+				option.findElement(By.tagName("a")).click();
+				//System.out.println("Seleccionado"); //13/09/2017 working.
+				break;
+			}
+		}
+		
 /////////////////////////////////Selecciono VIsta///////////////////////////////////////////////
 		
 		WebElement frame0 = driver.findElement(By.tagName("iframe"));
@@ -185,21 +237,119 @@ System.out.println("Entra al metodo");
 		Accounts accPage = new Accounts(driver);
 		accPage.accountSelect(vista);
 	    sleep(4000);
-	    try {accPage.selectAccountByName(Cuenta);}
-	    catch(NoSuchElementException ex) {
-	    	System.out.println("entro al catch");
-		    driver.switchTo().frame(accPage.getFrameForElement(driver, By.className("listItem")));
-		    List<WebElement> Iniciales=driver.findElements(By.className("listItem"));
+	    //try {accPage.selectAccountByName(Cuenta);}
+	 //   catch(NoSuchElementException ex) {
+	    	//System.out.println("entro al catch");
+		    driver.switchTo().frame(accPage.getFrameForElement(driver, By.className("listItemPad")));
+		    List<WebElement> Iniciales=driver.findElements(By.className("listItemPad"));
 		    for(WebElement letras:Iniciales) {
-		    	System.out.println("Entro a las letras");
-		    	System.out.println("-"+letras.getText()+"-");
-		    	if(letras.getText().toLowerCase().startsWith(Cuenta, 0)) {
+		    	//System.out.println("Entro a las letras");
+		    	System.out.println(letras.getText());
+		    	if(letras.getText().toLowerCase().startsWith(inicialCuenta.toLowerCase())) {
 		    		letras.click();
 		    		break;
 		    	}
-		    }
-		    accPage.selectAccountByName(Cuenta);
+		//    }
+		    CustomerCare ccPage=new CustomerCare(driver);
+		    ccPage.elegirCuenta(Cuenta);
+		    //accPage.selectAccountByName(Cuenta);
 	    }
-	    System.out.println("sale del metodo");
+	}
+	
+	public void selectAccount(String cuenta) {
+		driver.switchTo().defaultContent();
+		Boolean flag = false;
+		if (pestañasPrimarias.size() > 0) {
+			for (WebElement t : pestañasPrimarias) {
+				if (t.getText().equals(cuenta)) {
+					flag = true;
+					t.click();
+					// Verificar que exista la pestaña Servicios almenos
+				} else {
+					WebElement btn_cerrar = t.findElement(By.className("x-tab-strip-close"));
+					((JavascriptExecutor) driver).executeScript("arguments[0].click();", btn_cerrar);	
+				}
+			}
+		}
+	
+		if (flag == false) {
+			if  (!selector.getText().equalsIgnoreCase("Cuentas")) {
+				WebElement btnSplit = selector.findElement(By.className("x-btn-split"));
+				Actions builder = new Actions(driver);   
+				builder.moveToElement(btnSplit, 245, 20).click().build().perform();
+				for (WebElement op : desplegable) {
+					if (op.getText().equalsIgnoreCase("Cuentas")) op.click();
+				}
+			}
+					
+			driver.switchTo().frame(marcoCuentas);
+			Select field = new Select(selectCuentas);
+			if (!field.getFirstSelectedOption().getText().equalsIgnoreCase("Todas las cuentas")) {
+				field.selectByVisibleText("Todas las cuentas");
+				TestBase.sleep(1500);
+			}
+			
+			char char0 = cuenta.toUpperCase().charAt(0);
+			driver.findElement(By.xpath("//div[@class='rolodex']//span[contains(.,'" + char0 + "')]")).click();
+			sleep(1800);
+			
+			for (WebElement c : cuentas) {
+
+				if (c.getText().equalsIgnoreCase(cuenta)) {
+					(new Actions(driver)).click(c.findElement(By.tagName("a"))).build().perform();
+					c.findElement(By.tagName("a")).click();
+					TestBase.sleep(1000);
+					return;
+				}
+			}
+		}
+	}
+	
+	public void BajaryContinuar() {
+		sleep(1000);
+		WebElement cancelar=driver.findElement(By.cssSelector(".vlc-slds-button--tertiary.ng-binding.ng-scope"));
+		((JavascriptExecutor)driver).executeScript("window.scrollTo(0,"+cancelar.getLocation().y+")");
+		sleep(100);
+		try {driver.findElement(By.id("IssueSelectStep_nextBtn")).click(); }
+		catch(org.openqa.selenium.ElementNotVisibleException e) {
+			try{driver.findElement(By.id("KnowledgeBaseResults_nextBtn")).click();}
+			catch(org.openqa.selenium.ElementNotVisibleException a) {
+				try{driver.findElement(By.id("NetworkCategory_nextBtn")).click();}
+				catch(org.openqa.selenium.ElementNotVisibleException b) {
+				driver.findElement(By.id("CoverageValidation_nextBtn")).click();
+				}
+			}
+		}
+	}
+	/**vlc-slds-button--tertiary ng-binding ng-scope
+	 * Selecciona una opcion luego de diagnosticar
+	 * @param opcion
+	 */
+	public void seleccionarRespuesta(String opcion) {
+		
+		Accounts accPage = new Accounts(driver);
+	    driver.switchTo().frame(accPage.getFrameForElement(driver, By.cssSelector(".imgItemContainer.ng-scope")));
+	    List<WebElement> preguntas=driver.findElements(By.cssSelector(".imgItemContainer.ng-scope"));
+	    for(WebElement p:preguntas) {
+	    	//System.out.println(p.getText());
+	    	if(p.getText().toLowerCase().contains(opcion)) {
+	    		p.click();
+	    		sleep(2000);
+	    		return;
+	    	}
+	    }
+	}
+	
+	public void buscarDireccion(String Direccion) {
+		direccion.sendKeys(Direccion);
+		sleep(1000);
+		direccion.sendKeys(Keys.ARROW_DOWN);
+		direccion.submit();
+		sleep(5000);
+		buscar.click();
+		//ystem.out.println("primer Click");
+		sleep(5000);
+		//System.out.println("Segundo Click");
+		buscar.click();
 	}
 }

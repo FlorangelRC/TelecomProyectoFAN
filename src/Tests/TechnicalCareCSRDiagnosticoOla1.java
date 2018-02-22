@@ -27,7 +27,7 @@ import Pages.TechnicalCareCSRDiagnosticoPage;
 import Pages.setConexion;
 
 
-public class TechnicalCareCSRDiagnosticoFase4 extends TestBase{
+public class TechnicalCareCSRDiagnosticoOla1 extends TestBase{
 	
 private WebDriver driver;
 	
@@ -75,6 +75,18 @@ private WebDriver driver;
      sleep(8000);
      accountPage.selectAccountByName("Adrian Tech");
  	}
+
+	//@AfterClass(alwaysRun=true)
+	public void tearDown() {
+		try {Thread.sleep(1000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		CustomerCare cerrar = new CustomerCare(driver);
+		cerrar.cerrarultimapestaña();
+		HomeBase homePage = new HomeBase(driver);
+		try {Thread.sleep(1000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		homePage.selectAppFromMenuByName("Ventas");
+		try {Thread.sleep(1000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		driver.quit();
+	}
 
 	
 
@@ -209,17 +221,62 @@ private WebDriver driver;
 	
 	}
 	
-	@Test (groups= {"TechnicalCare", "SVA", "Ola1"}) //Listo
+	@Test (groups= {"TechnicalCare", "SVA", "Ola1"})
 	public void TS94309_CRM_Ola_1_Technical_Care_CSR_SVA_Visualizacion_de_buscador_para_servicios_agrupados() throws Exception {
 	TechnicalCareCSRDiagnosticoPage tech = new TechnicalCareCSRDiagnosticoPage(driver);
-	//TechCare_Ola1 page=new TechCare_Ola1(driver);
 	sleep (4000);
     tech.clickOpcionEnAsset("1100000075", "mis servicios");
     tech.verDetalles();
-    tech.buscarServicio("sms");
-    //page.buscarServicio("sms");
+    tech.buscarServicio("SMS");
+    assertTrue(tech.validarOpcionesXServicio("SMS"));
+   	}
 	
+	@Test (groups= {"TechnicalCare", "SVA", "Ola1"}) 
+	public void TS94310_CRM_Ola_1_Technical_Care_CSR_SVA_Verificacion_del_funcionamiento_del_buscador_para_servicios_agrupados() throws Exception {
+	TechnicalCareCSRDiagnosticoPage tech = new TechnicalCareCSRDiagnosticoPage(driver);
+	sleep (4000);
+    tech.clickOpcionEnAsset("1100000075", "mis servicios");
+    tech.verDetalles();
+    tech.buscarServicio("VOZ");
+    assertTrue(tech.validarOpcionesXServicio("VOZ"));
 	}
 	
+	@Test (groups= {"TechnicalCare", "SVA", "Ola1"})
+	public void TS94311_CRM_Ola_1_Technical_Care_CSR_SVA_Verificacion_de_lista_de_servicios_agrupados() throws Exception {
+	TechnicalCareCSRDiagnosticoPage tech = new TechnicalCareCSRDiagnosticoPage(driver);
+	sleep (4000);
+    tech.clickOpcionEnAsset("1100000075", "mis servicios");
+    tech.verDetalles();
+    tech.clickDiagnosticarServicio("sms", "SMS Saliente", false);
+    assertTrue(tech.validarOpcionesXServicio("SMS Saliente"));
+    
+	}
+	@Test (groups= {"TechnicalCare", "SVA", "Ola1"})
+	public void TS94312_CRM_Ola_1_Technical_Care_CSR_SVA_Visualizacion_del_agrupador_estado_ACTIVO() throws Exception {
+	TechnicalCareCSRDiagnosticoPage tech = new TechnicalCareCSRDiagnosticoPage(driver);
+	sleep (4000);
+    tech.clickOpcionEnAsset("1100000075", "mis servicios");
+    tech.verDetalles();
+    tech.clickDiagnosticarServicio("sms", "SMS Saliente", false);
+    assertTrue(tech.validarEstado("SMS"));
+    
+	}
 	
+	@Test (groups= {"TechnicalCare", "SVA", "Ola1"})
+	public void TS94315_CRM_Ola_1_Technical_Care_CSR_SVA_Visualizar_pregunta_al_final_del_proceso_SVA() throws Exception {
+	TechnicalCareCSRDiagnosticoPage tech = new TechnicalCareCSRDiagnosticoPage(driver);
+	sleep (4000);
+	tech.clickOpcionEnAsset("1100000075", "mis servicios");
+    tech.verDetalles();
+    tech.clickDiagnosticarServicio("sms", "SMS Entrante", true);
+    tech.selectionInconvenient("No recibe de un número particular");
+    tech.continuar();
+    tech.seleccionarRespuesta("no");
+    tech.getNextBtn().click();
+    tech.categoriaRed("Desregistrar");
+    tech.getNextCategoria().click();
+
+	}
+	
+
 }

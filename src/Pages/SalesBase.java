@@ -181,7 +181,7 @@ public void BusquedaAvanzada(){
 	List<WebElement> busqueda = driver.findElements(By.className("slds-form-element__control"));	
 	for(WebElement e: busqueda){
 		
-		if(e.getText().equals("Búsqueda avanzada")){
+		if(e.getText().equals("Bï¿½squeda avanzada")){
 			e.click();
 			e.click();
 			break;}}
@@ -396,7 +396,7 @@ for(WebElement e: btns){
 			if(e.getText().equals("Telecom Price List")){
 				System.out.println(e.getText());
 				e.click();
-				break;}}
+				break;}}*/
 		try {Thread.sleep(3000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 		driver.findElement(By.cssSelector(".slds-input.ng-pristine.ng-untouched.ng-valid")).sendKeys(plan);		
 		try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
@@ -694,7 +694,7 @@ try{	driver.findElement(By.id("alert-ok-button")).click();	} catch (NoSuchElemen
 			System.out.println(bsqda.size());
 			for(WebElement e: bsqda){
 				System.out.println(e.getText());
-				if(e.getText().equals("Modificar búsqueda")){
+				if(e.getText().equals("Modificar bï¿½squeda")){
 					e.click();
 					break;}}
 		driver.findElement(By.id("LineAssignment_nextBtn")).click();

@@ -57,7 +57,7 @@ public class ta_CPQ extends TestBase {
 	protected WebDriver driver;
 	protected  WebDriverWait wait;
 
-	//@AfterClass(alwaysRun=true)
+	@AfterClass(alwaysRun=true)
 	public void tearDown() {
 		driver.quit();
 		sleep(1000);
@@ -146,18 +146,23 @@ public class ta_CPQ extends TestBase {
 	@Test(groups={"Sales", "AltaLinea", "Ola1"})
 	public void TS94479_checkPlanIsDeleted() {
 		Ta_CPQ page3 = new Ta_CPQ(driver);
-		try { for(WebElement e : driver.findElements(By.className("cpq-product-name"))) {
+		/*try { for(WebElement e : driver.findElements(By.className("cpq-product-name"))) {
 			page3.clickOnDelete();
 			try {Thread.sleep(2000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 		} } catch (java.lang.IndexOutOfBoundsException e) {}
-		page3.addPlan();
-		try {Thread.sleep(4000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
-		page3.clickOnDelete();
-		try {Thread.sleep(4000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		//page3.addPlan();*/
+		sleep(4000);
+		SalesBase SB=new SalesBase(driver);
+		page3.addPlan("plan prepagp");
+		sleep(2000);
+		page3.abrirprimeraflecha();
+		sleep(3000);
+		page3.deleteoneplan();
+		try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 		Assert.assertFalse(page3.isPlanPresent());
 	}
 	
-	/**
+	/**bin;
 	 * Verifica que aparezca "Quitar el producto del carrito" en la etiqueta de la papelera.
 	 * 
 	 * Papelera ya no existe
@@ -230,7 +235,7 @@ public class ta_CPQ extends TestBase {
 			page3.clickOnDelete();
 			try {Thread.sleep(2000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 		} } catch (java.lang.IndexOutOfBoundsException e) {}
-		page3.addPlan();
+		page3.addPlan("plan prepago");
 		try {Thread.sleep(4000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 		page3.clickOnSalesConfig();
 		try {Thread.sleep(10000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
@@ -371,22 +376,24 @@ public class ta_CPQ extends TestBase {
 			try {Thread.sleep(2000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 		} } catch (java.lang.IndexOutOfBoundsException e) {}
 		try {Thread.sleep(3000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
-		page3.addPlan();
+		page3.addPlan("plan prepago");
 		try {Thread.sleep(3000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
-		page3.addPlan();
+		page3.addPlan("plan prepago");
 		try {Thread.sleep(3000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
-		page3.addPlan();
+		page3.addPlan("plan prepago");
 		try {Thread.sleep(3000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
-		page3.addPlan();
-		try {Thread.sleep(3000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
-		page3.clickOnDelete();
-		try {Thread.sleep(3000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
-		page3.clickOnDelete();
-		try {Thread.sleep(3000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
-		page3.clickOnDelete();
-		try {Thread.sleep(3000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
-		page3.clickOnDelete();
-		try {Thread.sleep(3000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		page3.abrirprimeraflecha();
+		sleep(3000);
+		page3.deleteoneplan();
+		try {Thread.sleep(4000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		page3.abrirprimeraflecha();
+		sleep(3000);
+		page3.deleteoneplan();
+		try {Thread.sleep(4000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		page3.abrirprimeraflecha();
+		sleep(3000);
+		page3.deleteoneplan();
+		try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 		Assert.assertEquals("Cart is empty.", page3.getEmptyCartMessage());
 	}
 	

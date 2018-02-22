@@ -6,6 +6,7 @@
       <class name="Tests.Sales2">
         <methods>
           <include name="init"/>
+          <include name="TS94501_Alta_Linea_Configurar_Nueva_Linea_Visualizar_filtros_de_localidad_y_provincia_al_modificar_linea_XX"/>
           <include name="setup"/>
           <include name="TS94716_Ventas_VentasGestiones_Visualizar_un_historico_de_gestiones_realizadas"/>
         </methods>

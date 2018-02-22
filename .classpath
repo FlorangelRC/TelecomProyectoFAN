@@ -3,6 +3,7 @@
 	<classpathentry kind="src" path="src"/>
 	<classpathentry kind="con" path="org.testng.TESTNG_CONTAINER"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
+	<classpathentry kind="lib" path="C:/Users/Sofia Chardin/Downloads/Selenium/client-combined-3.4.0-nodeps.jar"/>
 	<classpathentry kind="lib" path="C:/Users/Sofia Chardin/Downloads/Selenium/lib/cglib-nodep-3.2.4.jar"/>
 	<classpathentry kind="lib" path="C:/Users/Sofia Chardin/Downloads/Selenium/lib/commons-codec-1.10.jar"/>
 	<classpathentry kind="lib" path="C:/Users/Sofia Chardin/Downloads/Selenium/lib/commons-exec-1.3.jar"/>
@@ -35,6 +36,5 @@
 	<classpathentry kind="lib" path="C:/Users/Sofia Chardin/Downloads/Selenium/lib/xalan-2.7.2.jar"/>
 	<classpathentry kind="lib" path="C:/Users/Sofia Chardin/Downloads/Selenium/lib/xercesImpl-2.11.0.jar"/>
 	<classpathentry kind="lib" path="C:/Users/Sofia Chardin/Downloads/Selenium/lib/xml-apis-1.4.01.jar"/>
-	<classpathentry kind="lib" path="C:/Users/Sofia Chardin/Downloads/Selenium/client-combined-3.4.0-nodeps.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
