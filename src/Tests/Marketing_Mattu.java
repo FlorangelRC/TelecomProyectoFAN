@@ -56,7 +56,7 @@ public class Marketing_Mattu extends TestBase{
 			}
 		}*/
 		CustomerCare cCC = new CustomerCare(driver);
-		cCC.cerrarTodasLasPestaï¿½as();
+		cCC.cerrarTodasLasPestañas();
 		goToLeftPanel(driver, "Cuentas");
 		WebElement frame0 = driver.findElement(By.tagName("iframe"));
 		driver.switchTo().frame(frame0);
@@ -99,15 +99,11 @@ public class Marketing_Mattu extends TestBase{
 		driver.switchTo().defaultContent();
 		driver.switchTo().frame(cambioFrame.getFrameForElement(driver, By.cssSelector(".slds-panel__section.slds-p-around--small")));
 	}
-<<<<<<< Updated upstream
-	@AfterMethod
-=======
 	@AfterMethod(alwaysRun=true)
->>>>>>> Stashed changes
 	public void byeByeTab() {
 		try {
 			CustomerCare cCC = new CustomerCare(driver);
-			WebElement wActiveTab = cCC.obtenerPestaï¿½aActiva();
+			WebElement wActiveTab = cCC.obtenerPestañaActiva();
 			if (!wActiveTab.findElement(By.className("tabText")).getText().toLowerCase().equals("club personal")) {
 				mMarketing.closeActiveTab();
 			}
@@ -115,11 +111,7 @@ public class Marketing_Mattu extends TestBase{
 			//AllwaysEmpty
 		}
 	}
-<<<<<<< Updated upstream
-	@AfterClass
-=======
 	@AfterClass(alwaysRun=true)
->>>>>>> Stashed changes
 	public void tearDown() {
 		driver.close();
 	}
@@ -266,23 +258,6 @@ public class Marketing_Mattu extends TestBase{
 	//-------------------------------------------------------------------------------------------------
 	//TCC = 10
 	@Test(groups = {"Marketing", "Ola1"})
-<<<<<<< Updated upstream
-	public void TS98057_Verificar_seleccion_del_motivo_otro_Baja_CP() {
-		mMarketing.estadoAltaBaja("Baja");
-		try {Thread.sleep(10000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
-		BasePage cambioFrame=new BasePage();
-		driver.switchTo().defaultContent();
-		driver.switchTo().frame(cambioFrame.getFrameForElement(driver, By.id("consumerAccounts")));
-		try {Thread.sleep(10000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
-		WebElement wConsumerBox = driver.findElement(By.id("consumerAccounts"));
-		WebElement wConsumerTable= wConsumerBox.findElement(By.tagName("tbody"));
-		List<WebElement> wConsumerTableRows = wConsumerTable.findElements(By.tagName("tr"));
-		WebElement wCTCheckBox = wConsumerTableRows.get(0).findElement(By.tagName("th"));
-		wCTCheckBox.findElement(By.tagName("label")).click();
-		BasePage bBP = new BasePage(driver);
-		bBP.setSimpleDropdown(driver.findElement(By.id("SelectReason")), "Otro");
-		Assert.assertTrue(driver.findElement(By.id("Others")).isEnabled());
-=======
 	public void TS98021_Funcionamiento_Boton_ABM_del_CP() {
 		Marketing mMarketing = new Marketing(driver);
 		mMarketing.buscarGestion("club personal");
@@ -299,19 +274,13 @@ public class Marketing_Mattu extends TestBase{
 		mMarketing.sleepMedium(0);
 		driver.switchTo().frame(cambioFrame(driver, By.cssSelector(".slds-panel__section.slds-p-around--small")));
 		Assert.assertTrue(true);
->>>>>>> Stashed changes
 	}
 	
 	//-------------------------------------------------------------------------------------------------
 	//TCC = 11
 	@Test(groups = {"Marketing", "Ola1"})
-<<<<<<< Updated upstream
-	public void TS98058_Verificar_seleccion_del_motivo_otro_vacio_Baja_CP() {
-		mMarketing.estadoAltaBaja("Baja");
-=======
 	public void TS98023_Funcionamiento_boton_Alta_ABM_del_CP() {
 		mMarketing.estadoAltaBaja("Alta");
->>>>>>> Stashed changes
 		try {Thread.sleep(10000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 		BasePage cambioFrame=new BasePage();
 		driver.switchTo().defaultContent();
@@ -602,10 +571,7 @@ public class Marketing_Mattu extends TestBase{
 	//TCC = 29
 	@Test(groups = {"Marketing", "Ola1"})
 	public void TS98056_Verificar_seleccion_de_un_unico_valor_en_el_campo_motivo_de_baja_Baja_CP() {
-<<<<<<< Updated upstream
 		//mMarketing.clubPersonal("baja");
-=======
->>>>>>> Stashed changes
 		mMarketing.estadoAltaBaja("Baja");
 		try {Thread.sleep(10000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 		BasePage cambioFrame=new BasePage();
