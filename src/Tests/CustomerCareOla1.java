@@ -245,7 +245,6 @@ public class CustomerCareOla1 extends TestBase {
 		int i = 0;
 		while(msg.charAt(i++) != '0') {	}
 		String caso = msg.substring(i-1, msg.length());
-		System.out.println(caso);
 		cc.buscarCaso(caso);
 		driver.switchTo().frame(cambioFrame(driver, By.cssSelector(".feeditemaux.cxfeeditemaux.CreateRecordAuxBody")));
 		WebElement vc = driver.findElement(By.cssSelector(".feeditemaux.cxfeeditemaux.CreateRecordAuxBody"));
