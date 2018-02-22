@@ -1,6 +1,9 @@
 package Tests;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 
@@ -492,6 +495,12 @@ public class TestBase {
 	
 	public String obtenerValorDelCampo(WebElement campo) {
 		return campo.getAttribute("value");
+	}
+	
+	public String fechaDeHoy() {
+		DateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
+		Date date = new Date();
+		return(dateFormat.format(date));
 	}
 	
 	public void selectByText(WebElement element, String data){

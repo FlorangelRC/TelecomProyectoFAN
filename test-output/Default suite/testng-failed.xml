@@ -3,13 +3,13 @@
 <suite guice-stage="DEVELOPMENT" name="Failed suite [Default suite]">
   <test name="Default test(failed)">
     <classes>
-      <class name="Tests.SCPParquedeServicios">
+      <class name="Tests.Sales2">
         <methods>
-          <include name="TS112718_Mosaico_de_Relacionamiento_por_Oportunidad_contextualizado_Escribir_comentario"/>
           <include name="init"/>
+          <include name="TS94501_Alta_Linea_Configurar_Nueva_Linea_Visualizar_filtros_de_localidad_y_provincia_al_modificar_linea_XX"/>
           <include name="setup"/>
         </methods>
-      </class> <!-- Tests.SCPParquedeServicios -->
+      </class> <!-- Tests.Sales2 -->
     </classes>
   </test> <!-- Default test(failed) -->
 </suite> <!-- Failed suite [Default suite] -->
