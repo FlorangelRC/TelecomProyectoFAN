@@ -145,8 +145,7 @@ public class Marketing_Mattu extends TestBase{
 	//TCC = 2
 	@Test(groups = {"Marketing", "Ola1"})
 	public void TS98023_Funcionamiento_boton_Alta_ABM_del_CP() {
-		Marketing mMenuABM = new Marketing(driver);
-		mMenuABM.clubPersonal("alta");
+		mMarketing.clubPersonal("alta");
 		try {Thread.sleep(10000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 		BasePage cambioFrame=new BasePage();
 		driver.switchTo().defaultContent();
@@ -159,8 +158,7 @@ public class Marketing_Mattu extends TestBase{
 	//TCC = 3
 	@Test(groups = {"Marketing", "Ola1"})
 	public void TS98024_Funcionamiento_boton_Baja_ABM_del_CP() {
-		Marketing mMenuABM = new Marketing(driver);
-		mMenuABM.clubPersonal("baja");
+		mMarketing.clubPersonal("baja");
 		try {Thread.sleep(10000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 		BasePage cambioFrame=new BasePage();
 		driver.switchTo().defaultContent();
@@ -173,8 +171,7 @@ public class Marketing_Mattu extends TestBase{
 	//TCC = 4
 	@Test(groups = {"Marketing", "Ola1"})
 	public void TS98032_Separacion_de_cuentas_Alta_CP() {
-		Marketing mMenuABM = new Marketing(driver);
-		mMenuABM.clubPersonal("alta");
+		mMarketing.clubPersonal("alta");
 		try {Thread.sleep(10000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 		BasePage cambioFrame=new BasePage();
 		driver.switchTo().defaultContent();
@@ -194,8 +191,7 @@ public class Marketing_Mattu extends TestBase{
 	//TCC = 5
 	@Test(groups = {"Marketing", "Ola1"})
 	public void TS98049_Separacion_Baja_CP() {
-		Marketing mMenuABM = new Marketing(driver);
-		mMenuABM.clubPersonal("baja");
+		mMarketing.clubPersonal("baja");
 		try {Thread.sleep(10000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 		BasePage cambioFrame=new BasePage();
 		driver.switchTo().defaultContent();
@@ -215,8 +211,7 @@ public class Marketing_Mattu extends TestBase{
 	//TCC = 6
 	@Test(groups = {"Marketing", "Ola1"})
 	public void TS98036_Boton_Cancelar_Alta_CP() {
-		Marketing mMenuABM = new Marketing(driver);
-		mMenuABM.clubPersonal("alta");
+		mMarketing.clubPersonal("alta");
 		try {Thread.sleep(10000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 		BasePage cambioFrame=new BasePage();
 		driver.switchTo().defaultContent();
@@ -230,8 +225,7 @@ public class Marketing_Mattu extends TestBase{
 	//TCC = 7
 	@Test(groups = {"Marketing", "Ola1"})
 	public void TS98037_Boton_Continuar_Alta_CP() {
-		Marketing mMenuABM = new Marketing(driver);
-		mMenuABM.clubPersonal("alta");
+		mMarketing.clubPersonal("alta");
 		try {Thread.sleep(10000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 		WebElement wSiguiente = driver.findElement(By.className("slds-box"));
 		Assert.assertTrue(wSiguiente.findElement(By.tagName("p")).getText().toLowerCase().equals("siguiente"));
@@ -241,8 +235,7 @@ public class Marketing_Mattu extends TestBase{
 	//TCC = 8
 	@Test(groups = {"Marketing", "Ola1"})
 	public void TS98051_Visualizar_cuentas_costumer_Baja_CP() {
-		Marketing mMenuABM = new Marketing(driver);
-		mMenuABM.clubPersonal("baja");
+		mMarketing.clubPersonal("baja");
 		try {Thread.sleep(10000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 		BasePage cambioFrame=new BasePage();
 		driver.switchTo().defaultContent();
@@ -258,8 +251,7 @@ public class Marketing_Mattu extends TestBase{
 	//TCC = 9
 	@Test(groups = {"Marketing", "Ola1"})
 	public void TS98052_Visualizar_cuentas_business_Baja_CP() {
-		Marketing mMenuABM = new Marketing(driver);
-		mMenuABM.clubPersonal("alta");
+		mMarketing.clubPersonal("alta");
 		try {Thread.sleep(10000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 		BasePage cambioFrame=new BasePage();
 		driver.switchTo().defaultContent();
@@ -317,8 +309,7 @@ public class Marketing_Mattu extends TestBase{
 	//TCC = 12
 	@Test(groups = {"Marketing", "Ola1"})
 	public void TS98059_Visualizar_botones_Baja_CP() {
-		Marketing mMenuABM = new Marketing(driver);
-		mMenuABM.clubPersonal("baja");
+		mMarketing.clubPersonal("baja");
 		try {Thread.sleep(10000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 		BasePage cambioFrame=new BasePage();
 		driver.switchTo().defaultContent();
@@ -332,8 +323,7 @@ public class Marketing_Mattu extends TestBase{
 	//TCC = 13
 	@Test(groups = "Marketing")
 	public void TS50055_No_visualizar_error_de_Mora_Alta_CP() {
-		Marketing mMenuABM = new Marketing(driver);
-		mMenuABM.clubPersonal("alta");
+		mMarketing.clubPersonal("alta");
 		try {Thread.sleep(10000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 		BasePage cambioFrame=new BasePage();
 		driver.switchTo().defaultContent();
@@ -353,8 +343,7 @@ public class Marketing_Mattu extends TestBase{
 	//TCC = 14
 	@Test(groups = "Marketing")
 	public void TS50057_Visualizar_boton_Canje() {
-		Marketing mMenuABM = new Marketing(driver);
-		mMenuABM.clubPersonal("alta");
+		mMarketing.clubPersonal("alta");
 		BasePage cambioFrame=new BasePage();
 		driver.switchTo().defaultContent();
 		driver.switchTo().frame(cambioFrame.getFrameForElement(driver, By.cssSelector(".slds-input.actionSearch.ng-valid.ng-not-empty.ng-dirty.ng-valid-parse.ng-touched")));
@@ -458,7 +447,6 @@ public class Marketing_Mattu extends TestBase{
 	//TCC = 23
 	@Test(groups = {"Marketing", "Ola1"})
 	public void TS98020_Boton_ABM_del_CP() {
-		Marketing mMarketing = new Marketing(driver);
 		mMarketing.buscarGestion("club personal");
 		BasePage cambioFrame=new BasePage();
 		driver.switchTo().defaultContent();
