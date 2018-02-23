@@ -755,8 +755,8 @@ public class Sales2 extends TestBase{
 	public void TS94763_Ventas_Entregas_General_Modificar_el_lugar_de_entrega() {
 		sb.BuscarCuenta(DNI, "11111111");
 		sb.acciondecontacto("catalogo");
-		sb.agregarplan("plan con tarjeta");
 		sleep(15000);
+		sb.elegirplan("Plan con Tarjeta Repro");
 		String a = driver.findElement(By.cssSelector(".slds-col.taChangeDeliveryMethod.slds-text-body--small.slds-m-left--large")).getText();
 		driver.findElement(By.cssSelector(".slds-m-left--x-small.slds-button.slds-button--brand")).click();
 		sleep(7000);
@@ -1167,7 +1167,6 @@ public class Sales2 extends TestBase{
 		sb.acciondecontacto("catalogo");
 		sleep(15000);
 		sb.elegirplan("Plan con Tarjeta Repro");
-		sleep(15000);
 		driver.findElement(By.cssSelector(".slds-button.slds-m-left--large.slds-button--brand.ta-button-brand")).click();
 		sleep(10000);
 		WebElement line = driver.findElement(By.cssSelector(".slds-tree__container.ng-scope"));
@@ -1180,8 +1179,8 @@ public class Sales2 extends TestBase{
 			b = true;
 		}
 		Assert.assertTrue(a && b);
-	}
-	
+		}
+			
 	@Test(groups={"Sales", "AltaDeLinea", "Ola1"})
 	public void TS94495_Alta_Linea_Configurar_Nueva_Linea_Cancelar_la_venta_al_no_tener_lineas_disponibles_XX() {
 		sb.BuscarCuenta(DNI, "34073329");
@@ -1503,7 +1502,7 @@ public class Sales2 extends TestBase{
 	}
 
 		
-	@Test(groups={"Sales","AltaDeLinea","Ola1"})  
+	//@Test(groups={"Sales","AltaDeLinea","Ola1"})    //no se ve la asignacion de lineas
 	public void TS94505_Alta_Linea_Configurar_Nueva_Linea_Visualizar_misma_cantidad_de_lineas_que_planes_XX(){
 		sb.BuscarCuenta(DNI, "34073329");
 		sb.acciondecontacto("catalogo");
@@ -1832,4 +1831,54 @@ public class Sales2 extends TestBase{
 		sleep(5000);*/
 		
 	}
+	
+	@Test(groups={"Sales","Ventas","Ola1"})
+	public void TS94649_Ventas_NumeroOrden_Verificar_Orden_de_Venta_Abierta_Nueva_Venta(){
+		sb.BuscarCuenta(DNI, "34073329");
+		sb.acciondecontacto("catalogo");
+		sleep(15000);
+		boolean x = false;
+		List<WebElement> cam = driver.findElements(By.cssSelector(".slds-m-left--x-small.slds-button.slds-button--brand"));
+		for(WebElement c : cam ){	
+			if(c.getText().toLowerCase().equals("cambiar")){
+				c.click();
+			}
+		sleep(7000);	
+		List<WebElement> frame2 = driver.findElements(By.tagName("iframe"));
+		driver.switchTo().frame(frame2.get(0));
+		Select env = new Select (driver.findElement(By.id("DeliveryMethodSelection")));
+		env.selectByVisibleText("Delivery");
+		driver.findElement(By.id("SalesChannelConfiguration_nextBtn")).click();
+		sleep(10000);
+		driver.switchTo().defaultContent();
+		} 	
+		sb.elegirplan("Plan con Tarjeta Repro");
+		String ord = driver.findElement(By.cssSelector(".slds-text-body--small.slds-page-header__info.taDevider")).getText();
+		ord=ord.substring(ord.length()-8, ord.length());
+		sb.continuar();
+		sleep(10000);
+		System.out.println(ord);
+		List<WebElement> cont = driver.findElements(By.cssSelector(".slds-button.slds-m-left--large.slds-button--brand.ta-button-brand"));
+			for(WebElement c : cont){
+			c.getText().equals("Continuar");
+			c.click();}
+		sleep(7000);
+		driver.findElements(By.cssSelector(".vlc-slds-button--tertiary.ng-binding.ng-scope")).get(1).click();
+		sleep(3000);
+		driver.findElement(By.id("alert-ok-button")).click();
+		sleep(2000);
+		driver.get("https://crm--sit.cs14.my.salesforce.com/home/home.jsp?tsid=02u41000000QWha/");
+		sleep(20000);
+		List<WebElement> frame2 = driver.findElements(By.tagName("iframe"));
+		driver.switchTo().frame(frame2.get(0));
+		WebElement list = driver.findElement(By.cssSelector(".slds-truncate.slds-text-align--center")).findElement(By.tagName("a"));
+		System.out.println(list.getText());
+		list.click();
+		sleep(5000);
+		WebElement lst = driver.findElements(By.cssSelector(".bPageBlock.brandSecondaryBrd.secondaryPalette")).get(1);
+		System.out.println(lst.getText());
+		Assert.assertTrue(lst.getText().contains("Plan con Tarjeta Repro"));
+		}
+		
+		
 }
