@@ -1,9 +1,5 @@
 package Tests;
 
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
-import java.util.Date;
-
 import org.openqa.selenium.WebElement;
 import org.testng.Assert;
 import org.testng.annotations.AfterClass;
@@ -47,7 +43,29 @@ public class CustomerOla2_Joaquin extends TestBase {
 		Assert.assertTrue(fechaHasta.getAttribute("value").contentEquals(fechaDeHoy()));
 	}
 	
-	@Test(groups = {"CustomerCare", "Ola2"})
+	@Test(groups = {"CustomerCare", "Ola2", "Marcas"})
+	public void TS100963_Marks_Management_Marks_Management_Base_Conocimiento_Acceso_a_base_de_conocimiento(){
+		Page.elegirCuenta("aaaaFernando Care");
+		Page.irAGestion("Gestión de Marcas");
+		
+		Assert.assertTrue(Page.verificarBaseConocimientoMarcas());
+	}
+	
+	@Test(groups = {"CustomerCare", "Ola2", "Marcas"})
+	public void TS100967_Marks_Management_Marks_Management_Escenario_de_Casos_Existentes_Ingresar_comentarios() {
+		Page.elegirCuenta("aaaaFernando Care");
+		Page.irAGestion("Gestión de Marcas");
+		Page.SeleccionarClienteOCuenta("Cliente");
+		Page.botonSiguiente().click();
+		sleep(1000);
+		
+		Page.seleccionarMarca(1);
+		Page.botonConsultar().click();
+		
+		Assert.assertTrue(Page.campoComentarios().isDisplayed());
+	}
+	
+	@Test(groups = {"CustomerCare", "Ola2", "Marcas"})
 	public void TS100971_Marks_Management_Marcas_Session_Guiada_Botón_en_Iniciar_gestiones() {
 		Page.elegirCuenta("aaaaFernando Care");
 		Page.irAGestion("Gestión de Marcas");

@@ -17,9 +17,10 @@ public class Ta_CPQ extends BasePage {
 	
 	public enum RightPanel{DISPOSITIVOS, PLANES, BUNDLES, DATOS, ACCESORIOS, TV, CONTENIDOS, IOT, PACKS}
 	
-	@FindBy (how = How.CSS, using = ".slds-button.slds-button--neutral.add-button")
+	//@FindBy (how = How.CSS, using = ".slds-button.slds-button--neutral.add-button")
+	@FindBy (how = How.CSS, using = ".slds-button.slds-button_neutral.cpq-add-button")
 	private List<WebElement> addToCartButtons;
-		
+	
 	@FindBy (how = How.CSS, using = ".slds-button__icon.slds-button__icon--small.slds-button__icon--left.fix-slds-close-switch")
 	private List<WebElement> arrowPlan;
 	
@@ -69,6 +70,12 @@ public class Ta_CPQ extends BasePage {
 		addToCartButtons.get(6).click();
 	}
 	
+	public void addPlan(String plan) {
+		driver.findElement(By.cssSelector(".slds-input.ng-pristine.ng-untouched.ng-valid")).sendKeys(plan);
+		sleep(10000);
+		driver.findElements(By.cssSelector(".slds-button.slds-button_neutral.cpq-add-button")).get(0).click();
+		try {Thread.sleep(10000);} catch (InterruptedException ex) {System.out.println("No Espera");Thread.currentThread().interrupt();}
+	}
 	public void openArrow() {
 		arrowPlan.get(2).click();
 	}
@@ -122,7 +129,8 @@ public class Ta_CPQ extends BasePage {
 	}
 	
 	public String getEmptyCartMessage() {
-		return driver.findElement(By.cssSelector(".slds-grid.slds-grid--vertical-align-center.slds-grid--align-center.cpq-no-cart-items-msg")).getText();
+		//return driver.findElement(By.cssSelector(".slds-grid.slds-grid--vertical-align-center.slds-grid--align-center.cpq-no-cart-items-msg")).getText();
+		return driver.findElement(By.cssSelector(".slds-grid.slds-grid_vertical-align-center.slds-grid_align-center.cpq-no-cart-items-msg")).getText();
 	}
 	
 	public List<WebElement> getDivsProducts(){return divsProducts;}
@@ -326,6 +334,14 @@ public class Ta_CPQ extends BasePage {
 	    return false;
 	  }
 	
+	public void abrirprimeraflecha() {
+		sleep(1000);
+		driver.findElement(By.xpath("//*[@id=\"tab-default-1\"]/div[1]/ng-include/div/div/div/div[3]/div[10]/div/button")).click();
+	}
 	
-}	
+	public void deleteoneplan() {
+		sleep(1000);
+		driver.findElement(By.xpath("//*[@id=\"tab-default-1\"]/div[1]/ng-include/div/div/div/div[3]/div[10]/div/div/ul/li[2]/a/span")).click();
+	}
+}	 
 	
