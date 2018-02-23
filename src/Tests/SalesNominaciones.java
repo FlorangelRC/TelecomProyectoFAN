@@ -27,11 +27,13 @@ import Pages.setConexion;
 
 public class SalesNominaciones extends TestBase{
 
+	protected String perfil = "venta";
+	
 	@BeforeClass
 	public void Init() {
 		this.driver = setConexion.setupEze();
-		try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
-		loginFranciso(driver);
+		try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}		
+			 loginFranciso(driver);
 		try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 		HomeBase homePage = new HomeBase(driver);
 		try {Thread.sleep(6000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
@@ -58,12 +60,12 @@ public class SalesNominaciones extends TestBase{
 		
 	}
 
-	//@AfterMethod
+	@AfterMethod
 	public void IceB() {
 		driver.navigate().refresh();
 	}
 	
-	//@AfterClass
+	@AfterClass
 	public void Exit() {
 		driver.quit();
 		sleep(2000);
@@ -71,6 +73,7 @@ public class SalesNominaciones extends TestBase{
 	
 	@Test(groups = "Sales") //si 215 213 078 135 094 114 119 118 157
 	  public void TS95215_Nominacion_Argentino_Nominar_personas_mayores_a_16_anios_cliente_mayor_de_edad_con_linea_existente_plan_repro(){
+		perfil = "call";
 		CustomerCare CC = new CustomerCare(driver);
 		ContactSearch contact = new ContactSearch(driver);
 		boolean b = false;
@@ -323,6 +326,33 @@ public class SalesNominaciones extends TestBase{
 		//CC.obligarclick(driver.findElement(By.id("Contact_nextBtn")));
 		
 	}
+	@Test(groups={"Sales","Nominacion","Ola1"})
+	public void TS95288_SalesCPQ_Nominacion_Argentino_Verificar_Flujo_De_Nominacion_Arg_Telefonico(){
+		perfil = "venta";
+		String FilePath = "C:\\Users\\florangel\\Downloads\\mapache.jpg";
+		SalesBase SB = new SalesBase(driver);
+		CustomerCare CC = new CustomerCare(driver);
+		ContactSearch contact = new ContactSearch(driver);
+		sleep(5000);
+		contact.searchContact2("DNI", "10000018", "femenino");
+		sleep(6000);		
+		driver.findElement(By.cssSelector(".slds-input.form-control.ng-pristine.ng-untouched.ng-valid.ng-empty")).sendKeys("algoaqui@yahoo.com.ar");
+		CC.obligarclick(driver.findElement(By.id("Contact_nextBtn")));
+		sleep(5000);
+		driver.findElement(By.id("MethodSelectionTelefonico|0")).findElement(By.cssSelector(".slds-radio--faux.ng-scope")).click();
+		driver.findElement(By.id("ValidationMethod_nextBtn")).click();
+		sleep(5000);
+		CC.obligarclick(driver.findElement(By.id("QAResult_nextBtn")));
+		sleep(18000);
+		BasePage bp = new BasePage(driver);
+		bp.setSimpleDropdown(driver.findElement(By.id("ImpositiveCondition")), "IVA Consumidor Final");
+		SB.Crear_DomicilioLegal("Buenos Aires", "aba", "falsa", "", "1000", "", "", "1549");
+		sleep(20000);
+		System.out.println(driver.findElement(By.cssSelector(".slds-grid.slds-wrap.ng-pristine.ng-valid")).findElement(By.id("TextBlock2")).findElement(By.className("ng-binding")).findElements(By.tagName("p")).get(2).getText());
+		assertTrue(driver.findElements(By.id("TextBlock2")).get(1).findElements(By.tagName("p")).get(3).getText().toLowerCase().contains("nominaci\u00f3n exitosa"));
+		
+	}
+	
 	
 	//@Test(groups = "Sales")//si
 	public void TS95119_SalesCPQ_Nominacion_Extranjero_Verificar_Documento_Adjunto_Pasaporte(){

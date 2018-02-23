@@ -181,7 +181,7 @@ public void BusquedaAvanzada(){
 	List<WebElement> busqueda = driver.findElements(By.className("slds-form-element__control"));	
 	for(WebElement e: busqueda){
 		
-		if(e.getText().equals("B�squeda avanzada")){
+		if(e.getText().equals("B\u00fasqueda avanzada")){
 			e.click();
 			e.click();
 			break;}}

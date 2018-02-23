@@ -30,12 +30,12 @@ public class Sales2 extends TestBase{
 	String localidad="BASAIL";
 
 	
-	//@AfterClass(alwaysRun=true)
+	@AfterClass(alwaysRun=true)
 	public void tearDown() {
 		driver.quit();
 	}
 	
-	//@AfterMethod(alwaysRun=true)
+	@AfterMethod(alwaysRun=true)
 	public void deslogin() {
 		sleep(3000);
 		driver.get("https://crm--sit.cs14.my.salesforce.com/home/home.jsp?tsid=02u41000000QWha/");
@@ -1786,7 +1786,11 @@ public class Sales2 extends TestBase{
 		try {
 			driver.findElement(By.id("Step_Error_Huawei_S013_nextBtn")).click();
 			sleep(8000);
-		}catch(NoSuchElementException ex1) {}
+		}catch(NoSuchElementException ex1) {
+			WebElement este = driver.findElement(By.id("LineAssignment_nextBtn"));
+			page.obligarclick(este);
+			sleep(5000);
+		}
 		WebElement sig = driver.findElement(By.id("PaymentMethod_nextBtn"));
 		page.obligarclick(sig);
 		sleep(5000);
