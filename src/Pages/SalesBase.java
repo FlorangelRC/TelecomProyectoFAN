@@ -181,7 +181,7 @@ public void BusquedaAvanzada(){
 	List<WebElement> busqueda = driver.findElements(By.className("slds-form-element__control"));	
 	for(WebElement e: busqueda){
 		
-		if(e.getText().equals("Búsqueda avanzada")){
+		if(e.getText().equals("B\u00fasqueda avanzada")){
 			e.click();
 			e.click();
 			break;}}
@@ -278,7 +278,7 @@ public boolean btnnoexiste(String boton){
  
  public void agregarproductos(){
 		try {Thread.sleep(30000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
-		List<WebElement> asl = driver.findElements(By.cssSelector(".slds-button.slds-button--neutral.add-button"));
+		List<WebElement> asl = driver.findElements(By.cssSelector(".slds-button.slds-button_neutral.cpq-add-button"));
 		try {Thread.sleep(10000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 
 		System.out.println(asl.size());
@@ -292,10 +292,11 @@ public boolean btnnoexiste(String boton){
  
  public void continuar(){
 		try {Thread.sleep(30000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
-		((JavascriptExecutor)driver).executeScript("window.scrollTo(0,"+ driver.findElement(By.cssSelector(".slds-button.slds-m-left--large.slds-button--brand.ta-button-brand")).getLocation().y+")");
-		driver.findElement(By.cssSelector(".slds-button.slds-m-left--large.slds-button--brand.ta-button-brand")).click();
-		try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
-
+		List<WebElement> cont = driver.findElements(By.cssSelector(".slds-button.slds-m-left--large.slds-button--brand.ta-button-brand"));
+		for(WebElement c : cont){
+			c.getText().equals("Continuar");
+				c.click();
+		}
  }
  
  public void validarpasos(){
@@ -386,8 +387,8 @@ for(WebElement e: btns){
  }
  
  public void elegirplan(String plan){
-		/*try {Thread.sleep(15000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
-		driver.findElement(By.id("cpq-custom-view-button")).click();
+		try {Thread.sleep(15000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		driver.findElement(By.cssSelector(".slds-button.custom-view-dropdown-button.slds-button_neutral.slds-p-right_small.slds-picklist__label.cpq-base-header-picklist-label")).click();
 		try {Thread.sleep(3000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 		List<WebElement> list = driver.findElements(By.className("slds-dropdown__item"));
 		System.out.println(list.size());
@@ -395,16 +396,16 @@ for(WebElement e: btns){
 			if(e.getText().equals("Telecom Price List")){
 				System.out.println(e.getText());
 				e.click();
-				break;}}*/
+				break;}}
 		try {Thread.sleep(3000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 		driver.findElement(By.cssSelector(".slds-input.ng-pristine.ng-untouched.ng-valid")).sendKeys(plan);		
-		try {Thread.sleep(8000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 		List<WebElement> agregar = driver.findElements(By.cssSelector(".slds-button.slds-button_neutral.cpq-add-button")); 
 		agregar.get(0).click();
 }
  public void agregarplan(String plan){
 		try {Thread.sleep(30000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
-		driver.findElement(By.cssSelector(".slds-picklist.slds-dropdown-trigger.slds-dropdown-trigger--click.slds-is-open")).click();
+		driver.findElement(By.cssSelector(".slds-button.custom-view-dropdown-button.slds-button_neutral.slds-p-right_small.slds-picklist__label.cpq-base-header-picklist-label")).click();
 		try {Thread.sleep(3000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 		List<WebElement> list = driver.findElements(By.className("slds-dropdown__item"));
 		System.out.println(list.size());
@@ -416,7 +417,7 @@ for(WebElement e: btns){
 		try {Thread.sleep(10000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 		driver.findElement(By.cssSelector(".slds-input.ng-pristine.ng-untouched.ng-valid")).sendKeys(plan);		
 		try {Thread.sleep(20000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
-		List<WebElement> agregar = driver.findElements(By.cssSelector(".slds-button.slds-button--neutral.add-button")); 
+		List<WebElement> agregar = driver.findElements(By.cssSelector(".slds-button.slds-button_neutral.cpq-add-button")); 
 		agregar.get(1).click();
  }
  
@@ -491,6 +492,49 @@ for(WebElement e: btns){
 	 driver.findElement(By.id("ValidationMethod_nextBtn")).click();
  }
  
+ public void validacionProcesoVenta(String validacion){
+	try {Thread.sleep(15000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+	List<WebElement> valid =driver.findElements(By.id("ValidationMethodValidContact"));
+	List<WebElement> radio = driver.findElement(By.id("ValidationMethodValidContact|0")).findElements(By.cssSelector(".slds-radio--faux.ng-scope"));
+	int i = -1;
+	for(WebElement UnV: valid){
+		System.out.println(UnV.getAttribute("value"));
+		i++;
+		if(UnV.getAttribute("value").toLowerCase().contains(validacion)){
+			((JavascriptExecutor)driver).executeScript("window.scrollTo(0,"+radio.get(i).getLocation().y+")");
+			radio.get(i).click();
+			break;}}
+	try {Thread.sleep(3000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+	 driver.findElement(By.id("MethodSelection_nextBtn")).click();
+	 sleep(8000);
+ }
+ 
+ public void praguntasRespuestasLino(String resp1, String resp2){
+		try {Thread.sleep(15000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		WebElement valid =driver.findElement(By.id("tree0-node1"));
+		List<WebElement> radio = valid.findElements(By.className("slds-radio"));
+		for(WebElement UnV: radio){
+			System.out.println(UnV.findElement(By.cssSelector(".slds-form-element__label.ng-binding")).getText());
+			if(UnV.findElement(By.cssSelector(".slds-form-element__label.ng-binding")).getText().equalsIgnoreCase(resp1)){	
+				UnV.findElement(By.className("slds-radio--faux")).click();
+				break;}
+		}
+		
+		valid =driver.findElements(By.id("tree0-node1")).get(1);
+		radio = valid.findElements(By.className("slds-radio"));
+		for(WebElement UnV: radio){
+			System.out.println(UnV.findElement(By.cssSelector(".slds-form-element__label.ng-binding")).getText());
+			if(UnV.findElement(By.cssSelector(".slds-form-element__label.ng-binding")).getText().equalsIgnoreCase(resp2)){	
+				UnV.findElement(By.className("slds-radio--faux")).click();
+				break;}
+		}
+		
+		try {Thread.sleep(3000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		 driver.findElement(By.id("QAQuestions_nextBtn")).click();
+		 sleep(6000);
+	 }
+ 
+
  public void subirdoc(){
 		try {Thread.sleep(15000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 	//driver.findElement(By.id("FileDocumentImage")).click();
@@ -650,7 +694,7 @@ try{	driver.findElement(By.id("alert-ok-button")).click();	} catch (NoSuchElemen
 			System.out.println(bsqda.size());
 			for(WebElement e: bsqda){
 				System.out.println(e.getText());
-				if(e.getText().equals("Modificar búsqueda")){
+				if(e.getText().equals("Modificar bï¿½squeda")){
 					e.click();
 					break;}}
 		driver.findElement(By.id("LineAssignment_nextBtn")).click();

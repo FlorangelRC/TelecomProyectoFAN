@@ -25,6 +25,7 @@ import Pages.Accounts;
 import Pages.CustomerCare;
 import Pages.HomeBase;
 import Pages.TechCare_Ola1;
+import Pages.TechnicalCareCSRDiagnosticoPage;
 import Pages.setConexion;
 import Tests.TestBase.IrA;
 
@@ -51,29 +52,25 @@ public class TechCareOla1Almer extends TestBase {
 
        CustomerCare cerrar = new CustomerCare(driver);
        cerrar.cerrarultimapestaña();
-		
-		//Selecciona Cuentas
-		sleep(4000);
-		TechCare_Ola1 page=new TechCare_Ola1(driver);
-		sleep(3000);
-		page.selectAccount("Marco Polo");
-		driver.switchTo().defaultContent();
 	}
 	
 	
 	@BeforeMethod(alwaysRun=true)
 	public void setUp() throws Exception {
-		//Selecciona la cuenta Adrian Tech de todas las Cuentas
-				//seleccionCuentaPorNombre(driver, "Adrian Techh");
-				sleep(3000);
+		TechCare_Ola1 page=new TechCare_Ola1(driver);
+		sleep(3000);
+		page.selectAccount("Marco Polo");
+		driver.switchTo().defaultContent();
+		sleep(3000);
 		
 	}
 	
 	
 	@AfterMethod(alwaysRun=true)
 	public void after() {
-		try {Thread.sleep(2000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
-		
+		CustomerCare cerrar = new CustomerCare(driver);
+	    cerrar.cerrarultimapestaña();
+	    sleep(2000);
 	}
 	
 	//@AfterClass(alwaysRun=true)
@@ -104,7 +101,6 @@ public class TechCareOla1Almer extends TestBase {
 		Accounts accPage = new Accounts(driver);
 	    driver.switchTo().frame(accPage.getFrameForElement(driver, By.cssSelector(".imgItemContainer.ng-scope")));
 		assertEquals(driver.findElements(By.cssSelector(".imgItemContainer.ng-scope")).get(1).getText().toLowerCase(),"no puede configurar");
-		page.clickDiagnosticarServicio("voz","Voz Entrante");
 	}
 
 	/**
@@ -234,12 +230,37 @@ public class TechCareOla1Almer extends TestBase {
 	    page.BajaryContinuar();
 	    sleep(4000);
 	    page.buscarDireccion("Av. Congreso 3940, Buenos Aires, Argentina");
+	    sleep(2000);
 	    page.seleccionarRespuesta("no son las antenas");
-	    page.BajaryContinuar();
 	    sleep(4000);
+	    try{page.seleccionarRespuesta("no");assertTrue(true);}
+	    catch(org.openqa.selenium.NoSuchElementException a) {assertTrue(false);}   
+	}
+	
+	@Test(groups= {"TechnicalCare","SVA","Ola1"})
+	public void TS94402_CRM_Ola1_Technical_Care_CSR_SVA_Validacion_Red_OK_Consulta_al_cliente_tiene_señal_SI() {
+		sleep(5000);
+		TechCare_Ola1 page=new TechCare_Ola1(driver);
+		page.clickOpcionEnAsset("543416869777", "mis servicios");
+		sleep(7000);
+		page.clickVerDetalle();
+		sleep(5000);
+		page.clickDiagnosticarServicio("SMS","sms saliente");
+		sleep(5000);
+		page.seleccionarRespuesta("sms emisión a algún destino en particular");
+	    page.BajaryContinuar();
+	    sleep(5000);
 	    page.seleccionarRespuesta("no");
 	    page.BajaryContinuar();
-	    
+	    sleep(4000);
+	    page.BajaryContinuar();
+	    sleep(4000);
+	    page.buscarDireccion("Av. Congreso 3940, Buenos Aires, Argentina");
+	    sleep(2000);
+	    page.seleccionarRespuesta("no son las antenas");
+	    sleep(4000);
+	    try{page.seleccionarRespuesta("si");assertTrue(true);}
+	    catch(org.openqa.selenium.NoSuchElementException a) {assertTrue(false);}   
 	}
 	
 	@Test(groups= {"TechnicalCare","SVA","Ola1"})
@@ -281,5 +302,273 @@ public class TechCareOla1Almer extends TestBase {
 	    sleep(4000);
 	    assertTrue(driver.findElement(By.xpath("//*[@id=\"busSearchMap\"]")).isDisplayed());
 	}
-}
 	
+	@Test(groups= {"TechnicalCare","SVA","Ola1"})
+	public void TS94412_CRM_Ola1_Technical_Care_CSR_SVA_Visualizacion_SMS_Emision_a_algun_destino() {
+		sleep(5000);
+		TechCare_Ola1 page=new TechCare_Ola1(driver);
+		page.clickOpcionEnAsset("543416869777", "mis servicios");
+		sleep(7000);
+		page.clickVerDetalle();
+		sleep(5000);
+		page.clickDiagnosticarServicio("sms","sms saliente");
+		sleep(5000);
+		Accounts accPage = new Accounts(driver);
+	    driver.switchTo().frame(accPage.getFrameForElement(driver, By.cssSelector(".imgItemContainer.ng-scope")));
+	    assertTrue(driver.findElements(By.cssSelector(".imgItemContainer.ng-scope")).get(1).getText().toLowerCase().contains("sms emisión a algún destino en particular"));
+	}
+	
+	@Test(groups= {"TechnicalCare","SVA","Ola1"})
+	public void TS94407_CRM_Ola1_Technical_Care_CSR_SVA_Visualizar_SMS_A_FIJO() {
+		sleep(5000);
+		TechCare_Ola1 page=new TechCare_Ola1(driver);
+		page.clickOpcionEnAsset("543416869777", "mis servicios");
+		sleep(7000);
+		page.clickVerDetalle();
+		sleep(5000);
+		page.clickDiagnosticarServicio("sms","sms saliente");
+		sleep(5000);
+		Accounts accPage = new Accounts(driver);
+	    driver.switchTo().frame(accPage.getFrameForElement(driver, By.cssSelector(".imgItemContainer.ng-scope")));
+	    assertTrue(driver.findElements(By.cssSelector(".imgItemContainer.ng-scope")).get(0).getText().toLowerCase().contains("sms a fijo"));
+	}
+	
+	@Test(groups= {"TechnicalCare","SVA","Ola1"})
+	public void TS94466_CRM_Ola1_Technical_Care_CSR_SVA_Visualizacion_de_Servicio_SMS_entrante_e_inconveniente_No_recibe_de_un_número_particular() {
+		sleep(5000);
+		TechCare_Ola1 page=new TechCare_Ola1(driver);
+		page.clickOpcionEnAsset("543416869777", "mis servicios");
+		sleep(7000);
+		page.clickVerDetalle();
+		sleep(5000);
+		page.clickDiagnosticarServicio("sms","sms entrante");
+		sleep(5000);
+		Accounts accPage = new Accounts(driver);
+	    driver.switchTo().frame(accPage.getFrameForElement(driver, By.cssSelector(".imgItemContainer.ng-scope")));
+	    assertTrue(driver.findElements(By.cssSelector(".imgItemContainer.ng-scope")).get(0).getText().toLowerCase().contains("no recibe de un número particular"));
+	}
+	
+	@Test(groups= {"TechnicalCare","SVA","Ola1"})
+	public void TS94469_CRM_Ola1_Technical_Care_CSR_SVA_Visualizacion_de_Servicio_SMS_saliente_e_inconveniente_SMS_a_fijo() {
+		sleep(5000);
+		TechCare_Ola1 page=new TechCare_Ola1(driver);
+		page.clickOpcionEnAsset("543416869777", "mis servicios");
+		sleep(7000);
+		page.clickVerDetalle();
+		sleep(5000);
+		page.clickDiagnosticarServicio("sms","sms saliente");
+		sleep(5000);
+		Accounts accPage = new Accounts(driver);
+	    driver.switchTo().frame(accPage.getFrameForElement(driver, By.cssSelector(".imgItemContainer.ng-scope")));
+	    assertTrue(driver.findElements(By.cssSelector(".imgItemContainer.ng-scope")).get(0).getText().toLowerCase().contains("sms a fijo"));
+	}
+	
+	
+	@Test(groups= {"TechnicalCare","SVA","Ola1"})
+	public void TS94462_CRM_Ola1_Technical_Care_CSR_SVA_Visualizacion_de_Servicio_e_inconveniente() {
+		sleep(5000);
+		TechCare_Ola1 page=new TechCare_Ola1(driver);
+		page.clickOpcionEnAsset("543416869777", "mis servicios");
+		sleep(7000);
+		page.clickVerDetalle();
+		sleep(5000);
+		page.clickDiagnosticarServicio("sms","sms saliente");
+		sleep(5000);
+		Accounts accPage = new Accounts(driver);
+	    driver.switchTo().frame(accPage.getFrameForElement(driver, By.cssSelector(".imgItemContainer.ng-scope")));
+	    assertTrue(driver.findElement(By.xpath("//*[@id=\"HeadServiceDiagnosis\"]/div")).getText().toLowerCase().contains("sms saliente"));
+	    assertTrue(driver.findElements(By.cssSelector(".imgItemContainer.ng-scope")).get(0).isDisplayed());
+	}
+	
+	@Test(groups= {"TechnicalCare","SVA","Ola1"})
+	public void TS94372_CRM_Ola1_Technical_Care_CSR_SVA_Verificacion_de_Cobertura_y_Señal_en_el_equipo() {
+		sleep(5000);
+		TechCare_Ola1 page=new TechCare_Ola1(driver);
+		page.clickOpcionEnAsset("543416869777", "mis servicios");
+		sleep(7000);
+		page.clickVerDetalle();
+		sleep(5000);
+		page.clickDiagnosticarServicio("SMS","sms saliente");
+		sleep(5000);
+		page.seleccionarRespuesta("sms emisión a algún destino en particular");
+	    page.BajaryContinuar();
+	    sleep(5000);
+	    page.seleccionarRespuesta("no");
+	    page.BajaryContinuar();
+	    sleep(4000);
+	    page.BajaryContinuar();
+	    sleep(4000);
+	    page.buscarDireccion("José Martí 1439, Argentina");
+	    sleep(2000);
+	    page.seleccionarRespuesta("fuera del area de cobertura");
+	    sleep(5000);
+	    assertTrue(driver.findElement(By.xpath("//*[@id=\"OutOfCoverage\"]/div/p/p/strong")).isDisplayed());
+	}
+	
+	@Test(groups= {"TechnicalCare","SVA","Ola1"})
+	public void TS94329_CRM_Ola1_Technical_Care_CSR_SVA_Seleccion_del_dispositivo_CON_señal() {
+		sleep(5000);
+		TechCare_Ola1 page=new TechCare_Ola1(driver);
+		page.clickOpcionEnAsset("543416869777", "mis servicios");
+		sleep(7000);
+		page.clickVerDetalle();
+		sleep(5000);
+		page.clickDiagnosticarServicio("InternetXDia");
+		sleep(5000);
+	    page.seleccionarRespuesta("no");
+	    page.BajaryContinuar();
+	    sleep(4000);
+	    page.BajaryContinuar();
+	    sleep(4000);
+	    page.buscarDireccion("Av. Congreso 3940, Buenos Aires, Argentina");
+	    sleep(2000);
+	    page.seleccionarRespuesta("no son las antenas");
+	    sleep(4000);
+	    try{page.seleccionarRespuesta("si");assertTrue(true);}
+	    catch(org.openqa.selenium.NoSuchElementException a) {assertTrue(false);}   
+	}
+	
+	@Test(groups= {"TechnicalCare","SVA","Ola1"})
+	public void TS94330_CRM_Ola1_Technical_Care_CSR_SVA_Seleccion_del_dispositivo_SIN_señal() {
+		sleep(5000);
+		TechCare_Ola1 page=new TechCare_Ola1(driver);
+		page.clickOpcionEnAsset("543416869777", "mis servicios");
+		sleep(7000);
+		page.clickVerDetalle();
+		sleep(5000);
+		page.clickDiagnosticarServicio("InternetXDia");
+		sleep(5000);
+	    page.seleccionarRespuesta("no");
+	    page.BajaryContinuar();
+	    sleep(5000);
+	    page.BajaryContinuar();
+	    sleep(4000);
+	    page.buscarDireccion("Av. Congreso 3940, Buenos Aires, Argentina");
+	    sleep(2000);
+	    page.seleccionarRespuesta("no son las antenas");
+	    sleep(4000);
+	    try{page.seleccionarRespuesta("no");assertTrue(true);}
+	    catch(org.openqa.selenium.NoSuchElementException a) {assertTrue(false);}   
+	}
+	
+	@Test(groups= {"TechnicalCare","SVA","Ola1"})
+	public void TS94317_CRM_Ola1_Technical_Care_CSR_SVA_Visualizar_pregunta_Respuesta_NO() {
+		sleep(5000);
+		TechCare_Ola1 page=new TechCare_Ola1(driver);
+		page.clickOpcionEnAsset("543416869777", "mis servicios");
+		sleep(7000);
+		page.clickVerDetalle();
+		sleep(5000);
+		page.clickDiagnosticarServicio("SMS","sms saliente");
+		sleep(5000);
+		page.seleccionarRespuesta("sms emisión a algún destino en particular");
+	    page.BajaryContinuar();
+	    sleep(5000);
+	    page.seleccionarRespuesta("no");
+	    page.clickContinuar();
+	    sleep(4000);
+	    page.seleccionarRespuesta("desregistrar");
+	    page.clickContinuar();
+	    sleep(5000);
+	    page.clickContinuar();
+	    sleep(5000);
+	    page.seleccionarRespuesta("sí");
+	    page.clickContinuar();
+	    sleep(4000);
+	    page.seleccionarPreguntaFinal("No, sigue con inconvenientes");
+	    sleep(2000);
+	    assertTrue(page.getOpcionesFinal(2).isDisplayed()&&page.getOpcionesFinal(3).isDisplayed());
+	}
+	
+	
+	@Test(groups= {"TechnicalCare","SVA","Ola1"})
+	public void TS94316_CRM_Ola1_Technical_Care_CSR_SVA_Visualizar_pregunta_Respuesta_SI() {
+		sleep(5000);
+		TechCare_Ola1 page=new TechCare_Ola1(driver);
+		page.clickOpcionEnAsset("543416869777", "mis servicios");
+		sleep(7000);
+		page.clickVerDetalle();
+		sleep(5000);
+		page.clickDiagnosticarServicio("SMS","sms saliente");
+		sleep(5000);
+		page.seleccionarRespuesta("sms emisión a algún destino en particular");
+	    page.BajaryContinuar();
+	    sleep(5000);
+	    page.seleccionarRespuesta("no");
+	    page.clickContinuar();
+	    sleep(4000);
+	    page.seleccionarRespuesta("desregistrar");
+	    page.clickContinuar();
+	    sleep(5000);
+	    page.clickContinuar();
+	    sleep(5000);
+	    page.seleccionarRespuesta("sí");
+	    page.clickContinuar();
+	    sleep(4000);
+	    page.seleccionarPreguntaFinal("Sí, funciona correctamente");
+	    sleep(3000);
+	    assertTrue(driver.findElement(By.xpath("//*[@id=\"OperationalServiceMessage\"]/div")).isDisplayed());
+	}
+	
+	@Test(groups= {"TechnicalCare","SVA","Ola1"})
+	public void TS94350_CRM_Ola1_Technical_Care_CSR_SVA_Verificacion_del_ingreso_de_direccion() {
+		sleep(5000);
+		TechCare_Ola1 page=new TechCare_Ola1(driver);
+		page.clickOpcionEnAsset("543416869777", "mis servicios");
+		sleep(7000);
+		page.clickVerDetalle();
+		sleep(5000);
+		page.clickDiagnosticarServicio("InternetXDia");
+		sleep(5000);
+	    page.seleccionarRespuesta("no");
+	    page.BajaryContinuar();
+	    sleep(5000);
+	    page.BajaryContinuar();
+	    sleep(4000);
+	    try {page.setDireccion("av congreso, argentina"); assertTrue(true);}
+	    catch(org.openqa.selenium.NoSuchElementException noCampo) {assertTrue(false);}
+	}
+	
+	
+	@Test(groups= {"TechnicalCare","SVA","Ola1"})
+	public void TS94335_CRM_Ola1_Technical_Care_CSR_SVA_Verificacion_de_desregistro_de_la_linea() {
+		sleep(5000);
+		TechCare_Ola1 page=new TechCare_Ola1(driver);
+		page.clickOpcionEnAsset("543416869777", "mis servicios");
+		sleep(7000);
+		page.clickVerDetalle();
+		sleep(5000);
+		page.clickDiagnosticarServicio("SMS","sms saliente");
+		sleep(5000);
+		page.seleccionarRespuesta("sms emisión a algún destino en particular");
+	    page.BajaryContinuar();
+	    sleep(5000);
+	    page.seleccionarRespuesta("no");
+	    page.clickContinuar();
+	    sleep(5000);
+	    page.seleccionarRespuesta("desregistrar");
+	    page.clickContinuar();
+	    sleep(5000);
+	    assertTrue(driver.findElement(By.xpath("//*[@id=\"DeregisterSpeechMessage\"]/div")).isDisplayed());
+	}
+	
+	@Test(groups= {"TechnicalCare","SVA","Ola1"})
+	public void TS94478_CRM_Ola1_Technical_Care_CSR_SVA_Validacion_SMS_saliente() {
+		sleep(5000);
+		TechCare_Ola1 page=new TechCare_Ola1(driver);
+		page.clickOpcionEnAsset("543416869777", "mis servicios");
+		sleep(7000);
+		page.clickVerDetalle();
+		sleep(5000);
+		page.clickDiagnosticarServicio("sms","sms saliente");
+		sleep(5000);
+		Accounts accPage = new Accounts(driver);
+	    driver.switchTo().frame(accPage.getFrameForElement(driver, By.cssSelector(".imgItemContainer.ng-scope")));
+	    assertTrue(driver.findElements(By.cssSelector(".imgItemContainer.ng-scope")).get(0).getText().toLowerCase().contains("sms a fijo"));
+	    assertTrue(driver.findElements(By.cssSelector(".imgItemContainer.ng-scope")).get(1).getText().toLowerCase().contains("sms emisión a algún destino en particular"));
+	}
+}
+
+
+
+

@@ -1404,7 +1404,7 @@ public class CustomerCare extends BasePage {
 					sleep(3000);
 					driver.switchTo().frame(cambioFrameByID.getFrameForElement(driver, By.id("searchPageHolderDiv")));
 					i = 4;
-					System.out.println("Segundo Catch");
+					//System.out.println("Segundo Catch");
 				}
 			}
 			sleep(2000);

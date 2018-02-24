@@ -2,6 +2,34 @@
 <testng-results skipped="0" failed="0" ignored="60" total="61" passed="1">
   <reporter-output>
   </reporter-output>
+<<<<<<< HEAD
+  <suite name="Default suite" duration-ms="163575" started-at="2018-02-16T18:30:01Z" finished-at="2018-02-16T18:32:45Z">
+    <groups>
+      <group name="Sales">
+        <method signature="Sales2.TS94716_Ventas_VentasGestiones_Visualizar_un_historico_de_gestiones_realizadas()[pri:0, instance:Tests.Sales2@5f341870]" name="TS94716_Ventas_VentasGestiones_Visualizar_un_historico_de_gestiones_realizadas" class="Tests.Sales2"/>
+      </group> <!-- Sales -->
+      <group name="Ventas">
+        <method signature="Sales2.TS94716_Ventas_VentasGestiones_Visualizar_un_historico_de_gestiones_realizadas()[pri:0, instance:Tests.Sales2@5f341870]" name="TS94716_Ventas_VentasGestiones_Visualizar_un_historico_de_gestiones_realizadas" class="Tests.Sales2"/>
+      </group> <!-- Ventas -->
+      <group name="Ola1">
+        <method signature="Sales2.TS94716_Ventas_VentasGestiones_Visualizar_un_historico_de_gestiones_realizadas()[pri:0, instance:Tests.Sales2@5f341870]" name="TS94716_Ventas_VentasGestiones_Visualizar_un_historico_de_gestiones_realizadas" class="Tests.Sales2"/>
+      </group> <!-- Ola1 -->
+    </groups>
+    <test name="Default test" duration-ms="163575" started-at="2018-02-16T18:30:01Z" finished-at="2018-02-16T18:32:45Z">
+      <class name="Tests.Sales2">
+        <test-method status="PASS" signature="init()[pri:0, instance:Tests.Sales2@5f341870]" name="init" is-config="true" duration-ms="43753" started-at="2018-02-16T15:30:01Z" finished-at="2018-02-16T15:30:45Z">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- init -->
+        <test-method status="PASS" signature="setup()[pri:0, instance:Tests.Sales2@5f341870]" name="setup" is-config="true" duration-ms="28778" started-at="2018-02-16T15:30:45Z" finished-at="2018-02-16T15:31:14Z">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- setup -->
+        <test-method status="PASS" signature="TS94716_Ventas_VentasGestiones_Visualizar_un_historico_de_gestiones_realizadas()[pri:0, instance:Tests.Sales2@5f341870]" name="TS94716_Ventas_VentasGestiones_Visualizar_un_historico_de_gestiones_realizadas" duration-ms="91019" started-at="2018-02-16T15:31:14Z" finished-at="2018-02-16T15:32:45Z">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- TS94716_Ventas_VentasGestiones_Visualizar_un_historico_de_gestiones_realizadas -->
+=======
   <suite name="Default suite" duration-ms="190937" started-at="2018-02-20T20:16:58Z" finished-at="2018-02-20T20:20:09Z">
     <groups>
       <group name="Sales">
@@ -28,6 +56,7 @@
           <reporter-output>
           </reporter-output>
         </test-method> <!-- TS94501_Alta_Linea_Configurar_Nueva_Linea_Visualizar_filtros_de_localidad_y_provincia_al_modificar_linea_XX -->
+>>>>>>> master
       </class> <!-- Tests.Sales2 -->
     </test> <!-- Default test -->
   </suite> <!-- Default suite -->
