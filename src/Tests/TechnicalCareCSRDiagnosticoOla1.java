@@ -33,7 +33,6 @@ private WebDriver driver;
 	
  	@BeforeClass(groups= {"TechnicalCare", "SVA", "Ola1"})
  	public void init() throws InterruptedException{
-	
 	this.driver = setConexion.setupEze();
     sleep(5000);
     login(driver);
@@ -65,18 +64,27 @@ private WebDriver driver;
  	
 	
  	}
+ 		@BeforeMethod(alwaysRun=true)
+ 		public void setUp() throws Exception {
+		//Selecciona la cuenta Adrian Tech de todas las Cuentas
+ 		TechCare_Ola1 page=new TechCare_Ola1(driver);
+		sleep(3000);
+		driver.switchTo().defaultContent();
+		sleep(3000);
+		page.selectAccount("Marco Polo");
  	
- 	@BeforeMethod(groups= {"TechnicalCare", "SVA", "Ola1"}) 
-	public void setUp() throws Exception {
-	 Accounts accountPage = new Accounts(driver);
-     //Selecciono Vista Tech
-     driver.switchTo().defaultContent();
-     accountPage.accountSelect("Vista Tech");
-     sleep(8000);
-     accountPage.selectAccountByName("Adrian Tech");
- 	}
-
-	//@AfterClass(alwaysRun=true)
+	}
+ 	 	
+	@AfterMethod(alwaysRun=true)
+	public void after() {
+		try {Thread.sleep(2000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		driver.switchTo().defaultContent(); 
+		CustomerCare cerrar = new CustomerCare(driver);
+	    cerrar.cerrarultimapestaña();
+	    driver.switchTo().defaultContent(); 
+	}
+ 	
+	@AfterClass(alwaysRun=true)
 	public void tearDown() {
 		try {Thread.sleep(1000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 		CustomerCare cerrar = new CustomerCare(driver);
@@ -87,7 +95,8 @@ private WebDriver driver;
 		try {Thread.sleep(1000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 		driver.quit();
 	}
-
+	
+	
 	
 
 	@Test (groups= {"TechnicalCare", "SVA", "Ola1"})//listo
@@ -95,7 +104,7 @@ private WebDriver driver;
 	TechnicalCareCSRDiagnosticoPage tech = new TechnicalCareCSRDiagnosticoPage(driver);
 	sleep (4000);
 	driver.switchTo().defaultContent();
-    tech.clickOpcionEnAsset("1100000075", "mis servicios");
+    tech.clickOpcionEnAsset("543416869777", "mis servicios");
     tech.verDetalles();
     tech.clickDiagnosticarServicio("Transferencia de Llamadas");
     tech.selectionInconvenient("No puede configurar");
@@ -107,7 +116,7 @@ private WebDriver driver;
 	TechnicalCareCSRDiagnosticoPage tech = new TechnicalCareCSRDiagnosticoPage(driver);
 	sleep (4000);
 	driver.switchTo().defaultContent();
-    tech.clickOpcionEnAsset("1100000075", "mis servicios");
+    tech.clickOpcionEnAsset("543416869777", "mis servicios");
     tech.verDetalles();
     tech.clickDiagnosticarServicio("sms", "SMS Entrante", false);
     assertTrue(tech.validarOpcionesXSubServicio("SMS Entrante"));
@@ -119,10 +128,11 @@ private WebDriver driver;
 	TechnicalCareCSRDiagnosticoPage tech = new TechnicalCareCSRDiagnosticoPage(driver);
 	sleep (4000);
 	driver.switchTo().defaultContent();
-    tech.clickOpcionEnAsset("1100000075", "mis servicios");
+    tech.clickOpcionEnAsset("543416869777", "mis servicios");
     tech.verDetalles();
     tech.clickDiagnosticarServicio("Transferencia de Llamadas");
-    assertTrue(tech.validarInconveniente("Transferencia de Llamadas"));
+    tech.selectionInconvenient("No funciona transferencia de Llamadas");
+    assertTrue(tech.validarInconveniente("No funciona transferencia de Llamadas"));
     
 	}
 	
@@ -131,7 +141,7 @@ private WebDriver driver;
 	TechnicalCareCSRDiagnosticoPage tech = new TechnicalCareCSRDiagnosticoPage(driver);
 	sleep (4000);
 	driver.switchTo().defaultContent();
-    tech.clickOpcionEnAsset("1100000075", "mis servicios");
+    tech.clickOpcionEnAsset("543416869777", "mis servicios");
     tech.verDetalles();
     tech.clickDiagnosticarServicio("Llamada en espera");
     assertTrue(tech.validarInconveniente("No funciona llamada en espera"));
@@ -143,7 +153,7 @@ private WebDriver driver;
 	TechnicalCareCSRDiagnosticoPage tech = new TechnicalCareCSRDiagnosticoPage(driver);
 	sleep (4000);
 	driver.switchTo().defaultContent();
-    tech.clickOpcionEnAsset("1100000075", "mis servicios");
+    tech.clickOpcionEnAsset("543416869777", "mis servicios");
     tech.verDetalles();
     tech.clickDiagnosticarServicio("Llamada Tripartita");
     tech.selectionInconvenient("No funciona Llamada tripartita");
@@ -155,7 +165,7 @@ private WebDriver driver;
 	public void TS94459_CRM_Ola_1_Technical_Care_CSR_SVA_Visualizacion_de_Servicio_Conferencia_tripartita_e_inconveniente_No_funciona_Conferencia_Tripartita() throws Exception {
 	TechnicalCareCSRDiagnosticoPage tech = new TechnicalCareCSRDiagnosticoPage(driver);
 	sleep (4000);
-    tech.clickOpcionEnAsset("1100000075", "mis servicios");
+    tech.clickOpcionEnAsset("543416869777", "mis servicios");
     tech.verDetalles();
     tech.clickDiagnosticarServicio("Llamada Tripartita");
     tech.selectionInconvenient("No funciona Llamada tripartita");
@@ -166,7 +176,7 @@ private WebDriver driver;
 	public void TS94464_CRM_Ola_1_Technical_Care_CSR_SVA_Visualizacion_de_Servicio_Mensajes_Multimedia_Personal_MMS_e_inconveniente_MMS_Emisión_Cliente_informa_que_no_puede_enviar_Archivo_Imagen_Audio() throws Exception {
 	TechnicalCareCSRDiagnosticoPage tech = new TechnicalCareCSRDiagnosticoPage(driver);
 	sleep (4000);
-    tech.clickOpcionEnAsset("1100000075", "mis servicios");
+    tech.clickOpcionEnAsset("543416869777", "mis servicios");
     tech.verDetalles();
     tech.clickDiagnosticarServicio("MMS");
     tech.selectionInconvenient("MMS Emisión Cliente informa que no puede enviar Imagen");
@@ -178,7 +188,7 @@ private WebDriver driver;
 	public void TS94467_CRM_Ola_1_Technical_Care_CSR_SVA_Visualizacion_de_Servicio_SMS_saliente_e_inconveniente_SMS_Emisión_a_algun_destino_en_particular() throws Exception {
 	TechnicalCareCSRDiagnosticoPage tech = new TechnicalCareCSRDiagnosticoPage(driver);
 	sleep (4000);
-    tech.clickOpcionEnAsset("1100000075", "mis servicios");
+    tech.clickOpcionEnAsset("543416869777", "mis servicios");
     tech.verDetalles();
     tech.clickDiagnosticarServicio("sms", "SMS Saliente", false);
     assertTrue(tech.validarOpcionesXSubServicio("SMS Saliente"));
@@ -189,7 +199,7 @@ private WebDriver driver;
 	public void TS94276_CRM_Ola_1_Technical_Care_CSR_SVA_Validacion_SMS_entrante_no_recibe_ningun_numero() throws Exception {
 	TechnicalCareCSRDiagnosticoPage tech = new TechnicalCareCSRDiagnosticoPage(driver);
 	sleep (4000);
-    tech.clickOpcionEnAsset("1100000075", "mis servicios");
+    tech.clickOpcionEnAsset("543416869777", "mis servicios");
     tech.verDetalles();
     tech.clickDiagnosticarServicio("sms", "SMS Entrante", true);
     tech.selectionInconvenient("No recibe de un número particular");
@@ -201,7 +211,7 @@ private WebDriver driver;
 	public void TS94277_CRM_Ola_1_Technical_Care_CSR_SVA_Validacion_SMS_saliente_no_emite_a_ningun_numero() throws Exception {
 	TechnicalCareCSRDiagnosticoPage tech = new TechnicalCareCSRDiagnosticoPage(driver);
 	sleep (4000);
-    tech.clickOpcionEnAsset("1100000075", "mis servicios");
+    tech.clickOpcionEnAsset("543416869777", "mis servicios");
     tech.verDetalles();
     tech.clickDiagnosticarServicio("sms", "SMS Saliente", true);
     tech.selectionInconvenient("SMS a fijo");
@@ -213,7 +223,7 @@ private WebDriver driver;
 	public void TS94278_CRM_Ola_1_Technical_Care_CSR_SVA_Validacion_SMS_saliente_no_emite_a_algun_destino() throws Exception {
 	TechnicalCareCSRDiagnosticoPage tech = new TechnicalCareCSRDiagnosticoPage(driver);
 	sleep (4000);
-    tech.clickOpcionEnAsset("1100000075", "mis servicios");
+    tech.clickOpcionEnAsset("543416869777", "mis servicios");
     tech.verDetalles();
     tech.clickDiagnosticarServicio("sms", "SMS Saliente", true);
     tech.selectionInconvenient("SMS Emisión a algún destino en particular");
@@ -225,7 +235,7 @@ private WebDriver driver;
 	public void TS94309_CRM_Ola_1_Technical_Care_CSR_SVA_Visualizacion_de_buscador_para_servicios_agrupados() throws Exception {
 	TechnicalCareCSRDiagnosticoPage tech = new TechnicalCareCSRDiagnosticoPage(driver);
 	sleep (4000);
-    tech.clickOpcionEnAsset("1100000075", "mis servicios");
+    tech.clickOpcionEnAsset("543416869777", "mis servicios");
     tech.verDetalles();
     tech.buscarServicio("SMS");
     assertTrue(tech.validarOpcionesXServicio("SMS"));
@@ -235,7 +245,7 @@ private WebDriver driver;
 	public void TS94310_CRM_Ola_1_Technical_Care_CSR_SVA_Verificacion_del_funcionamiento_del_buscador_para_servicios_agrupados() throws Exception {
 	TechnicalCareCSRDiagnosticoPage tech = new TechnicalCareCSRDiagnosticoPage(driver);
 	sleep (4000);
-    tech.clickOpcionEnAsset("1100000075", "mis servicios");
+    tech.clickOpcionEnAsset("543416869777", "mis servicios");
     tech.verDetalles();
     tech.buscarServicio("VOZ");
     assertTrue(tech.validarOpcionesXServicio("VOZ"));
@@ -245,7 +255,7 @@ private WebDriver driver;
 	public void TS94311_CRM_Ola_1_Technical_Care_CSR_SVA_Verificacion_de_lista_de_servicios_agrupados() throws Exception {
 	TechnicalCareCSRDiagnosticoPage tech = new TechnicalCareCSRDiagnosticoPage(driver);
 	sleep (4000);
-    tech.clickOpcionEnAsset("1100000075", "mis servicios");
+    tech.clickOpcionEnAsset("543416869777", "mis servicios");
     tech.verDetalles();
     tech.clickDiagnosticarServicio("sms", "SMS Saliente", false);
     assertTrue(tech.validarOpcionesXServicio("SMS Saliente"));
@@ -255,7 +265,7 @@ private WebDriver driver;
 	public void TS94312_CRM_Ola_1_Technical_Care_CSR_SVA_Visualizacion_del_agrupador_estado_ACTIVO() throws Exception {
 	TechnicalCareCSRDiagnosticoPage tech = new TechnicalCareCSRDiagnosticoPage(driver);
 	sleep (4000);
-    tech.clickOpcionEnAsset("1100000075", "mis servicios");
+    tech.clickOpcionEnAsset("543416869777", "mis servicios");
     tech.verDetalles();
     tech.clickDiagnosticarServicio("sms", "SMS Saliente", false);
     assertTrue(tech.validarEstado("SMS"));
@@ -266,17 +276,85 @@ private WebDriver driver;
 	public void TS94315_CRM_Ola_1_Technical_Care_CSR_SVA_Visualizar_pregunta_al_final_del_proceso_SVA() throws Exception {
 	TechnicalCareCSRDiagnosticoPage tech = new TechnicalCareCSRDiagnosticoPage(driver);
 	sleep (4000);
-	tech.clickOpcionEnAsset("1100000075", "mis servicios");
+	tech.clickOpcionEnAsset("543416869777", "mis servicios");
     tech.verDetalles();
     tech.clickDiagnosticarServicio("sms", "SMS Entrante", true);
     tech.selectionInconvenient("No recibe de un número particular");
     tech.continuar();
     tech.seleccionarRespuesta("no");
-    tech.getNextBtn().click();
+    tech.clickContinuar();
     tech.categoriaRed("Desregistrar");
-    tech.getNextCategoria().click();
-
+    tech.clickContinuar();
+    tech.speech();
+    tech.categoriaRed("Sí");
+    tech.clickContinuar();
+    assertTrue( tech.serviciofunciona("No"));
+	}
+	
+	
+	
+	@Test (groups= {"TechnicalCare", "SVA", "Ola1"})
+	public void TS94413_CRM_Ola_1_Technical_Care_CSR_SVA_Validaciones_SMS_Emisión_a_ningún_destino_INCONSISTENCIA_LOCACION_NO() throws Exception {
+	TechnicalCareCSRDiagnosticoPage tech = new TechnicalCareCSRDiagnosticoPage(driver);
+	sleep (4000);
+	tech.clickOpcionEnAsset("543416869777", "mis servicios");
+    tech.verDetalles();
+    tech.clickDiagnosticarServicio("sms", "SMS Saliente", true);
+    tech.selectionInconvenient("SMS Emisión a algún destino en particular");
+    tech.continuar();
+    tech.seleccionarRespuesta("no");
+    tech.clickContinuar();
+    tech.categoriaRed("Desregistrar");
+    tech.clickContinuar();
+    assertTrue(tech.validarSpeech());
+	}
+	
+	@Test (groups= {"TechnicalCare", "SVA", "Ola1"})
+	public void TS94339_CRM_Ola_1_Technical_Care_CSR_SVA_Visualizacion_de_mensaje_solicitando_realizar_un_consumo() throws Exception {
+	TechnicalCareCSRDiagnosticoPage tech = new TechnicalCareCSRDiagnosticoPage(driver);
+	sleep (4000);
+	tech.clickOpcionEnAsset("543416869777", "mis servicios");
+    tech.verDetalles();
+    tech.clickDiagnosticarServicio("sms", "SMS Saliente", true);
+    tech.selectionInconvenient("SMS Emisión a algún destino en particular");
+    tech.continuar();
+    tech.seleccionarRespuesta("no");
+    tech.clickContinuar();
+    tech.categoriaRed("Desregistrar");
+    tech.clickContinuar();
+    tech.speech();
+    tech.categoriaRed("No");
+    assertTrue(tech.validarInconveniente("No"));
+	}
+	
+	@Test (groups= {"TechnicalCare", "SVA", "Ola1"})
+		public void TS94343_CRM_Ola_1_Technical_Care_CSR_SVA_Seleccion_OBLIGATORIA_de_inconveniente() throws Exception {
+	    TechnicalCareCSRDiagnosticoPage tech = new TechnicalCareCSRDiagnosticoPage(driver);
+		sleep (4000);
+	    tech.clickOpcionEnAsset("543416869777", "mis servicios");
+	    tech.verDetalles();
+	    tech.clickDiagnosticarServicio("sms", "SMS Saliente", false);
+	    assertTrue(tech.validarEstado("SMS"));
+	}
+	
+	@Test (groups= {"TechnicalCare", "SVA", "Ola1"})
+	public void TS94393_CRM_Ola_1_Technical_Care_CSR_Mis_Servicios_Identificacion_de_los_Servicios_opcionales_y_obligatorios() throws Exception {
+    TechnicalCareCSRDiagnosticoPage tech = new TechnicalCareCSRDiagnosticoPage(driver);
+	sleep (4000);
+    tech.clickOpcionEnAsset("543416869777", "mis servicios");
+    tech.verDetalles();
+    tech.clickDiagnosticarServicio("sms", "SMS Entrante", false);
+    assertTrue(tech.validarEstado("SMS"));
 	}
 	
 
+	@Test (groups= {"TechnicalCare", "SVA", "Ola1"})
+	public void TS94369_CRM_Ola_1_Technical_Care_CSR_SVA_Visualizacion_servicio_ACTIVO() throws Exception {
+    TechnicalCareCSRDiagnosticoPage tech = new TechnicalCareCSRDiagnosticoPage(driver);
+	sleep (4000);
+    tech.clickOpcionEnAsset("543416869777", "mis servicios");
+    tech.verDetalles();
+    tech.clickDiagnosticarServicio("sms", "SMS Entrante", false);
+    assertTrue(tech.validarEstado("SMS"));
+	}
 }
