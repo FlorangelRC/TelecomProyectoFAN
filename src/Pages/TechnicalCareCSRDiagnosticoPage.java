@@ -17,11 +17,7 @@ import org.openqa.selenium.support.ui.Select;
 public class TechnicalCareCSRDiagnosticoPage extends BasePage{
 	
 	final WebDriver driver;
-	 
-	
-	@FindBy(className="slds-truncate")// escoger entre Diagnosticar y Desactivar
-	private WebElement diagnosticar;
-	
+	 		
 	@FindBy (className="slds-checkbox--faux")
 	private WebElement inconveniente;
 	
@@ -37,11 +33,16 @@ public class TechnicalCareCSRDiagnosticoPage extends BasePage{
 	@FindBy(id="NetworkCategory_nextBtn")
 	private WebElement nextCategoria;
 	
+	@FindBy(id="DeregisterSpeech_nextBtn")
+	private WebElement Continuar;
+	
+	@FindBy(xpath=".//*[@id='ServiceOperation|0']/div/div[1]/label[1]")
+	private List<WebElement> serviciofunciona;
+	
+	
 	@FindBy(xpath="//*[@class='imgItemContainer ng-scope']") //
 	private List<WebElement> listaDeInconvenientes;
-	
-	@FindBy(id="KnowledgeBaseResults_prevBtn") // escoger entre coninuar o anterior
-	private WebElement continuarOanterior;
+
 	
 	@FindBy (id="ClosedCaseKnowledgeBase")
 	private WebElement casoGenerado;
@@ -56,14 +57,8 @@ public class TechnicalCareCSRDiagnosticoPage extends BasePage{
 	@FindBy(xpath="//*[@id='SimilCaseExistCommentUpdateMessage']/div/p/p[2]/span/strong")
 	private WebElement numCaso;
 	
-	
-	
-	
 	@FindBy(xpath=".//*[@id='DeregisterSpeechMessage']/div/p/p")
 	private WebElement SpeechMessage;
-	
-	@FindBy(id="DeregisterSpeech_nextBtn") //Speech
-	private WebElement continuaroAnterior2;
 	
 	@FindBy(id="AdressInput")
 	private WebElement direccion;
@@ -79,32 +74,27 @@ public class TechnicalCareCSRDiagnosticoPage extends BasePage{
 	
 	@FindBy(id="HlrDeregisterUpdate")
 	private WebElement consultarHLR;
-	
-	@FindBy(className="slds-form-element__label ng-binding ng-scope")
-	private WebElement servicioFunciona;
-		
+			
 	@FindBy(id="SmsServiceDiagnosis_prevBtn")
 	private WebElement diagnosticodeServicioSMS;
 		
 	@FindBy(className="slds-text-body_regular")
 	private WebElement menuOpcion;
-			
-	@FindBy(className="card-top")
-	private WebElement planConTarjeta;
+	
+	@FindBy(xpath=".//*[@id='ServiceOperation|0']/div/div[1]/label/span[1]")
+	private List<WebElement> diagnosticoOptions;
 	
 	@FindBy (css= ".slds-form-element__control.slds-input-has-icon.slds-input-has-icon--left")
 	private WebElement search;
 	
-	
-
-		
-
 
 	public TechnicalCareCSRDiagnosticoPage(WebDriver driver){
 		this.driver = driver;
 			PageFactory.initElements(driver, this);
 
 	}
+	
+	////////////////////////////////////BUSACR SERVICIO////////////////////////////////////////////////////
 	
 	public void buscarServicio(String servicio)throws InterruptedException {
 		sleep(8000);
@@ -127,6 +117,7 @@ public class TechnicalCareCSRDiagnosticoPage extends BasePage{
 		  }
 	}
 	
+////////////////////////////////////SELECCIONAR EL ASSET////////////////////////////////////////////////////
 	
 	public void clickOpcionEnAsset(String Asset,String Opcion) {
 	    boolean assetEncontrado=false,opcion=false;
@@ -157,6 +148,7 @@ public class TechnicalCareCSRDiagnosticoPage extends BasePage{
 	    if(!opcion) System.out.println("asset encontrado, Opcion No encontrada");
 	  }
 	
+////////////////////////////////////VER DETALLES////////////////////////////////////////////////////
 	
 	public void verDetalles() {
 		sleep (7000);
@@ -166,6 +158,8 @@ public class TechnicalCareCSRDiagnosticoPage extends BasePage{
 		    sleep(7000);
 		    driver.findElement(By.cssSelector(".slds-button.slds-button--brand")).click();
 	}
+	
+////////////////////////////////////SELECT DIAGNOSTICAR////////////////////////////////////////////////////
 	
 	public void clickDiagnosticarServicio(String servicio) {
 	      sleep(5000);
@@ -198,6 +192,9 @@ public class TechnicalCareCSRDiagnosticoPage extends BasePage{
 	        }
 	      } 
 	  }
+	
+////////////////////////////////////BUSACR SERVICIO CON SUBSERVICIO////////////////////////////////////////////////////
+	
 	public void clickDiagnosticarServicio(String servicio, String subServicio, boolean clickOnSubServicio) {
 	    sleep(5000);
 	    boolean sEncontrado=true;
@@ -245,6 +242,7 @@ public class TechnicalCareCSRDiagnosticoPage extends BasePage{
 	          }    
 	  }
 	
+////////////////////////////////////VALIDAR SERVICIO////////////////////////////////////////////////////
 	public boolean validarOpcionesXSubServicio(String subServicio ) {
 	    List<WebElement> tablas=driver.findElements(By.cssSelector(".slds-card__body.cards-container"));
 	
@@ -279,6 +277,7 @@ public class TechnicalCareCSRDiagnosticoPage extends BasePage{
 	        return false;
 	  }
 	
+////////////////////////////////////VALIDAR ESTADO ACTIVO////////////////////////////////////////////////////
 	public boolean validarEstado(String servicio ) {
 	     sleep(5000);
 	        Accounts accPage = new Accounts(driver);
@@ -306,44 +305,17 @@ public class TechnicalCareCSRDiagnosticoPage extends BasePage{
 	}
 			return false;
 	}
-	/*public boolean validarEstado(String servicio ) {
-		 sleep(5000);
-		    Accounts accPage = new Accounts(driver);
-		    driver.switchTo().frame(accPage.getFrameForElement(driver, By.cssSelector(".slds-card__body.cards-container")));
-		    List<WebElement> tablas=driver.findElements(By.cssSelector(".slds-card__body.cards-container"));
-		    //Listado de opciones
-		    List<WebElement> servicios=tablas.get(0).findElements(By.xpath("//table//tbody//tr"));
-		    for(WebElement service : servicios) {
-		      if(service.getText().toLowerCase().contains(servicio.toLowerCase())) {
-		            ((JavascriptExecutor)driver).executeScript("window.scrollTo(0,"+service.getLocation().y+")");
-		        service.findElement(By.className("addedValueServices-arrowWrapper")).click();
-		        sleep(2000);
-		        List<WebElement> sServicios=tablas.get(selectionTable(servicio)).findElements(By.xpath("//*[@class='addedValueServices']/tr"));
-		        for(WebElement subService : sServicios) {
-		        	if (subService.isDisplayed()) {
-		        		System.out.println(subService.getText());
-					}
-		        	
-		   //       if(!service.getText().toLowerCase().contains("Activo") && service.isDisplayed() ) {
-		//        	  return false;
-		  //        }   
-		      }
-		    }
-	  }
-			return true;
-}*/
-		           
 	
-	
+////////////////////////////////////SELECT INCONVENENTES////////////////////////////////////////////////////
 	public void selectionInconvenient(String inconvenientName) {
 		sleep(4000);
 	      driver.switchTo().frame(getFrameForElement(driver, By.id("IssueSelectStep")));
-	      sleep(2000);
-	      for (WebElement opt : getlistaDeInconvenientes()) {
-	        if (opt.getText().equalsIgnoreCase(inconvenientName)) {
-	          opt.click();
-	          sleep(2000);
-	          break;
+	      	sleep(2000);
+	      		for (WebElement opt : getlistaDeInconvenientes()) {
+	      			if (opt.getText().equalsIgnoreCase(inconvenientName)) {
+	      				opt.click();
+	      				sleep(2000);
+	      				break;
 	        }
 	    
 	      }	     
@@ -368,19 +340,26 @@ public class TechnicalCareCSRDiagnosticoPage extends BasePage{
 		
 	}
 	
+	
+		
+
+	
 	/**
 	 * Seleciona cuenta despues de diagnosticar
 	 * @param opcion
 	 * @author Quelys
 	 */
+////////////////////////////////////SELECT RESPUESTA////////////////////////////////////////////////////
 	public void seleccionarRespuesta(String opcion) {
 	    Accounts accPage = new Accounts(driver);
 	      driver.switchTo().frame(accPage.getFrameForElement(driver, By.cssSelector(".imgItemContainer.ng-scope")));
 	      	List<WebElement> preguntas=driver.findElements(By.cssSelector(".imgItemContainer.ng-scope"));
 	      		for(WebElement p:preguntas) {
 	      			if(p.getText().toLowerCase().contains(opcion)) {
-	      				p.click();
-	      					sleep(2000);
+	      				scrollToElement(p);
+	      				sleep(100);
+	      				p.click();    				
+	      					sleep(5000);
 	      							return;
 	      							
 	      						}
@@ -394,32 +373,57 @@ public class TechnicalCareCSRDiagnosticoPage extends BasePage{
 	      	sleep(2000);
 	      		for (WebElement opt : getPreguntas()) {
 	      			if (opt.getText().equalsIgnoreCase(categoria)) {
+	      				scrollToElement(opt);
+	      				sleep(300);
 	      				opt.click();
-	      					sleep(2000);
+	      					sleep(8000);
 	      						break;
+	      						
 	        }
 	    
 	      }	     
 	  }
-		/*sleep(5000);
-		Accounts accPage = new Accounts(driver);
-			 driver.switchTo().frame(accPage.getFrameForElement(driver, By.cssSelector(".imgItemContainer.ng-scope")));
-	    		List<WebElement> opc=driver.findElements(By.cssSelector(".imgItemContainer.ng-scope"));
-	    			for (WebElement o:opc) {
-	    				if(o.getText().toLowerCase().contains(categoria)) {
-	    	      				o.click();
-	    	      					sleep(2000);
-	    	      						return;*/
 	    
-	public boolean speech(String speechMessage) {
-		driver.switchTo().frame(getFrameForElement(driver, By.id("IssueSelectStep")));
-		for (WebElement opt : getSpeechMessage()) {
-			if(opt.getText().contains(speechMessage)) {
-	        	return true;
+	public boolean speech() throws InterruptedException {
+		String speech=" ";
+			if(elementExists(SpeechMessage)) {
+				speech=SpeechMessage.getText();
+				getNextSpeech().click();
 			}
-	}
-		return false;
-}	
+			else {
+				speech=SpeechMessage.getText();
+			}
+			return true;
+				}
+	
+	public boolean validarSpeech() throws InterruptedException {
+		String speech=" ";
+			if(elementExists(SpeechMessage)) {
+				speech=SpeechMessage.getText();
+			}
+			else {
+				speech=SpeechMessage.getText();
+			}
+			return true;
+				}
+	
+////////////////////////////////////VALIDA SI EL SERVICIO FUNCIONA.... SI O NO////////////////////////////////////////////////////
+	
+	public boolean serviciofunciona(String opcion) {
+	      Accounts accPage = new Accounts(driver);
+	        driver.switchTo().frame(accPage.getFrameForElement(driver, By.xpath("//*[@id='ServiceOperation']")));
+	      			if (opcion.equalsIgnoreCase("NO")) {
+	      					diagnosticoOptions.get(1).click();
+	      					return true;
+	          }
+	              else if(opcion.equalsIgnoreCase("SI")){
+	            	  diagnosticoOptions.get(0).click();
+	            	  return true;
+	          }
+	      			return false;
+	      }
+	
+	
 	public String verificarCaso() throws InterruptedException {
 		String caso="";
 		if(elementExists(existCaso)) {
@@ -448,13 +452,7 @@ public class TechnicalCareCSRDiagnosticoPage extends BasePage{
 	    return false;
 	}
 	
-		
-			    	
-	public WebElement getPlanConTarjeta() {
-		return planConTarjeta;
-	}
-
-	
+			
 	public void scrollToElement(WebElement element) {
 		((JavascriptExecutor)driver)
 	        .executeScript("arguments[0].scrollIntoView();", element);
@@ -472,10 +470,6 @@ public class TechnicalCareCSRDiagnosticoPage extends BasePage{
 	}
 
 
-	public WebElement getDiagnosticar() {
-		return diagnosticar;
-	}
-
 
 	public WebElement getInconveniente() {
 		return inconveniente;
@@ -492,8 +486,6 @@ public class TechnicalCareCSRDiagnosticoPage extends BasePage{
 	}
 
 
-
-
 	public List<WebElement> getPreguntas() {
 		return preguntas;
 	}
@@ -506,9 +498,9 @@ public class TechnicalCareCSRDiagnosticoPage extends BasePage{
 	public WebElement getNextCategoria() {
 		return nextCategoria;
 	}
-
-	public WebElement getContinuarOanterior() {
-		return continuarOanterior;
+	
+	public WebElement getNextSpeech() {
+		return Continuar;
 	}
 
 
@@ -520,12 +512,6 @@ public class TechnicalCareCSRDiagnosticoPage extends BasePage{
 	public WebElement getExistCaso() {
 		return existCaso;
 	}
-
-
-	public WebElement getContinuar2() {
-		return continuaroAnterior2;
-	}
-
 
 	public WebElement getDireccion() {
 		return direccion;
@@ -552,10 +538,9 @@ public class TechnicalCareCSRDiagnosticoPage extends BasePage{
 	}
 
 
-	public WebElement getServicioFunciona() {
-		return servicioFunciona;
+	public List<WebElement> getServiciofunciona() {
+		return serviciofunciona;
 	}
-
 
 	public WebElement getMenuOpcion() {
 		return menuOpcion;
@@ -591,6 +576,24 @@ public class TechnicalCareCSRDiagnosticoPage extends BasePage{
 		return SpeechMessage;
 	}
 	
+	//ALmer
+	public void clickContinuar() {
+		try {Thread.sleep(500);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		WebElement BenBoton = driver.findElement(By.cssSelector(".vlc-slds-button--tertiary.ng-binding.ng-scope"));
+		((JavascriptExecutor)driver).executeScript("window.scrollTo(0,"+BenBoton.getLocation().y+")");
+		WebElement continuar= driver.findElement(By.xpath("//*[text() = 'Continuar']"));
+		try {Thread.sleep(500);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		try {
+		continuar.click();
+		try {Thread.sleep(3000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		}
+		catch(org.openqa.selenium.ElementNotVisibleException a) {
+			List <WebElement> continuar2=driver.findElements(By.className("ng-binding"));
+			for(WebElement c:continuar2) {
+				if(c.getText().contains("Continuar")) {
+					c.click();
+					break;}}}		
+	}
 
 	}
 	
