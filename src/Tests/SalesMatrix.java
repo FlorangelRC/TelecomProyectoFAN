@@ -208,7 +208,7 @@ public class SalesMatrix extends TestBase {
 			if (x.findElements(By.tagName("td")).get(1).getText().contains("FACTURA")) {
 				b = true;
 			}
-			if (x.findElements(By.tagName("td")).get(4).getText().contains("VICLIE")) {
+			if (x.findElements(By.tagName("td")).get(5).getText().contains("VICLIE")) {
 				c = true;
 			}
 		}
