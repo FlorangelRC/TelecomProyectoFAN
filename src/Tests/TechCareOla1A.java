@@ -30,7 +30,7 @@ import Pages.setConexion;
 import Tests.TestBase.IrA;
 
 
-public class TechCareOla1Almer extends TestBase {
+public class TechCareOla1A extends TestBase {
 	
 	private WebDriver driver;
 	
@@ -73,7 +73,7 @@ public class TechCareOla1Almer extends TestBase {
 	    sleep(2000);
 	}
 	
-	//@AfterClass(alwaysRun=true)
+	@AfterClass(alwaysRun=true)
 	public void tearDown() {
 		try {Thread.sleep(1000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 		CustomerCare cerrar = new CustomerCare(driver);
