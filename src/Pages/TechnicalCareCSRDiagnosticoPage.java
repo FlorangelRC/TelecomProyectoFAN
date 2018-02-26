@@ -17,9 +17,7 @@ import org.openqa.selenium.support.ui.Select;
 public class TechnicalCareCSRDiagnosticoPage extends BasePage{
 	
 	final WebDriver driver;
-	 
-	
-		
+	 		
 	@FindBy (className="slds-checkbox--faux")
 	private WebElement inconveniente;
 	
@@ -59,9 +57,6 @@ public class TechnicalCareCSRDiagnosticoPage extends BasePage{
 	@FindBy(xpath="//*[@id='SimilCaseExistCommentUpdateMessage']/div/p/p[2]/span/strong")
 	private WebElement numCaso;
 	
-	
-	
-	
 	@FindBy(xpath=".//*[@id='DeregisterSpeechMessage']/div/p/p")
 	private WebElement SpeechMessage;
 	
@@ -92,16 +87,14 @@ public class TechnicalCareCSRDiagnosticoPage extends BasePage{
 	@FindBy (css= ".slds-form-element__control.slds-input-has-icon.slds-input-has-icon--left")
 	private WebElement search;
 	
-	
-
-		
-
 
 	public TechnicalCareCSRDiagnosticoPage(WebDriver driver){
 		this.driver = driver;
 			PageFactory.initElements(driver, this);
 
 	}
+	
+	////////////////////////////////////BUSACR SERVICIO////////////////////////////////////////////////////
 	
 	public void buscarServicio(String servicio)throws InterruptedException {
 		sleep(8000);
@@ -124,6 +117,7 @@ public class TechnicalCareCSRDiagnosticoPage extends BasePage{
 		  }
 	}
 	
+////////////////////////////////////SELECCIONAR EL ASSET////////////////////////////////////////////////////
 	
 	public void clickOpcionEnAsset(String Asset,String Opcion) {
 	    boolean assetEncontrado=false,opcion=false;
@@ -154,6 +148,7 @@ public class TechnicalCareCSRDiagnosticoPage extends BasePage{
 	    if(!opcion) System.out.println("asset encontrado, Opcion No encontrada");
 	  }
 	
+////////////////////////////////////VER DETALLES////////////////////////////////////////////////////
 	
 	public void verDetalles() {
 		sleep (7000);
@@ -163,6 +158,8 @@ public class TechnicalCareCSRDiagnosticoPage extends BasePage{
 		    sleep(7000);
 		    driver.findElement(By.cssSelector(".slds-button.slds-button--brand")).click();
 	}
+	
+////////////////////////////////////SELECT DIAGNOSTICAR////////////////////////////////////////////////////
 	
 	public void clickDiagnosticarServicio(String servicio) {
 	      sleep(5000);
@@ -195,6 +192,9 @@ public class TechnicalCareCSRDiagnosticoPage extends BasePage{
 	        }
 	      } 
 	  }
+	
+////////////////////////////////////BUSACR SERVICIO CON SUBSERVICIO////////////////////////////////////////////////////
+	
 	public void clickDiagnosticarServicio(String servicio, String subServicio, boolean clickOnSubServicio) {
 	    sleep(5000);
 	    boolean sEncontrado=true;
@@ -242,6 +242,7 @@ public class TechnicalCareCSRDiagnosticoPage extends BasePage{
 	          }    
 	  }
 	
+////////////////////////////////////VALIDAR SERVICIO////////////////////////////////////////////////////
 	public boolean validarOpcionesXSubServicio(String subServicio ) {
 	    List<WebElement> tablas=driver.findElements(By.cssSelector(".slds-card__body.cards-container"));
 	
@@ -276,6 +277,7 @@ public class TechnicalCareCSRDiagnosticoPage extends BasePage{
 	        return false;
 	  }
 	
+////////////////////////////////////VALIDAR ESTADO ACTIVO////////////////////////////////////////////////////
 	public boolean validarEstado(String servicio ) {
 	     sleep(5000);
 	        Accounts accPage = new Accounts(driver);
@@ -304,6 +306,7 @@ public class TechnicalCareCSRDiagnosticoPage extends BasePage{
 			return false;
 	}
 	
+////////////////////////////////////SELECT INCONVENENTES////////////////////////////////////////////////////
 	public void selectionInconvenient(String inconvenientName) {
 		sleep(4000);
 	      driver.switchTo().frame(getFrameForElement(driver, By.id("IssueSelectStep")));
@@ -346,6 +349,7 @@ public class TechnicalCareCSRDiagnosticoPage extends BasePage{
 	 * @param opcion
 	 * @author Quelys
 	 */
+////////////////////////////////////SELECT RESPUESTA////////////////////////////////////////////////////
 	public void seleccionarRespuesta(String opcion) {
 	    Accounts accPage = new Accounts(driver);
 	      driver.switchTo().frame(accPage.getFrameForElement(driver, By.cssSelector(".imgItemContainer.ng-scope")));
@@ -402,6 +406,8 @@ public class TechnicalCareCSRDiagnosticoPage extends BasePage{
 			}
 			return true;
 				}
+	
+////////////////////////////////////VALIDA SI EL SERVICIO FUNCIONA.... SI O NO////////////////////////////////////////////////////
 	
 	public boolean serviciofunciona(String opcion) {
 	      Accounts accPage = new Accounts(driver);
