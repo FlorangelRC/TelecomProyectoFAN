@@ -131,8 +131,8 @@ private WebDriver driver;
     tech.clickOpcionEnAsset("543416869777", "mis servicios");
     tech.verDetalles();
     tech.clickDiagnosticarServicio("Transferencia de Llamadas");
-    tech.selectionInconvenient("No funciona transferencia de Llamadas");
-    assertTrue(tech.validarInconveniente("No funciona transferencia de Llamadas"));
+    tech.selectionInconvenient("No funciona transferencia de llamadas");
+    assertTrue(tech.validarInconveniente("No funciona transferencia de llamadas"));
     
 	}
 	
