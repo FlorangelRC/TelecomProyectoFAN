@@ -250,6 +250,24 @@ public class CustomerCare extends BasePage {
 		}
 	}
 	
+	public void SeleccionarClienteOCuenta(String sel) { 
+		waitForVisibilityOfElementLocated(By.xpath("//label[contains(.,'" + sel + "')]//span[contains(@class,'radio')]")); 
+		driver.findElement(By.xpath("//label[contains(.,'" + sel + "')]//span[contains(@class,'radio')]")).click(); 
+		if (sel.contentEquals("Cuenta")) { 
+			driver.findElement(By.xpath("//ng-form[@id='BillingAccs']//span[@class='slds-radio--faux']")).click(); 
+		} 
+	} 
+		   
+	public void seleccionarMarca(int index) { 
+		Select marca = new Select(driver.findElement(By.xpath("//select[@id='MarksList']"))); 
+		marca.selectByIndex(index); 
+	} 
+		   
+	public Boolean verificarBaseConocimientoMarcas() { 
+		WebElement knowledge = driver.findElement(By.xpath("//ng-include[@id='vlcKnowledge']")); 
+		return (knowledge.isDisplayed() && knowledge.getText().contains("Informaci")); 
+	} 
+	
 	public void limpiarTodo() {
 		driver.switchTo().defaultContent();
 		for (WebElement t : pestañasSecundarias) {
