@@ -30,12 +30,12 @@ public class Sales2 extends TestBase{
 	String localidad="BASAIL";
 
 	
-	@AfterClass(alwaysRun=true)
+	//@AfterClass(alwaysRun=true)
 	public void tearDown() {
 		driver.quit();
 	}
 	
-	@AfterMethod(alwaysRun=true)
+	//@AfterMethod(alwaysRun=true)
 	public void deslogin() {
 		sleep(3000);
 		driver.get("https://crm--sit.cs14.my.salesforce.com/home/home.jsp?tsid=02u41000000QWha/");
@@ -873,13 +873,7 @@ public class Sales2 extends TestBase{
 		sleep(15000);
 		sb.elegirplan("Plan con Tarjeta Repro");
 		sb.continuar();
-		sleep(10000);
-		List<WebElement> cont = driver.findElements(By.cssSelector(".slds-button.slds-m-left--large.slds-button--brand.ta-button-brand"));
-			for(WebElement c : cont){
-				c.getText().equals("Continuar");
-					c.click();
-			}
-		sleep(5000);
+		sleep(15000);
 		CustomerCare page = new CustomerCare(driver);
 		WebElement sig = driver.findElement(By.id("LineAssignment_nextBtn"));
 		page.obligarclick(sig);
@@ -1698,7 +1692,7 @@ public class Sales2 extends TestBase{
 		Assert.assertTrue(driver.findElement(By.cssSelector(".slds-modal.slds-fade-in-open.slds-modal--large")).findElement(By.tagName("h2")).getText().equalsIgnoreCase("product details"));
 	}
 	
-	@Test(groups={"Sales","Ventas","Ola1"})
+	@Test(groups={"Sales","Ventas","Ola1"})//*******************Arreglar
 	public void TS94762_Ventas_Modo_De_Pago_General_Verificar_LOV_Modalidad_De_Pago(){
 		boolean DPF = false;
 		boolean E = false;
@@ -1709,8 +1703,31 @@ public class Sales2 extends TestBase{
 		sb.elegirplan("Plan con Tarjeta Repro");
 		sb.continuar();
 		sleep(25000);
-		Assert.assertTrue(false);
 		CustomerCare page = new CustomerCare(driver);
+		WebElement sig = driver.findElement(By.id("LineAssignment_nextBtn"));
+		page.obligarclick(sig);
+		sleep(10000);
+		try {driver.findElement(By.id("Step_Error_Huawei_S013_nextBtn")).click();
+		sleep(8000);}catch (org.openqa.selenium.NoSuchElementException ex1) {}
+		//page.obligarclick(driver.findElement(By.id("ICCDAssignment_nextBtn")));
+		//sleep(10000);
+		//page.obligarclick(driver.findElement(By.id("InvoicePreview_nextBtn")));
+		//sleep(10000);
+		sleep(8000);
+		List<WebElement> mediosP = driver.findElements(By.cssSelector(".slds-form-element__label.ng-binding"));
+		for (WebElement UnMP : mediosP) {
+			if (UnMP.getText().toLowerCase().contains("tarjeta de credito")){System.out.println("TDC");
+			TC = true;
+		}
+			if (UnMP.getText().toLowerCase().contains("efectivo")) {System.out.println("Efectivo");
+				E = true;
+			}
+			if (UnMP.getText().toLowerCase().contains("debito a proxima factura")){System.out.println("factura");
+			DPF = true;
+		}
+		}
+		Assert.assertTrue(TC&&E&&DPF);
+		sleep(5000);
 	}
 	
 	@Test(groups={"Sales","Ventas","Ola1"})

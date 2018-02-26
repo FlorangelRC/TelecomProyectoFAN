@@ -62,13 +62,13 @@ public class Sales extends TestBase {
 	String[] genero = {"masculino","femenino"};
 	String[] DocValue = {"52698550","3569874563","365","ssss"};
 	
-	@AfterClass(alwaysRun=true)
+	//@AfterClass(alwaysRun=true)
 	public void tearDown() {
 		driver.close();
 		driver.quit();
 	}
 	
-	@AfterMethod(alwaysRun=true)
+	//@AfterMethod(alwaysRun=true)
 	public void deslogin(){
 		try {Thread.sleep(10000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 		driver.get("https://crm--sit.cs14.my.salesforce.com/home/home.jsp?tsid=02u41000000QWha/");
@@ -1418,10 +1418,14 @@ public class Sales extends TestBase {
 			}
 		}
 		sleep(5000);
-		driver.findElement(By.id("Birthdate")).sendKeys("12/12/2005");
+		driver.findElement(By.id("Birthdate")).sendKeys("26/02/2002");
 		sleep(2000);
-		WebElement error = driver.findElement(By.cssSelector(".message.description.ng-binding.ng-scope"));
-		Assert.assertTrue(error.getText().toLowerCase().contains("fecha de nacimiento inv\u00e1lida"));
+		try {WebElement error = driver.findElement(By.cssSelector(".message.description.ng-binding.ng-scope"));
+			Assert.assertTrue(false);
+		}catch(org.openqa.selenium.NoSuchElementException ex1) {
+			Assert.assertTrue(true);
+		}
+		
 	}
 	
 	@Test(groups={"Sales", "AltaCuenta","Ola1"})
