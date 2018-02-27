@@ -378,7 +378,7 @@ public class Sales2 extends TestBase{
 		sb.elegirplan("Plan con Tarjeta Repro");
 		sleep(15000);
 		driver.findElement(By.cssSelector(".slds-button.slds-m-left--large.slds-button--brand.ta-button-brand")).click();
-		sleep(10000);
+		sleep(15000);
 		List <WebElement> num = driver.findElements(By.className("slds-form-element__control"));
 		boolean a = false;
 		for (WebElement x : num) {
@@ -1249,8 +1249,8 @@ public class Sales2 extends TestBase{
 		sb.elegirplan("Plan con Tarjeta Repro");
 		sleep(15000);
 		WebElement num = driver.findElement(By.cssSelector(".slds-m-bottom--x-small"));
-		System.out.println(num.getAttribute("value"));
-		Assert.assertTrue(num.getAttribute("value").contains("Nro. Orden:"));
+		System.out.println(num.getText());
+		Assert.assertTrue(num.getText().contains("Nro. Orden:"));
 	}
 	
 	@Test(groups={"Sales", "Ventas", "Ola1"})
