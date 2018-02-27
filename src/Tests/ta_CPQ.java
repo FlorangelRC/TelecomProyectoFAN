@@ -57,7 +57,7 @@ public class ta_CPQ extends TestBase {
 	protected WebDriver driver;
 	protected  WebDriverWait wait;
 
-	@AfterClass(alwaysRun=true)
+	//@AfterClass(alwaysRun=true)
 	public void tearDown() {
 		driver.quit();
 		sleep(1000);
@@ -181,13 +181,14 @@ public class ta_CPQ extends TestBase {
 		Assert.assertEquals("Quitar el producto del carrito", page3.getPaperCanLabel());
 	}
 	
+	//Realizado en Sales2
 	/**
 	 * Verifica que si no se encuentre linea disponible y se pueda cancelar la orden.
 	 * 
 	 * no Anda.
 	 * Ultima revision 30-01-18
 	 */
-	@Test(groups={"Sales", "AltaLinea", "Ola1"})
+	//@Test(groups={"Sales", "AltaLinea", "Ola1"})
 	public void TS94495_checkNoLineAvailableMessageAndCancelPlan() {
 		Ta_CPQ page3 = new Ta_CPQ(driver);
 		try { for(WebElement e : driver.findElements(By.className("cpq-product-name"))) {
@@ -204,13 +205,14 @@ public class ta_CPQ extends TestBase {
 		page4.cancelLineAssignment();
 	}
 	
+	//Realizado en SALES2
 	/**
 	 * Verifica informacion del plan haciendole click a la flecha.
 	 * 
 	 * Flecha no Existe
 	 * Ultima Revision 30-01-18
 	 */
-	@Test(groups={"Sales", "AltaLinea", "Ola1"})
+	//@Test(groups={"Sales", "AltaLinea", "Ola1"})
 	public void TS94496_checkPlanInformation() {
 		Ta_CPQ page3 = new Ta_CPQ(driver);
 		try { for(WebElement e : driver.findElements(By.className("cpq-product-name"))) {
@@ -533,9 +535,9 @@ public class ta_CPQ extends TestBase {
 		
 		try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 		
-		WebElement result = driver.findElement(By.cssSelector(".slds-tile__title.slds-truncate.product-name"));
+		WebElement result = driver.findElement(By.cssSelector(".slds-tile__title.slds-truncate.cpq-product-name"));
 		System.out.println(result.getText());
-		Assert.assertEquals(result.getText(), "Plan Prepago Nacional");
+		Assert.assertTrue(result.getText().contains("Plan Prepago Nacional"));
 			
 	}
 	
@@ -604,17 +606,21 @@ public class ta_CPQ extends TestBase {
 		Ta_CPQ cart = new Ta_CPQ(driver);
 		//cart.addAnyProductToCart();
 		//cart.deleteAddedProducts();
-		cart.addPlan();
+		cart.addPlan("plan prepago nacional");
 		sleep(5000);
-		cart.clickOnDelete();
+		cart.abrirprimeraflecha();
+		sleep(3000);
+		cart.deleteoneplan();
 		try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 		//WebElement messageEmptyCart = driver.findElement(By.xpath(".//div[@class=\"slds-grid slds-grid--vertical-align-center slds-grid--align-center cpq-no-cart-items-msg\"]"));
 		//Assert.assertEquals(messageEmptyCart.getText().trim(), "Cart is empty.");
 		Assert.assertEquals("Cart is empty.", cart.getEmptyCartMessage());
 	}
 	
+	
+	//Realizado en Sales2
 	//Listo 26-01-18 falta darle continuar, pero al darle continuar no hay privilegios.
-	@Test(groups={"Sales", "AltaLinea", "Ola1"})
+	//@Test(groups={"Sales", "AltaLinea", "Ola1"})
 	public void TS94494_CRM_Fase_1_SalesCPQ_Alta_Linea_Configurar_Nueva_Linea_Buscar_nuevo_lote_de_lineas_pre_asignadas() throws Exception {
 		Ta_CPQ cart = new Ta_CPQ(driver);
 		try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
@@ -633,28 +639,29 @@ public class ta_CPQ extends TestBase {
 	assertTrue(false); //No hay lineas pre-asignadas.
 	}
 	
-
-	@Test(groups={"Sales", "AltaLinea", "Ola1"})
+	//realizado en SALES2
+	//@Test(groups={"Sales", "AltaLinea", "Ola1"})
 	public void TS94498_CRM_Fase_1_SalesCPQ_Alta_Linea_Configurar_Nueva_Linea_Modificar_linea_pre_asignada_ultimos_cuatro_digitos() {
 
 		//Mismo bug que el TS6845. Se pueden tomar ese test  como base para automatizar �ste hasta el Step 4 inclusive.
 		assertTrue(false);
 	}
 	
-
-	@Test(groups={"Sales", "AltaLinea", "Ola1"})
+	//Realizado en SALES2
+	//@Test(groups={"Sales", "AltaLinea", "Ola1"})
 	public void TS94499_CRM_Fase_1_SalesCPQ_Alta_Linea_Configurar_Nueva_Linea_Presionar_el_boton_Buscar() {
 		//Mismo TS6849
 		assertTrue(false);
 	}
 	
-
-	@Test(groups={"Sales", "AltaLinea", "Ola1"})
+	//REALIZADO EN SALES2
+	//@Test(groups={"Sales", "AltaLinea", "Ola1"})
 	public void TS94501_CRM_Fase_1_SalesCPQ_Alta_Linea_Configurar_Nueva_Linea_Visualizar_filtros_de_localidad_y_provincia_al_modificar_linea_XX(){
 		//Mismo TS6849		
 		assertTrue(false); 
 	}
 	
+	//REALIZADO EN SALES2
 	@Test(groups={"Sales", "AltaLinea", "Ola1"})
 	public void TS94504_CRM_Fase_1_SalesCPQ_Alta_Linea_Configurar_Nueva_Linea_Visualizar_mensaje_y_opciones_de_lineas_no_disponibles() {
 		//Mismo TS6849	
@@ -662,15 +669,15 @@ public class ta_CPQ extends TestBase {
 	}
 	
 	
-
-	@Test(groups={"Sales", "AltaLinea", "Ola1"})
+//HACer en SALES2
+//	@Test(groups={"Sales", "AltaLinea", "Ola1"})
 	public void TS94506_CRM_Fase_1_SalesCPQ_Alta_Linea_Configurar_Nueva_Linea_Visualizar_una_descripcion_por_varios_productos_iguales() {
 
 		//Mismo TS6849
 		assertTrue(false);
 	}
-	
-	@Test
+//HACER EN SALES	
+//	@Test
 	public void TS6858_CRM_Fase_1_SalesCPQ_Alta_Linea_Asignar_SIMCARD_Visualizar_mensaje_al_asignar_un_ICCID_No_disponible(){
 		assertTrue(false);
 	}

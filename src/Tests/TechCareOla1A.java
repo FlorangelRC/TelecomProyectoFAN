@@ -66,14 +66,14 @@ public class TechCareOla1A extends TestBase {
 	}
 	
 	
-	@AfterMethod(alwaysRun=true)
+	//@AfterMethod(alwaysRun=true)
 	public void after() {
 		CustomerCare cerrar = new CustomerCare(driver);
 	    cerrar.cerrarultimapestaña();
 	    sleep(2000);
 	}
 	
-	@AfterClass(alwaysRun=true)
+	//@AfterClass(alwaysRun=true)
 	public void tearDown() {
 		try {Thread.sleep(1000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 		CustomerCare cerrar = new CustomerCare(driver);
@@ -294,12 +294,12 @@ public class TechCareOla1A extends TestBase {
 	    page.BajaryContinuar();
 	    sleep(5000);
 	    page.seleccionarRespuesta("no");
-	    page.BajaryContinuar();
-	    sleep(4000);
-	    page.BajaryContinuar();
+	    page.clickContinuar();
+	    sleep(5000);
+	    page.clickContinuar();
 	    sleep(4000);
 	    page.buscarDireccion("José Martí 1439, Argentina");
-	    sleep(4000);
+	    sleep(5000);
 	    assertTrue(driver.findElement(By.xpath("//*[@id=\"busSearchMap\"]")).isDisplayed());
 	}
 	
@@ -506,7 +506,7 @@ public class TechCareOla1A extends TestBase {
 	    page.clickContinuar();
 	    sleep(4000);
 	    page.seleccionarPreguntaFinal("Sí, funciona correctamente");
-	    sleep(3000);
+	    sleep(5000);
 	    assertTrue(driver.findElement(By.xpath("//*[@id=\"OperationalServiceMessage\"]/div")).isDisplayed());
 	}
 	
