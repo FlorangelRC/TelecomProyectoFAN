@@ -34,6 +34,14 @@ public class TechCare_Ola1 {
 	@FindBy (how= How.CSS, using = ".slds-input.ng-valid.ng-touched.ng-dirty.ng-valid-parse.ng-empty")
 	private WebElement campoBusqueda;
 	
+	//-----------------------------pregunta final desregistrar -----------------//
+	@FindBy(css=".slds-form-element__label.ng-binding.ng-scope")
+	private List<WebElement> opcionesFinal;
+
+	public WebElement getOpcionesFinal(int index) {
+		return opcionesFinal.get(index);
+	}
+
 	//----------------------------- Busqueda Cuenta ----------------------------//
 	@FindBy(css = ".x-plain-header.sd_primary_tabstrip.x-unselectable .x-tab-strip-closable")
 	private List<WebElement> pestañasPrimarias;
@@ -56,7 +64,11 @@ public class TechCare_Ola1 {
 	//---------------------------- Busqueda GEO ---------------------------//
 	@FindBy(id="AdressInput")
 	private WebElement direccion;
-	
+
+	public void setDireccion(String dir) {
+		direccion.sendKeys(dir);
+	}
+
 	@FindBy(id="GeoMock")
 	private WebElement buscar;
 	
@@ -66,7 +78,7 @@ public class TechCare_Ola1 {
 		Accounts accPage = new Accounts(driver);
 		driver.switchTo().frame(accPage.getFrameForElement(driver, By.cssSelector(".slds-button.slds-button--brand")));
 		WebElement vD=driver.findElement(By.cssSelector(".slds-button.slds-button--brand"));
-		System.out.println(vD.getText());
+		//System.out.println(vD.getText());
 		((JavascriptExecutor)driver).executeScript("window.scrollTo(0,"+driver.findElement(By.cssSelector(".slds-button.slds-button--brand")).getLocation().y+")");
 		sleep(1000);
 		driver.findElement(By.cssSelector(".slds-button.slds-button--brand")).click();
@@ -311,16 +323,38 @@ public class TechCare_Ola1 {
 		((JavascriptExecutor)driver).executeScript("window.scrollTo(0,"+cancelar.getLocation().y+")");
 		sleep(100);
 		try {driver.findElement(By.id("IssueSelectStep_nextBtn")).click(); }
-		catch(org.openqa.selenium.ElementNotVisibleException e) {
+		catch(org.openqa.selenium.ElementNotVisibleException Inco) {
 			try{driver.findElement(By.id("KnowledgeBaseResults_nextBtn")).click();}
-			catch(org.openqa.selenium.ElementNotVisibleException a) {
+			catch(org.openqa.selenium.ElementNotVisibleException BasedeConocmiento) {
 				try{driver.findElement(By.id("NetworkCategory_nextBtn")).click();}
-				catch(org.openqa.selenium.ElementNotVisibleException b) {
-				driver.findElement(By.id("CoverageValidation_nextBtn")).click();
+				catch(org.openqa.selenium.NoSuchElementException CategoriadeRed) {
+					try{driver.findElement(By.id("CoverageValidation_nextBtn")).click();}
+					catch(org.openqa.selenium.NoSuchElementException PosicionGeo) {
+						driver.findElement(By.id("Address Section_nextBtn")).click();
+					}
 				}
 			}
 		}
 	}
+	
+	public void clickContinuar() {
+		try {Thread.sleep(500);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		WebElement BenBoton = driver.findElement(By.cssSelector(".vlc-slds-button--tertiary.ng-binding.ng-scope"));
+		((JavascriptExecutor)driver).executeScript("window.scrollTo(0,"+BenBoton.getLocation().y+")");
+		WebElement continuar= driver.findElement(By.xpath("//*[text() = 'Continuar']"));
+		try {Thread.sleep(500);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		try {
+		continuar.click();
+		try {Thread.sleep(3000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		}
+		catch(org.openqa.selenium.ElementNotVisibleException a) {
+			List <WebElement> continuar2=driver.findElements(By.className("ng-binding"));
+			for(WebElement c:continuar2) {
+				if(c.getText().contains("Continuar")) {
+					c.click();
+					break;}}}		
+	}
+	
 	/**vlc-slds-button--tertiary ng-binding ng-scope
 	 * Selecciona una opcion luego de diagnosticar
 	 * @param opcion
@@ -352,4 +386,18 @@ public class TechCare_Ola1 {
 		//System.out.println("Segundo Click");
 		buscar.click();
 	}
+	
+	public void seleccionarPreguntaFinal(String opcion) {
+		opcion=opcion.toLowerCase();
+		boolean flag=false;
+		for(WebElement opt:opcionesFinal) {
+			if(opt.getText().toLowerCase().contains(opcion)) {
+				opt.click();
+				flag=true;
+				return;
+			}
+		}
+		if(!flag) System.out.println("Opcion no disponible");
+	}
+	
 }
