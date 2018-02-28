@@ -28,30 +28,30 @@ public class Marketing extends CustomerCare {
 	//Sleep
 	
 	//Working
-	public void sleepShort(int diferencia) {
-		try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+	public void sleepShort(int iDiferencia) {
+		try {Thread.sleep(5000 + iDiferencia);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 	}
 	
-	public void sleepMedium(int diferencia) {
-		try {Thread.sleep(10000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+	public void sleepMedium(int iDiferencia) {
+		try {Thread.sleep(10000 + iDiferencia);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 	}
 	
-	public void sleepLong(int diferencia) {
-		try {Thread.sleep(15000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+	public void sleepLong(int iDiferencia) {
+		try {Thread.sleep(15000 + iDiferencia);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 	}
 	
 	//Weekends
 	/*
-	public void sleepShort(int diferencia) {
-		try {Thread.sleep(8000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+	public void sleepShort(int iDiferencia) {
+		try {Thread.sleep(8000 + iDiferencia);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 	}
 	
-	public void sleepMedium(int diferencia) {
-		try {Thread.sleep(12000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+	public void sleepMedium(int iDiferencia) {
+		try {Thread.sleep(12000 + iDiferencia);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 	}
 	
-	public void sleepLong(int diferencia) {
-		try {Thread.sleep(18000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+	public void sleepLong(int iDiferencia) {
+		try {Thread.sleep(18000 + iDiferencia);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 	} 
 	*/
 	
@@ -91,22 +91,28 @@ public class Marketing extends CustomerCare {
 	}
 	
 	public void irAGestionMarketing() {
-		buscarGestion("Club Personal");
+		/*CustomerCare cCC = new CustomerCare(driver);
+		cCC.buscarGestion("Club Personal");
 		if (gestionesEncontradas.isEmpty()) {
 			System.err.println("ERROR: No existe la gestión 'Club Personal'");
 			Assert.assertFalse(gestionesEncontradas.isEmpty());
 		}
 		gestionesEncontradas.get(1).click();
 		TestBase.sleep(3000);
-		cambiarAFrameActivo();
+		cambiarAFrameActivo();*/
+		BasePage cambioFrame=new BasePage(driver);
+		driver.switchTo().defaultContent();
+		driver.switchTo().frame(cambioFrame.getFrameForElement(driver, By.className("actions-content")));
+		driver.findElement(By.xpath("//input[@ng-model='searchTerm']")).clear();
+		driver.findElement(By.xpath("//input[@ng-model='searchTerm']")).sendKeys("Club Personal");
 	}
 	
-	public void buscarGestion(String gest) {
+	/*public void buscarGestion(String gest) {
 		CustomerCare cCC = new CustomerCare(driver);
 		cCC.panelDerecho();
 		buscadorGestiones.clear();
 		buscadorGestiones.sendKeys(gest);
-	}
+	}*/
 	
 	private void cambiarAFrameActivo() {
 		driver.switchTo().defaultContent();
@@ -146,13 +152,13 @@ public class Marketing extends CustomerCare {
 		return driver.findElements(By.cssSelector(".slds-align--absolute-center.slds-m-bottom--xx-small"));
 	}
 	
-	public void seleccionarFecha (int iCantidadColumnas, int iColumna, int iDias, String sId, String sTiempo) {
+	public void seleccionarFecha (int iColumna, int iDias, String sId, String sTiempo) {
 		List <WebElement> wBodyComplete = driver.findElements(By.cssSelector(".slds-media.slds-media--center.slds-has-flexi-truncate"));
 		WebElement wBody = wBodyComplete.get(5);
-		List <WebElement> wColumna = traerColumnaElement(wBody, iCantidadColumnas, iColumna);
+		List <WebElement> wColumna = traerColumnaElement(wBody, 7, iColumna);
 		WebElement wFechaDesde = wColumna.get(0).findElement(By.id(sId));
 		wFechaDesde.click();
-		wColumna = traerColumnaElement(wBody, iCantidadColumnas, iColumna);
+		wColumna = traerColumnaElement(wBody, 7, iColumna);
 		wFechaDesde = wColumna.get(0);
 		List<WebElement> wDias = wFechaDesde.findElements(By.tagName("td"));
 		switch (sTiempo.toLowerCase()) {
@@ -451,4 +457,5 @@ public class Marketing extends CustomerCare {
 		Select motivo = new Select(driver.findElement(By.xpath("//select[@id='SelectReason']")));
 		motivo.selectByIndex(num);
 	}
+	
 }
