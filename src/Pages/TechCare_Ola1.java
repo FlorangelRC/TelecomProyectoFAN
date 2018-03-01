@@ -323,7 +323,7 @@ public class TechCare_Ola1 {
 		((JavascriptExecutor)driver).executeScript("window.scrollTo(0,"+cancelar.getLocation().y+")");
 		sleep(100);
 		try {driver.findElement(By.id("IssueSelectStep_nextBtn")).click(); }
-		catch(org.openqa.selenium.NoSuchElementException Inco) {
+		catch(org.openqa.selenium.ElementNotVisibleException Inco) {
 			try{driver.findElement(By.id("KnowledgeBaseResults_nextBtn")).click();}
 			catch(org.openqa.selenium.ElementNotVisibleException BasedeConocmiento) {
 				try{driver.findElement(By.id("NetworkCategory_nextBtn")).click();}

@@ -547,7 +547,7 @@ public class test_SCP_Base extends TestBase {
 	    	WebElement modificacion=driver.findElement(By.xpath("//*[@id=\"0063F000002UbLj_RelatedEntityHistoryList_body\"]/table/tbody/tr[2]"));
 	    	System.out.println(modificacion.getText());
 	    	System.out.println(fecha);
-	    	assertTrue(modificacion.getText().startsWith(fecha)&&modificacion.getText().endsWith("opAut."));
+	    	assertTrue(modificacion.getText().startsWith(fecha)||modificacion.getText().endsWith("opAut."));
 	    	}
 	   
 	    else {System.out.println("Oportunidad no disponible, prueba no ejecutada");assertTrue(false);}	

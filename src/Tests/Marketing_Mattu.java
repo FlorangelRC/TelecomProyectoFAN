@@ -29,7 +29,6 @@ public class Marketing_Mattu extends TestBase{
 	public void readySteady() throws Exception {
 		this.driver = setConexion.setupEze();
 		try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
-		mMarketing = new Marketing(driver);
 		loginMarketing(driver);
 		//login(driver);
 		try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
@@ -76,8 +75,26 @@ public class Marketing_Mattu extends TestBase{
 			}
 		}
 		
-		try {Thread.sleep(8000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
-		mMarketing.irAGestionMarketing();//Checkear
+		try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		
+		BasePage cambioFrame = new BasePage(driver);
+		driver.switchTo().defaultContent();
+		driver.switchTo().frame(cambioFrame.getFrameForElement(driver, By.className("actions-content")));
+		driver.findElement(By.xpath("//input[@ng-model='searchTerm']")).clear();
+		driver.findElement(By.xpath("//input[@ng-model='searchTerm']")).sendKeys("Club Personal");
+		/*WebElement wPanelDerecho = driver.findElement(By.className("actions-content"));
+		List<WebElement> wGestiones = wPanelDerecho.findElements(By.tagName("div"));
+		for (WebElement wAux : wGestiones) {
+			System.out.println("wGestiones: " + wAux.findElement(By.cssSelector(".slds-text-body_regular.ta-button-font")).getText());
+			if (wAux.findElement(By.cssSelector(".slds-text-body_regular.ta-button-font")).getText().toLowerCase().equals("club personal")) {
+				wAux.click();
+			}
+		}*/
+		driver.switchTo().defaultContent();
+		driver.switchTo().frame(cambioFrame.getFrameForElement(driver, By.xpath("/html/body/div/div[1]/ng-include/div/div[1]/ng-include/div/div[2]/div[2]/button")));
+		driver.findElement(By.xpath("/html/body/div/div[1]/ng-include/div/div[1]/ng-include/div/div[2]/div[2]/button"));
+		
+		//mMarketing.irAGestionMarketing();//Checkear
 		/*BasePage cambioFrame=new BasePage();
 		driver.switchTo().defaultContent();
 		driver.switchTo().frame(cambioFrame.getFrameForElement(driver, By.cssSelector(".slds-input.actionSearch.ng-pristine.ng-untouched.ng-valid.ng-empty")));
@@ -94,12 +111,12 @@ public class Marketing_Mattu extends TestBase{
 	}
 	@BeforeMethod(alwaysRun=true)
 	public void go() throws Exception {
-		mMarketing.sleepMedium(0);
+		try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 		BasePage cambioFrame=new BasePage();
 		driver.switchTo().defaultContent();
 		driver.switchTo().frame(cambioFrame.getFrameForElement(driver, By.cssSelector(".slds-panel__section.slds-p-around--small")));
 	}
-	@AfterMethod(alwaysRun=true)
+	//@AfterMethod(alwaysRun=true)
 	public void byeByeTab() {
 		try {
 			CustomerCare cCC = new CustomerCare(driver);
@@ -111,7 +128,7 @@ public class Marketing_Mattu extends TestBase{
 			//AllwaysEmpty
 		}
 	}
-	@AfterClass(alwaysRun=true)
+	//@AfterClass(alwaysRun=true)
 	public void tearDown() {
 		driver.close();
 	}
@@ -204,8 +221,8 @@ public class Marketing_Mattu extends TestBase{
 	//TCC = 6
 	@Test(groups = "Marketing")
 	public void TS50072_Campo_fecha_Mayor_al_actual_Solapa_CP() {
-		mMarketing.seleccionarFecha(7, 5, 1, "text-input-id-1", "Futuro");
-		mMarketing.seleccionarFecha(7, 7, 2, "text-input-id-2", "Futuro");
+		mMarketing.seleccionarFecha(5, 1, "text-input-id-1", "Futuro");
+		mMarketing.seleccionarFecha(7, 2, "text-input-id-2", "Futuro");
 		
 		List<WebElement> wBody = driver.findElements(By.className("techCare-PriceList-tbody"));
 		List<WebElement> wRows = wBody.get(2).findElements(By.tagName("tr"));
