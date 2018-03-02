@@ -17,6 +17,7 @@ import org.testng.annotations.Test;
 import Pages.BasePage;
 import Pages.CustomerCare;
 import Pages.HomeBase;
+import Pages.TechCare_Ola1;
 import Pages.setConexion;
 
 public class TechnicalCareCSRAutogestionA extends TestBase{
@@ -42,13 +43,11 @@ public class TechnicalCareCSRAutogestionA extends TestBase{
        cerrar.cerrarultimapestaña();
 		
 		//Selecciona Cuentas
-		try {Thread.sleep(4000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
-		goToLeftPanel2(driver, "Cuentas"	);
-		
-		//Selecciona la cuenta Adrian Tech de todas las Cuentas
-		seleccionCuentaPorNombre(driver, "Adrian Techh");
-		try {Thread.sleep(3000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+       TechCare_Ola1 page=new TechCare_Ola1(driver);
+		sleep(3000);
+		page.selectAccount("Adrian Tech");
 		driver.switchTo().defaultContent();
+		sleep(3000);
 		
 		//selecciona el campo donde esta la busquedad escribe y busca
 		searchAndClick(driver, "Diagnóstico de Autogestión");
@@ -63,13 +62,13 @@ public class TechnicalCareCSRAutogestionA extends TestBase{
 	}
 	
 	
-	@AfterMethod(alwaysRun=true)
+	//@AfterMethod(alwaysRun=true)
 	public void after() {
 		sleep(2000);
 		
 	}
 	
-	@AfterClass(alwaysRun=true)
+	//@AfterClass(alwaysRun=true)
 	public void tearDown() {
 		sleep(1000);
 		CustomerCare cerrar = new CustomerCare(driver);
