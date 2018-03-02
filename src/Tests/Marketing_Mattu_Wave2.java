@@ -66,7 +66,7 @@ public class Marketing_Mattu_Wave2 extends TestBase{
 			//AllwaysEmpty
 		}
 	}*/
-	@AfterClass(alwaysRun=true)
+	//@AfterClass(alwaysRun=true)
 	public void tearDown() {
 		driver.close();
 	}
@@ -157,6 +157,7 @@ public class Marketing_Mattu_Wave2 extends TestBase{
 			if (wAux.getAttribute("value").toLowerCase().equals("guardar")) {
 				bGuardar = true;
 				wAux.click();
+				break;
 			}
 		}
 		Assert.assertTrue(bGuardar);
