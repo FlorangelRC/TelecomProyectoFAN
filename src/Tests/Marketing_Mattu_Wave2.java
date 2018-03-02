@@ -107,7 +107,7 @@ public class Marketing_Mattu_Wave2 extends TestBase{
 	//TCC = 2
 	@SuppressWarnings("deprecation")
 	@Test(groups = {"Marketing", "Ola2", "GestionDeCampaniasEnMarketingCloudDeClubPersonal"})
-	public void TS102037_Creación_exitosa_de_una_campaña_en_MKT() {
+	public void TS102037_Creacion_exitosa_de_una_campaña_en_MKT() {
 		driver.findElement(By.className("pbButton")).findElement(By.tagName("input")).click();
 		WebElement wSelect = driver.findElement(By.id("p3"));
 		wSelect.click();
@@ -308,7 +308,7 @@ public class Marketing_Mattu_Wave2 extends TestBase{
 	}
 	
 	//-------------------------------------------------------------------------------------------------
-	//TCC = 7
+	//TCC = 8
 	/*@Test(groups = {"Marketing", "Ola2", "ConfiguracionDeCampaniasEnMarketingCloudDeClubPersonal"})
 	public void TS102110_Dependencia_de_Campos_Picklist_Alta_Campaña() {
 		driver.findElement(By.className("pbButton")).findElement(By.tagName("input")).click();
