@@ -48,7 +48,7 @@ public class Marketing_Mattu_Wave2 extends TestBase{
 		/*WebElement wMenu = driver.findElement(By.id("tabBar"));
 		List<WebElement> wMenuElements = wMenu.findElements(By.tagName("li"));
 		for (WebElement wAux : wMenuElements) {
-			if(wAux.findElement(By.tagName("a")).getText().toLowerCase().equals("campañas")) {
+			if(wAux.findElement(By.tagName("a")).getText().toLowerCase().equals("campanias")) {
 				wAux.click();
 			}
 		}*/
@@ -66,7 +66,7 @@ public class Marketing_Mattu_Wave2 extends TestBase{
 			//AllwaysEmpty
 		}
 	}*/
-	//@AfterClass(alwaysRun=true)
+	@AfterClass(alwaysRun=true)
 	public void tearDown() {
 		driver.close();
 	}
@@ -74,7 +74,7 @@ public class Marketing_Mattu_Wave2 extends TestBase{
 	//-------------------------------------------------------------------------------------------------
 	//TCC = 1
 	@Test(groups = {"Marketing", "Ola2", "GestionDeCampaniasEnMarketingCloudDeClubPersonal"})
-	public void TS102035_Poder_crear_una_campaña_en_MKT() {
+	public void TS102035_Poder_crear_una_campania_en_MKT() {
 		driver.findElement(By.className("pbButton")).findElement(By.tagName("input")).click();
 		WebElement wSelect = driver.findElement(By.id("p3"));
 		wSelect.click();
@@ -107,7 +107,7 @@ public class Marketing_Mattu_Wave2 extends TestBase{
 	//TCC = 2
 	@SuppressWarnings("deprecation")
 	@Test(groups = {"Marketing", "Ola2", "GestionDeCampaniasEnMarketingCloudDeClubPersonal"})
-	public void TS102037_Creacion_exitosa_de_una_campaña_en_MKT() {
+	public void TS102037_Creacion_exitosa_de_una_campania_en_MKT() {
 		driver.findElement(By.className("pbButton")).findElement(By.tagName("input")).click();
 		WebElement wSelect = driver.findElement(By.id("p3"));
 		wSelect.click();
@@ -173,7 +173,7 @@ public class Marketing_Mattu_Wave2 extends TestBase{
 	//-------------------------------------------------------------------------------------------------
 	//TCC = 3
 	@Test(groups = {"Marketing", "Ola2", "ConfiguracionDeCampaniasEnMarketingCloudDeClubPersonal"})
-	public void TS102092_Campo_Obligatorio_Canal_Alta_de_Campaña() {
+	public void TS102092_Campo_Obligatorio_Canal_Alta_de_Campania() {
 		driver.findElement(By.className("pbButton")).findElement(By.tagName("input")).click();
 		WebElement wSelect = driver.findElement(By.id("p3"));
 		wSelect.click();
@@ -206,7 +206,7 @@ public class Marketing_Mattu_Wave2 extends TestBase{
 	//-------------------------------------------------------------------------------------------------
 	//TCC = 4
 	@Test(groups = {"Marketing", "Ola2", "ConfiguracionDeCampaniasEnMarketingCloudDeClubPersonal"})
-	public void TS102100_Campo_Obligatorio_Fecha_de_Vigencia_desde_Alta_de_Campaña() {
+	public void TS102100_Campo_Obligatorio_Fecha_de_Vigencia_desde_Alta_de_Campania() {
 		driver.findElement(By.className("pbButton")).findElement(By.tagName("input")).click();
 		WebElement wSelect = driver.findElement(By.id("p3"));
 		wSelect.click();
@@ -230,7 +230,7 @@ public class Marketing_Mattu_Wave2 extends TestBase{
 	//-------------------------------------------------------------------------------------------------
 	//TCC = 5
 	@Test(groups = {"Marketing", "Ola2", "ConfiguracionDeCampaniasEnMarketingCloudDeClubPersonal"})
-	public void TS102072_Campo_Obligatorio_Nombre_de_Campaña_Alta_de_Campaña() {
+	public void TS102072_Campo_Obligatorio_Nombre_de_Campania_Alta_de_Campania() {
 		driver.findElement(By.className("pbButton")).findElement(By.tagName("input")).click();
 		WebElement wSelect = driver.findElement(By.id("p3"));
 		wSelect.click();
@@ -256,7 +256,7 @@ public class Marketing_Mattu_Wave2 extends TestBase{
 	//-------------------------------------------------------------------------------------------------
 	//TCC = 6
 	@Test(groups = {"Marketing", "Ola2", "ConfiguracionDeCampaniasEnMarketingCloudDeClubPersonal"})
-	public void TS102076_Campo_Obligatorio_Objetivo_de_Campaña_Alta_de_Campaña() {
+	public void TS102076_Campo_Obligatorio_Objetivo_de_Campania_Alta_de_Campania() {
 		driver.findElement(By.className("pbButton")).findElement(By.tagName("input")).click();
 		WebElement wSelect = driver.findElement(By.id("p3"));
 		wSelect.click();
@@ -283,7 +283,7 @@ public class Marketing_Mattu_Wave2 extends TestBase{
 	//-------------------------------------------------------------------------------------------------
 	//TCC = 7
 	@Test(groups = {"Marketing", "Ola2", "ConfiguracionDeCampaniasEnMarketingCloudDeClubPersonal"})
-	public void TS102080_Campo_Obligatorio_Tipo_de_Campaña_Alta_de_Campaña() {
+	public void TS102080_Campo_Obligatorio_Tipo_de_Campania_Alta_de_Campania() {
 		driver.findElement(By.className("pbButton")).findElement(By.tagName("input")).click();
 		WebElement wSelect = driver.findElement(By.id("p3"));
 		wSelect.click();
@@ -310,7 +310,7 @@ public class Marketing_Mattu_Wave2 extends TestBase{
 	//-------------------------------------------------------------------------------------------------
 	//TCC = 8
 	/*@Test(groups = {"Marketing", "Ola2", "ConfiguracionDeCampaniasEnMarketingCloudDeClubPersonal"})
-	public void TS102110_Dependencia_de_Campos_Picklist_Alta_Campaña() {
+	public void TS102110_Dependencia_de_Campos_Picklist_Alta_Campania() {
 		driver.findElement(By.className("pbButton")).findElement(By.tagName("input")).click();
 		WebElement wSelect = driver.findElement(By.id("p3"));
 		wSelect.click();
