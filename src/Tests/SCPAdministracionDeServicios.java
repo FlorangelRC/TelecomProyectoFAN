@@ -51,7 +51,7 @@ public class SCPAdministracionDeServicios extends TestBase {
 		try {Thread.sleep(10000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 	}
 	
-	@AfterClass(groups = "SCP")
+	//@AfterClass(groups = "SCP")
 	public void tearDown() {
 		driver.quit();
 		try {Thread.sleep(2000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
@@ -114,8 +114,6 @@ public class SCPAdministracionDeServicios extends TestBase {
 			}
 		}
 		assertTrue(estaMon);
-		assertTrue(false);
-		
 		pcp.Desloguear_Loguear("isabel");
     }  
 	

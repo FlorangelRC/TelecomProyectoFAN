@@ -16,6 +16,8 @@ import org.testng.annotations.BeforeClass;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
+import com.gargoylesoftware.htmlunit.Page;
+
 import Pages.AccountType;
 import Pages.Accounts;
 import Pages.BasePage;
@@ -75,7 +77,7 @@ private WebDriver driver;
  	
 	}
  	 	
-	@AfterMethod(alwaysRun=true)
+//	@AfterMethod(alwaysRun=true)
 	public void after() {
 		try {Thread.sleep(2000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 		driver.switchTo().defaultContent(); 
@@ -84,7 +86,7 @@ private WebDriver driver;
 	    driver.switchTo().defaultContent(); 
 	}
  	
-	@AfterClass(alwaysRun=true)
+	//@AfterClass(alwaysRun=true)
 	public void tearDown() {
 		try {Thread.sleep(1000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 		CustomerCare cerrar = new CustomerCare(driver);
@@ -357,4 +359,34 @@ private WebDriver driver;
     tech.clickDiagnosticarServicio("sms", "SMS Entrante", false);
     assertTrue(tech.validarEstado("SMS"));
 	}
+	
+
+	@Test (groups= {"TechnicalCare", "SVA", "Ola1"})
+	public void TS94352_CRM_Ola_1_Technical_Care_CSR_SVA_Verificacion_de_la_posicion_en_el_mapa() throws Exception {
+	TechnicalCareCSRDiagnosticoPage tech = new TechnicalCareCSRDiagnosticoPage(driver);
+	sleep (4000);
+	tech.clickOpcionEnAsset("543416869777", "mis servicios");
+    tech.verDetalles();
+    tech.clickDiagnosticarServicio("sms", "SMS Saliente", true);
+    tech.selectionInconvenient("SMS Emisión a algún destino en particular");
+    tech.continuar();
+    sleep(3000);
+   // tech.verificarCaso();
+    tech.seleccionarRespuesta("no");
+    tech.clickContinuar();
+    sleep(5000);
+    tech.clickContinuar();
+    sleep(5000);
+    tech.buscarDireccion("Av. Cabildo");
+    sleep(5000);
+    tech.categoriaRed("No son las antenas");
+    tech.categoriaRed("Si");
+    sleep(3000);
+   tech.clickContinua();
+   tech.actualizarEquipo("Test-X Play");
+   sleep(3000);
+   tech.clickContinua();
+   tech.categoriaRed("Sí");
+   
+}
 }
