@@ -248,7 +248,7 @@ public class SalesMatrix extends TestBase {
 		Assert.assertTrue(a && b && c);
 	}
 	
-	@Test (groups = {"Sales", "Ventas", "Ola1"})
+	@Test (groups = {"Sales", "AltaDeLinea", "Ola1"})
 	public void TS95246_Ventas_General_Anulacion_de_reserva_de_venta_de_productos_tangibles_Modo_presencial() {
 		sb.selectMatrix("s", "stockmovementoperation");
 		driver.switchTo().frame(cambioFrame(driver, By.className("edit-columns")));

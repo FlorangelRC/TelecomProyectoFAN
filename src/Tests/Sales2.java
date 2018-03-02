@@ -30,12 +30,12 @@ public class Sales2 extends TestBase{
 	String localidad="BASAIL";
 
 	
-	//@AfterClass(alwaysRun=true)
+	@AfterClass(alwaysRun=true)
 	public void tearDown() {
 		driver.quit();
 	}
 	
-	//@AfterMethod(alwaysRun=true)
+	@AfterMethod(alwaysRun=true)
 	public void deslogin() {
 		sleep(3000);
 		driver.get("https://crm--sit.cs14.my.salesforce.com/home/home.jsp?tsid=02u41000000QWha/");
@@ -57,7 +57,7 @@ public class Sales2 extends TestBase{
 		sleep(7000);
 	}
 	
-	@Test(groups={"Sales", "NuevaVenta", "Ola1"})
+	@Test(groups={"Sales", "AltaDeLinea", "Ola1"})
 	public void TS94698_Nueva_Venta_Modo_de_Entrega_Verificar_Solicitud_de_Domicilio_de_envio_Envio_Estandar(){
 		sb.BuscarCuenta(DNI, "34073329");
 		sb.acciondecontacto("catalogo");
@@ -95,7 +95,7 @@ public class Sales2 extends TestBase{
 		Assert.assertEquals(delir.getFirstSelectedOption().getText(),"Env\u00edo Est\u00e1ndar");
 	}
 	
-	@Test(groups={"Sales", "NuevaVenta", "Ola1"})
+	@Test(groups={"Sales", "AltaDeLinea", "Ola1"})
 	public void TS95246_Ventas_General_Verificar_Que_Este_El_Paso_En_Metodo_De_Entrega_Distinto_A_Presencial(){
 		sb.BuscarCuenta(DNI, "34073329");
 		sb.acciondecontacto("catalogo");
@@ -131,7 +131,7 @@ public class Sales2 extends TestBase{
 		Assert.assertTrue(esta);
 	}
 	
-	@Test(groups = { "Sales", "NuevaVenta", "Ola1" })
+	@Test(groups = { "Sales", "AltaDeLinea", "Ola1" })
 	public void TS94699_Nueva_Venta_Modo_de_Entrega_Verificar_Solicitud_de_Domicilio_de_envio_Envio_Express() {
 		sb.BuscarCuenta(DNI, "34073329");
 		sb.acciondecontacto("catalogo");
@@ -218,7 +218,7 @@ public class Sales2 extends TestBase{
 		Assert.assertTrue(doc.getLocation().y > dom.getLocation().y);
 	}
 	
-	@Test(groups={"Sales", "Ventas", "Ola1"}) 
+	@Test(groups={"Sales", "AltaDeLinea", "Ola1"}) 
 	public void TS94637_Ventas_Nueva_Venta_Verificar_creacion_orden_de_venta_Usuario() {
 		sb.BuscarCuenta(DNI, "11111111");
 		sb.acciondecontacto("catalogo");
@@ -228,7 +228,7 @@ public class Sales2 extends TestBase{
 		Assert.assertTrue(num.getText().contains("Nro. Orden:"));
 	}
 	
-	@Test(groups={"Sales", "Ventas", "Ola1"})
+	@Test(groups={"Sales", "AltaDeLinea", "Ola1"})
 	public void TS94652_Ventas_NumeroOrden_Verificar_Orden_de_Venta_Abierta_Modo_de_Entrega() {
 		sb.BuscarCuenta(DNI, "34073329");
 		sb.acciondecontacto("catalogo");
@@ -257,7 +257,7 @@ public class Sales2 extends TestBase{
 		Assert.assertTrue(a);
 	}
 	
-	@Test(groups={"Sales", "Ventas", "Ola1"})
+	@Test(groups={"Sales", "AltaDeLinea", "Ola1"})
 	public void TS94651_Ventas_NumeroOrden_Verificar_Orden_de_Venta_Abierta_Seleccion_de_Linea() {
 		sb.BuscarCuenta(DNI, "34073329");
 		sb.acciondecontacto("catalogo");
@@ -275,7 +275,7 @@ public class Sales2 extends TestBase{
 		Assert.assertTrue(a);
 	}
 	
-	@Test(groups={"Sales", "Ventas", "Ola1"})  
+	@Test(groups={"Sales", "AltaDeLinea", "Ola1"})  
 	public void TS94650_Ventas_NumeroOrden_Verificar_Orden_de_Venta_Abierta_Seleccionar_un_producto() {
 		sb.BuscarCuenta(DNI, "34073329");
 		sb.acciondecontacto("catalogo");
@@ -323,7 +323,7 @@ public class Sales2 extends TestBase{
 		
 	}
 	
-	@Test(groups={"Sales", "Ventas", "Ola1"})  
+	@Test(groups={"Sales", "AltaDeLinea", "Ola1"})  
 	public void TS94646_Ventas_NumeroOrden_Verificar_Orden_de_Venta_Abierta_Medio_de_Pago() {
 		sb.BuscarCuenta(DNI, "34073329");
 		sb.acciondecontacto("catalogo");
@@ -357,7 +357,7 @@ public class Sales2 extends TestBase{
 		Assert.assertTrue(x);
 	}
 	
-	@Test(groups={"Sales", "Ventas", "Ola1"})
+	@Test(groups={"Sales", "AltaDeLinea", "Ola1"})
 	public void TS94641_Ventas_NumeroOrden_Verificar_Orden_de_Venta_Abierta_Nueva_Venta() {
 		sb.BuscarCuenta(DNI, "11111111");
 		sb.acciondecontacto("catalogo");
@@ -370,7 +370,7 @@ public class Sales2 extends TestBase{
 			}
 	}
 	
-	@Test(groups={"Sales", "Ventas", "Ola1"})
+	@Test(groups={"Sales", "AltaDeLinea", "Ola1"})
 	public void TS94643_Ventas_NumeroOrden_Verificar_Orden_de_Venta_Abierta_Seleccion_de_Linea() {
 		sb.BuscarCuenta(DNI, "34073329");
 		sb.acciondecontacto("catalogo");
@@ -389,7 +389,7 @@ public class Sales2 extends TestBase{
 		Assert.assertTrue(a);
 	}
 	
-	@Test(groups={"Sales", "Ventas", "Ola1"})  //Falta terminar, no se puede crear venta desde la V360
+	@Test(groups={"Sales", "AltaDeLinea", "Ola1"})  //Falta terminar, no se puede crear venta desde la V360
 	public void TS94639_Ventas_Nueva_Venta_Verificar_creacion_orden_de_venta_desde_un_Asset_Usuario() {
 		driver.findElement(By.cssSelector(".vlc-slds-button--tertiary.ng-binding.ng-scope")).click();
 		sleep(2000);
@@ -402,7 +402,7 @@ public class Sales2 extends TestBase{
 		Assert.assertTrue(false);
 	}
 	
-	@Test(groups={"Sales", "Ventas", "Ola1"})
+	@Test(groups={"Sales", "AltaDeLinea", "Ola1"})
 	public void TS94716_Ventas_VentasGestiones_Visualizar_un_historico_de_gestiones_realizadas() {
 		driver.findElement(By.cssSelector(".vlc-slds-button--tertiary.ng-binding.ng-scope")).click();
 		sleep(2000);
@@ -488,7 +488,7 @@ public class Sales2 extends TestBase{
 		Assert.assertTrue(a.equals(b));
 	}
 	
-	@Test(groups={"Sales", "Ventas", "Ola1"})
+	@Test(groups={"Sales", "AltaDeLinea", "Ola1"})
 	public void TS94913_Ventas_General_Verificar_Completitud_Pendiente_para_cada_estado() {
 		sb.BuscarCuenta(DNI, "11111111");
 		sb.acciondecontacto("catalogo");
@@ -549,7 +549,7 @@ public class Sales2 extends TestBase{
 		Assert.assertTrue(verdni.getText().toLowerCase().contains(a));
 	}
 	
-	@Test(groups={"Sales", "Ventas", "Ola1"})
+	@Test(groups={"Sales", "AltaDeLinea", "Ola1"})
 	public void TS94696_Nueva_Venta_Modo_de_Entrega_Verificar_LOV_Tipo_de_Delivery() {
 		sb.BuscarCuenta(DNI, "34073329");
 		sb.acciondecontacto("catalogo");
@@ -575,7 +575,7 @@ public class Sales2 extends TestBase{
 		
 	}
 	
-	@Test(groups={"Sales", "Ventas", "Ola1"})
+	@Test(groups={"Sales", "AltaDeLinea", "Ola1"})
 	public void TS94690_Nueva_Venta_Modo_de_Entrega_Verificar_que_no_se_puede_cambiar_el_Modo_de_Entrega_Delivery() {
 		sb.BuscarCuenta(DNI, "34073329");
 		sb.acciondecontacto("catalogo");
@@ -598,7 +598,7 @@ public class Sales2 extends TestBase{
 		Assert.assertTrue(mde.getAttribute("disabled").equals("true"));
 	}
 	
-	@Test(groups={"Sales", "Ventas", "Ola1"})
+	@Test(groups={"Sales", "AltaDeLinea", "Ola1"})
 	public void TS94691_Nueva_Venta_Modo_de_Entrega_Verificar_que_no_se_puede_cambiar_el_Modo_de_Entrega_Store_Pick_Up() {
 		sb.BuscarCuenta(DNI, "34073329");
 		sb.acciondecontacto("catalogo");
@@ -627,7 +627,7 @@ public class Sales2 extends TestBase{
 		Assert.assertTrue(mde.getAttribute("disabled").equals("true"));
 	}
 	
-	@Test(groups={"Sales", "Ventas", "Ola1"})
+	@Test(groups={"Sales", "AltaDeLinea", "Ola1"})
 	public void TS94694_Nueva_Venta_Modo_de_Entrega_Verificar_que_se_habilite_Tipo_de_Delivery() {
 		sb.BuscarCuenta(DNI, "34073329");
 		sb.acciondecontacto("catalogo");
@@ -649,7 +649,7 @@ public class Sales2 extends TestBase{
 		Assert.assertTrue(driver.findElement(By.id("DeliveryServiceType")).isEnabled());
 	}
 	
-	@Test(groups={"Sales", "Ventas", "Ola1"})
+	@Test(groups={"Sales", "AltaDeLinea", "Ola1"})
 	public void TS94730_Alta_De_Linea_Verificar_LOV_De_Modalidad_Entrega_Para_Canal_Presencial_Agentes() {
 		boolean Pr = false;
 		boolean Dl = false;
@@ -681,7 +681,7 @@ public class Sales2 extends TestBase{
 		assertTrue(driver.findElement(By.cssSelector(".slds-col.taChangeDeliveryMethod.slds-text-body--small.slds-m-left--large")).findElement(By.tagName("strong")).getText().contains("Presencial"));
 	}
 	
-	 @Test(groups = {"Sales", "Ventas","Ola1"})
+	 @Test(groups = {"Sales", "AltaDeLinea","Ola1"})
 	  public void TS94714_Ventas_BuscarCliente_Verificar_Solo_Clientes_No_Activos() {
 		  driver.findElement(By.id("PhoneNumber")).sendKeys("1111111111");
 		  driver.findElement(By.id("SearchClientsDummy")).click();
@@ -693,7 +693,7 @@ public class Sales2 extends TestBase{
 		  Assert.assertTrue(cai.get(1).findElement(By.tagName("a")).getText().contains("Inactivos"));
 	 }
 	
-	@Test(groups={"Sales", "Ventas", "Ola1"})
+	@Test(groups={"Sales", "AltaDeLinea", "Ola1"})
 	public void TS95111_Ventas_General_Verificar_Que_No_Se_Puede_Seleccionar_Una_Linea_Decisora_ProcesoVenta() {
 		boolean esta = false;
 		sb.BuscarCuenta(DNI, "34073329");
@@ -751,7 +751,7 @@ public class Sales2 extends TestBase{
 		Assert.assertTrue(driver.findElement(By.id("DocumentNumber")).getAttribute("value").matches("\\d{2}-\\d{8}-\\d{1}"));
 	}
 	
-	@Test(groups={"Sales", "Ventas", "Ola1"})
+	@Test(groups={"Sales", "AltaDeLinea", "Ola1"})
 	public void TS94763_Ventas_Entregas_General_Modificar_el_lugar_de_entrega() {
 		sb.BuscarCuenta(DNI, "11111111");
 		sb.acciondecontacto("catalogo");
@@ -793,7 +793,7 @@ public class Sales2 extends TestBase{
 		Assert.assertTrue(ultnum.getText().contains("7354"));
  	}
 	
-	@Test(groups={"Sales", "Configuracion", "Ola1"})  
+	@Test(groups={"Sales", "AltaDeLinea", "Ola1"})  
 	public void TS94807_Configuracion_Verificar_Asignacion_De_Seriales_AgentePresencial() {
 		sb.BuscarCuenta(DNI, "34073329");
 		sb.acciondecontacto("catalogo");
@@ -809,7 +809,7 @@ public class Sales2 extends TestBase{
 		Assert.assertTrue(!serial.findElement(By.tagName("input")).getAttribute("value").isEmpty());
 	}
 	
-	@Test(groups={"Sales", "Ventas", "Ola1"})
+	@Test(groups={"Sales", "AltaDeLinea", "Ola1"})
 	public void TS94777_Ventas_Entregas_General_Store_Pickup_Consulta_stock_por_PDV_Visualizar_campos_filtro_de_la_consulta() {
 		sb.BuscarCuenta(DNI, "34073329");
 		sb.acciondecontacto("catalogo");
@@ -831,7 +831,7 @@ public class Sales2 extends TestBase{
 		Assert.assertTrue(driver.findElement(By.id("Store")).isEnabled());
 	}
 	
-	@Test(groups={"Sales", "Ventas", "Ola1"})  //falta validar los campos porque los campos no son opcionales
+	@Test(groups={"Sales", "AltaDeLinea", "Ola1"})  //falta validar los campos porque los campos no son opcionales
 	public void TS94935_Ventas_Modo_De_Pago_Tarjeta_Verificar_Campos_Opcionales_Medio_De_Pago_TC() {
 		sb.BuscarCuenta(DNI, "34073329");
 		sb.acciondecontacto("catalogo");
@@ -866,7 +866,7 @@ public class Sales2 extends TestBase{
 		//Assert.assertTrue(driver.findElement(By.id("CardBankingEntity")).getAttribute("required"));
 	}
 	
-	@Test(groups={"Sales", "Ventas", "Ola1"})  //falta validar los campos porque el campo requerido no existe
+	@Test(groups={"Sales", "AltaDeLinea", "Ola1"})  //falta validar los campos porque el campo requerido no existe
 	public void TS94936_Ventas_Modo_De_Pago_Tarjeta_Verificar_Campos_requeridos_Medio_De_Pago_TC() {
 		sb.BuscarCuenta(DNI, "34073329");
 		sb.acciondecontacto("catalogo");
@@ -897,7 +897,7 @@ public class Sales2 extends TestBase{
 		//Assert.assertTrue(driver.findElement(By.id("CardBankingEntity")).getAttribute("required"));
 	}
 	
-	@Test(groups={"Sales", "Ventas", "Ola1"})  
+	@Test(groups={"Sales", "AltaDeLinea", "Ola1"})  
 	public void TS94937_Ventas_Modo_De_Pago_Tarjeta_Verificar_Datos_Del_Campo_Entidad_De_Tarjeta() {
 		sb.BuscarCuenta(DNI, "34073329");
 		sb.acciondecontacto("catalogo");
@@ -936,7 +936,7 @@ public class Sales2 extends TestBase{
 		Assert.assertTrue(driver.findElement(By.id("CardBankingEntity-0")).findElements(By.tagName("option")).size()>1);
 	}
 	
-	@Test(groups={"Sales", "Ventas", "Ola1"})  
+	@Test(groups={"Sales", "AltaDeLinea", "Ola1"})  
 	public void TS94938_Ventas_Modo_De_Pago_Tarjeta_Verificar_Datos_Del_Campo_Entidad_Banco_Emisor_Tarjeta() {
 		sb.BuscarCuenta(DNI, "34073329");
 		sb.acciondecontacto("catalogo");
@@ -971,7 +971,7 @@ public class Sales2 extends TestBase{
 		Assert.assertTrue(driver.findElement(By.id("BankingEntity-0")).findElements(By.tagName("option")).size()>1);
 	}
 	
-	@Test(groups={"Sales", "Ventas", "Ola1"})  
+	@Test(groups={"Sales", "AltaDeLinea", "Ola1"})  
 	public void TS94939_Ventas_Modo_De_Pago_Tarjeta_Verificar_Datos_Del_Campo_Codigo_Promo_Bancaria() {
 		sb.BuscarCuenta(DNI, "34073329");
 		sb.acciondecontacto("catalogo");
@@ -1014,7 +1014,7 @@ public class Sales2 extends TestBase{
 		Assert.assertTrue(driver.findElement(By.id("promotionsByCardsBank-0")).findElements(By.tagName("option")).size()>1);
 	}
 	
-	@Test(groups={"Sales", "Ventas", "Ola1"})  
+	@Test(groups={"Sales", "AltaDeLinea", "Ola1"})  
 	public void TS94941_Ventas_Modo_De_Pago_Tarjeta_Verificar_Datos_Del_Campo_Cuotas_TC() {
 		sb.BuscarCuenta(DNI, "34073329");
 		sb.acciondecontacto("catalogo");
@@ -1061,7 +1061,7 @@ public class Sales2 extends TestBase{
 		Assert.assertTrue(driver.findElement(By.id("Installment-0")).findElements(By.tagName("option")).size()>1);
 	}
 	
-	@Test(groups={"Sales", "Ventas", "Ola1"})  
+	@Test(groups={"Sales", "AltaDeLinea", "Ola1"})  
 	public void TS94942_Ventas_Modo_De_Pago_Tarjeta_Verificar_Datos_Del_Campo_Cuotas_CFT() {
 		sb.BuscarCuenta(DNI, "34073329");
 		sb.acciondecontacto("catalogo");
@@ -1112,7 +1112,7 @@ public class Sales2 extends TestBase{
 		Assert.assertTrue(driver.findElement(By.cssSelector(".padding-custom.ng-binding")).getText().toLowerCase().contains("costo financiero"));
 	}
 	
-	@Test(groups={"Sales", "Ventas", "Ola1"})
+	@Test(groups={"Sales", "AltaDeLinea", "Ola1"})
 	public void TS94779_Ventas_Entregas_General_Store_Pickup_Consulta_stock_por_PDV_Visualizar_el_campo_LOCALIDAD_con_un_desplegable_que_permita_seleccionar_una() {
 		sb.BuscarCuenta(DNI, "34073329");
 		sb.acciondecontacto("catalogo");
@@ -1135,7 +1135,7 @@ public class Sales2 extends TestBase{
 		Assert.assertTrue(a);
 	}
 	
-	@Test(groups={"Sales", "Ventas", "Ola1"})
+	@Test(groups={"Sales", "AltaDeLinea", "Ola1"})
 	public void TS94778_Ventas_Entregas_General_Store_Pickup_Consulta_stock_por_PDV_Visualizar_el_campo_PROVINCIA_con_un_desplegable_que_permita_seleccionar_una() {
 		sb.BuscarCuenta(DNI, "34073329");
 		sb.acciondecontacto("catalogo");
@@ -1240,7 +1240,7 @@ public class Sales2 extends TestBase{
 		Assert.assertTrue(a);
 	}
 	
-	@Test(groups={"Sales", "Ventas", "Ola1"})
+	@Test(groups={"Sales", "AltaDeLinea", "Ola1"})
 	public void TS94642_Ventas_NumeroOrden_Visualizar_Orden_de_Venta_Abierta_Seleccionar_un_producto() {
 		sb.BuscarCuenta(DNI, "34073329");
 		sb.acciondecontacto("catalogo");
@@ -1251,7 +1251,7 @@ public class Sales2 extends TestBase{
 		Assert.assertTrue(num.getText().contains("Nro. de Orden:"));
 	}
 	
-	@Test(groups={"Sales", "Ventas", "Ola1"})
+	@Test(groups={"Sales", "AltaDeLinea", "Ola1"})
 	public void TS94644_Ventas_NumeroOrden_Visualizar_Orden_de_Venta_Abierta_Modo_de_Entrega() {
 		sb.BuscarCuenta(DNI, "34073329");
 		sb.acciondecontacto("catalogo");
@@ -1274,7 +1274,7 @@ public class Sales2 extends TestBase{
 		Assert.assertTrue(a);
 	}
 	
-	@Test(groups={"Sales", "Ventas", "Ola1"})
+	@Test(groups={"Sales", "AltaDeLinea", "Ola1"})
 	public void TS94647_Ventas_NumeroOrden_Visualizar_Orden_de_Venta_Abierta_ICCID() {
 		sb.BuscarCuenta(DNI, "34073329");
 		sb.acciondecontacto("catalogo");
@@ -1523,7 +1523,7 @@ public class Sales2 extends TestBase{
 		Assert.assertTrue(driver.findElement(By.cssSelector(".OSradioButton.ng-scope.only-buttom")).isEnabled());
 	}
 	
-	@Test(groups={"Sales", "Ventas", "Ola1"})
+	@Test(groups={"Sales", "AltaDeLinea", "Ola1"})
 	public void TS94782_Ventas_Entregas_General_Store_Pickup_Consulta_stock_por_PDV_Verificar_que_se_hablilite_solo_las_localidades_con_punto_de_venta_para_Store_Pickup() {
 		sb.BuscarCuenta(DNI, "34073329");
 		sb.acciondecontacto("catalogo");
@@ -1552,7 +1552,7 @@ public class Sales2 extends TestBase{
 		Assert.assertTrue(a && b);
 	}
 	
-	@Test(groups={"Sales", "Ventas", "Ola1"})
+	@Test(groups={"Sales", "AltaDeLinea", "Ola1"})
 	public void TS94785_Ventas_Entregas_General_Verificar_que_se_pueda_seleccionar_ModEntrega_Tangible() {
 		sb.BuscarCuenta(DNI, "34073329");
 		sb.acciondecontacto("catalogo");
@@ -1581,7 +1581,7 @@ public class Sales2 extends TestBase{
 		Assert.assertTrue(driver.findElement(By.cssSelector(".slds-col.taChangeDeliveryMethod.slds-text-body--small.slds-m-left--large")).getText().contains("Delivery"));		
 	}
 	
-	@Test(groups={"Sales", "Ventas", "Ola1"})
+	@Test(groups={"Sales", "AltaDeLinea", "Ola1"})
 	public void TS94903_Venta_Medio_de_pago_Verificar_LOV_para_canal_Presencial_Oficinas_Comerciales_POC() {
 		sb.BuscarCuenta(DNI, "34073329");
 		sb.acciondecontacto("catalogo");
@@ -1616,7 +1616,7 @@ public class Sales2 extends TestBase{
 		Assert.assertTrue(a && b && c);
 	}
 	
-	@Test(groups={"Sales", "Ventas", "Ola1"})
+	@Test(groups={"Sales", "AltaDeLinea", "Ola1"})
 	public void TS95260_Venta_General_Visualizar_Packs_Plan() {
 		sb.BuscarCuenta(DNI, "34073329");
 		sb.acciondecontacto("catalogo");
@@ -1654,7 +1654,7 @@ public class Sales2 extends TestBase{
 	     Assert.assertTrue(a);
 	}
 	
-	@Test(groups={"Sales","Ventas","Ola1"})
+	@Test(groups={"Sales","AltaDeLinea","Ola1"})
 	public void TS95048_Ventas_Acciones_Verificar_accion_detalle_Plan_Movil(){
 		sb.BuscarCuenta(DNI, "34073329");
 		sb.acciondecontacto("catalogo");
@@ -1673,7 +1673,7 @@ public class Sales2 extends TestBase{
 		Assert.assertTrue(driver.findElement(By.cssSelector(".slds-modal.slds-fade-in-open.slds-modal--large")).findElement(By.tagName("h2")).getText().equalsIgnoreCase("product details"));
 	}
 	
-	@Test(groups={"Sales","Ventas","Ola1"})
+	@Test(groups={"Sales","AltaDeLinea","Ola1"})
 	public void TS95050_Ventas_Acciones_Verificar_accion_detalle_Packs(){
 		sb.BuscarCuenta(DNI, "34073329");
 		sb.acciondecontacto("catalogo");
@@ -1692,7 +1692,7 @@ public class Sales2 extends TestBase{
 		Assert.assertTrue(driver.findElement(By.cssSelector(".slds-modal.slds-fade-in-open.slds-modal--large")).findElement(By.tagName("h2")).getText().equalsIgnoreCase("product details"));
 	}
 	
-	@Test(groups={"Sales","Ventas","Ola1"})//*******************Arreglar
+	@Test(groups={"Sales","AltaDeLinea","Ola1"})//*******************Arreglar
 	public void TS94762_Ventas_Modo_De_Pago_General_Verificar_LOV_Modalidad_De_Pago(){
 		boolean DPF = false;
 		boolean E = false;
@@ -1730,7 +1730,7 @@ public class Sales2 extends TestBase{
 		sleep(5000);
 	}
 	
-	@Test(groups={"Sales","Ventas","Ola1"})
+	@Test(groups={"Sales","AltaDeLinea","Ola1"})
 	public void TS95261_Ventas_General_Asignar_Una_Linea_Como_Decisora_Durante_La_Venta_En_Misma_Pantalla_De_Asignacion_De_Lineas(){
 		boolean estaM = false;
 		sb.BtnCrearNuevoCliente();
@@ -1769,7 +1769,7 @@ public class Sales2 extends TestBase{
 		Assert.assertTrue(a);
 	}
 	
-	@Test(groups={"Sales", "AltaCuenta","Ola1"})
+	@Test(groups={"Sales", "AltaDeCuenta","Ola1"})
 	public void TS95198_Alta_Cuenta_Busqueda_Verificar_busqueda_combinada_DNI_con_NyAp_DNI_No_Existe_NyAP_Existe() {
 		BasePage dni = new BasePage(driver);
 		dni.setSimpleDropdown(driver.findElement(By.id("SearchClientDocumentType")), "DNI");
@@ -1783,7 +1783,7 @@ public class Sales2 extends TestBase{
 		Assert.assertFalse(tNom.getText().equalsIgnoreCase("lino" + " " + "acosta"));
 	}
 
-	@Test(groups={"Sales", "Ventas", "Ola1"})
+	@Test(groups={"Sales", "AltaDeLinea", "Ola1"})
 	public void TS95302_Ventas_General_Visualizar_Datos_De_La_Pantalla_De_Resumen_De_Venta(){
 		boolean nOrden = false, nyA = false, pago = false, dni = false, entrega = false, modelo = false, serial = false, linea = false, plan = false;
 		sb.BuscarCuenta(DNI, "34073329");
@@ -1849,7 +1849,7 @@ public class Sales2 extends TestBase{
 		
 	}
 	
-	@Test(groups={"Sales","Ventas","Ola1"})
+	@Test(groups={"Sales","AltaDeLinea","Ola1"})
 	public void TS94649_Ventas_NumeroOrden_Verificar_Orden_de_Venta_Abierta_Nueva_Venta(){
 		sb.BuscarCuenta(DNI, "34073329");
 		sb.acciondecontacto("catalogo");
