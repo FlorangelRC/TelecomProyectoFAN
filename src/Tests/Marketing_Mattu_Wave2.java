@@ -66,7 +66,7 @@ public class Marketing_Mattu_Wave2 extends TestBase{
 			//AllwaysEmpty
 		}
 	}*/
-	//@AfterClass(alwaysRun=true)
+	@AfterClass(alwaysRun=true)
 	public void tearDown() {
 		driver.close();
 	}
