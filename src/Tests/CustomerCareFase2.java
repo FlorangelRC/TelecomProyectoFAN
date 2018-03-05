@@ -688,8 +688,7 @@ public class CustomerCareFase2 extends TestBase {
 		driver.findElement(By.id("CostReview_nextBtn")).click();
 		sleep(10000);
 		List <WebElement> accounts = driver.findElements(By.className("slds-checkbox__label"));
-		boolean a = false;
-		boolean b = false;
+		boolean a = false, b = false;
 		for (WebElement x : accounts) {
 			if (x.getText().contains("aaaaFernando Care")) {
 				a = true;

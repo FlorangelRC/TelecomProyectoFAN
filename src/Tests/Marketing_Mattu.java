@@ -21,7 +21,7 @@ import Pages.setConexion;
 public class Marketing_Mattu extends TestBase{
 	
 	private WebDriver driver;
-	Marketing mMarketing;
+	private Marketing mMarketing;
 	
 	//-------------------------------------------------------------------------------------------------
 	//@Befor&After
@@ -29,6 +29,7 @@ public class Marketing_Mattu extends TestBase{
 	public void readySteady() throws Exception {
 		this.driver = setConexion.setupEze();
 		try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		mMarketing = new Marketing(driver);
 		loginMarketing(driver);
 		//login(driver);
 		try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
@@ -77,11 +78,12 @@ public class Marketing_Mattu extends TestBase{
 		
 		try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 		
-		BasePage cambioFrame = new BasePage(driver);
+		/*BasePage cambioFrame = new BasePage(driver);
 		driver.switchTo().defaultContent();
 		driver.switchTo().frame(cambioFrame.getFrameForElement(driver, By.className("actions-content")));
 		driver.findElement(By.xpath("//input[@ng-model='searchTerm']")).clear();
-		driver.findElement(By.xpath("//input[@ng-model='searchTerm']")).sendKeys("Club Personal");
+		driver.findElement(By.xpath("//input[@ng-model='searchTerm']")).sendKeys("Club Personal");*/
+		mMarketing.irAGestionMarketing();
 		/*WebElement wPanelDerecho = driver.findElement(By.className("actions-content"));
 		List<WebElement> wGestiones = wPanelDerecho.findElements(By.tagName("div"));
 		for (WebElement wAux : wGestiones) {
@@ -118,7 +120,7 @@ public class Marketing_Mattu extends TestBase{
 		driver.switchTo().defaultContent();
 		driver.switchTo().frame(cambioFrame.getFrameForElement(driver, By.cssSelector(".slds-panel__section.slds-p-around--small")));
 	}
-	@AfterMethod(alwaysRun=true)
+	//@AfterMethod(alwaysRun=true)
 	public void byeByeTab() {
 		try {
 			CustomerCare cCC = new CustomerCare(driver);
@@ -130,7 +132,7 @@ public class Marketing_Mattu extends TestBase{
 			//AllwaysEmpty
 		}
 	}
-	@AfterClass(alwaysRun=true)
+	//@AfterClass(alwaysRun=true)
 	public void tearDown() {
 		driver.close();
 	}
@@ -466,6 +468,7 @@ public class Marketing_Mattu extends TestBase{
 	@Test(groups = {"Marketing","Ola1", "GestionDelSocioDeClubPersonal"})
 	public void TS98044_Caso_cerrado_Alta_CP() {
 		mMarketing.estadoAltaBaja("Alta");
+		mMarketing.closeActiveTab();
 		String sCaso = mMarketing.darDeAltaCP();
 		boolean bAssert = mMarketing.corroborarCasoCerrado(sCaso);
 		mMarketing.closeActiveUpperTab();

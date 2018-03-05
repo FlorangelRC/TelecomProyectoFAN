@@ -91,7 +91,7 @@ public class Marketing extends CustomerCare {
 	}
 	
 	public void irAGestionMarketing() {
-		/*CustomerCare cCC = new CustomerCare(driver);
+		CustomerCare cCC = new CustomerCare(driver);
 		cCC.buscarGestion("Club Personal");
 		if (gestionesEncontradas.isEmpty()) {
 			System.err.println("ERROR: No existe la gestión 'Club Personal'");
@@ -99,12 +99,12 @@ public class Marketing extends CustomerCare {
 		}
 		gestionesEncontradas.get(1).click();
 		TestBase.sleep(3000);
-		cambiarAFrameActivo();*/
-		BasePage cambioFrame=new BasePage(driver);
+		cambiarAFrameActivo();
+		/*BasePage cambioFrame=new BasePage(driver);
 		driver.switchTo().defaultContent();
 		driver.switchTo().frame(cambioFrame.getFrameForElement(driver, By.className("actions-content")));
 		driver.findElement(By.xpath("//input[@ng-model='searchTerm']")).clear();
-		driver.findElement(By.xpath("//input[@ng-model='searchTerm']")).sendKeys("Club Personal");
+		driver.findElement(By.xpath("//input[@ng-model='searchTerm']")).sendKeys("Club Personal");*/
 	}
 	
 	/*public void buscarGestion(String gest) {

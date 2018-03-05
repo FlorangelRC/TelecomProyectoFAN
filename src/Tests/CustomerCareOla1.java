@@ -143,8 +143,7 @@ public class CustomerCareOla1 extends TestBase {
 		cc.elegirCuenta("aaaaFernando Care");
 		cc.irAGestion("suspensiones");
 		List <WebElement> gest = driver.findElements(By.cssSelector(".slds-form-element__label.ng-binding.ng-scope"));
-		boolean a = false;
-		boolean b = false;
+		boolean a = false, b = false;
 		for (WebElement x : gest) {
 			if (x.getText().contains("Suspensi\u00f3n")) {
 				a = true;
@@ -220,6 +219,8 @@ public class CustomerCareOla1 extends TestBase {
 			}
 		}
 		sleep(3000);
+		driver.findElement(By.id("Step1SelectSuspensionOrReconnection_nextBtn")).click();
+		sleep(3000);
 		List <WebElement> dni = driver.findElements(By.cssSelector(".slds-form-element__label.ng-binding.ng-scope"));
 		for (WebElement x : dni) {
 			if (x.getText().toLowerCase().contains("dni/cuit")) {
@@ -227,6 +228,7 @@ public class CustomerCareOla1 extends TestBase {
 				break;
 			}
 		}
+		driver.findElement(By.id("Step2-SelectAssetOrDocument_nextBtn")).click();
 		sleep(3000);
 		driver.findElement(By.id("Step3_nextBtn")).click();
 		sleep(3000);
@@ -383,8 +385,7 @@ public class CustomerCareOla1 extends TestBase {
 		driver.findElement(By.id("Step4-SuspensionReason_nextBtn")).click();
 		sleep(3000);
 		List <WebElement> pais = driver.findElements(By.cssSelector(".slds-form-element__label.ng-binding.ng-scope"));
-		boolean a = false;
-		boolean b = false;
+		boolean a = false, b = false;
 		for (WebElement x : pais) {
 			if (x.getText().toLowerCase().contains("argentina")) {
 				a = true;
@@ -410,6 +411,7 @@ public class CustomerCareOla1 extends TestBase {
 				break;
 			}
 		}
+		driver.findElement(By.id("Step1SelectSuspensionOrReconnection_nextBtn")).click();
 		sleep(3000);
 		List <WebElement> dni = driver.findElements(By.cssSelector(".slds-form-element__label.ng-binding.ng-scope"));
 		boolean a = false;
@@ -432,10 +434,10 @@ public class CustomerCareOla1 extends TestBase {
 				break;
 			}
 		}
+		driver.findElement(By.id("Step1SelectSuspensionOrReconnection_nextBtn")).click();
 		sleep(3000);
 		List <WebElement> dni = driver.findElements(By.cssSelector(".slds-form-element__label.ng-binding.ng-scope"));
-		boolean a = false;
-		boolean b = false;
+		boolean a = false, b = false;
 		for (WebElement x : dni) {
 			if (x.getText().toLowerCase().contains("cuenta de facturacion")) {
 				a = true;
@@ -517,6 +519,7 @@ public class CustomerCareOla1 extends TestBase {
 				break;
 			}
 		}
+		driver.findElement(By.id("Step1SelectSuspensionOrReconnection_nextBtn")).click();
 		sleep(3000);
 		List <WebElement> dni = driver.findElements(By.cssSelector(".slds-form-element__label.ng-binding.ng-scope"));
 		for (WebElement x : dni) {
@@ -525,6 +528,7 @@ public class CustomerCareOla1 extends TestBase {
 				break;
 			}
 		}
+		driver.findElement(By.id("Step2-SelectAssetOrDocument_nextBtn")).click();
 		sleep(3000);
 		driver.findElement(By.id("Step3_nextBtn")).click();
 		sleep(3000);
@@ -580,9 +584,7 @@ public class CustomerCareOla1 extends TestBase {
 		driver.findElement(By.id("Step3-AvailableAssetsSelection_nextBtn")).click();
 		sleep(5000);
 		List <WebElement> element = driver.findElements(By.cssSelector(".slds-form-element__label.ng-binding.ng-scope"));
-		boolean a = false;
-		boolean b = false;
-		boolean c = false;
+		boolean a = false, b = false, c = false;
 		for (WebElement x : element) {
 			if (x.getText().toLowerCase().contains("robo")) {
 				a = true;
@@ -660,9 +662,7 @@ public class CustomerCareOla1 extends TestBase {
 		driver.findElement(By.id("Step1-SuspensionOrReconnection_nextBtn")).click();
 		sleep(5000);
 		List <WebElement> linea = driver.findElements(By.cssSelector(".slds-form-element__label.ng-binding.ng-scope"));
-		boolean a = false;
-		boolean b = false;
-		boolean c = false;
+		boolean a = false, b = false, c = false;
 		for (WebElement x : linea) {
 			if (x.getText().toLowerCase().contains("linea")) {
 				a = true;
@@ -691,9 +691,7 @@ public class CustomerCareOla1 extends TestBase {
 		driver.findElement(By.id("Step1-SuspensionOrReconnection_nextBtn")).click();
 		sleep(5000);
 		List <WebElement> linea = driver.findElements(By.cssSelector(".slds-form-element__label.ng-binding.ng-scope"));
-		boolean a = false;
-		boolean b = false;
-		boolean c = false;
+		boolean a = false, b = false, c = false;
 		for (WebElement x : linea) {
 			if (x.getText().toLowerCase().contains("linea")) {
 				a = true;
@@ -752,10 +750,10 @@ public class CustomerCareOla1 extends TestBase {
 				break;
 			}
 		}
+		driver.findElement(By.id("Step1SelectSuspensionOrReconnection_nextBtn")).click();
 		sleep(3000);
 		List <WebElement> dni = driver.findElements(By.cssSelector(".slds-form-element__label.ng-binding.ng-scope"));
-		boolean a = false;
-		boolean b = false;
+		boolean a = false, b = false;
 		for (WebElement x : dni) {
 			if (x.getText().toLowerCase().contains("dni/cuit")) {
 				a = true;
