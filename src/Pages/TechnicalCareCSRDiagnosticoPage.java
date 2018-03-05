@@ -477,20 +477,47 @@ public class TechnicalCareCSRDiagnosticoPage extends BasePage{
 		 driver.findElement(By.xpath("//*[@id=\"Case_body\"]/table/tbody/tr[2]/th/a")).click();
 		
 }
-			public void actualizarEquipo(String molelo) throws InterruptedException{
-		     driver.switchTo().frame(getFrameForElement(driver, By.id("MobileIdentification")));
-		     actualizarEquipo.click();
-		     buscarModelos.click();
-		      List<WebElement> modelos= getBuscarEquipo(); //driver.findElements(By.xpath("Nombre de la lista"));
-		      for(WebElement opt : modelos ){
-		       if (opt.getText().equalsIgnoreCase(molelo)) {
-		    	   
-		        opt.click();
-		        break;
-		       }
-		      }
-		     }
-		
+	
+	public void actualizarEquipo(String modelo) throws InterruptedException{
+	       sleep(3000);
+	       driver.switchTo().frame(getFrameForElement(driver, By.id("MobileIdentification")));
+	       actualizarEquipo.click();
+	       buscarModelos.click();
+	          WebElement tabla = driver.findElement(By.xpath("//*[@class='slds-list--vertical vlc-slds-list--vertical ng-hide']"));
+	            List<WebElement> modelos= tabla.findElements(By.tagName("li"));
+	              for(WebElement opt : modelos ){
+	                   sleep(5000);
+	                if (opt.getText().equalsIgnoreCase(modelo)) {    
+	                     sleep(6000);
+	                  opt.click();
+	                    System.out.println("Se selecciono el modelo: " +opt.getText());
+	           sleep(3000);
+	               break; 
+	          }
+	         }
+	  }
+	
+	/*public void actualizarEquipo(String modelo) throws InterruptedException{
+	       sleep(3000);
+	       driver.switchTo().frame(getFrameForElement(driver, By.id("MobileIdentification")));
+	       actualizarEquipo.click();
+	       buscarModelos.click();
+	          WebElement tabla = driver.findElement(By.xpath("//*[@class='slds-list--vertical vlc-slds-list--vertical ng-hide']"));
+	          scrollToElement(tabla);
+	            List<WebElement> modelos= tabla.findElements(By.tagName("li"));
+	            sleep(3000);
+	              for(WebElement opt : modelos ){
+	                if (opt.getText().equalsIgnoreCase(modelo)) {    
+	                	  sleep(3000);
+	                     scrollToElement(opt);
+	                  opt.click();
+	                    System.out.println("Se selecciono el modelo: " +opt.getText());
+	         
+	               break; 
+	          }
+	         }
+	  }*/
+	      
 		
 
 	

@@ -40,7 +40,7 @@ public class SCP_Joaquin extends TestBase{
 	    try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}	
 	}
 	
-	//@AfterClass(groups = {"SCP", "Filtros"})
+	@AfterClass(groups = {"SCP", "Filtros"})
 	public void teardown() {
 		driver.quit();
 		sleep(3000);
