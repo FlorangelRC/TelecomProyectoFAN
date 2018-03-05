@@ -90,9 +90,11 @@ public class Marketing_Mattu extends TestBase{
 				wAux.click();
 			}
 		}*/
-		driver.switchTo().defaultContent();
-		driver.switchTo().frame(cambioFrame.getFrameForElement(driver, By.xpath("/html/body/div/div[1]/ng-include/div/div[1]/ng-include/div/div[2]/div[2]/button")));
-		driver.findElement(By.xpath("/html/body/div/div[1]/ng-include/div/div[1]/ng-include/div/div[2]/div[2]/button"));
+		//driver.switchTo().defaultContent();
+		//driver.switchTo().frame(cambioFrame.getFrameForElement(driver, By.xpath("/html/body/div/div[1]/ng-include/div/div[1]/ng-include/div/div[2]/div[2]/button")));
+		//driver.findElement(By.xpath("/html/body/div/div[1]/ng-include/div/div[1]/ng-include/div/div[2]/div[2]/button"));
+		List<WebElement> wGestiones = driver.findElements(By.className("startActions-item"));
+		wGestiones.get(1).findElement(By.tagName("button")).click();
 		
 		//mMarketing.irAGestionMarketing();//Checkear
 		/*BasePage cambioFrame=new BasePage();
