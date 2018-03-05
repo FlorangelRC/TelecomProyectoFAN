@@ -78,11 +78,12 @@ public class Marketing_Mattu extends TestBase{
 		
 		try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 		
-		BasePage cambioFrame = new BasePage(driver);
+		/*BasePage cambioFrame = new BasePage(driver);
 		driver.switchTo().defaultContent();
 		driver.switchTo().frame(cambioFrame.getFrameForElement(driver, By.className("actions-content")));
 		driver.findElement(By.xpath("//input[@ng-model='searchTerm']")).clear();
-		driver.findElement(By.xpath("//input[@ng-model='searchTerm']")).sendKeys("Club Personal");
+		driver.findElement(By.xpath("//input[@ng-model='searchTerm']")).sendKeys("Club Personal");*/
+		mMarketing.irAGestionMarketing();
 		/*WebElement wPanelDerecho = driver.findElement(By.className("actions-content"));
 		List<WebElement> wGestiones = wPanelDerecho.findElements(By.tagName("div"));
 		for (WebElement wAux : wGestiones) {
