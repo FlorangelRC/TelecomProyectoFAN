@@ -289,7 +289,7 @@ private WebDriver driver;
     tech.clickContinuar();
     tech.speech();
     tech.categoriaRed("Sí");
-    tech.clickContinuar();
+    tech.clickContinua();
     assertTrue( tech.serviciofunciona("No"));
 	}
 	
@@ -387,8 +387,8 @@ private WebDriver driver;
    sleep(3000);
    tech.clickContinua();
    tech.categoriaRed("Sí");
+   tech.enviodeconfiguracion();
    sleep(5000);
-   tech.clickContinua();
    tech.verificarCaso();
    
 }

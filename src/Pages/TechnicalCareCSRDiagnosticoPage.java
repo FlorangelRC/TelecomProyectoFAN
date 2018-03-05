@@ -37,6 +37,9 @@ public class TechnicalCareCSRDiagnosticoPage extends BasePage{
 	@FindBy(id="DeregisterSpeech_nextBtn")
 	private WebElement Continuar;
 	
+	@FindBy(id="ConfigurationSending_nextBtn")
+	private WebElement configuracion;
+	
 	@FindBy(xpath=".//*[@id='ServiceOperation|0']/div/div[1]/label[1]")
 	private List<WebElement> serviciofunciona;
 	
@@ -347,9 +350,13 @@ public class TechnicalCareCSRDiagnosticoPage extends BasePage{
 		
 	}
 	
-	
+	public void enviodeconfiguracion() {
+		scrollToElement(getConfiguracion());
+		sleep(2000);
+		configuracion.click();
+		sleep(8000);
 		
-
+	}
 	
 	/**
 	 * Seleciona cuenta despues de diagnosticar
@@ -496,31 +503,7 @@ public class TechnicalCareCSRDiagnosticoPage extends BasePage{
 	         }
 	  }
 	
-	/*public void actualizarEquipo(String modelo) throws InterruptedException{
-	       sleep(3000);
-	       driver.switchTo().frame(getFrameForElement(driver, By.id("MobileIdentification")));
-	       actualizarEquipo.click();
-	       buscarModelos.click();
-	          WebElement tabla = driver.findElement(By.xpath("//*[@class='slds-list--vertical vlc-slds-list--vertical ng-hide']"));
-	          scrollToElement(tabla);
-	            List<WebElement> modelos= tabla.findElements(By.tagName("li"));
-	            sleep(3000);
-	              for(WebElement opt : modelos ){
-	                if (opt.getText().equalsIgnoreCase(modelo)) {    
-	                	  sleep(3000);
-	                     scrollToElement(opt);
-	                  opt.click();
-	                    System.out.println("Se selecciono el modelo: " +opt.getText());
-	         
-	               break; 
-	          }
-	         }
-	  }*/
-	      
-		
 
-	
-	
 	public  boolean verificarOpciones(WebElement element,String data){
 	    Select select = new Select(element);
 	    List<WebElement> options = select.getOptions();
@@ -574,6 +557,10 @@ public class TechnicalCareCSRDiagnosticoPage extends BasePage{
 
 	public WebElement getContinuar() {
 		return continuar;
+	}
+	
+	public WebElement getConfiguracion() {
+		return configuracion;
 	}
 
 
@@ -687,10 +674,13 @@ public class TechnicalCareCSRDiagnosticoPage extends BasePage{
 					try{driver.findElement(By.id("CoverageValidation_nextBtn")).click();}
 					catch(org.openqa.selenium.NoSuchElementException PosicionGeo) {
 						try{driver.findElement(By.id("ConfigurationSending_nextBtn")).click();}
-						catch(org.openqa.selenium.NoSuchElementException EnviodeConfiguracion) {
+						catch(org.openqa.selenium.NoSuchElementException EnvíodeConfiguración) {
 							try{driver.findElement(By.id("MobileIdentification_nextBtn")).click();}
 							catch(org.openqa.selenium.NoSuchElementException IdentificaciondelEquipo) {
+								try{driver.findElement(By.id("Deregister_nextBtn")).click();}
+								catch(org.openqa.selenium.NoSuchElementException Deregistro) {
 							driver.findElement(By.id("Address Section_nextBtn")).click();
+								}
 							}
 						}	
 					}
