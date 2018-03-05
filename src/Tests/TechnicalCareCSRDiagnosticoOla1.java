@@ -387,6 +387,9 @@ private WebDriver driver;
    sleep(3000);
    tech.clickContinua();
    tech.categoriaRed("Sí");
+   sleep(5000);
+   tech.clickContinua();
+   tech.verificarCaso();
    
 }
 }

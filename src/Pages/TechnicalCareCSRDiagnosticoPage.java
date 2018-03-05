@@ -483,15 +483,14 @@ public class TechnicalCareCSRDiagnosticoPage extends BasePage{
 	       driver.switchTo().frame(getFrameForElement(driver, By.id("MobileIdentification")));
 	       actualizarEquipo.click();
 	       buscarModelos.click();
-	          WebElement tabla = driver.findElement(By.xpath("//*[@class='slds-list--vertical vlc-slds-list--vertical ng-hide']"));
+	       sleep(5000);
+	          WebElement tabla = driver.findElement(By.cssSelector(".slds-list--vertical.vlc-slds-list--vertical"));
 	            List<WebElement> modelos= tabla.findElements(By.tagName("li"));
 	              for(WebElement opt : modelos ){
-	                   sleep(5000);
-	                if (opt.getText().equalsIgnoreCase(modelo)) {    
-	                     sleep(6000);
-	                  opt.click();
+	                if (opt.getText().toLowerCase().contains(modelo.toLowerCase())) {    
+	                	opt.click();
 	                    System.out.println("Se selecciono el modelo: " +opt.getText());
-	           sleep(3000);
+	                    sleep(3000);
 	               break; 
 	          }
 	         }
@@ -687,7 +686,13 @@ public class TechnicalCareCSRDiagnosticoPage extends BasePage{
 				catch(org.openqa.selenium.NoSuchElementException CategoriadeRed) {
 					try{driver.findElement(By.id("CoverageValidation_nextBtn")).click();}
 					catch(org.openqa.selenium.NoSuchElementException PosicionGeo) {
-						driver.findElement(By.id("Address Section_nextBtn")).click();
+						try{driver.findElement(By.id("ConfigurationSending_nextBtn")).click();}
+						catch(org.openqa.selenium.NoSuchElementException EnviodeConfiguracion) {
+							try{driver.findElement(By.id("MobileIdentification_nextBtn")).click();}
+							catch(org.openqa.selenium.NoSuchElementException IdentificaciondelEquipo) {
+							driver.findElement(By.id("Address Section_nextBtn")).click();
+							}
+						}	
 					}
 				}
 			}
