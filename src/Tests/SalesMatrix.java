@@ -39,7 +39,7 @@ public class SalesMatrix extends TestBase {
 	    sleep(8000);
 	    driver.findElement(By.xpath("//a[@href=\"/home/showAllTabs.jsp\"]")).click();
 	    sleep(5000);
-	    driver.findElement(By.xpath("//*[@id=\"bodyCell\"]/div[3]/div[2]/table/tbody/tr[39]/td[2]/a/img")).click();
+	    driver.findElement(By.xpath("//*[@id=\"bodyCell\"]/div[3]/div[2]/table/tbody/tr[38]/td[2]/a/img")).click();
 	    sleep(5000);
 	    driver.findElement(By.name("go")).click();
 	    sleep(5000);
@@ -65,9 +65,7 @@ public class SalesMatrix extends TestBase {
 		driver.switchTo().frame(cambioFrame(driver, By.cssSelector(".rowsTbody.ng-scope")));
 		WebElement element = driver.findElement(By.cssSelector(".rowsTbody.ng-scope"));
 		List <WebElement> fila = element.findElements(By.tagName("tr"));
-		boolean a = false;
-		boolean b = false;
-		boolean c = false;
+		boolean a = false, b = false, c = false;
 		if (fila.get(2).getText().toLowerCase().contains("retiro")) {
 			a = true;
 		}
@@ -86,9 +84,7 @@ public class SalesMatrix extends TestBase {
 		driver.switchTo().frame(cambioFrame(driver, By.cssSelector(".rowsTbody.ng-scope")));
 		WebElement element = driver.findElement(By.cssSelector(".rowsTbody.ng-scope"));
 		List <WebElement> fila = element.findElements(By.tagName("tr"));
-		boolean a = false;
-		boolean b = false;
-		boolean c = false;
+		boolean a = false, b = false, c = false;
 		if (fila.get(3).getText().toLowerCase().contains("retiro")) {
 			a = true;
 		}
@@ -107,9 +103,7 @@ public class SalesMatrix extends TestBase {
 		driver.switchTo().frame(cambioFrame(driver, By.cssSelector(".rowsTbody.ng-scope")));
 		WebElement element = driver.findElement(By.cssSelector(".rowsTbody.ng-scope"));
 		List <WebElement> fila = element.findElements(By.tagName("tr"));
-		boolean a = false;
-		boolean b = false;
-		boolean c = false;
+		boolean a = false, b = false, c = false;
 		if (fila.get(4).getText().toLowerCase().contains("standard")) {
 			a = true;
 		}
@@ -128,9 +122,7 @@ public class SalesMatrix extends TestBase {
 		driver.switchTo().frame(cambioFrame(driver, By.cssSelector(".rowsTbody.ng-scope")));
 		WebElement element = driver.findElement(By.cssSelector(".rowsTbody.ng-scope"));
 		List <WebElement> fila = element.findElements(By.tagName("tr"));
-		boolean a = false;
-		boolean b = false;
-		boolean c = false;
+		boolean a = false, b = false, c = false;
 		if (fila.get(5).getText().toLowerCase().contains("standard")) {
 			a = true;
 		}
@@ -149,9 +141,7 @@ public class SalesMatrix extends TestBase {
 		driver.switchTo().frame(cambioFrame(driver, By.cssSelector(".rowsTbody.ng-scope")));
 		WebElement element = driver.findElement(By.cssSelector(".rowsTbody.ng-scope"));
 		List <WebElement> fila = element.findElements(By.tagName("tr"));
-		boolean a = false;
-		boolean b = false;
-		boolean c = false;
+		boolean a = false, b = false, c = false;
 		if (fila.get(0).getText().toLowerCase().contains("express")) {
 			a = true;
 		}
@@ -170,9 +160,7 @@ public class SalesMatrix extends TestBase {
 		driver.switchTo().frame(cambioFrame(driver, By.cssSelector(".rowsTbody.ng-scope")));
 		WebElement element = driver.findElement(By.cssSelector(".rowsTbody.ng-scope"));
 		List <WebElement> fila = element.findElements(By.tagName("tr"));
-		boolean a = false;
-		boolean b = false;
-		boolean c = false;
+		boolean a = false, b = false, c = false;
 		if (fila.get(1).getText().toLowerCase().contains("express")) {
 			a = true;
 		}
@@ -198,9 +186,7 @@ public class SalesMatrix extends TestBase {
 		driver.switchTo().frame(cambioFrame(driver, By.cssSelector(".table.pricingMatrixTable")));
 		WebElement tabla = driver.findElement(By.id("rowsTbody"));
 		List <WebElement> fila = tabla.findElements(By.tagName("tr"));
-		boolean a = false;
-		boolean b = false;
-		boolean c = false;
+		boolean a = false, b = false, c = false;
 		for (WebElement x : fila) {
 			if (x.findElements(By.tagName("td")).get(2).getText().contains("StorePickUp")) {
 				a = true;
@@ -233,9 +219,7 @@ public class SalesMatrix extends TestBase {
 		sb.selectMatrix("s", "stockmovementoperation");
 		driver.switchTo().frame(cambioFrame(driver, By.className("edit-columns")));
 		WebElement fila = driver.findElement(By.className("edit-columns"));
-		boolean a = false;
-		boolean b = false;
-		boolean c = false;
+		boolean a = false, b = false, c = false;
 		if (fila.getText().toLowerCase().contains("operationtype")) {
 			a = true;
 		}
@@ -254,8 +238,7 @@ public class SalesMatrix extends TestBase {
 		driver.switchTo().frame(cambioFrame(driver, By.className("edit-columns")));
 		WebElement tabla = driver.findElement(By.id("rowsTbody"));
 		List <WebElement> fila = tabla.findElements(By.tagName("tr"));
-		boolean a = false;
-		boolean b = false;
+		boolean a = false, b = false;
 		for (WebElement x : fila) {
 			if (x.findElements(By.tagName("td")).get(1).getText().contains("ANULARESERVA")) {
 				a = true;

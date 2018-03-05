@@ -988,12 +988,11 @@ public class SCPContextoSectorial extends TestBase {
 		}
 		sleep(10000);
 		WebElement boton = driver.findElement(By.xpath("//*[@id=\"j_id0:j_id128:j_id140\"]"));
-		boolean b = false;
+		boolean b = false, c = false;
 		if (boton.getAttribute("value").contains("Agregar Criterio")) {
 			b = true;
 		}
 		WebElement eliminar = driver.findElement(By.id("j_id0:j_id143:j_id158:0:j_id174"));
-		boolean c = false;
 		if (eliminar.getAttribute("value").contains("Eliminar")) {
 			c = true;
 		}
