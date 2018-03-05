@@ -21,7 +21,7 @@ import Pages.setConexion;
 public class Marketing_Mattu extends TestBase{
 	
 	private WebDriver driver;
-	Marketing mMarketing;
+	private Marketing mMarketing;
 	
 	//-------------------------------------------------------------------------------------------------
 	//@Befor&After
@@ -29,6 +29,7 @@ public class Marketing_Mattu extends TestBase{
 	public void readySteady() throws Exception {
 		this.driver = setConexion.setupEze();
 		try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		mMarketing = new Marketing(driver);
 		loginMarketing(driver);
 		//login(driver);
 		try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
@@ -90,9 +91,11 @@ public class Marketing_Mattu extends TestBase{
 				wAux.click();
 			}
 		}*/
-		driver.switchTo().defaultContent();
-		driver.switchTo().frame(cambioFrame.getFrameForElement(driver, By.xpath("/html/body/div/div[1]/ng-include/div/div[1]/ng-include/div/div[2]/div[2]/button")));
-		driver.findElement(By.xpath("/html/body/div/div[1]/ng-include/div/div[1]/ng-include/div/div[2]/div[2]/button"));
+		//driver.switchTo().defaultContent();
+		//driver.switchTo().frame(cambioFrame.getFrameForElement(driver, By.xpath("/html/body/div/div[1]/ng-include/div/div[1]/ng-include/div/div[2]/div[2]/button")));
+		//driver.findElement(By.xpath("/html/body/div/div[1]/ng-include/div/div[1]/ng-include/div/div[2]/div[2]/button"));
+		List<WebElement> wGestiones = driver.findElements(By.className("startActions-item"));
+		wGestiones.get(1).findElement(By.tagName("button")).click();
 		
 		//mMarketing.irAGestionMarketing();//Checkear
 		/*BasePage cambioFrame=new BasePage();
@@ -116,7 +119,7 @@ public class Marketing_Mattu extends TestBase{
 		driver.switchTo().defaultContent();
 		driver.switchTo().frame(cambioFrame.getFrameForElement(driver, By.cssSelector(".slds-panel__section.slds-p-around--small")));
 	}
-	@AfterMethod(alwaysRun=true)
+	//@AfterMethod(alwaysRun=true)
 	public void byeByeTab() {
 		try {
 			CustomerCare cCC = new CustomerCare(driver);
@@ -128,7 +131,7 @@ public class Marketing_Mattu extends TestBase{
 			//AllwaysEmpty
 		}
 	}
-	@AfterClass(alwaysRun=true)
+	//@AfterClass(alwaysRun=true)
 	public void tearDown() {
 		driver.close();
 	}
@@ -464,6 +467,7 @@ public class Marketing_Mattu extends TestBase{
 	@Test(groups = {"Marketing","Ola1", "GestionDelSocioDeClubPersonal"})
 	public void TS98044_Caso_cerrado_Alta_CP() {
 		mMarketing.estadoAltaBaja("Alta");
+		mMarketing.closeActiveTab();
 		String sCaso = mMarketing.darDeAltaCP();
 		boolean bAssert = mMarketing.corroborarCasoCerrado(sCaso);
 		mMarketing.closeActiveUpperTab();
