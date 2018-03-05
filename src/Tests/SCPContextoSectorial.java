@@ -8,7 +8,6 @@ import java.util.List;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
-import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Actions;
 
@@ -26,25 +25,24 @@ import Pages.setConexion;
 
 public class SCPContextoSectorial extends TestBase {
 
-	private WebDriver driver;
 	private SCP scp;
 	private static String downloadPath = "C:\\Users\\Nicolas\\Downloads";
 	
 	
 	@BeforeClass(groups = "SCP")
-	  public void Init() throws Exception {
-	    this.driver = setConexion.setupEze();
-	    scp = new SCP(driver);
-	    loginSCPAdmin(driver);
-	    sleep(5000);
-	  }
+	public void Init() throws Exception {
+		driver = setConexion.setupEze();
+		scp = new SCP(driver);
+		loginSCPAdmin(driver);
+		sleep(5000);
+	}
 	
 	@BeforeMethod(groups = "SCP")
-	  public void setUp() throws Exception {
-	    sleep(3000);
-	    scp.clickOnTabByName("cuentas");
-	    scp.clickOnFirstAccRe();
-	    sleep(5000);	
+	public void setUp() throws Exception {
+		sleep(3000);
+		scp.clickOnTabByName("cuentas");
+		scp.clickOnFirstAccRe();
+		sleep(5000);
 	}
 	
 	@AfterMethod(groups = "SCP")
