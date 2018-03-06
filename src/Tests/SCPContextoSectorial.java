@@ -45,7 +45,7 @@ public class SCPContextoSectorial extends TestBase {
 		sleep(5000);
 	}
 	
-	@AfterMethod(groups = "SCP")
+	//@AfterMethod(groups = "SCP")
 	public void after(){
 		sleep(3000);
 		driver.switchTo().defaultContent();
@@ -54,7 +54,7 @@ public class SCPContextoSectorial extends TestBase {
 		driver.findElement(By.id("home_Tab")).click();
 	}
 	
-	@AfterClass(groups = "SCP")
+	//@AfterClass(groups = "SCP")
 	public void teardown() {
 		driver.quit();
 		sleep(5000);

@@ -54,6 +54,7 @@ public class Login extends BasePage {
 	//Methods
 
 	public void ingresarAdminSCP() {
+		 logininterno.click();
 	     Ecom_User_ID.sendKeys("u585244");
 	     Ecom_Password.sendKeys("Testa10k");
 	     loginButton2.click();
@@ -62,6 +63,7 @@ public class Login extends BasePage {
 	   
 	  
 	   public void ingresarUsuarioSCP() {
+		 logininterno.click();
 	     Ecom_User_ID.sendKeys("u585244");
 	     Ecom_Password.sendKeys("Testa10k");
 	     loginButton2.click();
@@ -148,7 +150,7 @@ public class Login extends BasePage {
 		}
 		
 		public void ingresarSCPAdminServices() {
-			  //logininterno.click();
+			  logininterno.click();
 			  try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 			  Ecom_User_ID.sendKeys("uat090571");
 			  Ecom_Password.sendKeys("Testa10k");
@@ -157,7 +159,7 @@ public class Login extends BasePage {
 		}
 		
 		public void ingresarSCPConPermisos() {
-			  //logininterno.click();
+			  logininterno.click();
 			  try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 			  Ecom_User_ID.sendKeys("uat090022");
 			  Ecom_Password.sendKeys("Testa10k");

@@ -106,6 +106,7 @@ public class TestBase {
 	public void loginSCPAdmin(WebDriver driver) {
 	     driver.get("https://telecomcrm--uat.cs8.my.salesforce.com");
 	     try {Thread.sleep(6000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+	     driver.findElement(By.cssSelector(".button.mb24.secondary.wide")).click();
 	       Login page0 = new Login(driver);
 	       page0.ingresarAdminSCP();
 	   }
