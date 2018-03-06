@@ -240,14 +240,13 @@ public class CustomerCareFase4 extends TestBase{
 		page.elegirCuenta("aaaaFernando Care");
 		page.irAGestion("detalle de consu");
 		List <WebElement> element = driver.findElements(By.className("slds-text-heading--small"));
-		boolean a = false;
+		boolean a = false, b = false;
 		for (WebElement x : element) {
 			if (x.getText().equals("Periodo")) {
 				a = true;
 			}
 		}
 		List <WebElement> cons = driver.findElements(By.id("text-input-02"));
-		boolean b = false;
 		for (WebElement x : cons) {
 			if (x.getAttribute("placeholder").equals("Los \u00faltimos 15 d\u00edas")) {
 				b = true;
@@ -324,14 +323,13 @@ public class CustomerCareFase4 extends TestBase{
 		List<WebElement> filtro = driver.findElements(By.className("slds-text-heading--x-small"));
 		filtro.get(0).click();
 		List <WebElement> element = driver.findElements(By.className("slds-text-heading--small"));
-		boolean a = false;
+		boolean a = false, b = false;
 		for (WebElement x : element) {
 			if (x.getText().equals("N\u00famero de origen o destino")) {
 				a = true;
 			}
 		}
 		List <WebElement> search = driver.findElements(By.cssSelector(".slds-input.ng-pristine.ng-untouched.ng-valid.ng-empty"));
-		boolean b = false;
 		if (search.get(1).getAttribute("placeholder").equals("Buscar")) {
 			b = true;			
 		}		
@@ -346,14 +344,13 @@ public class CustomerCareFase4 extends TestBase{
 		List<WebElement> filtro = driver.findElements(By.className("slds-text-heading--x-small"));
 		filtro.get(0).click();
 		List <WebElement> element = driver.findElements(By.className("slds-text-heading--small"));
-		boolean a = false;
+		boolean a = false, b = false;
 		for (WebElement x : element) {
 			if (x.getText().equals("Tipo de consumo")) {
 				a = true;
 			}
 		}
 		List <WebElement> cons = driver.findElements(By.id("text-input-02"));
-		boolean b = false;
 		for (WebElement x : cons) {
 			if (x.getAttribute("placeholder").equals("Todos los consumos")) {
 				b = true;
@@ -370,14 +367,13 @@ public class CustomerCareFase4 extends TestBase{
 		List<WebElement> filtro = driver.findElements(By.className("slds-text-heading--x-small"));
 		filtro.get(0).click();
 		List <WebElement> element = driver.findElements(By.className("slds-text-heading--small"));
-		boolean a = false;
+		boolean a = false, b = false;
 		for (WebElement x : element) {
 			if (x.getText().equals("Con o sin cargo")) {
 				a = true;
 			}
 		}
 		List <WebElement> checkbox = driver.findElements(By.id("text-input-01"));
-		boolean b = false;
 		for (WebElement x : checkbox) {
 			if (x.getAttribute("placeholder").equals("Con y sin cargo")) {
 				b = true;
@@ -484,10 +480,7 @@ public class CustomerCareFase4 extends TestBase{
 		page.elegirCuenta("aaaaFernando Care");
 		driver.findElement(By.cssSelector(".console-card.active")).click();
 		List <WebElement> gestiones = driver.findElements(By.className("slds-text-body_regular"));
-		boolean a = false;
-		boolean b = false;
-		boolean c = false;
-		boolean d = false;
+		boolean a = false, b = false, c = false, d = false;
 		for (WebElement x : gestiones) {
 			if (x.getText().equals("Detalle de Consumos")) {
 				a = true;

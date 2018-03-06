@@ -19,7 +19,7 @@ public class CustomerCareOla1 extends TestBase {
 	CustomerCare cc;
 	
 	
-	@BeforeClass (alwaysRun = true)
+	@BeforeClass (alwaysRun = true, groups = {"CustomerCare", "AjustesYEscalamiento", "SuspensionYRehabilitacion", "Ola1"})
 	public void init() {
 		inicializarDriver();
 		cc = new CustomerCare(driver);
@@ -27,12 +27,12 @@ public class CustomerCareOla1 extends TestBase {
 		IrA.CajonDeAplicaciones.ConsolaFAN();
 	}
 	
-	@AfterClass (alwaysRun = true)
+	@AfterClass (alwaysRun = true, groups = {"CustomerCare", "AjustesYEscalamiento", "SuspensionYRehabilitacion", "Ola1"})
 	public void quit() {
 		driver.quit();
 	}
 	
-	@BeforeMethod (alwaysRun = true)
+	@BeforeMethod (alwaysRun = true, groups = {"CustomerCare", "AjustesYEscalamiento", "SuspensionYRehabilitacion", "Ola1"})
 	public void before() {
 		cc.cerrarTodasLasPestañas();
 	}
@@ -138,13 +138,12 @@ public class CustomerCareOla1 extends TestBase {
 		Assert.assertTrue(list.get(0).getText().toLowerCase().contains("ajustes"));
 	}
 	
-	@Test (groups = {"CustomerCare", "SuspensionYRehabilitacion(Online)", "Ola1"})
+	@Test (groups = {"CustomerCare", "SuspensionYRehabilitacion", "Ola1"})
 	public void TS90462_360_VIEW_Suspensiones_and_Reconexiones_Visualizar_pantalla_para_seleccionar_el_tipo_de_acción_a_realizar_Suspensión_Rehabilitación() {
 		cc.elegirCuenta("aaaaFernando Care");
 		cc.irAGestion("suspensiones");
 		List <WebElement> gest = driver.findElements(By.cssSelector(".slds-form-element__label.ng-binding.ng-scope"));
-		boolean a = false;
-		boolean b = false;
+		boolean a = false, b = false;
 		for (WebElement x : gest) {
 			if (x.getText().contains("Suspensi\u00f3n")) {
 				a = true;
@@ -186,7 +185,7 @@ public class CustomerCareOla1 extends TestBase {
 		Assert.assertTrue(a);
 	}
 	
-	@Test (groups = {"CustomerCare", "SuspensionYRehabilitacion(Online)", "Ola1"})
+	@Test (groups = {"CustomerCare", "SuspensionYRehabilitacion", "Ola1"})
 	public void TS90498_360_VIEW_Suspensiones_and_Reconexiones_Session_Guiada_Visualizar_la_opción_Suspensión_en_el_panel_de_gestiones() {
 		cc.elegirCuenta("aaaaFernando Care");
 		cc.buscarGestion("suspensiones");
@@ -208,7 +207,7 @@ public class CustomerCareOla1 extends TestBase {
 		Assert.assertTrue(a);
 	}
 	
-	@Test (groups = {"CustomerCare", "SuspensionYRehabilitacion(Online)", "Ola1"})
+	@Test (groups = {"CustomerCare", "SuspensionYRehabilitacion", "Ola1"})
 	public void TS95637_Suspensiones_and_Reconexiones_Creación_del_Caso_Back_office_Creación_caso_comentario_de_resolucion_La_gestion_ha_sido_realizada_exitosamente() {
 		cc.elegirCuenta("aaaaFernando Care");
 		cc.irAGestion("suspensiones y reconexion back");
@@ -220,6 +219,8 @@ public class CustomerCareOla1 extends TestBase {
 			}
 		}
 		sleep(3000);
+		driver.findElement(By.id("Step1SelectSuspensionOrReconnection_nextBtn")).click();
+		sleep(3000);
 		List <WebElement> dni = driver.findElements(By.cssSelector(".slds-form-element__label.ng-binding.ng-scope"));
 		for (WebElement x : dni) {
 			if (x.getText().toLowerCase().contains("dni/cuit")) {
@@ -227,6 +228,7 @@ public class CustomerCareOla1 extends TestBase {
 				break;
 			}
 		}
+		driver.findElement(By.id("Step2-SelectAssetOrDocument_nextBtn")).click();
 		sleep(3000);
 		driver.findElement(By.id("Step3_nextBtn")).click();
 		sleep(3000);
@@ -252,7 +254,7 @@ public class CustomerCareOla1 extends TestBase {
 		Assert.assertTrue(a);
 	}
 	
-	@Test (groups = {"CustomerCare", "SuspensionYRehabilitacion(Online)", "Ola1"})
+	@Test (groups = {"CustomerCare", "SuspensionYRehabilitacion", "Ola1"})
 	public void TS95641_Suspensiones_and_Reconexiones_Creación_del_Caso_Creación_caso_habilitacion_status() {
 		cc.elegirCuenta("aaaaFernando Care");
 		cc.irAGestion("suspensiones");
@@ -297,7 +299,7 @@ public class CustomerCareOla1 extends TestBase {
 		Assert.assertTrue(a);
 	}
 	
-	@Test (groups = {"CustomerCare", "SuspensionYRehabilitacion(Online)", "Ola1"})
+	@Test (groups = {"CustomerCare", "SuspensionYRehabilitacion", "Ola1"})
 	public void TS95647_Suspensiones_and_Reconexiones_Creación_del_Caso_Creación_caso_habilitacion_Líneas_y_o_equipos_seleccionados() {
 		cc.elegirCuenta("aaaaFernando Care");
 		cc.irAGestion("suspensiones");
@@ -342,7 +344,7 @@ public class CustomerCareOla1 extends TestBase {
 		Assert.assertTrue(vc.getText().toLowerCase().contains("suspensiones & reconexiones"));
 	}
 	
-	@Test (groups = {"CustomerCare", "SuspensionYRehabilitacion(Online)", "Ola1"})
+	@Test (groups = {"CustomerCare", "SuspensionYRehabilitacion", "Ola1"})
 	public void TS95651_Suspensiones_and_Reconexiones_Creación_del_Caso_Suspensión_Nivel_cuenta_campo_pais() {
 		cc.elegirCuenta("aaaaFernando Care");
 		cc.irAGestion("suspensiones");
@@ -383,8 +385,7 @@ public class CustomerCareOla1 extends TestBase {
 		driver.findElement(By.id("Step4-SuspensionReason_nextBtn")).click();
 		sleep(3000);
 		List <WebElement> pais = driver.findElements(By.cssSelector(".slds-form-element__label.ng-binding.ng-scope"));
-		boolean a = false;
-		boolean b = false;
+		boolean a = false, b = false;
 		for (WebElement x : pais) {
 			if (x.getText().toLowerCase().contains("argentina")) {
 				a = true;
@@ -399,7 +400,7 @@ public class CustomerCareOla1 extends TestBase {
 		Assert.assertTrue(driver.findElement(By.id("CityTypeAhead")).isEnabled() && driver.findElement(By.id("CityTypeAhead")).getAttribute("required").equals("true"));
 	}
 	
-	@Test (groups = {"CustomerCare", "SuspensionYRehabilitacion(Online)", "Ola1"})
+	@Test (groups = {"CustomerCare", "SuspensionYRehabilitacion", "Ola1"})
 	public void TS95927_360_VIEW_Suspensiones_and_Reconexiones_Seleccionar_tipo_Siniestro_Back_Office_Verificar_que_si_selecciono_Suspension_pueda_ser_de_DNI_CUIT() {
 		cc.elegirCuenta("aaaaFernando Care");
 		cc.irAGestion("suspensiones y reconexion back");
@@ -410,6 +411,7 @@ public class CustomerCareOla1 extends TestBase {
 				break;
 			}
 		}
+		driver.findElement(By.id("Step1SelectSuspensionOrReconnection_nextBtn")).click();
 		sleep(3000);
 		List <WebElement> dni = driver.findElements(By.cssSelector(".slds-form-element__label.ng-binding.ng-scope"));
 		boolean a = false;
@@ -421,7 +423,7 @@ public class CustomerCareOla1 extends TestBase {
 		Assert.assertTrue(a);
 	}
 	
-	@Test (groups = {"CustomerCare", "SuspensionYRehabilitacion(Online)", "Ola1"})
+	@Test (groups = {"CustomerCare", "SuspensionYRehabilitacion", "Ola1"})
 	public void TS95928_Suspensiones_and_Reconexiones_Seleccionar_tipo_Siniestro_Back_Office_Verificar_que_si_selecciono_Suspension_pueda_ser_de_CUENTA_DE_FACTURACION() {
 		cc.elegirCuenta("aaaaFernando Care");
 		cc.irAGestion("suspensiones y reconexion back");
@@ -432,10 +434,10 @@ public class CustomerCareOla1 extends TestBase {
 				break;
 			}
 		}
+		driver.findElement(By.id("Step1SelectSuspensionOrReconnection_nextBtn")).click();
 		sleep(3000);
 		List <WebElement> dni = driver.findElements(By.cssSelector(".slds-form-element__label.ng-binding.ng-scope"));
-		boolean a = false;
-		boolean b = false;
+		boolean a = false, b = false;
 		for (WebElement x : dni) {
 			if (x.getText().toLowerCase().contains("cuenta de facturacion")) {
 				a = true;
@@ -447,7 +449,7 @@ public class CustomerCareOla1 extends TestBase {
 		Assert.assertTrue(a && b);
 	}
 	
-	@Test (groups = {"CustomerCare", "SuspensionYRehabilitacion(Online)", "Ola1"})
+	@Test (groups = {"CustomerCare", "SuspensionYRehabilitacion", "Ola1"})
 	public void TS95965_Suspensiones_and_Reconexiones_Configurar_el_tipo_de_Siniestro_Seleccionar_Solicitante_No_titular_habilita_para_completar_Apellido() {
 		cc.elegirCuenta("aaaaFernando Care");
 		cc.irAGestion("suspensiones");
@@ -506,7 +508,7 @@ public class CustomerCareOla1 extends TestBase {
 		Assert.assertTrue(false);
 	}
 	
-	@Test (groups = {"CustomerCare", "SuspensionYRehabilitacion(Online)", "Ola1"})
+	@Test (groups = {"CustomerCare", "SuspensionYRehabilitacion", "Ola1"})
 	public void TS96046_Suspensiones_and_Reconexiones_Creacion_del_Caso_Back_office_Creacion_caso_Subject_Suspencion_Administrativa() {
 		cc.elegirCuenta("aaaaFernando Care");
 		cc.irAGestion("suspensiones y reconexion back");
@@ -517,6 +519,7 @@ public class CustomerCareOla1 extends TestBase {
 				break;
 			}
 		}
+		driver.findElement(By.id("Step1SelectSuspensionOrReconnection_nextBtn")).click();
 		sleep(3000);
 		List <WebElement> dni = driver.findElements(By.cssSelector(".slds-form-element__label.ng-binding.ng-scope"));
 		for (WebElement x : dni) {
@@ -525,6 +528,7 @@ public class CustomerCareOla1 extends TestBase {
 				break;
 			}
 		}
+		driver.findElement(By.id("Step2-SelectAssetOrDocument_nextBtn")).click();
 		sleep(3000);
 		driver.findElement(By.id("Step3_nextBtn")).click();
 		sleep(3000);
@@ -554,7 +558,7 @@ public class CustomerCareOla1 extends TestBase {
 		Assert.assertTrue(vc.getText().toLowerCase().contains("suspension administrativa"));
 	}
 	
-	@Test (groups = {"CustomerCare", "SuspensionYRehabilitacion(Online)", "Ola1"})
+	@Test (groups = {"CustomerCare", "SuspensionYRehabilitacion", "Ola1"})
 	public void TS96074_360_VIEW_Suspensiones_and_Reconexiones_Seleccionar_tipo_Siniestro_Visualizar_opcion_Tipo_de_Siniestro() {
 		cc.elegirCuenta("aaaaFernando Care");
 		cc.irAGestion("suspensiones");
@@ -580,9 +584,7 @@ public class CustomerCareOla1 extends TestBase {
 		driver.findElement(By.id("Step3-AvailableAssetsSelection_nextBtn")).click();
 		sleep(5000);
 		List <WebElement> element = driver.findElements(By.cssSelector(".slds-form-element__label.ng-binding.ng-scope"));
-		boolean a = false;
-		boolean b = false;
-		boolean c = false;
+		boolean a = false, b = false, c = false;
 		for (WebElement x : element) {
 			if (x.getText().toLowerCase().contains("robo")) {
 				a = true;
@@ -597,7 +599,7 @@ public class CustomerCareOla1 extends TestBase {
 		Assert.assertTrue(a && b && c);
 	}
 	
-	@Test (groups = {"CustomerCare", "SuspensionYRehabilitacion(Online)", "Ola1"})
+	@Test (groups = {"CustomerCare", "SuspensionYRehabilitacion", "Ola1"})
 	public void TS96075_Suspensiones_and_Reconexiones_Seleccionar_tipo_Siniestro_Verificar_que_la_opcion_Tipo_de_Siniestro_se_de_seleccion_unica() {
 		cc.elegirCuenta("aaaaFernando Care");
 		cc.irAGestion("suspensiones");
@@ -646,7 +648,7 @@ public class CustomerCareOla1 extends TestBase {
 		Assert.assertTrue(!(driver.findElement(By.xpath("//*[@id=\"Radio3-ReasonSuspension|0\"]/div/div[1]/label[1]/span[1]")).isSelected()));
 	}
 	
-	@Test (groups = {"CustomerCare", "SuspensionYRehabilitacion(Online)", "Ola1"})
+	@Test (groups = {"CustomerCare", "SuspensionYRehabilitacion", "Ola1"})
 	public void TS96078_Suspensiones_and_Reconexiones_Seleccionar_Tipo_de_gestion_Suspension_Reconexion_Verficiar_que_al_seleccionar_Suspension_se_muestren_las_opciones_Linea_Linea__Equipo_Equipo() {
 		cc.elegirCuenta("aaaaFernando Care");
 		cc.irAGestion("suspensiones");
@@ -660,9 +662,7 @@ public class CustomerCareOla1 extends TestBase {
 		driver.findElement(By.id("Step1-SuspensionOrReconnection_nextBtn")).click();
 		sleep(5000);
 		List <WebElement> linea = driver.findElements(By.cssSelector(".slds-form-element__label.ng-binding.ng-scope"));
-		boolean a = false;
-		boolean b = false;
-		boolean c = false;
+		boolean a = false, b = false, c = false;
 		for (WebElement x : linea) {
 			if (x.getText().toLowerCase().contains("linea")) {
 				a = true;
@@ -677,7 +677,7 @@ public class CustomerCareOla1 extends TestBase {
 		Assert.assertTrue(a && b && c);
 	}
 	
-	@Test (groups = {"CustomerCare", "SuspensionYRehabilitacion(Online)", "Ola1"})
+	@Test (groups = {"CustomerCare", "SuspensionYRehabilitacion", "Ola1"})
 	public void TS96080_Suspensiones_and_Reconexiones_Seleccionar_Tipo_de_gestion_Suspension_Reconexion_Seleccionar_Habilitacion_para_workplace_personalizada_se_muestren_las_opciones_Linea_Linea___Equipo_Equipo() {
 		cc.elegirCuenta("aaaaFernando Care");
 		cc.irAGestion("suspensiones");
@@ -691,9 +691,7 @@ public class CustomerCareOla1 extends TestBase {
 		driver.findElement(By.id("Step1-SuspensionOrReconnection_nextBtn")).click();
 		sleep(5000);
 		List <WebElement> linea = driver.findElements(By.cssSelector(".slds-form-element__label.ng-binding.ng-scope"));
-		boolean a = false;
-		boolean b = false;
-		boolean c = false;
+		boolean a = false, b = false, c = false;
 		for (WebElement x : linea) {
 			if (x.getText().toLowerCase().contains("linea")) {
 				a = true;
@@ -708,7 +706,7 @@ public class CustomerCareOla1 extends TestBase {
 		Assert.assertTrue(a && b && c);
 	}
 	
-	@Test (groups = {"CustomerCare", "SuspensionYRehabilitacion(Online)", "Ola1"})
+	@Test (groups = {"CustomerCare", "SuspensionYRehabilitacion", "Ola1"})
 	public void TS96104_Suspensiones_and_Reconexiones_Visualizar_Lineas_Habilitacion_Verificar_que_sean_campos_de_seleccion_unica() {
 		cc.elegirCuenta("aaaaFernando Care");
 		cc.irAGestion("suspensiones");
@@ -741,7 +739,7 @@ public class CustomerCareOla1 extends TestBase {
 		Assert.assertTrue(!(driver.findElement(By.cssSelector(".ng-not-empty.ng-dirty.ng-valid.ng-valid-required.ng-touched")).isSelected()));
 	}
 	
-	@Test (groups = {"CustomerCare", "SuspensionYRehabilitacion(Online)", "Ola1"})
+	@Test (groups = {"CustomerCare", "SuspensionYRehabilitacion", "Ola1"})
 	public void TS96111_Suspensiones_and_Reconexiones_Seleccionar_tipo_Siniestro_Back_Office_Verificar_que_si_selecciono_Reconexion_pueda_ser_de_DNI_CUIT() {
 		cc.elegirCuenta("aaaaFernando Care");
 		cc.irAGestion("suspensiones y reconexion back");
@@ -752,10 +750,10 @@ public class CustomerCareOla1 extends TestBase {
 				break;
 			}
 		}
+		driver.findElement(By.id("Step1SelectSuspensionOrReconnection_nextBtn")).click();
 		sleep(3000);
 		List <WebElement> dni = driver.findElements(By.cssSelector(".slds-form-element__label.ng-binding.ng-scope"));
-		boolean a = false;
-		boolean b = false;
+		boolean a = false, b = false;
 		for (WebElement x : dni) {
 			if (x.getText().toLowerCase().contains("dni/cuit")) {
 				a = true;

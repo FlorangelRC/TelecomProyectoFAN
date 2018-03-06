@@ -289,7 +289,7 @@ private WebDriver driver;
     tech.clickContinuar();
     tech.speech();
     tech.categoriaRed("Sí");
-    tech.clickContinuar();
+    tech.clickContinua();
     assertTrue( tech.serviciofunciona("No"));
 	}
 	
@@ -373,7 +373,6 @@ private WebDriver driver;
     sleep(3000);
    // tech.verificarCaso();
     tech.seleccionarRespuesta("no");
-    sleep(3000);
     tech.clickContinuar();
     sleep(5000);
     tech.clickContinuar();
@@ -384,7 +383,13 @@ private WebDriver driver;
     tech.categoriaRed("Si");
     sleep(3000);
    tech.clickContinua();
-   tech.actualizarEquipo("Test-Google Pixel");
+   tech.actualizarEquipo("Test-X Play");
+   sleep(3000);
+   tech.clickContinua();
+   tech.categoriaRed("Sí");
+   tech.enviodeconfiguracion();
+   sleep(5000);
+   tech.verificarCaso();
    
 }
 }

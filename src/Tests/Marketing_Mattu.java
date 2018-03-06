@@ -21,7 +21,7 @@ import Pages.setConexion;
 public class Marketing_Mattu extends TestBase{
 	
 	private WebDriver driver;
-	Marketing mMarketing;
+	private Marketing mMarketing;
 	
 	//-------------------------------------------------------------------------------------------------
 	//@Befor&After
@@ -29,6 +29,7 @@ public class Marketing_Mattu extends TestBase{
 	public void readySteady() throws Exception {
 		this.driver = setConexion.setupEze();
 		try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		mMarketing = new Marketing(driver);
 		loginMarketing(driver);
 		//login(driver);
 		try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
@@ -77,11 +78,12 @@ public class Marketing_Mattu extends TestBase{
 		
 		try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 		
-		BasePage cambioFrame = new BasePage(driver);
+		/*BasePage cambioFrame = new BasePage(driver);
 		driver.switchTo().defaultContent();
 		driver.switchTo().frame(cambioFrame.getFrameForElement(driver, By.className("actions-content")));
 		driver.findElement(By.xpath("//input[@ng-model='searchTerm']")).clear();
-		driver.findElement(By.xpath("//input[@ng-model='searchTerm']")).sendKeys("Club Personal");
+		driver.findElement(By.xpath("//input[@ng-model='searchTerm']")).sendKeys("Club Personal");*/
+		mMarketing.irAGestionMarketing();
 		/*WebElement wPanelDerecho = driver.findElement(By.className("actions-content"));
 		List<WebElement> wGestiones = wPanelDerecho.findElements(By.tagName("div"));
 		for (WebElement wAux : wGestiones) {
@@ -90,9 +92,11 @@ public class Marketing_Mattu extends TestBase{
 				wAux.click();
 			}
 		}*/
-		driver.switchTo().defaultContent();
-		driver.switchTo().frame(cambioFrame.getFrameForElement(driver, By.xpath("/html/body/div/div[1]/ng-include/div/div[1]/ng-include/div/div[2]/div[2]/button")));
-		driver.findElement(By.xpath("/html/body/div/div[1]/ng-include/div/div[1]/ng-include/div/div[2]/div[2]/button"));
+		//driver.switchTo().defaultContent();
+		//driver.switchTo().frame(cambioFrame.getFrameForElement(driver, By.xpath("/html/body/div/div[1]/ng-include/div/div[1]/ng-include/div/div[2]/div[2]/button")));
+		//driver.findElement(By.xpath("/html/body/div/div[1]/ng-include/div/div[1]/ng-include/div/div[2]/div[2]/button"));
+		List<WebElement> wGestiones = driver.findElements(By.className("startActions-item"));
+		wGestiones.get(1).findElement(By.tagName("button")).click();
 		
 		//mMarketing.irAGestionMarketing();//Checkear
 		/*BasePage cambioFrame=new BasePage();
@@ -239,7 +243,7 @@ public class Marketing_Mattu extends TestBase{
 	
 	//-------------------------------------------------------------------------------------------------
 	//TCC = 7
-	@Test(groups = {"Marketing", "Ola1"})
+	@Test(groups = {"Marketing", "Ola1", "GestionDelSocioDeClubPersonal"})
 	public void TS90241_Sucripcion_CP_Validacion_de_Mail() {
 		TS98023_Funcionamiento_boton_Alta_ABM_del_CP();
 	}
@@ -253,7 +257,7 @@ public class Marketing_Mattu extends TestBase{
 	
 	//-------------------------------------------------------------------------------------------------
 	//TCC = 9
-	@Test(groups = {"Marketing", "Ola1"})
+	@Test(groups = {"Marketing", "Ola1", "GestionDelSocioDeClubPersonal"})
 	public void TS98020_Boton_ABM_del_CP() {
 		mMarketing.buscarGestion("club personal");
 		BasePage cambioFrame=new BasePage();
@@ -274,7 +278,7 @@ public class Marketing_Mattu extends TestBase{
 	
 	//-------------------------------------------------------------------------------------------------
 	//TCC = 10
-	@Test(groups = {"Marketing", "Ola1"})
+	@Test(groups = {"Marketing", "Ola1", "GestionDelSocioDeClubPersonal"})
 	public void TS98021_Funcionamiento_Boton_ABM_del_CP() {
 		Marketing mMarketing = new Marketing(driver);
 		mMarketing.buscarGestion("club personal");
@@ -295,7 +299,7 @@ public class Marketing_Mattu extends TestBase{
 	
 	//-------------------------------------------------------------------------------------------------
 	//TCC = 11
-	@Test(groups = {"Marketing", "Ola1"})
+	@Test(groups = {"Marketing", "Ola1", "GestionDelSocioDeClubPersonal"})
 	public void TS98023_Funcionamiento_boton_Alta_ABM_del_CP() {
 		mMarketing.estadoAltaBaja("Alta");
 		try {Thread.sleep(10000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
@@ -308,7 +312,7 @@ public class Marketing_Mattu extends TestBase{
 	
 	//-------------------------------------------------------------------------------------------------
 	//TCC = 12
-	@Test(groups = {"Marketing", "Ola1"})
+	@Test(groups = {"Marketing", "Ola1", "GestionDelSocioDeClubPersonal"})
 	public void TS98024_Funcionamiento_boton_Baja_ABM_del_CP() {
 		mMarketing.clubPersonal("Baja");
 		try {Thread.sleep(10000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
@@ -321,14 +325,14 @@ public class Marketing_Mattu extends TestBase{
 	
 	//-------------------------------------------------------------------------------------------------
 	//TCC = 13
-	@Test(groups = {"Marketing","Ola1"})
+	@Test(groups = {"Marketing","Ola1", "GestionDelSocioDeClubPersonal"})
 	public void TS98027_No_visualizar_error_Fraude_Alta_CP() {
 		TS98023_Funcionamiento_boton_Alta_ABM_del_CP();
 	}
 	
 	//-------------------------------------------------------------------------------------------------
 	//TCC = 14
-	@Test(groups = {"Marketing","Ola1"})
+	@Test(groups = {"Marketing","Ola1", "GestionDelSocioDeClubPersonal"})
 	public void TS98031_Seleccion_multiple_Alta_CP() {
 		mMarketing.estadoAltaBaja("Alta");
 		mMarketing.seleccionarCuenta("consumerAccounts");
@@ -338,7 +342,7 @@ public class Marketing_Mattu extends TestBase{
 	
 	//-------------------------------------------------------------------------------------------------
 	//TCC = 15
-	@Test(groups = {"Marketing", "Ola1"})
+	@Test(groups = {"Marketing", "Ola1", "GestionDelSocioDeClubPersonal"})
 	public void TS98032_Separacion_de_cuentas_Alta_CP() {
 		mMarketing.estadoAltaBaja("Alta");
 		try {Thread.sleep(10000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
@@ -358,7 +362,7 @@ public class Marketing_Mattu extends TestBase{
 	
 	//-------------------------------------------------------------------------------------------------
 	//TCC = 16
-	@Test(groups = {"Marketing","Ola1"})
+	@Test(groups = {"Marketing","Ola1", "GestionDelSocioDeClubPersonal"})
 	public void TS98033_No_seleccion_cuentas_Alta_CP() {
 		mMarketing.estadoAltaBaja("Baja");
 		mMarketing.closeActiveTab();
@@ -385,7 +389,7 @@ public class Marketing_Mattu extends TestBase{
 	
 	//-------------------------------------------------------------------------------------------------
 	//TCC = 17
-	@Test(groups = {"Marketing", "Ola1"})
+	@Test(groups = {"Marketing", "Ola1", "GestionDelSocioDeClubPersonal"})
 	public void TS98036_Boton_Cancelar_Alta_CP() {
 		mMarketing.estadoAltaBaja("Alta");
 		try {Thread.sleep(10000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
@@ -399,7 +403,7 @@ public class Marketing_Mattu extends TestBase{
 	
 	//-------------------------------------------------------------------------------------------------
 	//TCC = 18
-	@Test(groups = {"Marketing", "Ola1"})
+	@Test(groups = {"Marketing", "Ola1", "GestionDelSocioDeClubPersonal"})
 	public void TS98037_Boton_Continuar_Alta_CP() {
 		mMarketing.estadoAltaBaja("Alta");
 		try {Thread.sleep(10000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
@@ -409,7 +413,7 @@ public class Marketing_Mattu extends TestBase{
 	
 	//-------------------------------------------------------------------------------------------------
 	//TCC = 19
-	@Test(groups = {"Marketing","Ola1"})
+	@Test(groups = {"Marketing","Ola1", "GestionDelSocioDeClubPersonal"})
 	public void TS98042_Numero_de_caso_Alta_CP() {
 		mMarketing.estadoAltaBaja("Alta");
 		mMarketing.closeActiveTab();
@@ -419,7 +423,7 @@ public class Marketing_Mattu extends TestBase{
 	
 	//-------------------------------------------------------------------------------------------------
 	//TCC = 20
-	@Test(groups = {"Marketing","Ola1"})
+	@Test(groups = {"Marketing","Ola1", "GestionDelSocioDeClubPersonal"})
 	public void TS98043_Caso_creado_Alta_CP() {
 		mMarketing.estadoAltaBaja("Alta");
 		List<String> sCuentasSeleccionadas = new ArrayList<String>();
@@ -461,9 +465,10 @@ public class Marketing_Mattu extends TestBase{
 	
 	//-------------------------------------------------------------------------------------------------
 	//TCC = 21
-	@Test(groups = {"Marketing","Ola1"})
+	@Test(groups = {"Marketing","Ola1", "GestionDelSocioDeClubPersonal"})
 	public void TS98044_Caso_cerrado_Alta_CP() {
 		mMarketing.estadoAltaBaja("Alta");
+		mMarketing.closeActiveTab();
 		String sCaso = mMarketing.darDeAltaCP();
 		boolean bAssert = mMarketing.corroborarCasoCerrado(sCaso);
 		mMarketing.closeActiveUpperTab();
@@ -472,14 +477,14 @@ public class Marketing_Mattu extends TestBase{
 	
 	//-------------------------------------------------------------------------------------------------
 	//TCC = 22
-	@Test(groups = {"Marketing", "Ola1"})
+	@Test(groups = {"Marketing", "Ola1", "GestionDelSocioDeClubPersonal"})
 	public void TS98047_No_visualizar_error_Fraude_Baja_CP() {
 		TS98024_Funcionamiento_boton_Baja_ABM_del_CP();
 	}
 	
 	//-------------------------------------------------------------------------------------------------
 	//TCC = 23
-	@Test(groups = {"Marketing", "Ola1"})
+	@Test(groups = {"Marketing", "Ola1", "GestionDelSocioDeClubPersonal"})
 	public void TS98048_Generar_Caso_error_Fraude_Baja_CP() {
 		mMarketing.cambioCuenta("Todas las cuentas", "aaaaCuenta Fraude");
 		mMarketing.clubPersonal("Baja");
@@ -494,7 +499,7 @@ public class Marketing_Mattu extends TestBase{
 	
 	//-------------------------------------------------------------------------------------------------
 	//TCC = 24
-	@Test(groups = {"Marketing", "Ola1"})
+	@Test(groups = {"Marketing", "Ola1", "GestionDelSocioDeClubPersonal"})
 	public void TS98049_Separacion_Baja_CP() {
 		mMarketing.estadoAltaBaja("Baja");
 		try {Thread.sleep(10000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
@@ -514,7 +519,7 @@ public class Marketing_Mattu extends TestBase{
 	
 	//-------------------------------------------------------------------------------------------------
 	//TCC = 25
-	@Test(groups = "Marketing")
+	@Test(groups = {"Marketing", "Ola1", "GestionDelSocioDeClubPersonal"})
 	public void TS98050_Multiple_seleccion_Baja_CP() {
 		mMarketing.estadoAltaBaja("Baja");
 		mMarketing.seleccionarCuenta("consumerAccounts");
@@ -524,7 +529,7 @@ public class Marketing_Mattu extends TestBase{
 	
 	//-------------------------------------------------------------------------------------------------
 	//TCC = 26
-	@Test(groups = {"Marketing", "Ola1"})
+	@Test(groups = {"Marketing", "Ola1", "GestionDelSocioDeClubPersonal"})
 	public void TS98051_Visualizar_cuentas_costumer_Baja_CP() {
 		mMarketing.estadoAltaBaja("Baja");
 		try {Thread.sleep(10000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
@@ -540,7 +545,7 @@ public class Marketing_Mattu extends TestBase{
 	
 	//-------------------------------------------------------------------------------------------------
 	//TCC = 27
-	@Test(groups = {"Marketing", "Ola1"})
+	@Test(groups = {"Marketing", "Ola1", "GestionDelSocioDeClubPersonal"})
 	public void TS98052_Visualizar_cuentas_business_Baja_CP() {
 		mMarketing.estadoAltaBaja("Alta");
 		try {Thread.sleep(10000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
@@ -556,7 +561,7 @@ public class Marketing_Mattu extends TestBase{
 	
 	//-------------------------------------------------------------------------------------------------
 	//TCC = 28
-	@Test(groups = {"Marketing","Ola1"})
+	@Test(groups = {"Marketing","Ola1", "GestionDelSocioDeClubPersonal"})
 	public void TS98053_Visualizar_cuentas_no_adheridas_Baja_CP() {
 		mMarketing.estadoAltaBaja("Alta");
 		mMarketing.closeActiveTab();
@@ -586,7 +591,7 @@ public class Marketing_Mattu extends TestBase{
 	
 	//-------------------------------------------------------------------------------------------------
 	//TCC = 29
-	@Test(groups = {"Marketing", "Ola1"})
+	@Test(groups = {"Marketing", "Ola1", "GestionDelSocioDeClubPersonal"})
 	public void TS98056_Verificar_seleccion_de_un_unico_valor_en_el_campo_motivo_de_baja_Baja_CP() {
 		//mMarketing.clubPersonal("baja");
 		mMarketing.estadoAltaBaja("Baja");
@@ -631,7 +636,7 @@ public class Marketing_Mattu extends TestBase{
 	
 	//-------------------------------------------------------------------------------------------------
 	//TCC = 30
-	@Test(groups = {"Marketing", "Ola1"})
+	@Test(groups = {"Marketing", "Ola1", "GestionDelSocioDeClubPersonal"})
 	public void TS98057_Verificar_seleccion_del_motivo_otro_Baja_CP() {
 		mMarketing.estadoAltaBaja("Baja");
 		try {Thread.sleep(10000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
@@ -651,7 +656,7 @@ public class Marketing_Mattu extends TestBase{
 	
 	//-------------------------------------------------------------------------------------------------
 	//TCC = 31
-	@Test(groups = {"Marketing", "Ola1"})
+	@Test(groups = {"Marketing", "Ola1", "GestionDelSocioDeClubPersonal"})
 	public void TS98058_Verificar_seleccion_del_motivo_otro_vacio_Baja_CP() {
 		mMarketing.estadoAltaBaja("Baja");
 		try {Thread.sleep(10000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
@@ -673,7 +678,7 @@ public class Marketing_Mattu extends TestBase{
 	
 	//-------------------------------------------------------------------------------------------------
 	//TCC = 32
-	@Test(groups = {"Marketing", "Ola1"})
+	@Test(groups = {"Marketing", "Ola1", "GestionDelSocioDeClubPersonal"})
 	public void TS98059_Visualizar_botones_Baja_CP() {
 		mMarketing.estadoAltaBaja("Baja");
 		try {Thread.sleep(10000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
@@ -687,21 +692,21 @@ public class Marketing_Mattu extends TestBase{
 		
 	//-------------------------------------------------------------------------------------------------
 	//TCC = 33
-	@Test(groups = {"Marketing","Ola1"})
+	@Test(groups = {"Marketing","Ola1", "GestionDelSocioDeClubPersonal"})
 	public void TS98069_Visualizar_boton_Solapa_CP() {
 		Assert.assertTrue(true);
 	}
 	
 	//-------------------------------------------------------------------------------------------------
 	//TCC = 34
-	@Test(groups = {"Marketing", "Ola1"})
+	@Test(groups = {"Marketing", "Ola1", "GestionDelSocioDeClubPersonal"})
 	public void TS98070_Funcionamiento_boton_Solapa_CP() {
 		Assert.assertTrue(true);
 	}
 	
 	//-------------------------------------------------------------------------------------------------
 	//TCC = 35
-	@Test(groups = {"Marketing", "Ola1"})
+	@Test(groups = {"Marketing", "Ola1", "GestionDelSocioDeClubPersonal"})
 	public void TS98071_Visualizar_campo_Fecha_hasta_Solapa_CP() {
 		List <WebElement> wBodyComplete = driver.findElements(By.cssSelector(".slds-media.slds-media--center.slds-has-flexi-truncate"));
 		WebElement wBody = wBodyComplete.get(5);

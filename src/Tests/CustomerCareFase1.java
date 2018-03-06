@@ -393,8 +393,7 @@ public class CustomerCareFase1 extends TestBase {
 	public void TS7106_ValidationNumberEstatus (){
 		driver.switchTo().frame(cambioFrame(driver, By.className("story-field")));
 		List<WebElement> profileInfo = driver.findElements(By.className("story-field"));
-		boolean a = false;
-		boolean b = false;
+		boolean a = false, b = false;
 		for (WebElement x : profileInfo) {
 			if (x.getText().toLowerCase().contains("new")) {
 				a = true;

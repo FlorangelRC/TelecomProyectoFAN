@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.Random;
 
 import org.openqa.selenium.By;
+import org.openqa.selenium.Dimension;
 import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.Select;
@@ -30,12 +31,12 @@ public class Sales2 extends TestBase{
 	String localidad="BASAIL";
 
 	
-	@AfterClass(alwaysRun=true)
+	//@AfterClass(alwaysRun=true)
 	public void tearDown() {
 		driver.quit();
 	}
 	
-	@AfterMethod(alwaysRun=true)
+	//@AfterMethod(alwaysRun=true)
 	public void deslogin() {
 		sleep(3000);
 		driver.get("https://crm--sit.cs14.my.salesforce.com/home/home.jsp?tsid=02u41000000QWha/");
@@ -1164,13 +1165,14 @@ public class Sales2 extends TestBase{
 		//driver.findElement(By.cssSelector(".slds-button.slds-m-left--large.slds-button--brand.ta-button-brand")).click();
 		sb.continuar();
 		sleep(10000);
-		WebElement line = driver.findElement(By.cssSelector(".slds-tree__container.ng-scope"));
+		WebElement line = driver.findElement(By.id("tree0-node1__label"));
+		WebElement line2 = driver.findElement(By.id("tree0-node1-0"));
 		boolean a = false;
 		boolean b = false;
 		if (line.getText().toLowerCase().contains("lineas disponibles")) {
 			a = true;
 		}
-		if (line.getText().toLowerCase().contains("011")) {
+		if (line2.getText().toLowerCase().contains("011")) {
 			b = true;
 		}
 		Assert.assertTrue(a && b);
@@ -1262,8 +1264,9 @@ public class Sales2 extends TestBase{
 		sleep(15000);
 		driver.findElement(By.cssSelector(".slds-button.slds-m-left--large.slds-button--brand.ta-button-brand")).click();
 		sleep(10000);
-		driver.findElement(By.id("LineAssignment_nextBtn")).click();
-		sleep(15000);
+		CustomerCare CC = new CustomerCare(driver);
+		WebElement sig = driver.findElement(By.id("LineAssignment_nextBtn"));
+ 		sleep(15000);
 		driver.findElement(By.id("ICCDAssignment_nextBtn")).click();
 		sleep(10000);
 		List <WebElement> num = driver.findElements(By.cssSelector(".slds-form-element.vlc-flex.vlc-slds-text-block.vlc-slds-rte.ng-pristine.ng-valid.ng-scope"));
@@ -1508,9 +1511,11 @@ public class Sales2 extends TestBase{
 		List<WebElement> agregar = driver.findElements(By.cssSelector(".slds-button.slds-button_neutral.cpq-add-button")); 
 		agregar.get(0).click();
 		sb.continuar();
-		sleep(5000);
-		WebElement faf = driver.findElement(By.id("tree0-node1"));
-		System.out.println(faf.getText());
+		sleep(7000);
+		List <WebElement> faf = driver.findElements(By.id("tree0-node1"));
+		for(WebElement f : faf){
+			System.out.println(f.getSize());
+		}
 	}
 	
 
