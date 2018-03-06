@@ -4,6 +4,9 @@ import static org.testng.Assert.assertTrue;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+
+import javax.xml.bind.ParseConversionEvent;
+
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver; 
 import org.openqa.selenium.WebElement;
@@ -66,7 +69,7 @@ public class Marketing_Mattu_Wave2 extends TestBase{
 			//AllwaysEmpty
 		}
 	}*/
-	@AfterClass(alwaysRun=true)
+	//@AfterClass(alwaysRun=true)
 	public void tearDown() {
 		driver.close();
 	}
@@ -310,7 +313,7 @@ public class Marketing_Mattu_Wave2 extends TestBase{
 	
 	//-------------------------------------------------------------------------------------------------
 	//TCC = 8
-	/*@Test(groups = {"Marketing", "Ola2", "ConfiguracionDeCampaniasEnMarketingCloudDeClubPersonal"})
+	@Test(groups = {"Marketing", "Ola2", "ConfiguracionDeCampaniasEnMarketingCloudDeClubPersonal"})
 	public void TS102110_Dependencia_de_Campos_Picklist_Alta_Campania() {
 		driver.findElement(By.className("pbButton")).findElement(By.tagName("input")).click();
 		WebElement wSelect = driver.findElement(By.id("p3"));
@@ -328,8 +331,48 @@ public class Marketing_Mattu_Wave2 extends TestBase{
 		wContinuar.findElement(By.name("save")).click();
 		
 		WebElement wInfoCampania = driver.findElement(By.className("pbBody"));
-		List<WebElement> wTd = wInfoCampania.findElement(By.tagName("tbody")).findElements(By.tagName("td"));
-		WebElement wNombreDeCampania = wTd.get(3);
+		List<WebElement> wTr = wInfoCampania.findElement(By.tagName("tbody")).findElements(By.tagName("tr"));
+		List<WebElement> wTd = wTr.get(1).findElements(By.tagName("td"));
+		Assert.assertTrue(wTd.get(3).findElement(By.tagName("div")).getAttribute("class").equals("condRequiredInput"));
+		
+		Select sSelectDropdown = new Select(driver.findElement(By.id("00Nc00000036par")));
+		sSelectDropdown.selectByVisibleText("Captura");
+		wInfoCampania = driver.findElement(By.className("pbBody"));
+		wTr = wInfoCampania.findElement(By.tagName("tbody")).findElements(By.tagName("tr"));
+		wTd = wTr.get(2).findElements(By.tagName("td"));
+		Assert.assertTrue(wTd.get(3).findElement(By.tagName("div")).getAttribute("class").equals("condRequiredInput"));
+		
+		sSelectDropdown = new Select(driver.findElement(By.id("00Nc00000036paq")));
+		sSelectDropdown.selectByVisibleText("Alta/Portin Nuevo Cliente  (Nuevo DNI/CUIT)");
+		wInfoCampania = driver.findElement(By.className("pbBody"));
+		wTr = wInfoCampania.findElement(By.tagName("tbody")).findElements(By.tagName("tr"));
+		wTd = wTr.get(3).findElements(By.tagName("td"));
+		Assert.assertTrue(wTd.get(3).findElement(By.tagName("div")).getAttribute("class").equals("condRequiredInput"));
+	}
+	
+	//-------------------------------------------------------------------------------------------------
+	//TCC = 9
+	/*@Test(groups = {"Marketing", "Ola2", "ConfiguracionDeCampaniasEnMarketingCloudDeClubPersonal"})
+	public void TS102109_Fecha_de_Vigencia_Desde_Actualizada() {
+		driver.findElement(By.className("pbButton")).findElement(By.tagName("input")).click();
+		WebElement wSelect = driver.findElement(By.id("p3"));
+		wSelect.click();
+		List<WebElement> wOptions = wSelect.findElements(By.tagName("option"));
+		boolean bComercialCampaigns = false;
+		for (WebElement wAux : wOptions) {
+			if (wAux.getText().toLowerCase().equals("commercial campaigns")) {
+				bComercialCampaigns = true;
+				wAux.click();
+			}
+		}
+		Assert.assertTrue(bComercialCampaigns);
+		WebElement wContinuar = driver.findElement(By.id("bottomButtonRow"));
+		wContinuar.findElement(By.name("save")).click();
+		
+		java.util.Date dFechaCompleta = new Date();
+		String sDia = String.valueOf(dFechaCompleta.getDate());
+		String sFecha =  dFechaCompleta.getDate() + "/" + (dFechaCompleta.getMonth()+1 + "/" + dFechaCompleta.toString().substring(24, 28));
+	    System.out.println("sFecha: " + sFecha);
 	}*/
 	
 	//-------------------------------------------------------------------------------------------------
