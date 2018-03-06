@@ -35,7 +35,7 @@ public class test_SCP_Base extends TestBase {
 	private WebDriver driver;
 	private String Cuenta;
 
-	@BeforeClass(groups= {"SCP", "Almer", "Prueba"})
+	@BeforeClass(alwaysRun=true)
 	public void Init() throws Exception
 	{
 		this.driver = setConexion.setupEze();
@@ -43,7 +43,7 @@ public class test_SCP_Base extends TestBase {
 		try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 	}
 	
-	@BeforeMethod(groups= {"SCP", "Almer", "Prueba"})
+	@BeforeMethod(alwaysRun=true)
 	public void setUp() throws Exception {
 		try {Thread.sleep(2000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 		SCP page= new SCP(driver);
@@ -55,7 +55,7 @@ public class test_SCP_Base extends TestBase {
 		page.moveToElementOnAccAndClick("tercerTitulo", 1);
 		}
 	
-	//@AfterMethod(groups= {"SCP", "Almer", "Prueba"})
+	@AfterMethod(alwaysRun=true)
 	public void afterMethod() {
 		driver.switchTo().defaultContent();
 		SCP page= new SCP(driver);
@@ -63,7 +63,7 @@ public class test_SCP_Base extends TestBase {
 		try {Thread.sleep(1000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 	}
 	
-	//@AfterClass(groups= {"SCP", "Almer", "Prueba"})
+	@AfterClass(alwaysRun=true)
 	public void tearDown() {
 		driver.quit();
 		sleep(4000);

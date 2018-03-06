@@ -104,7 +104,7 @@ public class TestBase {
 	}
 	
 	public void loginSCPAdmin(WebDriver driver) {
-	     driver.get("https://crm--uat2.cs92.my.salesforce.com");
+	     driver.get("https://telecomcrm--uat.cs8.my.salesforce.com");
 	     try {Thread.sleep(6000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 	       Login page0 = new Login(driver);
 	       page0.ingresarAdminSCP();
@@ -112,7 +112,7 @@ public class TestBase {
 	   
 	   
 	     public void loginSCPUsuario(WebDriver driver) {
-	       driver.get("https://crm--uat2.cs92.my.salesforce.com");
+	       driver.get("https://telecomcrm--uat.cs8.my.salesforce.com");
 	       try {Thread.sleep(6000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 	         Login page0 = new Login(driver);
 	         page0.ingresarUsuarioSCP();
@@ -120,13 +120,13 @@ public class TestBase {
 	     
 	     
 	     public void loginSCPAdminServices(WebDriver driver) {
-		       driver.get("https://crm--uat2.cs92.my.salesforce.com");
+		       driver.get("https://telecomcrm--uat.cs8.my.salesforce.com");
 		       try {Thread.sleep(6000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 		         Login page0 = new Login(driver);
 		         page0.ingresarSCPAdminServices();
 		     }
 	     public void loginSCPConPermisos(WebDriver driver) {
-		       driver.get("https://crm--uat2.cs92.my.salesforce.com");
+		       driver.get("https://telecomcrm--uat.cs8.my.salesforce.com");
 		       try {Thread.sleep(6000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 		         Login page0 = new Login(driver);
 		         page0.ingresarSCPConPermisos();
