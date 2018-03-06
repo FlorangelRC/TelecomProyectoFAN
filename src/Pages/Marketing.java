@@ -458,4 +458,15 @@ public class Marketing extends CustomerCare {
 		motivo.selectByIndex(num);
 	}
 	
+	public String unDigitoADosDigitos(int iNumero) {
+		//Para las fechas por ejemplo, que se necesite que tenga un cero adelante
+		String sNumero = String.valueOf(iNumero);
+		
+		if (sNumero.length() != 2) {
+			sNumero = "0" + sNumero;
+		}
+		
+		return sNumero;
+	}
+	
 }
