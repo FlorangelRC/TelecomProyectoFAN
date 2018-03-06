@@ -416,9 +416,9 @@ public class TechCareOla1A extends TestBase {
 		page.clickDiagnosticarServicio("InternetXDia");
 		sleep(5000);
 	    page.seleccionarRespuesta("no");
-	    page.BajaryContinuar();
+	    page.clickContinuar();
 	    sleep(4000);
-	    page.BajaryContinuar();
+	    page.clickContinuar();
 	    sleep(4000);
 	    page.buscarDireccion("Av. Congreso 3940, Buenos Aires, Argentina");
 	    sleep(2000);
@@ -439,9 +439,9 @@ public class TechCareOla1A extends TestBase {
 		page.clickDiagnosticarServicio("InternetXDia");
 		sleep(5000);
 	    page.seleccionarRespuesta("no");
-	    page.BajaryContinuar();
+	    page.clickContinuar();
 	    sleep(5000);
-	    page.BajaryContinuar();
+	    page.clickContinuar();
 	    sleep(4000);
 	    page.buscarDireccion("Av. Congreso 3940, Buenos Aires, Argentina");
 	    sleep(2000);
@@ -521,9 +521,9 @@ public class TechCareOla1A extends TestBase {
 		page.clickDiagnosticarServicio("InternetXDia");
 		sleep(5000);
 	    page.seleccionarRespuesta("no");
-	    page.BajaryContinuar();
+	    page.clickContinuar();
 	    sleep(5000);
-	    page.BajaryContinuar();
+	    page.clickContinuar();
 	    sleep(4000);
 	    try {page.setDireccion("av congreso, argentina"); assertTrue(true);}
 	    catch(org.openqa.selenium.NoSuchElementException noCampo) {assertTrue(false);}
