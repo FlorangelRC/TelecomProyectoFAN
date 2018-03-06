@@ -33,6 +33,7 @@ public class Marketing_Mattu_Wave2 extends TestBase{
 	public void readySteady() throws Exception {
 		this.driver = setConexion.setupEze();
 		try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		mMarketing = new Marketing(driver);
 		loginMarketing(driver);
 		try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 		if (!driver.findElement(By.id("tsidLabel")).getText().toLowerCase().equals("marketing")) {
@@ -69,7 +70,7 @@ public class Marketing_Mattu_Wave2 extends TestBase{
 			//AllwaysEmpty
 		}
 	}*/
-	//@AfterClass(alwaysRun=true)
+	@AfterClass(alwaysRun=true)
 	public void tearDown() {
 		driver.close();
 	}
@@ -151,7 +152,7 @@ public class Marketing_Mattu_Wave2 extends TestBase{
 		driver.findElement(By.id("00Nc00000036pao")).sendKeys("Campaign Objetive");
 		
 		java.util.Date dFechaCompleta = new Date();
-	    String sFecha =  dFechaCompleta.getDate() + "/" + (dFechaCompleta.getMonth()+1 + "/" + dFechaCompleta.toString().substring(24, 28));
+	    String sFecha =  mMarketing.unDigitoADosDigitos(dFechaCompleta.getDate()) + "/" + mMarketing.unDigitoADosDigitos(dFechaCompleta.getMonth()+1) + "/" + dFechaCompleta.toString().substring(24, 28);
 		driver.findElement(By.id("cpn5")).sendKeys(sFecha);
 		
 		List<WebElement> wGuardar = driver.findElement(By.id("bottomButtonRow")).findElements(By.tagName("input"));
@@ -166,12 +167,12 @@ public class Marketing_Mattu_Wave2 extends TestBase{
 		Assert.assertTrue(bGuardar);
 		Assert.assertTrue(driver.findElement(By.id("cpn1_ileinner")).getText().equals("Nombre de la campania"));
 		Assert.assertTrue(driver.findElement(By.id("00Nc00000036par_ileinner")).getText().equals("Captura"));
-		Assert.assertTrue(driver.findElement(By.id("00Nc00000036paq_ileinner")).getText().equals("Alta/Portin Nuevo Cliente  (Nuevo DNI/CUIT)"));
+		Assert.assertTrue(driver.findElement(By.id("00Nc00000036paq_ileinner")).getText().equals("Alta/Portin Nuevo Cliente (Nuevo DNI/CUIT)"));
 		Assert.assertTrue(driver.findElement(By.id("00Nc00000036pap_ilecell")).getText().equals("N/A"));
 		Assert.assertTrue(driver.findElement(By.id("00Nc00000036pas_ileinner")).getText().equals("IN"));
 		Assert.assertTrue(driver.findElement(By.id("00Nc00000036pat_ileinner")).getText().equals("SMS"));
 		Assert.assertTrue(driver.findElement(By.id("00Nc00000036pao_ileinner")).getText().equals("Campaign Objetive"));
-		Assert.assertTrue(driver.findElement(By.id("cpn5_ileinner")).getText().equals("sFecha"));
+		Assert.assertTrue(driver.findElement(By.id("cpn5_ileinner")).getText().equals(sFecha));
 	}
 	
 	//-------------------------------------------------------------------------------------------------
@@ -352,7 +353,8 @@ public class Marketing_Mattu_Wave2 extends TestBase{
 	
 	//-------------------------------------------------------------------------------------------------
 	//TCC = 9
-	/*@Test(groups = {"Marketing", "Ola2", "ConfiguracionDeCampaniasEnMarketingCloudDeClubPersonal"})
+	@SuppressWarnings("deprecation")
+	@Test(groups = {"Marketing", "Ola2", "ConfiguracionDeCampaniasEnMarketingCloudDeClubPersonal"})
 	public void TS102109_Fecha_de_Vigencia_Desde_Actualizada() {
 		driver.findElement(By.className("pbButton")).findElement(By.tagName("input")).click();
 		WebElement wSelect = driver.findElement(By.id("p3"));
@@ -369,11 +371,56 @@ public class Marketing_Mattu_Wave2 extends TestBase{
 		WebElement wContinuar = driver.findElement(By.id("bottomButtonRow"));
 		wContinuar.findElement(By.name("save")).click();
 		
+		List<WebElement> wFecha = driver.findElements(By.className("dateFormat"));
+		
 		java.util.Date dFechaCompleta = new Date();
-		String sDia = String.valueOf(dFechaCompleta.getDate());
-		String sFecha =  dFechaCompleta.getDate() + "/" + (dFechaCompleta.getMonth()+1 + "/" + dFechaCompleta.toString().substring(24, 28));
-	    System.out.println("sFecha: " + sFecha);
-	}*/
+		String sFecha =  mMarketing.unDigitoADosDigitos(dFechaCompleta.getDate()) + "/" + mMarketing.unDigitoADosDigitos((dFechaCompleta.getMonth()+1)) + "/" + dFechaCompleta.toString().substring(24, 28);
+	    
+		Assert.assertTrue(wFecha.get(0).getText().contains(sFecha));
+	}
+	
+	//-------------------------------------------------------------------------------------------------
+	//TCC = 10
+	@Test(groups = {"Marketing", "Ola2", "ConfiguracionDeCampaniasEnMarketingCloudDeClubPersonal"})
+	public void TS102107_Picklist_Sin_Valores_Pre_selecionados_Alta_Campaña() {
+		driver.findElement(By.className("pbButton")).findElement(By.tagName("input")).click();
+		WebElement wSelect = driver.findElement(By.id("p3"));
+		wSelect.click();
+		List<WebElement> wOptions = wSelect.findElements(By.tagName("option"));
+		boolean bComercialCampaigns = false;
+		for (WebElement wAux : wOptions) {
+			if (wAux.getText().toLowerCase().equals("commercial campaigns")) {
+				bComercialCampaigns = true;
+				wAux.click();
+			}
+		}
+		Assert.assertTrue(bComercialCampaigns);
+		WebElement wContinuar = driver.findElement(By.id("bottomButtonRow"));
+		wContinuar.findElement(By.name("save")).click();
+		
+		String sEmpty = "--Ninguno--";
+		WebElement wInfoCampania = driver.findElement(By.className("pbBody"));
+		List<WebElement> wTr = wInfoCampania.findElement(By.tagName("tbody")).findElements(By.tagName("tr"));
+		List<WebElement> wTd = wTr.get(0).findElements(By.tagName("td"));
+		Select sPickList = new Select(wTd.get(3).findElement(By.tagName("select")));
+		Assert.assertTrue(sPickList.getFirstSelectedOption().getText().equals(sEmpty));
+		
+		wTd = wTr.get(1).findElements(By.tagName("td"));
+		sPickList = new Select(wTd.get(3).findElement(By.tagName("select")));
+		Assert.assertTrue(sPickList.getFirstSelectedOption().getText().equals(sEmpty));
+		
+		wTd = wTr.get(2).findElements(By.tagName("td"));
+		sPickList = new Select(wTd.get(1).findElement(By.tagName("select")));
+		Assert.assertTrue(sPickList.getFirstSelectedOption().getText().equals(sEmpty));
+		
+		wTd = wTr.get(2).findElements(By.tagName("td"));
+		sPickList = new Select(wTd.get(3).findElement(By.tagName("select")));
+		Assert.assertTrue(sPickList.getFirstSelectedOption().getText().equals(sEmpty));
+		
+		wTd = wTr.get(3).findElements(By.tagName("td"));
+		sPickList = new Select(wTd.get(3).findElement(By.tagName("select")));
+		Assert.assertTrue(sPickList.getFirstSelectedOption().getText().equals(sEmpty));
+	}
 	
 	//-------------------------------------------------------------------------------------------------
 	//Abrir Pagina
