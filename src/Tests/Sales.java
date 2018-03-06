@@ -62,13 +62,13 @@ public class Sales extends TestBase {
 	String[] genero = {"masculino","femenino"};
 	String[] DocValue = {"52698550","3569874563","365","ssss"};
 	
-	@AfterClass(alwaysRun=true)
+	//@AfterClass(alwaysRun=true)
 	public void tearDown() {
 		driver.close();
 		driver.quit();
 	}
 	
-	@AfterMethod(alwaysRun=true)
+	//@AfterMethod(alwaysRun=true)
 	public void deslogin(){
 		try {Thread.sleep(10000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 		driver.get("https://crm--sit.cs14.my.salesforce.com/home/home.jsp?tsid=02u41000000QWha/");
@@ -1216,7 +1216,7 @@ public class Sales extends TestBase {
 	public void TS94874_Perfiles_Verificar_creacion_de_perfil_Oficina_Agente(){
 		SalesBase SB = new SalesBase(driver);
 		SB.gestiondeusuarios();
-		SB.validarperfil("Borbon, Andres", "Agente Venta y Atencion a Clientes");			
+		SB.validarperfil("Borbon, Andres", "TA - Agente Venta y Atencion a Clientes");			
 	}
 	
 	@Test(groups={"Sales", "AltaDeLinea","Ola1"})
