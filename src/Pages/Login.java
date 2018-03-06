@@ -55,7 +55,7 @@ public class Login extends BasePage {
 
 	public void ingresarAdminSCP() {
 		 logininterno.click();
-	     Ecom_User_ID.sendKeys("u585244");
+	     Ecom_User_ID.sendKeys("UAT585244");
 	     Ecom_Password.sendKeys("Testa10k");
 	     loginButton2.click();
 	     try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
@@ -64,7 +64,7 @@ public class Login extends BasePage {
 	  
 	   public void ingresarUsuarioSCP() {
 		 logininterno.click();
-	     Ecom_User_ID.sendKeys("u585244");
+	     Ecom_User_ID.sendKeys("UAT585244");
 	     Ecom_Password.sendKeys("Testa10k");
 	     loginButton2.click();
 	     try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
@@ -152,7 +152,7 @@ public class Login extends BasePage {
 		public void ingresarSCPAdminServices() {
 			  logininterno.click();
 			  try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
-			  Ecom_User_ID.sendKeys("uat090571");
+			  Ecom_User_ID.sendKeys("UA090571");
 			  Ecom_Password.sendKeys("Testa10k");
 			  loginButton2.click();
 			  try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
@@ -161,7 +161,7 @@ public class Login extends BasePage {
 		public void ingresarSCPConPermisos() {
 			  logininterno.click();
 			  try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
-			  Ecom_User_ID.sendKeys("uat090022");
+			  Ecom_User_ID.sendKeys("UA090022");
 			  Ecom_Password.sendKeys("Testa10k");
 			  loginButton2.click();
 			  try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
