@@ -60,12 +60,12 @@ public class SalesNominaciones extends TestBase{
 		
 	}
 
-	@AfterMethod(alwaysRun=true)
+	//@AfterMethod(alwaysRun=true)
 	public void IceB() {
 		driver.navigate().refresh();
 	}
 	
-	@AfterClass(alwaysRun=true)
+	//@AfterClass(alwaysRun=true)
 	public void Exit() {
 		driver.quit();
 		sleep(2000);
@@ -260,7 +260,7 @@ public class SalesNominaciones extends TestBase{
 	@Test(groups={"Sales","Nominacion","Ola1"})
 	public void TS95075_SalesCPQ_Nominacion_Argentino_Verificar_Datos_Para_Nominar_Cliente_Existente(){
 		ContactSearch contact = new ContactSearch(driver);
-		contact.searchContact("DNI", "10000018", "femenino");
+		contact.searchContact2("DNI", "10000018", "femenino");
 		sleep(6000);
 		assertTrue(!driver.findElement(By.id("FirstName")).getAttribute("value").isEmpty());
 		
@@ -299,7 +299,6 @@ public class SalesNominaciones extends TestBase{
 	
 	@Test(groups={"Sales","Nominacion","Ola1"})
 	public void TS95118_SalesCPQ_Nominacion_Extranjero_Verificar_Formato_De_Fecha_PlazoPermanencia(){
-		String FilePath = "C:\\Users\\florangel\\Downloads\\mapache.jpg";
 		SalesBase SB = new SalesBase(driver);
 		CustomerCare CC = new CustomerCare(driver);
 		ContactSearch contact = new ContactSearch(driver);
@@ -313,7 +312,7 @@ public class SalesNominaciones extends TestBase{
 		//driver.findElement(By.cssSelector(".slds-input.form-control.ng-pristine.ng-untouched.ng-valid.ng-empty")).sendKeys("algoaqui@yahoo.com.ar");
 		CC.obligarclick(driver.findElement(By.id("Contact_nextBtn")));
 		sleep(5000);
-		assertTrue(driver.findElement(By.id("MethodSelectionPassport|0")).isEnabled());
+		assertTrue(driver.findElement(By.id("MethodSelection")).isEnabled());
 	}
 	
 	@Test(groups={"Sales","Nominacion","Ola1"})
@@ -436,7 +435,7 @@ public class SalesNominaciones extends TestBase{
 	@Test(groups={"Sales","Nominacion","Ola1"})
 	public void TS95156_SalesCPQ_Nominacion_Extranjero_Verificar_Campo_Fecha_De_Permanencia_Cliente_Nuevo(){
 		ContactSearch contact = new ContactSearch(driver);
-		contact.searchContact("Pasaporte", "1324657", "femenino");
+		contact.searchContact2("Pasaporte", "1324657", "femenino");
 		sleep(6000);
 		assertTrue(driver.findElement(By.id("PermanencyDueDate")).isEnabled());
 		assertTrue(driver.findElements(By.cssSelector(".slds-form-element__control.slds-input-has-icon.slds-input-has-icon--right")).get(2).findElement(By.tagName("label")).getText().toLowerCase().contains("plazo de permanencia"));
