@@ -27,7 +27,7 @@ private WebDriver driver;
 	@BeforeClass(groups = "SCP")
 	public void Init() throws Exception {
 		this.driver = setConexion.setupEze();
-		loginSCPAdmin(driver);
+		loginSCPConPermisos(driver);
 		try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 	}
 	@BeforeMethod(groups = "SCP")
