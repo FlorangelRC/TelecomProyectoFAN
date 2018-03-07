@@ -32,7 +32,7 @@ public class SCPAdministracionDeServicios extends TestBase {
 	{
 		this.driver = setConexion.setupEze();
 		try {Thread.sleep(15000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
-		loginSCPAdminServices(driver);
+		loginSCPConPermisos(driver);
 		try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 		
 	}
@@ -558,7 +558,7 @@ public class SCPAdministracionDeServicios extends TestBase {
 	public void TS112576_Configurar_Reporte_SCP_Exportar_a_Word() {
 		SCP pcp = new SCP(driver);
 		pcp.moveToElementOnAccAndClick("cuartoTitulo",3);
-		String usuario = driver.findElements(By.cssSelector(".nav.navbar-nav.navbar-right")).get(1).findElement(By.tagName("a")).getText();
+		String usuario = driver.findElement(By.cssSelector(".nav.navbar-nav.navbar-right")).findElement(By.tagName("a")).getText();
 		List<WebElement> servicioList = driver.findElements(By.cssSelector(".btn.btn-default.btn-sm"));
 		for (WebElement UnS : servicioList) {
 			if (UnS.getText().toLowerCase().contains("export to word")||UnS.getText().toLowerCase().contains("exportar a word")) {
@@ -775,7 +775,7 @@ public class SCPAdministracionDeServicios extends TestBase {
     public void TS112631_Estrategia_De_Crecimiento_Exportar_A_Excel() {  
       SCP pcp = new SCP(driver);  
       pcp.moveToElementOnAccAndClick("tercerTitulo",5);  
-      String usuario = driver.findElements(By.cssSelector(".nav.navbar-nav.navbar-right")).get(1).findElement(By.tagName("a")).getText();  
+      String usuario = driver.findElement(By.cssSelector(".nav.navbar-nav.navbar-right")).findElement(By.tagName("a")).getText();  
       List<WebElement> servicioList = driver.findElements(By.cssSelector(".btn.btn-default.btn-sm"));  
       for (WebElement UnS : servicioList) {  
         if (UnS.getText().toLowerCase().contains("export to excel")||UnS.getText().toLowerCase().contains("exportar a excel")) {  
@@ -794,7 +794,7 @@ public class SCPAdministracionDeServicios extends TestBase {
       SCP pcp = new SCP(driver);  
       boolean botonG = false;  
       java.util.Date fecha = new Date();
-      pcp.Desloguear_Loguear("fabiana");
+      pcp.Desloguear_Loguear("permisos");
       try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 		pcp.clickOnTabByName("cuentas");
 		try {Thread.sleep(7000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
@@ -895,11 +895,11 @@ public class SCPAdministracionDeServicios extends TestBase {
 		try {Thread.sleep(7000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 		pcp.clickEnCuentaPorNombre("AIR S.R.L");
 		try {Thread.sleep(7000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
-		driver.findElement(By.cssSelector(".listRelatedObject.accountContactRelationBlock")).findElement(By.className("pShowMore")).findElements(By.tagName("a")).get(1).click();
+		//driver.findElement(By.cssSelector(".listRelatedObject.accountContactRelationBlock")).findElement(By.className("pShowMore")).findElements(By.tagName("a")).get(1).click();
 		try {Thread.sleep(7000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
-		driver.findElement(By.cssSelector(".listRelatedObject.accountContactRelationBlock")).findElement(By.cssSelector(".dataRow.even.first")).findElement(By.tagName("a")).click();
+		driver.findElement(By.cssSelector(".listRelatedObject.accountContactRelationBlock")).findElement(By.cssSelector(".dataRow.even.first")).findElements(By.tagName("a")).get(1).click();
 		try {Thread.sleep(7000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
-		String[] campos = {"propietario del contacto","tel\u00e9fono","nombre","m\u00f3vil","nombre de la cuenta","correo electr\u00f3nico","fecha de nacimiento","pictureurl","t\u00edtulo","picture","activo","domicilio","creado por","descripci\u00f3n","ejecutivo de cuenta"};//
+		String[] campos = {"propietario del contacto","tel\u00e9fono","nombre","celular","nombre de la cuenta","email","fecha de nacimiento","pictureurl","t\u00edtulo","picture","activo","domicilio","creado por","descripci\u00f3n","ejecutivo de cuenta"};//
 		List<WebElement> Detalles = driver.findElement(By.className("detailList")).findElements(By.tagName("tr"));
 		List<WebElement> cReales = new ArrayList<WebElement>();
 		for(WebElement UnaL : Detalles) {
