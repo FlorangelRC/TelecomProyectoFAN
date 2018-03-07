@@ -33,7 +33,7 @@ public class SCPContextoSectorial extends TestBase {
 	public void Init() throws Exception {
 		driver = setConexion.setupEze();
 		scp = new SCP(driver);
-		loginSCPAdmin(driver);
+		loginSCPConPermisos(driver);
 		sleep(5000);
 	}
 	
@@ -45,7 +45,7 @@ public class SCPContextoSectorial extends TestBase {
 		sleep(5000);
 	}
 	
-	//@AfterMethod(groups = "SCP")
+	@AfterMethod(groups = "SCP")
 	public void after(){
 		sleep(3000);
 		driver.switchTo().defaultContent();
@@ -54,7 +54,7 @@ public class SCPContextoSectorial extends TestBase {
 		driver.findElement(By.id("home_Tab")).click();
 	}
 	
-	//@AfterClass(groups = "SCP")
+	@AfterClass(groups = "SCP")
 	public void teardown() {
 		driver.quit();
 		sleep(5000);
@@ -235,7 +235,7 @@ public class SCPContextoSectorial extends TestBase {
 	    Assert.assertTrue(check);
 	}
 	
-	@Test(groups = "SCP")
+	@Test(groups = "SCP")  //No existe el boton Enviar
 	public void TS112720_Mosaico_de_Relacionamiento_por_Oportunidad_Enviar() {
 		scp.moveToElementOnAccAndClick("segundoTitulo", 4);
 		driver.findElement(By.cssSelector(".btn.btnPrimary.publishersharebutton.btn.btn-default.btn-sm")).click();
@@ -303,7 +303,7 @@ public class SCPContextoSectorial extends TestBase {
 		}
 		sleep(5000);
 		WebElement oportunidad = driver.findElement(By.className("panel-body"));
-		Assert.assertTrue(oportunidad.getText().contains("Oportunidad: Oportunidad"));
+		Assert.assertTrue(oportunidad.getText().contains("Oportunidad: opAut"));
 	}
 	
 	@Test(groups = "SCP")
@@ -466,7 +466,7 @@ public class SCPContextoSectorial extends TestBase {
 	@Test(groups = "SCP")
 	public void TS112768_Organigrama_y_mapa_de_influencia_Search() {
 		scp.moveToElementOnAccAndClick("primerTitulo", 3);
-		String a = "javier";
+		String a = "celina";
 		driver.findElement(By.xpath("//*[@id=\"mainTable_filter\"]/label/input")).sendKeys(a);
 		sleep(3000);
 		Assert.assertTrue(driver.findElement(By.className("odd")).getText().toLowerCase().contains(a));
@@ -976,7 +976,7 @@ public class SCPContextoSectorial extends TestBase {
 	    driver.switchTo().window(tabs2.get(0));
 	}
 	
-	@Test(groups = "SCP")  //Rompe porque no esta la columna "Posición Competitiva de la Competencia", dice "Competidores competitivos de pie"
+	@Test(groups = "SCP")  //Rompe porque no estan las columnas "Posición Competitiva de la Competencia" y "Enfoque", dicen "Competidores competitivos de pie" y "Approach"
 	public void TS112692_Matriz_de_Criterios_de_desicion_Ingreso_Desde_el_contacto() {
 		scp.moveToElementOnAccAndClick("tercerTitulo", 2);
 		List <WebElement> element = driver.findElements(By.cssSelector(".btn.btn-default.btn-sm"));
