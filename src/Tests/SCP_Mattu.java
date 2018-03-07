@@ -155,7 +155,7 @@ private WebDriver driver;
 	//------------------------------------------------------------------------------------------------- 
 	//TCC = 8
 	@Test(groups = "SCP")
-	public void TS112566_Asignación_de_Value_Drivers_a_Oportunidades_Ordenar_por_columnas() throws ParseException {
+	public void TS112566_Asignacion_de_Value_Drivers_a_Oportunidades_Ordenar_por_columnas() throws ParseException {
 		SCP prueba = new SCP(driver); 
 		prueba.moveToElementOnAccAndClick("tercerTitulo", 1);
 		
