@@ -42,7 +42,7 @@ public class SCPParquedeServicios extends TestBase{
 		driver.manage().timeouts().implicitlyWait(5, TimeUnit.SECONDS);
 
 		try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
-	loginSCPAdmin(driver);
+		loginSCPConPermisos(driver);
 		try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 	}
 		
@@ -74,14 +74,14 @@ public class SCPParquedeServicios extends TestBase{
 		}
 	}
 	
-	//@AfterMethod(groups= "SCP")
+	@AfterMethod(groups= "SCP")
 	public void after(){
 		driver.switchTo().defaultContent();
 		((JavascriptExecutor)driver).executeScript("window.scrollTo(0,"+driver.findElement(By.id("home_Tab")).getLocation().y+")");
 		driver.findElement(By.id("home_Tab")).click();
 	}
 	
-   //@AfterClass(groups= "SCP")
+   @AfterClass(groups= "SCP")
 	public void tearDown() {
 		driver.quit();
 		sleep(4000);
