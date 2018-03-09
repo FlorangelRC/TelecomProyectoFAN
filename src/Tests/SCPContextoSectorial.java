@@ -399,17 +399,15 @@ public class SCPContextoSectorial extends TestBase {
 	
 	@Test(groups = "SCP")
 	public void TS112751_Opportunity_Snapshot_Chatter_contextualizado_Leer_comentario_escrito_con_otro_usuario() {
+		scp.Desloguear_Loguear("fabiana");
+		scp.Desloguear_Loguear_Comentar("fabiana", "maximiliano", "comentario opportunity", "tercerTitulo", 4);
+		scp.Desloguear_Loguear("maximiliano");
+		sleep(5000);
+		scp.clickOnTabByName("cuentas");
+		sleep(7000);
+		scp.clickEnCuentaPorNombre("Florencia Di Ci");
 		scp.moveToElementOnAccAndClick("tercerTitulo", 4);
-		List <WebElement> cuentas = driver.findElements(By.cssSelector(".cxfeeditem.feeditem"));
-		boolean a = false;
-		for (WebElement x : cuentas) {
-			if (!(x.getText().toLowerCase().contains("fabiana vaccotti"))) {
-				if (x.getText().toLowerCase().contains(" ")) {
-					a = true;
-				}
-			}
-		}
-		Assert.assertTrue(a);
+		scp.validarcomentarioajeno("comentario opportunity");
 	}
 	
 	@Test(groups = "SCP")
@@ -450,17 +448,15 @@ public class SCPContextoSectorial extends TestBase {
 	
 	@Test(groups = "SCP")
 	public void TS112762_Organigrama_y_mapa_de_influencia_Chatter_contextualizado_Leer_comentario_escrito_con_otro_usuario() {
+		scp.Desloguear_Loguear("fabiana");
+		scp.Desloguear_Loguear_Comentar("fabiana", "maximiliano", "comentario opportunity", "primerTitulo", 3);
+		scp.Desloguear_Loguear("maximiliano");
+		sleep(5000);
+		scp.clickOnTabByName("cuentas");
+		sleep(7000);
+		scp.clickEnCuentaPorNombre("Florencia Di Ci");
 		scp.moveToElementOnAccAndClick("primerTitulo", 3);
-		List <WebElement> cuentas = driver.findElements(By.cssSelector(".cxfeeditem.feeditem"));
-		boolean a = false;
-		for (WebElement x : cuentas) {
-			if (!(x.getText().toLowerCase().contains("fabiana vaccotti"))) {
-				if (x.getText().toLowerCase().contains(" ")) {
-					a = true;
-				}
-			}
-		}
-		Assert.assertTrue(a);
+		scp.validarcomentarioajeno("comentario opportunity");
 	}
 	
 	@Test(groups = "SCP")
@@ -493,32 +489,28 @@ public class SCPContextoSectorial extends TestBase {
 	
 	@Test(groups = "SCP")
 	public void TS112588_Contexto_Sectorial_Chatter_contextualizado_Leer_comentario_escrito_con_otro_usuario() {
+		scp.Desloguear_Loguear("fabiana");
+		scp.Desloguear_Loguear_Comentar("fabiana", "maximiliano", "comentario opportunity", "primerTitulo", 1);
+		scp.Desloguear_Loguear("maximiliano");
+		sleep(5000);
+		scp.clickOnTabByName("cuentas");
+		sleep(7000);
+		scp.clickEnCuentaPorNombre("Florencia Di Ci");
 		scp.moveToElementOnAccAndClick("primerTitulo", 1);
-		List <WebElement> cuentas = driver.findElements(By.cssSelector(".cxfeeditem.feeditem"));
-		boolean a = false;
-		for (WebElement x : cuentas) {
-			if (!(x.getText().toLowerCase().contains("fabiana vaccotti"))) {
-				if (x.getText().toLowerCase().contains(" ")) {
-					a = true;
-				}
-			}
-		}
-		Assert.assertTrue(a);
+		scp.validarcomentarioajeno("comentario opportunity");
 	}
 	
 	@Test(groups = "SCP")
 	public void TS112801_Share_of_Wallet_Chatter_contextualizado_Leer_comentario_escrito_con_otro_usuario() {
+		scp.Desloguear_Loguear("fabiana");
+		scp.Desloguear_Loguear_Comentar("fabiana", "maximiliano", "comentario opportunity", "segundoTitulo", 1);
+		scp.Desloguear_Loguear("maximiliano");
+		sleep(5000);
+		scp.clickOnTabByName("cuentas");
+		sleep(7000);
+		scp.clickEnCuentaPorNombre("Florencia Di Ci");
 		scp.moveToElementOnAccAndClick("segundoTitulo", 1);
-		List <WebElement> cuentas = driver.findElements(By.cssSelector(".cxfeeditem.feeditem"));
-		boolean a = false;
-		for (WebElement x : cuentas) {
-			if (!(x.getText().toLowerCase().contains("fabiana vaccotti"))) {
-				if (x.getText().toLowerCase().contains(" ")) {
-					a = true;
-				}
-			}
-		}
-		Assert.assertTrue(a);
+		scp.validarcomentarioajeno("comentario opportunity");
 	}
 	
 	@Test(groups = "SCP")
@@ -746,7 +738,7 @@ public class SCPContextoSectorial extends TestBase {
 		Assert.assertTrue(a);
 	}
 	
-	//@Test(groups = "SCP")
+	@Test(groups = "SCP")
 	public void TS112716_Mosaico_de_Relacionamiento_General_Ver_Video() {
 		scp.moveToElementOnAccAndClick("segundoTitulo", 4);
 		driver.findElement(By.cssSelector(".btn.btn-xs.btn-default")).click();
@@ -756,7 +748,7 @@ public class SCPContextoSectorial extends TestBase {
 	    BasePage cambioFrameByID = new BasePage();
 	    sleep(10000);
 		driver.switchTo().frame(cambioFrameByID.getFrameForElement(driver, By.className("ytp-cued-thumbnail-overlay")));
-		Assert.assertTrue(driver.findElement(By.id("player-container")).isDisplayed());
+		Assert.assertTrue(driver.findElement(By.cssSelector(".ytp-large-play-button.ytp-button")).isDisplayed());
 		sleep(3000);
 		driver.close();
 		sleep(3000);
