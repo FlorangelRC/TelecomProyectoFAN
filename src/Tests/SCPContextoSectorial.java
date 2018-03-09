@@ -88,8 +88,7 @@ public class SCPContextoSectorial extends TestBase {
 		checkbox.get(1).click();
 		driver.findElement(By.id("j_id0:j_id91:j_id111")).click();
 		sleep(3000);
-		Assert.assertTrue(driver.findElement(By.className("tl-message-full")).isDisplayed() 
-						  && driver.findElement(By.className("tl-timenav-slider-background")).isDisplayed());
+		Assert.assertTrue(driver.findElement(By.className("tl-message-full")).isDisplayed() && driver.findElement(By.className("tl-timenav-slider-background")).isDisplayed());
 	}
 	
 	@Test(groups = "SCP")
@@ -238,7 +237,9 @@ public class SCPContextoSectorial extends TestBase {
 	@Test(groups = "SCP")  //No existe el boton Enviar
 	public void TS112720_Mosaico_de_Relacionamiento_por_Oportunidad_Enviar() {
 		scp.moveToElementOnAccAndClick("segundoTitulo", 4);
-		driver.findElement(By.cssSelector(".btn.btnPrimary.publishersharebutton.btn.btn-default.btn-sm")).click();
+		if (!driver.findElement(By.cssSelector(".btn.btnPrimary.publishersharebutton.btn.btn-default.btn-sm")).isDisplayed());{
+			Assert.assertTrue(false);
+		}
 	}
 	
 	@Test(groups = "SCP")
@@ -656,7 +657,7 @@ public class SCPContextoSectorial extends TestBase {
 		scp.validarcomentario(a);
 	}
 	
-	@Test(groups = "SCP")
+	@Test(groups = "SCP")  //No existe el boton Enviar
 	public void TS112752_Opportunity_Snapshot_enviar() {
 		scp.moveToElementOnAccAndClick("tercerTitulo", 4);
 		WebElement element = driver.findElement(By.name("j_id0:j_id111:j_id112:FastTaskForm:j_id117"));
@@ -738,7 +739,7 @@ public class SCPContextoSectorial extends TestBase {
 		Assert.assertTrue(a);
 	}
 	
-	@Test(groups = "SCP")
+	//@Test(groups = "SCP")
 	public void TS112716_Mosaico_de_Relacionamiento_General_Ver_Video() {
 		scp.moveToElementOnAccAndClick("segundoTitulo", 4);
 		driver.findElement(By.cssSelector(".btn.btn-xs.btn-default")).click();
