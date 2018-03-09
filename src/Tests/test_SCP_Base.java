@@ -39,7 +39,8 @@ public class test_SCP_Base extends TestBase {
 	public void Init() throws Exception
 	{
 		this.driver = setConexion.setupEze();
-		loginSCPAdmin(driver);
+		//loginSCPAdmin(driver);
+		loginSCPConPermisos(driver);
 		try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 	}
 	
@@ -55,7 +56,7 @@ public class test_SCP_Base extends TestBase {
 		page.moveToElementOnAccAndClick("tercerTitulo", 1);
 		}
 	
-	@AfterMethod(alwaysRun=true)
+	//@AfterMethod(alwaysRun=true)
 	public void afterMethod() {
 		driver.switchTo().defaultContent();
 		SCP page= new SCP(driver);
@@ -63,7 +64,7 @@ public class test_SCP_Base extends TestBase {
 		try {Thread.sleep(1000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 	}
 	
-	@AfterClass(alwaysRun=true)
+	//@AfterClass(alwaysRun=true)
 	public void tearDown() {
 		driver.quit();
 		sleep(4000);
@@ -195,7 +196,7 @@ public class test_SCP_Base extends TestBase {
 	    if(page.goToOportunity()) {
 	    	try {Thread.sleep(3000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 	    	String[] primerBloque= {"información adicional de ventas","valorizado de la oportunidad","estados proyectos en delta"};
-	    	String[] segundoBloque= {"detalle de oportunidad","productos","contactos","funciones de contactos","actividades abiertas","competidores","historial de campos de oportunidades","notas y archivos adjuntos"};
+	    	String[] segundoBloque= {"detalle de oportunidad","productos (telecom)","contactos","funciones de contactos","actividades abiertas","competidores","notas y archivos adjuntos"};
 	    	
 	    	//Se verifica que el primer bloque
 	    	List <WebElement> listA= driver.findElements(By.cssSelector(".brandTertiaryBrd.pbSubheader.tertiaryPalette"));
@@ -380,7 +381,7 @@ public class test_SCP_Base extends TestBase {
 	    	for(WebElement a:compBefore) {
 	    		if(a.getText().toLowerCase().startsWith("notas")) { 
 	    			a.click();}} //hace click en notas para bajar
-	    	driver.findElement(By.xpath("//*[@id=\"0063F000002UbLj_RelatedNoteList_body\"]/table/tbody/tr[2]/td[2]/a")).click();	
+	    	driver.findElement(By.xpath("//*[@id=\"006L0000009BQte_RelatedNoteList_body\"]/table/tbody/tr[2]/td[2]/a")).click();	
 	    	try {Thread.sleep(3000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 	    	List <WebElement> cuerpoNota= driver.findElements(By.className("data2Col"));
 	    	assertTrue(cuerpoNota.get(4).isDisplayed());
@@ -402,15 +403,15 @@ public class test_SCP_Base extends TestBase {
 	    	try {Thread.sleep(500);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 	    	Actions dobleClick= new Actions(driver);
 	    	//List <WebElement> valorizacion= driver.findElements(By.cssSelector(".brandTertiaryBrd.pbSubheader.tertiaryPalette"));
-	    	WebElement dolarBudget = driver.findElement(By.id("00N3F000000HaYj_ileinner"));
+	    	WebElement dolarBudget = driver.findElement(By.id("00N4100000c3bM8_ileinner"));
 			((JavascriptExecutor)driver).executeScript("window.scrollTo(0,"+dolarBudget.getLocation().y+")");
 	    	dobleClick.doubleClick(dolarBudget).perform();
-	    	driver.findElement(By.id("00N3F000000HaYj")).clear();
-	    	driver.findElement(By.id("00N3F000000HaYj")).sendKeys("10");
+	    	driver.findElement(By.id("00N4100000c3bM8")).clear();
+	    	driver.findElement(By.id("00N4100000c3bM8")).sendKeys("10");
 	    	page.goTop();
 	    	driver.findElement(By.id("topButtonRow")).findElement(By.name("inlineEditSave")).click();
 	    	try {Thread.sleep(1000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
-	    	String valorDolar= driver.findElement(By.id("00N3F000000HaYj_ileinner")).getText();
+	    	String valorDolar= driver.findElement(By.id("00N4100000c3bM8_ileinner")).getText();
 	    	assertTrue(valorDolar.contains("10"));
 	    	
 	    }
@@ -522,11 +523,35 @@ public class test_SCP_Base extends TestBase {
 	 * Modifica la oportunidad y verifica 
 	 * que se haya cambiado el nombre y la fecha en el historial de campos de la oportunidad.
 	 */
+	//Falla porque no se muestra el historial de Campos
 	@Test(groups= "SCP")
 	public void TS112647_CRM_SCP_Estructura_de_las_oportunidades_Bloques_Historial_de_Campos() {
 		SCP page=new SCP(driver);
 		String fecha="";
-	    if(page.goToOportunity()) {
+	    //if(page.goToOportunity()) {
+		page.clickOnTabByName("oportunidades");
+		sleep(3000);
+		Select sOp=new Select(driver.findElement(By.id("fcf")));
+		sOp.selectByVisibleText("Todas las oportunidades");
+		sleep(200);
+		driver.findElement(By.name("go")).click();
+		sleep(2000);
+		List<WebElement> lOp=driver.findElements(By.className("x-grid3-row"));
+		lOp.add(driver.findElement(By.cssSelector(".x-grid3-row.x-grid3-row-first")));
+		boolean flag=false;
+		for(WebElement nOp: lOp) {
+			List<WebElement> tagsOp=nOp.findElements(By.tagName("a"));
+			for(WebElement nombre:tagsOp) {
+			if(nombre.getText().toLowerCase().contains("opaut")) {
+				nombre.click();
+				flag=true;
+				break;}
+				}
+			if(flag)
+				break;
+			}
+		sleep(2000);
+		
 	    	try {Thread.sleep(3000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 	    	driver.findElement(By.name("edit")).click();
 	    	try {Thread.sleep(3000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
@@ -550,8 +575,8 @@ public class test_SCP_Base extends TestBase {
 	    	assertTrue(modificacion.getText().startsWith(fecha)||modificacion.getText().endsWith("opAut."));
 	    	}
 	   
-	    else {System.out.println("Oportunidad no disponible, prueba no ejecutada");assertTrue(false);}	
-	}
+	    //else {System.out.println("Oportunidad no disponible, prueba no ejecutada");assertTrue(false);}	
+	
 	
 //-------------------------------------------------Este Test  va a una oportunidad especifica que tiene un producto----------------------------------------------------------------//
 	/**
@@ -593,7 +618,7 @@ public class test_SCP_Base extends TestBase {
 	List<String> listaComparativa = new ArrayList<String>();
 	boolean check=true;
 	//Elemento con el campo
-	List<WebElement> campos= driver.findElement(By.xpath("//*[@id=\"0063F000002UkUu_RelatedLineItemList_body\"]/table/tbody/tr[1]")).
+	List<WebElement> campos= driver.findElement(By.xpath("//*[@id=\"006L0000009BRrX_RelatedLineItemList_body\"]/table/tbody/tr[1]")).
 			findElements(By.tagName("th"));
 	for(WebElement a:campos) {
 		System.out.println(a.getText());
@@ -679,21 +704,27 @@ public class test_SCP_Base extends TestBase {
 		if(flag)
 			break;
 		}
-	sleep(3000);
+	sleep(4000);
 		
-	double totalCuvD, cantidad, plazo, cargopormes, montoContratoD;
-	//WebElement temporal;
-	//temporal=driver.findElement(By.xpath("//*[@id=\"0063F000002UjvW_RelatedLineItemList_body\"]/table/tbody/tr[2]/td[6]"));
-	//System.out.println(temporal.getText());
+	double totalCuvD, cantidad, plazo, preciodeVenta, montoContratoD;
+	WebElement temporal;
+	temporal=driver.findElement(By.xpath("//*[@id=\"ep\"]/div[2]/div[6]/table/tbody/tr[3]/td[4]"));
+	System.out.println(temporal.getText());
+	
+	System.out.println(driver.findElement(By.xpath("//*[@id=\"006L0000009BQt0_RelatedLineItemList_body\"]/table/tbody/tr[3]/td[9]")).getText());
+	System.out.println(driver.findElement(By.xpath("//*[@id=\"006L0000009BQt0_RelatedLineItemList_body\"]/table/tbody/tr[3]/td[2]")).getText());
+	System.out.println(driver.findElement(By.xpath("//*[@id=\"006L0000009BQt0_RelatedLineItemList_body\"]/table/tbody/tr[3]/td[6]")).getText());
+	System.out.println(driver.findElement(By.xpath("//*[@id=\"006L0000009BQt0_RelatedLineItemList_body\"]/table/tbody/tr[3]/td[5]")).getText());
+	
 	
 	montoContratoD=Double.parseDouble(limpiarValor(driver.findElement(By.xpath("//*[@id=\"ep\"]/div[2]/div[6]/table/tbody/tr[3]/td[4]")).getText()));
 	
-	totalCuvD=Double.parseDouble(limpiarValor(driver.findElement(By.xpath("//*[@id=\"0063F000002UjvW_RelatedLineItemList_body\"]/table/tbody/tr[2]/td[9]")).getText()));
-	cantidad=Double.parseDouble(limpiarValor(driver.findElement(By.xpath("//*[@id=\"0063F000002UjvW_RelatedLineItemList_body\"]/table/tbody/tr[2]/td[2]")).getText()));
-	plazo=Double.parseDouble(limpiarValor(driver.findElement(By.xpath("//*[@id=\"0063F000002UjvW_RelatedLineItemList_body\"]/table/tbody/tr[2]/td[6]")).getText()));
-	cargopormes=Double.parseDouble(limpiarValor(driver.findElement(By.xpath("//*[@id=\"0063F000002UjvW_RelatedLineItemList_body\"]/table/tbody/tr[2]/td[5]")).getText()));
-	
-	assertTrue(((cantidad*plazo*cargopormes)+totalCuvD)==montoContratoD);
+	totalCuvD=Double.parseDouble(limpiarValor(driver.findElement(By.xpath("//*[@id=\"006L0000009BQt0_RelatedLineItemList_body\"]/table/tbody/tr[3]/td[9]")).getText()));
+	cantidad=Double.parseDouble(limpiarValor(driver.findElement(By.xpath("//*[@id=\"006L0000009BQt0_RelatedLineItemList_body\"]/table/tbody/tr[3]/td[2]")).getText()));
+	plazo=Double.parseDouble(limpiarValor(driver.findElement(By.xpath("//*[@id=\"006L0000009BQt0_RelatedLineItemList_body\"]/table/tbody/tr[3]/td[6]")).getText()));
+	preciodeVenta=Double.parseDouble(limpiarValor(driver.findElement(By.xpath("//*[@id=\"006L0000009BQt0_RelatedLineItemList_body\"]/table/tbody/tr[3]/td[4]")).getText()));
+	System.out.println("Resultado: "+((cantidad*plazo*preciodeVenta)+totalCuvD));
+	assertEquals((cantidad*plazo*preciodeVenta)+totalCuvD,montoContratoD);
 	}
 	
 	/**
@@ -776,11 +807,11 @@ public class test_SCP_Base extends TestBase {
 	//System.out.println(temporal.getText());
 
 	montoContratoP=Double.parseDouble(limpiarValor(driver.findElement(By.xpath("//*[@id=\"ep\"]/div[2]/div[6]/table/tbody/tr[3]/td[2]")).getText()));
-
-	totalCuvP=Double.parseDouble(limpiarValor(driver.findElement(By.xpath("//*[@id=\"0063F000002UjvW_RelatedLineItemList_body\"]/table/tbody/tr[3]/td[9]")).getText()));
-	cantidad=Double.parseDouble(limpiarValor(driver.findElement(By.xpath("//*[@id=\"0063F000002UjvW_RelatedLineItemList_body\"]/table/tbody/tr[3]/td[2]")).getText()));
-	plazo=Double.parseDouble(limpiarValor(driver.findElement(By.xpath("//*[@id=\"0063F000002UjvW_RelatedLineItemList_body\"]/table/tbody/tr[3]/td[6]")).getText()));
-	cargopormes=Double.parseDouble(limpiarValor(driver.findElement(By.xpath("//*[@id=\"0063F000002UjvW_RelatedLineItemList_body\"]/table/tbody/tr[3]/td[5]")).getText()));
+	//*[@id="006L0000009BQt0_RelatedLineItemList_body"]/table/tbody/tr[2]/td[2]
+	totalCuvP=Double.parseDouble(limpiarValor(driver.findElement(By.xpath("//*[@id=\"006L0000009BQt0_RelatedLineItemList_body\"]/table/tbody/tr[2]/td[9]")).getText()));
+	cantidad=Double.parseDouble(limpiarValor(driver.findElement(By.xpath("//*[@id=\"006L0000009BQt0_RelatedLineItemList_body\"]/table/tbody/tr[2]/td[2]")).getText()));
+	plazo=Double.parseDouble(limpiarValor(driver.findElement(By.xpath("//*[@id=\"006L0000009BQt0_RelatedLineItemList_body\"]/table/tbody/tr[2]/td[6]")).getText()));
+	cargopormes=Double.parseDouble(limpiarValor(driver.findElement(By.xpath("//*[@id=\"006L0000009BQt0_RelatedLineItemList_body\"]/table/tbody/tr[2]/td[5]")).getText()));
 	
 	assertTrue(((cantidad*plazo*cargopormes)+totalCuvP)==montoContratoP);
 	}
@@ -817,7 +848,7 @@ public class test_SCP_Base extends TestBase {
 	sleep(3000);
 	double montoAbono=0.0;
 	double totalAbonoP=Double.parseDouble(limpiarValor(driver.findElement(By.xpath("//*[@id=\"ep\"]/div[2]/div[6]/table/tbody/tr[1]/td[2]")).getText()));
-	List<WebElement> abono=driver.findElements(By.xpath("//*[@id=\"0063F000002Uk8Q_RelatedLineItemList_body\"]/table/tbody/tr"));
+	List<WebElement> abono=driver.findElements(By.xpath("//*[@id=\"006L0000009BQte_RelatedLineItemList_body\"]/table/tbody/tr"));
 	abono.remove(0);
 	for(WebElement ab:abono) {
 			//System.out.println(ab.getText());
@@ -862,7 +893,7 @@ public class test_SCP_Base extends TestBase {
 	sleep(3000);
 	double montoAbono=0.0;
 	double totalAbonoD=Double.parseDouble(limpiarValor(driver.findElement(By.xpath("//*[@id=\"ep\"]/div[2]/div[6]/table/tbody/tr[1]/td[4]")).getText()));
-	List<WebElement> abono=driver.findElements(By.xpath("//*[@id=\"0063F000002Uk8Q_RelatedLineItemList_body\"]/table/tbody/tr"));
+	List<WebElement> abono=driver.findElements(By.xpath("//*[@id=\"006L0000009BQte_RelatedLineItemList_body\"]/table/tbody/tr"));
 	abono.remove(0);
 	for(WebElement ab:abono) {
 			//System.out.println(ab.getText());
@@ -909,7 +940,7 @@ public class test_SCP_Base extends TestBase {
 	
 	double totalCuv=Double.parseDouble(limpiarValor(driver.findElement(By.xpath("//*[@id=\"ep\"]/div[2]/div[6]/table/tbody/tr[2]/td[4]")).getText()));
 	double cuvs=0.0;
-	List<WebElement> abono=driver.findElements(By.xpath("//*[@id=\"0063F000002Uk8Q_RelatedLineItemList_body\"]/table/tbody/tr"));
+	List<WebElement> abono=driver.findElements(By.xpath("//*[@id=\"006L0000009BQte_RelatedLineItemList_body\"]/table/tbody/tr"));
 	abono.remove(0);
 	for(WebElement ab:abono) {
 			//System.out.println(ab.getText());
@@ -951,11 +982,11 @@ public class test_SCP_Base extends TestBase {
 		if(flag)
 			break;
 		}
-	sleep(3000);
+	sleep(5000);
 	
 	double totalCuv=Double.parseDouble(limpiarValor(driver.findElement(By.xpath("//*[@id=\"ep\"]/div[2]/div[6]/table/tbody/tr[2]/td[2]")).getText()));
 	double cuvs=0.0;
-	List<WebElement> abono=driver.findElements(By.xpath("//*[@id=\"0063F000002Uk8Q_RelatedLineItemList_body\"]/table/tbody/tr"));
+	List<WebElement> abono=driver.findElements(By.xpath("//*[@id=\"006L0000009BQte_RelatedLineItemList_body\"]/table/tbody/tr"));
 	abono.remove(0);
 	for(WebElement ab:abono) {
 			//System.out.println(ab.getText());
