@@ -101,7 +101,7 @@ public class SCP extends BasePage {
 		  try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 		WebElement element = driver.findElement(By.cssSelector(".bRelatedList.first"));
 		((JavascriptExecutor)driver).executeScript("window.scrollTo(0,"+element.getLocation().y+")");
-		driver.findElement(By.cssSelector(".pShowMore")).findElements(By.tagName("a")).get(1).click();
+		//driver.findElement(By.cssSelector(".pShowMore")).findElements(By.tagName("a")).get(1).click();
 		try {Thread.sleep(3000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 		element = driver.findElement(By.cssSelector(".listRelatedObject.opportunityBlock"));
 		List<WebElement> op = element.findElements((By.cssSelector(".dataCell")));
@@ -361,7 +361,10 @@ public void comentarycompartir(String comentario){
 	TB.waitFor(driver, By.tagName("iframe"));
 	WebElement iframe =driver.findElement(By.tagName("iframe"));
 	driver.switchTo().frame(iframe);
-	WebElement description=driver.findElement(By.xpath("//body[@class='chatterPublisherRTE cke_editable cke_editable_themed cke_contents_ltr cke_show_borders']"));
+	WebElement description;
+	try {description=driver.findElement(By.xpath("//body[@class='chatterPublisherRTE cke_editable cke_editable_themed cke_contents_ltr cke_show_borders placeholder']"));
+	}catch(org.openqa.selenium.NoSuchElementException ex1){description=driver.findElement(By.xpath("//body[@class='chatterPublisherRTE cke_editable cke_editable_themed cke_contents_ltr cke_show_borders']"));
+	}
 	try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 	description.click();
 	description.sendKeys(comentario);

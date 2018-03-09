@@ -22,13 +22,7 @@ import Pages.setConexion;
 public class SCP_Joaquin extends TestBase{
 	private WebDriver driver;
 	
-	@BeforeClass(groups = {"SCP", "Filtros"})
-	  public void Init() throws Exception
-	  {
-	    this.driver = setConexion.setupEze();
-	    loginSCPAdmin(driver);
-	    try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
-	  }
+	
 	
 	@BeforeMethod(groups = {"SCP", "Filtros"})
 	  public void setUp() throws Exception {
@@ -44,6 +38,15 @@ public class SCP_Joaquin extends TestBase{
 	public void teardown() {
 		driver.quit();
 		sleep(3000);
+	}
+	
+	
+	@BeforeClass(groups = {"SCP", "Filtros"})
+	public void Init() throws Exception
+	{
+	  this.driver = setConexion.setupEze();
+	  loginSCPConPermisos(driver);
+	  try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 	}
 	
 	private boolean isFileDownloaded_Ext(String dirPath, String ext){
