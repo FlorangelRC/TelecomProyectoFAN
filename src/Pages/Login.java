@@ -3,6 +3,7 @@ package Pages;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.How;
 import org.openqa.selenium.support.PageFactory;
+import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 
@@ -52,7 +53,17 @@ public class Login extends BasePage {
     }
 	
 	//Methods
-
+	public void ingresarSCPconTodo() { 
+		 try {logininterno.click();}
+		 catch(org.openqa.selenium.ElementNotVisibleException ex1) {
+			 driver.findElement(By.id("idp_hint")).click();
+		 }
+		 Ecom_User_ID.sendKeys("UA198998");
+	     Ecom_Password.sendKeys("Teco1234");
+	     loginButton2.click();
+	     try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+	}
+	
 	public void ingresarAdminSCP() {
 		 logininterno.click();
 	     Ecom_User_ID.sendKeys("UAT585244");
@@ -63,7 +74,10 @@ public class Login extends BasePage {
 	   
 	  
 	   public void ingresarUsuarioSCP() {
-		 logininterno.click();
+		 try {logininterno.click();}
+		 catch(org.openqa.selenium.ElementNotVisibleException ex1) {
+			 driver.findElement(By.id("idp_hint")).click();
+		 }
 	     Ecom_User_ID.sendKeys("UAT585244");
 	     Ecom_Password.sendKeys("Testa10k");
 	     loginButton2.click();
@@ -150,7 +164,10 @@ public class Login extends BasePage {
 		}
 		
 		public void ingresarSCPAdminServices() {
-			  logininterno.click();
+			try {logininterno.click();}
+			 catch(org.openqa.selenium.ElementNotVisibleException ex1) {
+				 driver.findElement(By.id("idp_hint")).click();
+			 }
 			  try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 			  Ecom_User_ID.sendKeys("UA090571");
 			  Ecom_Password.sendKeys("Testa10k");
@@ -159,7 +176,10 @@ public class Login extends BasePage {
 		}
 		
 		public void ingresarSCPConPermisos() {
-			  logininterno.click();
+			try {logininterno.click();}
+			 catch(org.openqa.selenium.ElementNotVisibleException ex1) {
+				 driver.findElement(By.id("idp_hint")).click();
+			 }
 			  try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 			  Ecom_User_ID.sendKeys("UA090022");
 			  Ecom_Password.sendKeys("Testa10k");

@@ -387,6 +387,7 @@ public class Sales extends TestBase {
 	@Test(groups={"Sales", "AltaDeLinea","Ola1"})
 	public void TS95146_Ventas_General_Verificar_Creacion_De_Campo_De_Subestados(){
 		boolean esta = false;
+		//en teoria se debe hacer una venta para luego poder verificar la orden y que tenga el campo requerido
 		driver.findElement(By.cssSelector(".vlc-slds-button--tertiary.ng-binding.ng-scope")).click();
 		driver.findElement(By.id("alert-ok-button")).click();
 		sleep(8000);
@@ -486,6 +487,7 @@ public class Sales extends TestBase {
 	@Test(groups={"Sales", "AltaDeLinea","Ola1"})
 	public void TS95147_Ventas_General_Verificar_LOV_Campo_Status_En_La_Orden(){
 		boolean esta = false;
+		//en teoria se debe hacer una venta para luego poder verificar la orden y que tenga el campo requerido
 		String[] todos = {"draft","cancelled","activated"};
 		driver.findElement(By.cssSelector(".vlc-slds-button--tertiary.ng-binding.ng-scope")).click();
 		driver.findElement(By.id("alert-ok-button")).click();
@@ -515,6 +517,7 @@ public class Sales extends TestBase {
 	@Test(groups={"Sales", "AltaDeLinea","Ola1"})
 	public void TS95148_Ventas_General_Verificar_LOV_Campo_TrackingStatus_En_La_Orden(){
 		boolean esta = false;
+		//en teoria se debe hacer una venta para luego poder verificar la orden y que tenga el campo requerido
 		String[] todos = {"pendiente de pago","preparar pedido","pendiente de entrega","entregado"};
 		driver.findElement(By.cssSelector(".vlc-slds-button--tertiary.ng-binding.ng-scope")).click();
 		driver.findElement(By.id("alert-ok-button")).click();
@@ -1272,7 +1275,7 @@ public class Sales extends TestBase {
 	public void TS94885_Alta_Cuenta_Busqueda_Verificar_Nombre_y_Apellido_separado(){
 		SalesBase SB = new SalesBase(driver);
 		SB.BusquedaAvanzada();
-		SB.BuscarAvanzada("pepeasd","argentoasd", "", "", "");
+		SB.BuscarAvanzada(nombre,apellido, "", "", "");
 		SB.validarespacio();
 	}
 	
@@ -1470,11 +1473,11 @@ public class Sales extends TestBase {
 		BasePage dni = new BasePage(driver);
 		dni.setSimpleDropdown(driver.findElement(By.id("SearchClientDocumentType")), "DNI");
 		driver.findElement(By.id("SearchClientDocumentNumber")).click();
-		driver.findElement(By.id("SearchClientDocumentNumber")).sendKeys("17856969");
+		driver.findElement(By.id("SearchClientDocumentNumber")).sendKeys("34073329");
 		SalesBase SB = new SalesBase(driver);
 		SB.BuscarAvanzada("papa", "nata", "", "", "");
 		WebElement tTel = driver.findElement(By.id("tab-scoped-3")).findElement(By.tagName("tbody")).findElements(By.tagName("td")).get(2);
-		Assert.assertTrue(tTel.getText().equals("17856969"));
+		Assert.assertTrue(tTel.getText().equals("34073329"));
 		WebElement tNom = driver.findElement(By.id("tab-scoped-3")).findElement(By.tagName("tbody")).findElements(By.tagName("td")).get(0);
 		Assert.assertFalse(tNom.getText().equals("papa" + " " + "nata"));
 	}
@@ -1568,7 +1571,7 @@ public class Sales extends TestBase {
 	      Assert.assertTrue(a && b); 
 	    } 
 	     
-	    @Test(groups = {"Sales", "AltaDeContacto"}) 
+	    @Test(groups = {"Sales", "AltaDeContacto","Ola1"}) 
 	    public void TS94528_Alta_de_Contacto_Persona_Fisica_Confirmar_creacion_de_contacto_con_un_campo_obligatorio_incompleto_47() { 
 	      SalesBase SB = new SalesBase(driver); 
 	      SB.BtnCrearNuevoCliente(); 
@@ -1983,6 +1986,7 @@ public class Sales extends TestBase {
 	  
 	  @Test(groups = {"Sales", "AltaDeLinea","Ola1"})
 	  public void TS94709_Ventas_BuscarCliente_Verificar_cliente_activo_por_numero_de_linea() {
+		  //buscar todos los dni y tomar una linea y luego hacer la busqueda por la linea
 		  String tel = "1157602860";
 		  driver.findElement(By.id("PhoneNumber")).sendKeys(tel);
 		  driver.findElement(By.id("SearchClientsDummy")).click();
@@ -2028,6 +2032,7 @@ public class Sales extends TestBase {
 	  
 	  @Test(groups = {"Sales", "AltaDeLinea","Ola1"})
 	  public void TS94711_Ventas_BuscarCliente_Verificar_Clientes_No_Activos() {
+		  //debo buscar un cliente inactivo y me traigo el numero de linea y lo busco
 		  driver.findElement(By.id("PhoneNumber")).sendKeys("1157572274");
 		  driver.findElement(By.id("SearchClientsDummy")).click();
 		  sleep(5000);
@@ -2039,6 +2044,7 @@ public class Sales extends TestBase {
 	  
 	  @Test(groups = {"Sales", "AltaDeLinea","Ola1"})
 	  public void TS94713_Ventas_BuscarCliente_Verificar_Clientes_Activos_Y_No_Activos() {
+		  //buscar un cliente inactivo (1) y uno activo (2)
 		  driver.findElement(By.id("PhoneNumber")).sendKeys("1157572274");
 		  driver.findElement(By.id("SearchClientsDummy")).click();
 		  sleep(5000);

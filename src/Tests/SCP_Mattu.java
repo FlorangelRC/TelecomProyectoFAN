@@ -27,7 +27,7 @@ private WebDriver driver;
 	@BeforeClass(groups = "SCP")
 	public void Init() throws Exception {
 		this.driver = setConexion.setupEze();
-		loginSCPAdmin(driver);
+		loginSCPConPermisos(driver);
 		try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 	}
 	@BeforeMethod(groups = "SCP")
@@ -155,7 +155,7 @@ private WebDriver driver;
 	//------------------------------------------------------------------------------------------------- 
 	//TCC = 8
 	@Test(groups = "SCP")
-	public void TS112566_Asignación_de_Value_Drivers_a_Oportunidades_Ordenar_por_columnas() throws ParseException {
+	public void TS112566_Asignacion_de_Value_Drivers_a_Oportunidades_Ordenar_por_columnas() throws ParseException {
 		SCP prueba = new SCP(driver); 
 		prueba.moveToElementOnAccAndClick("tercerTitulo", 1);
 		

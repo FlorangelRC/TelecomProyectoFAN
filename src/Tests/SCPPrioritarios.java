@@ -30,7 +30,7 @@ public class SCPPrioritarios extends TestBase{
 		this.driver = setConexion.setupEze();
 		try {Thread.sleep(10000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 		try {Thread.sleep(10000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
-		loginSCPAdmin(driver);
+		loginSCPUsuario(driver);
 		try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 		
 	}
@@ -44,7 +44,7 @@ public class SCPPrioritarios extends TestBase{
 		try {Thread.sleep(7000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 	}
 	
-	@AfterClass(groups = "SCP")
+	//@AfterClass(groups = "SCP")
 	public void tearDown() {
 		driver.quit();
 	}
