@@ -60,7 +60,7 @@ public class SCPAdministracionDeServicios extends TestBase {
     public void TS110248_Estructura_De_Los_Productos_Moneda() {  
       SCP pcp = new SCP(driver);  
       boolean estaMon= false;
-      pcp.Desloguear_Loguear("fabiana");
+      //pcp.Desloguear_Loguear("fabiana");
       pcp.clickOnTabByName("cuentas");
 		try {Thread.sleep(7000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 		try {Thread.sleep(7000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
@@ -89,14 +89,14 @@ public class SCPAdministracionDeServicios extends TestBase {
 		Detalles = driver.findElement(By.className("detailList")).findElements(By.tagName("tr")).get(8);
 		String MonNuev = Detalles.findElements(By.tagName("td")).get(1).getText();
 		assertFalse(MonActual.equals(MonNuev));
-		pcp.Desloguear_Loguear("isabel");
+		//pcp.Desloguear_Loguear("isabel");
     }  
 	
 	@Test(groups = "SCP")  
     public void TS110249_Estructura_De_Las_Oportunidades_Moneda() {  
       SCP pcp = new SCP(driver);  
       boolean estaMon= false;
-      pcp.Desloguear_Loguear("permisos");
+      //pcp.Desloguear_Loguear("permisos");
       pcp.clickOnTabByName("cuentas");
 		try {Thread.sleep(7000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 		try {Thread.sleep(7000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
@@ -113,13 +113,13 @@ public class SCPAdministracionDeServicios extends TestBase {
 			}
 		}
 		assertTrue(estaMon);
-		pcp.Desloguear_Loguear("isabel");
+		//pcp.Desloguear_Loguear("isabel");
     }  
 	
 	@Test(groups = "SCP")  
     public void TS110250_Estructura_De_Los_Proyectos_TMI() {  
       SCP pcp = new SCP(driver);  
-      pcp.Desloguear_Loguear("fabiana");
+      //pcp.Desloguear_Loguear("fabiana");
       pcp.clickOnTabByName("cuentas");
 		try {Thread.sleep(7000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 		try {Thread.sleep(7000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
@@ -138,13 +138,13 @@ public class SCPAdministracionDeServicios extends TestBase {
 	    TMI = driver.findElement(By.className("detailList")).findElements(By.tagName("tr")).get(4).findElements(By.tagName("td")).get(3);
 	    assertTrue(TMI.getText().equals(Integer.toString(numTMI)));
 		try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}  
-		pcp.Desloguear_Loguear("isabel");
+		//pcp.Desloguear_Loguear("isabel");
     }  
 	
 	@Test(groups = "SCP")  
     public void TS110251_Estructura_De_Los_Proyectos_TMI_Fecha_Pasada() {  
       SCP pcp = new SCP(driver);  
-      pcp.Desloguear_Loguear("fabiana");
+      //pcp.Desloguear_Loguear("fabiana");
       pcp.clickOnTabByName("cuentas");
 		try {Thread.sleep(7000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 		try {Thread.sleep(7000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
@@ -162,13 +162,13 @@ public class SCPAdministracionDeServicios extends TestBase {
 	    assertTrue(driver.findElement(By.id("errorDiv_ep")).getText().contains("Error:El valor del TMI debe ser un n\u00famero positivo."));
 
 		try {Thread.sleep(2000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}  
-		pcp.Desloguear_Loguear("isabel");
+		//pcp.Desloguear_Loguear("isabel");
     }  
 	
 	@Test(groups = "SCP")  
     public void TS110252_Estructura_De_Las_Oportunidades_Probabilidad() {  
       SCP pcp = new SCP(driver);  
-      pcp.Desloguear_Loguear("fabiana");
+      //pcp.Desloguear_Loguear("fabiana");
       pcp.clickOnTabByName("cuentas");
 		try {Thread.sleep(7000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 		try {Thread.sleep(7000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
@@ -185,14 +185,14 @@ public class SCPAdministracionDeServicios extends TestBase {
 	    List<WebElement> motivos = listSelect.getOptions();
 	    assertTrue(verificarContenidoLista(todos,motivos));
 	    try {Thread.sleep(2000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}  
-		pcp.Desloguear_Loguear("isabel");
+		//pcp.Desloguear_Loguear("isabel");
     }  
 	
 	@Test(groups = "SCP")  
     public void TS110253_Estructura_De_Los_Contactos_Estado() {  
       SCP pcp = new SCP(driver);  
       boolean estaMon= false;
-      pcp.Desloguear_Loguear("fabiana");
+     // pcp.Desloguear_Loguear("fabiana");
       pcp.clickOnTabByName("cuentas");
 		try {Thread.sleep(7000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 		try {Thread.sleep(7000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
@@ -219,7 +219,7 @@ public class SCPAdministracionDeServicios extends TestBase {
 		driver.findElement(By.id("topButtonRow")).findElement(By.tagName("input")).click();
 		try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 		
-		pcp.Desloguear_Loguear("isabel");
+		//pcp.Desloguear_Loguear("isabel");
     }  
 	
 	
@@ -794,7 +794,7 @@ public class SCPAdministracionDeServicios extends TestBase {
       SCP pcp = new SCP(driver);  
       boolean botonG = false;  
       java.util.Date fecha = new Date();
-      pcp.Desloguear_Loguear("permisos");
+      //pcp.Desloguear_Loguear("permisos");
       try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 		pcp.clickOnTabByName("cuentas");
 		try {Thread.sleep(7000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
@@ -897,7 +897,7 @@ public class SCPAdministracionDeServicios extends TestBase {
 		try {Thread.sleep(7000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 		//driver.findElement(By.cssSelector(".listRelatedObject.accountContactRelationBlock")).findElement(By.className("pShowMore")).findElements(By.tagName("a")).get(1).click();
 		try {Thread.sleep(7000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
-		driver.findElement(By.cssSelector(".listRelatedObject.accountContactRelationBlock")).findElement(By.cssSelector(".dataRow.even.first")).findElements(By.tagName("a")).get(1).click();
+		driver.findElement(By.cssSelector(".listRelatedObject.accountContactRelationBlock")).findElement(By.cssSelector(".dataRow.even.first")).findElements(By.tagName("a")).get(3).click();
 		try {Thread.sleep(7000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 		String[] campos = {"propietario del contacto","tel\u00e9fono","nombre","celular","nombre de la cuenta","email","fecha de nacimiento","pictureurl","t\u00edtulo","picture","activo","domicilio","creado por","descripci\u00f3n","ejecutivo de cuenta"};//
 		List<WebElement> Detalles = driver.findElement(By.className("detailList")).findElements(By.tagName("tr"));
@@ -963,8 +963,8 @@ public class SCPAdministracionDeServicios extends TestBase {
 		    SCP pcp = new SCP(driver); 
 		    java.util.Date fecha = new Date();
 		    System.out.println (fecha);
-		    pcp.Desloguear_Loguear("fabiana");
-		    pcp.Desloguear_Loguear_Comentar("fabiana", "admin", fecha.toString(), "cuartoTitulo", 2); 
+		    pcp.Desloguear_Loguear("isabel");
+		    pcp.Desloguear_Loguear_Comentar("persimos", "isabel", fecha.toString(), "cuartoTitulo", 2); 
 		    try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 			pcp.clickOnTabByName("cuentas");
 			try {Thread.sleep(7000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
@@ -973,13 +973,13 @@ public class SCPAdministracionDeServicios extends TestBase {
 			try {Thread.sleep(10000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 			pcp.moveToElementOnAccAndClick("cuartoTitulo", 2);
 		    pcp.validarcomentarioajeno(fecha.toString());
-		    pcp.Desloguear_Loguear("isabel");
+		    pcp.Desloguear_Loguear("permisos");
 	}
 
 	@Test(groups = "SCP") 
 	  public void TS112791_Plan_de_accion_Doble_Click_Para_Editar() { 
 	    SCP pcp = new SCP(driver); 
-	    pcp.Desloguear_Loguear("fabiana");
+	   // pcp.Desloguear_Loguear("fabiana");
 	    try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 		pcp.clickOnTabByName("cuentas");
 		try {Thread.sleep(7000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
@@ -991,7 +991,7 @@ public class SCPAdministracionDeServicios extends TestBase {
 		Actions action = new Actions(driver);   
 		action.moveToElement(modificar.findElement(By.tagName("span")).findElement(By.tagName("span"))).doubleClick().perform();
 		assertTrue(modificar.findElement(By.className("inlineEditDiv")).isDisplayed());
-		pcp.Desloguear_Loguear("isabel");
+		//pcp.Desloguear_Loguear("isabel");
 	 }
 	
 	@Test(groups = "SCP")  
