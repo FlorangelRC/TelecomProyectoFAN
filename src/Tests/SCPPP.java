@@ -38,7 +38,7 @@ private WebDriver driver;
 	public void init() throws Exception	{
 	this.driver = setConexion.setupEze();
 	try {Thread.sleep(15000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
-	loginSCPAdmin(driver);
+	loginSCPconTodo(driver);
 	try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 	}
 	
@@ -57,7 +57,7 @@ private WebDriver driver;
 	}
 	
 	
-	//@AfterClass(groups = "SCP")
+	@AfterClass(groups = "SCP")
 	public void teardown() {
 		driver.quit();
 		sleep(10000);
@@ -85,6 +85,8 @@ private WebDriver driver;
 	
 	@Test(groups = "SCP") 
 	public void TS110245_Estructura_del_cliente_GGCC_Campos_Region	() {
+		SCP pScp = new SCP(driver);
+		pScp.Desloguear_Loguear("fabiana");
 		WebElement reg = driver.findElement(By.id("00N3F000000HaUe_ileinner"));
 		Actions action = new Actions(driver);   
 		action.moveToElement(reg).doubleClick().perform();
@@ -173,7 +175,7 @@ private WebDriver driver;
 	    prueba.moveToElementOnAccAndClick("cuartoTitulo", 2);
 	    WebElement tabla= driver.findElement(By.id("mainTable_wrapper")).findElement(By.className("odd")).findElements(By.tagName("td")).get(1);
 	    String lala = tabla.getText();
-	    //System.out.println(lala);
+	    System.out.println(lala);
 	    WebElement box = driver.findElement(By.id("mainTable")).findElement(By.className("odd")).findElement(By.tagName("td")).findElement(By.tagName("input"));	    
 	    box.click();
 	    boolean bot= false;
@@ -279,12 +281,12 @@ private WebDriver driver;
 	    Assert.assertTrue(lala.equals("TestGuardar"));
 	   	busc.clear();
 	    busc.submit();
-	    sleep(5000);
+	    sleep(5000);	
 	    driver.navigate().refresh();
 	    sleep(5000);
 	    WebElement tablaa= driver.findElement(By.id("mainTable_wrapper")).findElement(By.className("odd")).findElements(By.tagName("td")).get(3);
 	    action.moveToElement(tablaa).doubleClick().perform();
-	    WebElement asjd = driver.findElement(By.id("mainTable_wrapper")).findElements(By.tagName("tr")).get(3); 
+	    WebElement asjd = driver.findElement(By.id("mainTable_wrapper")).findElements(By.tagName("td")).get(3); 
 	    sleep(5000);
 	    WebElement buscc = driver.findElement(By.id("mainTable_filter")).findElement(By.tagName("input"));
 		sleep(3000);

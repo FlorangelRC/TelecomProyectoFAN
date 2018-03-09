@@ -110,6 +110,12 @@ public class TestBase {
 	       page0.ingresarAdminSCP();
 	   }
 	   
+	public void loginSCPconTodo(WebDriver driver) {
+	     driver.get("https://telecomcrm--uat.cs8.my.salesforce.com");
+	     try {Thread.sleep(6000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+	       Login page0 = new Login(driver);
+	       page0.ingresarSCPconTodo();
+	   }
 	   
 	     public void loginSCPUsuario(WebDriver driver) {
 	       driver.get("https://telecomcrm--uat.cs8.my.salesforce.com");

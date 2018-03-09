@@ -53,7 +53,17 @@ public class Login extends BasePage {
     }
 	
 	//Methods
-
+	public void ingresarSCPconTodo() { 
+		 try {logininterno.click();}
+		 catch(org.openqa.selenium.ElementNotVisibleException ex1) {
+			 driver.findElement(By.id("idp_hint")).click();
+		 }
+		 Ecom_User_ID.sendKeys("uat198998");
+	     Ecom_Password.sendKeys("Teco1234");
+	     loginButton2.click();
+	     try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+	}
+	
 	public void ingresarAdminSCP() {
 		 logininterno.click();
 	     Ecom_User_ID.sendKeys("UAT585244");
