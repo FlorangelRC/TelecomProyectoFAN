@@ -128,7 +128,7 @@ private WebDriver driver;
 	//------------------------------------------------------------------------------------------------- 
 	//TCC = 6
 	@Test(groups = "SCP")
-	public void TS112563_Asignación_de_Value_Drivers_a_Oportunidades_MÁS() {
+	public void TS112563_Asignacion_de_Value_Drivers_a_Oportunidades_MAS() {
 		SCP prueba = new SCP(driver); 
 		prueba.moveToElementOnAccAndClick("tercerTitulo", 1);
 		((JavascriptExecutor)driver).executeScript("window.scrollTo(0,"+driver.findElement(By.xpath("//*[@id=\"a0l3F0000005ipnQAA\"]/td[2]/span[2]/button")).getLocation().y+")");
@@ -146,7 +146,7 @@ private WebDriver driver;
 	//------------------------------------------------------------------------------------------------- 
 	//TCC = 7
 	@Test(groups = "SCP")
-	public void TS112565_Asignación_de_Value_Drivers_a_Oportunidades_Oportunidades() {
+	public void TS112565_Asignacion_de_Value_Drivers_a_Oportunidades_Oportunidades() {
 		SCP prueba = new SCP(driver); 
 		prueba.moveToElementOnAccAndClick("tercerTitulo", 1);
 		driver.findElement(By.xpath("//*[@id=\"0063F000002UbLjQAK\"]/td[1]/a")).click();
@@ -311,7 +311,7 @@ private WebDriver driver;
 	//------------------------------------------------------------------------------------------------- 
 	//TCC = 17
 	@Test(groups = "SCP")
-	public void TS112567_Asignación_de_Value_Drivers_a_Oportunidades_Related_value_drivers() {
+	public void TS112567_Asignacin_de_Value_Drivers_a_Oportunidades_Related_value_drivers() {
 		SCP prueba= new SCP(driver);
 		TestBase tTB = new TestBase();
 		try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
