@@ -1476,7 +1476,7 @@ public class Sales extends TestBase {
 		driver.findElement(By.id("SearchClientDocumentNumber")).sendKeys("34073329");
 		SalesBase SB = new SalesBase(driver);
 		SB.BuscarAvanzada("papa", "nata", "", "", "");
-		WebElement tTel = driver.findElement(By.id("tab-scoped-3")).findElement(By.tagName("tbody")).findElements(By.tagName("td")).get(2);
+		WebElement tTel = driver.findElement(By.id("tab-scoped-1")).findElement(By.tagName("tbody")).findElements(By.tagName("td")).get(3);
 		Assert.assertTrue(tTel.getText().equals("34073329"));
 		WebElement tNom = driver.findElement(By.id("tab-scoped-3")).findElement(By.tagName("tbody")).findElements(By.tagName("td")).get(0);
 		Assert.assertFalse(tNom.getText().equals("papa" + " " + "nata"));
