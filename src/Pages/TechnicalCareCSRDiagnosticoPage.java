@@ -51,6 +51,10 @@ public class TechnicalCareCSRDiagnosticoPage extends BasePage{
 	@FindBy (id="ClosedCaseKnowledgeBase")
 	private WebElement casoGenerado;
 	
+	@FindBy(id="ClosedCaseMessage")
+	  private WebElement numReclamo;
+	 
+	
 	@FindBy(xpath=".//*[@id='SimilCaseInformation']/div/p/p[2]/span/strong[1]")
 	private WebElement existCaso; 
 	
@@ -515,6 +519,18 @@ public class TechnicalCareCSRDiagnosticoPage extends BasePage{
 	    }
 	    return false;
 	}
+	
+	public boolean reclamo() throws InterruptedException {
+		  String numreclamo=" ";
+	       if(elementExists(numReclamo)) {
+	        numreclamo=numReclamo.getText();
+	 	      }
+	 	      else {
+	 	        numreclamo=numReclamo.getText();
+	 	      }
+	 	      return true;
+	 	 }
+	 
 	
 	public void buscarDireccion(String Direccion) {
 		direccion.clear();
