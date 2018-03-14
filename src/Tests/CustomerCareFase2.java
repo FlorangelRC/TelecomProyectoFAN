@@ -11,7 +11,6 @@ import java.util.List;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
-import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.ui.Select;
@@ -30,7 +29,6 @@ import Pages.setConexion;
 
 public class CustomerCareFase2 extends TestBase {
 
-	private WebDriver driver;
 	private CustomerCare cc;
 	private BasePage bp;
 	private Accounts ac;
@@ -44,7 +42,7 @@ public class CustomerCareFase2 extends TestBase {
 
 	@BeforeClass(groups = {"CustomerCare", "Vista360Layout", "CambiosDeCondiciónImpositiva", "Sugerencias", "DetalleDeConsumos", "CambioDeCiclo", "MovimientoDeCuentasDeFacturación", "AdministraciónDeCasos", "CostoDeCambios"})
 	public void init() throws Exception {
-		this.driver = setConexion.setupEze();
+		driver = setConexion.setupEze();
 		sleep(5000);
 		cc = new CustomerCare(driver);
 		bp = new BasePage(driver);

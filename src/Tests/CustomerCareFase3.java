@@ -3,8 +3,8 @@ package Tests;
 import java.util.List;
 
 import org.openqa.selenium.By;
-import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
+
 import org.testng.Assert;
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;
@@ -17,14 +17,13 @@ import Pages.setConexion;
 
 public class CustomerCareFase3 extends TestBase{
 	
-	private WebDriver driver;
 	private CustomerCare cc;
 	private Accounts ac;
 	
 	
 	@BeforeClass (groups = {"CustomerCare", "DebitoAutomatico", "Vista360Layout", "DetalleDeConsumos"})
 	 public void init() throws Exception {
-		this.driver = setConexion.setupEze();
+		driver = setConexion.setupEze();
 		sleep(5000);
 		cc = new CustomerCare(driver);
 		ac = new Accounts(driver);

@@ -16,6 +16,7 @@ import org.openqa.selenium.support.ui.Select;
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.BeforeMethod;
+import org.testng.annotations.Parameters;
 import org.testng.annotations.Test;
 
 import Pages.SCP;
@@ -30,7 +31,7 @@ public class SCPPrioritarios extends TestBase{
 		this.driver = setConexion.setupEze();
 		try {Thread.sleep(10000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 		try {Thread.sleep(10000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
-		loginSCPUsuario(driver);
+		loginSCPconTodo(driver);
 		try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 		
 	}
@@ -50,43 +51,43 @@ public class SCPPrioritarios extends TestBase{
 	}
 	
 
-		@Test(groups = "SCP")
-		 public void TS116024_SCP_Crear_Cuenta() { 
-		  SCP prueba = new SCP(driver);
-		
-		          driver.findElement(By.className("pbButton")).findElement(By.className("btn")).click();
-		  		  try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}  
-		  		List<WebElement> campos = driver.findElement(By.className("pbSubsection")).findElements(By.tagName("tr"));
-		  		//Tipo
-		  		Select listSelect = new Select (campos.get(0).findElements(By.tagName("td")).get(3).findElement(By.tagName("select")));
-		  		listSelect.selectByIndex(1);
-		  		//Segmento
-		  		listSelect = new Select (campos.get(1).findElements(By.tagName("td")).get(1).findElement(By.tagName("select")));
-		  		listSelect.selectByIndex(1);
-		  		//nombre de la cuenta
-		  		campos.get(2).findElements(By.tagName("td")).get(1).findElement(By.tagName("input")).sendKeys("APEREZ APEREZ");
-		  		  //driver.findElement(By.id("acc2")).
-		  		//razon social
-		  		//campos.get(2).findElements(By.tagName("td")).get(3).findElement(By.tagName("input")).sendKeys("APEREZ APEREZ");
-		  		  //driver.findElement(By.id("00N3F000000JoSt")).sendKeys("APEREZ APEREZ");
-		  		  //CUIT
-		  		 Random aleatorio = new Random(System.currentTimeMillis());
-		  		     aleatorio.setSeed(System.currentTimeMillis());
-		  		  int intAletorio = aleatorio.nextInt(8999)+1000;
-		  		campos.get(3).findElements(By.tagName("td")).get(3).findElement(By.tagName("input")).sendKeys("3053806"+Integer.toString(intAletorio));
-		  		  //driver.findElement(By.id("00N3F000000JoSZ")).sendKeys("30538068899");
-		  		  //numero de cliente
-		  		campos.get(7).findElements(By.tagName("td")).get(1).findElement(By.tagName("input")).sendKeys("000009"+Integer.toString(intAletorio));
-		  		  //driver.findElement(By.id("00N3F000000JoSf")).sendKeys("0000096399");
-		  		  try {Thread.sleep(2000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
-		  		  driver.findElement(By.name("save")).click();
-		  		try {Thread.sleep(8000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
-				prueba.clickOnTabByName("cuentas");
-				try {Thread.sleep(8000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
-				assertTrue(driver.findElement(By.className("hotListElement")).findElement(By.cssSelector(".dataRow.even.first")).findElement(By.tagName("a")).getText().toLowerCase().contains("aperez"));
-		  	
-		}
-		
+@Test(groups = "SCP", priority=2)
+ public void TS116024_SCP_Crear_Cuenta() { 
+  SCP prueba = new SCP(driver);
+
+          driver.findElement(By.className("pbButton")).findElement(By.className("btn")).click();
+  		  try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}  
+  		List<WebElement> campos = driver.findElement(By.className("pbSubsection")).findElements(By.tagName("tr"));
+  		//Tipo
+  		Select listSelect = new Select (campos.get(0).findElements(By.tagName("td")).get(3).findElement(By.tagName("select")));
+  		listSelect.selectByIndex(1);
+  		//Segmento
+  		listSelect = new Select (campos.get(1).findElements(By.tagName("td")).get(1).findElement(By.tagName("select")));
+  		listSelect.selectByIndex(1);
+  		//nombre de la cuenta
+  		campos.get(2).findElements(By.tagName("td")).get(1).findElement(By.tagName("input")).sendKeys("APEREZ APEREZ");
+  		  //driver.findElement(By.id("acc2")).
+  		//razon social
+  		//campos.get(2).findElements(By.tagName("td")).get(3).findElement(By.tagName("input")).sendKeys("APEREZ APEREZ");
+  		  //driver.findElement(By.id("00N3F000000JoSt")).sendKeys("APEREZ APEREZ");
+  		  //CUIT
+  		 Random aleatorio = new Random(System.currentTimeMillis());
+  		     aleatorio.setSeed(System.currentTimeMillis());
+  		  int intAletorio = aleatorio.nextInt(8999)+1000;
+  		campos.get(3).findElements(By.tagName("td")).get(3).findElement(By.tagName("input")).sendKeys("3053806"+Integer.toString(intAletorio));
+  		  //driver.findElement(By.id("00N3F000000JoSZ")).sendKeys("30538068899");
+  		  //numero de cliente
+  		campos.get(7).findElements(By.tagName("td")).get(1).findElement(By.tagName("input")).sendKeys("000009"+Integer.toString(intAletorio));
+  		  //driver.findElement(By.id("00N3F000000JoSf")).sendKeys("0000096399");
+  		  try {Thread.sleep(2000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+  		  driver.findElement(By.name("save")).click();
+  		try {Thread.sleep(8000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		prueba.clickOnTabByName("cuentas");
+		try {Thread.sleep(8000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		assertTrue(driver.findElement(By.className("hotListElement")).findElement(By.cssSelector(".dataRow.even.first")).findElement(By.tagName("a")).getText().toLowerCase().contains("aperez"));
+  	
+}
+
 		/*@Test(groups = "Fase2")
 		 public void TS_SCP_Crear_Cuenta() { 
 		  SCP prueba = new SCP(driver);
@@ -127,4 +128,47 @@ public class SCPPrioritarios extends TestBase{
 		 }
 		}*/
 	
+		 public void Eliminar_Cuenta(String Cuenta){
+		  //Eliminacion
+		  List<WebElement> cuentass = driver.findElements(By.cssSelector(".recentItemModule.sidebarModule"));
+		   for(WebElement c : cuentass){
+		   c.getText().equals(Cuenta);
+		   c.click();
+		   }
+		  sleep(5000);
+		  WebElement delet = driver.findElement(By.id("topButtonRow")).findElements(By.tagName("input")).get(3);
+		  System.out.println(delet.getText());
+		  delet.click();
+		  try {driver.switchTo().alert().accept();}catch(org.openqa.selenium.NoAlertPresentException e) {}
+		 }
+		
+@Test(groups = "SCP", priority=1)
+@Parameters ({"NombreDeLaCuenta","Cuit","NumeroDeCliente"})
+ public void Crear_Cuenta(String NombreDeLaCuenta, String Cuit, String NumeroDeCliente) { 
+  SCP prueba = new SCP(driver);
+
+          driver.findElement(By.className("pbButton")).findElement(By.className("btn")).click();
+  		  try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}  
+  		List<WebElement> campos = driver.findElement(By.className("pbSubsection")).findElements(By.tagName("tr"));
+  		//Tipo
+  		Select listSelect = new Select (campos.get(0).findElements(By.tagName("td")).get(3).findElement(By.tagName("select")));
+  		listSelect.selectByIndex(1);
+  		//Segmento
+  		listSelect = new Select (campos.get(1).findElements(By.tagName("td")).get(1).findElement(By.tagName("select")));
+  		listSelect.selectByIndex(1);
+  		//nombre de la cuenta
+  		campos.get(2).findElements(By.tagName("td")).get(1).findElement(By.tagName("input")).sendKeys(NombreDeLaCuenta);
+  		  //CUIT
+  		campos.get(3).findElements(By.tagName("td")).get(3).findElement(By.tagName("input")).sendKeys(Cuit);
+  		  //numero de cliente
+  		campos.get(7).findElements(By.tagName("td")).get(1).findElement(By.tagName("input")).sendKeys(NumeroDeCliente);
+  		sleep(2000);
+  		  driver.findElement(By.name("save")).click();
+  		sleep(8000);
+  			prueba.clickOnTabByName("cuentas");
+		sleep(8000);
+		assertTrue(driver.findElement(By.className("hotListElement")).findElement(By.cssSelector(".dataRow.even.first")).findElement(By.tagName("a")).getText().toLowerCase().contains("aperez"));
 }
+		 
+}
+

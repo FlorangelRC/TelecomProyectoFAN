@@ -6,7 +6,6 @@ import java.util.List;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
-import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 
 import org.testng.Assert;
@@ -23,7 +22,6 @@ import Pages.setConexion;
 
 public class customerInformationUpdates extends TestBase {
 	
-	private WebDriver driver;
 	private CustomerCare cc;
 	private customerInformation ci;
 	private BasePage bp;
@@ -43,7 +41,7 @@ public class customerInformationUpdates extends TestBase {
 	
 	@BeforeClass(groups = {"CustomerCare", "ActualizarDatos"})
 	public void init() throws Exception{
-		this.driver = setConexion.setupEze();
+		driver = setConexion.setupEze();
 		sleep(5000);
 		cc = new CustomerCare(driver);
 		ci = new customerInformation(driver);

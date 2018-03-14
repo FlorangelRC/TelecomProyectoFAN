@@ -15,27 +15,27 @@ import Pages.CustomerCare;
 
 public class CustomerCareFase4 extends TestBase{
 
-	CustomerCare page;
+	private CustomerCare cc;
 
 	
 	@BeforeClass (groups = {"CustomerCare", "Vista360Layout", "DetalleDeConsumos", "ActualizarDatos", "ProblemasConRecargas", "DebitoAutomatico"})
 	public void init() {
 		inicializarDriver();
-		page = new CustomerCare(driver);
+		cc = new CustomerCare(driver);
 		login();
 		IrA.CajonDeAplicaciones.ConsolaFAN();
 	}
 	
 	@AfterClass (groups = {"CustomerCare", "Vista360Layout", "DetalleDeConsumos", "ActualizarDatos", "ProblemasConRecargas", "DebitoAutomatico"})
 	public void quit() {
-		page.cerrarTodasLasPestañas();
+		cc.cerrarTodasLasPestañas();
 		IrA.CajonDeAplicaciones.Ventas();
 		cerrarTodo();
 	}
 	
 	@BeforeMethod (groups = {"CustomerCare", "Vista360Layout", "DetalleDeConsumos", "ActualizarDatos", "ProblemasConRecargas", "DebitoAutomatico"})
 	public void after() {
-		page.cerrarTodasLasPestañas();
+		cc.cerrarTodasLasPestañas();
 	}
 	
 	//@Test (groups = {"CustomerCare", "Vista360Layout"})
@@ -101,8 +101,8 @@ public class CustomerCareFase4 extends TestBase{
 	
 	@Test (groups = {"CustomerCare", "Vista360Layout"})
 	public void TS37166_360_View_UX_360_Card_Historiales_Visualizar_HISTORIAL_DE_AJUSTES() {
-		page.elegirCuenta("aaaaFernando Care");
-		page.irAHistoriales();
+		cc.elegirCuenta("aaaaFernando Care");
+		cc.irAHistoriales();
 		List <WebElement> element = driver.findElements(By.cssSelector(".slds-p-around--large.slds-text-body--regular.labelFont"));
 		boolean a = false;
 		for (WebElement x : element) {
@@ -115,8 +115,8 @@ public class CustomerCareFase4 extends TestBase{
 	
 	@Test (groups = {"CustomerCare", "DebitoAutomatico"})
 	public void TS37230_Automatic_Debit_Subscriptions_Sesión_guiada_Débito_Automático_Inicial_Paso_2_Adhesión_Cuenta_con_Mora() {
-		page.elegirCuenta("aaaaCuenta ConMora");
-		page.irAGestion("débito auto");
+		cc.elegirCuenta("aaaaCuenta ConMora");
+		cc.irAGestion("débito auto");
 		driver.switchTo().frame(cambioFrame(driver, By.className("borderOverlay")));
 		List <WebElement> element = driver.findElements(By.className("borderOverlay"));
 		element.get(0).click();
@@ -129,8 +129,8 @@ public class CustomerCareFase4 extends TestBase{
 	
 	@Test (groups = {"CustomerCare", "Vista360Layout"})
 	public void TS37469_360_View_Vista_360_de_facturación_clientes_individuos_Persistencia_Visualizar_Convenios_de_Pago() {
-		page.elegirCuenta("aaaaFernando Care");
-		page.irAFacturacion();
+		cc.elegirCuenta("aaaaFernando Care");
+		cc.irAFacturacion();
 		driver.switchTo().frame(cambioFrame(driver, By.cssSelector(".icon.icon-v-modify-contract")));
 		List <WebElement> element = driver.findElements(By.className("slds-text-body_regular"));
 		boolean a = false;
@@ -144,8 +144,8 @@ public class CustomerCareFase4 extends TestBase{
 	
 	@Test (groups = {"CustomerCare", "ProblemasConRecargas"})
 	public void TS69021_Problems_with_Refills_Problemas_con_Recargas_Base_de_Conocimiento_Tarjeta_Prepaga_OS_Verificar_articulo_en_Base_de_conocimiento() {
-		page.elegirCuenta("aaaaFernando Care");
-		page.irAProblemasConRecargas();
+		cc.elegirCuenta("aaaaFernando Care");
+		cc.irAProblemasConRecargas();
 		driver.switchTo().defaultContent();
 		List <WebElement> know = driver.findElements(By.className("sd_widget_btn_text"));
 		know.get(0).click();
@@ -157,8 +157,8 @@ public class CustomerCareFase4 extends TestBase{
 	
 	@Test (groups = {"CustomerCare", "Vista360Layout"})
 	public void TS69033_360_View_360_View_Historiales_Formulario_Historiales_Ver_detalle_Historial_de_Recargas_Verificar_nombre_Historico() {
-		page.elegirCuenta("aaaaFernando Care");
-		page.irAHistoriales();		
+		cc.elegirCuenta("aaaaFernando Care");
+		cc.irAHistoriales();		
 		List <WebElement> hist = driver.findElements(By.cssSelector(".slds-p-around--large.slds-text-body--regular.labelFont"));
 		for (WebElement x : hist) {
 			if (x.getText().toLowerCase().contains("historial de recargas")) {
@@ -166,14 +166,14 @@ public class CustomerCareFase4 extends TestBase{
 				break;
 			}
 		}
-		WebElement element = page.obtenerPestañaActiva();
+		WebElement element = cc.obtenerPestañaActiva();
 		Assert.assertTrue(element.getText().equals("Historiales"));
 	}
 	
 	@Test (groups = {"CustomerCare", "Vista360Layout"})
 	public void TS69034_360_View_360_View_Historiales_Formulario_Historiales_Ver_detalle_Historial_de_Packs_Verificar_nombre_Historico() {
-		page.elegirCuenta("aaaaFernando Care");
-		page.irAHistoriales();		
+		cc.elegirCuenta("aaaaFernando Care");
+		cc.irAHistoriales();		
 		List <WebElement> hist = driver.findElements(By.cssSelector(".slds-p-around--large.slds-text-body--regular.labelFont"));
 		for (WebElement x : hist) {
 			if (x.getText().toLowerCase().contains("historial de packs")) {
@@ -181,13 +181,13 @@ public class CustomerCareFase4 extends TestBase{
 				break;
 			}
 		}
-		WebElement element = page.obtenerPestañaActiva();
+		WebElement element = cc.obtenerPestañaActiva();
 		Assert.assertTrue(element.getText().equals("Historiales"));
 	}
 	
 	@Test (groups = {"CustomerCare", "ActualizarDatos"})
 	public void TS69038_Profile_Changes_Perfil_del_cliente_Modificacion_DNI_CUIL_Verificar_Imposibilidad_de_modificar_DNI_y_CUIL_al_mismo_tiempo(){
-		page.elegirCuenta("aaaaFernando Care");
+		cc.elegirCuenta("aaaaFernando Care");
 		driver.switchTo().frame(cambioFrame(driver, By.className("profile-edit")));
 		List <WebElement> act = driver.findElements(By.className("profile-edit"));
 		act.get(0).click();
@@ -201,8 +201,8 @@ public class CustomerCareFase4 extends TestBase{
 	
 	@Test (groups = {"CustomerCare", "DetalleDeConsumos"})
 	public void TS69098_Consumption_Details_Detalle_de_Consumo_Modificacion_de_Tabla_Nuevas_Columnas_Visualizar_encabezado() {
-		page.elegirCuenta("aaaaFernando Care");
-		page.irAGestion("detalle de consu");
+		cc.elegirCuenta("aaaaFernando Care");
+		cc.irAGestion("detalle de consu");
 		List <WebElement> title = driver.findElements(By.className("big_title"));
 		boolean a = false;
 		for (WebElement x : title) {
@@ -215,8 +215,8 @@ public class CustomerCareFase4 extends TestBase{
 	
 	@Test (groups = {"CustomerCare", "DetalleDeConsumos"})
 	public void TS69099_Consumption_Details_Detalle_de_Consumo_Modificacion_de_Tabla_Nuevas_Columnas_Visualizar_filtro_Servicio() {
-		page.elegirCuenta("aaaaFernando Care");
-		page.irAGestion("detalle de consu");
+		cc.elegirCuenta("aaaaFernando Care");
+		cc.irAGestion("detalle de consu");
 		List <WebElement> element = driver.findElements(By.className("slds-text-heading--small"));
 		boolean a = false;
 		for (WebElement x : element) {
@@ -229,16 +229,16 @@ public class CustomerCareFase4 extends TestBase{
 	
 	@Test (groups = {"CustomerCare", "DetalleDeConsumos"})
 	public void TS69100_Consumption_Details_Detalle_de_Consumo_Modificacion_de_Tabla_Nuevas_Columnas_Visualizar_menu_desplegable_del_filtro_Servicio() {
-		page.elegirCuenta("aaaaFernando Care");
-		page.irAGestion("detalle de consu");
+		cc.elegirCuenta("aaaaFernando Care");
+		cc.irAGestion("detalle de consu");
 		List <WebElement> filtro = driver.findElements(By.id("text-input-01"));
 		Assert.assertTrue(filtro.get(0).getAttribute("ng-model").contains("ptc.filterServiceOption"));
 	}
 	
 	@Test (groups = {"CustomerCare", "DetalleDeConsumos"})
 	public void TS69101_Consumption_Details_Detalle_de_Consumo_Modificacion_de_Tabla_Nuevas_Columnas_Visualizar_filtro_Periodo() {
-		page.elegirCuenta("aaaaFernando Care");
-		page.irAGestion("detalle de consu");
+		cc.elegirCuenta("aaaaFernando Care");
+		cc.irAGestion("detalle de consu");
 		List <WebElement> element = driver.findElements(By.className("slds-text-heading--small"));
 		boolean a = false, b = false;
 		for (WebElement x : element) {
@@ -257,8 +257,8 @@ public class CustomerCareFase4 extends TestBase{
 	
 	@Test (groups = {"CustomerCare", "DetalleDeConsumos"})
 	public void TS69102_Consumption_Details_Detalle_de_Consumo_Modificacion_de_Tabla_Nuevas_Columnas_Visualizar_menu_desplegable_del_filtro_Periodo() {
-		page.elegirCuenta("aaaaFernando Care");
-		page.irAGestion("detalle de consu");
+		cc.elegirCuenta("aaaaFernando Care");
+		cc.irAGestion("detalle de consu");
 		sleep(3000);
 		List <WebElement> filtro = driver.findElements(By.id("text-input-02"));
 		filtro.get(0).click();
@@ -269,8 +269,8 @@ public class CustomerCareFase4 extends TestBase{
 	
 	@Test (groups = {"CustomerCare", "DetalleDeConsumos"})
 	public void TS69104_Consumption_Details_Detalle_de_Consumo_Modificacion_de_Tabla_Nuevas_Columnas_Visualizar_calendario_en_filtro_Inicio() {
-		page.elegirCuenta("aaaaFernando Care");
-		page.irAGestion("detalle de consu");
+		cc.elegirCuenta("aaaaFernando Care");
+		cc.irAGestion("detalle de consu");
 		sleep(3000);
 		driver.findElement(By.id("text-input-02")).click();
 		driver.findElement(By.xpath("//*[text() = 'Un rango personalizado']")).click();
@@ -281,8 +281,8 @@ public class CustomerCareFase4 extends TestBase{
 	@Test (groups = {"CustomerCare", "DetalleDeConsumos"})
 	public void TS69106_Consumption_Details_Detalle_de_Consumo_Modificacion_de_Tabla_Nuevas_Columnas_Visualizar_calendario_en_filtro_Fin() {
 		TestBase TB = new TestBase();
-		page.elegirCuenta("aaaaFernando Care");
-		page.irAGestion("detalle de consu");
+		cc.elegirCuenta("aaaaFernando Care");
+		cc.irAGestion("detalle de consu");
 		sleep(3000);
 		driver.findElement(By.id("text-input-02")).click();
 		driver.findElement(By.xpath("//*[text() = 'Un rango personalizado']")).click();
@@ -294,16 +294,16 @@ public class CustomerCareFase4 extends TestBase{
 	
 	@Test (groups = {"CustomerCare", "DetalleDeConsumos"})
 	public void TS69107_Consumption_Details_Detalle_de_Consumo_Modificacion_de_Tabla_Nuevas_Columnas_Visualizar_boton_Consultar() {
-		page.elegirCuenta("aaaaFernando Care");
-		page.irAGestion("detalle de consu");
+		cc.elegirCuenta("aaaaFernando Care");
+		cc.irAGestion("detalle de consu");
 		sleep(3000);
 		Assert.assertTrue(driver.findElement(By.cssSelector(".slds-button.slds-button--brand")).isDisplayed());
 	}
 	
 	@Test (groups = {"CustomerCare", "DetalleDeConsumos"})
 	public void TS69108_Consumption_Details_Detalle_de_Consumo_Modificacion_de_Tabla_Nuevas_Columnas_Visualizar_desplegable_Filtros_Avanzados() {
-		page.elegirCuenta("aaaaFernando Care");
-		page.irAGestion("detalle de consu");
+		cc.elegirCuenta("aaaaFernando Care");
+		cc.irAGestion("detalle de consu");
 		sleep(3000);
 		List <WebElement> element = driver.findElements(By.className("slds-text-heading--small"));
 		boolean a = false;
@@ -317,8 +317,8 @@ public class CustomerCareFase4 extends TestBase{
 	
 	@Test (groups = {"CustomerCare", "DetalleDeConsumos"})
 	public void TS69110_Consumption_Details_Detalle_de_Consumo_Modificacion_de_Tabla_Nuevas_Columnas_Visualizar_filtro_avanzado_Numero_de_origen_o_destino() {
-		page.elegirCuenta("aaaaFernando Care");
-		page.irAGestion("detalle de consu");
+		cc.elegirCuenta("aaaaFernando Care");
+		cc.irAGestion("detalle de consu");
 		sleep(3000);
 		List<WebElement> filtro = driver.findElements(By.className("slds-text-heading--x-small"));
 		filtro.get(0).click();
@@ -338,8 +338,8 @@ public class CustomerCareFase4 extends TestBase{
 	
 	@Test (groups = {"CustomerCare", "DetalleDeConsumos"})
 	public void TS69111_Consumption_Details_Detalle_de_Consumo_Modificacion_de_Tabla_Nuevas_Columnas_Visualizar_filtro_avanzado_Tipo_de_consumo() {
-		page.elegirCuenta("aaaaFernando Care");
-		page.irAGestion("detalle de consu");
+		cc.elegirCuenta("aaaaFernando Care");
+		cc.irAGestion("detalle de consu");
 		sleep(3000);
 		List<WebElement> filtro = driver.findElements(By.className("slds-text-heading--x-small"));
 		filtro.get(0).click();
@@ -361,8 +361,8 @@ public class CustomerCareFase4 extends TestBase{
 	
 	@Test (groups = {"CustomerCare", "DetalleDeConsumos"})
 	public void TS69112_Consumption_Details_Detalle_de_Consumo_Modificacion_de_Tabla_Nuevas_Columnas_Visualizar_filtro_avanzado_Con_o_sin_cargo() {
-		page.elegirCuenta("aaaaFernando Care");
-		page.irAGestion("detalle de consu");
+		cc.elegirCuenta("aaaaFernando Care");
+		cc.irAGestion("detalle de consu");
 		sleep(3000);
 		List<WebElement> filtro = driver.findElements(By.className("slds-text-heading--x-small"));
 		filtro.get(0).click();
@@ -384,8 +384,8 @@ public class CustomerCareFase4 extends TestBase{
 	
 	@Test (groups = {"CustomerCare", "DetalleDeConsumos"})
 	public void TS69113_Consumption_Details_Detalle_de_Consumo_Modificacion_de_Tabla_Nuevas_Columnas_Visualizar_filtro_avanzado_Producto() {
-		page.elegirCuenta("aaaaFernando Care");
-		page.irAGestion("detalle de consu");
+		cc.elegirCuenta("aaaaFernando Care");
+		cc.irAGestion("detalle de consu");
 		List<WebElement> filtro = driver.findElements(By.className("slds-text-heading--x-small"));
 		filtro.get(0).click();
 		List <WebElement> element = driver.findElements(By.className("slds-text-heading--small"));
@@ -401,8 +401,8 @@ public class CustomerCareFase4 extends TestBase{
 	
 	@Test (groups = {"CustomerCare", "DetalleDeConsumos"})
 	public void TS69138_Consumption_Details_Detalle_de_Consumo_Filtro_x_Producto_Visualizar_filtro_Producto_desplegado() {
-		page.elegirCuenta("aaaaFernando Care");
-		page.irAGestion("detalle de consu");
+		cc.elegirCuenta("aaaaFernando Care");
+		cc.irAGestion("detalle de consu");
 		List<WebElement> filtro = driver.findElements(By.className("slds-text-heading--x-small"));
 		filtro.get(0).click();
 		List <WebElement> element = driver.findElements(By.className("slds-text-heading--small"));
@@ -417,8 +417,8 @@ public class CustomerCareFase4 extends TestBase{
 	
 	@Test (groups = {"CustomerCare", "DetalleDeConsumos"})
 	public void TS69149_Consumption_Details_Criterios_de_Filtro_Temporal_Visualizar_filtro_Fin() {
-		page.elegirCuenta("aaaaFernando Care");
-		page.irAGestion("detalle de consu");
+		cc.elegirCuenta("aaaaFernando Care");
+		cc.irAGestion("detalle de consu");
 		driver.findElement(By.id("text-input-02")).click();
 		driver.findElement(By.xpath("//*[text() = 'Un rango personalizado']")).click();		
 		List <WebElement> element = driver.findElements(By.cssSelector(".slds-picklist.slds-dropdown-trigger.slds-dropdown-trigger--click"));
@@ -433,7 +433,7 @@ public class CustomerCareFase4 extends TestBase{
 	
 	@Test (groups = {"CustomerCare", "Vista360Layout"})
 	public void TS69164_360_View_360_View_Visualizacion_de_gestiones_desde_el_asset_Visualizar_todas_las_ordenes() {
-		page.elegirCuenta("aaaaFernando Care");
+		cc.elegirCuenta("aaaaFernando Care");
 		driver.findElement(By.cssSelector(".console-card.active")).click();
 		waitFor(driver, By.cssSelector(".icon.icon-v-troubleshoot-line"));
 		List <WebElement> gest = driver.findElements(By.cssSelector(".icon.icon-v-troubleshoot-line"));
@@ -445,7 +445,7 @@ public class CustomerCareFase4 extends TestBase{
 	
 	@Test (groups = {"CustomerCare", "Vista360Layout"})
 	public void TS69165_360_View_360_View_Visualizacion_de_gestiones_desde_el_asset_Visualizar_todos_los_casos() {
-		page.elegirCuenta("aaaaFernando Care");
+		cc.elegirCuenta("aaaaFernando Care");
 		driver.findElement(By.cssSelector(".console-card.active")).click();
 		waitFor(driver, By.cssSelector(".icon.icon-v-troubleshoot-line"));
 		List <WebElement> gest = driver.findElements(By.cssSelector(".icon.icon-v-troubleshoot-line"));
@@ -464,7 +464,7 @@ public class CustomerCareFase4 extends TestBase{
 	
 	@Test (groups = {"CustomerCare", "Vista360Layout"})
 	public void TS69168_360_View_360_View_Visualizacion_de_gestiones_desde_el_asset_Fitlro_Fecha_Verificar_Calendario() {
-		page.elegirCuenta("aaaaFernando Care");
+		cc.elegirCuenta("aaaaFernando Care");
 		driver.findElement(By.cssSelector(".console-card.active")).click();
 		waitFor(driver, By.cssSelector(".icon.icon-v-troubleshoot-line"));
 		List <WebElement> gest = driver.findElements(By.cssSelector(".icon.icon-v-troubleshoot-line"));
@@ -477,7 +477,7 @@ public class CustomerCareFase4 extends TestBase{
 	
 	@Test (groups = {"CustomerCare", "Vista360Layout"})
 	public void TS69251_360_View_Validacion_de_nominacion_en_Vista_360_Asset_no_nominado_Visualiza_todas_sus_acciones_disponibles() {
-		page.elegirCuenta("aaaaFernando Care");
+		cc.elegirCuenta("aaaaFernando Care");
 		driver.findElement(By.cssSelector(".console-card.active")).click();
 		List <WebElement> gestiones = driver.findElements(By.className("slds-text-body_regular"));
 		boolean a = false, b = false, c = false, d = false;
@@ -501,8 +501,8 @@ public class CustomerCareFase4 extends TestBase{
 	
 	@Test (groups = {"CustomerCare", "ProblemasConRecargas"})
 	public void TS68984_Problems_with_Refills_UX_Tarjeta_de_Recarga_Pre_paga_Verificacion_Visualizar_Boton_Consultar() {
-		page.elegirCuenta("aaaaFernando Care");
-		page.irAGestion("estado de tarjeta");
+		cc.elegirCuenta("aaaaFernando Care");
+		cc.irAGestion("estado de tarjeta");
 		WebElement boton = driver.findElement(By.cssSelector(".slds-form-element.vlc-flex.vlc-form-group.vlc-slds-remote-action--button.ng-pristine.ng-valid.ng-scope"));
 		Assert.assertTrue(boton.getText().equals("Consultar"));
 	}
