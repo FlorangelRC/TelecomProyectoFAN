@@ -56,15 +56,15 @@ public class test_SCP_Base extends TestBase {
 		page.moveToElementOnAccAndClick("tercerTitulo", 1);
 		}
 	
-	//@AfterMethod(alwaysRun=true)
+	@AfterMethod(alwaysRun=true)
 	public void afterMethod() {
 		driver.switchTo().defaultContent();
 		SCP page= new SCP(driver);
 		page.goTop();
-		try {Thread.sleep(1000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		sleep(1000);
 	}
 	
-	//@AfterClass(alwaysRun=true)
+	@AfterClass(alwaysRun=true)
 	public void tearDown() {
 		driver.quit();
 		sleep(4000);
@@ -371,17 +371,20 @@ public class test_SCP_Base extends TestBase {
 	    
 	/**
 	 * Verifica que se puede visualizar las notas.
-	 * By: Almer
+	 * By: Almer  String idOportunidad=driver.findElement(By.xpath("//*[@id=\"ep\"]/div[2]/div[2]/table/tbody/tr[2]/td[2]")).getText();
+	System.out.println(idOportunidad);
 	 */
 	@Test(groups= "SCP")
 	public void TS112650_CRM_SCP_Estructura_de_las_oportunidades_Bloques_Notas_y_Archivos_Adjuntos_Visualizar_Nota() {
 		SCP page=new SCP(driver);
 	    if(page.goToOportunity()) {
+	    	String idOportunidad=driver.findElement(By.xpath("//*[@id=\"ep\"]/div[2]/div[2]/table/tbody/tr[2]/td[2]")).getText();
+	    	//System.out.println(idOportunidad);
 	    	List <WebElement> compBefore = driver.findElements(By.className("listTitle")); //Lista los Elementos de arriba
 	    	for(WebElement a:compBefore) {
 	    		if(a.getText().toLowerCase().startsWith("notas")) { 
 	    			a.click();}} //hace click en notas para bajar
-	    	driver.findElement(By.xpath("//*[@id=\"006L0000009BQte_RelatedNoteList_body\"]/table/tbody/tr[2]/td[2]/a")).click();	
+	    	driver.findElement(By.xpath("//*[@id=\""+idOportunidad+"_RelatedNoteList_body\"]/table/tbody/tr[2]/td[2]/a")).click();	
 	    	try {Thread.sleep(3000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 	    	List <WebElement> cuerpoNota= driver.findElements(By.className("data2Col"));
 	    	assertTrue(cuerpoNota.get(4).isDisplayed());
@@ -397,7 +400,6 @@ public class test_SCP_Base extends TestBase {
 	public void TS112665_CRM_SCP_Estructura_de_las_oportunidades_Bloques_Valorizado_de_la_oportunidad_Cotizacion_del_dolar_segun_Budget() {
 		SCP page=new SCP(driver);
 	    if(page.goToOportunity()) {
-	   
 	    	//String valorDolar= driver.findElement(By.id("00N3F000000JoWy_ileinner")).getText();
 	    	//System.out.println(valorDolar);
 	    	try {Thread.sleep(500);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
@@ -528,33 +530,12 @@ public class test_SCP_Base extends TestBase {
 	public void TS112647_CRM_SCP_Estructura_de_las_oportunidades_Bloques_Historial_de_Campos() {
 		SCP page=new SCP(driver);
 		String fecha="";
-	    //if(page.goToOportunity()) {
-		page.clickOnTabByName("oportunidades");
-		sleep(3000);
-		Select sOp=new Select(driver.findElement(By.id("fcf")));
-		sOp.selectByVisibleText("Todas las oportunidades");
-		sleep(200);
-		driver.findElement(By.name("go")).click();
-		sleep(2000);
-		List<WebElement> lOp=driver.findElements(By.className("x-grid3-row"));
-		lOp.add(driver.findElement(By.cssSelector(".x-grid3-row.x-grid3-row-first")));
-		boolean flag=false;
-		for(WebElement nOp: lOp) {
-			List<WebElement> tagsOp=nOp.findElements(By.tagName("a"));
-			for(WebElement nombre:tagsOp) {
-			if(nombre.getText().toLowerCase().contains("opaut")) {
-				nombre.click();
-				flag=true;
-				break;}
-				}
-			if(flag)
-				break;
-			}
-		sleep(2000);
-		
-	    	try {Thread.sleep(3000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		page.selectOporunity("opaut");
+			String idOportunidad=driver.findElement(By.xpath("//*[@id=\"ep\"]/div[2]/div[2]/table/tbody/tr[2]/td[2]")).getText();
+	    	//System.out.println(idOportunidad);
+	    	
 	    	driver.findElement(By.name("edit")).click();
-	    	try {Thread.sleep(3000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+	    	sleep(3000);
 	    	List<WebElement> date=driver.findElements(By.className("dateFormat"));
 	    	fecha=date.get(1).getText();
 	    	fecha=fecha.substring(2, fecha.length()-2);
@@ -569,7 +550,7 @@ public class test_SCP_Base extends TestBase {
 	    	driver.findElement(By.id("opp3")).sendKeys("opAut");
 	    	sleep(1000);
 	    	driver.findElement(By.name("save")).click();
-	    	WebElement modificacion=driver.findElement(By.xpath("//*[@id=\"0063F000002UbLj_RelatedEntityHistoryList_body\"]/table/tbody/tr[2]"));
+	    	WebElement modificacion=driver.findElement(By.xpath("//*[@id=\""+idOportunidad+"_RelatedEntityHistoryList_body\"]/table/tbody/tr[2]"));
 	    	System.out.println(modificacion.getText());
 	    	System.out.println(fecha);
 	    	assertTrue(modificacion.getText().startsWith(fecha)||modificacion.getText().endsWith("opAut."));
@@ -585,28 +566,9 @@ public class test_SCP_Base extends TestBase {
 	@Test(groups= "SCP")
 	public void TS112651_CRM_SCP_Estructura_de_las_oportunidades_Bloques_Productos_de_la_oportunidad() {
 	SCP page=new SCP(driver);
-	page.clickOnTabByName("oportunidades");
-	sleep(3000);
-	Select sOp=new Select(driver.findElement(By.id("fcf")));
-	sOp.selectByVisibleText("Todas las oportunidades");
-	sleep(200);
-	driver.findElement(By.name("go")).click();
-	sleep(2000);
-	List<WebElement> lOp=driver.findElements(By.className("x-grid3-row"));
-	lOp.add(driver.findElement(By.cssSelector(".x-grid3-row.x-grid3-row-first")));
-	boolean flag=false;
-	for(WebElement nOp: lOp) {
-		List<WebElement> tagsOp=nOp.findElements(By.tagName("a"));
-		for(WebElement nombre:tagsOp) {
-		if(nombre.getText().toLowerCase().contains("alta sucursal entre rios")) {
-			nombre.click();
-			flag=true;
-			break;}
-			}
-		if(flag)
-			break;
-		}
-	sleep(2000);
+	page.selectOporunity("alta sucursal entre rios");
+	String idOportunidad=driver.findElement(By.xpath("//*[@id=\"ep\"]/div[2]/div[2]/table/tbody/tr[2]/td[2]")).getText();
+	//System.out.println(idOportunidad);
 	List <WebElement> compBefore = driver.findElements(By.className("listTitle")); //Lista los Elementos de arriba
 	for(WebElement a:compBefore) {
 		if(a.getText().toLowerCase().startsWith("productos")) { 
@@ -618,10 +580,10 @@ public class test_SCP_Base extends TestBase {
 	List<String> listaComparativa = new ArrayList<String>();
 	boolean check=true;
 	//Elemento con el campo
-	List<WebElement> campos= driver.findElement(By.xpath("//*[@id=\"006L0000009BRrX_RelatedLineItemList_body\"]/table/tbody/tr[1]")).
+	List<WebElement> campos= driver.findElement(By.xpath("//*[@id=\""+idOportunidad+"_RelatedLineItemList_body\"]/table/tbody/tr[1]")).
 			findElements(By.tagName("th"));
 	for(WebElement a:campos) {
-		System.out.println(a.getText());
+		//System.out.println(a.getText());
 		listaComparativa.add(a.getText());
 		}
 	for(String a:camposaVerificar) {
@@ -683,47 +645,27 @@ public class test_SCP_Base extends TestBase {
 	@Test(groups= "SCP")
 	public void TS112667_CRM_SCP_Estructura_de_las_oportunidades_Bloques_Valorizado_de_la_oportunidad_Monto_Contrato_USD() {
 	SCP page=new SCP(driver);
-	page.clickOnTabByName("oportunidades");
-	sleep(3000);
-	Select sOp=new Select(driver.findElement(By.id("fcf")));
-	sOp.selectByVisibleText("Todas las oportunidades");
-	sleep(200);
-	driver.findElement(By.name("go")).click();
-	sleep(2000);
-	List<WebElement> lOp=driver.findElements(By.className("x-grid3-row"));
-	lOp.add(driver.findElement(By.cssSelector(".x-grid3-row.x-grid3-row-first")));
-	boolean flag=false;
-	for(WebElement nOp: lOp) {
-		List<WebElement> tagsOp=nOp.findElements(By.tagName("a"));
-		for(WebElement nombre:tagsOp) {
-		if(nombre.getText().toLowerCase().contains("alta sucursal jujuy")) {
-			nombre.click();
-			flag=true;
-			break;}
-			}
-		if(flag)
-			break;
-		}
-	sleep(4000);
-		
+	page.selectOporunity("alta sucursal jujuy");
+	String idOportunidad=driver.findElement(By.xpath("//*[@id=\"ep\"]/div[2]/div[2]/table/tbody/tr[2]/td[2]")).getText();
+	System.out.println(idOportunidad);
 	double totalCuvD, cantidad, plazo, preciodeVenta, montoContratoD;
 	WebElement temporal;
 	temporal=driver.findElement(By.xpath("//*[@id=\"ep\"]/div[2]/div[6]/table/tbody/tr[3]/td[4]"));
-	System.out.println(temporal.getText());
-	
-	System.out.println(driver.findElement(By.xpath("//*[@id=\"006L0000009BQt0_RelatedLineItemList_body\"]/table/tbody/tr[3]/td[9]")).getText());
-	System.out.println(driver.findElement(By.xpath("//*[@id=\"006L0000009BQt0_RelatedLineItemList_body\"]/table/tbody/tr[3]/td[2]")).getText());
-	System.out.println(driver.findElement(By.xpath("//*[@id=\"006L0000009BQt0_RelatedLineItemList_body\"]/table/tbody/tr[3]/td[6]")).getText());
-	System.out.println(driver.findElement(By.xpath("//*[@id=\"006L0000009BQt0_RelatedLineItemList_body\"]/table/tbody/tr[3]/td[5]")).getText());
-	
+	//System.out.println(temporal.getText());
+	/*
+	System.out.println(driver.findElement(By.xpath("//*[@id=\""+idOportunidad+"_RelatedLineItemList_body\"]/table/tbody/tr[3]/td[9]")).getText());
+	System.out.println(driver.findElement(By.xpath("//*[@id=\""+idOportunidad+"_RelatedLineItemList_body\"]/table/tbody/tr[3]/td[2]")).getText());
+	System.out.println(driver.findElement(By.xpath("//*[@id=\""+idOportunidad+"_RelatedLineItemList_body\"]/table/tbody/tr[3]/td[6]")).getText());
+	System.out.println(driver.findElement(By.xpath("//*[@id=\""+idOportunidad+"_RelatedLineItemList_body\"]/table/tbody/tr[3]/td[5]")).getText());
+	*/
 	
 	montoContratoD=Double.parseDouble(limpiarValor(driver.findElement(By.xpath("//*[@id=\"ep\"]/div[2]/div[6]/table/tbody/tr[3]/td[4]")).getText()));
 	
-	totalCuvD=Double.parseDouble(limpiarValor(driver.findElement(By.xpath("//*[@id=\"006L0000009BQt0_RelatedLineItemList_body\"]/table/tbody/tr[3]/td[9]")).getText()));
-	cantidad=Double.parseDouble(limpiarValor(driver.findElement(By.xpath("//*[@id=\"006L0000009BQt0_RelatedLineItemList_body\"]/table/tbody/tr[3]/td[2]")).getText()));
-	plazo=Double.parseDouble(limpiarValor(driver.findElement(By.xpath("//*[@id=\"006L0000009BQt0_RelatedLineItemList_body\"]/table/tbody/tr[3]/td[6]")).getText()));
-	preciodeVenta=Double.parseDouble(limpiarValor(driver.findElement(By.xpath("//*[@id=\"006L0000009BQt0_RelatedLineItemList_body\"]/table/tbody/tr[3]/td[4]")).getText()));
-	System.out.println("Resultado: "+((cantidad*plazo*preciodeVenta)+totalCuvD));
+	totalCuvD=Double.parseDouble(limpiarValor(driver.findElement(By.xpath("//*[@id=\""+idOportunidad+"_RelatedLineItemList_body\"]/table/tbody/tr[3]/td[9]")).getText()));
+	cantidad=Double.parseDouble(limpiarValor(driver.findElement(By.xpath("//*[@id=\""+idOportunidad+"_RelatedLineItemList_body\"]/table/tbody/tr[3]/td[2]")).getText()));
+	plazo=Double.parseDouble(limpiarValor(driver.findElement(By.xpath("//*[@id=\""+idOportunidad+"_RelatedLineItemList_body\"]/table/tbody/tr[3]/td[6]")).getText()));
+	preciodeVenta=Double.parseDouble(limpiarValor(driver.findElement(By.xpath("//*[@id=\""+idOportunidad+"_RelatedLineItemList_body\"]/table/tbody/tr[3]/td[4]")).getText()));
+	//System.out.println("Resultado: "+((cantidad*plazo*preciodeVenta)+totalCuvD));
 	assertEquals((cantidad*plazo*preciodeVenta)+totalCuvD,montoContratoD);
 	}
 	
@@ -734,28 +676,7 @@ public class test_SCP_Base extends TestBase {
 	@Test(groups= "SCP")
 	public void TS112670_CRM_SCP_Estructura_de_las_oportunidades_Bloques_Valorizado_de_la_oportunidad_Total_Contrato_Pesos() {
 	SCP page=new SCP(driver);
-	page.clickOnTabByName("oportunidades");
-	sleep(3000);
-	Select sOp=new Select(driver.findElement(By.id("fcf")));
-	sOp.selectByVisibleText("Todas las oportunidades");
-	sleep(200);
-	driver.findElement(By.name("go")).click();
-	sleep(2000);
-	List<WebElement> lOp=driver.findElements(By.className("x-grid3-row"));
-	lOp.add(driver.findElement(By.cssSelector(".x-grid3-row.x-grid3-row-first")));
-	boolean flag=false;
-	for(WebElement nOp: lOp) {
-		List<WebElement> tagsOp=nOp.findElements(By.tagName("a"));
-		for(WebElement nombre:tagsOp) {
-		if(nombre.getText().toLowerCase().contains("alta sucursal jujuy")) {
-			nombre.click();
-			flag=true;
-			break;}
-			}
-		if(flag)
-			break;
-		}
-	sleep(3000);
+	page.selectOporunity("alta sucursal jujuy");
 	double montoContratoTotalP, montoContratoP, MontoContratoD, dolar;
 	
 	//WebElement temporal;
@@ -763,7 +684,6 @@ public class test_SCP_Base extends TestBase {
 	//System.out.println(temporal.getText());
 	
 	montoContratoTotalP=Double.parseDouble(limpiarValor(driver.findElement(By.xpath("//*[@id=\"ep\"]/div[2]/div[6]/table/tbody/tr[4]/td[2]")).getText()));
-	
 	montoContratoP=Double.parseDouble(limpiarValor(driver.findElement(By.xpath("//*[@id=\"ep\"]/div[2]/div[6]/table/tbody/tr[3]/td[2]")).getText()));
 	MontoContratoD=Double.parseDouble(limpiarValor(driver.findElement(By.xpath("//*[@id=\"ep\"]/div[2]/div[6]/table/tbody/tr[3]/td[4]")).getText()));
 	dolar=Double.parseDouble(limpiarValor(driver.findElement(By.xpath("//*[@id=\"ep\"]/div[2]/div[6]/table/tbody/tr[5]/td[2]")).getText()));
@@ -778,29 +698,9 @@ public class test_SCP_Base extends TestBase {
 	@Test(groups= "SCP")
 	public void TS112666_CRM_SCP_Estructura_de_las_oportunidades_Bloques_Valorizado_de_la_oportunidad_Monto_Contrato_Pesos() {
 	SCP page=new SCP(driver);
-	page.clickOnTabByName("oportunidades");
-	sleep(3000);
-	Select sOp=new Select(driver.findElement(By.id("fcf")));
-	sOp.selectByVisibleText("Todas las oportunidades");
-	sleep(200);
-	driver.findElement(By.name("go")).click();
-	sleep(2000);
-	List<WebElement> lOp=driver.findElements(By.className("x-grid3-row"));
-	lOp.add(driver.findElement(By.cssSelector(".x-grid3-row.x-grid3-row-first")));
-	boolean flag=false;
-	for(WebElement nOp: lOp) {
-		List<WebElement> tagsOp=nOp.findElements(By.tagName("a"));
-		for(WebElement nombre:tagsOp) {
-		if(nombre.getText().toLowerCase().contains("alta sucursal jujuy")) {
-			nombre.click();
-			flag=true;
-			break;}
-			}
-		if(flag)
-			break;
-		}
-	sleep(3000);
-		
+	page.selectOporunity("alta sucursal jujuy");
+	String idOportunidad=driver.findElement(By.xpath("//*[@id=\"ep\"]/div[2]/div[2]/table/tbody/tr[2]/td[2]")).getText();
+	//System.out.println(idOportunidad);	
 	double totalCuvP, cantidad, plazo, cargopormes, montoContratoP;
 	//WebElement temporal;
 	//temporal=driver.findElement(By.xpath("//*[@id=\"0063F000002UjvW_RelatedLineItemList_body\"]/table/tbody/tr[2]/td[6]"));
@@ -808,10 +708,10 @@ public class test_SCP_Base extends TestBase {
 
 	montoContratoP=Double.parseDouble(limpiarValor(driver.findElement(By.xpath("//*[@id=\"ep\"]/div[2]/div[6]/table/tbody/tr[3]/td[2]")).getText()));
 	//*[@id="006L0000009BQt0_RelatedLineItemList_body"]/table/tbody/tr[2]/td[2]
-	totalCuvP=Double.parseDouble(limpiarValor(driver.findElement(By.xpath("//*[@id=\"006L0000009BQt0_RelatedLineItemList_body\"]/table/tbody/tr[2]/td[9]")).getText()));
-	cantidad=Double.parseDouble(limpiarValor(driver.findElement(By.xpath("//*[@id=\"006L0000009BQt0_RelatedLineItemList_body\"]/table/tbody/tr[2]/td[2]")).getText()));
-	plazo=Double.parseDouble(limpiarValor(driver.findElement(By.xpath("//*[@id=\"006L0000009BQt0_RelatedLineItemList_body\"]/table/tbody/tr[2]/td[6]")).getText()));
-	cargopormes=Double.parseDouble(limpiarValor(driver.findElement(By.xpath("//*[@id=\"006L0000009BQt0_RelatedLineItemList_body\"]/table/tbody/tr[2]/td[5]")).getText()));
+	totalCuvP=Double.parseDouble(limpiarValor(driver.findElement(By.xpath("//*[@id=\""+idOportunidad+"_RelatedLineItemList_body\"]/table/tbody/tr[2]/td[9]")).getText()));
+	cantidad=Double.parseDouble(limpiarValor(driver.findElement(By.xpath("//*[@id=\""+idOportunidad+"_RelatedLineItemList_body\"]/table/tbody/tr[2]/td[2]")).getText()));
+	plazo=Double.parseDouble(limpiarValor(driver.findElement(By.xpath("//*[@id=\""+idOportunidad+"_RelatedLineItemList_body\"]/table/tbody/tr[2]/td[6]")).getText()));
+	cargopormes=Double.parseDouble(limpiarValor(driver.findElement(By.xpath("//*[@id=\""+idOportunidad+"_RelatedLineItemList_body\"]/table/tbody/tr[2]/td[5]")).getText()));
 	
 	assertTrue(((cantidad*plazo*cargopormes)+totalCuvP)==montoContratoP);
 	}
@@ -824,31 +724,12 @@ public class test_SCP_Base extends TestBase {
 	@Test(groups= "SCP")
 	public void TS112669_CRM_SCP_Estructura_de_las_oportunidades_Bloques_Valorizado_de_la_oportunidad_Total_Abono_PESOS() {
 	SCP page=new SCP(driver);
-	page.clickOnTabByName("oportunidades");
-	sleep(3000);
-	Select sOp=new Select(driver.findElement(By.id("fcf")));
-	sOp.selectByVisibleText("Todas las oportunidades");
-	sleep(200);
-	driver.findElement(By.name("go")).click();
-	sleep(2000);
-	List<WebElement> lOp=driver.findElements(By.className("x-grid3-row"));
-	lOp.add(driver.findElement(By.cssSelector(".x-grid3-row.x-grid3-row-first")));
-	boolean flag=false;
-	for(WebElement nOp: lOp) {
-		List<WebElement> tagsOp=nOp.findElements(By.tagName("a"));
-		for(WebElement nombre:tagsOp) {
-		if(nombre.getText().toLowerCase().contains("alta sucursal tucuman")) {
-			nombre.click();
-			flag=true;
-			break;}
-			}
-		if(flag)
-			break;
-		}
-	sleep(3000);
+	page.selectOporunity("alta sucursal tucuman");
+	String idOportunidad=driver.findElement(By.xpath("//*[@id=\"ep\"]/div[2]/div[2]/table/tbody/tr[2]/td[2]")).getText();
+	//System.out.println(idOportunidad);
 	double montoAbono=0.0;
 	double totalAbonoP=Double.parseDouble(limpiarValor(driver.findElement(By.xpath("//*[@id=\"ep\"]/div[2]/div[6]/table/tbody/tr[1]/td[2]")).getText()));
-	List<WebElement> abono=driver.findElements(By.xpath("//*[@id=\"006L0000009BQte_RelatedLineItemList_body\"]/table/tbody/tr"));
+	List<WebElement> abono=driver.findElements(By.xpath("//*[@id=\""+idOportunidad+"_RelatedLineItemList_body\"]/table/tbody/tr"));
 	abono.remove(0);
 	for(WebElement ab:abono) {
 			//System.out.println(ab.getText());
@@ -859,7 +740,7 @@ public class test_SCP_Base extends TestBase {
 				}
 		}
 	//System.out.println("Suma de Montos: "+montoAbono+" TotalAbono: "+totalAbonoP);
-	assertTrue(montoAbono==totalAbonoP);
+	assertEquals(montoAbono,totalAbonoP);
 	}
 	
 	/**
@@ -869,31 +750,12 @@ public class test_SCP_Base extends TestBase {
 	@Test(groups= "SCP")
 	public void TS112668_CRM_SCP_Estructura_de_las_oportunidades_Bloques_Valorizado_de_la_oportunidad_Total_Abono_Dolares() {
 	SCP page=new SCP(driver);
-	page.clickOnTabByName("oportunidades");
-	sleep(3000);
-	Select sOp=new Select(driver.findElement(By.id("fcf")));
-	sOp.selectByVisibleText("Todas las oportunidades");
-	sleep(200);
-	driver.findElement(By.name("go")).click();
-	sleep(2000);
-	List<WebElement> lOp=driver.findElements(By.className("x-grid3-row"));
-	lOp.add(driver.findElement(By.cssSelector(".x-grid3-row.x-grid3-row-first")));
-	boolean flag=false;
-	for(WebElement nOp: lOp) {
-		List<WebElement> tagsOp=nOp.findElements(By.tagName("a"));
-		for(WebElement nombre:tagsOp) {
-		if(nombre.getText().toLowerCase().contains("alta sucursal tucuman")) {
-			nombre.click();
-			flag=true;
-			break;}
-			}
-		if(flag)
-			break;
-		}
-	sleep(3000);
+	page.selectOporunity("alta sucursal tucuman");
+	String idOportunidad=driver.findElement(By.xpath("//*[@id=\"ep\"]/div[2]/div[2]/table/tbody/tr[2]/td[2]")).getText();
+	//System.out.println(idOportunidad);
 	double montoAbono=0.0;
 	double totalAbonoD=Double.parseDouble(limpiarValor(driver.findElement(By.xpath("//*[@id=\"ep\"]/div[2]/div[6]/table/tbody/tr[1]/td[4]")).getText()));
-	List<WebElement> abono=driver.findElements(By.xpath("//*[@id=\"006L0000009BQte_RelatedLineItemList_body\"]/table/tbody/tr"));
+	List<WebElement> abono=driver.findElements(By.xpath("//*[@id=\""+idOportunidad+"_RelatedLineItemList_body\"]/table/tbody/tr"));
 	abono.remove(0);
 	for(WebElement ab:abono) {
 			//System.out.println(ab.getText());
@@ -904,7 +766,7 @@ public class test_SCP_Base extends TestBase {
 				}
 		}
 	//System.out.println("Suma de Montos: "+montoAbono+" TotalAbono: "+totalAbonoP);
-	assertTrue(montoAbono==totalAbonoD);
+	assertEquals(montoAbono,totalAbonoD);
 	}
 
 	
@@ -915,32 +777,12 @@ public class test_SCP_Base extends TestBase {
 	@Test(groups= "SCP")
 	public void TS112671_CRM_SCP_Estructura_de_las_oportunidades_Bloques_Valorizado_de_la_oportunidad_Total_CUV_Dolares() {
 	SCP page=new SCP(driver);
-	page.clickOnTabByName("oportunidades");
-	sleep(3000);
-	Select sOp=new Select(driver.findElement(By.id("fcf")));
-	sOp.selectByVisibleText("Todas las oportunidades");
-	sleep(200);
-	driver.findElement(By.name("go")).click();
-	sleep(2000);
-	List<WebElement> lOp=driver.findElements(By.className("x-grid3-row"));
-	lOp.add(driver.findElement(By.cssSelector(".x-grid3-row.x-grid3-row-first")));
-	boolean flag=false;
-	for(WebElement nOp: lOp) {
-		List<WebElement> tagsOp=nOp.findElements(By.tagName("a"));
-		for(WebElement nombre:tagsOp) {
-		if(nombre.getText().toLowerCase().contains("alta sucursal tucuman")) {
-			nombre.click();
-			flag=true;
-			break;}
-			}
-		if(flag)
-			break;
-		}
-	sleep(3000);
-	
+	page.selectOporunity("alta sucursal tucuman");
+	String idOportunidad=driver.findElement(By.xpath("//*[@id=\"ep\"]/div[2]/div[2]/table/tbody/tr[2]/td[2]")).getText();
+	//System.out.println(idOportunidad);
 	double totalCuv=Double.parseDouble(limpiarValor(driver.findElement(By.xpath("//*[@id=\"ep\"]/div[2]/div[6]/table/tbody/tr[2]/td[4]")).getText()));
 	double cuvs=0.0;
-	List<WebElement> abono=driver.findElements(By.xpath("//*[@id=\"006L0000009BQte_RelatedLineItemList_body\"]/table/tbody/tr"));
+	List<WebElement> abono=driver.findElements(By.xpath("//*[@id=\""+idOportunidad+"_RelatedLineItemList_body\"]/table/tbody/tr"));
 	abono.remove(0);
 	for(WebElement ab:abono) {
 			//System.out.println(ab.getText());
@@ -950,8 +792,7 @@ public class test_SCP_Base extends TestBase {
 				cuvs=cuvs+Double.parseDouble(limpiarValor(ab.findElements(By.tagName("td")).get(8).getText()));
 				}
 		}
-	
-	assertTrue(totalCuv==cuvs);
+	assertEquals(totalCuv,cuvs);
 	}
 
 	/**
@@ -961,32 +802,12 @@ public class test_SCP_Base extends TestBase {
 	@Test(groups= "SCP")
 	public void TS112672_CRM_SCP_Estructura_de_las_oportunidades_Bloques_Valorizado_de_la_oportunidad_Total_CUV_Pesos() {
 	SCP page=new SCP(driver);
-	page.clickOnTabByName("oportunidades");
-	sleep(3000);
-	Select sOp=new Select(driver.findElement(By.id("fcf")));
-	sOp.selectByVisibleText("Todas las oportunidades");
-	sleep(200);
-	driver.findElement(By.name("go")).click();
-	sleep(2000);
-	List<WebElement> lOp=driver.findElements(By.className("x-grid3-row"));
-	lOp.add(driver.findElement(By.cssSelector(".x-grid3-row.x-grid3-row-first")));
-	boolean flag=false;
-	for(WebElement nOp: lOp) {
-		List<WebElement> tagsOp=nOp.findElements(By.tagName("a"));
-		for(WebElement nombre:tagsOp) {
-		if(nombre.getText().toLowerCase().contains("alta sucursal tucuman")) {
-			nombre.click();
-			flag=true;
-			break;}
-			}
-		if(flag)
-			break;
-		}
-	sleep(5000);
-	
+	page.selectOporunity("alta sucursal tucuman");
+	String idOportunidad=driver.findElement(By.xpath("//*[@id=\"ep\"]/div[2]/div[2]/table/tbody/tr[2]/td[2]")).getText();
+	//System.out.println(idOportunidad);
 	double totalCuv=Double.parseDouble(limpiarValor(driver.findElement(By.xpath("//*[@id=\"ep\"]/div[2]/div[6]/table/tbody/tr[2]/td[2]")).getText()));
 	double cuvs=0.0;
-	List<WebElement> abono=driver.findElements(By.xpath("//*[@id=\"006L0000009BQte_RelatedLineItemList_body\"]/table/tbody/tr"));
+	List<WebElement> abono=driver.findElements(By.xpath("//*[@id=\""+idOportunidad+"_RelatedLineItemList_body\"]/table/tbody/tr"));
 	abono.remove(0);
 	for(WebElement ab:abono) {
 			//System.out.println(ab.getText());
@@ -996,8 +817,7 @@ public class test_SCP_Base extends TestBase {
 				cuvs=cuvs+Double.parseDouble(limpiarValor(ab.findElements(By.tagName("td")).get(8).getText()));
 				}
 		}
-	
-	assertTrue(totalCuv==cuvs);
+	assertEquals(totalCuv,cuvs);
 	}
 }
 
