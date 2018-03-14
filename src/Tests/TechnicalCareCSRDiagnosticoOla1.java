@@ -285,6 +285,7 @@ private WebDriver driver;
     tech.continuar();
     tech.seleccionarRespuesta("no");
     tech.clickContinuar();
+    sleep(3000);
     tech.categoriaRed("Desregistrar");
     tech.clickContinuar();
     tech.speech();
@@ -389,7 +390,8 @@ private WebDriver driver;
    tech.categoriaRed("Sí");
    tech.enviodeconfiguracion();
    sleep(5000);
-   tech.verificarCaso();
+   assertTrue(tech.reclamo());
+
    
 }
 }
