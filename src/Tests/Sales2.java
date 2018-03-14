@@ -22,6 +22,7 @@ import Pages.BasePage;
 import Pages.ContactSearch;
 import Pages.CustomerCare;
 import Pages.SalesBase;
+import Pages.Ta_CPQ;
 
 public class Sales2 extends TestBase{
 
@@ -1904,5 +1905,49 @@ public class Sales2 extends TestBase{
 		Assert.assertTrue(lst.getText().contains("Plan con Tarjeta Repro"));
 		}
 		
+	@Test(groups={"Sales", "AltaDeLinea", "Ola1"})
+	public void TS94479_checkPlanIsDeleted() {
+		Ta_CPQ page3 = new Ta_CPQ(driver);
+		sb.BuscarCuenta(DNI, "32323232");
+		sb.acciondecontacto("catalogo");
+		sleep(15000);
+		page3.addPlan("plan prepago");
+		sleep(2000);
+		page3.abrirprimeraflecha();
+		sleep(3000);
+		page3.deleteoneplan();
+		try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		Assert.assertFalse(page3.isPlanPresent());
+	}
+	@Test(groups={"Sales", "AltaDeLinea", "Ola1"})
+	public void TS94482_deleteAllPlans() {
+		Ta_CPQ page3 = new Ta_CPQ(driver);
+		sb.BuscarCuenta(DNI, "32323232");
+		sb.acciondecontacto("catalogo");
+		try { for(WebElement e : driver.findElements(By.className("cpq-product-name"))) {
+			page3.clickOnDelete();
+			try {Thread.sleep(2000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		} } catch (java.lang.IndexOutOfBoundsException e) {}
+		try {Thread.sleep(3000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		page3.addPlan("plan prepago");
+		try {Thread.sleep(3000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		page3.addPlan("plan prepago");
+		try {Thread.sleep(3000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		page3.addPlan("plan prepago");
+		try {Thread.sleep(3000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		page3.abrirprimeraflecha();
+		sleep(3000);
+		page3.deleteoneplan();
+		try {Thread.sleep(4000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		page3.abrirprimeraflecha();
+		sleep(3000);
+		page3.deleteoneplan();
+		try {Thread.sleep(4000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		page3.abrirprimeraflecha();
+		sleep(3000);
+		page3.deleteoneplan();
+		try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		Assert.assertEquals("Cart is empty.", page3.getEmptyCartMessage());
+	}
 		
 }
