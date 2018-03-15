@@ -14,8 +14,11 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.Select;
 import org.testng.annotations.AfterClass;
+import org.testng.annotations.AfterSuite;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.BeforeMethod;
+import org.testng.annotations.BeforeSuite;
+import org.testng.annotations.DataProvider;
 import org.testng.annotations.Parameters;
 import org.testng.annotations.Test;
 
@@ -45,13 +48,13 @@ public class SCPPrioritarios extends TestBase{
 		try {Thread.sleep(7000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 	}
 	
-	//@AfterClass(groups = "SCP")
+	@AfterClass(groups = "SCP")
 	public void tearDown() {
 		driver.quit();
 	}
 	
 
-@Test(groups = "SCP", priority=2)
+@Test(groups = "SCP", priority=1)
  public void TS116024_SCP_Crear_Cuenta() { 
   SCP prueba = new SCP(driver);
 
@@ -128,27 +131,33 @@ public class SCPPrioritarios extends TestBase{
 		 }
 		}*/
 	
-		 public void Eliminar_Cuenta(String Cuenta){
-		  //Eliminacion
-		  List<WebElement> cuentass = driver.findElements(By.cssSelector(".recentItemModule.sidebarModule"));
-		   for(WebElement c : cuentass){
-		   c.getText().equals(Cuenta);
-		   c.click();
-		   }
-		  sleep(5000);
-		  WebElement delet = driver.findElement(By.id("topButtonRow")).findElements(By.tagName("input")).get(3);
-		  System.out.println(delet.getText());
-		  delet.click();
-		  try {driver.switchTo().alert().accept();}catch(org.openqa.selenium.NoAlertPresentException e) {}
-		 }
+	public boolean Eliminar_Cuenta(String Cuenta){
+		SCP page=new SCP(driver);
+		page.clickOnTabByName("cuentas");
+		sleep(2000);
+		driver.findElement(By.name("go")).click();
+		sleep(3000);
+		List<WebElement> listaDeCuentas=driver.findElements(By.className("x-grid3-row-table"));
+		//listaDeCuentas.add(driver.findElement(By.cssSelector(".x-grid3-row.x-grid3-row-first")));
+		for(WebElement lc:listaDeCuentas) {
+			WebElement nombre=lc.findElement(By.tagName("tbody")).findElement(By.tagName("tr")).findElements(By.tagName("td")).get(2);
+			WebElement eliminar=lc.findElement(By.tagName("tbody")).findElement(By.tagName("tr")).findElements(By.tagName("td")).get(1).findElements(By.tagName("a")).get(1);
+			//System.out.println(nombre.getText());
+			if(nombre.getText().toLowerCase().contains(Cuenta.toLowerCase())) {
+				eliminar.click();
+				try {driver.switchTo().alert().accept();}catch(org.openqa.selenium.NoAlertPresentException e) {}
+				sleep(1000);
+				return true;
+			}
+				
+		}
+		return false;
+	}
 		
-@Test(groups = "SCP", priority=1)
-@Parameters ({"NombreDeLaCuenta","Cuit","NumeroDeCliente"})
- public void Crear_Cuenta(String NombreDeLaCuenta, String Cuit, String NumeroDeCliente) { 
-  SCP prueba = new SCP(driver);
-
-          driver.findElement(By.className("pbButton")).findElement(By.className("btn")).click();
-  		  try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}  
+	public void Crear_Cuenta(String NombreDeLaCuenta, String Cuit, String NumeroDeCliente) { 
+		SCP prueba = new SCP(driver);
+        driver.findElement(By.className("pbButton")).findElement(By.className("btn")).click();
+  		try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}  
   		List<WebElement> campos = driver.findElement(By.className("pbSubsection")).findElements(By.tagName("tr"));
   		//Tipo
   		Select listSelect = new Select (campos.get(0).findElements(By.tagName("td")).get(3).findElement(By.tagName("select")));
@@ -164,11 +173,78 @@ public class SCPPrioritarios extends TestBase{
   		campos.get(7).findElements(By.tagName("td")).get(1).findElement(By.tagName("input")).sendKeys(NumeroDeCliente);
   		sleep(2000);
   		  driver.findElement(By.name("save")).click();
-  		sleep(8000);
-  			prueba.clickOnTabByName("cuentas");
-		sleep(8000);
-		assertTrue(driver.findElement(By.className("hotListElement")).findElement(By.cssSelector(".dataRow.even.first")).findElement(By.tagName("a")).getText().toLowerCase().contains("aperez"));
+  		sleep(4000);
 }
-		 
+ 
+ 
+		@BeforeSuite
+		public void InicializarDatos() throws Exception {
+			init();
+			int i=0;
+			Cuentas C=new Cuentas();
+			while(i<C.getNombreDeLaCuenta().length){
+			setup();
+			Crear_Cuenta(C.getNombreDeLaCuenta(i),C.getCuit(i),C.getNumeroDelCliente(i));
+			i++;
+			}
+			i=0;
+			SCP page=new SCP(driver);
+			while(i<C.getNombreDeLaCuenta().length){
+				//boolean creada=page.verificarExistenciaDeCuenta(C.getNombreDeLaCuenta(i));
+				if(page.verificarExistenciaDeCuenta(C.getNombreDeLaCuenta(i))) System.out.println("Cuenta: "+C.getNombreDeLaCuenta(i)+" Creada.");
+				else System.out.println("Cuenta "+C.getNombreDeLaCuenta(i)+" no Creada o no Disponible en el Listado.");
+				i++;
+			}
+			tearDown();
+		}
+		
+		@AfterSuite
+		//@BeforeSuite
+		 public void EliminarDatos() throws Exception {
+			 init();
+			 int i=0;
+			 Cuentas C=new Cuentas();
+			 while(i<C.getNombreDeLaCuenta().length){
+				 if(Eliminar_Cuenta(C.getNombreDeLaCuenta(i))) System.out.println("Cuenta: "+C.getNombreDeLaCuenta(i)+" Eliminada.");
+				 else System.out.println("Cuenta no Encontrada o no eliminada");
+				 i++;
+			 }
+			 tearDown();
+		 }
 }
 
+
+
+//------------------------------------------------ Valores de Cuentas a Crear-----------------------------------------//
+ class Cuentas{
+	String[] NombreDeLaCuenta;
+	//lo uso para determinar el Size
+	public String[] getNombreDeLaCuenta() {
+		return NombreDeLaCuenta;
+	}
+
+	public String getNombreDeLaCuenta(int i) {
+		return NombreDeLaCuenta[i];
+	}
+
+	String[] Cuit;
+	public String getCuit(int i) {
+		return Cuit[i];
+	}
+
+	String[] NumeroDelCliente;
+	
+	public String getNumeroDelCliente(int i) {
+		return NumeroDelCliente[i];
+	}
+
+	public Cuentas() {
+		NombreDeLaCuenta= new String[] {"Almer","Flor"};
+		Cuit= new String[] {"300030000","400040000"};
+		NumeroDelCliente= new String[] {"0000400000","0000500000"};
+	}
+	
+}
+//------------------------------------------------ ---------------------- ----------------------------------------------//
+ 
+ 

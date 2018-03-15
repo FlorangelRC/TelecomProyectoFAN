@@ -777,4 +777,20 @@ Assert.assertTrue(acc&&nmbre&&pntf&&pntd);
 		if(!flag) {System.out.println("Oportunidad: "+oportunidad+" No encontrada.");}
 		sleep(3000);
 	}
+	
+	public boolean verificarExistenciaDeCuenta(String NombreCuenta) {
+		clickOnTabByName("cuentas");
+		sleep(2000);
+		driver.findElement(By.name("go")).click();
+		sleep(3000);
+		List<WebElement> listaDeCuentas=driver.findElements(By.className("x-grid3-row-table"));
+		listaDeCuentas.add(driver.findElement(By.cssSelector(".x-grid3-row.x-grid3-row-first")));
+		for(WebElement list:listaDeCuentas) {
+			//System.out.println(list.getText());
+			if(list.getText().toLowerCase().contains(NombreCuenta.toLowerCase())) {
+				return true;
+			}
+		}
+		return false;
+	}
 }
