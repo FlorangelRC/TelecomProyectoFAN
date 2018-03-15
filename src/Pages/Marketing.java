@@ -8,7 +8,6 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.ui.Select;
 import org.testng.Assert;
-
 import Tests.TestBase;
 
 public class Marketing extends CustomerCare {
@@ -467,6 +466,13 @@ public class Marketing extends CustomerCare {
 		}
 		
 		return sNumero;
+	}
+	
+	public void ingresarANuevoProspecto() {
+		driver.get("https://crm--sit.cs14.my.salesforce.com/home/home.jsp?tsid=02u41000000QWhf");
+		driver.findElement(By.id("Lead_Tab")).click();
+		driver.findElement(By.id("hotlist")).findElement(By.className("pbButton")).findElement(By.tagName("input")).click();
+		sleepShort(0);
 	}
 	
 }

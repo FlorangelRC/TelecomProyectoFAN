@@ -132,7 +132,7 @@ public class Marketing_Mattu extends TestBase{
 			//AllwaysEmpty
 		}
 	}
-	//@AfterClass(alwaysRun=true)
+	@AfterClass(alwaysRun=true)
 	public void tearDown() {
 		driver.close();
 	}
@@ -715,6 +715,61 @@ public class Marketing_Mattu extends TestBase{
 		Assert.assertTrue(sFechaHasta.equals("fecha hasta:"));
 		wColumna = mMarketing.traerColumnaElement(wBody, 7, 7);
 		Assert.assertTrue(wColumna.get(0).findElement(By.id("text-input-id-2")).getAttribute("date-format").toLowerCase().equals("dd/mm/yyyy"));
+	}
+	
+	//-------------------------------------------------------------------------------------------------
+	//TCC = 36
+	@Test(groups = {"Marketing", "Ola1", "CapacidadDeAdministrarLaSegmentaciónDeLosClientes"})
+	public void TS99087_Campo_Nombre_LEADS() {
+		mMarketing.ingresarANuevoProspecto();
+		Assert.assertTrue(driver.findElement(By.id("name_firstlea2")).isDisplayed());
+		driver.get("https://crm--sit.cs14.my.salesforce.com/console?tsid=02uc0000000D6Hd");
+		List<WebElement> wTabs = driver.findElement(By.id("ext-gen59")).findElements(By.tagName("li"));
+		wTabs.get(2).click();
+	}
+	
+	//-------------------------------------------------------------------------------------------------
+	//TCC = 37
+	@Test(groups = {"Marketing", "Ola1", "CapacidadDeAdministrarLaSegmentaciónDeLosClientes"})
+	public void TS99088_Campo_Apellido_LEADS() {
+		mMarketing.ingresarANuevoProspecto();
+		Assert.assertTrue(driver.findElement(By.id("name_lastlea2")).isDisplayed());
+		driver.get("https://crm--sit.cs14.my.salesforce.com/console?tsid=02uc0000000D6Hd");
+		List<WebElement> wTabs = driver.findElement(By.id("ext-gen59")).findElements(By.tagName("li"));
+		wTabs.get(2).click();
+	}
+	
+	//-------------------------------------------------------------------------------------------------
+	//TCC = 38
+	@Test(groups = {"Marketing", "Ola1", "CapacidadDeAdministrarLaSegmentaciónDeLosClientes"})
+	public void TS99089_Campo_Mail_LEADS() {
+		mMarketing.ingresarANuevoProspecto();
+		Assert.assertTrue(driver.findElement(By.id("lea11")).isDisplayed());
+		driver.get("https://crm--sit.cs14.my.salesforce.com/console?tsid=02uc0000000D6Hd");
+		List<WebElement> wTabs = driver.findElement(By.id("ext-gen59")).findElements(By.tagName("li"));
+		wTabs.get(2).click();
+	}
+	
+	//-------------------------------------------------------------------------------------------------
+	//TCC = 39
+	@Test(groups = {"Marketing", "Ola1", "CapacidadDeAdministrarLaSegmentaciónDeLosClientes"})
+	public void TS99090_Campo_Telefono_LEADS() {
+		mMarketing.ingresarANuevoProspecto();
+		Assert.assertTrue(driver.findElement(By.id("lea8")).isDisplayed());
+		driver.get("https://crm--sit.cs14.my.salesforce.com/console?tsid=02uc0000000D6Hd");
+		List<WebElement> wTabs = driver.findElement(By.id("ext-gen59")).findElements(By.tagName("li"));
+		wTabs.get(2).click();
+	}
+	
+	//-------------------------------------------------------------------------------------------------
+	//TCC = 40
+	@Test(groups = {"Marketing", "Ola1", "CapacidadDeAdministrarLaSegmentaciónDeLosClientes"})
+	public void TS99091_Campo_Empresa_LEADS() {
+		mMarketing.ingresarANuevoProspecto();
+		Assert.assertTrue(driver.findElement(By.id("lea3")).isDisplayed());
+		driver.get("https://crm--sit.cs14.my.salesforce.com/console?tsid=02uc0000000D6Hd");
+		List<WebElement> wTabs = driver.findElement(By.id("ext-gen59")).findElements(By.tagName("li"));
+		wTabs.get(2).click();
 	}
 	
 	//-------------------------------------------------------------------------------------------------
