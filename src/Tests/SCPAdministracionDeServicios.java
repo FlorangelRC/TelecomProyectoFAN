@@ -50,13 +50,13 @@ public class SCPAdministracionDeServicios extends TestBase {
 		try {Thread.sleep(10000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 	}
 	
-	//@AfterClass(groups = "SCP")
+	@AfterClass(groups = "SCP")
 	public void tearDown() {
 		driver.quit();
 		try {Thread.sleep(2000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 	}
 	
-	@Test(groups = "SCP")  
+	@Test(groups = "SCP", priority=6)  
     public void TS110248_Estructura_De_Los_Productos_Moneda() {  
       SCP pcp = new SCP(driver);  
       boolean estaMon= false;
@@ -92,7 +92,7 @@ public class SCPAdministracionDeServicios extends TestBase {
 		//pcp.Desloguear_Loguear("isabel");
     }  
 	
-	@Test(groups = "SCP")  
+	@Test(groups = "SCP", priority=6)  
     public void TS110249_Estructura_De_Las_Oportunidades_Moneda() {  
       SCP pcp = new SCP(driver);  
       boolean estaMon= false;
@@ -116,7 +116,7 @@ public class SCPAdministracionDeServicios extends TestBase {
 		//pcp.Desloguear_Loguear("isabel");
     }  
 	
-	@Test(groups = "SCP")  
+	@Test(groups = "SCP", priority=6)  
     public void TS110250_Estructura_De_Los_Proyectos_TMI() {  
       SCP pcp = new SCP(driver);  
       //pcp.Desloguear_Loguear("fabiana");
@@ -141,7 +141,7 @@ public class SCPAdministracionDeServicios extends TestBase {
 		//pcp.Desloguear_Loguear("isabel");
     }  
 	
-	@Test(groups = "SCP")  
+	@Test(groups = "SCP", priority=6)  
     public void TS110251_Estructura_De_Los_Proyectos_TMI_Fecha_Pasada() {  
       SCP pcp = new SCP(driver);  
       //pcp.Desloguear_Loguear("fabiana");
@@ -165,7 +165,7 @@ public class SCPAdministracionDeServicios extends TestBase {
 		//pcp.Desloguear_Loguear("isabel");
     }  
 	
-	@Test(groups = "SCP")  
+	@Test(groups = "SCP", priority=6)  
     public void TS110252_Estructura_De_Las_Oportunidades_Probabilidad() {  
       SCP pcp = new SCP(driver);  
       //pcp.Desloguear_Loguear("fabiana");
@@ -188,7 +188,7 @@ public class SCPAdministracionDeServicios extends TestBase {
 		//pcp.Desloguear_Loguear("isabel");
     }  
 	
-	@Test(groups = "SCP")  
+	@Test(groups = "SCP", priority=3)  
     public void TS110253_Estructura_De_Los_Contactos_Estado() {  
       SCP pcp = new SCP(driver);  
       boolean estaMon= false;
@@ -223,7 +223,7 @@ public class SCPAdministracionDeServicios extends TestBase {
     }  
 	
 	
-	@Test(groups = "SCP")  
+	@Test(groups = "SCP", priority=5)  
     public void TS110254_Estructura_De_Los_Servicios_Servicios_Nuestros() {  
       SCP pcp = new SCP(driver);  
       pcp.moveToElementOnAccAndClick("segundoTitulo",2);  
@@ -232,7 +232,7 @@ public class SCPAdministracionDeServicios extends TestBase {
         
     }  
       
-    @Test(groups = "SCP")  
+    @Test(groups = "SCP", priority=4)  
     public void TS110255_Estructura_De_Los_Servicios_Servicios_De_La_Competencia() {  
       SCP pcp = new SCP(driver);  
       pcp.moveToElementOnAccAndClick("segundoTitulo",2);  
@@ -240,7 +240,7 @@ public class SCPAdministracionDeServicios extends TestBase {
         
     }  
       
-    @Test(groups = "SCP")  
+    @Test(groups = "SCP", priority=3)  
     public void TS110256_Estructura_De_Los_Servicios_Servicios_Futuros() {  
       SCP pcp = new SCP(driver);  
       pcp.moveToElementOnAccAndClick("segundoTitulo",2);  
@@ -248,7 +248,7 @@ public class SCPAdministracionDeServicios extends TestBase {
         
     }  
 	
-	@Test(groups = "SCP")
+	@Test(groups = "SCP", priority=3)
 	public void TS112539_Administracion_de_Contexto_Sectorial_Agregar_Guardando() {
 		BasePage Bp = new BasePage();
 		SCP pcp = new SCP(driver);
@@ -316,7 +316,7 @@ public class SCPAdministracionDeServicios extends TestBase {
 		
 	}
 	
-	@Test(groups = "SCP")
+	@Test(groups = "SCP", priority=4)
 	public void TS112541_Administracion_de_Contexto_Sectorial_Borrar_Guardando() {
 		SCP pcp = new SCP(driver);
 		BasePage Bp = new BasePage();
@@ -380,7 +380,7 @@ public class SCPAdministracionDeServicios extends TestBase {
 		
 	}
 	
-	  @Test(groups = "SCP")  
+	  @Test(groups = "SCP",priority=4)  
 	    public void TS112545_Administracion_de_Contexto_Sectorial_Filtros_Sector() {  
 	      SCP pcp = new SCP(driver);  
 	      boolean filtroSirve = false;  
@@ -402,7 +402,7 @@ public class SCPAdministracionDeServicios extends TestBase {
 	    }  
 	      
 	
-	@Test(groups = "SCP")
+	@Test(groups = "SCP",priority=4)
 	public void TS112547_Administracion_de_Contexto_Sectorial_Ingreso_Desde_el_Contacto() {
 		SCP pcp = new SCP(driver);
 		pcp.moveToElementOnAccAndClick("quintoTitulo",1);
@@ -423,7 +423,7 @@ public class SCPAdministracionDeServicios extends TestBase {
 		assertTrue(Itabla.get(4).getText().toLowerCase().equals("descripci\u00f3n"));
 	}
 	
-	@Test(groups = "SCP")
+	@Test(groups = "SCP",priority=6)
 	public void TS112548_Administracion_de_Servicios_Borrar_Categoria_del_Servicio() {
 		SCP pcp = new SCP(driver);
 		pcp.moveToElementOnAccAndClick("quintoTitulo",2);
@@ -442,7 +442,7 @@ public class SCPAdministracionDeServicios extends TestBase {
 		assertTrue(enc);
 	}
 	
-	@Test(groups = "SCP")
+	@Test(groups = "SCP",priority=6)
 	public void TS112551_Administracion_de_Servicios_Borrar_Servicio() {
 		SCP pcp = new SCP(driver);
 		pcp.moveToElementOnAccAndClick("quintoTitulo",2);
@@ -466,7 +466,7 @@ public class SCPAdministracionDeServicios extends TestBase {
 		assertTrue(enc);
 	}
 	
-	@Test(groups = "SCP")
+	@Test(groups = "SCP",priority=2)
 	public void TS112554_Administracion_de_Servicios_Creacion_Crear_Categoria_de_Servicio() {
 		SCP pcp = new SCP(driver);
 		pcp.moveToElementOnAccAndClick("quintoTitulo",2);
@@ -493,7 +493,7 @@ public class SCPAdministracionDeServicios extends TestBase {
 		
 	}
 	
-	@Test(groups = "SCP")
+	@Test(groups = "SCP",priority=6)
 	public void TS112556_Administracion_de_Servicios_Creacion_Crear_Servicio() {
 		SCP pcp = new SCP(driver);
 		pcp.moveToElementOnAccAndClick("quintoTitulo",2);
@@ -521,7 +521,7 @@ public class SCPAdministracionDeServicios extends TestBase {
 
 	}
 	
-	@Test(groups = "SCP")
+	@Test(groups = "SCP",priority=1)
 	public void TS112557_Administracion_de_Servicios_Ingreso_Desde_El_Contacto() {
 		SCP pcp = new SCP(driver);
 		pcp.moveToElementOnAccAndClick("quintoTitulo",2);
@@ -554,7 +554,7 @@ public class SCPAdministracionDeServicios extends TestBase {
 		assertTrue(bbs);
 	}
 	
-	@Test(groups = "SCP")
+	@Test(groups = "SCP", priority=3)
 	public void TS112576_Configurar_Reporte_SCP_Exportar_a_Word() {
 		SCP pcp = new SCP(driver);
 		pcp.moveToElementOnAccAndClick("cuartoTitulo",3);
@@ -572,7 +572,7 @@ public class SCPAdministracionDeServicios extends TestBase {
 		assertTrue(pcp.isFileDownloaded(downloadPath, usuario), "Failed to download Expected document");
 	}
 	
-	  @Test(groups = "SCP")  
+	  @Test(groups = "SCP",priority=3)  
 	    public void TS112577_Configurar_Reporte_SCP_Guardar() {  
 	      SCP pcp = new SCP(driver);  
 	      boolean botonG = false;  
@@ -588,7 +588,7 @@ public class SCPAdministracionDeServicios extends TestBase {
 	      System.out.println("Se debe verificar que mas hacer!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");  
 	    }  
 	
-	@Test(groups = "SCP")
+	@Test(groups = "SCP",priority=3)
 	public void TS112578_Configurar_Reporte_SCP_Ingreso_Desde_El_Contacto() {
 		SCP pcp = new SCP(driver);
 		boolean botonG= false;
@@ -611,7 +611,7 @@ public class SCPAdministracionDeServicios extends TestBase {
 		
 	}
 	
-	@Test(groups = "SCP")  
+	@Test(groups = "SCP", priority=3)  
     public void TS112579_Configurar_Reporte_SCP_Ver_Video() {  
       SCP pcp = new SCP(driver);  
       boolean botonG = false;  
@@ -633,7 +633,7 @@ public class SCPAdministracionDeServicios extends TestBase {
       try {Thread.sleep(2000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}  
     }  
       
-	@Test(groups = "SCP")
+	@Test(groups = "SCP",priority=3)
 	public void TS112580_Contexto_Sectorial_Cadena_De_Valor_Y_Procesos() {
 		BasePage Bp = new BasePage();
 		SCP pcp = new SCP(driver);
@@ -702,7 +702,7 @@ public class SCPAdministracionDeServicios extends TestBase {
 		
 	}
 	
-	@Test(groups = "SCP")
+	@Test(groups = "SCP",priority=3)
 	public void TS112583_Contexto_Sectorial_Casos_De_Exito_Sectorial() {
 		BasePage Bp = new BasePage();
 		SCP pcp = new SCP(driver);
@@ -771,7 +771,7 @@ public class SCPAdministracionDeServicios extends TestBase {
 		
 	}
 	
-    @Test(groups = "SCP")  
+    @Test(groups = "SCP", priority=3)  
     public void TS112631_Estrategia_De_Crecimiento_Exportar_A_Excel() {  
       SCP pcp = new SCP(driver);  
       pcp.moveToElementOnAccAndClick("tercerTitulo",5);  
@@ -789,7 +789,7 @@ public class SCPAdministracionDeServicios extends TestBase {
       assertTrue(pcp.isFileDownloaded(downloadPath, usuario), "Failed to download Expected document");  
     }  
       
-    @Test(groups = "SCP")  
+    @Test(groups = "SCP",priority=3)  
     public void TS112632_Estrategia_De_Crecimiento_Guardar() {  
       SCP pcp = new SCP(driver);  
       boolean botonG = false;  
@@ -833,7 +833,7 @@ public class SCPAdministracionDeServicios extends TestBase {
        assertTrue(botonG);	 
     }  
     
-    @Test(groups = "SCP")  
+    @Test(groups = "SCP", priority=3)  
     public void TS112635_Estrategia_De_Crecimiento_Search() {  
       SCP pcp = new SCP(driver);  
       boolean filtroBien = true;  
@@ -858,7 +858,7 @@ public class SCPAdministracionDeServicios extends TestBase {
       try {Thread.sleep(2000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}  
     }  
       
-    @Test(groups = "SCP")  
+    @Test(groups = "SCP", priority=3)  
     public void TS112637_Estrategia_De_Crecimiento_Ver_Video() {  
       SCP pcp = new SCP(driver);  
       boolean botonG = false;  
@@ -885,7 +885,7 @@ public class SCPAdministracionDeServicios extends TestBase {
       
     }  
       
-    @Test(groups = "SCP")  
+    @Test(groups = "SCP", priority=3)  
     public void TS112673_Estructura_De_Los_Contactos_Detalle_De_Contacto() {  
       SCP pcp = new SCP(driver);  
       boolean estaMon= false;
@@ -914,7 +914,7 @@ public class SCPAdministracionDeServicios extends TestBase {
 		assertTrue(driver.findElement(By.className("noStandardTab")).findElement(By.tagName("h3")).getText().toLowerCase().contains("notas"));
     }
     
-    @Test(groups = "SCP")  
+    @Test(groups = "SCP", priority=3)  
     public void TS112788_Parque_De_Servicios_Ver_Video() {  
       SCP pcp = new SCP(driver);  
       boolean botonG = false;  
@@ -938,7 +938,7 @@ public class SCPAdministracionDeServicios extends TestBase {
       try {Thread.sleep(2000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}  
     }  
 	
-	@Test(groups = "SCP")
+	@Test(groups = "SCP", priority=3)
 	public void TS112787_Parque_De_Servicios_Ingreso_Desde_El_Contacto() {
 		SCP pcp = new SCP(driver);
 		List<String> tdo = new ArrayList<String>();
@@ -958,7 +958,7 @@ public class SCPAdministracionDeServicios extends TestBase {
 	}
 	
 
-	@Test(groups = "SCP") 
+	@Test(groups = "SCP", priority=3) 
 		  public void TS112790_Plan_de_accion_Chatter_Contextualizado_Leer_Comentario_Escrito_Con_Otro_Usuario() { 
 		    SCP pcp = new SCP(driver); 
 		    java.util.Date fecha = new Date();
@@ -976,7 +976,7 @@ public class SCPAdministracionDeServicios extends TestBase {
 		    pcp.Desloguear_Loguear("permisos");
 	}
 
-	@Test(groups = "SCP") 
+	@Test(groups = "SCP", priority=3) 
 	  public void TS112791_Plan_de_accion_Doble_Click_Para_Editar() { 
 	    SCP pcp = new SCP(driver); 
 	   // pcp.Desloguear_Loguear("fabiana");
@@ -994,7 +994,7 @@ public class SCPAdministracionDeServicios extends TestBase {
 		//pcp.Desloguear_Loguear("isabel");
 	 }
 	
-	@Test(groups = "SCP")  
+	@Test(groups = "SCP", priority=3)  
     public void TS112793_Plan_De_Accion_Exportar_A_Excel() {  
       SCP pcp = new SCP(driver);  
       pcp.moveToElementOnAccAndClick("cuartoTitulo",2);  
@@ -1012,7 +1012,7 @@ public class SCPAdministracionDeServicios extends TestBase {
       assertTrue(pcp.isFileDownloaded(downloadPath, usuario), "Failed to download Expected document");  
     }  
 	 
-	 @Test(groups = "SCP") 
+	 @Test(groups = "SCP",priority=3) 
 	  public void TS112799_Plan_Accion_Ver_Video() { 
 	    SCP pcp = new SCP(driver); 
 	    boolean botonG = false; 

@@ -582,7 +582,7 @@ public void validarcompetidores(){
 			pntf = true;
 			System.out.println(e.getText());}
 		
-		if(e.getText().equals("Puntos d�biles")){
+		if(e.getText().equals("Puntos d\u00e9biles")){
 			pntd= true;
 			System.out.println(e.getText());}}	
 Assert.assertTrue(acc&&nmbre&&pntf&&pntd);
@@ -594,11 +594,11 @@ Assert.assertTrue(acc&&nmbre&&pntf&&pntd);
 		 ArrayList<String> txt1 = new ArrayList<String>();
 		 ArrayList<String> txt2 = new ArrayList<String>();
 		 txt2.add("Tipo");
-		 txt2.add("Raz�n perdida");
+		 txt2.add("Raz\u00f3n perdida");
 		 txt2.add("Estado de la oportunidad");
 		 txt2.add("Creado por");
 		 txt2.add("Propietario de oportunidad");
-		 txt2.add("�ltima modificaci�n por");
+		 txt2.add("\u00daltima modificaci\u00f3n por");
 		 txt2.add("Descripci\u00f3n");
 
 		((JavascriptExecutor)driver).executeScript("window.scrollTo(0,"+element.getLocation().y+")");
@@ -647,17 +647,16 @@ Assert.assertTrue(acc&&nmbre&&pntf&&pntd);
 				break;
 		case "plazo":
 		
-			driver.findElement(By.id("00N3F000000HaZN")).clear();
-			driver.findElement(By.id("00N3F000000HaZN")).sendKeys(dato);
+			driver.findElement(By.className("detailList")).findElements(By.tagName("tr")).get(6).findElement(By.tagName("input")).clear();
+			driver.findElement(By.className("detailList")).findElements(By.tagName("tr")).get(6).findElement(By.tagName("input")).sendKeys(dato);
 				break;
 		case "cargo unico":			  
-		
-			driver.findElement(By.id("00N3F000000HaZH")).clear();
-			driver.findElement(By.id("00N3F000000HaZH")).sendKeys(dato);
+			driver.findElement(By.className("detailList")).findElements(By.tagName("tr")).get(7).findElement(By.tagName("input")).clear();
+			driver.findElement(By.className("detailList")).findElements(By.tagName("tr")).get(7).findElement(By.tagName("input")).sendKeys(dato);
 				break;
 		case "moneda":
 	
-			setSimpleDropdown(driver.findElement(By.id("00N3F000000HaZL")), dato);
+			setSimpleDropdown(driver.findElement(By.className("detailList")).findElements(By.tagName("tr")).get(7).findElement(By.tagName("select")), dato);
 				break;
 		case "descripcion":			  
 		
@@ -666,8 +665,8 @@ Assert.assertTrue(acc&&nmbre&&pntf&&pntd);
 				break;
 		case "comentarios":			  
 		
-			driver.findElement(By.id("00N3F000000HaZJ")).clear();
-			driver.findElement(By.id("00N3F000000HaZJ")).sendKeys(dato);
+			driver.findElement(By.className("detailList")).findElements(By.tagName("tr")).get(12).findElement(By.tagName("input")).clear();
+			driver.findElement(By.className("detailList")).findElements(By.tagName("tr")).get(12).findElement(By.tagName("input")).sendKeys(dato);
 				break;}
 		
 		List<WebElement> btns2 = driver.findElements(By.cssSelector(".btn"));
@@ -687,45 +686,45 @@ Assert.assertTrue(acc&&nmbre&&pntf&&pntd);
 			Assert.assertTrue(driver.findElement(By.id("Quantity_ileinner")).getText().contains(dato));
 				break;
 		case "plazo":
-			Assert.assertTrue(driver.findElement(By.id("00N3F000000HaZN_ileinner")).getText().contains(dato));
+			Assert.assertTrue(driver.findElement(By.className("detailList")).findElements(By.tagName("tr")).get(6).findElement(By.tagName("div")).getText().contains(dato));
 				break;
 		case "cargo unico":		
-			Assert.assertTrue(driver.findElement(By.id("00N3F000000HaZH_ileinner")).getText().contains(dato));
+			Assert.assertTrue(driver.findElement(By.className("detailList")).findElements(By.tagName("tr")).get(7).findElement(By.tagName("div")).getText().contains(dato));
 				break;
 		case "moneda":
-			Assert.assertTrue(driver.findElement(By.id("00N3F000000HaZL_ileinner")).getText().contains(dato));
+			Assert.assertTrue(driver.findElement(By.className("detailList")).findElements(By.tagName("tr")).get(8).findElement(By.tagName("div")).getText().contains(dato));
 				break;
 		case "descripcion":			  
 			Assert.assertTrue(	driver.findElement(By.id("Description_ileinner")).getText().contains(dato));
 				break;
 		case "comentarios":			  
-			Assert.assertTrue(driver.findElement(By.id("00N3F000000HaZJ_ileinner")).getText().contains(dato));
+			Assert.assertTrue(driver.findElement(By.className("detailList")).findElements(By.tagName("tr")).get(12).findElement(By.tagName("div")).getText().contains(dato));
 				break;}
 	}
 	
 	public String CargosTotalesPorMes(){
-		TestBase TB = new TestBase();
-		TB.waitFor(driver, By.id("00N3F000000HaZI_ileinner"));
+		//TestBase TB = new TestBase();
+		sleep(5000);
 		String a;
-		a = driver.findElement(By.id("00N3F000000HaZI_ileinner")).getText();
+		a = driver.findElement(By.className("detailList")).findElements(By.tagName("tr")).get(2).findElements(By.tagName("td")).get(3).getText();
 		return a;
 	}
 	
 	public void ValidarMontoContrato(){
 		try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
-		String CUV0 = driver.findElement(By.id("00N3F000000HaZH_ileinner")).getText().substring(1).replaceAll(",", ".");
+		String CUV0 = driver.findElement(By.className("detailList")).findElements(By.tagName("tr")).get(7).findElement(By.tagName("div")).getText().substring(1).replaceAll(",", ".");
 		System.out.println("Cargo unico: "+CUV0);
 
 		double CUV= Double.parseDouble(CUV0); 
 		String cant0 = driver.findElement(By.id("Quantity_ileinner")).getText().replaceAll(",", ".");
 		System.out.println("cantidad: "+cant0);
 		double cant = Double.parseDouble(cant0);
-		int plazo = Integer.parseInt(driver.findElement(By.id("00N3F000000HaZN_ileinner")).getText()); 
+		int plazo = Integer.parseInt(driver.findElement(By.className("detailList")).findElements(By.tagName("tr")).get(6).findElement(By.tagName("div")).getText()); 
 		System.out.println("plazo: "+ plazo);
 		String abono0 =driver.findElement(By.id("UnitPrice_ileinner")).getText().substring(1).replaceAll(",", ".");
 		System.out.println("abono: "+abono0);
 		double abono = Double.parseDouble(abono0);	 
-		String TC = driver.findElement(By.id("00N3F000000HaZK_ileinner")).getText().substring(1).replace(".","");
+		String TC = driver.findElement(By.className("detailList")).findElements(By.tagName("tr")).get(1).findElements(By.tagName("div")).get(1).getText().substring(1).replace(".","");
 		TC = (TC.replaceAll(",", "."));
 		System.out.println("totalcontrato: "+TC);
 		double TotalContrato = Double.parseDouble(TC); 
@@ -740,14 +739,14 @@ Assert.assertTrue(acc&&nmbre&&pntf&&pntd);
 	//   
 	public String SacarTotalMesXPlazo(){
 		try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
-		String antes = driver.findElement(By.id("00N3F000000HaZK_ileinner")).getText().substring(1).replace(".","");
+		String antes = driver.findElement(By.className("detailList")).findElements(By.tagName("tr")).get(3).findElements(By.tagName("div")).get(1).getText().substring(1).replace(".","");
 		System.out.println("Antes: "+antes);
 		return antes;
 	}
 	
 	public void ValidarTotalMesXPlazo(String antes){
 		try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
-		String despues = driver.findElement(By.id("00N3F000000HaZK_ileinner")).getText().substring(1).replace(".","");
+		String despues = driver.findElement(By.className("detailList")).findElements(By.tagName("tr")).get(3).findElements(By.tagName("div")).get(1).getText().substring(1).replace(".","");
 		System.out.println("Antes: "+antes);
 		Assert.assertFalse(despues.equals(antes));
 	}
@@ -776,5 +775,21 @@ Assert.assertTrue(acc&&nmbre&&pntf&&pntd);
 			}
 		if(!flag) {System.out.println("Oportunidad: "+oportunidad+" No encontrada.");}
 		sleep(3000);
+	}
+	
+	public boolean verificarExistenciaDeCuenta(String NombreCuenta) {
+		clickOnTabByName("cuentas");
+		sleep(2000);
+		driver.findElement(By.name("go")).click();
+		sleep(3000);
+		List<WebElement> listaDeCuentas=driver.findElements(By.className("x-grid3-row-table"));
+		listaDeCuentas.add(driver.findElement(By.cssSelector(".x-grid3-row.x-grid3-row-first")));
+		for(WebElement list:listaDeCuentas) {
+			//System.out.println(list.getText());
+			if(list.getText().toLowerCase().contains(NombreCuenta.toLowerCase())) {
+				return true;
+			}
+		}
+		return false;
 	}
 }
