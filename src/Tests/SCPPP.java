@@ -57,7 +57,7 @@ private WebDriver driver;
 	}
 	
 	
-	@AfterClass(groups = "SCP")
+	//@AfterClass(groups = "SCP")
 	public void teardown() {
 		driver.quit();
 		sleep(10000);
@@ -86,31 +86,31 @@ private WebDriver driver;
 	@Test(groups = "SCP") 
 	public void TS110245_Estructura_del_cliente_GGCC_Campos_Region	() {
 		SCP pScp = new SCP(driver);
-		pScp.Desloguear_Loguear("fabiana");
-		WebElement reg = driver.findElement(By.id("00N3F000000HaUe_ileinner"));
+		//pScp.Desloguear_Loguear("fabiana");
+		WebElement reg = driver.findElement(By.id("00N4100000c3bHn_ilecell"));
 		Actions action = new Actions(driver);   
 		action.moveToElement(reg).doubleClick().perform();
-		waitFor(driver, By.id("00N3F000000HaUe"));
-		Select dropdown = new Select (driver.findElement(By.id("00N3F000000HaUe")));
+		waitFor(driver, By.id("00N4100000c3bHn"));
+		Select dropdown = new Select (driver.findElement(By.id("00N4100000c3bHn")));
 		dropdown.selectByVisibleText("Gobierno");	
-		WebElement cerra = driver.findElement(By.id("InlineEditDialogX"));
+		WebElement cerra = driver.findElement(By.id("InlineEditDialog_buttons"));
 		cerra.click();
 	}
 	@Test(groups = "SCP")
 	public void TS110246_Estructura_del_cliente_GGCC_Campos_Territorio() {
-	WebElement reg = driver.findElement(By.id("00N3F000000HaUe_ileinner"));
+	WebElement reg = driver.findElement(By.id("00N4100000c3bHs_ilecell"));
 	Actions action = new Actions(driver);   
 	action.moveToElement(reg).doubleClick().perform();
-	waitFor(driver, By.id("00N3F000000HaUe"));
-	Select regio = new Select (driver.findElement(By.id("00N3F000000HaUe")));
+	waitFor(driver, By.id("00N4100000c3bHn"));
+	Select regio = new Select (driver.findElement(By.id("00N4100000c3bHn")));
 	regio.selectByVisibleText("Privado");	
-	Select terr = new Select (driver.findElement(By.id("00N3F000000HaUj")));
+	Select terr = new Select (driver.findElement(By.id("00N4100000c3bHs")));
 	terr.selectByVisibleText("--Ninguno--");
 	Assert.assertEquals(terr.getFirstSelectedOption().getText(),"--Ninguno--");
 	terr.selectByVisibleText("Industria");
 	Assert.assertEquals(terr.getFirstSelectedOption().getText(),"Industria");
-	terr.selectByVisibleText("Financias");
-	Assert.assertEquals(terr.getFirstSelectedOption().getText(),"Financias");
+	terr.selectByVisibleText("Finanzas");
+	Assert.assertEquals(terr.getFirstSelectedOption().getText(),"Finanzas");
 	terr.selectByVisibleText("Servicios");
 	Assert.assertEquals(terr.getFirstSelectedOption().getText(),"Servicios");
 	terr.selectByVisibleText("Privado litoral");
@@ -119,7 +119,7 @@ private WebDriver driver;
 	Assert.assertEquals(terr.getFirstSelectedOption().getText(),"Privado mediterraneo");
 	regio.selectByVisibleText("Gobierno");
 	sleep(3000);
-	Select terri = new Select (driver.findElement(By.id("00N3F000000HaUj")));
+	Select terri = new Select (driver.findElement(By.id("00N4100000c3bHs")));
 	terri.selectByVisibleText("--Ninguno--");
 	Assert.assertEquals(terri.getFirstSelectedOption().getText(),"--Ninguno--");
 	terri.selectByVisibleText("Gobierno amba 1");
@@ -130,7 +130,7 @@ private WebDriver driver;
 	Assert.assertEquals(terri.getFirstSelectedOption().getText(),"Gobierno litoral");
 	terri.selectByVisibleText("Gobierno mediterraneo");
 	Assert.assertEquals(terri.getFirstSelectedOption().getText(),"Gobierno mediterraneo");
-	WebElement cerra = driver.findElement(By.id("InlineEditDialogX"));
+	WebElement cerra = driver.findElement(By.id("InlineEditDialog_buttons"));
 	cerra.click();
 	}
 	
@@ -172,6 +172,10 @@ private WebDriver driver;
 	@Test(groups = "SCP") 
 	public void TS112792_Plan_de_acción_Eliminar_tareas() {
 		SCP prueba = new SCP(driver); 
+		prueba.Desloguear_Loguear("Maximiliano");
+		sleep(15000);
+		driver.findElement(By.id("mru001L000000vmnvl")).click();
+		sleep(10000);
 	    prueba.moveToElementOnAccAndClick("cuartoTitulo", 2);
 	    WebElement tabla= driver.findElement(By.id("mainTable_wrapper")).findElement(By.className("odd")).findElements(By.tagName("td")).get(1);
 	    String lala = tabla.getText();
@@ -197,6 +201,10 @@ private WebDriver driver;
 	@Test(groups = "SCP") 
 	public void TS112794_Plan_de_acción_Plan_de_acción_Fusionar_tareas() {
 		SCP prueba = new SCP(driver); 
+		prueba.Desloguear_Loguear("Maximiliano");
+		sleep(15000);
+		driver.findElement(By.id("mru001L000000vmnvl")).click();
+		sleep(3000);
 	    prueba.moveToElementOnAccAndClick("cuartoTitulo", 2);
 	    java.util.Date fechaCompleta = new Date();
 	    boolean bien = false;

@@ -16,7 +16,7 @@ import Pages.CustomerCare;
 
 public class CustomerCareOla1 extends TestBase {
 
-	CustomerCare cc;
+	private CustomerCare cc;
 	
 	
 	@BeforeClass (alwaysRun = true, groups = {"CustomerCare", "AjustesYEscalamiento", "SuspensionYRehabilitacion", "Ola1"})
