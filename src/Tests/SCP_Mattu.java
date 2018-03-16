@@ -50,9 +50,10 @@ private WebDriver driver;
 	
 	//------------------------------------------------------------------------------------------------- 
     //TCC = 1 
-	@Test(groups = "SCP")
+	@Test(groups = "SCP", priority = 3)
 	public void TS112722_Mosaico_de_Relacionamiento_por_Oportunidad_Ir_al_mosaico() {
 		SCP prueba = new SCP(driver); 
+		try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 	    prueba.moveToElementOnAccAndClick("tercerTitulo", 3); 
 	    List <WebElement> wIrAlMosaico = driver.findElements(By.cssSelector(".sorting_1")); 
 	    wIrAlMosaico.get(1).click(); 
@@ -62,7 +63,7 @@ private WebDriver driver;
 	
 	//------------------------------------------------------------------------------------------------- 
     //TCC = 2 
-	@Test(groups = "SCP") 
+	@Test(groups = "SCP", priority = 3) 
 	public void TS112723_Mosaico_de_Relacionamiento_por_Oportunidad_Nombre_de_la_oportunidad() { 
 	  SCP prueba = new SCP(driver); 
 	  prueba.moveToElementOnAccAndClick("tercerTitulo", 4); 
@@ -74,7 +75,7 @@ private WebDriver driver;
 	 
 	//------------------------------------------------------------------------------------------------- 
 	//TCC = 3 
-	@Test(groups = "SCP") 
+	@Test(groups = "SCP", priority = 3) 
 	public void TS112724_Mosaico_de_Relacionamiento_por_Oportunidad_Search() { 
 	  SCP prueba = new SCP(driver); 
 	  prueba.moveToElementOnAccAndClick("tercerTitulo", 3); 
@@ -96,7 +97,7 @@ private WebDriver driver;
 	
 	//------------------------------------------------------------------------------------------------- 
 	//TCC = 4 
-	@Test(groups = "SCP") 
+	@Test(groups = "SCP", priority = 3) 
 	public void TS112725_Mosaico_de_Relacionamiento_por_Oportunidad_Triangulo_Ordenador() throws ParseException {
 		SCP prueba = new SCP(driver);
 		prueba.moveToElementOnAccAndClick("tercerTitulo", 3);
@@ -105,7 +106,7 @@ private WebDriver driver;
 	
 	//------------------------------------------------------------------------------------------------- 
 	//TCC = 5
-	@Test(groups = "SCP")
+	@Test(groups = "SCP", priority = 3)
 	public void TS112726_Mosaico_de_Relacionamiento_por_Oportunidad_Ver_video() {
 		TestBase TB = new TestBase();
 		SCP prueba = new SCP(driver);
@@ -127,7 +128,7 @@ private WebDriver driver;
 	
 	//------------------------------------------------------------------------------------------------- 
 	//TCC = 6
-	@Test(groups = "SCP")
+	@Test(groups = "SCP", priority = 3)
 	public void TS112563_Asignacion_de_Value_Drivers_a_Oportunidades_MAS() {
 		SCP prueba = new SCP(driver); 
 		prueba.moveToElementOnAccAndClick("tercerTitulo", 1);
@@ -145,7 +146,7 @@ private WebDriver driver;
 	
 	//------------------------------------------------------------------------------------------------- 
 	//TCC = 7
-	@Test(groups = "SCP")
+	@Test(groups = "SCP", priority = 3)
 	public void TS112565_Asignacion_de_Value_Drivers_a_Oportunidades_Oportunidades() {
 		SCP prueba = new SCP(driver); 
 		prueba.moveToElementOnAccAndClick("tercerTitulo", 1);
@@ -154,7 +155,7 @@ private WebDriver driver;
 	
 	//------------------------------------------------------------------------------------------------- 
 	//TCC = 8
-	@Test(groups = "SCP")
+	@Test(groups = "SCP", priority = 3)
 	public void TS112566_Asignacion_de_Value_Drivers_a_Oportunidades_Ordenar_por_columnas() throws ParseException {
 		SCP prueba = new SCP(driver); 
 		prueba.moveToElementOnAccAndClick("tercerTitulo", 1);
@@ -169,7 +170,7 @@ private WebDriver driver;
 	
 	//------------------------------------------------------------------------------------------------- 
 	//TCC = 9
-	@Test(groups = "SCP")
+	@Test(groups = "SCP", priority = 3)
 	public void TS112772_Panel_de_control_Busqueda_Anterior_pagina() {
 		WebElement wNavBar = driver.findElement(By.cssSelector(".zen-inlineList.zen-tabMenu"));
 		List<WebElement> wMenu = wNavBar.findElements(By.tagName("li"));
@@ -188,7 +189,7 @@ private WebDriver driver;
 	
 	//------------------------------------------------------------------------------------------------- 
 	//TCC = 10
-	@Test(groups = "SCP")
+	@Test(groups = "SCP", priority = 3)
 	public void TS112773_Panel_de_control_Busqueda_Con_varios_resultados() {
 		WebElement wNavBar = driver.findElement(By.cssSelector(".zen-inlineList.zen-tabMenu"));
 		List<WebElement> wMenu = wNavBar.findElements(By.tagName("li"));
@@ -221,7 +222,7 @@ private WebDriver driver;
 	
 	//------------------------------------------------------------------------------------------------- 
 	//TCC = 11
-	@Test(groups = "SCP")
+	@Test(groups = "SCP", priority = 3)
 	public void TS112636_Estrategia_de_Crecimiento_Triangulo_ordenador() throws ParseException {
 		SCP prueba = new SCP(driver); 
 		prueba.moveToElementOnAccAndClick("tercerTitulo", 5);
@@ -235,7 +236,7 @@ private WebDriver driver;
 	
 	//------------------------------------------------------------------------------------------------- 
 	//TCC = 12
-	@Test(groups = "SCP")
+	@Test(groups = "SCP", priority = 3)
 	public void TS112775_Panel_de_control_Busqueda_Primera_pagina() {
 		WebElement wNavBar = driver.findElement(By.cssSelector(".zen-inlineList.zen-tabMenu"));
 		List<WebElement> wMenu = wNavBar.findElements(By.tagName("li"));
@@ -251,7 +252,7 @@ private WebDriver driver;
 	
 	//------------------------------------------------------------------------------------------------- 
 	//TCC = 13
-	@Test(groups = "SCP")
+	@Test(groups = "SCP", priority = 3)
 	public void TS112777_Panel_de_control_Busqueda_Ultima_pagina() {
 		WebElement wNavBar = driver.findElement(By.cssSelector(".zen-inlineList.zen-tabMenu"));
 		List<WebElement> wMenu = wNavBar.findElements(By.tagName("li"));
@@ -265,7 +266,7 @@ private WebDriver driver;
 	
 	//------------------------------------------------------------------------------------------------- 
 	//TCC = 14
-	@Test(groups = "SCP")
+	@Test(groups = "SCP", priority = 3)
 	public void TS112776_Panel_de_control_Busqueda_Siguiente_pagina() {
 		WebElement wNavBar = driver.findElement(By.cssSelector(".zen-inlineList.zen-tabMenu"));
 		List<WebElement> wMenu = wNavBar.findElements(By.tagName("li"));
@@ -279,7 +280,7 @@ private WebDriver driver;
 	
 	//------------------------------------------------------------------------------------------------- 
 	//TCC = 15
-	@Test(groups = "SCP")
+	@Test(groups = "SCP", priority = 3)
 	public void TS112778_Panel_de_control_Hipervinculos_Ir_a_Detalle_de_la_Cuenta() {
 		WebElement wNavBar = driver.findElement(By.cssSelector(".zen-inlineList.zen-tabMenu"));
 		List<WebElement> wMenu = wNavBar.findElements(By.tagName("li"));
@@ -296,7 +297,7 @@ private WebDriver driver;
 	
 	//------------------------------------------------------------------------------------------------- 
 	//TCC = 16
-	@Test(groups = "SCP")
+	@Test(groups = "SCP", priority = 3)
 	public void TS112779_Panel_de_control_Ingreso_Desde_salesforce() {
 		WebElement wNavBar = driver.findElement(By.cssSelector(".zen-inlineList.zen-tabMenu"));
 		List<WebElement> wMenu = wNavBar.findElements(By.tagName("li"));
@@ -310,7 +311,7 @@ private WebDriver driver;
 	
 	//------------------------------------------------------------------------------------------------- 
 	//TCC = 17
-	@Test(groups = "SCP")
+	@Test(groups = "SCP", priority = 3)
 	public void TS112567_Asignacin_de_Value_Drivers_a_Oportunidades_Related_value_drivers() {
 		SCP prueba= new SCP(driver);
 		TestBase tTB = new TestBase();
