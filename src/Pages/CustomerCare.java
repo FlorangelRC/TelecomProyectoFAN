@@ -1434,4 +1434,12 @@ public class CustomerCare extends BasePage {
 		}
 		sleep(5000);
 	}
+	
+	public WebElement botonConsultar() {
+		return driver.findElement(By.xpath("//div[@title='Consultar']/p"));
+	}
+	
+	public WebElement campoComentarios() {
+		return driver.findElement(By.xpath("//textarea[@id='Comment']"));
+	}
 }
