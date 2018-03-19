@@ -61,7 +61,7 @@ public class SCPContextoSectorial extends TestBase {
 	}
 	
 	
-	@Test(groups = "SCP")
+	@Test(groups = "SCP", priority=3)
 	public void TS112613_Cronograma_de_cuenta_Agregar_Vencimiento_Contrato_del_Servicio() {
 		scp.moveToElementOnAccAndClick("cuartoTitulo", 1);
 		List <WebElement> checkbox = driver.findElements(By.className("checkboxFiltroTimeLine"));
@@ -71,7 +71,7 @@ public class SCPContextoSectorial extends TestBase {
 		Assert.assertTrue(driver.findElement(By.className("tl-message-full")).isDisplayed());		
 	}
 	
-	@Test(groups = "SCP")
+	@Test(groups = "SCP", priority=3)
 	public void TS112626_Cronograma_de_cuenta_Filtros_Vencimiento_Contrato_del_Servicio(){
 		scp.moveToElementOnAccAndClick("cuartoTitulo", 1);
 		List <WebElement> checkbox = driver.findElements(By.className("checkboxFiltroTimeLine"));
@@ -81,7 +81,7 @@ public class SCPContextoSectorial extends TestBase {
 		Assert.assertTrue(driver.findElement(By.className("tl-timenav-slider-background")).isDisplayed());
 	}
 	
-	@Test(groups = "SCP")
+	@Test(groups = "SCP", priority=3)
 	public void TS112627_Cronograma_de_Cuenta_Ingreso_Desde_el_contacto() {
 		scp.moveToElementOnAccAndClick("cuartoTitulo", 1);
 		List <WebElement> checkbox = driver.findElements(By.className("checkboxFiltroTimeLine"));
@@ -91,7 +91,7 @@ public class SCPContextoSectorial extends TestBase {
 		Assert.assertTrue(driver.findElement(By.className("tl-message-full")).isDisplayed() && driver.findElement(By.className("tl-timenav-slider-background")).isDisplayed());
 	}
 	
-	@Test(groups = "SCP")
+	@Test(groups = "SCP", priority=3)
 	public void TS112594_Contexto_Sectorial_Ingreso_Desde_Acerca_del_cliente() {
 		scp.moveToElementOnAccAndClick("primerTitulo", 1);
 		Assert.assertTrue(driver.findElement(By.id("hidden-Con")).isDisplayed());
@@ -102,7 +102,7 @@ public class SCPContextoSectorial extends TestBase {
 		Assert.assertTrue(driver.findElement(By.id("hidden-Cas")).isDisplayed());
 	}
 	
-	@Test(groups = "SCP")
+	@Test(groups = "SCP", priority=3)
 	public void TS112595_Contexto_Sectorial_Ingreso_Desde_el_contacto() {
 		scp.moveToElementOnAccAndClick("primerTitulo", 1);		
 		Assert.assertTrue(driver.findElement(By.id("hidden-Con")).isDisplayed());
@@ -113,7 +113,7 @@ public class SCPContextoSectorial extends TestBase {
 		Assert.assertTrue(driver.findElement(By.id("hidden-Cas")).isDisplayed());
 	}
 	
-	@Test(groups = "SCP")
+	@Test(groups = "SCP", priority=3)
 	public void TS112633_Estrategia_de_Crecimiento_Ingreso_Desde_el_contacto() {
 		scp.moveToElementOnAccAndClick("tercerTitulo", 5);
 		boolean check=true;
@@ -132,7 +132,7 @@ public class SCPContextoSectorial extends TestBase {
 	    Assert.assertTrue(check);
 	}
 	
-	@Test(groups = "SCP")
+	@Test(groups = "SCP", priority=3)
 	public void TS112678_Hitos_Relevantes_Nuevo_Hito_Relevante() {
 		scp.moveToElementOnAccAndClick("segundoTitulo", 3);
 		WebElement element = driver.findElement(By.cssSelector(".data2Col.last")).findElement(By.cssSelector(".btn.btn-default.btn-sm"));
@@ -144,7 +144,7 @@ public class SCPContextoSectorial extends TestBase {
 		
 	}
 	
-	@Test(groups = "SCP")
+	@Test(groups = "SCP", priority=2)
 	public void TS112742_Negocio_del_Cliente_Exportar_a_Excel() {
 		scp.moveToElementOnAccAndClick("primerTitulo", 2);
 		String usuario = driver.findElement(By.cssSelector(".nav.navbar-nav.navbar-right")).findElement(By.tagName("a")).getText();
@@ -161,7 +161,7 @@ public class SCPContextoSectorial extends TestBase {
 		assertTrue(scp.isFileDownloaded(downloadPath, usuario), "Failed to download Expected document");
 	}
 	
-	@Test(groups = "SCP")
+	@Test(groups = "SCP", priority=2)
 	public void TS112744_Negocio_del_cliente_Ingreso_Desde_el_contacto() {
 		scp.moveToElementOnAccAndClick("primerTitulo", 2);
 		Assert.assertTrue(driver.findElement(By.id("hidden-descripcionCliente")).isDisplayed());
@@ -171,7 +171,7 @@ public class SCPContextoSectorial extends TestBase {
 		Assert.assertTrue(driver.findElement(By.id("hidden-csat")).isDisplayed());
 	}
 	
-	@Test(groups = "SCP")
+	@Test(groups = "SCP", priority=2)
 	public void TS112745_Negocio_del_Cliente_Principales_competidores_del_cliente() {
 		scp.moveToElementOnAccAndClick("primerTitulo", 2);
 		driver.findElement(By.id("hidden-mainCompetitors")).click();
@@ -179,7 +179,7 @@ public class SCPContextoSectorial extends TestBase {
 		Assert.assertTrue(driver.findElement(By.cssSelector(".hiddenTable.hidden-mainCompetitors")).isDisplayed());
 	}
 	
-	@Test(groups = "SCP")
+	@Test(groups = "SCP", priority=2)
 	public void TS112802_Share_of_Wallet_Exportar_a_Excel() {
 		scp.moveToElementOnAccAndClick("segundoTitulo", 1);
 		String usuario = driver.findElement(By.cssSelector(".nav.navbar-nav.navbar-right")).findElement(By.tagName("a")).getText();
@@ -196,7 +196,7 @@ public class SCPContextoSectorial extends TestBase {
 		assertTrue(scp.isFileDownloaded(downloadPath, usuario), "Failed to download Expected document");
 	}
 	
-	@Test(groups = "SCP")
+	@Test(groups = "SCP", priority=3)
 	public void TS112804_Share_of_Wallet_Ingreso_Desde_el_contacto() {
 		scp.moveToElementOnAccAndClick("segundoTitulo", 1);	
 		boolean check=true;
@@ -215,7 +215,7 @@ public class SCPContextoSectorial extends TestBase {
 	    Assert.assertTrue(check);
 	}
 	
-	@Test(groups = "SCP")
+	@Test(groups = "SCP", priority=3)
 	public void TS112703_Mosaico_de_Relacionamiento_General_Ingreso_Desde_el_contacto() {
 		scp.moveToElementOnAccAndClick("segundoTitulo", 4);
 		boolean check=true;
@@ -234,7 +234,7 @@ public class SCPContextoSectorial extends TestBase {
 	    Assert.assertTrue(check);
 	}
 	
-	@Test(groups = "SCP")  //No existe el boton Enviar
+	@Test(groups = "SCP", priority=3)  //No existe el boton Enviar
 	public void TS112720_Mosaico_de_Relacionamiento_por_Oportunidad_Enviar() {
 		scp.moveToElementOnAccAndClick("segundoTitulo", 4);
 		if (!driver.findElement(By.cssSelector(".btn.btnPrimary.publishersharebutton.btn.btn-default.btn-sm")).isDisplayed());{
@@ -242,7 +242,7 @@ public class SCPContextoSectorial extends TestBase {
 		}
 	}
 	
-	@Test(groups = "SCP")
+	@Test(groups = "SCP", priority=3)
 	public void TS112721_Mosaico_de_Relacionamiento_por_Oportunidad_Ingreso_Desde_el_contacto() {
 		scp.moveToElementOnAccAndClick("tercerTitulo", 3);
 		List<WebElement> element = driver.findElements(By.cssSelector(".btn.btn-default.btn-sm"));
@@ -267,7 +267,7 @@ public class SCPContextoSectorial extends TestBase {
 	    Assert.assertTrue(check);
 	}
 	
-	@Test(groups = "SCP")
+	@Test(groups = "SCP", priority=3)
 	public void TS112753_Opportunity_Snapshot_Ingreso_Desde_el_contacto() {
 		scp.moveToElementOnAccAndClick("tercerTitulo", 4);
 		List<WebElement> element = driver.findElements(By.cssSelector(".btn.btn-default.btn-sm"));
@@ -292,7 +292,7 @@ public class SCPContextoSectorial extends TestBase {
 		Assert.assertTrue(check);	  
 	}
 	
-	@Test(groups = "SCP")
+	@Test(groups = "SCP", priority=3)
 	public void TS112754_Opportunity_Snapshot_Ir_al_Snapshot() {
 		scp.moveToElementOnAccAndClick("tercerTitulo", 4);
 		List <WebElement> element = driver.findElements(By.cssSelector(".btn.btn-default.btn-sm"));
@@ -307,7 +307,7 @@ public class SCPContextoSectorial extends TestBase {
 		Assert.assertTrue(oportunidad.getText().contains("Oportunidad: opAut"));
 	}
 	
-	@Test(groups = "SCP")
+	@Test(groups = "SCP", priority=3)
 	public void TS112756_Opportunity_Snapshot_Nombre_de_la_oportunidad() {
 		scp.moveToElementOnAccAndClick("tercerTitulo", 4);
 		driver.findElement(By.xpath("//*[@id=\"mainTable\"]/tbody/tr[1]/td[2]/a")).click();
@@ -315,7 +315,7 @@ public class SCPContextoSectorial extends TestBase {
 		Assert.assertTrue(driver.findElement(By.id("bodyCell")).isDisplayed());
 	}
 	
-	@Test(groups = "SCP")
+	@Test(groups = "SCP", priority=3)
 	public void TS112763_Organigrama_y_mapa_de_influencia_Descargar_Imagen() {
 		scp.moveToElementOnAccAndClick("primerTitulo", 3);
 		List<WebElement> element = driver.findElements(By.cssSelector(".btn.btn-default.btn-sm"));
@@ -335,13 +335,13 @@ public class SCPContextoSectorial extends TestBase {
 		}	
 	}
 	
-	@Test(groups = "SCP")
+	@Test(groups = "SCP", priority=3)
 	public void TS112766_Organigrama_y_mapa_de_Influencia_Ingreso_Desde_el_contacto() {
 		scp.moveToElementOnAccAndClick("primerTitulo", 3);
 		Assert.assertTrue(driver.findElement(By.className("jOrgChart")).isDisplayed());	
 	}
 	
-	@Test(groups = "SCP")
+	@Test(groups = "SCP", priority=3)
 	public void TS112765_Organigrama_y_mapa_de_influencia_Guardar_cambios() {
 		scp.moveToElementOnAccAndClick("primerTitulo", 3);
 		List<WebElement> organigrama = driver.findElements(By.cssSelector(".btn.btn-default.btn-sm"));
@@ -361,7 +361,7 @@ public class SCPContextoSectorial extends TestBase {
 		}	
 	}
 	
-	@Test(groups = "SCP")
+	@Test(groups = "SCP", priority=3)
 	public void TS112764_Organigrama_y_mapa_de_influencia_Guardar() {
 		scp.moveToElementOnAccAndClick("primerTitulo", 3);
 		List<WebElement> organigrama = driver.findElements(By.cssSelector(".btn.btn-default.btn-sm"));
@@ -381,7 +381,7 @@ public class SCPContextoSectorial extends TestBase {
 		}
 	}
 	
-	@Test(groups = "SCP")
+	@Test(groups = "SCP", priority=4)
 	public void TS112592_Contexto_Sectorial_Exportar_a_Excel() {
 		scp.moveToElementOnAccAndClick("primerTitulo", 1);
 		String usuario = driver.findElement(By.cssSelector(".nav.navbar-nav.navbar-right")).findElement(By.tagName("a")).getText();
@@ -398,7 +398,7 @@ public class SCPContextoSectorial extends TestBase {
 		assertTrue(scp.isFileDownloaded(downloadPath, usuario), "Failed to download Expected document");
 	}
 	
-	@Test(groups = "SCP")
+	@Test(groups = "SCP", priority=2)
 	public void TS112751_Opportunity_Snapshot_Chatter_contextualizado_Leer_comentario_escrito_con_otro_usuario() {
 		scp.Desloguear_Loguear("fabiana");
 		scp.Desloguear_Loguear_Comentar("fabiana", "maximiliano", "comentario opportunity", "tercerTitulo", 4);
@@ -411,7 +411,7 @@ public class SCPContextoSectorial extends TestBase {
 		scp.validarcomentarioajeno("comentario opportunity");
 	}
 	
-	@Test(groups = "SCP")
+	@Test(groups = "SCP",priority=3)
 	public void TS112755_Opportunity_Snapshot_Ir_al_Snapshot_Ingreso() {
 		scp.moveToElementOnAccAndClick("tercerTitulo", 4);
 		List <WebElement> snapshot = driver.findElements(By.cssSelector(".btn.btn-default.btn-sm"));
@@ -426,7 +426,7 @@ public class SCPContextoSectorial extends TestBase {
 		Assert.assertTrue(element.get(5).getText().contains("Criterios de Decisión por Oportunidad"));		
 	}
 	
-	@Test(groups = "SCP")
+	@Test(groups = "SCP", priority=3)
 	public void TS112757_Opportunity_Snapshot_Search() {
 		scp.moveToElementOnAccAndClick("tercerTitulo", 4);
 		String a = "oportunidad";
@@ -435,7 +435,7 @@ public class SCPContextoSectorial extends TestBase {
 		Assert.assertTrue(element.getText().toLowerCase().contains(a));
 	}
 	
-	@Test(groups = "SCP")
+	@Test(groups = "SCP", priority=3)
 	public void TS112759_Opportunity_Snapshot_Ver_video() {
 		scp.moveToElementOnAccAndClick("tercerTitulo", 4);
 		driver.findElement(By.cssSelector(".btn.btn-xs.btn-default")).click();
@@ -447,7 +447,7 @@ public class SCPContextoSectorial extends TestBase {
 	    driver.switchTo().window(tabs2.get(0));
 	}
 	
-	@Test(groups = "SCP")
+	@Test(groups = "SCP", priority=2)
 	public void TS112762_Organigrama_y_mapa_de_influencia_Chatter_contextualizado_Leer_comentario_escrito_con_otro_usuario() {
 		scp.Desloguear_Loguear("fabiana");
 		scp.Desloguear_Loguear_Comentar("fabiana", "maximiliano", "comentario opportunity", "primerTitulo", 3);
@@ -460,7 +460,7 @@ public class SCPContextoSectorial extends TestBase {
 		scp.validarcomentarioajeno("comentario opportunity");
 	}
 	
-	@Test(groups = "SCP")
+	@Test(groups = "SCP", priority=3)
 	public void TS112768_Organigrama_y_mapa_de_influencia_Search() {
 		scp.moveToElementOnAccAndClick("primerTitulo", 3);
 		String a = "celina";
@@ -469,7 +469,7 @@ public class SCPContextoSectorial extends TestBase {
 		Assert.assertTrue(driver.findElement(By.className("odd")).getText().toLowerCase().contains(a));
 	}
 	
-	@Test(groups = "SCP")
+	@Test(groups = "SCP", priority=3)
 	public void TS112769_Organigrama_y_mapa_de_influencia_Ver_Video() {
 		scp.moveToElementOnAccAndClick("primerTitulo", 3);
 		driver.findElement(By.cssSelector(".btn.btn-xs.btn-default")).click();
@@ -481,14 +481,14 @@ public class SCPContextoSectorial extends TestBase {
 	    driver.switchTo().window(tabs2.get(0));		
 	}
 	
-	@Test(groups = "SCP")
+	@Test(groups = "SCP", priority=3)
 	public void TS112771_Organigrama_y_mapa_de_influencia_zoom() {
 		scp.moveToElementOnAccAndClick("primerTitulo", 3);
 		Assert.assertTrue(driver.findElement(By.id("zoomOut")).isDisplayed());
 		Assert.assertTrue(driver.findElement(By.id("zoomIn")).isDisplayed());
 	}
 	
-	@Test(groups = "SCP")
+	@Test(groups = "SCP", priority=4)
 	public void TS112588_Contexto_Sectorial_Chatter_contextualizado_Leer_comentario_escrito_con_otro_usuario() {
 		scp.Desloguear_Loguear("fabiana");
 		scp.Desloguear_Loguear_Comentar("fabiana", "maximiliano", "comentario opportunity", "primerTitulo", 1);
@@ -501,7 +501,7 @@ public class SCPContextoSectorial extends TestBase {
 		scp.validarcomentarioajeno("comentario opportunity");
 	}
 	
-	@Test(groups = "SCP")
+	@Test(groups = "SCP", priority=2)
 	public void TS112801_Share_of_Wallet_Chatter_contextualizado_Leer_comentario_escrito_con_otro_usuario() {
 		scp.Desloguear_Loguear("fabiana");
 		scp.Desloguear_Loguear_Comentar("fabiana", "maximiliano", "comentario opportunity", "segundoTitulo", 1);
@@ -514,7 +514,7 @@ public class SCPContextoSectorial extends TestBase {
 		scp.validarcomentarioajeno("comentario opportunity");
 	}
 	
-	@Test(groups = "SCP")
+	@Test(groups = "SCP", priority=3)
 	public void TS112805_Share_of_Wallet_Ver_Video() {
 		scp.moveToElementOnAccAndClick("segundoTitulo", 1);
 		driver.findElement(By.cssSelector(".btn.btn-xs.btn-default")).click();
@@ -526,7 +526,7 @@ public class SCPContextoSectorial extends TestBase {
 	    driver.switchTo().window(tabs2.get(0));
 	}
 	
-	@Test(groups = "SCP")
+	@Test(groups = "SCP", priority=3)
 	public void TS112803_Share_of_Wallet_Guardar() {
 		scp.moveToElementOnAccAndClick("segundoTitulo", 1);
 		Actions action = new Actions(driver);
@@ -554,7 +554,7 @@ public class SCPContextoSectorial extends TestBase {
 		}
 	}
 	
-	@Test(groups = "SCP")
+	@Test(groups = "SCP", priority=2)
 	public void TS112748_Negocio_del_Cliente_Ver_Video() {
 		scp.moveToElementOnAccAndClick("primerTitulo", 2);
 		driver.findElement(By.cssSelector(".btn.btn-xs.btn-default")).click();
@@ -566,7 +566,7 @@ public class SCPContextoSectorial extends TestBase {
 	    driver.switchTo().window(tabs2.get(0));
 	}
 	
-	@Test(groups = "SCP")
+	@Test(groups = "SCP", priority=3)
 	public void TS112681_Hitos_Relevantes_Ver_Video() {
 		scp.moveToElementOnAccAndClick("segundoTitulo", 3);
 		driver.findElement(By.cssSelector(".btn.btn-xs.btn-default")).click();
@@ -578,7 +578,7 @@ public class SCPContextoSectorial extends TestBase {
 	    driver.switchTo().window(tabs2.get(0));
 	}
 	
-	@Test(groups = "SCP")
+	@Test(groups = "SCP", priority=3)
 	public void TS112679_Hitos_Relevantes_Nuevo_Hito_Relevante_Agregar() {
 		scp.moveToElementOnAccAndClick("segundoTitulo", 3);
 		List <WebElement> boton = driver.findElements(By.cssSelector(".btn.btn-default.btn-sm"));
@@ -603,7 +603,7 @@ public class SCPContextoSectorial extends TestBase {
 		Assert.assertTrue(b.get(1).getText().contains(c));
 	}
 	
-	@Test(groups = "SCP")
+	@Test(groups = "SCP", priority=3)
 	public void TS112680_Hitos_Relevantes_Nuevo_Hito_Relevante_Cancelar() {
 		scp.moveToElementOnAccAndClick("segundoTitulo", 3);
 		List <WebElement> boton = driver.findElements(By.cssSelector(".btn.btn-default.btn-sm"));
@@ -628,7 +628,7 @@ public class SCPContextoSectorial extends TestBase {
 		Assert.assertTrue(!(b.get(1).getText().contains(c)));
 	}
 
-	@Test(groups = "SCP")
+	@Test(groups = "SCP", priority=3)
 	public void TS112677_Hitos_Relevantes_Ingreso_Desde_el_contacto() {
 		scp.moveToElementOnAccAndClick("segundoTitulo", 3);
 		boolean check=true;
@@ -649,7 +649,7 @@ public class SCPContextoSectorial extends TestBase {
 	    
 	}
 	
-	@Test(groups = "SCP")
+	@Test(groups = "SCP", priority=3)
 	public void TS112750_Opportunity_Snapshot_Chatter_contextualizado_Escribir_comentario() {
 		scp.moveToElementOnAccAndClick("tercerTitulo", 4);
 		String a = "comentario de opportunity snapshot";
@@ -657,7 +657,7 @@ public class SCPContextoSectorial extends TestBase {
 		scp.validarcomentario(a);
 	}
 	
-	@Test(groups = "SCP")  //No existe el boton Enviar
+	@Test(groups = "SCP", priority=3)  //No existe el boton Enviar
 	public void TS112752_Opportunity_Snapshot_enviar() {
 		scp.moveToElementOnAccAndClick("tercerTitulo", 4);
 		WebElement element = driver.findElement(By.name("j_id0:j_id111:j_id112:FastTaskForm:j_id117"));
@@ -668,7 +668,7 @@ public class SCPContextoSectorial extends TestBase {
 		Assert.assertTrue(!(a.equals(b)));
 	}
 	
-	@Test(groups = "SCP")
+	@Test(groups = "SCP", priority=3)
 	public void TS112800_Share_of_Wallet_Chatter_contextualizado_Escribir_comentario() {
 		scp.moveToElementOnAccAndClick("segundoTitulo", 1);
 		String a = "comentario de share of wallet";
@@ -676,7 +676,7 @@ public class SCPContextoSectorial extends TestBase {
 		scp.validarcomentario(a);
 	}
 	
-	@Test(groups = "SCP")
+	@Test(groups = "SCP", priority=3)
 	public void TS112761_Organigrama_y_mapa_de_influencia_Chatter_contextualizado_Escribir_comentario() {
 		scp.moveToElementOnAccAndClick("primerTitulo", 3);
 		String a = "comentario";
@@ -684,7 +684,7 @@ public class SCPContextoSectorial extends TestBase {
 		scp.validarcomentario(a);
 	}
 	
-	@Test(groups = "SCP")
+	@Test(groups = "SCP", priority=3)
 	public void TS112674_Hitos_Relevantes_Chatter_contextualizado_Escribir_comentario() {
 		scp.moveToElementOnAccAndClick("segundoTitulo", 3);
 		String a = "comentario de hitos relevantes";
@@ -692,7 +692,7 @@ public class SCPContextoSectorial extends TestBase {
 		scp.validarcomentario(a);
 	}
 	
-	@Test(groups = "SCP")
+	@Test(groups = "SCP", priority=3)
 	public void TS112628_Estrategia_de_Crecimiento_Agregar_Negocio_Potencial() {
 		scp.moveToElementOnAccAndClick("tercerTitulo", 5);
 		List <WebElement> boton = driver.findElements(By.cssSelector(".btn.btn-default.btn-sm"));
@@ -710,7 +710,7 @@ public class SCPContextoSectorial extends TestBase {
 		Assert.assertTrue(tabla.get(1).getText().contains("nuevo negocio de prueba"));
 	}
 	
-	@Test(groups = "SCP")
+	@Test(groups = "SCP", priority=2)
 	public void TS112629_Estrategia_de_Crecimiento_Chatter_contextualizado_Escribir_comentario() {
 		scp.moveToElementOnAccAndClick("tercerTitulo", 5);
 		String a = "comentario de estrategia de crecimiento";
@@ -718,7 +718,7 @@ public class SCPContextoSectorial extends TestBase {
 		scp.validarcomentario(a);
 	}
 
-	@Test(groups = "SCP")
+	@Test(groups = "SCP", priority=3)
 	public void TS112700_Mosaico_de_Relacionamiento_General_Descargar_imagen() {
 		scp.moveToElementOnAccAndClick("segundoTitulo", 4);
 		List <WebElement> element = driver.findElements(By.cssSelector(".btn.btn-default.btn-sm"));
@@ -739,7 +739,7 @@ public class SCPContextoSectorial extends TestBase {
 		Assert.assertTrue(a);
 	}
 	
-	//@Test(groups = "SCP")
+	@Test(groups = "SCP", priority=2)
 	public void TS112716_Mosaico_de_Relacionamiento_General_Ver_Video() {
 		scp.moveToElementOnAccAndClick("segundoTitulo", 4);
 		driver.findElement(By.cssSelector(".btn.btn-xs.btn-default")).click();
@@ -756,7 +756,7 @@ public class SCPContextoSectorial extends TestBase {
 	    driver.switchTo().window(tabs2.get(0));
 	}
 	
-	@Test(groups = "SCP")
+	@Test(groups = "SCP", priority=3)
 	public void TS112707_Mosaico_de_Relacionamiento_General_Ordenar_por_Actitud() {
 		scp.moveToElementOnAccAndClick("segundoTitulo", 4);
 		List <WebElement> element = driver.findElements(By.cssSelector(".btn.btn-default.btn-sm"));
@@ -771,7 +771,7 @@ public class SCPContextoSectorial extends TestBase {
 		Assert.assertTrue(driver.findElement(By.cssSelector(".tablaMosaico.tablaTecnico")).isDisplayed());
 	}
 	
-	@Test(groups = "SCP")
+	@Test(groups = "SCP", priority=3)
 	public void TS112711_Mosaico_de_Relacionamiento_General_Ordenar_por_ROL() {
 		scp.moveToElementOnAccAndClick("segundoTitulo", 4);
 		List <WebElement> element = driver.findElements(By.cssSelector(".btn.btn-default.btn-sm"));
@@ -786,7 +786,7 @@ public class SCPContextoSectorial extends TestBase {
 		Assert.assertTrue(a.get(0).isDisplayed() && a.get(1).isDisplayed());
 	}
 	
-	@Test(groups = "SCP")
+	@Test(groups = "SCP", priority=3)
 	public void TS112715_Mosaico_de_Relacionamiento_General_Ver_organigrama() {
 		scp.moveToElementOnAccAndClick("segundoTitulo", 4);
 		List <WebElement> a = driver.findElements(By.cssSelector(".btn.btn-default.btn-sm"));
@@ -813,13 +813,13 @@ public class SCPContextoSectorial extends TestBase {
 	    driver.switchTo().window(tabs2.get(0));
 	}
 	
-	@Test(groups = "SCP")
+	@Test(groups = "SCP", priority=3)
 	public void TS112758_Opportunity_Snapshot_Triangulo_Ordenador() throws ParseException {
 		scp.moveToElementOnAccAndClick("tercerTitulo", 4);
 		Assert.assertTrue(scp.Triangulo_Ordenador_Validador(driver, By.id("mainTable_wrapper"), 5, 2));	
 	}
 	
-	@Test(groups = "SCP")
+	@Test(groups = "SCP", priority=3)
 	public void TS112561_Asignación_de_Value_Drivers_a_Oportunidades_Exportar_a_Excel() {
 		scp.moveToElementOnAccAndClick("tercerTitulo", 1);
 		String usuario = driver.findElement(By.cssSelector(".nav.navbar-nav.navbar-right")).findElement(By.tagName("a")).getText();
@@ -836,7 +836,7 @@ public class SCPContextoSectorial extends TestBase {
 		assertTrue(scp.isFileDownloaded(downloadPath, usuario), "Failed to download Expected document");
 	}
 	
-	@Test(groups = "SCP")
+	@Test(groups = "SCP", priority=2)
 	public void TS112686_Matriz_de_Criterios_de_Decisión_Exportar_a_Excel() {
 		scp.moveToElementOnAccAndClick("tercerTitulo", 2);
 		List <WebElement> element = driver.findElements(By.cssSelector(".btn.btn-default.btn-sm"));
@@ -861,7 +861,7 @@ public class SCPContextoSectorial extends TestBase {
 		assertTrue(scp.isFileDownloaded(downloadPath, usuario), "Failed to download Expected document");		
 	}
 	
-	@Test(groups = "SCP")
+	@Test(groups = "SCP", priority=3)
 	public void TS112687_Matriz_de_Criterios_de_Decisión_Guardar() {
 		scp.moveToElementOnAccAndClick("tercerTitulo", 2);
 		List <WebElement> element = driver.findElements(By.cssSelector(".btn.btn-default.btn-sm"));
@@ -884,7 +884,7 @@ public class SCPContextoSectorial extends TestBase {
 		Assert.assertTrue(a);
 	}
 	
-	@Test(groups = "SCP")
+	@Test(groups = "SCP",priority=3)
 	public void TS112688_Matriz_de_Criterios_de_Decisión_Ir_al_mosaico() {
 		scp.moveToElementOnAccAndClick("tercerTitulo", 2);
 		List <WebElement> element = driver.findElements(By.cssSelector(".btn.btn-default.btn-sm"));
@@ -906,7 +906,7 @@ public class SCPContextoSectorial extends TestBase {
 		Assert.assertTrue(driver.findElement(By.className("panel-heading")).getText().contains("Mosaico de Relacionamiento"));
 	}
 	
-	@Test(groups = "SCP")
+	@Test(groups = "SCP", priority=3)
 	public void TS112689_Matriz_de_Criterios_de_Decisión_Ir_al_Snapshot() {
 		scp.moveToElementOnAccAndClick("tercerTitulo", 2);
 		List <WebElement> element = driver.findElements(By.cssSelector(".btn.btn-default.btn-sm"));
@@ -928,7 +928,7 @@ public class SCPContextoSectorial extends TestBase {
 		Assert.assertTrue(driver.findElement(By.className("panel-heading")).getText().contains("Opportunity Snapshot"));
 	}
 	
-	@Test(groups = "SCP")
+	@Test(groups = "SCP", priority=3)
 	public void TS112690_Matriz_de_Criterios_de_Decisión_Ver_Gráficos_de_Criterio() {
 		scp.moveToElementOnAccAndClick("tercerTitulo", 2);
 		List <WebElement> element = driver.findElements(By.cssSelector(".btn.btn-default.btn-sm"));
@@ -957,7 +957,7 @@ public class SCPContextoSectorial extends TestBase {
 		Assert.assertTrue(a);	
 	}
 	
-	@Test(groups = "SCP")
+	@Test(groups = "SCP", priority=3)
 	public void TS112691_Matriz_de_Criterios_de_Decisión_Ver_Video() {
 		scp.moveToElementOnAccAndClick("tercerTitulo", 2);
 		driver.findElement(By.cssSelector(".btn.btn-xs.btn-default")).click();
@@ -969,7 +969,7 @@ public class SCPContextoSectorial extends TestBase {
 	    driver.switchTo().window(tabs2.get(0));
 	}
 	
-	@Test(groups = "SCP")  //Rompe porque no estan las columnas "Posición Competitiva de la Competencia" y "Enfoque", dicen "Competidores competitivos de pie" y "Approach"
+	@Test(groups = "SCP", priority=2)  //Rompe porque no estan las columnas "Posición Competitiva de la Competencia" y "Enfoque", dicen "Competidores competitivos de pie" y "Approach"
 	public void TS112692_Matriz_de_Criterios_de_desicion_Ingreso_Desde_el_contacto() {
 		scp.moveToElementOnAccAndClick("tercerTitulo", 2);
 		List <WebElement> element = driver.findElements(By.cssSelector(".btn.btn-default.btn-sm"));
@@ -1005,7 +1005,7 @@ public class SCPContextoSectorial extends TestBase {
 	    Assert.assertTrue(b && c && check);
 	}
 
-	@Test(groups = "SCP")
+	@Test(groups = "SCP", priority=3)
 	public void TS112685_Matriz_de_Criterios_de_desicion_Eliminar() {
 		scp.moveToElementOnAccAndClick("tercerTitulo", 2);
 		List <WebElement> element = driver.findElements(By.cssSelector(".btn.btn-default.btn-sm"));
@@ -1027,7 +1027,7 @@ public class SCPContextoSectorial extends TestBase {
 		Assert.assertTrue(a);
 	}
 	
-	@Test(groups = "SCP")
+	@Test(groups = "SCP", priority=3)
 	public void TS112682_Matriz_de_Criterios_de_Decisión_Agregar_Criterio() {
 		scp.moveToElementOnAccAndClick("tercerTitulo", 2);
 		List <WebElement> element = driver.findElements(By.cssSelector(".btn.btn-default.btn-sm"));
