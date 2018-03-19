@@ -793,4 +793,12 @@ Assert.assertTrue(acc&&nmbre&&pntf&&pntd);
 		}
 		return false;
 	}
+	
+	
+	public void EjecutarInterfazBatch() {
+		Runtime aplicacion = Runtime.getRuntime(); 
+        try{aplicacion.exec("cmd.exe /K start C:\\CargarDatosSCP.bat"); 
+        	System.out.println("Carga de Datos en Interfaces Batch Realizada");}
+        catch(Exception e){System.out.println(e);}
+	}
 }
