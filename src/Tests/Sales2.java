@@ -35,12 +35,12 @@ public class Sales2 extends TestBase{
 	String localidad="BASAIL";
 	protected  WebDriverWait wait;
 	
-	@AfterClass(alwaysRun=true)
+	//@AfterClass(alwaysRun=true)
 	public void tearDown() {
 		driver.quit();
 	}
 	
-	@AfterMethod(alwaysRun=true)
+	//@AfterMethod(alwaysRun=true)
 	public void deslogin() {
 		sleep(3000);
 		driver.get("https://crm--sit.cs14.my.salesforce.com/home/home.jsp?tsid=02u41000000QWha/");
@@ -679,8 +679,7 @@ public class Sales2 extends TestBase{
 		SB.BuscarCuenta(DNI, "34073329");
 		SB.acciondecontacto("catalogo");
 		sleep(15000);
-		//assertTrue(
-		System.out.println(driver.findElement(By.cssSelector(".slds-col.taChangeDeliveryMethod.slds-text-body--small.slds-m-left--large")).findElement(By.tagName("span")).findElement(By.tagName("strong")).getText());//.contains("Presencial"));
+		assertTrue(driver.findElement(By.cssSelector(".slds-col.taChangeDeliveryMethod.slds-text-body--small.slds-m-left--large")).findElement(By.tagName("span")).findElement(By.tagName("strong")).getText().equals("Presencial"));
 	}
 	
 	 @Test(groups = {"Sales", "AltaDeLinea","Ola1"})
