@@ -33,7 +33,8 @@ public class SCPParquedeServicios extends TestBase{
 	private WebDriver driver;
 	String categoria = "Servicio automatizado";
 	String servicio = "Prueba automatizada";
-	String color = "Rojo";
+	String color = "Red";
+	private static String downloadPath = "C:\\Users\\Florangel\\Downloads";
 	
 	@BeforeClass(groups= "SCP")
 	public void init() throws Exception
@@ -74,20 +75,20 @@ public class SCPParquedeServicios extends TestBase{
 		}
 	}
 	
-	@AfterMethod(groups= "SCP")
+	//@AfterMethod(groups= "SCP")
 	public void after(){
 		driver.switchTo().defaultContent();
 		((JavascriptExecutor)driver).executeScript("window.scrollTo(0,"+driver.findElement(By.id("home_Tab")).getLocation().y+")");
 		driver.findElement(By.id("home_Tab")).click();
 	}
 	
-   @AfterClass(groups= "SCP")
+   //@AfterClass(groups= "SCP")
 	public void tearDown() {
 		driver.quit();
 		sleep(4000);
 	}
 	
-	@Test(groups= "SCP")
+	@Test(groups= "SCP", priority=6)
 	public void TS112781_Parque_de_Servicios_Agregar_Nuevo_Servicio(){
 	
 		SCP page = new SCP(driver);
@@ -99,7 +100,7 @@ public class SCPParquedeServicios extends TestBase{
 		
 	}
 	
-	@Test(groups= "SCP")
+	@Test(groups= "SCP", priority=6)
 	public void TS112782_Parque_de_Servicios_Borrar(){
 	
 		SCP page = new SCP(driver);
@@ -112,17 +113,27 @@ public class SCPParquedeServicios extends TestBase{
 	}
 	
 		
-	@Test(groups= "SCP")
+	@Test(groups= "SCP", priority=6)
 	public void TS112785_Parque_de_Servicios_Exportar_a_Excel(){
-		
 		SCP page = new SCP(driver);
 		page.clickOnTabByName("cuentas");
 		page.clickOnFirstAccRe();
 		try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 		page.moveToElementOnAccAndClick("segundoTitulo",2);
-		page.servicioexportarexcel();
+		 String usuario = driver.findElements(By.cssSelector(".nav.navbar-nav.navbar-right")).get(1).findElement(By.tagName("a")).getText();  
+	      List<WebElement> servicioList = driver.findElements(By.cssSelector(".btn.btn-default.btn-sm"));  
+	      for (WebElement UnS : servicioList) {  
+	        if (UnS.getText().toLowerCase().contains("export to excel")||UnS.getText().toLowerCase().contains("exportar a excel")) {  
+	          UnS.click();  
+	          break;  
+	        }  
+	      }  
+	      try {Thread.sleep(8000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}  
+	      usuario=usuario.replace(' ', '_');  
+	      usuario=usuario.concat("-Plan_de_Acci\u00f3n.xls");  
+	      assertTrue(page.isFileDownloaded(downloadPath, usuario), "Failed to download Expected document");  
 	}
-		@Test(groups= "SCP")
+		@Test(groups= "SCP", priority=6)
 		public void TS112786_Parque_de_Servicios_Guardar(){
 			SCP page = new SCP(driver);
 			page.clickOnTabByName("cuentas");
@@ -132,7 +143,7 @@ public class SCPParquedeServicios extends TestBase{
 			page.servicioguardar();
 		}
 		
-	@Test(groups= "SCP")
+	@Test(groups= "SCP", priority=6)
 	public void TS112783_Parque_de_Servicios_Chatter_contextualizado_Escribir_comentario(){
 			SCP page = new SCP(driver);
 			page.clickOnTabByName("cuentas");
@@ -142,7 +153,7 @@ public class SCPParquedeServicios extends TestBase{
 			page.comentarycompartir("Esto es un comentario");
 			page.validarcomentario("Esto es un comentario");
 	}
-	@Test(groups= "SCP")
+	@Test(groups= "SCP", priority=6)
 	public void TS112789_Plan_de_Accion_Chatter_contextualizado_Escribir_comentario(){
 		SCP page = new SCP(driver);
 		page.clickOnTabByName("cuentas");
@@ -153,7 +164,7 @@ public class SCPParquedeServicios extends TestBase{
 		page.validarcomentario("Esto es un comentario");
 	}
 	
-	@Test(groups= "SCP")
+	@Test(groups= "SCP", priority=3)
 	public void TS112727_Negocio_del_cliente_Chatter_contextualizado_Escribir_comentario(){
 		SCP page = new SCP(driver);
 		page.clickOnTabByName("cuentas");
@@ -164,7 +175,7 @@ public class SCPParquedeServicios extends TestBase{
 		page.validarcomentario("Esto es un comentario");
 	}
 	
-	@Test(groups= "SCP")
+	@Test(groups= "SCP", priority=3)
 	public void TS112587_Contexto_sectorial_Chatter_contextualizado_Escribir_comentario(){
 		SCP page = new SCP(driver);
 		page.clickOnTabByName("cuentas");
@@ -175,7 +186,7 @@ public class SCPParquedeServicios extends TestBase{
 		page.validarcomentario("Esto es un comentario");
 	}
 	
-	@Test(groups= "SCP")
+	@Test(groups= "SCP", priority=3)
 	public void TS112718_Mosaico_de_Relacionamiento_por_Oportunidad_Chatter_contextualizado_Escribir_comentario(){
 		SCP page = new SCP(driver);
 		page.clickOnTabByName("cuentas");
@@ -186,7 +197,7 @@ public class SCPParquedeServicios extends TestBase{
 		page.validarcomentario("Esto es un comentario");
 	}
 	
-	@Test(groups= "SCP")
+	@Test(groups= "SCP", priority=3)
 	public void TS112683_Matriz_de_Criterios_de_Decision_Chatter_contextualizado_Escribir_comentario(){
 		SCP page = new SCP(driver);
 		page.clickOnTabByName("cuentas");
@@ -196,7 +207,7 @@ public class SCPParquedeServicios extends TestBase{
 		page.comentarycompartir("Esto es un comentario");
 		page.validarcomentario("Esto es un comentario");
 	}
-	@Test(groups= "SCP")
+	@Test(groups= "SCP", priority=3)
 	public void TS112614_Cronograma_de_Cuenta_Chatter_contextualizado_Escribir_comentario(){
 		SCP page = new SCP(driver);
 		page.clickOnTabByName("cuentas");
@@ -207,7 +218,7 @@ public class SCPParquedeServicios extends TestBase{
 		page.validarcomentario("Esto es un comentario");
 	}
 	
-	@Test(groups= "SCP")
+	@Test(groups= "SCP", priority=3)
 	public void TS112698_Mosaico_de_Relacionamiento_General_Chatter_contextualizado_Escribir_comentario(){
 		SCP page = new SCP(driver);
 		page.clickOnTabByName("cuentas");
@@ -218,12 +229,13 @@ public class SCPParquedeServicios extends TestBase{
 		page.validarcomentario("Esto es un comentario");
 	}
 	
-	@Test(groups = "SCP") 
+	@Test(groups = "SCP", priority=3) 
     public void TS112630_Estrategia_de_Crecimiento_Chatter_Contextualizado_Leer_Comentario_Escrito_Con_Otro_Usuario() { 
       SCP pcp = new SCP(driver); 
       java.util.Date fecha = new Date();
       System.out.println (fecha);
-      pcp.Desloguear_Loguear_Comentar("fabiana", "admin", fecha.toString(), "tercerTitulo", 5); 
+      pcp.Desloguear_Loguear("isabel");
+	  pcp.Desloguear_Loguear_Comentar("persimos", "isabel", fecha.toString(), "cuartoTitulo", 2);    
       try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
    pcp.clickOnTabByName("cuentas");
    try {Thread.sleep(7000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
@@ -232,14 +244,16 @@ public class SCPParquedeServicios extends TestBase{
    try {Thread.sleep(10000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
    pcp.moveToElementOnAccAndClick("tercerTitulo", 5);
       pcp.validarcomentarioajeno(fecha.toString());
+      pcp.Desloguear_Loguear("permisos");
  }
 	
-	@Test(groups = "SCP") 
+	@Test(groups = "SCP", priority=3) 
     public void TS112615_Cronograma_de_Cuenta_Chatter_Contextualizado_Leer_Comentario_Escrito_Con_Otro_Usuario() { 
       SCP pcp = new SCP(driver); 
       java.util.Date fecha = new Date();
       System.out.println (fecha);
-      pcp.Desloguear_Loguear_Comentar("fabiana", "admin", fecha.toString(), "cuartoTitulo", 1); 
+      pcp.Desloguear_Loguear("isabel");
+	  pcp.Desloguear_Loguear_Comentar("persimos", "isabel", fecha.toString(), "cuartoTitulo", 2);    
       try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
    pcp.clickOnTabByName("cuentas");
    try {Thread.sleep(7000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
@@ -248,15 +262,17 @@ public class SCPParquedeServicios extends TestBase{
    try {Thread.sleep(10000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
    pcp.moveToElementOnAccAndClick("cuartoTitulo", 1);
       pcp.validarcomentarioajeno(fecha.toString());
+      pcp.Desloguear_Loguear("permisos");
  }
 	
-	@Test(groups = "SCP") 
+	@Test(groups = "SCP", priority=3) 
     public void TS112675_Hitos_Relevantes_Chatter_Contextualizado_Leer_Comentario_Escrito_Con_Otro_Usuario() { 
       SCP pcp = new SCP(driver); 
       java.util.Date fecha = new Date();
       System.out.println (fecha);
-      pcp.Desloguear_Loguear_Comentar("fabiana", "admin", fecha.toString(), "segundoTitulo", 3); 
-      try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+      pcp.Desloguear_Loguear("isabel");
+	    pcp.Desloguear_Loguear_Comentar("persimos", "isabel", fecha.toString(), "cuartoTitulo", 2); 
+	     try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
    pcp.clickOnTabByName("cuentas");
    try {Thread.sleep(7000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
    try {Thread.sleep(7000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
@@ -264,15 +280,17 @@ public class SCPParquedeServicios extends TestBase{
    try {Thread.sleep(10000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
    pcp.moveToElementOnAccAndClick("segundoTitulo", 3);
       pcp.validarcomentarioajeno(fecha.toString());
+      pcp.Desloguear_Loguear("permisos");
  }
 	
-	@Test(groups = "SCP") 
+	@Test(groups = "SCP", priority=3) 
     public void TS112684_Matriz_de_Criterios_de_Decision_Chatter_Contextualizado_Leer_Comentario_Escrito_Con_Otro_Usuario() { 
       SCP pcp = new SCP(driver); 
       java.util.Date fecha = new Date();
       System.out.println (fecha);
-      pcp.Desloguear_Loguear_Comentar("fabiana", "admin", fecha.toString(), "tercerTitulo", 2); 
-      try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+      pcp.Desloguear_Loguear("isabel");
+	    pcp.Desloguear_Loguear_Comentar("persimos", "isabel", fecha.toString(), "cuartoTitulo", 2); 
+	     try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
    pcp.clickOnTabByName("cuentas");
    try {Thread.sleep(7000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
    try {Thread.sleep(7000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
@@ -280,15 +298,17 @@ public class SCPParquedeServicios extends TestBase{
    try {Thread.sleep(10000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
    pcp.moveToElementOnAccAndClick("tercerTitulo", 2);
       pcp.validarcomentarioajeno(fecha.toString());
+      pcp.Desloguear_Loguear("permisos");
  }
 	
-	@Test(groups = "SCP") 
+	@Test(groups = "SCP", priority=3) 
     public void TS112699_Mosaico_de_Relacionamiento_General_Chatter_Contextualizado_Leer_Comentario_Escrito_Con_Otro_Usuario() { 
       SCP pcp = new SCP(driver); 
       java.util.Date fecha = new Date();
       System.out.println (fecha);
-      pcp.Desloguear_Loguear_Comentar("fabiana", "admin", fecha.toString(), "segundoTitulo", 4); 
-      try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+      pcp.Desloguear_Loguear("isabel");
+	    pcp.Desloguear_Loguear_Comentar("persimos", "isabel", fecha.toString(), "cuartoTitulo", 2); 
+	     try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
    pcp.clickOnTabByName("cuentas");
    try {Thread.sleep(7000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
    try {Thread.sleep(7000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
@@ -296,15 +316,17 @@ public class SCPParquedeServicios extends TestBase{
    try {Thread.sleep(10000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
    pcp.moveToElementOnAccAndClick("segundoTitulo", 4);
       pcp.validarcomentarioajeno(fecha.toString());
+      pcp.Desloguear_Loguear("permisos");
  }
 	
-	@Test(groups = "SCP") 
+	@Test(groups = "SCP", priority=3) 
     public void TS112719_Mosaico_de_Relacionamiento_por_Oportunidad_Chatter_Contextualizado_Leer_Comentario_Escrito_Con_Otro_Usuario() { 
       SCP pcp = new SCP(driver); 
       java.util.Date fecha = new Date();
       System.out.println (fecha);
-      pcp.Desloguear_Loguear_Comentar("fabiana", "admin", fecha.toString(), "tercerTitulo", 3); 
-      try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+      pcp.Desloguear_Loguear("isabel");
+	    pcp.Desloguear_Loguear_Comentar("persimos", "isabel", fecha.toString(), "cuartoTitulo", 2); 
+	     try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
    pcp.clickOnTabByName("cuentas");
    try {Thread.sleep(7000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
    try {Thread.sleep(7000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
@@ -312,16 +334,18 @@ public class SCPParquedeServicios extends TestBase{
    try {Thread.sleep(10000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
    pcp.moveToElementOnAccAndClick("tercerTitulo", 3);
       pcp.validarcomentarioajeno(fecha.toString());
+      pcp.Desloguear_Loguear("permisos");
  }
 	
 	
-	@Test(groups = "SCP") 
+	@Test(groups = "SCP", priority=3) 
     public void TS112728_Negocio_del_cliente_Chatter_Contextualizado_Leer_Comentario_Escrito_Con_Otro_Usuario() { 
       SCP pcp = new SCP(driver); 
       java.util.Date fecha = new Date();
       System.out.println (fecha);
-      pcp.Desloguear_Loguear_Comentar("fabiana", "admin", fecha.toString(), "primerTitulo", 2); 
-      try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+      pcp.Desloguear_Loguear("isabel");
+	    pcp.Desloguear_Loguear_Comentar("persimos", "isabel", fecha.toString(), "cuartoTitulo", 2); 
+	    try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
    pcp.clickOnTabByName("cuentas");
    try {Thread.sleep(7000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
    try {Thread.sleep(7000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
@@ -329,15 +353,17 @@ public class SCPParquedeServicios extends TestBase{
    try {Thread.sleep(10000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
    pcp.moveToElementOnAccAndClick("primerTitulo", 2);
       pcp.validarcomentarioajeno(fecha.toString());
+      pcp.Desloguear_Loguear("permisos");
  }
 	
-	@Test(groups = "SCP") 
+	@Test(groups = "SCP", priority=3) 
     public void TS112784_Parque_de_Servicios_Chatter_Contextualizado_Leer_Comentario_Escrito_Con_Otro_Usuario() { 
       SCP pcp = new SCP(driver); 
       java.util.Date fecha = new Date();
       System.out.println (fecha);
-      pcp.Desloguear_Loguear_Comentar("fabiana", "admin", fecha.toString(), "segundoTitulo", 2); 
-      try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+      pcp.Desloguear_Loguear("isabel");
+	    pcp.Desloguear_Loguear_Comentar("persimos", "isabel", fecha.toString(), "cuartoTitulo", 2); 
+	     try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
    pcp.clickOnTabByName("cuentas");
    try {Thread.sleep(7000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
    try {Thread.sleep(7000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
@@ -345,27 +371,28 @@ public class SCPParquedeServicios extends TestBase{
    try {Thread.sleep(10000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
    pcp.moveToElementOnAccAndClick("segundoTitulo", 2);
       pcp.validarcomentarioajeno(fecha.toString());
+      pcp.Desloguear_Loguear("permisos");
  }	
-	@Test(groups = "SCP") 
+	@Test(groups = "SCP", priority=6) 
 	public void TS112645_Estructura_de_las_oportunidades_Bloques_Estado_de_Proyecto_DELTA_Oportunidad(){
 		SCP page = new SCP(driver);
 		page.clickOnTabByName("cuentas");
 		page.clickEnCuentaPorNombre("Florencia Di Ciocco SRL");
 		try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
-		page.elegiroportunidad("Oportunidad creada desde el chatter");
+		page.elegiroportunidad("Red Nacional - ex Oportunidad 1");
 		page.ValidarEstadosDELTA("oportunidad");
 	}
-	@Test(groups = "SCP") 
+	@Test(groups = "SCP", priority=6) 
 	public void TS112646_Estructura_de_las_oportunidades_Bloques_Estado_de_Proyecto_DELTA_Proyectos(){
 		SCP page = new SCP(driver);
 		page.clickOnTabByName("cuentas");
 		page.clickEnCuentaPorNombre("Florencia Di Ciocco SRL");
 		try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
-		page.elegiroportunidad("Oportunidad creada desde el chatter");
+		page.elegiroportunidad("Red Nacional - ex Oportunidad 1");
 		page.ValidarEstadosDELTA("proyectos");
 	}
 	
-	@Test(groups = "SCP") 
+	@Test(groups = "SCP", priority=6) 
 	public void TS112640_Estructura_de_las_oportunidades_Bloques_Competidores(){
 		SCP page = new SCP(driver);
 		page.clickOnTabByName("cuentas");
@@ -374,7 +401,7 @@ public class SCPParquedeServicios extends TestBase{
 		page.elegiroportunidad("Red Nacional - ex Oportunidad 1");
 		page.validarcompetidores();
 	}
-	@Test(groups = "SCP") 
+	@Test(groups = "SCP", priority=6) 
 public void TS112648_Estructura_de_las_oportunidades_Bloques_Informacion_Adicional_de_Ventas(){
 		SCP page = new SCP(driver);
 		page.clickOnTabByName("cuentas");
@@ -384,7 +411,7 @@ public void TS112648_Estructura_de_las_oportunidades_Bloques_Informacion_Adicion
 		page.validarinfoventas();
 	}
 	
-	@Test(groups = "SCP") 
+	@Test(groups = "SCP", priority=6) 
 	public void TS112652_Estructura_de_las_oportunidades_Bloques_Productos_de_la_oportunidad_Campos_no_editables(){
 		SCP page = new SCP(driver);
 		page.clickOnTabByName("cuentas");
@@ -396,7 +423,7 @@ public void TS112648_Estructura_de_las_oportunidades_Bloques_Informacion_Adicion
 		page.VerificarCampoModificado("cantidad", "5,00");
 	}
 	
-	@Test(groups = "SCP") 
+	@Test(groups = "SCP", priority=6) 
 	public void TS112658_Estructura_de_las_oportunidades_Bloques_Productos_de_la_oportunidad_Cargo_Unica_Vez_Modificar(){
 		SCP page = new SCP(driver);
 		page.clickOnTabByName("cuentas");
@@ -408,7 +435,7 @@ public void TS112648_Estructura_de_las_oportunidades_Bloques_Informacion_Adicion
 		page.VerificarCampoModificado("cargo unico", "600,00");
 	}
 	
-	@Test(groups = "SCP") 
+	@Test(groups = "SCP", priority=3) 
 	public void TS1112659_Estructura_de_las_oportunidades_Bloques_Productos_de_la_oportunidad_Cargos_Totales_por_Mes(){
 		SCP page = new SCP(driver);
 		page.clickOnTabByName("cuentas");
@@ -423,7 +450,7 @@ public void TS112648_Estructura_de_las_oportunidades_Bloques_Informacion_Adicion
 		Assert.assertFalse(a.equals(b));
 	}
 	
-	@Test(groups = "SCP") 
+	@Test(groups = "SCP", priority=6) 
 	public void TS112661_Estructura_de_las_oportunidades_Bloques_Productos_de_la_oportunidad_Plazo_Modificar(){
 		SCP page = new SCP(driver);
 		page.clickOnTabByName("cuentas");
@@ -435,7 +462,7 @@ public void TS112648_Estructura_de_las_oportunidades_Bloques_Informacion_Adicion
 		page.VerificarCampoModificado("plazo", "50");
 	}
 	
-	@Test(groups = "SCP") 
+	@Test(groups = "SCP", priority=3) 
 	public void TS1112662_Estructura_de_las_oportunidades_Bloques_Productos_de_la_oportunidad_Precio_total_contrato(){
 		SCP page = new SCP(driver);
 		page.clickOnTabByName("cuentas");
@@ -449,7 +476,7 @@ public void TS112648_Estructura_de_las_oportunidades_Bloques_Informacion_Adicion
 		
 	}
 	
-	@Test(groups = "SCP") 
+	@Test(groups = "SCP", priority=6) 
 	public void TS112663_Estructura_de_las_oportunidades_Bloques_Productos_de_la_oportunidad_Total_mes_por_plazo(){
 		SCP page = new SCP(driver);
 		page.clickOnTabByName("cuentas");

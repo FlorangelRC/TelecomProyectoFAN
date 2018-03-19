@@ -181,8 +181,8 @@ public class Login extends BasePage {
 				 driver.findElement(By.id("idp_hint")).click();
 			 }
 			  try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
-			  Ecom_User_ID.sendKeys("UA090022");
-			  Ecom_Password.sendKeys("Testa10k");
+			  Ecom_User_ID.sendKeys("UAT090022");
+			  Ecom_Password.sendKeys("Testa10K");
 			  loginButton2.click();
 			  try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 		}
