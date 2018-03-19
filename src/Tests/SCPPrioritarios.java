@@ -196,9 +196,11 @@ public class SCPPrioritarios extends TestBase{
 				i++;
 			}
 			tearDown();
+			page.EjecutarInterfazBatch();
+			System.out.println("Before Suite Ejecutado.");
 		}
 		
-		@AfterSuite
+		//@AfterSuite
 		//@BeforeSuite
 		 public void EliminarDatos() throws Exception {
 			 init();
