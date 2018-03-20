@@ -1,5 +1,6 @@
 package Tests;
 
+import static org.testng.Assert.assertEquals;
 import static org.testng.Assert.assertTrue;
 
 import java.util.List;
@@ -1980,11 +1981,53 @@ public class Sales2 extends TestBase{
 		try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 		WebElement more	 = driver.findElements(By.cssSelector(".product-link.slds-text-body--small.slds-float--right")).get(0);
 		more.click();
-		
 		WebElement waiter = wait.until(ExpectedConditions.presenceOfElementLocated(By.cssSelector(".slds-item--detail.slds-truncate")));
 		List<WebElement> values = driver.findElements(By.cssSelector(".slds-item--detail.slds-truncate"));
 		String[] precissionCounter = values.get(3).getText().split(",");
 		Assert.assertEquals(precissionCounter[1].length(), 2);
+	}
+	@Test(groups={"Sales", "AltaLinea", "Ola1"})              
+	public void TS94481_checkPaperCanLabel() {
+		Ta_CPQ page3 = new Ta_CPQ(driver);
+		sb.BuscarCuenta(DNI, "32323232");
+		sb.acciondecontacto("catalogo");
+		try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		sb.elegirplan("Plan con Tarjeta Repro");
+		try {Thread.sleep(8000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		WebElement boton = driver.findElements(By.cssSelector(".slds-button.slds-button_icon-border-filled.cpq-item-actions-dropdown-button")).get(0);
+		boton.click();
+		WebElement delet = driver.findElements(By.cssSelector(".slds-dropdown.slds-dropdown_right.cpq-item-actions-dropdown")).get(0);
+		Assert.assertTrue(delet.getText().contains("Delete"));
+	}
+	
+	
+	@Test(groups={"Sales", "AltaLinea", "Ola1"})
+	public void TS94496_checkPlanInformation() {
+		Ta_CPQ page3 = new Ta_CPQ(driver);
+		sb.BuscarCuenta(DNI, "32323232");
+		sb.acciondecontacto("catalogo");
+		try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		sb.elegirplan("Plan con Tarjeta Repro");
+		try {Thread.sleep(8000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		WebElement boton = driver.findElements(By.cssSelector(".slds-button.slds-button_icon-border-filled.cpq-item-actions-dropdown-button")).get(0);
+		boton.click();
+		WebElement delet = driver.findElements(By.cssSelector(".slds-dropdown.slds-dropdown_right.cpq-item-actions-dropdown")).get(0);
+		Assert.assertTrue(delet.getText().contains("Inspect"));	
+	}
+	@Test(groups={"Sales", "AltaDeLinea", "Ola1"})
+	public void TS94518_CRM_Fase_1_SalesCPQ_Alta_Linea_Costo_Operacion_Verificar_opciones_del_carrito_Boton_Siguiente(){
+		sb.BuscarCuenta(DNI, "32323232");
+		sb.acciondecontacto("catalogo");
+		try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		sb.elegirplan("Plan con Tarjeta Repro");
+		try {Thread.sleep(8000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		Boolean r = false;
+		List<WebElement> cont = driver.findElements(By.cssSelector(".slds-button.slds-m-left--large.slds-button--brand.ta-button-brand"));
+		for(WebElement c : cont){
+			if(c.getText().equals("Continuar")){
+			c.isDisplayed();
+			r=true;}}
+		Assert.assertTrue(r);
 	}
 	
 }
