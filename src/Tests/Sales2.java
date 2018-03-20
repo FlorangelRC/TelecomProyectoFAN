@@ -182,10 +182,11 @@ public class Sales2 extends TestBase{
 	@Test(groups={"Sales", "AltaDeContacto", "Ola1"})
 	public void TS94661_Alta_De_Contacto_Persona_Fisica_Verificar_Categoria_Impositiva_Por_Default(){
 		sb.BuscarCuenta(DNI, "");
-		driver.findElement(By.id("tab-scoped-3__item")).click();
+		CustomerCare CC = new CustomerCare(driver);
+		CC.obligarclick(driver.findElement(By.id("tab-scoped-3__item")));
 		sb.acciondecontacto("catalogo");
 		sleep(15000);
-		List<WebElement> cam = driver.findElements(By.cssSelector(".slds-m-left--x-small.slds-button.slds-button--brand"));
+		/*List<WebElement> cam = driver.findElements(By.cssSelector(".slds-m-left--x-small.slds-button.slds-button--brand"));
 		for(WebElement c : cam ){	
 			if(c.getText().toLowerCase().equals("cambiar")){
 				c.click();
@@ -198,11 +199,11 @@ public class Sales2 extends TestBase{
 		driver.findElement(By.id("SalesChannelConfiguration_nextBtn")).click();
 		sleep(10000);
 		driver.switchTo().defaultContent();
-		}
+		}*/
 		sb.elegirplan("Plan con Tarjeta Repro");
 		sleep(15000);
 		sb.continuar();
-		sleep(5000);
+		sleep(15000);
 		Select condI = new Select(driver.findElement(By.id("ImpositiveCondition")));
 		Assert.assertTrue(condI.getFirstSelectedOption().getText().equalsIgnoreCase("iva consumidor final"));
 	}
@@ -467,11 +468,11 @@ public class Sales2 extends TestBase{
 		sb.BuscarCuenta(DNI, "11111111");
 		sb.acciondecontacto("nueva cuenta");
 		sleep(7000);
-		driver.findElement(By.id("ImageDNI")).sendKeys("C:\\Users\\Sofia Chardin\\Desktop\\DNI.png");
+		driver.findElement(By.id("ImageDNI")).sendKeys("C:\\Users\\florangel\\Downloads\\mapache.jpg");
 		sleep(3000);
 		WebElement up = driver.findElement(By.cssSelector(".vlc-slds-box__max-width-80.ng-binding"));
-		Assert.assertTrue(up.getText().toLowerCase().contains("dni.png"));
-		Assert.assertTrue(up.getText().toLowerCase().contains("59.67 kb"));
+		Assert.assertTrue(up.getText().toLowerCase().contains("mapache.jpg"));
+		Assert.assertTrue(up.getText().toLowerCase().contains("30.55 kb"));
 	}
 	
 	@Test(groups={"Sales", "AltaDeContacto", "Ola1"})

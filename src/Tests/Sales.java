@@ -28,6 +28,8 @@ import org.testng.annotations.BeforeClass;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.BeforeTest;
 import org.testng.annotations.Test;
+
+import Pages.Accounts;
 import Pages.BasePage;
 import Pages.ContactInformation;
 import Pages.ContactSearch;
@@ -62,13 +64,13 @@ public class Sales extends TestBase {
 	String[] genero = {"masculino","femenino"};
 	String[] DocValue = {"52698550","3569874563","365","ssss"};
 	
-	@AfterClass(alwaysRun=true)
+	//@AfterClass(alwaysRun=true)
 	public void tearDown() {
 		driver.close();
 		driver.quit();
 	}
 	
-	@AfterMethod(alwaysRun=true)
+	//@AfterMethod(alwaysRun=true)
 	public void deslogin(){
 		try {Thread.sleep(10000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 		driver.get("https://crm--sit.cs14.my.salesforce.com/home/home.jsp?tsid=02u41000000QWha/");
@@ -1210,7 +1212,10 @@ public class Sales extends TestBase {
 	@Test(groups={"Sales", "AltaDeContacto","Ola1"})
 	public void TS94873_Perfiles_Verificar_creacion_de_perfil_Oficina_Comercial(){
 		SalesBase SB = new SalesBase(driver);
+		Accounts acc = new Accounts(driver);
 		SB.gestiondeusuarios();
+		sleep(5000);
+		 acc.getElementFromList(driver.findElements(By.className("listItemPad")), "S").click();
 		SB.validarperfil("Sit, Francisco", "TA - OFCOM Venta y Atencion a Clientes");		
 	}
 	
@@ -1225,9 +1230,9 @@ public class Sales extends TestBase {
 	public void TS94875_Perfiles_Verificar_creacion_de_perfil_Oficina_Logistica(){
 		SalesBase SB = new SalesBase(driver);
 		SB.gestiondeusuarios();
-		driver.findElements(By.className("listItemPad")).get(13).click();
+		driver.findElements(By.className("listItemPad")).get(19).click();
 		sleep(4000);
-		SB.validarperfil("Sit, Nicolas", "Logistica B");
+		SB.validarperfil("Sit, Nicolas", "TA - Logistica B");
 			perfil="agente";			
 	}
 

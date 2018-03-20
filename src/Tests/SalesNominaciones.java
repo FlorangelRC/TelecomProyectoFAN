@@ -27,7 +27,7 @@ import Pages.setConexion;
 
 public class SalesNominaciones extends TestBase{
 
-	protected String perfil = "venta";
+	protected String perfil = "call";
 	
 	@BeforeClass(alwaysRun=true)
 	public void Init() {
@@ -213,17 +213,16 @@ public class SalesNominaciones extends TestBase{
 		ContactSearch contact = new ContactSearch(driver);
 		SalesBase SB = new SalesBase(driver);
 		contact.searchContact2("DNI", "10000024", "femenino");
-		contact.ingresarMail("asdads@gmail.com", "si");
+		try {
+			contact.ingresarMail("asdads@gmail.com", "si");
+		}catch (org.openqa.selenium.ElementNotVisibleException ex1) {}
 		contact.tipoValidacion("documento");
 		contact.subirArchivo("C:\\Users\\florangel\\Downloads\\mapache.jpg", "si");
 		BasePage bp = new BasePage(driver);
-		bp.setSimpleDropdown(driver.findElement(By.id("ImpositiveCondition")), "IVA Consumidor Final");
-		SB.Crear_DomicilioLegal("Buenos Aires", "aba", "falsa", "", "1000", "", "", "1549");
+		driver.findElement(By.id("FormUpload_nextBtn")).click();
+		//bp.setSimpleDropdown(driver.findElement(By.id("ImpositiveCondition")), "IVA Consumidor Final");
+		//SB.Crear_DomicilioLegal("Buenos Aires", "aba", "falsa", "", "1000", "", "", "1549");
 		sleep(20000);
-		driver.findElement(By.id("Step_Error_Huawei_S202_nextBtn")).click();
-		sleep(8000);
-		try {driver.findElement(By.id("Step_Error_Huawei_S015_nextBtn")).click();
-		}catch(NoSuchElementException ex1) {}
 		sleep(8000);
 		List <WebElement> element = driver.findElements(By.cssSelector(".slds-form-element.vlc-flex.vlc-slds-text-block.vlc-slds-rte.ng-pristine.ng-valid.ng-scope"));
 		boolean a = false;
@@ -277,13 +276,15 @@ public class SalesNominaciones extends TestBase{
 		driver.findElement(By.id("PermanencyDueDate")).sendKeys("30/06/2018");
 		CC.obligarclick(driver.findElement(By.id("Contact_nextBtn")));
 		sleep(5000);
-		driver.findElement(By.id("MethodSelectionPassport|0")).findElement(By.cssSelector(".slds-radio--faux.ng-scope")).click();
+		driver.findElement(By.id("MethodSelection|0")).findElement(By.cssSelector(".slds-radio--faux.ng-scope")).click();
 		driver.findElement(By.id("ValidationMethod_nextBtn")).click();
 		sleep(5000);
 		driver.findElement(By.id("FileDocumentImage")).sendKeys(FilePath);
 		sleep(1000);
 		CC.obligarclick(driver.findElement(By.id("DocumentMethod_nextBtn")));
-		sleep(18000);
+		sleep(5000);
+		CC.obligarclick(driver.findElement(By.id("FormUpload_nextBtn")));
+		sleep(15000);
 		System.out.println(driver.findElement(By.cssSelector(".slds-grid.slds-wrap.ng-pristine.ng-valid")).findElement(By.id("TextBlock2")).findElement(By.className("ng-binding")).findElements(By.tagName("p")).get(2).getText());
 		assertTrue(driver.findElements(By.id("TextBlock2")).get(1).findElements(By.tagName("p")).get(3).getText().toLowerCase().contains("nominaci\u00f3n exitosa"));
 		
@@ -338,12 +339,14 @@ public class SalesNominaciones extends TestBase{
 		driver.findElement(By.cssSelector(".slds-input.form-control.ng-pristine.ng-untouched.ng-valid.ng-empty")).sendKeys("algoaqui@yahoo.com.ar");
 		CC.obligarclick(driver.findElement(By.id("Contact_nextBtn")));
 		sleep(5000);
-		driver.findElement(By.id("MethodSelectionTelefonico|0")).findElement(By.cssSelector(".slds-radio--faux.ng-scope")).click();
+		driver.findElement(By.id("MethodSelection|0")).findElement(By.cssSelector(".slds-radio--faux.ng-scope")).click();
 		driver.findElement(By.id("ValidationMethod_nextBtn")).click();
 		sleep(5000);
-		CC.obligarclick(driver.findElement(By.id("QAResult_nextBtn")));
+		contact.subirArchivo("C:\\Users\\florangel\\Downloads\\mapache.jpg", "si");
 		sleep(18000);
 		BasePage bp = new BasePage(driver);
+		driver.findElement(By.id("FormUpload_nextBtn")).click();
+		sleep(8000);
 		bp.setSimpleDropdown(driver.findElement(By.id("ImpositiveCondition")), "IVA Consumidor Final");
 		SB.Crear_DomicilioLegal("Buenos Aires", "aba", "falsa", "", "1000", "", "", "1549");
 		sleep(20000);
@@ -406,7 +409,7 @@ public class SalesNominaciones extends TestBase{
 		//driver.findElement(By.cssSelector(".slds-input.form-control.ng-pristine.ng-untouched.ng-valid.ng-empty")).sendKeys("algoaqui@yahoo.com.ar");
 		CC.obligarclick(driver.findElement(By.id("Contact_nextBtn")));
 		sleep(5000);
-		driver.findElement(By.id("MethodSelectionPassport|0")).findElement(By.cssSelector(".slds-radio--faux.ng-scope")).click();
+		driver.findElement(By.id("MethodSelection|0")).findElement(By.cssSelector(".slds-radio--faux.ng-scope")).click();
 		driver.findElement(By.id("ValidationMethod_nextBtn")).click();
 		sleep(5000);
 		driver.findElement(By.id("FileDocumentImage")).sendKeys(FilePath);

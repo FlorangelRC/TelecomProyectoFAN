@@ -260,13 +260,22 @@ public boolean btnnoexiste(String boton){
 
  public void validarperfil(String nombre, String perfil){
 	 boolean a= false;
+	 int rep = 0;
 	 List<WebElement> filas = driver.findElements(By.cssSelector(".dataCell"));
 	 for(int i=0; i<filas.size();i++){
 		 if (filas.get(i).getText().equals(nombre)){
 			 a = true;
 			 System.out.println(filas.get(i+5).getText());
-			Assert.assertTrue(filas.get(i+5).getText().contains(perfil));
-			break;}} 
+			 if (nombre.contains("Nicolas")) {
+				 if(rep == 1) {
+					 Assert.assertTrue(filas.get(i+5).getText().contains(perfil));
+					 break;}
+				 rep++;
+			 }else {
+				 Assert.assertTrue(filas.get(i+5).getText().contains(perfil));
+				 break;
+			 }
+			}} 
 	 Assert.assertTrue(a);}
  
  public boolean validartxtbtn(String txt){
