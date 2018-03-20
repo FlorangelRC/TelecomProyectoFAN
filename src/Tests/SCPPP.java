@@ -19,6 +19,8 @@ import org.openqa.selenium.StaleElementReferenceException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Actions;
+import org.openqa.selenium.support.FindBy;
+import org.openqa.selenium.support.How;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.Select;
 import org.testng.Assert;
@@ -57,24 +59,64 @@ private WebDriver driver;
 	}
 	
 	
-	//@AfterClass(groups = "SCP")
+	@AfterClass(groups = "SCP")
 	public void teardown() {
 		driver.quit();
 		sleep(10000);
 	}
-
-	@Test(groups = "SCP")
+	
+/*	@Test(groups = "SCP")
+	public void Test_Crear_Cuenta_Borrar_Cuenta(){
+		//Creacion
+		driver.findElement(By.id("createNewLabel")).click();
+		sleep(2000);
+		driver.findElement(By.id("createNewMenu")).findElements(By.tagName("a")).get(0).click();
+		sleep(5000);
+		Select segment= new Select (driver.findElement(By.id("00N4100000c3bHf")));
+		segment.selectByVisibleText("Negocio Corporativo");	
+		driver.findElement(By.id("acc2")).sendKeys("CuentaTest");
+		Select tipo = new Select (driver.findElement(By.id("acc6")));
+		tipo.selectByVisibleText("Cuenta Cabecera");
+		Random aleatorio = new Random(System.currentTimeMillis());
+		aleatorio.setSeed(System.currentTimeMillis());
+		int intAleatorio = aleatorio.nextInt(8999999)+1000000;
+		driver.findElement(By.id("00N4100000c3bHN")).sendKeys(Integer.toString(intAleatorio));
+		WebElement guardar = driver.findElement(By.id("bottomButtonRow")).findElements(By.tagName("input")).get(0);
+		guardar.click();
+		sleep(10000);
+		//Eliminacion
+		List<WebElement> cuentass = driver.findElements(By.cssSelector(".recentItemModule.sidebarModule"));
+			for(WebElement c : cuentass){
+			c.getText().equals("CuentaTest");
+			c.click();
+			}
+		sleep(5000);
+		WebElement delet = driver.findElement(By.id("topButtonRow")).findElements(By.tagName("input")).get(3);
+		System.out.println(delet.getText());
+		delet.click();
+		try {driver.switchTo().alert().accept();}catch(org.openqa.selenium.NoAlertPresentException e) {}
+	}
+	
+	@Test (groups = "SCP")
+	public void Test_Oportunidad(){
+		SCP prueba = new SCP(driver); 
+		prueba.Desloguear_Loguear("Maximiliano");
+		sleep(10000);
+		prueba.Crear_Oportunidad("testop", "test", "14/03/2018", "15/03/2018","Contacto", "17/03/2018", "CONTACTO INICIAL");
+	} */
+	
+	@Test(groups = "SCP", priority=2)
 	public void TS110244_Estructura_del_cliente_GGCC_Campos() {
 	
 		 ArrayList<String> camp1 = new ArrayList<String>();
 		 ArrayList<String> txt2 = new ArrayList<String>();
 		 txt2.add("CUIT");
-		 txt2.add("Razón Social");  // falta razon social
+		 txt2.add("Raz\u00f3n Social");  // falta razon social
 		 txt2.add("Holding");
 		 txt2.add("Segmento");
 		 txt2.add("Region");
 		 txt2.add("Territorio");
-		 txt2.add("Domicilio de recepción de notificaciones");
+		 txt2.add("Domicilio de recepciï¿½n de notificaciones");
 		 List<WebElement> campos = driver.findElements(By.className("labelCol"));
 		 System.out.println(campos.size());
 		 for(WebElement c: campos){
@@ -83,28 +125,30 @@ private WebDriver driver;
 			 Assert.assertTrue(camp1.containsAll(txt2));
 	}
 	
-	@Test(groups = "SCP") 
+	@Test(groups = "SCP", priority=2) 
 	public void TS110245_Estructura_del_cliente_GGCC_Campos_Region	() {
 		SCP pScp = new SCP(driver);
 		//pScp.Desloguear_Loguear("fabiana");
-		WebElement reg = driver.findElement(By.id("00N4100000c3bHn_ilecell"));
+		//WebElement reg = driver.findElement(By.id("00N4100000c3bHn_ilecell"));
+		WebElement reg = driver.findElement(By.className("detailList")).findElement(By.tagName("tbody")).findElements(By.tagName("tr")).get(5);
 		Actions action = new Actions(driver);   
 		action.moveToElement(reg).doubleClick().perform();
 		waitFor(driver, By.id("00N4100000c3bHn"));
-		Select dropdown = new Select (driver.findElement(By.id("00N4100000c3bHn")));
+		Select dropdown = new Select (driver.findElements(By.cssSelector(".inlineEditDiv.inlineEditGroup")).get(0).findElement(By.tagName("span")).findElement(By.tagName("select")));
 		dropdown.selectByVisibleText("Gobierno");	
 		WebElement cerra = driver.findElement(By.id("InlineEditDialog_buttons"));
 		cerra.click();
+		
 	}
-	@Test(groups = "SCP")
+	@Test(groups = "SCP", priority=2)
 	public void TS110246_Estructura_del_cliente_GGCC_Campos_Territorio() {
-	WebElement reg = driver.findElement(By.id("00N4100000c3bHs_ilecell"));
+	WebElement reg = driver.findElement(By.className("detailList")).findElement(By.tagName("tbody")).findElements(By.tagName("tr")).get(5);
 	Actions action = new Actions(driver);   
 	action.moveToElement(reg).doubleClick().perform();
 	waitFor(driver, By.id("00N4100000c3bHn"));
-	Select regio = new Select (driver.findElement(By.id("00N4100000c3bHn")));
+	Select regio = new Select (driver.findElements(By.cssSelector(".inlineEditDiv.inlineEditGroup")).get(0).findElement(By.tagName("span")).findElement(By.tagName("select")));
 	regio.selectByVisibleText("Privado");	
-	Select terr = new Select (driver.findElement(By.id("00N4100000c3bHs")));
+	Select terr = new Select (driver.findElements(By.cssSelector(".inlineEditDiv.inlineEditGroup")).get(1).findElement(By.tagName("span")).findElement(By.tagName("select")));
 	terr.selectByVisibleText("--Ninguno--");
 	Assert.assertEquals(terr.getFirstSelectedOption().getText(),"--Ninguno--");
 	terr.selectByVisibleText("Industria");
@@ -119,7 +163,7 @@ private WebDriver driver;
 	Assert.assertEquals(terr.getFirstSelectedOption().getText(),"Privado mediterraneo");
 	regio.selectByVisibleText("Gobierno");
 	sleep(3000);
-	Select terri = new Select (driver.findElement(By.id("00N4100000c3bHs")));
+	Select terri = new Select (driver.findElements(By.cssSelector(".inlineEditDiv.inlineEditGroup")).get(1).findElement(By.tagName("span")).findElement(By.tagName("select")));
 	terri.selectByVisibleText("--Ninguno--");
 	Assert.assertEquals(terri.getFirstSelectedOption().getText(),"--Ninguno--");
 	terri.selectByVisibleText("Gobierno amba 1");
@@ -134,7 +178,7 @@ private WebDriver driver;
 	cerra.click();
 	}
 	
-	@Test(groups = "SCP") 
+	@Test(groups = "SCP", priority=2) 
 	public void TS110247_Estructura_del_cliente_GGCC_Campos_Territorio() {
 		SCP pScp = new SCP(driver);
 		driver.findElement(By.id("tabContainer")).findElement(By.id("tabBar")).findElements(By.tagName("li")).get(1).click();
@@ -142,11 +186,11 @@ private WebDriver driver;
 		 ArrayList<String> camp1 = new ArrayList<String>();
 		 ArrayList<String> txt2 = new ArrayList<String>();
 		 txt2.add("CUIT");
-		 txt2.add("Razón Social");  // falta
+		 txt2.add("Raz\u00f3n Social");  // falta
 		 txt2.add("Numero de clientes"); //falta 
 		 txt2.add("Numero de Holding");
-		 txt2.add("Categoría WH");
-		 txt2.add("Domicilio de recepción de notificaciones");
+		 txt2.add("Categor\u00ed WH");
+		 txt2.add("Domicilio de recepci\u00f3n de notificaciones");
 		 List<WebElement> campos = driver.findElements(By.className("labelCol"));
 		 System.out.println(campos.size());
 		 for(WebElement c: campos){
@@ -156,7 +200,7 @@ private WebDriver driver;
 
 	}
 	
-	@Test(groups = "SCP")
+	@Test(groups = "SCP", priority=3)
 	public void TS_112767_Organigrama_y_mapa_de_influencia_Modificar_mapa_de_influencias() {
 	SCP prueba = new SCP(driver); 
 	prueba.moveToElementOnAccAndClick("primerTitulo", 3);
@@ -165,16 +209,21 @@ private WebDriver driver;
 	WebElement msg = driver.findElement(By.className("messageText"));
 	waitFor(driver, By.className("messageText"));
 	System.out.println(msg.getText());
-	Assert.assertTrue((msg.getText().equals("Para agregar o para quitar una Influencia: 1) Arrastrar la caja del contacto influyente 2) Soltarla sobre la caja del contacto influenciado 3) Clickear el botón de \"Guardar cambios\" antes de abandonar la página!")));
+	Assert.assertTrue((msg.getText().equals("Para agregar o para quitar una Influencia: 1) Arrastrar la caja del contacto influyente 2) Soltarla sobre la caja del contacto influenciado 3) Clickear el botï¿½n de \"Guardar cambios\" antes de abandonar la pï¿½gina!")));
 	}
 	
 	
-	@Test(groups = "SCP") 
-	public void TS112792_Plan_de_acción_Eliminar_tareas() {
+	@Test(groups = "SCP", priority=3) 
+	public void TS112792_Plan_de_accion_Eliminar_tareas() {  // actualizar
 		SCP prueba = new SCP(driver); 
 		prueba.Desloguear_Loguear("Maximiliano");
 		sleep(15000);
-		driver.findElement(By.id("mru001L000000vmnvl")).click();
+		WebElement user = driver.findElement(By.id(".sidebarDiv")).findElements(By.tagName("div")).get(1).findElements(By.tagName("div")).get(1).findElements(By.tagName("div")).get(1).findElement(By.id("hoverItem27"));
+		if(user.getText().contains("Florencia Di Ciocco SRL")){
+			user.click();
+		}
+		System.out.println(user.getText());
+		user.click();
 		sleep(10000);
 	    prueba.moveToElementOnAccAndClick("cuartoTitulo", 2);
 	    WebElement tabla= driver.findElement(By.id("mainTable_wrapper")).findElement(By.className("odd")).findElements(By.tagName("td")).get(1);
@@ -198,8 +247,8 @@ private WebDriver driver;
 	    
 	}
 	
-	@Test(groups = "SCP") 
-	public void TS112794_Plan_de_acción_Plan_de_acción_Fusionar_tareas() {
+	@Test(groups = "SCP", priority=3) 
+	public void TS112794_Plan_de_accion_Plan_de_accion_Fusionar_tareas() {
 		SCP prueba = new SCP(driver); 
 		prueba.Desloguear_Loguear("Maximiliano");
 		sleep(15000);
@@ -261,8 +310,8 @@ private WebDriver driver;
 		 Assert.assertTrue(bien);   
 	}	
 	
-	@Test(groups = "SCP") 
-	public void TS112795_Plan_de_acción_Guardar() {
+	@Test(groups = "SCP", priority=3) 
+	public void TS112795_Plan_de_accion_Guardar() {
 		SCP prueba = new SCP(driver); 
 	    prueba.moveToElementOnAccAndClick("cuartoTitulo", 2);
 	    WebElement tabla= driver.findElement(By.id("mainTable_wrapper")).findElement(By.className("odd")).findElements(By.tagName("td")).get(3);
@@ -310,16 +359,16 @@ private WebDriver driver;
 		        break;}}
 	}
 	
-	@Test(groups = "SCP") 
+	@Test(groups = "SCP", priority=3) 
 	public void TS112796_Plan_de_Accion_Ingreso_Desde_el_contacto() {
 		SCP prueba = new SCP(driver); 
 	    prueba.moveToElementOnAccAndClick("cuartoTitulo", 2);
 		 ArrayList<String> colu = new ArrayList<String>();
 		 ArrayList<String> txt2 = new ArrayList<String>();
 		 txt2.add(": activate to sort column descending");
-		 txt2.add("Fecha de Creación");
+		 txt2.add("Fecha de Creaciï¿½n");
 		 txt2.add("Tema");
-		 txt2.add("Descripción");
+		 txt2.add("Descripciï¿½n");
 		 txt2.add("Fecha Limite");
 		 txt2.add("Completado");
 		 txt2.add("Estado de la tarea");
@@ -342,8 +391,8 @@ private WebDriver driver;
 			 Assert.assertTrue(true);
 		
 	}
-	@Test(groups = "SCP") 
-	public void TS112797_Plan_de_acción_Search() {
+	@Test(groups = "SCP", priority=3) 
+	public void TS112797_Plan_de_accion_Search() {
 		SCP prueba = new SCP(driver); 
 	    prueba.moveToElementOnAccAndClick("cuartoTitulo", 2);
 	    WebElement busc = driver.findElement(By.id("mainTable_filter")).findElement(By.tagName("input"));
@@ -352,8 +401,8 @@ private WebDriver driver;
 	    busc.sendKeys(lala);
 	    Assert.assertTrue(lala.contains(tabla.getText()));
 	}
-	@Test(groups = "SCP") 
-	public void TS112798_Plan_de_acción_Triangulo_ordenador() throws ParseException {
+	@Test(groups = "SCP", priority=3) 
+	public void TS112798_Plan_de_accion_Triangulo_ordenador() throws ParseException {
 		SCP prueba = new SCP(driver); 
 	    prueba.moveToElementOnAccAndClick("cuartoTitulo", 2);
 	    prueba.Triangulo_Ordenador_Validador(driver, By.cssSelector(".table.table-striped.table-bordered.table-condensed.dataTable"), 7, 2);

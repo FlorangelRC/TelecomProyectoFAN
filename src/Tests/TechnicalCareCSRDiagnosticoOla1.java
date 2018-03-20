@@ -24,7 +24,6 @@ import Pages.BasePage;
 import Pages.CustomerCare;
 import Pages.HomeBase;
 import Pages.TechCare_Ola1;
-import Pages.TechnicalCareCSRAutogestionPage;
 import Pages.TechnicalCareCSRDiagnosticoPage;
 import Pages.setConexion;
 
@@ -77,8 +76,8 @@ private WebDriver driver;
  	
 	}
  	 	
-//	@AfterMethod(alwaysRun=true)
-	public void after() {
+ 		//@AfterMethod(alwaysRun=true)
+ 		public void after() {
 		try {Thread.sleep(2000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 		driver.switchTo().defaultContent(); 
 		CustomerCare cerrar = new CustomerCare(driver);

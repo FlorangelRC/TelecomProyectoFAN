@@ -88,7 +88,7 @@ public class SCPParquedeServicios extends TestBase{
 		sleep(4000);
 	}
 	
-	@Test(groups= "SCP")
+	@Test(groups= "SCP", priority=6)
 	public void TS112781_Parque_de_Servicios_Agregar_Nuevo_Servicio(){
 	
 		SCP page = new SCP(driver);
@@ -100,7 +100,7 @@ public class SCPParquedeServicios extends TestBase{
 		
 	}
 	
-	@Test(groups= "SCP")
+	@Test(groups= "SCP", priority=6)
 	public void TS112782_Parque_de_Servicios_Borrar(){
 	
 		SCP page = new SCP(driver);
@@ -113,7 +113,7 @@ public class SCPParquedeServicios extends TestBase{
 	}
 	
 		
-	@Test(groups= "SCP")
+	@Test(groups= "SCP", priority=6)
 	public void TS112785_Parque_de_Servicios_Exportar_a_Excel(){
 		SCP page = new SCP(driver);
 		page.clickOnTabByName("cuentas");
@@ -133,7 +133,7 @@ public class SCPParquedeServicios extends TestBase{
 	      usuario=usuario.concat("-Plan_de_Acci\u00f3n.xls");  
 	      assertTrue(page.isFileDownloaded(downloadPath, usuario), "Failed to download Expected document");  
 	}
-		@Test(groups= "SCP")
+		@Test(groups= "SCP", priority=6)
 		public void TS112786_Parque_de_Servicios_Guardar(){
 			SCP page = new SCP(driver);
 			page.clickOnTabByName("cuentas");
@@ -143,7 +143,7 @@ public class SCPParquedeServicios extends TestBase{
 			page.servicioguardar();
 		}
 		
-	@Test(groups= "SCP")
+	@Test(groups= "SCP", priority=6)
 	public void TS112783_Parque_de_Servicios_Chatter_contextualizado_Escribir_comentario(){
 			SCP page = new SCP(driver);
 			page.clickOnTabByName("cuentas");
@@ -153,7 +153,7 @@ public class SCPParquedeServicios extends TestBase{
 			page.comentarycompartir("Esto es un comentario");
 			page.validarcomentario("Esto es un comentario");
 	}
-	@Test(groups= "SCP")
+	@Test(groups= "SCP", priority=6)
 	public void TS112789_Plan_de_Accion_Chatter_contextualizado_Escribir_comentario(){
 		SCP page = new SCP(driver);
 		page.clickOnTabByName("cuentas");
@@ -164,7 +164,7 @@ public class SCPParquedeServicios extends TestBase{
 		page.validarcomentario("Esto es un comentario");
 	}
 	
-	@Test(groups= "SCP")
+	@Test(groups= "SCP", priority=3)
 	public void TS112727_Negocio_del_cliente_Chatter_contextualizado_Escribir_comentario(){
 		SCP page = new SCP(driver);
 		page.clickOnTabByName("cuentas");
@@ -175,7 +175,7 @@ public class SCPParquedeServicios extends TestBase{
 		page.validarcomentario("Esto es un comentario");
 	}
 	
-	@Test(groups= "SCP")
+	@Test(groups= "SCP", priority=3)
 	public void TS112587_Contexto_sectorial_Chatter_contextualizado_Escribir_comentario(){
 		SCP page = new SCP(driver);
 		page.clickOnTabByName("cuentas");
@@ -186,7 +186,7 @@ public class SCPParquedeServicios extends TestBase{
 		page.validarcomentario("Esto es un comentario");
 	}
 	
-	@Test(groups= "SCP")
+	@Test(groups= "SCP", priority=3)
 	public void TS112718_Mosaico_de_Relacionamiento_por_Oportunidad_Chatter_contextualizado_Escribir_comentario(){
 		SCP page = new SCP(driver);
 		page.clickOnTabByName("cuentas");
@@ -197,7 +197,7 @@ public class SCPParquedeServicios extends TestBase{
 		page.validarcomentario("Esto es un comentario");
 	}
 	
-	@Test(groups= "SCP")
+	@Test(groups= "SCP", priority=3)
 	public void TS112683_Matriz_de_Criterios_de_Decision_Chatter_contextualizado_Escribir_comentario(){
 		SCP page = new SCP(driver);
 		page.clickOnTabByName("cuentas");
@@ -207,7 +207,7 @@ public class SCPParquedeServicios extends TestBase{
 		page.comentarycompartir("Esto es un comentario");
 		page.validarcomentario("Esto es un comentario");
 	}
-	@Test(groups= "SCP")
+	@Test(groups= "SCP", priority=3)
 	public void TS112614_Cronograma_de_Cuenta_Chatter_contextualizado_Escribir_comentario(){
 		SCP page = new SCP(driver);
 		page.clickOnTabByName("cuentas");
@@ -218,7 +218,7 @@ public class SCPParquedeServicios extends TestBase{
 		page.validarcomentario("Esto es un comentario");
 	}
 	
-	@Test(groups= "SCP")
+	@Test(groups= "SCP", priority=3)
 	public void TS112698_Mosaico_de_Relacionamiento_General_Chatter_contextualizado_Escribir_comentario(){
 		SCP page = new SCP(driver);
 		page.clickOnTabByName("cuentas");
@@ -229,7 +229,7 @@ public class SCPParquedeServicios extends TestBase{
 		page.validarcomentario("Esto es un comentario");
 	}
 	
-	@Test(groups = "SCP") 
+	@Test(groups = "SCP", priority=3) 
     public void TS112630_Estrategia_de_Crecimiento_Chatter_Contextualizado_Leer_Comentario_Escrito_Con_Otro_Usuario() { 
       SCP pcp = new SCP(driver); 
       java.util.Date fecha = new Date();
@@ -247,7 +247,7 @@ public class SCPParquedeServicios extends TestBase{
       pcp.Desloguear_Loguear("permisos");
  }
 	
-	@Test(groups = "SCP") 
+	@Test(groups = "SCP", priority=3) 
     public void TS112615_Cronograma_de_Cuenta_Chatter_Contextualizado_Leer_Comentario_Escrito_Con_Otro_Usuario() { 
       SCP pcp = new SCP(driver); 
       java.util.Date fecha = new Date();
@@ -265,7 +265,7 @@ public class SCPParquedeServicios extends TestBase{
       pcp.Desloguear_Loguear("permisos");
  }
 	
-	@Test(groups = "SCP") 
+	@Test(groups = "SCP", priority=3) 
     public void TS112675_Hitos_Relevantes_Chatter_Contextualizado_Leer_Comentario_Escrito_Con_Otro_Usuario() { 
       SCP pcp = new SCP(driver); 
       java.util.Date fecha = new Date();
@@ -283,7 +283,7 @@ public class SCPParquedeServicios extends TestBase{
       pcp.Desloguear_Loguear("permisos");
  }
 	
-	@Test(groups = "SCP") 
+	@Test(groups = "SCP", priority=3) 
     public void TS112684_Matriz_de_Criterios_de_Decision_Chatter_Contextualizado_Leer_Comentario_Escrito_Con_Otro_Usuario() { 
       SCP pcp = new SCP(driver); 
       java.util.Date fecha = new Date();
@@ -301,7 +301,7 @@ public class SCPParquedeServicios extends TestBase{
       pcp.Desloguear_Loguear("permisos");
  }
 	
-	@Test(groups = "SCP") 
+	@Test(groups = "SCP", priority=3) 
     public void TS112699_Mosaico_de_Relacionamiento_General_Chatter_Contextualizado_Leer_Comentario_Escrito_Con_Otro_Usuario() { 
       SCP pcp = new SCP(driver); 
       java.util.Date fecha = new Date();
@@ -319,7 +319,7 @@ public class SCPParquedeServicios extends TestBase{
       pcp.Desloguear_Loguear("permisos");
  }
 	
-	@Test(groups = "SCP") 
+	@Test(groups = "SCP", priority=3) 
     public void TS112719_Mosaico_de_Relacionamiento_por_Oportunidad_Chatter_Contextualizado_Leer_Comentario_Escrito_Con_Otro_Usuario() { 
       SCP pcp = new SCP(driver); 
       java.util.Date fecha = new Date();
@@ -338,7 +338,7 @@ public class SCPParquedeServicios extends TestBase{
  }
 	
 	
-	@Test(groups = "SCP") 
+	@Test(groups = "SCP", priority=3) 
     public void TS112728_Negocio_del_cliente_Chatter_Contextualizado_Leer_Comentario_Escrito_Con_Otro_Usuario() { 
       SCP pcp = new SCP(driver); 
       java.util.Date fecha = new Date();
@@ -356,7 +356,7 @@ public class SCPParquedeServicios extends TestBase{
       pcp.Desloguear_Loguear("permisos");
  }
 	
-	@Test(groups = "SCP") 
+	@Test(groups = "SCP", priority=3) 
     public void TS112784_Parque_de_Servicios_Chatter_Contextualizado_Leer_Comentario_Escrito_Con_Otro_Usuario() { 
       SCP pcp = new SCP(driver); 
       java.util.Date fecha = new Date();
@@ -373,7 +373,7 @@ public class SCPParquedeServicios extends TestBase{
       pcp.validarcomentarioajeno(fecha.toString());
       pcp.Desloguear_Loguear("permisos");
  }	
-	@Test(groups = "SCP") 
+	@Test(groups = "SCP", priority=6) 
 	public void TS112645_Estructura_de_las_oportunidades_Bloques_Estado_de_Proyecto_DELTA_Oportunidad(){
 		SCP page = new SCP(driver);
 		page.clickOnTabByName("cuentas");
@@ -382,7 +382,7 @@ public class SCPParquedeServicios extends TestBase{
 		page.elegiroportunidad("Red Nacional - ex Oportunidad 1");
 		page.ValidarEstadosDELTA("oportunidad");
 	}
-	@Test(groups = "SCP") 
+	@Test(groups = "SCP", priority=6) 
 	public void TS112646_Estructura_de_las_oportunidades_Bloques_Estado_de_Proyecto_DELTA_Proyectos(){
 		SCP page = new SCP(driver);
 		page.clickOnTabByName("cuentas");
@@ -392,7 +392,7 @@ public class SCPParquedeServicios extends TestBase{
 		page.ValidarEstadosDELTA("proyectos");
 	}
 	
-	@Test(groups = "SCP") 
+	@Test(groups = "SCP", priority=6) 
 	public void TS112640_Estructura_de_las_oportunidades_Bloques_Competidores(){
 		SCP page = new SCP(driver);
 		page.clickOnTabByName("cuentas");
@@ -401,7 +401,7 @@ public class SCPParquedeServicios extends TestBase{
 		page.elegiroportunidad("Red Nacional - ex Oportunidad 1");
 		page.validarcompetidores();
 	}
-	@Test(groups = "SCP") 
+	@Test(groups = "SCP", priority=6) 
 public void TS112648_Estructura_de_las_oportunidades_Bloques_Informacion_Adicional_de_Ventas(){
 		SCP page = new SCP(driver);
 		page.clickOnTabByName("cuentas");
@@ -411,7 +411,7 @@ public void TS112648_Estructura_de_las_oportunidades_Bloques_Informacion_Adicion
 		page.validarinfoventas();
 	}
 	
-	@Test(groups = "SCP") 
+	@Test(groups = "SCP", priority=6) 
 	public void TS112652_Estructura_de_las_oportunidades_Bloques_Productos_de_la_oportunidad_Campos_no_editables(){
 		SCP page = new SCP(driver);
 		page.clickOnTabByName("cuentas");
@@ -423,7 +423,7 @@ public void TS112648_Estructura_de_las_oportunidades_Bloques_Informacion_Adicion
 		page.VerificarCampoModificado("cantidad", "5,00");
 	}
 	
-	@Test(groups = "SCP") 
+	@Test(groups = "SCP", priority=6) 
 	public void TS112658_Estructura_de_las_oportunidades_Bloques_Productos_de_la_oportunidad_Cargo_Unica_Vez_Modificar(){
 		SCP page = new SCP(driver);
 		page.clickOnTabByName("cuentas");
@@ -435,7 +435,7 @@ public void TS112648_Estructura_de_las_oportunidades_Bloques_Informacion_Adicion
 		page.VerificarCampoModificado("cargo unico", "600,00");
 	}
 	
-	@Test(groups = "SCP") 
+	@Test(groups = "SCP", priority=3) 
 	public void TS1112659_Estructura_de_las_oportunidades_Bloques_Productos_de_la_oportunidad_Cargos_Totales_por_Mes(){
 		SCP page = new SCP(driver);
 		page.clickOnTabByName("cuentas");
@@ -450,7 +450,7 @@ public void TS112648_Estructura_de_las_oportunidades_Bloques_Informacion_Adicion
 		Assert.assertFalse(a.equals(b));
 	}
 	
-	@Test(groups = "SCP") 
+	@Test(groups = "SCP", priority=6) 
 	public void TS112661_Estructura_de_las_oportunidades_Bloques_Productos_de_la_oportunidad_Plazo_Modificar(){
 		SCP page = new SCP(driver);
 		page.clickOnTabByName("cuentas");
@@ -462,7 +462,7 @@ public void TS112648_Estructura_de_las_oportunidades_Bloques_Informacion_Adicion
 		page.VerificarCampoModificado("plazo", "50");
 	}
 	
-	@Test(groups = "SCP") 
+	@Test(groups = "SCP", priority=3) 
 	public void TS1112662_Estructura_de_las_oportunidades_Bloques_Productos_de_la_oportunidad_Precio_total_contrato(){
 		SCP page = new SCP(driver);
 		page.clickOnTabByName("cuentas");
@@ -476,7 +476,7 @@ public void TS112648_Estructura_de_las_oportunidades_Bloques_Informacion_Adicion
 		
 	}
 	
-	@Test(groups = "SCP") 
+	@Test(groups = "SCP", priority=6) 
 	public void TS112663_Estructura_de_las_oportunidades_Bloques_Productos_de_la_oportunidad_Total_mes_por_plazo(){
 		SCP page = new SCP(driver);
 		page.clickOnTabByName("cuentas");
