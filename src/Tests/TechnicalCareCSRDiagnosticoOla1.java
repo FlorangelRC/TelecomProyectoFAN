@@ -24,7 +24,6 @@ import Pages.BasePage;
 import Pages.CustomerCare;
 import Pages.HomeBase;
 import Pages.TechCare_Ola1;
-import Pages.TechnicalCareCSRAutogestionPage;
 import Pages.TechnicalCareCSRDiagnosticoPage;
 import Pages.setConexion;
 
@@ -77,8 +76,8 @@ private WebDriver driver;
  	
 	}
  	 	
-//	@AfterMethod(alwaysRun=true)
-	public void after() {
+ 		//@AfterMethod(alwaysRun=true)
+ 		public void after() {
 		try {Thread.sleep(2000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 		driver.switchTo().defaultContent(); 
 		CustomerCare cerrar = new CustomerCare(driver);
@@ -113,7 +112,7 @@ private WebDriver driver;
     assertTrue(tech.validarInconveniente("No puede configurar"));
 	}
 	
-	@Test (groups= {"TechnicalCare", "SVA", "Ola1"})
+	@Test (groups= {"TechnicalCare", "SVA", "Ola1"},priority=2)
 	public void TS94368_CRM_Ola_1_Technical_Care_CSR_SVA_Visualizacion_de_lista_de_servicios_AGRUPADOR() throws Exception {
 	TechnicalCareCSRDiagnosticoPage tech = new TechnicalCareCSRDiagnosticoPage(driver);
 	sleep (4000);
@@ -125,7 +124,7 @@ private WebDriver driver;
     
 	}
 	
-	@Test (groups= {"TechnicalCare", "SVA", "Ola1"}) //listo
+	@Test (groups= {"TechnicalCare", "SVA", "Ola1"},priority=3) //listo
 	public void TS94439_CRM_Ola_1_Technical_Care_CSR_SVA_Visualizacion_de_Servicio_Transferencia_de_llamadas_e_inconveniente_No_funciona_transferencia_de_llamadas_No_puede_configurar() throws Exception {
 	TechnicalCareCSRDiagnosticoPage tech = new TechnicalCareCSRDiagnosticoPage(driver);
 	sleep (4000);
@@ -138,7 +137,7 @@ private WebDriver driver;
     
 	}
 	
-	@Test (groups= {"TechnicalCare", "SVA", "Ola1"})//listo
+	@Test (groups= {"TechnicalCare", "SVA", "Ola1"},priority=3)//listo
 	public void TS94440_CRM_Ola_1_Technical_Care_CSR_SVA_Visualizacion_de_Servicio_Llamada_en_espera_e_inconveniente_No_funciona_llamada_en_espera() throws Exception {
 	TechnicalCareCSRDiagnosticoPage tech = new TechnicalCareCSRDiagnosticoPage(driver);
 	sleep (4000);
@@ -150,7 +149,7 @@ private WebDriver driver;
     
 	}
 	
-	@Test (groups= {"TechnicalCare", "SVA", "Ola1"})//listo
+	@Test (groups= {"TechnicalCare", "SVA", "Ola1"},priority=3)//listo
 	public void TS94441_CRM_Ola_1_Technical_Care_CSR_SVA_Visualizacion_de_Servicio_Llamada_tripartita_e_inconveniente_No_funciona_Llamada_tripartita() throws Exception {
 	TechnicalCareCSRDiagnosticoPage tech = new TechnicalCareCSRDiagnosticoPage(driver);
 	sleep (4000);
@@ -163,7 +162,7 @@ private WebDriver driver;
     
 	}
 	
-	@Test (groups= {"TechnicalCare", "SVA", "Ola1"})//listo
+	@Test (groups= {"TechnicalCare", "SVA", "Ola1"},priority=3)//listo
 	public void TS94459_CRM_Ola_1_Technical_Care_CSR_SVA_Visualizacion_de_Servicio_Conferencia_tripartita_e_inconveniente_No_funciona_Conferencia_Tripartita() throws Exception {
 	TechnicalCareCSRDiagnosticoPage tech = new TechnicalCareCSRDiagnosticoPage(driver);
 	sleep (4000);
@@ -174,7 +173,7 @@ private WebDriver driver;
     assertTrue(tech.validarInconveniente("No funciona Llamada tripartita"));
 	}
 	
-	@Test(groups= {"TechnicalCare", "SVA", "Ola1"}) //Listo
+	@Test(groups= {"TechnicalCare", "SVA", "Ola1"},priority=3) //Listo
 	public void TS94464_CRM_Ola_1_Technical_Care_CSR_SVA_Visualizacion_de_Servicio_Mensajes_Multimedia_Personal_MMS_e_inconveniente_MMS_Emisión_Cliente_informa_que_no_puede_enviar_Archivo_Imagen_Audio() throws Exception {
 	TechnicalCareCSRDiagnosticoPage tech = new TechnicalCareCSRDiagnosticoPage(driver);
 	sleep (4000);
@@ -186,7 +185,7 @@ private WebDriver driver;
     
 	}
 	
-	@Test (groups= {"TechnicalCare", "SVA", "Ola1"})
+	@Test (groups= {"TechnicalCare", "SVA", "Ola1"},priority=3)
 	public void TS94467_CRM_Ola_1_Technical_Care_CSR_SVA_Visualizacion_de_Servicio_SMS_saliente_e_inconveniente_SMS_Emisión_a_algun_destino_en_particular() throws Exception {
 	TechnicalCareCSRDiagnosticoPage tech = new TechnicalCareCSRDiagnosticoPage(driver);
 	sleep (4000);
@@ -197,7 +196,7 @@ private WebDriver driver;
 
     
     }
-	@Test (groups= {"TechnicalCare", "SVA", "Ola1"}) //Listo
+	@Test (groups= {"TechnicalCare", "SVA", "Ola1"},priority=3) //Listo
 	public void TS94276_CRM_Ola_1_Technical_Care_CSR_SVA_Validacion_SMS_entrante_no_recibe_ningun_numero() throws Exception {
 	TechnicalCareCSRDiagnosticoPage tech = new TechnicalCareCSRDiagnosticoPage(driver);
 	sleep (4000);
@@ -209,7 +208,7 @@ private WebDriver driver;
 	
 	}
 	
-	@Test (groups= {"TechnicalCare", "SVA", "Ola1"}) //Listo
+	@Test (groups= {"TechnicalCare", "SVA", "Ola1"},priority=3) //Listo
 	public void TS94277_CRM_Ola_1_Technical_Care_CSR_SVA_Validacion_SMS_saliente_no_emite_a_ningun_numero() throws Exception {
 	TechnicalCareCSRDiagnosticoPage tech = new TechnicalCareCSRDiagnosticoPage(driver);
 	sleep (4000);
@@ -221,7 +220,7 @@ private WebDriver driver;
 	
 	}
 	
-	@Test (groups= {"TechnicalCare", "SVA", "Ola1"}) //Listo
+	@Test (groups= {"TechnicalCare", "SVA", "Ola1"},priority=3) //Listo
 	public void TS94278_CRM_Ola_1_Technical_Care_CSR_SVA_Validacion_SMS_saliente_no_emite_a_algun_destino() throws Exception {
 	TechnicalCareCSRDiagnosticoPage tech = new TechnicalCareCSRDiagnosticoPage(driver);
 	sleep (4000);
@@ -233,7 +232,7 @@ private WebDriver driver;
 	
 	}
 	
-	@Test (groups= {"TechnicalCare", "SVA", "Ola1"})
+	@Test (groups= {"TechnicalCare", "SVA", "Ola1"},priority=2)
 	public void TS94309_CRM_Ola_1_Technical_Care_CSR_SVA_Visualizacion_de_buscador_para_servicios_agrupados() throws Exception {
 	TechnicalCareCSRDiagnosticoPage tech = new TechnicalCareCSRDiagnosticoPage(driver);
 	sleep (4000);
@@ -243,7 +242,7 @@ private WebDriver driver;
     assertTrue(tech.validarOpcionesXServicio("SMS"));
    	}
 	
-	@Test (groups= {"TechnicalCare", "SVA", "Ola1"}) 
+	@Test (groups= {"TechnicalCare", "SVA", "Ola1"},priority=2) 
 	public void TS94310_CRM_Ola_1_Technical_Care_CSR_SVA_Verificacion_del_funcionamiento_del_buscador_para_servicios_agrupados() throws Exception {
 	TechnicalCareCSRDiagnosticoPage tech = new TechnicalCareCSRDiagnosticoPage(driver);
 	sleep (4000);
@@ -253,7 +252,7 @@ private WebDriver driver;
     assertTrue(tech.validarOpcionesXServicio("VOZ"));
 	}
 	
-	@Test (groups= {"TechnicalCare", "SVA", "Ola1"})
+	@Test (groups= {"TechnicalCare", "SVA", "Ola1"},priority=2)
 	public void TS94311_CRM_Ola_1_Technical_Care_CSR_SVA_Verificacion_de_lista_de_servicios_agrupados() throws Exception {
 	TechnicalCareCSRDiagnosticoPage tech = new TechnicalCareCSRDiagnosticoPage(driver);
 	sleep (4000);
@@ -263,7 +262,7 @@ private WebDriver driver;
     assertTrue(tech.validarOpcionesXServicio("SMS Saliente"));
     
 	}
-	@Test (groups= {"TechnicalCare", "SVA", "Ola1"})
+	@Test (groups= {"TechnicalCare", "SVA", "Ola1"},priority=2)
 	public void TS94312_CRM_Ola_1_Technical_Care_CSR_SVA_Visualizacion_del_agrupador_estado_ACTIVO() throws Exception {
 	TechnicalCareCSRDiagnosticoPage tech = new TechnicalCareCSRDiagnosticoPage(driver);
 	sleep (4000);
@@ -274,7 +273,7 @@ private WebDriver driver;
     
 	}
 	
-	@Test (groups= {"TechnicalCare", "SVA", "Ola1"})
+	@Test (groups= {"TechnicalCare", "SVA", "Ola1"},priority=11)
 	public void TS94315_CRM_Ola_1_Technical_Care_CSR_SVA_Visualizar_pregunta_al_final_del_proceso_SVA() throws Exception {
 	TechnicalCareCSRDiagnosticoPage tech = new TechnicalCareCSRDiagnosticoPage(driver);
 	sleep (4000);
@@ -296,7 +295,7 @@ private WebDriver driver;
 	
 	
 	
-	@Test (groups= {"TechnicalCare", "SVA", "Ola1"})
+	@Test (groups= {"TechnicalCare", "SVA", "Ola1"},priority=3)
 	public void TS94413_CRM_Ola_1_Technical_Care_CSR_SVA_Validaciones_SMS_Emisión_a_ningún_destino_INCONSISTENCIA_LOCACION_NO() throws Exception {
 	TechnicalCareCSRDiagnosticoPage tech = new TechnicalCareCSRDiagnosticoPage(driver);
 	sleep (4000);
@@ -312,7 +311,7 @@ private WebDriver driver;
     assertTrue(tech.validarSpeech());
 	}
 	
-	@Test (groups= {"TechnicalCare", "SVA", "Ola1"})
+	@Test (groups= {"TechnicalCare", "SVA", "Ola1"},priority=7)
 	public void TS94339_CRM_Ola_1_Technical_Care_CSR_SVA_Visualizacion_de_mensaje_solicitando_realizar_un_consumo() throws Exception {
 	TechnicalCareCSRDiagnosticoPage tech = new TechnicalCareCSRDiagnosticoPage(driver);
 	sleep (4000);
@@ -330,7 +329,7 @@ private WebDriver driver;
     assertTrue(tech.validarInconveniente("No"));
 	}
 	
-	@Test (groups= {"TechnicalCare", "SVA", "Ola1"})
+	@Test (groups= {"TechnicalCare", "SVA", "Ola1"},priority=3)
 		public void TS94343_CRM_Ola_1_Technical_Care_CSR_SVA_Seleccion_OBLIGATORIA_de_inconveniente() throws Exception {
 	    TechnicalCareCSRDiagnosticoPage tech = new TechnicalCareCSRDiagnosticoPage(driver);
 		sleep (4000);
@@ -340,7 +339,7 @@ private WebDriver driver;
 	    assertTrue(tech.validarEstado("SMS"));
 	}
 	
-	@Test (groups= {"TechnicalCare", "SVA", "Ola1"})
+	@Test (groups= {"TechnicalCare", "SVA", "Ola1"},priority=2)
 	public void TS94393_CRM_Ola_1_Technical_Care_CSR_Mis_Servicios_Identificacion_de_los_Servicios_opcionales_y_obligatorios() throws Exception {
     TechnicalCareCSRDiagnosticoPage tech = new TechnicalCareCSRDiagnosticoPage(driver);
 	sleep (4000);
@@ -351,7 +350,7 @@ private WebDriver driver;
 	}
 	
 
-	@Test (groups= {"TechnicalCare", "SVA", "Ola1"})
+	@Test (groups= {"TechnicalCare", "SVA", "Ola1"}, priority=1)
 	public void TS94369_CRM_Ola_1_Technical_Care_CSR_SVA_Visualizacion_servicio_ACTIVO() throws Exception {
     TechnicalCareCSRDiagnosticoPage tech = new TechnicalCareCSRDiagnosticoPage(driver);
 	sleep (4000);
@@ -362,7 +361,7 @@ private WebDriver driver;
 	}
 	
 
-	@Test (groups= {"TechnicalCare", "SVA", "Ola1"})
+	@Test (groups= {"TechnicalCare", "SVA", "Ola1"},priority=8)
 	public void TS94352_CRM_Ola_1_Technical_Care_CSR_SVA_Verificacion_de_la_posicion_en_el_mapa() throws Exception {
 	TechnicalCareCSRDiagnosticoPage tech = new TechnicalCareCSRDiagnosticoPage(driver);
 	sleep (4000);
