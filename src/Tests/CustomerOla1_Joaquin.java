@@ -25,7 +25,7 @@ public class CustomerOla1_Joaquin extends TestBase {
 	public void exit() {
 		Page.cerrarTodasLasPestañas();
 		Page.cajonDeAplicaciones("Ventas");
-		cerrarTodo();
+		//cerrarTodo();
 	}
 	
 	@BeforeMethod(alwaysRun = true, groups = {"CustomerCare", "Ola1", "AjustesYEscalamiento", "SuspensionYRehabilitacion"})

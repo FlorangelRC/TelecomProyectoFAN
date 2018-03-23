@@ -191,7 +191,7 @@ public class CustomerCare extends BasePage {
 				if (c.getText().equalsIgnoreCase(nombreCuenta)) {
 					(new Actions(driver)).click(c.findElement(By.tagName("a"))).build().perform();
 					c.findElement(By.tagName("a")).click();
-					(new Actions(driver)).click(c.findElement(By.tagName("a"))).build().perform();
+					//(new Actions(driver)).click(c.findElement(By.tagName("a"))).build().perform();
 					TestBase.sleep(1000);
 					esperarAQueCargueLaCuenta();
 					return;

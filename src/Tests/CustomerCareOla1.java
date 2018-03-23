@@ -18,7 +18,6 @@ public class CustomerCareOla1 extends TestBase {
 
 	private CustomerCare cc;
 	
-	
 	@BeforeClass (alwaysRun = true, groups = {"CustomerCare", "AjustesYEscalamiento", "SuspensionYRehabilitacion", "Ola1"})
 	public void init() {
 		inicializarDriver();
@@ -29,7 +28,7 @@ public class CustomerCareOla1 extends TestBase {
 	
 	@AfterClass (alwaysRun = true, groups = {"CustomerCare", "AjustesYEscalamiento", "SuspensionYRehabilitacion", "Ola1"})
 	public void quit() {
-		driver.quit();
+		//driver.close();
 		sleep(5000);
 	}
 	
