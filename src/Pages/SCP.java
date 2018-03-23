@@ -800,4 +800,40 @@ Assert.assertTrue(acc&&nmbre&&pntf&&pntd);
         	System.out.println("Carga de Datos en Interfaces Batch Realizada");}
         catch(Exception e){System.out.println(e);}
 	}
+	
+	public void scroll(By elemento) {
+			  try {
+			  ((JavascriptExecutor)driver).executeScript("window.scrollTo(0,"+driver.findElement(elemento).getLocation().y+")");
+			  }catch(org.openqa.selenium.NoSuchElementException e) {
+				  System.out.print("No se puede hacer Scroll: ");
+				  e.printStackTrace();
+			  }
+			  
+	}
+	
+	public void CrearOportunidad(String NombreOportunidad) {
+		sleep(1000);
+		
+		//Nombre Oportunidad
+		WebElement NombreOp=driver.findElement(By.id("opp3"));
+		NombreOp.sendKeys(NombreOportunidad);
+		
+		//Etapa
+		Select etapa=new Select(driver.findElement(By.id("opp11")));
+		etapa.selectByIndex(1);
+		
+		//Contacto (Pendiente con el ID)
+		driver.findElement(By.id("CF00N4100000c3bM7")).sendKeys("Automatizacion");
+		
+		//Fechas
+		List<WebElement> date=driver.findElements(By.className("dateFormat"));
+		date.get(0).click();
+    	date.get(1).click();
+    	date.get(2).click();
+    	sleep(2000);
+    	//GuardarYNuevo
+    	driver.findElement(By.name("save_new")).click();
+    	sleep(4000);
+	}
+	
 }

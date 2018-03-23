@@ -86,7 +86,7 @@ public class test_SCP_Base extends TestBase {
 	 * Escribe un comentario y verifica que aparezca (Victor Pidio que lo Obviaramos)
 	 * By: Almer
 	 */
-	@Test(groups= {"SCP", "Almer"})
+	@Test(groups= {"SCP", "Almer"}, priority=3)
 	public void TS112559_CRM_SCP_Asignación_de_Value_Drivers_a_Oportunidades_Chatter_contextualizado_Escribir_comentario() {
 		
 		try {Thread.sleep(3000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
@@ -113,7 +113,7 @@ public class test_SCP_Base extends TestBase {
 	 * Verifica que se muestren los comentarios de otras cuentas en la vista
 	 * By: Almer
 	 */
-	@Test(groups= {"SCP", "Prueba"})
+	@Test(groups= {"SCP", "Prueba"}, priority=3)
 	public void TS112560_CRM_SCP_Asignación_de_Value_Drivers_a_Oportunidades_Chatter_contextualizado_Leer_comentario_escrito_con_otro_usuario() {
 		
 		try {Thread.sleep(3000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
@@ -138,7 +138,7 @@ public class test_SCP_Base extends TestBase {
 	 * Verifica que las tablas Oportunidades y Value Drivers tengan los Componentes deseados
 	 * By: Almer
 	 */
-	@Test(groups= "SCP")
+	@Test(groups= "SCP", priority=3)
 	public void TS112562_CRM_SCP_Asignación_de_Value_Drivers_a_Oportunidades_Ingreso_Desde_el_contacto() {
 		
 		try {Thread.sleep(3000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
@@ -179,7 +179,7 @@ public class test_SCP_Base extends TestBase {
 	 * Se Verifica que al hacer en click en la primera oportunidad, pase a la siguiente pagina y se muestre toda la informacion de la oportunidad
 	 * By: Almer
 	 */
-	@Test(groups= "SCP")
+	@Test(groups= "SCP", priority=3)
 	public void TS112565_CRM_SCP_Asignación_de_Value_Drivers_a_Oportunidades_Oportunidades() {
 		SCP page=new SCP(driver);
 	     assertTrue(page.goToOportunity());
@@ -189,7 +189,7 @@ public class test_SCP_Base extends TestBase {
 	 * Verifica los campos que conforman la estructura de oportunidades. El caso especifica el orden pero Victor menciono que no es necesario.
 	 * By: Almer.
 	 */
-	@Test(groups= "SCP")
+	@Test(groups= "SCP", priority=3)
 	public void TS112638_CRM_SCP_Estructura_de_las_oportunidades_Bloques() {
 		boolean check=true;
 		SCP page=new SCP(driver);
@@ -234,7 +234,7 @@ public class test_SCP_Base extends TestBase {
 	 * Crea un Competidor y luego verifica que se creo segun la cantidad de competidores.
 	 * @author Almer
 	 */
-	@Test(groups= "SCP")
+	@Test(groups= "SCP", priority=3)
 	public void TS112641_CRM_SCP_Estructura_de_las_oportunidades_Bloques_Competidores_Creacion() {
 		SCP page=new SCP(driver);
 		String countBefore="", countAfter=""; //Comparadores
@@ -270,7 +270,7 @@ public class test_SCP_Base extends TestBase {
 	 * Edita un Competidor y Verifica que se mantenga la misma cantidad de competidores.
 	 * By: Almer
 	 */
-	@Test(groups= "SCP")
+	@Test(groups= "SCP", priority=3)
 	public void TS112642_CRM_SCP_Estructura_de_las_oportunidades_Bloques_Competidores_Edicion() {
 		SCP page=new SCP(driver);
 		String countBefore="", countAfter=""; //Comparadores
@@ -305,7 +305,7 @@ public class test_SCP_Base extends TestBase {
 	 * Elimina un competidor y compara si fue eliminado segun la cantidad de competidores
 	 * By: Almer
 	 */
-	@Test(groups= "SCP")
+	@Test(groups= "SCP", priority=3)
 	public void TS112643_CRM_SCP_Estructura_de_las_oportunidades_Bloques_Competidores_Eliminacion() {
 		SCP page=new SCP(driver);
 		String countBefore="", countAfter=""; //Comparadores
@@ -338,7 +338,7 @@ public class test_SCP_Base extends TestBase {
 	 * Crea una nota y verifica que ha sido creada comparando las cantidades.
 	 * By: Almer
 	 */
-	@Test(groups= "SCP")
+	@Test(groups= "SCP", priority=3)
 	public void TS112649_CRM_SCP_Estructura_de_las_oportunidades_Bloques_Notas_y_Archivos_Adjuntos_Adjuntar_Nota() {
 		SCP page=new SCP(driver);
 		String countBefore="", countAfter=""; //Comparadores
@@ -374,7 +374,7 @@ public class test_SCP_Base extends TestBase {
 	 * By: Almer  String idOportunidad=driver.findElement(By.xpath("//*[@id=\"ep\"]/div[2]/div[2]/table/tbody/tr[2]/td[2]")).getText();
 	System.out.println(idOportunidad);
 	 */
-	@Test(groups= "SCP")
+	@Test(groups= "SCP", priority=3)
 	public void TS112650_CRM_SCP_Estructura_de_las_oportunidades_Bloques_Notas_y_Archivos_Adjuntos_Visualizar_Nota() {
 		SCP page=new SCP(driver);
 	    if(page.goToOportunity()) {
@@ -396,7 +396,7 @@ public class test_SCP_Base extends TestBase {
 	 * Cambia el Valor del Dolar Budget y verifica que se ha cambiado.
 	 * By: Almer
 	 */
-	@Test(groups= "SCP")
+	@Test(groups= "SCP", priority=6)
 	public void TS112665_CRM_SCP_Estructura_de_las_oportunidades_Bloques_Valorizado_de_la_oportunidad_Cotizacion_del_dolar_segun_Budget() {
 		SCP page=new SCP(driver);
 	    if(page.goToOportunity()) {
@@ -426,7 +426,7 @@ public class test_SCP_Base extends TestBase {
 	/**
 	 * Se verifica que se pueda crear una nueva Tarea.
 	 */
-	@Test(groups= "SCP")
+	@Test(groups= "SCP", priority=3)
 	public void TS112639_CRM_SCP_Estructura_de_las_oportunidades_Bloques_Actividades_abiertas_Tareas() {
 		SCP page=new SCP(driver);
 		String countBefore="", countAfter=""; //Comparadores
@@ -464,7 +464,7 @@ public class test_SCP_Base extends TestBase {
 	 * - Contactos de la oportunidad - Probabilidad - Grado de avance - TMI - Nombre de la oportunidad - Nombre de la cuenta
 	   - Licitación - Retroactiva - Fecha probable de venta - Fecha probable de instalación - Etapa - Fecha real de venta- Fecha real Instalación
 	 */
-	@Test(groups= "SCP")
+	@Test(groups= "SCP", priority=3)
 	public void TS112644_CRM_SCP_Estructura_de_las_oportunidades_Bloques_Detalle_de_la_oportunidad() {
 		SCP page=new SCP(driver);
 		Boolean co=false, pro=false, grado=false, tmi=false, nombreOp=false,
@@ -526,7 +526,7 @@ public class test_SCP_Base extends TestBase {
 	 * que se haya cambiado el nombre y la fecha en el historial de campos de la oportunidad.
 	 */
 	//Falla porque no se muestra el historial de Campos
-	@Test(groups= "SCP")
+	@Test(groups= "SCP", priority=3)
 	public void TS112647_CRM_SCP_Estructura_de_las_oportunidades_Bloques_Historial_de_Campos() {
 		SCP page=new SCP(driver);
 		String fecha="";
@@ -563,7 +563,7 @@ public class test_SCP_Base extends TestBase {
 	/**
 	 * Verifica que en el bloque productos contenga los campos que se validan en el test
 	 */
-	@Test(groups= "SCP")
+	@Test(groups= "SCP", priority=4)
 	public void TS112651_CRM_SCP_Estructura_de_las_oportunidades_Bloques_Productos_de_la_oportunidad() {
 	SCP page=new SCP(driver);
 	page.selectOporunity("alta sucursal entre rios");
@@ -596,7 +596,7 @@ public class test_SCP_Base extends TestBase {
 	/**
 	 * Verifica que en oportunidades, en el bloque Valorizado de la oportunidad, se muestren los campos.
 	 */
-	@Test(groups= "SCP")
+	@Test(groups= "SCP", priority=6)
 	public void TS112664_CRM_SCP_Estructura_de_las_oportunidades_Bloques_Valorizado_de_la_oportunidad() {
 		SCP page=new SCP(driver);
 	    if(page.goToOportunity()) {
@@ -642,7 +642,7 @@ public class test_SCP_Base extends TestBase {
 	 * Verifica que el monto total del contrato total en dolares, se igual a la formula
 	 * totalcuv+(cantidad*plazo*cargopormes)
 	 */
-	@Test(groups= "SCP")
+	@Test(groups= "SCP", priority=3)
 	public void TS112667_CRM_SCP_Estructura_de_las_oportunidades_Bloques_Valorizado_de_la_oportunidad_Monto_Contrato_USD() {
 	SCP page=new SCP(driver);
 	page.selectOporunity("alta sucursal jujuy");
@@ -673,7 +673,7 @@ public class test_SCP_Base extends TestBase {
 	 * Se Verifica que el monto total del contrato en peso, se igual a la formula
 	 * montocontrato en pesos + (monto contrado en dolares *dolar budget)
 	 */
-	@Test(groups= "SCP")
+	@Test(groups= "SCP", priority=6)
 	public void TS112670_CRM_SCP_Estructura_de_las_oportunidades_Bloques_Valorizado_de_la_oportunidad_Total_Contrato_Pesos() {
 	SCP page=new SCP(driver);
 	page.selectOporunity("alta sucursal jujuy");
@@ -695,7 +695,7 @@ public class test_SCP_Base extends TestBase {
 	 * Verifica que el monto total del contrato total en dolares, se igual a la formula
 	 * totalcuv+(cantidad*plazo*cargopormes)
 	 */
-	@Test(groups= "SCP")
+	@Test(groups= "SCP", priority=3)
 	public void TS112666_CRM_SCP_Estructura_de_las_oportunidades_Bloques_Valorizado_de_la_oportunidad_Monto_Contrato_Pesos() {
 	SCP page=new SCP(driver);
 	page.selectOporunity("alta sucursal jujuy");
@@ -721,7 +721,7 @@ public class test_SCP_Base extends TestBase {
 	 * Verifica que la suma de precio de venta (abono) en PESOS que aparece en producto, sea igual al total abono en PESOS
 	 * en el bloque de Valorizado de la oportunidad
 	 */
-	@Test(groups= "SCP")
+	@Test(groups= "SCP", priority=6)
 	public void TS112669_CRM_SCP_Estructura_de_las_oportunidades_Bloques_Valorizado_de_la_oportunidad_Total_Abono_PESOS() {
 	SCP page=new SCP(driver);
 	page.selectOporunity("alta sucursal tucuman");
@@ -747,7 +747,7 @@ public class test_SCP_Base extends TestBase {
 	 * Verifica que la suma de precio de venta (abono) en USD que aparece en producto, sea igual al total abono en USD
 	 * en el bloque de Valorizado de la oportunidad
 	 */
-	@Test(groups= "SCP")
+	@Test(groups= "SCP", priority=3)
 	public void TS112668_CRM_SCP_Estructura_de_las_oportunidades_Bloques_Valorizado_de_la_oportunidad_Total_Abono_Dolares() {
 	SCP page=new SCP(driver);
 	page.selectOporunity("alta sucursal tucuman");
@@ -774,7 +774,7 @@ public class test_SCP_Base extends TestBase {
 	 * Verifica que la sumatoria de todos los CUVS (cargos unica venta) en dolares sea igual al total CUVs del apartado
 	 * Valorizado de la oportunidad.
 	 */
-	@Test(groups= "SCP")
+	@Test(groups= "SCP", priority=6)
 	public void TS112671_CRM_SCP_Estructura_de_las_oportunidades_Bloques_Valorizado_de_la_oportunidad_Total_CUV_Dolares() {
 	SCP page=new SCP(driver);
 	page.selectOporunity("alta sucursal tucuman");
@@ -799,7 +799,7 @@ public class test_SCP_Base extends TestBase {
 	 * Verifica que la sumatoria de todos los CUVS (cargos unica venta) en Pesos sea igual al total CUVs del apartado
 	 * Valorizado de la oportunidad.
 	 */
-	@Test(groups= "SCP")
+	@Test(groups= "SCP", priority=6)
 	public void TS112672_CRM_SCP_Estructura_de_las_oportunidades_Bloques_Valorizado_de_la_oportunidad_Total_CUV_Pesos() {
 	SCP page=new SCP(driver);
 	page.selectOporunity("alta sucursal tucuman");

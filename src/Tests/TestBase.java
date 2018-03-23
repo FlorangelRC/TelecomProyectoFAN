@@ -16,6 +16,7 @@ import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.Select;
 import org.openqa.selenium.support.ui.WebDriverWait;
+import org.testng.annotations.AfterSuite;
 
 import Pages.Accounts;
 import Pages.BasePage;
@@ -26,6 +27,12 @@ import Pages.setConexion;
 
 public class TestBase {
 	protected static WebDriver driver;//
+	
+	@AfterSuite (alwaysRun = true, groups = {"CustomerCare", "AjustesYEscalamiento", "SuspensionYRehabilitacion", "Ola1"})
+	public void afterSuite() {
+		driver.quit();
+	}
+	
 	public void leftDropdown(WebDriver driver, String selection) {
 		driver.findElement(By.className("x-btn-mc")).click();
 		switch(selection) {
@@ -399,7 +406,7 @@ public class TestBase {
 	}
 	
 	public static void cerrarTodo() {
-		driver.quit();
+		driver.close();
 	}
 	
 	public static void login() {
