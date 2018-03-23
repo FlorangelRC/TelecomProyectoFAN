@@ -4,6 +4,7 @@ import static org.testng.Assert.assertTrue;
 import java.util.ArrayList;
 import java.util.List;
 import org.openqa.selenium.By;
+import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.WebDriver; 
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.Select; 
@@ -779,11 +780,18 @@ public class Marketing_Mattu extends TestBase{
 		mMarketing.ingresarANuevoProspecto();
 		WebElement wTable = driver.findElement(By.className("pbSubsection"));
 		List<WebElement> wColumn = mMarketing.traerColumnaElement(wTable, 4, 2);
-		WebElement wRequiredInput = wColumn.get(1).findElement(By.tagName("div"));
-		Assert.assertTrue(wRequiredInput.getAttribute("class").equals("requiredInput"));
+		boolean bAssert = true;
+		try {
+			WebElement wRequiredInput = wColumn.get(1).findElement(By.tagName("div"));
+			Assert.assertTrue(wRequiredInput.getAttribute("class").equals("requiredInput"));
+		}
+		catch (NoSuchElementException exception){
+			bAssert = false;
+		}
 		driver.get("https://crm--sit.cs14.my.salesforce.com/console?tsid=02uc0000000D6Hd");
 		List<WebElement> wTabs = driver.findElement(By.id("ext-gen59")).findElements(By.tagName("li"));
 		wTabs.get(2).click();
+		Assert.assertTrue(bAssert);
 	}
 	
 	//-------------------------------------------------------------------------------------------------
