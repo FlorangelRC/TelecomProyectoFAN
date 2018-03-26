@@ -579,8 +579,13 @@ public class TestBase {
 		    if (row.getCell(0).getStringCellValue().toLowerCase().contains(desc.toLowerCase())){
 		    	try {Campo = row.getCell(columna).getStringCellValue();}
 		    	catch (java.lang.IllegalStateException ex1) 
-		    	{//Campo = Double.toString(row.getCell(columna).getNumericCellValue());
-		    		System.out.println("Error!!!!!!! ="+ ex1);
+		    	{  
+		    		Campo = Double.toString(row.getCell(columna).getNumericCellValue());
+		    		if(Campo.contains("E")) 
+		    		{	
+		    			Campo = Double.toString(row.getCell(columna).getNumericCellValue());
+		    			Campo = Campo.substring(0, Campo.indexOf("E")).replace(".","" );
+		    		}
 		    	}
 		    }
 		 }
