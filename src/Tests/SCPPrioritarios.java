@@ -179,10 +179,10 @@ public class SCPPrioritarios extends TestBase{
  
 		@BeforeSuite
 		public void InicializarDatos() throws Exception {
-			init();
+			//init();
 			int i=0;
 			Cuentas C=new Cuentas();
-			while(i<C.getNombreDeLaCuenta().length){
+			/*while(i<C.getNombreDeLaCuenta().length){
 			setup();
 			Crear_Cuenta(C.getNombreDeLaCuenta(i),C.getCuit(i),C.getNumeroDelCliente(i));
 			i++;
@@ -197,6 +197,27 @@ public class SCPPrioritarios extends TestBase{
 			}
 			tearDown();
 			page.EjecutarInterfazBatch();
+			sleep(5000);*/
+			this.driver = setConexion.setupEze();
+			sleep(10000);
+			loginSCPConPermisos(driver);
+			sleep(5000);
+			SCP page=new SCP(driver);
+			i=0;
+			while(i<C.getNombreDeLaCuenta().length) {
+				page.clickOnTabByName("cuentas");
+				sleep(3000);
+				page.clickEnCuentaPorNombre(C.getNombreDeLaCuenta(i));
+				sleep(2000);
+				page.scroll(By.name("newOpp"));
+				driver.findElement(By.name("newOpp")).click();
+				sleep(3000);
+					for(int j=0;j<2;j++) {
+					page.CrearOportunidad("aaaaaprueba");
+				}
+			i++;
+			}
+			
 			System.out.println("Before Suite Ejecutado.");
 		}
 		
@@ -249,4 +270,19 @@ public class SCPPrioritarios extends TestBase{
 }
 //------------------------------------------------ ---------------------- ----------------------------------------------//
  
+ class Oportunidad{
+	 String nombreDeLaOportunidad;
+	 String etapa;
+	 String contacto;
+	 String fechaProbableVenta;
+	 String fechaProbableInstalacion;
+	 String fechaCierre;
+	 
+	 public String getNombreDeLaOportunidad() {
+			return nombreDeLaOportunidad;
+	}
+	 
+	 
+
+ }
  

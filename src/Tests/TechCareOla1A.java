@@ -88,7 +88,7 @@ public class TechCareOla1A extends TestBase {
 	/**
 	 * Verifica que aparezca el inconveniente "no puede configurar" luego de diagnosticar el servicio.
 	 */
-	@Test(groups= {"TechnicalCare","SVA","Ola1"})
+	@Test(groups= {"TechnicalCare","SVA","Ola1"}, priority=12)
 	public void TS94226_CRM_Ola1_Technical_Care_CSR_SVA_Actualización_de_matriz_Servicio_Transferencia_de_llamadas_inconveniente_No_funciona_transferencia_de_llamadas_No_funciona_transferencia_de_llamadas_No_puede_configurar() {
 		sleep(5000);
 		TechCare_Ola1 page=new TechCare_Ola1(driver);
@@ -107,7 +107,7 @@ public class TechCareOla1A extends TestBase {
 	 * Verifica que al diagnosticar servicio "voice mail con clave" se muestre la pregunta
 	 * "cómo ingreso mi clave"
 	 */
-	@Test(groups= {"TechnicalCare","SVA","Ola1"})
+	@Test(groups= {"TechnicalCare","SVA","Ola1"}, priority=3)
 	public void TS94438_CRM_Ola1_Technical_Care_CSR_SVA_Visualizacion_de_Servicio_Voice_Mail_con_Clave_e_inconveniente_cómo_ingreso_mi_clave() {
 		sleep(5000);
 		TechCare_Ola1 page=new TechCare_Ola1(driver);
@@ -125,7 +125,7 @@ public class TechCareOla1A extends TestBase {
 	/**
 	 * Veririca que se muestre la pregunta "no puedo llamar a un número en particular"
 	 */
-	@Test(groups= {"TechnicalCare","SVA","Ola1"})
+	@Test(groups= {"TechnicalCare","SVA","Ola1"}, priority=3)
 	public void TS96292_CRM_Ola1_Technical_Care_CSR_SVA_Visualizacion_de_Servicio_Barrings_Configurables_por_el_usuario_e_inconveniente_No_puedo_llamar_a_un_numero_en_particular() {
 		sleep(5000);
 		TechCare_Ola1 page=new TechCare_Ola1(driver);
@@ -143,7 +143,7 @@ public class TechCareOla1A extends TestBase {
 	/**
 	 * Veririca que se muestre la pregunta "el artículo ofrecido soluciona su inconveniente"
 	 */
-	@Test(groups= {"TechnicalCare","MisServicios","Ola1"})
+	@Test(groups= {"TechnicalCare","MisServicios","Ola1"}, priority=4)
 	public void TS94390_CRM_Ola1_Technical_Care_CSR_Mis_Servicios_Visualizacion_de_pregunta() {
 		sleep(5000);
 		TechCare_Ola1 page=new TechCare_Ola1(driver);
@@ -170,7 +170,7 @@ public class TechCareOla1A extends TestBase {
 	/**
 	 * Verifica que al seleccionar NO continue a la siguienete Ventana
 	 */
-	@Test(groups= {"TechnicalCare","MisServicios","Ola1"})
+	@Test(groups= {"TechnicalCare","MisServicios","Ola1"}, priority=5)
 	public void TS94392_CRM_Ola1_Technical_Care_CSR_Mis_Servicios_Visualizacion_Documento_Base_de_Conocimiento_Respuesta_NO() {
 		sleep(5000);
 		TechCare_Ola1 page=new TechCare_Ola1(driver);
@@ -192,7 +192,7 @@ public class TechCareOla1A extends TestBase {
 	/**
 	 * Verifica que al seleccionar SI, se genere el ticket al final.
 	 */
-	@Test(groups= {"TechnicalCare","MisServicios","Ola1"})
+	@Test(groups= {"TechnicalCare","MisServicios","Ola1"}, priority=5)
 	public void TS94391_CRM_Ola1_Technical_Care_CSR_Mis_Servicios_Visualizacion_Documento_Base_de_Conocimiento_Respuesta_SI() {
 		sleep(5000);
 		TechCare_Ola1 page=new TechCare_Ola1(driver);
@@ -211,7 +211,7 @@ public class TechCareOla1A extends TestBase {
 	    assertTrue(driver.findElement(By.xpath("//*[@id=\"ClosedCaseKnowledgeBase\"]/div/p/p/strong/strong")).isDisplayed());
 	}
 	
-	@Test(groups= {"TechnicalCare","SVA","Ola1"})
+	@Test(groups= {"TechnicalCare","SVA","Ola1"}, priority=10)
 	public void TS94403_CRM_Ola1_Technical_Care_CSR_SVA_Validacion_Red_OK_Consulta_al_cliente_tiene_señal_NO() {
 		sleep(5000);
 		TechCare_Ola1 page=new TechCare_Ola1(driver);
@@ -237,7 +237,7 @@ public class TechCareOla1A extends TestBase {
 	    catch(org.openqa.selenium.NoSuchElementException a) {assertTrue(false);}   
 	}
 	
-	@Test(groups= {"TechnicalCare","SVA","Ola1"})
+	@Test(groups= {"TechnicalCare","SVA","Ola1"}, priority=9)
 	public void TS94402_CRM_Ola1_Technical_Care_CSR_SVA_Validacion_Red_OK_Consulta_al_cliente_tiene_señal_SI() {
 		sleep(5000);
 		TechCare_Ola1 page=new TechCare_Ola1(driver);
@@ -263,7 +263,7 @@ public class TechCareOla1A extends TestBase {
 	    catch(org.openqa.selenium.NoSuchElementException a) {assertTrue(false);}   
 	}
 	
-	@Test(groups= {"TechnicalCare","SVA","Ola1"})
+	@Test(groups= {"TechnicalCare","SVA","Ola1"}, priority=3)
 	public void TS94417_CRM_Ola1_Technical_Care_CSR_SVA_Validaciones_Visualizacion_MMS_Emisión_Cliente_informa_que_no_puede_enviar_Archivo_Imagen_Audio() {
 		sleep(5000);
 		TechCare_Ola1 page=new TechCare_Ola1(driver);
@@ -280,7 +280,7 @@ public class TechCareOla1A extends TestBase {
 		assertEquals(driver.findElements(By.cssSelector(".imgItemContainer.ng-scope")).get(2).getText().toLowerCase(),"mms emisión cliente informa que no puede enviar imagen");
 	}
 
-	@Test(groups= {"TechnicalCare","SVA","Ola1"})
+	@Test(groups= {"TechnicalCare","SVA","Ola1"}, priority=8)
 	public void TS94351_CRM_Ola1_Technical_Care_CSR_SVA_Verificacion_de_buscar_la_posicion_en_el_mapa() {
 		sleep(5000);
 		TechCare_Ola1 page=new TechCare_Ola1(driver);
@@ -303,7 +303,7 @@ public class TechCareOla1A extends TestBase {
 	    assertTrue(driver.findElement(By.xpath("//*[@id=\"busSearchMap\"]")).isDisplayed());
 	}
 	
-	@Test(groups= {"TechnicalCare","SVA","Ola1"})
+	@Test(groups= {"TechnicalCare","SVA","Ola1"}, priority=3)
 	public void TS94412_CRM_Ola1_Technical_Care_CSR_SVA_Visualizacion_SMS_Emision_a_algun_destino() {
 		sleep(5000);
 		TechCare_Ola1 page=new TechCare_Ola1(driver);
@@ -318,7 +318,7 @@ public class TechCareOla1A extends TestBase {
 	    assertTrue(driver.findElements(By.cssSelector(".imgItemContainer.ng-scope")).get(1).getText().toLowerCase().contains("sms emisión a algún destino en particular"));
 	}
 	
-	@Test(groups= {"TechnicalCare","SVA","Ola1"})
+	@Test(groups= {"TechnicalCare","SVA","Ola1"}, priority=3)
 	public void TS94407_CRM_Ola1_Technical_Care_CSR_SVA_Visualizar_SMS_A_FIJO() {
 		sleep(5000);
 		TechCare_Ola1 page=new TechCare_Ola1(driver);
@@ -333,7 +333,7 @@ public class TechCareOla1A extends TestBase {
 	    assertTrue(driver.findElements(By.cssSelector(".imgItemContainer.ng-scope")).get(0).getText().toLowerCase().contains("sms a fijo"));
 	}
 	
-	@Test(groups= {"TechnicalCare","SVA","Ola1"})
+	@Test(groups= {"TechnicalCare","SVA","Ola1"}, priority=3)
 	public void TS94466_CRM_Ola1_Technical_Care_CSR_SVA_Visualizacion_de_Servicio_SMS_entrante_e_inconveniente_No_recibe_de_un_número_particular() {
 		sleep(5000);
 		TechCare_Ola1 page=new TechCare_Ola1(driver);
@@ -348,7 +348,7 @@ public class TechCareOla1A extends TestBase {
 	    assertTrue(driver.findElements(By.cssSelector(".imgItemContainer.ng-scope")).get(0).getText().toLowerCase().contains("no recibe de un número particular"));
 	}
 	
-	@Test(groups= {"TechnicalCare","SVA","Ola1"})
+	@Test(groups= {"TechnicalCare","SVA","Ola1"}, priority=3)
 	public void TS94469_CRM_Ola1_Technical_Care_CSR_SVA_Visualizacion_de_Servicio_SMS_saliente_e_inconveniente_SMS_a_fijo() {
 		sleep(5000);
 		TechCare_Ola1 page=new TechCare_Ola1(driver);
@@ -364,7 +364,7 @@ public class TechCareOla1A extends TestBase {
 	}
 	
 	
-	@Test(groups= {"TechnicalCare","SVA","Ola1"})
+	@Test(groups= {"TechnicalCare","SVA","Ola1"}, priority=3)
 	public void TS94462_CRM_Ola1_Technical_Care_CSR_SVA_Visualizacion_de_Servicio_e_inconveniente() {
 		sleep(5000);
 		TechCare_Ola1 page=new TechCare_Ola1(driver);
@@ -380,7 +380,7 @@ public class TechCareOla1A extends TestBase {
 	    assertTrue(driver.findElements(By.cssSelector(".imgItemContainer.ng-scope")).get(0).isDisplayed());
 	}
 	
-	@Test(groups= {"TechnicalCare","SVA","Ola1"})
+	@Test(groups= {"TechnicalCare","SVA","Ola1"}, priority=7)
 	public void TS94372_CRM_Ola1_Technical_Care_CSR_SVA_Verificacion_de_Cobertura_y_Señal_en_el_equipo() {
 		sleep(5000);
 		TechCare_Ola1 page=new TechCare_Ola1(driver);
@@ -405,7 +405,7 @@ public class TechCareOla1A extends TestBase {
 	    assertTrue(driver.findElement(By.xpath("//*[@id=\"OutOfCoverage\"]/div/p/p/strong")).isDisplayed());
 	}
 	
-	@Test(groups= {"TechnicalCare","SVA","Ola1"})
+	@Test(groups= {"TechnicalCare","SVA","Ola1"}, priority=9)
 	public void TS94329_CRM_Ola1_Technical_Care_CSR_SVA_Seleccion_del_dispositivo_CON_señal() {
 		sleep(5000);
 		TechCare_Ola1 page=new TechCare_Ola1(driver);
@@ -428,7 +428,7 @@ public class TechCareOla1A extends TestBase {
 	    catch(org.openqa.selenium.NoSuchElementException a) {assertTrue(false);}   
 	}
 	
-	@Test(groups= {"TechnicalCare","SVA","Ola1"})
+	@Test(groups= {"TechnicalCare","SVA","Ola1"}, priority=10)
 	public void TS94330_CRM_Ola1_Technical_Care_CSR_SVA_Seleccion_del_dispositivo_SIN_señal() {
 		sleep(5000);
 		TechCare_Ola1 page=new TechCare_Ola1(driver);
@@ -451,7 +451,7 @@ public class TechCareOla1A extends TestBase {
 	    catch(org.openqa.selenium.NoSuchElementException a) {assertTrue(false);}   
 	}
 	
-	@Test(groups= {"TechnicalCare","SVA","Ola1"})
+	@Test(groups= {"TechnicalCare","SVA","Ola1"}, priority=10)
 	public void TS94317_CRM_Ola1_Technical_Care_CSR_SVA_Visualizar_pregunta_Respuesta_NO() {
 		sleep(5000);
 		TechCare_Ola1 page=new TechCare_Ola1(driver);
@@ -481,7 +481,7 @@ public class TechCareOla1A extends TestBase {
 	}
 	
 	
-	@Test(groups= {"TechnicalCare","SVA","Ola1"})
+	@Test(groups= {"TechnicalCare","SVA","Ola1"}, priority=9)
 	public void TS94316_CRM_Ola1_Technical_Care_CSR_SVA_Visualizar_pregunta_Respuesta_SI() {
 		sleep(5000);
 		TechCare_Ola1 page=new TechCare_Ola1(driver);
@@ -510,7 +510,7 @@ public class TechCareOla1A extends TestBase {
 	    assertTrue(driver.findElement(By.xpath("//*[@id=\"OperationalServiceMessage\"]/div")).isDisplayed());
 	}
 	
-	@Test(groups= {"TechnicalCare","SVA","Ola1"})
+	@Test(groups= {"TechnicalCare","SVA","Ola1"}, priority=8)
 	public void TS94350_CRM_Ola1_Technical_Care_CSR_SVA_Verificacion_del_ingreso_de_direccion() {
 		sleep(5000);
 		TechCare_Ola1 page=new TechCare_Ola1(driver);
@@ -530,7 +530,7 @@ public class TechCareOla1A extends TestBase {
 	}
 	
 	
-	@Test(groups= {"TechnicalCare","SVA","Ola1"})
+	@Test(groups= {"TechnicalCare","SVA","Ola1"}, priority=6)
 	public void TS94335_CRM_Ola1_Technical_Care_CSR_SVA_Verificacion_de_desregistro_de_la_linea() {
 		sleep(5000);
 		TechCare_Ola1 page=new TechCare_Ola1(driver);
@@ -552,7 +552,7 @@ public class TechCareOla1A extends TestBase {
 	    assertTrue(driver.findElement(By.xpath("//*[@id=\"DeregisterSpeechMessage\"]/div")).isDisplayed());
 	}
 	
-	@Test(groups= {"TechnicalCare","SVA","Ola1"})
+	@Test(groups= {"TechnicalCare","SVA","Ola1"}, priority=3)
 	public void TS94478_CRM_Ola1_Technical_Care_CSR_SVA_Validacion_SMS_saliente() {
 		sleep(5000);
 		TechCare_Ola1 page=new TechCare_Ola1(driver);
