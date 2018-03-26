@@ -3,6 +3,8 @@ package Tests;
 import static org.testng.Assert.assertEquals;
 import static org.testng.Assert.assertFalse;
 import static org.testng.Assert.assertTrue;
+
+import java.io.IOException;
 import java.sql.Driver;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -408,12 +410,12 @@ public class Sales extends TestBase {
 	}
 	
 	@Test(groups={"Sales", "AltaDeLinea", "Ola1"})  
-	public void TS94827_Ventas_General_Verificar_Metodos_De_Pago_Perfil_Representante_Telefonico() {
+	public void TS94827_Ventas_General_Verificar_Metodos_De_Pago_Perfil_Representante_Telefonico() throws IOException {
 		perfil = "agente";
 		boolean TDC = false;
 		boolean DPF = false;
 		SalesBase sb = new SalesBase(driver);
-		sb.BuscarCuenta(DNI, "34073329");
+		sb.BuscarCuenta(DNI, buscarCampoExcel(1, "Cuenta Activa", 2));
 		sb.acciondecontacto("catalogo");
 		sleep(18000);
 		sb.elegirplan("Plan con Tarjeta Repro");

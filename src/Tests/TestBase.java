@@ -13,6 +13,7 @@ import java.util.List;
 import java.util.concurrent.TimeUnit;
 
 import org.apache.poi.ss.usermodel.Row;
+import org.apache.poi.xssf.usermodel.XSSFRow;
 import org.apache.poi.xssf.usermodel.XSSFSheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.openqa.selenium.By;
@@ -567,11 +568,22 @@ public class TestBase {
 	public String buscarCampoExcel(int hoja, String desc, int columna) throws IOException
 	{
 		String Campo = null;
-		 File archivo = new File("C:\\Users\\florangel\\Desktop\\Altas_Necesarias.xlsx");
+		 File archivo = new File("Cuentas.xlsx");
 		 FileInputStream file = new FileInputStream(archivo);
 	     XSSFWorkbook workbook = new XSSFWorkbook(file); 
 	     XSSFSheet sheet = workbook.getSheetAt(hoja);
 	     Iterator<Row> rows = sheet.rowIterator();
+	     rows.next();
+	     while (rows.hasNext()) {
+		     XSSFRow row = (XSSFRow) rows.next();
+		    if (row.getCell(0).getStringCellValue().toLowerCase().contains(desc.toLowerCase())){
+		    	try {Campo = row.getCell(columna).getStringCellValue();}
+		    	catch (java.lang.IllegalStateException ex1) 
+		    	{//Campo = Double.toString(row.getCell(columna).getNumericCellValue());
+		    		System.out.println("Error!!!!!!! ="+ ex1);
+		    	}
+		    }
+		 }
 		return (Campo);
 	}
 }
