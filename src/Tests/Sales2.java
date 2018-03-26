@@ -36,12 +36,12 @@ public class Sales2 extends TestBase{
 	String localidad="BASAIL";
 	protected  WebDriverWait wait;
 	
-	//@AfterClass(alwaysRun=true)
+	@AfterClass(alwaysRun=true)
 	public void tearDown() {
 		driver.quit();
 	}
 	
-	//@AfterMethod(alwaysRun=true)
+	@AfterMethod(alwaysRun=true)
 	public void deslogin() {
 		sleep(3000);
 		driver.get("https://crm--sit.cs14.my.salesforce.com/home/home.jsp?tsid=02u41000000QWha/");
@@ -1370,10 +1370,15 @@ public class Sales2 extends TestBase{
 		sb.elegirplan("Plan con Tarjeta Repro");
 		sb.continuar();
 		sleep(30000);
-		WebElement bx = driver.findElement(By.id("tree0-node1__label"));
+		String lineaVieja = driver.findElement(By.id("tree0-node1")).findElement(By.cssSelector(".slds-checkbox__label.ta-cyan-color-dark")).findElement(By.className("ng-binding")).getText();
+		
+		WebElement bx = driver.findElement(By.id("SearchBlock"));
 		CC.obligarclick(bx);
 		sleep(3000);
-		Assert.assertTrue(false);
+		CC.obligarclick(driver.findElement(By.id("ChangeNumber")));
+		sleep(5000);
+		String lineaNueva = driver.findElement(By.id("tree0-node1")).findElement(By.cssSelector(".slds-checkbox__label.ta-cyan-color-dark")).findElement(By.className("ng-binding")).getText();
+		Assert.assertTrue(!lineaVieja.equals(lineaNueva));
 	}
 	
 	@Test(groups={"Sales","AltaDeLinea","Ola1"}) 	
@@ -1975,17 +1980,29 @@ public class Sales2 extends TestBase{
 		Ta_CPQ cart = new Ta_CPQ(driver);
 		sb.BuscarCuenta(DNI, "32323232");
 		sb.acciondecontacto("catalogo");
-		try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		sleep(10000);
 		WebElement produc = driver.findElement(By.cssSelector(".cpq-categories-container")).findElements(By.tagName("li")).get(1);
 		produc.click();
 		driver.findElement(By.cssSelector(".slds-input.ng-pristine.ng-untouched.ng-valid")).sendKeys("Galaxy S8");		
 		try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		driver.findElement(By.cssSelector(".slds-button.slds-button--neutral.add-button")).click();
+		sleep(15000);
 		WebElement more	 = driver.findElements(By.cssSelector(".product-link.slds-text-body--small.slds-float--right")).get(0);
 		more.click();
-		WebElement waiter = wait.until(ExpectedConditions.presenceOfElementLocated(By.cssSelector(".slds-item--detail.slds-truncate")));
+		sleep(8000);
+		//WebElement waiter = wait.until(ExpectedConditions.presenceOfElementLocated(By.cssSelector(".slds-item--detail.slds-truncate")));
 		List<WebElement> values = driver.findElements(By.cssSelector(".slds-item--detail.slds-truncate"));
 		String[] precissionCounter = values.get(3).getText().split(",");
 		Assert.assertEquals(precissionCounter[1].length(), 2);
+		driver.findElements(By.cssSelector(".slds-button.slds-button--neutral")).get(3).click();
+		sleep(3000);
+		List<WebElement> montos = driver.findElements(By.className("cpq-underline"));
+		montos = montos.subList(0, 3);
+		for (WebElement UnM : montos) {
+			System.out.println("monto="+UnM.getText());
+			precissionCounter =UnM.getText().split(",");
+			Assert.assertEquals(precissionCounter[1].length(), 2);
+		}
 	}
 	@Test(groups={"Sales", "AltaLinea", "Ola1"})              
 	public void TS94481_checkPaperCanLabel() {

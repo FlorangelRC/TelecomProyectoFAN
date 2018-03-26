@@ -1,12 +1,20 @@
 package Tests;
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.Iterator;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 
+import org.apache.poi.ss.usermodel.Row;
+import org.apache.poi.xssf.usermodel.XSSFSheet;
+import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.openqa.selenium.By;
 import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.TimeoutException;
@@ -547,6 +555,17 @@ public class TestBase {
 			return null;
 		}
 
+	}
+	
+	public String buscarCampoExcel(int hoja, String desc, int columna) throws IOException
+	{
+		String Campo = null;
+		 File archivo = new File("C:\\Users\\florangel\\Desktop\\Altas_Necesarias.xlsx");
+		 FileInputStream file = new FileInputStream(archivo);
+	     XSSFWorkbook workbook = new XSSFWorkbook(file); 
+	     XSSFSheet sheet = workbook.getSheetAt(hoja);
+	     Iterator<Row> rows = sheet.rowIterator();
+		return (Campo);
 	}
 }
 

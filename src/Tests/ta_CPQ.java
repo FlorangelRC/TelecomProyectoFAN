@@ -57,7 +57,7 @@ public class ta_CPQ extends TestBase {
 	protected WebDriver driver;
 	protected  WebDriverWait wait;
 
-	//@AfterClass(alwaysRun=true)
+	@AfterClass(alwaysRun=true)
 	public void tearDown() {
 		driver.quit();
 		sleep(1000);
@@ -143,24 +143,7 @@ public class ta_CPQ extends TestBase {
 	 * Verifica que al agregar un plan que no requiere prefactibilidad, se pueda borrar.
 	 * Passed Ultima revision 30-01-18
 	 */
-	@Test(groups={"Sales", "AltaDeLinea", "Ola1"})
-	public void TS94479_checkPlanIsDeleted() {
-		Ta_CPQ page3 = new Ta_CPQ(driver);
-		/*try { for(WebElement e : driver.findElements(By.className("cpq-product-name"))) {
-			page3.clickOnDelete();
-			try {Thread.sleep(2000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
-		} } catch (java.lang.IndexOutOfBoundsException e) {}
-		//page3.addPlan();*/
-		sleep(4000);
-		SalesBase SB=new SalesBase(driver);
-		page3.addPlan("plan prepagp");
-		sleep(2000);
-		page3.abrirprimeraflecha();
-		sleep(3000);
-		page3.deleteoneplan();
-		try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
-		Assert.assertFalse(page3.isPlanPresent());
-	}
+	
 	
 	/**bin;
 	 * Verifica que aparezca "Quitar el producto del carrito" en la etiqueta de la papelera.
@@ -366,11 +349,11 @@ public class ta_CPQ extends TestBase {
 		Assert.assertEquals("Estado de la orden : Pendiente de pago", page9.getOrderStatus());
 	}
 	
-	/**
+	/** pasado a sales2
 	 * Verifica que se puedan borrar varios planes.
 	 * Ultima Revision 30-01-18
 	 */
-	@Test(groups={"Sales", "AltaDeLinea", "Ola1"})
+	//@Test(groups={"Sales", "AltaDeLinea", "Ola1"})
 	public void TS94482_deleteAllPlans() {
 		Ta_CPQ page3 = new Ta_CPQ(driver);
 		try { for(WebElement e : driver.findElements(By.className("cpq-product-name"))) {
@@ -595,13 +578,13 @@ public class ta_CPQ extends TestBase {
 		Assert.assertTrue(cart.getButtonNewAccount() != null);
 	}
 	
-	/**
+	/** pasado a sales 2
 	 * Verifica que despues de eliminar los productos del carrito se muestre el mensaje
 	 * "Cart is empty."
 	 * 
 	 * Ultima revision 30-01-18
 	 */
-	@Test(groups={"Sales", "AltaDeLinea", "Ola1"})
+	//@Test(groups={"Sales", "AltaDeLinea", "Ola1"})
 	public void TS94522_CRM_Fase_1_SalesCPQ_Alta_Linea_Carrito_Verificar_el_mensaje_al_vaciar_el_carrito_XX() {
 		Ta_CPQ cart = new Ta_CPQ(driver);
 		//cart.addAnyProductToCart();
@@ -682,8 +665,8 @@ public class ta_CPQ extends TestBase {
 		assertTrue(false);
 	}
 	
-	//Listo 26-01-18 no hay costo
-	@Test(groups={"Sales", "AltaDeLinea", "Ola1"})
+	//Listo 26-01-18 no hay costo pasado a SALES2
+	//@Test(groups={"Sales", "AltaDeLinea", "Ola1"})
 	public void TS94515_CRM_Fase_1_SalesCPQ_Alta_Linea_Costo_Operacion_Validar_formato_del_monto() {
 		Ta_CPQ cart = new Ta_CPQ(driver);
 		try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
