@@ -8,6 +8,7 @@ import java.util.List;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
+import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Actions;
 
@@ -24,14 +25,14 @@ import Pages.SCP;
 import Pages.setConexion;
 
 public class SCPContextoSectorial extends TestBase {
-
+	private WebDriver driver;
 	private SCP scp;
 	private static String downloadPath = "C:\\Users\\Nicolas\\Downloads";
 	
 	
 	@BeforeClass(groups = "SCP")
 	public void Init() throws Exception {
-		driver = setConexion.setupEze();
+		this.driver = setConexion.setupEze();
 		scp = new SCP(driver);
 		loginSCPConPermisos(driver);
 		sleep(5000);

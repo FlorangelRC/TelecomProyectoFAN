@@ -119,6 +119,9 @@ public class SCP extends BasePage {
 		List<WebElement> cuentas = driver.findElement(By.className("hotListElement")).findElements(By.cssSelector(".dataRow.odd"));
 		cuentas.add(driver.findElement(By.className("hotListElement")).findElement(By.cssSelector(".dataRow.even.first")));
 		cuentas.add(driver.findElement(By.className("hotListElement")).findElement(By.cssSelector(".dataRow.even")));
+		try{cuentas.add(driver.findElement(By.className("hotListElement")).findElement(By.cssSelector(".dataRow.even.last")));}
+		catch(org.openqa.selenium.NoSuchElementException ex1) {}
+		
 		for (WebElement unaCuenta : cuentas) {
 			System.out.println("Cuenta:"+ unaCuenta.findElement(By.tagName("a")).getText());
 			if(unaCuenta.findElement(By.tagName("a")).getText().toLowerCase().contains(name.toLowerCase())) {
@@ -654,6 +657,7 @@ Assert.assertTrue(acc&&nmbre&&pntf&&pntd);
 			driver.findElement(By.className("detailList")).findElements(By.tagName("tr")).get(7).findElement(By.tagName("input")).clear();
 			driver.findElement(By.className("detailList")).findElements(By.tagName("tr")).get(7).findElement(By.tagName("input")).sendKeys(dato);
 				break;
+				
 		case "moneda":
 	
 			setSimpleDropdown(driver.findElement(By.className("detailList")).findElements(By.tagName("tr")).get(7).findElement(By.tagName("select")), dato);

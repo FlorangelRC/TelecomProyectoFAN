@@ -104,15 +104,9 @@ public class SCPAdministracionDeServicios extends TestBase {
 		try {Thread.sleep(7000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 		pcp.elegiroportunidad("Integra y SPV");
 		try {Thread.sleep(7000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
-		List<WebElement> Detalles = driver.findElement(By.className("detailList")).findElements(By.tagName("tr"));
-		for(WebElement UnaL : Detalles) {
-			List<WebElement> campos = UnaL.findElements(By.tagName("td"));
-			for(WebElement UnC : campos) {
-				if (UnC.getText().toLowerCase().equals("moneda"))
-					estaMon = true;
-			}
-		}
-		assertTrue(estaMon);
+		List<WebElement> Detalles = driver.findElements(By.className("detailList")).get(2).findElements(By.cssSelector(".dataCol.col02.inlineEditWrite"));
+		Detalles.addAll(driver.findElements(By.className("detailList")).get(2).findElements(By.cssSelector(".dataCol.inlineEditWrite")));
+		assertTrue(Detalles.size()==0);
 		//pcp.Desloguear_Loguear("isabel");
     }  
 	
@@ -899,7 +893,7 @@ public class SCPAdministracionDeServicios extends TestBase {
 		try {Thread.sleep(7000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 		driver.findElement(By.cssSelector(".listRelatedObject.accountContactRelationBlock")).findElement(By.cssSelector(".dataRow.even.first")).findElements(By.tagName("a")).get(3).click();
 		try {Thread.sleep(7000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
-		String[] campos = {"propietario del contacto","tel\u00e9fono","nombre","celular","nombre de la cuenta","email","fecha de nacimiento","pictureurl","t\u00edtulo","picture","activo","domicilio","creado por","descripci\u00f3n","ejecutivo de cuenta"};//
+		String[] campos = {"propietario del contacto","tel\u00e9fono","nombre","celular","nombre de la cuenta","email","fecha de nacimiento","pictureurl","t\u00edtulo","picture","activo","domicilio","creado por","descripci\u00f3n"};//
 		List<WebElement> Detalles = driver.findElement(By.className("detailList")).findElements(By.tagName("tr"));
 		List<WebElement> cReales = new ArrayList<WebElement>();
 		for(WebElement UnaL : Detalles) {
