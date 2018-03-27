@@ -107,22 +107,22 @@ private WebDriver driver;
 	
 	@Test(groups = "SCP", priority=2)
 	public void TS110244_Estructura_del_cliente_GGCC_Campos() {
-	
+		
 		 ArrayList<String> camp1 = new ArrayList<String>();
 		 ArrayList<String> txt2 = new ArrayList<String>();
 		 txt2.add("CUIT");
-		 txt2.add("Raz\u00f3n Social");  // falta razon social
-		 txt2.add("Holding");
-		 txt2.add("Segmento");
+		 txt2.add("Numero de Holding");
+		 txt2.add("Segmento Vertical");
 		 txt2.add("Region");
 		 txt2.add("Territorio");
-		 txt2.add("Domicilio de recepci�n de notificaciones");
+		 txt2.add("Domicilio de recepci\u00f3n de notificaciones");
 		 List<WebElement> campos = driver.findElements(By.className("labelCol"));
 		 System.out.println(campos.size());
 		 for(WebElement c: campos){
 			 camp1.add(c.getText());
+			 System.out.println(c.getText());
 			 }
-			 Assert.assertTrue(camp1.containsAll(txt2));
+		 Assert.assertTrue(camp1.containsAll(txt2));
 	}
 	
 	@Test(groups = "SCP", priority=2) 
@@ -186,10 +186,9 @@ private WebDriver driver;
 		 ArrayList<String> camp1 = new ArrayList<String>();
 		 ArrayList<String> txt2 = new ArrayList<String>();
 		 txt2.add("CUIT");
-		 txt2.add("Raz\u00f3n Social");  // falta
-		 txt2.add("Numero de clientes"); //falta 
+		 txt2.add("Id Cliente Legado");
 		 txt2.add("Numero de Holding");
-		 txt2.add("Categor\u00ed WH");
+		 txt2.add("Categor\u00eda WH");
 		 txt2.add("Domicilio de recepci\u00f3n de notificaciones");
 		 List<WebElement> campos = driver.findElements(By.className("labelCol"));
 		 System.out.println(campos.size());
@@ -209,22 +208,18 @@ private WebDriver driver;
 	WebElement msg = driver.findElement(By.className("messageText"));
 	waitFor(driver, By.className("messageText"));
 	System.out.println(msg.getText());
-	Assert.assertTrue((msg.getText().equals("Para agregar o para quitar una Influencia: 1) Arrastrar la caja del contacto influyente 2) Soltarla sobre la caja del contacto influenciado 3) Clickear el bot�n de \"Guardar cambios\" antes de abandonar la p�gina!")));
+	Assert.assertTrue((msg.getText().equals("Para agregar o para quitar una Influencia: 1) Arrastrar la caja del contacto influyente 2) Soltarla sobre la caja del contacto influenciado 3) Clickear el bot\u00f3n de \"Guardar cambios\" antes de abandonar la p\u00e1gina!")));
 	}
 	
 	
 	@Test(groups = "SCP", priority=3) 
-	public void TS112792_Plan_de_accion_Eliminar_tareas() {  // actualizar
+	public void S() { 
 		SCP prueba = new SCP(driver); 
 		prueba.Desloguear_Loguear("Maximiliano");
-		sleep(15000);
-		WebElement user = driver.findElement(By.id(".sidebarDiv")).findElements(By.tagName("div")).get(1).findElements(By.tagName("div")).get(1).findElements(By.tagName("div")).get(1).findElement(By.id("hoverItem27"));
-		if(user.getText().contains("Florencia Di Ciocco SRL")){
-			user.click();
-		}
-		System.out.println(user.getText());
+		sleep(7000);
+		WebElement user = driver.findElements(By.className("mruText")).get(0);
 		user.click();
-		sleep(10000);
+		sleep(3000);
 	    prueba.moveToElementOnAccAndClick("cuartoTitulo", 2);
 	    WebElement tabla= driver.findElement(By.id("mainTable_wrapper")).findElement(By.className("odd")).findElements(By.tagName("td")).get(1);
 	    String lala = tabla.getText();
@@ -366,9 +361,9 @@ private WebDriver driver;
 		 ArrayList<String> colu = new ArrayList<String>();
 		 ArrayList<String> txt2 = new ArrayList<String>();
 		 txt2.add(": activate to sort column descending");
-		 txt2.add("Fecha de Creaci�n");
+		 txt2.add("Fecha de Creaci\u00f3n");
 		 txt2.add("Tema");
-		 txt2.add("Descripci�n");
+		 txt2.add("Descripci\u00f3n");
 		 txt2.add("Fecha Limite");
 		 txt2.add("Completado");
 		 txt2.add("Estado de la tarea");
