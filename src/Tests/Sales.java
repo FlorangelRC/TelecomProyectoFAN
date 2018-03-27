@@ -255,10 +255,11 @@ public class Sales extends TestBase {
 			}
 	
 	//@Test(groups={"Sales", "AltaDeContacto", "Ola1"}) //no es obligatorio
-	public void TS94571_Verificar_que_el_campo_Numero_de_Documento_sea_obligatorio(){
+	public void TS94571_Verificar_que_el_campo_Numero_de_Documento_sea_obligatorio() throws IOException{
 		boolean a= false;
 		SalesBase SB = new SalesBase(driver);
-		SB.BuscarAvanzada(nombre, apellido, "", "", "");
+		String cuenta = buscarCampoExcel(1, "Cuenta Activa", 1);
+		SB.BuscarAvanzada(cuenta.split(" ")[0], cuenta.split(" ")[1], "", "", "");
 		CustomerCare CC = new CustomerCare(driver);
 		CC.obligarclick(driver.findElement(By.id("dataInput_nextBtn")));
 		try {Thread.sleep(10000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
@@ -456,10 +457,10 @@ public class Sales extends TestBase {
 	}
 	
 	@Test(groups={"Sales", "AltaDeLinea", "Ola1"})  
-	public void TS94831_Ventas_General_Verificar_No_Asignacion_De_Seriales_Perfil_Representante_Telefonico() {
+	public void TS94831_Ventas_General_Verificar_No_Asignacion_De_Seriales_Perfil_Representante_Telefonico() throws IOException {
 		perfil = "agente";
 		SalesBase sb = new SalesBase(driver);
-		sb.BuscarCuenta(DNI, "34073329");
+		sb.BuscarCuenta(DNI, buscarCampoExcel(1, "Cuenta Activa", 2));
 		sb.acciondecontacto("catalogo");
 		sleep(15000);
 		sb.elegirplan("Plan con Tarjeta Repro");  
@@ -640,21 +641,26 @@ public class Sales extends TestBase {
 	@Test(groups={"Sales", "AltaDeContacto", "Ola1"})
 	public void TS94588_Seleccionar_opcion_de_validacion_de_identidad(){//la validacion de identidad no esta mas
 		SalesBase SB = new SalesBase(driver);
+		boolean existe = false;
 		BasePage Bp= new BasePage();
-		Random aleatorio = new Random(System.currentTimeMillis());
-		aleatorio.setSeed(System.currentTimeMillis());
-		int intAletorio = aleatorio.nextInt(8999999)+1000000;
-		Bp.setSimpleDropdown(driver.findElement(By.id("SearchClientDocumentType")),"DNI");
-		driver.findElement(By.id("SearchClientDocumentNumber")).sendKeys(Integer.toString(intAletorio));
-		driver.findElement(By.id("SearchClientsDummy")).click();
-		sleep(5000);
-		List <WebElement> cc = driver.findElements(By.cssSelector(".slds-form-element__label.ng-binding"));
-		for (WebElement x : cc) {
-			if (x.getText().toLowerCase().contains("+ crear nuevo cliente")) {
-				x.click();
-				break;
+		do {
+			Random aleatorio = new Random(System.currentTimeMillis());
+			aleatorio.setSeed(System.currentTimeMillis());
+			int intAletorio = aleatorio.nextInt(8999999)+1000000;
+			Bp.setSimpleDropdown(driver.findElement(By.id("SearchClientDocumentType")),"DNI");
+			driver.findElement(By.id("SearchClientDocumentNumber")).clear();
+			driver.findElement(By.id("SearchClientDocumentNumber")).sendKeys(Integer.toString(intAletorio));
+			driver.findElement(By.id("SearchClientsDummy")).click();
+			sleep(5000);
+			List <WebElement> cc = driver.findElements(By.cssSelector(".slds-form-element__label.ng-binding"));
+			for (WebElement x : cc) {
+				if (x.getText().toLowerCase().contains("+ crear nuevo cliente")) {
+					x.click();
+					existe = true;
+					break;
+				}
 			}
-		}
+		}while(existe == false);
 		sleep(5000);
 		driver.findElement(By.cssSelector(".slds-radio--faux.ng-scope")).click();
 		
