@@ -33,7 +33,7 @@ public class SCPContextoSectorial extends TestBase {
 	
 	@BeforeClass(groups = "SCP")
 	public void Init() throws Exception {
-		driver = setConexion.setupEze();
+		this.driver = setConexion.setupEze();
 		scp = new SCP(driver);
 		loginSCPConPermisos(driver);
 		sleep(5000);
@@ -97,7 +97,7 @@ public class SCPContextoSectorial extends TestBase {
 	public void TS112594_Contexto_Sectorial_Ingreso_Desde_Acerca_del_cliente() {
 		scp.moveToElementOnAccAndClick("primerTitulo", 1);
 		Assert.assertTrue(driver.findElement(By.id("hidden-Con")).isDisplayed());
-		Assert.assertTrue(driver.findElement(By.id("hidden-Mét")).isDisplayed());
+		Assert.assertTrue(driver.findElement(By.id("hidden-Mï¿½t")).isDisplayed());
 		Assert.assertTrue(driver.findElement(By.id("hidden-Pla")).isDisplayed());
 		Assert.assertTrue(driver.findElement(By.id("hidden-Cad")).isDisplayed());
 		Assert.assertTrue(driver.findElement(By.id("hidden-Ten")).isDisplayed());
@@ -108,7 +108,7 @@ public class SCPContextoSectorial extends TestBase {
 	public void TS112595_Contexto_Sectorial_Ingreso_Desde_el_contacto() {
 		scp.moveToElementOnAccAndClick("primerTitulo", 1);		
 		Assert.assertTrue(driver.findElement(By.id("hidden-Con")).isDisplayed());
-		Assert.assertTrue(driver.findElement(By.id("hidden-Mét")).isDisplayed());
+		Assert.assertTrue(driver.findElement(By.id("hidden-Mï¿½t")).isDisplayed());
 		Assert.assertTrue(driver.findElement(By.id("hidden-Pla")).isDisplayed());
 		Assert.assertTrue(driver.findElement(By.id("hidden-Cad")).isDisplayed());
 		Assert.assertTrue(driver.findElement(By.id("hidden-Ten")).isDisplayed());
@@ -119,7 +119,7 @@ public class SCPContextoSectorial extends TestBase {
 	public void TS112633_Estrategia_de_Crecimiento_Ingreso_Desde_el_contacto() {
 		scp.moveToElementOnAccAndClick("tercerTitulo", 5);
 		boolean check=true;
-	    String[] datosOp = {"título", "descripción", "tipo", "origen", "negocio potencial"};
+	    String[] datosOp = {"tï¿½tulo", "descripciï¿½n", "tipo", "origen", "negocio potencial"};
 	    List<String> titleTabla = new ArrayList<String>();
 	    WebElement oportunidad = driver.findElement(By.id("mainTable")).findElement(By.className("headerRow"));
 	    List<WebElement> composicion= oportunidad.findElements(By.tagName("th"));	    
@@ -202,7 +202,7 @@ public class SCPContextoSectorial extends TestBase {
 	public void TS112804_Share_of_Wallet_Ingreso_Desde_el_contacto() {
 		scp.moveToElementOnAccAndClick("segundoTitulo", 1);	
 		boolean check=true;
-	    String[] datosOp = {"ytd", "año anterior", "año anterior -1"};
+	    String[] datosOp = {"ytd", "aï¿½o anterior", "aï¿½o anterior -1"};
 	    List<String> titleTabla = new ArrayList<String>();
 	    WebElement oportunidad = driver.findElement(By.id("j_id0:Form:pageContent")).findElement(By.cssSelector(".table.table-striped.table-bordered.table-condensed"));
 	    List<WebElement> composicion= oportunidad.findElements(By.tagName("th"));	    
@@ -221,7 +221,7 @@ public class SCPContextoSectorial extends TestBase {
 	public void TS112703_Mosaico_de_Relacionamiento_General_Ingreso_Desde_el_contacto() {
 		scp.moveToElementOnAccAndClick("segundoTitulo", 4);
 		boolean check=true;
-	    String[] datosOp = {"rol", "actitud", "autoridad", "influencia", "relacionamiento con la competencia", "generación"};
+	    String[] datosOp = {"rol", "actitud", "autoridad", "influencia", "relacionamiento con la competencia", "generaciï¿½n"};
 	    List<String> titleTabla = new ArrayList<String>();
 	    WebElement oportunidad = driver.findElement(By.id("j_id0:j_id139")).findElement(By.cssSelector(".table.table-striped.table-bordered.table-condensed"));
 	    List<WebElement> composicion= oportunidad.findElements(By.tagName("th"));	    
@@ -418,7 +418,7 @@ public class SCPContextoSectorial extends TestBase {
 		Assert.assertTrue(element.get(2).getText().contains("Value Drivers"));
 		Assert.assertTrue(element.get(3).getText().contains("Propuesta de Valor"));
 		Assert.assertTrue(element.get(4).getText().contains("Mosaico de Relacionamiento por Oportunidad"));
-		Assert.assertTrue(element.get(5).getText().contains("Criterios de Decisión por Oportunidad"));		
+		Assert.assertTrue(element.get(5).getText().contains("Criterios de Decisiï¿½n por Oportunidad"));		
 	}
 	
 	@Test(groups = "SCP", priority=3)
@@ -627,7 +627,7 @@ public class SCPContextoSectorial extends TestBase {
 	public void TS112677_Hitos_Relevantes_Ingreso_Desde_el_contacto() {
 		scp.moveToElementOnAccAndClick("segundoTitulo", 3);
 		boolean check=true;
-	    String[] datosOp = {"Descripción", "Fecha", "Categoría"};
+	    String[] datosOp = {"Descripciï¿½n", "Fecha", "Categorï¿½a"};
 	    List<String> titleTabla = new ArrayList<String>();
 	    WebElement oportunidad = driver.findElement(By.xpath("//*[@id=\"j_id0:j_id89:hitosRelevantes:j_id97\"]/div[2]/table/tbody/tr[2]/td/table/thead"));
 	    List<WebElement> composicion= oportunidad.findElement(By.tagName("tr")).findElements(By.tagName("th"));	    
@@ -804,7 +804,7 @@ public class SCPContextoSectorial extends TestBase {
 	}
 	
 	@Test(groups = "SCP", priority=3)
-	public void TS112561_Asignación_de_Value_Drivers_a_Oportunidades_Exportar_a_Excel() {
+	public void TS112561_Asignacion_de_Value_Drivers_a_Oportunidades_Exportar_a_Excel() {
 		scp.moveToElementOnAccAndClick("tercerTitulo", 1);
 		String usuario = driver.findElement(By.cssSelector(".nav.navbar-nav.navbar-right")).findElement(By.tagName("a")).getText();
 		List <WebElement> element = driver.findElements(By.cssSelector(".btn.btn-default.btn-sm"));
@@ -816,12 +816,12 @@ public class SCPContextoSectorial extends TestBase {
 		}
 		sleep(8000);
 		usuario=usuario.replace(' ', '_');
-		usuario=usuario.concat("-Asignación_de_Value_Drivers_a_Oportunidades.xls");
+		usuario=usuario.concat("-Asignaciï¿½n_de_Value_Drivers_a_Oportunidades.xls");
 		assertTrue(scp.isFileDownloaded(downloadPath, usuario), "Failed to download Expected document");
 	}
 	
 	@Test(groups = "SCP", priority=2)
-	public void TS112686_Matriz_de_Criterios_de_Decisión_Exportar_a_Excel() {
+	public void TS112686_Matriz_de_Criterios_de_Decision_Exportar_a_Excel() {
 		scp.moveToElementOnAccAndClick("tercerTitulo", 2);
 		List <WebElement> element = driver.findElements(By.cssSelector(".btn.btn-default.btn-sm"));
 		for (WebElement x : element) {
@@ -841,12 +841,12 @@ public class SCPContextoSectorial extends TestBase {
 		}
 		sleep(8000);
 		usuario=usuario.replace(' ', '_');
-		usuario=usuario.concat("-Criterios_de_Decisión_por_Oportunidad.xls");
+		usuario=usuario.concat("-Criterios_de_Decisiï¿½n_por_Oportunidad.xls");
 		assertTrue(scp.isFileDownloaded(downloadPath, usuario), "Failed to download Expected document");		
 	}
 	
 	@Test(groups = "SCP", priority=3)
-	public void TS112687_Matriz_de_Criterios_de_Decisión_Guardar() {
+	public void TS112687_Matriz_de_Criterios_de_Decision_Guardar() {
 		scp.moveToElementOnAccAndClick("tercerTitulo", 2);
 		List <WebElement> element = driver.findElements(By.cssSelector(".btn.btn-default.btn-sm"));
 		for (WebElement x : element) {
@@ -869,7 +869,7 @@ public class SCPContextoSectorial extends TestBase {
 	}
 	
 	@Test(groups = "SCP",priority=3)
-	public void TS112688_Matriz_de_Criterios_de_Decisión_Ir_al_mosaico() {
+	public void TS112688_Matriz_de_Criterios_de_Decision_Ir_al_mosaico() {
 		scp.moveToElementOnAccAndClick("tercerTitulo", 2);
 		List <WebElement> element = driver.findElements(By.cssSelector(".btn.btn-default.btn-sm"));
 		for (WebElement x : element) {
@@ -891,7 +891,7 @@ public class SCPContextoSectorial extends TestBase {
 	}
 	
 	@Test(groups = "SCP", priority=3)
-	public void TS112689_Matriz_de_Criterios_de_Decisión_Ir_al_Snapshot() {
+	public void TS112689_Matriz_de_Criterios_de_Decision_Ir_al_Snapshot() {
 		scp.moveToElementOnAccAndClick("tercerTitulo", 2);
 		List <WebElement> element = driver.findElements(By.cssSelector(".btn.btn-default.btn-sm"));
 		for (WebElement x : element) {
@@ -913,7 +913,7 @@ public class SCPContextoSectorial extends TestBase {
 	}
 	
 	@Test(groups = "SCP", priority=3)
-	public void TS112690_Matriz_de_Criterios_de_Decisión_Ver_Gráficos_de_Criterio() {
+	public void TS112690_Matriz_de_Criterios_de_Decision_Ver_Graficos_de_Criterio() {
 		scp.moveToElementOnAccAndClick("tercerTitulo", 2);
 		List <WebElement> element = driver.findElements(By.cssSelector(".btn.btn-default.btn-sm"));
 		for (WebElement x : element) {
@@ -925,7 +925,7 @@ public class SCPContextoSectorial extends TestBase {
 		sleep(10000);
 		List <WebElement> element1 = driver.findElements(By.cssSelector(".btn.btn-default.btn-sm"));
 		for (WebElement x : element1) {
-			if (x.getText().toLowerCase().contains("ver gráfico de criterios")) {
+			if (x.getText().toLowerCase().contains("ver grï¿½fico de criterios")) {
 				x.click();
 				break;
 			}
@@ -942,7 +942,7 @@ public class SCPContextoSectorial extends TestBase {
 	}
 	
 	@Test(groups = "SCP", priority=3)
-	public void TS112691_Matriz_de_Criterios_de_Decisión_Ver_Video() {
+	public void TS112691_Matriz_de_Criterios_de_Decision_Ver_Video() {
 		scp.moveToElementOnAccAndClick("tercerTitulo", 2);
 		driver.findElement(By.cssSelector(".btn.btn-xs.btn-default")).click();
 		sleep(10000);
@@ -953,7 +953,7 @@ public class SCPContextoSectorial extends TestBase {
 	    driver.switchTo().window(tabs2.get(0));
 	}
 	
-	@Test(groups = "SCP", priority=2)  //Rompe porque no estan las columnas "Posición Competitiva de la Competencia" y "Enfoque", dicen "Competidores competitivos de pie" y "Approach"
+	@Test(groups = "SCP", priority=2)  //Rompe porque no estan las columnas "Posiciï¿½n Competitiva de la Competencia" y "Enfoque", dicen "Competidores competitivos de pie" y "Approach"
 	public void TS112692_Matriz_de_Criterios_de_desicion_Ingreso_Desde_el_contacto() {
 		scp.moveToElementOnAccAndClick("tercerTitulo", 2);
 		List <WebElement> element = driver.findElements(By.cssSelector(".btn.btn-default.btn-sm"));
@@ -974,7 +974,7 @@ public class SCPContextoSectorial extends TestBase {
 			c = true;
 		}
 		boolean check=true;
-	    String[] datosOp = {"Criterio", "Consideración del cliente", "Nuestra posición competitiva", "Posición Competitiva de la Competencia", "Enfoque"};
+	    String[] datosOp = {"Criterio", "Consideraciï¿½n del cliente", "Nuestra posiciï¿½n competitiva", "Posiciï¿½n Competitiva de la Competencia", "Enfoque"};
 	    List<String> titleTabla = new ArrayList<String>();
 	    WebElement oportunidad = driver.findElement(By.id("j_id0:j_id143:j_id146"));
 	    List<WebElement> composicion= oportunidad.findElement(By.tagName("tr")).findElements(By.tagName("th"));	    
@@ -1012,7 +1012,7 @@ public class SCPContextoSectorial extends TestBase {
 	}
 	
 	@Test(groups = "SCP", priority=3)
-	public void TS112682_Matriz_de_Criterios_de_Decisión_Agregar_Criterio() {
+	public void TS112682_Matriz_de_Criterios_de_Decision_Agregar_Criterio() {
 		scp.moveToElementOnAccAndClick("tercerTitulo", 2);
 		List <WebElement> element = driver.findElements(By.cssSelector(".btn.btn-default.btn-sm"));
 		for (WebElement x : element) {
@@ -1025,7 +1025,7 @@ public class SCPContextoSectorial extends TestBase {
 		driver.findElement(By.xpath("//*[@id=\"j_id0:j_id128:j_id140\"]")).click();
 		sleep(5000);
 		WebElement ventana = driver.findElement(By.className("modal-header"));
-		Assert.assertTrue(ventana.getText().contains("Evaluación del Criterio"));		
+		Assert.assertTrue(ventana.getText().contains("Evaluaciï¿½n del Criterio"));		
 		List <WebElement> cerrar = driver.findElements(By.cssSelector(".btn.btn-default"));
 		for (WebElement x : cerrar) {
 			if (x.getText().toLowerCase().contains("cerrar")) {
