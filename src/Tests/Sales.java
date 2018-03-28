@@ -83,7 +83,6 @@ public class Sales extends TestBase {
 	@BeforeClass(alwaysRun=true)
 	public void Init() throws Exception
 	{
-		//buscarCampoExcel(1, "Cuenta Activa", 2);
 		this.driver = setConexion.setupEze();
 		 wait = new WebDriverWait(driver, 10);
 		//try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
