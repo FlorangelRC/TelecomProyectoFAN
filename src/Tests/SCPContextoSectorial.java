@@ -8,6 +8,7 @@ import java.util.List;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
+import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Actions;
 
@@ -25,6 +26,7 @@ import Pages.setConexion;
 
 public class SCPContextoSectorial extends TestBase {
 
+	private WebDriver driver;
 	private SCP scp;
 	private static String downloadPath = "C:\\Users\\Nicolas\\Downloads";
 	
@@ -41,11 +43,11 @@ public class SCPContextoSectorial extends TestBase {
 	public void setUp() throws Exception {
 		sleep(3000);
 		scp.clickOnTabByName("cuentas");
-		scp.clickOnFirstAccRe();
+		scp.clickEnCuentaPorNombre("Florencia Di Ci");
 		sleep(5000);
 	}
 	
-	@AfterMethod(groups = "SCP")
+	//@AfterMethod(groups = "SCP")
 	public void after(){
 		sleep(3000);
 		driver.switchTo().defaultContent();
@@ -54,7 +56,7 @@ public class SCPContextoSectorial extends TestBase {
 		driver.findElement(By.id("home_Tab")).click();
 	}
 	
-	@AfterClass(groups = "SCP")
+	//@AfterClass(groups = "SCP")
 	public void teardown() {
 		driver.quit();
 		sleep(5000);
@@ -234,13 +236,6 @@ public class SCPContextoSectorial extends TestBase {
 	    Assert.assertTrue(check);
 	}
 	
-	@Test(groups = "SCP", priority=3)  //No existe el boton Enviar
-	public void TS112720_Mosaico_de_Relacionamiento_por_Oportunidad_Enviar() {
-		scp.moveToElementOnAccAndClick("segundoTitulo", 4);
-		if (!driver.findElement(By.cssSelector(".btn.btnPrimary.publishersharebutton.btn.btn-default.btn-sm")).isDisplayed());{
-			Assert.assertTrue(false);
-		}
-	}
 	
 	@Test(groups = "SCP", priority=3)
 	public void TS112721_Mosaico_de_Relacionamiento_por_Oportunidad_Ingreso_Desde_el_contacto() {
@@ -400,9 +395,9 @@ public class SCPContextoSectorial extends TestBase {
 	
 	@Test(groups = "SCP", priority=2)
 	public void TS112751_Opportunity_Snapshot_Chatter_contextualizado_Leer_comentario_escrito_con_otro_usuario() {
-		scp.Desloguear_Loguear("fabiana");
-		scp.Desloguear_Loguear_Comentar("fabiana", "maximiliano", "comentario opportunity", "tercerTitulo", 4);
-		scp.Desloguear_Loguear("maximiliano");
+		scp.Desloguear_Loguear("isabel");
+		scp.Desloguear_Loguear_Comentar("permisos", "isabel", "comentario opportunity", "tercerTitulo", 4);
+		scp.Desloguear_Loguear("permisos");
 		sleep(5000);
 		scp.clickOnTabByName("cuentas");
 		sleep(7000);
@@ -449,9 +444,9 @@ public class SCPContextoSectorial extends TestBase {
 	
 	@Test(groups = "SCP", priority=2)
 	public void TS112762_Organigrama_y_mapa_de_influencia_Chatter_contextualizado_Leer_comentario_escrito_con_otro_usuario() {
-		scp.Desloguear_Loguear("fabiana");
-		scp.Desloguear_Loguear_Comentar("fabiana", "maximiliano", "comentario opportunity", "primerTitulo", 3);
-		scp.Desloguear_Loguear("maximiliano");
+		scp.Desloguear_Loguear("isabel");
+		scp.Desloguear_Loguear_Comentar("permisos", "isabel", "comentario opportunity", "primerTitulo", 3);
+		scp.Desloguear_Loguear("permisos");
 		sleep(5000);
 		scp.clickOnTabByName("cuentas");
 		sleep(7000);
@@ -490,9 +485,9 @@ public class SCPContextoSectorial extends TestBase {
 	
 	@Test(groups = "SCP", priority=4)
 	public void TS112588_Contexto_Sectorial_Chatter_contextualizado_Leer_comentario_escrito_con_otro_usuario() {
-		scp.Desloguear_Loguear("fabiana");
-		scp.Desloguear_Loguear_Comentar("fabiana", "maximiliano", "comentario opportunity", "primerTitulo", 1);
-		scp.Desloguear_Loguear("maximiliano");
+		scp.Desloguear_Loguear("isabel");
+		scp.Desloguear_Loguear_Comentar("permisos", "isabel", "comentario opportunity", "primerTitulo", 1);
+		scp.Desloguear_Loguear("permisos");
 		sleep(5000);
 		scp.clickOnTabByName("cuentas");
 		sleep(7000);
@@ -503,9 +498,9 @@ public class SCPContextoSectorial extends TestBase {
 	
 	@Test(groups = "SCP", priority=2)
 	public void TS112801_Share_of_Wallet_Chatter_contextualizado_Leer_comentario_escrito_con_otro_usuario() {
-		scp.Desloguear_Loguear("fabiana");
-		scp.Desloguear_Loguear_Comentar("fabiana", "maximiliano", "comentario opportunity", "segundoTitulo", 1);
-		scp.Desloguear_Loguear("maximiliano");
+		scp.Desloguear_Loguear("isabel");
+		scp.Desloguear_Loguear_Comentar("permisos", "isabel", "comentario opportunity", "segundoTitulo", 1);
+		scp.Desloguear_Loguear("permisos");
 		sleep(5000);
 		scp.clickOnTabByName("cuentas");
 		sleep(7000);
@@ -657,17 +652,6 @@ public class SCPContextoSectorial extends TestBase {
 		scp.validarcomentario(a);
 	}
 	
-	@Test(groups = "SCP", priority=3)  //No existe el boton Enviar
-	public void TS112752_Opportunity_Snapshot_enviar() {
-		scp.moveToElementOnAccAndClick("tercerTitulo", 4);
-		WebElement element = driver.findElement(By.name("j_id0:j_id111:j_id112:FastTaskForm:j_id117"));
-		String a = element.getAttribute("value");		
-		String b = "asd";
-		element.sendKeys(b);
-		driver.findElement(By.cssSelector(".btn.btnPrimary.publishersharebutton.btn.btn-default.btn-sm")).click();
-		Assert.assertTrue(!(a.equals(b)));
-	}
-	
 	@Test(groups = "SCP", priority=3)
 	public void TS112800_Share_of_Wallet_Chatter_contextualizado_Escribir_comentario() {
 		scp.moveToElementOnAccAndClick("segundoTitulo", 1);
@@ -739,7 +723,7 @@ public class SCPContextoSectorial extends TestBase {
 		Assert.assertTrue(a);
 	}
 	
-	@Test(groups = "SCP", priority=2)
+	//@Test(groups = "SCP", priority=2)
 	public void TS112716_Mosaico_de_Relacionamiento_General_Ver_Video() {
 		scp.moveToElementOnAccAndClick("segundoTitulo", 4);
 		driver.findElement(By.cssSelector(".btn.btn-xs.btn-default")).click();
