@@ -105,6 +105,8 @@ private WebDriver driver;
 	TechnicalCareCSRDiagnosticoPage tech = new TechnicalCareCSRDiagnosticoPage(driver);
 	sleep (4000);
 	driver.switchTo().defaultContent();
+	buscarCampoExcel(3, "Cuenta Activa c/ linea y serv", 1);
+	buscarCampoExcel(3,"Cuenta Activa c/ linea y serv", 3);
     tech.clickOpcionEnAsset("543416869777", "mis servicios");
     tech.verDetalles();
     tech.clickDiagnosticarServicio("Transferencia de Llamadas");
@@ -117,7 +119,7 @@ private WebDriver driver;
 	TechnicalCareCSRDiagnosticoPage tech = new TechnicalCareCSRDiagnosticoPage(driver);
 	sleep (4000);
 	driver.switchTo().defaultContent();
-    tech.clickOpcionEnAsset("543416869777", "mis servicios");
+	tech.clickOpcionEnAsset("543416869777", "mis servicios");
     tech.verDetalles();
     tech.clickDiagnosticarServicio("sms", "SMS Entrante", false);
     assertTrue(tech.validarOpcionesXSubServicio("SMS Entrante"));
@@ -393,4 +395,6 @@ private WebDriver driver;
 
    
 }
+	
+	
 }
