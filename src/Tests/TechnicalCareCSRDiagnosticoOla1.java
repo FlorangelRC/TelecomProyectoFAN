@@ -72,7 +72,7 @@ private WebDriver driver;
 		sleep(3000);
 		driver.switchTo().defaultContent();
 		sleep(3000);
-		page.selectAccount("Marco Polo");
+		page.selectAccount((buscarCampoExcel(3, "Cuenta Activa c/ linea y serv", 1)));
  	
 	}
  	 	
@@ -105,11 +105,10 @@ private WebDriver driver;
 	TechnicalCareCSRDiagnosticoPage tech = new TechnicalCareCSRDiagnosticoPage(driver);
 	sleep (4000);
 	driver.switchTo().defaultContent();
-	buscarCampoExcel(3, "Cuenta Activa c/ linea y serv", 1);
-	buscarCampoExcel(3,"Cuenta Activa c/ linea y serv", 3);
-    tech.clickOpcionEnAsset("543416869777", "mis servicios");
+    tech.clickOpcionEnAsset(buscarCampoExcel(3, "Cuenta Activa c/ linea y serv", 3), "mis servicios");
     tech.verDetalles();
     tech.clickDiagnosticarServicio("Transferencia de Llamadas");
+    sleep (4000);
     tech.selectionInconvenient("No puede configurar");
     assertTrue(tech.validarInconveniente("No puede configurar"));
 	}
