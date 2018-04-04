@@ -65,6 +65,9 @@ public class TechnicalCareCSRDiagnosticoPage extends BasePage{
 	@FindBy(xpath=".//*[@id='ClosedCaseKnowledgeBase']/div/p/p/strong/strong")
 	private WebElement numCaso;
 	
+	@FindBy(xpath=".//*[@id='IncorrectCategoryMessage']/div/p/p[2]/span/strong")
+	private WebElement concCaso;
+	
 	@FindBy(id= "phSearchInput")
 	private WebElement buscar;
 	
@@ -474,24 +477,43 @@ public class TechnicalCareCSRDiagnosticoPage extends BasePage{
 				caso=numCaso.getText();
 			}
 		driver.switchTo().defaultContent();
-		buscarCaso(caso);
+		//buscarCaso();
 		driver.switchTo().defaultContent();
 		return caso;		
 			
 	
 	}
 	
-	public void buscarCaso(String caso) throws InterruptedException{
-		caso = numCaso.getText();
+	public void buscarCaso() throws InterruptedException{
+
+		String caso = numCaso.getText().substring(0, numCaso.getText().indexOf(","));
+		driver.switchTo().defaultContent();
+		//driver.switchTo().frame(getFrameForElement(driver, By.id("searchButtonContainer")));
 		buscar.click();
 		buscar.clear();
 		buscar.sendKeys(caso);
 		buscar.submit();
 		sleep(5000);
 		driver.switchTo().frame(getFrameForElement(driver, By.id("Case_body")));
-		driver.findElement(By.xpath("//*[@id=\"Case_body\"]/table/tbody/tr[2]/th/a")).click();
+		
 		
 }
+	
+	public void CasoConciliar() throws InterruptedException{
+
+		String caso = concCaso.getText();
+		driver.switchTo().defaultContent();
+		//driver.switchTo().frame(getFrameForElement(driver, By.id("searchButtonContainer")));
+		buscar.click();
+		buscar.clear();
+		buscar.sendKeys(caso);
+		buscar.submit();
+		sleep(5000);
+		driver.switchTo().frame(getFrameForElement(driver, By.id("Case_body")));
+		
+		
+}
+
 	
 	
 	
