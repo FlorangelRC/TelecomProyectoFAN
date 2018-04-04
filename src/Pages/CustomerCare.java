@@ -235,10 +235,8 @@ public class CustomerCare extends BasePage {
 	private void esperarAQueCargueLaCuenta() {
 		driver.switchTo().defaultContent();
 		TestBase.sleep(4000);
-		TestBase.dynamicWait().until(ExpectedConditions.numberOfElementsToBe(By.cssSelector(".sd_secondary_container.x-border-layout-ct"), 2));
 		cambiarAFrameActivo();
-		TestBase.sleep(1000);
-		TestBase.dynamicWait().until(ExpectedConditions.visibilityOfElementLocated(By.cssSelector(".btn.btn-primary")));
+		TestBase.sleep(2000);
 	}
 	
 	public void cerrarTodasLasPestañas() {

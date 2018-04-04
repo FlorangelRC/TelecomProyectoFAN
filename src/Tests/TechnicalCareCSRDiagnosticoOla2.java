@@ -101,8 +101,32 @@ private WebDriver driver;
  	    tech.categoriaRed("SI");
  	    tech.clickContinuar();
  	    sleep (4000);
- 	    tech.buscarCaso("00019700");
+ 	    tech.buscarCaso();
+ 	    sleep (4000);
  	    assertTrue(tech.getEstado().getText().equalsIgnoreCase("Resuelta Exitosa"));
 
  		}
+ 		
+ 		@Test (groups= {"TechnicalCare", "SVA", "Ola2"},priority=2)
+ 		public void CRM_Ola_2_Technical_Care_CRM_SVA_Estado_Conciliador_Verificación_de_cierre_de_estado_en_Resuelta_exitosa() throws Exception {
+ 		TechnicalCareCSRDiagnosticoPage tech = new TechnicalCareCSRDiagnosticoPage(driver);
+ 		sleep (4000);
+ 		driver.switchTo().defaultContent();
+ 	    tech.clickOpcionEnAsset(buscarCampoExcel(3, "Cuenta Activa c/ linea y serv", 3), "mis servicios");
+ 	    tech.verDetalles();
+ 	    tech.clickDiagnosticarServicio("Llamada en espera");
+ 	    sleep (4000);
+ 	    tech.selectionInconvenient("No funciona llamada en espera");
+ 	    tech.continuar();
+ 	    sleep (4000);
+ 	    tech.categoriaRed("NO");
+ 	    tech.clickContinuar();
+ 	    sleep (4000);
+ 	    tech.categoriaRed("Conciliar");
+ 	    sleep (4000);
+ 	    tech.CasoConciliar();
+ 	    sleep (4000);
+ 	    assertTrue(tech.getEstado().getText().equalsIgnoreCase("Resuelta Exitosa"));
+
+}
 }

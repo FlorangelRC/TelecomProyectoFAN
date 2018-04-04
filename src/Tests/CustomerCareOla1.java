@@ -1,8 +1,10 @@
 package Tests;
 
+import java.io.IOException;
 import java.util.List;
 
 import org.openqa.selenium.By;
+import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.Select;
 
@@ -13,22 +15,26 @@ import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
 import Pages.CustomerCare;
+import Pages.setConexion;
 
 public class CustomerCareOla1 extends TestBase {
 
-	private CustomerCare cc;
+	private WebDriver driver;
+	protected CustomerCare cc;
+	
 	
 	@BeforeClass (alwaysRun = true, groups = {"CustomerCare", "AjustesYEscalamiento", "SuspensionYRehabilitacion", "Ola1"})
 	public void init() {
-		inicializarDriver();
+		driver = setConexion.setupEze();
+		sleep(5000);
 		cc = new CustomerCare(driver);
-		login();
-		IrA.CajonDeAplicaciones.ConsolaFAN();
+		cc.login("SIT");
+		cc.cajonDeAplicaciones("Consola FAN");
 	}
 	
 	@AfterClass (alwaysRun = true, groups = {"CustomerCare", "AjustesYEscalamiento", "SuspensionYRehabilitacion", "Ola1"})
 	public void quit() {
-		//driver.close();
+		driver.quit();
 		sleep(5000);
 	}
 	
@@ -39,8 +45,8 @@ public class CustomerCareOla1 extends TestBase {
 	
 	
 	@Test (groups = {"CustomerCare", "AjustesYEscalamiento", "Ola1"}, priority = 3)  //No existe la gestion Ajustes
-	public void TS90442_Adjustments_and_Escalations_Configurar_Ajuste_Formato_dd_mm_yyyy_fecha_hasta_desde() {
-		cc.elegirCuenta("aaaaFernando Care");
+	public void TS90442_Adjustments_and_Escalations_Configurar_Ajuste_Formato_dd_mm_yyyy_fecha_hasta_desde() throws IOException {
+		cc.elegirCuenta(buscarCampoExcel(2, "cuenta activa c/serv activo", 1));
 		cc.irAGestion("ajuste");
 		List <WebElement> serv = driver.findElements(By.cssSelector(".slds-form-element__label.ng-binding.ng-scope"));
 		for (WebElement x : serv) {
@@ -79,8 +85,8 @@ public class CustomerCareOla1 extends TestBase {
 	}
 	
 	@Test (groups = {"CustomerCare", "AjustesYEscalamiento", "Ola1"}, priority = 3)  //No existe la gestion Ajustes
-	public void TS90444_Adjustments_and_Escalations_Configurar_Ajuste_Tipos_Unidades_a_Ajustar() {
-		cc.elegirCuenta("aaaaFernando Care");
+	public void TS90444_Adjustments_and_Escalations_Configurar_Ajuste_Tipos_Unidades_a_Ajustar() throws IOException {
+		cc.elegirCuenta(buscarCampoExcel(2, "cuenta activa c/serv activo", 1));
 		cc.irAGestion("ajuste");
 		List <WebElement> serv = driver.findElements(By.cssSelector(".slds-form-element__label.ng-binding.ng-scope"));
 		for (WebElement x : serv) {
@@ -131,16 +137,16 @@ public class CustomerCareOla1 extends TestBase {
 	}
 	
 	@Test (groups = {"CustomerCare", "AjustesYEscalamiento", "Ola1"}, priority = 0)  //No existe la gestion Ajustes
-	public void TS90461_Adjustments_and_Escalations_Sesión_guiada_Visualizar_Gestion_Ajustes() {
-		cc.elegirCuenta("aaaaFernando Care");
+	public void TS90461_Adjustments_and_Escalations_Sesión_guiada_Visualizar_Gestion_Ajustes() throws IOException {
+		cc.elegirCuenta(buscarCampoExcel(2, "cuenta activa c/serv activo", 1));
 		cc.buscarGestion("ajustes");
 		List <WebElement> list = driver.findElements(By.cssSelector(".slds-button.slds-button--neutral.slds-truncate"));
 		Assert.assertTrue(list.get(0).getText().toLowerCase().contains("ajustes"));
 	}
 	
 	@Test (groups = {"CustomerCare", "SuspensionYRehabilitacion", "Ola1"}, priority = 1)
-	public void TS90462_360_VIEW_Suspensiones_and_Reconexiones_Visualizar_pantalla_para_seleccionar_el_tipo_de_acción_a_realizar_Suspensión_Rehabilitación() {
-		cc.elegirCuenta("aaaaFernando Care");
+	public void TS90462_360_VIEW_Suspensiones_and_Reconexiones_Visualizar_pantalla_para_seleccionar_el_tipo_de_acción_a_realizar_Suspensión_Rehabilitación() throws IOException {
+		cc.elegirCuenta(buscarCampoExcel(2, "cuenta activa c/serv activo", 1));
 		cc.irAGestion("suspensiones");
 		List <WebElement> gest = driver.findElements(By.cssSelector(".slds-form-element__label.ng-binding.ng-scope"));
 		boolean a = false, b = false;
@@ -156,8 +162,8 @@ public class CustomerCareOla1 extends TestBase {
 	}
 	
 	@Test (groups = {"CustomerCare", "AjustesYEscalamiento", "Ola1"}, priority = 1)  //No existe la gestion Ajustes
-	public void TS90469_360_VIEW_Ajustes_y_Escalaciones_Selección_de_Concepto_Tipo_de_Cargo_Item_Motivo_Visualizar_parametro_Concepto() {
-		cc.elegirCuenta("aaaaFernando Care");
+	public void TS90469_360_VIEW_Ajustes_y_Escalaciones_Selección_de_Concepto_Tipo_de_Cargo_Item_Motivo_Visualizar_parametro_Concepto() throws IOException {
+		cc.elegirCuenta(buscarCampoExcel(2, "cuenta activa c/serv activo", 1));
 		cc.irAGestion("ajuste");
 		List <WebElement> serv = driver.findElements(By.cssSelector(".slds-form-element__label.ng-binding.ng-scope"));
 		for (WebElement x : serv) {
@@ -175,8 +181,8 @@ public class CustomerCareOla1 extends TestBase {
 	}
 	
 	@Test (groups = {"CustomerCare", "AjustesYEscalamiento", "Ola1"}, priority = 2)  //No existe la gestion Ajustes
-	public void TS90481_360_VIEW_Adjustments_and_scalations_Visualizacion_Ajustes_y_Casos_Relacionados_Visualizar_un_botón_Siguiente_que_me_permita_avanzar_al_siguiente_paso_del_proceso() {
-		cc.elegirCuenta("aaaaFernando Care");
+	public void TS90481_360_VIEW_Adjustments_and_scalations_Visualizacion_Ajustes_y_Casos_Relacionados_Visualizar_un_botón_Siguiente_que_me_permita_avanzar_al_siguiente_paso_del_proceso() throws IOException {
+		cc.elegirCuenta(buscarCampoExcel(2, "cuenta activa c/serv activo", 1));
 		cc.irAGestion("ajuste");
 		boolean a = false;
 		if (driver.findElement(By.id("Step-ApplyAdjustToAccountOrService_nextBtn")).isDisplayed()) {
@@ -186,16 +192,16 @@ public class CustomerCareOla1 extends TestBase {
 	}
 	
 	@Test (groups = {"CustomerCare", "SuspensionYRehabilitacion", "Ola1"}, priority = 0)
-	public void TS90498_360_VIEW_Suspensiones_and_Reconexiones_Session_Guiada_Visualizar_la_opción_Suspensión_en_el_panel_de_gestiones() {
-		cc.elegirCuenta("aaaaFernando Care");
+	public void TS90498_360_VIEW_Suspensiones_and_Reconexiones_Session_Guiada_Visualizar_la_opción_Suspensión_en_el_panel_de_gestiones() throws IOException {
+		cc.elegirCuenta(buscarCampoExcel(2, "cuenta activa c/serv activo", 1));
 		cc.buscarGestion("suspensiones");
 		List <WebElement> list = driver.findElements(By.cssSelector(".slds-button.slds-button--neutral.slds-truncate"));
 		Assert.assertTrue(list.get(0).getText().toLowerCase().contains("suspensiones y reconexion"));
 	}
 	
 	@Test (groups = {"CustomerCare", "SuspensionYRehabilitacion(Online)", "Ola1"})
-	public void TS90499_360_VIEW_Suspensiones_and_Reconexiones_Session_Guiada_Visualizar_la_opción_Habilitación_en_el_panel_de_gestiones() {
-		cc.elegirCuenta("aaaaFernando Care");
+	public void TS90499_360_VIEW_Suspensiones_and_Reconexiones_Session_Guiada_Visualizar_la_opción_Habilitación_en_el_panel_de_gestiones() throws IOException {
+		cc.elegirCuenta(buscarCampoExcel(2, "cuenta activa c/serv activo", 1));
 		cc.irAGestion("suspensiones");
 		List <WebElement> hab = driver.findElements(By.cssSelector(".slds-form-element__label.ng-binding.ng-scope"));
 		boolean a = false;
@@ -208,8 +214,8 @@ public class CustomerCareOla1 extends TestBase {
 	}
 	
 	@Test (groups = {"CustomerCare", "SuspensionYRehabilitacion", "Ola1"}, priority = 6)
-	public void TS95637_Suspensiones_and_Reconexiones_Creación_del_Caso_Back_office_Creación_caso_comentario_de_resolucion_La_gestion_ha_sido_realizada_exitosamente() {
-		cc.elegirCuenta("aaaaFernando Care");
+	public void TS95637_Suspensiones_and_Reconexiones_Creación_del_Caso_Back_office_Creación_caso_comentario_de_resolucion_La_gestion_ha_sido_realizada_exitosamente() throws IOException {
+		cc.elegirCuenta(buscarCampoExcel(2, "cuenta activa c/serv activo", 1));
 		cc.irAGestion("suspensiones y reconexion back");
 		List <WebElement> hab = driver.findElements(By.cssSelector(".slds-form-element__label.ng-binding.ng-scope"));
 		for (WebElement x : hab) {
@@ -255,8 +261,8 @@ public class CustomerCareOla1 extends TestBase {
 	}
 	
 	@Test (groups = {"CustomerCare", "SuspensionYRehabilitacion", "Ola1"}, priority = 4)
-	public void TS95641_Suspensiones_and_Reconexiones_Creación_del_Caso_Creación_caso_habilitacion_status() {
-		cc.elegirCuenta("aaaaFernando Care");
+	public void TS95641_Suspensiones_and_Reconexiones_Creación_del_Caso_Creación_caso_habilitacion_status() throws IOException {
+		cc.elegirCuenta(buscarCampoExcel(2, "cuenta activa c/serv activo", 1));
 		cc.irAGestion("suspensiones");
 		List <WebElement> hab = driver.findElements(By.cssSelector(".slds-form-element__label.ng-binding.ng-scope"));
 		for (WebElement x : hab) {
@@ -300,8 +306,8 @@ public class CustomerCareOla1 extends TestBase {
 	}
 	
 	@Test (groups = {"CustomerCare", "SuspensionYRehabilitacion", "Ola1"}, priority = 4)
-	public void TS95647_Suspensiones_and_Reconexiones_Creación_del_Caso_Creación_caso_habilitacion_Líneas_y_o_equipos_seleccionados() {
-		cc.elegirCuenta("aaaaFernando Care");
+	public void TS95647_Suspensiones_and_Reconexiones_Creación_del_Caso_Creación_caso_habilitacion_Líneas_y_o_equipos_seleccionados() throws IOException {
+		cc.elegirCuenta(buscarCampoExcel(2, "cuenta activa c/serv activo", 1));
 		cc.irAGestion("suspensiones");
 		List <WebElement> hab = driver.findElements(By.cssSelector(".slds-form-element__label.ng-binding.ng-scope"));
 		for (WebElement x : hab) {
@@ -345,8 +351,8 @@ public class CustomerCareOla1 extends TestBase {
 	}
 	
 	@Test (groups = {"CustomerCare", "SuspensionYRehabilitacion", "Ola1"}, priority = 4)
-	public void TS95651_Suspensiones_and_Reconexiones_Creación_del_Caso_Suspensión_Nivel_cuenta_campo_pais() {
-		cc.elegirCuenta("aaaaFernando Care");
+	public void TS95651_Suspensiones_and_Reconexiones_Creación_del_Caso_Suspensión_Nivel_cuenta_campo_pais() throws IOException {
+		cc.elegirCuenta(buscarCampoExcel(2, "cuenta activa c/serv activo", 1));
 		cc.irAGestion("suspensiones");
 		List <WebElement> hab = driver.findElements(By.cssSelector(".slds-form-element__label.ng-binding.ng-scope"));
 		for (WebElement x : hab) {
@@ -401,8 +407,8 @@ public class CustomerCareOla1 extends TestBase {
 	}
 	
 	@Test (groups = {"CustomerCare", "SuspensionYRehabilitacion", "Ola1"}, priority = 6)
-	public void TS95927_360_VIEW_Suspensiones_and_Reconexiones_Seleccionar_tipo_Siniestro_Back_Office_Verificar_que_si_selecciono_Suspension_pueda_ser_de_DNI_CUIT() {
-		cc.elegirCuenta("aaaaFernando Care");
+	public void TS95927_360_VIEW_Suspensiones_and_Reconexiones_Seleccionar_tipo_Siniestro_Back_Office_Verificar_que_si_selecciono_Suspension_pueda_ser_de_DNI_CUIT() throws IOException {
+		cc.elegirCuenta(buscarCampoExcel(2, "cuenta activa c/serv activo", 1));
 		cc.irAGestion("suspensiones y reconexion back");
 		List <WebElement> sus = driver.findElements(By.cssSelector(".slds-form-element__label.ng-binding.ng-scope"));
 		for (WebElement x : sus) {
@@ -424,8 +430,8 @@ public class CustomerCareOla1 extends TestBase {
 	}
 	
 	@Test (groups = {"CustomerCare", "SuspensionYRehabilitacion", "Ola1"}, priority = 6)
-	public void TS95928_Suspensiones_and_Reconexiones_Seleccionar_tipo_Siniestro_Back_Office_Verificar_que_si_selecciono_Suspension_pueda_ser_de_CUENTA_DE_FACTURACION() {
-		cc.elegirCuenta("aaaaFernando Care");
+	public void TS95928_Suspensiones_and_Reconexiones_Seleccionar_tipo_Siniestro_Back_Office_Verificar_que_si_selecciono_Suspension_pueda_ser_de_CUENTA_DE_FACTURACION() throws IOException {
+		cc.elegirCuenta(buscarCampoExcel(2, "cuenta activa c/serv activo", 1));
 		cc.irAGestion("suspensiones y reconexion back");
 		List <WebElement> sus = driver.findElements(By.cssSelector(".slds-form-element__label.ng-binding.ng-scope"));
 		for (WebElement x : sus) {
@@ -450,8 +456,8 @@ public class CustomerCareOla1 extends TestBase {
 	}
 	
 	@Test (groups = {"CustomerCare", "SuspensionYRehabilitacion", "Ola1"}, priority = 5)
-	public void TS95965_Suspensiones_and_Reconexiones_Configurar_el_tipo_de_Siniestro_Seleccionar_Solicitante_No_titular_habilita_para_completar_Apellido() {
-		cc.elegirCuenta("aaaaFernando Care");
+	public void TS95965_Suspensiones_and_Reconexiones_Configurar_el_tipo_de_Siniestro_Seleccionar_Solicitante_No_titular_habilita_para_completar_Apellido() throws IOException {
+		cc.elegirCuenta(buscarCampoExcel(2, "cuenta activa c/serv activo", 1));
 		cc.irAGestion("suspensiones");
 		List <WebElement> hab = driver.findElements(By.cssSelector(".slds-form-element__label.ng-binding.ng-scope"));
 		for (WebElement x : hab) {
@@ -509,8 +515,8 @@ public class CustomerCareOla1 extends TestBase {
 	}
 	
 	@Test (groups = {"CustomerCare", "SuspensionYRehabilitacion", "Ola1"}, priority = 6)
-	public void TS96046_Suspensiones_and_Reconexiones_Creacion_del_Caso_Back_office_Creacion_caso_Subject_Suspencion_Administrativa() {
-		cc.elegirCuenta("aaaaFernando Care");
+	public void TS96046_Suspensiones_and_Reconexiones_Creacion_del_Caso_Back_office_Creacion_caso_Subject_Suspencion_Administrativa() throws IOException {
+		cc.elegirCuenta(buscarCampoExcel(2, "cuenta activa c/serv activo", 1));
 		cc.irAGestion("suspensiones y reconexion back");
 		List <WebElement> sus = driver.findElements(By.cssSelector(".slds-form-element__label.ng-binding.ng-scope"));
 		for (WebElement x : sus) {
@@ -559,8 +565,8 @@ public class CustomerCareOla1 extends TestBase {
 	}
 	
 	@Test (groups = {"CustomerCare", "SuspensionYRehabilitacion", "Ola1"}, priority = 5)
-	public void TS96074_360_VIEW_Suspensiones_and_Reconexiones_Seleccionar_tipo_Siniestro_Visualizar_opcion_Tipo_de_Siniestro() {
-		cc.elegirCuenta("aaaaFernando Care");
+	public void TS96074_360_VIEW_Suspensiones_and_Reconexiones_Seleccionar_tipo_Siniestro_Visualizar_opcion_Tipo_de_Siniestro() throws IOException {
+		cc.elegirCuenta(buscarCampoExcel(2, "cuenta activa c/serv activo", 1));
 		cc.irAGestion("suspensiones");
 		List <WebElement> sus = driver.findElements(By.cssSelector(".slds-form-element__label.ng-binding.ng-scope"));
 		for (WebElement x : sus) {
@@ -600,8 +606,8 @@ public class CustomerCareOla1 extends TestBase {
 	}
 	
 	@Test (groups = {"CustomerCare", "SuspensionYRehabilitacion", "Ola1"}, priority = 5)
-	public void TS96075_Suspensiones_and_Reconexiones_Seleccionar_tipo_Siniestro_Verificar_que_la_opcion_Tipo_de_Siniestro_se_de_seleccion_unica() {
-		cc.elegirCuenta("aaaaFernando Care");
+	public void TS96075_Suspensiones_and_Reconexiones_Seleccionar_tipo_Siniestro_Verificar_que_la_opcion_Tipo_de_Siniestro_se_de_seleccion_unica() throws IOException {
+		cc.elegirCuenta(buscarCampoExcel(2, "cuenta activa c/serv activo", 1));
 		cc.irAGestion("suspensiones");
 		List <WebElement> hab = driver.findElements(By.cssSelector(".slds-form-element__label.ng-binding.ng-scope"));
 		for (WebElement x : hab) {
@@ -649,8 +655,8 @@ public class CustomerCareOla1 extends TestBase {
 	}
 	
 	@Test (groups = {"CustomerCare", "SuspensionYRehabilitacion", "Ola1"}, priority = 2)
-	public void TS96078_Suspensiones_and_Reconexiones_Seleccionar_Tipo_de_gestion_Suspension_Reconexion_Verficiar_que_al_seleccionar_Suspension_se_muestren_las_opciones_Linea_Linea__Equipo_Equipo() {
-		cc.elegirCuenta("aaaaFernando Care");
+	public void TS96078_Suspensiones_and_Reconexiones_Seleccionar_Tipo_de_gestion_Suspension_Reconexion_Verficiar_que_al_seleccionar_Suspension_se_muestren_las_opciones_Linea_Linea__Equipo_Equipo() throws IOException {
+		cc.elegirCuenta(buscarCampoExcel(2, "cuenta activa c/serv activo", 1));
 		cc.irAGestion("suspensiones");
 		List <WebElement> sus = driver.findElements(By.cssSelector(".slds-form-element__label.ng-binding.ng-scope"));
 		for (WebElement x : sus) {
@@ -678,8 +684,8 @@ public class CustomerCareOla1 extends TestBase {
 	}
 	
 	@Test (groups = {"CustomerCare", "SuspensionYRehabilitacion", "Ola1"}, priority = 2)
-	public void TS96080_Suspensiones_and_Reconexiones_Seleccionar_Tipo_de_gestion_Suspension_Reconexion_Seleccionar_Habilitacion_para_workplace_personalizada_se_muestren_las_opciones_Linea_Linea___Equipo_Equipo() {
-		cc.elegirCuenta("aaaaFernando Care");
+	public void TS96080_Suspensiones_and_Reconexiones_Seleccionar_Tipo_de_gestion_Suspension_Reconexion_Seleccionar_Habilitacion_para_workplace_personalizada_se_muestren_las_opciones_Linea_Linea___Equipo_Equipo() throws IOException {
+		cc.elegirCuenta(buscarCampoExcel(2, "cuenta activa c/serv activo", 1));
 		cc.irAGestion("suspensiones");
 		List <WebElement> sus = driver.findElements(By.cssSelector(".slds-form-element__label.ng-binding.ng-scope"));
 		for (WebElement x : sus) {
@@ -707,8 +713,8 @@ public class CustomerCareOla1 extends TestBase {
 	}
 	
 	@Test (groups = {"CustomerCare", "SuspensionYRehabilitacion", "Ola1"}, priority = 3)
-	public void TS96104_Suspensiones_and_Reconexiones_Visualizar_Lineas_Habilitacion_Verificar_que_sean_campos_de_seleccion_unica() {
-		cc.elegirCuenta("aaaaFernando Care");
+	public void TS96104_Suspensiones_and_Reconexiones_Visualizar_Lineas_Habilitacion_Verificar_que_sean_campos_de_seleccion_unica() throws IOException {
+		cc.elegirCuenta(buscarCampoExcel(2, "cuenta activa c/serv activo", 1));
 		cc.irAGestion("suspensiones");
 		List <WebElement> sus = driver.findElements(By.cssSelector(".slds-form-element__label.ng-binding.ng-scope"));
 		for (WebElement x : sus) {
@@ -740,8 +746,8 @@ public class CustomerCareOla1 extends TestBase {
 	}
 	
 	@Test (groups = {"CustomerCare", "SuspensionYRehabilitacion", "Ola1"}, priority = 6)
-	public void TS96111_Suspensiones_and_Reconexiones_Seleccionar_tipo_Siniestro_Back_Office_Verificar_que_si_selecciono_Reconexion_pueda_ser_de_DNI_CUIT() {
-		cc.elegirCuenta("aaaaFernando Care");
+	public void TS96111_Suspensiones_and_Reconexiones_Seleccionar_tipo_Siniestro_Back_Office_Verificar_que_si_selecciono_Reconexion_pueda_ser_de_DNI_CUIT() throws IOException {
+		cc.elegirCuenta(buscarCampoExcel(2, "cuenta activa c/serv activo", 1));
 		cc.irAGestion("suspensiones y reconexion back");
 		List <WebElement> sus = driver.findElements(By.cssSelector(".slds-form-element__label.ng-binding.ng-scope"));
 		for (WebElement x : sus) {

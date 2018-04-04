@@ -1,5 +1,6 @@
 package Pages;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import org.openqa.selenium.By;
@@ -182,7 +183,7 @@ public class Marketing extends CustomerCare {
 		}
 	}
 	
-	public void cambioCuenta(String sVista, String sCliente) {
+	public void cambioCuenta(String sVista, String sCliente) throws IOException {
 		TestBase tTB = new TestBase();
 		CustomerCare cCC = new CustomerCare(driver);
 		cCC.cerrarTodasLasPestañas();
@@ -195,11 +196,12 @@ public class Marketing extends CustomerCare {
 		sleepMedium(0);
 		WebElement wBody = driver.findElement(By.className("x-grid3-body"));
 		List<WebElement> wAccountName = wBody.findElements(By.cssSelector(".x-grid3-col.x-grid3-cell.x-grid3-td-ACCOUNT_NAME"));
+		String sNombreCuenta = tTB.buscarCampoExcel(0, sCliente, 1);
 		
 		for (WebElement wAux:wAccountName) {
 			WebElement wContenido = wAux.findElement(By.tagName("span"));
 			
-			if (wContenido.getText().toLowerCase().equals(sCliente.toLowerCase())) {
+			if (wContenido.getText().toLowerCase().equals(sNombreCuenta.toLowerCase())) {
 				wAux.click();
 				break;
 			}

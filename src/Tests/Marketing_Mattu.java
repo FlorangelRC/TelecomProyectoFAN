@@ -1,6 +1,8 @@
 package Tests;
 
 import static org.testng.Assert.assertTrue;
+
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import org.openqa.selenium.By;
@@ -67,11 +69,10 @@ public class Marketing_Mattu extends TestBase{
 		try {Thread.sleep(10000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 		WebElement wBody = driver.findElement(By.className("x-grid3-body"));
 		List<WebElement> wAccountName = wBody.findElements(By.cssSelector(".x-grid3-col.x-grid3-cell.x-grid3-td-ACCOUNT_NAME"));
-		
+		String sNombreCuenta = buscarCampoExcel(0, "Cuenta Normal", 1);
 		for (WebElement wAux2:wAccountName) {
 			WebElement wContenido = wAux2.findElement(By.tagName("span"));
-			
-			if (wContenido.getText().toLowerCase().equals("florencia marketing")) {
+			if (wContenido.getText().toLowerCase().equals(sNombreCuenta.toLowerCase())) {
 				wAux2.click();
 				break;
 			}
@@ -141,8 +142,8 @@ public class Marketing_Mattu extends TestBase{
 	//-------------------------------------------------------------------------------------------------
 	//TCC = 1
 	@Test(groups = "Marketing")
-	public void TS4176_Visualizar_error_Mora_Alta_CP() {
-		mMarketing.cambioCuenta("Todas las cuentas", "aaaacuenta conmora");
+	public void TS4176_Visualizar_error_Mora_Alta_CP() throws IOException {
+		mMarketing.cambioCuenta("Todas las cuentas", "Cuenta c/ Mora");
 		BasePage cambioFrame=new BasePage();
 		try {Thread.sleep(10000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 		driver.switchTo().defaultContent();
@@ -155,7 +156,7 @@ public class Marketing_Mattu extends TestBase{
 		WebElement wMessage = driver.findElement(By.cssSelector(".slds-form-element.vlc-flex.vlc-slds-text-block.vlc-slds-rte.ng-pristine.ng-valid.ng-scope"));
 		List<WebElement> lText = wMessage.findElements(By.tagName("p"));
 		Assert.assertTrue(lText.get(1).getText().contains("Para continuar es necesario regularizar su estado de cuenta, caso nro."));
-		mMarketing.cambioCuenta("Vista Marketing", "Florencia Marketing");
+		mMarketing.cambioCuenta("Vista Marketing", "Cuenta Normal");
 		try {Thread.sleep(10000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 	}
 	
@@ -486,15 +487,15 @@ public class Marketing_Mattu extends TestBase{
 	//-------------------------------------------------------------------------------------------------
 	//TCC = 23
 	@Test(groups = {"Marketing", "Ola1", "GestionDelSocioDeClubPersonal"})
-	public void TS98048_Generar_Caso_error_Fraude_Baja_CP() {
-		mMarketing.cambioCuenta("Todas las cuentas", "aaaaCuenta Fraude");
+	public void TS98048_Generar_Caso_error_Fraude_Baja_CP() throws IOException {
+		mMarketing.cambioCuenta("Todas las cuentas", "Cuenta c/ Fraude");
 		mMarketing.clubPersonal("Baja");
 		try {Thread.sleep(10000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 		WebElement wMessage = driver.findElement(By.cssSelector(".slds-form-element.vlc-flex.vlc-slds-text-block.vlc-slds-rte.ng-pristine.ng-valid.ng-scope"));
 		List <WebElement> wMessageBox = wMessage.findElements(By.tagName("p"));
 		String sCaso = wMessageBox.get(1).getText().substring(71, 79);
 		boolean bAssert = mMarketing.corroborarCasoCerrado(sCaso);
-		mMarketing.cambioCuenta("Vista Marketing", "Florencia Marketing");
+		mMarketing.cambioCuenta("Vista Marketing", "Cuenta Normal");
 		Assert.assertTrue(bAssert);
 	}
 	
