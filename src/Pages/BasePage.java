@@ -246,6 +246,7 @@ public class BasePage {
 	
 	public void cajonDeAplicaciones(String nombre) {
 		driver.switchTo().defaultContent();
+		sleep(5000);
 		WebElement cajon = driver.findElement(By.xpath("//span[@id='tsidLabel']"));
 		
 		if (!nombre.equalsIgnoreCase("Consola FAN") && cajon.getText().equalsIgnoreCase(nombre))
