@@ -379,13 +379,13 @@ public class Sales2 extends TestBase{
 	
 	@Test(groups={"Sales", "AltaDeLinea", "Ola1"})
 	public void TS94643_Ventas_NumeroOrden_Verificar_Orden_de_Venta_Abierta_Seleccion_de_Linea() {
-		sb.BuscarCuenta(DNI, "34073329");
+		sb.BuscarCuenta(DNI, "34073327");
 		sb.acciondecontacto("catalogo");
 		sleep(15000);
 		sb.elegirplan("Plan con Tarjeta Repro");
-		sleep(15000);
+		sleep(25000);
 		driver.findElement(By.cssSelector(".slds-button.slds-m-left--large.slds-button--brand.ta-button-brand")).click();
-		sleep(15000);
+		sleep(20000);
 		List <WebElement> num = driver.findElements(By.className("slds-form-element__control"));
 		boolean a = false;
 		for (WebElement x : num) {
@@ -775,12 +775,12 @@ public class Sales2 extends TestBase{
 	@Test(groups={"Sales","AltaDeLinea","Ola1"})
 	public void TS94498_Alta_Linea_Configurar_Nueva_Linea_Modificar_linea_pre_asignada_ultimos_cuatro_digitos_XX(){
 		CustomerCare CC = new CustomerCare(driver);
-		sb.BuscarCuenta(DNI, "34073329");
+		sb.BuscarCuenta(DNI, "34073327");
 		sb.acciondecontacto("catalogo");
 		sleep(15000);
 		sb.elegirplan("Plan con Tarjeta Repro");
 		sb.continuar();
-		sleep(13000);
+		sleep(20000);
 		List<WebElement> modi = driver.findElements(By.cssSelector(".slds-form-element__label--toggleText.ng-binding"));
 			for(WebElement m : modi){
 				m.getText().equals("Modificar b\u00fasqueda");
@@ -1166,11 +1166,13 @@ public class Sales2 extends TestBase{
 		sb.elegirplan("Plan con Tarjeta Repro");
 		//driver.findElement(By.cssSelector(".slds-button.slds-m-left--large.slds-button--brand.ta-button-brand")).click();
 		sb.continuar();
-		sleep(10000);
+		sleep(20000);
 		WebElement line = driver.findElement(By.id("tree0-node1__label"));
 		WebElement line2 = driver.findElement(By.id("tree0-node1-0"));
 		boolean a = false;
 		boolean b = false;
+		System.out.println(line.getText());
+		System.out.println(line2.getText());
 		if (line.getText().toLowerCase().contains("lineas disponibles")) {
 			a = true;
 		}
@@ -1343,7 +1345,7 @@ public class Sales2 extends TestBase{
 		sleep(15000);
 		sb.elegirplan("Plan con Tarjeta Repro");
 		sb.continuar();
-		sleep(10000);
+		sleep(15000);
 		WebElement bx = driver.findElement(By.id("tree0-node1__label"));
 		bx.click();
 		sleep(3000);
@@ -1371,24 +1373,25 @@ public class Sales2 extends TestBase{
 		sb.continuar();
 		sleep(30000);
 		String lineaVieja = driver.findElement(By.id("tree0-node1")).findElement(By.cssSelector(".slds-checkbox__label.ta-cyan-color-dark")).findElement(By.className("ng-binding")).getText();
-		
+		System.out.println("vieja ="+lineaVieja);
 		WebElement bx = driver.findElement(By.id("SearchBlock"));
 		CC.obligarclick(bx);
-		sleep(3000);
+		sleep(10000);
 		CC.obligarclick(driver.findElement(By.id("ChangeNumber")));
-		sleep(5000);
+		sleep(15000);
 		String lineaNueva = driver.findElement(By.id("tree0-node1")).findElement(By.cssSelector(".slds-checkbox__label.ta-cyan-color-dark")).findElement(By.className("ng-binding")).getText();
+		System.out.println("nueva ="+lineaNueva);
 		Assert.assertTrue(!lineaVieja.equals(lineaNueva));
 	}
 	
 	@Test(groups={"Sales","AltaDeLinea","Ola1"}) 	
 	public void TS94503_Alta_Linea_Configurar_Nueva_Linea_Visualizar_lineas_pre_asignadas_automaticamente_XX(){
-		sb.BuscarCuenta(DNI, "34073329");
+		sb.BuscarCuenta(DNI, "34073327");
 		sb.acciondecontacto("catalogo");
 		sleep(15000);
 		sb.elegirplan("Plan con Tarjeta Repro");
 		sb.continuar();
-		sleep(10000);
+		sleep(20000);
 		WebElement bx = driver.findElement(By.id("tree0-node1"));
 		Assert.assertTrue(bx.isDisplayed());
 	}
@@ -1396,12 +1399,12 @@ public class Sales2 extends TestBase{
 	@Test(groups={"Sales","AltaDeLinea","Ola1"}) 	
 	public void TS94499_Alta_Linea_Configurar_Nueva_Linea_Presionar_el_boton_Buscar_XX(){
 		CustomerCare CC = new CustomerCare(driver);
-		sb.BuscarCuenta(DNI, "34073329");
+		sb.BuscarCuenta(DNI, "34073327");
 		sb.acciondecontacto("catalogo");
 		sleep(15000);
 		sb.elegirplan("Plan con Tarjeta Repro");
 		sb.continuar();
-		sleep(10000);
+		sleep(20000);
 		List<WebElement> modi = driver.findElements(By.cssSelector(".slds-form-element__label--toggleText.ng-binding"));
 			for(WebElement m : modi){
 				m.getText().equals("Modificar b\u00fasqueda");
@@ -1425,20 +1428,20 @@ public class Sales2 extends TestBase{
 	
 	@Test(groups={"Sales","AltaDeLinea","Ola1"}) 	
 	public void TS94501_Alta_Linea_Configurar_Nueva_Linea_Visualizar_filtros_de_localidad_y_provincia_al_modificar_linea_XX(){
-		sb.BuscarCuenta(DNI, "34073329");
+		sb.BuscarCuenta(DNI, "34073327");
 		sb.acciondecontacto("catalogo");
 		sleep(15000);
-		driver.findElement(By.cssSelector(".slds-m-left--x-small.slds-button.slds-button--brand")).click();
+		/*driver.findElement(By.cssSelector(".slds-m-left--x-small.slds-button.slds-button--brand")).click();
 		sleep(15000);
 		driver.switchTo().frame(cambioFrame(driver, By.id("DeliveryMethodSelection")));
 		Select env = new Select (driver.findElement(By.id("DeliveryMethodSelection")));
 		env.selectByVisibleText("Delivery");
 		driver.findElement(By.id("SalesChannelConfiguration_nextBtn")).click();
 		sleep(7000);
-		driver.switchTo().defaultContent();
+		driver.switchTo().defaultContent();*/
 		sb.elegirplan("Plan con Tarjeta Repro");
 		sb.continuar();
-		sleep(15000);
+		sleep(25000);
 		List<WebElement> modi = driver.findElements(By.cssSelector(".slds-form-element__label--toggleText.ng-binding"));
 		for(WebElement m : modi){
 			m.getText().equals("Modificar b\u00fasqueda");
@@ -1465,7 +1468,7 @@ public class Sales2 extends TestBase{
 		sleep(15000);
 		sb.elegirplan("Plan con Tarjeta Repro");
 		sb.continuar();
-		sleep(10000);
+		sleep(20000);
 		sb.Crear_DomicilioLegal(provincia, localidad, "falsa", "", "1000", "", "", "1549");
 		sleep(7000);
 		WebElement text = driver.findElement(By.id("LineAssingmentMessage")).findElement(By.tagName("div")).findElements(By.tagName("p")).get(1).findElements(By.tagName("strong")).get(0);

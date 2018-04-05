@@ -27,7 +27,7 @@ import Pages.setConexion;
 
 public class SalesNominaciones extends TestBase{
 
-	protected String perfil = "call";
+	protected String perfil = "venta";
 	
 	@BeforeClass(alwaysRun=true)
 	public void Init() {
@@ -271,7 +271,7 @@ public class SalesNominaciones extends TestBase{
 		SalesBase SB = new SalesBase(driver);
 		CustomerCare CC = new CustomerCare(driver);
 		ContactSearch contact = new ContactSearch(driver);
-		contact.searchContact2("Pasaporte", "1324567", "femenino");
+		contact.searchContact2("Pasaporte", "132456789", "femenino");
 		sleep(6000);
 		driver.findElement(By.id("PermanencyDueDate")).sendKeys("30/06/2018");
 		CC.obligarclick(driver.findElement(By.id("Contact_nextBtn")));
@@ -303,7 +303,7 @@ public class SalesNominaciones extends TestBase{
 		SalesBase SB = new SalesBase(driver);
 		CustomerCare CC = new CustomerCare(driver);
 		ContactSearch contact = new ContactSearch(driver);
-		contact.searchContact2("Pasaporte", "1324567", "femenino");
+		contact.searchContact2("Pasaporte", "132456789", "femenino");
 		sleep(6000);
 		driver.findElement(By.id("PermanencyDueDate")).sendKeys("30/06/2021");
 		assertTrue(driver.findElement(By.cssSelector(".message.description.ng-binding.ng-scope")).getText().contains("La permanencia no puede ser mayor a 2 años a partir de la fecha o menor a la fecha actual"));
@@ -350,7 +350,7 @@ public class SalesNominaciones extends TestBase{
 		bp.setSimpleDropdown(driver.findElement(By.id("ImpositiveCondition")), "IVA Consumidor Final");
 		SB.Crear_DomicilioLegal("Buenos Aires", "aba", "falsa", "", "1000", "", "", "1549");
 		sleep(20000);
-		System.out.println(driver.findElement(By.cssSelector(".slds-grid.slds-wrap.ng-pristine.ng-valid")).findElement(By.id("TextBlock2")).findElement(By.className("ng-binding")).findElements(By.tagName("p")).get(2).getText());
+		System.out.println(driver.findElements(By.cssSelector(".slds-grid.slds-wrap.ng-pristine.ng-valid")).get(1).findElement(By.id("TextBlock2")).findElement(By.className("ng-binding")).findElements(By.tagName("p")).get(2).getText());
 		assertTrue(driver.findElements(By.id("TextBlock2")).get(1).findElements(By.tagName("p")).get(3).getText().toLowerCase().contains("nominaci\u00f3n exitosa"));
 		
 	}
@@ -399,7 +399,7 @@ public class SalesNominaciones extends TestBase{
 		ContactSearch contact = new ContactSearch(driver);
 		Random aleatorio = new Random(System.currentTimeMillis());
 		aleatorio.setSeed(System.currentTimeMillis());
-		int intAletorio = aleatorio.nextInt(8999999)+1000000;
+		int intAletorio = aleatorio.nextInt(899999999)+1000000;
 		contact.searchContact2("Pasaporte", Integer.toString(intAletorio), "femenino");
 		sleep(6000);
 		driver.findElement(By.id("PermanencyDueDate")).sendKeys("30/06/2018");
@@ -438,7 +438,7 @@ public class SalesNominaciones extends TestBase{
 	@Test(groups={"Sales","Nominacion","Ola1"})
 	public void TS95156_SalesCPQ_Nominacion_Extranjero_Verificar_Campo_Fecha_De_Permanencia_Cliente_Nuevo(){
 		ContactSearch contact = new ContactSearch(driver);
-		contact.searchContact2("Pasaporte", "1324657", "femenino");
+		contact.searchContact2("Pasaporte", "132465789", "femenino");
 		sleep(6000);
 		assertTrue(driver.findElement(By.id("PermanencyDueDate")).isEnabled());
 		assertTrue(driver.findElements(By.cssSelector(".slds-form-element__control.slds-input-has-icon.slds-input-has-icon--right")).get(2).findElement(By.tagName("label")).getText().toLowerCase().contains("plazo de permanencia"));

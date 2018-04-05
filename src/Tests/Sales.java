@@ -66,13 +66,13 @@ public class Sales extends TestBase {
 	String[] genero = {"masculino","femenino"};
 	String[] DocValue = {"52698550","3569874563","365","ssss"};
 	
-	//@AfterClass(alwaysRun=true)
+	@AfterClass(alwaysRun=true)
 	public void tearDown() {
 		driver.close();
 		driver.quit();
 	}
 	
-	//@AfterMethod(alwaysRun=true)
+	@AfterMethod(alwaysRun=true)
 	public void deslogin(){
 		try {Thread.sleep(10000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 		driver.get("https://crm--sit.cs14.my.salesforce.com/home/home.jsp?tsid=02u41000000QWha/");
@@ -1500,7 +1500,7 @@ public class Sales extends TestBase {
 		driver.findElement(By.id("tab-scoped-3__item")).click();
 		WebElement tTel = driver.findElement(By.id("tab-scoped-3")).findElement(By.tagName("tbody")).findElements(By.tagName("td")).get(2);
 		System.out.println(tTel.getText());
-		Assert.assertTrue(tTel.getText().equals("34073329"));
+		Assert.assertTrue(tTel.getText().equals(buscarCampoExcel(1, "Cuenta activa", 2)));
 		WebElement tNom = driver.findElement(By.id("tab-scoped-3")).findElement(By.tagName("tbody")).findElements(By.tagName("td")).get(0);
 		Assert.assertFalse(tNom.getText().equals("papa" + " " + "nata"));
 	}
@@ -1512,6 +1512,8 @@ public class Sales extends TestBase {
 		SB.BuscarAvanzada("", cuenta.split(" ")[1], "", "", "");
 		driver.findElement(By.id("SearchClientsDummy")).click();
 		sleep (3000);	
+		driver.findElement(By.id("tab-scoped-3__item")).click();
+		sleep(3000);
 		WebElement asdf = driver.findElement(By.id("tab-scoped-3")).findElement(By.tagName("tbody")).findElements(By.tagName("td")).get(0);
 		System.out.println(asdf.getText());
 		List <WebElement> nc = driver.findElements(By.cssSelector(".slds-button.slds-button.slds-button--icon"));
@@ -1615,17 +1617,19 @@ public class Sales extends TestBase {
 	    @Test(groups = {"Sales", "AltaDeCuenta","Ola1"}) 
 	    public void TS95278_Alta_Cuenta_Consumer_Valida_alta_menor_16anios() { 
 	      SalesBase SB = new SalesBase(driver); 
+	      java.util.Date fecha = new Date();
+	      String fecha16 = (fecha.getDate()-1)+"/"+(fecha.getMonth()+1)+"/2005"; 
 	      SB.BtnCrearNuevoCliente(); 
-	      driver.findElement(By.id("Birthdate")).sendKeys("07/05/2005"); 
+	      driver.findElement(By.id("Birthdate")).sendKeys(fecha16); 
 	      sleep(2000); 
 	      WebElement error = driver.findElement(By.cssSelector(".message.description.ng-binding.ng-scope")); 
 	      Assert.assertTrue(error.getText().toLowerCase().contains("fecha de nacimiento inv\u00e1lida")); 
 	    } 
 	     
 	    @Test(groups = {"Sales", "AltaDeLinea","Ola1"}) 
-	    public void TS94627_Alta_Linea_Carrito_Seleccionar_producto_Agregar_cantidad() { 
+	    public void TS94627_Alta_Linea_Carrito_Seleccionar_producto_Agregar_cantidad() throws IOException { 
 	      SalesBase SB = new SalesBase(driver); 
-	      SB.BuscarCuenta(DNI, "11111111"); 
+	      SB.BuscarCuenta(DNI, buscarCampoExcel(1, "Cuenta activa", 2)); 
 	      SB.acciondecontacto("catalogo"); 
 	      SB.agregarplan("plan con tarjeta"); 
 	      sleep(25000); 
@@ -1646,9 +1650,9 @@ public class Sales extends TestBase {
 	    } 
 	     
 	    @Test(groups = {"Sales", "AltaDeLinea","Ola1"}) 
-	    public void TS94628_Alta_Linea_Carrito_Seleccionar_producto_Restar_cantidad() { 
+	    public void TS94628_Alta_Linea_Carrito_Seleccionar_producto_Restar_cantidad() throws IOException { 
 	      SalesBase SB = new SalesBase(driver); 
-	      SB.BuscarCuenta(DNI, "11111111"); 
+	      SB.BuscarCuenta(DNI, buscarCampoExcel(1, "Cuenta activa", 2)); 
 	      SB.acciondecontacto("catalogo"); 
 	      SB.agregarplan("plan con tarjeta"); 
 	      sleep(25000); 
@@ -1671,9 +1675,9 @@ public class Sales extends TestBase {
 	    } 
 	     
 	    @Test(groups = {"Sales", "AltaDeLinea","Ola1"}) 
-	    public void TS94629_Alta_Linea_Configurar_Nueva_Linea_Boton_Siguiente() { 
+	    public void TS94629_Alta_Linea_Configurar_Nueva_Linea_Boton_Siguiente() throws IOException { 
 	      SalesBase SB = new SalesBase(driver); 
-	      SB.BuscarCuenta(DNI, "11111111"); 
+	      SB.BuscarCuenta(DNI, buscarCampoExcel(1, "Cuenta activa", 2)); 
 	      SB.acciondecontacto("catalogo"); 
 	      SB.agregarplan("plan con tarjeta"); 
 	      sleep(15000); 
@@ -1681,48 +1685,54 @@ public class Sales extends TestBase {
 	    } 
 	     
 	    @Test(groups = {"Sales", "AltaDeCuenta","Ola1"}) 
-	    public void TS94969_Alta_Cuenta_Busqueda_Verificar_accion_boton_2_con_datos_heredados() { 
+	    public void TS94969_Alta_Cuenta_Busqueda_Verificar_accion_boton_2_con_datos_heredados() throws IOException { 
 	      SalesBase SB = new SalesBase(driver); 
-	      SB.BuscarCuenta(DNI, "11111111"); 
+	      String nombre = buscarCampoExcel(1, "Cuenta activa", 1);
+	      SB.BuscarCuenta(DNI, buscarCampoExcel(1, "Cuenta activa", 2)); 
 	      sleep(7000); 
-	      String name = ""; 
+	      driver.findElement(By.id("tab-scoped-3__item")).click();
+	      sleep(3000);
 	      List <WebElement> cuenta = driver.findElements(By.cssSelector(".slds-truncate.ng-binding")); 
 	      for (WebElement x : cuenta) { 
-	        if (x.getText().contains("Adela Sales")) { 
-	          name = "Adela Sales"; 
+	        if (x.getText().toLowerCase().contains(nombre.toLowerCase())) {  
+	        	 SB.acciondecontacto("nueva cuenta"); 
+	   	      	sleep(7000); 
+	   	      	WebElement titu = driver.findElement(By.id("Owner")); 
+	   	      	Assert.assertTrue(titu.getAttribute("value").toLowerCase().contains(nombre.toLowerCase())); 
+	   	      	break;
 	        }  
 	      } 
-	      SB.acciondecontacto("nueva cuenta"); 
-	      sleep(7000); 
-	      WebElement titu = driver.findElement(By.id("Owner")); 
-	      Assert.assertTrue(titu.getAttribute("value").contains(name)); 
+	     
 	    } 
 	     
 	    @Test(groups = {"Sales", "AltaDeCuenta","Ola1"}) 
-	    public void TS94971_Alta_Cuenta_Busqueda_Verificar_que_no_se_completen_datos_boton_accion_cliente() { 
+	    public void TS94971_Alta_Cuenta_Busqueda_Verificar_que_no_se_completen_datos_boton_accion_cliente() throws IOException { 
 	      SalesBase SB = new SalesBase(driver); 
-	      SB.BuscarCuenta(DNI, "11111111"); 
+	      String nombre = buscarCampoExcel(1, "Cuenta activa", 1);
+	      SB.BuscarCuenta(DNI, buscarCampoExcel(1, "Cuenta activa", 2)); 
 	      sleep(7000); 
-	      String name = ""; 
+	      driver.findElement(By.id("tab-scoped-3__item")).click();
+	      sleep(3000);
 	      List <WebElement> cuenta = driver.findElements(By.cssSelector(".slds-truncate.ng-binding")); 
 	      for (WebElement x : cuenta) { 
-	        if (x.getText().contains("Adela Sales")) { 
-	          name = "Adela Sales"; 
+	        if (x.getText().toLowerCase().contains(nombre.toLowerCase())) { 
+	        	SB.acciondecontacto("nueva cuenta"); 
+	  	      sleep(7000); 
+	  	      List <WebElement> prov = driver.findElements(By.cssSelector(".slds-form-element__label.ng-binding")); 
+	  	      boolean a = false; 
+	  	      for (WebElement z : prov) { 
+	  	        if (z.getText().toLowerCase().contains("provincia")) { 
+	  	          a = true; 
+	  	        } 
+	  	      } 
+	  	      WebElement titu = driver.findElement(By.id("Owner")); 
+	  	      Assert.assertTrue(driver.findElement(By.id("CityTypeAhead")).getText().isEmpty()); 
+	  	      Assert.assertTrue(titu.getAttribute("value").toLowerCase().contains(nombre.toLowerCase())); 
+	  	      Assert.assertTrue(a);    
+	  	      break;
 	        }  
 	      } 
-	      SB.acciondecontacto("nueva cuenta"); 
-	      sleep(7000); 
-	      List <WebElement> prov = driver.findElements(By.cssSelector(".slds-form-element__label.ng-binding")); 
-	      boolean a = false; 
-	      for (WebElement x : prov) { 
-	        if (x.getText().toLowerCase().contains("provincia")) { 
-	          a = true; 
-	        } 
-	      } 
-	      WebElement titu = driver.findElement(By.id("Owner")); 
-	      Assert.assertTrue(driver.findElement(By.id("CityTypeAhead")).getText().isEmpty()); 
-	      Assert.assertTrue(titu.getAttribute("value").contains(name)); 
-	      Assert.assertTrue(a);       
+	       
 	    } 
 	     
 	    @Test(groups = {"Sales", "AltaDeContacto","Ola1"}) 
@@ -1747,9 +1757,9 @@ public class Sales extends TestBase {
 	    } 
 	     
 	    @Test(groups = {"Sales", "AltaDeLinea","Ola1"}) 
-	    public void TS95062_Ventas_General_Visualizar_accion_Agregar() { 
+	    public void TS95062_Ventas_General_Visualizar_accion_Agregar() throws IOException { 
 	      SalesBase SB = new SalesBase(driver); 
-	      SB.BuscarCuenta(DNI, "11111111"); 
+	      SB.BuscarCuenta(DNI, buscarCampoExcel(1, "Cuenta activa", 2)); 
 	      SB.acciondecontacto("catalogo"); 
 	      SB.agregarplan("plan con tarjeta"); 
 	      Assert.assertTrue(driver.findElements(By.cssSelector(".slds-button.slds-button_neutral.cpq-add-button")).get(1).getText().equalsIgnoreCase("agregar")); 
@@ -1775,9 +1785,9 @@ public class Sales extends TestBase {
 	    } 
 	     
 	    @Test(groups = {"Sales", "AltaDeLinea","Ola1"}) 
-	    public void TS95063_Ventas_General_Visualizar_accion_Eliminar() { 
+	    public void TS95063_Ventas_General_Visualizar_accion_Eliminar() throws IOException { 
 	      SalesBase SB = new SalesBase(driver); 
-	      SB.BuscarCuenta(DNI, "11111111"); 
+	      SB.BuscarCuenta(DNI, buscarCampoExcel(1, "Cuenta activa", 2)); 
 	      SB.acciondecontacto("catalogo"); 
 	      SB.agregarplan("plan con tarjeta"); 
 	      sleep(15000); 
@@ -1802,9 +1812,9 @@ public class Sales extends TestBase {
 	    } 
 	     
 	    @Test(groups = {"Sales", "AltaDeLinea","Ola1"}) 
-	    public void TS95061_Ventas_General_Visualizar_botones_Agregar_Eliminar() { 
+	    public void TS95061_Ventas_General_Visualizar_botones_Agregar_Eliminar() throws IOException { 
 	      SalesBase SB = new SalesBase(driver); 
-	      SB.BuscarCuenta(DNI, "11111111"); 
+	      SB.BuscarCuenta(DNI, buscarCampoExcel(1, "Cuenta activa", 2)); 
 	      SB.acciondecontacto("catalogo"); 
 	      SB.agregarplan("plan con tarjeta"); 
 	      sleep(15000); 
@@ -1826,12 +1836,12 @@ public class Sales extends TestBase {
 	    } 
 	     
 	    @Test(groups = {"Sales", "AltaDeLinea","Ola1"}) 
-	    public void TS94888_Ventas_General_Verificar_no_visualizacion_de_boton_Crear_Cuenta() { 
+	    public void TS94888_Ventas_General_Verificar_no_visualizacion_de_boton_Crear_Cuenta() throws IOException { 
 	      SalesBase SB = new SalesBase(driver); 
-	      SB.BuscarCuenta(DNI, "11111111"); 
+	      SB.BuscarCuenta(DNI, buscarCampoExcel(1, "Cuenta activa", 2)); 
 	      SB.acciondecontacto("catalogo"); 
-	      sleep(10000); 
-	      WebElement page = driver.findElement(By.cssSelector(".vlocity.via-slds")); 
+	      sleep(15000); 
+	      WebElement page = driver.findElement(By.className("cpq-base-grid")); 
 	      if (page.findElement(By.tagName("button")).getText().toLowerCase().contains("crear cuenta")) { 
 	        Assert.assertTrue(false); 
 	      } 
@@ -1841,12 +1851,14 @@ public class Sales extends TestBase {
 	    } 
 	     
 	    @Test(groups = {"Sales", "AltaDeCuenta","Ola1"}) 
-	    public void TS95513_Alta_de_Cuenta_Consumer_Verificar_Consumidor_final_por_defecto() { 
+	    public void TS95513_Alta_de_Cuenta_Consumer_Verificar_Consumidor_final_por_defecto() throws IOException { 
 	      SalesBase SB = new SalesBase(driver); 
-	      SB.BuscarCuenta(DNI, "11111111"); 
+	      SB.BuscarCuenta(DNI, buscarCampoExcel(1, "Cuenta activa", 2)); 
+	      driver.findElement(By.id("tab-scoped-3__item")).click();
+	      sleep(3000);
 	      SB.acciondecontacto("catalogo"); 
 	      SB.agregarplan("plan con tarjeta"); 
-	      sleep(15000); 
+	      sleep(18000); 
 	      driver.findElement(By.cssSelector(".slds-button.slds-m-left--large.slds-button--brand.ta-button-brand")).click(); 
 	      sleep(7000); 
 	      WebElement iva = driver.findElement(By.id("ImpositiveCondition")); 
@@ -1855,9 +1867,11 @@ public class Sales extends TestBase {
 
 	 	
 	@Test(groups = "Sales")
-	public void TS76117_Alta_Contacto_Creacion_Verificar_creacion_de_cliente() {
+	public void TS76117_Alta_Contacto_Creacion_Verificar_creacion_de_cliente() throws IOException {
 		SalesBase SB = new SalesBase(driver);
-		SB.BuscarCuenta(DNI, "1111111");
+		SB.BuscarCuenta(DNI, buscarCampoExcel(1, "Cuenta activa", 2)); 
+	    driver.findElement(By.id("tab-scoped-3__item")).click();
+	    sleep(3000);
 		SB.acciondecontacto("nueva cuenta");
 		sleep(5000);
 		List<WebElement> dat = driver.findElements(By.cssSelector(".slds-page-header__title.vlc-slds-page-header__title.slds-truncate.ng-binding"));
@@ -1871,9 +1885,11 @@ public class Sales extends TestBase {
 	}
 	 	
 	@Test(groups={"Sales", "AltaDeContacto","Ola1"})
-	public void TS95186_Alta_Contacto_Creacion_Verificar_creacion_de_cliente() {
+	public void TS95186_Alta_Contacto_Creacion_Verificar_creacion_de_cliente() throws IOException {
 		SalesBase SB = new SalesBase(driver);
-		SB.BuscarCuenta(DNI, "1111111");
+		SB.BuscarCuenta(DNI, buscarCampoExcel(1, "Cuenta activa", 2)); 
+	    driver.findElement(By.id("tab-scoped-3__item")).click();
+	    sleep(3000);
 		SB.acciondecontacto("nueva cuenta");
 		sleep(5000);
 		WebElement telalt = driver.findElement(By.id("AlternativePhone"));
@@ -1901,9 +1917,11 @@ public class Sales extends TestBase {
 	
 	
 	 @Test(groups = {"Sales", "AltaDeContacto","Ola1"})
-	  public void TS94734_Alta_de_Contacto_Persona_Fisica_Verificar_seleccion_de_localidad_existente(){ 
+	  public void TS94734_Alta_de_Contacto_Persona_Fisica_Verificar_seleccion_de_localidad_existente() throws IOException{ 
 	    SalesBase SB = new SalesBase(driver); 
-	    SB.BuscarCuenta(DNI, "11111111"); 
+	    SB.BuscarCuenta(DNI, buscarCampoExcel(1, "Cuenta activa", 2)); 
+	    driver.findElement(By.id("tab-scoped-3__item")).click();
+	    sleep(3000);
 	    SB.acciondecontacto("nueva cuenta"); 
 	    boolean h = false; 
 	    sleep(5000); 
@@ -1920,10 +1938,14 @@ public class Sales extends TestBase {
 	    } 
 	    Assert.assertTrue(h); 
 	   } 
+	 
+	 
 	  @Test(groups = {"Sales", "AltaDeContacto","Ola1"})
-	  public void TS94737_Alta_de_Contacto_Persona_Fisica_Verificar_seleccion_de_calle_existente(){ 
+	  public void TS94737_Alta_de_Contacto_Persona_Fisica_Verificar_seleccion_de_calle_existente() throws IOException{ 
 	    SalesBase SB = new SalesBase(driver); 
-	    SB.BuscarCuenta(DNI, "11111111"); 
+	    SB.BuscarCuenta(DNI,  buscarCampoExcel(1, "Cuenta activa", 2)); 
+	    driver.findElement(By.id("tab-scoped-3__item")).click();
+	    sleep(3000);
 	    SB.acciondecontacto("nueva cuenta"); 
 	    boolean h = false; 
 	    sleep(5000); 
