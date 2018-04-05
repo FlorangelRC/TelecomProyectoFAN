@@ -7,6 +7,7 @@ import org.testng.annotations.Test;
 
 import Pages.Marketing;
 
+import java.io.IOException;
 import java.util.List;
 
 import org.openqa.selenium.WebElement;
@@ -36,8 +37,8 @@ public class MarketingOla1_Joaquin extends TestBase {
 	}
 	
 	@Test(groups = {"Marketing", "Ola1", "GestionDelSocioDeClubPersonal"})
-	public void TS90242_Sucripcion_CP_No_Validacion_de_Mail() {
-		Page.elegirCuenta("aaaaCuenta Activa S/Serv");
+	public void TS90242_Sucripcion_CP_No_Validacion_de_Mail() throws IOException {
+		Page.elegirCuenta(buscarCampoExcel(0, "cuenta sin servicio", 1));
 		Page.irAGestionMarketing();
 		Page.clubPersonal("alta");
 		
@@ -45,8 +46,8 @@ public class MarketingOla1_Joaquin extends TestBase {
 	}
 	
 	@Test(groups = {"Marketing", "Ola1", "GestionDelSocioDeClubPersonal"})
-	public void TS98022_Visualizar_botones_ABM_del_CP() {
-		Page.elegirCuenta("Florencia Marketing");
+	public void TS98022_Visualizar_botones_ABM_del_CP() throws IOException {
+		Page.elegirCuenta(buscarCampoExcel(0, "cuenta normal", 1));
 		Page.irAGestionMarketing();
 		
 		List<WebElement> botones = Page.obtenerBotonesClubPersonal();
@@ -56,8 +57,8 @@ public class MarketingOla1_Joaquin extends TestBase {
 	}
 	
 	@Test(groups = {"Marketing", "Ola1", "GestionDelSocioDeClubPersonal"})
-	public void TS98025_Visualizar_error_Fraude_Alta_CP() {
-		Page.elegirCuenta("aaaaCuenta Fraude");
+	public void TS98025_Visualizar_error_Fraude_Alta_CP() throws IOException {
+		Page.elegirCuenta(buscarCampoExcel(0, "cuenta c/ fraude", 1));
 		Page.irAGestionMarketing();
 		Page.clubPersonal("alta");
 		
@@ -65,8 +66,8 @@ public class MarketingOla1_Joaquin extends TestBase {
 	}
 	
 	@Test(groups = {"Marketing", "Ola1", "GestionDelSocioDeClubPersonal"})
-	public void TS98028_Generar_Caso_error_Fraude_Alta_CP() {
-		Page.elegirCuenta("aaaaCuenta Fraude");
+	public void TS98028_Generar_Caso_error_Fraude_Alta_CP() throws IOException {
+		Page.elegirCuenta(buscarCampoExcel(0, "cuenta c/ fraude", 1));
 		Page.irAGestionMarketing();
 		Page.clubPersonal("alta");
 		
@@ -82,8 +83,8 @@ public class MarketingOla1_Joaquin extends TestBase {
 	}
 	
 	@Test(groups = {"Marketing", "Ola1", "GestionDelSocioDeClubPersonal"})
-	public void TS98029_Visualizar_cuentas_Customer_Alta_CP() {
-		Page.elegirCuenta("Florencia Marketing");
+	public void TS98029_Visualizar_cuentas_Customer_Alta_CP() throws IOException {
+		Page.elegirCuenta(buscarCampoExcel(0, "cuenta normal", 1));
 		Page.irAGestionMarketing();
 		Page.clubPersonal("alta");
 		
@@ -91,8 +92,8 @@ public class MarketingOla1_Joaquin extends TestBase {
 	}
 	
 	@Test(groups = {"Marketing", "Ola1", "GestionDelSocioDeClubPersonal"})
-	public void TS98030_Visualizar_cuentas_Business_Alta_CP() {
-		Page.elegirCuenta("Florencia Marketing");
+	public void TS98030_Visualizar_cuentas_Business_Alta_CP() throws IOException {
+		Page.elegirCuenta(buscarCampoExcel(0, "cuenta normal", 1));
 		Page.irAGestionMarketing();
 		Page.clubPersonal("alta");
 		
@@ -100,8 +101,8 @@ public class MarketingOla1_Joaquin extends TestBase {
 	}
 	
 	@Test(groups = {"Marketing", "Ola1", "GestionDelSocioDeClubPersonal"})
-	public void TS98039_Visualizacion_de_cuentas_seleccionadas_Alta_CP() {
-		Page.elegirCuenta("Florencia Marketing");
+	public void TS98039_Visualizacion_de_cuentas_seleccionadas_Alta_CP() throws IOException {
+		Page.elegirCuenta(buscarCampoExcel(0, "cuenta normal", 1));
 		Page.irAGestionMarketing();
 		Page.clubPersonal("alta");
 		Page.seleccionarCuenta("consumerAccounts");
@@ -111,8 +112,8 @@ public class MarketingOla1_Joaquin extends TestBase {
 	}
 	
 	@Test(groups = {"Marketing", "Ola1", "GestionDelSocioDeClubPersonal"})
-	public void TS98040_No_visualizacion_de_cuentas_sin_seleccionar_Alta_CP() {
-		Page.elegirCuenta("Florencia Marketing");
+	public void TS98040_No_visualizacion_de_cuentas_sin_seleccionar_Alta_CP() throws IOException {
+		Page.elegirCuenta(buscarCampoExcel(0, "cuenta normal", 1));
 		Page.irAGestionMarketing();
 		Page.clubPersonal("alta");
 		Page.seleccionarCuenta("consumerAccounts");
@@ -122,8 +123,8 @@ public class MarketingOla1_Joaquin extends TestBase {
 	}
 	
 	@Test(groups = {"Marketing", "Ola1", "GestionDelSocioDeClubPersonal"})
-	public void TS98063_Verificar_creacion_de_caso_cerrado_Notificacion_Baja_CP() {
-		Page.elegirCuenta("Florencia Marketing");
+	public void TS98063_Verificar_creacion_de_caso_cerrado_Notificacion_Baja_CP() throws IOException {
+		Page.elegirCuenta(buscarCampoExcel(0, "cuenta normal", 1));
 		Page.irAGestionMarketing();
 		Page.clubPersonal("baja");
 		Page.seleccionarCuenta("consumerAccounts");
@@ -141,8 +142,8 @@ public class MarketingOla1_Joaquin extends TestBase {
 	}
 	
 	@Test(groups = {"Marketing", "Ola1", "GestionDelSocioDeClubPersonal"})
-	public void TS98064_Visualizar_mensaje_al_cerrar_el_caso_Notificacion_Baja_CP() {
-		Page.elegirCuenta("Florencia Marketing");
+	public void TS98064_Visualizar_mensaje_al_cerrar_el_caso_Notificacion_Baja_CP() throws IOException {
+		Page.elegirCuenta(buscarCampoExcel(0, "cuenta normal", 1));
 		Page.irAGestionMarketing();
 		Page.clubPersonal("baja");
 		Page.seleccionarCuenta("businessAccounts");
