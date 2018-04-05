@@ -40,23 +40,23 @@ private WebDriver driver;
     sleep(5000);
     HomeBase homePage = new HomeBase(driver);
     Accounts accountPage = new Accounts(driver);
-       if(driver.findElement(By.id("tsidLabel")).getText().equals("Consola FAN")) {
-         homePage.switchAppsMenu();
-         sleep(2000);
-         homePage.selectAppFromMenuByName("Ventas");
-         sleep(5000);
+    if(driver.findElement(By.id("tsidLabel")).getText().equals("Consola FAN")) {
+    homePage.switchAppsMenu();
+    sleep(2000);
+    homePage.selectAppFromMenuByName("Ventas");
+    sleep(5000);
        }
-       homePage.switchAppsMenu();
-       sleep(2000);
-       homePage.selectAppFromMenuByName("Consola FAN");
-       sleep(5000);
-	   goToLeftPanel2(driver, "Cuentas");
-	   sleep(2000);  
-	   driver.switchTo().defaultContent();
-		 driver.switchTo().frame(accountPage.getFrameForElement(driver, By.cssSelector(".topNav.primaryPalette")));
-		 Select field = new Select(driver.findElement(By.name("fcf")));
-		 try {field.selectByVisibleText("Todas Las cuentas");}
-		 catch (org.openqa.selenium.NoSuchElementException ExM) {field.selectByVisibleText("Todas las cuentas");}
+    homePage.switchAppsMenu();
+    sleep(2000);
+    homePage.selectAppFromMenuByName("Consola FAN");
+    sleep(5000);
+	goToLeftPanel2(driver, "Cuentas");
+	sleep(2000);  
+	driver.switchTo().defaultContent();
+	driver.switchTo().frame(accountPage.getFrameForElement(driver, By.cssSelector(".topNav.primaryPalette")));
+	Select field = new Select(driver.findElement(By.name("fcf")));
+	try {field.selectByVisibleText("Todas Las cuentas");}
+	catch (org.openqa.selenium.NoSuchElementException ExM) {field.selectByVisibleText("Todas las cuentas");}
 	
 
  	 CustomerCare cerrar = new CustomerCare(driver);
@@ -72,11 +72,14 @@ private WebDriver driver;
 		sleep(3000);
 		driver.switchTo().defaultContent();
 		sleep(3000);
-		page.selectAccount("Marco Polo");
+		//page.selectAccount((buscarCampoExcel(3, "Cuenta Activa c/ linea y serv", 1)));
+		page.selectAccount ("Marco Polo");
+		driver.switchTo().defaultContent();
+		sleep(3000);
  	
 	}
  	 	
- 		//@AfterMethod(alwaysRun=true)
+ 		@AfterMethod(alwaysRun=true)
  		public void after() {
 		try {Thread.sleep(2000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 		driver.switchTo().defaultContent(); 
@@ -85,7 +88,7 @@ private WebDriver driver;
 	    driver.switchTo().defaultContent(); 
 	}
  	
- 		//@AfterClass(alwaysRun=true)
+ 		@AfterClass(alwaysRun=true)
  		public void tearDown() {
 		try {Thread.sleep(1000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 		CustomerCare cerrar = new CustomerCare(driver);
@@ -105,9 +108,11 @@ private WebDriver driver;
 	TechnicalCareCSRDiagnosticoPage tech = new TechnicalCareCSRDiagnosticoPage(driver);
 	sleep (4000);
 	driver.switchTo().defaultContent();
-    tech.clickOpcionEnAsset("543416869777", "mis servicios");
+    //tech.clickOpcionEnAsset(buscarCampoExcel(3, "Cuenta Activa c/ linea y serv", 3), "mis servicios");
+	tech.clickOpcionEnAsset("543416869777", "mis servicios");
     tech.verDetalles();
     tech.clickDiagnosticarServicio("Transferencia de Llamadas");
+    sleep (4000);
     tech.selectionInconvenient("No puede configurar");
     assertTrue(tech.validarInconveniente("No puede configurar"));
 	}
@@ -117,7 +122,7 @@ private WebDriver driver;
 	TechnicalCareCSRDiagnosticoPage tech = new TechnicalCareCSRDiagnosticoPage(driver);
 	sleep (4000);
 	driver.switchTo().defaultContent();
-    tech.clickOpcionEnAsset("543416869777", "mis servicios");
+	tech.clickOpcionEnAsset("543416869777", "mis servicios");
     tech.verDetalles();
     tech.clickDiagnosticarServicio("sms", "SMS Entrante", false);
     assertTrue(tech.validarOpcionesXSubServicio("SMS Entrante"));
@@ -393,4 +398,6 @@ private WebDriver driver;
 
    
 }
+	
+	
 }

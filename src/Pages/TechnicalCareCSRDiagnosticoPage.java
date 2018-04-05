@@ -62,8 +62,11 @@ public class TechnicalCareCSRDiagnosticoPage extends BasePage{
 	private WebElement next;
 	
 	
-	@FindBy(xpath="//*[@id=\"SimilCaseInformation\"]/div/p/p[3]/strong[1]")
+	@FindBy(xpath=".//*[@id='ClosedCaseKnowledgeBase']/div/p/p/strong/strong")
 	private WebElement numCaso;
+	
+	@FindBy(xpath=".//*[@id='IncorrectCategoryMessage']/div/p/p[2]/span/strong")
+	private WebElement concCaso;
 	
 	@FindBy(id= "phSearchInput")
 	private WebElement buscar;
@@ -100,6 +103,9 @@ public class TechnicalCareCSRDiagnosticoPage extends BasePage{
 	
 	@FindBy (css= ".slds-form-element__control.slds-input-has-icon.slds-input-has-icon--left")
 	private WebElement search;
+	
+	@FindBy(xpath=".//*[@id='Case_body']/table/tbody/tr[2]/td[3]")
+	private WebElement estado;
 	
 
 	public TechnicalCareCSRDiagnosticoPage(WebDriver driver){
@@ -324,7 +330,7 @@ public class TechnicalCareCSRDiagnosticoPage extends BasePage{
 	public void selectionInconvenient(String inconvenientName) {
 		sleep(4000);
 	      driver.switchTo().frame(getFrameForElement(driver, By.id("IssueSelectStep"))); //.//*[@id='SignalAnswer|0']/div/div[1]/label/span/div/div
-	      	sleep(2000);
+	      	sleep(4000);
 	      		for (WebElement opt : getlistaDeInconvenientes()) {
 	      			if (opt.getText().equalsIgnoreCase(inconvenientName)) {
 	      				opt.click();
@@ -467,28 +473,51 @@ public class TechnicalCareCSRDiagnosticoPage extends BasePage{
 			 
 			}
 			else {	
-				continuar.click();
+				//continuar.click();
 				caso=numCaso.getText();
 			}
 		driver.switchTo().defaultContent();
-		buscarCaso(caso);
+		//buscarCaso();
 		driver.switchTo().defaultContent();
 		return caso;		
 			
 	
 	}
 	
-	public void buscarCaso(String numero) throws InterruptedException{
+	public void buscarCaso() throws InterruptedException{
+
+		String caso = numCaso.getText().substring(0, numCaso.getText().indexOf(","));
+		driver.switchTo().defaultContent();
+		//driver.switchTo().frame(getFrameForElement(driver, By.id("searchButtonContainer")));
 		buscar.click();
 		buscar.clear();
-		buscar.sendKeys(numero);
+		buscar.sendKeys(caso);
 		buscar.submit();
 		sleep(5000);
-		 driver.switchTo().frame(getFrameForElement(driver, By.id("Case_body")));
-		 driver.findElement(By.xpath("//*[@id=\"Case_body\"]/table/tbody/tr[2]/th/a")).click();
+		driver.switchTo().frame(getFrameForElement(driver, By.id("Case_body")));
+		
 		
 }
 	
+	public void CasoConciliar() throws InterruptedException{
+
+		String caso = concCaso.getText();
+		driver.switchTo().defaultContent();
+		//driver.switchTo().frame(getFrameForElement(driver, By.id("searchButtonContainer")));
+		buscar.click();
+		buscar.clear();
+		buscar.sendKeys(caso);
+		buscar.submit();
+		sleep(5000);
+		driver.switchTo().frame(getFrameForElement(driver, By.id("Case_body")));
+		
+		
+}
+
+	
+	
+	
+
 	public void actualizarEquipo(String modelo) throws InterruptedException{
 	       sleep(3000);
 	       driver.switchTo().frame(getFrameForElement(driver, By.id("MobileIdentification")));
@@ -720,6 +749,10 @@ public void clickContinua() {
 			if(c.getText().contains("Continuar")) {
 				c.click();
 				break;}}}		
+}
+
+public WebElement getEstado() {
+	return estado;
 }
 }
 	
