@@ -146,75 +146,12 @@ public class ta_CPQ extends TestBase {
 	
 	
 	/**bin;
-	 * Verifica que aparezca "Quitar el producto del carrito" en la etiqueta de la papelera.
-	 * 
-	 * Papelera ya no existe
-	 * Ultima revision 30-01-18
-	 */
-	@Test(groups={"Sales", "AltaLinea", "Ola1"})
-	public void TS94481_checkPaperCanLabel() {
-		Ta_CPQ page3 = new Ta_CPQ(driver);
-		try { for(WebElement e : driver.findElements(By.className("cpq-product-name"))) {
-			page3.clickOnDelete();
-			try {Thread.sleep(2000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
-		} } catch (java.lang.IndexOutOfBoundsException e) {}
-		try {Thread.sleep(4000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
-		page3.addPlan();
-		try {Thread.sleep(4000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
-		Assert.assertEquals("Quitar el producto del carrito", page3.getPaperCanLabel());
-	}
+	 * Verifica que aparezca "Quitar el producto del carrito" en la etiqueta de la papelera.*/
 	
-	//Realizado en Sales2
-	/**
-	 * Verifica que si no se encuentre linea disponible y se pueda cancelar la orden.
-	 * 
-	 * no Anda.
-	 * Ultima revision 30-01-18
-	 */
-	//@Test(groups={"Sales", "AltaLinea", "Ola1"})
-	public void TS94495_checkNoLineAvailableMessageAndCancelPlan() {
-		Ta_CPQ page3 = new Ta_CPQ(driver);
-		try { for(WebElement e : driver.findElements(By.className("cpq-product-name"))) {
-			page3.clickOnDelete();
-			try {Thread.sleep(2000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
-		} } catch (java.lang.IndexOutOfBoundsException e) {}
-		page3.addPlan();
-		try {Thread.sleep(4000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
-		page3.clickOnSalesConfig();
-		try {Thread.sleep(4000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
-		LineAssignment page4 = new LineAssignment(driver);
-		try {Thread.sleep(4000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
-		Assert.assertEquals("No se encontro linea disponible", page4.getNoLineMessage());
-		page4.cancelLineAssignment();
-	}
 	
-	//Realizado en SALES2
-	/**
-	 * Verifica informacion del plan haciendole click a la flecha.
-	 * 
-	 * Flecha no Existe
-	 * Ultima Revision 30-01-18
-	 */
-	//@Test(groups={"Sales", "AltaLinea", "Ola1"})
-	public void TS94496_checkPlanInformation() {
-		Ta_CPQ page3 = new Ta_CPQ(driver);
-		try { for(WebElement e : driver.findElements(By.className("cpq-product-name"))) {
-			page3.clickOnDelete();
-			try {Thread.sleep(2000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
-		} } catch (java.lang.IndexOutOfBoundsException e) {}
-		page3.addPlan();
-		try {Thread.sleep(4000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
-		page3.openArrow();
-		try {Thread.sleep(2000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
-		Assert.assertTrue(page3.getPlanInformation());
-	}
-
-	/**
-	 * Flujo no se completa, por factura
-	 * ultima revision 30-01-18
-	 */
+	
 	@Test(groups={"Sales", "AltaDeLinea", "Ola1"})
-	public void TS94486_wrongICCDFormat() {
+	public void TS94486_Alta_Linea_Asignar_SIMCARD_Ingresar_un_ICCID_con_menor_cantidad_de_numeros() {
 		Ta_CPQ page3 = new Ta_CPQ(driver);
 		try { for(WebElement e : driver.findElements(By.className("cpq-product-name"))) {
 			page3.clickOnDelete();
@@ -248,7 +185,7 @@ public class ta_CPQ extends TestBase {
 	 * ultima revision 30-01-18
 	 */
 	@Test(groups={"Sales", "AltaDeLinea", "Ola1"})
-	public void TS94488_rightICCDFormat() {
+	public void TS94488_Alta_Linea_Asignar_SIMCARD_Visualizar_mensaje_al_asignar_un_ICCID_disponible() {
 		Ta_CPQ page3 = new Ta_CPQ(driver);
 		/*
 		try { for(WebElement e : driver.findElements(By.className("cpq-product-name"))) {
@@ -286,7 +223,7 @@ public class ta_CPQ extends TestBase {
 	 * ultima revision 30-01-18
 	 */
 	@Test(groups={"Sales", "AltaDeLinea", "Ola1"})
-	public void TS94491_checkAssignButtonIsAvailable() {
+	public void TS94491_Alta_Linea_Asignar_SIMCARD_Habilitar_boton_asignar_una_vez_ingresado_el_ICCID_07() {
 		Ta_CPQ page3 = new Ta_CPQ(driver);
 		try { for(WebElement e : driver.findElements(By.className("cpq-product-name"))) {
 			page3.clickOnDelete();
@@ -318,13 +255,16 @@ public class ta_CPQ extends TestBase {
 	 * ultima revision 30-01-18
 	 */
 	@Test(groups={"Sales", "AltaDeLinea", "Ola1"})
-	public void TS94487_checkOrderStatusIsPending() {
+	public void TS94487_Alta_Linea_Asignar_SIMCARD_Visualizar_el_estado_de_la_orden_al_contar_con_un_ICCID_asignado() {
 		Ta_CPQ page3 = new Ta_CPQ(driver);
+		SalesBase SB = new SalesBase(driver);
+		
 		try { for(WebElement e : driver.findElements(By.className("cpq-product-name"))) {
 			page3.clickOnDelete();
 			try {Thread.sleep(2000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 		} } catch (java.lang.IndexOutOfBoundsException e) {}
-		page3.addPlan();
+		//page3.addPlan();
+		SB.elegirplan("repro");
 		try {Thread.sleep(4000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 		page3.clickOnSalesConfig();
 		try {Thread.sleep(10000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
@@ -354,38 +294,7 @@ public class ta_CPQ extends TestBase {
 	 * Ultima Revision 30-01-18
 	 */
 	//@Test(groups={"Sales", "AltaDeLinea", "Ola1"})
-	public void TS94482_deleteAllPlans() {
-		Ta_CPQ page3 = new Ta_CPQ(driver);
-		try { for(WebElement e : driver.findElements(By.className("cpq-product-name"))) {
-			page3.clickOnDelete();
-			try {Thread.sleep(2000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
-		} } catch (java.lang.IndexOutOfBoundsException e) {}
-		try {Thread.sleep(3000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
-		page3.addPlan("plan prepago");
-		try {Thread.sleep(3000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
-		page3.addPlan("plan prepago");
-		try {Thread.sleep(3000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
-		page3.addPlan("plan prepago");
-		try {Thread.sleep(3000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
-		page3.abrirprimeraflecha();
-		sleep(3000);
-		page3.deleteoneplan();
-		try {Thread.sleep(4000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
-		page3.abrirprimeraflecha();
-		sleep(3000);
-		page3.deleteoneplan();
-		try {Thread.sleep(4000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
-		page3.abrirprimeraflecha();
-		sleep(3000);
-		page3.deleteoneplan();
-		try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
-		Assert.assertEquals("Cart is empty.", page3.getEmptyCartMessage());
-	}
 	
-	/**
-	 * Flujo no se completa, por factura
-	 * ultima revision 30-01-18
-	 */
 	@Test
 	public void TS7007_checkCancelOrder() {
 		Ta_CPQ page3 = new Ta_CPQ(driver);
@@ -584,72 +493,6 @@ public class ta_CPQ extends TestBase {
 	 * 
 	 * Ultima revision 30-01-18
 	 */
-	//@Test(groups={"Sales", "AltaDeLinea", "Ola1"})
-	public void TS94522_CRM_Fase_1_SalesCPQ_Alta_Linea_Carrito_Verificar_el_mensaje_al_vaciar_el_carrito_XX() {
-		Ta_CPQ cart = new Ta_CPQ(driver);
-		//cart.addAnyProductToCart();
-		//cart.deleteAddedProducts();
-		cart.addPlan("plan prepago nacional");
-		sleep(5000);
-		cart.abrirprimeraflecha();
-		sleep(3000);
-		cart.deleteoneplan();
-		try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
-		//WebElement messageEmptyCart = driver.findElement(By.xpath(".//div[@class=\"slds-grid slds-grid--vertical-align-center slds-grid--align-center cpq-no-cart-items-msg\"]"));
-		//Assert.assertEquals(messageEmptyCart.getText().trim(), "Cart is empty.");
-		Assert.assertEquals("Cart is empty.", cart.getEmptyCartMessage());
-	}
-	
-	
-	//Realizado en Sales2
-	//Listo 26-01-18 falta darle continuar, pero al darle continuar no hay privilegios.
-	//@Test(groups={"Sales", "AltaLinea", "Ola1"})
-	public void TS94494_CRM_Fase_1_SalesCPQ_Alta_Linea_Configurar_Nueva_Linea_Buscar_nuevo_lote_de_lineas_pre_asignadas() throws Exception {
-		Ta_CPQ cart = new Ta_CPQ(driver);
-		try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
-		List<WebElement> buttonsRightPanel = driver.findElements(By.xpath("//a[@ng-class=\"{'cpq-category-item-selected' : isSelectedCategory(category.catalogName), 'cat-icon': !isSelectedCategory(category.catalogName)}\"]"));
-		WebElement buttonShowPlans = buttonsRightPanel.get(1);
-		buttonShowPlans.click();
-		try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
-		
-		cart.addAnyProductToCart();
-		sleep(5000);
-		cart.getButtonNext().click();
-		
-		try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
-		
-		//Deber�a mostrarse una vista en la que se muestran los planes preasignados, pero hay cargado un bug dado que no se est� mostrando esa descripci�n de los planes.
-	assertTrue(false); //No hay lineas pre-asignadas.
-	}
-	
-	//realizado en SALES2
-	//@Test(groups={"Sales", "AltaLinea", "Ola1"})
-	public void TS94498_CRM_Fase_1_SalesCPQ_Alta_Linea_Configurar_Nueva_Linea_Modificar_linea_pre_asignada_ultimos_cuatro_digitos() {
-
-		//Mismo bug que el TS6845. Se pueden tomar ese test  como base para automatizar �ste hasta el Step 4 inclusive.
-		assertTrue(false);
-	}
-	
-	//Realizado en SALES2
-	//@Test(groups={"Sales", "AltaLinea", "Ola1"})
-	public void TS94499_CRM_Fase_1_SalesCPQ_Alta_Linea_Configurar_Nueva_Linea_Presionar_el_boton_Buscar() {
-		//Mismo TS6849
-		assertTrue(false);
-	}
-	
-	//REALIZADO EN SALES2
-	//@Test(groups={"Sales", "AltaLinea", "Ola1"})
-	public void TS94501_CRM_Fase_1_SalesCPQ_Alta_Linea_Configurar_Nueva_Linea_Visualizar_filtros_de_localidad_y_provincia_al_modificar_linea_XX(){
-		//Mismo TS6849		
-		assertTrue(false); 
-	}
-	
-	//REALIZADO EN SALES2
-	@Test(groups={"Sales", "AltaLinea", "Ola1"})
-	public void TS94504_CRM_Fase_1_SalesCPQ_Alta_Linea_Configurar_Nueva_Linea_Visualizar_mensaje_y_opciones_de_lineas_no_disponibles() {
-		//Mismo TS6849	
-		assertTrue(false); 
-	}
 	
 	
 //HACer en SALES2
@@ -667,26 +510,7 @@ public class ta_CPQ extends TestBase {
 	
 	//Listo 26-01-18 no hay costo pasado a SALES2
 	//@Test(groups={"Sales", "AltaDeLinea", "Ola1"})
-	public void TS94515_CRM_Fase_1_SalesCPQ_Alta_Linea_Costo_Operacion_Validar_formato_del_monto() {
-		Ta_CPQ cart = new Ta_CPQ(driver);
-		try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
-		cart.selectFromRightPanel(RightPanel.DISPOSITIVOS);
-		try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
-		WebElement linkMore = wait.until(ExpectedConditions.elementToBeClickable(By.cssSelector(".product-link.slds-text-body--small.slds-float--right"))); 
-		linkMore.click();
-		
-		WebElement waiter = wait.until(ExpectedConditions.presenceOfElementLocated(By.cssSelector(".slds-item--detail.slds-truncate")));
-		List<WebElement> values = driver.findElements(By.cssSelector(".slds-item--detail.slds-truncate"));
-		String[] precissionCounter = values.get(3).getText().split(",");
-		
-		Assert.assertEquals(precissionCounter[1].length(), 2);
-	}
 	
-	/**
-	 * Verifica que se muestren los impuestos, en simulacion de factura
-	 * 
-	 * Ultima revision 30-01-18.
-	 */
 	@Test
 	public void TS6883_CRM_Fase_1_SalesCPQ_Alta_Linea_Costo_Operacion_Verificar_el_detalle_de_los_impuestos_aplicados_a_la_venta() throws Exception {
 		Ta_CPQ cart = new Ta_CPQ(driver);
@@ -712,29 +536,10 @@ public class ta_CPQ extends TestBase {
 	
 	/*
 	 * TODO: el assert deber�a verificar que el dropdown con id "DeliveryMethod" ofrezca varios m�todos de entrega.
-	 * Actualmente el bot�n est� bloqueado, y no se puede ver qu� opciones contiene.
+	 * Actualmente el bot�n est� bloqueado, y no se puede ver que opciones contiene.
 	 * 
 	 * Ultima revision 05-02-18 PASSED
 	 * */
-	@Test(groups={"Sales", "AltaDeLinea", "Ola1"})
-	public void TS94518_CRM_Fase_1_SalesCPQ_Alta_Linea_Costo_Operacion_Verificar_opciones_del_carrito_Boton_Siguiente() throws Exception {
-		Ta_CPQ cart = new Ta_CPQ(driver);
-		try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
-		cart.selectFromRightPanel(RightPanel.DISPOSITIVOS);
-		try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
-		cart.addAnyProductToCart();
-		sleep(4000);
-		assertEquals(cart.getButtonNext().getText(),"Continuar");
-		/*sleep(7000);
-		//WebElement waiter = wait.until(ExpectedConditions.elementToBeClickable(By.className("ng-binding")));
-		//BillSimulation bill = new BillSimulation (driver);
-		//presiono Siguiente 1 vezpara llegar al paso "Modo de Entrega"
-		//bill.clickOnNext();
-		driver.findElement(By.id("LineAssignment_nextBtn")).click();
-		sleep(5000);
-		List<WebElement> inputDeliveryMethod = driver.findElements(By.id("DeliveryMethod"));
-		Assert.assertTrue(inputDeliveryMethod.size() > 0);*/
-	}
 	
 	@Test(groups={"Sales", "AltaDeLinea", "Ola1"})
 	public void TS94520_CRM_Fase_1_SalesCPQ_Alta_Linea_Costo_Operacion_Visualizar_costo_cero_en_modo_de_entrega() {
