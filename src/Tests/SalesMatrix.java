@@ -173,14 +173,14 @@ public class SalesMatrix extends TestBase {
 		Assert.assertTrue(a && b && c);
 	}
 	
-	@Test (groups = {"Sales", "AltaDeCuenta","Ola1"})
+	@Test (groups = {"Sales", "AltaDeCuenta","Ola1"}, priority=5)
 	public void TS95194_Alta_Cuenta_Validaciones_Verificar_creacion_de_matriz_de_validacion_de_identidad() {
 		sb.selectMatrix("m", "manageableidentityvalidation");
 		driver.switchTo().frame(cambioFrame(driver, By.cssSelector(".table.pricingMatrixTable")));
 		Assert.assertTrue(driver.findElement(By.cssSelector(".table.pricingMatrixTable")).isDisplayed());
 	}
 	
-	@Test (groups = {"Sales", "AltaDeLinea","Ola1"})
+	@Test (groups = {"Sales", "AltaDeLinea","Ola1"}, priority=0)
 	public void TS95293_Ventas_Seriales_Verificar_instancia_de_Factura_en_la_matriz_StockMovementOperation() {
 		sb.selectMatrix("s", "stockmovementoperation");
 		driver.switchTo().frame(cambioFrame(driver, By.cssSelector(".table.pricingMatrixTable")));
@@ -201,7 +201,7 @@ public class SalesMatrix extends TestBase {
 		Assert.assertTrue(a && b && c);
 	}
 	
-	@Test (groups = {"Sales", "AltaDeLinea","Ola1"})
+	@Test (groups = {"Sales", "AltaDeLinea","Ola1"}, priority=0)
 	public void TS95294_Ventas_Seriales_Verificar_instancia_de_Entrega_eliminada_en_la_matriz_StockMovementOperation() {
 		sb.selectMatrix("s", "stockmovementoperation");
 		driver.switchTo().frame(cambioFrame(driver, By.cssSelector(".table.pricingMatrixTable")));
@@ -214,7 +214,7 @@ public class SalesMatrix extends TestBase {
 		}
 	}
 	
-	@Test (groups = {"Sales", "AltaDeLinea", "Ola1"})
+	@Test (groups = {"Sales", "AltaDeLinea", "Ola1"}, priority=0)
 	public void TS94963_Verificar_que_se_configuren_criterios_Stock() {
 		sb.selectMatrix("s", "stockmovementoperation");
 		driver.switchTo().frame(cambioFrame(driver, By.className("edit-columns")));
@@ -232,7 +232,7 @@ public class SalesMatrix extends TestBase {
 		Assert.assertTrue(a && b && c);
 	}
 	
-	@Test (groups = {"Sales", "AltaDeLinea", "Ola1"})
+	@Test (groups = {"Sales", "AltaDeLinea", "Ola1"}, priority=0)
 	public void TS95246_Ventas_General_Anulacion_de_reserva_de_venta_de_productos_tangibles_Modo_presencial() {
 		sb.selectMatrix("s", "stockmovementoperation");
 		driver.switchTo().frame(cambioFrame(driver, By.className("edit-columns")));
