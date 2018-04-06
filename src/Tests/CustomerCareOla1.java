@@ -199,7 +199,7 @@ public class CustomerCareOla1 extends TestBase {
 		Assert.assertTrue(list.get(0).getText().toLowerCase().contains("suspensiones y reconexion"));
 	}
 	
-	@Test (groups = {"CustomerCare", "SuspensionYRehabilitacion(Online)", "Ola1"})
+	@Test (groups = {"CustomerCare", "SuspensionYRehabilitacion", "Ola1"})
 	public void TS90499_360_VIEW_Suspensiones_and_Reconexiones_Session_Guiada_Visualizar_la_opción_Habilitación_en_el_panel_de_gestiones() throws IOException {
 		cc.elegirCuenta(buscarCampoExcel(2, "cuenta activa c/serv activo", 1));
 		cc.irAGestion("suspensiones");
@@ -769,5 +769,36 @@ public class CustomerCareOla1 extends TestBase {
 			}
 		}
 		Assert.assertTrue(a && b);
+	}
+	
+	@Test(groups = {"CustomerCare", "Ola1", "AjustesYEscalamiento"}, priority = 3)  //No existe la gestion Ajustes
+	public void TS90443_Adjustments_and_Esccalations_Adjustments_and_Escalations_Configurar_Ajuste_Formato_monto_con_2_decimales() throws IOException {
+		cc.elegirCuenta(buscarCampoExcel(2, "cuenta activa c/serv activo", 1));
+		cc.irAGestion("Ajustes");
+		cc.avanzarAConfigurarAjuste();
+		cc.unidad("Credito");		
+		WebElement monto = cc.obtenerCampo("CantidadMonto");
+		monto.sendKeys("55511");
+		String valorCampo = obtenerValorDelCampo(monto);		
+		Assert.assertTrue(valorCampo.contentEquals("555.11"));
+	}
+	
+	@Test(groups = {"CustomerCare", "Ola1", "AjustesYEscalamiento"}, priority = 3)  //No existe la gestion Ajustes
+	public void TS90446_Adjustments_and_Esccalations_Adjustments_and_Escalations_Configurar_Ajuste_Tipos_Unidades_VOZ_HH_MM_SS() throws IOException {
+		cc.elegirCuenta(buscarCampoExcel(2, "cuenta activa c/serv activo", 1));
+		cc.irAGestion("Ajustes");
+		cc.avanzarAConfigurarAjuste();
+		cc.unidad("Voz");		
+		WebElement cantidad = cc.obtenerCampo("CantidadVoz");
+		cantidad.sendKeys("042050");
+		String valorCampo = obtenerValorDelCampo(cantidad);		
+		Assert.assertTrue(valorCampo.contentEquals("04:20:50"));
+	}
+	
+	@Test(groups = {"CustomerCare", "Ola1", "AjustesYEscalamiento"}, priority = 2)  //No existe la gestion Ajustes
+	public void TS90454_Adjustments_and_Esccalations_Adjustments_and_Escalations_UX_Visualizacion_Ajustes_y_Casos_Relacionados_Visualizar_botón_siguiente_OS() throws IOException {
+		cc.elegirCuenta(buscarCampoExcel(2, "cuenta activa c/serv activo", 1));
+		cc.irAGestion("Ajustes");		
+		Assert.assertTrue(cc.botonSiguiente().isDisplayed());
 	}
 }
