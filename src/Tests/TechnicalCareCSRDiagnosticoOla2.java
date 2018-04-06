@@ -61,7 +61,10 @@ private WebDriver driver;
 		sleep(3000);
 		driver.switchTo().defaultContent();
 		sleep(3000);
-		page.selectAccount(buscarCampoExcel(3, "Cuenta Activa c/ linea y serv", 1));
+	//	page.selectAccount(buscarCampoExcel(3, "Cuenta Activa c/ linea y serv", 1));
+		page.selectAccount ("Marco Polo");
+		driver.switchTo().defaultContent();
+		sleep(3000);
  	
 	}
  	 	
@@ -91,7 +94,8 @@ private WebDriver driver;
  		TechnicalCareCSRDiagnosticoPage tech = new TechnicalCareCSRDiagnosticoPage(driver);
  		sleep (4000);
  		driver.switchTo().defaultContent();
- 	    tech.clickOpcionEnAsset(buscarCampoExcel(3, "Cuenta Activa c/ linea y serv", 3), "mis servicios");
+ 	    //tech.clickOpcionEnAsset(buscarCampoExcel(3, "Cuenta Activa c/ linea y serv", 3), "mis servicios");
+ 	    tech.clickOpcionEnAsset("543416869777", "mis servicios");
  	    tech.verDetalles();
  	    tech.clickDiagnosticarServicio("Caller Id");
  	    sleep (4000);
@@ -112,21 +116,25 @@ private WebDriver driver;
  		TechnicalCareCSRDiagnosticoPage tech = new TechnicalCareCSRDiagnosticoPage(driver);
  		sleep (4000);
  		driver.switchTo().defaultContent();
- 	    tech.clickOpcionEnAsset(buscarCampoExcel(3, "Cuenta Activa c/ linea y serv", 3), "mis servicios");
+ 	    tech.clickOpcionEnAsset("543416869777", "mis servicios");
  	    tech.verDetalles();
  	    tech.clickDiagnosticarServicio("Llamada en espera");
  	    sleep (4000);
  	    tech.selectionInconvenient("No funciona llamada en espera");
  	    tech.continuar();
  	    sleep (4000);
+ 	   //tech.verificarCaso();
  	    tech.categoriaRed("NO");
  	    tech.clickContinuar();
  	    sleep (4000);
  	    tech.categoriaRed("Conciliar");
- 	    sleep (4000);
- 	    tech.CasoConciliar();
+ 	    sleep (5000);
+ 	    tech.clickContinuar();
+ 	   tech.CasoConciliar();
  	    sleep (4000);
  	    assertTrue(tech.getEstado().getText().equalsIgnoreCase("Resuelta Exitosa"));
 
-}
+ 		}
+ 		
+ 		
 }

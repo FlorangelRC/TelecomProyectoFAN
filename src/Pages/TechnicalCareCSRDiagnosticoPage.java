@@ -55,7 +55,7 @@ public class TechnicalCareCSRDiagnosticoPage extends BasePage{
 	  private WebElement numReclamo;
 	 
 	
-	@FindBy(xpath=".//*[@id='SimilCaseInformation']/div/p/p[2]/span/strong[1]")
+	@FindBy(xpath=".//*[@id='SimilCaseInformation']/div/p/p[3]")
 	private WebElement existCaso; 
 	
 	@FindBy(id="ExistSimilCase_nextBtn") 
@@ -65,7 +65,7 @@ public class TechnicalCareCSRDiagnosticoPage extends BasePage{
 	@FindBy(xpath=".//*[@id='ClosedCaseKnowledgeBase']/div/p/p/strong/strong")
 	private WebElement numCaso;
 	
-	@FindBy(xpath=".//*[@id='IncorrectCategoryMessage']/div/p/p[2]/span/strong")
+	@FindBy(xpath=".//*[@id='SimilCaseInformation']/div/p/p[3]/strong[1]")
 	private WebElement concCaso;
 	
 	@FindBy(id= "phSearchInput")
@@ -106,6 +106,8 @@ public class TechnicalCareCSRDiagnosticoPage extends BasePage{
 	
 	@FindBy(xpath=".//*[@id='Case_body']/table/tbody/tr[2]/td[3]")
 	private WebElement estado;
+
+	private Object findElement;
 	
 
 	public TechnicalCareCSRDiagnosticoPage(WebDriver driver){
@@ -468,21 +470,16 @@ public class TechnicalCareCSRDiagnosticoPage extends BasePage{
 	public String verificarCaso() throws InterruptedException {
 		String caso="";
 		if(elementExists(existCaso)) {
-			caso=existCaso.getText();
-			getNext().click();
-			 
+			caso=existCaso.getText();				
 			}
-			else {	
-				//continuar.click();
-				caso=numCaso.getText();
+				else {	
+					caso=concCaso.getText();
 			}
-		driver.switchTo().defaultContent();
-		//buscarCaso();
-		driver.switchTo().defaultContent();
-		return caso;		
-			
-	
-	}
+					
+		CasoConciliar();
+		driver.switchTo().defaultContent();	
+		return caso;	
+		}
 	
 	public void buscarCaso() throws InterruptedException{
 
@@ -500,7 +497,6 @@ public class TechnicalCareCSRDiagnosticoPage extends BasePage{
 }
 	
 	public void CasoConciliar() throws InterruptedException{
-
 		String caso = concCaso.getText();
 		driver.switchTo().defaultContent();
 		//driver.switchTo().frame(getFrameForElement(driver, By.id("searchButtonContainer")));
@@ -511,10 +507,20 @@ public class TechnicalCareCSRDiagnosticoPage extends BasePage{
 		sleep(5000);
 		driver.switchTo().frame(getFrameForElement(driver, By.id("Case_body")));
 		
-		
-}
-
+		}
 	
+	public void  ConfirmaciondeGestion() throws InterruptedException{
+		String caso = concCaso.getText();
+		driver.switchTo().defaultContent();
+		//driver.switchTo().frame(getFrameForElement(driver, By.id("searchButtonContainer")));
+		buscar.click();
+		buscar.clear();
+		buscar.sendKeys(caso);
+		buscar.submit();
+		sleep(5000);
+		driver.switchTo().frame(getFrameForElement(driver, By.id("Case_body")));
+
+	}
 	
 	
 
@@ -754,6 +760,8 @@ public void clickContinua() {
 public WebElement getEstado() {
 	return estado;
 }
+
+
 }
 	
 		
