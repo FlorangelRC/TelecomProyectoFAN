@@ -467,18 +467,36 @@ public class TechnicalCareCSRDiagnosticoPage extends BasePage{
 	      }
 	
 	
-	public String verificarCaso() throws InterruptedException {
+	public boolean verificarCaso(String categoriaRed,String catogoriaRed2 ,String estado) throws InterruptedException {
 		String caso="";
 		if(elementExists(existCaso)) {
-			caso=existCaso.getText();				
+			caso=existCaso.getText();	
 			}
 				else {	
-					caso=concCaso.getText();
+					categoriaRed(categoriaRed);
+					    clickContinuar();
+				 	    sleep (4000);
+						categoriaRed(catogoriaRed2);
+				 	   sleep (5000);
+				 	    clickContinuar();
+				 	     CasoConciliar();
+				 	    sleep (4000);
+		
+					caso=		CasoConciliar();
 			}
-					
-		CasoConciliar();
+				//buscar
+		// hacer todo lo demas
+		// Buscar dentro de la tabla lo que quieras ara comparar  estado
+
 		driver.switchTo().defaultContent();	
-		return caso;	
+		buscar.click();
+		buscar.clear();
+		buscar.sendKeys(caso);
+		buscar.submit();
+		sleep(5000);
+		driver.switchTo().frame(getFrameForElement(driver, By.id("Case_body")));
+		
+		return getEstado().getText().equalsIgnoreCase(estado);	
 		}
 	
 	public void buscarCaso() throws InterruptedException{
@@ -496,21 +514,16 @@ public class TechnicalCareCSRDiagnosticoPage extends BasePage{
 		
 }
 	
-	public void CasoConciliar() throws InterruptedException{
+	public String CasoConciliar() throws InterruptedException{
 		String caso = concCaso.getText();
 		driver.switchTo().defaultContent();
 		//driver.switchTo().frame(getFrameForElement(driver, By.id("searchButtonContainer")));
-		buscar.click();
-		buscar.clear();
-		buscar.sendKeys(caso);
-		buscar.submit();
-		sleep(5000);
-		driver.switchTo().frame(getFrameForElement(driver, By.id("Case_body")));
+	return caso;
 		
 		}
 	
-	public void  ConfirmaciondeGestion() throws InterruptedException{
-		String caso = concCaso.getText();
+	public void  ConfirmaciondeGestion(WebElement numCaso) throws InterruptedException{
+		String caso = numCaso.getText();
 		driver.switchTo().defaultContent();
 		//driver.switchTo().frame(getFrameForElement(driver, By.id("searchButtonContainer")));
 		buscar.click();

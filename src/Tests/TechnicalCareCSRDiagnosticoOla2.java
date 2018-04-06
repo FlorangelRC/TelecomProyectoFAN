@@ -123,16 +123,17 @@ private WebDriver driver;
  	    tech.selectionInconvenient("No funciona llamada en espera");
  	    tech.continuar();
  	    sleep (4000);
- 	   //tech.verificarCaso();
- 	    tech.categoriaRed("NO");
+ 	//   tech.verificarCaso("Resuelta Exitosa");
+ 	/*    tech.categoriaRed("NO");
  	    tech.clickContinuar();
  	    sleep (4000);
  	    tech.categoriaRed("Conciliar");
  	    sleep (5000);
  	    tech.clickContinuar();
  	   tech.CasoConciliar();
- 	    sleep (4000);
- 	    assertTrue(tech.getEstado().getText().equalsIgnoreCase("Resuelta Exitosa"));
+ 	    sleep (4000);*/
+ 	   assertTrue(tech.verificarCaso("NO","Conciliar","Resuelta Exitosa"));
+ 	 //   assertTrue(tech.getEstado().getText().equalsIgnoreCase("Resuelta Exitosa"));
 
  		}
  		
