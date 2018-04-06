@@ -149,7 +149,8 @@ private WebDriver driver;
 	driver.switchTo().defaultContent();
     tech.clickOpcionEnAsset("543416869777", "mis servicios");
     tech.verDetalles();
-    tech.clickDiagnosticarServicio("Llamada en espera");
+    tech.clickDiagnosticarServicio("Llamada en espera"); 
+    tech.selectionInconvenient("No funciona llamada en espera");
     assertTrue(tech.validarInconveniente("No funciona llamada en espera"));
     
 	}
