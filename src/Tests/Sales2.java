@@ -23,8 +23,11 @@ import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
 import Pages.BasePage;
+import Pages.BillSimulation;
 import Pages.ContactSearch;
 import Pages.CustomerCare;
+import Pages.DeliveryMethod;
+import Pages.LineAssignment;
 import Pages.SalesBase;
 import Pages.Ta_CPQ;
 import Pages.Ta_CPQ.RightPanel;
@@ -64,7 +67,7 @@ public class Sales2 extends TestBase{
 		sleep(7000);
 	}
 	
-	@Test(groups={"Sales", "AltaDeLinea", "Ola1"})
+	@Test(groups={"Sales", "AltaDeLinea", "Ola1"}, priority=5)
 	public void TS94698_Nueva_Venta_Modo_de_Entrega_Verificar_Solicitud_de_Domicilio_de_envio_Envio_Estandar() throws IOException{
 		sb.BuscarCuenta(DNI, buscarCampoExcel(1, "Cuenta Activa", 2));
 		sb.acciondecontacto("catalogo");
@@ -102,7 +105,7 @@ public class Sales2 extends TestBase{
 		Assert.assertEquals(delir.getFirstSelectedOption().getText(),"Env\u00edo Est\u00e1ndar");
 	}
 	
-	@Test(groups={"Sales", "AltaDeLinea", "Ola1"})
+	@Test(groups={"Sales", "AltaDeLinea", "Ola1"}, priority=5)
 	public void TS95246_Ventas_General_Verificar_Que_Este_El_Paso_En_Metodo_De_Entrega_Distinto_A_Presencial() throws IOException{
 		sb.BuscarCuenta(DNI, buscarCampoExcel(1, "Cuenta Activa", 2));
 		sb.acciondecontacto("catalogo");
@@ -138,7 +141,7 @@ public class Sales2 extends TestBase{
 		Assert.assertTrue(esta);
 	}
 	
-	@Test(groups = { "Sales", "AltaDeLinea", "Ola1" })
+	@Test(groups = { "Sales", "AltaDeLinea", "Ola1" }, priority=5)
 	public void TS94699_Nueva_Venta_Modo_de_Entrega_Verificar_Solicitud_de_Domicilio_de_envio_Envio_Express() throws IOException {
 		sb.BuscarCuenta(DNI, buscarCampoExcel(1, "Cuenta Activa", 2));
 		sb.acciondecontacto("catalogo");
@@ -175,7 +178,7 @@ public class Sales2 extends TestBase{
 		Assert.assertEquals(delir.getFirstSelectedOption().getText(), "Env\u00edo Express");
 	}
 	
-	@Test(groups={"Sales", "AltaDeContacto", "Ola1"})
+	@Test(groups={"Sales", "AltaDeContacto", "Ola1"}, priority=2)
 	public void TS94880_Alta_De_Contacto_Busqueda_Verificar_Accion_De_Ver_Detalle_De_Contacto() throws IOException{//dentro del ver detalles no se muestran las opciones de actualizar ni lanzar carrito
 		SalesBase SB = new SalesBase(driver);
 		sb.BuscarCuenta(DNI, buscarCampoExcel(1, "Cuenta Activa", 2));
@@ -184,7 +187,7 @@ public class Sales2 extends TestBase{
 		Assert.assertTrue(false);
 	}
 	
-	@Test(groups={"Sales", "AltaDeContacto", "Ola1"})
+	@Test(groups={"Sales", "AltaDeContacto", "Ola1"}, priority=3)
 	public void TS94661_Alta_De_Contacto_Persona_Fisica_Verificar_Categoria_Impositiva_Por_Default() throws IOException{
 		sb.BuscarCuenta(DNI, buscarCampoExcel(1, "Cuenta Activa", 2));
 		CustomerCare CC = new CustomerCare(driver);
@@ -213,7 +216,7 @@ public class Sales2 extends TestBase{
 		Assert.assertTrue(condI.getFirstSelectedOption().getText().equalsIgnoreCase("iva consumidor final"));
 	}
 	
-	@Test(groups={"Sales", "AltaDeCuenta", "Ola1"})
+	@Test(groups={"Sales", "AltaDeCuenta", "Ola1"}, priority=4)
 	public void TS95515_Alta_de_Cuenta_Business_Visualizar_los_campos_de_documentacion_impositiva_abajo() throws IOException {
 		sb.BuscarCuenta(DNI, buscarCampoExcel(1, "Cuenta Activa", 2));
 		sb.acciondecontacto("nueva cuenta");
@@ -226,7 +229,7 @@ public class Sales2 extends TestBase{
 		Assert.assertTrue(doc.getLocation().y > dom.getLocation().y);
 	}
 	
-	@Test(groups={"Sales", "AltaDeLinea", "Ola1"}) 
+	@Test(groups={"Sales", "AltaDeLinea", "Ola1"}, priority=8) 
 	public void TS94637_Ventas_Nueva_Venta_Verificar_creacion_orden_de_venta_Usuario() throws IOException {
 		sb.BuscarCuenta(DNI, buscarCampoExcel(1, "Cuenta Activa", 2));
 		sb.acciondecontacto("catalogo");
@@ -236,7 +239,7 @@ public class Sales2 extends TestBase{
 		Assert.assertTrue(num.getText().contains("Nro. Orden:"));
 	}
 	
-	@Test(groups={"Sales", "AltaDeLinea", "Ola1"})
+	@Test(groups={"Sales", "AltaDeLinea", "Ola1"}, priority=3)
 	public void TS94652_Ventas_NumeroOrden_Verificar_Orden_de_Venta_Abierta_Modo_de_Entrega() throws IOException {
 		sb.BuscarCuenta(DNI, buscarCampoExcel(1, "Cuenta Activa", 2));
 		sb.acciondecontacto("catalogo");
@@ -265,7 +268,7 @@ public class Sales2 extends TestBase{
 		Assert.assertTrue(a);
 	}
 	
-	@Test(groups={"Sales", "AltaDeLinea", "Ola1"})
+	@Test(groups={"Sales", "AltaDeLinea", "Ola1"}, priority=3)
 	public void TS94651_Ventas_NumeroOrden_Verificar_Orden_de_Venta_Abierta_Seleccion_de_Linea() throws IOException {
 		sb.BuscarCuenta(DNI, buscarCampoExcel(1, "Cuenta Activa", 2));
 		sb.acciondecontacto("catalogo");
@@ -283,7 +286,7 @@ public class Sales2 extends TestBase{
 		Assert.assertTrue(a);
 	}
 	
-	@Test(groups={"Sales", "AltaDeLinea", "Ola1"})  
+	@Test(groups={"Sales", "AltaDeLinea", "Ola1"}, priority=3)  
 	public void TS94650_Ventas_NumeroOrden_Verificar_Orden_de_Venta_Abierta_Seleccionar_un_producto() throws IOException {
 		sb.BuscarCuenta(DNI, buscarCampoExcel(1, "Cuenta Activa", 2));
 		sb.acciondecontacto("catalogo");
@@ -331,7 +334,7 @@ public class Sales2 extends TestBase{
 		
 	}
 	
-	@Test(groups={"Sales", "AltaDeLinea", "Ola1"})  
+	@Test(groups={"Sales", "AltaDeLinea", "Ola1"}, priority=3)  
 	public void TS94646_Ventas_NumeroOrden_Verificar_Orden_de_Venta_Abierta_Medio_de_Pago() throws IOException {
 		sb.BuscarCuenta(DNI, buscarCampoExcel(1, "Cuenta Activa", 2));
 		sb.acciondecontacto("catalogo");
@@ -365,7 +368,7 @@ public class Sales2 extends TestBase{
 		Assert.assertTrue(x);
 	}
 	
-	@Test(groups={"Sales", "AltaDeLinea", "Ola1"})
+	@Test(groups={"Sales", "AltaDeLinea", "Ola1"}, priority=3)
 	public void TS94641_Ventas_NumeroOrden_Verificar_Orden_de_Venta_Abierta_Nueva_Venta() throws IOException {
 		sb.BuscarCuenta(DNI, buscarCampoExcel(1, "Cuenta Activa", 2));
 		sb.acciondecontacto("catalogo");
@@ -378,10 +381,9 @@ public class Sales2 extends TestBase{
 			}
 	}
 	
-	@Test(groups={"Sales", "AltaDeLinea", "Ola1"})
+	@Test(groups={"Sales", "AltaDeLinea", "Ola1"}, priority=3)
 	public void TS94643_Ventas_NumeroOrden_Verificar_Orden_de_Venta_Abierta_Seleccion_de_Linea() throws IOException {
 		sb.BuscarCuenta(DNI, buscarCampoExcel(1, "Cuenta Activa", 2));
-	
 		sb.acciondecontacto("catalogo");
 		sleep(15000);
 		sb.elegirplan("Plan con Tarjeta Repro");
@@ -398,7 +400,7 @@ public class Sales2 extends TestBase{
 		Assert.assertTrue(a);
 	}
 	
-	@Test(groups={"Sales", "AltaDeLinea", "Ola1"})  //Falta terminar, no se puede crear venta desde la V360
+	@Test(groups={"Sales", "AltaDeLinea", "Ola1"}, priority=8)  //Falta terminar, no se puede crear venta desde la V360
 	public void TS94639_Ventas_Nueva_Venta_Verificar_creacion_orden_de_venta_desde_un_Asset_Usuario() {
 		driver.findElement(By.cssSelector(".vlc-slds-button--tertiary.ng-binding.ng-scope")).click();
 		sleep(2000);
@@ -411,7 +413,7 @@ public class Sales2 extends TestBase{
 		Assert.assertTrue(false);
 	}
 	
-	@Test(groups={"Sales", "AltaDeLinea", "Ola1"})
+	@Test(groups={"Sales", "AltaDeLinea", "Ola1"}, priority=0)
 	public void TS94716_Ventas_VentasGestiones_Visualizar_un_historico_de_gestiones_realizadas() {
 		driver.findElement(By.cssSelector(".vlc-slds-button--tertiary.ng-binding.ng-scope")).click();
 		sleep(2000);
@@ -436,7 +438,7 @@ public class Sales2 extends TestBase{
 		Assert.assertTrue(a && b);
 	}
 	
-	@Test(groups={"Sales", "AltaDeLinea", "Ola1"})
+	@Test(groups={"Sales", "AltaDeLinea", "Ola1"}, priority=0)
 	public void TS94611_Alta_Linea_Nueva_Venta_Verificar_acceso_a_Nueva_Venta_desde_vista_360() {
 		driver.findElement(By.cssSelector(".vlc-slds-button--tertiary.ng-binding.ng-scope")).click();
 		sleep(2000);
@@ -450,7 +452,7 @@ public class Sales2 extends TestBase{
 		Assert.assertTrue(nv.getText().toLowerCase().contains("nueva venta"));
 	}
 	
-	@Test(groups={"Sales", "AltaDeCuenta", "Ola1"})
+	@Test(groups={"Sales", "AltaDeCuenta", "Ola1"}, priority=2)
 	public void TS94972_Alta_Cuenta_Busqueda_Verificar_flujo_de_cuenta_Clonada() throws IOException {
 		sb.BuscarCuenta(DNI, buscarCampoExcel(1, "Cuenta Activa", 2));
 		sb.acciondecontacto("catalogo");
@@ -469,7 +471,7 @@ public class Sales2 extends TestBase{
 		Assert.assertTrue(a);
 	}
 	
-	@Test(groups={"Sales", "AltaDeContacto", "Ola1"})
+	@Test(groups={"Sales", "AltaDeContacto", "Ola1"}, priority=4)
 	public void TS94582_Alta_de_Contacto_Persona_Fisica_Verificar_confirmacion_de_adjunto_exitoso_XX() throws IOException {
 		sb.BuscarCuenta(DNI, buscarCampoExcel(1, "Cuenta Activa", 2));
 		sb.acciondecontacto("nueva cuenta");
@@ -481,7 +483,7 @@ public class Sales2 extends TestBase{
 		Assert.assertTrue(up.getText().toLowerCase().contains("30.55 kb"));
 	}
 	
-	@Test(groups={"Sales", "AltaDeContacto", "Ola1"})
+	@Test(groups={"Sales", "AltaDeContacto", "Ola1"}, priority=2)
 	public void TS94529_Alta_de_Contacto_Persona_Fisica_Confirmar_direccion_de_email_existente_30() throws IOException {
 		sb.BuscarCuenta(DNI, buscarCampoExcel(1, "Cuenta Activa", 2));
 		String a = driver.findElement(By.xpath("//*[@id=\"tab-scoped-3\"]/section/div/table/tbody/tr/td[4]")).getText();
@@ -497,7 +499,7 @@ public class Sales2 extends TestBase{
 		Assert.assertTrue(a.equals(b));
 	}
 	
-	@Test(groups={"Sales", "AltaDeLinea", "Ola1"})
+	@Test(groups={"Sales", "AltaDeLinea", "Ola1"}, priority=3)
 	public void TS94913_Ventas_General_Verificar_Completitud_Pendiente_para_cada_estado() throws IOException {
 		sb.BuscarCuenta(DNI, buscarCampoExcel(1, "Cuenta Activa", 2));
 		sb.acciondecontacto("catalogo");
@@ -508,7 +510,7 @@ public class Sales2 extends TestBase{
 		Assert.assertTrue(driver.findElement(By.cssSelector(".list-group.vertical-steps.ng-scope")).isDisplayed());
 	}
 	
-	@Test(groups={"Sales", "AltaDeContacto", "Ola1"})
+	@Test(groups={"Sales", "AltaDeContacto", "Ola1"}, priority=2)
 	public void TS94530_Alta_de_Contacto_Persona_Fisica_Dar_de_alta_un_contacto_nuevo_48() {
 		BasePage dni = new BasePage(driver);
 		Random aleatorio = new Random(System.currentTimeMillis());
@@ -554,7 +556,7 @@ public class Sales2 extends TestBase{
 		Assert.assertTrue(verdni.getText().toLowerCase().contains(a));
 	}
 	
-	@Test(groups={"Sales", "AltaDeLinea", "Ola1"})
+	@Test(groups={"Sales", "AltaDeLinea", "Ola1"}, priority=3)
 	public void TS94696_Nueva_Venta_Modo_de_Entrega_Verificar_LOV_Tipo_de_Delivery() throws IOException {
 		sb.BuscarCuenta(DNI, buscarCampoExcel(1, "Cuenta Activa", 2));
 		sb.acciondecontacto("catalogo");
@@ -580,7 +582,7 @@ public class Sales2 extends TestBase{
 		
 	}
 	
-	@Test(groups={"Sales", "AltaDeLinea", "Ola1"})
+	@Test(groups={"Sales", "AltaDeLinea", "Ola1"}, priority=3)
 	public void TS94690_Nueva_Venta_Modo_de_Entrega_Verificar_que_no_se_puede_cambiar_el_Modo_de_Entrega_Delivery() throws IOException {
 		sb.BuscarCuenta(DNI, buscarCampoExcel(1, "Cuenta Activa", 2));
 		sb.acciondecontacto("catalogo");
@@ -603,7 +605,7 @@ public class Sales2 extends TestBase{
 		Assert.assertTrue(mde.getAttribute("disabled").equals("true"));
 	}
 	
-	@Test(groups={"Sales", "AltaDeLinea", "Ola1"})
+	@Test(groups={"Sales", "AltaDeLinea", "Ola1"}, priority=3)
 	public void TS94691_Nueva_Venta_Modo_de_Entrega_Verificar_que_no_se_puede_cambiar_el_Modo_de_Entrega_Store_Pick_Up() throws IOException {
 		sb.BuscarCuenta(DNI, buscarCampoExcel(1, "Cuenta Activa", 2));
 		sb.acciondecontacto("catalogo");
@@ -632,7 +634,7 @@ public class Sales2 extends TestBase{
 		Assert.assertTrue(mde.getAttribute("disabled").equals("true"));
 	}
 	
-	@Test(groups={"Sales", "AltaDeLinea", "Ola1"})
+	@Test(groups={"Sales", "AltaDeLinea", "Ola1"}, priority=3)
 	public void TS94694_Nueva_Venta_Modo_de_Entrega_Verificar_que_se_habilite_Tipo_de_Delivery() throws IOException {
 		sb.BuscarCuenta(DNI, buscarCampoExcel(1, "Cuenta Activa", 2));
 		sb.acciondecontacto("catalogo");
@@ -654,7 +656,7 @@ public class Sales2 extends TestBase{
 		Assert.assertTrue(driver.findElement(By.id("DeliveryServiceType")).isEnabled());
 	}
 	
-	@Test(groups={"Sales", "AltaDeLinea", "Ola1"})
+	@Test(groups={"Sales", "AltaDeLinea", "Ola1"}, priority=3)
 	public void TS94730_Alta_De_Linea_Verificar_LOV_De_Modalidad_Entrega_Para_Canal_Presencial_Agentes() throws IOException {
 		boolean Pr = false;
 		boolean Dl = false;
@@ -677,7 +679,7 @@ public class Sales2 extends TestBase{
 		Assert.assertTrue(Pr&&Dl&&St);
 	}
 	
-	@Test(groups={"Sales", "AltaDeLinea", "Ola1"})
+	@Test(groups={"Sales", "AltaDeLinea", "Ola1"}, priority=3)
 	public void TS94733_Alta_De_Linea_Verificar_Default_De_Modalidad_Entrega_Para_Canal_Presencial_Agentes() throws IOException{
 		SalesBase SB = new SalesBase(driver);
 		sb.BuscarCuenta(DNI, buscarCampoExcel(1, "Cuenta Activa", 2));
@@ -686,7 +688,7 @@ public class Sales2 extends TestBase{
 		assertTrue(driver.findElement(By.cssSelector(".slds-col.taChangeDeliveryMethod.slds-text-body--small.slds-m-left--large")).findElement(By.tagName("span")).findElement(By.tagName("strong")).getText().equals("Presencial"));
 	}
 	
-	 @Test(groups = {"Sales", "AltaDeLinea","Ola1"})
+	 @Test(groups = {"Sales", "AltaDeLinea","Ola1"}, priority=2)
 	  public void TS94714_Ventas_BuscarCliente_Verificar_Solo_Clientes_No_Activos() throws IOException {
 		 String tel = buscarCampoExcel(1, "Cuenta Inactiva", 3);
 		  driver.findElement(By.id("PhoneNumber")).sendKeys(tel);
@@ -699,7 +701,7 @@ public class Sales2 extends TestBase{
 		  Assert.assertTrue(cai.get(1).findElement(By.tagName("a")).getText().contains("Inactivos"));
 	 }
 	
-	@Test(groups={"Sales", "AltaDeLinea", "Ola1"})
+	@Test(groups={"Sales", "AltaDeLinea", "Ola1"}, priority=4)
 	public void TS95111_Ventas_General_Verificar_Que_No_Se_Puede_Seleccionar_Una_Linea_Decisora_ProcesoVenta() throws IOException {
 		boolean esta = false;
 		sb.BuscarCuenta(DNI, buscarCampoExcel(1, "Cuenta Activa", 2));
@@ -718,7 +720,7 @@ public class Sales2 extends TestBase{
 		Assert.assertFalse(esta);
 	}
 	
-	@Test(groups={"Sales", "AltaDeContacto", "Ola1"})
+	@Test(groups={"Sales", "AltaDeContacto", "Ola1"}, priority=2)
 	public void TS94554_Alta_De_Contacto_Persona_Fisica_Verificar_Campo_Tipo_De_Documento_Por_Default() {
 		Random aleatorio = new Random(System.currentTimeMillis());
 		aleatorio.setSeed(System.currentTimeMillis());
@@ -739,7 +741,7 @@ public class Sales2 extends TestBase{
 		
 	}
 	
-	@Test(groups={"Sales", "AltaDeContacto","Ola1"})  
+	@Test(groups={"Sales", "AltaDeContacto","Ola1"}, priority=2)  
 	public void TS94566_Alta_De_Contacto_Persona_Fisica_Verificar_Mascara_Del_Campo_CUIT(){
 		try {Thread.sleep(10000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 		ContactSearch contact = new ContactSearch(driver);
@@ -757,7 +759,7 @@ public class Sales2 extends TestBase{
 		Assert.assertTrue(driver.findElement(By.id("DocumentNumber")).getAttribute("value").matches("\\d{2}-\\d{8}-\\d{1}"));
 	}
 	
-	@Test(groups={"Sales", "AltaDeLinea", "Ola1"})
+	@Test(groups={"Sales", "AltaDeLinea", "Ola1"}, priority=5)
 	public void TS94763_Ventas_Entregas_General_Modificar_el_lugar_de_entrega() throws IOException {
 		sb.BuscarCuenta(DNI, buscarCampoExcel(1, "Cuenta Activa", 2));
 		sb.acciondecontacto("catalogo");
@@ -775,7 +777,7 @@ public class Sales2 extends TestBase{
 		Assert.assertTrue(!a.equals(b));
 	}
 	
-	@Test(groups={"Sales","AltaDeLinea","Ola1"})
+	@Test(groups={"Sales","AltaDeLinea","Ola1"}, priority=4)
 	public void TS94498_Alta_Linea_Configurar_Nueva_Linea_Modificar_linea_pre_asignada_ultimos_cuatro_digitos_XX() throws IOException{
 		CustomerCare CC = new CustomerCare(driver);
 		sb.BuscarCuenta(DNI, buscarCampoExcel(1, "Cuenta Activa", 2));
@@ -799,7 +801,7 @@ public class Sales2 extends TestBase{
 		Assert.assertTrue(ultnum.getText().contains("7354"));
  	}
 	
-	@Test(groups={"Sales", "AltaDeLinea", "Ola1"})  
+	@Test(groups={"Sales", "AltaDeLinea", "Ola1"}, priority=7)  
 	public void TS94807_Configuracion_Verificar_Asignacion_De_Seriales_AgentePresencial() throws IOException {
 		sb.BuscarCuenta(DNI, buscarCampoExcel(1, "Cuenta Activa", 2));
 		sb.acciondecontacto("catalogo");
@@ -815,7 +817,7 @@ public class Sales2 extends TestBase{
 		Assert.assertTrue(!serial.findElement(By.tagName("input")).getAttribute("value").isEmpty());
 	}
 	
-	@Test(groups={"Sales", "AltaDeLinea", "Ola1"})
+	@Test(groups={"Sales", "AltaDeLinea", "Ola1"}, priority=0)
 	public void TS94777_Ventas_Entregas_General_Store_Pickup_Consulta_stock_por_PDV_Visualizar_campos_filtro_de_la_consulta() throws IOException {
 		sb.BuscarCuenta(DNI, buscarCampoExcel(1, "Cuenta Activa", 2));
 		sb.acciondecontacto("catalogo");
@@ -837,7 +839,7 @@ public class Sales2 extends TestBase{
 		Assert.assertTrue(driver.findElement(By.id("Store")).isEnabled());
 	}
 	
-	@Test(groups={"Sales", "AltaDeLinea", "Ola1"})  //falta validar los campos porque los campos no son opcionales
+	@Test(groups={"Sales", "AltaDeLinea", "Ola1"}, priority=6)  //falta validar los campos porque los campos no son opcionales
 	public void TS94935_Ventas_Modo_De_Pago_Tarjeta_Verificar_Campos_Opcionales_Medio_De_Pago_TC() throws IOException {
 		sb.BuscarCuenta(DNI, buscarCampoExcel(1, "Cuenta Activa", 2));
 		sb.acciondecontacto("catalogo");
@@ -872,7 +874,7 @@ public class Sales2 extends TestBase{
 		//Assert.assertTrue(driver.findElement(By.id("CardBankingEntity")).getAttribute("required"));
 	}
 	
-	@Test(groups={"Sales", "AltaDeLinea", "Ola1"})  //falta validar los campos porque el campo requerido no existe
+	@Test(groups={"Sales", "AltaDeLinea", "Ola1"}, priority=6)  //falta validar los campos porque el campo requerido no existe
 	public void TS94936_Ventas_Modo_De_Pago_Tarjeta_Verificar_Campos_requeridos_Medio_De_Pago_TC() throws IOException {
 		sb.BuscarCuenta(DNI, buscarCampoExcel(1, "Cuenta Activa", 2));
 		sb.acciondecontacto("catalogo");
@@ -903,7 +905,7 @@ public class Sales2 extends TestBase{
 		//Assert.assertTrue(driver.findElement(By.id("CardBankingEntity")).getAttribute("required"));
 	}
 	
-	@Test(groups={"Sales", "AltaDeLinea", "Ola1"})  
+	@Test(groups={"Sales", "AltaDeLinea", "Ola1"}, priority=6)  
 	public void TS94937_Ventas_Modo_De_Pago_Tarjeta_Verificar_Datos_Del_Campo_Entidad_De_Tarjeta() throws IOException {
 		sb.BuscarCuenta(DNI, buscarCampoExcel(1, "Cuenta Activa", 2));
 		sb.acciondecontacto("catalogo");
@@ -942,7 +944,7 @@ public class Sales2 extends TestBase{
 		Assert.assertTrue(driver.findElement(By.id("CardBankingEntity-0")).findElements(By.tagName("option")).size()>1);
 	}
 	
-	@Test(groups={"Sales", "AltaDeLinea", "Ola1"})  
+	@Test(groups={"Sales", "AltaDeLinea", "Ola1"}, priority=6)  
 	public void TS94938_Ventas_Modo_De_Pago_Tarjeta_Verificar_Datos_Del_Campo_Entidad_Banco_Emisor_Tarjeta() throws IOException {
 		sb.BuscarCuenta(DNI, buscarCampoExcel(1, "Cuenta Activa", 2));
 		sb.acciondecontacto("catalogo");
@@ -977,7 +979,7 @@ public class Sales2 extends TestBase{
 		Assert.assertTrue(driver.findElement(By.id("BankingEntity-0")).findElements(By.tagName("option")).size()>1);
 	}
 	
-	@Test(groups={"Sales", "AltaDeLinea", "Ola1"})  
+	@Test(groups={"Sales", "AltaDeLinea", "Ola1"}, priority=6)  
 	public void TS94939_Ventas_Modo_De_Pago_Tarjeta_Verificar_Datos_Del_Campo_Codigo_Promo_Bancaria() throws IOException {
 		sb.BuscarCuenta(DNI, buscarCampoExcel(1, "Cuenta Activa", 2));
 		sb.acciondecontacto("catalogo");
@@ -1020,7 +1022,7 @@ public class Sales2 extends TestBase{
 		Assert.assertTrue(driver.findElement(By.id("promotionsByCardsBank-0")).findElements(By.tagName("option")).size()>1);
 	}
 	
-	@Test(groups={"Sales", "AltaDeLinea", "Ola1"})  
+	@Test(groups={"Sales", "AltaDeLinea", "Ola1"}, priority=6)  
 	public void TS94941_Ventas_Modo_De_Pago_Tarjeta_Verificar_Datos_Del_Campo_Cuotas_TC() throws IOException {
 		sb.BuscarCuenta(DNI, buscarCampoExcel(1, "Cuenta Activa", 2));
 		sb.acciondecontacto("catalogo");
@@ -1067,7 +1069,7 @@ public class Sales2 extends TestBase{
 		Assert.assertTrue(driver.findElement(By.id("Installment-0")).findElements(By.tagName("option")).size()>1);
 	}
 	
-	@Test(groups={"Sales", "AltaDeLinea", "Ola1"})  
+	@Test(groups={"Sales", "AltaDeLinea", "Ola1"}, priority=6)  
 	public void TS94942_Ventas_Modo_De_Pago_Tarjeta_Verificar_Datos_Del_Campo_Cuotas_CFT() throws IOException {
 		sb.BuscarCuenta(DNI, buscarCampoExcel(1, "Cuenta Activa", 2));
 		sb.acciondecontacto("catalogo");
@@ -1118,7 +1120,7 @@ public class Sales2 extends TestBase{
 		Assert.assertTrue(driver.findElement(By.cssSelector(".padding-custom.ng-binding")).getText().toLowerCase().contains("costo financiero"));
 	}
 	
-	@Test(groups={"Sales", "AltaDeLinea", "Ola1"})
+	@Test(groups={"Sales", "AltaDeLinea", "Ola1"}, priority=0)
 	public void TS94779_Ventas_Entregas_General_Store_Pickup_Consulta_stock_por_PDV_Visualizar_el_campo_LOCALIDAD_con_un_desplegable_que_permita_seleccionar_una() throws IOException {
 		sb.BuscarCuenta(DNI, buscarCampoExcel(1, "Cuenta Activa", 2));
 		sb.acciondecontacto("catalogo");
@@ -1141,7 +1143,7 @@ public class Sales2 extends TestBase{
 		Assert.assertTrue(a);
 	}
 	
-	@Test(groups={"Sales", "AltaDeLinea", "Ola1"})
+	@Test(groups={"Sales", "AltaDeLinea", "Ola1"}, priority=0)
 	public void TS94778_Ventas_Entregas_General_Store_Pickup_Consulta_stock_por_PDV_Visualizar_el_campo_PROVINCIA_con_un_desplegable_que_permita_seleccionar_una() throws IOException {
 		sb.BuscarCuenta(DNI, buscarCampoExcel(1, "Cuenta Activa", 2));
 		sb.acciondecontacto("catalogo");
@@ -1185,7 +1187,7 @@ public class Sales2 extends TestBase{
 		Assert.assertTrue(a && b);
 		}
 			
-	@Test(groups={"Sales", "AltaDeLinea", "Ola1"})
+	@Test(groups={"Sales", "AltaDeLinea", "Ola1"}, priority=4)
 	public void TS94495_Alta_Linea_Configurar_Nueva_Linea_Cancelar_la_venta_al_no_tener_lineas_disponibles_XX() throws IOException {
 		sb.BuscarCuenta(DNI, buscarCampoExcel(1, "Cuenta Activa", 2));
 		sb.acciondecontacto("catalogo");
@@ -1209,7 +1211,7 @@ public class Sales2 extends TestBase{
 		Assert.assertTrue(canc.isDisplayed());
 	}
 	
-	@Test(groups={"Sales", "AltaDeLinea", "Ola1"})
+	@Test(groups={"Sales", "AltaDeLinea", "Ola1"}, priority=3)
 	public void TS94508_Alta_Linea_Modo_de_Entrega_Seleccionar_modo_de_entrega_presencial_Producto_Tangible_52() throws IOException {
 		sb.BuscarCuenta(DNI, buscarCampoExcel(1, "Cuenta Activa", 2));
 		sb.acciondecontacto("catalogo");
@@ -1225,7 +1227,7 @@ public class Sales2 extends TestBase{
 		Assert.assertTrue(mde.getText().contains("Presencial"));
 	}
 	
-	@Test(groups={"Sales", "AltaDeLinea", "Ola1"})
+	@Test(groups={"Sales", "AltaDeLinea", "Ola1"}, priority=3)
 	public void TS94625_Alta_Linea_Asignar_SIMCARD_Verificar_que_se_agrege_la_seleccion_al_carrito() throws IOException {
 		sb.BuscarCuenta(DNI, buscarCampoExcel(1, "Cuenta Activa", 2));
 		sb.acciondecontacto("catalogo");
@@ -1250,7 +1252,7 @@ public class Sales2 extends TestBase{
 		Assert.assertTrue(a);
 	}
 	
-	@Test(groups={"Sales", "AltaDeLinea", "Ola1"})
+	@Test(groups={"Sales", "AltaDeLinea", "Ola1"}, priority=3)
 	public void TS94642_Ventas_NumeroOrden_Visualizar_Orden_de_Venta_Abierta_Seleccionar_un_producto() throws IOException {
 		sb.BuscarCuenta(DNI, buscarCampoExcel(1, "Cuenta Activa", 2));
 		sb.acciondecontacto("catalogo");
@@ -1262,7 +1264,7 @@ public class Sales2 extends TestBase{
 		Assert.assertTrue(num.getText().contains("Nro. Orden:"));
 	}
 	
-	@Test(groups={"Sales", "AltaDeLinea", "Ola1"})
+	@Test(groups={"Sales", "AltaDeLinea", "Ola1"}, priority=3)
 	public void TS94644_Ventas_NumeroOrden_Visualizar_Orden_de_Venta_Abierta_Modo_de_Entrega() throws IOException {
 		sb.BuscarCuenta(DNI, buscarCampoExcel(1, "Cuenta Activa", 2));
 		sb.acciondecontacto("catalogo");
@@ -1286,7 +1288,7 @@ public class Sales2 extends TestBase{
 		Assert.assertTrue(a);
 	}
 	
-	@Test(groups={"Sales", "AltaDeLinea", "Ola1"})
+	@Test(groups={"Sales", "AltaDeLinea", "Ola1"}, priority=3)
 	public void TS94647_Ventas_NumeroOrden_Visualizar_Orden_de_Venta_Abierta_ICCID() throws IOException {
 		sb.BuscarCuenta(DNI, buscarCampoExcel(1, "Cuenta Activa", 2));
 		sb.acciondecontacto("catalogo");
@@ -1307,7 +1309,7 @@ public class Sales2 extends TestBase{
 		Assert.assertTrue(a);
 	}
 	
-	@Test(groups={"Sales", "AltaDeCuenta", "Ola1"})
+	@Test(groups={"Sales", "AltaDeCuenta", "Ola1"}, priority=6)
 	public void TS95207_Alta_de_Cuenta_Usuario_Verificar_usuario_del_asset_por_default() throws IOException {
 		sb.BuscarCuenta(DNI, buscarCampoExcel(1, "Cuenta Activa", 2));
 		String a = driver.findElement(By.xpath("//*[@id=\"tab-scoped-1\"]/section/div/table/tbody/tr[1]/th/div")).getText();
@@ -1317,7 +1319,7 @@ public class Sales2 extends TestBase{
 		Assert.assertTrue(name.getText().equals(a));	
 	}
 	
-	@Test(groups={"Sales", "AltaDeCuenta", "Ola1"})
+	@Test(groups={"Sales", "AltaDeCuenta", "Ola1"}, priority=6)
 	public void TS95208_Alta_de_Cuenta_Usuario_Verificar_datos_para_la_creacion_de_usuarios() {
 		sb.BtnCrearNuevoCliente();
 		boolean masc = false;
@@ -1340,7 +1342,7 @@ public class Sales2 extends TestBase{
 	}
 	
 	
-	@Test(groups={"Sales","AltaDeLinea","Ola1"})  //Continua aunque no se asigne las lianeas
+	@Test(groups={"Sales","AltaDeLinea","Ola1"}, priority=4)  //Continua aunque no se asigne las lianeas
 	public void TS94497_Alta_Linea_Configurar_Nueva_Linea_Intentar_pasar_al_siguiente_paso_lineas_incompletas_XX() throws IOException{
 		CustomerCare CC = new CustomerCare(driver);
 		sb.BuscarCuenta(DNI, buscarCampoExcel(1, "Cuenta Activa", 2));
@@ -1366,7 +1368,7 @@ public class Sales2 extends TestBase{
 		Assert.assertTrue(x);
 	}
 	
-	@Test(groups={"Sales","AltaDeLinea","Ola1"}) // No figura el lote de lineas
+	@Test(groups={"Sales","AltaDeLinea","Ola1"}, priority=4) // No figura el lote de lineas
 	public void TS94494_Alta_Linea_Configurar_Nueva_Linea_Buscar_nuevo_lote_de_lineas_pre_asignadas_XX() throws IOException{
 		CustomerCare CC = new CustomerCare(driver);
 		sb.BuscarCuenta(DNI, buscarCampoExcel(1, "Cuenta Activa", 2));
@@ -1387,7 +1389,7 @@ public class Sales2 extends TestBase{
 		Assert.assertTrue(!lineaVieja.equals(lineaNueva));
 	}
 	
-	@Test(groups={"Sales","AltaDeLinea","Ola1"}) 	
+	@Test(groups={"Sales","AltaDeLinea","Ola1"}, priority=4) 	
 	public void TS94503_Alta_Linea_Configurar_Nueva_Linea_Visualizar_lineas_pre_asignadas_automaticamente_XX() throws IOException{
 		sb.BuscarCuenta(DNI, buscarCampoExcel(1, "Cuenta Activa", 2));
 		sb.acciondecontacto("catalogo");
@@ -1399,7 +1401,7 @@ public class Sales2 extends TestBase{
 		Assert.assertTrue(bx.isDisplayed());
 	}
 	
-	@Test(groups={"Sales","AltaDeLinea","Ola1"}) 	
+	@Test(groups={"Sales","AltaDeLinea","Ola1"}, priority=4) 	
 	public void TS94499_Alta_Linea_Configurar_Nueva_Linea_Presionar_el_boton_Buscar_XX() throws IOException{
 		CustomerCare CC = new CustomerCare(driver);
 		sb.BuscarCuenta(DNI, buscarCampoExcel(1, "Cuenta Activa", 2));
@@ -1429,7 +1431,7 @@ public class Sales2 extends TestBase{
 		Assert.assertTrue(txt2.getText().equals("ACHALCO"));
 	}
 	
-	@Test(groups={"Sales","AltaDeLinea","Ola1"}) 	
+	@Test(groups={"Sales","AltaDeLinea","Ola1"}, priority=4) 	
 	public void TS94501_Alta_Linea_Configurar_Nueva_Linea_Visualizar_filtros_de_localidad_y_provincia_al_modificar_linea_XX() throws IOException{
 		sb.BuscarCuenta(DNI, buscarCampoExcel(1, "Cuenta Activa", 2));
 		sb.acciondecontacto("catalogo");
@@ -1458,7 +1460,7 @@ public class Sales2 extends TestBase{
 		}
 	}	
 	
-	@Test(groups={"Sales","AltaDeLinea","Ola1"}) 	
+	@Test(groups={"Sales","AltaDeLinea","Ola1"}, priority=4) 	
 	public void TS94502_Alta_Linea_Configurar_Nueva_Linea_Visualizar_home_de_la_linea_pre_asignada_correspondiente_a_direccion_de_facturacion_XX(){
 		sb.BtnCrearNuevoCliente();
 		ContactSearch contact = new ContactSearch(driver);
@@ -1481,7 +1483,7 @@ public class Sales2 extends TestBase{
 	
 	}
 	
-	@Test(groups={"Sales","AltaDeLinea","Ola1"})
+	@Test(groups={"Sales","AltaDeLinea","Ola1"}, priority=4)
 	public void TS94504_Alta_Linea_Configurar_Nueva_Linea_Visualizar_mensaje_y_opciones_de_lineas_no_disponibles_XX(){
 		sb.BtnCrearNuevoCliente();
 		ContactSearch contact = new ContactSearch(driver);
@@ -1514,7 +1516,7 @@ public class Sales2 extends TestBase{
 	}
 
 		
-	@Test(groups={"Sales","AltaDeLinea","Ola1"})    //no se ve la asignacion de lineas
+	@Test(groups={"Sales","AltaDeLinea","Ola1"}, priority=4)    //no se ve la asignacion de lineas
 	public void TS94505_Alta_Linea_Configurar_Nueva_Linea_Visualizar_misma_cantidad_de_lineas_que_planes_XX() throws IOException{
 		sb.BuscarCuenta(DNI, buscarCampoExcel(1, "Cuenta Activa", 2));
 		sb.acciondecontacto("catalogo");
@@ -1533,7 +1535,7 @@ public class Sales2 extends TestBase{
 	
 
 	
-	@Test(groups={"Sales", "AltaDeContacto","Ola1"})
+	@Test(groups={"Sales", "AltaDeContacto","Ola1"}, priority=9)
 	public void TS94590_Alta_de_Contacto_Persona_Fisica_Verificar_campos_inhabilitados_hasta_la_validacion_existosa_del_contacto_XX(){
 		BasePage Bp= new BasePage();
 		Random aleatorio = new Random(System.currentTimeMillis());
@@ -1546,7 +1548,7 @@ public class Sales2 extends TestBase{
 		Assert.assertTrue(driver.findElement(By.cssSelector(".OSradioButton.ng-scope.only-buttom")).isEnabled());
 	}
 	
-	@Test(groups={"Sales", "AltaDeLinea", "Ola1"})
+	@Test(groups={"Sales", "AltaDeLinea", "Ola1"}, priority=0)
 	public void TS94782_Ventas_Entregas_General_Store_Pickup_Consulta_stock_por_PDV_Verificar_que_se_hablilite_solo_las_localidades_con_punto_de_venta_para_Store_Pickup() throws IOException {
 		sb.BuscarCuenta(DNI, buscarCampoExcel(1, "Cuenta Activa", 2));
 		sb.acciondecontacto("catalogo");
@@ -1575,7 +1577,7 @@ public class Sales2 extends TestBase{
 		Assert.assertTrue(a && b);
 	}
 	
-	@Test(groups={"Sales", "AltaDeLinea", "Ola1"})
+	@Test(groups={"Sales", "AltaDeLinea", "Ola1"}, priority=5)
 	public void TS94785_Ventas_Entregas_General_Verificar_que_se_pueda_seleccionar_ModEntrega_Tangible() throws IOException {
 		sb.BuscarCuenta(DNI, buscarCampoExcel(1, "Cuenta Activa", 2));
 		sb.acciondecontacto("catalogo");
@@ -1604,7 +1606,7 @@ public class Sales2 extends TestBase{
 		Assert.assertTrue(driver.findElement(By.cssSelector(".slds-col.taChangeDeliveryMethod.slds-text-body--small.slds-m-left--large")).getText().contains("Delivery"));		
 	}
 	
-	@Test(groups={"Sales", "AltaDeLinea", "Ola1"})
+	@Test(groups={"Sales", "AltaDeLinea", "Ola1"}, priority=6)
 	public void TS94903_Venta_Medio_de_pago_Verificar_LOV_para_canal_Presencial_Oficinas_Comerciales_POC() throws IOException {
 		sb.BuscarCuenta(DNI, buscarCampoExcel(1, "Cuenta Activa", 2));
 		sb.acciondecontacto("catalogo");
@@ -1639,7 +1641,7 @@ public class Sales2 extends TestBase{
 		Assert.assertTrue(a && b && c);
 	}
 	
-	@Test(groups={"Sales", "AltaDeLinea", "Ola1"})
+	@Test(groups={"Sales", "AltaDeLinea", "Ola1"}, priority=4)
 	public void TS95260_Venta_General_Visualizar_Packs_Plan() throws IOException {
 		sb.BuscarCuenta(DNI, buscarCampoExcel(1, "Cuenta Activa", 2));
 		sb.acciondecontacto("catalogo");
@@ -1677,7 +1679,7 @@ public class Sales2 extends TestBase{
 	     Assert.assertTrue(a);
 	}
 	
-	@Test(groups={"Sales","AltaDeLinea","Ola1"})
+	@Test(groups={"Sales","AltaDeLinea","Ola1"}, priority=3)
 	public void TS95048_Ventas_Acciones_Verificar_accion_detalle_Plan_Movil() throws IOException{
 		sb.BuscarCuenta(DNI, buscarCampoExcel(1, "Cuenta Activa", 2));
 		sb.acciondecontacto("catalogo");
@@ -1696,7 +1698,7 @@ public class Sales2 extends TestBase{
 		Assert.assertTrue(driver.findElement(By.cssSelector(".slds-modal.slds-fade-in-open.slds-modal--large")).findElement(By.tagName("h2")).getText().equalsIgnoreCase("product details"));
 	}
 	
-	@Test(groups={"Sales","AltaDeLinea","Ola1"})
+	@Test(groups={"Sales","AltaDeLinea","Ola1"}, priority=3)
 	public void TS95050_Ventas_Acciones_Verificar_accion_detalle_Packs() throws IOException{
 		sb.BuscarCuenta(DNI, buscarCampoExcel(1, "Cuenta Activa", 2));
 		sb.acciondecontacto("catalogo");
@@ -1715,7 +1717,7 @@ public class Sales2 extends TestBase{
 		Assert.assertTrue(driver.findElement(By.cssSelector(".slds-modal.slds-fade-in-open.slds-modal--large")).findElement(By.tagName("h2")).getText().equalsIgnoreCase("product details"));
 	}
 	
-	@Test(groups={"Sales","AltaDeLinea","Ola1"})//*******************Arreglar
+	@Test(groups={"Sales","AltaDeLinea","Ola1"}, priority=6)//*******************Arreglar
 	public void TS94762_Ventas_Modo_De_Pago_General_Verificar_LOV_Modalidad_De_Pago() throws IOException{
 		boolean DPF = false;
 		boolean E = false;
@@ -1753,7 +1755,7 @@ public class Sales2 extends TestBase{
 		sleep(5000);
 	}
 	
-	@Test(groups={"Sales","AltaDeLinea","Ola1"})
+	@Test(groups={"Sales","AltaDeLinea","Ola1"}, priority=7)
 	public void TS95261_Ventas_General_Asignar_Una_Linea_Como_Decisora_Durante_La_Venta_En_Misma_Pantalla_De_Asignacion_De_Lineas(){
 		boolean estaM = false;
 		sb.BtnCrearNuevoCliente();
@@ -1779,7 +1781,7 @@ public class Sales2 extends TestBase{
 		Assert.assertTrue(driver.findElement(By.id("text-input-01")).isDisplayed());
 	}
 	
-	@Test(groups={"Sales", "AltaDeContacto", "Ola1"})
+	@Test(groups={"Sales", "AltaDeContacto", "Ola1"}, priority=2)
 	public void TS94947_Alta_de_Contacto_Busqueda_Verificar_boton_3_sobre_contactos() throws IOException {
 		sb.BuscarCuenta(DNI, buscarCampoExcel(1, "Cuenta Activa", 2));
 		List <WebElement> btn = driver.findElements(By.cssSelector(".slds-button.slds-button.slds-button--icon"));
@@ -1792,7 +1794,7 @@ public class Sales2 extends TestBase{
 		Assert.assertTrue(a);
 	}
 	
-	@Test(groups={"Sales", "AltaDeCuenta","Ola1"})
+	@Test(groups={"Sales", "AltaDeCuenta","Ola1"}, priority=2)
 	public void TS95198_Alta_Cuenta_Busqueda_Verificar_busqueda_combinada_DNI_con_NyAp_DNI_No_Existe_NyAP_Existe() throws IOException {
 		BasePage dni = new BasePage(driver);
 		String NyA = buscarCampoExcel(1, "Cuenta Activa", 1);
@@ -1808,7 +1810,7 @@ public class Sales2 extends TestBase{
 		Assert.assertFalse(tNom.getText().equalsIgnoreCase("lino" + " " + "acosta"));
 	}
 
-	@Test(groups={"Sales", "AltaDeLinea", "Ola1"})
+	@Test(groups={"Sales", "AltaDeLinea", "Ola1"}, priority=8)
 	public void TS95302_Ventas_General_Visualizar_Datos_De_La_Pantalla_De_Resumen_De_Venta() throws IOException{
 		boolean nOrden = false, nyA = false, pago = false, dni = false, entrega = false, modelo = false, serial = false, linea = false, plan = false;
 		sb.BuscarCuenta(DNI, buscarCampoExcel(1, "Cuenta Activa", 2));
@@ -1874,7 +1876,7 @@ public class Sales2 extends TestBase{
 		
 	}
 	
-	@Test(groups={"Sales","AltaDeLinea","Ola1"})
+	@Test(groups={"Sales","AltaDeLinea","Ola1"}, priority=3)
 	public void TS94649_Ventas_NumeroOrden_Verificar_Orden_de_Venta_Abierta_Nueva_Venta() throws IOException{
 		sb.BuscarCuenta(DNI, buscarCampoExcel(1, "Cuenta Activa", 2));
 		sb.acciondecontacto("catalogo");
@@ -1922,7 +1924,7 @@ public class Sales2 extends TestBase{
 		Assert.assertTrue(lst.getText().contains("Plan con Tarjeta Repro"));
 		}
 		
-	@Test(groups={"Sales", "AltaDeLinea", "Ola1"})
+	@Test(groups={"Sales", "AltaDeLinea", "Ola1"}, priority=3)
 	public void TS94479_checkPlanIsDeleted() throws IOException {
 		Ta_CPQ page3 = new Ta_CPQ(driver);
 		sb.BuscarCuenta(DNI, buscarCampoExcel(1, "Cuenta Activa", 2));
@@ -1936,7 +1938,7 @@ public class Sales2 extends TestBase{
 		try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 		Assert.assertFalse(page3.isPlanPresent());
 	}
-	@Test(groups={"Sales", "AltaDeLinea", "Ola1"})
+	@Test(groups={"Sales", "AltaDeLinea", "Ola1"}, priority=3)
 	public void TS94482_deleteAllPlans() throws IOException {
 		Ta_CPQ page3 = new Ta_CPQ(driver);
 		sb.BuscarCuenta(DNI, buscarCampoExcel(1, "Cuenta Activa", 2));
@@ -1966,7 +1968,7 @@ public class Sales2 extends TestBase{
 		try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 		Assert.assertEquals("Cart is empty.", page3.getEmptyCartMessage());
 	}
-	@Test(groups={"Sales", "AltaDeLinea", "Ola1"})
+	@Test(groups={"Sales", "AltaDeLinea", "Ola1"}, priority=3)
 	public void TS94522_CRM_Fase_1_SalesCPQ_Alta_Linea_Carrito_Verificar_el_mensaje_al_vaciar_el_carrito_XX() throws IOException {
 		Ta_CPQ cart = new Ta_CPQ(driver);
 		sb.BuscarCuenta(DNI, buscarCampoExcel(1, "Cuenta Activa", 2));
@@ -1981,7 +1983,7 @@ public class Sales2 extends TestBase{
 		//Assert.assertEquals(messageEmptyCart.getText().trim(), "Cart is empty.");
 		Assert.assertEquals("Cart is empty.", cart.getEmptyCartMessage());
 	}
-	@Test(groups={"Sales", "AltaDeLinea", "Ola1"})
+	@Test(groups={"Sales", "AltaDeLinea", "Ola1"}, priority=9)
 	public void TS94515_CRM_Fase_1_SalesCPQ_Alta_Linea_Costo_Operacion_Validar_formato_del_monto() throws IOException {
 		Ta_CPQ cart = new Ta_CPQ(driver);
 		sb.BuscarCuenta(DNI, buscarCampoExcel(1, "Cuenta Activa", 2));
@@ -2038,7 +2040,7 @@ public class Sales2 extends TestBase{
 		WebElement delet = driver.findElements(By.cssSelector(".slds-dropdown.slds-dropdown_right.cpq-item-actions-dropdown")).get(0);
 		Assert.assertTrue(delet.getText().contains("Inspect"));	
 	}
-	@Test(groups={"Sales", "AltaDeLinea", "Ola1"})
+	@Test(groups={"Sales", "AltaDeLinea", "Ola1"}, priority=9)
 	public void TS94518_CRM_Fase_1_SalesCPQ_Alta_Linea_Costo_Operacion_Verificar_opciones_del_carrito_Boton_Siguiente() throws IOException{
 		sb.BuscarCuenta(DNI, buscarCampoExcel(1, "Cuenta Activa", 2));
 		sb.acciondecontacto("catalogo");
@@ -2054,4 +2056,66 @@ public class Sales2 extends TestBase{
 		Assert.assertTrue(r);
 	}
 	
+	@Test(groups={"Sales", "AltaDeLinea", "Ola1"}, priority=9)
+	public void TS94707_CRM_Fase_2_SalesCPQ_Nueva_Venta_Orden_Venta_Verficar_que_se_puede_modificar_el_ciclo_de_facturacion() throws Exception {
+		sb.BuscarCuenta(DNI, buscarCampoExcel(1, "Cuenta Activa", 2));
+		sb.acciondecontacto("catalogo");
+		try {Thread.sleep(4000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		sb.elegirplan("Plan con Tarjeta Repro");
+		try {Thread.sleep(8000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		sb.continuar();
+		sleep(8000);
+		Assert.assertTrue(false);
+	/*	LineAssignment lineAssignment = new LineAssignment (driver);
+		lineAssignment.clickOnNext();
+		BillSimulation billSimulation = new BillSimulation (driver);
+		billSimulation.clickOnNext();
+		DeliveryMethod deliveryMethod = new DeliveryMethod (driver);
+		try {Thread.sleep(4000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		Select billingCycleSelect = new Select (deliveryMethod.getBillingCycle());
+		billingCycleSelect.selectByValue("7");
+		Assert.assertEquals(billingCycleSelect.getFirstSelectedOption().getText(), "7");*/
+	}
+	
+	@Test(groups = {"Sales", "AltaDeLinea", "Ola1"}, priority=9)
+	public void TS94706_CRM_Fase_2_SalesCPQ_Nueva_Venta_Orden_Venta_Verficar_ciclo_de_facturacion_asignado_por_default() throws Exception {
+		sb.BuscarCuenta(DNI, buscarCampoExcel(1, "Cuenta Activa", 2));
+		sb.acciondecontacto("catalogo");
+		try {Thread.sleep(4000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		sb.elegirplan("Plan con Tarjeta Repro");
+		try {Thread.sleep(8000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		sb.continuar();
+		sleep(8000);
+		Assert.assertTrue(false);
+	/*	LineAssignment lineAssignmentPage = new LineAssignment(driver);
+		lineAssignmentPage.clickOnNext();
+		BillSimulation billSimulationPage = new BillSimulation(driver);
+		billSimulationPage.clickOnNext();
+		DeliveryMethod deliveryMethodPage = new DeliveryMethod (driver);
+		Select billingCycleSelect = new Select(deliveryMethodPage.getBillingCycle());
+		Assert.assertEquals(billingCycleSelect.getFirstSelectedOption().getText(), "21");*/
+	}
+	
+	@Test(groups={"Sales", "AltaDeLinea", "Ola1"}, priority=9)
+	public void TS94708_CRM_Fase_2_SalesCPQ_Nueva_Venta_Orden_Venta_Verficar_ciclos_de_facturacion_disponibles() throws Exception{
+		sb.BuscarCuenta(DNI, buscarCampoExcel(1, "Cuenta Activa", 2));
+		sb.acciondecontacto("catalogo");
+		try {Thread.sleep(4000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		sb.elegirplan("Plan con Tarjeta Repro");
+		try {Thread.sleep(8000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		sb.continuar();
+		sleep(8000);
+		Assert.assertTrue(false);
+		/*
+		LineAssignment lineAssignment = new LineAssignment (driver);
+		lineAssignment.clickOnNext();
+		BillSimulation billSimulation = new BillSimulation (driver);
+		billSimulation.clickOnNext();
+		DeliveryMethod deliveryMethod = new DeliveryMethod (driver);
+		
+		Assert.assertTrue(deliveryMethod.getBillingCycleOptions().contains("1"));
+		Assert.assertTrue(deliveryMethod.getBillingCycleOptions().contains("7"));
+		Assert.assertTrue(deliveryMethod.getBillingCycleOptions().contains("14"));
+		Assert.assertTrue(deliveryMethod.getBillingCycleOptions().contains("21"));*/
+	}
 }

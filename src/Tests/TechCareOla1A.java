@@ -33,7 +33,8 @@ import Tests.TestBase.IrA;
 public class TechCareOla1A extends TestBase {
 	
 	private WebDriver driver;
-	
+	private String Cuenta="Marco Polo";
+	private String Linea="543416869777";
 	
 	@BeforeClass(alwaysRun=true)
 	public void init() throws Exception
@@ -59,7 +60,7 @@ public class TechCareOla1A extends TestBase {
 	public void setUp() throws Exception {
 		TechCare_Ola1 page=new TechCare_Ola1(driver);
 		sleep(3000);
-		page.selectAccount("Marco Polo");
+		page.selectAccount(Cuenta);
 		driver.switchTo().defaultContent();
 		sleep(3000);
 		
@@ -92,7 +93,7 @@ public class TechCareOla1A extends TestBase {
 	public void TS94226_CRM_Ola1_Technical_Care_CSR_SVA_Actualización_de_matriz_Servicio_Transferencia_de_llamadas_inconveniente_No_funciona_transferencia_de_llamadas_No_funciona_transferencia_de_llamadas_No_puede_configurar() {
 		sleep(5000);
 		TechCare_Ola1 page=new TechCare_Ola1(driver);
-		page.clickOpcionEnAsset("543416869777", "mis servicios");
+		page.clickOpcionEnAsset(Linea, "mis servicios");
 		sleep(7000);
 		page.clickVerDetalle();
 		sleep(5000);
@@ -111,7 +112,7 @@ public class TechCareOla1A extends TestBase {
 	public void TS94438_CRM_Ola1_Technical_Care_CSR_SVA_Visualizacion_de_Servicio_Voice_Mail_con_Clave_e_inconveniente_cómo_ingreso_mi_clave() {
 		sleep(5000);
 		TechCare_Ola1 page=new TechCare_Ola1(driver);
-		page.clickOpcionEnAsset("543416869777", "mis servicios");
+		page.clickOpcionEnAsset(Linea, "mis servicios");
 		sleep(7000);
 		page.clickVerDetalle();
 		sleep(5000);
@@ -129,7 +130,7 @@ public class TechCareOla1A extends TestBase {
 	public void TS96292_CRM_Ola1_Technical_Care_CSR_SVA_Visualizacion_de_Servicio_Barrings_Configurables_por_el_usuario_e_inconveniente_No_puedo_llamar_a_un_numero_en_particular() {
 		sleep(5000);
 		TechCare_Ola1 page=new TechCare_Ola1(driver);
-		page.clickOpcionEnAsset("543416869777", "mis servicios");
+		page.clickOpcionEnAsset(Linea, "mis servicios");
 		sleep(7000);
 		page.clickVerDetalle();
 		sleep(5000);
@@ -147,7 +148,7 @@ public class TechCareOla1A extends TestBase {
 	public void TS94390_CRM_Ola1_Technical_Care_CSR_Mis_Servicios_Visualizacion_de_pregunta() {
 		sleep(5000);
 		TechCare_Ola1 page=new TechCare_Ola1(driver);
-		page.clickOpcionEnAsset("543416869777", "mis servicios");
+		page.clickOpcionEnAsset(Linea, "mis servicios");
 		sleep(7000);
 		page.clickVerDetalle();
 		sleep(5000);
@@ -174,7 +175,7 @@ public class TechCareOla1A extends TestBase {
 	public void TS94392_CRM_Ola1_Technical_Care_CSR_Mis_Servicios_Visualizacion_Documento_Base_de_Conocimiento_Respuesta_NO() {
 		sleep(5000);
 		TechCare_Ola1 page=new TechCare_Ola1(driver);
-		page.clickOpcionEnAsset("543416869777", "mis servicios");
+		page.clickOpcionEnAsset(Linea, "mis servicios");
 		sleep(7000);
 		page.clickVerDetalle();
 		sleep(5000);
@@ -196,7 +197,7 @@ public class TechCareOla1A extends TestBase {
 	public void TS94391_CRM_Ola1_Technical_Care_CSR_Mis_Servicios_Visualizacion_Documento_Base_de_Conocimiento_Respuesta_SI() {
 		sleep(5000);
 		TechCare_Ola1 page=new TechCare_Ola1(driver);
-		page.clickOpcionEnAsset("543416869777", "mis servicios");
+		page.clickOpcionEnAsset(Linea, "mis servicios");
 		sleep(7000);
 		page.clickVerDetalle();
 		sleep(5000);
@@ -215,7 +216,7 @@ public class TechCareOla1A extends TestBase {
 	public void TS94403_CRM_Ola1_Technical_Care_CSR_SVA_Validacion_Red_OK_Consulta_al_cliente_tiene_señal_NO() {
 		sleep(5000);
 		TechCare_Ola1 page=new TechCare_Ola1(driver);
-		page.clickOpcionEnAsset("543416869777", "mis servicios");
+		page.clickOpcionEnAsset(Linea, "mis servicios");
 		sleep(7000);
 		page.clickVerDetalle();
 		sleep(5000);
@@ -241,7 +242,7 @@ public class TechCareOla1A extends TestBase {
 	public void TS94402_CRM_Ola1_Technical_Care_CSR_SVA_Validacion_Red_OK_Consulta_al_cliente_tiene_señal_SI() {
 		sleep(5000);
 		TechCare_Ola1 page=new TechCare_Ola1(driver);
-		page.clickOpcionEnAsset("543416869777", "mis servicios");
+		page.clickOpcionEnAsset(Linea, "mis servicios");
 		sleep(7000);
 		page.clickVerDetalle();
 		sleep(5000);
@@ -267,7 +268,7 @@ public class TechCareOla1A extends TestBase {
 	public void TS94417_CRM_Ola1_Technical_Care_CSR_SVA_Validaciones_Visualizacion_MMS_Emisión_Cliente_informa_que_no_puede_enviar_Archivo_Imagen_Audio() {
 		sleep(5000);
 		TechCare_Ola1 page=new TechCare_Ola1(driver);
-		page.clickOpcionEnAsset("543416869777", "mis servicios");
+		page.clickOpcionEnAsset(Linea, "mis servicios");
 		sleep(7000);
 		page.clickVerDetalle();
 		sleep(5000);
@@ -284,7 +285,7 @@ public class TechCareOla1A extends TestBase {
 	public void TS94351_CRM_Ola1_Technical_Care_CSR_SVA_Verificacion_de_buscar_la_posicion_en_el_mapa() {
 		sleep(5000);
 		TechCare_Ola1 page=new TechCare_Ola1(driver);
-		page.clickOpcionEnAsset("543416869777", "mis servicios");
+		page.clickOpcionEnAsset(Linea, "mis servicios");
 		sleep(7000);
 		page.clickVerDetalle();
 		sleep(5000);
@@ -307,7 +308,7 @@ public class TechCareOla1A extends TestBase {
 	public void TS94412_CRM_Ola1_Technical_Care_CSR_SVA_Visualizacion_SMS_Emision_a_algun_destino() {
 		sleep(5000);
 		TechCare_Ola1 page=new TechCare_Ola1(driver);
-		page.clickOpcionEnAsset("543416869777", "mis servicios");
+		page.clickOpcionEnAsset(Linea, "mis servicios");
 		sleep(7000);
 		page.clickVerDetalle();
 		sleep(5000);
@@ -322,7 +323,7 @@ public class TechCareOla1A extends TestBase {
 	public void TS94407_CRM_Ola1_Technical_Care_CSR_SVA_Visualizar_SMS_A_FIJO() {
 		sleep(5000);
 		TechCare_Ola1 page=new TechCare_Ola1(driver);
-		page.clickOpcionEnAsset("543416869777", "mis servicios");
+		page.clickOpcionEnAsset(Linea, "mis servicios");
 		sleep(7000);
 		page.clickVerDetalle();
 		sleep(5000);
@@ -337,7 +338,7 @@ public class TechCareOla1A extends TestBase {
 	public void TS94466_CRM_Ola1_Technical_Care_CSR_SVA_Visualizacion_de_Servicio_SMS_entrante_e_inconveniente_No_recibe_de_un_número_particular() {
 		sleep(5000);
 		TechCare_Ola1 page=new TechCare_Ola1(driver);
-		page.clickOpcionEnAsset("543416869777", "mis servicios");
+		page.clickOpcionEnAsset(Linea, "mis servicios");
 		sleep(7000);
 		page.clickVerDetalle();
 		sleep(5000);
@@ -352,7 +353,7 @@ public class TechCareOla1A extends TestBase {
 	public void TS94469_CRM_Ola1_Technical_Care_CSR_SVA_Visualizacion_de_Servicio_SMS_saliente_e_inconveniente_SMS_a_fijo() {
 		sleep(5000);
 		TechCare_Ola1 page=new TechCare_Ola1(driver);
-		page.clickOpcionEnAsset("543416869777", "mis servicios");
+		page.clickOpcionEnAsset(Linea, "mis servicios");
 		sleep(7000);
 		page.clickVerDetalle();
 		sleep(5000);
@@ -368,7 +369,7 @@ public class TechCareOla1A extends TestBase {
 	public void TS94462_CRM_Ola1_Technical_Care_CSR_SVA_Visualizacion_de_Servicio_e_inconveniente() {
 		sleep(5000);
 		TechCare_Ola1 page=new TechCare_Ola1(driver);
-		page.clickOpcionEnAsset("543416869777", "mis servicios");
+		page.clickOpcionEnAsset(Linea, "mis servicios");
 		sleep(7000);
 		page.clickVerDetalle();
 		sleep(5000);
@@ -384,7 +385,7 @@ public class TechCareOla1A extends TestBase {
 	public void TS94372_CRM_Ola1_Technical_Care_CSR_SVA_Verificacion_de_Cobertura_y_Señal_en_el_equipo() {
 		sleep(5000);
 		TechCare_Ola1 page=new TechCare_Ola1(driver);
-		page.clickOpcionEnAsset("543416869777", "mis servicios");
+		page.clickOpcionEnAsset(Linea, "mis servicios");
 		sleep(7000);
 		page.clickVerDetalle();
 		sleep(5000);
@@ -409,7 +410,7 @@ public class TechCareOla1A extends TestBase {
 	public void TS94329_CRM_Ola1_Technical_Care_CSR_SVA_Seleccion_del_dispositivo_CON_señal() {
 		sleep(5000);
 		TechCare_Ola1 page=new TechCare_Ola1(driver);
-		page.clickOpcionEnAsset("543416869777", "mis servicios");
+		page.clickOpcionEnAsset(Linea, "mis servicios");
 		sleep(7000);
 		page.clickVerDetalle();
 		sleep(5000);
@@ -432,7 +433,7 @@ public class TechCareOla1A extends TestBase {
 	public void TS94330_CRM_Ola1_Technical_Care_CSR_SVA_Seleccion_del_dispositivo_SIN_señal() {
 		sleep(5000);
 		TechCare_Ola1 page=new TechCare_Ola1(driver);
-		page.clickOpcionEnAsset("543416869777", "mis servicios");
+		page.clickOpcionEnAsset(Linea, "mis servicios");
 		sleep(7000);
 		page.clickVerDetalle();
 		sleep(5000);
@@ -455,7 +456,7 @@ public class TechCareOla1A extends TestBase {
 	public void TS94317_CRM_Ola1_Technical_Care_CSR_SVA_Visualizar_pregunta_Respuesta_NO() {
 		sleep(5000);
 		TechCare_Ola1 page=new TechCare_Ola1(driver);
-		page.clickOpcionEnAsset("543416869777", "mis servicios");
+		page.clickOpcionEnAsset(Linea, "mis servicios");
 		sleep(7000);
 		page.clickVerDetalle();
 		sleep(5000);
@@ -485,7 +486,7 @@ public class TechCareOla1A extends TestBase {
 	public void TS94316_CRM_Ola1_Technical_Care_CSR_SVA_Visualizar_pregunta_Respuesta_SI() {
 		sleep(5000);
 		TechCare_Ola1 page=new TechCare_Ola1(driver);
-		page.clickOpcionEnAsset("543416869777", "mis servicios");
+		page.clickOpcionEnAsset(Linea, "mis servicios");
 		sleep(7000);
 		page.clickVerDetalle();
 		sleep(5000);
@@ -514,7 +515,7 @@ public class TechCareOla1A extends TestBase {
 	public void TS94350_CRM_Ola1_Technical_Care_CSR_SVA_Verificacion_del_ingreso_de_direccion() {
 		sleep(5000);
 		TechCare_Ola1 page=new TechCare_Ola1(driver);
-		page.clickOpcionEnAsset("543416869777", "mis servicios");
+		page.clickOpcionEnAsset(Linea, "mis servicios");
 		sleep(7000);
 		page.clickVerDetalle();
 		sleep(5000);
@@ -534,7 +535,7 @@ public class TechCareOla1A extends TestBase {
 	public void TS94335_CRM_Ola1_Technical_Care_CSR_SVA_Verificacion_de_desregistro_de_la_linea() {
 		sleep(5000);
 		TechCare_Ola1 page=new TechCare_Ola1(driver);
-		page.clickOpcionEnAsset("543416869777", "mis servicios");
+		page.clickOpcionEnAsset(Linea, "mis servicios");
 		sleep(7000);
 		page.clickVerDetalle();
 		sleep(5000);
@@ -556,7 +557,7 @@ public class TechCareOla1A extends TestBase {
 	public void TS94478_CRM_Ola1_Technical_Care_CSR_SVA_Validacion_SMS_saliente() {
 		sleep(5000);
 		TechCare_Ola1 page=new TechCare_Ola1(driver);
-		page.clickOpcionEnAsset("543416869777", "mis servicios");
+		page.clickOpcionEnAsset(Linea, "mis servicios");
 		sleep(7000);
 		page.clickVerDetalle();
 		sleep(5000);
