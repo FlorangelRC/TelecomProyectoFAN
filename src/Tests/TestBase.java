@@ -577,6 +577,7 @@ public class TestBase {
 	     rows.next();
 	     while (rows.hasNext()) {
 		    XSSFRow row = (XSSFRow) rows.next();
+		    System.out.println(row.getCell(0).getStringCellValue());
 		    if (row.getCell(0).getStringCellValue().toLowerCase().contains(desc.toLowerCase())){
 		    	try {Campo = row.getCell(columna).getStringCellValue();}
 		    	catch (java.lang.IllegalStateException ex1) 
@@ -588,6 +589,7 @@ public class TestBase {
 		    			Campo = Campo.substring(0, Campo.indexOf("E")).replace(".","" );
 		    		}
 		    	}
+		    	break;
 		    }
 		 }
 		return (Campo);
