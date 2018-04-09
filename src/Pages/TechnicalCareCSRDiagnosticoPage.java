@@ -111,7 +111,7 @@ public class TechnicalCareCSRDiagnosticoPage extends BasePage{
 	private WebElement nuevocasoconciliar;
 	
 	
-	@FindBy(xpath="//*[@id=\"OperationalServiceMessage\"]/div/p/p/span/strong")								
+	@FindBy(xpath=".//*[@id='OperationalServiceMessage']/div/p/p/span/strong")								
 	private WebElement OperationalServiceMessage;
 
 	private Object findElement;
@@ -407,7 +407,7 @@ public class TechnicalCareCSRDiagnosticoPage extends BasePage{
 	      	sleep(2000);
 	      		for (WebElement opt : getPreguntas()) {
 	      			if (opt.getText().equalsIgnoreCase(categoria)) {
-	      				scrollToElement(opt);
+	      				//scrollToElement(opt);
 	      				sleep(3000);
 	      				opt.click();
 	      						break;
@@ -487,8 +487,9 @@ public class TechnicalCareCSRDiagnosticoPage extends BasePage{
 			 	sleep (5000);
 			    clickContinuar();
 				sleep (9000);
-				Conciliador();
+				//Conciliador();
 				sleep (5000);
+				driver.switchTo();
 				caso=	Conciliador();
 		}	
 		//buscar		// hacer todo lo demas	// Buscar dentro de la tabla lo que quieras para comparar  estado
@@ -516,17 +517,16 @@ public class TechnicalCareCSRDiagnosticoPage extends BasePage{
 			 	sleep (8000);
 				categoriaRed(catogoriaRed2);
 			    clickContinuar();
-				sleep (8000);
+				sleep (4000);
 				speech();
-				clickContinuar();
-				sleep (9000);
+				driver.switchTo();
 				categoriaRed(catogoriaRed3);
-				sleep (5000);
-				clickContinuar();
+				driver.findElement(By.id("Deregister_nextBtn")).click();
 				sleep (8000);
 				serviciofunciona(opcion);
 				//confirmacionDeGestion();
 				sleep (5000);
+				driver.switchTo();
 				caso=	confirmacionDeGestion();
 		}	
 		//buscar		// hacer todo lo demas	// Buscar dentro de la tabla lo que quieras para comparar  estado
@@ -538,7 +538,6 @@ public class TechnicalCareCSRDiagnosticoPage extends BasePage{
 		buscar.submit();
 		sleep(5000);
 		driver.switchTo().frame(getFrameForElement(driver, By.id("Case_body")));
-		
 		return getEstado().getText().equalsIgnoreCase(estado);	
 		}
 		
