@@ -143,4 +143,19 @@ private WebDriver driver;
  	   assertTrue(tech.estadoDelServicio("NO","Desregistrar", "Sí","Si","Resuelta Exitosa"));
   		}
  		
+ 		
+ 		@Test (groups= {"TechnicalCare", "SVA", "Ola2"},priority=3)
+ 		public void CRM_Ola_2_Technical_Care_CRM_SVA_Estado_del_Servicio_sin_modificaciones_Verificación_de_cierre_de_estado_en_Resuelta_exitosa() throws Exception {
+ 		TechnicalCareCSRDiagnosticoPage tech = new TechnicalCareCSRDiagnosticoPage(driver);
+ 		sleep (4000);
+ 		driver.switchTo().defaultContent();
+ 	    tech.clickOpcionEnAsset("543416869777", "mis servicios");
+ 	    tech.verDetalles();
+ 	   tech.clickDiagnosticarServicio("sms", "SMS Saliente", true);
+	    sleep (4000);
+	    tech.selectionInconvenient("SMS a fijo");
+ 	    tech.continuar();
+ 	    sleep (4000);
+ 	   assertTrue(tech.estadoDelServicioSinModificaciones("NO", "Desregistrar", "No", "Sí", "NO","NO","Resuelta Exitosa"));
+  		}
 }
