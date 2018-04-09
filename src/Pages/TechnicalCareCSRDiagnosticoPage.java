@@ -55,7 +55,7 @@ public class TechnicalCareCSRDiagnosticoPage extends BasePage{
 	  private WebElement numReclamo;
 	 
 	
-	@FindBy(xpath=".//*[@id='SimilCaseInformation']/div/p/p[2]/span/strong[1]")
+	@FindBy(xpath=".//*[@id='SimilCaseInformation']/div/p/p[3]/strong[1]")
 	private WebElement existCaso; 
 	
 	@FindBy(id="ExistSimilCase_nextBtn") 
@@ -65,7 +65,7 @@ public class TechnicalCareCSRDiagnosticoPage extends BasePage{
 	@FindBy(xpath=".//*[@id='ClosedCaseKnowledgeBase']/div/p/p/strong/strong")
 	private WebElement numCaso;
 	
-	@FindBy(xpath=".//*[@id='IncorrectCategoryMessage']/div/p/p[2]/span/strong")
+	@FindBy(xpath=".//*[@id='SimilCaseInformation']/div/p/p[3]/strong[1]")
 	private WebElement concCaso;
 	
 	@FindBy(id= "phSearchInput")
@@ -104,8 +104,17 @@ public class TechnicalCareCSRDiagnosticoPage extends BasePage{
 	@FindBy (css= ".slds-form-element__control.slds-input-has-icon.slds-input-has-icon--left")
 	private WebElement search;
 	
-	@FindBy(xpath=".//*[@id='Case_body']/table/tbody/tr[2]/td[3]")
+	@FindBy(xpath=".//*[@id='Case_body']/table/tbody/tr[2]/td[3]")								
 	private WebElement estado;
+	
+	@FindBy(xpath=".//*[@id='IncorrectCategoryMessage']/div/p/p[2]/span/strong")								
+	private WebElement nuevocasoconciliar;
+	
+	
+	@FindBy(xpath="//*[@id=\"OperationalServiceMessage\"]/div/p/p/span/strong")								
+	private WebElement OperationalServiceMessage;
+
+	private Object findElement;
 	
 
 	public TechnicalCareCSRDiagnosticoPage(WebDriver driver){
@@ -398,7 +407,7 @@ public class TechnicalCareCSRDiagnosticoPage extends BasePage{
 	      	sleep(2000);
 	      		for (WebElement opt : getPreguntas()) {
 	      			if (opt.getText().equalsIgnoreCase(categoria)) {
-	      			//	scrollToElement(opt);
+	      				scrollToElement(opt);
 	      				sleep(3000);
 	      				opt.click();
 	      						break;
@@ -465,25 +474,75 @@ public class TechnicalCareCSRDiagnosticoPage extends BasePage{
 	      }
 	
 	
-	public String verificarCaso() throws InterruptedException {
+	public boolean estadoConciliador(String categoriaRed,String catogoriaRed2 ,String estado) throws InterruptedException {
 		String caso="";
 		if(elementExists(existCaso)) {
-			caso=existCaso.getText();
-			getNext().click();
-			 
+			caso=existCaso.getText();	
 			}
-			else {	
-				//continuar.click();
-				caso=numCaso.getText();
+		else {			
+				categoriaRed(categoriaRed);
+				clickContinuar();
+			 	sleep (4000);
+				categoriaRed(catogoriaRed2);
+			 	sleep (5000);
+			    clickContinuar();
+				sleep (9000);
+				Conciliador();
+				sleep (5000);
+				caso=	Conciliador();
+		}	
+		//buscar		// hacer todo lo demas	// Buscar dentro de la tabla lo que quieras para comparar  estado
+
+		driver.switchTo().defaultContent();	
+		buscar.click();
+		buscar.clear();
+		buscar.sendKeys(caso);
+		buscar.submit();
+		sleep(5000);
+		driver.switchTo().frame(getFrameForElement(driver, By.id("Case_body")));
+		
+		return getEstado().getText().equalsIgnoreCase(estado);	
+		}
+		
+	
+	public boolean estadoDelServicio(String categoriaRed,String catogoriaRed2, String catogoriaRed3,String opcion, String estado) throws InterruptedException {
+		String caso="";
+		if(elementExists(existCaso)) {
+			caso=existCaso.getText();	
 			}
-		driver.switchTo().defaultContent();
-		//buscarCaso();
-		driver.switchTo().defaultContent();
-		return caso;		
-			
-	
-	}
-	
+		else {			
+				categoriaRed(categoriaRed);
+				clickContinuar();
+			 	sleep (8000);
+				categoriaRed(catogoriaRed2);
+			    clickContinuar();
+				sleep (8000);
+				speech();
+				clickContinuar();
+				sleep (9000);
+				categoriaRed(catogoriaRed3);
+				sleep (5000);
+				clickContinuar();
+				sleep (8000);
+				serviciofunciona(opcion);
+				//confirmacionDeGestion();
+				sleep (5000);
+				caso=	confirmacionDeGestion();
+		}	
+		//buscar		// hacer todo lo demas	// Buscar dentro de la tabla lo que quieras para comparar  estado
+
+		driver.switchTo().defaultContent();	
+		buscar.click();
+		buscar.clear();
+		buscar.sendKeys(caso);
+		buscar.submit();
+		sleep(5000);
+		driver.switchTo().frame(getFrameForElement(driver, By.id("Case_body")));
+		
+		return getEstado().getText().equalsIgnoreCase(estado);	
+		}
+		
+
 	public void buscarCaso() throws InterruptedException{
 
 		String caso = numCaso.getText().substring(0, numCaso.getText().indexOf(","));
@@ -499,25 +558,21 @@ public class TechnicalCareCSRDiagnosticoPage extends BasePage{
 		
 }
 	
-	public void CasoConciliar() throws InterruptedException{
-
-		String caso = concCaso.getText();
+	public String Conciliador() throws InterruptedException{
+		String caso =  nuevocasoconciliar.getText();
+		sleep(2000);
 		driver.switchTo().defaultContent();
-		//driver.switchTo().frame(getFrameForElement(driver, By.id("searchButtonContainer")));
-		buscar.click();
-		buscar.clear();
-		buscar.sendKeys(caso);
-		buscar.submit();
-		sleep(5000);
-		driver.switchTo().frame(getFrameForElement(driver, By.id("Case_body")));
-		
-		
-}
-
+		sleep(2000);
+	return caso;
+	}
+	
+	public String confirmacionDeGestion() throws InterruptedException{
+		String caso =  OperationalServiceMessage.getText();
+		driver.switchTo().defaultContent();
+	return caso;
+	}
 	
 	
-	
-
 	public void actualizarEquipo(String modelo) throws InterruptedException{
 	       sleep(3000);
 	       driver.switchTo().frame(getFrameForElement(driver, By.id("MobileIdentification")));
@@ -635,6 +690,7 @@ public class TechnicalCareCSRDiagnosticoPage extends BasePage{
 	public WebElement getCasoGenerado() {
 		return casoGenerado;
 	}
+	
 
 
 	public WebElement getExistCaso() {
@@ -754,6 +810,8 @@ public void clickContinua() {
 public WebElement getEstado() {
 	return estado;
 }
+
+
 }
 	
 		
