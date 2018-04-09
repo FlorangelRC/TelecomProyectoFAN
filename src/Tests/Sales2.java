@@ -379,13 +379,9 @@ public class Sales2 extends TestBase{
 	}
 	
 	@Test(groups={"Sales", "AltaDeLinea", "Ola1"})
-<<<<<<< HEAD
 	public void TS94643_Ventas_NumeroOrden_Verificar_Orden_de_Venta_Abierta_Seleccion_de_Linea() throws IOException {
 		sb.BuscarCuenta(DNI, buscarCampoExcel(1, "Cuenta Activa", 2));
-=======
-	public void TS94643_Ventas_NumeroOrden_Verificar_Orden_de_Venta_Abierta_Seleccion_de_Linea() {
-		sb.BuscarCuenta(DNI, "34073327");
->>>>>>> master
+	
 		sb.acciondecontacto("catalogo");
 		sleep(15000);
 		sb.elegirplan("Plan con Tarjeta Repro");
@@ -782,11 +778,7 @@ public class Sales2 extends TestBase{
 	@Test(groups={"Sales","AltaDeLinea","Ola1"})
 	public void TS94498_Alta_Linea_Configurar_Nueva_Linea_Modificar_linea_pre_asignada_ultimos_cuatro_digitos_XX() throws IOException{
 		CustomerCare CC = new CustomerCare(driver);
-<<<<<<< HEAD
 		sb.BuscarCuenta(DNI, buscarCampoExcel(1, "Cuenta Activa", 2));
-=======
-		sb.BuscarCuenta(DNI, "34073327");
->>>>>>> master
 		sb.acciondecontacto("catalogo");
 		sleep(15000);
 		sb.elegirplan("Plan con Tarjeta Repro");
@@ -1396,13 +1388,8 @@ public class Sales2 extends TestBase{
 	}
 	
 	@Test(groups={"Sales","AltaDeLinea","Ola1"}) 	
-<<<<<<< HEAD
 	public void TS94503_Alta_Linea_Configurar_Nueva_Linea_Visualizar_lineas_pre_asignadas_automaticamente_XX() throws IOException{
 		sb.BuscarCuenta(DNI, buscarCampoExcel(1, "Cuenta Activa", 2));
-=======
-	public void TS94503_Alta_Linea_Configurar_Nueva_Linea_Visualizar_lineas_pre_asignadas_automaticamente_XX(){
-		sb.BuscarCuenta(DNI, "34073327");
->>>>>>> master
 		sb.acciondecontacto("catalogo");
 		sleep(15000);
 		sb.elegirplan("Plan con Tarjeta Repro");
@@ -1415,11 +1402,7 @@ public class Sales2 extends TestBase{
 	@Test(groups={"Sales","AltaDeLinea","Ola1"}) 	
 	public void TS94499_Alta_Linea_Configurar_Nueva_Linea_Presionar_el_boton_Buscar_XX() throws IOException{
 		CustomerCare CC = new CustomerCare(driver);
-<<<<<<< HEAD
 		sb.BuscarCuenta(DNI, buscarCampoExcel(1, "Cuenta Activa", 2));
-=======
-		sb.BuscarCuenta(DNI, "34073327");
->>>>>>> master
 		sb.acciondecontacto("catalogo");
 		sleep(15000);
 		sb.elegirplan("Plan con Tarjeta Repro");
@@ -1447,13 +1430,8 @@ public class Sales2 extends TestBase{
 	}
 	
 	@Test(groups={"Sales","AltaDeLinea","Ola1"}) 	
-<<<<<<< HEAD
 	public void TS94501_Alta_Linea_Configurar_Nueva_Linea_Visualizar_filtros_de_localidad_y_provincia_al_modificar_linea_XX() throws IOException{
 		sb.BuscarCuenta(DNI, buscarCampoExcel(1, "Cuenta Activa", 2));
-=======
-	public void TS94501_Alta_Linea_Configurar_Nueva_Linea_Visualizar_filtros_de_localidad_y_provincia_al_modificar_linea_XX(){
-		sb.BuscarCuenta(DNI, "34073327");
->>>>>>> master
 		sb.acciondecontacto("catalogo");
 		sleep(15000);
 		/*driver.findElement(By.cssSelector(".slds-m-left--x-small.slds-button.slds-button--brand")).click();

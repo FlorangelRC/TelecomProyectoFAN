@@ -1921,7 +1921,7 @@ public class Sales extends TestBase {
 	    Assert.assertTrue(h); 
 	   } 
 	  @Test(groups = {"Sales", "AltaDeContacto","Ola1"})
-	  public void TS94737_Alta_de_Contacto_Persona_Fisica_Verificar_seleccion_de_calle_existente(){ 
+	  public void TS94737_Alta_de_Contacto_Persona_Fisica_Verificar_seleccion_de_calle_existente() throws IOException{ 
 	    SalesBase SB = new SalesBase(driver); 
 	    SB.BuscarCuenta(DNI, buscarCampoExcel(1, "Cuenta activa", 2)); 
 	    driver.findElement(By.id("tab-scoped-3__item")).click();
