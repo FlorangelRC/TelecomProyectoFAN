@@ -45,7 +45,7 @@ public class Sales2 extends TestBase{
 		driver.quit();
 	}
 	
-	//@AfterMethod(alwaysRun=true)
+//	@AfterMethod(alwaysRun=true)
 	public void deslogin() {
 		sleep(3000);
 		driver.get("https://crm--sit.cs14.my.salesforce.com/home/home.jsp?tsid=02u41000000QWha/");
@@ -275,18 +275,18 @@ public class Sales2 extends TestBase{
 		sb.elegirplan("Plan con Tarjeta Repro");
 		sleep(15000);
 		driver.findElement(By.cssSelector(".slds-button.slds-m-left--large.slds-button--brand.ta-button-brand")).click();
-		sleep(15000);
+		sleep(25000);
 		List <WebElement> num = driver.findElements(By.className("slds-form-element__control"));
 		boolean a = false;
 		for (WebElement x : num) {
-			if (x.getText().contains("Nro. orden:")) {
+			if (x.getText().contains("Nro. orden:")){
 				a = true;
-			}
-		}
+			
+			}}
 		Assert.assertTrue(a);
 	}
 	
-	@Test(groups={"Sales", "AltaDeLinea", "Ola1"}, priority=3)  
+	@Test(groups={"Sales", "AltaDeLinea", "Ola1"}, priority=3) 
 	public void TS94650_Ventas_NumeroOrden_Verificar_Orden_de_Venta_Abierta_Seleccionar_un_producto() throws IOException {
 		sb.BuscarCuenta(DNI, buscarCampoExcel(1, "Cuenta Activa", 2));
 		sb.acciondecontacto("catalogo");
@@ -1818,7 +1818,7 @@ public class Sales2 extends TestBase{
 		sb.acciondecontacto("catalogo");
 		boolean x = false;
 		sleep(18000);
-		sb.elegirplan("J2 prime");
+		sb.agregarplan("J2 prime");
 		driver.findElement(By.cssSelector(".slds-input.ng-valid.ng-not-empty.ng-dirty.ng-valid-parse.ng-touched")).clear();
 		driver.findElement(By.cssSelector(".slds-input.ng-valid.ng-dirty.ng-valid-parse.ng-touched.ng-empty")).sendKeys("plan con tarjeta repro");		
 		try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
@@ -2119,5 +2119,20 @@ public class Sales2 extends TestBase{
 		Assert.assertTrue(deliveryMethod.getBillingCycleOptions().contains("7"));
 		Assert.assertTrue(deliveryMethod.getBillingCycleOptions().contains("14"));
 		Assert.assertTrue(deliveryMethod.getBillingCycleOptions().contains("21"));*/
+	}
+	
+	@Test(groups={"Sales", "AltaDeLinea", "Ola1"})
+	public void TS94617_CRM_Fase_1_SalesCPQ_Alta_Linea_Buscar_Cliente_Buscar_por_Nombre_del_plan_V360() throws IOException {
+		try {Thread.sleep(4000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		sb.BuscarCuenta(DNI, buscarCampoExcel(1, "Cuenta Activa", 2));
+		sb.acciondecontacto("catalogo");
+		try {Thread.sleep(4000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		sb.elegirplan("Plan con Tarjeta Repro");
+		try {Thread.sleep(8000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		
+		WebElement result = driver.findElement(By.cssSelector(".slds-tile__title.slds-truncate.cpq-product-name"));
+		System.out.println(result.getText());
+		Assert.assertTrue(result.getText().contains("Plan con Tarjeta Repro"));
+			
 	}
 }

@@ -173,7 +173,8 @@ public class CustomerCare extends BasePage {
 					if (op.getText().equalsIgnoreCase("Cuentas")) op.click();
 				}
 			}
-					
+				
+			sleep(2500);
 			driver.switchTo().frame(marcoCuentas);
 			Select field = new Select(selectCuentas);
 			if (!field.getFirstSelectedOption().getText().equalsIgnoreCase("Todas las cuentas")) {
@@ -213,7 +214,7 @@ public class CustomerCare extends BasePage {
 				}
 			}
 		}
-
+		sleep(1500);
 		driver.switchTo().frame(marcoCuentas);
 	}
 	
@@ -223,6 +224,7 @@ public class CustomerCare extends BasePage {
 	}
 	
 	public String obtenerEstadoDelCaso(String numCaso) {
+		sleep(1000);
 		List<WebElement> registros = driver.findElements(By.cssSelector(".x-grid3-row-table tr"));
 		for (WebElement reg : registros) {
 			if (reg.findElement(By.cssSelector(".x-grid3-col-CASES_CASE_NUMBER")).getText().contains(numCaso)) {
