@@ -418,26 +418,7 @@ public class ta_CPQ extends TestBase {
 	 * 
 	 * ultima revision 30-01-18
 	 */
-	@Test(groups={"Sales", "AltaDeLinea", "Ola1"})
-	public void TS94617_CRM_Fase_1_SalesCPQ_Alta_Linea_Buscar_Cliente_Buscar_por_Nombre_del_plan_V360() {
-		try {Thread.sleep(4000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
-		
-		WebElement inputSearch = driver.findElement(By.xpath("//input[@placeholder=\"Search\"]"));
-		inputSearch.sendKeys("Plan Prepago Nacional");
-		
-		try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
-		
-		WebElement result = driver.findElement(By.cssSelector(".slds-tile__title.slds-truncate.cpq-product-name"));
-		System.out.println(result.getText());
-		Assert.assertTrue(result.getText().contains("Plan Prepago Nacional"));
-			
-	}
-	
-	/**
-	 * Agrega un plan y verifica que el plan que aparece en el carrito corresponde al agregado.
-	 * 
-	 * Ultima revision 30-01-18
-	 */
+
 	@Test
 	public void TS6826_CRM_Fase_1_SalesCPQ_Alta_Linea_Carrito_Verificar_seleccion_de_productos() {
 		Ta_CPQ cart = new Ta_CPQ (driver);

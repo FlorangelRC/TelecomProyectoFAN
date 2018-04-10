@@ -42,7 +42,7 @@ private WebDriver driver;
 	   goToLeftPanel2(driver, "Cuentas");
 	   sleep(2000);  
 	   driver.switchTo().defaultContent();
-		 driver.switchTo().frame(accountPage.getFrameForElement(driver, By.cssSelector(".topNav.primaryPalette")));
+	   driver.switchTo().frame(accountPage.getFrameForElement(driver, By.cssSelector(".topNav.primaryPalette")));
 		 Select field = new Select(driver.findElement(By.name("fcf")));
 		 try {field.selectByVisibleText("Todas Las cuentas");}
 		 catch (org.openqa.selenium.NoSuchElementException ExM) {field.selectByVisibleText("Todas las cuentas");}
