@@ -101,6 +101,9 @@ public class TechnicalCareCSRDiagnosticoPage extends BasePage{
 	@FindBy(xpath=".//*[@id='ServiceOperation|0']/div/div[1]/label/span[1]")
 	private List<WebElement> diagnosticoOptions;
 	
+	@FindBy(xpath=".//*[@id='UpdatedPhone|0']/div/div[1]/label[2]/span[1]")
+	private List<WebElement> UpdatedPhone;
+	
 	@FindBy (css= ".slds-form-element__control.slds-input-has-icon.slds-input-has-icon--left")
 	private WebElement search;
 	
@@ -111,8 +114,11 @@ public class TechnicalCareCSRDiagnosticoPage extends BasePage{
 	private WebElement nuevocasoconciliar;
 	
 	
-	@FindBy(xpath=".//*[@id='OperationalServiceMessage']/div/p/p/span/strong")								
+	@FindBy(xpath=".//*[@id='OperationalServiceMessage']/div/p/p/span/strong")					
 	private WebElement OperationalServiceMessage;
+	
+	@FindBy(xpath="//*[@id='NotUpdatedPhoneMessage']/div/p/p[2]/span/strong")
+	private WebElement NotUpdatedPhoneMessage;
 
 	private Object findElement;
 	
@@ -391,7 +397,7 @@ public class TechnicalCareCSRDiagnosticoPage extends BasePage{
 	      			//scrollToElement(p);
 	      			if(p.getText().toLowerCase().contains(opcion)) {
 	      				//scrollToElement(p);
-	      				sleep(1000);
+	      				sleep(3000);
 	      				p.click();    				
 	      					sleep(5000);
 	      							return;
@@ -402,9 +408,9 @@ public class TechnicalCareCSRDiagnosticoPage extends BasePage{
 	 }
 	
 	public void categoriaRed(String categoria) {
-		sleep(2000);
+		sleep(4000);
 	      driver.switchTo().frame(getFrameForElement(driver, By.cssSelector(".imgItemContainer.ng-scope")));
-	      	sleep(2000);
+	      	sleep(4000);
 	      		for (WebElement opt : getPreguntas()) {
 	      			if (opt.getText().equalsIgnoreCase(categoria)) {
 	      				//scrollToElement(opt);
@@ -473,6 +479,20 @@ public class TechnicalCareCSRDiagnosticoPage extends BasePage{
 	      			return false;
 	      }
 	
+	public boolean serviciofuemodificado(String opcion) {
+	      Accounts accPage = new Accounts(driver);
+	        driver.switchTo().frame(accPage.getFrameForElement(driver, By.xpath("//*[@id=\'UpdatedPhone\']")));
+	      			if (opcion.equalsIgnoreCase("NO")) {
+	      				UpdatedPhone.get(0).click();
+	      					return true;
+	          }
+	              else if(opcion.equalsIgnoreCase("SI")){
+	            	  UpdatedPhone.get(1).click();
+	            	  return true;
+	          }
+	      			return false;
+	      }
+	
 	
 	public boolean estadoConciliador(String categoriaRed,String catogoriaRed2 ,String estado) throws InterruptedException {
 		String caso="";
@@ -524,10 +544,48 @@ public class TechnicalCareCSRDiagnosticoPage extends BasePage{
 				driver.findElement(By.id("Deregister_nextBtn")).click();
 				sleep (8000);
 				serviciofunciona(opcion);
-				//confirmacionDeGestion();
 				sleep (5000);
-				driver.switchTo();
 				caso=	confirmacionDeGestion();
+		}	
+		//buscar		// hacer todo lo demas	// Buscar dentro de la tabla lo que quieras para comparar  estado
+
+		driver.switchTo().defaultContent();	
+		buscar.click();
+		buscar.clear();
+		buscar.sendKeys(caso);
+		buscar.submit();
+		sleep(5000);
+		driver.switchTo().frame(getFrameForElement(driver, By.id("Case_body")));
+		return getEstado().getText().equalsIgnoreCase(estado);	
+		}
+	
+	public boolean estadoDelServicioSinModificaciones(String categoriaRed,String catogoriaRed2, String catogoriaRed3, String catogoriaRed4, String opcion, String opcion2, String estado) throws InterruptedException {
+		String caso="";
+		if(elementExists(existCaso)) {
+			caso=existCaso.getText();	
+			}
+		else {			
+				categoriaRed(categoriaRed);
+				clickContinuar();
+			 	sleep (8000);
+				categoriaRed(catogoriaRed2);
+			    clickContinuar();
+				sleep (4000);
+				speech();
+				categoriaRed(catogoriaRed3);
+				clickContinua();
+				//driver.findElement(By.id("Deregister_nextBtn")).click();
+				sleep (8000);
+				categoriaRed(catogoriaRed4);
+				clickContinua();
+				serviciofunciona(opcion);
+				driver.switchTo();
+				sleep (5000);
+				serviciofuemodificado(opcion2);
+				sleep (5000);
+				clickContinua();
+				driver.switchTo();
+				caso=	confirmacionDeGestionSMS();
 		}	
 		//buscar		// hacer todo lo demas	// Buscar dentro de la tabla lo que quieras para comparar  estado
 
@@ -567,6 +625,12 @@ public class TechnicalCareCSRDiagnosticoPage extends BasePage{
 	
 	public String confirmacionDeGestion() throws InterruptedException{
 		String caso =  OperationalServiceMessage.getText();
+		driver.switchTo().defaultContent();
+	return caso;
+	}
+	
+	public String confirmacionDeGestionSMS() throws InterruptedException{
+		String caso =  NotUpdatedPhoneMessage.getText();
 		driver.switchTo().defaultContent();
 	return caso;
 	}
@@ -779,7 +843,10 @@ public class TechnicalCareCSRDiagnosticoPage extends BasePage{
 							catch(org.openqa.selenium.NoSuchElementException IdentificaciondelEquipo) {
 								try{driver.findElement(By.id("Deregister_nextBtn")).click();}
 								catch(org.openqa.selenium.NoSuchElementException Deregistro) {
-							driver.findElement(By.id("Address Section_nextBtn")).click();
+									driver.findElement(By.id("Address Section_nextBtn")).click();
+									try{driver.findElement(By.id("SmsServiceDiagnosis_nextBtn")).click();}
+									catch(org.openqa.selenium.NoSuchElementException DiagnósticodeservicioSMS) {
+										driver.findElement(By.id("Address Section_nextBtn")).click();
 								}
 							}
 						}	
@@ -787,6 +854,7 @@ public class TechnicalCareCSRDiagnosticoPage extends BasePage{
 				}
 			}
 		}
+	}
 	
 public void clickContinua() {
 	try {Thread.sleep(500);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
