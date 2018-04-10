@@ -3,6 +3,7 @@ package Tests;
 import java.util.List;
 
 import org.openqa.selenium.By;
+import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.testng.Assert;
 import org.testng.annotations.AfterClass;
@@ -16,7 +17,8 @@ import Pages.setConexion;
 
 public class SalesMatrix extends TestBase {
 	
-	private SalesBase sb;
+	private WebDriver driver;
+	protected SalesBase sb;
 	
 		
 	@BeforeClass (alwaysRun = true)
@@ -39,7 +41,13 @@ public class SalesMatrix extends TestBase {
 	    sleep(8000);
 	    driver.findElement(By.xpath("//a[@href=\"/home/showAllTabs.jsp\"]")).click();
 	    sleep(5000);
-	    driver.findElement(By.xpath("//*[@id=\"bodyCell\"]/div[3]/div[2]/table/tbody/tr[38]/td[2]/a/img")).click();
+	    List <WebElement> vcm = driver.findElements(By.cssSelector(".relatedListIcon.userDefinedImage"));
+	    for (WebElement x : vcm) {
+	    	if (x.getAttribute("title").toLowerCase().equals("vlocity calculation matrices")) {
+	    		x.click();
+	    		break;
+	    	}
+	    }
 	    sleep(5000);
 	    driver.findElement(By.name("go")).click();
 	    sleep(5000);
