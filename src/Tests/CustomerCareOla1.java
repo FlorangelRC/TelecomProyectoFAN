@@ -199,7 +199,7 @@ public class CustomerCareOla1 extends TestBase {
 		Assert.assertTrue(list.get(0).getText().toLowerCase().contains("suspensiones y reconexion"));
 	}
 	
-	@Test (groups = {"CustomerCare", "SuspensionYRehabilitacion", "Ola1"})
+	@Test (groups = {"CustomerCare", "SuspensionYRehabilitacion", "Ola1"}, priority = 1)
 	public void TS90499_360_VIEW_Suspensiones_and_Reconexiones_Session_Guiada_Visualizar_la_opción_Habilitación_en_el_panel_de_gestiones() throws IOException {
 		cc.elegirCuenta(buscarCampoExcel(2, "cuenta activa c/serv activo", 1));
 		cc.irAGestion("suspensiones");
@@ -586,7 +586,7 @@ public class CustomerCareOla1 extends TestBase {
 		}
 		driver.findElement(By.id("Step2-AssetTypeSelection_nextBtn")).click();
 		sleep(5000);
-		driver.findElement(By.xpath("//*[@id=\"AssetsM0\"]/div/fieldset/div/span[2]/label/span[1]")).click();
+		driver.findElement(By.xpath("//*[@id=\"AssetsM0\"]/div/fieldset/div/span/label/span[2]")).click();
 		driver.findElement(By.id("Step3-AvailableAssetsSelection_nextBtn")).click();
 		sleep(5000);
 		List <WebElement> element = driver.findElements(By.cssSelector(".slds-form-element__label.ng-binding.ng-scope"));
