@@ -2118,4 +2118,19 @@ public class Sales2 extends TestBase{
 		Assert.assertTrue(deliveryMethod.getBillingCycleOptions().contains("14"));
 		Assert.assertTrue(deliveryMethod.getBillingCycleOptions().contains("21"));*/
 	}
+	
+	@Test(groups={"Sales", "AltaDeLinea", "Ola1"})
+	public void TS94617_CRM_Fase_1_SalesCPQ_Alta_Linea_Buscar_Cliente_Buscar_por_Nombre_del_plan_V360() throws IOException {
+		try {Thread.sleep(4000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		sb.BuscarCuenta(DNI, buscarCampoExcel(1, "Cuenta Activa", 2));
+		sb.acciondecontacto("catalogo");
+		try {Thread.sleep(4000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		sb.elegirplan("Plan con Tarjeta Repro");
+		try {Thread.sleep(8000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		
+		WebElement result = driver.findElement(By.cssSelector(".slds-tile__title.slds-truncate.cpq-product-name"));
+		System.out.println(result.getText());
+		Assert.assertTrue(result.getText().contains("Plan con Tarjeta Repro"));
+			
+	}
 }
