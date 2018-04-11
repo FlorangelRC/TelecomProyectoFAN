@@ -1,6 +1,7 @@
 package Tests;
 
 import java.io.File;
+
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -26,12 +27,16 @@ import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.Select;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.annotations.AfterSuite;
+import org.testng.annotations.DataProvider;
 
 import Pages.Accounts;
 import Pages.BasePage;
 import Pages.HomeBase;
 import Pages.Login;
 import Pages.setConexion;
+
+//Data provider
+import DataProvider.ExcelUtils;
 
 
 public class TestBase {
@@ -591,6 +596,24 @@ public class TestBase {
 		    }
 		 }
 		return (Campo);
+	}
+	
+	@DataProvider
+	public Object[][] Tech() throws Exception{
+
+	 Object[][] testObjArray = ExcelUtils.getTableArray("Cuentas.xlsx","Tech",1,1,3);
+
+	 return (testObjArray);
+
+	}
+	
+	@DataProvider
+	public Object[][] SalesCuentaInactiva() throws Exception{
+
+	 Object[][] testObjArray = ExcelUtils.getTableArray("Cuentas.xlsx","Sales",1,1,3,"Cuenta Inactiva");
+
+	 return (testObjArray);
+
 	}
 }
 
