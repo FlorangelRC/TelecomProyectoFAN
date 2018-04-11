@@ -830,7 +830,7 @@ public class Marketing_Mattu extends TestBase{
 		mMarketing.ingresarANuevoProspecto();
 		WebElement wTable = driver.findElement(By.className("pbSubsection"));
 		List<WebElement> wColumn = mMarketing.traerColumnaElement(wTable, 4, 2);
-		WebElement wRequiredInput = wColumn.get(4).findElement(By.tagName("div"));
+		WebElement wRequiredInput = wColumn.get(6).findElement(By.tagName("div"));
 		Assert.assertTrue(wRequiredInput.getAttribute("class").equals("requiredInput"));
 		driver.get("https://crm--sit.cs14.my.salesforce.com/console?tsid=02uc0000000D6Hd");
 		List<WebElement> wTabs = driver.findElement(By.id("ext-gen59")).findElements(By.tagName("li"));
