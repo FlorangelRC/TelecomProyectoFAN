@@ -63,7 +63,7 @@ public class Marketing extends CustomerCare {
 		switch (sAltaBajaModificacion.toLowerCase()) {
 			case "alta":
 				lMenuesABM.get(0).click();
-				sleep(3000);
+				sleep(7000);
 				cambiarAFrameActivo();
 				break;
 			case "baja":

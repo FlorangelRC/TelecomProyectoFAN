@@ -579,9 +579,13 @@ public class TestBase {
 	     XSSFWorkbook workbook = new XSSFWorkbook(file); 
 	     XSSFSheet sheet = workbook.getSheetAt(hoja);
 	     Iterator<Row> rows = sheet.rowIterator();
-	     rows.next();
+	    // rows.next();
+	     System.out.println("Aquiiiii");
+	     System.out.println(rows.next().getCell(0).getStringCellValue());
 	     while (rows.hasNext()) {
+	    	 
 		    XSSFRow row = (XSSFRow) rows.next();
+		   // System.out.println(row.getCell(0).getStringCellValue());
 		    if (row.getCell(0).getStringCellValue().toLowerCase().contains(desc.toLowerCase())){
 		    	try {Campo = row.getCell(columna).getStringCellValue();}
 		    	catch (java.lang.IllegalStateException ex1) 
@@ -593,6 +597,7 @@ public class TestBase {
 		    			Campo = Campo.substring(0, Campo.indexOf("E")).replace(".","" );
 		    		}
 		    	}
+		    	break;
 		    }
 		 }
 		return (Campo);

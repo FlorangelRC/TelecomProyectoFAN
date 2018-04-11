@@ -103,7 +103,7 @@ public class MarketingOla1_Joaquin extends TestBase {
 	public void TS98039_Visualizacion_de_cuentas_seleccionadas_Alta_CP() {
 		Page.elegirCuenta("Florencia Marketing");
 		Page.irAGestionMarketing();
-		Page.clubPersonal("alta");
+		Page.estadoAltaBaja("alta");
 		Page.seleccionarCuenta("consumerAccounts");
 		Page.botonSiguiente().click();
 
@@ -114,7 +114,7 @@ public class MarketingOla1_Joaquin extends TestBase {
 	public void TS98040_No_visualizacion_de_cuentas_sin_seleccionar_Alta_CP() {
 		Page.elegirCuenta("Florencia Marketing");
 		Page.irAGestionMarketing();
-		Page.clubPersonal("alta");
+		Page.estadoAltaBaja("alta");
 		Page.seleccionarCuenta("consumerAccounts");
 		Page.botonSiguiente().click();
 		
@@ -125,16 +125,16 @@ public class MarketingOla1_Joaquin extends TestBase {
 	public void TS98063_Verificar_creacion_de_caso_cerrado_Notificacion_Baja_CP() {
 		Page.elegirCuenta("Florencia Marketing");
 		Page.irAGestionMarketing();
-		Page.clubPersonal("baja");
-		Page.seleccionarCuenta("consumerAccounts");
+		Page.estadoAltaBaja("baja");
+		Page.seleccionarCuenta("businessAccounts");
 		Page.seleccionarMotivo(1);
 		Page.botonSiguiente().click();
 		sleep(1000);
 		Page.botonSiguiente().click();
 		sleep(1500);
 		
-		String numeroCaso = Page.obtenerNumeroCasoAltaOBaja();
-		Page.cerrarTodasLasPestañas();
+	    String numeroCaso = Page.obtenerNumeroCasoAltaOBaja(); 
+	    Page.cerrarTodasLasPestañas();
 		Page.irACasos();
 		
 		Assert.assertTrue(Page.obtenerEstadoDelCaso(numeroCaso).contentEquals("Closed"));
@@ -144,7 +144,7 @@ public class MarketingOla1_Joaquin extends TestBase {
 	public void TS98064_Visualizar_mensaje_al_cerrar_el_caso_Notificacion_Baja_CP() {
 		Page.elegirCuenta("Florencia Marketing");
 		Page.irAGestionMarketing();
-		Page.clubPersonal("baja");
+		Page.estadoAltaBaja("baja");
 		Page.seleccionarCuenta("businessAccounts");
 		Page.seleccionarMotivo(1);
 		Page.botonSiguiente().click();
