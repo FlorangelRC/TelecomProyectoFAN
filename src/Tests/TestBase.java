@@ -620,5 +620,23 @@ public class TestBase {
 	 return (testObjArray);
 
 	}
+	
+	@DataProvider
+	public Object[][] SalesCuentaActiva() throws Exception{
+
+	 Object[][] testObjArray = ExcelUtils.getTableArray("Cuentas.xlsx","Sales",1,1,3,"Cuenta Activa");
+
+	 return (testObjArray);
+
+	}
+	
+	@DataProvider
+	public Object[][] SalesContactoSinCuenta() throws Exception{
+
+	 Object[][] testObjArray = ExcelUtils.getTableArray("Cuentas.xlsx","Sales",1,1,2,"Contacto sin cuenta");
+
+	 return (testObjArray);
+
+	}
 }
 
