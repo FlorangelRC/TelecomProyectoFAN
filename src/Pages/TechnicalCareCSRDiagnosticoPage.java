@@ -401,7 +401,7 @@ public class TechnicalCareCSRDiagnosticoPage extends BasePage{
 	      				p.click();    				
 	      					sleep(5000);
 	      							return;
-	      							
+	      				
 	      						}
 	      		}
 	      		
