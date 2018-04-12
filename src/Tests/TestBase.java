@@ -243,7 +243,7 @@ public class TestBase {
 	    
 	}
 		/**Ingresa con los datos de la cuenta Andres
-		 * Para el Modulo Sales tiene vinculado el perfil de Agente y Atención a clientes		 */
+		 * Para el Modulo Sales tiene vinculado el perfil de Agente y Atenciï¿½n a clientes		 */
 		public void loginAndres(WebDriver driver) {
 			driver.get("https://crm--sit.cs14.my.salesforce.com/");
 			try {Thread.sleep(6000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
@@ -625,6 +625,24 @@ public class TestBase {
 	public Object[][] Customer() throws Exception{
 
 	 Object[][] testObjArray = ExcelUtils.getTableArray("Cuentas.xlsx","Customer",1,1,1);
+
+	 return (testObjArray);
+
+	}
+	
+	@DataProvider
+	public Object[][] SalesCuentaActiva() throws Exception{
+
+	 Object[][] testObjArray = ExcelUtils.getTableArray("Cuentas.xlsx","Sales",1,1,3,"Cuenta Activa");
+
+	 return (testObjArray);
+
+	}
+	
+	@DataProvider
+	public Object[][] SalesContactoSinCuenta() throws Exception{
+
+	 Object[][] testObjArray = ExcelUtils.getTableArray("Cuentas.xlsx","Sales",1,1,2,"Contacto sin cuenta");
 
 	 return (testObjArray);
 
