@@ -5,14 +5,18 @@ import java.util.List;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.ui.Select;
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
+
+import Pages.Accounts;
 import Pages.BasePage;
 import Pages.CustomerCare;
 import Pages.HomeBase;
+import Pages.TechCare_Ola1;
 import Pages.TechnicalCareCSRAutogestionPage;
 import Pages.setConexion;
 
@@ -22,39 +26,56 @@ public class TechnicalCareCSRAutogestionOla2 extends TestBase{
 	private WebDriver driver;
 	
 	@BeforeClass(alwaysRun=true)
-	public void init() throws InterruptedException
-	{
+	public void init() throws InterruptedException{
 		this.driver = setConexion.setupEze();
-		sleep(4000);
-		loginMarcela(driver);
-		sleep(3000);
-		//leftDropdown(driver, "");
-		goInitToConsolaFanF3(driver);
-	    Thread.sleep(3000);
-	     //Alerta Aparece Ocasionalmente
-	       try {
-				driver.switchTo().alert().accept();
-				driver.switchTo().defaultContent();
-			}catch(org.openqa.selenium.NoAlertPresentException e) {}
+	    sleep(5000);
+	    login(driver);
+	    sleep(5000);
+	    HomeBase homePage = new HomeBase(driver);
+	    Accounts accountPage = new Accounts(driver);
+	    if(driver.findElement(By.id("tsidLabel")).getText().equals("Consola FAN")) {
+	    homePage.switchAppsMenu();
+	    sleep(2000);
+	    homePage.selectAppFromMenuByName("Ventas");
+	    sleep(5000);
+	       }
+	    homePage.switchAppsMenu();
+	    sleep(2000);
+	    homePage.selectAppFromMenuByName("Consola FAN");
+	    sleep(5000);
+		goToLeftPanel2(driver, "Cuentas");
+		sleep(2000);  
+		driver.switchTo().defaultContent();
+		driver.switchTo().frame(accountPage.getFrameForElement(driver, By.cssSelector(".topNav.primaryPalette")));
+		Select field = new Select(driver.findElement(By.name("fcf")));
+		try {field.selectByVisibleText("Todas Las cuentas");}
+		catch (org.openqa.selenium.NoSuchElementException ExM) {field.selectByVisibleText("Todas las cuentas");}
+		
 
-       CustomerCare cerrar = new CustomerCare(driver);
-       cerrar.cerrarultimapestaña();		
-       sleep(4000);
+	 	 CustomerCare cerrar = new CustomerCare(driver);
+	 	 cerrar.cerrarultimapestaña();		
+	 	 sleep(4000);
 	}
 	
 	@BeforeMethod(alwaysRun=true)
 	public void setUp() throws Exception {
 		//Selecciona la cuenta Adrian Tech de todas las Cuentas
-		seleccionCuentaPorNombre(driver, "Adrian Techh");
+ 		TechCare_Ola1 page=new TechCare_Ola1(driver);
 		sleep(3000);
 		driver.switchTo().defaultContent();
+		sleep(3000);
+		//page.selectAccount((buscarCampoExcel(3, "Cuenta Activa c/ linea y serv", 1)));
+		page.selectAccount ("Adrian Tech");
+		driver.switchTo().defaultContent();
+		sleep(3000);
 		//selecciona el campo donde esta la busquedad escribe y busca
 		searchAndClick(driver, "Diagnóstico de Autogestión");
-		sleep(1000);
+		driver.switchTo().defaultContent();
+		sleep(3000);
 	}
 	
-	@AfterMethod(alwaysRun=true)
-	public void after() {
+	//@AfterMethod(alwaysRun=true)
+		public void after() {
 		try {Thread.sleep(2000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 		driver.switchTo().defaultContent(); 
 		CustomerCare cerrar = new CustomerCare(driver);
@@ -62,15 +83,18 @@ public class TechnicalCareCSRAutogestionOla2 extends TestBase{
 	    driver.switchTo().defaultContent(); 
 	}
 	
-	@AfterClass(alwaysRun=true)
-	public void tearDown() {
-		HomeBase homePage = new HomeBase(driver);
-		sleep(1000);
-		homePage.selectAppFromMenuByName("Ventas");
-		sleep(2000);
-		driver.quit();
-		sleep(2000);
-	}
+	//@AfterClass(alwaysRun=true)
+		public void tearDown() {
+			try {Thread.sleep(1000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+			CustomerCare cerrar = new CustomerCare(driver);
+			cerrar.cerrarultimapestaña();
+			HomeBase homePage = new HomeBase(driver);
+			try {Thread.sleep(1000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+			homePage.selectAppFromMenuByName("Ventas");
+			try {Thread.sleep(1000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+			driver.quit();
+		}
+	
 	
 	
 	@Test(groups= {"Fase4","TechnicalCare", "Autogestion", "Ola2"})
@@ -1321,17 +1345,17 @@ public class TechnicalCareCSRAutogestionOla2 extends TestBase{
 	@Test(groups= {"TechnicalCare", "Autogestion", "Ola2"})
 	public void TS_CSR_Autogestión_Asteriscos_Verificar_Opcion_SI_cree_y_cierre_el_caso() throws Exception {
 		BasePage cambioFrameByID=new BasePage();
-		driver.switchTo().frame(cambioFrameByID.getFrameForElement(driver, By.id("ChannelSelection")));
+		driver.switchTo().frame(cambioFrameByID.getFrameForElement(driver, By.id("SelfManagementFields")));
 		TechnicalCareCSRAutogestionPage tech = new TechnicalCareCSRAutogestionPage(driver);
-		tech.listadoDeSeleccion("Asteriscos TP", "*111", "Tono ocupado");  
-		tech.clickOnButtons();
+		tech.listadeseleccion("Asteriscos TP", "*111", "Tono ocupado");  
+		/*tech.clickOnButtons();
 		tech.verificarCaso();
 		driver.switchTo().frame(cambioFrameByID.getFrameForElement(driver, By.id("srchErrorDiv_Case")));
 		tech.getCaseBody().click();		
 		sleep(5000);
 		driver.switchTo().frame(cambioFrameByID.getFrameForElement(driver, By.className("optionLabel")));
 		List<WebElement>menu=tech.getOptionContainer();
-		menu.get(4).click();
+		menu.get(4).click();*/
 	}
 
 

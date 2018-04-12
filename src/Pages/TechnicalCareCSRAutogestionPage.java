@@ -72,6 +72,45 @@ public class TechnicalCareCSRAutogestionPage extends BasePage {
 		selectByText(getServiceSelection(),servicio);
 		selectByText(getMotiveSelection(),motivo) ;	
 	}
+		
+		public void listadeseleccion(String canal,String servicio,String inconveniente) throws InterruptedException{
+	           sleep(5000);
+	           selection(channelSelection,canal);
+	           selection(ServiceSelection,servicio);
+	           selection(MotiveSelection,inconveniente);
+	           }
+
+	  private void selection(WebElement elemento, String opcion){
+	    elemento.click();
+	             WebElement tabla = driver.findElement(By.cssSelector(".slds-list--vertical.vlc-slds-list--vertical"));
+	                List<WebElement> canales= tabla.findElements(By.tagName("li"));
+	                  for(WebElement opt : canales ){
+	                    if (opt.getText().toLowerCase().contains(opcion.toLowerCase())) {
+	                      opt.click();
+	                    }
+	                  }
+	                }
+		
+		public void canal(String canal) throws InterruptedException{
+		       sleep(5000);
+		       driver.switchTo().frame(getFrameForElement(driver, By.id("SelfManagementFields")));
+		       channelSelection.click();
+		        sleep(5000);
+		          WebElement tabla = driver.findElement(By.cssSelector(".slds-list--vertical.vlc-slds-list--vertical"));
+		            List<WebElement> canales= tabla.findElements(By.tagName("li"));
+		              for(WebElement opt : canales ){
+		                if (opt.getText().toLowerCase().contains(canal.toLowerCase())) {
+		                	opt.click();
+		                      	System.out.println("Se selecciono el servicio: " +opt.getText());
+		                      		sleep(3000);
+		                      			break; 
+				            			  }
+				            		  }
+				            	  }           
+		                	        
+		                
+		          
+		  
 	////...................................................listaOpciones......................................///
 		
 		public  boolean verificarOpciones(WebElement element,String data){
