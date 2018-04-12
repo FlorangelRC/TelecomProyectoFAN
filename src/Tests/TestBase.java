@@ -622,7 +622,7 @@ public class TestBase {
 	}
 	
 	@DataProvider
-	public Object[][] Customer() throws Exception{
+	public Object[][] CustomerCuentaActiva() throws Exception{
 
 	 Object[][] testObjArray = ExcelUtils.getTableArray("Cuentas.xlsx","Customer",1,1,1);
 
