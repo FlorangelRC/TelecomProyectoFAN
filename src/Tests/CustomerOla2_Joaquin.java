@@ -72,9 +72,9 @@ public class CustomerOla2_Joaquin extends TestBase {
 		Assert.assertTrue(cc.campoComentarios().isDisplayed());
 	}
 	
-	@Test (groups = {"CustomerCare", "Ola2", "Marcas"})
-	public void TS100971_Marks_Management_Marcas_Session_Guiada_Botón_en_Iniciar_gestiones() throws IOException {
-		cc.elegirCuenta(buscarCampoExcel(2, "cuenta activa c/serv activo", 1));
+	@Test (groups = {"CustomerCare", "Ola2", "Marcas"},dataProvider="Customer")
+	public void TS100971_Marks_Management_Marcas_Session_Guiada_Botón_en_Iniciar_gestiones(String nCuenta) throws IOException {
+		cc.elegirCuenta(nCuenta);
 		cc.irAGestion("Gestión de Marcas");
 		WebElement tab = cc.obtenerPestañaActiva();		
 		Assert.assertTrue(tab.getText().contentEquals("Gestión de Marcas"));
