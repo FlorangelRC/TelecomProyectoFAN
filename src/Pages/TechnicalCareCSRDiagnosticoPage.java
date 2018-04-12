@@ -344,7 +344,7 @@ public class TechnicalCareCSRDiagnosticoPage extends BasePage{
 ////////////////////////////////////SELECT INCONVENENTES////////////////////////////////////////////////////
 	public void selectionInconvenient(String inconvenientName) {
 		sleep(4000);
-	      driver.switchTo().frame(getFrameForElement(driver, By.id("IssueSelectStep"))); //.//*[@id='SignalAnswer|0']/div/div[1]/label/span/div/div
+	      driver.switchTo().frame(getFrameForElement(driver, By.id("IssueSelectStep")));
 	      	sleep(4000);
 	      		for (WebElement opt : getlistaDeInconvenientes()) {
 	      			if (opt.getText().equalsIgnoreCase(inconvenientName)) {

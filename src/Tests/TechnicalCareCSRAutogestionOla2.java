@@ -1345,17 +1345,16 @@ public class TechnicalCareCSRAutogestionOla2 extends TestBase{
 	@Test(groups= {"TechnicalCare", "Autogestion", "Ola2"})
 	public void TS_CSR_Autogestión_Asteriscos_Verificar_Opcion_SI_cree_y_cierre_el_caso() throws Exception {
 		BasePage cambioFrameByID=new BasePage();
-		driver.switchTo().frame(cambioFrameByID.getFrameForElement(driver, By.id("SelfManagementFields")));
 		TechnicalCareCSRAutogestionPage tech = new TechnicalCareCSRAutogestionPage(driver);
-		tech.listadeseleccion("Asteriscos TP", "*111", "Tono ocupado");  
-		/*tech.clickOnButtons();
+		tech.listadoDeSeleccion("Asteriscos TP", "*111", "Tono ocupado");  
+		tech.clickOnButtons();
 		tech.verificarCaso();
 		driver.switchTo().frame(cambioFrameByID.getFrameForElement(driver, By.id("srchErrorDiv_Case")));
 		tech.getCaseBody().click();		
 		sleep(5000);
 		driver.switchTo().frame(cambioFrameByID.getFrameForElement(driver, By.className("optionLabel")));
 		List<WebElement>menu=tech.getOptionContainer();
-		menu.get(4).click();*/
+		menu.get(4).click();
 	}
 
 

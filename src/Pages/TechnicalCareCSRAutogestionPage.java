@@ -67,26 +67,28 @@ public class TechnicalCareCSRAutogestionPage extends BasePage {
 	
 ////...................................................MenudeOpciones......................................///
 	
-		public void listadoDeSeleccion(String seleccion, String servicio, String motivo) {
+		/*public void listadoDeSeleccion(String seleccion, String servicio, String motivo) {
 		selectByText(getChannelSelection(),seleccion);
 		selectByText(getServiceSelection(),servicio);
 		selectByText(getMotiveSelection(),motivo) ;	
-	}
+	}*/
 		
-		public void listadeseleccion(String canal,String servicio,String inconveniente) throws InterruptedException{
+		public void listadoDeSeleccion(String canal,String servicio,String inconveniente) throws InterruptedException{
 	           sleep(5000);
+	           driver.switchTo().frame(getFrameForElement(driver, By.id("SelfManagementFields")));
 	           selection(channelSelection,canal);
 	           selection(ServiceSelection,servicio);
 	           selection(MotiveSelection,inconveniente);
-	           }
-
+		}       
 	  private void selection(WebElement elemento, String opcion){
+		  sleep(5000);
 	    elemento.click();
-	             WebElement tabla = driver.findElement(By.cssSelector(".slds-list--vertical.vlc-slds-list--vertical"));
-	                List<WebElement> canales= tabla.findElements(By.tagName("li"));
-	                  for(WebElement opt : canales ){
-	                    if (opt.getText().toLowerCase().contains(opcion.toLowerCase())) {
-	                      opt.click();
+		  sleep(3000);
+	        List<WebElement> servicio= driver.findElements(By.xpath(".//*[@class='slds-list--vertical vlc-slds-list--vertical']/li"));
+	           for(WebElement opt : servicio ){
+	              if (opt.getText().toLowerCase().contains(opcion.toLowerCase())) {
+	                 opt.click();
+	                      break;
 	                    }
 	                  }
 	                }
