@@ -435,24 +435,7 @@ private WebDriver driver;
     tech.selectionInconvenient("SMS Emisión a algún destino en particular");
     tech.continuar();
     sleep(3000);
-   // tech.verificarCaso();
-    tech.seleccionarRespuesta("no");
-    tech.clickContinuar();
-    sleep(5000);
-    tech.clickContinuar();
-    sleep(5000);
-    tech.buscarDireccion("Av. Cabildo");
-    sleep(5000);
-    tech.categoriaRed("No son las antenas");
-    tech.categoriaRed("Si");
-    sleep(3000);
-   tech.clickContinua();
-   tech.actualizarEquipo("Test-X Play");
-   sleep(3000);
-   tech.clickContinua();
-   tech.categoriaRed("Sí");
-   tech.enviodeconfiguracion();
-   sleep(5000);
+    tech.Verificacion_de_la_posicion_en_el_mapa("no", "Av. Cabildo", "No son las antenas", "Si", "Test-X Play", "Sí");
    assertTrue(tech.reclamo());
 
    

@@ -1344,7 +1344,6 @@ public class TechnicalCareCSRAutogestionOla2 extends TestBase{
 	
 	@Test(groups= {"TechnicalCare", "Autogestion", "Ola2"})
 	public void TS_CSR_Autogestión_Asteriscos_Verificar_Opcion_SI_cree_y_cierre_el_caso() throws Exception {
-		BasePage cambioFrameByID=new BasePage();
 		TechnicalCareCSRAutogestionPage tech = new TechnicalCareCSRAutogestionPage(driver);
 		tech.listadoDeSeleccion("Asteriscos TP", "*111", "Tono ocupado");  
 		tech.selectionInconvenient("Sí");
