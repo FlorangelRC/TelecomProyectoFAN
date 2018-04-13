@@ -647,5 +647,14 @@ public class TestBase {
 	 return (testObjArray);
 
 	}
+	
+	@DataProvider
+	public Object[][] SalesBlacklist() throws Exception{
+
+	 Object[][] testObjArray = ExcelUtils.getTableArray("Cuentas.xlsx","Sales",1,1,2,"Blacklist");
+
+	 return (testObjArray);
+
+	}
 }
 
