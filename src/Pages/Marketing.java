@@ -477,4 +477,28 @@ public class Marketing extends CustomerCare {
 		sleepShort(0);
 	}
 	
+	public void seleccionarCuentaMarketing(String sCuenta, String sVista) throws IOException {
+		CustomerCare cCC = new CustomerCare(driver);
+		cCC.cerrarTodasLasPestañas();
+		goToLeftPanel(driver, "Cuentas");
+		WebElement frame0 = driver.findElement(By.tagName("iframe"));
+		driver.switchTo().frame(frame0);
+		TestBase tTB = new TestBase();
+		tTB.waitFor(driver, (By.name("fcf")));
+		Select field = new Select(driver.findElement(By.name("fcf")));
+		field.selectByVisibleText(sVista);
+		try {Thread.sleep(10000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		WebElement wBody = driver.findElement(By.className("x-grid3-body"));
+		List<WebElement> wAccountName = wBody.findElements(By.cssSelector(".x-grid3-col.x-grid3-cell.x-grid3-td-ACCOUNT_NAME"));
+		for (WebElement wAux2:wAccountName) {
+			WebElement wContenido = wAux2.findElement(By.tagName("span"));
+			if (wContenido.getText().toLowerCase().equals(sCuenta.toLowerCase())) {
+				wAux2.click();
+				break;
+			}
+		}
+		
+		try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+	}
+	
 }

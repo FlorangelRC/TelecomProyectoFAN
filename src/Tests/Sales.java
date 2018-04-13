@@ -872,14 +872,14 @@ public class Sales extends TestBase {
 		Assert.assertTrue(driver.findElement(By.cssSelector(".slds-datepicker.slds-dropdown.slds-dropdown--left.ng-scope")).isDisplayed());
 	}
 
-	@Test(groups={"Sales", "AltaDeContacto","Ola1"}, priority=2)
-	public void TS94567_Verificar_mascara_del_campo_Fecha_de_Nacimiento() throws IOException {
+	@Test(groups={"Sales", "AltaDeContacto","Ola1"}, priority=2, dataProvider="SalesCuentaActiva")
+	public void TS94567_Verificar_mascara_del_campo_Fecha_de_Nacimiento(String sCuenta, String sDni, String sLinea) throws IOException {
 		SalesBase SB = new SalesBase(driver);
-		String NombreCuenta = buscarCampoExcel(1, "Cuenta Activa", 1);
-		SB.BuscarAvanzada(NombreCuenta.split(" ")[0], NombreCuenta.split(" ")[1], "", "", "");
+		//String NombreCuenta = buscarCampoExcel(1, "Cuenta Activa", 1);
+		SB.BuscarAvanzada(sCuenta.split(" ")[0], sCuenta.split(" ")[1], "", "", "");
 		List <WebElement> cuenta = driver.findElements(By.cssSelector(".slds-truncate.ng-binding"));
 		for (WebElement x : cuenta) {
-			if (x.getText().toLowerCase().contains(NombreCuenta)) {
+			if (x.getText().toLowerCase().contains(sCuenta)) {
 				x.click();
 				break;
 			}
@@ -990,10 +990,10 @@ public class Sales extends TestBase {
 		assertTrue(solapas.get(2).findElement(By.tagName("a")).getText().equals("Clientes Inactivos"));
 	}
 	
-	@Test(groups={"Sales", "AltaDeContacto","Ola1"}, priority=2)
-	public void TS94792_Alta_Contacto_Busqueda_Verificar_Primer_TAB_De_Visualizacion() throws IOException {
+	@Test(groups={"Sales", "AltaDeContacto","Ola1"}, priority=2, dataProvider="SalesCuentaActiva")
+	public void TS94792_Alta_Contacto_Busqueda_Verificar_Primer_TAB_De_Visualizacion(String sCuenta, String sDni, String sLinea) throws IOException {
 		SalesBase SB = new SalesBase(driver);
-		SB.BuscarCuenta("DNI", buscarCampoExcel(1, "Cuenta Activa", 2));
+		SB.BuscarCuenta("DNI", sDni);
 		try {Thread.sleep(6000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 		List<WebElement> solapas = driver.findElement(By.className("slds-tabs--scoped__nav")).findElements(By.tagName("li"));
 		assertTrue(solapas.get(0).findElement(By.tagName("a")).getText().equals("Clientes Activos") && solapas.get(0).isDisplayed());
@@ -1101,10 +1101,10 @@ public class Sales extends TestBase {
 		
 	}
 	
-	@Test(groups={"Sales", "AltaDeContacto","Ola1"}, priority=2)
-	public void TS94564_Alta_Contacto_Persona_Fisica_Verificar_Formato_De_Email() throws IOException {
+	@Test(groups={"Sales", "AltaDeContacto","Ola1"}, priority=2, dataProvider="SalesCuentaActiva")
+	public void TS94564_Alta_Contacto_Persona_Fisica_Verificar_Formato_De_Email(String sCuenta, String sDni, String sLinea) throws IOException {
 		SalesBase SB = new SalesBase(driver);
-		SB.BuscarCuenta("DNI", buscarCampoExcel(1, "Cuenta Activa", 2));
+		SB.BuscarCuenta("DNI", sDni);
 		try {Thread.sleep(6000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 		List<WebElement> solapas = driver.findElement(By.className("slds-tabs--scoped__nav")).findElements(By.tagName("li"));
 		for (WebElement UnaS : solapas) {
@@ -1128,10 +1128,10 @@ public class Sales extends TestBase {
 		}catch(org.openqa.selenium.NoSuchElementException exp1) {assertTrue(true);}
 	}
 	
-	@Test(groups={"Sales", "AltaDeContacto","Ola1"}, priority=2)
-	public void TS94944_Alta_Contacto_Busqueda_Verificar_Botones_Sobre_Contactos() throws IOException {
+	@Test(groups={"Sales", "AltaDeContacto","Ola1"}, priority=2, dataProvider="SalesContactoSinCuenta")
+	public void TS94944_Alta_Contacto_Busqueda_Verificar_Botones_Sobre_Contactos(String sCuenta, String sDni) throws IOException {
 		SalesBase SB = new SalesBase(driver);
-		SB.BuscarCuenta("DNI", buscarCampoExcel(1, "Contacto sin cuenta", 2));
+		SB.BuscarCuenta("DNI", sDni);
 		try {Thread.sleep(6000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 		List<WebElement> solapas = driver.findElement(By.className("slds-tabs--scoped__nav")).findElements(By.tagName("li"));
 		for (WebElement UnaS : solapas) {

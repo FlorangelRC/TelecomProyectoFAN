@@ -37,92 +37,16 @@ public class Marketing_Mattu extends TestBase{
 		//login(driver);
 		try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 		driver.get("https://crm--sit.cs14.my.salesforce.com/console?tsid=02uc0000000D6Hd");
-		/*if (driver.findElement(By.id("tsidLabel")).getText().toLowerCase().equals("consola fan")) {
-			driver.findElement(By.id("BackToServiceDesk_Tab")).click();
-			driver.findElement(By.id("tsidLabel")).click();
-			WebElement wMenu = driver.findElement(By.id("tsid-menuItems"));
-			List<WebElement> wMenuOptions = wMenu.findElements(By.tagName("a"));
-			for (WebElement wAux:wMenuOptions) {
-				if(wAux.getText().toLowerCase().equals("marketing")) {
-					wAux.click();
-				}
-			}
-		} else {
-			driver.findElement(By.id("tsidLabel")).click();
-			WebElement wMenu = driver.findElement(By.id("tsid-menuItems"));
-			List<WebElement> wMenuOptions = wMenu.findElements(By.tagName("a"));
-			for (WebElement wAux:wMenuOptions) {
-				if(wAux.getText().toLowerCase().equals("consola fan")) {
-					wAux.click();
-					break;
-				}
-			}
-		}*/
-		CustomerCare cCC = new CustomerCare(driver);
-		cCC.cerrarTodasLasPestañas();
-		goToLeftPanel(driver, "Cuentas");
-		WebElement frame0 = driver.findElement(By.tagName("iframe"));
-		driver.switchTo().frame(frame0);
-		waitFor(driver, (By.name("fcf")));
-		Select field = new Select(driver.findElement(By.name("fcf")));
-		field.selectByVisibleText("Vista Marketing");
-		try {Thread.sleep(10000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
-		WebElement wBody = driver.findElement(By.className("x-grid3-body"));
-		List<WebElement> wAccountName = wBody.findElements(By.cssSelector(".x-grid3-col.x-grid3-cell.x-grid3-td-ACCOUNT_NAME"));
-		String sNombreCuenta = buscarCampoExcel(0, "Cuenta Normal", 1);
-		for (WebElement wAux2:wAccountName) {
-			WebElement wContenido = wAux2.findElement(By.tagName("span"));
-			if (wContenido.getText().toLowerCase().equals(sNombreCuenta.toLowerCase())) {
-				wAux2.click();
-				break;
-			}
-		}
-		
-		try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
-		
-		/*BasePage cambioFrame = new BasePage(driver);
-		driver.switchTo().defaultContent();
-		driver.switchTo().frame(cambioFrame.getFrameForElement(driver, By.className("actions-content")));
-		driver.findElement(By.xpath("//input[@ng-model='searchTerm']")).clear();
-		driver.findElement(By.xpath("//input[@ng-model='searchTerm']")).sendKeys("Club Personal");*/
-		mMarketing.irAGestionMarketing();
-		/*WebElement wPanelDerecho = driver.findElement(By.className("actions-content"));
-		List<WebElement> wGestiones = wPanelDerecho.findElements(By.tagName("div"));
-		for (WebElement wAux : wGestiones) {
-			System.out.println("wGestiones: " + wAux.findElement(By.cssSelector(".slds-text-body_regular.ta-button-font")).getText());
-			if (wAux.findElement(By.cssSelector(".slds-text-body_regular.ta-button-font")).getText().toLowerCase().equals("club personal")) {
-				wAux.click();
-			}
-		}*/
-		//driver.switchTo().defaultContent();
-		//driver.switchTo().frame(cambioFrame.getFrameForElement(driver, By.xpath("/html/body/div/div[1]/ng-include/div/div[1]/ng-include/div/div[2]/div[2]/button")));
-		//driver.findElement(By.xpath("/html/body/div/div[1]/ng-include/div/div[1]/ng-include/div/div[2]/div[2]/button"));
-		/*List<WebElement> wGestiones = driver.findElements(By.className("startActions-item"));
-		wGestiones.get(1).findElement(By.tagName("button")).click();*/
-		
-		//mMarketing.irAGestionMarketing();//Checkear
-		/*BasePage cambioFrame=new BasePage();
-		driver.switchTo().defaultContent();
-		driver.switchTo().frame(cambioFrame.getFrameForElement(driver, By.cssSelector(".slds-input.actionSearch.ng-pristine.ng-untouched.ng-valid.ng-empty")));
-		driver.findElement(By.cssSelector(".slds-input.actionSearch.ng-pristine.ng-untouched.ng-valid.ng-empty")).clear();
-		driver.findElement(By.cssSelector(".slds-input.actionSearch.ng-pristine.ng-untouched.ng-valid.ng-empty")).sendKeys("Club Personal");
-		List<WebElement> wGestiones = driver.findElements(By.cssSelector(".slds-button.slds-button--neutral.slds-truncate"));
-			for (WebElement wAux2:wGestiones) {
-			WebElement wContenido = wAux2.findElement(By.cssSelector(".slds-text-body_regular.ta-button-font"));
-			if (wContenido.getText().toLowerCase().equals("club personal")) {
-				wAux2.click();
-				break;
-			}
-		}*/
 	}
-	@BeforeMethod(alwaysRun=true)
+	//@BeforeMethod(alwaysRun=true)
 	public void go() throws Exception {
 		try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 		BasePage cambioFrame=new BasePage();
 		driver.switchTo().defaultContent();
 		driver.switchTo().frame(cambioFrame.getFrameForElement(driver, By.cssSelector(".slds-panel__section.slds-p-around--small")));
+		
 	}
-	@AfterMethod(alwaysRun=true)
+	//@AfterMethod(alwaysRun=true)
 	public void byeByeTab() {
 		try {
 			CustomerCare cCC = new CustomerCare(driver);
@@ -133,6 +57,9 @@ public class Marketing_Mattu extends TestBase{
 		} catch (IndexOutOfBoundsException e) {
 			//AllwaysEmpty
 		}
+		
+		CustomerCare cCC = new CustomerCare(driver);
+		cCC.cerrarTodasLasPestañas();
 	}
 	@AfterClass(alwaysRun=true)
 	public void tearDown() {
@@ -141,9 +68,11 @@ public class Marketing_Mattu extends TestBase{
 	
 	//-------------------------------------------------------------------------------------------------
 	//TCC = 1
-	@Test(groups = "Marketing")
-	public void TS4176_Visualizar_error_Mora_Alta_CP() throws IOException {
-		mMarketing.cambioCuenta("Todas las cuentas", "Cuenta c/ Mora");
+	@Test(groups = "Marketing", dataProvider="MarketingCuentaConMora")
+	public void TS4176_Visualizar_error_Mora_Alta_CP(String sCuenta) throws IOException {
+		Marketing page = new Marketing(driver);
+		page.seleccionarCuentaMarketing(sCuenta, "Todas las cuentas");
+		mMarketing.irAGestionMarketing();
 		BasePage cambioFrame=new BasePage();
 		try {Thread.sleep(10000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 		driver.switchTo().defaultContent();
@@ -156,14 +85,15 @@ public class Marketing_Mattu extends TestBase{
 		WebElement wMessage = driver.findElement(By.cssSelector(".slds-form-element.vlc-flex.vlc-slds-text-block.vlc-slds-rte.ng-pristine.ng-valid.ng-scope"));
 		List<WebElement> lText = wMessage.findElements(By.tagName("p"));
 		Assert.assertTrue(lText.get(1).getText().contains("Para continuar es necesario regularizar su estado de cuenta, caso nro."));
-		mMarketing.cambioCuenta("Vista Marketing", "Cuenta Normal");
-		try {Thread.sleep(10000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+
 	}
 	
 	//-------------------------------------------------------------------------------------------------
 	//TCC = 2
-	@Test(groups = "Marketing")
-	public void TS50055_No_visualizar_error_de_Mora_Alta_CP() {
+	@Test(groups = "Marketing", dataProvider="MarketingCuentaNormal")
+	public void TS50055_No_visualizar_error_de_Mora_Alta_CP(String sCuenta) throws IOException {
+		Marketing page = new Marketing(driver);
+		page.seleccionarCuentaMarketing(sCuenta, "Vista Marketing");
 		mMarketing.estadoAltaBaja("Alta");
 		try {Thread.sleep(10000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 		BasePage cambioFrame=new BasePage();
@@ -182,8 +112,10 @@ public class Marketing_Mattu extends TestBase{
 	
 	//-------------------------------------------------------------------------------------------------
 	//TCC = 3
-	@Test(groups = "Marketing")
-	public void TS50057_Visualizar_boton_Canje() {
+	@Test(groups = "Marketing", dataProvider="MarketingCuentaNormal")
+	public void TS50057_Visualizar_boton_Canje(String sCuenta) throws IOException {
+		Marketing page = new Marketing(driver);
+		page.seleccionarCuentaMarketing(sCuenta, "Vista Marketing");
 		mMarketing.estadoAltaBaja("Alta");
 		BasePage cambioFrame=new BasePage();
 		driver.switchTo().defaultContent();
@@ -203,8 +135,10 @@ public class Marketing_Mattu extends TestBase{
 	
 	//-------------------------------------------------------------------------------------------------
 	//TCC = 4
-	@Test(groups = "Marketing")
-	public void TS50062_Visualizar_Categoria_CP_Solapa_CP() {
+	@Test(groups = "Marketing", dataProvider="MarketingCuentaNormal")
+	public void TS50062_Visualizar_Categoria_CP_Solapa_CP(String sCuenta) throws IOException {
+		Marketing page = new Marketing(driver);
+		page.seleccionarCuentaMarketing(sCuenta, "Vista Marketing");
 		//try {Thread.sleep(10000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 		WebElement wPCCategory = driver.findElement(By.cssSelector(".slds-tile.slds-p-bottom--medium")).findElement(By.tagName("div")).findElement(By.tagName("p"));
 		Assert.assertTrue(!wPCCategory.getText().isEmpty());
@@ -212,8 +146,10 @@ public class Marketing_Mattu extends TestBase{
 	
 	//-------------------------------------------------------------------------------------------------
 	//TCC = 5
-	@Test(groups = "Marketing")
-	public void TS50070_Visualizar_campo_Fecha_desde_Solapa_CP() {
+	@Test(groups = "Marketing", dataProvider="MarketingCuentaNormal")
+	public void TS50070_Visualizar_campo_Fecha_desde_Solapa_CP(String sCuenta) throws IOException {
+		Marketing page = new Marketing(driver);
+		page.seleccionarCuentaMarketing(sCuenta, "Vista Marketing");
 		List <WebElement> wBodyComplete = driver.findElements(By.cssSelector(".slds-media.slds-media--center.slds-has-flexi-truncate"));
 		WebElement wBody = wBodyComplete.get(5);
 		List <WebElement> wColumna = mMarketing.traerColumnaElement(wBody, 7, 4);
@@ -225,8 +161,10 @@ public class Marketing_Mattu extends TestBase{
 	
 	//-------------------------------------------------------------------------------------------------
 	//TCC = 6
-	@Test(groups = "Marketing")
-	public void TS50072_Campo_fecha_Mayor_al_actual_Solapa_CP() {
+	@Test(groups = "Marketing", dataProvider="MarketingCuentaNormal")
+	public void TS50072_Campo_fecha_Mayor_al_actual_Solapa_CP(String sCuenta) throws IOException {
+		Marketing page = new Marketing(driver);
+		page.seleccionarCuentaMarketing(sCuenta, "Vista Marketing");
 		mMarketing.seleccionarFecha(5, 1, "text-input-id-1", "Futuro");
 		mMarketing.seleccionarFecha(7, 2, "text-input-id-2", "Futuro");
 		
@@ -245,22 +183,26 @@ public class Marketing_Mattu extends TestBase{
 	
 	//-------------------------------------------------------------------------------------------------
 	//TCC = 7
-	@Test(groups = {"Marketing", "Ola1", "GestionDelSocioDeClubPersonal"})
-	public void TS90241_Sucripcion_CP_Validacion_de_Mail() {
-		TS98023_Funcionamiento_boton_Alta_ABM_del_CP();
+	@Test(groups = {"Marketing", "Ola1", "GestionDelSocioDeClubPersonal"}, dataProvider="MarketingCuentaNormal")
+	public void TS90241_Sucripcion_CP_Validacion_de_Mail(String sCuenta) throws IOException {
+		TS98023_Funcionamiento_boton_Alta_ABM_del_CP(sCuenta);
 	}
 	
 	//-------------------------------------------------------------------------------------------------
 	//TCC = 8
-	/*@Test(groups = "Marketing")
-	public void TS90286_Asignacion_de_Perfil_para_Aplicacion_Atributos() {
+	/*@Test(groups = "Marketing", dataProvider="MarketingCuentaNormal")
+	public void TS90286_Asignacion_de_Perfil_para_Aplicacion_Atributos(String sCuenta) throws IOException {
+		Marketing page = new Marketing(driver);
+		page.seleccionarCuentaMarketing(sCuenta);
 		
 	}*/
 	
 	//-------------------------------------------------------------------------------------------------
 	//TCC = 9
-	@Test(groups = {"Marketing", "Ola1", "GestionDelSocioDeClubPersonal"})
-	public void TS98020_Boton_ABM_del_CP() {
+	@Test(groups = {"Marketing", "Ola1", "GestionDelSocioDeClubPersonal"}, dataProvider="MarketingCuentaNormal")
+	public void TS98020_Boton_ABM_del_CP(String sCuenta) throws IOException {
+		Marketing page = new Marketing(driver);
+		page.seleccionarCuentaMarketing(sCuenta, "Vista Marketing");
 		mMarketing.buscarGestion("club personal");
 		BasePage cambioFrame=new BasePage();
 		driver.switchTo().defaultContent();
@@ -280,8 +222,10 @@ public class Marketing_Mattu extends TestBase{
 	
 	//-------------------------------------------------------------------------------------------------
 	//TCC = 10
-	@Test(groups = {"Marketing", "Ola1", "GestionDelSocioDeClubPersonal"})
-	public void TS98021_Funcionamiento_Boton_ABM_del_CP() {
+	@Test(groups = {"Marketing", "Ola1", "GestionDelSocioDeClubPersonal"}, dataProvider="MarketingCuentaNormal")
+	public void TS98021_Funcionamiento_Boton_ABM_del_CP(String sCuenta) throws IOException {
+		Marketing page = new Marketing(driver);
+		page.seleccionarCuentaMarketing(sCuenta, "Vista Marketing");
 		Marketing mMarketing = new Marketing(driver);
 		mMarketing.buscarGestion("club personal");
 		driver.switchTo().frame(cambioFrame(driver, By.className("actions-content")));
@@ -301,8 +245,10 @@ public class Marketing_Mattu extends TestBase{
 	
 	//-------------------------------------------------------------------------------------------------
 	//TCC = 11
-	@Test(groups = {"Marketing", "Ola1", "GestionDelSocioDeClubPersonal"})
-	public void TS98023_Funcionamiento_boton_Alta_ABM_del_CP() {
+	@Test(groups = {"Marketing", "Ola1", "GestionDelSocioDeClubPersonal"}, dataProvider="MarketingCuentaNormal")
+	public void TS98023_Funcionamiento_boton_Alta_ABM_del_CP(String sCuenta) throws IOException {
+		Marketing page = new Marketing(driver);
+		page.seleccionarCuentaMarketing(sCuenta, "Vista Marketing");
 		mMarketing.estadoAltaBaja("Alta");
 		try {Thread.sleep(10000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 		BasePage cambioFrame=new BasePage();
@@ -314,8 +260,10 @@ public class Marketing_Mattu extends TestBase{
 	
 	//-------------------------------------------------------------------------------------------------
 	//TCC = 12
-	@Test(groups = {"Marketing", "Ola1", "GestionDelSocioDeClubPersonal"})
-	public void TS98024_Funcionamiento_boton_Baja_ABM_del_CP() {
+	@Test(groups = {"Marketing", "Ola1", "GestionDelSocioDeClubPersonal"}, dataProvider="MarketingCuentaNormal")
+	public void TS98024_Funcionamiento_boton_Baja_ABM_del_CP(String sCuenta) throws IOException {
+		Marketing page = new Marketing(driver);
+		page.seleccionarCuentaMarketing(sCuenta, "Vista Marketing");
 		mMarketing.clubPersonal("Baja");
 		try {Thread.sleep(10000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 		BasePage cambioFrame=new BasePage();
@@ -327,15 +275,17 @@ public class Marketing_Mattu extends TestBase{
 	
 	//-------------------------------------------------------------------------------------------------
 	//TCC = 13
-	@Test(groups = {"Marketing","Ola1", "GestionDelSocioDeClubPersonal"})
-	public void TS98027_No_visualizar_error_Fraude_Alta_CP() {
-		TS98023_Funcionamiento_boton_Alta_ABM_del_CP();
+	@Test(groups = {"Marketing","Ola1", "GestionDelSocioDeClubPersonal"}, dataProvider="MarketingCuentaNormal")
+	public void TS98027_No_visualizar_error_Fraude_Alta_CP(String sCuenta) throws IOException {
+		TS98023_Funcionamiento_boton_Alta_ABM_del_CP(sCuenta);
 	}
 	
 	//-------------------------------------------------------------------------------------------------
 	//TCC = 14
-	@Test(groups = {"Marketing","Ola1", "GestionDelSocioDeClubPersonal"})
-	public void TS98031_Seleccion_multiple_Alta_CP() {
+	@Test(groups = {"Marketing","Ola1", "GestionDelSocioDeClubPersonal"}, dataProvider="MarketingCuentaNormal")
+	public void TS98031_Seleccion_multiple_Alta_CP(String sCuenta) throws IOException {
+		Marketing page = new Marketing(driver);
+		page.seleccionarCuentaMarketing(sCuenta, "Vista Marketing");
 		mMarketing.estadoAltaBaja("Alta");
 		mMarketing.seleccionarCuenta("consumerAccounts");
 		mMarketing.seleccionarCuenta("businessAccounts");
@@ -344,8 +294,10 @@ public class Marketing_Mattu extends TestBase{
 	
 	//-------------------------------------------------------------------------------------------------
 	//TCC = 15
-	@Test(groups = {"Marketing", "Ola1", "GestionDelSocioDeClubPersonal"})
-	public void TS98032_Separacion_de_cuentas_Alta_CP() {
+	@Test(groups = {"Marketing", "Ola1", "GestionDelSocioDeClubPersonal"}, dataProvider="MarketingCuentaNormal")
+	public void TS98032_Separacion_de_cuentas_Alta_CP(String sCuenta) throws IOException {
+		Marketing page = new Marketing(driver);
+		page.seleccionarCuentaMarketing(sCuenta, "Vista Marketing");
 		mMarketing.estadoAltaBaja("Alta");
 		try {Thread.sleep(10000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 		BasePage cambioFrame=new BasePage();
@@ -364,8 +316,10 @@ public class Marketing_Mattu extends TestBase{
 	
 	//-------------------------------------------------------------------------------------------------
 	//TCC = 16
-	@Test(groups = {"Marketing","Ola1", "GestionDelSocioDeClubPersonal"})
-	public void TS98033_No_seleccion_cuentas_Alta_CP() {
+	@Test(groups = {"Marketing","Ola1", "GestionDelSocioDeClubPersonal"}, dataProvider="MarketingCuentaNormal")
+	public void TS98033_No_seleccion_cuentas_Alta_CP(String sCuenta) throws IOException {
+		Marketing page = new Marketing(driver);
+		page.seleccionarCuentaMarketing(sCuenta, "Vista Marketing");
 		mMarketing.estadoAltaBaja("Baja");
 		mMarketing.closeActiveTab();
 		mMarketing.sleepMedium(0);
@@ -391,7 +345,7 @@ public class Marketing_Mattu extends TestBase{
 	
 	//-------------------------------------------------------------------------------------------------
 	//TCC = 17
-	@Test(groups = {"Marketing", "Ola1", "GestionDelSocioDeClubPersonal"})
+	@Test(groups = {"Marketing", "Ola1", "GestionDelSocioDeClubPersonal"}, dataProvider="MarketingCuentaNormal")
 	public void TS98036_Boton_Cancelar_Alta_CP() {
 		mMarketing.estadoAltaBaja("Alta");
 		try {Thread.sleep(10000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
@@ -405,7 +359,7 @@ public class Marketing_Mattu extends TestBase{
 	
 	//-------------------------------------------------------------------------------------------------
 	//TCC = 18
-	@Test(groups = {"Marketing", "Ola1", "GestionDelSocioDeClubPersonal"})
+	@Test(groups = {"Marketing", "Ola1", "GestionDelSocioDeClubPersonal"}, dataProvider="MarketingCuentaNormal")
 	public void TS98037_Boton_Continuar_Alta_CP() {
 		mMarketing.estadoAltaBaja("Alta");
 		try {Thread.sleep(10000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
@@ -415,8 +369,10 @@ public class Marketing_Mattu extends TestBase{
 	
 	//-------------------------------------------------------------------------------------------------
 	//TCC = 19
-	@Test(groups = {"Marketing","Ola1", "GestionDelSocioDeClubPersonal"})
-	public void TS98042_Numero_de_caso_Alta_CP() {
+	@Test(groups = {"Marketing","Ola1", "GestionDelSocioDeClubPersonal"}, dataProvider="MarketingCuentaNormal")
+	public void TS98042_Numero_de_caso_Alta_CP(String sCuenta) throws IOException {
+		Marketing page = new Marketing(driver);
+		page.seleccionarCuentaMarketing(sCuenta, "Vista Marketing");
 		mMarketing.estadoAltaBaja("Alta");
 		mMarketing.closeActiveTab();
 		String sCaso = mMarketing.darDeAltaCP();
@@ -425,8 +381,10 @@ public class Marketing_Mattu extends TestBase{
 	
 	//-------------------------------------------------------------------------------------------------
 	//TCC = 20
-	@Test(groups = {"Marketing","Ola1", "GestionDelSocioDeClubPersonal"})
-	public void TS98043_Caso_creado_Alta_CP() {
+	@Test(groups = {"Marketing","Ola1", "GestionDelSocioDeClubPersonal"}, dataProvider="MarketingCuentaNormal")
+	public void TS98043_Caso_creado_Alta_CP(String sCuenta) throws IOException {
+		Marketing page = new Marketing(driver);
+		page.seleccionarCuentaMarketing(sCuenta, "Vista Marketing");
 		mMarketing.estadoAltaBaja("Alta");
 		List<String> sCuentasSeleccionadas = new ArrayList<String>();
 		WebElement wBody = driver.findElement(By.id("consumerAccounts")).findElement(By.tagName("table"));
@@ -467,8 +425,10 @@ public class Marketing_Mattu extends TestBase{
 	
 	//-------------------------------------------------------------------------------------------------
 	//TCC = 21
-	@Test(groups = {"Marketing","Ola1", "GestionDelSocioDeClubPersonal"})
-	public void TS98044_Caso_cerrado_Alta_CP() {
+	@Test(groups = {"Marketing","Ola1", "GestionDelSocioDeClubPersonal"}, dataProvider="MarketingCuentaNormal")
+	public void TS98044_Caso_cerrado_Alta_CP(String sCuenta) throws IOException {
+		Marketing page = new Marketing(driver);
+		page.seleccionarCuentaMarketing(sCuenta, "Vista Marketing");
 		mMarketing.estadoAltaBaja("Alta");
 		mMarketing.closeActiveTab();
 		String sCaso = mMarketing.darDeAltaCP();
@@ -479,30 +439,31 @@ public class Marketing_Mattu extends TestBase{
 	
 	//-------------------------------------------------------------------------------------------------
 	//TCC = 22
-	@Test(groups = {"Marketing", "Ola1", "GestionDelSocioDeClubPersonal"})
-	public void TS98047_No_visualizar_error_Fraude_Baja_CP() {
-		TS98024_Funcionamiento_boton_Baja_ABM_del_CP();
+	@Test(groups = {"Marketing", "Ola1", "GestionDelSocioDeClubPersonal"}, dataProvider="MarktingCuentaNormal")
+	public void TS98047_No_visualizar_error_Fraude_Baja_CP(String sCuenta) throws IOException {
+		TS98024_Funcionamiento_boton_Baja_ABM_del_CP(sCuenta);
 	}
 	
 	//-------------------------------------------------------------------------------------------------
 	//TCC = 23
-	@Test(groups = {"Marketing", "Ola1", "GestionDelSocioDeClubPersonal"})
-	public void TS98048_Generar_Caso_error_Fraude_Baja_CP() throws IOException {
-		mMarketing.cambioCuenta("Todas las cuentas", "Cuenta c/ Fraude");
+	@Test(groups = {"Marketing", "Ola1", "GestionDelSocioDeClubPersonal"}, dataProvider="MarketingCuentaConFraude")
+	public void TS98048_Generar_Caso_error_Fraude_Baja_CP(String sCuenta) throws IOException {
+		Marketing page = new Marketing(driver);
+		page.seleccionarCuentaMarketing(sCuenta, "Todas las cuentas");
 		mMarketing.clubPersonal("Baja");
 		try {Thread.sleep(10000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 		WebElement wMessage = driver.findElement(By.cssSelector(".slds-form-element.vlc-flex.vlc-slds-text-block.vlc-slds-rte.ng-pristine.ng-valid.ng-scope"));
 		List <WebElement> wMessageBox = wMessage.findElements(By.tagName("p"));
 		String sCaso = wMessageBox.get(1).getText().substring(71, 79);
-		boolean bAssert = mMarketing.corroborarCasoCerrado(sCaso);
-		mMarketing.cambioCuenta("Vista Marketing", "Cuenta Normal");
-		Assert.assertTrue(bAssert);
+		Assert.assertTrue(mMarketing.corroborarCasoCerrado(sCaso));
 	}
 	
 	//-------------------------------------------------------------------------------------------------
 	//TCC = 24
-	@Test(groups = {"Marketing", "Ola1", "GestionDelSocioDeClubPersonal"})
-	public void TS98049_Separacion_Baja_CP() {
+	@Test(groups = {"Marketing", "Ola1", "GestionDelSocioDeClubPersonal"}, dataProvider="MarketingCuentaNormal")
+	public void TS98049_Separacion_Baja_CP(String sCuenta) throws IOException {
+		Marketing page = new Marketing(driver);
+		page.seleccionarCuentaMarketing(sCuenta, "Vista Marketing");
 		mMarketing.estadoAltaBaja("Baja");
 		try {Thread.sleep(10000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 		BasePage cambioFrame=new BasePage();
@@ -521,8 +482,10 @@ public class Marketing_Mattu extends TestBase{
 	
 	//-------------------------------------------------------------------------------------------------
 	//TCC = 25
-	@Test(groups = {"Marketing", "Ola1", "GestionDelSocioDeClubPersonal"})
-	public void TS98050_Multiple_seleccion_Baja_CP() {
+	@Test(groups = {"Marketing", "Ola1", "GestionDelSocioDeClubPersonal"}, dataProvider="MarketingCuentaNormal")
+	public void TS98050_Multiple_seleccion_Baja_CP(String sCuenta) throws IOException {
+		Marketing page = new Marketing(driver);
+		page.seleccionarCuentaMarketing(sCuenta, "Vista Marketing");
 		mMarketing.estadoAltaBaja("Baja");
 		mMarketing.seleccionarCuenta("consumerAccounts");
 		mMarketing.seleccionarCuenta("businessAccounts");
@@ -531,8 +494,10 @@ public class Marketing_Mattu extends TestBase{
 	
 	//-------------------------------------------------------------------------------------------------
 	//TCC = 26
-	@Test(groups = {"Marketing", "Ola1", "GestionDelSocioDeClubPersonal"})
-	public void TS98051_Visualizar_cuentas_costumer_Baja_CP() {
+	@Test(groups = {"Marketing", "Ola1", "GestionDelSocioDeClubPersonal"}, dataProvider="MarketingCuentaNormal")
+	public void TS98051_Visualizar_cuentas_costumer_Baja_CP(String sCuenta) throws IOException {
+		Marketing page = new Marketing(driver);
+		page.seleccionarCuentaMarketing(sCuenta, "Vista Marketing");
 		mMarketing.estadoAltaBaja("Baja");
 		try {Thread.sleep(10000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 		BasePage cambioFrame=new BasePage();
@@ -547,8 +512,10 @@ public class Marketing_Mattu extends TestBase{
 	
 	//-------------------------------------------------------------------------------------------------
 	//TCC = 27
-	@Test(groups = {"Marketing", "Ola1", "GestionDelSocioDeClubPersonal"})
-	public void TS98052_Visualizar_cuentas_business_Baja_CP() {
+	@Test(groups = {"Marketing", "Ola1", "GestionDelSocioDeClubPersonal"}, dataProvider="MarketingCuentaNormal")
+	public void TS98052_Visualizar_cuentas_business_Baja_CP(String sCuenta) throws IOException {
+		Marketing page = new Marketing(driver);
+		page.seleccionarCuentaMarketing(sCuenta, "Vista Marketing");
 		mMarketing.estadoAltaBaja("Alta");
 		try {Thread.sleep(10000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 		BasePage cambioFrame=new BasePage();
@@ -563,8 +530,10 @@ public class Marketing_Mattu extends TestBase{
 	
 	//-------------------------------------------------------------------------------------------------
 	//TCC = 28
-	@Test(groups = {"Marketing","Ola1", "GestionDelSocioDeClubPersonal"})
-	public void TS98053_Visualizar_cuentas_no_adheridas_Baja_CP() {
+	@Test(groups = {"Marketing","Ola1", "GestionDelSocioDeClubPersonal"}, dataProvider="MarketingCuentaNormal")
+	public void TS98053_Visualizar_cuentas_no_adheridas_Baja_CP(String sCuenta) throws IOException {
+		Marketing page = new Marketing(driver);
+		page.seleccionarCuentaMarketing(sCuenta, "Vista Marketing");
 		mMarketing.estadoAltaBaja("Alta");
 		mMarketing.closeActiveTab();
 		mMarketing.sleepMedium(0);
@@ -593,9 +562,10 @@ public class Marketing_Mattu extends TestBase{
 	
 	//-------------------------------------------------------------------------------------------------
 	//TCC = 29
-	@Test(groups = {"Marketing", "Ola1", "GestionDelSocioDeClubPersonal"})
-	public void TS98056_Verificar_seleccion_de_un_unico_valor_en_el_campo_motivo_de_baja_Baja_CP() {
-		//mMarketing.clubPersonal("baja");
+	@Test(groups = {"Marketing", "Ola1", "GestionDelSocioDeClubPersonal"}, dataProvider="MarketingCuentaNormal")
+	public void TS98056_Verificar_seleccion_de_un_unico_valor_en_el_campo_motivo_de_baja_Baja_CP(String sCuenta) throws IOException {
+		Marketing page = new Marketing(driver);
+		page.seleccionarCuentaMarketing(sCuenta, "Vista Marketing");
 		mMarketing.estadoAltaBaja("Baja");
 		try {Thread.sleep(10000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 		BasePage cambioFrame=new BasePage();
@@ -638,8 +608,10 @@ public class Marketing_Mattu extends TestBase{
 	
 	//-------------------------------------------------------------------------------------------------
 	//TCC = 30
-	@Test(groups = {"Marketing", "Ola1", "GestionDelSocioDeClubPersonal"})
-	public void TS98057_Verificar_seleccion_del_motivo_otro_Baja_CP() {
+	@Test(groups = {"Marketing", "Ola1", "GestionDelSocioDeClubPersonal"}, dataProvider="MarketingCuentaNormal")
+	public void TS98057_Verificar_seleccion_del_motivo_otro_Baja_CP(String sCuenta) throws IOException {
+		Marketing page = new Marketing(driver);
+		page.seleccionarCuentaMarketing(sCuenta, "Vista Marketing");
 		mMarketing.estadoAltaBaja("Baja");
 		try {Thread.sleep(10000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 		BasePage cambioFrame=new BasePage();
@@ -658,8 +630,10 @@ public class Marketing_Mattu extends TestBase{
 	
 	//-------------------------------------------------------------------------------------------------
 	//TCC = 31
-	@Test(groups = {"Marketing", "Ola1", "GestionDelSocioDeClubPersonal"})
-	public void TS98058_Verificar_seleccion_del_motivo_otro_vacio_Baja_CP() {
+	@Test(groups = {"Marketing", "Ola1", "GestionDelSocioDeClubPersonal"}, dataProvider="MarketingCuentaNormal")
+	public void TS98058_Verificar_seleccion_del_motivo_otro_vacio_Baja_CP(String sCuenta) throws IOException {
+		Marketing page = new Marketing(driver);
+		page.seleccionarCuentaMarketing(sCuenta, "Vista Marketing");
 		mMarketing.estadoAltaBaja("Baja");
 		try {Thread.sleep(10000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 		BasePage cambioFrame=new BasePage();
@@ -680,8 +654,10 @@ public class Marketing_Mattu extends TestBase{
 	
 	//-------------------------------------------------------------------------------------------------
 	//TCC = 32
-	@Test(groups = {"Marketing", "Ola1", "GestionDelSocioDeClubPersonal"})
-	public void TS98059_Visualizar_botones_Baja_CP() {
+	@Test(groups = {"Marketing", "Ola1", "GestionDelSocioDeClubPersonal"}, dataProvider="MarketingCuentaNormal")
+	public void TS98059_Visualizar_botones_Baja_CP(String sCuenta) throws IOException {
+		Marketing page = new Marketing(driver);
+		page.seleccionarCuentaMarketing(sCuenta, "Vista Marketing");
 		mMarketing.estadoAltaBaja("Baja");
 		try {Thread.sleep(10000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 		BasePage cambioFrame=new BasePage();
@@ -694,22 +670,28 @@ public class Marketing_Mattu extends TestBase{
 		
 	//-------------------------------------------------------------------------------------------------
 	//TCC = 33
-	@Test(groups = {"Marketing","Ola1", "GestionDelSocioDeClubPersonal"})
-	public void TS98069_Visualizar_boton_Solapa_CP() {
+	@Test(groups = {"Marketing","Ola1", "GestionDelSocioDeClubPersonal"}, dataProvider="MarketingCuentaNormal")
+	public void TS98069_Visualizar_boton_Solapa_CP(String sCuenta) throws IOException {
+		Marketing page = new Marketing(driver);
+		page.seleccionarCuentaMarketing(sCuenta, "Vista Marketing");
 		Assert.assertTrue(true);
 	}
 	
 	//-------------------------------------------------------------------------------------------------
 	//TCC = 34
-	@Test(groups = {"Marketing", "Ola1", "GestionDelSocioDeClubPersonal"})
-	public void TS98070_Funcionamiento_boton_Solapa_CP() {
+	@Test(groups = {"Marketing", "Ola1", "GestionDelSocioDeClubPersonal"}, dataProvider="MarketingCuentaNormal")
+	public void TS98070_Funcionamiento_boton_Solapa_CP(String sCuenta) throws IOException {
+		Marketing page = new Marketing(driver);
+		page.seleccionarCuentaMarketing(sCuenta, "Vista Marketing");
 		Assert.assertTrue(true);
 	}
 	
 	//-------------------------------------------------------------------------------------------------
 	//TCC = 35
-	@Test(groups = {"Marketing", "Ola1", "GestionDelSocioDeClubPersonal"})
-	public void TS98071_Visualizar_campo_Fecha_hasta_Solapa_CP() {
+	@Test(groups = {"Marketing", "Ola1", "GestionDelSocioDeClubPersonal"}, dataProvider="MarketingCuentaNormal")
+	public void TS98071_Visualizar_campo_Fecha_hasta_Solapa_CP(String sCuenta) throws IOException {
+		Marketing page = new Marketing(driver);
+		page.seleccionarCuentaMarketing(sCuenta, "Vista Marketing");
 		List <WebElement> wBodyComplete = driver.findElements(By.cssSelector(".slds-media.slds-media--center.slds-has-flexi-truncate"));
 		WebElement wBody = wBodyComplete.get(5);
 		List <WebElement> wColumna = mMarketing.traerColumnaElement(wBody, 7, 6);
