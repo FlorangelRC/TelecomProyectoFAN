@@ -11,6 +11,8 @@ import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.Select;
 
+import javafx.scene.control.ScrollToEvent;
+
 
 public class TechnicalCareCSRAutogestionPage extends BasePage {
 	
@@ -38,7 +40,7 @@ public class TechnicalCareCSRAutogestionPage extends BasePage {
 	@FindBy(xpath=".//*[@id='KnowledgeBaseResults_nextBtn']") 
 	private WebElement knowledgeBaseBtn;
 
-	@FindBy(xpath=".//*[@id='CreatedClosedCaseText']/div/p/p/strong[1]")
+	@FindBy(xpath=".//*[@id='CreatedCaseText']/div/p/p[1]/strong")
 	private WebElement numCaso;
 	
 	@FindBy(xpath=".//*[@id='SimilCaseInformation']/div/p/p[3]/strong[1]")
@@ -56,6 +58,20 @@ public class TechnicalCareCSRAutogestionPage extends BasePage {
 	@FindBy(xpath=" //*[@id='00Nc0000002Ja0S_ilecell']")
 	private WebElement verificar;
 	
+	@FindBy(xpath="//*[@class='imgItemContainer ng-scope']") 
+	private List<WebElement> listaDeInconvenientes;
+	
+	@FindBy(xpath= ".//*[@id='topButtonRow']/input[5]")
+	private WebElement cerrarcaso;
+	
+	@FindBy(id="cas7")
+	private WebElement estado;
+	
+	@FindBy(id="cas6")
+	private WebElement motivo;
+	
+	@FindBy(xpath=".//*[@id='topButtonRow']/input[1]")
+	private WebElement guardar;	
 
 	
 	public TechnicalCareCSRAutogestionPage(WebDriver driver) {
@@ -67,26 +83,30 @@ public class TechnicalCareCSRAutogestionPage extends BasePage {
 	
 ////...................................................MenudeOpciones......................................///
 	
-		public void listadoDeSeleccion(String seleccion, String servicio, String motivo) {
+		/*public void listadoDeSeleccion(String seleccion, String servicio, String motivo) {
 		selectByText(getChannelSelection(),seleccion);
 		selectByText(getServiceSelection(),servicio);
 		selectByText(getMotiveSelection(),motivo) ;	
-	}
+	}*/
 		
-		public void listadeseleccion(String canal,String servicio,String inconveniente) throws InterruptedException{
+		public void listadoDeSeleccion(String canal,String servicio,String inconveniente) throws InterruptedException{
 	           sleep(5000);
+	           driver.switchTo().frame(getFrameForElement(driver, By.id("SelfManagementFields")));
 	           selection(channelSelection,canal);
 	           selection(ServiceSelection,servicio);
 	           selection(MotiveSelection,inconveniente);
-	           }
-
+	           scrollToElement(selfManagementStepBtn);
+	           selfManagementStepBtn.click();
+		}       
 	  private void selection(WebElement elemento, String opcion){
+		  sleep(5000);
 	    elemento.click();
-	             WebElement tabla = driver.findElement(By.cssSelector(".slds-list--vertical.vlc-slds-list--vertical"));
-	                List<WebElement> canales= tabla.findElements(By.tagName("li"));
-	                  for(WebElement opt : canales ){
-	                    if (opt.getText().toLowerCase().contains(opcion.toLowerCase())) {
-	                      opt.click();
+		  sleep(3000);
+	        List<WebElement> servicio= driver.findElements(By.xpath(".//*[@class='slds-list--vertical vlc-slds-list--vertical']/li"));
+	           for(WebElement opt : servicio ){
+	              if (opt.getText().toLowerCase().contains(opcion.toLowerCase())) {
+	                 opt.click();
+	                      break;
 	                    }
 	                  }
 	                }
@@ -153,6 +173,46 @@ public class TechnicalCareCSRAutogestionPage extends BasePage {
 		}
 	}
 	
+	
+	public void selectionInconvenient(String inconvenientName) {
+		sleep(5000);
+		driver.switchTo().frame(getFrameForElement(driver, By.cssSelector(".imgItem.ng-binding.ng-scope")));
+		  sleep(5000);
+	      	for(WebElement p:getBorderOverlay()) {
+	      		System.out.println(p.getText());
+	      		   if(p.getText().equalsIgnoreCase(inconvenientName));
+	      		   		sleep(5000);
+	      			   p.click();    		
+	      			   scrollToElement(knowledgeBaseBtn);
+	      			   knowledgeBaseBtn.click();
+	      				sleep(5000);
+	      						break;
+	      				}
+	      		} 
+			
+	
+	public void cerrarCaso(String data, String motivo) {
+		BasePage cambioFrameByID=new BasePage();
+		driver.switchTo().frame(cambioFrameByID.getFrameForElement(driver, By.id("srchErrorDiv_Case")));
+		getCaseBody().click();		
+		sleep(5000);
+		//driver.switchTo().frame(cambioFrameByID.getFrameForElement(driver, By.xpath(".//*[@id='topButtonRow']")));
+		driver.switchTo().frame(cambioFrameByID.getFrameForElement(driver, By.id("ep")));
+		WebElement cerrarcaso=getCerrarcaso();
+		((JavascriptExecutor)driver).executeScript("window.scrollTo(0,"+cerrarcaso.getLocation().y+")");
+		 sleep(4000);
+		 cerrarcaso.click();
+		List<WebElement>tabla=driver.findElements(By.className("detailList"));
+		 sleep(4000);
+		 selectByText(getEstado(), data);
+		 selectByText(getMotivo(), motivo);
+		 scrollToElement(guardar);
+		 guardar.click();
+
+			
+		 
+	}
+	
 ////...................................................verificarcaso...........................................///
 	
 	public String verificarCaso() throws InterruptedException {
@@ -161,7 +221,8 @@ public class TechnicalCareCSRAutogestionPage extends BasePage {
 			 caso=existCaso.getText();
 			}
 			else {		
-				caso=numCaso.getText();
+				driver.switchTo();
+				caso=numCaso();
 			}
 		driver.switchTo().defaultContent();
 		buscarCaso(caso);
@@ -177,9 +238,16 @@ public class TechnicalCareCSRAutogestionPage extends BasePage {
 				search.submit();
 				sleep(5000);
 		
-				
-	}
+			}
 
+	
+	public String numCaso() throws InterruptedException{
+		String caso =  numCaso.getText();
+		sleep(2000);
+		driver.switchTo().defaultContent();
+		sleep(2000);
+	return caso;
+	}
 		
 	public WebElement getExistCaso() {
 		return existCaso;
@@ -221,6 +289,35 @@ public class TechnicalCareCSRAutogestionPage extends BasePage {
 	}
 	
 		
+	public List<WebElement> getListaDeInconvenientes() {
+		return listaDeInconvenientes;
+	}
+
+
+
+	public WebElement getEstado() {
+		return estado;
+	}
+
+
+
+	public WebElement getMotivo() {
+		return motivo;
+	}
+	
+
+	public WebElement getCerrarcaso() {
+		return cerrarcaso;
+	}
+
+
+
+	public List<WebElement> getBorderOverlay() {
+		return borderOverlay;
+	}
+
+
+
 	public void scrollToElement(WebElement element) {
 		((JavascriptExecutor)driver)
 	        .executeScript("arguments[0].scrollIntoView();", element);
