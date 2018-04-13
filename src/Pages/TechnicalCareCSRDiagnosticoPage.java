@@ -44,7 +44,7 @@ public class TechnicalCareCSRDiagnosticoPage extends BasePage{
 	private List<WebElement> serviciofunciona;
 	
 	
-	@FindBy(xpath="//*[@class='imgItemContainer ng-scope']") //
+	@FindBy(xpath="//*[@class='imgItemContainer ng-scope']") 
 	private List<WebElement> listaDeInconvenientes;
 
 	

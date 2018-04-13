@@ -1347,19 +1347,11 @@ public class TechnicalCareCSRAutogestionOla2 extends TestBase{
 		BasePage cambioFrameByID=new BasePage();
 		TechnicalCareCSRAutogestionPage tech = new TechnicalCareCSRAutogestionPage(driver);
 		tech.listadoDeSeleccion("Asteriscos TP", "*111", "Tono ocupado");  
-		tech.clickOnButtons();
-		tech.verificarCaso();
-		driver.switchTo().frame(cambioFrameByID.getFrameForElement(driver, By.id("srchErrorDiv_Case")));
-		tech.getCaseBody().click();		
-		sleep(5000);
-		driver.switchTo().frame(cambioFrameByID.getFrameForElement(driver, By.className("optionLabel")));
-		List<WebElement>menu=tech.getOptionContainer();
-		menu.get(4).click();
+		tech.selectionInconvenient("Sí");
+		tech.verificarCaso();		
+		tech.cerrarCaso("Resuelta Masiva", "Instructions not clear");
 	}
 
-
-	
-	
 }
 
 
