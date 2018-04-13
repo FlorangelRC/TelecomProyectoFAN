@@ -410,13 +410,13 @@ public class Sales extends TestBase {
 		assertTrue(esta);
 	}
 	
-	@Test(groups={"Sales", "AltaDeLinea", "Ola1"}, priority=3)  
-	public void TS94827_Ventas_General_Verificar_Metodos_De_Pago_Perfil_Representante_Telefonico() throws IOException {
+	@Test(groups={"Sales", "AltaDeLinea", "Ola1"}, priority=3, dataProvider="SalesCuentaActiva")  
+	public void TS94827_Ventas_General_Verificar_Metodos_De_Pago_Perfil_Representante_Telefonico(String sCuenta, String sDni, String sLinea) throws IOException {
 		perfil = "agente";
 		boolean TDC = false;
 		boolean DPF = false;
 		SalesBase sb = new SalesBase(driver);
-		sb.BuscarCuenta(DNI, buscarCampoExcel(1, "Cuenta Activa", 2));
+		sb.BuscarCuenta(DNI, sDni);
 		sb.acciondecontacto("catalogo");
 		sleep(18000);
 		sb.elegirplan("Plan con Tarjeta Repro");
@@ -456,11 +456,11 @@ public class Sales extends TestBase {
 		
 	}
 	
-	@Test(groups={"Sales", "AltaDeLinea", "Ola1"}, priority=7)  
-	public void TS94831_Ventas_General_Verificar_No_Asignacion_De_Seriales_Perfil_Representante_Telefonico() throws IOException {
+	@Test(groups={"Sales", "AltaDeLinea", "Ola1"}, priority=7, dataProvider="SalesCuentaActiva")  
+	public void TS94831_Ventas_General_Verificar_No_Asignacion_De_Seriales_Perfil_Representante_Telefonico(String sCuenta, String sDni, String sLinea) throws IOException {
 		perfil = "agente";
 		SalesBase sb = new SalesBase(driver);
-		sb.BuscarCuenta(DNI, buscarCampoExcel(1, "Cuenta Activa", 2));
+		sb.BuscarCuenta(DNI, sDni);
 		sb.acciondecontacto("catalogo");
 		sleep(15000);
 		sb.elegirplan("Plan con Tarjeta Repro");  
@@ -634,8 +634,6 @@ public class Sales extends TestBase {
 		assertTrue(driver.findElement(By.id("FirstName")).getAttribute("value").equals(nombre));
 		assertTrue(driver.findElement(By.id("LastName")).getAttribute("value").equals(apellido));
 		assertTrue(driver.findElement(By.id("Birthdate")).getAttribute("value").equals(nacimiento));
-		
-		
 	}
 	
 	@Test(groups={"Sales", "AltaDeContacto", "Ola1"}, priority=2)
@@ -875,7 +873,6 @@ public class Sales extends TestBase {
 	@Test(groups={"Sales", "AltaDeContacto","Ola1"}, priority=2, dataProvider="SalesCuentaActiva")
 	public void TS94567_Verificar_mascara_del_campo_Fecha_de_Nacimiento(String sCuenta, String sDni, String sLinea) throws IOException {
 		SalesBase SB = new SalesBase(driver);
-		//String NombreCuenta = buscarCampoExcel(1, "Cuenta Activa", 1);
 		SB.BuscarAvanzada(sCuenta.split(" ")[0], sCuenta.split(" ")[1], "", "", "");
 		List <WebElement> cuenta = driver.findElements(By.cssSelector(".slds-truncate.ng-binding"));
 		for (WebElement x : cuenta) {
@@ -982,7 +979,7 @@ public class Sales extends TestBase {
 	@Test(groups={"Sales", "AltaDeContacto","Ola1"}, priority=2)
 	public void TS94877_Alta_Contacto_Busqueda_Verificar_Tabs_Del_Resultado_De_La_Busqueda() {
 		SalesBase SB = new SalesBase(driver);
-		SB.BuscarCuenta("DNI", "32323232");
+		SB.BuscarCuenta("DNI", "");
 		try {Thread.sleep(10000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 		List<WebElement> solapas = driver.findElement(By.className("slds-tabs--scoped__nav")).findElements(By.tagName("li"));
 		assertTrue(solapas.get(0).findElement(By.tagName("a")).getText().equals("Clientes Activos"));
@@ -1039,7 +1036,7 @@ public class Sales extends TestBase {
 	@Test(groups={"Sales", "AltaDeContacto","Ola1"}, priority=2)
 	public void TS94559_Alta_Contacto_Persona_Fisica_Verificar_Error_Al_Ingresar_Pasaporte_Con_Cero_Al_Inicio() {
 		SalesBase SB = new SalesBase(driver);
-		SB.BuscarCuenta("Pasaporte", "0145698");
+		SB.BuscarCuenta("Pasaporte", "014569825");
 		assertTrue(driver.findElement(By.cssSelector(".slds-form-element.vlc-flexng-scope.ng-valid-pattern.ng-valid-maxlength.ng-valid-required.ng-dirty.ng-valid-parse.ng-invalid.ng-invalid-minlength")).isDisplayed());
 	}
 	
@@ -1053,10 +1050,10 @@ public class Sales extends TestBase {
 		
 	}
 	
-	@Test(groups={"Sales", "AltaDeContacto","Ola1"}, priority=2)
-	public void TS94876_Alta_Contacto_Busqueda_Verificar_Opciones_Del_Resultado_De_La_Busqueda() throws IOException {
+	@Test(groups={"Sales", "AltaDeContacto","Ola1"}, priority=2, dataProvider="SalesContactoSinCuenta")
+	public void TS94876_Alta_Contacto_Busqueda_Verificar_Opciones_Del_Resultado_De_La_Busqueda(String sCuenta, String sDni) throws IOException {
 		SalesBase SB = new SalesBase(driver);
-		SB.BuscarCuenta("DNI", buscarCampoExcel(1, "contacto sin cuenta", 2));
+		SB.BuscarCuenta("DNI", sDni);
 		try {Thread.sleep(6000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 		List<WebElement> solapas = driver.findElement(By.className("slds-tabs--scoped__nav")).findElements(By.tagName("li"));
 		for (WebElement UnaS : solapas) {
@@ -1072,10 +1069,10 @@ public class Sales extends TestBase {
 		assertTrue(btns.get(0).getText().equalsIgnoreCase("ver contacto")||btns.get(1).getText().equalsIgnoreCase("ver contacto")||btns.get(2).getText().equalsIgnoreCase("ver contacto"));
 	}
 	
-	@Test(groups={"Sales", "AltaDeContacto","Ola1"}, priority=2)
-	public void TS94574_Alta_Contacto_Persona_Fisica_Verificar_Sugerencia_De_Dominio_En_Campo_Email() throws IOException {
+	@Test(groups={"Sales", "AltaDeContacto","Ola1"}, priority=2, dataProvider="SalesContactoSinCuenta")
+	public void TS94574_Alta_Contacto_Persona_Fisica_Verificar_Sugerencia_De_Dominio_En_Campo_Email(String sCuenta, String sDni) throws IOException {
 		SalesBase SB = new SalesBase(driver);
-		SB.BuscarCuenta("DNI", buscarCampoExcel(1, "Contacto sin cuenta", 2));
+		SB.BuscarCuenta("DNI", sDni);
 		try {Thread.sleep(6000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 		List<WebElement> solapas = driver.findElement(By.className("slds-tabs--scoped__nav")).findElements(By.tagName("li"));
 		for (WebElement UnaS : solapas) {
@@ -1149,10 +1146,10 @@ public class Sales extends TestBase {
 		}
 	}
 	
-	@Test(groups={"Sales", "AltaDeCuenta","Ola1"}, priority=2)
-	public void TS94966_Alta_Alta_Cuenta_Busqueda_Verificar_2_Botones_De_Accion_En_Cada_Cuenta() throws IOException {
+	@Test(groups={"Sales", "AltaDeCuenta","Ola1"}, priority=2, dataProvider="SalesCuentaActiva")
+	public void TS94966_Alta_Alta_Cuenta_Busqueda_Verificar_2_Botones_De_Accion_En_Cada_Cuenta(String sCuenta, String sDni, String sLinea) throws IOException {
 		SalesBase SB = new SalesBase(driver);
-		SB.BuscarCuenta("DNI", buscarCampoExcel(1, "Cuenta Activa", 2));
+		SB.BuscarCuenta("DNI", sDni);
 		try {Thread.sleep(6000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 		List<WebElement> solapas = driver.findElement(By.className("slds-tabs--scoped__nav")).findElements(By.tagName("li"));
 		for (WebElement UnaS : solapas) {
@@ -1177,10 +1174,10 @@ public class Sales extends TestBase {
 		try {Thread.sleep(2000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 	}
 	
-	@Test(groups={"Sales", "AltaDeContacto","Ola1"}, priority=2)
-	public void TS94881_Alta_Contacto_Busqueda_Verificar_Solapa_Por_Defecto_En_Contacto_Sin_Cuenta() {
+	@Test(groups={"Sales", "AltaDeContacto","Ola1"}, priority=2, dataProvider="SalesContactoSinCuenta")
+	public void TS94881_Alta_Contacto_Busqueda_Verificar_Solapa_Por_Defecto_En_Contacto_Sin_Cuenta(String sCuenta, String sDni) {
 		SalesBase SB = new SalesBase(driver);
-		SB.BuscarCuenta("DNI", "22222222");
+		SB.BuscarCuenta("DNI", sDni);
 		try {Thread.sleep(6000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 		List<WebElement> solapas = driver.findElement(By.className("slds-tabs--scoped__nav")).findElements(By.tagName("li"));
 		for (WebElement UnaS : solapas) {
@@ -1192,10 +1189,10 @@ public class Sales extends TestBase {
 		}
 	}
 	
-	@Test(groups={"Sales", "AltaDeContacto","Ola1"}, priority=2)
-	public void TS94790_Alta_Contacto_Busqueda_Verificar_Resultado_Busqueda_Contacto_Sin_Cuenta_Asociada() {
+	@Test(groups={"Sales", "AltaDeContacto","Ola1"}, priority=2, dataProvider="SalesContactoSinCuenta")
+	public void TS94790_Alta_Contacto_Busqueda_Verificar_Resultado_Busqueda_Contacto_Sin_Cuenta_Asociada(String sCuenta, String sDni) {
 		SalesBase SB = new SalesBase(driver);
-		SB.BuscarCuenta("DNI", "22222222");
+		SB.BuscarCuenta("DNI", sDni);
 		try {Thread.sleep(6000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 		List<WebElement> solapas = driver.findElement(By.className("slds-tabs--scoped__nav")).findElements(By.tagName("li"));
 		for (WebElement UnaS : solapas) {
@@ -1284,12 +1281,11 @@ public class Sales extends TestBase {
 		SB.validarcamposbusqueda();
 	}
 	
-	@Test(groups={"Sales", "AltaDeCuenta","Ola1"}, priority=2)
-	public void TS94885_Alta_Cuenta_Busqueda_Verificar_Nombre_y_Apellido_separado() throws IOException{
+	@Test(groups={"Sales", "AltaDeCuenta","Ola1"}, priority=2, dataProvider="SalesCuentaActiva")
+	public void TS94885_Alta_Cuenta_Busqueda_Verificar_Nombre_y_Apellido_separado(String sCuenta, String sDni, String sLinea) throws IOException{
 		SalesBase SB = new SalesBase(driver);
-		String cuenta = buscarCampoExcel(1, "Cuenta activa", 1);
 		SB.BusquedaAvanzada();
-		SB.BuscarAvanzada(cuenta.split(" ")[0],cuenta.split(" ")[1], "", "", "");
+		SB.BuscarAvanzada(sCuenta.split(" ")[0],sCuenta.split(" ")[1], "", "", "");
 		SB.validarespacio();
 	}
 	
@@ -1312,7 +1308,7 @@ public class Sales extends TestBase {
 		SB.validarpasos();			
 	}
 	
-	@Test(groups= {"Fase2", "Sales"})
+	//@Test(groups= {"Fase2", "Sales"})
 	public void TS7005_mandatoryTaxCondition()
 	{
 		BasePage page = new BasePage();
@@ -1359,16 +1355,15 @@ public class Sales extends TestBase {
 	
 	//se deben tener 2 cuentas de lino
 	
-	@Test(groups={"Sales", "AltaDeCuenta","Ola1"}, priority=2)
-	public void TS94965_Alta_Cuenta_Busqueda_Verificar_que_se_agregue_un_nivel_de_agrupamiento() throws IOException{
+	@Test(groups={"Sales", "AltaDeCuenta","Ola1"}, priority=2, dataProvider="SalesCuentaActiva")
+	public void TS94965_Alta_Cuenta_Busqueda_Verificar_que_se_agregue_un_nivel_de_agrupamiento(String sCuenta, String sDni, String sLinea) throws IOException{
 		SalesBase SB = new SalesBase(driver);
-		String cuenta = buscarCampoExcel(1, "Cuenta activa", 1);
-		SB.BuscarAvanzada(cuenta.split(" ")[0],cuenta.split(" ")[1], "", "", "");
+		SB.BuscarAvanzada(sCuenta.split(" ")[0],sCuenta.split(" ")[1], "", "", "");
 		List <WebElement> lista = driver.findElements(By.cssSelector(".slds-truncate.ng-binding"));
 		int a = 0;
 		for (WebElement x : lista) {
 			System.out.println("X = "+x.getText());
-			if (x.getText().toLowerCase().contains(cuenta.toLowerCase())) {
+			if (x.getText().toLowerCase().contains(sCuenta.toLowerCase())) {
 				a++;
 				System.out.println("entre");
 			}
@@ -1385,13 +1380,11 @@ public class Sales extends TestBase {
 		Assert.assertTrue(cont.getText().equals("Contactos"));
 	}		 
 	
-	@Test(groups={"Sales", "AltaDeContacto","Ola1"}, priority=5)
-	public void TS94820_Verificar_que_se_ejecuten_los_procesos_de_validacion() throws IOException {
+	@Test(groups={"Sales", "AltaDeContacto","Ola1"}, priority=5, dataProvider="SalesCuentaActiva")
+	public void TS94820_Verificar_que_se_ejecuten_los_procesos_de_validacion(String sCuenta, String sDni, String sLinea) throws IOException {
 		BasePage dni = new BasePage(driver);
-		String a =  buscarCampoExcel(1, "Cuenta activa", 2);
-		String cuenta =  buscarCampoExcel(1, "Cuenta activa", 1);
 		dni.setSimpleDropdown(driver.findElement(By.id("SearchClientDocumentType")), "DNI");
-		driver.findElement(By.id("SearchClientDocumentNumber")).sendKeys(a);
+		driver.findElement(By.id("SearchClientDocumentNumber")).sendKeys(sDni);
 		driver.findElement(By.id("SearchClientsDummy")).click();
 		sleep(4000);
 		driver.findElement(By.id("tab-scoped-3__item")).click();
@@ -1400,9 +1393,9 @@ public class Sales extends TestBase {
 		WebElement numdni = driver.findElement(By.id("DocumentNumber"));
 		WebElement nomb = driver.findElement(By.id("FirstName"));
 		WebElement apel = driver.findElement(By.id("LastName"));
-		Assert.assertTrue(numdni.getAttribute("value").equals(a));
-		Assert.assertTrue(nomb.getAttribute("value").toLowerCase().equals(cuenta.split(" ")[0].toLowerCase()));
-		Assert.assertTrue(apel.getAttribute("value").toLowerCase().equals(cuenta.split(" ")[1].toLowerCase()));
+		Assert.assertTrue(numdni.getAttribute("value").equals(sDni));
+		Assert.assertTrue(nomb.getAttribute("value").toLowerCase().equals(sCuenta.split(" ")[0].toLowerCase()));
+		Assert.assertTrue(apel.getAttribute("value").toLowerCase().equals(sCuenta.split(" ")[1].toLowerCase()));
 	}
 
 	@Test(groups={"Sales", "AltaDeLinea","Ola1"}, priority=3)
@@ -1489,27 +1482,26 @@ public class Sales extends TestBase {
 		Assert.assertTrue(cump.isDisplayed());
 	}
 
-	@Test(groups={"Sales", "AltaDeCuenta","Ola1"}, priority=2)
-	public void TS95197_Alta_Cuenta_Busqueda_Verificar_busqueda_combinada_DNI_con_NyAp_DNI_Existe_NyAP_No_Existe() throws IOException {
+	@Test(groups={"Sales", "AltaDeCuenta","Ola1"}, priority=2, dataProvider="SalesCuentaActiva")
+	public void TS95197_Alta_Cuenta_Busqueda_Verificar_busqueda_combinada_DNI_con_NyAp_DNI_Existe_NyAP_No_Existe(String sCuenta, String sDni, String sLinea) throws IOException {
 		BasePage dni = new BasePage(driver);
 		dni.setSimpleDropdown(driver.findElement(By.id("SearchClientDocumentType")), "DNI");
 		driver.findElement(By.id("SearchClientDocumentNumber")).click();
-		driver.findElement(By.id("SearchClientDocumentNumber")).sendKeys(buscarCampoExcel(1, "Cuenta activa", 2));
+		driver.findElement(By.id("SearchClientDocumentNumber")).sendKeys(sDni);
 		SalesBase SB = new SalesBase(driver);
 		SB.BuscarAvanzada("papa", "nata", "", "", "");
 		driver.findElement(By.id("tab-scoped-3__item")).click();
 		WebElement tTel = driver.findElement(By.id("tab-scoped-3")).findElement(By.tagName("tbody")).findElements(By.tagName("td")).get(2);
 		System.out.println(tTel.getText());
-		Assert.assertTrue(tTel.getText().equals("34073329"));
+		Assert.assertTrue(tTel.getText().equals(sDni));
 		WebElement tNom = driver.findElement(By.id("tab-scoped-3")).findElement(By.tagName("tbody")).findElements(By.tagName("td")).get(0);
 		Assert.assertFalse(tNom.getText().equals("papa" + " " + "nata"));
 	}
 	
-	@Test(groups={"Sales", "AltaDeCuenta","Ola1"}, priority=2) 
-	public void TS95205_Alta_Cuenta_Business_Validar_nombres_de_los_campos() throws IOException {
+	@Test(groups={"Sales", "AltaDeCuenta","Ola1"}, priority=2, dataProvider="SalesCuentaActiva") 
+	public void TS95205_Alta_Cuenta_Business_Validar_nombres_de_los_campos(String sCuenta, String sDni, String sLinea) throws IOException {
 		SalesBase SB = new SalesBase(driver);
-		String cuenta = buscarCampoExcel(1, "Cuenta activa", 1);
-		SB.BuscarAvanzada("", cuenta.split(" ")[1], "", "", "");
+		SB.BuscarAvanzada("", sCuenta.split(" ")[1], "", "", "");
 		driver.findElement(By.id("SearchClientsDummy")).click();
 		sleep (3000);	
 		WebElement asdf = driver.findElement(By.id("tab-scoped-3")).findElement(By.tagName("tbody")).findElements(By.tagName("td")).get(0);
@@ -1622,10 +1614,10 @@ public class Sales extends TestBase {
 	      Assert.assertTrue(error.getText().toLowerCase().contains("fecha de nacimiento inv\u00e1lida")); 
 	    } 
 	     
-	    @Test(groups = {"Sales", "AltaDeLinea","Ola1"}, priority=3) 
-	    public void TS94627_Alta_Linea_Carrito_Seleccionar_producto_Agregar_cantidad() { 
+	    @Test(groups = {"Sales", "AltaDeLinea","Ola1"}, priority=3, dataProvider="SalesContactoSinCuenta") 
+	    public void TS94627_Alta_Linea_Carrito_Seleccionar_producto_Agregar_cantidad(String sCuenta, String sDni) { 
 	      SalesBase SB = new SalesBase(driver); 
-	      SB.BuscarCuenta(DNI, "11111111"); 
+	      SB.BuscarCuenta(DNI, sDni); 
 	      SB.acciondecontacto("catalogo"); 
 	      SB.agregarplan("plan con tarjeta"); 
 	      sleep(25000); 
@@ -1645,10 +1637,10 @@ public class Sales extends TestBase {
 	      Assert.assertTrue(cant.getAttribute("value").contains("2"));
 	    } 
 	     
-	    @Test(groups = {"Sales", "AltaDeLinea","Ola1"}, priority=3) 
-	    public void TS94628_Alta_Linea_Carrito_Seleccionar_producto_Restar_cantidad() { 
+	    @Test(groups = {"Sales", "AltaDeLinea","Ola1"}, priority=3, dataProvider="SalesContactoSinCuenta") 
+	    public void TS94628_Alta_Linea_Carrito_Seleccionar_producto_Restar_cantidad(String sCuenta, String sDni) { 
 	      SalesBase SB = new SalesBase(driver); 
-	      SB.BuscarCuenta(DNI, "11111111"); 
+	      SB.BuscarCuenta(DNI, sDni); 
 	      SB.acciondecontacto("catalogo"); 
 	      SB.agregarplan("plan con tarjeta"); 
 	      sleep(25000); 
@@ -1670,26 +1662,26 @@ public class Sales extends TestBase {
 	      Assert.assertTrue(cant.getAttribute("value").contains("1"));
 	    } 
 	     
-	    @Test(groups = {"Sales", "AltaDeLinea","Ola1"}, priority=4) 
-	    public void TS94629_Alta_Linea_Configurar_Nueva_Linea_Boton_Siguiente() { 
+	    @Test(groups = {"Sales", "AltaDeLinea","Ola1"}, priority=4, dataProvider="SalesContactoSinCuenta") 
+	    public void TS94629_Alta_Linea_Configurar_Nueva_Linea_Boton_Siguiente(String sCuenta, String sDni) { 
 	      SalesBase SB = new SalesBase(driver); 
-	      SB.BuscarCuenta(DNI, "11111111"); 
+	      SB.BuscarCuenta(DNI, sDni); 
 	      SB.acciondecontacto("catalogo"); 
 	      SB.agregarplan("plan con tarjeta"); 
 	      sleep(15000); 
 	      Assert.assertTrue(driver.findElement(By.cssSelector(".slds-button.slds-m-left--large.slds-button--brand.ta-button-brand")).getText().contains("Continuar")); 
 	    } 
 	     
-	    @Test(groups = {"Sales", "AltaDeCuenta","Ola1"}, priority=2) 
-	    public void TS94969_Alta_Cuenta_Busqueda_Verificar_accion_boton_2_con_datos_heredados() { 
+	    @Test(groups = {"Sales", "AltaDeCuenta","Ola1"}, priority=2, dataProvider="SalesContactoSinCuenta") 
+	    public void TS94969_Alta_Cuenta_Busqueda_Verificar_accion_boton_2_con_datos_heredados(String sCuenta, String sDni) { 
 	      SalesBase SB = new SalesBase(driver); 
-	      SB.BuscarCuenta(DNI, "11111111"); 
+	      SB.BuscarCuenta(DNI, sDni); 
 	      sleep(7000); 
 	      String name = ""; 
 	      List <WebElement> cuenta = driver.findElements(By.cssSelector(".slds-truncate.ng-binding")); 
 	      for (WebElement x : cuenta) { 
-	        if (x.getText().contains("Adela Sales")) { 
-	          name = "Adela Sales"; 
+	        if (x.getText().contains(sCuenta)) { 
+	          name = sCuenta; 
 	        }  
 	      } 
 	      SB.acciondecontacto("nueva cuenta"); 
@@ -1698,16 +1690,16 @@ public class Sales extends TestBase {
 	      Assert.assertTrue(titu.getAttribute("value").contains(name)); 
 	    } 
 	     
-	    @Test(groups = {"Sales", "AltaDeCuenta","Ola1"}, priority=2) 
-	    public void TS94971_Alta_Cuenta_Busqueda_Verificar_que_no_se_completen_datos_boton_accion_cliente() { 
+	    @Test(groups = {"Sales", "AltaDeCuenta","Ola1"}, priority=2, dataProvider="SalesContactoSinCuenta") 
+	    public void TS94971_Alta_Cuenta_Busqueda_Verificar_que_no_se_completen_datos_boton_accion_cliente(String sCuenta, String sDni) { 
 	      SalesBase SB = new SalesBase(driver); 
-	      SB.BuscarCuenta(DNI, "11111111"); 
+	      SB.BuscarCuenta(DNI, sDni); 
 	      sleep(7000); 
 	      String name = ""; 
 	      List <WebElement> cuenta = driver.findElements(By.cssSelector(".slds-truncate.ng-binding")); 
 	      for (WebElement x : cuenta) { 
-	        if (x.getText().contains("Adela Sales")) { 
-	          name = "Adela Sales"; 
+	        if (x.getText().contains(sCuenta)) { 
+	          name = x.getText(); 
 	        }  
 	      } 
 	      SB.acciondecontacto("nueva cuenta"); 
@@ -1746,10 +1738,10 @@ public class Sales extends TestBase {
 	      Assert.assertTrue(driver.findElement(By.id("Contact_nextBtn")).isDisplayed()); 
 	    } 
 	     
-	    @Test(groups = {"Sales", "AltaDeLinea","Ola1"}, priority=3) 
-	    public void TS95062_Ventas_General_Visualizar_accion_Agregar() { 
+	    @Test(groups = {"Sales", "AltaDeLinea","Ola1"}, priority=3, dataProvider="SalesContactoSinCuenta") 
+	    public void TS95062_Ventas_General_Visualizar_accion_Agregar(String sCuenta, String sDni) { 
 	      SalesBase SB = new SalesBase(driver); 
-	      SB.BuscarCuenta(DNI, "11111111"); 
+	      SB.BuscarCuenta(DNI, sDni); 
 	      SB.acciondecontacto("catalogo"); 
 	      SB.agregarplan("plan con tarjeta"); 
 	      Assert.assertTrue(driver.findElements(By.cssSelector(".slds-button.slds-button_neutral.cpq-add-button")).get(1).getText().equalsIgnoreCase("agregar")); 
@@ -1774,10 +1766,10 @@ public class Sales extends TestBase {
 	      Assert.assertTrue(a == 2); 
 	    } 
 	     
-	    @Test(groups = {"Sales", "AltaDeLinea","Ola1"}, priority=3) 
-	    public void TS95063_Ventas_General_Visualizar_accion_Eliminar() { 
+	    @Test(groups = {"Sales", "AltaDeLinea","Ola1"}, priority=3, dataProvider="SalesContactoSinCuenta") 
+	    public void TS95063_Ventas_General_Visualizar_accion_Eliminar(String sCuenta, String sDni) { 
 	      SalesBase SB = new SalesBase(driver); 
-	      SB.BuscarCuenta(DNI, "11111111"); 
+	      SB.BuscarCuenta(DNI, sDni); 
 	      SB.acciondecontacto("catalogo"); 
 	      SB.agregarplan("plan con tarjeta"); 
 	      sleep(15000); 
@@ -1801,10 +1793,10 @@ public class Sales extends TestBase {
 	      Assert.assertTrue(a == 0); 
 	    } 
 	     
-	    @Test(groups = {"Sales", "AltaDeLinea","Ola1"}, priority=3) 
-	    public void TS95061_Ventas_General_Visualizar_botones_Agregar_Eliminar() { 
+	    @Test(groups = {"Sales", "AltaDeLinea","Ola1"}, priority=3, dataProvider="SalesContactoSinCuenta") 
+	    public void TS95061_Ventas_General_Visualizar_botones_Agregar_Eliminar(String sCuenta, String sDni) { 
 	      SalesBase SB = new SalesBase(driver); 
-	      SB.BuscarCuenta(DNI, "11111111"); 
+	      SB.BuscarCuenta(DNI, sDni); 
 	      SB.acciondecontacto("catalogo"); 
 	      SB.agregarplan("plan con tarjeta"); 
 	      sleep(15000); 
@@ -1825,10 +1817,10 @@ public class Sales extends TestBase {
 	      Assert.assertTrue(a && b); 
 	    } 
 	     
-	    @Test(groups = {"Sales", "AltaDeLinea","Ola1"}, priority=2) 
-	    public void TS94888_Ventas_General_Verificar_no_visualizacion_de_boton_Crear_Cuenta() throws IOException { 
+	    @Test(groups = {"Sales", "AltaDeLinea","Ola1"}, priority=2, dataProvider="SalesContactoSinCuenta") 
+	    public void TS94888_Ventas_General_Verificar_no_visualizacion_de_boton_Crear_Cuenta(String sCuenta, String sDni) throws IOException { 
 	      SalesBase SB = new SalesBase(driver); 
-	      SB.BuscarCuenta(DNI, buscarCampoExcel(1, "Contacto sin cuenta", 2)); 
+	      SB.BuscarCuenta(DNI, sDni); 
 	      SB.acciondecontacto("catalogo"); 
 	      sleep(10000); 
 	      WebElement page = driver.findElement(By.cssSelector(".vlocity.via-slds")); 
@@ -1840,10 +1832,10 @@ public class Sales extends TestBase {
 	      } 
 	    } 
 	     
-	    @Test(groups = {"Sales", "AltaDeCuenta","Ola1"}, priority=4) 
-	    public void TS95513_Alta_de_Cuenta_Consumer_Verificar_Consumidor_final_por_defecto() throws IOException { 
+	    @Test(groups = {"Sales", "AltaDeCuenta","Ola1"}, priority=4, dataProvider="SalesContactoSinCuenta") 
+	    public void TS95513_Alta_de_Cuenta_Consumer_Verificar_Consumidor_final_por_defecto(String sCuenta, String sDni) throws IOException { 
 	      SalesBase SB = new SalesBase(driver); 
-	      SB.BuscarCuenta(DNI, buscarCampoExcel(1, "Contacto sin cuenta", 2)); 
+	      SB.BuscarCuenta(DNI, sDni); 
 	      SB.acciondecontacto("catalogo"); 
 	      SB.agregarplan("plan con tarjeta"); 
 	      sleep(15000); 
@@ -1854,7 +1846,7 @@ public class Sales extends TestBase {
 	    }     
 
 	 	
-	@Test(groups = "Sales")
+	//@Test(groups = "Sales")
 	public void TS76117_Alta_Contacto_Creacion_Verificar_creacion_de_cliente() throws IOException {
 		SalesBase SB = new SalesBase(driver);
 		SB.BuscarCuenta(DNI, buscarCampoExcel(1, "Contacto sin cuenta", 2));
@@ -1870,10 +1862,10 @@ public class Sales extends TestBase {
 		Assert.assertTrue(as);
 	}
 	 	
-	@Test(groups={"Sales", "AltaDeContacto","Ola1"}, priority=3)
-	public void TS95186_Alta_Contacto_Creacion_Verificar_creacion_de_cliente() throws IOException {
+	@Test(groups={"Sales", "AltaDeContacto","Ola1"}, priority=3, dataProvider="SalesContactoSinCuenta")
+	public void TS95186_Alta_Contacto_Creacion_Verificar_creacion_de_cliente(String sCuenta, String sDni) throws IOException {
 		SalesBase SB = new SalesBase(driver);
-		SB.BuscarCuenta(DNI, buscarCampoExcel(1, "Contacto sin cuenta", 2));
+		SB.BuscarCuenta(DNI, sDni);
 		SB.acciondecontacto("nueva cuenta");
 		sleep(5000);
 		WebElement telalt = driver.findElement(By.id("AlternativePhone"));
@@ -1887,11 +1879,11 @@ public class Sales extends TestBase {
 		}
 	}
 	
-	@Test(groups = {"Sales","AltaDeContacto","Ola1"}, priority=2)
-	 public void TS95218_Blacklist_Validacion_de_cliente_en_blacklist_Cliente_DNI(){
+	@Test(groups = {"Sales","AltaDeContacto","Ola1"}, priority=2, dataProvider="SalesBlacklist")
+	 public void TS95218_Blacklist_Validacion_de_cliente_en_blacklist_Cliente_DNI(String sCuenta, String sDni){
 	  SalesBase SB = new SalesBase(driver);
 	  Boolean t = false;
-	  SB.BuscarCuenta(DNI, "22355504");
+	  SB.BuscarCuenta(DNI, sDni);
 	  SB.acciondecontacto("catalogo");
 	  sleep(18000);
 	  WebElement pp = driver.findElement(By.cssSelector(".slds-grid.slds-grid--vertical-align-center.slds-grid--align-center.cpq-no-products-msg"));
@@ -1900,10 +1892,10 @@ public class Sales extends TestBase {
 	 }  
 	
 	
-	 @Test(groups = {"Sales", "AltaDeContacto","Ola1"}, priority=4)
-	  public void TS94734_Alta_de_Contacto_Persona_Fisica_Verificar_seleccion_de_localidad_existente() throws IOException{ 
+	 @Test(groups = {"Sales", "AltaDeContacto","Ola1"}, priority=4,  dataProvider="SalesContactoSinCuenta")
+	  public void TS94734_Alta_de_Contacto_Persona_Fisica_Verificar_seleccion_de_localidad_existente(String sCuenta, String sDni) throws IOException{ 
 	    SalesBase SB = new SalesBase(driver); 
-	    SB.BuscarCuenta(DNI, buscarCampoExcel(1, "Contacto sin cuenta", 2)); 
+	    SB.BuscarCuenta(DNI, sDni); 
 	    SB.acciondecontacto("nueva cuenta"); 
 	    boolean h = false; 
 	    sleep(5000); 
@@ -1920,10 +1912,11 @@ public class Sales extends TestBase {
 	    } 
 	    Assert.assertTrue(h); 
 	   } 
-	  @Test(groups = {"Sales", "AltaDeContacto","Ola1"}, priority=2)
-	  public void TS94737_Alta_de_Contacto_Persona_Fisica_Verificar_seleccion_de_calle_existente() throws IOException{ 
+	 
+	  @Test(groups = {"Sales", "AltaDeContacto","Ola1"}, priority=2,  dataProvider="SalesCuentaActiva")
+	  public void TS94737_Alta_de_Contacto_Persona_Fisica_Verificar_seleccion_de_calle_existente(String sCuenta, String sDni, String sLinea) throws IOException{ 
 	    SalesBase SB = new SalesBase(driver); 
-	    SB.BuscarCuenta(DNI, buscarCampoExcel(1, "Cuenta activa", 2)); 
+	    SB.BuscarCuenta(DNI, sDni); 
 	    driver.findElement(By.id("tab-scoped-3__item")).click();
 	    sleep(3000);
 	    SB.acciondecontacto("nueva cuenta"); 
@@ -1944,10 +1937,10 @@ public class Sales extends TestBase {
 	    Assert.assertTrue(h); 
 	   } 
 	  
-	  @Test(groups = {"Sales", "AltaDeContacto","Ola1"}, priority=4) 
-	  public void TS94735_Alta_de_Contacto_Persona_Fisica_Verificar_ingreso_manual_de_localidad_inexistente() throws IOException{ 
+	  @Test(groups = {"Sales", "AltaDeContacto","Ola1"}, priority=4, dataProvider="SalesCuentaActiva") 
+	  public void TS94735_Alta_de_Contacto_Persona_Fisica_Verificar_ingreso_manual_de_localidad_inexistente(String sCuenta, String sDni, String sLinea) throws IOException{ 
 	    SalesBase SB = new SalesBase(driver); 
-	    SB.BuscarCuenta(DNI, buscarCampoExcel(1, "Cuenta activa", 2)); 
+	    SB.BuscarCuenta(DNI, sDni); 
 	    SB.acciondecontacto("nueva cuenta"); 
 	    sleep(5000); 
 	    Select regio = new Select (driver.findElement(By.id("State"))); 
@@ -1961,10 +1954,10 @@ public class Sales extends TestBase {
 	  } 
 	  
 	  
-	  @Test(groups = {"Sales", "AltaDeContacto","Ola1"}, priority=4) 
-	  public void TS94739_Alta_de_Contacto_Persona_Fisica_Verificar_ingreso_manual_de_cod_postal_inexistente() throws IOException{ 
+	  @Test(groups = {"Sales", "AltaDeContacto","Ola1"}, priority=4, dataProvider="SalesCuentaActiva") 
+	  public void TS94739_Alta_de_Contacto_Persona_Fisica_Verificar_ingreso_manual_de_cod_postal_inexistente(String sCuenta, String sDni, String sLinea) throws IOException{ 
 	    SalesBase SB = new SalesBase(driver); 
-	    SB.BuscarCuenta(DNI, buscarCampoExcel(1, "Cuenta activa", 2)); 
+	    SB.BuscarCuenta(DNI, sDni); 
 	    SB.acciondecontacto("nueva cuenta"); 
 	    sleep(5000); 
 	    Select regio = new Select (driver.findElement(By.id("State"))); 
@@ -1980,10 +1973,11 @@ public class Sales extends TestBase {
 	    cod.sendKeys("1765"); 
 	    Assert.assertTrue(cod.getAttribute("value").equals("1765")); 
 	  } 
-	  @Test(groups = {"Sales", "AltaDeContacto","Ola1"}, priority=4)
-	  public void TS94736_Alta_de_Contacto_Persona_Fisica_Verificar_ingreso_manual_de_calle_inexistente() throws IOException{ 
+	  
+	  @Test(groups = {"Sales", "AltaDeContacto","Ola1"}, priority=4, dataProvider="SalesCuentaActiva")
+	  public void TS94736_Alta_de_Contacto_Persona_Fisica_Verificar_ingreso_manual_de_calle_inexistente(String sCuenta, String sDni, String sLinea) throws IOException{ 
 	    SalesBase SB = new SalesBase(driver); 
-	    SB.BuscarCuenta(DNI, buscarCampoExcel(1, "Cuenta activa", 2)); 
+	    SB.BuscarCuenta(DNI, sDni); 
 	    SB.acciondecontacto("nueva cuenta"); 
 	    sleep(5000); 
 	    Select regio = new Select (driver.findElement(By.id("State"))); 
@@ -2000,10 +1994,10 @@ public class Sales extends TestBase {
 	    Assert.assertTrue(cal.getAttribute("value").equals("ATENAS")); 
 	  } 
 	  
-	  @Test(groups = {"Sales", "AltaDeContacto","Ola1"}, priority=4) 
-	  public void TS94610_Configuracion_CondicionImpositiva_Verificar_categoria_frente_al_IVA_para_clientes_con_DNI_Pasaporte() throws IOException {
+	  @Test(groups = {"Sales", "AltaDeContacto","Ola1"}, priority=4, dataProvider="SalesCuentaActiva") 
+	  public void TS94610_Configuracion_CondicionImpositiva_Verificar_categoria_frente_al_IVA_para_clientes_con_DNI_Pasaporte(String sCuenta, String sDni, String sLinea) throws IOException {
 		  SalesBase SB = new SalesBase(driver); 
-		  SB.BuscarCuenta(DNI, buscarCampoExcel(1, "Cuenta activa", 2)); 
+		  SB.BuscarCuenta(DNI, sDni); 
 		  SB.acciondecontacto("nueva cuenta");
 		  sleep(7000);
 		  driver.findElement(By.id("ImpositiveCondition")).click();
@@ -2011,21 +2005,21 @@ public class Sales extends TestBase {
 		  Assert.assertTrue(driver.findElement(By.xpath("//*[text() = 'IVA Consumidor Final']")).isDisplayed());
 	  }
 	  
-	  @Test(groups = {"Sales", "AltaDeLinea","Ola1"}, priority=2)
-	  public void TS94709_Ventas_BuscarCliente_Verificar_cliente_activo_por_numero_de_linea() throws IOException {
+	  @Test(groups = {"Sales", "AltaDeLinea","Ola1"}, priority=2, dataProvider="SalesCuentaActiva")
+	  public void TS94709_Ventas_BuscarCliente_Verificar_cliente_activo_por_numero_de_linea(String sCuenta, String sDni, String sLinea) throws IOException {
 		  //buscar todos los dni y tomar una linea y luego hacer la busqueda por la linea
 		 // String tel = "1157602860";
-		  driver.findElement(By.id("PhoneNumber")).sendKeys(buscarCampoExcel(1, "Cuenta activa", 3));
+		  driver.findElement(By.id("PhoneNumber")).sendKeys(sLinea);
 		  driver.findElement(By.id("SearchClientsDummy")).click();
 		  sleep(5000);
 		  WebElement linea = driver.findElement(By.xpath("//*[@id=\"tab-scoped-1\"]/section/div/table/tbody/tr[1]/td[2]"));
-		  Assert.assertTrue(linea.getText().equals(buscarCampoExcel(1, "Cuenta activa", 3)));		  
+		  Assert.assertTrue(linea.getText().equals(sLinea));		  
 	  }
 	  
-	  @Test(groups = {"Sales", "AltaDeLinea","Ola1"}, priority=2)
-	  public void TS94710_Ventas_BuscarCliente_Verificar_Los_Datos_Del_Cliente_Activo() throws IOException { 
+	  @Test(groups = {"Sales", "AltaDeLinea","Ola1"}, priority=2, dataProvider="SalesCuentaActiva")
+	  public void TS94710_Ventas_BuscarCliente_Verificar_Los_Datos_Del_Cliente_Activo(String sCuenta, String sDni, String sLinea) throws IOException { 
 		  boolean ok = false;
-		  driver.findElement(By.id("PhoneNumber")).sendKeys(buscarCampoExcel(1, "Cuenta activa", 3));
+		  driver.findElement(By.id("PhoneNumber")).sendKeys(sLinea);
 		  driver.findElement(By.id("SearchClientsDummy")).click();
 		  sleep(5000);
 		  List<WebElement> campos = driver.findElement(By.id("tab-scoped-1")).findElement(By.cssSelector(".slds-table.slds-table--bordered.slds-tree.slds-table--tree.table.tableCSS")).findElement(By.tagName("tr")).findElements(By.tagName("th"));
@@ -2057,10 +2051,10 @@ public class Sales extends TestBase {
 		  }
 	  }
 	  
-	  @Test(groups = {"Sales", "AltaDeLinea","Ola1"}, priority=2)
-	  public void TS94711_Ventas_BuscarCliente_Verificar_Clientes_No_Activos() throws IOException {
+	  @Test(groups = {"Sales", "AltaDeLinea","Ola1"}, priority=2, dataProvider="SalesCuentaInactiva")
+	  public void TS94711_Ventas_BuscarCliente_Verificar_Clientes_No_Activos(String sCuenta, String sDni, String sLinea) throws IOException {
 		  //debo buscar un cliente inactivo y me traigo el numero de linea y lo busco
-		  driver.findElement(By.id("PhoneNumber")).sendKeys(buscarCampoExcel(1, "Cuenta inactiva", 3));
+		  driver.findElement(By.id("PhoneNumber")).sendKeys(sLinea);
 		  driver.findElement(By.id("SearchClientsDummy")).click();
 		  sleep(5000);
 		  List <WebElement> cai = driver.findElement(By.className("slds-tabs--scoped__nav")).findElements(By.tagName("li"));
@@ -2069,10 +2063,10 @@ public class Sales extends TestBase {
 		  }
 	  }
 	  
-	  @Test(groups = {"Sales", "AltaDeLinea","Ola1"}, priority=2)
-	  public void TS94713_Ventas_BuscarCliente_Verificar_Clientes_Activos_Y_No_Activos() throws IOException {
+	  @Test(groups = {"Sales", "AltaDeLinea","Ola1"}, priority=2, dataProvider="SalesCuentaInactiva")
+	  public void TS94713_Ventas_BuscarCliente_Verificar_Clientes_Activos_Y_No_Activos(String sCuenta, String sDni, String sLinea) throws IOException {
 		  //buscar un cliente inactivo (1) y uno activo (2)
-		  driver.findElement(By.id("PhoneNumber")).sendKeys(buscarCampoExcel(1, "Cuenta inactiva", 3));
+		  driver.findElement(By.id("PhoneNumber")).sendKeys(sLinea);
 		  driver.findElement(By.id("SearchClientsDummy")).click();
 		  sleep(5000);
 		  List <WebElement> cai = driver.findElement(By.className("slds-tabs--scoped__nav")).findElements(By.tagName("li"));
@@ -2081,6 +2075,7 @@ public class Sales extends TestBase {
 		  }
 		  sleep(2000);
 		  driver.findElement(By.id("PhoneNumber")).clear();
+		  //************************************************
 		  driver.findElement(By.id("PhoneNumber")).sendKeys(buscarCampoExcel(1, "Cuenta activa", 3));
 		  driver.findElement(By.id("SearchClientsDummy")).click();
 		  sleep(5000);
@@ -2162,10 +2157,10 @@ public class Sales extends TestBase {
 		  Assert.assertTrue(driver.findElement(By.cssSelector(".OSradioButton.ng-scope.only-buttom")).isDisplayed());
 	  }
 	  
-	  @Test(groups = {"Sales", "AltaDeContacto", "Ola1"}, priority=2)
-	  public void TS94945_Alta_de_Contacto_Busqueda_Verificar_boton_1_sobre_contactos() throws IOException {
+	  @Test(groups = {"Sales", "AltaDeContacto", "Ola1"}, priority=2, dataProvider="SalesContactoSinCuenta")
+	  public void TS94945_Alta_de_Contacto_Busqueda_Verificar_boton_1_sobre_contactos(String sCuenta, String sDni) throws IOException {
 		  SalesBase SB = new SalesBase(driver); 
-		  SB.BuscarCuenta(DNI, buscarCampoExcel(1, "Contacto sin cuenta", 2));
+		  SB.BuscarCuenta(DNI, sDni);
 		  List <WebElement> nc = driver.findElements(By.cssSelector(".slds-button.slds-button.slds-button--icon"));
 		  boolean a = false;
 		  for (WebElement x : nc) {
@@ -2176,10 +2171,10 @@ public class Sales extends TestBase {
 		  Assert.assertTrue(a);
 	  }
 	  
-	  @Test(groups = {"Sales", "AltaDeContacto", "Ola1"}, priority=2)
-	  public void TS94946_Alta_de_Contacto_Busqueda_Verificar_boton_2_sobre_contactos() throws IOException {
+	  @Test(groups = {"Sales", "AltaDeContacto", "Ola1"}, priority=2, dataProvider="SalesContactoSinCuenta")
+	  public void TS94946_Alta_de_Contacto_Busqueda_Verificar_boton_2_sobre_contactos(String sCuenta, String sDni) throws IOException {
 		  SalesBase SB = new SalesBase(driver); 
-		  SB.BuscarCuenta(DNI, buscarCampoExcel(1, "Contacto sin cuenta", 2));
+		  SB.BuscarCuenta(DNI, sDni);
 		  List <WebElement> nc = driver.findElements(By.cssSelector(".slds-button.slds-button.slds-button--icon"));
 		  boolean a = false;
 		  for (WebElement x : nc) {
@@ -2196,21 +2191,19 @@ public class Sales extends TestBase {
 	  
 	  
 	  
-	  @Test(groups = {"Sales", "AltaDeContacto", "Ola1"}, priority=2)
-	  public void TS94878_Alta_de_Contacto_Busqueda_Verificar_accion_de_Crear_Cuenta() throws IOException {
+	  @Test(groups = {"Sales", "AltaDeContacto", "Ola1"}, priority=2, dataProvider="SalesContactoSinCuenta")
+	  public void TS94878_Alta_de_Contacto_Busqueda_Verificar_accion_de_Crear_Cuenta(String sCuenta, String sDni) throws IOException {
 		  SalesBase SB = new SalesBase(driver); 
-		  SB.BuscarCuenta(DNI, buscarCampoExcel(1, "Contacto sin cuenta", 2)); 
+		  SB.BuscarCuenta(DNI, sDni); 
 		  SB.acciondecontacto("nueva cuenta");
 		  sleep(7000);
 		  Assert.assertTrue(driver.findElement(By.id("ContactName")).isDisplayed());
 	  }
 	  
-	  @Test(groups = {"Sales", "AltaDeContacto", "Ola1"}, priority=2)
-	  public void TS94896_Alta_Contacto_Verificar_contacto_existente_sin_cuenta_asociada_muestra_datos_de_contacto() throws IOException {
+	  @Test(groups = {"Sales", "AltaDeContacto", "Ola1"}, priority=2, dataProvider="SalesContactoSinCuenta")
+	  public void TS94896_Alta_Contacto_Verificar_contacto_existente_sin_cuenta_asociada_muestra_datos_de_contacto(String sCuenta, String sDni) throws IOException {
 		  SalesBase SB = new SalesBase(driver); 
-		  String cel = buscarCampoExcel(1, "Contacto sin cuenta", 2);
-		  String nombre = buscarCampoExcel(1, "Contacto sin cuenta", 1);
-		  SB.BuscarCuenta(DNI, cel);
+		  SB.BuscarCuenta(DNI, sDni);
 		  sleep(7000);
 		  List <WebElement> cuenta = driver.findElements(By.cssSelector(".slds-truncate.ng-binding"));
 		  for (WebElement x : cuenta) {
@@ -2223,7 +2216,7 @@ public class Sales extends TestBase {
 		  WebElement dni = driver.findElement(By.id("DocumentNumber"));
 		  WebElement name = driver.findElement(By.id("FirstName"));
 		  WebElement apel = driver.findElement(By.id("LastName"));
-		  Assert.assertTrue(dni.getAttribute("value").contains(cel) && name.getAttribute("value").toLowerCase().contains(nombre.split(" ")[0]) && apel.getAttribute("value").contains(nombre.split(" ")[1]));
+		  Assert.assertTrue(dni.getAttribute("value").contains(sDni) && name.getAttribute("value").toLowerCase().contains(sCuenta.split(" ")[0]) && apel.getAttribute("value").contains(sCuenta.split(" ")[1]));
 	  }
 	  
 	  @Test(groups = {"Sales", "AltaDeContacto","Ola1"}, priority=2)
@@ -2297,14 +2290,15 @@ public class Sales extends TestBase {
 			}
 		  Assert.assertTrue(y);
 	  }
+	
 	@Test(groups={"Sales", "AltaDeContacto","Ola1"}, priority=2)
 	  public void TS94532_Alta_de_Contacto_Persona_Fisica_Ingresar_DNI_en_el_campo_Numero_de_Documento_05(){
 		  SalesBase SB = new SalesBase (driver);
 		  WebElement doc = driver.findElement(By.id("SearchClientDocumentNumber"));
 		  doc.sendKeys("46331352");
 		  Assert.assertFalse(doc.getAttribute("value").isEmpty());
-		  
 	  }
+	
 	@Test(groups={"Sales", "AltaDeContacto","Ola1"}, priority=2)
 	  public void TS94533_Alta_de_Contacto_Persona_Fisica_Ingresar_a_la_vista_de_alta_de_contacto_01(){
 		SalesBase SB = new SalesBase(driver);
@@ -2356,10 +2350,10 @@ public class Sales extends TestBase {
 		Assert.assertTrue(x);
 	  }
 	  
-	@Test(groups={"Sales", "AltaDeContacto","Ola1"}, priority=2)
-	  public void TS94879_Alta_de_Contacto_Busqueda_Verificar_accion_de_proceso_de_Venta() throws IOException{
+	@Test(groups={"Sales", "AltaDeContacto","Ola1"}, priority=2, dataProvider="SalesContactoSinCuenta")
+	  public void TS94879_Alta_de_Contacto_Busqueda_Verificar_accion_de_proceso_de_Venta(String sCuenta, String sDni) throws IOException{
 		  SalesBase SB = new SalesBase(driver);
-		  SB.BuscarCuenta(DNI, buscarCampoExcel(1, "Contacto sin cuenta", 2)); 
+		  SB.BuscarCuenta(DNI, sDni); 
 		  SB.acciondecontacto("catalogo"); 
 		  sleep(15000); 
 		  WebElement asd = driver.findElement(By.className("taHeaderInfoContainer"));
@@ -2368,15 +2362,15 @@ public class Sales extends TestBase {
 	  }
 	
 	
-	@Test(groups={"Sales", "AltaDeContacto","Ola1"}, priority=2)
-	  public void TS94822_Alta_Contacto_Busqueda_Verificar_Consumer_Account_Contacto_existente_CRM() throws IOException{
+	@Test(groups={"Sales", "AltaDeContacto","Ola1"}, priority=2,  dataProvider="SalesContactoSinCuenta")
+	  public void TS94822_Alta_Contacto_Busqueda_Verificar_Consumer_Account_Contacto_existente_CRM(String sCuenta, String sDni) throws IOException{
 		  SalesBase SB = new SalesBase(driver);
-		  SB.BuscarCuenta(DNI, buscarCampoExcel(1, "Contacto sin cuenta", 2));
+		  SB.BuscarCuenta(DNI, sDni);
 		  sleep(5000);
 		WebElement nomb = driver.findElement(By.id("tab-scoped-3")).findElement(By.tagName("section")).findElement(By.tagName("div")).findElement(By.tagName("table")).findElement(By.tagName("tbody")).findElements(By.tagName("td")).get(0);
-		System.out.println(nomb.getText());
-		System.out.println(" "+buscarCampoExcel(1, "Contacto sin cuenta", 1));
-		Assert.assertTrue(nomb.getText().toLowerCase().equals(buscarCampoExcel(1, "Contacto sin cuenta", 1).toLowerCase()));
+		//System.out.println(nomb.getText());
+		//System.out.println(" "+buscarCampoExcel(1, "Contacto sin cuenta", 1));
+		Assert.assertTrue(nomb.getText().toLowerCase().equals(sCuenta.toLowerCase()));
 	  }
 	
 	
@@ -2397,11 +2391,11 @@ public class Sales extends TestBase {
 	
 	}
 	
-	@Test(groups={"Sales", "AltaDeLinea", "Ola1"}, priority=3)
-	public void TS94830_Ventas_General_Verificar_Metodo_De_Entrega_Por_Default_Perfil_Representante_Telefonico() throws IOException{
+	@Test(groups={"Sales", "AltaDeLinea", "Ola1"}, priority=3, dataProvider="SalesCuentaActiva")
+	public void TS94830_Ventas_General_Verificar_Metodo_De_Entrega_Por_Default_Perfil_Representante_Telefonico(String sCuenta, String sDni, String sLinea) throws IOException{
 		perfil = "agente";
 		SalesBase SB = new SalesBase(driver);
-		SB.BuscarCuenta(DNI, buscarCampoExcel(1, "Cuenta activa", 2));
+		SB.BuscarCuenta(DNI, sDni);
 		SB.acciondecontacto("catalogo");
 		boolean x = false;
 		sleep(18000);
@@ -2425,10 +2419,10 @@ public class Sales extends TestBase {
 		
 	}
 	
-	@Test(groups={"Sales", "AltaDeLinea", "Ola1"}, priority=3)
-	public void TS94697_Nueva_Venta_Modo_de_Entrega_Verificar_Valor_por_Default_Tipo_de_Delivery() throws IOException{
+	@Test(groups={"Sales", "AltaDeLinea", "Ola1"}, priority=3, dataProvider="SalesCuentaActiva")
+	public void TS94697_Nueva_Venta_Modo_de_Entrega_Verificar_Valor_por_Default_Tipo_de_Delivery(String sCuenta, String sDni, String sLinea) throws IOException{
 		SalesBase SB = new SalesBase(driver);
-		SB.BuscarCuenta(DNI, buscarCampoExcel(1, "Cuenta activa", 2));
+		SB.BuscarCuenta(DNI, sDni);
 		SB.acciondecontacto("catalogo");
 		boolean x = false;
 		sleep(20000);
@@ -2464,10 +2458,10 @@ public class Sales extends TestBase {
 	}	
 	
 	
-	@Test(groups={"Sales", "AltaDeLinea", "Ola1"}, priority=3)
-	public void TS94687_Nueva_Venta_Modo_de_Entrega_Verificar_Valor_por_Default_Modo_de_Entrega_Delivery() throws IOException{
+	@Test(groups={"Sales", "AltaDeLinea", "Ola1"}, priority=3, dataProvider="SalesContactoSinCuenta")
+	public void TS94687_Nueva_Venta_Modo_de_Entrega_Verificar_Valor_por_Default_Modo_de_Entrega_Delivery(String sCuenta, String sDni) throws IOException{
 		SalesBase SB = new SalesBase(driver);
-		SB.BuscarCuenta(DNI, buscarCampoExcel(1, "Contacto sin cuenta", 2));
+		SB.BuscarCuenta(DNI, sDni);
 		SB.acciondecontacto("catalogo");
 		boolean x = false;
 		sleep(18000);
