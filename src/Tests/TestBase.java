@@ -649,6 +649,15 @@ public class TestBase {
 	}
 	
 	@DataProvider
+	public Object[][] SalesBlacklist() throws Exception{
+
+		 Object[][] testObjArray = ExcelUtils.getTableArray("Cuentas.xlsx","Sales",1,1,2,"Blacklist");
+		 return (testObjArray);
+
+	}
+	
+	
+	@DataProvider
 	public Object[][] SalesCuentaConGestiones() throws Exception{
 
 	 Object[][] testObjArray = ExcelUtils.getTableArray("Cuentas.xlsx","Sales",1,1,3,"Cuenta con gestiones");
@@ -656,5 +665,41 @@ public class TestBase {
 	 return (testObjArray);
 
 	}
-}
+	
+	@DataProvider
+	public Object[][] MarketingCuentaNormal() throws Exception{
 
+	 Object[][] testObjArray = ExcelUtils.getTableArray("Cuentas.xlsx","Marketing",1,1,1,"Cuenta Normal");
+
+	 return (testObjArray);
+
+	}
+	
+	@DataProvider
+	public Object[][] MarketingCuentaConMora() throws Exception{
+
+	 Object[][] testObjArray = ExcelUtils.getTableArray("Cuentas.xlsx","Marketing",1,1,1,"Cuenta c/ Mora");
+
+	 return (testObjArray);
+
+	}
+	
+	@DataProvider
+	public Object[][] MarketingCuentaConFraude() throws Exception{
+
+	 Object[][] testObjArray = ExcelUtils.getTableArray("Cuentas.xlsx","Marketing",1,1,1,"Cuenta c/ Fraude");
+
+	 return (testObjArray);
+
+	}
+	
+	@DataProvider
+	public Object[][] MarketingCuentaSinServicio() throws Exception{
+
+	 Object[][] testObjArray = ExcelUtils.getTableArray("Cuentas.xlsx","Marketing",1,1,1,"Cuenta sin Servicio");
+
+	 return (testObjArray);
+
+	}
+	
+}

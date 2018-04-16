@@ -67,15 +67,13 @@ private WebDriver driver;
  	}
  		@BeforeMethod(alwaysRun=true)
  		public void setUp() throws Exception {
-		//Selecciona la cuenta Adrian Tech de todas las Cuentas
- 		TechCare_Ola1 page=new TechCare_Ola1(driver);
 		sleep(3000);
 		driver.switchTo().defaultContent();
 		sleep(3000);
-		//page.selectAccount((buscarCampoExcel(3, "Cuenta Activa c/ linea y serv", 1)));
-		page.selectAccount ("Marco Polo");
-		driver.switchTo().defaultContent();
-		sleep(3000);
+		//page.selectAccount((  (3, "Cuenta Activa c/ linea y serv", 1)));
+		//page.selectAccount ("Marco Polo");
+		//driver.switchTo().defaultContent();
+		//sleep(3000);
  	
 	}
  	 	
@@ -103,13 +101,14 @@ private WebDriver driver;
 	
 	
 
-	@Test (groups= {"TechnicalCare", "SVA", "Ola1"})//listo
-	public void TS94226_CRM_Ola_1_Technical_Care_CSR_SVA_Actualización_de_matriz_Servicio_Transferencia_de_llamadas_inconveniente_No_funciona_transferencia_de_llamadas_No_funciona_transferencia_de_llamadas_No_puede_configurar() throws Exception {
+	@Test (groups= {"TechnicalCare", "SVA", "Ola1"}, dataProvider="Tech")//listo
+	public void TS94226_CRM_Ola_1_Technical_Care_CSR_SVA_Actualización_de_matriz_Servicio_Transferencia_de_llamadas_inconveniente_No_funciona_transferencia_de_llamadas_No_funciona_transferencia_de_llamadas_No_puede_configurar(String sCuenta, String sDni, String sLinea) throws Exception {
 	TechnicalCareCSRDiagnosticoPage tech = new TechnicalCareCSRDiagnosticoPage(driver);
-	sleep (4000);
+	TechCare_Ola1 page=new TechCare_Ola1(driver);
+	page.selectAccount (sCuenta);
 	driver.switchTo().defaultContent();
-    //tech.clickOpcionEnAsset(buscarCampoExcel(3, "Cuenta Activa c/ linea y serv", 3), "mis servicios");
-	tech.clickOpcionEnAsset("543416869777", "mis servicios");
+	sleep(3000);
+	tech.clickOpcionEnAsset(sLinea, "mis servicios");
     tech.verDetalles();
     tech.clickDiagnosticarServicio("Transferencia de Llamadas");
     sleep (4000);
@@ -117,174 +116,215 @@ private WebDriver driver;
     assertTrue(tech.validarInconveniente("No puede configurar"));
 	}
 	
-	@Test (groups= {"TechnicalCare", "SVA", "Ola1"},priority=2)
-	public void TS94368_CRM_Ola_1_Technical_Care_CSR_SVA_Visualizacion_de_lista_de_servicios_AGRUPADOR() throws Exception {
+	@Test (groups= {"TechnicalCare", "SVA", "Ola1"},priority=2, dataProvider="Tech")
+	public void TS94368_CRM_Ola_1_Technical_Care_CSR_SVA_Visualizacion_de_lista_de_servicios_AGRUPADOR(String sCuenta, String sDni, String sLinea) throws Exception {
 	TechnicalCareCSRDiagnosticoPage tech = new TechnicalCareCSRDiagnosticoPage(driver);
-	sleep (4000);
+	TechCare_Ola1 page=new TechCare_Ola1(driver);
+	page.selectAccount (sCuenta);
 	driver.switchTo().defaultContent();
-	tech.clickOpcionEnAsset("543416869777", "mis servicios");
-    tech.verDetalles();
+	sleep(3000);
+	tech.clickOpcionEnAsset(sLinea, "mis servicios");
+	tech.verDetalles();
     tech.clickDiagnosticarServicio("sms", "SMS Entrante", false);
     assertTrue(tech.validarOpcionesXSubServicio("SMS Entrante"));
     
 	}
 	
-	@Test (groups= {"TechnicalCare", "SVA", "Ola1"},priority=3) //listo
-	public void TS94439_CRM_Ola_1_Technical_Care_CSR_SVA_Visualizacion_de_Servicio_Transferencia_de_llamadas_e_inconveniente_No_funciona_transferencia_de_llamadas_No_puede_configurar() throws Exception {
+	@Test (groups= {"TechnicalCare", "SVA", "Ola1"},priority=3, dataProvider="Tech") //listo
+	public void TS94439_CRM_Ola_1_Technical_Care_CSR_SVA_Visualizacion_de_Servicio_Transferencia_de_llamadas_e_inconveniente_No_funciona_transferencia_de_llamadas_No_puede_configurar(String sCuenta, String sDni, String sLinea) throws Exception {
 	TechnicalCareCSRDiagnosticoPage tech = new TechnicalCareCSRDiagnosticoPage(driver);
-	sleep (4000);
+	TechCare_Ola1 page=new TechCare_Ola1(driver);
+	page.selectAccount (sCuenta);
 	driver.switchTo().defaultContent();
-    tech.clickOpcionEnAsset("543416869777", "mis servicios");
-    tech.verDetalles();
+	sleep(3000);
+	tech.clickOpcionEnAsset(sLinea, "mis servicios");
+	tech.verDetalles();
     tech.clickDiagnosticarServicio("Transferencia de Llamadas");
     tech.selectionInconvenient("No funciona transferencia de llamadas");
     assertTrue(tech.validarInconveniente("No funciona transferencia de llamadas"));
     
 	}
 	
-	@Test (groups= {"TechnicalCare", "SVA", "Ola1"},priority=3)//listo
-	public void TS94440_CRM_Ola_1_Technical_Care_CSR_SVA_Visualizacion_de_Servicio_Llamada_en_espera_e_inconveniente_No_funciona_llamada_en_espera() throws Exception {
+	@Test (groups= {"TechnicalCare", "SVA", "Ola1"},priority=3, dataProvider="Tech")//listo
+	public void TS94440_CRM_Ola_1_Technical_Care_CSR_SVA_Visualizacion_de_Servicio_Llamada_en_espera_e_inconveniente_No_funciona_llamada_en_espera(String sCuenta, String sDni, String sLinea) throws Exception {
 	TechnicalCareCSRDiagnosticoPage tech = new TechnicalCareCSRDiagnosticoPage(driver);
-	sleep (4000);
+	TechCare_Ola1 page=new TechCare_Ola1(driver);
+	page.selectAccount (sCuenta);
 	driver.switchTo().defaultContent();
-    tech.clickOpcionEnAsset("543416869777", "mis servicios");
-    tech.verDetalles();
+	sleep(3000);
+	tech.clickOpcionEnAsset(sLinea, "mis servicios");
+	tech.verDetalles();
     tech.clickDiagnosticarServicio("Llamada en espera"); 
     tech.selectionInconvenient("No funciona llamada en espera");
     assertTrue(tech.validarInconveniente("No funciona llamada en espera"));
     
 	}
 	
-	@Test (groups= {"TechnicalCare", "SVA", "Ola1"},priority=3)//listo
-	public void TS94441_CRM_Ola_1_Technical_Care_CSR_SVA_Visualizacion_de_Servicio_Llamada_tripartita_e_inconveniente_No_funciona_Llamada_tripartita() throws Exception {
+	@Test (groups= {"TechnicalCare", "SVA", "Ola1"},priority=3, dataProvider="Tech")//listo
+	public void TS94441_CRM_Ola_1_Technical_Care_CSR_SVA_Visualizacion_de_Servicio_Llamada_tripartita_e_inconveniente_No_funciona_Llamada_tripartita(String sCuenta, String sDni, String sLinea) throws Exception {
 	TechnicalCareCSRDiagnosticoPage tech = new TechnicalCareCSRDiagnosticoPage(driver);
-	sleep (4000);
+	TechCare_Ola1 page=new TechCare_Ola1(driver);
+	page.selectAccount (sCuenta);
 	driver.switchTo().defaultContent();
-    tech.clickOpcionEnAsset("543416869777", "mis servicios");
-    tech.verDetalles();
+	sleep(3000);
+	tech.clickOpcionEnAsset(sLinea, "mis servicios");
+	tech.verDetalles();
     tech.clickDiagnosticarServicio("Llamada Tripartita");
     tech.selectionInconvenient("No funciona Llamada tripartita");
     assertTrue(tech.validarInconveniente("No funciona Llamada tripartita"));
     
 	}
 	
-	@Test (groups= {"TechnicalCare", "SVA", "Ola1"},priority=3)//listo
-	public void TS94459_CRM_Ola_1_Technical_Care_CSR_SVA_Visualizacion_de_Servicio_Conferencia_tripartita_e_inconveniente_No_funciona_Conferencia_Tripartita() throws Exception {
+	@Test (groups= {"TechnicalCare", "SVA", "Ola1"},priority=3, dataProvider="Tech")//listo
+	public void TS94459_CRM_Ola_1_Technical_Care_CSR_SVA_Visualizacion_de_Servicio_Conferencia_tripartita_e_inconveniente_No_funciona_Conferencia_Tripartita(String sCuenta, String sDni, String sLinea) throws Exception {
 	TechnicalCareCSRDiagnosticoPage tech = new TechnicalCareCSRDiagnosticoPage(driver);
-	sleep (4000);
-    tech.clickOpcionEnAsset("543416869777", "mis servicios");
-    tech.verDetalles();
+	TechCare_Ola1 page=new TechCare_Ola1(driver);
+	page.selectAccount (sCuenta);
+	driver.switchTo().defaultContent();
+	sleep(3000);
+	tech.clickOpcionEnAsset(sLinea, "mis servicios");
+	tech.verDetalles();
     tech.clickDiagnosticarServicio("Llamada Tripartita");
     tech.selectionInconvenient("No funciona Llamada tripartita");
     assertTrue(tech.validarInconveniente("No funciona Llamada tripartita"));
 	}
 	
-	@Test(groups= {"TechnicalCare", "SVA", "Ola1"},priority=3) //Listo
-	public void TS94464_CRM_Ola_1_Technical_Care_CSR_SVA_Visualizacion_de_Servicio_Mensajes_Multimedia_Personal_MMS_e_inconveniente_MMS_Emisión_Cliente_informa_que_no_puede_enviar_Archivo_Imagen_Audio() throws Exception {
+	@Test(groups= {"TechnicalCare", "SVA", "Ola1"},priority=3, dataProvider="Tech") //Listo
+	public void TS94464_CRM_Ola_1_Technical_Care_CSR_SVA_Visualizacion_de_Servicio_Mensajes_Multimedia_Personal_MMS_e_inconveniente_MMS_Emisión_Cliente_informa_que_no_puede_enviar_Archivo_Imagen_Audio(String sCuenta, String sDni, String sLinea) throws Exception {
 	TechnicalCareCSRDiagnosticoPage tech = new TechnicalCareCSRDiagnosticoPage(driver);
-	sleep (4000);
-    tech.clickOpcionEnAsset("543416869777", "mis servicios");
-    tech.verDetalles();
+	TechCare_Ola1 page=new TechCare_Ola1(driver);
+	page.selectAccount (sCuenta);
+	driver.switchTo().defaultContent();
+	sleep(3000);
+	tech.clickOpcionEnAsset(sLinea, "mis servicios");
+	tech.verDetalles();
     tech.clickDiagnosticarServicio("MMS");
     tech.selectionInconvenient("MMS Emisión Cliente informa que no puede enviar Imagen");
     assertTrue(tech.validarInconveniente("MMS Emisión Cliente informa que no puede enviar Imagen"));
     
 	}
 	
-	@Test (groups= {"TechnicalCare", "SVA", "Ola1"},priority=3)
-	public void TS94467_CRM_Ola_1_Technical_Care_CSR_SVA_Visualizacion_de_Servicio_SMS_saliente_e_inconveniente_SMS_Emisión_a_algun_destino_en_particular() throws Exception {
+	@Test (groups= {"TechnicalCare", "SVA", "Ola1"},priority=3, dataProvider="Tech")
+	public void TS94467_CRM_Ola_1_Technical_Care_CSR_SVA_Visualizacion_de_Servicio_SMS_saliente_e_inconveniente_SMS_Emisión_a_algun_destino_en_particular(String sCuenta, String sDni, String sLinea) throws Exception {
 	TechnicalCareCSRDiagnosticoPage tech = new TechnicalCareCSRDiagnosticoPage(driver);
-	sleep (4000);
-    tech.clickOpcionEnAsset("543416869777", "mis servicios");
-    tech.verDetalles();
+	TechCare_Ola1 page=new TechCare_Ola1(driver);
+	page.selectAccount (sCuenta);
+	driver.switchTo().defaultContent();
+	sleep(3000);
+	tech.clickOpcionEnAsset(sLinea, "mis servicios");
+	tech.verDetalles();
     tech.clickDiagnosticarServicio("sms", "SMS Saliente", false);
     assertTrue(tech.validarOpcionesXSubServicio("SMS Saliente"));
 
     
     }
-	@Test (groups= {"TechnicalCare", "SVA", "Ola1"},priority=3) //Listo
-	public void TS94276_CRM_Ola_1_Technical_Care_CSR_SVA_Validacion_SMS_entrante_no_recibe_ningun_numero() throws Exception {
+	@Test (groups= {"TechnicalCare", "SVA", "Ola1"},priority=3, dataProvider="Tech") //Listo
+	public void TS94276_CRM_Ola_1_Technical_Care_CSR_SVA_Validacion_SMS_entrante_no_recibe_ningun_numero(String sCuenta, String sDni, String sLinea) throws Exception {
 	TechnicalCareCSRDiagnosticoPage tech = new TechnicalCareCSRDiagnosticoPage(driver);
-	sleep (4000);
-    tech.clickOpcionEnAsset("543416869777", "mis servicios");
-    tech.verDetalles();
+	TechCare_Ola1 page=new TechCare_Ola1(driver);
+	page.selectAccount (sCuenta);
+	driver.switchTo().defaultContent();
+	sleep(3000);
+	tech.clickOpcionEnAsset(sLinea, "mis servicios");
+	tech.verDetalles();
     tech.clickDiagnosticarServicio("sms", "SMS Entrante", true);
     tech.selectionInconvenient("No recibe de un número particular");
     assertTrue(tech.validarInconveniente("No recibe de un número particular"));
 	
 	}
 	
-	@Test (groups= {"TechnicalCare", "SVA", "Ola1"},priority=3) //Listo
-	public void TS94277_CRM_Ola_1_Technical_Care_CSR_SVA_Validacion_SMS_saliente_no_emite_a_ningun_numero() throws Exception {
+	@Test (groups= {"TechnicalCare", "SVA", "Ola1"},priority=3, dataProvider="Tech") //Listo
+	public void TS94277_CRM_Ola_1_Technical_Care_CSR_SVA_Validacion_SMS_saliente_no_emite_a_ningun_numero(String sCuenta, String sDni, String sLinea) throws Exception {
 	TechnicalCareCSRDiagnosticoPage tech = new TechnicalCareCSRDiagnosticoPage(driver);
-	sleep (4000);
-    tech.clickOpcionEnAsset("543416869777", "mis servicios");
-    tech.verDetalles();
+	TechCare_Ola1 page=new TechCare_Ola1(driver);
+	page.selectAccount (sCuenta);
+	driver.switchTo().defaultContent();
+	sleep(3000);
+	tech.clickOpcionEnAsset(sLinea, "mis servicios");
+	tech.verDetalles();
     tech.clickDiagnosticarServicio("sms", "SMS Saliente", true);
     tech.selectionInconvenient("SMS a fijo");
     assertTrue(tech.validarInconveniente("SMS a fijo"));
 	
 	}
 	
-	@Test (groups= {"TechnicalCare", "SVA", "Ola1"},priority=3) //Listo
-	public void TS94278_CRM_Ola_1_Technical_Care_CSR_SVA_Validacion_SMS_saliente_no_emite_a_algun_destino() throws Exception {
+	@Test (groups= {"TechnicalCare", "SVA", "Ola1"},priority=3, dataProvider="Tech") //Listo
+	public void TS94278_CRM_Ola_1_Technical_Care_CSR_SVA_Validacion_SMS_saliente_no_emite_a_algun_destino(String sCuenta, String sDni, String sLinea) throws Exception {
 	TechnicalCareCSRDiagnosticoPage tech = new TechnicalCareCSRDiagnosticoPage(driver);
-	sleep (4000);
-    tech.clickOpcionEnAsset("543416869777", "mis servicios");
-    tech.verDetalles();
+	TechCare_Ola1 page=new TechCare_Ola1(driver);
+	page.selectAccount (sCuenta);
+	driver.switchTo().defaultContent();
+	sleep(3000);
+	tech.clickOpcionEnAsset(sLinea, "mis servicios");
+	tech.verDetalles();
     tech.clickDiagnosticarServicio("sms", "SMS Saliente", true);
     tech.selectionInconvenient("SMS Emisión a algún destino en particular");
     assertTrue(tech.validarInconveniente("SMS Emisión a algún destino en particular"));
 	
 	}
 	
-	@Test (groups= {"TechnicalCare", "SVA", "Ola1"},priority=2)
-	public void TS94309_CRM_Ola_1_Technical_Care_CSR_SVA_Visualizacion_de_buscador_para_servicios_agrupados() throws Exception {
+	@Test (groups= {"TechnicalCare", "SVA", "Ola1"},priority=2, dataProvider="Tech")
+	public void TS94309_CRM_Ola_1_Technical_Care_CSR_SVA_Visualizacion_de_buscador_para_servicios_agrupados(String sCuenta, String sDni, String sLinea) throws Exception {
 	TechnicalCareCSRDiagnosticoPage tech = new TechnicalCareCSRDiagnosticoPage(driver);
-	sleep (4000);
-    tech.clickOpcionEnAsset("543416869777", "mis servicios");
-    tech.verDetalles();
+	TechCare_Ola1 page=new TechCare_Ola1(driver);
+	page.selectAccount (sCuenta);
+	driver.switchTo().defaultContent();
+	sleep(3000);
+	tech.clickOpcionEnAsset(sLinea, "mis servicios");
+	tech.verDetalles();
     tech.buscarServicio("SMS");
     assertTrue(tech.validarOpcionesXServicio("SMS"));
    	}
 	
-	@Test (groups= {"TechnicalCare", "SVA", "Ola1"},priority=2) 
-	public void TS94310_CRM_Ola_1_Technical_Care_CSR_SVA_Verificacion_del_funcionamiento_del_buscador_para_servicios_agrupados() throws Exception {
+	@Test (groups= {"TechnicalCare", "SVA", "Ola1"},priority=2, dataProvider="Tech") 
+	public void TS94310_CRM_Ola_1_Technical_Care_CSR_SVA_Verificacion_del_funcionamiento_del_buscador_para_servicios_agrupados(String sCuenta, String sDni, String sLinea) throws Exception {
 	TechnicalCareCSRDiagnosticoPage tech = new TechnicalCareCSRDiagnosticoPage(driver);
-	sleep (4000);
-    tech.clickOpcionEnAsset("543416869777", "mis servicios");
-    tech.verDetalles();
+	TechCare_Ola1 page=new TechCare_Ola1(driver);
+	page.selectAccount (sCuenta);
+	driver.switchTo().defaultContent();
+	sleep(3000);
+	tech.clickOpcionEnAsset(sLinea, "mis servicios");
+	tech.verDetalles();
     tech.buscarServicio("VOZ");
     assertTrue(tech.validarOpcionesXServicio("VOZ"));
 	}
 	
-	@Test (groups= {"TechnicalCare", "SVA", "Ola1"},priority=2)
-	public void TS94311_CRM_Ola_1_Technical_Care_CSR_SVA_Verificacion_de_lista_de_servicios_agrupados() throws Exception {
+	@Test (groups= {"TechnicalCare", "SVA", "Ola1"},priority=2, dataProvider="Tech")
+	public void TS94311_CRM_Ola_1_Technical_Care_CSR_SVA_Verificacion_de_lista_de_servicios_agrupados(String sCuenta, String sDni, String sLinea) throws Exception {
 	TechnicalCareCSRDiagnosticoPage tech = new TechnicalCareCSRDiagnosticoPage(driver);
-	sleep (4000);
-    tech.clickOpcionEnAsset("543416869777", "mis servicios");
-    tech.verDetalles();
+	TechCare_Ola1 page=new TechCare_Ola1(driver);
+	page.selectAccount (sCuenta);
+	driver.switchTo().defaultContent();
+	sleep(3000);
+	tech.clickOpcionEnAsset(sLinea, "mis servicios");
+	tech.verDetalles();
     tech.clickDiagnosticarServicio("sms", "SMS Saliente", false);
     assertTrue(tech.validarOpcionesXServicio("SMS Saliente"));
     
 	}
-	@Test (groups= {"TechnicalCare", "SVA", "Ola1"},priority=2)
-	public void TS94312_CRM_Ola_1_Technical_Care_CSR_SVA_Visualizacion_del_agrupador_estado_ACTIVO() throws Exception {
+	@Test (groups= {"TechnicalCare", "SVA", "Ola1"},priority=2, dataProvider="Tech")
+	public void TS94312_CRM_Ola_1_Technical_Care_CSR_SVA_Visualizacion_del_agrupador_estado_ACTIVO(String sCuenta, String sDni, String sLinea) throws Exception {
 	TechnicalCareCSRDiagnosticoPage tech = new TechnicalCareCSRDiagnosticoPage(driver);
-	sleep (4000);
-    tech.clickOpcionEnAsset("543416869777", "mis servicios");
-    tech.verDetalles();
+	TechCare_Ola1 page=new TechCare_Ola1(driver);
+	page.selectAccount (sCuenta);
+	driver.switchTo().defaultContent();
+	sleep(3000);
+	tech.clickOpcionEnAsset(sLinea, "mis servicios");
+	tech.verDetalles();
     tech.clickDiagnosticarServicio("sms", "SMS Saliente", false);
     assertTrue(tech.validarEstado("SMS"));
     
 	}
 	
-	@Test (groups= {"TechnicalCare", "SVA", "Ola1"},priority=11)
-	public void TS94315_CRM_Ola_1_Technical_Care_CSR_SVA_Visualizar_pregunta_al_final_del_proceso_SVA() throws Exception {
+	@Test (groups= {"TechnicalCare", "SVA", "Ola1"},priority=11, dataProvider="Tech")
+	public void TS94315_CRM_Ola_1_Technical_Care_CSR_SVA_Visualizar_pregunta_al_final_del_proceso_SVA(String sCuenta, String sDni, String sLinea) throws Exception {
 	TechnicalCareCSRDiagnosticoPage tech = new TechnicalCareCSRDiagnosticoPage(driver);
-	sleep (4000);
-	tech.clickOpcionEnAsset("543416869777", "mis servicios");
-    tech.verDetalles();
+	TechCare_Ola1 page=new TechCare_Ola1(driver);
+	page.selectAccount (sCuenta);
+	driver.switchTo().defaultContent();
+	sleep(3000);
+	tech.clickOpcionEnAsset(sLinea, "mis servicios");
+	tech.verDetalles();
     tech.clickDiagnosticarServicio("sms", "SMS Entrante", true);
     tech.selectionInconvenient("No recibe de un número particular");
     tech.continuar();
@@ -301,12 +341,15 @@ private WebDriver driver;
 	
 	
 	
-	@Test (groups= {"TechnicalCare", "SVA", "Ola1"},priority=3)
-	public void TS94413_CRM_Ola_1_Technical_Care_CSR_SVA_Validaciones_SMS_Emisión_a_ningún_destino_INCONSISTENCIA_LOCACION_NO() throws Exception {
+	@Test (groups= {"TechnicalCare", "SVA", "Ola1"},priority=3, dataProvider="Tech")
+	public void TS94413_CRM_Ola_1_Technical_Care_CSR_SVA_Validaciones_SMS_Emisión_a_ningún_destino_INCONSISTENCIA_LOCACION_NO(String sCuenta, String sDni, String sLinea) throws Exception {
 	TechnicalCareCSRDiagnosticoPage tech = new TechnicalCareCSRDiagnosticoPage(driver);
-	sleep (4000);
-	tech.clickOpcionEnAsset("543416869777", "mis servicios");
-    tech.verDetalles();
+	TechCare_Ola1 page=new TechCare_Ola1(driver);
+	page.selectAccount (sCuenta);
+	driver.switchTo().defaultContent();
+	sleep(3000);
+	tech.clickOpcionEnAsset(sLinea, "mis servicios");
+	tech.verDetalles();
     tech.clickDiagnosticarServicio("sms", "SMS Saliente", true);
     tech.selectionInconvenient("SMS Emisión a algún destino en particular");
     tech.continuar();
@@ -317,12 +360,15 @@ private WebDriver driver;
     assertTrue(tech.validarSpeech());
 	}
 	
-	@Test (groups= {"TechnicalCare", "SVA", "Ola1"},priority=7)
-	public void TS94339_CRM_Ola_1_Technical_Care_CSR_SVA_Visualizacion_de_mensaje_solicitando_realizar_un_consumo() throws Exception {
+	@Test (groups= {"TechnicalCare", "SVA", "Ola1"},priority=7, dataProvider="Tech")
+	public void TS94339_CRM_Ola_1_Technical_Care_CSR_SVA_Visualizacion_de_mensaje_solicitando_realizar_un_consumo(String sCuenta, String sDni, String sLinea) throws Exception {
 	TechnicalCareCSRDiagnosticoPage tech = new TechnicalCareCSRDiagnosticoPage(driver);
-	sleep (4000);
-	tech.clickOpcionEnAsset("543416869777", "mis servicios");
-    tech.verDetalles();
+	TechCare_Ola1 page=new TechCare_Ola1(driver);
+	page.selectAccount (sCuenta);
+	driver.switchTo().defaultContent();
+	sleep(3000);
+	tech.clickOpcionEnAsset(sLinea, "mis servicios");
+	tech.verDetalles();
     tech.clickDiagnosticarServicio("sms", "SMS Saliente", true);
     tech.selectionInconvenient("SMS Emisión a algún destino en particular");
     tech.continuar();
@@ -335,66 +381,61 @@ private WebDriver driver;
     assertTrue(tech.validarInconveniente("No"));
 	}
 	
-	@Test (groups= {"TechnicalCare", "SVA", "Ola1"},priority=3)
-		public void TS94343_CRM_Ola_1_Technical_Care_CSR_SVA_Seleccion_OBLIGATORIA_de_inconveniente() throws Exception {
+	@Test (groups= {"TechnicalCare", "SVA", "Ola1"},priority=3, dataProvider="Tech")
+		public void TS94343_CRM_Ola_1_Technical_Care_CSR_SVA_Seleccion_OBLIGATORIA_de_inconveniente(String sCuenta, String sDni, String sLinea) throws Exception {
 	    TechnicalCareCSRDiagnosticoPage tech = new TechnicalCareCSRDiagnosticoPage(driver);
-		sleep (4000);
-	    tech.clickOpcionEnAsset("543416869777", "mis servicios");
-	    tech.verDetalles();
+	    TechCare_Ola1 page=new TechCare_Ola1(driver);
+		page.selectAccount (sCuenta);
+		driver.switchTo().defaultContent();
+		sleep(3000);
+		tech.clickOpcionEnAsset(sLinea, "mis servicios");
+		tech.verDetalles();
 	    tech.clickDiagnosticarServicio("sms", "SMS Saliente", false);
 	    assertTrue(tech.validarEstado("SMS"));
 	}
 	
-	@Test (groups= {"TechnicalCare", "SVA", "Ola1"},priority=2)
-	public void TS94393_CRM_Ola_1_Technical_Care_CSR_Mis_Servicios_Identificacion_de_los_Servicios_opcionales_y_obligatorios() throws Exception {
+	@Test (groups= {"TechnicalCare", "SVA", "Ola1"},priority=2, dataProvider="Tech")
+	public void TS94393_CRM_Ola_1_Technical_Care_CSR_Mis_Servicios_Identificacion_de_los_Servicios_opcionales_y_obligatorios(String sCuenta, String sDni, String sLinea) throws Exception {
     TechnicalCareCSRDiagnosticoPage tech = new TechnicalCareCSRDiagnosticoPage(driver);
-	sleep (4000);
-    tech.clickOpcionEnAsset("543416869777", "mis servicios");
-    tech.verDetalles();
+    TechCare_Ola1 page=new TechCare_Ola1(driver);
+	page.selectAccount (sCuenta);
+	driver.switchTo().defaultContent();
+	sleep(3000);
+	tech.clickOpcionEnAsset(sLinea, "mis servicios");
+	tech.verDetalles();
     tech.clickDiagnosticarServicio("sms", "SMS Entrante", false);
     assertTrue(tech.validarEstado("SMS"));
 	}
 	
 
-	@Test (groups= {"TechnicalCare", "SVA", "Ola1"}, priority=1)
-	public void TS94369_CRM_Ola_1_Technical_Care_CSR_SVA_Visualizacion_servicio_ACTIVO() throws Exception {
+	@Test (groups= {"TechnicalCare", "SVA", "Ola1"}, priority=1, dataProvider="Tech")
+	public void TS94369_CRM_Ola_1_Technical_Care_CSR_SVA_Visualizacion_servicio_ACTIVO(String sCuenta, String sDni, String sLinea) throws Exception {
     TechnicalCareCSRDiagnosticoPage tech = new TechnicalCareCSRDiagnosticoPage(driver);
-	sleep (4000);
-    tech.clickOpcionEnAsset("543416869777", "mis servicios");
-    tech.verDetalles();
+    TechCare_Ola1 page=new TechCare_Ola1(driver);
+	page.selectAccount (sCuenta);
+	driver.switchTo().defaultContent();
+	sleep(3000);
+	tech.clickOpcionEnAsset(sLinea, "mis servicios");
+	tech.verDetalles();
     tech.clickDiagnosticarServicio("sms", "SMS Entrante", false);
     assertTrue(tech.validarEstado("SMS"));
 	}
 	
 
-	@Test (groups= {"TechnicalCare", "SVA", "Ola1"},priority=8)
-	public void TS94352_CRM_Ola_1_Technical_Care_CSR_SVA_Verificacion_de_la_posicion_en_el_mapa() throws Exception {
+	@Test (groups= {"TechnicalCare", "SVA", "Ola1"},priority=8, dataProvider="Tech")
+	public void TS94352_CRM_Ola_1_Technical_Care_CSR_SVA_Verificacion_de_la_posicion_en_el_mapa(String sCuenta, String sDni, String sLinea) throws Exception {
 	TechnicalCareCSRDiagnosticoPage tech = new TechnicalCareCSRDiagnosticoPage(driver);
-	sleep (4000);
-	tech.clickOpcionEnAsset("543416869777", "mis servicios");
-    tech.verDetalles();
+	TechCare_Ola1 page=new TechCare_Ola1(driver);
+	page.selectAccount (sCuenta);
+	driver.switchTo().defaultContent();
+	sleep(3000);
+	tech.clickOpcionEnAsset(sLinea, "mis servicios");
+	tech.verDetalles();
     tech.clickDiagnosticarServicio("sms", "SMS Saliente", true);
     tech.selectionInconvenient("SMS Emisión a algún destino en particular");
     tech.continuar();
     sleep(3000);
-   // tech.verificarCaso();
-    tech.seleccionarRespuesta("no");
-    tech.clickContinuar();
-    sleep(5000);
-    tech.clickContinuar();
-    sleep(5000);
-    tech.buscarDireccion("Av. Cabildo");
-    sleep(5000);
-    tech.categoriaRed("No son las antenas");
-    tech.categoriaRed("Si");
-    sleep(3000);
-   tech.clickContinua();
-   tech.actualizarEquipo("Test-X Play");
-   sleep(3000);
-   tech.clickContinua();
-   tech.categoriaRed("Sí");
-   tech.enviodeconfiguracion();
-   sleep(5000);
+    tech.Verificacion_de_la_posicion_en_el_mapa("no", "Av. Cabildo", "No son las antenas", "Si", "Test-X Play", "Sí");
    assertTrue(tech.reclamo());
 
    

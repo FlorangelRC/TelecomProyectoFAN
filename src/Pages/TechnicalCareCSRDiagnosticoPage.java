@@ -1,4 +1,6 @@
 package Pages;
+import static org.testng.Assert.assertTrue;
+
 import java.awt.Component;
 import java.awt.Frame;
 import java.util.List;
@@ -44,7 +46,7 @@ public class TechnicalCareCSRDiagnosticoPage extends BasePage{
 	private List<WebElement> serviciofunciona;
 	
 	
-	@FindBy(xpath="//*[@class='imgItemContainer ng-scope']") //
+	@FindBy(xpath="//*[@class='imgItemContainer ng-scope']") 
 	private List<WebElement> listaDeInconvenientes;
 
 	
@@ -344,7 +346,7 @@ public class TechnicalCareCSRDiagnosticoPage extends BasePage{
 ////////////////////////////////////SELECT INCONVENENTES////////////////////////////////////////////////////
 	public void selectionInconvenient(String inconvenientName) {
 		sleep(4000);
-	      driver.switchTo().frame(getFrameForElement(driver, By.id("IssueSelectStep"))); //.//*[@id='SignalAnswer|0']/div/div[1]/label/span/div/div
+	      driver.switchTo().frame(getFrameForElement(driver, By.id("IssueSelectStep")));
 	      	sleep(4000);
 	      		for (WebElement opt : getlistaDeInconvenientes()) {
 	      			if (opt.getText().equalsIgnoreCase(inconvenientName)) {
@@ -401,7 +403,7 @@ public class TechnicalCareCSRDiagnosticoPage extends BasePage{
 	      				p.click();    				
 	      					sleep(5000);
 	      							return;
-	      							
+	      				
 	      						}
 	      		}
 	      		
@@ -599,7 +601,28 @@ public class TechnicalCareCSRDiagnosticoPage extends BasePage{
 		return getEstado().getText().equalsIgnoreCase(estado);	
 		}
 		
-
+	
+	public void Verificacion_de_la_posicion_en_el_mapa(String categoriaRed,String direccion, String catogoriaRed3, String catogoriaRed4, String Equipo, String catogoriaRed5) throws InterruptedException {
+			 // tech.verificarCaso();
+		    seleccionarRespuesta(categoriaRed);
+		    clickContinuar();
+		    sleep(5000);
+		    clickContinuar();
+		    sleep(5000);
+		    buscarDireccion(direccion);
+		    sleep(5000);
+		    categoriaRed(catogoriaRed3);
+		    categoriaRed(catogoriaRed4);
+		    sleep(3000);
+		   clickContinua();
+		   actualizarEquipo(Equipo);
+		   sleep(3000);
+		   clickContinua();
+		   categoriaRed(catogoriaRed5);
+		   enviodeconfiguracion();
+		   sleep(5000);
+		}
+	
 	public void buscarCaso() throws InterruptedException{
 
 		String caso = numCaso.getText().substring(0, numCaso.getText().indexOf(","));
