@@ -52,10 +52,10 @@ public class TechnicalCareCSRAutogestionPage extends BasePage {
 	@FindBy(xpath="//*[@id='Case_body']/table/tbody/tr[2]/th/a") 
 	private WebElement caseBody;
 
-	@FindBy(className="optionContainer")
+	@FindBy(xpath="//*[@id=\"ep\"]/div[2]/div[2]/table/tbody/tr[7]/td[3]")
 	private WebElement optionContainer;
 
-	@FindBy(xpath=" //*[@id='00Nc0000002Ja0S_ilecell']")
+	@FindBy(xpath=" //*[@id='00Nc0000002Ja0S_ilecell']") 
 	private WebElement verificar;
 	
 	@FindBy(xpath="//*[@class='imgItemContainer ng-scope']") 
@@ -166,15 +166,14 @@ public class TechnicalCareCSRAutogestionPage extends BasePage {
 		sleep(7000);
 		if (!elementExists(existCaso)) { 
 		borderOverlay.get(1).click();
-		sleep(4000);
 		scrollToElement(knowledgeBaseBtn);
 		knowledgeBaseBtn.click();
-		sleep(3000);
+		
 		}
 	}
 	
 	
-	public void selectionInconvenient(String inconvenientName) {
+	public void selectionInconvenient(String inconvenientName) {	
 		sleep(5000);
 		driver.switchTo().frame(getFrameForElement(driver, By.cssSelector(".imgItem.ng-binding.ng-scope")));
 		  sleep(5000);
@@ -189,9 +188,10 @@ public class TechnicalCareCSRAutogestionPage extends BasePage {
 	      						break;
 	      				}
 	      		} 
+	
 			
 	
-	public void cerrarCaso(String data, String motivo) {
+	public boolean cerrarCaso(String data, String motivo) {
 		BasePage cambioFrameByID=new BasePage();
 		driver.switchTo().frame(cambioFrameByID.getFrameForElement(driver, By.id("srchErrorDiv_Case")));
 		getCaseBody().click();		
@@ -207,9 +207,26 @@ public class TechnicalCareCSRAutogestionPage extends BasePage {
 		 selectByText(getMotivo(), motivo);
 		 scrollToElement(guardar);
 		 guardar.click();
-
-			
-		 
+		  return false;
+		}
+		
+	
+	public void ServiceOwner(){
+	BasePage cambioFrameByID=new BasePage();
+	driver.switchTo().frame(cambioFrameByID.getFrameForElement(driver, By.id("srchErrorDiv_Case")));
+	getCaseBody().click();		
+	sleep(5000);
+	driver.switchTo().frame(cambioFrameByID.getFrameForElement(driver, By.id("ep")));
+	WebElement ServiceOwner = getVerificar();
+	((JavascriptExecutor)driver).executeScript("window.scrollTo(0,"+ServiceOwner.getLocation().y+")");
+	 sleep(4000);
+	driver.switchTo().frame(cambioFrameByID.getFrameForElement(driver, By.className("labelCol")));
+	
+	//List<WebElement>menu=getOptionContainer();
+	//menu.get(7).isDisplayed();
+	
+	
+	
 	}
 	
 ////...................................................verificarcaso...........................................///
@@ -225,15 +242,17 @@ public class TechnicalCareCSRAutogestionPage extends BasePage {
 			}
 		driver.switchTo().defaultContent();
 		buscarCaso(caso);
-		driver.switchTo().defaultContent();
+		driver.switchTo().frame(getFrameForElement(driver, By.id("Case_body")));
+		ServiceOwner();
 		return caso;			
+	
 			}
 	
 
-	public void buscarCaso(String numero) throws InterruptedException{
+	public void buscarCaso(String caso) throws InterruptedException{
 				search.click();
 				search.clear();
-				search.sendKeys(numero);
+				search.sendKeys(caso);
 				search.submit();
 				sleep(5000);
 		
@@ -322,6 +341,9 @@ public class TechnicalCareCSRAutogestionPage extends BasePage {
 	        .executeScript("arguments[0].scrollIntoView();", element);
 	  }
 
+
+
+	
 	
 
 	
