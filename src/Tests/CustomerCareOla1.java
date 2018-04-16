@@ -31,7 +31,7 @@ public class CustomerCareOla1 extends TestBase {
 		cc.cajonDeAplicaciones("Consola FAN");
 	}
 	
-	@AfterClass (alwaysRun = true, groups = {"CustomerCare", "AjustesYEscalamiento", "SuspensionYRehabilitacion", "Ola1"})
+	//@AfterClass (alwaysRun = true, groups = {"CustomerCare", "AjustesYEscalamiento", "SuspensionYRehabilitacion", "Ola1"})
 	public void quit() {
 		driver.quit();
 		sleep(5000);
@@ -799,5 +799,193 @@ public class CustomerCareOla1 extends TestBase {
 		cc.elegirCuenta(nCuenta);
 		cc.irAGestion("Ajustes");		
 		Assert.assertTrue(cc.botonSiguiente().isDisplayed());
+	}
+	
+	@Test (groups = {"CustomerCare", "SuspensionYRehabilitacion", "Ola1"}, dataProvider = "CustomerCuentaActiva")
+	public void TS95964_360_VIEW_Suspensiones_and_Reconexiones_Configurar_el_tipo_de_Siniestro_Solicitante_No_titular_habilita_para_completar_Nombre_Apellido_DNI_telefono_de_contacto(String nCuenta) {
+		cc.elegirCuenta(nCuenta);
+		cc.irAGestion("suspensiones");
+		List <WebElement> sus = driver.findElements(By.cssSelector(".slds-form-element__label.ng-binding.ng-scope"));
+		for (WebElement x : sus) {
+			if (x.getText().toLowerCase().contains("suspensi\u00f3n")) {
+				x.click();
+				break;
+			}
+		}
+		driver.findElement(By.id("Step1-SuspensionOrReconnection_nextBtn")).click();
+		sleep(5000);
+		List <WebElement> linea = driver.findElements(By.cssSelector(".slds-form-element__label.ng-binding.ng-scope"));
+		for (WebElement x : linea) {
+			if (x.getText().toLowerCase().contains("linea")) {
+				x.click();
+				break;
+			}
+		}
+		driver.findElement(By.id("Step2-AssetTypeSelection_nextBtn")).click();
+		sleep(5000);
+		driver.findElement(By.xpath("//*[@id=\"AssetsM0\"]/div/fieldset/div/span/label/span[2]")).click();
+		driver.findElement(By.id("Step3-AvailableAssetsSelection_nextBtn")).click();
+		sleep(5000);
+		List <WebElement> element = driver.findElements(By.cssSelector(".slds-form-element__label.ng-binding.ng-scope"));
+		for (WebElement x : element) {
+			if (x.getText().toLowerCase().contains("robo")) {
+				x.click();
+				break;
+			}
+		}
+		sleep(3000);
+		driver.findElement(By.id("Step4-SuspensionReason_nextBtn")).click();
+		sleep(3000);
+		List <WebElement> no = driver.findElements(By.cssSelector(".slds-form-element__label.ng-binding.ng-scope"));
+		for (WebElement x : no) {
+			if (x.getText().toLowerCase().contains("no")) {
+				x.click();
+				break;
+			}
+		}
+		sleep(3000);
+		Assert.assertTrue(driver.findElement(By.id("DNI")).isDisplayed());
+		Assert.assertTrue(driver.findElement(By.id("FirstName")).isDisplayed());
+		Assert.assertTrue(driver.findElement(By.id("LastName")).isDisplayed());
+		Assert.assertTrue(driver.findElement(By.id("Phone")).isDisplayed());
+	}
+	
+	@Test (groups = {"CustomerCare", "SuspensionYRehabilitacion", "Ola1"}, dataProvider = "CustomerCuentaActiva")
+	public void TS95934_360_VIEW_Suspensiones_and_Reconexiones_Seleccionar_tipo_Siniestro_Back_Office_Reconexion_pueda_ser_de_Linea(String nCuenta) {
+		cc.elegirCuenta(nCuenta);
+		cc.irAGestion("suspensiones y reconexion back");
+		List <WebElement> sus = driver.findElements(By.cssSelector(".slds-form-element__label.ng-binding.ng-scope"));
+		for (WebElement x : sus) {
+			if (x.getText().toLowerCase().contains("habilitaci\u00f3n")) {
+				x.click();
+				break;
+			}
+		}
+		driver.findElement(By.id("Step1SelectSuspensionOrReconnection_nextBtn")).click();
+		sleep(3000);
+		boolean a = false;
+		List <WebElement> linea = driver.findElements(By.cssSelector(".slds-form-element__label.ng-binding.ng-scope"));
+		for (WebElement x : linea) {
+			if (x.getText().toLowerCase().contains("linea")) {
+				a = true;
+			}
+		}
+		Assert.assertTrue(a);
+	}
+	
+	@Test (groups = {"CustomerCare", "SuspensionYRehabilitacion", "Ola1"}, dataProvider = "CustomerCuentaActiva")
+	public void TS95929_360_VIEW_Suspensiones_and_Reconexiones_Seleccionar_tipo_Siniestro_Back_Office_Verificar_que_si_selecciono_Suspension_pueda_ser_de_Linea(String nCuenta) {
+		cc.elegirCuenta(nCuenta);
+		cc.irAGestion("suspensiones y reconexion back");
+		List <WebElement> sus = driver.findElements(By.cssSelector(".slds-form-element__label.ng-binding.ng-scope"));
+		for (WebElement x : sus) {
+			if (x.getText().toLowerCase().contains("suspensi\u00f3n")) {
+				x.click();
+				break;
+			}
+		}
+		driver.findElement(By.id("Step1SelectSuspensionOrReconnection_nextBtn")).click();
+		sleep(3000);
+		boolean a = false;
+		List <WebElement> linea = driver.findElements(By.cssSelector(".slds-form-element__label.ng-binding.ng-scope"));
+		for (WebElement x : linea) {
+			if (x.getText().toLowerCase().contains("linea")) {
+				a = true;
+			}
+		}
+		Assert.assertTrue(a);
+	}
+	
+	@Test (groups = {"CustomerCare", "SuspensionYRehabilitacion", "Ola1"}, dataProvider = "CustomerCuentaActiva")
+	public void TS95973_360_VIEW_Suspensiones_and_Reconexiones_Configurar_el_tipo_de_Siniestro_Direccion_del_Siniestro_y_Exterior_del_Pais_habilita_un_campo_para_ingresar_el_pais(String nCuenta) {
+		cc.elegirCuenta(nCuenta);
+		cc.irAGestion("suspensiones");
+		List <WebElement> sus = driver.findElements(By.cssSelector(".slds-form-element__label.ng-binding.ng-scope"));
+		for (WebElement x : sus) {
+			if (x.getText().toLowerCase().contains("suspensi\u00f3n")) {
+				x.click();
+				break;
+			}
+		}
+		driver.findElement(By.id("Step1-SuspensionOrReconnection_nextBtn")).click();
+		sleep(5000);
+		List <WebElement> linea = driver.findElements(By.cssSelector(".slds-form-element__label.ng-binding.ng-scope"));
+		for (WebElement x : linea) {
+			if (x.getText().toLowerCase().contains("linea")) {
+				x.click();
+				break;
+			}
+		}
+		driver.findElement(By.id("Step2-AssetTypeSelection_nextBtn")).click();
+		sleep(5000);
+		driver.findElement(By.xpath("//*[@id=\"AssetsM0\"]/div/fieldset/div/span/label/span[2]")).click();
+		driver.findElement(By.id("Step3-AvailableAssetsSelection_nextBtn")).click();
+		sleep(5000);
+		List <WebElement> element = driver.findElements(By.cssSelector(".slds-form-element__label.ng-binding.ng-scope"));
+		for (WebElement x : element) {
+			if (x.getText().toLowerCase().contains("robo")) {
+				x.click();
+				break;
+			}
+		}
+		sleep(3000);
+		driver.findElement(By.id("Step4-SuspensionReason_nextBtn")).click();
+		sleep(3000);
+		List <WebElement> ext = driver.findElements(By.cssSelector(".slds-form-element__label.ng-binding.ng-scope"));
+		for (WebElement x : ext) {
+			if (x.getText().toLowerCase().contains("exterior del pa\u00eds")) {
+				x.click();
+				break;
+			}
+		}
+		Assert.assertTrue(driver.findElement(By.id("Country")).isDisplayed());
+	}
+	
+	@Test (groups = {"CustomerCare", "SuspensionYRehabilitacion", "Ola1"}, dataProvider = "CustomerCuentaActiva")
+	public void TS96112_360_VIEW_Suspensiones_and_Reconexiones_Seleccionar_tipo_Siniestro_Back_Office_Verificar_que_si_selecciono_Reconexion_pueda_ser_de_CUENTA_DE_FACTURACION(String nCuenta) {
+		cc.elegirCuenta(nCuenta);
+		cc.irAGestion("suspensiones y reconexion back");
+		List <WebElement> sus = driver.findElements(By.cssSelector(".slds-form-element__label.ng-binding.ng-scope"));
+		for (WebElement x : sus) {
+			if (x.getText().toLowerCase().contains("habilitaci\u00f3n")) {
+				x.click();
+				break;
+			}
+		}
+		driver.findElement(By.id("Step1SelectSuspensionOrReconnection_nextBtn")).click();
+		sleep(3000);
+		boolean a = false;
+		List <WebElement> linea = driver.findElements(By.cssSelector(".slds-form-element__label.ng-binding.ng-scope"));
+		for (WebElement x : linea) {
+			if (x.getText().toLowerCase().contains("cuenta de facturacion")) {
+				a = true;
+			}
+		}
+		Assert.assertTrue(a);
+	}
+	
+	@Test (groups = {"CustomerCare", "AjustesYEscalamiento", "Ola1"}, dataProvider = "CustomerCuentaActiva")  //No existe la gestion Ajustes
+	public void TS90472_360_VIEW_Ajustes_y_Escalaciones_Seleccion_de_Concepto_Tipo_de_Cargo_Item_Motivo_Validar_Concepto_solo_se_puede_permitir_1_valor_de_la_lista_indicada_del_parametro_Tipo_de_Cargo() {
+		Assert.assertTrue(false);
+	}
+	
+	@Test (groups = {"CustomerCare", "AjustesYEscalamiento", "Ola1"}, dataProvider = "CustomerCuentaActiva")  //No existe la gestion Ajustes
+	public void TS90476_360_VIEW_Ajustes_y_Escalaciones_Seleccion_de_Concepto_Tipo_de_Cargo_Item_Motivo_Validar_que_se_puede_seleccionar_un_Motivo_solo_si_se_han_completado_los_valores_anteriores() {
+		Assert.assertTrue(false);
+	}
+	
+	@Test (groups = {"CustomerCare", "AjustesYEscalamiento", "Ola1"}, dataProvider = "CustomerCuentaActiva")  //No existe la gestion Ajustes
+	public void TS90470_360_VIEW_Ajustes_y_Escalaciones_Seleccion_de_Concepto_Tipo_de_Cargo_Item_Motivo_Validar_que_solo_se_puede_permitir_1_valor_de_la_lista_indicada_del_parametro_Conceptos() {
+		Assert.assertTrue(false);
+	}
+	
+	@Test (groups = {"CustomerCare", "AjustesYEscalamiento", "Ola1"}, dataProvider = "CustomerCuentaActiva")  //No existe la gestion Ajustes
+	public void TS96011_360_VIEW_Ajustes_y_Escalaciones_Seleccion_de_Concepto_Tipo_de_Cargo_Item_Motivo_Visualizar_parametro_item() {
+		Assert.assertTrue(false);
+	}
+	
+	@Test (groups = {"CustomerCare", "AjustesYEscalamiento", "Ola1"}, dataProvider = "CustomerCuentaActiva")  //No existe la gestion Ajustes
+	public void TS95996_Adjustments_and_Escalations_Cierre_Caso_Gestion_Exitosa_Rechazada_Ampliar_detalles_Cerrar_caso_exitoso_comentario() {
+		Assert.assertTrue(false);
 	}
 }
