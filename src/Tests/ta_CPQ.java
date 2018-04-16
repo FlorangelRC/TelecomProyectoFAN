@@ -57,7 +57,7 @@ public class ta_CPQ extends TestBase {
 	protected WebDriver driver;
 	protected  WebDriverWait wait;
 
-	@AfterClass(alwaysRun=true)
+	//@AfterClass(alwaysRun=true)
 	public void tearDown() {
 		driver.quit();
 		sleep(1000);
@@ -573,49 +573,7 @@ public class ta_CPQ extends TestBase {
 	 * @throws Exception *
 	 * 
 	 */
-	@Test(groups={"Sales", "AltaDeLinea", "Ola1"})
-	public void TS94708_CRM_Fase_2_SalesCPQ_Nueva_Venta_Orden_Venta_Verficar_ciclos_de_facturacion_disponibles() throws Exception{
-		Ta_CPQ cart = new Ta_CPQ(driver);
-		cart.deleteAddedProducts();
-		cart.addAnyProductToCart();	
-		
-		try {Thread.sleep(4000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
-		cart.getButtonNext().click();
-		
-		LineAssignment lineAssignment = new LineAssignment (driver);
-		lineAssignment.clickOnNext();
-		BillSimulation billSimulation = new BillSimulation (driver);
-		billSimulation.clickOnNext();
-		DeliveryMethod deliveryMethod = new DeliveryMethod (driver);
-		
-		Assert.assertTrue(deliveryMethod.getBillingCycleOptions().contains("1"));
-		Assert.assertTrue(deliveryMethod.getBillingCycleOptions().contains("7"));
-		Assert.assertTrue(deliveryMethod.getBillingCycleOptions().contains("14"));
-		Assert.assertTrue(deliveryMethod.getBillingCycleOptions().contains("21"));
-	}
-	
-	@Test(groups={"Sales", "AltaDeLinea", "Ola1"})
-	public void TS94707_CRM_Fase_2_SalesCPQ_Nueva_Venta_Orden_Venta_Verficar_que_se_puede_modificar_el_ciclo_de_facturacion() throws Exception {
-		/*Se verifica que el sistema permite modificar el ciclo de facturacion*/
-		
-		Ta_CPQ cart = new Ta_CPQ(driver);
-		cart.deleteAddedProducts();
-		cart.addAnyProductToCart();	
-		
-		try {Thread.sleep(4000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
-		cart.getButtonNext().click();
-		
-		LineAssignment lineAssignment = new LineAssignment (driver);
-		lineAssignment.clickOnNext();
-		BillSimulation billSimulation = new BillSimulation (driver);
-		billSimulation.clickOnNext();
-		DeliveryMethod deliveryMethod = new DeliveryMethod (driver);
-		try {Thread.sleep(4000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
-		Select billingCycleSelect = new Select (deliveryMethod.getBillingCycle());
-		billingCycleSelect.selectByValue("7");
-		Assert.assertEquals(billingCycleSelect.getFirstSelectedOption().getText(), "7");
-	}
-	
+
 	
 	/**
 	 * Se verifica que, cuando se selecciona un producto para linea movil 
