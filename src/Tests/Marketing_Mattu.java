@@ -74,14 +74,14 @@ public class Marketing_Mattu extends TestBase{
 		page.seleccionarCuentaMarketing(sCuenta, "Todas las cuentas");
 		mMarketing.irAGestionMarketing();
 		BasePage cambioFrame=new BasePage();
-		try {Thread.sleep(10000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		mMarketing.sleepMedium(0);
 		driver.switchTo().defaultContent();
 		driver.switchTo().frame(cambioFrame.getFrameForElement(driver, By.cssSelector(".slds-panel__section.slds-p-around--small")));
 		mMarketing.clubPersonal("alta");
-		try {Thread.sleep(10000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		mMarketing.sleepMedium(0);
 		driver.switchTo().defaultContent();
 		driver.switchTo().frame(cambioFrame.getFrameForElement(driver, By.cssSelector(".slds-form-element.vlc-flex.vlc-slds-text-block.vlc-slds-rte.ng-pristine.ng-valid.ng-scope")));
-		try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		mMarketing.sleepMedium(0);
 		WebElement wMessage = driver.findElement(By.cssSelector(".slds-form-element.vlc-flex.vlc-slds-text-block.vlc-slds-rte.ng-pristine.ng-valid.ng-scope"));
 		List<WebElement> lText = wMessage.findElements(By.tagName("p"));
 		Assert.assertTrue(lText.get(1).getText().contains("Para continuar es necesario regularizar su estado de cuenta, caso nro."));
@@ -95,11 +95,11 @@ public class Marketing_Mattu extends TestBase{
 		Marketing page = new Marketing(driver);
 		page.seleccionarCuentaMarketing(sCuenta, "Vista Marketing");
 		mMarketing.estadoAltaBaja("Alta");
-		try {Thread.sleep(10000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		mMarketing.sleepMedium(0);
 		BasePage cambioFrame=new BasePage();
 		driver.switchTo().defaultContent();
 		driver.switchTo().frame(cambioFrame.getFrameForElement(driver, By.cssSelector(".slds-form-element.vlc-flex.vlc-slds-text-block.vlc-slds-rte.ng-pristine.ng-valid.ng-scope")));
-		try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		mMarketing.sleepMedium(0);
 		WebElement wMessage = driver.findElement(By.cssSelector(".slds-form-element.vlc-flex.vlc-slds-text-block.vlc-slds-rte.ng-pristine.ng-valid.ng-scope"));
 		List<WebElement> lText = wMessage.findElements(By.tagName("p"));
 		try{
@@ -250,7 +250,7 @@ public class Marketing_Mattu extends TestBase{
 		Marketing page = new Marketing(driver);
 		page.seleccionarCuentaMarketing(sCuenta, "Vista Marketing");
 		mMarketing.estadoAltaBaja("Alta");
-		try {Thread.sleep(10000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		mMarketing.sleepMedium(0);
 		BasePage cambioFrame=new BasePage();
 		driver.switchTo().defaultContent();
 		driver.switchTo().frame(cambioFrame.getFrameForElement(driver, By.cssSelector(".slds-page-header.vlc-slds-page--header.ng-scope")));
@@ -265,7 +265,7 @@ public class Marketing_Mattu extends TestBase{
 		Marketing page = new Marketing(driver);
 		page.seleccionarCuentaMarketing(sCuenta, "Vista Marketing");
 		mMarketing.clubPersonal("Baja");
-		try {Thread.sleep(10000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		mMarketing.sleepMedium(0);
 		BasePage cambioFrame=new BasePage();
 		driver.switchTo().defaultContent();
 		driver.switchTo().frame(cambioFrame.getFrameForElement(driver, By.cssSelector(".slds-page-header.vlc-slds-page--header.ng-scope")));
@@ -299,11 +299,11 @@ public class Marketing_Mattu extends TestBase{
 		Marketing page = new Marketing(driver);
 		page.seleccionarCuentaMarketing(sCuenta, "Vista Marketing");
 		mMarketing.estadoAltaBaja("Alta");
-		try {Thread.sleep(10000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		mMarketing.sleepMedium(0);
 		BasePage cambioFrame=new BasePage();
 		driver.switchTo().defaultContent();
 		driver.switchTo().frame(cambioFrame.getFrameForElement(driver, By.id("consumerAccounts")));
-		try {Thread.sleep(10000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		mMarketing.sleepMedium(0);
 		WebElement wConsumerBox = driver.findElement(By.id("consumerAccounts"));
 		WebElement wConsumerTable= wConsumerBox.findElement(By.tagName("tbody"));
 		List<WebElement> wConsumerTableRows = wConsumerTable.findElements(By.tagName("tr"));
@@ -348,10 +348,10 @@ public class Marketing_Mattu extends TestBase{
 	@Test(groups = {"Marketing", "Ola1", "GestionDelSocioDeClubPersonal"}, dataProvider="MarketingCuentaNormal")
 	public void TS98036_Boton_Cancelar_Alta_CP() {
 		mMarketing.estadoAltaBaja("Alta");
-		try {Thread.sleep(10000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		mMarketing.sleepMedium(0);
 		BasePage cambioFrame=new BasePage();
 		driver.switchTo().defaultContent();
-		try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		mMarketing.sleepShort(0);
 		driver.switchTo().frame(cambioFrame.getFrameForElement(driver, By.cssSelector(".vlc-slds-button--tertiary.ng-binding.ng-scope")));
 		Assert.assertTrue(driver.findElement(By.cssSelector(".vlc-slds-button--tertiary.ng-binding.ng-scope")).getText().toLowerCase().equals("cancelar"));
 		
@@ -362,7 +362,7 @@ public class Marketing_Mattu extends TestBase{
 	@Test(groups = {"Marketing", "Ola1", "GestionDelSocioDeClubPersonal"}, dataProvider="MarketingCuentaNormal")
 	public void TS98037_Boton_Continuar_Alta_CP() {
 		mMarketing.estadoAltaBaja("Alta");
-		try {Thread.sleep(10000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		mMarketing.sleepMedium(0);
 		WebElement wSiguiente = driver.findElement(By.className("slds-box"));
 		Assert.assertTrue(wSiguiente.findElement(By.tagName("p")).getText().toLowerCase().equals("siguiente"));
 	}
@@ -451,7 +451,7 @@ public class Marketing_Mattu extends TestBase{
 		Marketing page = new Marketing(driver);
 		page.seleccionarCuentaMarketing(sCuenta, "Todas las cuentas");
 		mMarketing.clubPersonal("Baja");
-		try {Thread.sleep(10000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		mMarketing.sleepMedium(0);
 		WebElement wMessage = driver.findElement(By.cssSelector(".slds-form-element.vlc-flex.vlc-slds-text-block.vlc-slds-rte.ng-pristine.ng-valid.ng-scope"));
 		List <WebElement> wMessageBox = wMessage.findElements(By.tagName("p"));
 		String sCaso = wMessageBox.get(1).getText().substring(71, 79);
@@ -465,11 +465,11 @@ public class Marketing_Mattu extends TestBase{
 		Marketing page = new Marketing(driver);
 		page.seleccionarCuentaMarketing(sCuenta, "Vista Marketing");
 		mMarketing.estadoAltaBaja("Baja");
-		try {Thread.sleep(10000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		mMarketing.sleepMedium(0);
 		BasePage cambioFrame=new BasePage();
 		driver.switchTo().defaultContent();
 		driver.switchTo().frame(cambioFrame.getFrameForElement(driver, By.id("consumerAccounts")));
-		try {Thread.sleep(10000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		mMarketing.sleepMedium(0);
 		WebElement wConsumerBox = driver.findElement(By.id("consumerAccounts"));
 		WebElement wConsumerTable= wConsumerBox.findElement(By.tagName("tbody"));
 		List<WebElement> wConsumerTableRows = wConsumerTable.findElements(By.tagName("tr"));
@@ -499,11 +499,11 @@ public class Marketing_Mattu extends TestBase{
 		Marketing page = new Marketing(driver);
 		page.seleccionarCuentaMarketing(sCuenta, "Vista Marketing");
 		mMarketing.estadoAltaBaja("Baja");
-		try {Thread.sleep(10000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		mMarketing.sleepMedium(0);
 		BasePage cambioFrame=new BasePage();
 		driver.switchTo().defaultContent();
 		driver.switchTo().frame(cambioFrame.getFrameForElement(driver, By.id("consumerAccounts")));
-		try {Thread.sleep(10000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		mMarketing.sleepMedium(0);
 		WebElement wConsumerBox = driver.findElement(By.id("consumerAccounts"));
 		WebElement wConsumerTable= wConsumerBox.findElement(By.tagName("tbody"));
 		List<WebElement> wConsumerTableRows = wConsumerTable.findElements(By.tagName("tr"));
@@ -517,11 +517,11 @@ public class Marketing_Mattu extends TestBase{
 		Marketing page = new Marketing(driver);
 		page.seleccionarCuentaMarketing(sCuenta, "Vista Marketing");
 		mMarketing.estadoAltaBaja("Alta");
-		try {Thread.sleep(10000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		mMarketing.sleepMedium(0);
 		BasePage cambioFrame=new BasePage();
 		driver.switchTo().defaultContent();
 		driver.switchTo().frame(cambioFrame.getFrameForElement(driver, By.id("consumerAccounts")));
-		try {Thread.sleep(10000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		mMarketing.sleepMedium(0);
 		WebElement wBusinessBox = driver.findElement(By.id("businessAccounts"));
 		WebElement wBusinessTable= wBusinessBox.findElement(By.tagName("tbody"));
 		List<WebElement> wBusinessTableRows = wBusinessTable.findElements(By.tagName("tr"));
@@ -567,11 +567,11 @@ public class Marketing_Mattu extends TestBase{
 		Marketing page = new Marketing(driver);
 		page.seleccionarCuentaMarketing(sCuenta, "Vista Marketing");
 		mMarketing.estadoAltaBaja("Baja");
-		try {Thread.sleep(10000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		mMarketing.sleepMedium(0);
 		BasePage cambioFrame=new BasePage();
 		driver.switchTo().defaultContent();
 		driver.switchTo().frame(cambioFrame.getFrameForElement(driver, By.id("consumerAccounts")));
-		try {Thread.sleep(10000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		mMarketing.sleepMedium(0);
 		WebElement wConsumerBox = driver.findElement(By.id("consumerAccounts"));
 		WebElement wConsumerTable= wConsumerBox.findElement(By.tagName("tbody"));
 		List<WebElement> wConsumerTableRows = wConsumerTable.findElements(By.tagName("tr"));
@@ -613,11 +613,11 @@ public class Marketing_Mattu extends TestBase{
 		Marketing page = new Marketing(driver);
 		page.seleccionarCuentaMarketing(sCuenta, "Vista Marketing");
 		mMarketing.estadoAltaBaja("Baja");
-		try {Thread.sleep(10000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		mMarketing.sleepMedium(0);
 		BasePage cambioFrame=new BasePage();
 		driver.switchTo().defaultContent();
 		driver.switchTo().frame(cambioFrame.getFrameForElement(driver, By.id("consumerAccounts")));
-		try {Thread.sleep(10000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		mMarketing.sleepMedium(0);
 		WebElement wConsumerBox = driver.findElement(By.id("consumerAccounts"));
 		WebElement wConsumerTable= wConsumerBox.findElement(By.tagName("tbody"));
 		List<WebElement> wConsumerTableRows = wConsumerTable.findElements(By.tagName("tr"));
@@ -635,11 +635,11 @@ public class Marketing_Mattu extends TestBase{
 		Marketing page = new Marketing(driver);
 		page.seleccionarCuentaMarketing(sCuenta, "Vista Marketing");
 		mMarketing.estadoAltaBaja("Baja");
-		try {Thread.sleep(10000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		mMarketing.sleepMedium(0);
 		BasePage cambioFrame=new BasePage();
 		driver.switchTo().defaultContent();
 		driver.switchTo().frame(cambioFrame.getFrameForElement(driver, By.id("consumerAccounts")));
-		try {Thread.sleep(10000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		mMarketing.sleepMedium(0);
 		WebElement wConsumerBox = driver.findElement(By.id("consumerAccounts"));
 		WebElement wConsumerTable= wConsumerBox.findElement(By.tagName("tbody"));
 		List<WebElement> wConsumerTableRows = wConsumerTable.findElements(By.tagName("tr"));
@@ -648,7 +648,7 @@ public class Marketing_Mattu extends TestBase{
 		BasePage bBP = new BasePage(driver);
 		bBP.setSimpleDropdown(driver.findElement(By.id("SelectReason")), "Otro");
 		driver.findElement(By.id("CPMembershipCancellation_nextBtn")).click();
-		try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		mMarketing.sleepShort(0);
 		assertTrue(driver.findElement(By.id("alert-container")).isDisplayed());
 	}
 	
@@ -659,7 +659,7 @@ public class Marketing_Mattu extends TestBase{
 		Marketing page = new Marketing(driver);
 		page.seleccionarCuentaMarketing(sCuenta, "Vista Marketing");
 		mMarketing.estadoAltaBaja("Baja");
-		try {Thread.sleep(10000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		mMarketing.sleepMedium(0);
 		BasePage cambioFrame=new BasePage();
 		driver.switchTo().defaultContent();
 		driver.switchTo().frame(cambioFrame.getFrameForElement(driver, By.cssSelector(".vlc-slds-button--tertiary.ng-binding.ng-scope")));
