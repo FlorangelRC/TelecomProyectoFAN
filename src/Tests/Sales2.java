@@ -40,12 +40,12 @@ public class Sales2 extends TestBase{
 	String localidad="BASAIL";
 	protected  WebDriverWait wait;
 	
-	@AfterClass(alwaysRun=true)
+	//@AfterClass(alwaysRun=true)
 	public void tearDown() {
 		driver.quit();
 	}
 	
-	@AfterMethod(alwaysRun=true)
+	//@AfterMethod(alwaysRun=true)
 	public void deslogin() {
 		sleep(3000);
 		driver.get("https://crm--sit.cs14.my.salesforce.com/home/home.jsp?tsid=02u41000000QWha/");
@@ -508,14 +508,14 @@ public class Sales2 extends TestBase{
 		Assert.assertTrue(up.getText().toLowerCase().contains("30.55 kb"));
 	}
 	
-	@Test(groups={"Sales", "AltaDeContacto", "Ola1"}, priority=2, dataProvider="SalesCuentaActiva")
-	public void TS94529_Alta_de_Contacto_Persona_Fisica_Confirmar_direccion_de_email_existente_30(String sCuenta, String sDni, String sLinea) throws IOException {
+	@Test(groups={"Sales", "AltaDeContacto", "Ola1"}, priority=2, dataProvider="SalesContactoSinCuenta")
+	public void TS94529_Alta_de_Contacto_Persona_Fisica_Confirmar_direccion_de_email_existente_30(String sCuenta, String sDni) throws IOException {
 		sb.BuscarCuenta(DNI, sDni);
 		//sb.BuscarCuenta(DNI, buscarCampoExcel(1, "Cuenta Activa", 2));
 		String a = driver.findElement(By.xpath("//*[@id=\"tab-scoped-3\"]/section/div/table/tbody/tr/td[4]")).getText();
 		List <WebElement> cuenta = driver.findElements(By.cssSelector(".slds-truncate.ng-binding"));
 		for (WebElement x : cuenta) {
-			if (x.getText().toLowerCase().contains("adela sales")) {
+			if (x.getText().toLowerCase().contains(sCuenta.toLowerCase())) {
 				x.click();
 				break;
 			}
@@ -759,7 +759,7 @@ public class Sales2 extends TestBase{
 	public void TS94554_Alta_De_Contacto_Persona_Fisica_Verificar_Campo_Tipo_De_Documento_Por_Default() {
 		Random aleatorio = new Random(System.currentTimeMillis());
 		aleatorio.setSeed(System.currentTimeMillis());
-		int intAleatorio = aleatorio.nextInt(8999999)+1000000;
+		int intAleatorio = aleatorio.nextInt(89999999)+10000000;
 		driver.findElement(By.id("SearchClientDocumentNumber")).sendKeys(Integer.toString(intAleatorio));
 		driver.findElement(By.id("SearchClientsDummy")).click();
 		sleep(5000);
@@ -1713,7 +1713,7 @@ public class Sales2 extends TestBase{
 		//sb.BuscarCuenta(DNI, buscarCampoExcel(1, "Cuenta Activa", 2));
 		sb.acciondecontacto("catalogo");
 		sleep(15000);
-		sb.elegirplan("Plan con Tarjeta Repro");
+		sb.agregarplan("Plan con Tarjeta");
 		sleep(25000);
 		 driver.findElement(By.cssSelector(".slds-button.slds-button_icon-border-filled.cpq-item-actions-dropdown-button")).click();
 	      sleep(1000);
@@ -1735,7 +1735,7 @@ public class Sales2 extends TestBase{
 	    		  sleep(3000);
 	    		  mas = driver.findElement(By.id("js-cpq-lineitem-details-modal-content")).findElements(By.cssSelector(".cpq-item-base-product-name-field.cpq-item-text-value.cpq-item-product-title"));
 	    		  for(WebElement x : mas) {
-	    			 if( x.getText().toLowerCase().contains("10 sms")) {
+	    			 if( x.getText().toLowerCase().contains("5 dias de sms")) {
 	    			  a = true;
 	    			  break;
 	    			 }

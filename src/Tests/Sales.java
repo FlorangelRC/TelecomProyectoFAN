@@ -66,13 +66,13 @@ public class Sales extends TestBase {
 	String[] genero = {"masculino","femenino"};
 	String[] DocValue = {"52698550","3569874563","365","ssss"};
 	
-	@AfterClass(alwaysRun=true)
+	//@AfterClass(alwaysRun=true)
 	public void tearDown() {
 		driver.close();
 		driver.quit();
 	}
 	
-	@AfterMethod(alwaysRun=true)
+	//@AfterMethod(alwaysRun=true)
 	public void deslogin(){
 		try {Thread.sleep(10000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 		driver.get("https://crm--sit.cs14.my.salesforce.com/home/home.jsp?tsid=02u41000000QWha/");
@@ -298,10 +298,10 @@ public class Sales extends TestBase {
 		boolean a = false;
 		try {Thread.sleep(10000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 		ContactSearch contact = new ContactSearch(driver);
-		driver.findElement(By.id("SearchClientDocumentNumber")).sendKeys("875321499");
+		contact.searchContact("DNI", "875321499", "");
 		List <WebElement> error = driver.findElements(By.cssSelector(".description.ng-binding"));
 		for(WebElement e: error){
-			if(e.getText().toLowerCase().equals("longitud m\u00e1xima de 8")){
+			if(e.getText().toLowerCase().contains("longitud m\u00e1xima de 8")){
 				a=true;
 				break;}}
 		try {Thread.sleep(1000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
@@ -1764,16 +1764,8 @@ public class Sales extends TestBase {
 	      SB.agregarplan("plan con tarjeta"); 
 	      Assert.assertTrue(driver.findElements(By.cssSelector(".slds-button.slds-button_neutral.cpq-add-button")).get(1).getText().equalsIgnoreCase("agregar")); 
 	      sleep(20000); 
-	      driver.findElement(By.cssSelector(".slds-button.slds-button_icon-border-filled.cpq-item-actions-dropdown-button")).click();
-	      sleep(1000);
-	      List <WebElement> mas = driver.findElement(By.cssSelector(".slds-dropdown__list.cpq-item-actions-dropdown__list")).findElements(By.tagName("span"));
-	      for (WebElement x : mas) { 
-	        if (x.getText().toLowerCase().contains("clone")) { 
-	          x.click(); 
-	          break; 
-	        } 
-	      } 
-	      sleep(15000); 
+	      Assert.assertTrue(driver.findElements(By.cssSelector(".slds-button.slds-button_neutral.cpq-add-button")).get(1).getText().equalsIgnoreCase("agregar")); 
+	      sleep(20000); 
 	      int a = 0; 
 	      List <WebElement> plan = driver.findElements(By.cssSelector(".slds-button.cpq-item-has-children")); 
 	      for (WebElement x : plan) { 
@@ -2011,11 +2003,11 @@ public class Sales extends TestBase {
 	    cal.sendKeys("ATENAS"); 
 	    Assert.assertTrue(cal.getAttribute("value").equals("ATENAS")); 
 	  } 
-	  
+	  //agregar data provideeeeeeeer
 	  @Test(groups = {"Sales", "AltaDeContacto","Ola1"}, priority=4, dataProvider="SalesCuentaActiva") 
 	  public void TS94610_Configuracion_CondicionImpositiva_Verificar_categoria_frente_al_IVA_para_clientes_con_DNI_Pasaporte(String sCuenta, String sDni, String sLinea) throws IOException {
 		  SalesBase SB = new SalesBase(driver); 
-		  SB.BuscarCuenta(DNI, sDni); 
+		  SB.BuscarCuenta("Pasaporte", "312313214"); 
 		  SB.acciondecontacto("nueva cuenta");
 		  sleep(7000);
 		  driver.findElement(By.id("ImpositiveCondition")).click();
@@ -2037,8 +2029,8 @@ public class Sales extends TestBase {
 	  @Test(groups = {"Sales", "AltaDeLinea","Ola1"}, priority=2, dataProvider="SalesCuentaActiva")
 	  public void TS94710_Ventas_BuscarCliente_Verificar_Los_Datos_Del_Cliente_Activo(String sCuenta, String sDni, String sLinea) throws IOException { 
 		  boolean ok = false;
-		  driver.findElement(By.id("PhoneNumber")).sendKeys(sLinea);
-		  driver.findElement(By.id("SearchClientsDummy")).click();
+		  SalesBase SB = new SalesBase(driver); 
+		  SB.BuscarCuenta(DNI, sDni); 
 		  sleep(5000);
 		  List<WebElement> campos = driver.findElement(By.id("tab-scoped-1")).findElement(By.cssSelector(".slds-table.slds-table--bordered.slds-tree.slds-table--tree.table.tableCSS")).findElement(By.tagName("tr")).findElements(By.tagName("th"));
 		  assertTrue(campos.get(0).getText().equalsIgnoreCase("razon social"));	  
