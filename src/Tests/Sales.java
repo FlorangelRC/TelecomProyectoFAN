@@ -285,7 +285,7 @@ public class Sales extends TestBase {
 		contact.searchContact("Pasaporte", "1234568709", "");
 		List <WebElement> error = driver.findElements(By.cssSelector(".description.ng-binding"));
 		for(WebElement e: error){
-			if(e.getText().toLowerCase().equals("longitud m\u00e1xima de 8")){
+			if(e.getText().toLowerCase().equals("longitud m\u00e1xima de 9")){
 				a=true;
 				break;}}
 		try {Thread.sleep(1000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
@@ -336,7 +336,7 @@ public class Sales extends TestBase {
 		contact.searchContact("Pasaporte", "59801234", "");
 		List <WebElement> error = driver.findElements(By.cssSelector(".description.ng-binding"));
 		for(WebElement e: error){
-			if(e.getText().toLowerCase().equals("longitud m\u00ednima de 7")){
+			if(e.getText().toLowerCase().equals("longitud m\u00ednima de 9")){
 				a=true;
 				break;}}
 		try {Thread.sleep(1000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
@@ -346,7 +346,7 @@ public class Sales extends TestBase {
 	
 	 @Test(groups={"Sales", "AltaDeContacto","Ola1"}, priority=2)   //verify
 	public void TS94541_Ingresar_pasaporte_en_el_campo_Numero_de_Documento(){
-		String PASA = "4651327";
+		String PASA = "465132795";
 		boolean esta = false;
 		SalesBase SB = new SalesBase(driver);
 		SB.BuscarCuenta("Pasaporte", PASA);
@@ -556,13 +556,15 @@ public class Sales extends TestBase {
 		try {Thread.sleep(10000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 		boolean as = false;
 		ContactSearch contact = new ContactSearch(driver);
-		contact.searchContact("Pasaporte", "24asw", "");
-		WebElement num = driver.findElement(By.id("SearchClientDocumentNumber"));
-		List<WebElement> er = driver.findElements(By.cssSelector(".error.ng-scope"));
-		for(WebElement e : er){
-			if( e.getText().toLowerCase().equals("longitud m\u00ednima de 7 m\u00ednimo 7 caracteres y m\u00e1ximo 8 y el primer d\u00edgito no debe ser 0.")){
-				e.isDisplayed();
-			as=true;}
+		contact.searchContact("Pasaporte", "24asw5142", "");
+		driver.findElement(By.id("SearchClientsDummy")).click();
+		sleep(3000);
+		List <WebElement> cc = driver.findElements(By.cssSelector(".slds-form-element__label.ng-binding"));
+		for (WebElement x : cc) {
+			if (x.getText().toLowerCase().contains("+ crear nuevo cliente")) {
+				as = true;
+				break;
+			}
 		}
 		Assert.assertTrue(as);
 	}
@@ -1029,15 +1031,29 @@ public class Sales extends TestBase {
 	@Test(groups={"Sales", "AltaDeContacto","Ola1"}, priority=2)
 	public void TS94568_Alta_Contacto_Persona_Fisica_Verificar_Que_El_Campo_Numero_De_Documento_No_Inicie_Con_0() {
 		SalesBase SB = new SalesBase(driver);
+		boolean a = false;
 		driver.findElement(By.id("SearchClientDocumentNumber")).sendKeys("0145698");
-		assertTrue(driver.findElement(By.cssSelector(".slds-form-element.vlc-flexng-scope.ng-valid-pattern.ng-valid-maxlength.ng-valid-required.ng-dirty.ng-valid-parse.ng-invalid.ng-invalid-minlength")).isDisplayed());
+		List <WebElement> error = driver.findElements(By.cssSelector(".description.ng-binding"));
+		for(WebElement e: error){
+			if(e.getText().toLowerCase().contains("el primer d\u00edgito no deber\u00eda ser 0")){
+				a=true;
+				break;}}
+		sleep(1000);
+		Assert.assertTrue(a);	
 	}
 	
 	@Test(groups={"Sales", "AltaDeContacto","Ola1"}, priority=2)
 	public void TS94559_Alta_Contacto_Persona_Fisica_Verificar_Error_Al_Ingresar_Pasaporte_Con_Cero_Al_Inicio() {
-		SalesBase SB = new SalesBase(driver);
-		SB.BuscarCuenta("Pasaporte", "014569825");
-		assertTrue(driver.findElement(By.cssSelector(".slds-form-element.vlc-flexng-scope.ng-valid-pattern.ng-valid-maxlength.ng-valid-required.ng-dirty.ng-valid-parse.ng-invalid.ng-invalid-minlength")).isDisplayed());
+		boolean a = false;
+		ContactSearch contact = new ContactSearch(driver);
+		contact.searchContact("Pasaporte", "014569825", "");
+		List <WebElement> error = driver.findElements(By.cssSelector(".description.ng-binding"));
+		for(WebElement e: error){
+			if(e.getText().toLowerCase().equals("el campo debe ser alfanum\u00e9rico de 9 d\u00edgitos. el primer d\u00edgito no deber\u00eda ser 0.")){
+				a=true;
+				break;}}
+		sleep(1000);
+		Assert.assertTrue(a);	
 	}
 	
 	@Test(groups={"Sales", "AltaDeContacto","Ola1"}, priority=2)
@@ -1498,10 +1514,10 @@ public class Sales extends TestBase {
 		Assert.assertFalse(tNom.getText().equals("papa" + " " + "nata"));
 	}
 	
-	@Test(groups={"Sales", "AltaDeCuenta","Ola1"}, priority=2, dataProvider="SalesCuentaActiva") 
-	public void TS95205_Alta_Cuenta_Business_Validar_nombres_de_los_campos(String sCuenta, String sDni, String sLinea) throws IOException {
+	@Test(groups={"Sales", "AltaDeCuenta","Ola1"}, priority=2, dataProvider="SalesContactoSinCuenta") 
+	public void TS95205_Alta_Cuenta_Business_Validar_nombres_de_los_campos(String sCuenta, String sDni) throws IOException {
 		SalesBase SB = new SalesBase(driver);
-		SB.BuscarAvanzada("", sCuenta.split(" ")[1], "", "", "");
+		SB.BuscarAvanzada(sCuenta.split(" ")[0], sCuenta.split(" ")[1], "", "", "");
 		driver.findElement(By.id("SearchClientsDummy")).click();
 		sleep (3000);	
 		WebElement asdf = driver.findElement(By.id("tab-scoped-3")).findElement(By.tagName("tbody")).findElements(By.tagName("td")).get(0);
@@ -1513,7 +1529,9 @@ public class Sales extends TestBase {
 				break;
 			}
 		}
-		sleep(7000);
+		sleep(7000); 
+		Assert.assertTrue(driver.findElement(By.cssSelector(".slds-form-element.vlc-flex.ng-scope.ng-valid-minlength.ng-valid-maxlength.ng-valid.ng-valid-required.ng-dirty")).findElement(By.tagName("label")).getText().toLowerCase().contains("descripcion de la cuenta"));
+		Assert.assertTrue(driver.findElements(By.cssSelector(".slds-form-element.vlc-flex.ng-scope.ng-valid-minlength.ng-valid-maxlength.ng-valid.ng-valid-required.ng-dirty")).get(1).findElement(By.tagName("label")).getText().toLowerCase().contains("titular"));
 		Assert.assertTrue(driver.findElement(By.id("ContactName")).isDisplayed());
 		Assert.assertTrue(driver.findElement(By.id("Owner")).isDisplayed());
 	}
@@ -2205,19 +2223,13 @@ public class Sales extends TestBase {
 		  SalesBase SB = new SalesBase(driver); 
 		  SB.BuscarCuenta(DNI, sDni);
 		  sleep(7000);
-		  List <WebElement> cuenta = driver.findElements(By.cssSelector(".slds-truncate.ng-binding"));
-		  for (WebElement x : cuenta) {
-			  if (x.getText().toLowerCase().contains(nombre.toLowerCase())) {
-				  x.click();
-				  break;
-			  }
-		  }		  
+		  List <WebElement> tabla = driver.findElement(By.id("tab-scoped-3")).findElement(By.className("slds-text-title--caps")).findElements(By.tagName("th"));
 		  sleep(5000);
-		  WebElement dni = driver.findElement(By.id("DocumentNumber"));
-		  WebElement name = driver.findElement(By.id("FirstName"));
-		  WebElement apel = driver.findElement(By.id("LastName"));
-		  Assert.assertTrue(dni.getAttribute("value").contains(sDni) && name.getAttribute("value").toLowerCase().contains(sCuenta.split(" ")[0]) && apel.getAttribute("value").contains(sCuenta.split(" ")[1]));
-	  }
+		  Assert.assertTrue(tabla.get(0).getText().equalsIgnoreCase("nombre"));
+		  Assert.assertTrue(tabla.get(1).getText().equalsIgnoreCase("tipo documento"));
+		  Assert.assertTrue(tabla.get(2).getText().equalsIgnoreCase("documento"));
+		  Assert.assertTrue(tabla.get(3).getText().equalsIgnoreCase("mail"));
+		}
 	  
 	  @Test(groups = {"Sales", "AltaDeContacto","Ola1"}, priority=2)
 	  public void TS94795_Alta_Contacto_Busqueda_Verificar_Op1_tercer_TAB_de_visualizacion() {

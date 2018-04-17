@@ -1326,19 +1326,14 @@ public class TechnicalCareCSRAutogestionOla2 extends TestBase{
 	
 	@Test(groups= {"Fase4","TechnicalCare", "Autogestion", "Ola2"})
 	public void TS_CRM_Fase_4_Technical_Care_CSR_Autogestion_Verificacion_de_que_la_autogestion_del_del_servicio_103_corresponde_a_un_servicio_de_Telecom() throws Exception {
-		BasePage cambioFrameByID=new BasePage();
-		driver.switchTo().frame(cambioFrameByID.getFrameForElement(driver, By.id("ChannelSelection")));
+		//BasePage cambioFrameByID=new BasePage();
+		//driver.switchTo().frame(cambioFrameByID.getFrameForElement(driver, By.id("ChannelSelection")));
 		TechnicalCareCSRAutogestionPage tech = new TechnicalCareCSRAutogestionPage(driver);
 		tech.listadoDeSeleccion("Nros. emergencia", "103", "Tono ocupado");  
-		tech.clickOnButtons();
-		sleep(4000);
+	//	tech.clickOnButtons();
+		tech.selectionInconvenient("No");
 		tech.verificarCaso();
-		driver.switchTo().frame(cambioFrameByID.getFrameForElement(driver, By.id("srchErrorDiv_Case")));
-		tech.getCaseBody().click();		
-		sleep(5000);
-		driver.switchTo().frame(cambioFrameByID.getFrameForElement(driver, By.className("optionLabel")));
-		List<WebElement>menu=tech.getOptionContainer();
-		menu.get(4).click();
+		//tech.ServiceOwner();
 		assertTrue(tech.getVerificar().getText().equalsIgnoreCase("Telecom"));
 	}
 	

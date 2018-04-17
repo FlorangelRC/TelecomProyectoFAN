@@ -184,12 +184,22 @@ public class Sales2 extends TestBase{
 	@Test(groups={"Sales", "AltaDeContacto", "Ola1"}, priority=2, dataProvider="SalesCuentaActiva")
 	public void TS94880_Alta_De_Contacto_Busqueda_Verificar_Accion_De_Ver_Detalle_De_Contacto(String sCuenta, String sDni, String sLinea) throws IOException{//dentro del ver detalles no se muestran las opciones de actualizar ni lanzar carrito
 		SalesBase SB = new SalesBase(driver);
+		boolean cat = false;
+		boolean dc = false;
 		sb.BuscarCuenta(DNI, sDni);
-		//sb.BuscarCuenta(DNI, buscarCampoExcel(1, "Cuenta Activa", 2));
 		driver.findElement(By.id("tab-scoped-3__item")).click();
-		SB.acciondecontacto("ver contacto");
-		Assert.assertTrue(false);
-	}
+		List<WebElement> btns = driver.findElements(By.cssSelector(".slds-button.slds-button.slds-button--icon"));
+		for(WebElement e: btns){
+			if(e.getText().toLowerCase().equals("catalogo")){ 
+				cat = true;
+			}else { if (e.getText().toLowerCase().equals("ver contacto")) {
+				dc = true;
+				}
+			}
+		}
+		Assert.assertTrue(cat&&dc);
+	} 
+
 	
 	@Test(groups={"Sales", "AltaDeContacto", "Ola1"}, priority=3, dataProvider="SalesCuentaActiva")
 	public void TS94661_Alta_De_Contacto_Persona_Fisica_Verificar_Categoria_Impositiva_Por_Default(String sCuenta, String sDni, String sLinea) throws IOException{
@@ -1861,14 +1871,14 @@ public class Sales2 extends TestBase{
 		String NyA = sCuenta;
 		dni.setSimpleDropdown(driver.findElement(By.id("SearchClientDocumentType")), "DNI");
 		driver.findElement(By.id("SearchClientDocumentNumber")).click();
-		driver.findElement(By.id("SearchClientDocumentNumber")).sendKeys("11111111");
+		driver.findElement(By.id("SearchClientDocumentNumber")).sendKeys("5849652");
 		sleep(10000);
 		SalesBase SB = new SalesBase(driver);
 		SB.BuscarAvanzada(NyA.split(" ")[0], NyA.split(" ")[1], "", "", "");
 		WebElement tTel = driver.findElement(By.id("tab-scoped-3")).findElement(By.tagName("tbody")).findElements(By.tagName("td")).get(2);
-		Assert.assertTrue(!tTel.getText().equals("59876345"));
+		Assert.assertTrue(!tTel.getText().equals("5849652"));
 		WebElement tNom = driver.findElement(By.id("tab-scoped-3")).findElement(By.tagName("tbody")).findElements(By.tagName("td")).get(0);
-		Assert.assertFalse(tNom.getText().equalsIgnoreCase("lino" + " " + "acosta"));
+		Assert.assertTrue(tNom.getText().toLowerCase().contains(sCuenta.toLowerCase()));
 	}
 
 	@Test(groups={"Sales", "AltaDeLinea", "Ola1"}, priority=8,dataProvider="SalesCuentaActiva")
