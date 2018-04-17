@@ -63,7 +63,7 @@ private WebDriver driver;
  	
 	}
  	 	
- 		@AfterMethod(alwaysRun=true)
+ 		//@AfterMethod(alwaysRun=true)
  		public void after() {
 		try {Thread.sleep(2000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 		driver.switchTo().defaultContent(); 
@@ -72,7 +72,7 @@ private WebDriver driver;
 	    driver.switchTo().defaultContent(); 
 	}
  	
- 		@AfterClass(alwaysRun=true)
+ 		//@AfterClass(alwaysRun=true)
  		public void tearDown() {
 		try {Thread.sleep(1000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 		CustomerCare cerrar = new CustomerCare(driver);
@@ -110,11 +110,11 @@ private WebDriver driver;
  		@Test (groups= {"TechnicalCare", "SVA", "Ola2"},priority=2,dataProvider="Tech")
  		public void CRM_Ola_2_Technical_Care_CRM_SVA_Estado_Conciliador_Verificación_de_cierre_de_estado_en_Resuelta_exitosa(String sCuenta, String sDni, String sLinea) throws Exception {
  		TechnicalCareCSRDiagnosticoPage tech = new TechnicalCareCSRDiagnosticoPage(driver);
- 		TechCare_Ola1 page=new TechCare_Ola1(driver);
- 		page.selectAccount (sCuenta);
- 		driver.switchTo().defaultContent();
- 		sleep(3000);
- 		tech.clickOpcionEnAsset(sLinea, "mis servicios");
+ 	 	TechCare_Ola1 page=new TechCare_Ola1(driver);
+ 	 	page.selectAccount (sCuenta);
+ 	 	driver.switchTo().defaultContent();
+ 	 	sleep(3000);
+ 	 	tech.clickOpcionEnAsset(sLinea, "mis servicios");
  	    tech.verDetalles();
  	    tech.clickDiagnosticarServicio("Llamada en espera");
  	    sleep (4000);
@@ -129,14 +129,14 @@ private WebDriver driver;
  		@Test (groups= {"TechnicalCare", "SVA", "Ola2"},priority=3,dataProvider="Tech")
  		public void CRM_Ola_2_Technical_Care_CRM_SVA_Estado_del_Servicio_Verificación_de_cierre_de_estado_en_Resuelta_exitosa(String sCuenta, String sDni, String sLinea) throws Exception {
  		TechnicalCareCSRDiagnosticoPage tech = new TechnicalCareCSRDiagnosticoPage(driver);
- 		TechCare_Ola1 page=new TechCare_Ola1(driver);
- 		page.selectAccount (sCuenta);
- 		driver.switchTo().defaultContent();
- 		sleep(3000);
- 		tech.clickOpcionEnAsset(sLinea, "mis servicios");
+ 	 	 TechCare_Ola1 page=new TechCare_Ola1(driver);
+ 	 	 page.selectAccount (sCuenta);
+ 	 	 driver.switchTo().defaultContent();
+ 	 	 sleep(3000);
+ 	 	 tech.clickOpcionEnAsset(sLinea, "mis servicios");
  	    tech.verDetalles();
  	    tech.clickDiagnosticarServicio("sms", "SMS Saliente", true);
- 	    sleep (4000);
+ 	    sleep (5000);
  	    tech.selectionInconvenient("SMS a fijo");
  	    tech.continuar();
  	    sleep (4000);
@@ -147,11 +147,11 @@ private WebDriver driver;
  		@Test (groups= {"TechnicalCare", "SVA", "Ola2"},priority=4,dataProvider="Tech")
  		public void CRM_Ola_2_Technical_Care_CRM_SVA_Estado_del_Servicio_sin_modificaciones_Verificación_de_cierre_de_estado_en_Resuelta_exitosa(String sCuenta, String sDni, String sLinea) throws Exception {
  		TechnicalCareCSRDiagnosticoPage tech = new TechnicalCareCSRDiagnosticoPage(driver);
- 		TechCare_Ola1 page=new TechCare_Ola1(driver);
- 		page.selectAccount (sCuenta);
- 		driver.switchTo().defaultContent();
- 		sleep(3000);
- 		tech.clickOpcionEnAsset(sLinea, "mis servicios");
+ 	 	 TechCare_Ola1 page=new TechCare_Ola1(driver);
+ 	 	 page.selectAccount (sCuenta);
+ 	 	 driver.switchTo().defaultContent();
+ 	 	 sleep(3000);
+ 	 	 tech.clickOpcionEnAsset(sLinea, "mis servicios");
  	    tech.verDetalles();
  	   tech.clickDiagnosticarServicio("sms", "SMS Saliente", true);
 	    sleep (4000);

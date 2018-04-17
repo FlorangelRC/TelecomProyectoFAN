@@ -26,7 +26,7 @@ import Pages.setConexion;
 
 public class SalesNominaciones extends TestBase{
 
-	protected String perfil = "venta";
+	protected String perfil = "call";
 	
 	@BeforeClass(alwaysRun=true)
 	public void Init() {
@@ -396,6 +396,16 @@ public class SalesNominaciones extends TestBase{
 		ContactSearch contact = new ContactSearch(driver);
 		contact.searchContact2("Pasaporte", "441236778", "femenino");
 		sleep(6000);
+		if (driver.findElement(By.id("FirstName")).getAttribute("value").isEmpty()) {
+			driver.findElement(By.id("FirstName")).sendKeys("Malan");
+		}
+		if (driver.findElement(By.id("LasttName")).getAttribute("value").isEmpty()) {
+			driver.findElement(By.id("LastName")).sendKeys("Faretto");
+		}
+		if (driver.findElement(By.id("Birthdate")).getAttribute("value").isEmpty()) {
+			driver.findElement(By.id("Birthdate")).sendKeys("30/06/1980");
+		}
+		
 		driver.findElement(By.id("PermanencyDueDate")).sendKeys("30/06/2021");
 		assertTrue(driver.findElement(By.cssSelector(".message.description.ng-binding.ng-scope")).getText().contains("La permanencia no puede ser mayor a 2 años a partir de la fecha o menor a la fecha actual"));
 		sleep(1000);
@@ -403,8 +413,8 @@ public class SalesNominaciones extends TestBase{
 		driver.findElement(By.id("PermanencyDueDate")).sendKeys("30/06/2018");
 		//driver.findElement(By.cssSelector(".slds-input.form-control.ng-pristine.ng-untouched.ng-valid.ng-empty")).sendKeys("algoaqui@yahoo.com.ar");
 		CC.obligarclick(driver.findElement(By.id("Contact_nextBtn")));
-		sleep(5000);
-		assertTrue(driver.findElement(By.id("MethodSelection")).isEnabled());
+		sleep(7000);
+		assertTrue(driver.findElement(By.id("ValidationMethod_nextBtn")).isEnabled());
 	}
 	
 	@Test(groups={"Sales","Nominacion","Ola1"})
