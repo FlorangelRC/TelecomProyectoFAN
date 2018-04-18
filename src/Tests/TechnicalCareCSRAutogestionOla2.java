@@ -1330,11 +1330,12 @@ public class TechnicalCareCSRAutogestionOla2 extends TestBase{
 		//driver.switchTo().frame(cambioFrameByID.getFrameForElement(driver, By.id("ChannelSelection")));
 		TechnicalCareCSRAutogestionPage tech = new TechnicalCareCSRAutogestionPage(driver);
 		tech.listadoDeSeleccion("Nros. emergencia", "103", "Tono ocupado");  
-	//	tech.clickOnButtons();
-		tech.selectionInconvenient("No");
-		tech.verificarCaso();
-		//tech.ServiceOwner();
-		assertTrue(tech.getVerificar().getText().equalsIgnoreCase("Telecom"));
+		tech.clickOnButtons();
+		//tech.selectionInconvenient("NO");
+		tech.verificarNumDeGestion();
+		tech.ServiceOwner();
+		sleep(3000);
+		assertTrue(tech.getVerificar().getText().equalsIgnoreCase("Terceros"));
 	}
 	
 	@Test(groups= {"TechnicalCare", "Autogestion", "Ola2"})
