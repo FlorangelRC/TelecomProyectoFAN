@@ -1335,7 +1335,7 @@ public class TechnicalCareCSRAutogestionOla2 extends TestBase{
 		tech.verificarNumDeGestion();
 		tech.ServiceOwner();
 		sleep(3000);
-		assertTrue(tech.getVerificar().getText().equalsIgnoreCase("Terceros"));
+		assertTrue(tech.getVerificar().getText().equalsIgnoreCase("Telecom"));
 	}
 	
 	@Test(groups= {"TechnicalCare", "Autogestion", "Ola2"})
