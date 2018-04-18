@@ -272,7 +272,7 @@ public class SalesNominaciones extends TestBase{
 		SB.Crear_DomicilioLegal("Buenos Aires", "aba", "falsa", "", "1000", "", "", "1549");
 		sleep(10000);
 		contact.subirformulario("C:\\Users\\Sofia Chardin\\Desktop\\FormNom.pdf", "si");
-		sleep(25000);
+		sleep(30000);
 		List <WebElement> element = driver.findElements(By.cssSelector(".slds-form-element.vlc-flex.vlc-slds-text-block.vlc-slds-rte.ng-pristine.ng-valid.ng-scope"));
 		boolean a = false;
 		for (WebElement x : element) {
@@ -294,6 +294,7 @@ public class SalesNominaciones extends TestBase{
 		contact.ingresarMail("asdads@gmail.com", "si");
 		contact.tipoValidacion("documento");
 		contact.subirArchivo("C:\\Users\\Nicolas\\Desktop\\descarga.jpg", "si");
+		
 		List <WebElement> sms = driver.findElements(By.cssSelector(".slds-form-element__control.ng-scope"));
 		boolean a = false;
 		for (WebElement x : sms) {
@@ -322,13 +323,13 @@ public class SalesNominaciones extends TestBase{
 		cua.click();
 		sleep(13000);
 		perfil = "call";
-		contact.searchContact2("DNI", sDni, "femenino");
+		contact.searchContact2("DNI", sDni, sLinea);
 		sleep(6000);
 		assertTrue(!driver.findElement(By.id("FirstName")).getAttribute("value").isEmpty());
 		
 	}
 	//***********************************************************************************************************************
-	@Test(groups={"Sales","Nominacion","Ola1"},dataProvider="SalesCuentaBolsa")
+	@Test(groups={"Sales","Nominacion","Ola1"},dataProvider="SalesPasaporteBolsa")
 	public void TS95094_SalesCPQ_Nominacion_Extranjero_Verificar_Confirmacion_Exitosa(String sCuenta, String sDni, String sLinea){
 		String FilePath = "C:\\Users\\Sofia Chardin\\Desktop\\DNI.jpg";
 		SalesBase SB = new SalesBase(driver);
@@ -346,23 +347,38 @@ public class SalesNominaciones extends TestBase{
 		cua.click();
 		sleep(13000);
 		perfil = "call";
-		contact.searchContact2("Pasaporte", sDni ,"masculino");
+		contact.searchContact2("Pasaporte", sDni , sLinea);
 		sleep(6000);
+	/*	if (driver.findElement(By.id("FirstName")).getAttribute("value").isEmpty()) {
+			driver.findElement(By.id("FirstName")).sendKeys("Malan");
+		}
+		if (driver.findElement(By.id("LasttName")).getAttribute("value").isEmpty()) {
+			driver.findElement(By.id("LastName")).sendKeys("Faretto");
+		}
+		if (driver.findElement(By.id("Birthdate")).getAttribute("value").isEmpty()) {
+			driver.findElement(By.id("Birthdate")).sendKeys("30/06/1980");
+		}*/
 		driver.findElement(By.id("PermanencyDueDate")).sendKeys("30/06/2018");
 		CC.obligarclick(driver.findElement(By.id("Contact_nextBtn")));
 		sleep(5000);
-		driver.findElement(By.id("MethodSelection|0")).findElement(By.cssSelector(".slds-radio--faux.ng-scope")).click();
-		driver.findElement(By.id("ValidationMethod_nextBtn")).click();
-		sleep(5000);
-		driver.findElement(By.id("FileDocumentImage")).sendKeys(FilePath);
-		sleep(1000);
-		CC.obligarclick(driver.findElement(By.id("DocumentMethod_nextBtn")));
-		sleep(5000);
-		CC.obligarclick(driver.findElement(By.id("FormUpload_nextBtn")));
-		sleep(15000);
-		System.out.println(driver.findElement(By.cssSelector(".slds-grid.slds-wrap.ng-pristine.ng-valid")).findElement(By.id("TextBlock2")).findElement(By.className("ng-binding")).findElements(By.tagName("p")).get(2).getText());
-		assertTrue(driver.findElements(By.id("TextBlock2")).get(1).findElements(By.tagName("p")).get(3).getText().toLowerCase().contains("nominaci\u00f3n exitosa"));
-		
+		contact.tipoValidacion("documento");
+		contact.subirArchivo("C:\\Users\\Sofia Chardin\\Desktop\\DNI.jpg", "si");
+			BasePage bp = new BasePage(driver);
+		//bp.setSimpleDropdown(driver.findElement(By.id("ImpositiveCondition")), "IVA Consumidor Final");
+		//SB.Crear_DomicilioLegal("Buenos Aires", "aba", "falsa", "", "1000", "", "", "1549");
+		sleep(10000);
+		contact.subirformulario("C:\\Users\\Sofia Chardin\\Desktop\\FormNom.pdf", "si");
+		sleep(25000);
+		List <WebElement> element = driver.findElements(By.cssSelector(".slds-form-element.vlc-flex.vlc-slds-text-block.vlc-slds-rte.ng-pristine.ng-valid.ng-scope"));
+		boolean a = false;
+		for (WebElement x : element) {
+			if (x.getText().toLowerCase().contains("¡nominaci\u00f3n exitosa!")) {
+				a = true;
+				System.out.println(x.getText());
+			}
+		}
+		Assert.assertTrue(a);
+		driver.findElement(By.id("FinishProcess_nextBtn")).click();
 	}
 	
 	@Test(groups={"Sales","Nominacion","Ola1"}, dataProvider="SalesCuentaBolsa")
@@ -389,12 +405,24 @@ public class SalesNominaciones extends TestBase{
 		assertTrue(driver.findElement(By.id("GenderSearch|0")).isEnabled()&&(driver.findElement(By.id("GenderSearch|0")).findElement(By.tagName("label")).getText().contains("G\u00e9nero")));
 	}
 	
-	@Test(groups={"Sales","Nominacion","Ola1"})
-	public void TS95118_SalesCPQ_Nominacion_Extranjero_Verificar_Formato_De_Fecha_PlazoPermanencia(){
+	@Test(groups={"Sales","Nominacion","Ola1"}, dataProvider="SalesPasaporteBolsa")
+	public void TS95118_SalesCPQ_Nominacion_Extranjero_Verificar_Formato_De_Fecha_PlazoPermanencia(String sCuenta, String sDni, String sLinea){
 		SalesBase SB = new SalesBase(driver);
 		CustomerCare CC = new CustomerCare(driver);
 		ContactSearch contact = new ContactSearch(driver);
-		contact.searchContact2("Pasaporte", "441236778", "femenino");
+		String NyA = sCuenta;
+		SB.BuscarAvanzada(NyA.split(" ")[0], NyA.split(" ")[1], "", "", "");
+		WebElement cli = driver.findElement(By.id("tab-scoped-1"));
+		if (cli.findElement(By.tagName("tbody")).findElement(By.tagName("tr")).findElement(By.tagName("div")).getText().equals("Cliente Wholesale")) {
+			cli.findElement(By.tagName("tbody")).findElement(By.tagName("tr")).click();
+		}
+		sleep(3000);
+		WebElement cua = driver.findElement(By.id("tab-scoped-1")).findElement(By.tagName("tbody")).findElements(By.tagName("tr")).get(2).findElements(By.tagName("td")).get(6).findElement(By.tagName("svg"));
+		System.out.println("1: "+driver.findElement(By.id("tab-scoped-1")).findElement(By.tagName("tbody")).findElements(By.tagName("tr")).get(2).findElements(By.tagName("td")).get(1).getText());
+		cua.click();
+		sleep(13000);
+		perfil = "call";
+		contact.searchContact2("Pasaporte", sDni, sLinea);
 		sleep(6000);
 		if (driver.findElement(By.id("FirstName")).getAttribute("value").isEmpty()) {
 			driver.findElement(By.id("FirstName")).sendKeys("Malan");
