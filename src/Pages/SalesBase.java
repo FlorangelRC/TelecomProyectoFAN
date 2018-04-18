@@ -373,6 +373,8 @@ Assert.assertTrue(driver.findElement(By.cssSelector(".slds-page-header__title.vl
  
  public void acciondecontacto(String accion){
 		try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		 driver.findElement(By.id("tab-scoped-3__item")).click();
+		    sleep(3000);
 	List<WebElement> btns = driver.findElements(By.cssSelector(".slds-button.slds-button.slds-button--icon"));
 for(WebElement e: btns){
 	if(e.getText().toLowerCase().equals(accion)){ 
