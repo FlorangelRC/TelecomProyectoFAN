@@ -42,7 +42,7 @@ import DataProvider.ExcelUtils;
 public class TestBase {
 	protected static WebDriver driver;//
 	
-	@AfterSuite (alwaysRun = true, groups = {"CustomerCare", "AjustesYEscalamiento", "SuspensionYRehabilitacion", "Ola1"})
+	//@AfterSuite (alwaysRun = true, groups = {"CustomerCare", "AjustesYEscalamiento", "SuspensionYRehabilitacion", "Ola1"})
 	public void afterSuite() {
 		driver.quit();
 	}
