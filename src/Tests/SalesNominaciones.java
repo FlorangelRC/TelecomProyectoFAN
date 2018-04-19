@@ -426,11 +426,7 @@ public class SalesNominaciones extends TestBase{
 		sleep(6000);
 		if (driver.findElement(By.id("FirstName")).getAttribute("value").isEmpty()) {
 			driver.findElement(By.id("FirstName")).sendKeys("Malan");
-		}
-		if (driver.findElement(By.id("LasttName")).getAttribute("value").isEmpty()) {
 			driver.findElement(By.id("LastName")).sendKeys("Faretto");
-		}
-		if (driver.findElement(By.id("Birthdate")).getAttribute("value").isEmpty()) {
 			driver.findElement(By.id("Birthdate")).sendKeys("30/06/1980");
 		}
 		
@@ -534,7 +530,7 @@ public class SalesNominaciones extends TestBase{
 		ContactSearch contact = new ContactSearch(driver);
 		Random aleatorio = new Random(System.currentTimeMillis());
 		aleatorio.setSeed(System.currentTimeMillis());
-		int intAletorio = aleatorio.nextInt(8999999)+1000000;
+		int intAletorio = aleatorio.nextInt(899999999)+100000000;
 		contact.searchContact2("Pasaporte", Integer.toString(intAletorio), "femenino");
 		sleep(6000);
 		driver.findElement(By.id("PermanencyDueDate")).sendKeys("30/06/2018");
@@ -544,7 +540,7 @@ public class SalesNominaciones extends TestBase{
 		//driver.findElement(By.cssSelector(".slds-input.form-control.ng-pristine.ng-untouched.ng-valid.ng-empty")).sendKeys("algoaqui@yahoo.com.ar");
 		CC.obligarclick(driver.findElement(By.id("Contact_nextBtn")));
 		sleep(5000);
-		driver.findElement(By.id("MethodSelection|0")).findElement(By.cssSelector(".slds-radio--faux.ng-scope")).click();
+		driver.findElement(By.id("MethodSelectionOnlyDOC|0")).findElement(By.cssSelector(".slds-radio--faux.ng-scope")).click();
 		driver.findElement(By.id("ValidationMethod_nextBtn")).click();
 		sleep(5000);
 		driver.findElement(By.id("FileDocumentImage")).sendKeys(FilePath);

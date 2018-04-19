@@ -313,7 +313,7 @@ public class Sales extends TestBase {
 	public void TS94668_Alta_De_Contacto_Persona_Fisica_Verificar_Eliminacion_Valor_CI(){
 		SalesBase SB = new SalesBase(driver);
 		sleep(8000);
-		SB.BuscarCuenta("Cedula de Identidad", "1487569");
+		SB.BuscarCuenta("-- Clear --", "148750609");
 		List <WebElement> cc = driver.findElements(By.cssSelector(".slds-form-element__label.ng-binding"));
 		for (WebElement x : cc) {
 			if (x.getText().toLowerCase().contains("+ crear nuevo cliente")) {
@@ -670,6 +670,10 @@ public class Sales extends TestBase {
 		sleep(5000);
 		SB.agregarplan(plan);
 		SB.continuar();
+		sleep(15000);
+		SB.Crear_DomicilioLegal(provincia, localidad, "falsa", "", "1000", "", "", "1549");
+		sleep(15000);
+		
 		SB.elegirvalidacion("DOC");
 		
 	}
