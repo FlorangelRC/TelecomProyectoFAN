@@ -42,10 +42,6 @@ import DataProvider.ExcelUtils;
 public class TestBase {
 	protected static WebDriver driver;//
 	
-	@AfterSuite (alwaysRun = true, groups = {"CustomerCare", "AjustesYEscalamiento", "SuspensionYRehabilitacion", "Ola1"})
-	public void afterSuite() {
-		driver.quit();
-	}
 	
 	public void leftDropdown(WebDriver driver, String selection) {
 		driver.findElement(By.className("x-btn-mc")).click();
