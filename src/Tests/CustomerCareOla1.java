@@ -402,6 +402,7 @@ public class CustomerCareOla1 extends TestBase {
 				break;
 			}
 		}
+		sleep(2000);
 		driver.findElement(By.id("Step1-SuspensionOrReconnection_nextBtn")).click();
 		sleep(3000);
 		List <WebElement> eq = driver.findElements(By.cssSelector(".slds-form-element__label.ng-binding.ng-scope"));
@@ -782,6 +783,7 @@ public class CustomerCareOla1 extends TestBase {
 				break;
 			}
 		}
+		sleep(2000);
 		driver.findElement(By.id("Step1-SuspensionOrReconnection_nextBtn")).click();
 		sleep(5000);
 		List <WebElement> linea = driver.findElements(By.cssSelector(".slds-form-element__label.ng-binding.ng-scope"));
@@ -854,6 +856,7 @@ public class CustomerCareOla1 extends TestBase {
 				break;
 			}
 		}
+		sleep(2000);
 		driver.findElement(By.id("Step1SelectSuspensionOrReconnection_nextBtn")).click();
 		sleep(3000);
 		boolean a = false;
