@@ -125,7 +125,6 @@ public class Sales extends TestBase {
 		SalesBase SB = new SalesBase(driver);
 		SB.BtnCrearNuevoCliente();
 		String asd = driver.findElement(By.id("SearchClientDocumentNumber")).getAttribute("value");
-		CustomerCare CC = new CustomerCare(driver);
 		ContactSearch contact = new ContactSearch(driver);
 		try {Thread.sleep(10000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 		driver.findElement(By.id("FirstName")).sendKeys("yy");
