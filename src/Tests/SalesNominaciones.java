@@ -49,12 +49,12 @@ public class SalesNominaciones extends TestBase{
 		
 	}
 
-	//@AfterMethod(alwaysRun=true)
+	@AfterMethod(alwaysRun=true)
 	public void IceB() {
 		driver.navigate().refresh();
 	}
 	
-	//@AfterClass(alwaysRun=true)
+	@AfterClass(alwaysRun=true)
 	public void Exit() {
 		driver.quit();
 		sleep(2000);
