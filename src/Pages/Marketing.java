@@ -497,8 +497,12 @@ public class Marketing extends CustomerCare {
 				break;
 			}
 		}
-		
-		try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		sleepShort(0);
+		irAGestionMarketing();
+		sleepShort(0);
+		BasePage cambioFrame=new BasePage();
+		driver.switchTo().defaultContent();
+		driver.switchTo().frame(cambioFrame.getFrameForElement(driver, By.cssSelector(".slds-panel__section.slds-p-around--small")));
 	}
 	
 }
