@@ -166,7 +166,7 @@ public class TechnicalCareCSRAutogestionPage extends BasePage {
 	public void clickOnButtons() throws InterruptedException  {
 		//scrollToElement(selfManagementStepBtn);
 		//selfManagementStepBtn.click();
-		sleep(7000);
+		sleep(4000);
 		if (!elementExists(existCaso)) { 
 		borderOverlay.get(1).click();
 		sleep(3000);
@@ -258,10 +258,11 @@ public class TechnicalCareCSRAutogestionPage extends BasePage {
 		String caso="";
 		if(elementExists(existCaso)) {
 			 caso=existCaso.getText();
+			 sleep(4000);
 			}
 			else {		
-				//driver.switchTo().defaultContent();
 				caso=numDeGestion();
+				sleep(4000);
 			}
 		driver.switchTo().defaultContent();
 		buscarCaso(caso);
@@ -290,12 +291,12 @@ public class TechnicalCareCSRAutogestionPage extends BasePage {
 	return caso;
 	}
 	
-	public String numDeGestion() throws InterruptedException{
+	public String numDeGestion()  throws InterruptedException {
+		sleep(3000);
 		String caso =  numGestion.getText();
-		sleep(2000);
 		driver.switchTo().defaultContent();
 		sleep(2000);
-	return caso;
+		return caso;
 	}
 		
 	public WebElement getExistCaso() {

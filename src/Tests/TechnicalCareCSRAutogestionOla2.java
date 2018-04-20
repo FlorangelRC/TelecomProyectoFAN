@@ -1290,7 +1290,15 @@ public class TechnicalCareCSRAutogestionOla2 extends TestBase{
 	
 	@Test(groups= {"Fase4","TechnicalCare", "Autogestion", "Ola2"})
 	public void TS_CRM_Fase_4_Technical_Care_CSR_Autogestion_Verificacion_de_que_la_autogestion_del_del_servicio_101_corresponde_a_un_servicio_de_Telecom() throws Exception {
-		BasePage cambioFrameByID=new BasePage();
+		TechnicalCareCSRAutogestionPage tech = new TechnicalCareCSRAutogestionPage(driver);
+		tech.listadoDeSeleccion("Nros. emergencia", "101", "Tono ocupado");  
+		tech.clickOnButtons();
+		tech.verificarNumDeGestion();
+		tech.ServiceOwner();
+		sleep(3000);
+		assertTrue(tech.getVerificar().getText().equalsIgnoreCase("Telecom"));
+	}
+		/*BasePage cambioFrameByID=new BasePage();
 		driver.switchTo().frame(cambioFrameByID.getFrameForElement(driver, By.id("ChannelSelection")));
 		TechnicalCareCSRAutogestionPage tech = new TechnicalCareCSRAutogestionPage(driver);
 		tech.listadoDeSeleccion("Nros. emergencia", "101", "Tono ocupado");  
@@ -1304,11 +1312,19 @@ public class TechnicalCareCSRAutogestionOla2 extends TestBase{
 		List<WebElement>menu=tech.getOptionContainer();
 		menu.get(4).click();
 		assertTrue(tech.getVerificar().getText().equalsIgnoreCase("Telecom"));
-	}
+	}*/
 	
 	@Test(groups= {"Fase4","TechnicalCare", "Autogestion", "Ola2"})
 	public void TS_CRM_Fase_4_Technical_Care_CSR_Autogestion_Verificacion_de_que_la_autogestion_del_del_servicio_102_corresponde_a_un_servicio_de_Telecom() throws Exception {
-		BasePage cambioFrameByID=new BasePage();
+		TechnicalCareCSRAutogestionPage tech = new TechnicalCareCSRAutogestionPage(driver);
+		tech.listadoDeSeleccion("Nros. emergencia", "102", "Tono ocupado");  
+		tech.clickOnButtons();
+		tech.verificarNumDeGestion();
+		tech.ServiceOwner();
+		sleep(3000);
+		assertTrue(tech.getVerificar().getText().equalsIgnoreCase("Telecom"));
+	}
+		/*BasePage cambioFrameByID=new BasePage();
 		driver.switchTo().frame(cambioFrameByID.getFrameForElement(driver, By.id("ChannelSelection")));
 		TechnicalCareCSRAutogestionPage tech = new TechnicalCareCSRAutogestionPage(driver);
 		tech.listadoDeSeleccion("Nros. emergencia", "102", "Tono ocupado");  
@@ -1322,16 +1338,13 @@ public class TechnicalCareCSRAutogestionOla2 extends TestBase{
 		List<WebElement>menu=tech.getOptionContainer();
 		menu.get(4).click();
 		assertTrue(tech.getVerificar().getText().equalsIgnoreCase("Telecom"));
-	}
+	}*/
 	
 	@Test(groups= {"Fase4","TechnicalCare", "Autogestion", "Ola2"})
 	public void TS_CRM_Fase_4_Technical_Care_CSR_Autogestion_Verificacion_de_que_la_autogestion_del_del_servicio_103_corresponde_a_un_servicio_de_Telecom() throws Exception {
-		//BasePage cambioFrameByID=new BasePage();
-		//driver.switchTo().frame(cambioFrameByID.getFrameForElement(driver, By.id("ChannelSelection")));
 		TechnicalCareCSRAutogestionPage tech = new TechnicalCareCSRAutogestionPage(driver);
 		tech.listadoDeSeleccion("Nros. emergencia", "103", "Tono ocupado");  
 		tech.clickOnButtons();
-		//tech.selectionInconvenient("NO");
 		tech.verificarNumDeGestion();
 		tech.ServiceOwner();
 		sleep(3000);

@@ -275,7 +275,7 @@ public class SalesNominaciones extends TestBase{
 		List <WebElement> element = driver.findElements(By.cssSelector(".slds-form-element.vlc-flex.vlc-slds-text-block.vlc-slds-rte.ng-pristine.ng-valid.ng-scope"));
 		boolean a = false;
 		for (WebElement x : element) {
-			if (x.getText().toLowerCase().contains("¡nominaci\u00f3n exitosa!")) {
+			if (x.getText().toLowerCase().contains("ï¿½nominaci\u00f3n exitosa!")) {
 				a = true;
 				//System.out.println(x.getText());
 			}
@@ -367,7 +367,7 @@ public class SalesNominaciones extends TestBase{
 		List <WebElement> element = driver.findElements(By.cssSelector(".slds-form-element.vlc-flex.vlc-slds-text-block.vlc-slds-rte.ng-pristine.ng-valid.ng-scope"));
 		boolean a = false;
 		for (WebElement x : element) {
-			if (x.getText().toLowerCase().contains("¡nominaci\u00f3n exitosa!")) {
+			if (x.getText().toLowerCase().contains("ï¿½nominaci\u00f3n exitosa!")) {
 				a = true;
 				System.out.println(x.getText());
 			}
@@ -426,7 +426,7 @@ public class SalesNominaciones extends TestBase{
 		}
 		
 		driver.findElement(By.id("PermanencyDueDate")).sendKeys("30/06/2021");
-		assertTrue(driver.findElement(By.cssSelector(".message.description.ng-binding.ng-scope")).getText().contains("La permanencia no puede ser mayor a 2 años a partir de la fecha o menor a la fecha actual"));
+		assertTrue(driver.findElement(By.cssSelector(".message.description.ng-binding.ng-scope")).getText().contains("La permanencia no puede ser mayor a 2 aï¿½os a partir de la fecha o menor a la fecha actual"));
 		sleep(1000);
 		driver.findElement(By.id("PermanencyDueDate")).clear();
 		driver.findElement(By.id("PermanencyDueDate")).sendKeys("30/06/2018");
