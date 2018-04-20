@@ -31,7 +31,7 @@ public class CustomerCareOla1 extends TestBase {
 		cc.cajonDeAplicaciones("Consola FAN");
 	}
 	
-	//@AfterClass (alwaysRun = true, groups = {"CustomerCare", "AjustesYEscalamiento", "SuspensionYRehabilitacion", "Ola1"})
+	@AfterClass (alwaysRun = true, groups = {"CustomerCare", "AjustesYEscalamiento", "SuspensionYRehabilitacion", "Ola1"})
 	public void quit() {
 		driver.quit();
 		sleep(5000);
@@ -43,104 +43,51 @@ public class CustomerCareOla1 extends TestBase {
 	}
 	
 	
-	@Test (groups = {"CustomerCare", "AjustesYEscalamiento", "Ola1"}, dataProvider = "CustomerCuentaActiva", priority = 3)  //No existe la gestion Ajustes
+	@Test (groups = {"CustomerCare", "AjustesYEscalamiento", "Ola1"}, dataProvider = "CustomerCuentaActiva", priority = 3)
 	public void TS90442_Adjustments_and_Escalations_Configurar_Ajuste_Formato_dd_mm_yyyy_fecha_hasta_desde(String nCuenta) {
 		cc.elegirCuenta(nCuenta);
-		cc.irAGestion("ajuste");
-		List <WebElement> serv = driver.findElements(By.cssSelector(".slds-form-element__label.ng-binding.ng-scope"));
-		for (WebElement x : serv) {
-			if (x.getText().toLowerCase().contains("un servicio")) {
-				x.click();
-				break;
-			}
-		}
-		driver.findElement(By.id("Step-ApplyAdjustToAccountOrService_nextBtn")).click();
-		sleep(5000);
-		driver.findElement(By.id("Step-AssetSelection_nextBtn")).click();
-		sleep(5000);
-		driver.findElement(By.id("CboConcepto")).click();
-		driver.findElement(By.xpath("//*[text() = 'CARGOS AUN NO FACTURADOS']")).click();
-		driver.findElement(By.id("CboTipo")).click();
-		driver.findElement(By.xpath("//*[text() = 'Otros cargos no facturados']")).click();
-		driver.findElement(By.id("CboItem")).click();
-		driver.findElement(By.xpath("//*[text() = 'Cargo de reconexión']")).click();
-		driver.findElement(By.id("CboMotivo")).click();
-		driver.findElement(By.xpath("//*[text() = 'Error/omisión/demora gestión']")).click();
-		driver.findElement(By.id("Step-TipodeAjuste_nextBtn")).click();
-		sleep(5000);
-		Assert.assertTrue(false);
-		//LO SIGUIENTE ES LO QUE SE NECESITA PARA FINALIZAR EL CASO
-		/*List <WebElement> si = driver.findElements(By.cssSelector(".slds-form-element__label.ng-binding.ng-scope"));
-		for (WebElement x : si) {
-			if (x.getText().toLowerCase().contains("ajustar")) {
-				x.click();
-				break;
-			}
-		}
-		driver.findElement(By.id("Step-HistoricalAdjustments_nextBtn")).click();
-		sleep(5000);
-		Assert.assertTrue(driver.findElement(By.id("Desde")).getAttribute("vlc-slds-model-date-format").contains("dd-MM-yyyy"));
-		Assert.assertTrue(driver.findElement(By.id("Hasta")).getAttribute("vlc-slds-model-date-format").contains("dd-MM-yyyy"));*/
+		cc.irAGestion("inconvenientes");
+		cc.flujoInconvenientes();
+		Assert.assertTrue(driver.findElement(By.id("Desde")).getAttribute("model-date-format").contains("dd-MM-yyyy"));
+		Assert.assertTrue(driver.findElement(By.id("Hasta")).getAttribute("model-date-format").contains("dd-MM-yyyy"));
 	}
 	
-	@Test (groups = {"CustomerCare", "AjustesYEscalamiento", "Ola1"}, dataProvider = "CustomerCuentaActiva", priority = 3)  //No existe la gestion Ajustes
+	@Test (groups = {"CustomerCare", "AjustesYEscalamiento", "Ola1"}, dataProvider = "CustomerCuentaActiva", priority = 3)
 	public void TS90444_Adjustments_and_Escalations_Configurar_Ajuste_Tipos_Unidades_a_Ajustar(String nCuenta) {
 		cc.elegirCuenta(nCuenta);
-		cc.irAGestion("ajuste");
-		List <WebElement> serv = driver.findElements(By.cssSelector(".slds-form-element__label.ng-binding.ng-scope"));
-		for (WebElement x : serv) {
-			if (x.getText().toLowerCase().contains("un servicio")) {
-				x.click();
-				break;
-			}
-		}
-		driver.findElement(By.id("Step-ApplyAdjustToAccountOrService_nextBtn")).click();
-		sleep(5000);
-		driver.findElement(By.id("Step-AssetSelection_nextBtn")).click();
-		sleep(5000);
-		driver.findElement(By.id("CboConcepto")).click();
-		driver.findElement(By.xpath("//*[text() = 'CARGOS AUN NO FACTURADOS']")).click();
-		driver.findElement(By.id("CboTipo")).click();
-		driver.findElement(By.xpath("//*[text() = 'Otros cargos no facturados']")).click();
-		driver.findElement(By.id("CboItem")).click();
-		driver.findElement(By.xpath("//*[text() = 'Cargo de reconexión']")).click();
-		driver.findElement(By.id("CboMotivo")).click();
-		driver.findElement(By.xpath("//*[text() = 'Error/omisión/demora gestión']")).click();
-		driver.findElement(By.id("Step-TipodeAjuste_nextBtn")).click();
-		sleep(5000);
-		Assert.assertTrue(false);
-		//LO SIGUIENTE ES LO QUE SE NECESITA PARA FINALIZAR EL CASO
-		/*List <WebElement> si = driver.findElements(By.cssSelector(".slds-form-element__label.ng-binding.ng-scope"));
-		for (WebElement x : si) {
-			if (x.getText().toLowerCase().contains("ajustar")) {
-				x.click();
-				break;
-			}
-		}
-		driver.findElement(By.id("Step-HistoricalAdjustments_nextBtn")).click();
-		sleep(5000);
+		cc.irAGestion("inconvenientes");
+		cc.flujoInconvenientes();
 		driver.findElement(By.id("Unidad")).click();
 		Assert.assertTrue(driver.findElement(By.xpath("//*[text() = 'Datos (Mb)']")).isDisplayed());
 		Assert.assertTrue(driver.findElement(By.xpath("//*[text() = 'Voz']")).isDisplayed());
-		Assert.assertTrue(driver.findElement(By.xpath("//*[text() = 'SMS']")).isDisplayed());*/
+		Assert.assertTrue(driver.findElement(By.xpath("//*[text() = 'SMS']")).isDisplayed());
 	}
 	
-	@Test (groups = {"CustomerCare", "AjustesYEscalamiento", "Ola1"}, dataProvider = "CustomerCuentaActiva", priority = 3)  //No existe la gestion Ajustes
-	public void TS90447_Adjustments_and_Escalations_Configurar_Ajuste_Tipos_Unidades_SMS() {
-		Assert.assertTrue(false);
+	@Test (groups = {"CustomerCare", "AjustesYEscalamiento", "Ola1"}, dataProvider = "CustomerCuentaActiva", priority = 3)
+	public void TS90447_Adjustments_and_Escalations_Configurar_Ajuste_Tipos_Unidades_SMS(String nCuenta) {
+		cc.elegirCuenta(nCuenta);
+		cc.irAGestion("inconvenientes");
+		cc.flujoInconvenientes();
+		driver.findElement(By.id("Unidad")).click();
+		Assert.assertTrue(driver.findElement(By.xpath("//*[text() = 'SMS']")).isDisplayed());
 	}
 	
-	@Test (groups = {"CustomerCare", "AjustesYEscalamiento", "Ola1"}, dataProvider = "CustomerCuentaActiva", priority = 3)  //No existe la gestion Ajustes
-	public void TS90448_Adjustments_and_Escalations_Configurar_Ajuste_Tipos_Unidades_Datos_adaptar_campo() {
-		Assert.assertTrue(false);
+	@Test (groups = {"CustomerCare", "AjustesYEscalamiento", "Ola1"}, dataProvider = "CustomerCuentaActiva", priority = 3)
+	public void TS90448_Adjustments_and_Escalations_Configurar_Ajuste_Tipos_Unidades_Datos_adaptar_campo(String nCuenta) {
+		cc.elegirCuenta(nCuenta);
+		cc.irAGestion("inconvenientes");
+		cc.flujoInconvenientes();
+		driver.findElement(By.id("Unidad")).click();
+		driver.findElement(By.xpath("//*[text() = 'Datos (Mb)']")).click();
+		Assert.assertTrue(driver.findElement(By.id("CantidadDatosms")).isDisplayed());
 	}
 	
-	@Test (groups = {"CustomerCare", "AjustesYEscalamiento", "Ola1"}, dataProvider = "CustomerCuentaActiva", priority = 0)  //No existe la gestion Ajustes
+	@Test (groups = {"CustomerCare", "AjustesYEscalamiento", "Ola1"}, dataProvider = "CustomerCuentaActiva", priority = 0)
 	public void TS90461_Adjustments_and_Escalations_Sesión_guiada_Visualizar_Gestion_Ajustes(String nCuenta) {
 		cc.elegirCuenta(nCuenta);
-		cc.buscarGestion("ajustes");
+		cc.buscarGestion("inconvenientes con cargos tasados y facturados");
 		List <WebElement> list = driver.findElements(By.cssSelector(".slds-button.slds-button--neutral.slds-truncate"));
-		Assert.assertTrue(list.get(0).getText().toLowerCase().contains("ajustes"));
+		Assert.assertTrue(list.get(0).getText().toLowerCase().contains("inconvenientes con cargos tasados y facturados"));
 	}
 	
 	@Test (groups = {"CustomerCare", "SuspensionYRehabilitacion", "Ola1"}, dataProvider = "CustomerCuentaActiva", priority = 1)
@@ -160,31 +107,21 @@ public class CustomerCareOla1 extends TestBase {
 		Assert.assertTrue(a && b);
 	}
 	
-	@Test (groups = {"CustomerCare", "AjustesYEscalamiento", "Ola1"}, dataProvider = "CustomerCuentaActiva", priority = 1)  //No existe la gestion Ajustes
+	@Test (groups = {"CustomerCare", "AjustesYEscalamiento", "Ola1"}, dataProvider = "CustomerCuentaActiva", priority = 1)
 	public void TS90469_360_VIEW_Ajustes_y_Escalaciones_Selección_de_Concepto_Tipo_de_Cargo_Item_Motivo_Visualizar_parametro_Concepto(String nCuenta) {
 		cc.elegirCuenta(nCuenta);
-		cc.irAGestion("ajuste");
-		List <WebElement> serv = driver.findElements(By.cssSelector(".slds-form-element__label.ng-binding.ng-scope"));
-		for (WebElement x : serv) {
-			if (x.getText().toLowerCase().contains("un servicio")) {
-				x.click();
-				break;
-			}
-		}
-		driver.findElement(By.id("Step-ApplyAdjustToAccountOrService_nextBtn")).click();
+		cc.irAGestion("inconvenientes");
 		sleep(5000);
-		driver.findElement(By.id("Step-AssetSelection_nextBtn")).click();
-		sleep(5000);
-		driver.switchTo().frame(cambioFrame(driver, By.id("CboConcepto")));
 		Assert.assertTrue(driver.findElement(By.id("CboConcepto")).getAttribute("required").equals("true"));
 	}
 	
-	@Test (groups = {"CustomerCare", "AjustesYEscalamiento", "Ola1"}, dataProvider = "CustomerCuentaActiva", priority = 2)  //No existe la gestion Ajustes
+	@Test (groups = {"CustomerCare", "AjustesYEscalamiento", "Ola1"}, dataProvider = "CustomerCuentaActiva", priority = 2)
 	public void TS90481_360_VIEW_Adjustments_and_scalations_Visualizacion_Ajustes_y_Casos_Relacionados_Visualizar_un_botón_Siguiente_que_me_permita_avanzar_al_siguiente_paso_del_proceso(String nCuenta) {
 		cc.elegirCuenta(nCuenta);
-		cc.irAGestion("ajuste");
+		cc.irAGestion("inconvenientes");
+		sleep(5000);
 		boolean a = false;
-		if (driver.findElement(By.id("Step-ApplyAdjustToAccountOrService_nextBtn")).isDisplayed()) {
+		if (driver.findElement(By.id("Step-TipodeAjuste_nextBtn")).isDisplayed()) {
 			a = true;
 		}
 		Assert.assertTrue(a);
@@ -465,6 +402,7 @@ public class CustomerCareOla1 extends TestBase {
 				break;
 			}
 		}
+		sleep(2000);
 		driver.findElement(By.id("Step1-SuspensionOrReconnection_nextBtn")).click();
 		sleep(3000);
 		List <WebElement> eq = driver.findElements(By.cssSelector(".slds-form-element__label.ng-binding.ng-scope"));
@@ -508,9 +446,22 @@ public class CustomerCareOla1 extends TestBase {
 		Assert.assertTrue(driver.findElement(By.id("Phone")).isEnabled());
 	}
 	
-	@Test (groups = {"CustomerCare", "AjustesYEscalamiento", "Ola1"}, dataProvider = "CustomerCuentaActiva", priority = 2)  //No existe la gestion Ajustes
-	public void TS96020_Adjustments_and_Escalations_Consulta_de_Ajuste_Historicos_Visualizar_Ajuste_historico_de_la_cuenta() {
-		Assert.assertTrue(false);
+	@Test (groups = {"CustomerCare", "AjustesYEscalamiento", "Ola1"}, dataProvider = "CustomerCuentaActiva", priority = 2)
+	public void TS96020_Adjustments_and_Escalations_Consulta_de_Ajuste_Historicos_Visualizar_Ajuste_historico_de_la_cuenta(String nCuenta) {
+		cc.elegirCuenta(nCuenta);
+		sleep(5000);
+		driver.switchTo().frame(cambioFrame(driver, By.className("story-container")));
+		List <WebElement> list = driver.findElements(By.className("story-container"));
+		boolean a = false, b = false;
+		for (WebElement x : list) {
+			if (x.getText().toLowerCase().contains("t\u00edtulo")) {
+				a = true;
+			}
+			if (x.getText().toLowerCase().contains("inconvenientes con cargos tasados y facturados")) {
+				b = true;
+			}
+		}
+		Assert.assertTrue(a && b);
 	}
 	
 	@Test (groups = {"CustomerCare", "SuspensionYRehabilitacion", "Ola1"}, dataProvider = "CustomerCuentaActiva", priority = 6)
@@ -770,35 +721,55 @@ public class CustomerCareOla1 extends TestBase {
 		Assert.assertTrue(a && b);
 	}
 	
-	@Test(groups = {"CustomerCare", "Ola1", "AjustesYEscalamiento"}, dataProvider = "CustomerCuentaActiva", priority = 3)  //No existe la gestion Ajustes
+	@Test(groups = {"CustomerCare", "Ola1", "AjustesYEscalamiento"}, dataProvider = "CustomerCuentaActiva", priority = 3)
 	public void TS90443_Adjustments_and_Esccalations_Adjustments_and_Escalations_Configurar_Ajuste_Formato_monto_con_2_decimales(String nCuenta) {
 		cc.elegirCuenta(nCuenta);
-		cc.irAGestion("Ajustes");
-		cc.avanzarAConfigurarAjuste();
-		cc.unidad("Credito");		
+		cc.irAGestion("inconvenientes");
+		cc.flujoInconvenientes();
+		driver.findElement(By.id("Unidad")).click();
+		driver.findElement(By.xpath("//*[text() = 'Credito']")).click();
+		sleep(2000);
 		WebElement monto = cc.obtenerCampo("CantidadMonto");
 		monto.sendKeys("55511");
-		String valorCampo = obtenerValorDelCampo(monto);		
+		String valorCampo = obtenerValorDelCampo(monto);
 		Assert.assertTrue(valorCampo.contentEquals("555.11"));
 	}
 	
-	@Test(groups = {"CustomerCare", "Ola1", "AjustesYEscalamiento"}, dataProvider = "CustomerCuentaActiva", priority = 3)  //No existe la gestion Ajustes
+	@Test(groups = {"CustomerCare", "Ola1", "AjustesYEscalamiento"}, dataProvider = "CustomerCuentaActiva", priority = 3)
 	public void TS90446_Adjustments_and_Esccalations_Adjustments_and_Escalations_Configurar_Ajuste_Tipos_Unidades_VOZ_HH_MM_SS(String nCuenta) {
 		cc.elegirCuenta(nCuenta);
-		cc.irAGestion("Ajustes");
-		cc.avanzarAConfigurarAjuste();
-		cc.unidad("Voz");		
+		cc.irAGestion("inconvenientes");
+		cc.flujoInconvenientes();
+		driver.findElement(By.id("Unidad")).click();
+		driver.findElement(By.xpath("//*[text() = 'Voz']")).click();
+		sleep(2000);
 		WebElement cantidad = cc.obtenerCampo("CantidadVoz");
 		cantidad.sendKeys("042050");
 		String valorCampo = obtenerValorDelCampo(cantidad);		
 		Assert.assertTrue(valorCampo.contentEquals("04:20:50"));
 	}
 	
-	@Test(groups = {"CustomerCare", "Ola1", "AjustesYEscalamiento"}, dataProvider = "CustomerCuentaActiva", priority = 2)  //No existe la gestion Ajustes
+	@Test(groups = {"CustomerCare", "Ola1", "AjustesYEscalamiento"}, dataProvider = "CustomerCuentaActiva", priority = 2)
 	public void TS90454_Adjustments_and_Esccalations_Adjustments_and_Escalations_UX_Visualizacion_Ajustes_y_Casos_Relacionados_Visualizar_botón_siguiente_OS(String nCuenta) {
 		cc.elegirCuenta(nCuenta);
-		cc.irAGestion("Ajustes");		
-		Assert.assertTrue(cc.botonSiguiente().isDisplayed());
+		cc.irAGestion("inconvenientes");
+		sleep(5000);
+		driver.findElement(By.id("CboConcepto")).click();
+		driver.findElement(By.xpath("//*[text() = 'CREDITO PREPAGO']")).click();
+		driver.findElement(By.id("CboItem")).click();
+		driver.findElement(By.xpath("//*[text() = 'Consumos de datos']")).click();
+		driver.findElement(By.id("CboMotivo")).click();
+		driver.findElement(By.xpath("//*[text() = 'Error/omisión/demora gestión']")).click();
+		List <WebElement> si = driver.findElements(By.cssSelector(".slds-form-element__label.ng-binding.ng-scope"));
+		for (WebElement x : si) {
+			if (x.getText().toLowerCase().equals("si")) {
+				x.click();
+				break;
+			}
+		}
+		driver.findElement(By.id("Step-TipodeAjuste_nextBtn")).click();
+		sleep(5000);
+		Assert.assertTrue(driver.findElement(By.id("Step-AssetSelection_nextBtn")).isDisplayed());
 	}
 	
 	@Test (groups = {"CustomerCare", "SuspensionYRehabilitacion", "Ola1"}, dataProvider = "CustomerCuentaActiva")
@@ -812,6 +783,7 @@ public class CustomerCareOla1 extends TestBase {
 				break;
 			}
 		}
+		sleep(2000);
 		driver.findElement(By.id("Step1-SuspensionOrReconnection_nextBtn")).click();
 		sleep(5000);
 		List <WebElement> linea = driver.findElements(By.cssSelector(".slds-form-element__label.ng-binding.ng-scope"));
@@ -884,6 +856,7 @@ public class CustomerCareOla1 extends TestBase {
 				break;
 			}
 		}
+		sleep(2000);
 		driver.findElement(By.id("Step1SelectSuspensionOrReconnection_nextBtn")).click();
 		sleep(3000);
 		boolean a = false;
@@ -964,28 +937,80 @@ public class CustomerCareOla1 extends TestBase {
 		Assert.assertTrue(a);
 	}
 	
-	@Test (groups = {"CustomerCare", "AjustesYEscalamiento", "Ola1"}, dataProvider = "CustomerCuentaActiva")  //No existe la gestion Ajustes
-	public void TS90472_360_VIEW_Ajustes_y_Escalaciones_Seleccion_de_Concepto_Tipo_de_Cargo_Item_Motivo_Validar_Concepto_solo_se_puede_permitir_1_valor_de_la_lista_indicada_del_parametro_Tipo_de_Cargo() {
-		Assert.assertTrue(false);
+	@Test (groups = {"CustomerCare", "AjustesYEscalamiento", "Ola1"}, dataProvider = "CustomerCuentaActiva")
+	public void TS90472_360_VIEW_Ajustes_y_Escalaciones_Seleccion_de_Concepto_Tipo_de_Cargo_Item_Motivo_Validar_Concepto_solo_se_puede_permitir_1_valor_de_la_lista_indicada_del_parametro_Tipo_de_Cargo(String nCuenta) {
+		cc.elegirCuenta(nCuenta);
+		cc.irAGestion("inconvenientes");
+		sleep(5000);
+		driver.findElement(By.id("CboConcepto")).click();
+		driver.findElement(By.xpath("//*[text() = 'CARGOS AUN NO FACTURADOS']")).click();
+		driver.findElement(By.id("CboTipo")).click();
+		driver.findElement(By.xpath("//*[text() = 'Otros cargos no facturados']")).click();
+		String a = driver.findElement(By.id("CboTipo")).getAttribute("value");
+		driver.findElement(By.id("CboTipo")).click();
+		driver.findElement(By.xpath("//*[text() = 'Cargos fijos no facturados']")).click();
+		Assert.assertTrue(!driver.findElement(By.id("CboTipo")).getAttribute("value").equals(a));
 	}
 	
-	@Test (groups = {"CustomerCare", "AjustesYEscalamiento", "Ola1"}, dataProvider = "CustomerCuentaActiva")  //No existe la gestion Ajustes
-	public void TS90476_360_VIEW_Ajustes_y_Escalaciones_Seleccion_de_Concepto_Tipo_de_Cargo_Item_Motivo_Validar_que_se_puede_seleccionar_un_Motivo_solo_si_se_han_completado_los_valores_anteriores() {
-		Assert.assertTrue(false);
+	@Test (groups = {"CustomerCare", "AjustesYEscalamiento", "Ola1"}, dataProvider = "CustomerCuentaActiva")
+	public void TS90476_360_VIEW_Ajustes_y_Escalaciones_Seleccion_de_Concepto_Tipo_de_Cargo_Item_Motivo_Validar_que_se_puede_seleccionar_un_Motivo_solo_si_se_han_completado_los_valores_anteriores(String nCuenta) {
+		cc.elegirCuenta(nCuenta);
+		cc.irAGestion("inconvenientes");
+		sleep(5000);
+		driver.findElement(By.id("CboMotivo")).click();
+		driver.findElement(By.xpath("//*[text() = 'Error/omisi\u00f3n/demora gesti\u00f3n']")).click();
+		String a = driver.findElement(By.id("CboMotivo")).getAttribute("value");
+		driver.findElement(By.id("CboMotivo")).click();
+		driver.findElement(By.xpath("//*[text() = 'Informacion incorrecta']")).click();
+		Assert.assertTrue(!driver.findElement(By.id("CboMotivo")).getAttribute("value").equals(a));
 	}
 	
-	@Test (groups = {"CustomerCare", "AjustesYEscalamiento", "Ola1"}, dataProvider = "CustomerCuentaActiva")  //No existe la gestion Ajustes
-	public void TS90470_360_VIEW_Ajustes_y_Escalaciones_Seleccion_de_Concepto_Tipo_de_Cargo_Item_Motivo_Validar_que_solo_se_puede_permitir_1_valor_de_la_lista_indicada_del_parametro_Conceptos() {
-		Assert.assertTrue(false);
+	@Test (groups = {"CustomerCare", "AjustesYEscalamiento", "Ola1"}, dataProvider = "CustomerCuentaActiva")
+	public void TS90470_360_VIEW_Ajustes_y_Escalaciones_Seleccion_de_Concepto_Tipo_de_Cargo_Item_Motivo_Validar_que_solo_se_puede_permitir_1_valor_de_la_lista_indicada_del_parametro_Conceptos(String nCuenta) {
+		cc.elegirCuenta(nCuenta);
+		cc.irAGestion("inconvenientes");
+		sleep(5000);
+		driver.findElement(By.id("CboConcepto")).click();
+		driver.findElement(By.xpath("//*[text() = 'CREDITO PREPAGO']")).click();
+		String a = driver.findElement(By.id("CboConcepto")).getAttribute("value");
+		driver.findElement(By.id("CboConcepto")).click();
+		driver.findElement(By.xpath("//*[text() = 'CREDITO POSPAGO']")).click();
+		Assert.assertTrue(!driver.findElement(By.id("CboMotivo")).getAttribute("value").equals(a));
 	}
 	
-	@Test (groups = {"CustomerCare", "AjustesYEscalamiento", "Ola1"}, dataProvider = "CustomerCuentaActiva")  //No existe la gestion Ajustes
-	public void TS96011_360_VIEW_Ajustes_y_Escalaciones_Seleccion_de_Concepto_Tipo_de_Cargo_Item_Motivo_Visualizar_parametro_item() {
-		Assert.assertTrue(false);
+	@Test (groups = {"CustomerCare", "AjustesYEscalamiento", "Ola1"}, dataProvider = "CustomerCuentaActiva")
+	public void TS96011_360_VIEW_Ajustes_y_Escalaciones_Seleccion_de_Concepto_Tipo_de_Cargo_Item_Motivo_Visualizar_parametro_item(String nCuenta) {
+		cc.elegirCuenta(nCuenta);
+		cc.irAGestion("inconvenientes");
+		sleep(5000);
+		Assert.assertTrue(driver.findElement(By.id("CboItem")).isEnabled());
 	}
 	
-	@Test (groups = {"CustomerCare", "AjustesYEscalamiento", "Ola1"}, dataProvider = "CustomerCuentaActiva")  //No existe la gestion Ajustes
-	public void TS95996_Adjustments_and_Escalations_Cierre_Caso_Gestion_Exitosa_Rechazada_Ampliar_detalles_Cerrar_caso_exitoso_comentario() {
-		Assert.assertTrue(false);
+	@Test (groups = {"CustomerCare", "AjustesYEscalamiento", "Ola1"}, dataProvider = "CustomerCuentaActiva")
+	public void TS95996_Adjustments_and_Escalations_Cierre_Caso_Gestion_Exitosa_Rechazada_Ampliar_detalles_Cerrar_caso_exitoso_comentario(String nCuenta) {
+		cc.elegirCuenta(nCuenta);
+		cc.irAGestion("inconvenientes");
+		cc.flujoInconvenientes();
+		List <WebElement> no = driver.findElements(By.cssSelector(".slds-form-element__label.ng-binding.ng-scope"));
+		for (WebElement x : no) {
+			if (x.getText().toLowerCase().equals("no")) {
+				x.click();
+				break;
+			}
+		}
+		sleep(2000);
+		driver.findElement(By.id("Step-AjusteNivelLinea_nextBtn")).click();
+		sleep(5000);
+		driver.findElement(By.id("SummaryDerivateToBO_nextBtn")).click();
+		sleep(3000);
+		WebElement gest = driver.findElement(By.cssSelector(".slds-box.ng-scope"));
+		boolean a = false, b = false;
+		if (gest.getText().toLowerCase().contains("la gesti\u00f3n se deriv\u00f3 al area")) {
+			a = true;
+		}
+		if (gest.getText().toLowerCase().contains("el n\u00famero de caso es")) {
+			b = true;
+		}
+		Assert.assertTrue(a && b);
 	}
 }

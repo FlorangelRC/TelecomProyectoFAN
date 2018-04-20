@@ -40,12 +40,12 @@ public class Sales2 extends TestBase{
 	String localidad="BASAIL";
 	protected  WebDriverWait wait;
 	
-	//@AfterClass(alwaysRun=true)
+	@AfterClass(alwaysRun=true)
 	public void tearDown() {
 		driver.quit();
 	}
 	
-	//@AfterMethod(alwaysRun=true)
+	@AfterMethod(alwaysRun=true)
 	public void deslogin() {
 		sleep(3000);
 		driver.get("https://crm--sit.cs14.my.salesforce.com/home/home.jsp?tsid=02u41000000QWha/");
@@ -1999,7 +1999,7 @@ public class Sales2 extends TestBase{
 		}
 		
 	@Test(groups={"Sales", "AltaDeLinea", "Ola1"}, priority=3, dataProvider="SalesCuentaActiva")
-	public void TS94479_checkPlanIsDeleted(String sCuenta, String sDni, String sLinea) throws IOException {
+	public void TS94479_Alta_Linea_Carrito_Eliminar_productos_del_carrito(String sCuenta, String sDni, String sLinea) throws IOException {
 		Ta_CPQ page3 = new Ta_CPQ(driver);
 		sb.BuscarCuenta(DNI, sDni);
 		//sb.BuscarCuenta(DNI, buscarCampoExcel(1, "Cuenta Activa", 2));
@@ -2014,9 +2014,9 @@ public class Sales2 extends TestBase{
 		Assert.assertFalse(page3.isPlanPresent());
 	}
 	@Test(groups={"Sales", "AltaDeLinea", "Ola1"}, priority=3, dataProvider="SalesCuentaActiva")
-	public void TS94482_deleteAllPlans(String sCuenta, String sDni, String sLinea) throws IOException {
+	public void TS94482_Alta_Linea_Carrito_Eliminar_todos_los_productos_del_carrito1(String sCuenta, String sDni, String sLinea) throws IOException {
 		Ta_CPQ page3 = new Ta_CPQ(driver);
-		sb.BuscarCuenta(DNI, sDni);
+		sb.BuscarCuenta(DNI, sDni); 
 		//sb.BuscarCuenta(DNI, buscarCampoExcel(1, "Cuenta Activa", 2));
 		sb.acciondecontacto("catalogo");
 		sleep(12000);

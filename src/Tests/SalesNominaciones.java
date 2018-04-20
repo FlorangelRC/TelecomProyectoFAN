@@ -49,12 +49,12 @@ public class SalesNominaciones extends TestBase{
 		
 	}
 
-	//@AfterMethod(alwaysRun=true)
+	@AfterMethod(alwaysRun=true)
 	public void IceB() {
 		driver.navigate().refresh();
 	}
 	
-	//@AfterClass(alwaysRun=true)
+	@AfterClass(alwaysRun=true)
 	public void Exit() {
 		driver.quit();
 		sleep(2000);
@@ -78,7 +78,7 @@ public class SalesNominaciones extends TestBase{
 		CustomerCare CC = new CustomerCare(driver);
 		ContactSearch contact = new ContactSearch(driver);
 		boolean b = false;
-		contact.searchContact2("DNI", sDni, "femenino");
+		contact.searchContact2("DNI", sDni, sLinea);
 		sleep(6000);
 		driver.findElement(By.cssSelector(".slds-input.form-control.ng-pristine.ng-untouched.ng-valid.ng-empty")).sendKeys("algoaqui@yahoo.com.ar");
 		CC.obligarclick(driver.findElement(By.id("Contact_nextBtn")));
@@ -112,7 +112,7 @@ public class SalesNominaciones extends TestBase{
 		ContactSearch contact = new ContactSearch(driver);
 		boolean b = false;
 		sleep(5000);
-		contact.searchContact2("DNI", sDni, "femenino");
+		contact.searchContact2("DNI", sDni, sLinea);
 		sleep(6000);
 		driver.findElement(By.cssSelector(".slds-input.form-control.ng-pristine.ng-untouched.ng-valid.ng-empty")).sendKeys("algoaqui@yahoo.com.ar");
 		CC.obligarclick(driver.findElement(By.id("Contact_nextBtn")));
@@ -175,7 +175,7 @@ public class SalesNominaciones extends TestBase{
 		cua.click();
 		sleep(10000);
 		perfil = "call";
-		contact.searchContact2("DNI", sDni, "femenino");
+		contact.searchContact2("DNI", sDni, sLinea);
 		sleep(5000);
 		driver.findElement(By.cssSelector(".slds-input.form-control.ng-pristine.ng-untouched.ng-valid.ng-empty")).click();
 		sleep(2000);
@@ -233,7 +233,6 @@ public class SalesNominaciones extends TestBase{
 		cua.click();
 		sleep(10000);
 		perfil = "call";
-		sleep(5000);
 		boolean a = false;
 		List <WebElement> element = driver.findElements(By.cssSelector(".slds-form-element__label.vlc-slds-inline-control__label.ng-binding"));
 		for (WebElement x : element) {
@@ -263,7 +262,7 @@ public class SalesNominaciones extends TestBase{
 		sleep(13000);
 		perfil = "call";
 		ContactSearch contact = new ContactSearch(driver);
-		contact.searchContact2("DNI", sDni, "femenino");
+		contact.searchContact2("DNI", sDni, sLinea);
 		try {contact.ingresarMail("asdads@gmail.com", "si");}catch (org.openqa.selenium.ElementNotVisibleException ex1) {}
 		contact.tipoValidacion("documento");
 		contact.subirArchivo("C:\\Users\\Sofia Chardin\\Desktop\\DNI.jpg", "si");
@@ -276,7 +275,7 @@ public class SalesNominaciones extends TestBase{
 		List <WebElement> element = driver.findElements(By.cssSelector(".slds-form-element.vlc-flex.vlc-slds-text-block.vlc-slds-rte.ng-pristine.ng-valid.ng-scope"));
 		boolean a = false;
 		for (WebElement x : element) {
-			if (x.getText().toLowerCase().contains("¡nominaci\u00f3n exitosa!")) {
+			if (x.getText().toLowerCase().contains("ï¿½nominaci\u00f3n exitosa!")) {
 				a = true;
 				//System.out.println(x.getText());
 			}
@@ -349,30 +348,26 @@ public class SalesNominaciones extends TestBase{
 		perfil = "call";
 		contact.searchContact2("Pasaporte", sDni , sLinea);
 		sleep(6000);
-	/*	if (driver.findElement(By.id("FirstName")).getAttribute("value").isEmpty()) {
+		if (driver.findElement(By.id("FirstName")).getAttribute("value").isEmpty()) {
 			driver.findElement(By.id("FirstName")).sendKeys("Malan");
-		}
-		if (driver.findElement(By.id("LasttName")).getAttribute("value").isEmpty()) {
 			driver.findElement(By.id("LastName")).sendKeys("Faretto");
-		}
-		if (driver.findElement(By.id("Birthdate")).getAttribute("value").isEmpty()) {
 			driver.findElement(By.id("Birthdate")).sendKeys("30/06/1980");
-		}*/
+		}
 		driver.findElement(By.id("PermanencyDueDate")).sendKeys("30/06/2018");
 		CC.obligarclick(driver.findElement(By.id("Contact_nextBtn")));
 		sleep(5000);
 		contact.tipoValidacion("documento");
 		contact.subirArchivo("C:\\Users\\Sofia Chardin\\Desktop\\DNI.jpg", "si");
 			BasePage bp = new BasePage(driver);
-		//bp.setSimpleDropdown(driver.findElement(By.id("ImpositiveCondition")), "IVA Consumidor Final");
-		//SB.Crear_DomicilioLegal("Buenos Aires", "aba", "falsa", "", "1000", "", "", "1549");
+		bp.setSimpleDropdown(driver.findElement(By.id("ImpositiveCondition")), "IVA Consumidor Final");
+		SB.Crear_DomicilioLegal("Buenos Aires", "aba", "falsa", "", "1000", "", "", "1549");
 		sleep(10000);
 		contact.subirformulario("C:\\Users\\Sofia Chardin\\Desktop\\FormNom.pdf", "si");
 		sleep(25000);
 		List <WebElement> element = driver.findElements(By.cssSelector(".slds-form-element.vlc-flex.vlc-slds-text-block.vlc-slds-rte.ng-pristine.ng-valid.ng-scope"));
 		boolean a = false;
 		for (WebElement x : element) {
-			if (x.getText().toLowerCase().contains("¡nominaci\u00f3n exitosa!")) {
+			if (x.getText().toLowerCase().contains("ï¿½nominaci\u00f3n exitosa!")) {
 				a = true;
 				System.out.println(x.getText());
 			}
@@ -381,7 +376,7 @@ public class SalesNominaciones extends TestBase{
 		driver.findElement(By.id("FinishProcess_nextBtn")).click();
 	}
 	
-	@Test(groups={"Sales","Nominacion","Ola1"}, dataProvider="SalesCuentaBolsa")
+	@Test(groups={"Sales","Nominacion","Ola1"}, dataProvider="SalesPasaporteBolsa")
 	public void TS95114_SalesCPQ_Nominacion_Extranjero_Verificar_Datos_Nominar_Cliente_Extranjero(String sCuenta, String sDni, String sLinea){
 		String FilePath = "C:\\Users\\Sofia Chardin\\Desktop\\DNI.jpg";
 		SalesBase SB = new SalesBase(driver);
@@ -431,7 +426,7 @@ public class SalesNominaciones extends TestBase{
 		}
 		
 		driver.findElement(By.id("PermanencyDueDate")).sendKeys("30/06/2021");
-		assertTrue(driver.findElement(By.cssSelector(".message.description.ng-binding.ng-scope")).getText().contains("La permanencia no puede ser mayor a 2 años a partir de la fecha o menor a la fecha actual"));
+		assertTrue(driver.findElement(By.cssSelector(".message.description.ng-binding.ng-scope")).getText().contains("La permanencia no puede ser mayor a 2 aï¿½os a partir de la fecha o menor a la fecha actual"));
 		sleep(1000);
 		driver.findElement(By.id("PermanencyDueDate")).clear();
 		driver.findElement(By.id("PermanencyDueDate")).sendKeys("30/06/2018");
@@ -441,7 +436,7 @@ public class SalesNominaciones extends TestBase{
 		assertTrue(driver.findElement(By.id("ValidationMethod_nextBtn")).isEnabled());
 	}
 	
-	@Test(groups={"Sales","Nominacion","Ola1"})
+	@Test(groups={"Sales","Nominacion","Ola1"})  //**************************** VER ***********************************//
 	public void TS95116_SalesCPQ_Nominacion_Extranjero_Verificar_Blacklist_Cliente_Existente(){
 		SalesBase SB = new SalesBase(driver);
 		CustomerCare CC = new CustomerCare(driver);
@@ -451,17 +446,25 @@ public class SalesNominaciones extends TestBase{
 		//CC.obligarclick(driver.findElement(By.id("Contact_nextBtn")));
 		
 	}
-	@Test(groups={"Sales","Nominacion","Ola1"})
-	public void TS95288_SalesCPQ_Nominacion_Argentino_Verificar_Flujo_De_Nominacion_Arg_Telefonico(){
-		perfil = "venta";
-		String FilePath = "C:\\Users\\Sofia Chardin\\Desktop\\DNI.jpg";
-		String FilePath1 = "C:\\Users\\Sofia Chardin\\Desktop\\FormNom.pdf";
+	@Test(groups={"Sales","Nominacion","Ola1"}, dataProvider="SalesCuentaBolsa")
+	public void TS95288_SalesCPQ_Nominacion_Argentino_Verificar_Flujo_De_Nominacion_Arg_Telefonico(String sCuenta, String sDni, String sLinea){
 		SalesBase SB = new SalesBase(driver);
 		CustomerCare CC = new CustomerCare(driver);
 		ContactSearch contact = new ContactSearch(driver);
-		sleep(5000);
-		contact.searchContact2("DNI", "10000018", "femenino");
-		sleep(6000);		
+		String NyA = sCuenta;
+		SB.BuscarAvanzada(NyA.split(" ")[0], NyA.split(" ")[1], "", "", "");
+		WebElement cli = driver.findElement(By.id("tab-scoped-1"));
+		if (cli.findElement(By.tagName("tbody")).findElement(By.tagName("tr")).findElement(By.tagName("div")).getText().equals("Cliente Wholesale")) {
+			cli.findElement(By.tagName("tbody")).findElement(By.tagName("tr")).click();
+		}
+		sleep(3000);
+		WebElement cua = driver.findElement(By.id("tab-scoped-1")).findElement(By.tagName("tbody")).findElements(By.tagName("tr")).get(2).findElements(By.tagName("td")).get(6).findElement(By.tagName("svg"));
+		System.out.println("1: "+driver.findElement(By.id("tab-scoped-1")).findElement(By.tagName("tbody")).findElements(By.tagName("tr")).get(2).findElements(By.tagName("td")).get(1).getText());
+		cua.click();
+		sleep(13000);
+		perfil = "call";
+		contact.searchContact2("DNI", sDni , sLinea);
+		sleep(8000);		
 		driver.findElement(By.cssSelector(".slds-input.form-control.ng-pristine.ng-untouched.ng-valid.ng-empty")).sendKeys("algoaqui@yahoo.com.ar");
 		CC.obligarclick(driver.findElement(By.id("Contact_nextBtn")));
 		sleep(5000);
@@ -476,9 +479,7 @@ public class SalesNominaciones extends TestBase{
 		bp.setSimpleDropdown(driver.findElement(By.id("ImpositiveCondition")), "IVA Consumidor Final");
 		SB.Crear_DomicilioLegal("Buenos Aires", "aba", "falsa", "", "1000", "", "", "1549");
 		sleep(20000);
-		driver.findElement(By.id("signedForm")).click();
-		sleep(5000);
-		contact.subirArchivo("C:\\Users\\Sofia Chardin\\Desktop\\FormNom.pdf", "si");
+		contact.subirformulario("C:\\Users\\Sofia Chardin\\Desktop\\FormNom.pdf", "si");
 		sleep(8000);
 		SB.continuar();
 		System.out.println(driver.findElement(By.cssSelector(".slds-grid.slds-wrap.ng-pristine.ng-valid")).findElement(By.id("TextBlock2")).findElement(By.className("ng-binding")).findElements(By.tagName("p")).get(2).getText());
@@ -523,15 +524,27 @@ public class SalesNominaciones extends TestBase{
 	}
 	
 	
-	@Test(groups={"Sales","Nominacion","Ola1"})
-	public void TS95157_SalesCPQ_Nominacion_Extranjero_Verificar_Solicitud_De_Ingreso_Pasaporte_Cliente_Nuevo(){
-		String FilePath = "C:\\Users\\florangel\\Downloads\\mapache.jpg";
+	@Test(groups={"Sales","Nominacion","Ola1"},dataProvider="SalesPasaporteBolsa")
+	public void TS95157_SalesCPQ_Nominacion_Extranjero_Verificar_Solicitud_De_Ingreso_Pasaporte_Cliente_Nuevo(String sCuenta, String sDni, String sLinea){
 		CustomerCare CC = new CustomerCare(driver);
 		ContactSearch contact = new ContactSearch(driver);
 		Random aleatorio = new Random(System.currentTimeMillis());
+		String NyA = sCuenta;
+		SalesBase SB = new SalesBase(driver);
+		SB.BuscarAvanzada(NyA.split(" ")[0], NyA.split(" ")[1], "", "", "");
+		WebElement cli = driver.findElement(By.id("tab-scoped-1"));
+		if (cli.findElement(By.tagName("tbody")).findElement(By.tagName("tr")).findElement(By.tagName("div")).getText().equals("Cliente Wholesale")) {
+			cli.findElement(By.tagName("tbody")).findElement(By.tagName("tr")).click();
+		}
+		sleep(3000);
+		WebElement cua = driver.findElement(By.id("tab-scoped-1")).findElement(By.tagName("tbody")).findElements(By.tagName("tr")).get(2).findElements(By.tagName("td")).get(6).findElement(By.tagName("svg"));
+		System.out.println("1: "+driver.findElement(By.id("tab-scoped-1")).findElement(By.tagName("tbody")).findElements(By.tagName("tr")).get(2).findElements(By.tagName("td")).get(1).getText());
+		cua.click();
+		sleep(13000);
+		perfil = "call";
 		aleatorio.setSeed(System.currentTimeMillis());
 		int intAletorio = aleatorio.nextInt(899999999)+100000000;
-		contact.searchContact2("Pasaporte", Integer.toString(intAletorio), "femenino");
+		contact.searchContact2("Pasaporte", Integer.toString(intAletorio), sLinea);
 		sleep(6000);
 		driver.findElement(By.id("PermanencyDueDate")).sendKeys("30/06/2018");
 		driver.findElement(By.id("FirstName")).sendKeys("Malan");
@@ -540,10 +553,9 @@ public class SalesNominaciones extends TestBase{
 		//driver.findElement(By.cssSelector(".slds-input.form-control.ng-pristine.ng-untouched.ng-valid.ng-empty")).sendKeys("algoaqui@yahoo.com.ar");
 		CC.obligarclick(driver.findElement(By.id("Contact_nextBtn")));
 		sleep(5000);
-		driver.findElement(By.id("MethodSelectionOnlyDOC|0")).findElement(By.cssSelector(".slds-radio--faux.ng-scope")).click();
-		driver.findElement(By.id("ValidationMethod_nextBtn")).click();
+		contact.tipoValidacion("documento");
 		sleep(5000);
-		driver.findElement(By.id("FileDocumentImage")).sendKeys(FilePath);
+		contact.subirArchivo("C:\\Users\\Sofia Chardin\\Desktop\\DNI.jpg", "si");
 		sleep(1000);
 		driver.findElement(By.cssSelector(".message.description.ng-binding.ng-scope")).getText().toLowerCase().contains("documento de identidad superada");
 	}
@@ -566,10 +578,23 @@ public class SalesNominaciones extends TestBase{
 		driver.findElement(By.cssSelector(".message.description.ng-binding.ng-scope")).getText().toLowerCase().contains("documento de identidad superada");
 	}
 	
-	@Test(groups={"Sales","Nominacion","Ola1"})
-	public void TS95156_SalesCPQ_Nominacion_Extranjero_Verificar_Campo_Fecha_De_Permanencia_Cliente_Nuevo(){
+	@Test(groups={"Sales","Nominacion","Ola1"}, dataProvider="SalesPasaporteBolsa")
+	public void TS95156_SalesCPQ_Nominacion_Extranjero_Verificar_Campo_Fecha_De_Permanencia_Cliente_Nuevo(String sCuenta, String sDni, String sLinea){
 		ContactSearch contact = new ContactSearch(driver);
-		contact.searchContact2("Pasaporte", "132465789", "femenino");
+		String NyA = sCuenta;
+		SalesBase SB = new SalesBase(driver);
+		SB.BuscarAvanzada(NyA.split(" ")[0], NyA.split(" ")[1], "", "", "");
+		WebElement cli = driver.findElement(By.id("tab-scoped-1"));
+		if (cli.findElement(By.tagName("tbody")).findElement(By.tagName("tr")).findElement(By.tagName("div")).getText().equals("Cliente Wholesale")) {
+			cli.findElement(By.tagName("tbody")).findElement(By.tagName("tr")).click();
+		}
+		sleep(3000);
+		WebElement cua = driver.findElement(By.id("tab-scoped-1")).findElement(By.tagName("tbody")).findElements(By.tagName("tr")).get(2).findElements(By.tagName("td")).get(6).findElement(By.tagName("svg"));
+		System.out.println("1: "+driver.findElement(By.id("tab-scoped-1")).findElement(By.tagName("tbody")).findElements(By.tagName("tr")).get(2).findElements(By.tagName("td")).get(1).getText());
+		cua.click();
+		sleep(13000);
+		perfil = "call";
+		contact.searchContact2("Pasaporte", sDni, sLinea);
 		sleep(6000);
 		assertTrue(driver.findElement(By.id("PermanencyDueDate")).isEnabled());
 		assertTrue(driver.findElements(By.cssSelector(".slds-form-element__control.slds-input-has-icon.slds-input-has-icon--right")).get(2).findElement(By.tagName("label")).getText().toLowerCase().contains("plazo de permanencia"));

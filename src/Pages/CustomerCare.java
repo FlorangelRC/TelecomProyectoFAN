@@ -264,7 +264,8 @@ public class CustomerCare extends BasePage {
 		marca.selectByIndex(index); 
 	} 
 		   
-	public Boolean verificarBaseConocimientoMarcas() { 
+	public Boolean verificarBaseConocimientoMarcas() {
+		sleep(3000);
 		WebElement knowledge = driver.findElement(By.xpath("//ng-include[@id='vlcKnowledge']")); 
 		return (knowledge.isDisplayed() && knowledge.getText().contains("Informaci")); 
 	} 
@@ -1359,31 +1360,42 @@ public class CustomerCare extends BasePage {
 		return null;
 	}
 	
-	public void avanzarAConfigurarAjuste() {
-		driver.findElement(By.xpath("//label//span[contains(.,'Un servicio')]")).click();
-		botonSiguiente().click();
-		waitForVisibilityOfElementLocated(By.xpath("//section[@id='Step-AssetSelection']/section"));
-		botonSiguiente().click();
-		waitForVisibilityOfElementLocated(By.xpath("//section[@id='Step-TipodeAjuste']/section"));		
-		WebElement concepto = driver.findElement(By.xpath("//select[@id='CboConcepto']"));
-		WebElement tipoDeCargo = driver.findElement(By.xpath("//select[@id='CboTipo']"));
-		WebElement item = driver.findElement(By.xpath("//select[@id='CboItem']"));
-		WebElement motivo = driver.findElement(By.xpath("//select[@id='CboMotivo']"));
-		(new Select(concepto)).selectByIndex(1);
-		(new Select(tipoDeCargo)).selectByIndex(1);
-		(new Select(item)).selectByIndex(1);
-		(new Select(motivo)).selectByIndex(1);
-		botonSiguiente().click();		
-		try {
-			driver.findElement(By.xpath("//div[@id='RAGetAdjustmentHistory']")).isDisplayed();
-			Assert.assertTrue(false); // SE DEBE CORREGIR EL MENSAJE DE ERROR QUE APARECE ACA
-			driver.findElement(By.xpath("//button[contains(.,'Continue')]")).click();
+	public void flujoInconvenientes() {
+		sleep(5000);
+		driver.findElement(By.id("CboConcepto")).click();
+		driver.findElement(By.xpath("//*[text() = 'CREDITO PREPAGO']")).click();
+		driver.findElement(By.id("CboItem")).click();
+		driver.findElement(By.xpath("//*[text() = 'Consumos de datos']")).click();
+		driver.findElement(By.id("CboMotivo")).click();
+		driver.findElement(By.xpath("//*[text() = 'Error/omisión/demora gestión']")).click();
+		List <WebElement> si = driver.findElements(By.cssSelector(".slds-form-element__label.ng-binding.ng-scope"));
+		for (WebElement x : si) {
+			if (x.getText().toLowerCase().equals("si")) {
+				x.click();
+				break;
+			}
 		}
-		catch (NoSuchElementException e) {}		
-		waitForVisibilityOfElementLocated(By.xpath("//section[@id='Step-HistoricalAdjustments']/section"));
-		driver.findElement(By.xpath("//label//span[contains(.,'Si, ajustar')]")).click();
-		botonSiguiente().click();
-		waitForVisibilityOfElementLocated(By.xpath("//section[@id='Step-adjustmentConfiguration']/section"));
+		driver.findElement(By.id("Step-TipodeAjuste_nextBtn")).click();
+		sleep(5000);
+		driver.findElement(By.id("Step-AssetSelection_nextBtn")).click();
+		sleep(5000);
+		List <WebElement> sa = driver.findElements(By.cssSelector(".slds-form-element__label.ng-binding.ng-scope"));
+		for (WebElement x : sa) {
+			if (x.getText().toLowerCase().contains("si, ajustar")) {
+				x.click();
+				break;
+			}
+		}
+		driver.findElement(By.id("Step-VerifyPreviousAdjustments_nextBtn")).click();
+		sleep(5000);
+		List <WebElement> nsi = driver.findElements(By.cssSelector(".slds-form-element__label.ng-binding.ng-scope"));
+		for (WebElement x : nsi) {
+			if (x.getText().toLowerCase().equals("si")) {
+				x.click();
+				break;
+			}
+		}
+		sleep(2000);
 	}
 	
 	public void unidad(String texto) {

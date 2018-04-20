@@ -2,6 +2,7 @@ package Tests;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
@@ -19,7 +20,7 @@ import org.testng.annotations.Test;
 import Pages.CustomerCare;
 import Pages.setConexion;
 
-public class CustomerOla2_Joaquin extends TestBase {
+public class CustomerCareOla2 extends TestBase {
 	
 	private WebDriver driver;
 	protected CustomerCare cc;
@@ -58,14 +59,14 @@ public class CustomerOla2_Joaquin extends TestBase {
 	@Test (groups = {"CustomerCare", "Ola2", "Marcas"}, dataProvider = "CustomerCuentaActiva")
 	public void TS100963_Marks_Management_Base_Conocimiento_Acceso_a_base_de_conocimiento(String nCuenta) {
 		cc.elegirCuenta(nCuenta);
-		cc.irAGestion("Gestión de Marcas");
+		cc.irAGestion("marcas");
 		Assert.assertTrue(cc.verificarBaseConocimientoMarcas());
 	}
 	
 	@Test (groups = {"CustomerCare", "Ola2", "Marcas"}, dataProvider = "CustomerCuentaActiva")
 	public void TS100967_Marks_Management_Escenario_de_Casos_Existentes_Ingresar_comentarios(String nCuenta) {
 		cc.elegirCuenta(nCuenta);
-		cc.irAGestion("Gestión de Marcas");
+		cc.irAGestion("marcas");
 		cc.SeleccionarClienteOCuenta("Cliente");
 		cc.botonSiguiente().click();
 		sleep(1000);	
@@ -77,7 +78,7 @@ public class CustomerOla2_Joaquin extends TestBase {
 	@Test (groups = {"CustomerCare", "Ola2", "Marcas"}, dataProvider = "CustomerCuentaActiva")
 	public void TS100971_Marks_Management_Marcas_Session_Guiada_Botón_en_Iniciar_gestiones(String nCuenta) {
 		cc.elegirCuenta(nCuenta);
-		cc.irAGestion("Gestión de Marcas");
+		cc.irAGestion("marcas");
 		WebElement tab = cc.obtenerPestañaActiva();		
 		Assert.assertTrue(tab.getText().contentEquals("Gestión de Marcas"));
 	}
@@ -127,7 +128,6 @@ public class CustomerOla2_Joaquin extends TestBase {
 		while(msg.charAt(i++) != '0') {}
 		String caso = msg.substring(i-1, msg.length());
 		caso = caso.substring(0, caso.lastIndexOf(" "));
-		System.out.println(caso);
 		cc.buscarCaso(caso);
 		driver.switchTo().frame(cambioFrame(driver, By.cssSelector(".feeditemaux.cxfeeditemaux.CreateRecordAuxBody")));
 		WebElement vc = driver.findElement(By.cssSelector(".feeditemaux.cxfeeditemaux.CreateRecordAuxBody"));
@@ -144,4 +144,111 @@ public class CustomerOla2_Joaquin extends TestBase {
 		WebElement fh = driver.findElement(By.id("text-input-id-2"));
 		Assert.assertTrue(fh.getAttribute("max-date").contains(dateFormat.format(date)));
 	}
+	
+	@Test (groups = {"CustomerCare", "Ola2", "Marcas"}, dataProvider = "CustomerCuentaActiva")  //No anda el boton Consultar
+	public void TS118727_360_View_POSTPAGO_Visualizacion_Resumen_de_Facturacion_Resumen_de_Cta_se_muestra_registros_de_los_ultimos_6_meses(String nCuenta) {
+		cc.elegirCuenta(nCuenta);
+		cc.irAFacturacion();
+		cc.irAResumenDeCuenta();
+		Assert.assertTrue(false);
+	}
+	
+	@Test (groups = {"CustomerCare", "Ola2", "Marcas"}, dataProvider = "CustomerCuentaActiva")  //No anda el boton Consultar
+	public void TS118763_360_View_Resumen_Cta_Cte_Simple_Integracion_historial_de_pagos_S059_Obtener_historial_de_pagos(String nCuenta) {
+		cc.elegirCuenta(nCuenta);
+		cc.irAFacturacion();
+		cc.irAResumenDeCuenta();
+		Assert.assertTrue(false);
+	}
+	
+	@Test (groups = {"CustomerCare", "Ola2", "Marcas"}, dataProvider = "CustomerCuentaActiva")
+	public void TS118732_360_View_POSTPAGO_Visualizacion_Resumen_de_Facturacion_Fecha_Desde_muestra_griseadas_las_fechas_anteriores_a_6_meses_de_la_fecha_actual(String nCuenta) {
+		Date date = new Date();
+		Calendar cal = Calendar.getInstance(); 
+        cal.setTime(date); 
+        cal.add(Calendar.MONTH, -6);
+        cal.add(Calendar.DATE, -1);
+        date = cal.getTime();
+		DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+		cc.elegirCuenta(nCuenta);
+		cc.irAFacturacion();
+		cc.irAResumenDeCuenta();
+		String mes = "";
+		String fh = driver.findElement(By.id("text-input-id-1")).getAttribute("min-date");
+		String[] meses = {"Jan","Feb", "Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"};
+		for(int i=0; i<=11; i++) {
+			if (fh.contains(meses[i])) {
+				int parc = i+1;
+				if(parc < 10)
+					mes = "0"+parc;
+				else
+					mes = Integer.toString(parc);
+			}
+		}
+		Assert.assertTrue((fh.split(" ")[3]+"-"+mes+"-"+fh.split(" ")[2]).contains(dateFormat.format(date)));
+	}
+	
+	@Test (groups = {"CustomerCare", "Ola2", "Marcas"}, dataProvider = "CustomerCuentaActiva")  //No anda el boton Consultar
+	public void TS96127_360_View_POSTPAGO_UX_Visualizacion_Resumen_de_Facturacion_Verificar_que_mas_detalle_de_un_registro_especifico_de_pago_del_grupo_2_se_muestra_el_campo_Numero_de_Cupon_de_Telecom_Argentina_numero(String nCuenta) {
+		cc.elegirCuenta(nCuenta);
+		cc.irAFacturacion();
+		cc.irAResumenDeCuenta();
+		Assert.assertTrue(false);
+	}
+	
+	@Test (groups = {"CustomerCare", "Ola2", "Marcas"}, dataProvider = "CustomerCuentaActiva")  //No anda el boton Consultar
+	public void TS96125_360_View_POSTPAGO_UX_Visualizacion_Resumen_de_Facturacion_Verificar_que_mas_detalle_de_un_registro_especifico_de_pago_del_grupo_2_se_muestra_el_campo_Numero_de_Tarjeta_cheque_numero(String nCuenta) {
+		cc.elegirCuenta(nCuenta);
+		cc.irAFacturacion();
+		cc.irAResumenDeCuenta();
+		Assert.assertTrue(false);
+	}
+	
+	@Test (groups = {"CustomerCare", "Ola2", "Marcas"}, dataProvider = "CustomerCuentaActiva")  //No anda el boton Consultar
+	public void TS96129_360_View_POSTPAGO_UX_Visualizacion_Resumen_de_Facturacion_Verificar_que_mas_detalle_de_un_registro_especifico_de_pago_del_grupo_2_se_muestra_el_campo_Tipo_Cupon_texto(String nCuenta) {
+		cc.elegirCuenta(nCuenta);
+		cc.irAFacturacion();
+		cc.irAResumenDeCuenta();
+		Assert.assertTrue(false);
+	}
+	
+	@Test (groups = {"CustomerCare", "Ola2", "Marcas"}, dataProvider = "CustomerCuentaActiva")  //No anda el boton Consultar
+	public void TS96128_360_View_POSTPAGO_UX_Visualizacion_Resumen_de_Facturacion_Verificar_que_mas_detalle_de_un_registro_especifico_de_pago_del_grupo_2_se_muestra_el_campo_Tipo_de_Comprobante_texto(String nCuenta) {
+		cc.elegirCuenta(nCuenta);
+		cc.irAFacturacion();
+		cc.irAResumenDeCuenta();
+		Assert.assertTrue(false);
+	}
+	
+	@Test (groups = {"CustomerCare", "Ola2", "Marcas"}, dataProvider = "CustomerCuentaActiva")  //No anda el boton Consultar
+	public void TS96133_360_View_POSTPAGO_UX_Visualizacion_Resumen_de_Facturacion_Verificar_que_mas_detalle_de_un_registro_especifico_de_pago_del_grupo_3_se_muestra_el_campo_Descripcion_de_Motivo_texto(String nCuenta) {
+		cc.elegirCuenta(nCuenta);
+		cc.irAFacturacion();
+		cc.irAResumenDeCuenta();
+		Assert.assertTrue(false);
+	}
+	
+	@Test (groups = {"CustomerCare", "Ola2", "Marcas"}, dataProvider = "CustomerCuentaActiva")  //No anda el boton Consultar
+	public void TS96132_360_View_POSTPAGO_UX_Visualizacion_Resumen_de_Facturacion_Verificar_que_mas_detalle_de_un_registro_especifico_de_pago_del_grupo_3_se_muestra_el_campo_Fecha_ATM_dd_mm_aaaa(String nCuenta) {
+		cc.elegirCuenta(nCuenta);
+		cc.irAFacturacion();
+		cc.irAResumenDeCuenta();
+		Assert.assertTrue(false);
+	}
+	
+	@Test (groups = {"CustomerCare", "Ola2", "Marcas"}, dataProvider = "CustomerCuentaActiva")  //No anda el boton Consultar
+	public void TS96131_360_View_POSTPAGO_UX_Visualizacion_Resumen_de_Facturacion_Verificar_que_mas_detalle_de_un_registro_especifico_de_pago_del_grupo_3_se_muestra_el_campo_Usuario_Modificacion_texto(String nCuenta) {
+		cc.elegirCuenta(nCuenta);
+		cc.irAFacturacion();
+		cc.irAResumenDeCuenta();
+		Assert.assertTrue(false);
+	}
+	
+	@Test (groups = {"CustomerCare", "Ola2", "Marcas"}, dataProvider = "CustomerCuentaActiva")  //No anda el boton Consultar
+	public void TS96130_360_View_POSTPAGO_UX_Visualizacion_Resumen_de_Facturacion_Verificar_que_mas_detalle_de_un_registro_especifico_de_pago_del_grupo_3_se_muestra_el_campo_Usuario_texto(String nCuenta) {
+		cc.elegirCuenta(nCuenta);
+		cc.irAFacturacion();
+		cc.irAResumenDeCuenta();
+		Assert.assertTrue(false);
+	}	
 }
