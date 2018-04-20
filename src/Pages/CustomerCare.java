@@ -264,7 +264,8 @@ public class CustomerCare extends BasePage {
 		marca.selectByIndex(index); 
 	} 
 		   
-	public Boolean verificarBaseConocimientoMarcas() { 
+	public Boolean verificarBaseConocimientoMarcas() {
+		sleep(3000);
 		WebElement knowledge = driver.findElement(By.xpath("//ng-include[@id='vlcKnowledge']")); 
 		return (knowledge.isDisplayed() && knowledge.getText().contains("Informaci")); 
 	} 
