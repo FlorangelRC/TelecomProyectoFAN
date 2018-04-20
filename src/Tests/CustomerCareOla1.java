@@ -31,7 +31,7 @@ public class CustomerCareOla1 extends TestBase {
 		cc.cajonDeAplicaciones("Consola FAN");
 	}
 	
-	//@AfterClass (alwaysRun = true, groups = {"CustomerCare", "AjustesYEscalamiento", "SuspensionYRehabilitacion", "Ola1"})
+	@AfterClass (alwaysRun = true, groups = {"CustomerCare", "AjustesYEscalamiento", "SuspensionYRehabilitacion", "Ola1"})
 	public void quit() {
 		driver.quit();
 		sleep(5000);
@@ -986,8 +986,31 @@ public class CustomerCareOla1 extends TestBase {
 		Assert.assertTrue(driver.findElement(By.id("CboItem")).isEnabled());
 	}
 	
-	@Test (groups = {"CustomerCare", "AjustesYEscalamiento", "Ola1"}, dataProvider = "CustomerCuentaActiva")  //Falta hacer
-	public void TS95996_Adjustments_and_Escalations_Cierre_Caso_Gestion_Exitosa_Rechazada_Ampliar_detalles_Cerrar_caso_exitoso_comentario() {
-		Assert.assertTrue(false);
+	@Test (groups = {"CustomerCare", "AjustesYEscalamiento", "Ola1"}, dataProvider = "CustomerCuentaActiva")
+	public void TS95996_Adjustments_and_Escalations_Cierre_Caso_Gestion_Exitosa_Rechazada_Ampliar_detalles_Cerrar_caso_exitoso_comentario(String nCuenta) {
+		cc.elegirCuenta(nCuenta);
+		cc.irAGestion("inconvenientes");
+		cc.flujoInconvenientes();
+		List <WebElement> no = driver.findElements(By.cssSelector(".slds-form-element__label.ng-binding.ng-scope"));
+		for (WebElement x : no) {
+			if (x.getText().toLowerCase().equals("no")) {
+				x.click();
+				break;
+			}
+		}
+		sleep(2000);
+		driver.findElement(By.id("Step-AjusteNivelLinea_nextBtn")).click();
+		sleep(5000);
+		driver.findElement(By.id("SummaryDerivateToBO_nextBtn")).click();
+		sleep(3000);
+		WebElement gest = driver.findElement(By.cssSelector(".slds-box.ng-scope"));
+		boolean a = false, b = false;
+		if (gest.getText().toLowerCase().contains("la gesti\u00f3n se deriv\u00f3 al area")) {
+			a = true;
+		}
+		if (gest.getText().toLowerCase().contains("el n\u00famero de caso es")) {
+			b = true;
+		}
+		Assert.assertTrue(a && b);
 	}
 }
