@@ -19,7 +19,7 @@ import org.testng.annotations.Test;
 import Pages.CustomerCare;
 import Pages.setConexion;
 
-public class CustomerOla2_Joaquin extends TestBase {
+public class CustomerCareOla2 extends TestBase {
 	
 	private WebDriver driver;
 	protected CustomerCare cc;
@@ -34,7 +34,7 @@ public class CustomerOla2_Joaquin extends TestBase {
 		cc.cajonDeAplicaciones("Consola FAN");
 	}
 	
-	@AfterClass (alwaysRun = true, groups = {"CustomerCare", "Ola2", "Marcas"})
+	//@AfterClass (alwaysRun = true, groups = {"CustomerCare", "Ola2", "Marcas"})
 	public void exit() {
 		driver.quit();
 		sleep(5000);
@@ -143,5 +143,29 @@ public class CustomerOla2_Joaquin extends TestBase {
 		cc.irAResumenDeCuenta();
 		WebElement fh = driver.findElement(By.id("text-input-id-2"));
 		Assert.assertTrue(fh.getAttribute("max-date").contains(dateFormat.format(date)));
+	}
+	
+	@Test (groups = {"CustomerCare", "Ola2", "Marcas"}, dataProvider = "CustomerCuentaActiva")  //No anda el boton Consultar
+	public void TS118727_360_View_POSTPAGO_Visualizacion_Resumen_de_Facturacion_Resumen_de_Cta_se_muestra_registros_de_los_ultimos_6_meses(String nCuenta) {
+		cc.elegirCuenta(nCuenta);
+		cc.irAFacturacion();
+		cc.irAResumenDeCuenta();
+		Assert.assertTrue(false);
+	}
+	
+	@Test (groups = {"CustomerCare", "Ola2", "Marcas"}, dataProvider = "CustomerCuentaActiva")  //No anda el boton Consultar
+	public void TS118763_360_View_Resumen_Cta_Cte_Simple_Integracion_historial_de_pagos_S059_Obtener_historial_de_pagos(String nCuenta) {
+		cc.elegirCuenta(nCuenta);
+		cc.irAFacturacion();
+		cc.irAResumenDeCuenta();
+		Assert.assertTrue(false);
+	}
+	
+	@Test (groups = {"CustomerCare", "Ola2", "Marcas"}, dataProvider = "CustomerCuentaActiva")
+	public void TS118732_360_View_POSTPAGO_Visualizacion_Resumen_de_Facturacion_Fecha_Desde_muestra_griseadas_las_fechas_anteriores_a_6_meses_de_la_fecha_actual(String nCuenta) {
+		cc.elegirCuenta(nCuenta);
+		cc.irAFacturacion();
+		cc.irAResumenDeCuenta();
+		
 	}
 }
