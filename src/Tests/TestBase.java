@@ -707,4 +707,13 @@ public class TestBase {
 
 	}
 	
+	@DataProvider
+	public Object[][] SalesAltaDeLinea() throws Exception{
+
+	 Object[][] testObjArray = ExcelUtils.getTableArray("Cuentas.xlsx","AltaMasiva",1,1,3,"Alta de Linea");
+
+	 return (testObjArray);
+
+	}
+	
 }
