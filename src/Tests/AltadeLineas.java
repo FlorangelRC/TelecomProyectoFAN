@@ -14,7 +14,6 @@ import org.apache.poi.xssf.usermodel.XSSFSheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.support.ui.Select;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.BeforeMethod;
@@ -79,7 +78,7 @@ public class AltadeLineas extends TestBase {
 	
 	@BeforeMethod(alwaysRun=true)
 	 void cargarDatos() throws IOException {
-		 /*File archivo = new File("C:\\Users\\florangel\\Desktop\\Altas_Necesarias.xlsx");
+		 File archivo = new File("C:\\Users\\florangel\\Desktop\\Altas_Necesarias.xlsx");
 		 FileInputStream file = new FileInputStream(archivo);
 	     XSSFWorkbook workbook = new XSSFWorkbook(file); 
 	     XSSFSheet sheet = workbook.getSheetAt(0);
@@ -92,16 +91,16 @@ public class AltadeLineas extends TestBase {
 		 workbook.close();
 		 for (linea UnaL : lineas) {
 			 UnaL.VerLinea();
-		 }*/
+		 }
 		 try {Thread.sleep(10000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 		 driver.findElement(By.xpath("//a[@href=\'https://crm--sit--c.cs14.visual.force.com/apex/taClientSearch']")).click();
 		try {Thread.sleep(10000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 		 
 	}
 	
-	//@Test(groups={"Sales", "AltaDeContacto", "Ola1"}, dataProvider="SalesAltaDeLinea") 
-	public void TS_Alta_De_Lineas(String sPlan, String sIva, String sProvinci){
-	//public void TS_Alta_De_Lineas(){
+	@Test(groups={"Sales", "AltaDeContacto", "Ola1"}) 
+	//public void TS_Alta_De_Lineas(String sProducto, String sPlan, String sIva, String sProvinci){
+	public void TS_Alta_De_Lineas(){
 		SalesBase SB = new SalesBase(driver);
 		SB.BtnCrearNuevoCliente();
 		String asd = driver.findElement(By.id("SearchClientDocumentNumber")).getAttribute("value");
@@ -115,12 +114,10 @@ public class AltadeLineas extends TestBase {
 		driver.findElement(By.id("Contact_nextBtn")).click();
 		try {Thread.sleep(8000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 		sleep(15000);
-		SB.elegirplan(sPlan);
+		SB.agregarplan("Plan con Tarjeta");
 		SB.continuar();
 		sleep(20000);
-		Select iva = new Select(driver.findElement(By.id("ImpositiveCondition")));
-		iva.selectByVisibleText(sIva);
-		SB.Crear_DomicilioLegal(sProvinci,"ab", calle, "", altura, "", "", CP);
+		SB.Crear_DomicilioLegal("Buenos Aires","ab", calle, "", altura, "", "", CP);
 		sleep(15000);
 		driver.findElement(By.id("LineAssignment_nextBtn")).click();
 		sleep(10000);
