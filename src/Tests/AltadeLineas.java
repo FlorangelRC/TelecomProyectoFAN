@@ -99,7 +99,7 @@ public class AltadeLineas extends TestBase {
 	}
 	
 	@Test(groups={"Sales", "AltaDeContacto", "Ola1"}) 
-	//public void TS_Alta_De_Lineas(String sProducto, String sPlan, String sIva, String sProvincia
+	//public void TS_Alta_De_Lineas(String sProducto, String sPlan, String sIva, String sProvinci){
 	public void TS_Alta_De_Lineas(){
 		SalesBase SB = new SalesBase(driver);
 		SB.BtnCrearNuevoCliente();
@@ -114,14 +114,21 @@ public class AltadeLineas extends TestBase {
 		driver.findElement(By.id("Contact_nextBtn")).click();
 		try {Thread.sleep(8000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 		sleep(15000);
-		SB.elegirplan("Plan con Tarjeta Repro");
+		SB.agregarplan("Plan con Tarjeta");
 		SB.continuar();
 		sleep(20000);
 		SB.Crear_DomicilioLegal("Buenos Aires","ab", calle, "", altura, "", "", CP);
 		sleep(15000);
 		driver.findElement(By.id("LineAssignment_nextBtn")).click();
 		sleep(10000);
-		
+		driver.findElement(By.id("GetStockAvailableCode")).findElement(By.cssSelector(".slds-button.slds-button--neutral.ng-binding.ng-scope")).click();
+		sleep(30000);
+		driver.findElement(By.id("DecisiveLineSelection_nextBtn")).click();
+		sleep(5000);
+		CC.obligarclick(driver.findElement(By.id("OrderSumary_nextBtn")));
+		sleep(5000);
+		CC.obligarclick(driver.findElement(By.id("SaleOrderMessages_nextBtn")));
+		sleep(10000);
 	}
 	
 	

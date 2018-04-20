@@ -2016,7 +2016,7 @@ public class Sales2 extends TestBase{
 	@Test(groups={"Sales", "AltaDeLinea", "Ola1"}, priority=3, dataProvider="SalesCuentaActiva")
 	public void TS94482_Alta_Linea_Carrito_Eliminar_todos_los_productos_del_carrito1(String sCuenta, String sDni, String sLinea) throws IOException {
 		Ta_CPQ page3 = new Ta_CPQ(driver);
-		sb.BuscarCuenta(DNI, sDni);
+		sb.BuscarCuenta(DNI, sDni); 
 		//sb.BuscarCuenta(DNI, buscarCampoExcel(1, "Cuenta Activa", 2));
 		sb.acciondecontacto("catalogo");
 		sleep(12000);

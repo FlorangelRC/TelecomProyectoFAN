@@ -2,6 +2,7 @@ package Tests;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
@@ -163,9 +164,29 @@ public class CustomerCareOla2 extends TestBase {
 	
 	@Test (groups = {"CustomerCare", "Ola2", "Marcas"}, dataProvider = "CustomerCuentaActiva")
 	public void TS118732_360_View_POSTPAGO_Visualizacion_Resumen_de_Facturacion_Fecha_Desde_muestra_griseadas_las_fechas_anteriores_a_6_meses_de_la_fecha_actual(String nCuenta) {
+		Date date = new Date();
+		Calendar cal = Calendar.getInstance(); 
+        cal.setTime(date); 
+        cal.add(Calendar.MONTH, -6);
+        cal.add(Calendar.DATE, -1);
+        date = cal.getTime();
+		DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
 		cc.elegirCuenta(nCuenta);
 		cc.irAFacturacion();
 		cc.irAResumenDeCuenta();
+		String mes = "";
+		String fh = driver.findElement(By.id("text-input-id-1")).getAttribute("min-date");
+		String[] meses = {"Jan","Feb", "Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"};
+		for(int i =0; i<=11;i++) {
+			if (fh.contains(meses[i])) {
+				int parc = i+1;
+				if(parc < 10)
+					mes = "0"+parc;
+				else
+					mes = Integer.toString(parc);
+			}
+		}
+		Assert.assertTrue((fh.split(" ")[3]+"-"+mes+"-"+fh.split(" ")[2]).contains(dateFormat.format(date)));
 		
 	}
 }
