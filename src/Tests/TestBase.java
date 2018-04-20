@@ -42,7 +42,7 @@ import DataProvider.ExcelUtils;
 public class TestBase {
 	protected static WebDriver driver;//
 	
-	@AfterSuite (alwaysRun = true, groups = {"CustomerCare", "AjustesYEscalamiento", "SuspensionYRehabilitacion", "Ola1"})
+	//@AfterSuite (alwaysRun = true, groups = {"CustomerCare", "AjustesYEscalamiento", "SuspensionYRehabilitacion", "Ola1"})
 	public void afterSuite() {
 		driver.quit();
 	}
@@ -670,6 +670,15 @@ public class TestBase {
 	public Object[][] SalesCuentaBolsa() throws Exception{
 
 	 Object[][] testObjArray = ExcelUtils.getTableArray("Cuentas.xlsx","Sales",1,1,3,"Cuenta Bolsa");
+
+	 return (testObjArray);
+
+	}
+	
+	@DataProvider
+	public Object[][] SalesPasaporteBolsa() throws Exception{
+
+	 Object[][] testObjArray = ExcelUtils.getTableArray("Cuentas.xlsx","Sales",1,1,3,"Pasaporte Bolsa");
 
 	 return (testObjArray);
 
