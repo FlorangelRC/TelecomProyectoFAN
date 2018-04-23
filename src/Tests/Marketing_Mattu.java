@@ -36,31 +36,10 @@ public class Marketing_Mattu extends TestBase{
 		loginMarketing(driver);
 		//login(driver);
 		try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
-		driver.get("https://crm--sit.cs14.my.salesforce.com/console?tsid=02uc0000000D6Hd");
+		//driver.get("https://crm--sit.cs14.my.salesforce.com/console?tsid=02uc0000000D6Hd");
+		mMarketing.cajonDeAplicaciones("Consola FAN");
 	}
-	//@BeforeMethod(alwaysRun=true)
-	public void go() throws Exception {
-		try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
-		BasePage cambioFrame=new BasePage();
-		driver.switchTo().defaultContent();
-		driver.switchTo().frame(cambioFrame.getFrameForElement(driver, By.cssSelector(".slds-panel__section.slds-p-around--small")));
-		
-	}
-	//@AfterMethod(alwaysRun=true)
-	public void byeByeTab() {
-		try {
-			CustomerCare cCC = new CustomerCare(driver);
-			WebElement wActiveTab = cCC.obtenerPestañaActiva();
-			if (!wActiveTab.findElement(By.className("tabText")).getText().toLowerCase().equals("club personal")) {
-				mMarketing.closeActiveTab();
-			}
-		} catch (IndexOutOfBoundsException e) {
-			//AllwaysEmpty
-		}
-		
-		CustomerCare cCC = new CustomerCare(driver);
-		cCC.cerrarTodasLasPestañas();
-	}
+	
 	@AfterClass(alwaysRun=true)
 	public void tearDown() {
 		driver.close();
@@ -733,9 +712,7 @@ public class Marketing_Mattu extends TestBase{
 	public void TS99087_Campo_Nombre_LEADS() {
 		mMarketing.ingresarANuevoProspecto();
 		Assert.assertTrue(driver.findElement(By.id("name_firstlea2")).isDisplayed());
-		driver.get("https://crm--sit.cs14.my.salesforce.com/console?tsid=02uc0000000D6Hd");
-		List<WebElement> wTabs = driver.findElement(By.id("ext-gen59")).findElements(By.tagName("li"));
-		wTabs.get(2).click();
+		mMarketing.cajonDeAplicaciones("Consola FAN");
 	}
 	
 	//-------------------------------------------------------------------------------------------------
@@ -744,9 +721,7 @@ public class Marketing_Mattu extends TestBase{
 	public void TS99088_Campo_Apellido_LEADS() {
 		mMarketing.ingresarANuevoProspecto();
 		Assert.assertTrue(driver.findElement(By.id("name_lastlea2")).isDisplayed());
-		driver.get("https://crm--sit.cs14.my.salesforce.com/console?tsid=02uc0000000D6Hd");
-		List<WebElement> wTabs = driver.findElement(By.id("ext-gen59")).findElements(By.tagName("li"));
-		wTabs.get(2).click();
+		mMarketing.cajonDeAplicaciones("Consola FAN");
 	}
 	
 	//-------------------------------------------------------------------------------------------------
@@ -755,9 +730,7 @@ public class Marketing_Mattu extends TestBase{
 	public void TS99089_Campo_Mail_LEADS() {
 		mMarketing.ingresarANuevoProspecto();
 		Assert.assertTrue(driver.findElement(By.id("lea11")).isDisplayed());
-		driver.get("https://crm--sit.cs14.my.salesforce.com/console?tsid=02uc0000000D6Hd");
-		List<WebElement> wTabs = driver.findElement(By.id("ext-gen59")).findElements(By.tagName("li"));
-		wTabs.get(2).click();
+		mMarketing.cajonDeAplicaciones("Consola FAN");
 	}
 	
 	//-------------------------------------------------------------------------------------------------
@@ -766,9 +739,7 @@ public class Marketing_Mattu extends TestBase{
 	public void TS99090_Campo_Telefono_LEADS() {
 		mMarketing.ingresarANuevoProspecto();
 		Assert.assertTrue(driver.findElement(By.id("lea8")).isDisplayed());
-		driver.get("https://crm--sit.cs14.my.salesforce.com/console?tsid=02uc0000000D6Hd");
-		List<WebElement> wTabs = driver.findElement(By.id("ext-gen59")).findElements(By.tagName("li"));
-		wTabs.get(2).click();
+		mMarketing.cajonDeAplicaciones("Consola FAN");
 	}
 	
 	//-------------------------------------------------------------------------------------------------
@@ -777,9 +748,7 @@ public class Marketing_Mattu extends TestBase{
 	public void TS99091_Campo_Empresa_LEADS() {
 		mMarketing.ingresarANuevoProspecto();
 		Assert.assertTrue(driver.findElement(By.id("lea3")).isDisplayed());
-		driver.get("https://crm--sit.cs14.my.salesforce.com/console?tsid=02uc0000000D6Hd");
-		List<WebElement> wTabs = driver.findElement(By.id("ext-gen59")).findElements(By.tagName("li"));
-		wTabs.get(2).click();
+		mMarketing.cajonDeAplicaciones("Consola FAN");
 	}
 	
 	//-------------------------------------------------------------------------------------------------
@@ -804,9 +773,7 @@ public class Marketing_Mattu extends TestBase{
 			bAssert = false;
 		}
 		
-		driver.get("https://crm--sit.cs14.my.salesforce.com/console?tsid=02uc0000000D6Hd");
-		List<WebElement> wTabs = driver.findElement(By.id("ext-gen59")).findElements(By.tagName("li"));
-		wTabs.get(2).click();
+		mMarketing.cajonDeAplicaciones("Consola FAN");
 		
 		Assert.assertTrue(bAssert);
 	}
@@ -816,13 +783,26 @@ public class Marketing_Mattu extends TestBase{
 	@Test(groups = {"Marketing", "Ola1", "CapacidadDeAdministrarLaSegmentaciónDeLosClientes"})
 	public void TS99093_Campo_Obligatorio_Apellido_LEADS() {
 		mMarketing.ingresarANuevoProspecto();
-		WebElement wTable = driver.findElement(By.className("pbSubsection"));
-		List<WebElement> wColumn = mMarketing.traerColumnaElement(wTable, 4, 2);
-		WebElement wRequiredInput = wColumn.get(2).findElement(By.tagName("div"));
-		Assert.assertTrue(wRequiredInput.getAttribute("class").equals("requiredInput"));
-		driver.get("https://crm--sit.cs14.my.salesforce.com/console?tsid=02uc0000000D6Hd");
-		List<WebElement> wTabs = driver.findElement(By.id("ext-gen59")).findElements(By.tagName("li"));
-		wTabs.get(2).click();
+		driver.findElement(By.id("name_firstlea2")).sendKeys("Name");
+		driver.findElement(By.id("lea11")).sendKeys("mail@gmail.com");
+		driver.findElement(By.id("lea8")).sendKeys("4567-8910");
+		driver.findElement(By.id("lea3")).sendKeys("Company");
+		
+		List<WebElement> wTopBotonRow = driver.findElement(By.id("topButtonRow")).findElements(By.tagName("input"));
+		wTopBotonRow.get(0).click();
+		
+		Boolean bAssert;
+		
+		try {
+			bAssert = driver.findElement(By.id("errorDiv_ep")).isDisplayed();
+		}
+		catch (NoSuchElementException exception) {
+			bAssert = false;
+		}
+		
+		mMarketing.cajonDeAplicaciones("Consola FAN");
+		
+		Assert.assertTrue(bAssert);
 	}
 	
 	//-------------------------------------------------------------------------------------------------
@@ -830,13 +810,26 @@ public class Marketing_Mattu extends TestBase{
 	@Test(groups = {"Marketing", "Ola1", "CapacidadDeAdministrarLaSegmentaciónDeLosClientes"})
 	public void TS99094_Campo_Obligatorio_Mail_LEADS() {
 		mMarketing.ingresarANuevoProspecto();
-		WebElement wTable = driver.findElement(By.className("pbSubsection"));
-		List<WebElement> wColumn = mMarketing.traerColumnaElement(wTable, 4, 2);
-		WebElement wRequiredInput = wColumn.get(3).findElement(By.tagName("div"));
-		Assert.assertTrue(wRequiredInput.getAttribute("class").equals("requiredInput"));
-		driver.get("https://crm--sit.cs14.my.salesforce.com/console?tsid=02uc0000000D6Hd");
-		List<WebElement> wTabs = driver.findElement(By.id("ext-gen59")).findElements(By.tagName("li"));
-		wTabs.get(2).click();
+		driver.findElement(By.id("name_firstlea2")).sendKeys("Name");
+		driver.findElement(By.id("name_lastlea2")).sendKeys("Last Name");
+		driver.findElement(By.id("lea8")).sendKeys("4567-8910");
+		driver.findElement(By.id("lea3")).sendKeys("Company");
+		
+		List<WebElement> wTopBotonRow = driver.findElement(By.id("topButtonRow")).findElements(By.tagName("input"));
+		wTopBotonRow.get(0).click();
+		
+		Boolean bAssert;
+		
+		try {
+			bAssert = driver.findElement(By.id("errorDiv_ep")).isDisplayed();
+		}
+		catch (NoSuchElementException exception) {
+			bAssert = false;
+		}
+		
+		mMarketing.cajonDeAplicaciones("Consola FAN");
+		
+		Assert.assertTrue(bAssert);
 	}
 	
 	//-------------------------------------------------------------------------------------------------
@@ -848,9 +841,7 @@ public class Marketing_Mattu extends TestBase{
 		List<WebElement> wColumn = mMarketing.traerColumnaElement(wTable, 4, 2);
 		WebElement wRequiredInput = wColumn.get(6).findElement(By.tagName("div"));
 		Assert.assertTrue(wRequiredInput.getAttribute("class").equals("requiredInput"));
-		driver.get("https://crm--sit.cs14.my.salesforce.com/console?tsid=02uc0000000D6Hd");
-		List<WebElement> wTabs = driver.findElement(By.id("ext-gen59")).findElements(By.tagName("li"));
-		wTabs.get(2).click();
+		mMarketing.cajonDeAplicaciones("Consola FAN");
 	}
 	
 	//-------------------------------------------------------------------------------------------------
@@ -869,15 +860,13 @@ public class Marketing_Mattu extends TestBase{
 		
 		Assert.assertTrue(driver.findElement(By.id("lea2_ileinner")).getText().equals("Name Last Name"));
 		
-		driver.get("https://crm--sit.cs14.my.salesforce.com/console?tsid=02uc0000000D6Hd");
-		List<WebElement> wTabs = driver.findElement(By.id("ext-gen59")).findElements(By.tagName("li"));
-		wTabs.get(2).click();
+		mMarketing.cajonDeAplicaciones("Consola FAN");
 	}
 	
 	//-------------------------------------------------------------------------------------------------
 	//Casos Extra
 	//TCC = 1
-	//@Test(groups = {"Marketing", "Ola1", "CapacidadDeAdministrarLaSegmentaciónDeLosClientes"})
+	@Test(groups = {"Marketing", "Ola1", "CapacidadDeAdministrarLaSegmentaciónDeLosClientes"})
 	public void Indicacion_Campo_Obligatorio_Nombre_LEADS() {
 		mMarketing.ingresarANuevoProspecto();
 		WebElement wTable = driver.findElement(By.className("pbSubsection"));
@@ -890,9 +879,70 @@ public class Marketing_Mattu extends TestBase{
 		catch (NoSuchElementException exception){
 			bAssert = false;
 		}
-		driver.get("https://crm--sit.cs14.my.salesforce.com/console?tsid=02uc0000000D6Hd");
-		List<WebElement> wTabs = driver.findElement(By.id("ext-gen59")).findElements(By.tagName("li"));
-		wTabs.get(2).click();
+		
+		mMarketing.cajonDeAplicaciones("Consola FAN");
+		
+		Assert.assertTrue(bAssert);
+	}
+
+	//-------------------------------------------------------------------------------------------------
+	//TCC = 2
+	@Test(groups = {"Marketing", "Ola1", "CapacidadDeAdministrarLaSegmentaciónDeLosClientes"})
+	public void Indicacion_Campo_Obligatorio_Apellido_LEADS() {
+		mMarketing.ingresarANuevoProspecto();
+		WebElement wTable = driver.findElement(By.className("pbSubsection"));
+		List<WebElement> wColumn = mMarketing.traerColumnaElement(wTable, 4, 2);
+		boolean bAssert = true;
+		try {
+			WebElement wRequiredInput = wColumn.get(2).findElement(By.tagName("div"));
+			Assert.assertTrue(wRequiredInput.getAttribute("class").equals("requiredInput"));
+		}
+		catch (NoSuchElementException exception){
+			bAssert = false;
+		}
+		mMarketing.cajonDeAplicaciones("Consola FAN");
+		Assert.assertTrue(bAssert);
+	}
+	
+	//-------------------------------------------------------------------------------------------------
+	//TCC = 3
+	@Test(groups = {"Marketing", "Ola1", "CapacidadDeAdministrarLaSegmentaciónDeLosClientes"})
+	public void Indicacion_Campo_Obligatorio_Mail_LEADS() {
+		mMarketing.ingresarANuevoProspecto();
+		WebElement wTable = driver.findElement(By.className("pbSubsection"));
+		List<WebElement> wColumn = mMarketing.traerColumnaElement(wTable, 4, 2);
+		boolean bAssert = true;
+		try {
+			WebElement wRequiredInput = wColumn.get(3).findElement(By.tagName("div"));
+			Assert.assertTrue(wRequiredInput.getAttribute("class").equals("requiredInput"));
+		}
+		catch (NoSuchElementException exception){
+			bAssert = false;
+		}
+		
+		mMarketing.cajonDeAplicaciones("Consola FAN");
+		
+		Assert.assertTrue(bAssert);
+	}
+	
+	//-------------------------------------------------------------------------------------------------
+	//TCC = 4
+	@Test(groups = {"Marketing", "Ola1", "CapacidadDeAdministrarLaSegmentaciónDeLosClientes"})
+	public void Indicacion_Campo_Obligatorio_Telefono_LEADS() {
+		mMarketing.ingresarANuevoProspecto();
+		WebElement wTable = driver.findElement(By.className("pbSubsection"));
+		List<WebElement> wColumn = mMarketing.traerColumnaElement(wTable, 4, 2);
+		boolean bAssert = true;
+		try {
+			WebElement wRequiredInput = wColumn.get(6).findElement(By.tagName("div"));
+			Assert.assertTrue(wRequiredInput.getAttribute("class").equals("requiredInput"));
+		}
+		catch (NoSuchElementException exception){
+			bAssert = false;
+		}
+		
+		mMarketing.cajonDeAplicaciones("Consola FAN");
+		
 		Assert.assertTrue(bAssert);
 	}
 	
