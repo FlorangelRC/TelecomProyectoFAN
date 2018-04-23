@@ -1249,10 +1249,15 @@ public class Sales2 extends TestBase{
 		sb.acciondecontacto("catalogo");
 		sleep(15000);
 		sb.elegirplan("Plan con Tarjeta Repro");
+		sb.continuar();
 		sleep(20000);
-		driver.findElement(By.cssSelector(".slds-button.slds-m-left--large.slds-button--brand.ta-button-brand")).click();
+		sb.Crear_DomicilioLegal(provincia, localidad, "falsa", "", "1000", "", "", "1549");
+		//sleep(15000);
+		//driver.findElement(By.cssSelector(".slds-button.slds-m-left--large.slds-button--brand.ta-button-brand")).click();
 		sleep(25000);
 		driver.findElement(By.cssSelector(".slds-form-element__label--toggleText.ng-binding")).click();
+		Select pro = new Select(driver.findElement(By.id("SelectProvincia")));
+		pro.selectByVisibleText("Buenos Aires");
 		Select loc = new Select(driver.findElement(By.id("SelectLocalidad")));
 		loc.selectByVisibleText("JUAN BLAQUIER");
 		driver.findElement(By.id("ChangeNumber")).click();
@@ -1440,6 +1445,8 @@ public class Sales2 extends TestBase{
 		sleep(15000);
 		sb.elegirplan("Plan con Tarjeta Repro");
 		sb.continuar();
+		sleep(20000);
+		sb.Crear_DomicilioLegal(provincia, localidad, "falsa", "", "1000", "", "", "1549");
 		sleep(30000);
 		String lineaVieja = driver.findElement(By.id("tree0-node1")).findElement(By.cssSelector(".slds-checkbox__label.ta-cyan-color-dark")).findElement(By.className("ng-binding")).getText();
 		System.out.println("vieja ="+lineaVieja);
@@ -1461,10 +1468,12 @@ public class Sales2 extends TestBase{
 		sleep(15000);
 		sb.elegirplan("Plan con Tarjeta Repro");
 		sb.continuar();
-		sleep(25000);
+		sleep(15000);
+		sb.Crear_DomicilioLegal(provincia, localidad, "falsa", "", "1000", "", "", "1549");
+		sleep(15000);
 		WebElement bx = driver.findElement(By.id("tree0-node1"));
 		System.out.println(bx.getText());
-	//	Assert.assertTrue(bx.isDisplayed());
+		Assert.assertTrue(bx.isDisplayed());
 	}
 	
 	@Test(groups={"Sales","AltaDeLinea","Ola1"}, priority=4, dataProvider="SalesCuentaActiva") 	
@@ -1477,6 +1486,8 @@ public class Sales2 extends TestBase{
 		sb.elegirplan("Plan con Tarjeta Repro");
 		sb.continuar();
 		sleep(20000);
+		sb.Crear_DomicilioLegal(provincia, localidad, "falsa", "", "1000", "", "", "1549");
+		sleep(10000);
 		List<WebElement> modi = driver.findElements(By.cssSelector(".slds-form-element__label--toggleText.ng-binding"));
 			for(WebElement m : modi){
 				m.getText().equals("Modificar b\u00fasqueda");
@@ -1514,7 +1525,9 @@ public class Sales2 extends TestBase{
 		driver.switchTo().defaultContent();*/
 		sb.elegirplan("Plan con Tarjeta Repro");
 		sb.continuar();
-		sleep(25000);
+		sleep(20000);
+		sb.Crear_DomicilioLegal(provincia, localidad, "falsa", "", "1000", "", "", "1549");
+		sleep(7000);
 		List<WebElement> modi = driver.findElements(By.cssSelector(".slds-form-element__label--toggleText.ng-binding"));
 		for(WebElement m : modi){
 			m.getText().equals("Modificar b\u00fasqueda");
@@ -1896,7 +1909,7 @@ public class Sales2 extends TestBase{
 		sb.acciondecontacto("catalogo");
 		boolean x = false;
 		sleep(18000);
-		sb.agregarplan("J2 prime");
+		sb.elegirplan("J2 Prime");
 		driver.findElement(By.cssSelector(".slds-input.ng-valid.ng-not-empty.ng-dirty.ng-valid-parse.ng-touched")).clear();
 		driver.findElement(By.cssSelector(".slds-input.ng-valid.ng-dirty.ng-valid-parse.ng-touched.ng-empty")).sendKeys("plan con tarjeta repro");		
 		try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
@@ -2121,6 +2134,7 @@ public class Sales2 extends TestBase{
 		sb.acciondecontacto("catalogo");
 		try {Thread.sleep(15000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 		sb.elegirplan("Plan con Tarjeta Repro");
+		sb.continuar();
 		try {Thread.sleep(15000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 		WebElement boton = driver.findElements(By.cssSelector(".slds-button.slds-button_icon-border-filled.cpq-item-actions-dropdown-button")).get(0);
 		boton.click();
@@ -2227,6 +2241,17 @@ public class Sales2 extends TestBase{
 			
 	}
 	
-	
+	@Test(groups={"Sales", "AltaLinea", "Ola1"}, dataProvider="SalesCuentaActiva")
+	public void TS94480_checkPaperCanIsPresent(String sCuenta, String sDni, String sLinea) {
+		sb.BuscarCuenta(DNI, sDni);
+		//sb.BuscarCuenta(DNI, buscarCampoExcel(1, "Cuenta Activa", 2));
+		sb.acciondecontacto("catalogo");
+		try {Thread.sleep(4000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		sb.elegirplan("Plan con Tarjeta Repro");
+		sleep(5000);
+		driver.findElement(By.cssSelector(".slds-button__icon.slds-button__icon--.slds-icon-text-default")).click();
+		WebElement icon = driver.findElements(By.cssSelector(".slds-icon.slds-icon--x-small")).get(4);
+		Assert.assertTrue(icon.isDisplayed());
+	}
 }
 
