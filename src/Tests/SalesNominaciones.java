@@ -10,6 +10,7 @@ import java.util.NoSuchElementException;
 import java.util.Random;
 
 import org.openqa.selenium.By;
+import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.testng.Assert;
 import org.testng.annotations.AfterClass;
@@ -26,11 +27,12 @@ import Pages.setConexion;
 
 public class SalesNominaciones extends TestBase{
 
+	private WebDriver driver;
 	protected String perfil = "call";
 	
 	@BeforeClass(alwaysRun=true)
 	public void Init() {
-		this.driver = setConexion.setupEze();
+		driver = setConexion.setupEze();
 		try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}		
 			 loginFranciso(driver);
 		try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
