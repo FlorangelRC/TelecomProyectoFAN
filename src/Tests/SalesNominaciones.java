@@ -10,6 +10,7 @@ import java.util.NoSuchElementException;
 import java.util.Random;
 
 import org.openqa.selenium.By;
+import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.testng.Assert;
 import org.testng.annotations.AfterClass;
@@ -26,11 +27,12 @@ import Pages.setConexion;
 
 public class SalesNominaciones extends TestBase{
 
+	private WebDriver driver;
 	protected String perfil = "call";
 	
 	@BeforeClass(alwaysRun=true)
 	public void Init() {
-		this.driver = setConexion.setupEze();
+		driver = setConexion.setupEze();
 		try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}		
 			 loginFranciso(driver);
 		try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
@@ -359,8 +361,9 @@ public class SalesNominaciones extends TestBase{
 		contact.tipoValidacion("documento");
 		contact.subirArchivo("C:\\Users\\Sofia Chardin\\Desktop\\DNI.jpg", "si");
 			BasePage bp = new BasePage(driver);
-		bp.setSimpleDropdown(driver.findElement(By.id("ImpositiveCondition")), "IVA Consumidor Final");
-		SB.Crear_DomicilioLegal("Buenos Aires", "aba", "falsa", "", "1000", "", "", "1549");
+			sleep(5000);
+	//	bp.setSimpleDropdown(driver.findElement(By.id("ImpositiveCondition")), "IVA Consumidor Final");
+	//	SB.Crear_DomicilioLegal("Buenos Aires", "aba", "falsa", "", "1000", "", "", "1549");
 		sleep(10000);
 		contact.subirformulario("C:\\Users\\Sofia Chardin\\Desktop\\FormNom.pdf", "si");
 		sleep(25000);
