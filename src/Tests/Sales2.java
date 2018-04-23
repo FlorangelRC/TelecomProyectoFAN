@@ -40,12 +40,12 @@ public class Sales2 extends TestBase{
 	String localidad="BASAIL";
 	protected  WebDriverWait wait;
 	
-	@AfterClass(alwaysRun=true)
+	//@AfterClass(alwaysRun=true)
 	public void tearDown() {
 		driver.quit();
 	}
 	
-	@AfterMethod(alwaysRun=true)
+	//@AfterMethod(alwaysRun=true)
 	public void deslogin() {
 		sleep(3000);
 		driver.get("https://crm--sit.cs14.my.salesforce.com/home/home.jsp?tsid=02u41000000QWha/");
@@ -2235,6 +2235,17 @@ public class Sales2 extends TestBase{
 			
 	}
 	
-	
+	@Test(groups={"Sales", "AltaLinea", "Ola1"}, dataProvider="SalesCuentaActiva")
+	public void TS94480_checkPaperCanIsPresent(String sCuenta, String sDni, String sLinea) {
+		sb.BuscarCuenta(DNI, sDni);
+		//sb.BuscarCuenta(DNI, buscarCampoExcel(1, "Cuenta Activa", 2));
+		sb.acciondecontacto("catalogo");
+		try {Thread.sleep(4000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		sb.elegirplan("Plan con Tarjeta Repro");
+		sleep(5000);
+		driver.findElement(By.cssSelector(".slds-button__icon.slds-button__icon--.slds-icon-text-default")).click();
+		WebElement icon = driver.findElements(By.cssSelector(".slds-icon.slds-icon--x-small")).get(4);
+		Assert.assertTrue(icon.isDisplayed());
+	}
 }
 

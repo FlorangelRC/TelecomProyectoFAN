@@ -57,7 +57,7 @@ public class ta_CPQ extends TestBase {
 	protected WebDriver driver;
 	protected  WebDriverWait wait;
 
-	@AfterClass(alwaysRun=true)
+	//@AfterClass(alwaysRun=true)
 	public void tearDown() {
 		driver.quit();
 		sleep(1000);
@@ -119,25 +119,6 @@ public class ta_CPQ extends TestBase {
 		Assert.assertEquals("1", page3.getSimCardValue()); 	
 	}
 	
-	/*
-	 * Verifica que se muestre la papelera
-	 * Papelera no esta disponible.
-	 * Ultima Revision 30-01-18
-	 */
-	@Test(groups={"Sales", "AltaLinea", "Ola1"})
-	public void TS94480_checkPaperCanIsPresent() {
-		sleep(10000);
-		Ta_CPQ page3 = new Ta_CPQ(driver);
-		try { for(WebElement e : driver.findElements(By.className("cpq-product-name"))) {
-			page3.clickOnDelete();
-			try {Thread.sleep(2000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
-		} } catch (java.lang.IndexOutOfBoundsException e) {}
-		try {Thread.sleep(10000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
-
-		page3.addPlan();
-		try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
-		Assert.assertTrue(page3.isPaperCanPresent());
-	}
 	
 	/**
 	 * Verifica que al agregar un plan que no requiere prefactibilidad, se pueda borrar.
