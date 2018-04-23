@@ -40,12 +40,12 @@ public class Sales2 extends TestBase{
 	String localidad="BASAIL";
 	protected  WebDriverWait wait;
 	
-	@AfterClass(alwaysRun=true)
+	//@AfterClass(alwaysRun=true)
 	public void tearDown() {
 		driver.quit();
 	}
 	
-	@AfterMethod(alwaysRun=true)
+	//@AfterMethod(alwaysRun=true)
 	public void deslogin() {
 		sleep(3000);
 		driver.get("https://crm--sit.cs14.my.salesforce.com/home/home.jsp?tsid=02u41000000QWha/");
@@ -107,7 +107,7 @@ public class Sales2 extends TestBase{
 	}
 	
 	@Test(groups={"Sales", "AltaDeLinea", "Ola1"}, priority=5,dataProvider="SalesCuentaActiva")
-	public void TS95246_Ventas_General_Verificar_Que_Este_El_Paso_En_Metodo_De_Entrega_Distinto_A_Presencial(String sCuenta, String sDni, String sLinea) throws IOException{
+	public void TS95296_Ventas_General_Verificar_Que_Este_El_Paso_En_Metodo_De_Entrega_Distinto_A_Presencial(String sCuenta, String sDni, String sLinea) throws IOException{
 		//sb.BuscarCuenta(DNI, buscarCampoExcel(1, "Cuenta Activa", 2));
 		sb.BuscarCuenta(DNI, sDni);
 		sb.acciondecontacto("catalogo");
@@ -297,6 +297,8 @@ public class Sales2 extends TestBase{
 		sleep(15000);
 		driver.findElement(By.cssSelector(".slds-button.slds-m-left--large.slds-button--brand.ta-button-brand")).click();
 		sleep(25000);
+		sb.Crear_DomicilioLegal("Buenos Aires","ab", "falsa", "", "4537", "", "", "5384");
+		sleep(10000);
 		List <WebElement> num = driver.findElements(By.className("slds-form-element__control"));
 		boolean a = false;
 		for (WebElement x : num) {
@@ -413,6 +415,8 @@ public class Sales2 extends TestBase{
 		sleep(25000);
 		driver.findElement(By.cssSelector(".slds-button.slds-m-left--large.slds-button--brand.ta-button-brand")).click();
 		sleep(25000);
+		sb.Crear_DomicilioLegal("Buenos Aires","ab","falsa", "", "2154", "", "", "2453");
+		sleep(10000);
 		List <WebElement> num = driver.findElements(By.className("slds-form-element__control"));
 		boolean a = false;
 		for (WebElement x : num) {
@@ -436,7 +440,7 @@ public class Sales2 extends TestBase{
 		Assert.assertTrue(false);
 	}
 	
-	@Test(groups={"Sales", "AltaDeLinea", "Ola1"}, priority=0, dataProvider="SalesCuentaConGestiones" )
+	@Test(groups={"Sales", "AltaDeLinea", "Ola1"}, priority=1, dataProvider="SalesCuentaConGestiones" )
 	public void TS94716_Ventas_VentasGestiones_Visualizar_un_historico_de_gestiones_realizadas(String sCuenta, String sDni, String sLinea) {
 		driver.findElement(By.cssSelector(".vlc-slds-button--tertiary.ng-binding.ng-scope")).click();
 		sleep(2000);
@@ -461,7 +465,7 @@ public class Sales2 extends TestBase{
 		Assert.assertTrue(a && b);
 	}
 	
-	@Test(groups={"Sales", "AltaDeLinea", "Ola1"}, priority=0, dataProvider="SalesCuentaConGestiones")
+	@Test(groups={"Sales", "AltaDeLinea", "Ola1"}, priority=1, dataProvider="SalesCuentaConGestiones")
 	public void TS94611_Alta_Linea_Nueva_Venta_Verificar_acceso_a_Nueva_Venta_desde_vista_360(String sCuenta, String sDni, String sLinea) {
 		driver.findElement(By.cssSelector(".vlc-slds-button--tertiary.ng-binding.ng-scope")).click();
 		sleep(2000);
@@ -484,7 +488,7 @@ public class Sales2 extends TestBase{
 		sleep(15000);
 		driver.findElement(By.cssSelector(".slds-button.slds-m-left--large.slds-button--brand.ta-button-brand")).click();
 		sleep(10000);
-		Assert.assertTrue(driver.findElement(By.id("ContactName")).getAttribute("value").toLowerCase().contains("adela sales"));
+		Assert.assertTrue(driver.findElement(By.id("ContactName")).getAttribute("value").toLowerCase().contains(sCuenta.toLowerCase()));
 		List <WebElement> prov = driver.findElements(By.cssSelector(".slds-form-element__label.ng-binding"));
 		boolean a = false;
 		for (WebElement x : prov) {
@@ -1221,6 +1225,8 @@ public class Sales2 extends TestBase{
 		//driver.findElement(By.cssSelector(".slds-button.slds-m-left--large.slds-button--brand.ta-button-brand")).click();
 		sb.continuar();
 		sleep(20000);
+		sb.Crear_DomicilioLegal("Buenos Aires","ab","falsa", "", "5846", "", "", "5248");
+		sleep(10000);
 		WebElement line = driver.findElement(By.id("tree0-node1__label"));
 		WebElement line2 = driver.findElement(By.id("tree0-node1-0"));
 		boolean a = false;
