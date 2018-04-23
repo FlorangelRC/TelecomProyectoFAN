@@ -359,8 +359,9 @@ public class SalesNominaciones extends TestBase{
 		contact.tipoValidacion("documento");
 		contact.subirArchivo("C:\\Users\\Sofia Chardin\\Desktop\\DNI.jpg", "si");
 			BasePage bp = new BasePage(driver);
-		bp.setSimpleDropdown(driver.findElement(By.id("ImpositiveCondition")), "IVA Consumidor Final");
-		SB.Crear_DomicilioLegal("Buenos Aires", "aba", "falsa", "", "1000", "", "", "1549");
+			sleep(5000);
+	//	bp.setSimpleDropdown(driver.findElement(By.id("ImpositiveCondition")), "IVA Consumidor Final");
+	//	SB.Crear_DomicilioLegal("Buenos Aires", "aba", "falsa", "", "1000", "", "", "1549");
 		sleep(10000);
 		contact.subirformulario("C:\\Users\\Sofia Chardin\\Desktop\\FormNom.pdf", "si");
 		sleep(25000);
