@@ -36,31 +36,10 @@ public class Marketing_Mattu extends TestBase{
 		loginMarketing(driver);
 		//login(driver);
 		try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
-		driver.get("https://crm--sit.cs14.my.salesforce.com/console?tsid=02uc0000000D6Hd");
+		//driver.get("https://crm--sit.cs14.my.salesforce.com/console?tsid=02uc0000000D6Hd");
+		mMarketing.cajonDeAplicaciones("Consola FAN");
 	}
-	//@BeforeMethod(alwaysRun=true)
-	public void go() throws Exception {
-		try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
-		BasePage cambioFrame=new BasePage();
-		driver.switchTo().defaultContent();
-		driver.switchTo().frame(cambioFrame.getFrameForElement(driver, By.cssSelector(".slds-panel__section.slds-p-around--small")));
-		
-	}
-	//@AfterMethod(alwaysRun=true)
-	public void byeByeTab() {
-		try {
-			CustomerCare cCC = new CustomerCare(driver);
-			WebElement wActiveTab = cCC.obtenerPestañaActiva();
-			if (!wActiveTab.findElement(By.className("tabText")).getText().toLowerCase().equals("club personal")) {
-				mMarketing.closeActiveTab();
-			}
-		} catch (IndexOutOfBoundsException e) {
-			//AllwaysEmpty
-		}
-		
-		CustomerCare cCC = new CustomerCare(driver);
-		cCC.cerrarTodasLasPestañas();
-	}
+	
 	@AfterClass(alwaysRun=true)
 	public void tearDown() {
 		driver.close();
@@ -68,38 +47,37 @@ public class Marketing_Mattu extends TestBase{
 	
 	//-------------------------------------------------------------------------------------------------
 	//TCC = 1
-	@Test(groups = "Marketing", dataProvider="MarketingCuentaConMora")
-	public void TS4176_Visualizar_error_Mora_Alta_CP(String sCuenta) throws IOException {
+	@Test(groups = {"Marketing", "GestiónDeLosCanjesDelClubPersonal"}, dataProvider="MarketingCuentaConMora")
+	public void TS50054_Visualizar_error_Mora_Alta_CP(String sCuenta) throws IOException {
 		Marketing page = new Marketing(driver);
 		page.seleccionarCuentaMarketing(sCuenta, "Todas las cuentas");
 		mMarketing.irAGestionMarketing();
 		BasePage cambioFrame=new BasePage();
-		try {Thread.sleep(10000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		mMarketing.sleepMedium(0);
 		driver.switchTo().defaultContent();
 		driver.switchTo().frame(cambioFrame.getFrameForElement(driver, By.cssSelector(".slds-panel__section.slds-p-around--small")));
 		mMarketing.clubPersonal("alta");
-		try {Thread.sleep(10000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		mMarketing.sleepMedium(0);
 		driver.switchTo().defaultContent();
 		driver.switchTo().frame(cambioFrame.getFrameForElement(driver, By.cssSelector(".slds-form-element.vlc-flex.vlc-slds-text-block.vlc-slds-rte.ng-pristine.ng-valid.ng-scope")));
-		try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		mMarketing.sleepMedium(0);
 		WebElement wMessage = driver.findElement(By.cssSelector(".slds-form-element.vlc-flex.vlc-slds-text-block.vlc-slds-rte.ng-pristine.ng-valid.ng-scope"));
 		List<WebElement> lText = wMessage.findElements(By.tagName("p"));
 		Assert.assertTrue(lText.get(1).getText().contains("Para continuar es necesario regularizar su estado de cuenta, caso nro."));
-
 	}
 	
 	//-------------------------------------------------------------------------------------------------
 	//TCC = 2
-	@Test(groups = "Marketing", dataProvider="MarketingCuentaNormal")
+	@Test(groups = {"Marketing", "GestiónDeLosCanjesDelClubPersonal"}, dataProvider="MarketingCuentaNormal")
 	public void TS50055_No_visualizar_error_de_Mora_Alta_CP(String sCuenta) throws IOException {
 		Marketing page = new Marketing(driver);
 		page.seleccionarCuentaMarketing(sCuenta, "Vista Marketing");
 		mMarketing.estadoAltaBaja("Alta");
-		try {Thread.sleep(10000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		mMarketing.sleepMedium(0);
 		BasePage cambioFrame=new BasePage();
 		driver.switchTo().defaultContent();
 		driver.switchTo().frame(cambioFrame.getFrameForElement(driver, By.cssSelector(".slds-form-element.vlc-flex.vlc-slds-text-block.vlc-slds-rte.ng-pristine.ng-valid.ng-scope")));
-		try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		mMarketing.sleepMedium(0);
 		WebElement wMessage = driver.findElement(By.cssSelector(".slds-form-element.vlc-flex.vlc-slds-text-block.vlc-slds-rte.ng-pristine.ng-valid.ng-scope"));
 		List<WebElement> lText = wMessage.findElements(By.tagName("p"));
 		try{
@@ -112,7 +90,7 @@ public class Marketing_Mattu extends TestBase{
 	
 	//-------------------------------------------------------------------------------------------------
 	//TCC = 3
-	@Test(groups = "Marketing", dataProvider="MarketingCuentaNormal")
+	@Test(groups = {"Marketing", "GestiónDeLosCanjesDelClubPersonal"}, dataProvider="MarketingCuentaNormal")
 	public void TS50057_Visualizar_boton_Canje(String sCuenta) throws IOException {
 		Marketing page = new Marketing(driver);
 		page.seleccionarCuentaMarketing(sCuenta, "Vista Marketing");
@@ -135,7 +113,7 @@ public class Marketing_Mattu extends TestBase{
 	
 	//-------------------------------------------------------------------------------------------------
 	//TCC = 4
-	@Test(groups = "Marketing", dataProvider="MarketingCuentaNormal")
+	@Test(groups = {"Marketing", "GestiónDelSocioDeClubPersonal"}, dataProvider="MarketingCuentaNormal")
 	public void TS50062_Visualizar_Categoria_CP_Solapa_CP(String sCuenta) throws IOException {
 		Marketing page = new Marketing(driver);
 		page.seleccionarCuentaMarketing(sCuenta, "Vista Marketing");
@@ -146,7 +124,7 @@ public class Marketing_Mattu extends TestBase{
 	
 	//-------------------------------------------------------------------------------------------------
 	//TCC = 5
-	@Test(groups = "Marketing", dataProvider="MarketingCuentaNormal")
+	@Test(groups = {"Marketing", "GestiónDeLosPuntosDeLosClientesAsociadosAClubPersonal"}, dataProvider="MarketingCuentaNormal")
 	public void TS50070_Visualizar_campo_Fecha_desde_Solapa_CP(String sCuenta) throws IOException {
 		Marketing page = new Marketing(driver);
 		page.seleccionarCuentaMarketing(sCuenta, "Vista Marketing");
@@ -161,7 +139,7 @@ public class Marketing_Mattu extends TestBase{
 	
 	//-------------------------------------------------------------------------------------------------
 	//TCC = 6
-	@Test(groups = "Marketing", dataProvider="MarketingCuentaNormal")
+	@Test(groups = {"Marketing", "GestiónDeLosPuntosDeLosClientesAsociadosAClubPersonal"}, dataProvider="MarketingCuentaNormal")
 	public void TS50072_Campo_fecha_Mayor_al_actual_Solapa_CP(String sCuenta) throws IOException {
 		Marketing page = new Marketing(driver);
 		page.seleccionarCuentaMarketing(sCuenta, "Vista Marketing");
@@ -185,7 +163,15 @@ public class Marketing_Mattu extends TestBase{
 	//TCC = 7
 	@Test(groups = {"Marketing", "Ola1", "GestionDelSocioDeClubPersonal"}, dataProvider="MarketingCuentaNormal")
 	public void TS90241_Sucripcion_CP_Validacion_de_Mail(String sCuenta) throws IOException {
-		TS98023_Funcionamiento_boton_Alta_ABM_del_CP(sCuenta);
+		Marketing page = new Marketing(driver);
+		page.seleccionarCuentaMarketing(sCuenta, "Vista Marketing");
+		mMarketing.estadoAltaBaja("Alta");
+		mMarketing.sleepMedium(0);
+		BasePage cambioFrame=new BasePage();
+		driver.switchTo().defaultContent();
+		driver.switchTo().frame(cambioFrame.getFrameForElement(driver, By.cssSelector(".slds-page-header.vlc-slds-page--header.ng-scope")));
+		WebElement wHeader = driver.findElement(By.cssSelector(".slds-page-header.vlc-slds-page--header.ng-scope")).findElement(By.tagName("h1"));
+		Assert.assertTrue(wHeader.getText().toLowerCase().contains("cuentas"));
 	}
 	
 	//-------------------------------------------------------------------------------------------------
@@ -250,7 +236,7 @@ public class Marketing_Mattu extends TestBase{
 		Marketing page = new Marketing(driver);
 		page.seleccionarCuentaMarketing(sCuenta, "Vista Marketing");
 		mMarketing.estadoAltaBaja("Alta");
-		try {Thread.sleep(10000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		mMarketing.sleepMedium(0);
 		BasePage cambioFrame=new BasePage();
 		driver.switchTo().defaultContent();
 		driver.switchTo().frame(cambioFrame.getFrameForElement(driver, By.cssSelector(".slds-page-header.vlc-slds-page--header.ng-scope")));
@@ -265,7 +251,7 @@ public class Marketing_Mattu extends TestBase{
 		Marketing page = new Marketing(driver);
 		page.seleccionarCuentaMarketing(sCuenta, "Vista Marketing");
 		mMarketing.clubPersonal("Baja");
-		try {Thread.sleep(10000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		mMarketing.sleepMedium(0);
 		BasePage cambioFrame=new BasePage();
 		driver.switchTo().defaultContent();
 		driver.switchTo().frame(cambioFrame.getFrameForElement(driver, By.cssSelector(".slds-page-header.vlc-slds-page--header.ng-scope")));
@@ -277,7 +263,15 @@ public class Marketing_Mattu extends TestBase{
 	//TCC = 13
 	@Test(groups = {"Marketing","Ola1", "GestionDelSocioDeClubPersonal"}, dataProvider="MarketingCuentaNormal")
 	public void TS98027_No_visualizar_error_Fraude_Alta_CP(String sCuenta) throws IOException {
-		TS98023_Funcionamiento_boton_Alta_ABM_del_CP(sCuenta);
+		Marketing page = new Marketing(driver);
+		page.seleccionarCuentaMarketing(sCuenta, "Vista Marketing");
+		mMarketing.estadoAltaBaja("Alta");
+		mMarketing.sleepMedium(0);
+		BasePage cambioFrame=new BasePage();
+		driver.switchTo().defaultContent();
+		driver.switchTo().frame(cambioFrame.getFrameForElement(driver, By.cssSelector(".slds-page-header.vlc-slds-page--header.ng-scope")));
+		WebElement wHeader = driver.findElement(By.cssSelector(".slds-page-header.vlc-slds-page--header.ng-scope")).findElement(By.tagName("h1"));
+		Assert.assertTrue(wHeader.getText().toLowerCase().contains("cuentas"));
 	}
 	
 	//-------------------------------------------------------------------------------------------------
@@ -299,11 +293,11 @@ public class Marketing_Mattu extends TestBase{
 		Marketing page = new Marketing(driver);
 		page.seleccionarCuentaMarketing(sCuenta, "Vista Marketing");
 		mMarketing.estadoAltaBaja("Alta");
-		try {Thread.sleep(10000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		mMarketing.sleepMedium(0);
 		BasePage cambioFrame=new BasePage();
 		driver.switchTo().defaultContent();
 		driver.switchTo().frame(cambioFrame.getFrameForElement(driver, By.id("consumerAccounts")));
-		try {Thread.sleep(10000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		mMarketing.sleepMedium(0);
 		WebElement wConsumerBox = driver.findElement(By.id("consumerAccounts"));
 		WebElement wConsumerTable= wConsumerBox.findElement(By.tagName("tbody"));
 		List<WebElement> wConsumerTableRows = wConsumerTable.findElements(By.tagName("tr"));
@@ -346,23 +340,26 @@ public class Marketing_Mattu extends TestBase{
 	//-------------------------------------------------------------------------------------------------
 	//TCC = 17
 	@Test(groups = {"Marketing", "Ola1", "GestionDelSocioDeClubPersonal"}, dataProvider="MarketingCuentaNormal")
-	public void TS98036_Boton_Cancelar_Alta_CP() {
+	public void TS98036_Boton_Cancelar_Alta_CP(String sCuenta) throws IOException {
+		Marketing page = new Marketing(driver);
+		page.seleccionarCuentaMarketing(sCuenta, "Vista Marketing");
 		mMarketing.estadoAltaBaja("Alta");
-		try {Thread.sleep(10000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		mMarketing.sleepMedium(0);
 		BasePage cambioFrame=new BasePage();
 		driver.switchTo().defaultContent();
-		try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		mMarketing.sleepShort(0);
 		driver.switchTo().frame(cambioFrame.getFrameForElement(driver, By.cssSelector(".vlc-slds-button--tertiary.ng-binding.ng-scope")));
 		Assert.assertTrue(driver.findElement(By.cssSelector(".vlc-slds-button--tertiary.ng-binding.ng-scope")).getText().toLowerCase().equals("cancelar"));
-		
 	}
 	
 	//-------------------------------------------------------------------------------------------------
 	//TCC = 18
 	@Test(groups = {"Marketing", "Ola1", "GestionDelSocioDeClubPersonal"}, dataProvider="MarketingCuentaNormal")
-	public void TS98037_Boton_Continuar_Alta_CP() {
+	public void TS98037_Boton_Continuar_Alta_CP(String sCuenta) throws IOException {
+		Marketing page = new Marketing(driver);
+		page.seleccionarCuentaMarketing(sCuenta, "Vista Marketing");
 		mMarketing.estadoAltaBaja("Alta");
-		try {Thread.sleep(10000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		mMarketing.sleepMedium(0);
 		WebElement wSiguiente = driver.findElement(By.className("slds-box"));
 		Assert.assertTrue(wSiguiente.findElement(By.tagName("p")).getText().toLowerCase().equals("siguiente"));
 	}
@@ -439,9 +436,17 @@ public class Marketing_Mattu extends TestBase{
 	
 	//-------------------------------------------------------------------------------------------------
 	//TCC = 22
-	@Test(groups = {"Marketing", "Ola1", "GestionDelSocioDeClubPersonal"}, dataProvider="MarktingCuentaNormal")
+	@Test(groups = {"Marketing", "Ola1", "GestionDelSocioDeClubPersonal"}, dataProvider="MarketingCuentaNormal")
 	public void TS98047_No_visualizar_error_Fraude_Baja_CP(String sCuenta) throws IOException {
-		TS98024_Funcionamiento_boton_Baja_ABM_del_CP(sCuenta);
+		Marketing page = new Marketing(driver);
+		page.seleccionarCuentaMarketing(sCuenta, "Vista Marketing");
+		mMarketing.estadoAltaBaja("Baja");
+		mMarketing.sleepMedium(0);
+		BasePage cambioFrame=new BasePage();
+		driver.switchTo().defaultContent();
+		driver.switchTo().frame(cambioFrame.getFrameForElement(driver, By.cssSelector(".slds-page-header.vlc-slds-page--header.ng-scope")));
+		WebElement wHeader = driver.findElement(By.cssSelector(".slds-page-header.vlc-slds-page--header.ng-scope")).findElement(By.tagName("h1"));
+		Assert.assertTrue(wHeader.getText().toLowerCase().contains("club personal baja"));
 	}
 	
 	//-------------------------------------------------------------------------------------------------
@@ -451,7 +456,7 @@ public class Marketing_Mattu extends TestBase{
 		Marketing page = new Marketing(driver);
 		page.seleccionarCuentaMarketing(sCuenta, "Todas las cuentas");
 		mMarketing.clubPersonal("Baja");
-		try {Thread.sleep(10000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		mMarketing.sleepMedium(0);
 		WebElement wMessage = driver.findElement(By.cssSelector(".slds-form-element.vlc-flex.vlc-slds-text-block.vlc-slds-rte.ng-pristine.ng-valid.ng-scope"));
 		List <WebElement> wMessageBox = wMessage.findElements(By.tagName("p"));
 		String sCaso = wMessageBox.get(1).getText().substring(71, 79);
@@ -465,11 +470,11 @@ public class Marketing_Mattu extends TestBase{
 		Marketing page = new Marketing(driver);
 		page.seleccionarCuentaMarketing(sCuenta, "Vista Marketing");
 		mMarketing.estadoAltaBaja("Baja");
-		try {Thread.sleep(10000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		mMarketing.sleepMedium(0);
 		BasePage cambioFrame=new BasePage();
 		driver.switchTo().defaultContent();
 		driver.switchTo().frame(cambioFrame.getFrameForElement(driver, By.id("consumerAccounts")));
-		try {Thread.sleep(10000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		mMarketing.sleepMedium(0);
 		WebElement wConsumerBox = driver.findElement(By.id("consumerAccounts"));
 		WebElement wConsumerTable= wConsumerBox.findElement(By.tagName("tbody"));
 		List<WebElement> wConsumerTableRows = wConsumerTable.findElements(By.tagName("tr"));
@@ -499,11 +504,11 @@ public class Marketing_Mattu extends TestBase{
 		Marketing page = new Marketing(driver);
 		page.seleccionarCuentaMarketing(sCuenta, "Vista Marketing");
 		mMarketing.estadoAltaBaja("Baja");
-		try {Thread.sleep(10000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		mMarketing.sleepMedium(0);
 		BasePage cambioFrame=new BasePage();
 		driver.switchTo().defaultContent();
 		driver.switchTo().frame(cambioFrame.getFrameForElement(driver, By.id("consumerAccounts")));
-		try {Thread.sleep(10000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		mMarketing.sleepMedium(0);
 		WebElement wConsumerBox = driver.findElement(By.id("consumerAccounts"));
 		WebElement wConsumerTable= wConsumerBox.findElement(By.tagName("tbody"));
 		List<WebElement> wConsumerTableRows = wConsumerTable.findElements(By.tagName("tr"));
@@ -517,11 +522,11 @@ public class Marketing_Mattu extends TestBase{
 		Marketing page = new Marketing(driver);
 		page.seleccionarCuentaMarketing(sCuenta, "Vista Marketing");
 		mMarketing.estadoAltaBaja("Alta");
-		try {Thread.sleep(10000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		mMarketing.sleepMedium(0);
 		BasePage cambioFrame=new BasePage();
 		driver.switchTo().defaultContent();
 		driver.switchTo().frame(cambioFrame.getFrameForElement(driver, By.id("consumerAccounts")));
-		try {Thread.sleep(10000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		mMarketing.sleepMedium(0);
 		WebElement wBusinessBox = driver.findElement(By.id("businessAccounts"));
 		WebElement wBusinessTable= wBusinessBox.findElement(By.tagName("tbody"));
 		List<WebElement> wBusinessTableRows = wBusinessTable.findElements(By.tagName("tr"));
@@ -567,11 +572,11 @@ public class Marketing_Mattu extends TestBase{
 		Marketing page = new Marketing(driver);
 		page.seleccionarCuentaMarketing(sCuenta, "Vista Marketing");
 		mMarketing.estadoAltaBaja("Baja");
-		try {Thread.sleep(10000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		mMarketing.sleepMedium(0);
 		BasePage cambioFrame=new BasePage();
 		driver.switchTo().defaultContent();
 		driver.switchTo().frame(cambioFrame.getFrameForElement(driver, By.id("consumerAccounts")));
-		try {Thread.sleep(10000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		mMarketing.sleepMedium(0);
 		WebElement wConsumerBox = driver.findElement(By.id("consumerAccounts"));
 		WebElement wConsumerTable= wConsumerBox.findElement(By.tagName("tbody"));
 		List<WebElement> wConsumerTableRows = wConsumerTable.findElements(By.tagName("tr"));
@@ -613,11 +618,11 @@ public class Marketing_Mattu extends TestBase{
 		Marketing page = new Marketing(driver);
 		page.seleccionarCuentaMarketing(sCuenta, "Vista Marketing");
 		mMarketing.estadoAltaBaja("Baja");
-		try {Thread.sleep(10000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		mMarketing.sleepMedium(0);
 		BasePage cambioFrame=new BasePage();
 		driver.switchTo().defaultContent();
 		driver.switchTo().frame(cambioFrame.getFrameForElement(driver, By.id("consumerAccounts")));
-		try {Thread.sleep(10000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		mMarketing.sleepMedium(0);
 		WebElement wConsumerBox = driver.findElement(By.id("consumerAccounts"));
 		WebElement wConsumerTable= wConsumerBox.findElement(By.tagName("tbody"));
 		List<WebElement> wConsumerTableRows = wConsumerTable.findElements(By.tagName("tr"));
@@ -635,11 +640,11 @@ public class Marketing_Mattu extends TestBase{
 		Marketing page = new Marketing(driver);
 		page.seleccionarCuentaMarketing(sCuenta, "Vista Marketing");
 		mMarketing.estadoAltaBaja("Baja");
-		try {Thread.sleep(10000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		mMarketing.sleepMedium(0);
 		BasePage cambioFrame=new BasePage();
 		driver.switchTo().defaultContent();
 		driver.switchTo().frame(cambioFrame.getFrameForElement(driver, By.id("consumerAccounts")));
-		try {Thread.sleep(10000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		mMarketing.sleepMedium(0);
 		WebElement wConsumerBox = driver.findElement(By.id("consumerAccounts"));
 		WebElement wConsumerTable= wConsumerBox.findElement(By.tagName("tbody"));
 		List<WebElement> wConsumerTableRows = wConsumerTable.findElements(By.tagName("tr"));
@@ -648,7 +653,7 @@ public class Marketing_Mattu extends TestBase{
 		BasePage bBP = new BasePage(driver);
 		bBP.setSimpleDropdown(driver.findElement(By.id("SelectReason")), "Otro");
 		driver.findElement(By.id("CPMembershipCancellation_nextBtn")).click();
-		try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		mMarketing.sleepShort(0);
 		assertTrue(driver.findElement(By.id("alert-container")).isDisplayed());
 	}
 	
@@ -659,7 +664,7 @@ public class Marketing_Mattu extends TestBase{
 		Marketing page = new Marketing(driver);
 		page.seleccionarCuentaMarketing(sCuenta, "Vista Marketing");
 		mMarketing.estadoAltaBaja("Baja");
-		try {Thread.sleep(10000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		mMarketing.sleepMedium(0);
 		BasePage cambioFrame=new BasePage();
 		driver.switchTo().defaultContent();
 		driver.switchTo().frame(cambioFrame.getFrameForElement(driver, By.cssSelector(".vlc-slds-button--tertiary.ng-binding.ng-scope")));
@@ -707,9 +712,7 @@ public class Marketing_Mattu extends TestBase{
 	public void TS99087_Campo_Nombre_LEADS() {
 		mMarketing.ingresarANuevoProspecto();
 		Assert.assertTrue(driver.findElement(By.id("name_firstlea2")).isDisplayed());
-		driver.get("https://crm--sit.cs14.my.salesforce.com/console?tsid=02uc0000000D6Hd");
-		List<WebElement> wTabs = driver.findElement(By.id("ext-gen59")).findElements(By.tagName("li"));
-		wTabs.get(2).click();
+		mMarketing.cajonDeAplicaciones("Consola FAN");
 	}
 	
 	//-------------------------------------------------------------------------------------------------
@@ -718,9 +721,7 @@ public class Marketing_Mattu extends TestBase{
 	public void TS99088_Campo_Apellido_LEADS() {
 		mMarketing.ingresarANuevoProspecto();
 		Assert.assertTrue(driver.findElement(By.id("name_lastlea2")).isDisplayed());
-		driver.get("https://crm--sit.cs14.my.salesforce.com/console?tsid=02uc0000000D6Hd");
-		List<WebElement> wTabs = driver.findElement(By.id("ext-gen59")).findElements(By.tagName("li"));
-		wTabs.get(2).click();
+		mMarketing.cajonDeAplicaciones("Consola FAN");
 	}
 	
 	//-------------------------------------------------------------------------------------------------
@@ -729,9 +730,7 @@ public class Marketing_Mattu extends TestBase{
 	public void TS99089_Campo_Mail_LEADS() {
 		mMarketing.ingresarANuevoProspecto();
 		Assert.assertTrue(driver.findElement(By.id("lea11")).isDisplayed());
-		driver.get("https://crm--sit.cs14.my.salesforce.com/console?tsid=02uc0000000D6Hd");
-		List<WebElement> wTabs = driver.findElement(By.id("ext-gen59")).findElements(By.tagName("li"));
-		wTabs.get(2).click();
+		mMarketing.cajonDeAplicaciones("Consola FAN");
 	}
 	
 	//-------------------------------------------------------------------------------------------------
@@ -740,9 +739,7 @@ public class Marketing_Mattu extends TestBase{
 	public void TS99090_Campo_Telefono_LEADS() {
 		mMarketing.ingresarANuevoProspecto();
 		Assert.assertTrue(driver.findElement(By.id("lea8")).isDisplayed());
-		driver.get("https://crm--sit.cs14.my.salesforce.com/console?tsid=02uc0000000D6Hd");
-		List<WebElement> wTabs = driver.findElement(By.id("ext-gen59")).findElements(By.tagName("li"));
-		wTabs.get(2).click();
+		mMarketing.cajonDeAplicaciones("Consola FAN");
 	}
 	
 	//-------------------------------------------------------------------------------------------------
@@ -751,9 +748,7 @@ public class Marketing_Mattu extends TestBase{
 	public void TS99091_Campo_Empresa_LEADS() {
 		mMarketing.ingresarANuevoProspecto();
 		Assert.assertTrue(driver.findElement(By.id("lea3")).isDisplayed());
-		driver.get("https://crm--sit.cs14.my.salesforce.com/console?tsid=02uc0000000D6Hd");
-		List<WebElement> wTabs = driver.findElement(By.id("ext-gen59")).findElements(By.tagName("li"));
-		wTabs.get(2).click();
+		mMarketing.cajonDeAplicaciones("Consola FAN");
 	}
 	
 	//-------------------------------------------------------------------------------------------------
@@ -761,19 +756,25 @@ public class Marketing_Mattu extends TestBase{
 	@Test(groups = {"Marketing", "Ola1", "CapacidadDeAdministrarLaSegmentaciónDeLosClientes"})
 	public void TS99092_Campo_Obligatorio_Nombre_LEADS() {
 		mMarketing.ingresarANuevoProspecto();
-		WebElement wTable = driver.findElement(By.className("pbSubsection"));
-		List<WebElement> wColumn = mMarketing.traerColumnaElement(wTable, 4, 2);
-		boolean bAssert = true;
+		driver.findElement(By.id("name_lastlea2")).sendKeys("Last Name");
+		driver.findElement(By.id("lea11")).sendKeys("mail@gmail.com");
+		driver.findElement(By.id("lea8")).sendKeys("4567-8910");
+		driver.findElement(By.id("lea3")).sendKeys("Company");
+		
+		List<WebElement> wTopBotonRow = driver.findElement(By.id("topButtonRow")).findElements(By.tagName("input"));
+		wTopBotonRow.get(0).click();
+		
+		Boolean bAssert;
+		
 		try {
-			WebElement wRequiredInput = wColumn.get(1).findElement(By.tagName("div"));
-			Assert.assertTrue(wRequiredInput.getAttribute("class").equals("requiredInput"));
+			bAssert = driver.findElement(By.id("errorDiv_ep")).isDisplayed();
 		}
-		catch (NoSuchElementException exception){
+		catch (NoSuchElementException exception) {
 			bAssert = false;
 		}
-		driver.get("https://crm--sit.cs14.my.salesforce.com/console?tsid=02uc0000000D6Hd");
-		List<WebElement> wTabs = driver.findElement(By.id("ext-gen59")).findElements(By.tagName("li"));
-		wTabs.get(2).click();
+		
+		mMarketing.cajonDeAplicaciones("Consola FAN");
+		
 		Assert.assertTrue(bAssert);
 	}
 	
@@ -782,13 +783,26 @@ public class Marketing_Mattu extends TestBase{
 	@Test(groups = {"Marketing", "Ola1", "CapacidadDeAdministrarLaSegmentaciónDeLosClientes"})
 	public void TS99093_Campo_Obligatorio_Apellido_LEADS() {
 		mMarketing.ingresarANuevoProspecto();
-		WebElement wTable = driver.findElement(By.className("pbSubsection"));
-		List<WebElement> wColumn = mMarketing.traerColumnaElement(wTable, 4, 2);
-		WebElement wRequiredInput = wColumn.get(2).findElement(By.tagName("div"));
-		Assert.assertTrue(wRequiredInput.getAttribute("class").equals("requiredInput"));
-		driver.get("https://crm--sit.cs14.my.salesforce.com/console?tsid=02uc0000000D6Hd");
-		List<WebElement> wTabs = driver.findElement(By.id("ext-gen59")).findElements(By.tagName("li"));
-		wTabs.get(2).click();
+		driver.findElement(By.id("name_firstlea2")).sendKeys("Name");
+		driver.findElement(By.id("lea11")).sendKeys("mail@gmail.com");
+		driver.findElement(By.id("lea8")).sendKeys("4567-8910");
+		driver.findElement(By.id("lea3")).sendKeys("Company");
+		
+		List<WebElement> wTopBotonRow = driver.findElement(By.id("topButtonRow")).findElements(By.tagName("input"));
+		wTopBotonRow.get(0).click();
+		
+		Boolean bAssert;
+		
+		try {
+			bAssert = driver.findElement(By.id("errorDiv_ep")).isDisplayed();
+		}
+		catch (NoSuchElementException exception) {
+			bAssert = false;
+		}
+		
+		mMarketing.cajonDeAplicaciones("Consola FAN");
+		
+		Assert.assertTrue(bAssert);
 	}
 	
 	//-------------------------------------------------------------------------------------------------
@@ -796,13 +810,26 @@ public class Marketing_Mattu extends TestBase{
 	@Test(groups = {"Marketing", "Ola1", "CapacidadDeAdministrarLaSegmentaciónDeLosClientes"})
 	public void TS99094_Campo_Obligatorio_Mail_LEADS() {
 		mMarketing.ingresarANuevoProspecto();
-		WebElement wTable = driver.findElement(By.className("pbSubsection"));
-		List<WebElement> wColumn = mMarketing.traerColumnaElement(wTable, 4, 2);
-		WebElement wRequiredInput = wColumn.get(3).findElement(By.tagName("div"));
-		Assert.assertTrue(wRequiredInput.getAttribute("class").equals("requiredInput"));
-		driver.get("https://crm--sit.cs14.my.salesforce.com/console?tsid=02uc0000000D6Hd");
-		List<WebElement> wTabs = driver.findElement(By.id("ext-gen59")).findElements(By.tagName("li"));
-		wTabs.get(2).click();
+		driver.findElement(By.id("name_firstlea2")).sendKeys("Name");
+		driver.findElement(By.id("name_lastlea2")).sendKeys("Last Name");
+		driver.findElement(By.id("lea8")).sendKeys("4567-8910");
+		driver.findElement(By.id("lea3")).sendKeys("Company");
+		
+		List<WebElement> wTopBotonRow = driver.findElement(By.id("topButtonRow")).findElements(By.tagName("input"));
+		wTopBotonRow.get(0).click();
+		
+		Boolean bAssert;
+		
+		try {
+			bAssert = driver.findElement(By.id("errorDiv_ep")).isDisplayed();
+		}
+		catch (NoSuchElementException exception) {
+			bAssert = false;
+		}
+		
+		mMarketing.cajonDeAplicaciones("Consola FAN");
+		
+		Assert.assertTrue(bAssert);
 	}
 	
 	//-------------------------------------------------------------------------------------------------
@@ -814,9 +841,7 @@ public class Marketing_Mattu extends TestBase{
 		List<WebElement> wColumn = mMarketing.traerColumnaElement(wTable, 4, 2);
 		WebElement wRequiredInput = wColumn.get(6).findElement(By.tagName("div"));
 		Assert.assertTrue(wRequiredInput.getAttribute("class").equals("requiredInput"));
-		driver.get("https://crm--sit.cs14.my.salesforce.com/console?tsid=02uc0000000D6Hd");
-		List<WebElement> wTabs = driver.findElement(By.id("ext-gen59")).findElements(By.tagName("li"));
-		wTabs.get(2).click();
+		mMarketing.cajonDeAplicaciones("Consola FAN");
 	}
 	
 	//-------------------------------------------------------------------------------------------------
@@ -835,9 +860,90 @@ public class Marketing_Mattu extends TestBase{
 		
 		Assert.assertTrue(driver.findElement(By.id("lea2_ileinner")).getText().equals("Name Last Name"));
 		
-		driver.get("https://crm--sit.cs14.my.salesforce.com/console?tsid=02uc0000000D6Hd");
-		List<WebElement> wTabs = driver.findElement(By.id("ext-gen59")).findElements(By.tagName("li"));
-		wTabs.get(2).click();
+		mMarketing.cajonDeAplicaciones("Consola FAN");
+	}
+	
+	//-------------------------------------------------------------------------------------------------
+	//Casos Extra
+	//TCC = 1
+	@Test(groups = {"Marketing", "Ola1", "CapacidadDeAdministrarLaSegmentaciónDeLosClientes"})
+	public void Indicacion_Campo_Obligatorio_Nombre_LEADS() {
+		mMarketing.ingresarANuevoProspecto();
+		WebElement wTable = driver.findElement(By.className("pbSubsection"));
+		List<WebElement> wColumn = mMarketing.traerColumnaElement(wTable, 4, 2);
+		boolean bAssert = true;
+		try {
+			WebElement wRequiredInput = wColumn.get(1).findElement(By.tagName("div"));
+			Assert.assertTrue(wRequiredInput.getAttribute("class").equals("requiredInput"));
+		}
+		catch (NoSuchElementException exception){
+			bAssert = false;
+		}
+		
+		mMarketing.cajonDeAplicaciones("Consola FAN");
+		
+		Assert.assertTrue(bAssert);
+	}
+
+	//-------------------------------------------------------------------------------------------------
+	//TCC = 2
+	@Test(groups = {"Marketing", "Ola1", "CapacidadDeAdministrarLaSegmentaciónDeLosClientes"})
+	public void Indicacion_Campo_Obligatorio_Apellido_LEADS() {
+		mMarketing.ingresarANuevoProspecto();
+		WebElement wTable = driver.findElement(By.className("pbSubsection"));
+		List<WebElement> wColumn = mMarketing.traerColumnaElement(wTable, 4, 2);
+		boolean bAssert = true;
+		try {
+			WebElement wRequiredInput = wColumn.get(2).findElement(By.tagName("div"));
+			Assert.assertTrue(wRequiredInput.getAttribute("class").equals("requiredInput"));
+		}
+		catch (NoSuchElementException exception){
+			bAssert = false;
+		}
+		mMarketing.cajonDeAplicaciones("Consola FAN");
+		Assert.assertTrue(bAssert);
+	}
+	
+	//-------------------------------------------------------------------------------------------------
+	//TCC = 3
+	@Test(groups = {"Marketing", "Ola1", "CapacidadDeAdministrarLaSegmentaciónDeLosClientes"})
+	public void Indicacion_Campo_Obligatorio_Mail_LEADS() {
+		mMarketing.ingresarANuevoProspecto();
+		WebElement wTable = driver.findElement(By.className("pbSubsection"));
+		List<WebElement> wColumn = mMarketing.traerColumnaElement(wTable, 4, 2);
+		boolean bAssert = true;
+		try {
+			WebElement wRequiredInput = wColumn.get(3).findElement(By.tagName("div"));
+			Assert.assertTrue(wRequiredInput.getAttribute("class").equals("requiredInput"));
+		}
+		catch (NoSuchElementException exception){
+			bAssert = false;
+		}
+		
+		mMarketing.cajonDeAplicaciones("Consola FAN");
+		
+		Assert.assertTrue(bAssert);
+	}
+	
+	//-------------------------------------------------------------------------------------------------
+	//TCC = 4
+	@Test(groups = {"Marketing", "Ola1", "CapacidadDeAdministrarLaSegmentaciónDeLosClientes"})
+	public void Indicacion_Campo_Obligatorio_Telefono_LEADS() {
+		mMarketing.ingresarANuevoProspecto();
+		WebElement wTable = driver.findElement(By.className("pbSubsection"));
+		List<WebElement> wColumn = mMarketing.traerColumnaElement(wTable, 4, 2);
+		boolean bAssert = true;
+		try {
+			WebElement wRequiredInput = wColumn.get(6).findElement(By.tagName("div"));
+			Assert.assertTrue(wRequiredInput.getAttribute("class").equals("requiredInput"));
+		}
+		catch (NoSuchElementException exception){
+			bAssert = false;
+		}
+		
+		mMarketing.cajonDeAplicaciones("Consola FAN");
+		
+		Assert.assertTrue(bAssert);
 	}
 	
 	//-------------------------------------------------------------------------------------------------

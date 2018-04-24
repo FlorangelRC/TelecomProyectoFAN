@@ -6,32 +6,35 @@ import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
 import Pages.Marketing;
+import Pages.setConexion;
 
 import java.io.IOException;
 import java.util.List;
 
+import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.testng.Assert;
 
 public class MarketingOla1_Joaquin extends TestBase {
+	private WebDriver driver;
 	protected Marketing Page;
 	
-	@BeforeClass(groups = {"Marketing", "Ola1"})
+	@BeforeClass(alwaysRun = true, groups = {"Marketing", "Ola1"})
 	public void init() {
-		inicializarDriver();
+		driver = setConexion.setupEze();
 		Page = new Marketing(driver);
 		Page.login("SIT");
 		Page.cajonDeAplicaciones("Consola FAN");
 	}
 	
-	@AfterClass(groups = {"Marketing", "Ola1"})
+	@AfterClass(alwaysRun = true, groups = {"Marketing", "Ola1"})
 	public void exit() {
 		Page.cerrarTodasLasPestañas();
 		Page.cajonDeAplicaciones("Ventas");
 		cerrarTodo();
 	}
 	
-	@BeforeMethod(groups = {"Marketing", "Ola1"})
+	@BeforeMethod(alwaysRun = true, groups = {"Marketing", "Ola1"})
 	public void before() {
 		Page.cerrarTodasLasPestañas();
 	}

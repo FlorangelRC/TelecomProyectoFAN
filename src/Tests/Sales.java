@@ -66,13 +66,13 @@ public class Sales extends TestBase {
 	String[] genero = {"masculino","femenino"};
 	String[] DocValue = {"52698550","3569874563","365","ssss"};
 	
-	@AfterClass(alwaysRun=true)
+	//@AfterClass(alwaysRun=true)
 	public void tearDown() {
 		driver.close();
 		driver.quit();
 	}
 	
-	@AfterMethod(alwaysRun=true)
+	//@AfterMethod(alwaysRun=true)
 	public void deslogin(){
 		try {Thread.sleep(10000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 		driver.get("https://crm--sit.cs14.my.salesforce.com/home/home.jsp?tsid=02u41000000QWha/");
@@ -125,7 +125,6 @@ public class Sales extends TestBase {
 		SalesBase SB = new SalesBase(driver);
 		SB.BtnCrearNuevoCliente();
 		String asd = driver.findElement(By.id("SearchClientDocumentNumber")).getAttribute("value");
-		CustomerCare CC = new CustomerCare(driver);
 		ContactSearch contact = new ContactSearch(driver);
 		try {Thread.sleep(10000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 		driver.findElement(By.id("FirstName")).sendKeys("yy");
@@ -298,10 +297,10 @@ public class Sales extends TestBase {
 		boolean a = false;
 		try {Thread.sleep(10000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 		ContactSearch contact = new ContactSearch(driver);
-		driver.findElement(By.id("SearchClientDocumentNumber")).sendKeys("875321499");
+		contact.searchContact("DNI", "875321499", "");
 		List <WebElement> error = driver.findElements(By.cssSelector(".description.ng-binding"));
 		for(WebElement e: error){
-			if(e.getText().toLowerCase().equals("longitud m\u00e1xima de 8")){
+			if(e.getText().toLowerCase().contains("longitud m\u00e1xima de 8")){
 				a=true;
 				break;}}
 		try {Thread.sleep(1000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
@@ -313,7 +312,7 @@ public class Sales extends TestBase {
 	public void TS94668_Alta_De_Contacto_Persona_Fisica_Verificar_Eliminacion_Valor_CI(){
 		SalesBase SB = new SalesBase(driver);
 		sleep(8000);
-		SB.BuscarCuenta("Cedula de Identidad", "1487569");
+		SB.BuscarCuenta("-- Clear --", "148750609");
 		List <WebElement> cc = driver.findElements(By.cssSelector(".slds-form-element__label.ng-binding"));
 		for (WebElement x : cc) {
 			if (x.getText().toLowerCase().contains("+ crear nuevo cliente")) {
@@ -670,6 +669,10 @@ public class Sales extends TestBase {
 		sleep(5000);
 		SB.agregarplan(plan);
 		SB.continuar();
+		sleep(15000);
+		SB.Crear_DomicilioLegal(provincia, localidad, "falsa", "", "1000", "", "", "1549");
+		sleep(15000);
+		
 		SB.elegirvalidacion("DOC");
 		
 	}
@@ -1139,6 +1142,7 @@ public class Sales extends TestBase {
 			assertTrue(driver.findElement(By.cssSelector(".message.description.ng-binding.ng-scope")).getText().equalsIgnoreCase("ingresar un email v\u00e1lido"));
 			assertTrue(false);
 		}catch(org.openqa.selenium.NoSuchElementException exp1) {assertTrue(true);}
+		catch(org.openqa.selenium.StaleElementReferenceException exp1) {assertTrue(true);}
 	}
 	
 	@Test(groups={"Sales", "AltaDeContacto","Ola1"}, priority=2, dataProvider="SalesContactoSinCuenta")
@@ -1227,7 +1231,10 @@ public class Sales extends TestBase {
 	@Test(groups={"Sales", "AltaDeContacto","Ola1"}, priority=1)
 	public void TS94872_Perfiles_Verificar_creacion_de_perfil_Canal_Tefonico(){
 		SalesBase SB = new SalesBase(driver);
+		Accounts acc = new Accounts(driver);
 		SB.gestiondeusuarios();
+		sleep(5000);
+		 acc.getElementFromList(driver.findElements(By.className("listItemPad")), "M").click();
 		SB.validarperfil("Medina, Elena", "CC Venta y Atencion a Clientes");			
 	}
 	
@@ -1466,7 +1473,9 @@ public class Sales extends TestBase {
 		Random aleatorio = new Random(System.currentTimeMillis());
 		aleatorio.setSeed(System.currentTimeMillis());
 		int intAleatorio = aleatorio.nextInt(8999999) + 1000000;
-		driver.findElement(By.id("SearchClientDocumentNumber")).sendKeys(Integer.toString(intAleatorio));
+		ContactSearch contact = new ContactSearch(driver);
+		contact.searchContact(DNI, Integer.toString(intAleatorio), "");
+		//driver.findElement(By.id("SearchClientDocumentNumber")).sendKeys(Integer.toString(intAleatorio));
 		driver.findElement(By.id("SearchClientsDummy")).click();
 		sleep(3000);
 		WebElement msj = driver.findElement(By.cssSelector(".slds-form-element.vlc-flex.vlc-slds-text-block.vlc-slds-rte.ng-pristine.ng-valid.ng-scope"));
@@ -1762,18 +1771,12 @@ public class Sales extends TestBase {
 	      SB.BuscarCuenta(DNI, sDni); 
 	      SB.acciondecontacto("catalogo"); 
 	      SB.agregarplan("plan con tarjeta"); 
-	      Assert.assertTrue(driver.findElements(By.cssSelector(".slds-button.slds-button_neutral.cpq-add-button")).get(1).getText().equalsIgnoreCase("agregar")); 
 	      sleep(20000); 
-	      driver.findElement(By.cssSelector(".slds-button.slds-button_icon-border-filled.cpq-item-actions-dropdown-button")).click();
-	      sleep(1000);
-	      List <WebElement> mas = driver.findElement(By.cssSelector(".slds-dropdown__list.cpq-item-actions-dropdown__list")).findElements(By.tagName("span"));
-	      for (WebElement x : mas) { 
-	        if (x.getText().toLowerCase().contains("clone")) { 
-	          x.click(); 
-	          break; 
-	        } 
-	      } 
-	      sleep(15000); 
+	      Assert.assertTrue(driver.findElements(By.cssSelector(".slds-button.slds-button_neutral.cpq-add-button")).get(1).getText().equalsIgnoreCase("agregar")); 
+	      
+	      List<WebElement> agregar = driver.findElements(By.cssSelector(".slds-button.slds-button_neutral.cpq-add-button")); 
+			agregar.get(1).click();
+			sleep(20000); 
 	      int a = 0; 
 	      List <WebElement> plan = driver.findElements(By.cssSelector(".slds-button.cpq-item-has-children")); 
 	      for (WebElement x : plan) { 
@@ -2011,11 +2014,11 @@ public class Sales extends TestBase {
 	    cal.sendKeys("ATENAS"); 
 	    Assert.assertTrue(cal.getAttribute("value").equals("ATENAS")); 
 	  } 
-	  
+	  //agregar data provideeeeeeeer
 	  @Test(groups = {"Sales", "AltaDeContacto","Ola1"}, priority=4, dataProvider="SalesCuentaActiva") 
 	  public void TS94610_Configuracion_CondicionImpositiva_Verificar_categoria_frente_al_IVA_para_clientes_con_DNI_Pasaporte(String sCuenta, String sDni, String sLinea) throws IOException {
 		  SalesBase SB = new SalesBase(driver); 
-		  SB.BuscarCuenta(DNI, sDni); 
+		  SB.BuscarCuenta("Pasaporte", "312313214"); 
 		  SB.acciondecontacto("nueva cuenta");
 		  sleep(7000);
 		  driver.findElement(By.id("ImpositiveCondition")).click();
@@ -2037,8 +2040,8 @@ public class Sales extends TestBase {
 	  @Test(groups = {"Sales", "AltaDeLinea","Ola1"}, priority=2, dataProvider="SalesCuentaActiva")
 	  public void TS94710_Ventas_BuscarCliente_Verificar_Los_Datos_Del_Cliente_Activo(String sCuenta, String sDni, String sLinea) throws IOException { 
 		  boolean ok = false;
-		  driver.findElement(By.id("PhoneNumber")).sendKeys(sLinea);
-		  driver.findElement(By.id("SearchClientsDummy")).click();
+		  SalesBase SB = new SalesBase(driver); 
+		  SB.BuscarCuenta(DNI, sDni); 
 		  sleep(5000);
 		  List<WebElement> campos = driver.findElement(By.id("tab-scoped-1")).findElement(By.cssSelector(".slds-table.slds-table--bordered.slds-tree.slds-table--tree.table.tableCSS")).findElement(By.tagName("tr")).findElements(By.tagName("th"));
 		  assertTrue(campos.get(0).getText().equalsIgnoreCase("razon social"));	  

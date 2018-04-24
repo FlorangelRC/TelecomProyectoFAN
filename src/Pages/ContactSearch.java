@@ -143,4 +143,18 @@ public class ContactSearch extends BasePage {
 		}
 		try {Thread.sleep(7000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 	}
+	
+	public void subirformulario(String uploadPath, String continuar) {
+		driver.findElement(By.id("signedForm")).sendKeys(uploadPath);
+		try {Thread.sleep(3000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		switch (continuar) {
+		case "si":
+			try {Thread.sleep(2000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+			driver.findElement(By.id("Forms_nextBtn")).click();
+			break;
+		case "no":
+			//Nada
+		}
+		try {Thread.sleep(7000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+	}
 }

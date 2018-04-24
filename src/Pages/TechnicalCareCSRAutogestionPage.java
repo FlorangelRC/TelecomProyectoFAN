@@ -40,8 +40,11 @@ public class TechnicalCareCSRAutogestionPage extends BasePage {
 	@FindBy(xpath=".//*[@id='KnowledgeBaseResults_nextBtn']") 
 	private WebElement knowledgeBaseBtn;
 
-	@FindBy(xpath=".//*[@id='CreatedCaseText']/div/p/p[1]/strong")
+	@FindBy(xpath=".//*[@id='CreatedCaseText']/div/p/p[1]/strong") 
 	private WebElement numCaso;
+	
+	@FindBy(xpath=".//*[@id='CreatedClosedCaseText']/div/p/p[1]/strong[1]")
+	private WebElement numGestion;
 	
 	@FindBy(xpath=".//*[@id='SimilCaseInformation']/div/p/p[3]/strong[1]")
 	private WebElement existCaso;
@@ -111,7 +114,7 @@ public class TechnicalCareCSRAutogestionPage extends BasePage {
 	                  }
 	                }
 		
-		public void canal(String canal) throws InterruptedException{
+		/*public void canal(String canal) throws InterruptedException{
 		       sleep(5000);
 		       driver.switchTo().frame(getFrameForElement(driver, By.id("SelfManagementFields")));
 		       channelSelection.click();
@@ -126,7 +129,7 @@ public class TechnicalCareCSRAutogestionPage extends BasePage {
 		                      			break; 
 				            			  }
 				            		  }
-				            	  }           
+				            	  } */          
 		                	        
 		                
 		          
@@ -161,11 +164,12 @@ public class TechnicalCareCSRAutogestionPage extends BasePage {
 	  }
 		
 	public void clickOnButtons() throws InterruptedException  {
-		scrollToElement(selfManagementStepBtn);
-		selfManagementStepBtn.click();
-		sleep(7000);
+		//scrollToElement(selfManagementStepBtn);
+		//selfManagementStepBtn.click();
+		sleep(4000);
 		if (!elementExists(existCaso)) { 
 		borderOverlay.get(1).click();
+		sleep(3000);
 		scrollToElement(knowledgeBaseBtn);
 		knowledgeBaseBtn.click();
 		
@@ -217,10 +221,12 @@ public class TechnicalCareCSRAutogestionPage extends BasePage {
 	getCaseBody().click();		
 	sleep(5000);
 	driver.switchTo().frame(cambioFrameByID.getFrameForElement(driver, By.id("ep")));
+	scrollToElement(getVerificar());
 	WebElement ServiceOwner = getVerificar();
-	((JavascriptExecutor)driver).executeScript("window.scrollTo(0,"+ServiceOwner.getLocation().y+")");
-	 sleep(4000);
-	driver.switchTo().frame(cambioFrameByID.getFrameForElement(driver, By.className("labelCol")));
+	ServiceOwner.isDisplayed();
+	//((JavascriptExecutor)driver).executeScript("window.scrollTo(0,"+ServiceOwner.getLocation().y+")");
+	 sleep(5000);
+	//driver.switchTo().frame(cambioFrameByID.getFrameForElement(driver, By.className("labelCol")));
 	
 	//List<WebElement>menu=getOptionContainer();
 	//menu.get(7).isDisplayed();
@@ -243,7 +249,25 @@ public class TechnicalCareCSRAutogestionPage extends BasePage {
 		driver.switchTo().defaultContent();
 		buscarCaso(caso);
 		driver.switchTo().frame(getFrameForElement(driver, By.id("Case_body")));
-		ServiceOwner();
+	
+		return caso;			
+	
+			}
+	
+	public String verificarNumDeGestion() throws InterruptedException {
+		String caso="";
+		if(elementExists(existCaso)) {
+			 caso=existCaso.getText();
+			 sleep(4000);
+			}
+			else {		
+				caso=numDeGestion();
+				sleep(4000);
+			}
+		driver.switchTo().defaultContent();
+		buscarCaso(caso);
+		driver.switchTo().frame(getFrameForElement(driver, By.id("Case_body")));
+		//ServiceOwner();
 		return caso;			
 	
 			}
@@ -265,6 +289,14 @@ public class TechnicalCareCSRAutogestionPage extends BasePage {
 		driver.switchTo().defaultContent();
 		sleep(2000);
 	return caso;
+	}
+	
+	public String numDeGestion()  throws InterruptedException {
+		sleep(3000);
+		String caso =  numGestion.getText();
+		driver.switchTo().defaultContent();
+		sleep(2000);
+		return caso;
 	}
 		
 	public WebElement getExistCaso() {
