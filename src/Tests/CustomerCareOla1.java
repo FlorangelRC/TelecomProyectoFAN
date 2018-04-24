@@ -772,7 +772,7 @@ public class CustomerCareOla1 extends TestBase {
 		Assert.assertTrue(driver.findElement(By.id("Step-AssetSelection_nextBtn")).isDisplayed());
 	}
 	
-	@Test (groups = {"CustomerCare", "SuspensionYRehabilitacion", "Ola1"}, dataProvider = "CustomerCuentaActiva")
+	@Test (groups = {"CustomerCare", "SuspensionYRehabilitacion", "Ola1"}, dataProvider = "CustomerCuentaActiva", priority = 2)
 	public void TS95964_360_VIEW_Suspensiones_and_Reconexiones_Configurar_el_tipo_de_Siniestro_Solicitante_No_titular_habilita_para_completar_Nombre_Apellido_DNI_telefono_de_contacto(String nCuenta) {
 		cc.elegirCuenta(nCuenta);
 		cc.irAGestion("suspensiones");
@@ -822,7 +822,7 @@ public class CustomerCareOla1 extends TestBase {
 		Assert.assertTrue(driver.findElement(By.id("Phone")).isDisplayed());
 	}
 	
-	@Test (groups = {"CustomerCare", "SuspensionYRehabilitacion", "Ola1"}, dataProvider = "CustomerCuentaActiva")
+	@Test (groups = {"CustomerCare", "SuspensionYRehabilitacion", "Ola1"}, dataProvider = "CustomerCuentaActiva", priority = 1)
 	public void TS95934_360_VIEW_Suspensiones_and_Reconexiones_Seleccionar_tipo_Siniestro_Back_Office_Reconexion_pueda_ser_de_Linea(String nCuenta) {
 		cc.elegirCuenta(nCuenta);
 		cc.irAGestion("suspensiones y reconexion back");
@@ -845,7 +845,7 @@ public class CustomerCareOla1 extends TestBase {
 		Assert.assertTrue(a);
 	}
 	
-	@Test (groups = {"CustomerCare", "SuspensionYRehabilitacion", "Ola1"}, dataProvider = "CustomerCuentaActiva")
+	@Test (groups = {"CustomerCare", "SuspensionYRehabilitacion", "Ola1"}, dataProvider = "CustomerCuentaActiva", priority = 2)
 	public void TS95929_360_VIEW_Suspensiones_and_Reconexiones_Seleccionar_tipo_Siniestro_Back_Office_Verificar_que_si_selecciono_Suspension_pueda_ser_de_Linea(String nCuenta) {
 		cc.elegirCuenta(nCuenta);
 		cc.irAGestion("suspensiones y reconexion back");
@@ -869,7 +869,7 @@ public class CustomerCareOla1 extends TestBase {
 		Assert.assertTrue(a);
 	}
 	
-	@Test (groups = {"CustomerCare", "SuspensionYRehabilitacion", "Ola1"}, dataProvider = "CustomerCuentaActiva")
+	@Test (groups = {"CustomerCare", "SuspensionYRehabilitacion", "Ola1"}, dataProvider = "CustomerCuentaActiva", priority = 3)
 	public void TS95973_360_VIEW_Suspensiones_and_Reconexiones_Configurar_el_tipo_de_Siniestro_Direccion_del_Siniestro_y_Exterior_del_Pais_habilita_un_campo_para_ingresar_el_pais(String nCuenta) {
 		cc.elegirCuenta(nCuenta);
 		cc.irAGestion("suspensiones");
@@ -914,7 +914,7 @@ public class CustomerCareOla1 extends TestBase {
 		Assert.assertTrue(driver.findElement(By.id("Country")).isDisplayed());
 	}
 	
-	@Test (groups = {"CustomerCare", "SuspensionYRehabilitacion", "Ola1"}, dataProvider = "CustomerCuentaActiva")
+	@Test (groups = {"CustomerCare", "SuspensionYRehabilitacion", "Ola1"}, dataProvider = "CustomerCuentaActiva", priority = 1)
 	public void TS96112_360_VIEW_Suspensiones_and_Reconexiones_Seleccionar_tipo_Siniestro_Back_Office_Verificar_que_si_selecciono_Reconexion_pueda_ser_de_CUENTA_DE_FACTURACION(String nCuenta) {
 		cc.elegirCuenta(nCuenta);
 		cc.irAGestion("suspensiones y reconexion back");
@@ -937,7 +937,7 @@ public class CustomerCareOla1 extends TestBase {
 		Assert.assertTrue(a);
 	}
 	
-	@Test (groups = {"CustomerCare", "AjustesYEscalamiento", "Ola1"}, dataProvider = "CustomerCuentaActiva")
+	@Test (groups = {"CustomerCare", "AjustesYEscalamiento", "Ola1"}, dataProvider = "CustomerCuentaActiva", priority = 4)
 	public void TS90472_360_VIEW_Ajustes_y_Escalaciones_Seleccion_de_Concepto_Tipo_de_Cargo_Item_Motivo_Validar_Concepto_solo_se_puede_permitir_1_valor_de_la_lista_indicada_del_parametro_Tipo_de_Cargo(String nCuenta) {
 		cc.elegirCuenta(nCuenta);
 		cc.irAGestion("inconvenientes");
@@ -952,7 +952,7 @@ public class CustomerCareOla1 extends TestBase {
 		Assert.assertTrue(!driver.findElement(By.id("CboTipo")).getAttribute("value").equals(a));
 	}
 	
-	@Test (groups = {"CustomerCare", "AjustesYEscalamiento", "Ola1"}, dataProvider = "CustomerCuentaActiva")
+	@Test (groups = {"CustomerCare", "AjustesYEscalamiento", "Ola1"}, dataProvider = "CustomerCuentaActiva", priority = 4)
 	public void TS90476_360_VIEW_Ajustes_y_Escalaciones_Seleccion_de_Concepto_Tipo_de_Cargo_Item_Motivo_Validar_que_se_puede_seleccionar_un_Motivo_solo_si_se_han_completado_los_valores_anteriores(String nCuenta) {
 		cc.elegirCuenta(nCuenta);
 		cc.irAGestion("inconvenientes");
@@ -965,7 +965,7 @@ public class CustomerCareOla1 extends TestBase {
 		Assert.assertTrue(!driver.findElement(By.id("CboMotivo")).getAttribute("value").equals(a));
 	}
 	
-	@Test (groups = {"CustomerCare", "AjustesYEscalamiento", "Ola1"}, dataProvider = "CustomerCuentaActiva")
+	@Test (groups = {"CustomerCare", "AjustesYEscalamiento", "Ola1"}, dataProvider = "CustomerCuentaActiva", priority = 4)
 	public void TS90470_360_VIEW_Ajustes_y_Escalaciones_Seleccion_de_Concepto_Tipo_de_Cargo_Item_Motivo_Validar_que_solo_se_puede_permitir_1_valor_de_la_lista_indicada_del_parametro_Conceptos(String nCuenta) {
 		cc.elegirCuenta(nCuenta);
 		cc.irAGestion("inconvenientes");
@@ -978,7 +978,7 @@ public class CustomerCareOla1 extends TestBase {
 		Assert.assertTrue(!driver.findElement(By.id("CboMotivo")).getAttribute("value").equals(a));
 	}
 	
-	@Test (groups = {"CustomerCare", "AjustesYEscalamiento", "Ola1"}, dataProvider = "CustomerCuentaActiva")
+	@Test (groups = {"CustomerCare", "AjustesYEscalamiento", "Ola1"}, dataProvider = "CustomerCuentaActiva", priority = 3)
 	public void TS96011_360_VIEW_Ajustes_y_Escalaciones_Seleccion_de_Concepto_Tipo_de_Cargo_Item_Motivo_Visualizar_parametro_item(String nCuenta) {
 		cc.elegirCuenta(nCuenta);
 		cc.irAGestion("inconvenientes");
@@ -986,7 +986,7 @@ public class CustomerCareOla1 extends TestBase {
 		Assert.assertTrue(driver.findElement(By.id("CboItem")).isEnabled());
 	}
 	
-	@Test (groups = {"CustomerCare", "AjustesYEscalamiento", "Ola1"}, dataProvider = "CustomerCuentaActiva")
+	@Test (groups = {"CustomerCare", "AjustesYEscalamiento", "Ola1"}, dataProvider = "CustomerCuentaActiva", priority = 2)
 	public void TS95996_Adjustments_and_Escalations_Cierre_Caso_Gestion_Exitosa_Rechazada_Ampliar_detalles_Cerrar_caso_exitoso_comentario(String nCuenta) {
 		cc.elegirCuenta(nCuenta);
 		cc.irAGestion("inconvenientes");
