@@ -1142,6 +1142,7 @@ public class Sales extends TestBase {
 			assertTrue(driver.findElement(By.cssSelector(".message.description.ng-binding.ng-scope")).getText().equalsIgnoreCase("ingresar un email v\u00e1lido"));
 			assertTrue(false);
 		}catch(org.openqa.selenium.NoSuchElementException exp1) {assertTrue(true);}
+		catch(org.openqa.selenium.StaleElementReferenceException exp1) {assertTrue(true);}
 	}
 	
 	@Test(groups={"Sales", "AltaDeContacto","Ola1"}, priority=2, dataProvider="SalesContactoSinCuenta")
@@ -1230,7 +1231,10 @@ public class Sales extends TestBase {
 	@Test(groups={"Sales", "AltaDeContacto","Ola1"}, priority=1)
 	public void TS94872_Perfiles_Verificar_creacion_de_perfil_Canal_Tefonico(){
 		SalesBase SB = new SalesBase(driver);
+		Accounts acc = new Accounts(driver);
 		SB.gestiondeusuarios();
+		sleep(5000);
+		 acc.getElementFromList(driver.findElements(By.className("listItemPad")), "M").click();
 		SB.validarperfil("Medina, Elena", "CC Venta y Atencion a Clientes");			
 	}
 	
@@ -1469,7 +1473,9 @@ public class Sales extends TestBase {
 		Random aleatorio = new Random(System.currentTimeMillis());
 		aleatorio.setSeed(System.currentTimeMillis());
 		int intAleatorio = aleatorio.nextInt(8999999) + 1000000;
-		driver.findElement(By.id("SearchClientDocumentNumber")).sendKeys(Integer.toString(intAleatorio));
+		ContactSearch contact = new ContactSearch(driver);
+		contact.searchContact(DNI, Integer.toString(intAleatorio), "");
+		//driver.findElement(By.id("SearchClientDocumentNumber")).sendKeys(Integer.toString(intAleatorio));
 		driver.findElement(By.id("SearchClientsDummy")).click();
 		sleep(3000);
 		WebElement msj = driver.findElement(By.cssSelector(".slds-form-element.vlc-flex.vlc-slds-text-block.vlc-slds-rte.ng-pristine.ng-valid.ng-scope"));
@@ -1765,10 +1771,12 @@ public class Sales extends TestBase {
 	      SB.BuscarCuenta(DNI, sDni); 
 	      SB.acciondecontacto("catalogo"); 
 	      SB.agregarplan("plan con tarjeta"); 
-	      Assert.assertTrue(driver.findElements(By.cssSelector(".slds-button.slds-button_neutral.cpq-add-button")).get(1).getText().equalsIgnoreCase("agregar")); 
 	      sleep(20000); 
 	      Assert.assertTrue(driver.findElements(By.cssSelector(".slds-button.slds-button_neutral.cpq-add-button")).get(1).getText().equalsIgnoreCase("agregar")); 
-	      sleep(20000); 
+	      
+	      List<WebElement> agregar = driver.findElements(By.cssSelector(".slds-button.slds-button_neutral.cpq-add-button")); 
+			agregar.get(1).click();
+			sleep(20000); 
 	      int a = 0; 
 	      List <WebElement> plan = driver.findElements(By.cssSelector(".slds-button.cpq-item-has-children")); 
 	      for (WebElement x : plan) { 
