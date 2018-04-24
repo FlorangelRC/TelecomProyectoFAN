@@ -85,10 +85,10 @@ public class TechCareOla1A extends TestBase {
 		driver.quit();
 	}
 	
-	/**
+	/** CASO REPETIDO
 	 * Verifica que aparezca el inconveniente "no puede configurar" luego de diagnosticar el servicio.
 	 */
-	@Test(groups= {"TechnicalCare","SVA","Ola1"}, priority=12, dataProvider="Tech")
+	//@Test(groups= {"TechnicalCare","SVA","Ola1"}, priority=12, dataProvider="Tech")
 	public void TS94226_CRM_Ola1_Technical_Care_CSR_SVA_Actualización_de_matriz_Servicio_Transferencia_de_llamadas_inconveniente_No_funciona_transferencia_de_llamadas_No_funciona_transferencia_de_llamadas_No_puede_configurar(String sCuenta, String sDni, String sLinea) {
 		//------
 		TechCare_Ola1 page=new TechCare_Ola1(driver);
