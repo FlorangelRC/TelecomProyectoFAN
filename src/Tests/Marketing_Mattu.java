@@ -867,7 +867,7 @@ public class Marketing_Mattu extends TestBase{
 	//Casos Extra
 	//TCC = 1
 	@Test(groups = {"Marketing", "Ola1", "CapacidadDeAdministrarLaSegmentaciónDeLosClientes"})
-	public void Indicacion_Campo_Obligatorio_Nombre_LEADS() {
+	public void TX31001_Indicacion_Campo_Obligatorio_Nombre_LEADS() {
 		mMarketing.ingresarANuevoProspecto();
 		WebElement wTable = driver.findElement(By.className("pbSubsection"));
 		List<WebElement> wColumn = mMarketing.traerColumnaElement(wTable, 4, 2);
@@ -888,7 +888,7 @@ public class Marketing_Mattu extends TestBase{
 	//-------------------------------------------------------------------------------------------------
 	//TCC = 2
 	@Test(groups = {"Marketing", "Ola1", "CapacidadDeAdministrarLaSegmentaciónDeLosClientes"})
-	public void Indicacion_Campo_Obligatorio_Apellido_LEADS() {
+	public void TX31002_Indicacion_Campo_Obligatorio_Apellido_LEADS() {
 		mMarketing.ingresarANuevoProspecto();
 		WebElement wTable = driver.findElement(By.className("pbSubsection"));
 		List<WebElement> wColumn = mMarketing.traerColumnaElement(wTable, 4, 2);
@@ -907,7 +907,7 @@ public class Marketing_Mattu extends TestBase{
 	//-------------------------------------------------------------------------------------------------
 	//TCC = 3
 	@Test(groups = {"Marketing", "Ola1", "CapacidadDeAdministrarLaSegmentaciónDeLosClientes"})
-	public void Indicacion_Campo_Obligatorio_Mail_LEADS() {
+	public void TX31003_Indicacion_Campo_Obligatorio_Mail_LEADS() {
 		mMarketing.ingresarANuevoProspecto();
 		WebElement wTable = driver.findElement(By.className("pbSubsection"));
 		List<WebElement> wColumn = mMarketing.traerColumnaElement(wTable, 4, 2);
@@ -928,7 +928,7 @@ public class Marketing_Mattu extends TestBase{
 	//-------------------------------------------------------------------------------------------------
 	//TCC = 4
 	@Test(groups = {"Marketing", "Ola1", "CapacidadDeAdministrarLaSegmentaciónDeLosClientes"})
-	public void Indicacion_Campo_Obligatorio_Telefono_LEADS() {
+	public void TX31004_Indicacion_Campo_Obligatorio_Telefono_LEADS() {
 		mMarketing.ingresarANuevoProspecto();
 		WebElement wTable = driver.findElement(By.className("pbSubsection"));
 		List<WebElement> wColumn = mMarketing.traerColumnaElement(wTable, 4, 2);
