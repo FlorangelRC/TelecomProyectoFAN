@@ -54,11 +54,18 @@ public class BeFanTest {
 	    for(WebElement opcion:botones)
 	    	if(opcion.getText().equalsIgnoreCase("Importar"))
 	    		opcion.click();
+	    
+	    //Click aceptar
+	    Thread.sleep(3000);
+	    driver.findElement(By.linkText("Aceptar"));
 	}
-	
 	@Test
-	public void bee() {
-		
+	public void TS112047_BeFan_Movil_REPRO_Preactivacion_repro_Busqueda_de_archivos_Agente_Formato() throws InterruptedException {
+		Thread.sleep(3000);
+		driver.findElement(By.xpath("/html/body/div[1]/div[1]/div/div[3]/div[2]/div/div/ul/li[6]/a/b")).click();
+	    driver.findElement(By.linkText("Gestión")).click();
+	    Select estado=new Select(driver.findElement(By.cssSelector(".text.form-control.ng-valid.ng-not-empty.ng-dirty.ng-valid-parse.ng-touched")));
+	   estado.selectByVisibleText("Procesado");
 	}
 	
 	
