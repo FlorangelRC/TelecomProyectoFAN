@@ -161,7 +161,7 @@ public class Marketing_Mattu extends TestBase{
 	
 	//-------------------------------------------------------------------------------------------------
 	//TCC = 7
-	@Test(groups = {"Marketing", "Ola1", "GestionDelSocioDeClubPersonal"}, dataProvider="MarketingCuentaNormal")
+	@Test(groups = {"Marketing", "Ola1", "GestionDelSocioDeClubPersonal"}, priority = 2, dataProvider="MarketingCuentaNormal")
 	public void TS90241_Sucripcion_CP_Validacion_de_Mail(String sCuenta) throws IOException {
 		Marketing page = new Marketing(driver);
 		page.seleccionarCuentaMarketing(sCuenta, "Vista Marketing");
@@ -185,7 +185,7 @@ public class Marketing_Mattu extends TestBase{
 	
 	//-------------------------------------------------------------------------------------------------
 	//TCC = 9
-	@Test(groups = {"Marketing", "Ola1", "GestionDelSocioDeClubPersonal"}, dataProvider="MarketingCuentaNormal")
+	@Test(groups = {"Marketing", "Ola1", "GestionDelSocioDeClubPersonal"}, priority = 1, dataProvider="MarketingCuentaNormal")
 	public void TS98020_Boton_ABM_del_CP(String sCuenta) throws IOException {
 		Marketing page = new Marketing(driver);
 		page.seleccionarCuentaMarketing(sCuenta, "Vista Marketing");
@@ -208,7 +208,7 @@ public class Marketing_Mattu extends TestBase{
 	
 	//-------------------------------------------------------------------------------------------------
 	//TCC = 10
-	@Test(groups = {"Marketing", "Ola1", "GestionDelSocioDeClubPersonal"}, dataProvider="MarketingCuentaNormal")
+	@Test(groups = {"Marketing", "Ola1", "GestionDelSocioDeClubPersonal"}, priority = 1, dataProvider="MarketingCuentaNormal")
 	public void TS98021_Funcionamiento_Boton_ABM_del_CP(String sCuenta) throws IOException {
 		Marketing page = new Marketing(driver);
 		page.seleccionarCuentaMarketing(sCuenta, "Vista Marketing");
@@ -231,7 +231,7 @@ public class Marketing_Mattu extends TestBase{
 	
 	//-------------------------------------------------------------------------------------------------
 	//TCC = 11
-	@Test(groups = {"Marketing", "Ola1", "GestionDelSocioDeClubPersonal"}, dataProvider="MarketingCuentaNormal")
+	@Test(groups = {"Marketing", "Ola1", "GestionDelSocioDeClubPersonal"}, priority = 1, dataProvider="MarketingCuentaNormal")
 	public void TS98023_Funcionamiento_boton_Alta_ABM_del_CP(String sCuenta) throws IOException {
 		Marketing page = new Marketing(driver);
 		page.seleccionarCuentaMarketing(sCuenta, "Vista Marketing");
@@ -246,7 +246,7 @@ public class Marketing_Mattu extends TestBase{
 	
 	//-------------------------------------------------------------------------------------------------
 	//TCC = 12
-	@Test(groups = {"Marketing", "Ola1", "GestionDelSocioDeClubPersonal"}, dataProvider="MarketingCuentaNormal")
+	@Test(groups = {"Marketing", "Ola1", "GestionDelSocioDeClubPersonal"}, priority = 6, dataProvider="MarketingCuentaNormal")
 	public void TS98024_Funcionamiento_boton_Baja_ABM_del_CP(String sCuenta) throws IOException {
 		Marketing page = new Marketing(driver);
 		page.seleccionarCuentaMarketing(sCuenta, "Vista Marketing");
@@ -261,7 +261,7 @@ public class Marketing_Mattu extends TestBase{
 	
 	//-------------------------------------------------------------------------------------------------
 	//TCC = 13
-	@Test(groups = {"Marketing","Ola1", "GestionDelSocioDeClubPersonal"}, dataProvider="MarketingCuentaNormal")
+	@Test(groups = {"Marketing","Ola1", "GestionDelSocioDeClubPersonal"}, priority = 6, dataProvider="MarketingCuentaNormal")
 	public void TS98027_No_visualizar_error_Fraude_Alta_CP(String sCuenta) throws IOException {
 		Marketing page = new Marketing(driver);
 		page.seleccionarCuentaMarketing(sCuenta, "Vista Marketing");
@@ -276,7 +276,7 @@ public class Marketing_Mattu extends TestBase{
 	
 	//-------------------------------------------------------------------------------------------------
 	//TCC = 14
-	@Test(groups = {"Marketing","Ola1", "GestionDelSocioDeClubPersonal"}, dataProvider="MarketingCuentaNormal")
+	@Test(groups = {"Marketing","Ola1", "GestionDelSocioDeClubPersonal"}, priority = 3, dataProvider="MarketingCuentaNormal")
 	public void TS98031_Seleccion_multiple_Alta_CP(String sCuenta) throws IOException {
 		Marketing page = new Marketing(driver);
 		page.seleccionarCuentaMarketing(sCuenta, "Vista Marketing");
@@ -288,7 +288,7 @@ public class Marketing_Mattu extends TestBase{
 	
 	//-------------------------------------------------------------------------------------------------
 	//TCC = 15
-	@Test(groups = {"Marketing", "Ola1", "GestionDelSocioDeClubPersonal"}, dataProvider="MarketingCuentaNormal")
+	@Test(groups = {"Marketing", "Ola1", "GestionDelSocioDeClubPersonal"}, priority = 3, dataProvider="MarketingCuentaNormal")
 	public void TS98032_Separacion_de_cuentas_Alta_CP(String sCuenta) throws IOException {
 		Marketing page = new Marketing(driver);
 		page.seleccionarCuentaMarketing(sCuenta, "Vista Marketing");
@@ -310,7 +310,7 @@ public class Marketing_Mattu extends TestBase{
 	
 	//-------------------------------------------------------------------------------------------------
 	//TCC = 16
-	@Test(groups = {"Marketing","Ola1", "GestionDelSocioDeClubPersonal"}, dataProvider="MarketingCuentaNormal")
+	@Test(groups = {"Marketing","Ola1", "GestionDelSocioDeClubPersonal"}, priority = 3, dataProvider="MarketingCuentaNormal")
 	public void TS98033_No_seleccion_cuentas_Alta_CP(String sCuenta) throws IOException {
 		Marketing page = new Marketing(driver);
 		page.seleccionarCuentaMarketing(sCuenta, "Vista Marketing");
@@ -339,7 +339,7 @@ public class Marketing_Mattu extends TestBase{
 	
 	//-------------------------------------------------------------------------------------------------
 	//TCC = 17
-	@Test(groups = {"Marketing", "Ola1", "GestionDelSocioDeClubPersonal"}, dataProvider="MarketingCuentaNormal")
+	@Test(groups = {"Marketing", "Ola1", "GestionDelSocioDeClubPersonal"}, priority = 3, dataProvider="MarketingCuentaNormal")
 	public void TS98036_Boton_Cancelar_Alta_CP(String sCuenta) throws IOException {
 		Marketing page = new Marketing(driver);
 		page.seleccionarCuentaMarketing(sCuenta, "Vista Marketing");
@@ -354,7 +354,7 @@ public class Marketing_Mattu extends TestBase{
 	
 	//-------------------------------------------------------------------------------------------------
 	//TCC = 18
-	@Test(groups = {"Marketing", "Ola1", "GestionDelSocioDeClubPersonal"}, dataProvider="MarketingCuentaNormal")
+	@Test(groups = {"Marketing", "Ola1", "GestionDelSocioDeClubPersonal"}, priority = 3, dataProvider="MarketingCuentaNormal")
 	public void TS98037_Boton_Continuar_Alta_CP(String sCuenta) throws IOException {
 		Marketing page = new Marketing(driver);
 		page.seleccionarCuentaMarketing(sCuenta, "Vista Marketing");
@@ -366,7 +366,7 @@ public class Marketing_Mattu extends TestBase{
 	
 	//-------------------------------------------------------------------------------------------------
 	//TCC = 19
-	@Test(groups = {"Marketing","Ola1", "GestionDelSocioDeClubPersonal"}, dataProvider="MarketingCuentaNormal")
+	@Test(groups = {"Marketing","Ola1", "GestionDelSocioDeClubPersonal"}, priority = 5, dataProvider="MarketingCuentaNormal")
 	public void TS98042_Numero_de_caso_Alta_CP(String sCuenta) throws IOException {
 		Marketing page = new Marketing(driver);
 		page.seleccionarCuentaMarketing(sCuenta, "Vista Marketing");
@@ -378,7 +378,7 @@ public class Marketing_Mattu extends TestBase{
 	
 	//-------------------------------------------------------------------------------------------------
 	//TCC = 20
-	@Test(groups = {"Marketing","Ola1", "GestionDelSocioDeClubPersonal"}, dataProvider="MarketingCuentaNormal")
+	@Test(groups = {"Marketing","Ola1", "GestionDelSocioDeClubPersonal"}, priority = 5, dataProvider="MarketingCuentaNormal")
 	public void TS98043_Caso_creado_Alta_CP(String sCuenta) throws IOException {
 		Marketing page = new Marketing(driver);
 		page.seleccionarCuentaMarketing(sCuenta, "Vista Marketing");
@@ -422,7 +422,7 @@ public class Marketing_Mattu extends TestBase{
 	
 	//-------------------------------------------------------------------------------------------------
 	//TCC = 21
-	@Test(groups = {"Marketing","Ola1", "GestionDelSocioDeClubPersonal"}, dataProvider="MarketingCuentaNormal")
+	@Test(groups = {"Marketing","Ola1", "GestionDelSocioDeClubPersonal"}, priority = 5, dataProvider="MarketingCuentaNormal")
 	public void TS98044_Caso_cerrado_Alta_CP(String sCuenta) throws IOException {
 		Marketing page = new Marketing(driver);
 		page.seleccionarCuentaMarketing(sCuenta, "Vista Marketing");
@@ -436,7 +436,7 @@ public class Marketing_Mattu extends TestBase{
 	
 	//-------------------------------------------------------------------------------------------------
 	//TCC = 22
-	@Test(groups = {"Marketing", "Ola1", "GestionDelSocioDeClubPersonal"}, dataProvider="MarketingCuentaNormal")
+	@Test(groups = {"Marketing", "Ola1", "GestionDelSocioDeClubPersonal"}, priority = 9, dataProvider="MarketingCuentaNormal")
 	public void TS98047_No_visualizar_error_Fraude_Baja_CP(String sCuenta) throws IOException {
 		Marketing page = new Marketing(driver);
 		page.seleccionarCuentaMarketing(sCuenta, "Vista Marketing");
@@ -451,7 +451,7 @@ public class Marketing_Mattu extends TestBase{
 	
 	//-------------------------------------------------------------------------------------------------
 	//TCC = 23
-	@Test(groups = {"Marketing", "Ola1", "GestionDelSocioDeClubPersonal"}, dataProvider="MarketingCuentaConFraude")
+	@Test(groups = {"Marketing", "Ola1", "GestionDelSocioDeClubPersonal"}, priority = 8, dataProvider="MarketingCuentaConFraude")
 	public void TS98048_Generar_Caso_error_Fraude_Baja_CP(String sCuenta) throws IOException {
 		Marketing page = new Marketing(driver);
 		page.seleccionarCuentaMarketing(sCuenta, "Todas las cuentas");
@@ -465,7 +465,7 @@ public class Marketing_Mattu extends TestBase{
 	
 	//-------------------------------------------------------------------------------------------------
 	//TCC = 24
-	@Test(groups = {"Marketing", "Ola1", "GestionDelSocioDeClubPersonal"}, dataProvider="MarketingCuentaNormal")
+	@Test(groups = {"Marketing", "Ola1", "GestionDelSocioDeClubPersonal"}, priority = 9, dataProvider="MarketingCuentaNormal")
 	public void TS98049_Separacion_Baja_CP(String sCuenta) throws IOException {
 		Marketing page = new Marketing(driver);
 		page.seleccionarCuentaMarketing(sCuenta, "Vista Marketing");
@@ -487,7 +487,7 @@ public class Marketing_Mattu extends TestBase{
 	
 	//-------------------------------------------------------------------------------------------------
 	//TCC = 25
-	@Test(groups = {"Marketing", "Ola1", "GestionDelSocioDeClubPersonal"}, dataProvider="MarketingCuentaNormal")
+	@Test(groups = {"Marketing", "Ola1", "GestionDelSocioDeClubPersonal"}, priority = 9, dataProvider="MarketingCuentaNormal")
 	public void TS98050_Multiple_seleccion_Baja_CP(String sCuenta) throws IOException {
 		Marketing page = new Marketing(driver);
 		page.seleccionarCuentaMarketing(sCuenta, "Vista Marketing");
@@ -499,7 +499,7 @@ public class Marketing_Mattu extends TestBase{
 	
 	//-------------------------------------------------------------------------------------------------
 	//TCC = 26
-	@Test(groups = {"Marketing", "Ola1", "GestionDelSocioDeClubPersonal"}, dataProvider="MarketingCuentaNormal")
+	@Test(groups = {"Marketing", "Ola1", "GestionDelSocioDeClubPersonal"}, priority = 9, dataProvider="MarketingCuentaNormal")
 	public void TS98051_Visualizar_cuentas_costumer_Baja_CP(String sCuenta) throws IOException {
 		Marketing page = new Marketing(driver);
 		page.seleccionarCuentaMarketing(sCuenta, "Vista Marketing");
@@ -517,7 +517,7 @@ public class Marketing_Mattu extends TestBase{
 	
 	//-------------------------------------------------------------------------------------------------
 	//TCC = 27
-	@Test(groups = {"Marketing", "Ola1", "GestionDelSocioDeClubPersonal"}, dataProvider="MarketingCuentaNormal")
+	@Test(groups = {"Marketing", "Ola1", "GestionDelSocioDeClubPersonal"}, priority = 9, dataProvider="MarketingCuentaNormal")
 	public void TS98052_Visualizar_cuentas_business_Baja_CP(String sCuenta) throws IOException {
 		Marketing page = new Marketing(driver);
 		page.seleccionarCuentaMarketing(sCuenta, "Vista Marketing");
@@ -535,7 +535,7 @@ public class Marketing_Mattu extends TestBase{
 	
 	//-------------------------------------------------------------------------------------------------
 	//TCC = 28
-	@Test(groups = {"Marketing","Ola1", "GestionDelSocioDeClubPersonal"}, dataProvider="MarketingCuentaNormal")
+	@Test(groups = {"Marketing","Ola1", "GestionDelSocioDeClubPersonal"}, priority = 9, dataProvider="MarketingCuentaNormal")
 	public void TS98053_Visualizar_cuentas_no_adheridas_Baja_CP(String sCuenta) throws IOException {
 		Marketing page = new Marketing(driver);
 		page.seleccionarCuentaMarketing(sCuenta, "Vista Marketing");
@@ -567,7 +567,7 @@ public class Marketing_Mattu extends TestBase{
 	
 	//-------------------------------------------------------------------------------------------------
 	//TCC = 29
-	@Test(groups = {"Marketing", "Ola1", "GestionDelSocioDeClubPersonal"}, dataProvider="MarketingCuentaNormal")
+	@Test(groups = {"Marketing", "Ola1", "GestionDelSocioDeClubPersonal"}, priority = 9, dataProvider="MarketingCuentaNormal")
 	public void TS98056_Verificar_seleccion_de_un_unico_valor_en_el_campo_motivo_de_baja_Baja_CP(String sCuenta) throws IOException {
 		Marketing page = new Marketing(driver);
 		page.seleccionarCuentaMarketing(sCuenta, "Vista Marketing");
@@ -613,7 +613,7 @@ public class Marketing_Mattu extends TestBase{
 	
 	//-------------------------------------------------------------------------------------------------
 	//TCC = 30
-	@Test(groups = {"Marketing", "Ola1", "GestionDelSocioDeClubPersonal"}, dataProvider="MarketingCuentaNormal")
+	@Test(groups = {"Marketing", "Ola1", "GestionDelSocioDeClubPersonal"}, priority = 9, dataProvider="MarketingCuentaNormal")
 	public void TS98057_Verificar_seleccion_del_motivo_otro_Baja_CP(String sCuenta) throws IOException {
 		Marketing page = new Marketing(driver);
 		page.seleccionarCuentaMarketing(sCuenta, "Vista Marketing");
@@ -635,7 +635,7 @@ public class Marketing_Mattu extends TestBase{
 	
 	//-------------------------------------------------------------------------------------------------
 	//TCC = 31
-	@Test(groups = {"Marketing", "Ola1", "GestionDelSocioDeClubPersonal"}, dataProvider="MarketingCuentaNormal")
+	@Test(groups = {"Marketing", "Ola1", "GestionDelSocioDeClubPersonal"}, priority = 9, dataProvider="MarketingCuentaNormal")
 	public void TS98058_Verificar_seleccion_del_motivo_otro_vacio_Baja_CP(String sCuenta) throws IOException {
 		Marketing page = new Marketing(driver);
 		page.seleccionarCuentaMarketing(sCuenta, "Vista Marketing");
@@ -659,7 +659,7 @@ public class Marketing_Mattu extends TestBase{
 	
 	//-------------------------------------------------------------------------------------------------
 	//TCC = 32
-	@Test(groups = {"Marketing", "Ola1", "GestionDelSocioDeClubPersonal"}, dataProvider="MarketingCuentaNormal")
+	@Test(groups = {"Marketing", "Ola1", "GestionDelSocioDeClubPersonal"}, priority = 7, dataProvider="MarketingCuentaNormal")
 	public void TS98059_Visualizar_botones_Baja_CP(String sCuenta) throws IOException {
 		Marketing page = new Marketing(driver);
 		page.seleccionarCuentaMarketing(sCuenta, "Vista Marketing");
@@ -675,7 +675,7 @@ public class Marketing_Mattu extends TestBase{
 		
 	//-------------------------------------------------------------------------------------------------
 	//TCC = 33
-	@Test(groups = {"Marketing","Ola1", "GestionDelSocioDeClubPersonal"}, dataProvider="MarketingCuentaNormal")
+	@Test(groups = {"Marketing","Ola1", "GestionDelSocioDeClubPersonal"}, priority = 0, dataProvider="MarketingCuentaNormal")
 	public void TS98069_Visualizar_boton_Solapa_CP(String sCuenta) throws IOException {
 		Marketing page = new Marketing(driver);
 		page.seleccionarCuentaMarketing(sCuenta, "Vista Marketing");
@@ -684,7 +684,7 @@ public class Marketing_Mattu extends TestBase{
 	
 	//-------------------------------------------------------------------------------------------------
 	//TCC = 34
-	@Test(groups = {"Marketing", "Ola1", "GestionDelSocioDeClubPersonal"}, dataProvider="MarketingCuentaNormal")
+	@Test(groups = {"Marketing", "Ola1", "GestionDelSocioDeClubPersonal"}, priority = 0, dataProvider="MarketingCuentaNormal")
 	public void TS98070_Funcionamiento_boton_Solapa_CP(String sCuenta) throws IOException {
 		Marketing page = new Marketing(driver);
 		page.seleccionarCuentaMarketing(sCuenta, "Vista Marketing");
@@ -693,7 +693,7 @@ public class Marketing_Mattu extends TestBase{
 	
 	//-------------------------------------------------------------------------------------------------
 	//TCC = 35
-	@Test(groups = {"Marketing", "Ola1", "GestionDelSocioDeClubPersonal"}, dataProvider="MarketingCuentaNormal")
+	@Test(groups = {"Marketing", "Ola1", "GestionDelSocioDeClubPersonal"}, priority = 0, dataProvider="MarketingCuentaNormal")
 	public void TS98071_Visualizar_campo_Fecha_hasta_Solapa_CP(String sCuenta) throws IOException {
 		Marketing page = new Marketing(driver);
 		page.seleccionarCuentaMarketing(sCuenta, "Vista Marketing");
