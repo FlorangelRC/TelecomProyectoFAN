@@ -26,12 +26,12 @@ public class CustomerCareFase3F  extends TestBase {
 	private CustomerCare cc;
 	
 	
-	@AfterClass(groups = {"CustomerCare", "Vista360Layout","ProblemasConRecargas"})
+	@AfterClass(groups = {"CustomerCare", "Vista360Layout"})
 	public void tearDown2() {
 		driver.quit();	
 	}
 	
-	@BeforeClass(groups = {"CustomerCare", "Vista360Layout", "ProblemasConRecargas"})
+	@BeforeClass(groups = {"CustomerCare", "Vista360Layout"})
 	public void init() throws Exception {
 		driver = setConexion.setupEze();
 		ac = new Accounts(driver);
@@ -60,7 +60,7 @@ public class CustomerCareFase3F  extends TestBase {
 		}
 	}
 	
-	@BeforeMethod(groups = {"CustomerCare", "Vista360Layout", "ProblemasConRecargas"})
+	@BeforeMethod(groups = {"CustomerCare", "Vista360Layout"})
 	public void setUp() throws Exception {
 		sleep(6000);
 		cc.cerrarultimapestaña();
@@ -240,224 +240,5 @@ public class CustomerCareFase3F  extends TestBase {
 		}
 		assertTrue(enc);
 		ac.closeAccountServiceTabByName("Historiales");
-	}
-	
-	@Test(groups = {"CustomerCare", "ProblemasConRecargas"})
-	public void TS37326_Problems_With_Refills_Tarjeta_De_Recarga_Prepaga_Verificación_Numero_De_Lote_Ingresa_15_Dígitos() {
-		driver.switchTo().frame(cambioFrame(driver, By.cssSelector(".console-card.active")));
-		driver.findElement(By.className("card-info")).findElement(By.className("details")).click();
-		sleep(5000);
-		driver.switchTo().frame(cambioFrame(driver, By.cssSelector(".slds-small-size--3-of-12.slds-medium-size--3-of-12.slds-large-size--3-of-12.flyout-actions")));
-		((JavascriptExecutor) driver).executeScript("window.scrollTo(0,"+ driver.findElement(By.cssSelector(".console-flyout.active.flyout")).getLocation().y + ")");
-		sleep(3000);
-		driver.findElement(By.cssSelector(".console-flyout.active.flyout")).findElements(By.tagName("i")).get(1).click();
-		List<WebElement> wAsd = driver.findElements(By.id("refillMethod"));
-		for (WebElement x : wAsd) {
-			if (x.getText().toLowerCase().contains("tarjeta prepaga")) {
-				x.click();
-			}
-		}
-		sleep(8000);
-		driver.switchTo().frame(cambioFrame(driver, By.id("stepChooseMethod_nextBtn")));
-		sleep(5000);
-		((JavascriptExecutor) driver).executeScript("window.scrollTo(0,"+ driver.findElement(By.cssSelector(".vlc-slds-button--tertiary.ng-binding.ng-scope")).getLocation().y+ ")");
-		List<WebElement> wX = driver.findElements(By.className("slds-form-element__control"));
-		for (WebElement x : wX) {
-			if (x.getText().toLowerCase().contains("siguiente")) {
-				x.click();
-				break;
-			}
-		}
-		sleep(5000);
-		driver.findElement(By.id("lotNumber")).sendKeys("145789654212458");
-		assertTrue(driver.findElement(By.cssSelector(".vlc-slds-error-block.ng-scope")).findElement(By.cssSelector(".error.ng-scope")).findElement(By.cssSelector(".description.ng-binding")).getText().toLowerCase().equals("longitud mínima de 16"));
-		((JavascriptExecutor) driver).executeScript("window.scrollTo(0," + driver.findElement(By.id("stepPrepaidCardData_nextBtn")).getLocation().y + ")");
-		driver.findElement(By.id("stepPrepaidCardData_nextBtn")).click();
-		sleep(3000);
-		assertTrue(driver.findElement(By.cssSelector(".slds-modal__header.slds-theme--info.slds-theme--alert-texture.slds-theme--error")).isDisplayed());
-		ac.closeAccountServiceTabByName("Problemas con Recargas");
-	}
-	
-	@Test(groups = {"CustomerCare", "ProblemasConRecargas"})
-	public void TS37328_Problems_With_Refills_Tarjeta_De_Recarga_Prepaga_Verificación_Numero_De_Lote_Ingresa_Letras() {
-		boolean enc = true;
-		driver.switchTo().frame(cambioFrame(driver, By.cssSelector(".console-card.active")));
-		driver.findElement(By.className("card-info")).findElement(By.className("details")).click();
-		sleep(5000);
-		driver.switchTo().frame(cambioFrame(driver, By.cssSelector(".slds-small-size--3-of-12.slds-medium-size--3-of-12.slds-large-size--3-of-12.flyout-actions")));
-		((JavascriptExecutor) driver).executeScript("window.scrollTo(0,"+ driver.findElement(By.cssSelector(".console-flyout.active.flyout")).getLocation().y + ")");
-		sleep(3000);
-		driver.findElement(By.cssSelector(".console-flyout.active.flyout")).findElements(By.tagName("i")).get(1).click();
-		List<WebElement> wAsd = driver.findElements(By.id("refillMethod"));
-		for (WebElement x : wAsd) {
-			if (x.getText().toLowerCase().contains("tarjeta prepaga")) {
-				x.click();
-			}
-		}
-		sleep(8000);
-		driver.switchTo().frame(cambioFrame(driver, By.id("stepChooseMethod_nextBtn")));
-		((JavascriptExecutor) driver).executeScript("window.scrollTo(0,"+ driver.findElement(By.cssSelector(".vlc-slds-button--tertiary.ng-binding.ng-scope")).getLocation().y+ ")");
-		List<WebElement> wX = driver.findElements(By.className("slds-form-element__control"));
-		for (WebElement x : wX) {
-			if (x.getText().toLowerCase().contains("siguiente")) {
-				x.click();
-				break;
-			}
-		}
-		sleep(5000);
-		driver.findElement(By.id("lotNumber")).sendKeys("letrasletrasletr");
-		sleep(2000);
-		List<WebElement> errores = driver.findElement(By.cssSelector(".vlc-slds-error-block.ng-scope")).findElement(By.cssSelector(".error.ng-scope")).findElements(By.cssSelector(".description.ng-binding"));
-		for (WebElement UnE : errores) {
-			if (UnE.getText().toLowerCase().equals("sólo se permiten números")) {
-				enc = true;
-				break;
-			}
-		}
-		assertTrue(enc);
-		((JavascriptExecutor) driver).executeScript("window.scrollTo(0," + driver.findElement(By.id("stepPrepaidCardData_nextBtn")).getLocation().y + ")");
-		driver.findElement(By.id("stepPrepaidCardData_nextBtn")).click();
-		sleep(3000);
-		assertTrue(driver.findElement(By.cssSelector(".slds-modal__header.slds-theme--info.slds-theme--alert-texture.slds-theme--error")).isDisplayed());
-		ac.closeAccountServiceTabByName("Problemas con Recargas");
-	}
-	
-	@Test(groups = {"CustomerCare", "ProblemasConRecargas"})
-	public void TS37327_Problems_With_Refills_Tarjeta_De_Recarga_Prepaga_Verificación_Numero_De_Lote_Ingresa_17_Dígitos() {
-		boolean enc = true;
-		driver.switchTo().frame(cambioFrame(driver, By.cssSelector(".console-card.active")));
-		driver.findElement(By.className("card-info")).findElement(By.className("details")).click();
-		sleep(5000);
-		driver.switchTo().frame(cambioFrame(driver, By.cssSelector(".slds-small-size--3-of-12.slds-medium-size--3-of-12.slds-large-size--3-of-12.flyout-actions")));
-		((JavascriptExecutor) driver).executeScript("window.scrollTo(0,"+ driver.findElement(By.cssSelector(".console-flyout.active.flyout")).getLocation().y + ")");
-		sleep(3000);
-		driver.findElement(By.cssSelector(".console-flyout.active.flyout")).findElements(By.tagName("i")).get(1).click();
-		List<WebElement> wAsd = driver.findElements(By.id("refillMethod"));
-		for (WebElement x : wAsd) {
-			if (x.getText().toLowerCase().contains("tarjeta prepaga")) {
-				x.click();
-			}
-		}
-		sleep(8000);
-		driver.switchTo().frame(cambioFrame(driver, By.id("stepChooseMethod_nextBtn")));
-		((JavascriptExecutor) driver).executeScript("window.scrollTo(0,"+ driver.findElement(By.cssSelector(".vlc-slds-button--tertiary.ng-binding.ng-scope")).getLocation().y+ ")");
-		List<WebElement> wX = driver.findElements(By.className("slds-form-element__control"));
-		for (WebElement x : wX) {
-			if (x.getText().toLowerCase().contains("siguiente")) {
-				x.click();
-				break;
-			}
-		}
-		sleep(5000);
-		driver.findElement(By.id("lotNumber")).sendKeys("12457856321457895");
-		List<WebElement> errores = driver.findElement(By.cssSelector(".vlc-slds-error-block.ng-scope")).findElement(By.cssSelector(".error.ng-scope")).findElements(By.cssSelector(".description.ng-binding"));
-		for (WebElement UnE : errores) {
-			if (UnE.getText().toLowerCase().equals("longitud máxima de 16")) {
-				enc = true;
-				break;
-			}
-		}
-		assertTrue(enc);
-		((JavascriptExecutor) driver).executeScript("window.scrollTo(0," + driver.findElement(By.id("stepPrepaidCardData_nextBtn")).getLocation().y + ")");
-		driver.findElement(By.id("stepPrepaidCardData_nextBtn")).click();
-		sleep(3000);
-		assertTrue(driver.findElement(By.cssSelector(".slds-modal__header.slds-theme--info.slds-theme--alert-texture.slds-theme--error")).isDisplayed());
-		ac.closeAccountServiceTabByName("Problemas con Recargas");
-	}
-	
-	@Test(groups = {"CustomerCare", "ProblemasConRecargas"})
-	public void TS37325_Problems_With_Refills_Tarjeta_De_Recarga_Prepaga_Verificación_Numero_De_Lote_Ingresa_16_Dígitos() {
-		boolean enc = true;
-		driver.switchTo().frame(cambioFrame(driver, By.cssSelector(".console-card.active")));
-		driver.findElement(By.className("card-info")).findElement(By.className("details")).click();
-		sleep(5000);
-		driver.switchTo().frame(cambioFrame(driver, By.cssSelector(".slds-small-size--3-of-12.slds-medium-size--3-of-12.slds-large-size--3-of-12.flyout-actions")));
-		((JavascriptExecutor) driver).executeScript("window.scrollTo(0,"+ driver.findElement(By.cssSelector(".console-flyout.active.flyout")).getLocation().y + ")");
-		sleep(3000);
-		driver.findElement(By.cssSelector(".console-flyout.active.flyout")).findElements(By.tagName("i")).get(1).click();
-		List<WebElement> wAsd = driver.findElements(By.id("refillMethod"));
-		for (WebElement x : wAsd) {
-			if (x.getText().toLowerCase().contains("tarjeta prepaga")) {
-				x.click();
-			}
-		}
-		sleep(8000);
-		driver.switchTo().frame(cambioFrame(driver, By.id("stepChooseMethod_nextBtn")));
-		((JavascriptExecutor) driver).executeScript("window.scrollTo(0,"+ driver.findElement(By.cssSelector(".vlc-slds-button--tertiary.ng-binding.ng-scope")).getLocation().y+ ")");
-		List<WebElement> wX = driver.findElements(By.className("slds-form-element__control"));
-		for (WebElement x : wX) {
-			if (x.getText().toLowerCase().contains("siguiente")) {
-				x.click();
-				break;
-			}
-		}
-		sleep(5000);
-		driver.findElement(By.id("lotNumber")).sendKeys("1245785632145789");
-		List<WebElement> errores = driver.findElement(By.cssSelector(".vlc-slds-error-block.ng-scope")).findElement(By.cssSelector(".error.ng-scope")).findElements(By.cssSelector(".description.ng-binding"));
-		for (WebElement UnE : errores) {
-			if (!UnE.getText().isEmpty()) {
-				enc = false;
-				break;
-			}
-		}
-		assertTrue(enc);
-		ac.closeAccountServiceTabByName("Problemas con Recargas");
-	}
-	
-	@Test(groups = {"CustomerCare", "ProblemasConRecargas"})
-	public void TS37534_Problems_With_Refills_Problemas_Con_Recargas_Medio_De_Recarga_Seleccionar_ROL() {
-		String filePath = "C:\\Users\\Florangel\\Downloads\\usuaria.png";
-		driver.switchTo().frame(cambioFrame(driver, By.cssSelector(".console-card.active")));
-		driver.findElement(By.className("card-info")).findElement(By.className("details")).click();
-		sleep(5000);
-		driver.switchTo().frame(cambioFrame(driver, By.cssSelector(".slds-small-size--3-of-12.slds-medium-size--3-of-12.slds-large-size--3-of-12.flyout-actions")));
-		((JavascriptExecutor) driver).executeScript("window.scrollTo(0,"+ driver.findElement(By.cssSelector(".console-flyout.active.flyout")).getLocation().y + ")");
-		sleep(3000);
-		driver.findElement(By.cssSelector(".console-flyout.active.flyout")).findElements(By.tagName("i")).get(1).click();
-		sleep(10000);
-		driver.switchTo().frame(cambioFrame(driver, By.id("refillMethod")));
-		driver.findElements(By.cssSelector(".slds-radio.ng-scope")).get(1).click();
-		sleep(8000);
-		driver.switchTo().frame(cambioFrame(driver, By.id("stepChooseMethod_nextBtn")));
-		((JavascriptExecutor) driver).executeScript("window.scrollTo(0,"+ driver.findElement(By.cssSelector(".vlc-slds-button--tertiary.ng-binding.ng-scope")).getLocation().y+ ")");
-		List<WebElement> wX = driver.findElements(By.className("slds-form-element__control"));
-		for (WebElement x : wX) {
-			if (x.getText().toLowerCase().contains("siguiente")) {
-				x.click();
-				break;
-			}
-		}
-		sleep(8000);
-		driver.switchTo().frame(cambioFrame(driver, By.id("refillDate")));
-		driver.findElement(By.id("refillDate")).sendKeys("12-15-2017");
-		driver.findElement(By.id("refillAmount")).sendKeys("150");
-		driver.findElement(By.id("receiptCode")).sendKeys("150");
-		((JavascriptExecutor) driver).executeScript("window.scrollTo(0," + driver.findElement(By.id("stepInternetRefill_nextBtn")).getLocation().y + ")");
-		driver.findElement(By.id("stepInternetRefill_nextBtn")).click();
-		sleep(8000);
-		wX = driver.findElements(By.id("useExistingCase"));
-		for (WebElement x : wX) {
-			if (x.getText().toLowerCase().contains("nuevo")) {
-				x.click();
-			}
-		}
-		((JavascriptExecutor) driver).executeScript("window.scrollTo(0," + driver.findElement(By.id("StepExistingCase_nextBtn")).getLocation().y + ")");
-		driver.findElement(By.id("StepExistingCase_nextBtn")).click();
-		sleep(10000);
-		driver.switchTo().frame(cambioFrame(driver, By.id("HasVoucher")));
-		/*Actions action = new Actions(driver);
-		action.moveToElement(driver.findElement(By.id("HasVoucher"))).doubleClick().build().perform();*/
-		driver.findElement(By.cssSelector(".slds-radio--faux.ng-scope")).click();
-		sleep(2000);
-		driver.findElement(By.id("FileAttach")).sendKeys(filePath);
-		sleep(2000);
-		((JavascriptExecutor) driver).executeScript("window.scrollTo(0," + driver.findElement(By.id("stepAttachDocuments_nextBtn")).getLocation().y + ")");
-		driver.findElement(By.id("stepAttachDocuments_nextBtn")).click();
-		sleep(8000);
-		((JavascriptExecutor) driver).executeScript("window.scrollTo(0," + driver.findElement(By.id("stepSummary_nextBtn")).getLocation().y + ")");
-		driver.findElement(By.id("stepSummary_nextBtn")).click();
-		sleep(8000);
-		assertTrue(driver.findElement(By.id("txtROLConfirmationSuccess")).findElement(By.tagName("h1")).getText().toLowerCase().contains("la recarga se realizó con éxito"));
-		//ac.closeAccountServiceTabByName("Problemas con Recargas");
 	}
 }

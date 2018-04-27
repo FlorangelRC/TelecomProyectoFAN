@@ -18,7 +18,7 @@ public class CustomerCareFase4 extends TestBase{
 	private CustomerCare cc;
 
 	
-	@BeforeClass (groups = {"CustomerCare", "Vista360Layout", "DetalleDeConsumos", "ActualizarDatos", "ProblemasConRecargas", "DebitoAutomatico"})
+	@BeforeClass (groups = {"CustomerCare", "Vista360Layout", "DetalleDeConsumos", "ActualizarDatos", "DebitoAutomatico"})
 	public void init() {
 		inicializarDriver();
 		cc = new CustomerCare(driver);
@@ -26,14 +26,14 @@ public class CustomerCareFase4 extends TestBase{
 		IrA.CajonDeAplicaciones.ConsolaFAN();
 	}
 	
-	@AfterClass (groups = {"CustomerCare", "Vista360Layout", "DetalleDeConsumos", "ActualizarDatos", "ProblemasConRecargas", "DebitoAutomatico"})
+	@AfterClass (groups = {"CustomerCare", "Vista360Layout", "DetalleDeConsumos", "ActualizarDatos", "DebitoAutomatico"})
 	public void quit() {
 		cc.cerrarTodasLasPestañas();
 		IrA.CajonDeAplicaciones.Ventas();
 		cerrarTodo();
 	}
 	
-	@BeforeMethod (groups = {"CustomerCare", "Vista360Layout", "DetalleDeConsumos", "ActualizarDatos", "ProblemasConRecargas", "DebitoAutomatico"})
+	@BeforeMethod (groups = {"CustomerCare", "Vista360Layout", "DetalleDeConsumos", "ActualizarDatos", "DebitoAutomatico"})
 	public void after() {
 		cc.cerrarTodasLasPestañas();
 	}
@@ -140,19 +140,6 @@ public class CustomerCareFase4 extends TestBase{
 			}
 		}
 		Assert.assertTrue(a);
-	}
-	
-	@Test (groups = {"CustomerCare", "ProblemasConRecargas"})
-	public void TS69021_Problems_with_Refills_Problemas_con_Recargas_Base_de_Conocimiento_Tarjeta_Prepaga_OS_Verificar_articulo_en_Base_de_conocimiento() {
-		cc.elegirCuenta("aaaaFernando Care");
-		cc.irAProblemasConRecargas();
-		driver.switchTo().defaultContent();
-		List <WebElement> know = driver.findElements(By.className("sd_widget_btn_text"));
-		know.get(0).click();
-		sleep(3000);
-		driver.switchTo().frame(cambioFrame(driver, By.className("blocksettings")));
-		Assert.assertTrue(driver.findElement(By.className("blocksettings")).isDisplayed());
-		Assert.assertTrue(driver.findElement(By.className("articleListItem")).isDisplayed());
 	}
 	
 	@Test (groups = {"CustomerCare", "Vista360Layout"})
@@ -497,13 +484,5 @@ public class CustomerCareFase4 extends TestBase{
 		}
 		Assert.assertTrue(a && b && c && d);
 		Assert.assertTrue(driver.findElement(By.cssSelector(".console-flyout.active.flyout")).isDisplayed());
-	}
-	
-	@Test (groups = {"CustomerCare", "ProblemasConRecargas"})
-	public void TS68984_Problems_with_Refills_UX_Tarjeta_de_Recarga_Pre_paga_Verificacion_Visualizar_Boton_Consultar() {
-		cc.elegirCuenta("aaaaFernando Care");
-		cc.irAGestion("estado de tarjeta");
-		WebElement boton = driver.findElement(By.cssSelector(".slds-form-element.vlc-flex.vlc-form-group.vlc-slds-remote-action--button.ng-pristine.ng-valid.ng-scope"));
-		Assert.assertTrue(boton.getText().equals("Consultar"));
 	}
 }
