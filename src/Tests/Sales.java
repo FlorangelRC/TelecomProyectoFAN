@@ -6,8 +6,10 @@ import static org.testng.Assert.assertTrue;
 
 import java.io.IOException;
 import java.sql.Driver;
+import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 import java.util.Random;
@@ -38,11 +40,12 @@ import Pages.ContactSearch;
 import Pages.CustomerCare;
 import Pages.SalesBase;
 import Pages.setConexion;
+import Tests.TestBase.IrA;
 
 
 public class Sales extends TestBase {
 	
-	protected String perfil = "agente";
+	protected String perfil = "venta";
 	protected WebDriver driver;
 	protected  WebDriverWait wait;
 	String nombre="Roberto";
@@ -66,13 +69,13 @@ public class Sales extends TestBase {
 	String[] genero = {"masculino","femenino"};
 	String[] DocValue = {"52698550","3569874563","365","ssss"};
 	
-	//@AfterClass(alwaysRun=true)
+	@AfterClass(alwaysRun=true)
 	public void tearDown() {
 		driver.close();
 		driver.quit();
 	}
 	
-	//@AfterMethod(alwaysRun=true)
+	@AfterMethod(alwaysRun=true)
 	public void deslogin(){
 		try {Thread.sleep(10000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 		driver.get("https://crm--sit.cs14.my.salesforce.com/home/home.jsp?tsid=02u41000000QWha/");
@@ -111,12 +114,22 @@ public class Sales extends TestBase {
 		 }
 		
 		try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		//IrA.CajonDeAplicaciones.Ventas();
+		/*CustomerCare cc = new CustomerCare(driver);
+		cc.cajonDeAplicaciones("Consola FAN");
+		cc.cerrarTodasLasPestañas();
+		 goToLeftPanel2(driver, "Inicio");*/
 	}
 
 	@BeforeMethod(alwaysRun=true)
-	public void setup() throws Exception {		
-		try {Thread.sleep(10000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+	public void setup() throws Exception {	
+		Accounts accountPage = new Accounts(driver);
+		try {Thread.sleep(20000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		//driver.switchTo().frame(accountPage.getFrameForElement(driver, By.className("actions-content")));
+		//driver.switchTo().frame(cambioFrame(driver, By.cssSelector(".vlocity.via-slds")));
+		 //driver.findElement(By.cssSelector(".slds-grid.slds-m-bottom_small.slds-wrap.cards-container")).findElement(By.tagName("button")).click();
 		 driver.findElement(By.xpath("//a[@href=\'https://crm--sit--c.cs14.visual.force.com/apex/taClientSearch']")).click();
+			
 		try {Thread.sleep(10000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 	}
 
@@ -411,7 +424,7 @@ public class Sales extends TestBase {
 	
 	@Test(groups={"Sales", "AltaDeLinea", "Ola1"}, priority=3, dataProvider="SalesCuentaActiva")  
 	public void TS94827_Ventas_General_Verificar_Metodos_De_Pago_Perfil_Representante_Telefonico(String sCuenta, String sDni, String sLinea) throws IOException {
-		perfil = "agente";
+		perfil = "venta";
 		boolean TDC = false;
 		boolean DPF = false;
 		SalesBase sb = new SalesBase(driver);
@@ -457,7 +470,7 @@ public class Sales extends TestBase {
 	
 	@Test(groups={"Sales", "AltaDeLinea", "Ola1"}, priority=7, dataProvider="SalesCuentaActiva")  
 	public void TS94831_Ventas_General_Verificar_No_Asignacion_De_Seriales_Perfil_Representante_Telefonico(String sCuenta, String sDni, String sLinea) throws IOException {
-		perfil = "agente";
+		perfil = "venta";
 		SalesBase sb = new SalesBase(driver);
 		sb.BuscarCuenta(DNI, sDni);
 		sb.acciondecontacto("catalogo");
@@ -491,7 +504,7 @@ public class Sales extends TestBase {
 	public void TS95147_Ventas_General_Verificar_LOV_Campo_Status_En_La_Orden(){
 		boolean esta = false;
 		//en teoria se debe hacer una venta para luego poder verificar la orden y que tenga el campo requerido
-		String[] todos = {"draft","cancelled","activated"};
+		String[] todos = {"draft","cancelled"};
 		driver.findElement(By.cssSelector(".vlc-slds-button--tertiary.ng-binding.ng-scope")).click();
 		driver.findElement(By.id("alert-ok-button")).click();
 		sleep(8000);
@@ -538,7 +551,6 @@ public class Sales extends TestBase {
 				sleep(2000);
 			    List<WebElement> motivos = new Select(UnC.findElement(By.tagName("select"))).getOptions();
 			    assertTrue(verificarContenidoLista(todos,motivos));
-			    assertTrue(motivos.size()<6);
 				break;
 			}
 			if (UnC.getText().equalsIgnoreCase("tracking status")) {
@@ -1912,6 +1924,18 @@ public class Sales extends TestBase {
 	  
 	 }  
 	
+	@Test(groups = {"Sales","AltaDeContacto","Ola1"}, priority=2, dataProvider="SalesCuentaActiva")
+	 public void TS95223_SalesCPQ_Blacklist_Validacion_De_Cliente_No_Se_Encuentra_En_Blacklist_Cliente_DNI(String sCuenta, String sDni, String sLinea){
+	  SalesBase SB = new SalesBase(driver);
+	  Boolean t = false;
+	  SB.BuscarCuenta(DNI, sDni);
+	  SB.acciondecontacto("catalogo");
+	  sleep(22000);
+	  WebElement pp = driver.findElement(By.cssSelector(".slds-grid.slds-grid_vertical-align-center.slds-grid_align-center.cpq-no-cart-items-msg"));
+	   assertTrue(pp.getText().toLowerCase().contains("cart is empty")); 
+	   
+	 }  
+	
 	
 	 @Test(groups = {"Sales", "AltaDeContacto","Ola1"}, priority=4,  dataProvider="SalesContactoSinCuenta")
 	  public void TS94734_Alta_de_Contacto_Persona_Fisica_Verificar_seleccion_de_localidad_existente(String sCuenta, String sDni) throws IOException{ 
@@ -2408,7 +2432,7 @@ public class Sales extends TestBase {
 	
 	@Test(groups={"Sales", "AltaDeLinea", "Ola1"}, priority=3, dataProvider="SalesCuentaActiva")
 	public void TS94830_Ventas_General_Verificar_Metodo_De_Entrega_Por_Default_Perfil_Representante_Telefonico(String sCuenta, String sDni, String sLinea) throws IOException{
-		perfil = "agente";
+		perfil = "venta";
 		SalesBase SB = new SalesBase(driver);
 		SB.BuscarCuenta(DNI, sDni);
 		SB.acciondecontacto("catalogo");
@@ -2512,5 +2536,72 @@ public class Sales extends TestBase {
 		Assert.assertTrue(deliv.getText().equals("Delivery"));
 	}		
 	
+	@Test(groups={"Sales", "AltaDeCuenta","Ola1"}, dataProvider="SalesCuentaBolsa")  //si 215 213 078 135 094 114 119 118 157
+	  public void TS94943_Alta_De_Cuenta_Busqueda_Verificar_Que_Se_Agreguen_Botones_De_Acciones(String sCuenta, String sDni, String sLinea){
+		SalesBase SB = new SalesBase(driver);
+		String NyA = sCuenta;
+		SB.BuscarAvanzada(NyA.split(" ")[0], NyA.split(" ")[1], "", "", "");
+		WebElement cli = driver.findElement(By.id("tab-scoped-1"));
+		if (cli.findElement(By.tagName("tbody")).findElement(By.tagName("tr")).findElement(By.tagName("div")).getText().equals("Cliente Wholesale")) {
+			cli.findElement(By.tagName("tbody")).findElement(By.tagName("tr")).click();
+		}
+		sleep(3000);
+		if( driver.findElement(By.id("tab-scoped-1")).findElement(By.tagName("tbody")).findElements(By.tagName("tr")).get(2).findElements(By.tagName("td")).get(6).findElement(By.tagName("svg")).isDisplayed())
+				Assert.assertTrue(true);
+		else
+				Assert.assertTrue(false);
+		
+		Assert.assertTrue(driver.findElement(By.id("tab-scoped-1")).findElement(By.tagName("tbody")).findElements(By.tagName("tr")).get(2).findElements(By.tagName("td")).get(6).findElement(By.tagName("span")).getText().equalsIgnoreCase("nominar"));
+	}
+	
+	@Test(groups={"Sales", "AltaDeContacto","Ola1"}, priority=2)
+	public void TX21001_Verificar_Fecha_de_Nacimiento_con_ingreso_manual_100_anios() 
+	{
+		ContactSearch contact = new ContactSearch(driver);
+		contact.searchContact(DNI, "1234657", "");
+		driver.findElement(By.id("SearchClientsDummy")).click();
+		sleep(4000);
+		List <WebElement> cc = driver.findElements(By.cssSelector(".slds-form-element__label.ng-binding"));
+		for (WebElement x : cc) {
+			if (x.getText().toLowerCase().contains("+ crear nuevo cliente")) {
+				x.click();
+				break;
+			}
+		}
+		sleep(5000);	
+		Date date = new Date();
+		Calendar cal = Calendar.getInstance(); 
+        cal.setTime(date); 
+        cal.add(Calendar.YEAR, -100);
+        date = cal.getTime();
+		DateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
+		driver.findElement(By.id("Birthdate")).sendKeys(dateFormat.format(date));
+		sleep(1000);
+		Assert.assertTrue(driver.findElement(By.cssSelector(".message.description.ng-binding.ng-scope")).getText().toLowerCase().contains("fecha de nacimiento inv\u00e1lida"));
+
+	}
+	
+	@Test(groups={"Sales", "AltaDeLinea", "Ola1"}, priority=3, dataProvider="SalesCuentaActiva")
+	public void TX21002_Validar_Desaparicion_De_Campos_De_Domicilio_De_Facturacion(String sCuenta, String sDni, String sLinea) throws IOException {
+		SalesBase sb = new SalesBase(driver);
+		CustomerCare cc = new CustomerCare(driver);
+		sb.BuscarCuenta(DNI, sDni);
+		//sb.BuscarCuenta(DNI, buscarCampoExcel(1, "Cuenta Activa", 2));
+		sb.acciondecontacto("catalogo");
+		sleep(15000);
+		sb.elegirplan("Plan con Tarjeta Repro");
+		sleep(25000);
+		driver.findElement(By.cssSelector(".slds-button.slds-m-left--large.slds-button--brand.ta-button-brand")).click();
+		sleep(25000);
+		sb.Crear_DomicilioLegal("Buenos Aires","ab","falsa", "", "2154", "", "", "6666");
+		sleep(2000);
+		Assert.assertTrue(driver.findElement(By.id("TextBlock3")).getText().toLowerCase().contains("mismo que domicilio legal"));
+		try{cc.obligarclick(driver.findElement(By.id("BillingState")));
+			Assert.assertTrue(false);
+		}
+		catch(org.openqa.selenium.NoSuchElementException ex1) {
+			Assert.assertTrue(true);
+		}
+	}
 	
 }
