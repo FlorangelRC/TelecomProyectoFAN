@@ -1455,4 +1455,33 @@ public class CustomerCare extends BasePage {
 	public WebElement campoComentarios() {
 		return driver.findElement(By.xpath("//textarea[@id='Comment']"));
 	}
+	
+	public void tarjetaPrepaga() {
+		TestBase tb = new TestBase();
+		driver.switchTo().frame(tb.cambioFrame(driver, By.className("card-top")));
+	    driver.findElement(By.className("card-top")).click();
+	    sleep(5000);
+	    driver.switchTo().frame(tb.cambioFrame(driver, By.cssSelector(".slds-small-size--3-of-12.slds-medium-size--3-of-12.slds-large-size--3-of-12.flyout-actions")));
+	    ((JavascriptExecutor)driver).executeScript("window.scrollTo(0,"+driver.findElement(By.cssSelector(".console-flyout.active.flyout")).getLocation().y+")");
+	    sleep(3000);
+	    driver.findElement(By.cssSelector(".console-flyout.active.flyout")).findElements(By.tagName("i")).get(1).click();
+	    sleep(8000);
+	    List<WebElement> wAsd = driver.findElements(By.id("refillMethod"));
+	    for (WebElement x:wAsd) {
+	    	if (x.getText().toLowerCase().contains("tarjeta prepaga")) {
+	    		x.click();
+	    	}
+	    }
+	    sleep(8000);
+	    driver.switchTo().frame(tb.cambioFrame(driver, By.id("stepChooseMethod_nextBtn")));
+	    ((JavascriptExecutor)driver).executeScript("window.scrollTo(0,"+driver.findElement(By.cssSelector(".vlc-slds-button--tertiary.ng-binding.ng-scope")).getLocation().y+")");
+	    List <WebElement> wX = driver.findElements(By.className("slds-form-element__control"));
+	    for (WebElement x : wX) {
+	    	if (x.getText().toLowerCase().contains("siguiente")) {
+	    		x.click();
+	    		break;
+	    	}
+	    }
+	    sleep(5000);
+	}	
 }
