@@ -1052,15 +1052,15 @@ public class CustomerCareOla1 extends TestBase {
 	    Assert.assertTrue(!driver.findElement(By.cssSelector(".error.ng-scope")).getText().isEmpty());
 	}
 	
-	@Test (groups = {"CustomerCare", "ProblemasConRecargas"}, dataProvider = "CustomerCuentaActiva")
+	@Test (groups = {"CustomerCare", "ProblemasConRecargas"}, dataProvider = "CustomerCuentaActiva")  //Rompe pop popUp
 	public void TS37536_Problems_with_Refills_Problemas_con_Recargas_Medio_de_recarga_Seleccionar_Tarjeta_Pre_Paga_PIN_Invisible(String cCuenta) {
 		cc.elegirCuenta(cCuenta);
 		cc.tarjetaPrepaga();
 		driver.findElement(By.id("lotNumber")).sendKeys("2222222222222222");
-	    ((JavascriptExecutor)driver).executeScript("window.scrollTo(0,"+driver.findElement(By.id("stepPrepaidCardData_nextBtn")).getLocation().y+")");
-	    driver.findElement(By.xpath("//*[@id=\"stepPrepaidCardData_nextBtn\"]")).click();
-	    sleep(8000);
-	    Assert.assertTrue(driver.findElement(By.xpath("//*[@id=\"useExistingCase|0\"]/div/div[1]/label[1]/span/div/div")).isDisplayed());
+		driver.findElement(By.id("stepPrepaidCardData_nextBtn")).click();
+		sleep(3000);
+		driver.findElement(By.id("rechargeImpacted_nextBtn")).click();
+		Assert.assertTrue(false);
 	}
 	
 	@Test (groups = {"CustomerCare", "ProblemasConRecargas"}, dataProvider = "CustomerCuentaActiva")
@@ -1153,18 +1153,17 @@ public class CustomerCareOla1 extends TestBase {
 	    ((JavascriptExecutor)driver).executeScript("window.scrollTo(0,"+driver.findElement(By.className("community-flyout-actions-card")).getLocation().y+")");
 	    sleep(3000);
 	    WebElement x = driver.findElement(By.className("community-flyout-actions-card")).findElement(By.tagName("ul"));
-	    List<WebElement> menu = x.findElements(By.tagName("li"));
+	    List <WebElement> menu = x.findElements(By.tagName("li"));
 	    menu.get(4).click();
 	    sleep(5000);
+	    driver.switchTo().frame(cambioFrame(driver, By.cssSelector(".slds-button.slds-button--brand.filterNegotiations.slds-p-horizontal--x-large.slds-p-vertical--x-small")));
+	    driver.findElement(By.cssSelector(".slds-button.slds-button--brand.filterNegotiations.slds-p-horizontal--x-large.slds-p-vertical--x-small")).click();
+	    sleep(2000);
 	    driver.switchTo().frame(cambioFrame(driver, By.className("slds-p-bottom--small")));
-	    WebElement wGestion = driver.findElement(By.cssSelector(".ng-pristine.ng-untouched.ng-valid.ng-empty"));
-	    List<WebElement> wElements = wGestion.findElements(By.tagName("td"));
-	    String sGestion = wElements.get(2).getText();
-	    wElements.get(2).click();
-	    sleep(5000);
-	    driver.switchTo().frame(cambioFrame(driver, By.cssSelector(".hasMotif.caseTab.detailPage.ext-webkit.ext-chrome.sfdcBody.brandQuaternaryBgr")));
-	    ((JavascriptExecutor)driver).executeScript("window.scrollTo(0,"+driver.findElement(By.cssSelector(".hasMotif.caseTab.detailPage.ext-webkit.ext-chrome.sfdcBody.brandQuaternaryBgr")).getLocation().y+")");
-	    Assert.assertTrue(driver.findElement(By.className("pageDescription")).getText().equals(sGestion));
+	    WebElement table = driver.findElement(By.className("slds-text-heading--label"));
+	    List <WebElement> type = table.findElements(By.tagName("th"));
+	    String num = type.get(2).getText();
+	    Assert.assertTrue(num.toLowerCase().equals("n\u00famero"));
 	}
 	
 	@Test(groups = {"CustomerCare", "ProblemasConRecargas"}, dataProvider = "CustomerCuentaActiva")
@@ -1177,15 +1176,18 @@ public class CustomerCareOla1 extends TestBase {
 	    ((JavascriptExecutor)driver).executeScript("window.scrollTo(0,"+driver.findElement(By.className("community-flyout-actions-card")).getLocation().y+")");
 	    sleep(3000);
 	    WebElement x = driver.findElement(By.className("community-flyout-actions-card")).findElement(By.tagName("ul"));
-	    List<WebElement> menu = x.findElements(By.tagName("li"));
+	    List <WebElement> menu = x.findElements(By.tagName("li"));
 	    menu.get(4).click();
 	    sleep(5000);
+	    driver.switchTo().frame(cambioFrame(driver, By.cssSelector(".slds-button.slds-button--brand.filterNegotiations.slds-p-horizontal--x-large.slds-p-vertical--x-small")));
+	    driver.findElement(By.cssSelector(".slds-button.slds-button--brand.filterNegotiations.slds-p-horizontal--x-large.slds-p-vertical--x-small")).click();
+	    sleep(2000);
 	    driver.switchTo().frame(cambioFrame(driver, By.cssSelector(".slds-table.slds-table--bordered.slds-table--resizable-cols.slds-table--fixed-layout.via-slds-table-pinned-header")));
 	    SCP scp = new SCP(driver);
 	    Assert.assertTrue(scp.Triangulo_Ordenador_Validador(driver, By.cssSelector(".slds-table.slds-table--bordered.slds-table--resizable-cols.slds-table--fixed-layout.via-slds-table-pinned-header"), 5, 5));
 	}
 	
-	@Test(groups = {"CustomerCare", "ProblemasConRecargas"}, dataProvider = "CustomerCuentaActiva")
+	@Test(groups = {"CustomerCare", "ProblemasConRecargas"}, dataProvider = "CustomerCuentaActiva")  //Rompe porque hay solo un dato cargado
 	public void TS69187_360_View_Visualizacion_de_gestiones_desde_el_asset_Estado_Ordenar_descendente(String cCuenta) throws ParseException {
 		cc.elegirCuenta(cCuenta);
 		driver.switchTo().frame(cambioFrame(driver, By.className("card-top")));
@@ -1195,31 +1197,33 @@ public class CustomerCareOla1 extends TestBase {
 	    ((JavascriptExecutor)driver).executeScript("window.scrollTo(0,"+driver.findElement(By.className("community-flyout-actions-card")).getLocation().y+")");
 	    sleep(3000);
 	    WebElement x = driver.findElement(By.className("community-flyout-actions-card")).findElement(By.tagName("ul"));
-	    List<WebElement> menu = x.findElements(By.tagName("li"));
-	    menu.get(4).click();
+	    List <WebElement> element = x.findElements(By.tagName("li"));
+	    element.get(4).click();
 	    sleep(5000);
+	    driver.switchTo().frame(cambioFrame(driver, By.cssSelector(".slds-button.slds-button--brand.filterNegotiations.slds-p-horizontal--x-large.slds-p-vertical--x-small")));
+	    driver.findElement(By.cssSelector(".slds-button.slds-button--brand.filterNegotiations.slds-p-horizontal--x-large.slds-p-vertical--x-small")).click();
+	    sleep(2000);
 	    driver.switchTo().frame(cambioFrame(driver, By.cssSelector(".slds-table.slds-table--bordered.slds-table--resizable-cols.slds-table--fixed-layout.via-slds-table-pinned-header")));
 	    SCP scp = new SCP(driver);
-	    WebElement wTable = driver.findElement(By.cssSelector(".slds-table.slds-table--bordered.slds-table--resizable-cols.slds-table--fixed-layout.via-slds-table-pinned-header"));
-	    WebElement wMenuTable = wTable.findElement(By.tagName("thead"));
-	    List<WebElement> wMenuList = wMenuTable.findElements(By.tagName("th"));
-	    List<String> sList = scp.TraerColumna(wTable, 5, 5);
-	    //System.out.println("sList size: " + sList.size());
+	    WebElement table = driver.findElement(By.cssSelector(".slds-table.slds-table--bordered.slds-table--resizable-cols.slds-table--fixed-layout.via-slds-table-pinned-header"));
+	    WebElement menu = table.findElement(By.tagName("thead"));
+	    List <WebElement> list = menu.findElements(By.tagName("th"));
+	    List <String> sList = scp.TraerColumna(table, 5, 5);
 	    Collections.sort(sList);
-	    List<String> sListOrdered = new ArrayList<String>();
-	    for (int i = sList.size() - 1; i >= 0; i--) {
+	    List <String> sListOrdered = new ArrayList<String>();
+	    for (int i = sList.size()-1; i >= 0; i--) {
 	    	sListOrdered.add(sList.get(i));
 	    }
-	    wMenuList.get(4).click();
-	    wMenuList.get(4).click();
-	    List<String> sListOrderedOnPage = scp.TraerColumna(wTable, 5, 5);
-	    boolean bAssertTrue = true;
-	    for (int a = 0; a < sList.size(); a++) {
-	    	if(sListOrdered.get(a) != sListOrderedOnPage.get(a)) {
-	    		bAssertTrue = false;
+	    list.get(4).click();
+	    list.get(4).click();
+	    List <String> sListOrderedOnPage = scp.TraerColumna(table, 5, 5);
+	    boolean a = true;
+	    for (int i=0; i<sList.size(); i++) {
+	    	if (sListOrdered.get(i) != sListOrderedOnPage.get(i)) {
+	    		a = false;
 	    	}
 	    }
-	    Assert.assertTrue(bAssertTrue);
+	    Assert.assertTrue(a);
 	}
 	
 	@Test (groups= {"CustomerCare", "ProblemasConRecargas"}, dataProvider = "CustomerCuentaActiva")
