@@ -616,6 +616,7 @@ try{	driver.findElement(By.id("alert-ok-button")).click();	} catch (NoSuchElemen
 	driver.findElement(By.id("NewPostalCodeName")).sendKeys(CP);
 	driver.findElement(By.id("btnSameAsLegalAddress")).click();
 	try {Thread.sleep(3000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+	if(CP!="6666")
 	driver.findElement(By.id("AccountData_nextBtn")).click();
  }
  
