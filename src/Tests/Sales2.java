@@ -40,12 +40,12 @@ public class Sales2 extends TestBase{
 	String localidad="BASAIL";
 	protected  WebDriverWait wait;
 	
-	//@AfterClass(alwaysRun=true)
+	@AfterClass(alwaysRun=true)
 	public void tearDown() {
 		driver.quit();
 	}
 	
-	//@AfterMethod(alwaysRun=true)
+	@AfterMethod(alwaysRun=true)
 	public void deslogin() {
 		sleep(3000);
 		driver.get("https://crm--sit.cs14.my.salesforce.com/home/home.jsp?tsid=02u41000000QWha/");
@@ -56,7 +56,7 @@ public class Sales2 extends TestBase{
 	public void init() {
 		inicializarDriver();
 		sb = new SalesBase(driver);
-		loginAndres(driver);
+		 loginFranciso(driver);
 		IrA.CajonDeAplicaciones.Ventas();
 	}
 	
@@ -1766,6 +1766,39 @@ public class Sales2 extends TestBase{
 	     Assert.assertTrue(a);
 	}
 	
+	
+	@Test(groups={"Sales", "AltaDeLinea", "Ola1"}, priority=4, dataProvider="SalesCuentaActiva")
+	public void TS95051_Ventas_Acciones_Verificar_Visualizacion_De_Detalles_Pack(String sCuenta, String sDni, String sLinea) throws IOException {
+		sb.BuscarCuenta(DNI, sDni);
+		//sb.BuscarCuenta(DNI, buscarCampoExcel(1, "Cuenta Activa", 2));
+		sb.acciondecontacto("catalogo");
+		sleep(15000);
+		sb.elegirplan("Plan con Tarjeta repro");
+		sleep(25000);
+		driver.findElement(By.cssSelector(".cpq-product-link.slds-text-body_small.slds-float_right")).click();
+		sleep(10000);
+		List <WebElement> detalles = driver.findElement(By.className("services")).findElements(By.className("margin-space"));
+	    boolean voz = false, sms = false, datos = false, amigos = false; 
+	    for (WebElement x : detalles) { 
+	        if (x.getText().toLowerCase().contains("voz")) { 
+	          voz = true;
+	        } 
+	        if (x.getText().toLowerCase().contains("sms")) { 
+		          sms = true;
+		    } 
+	        if (x.getText().toLowerCase().contains("datos")) { 
+		          datos = true;
+		    } 
+	        if (x.getText().toLowerCase().contains("amigos")) { 
+		          amigos = true;
+		    } 
+	    } 
+	     Assert.assertTrue(voz);
+	     Assert.assertTrue(sms);
+	     Assert.assertTrue(datos);
+	     Assert.assertTrue(amigos);
+	}
+	
 	@Test(groups={"Sales","AltaDeLinea","Ola1"}, priority=3, dataProvider="SalesCuentaActiva")
 	public void TS95048_Ventas_Acciones_Verificar_accion_detalle_Plan_Movil(String sCuenta, String sDni, String sLinea) throws IOException{
 		sb.BuscarCuenta(DNI, sDni);
@@ -1974,21 +2007,6 @@ public class Sales2 extends TestBase{
 		//sb.BuscarCuenta(DNI, buscarCampoExcel(1, "Cuenta Activa", 2));
 		sb.acciondecontacto("catalogo");
 		sleep(15000);
-		boolean x = false;
-		List<WebElement> cam = driver.findElements(By.cssSelector(".slds-m-left--x-small.slds-button.slds-button--brand"));
-		for(WebElement c : cam ){	
-			if(c.getText().toLowerCase().equals("cambiar")){
-				c.click();
-			}
-		sleep(7000);	
-		List<WebElement> frame2 = driver.findElements(By.tagName("iframe"));
-		driver.switchTo().frame(frame2.get(0));
-		Select env = new Select (driver.findElement(By.id("DeliveryMethodSelection")));
-		env.selectByVisibleText("Delivery");
-		driver.findElement(By.id("SalesChannelConfiguration_nextBtn")).click();
-		sleep(10000);
-		driver.switchTo().defaultContent();
-		} 	
 		sb.elegirplan("Plan con Tarjeta Repro");
 		String ord = driver.findElement(By.cssSelector(".slds-text-body--small.slds-page-header__info.taDevider")).getText();
 		ord=ord.substring(ord.length()-8, ord.length());
@@ -2012,10 +2030,16 @@ public class Sales2 extends TestBase{
 		System.out.println(list.getText());
 		list.click();
 		sleep(5000);
-		WebElement lst = driver.findElements(By.cssSelector(".bPageBlock.brandSecondaryBrd.secondaryPalette")).get(1);
-		System.out.println(lst.getText());
-		Assert.assertTrue(lst.getText().contains("Plan con Tarjeta Repro"));
+		List<WebElement> lst = driver.findElements(By.cssSelector(".bPageBlock.brandSecondaryBrd.secondaryPalette"));
+		for (WebElement UnE : lst) {
+			if(UnE.findElement(By.className("pbTitle")).getText().toLowerCase().contains("productos de pedido")) {
+				if (UnE.findElement(By.cssSelector(".dataRow.even.first")).getText().toLowerCase().contains("plan con tarjeta repro"))
+					Assert.assertTrue(true);
+				else 
+					Assert.assertTrue(false);
+			}
 		}
+	}
 		
 	@Test(groups={"Sales", "AltaDeLinea", "Ola1"}, priority=3, dataProvider="SalesCuentaActiva")
 	public void TS94479_Alta_Linea_Carrito_Eliminar_productos_del_carrito(String sCuenta, String sDni, String sLinea) throws IOException {
