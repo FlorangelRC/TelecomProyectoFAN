@@ -21,7 +21,7 @@ public class CustomerCare360Joaquin extends TestBase {
 	private By tablaTarjetaHistorial = By.cssSelector(".slds-table.slds-table--bordered.slds-table--resizable-cols.slds-table--fixed-layout.via-slds-table-pinned-header");
 
 	
-	@BeforeClass(groups= {"CustomerCare", "ProblemasConRecargas", "DebitoAutomatico", "DetalleDeConsumos", "Vista360Layout"})
+	@BeforeClass(groups= {"CustomerCare", "DebitoAutomatico", "DetalleDeConsumos", "Vista360Layout"})
 	public void init() {
 		inicializarDriver();
 		Customer = new CustomerCare(driver);
@@ -29,14 +29,14 @@ public class CustomerCare360Joaquin extends TestBase {
 		IrA.CajonDeAplicaciones.ConsolaFAN();
 	}
 	
-	@AfterClass(groups= {"CustomerCare", "ProblemasConRecargas", "DebitoAutomatico", "DetalleDeConsumos", "Vista360Layout"})
+	@AfterClass(groups= {"CustomerCare", "DebitoAutomatico", "DetalleDeConsumos", "Vista360Layout"})
 	public void quit() {
 		Customer.cerrarTodasLasPestañas();
 		IrA.CajonDeAplicaciones.Ventas();
 		cerrarTodo();
 	}
 	
-	@BeforeMethod(groups= {"CustomerCare", "ProblemasConRecargas", "DebitoAutomatico", "DetalleDeConsumos", "Vista360Layout"})
+	@BeforeMethod(groups= {"CustomerCare", "DebitoAutomatico", "DetalleDeConsumos", "Vista360Layout"})
 	public void after() {
 		Customer.cerrarTodasLasPestañas();
 	}
@@ -471,176 +471,6 @@ public class CustomerCare360Joaquin extends TestBase {
 		Assert.assertTrue(textoTarjeta.contains("Mis servicios"));
 	}
 	
-	@Test(groups= {"CustomerCare", "ProblemasConRecargas"})
-	public void TS38537_Problems_with_Refills_Problemas_con_Recargas_Medio_de_recarga_Selección_simple() {
-		Customer.elegirCuenta("aaaaFernando Care");
-		Customer.irAProblemasConRecargas();
-		
-		List<WebElement> elementos = driver.findElements(By.cssSelector(".slds-radio.ng-scope"));
-		waitFor.visibilityOfAllElements(elementos);
-		
-		for (WebElement e : elementos) {
-			if (!e.getAttribute("class").contains("itemSelected")) {
-				e.click();
-				waitFor.attributeContains(e, "class", "itemSelected");
-				Assert.assertTrue(e.getAttribute("class").contains("itemSelected"));
-				return;
-			}
-		}
-		Assert.assertTrue(false);
-	}
-	
-	@Test(groups= {"CustomerCare", "ProblemasConRecargas"})
-	public void TS38538_Problems_with_Refills_Problemas_con_Recargas_Medio_de_recarga_Selección_Múltiple() {
-		Customer.elegirCuenta("aaaaFernando Care");
-
-		Customer.irAProblemasConRecargas();
-		
-		List<WebElement> elementos = driver.findElements(By.cssSelector(".slds-radio.ng-scope"));
-		waitFor.visibilityOfAllElements(elementos);
-		for (WebElement e : elementos) {
-			if (!e.getAttribute("class").contains("itemSelected")) {
-				e.click();
-				waitFor.attributeContains(e, "class", "itemSelected");
-				break;
-			}
-		}
-		
-		for (WebElement e : elementos) {
-			if (!e.getAttribute("class").contains("itemSelected")) {
-				Assert.assertTrue(!e.getAttribute("class").contains("itemSelected"));
-				return;
-			}	
-		}
-		Assert.assertTrue(false);
-	}
-	
-	@Test(groups= {"CustomerCare", "ProblemasConRecargas"})
-	public void TS38541_Problems_with_Refills_Problemas_con_Recargas_Medio_de_recarga_Seleccionar_Tarjeta_Pre_Paga_PIN_Visible_Lote_activo() {
-		Customer.elegirCuenta("aaaaFernando Care");
-
-		Customer.irAProblemasConRecargas();
-		
-		List<WebElement> elementos = driver.findElements(By.cssSelector(".slds-radio.ng-scope"));
-		waitFor.visibilityOfAllElements(elementos);
-		for (WebElement e : elementos) {
-			if (e.getText().contains("Tarjeta Prepaga")) {
-				e.click();
-				break;
-			}
-		}
-
-		WebElement botonSiguiente = driver.findElement(By.xpath("//div[@id='stepChooseMethod_nextBtn']//p"));
-		botonSiguiente.click();
-		
-		WebElement numeroLote = driver.findElement(By.id("lotNumber"));
-		numeroLote.sendKeys("2222222222222222");
-		botonSiguiente = driver.findElement(By.xpath("//div[@id='stepPrepaidCardData_nextBtn']//p"));
-		dynamicWait().until(ExpectedConditions.elementToBeClickable(botonSiguiente));
-		botonSiguiente.click();
-		
-		WebElement botonAnterior = driver.findElement(By.xpath("//div[@id='StepExistingCase_prevBtn']//p"));
-		dynamicWait().until(ExpectedConditions.visibilityOf(botonAnterior));
-		Assert.assertTrue(botonAnterior.isDisplayed());
-	}
-	
-	@Test(groups= {"CustomerCare", "ProblemasConRecargas"})
-	public void TS38549_Problems_with_Refills_Problemas_con_Recargas_Medio_de_recarga_Lote_Ingresa_15_dígitos() {
-		Customer.elegirCuenta("aaaaFernando Care");
-
-		Customer.irAProblemasConRecargas();
-		
-		List<WebElement> elementos = driver.findElements(By.cssSelector(".slds-radio.ng-scope"));
-		waitFor.visibilityOfAllElements(elementos);
-		for (WebElement e : elementos) {
-			if (e.getText().contains("Tarjeta Prepaga")) {
-				e.click();
-				break;
-			}
-		}
-		
-		WebElement btnSiguiente = driver.findElement(By.xpath("//div[@id='stepChooseMethod_nextBtn']/p"));
-		btnSiguiente.click();
-		
-		WebElement numeroLote = driver.findElement(By.id("lotNumber"));
-		numeroLote.sendKeys("123456789012345");
-		
-		Assert.assertTrue(numeroLote.getAttribute("class").contains("ng-invalid-minlength"));
-	}
-	
-	@Test(groups= {"CustomerCare", "ProblemasConRecargas"})
-	public void TS38550_Problems_with_Refills_Problemas_con_Recargas_Medio_de_recarga_Lote_Ingresa_16_dígitos() {
-		Customer.elegirCuenta("aaaaFernando Care");
-
-		Customer.irAProblemasConRecargas();
-		
-		List<WebElement> elementos = driver.findElements(By.cssSelector(".slds-radio.ng-scope"));
-		waitFor.visibilityOfAllElements(elementos);
-		for (WebElement e : elementos) {
-			if (e.getText().contains("Tarjeta Prepaga")) {
-				e.click();
-				break;
-			}
-		}
-
-		WebElement btnSiguiente = driver.findElement(By.xpath("//div[@id='stepChooseMethod_nextBtn']/p"));
-		btnSiguiente.click();
-		
-		WebElement numeroLote = driver.findElement(By.id("lotNumber"));
-		numeroLote.sendKeys("1234567890123456");
-		
-		Assert.assertTrue(numeroLote.getAttribute("class").contains("ng-valid-minlength"));
-		Assert.assertTrue(numeroLote.getAttribute("class").contains("ng-valid-maxlength"));
-	}
-	
-	@Test(groups= {"CustomerCare", "ProblemasConRecargas"})
-	public void TS38551_Problems_with_Refills_Problemas_con_Recargas_Medio_de_recarga_Lote_Ingresa_17_dígitos() {
-		Customer.elegirCuenta("aaaaFernando Care");
-
-		Customer.irAProblemasConRecargas();
-		
-		List<WebElement> elementos = driver.findElements(By.cssSelector(".slds-radio.ng-scope"));
-		dynamicWait().until(ExpectedConditions.visibilityOfAllElements(elementos));
-		for (WebElement e : elementos) {
-			if (e.getText().contains("Tarjeta Prepaga")) {
-				e.click();
-				break;
-			}
-		}
-		
-		WebElement btnSiguiente = driver.findElement(By.xpath("//div[@id='stepChooseMethod_nextBtn']/p"));
-		btnSiguiente.click();
-		
-		WebElement numeroLote = driver.findElement(By.id("lotNumber"));
-		numeroLote.sendKeys("12345678901234567");
-		
-		Assert.assertTrue(numeroLote.getAttribute("class").contains("ng-invalid-maxlength"));
-	}
-	
-	@Test(groups= {"CustomerCare", "ProblemasConRecargas"})
-	public void TS38552_Problems_with_Refills_Problemas_con_Recargas_Medio_de_recarga_Lote_Ingresa_letras() {
-		Customer.elegirCuenta("aaaaFernando Care");
-
-		Customer.irAProblemasConRecargas();
-
-		List<WebElement> elementos = driver.findElements(By.cssSelector(".slds-radio.ng-scope"));
-		dynamicWait().until(ExpectedConditions.visibilityOfAllElements(elementos));
-		for (WebElement e : elementos) {
-			if (e.getText().contains("Tarjeta Prepaga")) {
-				e.click();
-				break;
-			}
-		}
-
-		WebElement btnSiguiente = driver.findElement(By.xpath("//div[@id='stepChooseMethod_nextBtn']/p"));
-		btnSiguiente.click();
-		
-		WebElement numeroLote = driver.findElement(By.id("lotNumber"));
-		numeroLote.sendKeys("abcde");
-		
-		Assert.assertTrue(numeroLote.getAttribute("class").contains("ng-invalid-pattern"));
-	}
-	
 	@Test(groups= {"CustomerCare", "Vista360Layout"})
 	public void TS38628_360_View_360_View_Card_Pre_pago_Acción_sobre_Historiales_Visualizar_Ultimas_5_recargas_desde_el_dia_de_la_fecha() {
 		Customer.elegirCuenta("aaaaFernando Care");
@@ -730,42 +560,6 @@ public class CustomerCare360Joaquin extends TestBase {
 		Assert.assertTrue(campo.findElement(By.cssSelector(".slds-icon.slds-icon--x-small.slds-icon-text-default.slds-is-sortable__icon")).isDisplayed());
 	}
 	
-	@Test(groups= {"CustomerCare", "ProblemasConRecargas"})
-	public void TS68976_Problems_with_Refills_UX_Tarjeta_de_Recarga_Pre_paga_Verificacion_Visualizar_panel_de_Steps() {
-		Customer.elegirCuenta("aaaaFernando Care");
-		Customer.irAProblemasConRecargas();
-		
-		WebElement panelPasos = driver.findElement(By.cssSelector(".vlc-slds-wizard"));
-		WebElement listaPasos = driver.findElement(By.cssSelector(".list-group.vertical-steps"));
-		waitFor.visibilityOfElement(listaPasos);
-		
-		Assert.assertTrue(panelPasos.getText().contains("Pasos"));
-		Assert.assertTrue(listaPasos.isDisplayed());
-	}
-	
-	@Test(groups= {"CustomerCare", "ProblemasConRecargas"})
-	public void TS68977_Problems_with_Refills_UX_Tarjeta_de_Recarga_Pre_paga_Verificacion_Visualizar_Boton_Cancelar() {
-		Customer.elegirCuenta("aaaaFernando Care");
-		Customer.irAProblemasConRecargas();
-		
-		WebElement botonCancelar = driver.findElement(By.cssSelector(".vlc-slds-button--tertiary"));
-		waitFor.visibilityOfElement(botonCancelar);
-		
-		Assert.assertTrue(botonCancelar.getText().contains("Cancelar"));
-		Assert.assertTrue(botonCancelar.isDisplayed());
-	}
-	
-	@Test(groups= {"CustomerCare", "ProblemasConRecargas"})
-	public void TS68982_Problems_with_Refills_UX_Tarjeta_de_Recarga_Pre_paga_Verificacion_Visualizar_Titulo() {
-		Customer.elegirCuenta("aaaaFernando Care");
-		Customer.irAProblemasConRecargas();
-		
-		WebElement titulo = driver.findElement(By.cssSelector(".slds-page-header__title"));
-		waitFor.visibilityOfElement(titulo);
-		
-		Assert.assertTrue(titulo.isDisplayed());		
-	}
-	
 	@Test(groups= {"CustomerCare", "Vista360Layout"})
 	public void TS68996_360_View_360_View_Mis_servicios_Visualizar_numero_de_linea_asociada_al_asset() {
 		Customer.elegirCuenta("aaaaFernando Care");
@@ -825,31 +619,6 @@ public class CustomerCare360Joaquin extends TestBase {
 		Customer.buscarGestion("Debito automatico");
 
 		Assert.assertTrue(Customer.gestionesEncontradas.get(0).getText().contains("Débito automático"));
-	}
-	
-	
-	@Test(groups= {"CustomerCare", "ProblemasConRecargas"})
-	public void TS69091_Problems_with_Refills_Problemas_con_Recargas_Base_de_Conocimiento_Tarjeta_Prepaga_Panel_Visualizar_base_de_conocimiento_paso_omniscript() {
-		Customer.elegirCuenta("aaaaFernando Care");
-
-		Customer.irAProblemasConRecargas();
-
-		List<WebElement> elementos = driver.findElements(By.cssSelector(".slds-radio.ng-scope"));
-		dynamicWait().until(ExpectedConditions.visibilityOfAllElements(elementos));
-		for (WebElement e : elementos) {
-			if (e.getText().contains("Tarjeta Prepaga")) {
-				e.click();
-				break;
-			}
-		}
-
-		WebElement btnSiguiente = driver.findElement(By.xpath("//div[@id='stepChooseMethod_nextBtn']/p"));
-		btnSiguiente.click();
-		sleep(1000);
-		WebElement baseConocimiento = driver.findElement(By.cssSelector(".slds-form-element.slds-lookup.vlc-slds-knowledge-component"));
-		
-		Assert.assertTrue(baseConocimiento.isDisplayed());
-		Assert.assertTrue(baseConocimiento.getText().contains("Información De Recargas"));
 	}
 	
 	@Test(groups= {"CustomerCare", "Vista360Layout"})

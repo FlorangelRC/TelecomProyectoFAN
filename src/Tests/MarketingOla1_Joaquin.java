@@ -39,7 +39,7 @@ public class MarketingOla1_Joaquin extends TestBase {
 		Page.cerrarTodasLasPestañas();
 	}
 	
-	@Test(groups = {"Marketing", "Ola1", "GestionDelSocioDeClubPersonal"}, dataProvider="MarketingCuentaSinServicio")
+	@Test(groups = {"Marketing", "Ola1", "GestionDelSocioDeClubPersonal"}, priority = 2, dataProvider="MarketingCuentaSinServicio")
 	public void TS90242_Sucripcion_CP_No_Validacion_de_Mail(String nombreCuenta) {
 		Page.elegirCuenta(nombreCuenta);
 		Page.irAGestionMarketing();
@@ -48,7 +48,7 @@ public class MarketingOla1_Joaquin extends TestBase {
 		Assert.assertTrue(Page.verificarMensajeDeErrorEmail());
 	}
 	
-	@Test(groups = {"Marketing", "Ola1", "GestionDelSocioDeClubPersonal"}, dataProvider="MarketingCuentaNormal")
+	@Test(groups = {"Marketing", "Ola1", "GestionDelSocioDeClubPersonal"}, priority = 1, dataProvider="MarketingCuentaNormal")
 	public void TS98022_Visualizar_botones_ABM_del_CP(String nombreCuenta) {
 		Page.elegirCuenta(nombreCuenta);
 		Page.irAGestionMarketing();
@@ -59,7 +59,7 @@ public class MarketingOla1_Joaquin extends TestBase {
 		}
 	}
 	
-	@Test(groups = {"Marketing", "Ola1", "GestionDelSocioDeClubPersonal"}, dataProvider="MarketingCuentaConFraude")
+	@Test(groups = {"Marketing", "Ola1", "GestionDelSocioDeClubPersonal"}, priority = 2, dataProvider="MarketingCuentaConFraude")
 	public void TS98025_Visualizar_error_Fraude_Alta_CP(String nombreCuenta) {
 		Page.elegirCuenta(nombreCuenta);
 		Page.irAGestionMarketing();
@@ -68,7 +68,7 @@ public class MarketingOla1_Joaquin extends TestBase {
 		Assert.assertTrue(Page.verificarMensajeDeErrorCuentaFraude());
 	}
 	
-	@Test(groups = {"Marketing", "Ola1", "GestionDelSocioDeClubPersonal"}, dataProvider="MarketingCuentaConFraude")
+	@Test(groups = {"Marketing", "Ola1", "GestionDelSocioDeClubPersonal"}, priority = 2, dataProvider="MarketingCuentaConFraude")
 	public void TS98028_Generar_Caso_error_Fraude_Alta_CP(String nombreCuenta) {
 		Page.elegirCuenta(nombreCuenta);
 		Page.irAGestionMarketing();
@@ -85,7 +85,7 @@ public class MarketingOla1_Joaquin extends TestBase {
 		Assert.assertTrue(Page.obtenerEstadoDelCaso(numeroCaso).contentEquals("Closed"));
 	}
 	
-	@Test(groups = {"Marketing", "Ola1", "GestionDelSocioDeClubPersonal"}, dataProvider="MarketingCuentaNormal")
+	@Test(groups = {"Marketing", "Ola1", "GestionDelSocioDeClubPersonal"}, priority = 3, dataProvider="MarketingCuentaNormal")
 	public void TS98029_Visualizar_cuentas_Customer_Alta_CP(String nombreCuenta) {
 		Page.elegirCuenta(nombreCuenta);
 		Page.irAGestionMarketing();
@@ -94,7 +94,7 @@ public class MarketingOla1_Joaquin extends TestBase {
 		Assert.assertTrue(Page.visualizarCuentasConsumerUsuarioCP());
 	}
 	
-	@Test(groups = {"Marketing", "Ola1", "GestionDelSocioDeClubPersonal"}, dataProvider="MarketingCuentaNormal")
+	@Test(groups = {"Marketing", "Ola1", "GestionDelSocioDeClubPersonal"}, priority = 3, dataProvider="MarketingCuentaNormal")
 	public void TS98030_Visualizar_cuentas_Business_Alta_CP(String nombreCuenta) {
 		Page.elegirCuenta(nombreCuenta);
 		Page.irAGestionMarketing();
@@ -103,7 +103,7 @@ public class MarketingOla1_Joaquin extends TestBase {
 		Assert.assertTrue(Page.visualizarCuentasBusinessUsuarioCP());
 	}
 	
-	@Test(groups = {"Marketing", "Ola1", "GestionDelSocioDeClubPersonal"}, dataProvider="MarketingCuentaNormal")
+	@Test(groups = {"Marketing", "Ola1", "GestionDelSocioDeClubPersonal"}, priority = 4, dataProvider="MarketingCuentaNormal")
 	public void TS98039_Visualizacion_de_cuentas_seleccionadas_Alta_CP(String nombreCuenta) {
 		Page.elegirCuenta(nombreCuenta);
 		Page.irAGestionMarketing();
@@ -114,7 +114,7 @@ public class MarketingOla1_Joaquin extends TestBase {
 		Assert.assertTrue(Page.visualizarCuentasSeleccionadasConsumerCP());
 	}
 	
-	@Test(groups = {"Marketing", "Ola1", "GestionDelSocioDeClubPersonal"}, dataProvider="MarketingCuentaNormal")
+	@Test(groups = {"Marketing", "Ola1", "GestionDelSocioDeClubPersonal"}, priority = 4, dataProvider="MarketingCuentaNormal")
 	public void TS98040_No_visualizacion_de_cuentas_sin_seleccionar_Alta_CP(String nombreCuenta) {
 		Page.elegirCuenta(nombreCuenta);
 		Page.irAGestionMarketing();
@@ -125,7 +125,7 @@ public class MarketingOla1_Joaquin extends TestBase {
 		Assert.assertTrue(!Page.visualizarCuentasSeleccionadasBusinessCP());
 	}
 	
-	@Test(groups = {"Marketing", "Ola1", "GestionDelSocioDeClubPersonal"}, dataProvider="MarketingCuentaNormal")
+	@Test(groups = {"Marketing", "Ola1", "GestionDelSocioDeClubPersonal"}, priority = 11, dataProvider="MarketingCuentaNormal")
 	public void TS98063_Verificar_creacion_de_caso_cerrado_Notificacion_Baja_CP(String nombreCuenta) {
 		Page.elegirCuenta(nombreCuenta);
 		Page.irAGestionMarketing();
@@ -144,7 +144,7 @@ public class MarketingOla1_Joaquin extends TestBase {
 		Assert.assertTrue(Page.obtenerEstadoDelCaso(numeroCaso).contentEquals("Closed"));
 	}
 	
-	@Test(groups = {"Marketing", "Ola1", "GestionDelSocioDeClubPersonal"}, dataProvider="MarketingCuentaNormal")
+	@Test(groups = {"Marketing", "Ola1", "GestionDelSocioDeClubPersonal"}, priority = 10, dataProvider="MarketingCuentaNormal")
 	public void TS98064_Visualizar_mensaje_al_cerrar_el_caso_Notificacion_Baja_CP(String nombreCuenta) {
 		Page.elegirCuenta(nombreCuenta);
 		Page.irAGestionMarketing();
