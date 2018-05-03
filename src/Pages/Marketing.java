@@ -505,4 +505,20 @@ public class Marketing extends CustomerCare {
 		driver.switchTo().frame(cambioFrame.getFrameForElement(driver, By.cssSelector(".slds-panel__section.slds-p-around--small")));
 	}
 	
+	public void goToAccountTab(String sCuenta) {
+		CustomerCare cCC = new CustomerCare(driver);
+		cCC.selectMainTabByName(sCuenta);
+		boolean bTrue = false;
+		do {
+			WebElement wActiveTab = cCC.obtenerPestañaActiva();
+			String sTabName = wActiveTab.findElement(By.className("tabText")).getText();
+			System.out.println("sTabName: " + sTabName);
+			if (!sTabName.contains(sCuenta)) {
+				closeActiveTab();
+			} else {
+				bTrue = true;
+			}
+		} while(!bTrue);
+	}
+	
 }
