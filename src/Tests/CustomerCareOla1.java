@@ -88,7 +88,7 @@ public class CustomerCareOla1 extends TestBase {
 	}
 	
 	@Test (groups = {"CustomerCare", "AjustesYEscalamiento", "Ola1"}, dataProvider = "CustomerCuentaActiva", priority = 0)
-	public void TS90461_Adjustments_and_Escalations_Sesión_guiada_Visualizar_Gestion_Ajustes(String cCuenta) {
+	public void TS90461_Adjustments_and_Escalations_Sesion_guiada_Visualizar_Gestion_Ajustes(String cCuenta) {
 		cc.elegirCuenta(cCuenta);
 		cc.buscarGestion("inconvenientes con cargos tasados y facturados");
 		List <WebElement> list = driver.findElements(By.cssSelector(".slds-button.slds-button--neutral.slds-truncate"));
@@ -96,7 +96,7 @@ public class CustomerCareOla1 extends TestBase {
 	}
 	
 	@Test (groups = {"CustomerCare", "SuspensionYRehabilitacion", "Ola1"}, dataProvider = "CustomerCuentaActiva", priority = 1)
-	public void TS90462_360_VIEW_Suspensiones_and_Reconexiones_Visualizar_pantalla_para_seleccionar_el_tipo_de_acción_a_realizar_Suspensión_Rehabilitación(String cCuenta) {
+	public void TS90462_360_VIEW_Suspensiones_and_Reconexiones_Visualizar_pantalla_para_seleccionar_el_tipo_de_accion_a_realizar_Suspension_Rehabilitacion(String cCuenta) {
 		cc.elegirCuenta(cCuenta);
 		cc.irAGestion("suspensiones");
 		List <WebElement> gest = driver.findElements(By.cssSelector(".slds-form-element__label.ng-binding.ng-scope"));
@@ -113,7 +113,7 @@ public class CustomerCareOla1 extends TestBase {
 	}
 	
 	@Test (groups = {"CustomerCare", "AjustesYEscalamiento", "Ola1"}, dataProvider = "CustomerCuentaActiva", priority = 1)
-	public void TS90469_360_VIEW_Ajustes_y_Escalaciones_Selección_de_Concepto_Tipo_de_Cargo_Item_Motivo_Visualizar_parametro_Concepto(String cCuenta) {
+	public void TS90469_360_VIEW_Ajustes_y_Escalaciones_Seleccion_de_Concepto_Tipo_de_Cargo_Item_Motivo_Visualizar_parametro_Concepto(String cCuenta) {
 		cc.elegirCuenta(cCuenta);
 		cc.irAGestion("inconvenientes");
 		sleep(5000);
@@ -121,7 +121,7 @@ public class CustomerCareOla1 extends TestBase {
 	}
 	
 	@Test (groups = {"CustomerCare", "AjustesYEscalamiento", "Ola1"}, dataProvider = "CustomerCuentaActiva", priority = 2)
-	public void TS90481_360_VIEW_Adjustments_and_scalations_Visualizacion_Ajustes_y_Casos_Relacionados_Visualizar_un_botón_Siguiente_que_me_permita_avanzar_al_siguiente_paso_del_proceso(String cCuenta) {
+	public void TS90481_360_VIEW_Adjustments_and_scalations_Visualizacion_Ajustes_y_Casos_Relacionados_Visualizar_un_boton_Siguiente_que_me_permita_avanzar_al_siguiente_paso_del_proceso(String cCuenta) {
 		cc.elegirCuenta(cCuenta);
 		cc.irAGestion("inconvenientes");
 		sleep(5000);
@@ -133,7 +133,7 @@ public class CustomerCareOla1 extends TestBase {
 	}
 	
 	@Test (groups = {"CustomerCare", "SuspensionYRehabilitacion", "Ola1"}, dataProvider = "CustomerCuentaActiva", priority = 0)
-	public void TS90498_360_VIEW_Suspensiones_and_Reconexiones_Session_Guiada_Visualizar_la_opción_Suspensión_en_el_panel_de_gestiones(String cCuenta) {
+	public void TS90498_360_VIEW_Suspensiones_and_Reconexiones_Session_Guiada_Visualizar_la_opcion_Suspension_en_el_panel_de_gestiones(String cCuenta) {
 		cc.elegirCuenta(cCuenta);
 		cc.buscarGestion("suspensiones");
 		List <WebElement> list = driver.findElements(By.cssSelector(".slds-button.slds-button--neutral.slds-truncate"));
@@ -141,7 +141,7 @@ public class CustomerCareOla1 extends TestBase {
 	}
 	
 	@Test (groups = {"CustomerCare", "SuspensionYRehabilitacion", "Ola1"}, dataProvider = "CustomerCuentaActiva", priority = 1)
-	public void TS90499_360_VIEW_Suspensiones_and_Reconexiones_Session_Guiada_Visualizar_la_opción_Habilitación_en_el_panel_de_gestiones(String cCuenta) {
+	public void TS90499_360_VIEW_Suspensiones_and_Reconexiones_Session_Guiada_Visualizar_la_opcion_Habilitacion_en_el_panel_de_gestiones(String cCuenta) {
 		cc.elegirCuenta(cCuenta);
 		cc.irAGestion("suspensiones");
 		List <WebElement> hab = driver.findElements(By.cssSelector(".slds-form-element__label.ng-binding.ng-scope"));
@@ -155,7 +155,7 @@ public class CustomerCareOla1 extends TestBase {
 	}
 	
 	@Test (groups = {"CustomerCare", "SuspensionYRehabilitacion", "Ola1"}, dataProvider = "CustomerCuentaActiva", priority = 6)
-	public void TS95637_Suspensiones_and_Reconexiones_Creación_del_Caso_Back_office_Creación_caso_comentario_de_resolucion_La_gestion_ha_sido_realizada_exitosamente(String cCuenta) {
+	public void TS95637_Suspensiones_and_Reconexiones_Creacion_del_Caso_Back_office_Creacion_caso_comentario_de_resolucion_La_gestion_ha_sido_realizada_exitosamente(String cCuenta) {
 		cc.elegirCuenta(cCuenta);
 		cc.irAGestion("suspensiones y reconexion back");
 		List <WebElement> hab = driver.findElements(By.cssSelector(".slds-form-element__label.ng-binding.ng-scope"));
@@ -202,7 +202,7 @@ public class CustomerCareOla1 extends TestBase {
 	}
 	
 	@Test (groups = {"CustomerCare", "SuspensionYRehabilitacion", "Ola1"}, dataProvider = "CustomerCuentaActiva", priority = 4)
-	public void TS95641_Suspensiones_and_Reconexiones_Creación_del_Caso_Creación_caso_habilitacion_status(String cCuenta) {
+	public void TS95641_Suspensiones_and_Reconexiones_Creacion_del_Caso_Creacion_caso_habilitacion_status(String cCuenta) {
 		cc.elegirCuenta(cCuenta);
 		cc.irAGestion("suspensiones");
 		List <WebElement> hab = driver.findElements(By.cssSelector(".slds-form-element__label.ng-binding.ng-scope"));
@@ -247,7 +247,7 @@ public class CustomerCareOla1 extends TestBase {
 	}
 	
 	@Test (groups = {"CustomerCare", "SuspensionYRehabilitacion", "Ola1"}, dataProvider = "CustomerCuentaActiva", priority = 4)
-	public void TS95647_Suspensiones_and_Reconexiones_Creación_del_Caso_Creación_caso_habilitacion_Líneas_y_o_equipos_seleccionados(String cCuenta) {
+	public void TS95647_Suspensiones_and_Reconexiones_Creacion_del_Caso_Creacion_caso_habilitacion_Lineas_y_o_equipos_seleccionados(String cCuenta) {
 		cc.elegirCuenta(cCuenta);
 		cc.irAGestion("suspensiones");
 		List <WebElement> hab = driver.findElements(By.cssSelector(".slds-form-element__label.ng-binding.ng-scope"));
@@ -292,7 +292,7 @@ public class CustomerCareOla1 extends TestBase {
 	}
 	
 	@Test (groups = {"CustomerCare", "SuspensionYRehabilitacion", "Ola1"}, dataProvider = "CustomerCuentaActiva", priority = 4)
-	public void TS95651_Suspensiones_and_Reconexiones_Creación_del_Caso_Suspensión_Nivel_cuenta_campo_pais(String cCuenta) {
+	public void TS95651_Suspensiones_and_Reconexiones_Creacion_del_Caso_Suspension_Nivel_cuenta_campo_pais(String cCuenta) {
 		cc.elegirCuenta(cCuenta);
 		cc.irAGestion("suspensiones");
 		List <WebElement> hab = driver.findElements(By.cssSelector(".slds-form-element__label.ng-binding.ng-scope"));
@@ -496,7 +496,7 @@ public class CustomerCareOla1 extends TestBase {
 		Select tsus = new Select (driver.findElement(By.id("SelectFraud")));  
 		tsus.selectByVisibleText("Comercial");
 		Select sub = new Select (driver.findElement(By.id("SelectSubFraud")));  
-		sub.selectByVisibleText("Fraude por suscripción");
+		sub.selectByVisibleText("Fraude por suscripci\u00f3n");
 		driver.findElement(By.id("Step4_nextBtn")).click();
 		sleep(3000);
 		driver.findElement(By.id("StepSummary_nextBtn")).click();
@@ -564,13 +564,7 @@ public class CustomerCareOla1 extends TestBase {
 	public void TS96075_Suspensiones_and_Reconexiones_Seleccionar_tipo_Siniestro_Verificar_que_la_opcion_Tipo_de_Siniestro_se_de_seleccion_unica(String cCuenta) {
 		cc.elegirCuenta(cCuenta);
 		cc.irAGestion("suspensiones");
-		List <WebElement> hab = driver.findElements(By.cssSelector(".slds-form-element__label.ng-binding.ng-scope"));
-		for (WebElement x : hab) {
-			if (x.getText().toLowerCase().contains("suspensi\u00f3n")) {
-				x.click();
-				break;
-			}
-		}
+		searchAndClick(driver.findElements(By.cssSelector(".slds-form-element__label.ng-binding.ng-scope")), "contains", "suspensi\u00f3n");
 		driver.findElement(By.id("Step1-SuspensionOrReconnection_nextBtn")).click();
 		sleep(3000);
 		List <WebElement> eq = driver.findElements(By.cssSelector(".slds-form-element__label.ng-binding.ng-scope"));
@@ -755,7 +749,7 @@ public class CustomerCareOla1 extends TestBase {
 	}
 	
 	@Test(groups = {"CustomerCare", "Ola1", "AjustesYEscalamiento"}, dataProvider = "CustomerCuentaActiva", priority = 2)
-	public void TS90454_Adjustments_and_Esccalations_Adjustments_and_Escalations_UX_Visualizacion_Ajustes_y_Casos_Relacionados_Visualizar_botón_siguiente_OS(String cCuenta) {
+	public void TS90454_Adjustments_and_Esccalations_Adjustments_and_Escalations_UX_Visualizacion_Ajustes_y_Casos_Relacionados_Visualizar_boton_siguiente_OS(String cCuenta) {
 		cc.elegirCuenta(cCuenta);
 		cc.irAGestion("inconvenientes");
 		sleep(5000);
@@ -764,7 +758,7 @@ public class CustomerCareOla1 extends TestBase {
 		driver.findElement(By.id("CboItem")).click();
 		driver.findElement(By.xpath("//*[text() = 'Consumos de datos']")).click();
 		driver.findElement(By.id("CboMotivo")).click();
-		driver.findElement(By.xpath("//*[text() = 'Error/omisión/demora gestión']")).click();
+		driver.findElement(By.xpath("//*[text() = 'Error/omisi\u00f3n/demora gesti\u00f3n']")).click();
 		List <WebElement> si = driver.findElements(By.cssSelector(".slds-form-element__label.ng-binding.ng-scope"));
 		for (WebElement x : si) {
 			if (x.getText().toLowerCase().equals("si")) {
@@ -1019,24 +1013,24 @@ public class CustomerCareOla1 extends TestBase {
 		Assert.assertTrue(a && b);
 	}
 	
-	@Test (groups = {"CustomerCare", "ProblemasConRecargas"}, dataProvider = "CustomerCuentaActiva")
-	public void TS38553_Problems_with_Refills_Problemas_con_Recargas_Medio_de_recarga_PIN_Ingresa_15_dígitos(String cCuenta) {
+	@Test (groups = {"CustomerCare", "ProblemasConRecargas", "Ola1"}, dataProvider = "CustomerCuentaActiva")
+	public void TS38553_Problems_with_Refills_Problemas_con_Recargas_Medio_de_recarga_PIN_Ingresa_15_digitos(String cCuenta) {
 		cc.elegirCuenta(cCuenta);
 		cc.tarjetaPrepaga();
 	    driver.findElement(By.id("pinNumber")).sendKeys("123456789012345");
 	    Assert.assertTrue(!driver.findElement(By.cssSelector(".error.ng-scope")).getText().isEmpty());
 	}
 	
-	@Test (groups = {"CustomerCare", "ProblemasConRecargas"}, dataProvider = "CustomerCuentaActiva")
-	public void TS37554_Problems_with_Refills_Problemas_con_Recargas_Medio_de_recarga_PIN_Ingresa_16_dígitos(String cCuenta) {
+	@Test (groups = {"CustomerCare", "ProblemasConRecargas", "Ola1"}, dataProvider = "CustomerCuentaActiva")
+	public void TS37554_Problems_with_Refills_Problemas_con_Recargas_Medio_de_recarga_PIN_Ingresa_16_digitos(String cCuenta) {
 		cc.elegirCuenta(cCuenta);
 		cc.tarjetaPrepaga();
 		driver.findElement(By.id("pinNumber")).sendKeys("1234567890123456");
 	    Assert.assertTrue(driver.findElement(By.cssSelector(".error.ng-scope")).getText().isEmpty());
 	}
 	
-	@Test (groups = {"CustomerCare", "ProblemasConRecargas"}, dataProvider = "CustomerCuentaActiva")
-	public void TS37555_Problems_with_Refills_Problemas_con_Recargas_Medio_de_recarga_PIN_Ingresa_17_dígitos(String cCuenta) {
+	@Test (groups = {"CustomerCare", "ProblemasConRecargas", "Ola1"}, dataProvider = "CustomerCuentaActiva")
+	public void TS37555_Problems_with_Refills_Problemas_con_Recargas_Medio_de_recarga_PIN_Ingresa_17_digitos(String cCuenta) {
 		cc.elegirCuenta(cCuenta);
 		cc.tarjetaPrepaga();
 		driver.findElement(By.id("pinNumber")).sendKeys("12345678901234567");
@@ -1044,7 +1038,7 @@ public class CustomerCareOla1 extends TestBase {
 	    Assert.assertTrue(!driver.findElement(By.cssSelector(".error.ng-scope")).getText().isEmpty());
 	}
 	
-	@Test (groups = {"CustomerCare", "ProblemasConRecargas"}, dataProvider = "CustomerCuentaActiva")
+	@Test (groups = {"CustomerCare", "ProblemasConRecargas", "Ola1"}, dataProvider = "CustomerCuentaActiva")
 	public void TS37556_Problems_with_Refills_Problemas_con_Recargas_Medio_de_recarga_PIN_Ingresa_letras(String cCuenta) {
 		cc.elegirCuenta(cCuenta);
 		cc.tarjetaPrepaga();
@@ -1052,7 +1046,7 @@ public class CustomerCareOla1 extends TestBase {
 	    Assert.assertTrue(!driver.findElement(By.cssSelector(".error.ng-scope")).getText().isEmpty());
 	}
 	
-	@Test (groups = {"CustomerCare", "ProblemasConRecargas"}, dataProvider = "CustomerCuentaActiva")  //Rompe pop popUp
+	@Test (groups = {"CustomerCare", "ProblemasConRecargas", "Ola1"}, dataProvider = "CustomerCuentaActiva")  //Rompe pop popUp
 	public void TS37536_Problems_with_Refills_Problemas_con_Recargas_Medio_de_recarga_Seleccionar_Tarjeta_Pre_Paga_PIN_Invisible(String cCuenta) {
 		cc.elegirCuenta(cCuenta);
 		cc.tarjetaPrepaga();
@@ -1063,24 +1057,24 @@ public class CustomerCareOla1 extends TestBase {
 		Assert.assertTrue(false);
 	}
 	
-	@Test (groups = {"CustomerCare", "ProblemasConRecargas"}, dataProvider = "CustomerCuentaActiva")
-	public void TS37549_Problems_with_Refills_Problemas_con_Recargas_Recarga_sin_PIN_Gestión_pendiente_Recarga_sin_PIN_Lote_Ingresa_15_dígitos(String cCuenta) {
+	@Test (groups = {"CustomerCare", "ProblemasConRecargas", "Ola1"}, dataProvider = "CustomerCuentaActiva")
+	public void TS37549_Problems_with_Refills_Problemas_con_Recargas_Recarga_sin_PIN_Gestion_pendiente_Recarga_sin_PIN_Lote_Ingresa_15_digitos(String cCuenta) {
 		cc.elegirCuenta(cCuenta);
 		cc.tarjetaPrepaga();
 		driver.findElement(By.id("lotNumber")).sendKeys("123456789012345");
 	    Assert.assertTrue(!driver.findElement(By.cssSelector(".error.ng-scope")).getText().isEmpty());
 	}
 	
-	@Test (groups = {"CustomerCare", "ProblemasConRecargas"}, dataProvider = "CustomerCuentaActiva")
-	public void TS37550_Problems_with_Refills_Problemas_con_Recargas_Recarga_sin_PIN_Gestión_pendiente_Recarga_sin_PIN_Lote_Ingresa_16_dígitos(String cCuenta) {
+	@Test (groups = {"CustomerCare", "ProblemasConRecargas", "Ola1"}, dataProvider = "CustomerCuentaActiva")
+	public void TS37550_Problems_with_Refills_Problemas_con_Recargas_Recarga_sin_PIN_Gestion_pendiente_Recarga_sin_PIN_Lote_Ingresa_16_digitos(String cCuenta) {
 		cc.elegirCuenta(cCuenta);
 		cc.tarjetaPrepaga();
 		driver.findElement(By.id("lotNumber")).sendKeys("1234567890123456");
 	    Assert.assertTrue(driver.findElement(By.cssSelector(".error.ng-scope")).getText().isEmpty());
 	}
 	
-	@Test (groups = {"CustomerCare", "ProblemasConRecargas"}, dataProvider = "CustomerCuentaActiva")
-	public void TS37551_Problems_with_Refills_Problemas_con_Recargas_Recarga_sin_PIN_Gestión_pendiente_Recarga_sin_PIN_Lote_Ingresa_17_dígitos(String cCuenta) {
+	@Test (groups = {"CustomerCare", "ProblemasConRecargas", "Ola1"}, dataProvider = "CustomerCuentaActiva")
+	public void TS37551_Problems_with_Refills_Problemas_con_Recargas_Recarga_sin_PIN_Gestion_pendiente_Recarga_sin_PIN_Lote_Ingresa_17_digitos(String cCuenta) {
 		cc.elegirCuenta(cCuenta);
 		cc.tarjetaPrepaga();
 		driver.findElement(By.id("lotNumber")).sendKeys("12345678901234567");
@@ -1088,16 +1082,16 @@ public class CustomerCareOla1 extends TestBase {
 	    Assert.assertTrue(!driver.findElement(By.cssSelector(".error.ng-scope")).getText().isEmpty());
 	}
 	
-	@Test (groups = {"CustomerCare", "ProblemasConRecargas"}, dataProvider = "CustomerCuentaActiva")
-	public void TS37552_Problems_with_Refills_Problemas_con_Recargas_Recarga_sin_PIN_Gestión_pendiente_Recarga_sin_PIN_Lote_Ingresa_Letras(String cCuenta) {
+	@Test (groups = {"CustomerCare", "ProblemasConRecargas", "Ola1"}, dataProvider = "CustomerCuentaActiva")
+	public void TS37552_Problems_with_Refills_Problemas_con_Recargas_Recarga_sin_PIN_Gestion_pendiente_Recarga_sin_PIN_Lote_Ingresa_Letras(String cCuenta) {
 		cc.elegirCuenta(cCuenta);
 		cc.tarjetaPrepaga();
 		driver.findElement(By.id("lotNumber")).sendKeys("a");
 	    Assert.assertTrue(!driver.findElement(By.cssSelector(".error.ng-scope")).getText().isEmpty());
 	}
 	
-	@Test(groups = {"CustomerCare", "ProblemasConRecargas"}, dataProvider = "CustomerCuentaActiva")
-	public void TS37331_Problems_with_Refills_UX_Tarjeta_de_Recarga_Pre_paga_Verificación_Visualizar_Botón_Cancelar(String cCuenta) {
+	@Test(groups = {"CustomerCare", "ProblemasConRecargas", "Ola1"}, dataProvider = "CustomerCuentaActiva")
+	public void TS37331_Problems_with_Refills_UX_Tarjeta_de_Recarga_Pre_paga_Verificacion_Visualizar_Boton_Cancelar(String cCuenta) {
 		cc.elegirCuenta(cCuenta);
 		driver.switchTo().frame(cambioFrame(driver, By.className("card-top")));
 		driver.findElement(By.className("card-top")).click();
@@ -1112,8 +1106,8 @@ public class CustomerCareOla1 extends TestBase {
 	    Assert.assertTrue(driver.findElement(By.cssSelector(".vlc-slds-button--tertiary.ng-binding.ng-scope")).isDisplayed());
 	}
 	
-	@Test(groups = {"CustomerCare", "ProblemasConRecargas"}, dataProvider = "CustomerCuentaActiva")
-	public void TS37338_Problems_with_Refills_UX_Tarjeta_de_Recarga_Pre_paga_Verificación_Visualizar_Botón_Consultar(String cCuenta) {
+	@Test(groups = {"CustomerCare", "ProblemasConRecargas", "Ola1"}, dataProvider = "CustomerCuentaActiva")
+	public void TS37338_Problems_with_Refills_UX_Tarjeta_de_Recarga_Pre_paga_Verificacion_Visualizar_Boton_Consultar(String cCuenta) {
 		cc.elegirCuenta(cCuenta);
 		driver.switchTo().frame(cambioFrame(driver, By.className("card-top")));
 		driver.findElement(By.className("card-top")).click();
@@ -1128,8 +1122,8 @@ public class CustomerCareOla1 extends TestBase {
 	    Assert.assertTrue(driver.findElement(By.id("stepChooseMethod_nextBtn")).isDisplayed());
 	}
 	
-	@Test(groups = {"CustomerCare", "ProblemasConRecargas"}, dataProvider = "CustomerCuentaActiva")
-	public void TS37330_Problems_with_Refills_UX_Tarjeta_de_Recarga_Pre_paga_Verificación_Visualizar_panel_de_Steps(String cCuenta) {
+	@Test(groups = {"CustomerCare", "ProblemasConRecargas", "Ola1"}, dataProvider = "CustomerCuentaActiva")
+	public void TS37330_Problems_with_Refills_UX_Tarjeta_de_Recarga_Pre_paga_Verificacion_Visualizar_panel_de_Steps(String cCuenta) {
 		cc.elegirCuenta(cCuenta);
 		driver.switchTo().frame(cambioFrame(driver, By.className("card-top")));
 		driver.findElement(By.className("card-top")).click();
@@ -1143,7 +1137,7 @@ public class CustomerCareOla1 extends TestBase {
 	    Assert.assertTrue(driver.findElement(By.cssSelector(".vlc-slds-wizard.ng-scope.ng-isolate-scope")).isDisplayed());
 	}
 	
-	@Test(groups = {"CustomerCare", "ProblemasConRecargas"}, dataProvider = "CustomerCuentaActiva")
+	@Test(groups = {"CustomerCare", "ProblemasConRecargas", "Ola1"}, dataProvider = "CustomerCuentaActiva")
 	public void TS69190_360_View_Visualizacion_de_gestiones_desde_el_asset_Detalles_Gestion_Columna_numero(String cCuenta) {
 		cc.elegirCuenta(cCuenta);
 		driver.switchTo().frame(cambioFrame(driver, By.className("card-top")));
@@ -1166,7 +1160,7 @@ public class CustomerCareOla1 extends TestBase {
 	    Assert.assertTrue(num.toLowerCase().equals("n\u00famero"));
 	}
 	
-	@Test(groups = {"CustomerCare", "ProblemasConRecargas"}, dataProvider = "CustomerCuentaActiva")
+	@Test(groups = {"CustomerCare", "ProblemasConRecargas", "Ola1"}, dataProvider = "CustomerCuentaActiva")
 	public void TS69182_360_View_Visualizacion_de_gestiones_desde_el_asset_Estado_Ordenar_ascendente(String cCuenta) throws ParseException {
 		cc.elegirCuenta(cCuenta);
 		driver.switchTo().frame(cambioFrame(driver, By.className("card-top")));
@@ -1187,7 +1181,7 @@ public class CustomerCareOla1 extends TestBase {
 	    Assert.assertTrue(scp.Triangulo_Ordenador_Validador(driver, By.cssSelector(".slds-table.slds-table--bordered.slds-table--resizable-cols.slds-table--fixed-layout.via-slds-table-pinned-header"), 5, 5));
 	}
 	
-	@Test(groups = {"CustomerCare", "ProblemasConRecargas"}, dataProvider = "CustomerCuentaActiva")  //Rompe porque hay solo un dato cargado
+	@Test(groups = {"CustomerCare", "ProblemasConRecargas", "Ola1"}, dataProvider = "CustomerCuentaActiva")  //Rompe porque hay solo un dato cargado
 	public void TS69187_360_View_Visualizacion_de_gestiones_desde_el_asset_Estado_Ordenar_descendente(String cCuenta) throws ParseException {
 		cc.elegirCuenta(cCuenta);
 		driver.switchTo().frame(cambioFrame(driver, By.className("card-top")));
@@ -1226,8 +1220,8 @@ public class CustomerCareOla1 extends TestBase {
 	    Assert.assertTrue(a);
 	}
 	
-	@Test (groups= {"CustomerCare", "ProblemasConRecargas"}, dataProvider = "CustomerCuentaActiva")
-	public void TS38537_Problems_with_Refills_Problemas_con_Recargas_Medio_de_recarga_Selección_simple(String cCuenta) {
+	@Test (groups= {"CustomerCare", "ProblemasConRecargas", "Ola1"}, dataProvider = "CustomerCuentaActiva")
+	public void TS38537_Problems_with_Refills_Problemas_con_Recargas_Medio_de_recarga_Seleccion_simple(String cCuenta) {
 		cc.elegirCuenta(cCuenta);
 		cc.irAProblemasConRecargas();	
 		List<WebElement> elementos = driver.findElements(By.cssSelector(".slds-radio.ng-scope"));
@@ -1243,8 +1237,8 @@ public class CustomerCareOla1 extends TestBase {
 		Assert.assertTrue(false);
 	}
 	
-	@Test (groups= {"CustomerCare", "ProblemasConRecargas"}, dataProvider = "CustomerCuentaActiva")
-	public void TS38538_Problems_with_Refills_Problemas_con_Recargas_Medio_de_recarga_Selección_Múltiple(String cCuenta) {
+	@Test (groups= {"CustomerCare", "ProblemasConRecargas", "Ola1"}, dataProvider = "CustomerCuentaActiva")
+	public void TS38538_Problems_with_Refills_Problemas_con_Recargas_Medio_de_recarga_Seleccion_Multiple(String cCuenta) {
 		cc.elegirCuenta("aaaaFernando Care");
 		cc.irAProblemasConRecargas();		
 		List<WebElement> elementos = driver.findElements(By.cssSelector(".slds-radio.ng-scope"));
@@ -1265,7 +1259,7 @@ public class CustomerCareOla1 extends TestBase {
 		Assert.assertTrue(false);
 	}
 	
-	@Test (groups= {"CustomerCare", "ProblemasConRecargas"}, dataProvider = "CustomerCuentaActiva")
+	@Test (groups= {"CustomerCare", "ProblemasConRecargas", "Ola1"}, dataProvider = "CustomerCuentaActiva")
 	public void TS38541_Problems_with_Refills_Problemas_con_Recargas_Medio_de_recarga_Seleccionar_Tarjeta_Pre_Paga_PIN_Visible_Lote_activo(String cCuenta) {
 		cc.elegirCuenta(cCuenta);
 		cc.tarjetaPrepaga();
@@ -1275,8 +1269,8 @@ public class CustomerCareOla1 extends TestBase {
 		Assert.assertTrue(driver.findElement(By.id("rechargeImpacted_prevBtn")).isDisplayed());
 	}
 	
-	@Test (groups= {"CustomerCare", "ProblemasConRecargas"}, dataProvider = "CustomerCuentaActiva")
-	public void TS38549_Problems_with_Refills_Problemas_con_Recargas_Medio_de_recarga_Lote_Ingresa_15_dígitos(String cCuenta) {
+	@Test (groups= {"CustomerCare", "ProblemasConRecargas", "Ola1"}, dataProvider = "CustomerCuentaActiva")
+	public void TS38549_Problems_with_Refills_Problemas_con_Recargas_Medio_de_recarga_Lote_Ingresa_15_digitos(String cCuenta) {
 		cc.elegirCuenta(cCuenta);
 		cc.tarjetaPrepaga();
 		WebElement numeroLote = driver.findElement(By.id("lotNumber"));
@@ -1284,8 +1278,8 @@ public class CustomerCareOla1 extends TestBase {
 		Assert.assertTrue(numeroLote.getAttribute("class").contains("ng-invalid-minlength"));
 	}
 	
-	@Test (groups= {"CustomerCare", "ProblemasConRecargas"}, dataProvider = "CustomerCuentaActiva")
-	public void TS38550_Problems_with_Refills_Problemas_con_Recargas_Medio_de_recarga_Lote_Ingresa_16_dígitos(String cCuenta) {
+	@Test (groups= {"CustomerCare", "ProblemasConRecargas", "Ola1"}, dataProvider = "CustomerCuentaActiva")
+	public void TS38550_Problems_with_Refills_Problemas_con_Recargas_Medio_de_recarga_Lote_Ingresa_16_digitos(String cCuenta) {
 		cc.elegirCuenta(cCuenta);
 		cc.tarjetaPrepaga();
 		WebElement numeroLote = driver.findElement(By.id("lotNumber"));
@@ -1294,8 +1288,8 @@ public class CustomerCareOla1 extends TestBase {
 		Assert.assertTrue(numeroLote.getAttribute("class").contains("ng-valid-maxlength"));
 	}
 	
-	@Test (groups= {"CustomerCare", "ProblemasConRecargas"}, dataProvider = "CustomerCuentaActiva")
-	public void TS38551_Problems_with_Refills_Problemas_con_Recargas_Medio_de_recarga_Lote_Ingresa_17_dígitos(String cCuenta) {
+	@Test (groups= {"CustomerCare", "ProblemasConRecargas", "Ola1"}, dataProvider = "CustomerCuentaActiva")
+	public void TS38551_Problems_with_Refills_Problemas_con_Recargas_Medio_de_recarga_Lote_Ingresa_17_digitos(String cCuenta) {
 		cc.elegirCuenta(cCuenta);
 		cc.tarjetaPrepaga();
 		WebElement numeroLote = driver.findElement(By.id("lotNumber"));
@@ -1303,7 +1297,7 @@ public class CustomerCareOla1 extends TestBase {
 		Assert.assertTrue(numeroLote.getAttribute("class").contains("ng-invalid-maxlength"));
 	}
 	
-	@Test (groups= {"CustomerCare", "ProblemasConRecargas"}, dataProvider = "CustomerCuentaActiva")
+	@Test (groups= {"CustomerCare", "ProblemasConRecargas", "Ola1"}, dataProvider = "CustomerCuentaActiva")
 	public void TS38552_Problems_with_Refills_Problemas_con_Recargas_Medio_de_recarga_Lote_Ingresa_letras(String cCuenta) {
 		cc.elegirCuenta(cCuenta);
 		cc.tarjetaPrepaga();
@@ -1312,7 +1306,7 @@ public class CustomerCareOla1 extends TestBase {
 		Assert.assertTrue(numeroLote.getAttribute("class").contains("ng-invalid-pattern"));
 	}
 	
-	@Test (groups= {"CustomerCare", "ProblemasConRecargas"}, dataProvider = "CustomerCuentaActiva")
+	@Test (groups= {"CustomerCare", "ProblemasConRecargas", "Ola1"}, dataProvider = "CustomerCuentaActiva")
 	public void TS68976_Problems_with_Refills_UX_Tarjeta_de_Recarga_Pre_paga_Verificacion_Visualizar_panel_de_Steps(String cCuenta) {
 		cc.elegirCuenta(cCuenta);
 		cc.tarjetaPrepaga();
@@ -1320,7 +1314,7 @@ public class CustomerCareOla1 extends TestBase {
 		Assert.assertTrue(driver.findElement(By.cssSelector(".list-group.vertical-steps")).isDisplayed());
 	}
 	
-	@Test (groups= {"CustomerCare", "ProblemasConRecargas"}, dataProvider = "CustomerCuentaActiva")
+	@Test (groups= {"CustomerCare", "ProblemasConRecargas", "Ola1"}, dataProvider = "CustomerCuentaActiva")
 	public void TS68977_Problems_with_Refills_UX_Tarjeta_de_Recarga_Pre_paga_Verificacion_Visualizar_Boton_Cancelar(String cCuenta) {
 		cc.elegirCuenta(cCuenta);
 		cc.tarjetaPrepaga();
@@ -1329,7 +1323,7 @@ public class CustomerCareOla1 extends TestBase {
 		Assert.assertTrue(botonCancelar.isDisplayed());
 	}
 	
-	@Test (groups= {"CustomerCare", "ProblemasConRecargas"}, dataProvider = "CustomerCuentaActiva")
+	@Test (groups= {"CustomerCare", "ProblemasConRecargas", "Ola1"}, dataProvider = "CustomerCuentaActiva")
 	public void TS68982_Problems_with_Refills_UX_Tarjeta_de_Recarga_Pre_paga_Verificacion_Visualizar_Titulo(String cCuenta) {
 		cc.elegirCuenta("aaaaFernando Care");
 		cc.tarjetaPrepaga();
@@ -1343,25 +1337,25 @@ public class CustomerCareOla1 extends TestBase {
 		Assert.assertTrue(a);
 	}
 	
-	@Test (groups= {"CustomerCare", "ProblemasConRecargas"}, dataProvider = "CustomerCuentaActiva")
+	@Test (groups= {"CustomerCare", "ProblemasConRecargas", "Ola1"}, dataProvider = "CustomerCuentaActiva")
 	public void TS69091_Problems_with_Refills_Problemas_con_Recargas_Base_de_Conocimiento_Tarjeta_Prepaga_Panel_Visualizar_base_de_conocimiento_paso_omniscript(String cCuenta) {
 		cc.elegirCuenta(cCuenta);
 		cc.tarjetaPrepaga();
 		WebElement baseConocimiento = driver.findElement(By.cssSelector(".slds-form-element.slds-lookup.vlc-slds-knowledge-component"));
 		Assert.assertTrue(baseConocimiento.isDisplayed());
-		Assert.assertTrue(baseConocimiento.getText().contains("Información De Recargas"));
+		Assert.assertTrue(baseConocimiento.getText().contains("Informaci\u00f3n De Recargas"));
 	}
 	
-	@Test (groups= {"CustomerCare", "ProblemasConRecargas"}, dataProvider = "CustomerCuentaActiva")
-	public void TS37326_Problems_With_Refills_Tarjeta_De_Recarga_Prepaga_Verificación_Numero_De_Lote_Ingresa_15_Dígitos(String cCuenta) {
+	@Test (groups= {"CustomerCare", "ProblemasConRecargas", "Ola1"}, dataProvider = "CustomerCuentaActiva")
+	public void TS37326_Problems_With_Refills_Tarjeta_De_Recarga_Prepaga_Verificacion_Numero_De_Lote_Ingresa_15_Digitos(String cCuenta) {
 		cc.elegirCuenta(cCuenta);
 		cc.tarjetaPrepaga();
 		driver.findElement(By.id("lotNumber")).sendKeys("145789654212458");
-		Assert.assertTrue(driver.findElement(By.cssSelector(".vlc-slds-error-block.ng-scope")).findElement(By.cssSelector(".error.ng-scope")).findElement(By.cssSelector(".description.ng-binding")).getText().toLowerCase().equals("longitud mínima de 16"));
+		Assert.assertTrue(driver.findElement(By.cssSelector(".vlc-slds-error-block.ng-scope")).findElement(By.cssSelector(".error.ng-scope")).findElement(By.cssSelector(".description.ng-binding")).getText().toLowerCase().equals("longitud m\u00ednima de 16"));
 	}
 	
-	@Test (groups= {"CustomerCare", "ProblemasConRecargas"}, dataProvider = "CustomerCuentaActiva")
-	public void TS37328_Problems_With_Refills_Tarjeta_De_Recarga_Prepaga_Verificación_Numero_De_Lote_Ingresa_Letras(String cCuenta) {
+	@Test (groups= {"CustomerCare", "ProblemasConRecargas", "Ola1"}, dataProvider = "CustomerCuentaActiva")
+	public void TS37328_Problems_With_Refills_Tarjeta_De_Recarga_Prepaga_Verificacion_Numero_De_Lote_Ingresa_Letras(String cCuenta) {
 		cc.elegirCuenta(cCuenta);
 		cc.tarjetaPrepaga();
 		driver.findElement(By.id("lotNumber")).sendKeys("letrasletrasletr");
@@ -1377,8 +1371,8 @@ public class CustomerCareOla1 extends TestBase {
 		Assert.assertTrue(enc);
 	}
 	
-	@Test (groups= {"CustomerCare", "ProblemasConRecargas"}, dataProvider = "CustomerCuentaActiva")
-	public void TS37327_Problems_With_Refills_Tarjeta_De_Recarga_Prepaga_Verificación_Numero_De_Lote_Ingresa_17_Dígitos(String cCuenta) {
+	@Test (groups= {"CustomerCare", "ProblemasConRecargas", "Ola1"}, dataProvider = "CustomerCuentaActiva")
+	public void TS37327_Problems_With_Refills_Tarjeta_De_Recarga_Prepaga_Verificacion_Numero_De_Lote_Ingresa_17_Digitos(String cCuenta) {
 		cc.elegirCuenta(cCuenta);
 		cc.tarjetaPrepaga();
 		driver.findElement(By.id("lotNumber")).sendKeys("12457856321457895");
@@ -1393,8 +1387,8 @@ public class CustomerCareOla1 extends TestBase {
 		Assert.assertTrue(enc);
 	}
 	
-	@Test (groups= {"CustomerCare", "ProblemasConRecargas"}, dataProvider = "CustomerCuentaActiva")
-	public void TS37325_Problems_With_Refills_Tarjeta_De_Recarga_Prepaga_Verificación_Numero_De_Lote_Ingresa_16_Dígitos(String cCuenta) {
+	@Test (groups= {"CustomerCare", "ProblemasConRecargas", "Ola1"}, dataProvider = "CustomerCuentaActiva")
+	public void TS37325_Problems_With_Refills_Tarjeta_De_Recarga_Prepaga_Verificacion_Numero_De_Lote_Ingresa_16_Digitos(String cCuenta) {
 		cc.elegirCuenta(cCuenta);
 		cc.tarjetaPrepaga();
 		driver.findElement(By.id("lotNumber")).sendKeys("1245785632145789");
@@ -1409,7 +1403,7 @@ public class CustomerCareOla1 extends TestBase {
 		Assert.assertTrue(enc);
 	}
 	
-	@Test (groups= {"CustomerCare", "ProblemasConRecargas"}, dataProvider = "CustomerCuentaActiva")  //Rompe por popUp
+	@Test (groups= {"CustomerCare", "ProblemasConRecargas", "Ola1"}, dataProvider = "CustomerCuentaActiva")  //Rompe por popUp
 	public void TS37534_Problems_With_Refills_Problemas_Con_Recargas_Medio_De_Recarga_Seleccionar_ROL(String cCuenta) {
 		cc.elegirCuenta(cCuenta);
 		cc.tarjetaPrepaga();
@@ -1430,7 +1424,7 @@ public class CustomerCareOla1 extends TestBase {
 		Assert.assertTrue(false);
 	}
 	
-	@Test (groups= {"CustomerCare", "ProblemasConRecargas"}, dataProvider = "CustomerCuentaActiva")
+	@Test (groups= {"CustomerCare", "ProblemasConRecargas", "Ola1"}, dataProvider = "CustomerCuentaActiva")
 	public void TS69021_Problems_with_Refills_Problemas_con_Recargas_Base_de_Conocimiento_Tarjeta_Prepaga_OS_Verificar_articulo_en_Base_de_conocimiento(String cCuenta) {
 		cc.elegirCuenta(cCuenta);
 		cc.tarjetaPrepaga();
@@ -1442,7 +1436,7 @@ public class CustomerCareOla1 extends TestBase {
 		Assert.assertTrue(driver.findElement(By.className("articleListItem")).isDisplayed());
 	}
 	
-	@Test (groups= {"CustomerCare", "ProblemasConRecargas"}, dataProvider = "CustomerCuentaActiva")
+	@Test (groups= {"CustomerCare", "ProblemasConRecargas", "Ola1"}, dataProvider = "CustomerCuentaActiva")
 	public void TS68984_Problems_with_Refills_UX_Tarjeta_de_Recarga_Pre_paga_Verificacion_Visualizar_Boton_Consultar(String cCuenta) {
 		cc.elegirCuenta(cCuenta);
 		cc.irAGestion("estado de tarjeta");
