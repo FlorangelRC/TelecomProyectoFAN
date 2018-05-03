@@ -158,23 +158,10 @@ public class CustomerCareOla1 extends TestBase {
 	public void TS95637_Suspensiones_and_Reconexiones_Creacion_del_Caso_Back_office_Creacion_caso_comentario_de_resolucion_La_gestion_ha_sido_realizada_exitosamente(String cCuenta) {
 		cc.elegirCuenta(cCuenta);
 		cc.irAGestion("suspensiones y reconexion back");
-		List <WebElement> hab = driver.findElements(By.cssSelector(".slds-form-element__label.ng-binding.ng-scope"));
-		for (WebElement x : hab) {
-			if (x.getText().toLowerCase().contains("habilitaci\u00f3n")) {
-				x.click();
-				break;
-			}
-		}
-		sleep(3000);
+		searchAndClick(driver.findElements(By.cssSelector(".slds-form-element__label.ng-binding.ng-scope")), "contains", "habilitaci\u00f3n");
 		driver.findElement(By.id("Step1SelectSuspensionOrReconnection_nextBtn")).click();
 		sleep(3000);
-		List <WebElement> dni = driver.findElements(By.cssSelector(".slds-form-element__label.ng-binding.ng-scope"));
-		for (WebElement x : dni) {
-			if (x.getText().toLowerCase().contains("dni/cuit")) {
-				x.click();
-				break;
-			}
-		}
+		searchAndClick(driver.findElements(By.cssSelector(".slds-form-element__label.ng-binding.ng-scope")), "contains", "dni/cuit");
 		driver.findElement(By.id("Step2-SelectAssetOrDocument_nextBtn")).click();
 		sleep(3000);
 		driver.findElement(By.id("Step3_nextBtn")).click();
@@ -205,31 +192,13 @@ public class CustomerCareOla1 extends TestBase {
 	public void TS95641_Suspensiones_and_Reconexiones_Creacion_del_Caso_Creacion_caso_habilitacion_status(String cCuenta) {
 		cc.elegirCuenta(cCuenta);
 		cc.irAGestion("suspensiones");
-		List <WebElement> hab = driver.findElements(By.cssSelector(".slds-form-element__label.ng-binding.ng-scope"));
-		for (WebElement x : hab) {
-			if (x.getText().toLowerCase().contains("habilitaci\u00f3n")) {
-				x.click();
-				break;
-			}
-		}
+		searchAndClick(driver.findElements(By.cssSelector(".slds-form-element__label.ng-binding.ng-scope")), "contains", "habilitaci\u00f3n");
 		driver.findElement(By.id("Step1-SuspensionOrReconnection_nextBtn")).click();
 		sleep(3000);
-		List <WebElement> eq = driver.findElements(By.cssSelector(".slds-form-element__label.ng-binding.ng-scope"));
-		for (WebElement x : eq) {
-			if (x.getText().toLowerCase().equals("equipo")) {
-				x.click();
-				break;
-			}
-		}
+		searchAndClick(driver.findElements(By.cssSelector(".slds-form-element__label.ng-binding.ng-scope")), "equals", "equipo");
 		driver.findElement(By.id("Step2-AssetTypeSelection_nextBtn")).click();
 		sleep(3000);
-		List <WebElement> num = driver.findElements(By.cssSelector(".slds-form-element__label.ng-binding"));
-		for (WebElement x : num) {
-			if (x.getText().toLowerCase().contains("543343344409154")) {
-				x.click();
-				break;
-			}
-		}
+		searchAndClick(driver.findElements(By.cssSelector(".slds-form-element__label.ng-binding")), "contains", "543343344409154");
 		driver.findElement(By.id("Step3.5B-DeviceForLine_nextBtn")).click();
 		sleep(5000);
 		driver.findElement(By.id("Step6-Summary_nextBtn")).click();
@@ -250,31 +219,13 @@ public class CustomerCareOla1 extends TestBase {
 	public void TS95647_Suspensiones_and_Reconexiones_Creacion_del_Caso_Creacion_caso_habilitacion_Lineas_y_o_equipos_seleccionados(String cCuenta) {
 		cc.elegirCuenta(cCuenta);
 		cc.irAGestion("suspensiones");
-		List <WebElement> hab = driver.findElements(By.cssSelector(".slds-form-element__label.ng-binding.ng-scope"));
-		for (WebElement x : hab) {
-			if (x.getText().toLowerCase().contains("habilitaci\u00f3n")) {
-				x.click();
-				break;
-			}
-		}
+		searchAndClick(driver.findElements(By.cssSelector(".slds-form-element__label.ng-binding.ng-scope")), "contains", "habilitaci\u00f3n");
 		driver.findElement(By.id("Step1-SuspensionOrReconnection_nextBtn")).click();
 		sleep(3000);
-		List <WebElement> eq = driver.findElements(By.cssSelector(".slds-form-element__label.ng-binding.ng-scope"));
-		for (WebElement x : eq) {
-			if (x.getText().toLowerCase().equals("equipo")) {
-				x.click();
-				break;
-			}
-		}
+		searchAndClick(driver.findElements(By.cssSelector(".slds-form-element__label.ng-binding.ng-scope")), "equals", "equipo");
 		driver.findElement(By.id("Step2-AssetTypeSelection_nextBtn")).click();
 		sleep(3000);
-		List <WebElement> num = driver.findElements(By.cssSelector(".slds-form-element__label.ng-binding"));
-		for (WebElement x : num) {
-			if (x.getText().toLowerCase().contains("543343344409154")) {
-				x.click();
-				break;
-			}
-		}
+		searchAndClick(driver.findElements(By.cssSelector(".slds-form-element__label.ng-binding")), "contains", "543343344409154");
 		driver.findElement(By.id("Step3.5B-DeviceForLine_nextBtn")).click();
 		sleep(5000);
 		driver.findElement(By.id("Step6-Summary_nextBtn")).click();
@@ -295,40 +246,16 @@ public class CustomerCareOla1 extends TestBase {
 	public void TS95651_Suspensiones_and_Reconexiones_Creacion_del_Caso_Suspension_Nivel_cuenta_campo_pais(String cCuenta) {
 		cc.elegirCuenta(cCuenta);
 		cc.irAGestion("suspensiones");
-		List <WebElement> hab = driver.findElements(By.cssSelector(".slds-form-element__label.ng-binding.ng-scope"));
-		for (WebElement x : hab) {
-			if (x.getText().toLowerCase().contains("suspensi\u00f3n")) {
-				x.click();
-				break;
-			}
-		}
+		searchAndClick(driver.findElements(By.cssSelector(".slds-form-element__label.ng-binding.ng-scope")), "contains", "suspensi\u00f3n");
 		driver.findElement(By.id("Step1-SuspensionOrReconnection_nextBtn")).click();
 		sleep(3000);
-		List <WebElement> eq = driver.findElements(By.cssSelector(".slds-form-element__label.ng-binding.ng-scope"));
-		for (WebElement x : eq) {
-			if (x.getText().toLowerCase().equals("equipo")) {
-				x.click();
-				break;
-			}
-		}
+		searchAndClick(driver.findElements(By.cssSelector(".slds-form-element__label.ng-binding.ng-scope")), "equals", "equipo");
 		driver.findElement(By.id("Step2-AssetTypeSelection_nextBtn")).click();
 		sleep(3000);
-		List <WebElement> num = driver.findElements(By.cssSelector(".slds-form-element__label.ng-binding"));
-		for (WebElement x : num) {
-			if (x.getText().toLowerCase().contains("equipo facturado")) {
-				x.click();
-				break;
-			}
-		}
+		searchAndClick(driver.findElements(By.cssSelector(".slds-form-element__label.ng-binding")), "contains", "equipo facturado");
 		driver.findElement(By.id("Step3.5A-DeviceForLine_nextBtn")).click();
 		sleep(3000);
-		List <WebElement> tds = driver.findElements(By.cssSelector(".slds-form-element__label.ng-binding.ng-scope"));
-		for (WebElement x : tds) {
-			if (x.getText().toLowerCase().contains("robo")) {
-				x.click();
-				break;
-			}
-		}
+		searchAndClick(driver.findElements(By.cssSelector(".slds-form-element__label.ng-binding.ng-scop")), "contains", "robo");
 		driver.findElement(By.id("Step4-SuspensionReason_nextBtn")).click();
 		sleep(3000);
 		List <WebElement> pais = driver.findElements(By.cssSelector(".slds-form-element__label.ng-binding.ng-scope"));
@@ -351,13 +278,7 @@ public class CustomerCareOla1 extends TestBase {
 	public void TS95927_360_VIEW_Suspensiones_and_Reconexiones_Seleccionar_tipo_Siniestro_Back_Office_Verificar_que_si_selecciono_Suspension_pueda_ser_de_DNI_CUIT(String cCuenta) {
 		cc.elegirCuenta(cCuenta);
 		cc.irAGestion("suspensiones y reconexion back");
-		List <WebElement> sus = driver.findElements(By.cssSelector(".slds-form-element__label.ng-binding.ng-scope"));
-		for (WebElement x : sus) {
-			if (x.getText().toLowerCase().contains("suspensi\u00f3n")) {
-				x.click();
-				break;
-			}
-		}
+		searchAndClick(driver.findElements(By.cssSelector(".slds-form-element__label.ng-binding.ng-scope")), "contains", "suspensi\u00f3n");
 		driver.findElement(By.id("Step1SelectSuspensionOrReconnection_nextBtn")).click();
 		sleep(3000);
 		List <WebElement> dni = driver.findElements(By.cssSelector(".slds-form-element__label.ng-binding.ng-scope"));
@@ -374,13 +295,7 @@ public class CustomerCareOla1 extends TestBase {
 	public void TS95928_Suspensiones_and_Reconexiones_Seleccionar_tipo_Siniestro_Back_Office_Verificar_que_si_selecciono_Suspension_pueda_ser_de_CUENTA_DE_FACTURACION(String cCuenta) {
 		cc.elegirCuenta(cCuenta);
 		cc.irAGestion("suspensiones y reconexion back");
-		List <WebElement> sus = driver.findElements(By.cssSelector(".slds-form-element__label.ng-binding.ng-scope"));
-		for (WebElement x : sus) {
-			if (x.getText().toLowerCase().contains("suspensi\u00f3n")) {
-				x.click();
-				break;
-			}
-		}
+		searchAndClick(driver.findElements(By.cssSelector(".slds-form-element__label.ng-binding.ng-scope")), "contains", "suspensi\u00f3n");
 		driver.findElement(By.id("Step1SelectSuspensionOrReconnection_nextBtn")).click();
 		sleep(3000);
 		List <WebElement> dni = driver.findElements(By.cssSelector(".slds-form-element__label.ng-binding.ng-scope"));
@@ -400,51 +315,20 @@ public class CustomerCareOla1 extends TestBase {
 	public void TS95965_Suspensiones_and_Reconexiones_Configurar_el_tipo_de_Siniestro_Seleccionar_Solicitante_No_titular_habilita_para_completar_Apellido(String cCuenta) {
 		cc.elegirCuenta(cCuenta);
 		cc.irAGestion("suspensiones");
-		List <WebElement> hab = driver.findElements(By.cssSelector(".slds-form-element__label.ng-binding.ng-scope"));
-		for (WebElement x : hab) {
-			if (x.getText().toLowerCase().contains("suspensi\u00f3n")) {
-				x.click();
-				break;
-			}
-		}
+		searchAndClick(driver.findElements(By.cssSelector(".slds-form-element__label.ng-binding.ng-scope")), "contains", "suspensi\u00f3n");
 		sleep(2000);
 		driver.findElement(By.id("Step1-SuspensionOrReconnection_nextBtn")).click();
 		sleep(3000);
-		List <WebElement> eq = driver.findElements(By.cssSelector(".slds-form-element__label.ng-binding.ng-scope"));
-		for (WebElement x : eq) {
-			if (x.getText().toLowerCase().equals("equipo")) {
-				x.click();
-				break;
-			}
-		}
+		searchAndClick(driver.findElements(By.cssSelector(".slds-form-element__label.ng-binding.ng-scope")), "equals", "equipo");
 		driver.findElement(By.id("Step2-AssetTypeSelection_nextBtn")).click();
 		sleep(3000);
-		List <WebElement> num = driver.findElements(By.cssSelector(".slds-form-element__label.ng-binding"));
-		for (WebElement x : num) {
-			if (x.getText().toLowerCase().contains("equipo facturado")) {
-				x.click();
-				break;
-			}
-		}
+		searchAndClick(driver.findElements(By.cssSelector(".slds-form-element__label.ng-binding")), "contains", "equipo facturado");
 		driver.findElement(By.id("Step3.5A-DeviceForLine_nextBtn")).click();
 		sleep(3000);
-		List <WebElement> tds = driver.findElements(By.cssSelector(".slds-form-element__label.ng-binding.ng-scope"));
-		for (WebElement x : tds) {
-			if (x.getText().toLowerCase().contains("robo")) {
-				x.click();
-				break;
-			}
-		}
+		searchAndClick(driver.findElements(By.cssSelector(".slds-form-element__label.ng-binding.ng-scope")), "contains", "robo");
 		driver.findElement(By.id("Step4-SuspensionReason_nextBtn")).click();
 		sleep(7000);
-		List <WebElement> no = driver.findElements(By.cssSelector(".slds-form-element__label.ng-binding.ng-scope"));
-		for (WebElement x : no) {
-			if (x.getText().toLowerCase().equals("no")) {
-				x.click();
-				break;
-			}
-		}
-		sleep(2000);
+		searchAndClick(driver.findElements(By.cssSelector(".slds-form-element__label.ng-binding.ng-scope")), "equals", "no");
 		Assert.assertTrue(driver.findElement(By.id("LastName")).isEnabled());
 		Assert.assertTrue(driver.findElement(By.id("DNI")).isEnabled());
 		Assert.assertTrue(driver.findElement(By.id("FirstName")).isEnabled());
@@ -473,22 +357,10 @@ public class CustomerCareOla1 extends TestBase {
 	public void TS96046_Suspensiones_and_Reconexiones_Creacion_del_Caso_Back_office_Creacion_caso_Subject_Suspencion_Administrativa(String cCuenta) {
 		cc.elegirCuenta(cCuenta);
 		cc.irAGestion("suspensiones y reconexion back");
-		List <WebElement> sus = driver.findElements(By.cssSelector(".slds-form-element__label.ng-binding.ng-scope"));
-		for (WebElement x : sus) {
-			if (x.getText().toLowerCase().contains("suspensi\u00f3n")) {
-				x.click();
-				break;
-			}
-		}
+		searchAndClick(driver.findElements(By.cssSelector(".slds-form-element__label.ng-binding.ng-scope")), "contains", "suspensi\u00f3n");
 		driver.findElement(By.id("Step1SelectSuspensionOrReconnection_nextBtn")).click();
 		sleep(3000);
-		List <WebElement> dni = driver.findElements(By.cssSelector(".slds-form-element__label.ng-binding.ng-scope"));
-		for (WebElement x : dni) {
-			if (x.getText().toLowerCase().contains("dni/cuit")) {
-				x.click();
-				break;
-			}
-		}
+		searchAndClick(driver.findElements(By.cssSelector(".slds-form-element__label.ng-binding.ng-scope")), "contains", "dni/cuit");
 		driver.findElement(By.id("Step2-SelectAssetOrDocument_nextBtn")).click();
 		sleep(3000);
 		driver.findElement(By.id("Step3_nextBtn")).click();
@@ -523,22 +395,10 @@ public class CustomerCareOla1 extends TestBase {
 	public void TS96074_360_VIEW_Suspensiones_and_Reconexiones_Seleccionar_tipo_Siniestro_Visualizar_opcion_Tipo_de_Siniestro(String cCuenta) {
 		cc.elegirCuenta(cCuenta);
 		cc.irAGestion("suspensiones");
-		List <WebElement> sus = driver.findElements(By.cssSelector(".slds-form-element__label.ng-binding.ng-scope"));
-		for (WebElement x : sus) {
-			if (x.getText().toLowerCase().contains("suspensi\u00f3n")) {
-				x.click();
-				break;
-			}
-		}
+		searchAndClick(driver.findElements(By.cssSelector(".slds-form-element__label.ng-binding.ng-scope")), "contains", "suspensi\u00f3n");
 		driver.findElement(By.id("Step1-SuspensionOrReconnection_nextBtn")).click();
 		sleep(5000);
-		List <WebElement> linea = driver.findElements(By.cssSelector(".slds-form-element__label.ng-binding.ng-scope"));
-		for (WebElement x : linea) {
-			if (x.getText().toLowerCase().contains("linea")) {
-				x.click();
-				break;
-			}
-		}
+		searchAndClick(driver.findElements(By.cssSelector(".slds-form-element__label.ng-binding.ng-scope")), "contains", "linea");
 		driver.findElement(By.id("Step2-AssetTypeSelection_nextBtn")).click();
 		sleep(5000);
 		driver.findElement(By.xpath("//*[@id=\"AssetsM0\"]/div/fieldset/div/span/label/span[2]")).click();
@@ -567,39 +427,15 @@ public class CustomerCareOla1 extends TestBase {
 		searchAndClick(driver.findElements(By.cssSelector(".slds-form-element__label.ng-binding.ng-scope")), "contains", "suspensi\u00f3n");
 		driver.findElement(By.id("Step1-SuspensionOrReconnection_nextBtn")).click();
 		sleep(3000);
-		List <WebElement> eq = driver.findElements(By.cssSelector(".slds-form-element__label.ng-binding.ng-scope"));
-		for (WebElement x : eq) {
-			if (x.getText().toLowerCase().equals("equipo")) {
-				x.click();
-				break;
-			}
-		}
+		searchAndClick(driver.findElements(By.cssSelector(".slds-form-element__label.ng-binding.ng-scope")), "equals", "equipo");
 		driver.findElement(By.id("Step2-AssetTypeSelection_nextBtn")).click();
 		sleep(3000);
-		List <WebElement> num = driver.findElements(By.cssSelector(".slds-form-element__label.ng-binding"));
-		for (WebElement x : num) {
-			if (x.getText().toLowerCase().contains("equipo facturado")) {
-				x.click();
-				break;
-			}
-		}
+		searchAndClick(driver.findElements(By.cssSelector(".slds-form-element__label.ng-binding.ng-scope")), "contains", "equipo facturado");
 		driver.findElement(By.id("Step3.5A-DeviceForLine_nextBtn")).click();
 		sleep(3000);
-		List <WebElement> ro = driver.findElements(By.cssSelector(".slds-form-element__label.ng-binding.ng-scope"));
-		for (WebElement x : ro) {
-			if (x.getText().toLowerCase().contains("robo")) {
-				x.click();
-				break;
-			}
-		}
-		Assert.assertTrue(driver.findElement(By.cssSelector(".ng-not-empty.ng-dirty.ng-valid.ng-valid-required.ng-touched.ng-valid-parse")).isSelected());		
-		List <WebElement> hur = driver.findElements(By.cssSelector(".slds-form-element__label.ng-binding.ng-scope"));
-		for (WebElement x : hur) {
-			if (x.getText().toLowerCase().contains("hurto")) {
-				x.click();
-				break;
-			}
-		}
+		searchAndClick(driver.findElements(By.cssSelector(".slds-form-element__label.ng-binding.ng-scope")), "contains", "robo");
+		Assert.assertTrue(driver.findElement(By.cssSelector(".ng-not-empty.ng-dirty.ng-valid.ng-valid-required.ng-touched.ng-valid-parse")).isSelected());
+		searchAndClick(driver.findElements(By.cssSelector(".slds-form-element__label.ng-binding.ng-scope")), "contains", "hurto");
 		Assert.assertTrue(!(driver.findElement(By.xpath("//*[@id=\"Radio3-ReasonSuspension|0\"]/div/div[1]/label[1]/span[1]")).isSelected()));
 	}
 	
@@ -607,13 +443,7 @@ public class CustomerCareOla1 extends TestBase {
 	public void TS96078_Suspensiones_and_Reconexiones_Seleccionar_Tipo_de_gestion_Suspension_Reconexion_Verficiar_que_al_seleccionar_Suspension_se_muestren_las_opciones_Linea_Linea__Equipo_Equipo(String cCuenta) {
 		cc.elegirCuenta(cCuenta);
 		cc.irAGestion("suspensiones");
-		List <WebElement> sus = driver.findElements(By.cssSelector(".slds-form-element__label.ng-binding.ng-scope"));
-		for (WebElement x : sus) {
-			if (x.getText().toLowerCase().contains("suspensi\u00f3n")) {
-				x.click();
-				break;
-			}
-		}
+		searchAndClick(driver.findElements(By.cssSelector(".slds-form-element__label.ng-binding.ng-scope")), "contains", "suspensi\u00f3n");
 		driver.findElement(By.id("Step1-SuspensionOrReconnection_nextBtn")).click();
 		sleep(5000);
 		List <WebElement> linea = driver.findElements(By.cssSelector(".slds-form-element__label.ng-binding.ng-scope"));
@@ -636,13 +466,7 @@ public class CustomerCareOla1 extends TestBase {
 	public void TS96080_Suspensiones_and_Reconexiones_Seleccionar_Tipo_de_gestion_Suspension_Reconexion_Seleccionar_Habilitacion_para_workplace_personalizada_se_muestren_las_opciones_Linea_Linea___Equipo_Equipo(String cCuenta) {
 		cc.elegirCuenta(cCuenta);
 		cc.irAGestion("suspensiones");
-		List <WebElement> sus = driver.findElements(By.cssSelector(".slds-form-element__label.ng-binding.ng-scope"));
-		for (WebElement x : sus) {
-			if (x.getText().toLowerCase().contains("habilitaci\u00f3n")) {
-				x.click();
-				break;
-			}
-		}
+		searchAndClick(driver.findElements(By.cssSelector(".slds-form-element__label.ng-binding.ng-scope")), "contains", "habilitaci\u00f3n");
 		driver.findElement(By.id("Step1-SuspensionOrReconnection_nextBtn")).click();
 		sleep(5000);
 		List <WebElement> linea = driver.findElements(By.cssSelector(".slds-form-element__label.ng-binding.ng-scope"));
@@ -665,32 +489,12 @@ public class CustomerCareOla1 extends TestBase {
 	public void TS96104_Suspensiones_and_Reconexiones_Visualizar_Lineas_Habilitacion_Verificar_que_sean_campos_de_seleccion_unica(String cCuenta) {
 		cc.elegirCuenta(cCuenta);
 		cc.irAGestion("suspensiones");
-		List <WebElement> sus = driver.findElements(By.cssSelector(".slds-form-element__label.ng-binding.ng-scope"));
-		for (WebElement x : sus) {
-			if (x.getText().toLowerCase().contains("habilitaci\u00f3n")) {
-				x.click();
-				break;
-			}
-		}
+		searchAndClick(driver.findElements(By.cssSelector(".slds-form-element__label.ng-binding.ng-scope")), "contains", "habilitaci\u00f3n");
 		driver.findElement(By.id("Step1-SuspensionOrReconnection_nextBtn")).click();
 		sleep(5000);
-		List <WebElement> lin = driver.findElements(By.cssSelector(".slds-form-element__label.ng-binding.ng-scope"));
-		for (WebElement x : lin) {
-			if (x.getText().toLowerCase().contains("linea")) {
-				x.click();
-				break;
-			}
-		}
-		sleep(3000);
+		searchAndClick(driver.findElements(By.cssSelector(".slds-form-element__label.ng-binding.ng-scope")), "contains", "linea");
 		Assert.assertTrue(driver.findElement(By.cssSelector(".ng-not-empty.ng-dirty.ng-valid.ng-valid-required.ng-touched.ng-valid-parse")).isSelected());
-		List <WebElement> eq = driver.findElements(By.cssSelector(".slds-form-element__label.ng-binding.ng-scope"));
-		for (WebElement x : eq) {
-			if (x.getText().toLowerCase().contains("equipo")) {
-				x.click();
-				break;
-			}
-		}
-		sleep(3000);
+		searchAndClick(driver.findElements(By.cssSelector(".slds-form-element__label.ng-binding.ng-scope")), "contains", "equipo");
 		Assert.assertTrue(!(driver.findElement(By.cssSelector(".ng-not-empty.ng-dirty.ng-valid.ng-valid-required.ng-touched")).isSelected()));
 	}
 	
@@ -698,13 +502,7 @@ public class CustomerCareOla1 extends TestBase {
 	public void TS96111_Suspensiones_and_Reconexiones_Seleccionar_tipo_Siniestro_Back_Office_Verificar_que_si_selecciono_Reconexion_pueda_ser_de_DNI_CUIT(String cCuenta) {
 		cc.elegirCuenta(cCuenta);
 		cc.irAGestion("suspensiones y reconexion back");
-		List <WebElement> sus = driver.findElements(By.cssSelector(".slds-form-element__label.ng-binding.ng-scope"));
-		for (WebElement x : sus) {
-			if (x.getText().toLowerCase().contains("habilitaci\u00f3n")) {
-				x.click();
-				break;
-			}
-		}
+		searchAndClick(driver.findElements(By.cssSelector(".slds-form-element__label.ng-binding.ng-scope")), "contains", "habilitaci\u00f3n");
 		driver.findElement(By.id("Step1SelectSuspensionOrReconnection_nextBtn")).click();
 		sleep(3000);
 		List <WebElement> dni = driver.findElements(By.cssSelector(".slds-form-element__label.ng-binding.ng-scope"));
@@ -759,13 +557,7 @@ public class CustomerCareOla1 extends TestBase {
 		driver.findElement(By.xpath("//*[text() = 'Consumos de datos']")).click();
 		driver.findElement(By.id("CboMotivo")).click();
 		driver.findElement(By.xpath("//*[text() = 'Error/omisi\u00f3n/demora gesti\u00f3n']")).click();
-		List <WebElement> si = driver.findElements(By.cssSelector(".slds-form-element__label.ng-binding.ng-scope"));
-		for (WebElement x : si) {
-			if (x.getText().toLowerCase().equals("si")) {
-				x.click();
-				break;
-			}
-		}
+		searchAndClick(driver.findElements(By.cssSelector(".slds-form-element__label.ng-binding.ng-scope")), "equals", "si");
 		driver.findElement(By.id("Step-TipodeAjuste_nextBtn")).click();
 		sleep(5000);
 		Assert.assertTrue(driver.findElement(By.id("Step-AssetSelection_nextBtn")).isDisplayed());
@@ -775,46 +567,20 @@ public class CustomerCareOla1 extends TestBase {
 	public void TS95964_360_VIEW_Suspensiones_and_Reconexiones_Configurar_el_tipo_de_Siniestro_Solicitante_No_titular_habilita_para_completar_Nombre_Apellido_DNI_telefono_de_contacto(String cCuenta) {
 		cc.elegirCuenta(cCuenta);
 		cc.irAGestion("suspensiones");
-		List <WebElement> sus = driver.findElements(By.cssSelector(".slds-form-element__label.ng-binding.ng-scope"));
-		for (WebElement x : sus) {
-			if (x.getText().toLowerCase().contains("suspensi\u00f3n")) {
-				x.click();
-				break;
-			}
-		}
+		searchAndClick(driver.findElements(By.cssSelector(".slds-form-element__label.ng-binding.ng-scope")), "contains", "suspensi\u00f3n");
 		sleep(2000);
 		driver.findElement(By.id("Step1-SuspensionOrReconnection_nextBtn")).click();
 		sleep(5000);
-		List <WebElement> linea = driver.findElements(By.cssSelector(".slds-form-element__label.ng-binding.ng-scope"));
-		for (WebElement x : linea) {
-			if (x.getText().toLowerCase().contains("linea")) {
-				x.click();
-				break;
-			}
-		}
+		searchAndClick(driver.findElements(By.cssSelector(".slds-form-element__label.ng-binding.ng-scope")), "contains", "linea");
 		driver.findElement(By.id("Step2-AssetTypeSelection_nextBtn")).click();
 		sleep(5000);
 		driver.findElement(By.xpath("//*[@id=\"AssetsM0\"]/div/fieldset/div/span/label/span[2]")).click();
 		driver.findElement(By.id("Step3-AvailableAssetsSelection_nextBtn")).click();
 		sleep(5000);
-		List <WebElement> element = driver.findElements(By.cssSelector(".slds-form-element__label.ng-binding.ng-scope"));
-		for (WebElement x : element) {
-			if (x.getText().toLowerCase().contains("robo")) {
-				x.click();
-				break;
-			}
-		}
-		sleep(3000);
+		searchAndClick(driver.findElements(By.cssSelector(".slds-form-element__label.ng-binding.ng-scope")), "contains", "robo");
 		driver.findElement(By.id("Step4-SuspensionReason_nextBtn")).click();
 		sleep(3000);
-		List <WebElement> no = driver.findElements(By.cssSelector(".slds-form-element__label.ng-binding.ng-scope"));
-		for (WebElement x : no) {
-			if (x.getText().toLowerCase().contains("no")) {
-				x.click();
-				break;
-			}
-		}
-		sleep(3000);
+		searchAndClick(driver.findElements(By.cssSelector(".slds-form-element__label.ng-binding.ng-scope")), "contains", "no");
 		Assert.assertTrue(driver.findElement(By.id("DNI")).isDisplayed());
 		Assert.assertTrue(driver.findElement(By.id("FirstName")).isDisplayed());
 		Assert.assertTrue(driver.findElement(By.id("LastName")).isDisplayed());
@@ -825,13 +591,7 @@ public class CustomerCareOla1 extends TestBase {
 	public void TS95934_360_VIEW_Suspensiones_and_Reconexiones_Seleccionar_tipo_Siniestro_Back_Office_Reconexion_pueda_ser_de_Linea(String cCuenta) {
 		cc.elegirCuenta(cCuenta);
 		cc.irAGestion("suspensiones y reconexion back");
-		List <WebElement> sus = driver.findElements(By.cssSelector(".slds-form-element__label.ng-binding.ng-scope"));
-		for (WebElement x : sus) {
-			if (x.getText().toLowerCase().contains("habilitaci\u00f3n")) {
-				x.click();
-				break;
-			}
-		}
+		searchAndClick(driver.findElements(By.cssSelector(".slds-form-element__label.ng-binding.ng-scope")), "contains", "habilitaci\u00f3n");
 		driver.findElement(By.id("Step1SelectSuspensionOrReconnection_nextBtn")).click();
 		sleep(3000);
 		boolean a = false;
@@ -848,14 +608,7 @@ public class CustomerCareOla1 extends TestBase {
 	public void TS95929_360_VIEW_Suspensiones_and_Reconexiones_Seleccionar_tipo_Siniestro_Back_Office_Verificar_que_si_selecciono_Suspension_pueda_ser_de_Linea(String cCuenta) {
 		cc.elegirCuenta(cCuenta);
 		cc.irAGestion("suspensiones y reconexion back");
-		List <WebElement> sus = driver.findElements(By.cssSelector(".slds-form-element__label.ng-binding.ng-scope"));
-		for (WebElement x : sus) {
-			if (x.getText().toLowerCase().contains("suspensi\u00f3n")) {
-				x.click();
-				break;
-			}
-		}
-		sleep(2000);
+		searchAndClick(driver.findElements(By.cssSelector(".slds-form-element__label.ng-binding.ng-scope")), "contains", "suspensi\u00f3n");
 		driver.findElement(By.id("Step1SelectSuspensionOrReconnection_nextBtn")).click();
 		sleep(3000);
 		boolean a = false;
@@ -872,44 +625,19 @@ public class CustomerCareOla1 extends TestBase {
 	public void TS95973_360_VIEW_Suspensiones_and_Reconexiones_Configurar_el_tipo_de_Siniestro_Direccion_del_Siniestro_y_Exterior_del_Pais_habilita_un_campo_para_ingresar_el_pais(String cCuenta) {
 		cc.elegirCuenta(cCuenta);
 		cc.irAGestion("suspensiones");
-		List <WebElement> sus = driver.findElements(By.cssSelector(".slds-form-element__label.ng-binding.ng-scope"));
-		for (WebElement x : sus) {
-			if (x.getText().toLowerCase().contains("suspensi\u00f3n")) {
-				x.click();
-				break;
-			}
-		}
+		searchAndClick(driver.findElements(By.cssSelector(".slds-form-element__label.ng-binding.ng-scope")), "contains", "suspensi\u00f3n");
 		driver.findElement(By.id("Step1-SuspensionOrReconnection_nextBtn")).click();
 		sleep(5000);
-		List <WebElement> linea = driver.findElements(By.cssSelector(".slds-form-element__label.ng-binding.ng-scope"));
-		for (WebElement x : linea) {
-			if (x.getText().toLowerCase().contains("linea")) {
-				x.click();
-				break;
-			}
-		}
+		searchAndClick(driver.findElements(By.cssSelector(".slds-form-element__label.ng-binding.ng-scope")), "contains", "linea");
 		driver.findElement(By.id("Step2-AssetTypeSelection_nextBtn")).click();
 		sleep(5000);
 		driver.findElement(By.xpath("//*[@id=\"AssetsM0\"]/div/fieldset/div/span/label/span[2]")).click();
 		driver.findElement(By.id("Step3-AvailableAssetsSelection_nextBtn")).click();
 		sleep(5000);
-		List <WebElement> element = driver.findElements(By.cssSelector(".slds-form-element__label.ng-binding.ng-scope"));
-		for (WebElement x : element) {
-			if (x.getText().toLowerCase().contains("robo")) {
-				x.click();
-				break;
-			}
-		}
-		sleep(3000);
+		searchAndClick(driver.findElements(By.cssSelector(".slds-form-element__label.ng-binding.ng-scope")), "contains", "robo");
 		driver.findElement(By.id("Step4-SuspensionReason_nextBtn")).click();
 		sleep(3000);
-		List <WebElement> ext = driver.findElements(By.cssSelector(".slds-form-element__label.ng-binding.ng-scope"));
-		for (WebElement x : ext) {
-			if (x.getText().toLowerCase().contains("exterior del pa\u00eds")) {
-				x.click();
-				break;
-			}
-		}
+		searchAndClick(driver.findElements(By.cssSelector(".slds-form-element__label.ng-binding.ng-scope")), "contains", "exterior del pa\u00eds");
 		Assert.assertTrue(driver.findElement(By.id("Country")).isDisplayed());
 	}
 	
@@ -917,13 +645,7 @@ public class CustomerCareOla1 extends TestBase {
 	public void TS96112_360_VIEW_Suspensiones_and_Reconexiones_Seleccionar_tipo_Siniestro_Back_Office_Verificar_que_si_selecciono_Reconexion_pueda_ser_de_CUENTA_DE_FACTURACION(String cCuenta) {
 		cc.elegirCuenta(cCuenta);
 		cc.irAGestion("suspensiones y reconexion back");
-		List <WebElement> sus = driver.findElements(By.cssSelector(".slds-form-element__label.ng-binding.ng-scope"));
-		for (WebElement x : sus) {
-			if (x.getText().toLowerCase().contains("habilitaci\u00f3n")) {
-				x.click();
-				break;
-			}
-		}
+		searchAndClick(driver.findElements(By.cssSelector(".slds-form-element__label.ng-binding.ng-scope")), "contains", "habilitaci\u00f3n");
 		driver.findElement(By.id("Step1SelectSuspensionOrReconnection_nextBtn")).click();
 		sleep(3000);
 		boolean a = false;
@@ -990,14 +712,7 @@ public class CustomerCareOla1 extends TestBase {
 		cc.elegirCuenta(cCuenta);
 		cc.irAGestion("inconvenientes");
 		cc.flujoInconvenientes();
-		List <WebElement> no = driver.findElements(By.cssSelector(".slds-form-element__label.ng-binding.ng-scope"));
-		for (WebElement x : no) {
-			if (x.getText().toLowerCase().equals("no")) {
-				x.click();
-				break;
-			}
-		}
-		sleep(2000);
+		searchAndClick(driver.findElements(By.cssSelector(".slds-form-element__label.ng-binding.ng-scope")), "equals", "no");
 		driver.findElement(By.id("Step-AjusteNivelLinea_nextBtn")).click();
 		sleep(5000);
 		driver.findElement(By.id("SummaryDerivateToBO_nextBtn")).click();
