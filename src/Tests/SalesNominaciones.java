@@ -16,8 +16,10 @@ import org.testng.Assert;
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeClass;
+import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
+import Pages.Accounts;
 import Pages.BasePage;
 import Pages.ContactSearch;
 import Pages.CustomerCare;
@@ -46,14 +48,22 @@ public class SalesNominaciones extends TestBase{
 	    	homePage.selectAppFromMenuByName("Ventas");
 	    	try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}            
 	    }
-	    driver.findElement(By.xpath("//a[@href=\'https://crm--sit--c.cs14.visual.force.com/apex/taClientSearch']")).click();		
-	    try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}    
-		
+	   
+	}
+	
+	@BeforeMethod(alwaysRun=true)
+	public void setup() throws Exception {	
+		try {Thread.sleep(20000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		driver.findElement(By.xpath("//a[@href=\'https://crm--sit--c.cs14.visual.force.com/apex/taClientSearch']")).click();
+			
+		try {Thread.sleep(10000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 	}
 
 	@AfterMethod(alwaysRun=true)
 	public void IceB() {
-		driver.navigate().refresh();
+		try {Thread.sleep(10000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		driver.get("https://crm--sit.cs14.my.salesforce.com/home/home.jsp?tsid=02u41000000QWha/");
+		try {Thread.sleep(10000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 	}
 	
 	@AfterClass(alwaysRun=true)
