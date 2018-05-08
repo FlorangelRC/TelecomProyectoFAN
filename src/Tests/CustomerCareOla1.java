@@ -728,7 +728,7 @@ public class CustomerCareOla1 extends TestBase {
 		Assert.assertTrue(a && b);
 	}
 	
-	@Test (groups = {"CustomerCare", "ProblemasConRecargas", "Ola1"}, dataProvider = "CustomerCuentaActiva")
+	@Test (groups = {"CustomerCare", "ProblemasConRecargas", "Ola1"}, dataProvider = "CustomerCuentaActiva")  //Rompe porque el PIN acepta 4 numeros
 	public void TS38553_Problems_with_Refills_Problemas_con_Recargas_Medio_de_recarga_PIN_Ingresa_15_digitos(String cCuenta) {
 		cc.elegirCuenta(cCuenta);
 		cc.tarjetaPrepaga();
@@ -736,19 +736,19 @@ public class CustomerCareOla1 extends TestBase {
 	    Assert.assertTrue(!driver.findElement(By.cssSelector(".error.ng-scope")).getText().isEmpty());
 	}
 	
-	@Test (groups = {"CustomerCare", "ProblemasConRecargas", "Ola1"}, dataProvider = "CustomerCuentaActiva")
+	@Test (groups = {"CustomerCare", "ProblemasConRecargas", "Ola1"}, dataProvider = "CustomerCuentaActiva")  //Rompe porque el PIN acepta 4 numeros
 	public void TS37554_Problems_with_Refills_Problemas_con_Recargas_Medio_de_recarga_PIN_Ingresa_16_digitos(String cCuenta) {
 		cc.elegirCuenta(cCuenta);
 		cc.tarjetaPrepaga();
-		driver.findElement(By.id("pinNumber")).sendKeys("1234567890123456");
+		driver.findElement(By.id("PIN")).sendKeys("1234567890123456");
 	    Assert.assertTrue(driver.findElement(By.cssSelector(".error.ng-scope")).getText().isEmpty());
 	}
 	
-	@Test (groups = {"CustomerCare", "ProblemasConRecargas", "Ola1"}, dataProvider = "CustomerCuentaActiva")
+	@Test (groups = {"CustomerCare", "ProblemasConRecargas", "Ola1"}, dataProvider = "CustomerCuentaActiva")  //Rompe porque el PIN acepta 4 numeros
 	public void TS37555_Problems_with_Refills_Problemas_con_Recargas_Medio_de_recarga_PIN_Ingresa_17_digitos(String cCuenta) {
 		cc.elegirCuenta(cCuenta);
 		cc.tarjetaPrepaga();
-		driver.findElement(By.id("pinNumber")).sendKeys("12345678901234567");
+		driver.findElement(By.id("PIN")).sendKeys("12345678901234567");
 	    System.out.println(driver.findElement(By.cssSelector(".vlc-slds-error-block.ng-scope")).getText());
 	    Assert.assertTrue(!driver.findElement(By.cssSelector(".error.ng-scope")).getText().isEmpty());
 	}
@@ -757,18 +757,17 @@ public class CustomerCareOla1 extends TestBase {
 	public void TS37556_Problems_with_Refills_Problemas_con_Recargas_Medio_de_recarga_PIN_Ingresa_letras(String cCuenta) {
 		cc.elegirCuenta(cCuenta);
 		cc.tarjetaPrepaga();
-		driver.findElement(By.id("pinNumber")).sendKeys("a");
+		driver.findElement(By.id("PIN")).sendKeys("a");
 	    Assert.assertTrue(!driver.findElement(By.cssSelector(".error.ng-scope")).getText().isEmpty());
 	}
 	
-	@Test (groups = {"CustomerCare", "ProblemasConRecargas", "Ola1"}, dataProvider = "CustomerCuentaActiva")  //Rompe pop popUp
+	@Test (groups = {"CustomerCare", "ProblemasConRecargas", "Ola1"}, dataProvider = "CustomerCuentaActiva")  //Rompe por error en el flujo de Tarjeta Prepaga
 	public void TS37536_Problems_with_Refills_Problemas_con_Recargas_Medio_de_recarga_Seleccionar_Tarjeta_Pre_Paga_PIN_Invisible(String cCuenta) {
 		cc.elegirCuenta(cCuenta);
 		cc.tarjetaPrepaga();
-		driver.findElement(By.id("lotNumber")).sendKeys("2222222222222222");
-		driver.findElement(By.id("stepPrepaidCardData_nextBtn")).click();
-		sleep(3000);
-		driver.findElement(By.id("rechargeImpacted_nextBtn")).click();
+		driver.findElement(By.id("BatchNumber")).sendKeys("2222222222222222");
+		driver.findElement(By.id("PrepaidCardData_nextBtn")).click();
+		sleep(5000);
 		Assert.assertTrue(false);
 	}
 	
@@ -776,7 +775,7 @@ public class CustomerCareOla1 extends TestBase {
 	public void TS37549_Problems_with_Refills_Problemas_con_Recargas_Recarga_sin_PIN_Gestion_pendiente_Recarga_sin_PIN_Lote_Ingresa_15_digitos(String cCuenta) {
 		cc.elegirCuenta(cCuenta);
 		cc.tarjetaPrepaga();
-		driver.findElement(By.id("lotNumber")).sendKeys("123456789012345");
+		driver.findElement(By.id("BatchNumber")).sendKeys("123456789012345");
 	    Assert.assertTrue(!driver.findElement(By.cssSelector(".error.ng-scope")).getText().isEmpty());
 	}
 	
@@ -784,7 +783,8 @@ public class CustomerCareOla1 extends TestBase {
 	public void TS37550_Problems_with_Refills_Problemas_con_Recargas_Recarga_sin_PIN_Gestion_pendiente_Recarga_sin_PIN_Lote_Ingresa_16_digitos(String cCuenta) {
 		cc.elegirCuenta(cCuenta);
 		cc.tarjetaPrepaga();
-		driver.findElement(By.id("lotNumber")).sendKeys("1234567890123456");
+		driver.findElement(By.id("BatchNumber")).sendKeys("1234567890123456");
+		sleep(2000);
 	    Assert.assertTrue(driver.findElement(By.cssSelector(".error.ng-scope")).getText().isEmpty());
 	}
 	
@@ -792,7 +792,7 @@ public class CustomerCareOla1 extends TestBase {
 	public void TS37551_Problems_with_Refills_Problemas_con_Recargas_Recarga_sin_PIN_Gestion_pendiente_Recarga_sin_PIN_Lote_Ingresa_17_digitos(String cCuenta) {
 		cc.elegirCuenta(cCuenta);
 		cc.tarjetaPrepaga();
-		driver.findElement(By.id("lotNumber")).sendKeys("12345678901234567");
+		driver.findElement(By.id("BatchNumber")).sendKeys("12345678901234567");
 	    System.out.println(driver.findElement(By.cssSelector(".vlc-slds-error-block.ng-scope")).getText());
 	    Assert.assertTrue(!driver.findElement(By.cssSelector(".error.ng-scope")).getText().isEmpty());
 	}
@@ -801,7 +801,7 @@ public class CustomerCareOla1 extends TestBase {
 	public void TS37552_Problems_with_Refills_Problemas_con_Recargas_Recarga_sin_PIN_Gestion_pendiente_Recarga_sin_PIN_Lote_Ingresa_Letras(String cCuenta) {
 		cc.elegirCuenta(cCuenta);
 		cc.tarjetaPrepaga();
-		driver.findElement(By.id("lotNumber")).sendKeys("a");
+		driver.findElement(By.id("BatchNumber")).sendKeys("a");
 	    Assert.assertTrue(!driver.findElement(By.cssSelector(".error.ng-scope")).getText().isEmpty());
 	}
 	
@@ -816,7 +816,7 @@ public class CustomerCareOla1 extends TestBase {
 	    sleep(3000);
 	    driver.findElement(By.cssSelector(".console-flyout.active.flyout")).findElements(By.tagName("i")).get(1).click();
 	    sleep(8000);
-	    driver.switchTo().frame(cambioFrame(driver, By.id("stepChooseMethod_nextBtn")));
+	    driver.switchTo().frame(cambioFrame(driver, By.id("RefillMethods_nextBtn")));
 	    ((JavascriptExecutor)driver).executeScript("window.scrollTo(0,"+driver.findElement(By.cssSelector(".vlc-slds-button--tertiary.ng-binding.ng-scope")).getLocation().y+")");
 	    Assert.assertTrue(driver.findElement(By.cssSelector(".vlc-slds-button--tertiary.ng-binding.ng-scope")).isDisplayed());
 	}
@@ -832,9 +832,9 @@ public class CustomerCareOla1 extends TestBase {
 	    sleep(3000);
 	    driver.findElement(By.cssSelector(".console-flyout.active.flyout")).findElements(By.tagName("i")).get(1).click();
 	    sleep(8000);
-	    driver.switchTo().frame(cambioFrame(driver, By.id("stepChooseMethod_nextBtn")));
-	    ((JavascriptExecutor)driver).executeScript("window.scrollTo(0,"+driver.findElement(By.id("stepChooseMethod_nextBtn")).getLocation().y+")");
-	    Assert.assertTrue(driver.findElement(By.id("stepChooseMethod_nextBtn")).isDisplayed());
+	    driver.switchTo().frame(cambioFrame(driver, By.id("RefillMethods_nextBtn")));
+	    ((JavascriptExecutor)driver).executeScript("window.scrollTo(0,"+driver.findElement(By.id("RefillMethods_nextBtn")).getLocation().y+")");
+	    Assert.assertTrue(driver.findElement(By.id("RefillMethods_nextBtn")).isDisplayed());
 	}
 	
 	@Test(groups = {"CustomerCare", "ProblemasConRecargas", "Ola1"}, dataProvider = "CustomerCuentaActiva")
@@ -940,16 +940,11 @@ public class CustomerCareOla1 extends TestBase {
 		cc.elegirCuenta(cCuenta);
 		cc.irAProblemasConRecargas();	
 		List<WebElement> elementos = driver.findElements(By.cssSelector(".slds-radio.ng-scope"));
-		waitFor.visibilityOfAllElements(elementos);		
-		for (WebElement e : elementos) {
-			if (!e.getAttribute("class").contains("itemSelected")) {
-				e.click();
-				waitFor.attributeContains(e, "class", "itemSelected");
-				Assert.assertTrue(e.getAttribute("class").contains("itemSelected"));
-				return;
-			}
+		if (!elementos.get(1).getAttribute("class").contains("itemSelected")) {
+			elementos.get(1).click();
 		}
-		Assert.assertTrue(false);
+		sleep(2000);
+		Assert.assertTrue(!elementos.get(0).getAttribute("class").contains("itemSelected"));
 	}
 	
 	@Test (groups= {"CustomerCare", "ProblemasConRecargas", "Ola1"}, dataProvider = "CustomerCuentaActiva")
@@ -957,24 +952,14 @@ public class CustomerCareOla1 extends TestBase {
 		cc.elegirCuenta("aaaaFernando Care");
 		cc.irAProblemasConRecargas();		
 		List<WebElement> elementos = driver.findElements(By.cssSelector(".slds-radio.ng-scope"));
-		waitFor.visibilityOfAllElements(elementos);
-		for (WebElement e : elementos) {
-			if (!e.getAttribute("class").contains("itemSelected")) {
-				e.click();
-				waitFor.attributeContains(e, "class", "itemSelected");
-				break;
-			}
-		}		
-		for (WebElement e : elementos) {
-			if (!e.getAttribute("class").contains("itemSelected")) {
-				Assert.assertTrue(!e.getAttribute("class").contains("itemSelected"));
-				return;
-			}	
+		if (!elementos.get(1).getAttribute("class").contains("itemSelected")) {
+			elementos.get(1).click();
 		}
-		Assert.assertTrue(false);
+		sleep(2000);
+		Assert.assertTrue(!elementos.get(0).getAttribute("class").contains("itemSelected"));
 	}
 	
-	@Test (groups= {"CustomerCare", "ProblemasConRecargas", "Ola1"}, dataProvider = "CustomerCuentaActiva")
+	@Test (groups= {"CustomerCare", "ProblemasConRecargas", "Ola1"}, dataProvider = "CustomerCuentaActiva")  //Rompe por error en el flujo de Tarjeta Prepaga
 	public void TS38541_Problems_with_Refills_Problemas_con_Recargas_Medio_de_recarga_Seleccionar_Tarjeta_Pre_Paga_PIN_Visible_Lote_activo(String cCuenta) {
 		cc.elegirCuenta(cCuenta);
 		cc.tarjetaPrepaga();
@@ -988,7 +973,7 @@ public class CustomerCareOla1 extends TestBase {
 	public void TS38549_Problems_with_Refills_Problemas_con_Recargas_Medio_de_recarga_Lote_Ingresa_15_digitos(String cCuenta) {
 		cc.elegirCuenta(cCuenta);
 		cc.tarjetaPrepaga();
-		WebElement numeroLote = driver.findElement(By.id("lotNumber"));
+		WebElement numeroLote = driver.findElement(By.id("BatchNumber"));
 		numeroLote.sendKeys("123456789012345");
 		Assert.assertTrue(numeroLote.getAttribute("class").contains("ng-invalid-minlength"));
 	}
@@ -997,7 +982,7 @@ public class CustomerCareOla1 extends TestBase {
 	public void TS38550_Problems_with_Refills_Problemas_con_Recargas_Medio_de_recarga_Lote_Ingresa_16_digitos(String cCuenta) {
 		cc.elegirCuenta(cCuenta);
 		cc.tarjetaPrepaga();
-		WebElement numeroLote = driver.findElement(By.id("lotNumber"));
+		WebElement numeroLote = driver.findElement(By.id("BatchNumber"));
 		numeroLote.sendKeys("1234567890123456");
 		Assert.assertTrue(numeroLote.getAttribute("class").contains("ng-valid-minlength"));
 		Assert.assertTrue(numeroLote.getAttribute("class").contains("ng-valid-maxlength"));
@@ -1007,7 +992,7 @@ public class CustomerCareOla1 extends TestBase {
 	public void TS38551_Problems_with_Refills_Problemas_con_Recargas_Medio_de_recarga_Lote_Ingresa_17_digitos(String cCuenta) {
 		cc.elegirCuenta(cCuenta);
 		cc.tarjetaPrepaga();
-		WebElement numeroLote = driver.findElement(By.id("lotNumber"));
+		WebElement numeroLote = driver.findElement(By.id("BatchNumber"));
 		numeroLote.sendKeys("12345678901234567");
 		Assert.assertTrue(numeroLote.getAttribute("class").contains("ng-invalid-maxlength"));
 	}
@@ -1016,7 +1001,7 @@ public class CustomerCareOla1 extends TestBase {
 	public void TS38552_Problems_with_Refills_Problemas_con_Recargas_Medio_de_recarga_Lote_Ingresa_letras(String cCuenta) {
 		cc.elegirCuenta(cCuenta);
 		cc.tarjetaPrepaga();
-		WebElement numeroLote = driver.findElement(By.id("lotNumber"));
+		WebElement numeroLote = driver.findElement(By.id("BatchNumber"));
 		numeroLote.sendKeys("abcde");
 		Assert.assertTrue(numeroLote.getAttribute("class").contains("ng-invalid-pattern"));
 	}
@@ -1065,7 +1050,7 @@ public class CustomerCareOla1 extends TestBase {
 	public void TS37326_Problems_With_Refills_Tarjeta_De_Recarga_Prepaga_Verificacion_Numero_De_Lote_Ingresa_15_Digitos(String cCuenta) {
 		cc.elegirCuenta(cCuenta);
 		cc.tarjetaPrepaga();
-		driver.findElement(By.id("lotNumber")).sendKeys("145789654212458");
+		driver.findElement(By.id("BatchNumber")).sendKeys("145789654212458");
 		Assert.assertTrue(driver.findElement(By.cssSelector(".vlc-slds-error-block.ng-scope")).findElement(By.cssSelector(".error.ng-scope")).findElement(By.cssSelector(".description.ng-binding")).getText().toLowerCase().equals("longitud m\u00ednima de 16"));
 	}
 	
@@ -1073,7 +1058,7 @@ public class CustomerCareOla1 extends TestBase {
 	public void TS37328_Problems_With_Refills_Tarjeta_De_Recarga_Prepaga_Verificacion_Numero_De_Lote_Ingresa_Letras(String cCuenta) {
 		cc.elegirCuenta(cCuenta);
 		cc.tarjetaPrepaga();
-		driver.findElement(By.id("lotNumber")).sendKeys("letrasletrasletr");
+		driver.findElement(By.id("BatchNumber")).sendKeys("letrasletrasletr");
 		sleep(2000);
 		List<WebElement> errores = driver.findElement(By.cssSelector(".vlc-slds-error-block.ng-scope")).findElement(By.cssSelector(".error.ng-scope")).findElements(By.cssSelector(".description.ng-binding"));
 		boolean enc = false;
@@ -1090,7 +1075,7 @@ public class CustomerCareOla1 extends TestBase {
 	public void TS37327_Problems_With_Refills_Tarjeta_De_Recarga_Prepaga_Verificacion_Numero_De_Lote_Ingresa_17_Digitos(String cCuenta) {
 		cc.elegirCuenta(cCuenta);
 		cc.tarjetaPrepaga();
-		driver.findElement(By.id("lotNumber")).sendKeys("12457856321457895");
+		driver.findElement(By.id("BatchNumber")).sendKeys("12457856321457895");
 		List<WebElement> errores = driver.findElement(By.cssSelector(".vlc-slds-error-block.ng-scope")).findElement(By.cssSelector(".error.ng-scope")).findElements(By.cssSelector(".description.ng-binding"));
 		boolean enc = false;
 		for (WebElement UnE : errores) {
@@ -1106,7 +1091,7 @@ public class CustomerCareOla1 extends TestBase {
 	public void TS37325_Problems_With_Refills_Tarjeta_De_Recarga_Prepaga_Verificacion_Numero_De_Lote_Ingresa_16_Digitos(String cCuenta) {
 		cc.elegirCuenta(cCuenta);
 		cc.tarjetaPrepaga();
-		driver.findElement(By.id("lotNumber")).sendKeys("1245785632145789");
+		driver.findElement(By.id("BatchNumber")).sendKeys("1245785632145789");
 		List<WebElement> errores = driver.findElement(By.cssSelector(".vlc-slds-error-block.ng-scope")).findElement(By.cssSelector(".error.ng-scope")).findElements(By.cssSelector(".description.ng-binding"));
 		boolean enc = true;
 		for (WebElement UnE : errores) {
@@ -1118,25 +1103,35 @@ public class CustomerCareOla1 extends TestBase {
 		Assert.assertTrue(enc);
 	}
 	
-	@Test (groups= {"CustomerCare", "ProblemasConRecargas", "Ola1"}, dataProvider = "CustomerCuentaActiva")  //Rompe por popUp
+	@Test (groups= {"CustomerCare", "ProblemasConRecargas", "Ola1"}, dataProvider = "CustomerCuentaActiva")
 	public void TS37534_Problems_With_Refills_Problemas_Con_Recargas_Medio_De_Recarga_Seleccionar_ROL(String cCuenta) {
 		cc.elegirCuenta(cCuenta);
 		cc.tarjetaPrepaga();
-		driver.findElement(By.id("stepPrepaidCardData_prevBtn")).click();
+		driver.findElement(By.id("PrepaidCardData_prevBtn")).click();
 		sleep(3000);
-		driver.findElement(By.xpath("//*[@id=\"refillMethod|0\"]/div/div[1]/label[2]/span/div/div")).click();
-		driver.findElement(By.id("stepChooseMethod_nextBtn")).click();
+		driver.findElement(By.xpath("//*[@id=\"RefillMethod|0\"]/div/div[1]/label[2]/span/div/div")).click();
+		driver.findElement(By.id("RefillMethods_nextBtn")).click();
 		sleep(5000);
-		driver.switchTo().frame(cambioFrame(driver, By.id("refillDate")));
-		driver.findElement(By.id("refillDate")).sendKeys("12-15-2017");
-		driver.findElement(By.id("refillAmount")).sendKeys("150");
-		driver.findElement(By.id("receiptCode")).sendKeys("150");
-		((JavascriptExecutor) driver).executeScript("window.scrollTo(0," + driver.findElement(By.id("stepInternetRefill_nextBtn")).getLocation().y + ")");
-		driver.findElement(By.id("stepInternetRefill_nextBtn")).click();
+		driver.switchTo().frame(cambioFrame(driver, By.id("RefillDate")));
+		driver.findElement(By.id("RefillDate")).sendKeys("12-15-2017");
+		driver.findElement(By.id("RefillAmount")).sendKeys("150");
+		driver.findElement(By.id("ReceiptCode")).sendKeys("150");
+		driver.findElement(By.id("OnlineRefillData_nextBtn")).click();
 		sleep(5000);
-		driver.findElement(By.id("rechargeImpacted_nextBtn")).click();
-		sleep(5000);
-		Assert.assertTrue(false);
+		searchAndClick(driver.findElements(By.cssSelector(".slds-form-element__label.ng-binding.ng-scope")), "equals", "si");		
+		driver.findElement(By.id("FileAttach")).sendKeys("C:\\Users\\Nicolas\\Desktop\\descarga.jpg");
+		driver.findElement(By.id("AttachDocuments_nextBtn")).click();
+		sleep(3000);
+		driver.findElement(By.id("Summary_nextBtn")).click();
+		sleep(8000);
+		List <WebElement> msj = driver.findElements(By.className("ta-care-omniscript-done"));
+		boolean a = false;
+		for (WebElement x : msj) {
+			if (x.getText().toLowerCase().contains("recarga realizada con exito!")) {
+				a = true;
+			}
+		}
+		Assert.assertTrue(a);
 	}
 	
 	@Test (groups= {"CustomerCare", "ProblemasConRecargas", "Ola1"}, dataProvider = "CustomerCuentaActiva")
