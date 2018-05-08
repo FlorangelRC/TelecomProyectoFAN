@@ -716,6 +716,15 @@ public class TestBase {
 
 	}
 	
+	@DataProvider
+	public Object[][] MarketingCuentaAtributosYExclusiones() throws Exception{
+
+	 Object[][] testObjArray = ExcelUtils.getTableArray("Cuentas.xlsx","Marketing",1,1,1,"Cuenta Atributos y Exclusiones");
+
+	 return (testObjArray);
+
+	}
+	
 	public void searchAndClick(List <WebElement> elements, String match, String texto) {
 		sleep(2000);
 		switch (match) {
