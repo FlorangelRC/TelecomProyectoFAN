@@ -87,14 +87,8 @@ public class CustomerCareOla2 extends TestBase {
 	public void TS100941_360_View_POSTPAGO_Visualización_Resumen_de_Facturación_Campos_Fecha_no_editables(String nCuenta) {
 		cc.elegirCuenta(nCuenta);
 		cc.irAFacturacion();
-		List <WebElement> rdm = driver.findElements(By.className("slds-text-body_regular"));
-		for (WebElement x : rdm) {
-			if (x.getText().toLowerCase().contains("resumen de cuenta")) {
-				x.click();
-				break;
-			}
-		}
-		sleep(10000);
+		searchAndClick(driver.findElements(By.className("slds-text-body_regular")), "contains", "resumen de cuenta");
+		sleep(8000);
 		driver.switchTo().frame(cambioFrame(driver, By.id("text-input-id-1")));
 		String date1 = driver.findElement(By.id("text-input-id-1")).getAttribute("value");
 		driver.findElement(By.id("text-input-id-1")).sendKeys("01/01/1000");
