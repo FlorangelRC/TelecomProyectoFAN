@@ -29,6 +29,7 @@ import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.Select;
 import org.testng.Assert;
 
+import Tests.TestBase;
 import javafx.scene.control.Accordion;
 
 public class SalesBase extends BasePage {
@@ -255,7 +256,7 @@ public boolean btnnoexiste(String boton){
 		driver.findElement(By.xpath("//a[@href=\"/005?isUserEntityOverride=1&retURL=%2Fui%2Fsetup%2FSetup%3Fsetupid%3DUsers&setupid=ManageUsers\"]")).click();
 //buscar cuenta
 		try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
-		setSimpleDropdown(driver.findElement(By.id("fcf")), "Usuarios activos");	
+		setSimpleDropdown(driver.findElement(By.id("fcf")), "Todos los usuarios");	
  }
 
  public void validarperfil(String nombre, String perfil){
@@ -265,14 +266,14 @@ public boolean btnnoexiste(String boton){
 	 for(int i=0; i<filas.size();i++){
 		 if (filas.get(i).getText().equals(nombre)){
 			 a = true;
-			 System.out.println(filas.get(i+5).getText());
+			 System.out.println(filas.get(i+1).getText());
 			 if (nombre.contains("Nicolas")) {
 				 if(rep == 1) {
-					 Assert.assertTrue(filas.get(i+5).getText().contains(perfil));
+					 Assert.assertTrue(filas.get(i+1).getText().contains(perfil));
 					 break;}
 				 rep++;
 			 }else {
-				 Assert.assertTrue(filas.get(i+5).getText().contains(perfil));
+				 Assert.assertTrue(filas.get(i+1).getText().contains(perfil));
 				 break;
 			 }
 			}} 
@@ -801,5 +802,42 @@ try{	driver.findElement(By.id("alert-ok-button")).click();	} catch (NoSuchElemen
 						((JavascriptExecutor) driver).executeScript("arguments[0].click();", btn_cerrar);	
 				}
 			}
+		}
+		
+		public void DesloguearLoguear(String perfil) {
+			sleep(5000);
+			TestBase TB= new TestBase();
+			driver.get("https://crm--sit.cs14.my.salesforce.com/home/home.jsp?tsid=02u41000000QWha/");
+			try {Thread.sleep(10000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+			driver.findElement(By.id("userNavButton")).click();
+			sleep(2000);
+			driver.findElement(By.id("userNav-menuItems")).findElements(By.tagName("a")).get(4).click();
+			sleep(4000);
+			driver.get("https://crm--sit.cs14.my.salesforce.com/");
+			driver.findElement(By.id("cancel_idp_hint")).click();
+			 switch(perfil){
+			 case "dani":
+				TB.login(driver);
+				break;
+			 case "agente":
+				 TB.loginAndres(driver);
+				 break;
+			 case "call":
+				 TB.loginElena(driver);  
+				 break;
+			 case "venta":
+				 TB.loginFranciso(driver);
+				 break;
+			 case "logistica":
+				 TB.loginNicolas(driver);
+				 break;
+			 case "entregas":
+				 TB.loginMarcela(driver);
+				 break;
+			 case "fabiana":
+				 TB.loginFabiana(driver);
+				 break;
+			 }
+			 sleep(10000);
 		}
  }

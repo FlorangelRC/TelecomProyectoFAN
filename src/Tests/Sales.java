@@ -424,80 +424,98 @@ public class Sales extends TestBase {
 	
 	@Test(groups={"Sales", "AltaDeLinea", "Ola1"}, priority=3, dataProvider="SalesCuentaActiva")  
 	public void TS94827_Ventas_General_Verificar_Metodos_De_Pago_Perfil_Representante_Telefonico(String sCuenta, String sDni, String sLinea) throws IOException {
-		perfil = "venta";
 		boolean TDC = false;
 		boolean DPF = false;
 		SalesBase sb = new SalesBase(driver);
-		sb.BuscarCuenta(DNI, sDni);
-		sb.acciondecontacto("catalogo");
-		sleep(18000);
-		sb.elegirplan("Plan con Tarjeta Repro");
-		sb.continuar();
-		sleep(10000);
-		List<WebElement> cont = driver.findElements(By.cssSelector(".slds-button.slds-m-left--large.slds-button--brand.ta-button-brand"));
-			for(WebElement c : cont){
-				c.getText().equals("Continuar");
-					c.click();
-			}
+		sb.DesloguearLoguear("call");
 		sleep(5000);
-		CustomerCare page = new CustomerCare(driver);
-		
-		WebElement sig = driver.findElement(By.id("LineAssignment_nextBtn"));
-		page.obligarclick(sig);
-		sleep(10000);
-		page.obligarclick(driver.findElement(By.id("DeliveryMethodConfiguration_nextBtn")));
-		sleep(10000);
-		
-		/*page.obligarclick(driver.findElement(By.id("ICCDAssignment_nextBtn")));
-		sleep(10000);*/
-		page.obligarclick(driver.findElement(By.id("InvoicePreview_nextBtn")));
-		sleep(10000);
-		driver.findElement(By.id("PaymentMethodRadio")).click();
-		sleep(4000);
-		List<WebElement> mediosP = driver.findElements(By.cssSelector(".slds-list__item.ng-binding.ng-scope"));
-		for (WebElement UnMP : mediosP) {
-			if (UnMP.getText().toLowerCase().contains("tarjeta de credito"))
-				TDC = true;
-			else if (UnMP.getText().toLowerCase().contains("debito a proxima factura"))
-				DPF = true;
-			else
-				assertTrue(false);
+		try {
+			driver.findElement(By.xpath("//a[@href=\'https://crm--sit--c.cs14.visual.force.com/apex/taClientSearch']")).click();
+			sleep(10000);
+			
+			sb.BuscarCuenta(DNI, sDni);
+			sb.acciondecontacto("catalogo");
+			sleep(18000);
+			sb.elegirplan("Plan con Tarjeta Repro");
+			sb.continuar();
+			sleep(10000);
+			List<WebElement> cont = driver.findElements(By.cssSelector(".slds-button.slds-m-left--large.slds-button--brand.ta-button-brand"));
+				for(WebElement c : cont){
+					c.getText().equals("Continuar");
+						c.click();
+				}
+			sleep(5000);
+			CustomerCare page = new CustomerCare(driver);
+			
+			WebElement sig = driver.findElement(By.id("LineAssignment_nextBtn"));
+			page.obligarclick(sig);
+			sleep(10000);
+			page.obligarclick(driver.findElement(By.id("DeliveryMethodConfiguration_nextBtn")));
+			sleep(10000);
+			
+			/*page.obligarclick(driver.findElement(By.id("ICCDAssignment_nextBtn")));
+			sleep(10000);*/
+			page.obligarclick(driver.findElement(By.id("InvoicePreview_nextBtn")));
+			sleep(10000);
+			driver.findElement(By.id("PaymentMethodRadio")).click();
+			sleep(4000);
+			List<WebElement> mediosP = driver.findElements(By.cssSelector(".slds-list__item.ng-binding.ng-scope"));
+			for (WebElement UnMP : mediosP) {
+				if (UnMP.getText().toLowerCase().contains("tarjeta de credito"))
+					TDC = true;
+				else if (UnMP.getText().toLowerCase().contains("debito a proxima factura"))
+					DPF = true;
+				else
+					assertTrue(false);
+			}
+			assertTrue(TDC&&DPF);
+			sleep(4000);
+			sb.DesloguearLoguear("venta");
+		}catch(Exception ex1) {
+			sb.DesloguearLoguear("venta");
+			Assert.assertTrue(false);
 		}
-		assertTrue(TDC&&DPF);
-		sleep(4000);
 		
 	}
 	
 	@Test(groups={"Sales", "AltaDeLinea", "Ola1"}, priority=7, dataProvider="SalesCuentaActiva")  
 	public void TS94831_Ventas_General_Verificar_No_Asignacion_De_Seriales_Perfil_Representante_Telefonico(String sCuenta, String sDni, String sLinea) throws IOException {
-		perfil = "venta";
 		SalesBase sb = new SalesBase(driver);
-		sb.BuscarCuenta(DNI, sDni);
-		sb.acciondecontacto("catalogo");
-		sleep(15000);
-		sb.elegirplan("Plan con Tarjeta Repro");  
-		sb.continuar();
-		sleep(10000);
-		List<WebElement> cont = driver.findElements(By.cssSelector(".slds-button.slds-m-left--large.slds-button--brand.ta-button-brand"));
-			for(WebElement c : cont){
-				c.getText().equals("Continuar");
-					c.click();
-			}
+		sb.DesloguearLoguear("call");
 		sleep(5000);
-		CustomerCare page = new CustomerCare(driver);
-		
-		WebElement sig = driver.findElement(By.id("LineAssignment_nextBtn"));
-		page.obligarclick(sig);
-		sleep(10000);
-		page.obligarclick(driver.findElement(By.id("DeliveryMethodConfiguration_nextBtn")));
-		sleep(10000);
 		try {
-			page.obligarclick(driver.findElement(By.id("ICCDAssignment_nextBtn")));
-			assertTrue(false);
-		}catch(NoSuchElementException ex1) {
-			assertTrue(true);
+			driver.findElement(By.xpath("//a[@href=\'https://crm--sit--c.cs14.visual.force.com/apex/taClientSearch']")).click();
+			sleep(10000);
+			sb.BuscarCuenta(DNI, sDni);
+			sb.acciondecontacto("catalogo");
+			sleep(15000);
+			sb.elegirplan("Plan con Tarjeta Repro");  
+			sb.continuar();
+			sleep(10000);
+			List<WebElement> cont = driver.findElements(By.cssSelector(".slds-button.slds-m-left--large.slds-button--brand.ta-button-brand"));
+				for(WebElement c : cont){
+					c.getText().equals("Continuar");
+						c.click();
+				}
+			sleep(5000);
+			CustomerCare page = new CustomerCare(driver);
+			
+			WebElement sig = driver.findElement(By.id("LineAssignment_nextBtn"));
+			page.obligarclick(sig);
+			sleep(10000);
+			page.obligarclick(driver.findElement(By.id("DeliveryMethodConfiguration_nextBtn")));
+			sleep(10000);
+			try {
+				page.obligarclick(driver.findElement(By.id("ICCDAssignment_nextBtn")));
+				assertTrue(false);
+			}catch(NoSuchElementException ex1) {
+				assertTrue(true);
+			}
+			sb.DesloguearLoguear("venta");
+		}catch(Exception ex1) {
+			sb.DesloguearLoguear("venta");
+			Assert.assertTrue(false);
 		}
-		
 	}
 	
 	@Test(groups={"Sales", "AltaDeLinea","Ola1"}, priority=0)
@@ -548,8 +566,8 @@ public class Sales extends TestBase {
 			if(esta == true) {
 				Actions action = new Actions(driver);
 				action.moveToElement(UnC).doubleClick().build().perform();
-				sleep(2000);
-			    List<WebElement> motivos = new Select(UnC.findElement(By.tagName("select"))).getOptions();
+				sleep(3000);
+			    List<WebElement> motivos = new Select(driver.findElement(By.tagName("select"))).getOptions();
 			    assertTrue(verificarContenidoLista(todos,motivos));
 				break;
 			}
@@ -1244,7 +1262,7 @@ public class Sales extends TestBase {
 		Accounts acc = new Accounts(driver);
 		SB.gestiondeusuarios();
 		sleep(5000);
-		 acc.getElementFromList(driver.findElements(By.className("listItemPad")), "M").click();
+		 acc.getElementFromList(driver.findElements(By.className("listItemPad")), "E").click();
 		SB.validarperfil("Medina, Elena", "CC Venta y Atencion a Clientes");			
 	}
 	
@@ -1254,23 +1272,27 @@ public class Sales extends TestBase {
 		Accounts acc = new Accounts(driver);
 		SB.gestiondeusuarios();
 		sleep(5000);
-		 acc.getElementFromList(driver.findElements(By.className("listItemPad")), "S").click();
+		 acc.getElementFromList(driver.findElements(By.className("listItemPad")), "F").click();
 		SB.validarperfil("Sit, Francisco", "TA - OFCOM Venta y Atencion a Clientes");		
 	}
 	
 	@Test(groups={"Sales", "AltaDeContacto","Ola1"}, priority=1)
 	public void TS94874_Perfiles_Verificar_creacion_de_perfil_Oficina_Agente(){
 		SalesBase SB = new SalesBase(driver);
+		Accounts acc = new Accounts(driver);
 		SB.gestiondeusuarios();
+		sleep(5000);
+		 acc.getElementFromList(driver.findElements(By.className("listItemPad")), "A").click();
 		SB.validarperfil("Borbon, Andres", "TA - Agente Venta y Atencion a Clientes");			
 	}
 	
 	@Test(groups={"Sales", "AltaDeLinea","Ola1"}, priority=1)
 	public void TS94875_Perfiles_Verificar_creacion_de_perfil_Oficina_Logistica(){
 		SalesBase SB = new SalesBase(driver);
+		Accounts acc = new Accounts(driver);
 		SB.gestiondeusuarios();
-		driver.findElements(By.className("listItemPad")).get(19).click();
-		sleep(4000);
+		sleep(5000);
+		 acc.getElementFromList(driver.findElements(By.className("listItemPad")), "N").click();
 		SB.validarperfil("Sit, Nicolas", "TA - Logistica B");
 			perfil="agente";			
 	}
@@ -2410,50 +2432,44 @@ public class Sales extends TestBase {
 		SalesBase SB = new SalesBase(driver);
 		SB.BtnCrearNuevoCliente();
 		Assert.assertTrue(driver.findElement(By.id("DocumentType")).getAttribute("value").equals("DNI"));
-		Boolean x = false;
+		Boolean x = false, a = false, n = false, f = false, d = false, ge = false;
 		List<WebElement> mail = driver.findElements(By.cssSelector(".slds-form-element__label.ng-binding"));
 		for(WebElement m :mail){
 			if (m.getText().equals("E-MAIL")){
 				m.isDisplayed();
 				x=true;
 			}
-		}
-		List<WebElement> fech = driver.findElements(By.cssSelector(".slds-form-element__label.ng-binding"));
-		for(WebElement f :fech){
-			if (f.getText().equals("FECHA DE NACIMIENTO")){
-				f.isDisplayed();
-				x=true;
+			if (m.getText().equals("FECHA DE NACIMIENTO")){
+				m.isDisplayed();
+				f=true;
+			}
+			if (m.getText().equals("APELLIDO")){
+				m.isDisplayed();
+				a=true;
+			}
+			if (m.getText().equals("NOMBRE")){
+				m.isDisplayed();
+				n=true;
+			}
+			if (m.getText().equals("DOCUMENTO")){
+				m.isDisplayed();
+				d=true;
 			}
 		}
-		List<WebElement> ape = driver.findElements(By.cssSelector(".slds-form-element__label.ng-binding"));
-		for(WebElement a :ape){
-			if (a.getText().equals("APELLIDO")){
-				a.isDisplayed();
-				x=true;
-			}
-		}
-		List<WebElement> nom = driver.findElements(By.cssSelector(".slds-form-element__label.ng-binding"));
-		for(WebElement n :nom){
-			if (n.getText().equals("NOMBRE")){
-				n.isDisplayed();
-				x=true;
-			}
-		}
-		List<WebElement> docu = driver.findElements(By.cssSelector(".slds-form-element__label.ng-binding"));
-		for(WebElement d :docu){
-			if (d.getText().equals("DOCUMENTO")){
-				d.isDisplayed();
-				x=true;
-			}
-		}
-		List<WebElement> gen = driver.findElements(By.cssSelector(".vlc-slds-control-action__container"));
+		
+		List<WebElement> gen = driver.findElements(By.cssSelector(".slds-form-element__label.vlc-slds-inline-control__label.ng-binding"));
 		for(WebElement g :gen){
 			if (g.getText().equals("G\u00e9nero")){
 				g.isDisplayed();
-				x=true;
+				ge=true;
 			}
 		}
 		Assert.assertTrue(x);
+		Assert.assertTrue(f);
+		Assert.assertTrue(a);
+		Assert.assertTrue(n);		
+		Assert.assertTrue(d);
+		Assert.assertTrue(ge);
 	  }
 	  
 	@Test(groups={"Sales", "AltaDeContacto","Ola1"}, priority=2, dataProvider="SalesContactoSinCuenta")
@@ -2499,28 +2515,37 @@ public class Sales extends TestBase {
 	
 	@Test(groups={"Sales", "AltaDeLinea", "Ola1"}, priority=3, dataProvider="SalesCuentaActiva")
 	public void TS94830_Ventas_General_Verificar_Metodo_De_Entrega_Por_Default_Perfil_Representante_Telefonico(String sCuenta, String sDni, String sLinea) throws IOException{
-		perfil = "venta";
 		SalesBase SB = new SalesBase(driver);
-		SB.BuscarCuenta(DNI, sDni);
-		SB.acciondecontacto("catalogo");
-		boolean x = false;
-		sleep(18000);
-		assertTrue(driver.findElement(By.cssSelector(".slds-col.taChangeDeliveryMethod.slds-text-body--small.slds-m-left--large")).findElement(By.tagName("strong")).getText().contains("Delivery"));
-		List<WebElement> cam = driver.findElements(By.cssSelector(".slds-m-left--x-small.slds-button.slds-button--brand"));
-		for(WebElement c : cam ){	
-			if(c.getText().toLowerCase().equals("cambiar")){
-				c.click();
-			}
-		}
-		sleep(7000);	
-		List<WebElement> frame2 = driver.findElements(By.tagName("iframe"));
-		driver.switchTo().frame(frame2.get(0));
-		Select env = new Select (driver.findElement(By.id("DeliveryMethodSelection")));
+		SB.DesloguearLoguear("call");
+		sleep(5000);
 		try {
-			env.selectByVisibleText("Presencial");
-			assertTrue(false);
-		}catch(org.openqa.selenium.NoSuchElementException ex1) {
-			assertTrue(true);
+			driver.findElement(By.xpath("//a[@href=\'https://crm--sit--c.cs14.visual.force.com/apex/taClientSearch']")).click();
+			sleep(10000);
+			SB.BuscarCuenta(DNI, sDni);
+			SB.acciondecontacto("catalogo");
+			boolean x = false;
+			sleep(18000);
+			assertTrue(driver.findElement(By.cssSelector(".slds-col.taChangeDeliveryMethod.slds-text-body--small.slds-m-left--large")).findElement(By.tagName("strong")).getText().contains("Delivery"));
+			List<WebElement> cam = driver.findElements(By.cssSelector(".slds-m-left--x-small.slds-button.slds-button--brand"));
+			for(WebElement c : cam ){	
+				if(c.getText().toLowerCase().equals("cambiar")){
+					c.click();
+				}
+			}
+			sleep(7000);	
+			List<WebElement> frame2 = driver.findElements(By.tagName("iframe"));
+			driver.switchTo().frame(frame2.get(0));
+			Select env = new Select (driver.findElement(By.id("DeliveryMethodSelection")));
+			try {
+				env.selectByVisibleText("Presencial");
+				assertTrue(false);
+			}catch(org.openqa.selenium.NoSuchElementException ex1) {
+				assertTrue(true);
+			}
+			SB.DesloguearLoguear("venta");
+		}catch(Exception ex1) {
+			SB.DesloguearLoguear("venta");
+			Assert.assertTrue(false);
 		}
 		
 	}
