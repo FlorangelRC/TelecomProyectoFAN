@@ -72,17 +72,11 @@ public class MarketingOla1_Joaquin extends TestBase {
 	public void TS98028_Generar_Caso_error_Fraude_Alta_CP(String nombreCuenta) {
 		Page.elegirCuenta(nombreCuenta);
 		Page.irAGestionMarketing();
-		Page.clubPersonal("alta");
-		
-		String numeroCaso = null;
-		if (Page.verificarMensajeDeErrorCuentaFraude()) {
-			numeroCaso = Page.obtenerNumeroCasoCuentaFraude();
-		}
-		else Assert.assertTrue(false);
+		String sCaso = Page.darDeAltaCP();
 		
 		Page.cerrarTodasLasPestañas();
 		Page.irACasos();
-		Assert.assertTrue(Page.obtenerEstadoDelCaso(numeroCaso).contentEquals("Closed"));
+		Assert.assertTrue(Page.corroborarCasoCerrado(sCaso));
 	}
 	
 	@Test(groups = {"Marketing", "Ola1", "GestionDelSocioDeClubPersonal"}, priority = 3, dataProvider="MarketingCuentaNormal")
