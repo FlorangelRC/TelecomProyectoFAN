@@ -728,4 +728,36 @@ public class TestBase {
 	    Login page0 = new Login(driver);
 	    page0.ingresar(User, Password);
 	}
+	
+	@DataProvider
+	public Object[][] MarketingCuentaAtributosYExclusiones() throws Exception{
+
+	 Object[][] testObjArray = ExcelUtils.getTableArray("Cuentas.xlsx","Marketing",1,1,1,"Cuenta Atributos y Exclusiones");
+
+	 return (testObjArray);
+
+	}
+	
+	public void searchAndClick(List <WebElement> elements, String match, String texto) {
+		sleep(2000);
+		switch (match) {
+		case "contains":
+			for (WebElement x : elements) {
+				if (x.getText().toLowerCase().contains(texto)) {
+					x.click();
+					break;
+				}
+			}
+			break;
+		case "equals":
+			for (WebElement x : elements) {
+				if (x.getText().toLowerCase().equals(texto)) {
+					x.click();
+					break;
+				}
+			}
+			break;
+		}
+		sleep(2000);
+	}
 }
