@@ -186,4 +186,13 @@ public class Login extends BasePage {
 			  loginButton2.click();
 			  try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 		}
+		
+		public void ingresar(String User, String Password) {
+			logininterno.click();
+			try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+			username.sendKeys(User);
+			password.sendKeys(Password);
+			login.click();
+			try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		}
 }

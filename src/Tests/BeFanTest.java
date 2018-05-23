@@ -24,6 +24,8 @@ import org.testng.annotations.BeforeClass;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
+import Pages.BeFan;
+
 
 public class BeFanTest {
 	
@@ -32,40 +34,33 @@ public class BeFanTest {
 	@BeforeClass
 	public void init() throws Exception {
 		
-		System.setProperty("webdriver.chrome.driver", "chromedriver.exe");
-	    ChromeOptions options = new ChromeOptions();
-	    options.addArguments("start-maximized");
-	    driver = new ChromeDriver(options);
-	    driver.manage().timeouts().implicitlyWait(30, TimeUnit.SECONDS);
-	    driver.get("http://befantest.personal.corp/#/signin");
-	    driver.findElement(By.name("username")).sendKeys("BEF585991");
-	    driver.findElement(By.name("txtPass")).sendKeys("Telecom02!");
-	    driver.findElement(By.name("btnIngresar")).click();
+		driver=BeFan.initDriver();
+		BeFan.irABefan();
+	    BeFan page=new BeFan(driver);
+	    page.loginBefan("BEF585991", "Telecom02!");
 	    Thread.sleep(3000);
-	    driver.findElement(By.xpath("/html/body/div[1]/div[1]/div/div[3]/div[2]/div/div/ul/li[6]/a/b")).click();
-	    driver.findElement(By.linkText("Importación")).click();
-	    //driver.findElement(By.id("fileinput")).sendKeys("C:\\Pruebaautomatizacion.txt");
-	    Thread.sleep(9000);
-	    Select prefijo=new Select(driver.findElement(By.cssSelector(".text.form-control.ng-pristine.ng-untouched.ng-valid.ng-not-empty")));
-	    prefijo.selectByVisibleText("351");
-	    
-	    driver.findElement(By.cssSelector(".text.form-control.ng-pristine.ng-untouched.ng-valid.ng-empty")).sendKeys("2");
-	    List<WebElement> botones=driver.findElements(By.cssSelector(".btn.btn-primary"));
-	    for(WebElement opcion:botones)
-	    	if(opcion.getText().equalsIgnoreCase("Importar"))
-	    		opcion.click();
-	    
-	    //Click aceptar
-	    Thread.sleep(3000);
-	    driver.findElement(By.linkText("Aceptar"));
+	//    page.opcionDeSim("Importación");
+	//    page.selectPrefijo("351");
+	//    page.setCantidad("2");
+	//    page.clickEnBoton("Agregar");
+	//    page.adjuntarArchivoBefan("C:\\Pruebaautomatizacion.txt");
+	//    page.clickEnBoton("Importar");
+	//    page.clickAceptar();
+
 	}
+	
+	
 	@Test
 	public void TS112047_BeFan_Movil_REPRO_Preactivacion_repro_Busqueda_de_archivos_Agente_Formato() throws InterruptedException {
-		Thread.sleep(3000);
-		driver.findElement(By.xpath("/html/body/div[1]/div[1]/div/div[3]/div[2]/div/div/ul/li[6]/a/b")).click();
-	    driver.findElement(By.linkText("Gestión")).click();
-	    Select estado=new Select(driver.findElement(By.cssSelector(".text.form-control.ng-valid.ng-not-empty.ng-dirty.ng-valid-parse.ng-touched")));
-	   estado.selectByVisibleText("Procesado");
+		BeFan page=new BeFan(driver);
+		page.opcionDeSim("Gestión");
+		page.selectEstado("Procesado");
+		page.setNombreArchivo("Pruebaautomatizacion.txt");
+		//String f1="01/04/2018", f2="14/04/2018";
+		//page.setFechaDesde();
+		//page.SeleccionarFechas(f1,f2);
+		page.clickEnBoton("Buscar");
+
 	}
 	
 	

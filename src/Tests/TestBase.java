@@ -715,5 +715,17 @@ public class TestBase {
 	 return (testObjArray);
 
 	}
-	
+	/**
+	 * Inicia session en Login interno
+	 * @param driver
+	 * @param Ambiente
+	 * @param User
+	 * @param Password
+	 */
+	public void login(WebDriver driver, String Ambiente, String User, String Password ) {
+		driver.get(Ambiente);
+		sleep(4000);
+	    Login page0 = new Login(driver);
+	    page0.ingresar(User, Password);
+	}
 }
