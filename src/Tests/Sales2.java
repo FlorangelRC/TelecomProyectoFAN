@@ -41,12 +41,12 @@ public class Sales2 extends TestBase{
 	String localidad="Vicente Lopez";
 	protected  WebDriverWait wait;
 	
-	//@AfterClass(alwaysRun=true)
+	@AfterClass(alwaysRun=true)
 	public void tearDown() {
 		driver.quit();
 	}
 	
-	//@AfterMethod(alwaysRun=true)
+	@AfterMethod(alwaysRun=true)
 	public void deslogin() {
 		sleep(3000);
 		driver.get("https://crm--sit.cs14.my.salesforce.com/home/home.jsp?tsid=02u41000000QWha/");
@@ -518,7 +518,6 @@ public class Sales2 extends TestBase{
 		sb.acciondecontacto("nueva cuenta");
 		sleep(7000);*/
 		CustomerCare cc = new CustomerCare(driver);
-		
 		sb.BtnCrearNuevoCliente();
 		String asd = driver.findElement(By.id("SearchClientDocumentNumber")).getAttribute("value");
 		ContactSearch contact = new ContactSearch(driver);
@@ -539,9 +538,9 @@ public class Sales2 extends TestBase{
 		sleep(10000);
 		sb.elegirvalidacion("DOC");
 		sleep(8000);
-		driver.findElement(By.id("ImageDNI")).sendKeys("C:\\Users\\florangel\\Downloads\\mapache.jpg");
+		driver.findElement(By.id("FileDocumentImage")).sendKeys("C:\\Users\\florangel\\Downloads\\mapache.jpg");
 		sleep(3000);
-		WebElement up = driver.findElement(By.cssSelector(".vlc-slds-box__max-width-80.ng-binding"));
+		WebElement up = driver.findElement(By.cssSelector(".slds-box.vlc-slds-box__italic.slds-input-has-icon.slds-input-has-icon--right"));
 		Assert.assertTrue(up.getText().toLowerCase().contains("mapache.jpg"));
 		Assert.assertTrue(up.getText().toLowerCase().contains("30.55 kb"));
 	}

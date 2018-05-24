@@ -476,12 +476,15 @@ for(WebElement e: btns){
  
  public void elegirvalidacion(String validacion){
 	 //DOC SMS o QA
+	 CustomerCare cc = new CustomerCare(driver);
 	try {Thread.sleep(15000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 	List<WebElement> valid =driver.findElements(By.id("ValidationMethodInValidContact"));
+	List<WebElement> radio =driver.findElements(By.cssSelector(".slds-radio--faux.ng-scope"));
+	
 	for(int i=0; i<valid.size();i++){
 		String value=valid.get(i).getAttribute("value");
 		if(value.equals(validacion)){
-			valid.get(i).click();
+			cc.obligarclick(radio.get(i+2));
 			break;}}
 	try {Thread.sleep(3000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 	 driver.findElement(By.id("MethodSelection_nextBtn")).click();
