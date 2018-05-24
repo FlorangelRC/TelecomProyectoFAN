@@ -70,13 +70,13 @@ public class Sales extends TestBase {
 	String[] genero = {"masculino","femenino"};
 	String[] DocValue = {"52698550","3569874563","365","ssss"};
 	
-	//@AfterClass(alwaysRun=true)
+	@AfterClass(alwaysRun=true)
 	public void tearDown() {
 		driver.close();
 		driver.quit();
 	}
 	
-	//@AfterMethod(alwaysRun=true)
+	@AfterMethod(alwaysRun=true)
 	public void deslogin(){
 		try {Thread.sleep(10000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 		driver.get("https://crm--sit.cs14.my.salesforce.com/home/home.jsp?tsid=02u41000000QWha/");
@@ -481,8 +481,13 @@ public class Sales extends TestBase {
 		}
 		assertTrue(TDC&&DPF);
 		sleep(4000);
-		
+		sb.DesloguearLoguear("venta");
+		}catch(Exception ex1) {
+			sb.DesloguearLoguear("venta");
+			Assert.assertTrue(false);
+		}
 	}
+		
 	
 	@Test(groups={"Sales", "AltaDeLinea", "Ola1"}, priority=7, dataProvider="SalesCuentaActiva")  
 	public void TS94831_Ventas_General_Verificar_No_Asignacion_De_Seriales_Perfil_Representante_Telefonico(String sCuenta, String sDni, String sLinea) throws IOException {
@@ -580,21 +585,17 @@ public class Sales extends TestBase {
 					// ACA
 	@Test(groups={"Sales", "AltaDeContacto", "Ola1"}, priority=2)
 	public void TS94556_Verificar_el_ingreso_de_caracteres_alfanumericos_en_Pasaporte(){
-		try {Thread.sleep(10000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 		boolean as = false;
-		ContactSearch contact = new ContactSearch(driver);
-		contact.searchContact("Pasaporte", "24asw5142", "");
-		driver.findElement(By.id("SearchClientsDummy")).click();
-		sleep(3000);
+		SalesBase SB = new SalesBase(driver);
+		SB.BuscarCuenta("Pasaporte", "24asw5142");
+		sleep(5000);
 		List <WebElement> cc = driver.findElements(By.cssSelector(".slds-form-element__label.ng-binding"));
 		for (WebElement x : cc) {
-			System.out.println(x.getText());
-			if (x.getText().toLowerCase().contains("crear nuevo cliente")) {
+			if (x.getText().toLowerCase().contains("+ crear nuevo cliente")) {
 				as = true;
 				break;
 			}
 		}
-		Assert.assertTrue(driver.findElement(By.id("rdbNewClient0")).getText().toLowerCase().contains("crear nuevo cliente"));
 		Assert.assertTrue(as);
 	}
 	
@@ -1289,6 +1290,7 @@ public class Sales extends TestBase {
 	@Test(groups={"Sales", "AltaDeLinea","Ola1"}, priority=1)
 	public void TS94875_Perfiles_Verificar_creacion_de_perfil_Oficina_Logistica(){
 		SalesBase SB = new SalesBase(driver);
+		Accounts acc = new Accounts(driver);
 		SB.gestiondeusuarios();
 		sleep(5000);
 		acc.getElementFromList(driver.findElements(By.className("listItemPad")), "S").click();
@@ -1935,6 +1937,7 @@ public class Sales extends TestBase {
 		SalesBase SB = new SalesBase(driver);
 		Boolean t = false;
 		SB.BuscarCuenta(DNI, sDni);
+		Assert.assertTrue(driver.findElement(By.cssSelector(".message.description.ng-binding.ng-scope")).getText().toLowerCase().contains("el dni se encuentra en la blacklist"));
 		SB.acciondecontacto("catalogo");
 		sleep(22000);
 		WebElement pp = driver.findElement(By.cssSelector(".slds-text-align_center.slds-m-vertical_medium.cpq-no-products-msg"));

@@ -32,21 +32,22 @@ import Pages.LineAssignment;
 import Pages.SalesBase;
 import Pages.Ta_CPQ;
 import Pages.Ta_CPQ.RightPanel;
+import Pages.TechCare_Ola1;
 
 public class Sales2 extends TestBase{
 
 	SalesBase sb;
 	String DNI = "DNI";
-	String provincia="Chaco" ;
-	String localidad="BASAIL";
+	String provincia="Buenos Aires" ;
+	String localidad="Vicente Lopez";
 	protected  WebDriverWait wait;
 	
-	//@AfterClass(alwaysRun=true)
+	@AfterClass(alwaysRun=true)
 	public void tearDown() {
 		driver.quit();
 	}
 	
-	//@AfterMethod(alwaysRun=true)
+	@AfterMethod(alwaysRun=true)
 	public void deslogin() {
 		sleep(3000);
 		driver.get("https://crm--sit.cs14.my.salesforce.com/home/home.jsp?tsid=02u41000000QWha/");
@@ -304,7 +305,7 @@ public class Sales2 extends TestBase{
 		sb.BuscarCuenta(DNI, sDni);
 		//sb.BuscarCuenta(DNI, buscarCampoExcel(1, "Cuenta Activa", 2));
 		sb.acciondecontacto("catalogo");
-		sb.elegirplan("Plan con Tarjeta Repro");
+		sb.agregarplan("Plan Prepago Nacional");
 		sleep(15000);
 		sb.continuar();
 		sleep(10000);
@@ -427,7 +428,7 @@ public class Sales2 extends TestBase{
 		sleep(25000);
 		driver.findElement(By.cssSelector(".slds-button.slds-m-left--large.slds-button--brand.ta-button-brand")).click();
 		sleep(25000);
-		sb.Crear_DomicilioLegal("Buenos Aires","ab","falsa", "", "2154", "", "", "2453");
+		sb.Crear_DomicilioLegal("Buenos Aires","vicente lopez","falsa", "", "2154", "", "", "2453");
 		sleep(10000);
 		List <WebElement> num = driver.findElements(By.className("slds-form-element__control"));
 		boolean a = false;
@@ -439,17 +440,29 @@ public class Sales2 extends TestBase{
 		Assert.assertTrue(a);
 	}
 	
-	@Test(groups={"Sales", "AltaDeLinea", "Ola1"}, priority=8, dataProvider="SalesCuentaActiva" )  //Falta terminar, no se puede crear venta desde la V360
+	@Test(groups={"Sales", "AltaDeLinea", "Ola1"}, priority=8, dataProvider="SalesCuentaActiva" )  
 	public void TS94639_Ventas_Nueva_Venta_Verificar_creacion_orden_de_venta_desde_un_Asset_Usuario(String sCuenta, String sDni, String sLinea) {
 		driver.findElement(By.cssSelector(".vlc-slds-button--tertiary.ng-binding.ng-scope")).click();
 		sleep(2000);
 		driver.findElement(By.id("alert-ok-button")).click();
 		sleep(5000);
 		IrA.CajonDeAplicaciones.ConsolaFAN();
-		CustomerCare cc = new CustomerCare(driver);
+		TechCare_Ola1 tc = new TechCare_Ola1(driver);
 		sb.cerrarTodasLasPestanias();
-		cc.elegirCuenta(sCuenta);
-		Assert.assertTrue(false);
+		tc.selectAccount (sCuenta);
+		sleep(5000);
+		driver.switchTo().frame(cambioFrame(driver, By.cssSelector(".console-card.open")));
+		driver.findElement(By.cssSelector(".console-card.open")).click();
+		sleep(10000);
+		driver.switchTo().frame(cambioFrame(driver, By.cssSelector(".slds-col.slds-no-flex.cpq-base-header")));
+		List <WebElement> num = driver.findElements(By.className(".slds-col.slds-no-flex.cpq-base-header"));
+		boolean a = false;
+		for (WebElement x : num) {
+			if (x.getText().contains("Nro. orden:")) {
+				a = true;
+			}
+		}	
+		Assert.assertTrue(a);
 	}
 	
 	@Test(groups={"Sales", "AltaDeLinea", "Ola1"}, priority=1, dataProvider="SalesCuentaActiva" )//luego pasar a cuenta con gestiones
@@ -459,18 +472,20 @@ public class Sales2 extends TestBase{
 		driver.findElement(By.id("alert-ok-button")).click();
 		sleep(5000);
 		IrA.CajonDeAplicaciones.ConsolaFAN();
-		CustomerCare cc = new CustomerCare(driver);
+		TechCare_Ola1 tc = new TechCare_Ola1(driver);
 		sb.cerrarTodasLasPestanias();
-		cc.elegirCuenta(sCuenta);
+		tc.selectAccount (sCuenta);
+		sleep(5000);
 		driver.switchTo().frame(cambioFrame(driver, By.cssSelector(".slds-media.slds-media--timeline.slds-timeline__media--custom-custom91")));
 		List <WebElement> gest = driver.findElements(By.cssSelector(".slds-media.slds-media--timeline.slds-timeline__media--custom-custom91"));
 		boolean a = false;
 		boolean b = false;
 		for (WebElement x : gest) {
 			if (x.getText().toLowerCase().contains("t\u00edtulo")) {
+				System.out.println(x.getText());
 				a = true;
 			}
-			if (x.getText().toLowerCase().contains("status")) {
+			if (x.getText().toLowerCase().contains("estado")) {	
 				b = true;
 			}
 		}
@@ -484,11 +499,13 @@ public class Sales2 extends TestBase{
 		driver.findElement(By.id("alert-ok-button")).click();
 		sleep(5000);
 		IrA.CajonDeAplicaciones.ConsolaFAN();
-		CustomerCare cc = new CustomerCare(driver);
+		TechCare_Ola1 tc = new TechCare_Ola1(driver);
 		sb.cerrarTodasLasPestanias();
-		cc.elegirCuenta(sCuenta);
+		tc.selectAccount (sCuenta);
+		sleep(5000);
+		driver.switchTo().frame(cambioFrame(driver, By.cssSelector(".console-card.open")));
 		WebElement nv = driver.findElement(By.cssSelector(".console-card.open"));
-		Assert.assertTrue(nv.getText().toLowerCase().contains("nueva venta"));
+		Assert.assertTrue(nv.getText().contains("Nueva Venta"));
 	}
 	
 	@Test(groups={"Sales", "AltaDeCuenta", "Ola1"}, priority=2, dataProvider="SalesCuentaActiva")
@@ -496,7 +513,7 @@ public class Sales2 extends TestBase{
 		sb.BuscarCuenta(DNI, sDni);
 		//sb.BuscarCuenta(DNI, buscarCampoExcel(1, "Cuenta Activa", 2));
 		sb.acciondecontacto("catalogo");
-		sb.agregarplan("plan con tarjeta");
+		sb.elegirplan("plan prepago nacional");
 		sleep(15000);
 		driver.findElement(By.cssSelector(".slds-button.slds-m-left--large.slds-button--brand.ta-button-brand")).click();
 		sleep(10000);
@@ -513,13 +530,34 @@ public class Sales2 extends TestBase{
 	
 	@Test(groups={"Sales", "AltaDeContacto", "Ola1"}, priority=4, dataProvider="SalesCuentaActiva")
 	public void TS94582_Alta_de_Contacto_Persona_Fisica_Verificar_confirmacion_de_adjunto_exitoso_XX(String sCuenta, String sDni, String sLinea) throws IOException {
-		sb.BuscarCuenta(DNI, sDni);
+		/*sb.BuscarCuenta(DNI, sDni);
 		//sb.BuscarCuenta(DNI, buscarCampoExcel(1, "Cuenta Activa", 2));
 		sb.acciondecontacto("nueva cuenta");
-		sleep(7000);
-		driver.findElement(By.id("ImageDNI")).sendKeys("C:\\Users\\florangel\\Downloads\\mapache.jpg");
+		sleep(7000);*/
+		CustomerCare cc = new CustomerCare(driver);
+		sb.BtnCrearNuevoCliente();
+		String asd = driver.findElement(By.id("SearchClientDocumentNumber")).getAttribute("value");
+		ContactSearch contact = new ContactSearch(driver);
+		try {Thread.sleep(10000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		driver.findElement(By.id("FirstName")).sendKeys("yy");
+		driver.findElement(By.id("LastName")).sendKeys("z");
+		driver.findElement(By.id("Birthdate")).sendKeys("28/12/1999");
+		contact.sex("masculino");
+		driver.findElement(By.id("Contact_nextBtn")).click();
+		sleep(18000);
+		sb.elegirplan("Plan prepago nacional");
+		sb.continuar();
+		sleep(20000);
+		sb.Crear_DomicilioLegal(provincia, localidad, "falsa", "", "1000", "", "", "1549");
+		sleep(24000);
+		WebElement sig = driver.findElement(By.id("LineAssignment_nextBtn"));
+		cc.obligarclick(sig);
+		sleep(10000);
+		sb.elegirvalidacion("DOC");
+		sleep(8000);
+		driver.findElement(By.id("FileDocumentImage")).sendKeys("C:\\Users\\florangel\\Downloads\\mapache.jpg");
 		sleep(3000);
-		WebElement up = driver.findElement(By.cssSelector(".vlc-slds-box__max-width-80.ng-binding"));
+		WebElement up = driver.findElement(By.cssSelector(".slds-box.vlc-slds-box__italic.slds-input-has-icon.slds-input-has-icon--right"));
 		Assert.assertTrue(up.getText().toLowerCase().contains("mapache.jpg"));
 		Assert.assertTrue(up.getText().toLowerCase().contains("30.55 kb"));
 	}
@@ -1237,7 +1275,7 @@ public class Sales2 extends TestBase{
 		//driver.findElement(By.cssSelector(".slds-button.slds-m-left--large.slds-button--brand.ta-button-brand")).click();
 		sb.continuar();
 		sleep(20000);
-		sb.Crear_DomicilioLegal("Buenos Aires","ab","falsa", "", "5846", "", "", "5248");
+		sb.Crear_DomicilioLegal("Buenos Aires","vicente lopez","falsa", "", "5846", "", "", "5248");
 		sleep(10000);
 		WebElement line = driver.findElement(By.id("tree0-node1__label"));
 		WebElement line2 = driver.findElement(By.id("tree0-node1-0"));
@@ -1263,7 +1301,7 @@ public class Sales2 extends TestBase{
 		sb.elegirplan("Plan con Tarjeta Repro");
 		sb.continuar();
 		sleep(20000);
-		sb.Crear_DomicilioLegal(provincia, localidad, "falsa", "", "1000", "", "", "1549");
+		sb.Crear_DomicilioLegal(provincia, "ABEL", "falsa", "", "1000", "", "", "1549");
 		//sleep(15000);
 		//driver.findElement(By.cssSelector(".slds-button.slds-m-left--large.slds-button--brand.ta-button-brand")).click();
 		sleep(25000);
@@ -1482,7 +1520,7 @@ public class Sales2 extends TestBase{
 		sb.continuar();
 		sleep(15000);
 		sb.Crear_DomicilioLegal(provincia, localidad, "falsa", "", "1000", "", "", "1549");
-		sleep(15000);
+		sleep(20000);
 		WebElement bx = driver.findElement(By.id("tree0-node1"));
 		System.out.println(bx.getText());
 		Assert.assertTrue(bx.isDisplayed());
@@ -1539,7 +1577,7 @@ public class Sales2 extends TestBase{
 		sb.continuar();
 		sleep(20000);
 		sb.Crear_DomicilioLegal(provincia, localidad, "falsa", "", "1000", "", "", "1549");
-		sleep(7000);
+		sleep(25000);
 		List<WebElement> modi = driver.findElements(By.cssSelector(".slds-form-element__label--toggleText.ng-binding"));
 		for(WebElement m : modi){
 			m.getText().equals("Modificar b\u00fasqueda");
@@ -1569,8 +1607,8 @@ public class Sales2 extends TestBase{
 		sleep(20000);
 		sb.Crear_DomicilioLegal(provincia, localidad, "falsa", "", "1000", "", "", "1549");
 		sleep(15000);
-		WebElement text = driver.findElement(By.id("LineAssingmentMessage")).findElement(By.tagName("div")).findElements(By.tagName("p")).get(1).findElements(By.tagName("strong")).get(0);
-		WebElement text2 = driver.findElement(By.id("LineAssingmentMessage")).findElement(By.tagName("div")).findElements(By.tagName("p")).get(1).findElements(By.tagName("strong")).get(1);
+		WebElement text = driver.findElement(By.id("LineAssingmentMessage")).findElement(By.tagName("div")).findElement(By.tagName("p")).findElements(By.tagName("strong")).get(0);
+		WebElement text2 = driver.findElement(By.id("LineAssingmentMessage")).findElement(By.tagName("div")).findElement(By.tagName("p")).findElements(By.tagName("strong")).get(1);
 		Assert.assertTrue(text.getText().equals(provincia));
 		Assert.assertTrue(text2.getText().equals(localidad));
 	
@@ -1905,7 +1943,7 @@ public class Sales2 extends TestBase{
 		sb.elegirplan("Plan con Tarjeta Repro");
 		sb.continuar();
 		sleep(25000);
-		sb.Crear_DomicilioLegal(provincia, localidad, "falsa", "", "1000", "", "", "1549");
+		sb.Crear_DomicilioLegal(provincia, "ABEL", "falsa", "", "1000", "", "", "1549");
 		sleep(7000);
 		List<WebElement> mns = driver.findElements(By.cssSelector(".message.description.ng-binding.ng-scope"));
 		for(WebElement UnM : mns) {
@@ -2045,7 +2083,7 @@ public class Sales2 extends TestBase{
 		List<WebElement> lst = driver.findElements(By.cssSelector(".bPageBlock.brandSecondaryBrd.secondaryPalette"));
 		for (WebElement UnE : lst) {
 			if(UnE.findElement(By.className("pbTitle")).getText().toLowerCase().contains("productos de pedido")) {
-				if (UnE.findElement(By.cssSelector(".dataRow.even.first")).getText().toLowerCase().contains("plan con tarjeta repro"))
+				if (UnE.findElement(By.cssSelector(".dataRow.even.first")).getText().toLowerCase().contains("plan prepago nacional"))
 					Assert.assertTrue(true);
 				else 
 					Assert.assertTrue(false);
@@ -2131,13 +2169,13 @@ public class Sales2 extends TestBase{
 		sleep(15000);
 		WebElement more	 = driver.findElements(By.cssSelector(".product-link.slds-text-body--small.slds-float--right")).get(0);
 		more.click();
-		sleep(8000);
+		sleep(12000);
 		//WebElement waiter = wait.until(ExpectedConditions.presenceOfElementLocated(By.cssSelector(".slds-item--detail.slds-truncate")));
 		List<WebElement> values = driver.findElements(By.cssSelector(".slds-item--detail.slds-truncate"));
 		String[] precissionCounter = values.get(3).getText().split(",");
 		Assert.assertEquals(precissionCounter[1].length(), 2);
 		driver.findElements(By.cssSelector(".slds-button.slds-button--neutral")).get(3).click();
-		sleep(3000);
+		sleep(10000);
 		List<WebElement> montos = driver.findElements(By.className("cpq-underline"));
 		//montos = montos.subList(0, 3);
 		for (WebElement UnM : montos) {

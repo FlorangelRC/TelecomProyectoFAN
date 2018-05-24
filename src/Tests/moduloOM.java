@@ -75,7 +75,7 @@ public class moduloOM extends TestBase {
 	}
 	
 	
-	@Test(groups="OM")
+	@Test(groups="OM", priority=1)
 	public void TS8231_CRM_OM_Ordenes_Panel_principal_Crear_una_Orden() {
 		//Click Nuevo
 		driver.findElement(By.name("new")).click();
@@ -183,6 +183,18 @@ public class moduloOM extends TestBase {
 		assertTrue(driver.findElement(By.xpath("//*[text()='Request']")).isDisplayed()&&driver.findElement(By.xpath("//*[text()='Response']")).isDisplayed());
 	}
 	
+	@Test(groups="OM")
+	public void TS6716_CRM_OM_Ordenes_Panel_principal_Ingreso() {
+		Select allOrder=new Select(driver.findElement(By.id("fcf")));
+		allOrder.selectByVisibleText("All Orders VICTOR OM");
+		sleep(1000);
+		try {driver.findElement(By.name("go")).click();}catch(org.openqa.selenium.NoSuchElementException e) {}
+		sleep(3000);
+		List<WebElement> Orders=driver.findElement(By.className("x-grid3-scroller")).findElement(By.className("x-grid3-body"))
+				.findElements(By.cssSelector(".x-grid3-col.x-grid3-cell.x-grid3-td-ORDERS_ORDER_NUMBER"));
+		assertTrue(Orders.get(0).isDisplayed());
+		//System.out.println(Orders.get(0).getText());
+	}
 	
 	
 	
