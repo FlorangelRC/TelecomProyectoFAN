@@ -37,8 +37,8 @@ public class Sales2 extends TestBase{
 
 	SalesBase sb;
 	String DNI = "DNI";
-	String provincia="Chaco" ;
-	String localidad="BASAIL";
+	String provincia="Buenos Aires" ;
+	String localidad="Vicente Lopez";
 	protected  WebDriverWait wait;
 	
 	//@AfterClass(alwaysRun=true)
@@ -427,7 +427,7 @@ public class Sales2 extends TestBase{
 		sleep(25000);
 		driver.findElement(By.cssSelector(".slds-button.slds-m-left--large.slds-button--brand.ta-button-brand")).click();
 		sleep(25000);
-		sb.Crear_DomicilioLegal("Buenos Aires","ab","falsa", "", "2154", "", "", "2453");
+		sb.Crear_DomicilioLegal("Buenos Aires","vicente lopez","falsa", "", "2154", "", "", "2453");
 		sleep(10000);
 		List <WebElement> num = driver.findElements(By.className("slds-form-element__control"));
 		boolean a = false;
@@ -496,7 +496,7 @@ public class Sales2 extends TestBase{
 		sb.BuscarCuenta(DNI, sDni);
 		//sb.BuscarCuenta(DNI, buscarCampoExcel(1, "Cuenta Activa", 2));
 		sb.acciondecontacto("catalogo");
-		sb.agregarplan("plan con tarjeta");
+		sb.elegirplan("plan prepago nacional");
 		sleep(15000);
 		driver.findElement(By.cssSelector(".slds-button.slds-m-left--large.slds-button--brand.ta-button-brand")).click();
 		sleep(10000);
@@ -513,10 +513,32 @@ public class Sales2 extends TestBase{
 	
 	@Test(groups={"Sales", "AltaDeContacto", "Ola1"}, priority=4, dataProvider="SalesCuentaActiva")
 	public void TS94582_Alta_de_Contacto_Persona_Fisica_Verificar_confirmacion_de_adjunto_exitoso_XX(String sCuenta, String sDni, String sLinea) throws IOException {
-		sb.BuscarCuenta(DNI, sDni);
+		/*sb.BuscarCuenta(DNI, sDni);
 		//sb.BuscarCuenta(DNI, buscarCampoExcel(1, "Cuenta Activa", 2));
 		sb.acciondecontacto("nueva cuenta");
-		sleep(7000);
+		sleep(7000);*/
+		CustomerCare cc = new CustomerCare(driver);
+		
+		sb.BtnCrearNuevoCliente();
+		String asd = driver.findElement(By.id("SearchClientDocumentNumber")).getAttribute("value");
+		ContactSearch contact = new ContactSearch(driver);
+		try {Thread.sleep(10000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		driver.findElement(By.id("FirstName")).sendKeys("yy");
+		driver.findElement(By.id("LastName")).sendKeys("z");
+		driver.findElement(By.id("Birthdate")).sendKeys("28/12/1999");
+		contact.sex("masculino");
+		driver.findElement(By.id("Contact_nextBtn")).click();
+		sleep(18000);
+		sb.elegirplan("Plan prepago nacional");
+		sb.continuar();
+		sleep(20000);
+		sb.Crear_DomicilioLegal(provincia, localidad, "falsa", "", "1000", "", "", "1549");
+		sleep(24000);
+		WebElement sig = driver.findElement(By.id("LineAssignment_nextBtn"));
+		cc.obligarclick(sig);
+		sleep(10000);
+		sb.elegirvalidacion("DOC");
+		sleep(8000);
 		driver.findElement(By.id("ImageDNI")).sendKeys("C:\\Users\\florangel\\Downloads\\mapache.jpg");
 		sleep(3000);
 		WebElement up = driver.findElement(By.cssSelector(".vlc-slds-box__max-width-80.ng-binding"));
@@ -1237,7 +1259,7 @@ public class Sales2 extends TestBase{
 		//driver.findElement(By.cssSelector(".slds-button.slds-m-left--large.slds-button--brand.ta-button-brand")).click();
 		sb.continuar();
 		sleep(20000);
-		sb.Crear_DomicilioLegal("Buenos Aires","ab","falsa", "", "5846", "", "", "5248");
+		sb.Crear_DomicilioLegal("Buenos Aires","vicente lopez","falsa", "", "5846", "", "", "5248");
 		sleep(10000);
 		WebElement line = driver.findElement(By.id("tree0-node1__label"));
 		WebElement line2 = driver.findElement(By.id("tree0-node1-0"));

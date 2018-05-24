@@ -29,6 +29,7 @@ import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.Select;
 import org.testng.Assert;
 
+import Tests.TestBase;
 import javafx.scene.control.Accordion;
 
 public class SalesBase extends BasePage {
@@ -476,8 +477,7 @@ for(WebElement e: btns){
  public void elegirvalidacion(String validacion){
 	 //DOC SMS o QA
 	try {Thread.sleep(15000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
-	List<WebElement> valid =driver.findElements(By.xpath("//input[@id='ValidationMethod' and @type='radio']"));
-	List<WebElement> radio = driver.findElements(By.cssSelector(".slds-radio--faux.ng-scope"));
+	List<WebElement> valid =driver.findElements(By.id("ValidationMethodInValidContact"));
 	for(int i=0; i<valid.size();i++){
 		String value=valid.get(i).getAttribute("value");
 		if(value.equals(validacion)){
@@ -797,5 +797,42 @@ try{	driver.findElement(By.id("alert-ok-button")).click();	} catch (NoSuchElemen
 						((JavascriptExecutor) driver).executeScript("arguments[0].click();", btn_cerrar);	
 				}
 			}
+		}
+		
+		public void DesloguearLoguear(String perfil) {
+			sleep(5000);
+			TestBase TB= new TestBase();
+			driver.get("https://crm--sit.cs14.my.salesforce.com/home/home.jsp?tsid=02u41000000QWha/");
+			try {Thread.sleep(10000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+			driver.findElement(By.id("userNavButton")).click();
+			sleep(2000);
+			driver.findElement(By.id("userNav-menuItems")).findElements(By.tagName("a")).get(4).click();
+			sleep(4000);
+			driver.get("https://crm--sit.cs14.my.salesforce.com/");
+			driver.findElement(By.id("cancel_idp_hint")).click();
+			 switch(perfil){
+			 case "dani":
+				TB.login(driver);
+				break;
+			 case "agente":
+				 TB.loginAndres(driver);
+				 break;
+			 case "call":
+				 TB.loginElena(driver);  
+				 break;
+			 case "venta":
+				 TB.loginFranciso(driver);
+				 break;
+			 case "logistica":
+				 TB.loginNicolas(driver);
+				 break;
+			 case "entregas":
+				 TB.loginMarcela(driver);
+				 break;
+			 case "fabiana":
+				 TB.loginFabiana(driver);
+				 break;
+			 }
+			 sleep(10000);
 		}
  }

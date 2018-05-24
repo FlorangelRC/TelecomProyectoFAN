@@ -136,39 +136,43 @@ public class SCP extends BasePage {
 		  try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 		  Name= Name.toLowerCase();
 		  String actual = driver.findElement(By.id("tsidLabel")).getText();
-		    
-		  if (actual.toLowerCase().contains(Name)){
-		    return;}
-		  else {
-		    driver.findElement(By.id("tsid")).click();
-		    try {Thread.sleep(2000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
-		    switch(Name) {
-		    case "scp": driver.findElement(By.xpath("//a[@href=\"/home/home.jsp?tsid=02u3F000000CjqC\"]")).click();
-		    break;
-		    
-		    case "ventas": driver.findElement(By.xpath("//a[@href=\"/home/home.jsp?tsid=02u41000000QWha\"]")).click();
-		    break;
-		    
-		    case "marketing": driver.findElement(By.xpath("//a[@href=\"/home/home.jsp?tsid=02u41000000QWhf\"]")).click();
-		    break;
-		    
-		    case "salesforce chatter": driver.findElement(By.xpath("//a[@href=\"/home/home.jsp?tsid=02u41000000QWhg\"]")).click();
-		    break;
-		    
-		    case "service cloud console": driver.findElement(By.xpath("//a[@href=\"/console?tsid=02u41000000QWhZ\"]")).click();
-		    break;
-		    
-		    case "chatter answers moderator": driver.findElement(By.xpath("//a[@href=\"/console?tsid=02u41000000QWhc\"]")).click();
-		    break;
-		    
-		    case "appexchange": driver.findElement(By.xpath("//a[@href=\"https://appexchange.salesforce.com\"]")).click();
-		    break;
-		    
-		    case "comunidad de desarrolladores": driver.findElement(By.xpath("//a[@href=\"http://developer.force.com\"]")).click();
-		    break;
-		    
-		    case "success community": driver.findElement(By.xpath("//a[@href=\"https://success.salesforce.com\"]")).click();
-		    break;
+		  if(Name.equals("ventas")) {
+			  if(actual.toLowerCase().contains("sales"))
+					  return;
+		  }else {
+			  if (actual.toLowerCase().contains(Name)){
+				  return;}
+			  else {
+				    driver.findElement(By.id("tsid")).click();
+				    try {Thread.sleep(2000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+				    switch(Name) {
+				    case "scp": driver.findElement(By.xpath("//a[@href=\"/home/home.jsp?tsid=02u3F000000CjqC\"]")).click();
+				    break;
+				    
+				    case "ventas": driver.findElement(By.xpath("//a[@href=\"/home/home.jsp?tsid=02u41000000QWha\"]")).click();
+				    break;
+				    
+				    case "marketing": driver.findElement(By.xpath("//a[@href=\"/home/home.jsp?tsid=02u41000000QWhf\"]")).click();
+				    break;
+				    
+				    case "salesforce chatter": driver.findElement(By.xpath("//a[@href=\"/home/home.jsp?tsid=02u41000000QWhg\"]")).click();
+				    break;
+				    
+				    case "service cloud console": driver.findElement(By.xpath("//a[@href=\"/console?tsid=02u41000000QWhZ\"]")).click();
+				    break;
+				    
+				    case "chatter answers moderator": driver.findElement(By.xpath("//a[@href=\"/console?tsid=02u41000000QWhc\"]")).click();
+				    break;
+				    
+				    case "appexchange": driver.findElement(By.xpath("//a[@href=\"https://appexchange.salesforce.com\"]")).click();
+				    break;
+				    
+				    case "comunidad de desarrolladores": driver.findElement(By.xpath("//a[@href=\"http://developer.force.com\"]")).click();
+				    break;
+				    
+				    case "success community": driver.findElement(By.xpath("//a[@href=\"https://success.salesforce.com\"]")).click();
+				    break;
+				}
 		    }}
 		  }
 	
