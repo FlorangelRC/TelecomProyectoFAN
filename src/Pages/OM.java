@@ -86,4 +86,11 @@ static WebDriver driver;
 		ArrayList<String> newTab = new ArrayList<String>(driver.getWindowHandles());
 		driver.switchTo().window(newTab.get(Ventana));
 	}
+	
+	public void primeraOrden() {
+		WebElement fila = driver.findElement(By.cssSelector(".dataRow.even.first"));
+		WebElement nro = fila.findElement(By.tagName("th")).findElement(By.tagName("a"));
+		nro.click();
+		sleep(5000);
+	}
 }

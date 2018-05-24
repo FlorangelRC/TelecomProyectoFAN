@@ -38,6 +38,7 @@ import Pages.BasePage;
 import Pages.ContactInformation;
 import Pages.ContactSearch;
 import Pages.CustomerCare;
+import Pages.HomeBase;
 import Pages.SalesBase;
 import Pages.setConexion;
 import Tests.TestBase.IrA;
@@ -69,13 +70,13 @@ public class Sales extends TestBase {
 	String[] genero = {"masculino","femenino"};
 	String[] DocValue = {"52698550","3569874563","365","ssss"};
 	
-	@AfterClass(alwaysRun=true)
+	//@AfterClass(alwaysRun=true)
 	public void tearDown() {
 		driver.close();
 		driver.quit();
 	}
 	
-	@AfterMethod(alwaysRun=true)
+	//@AfterMethod(alwaysRun=true)
 	public void deslogin(){
 		try {Thread.sleep(10000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 		driver.get("https://crm--sit.cs14.my.salesforce.com/home/home.jsp?tsid=02u41000000QWha/");
@@ -113,11 +114,21 @@ public class Sales extends TestBase {
 			 break;
 		 }
 		
-		try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		try {Thread.sleep(15000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		HomeBase homePage = new HomeBase(driver);
+		try {Thread.sleep(6000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+	    String a = driver.findElement(By.id("tsidLabel")).getText(); 
+	    if (a.contains("Ventas")){}
+	    else {
+	    	homePage.switchAppsMenu();
+	    	try {Thread.sleep(2000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+	    	homePage.selectAppFromMenuByName("Ventas");
+	    	try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}            
+	    }
 		//IrA.CajonDeAplicaciones.Ventas();
 		/*CustomerCare cc = new CustomerCare(driver);
 		cc.cajonDeAplicaciones("Consola FAN");
-		cc.cerrarTodasLasPestañas();
+		cc.cerrarTodasLasPestaï¿½as();
 		 goToLeftPanel2(driver, "Inicio");*/
 	}
 
@@ -125,9 +136,9 @@ public class Sales extends TestBase {
 	public void setup() throws Exception {	
 		Accounts accountPage = new Accounts(driver);
 		try {Thread.sleep(20000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
-		//driver.switchTo().frame(accountPage.getFrameForElement(driver, By.className("actions-content")));
-		//driver.switchTo().frame(cambioFrame(driver, By.cssSelector(".vlocity.via-slds")));
-		 //driver.findElement(By.cssSelector(".slds-grid.slds-m-bottom_small.slds-wrap.cards-container")).findElement(By.tagName("button")).click();
+		/*driver.switchTo().frame(accountPage.getFrameForElement(driver, By.cssSelector(".slds-m-top_small.slds-m-left_small.slds-m-right_small.slds-size_1-of-1.ng-pristine.ng-untouched.ng-valid.ng-empty")));
+		driver.switchTo().frame(cambioFrame(driver, By.cssSelector(".vlocity.via-slds")));
+		 driver.findElement(By.cssSelector(".slds-grid.slds-m-bottom_small.slds-wrap.cards-container")).findElement(By.tagName("button")).click();*/
 		 driver.findElement(By.xpath("//a[@href=\'https://crm--sit--c.cs14.visual.force.com/apex/taClientSearch']")).click();
 			
 		try {Thread.sleep(10000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
@@ -428,15 +439,20 @@ public class Sales extends TestBase {
 		boolean TDC = false;
 		boolean DPF = false;
 		SalesBase sb = new SalesBase(driver);
-		sb.BuscarCuenta(DNI, sDni);
-		sb.acciondecontacto("catalogo");
-		sleep(18000);
-		sb.elegirplan("Plan con Tarjeta Repro");
-		sb.continuar();
-		sleep(10000);
-		List<WebElement> cont = driver.findElements(By.cssSelector(".slds-button.slds-m-left--large.slds-button--brand.ta-button-brand"));
-			for(WebElement c : cont){
-				c.getText().equals("Continuar");
+		sb.DesloguearLoguear("call");
+		sleep(5000);
+		try {
+			driver.findElement(By.xpath("//a[@href=\'https://crm--sit--c.cs14.visual.force.com/apex/taClientSearch']")).click();
+			sleep(10000);
+			sb.BuscarCuenta(DNI, sDni);
+			sb.acciondecontacto("catalogo");
+			sleep(18000);
+			sb.elegirplan("Plan con Tarjeta Repro");
+			sb.continuar();
+			sleep(18000);
+			List<WebElement> cont = driver.findElements(By.cssSelector(".slds-button.slds-m-left--large.slds-button--brand.ta-button-brand"));
+				for(WebElement c : cont){
+					c.getText().equals("Continuar");
 					c.click();
 			}
 		sleep(5000);
@@ -465,8 +481,13 @@ public class Sales extends TestBase {
 		}
 		assertTrue(TDC&&DPF);
 		sleep(4000);
-		
+		sb.DesloguearLoguear("venta");
+		}catch(Exception ex1) {
+			sb.DesloguearLoguear("venta");
+			Assert.assertTrue(false);
+		}
 	}
+		
 	
 	@Test(groups={"Sales", "AltaDeLinea", "Ola1"}, priority=7, dataProvider="SalesCuentaActiva")  
 	public void TS94831_Ventas_General_Verificar_No_Asignacion_De_Seriales_Perfil_Representante_Telefonico(String sCuenta, String sDni, String sLinea) throws IOException {
@@ -564,12 +585,10 @@ public class Sales extends TestBase {
 					// ACA
 	@Test(groups={"Sales", "AltaDeContacto", "Ola1"}, priority=2)
 	public void TS94556_Verificar_el_ingreso_de_caracteres_alfanumericos_en_Pasaporte(){
-		try {Thread.sleep(10000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 		boolean as = false;
-		ContactSearch contact = new ContactSearch(driver);
-		contact.searchContact("Pasaporte", "24asw5142", "");
-		driver.findElement(By.id("SearchClientsDummy")).click();
-		sleep(3000);
+		SalesBase SB = new SalesBase(driver);
+		SB.BuscarCuenta("Pasaporte", "24asw5142");
+		sleep(5000);
 		List <WebElement> cc = driver.findElements(By.cssSelector(".slds-form-element__label.ng-binding"));
 		for (WebElement x : cc) {
 			if (x.getText().toLowerCase().contains("+ crear nuevo cliente")) {
@@ -990,7 +1009,7 @@ public class Sales extends TestBase {
 		WebElement act = driver.findElement(By.id("tab-scoped-1__item"));
 		Assert.assertTrue(act.getText().equals("Clientes Activos"));
 		WebElement ina = driver.findElement(By.id("tab-scoped-2__item"));
-		Assert.assertTrue(ina.getText().equals("Cliente Inactivos"));
+		Assert.assertTrue(ina.getText().equals("Clientes Inactivos"));
 	}
 	
 	@Test(groups={"Sales", "AltaDeContacto","Ola1"}, priority=2)
@@ -1000,8 +1019,9 @@ public class Sales extends TestBase {
 		try {Thread.sleep(10000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 		List<WebElement> solapas = driver.findElement(By.className("slds-tabs--scoped__nav")).findElements(By.tagName("li"));
 		assertTrue(solapas.get(0).findElement(By.tagName("a")).getText().equals("Clientes Activos"));
-		assertTrue(solapas.get(1).findElement(By.tagName("a")).getText().equals("Contactos"));
-		assertTrue(solapas.get(2).findElement(By.tagName("a")).getText().equals("Clientes Inactivos"));
+		assertTrue(solapas.get(1).findElement(By.tagName("a")).getText().equals("Clientes Inactivos"));
+		assertTrue(solapas.get(2).findElement(By.tagName("a")).getText().equals("Contactos"));
+		
 	}
 	
 	@Test(groups={"Sales", "AltaDeContacto","Ola1"}, priority=2, dataProvider="SalesCuentaActiva")
@@ -1270,9 +1290,10 @@ public class Sales extends TestBase {
 	@Test(groups={"Sales", "AltaDeLinea","Ola1"}, priority=1)
 	public void TS94875_Perfiles_Verificar_creacion_de_perfil_Oficina_Logistica(){
 		SalesBase SB = new SalesBase(driver);
+		Accounts acc = new Accounts(driver);
 		SB.gestiondeusuarios();
-		driver.findElements(By.className("listItemPad")).get(19).click();
-		sleep(4000);
+		sleep(5000);
+		acc.getElementFromList(driver.findElements(By.className("listItemPad")), "S").click();
 		SB.validarperfil("Sit, Nicolas", "TA - Logistica B");
 			perfil="agente";			
 	}
@@ -1779,24 +1800,23 @@ public class Sales extends TestBase {
 	     
 	    @Test(groups = {"Sales", "AltaDeLinea","Ola1"}, priority=3, dataProvider="SalesContactoSinCuenta") 
 	    public void TS95062_Ventas_General_Visualizar_accion_Agregar(String sCuenta, String sDni) { 
-	      SalesBase SB = new SalesBase(driver); 
-	      SB.BuscarCuenta(DNI, sDni); 
-	      SB.acciondecontacto("catalogo"); 
-	      SB.agregarplan("plan con tarjeta"); 
-	      sleep(20000); 
-	      Assert.assertTrue(driver.findElements(By.cssSelector(".slds-button.slds-button_neutral.cpq-add-button")).get(1).getText().equalsIgnoreCase("agregar")); 
-	      
-	      List<WebElement> agregar = driver.findElements(By.cssSelector(".slds-button.slds-button_neutral.cpq-add-button")); 
-			agregar.get(1).click();
+	    	SalesBase SB = new SalesBase(driver); 
+	    	SB.BuscarCuenta(DNI, sDni); 
+	    	SB.acciondecontacto("catalogo"); 
+	    	SB.elegirplan("galaxy"); 
+	    	sleep(20000); 
+	    	Assert.assertTrue(driver.findElements(By.cssSelector(".slds-button.slds-button_neutral.cpq-add-button")).get(1).getText().equalsIgnoreCase("agregar")); 
+	    	List<WebElement> agregar = driver.findElements(By.cssSelector(".slds-button.slds-button_neutral.cpq-add-button")); 
+			agregar.get(0).click();
 			sleep(20000); 
-	      int a = 0; 
-	      List <WebElement> plan = driver.findElements(By.cssSelector(".slds-button.cpq-item-has-children")); 
-	      for (WebElement x : plan) { 
-	        if (x.getText().toLowerCase().contains("plan con tarjeta")) { 
-	          a++; 
-	        } 
-	      } 
-	      Assert.assertTrue(a == 2); 
+			int a = 0; 
+			List <WebElement> plan = driver.findElements(By.cssSelector(".slds-button.cpq-item-has-children")); 
+			for (WebElement x : plan) { 
+				if (x.getText().toLowerCase().contains("galaxy")) { 
+					a++; 
+				} 
+			} 
+			Assert.assertTrue(a == 2); 
 	    } 
 	     
 	    @Test(groups = {"Sales", "AltaDeLinea","Ola1"}, priority=3, dataProvider="SalesContactoSinCuenta") 
@@ -1865,7 +1885,7 @@ public class Sales extends TestBase {
 	      } 
 	    } 
 	     
-	    @Test(groups = {"Sales", "AltaDeCuenta","Ola1"}, priority=4, dataProvider="SalesContactoSinCuenta") 
+	    @Test(groups = {"Sales", "AltaDeCuenta","Ola1"}, priority=4, dataProvider="SalesContactoSinCuenta")//****************ACTUALIZAR****************** 
 	    public void TS95513_Alta_de_Cuenta_Consumer_Verificar_Consumidor_final_por_defecto(String sCuenta, String sDni) throws IOException { 
 	      SalesBase SB = new SalesBase(driver); 
 	      SB.BuscarCuenta(DNI, sDni); 
@@ -1913,16 +1933,16 @@ public class Sales extends TestBase {
 	}
 	
 	@Test(groups = {"Sales","AltaDeContacto","Ola1"}, priority=2, dataProvider="SalesBlacklist")
-	 public void TS95218_Blacklist_Validacion_de_cliente_en_blacklist_Cliente_DNI(String sCuenta, String sDni){
-	  SalesBase SB = new SalesBase(driver);
-	  Boolean t = false;
-	  SB.BuscarCuenta(DNI, sDni);
-	  SB.acciondecontacto("catalogo");
-	  sleep(18000);
-	  WebElement pp = driver.findElement(By.cssSelector(".slds-grid.slds-grid--vertical-align-center.slds-grid--align-center.cpq-no-products-msg"));
-	   assertTrue(pp.getText().toLowerCase().contains("no products available")); 
-	  
-	 }  
+	public void TS95218_Blacklist_Validacion_de_cliente_en_blacklist_Cliente_DNI(String sCuenta, String sDni){
+		SalesBase SB = new SalesBase(driver);
+		Boolean t = false;
+		SB.BuscarCuenta(DNI, sDni);
+		Assert.assertTrue(driver.findElement(By.cssSelector(".message.description.ng-binding.ng-scope")).getText().toLowerCase().contains("el dni se encuentra en la blacklist"));
+		SB.acciondecontacto("catalogo");
+		sleep(22000);
+		WebElement pp = driver.findElement(By.cssSelector(".slds-text-align_center.slds-m-vertical_medium.cpq-no-products-msg"));
+		assertTrue(pp.getText().toLowerCase().contains("no products available")); 
+	}  
 	
 	@Test(groups = {"Sales","AltaDeContacto","Ola1"}, priority=2, dataProvider="SalesCuentaActiva")
 	 public void TS95223_SalesCPQ_Blacklist_Validacion_De_Cliente_No_Se_Encuentra_En_Blacklist_Cliente_DNI(String sCuenta, String sDni, String sLinea){
