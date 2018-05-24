@@ -29,7 +29,6 @@ import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.Select;
 import org.testng.Assert;
 
-import Tests.TestBase;
 import javafx.scene.control.Accordion;
 
 public class SalesBase extends BasePage {
@@ -266,14 +265,14 @@ public boolean btnnoexiste(String boton){
 	 for(int i=0; i<filas.size();i++){
 		 if (filas.get(i).getText().equals(nombre)){
 			 a = true;
-			 System.out.println(filas.get(i+1).getText());
+			 System.out.println(filas.get(i+5).getText());
 			 if (nombre.contains("Nicolas")) {
 				 if(rep == 1) {
-					 Assert.assertTrue(filas.get(i+1).getText().contains(perfil));
+					 Assert.assertTrue(filas.get(i+5).getText().contains(perfil));
 					 break;}
 				 rep++;
 			 }else {
-				 Assert.assertTrue(filas.get(i+1).getText().contains(perfil));
+				 Assert.assertTrue(filas.get(i+5).getText().contains(perfil));
 				 break;
 			 }
 			}} 
@@ -476,14 +475,13 @@ for(WebElement e: btns){
  
  public void elegirvalidacion(String validacion){
 	 //DOC SMS o QA
-	 CustomerCare cc = new CustomerCare(driver);
 	try {Thread.sleep(15000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
-	List<WebElement> valid =driver.findElements(By.xpath("//input[@id='ValidationMethodInValidContact' and @type='radio']"));
+	List<WebElement> valid =driver.findElements(By.xpath("//input[@id='ValidationMethod' and @type='radio']"));
 	List<WebElement> radio = driver.findElements(By.cssSelector(".slds-radio--faux.ng-scope"));
 	for(int i=0; i<valid.size();i++){
 		String value=valid.get(i).getAttribute("value");
 		if(value.equals(validacion)){
-			cc.obligarclick(radio.get(i+2));
+			valid.get(i).click();
 			break;}}
 	try {Thread.sleep(3000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 	 driver.findElement(By.id("MethodSelection_nextBtn")).click();
@@ -683,24 +681,21 @@ try{	driver.findElement(By.id("alert-ok-button")).click();	} catch (NoSuchElemen
 		try {Thread.sleep(10000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 		boolean existe = false;
 		BasePage dni = new BasePage(driver);
-		do {
-			Random aleatorio = new Random(System.currentTimeMillis());
-			aleatorio.setSeed(System.currentTimeMillis());
-			int intAleatorio = aleatorio.nextInt(8999999)+1000000;
-			dni.setSimpleDropdown(driver.findElement(By.id("SearchClientDocumentType")),"DNI");
-			driver.findElement(By.id("SearchClientDocumentNumber")).click();
-			driver.findElement(By.id("SearchClientDocumentNumber")).sendKeys(Integer.toString(intAleatorio));
-			driver.findElement(By.id("SearchClientsDummy")).click();
-			try {Thread.sleep(3000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
-			List <WebElement> cc = driver.findElements(By.cssSelector(".slds-form-element__label.ng-binding"));
-			for (WebElement x : cc) {
-				if (x.getText().toLowerCase().contains("+ crear nuevo cliente")) {
-					x.click();
-					existe = true;
-					break;
-				}
+		Random aleatorio = new Random(System.currentTimeMillis());
+		aleatorio.setSeed(System.currentTimeMillis());
+		int intAleatorio = aleatorio.nextInt(8999999)+1000000;
+		dni.setSimpleDropdown(driver.findElement(By.id("SearchClientDocumentType")),"DNI");
+		driver.findElement(By.id("SearchClientDocumentNumber")).click();
+		driver.findElement(By.id("SearchClientDocumentNumber")).sendKeys(Integer.toString(intAleatorio));
+		driver.findElement(By.id("SearchClientsDummy")).click();
+		try {Thread.sleep(3000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		List <WebElement> cc = driver.findElements(By.cssSelector(".slds-form-element__label.ng-binding"));
+		for (WebElement x : cc) {
+			if (x.getText().toLowerCase().contains("+ crear nuevo cliente")) {
+				x.click();
+				break;
 			}
-		}while(existe == false);
+		}
 		try {Thread.sleep(7000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 	}
 	
@@ -802,42 +797,5 @@ try{	driver.findElement(By.id("alert-ok-button")).click();	} catch (NoSuchElemen
 						((JavascriptExecutor) driver).executeScript("arguments[0].click();", btn_cerrar);	
 				}
 			}
-		}
-		
-		public void DesloguearLoguear(String perfil) {
-			sleep(5000);
-			TestBase TB= new TestBase();
-			driver.get("https://crm--sit.cs14.my.salesforce.com/home/home.jsp?tsid=02u41000000QWha/");
-			try {Thread.sleep(10000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
-			driver.findElement(By.id("userNavButton")).click();
-			sleep(2000);
-			driver.findElement(By.id("userNav-menuItems")).findElements(By.tagName("a")).get(4).click();
-			sleep(4000);
-			driver.get("https://crm--sit.cs14.my.salesforce.com/");
-			driver.findElement(By.id("cancel_idp_hint")).click();
-			 switch(perfil){
-			 case "dani":
-				TB.login(driver);
-				break;
-			 case "agente":
-				 TB.loginAndres(driver);
-				 break;
-			 case "call":
-				 TB.loginElena(driver);  
-				 break;
-			 case "venta":
-				 TB.loginFranciso(driver);
-				 break;
-			 case "logistica":
-				 TB.loginNicolas(driver);
-				 break;
-			 case "entregas":
-				 TB.loginMarcela(driver);
-				 break;
-			 case "fabiana":
-				 TB.loginFabiana(driver);
-				 break;
-			 }
-			 sleep(10000);
 		}
  }

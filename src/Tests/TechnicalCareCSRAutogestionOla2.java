@@ -703,7 +703,6 @@ public class TechnicalCareCSRAutogestionOla2 extends TestBase{
 		List<WebElement>menu=tech.getOptionContainer();
 		menu.get(4).click();
 		assertTrue(tech.getVerificar().getText().equalsIgnoreCase("Telecom"));
-		
 	}
 	
 	@Test(groups= {"Fase4","TechnicalCare", "Autogestion", "Ola2"})

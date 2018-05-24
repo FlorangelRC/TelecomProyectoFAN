@@ -708,7 +708,7 @@ public class Marketing_Mattu extends TestBase{
 	
 	//-------------------------------------------------------------------------------------------------
 	//TCC = 36
-	@Test(groups = {"Marketing", "Ola1", "CapacidadDeAdministrarLaSegmentaciónDeLosClientes"}, priority = 0)
+	@Test(groups = {"Marketing", "Ola1", "CapacidadDeAdministrarLaSegmentaciónDeLosClientes"})
 	public void TS99087_Campo_Nombre_LEADS() {
 		mMarketing.ingresarANuevoProspecto();
 		Assert.assertTrue(driver.findElement(By.id("name_firstlea2")).isDisplayed());
@@ -717,7 +717,7 @@ public class Marketing_Mattu extends TestBase{
 	
 	//-------------------------------------------------------------------------------------------------
 	//TCC = 37
-	@Test(groups = {"Marketing", "Ola1", "CapacidadDeAdministrarLaSegmentaciónDeLosClientes"}, priority = 0)
+	@Test(groups = {"Marketing", "Ola1", "CapacidadDeAdministrarLaSegmentaciónDeLosClientes"})
 	public void TS99088_Campo_Apellido_LEADS() {
 		mMarketing.ingresarANuevoProspecto();
 		Assert.assertTrue(driver.findElement(By.id("name_lastlea2")).isDisplayed());
@@ -726,7 +726,7 @@ public class Marketing_Mattu extends TestBase{
 	
 	//-------------------------------------------------------------------------------------------------
 	//TCC = 38
-	@Test(groups = {"Marketing", "Ola1", "CapacidadDeAdministrarLaSegmentaciónDeLosClientes"}, priority = 0)
+	@Test(groups = {"Marketing", "Ola1", "CapacidadDeAdministrarLaSegmentaciónDeLosClientes"})
 	public void TS99089_Campo_Mail_LEADS() {
 		mMarketing.ingresarANuevoProspecto();
 		Assert.assertTrue(driver.findElement(By.id("lea11")).isDisplayed());
@@ -735,7 +735,7 @@ public class Marketing_Mattu extends TestBase{
 	
 	//-------------------------------------------------------------------------------------------------
 	//TCC = 39
-	@Test(groups = {"Marketing", "Ola1", "CapacidadDeAdministrarLaSegmentaciónDeLosClientes"}, priority = 0)
+	@Test(groups = {"Marketing", "Ola1", "CapacidadDeAdministrarLaSegmentaciónDeLosClientes"})
 	public void TS99090_Campo_Telefono_LEADS() {
 		mMarketing.ingresarANuevoProspecto();
 		Assert.assertTrue(driver.findElement(By.id("lea8")).isDisplayed());
@@ -744,7 +744,7 @@ public class Marketing_Mattu extends TestBase{
 	
 	//-------------------------------------------------------------------------------------------------
 	//TCC = 40
-	@Test(groups = {"Marketing", "Ola1", "CapacidadDeAdministrarLaSegmentaciónDeLosClientes"}, priority = 0)
+	@Test(groups = {"Marketing", "Ola1", "CapacidadDeAdministrarLaSegmentaciónDeLosClientes"})
 	public void TS99091_Campo_Empresa_LEADS() {
 		mMarketing.ingresarANuevoProspecto();
 		Assert.assertTrue(driver.findElement(By.id("lea3")).isDisplayed());
@@ -753,7 +753,7 @@ public class Marketing_Mattu extends TestBase{
 	
 	//-------------------------------------------------------------------------------------------------
 	//TCC = 41
-	@Test(groups = {"Marketing", "Ola1", "CapacidadDeAdministrarLaSegmentaciónDeLosClientes"}, priority = 0)
+	@Test(groups = {"Marketing", "Ola1", "CapacidadDeAdministrarLaSegmentaciónDeLosClientes"})
 	public void TS99092_Campo_Obligatorio_Nombre_LEADS() {
 		mMarketing.ingresarANuevoProspecto();
 		driver.findElement(By.id("name_lastlea2")).sendKeys("Last Name");
@@ -780,7 +780,7 @@ public class Marketing_Mattu extends TestBase{
 	
 	//-------------------------------------------------------------------------------------------------
 	//TCC = 42
-	@Test(groups = {"Marketing", "Ola1", "CapacidadDeAdministrarLaSegmentaciónDeLosClientes"}, priority = 0)
+	@Test(groups = {"Marketing", "Ola1", "CapacidadDeAdministrarLaSegmentaciónDeLosClientes"})
 	public void TS99093_Campo_Obligatorio_Apellido_LEADS() {
 		mMarketing.ingresarANuevoProspecto();
 		driver.findElement(By.id("name_firstlea2")).sendKeys("Name");
@@ -807,7 +807,7 @@ public class Marketing_Mattu extends TestBase{
 	
 	//-------------------------------------------------------------------------------------------------
 	//TCC = 43
-	@Test(groups = {"Marketing", "Ola1", "CapacidadDeAdministrarLaSegmentaciónDeLosClientes"}, priority = 0)
+	@Test(groups = {"Marketing", "Ola1", "CapacidadDeAdministrarLaSegmentaciónDeLosClientes"})
 	public void TS99094_Campo_Obligatorio_Mail_LEADS() {
 		mMarketing.ingresarANuevoProspecto();
 		driver.findElement(By.id("name_firstlea2")).sendKeys("Name");
@@ -834,7 +834,7 @@ public class Marketing_Mattu extends TestBase{
 	
 	//-------------------------------------------------------------------------------------------------
 	//TCC = 44
-	@Test(groups = {"Marketing", "Ola1", "CapacidadDeAdministrarLaSegmentaciónDeLosClientes"}, priority = 0)
+	@Test(groups = {"Marketing", "Ola1", "CapacidadDeAdministrarLaSegmentaciónDeLosClientes"})
 	public void TS99095_Campo_Obligatorio_Telefono_LEADS() {
 		mMarketing.ingresarANuevoProspecto();
 		WebElement wTable = driver.findElement(By.className("pbSubsection"));
@@ -846,7 +846,7 @@ public class Marketing_Mattu extends TestBase{
 	
 	//-------------------------------------------------------------------------------------------------
 	//TCC = 45
-	@Test(groups = {"Marketing", "Ola1", "CapacidadDeAdministrarLaSegmentaciónDeLosClientes"}, priority = 0)
+	@Test(groups = {"Marketing", "Ola1", "CapacidadDeAdministrarLaSegmentaciónDeLosClientes"})
 	public void TS99096_Campo_Lleno_Empresa_LEADS() {
 		mMarketing.ingresarANuevoProspecto();
 		driver.findElement(By.id("name_firstlea2")).sendKeys("Name");
@@ -861,60 +861,6 @@ public class Marketing_Mattu extends TestBase{
 		Assert.assertTrue(driver.findElement(By.id("lea2_ileinner")).getText().equals("Name Last Name"));
 		
 		mMarketing.cajonDeAplicaciones("Consola FAN");
-	}
-	
-	//-------------------------------------------------------------------------------------------------
-	//TCC = 46
-	@Test(groups = {"Marketing", "Ola1", "CapacidadDeAdministrarLaSegmentaciónDeLosClientes"}, dataProvider = "MarketingCuentaNormal")
-	public void TS98035_Label_TyC_Alta_CP(String sCuenta) throws IOException {
-		mMarketing.seleccionarCuentaMarketing(sCuenta, "Vista Marketing");
-		mMarketing.estadoAltaBaja("Alta");
-		mMarketing.seleccionarCuenta("consumerAccounts");
-		driver.findElement(By.id("AltaClubPersonal_nextBtn")).click();
-		mMarketing.sleepShort(0);
-		Assert.assertTrue(driver.findElement(By.id("TxtBkTerminosCondiciones")).findElement(By.tagName("p")).getText().equals("Al presionar siguiente está aceptando los Términos y Condiciones del Programa"));
-	}
-	
-	//-------------------------------------------------------------------------------------------------
-	//TCC = 47
-	@Test(groups = {"Marketing", "Ola1", "CapacidadDeAdministrarLaSegmentaciónDeLosClientes"}, dataProvider = "MarketingCuentaNormal")
-	public void TS98034_Link_TyC_Alta_CP(String sCuenta) throws IOException {
-		mMarketing.seleccionarCuentaMarketing(sCuenta, "Vista Marketing");
-		mMarketing.estadoAltaBaja("Alta");
-		mMarketing.seleccionarCuenta("consumerAccounts");
-		driver.findElement(By.id("AltaClubPersonal_nextBtn")).click();
-		mMarketing.sleepShort(0);
-		Assert.assertTrue(driver.findElement(By.id("TxtBkTerminosCondiciones")).findElement(By.tagName("a")).isDisplayed());
-	}
-	
-	//-------------------------------------------------------------------------------------------------
-	//TCC = 48
-	@Test(groups = {"Marketing", "Ola1", "CapacidadDeAdministrarLaSegmentaciónDeLosClientes"}, dataProvider = "MarketingCuentaNormal")
-	public void TS90288_Eliminación_de_Campo_Segmento_Segment_C(String sCuenta) throws IOException {
-		mMarketing.seleccionarCuentaMarketing(sCuenta, "Vista Marketing");
-		CustomerCare cCC = new CustomerCare(driver);
-		cCC.selectMainTabByName(sCuenta);
-		BasePage cambioFrame=new BasePage();
-		mMarketing.sleepMedium(0);
-		driver.switchTo().defaultContent();
-		driver.switchTo().frame(cambioFrame.getFrameForElement(driver, By.className("detailList")));
-		List<WebElement> wTd = driver.findElement(By.className("detailList")).findElements(By.tagName("td"));
-		boolean bFound = false;
-		for (WebElement wAux : wTd) {
-			if (wAux.getText().equals("Segment__C")) {
-				System.out.println("wAux.getText: " + wAux.getText());
-				bFound = true;
-				break;
-			}
-		}
-		Assert.assertTrue(!bFound);
-	}
-	
-	//-------------------------------------------------------------------------------------------------
-	//TCC = 49
-	//@Test(groups = {"Marketing", "Ola1", "CapacidadDeAdministrarLaSegmentaciónDeLosClientes"}, dataProvider = "MarketingCuentaAtributosYExclusiones")
-	public void TS(String sCuenta) throws IOException {
-		mMarketing.seleccionarCuentaMarketing(sCuenta, "Vista Marketing");
 	}
 	
 	//-------------------------------------------------------------------------------------------------

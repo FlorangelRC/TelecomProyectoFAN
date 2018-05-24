@@ -16,10 +16,8 @@ import org.testng.Assert;
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeClass;
-import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
-import Pages.Accounts;
 import Pages.BasePage;
 import Pages.ContactSearch;
 import Pages.CustomerCare;
@@ -30,20 +28,13 @@ import Pages.setConexion;
 public class SalesNominaciones extends TestBase{
 
 	private WebDriver driver;
-	protected String perfil = "venta";
+	protected String perfil = "call";
 	
 	@BeforeClass(alwaysRun=true)
 	public void Init() {
 		driver = setConexion.setupEze();
 		try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}		
-		switch(perfil){
-		 case "call":
-			 loginElena(driver);  
-			 break;
-		 case "venta":
 			 loginFranciso(driver);
-			 break;
-		}
 		try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 		HomeBase homePage = new HomeBase(driver);
 		try {Thread.sleep(6000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
@@ -55,22 +46,14 @@ public class SalesNominaciones extends TestBase{
 	    	homePage.selectAppFromMenuByName("Ventas");
 	    	try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}            
 	    }
-	   
-	}
-	
-	@BeforeMethod(alwaysRun=true)
-	public void setup() throws Exception {	
-		try {Thread.sleep(20000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
-		driver.findElement(By.xpath("//a[@href=\'https://crm--sit--c.cs14.visual.force.com/apex/taClientSearch']")).click();
-			
-		try {Thread.sleep(10000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+	    driver.findElement(By.xpath("//a[@href=\'https://crm--sit--c.cs14.visual.force.com/apex/taClientSearch']")).click();		
+	    try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}    
+		
 	}
 
 	//@AfterMethod(alwaysRun=true)
 	public void IceB() {
-		try {Thread.sleep(10000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
-		driver.get("https://crm--sit.cs14.my.salesforce.com/home/home.jsp?tsid=02u41000000QWha/");
-		try {Thread.sleep(10000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		driver.navigate().refresh();
 	}
 	
 	//@AfterClass(alwaysRun=true)
@@ -178,7 +161,7 @@ public class SalesNominaciones extends TestBase{
 		WebElement lis = driver.findElement(By.id("tab-scoped-2")).findElement(By.tagName("div")).findElement(By.tagName("tbody"));
 		System.out.println(lis.getSize());
 	}
-	@Test(groups ={ "Sales", "Ola1", "Nominacion"}, dataProvider="SalesCuentaBolsa")//si
+	@Test(groups ={ "Sales"}, dataProvider="SalesCuentaBolsa")//si
 	public void TS95078_Nominacion_Argentino_Validar_metodo_Ident_por_DNI(String sCuenta, String sDni, String sLinea){
 		ContactSearch contact = new ContactSearch(driver);
 		String NyA = sCuenta;
@@ -210,7 +193,7 @@ public class SalesNominaciones extends TestBase{
 		}
 		driver.findElement(By.id("ValidationMethod_nextBtn")).click();
 		sleep(7000);
-		contact.subirArchivo("C:\\Users\\florangel\\Downloads\\mapache.jpg", "si");
+		contact.subirArchivo("C:\\Users\\Sofia Chardin\\Desktop\\DNI.jpg", "si");
 		sleep(7000);
 		boolean b = false;
 		List<WebElement> vali = driver.findElements(By.cssSelector(".slds-page-header__title.vlc-slds-page-header__title.slds-truncate.ng-binding"));
@@ -284,17 +267,17 @@ public class SalesNominaciones extends TestBase{
 		contact.searchContact2("DNI", sDni, sLinea);
 		try {contact.ingresarMail("asdads@gmail.com", "si");}catch (org.openqa.selenium.ElementNotVisibleException ex1) {}
 		contact.tipoValidacion("documento");
-		contact.subirArchivo("C:\\Users\\florangel\\Downloads\\mapache.jpg", "si");
+		contact.subirArchivo("C:\\Users\\Sofia Chardin\\Desktop\\DNI.jpg", "si");
 			BasePage bp = new BasePage(driver);
 		bp.setSimpleDropdown(driver.findElement(By.id("ImpositiveCondition")), "IVA Consumidor Final");
 		SB.Crear_DomicilioLegal("Buenos Aires", "aba", "falsa", "", "1000", "", "", "1549");
 		sleep(10000);
-		contact.subirformulario("C:\\Users\\florangel\\Downloads\\form.pdf", "si");
+		contact.subirformulario("C:\\Users\\Sofia Chardin\\Desktop\\FormNom.pdf", "si");
 		sleep(30000);
 		List <WebElement> element = driver.findElements(By.cssSelector(".slds-form-element.vlc-flex.vlc-slds-text-block.vlc-slds-rte.ng-pristine.ng-valid.ng-scope"));
 		boolean a = false;
 		for (WebElement x : element) {
-			if (x.getText().toLowerCase().contains("nominaci\u00f3n exitosa!")) {
+			if (x.getText().toLowerCase().contains("�nominaci\u00f3n exitosa!")) {
 				a = true;
 				//System.out.println(x.getText());
 			}
@@ -349,7 +332,7 @@ public class SalesNominaciones extends TestBase{
 	//***********************************************************************************************************************
 	@Test(groups={"Sales","Nominacion","Ola1"},dataProvider="SalesPasaporteBolsa")
 	public void TS95094_SalesCPQ_Nominacion_Extranjero_Verificar_Confirmacion_Exitosa(String sCuenta, String sDni, String sLinea){
-		String FilePath = "C:\\Users\\florangel\\Downloads\\mapache.jpg";;
+		String FilePath = "C:\\Users\\Sofia Chardin\\Desktop\\DNI.jpg";
 		SalesBase SB = new SalesBase(driver);
 		CustomerCare CC = new CustomerCare(driver);
 		ContactSearch contact = new ContactSearch(driver);
@@ -376,18 +359,18 @@ public class SalesNominaciones extends TestBase{
 		CC.obligarclick(driver.findElement(By.id("Contact_nextBtn")));
 		sleep(5000);
 		contact.tipoValidacion("documento");
-		contact.subirArchivo("C:\\Users\\florangel\\Downloads\\mapache.jpg", "si");
+		contact.subirArchivo("C:\\Users\\Sofia Chardin\\Desktop\\DNI.jpg", "si");
 			BasePage bp = new BasePage(driver);
 			sleep(5000);
 	//	bp.setSimpleDropdown(driver.findElement(By.id("ImpositiveCondition")), "IVA Consumidor Final");
 	//	SB.Crear_DomicilioLegal("Buenos Aires", "aba", "falsa", "", "1000", "", "", "1549");
 		sleep(10000);
-		contact.subirformulario("C:\\Users\\florangel\\Downloads\\form.pdf", "si");
+		contact.subirformulario("C:\\Users\\Sofia Chardin\\Desktop\\FormNom.pdf", "si");
 		sleep(25000);
 		List <WebElement> element = driver.findElements(By.cssSelector(".slds-form-element.vlc-flex.vlc-slds-text-block.vlc-slds-rte.ng-pristine.ng-valid.ng-scope"));
 		boolean a = false;
 		for (WebElement x : element) {
-			if (x.getText().toLowerCase().contains("nominaci\u00f3n exitosa!")) {
+			if (x.getText().toLowerCase().contains("�nominaci\u00f3n exitosa!")) {
 				a = true;
 				System.out.println(x.getText());
 			}
@@ -398,7 +381,7 @@ public class SalesNominaciones extends TestBase{
 	
 	@Test(groups={"Sales","Nominacion","Ola1"}, dataProvider="SalesPasaporteBolsa")
 	public void TS95114_SalesCPQ_Nominacion_Extranjero_Verificar_Datos_Nominar_Cliente_Extranjero(String sCuenta, String sDni, String sLinea){
-		String FilePath = "C:\\Users\\florangel\\Downloads\\mapache.jpg";
+		String FilePath = "C:\\Users\\Sofia Chardin\\Desktop\\DNI.jpg";
 		SalesBase SB = new SalesBase(driver);
 		CustomerCare CC = new CustomerCare(driver);
 		ContactSearch contact = new ContactSearch(driver);
@@ -446,7 +429,7 @@ public class SalesNominaciones extends TestBase{
 		}
 		
 		driver.findElement(By.id("PermanencyDueDate")).sendKeys("30/06/2021");
-		assertTrue(driver.findElement(By.cssSelector(".message.description.ng-binding.ng-scope")).getText().contains("La permanencia no puede ser mayor a 2 a\u00f1os a partir de la fecha o menor a la fecha actual"));
+		assertTrue(driver.findElement(By.cssSelector(".message.description.ng-binding.ng-scope")).getText().contains("La permanencia no puede ser mayor a 2 a�os a partir de la fecha o menor a la fecha actual"));
 		sleep(1000);
 		driver.findElement(By.id("PermanencyDueDate")).clear();
 		driver.findElement(By.id("PermanencyDueDate")).sendKeys("30/06/2018");
@@ -456,8 +439,19 @@ public class SalesNominaciones extends TestBase{
 		assertTrue(driver.findElement(By.id("ValidationMethod_nextBtn")).isEnabled());
 	}
 	
-	@Test(groups={"Sales","Nominacion","Ola1"},  dataProvider="SalesPasaporteBolsa")  //**************************** VER ***********************************//
-	public void TS95116_SalesCPQ_Nominacion_Extranjero_Verificar_Blacklist_Cliente_Existente(String sCuenta, String sDni, String sLinea){
+	@Test(groups={"Sales","Nominacion","Ola1"})  //**************************** VER ***********************************//
+	public void TS95116_SalesCPQ_Nominacion_Extranjero_Verificar_Blacklist_Cliente_Existente(){
+		SalesBase SB = new SalesBase(driver);
+		CustomerCare CC = new CustomerCare(driver);
+		ContactSearch contact = new ContactSearch(driver);
+		contact.searchContact2("Pasaporte", "1324567", "femenino");
+		sleep(6000);
+		//CC.obligarclick(driver.findElement(By.id("Contact_nextBtn")));
+		Assert.assertTrue(false);
+		
+	}
+	@Test(groups={"Sales","Nominacion","Ola1"}, dataProvider="SalesCuentaBolsa")
+	public void TS95288_SalesCPQ_Nominacion_Argentino_Verificar_Flujo_De_Nominacion_Arg_Telefonico(String sCuenta, String sDni, String sLinea){
 		SalesBase SB = new SalesBase(driver);
 		CustomerCare CC = new CustomerCare(driver);
 		ContactSearch contact = new ContactSearch(driver);
@@ -472,93 +466,50 @@ public class SalesNominaciones extends TestBase{
 		System.out.println("1: "+driver.findElement(By.id("tab-scoped-1")).findElement(By.tagName("tbody")).findElements(By.tagName("tr")).get(2).findElements(By.tagName("td")).get(1).getText());
 		cua.click();
 		sleep(13000);
-		contact.searchContact2("Pasaporte", "1324567", "femenino");
-		sleep(6000);
-		Assert.assertFalse(driver.findElement(By.id("Contact_nextBtn")).isDisplayed());
-		//CC.obligarclick(driver.findElement(By.id("Contact_nextBtn")));
-		Assert.assertTrue(false);
+		perfil = "call";
+		contact.searchContact2("DNI", sDni , sLinea);
+		sleep(8000);		
+		driver.findElement(By.cssSelector(".slds-input.form-control.ng-pristine.ng-untouched.ng-valid.ng-empty")).sendKeys("algoaqui@yahoo.com.ar");
+		CC.obligarclick(driver.findElement(By.id("Contact_nextBtn")));
+		sleep(5000);
+		driver.findElement(By.id("MethodSelection|0")).findElement(By.cssSelector(".slds-radio--faux.ng-scope")).click();
+		driver.findElement(By.id("ValidationMethod_nextBtn")).click();
+		sleep(5000);
+		sleep(18000);
+		contact.subirArchivo("C:\\Users\\Sofia Chardin\\Desktop\\DNI.jpg", "si");
+		BasePage bp = new BasePage(driver);
+		//driver.findElement(By.id("FormUpload_nextBtn")).click();
+		sleep(8000);
+		bp.setSimpleDropdown(driver.findElement(By.id("ImpositiveCondition")), "IVA Consumidor Final");
+		SB.Crear_DomicilioLegal("Buenos Aires", "aba", "falsa", "", "1000", "", "", "1549");
+		sleep(20000);
+		contact.subirformulario("C:\\Users\\Sofia Chardin\\Desktop\\FormNom.pdf", "si");
+		sleep(8000);
+		SB.continuar();
+		System.out.println(driver.findElement(By.cssSelector(".slds-grid.slds-wrap.ng-pristine.ng-valid")).findElement(By.id("TextBlock2")).findElement(By.className("ng-binding")).findElements(By.tagName("p")).get(2).getText());
+		assertTrue(driver.findElements(By.id("TextBlock2")).get(1).findElements(By.tagName("p")).get(3).getText().toLowerCase().contains("nominaci\u00f3n exitosa"));
 		
 	}
-	@Test(groups={"Sales","Nominacion","Ola1"}, dataProvider="SalesCuentaBolsa")
-	public void TS95288_SalesCPQ_Nominacion_Argentino_Verificar_Flujo_De_Nominacion_Arg_Telefonico(String sCuenta, String sDni, String sLinea){
+	
+	
+	//@Test(groups = "Sales")//si
+	public void TS95119_SalesCPQ_Nominacion_Extranjero_Verificar_Documento_Adjunto_Pasaporte(){
+		String FilePath = "C:\\Users\\florangel\\Downloads\\mapache.jpg";
 		SalesBase SB = new SalesBase(driver);
 		CustomerCare CC = new CustomerCare(driver);
 		ContactSearch contact = new ContactSearch(driver);
-		String NyA = sCuenta;
-		SB.DesloguearLoguear("call");
-		sleep(5000);
-		try {
-			driver.findElement(By.xpath("//a[@href=\'https://crm--sit--c.cs14.visual.force.com/apex/taClientSearch']")).click();
-			sleep(10000);
-			SB.BuscarAvanzada(NyA.split(" ")[0], NyA.split(" ")[1], "", "", "");
-			WebElement cli = driver.findElement(By.id("tab-scoped-1"));
-			if (cli.findElement(By.tagName("tbody")).findElement(By.tagName("tr")).findElement(By.tagName("div")).getText().equals("Cliente Wholesale")) {
-				cli.findElement(By.tagName("tbody")).findElement(By.tagName("tr")).click();
-			}
-			sleep(3000);
-			WebElement cua = driver.findElement(By.id("tab-scoped-1")).findElement(By.tagName("tbody")).findElements(By.tagName("tr")).get(2).findElements(By.tagName("td")).get(6).findElement(By.tagName("svg"));
-			System.out.println("1: "+driver.findElement(By.id("tab-scoped-1")).findElement(By.tagName("tbody")).findElements(By.tagName("tr")).get(2).findElements(By.tagName("td")).get(1).getText());
-			cua.click();
-			sleep(13000);
-			contact.searchContact2("DNI", sDni , sLinea);
-			sleep(8000);		
-			driver.findElement(By.cssSelector(".slds-input.form-control.ng-pristine.ng-untouched.ng-valid.ng-empty")).sendKeys("algoaqui@yahoo.com.ar");
-			CC.obligarclick(driver.findElement(By.id("Contact_nextBtn")));
-			sleep(5000);
-			contact.tipoValidacion("preguntas y respuestas");
-			sleep(5000);
-			BasePage bp = new BasePage(driver);
-			//driver.findElement(By.id("FormUpload_nextBtn")).click();
-			sleep(8000);
-			bp.setSimpleDropdown(driver.findElement(By.id("ImpositiveCondition")), "IVA Consumidor Final");
-			SB.Crear_DomicilioLegal("Buenos Aires", "aba", "falsa", "", "1000", "", "", "1549");
-			sleep(20000);
-			contact.subirformulario("C:\\Users\\florangel\\Downloads\\form.pdf", "si");
-			sleep(8000);
-			SB.continuar();
-			System.out.println(driver.findElement(By.cssSelector(".slds-grid.slds-wrap.ng-pristine.ng-valid")).findElement(By.id("TextBlock2")).findElement(By.className("ng-binding")).findElements(By.tagName("p")).get(2).getText());
-			assertTrue(driver.findElements(By.id("TextBlock2")).get(1).findElements(By.tagName("p")).get(3).getText().toLowerCase().contains("nominaci\u00f3n exitosa"));
-			SB.DesloguearLoguear("venta");
-		}catch(Exception ex1) {
-			SB.DesloguearLoguear("venta");
-			Assert.assertTrue(false);
-		}
-	}
-	
-	
-	@Test(groups ={ "Sales", "Ola1", "Nominacion"}, dataProvider="SalesCuentaBolsa")//si
-	public void TS95119_SalesCPQ_Nominacion_Extranjero_Verificar_Documento_Adjunto_Pasaporte(String sCuenta, String sDni, String sLinea){
-		ContactSearch contact = new ContactSearch(driver);
-		String NyA = sCuenta;
-		SalesBase SB = new SalesBase(driver);
-		SB.BuscarAvanzada(NyA.split(" ")[0], NyA.split(" ")[1], "", "", "");
-		WebElement cli = driver.findElement(By.id("tab-scoped-1"));
-		if (cli.findElement(By.tagName("tbody")).findElement(By.tagName("tr")).findElement(By.tagName("div")).getText().equals("Cliente Wholesale")) {
-			cli.findElement(By.tagName("tbody")).findElement(By.tagName("tr")).click();
-		}
-		sleep(3000);
-		WebElement cua = driver.findElement(By.id("tab-scoped-1")).findElement(By.tagName("tbody")).findElements(By.tagName("tr")).get(2).findElements(By.tagName("td")).get(6).findElement(By.tagName("svg"));
-		System.out.println("1: "+driver.findElement(By.id("tab-scoped-1")).findElement(By.tagName("tbody")).findElements(By.tagName("tr")).get(2).findElements(By.tagName("td")).get(1).getText());
-		cua.click();
-		
-		contact.searchContact2("Pasaporte", "132456749", "femenino");
+		contact.searchContact2("Pasaporte", "1324567", "femenino");
 		sleep(6000);
 		driver.findElement(By.id("PermanencyDueDate")).sendKeys("30/06/2018");
 		//driver.findElement(By.cssSelector(".slds-input.form-control.ng-pristine.ng-untouched.ng-valid.ng-empty")).sendKeys("algoaqui@yahoo.com.ar");
-		driver.findElement(By.id("Contact_nextBtn")).click();
-		sleep(7000);
-		List <WebElement> valdni = driver.findElements(By.cssSelector(".slds-form-element__label.ng-binding.ng-scope"));
-		for (WebElement x : valdni) {
-			if (x.getText().toLowerCase().contains("validaci\u00f3n por documento de identidad")) {
-				x.click();
-				break;
-			}
-		}
+		CC.obligarclick(driver.findElement(By.id("Contact_nextBtn")));
+		sleep(5000);
+		driver.findElement(By.id("MethodSelectionPassport|0")).findElement(By.cssSelector(".slds-radio--faux.ng-scope")).click();
 		driver.findElement(By.id("ValidationMethod_nextBtn")).click();
-		sleep(7000);
-		contact.subirArchivo("C:\\Users\\florangel\\Downloads\\mapache.jpg", "no");
-		sleep(7000);
-		Assert.assertTrue(driver.findElement(By.cssSelector(".message.description.ng-binding.ng-scope")).getText().toLowerCase().contains("documento de identidad superada"));
+		sleep(5000);
+		driver.findElement(By.id("FileDocumentImage")).sendKeys(FilePath);
+		sleep(1000);
+		driver.findElement(By.cssSelector(".message.description.ng-binding.ng-scope")).getText().toLowerCase().contains("documento de identidad superada");
 	}
 	
 	//@Test(groups = "Sales")
@@ -608,7 +559,7 @@ public class SalesNominaciones extends TestBase{
 		sleep(5000);
 		contact.tipoValidacion("documento");
 		sleep(5000);
-		contact.subirArchivo("C:\\Users\\florangel\\Downloads\\mapache.jpg", "si");
+		contact.subirArchivo("C:\\Users\\Sofia Chardin\\Desktop\\DNI.jpg", "si");
 		sleep(1000);
 		driver.findElement(By.cssSelector(".message.description.ng-binding.ng-scope")).getText().toLowerCase().contains("documento de identidad superada");
 	}

@@ -169,7 +169,7 @@ public class BasePage {
 	public void selectMainTabByName(String tabName) {
 //		An Alternative.
 //		List<WebElement> tabs = tabsWrapperBar.findElements(By.tagName("li"));
-/*		driver.switchTo().defaultContent();
+		driver.switchTo().defaultContent();
 		List<WebElement> tabs = tabsWrapperBar.findElements(By.tagName("a"));
 
 		for(WebElement tab : tabs) {//tabs LINKS
@@ -178,24 +178,7 @@ public class BasePage {
 				return;
 			}
 		}
-		System.out.println("Tab NO encontrado.");*/
-		driver.switchTo().defaultContent();
-		List<WebElement> wLi = driver.findElements(By.tagName("li"));
-		boolean bSecondTab = false;
-		for (WebElement wAux : wLi) {
-			try {
-				if (wAux.findElement(By.className("tabText")).getText().equals(tabName)) {
-					if (!bSecondTab) {
-						bSecondTab = true;
-					} else {
-						wAux.click();
-						break;
-					}
-				}
-			} catch (NoSuchElementException exception) {
-				//Always empty
-			}
-		}
+		System.out.println("Tab NO encontrado.");
 	}
 	
 	//this is for Consola FAN, closes all tabs, takes in account Alert messages

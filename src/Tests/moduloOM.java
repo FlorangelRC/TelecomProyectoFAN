@@ -29,6 +29,7 @@ import com.gargoylesoftware.htmlunit.javascript.host.Iterator;
 import Pages.Accounts;
 import Pages.BasePage;
 import Pages.HomeBase;
+import Pages.OM;
 import Pages.RegistroEventoMasivo;
 import Pages.SCP;
 import Pages.setConexion;
@@ -43,44 +44,34 @@ public class moduloOM extends TestBase {
 	public void init() throws Exception
 	{
 		this.driver = setConexion.setupEze();
-		try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
-		login(driver);
-		try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
-		//Entrar en Ventas
-		
+		sleep(5000);
+		//Usuario Victor OM
+		login(driver, "https://crm--sit.cs14.my.salesforce.com/", "U585991", "Testa10k");
+		sleep(5000);	
 	}
 
 	@BeforeMethod(alwaysRun=true)
 	public void setUp() throws Exception {
 		driver.switchTo().defaultContent();
-		try {Thread.sleep(2000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
-		SCP page= new SCP(driver);
-		page.goToMenu("Ventas");
+		sleep(2000);
+		SCP pageSCP= new SCP(driver);
+		pageSCP.goToMenu("Ventas");
 		
 		//click +
-		try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
-		driver.findElement(By.xpath("//a[@href=\"/home/showAllTabs.jsp\"]")).click();
-		try {Thread.sleep(3000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		sleep(5000);
+		OM pageOm=new OM(driver);
+		pageOm.clickMore();
+		sleep(3000);
 		
-		//click en Pedidos
-
-		List<WebElement> optns= driver.findElements(By.cssSelector(".dataCol.orderBlock"));
-		for (WebElement option : optns) {
-			if(option.getText().toLowerCase().equals("Pedidos".toLowerCase())){
-					WebElement BenBoton = option.findElement(By.tagName("a"));
-						((JavascriptExecutor)driver).executeScript("window.scrollTo(0,"+BenBoton.getLocation().y+")");
-							try {Thread.sleep(1000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
-							BenBoton.click();
-				break;}
-			}
-		try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		//click en Ordenes
+		pageOm.clickOnListTabs("Orders");
 	}
 	
-	@AfterClass(alwaysRun=true)
+	//@AfterClass(alwaysRun=true)
 	public void tearDown() {
-		try {Thread.sleep(2000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		sleep(2000);
 		driver.quit();
-		try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		sleep(1000);
 	}
 	
 	
@@ -131,7 +122,8 @@ public class moduloOM extends TestBase {
 				.findElements(By.cssSelector(".x-grid3-col.x-grid3-cell.x-grid3-td-ORDERS_ORDER_NUMBER"));
 		for(WebElement p:nPedidos) {
 			//System.out.println(p.getText());
-			if(p.getText().endsWith("3879")) {
+			//if(p.getText().endsWith("3879")) {
+			if(p.getText().endsWith("17832")) {
 				((JavascriptExecutor)driver).executeScript("window.scrollTo(0,"+p.getLocation().y+")");
 				try {Thread.sleep(1000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 				p.findElement(By.tagName("a")).click();
