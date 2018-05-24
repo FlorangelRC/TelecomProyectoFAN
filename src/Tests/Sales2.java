@@ -28,6 +28,7 @@ import Pages.BillSimulation;
 import Pages.ContactSearch;
 import Pages.CustomerCare;
 import Pages.DeliveryMethod;
+import Pages.HomeBase;
 import Pages.LineAssignment;
 import Pages.SalesBase;
 import Pages.Ta_CPQ;
@@ -41,12 +42,12 @@ public class Sales2 extends TestBase{
 	String localidad="VICENTE LOPEZ";
 	protected  WebDriverWait wait;
 	
-	@AfterClass(alwaysRun=true)
+	//@AfterClass(alwaysRun=true)
 	public void tearDown() {
 		driver.quit();
 	}
 	
-	@AfterMethod(alwaysRun=true)
+	//@AfterMethod(alwaysRun=true)
 	public void deslogin() {
 		sleep(3000);
 		driver.get("https://crm--sit.cs14.my.salesforce.com/home/home.jsp?tsid=02u41000000QWha/");
@@ -58,7 +59,17 @@ public class Sales2 extends TestBase{
 		inicializarDriver();
 		sb = new SalesBase(driver);
 		 loginFranciso(driver);
-		IrA.CajonDeAplicaciones.Ventas();
+		 HomeBase homePage = new HomeBase(driver);
+			try {Thread.sleep(6000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		    String a = driver.findElement(By.id("tsidLabel")).getText(); 
+		    if (a.contains("Ventas")){}
+		    else {
+		    	homePage.switchAppsMenu();
+		    	try {Thread.sleep(2000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		    	homePage.selectAppFromMenuByName("Ventas");
+		    	try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}            
+		    }
+		//IrA.CajonDeAplicaciones.Ventas();
 	}
 	
 	@BeforeMethod(alwaysRun=true)
@@ -294,11 +305,12 @@ public class Sales2 extends TestBase{
 		sleep(15000);
 		sb.continuar();
 		sleep(10000);
-		sb.Crear_DomicilioLegal("Buenos Aires","ab", "falsa", "", "4537", "", "", "5384");
-		sleep(10000);
-		List <WebElement> num = driver.findElements(By.className("slds-form-element__control"));
+		sb.Crear_DomicilioLegal("Buenos Aires","Vicente Lopez", "falsa", "", "4537", "", "", "5384");
+		sleep(15000);
+		List <WebElement> num = driver.findElement(By.id("OrderStatus")).findElements(By.className("slds-form-element__control"));
 		boolean a = false;
 		for (WebElement x : num) {
+			System.out.println(x.getText());
 			if (x.getText().contains("Nro. orden:")){
 				a = true;
 			
@@ -416,7 +428,7 @@ public class Sales2 extends TestBase{
 		Assert.assertTrue(a);
 	}
 	
-	@Test(groups={"Sales", "AltaDeLinea", "Ola1"}, priority=8, dataProvider="SalesCuentaConGestiones" )  //Falta terminar, no se puede crear venta desde la V360
+	@Test(groups={"Sales", "AltaDeLinea", "Ola1"}, priority=8, dataProvider="SalesCuentaActiva" )  //Falta terminar, no se puede crear venta desde la V360
 	public void TS94639_Ventas_Nueva_Venta_Verificar_creacion_orden_de_venta_desde_un_Asset_Usuario(String sCuenta, String sDni, String sLinea) {
 		driver.findElement(By.cssSelector(".vlc-slds-button--tertiary.ng-binding.ng-scope")).click();
 		sleep(2000);
@@ -429,7 +441,7 @@ public class Sales2 extends TestBase{
 		Assert.assertTrue(false);
 	}
 	
-	@Test(groups={"Sales", "AltaDeLinea", "Ola1"}, priority=1, dataProvider="SalesCuentaConGestiones" )
+	@Test(groups={"Sales", "AltaDeLinea", "Ola1"}, priority=1, dataProvider="SalesCuentaActiva" )//luego pasar a cuenta con gestiones
 	public void TS94716_Ventas_VentasGestiones_Visualizar_un_historico_de_gestiones_realizadas(String sCuenta, String sDni, String sLinea) {
 		driver.findElement(By.cssSelector(".vlc-slds-button--tertiary.ng-binding.ng-scope")).click();
 		sleep(2000);
@@ -454,7 +466,7 @@ public class Sales2 extends TestBase{
 		Assert.assertTrue(a && b);
 	}
 	
-	@Test(groups={"Sales", "AltaDeLinea", "Ola1"}, priority=1, dataProvider="SalesCuentaConGestiones")
+	@Test(groups={"Sales", "AltaDeLinea", "Ola1"}, priority=1, dataProvider="SalesCuentaActiva")//agregar luego uno de cuenta con gestiones
 	public void TS94611_Alta_Linea_Nueva_Venta_Verificar_acceso_a_Nueva_Venta_desde_vista_360(String sCuenta, String sDni, String sLinea) {
 		driver.findElement(By.cssSelector(".vlc-slds-button--tertiary.ng-binding.ng-scope")).click();
 		sleep(2000);
@@ -1949,7 +1961,7 @@ public class Sales2 extends TestBase{
 		sb.acciondecontacto("catalogo");
 		boolean x = false;
 		sleep(18000);
-		sb.agregarplan("Galaxy S8");
+		sb.elegirplan("Plan prepago nacional");
 		driver.findElement(By.cssSelector(".slds-input.ng-valid.ng-not-empty.ng-dirty.ng-valid-parse.ng-touched")).clear();
 		driver.findElement(By.cssSelector(".slds-input.ng-valid.ng-dirty.ng-valid-parse.ng-touched.ng-empty")).sendKeys("Plan Prepago Nacional");		
 		try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
@@ -2136,7 +2148,7 @@ public class Sales2 extends TestBase{
 		driver.findElements(By.cssSelector(".slds-button.slds-button--neutral")).get(3).click();
 		sleep(3000);
 		List<WebElement> montos = driver.findElements(By.className("cpq-underline"));
-		montos = montos.subList(0, 3);
+		//montos = montos.subList(0, 3);
 		for (WebElement UnM : montos) {
 			System.out.println("monto="+UnM.getText());
 			precissionCounter =UnM.getText().split(",");

@@ -256,7 +256,7 @@ public boolean btnnoexiste(String boton){
 		driver.findElement(By.xpath("//a[@href=\"/005?isUserEntityOverride=1&retURL=%2Fui%2Fsetup%2FSetup%3Fsetupid%3DUsers&setupid=ManageUsers\"]")).click();
 //buscar cuenta
 		try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
-		setSimpleDropdown(driver.findElement(By.id("fcf")), "Todos los usuarios");	
+		setSimpleDropdown(driver.findElement(By.id("fcf")), "Usuarios activos");	
  }
 
  public void validarperfil(String nombre, String perfil){
@@ -680,7 +680,7 @@ try{	driver.findElement(By.id("alert-ok-button")).click();	} catch (NoSuchElemen
 		}
 	
 	public void BtnCrearNuevoCliente(){
-		try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		try {Thread.sleep(10000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 		boolean existe = false;
 		BasePage dni = new BasePage(driver);
 		do {

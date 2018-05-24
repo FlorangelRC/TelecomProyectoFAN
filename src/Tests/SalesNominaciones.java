@@ -66,14 +66,14 @@ public class SalesNominaciones extends TestBase{
 		try {Thread.sleep(10000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 	}
 
-	@AfterMethod(alwaysRun=true)
+	//@AfterMethod(alwaysRun=true)
 	public void IceB() {
 		try {Thread.sleep(10000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 		driver.get("https://crm--sit.cs14.my.salesforce.com/home/home.jsp?tsid=02u41000000QWha/");
 		try {Thread.sleep(10000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 	}
 	
-	@AfterClass(alwaysRun=true)
+	//@AfterClass(alwaysRun=true)
 	public void Exit() {
 		driver.quit();
 		sleep(2000);
@@ -476,6 +476,7 @@ public class SalesNominaciones extends TestBase{
 		sleep(6000);
 		Assert.assertFalse(driver.findElement(By.id("Contact_nextBtn")).isDisplayed());
 		//CC.obligarclick(driver.findElement(By.id("Contact_nextBtn")));
+		Assert.assertTrue(false);
 		
 	}
 	@Test(groups={"Sales","Nominacion","Ola1"}, dataProvider="SalesCuentaBolsa")

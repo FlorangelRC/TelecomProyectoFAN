@@ -38,6 +38,7 @@ import Pages.BasePage;
 import Pages.ContactInformation;
 import Pages.ContactSearch;
 import Pages.CustomerCare;
+import Pages.HomeBase;
 import Pages.SalesBase;
 import Pages.setConexion;
 import Tests.TestBase.IrA;
@@ -69,13 +70,13 @@ public class Sales extends TestBase {
 	String[] genero = {"masculino","femenino"};
 	String[] DocValue = {"52698550","3569874563","365","ssss"};
 	
-	@AfterClass(alwaysRun=true)
+	//@AfterClass(alwaysRun=true)
 	public void tearDown() {
 		driver.close();
 		driver.quit();
 	}
 	
-	@AfterMethod(alwaysRun=true)
+	//@AfterMethod(alwaysRun=true)
 	public void deslogin(){
 		try {Thread.sleep(10000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 		driver.get("https://crm--sit.cs14.my.salesforce.com/home/home.jsp?tsid=02u41000000QWha/");
@@ -113,7 +114,17 @@ public class Sales extends TestBase {
 			 break;
 		 }
 		
-		try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		try {Thread.sleep(15000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		HomeBase homePage = new HomeBase(driver);
+		try {Thread.sleep(6000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+	    String a = driver.findElement(By.id("tsidLabel")).getText(); 
+	    if (a.contains("Ventas")){}
+	    else {
+	    	homePage.switchAppsMenu();
+	    	try {Thread.sleep(2000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+	    	homePage.selectAppFromMenuByName("Ventas");
+	    	try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}            
+	    }
 		//IrA.CajonDeAplicaciones.Ventas();
 		/*CustomerCare cc = new CustomerCare(driver);
 		cc.cajonDeAplicaciones("Consola FAN");
@@ -125,9 +136,9 @@ public class Sales extends TestBase {
 	public void setup() throws Exception {	
 		Accounts accountPage = new Accounts(driver);
 		try {Thread.sleep(20000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
-		//driver.switchTo().frame(accountPage.getFrameForElement(driver, By.className("actions-content")));
-		//driver.switchTo().frame(cambioFrame(driver, By.cssSelector(".vlocity.via-slds")));
-		 //driver.findElement(By.cssSelector(".slds-grid.slds-m-bottom_small.slds-wrap.cards-container")).findElement(By.tagName("button")).click();
+		/*driver.switchTo().frame(accountPage.getFrameForElement(driver, By.cssSelector(".slds-m-top_small.slds-m-left_small.slds-m-right_small.slds-size_1-of-1.ng-pristine.ng-untouched.ng-valid.ng-empty")));
+		driver.switchTo().frame(cambioFrame(driver, By.cssSelector(".vlocity.via-slds")));
+		 driver.findElement(By.cssSelector(".slds-grid.slds-m-bottom_small.slds-wrap.cards-container")).findElement(By.tagName("button")).click();*/
 		 driver.findElement(By.xpath("//a[@href=\'https://crm--sit--c.cs14.visual.force.com/apex/taClientSearch']")).click();
 			
 		try {Thread.sleep(10000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
@@ -430,7 +441,7 @@ public class Sales extends TestBase {
 			sleep(18000);
 			sb.elegirplan("Plan con Tarjeta Repro");
 			sb.continuar();
-			sleep(10000);
+			sleep(18000);
 			List<WebElement> cont = driver.findElements(By.cssSelector(".slds-button.slds-m-left--large.slds-button--brand.ta-button-brand"));
 				for(WebElement c : cont){
 					c.getText().equals("Continuar");
@@ -578,11 +589,13 @@ public class Sales extends TestBase {
 		sleep(3000);
 		List <WebElement> cc = driver.findElements(By.cssSelector(".slds-form-element__label.ng-binding"));
 		for (WebElement x : cc) {
-			if (x.getText().toLowerCase().contains("+ crear nuevo cliente")) {
+			System.out.println(x.getText());
+			if (x.getText().toLowerCase().contains("crear nuevo cliente")) {
 				as = true;
 				break;
 			}
 		}
+		Assert.assertTrue(driver.findElement(By.id("rdbNewClient0")).getText().toLowerCase().contains("crear nuevo cliente"));
 		Assert.assertTrue(as);
 	}
 	
@@ -985,7 +998,7 @@ public class Sales extends TestBase {
 		WebElement act = driver.findElement(By.id("tab-scoped-1__item"));
 		Assert.assertTrue(act.getText().equals("Clientes Activos"));
 		WebElement ina = driver.findElement(By.id("tab-scoped-2__item"));
-		Assert.assertTrue(ina.getText().equals("Cliente Inactivos"));
+		Assert.assertTrue(ina.getText().equals("Clientes Inactivos"));
 	}
 	
 	@Test(groups={"Sales", "AltaDeContacto","Ola1"}, priority=2)
@@ -995,8 +1008,9 @@ public class Sales extends TestBase {
 		try {Thread.sleep(10000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 		List<WebElement> solapas = driver.findElement(By.className("slds-tabs--scoped__nav")).findElements(By.tagName("li"));
 		assertTrue(solapas.get(0).findElement(By.tagName("a")).getText().equals("Clientes Activos"));
-		assertTrue(solapas.get(1).findElement(By.tagName("a")).getText().equals("Contactos"));
-		assertTrue(solapas.get(2).findElement(By.tagName("a")).getText().equals("Clientes Inactivos"));
+		assertTrue(solapas.get(1).findElement(By.tagName("a")).getText().equals("Clientes Inactivos"));
+		assertTrue(solapas.get(2).findElement(By.tagName("a")).getText().equals("Contactos"));
+		
 	}
 	
 	@Test(groups={"Sales", "AltaDeContacto","Ola1"}, priority=2, dataProvider="SalesCuentaActiva")
@@ -1237,7 +1251,7 @@ public class Sales extends TestBase {
 		SB.gestiondeusuarios();
 		sleep(5000);
 		acc.getElementFromList(driver.findElements(By.className("listItemPad")), "E").click();
-		SB.validarperfil("Medina, Elena", "CC Venta y Atencion a Clientes");			
+		SB.validarperfil("Medina, Elena", "TA - CC Venta y Atencion a Clientes");			
 	}
 	
 	@Test(groups={"Sales", "AltaDeContacto","Ola1"}, priority=1)
@@ -1266,7 +1280,7 @@ public class Sales extends TestBase {
 		Accounts acc = new Accounts(driver);
 		SB.gestiondeusuarios();
 		sleep(5000);
-		acc.getElementFromList(driver.findElements(By.className("listItemPad")), "N").click();
+		acc.getElementFromList(driver.findElements(By.className("listItemPad")), "S").click();
 		SB.validarperfil("Sit, Nicolas", "TA - Logistica B");
 	    perfil="agente";			
 	}
@@ -1778,7 +1792,7 @@ public class Sales extends TestBase {
 	    	SalesBase SB = new SalesBase(driver); 
 	    	SB.BuscarCuenta(DNI, sDni); 
 	    	SB.acciondecontacto("catalogo"); 
-	    	SB.elegirplan("plan prepago nacional"); 
+	    	SB.elegirplan("galaxy"); 
 	    	sleep(20000); 
 	    	Assert.assertTrue(driver.findElements(By.cssSelector(".slds-button.slds-button_neutral.cpq-add-button")).get(1).getText().equalsIgnoreCase("agregar")); 
 	    	List<WebElement> agregar = driver.findElements(By.cssSelector(".slds-button.slds-button_neutral.cpq-add-button")); 
@@ -1787,7 +1801,7 @@ public class Sales extends TestBase {
 			int a = 0; 
 			List <WebElement> plan = driver.findElements(By.cssSelector(".slds-button.cpq-item-has-children")); 
 			for (WebElement x : plan) { 
-				if (x.getText().toLowerCase().contains("plan prepago nacional")) { 
+				if (x.getText().toLowerCase().contains("galaxy")) { 
 					a++; 
 				} 
 			} 
@@ -1859,7 +1873,7 @@ public class Sales extends TestBase {
 	    	} 
 	    } 
 	     
-	    @Test(groups = {"Sales", "AltaDeCuenta","Ola1"}, priority=4, dataProvider="SalesContactoSinCuenta") 
+	    @Test(groups = {"Sales", "AltaDeCuenta","Ola1"}, priority=4, dataProvider="SalesContactoSinCuenta")//****************ACTUALIZAR****************** 
 	    public void TS95513_Alta_de_Cuenta_Consumer_Verificar_Consumidor_final_por_defecto(String sCuenta, String sDni) throws IOException { 
 	    	SalesBase SB = new SalesBase(driver); 
 	    	SB.BuscarCuenta(DNI, sDni); 
@@ -1917,8 +1931,8 @@ public class Sales extends TestBase {
 		Boolean t = false;
 		SB.BuscarCuenta(DNI, sDni);
 		SB.acciondecontacto("catalogo");
-		sleep(18000);
-		WebElement pp = driver.findElement(By.cssSelector(".slds-grid.slds-grid--vertical-align-center.slds-grid--align-center.cpq-no-products-msg"));
+		sleep(22000);
+		WebElement pp = driver.findElement(By.cssSelector(".slds-text-align_center.slds-m-vertical_medium.cpq-no-products-msg"));
 		assertTrue(pp.getText().toLowerCase().contains("no products available")); 
 	}  
 	
