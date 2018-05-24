@@ -256,7 +256,7 @@ public boolean btnnoexiste(String boton){
 		driver.findElement(By.xpath("//a[@href=\"/005?isUserEntityOverride=1&retURL=%2Fui%2Fsetup%2FSetup%3Fsetupid%3DUsers&setupid=ManageUsers\"]")).click();
 //buscar cuenta
 		try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
-		setSimpleDropdown(driver.findElement(By.id("fcf")), "Todos los usuarios");	
+		setSimpleDropdown(driver.findElement(By.id("fcf")), "Usuarios activos");	
  }
 
  public void validarperfil(String nombre, String perfil){
@@ -266,14 +266,14 @@ public boolean btnnoexiste(String boton){
 	 for(int i=0; i<filas.size();i++){
 		 if (filas.get(i).getText().equals(nombre)){
 			 a = true;
-			 System.out.println(filas.get(i+1).getText());
+			 System.out.println(filas.get(i+5).getText());
 			 if (nombre.contains("Nicolas")) {
 				 if(rep == 1) {
-					 Assert.assertTrue(filas.get(i+1).getText().contains(perfil));
+					 Assert.assertTrue(filas.get(i+5).getText().contains(perfil));
 					 break;}
 				 rep++;
 			 }else {
-				 Assert.assertTrue(filas.get(i+1).getText().contains(perfil));
+				 Assert.assertTrue(filas.get(i+5).getText().contains(perfil));
 				 break;
 			 }
 			}} 
@@ -478,8 +478,9 @@ for(WebElement e: btns){
 	 //DOC SMS o QA
 	 CustomerCare cc = new CustomerCare(driver);
 	try {Thread.sleep(15000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
-	List<WebElement> valid =driver.findElements(By.xpath("//input[@id='ValidationMethodInValidContact' and @type='radio']"));
-	List<WebElement> radio = driver.findElements(By.cssSelector(".slds-radio--faux.ng-scope"));
+	List<WebElement> valid =driver.findElements(By.id("ValidationMethodInValidContact"));
+	List<WebElement> radio =driver.findElements(By.cssSelector(".slds-radio--faux.ng-scope"));
+	
 	for(int i=0; i<valid.size();i++){
 		String value=valid.get(i).getAttribute("value");
 		if(value.equals(validacion)){
@@ -680,27 +681,24 @@ try{	driver.findElement(By.id("alert-ok-button")).click();	} catch (NoSuchElemen
 		}
 	
 	public void BtnCrearNuevoCliente(){
-		try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		try {Thread.sleep(10000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 		boolean existe = false;
 		BasePage dni = new BasePage(driver);
-		do {
-			Random aleatorio = new Random(System.currentTimeMillis());
-			aleatorio.setSeed(System.currentTimeMillis());
-			int intAleatorio = aleatorio.nextInt(8999999)+1000000;
-			dni.setSimpleDropdown(driver.findElement(By.id("SearchClientDocumentType")),"DNI");
-			driver.findElement(By.id("SearchClientDocumentNumber")).click();
-			driver.findElement(By.id("SearchClientDocumentNumber")).sendKeys(Integer.toString(intAleatorio));
-			driver.findElement(By.id("SearchClientsDummy")).click();
-			try {Thread.sleep(3000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
-			List <WebElement> cc = driver.findElements(By.cssSelector(".slds-form-element__label.ng-binding"));
-			for (WebElement x : cc) {
-				if (x.getText().toLowerCase().contains("+ crear nuevo cliente")) {
-					x.click();
-					existe = true;
-					break;
-				}
+		Random aleatorio = new Random(System.currentTimeMillis());
+		aleatorio.setSeed(System.currentTimeMillis());
+		int intAleatorio = aleatorio.nextInt(8999999)+1000000;
+		dni.setSimpleDropdown(driver.findElement(By.id("SearchClientDocumentType")),"DNI");
+		driver.findElement(By.id("SearchClientDocumentNumber")).click();
+		driver.findElement(By.id("SearchClientDocumentNumber")).sendKeys(Integer.toString(intAleatorio));
+		driver.findElement(By.id("SearchClientsDummy")).click();
+		try {Thread.sleep(3000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		List <WebElement> cc = driver.findElements(By.cssSelector(".slds-form-element__label.ng-binding"));
+		for (WebElement x : cc) {
+			if (x.getText().toLowerCase().contains("+ crear nuevo cliente")) {
+				x.click();
+				break;
 			}
-		}while(existe == false);
+		}
 		try {Thread.sleep(7000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 	}
 	

@@ -29,6 +29,7 @@ import com.gargoylesoftware.htmlunit.javascript.host.Iterator;
 import Pages.Accounts;
 import Pages.BasePage;
 import Pages.HomeBase;
+import Pages.OM;
 import Pages.RegistroEventoMasivo;
 import Pages.SCP;
 import Pages.setConexion;
@@ -43,48 +44,38 @@ public class moduloOM extends TestBase {
 	public void init() throws Exception
 	{
 		this.driver = setConexion.setupEze();
-		try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
-		login(driver);
-		try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
-		//Entrar en Ventas
-		
+		sleep(5000);
+		//Usuario Victor OM
+		login(driver, "https://crm--sit.cs14.my.salesforce.com/", "U585991", "Testa10k");
+		sleep(5000);	
 	}
 
 	@BeforeMethod(alwaysRun=true)
 	public void setUp() throws Exception {
 		driver.switchTo().defaultContent();
-		try {Thread.sleep(2000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
-		SCP page= new SCP(driver);
-		page.goToMenu("Ventas");
+		sleep(2000);
+		SCP pageSCP= new SCP(driver);
+		pageSCP.goToMenu("Ventas");
 		
 		//click +
-		try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
-		driver.findElement(By.xpath("//a[@href=\"/home/showAllTabs.jsp\"]")).click();
-		try {Thread.sleep(3000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		sleep(5000);
+		OM pageOm=new OM(driver);
+		pageOm.clickMore();
+		sleep(3000);
 		
-		//click en Pedidos
-
-		List<WebElement> optns= driver.findElements(By.cssSelector(".dataCol.orderBlock"));
-		for (WebElement option : optns) {
-			if(option.getText().toLowerCase().equals("Pedidos".toLowerCase())){
-					WebElement BenBoton = option.findElement(By.tagName("a"));
-						((JavascriptExecutor)driver).executeScript("window.scrollTo(0,"+BenBoton.getLocation().y+")");
-							try {Thread.sleep(1000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
-							BenBoton.click();
-				break;}
-			}
-		try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		//click en Ordenes
+		pageOm.clickOnListTabs("Orders");
 	}
 	
-	@AfterClass(alwaysRun=true)
+	//@AfterClass(alwaysRun=true)
 	public void tearDown() {
-		try {Thread.sleep(2000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		sleep(2000);
 		driver.quit();
-		try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		sleep(1000);
 	}
 	
 	
-	@Test(groups="OM")
+	@Test(groups="OM", priority=1)
 	public void TS8231_CRM_OM_Ordenes_Panel_principal_Crear_una_Orden() {
 		//Click Nuevo
 		driver.findElement(By.name("new")).click();
@@ -131,7 +122,8 @@ public class moduloOM extends TestBase {
 				.findElements(By.cssSelector(".x-grid3-col.x-grid3-cell.x-grid3-td-ORDERS_ORDER_NUMBER"));
 		for(WebElement p:nPedidos) {
 			//System.out.println(p.getText());
-			if(p.getText().endsWith("3879")) {
+			//if(p.getText().endsWith("3879")) {
+			if(p.getText().endsWith("17832")) {
 				((JavascriptExecutor)driver).executeScript("window.scrollTo(0,"+p.getLocation().y+")");
 				try {Thread.sleep(1000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 				p.findElement(By.tagName("a")).click();
@@ -191,6 +183,18 @@ public class moduloOM extends TestBase {
 		assertTrue(driver.findElement(By.xpath("//*[text()='Request']")).isDisplayed()&&driver.findElement(By.xpath("//*[text()='Response']")).isDisplayed());
 	}
 	
+	@Test(groups="OM")
+	public void TS6716_CRM_OM_Ordenes_Panel_principal_Ingreso() {
+		Select allOrder=new Select(driver.findElement(By.id("fcf")));
+		allOrder.selectByVisibleText("All Orders VICTOR OM");
+		sleep(1000);
+		try {driver.findElement(By.name("go")).click();}catch(org.openqa.selenium.NoSuchElementException e) {}
+		sleep(3000);
+		List<WebElement> Orders=driver.findElement(By.className("x-grid3-scroller")).findElement(By.className("x-grid3-body"))
+				.findElements(By.cssSelector(".x-grid3-col.x-grid3-cell.x-grid3-td-ORDERS_ORDER_NUMBER"));
+		assertTrue(Orders.get(0).isDisplayed());
+		//System.out.println(Orders.get(0).getText());
+	}
 	
 	
 	

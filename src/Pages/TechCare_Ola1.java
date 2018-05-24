@@ -305,15 +305,33 @@ public class TechCare_Ola1 {
 			driver.findElement(By.xpath("//div[@class='rolodex']//span[contains(.,'" + char0 + "')]")).click();
 			sleep(1800);
 			
+			try {
+				List<WebElement>  lCuentas1=driver.findElements(By.cssSelector(".dataRow.odd"));
+				lCuentas1.add(driver.findElement(By.cssSelector(".dataRow.even.first")));
+				List<WebElement>  lCuentas2=driver.findElements(By.cssSelector(".dataRow.even"));
+				lCuentas1.addAll(lCuentas2);
+			
+				for (WebElement c : lCuentas1) {
+					if (c.getText().toLowerCase().contains(cuenta.toLowerCase())) {
+						sleep(500);
+						c.findElement(By.tagName("th")).findElement(By.tagName("a")).click();
+						TestBase.sleep(1000);
+						return;
+					}
+				}
+				
+			}catch(Exception e) {
 			for (WebElement c : cuentas) {
-
 				if (c.getText().equalsIgnoreCase(cuenta)) {
 					(new Actions(driver)).click(c.findElement(By.tagName("a"))).build().perform();
+					sleep(500);
 					c.findElement(By.tagName("a")).click();
 					TestBase.sleep(1000);
 					return;
 				}
 			}
+			}
+			
 		}
 	}
 	

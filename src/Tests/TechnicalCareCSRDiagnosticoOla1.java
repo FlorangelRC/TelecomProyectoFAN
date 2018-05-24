@@ -1,7 +1,9 @@
 package Tests;
 
 import static org.testng.Assert.assertTrue;
+
 import java.util.List;
+
 import org.hamcrest.core.Is;
 import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
@@ -13,7 +15,9 @@ import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
+
 import com.gargoylesoftware.htmlunit.Page;
+
 import Pages.AccountType;
 import Pages.Accounts;
 import Pages.BasePage;
