@@ -10,7 +10,9 @@ import java.util.List;
 import org.openqa.selenium.Alert;
 import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
+import org.openqa.selenium.NoAlertPresentException;
 import org.openqa.selenium.NoSuchElementException;
+import org.openqa.selenium.UnhandledAlertException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Actions;
@@ -25,6 +27,7 @@ import org.testng.annotations.BeforeClass;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
+import com.gargoylesoftware.htmlunit.javascript.host.Element;
 import com.gargoylesoftware.htmlunit.javascript.host.Iterator;
 
 import Pages.Accounts;
@@ -74,40 +77,51 @@ public class OMRuben extends TestBase {
 		sleep(1000);
 	}
 
+	
+	// TS6723_CRM_OM_Ordenes_Vista_Configuración_Borrar_Vista
+	// FALLA EN LA ALERTA: unexpected alert open: {Alert text : Delete this view?}
+	
 	@Test(groups = "OM")
 	public void TS6723_CRM_OM_Ordenes_Vista_Configuración_Borrar_Vista() {
 
-		WebDriverWait wait = new WebDriverWait(driver,5);
-		
 		// Crear Nueva Vista
+		sleep(3000);
 		driver.findElement(By.xpath("//*[@id=\"filter_element\"]/div/span/span[2]/a[2]")).click();
 
 		sleep(5000);
 		
 		// Completar el Formulario y Guardar
 		driver.findElement(By.id("fname")).sendKeys("Vista Temporal de Ruben");
-		driver.findElement(By.className("btn primary")).click();
+		driver.findElement(By.cssSelector(".btn.primary")).click();
 		
 		sleep(5000);
 		
-		//Seleccionar Vista y Editar
-		Select vistaSelect = new Select(driver.findElement(By.id("fcf")));
+		//Seleccionar Vista
+		Select vistaSelect = new Select(driver.findElement(By.name("fcf")));
 		vistaSelect.selectByVisibleText("Vista Temporal de Ruben");
-		driver.findElement(By.xpath("//*[@id=\"filter_element\"]/div/span/span[2]/a[1]")).click();
+		sleep(2000);
+		driver.findElement(By.className("filterLinks")).findElements(By.tagName("a")).get(1).click();
 		
 		sleep(5000);
 		
-		//Borrar Vista
-		driver.findElement(By.name("delID")).click();
-
-		//Confirmar Borrar Vista
+//		//Borrar Vista
+		try {
+			driver.findElement(By.name("delID")).click();
+			sleep(5000);
+		} catch (UnhandledAlertException f) {
+			try {
+		//Aceptar Alerta para Borrar Lista
+				Alert confirmDelete = driver.switchTo().alert();
+				confirmDelete.accept();
+			} catch (NoAlertPresentException e) {
+				e.printStackTrace();
+			}
+		}
 		
-		wait.until(ExpectedConditions.alertIsPresent());
-		Alert confirmDelete = driver.switchTo().alert();
-		confirmDelete.accept();
+		sleep(5000);
 		
 		//Chequear Si La Lista Se Borró
-		vistaSelect = new Select(driver.findElement(By.id("fcf")));
+		vistaSelect = new Select(driver.findElement(By.name("fcf")));
 		
 		List<WebElement> elementosVistaSelect = vistaSelect.getOptions();
 		
@@ -121,8 +135,16 @@ public class OMRuben extends TestBase {
 		}
 		
 		Assert.assertFalse(vistaEncontrada);
-		
-		sleep(3000);
 				
 	}
+	
+	@Test(groups = "OM")
+	public void TS() {
+		
+	}
+	
+	
+	
+	
+	
 }
