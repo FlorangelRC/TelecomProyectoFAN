@@ -29,6 +29,7 @@ import org.testng.annotations.Test;
 
 import com.gargoylesoftware.htmlunit.javascript.host.Element;
 import com.gargoylesoftware.htmlunit.javascript.host.Iterator;
+import com.sun.javafx.geom.transform.GeneralTransform3D;
 
 import Pages.Accounts;
 import Pages.BasePage;
@@ -36,6 +37,7 @@ import Pages.HomeBase;
 import Pages.OM;
 import Pages.RegistroEventoMasivo;
 import Pages.SCP;
+import Pages.SalesBase;
 import Pages.setConexion;
 
 import Pages.setConexion;
@@ -58,6 +60,7 @@ public class OMRuben extends TestBase {
 		driver.switchTo().defaultContent();
 		sleep(2000);
 		SCP pageSCP = new SCP(driver);
+		sleep(3000);
 		pageSCP.goToMenu("Ventas");
 
 		// click +
@@ -139,12 +142,51 @@ public class OMRuben extends TestBase {
 	}
 	
 	@Test(groups = "OM")
-	public void TS() {
+	public void TS6724_CRM_OM_Ordenes_Vista_Log_in_con_vista_previamente_utilizada(){
+		
+		//Seleccionar Una Vista Random
+		sleep(3000);
+		Select vistaSelect = new Select(driver.findElement(By.name("fcf")));
+		List<WebElement> elementosVistaSelect = vistaSelect.getOptions();
+		OM pageOm = new OM(driver);
+		String textoVistaRandom = pageOm.getRandomElementFromList(elementosVistaSelect).getText();
+		vistaSelect.selectByVisibleText(textoVistaRandom);
+		
+		//Logout
+		sleep(3000);
+		driver.findElement(By.id("userNav")).click();
+		sleep(2000);
+		driver.findElement(By.id("userNav-menuItems")).findElements(By.tagName("a")).get(3).click();;
+		
+		//Login
+		driver.navigate().to("https://crm--sit.cs14.my.salesforce.com/");
+		driver.findElement(By.xpath("//*[@id=\"idp_hint\"]/button")).click();
+		sleep(3000);
+		driver.findElement(By.name("Ecom_User_ID")).sendKeys("U585991");
+		driver.findElement(By.name("Ecom_Password")).sendKeys("Testa10k");
+		driver.findElement(By.id("loginButton2")).click();
+		sleep(5000);
+		
+		//Navegar hasta Ordenes
+		driver.switchTo().defaultContent();
+		sleep(5000);
+		SCP pageSCP = new SCP(driver);
+		pageSCP.goToMenu("Ventas");
+		sleep(2000);
+		pageOm.clickMore();
+		sleep(3000);
+		pageOm.clickOnListTabs("Orders");
+		sleep(5000);
+		driver.findElement(By.id("Order_Tab")).click();
+		
+		//Verificar si la misma Vista esta seleccionada
+		sleep(5000);
+		vistaSelect = new Select(driver.findElement(By.name("fcf")));
+		Boolean mismaVista = vistaSelect.getFirstSelectedOption().getText()
+				.equalsIgnoreCase(textoVistaRandom); 
+
+		Assert.assertTrue(mismaVista);
 		
 	}
-	
-	
-	
-	
 	
 }
