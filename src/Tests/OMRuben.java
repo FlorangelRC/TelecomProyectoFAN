@@ -79,10 +79,8 @@ public class OMRuben extends TestBase {
 		driver.quit();
 		sleep(1000);
 	}
-
 	
-	// TS6723_CRM_OM_Ordenes_Vista_Configuración_Borrar_Vista
-	// FALLA EN LA ALERTA: unexpected alert open: {Alert text : Delete this view?}
+	
 	
 	@Test(groups = "OM")
 	public void TS6723_CRM_OM_Ordenes_Vista_Configuración_Borrar_Vista() {
