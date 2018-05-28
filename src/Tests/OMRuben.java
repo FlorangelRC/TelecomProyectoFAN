@@ -152,20 +152,14 @@ public class OMRuben extends TestBase {
 		
 		//Logout
 		sleep(3000);
-		driver.findElement(By.id("userNav")).click();
-		sleep(2000);
-		driver.findElement(By.id("userNav-menuItems")).findElements(By.tagName("a")).get(3).click();;
+		omLogout(driver);
 		
 		//Login
-		driver.navigate().to("https://crm--sit.cs14.my.salesforce.com/");
-		driver.findElement(By.xpath("//*[@id=\"idp_hint\"]/button")).click();
-		sleep(3000);
-		driver.findElement(By.name("Ecom_User_ID")).sendKeys("U585991");
-		driver.findElement(By.name("Ecom_Password")).sendKeys("Testa10k");
-		driver.findElement(By.id("loginButton2")).click();
-		sleep(5000);
+		sleep(2000);
+		omInternalLoginWithCredentials(driver, "U585991","Testa10k");
 		
 		//Navegar hasta Ordenes
+		sleep(5000);
 		driver.switchTo().defaultContent();
 		sleep(5000);
 		SCP pageSCP = new SCP(driver);
@@ -184,6 +178,13 @@ public class OMRuben extends TestBase {
 				.equalsIgnoreCase(textoVistaRandom); 
 
 		Assert.assertTrue(mismaVista);
+		
+	}
+
+	@Test(groups = "OM")
+	public void TS6725_CRM_OM_Ordenes_Vista_Log_in_con_vista_previamente_utilizada_por_otro_usuario() {
+		
+		
 		
 	}
 	
