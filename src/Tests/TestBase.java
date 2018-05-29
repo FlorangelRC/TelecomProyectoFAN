@@ -155,6 +155,21 @@ public class TestBase {
 		         page0.ingresarSCPConPermisos();
 		     }
 	     
+	public void omInternalLoginWithCredentials(WebDriver driver, String userName, String password) {
+		driver.navigate().to("https://crm--sit.cs14.my.salesforce.com/");
+		driver.findElement(By.xpath("//*[@id=\"idp_hint\"]/button")).click();
+		sleep(3000);
+		driver.findElement(By.name("Ecom_User_ID")).sendKeys(userName);
+		driver.findElement(By.name("Ecom_Password")).sendKeys(password);
+		driver.findElement(By.id("loginButton2")).click();
+	}
+	
+	public void omLogout(WebDriver driver) {
+		driver.findElement(By.id("userNav")).click();
+		sleep(2000);
+		driver.findElement(By.id("userNav-menuItems")).findElements(By.tagName("a")).get(3).click();
+	}
+	     
 	public void login1(WebDriver driver) {
 		driver.get("https://goo.gl/ETjDYJ");
 		try {Thread.sleep(1000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
@@ -289,6 +304,13 @@ public class TestBase {
 		    Login page0 = new Login(driver);
 		    page0.ingresarFabiana();
 		}
+		public void loginVictor(WebDriver driver) {
+			driver.get("https://crm--sit.cs14.my.salesforce.com/");
+			try {Thread.sleep(6000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		    Login page0 = new Login(driver);
+		    page0.ingresarVictor();
+		}
+		
 		public void elegirmodulo(String modulo){
 			try {Thread.sleep(4000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 			String a = driver.findElement(By.id("tsidLabel")).getText();
@@ -738,7 +760,7 @@ public class TestBase {
 
 	}
 	
-	public void searchAndClick(List <WebElement> elements, String match, String texto) {
+	public void buscarYClick(List <WebElement> elements, String match, String texto) {
 		sleep(2000);
 		switch (match) {
 		case "contains":

@@ -42,12 +42,12 @@ public class Sales2 extends TestBase{
 	String localidad="Vicente Lopez";
 	protected  WebDriverWait wait;
 	
-	@AfterClass(alwaysRun=true)
+	//@AfterClass(alwaysRun=true)
 	public void tearDown() {
 		driver.quit();
 	}
 	
-	@AfterMethod(alwaysRun=true)
+	//@AfterMethod(alwaysRun=true)
 	public void deslogin() {
 		sleep(3000);
 		driver.get("https://crm--sit.cs14.my.salesforce.com/home/home.jsp?tsid=02u41000000QWha/");
@@ -235,7 +235,11 @@ public class Sales2 extends TestBase{
 		sleep(10000);
 		driver.switchTo().defaultContent();
 		}*/
+<<<<<<< HEAD
 		sb.elegirplan("Plan Prepago Nacional");
+=======
+		sb.elegirplan("Plan prepago nacional");
+>>>>>>> master
 		sleep(15000);
 		sb.continuar();
 		sleep(15000);
@@ -245,14 +249,23 @@ public class Sales2 extends TestBase{
 	
 	@Test(groups={"Sales", "AltaDeCuenta", "Ola1"}, priority=4, dataProvider="SalesCuentaActiva")
 	public void TS95515_Alta_de_Cuenta_Business_Visualizar_los_campos_de_documentacion_impositiva_abajo(String sCuenta, String sDni, String sLinea) throws IOException {
-		sb.BuscarCuenta(DNI, sDni);
-		//sb.BuscarCuenta(DNI, buscarCampoExcel(1, "Cuenta Activa", 2));
-		driver.findElement(By.id("tab-scoped-3__item")).click();
-			sleep(3000);
-		sb.acciondecontacto("nueva cuenta");
-		sleep(7000);
+		CustomerCare cc = new CustomerCare(driver);
+		sb.BtnCrearNuevoCliente();
+		String asd = driver.findElement(By.id("SearchClientDocumentNumber")).getAttribute("value");
+		ContactSearch contact = new ContactSearch(driver);
+		try {Thread.sleep(10000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		driver.findElement(By.id("FirstName")).sendKeys("yy");
+		driver.findElement(By.id("LastName")).sendKeys("z");
+		driver.findElement(By.id("Birthdate")).sendKeys("28/12/1999");
+		contact.sex("masculino");
+		driver.findElement(By.id("Contact_nextBtn")).click();
+		sleep(18000);
+		sb.elegirplan("Plan prepago nacional");
+		sb.continuar();
+		sleep(20000);
 		BasePage imp = new BasePage(driver);
 		imp.setSimpleDropdown(driver.findElement(By.id("ImpositiveCondition")), "IVA Responsable Inscripto");
+		sb.Crear_DomicilioLegal(provincia, localidad, "falsa", "", "1000", "", "", "1549");
 		sleep(2000);
 		WebElement dom = driver.findElement(By.id("State"));
 		WebElement doc = driver.findElement(By.id("ImageDNI"));
@@ -1888,6 +1901,8 @@ public class Sales2 extends TestBase{
 			}
 		}
 		sleep(5000);
+		driver.findElement(By.cssSelector(".slds-input.ng-pristine.ng-untouched.ng-valid")).sendKeys("pack");		
+		
 		Assert.assertTrue(driver.findElement(By.cssSelector(".cpq-product-link.slds-text-body_small.slds-float_right")).getText().equalsIgnoreCase("more"));
 		driver.findElement(By.cssSelector(".cpq-product-link.slds-text-body_small.slds-float_right")).click();
 		sleep(8000);
@@ -2123,24 +2138,21 @@ public class Sales2 extends TestBase{
 			try {Thread.sleep(2000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 		} } catch (java.lang.IndexOutOfBoundsException e) {}
 		try {Thread.sleep(3000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
-		page3.addPlan("plan prepago");
+		page3.addPlan("plan prepago nacional");
 		try {Thread.sleep(3000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
-		page3.addPlan("plan prepago");
-		try {Thread.sleep(3000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
-		page3.addPlan("plan prepago");
-		try {Thread.sleep(3000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
-		page3.abrirprimeraflecha();
-		sleep(3000);
-		page3.deleteoneplan();
-		try {Thread.sleep(4000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
-		page3.abrirprimeraflecha();
-		sleep(3000);
-		page3.deleteoneplan();
-		try {Thread.sleep(4000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
-		page3.abrirprimeraflecha();
-		sleep(3000);
-		page3.deleteoneplan();
+		driver.findElement(By.cssSelector(".slds-input.ng-valid.ng-not-empty.ng-dirty.ng-valid-parse.ng-touched")).clear();
+		driver.findElement(By.cssSelector(".slds-input.ng-valid.ng-not-empty.ng-dirty.ng-valid-parse.ng-touched")).sendKeys("Galaxy S8");		
 		try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		driver.findElement(By.cssSelector(".slds-button.slds-button--neutral.add-button")).click();
+		sleep(15000);
+		page3.abrirprimeraflecha();
+		sleep(3000);
+		page3.deleteoneplan();
+		try {Thread.sleep(4000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		page3.abrirprimeraflecha();
+		sleep(3000);
+		page3.deleteoneplan();
+		try {Thread.sleep(4000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 		Assert.assertEquals("Cart is empty.", page3.getEmptyCartMessage());
 	}
 	@Test(groups={"Sales", "AltaDeLinea", "Ola1"}, priority=3, dataProvider="SalesCuentaActiva")
