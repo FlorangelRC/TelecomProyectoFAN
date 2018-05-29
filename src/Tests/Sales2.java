@@ -100,7 +100,7 @@ public class Sales2 extends TestBase{
 		sleep(10000);
 		driver.switchTo().defaultContent();
 		}
-		sb.elegirplan("Plan con Tarjeta Repro");
+		sb.elegirplan("Plan Prepago Nacional");
 		sb.continuar();
 		sleep(10000);
 		List<WebElement> cont = driver.findElements(By.cssSelector(".slds-button.slds-m-left--large.slds-button--brand.ta-button-brand"));
@@ -139,7 +139,7 @@ public class Sales2 extends TestBase{
 		sleep(10000);
 		driver.switchTo().defaultContent();
 		}
-		sb.elegirplan("Plan con Tarjeta Repro");
+		sb.elegirplan("Plan Prepago Nacional");
 		sb.continuar();
 		sleep(18000);
 		CustomerCare page = new CustomerCare(driver);
@@ -175,7 +175,7 @@ public class Sales2 extends TestBase{
 			sleep(10000);
 			driver.switchTo().defaultContent();
 		}
-		sb.elegirplan("Plan con Tarjeta Repro");
+		sb.elegirplan("Plan Prepago Nacional");
 		sb.continuar();
 		sleep(10000);
 		List<WebElement> cont = driver.findElements(By.cssSelector(".slds-button.slds-m-left--large.slds-button--brand.ta-button-brand"));
@@ -235,7 +235,7 @@ public class Sales2 extends TestBase{
 		sleep(10000);
 		driver.switchTo().defaultContent();
 		}*/
-		sb.elegirplan("Plan con Tarjeta Repro");
+		sb.elegirplan("Plan Prepago Nacional");
 		sleep(15000);
 		sb.continuar();
 		sleep(15000);
@@ -284,7 +284,7 @@ public class Sales2 extends TestBase{
 		driver.findElement(By.id("SalesChannelConfiguration_nextBtn")).click();
 		sleep(10000);
 		driver.switchTo().defaultContent();
-		sb.elegirplan("Plan con Tarjeta Repro");
+		sb.elegirplan("Plan Prepago Nacional");
 		sleep(15000);
 		driver.findElement(By.cssSelector(".slds-button.slds-m-left--large.slds-button--brand.ta-button-brand")).click();
 		sleep(15000);
@@ -352,7 +352,7 @@ public class Sales2 extends TestBase{
 		sleep(10000);
 		driver.switchTo().defaultContent();
 		}
-		sb.elegirplan("Plan con Tarjeta Repro");
+		sb.elegirplan("Plan Prepago Nacional");
 		sb.continuar();
 		sleep(10000);
 		List<WebElement> cont = driver.findElements(By.cssSelector(".slds-button.slds-m-left--large.slds-button--brand.ta-button-brand"));
@@ -375,7 +375,7 @@ public class Sales2 extends TestBase{
 		//sb.BuscarCuenta(DNI, buscarCampoExcel(1, "Cuenta Activa", 2));
 		sb.acciondecontacto("catalogo");
 		sleep(10000);
-		sb.elegirplan("Plan con Tarjeta Repro");
+		sb.elegirplan("Plan Prepago Nacional");
 		sb.continuar();
 		sleep(10000);
 		List<WebElement> cont = driver.findElements(By.cssSelector(".slds-button.slds-m-left--large.slds-button--brand.ta-button-brand"));
@@ -424,13 +424,13 @@ public class Sales2 extends TestBase{
 		//sb.BuscarCuenta(DNI, buscarCampoExcel(1, "Cuenta Activa", 2));
 		sb.acciondecontacto("catalogo");
 		sleep(15000);
-		sb.elegirplan("Plan con Tarjeta Repro");
+		sb.elegirplan("Plan Prepago Nacional");
 		sleep(25000);
 		driver.findElement(By.cssSelector(".slds-button.slds-m-left--large.slds-button--brand.ta-button-brand")).click();
 		sleep(25000);
 		sb.Crear_DomicilioLegal("Buenos Aires","vicente lopez","falsa", "", "2154", "", "", "2453");
-		sleep(10000);
-		List <WebElement> num = driver.findElements(By.className("slds-form-element__control"));
+		sleep(20000);
+		List <WebElement> num = driver.findElements(By.className("	slds-form-element__control"));
 		boolean a = false;
 		for (WebElement x : num) {
 			if (x.getText().contains("Nro. orden:")) {
@@ -455,10 +455,11 @@ public class Sales2 extends TestBase{
 		driver.findElement(By.cssSelector(".console-card.open")).click();
 		sleep(10000);
 		driver.switchTo().frame(cambioFrame(driver, By.cssSelector(".slds-col.slds-no-flex.cpq-base-header")));
-		List <WebElement> num = driver.findElements(By.className(".slds-col.slds-no-flex.cpq-base-header"));
+		List <WebElement> num = driver.findElements(By.cssSelector(".slds-text-body--small.slds-page-header__info.taDevider"));
 		boolean a = false;
 		for (WebElement x : num) {
-			if (x.getText().contains("Nro. orden:")) {
+			System.out.println(x.getText());
+			if (x.getText().contains("Nro. Orden:")) {
 				a = true;
 			}
 		}	
@@ -651,7 +652,7 @@ public class Sales2 extends TestBase{
 		driver.findElement(By.id("SalesChannelConfiguration_nextBtn")).click();
 		sleep(10000);
 		driver.switchTo().defaultContent();
-		sb.elegirplan("Plan con Tarjeta Repro");
+		sb.elegirplan("Plan Prepago Nacional");
 		sleep(15000);
 		driver.findElement(By.cssSelector(".slds-button.slds-m-left--large.slds-button--brand.ta-button-brand")).click();
 		sleep(15000);
@@ -678,7 +679,7 @@ public class Sales2 extends TestBase{
 		driver.findElement(By.id("SalesChannelConfiguration_nextBtn")).click();
 		sleep(10000);
 		driver.switchTo().defaultContent();
-		sb.elegirplan("Plan con Tarjeta Repro");
+		sb.elegirplan("Plan Prepago Nacional");
 		sleep(15000);
 		driver.findElement(By.cssSelector(".slds-button.slds-m-left--large.slds-button--brand.ta-button-brand")).click();
 		sleep(15000);
@@ -708,7 +709,7 @@ public class Sales2 extends TestBase{
 		driver.findElement(By.id("SalesChannelConfiguration_nextBtn")).click();
 		sleep(10000);
 		driver.switchTo().defaultContent();
-		sb.elegirplan("Plan con Tarjeta Repro");
+		sb.elegirplan("Plan Prepago Nacional");
 		sleep(15000);
 		driver.findElement(By.cssSelector(".slds-button.slds-m-left--large.slds-button--brand.ta-button-brand")).click();
 		sleep(15000);
@@ -732,7 +733,7 @@ public class Sales2 extends TestBase{
 		driver.findElement(By.id("SalesChannelConfiguration_nextBtn")).click();
 		sleep(10000);
 		driver.switchTo().defaultContent();
-		sb.elegirplan("Plan con Tarjeta Repro");
+		sb.elegirplan("Plan Prepago Nacional");
 		sleep(15000);
 		driver.findElement(By.cssSelector(".slds-button.slds-m-left--large.slds-button--brand.ta-button-brand")).click();
 		sleep(15000);
@@ -796,7 +797,7 @@ public class Sales2 extends TestBase{
 		//sb.BuscarCuenta(DNI, buscarCampoExcel(1, "Cuenta Activa", 2));
 		sb.acciondecontacto("catalogo");
 		sleep(15000);
-		sb.elegirplan("Plan con Tarjeta Repro");
+		sb.elegirplan("Plan Prepago Nacional");
 		sleep(15000);
 		driver.findElement(By.cssSelector(".slds-button.slds-m-left--large.slds-button--brand.ta-button-brand")).click();
 		sleep(15000);
@@ -854,7 +855,7 @@ public class Sales2 extends TestBase{
 		//sb.BuscarCuenta(DNI, buscarCampoExcel(1, "Cuenta Activa", 2));
 		sb.acciondecontacto("catalogo");
 		sleep(15000);
-		sb.elegirplan("Plan con Tarjeta Repro");
+		sb.elegirplan("Plan Prepago Nacional");
 		String a = driver.findElement(By.cssSelector(".slds-col.taChangeDeliveryMethod.slds-text-body--small.slds-m-left--large")).getText();
 		driver.findElement(By.cssSelector(".slds-m-left--x-small.slds-button.slds-button--brand")).click();
 		sleep(7000);
@@ -874,9 +875,11 @@ public class Sales2 extends TestBase{
 		//sb.BuscarCuenta(DNI, buscarCampoExcel(1, "Cuenta Activa", 2));
 		sb.acciondecontacto("catalogo");
 		sleep(15000);
-		sb.elegirplan("Plan con Tarjeta Repro");
+		sb.elegirplan("Plan Prepago Nacional");
 		sb.continuar();
-		sleep(20000);
+		sleep(10000);
+		sb.Crear_DomicilioLegal( provincia, localidad,"falsa", "", "5846", "", "", "5248");
+		sleep(25000);
 		List<WebElement> modi = driver.findElements(By.cssSelector(".slds-form-element__label--toggleText.ng-binding"));
 			for(WebElement m : modi){
 				m.getText().equals("Modificar b\u00fasqueda");
@@ -898,7 +901,7 @@ public class Sales2 extends TestBase{
 		//sb.BuscarCuenta(DNI, buscarCampoExcel(1, "Cuenta Activa", 2));
 		sb.acciondecontacto("catalogo");
 		sleep(15000);
-		sb.elegirplan("Plan con Tarjeta Repro");
+		sb.elegirplan("Plan Prepago Nacional");
 		sb.continuar();
 		sleep(10000);
 		CustomerCare page = new CustomerCare(driver);
@@ -938,7 +941,7 @@ public class Sales2 extends TestBase{
 		//sb.BuscarCuenta(DNI, buscarCampoExcel(1, "Cuenta Activa", 2));
 		sb.acciondecontacto("catalogo");
 		sleep(15000);
-		sb.elegirplan("Plan con Tarjeta Repro");
+		sb.elegirplan("Plan Prepago Nacional");
 		sb.continuar();
 		sleep(10000);
 		List<WebElement> cont = driver.findElements(By.cssSelector(".slds-button.slds-m-left--large.slds-button--brand.ta-button-brand"));
@@ -974,7 +977,7 @@ public class Sales2 extends TestBase{
 		//sb.BuscarCuenta(DNI, buscarCampoExcel(1, "Cuenta Activa", 2));
 		sb.acciondecontacto("catalogo");
 		sleep(15000);
-		sb.elegirplan("Plan con Tarjeta Repro");
+		sb.elegirplan("Plan Prepago Nacional");
 		sb.continuar();
 		sleep(15000);
 		CustomerCare page = new CustomerCare(driver);
@@ -1006,7 +1009,7 @@ public class Sales2 extends TestBase{
 		//sb.BuscarCuenta(DNI, buscarCampoExcel(1, "Cuenta Activa", 2));
 		sb.acciondecontacto("catalogo");
 		sleep(15000);
-		sb.elegirplan("Plan con Tarjeta Repro");
+		sb.elegirplan("Plan Prepago Nacional");
 		sb.continuar();
 		sleep(25000);
 		CustomerCare page = new CustomerCare(driver);
@@ -1046,7 +1049,7 @@ public class Sales2 extends TestBase{
 		sb.BuscarCuenta(DNI, buscarCampoExcel(1, "Cuenta Activa", 2));
 		sb.acciondecontacto("catalogo");
 		sleep(15000);
-		sb.elegirplan("Plan con Tarjeta Repro");
+		sb.elegirplan("Plan Prepago Nacional");
 		sb.continuar();
 		sleep(20000);
 		CustomerCare page = new CustomerCare(driver);
@@ -1082,7 +1085,7 @@ public class Sales2 extends TestBase{
 		//sb.BuscarCuenta(DNI, buscarCampoExcel(1, "Cuenta Activa", 2));
 		sb.acciondecontacto("catalogo");
 		sleep(15000);
-		sb.elegirplan("Plan con Tarjeta Repro");
+		sb.elegirplan("Plan Prepago Nacional");
 		sb.continuar();
 		sleep(20000);
 		CustomerCare page = new CustomerCare(driver);
@@ -1126,7 +1129,7 @@ public class Sales2 extends TestBase{
 		//sb.BuscarCuenta(DNI, buscarCampoExcel(1, "Cuenta Activa", 2));
 		sb.acciondecontacto("catalogo");
 		sleep(15000);
-		sb.elegirplan("Plan con Tarjeta Repro");
+		sb.elegirplan("Plan Prepago Nacional");
 		sb.continuar();
 		sleep(20000);
 		CustomerCare page = new CustomerCare(driver);
@@ -1174,7 +1177,7 @@ public class Sales2 extends TestBase{
 		//sb.BuscarCuenta(DNI, buscarCampoExcel(1, "Cuenta Activa", 2));
 		sb.acciondecontacto("catalogo");
 		sleep(15000);
-		sb.elegirplan("Plan con Tarjeta Repro");
+		sb.elegirplan("Plan Prepago Nacional");
 		sb.continuar();
 		sleep(20000);
 		CustomerCare page = new CustomerCare(driver);
@@ -1271,11 +1274,11 @@ public class Sales2 extends TestBase{
 		//sb.BuscarCuenta(DNI, buscarCampoExcel(1, "Cuenta Activas", 2));
 		sb.acciondecontacto("catalogo");
 		sleep(15000);
-		sb.elegirplan("Plan con Tarjeta Repro");
+		sb.elegirplan("Plan Prepago Nacional");
 		//driver.findElement(By.cssSelector(".slds-button.slds-m-left--large.slds-button--brand.ta-button-brand")).click();
 		sb.continuar();
 		sleep(20000);
-		sb.Crear_DomicilioLegal("Buenos Aires","vicente lopez","falsa", "", "5846", "", "", "5248");
+		sb.Crear_DomicilioLegal( provincia, localidad,"falsa", "", "5846", "", "", "5248");
 		sleep(10000);
 		WebElement line = driver.findElement(By.id("tree0-node1__label"));
 		WebElement line2 = driver.findElement(By.id("tree0-node1-0"));
@@ -1298,7 +1301,7 @@ public class Sales2 extends TestBase{
 		//sb.BuscarCuenta(DNI, buscarCampoExcel(1, "Cuenta Activa", 2));
 		sb.acciondecontacto("catalogo");
 		sleep(15000);
-		sb.elegirplan("Plan con Tarjeta Repro");
+		sb.elegirplan("Plan Prepago Nacional");
 		sb.continuar();
 		sleep(20000);
 		sb.Crear_DomicilioLegal(provincia, "ABEL", "falsa", "", "1000", "", "", "1549");
@@ -1345,11 +1348,11 @@ public class Sales2 extends TestBase{
 		//sb.BuscarCuenta(DNI, buscarCampoExcel(1, "Cuenta Activa", 2));
 		sb.acciondecontacto("catalogo");
 		sleep(15000);
-		sb.elegirplan("Plan con Tarjeta Repro");
+		sb.elegirplan("Plan Prepago Nacional");
 		sleep(15000);
 		List <WebElement> plan = driver.findElements(By.cssSelector(".slds-button.cpq-item-has-children"));
 		for (WebElement x : plan) {
-			if (x.getText().toLowerCase().contains("plan con tarjeta repro")) {
+			if (x.getText().toLowerCase().contains("Plan Prepago Nacional")) {
 				x.click();
 				break;
 			}
@@ -1371,7 +1374,7 @@ public class Sales2 extends TestBase{
 		//sb.BuscarCuenta(DNI, buscarCampoExcel(1, "Cuenta Activa", 2));
 		sb.acciondecontacto("catalogo");
 		sleep(15000);
-		sb.elegirplan("Plan con Tarjeta Repro");
+		sb.elegirplan("Plan Prepago Nacional");
 		sleep(15000);
 		WebElement num = driver.findElement(By.cssSelector(".slds-m-bottom--x-small"));
 		System.out.println(num.getText());
@@ -1384,7 +1387,7 @@ public class Sales2 extends TestBase{
 		//sb.BuscarCuenta(DNI, buscarCampoExcel(1, "Cuenta Activa", 2));
 		sb.acciondecontacto("catalogo");
 		sleep(15000);
-		sb.elegirplan("Plan con Tarjeta Repro");
+		sb.elegirplan("Plan Prepago Nacional");
 		sleep(15000);
 		driver.findElement(By.cssSelector(".slds-button.slds-m-left--large.slds-button--brand.ta-button-brand")).click();
 		sleep(10000);
@@ -1409,7 +1412,7 @@ public class Sales2 extends TestBase{
 		//sb.BuscarCuenta(DNI, buscarCampoExcel(1, "Cuenta Activa", 2));
 		sb.acciondecontacto("catalogo");
 		sleep(15000);
-		sb.elegirplan("Plan con Tarjeta Repro");
+		sb.elegirplan("Plan Prepago Nacional");
 		sleep(15000);
 		driver.findElement(By.cssSelector(".slds-button.slds-m-left--large.slds-button--brand.ta-button-brand")).click();
 		sleep(12000);
@@ -1466,9 +1469,11 @@ public class Sales2 extends TestBase{
 		//sb.BuscarCuenta(DNI, buscarCampoExcel(1, "Cuenta Activa", 2));
 		sb.acciondecontacto("catalogo");
 		sleep(15000);
-		sb.elegirplan("Plan con Tarjeta Repro");
+		sb.elegirplan("Plan Prepago Nacional");
 		sb.continuar();
 		sleep(25000);
+		sb.Crear_DomicilioLegal(provincia, localidad, "falsa", "", "1000", "", "", "1549");
+		sleep(30000);
 		WebElement bx = driver.findElement(By.id("tree0-node1__label"));
 		bx.click();
 		sleep(3000);
@@ -1493,7 +1498,7 @@ public class Sales2 extends TestBase{
 		//sb.BuscarCuenta(DNI, buscarCampoExcel(1, "Cuenta Activa", 2));
 		sb.acciondecontacto("catalogo");
 		sleep(15000);
-		sb.elegirplan("Plan con Tarjeta Repro");
+		sb.elegirplan("Plan Prepago Nacional");
 		sb.continuar();
 		sleep(20000);
 		sb.Crear_DomicilioLegal(provincia, localidad, "falsa", "", "1000", "", "", "1549");
@@ -1516,7 +1521,7 @@ public class Sales2 extends TestBase{
 		//sb.BuscarCuenta(DNI, buscarCampoExcel(1, "Cuenta Activa", 2));
 		sb.acciondecontacto("catalogo");
 		sleep(15000);
-		sb.elegirplan("Plan con Tarjeta Repro");
+		sb.elegirplan("Plan Prepago Nacional");
 		sb.continuar();
 		sleep(15000);
 		sb.Crear_DomicilioLegal(provincia, localidad, "falsa", "", "1000", "", "", "1549");
@@ -1533,11 +1538,11 @@ public class Sales2 extends TestBase{
 		//sb.BuscarCuenta(DNI, buscarCampoExcel(1, "Cuenta Activa", 2));
 		sb.acciondecontacto("catalogo");
 		sleep(15000);
-		sb.elegirplan("Plan con Tarjeta Repro");
+		sb.elegirplan("Plan prepago nacional");
 		sb.continuar();
 		sleep(20000);
 		sb.Crear_DomicilioLegal(provincia, localidad, "falsa", "", "1000", "", "", "1549");
-		sleep(10000);
+		sleep(25000);
 		List<WebElement> modi = driver.findElements(By.cssSelector(".slds-form-element__label--toggleText.ng-binding"));
 			for(WebElement m : modi){
 				m.getText().equals("Modificar b\u00fasqueda");
@@ -1573,7 +1578,7 @@ public class Sales2 extends TestBase{
 		driver.findElement(By.id("SalesChannelConfiguration_nextBtn")).click();
 		sleep(7000);
 		driver.switchTo().defaultContent();*/
-		sb.elegirplan("Plan con Tarjeta Repro");
+		sb.elegirplan("Plan Prepago Nacional");
 		sb.continuar();
 		sleep(20000);
 		sb.Crear_DomicilioLegal(provincia, localidad, "falsa", "", "1000", "", "", "1549");
@@ -1602,7 +1607,7 @@ public class Sales2 extends TestBase{
 		contact.sex("masculino");
 		driver.findElement(By.id("Contact_nextBtn")).click();
 		sleep(15000);
-		sb.elegirplan("Plan con Tarjeta Repro");
+		sb.elegirplan("Plan Prepago Nacional");
 		sb.continuar();
 		sleep(20000);
 		sb.Crear_DomicilioLegal(provincia, localidad, "falsa", "", "1000", "", "", "1549");
@@ -1625,11 +1630,11 @@ public class Sales2 extends TestBase{
 		contact.sex("masculino");
 		driver.findElement(By.id("Contact_nextBtn")).click();
 		sleep(10000);
-		sb.elegirplan("Plan con Tarjeta Repro");
+		sb.elegirplan("Plan Prepago Nacional");
 		sb.continuar();
 		sleep(10000);
 		sb.Crear_DomicilioLegal(provincia, localidad, "falsa", "", "1000", "", "", "1549");
-		sleep(7000);
+		sleep(20000);
 		WebElement lindec = driver.findElement(By.id("tree0-node1")).findElement(By.tagName("ul")).findElements(By.tagName("div")).get(0);
 		System.out.println(lindec.getText());
 		System.out.println(lindec.getAttribute("value"));
@@ -1654,7 +1659,7 @@ public class Sales2 extends TestBase{
 		//sb.BuscarCuenta(DNI, buscarCampoExcel(1, "Cuenta Activa", 2));
 		sb.acciondecontacto("catalogo");
 		sleep(15000);
-		sb.elegirplan("Plan con Tarjeta Repro");
+		sb.elegirplan("Plan Prepago Nacional");
 		sleep(3000);
 		List<WebElement> agregar = driver.findElements(By.cssSelector(".slds-button.slds-button_neutral.cpq-add-button")); 
 		agregar.get(0).click();
@@ -1701,7 +1706,7 @@ public class Sales2 extends TestBase{
 		boolean a = false;
 		boolean b = false;
 		for (WebElement x : pdv) {
-			if (x.getText().toLowerCase().contains("centro de servicio santa fe - juan de garay null")) {
+			if (x.getText().toLowerCase().contains("centro de servicio santa fe - juan de garay 444")) {
 				a = true;
 			}
 			if (x.getText().toLowerCase().contains("centro de servicio santa fe - rivadavia null")) {
@@ -1747,7 +1752,7 @@ public class Sales2 extends TestBase{
 		//sb.BuscarCuenta(DNI, buscarCampoExcel(1, "Cuenta Activa", 2));
 		sb.acciondecontacto("catalogo");
 		sleep(15000);
-		sb.elegirplan("Plan con Tarjeta Repro");
+		sb.elegirplan("Plan Prepago Nacional");
 		sleep(15000);
 		driver.findElement(By.cssSelector(".slds-button.slds-m-left--large.slds-button--brand.ta-button-brand")).click();
 		sleep(15000);
@@ -1823,7 +1828,7 @@ public class Sales2 extends TestBase{
 		//sb.BuscarCuenta(DNI, buscarCampoExcel(1, "Cuenta Activa", 2));
 		sb.acciondecontacto("catalogo");
 		sleep(15000);
-		sb.elegirplan("Plan con Tarjeta repro");
+		sb.elegirplan("Plan Prepago Nacional");
 		sleep(25000);
 		driver.findElement(By.cssSelector(".cpq-product-link.slds-text-body_small.slds-float_right")).click();
 		sleep(10000);
@@ -1898,7 +1903,7 @@ public class Sales2 extends TestBase{
 		//sb.BuscarCuenta(DNI, buscarCampoExcel(1, "Cuenta Activa", 2));
 		sb.acciondecontacto("catalogo");
 		sleep(15000);
-		sb.elegirplan("Plan con Tarjeta Repro");
+		sb.elegirplan("Plan Prepago Nacional");
 		sb.continuar();
 		sleep(25000);
 		CustomerCare page = new CustomerCare(driver);
@@ -1940,7 +1945,7 @@ public class Sales2 extends TestBase{
 		contact.sex("masculino");
 		driver.findElement(By.id("Contact_nextBtn")).click();
 		sleep(10000);
-		sb.elegirplan("Plan con Tarjeta Repro");
+		sb.elegirplan("Plan Prepago Nacional");
 		sb.continuar();
 		sleep(25000);
 		sb.Crear_DomicilioLegal(provincia, "ABEL", "falsa", "", "1000", "", "", "1549");
@@ -1994,7 +1999,7 @@ public class Sales2 extends TestBase{
 		sleep(18000);
 		sb.elegirplan("Plan prepago nacional");
 		driver.findElement(By.cssSelector(".slds-input.ng-valid.ng-not-empty.ng-dirty.ng-valid-parse.ng-touched")).clear();
-		driver.findElement(By.cssSelector(".slds-input.ng-valid.ng-dirty.ng-valid-parse.ng-touched.ng-empty")).sendKeys("plan con tarjeta repro");		
+		driver.findElement(By.cssSelector(".slds-input.ng-valid.ng-dirty.ng-valid-parse.ng-touched.ng-empty")).sendKeys("Plan Prepago Nacional");		
 		try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 		List<WebElement> agregar = driver.findElements(By.cssSelector(".slds-button.slds-button_neutral.cpq-add-button")); 
 		agregar.get(0).click();
@@ -2057,7 +2062,7 @@ public class Sales2 extends TestBase{
 		//sb.BuscarCuenta(DNI, buscarCampoExcel(1, "Cuenta Activa", 2));
 		sb.acciondecontacto("catalogo");
 		sleep(15000);
-		sb.elegirplan("Plan con Tarjeta Repro");
+		sb.elegirplan("plan prepago nacional");
 		String ord = driver.findElement(By.cssSelector(".slds-text-body--small.slds-page-header__info.taDevider")).getText();
 		ord=ord.substring(ord.length()-8, ord.length());
 		sb.continuar();
@@ -2144,7 +2149,7 @@ public class Sales2 extends TestBase{
 		sb.BuscarCuenta(DNI, sDni);
 		//sb.BuscarCuenta(DNI, buscarCampoExcel(1, "Cuenta Activa", 2));
 		sb.acciondecontacto("catalogo");
-		sb.elegirplan("Plan con Tarjeta Repro");
+		sb.elegirplan("Plan Prepago Nacional");
 		sleep(5000);
 		cart.abrirprimeraflecha();
 		sleep(3000);
@@ -2191,7 +2196,7 @@ public class Sales2 extends TestBase{
 		//sb.BuscarCuenta(DNI, buscarCampoExcel(1, "Cuenta Activa", 2));
 		sb.acciondecontacto("catalogo");
 		try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
-		sb.elegirplan("Plan con Tarjeta Repro");
+		sb.elegirplan("Plan Prepago Nacional");
 		try {Thread.sleep(8000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 		WebElement boton = driver.findElements(By.cssSelector(".slds-button.slds-button_icon-border-filled.cpq-item-actions-dropdown-button")).get(0);
 		boton.click();
@@ -2200,28 +2205,13 @@ public class Sales2 extends TestBase{
 	}
 	
 	
-	@Test(groups={"Sales", "AltaLinea", "Ola1"}, dataProvider="SalesCuentaActiva")
-	public void TS94496_checkPlanInformation(String sCuenta, String sDni, String sLinea) throws IOException {
-		Ta_CPQ page3 = new Ta_CPQ(driver);
-		sb.BuscarCuenta(DNI, sDni);
-		//sb.BuscarCuenta(DNI, buscarCampoExcel(1, "Cuenta Activa", 2));
-		sb.acciondecontacto("catalogo");
-		try {Thread.sleep(15000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
-		sb.elegirplan("Plan con Tarjeta Repro");
-		sb.continuar();
-		try {Thread.sleep(15000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
-		WebElement boton = driver.findElements(By.cssSelector(".slds-button.slds-button_icon-border-filled.cpq-item-actions-dropdown-button")).get(0);
-		boton.click();
-		WebElement delet = driver.findElements(By.cssSelector(".slds-dropdown.slds-dropdown_right.cpq-item-actions-dropdown")).get(0);
-		Assert.assertTrue(delet.getText().contains("Inspect"));	
-	}
 	@Test(groups={"Sales", "AltaDeLinea", "Ola1"}, priority=9, dataProvider="SalesCuentaActiva")
 	public void TS94518_CRM_Fase_1_SalesCPQ_Alta_Linea_Costo_Operacion_Verificar_opciones_del_carrito_Boton_Siguiente(String sCuenta, String sDni, String sLinea) throws IOException{
 		sb.BuscarCuenta(DNI, sDni);
 		//sb.BuscarCuenta(DNI, buscarCampoExcel(1, "Cuenta Activa", 2));
 		sb.acciondecontacto("catalogo");
 		try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
-		sb.elegirplan("Plan con Tarjeta Repro");
+		sb.elegirplan("Plan Prepago Nacional");
 		try {Thread.sleep(14000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 		Boolean r = false;
 		List<WebElement> cont = driver.findElements(By.cssSelector(".slds-button.slds-m-left--large.slds-button--brand.ta-button-brand"));
@@ -2239,7 +2229,7 @@ public class Sales2 extends TestBase{
 		//sb.BuscarCuenta(DNI, buscarCampoExcel(1, "Cuenta Activa", 2));
 		sb.acciondecontacto("catalogo");
 		try {Thread.sleep(4000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
-		sb.elegirplan("Plan con Tarjeta Repro");
+		sb.elegirplan("Plan Prepago Nacional");
 		try {Thread.sleep(8000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 		sb.continuar();
 		sleep(8000);
@@ -2261,7 +2251,7 @@ public class Sales2 extends TestBase{
 		//sb.BuscarCuenta(DNI, buscarCampoExcel(1, "Cuenta Activa", 2));
 		sb.acciondecontacto("catalogo");
 		try {Thread.sleep(4000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
-		sb.elegirplan("Plan con Tarjeta Repro");
+		sb.elegirplan("Plan Prepago Nacional");
 		try {Thread.sleep(8000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 		sb.continuar();
 		sleep(8000);
@@ -2281,7 +2271,7 @@ public class Sales2 extends TestBase{
 		//sb.BuscarCuenta(DNI, buscarCampoExcel(1, "Cuenta Activa", 2));
 		sb.acciondecontacto("catalogo");
 		try {Thread.sleep(4000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
-		sb.elegirplan("Plan con Tarjeta Repro");
+		sb.elegirplan("Plan Prepago Nacional");
 		try {Thread.sleep(8000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 		sb.continuar();
 		sleep(8000);
@@ -2306,12 +2296,12 @@ public class Sales2 extends TestBase{
 		//sb.BuscarCuenta(DNI, buscarCampoExcel(1, "Cuenta Activa", 2));
 		sb.acciondecontacto("catalogo");
 		try {Thread.sleep(4000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
-		sb.elegirplan("Plan con Tarjeta Repro");
+		sb.elegirplan("Plan Prepago Nacional");
 		try {Thread.sleep(8000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 		
 		WebElement result = driver.findElement(By.cssSelector(".slds-tile__title.slds-truncate.cpq-product-name"));
 		System.out.println(result.getText());
-		Assert.assertTrue(result.getText().contains("Plan con Tarjeta Repro"));
+		Assert.assertTrue(result.getText().contains("Plan Prepago Nacional"));
 			
 	}
 	
@@ -2321,7 +2311,7 @@ public class Sales2 extends TestBase{
 		//sb.BuscarCuenta(DNI, buscarCampoExcel(1, "Cuenta Activa", 2));
 		sb.acciondecontacto("catalogo");
 		try {Thread.sleep(4000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
-		sb.elegirplan("Plan con Tarjeta Repro");
+		sb.elegirplan("Plan Prepago Nacional");
 		sleep(5000);
 		driver.findElement(By.cssSelector(".slds-button__icon.slds-button__icon--.slds-icon-text-default")).click();
 		WebElement icon = driver.findElements(By.cssSelector(".slds-icon.slds-icon--x-small")).get(4);
