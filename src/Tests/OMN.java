@@ -3,44 +3,42 @@ package Tests;
 import org.junit.Assert;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
-
+import org.openqa.selenium.WebElement;
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
+import Pages.BasePage;
 import Pages.OM;
-import Pages.SCP;
 import Pages.setConexion;
 
 public class OMN extends TestBase {
 
 	private WebDriver driver;
 	protected OM om;
-	protected SCP scp;
+	protected BasePage bp;
 
 
-	@BeforeClass (alwaysRun = true)
+	@BeforeClass (alwaysRun = true, groups = "OM")
 	public void init() {
 		driver = setConexion.setupEze();
 		sleep(5000);
 		login(driver, "https://crm--sit.cs14.my.salesforce.com/", "U585991", "Testa10k");
 		sleep(5000);
 		om = new OM(driver);
-		scp = new SCP(driver);
+		bp = new BasePage(driver);
 	}
 	
-	@BeforeMethod (alwaysRun = true)
+	@BeforeMethod (alwaysRun = true, groups = "OM")
 	public void before() {
-		driver.switchTo().defaultContent();
-		sleep(2000);		
-		scp.goToMenu("Ventas");
+		bp.cajonDeAplicaciones("Sales");
 		sleep(5000);
 		driver.findElement(By.id("Order_Tab")).click();
 		sleep(3000);
 	}
 	
-	//@AfterClass (alwaysRun = true)
+	//@AfterClass (alwaysRun = true, groups = "OM")
 	public void quit() {
 		driver.quit();
 		sleep(5000);
@@ -139,6 +137,19 @@ public class OMN extends TestBase {
 	}
 	
 	@Test (groups = "OM")
+	public void TS6736_Ordenes_Order_Detail_Adjunto_de_archivos_Formato_VSO() {
+		om.primeraOrden();
+		driver.findElement(By.name("attachFile")).click();
+		sleep(5000);
+		boolean a = false;
+		if (driver.findElement(By.id("file")).isEnabled()) {
+			driver.findElement(By.id("file")).sendKeys("C:\\Users\\Nicolas\\Desktop\\Archivos\\vso.vso");
+			a = true;
+		}
+		Assert.assertTrue(a);
+	}
+	
+	@Test (groups = "OM")
 	public void TS6737_Ordenes_Order_Detail_Adjunto_de_archivos_Varios_formatos() {
 		om.primeraOrden();
 		driver.findElement(By.name("attachFile")).click();
@@ -162,5 +173,28 @@ public class OMN extends TestBase {
 			a = true;
 		}
 		Assert.assertTrue(a);
+	}
+	
+	@Test (groups = "OM")
+	public void TS6740_Ordenes_Order_Detail_Links_funcionales() {
+		om.primeraOrden();
+		driver.findElement(By.name("attachFile")).click();
+		sleep(5000);
+		driver.findElement(By.id("file")).sendKeys("C:\\Users\\Nicolas\\Desktop\\Archivos\\jpg.jpg");
+		driver.findElement(By.id("Attach")).click();
+		sleep(3000);
+		driver.findElement(By.name("cancel")).click();
+		sleep(5000);
+		driver.findElements(By.cssSelector(".dataRow.even.last.first")).get(0).findElements(By.tagName("td")).get(1).findElement(By.tagName("a")).click();
+		sleep(5000);
+		WebElement title = driver.findElement(By.className("bPageTitle"));
+		boolean a = false, b = false;
+		if (title.getText().toLowerCase().contains("attached file")) {
+			a = true;
+		}
+		if (title.getText().toLowerCase().contains("jpg.jpg")) {
+			b = true;
+		}
+		Assert.assertTrue(a && b);
 	}
 }
