@@ -177,8 +177,8 @@ public class CustomerCare extends BasePage {
 			sleep(2500);
 			driver.switchTo().frame(marcoCuentas);
 			Select field = new Select(selectCuentas);
-			if (!field.getFirstSelectedOption().getText().equalsIgnoreCase("Todas las cuentas")) {
-				field.selectByVisibleText("Todas las cuentas");
+			if (!field.getFirstSelectedOption().getText().equalsIgnoreCase("All")) {
+				field.selectByVisibleText("All");
 				TestBase.sleep(1500);
 			}
 			
@@ -1473,7 +1473,7 @@ public class CustomerCare extends BasePage {
 	    	}
 	    }
 	    sleep(8000);
-	    driver.switchTo().frame(tb.cambioFrame(driver, By.id("stepChooseMethod_nextBtn")));
+	    driver.switchTo().frame(tb.cambioFrame(driver, By.id("RefillMethods_nextBtn")));
 	    ((JavascriptExecutor)driver).executeScript("window.scrollTo(0,"+driver.findElement(By.cssSelector(".vlc-slds-button--tertiary.ng-binding.ng-scope")).getLocation().y+")");
 	    List <WebElement> wX = driver.findElements(By.className("slds-form-element__control"));
 	    for (WebElement x : wX) {
