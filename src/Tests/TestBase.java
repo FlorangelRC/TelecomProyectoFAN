@@ -738,7 +738,7 @@ public class TestBase {
 
 	}
 	
-	public void searchAndClick(List <WebElement> elements, String match, String texto) {
+	public void buscarYClick(List <WebElement> elements, String match, String texto) {
 		sleep(2000);
 		switch (match) {
 		case "contains":
