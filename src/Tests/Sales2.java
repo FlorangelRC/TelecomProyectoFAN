@@ -235,11 +235,7 @@ public class Sales2 extends TestBase{
 		sleep(10000);
 		driver.switchTo().defaultContent();
 		}*/
-<<<<<<< HEAD
 		sb.elegirplan("Plan Prepago Nacional");
-=======
-		sb.elegirplan("Plan prepago nacional");
->>>>>>> master
 		sleep(15000);
 		sb.continuar();
 		sleep(15000);
