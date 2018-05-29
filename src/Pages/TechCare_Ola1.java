@@ -296,11 +296,11 @@ public class TechCare_Ola1 {
 					
 			driver.switchTo().frame(marcoCuentas);
 			Select field = new Select(selectCuentas);
-			if (!field.getFirstSelectedOption().getText().equalsIgnoreCase("Todas las cuentas")) {
-				field.selectByVisibleText("Todas las cuentas");
-				TestBase.sleep(1500);
+			if (!field.getFirstSelectedOption().getText().equalsIgnoreCase("All")) {
+				field.selectByVisibleText("All");
+				TestBase.sleep(4000);
 			}
-			
+			sleep(8000);
 			char char0 = cuenta.toUpperCase().charAt(0);
 			driver.findElement(By.xpath("//div[@class='rolodex']//span[contains(.,'" + char0 + "')]")).click();
 			sleep(1800);
