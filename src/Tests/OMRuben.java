@@ -14,6 +14,7 @@ import org.testng.annotations.BeforeClass;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
+import Pages.BasePage;
 import Pages.OM;
 import Pages.SCP;
 import Pages.setConexion;
@@ -35,9 +36,8 @@ public class OMRuben extends TestBase {
 	public void setUp() throws Exception {
 		driver.switchTo().defaultContent();
 		sleep(2000);
-		SCP pageSCP = new SCP(driver);
-		sleep(3000);
-		pageSCP.goToMenu("Ventas");
+		BasePage bp = new BasePage(driver);
+		bp.cajonDeAplicaciones("Sales");
 
 		// click +
 		sleep(5000);
@@ -136,14 +136,12 @@ public class OMRuben extends TestBase {
 		sleep(5000);
 		driver.switchTo().defaultContent();
 		sleep(5000);
-		SCP pageSCP = new SCP(driver);
-		pageSCP.goToMenu("Ventas");
+		BasePage bp = new BasePage(driver);
+		bp.cajonDeAplicaciones("Sales");
 		sleep(2000);
 		pageOm.clickMore();
 		sleep(3000);
 		pageOm.clickOnListTabs("Orders");
-		sleep(5000);
-		driver.findElement(By.id("Order_Tab")).click();
 
 		// Verificar si la misma Vista esta seleccionada
 		sleep(5000);
@@ -154,6 +152,7 @@ public class OMRuben extends TestBase {
 
 	}
 
+	/* El test TS6725 puede fallar si ambos usuarios seleccionen la misma vista */
 	@Test(groups = "OM")
 	public void TS6725_CRM_OM_Ordenes_Vista_Log_in_con_vista_previamente_utilizada_por_otro_usuario() {
 
@@ -177,14 +176,14 @@ public class OMRuben extends TestBase {
 		sleep(5000);
 		driver.switchTo().defaultContent();
 		sleep(5000);
-		SCP pageSCP = new SCP(driver);
-		pageSCP.goToMenu("Ventas");
+		BasePage bp = new BasePage(driver);
+		bp.cajonDeAplicaciones("Ventas");
 		sleep(2000);
 		pageOm.clickMore();
 		sleep(3000);
 		pageOm.clickOnListTabs("Orders");
 		sleep(5000);
-		driver.findElement(By.id("Order_Tab")).click();
+		driver.findElement(By.cssSelector(".listRelatedObject.orderBlock.title")).click();
 
 		// Verificar que la Vista no sea la del Primer Usuario
 		vistaSelect = new Select(driver.findElement(By.name("fcf")));
