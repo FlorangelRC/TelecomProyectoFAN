@@ -314,9 +314,8 @@ public boolean btnnoexiste(String boton){
 	 ArrayList<String> txt1 = new ArrayList<String>();
 	 ArrayList<String> txt2 = new ArrayList<String>();
 	 txt2.add("ASIGNACI\u00d3N DE L\u00cdNEA");
-	 txt2.add("SELECCI\u00d3N DE MEDIO DE PAGO");
+	 txt2.add("SELECCI\u00d3N DE L\u00cdNEA DECISORA");
 	 txt2.add("RESUMEN DE LA ORDEN DE VENTA");
-	 txt2.add("ENV\u00cdO FACTURA Y DATOS DE COBRO");
 	 txt2.add("INFORMACI\u00d3N");
 
 	 List<WebElement> pasos = driver.findElements(By.cssSelector(".slds-form-element__label.ng-binding"));
@@ -476,12 +475,15 @@ for(WebElement e: btns){
  
  public void elegirvalidacion(String validacion){
 	 //DOC SMS o QA
+	 CustomerCare cc = new CustomerCare(driver);
 	try {Thread.sleep(15000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 	List<WebElement> valid =driver.findElements(By.id("ValidationMethodInValidContact"));
+	List<WebElement> radio =driver.findElements(By.cssSelector(".slds-radio--faux.ng-scope"));
+	
 	for(int i=0; i<valid.size();i++){
 		String value=valid.get(i).getAttribute("value");
 		if(value.equals(validacion)){
-			valid.get(i).click();
+			cc.obligarclick(radio.get(i+2));
 			break;}}
 	try {Thread.sleep(3000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 	 driver.findElement(By.id("MethodSelection_nextBtn")).click();

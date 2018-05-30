@@ -53,7 +53,11 @@ public class SalesNominaciones extends TestBase{
 
 	//@AfterMethod(alwaysRun=true)
 	public void IceB() {
-		driver.navigate().refresh();
+		try {Thread.sleep(10000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();} 
+	    driver.get("https://crm--sit.cs14.my.salesforce.com/home/home.jsp?tsid=02u41000000QWha/"); 
+	    try {Thread.sleep(10000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+	    driver.findElement(By.xpath("//a[@href=\'https://crm--sit--c.cs14.visual.force.com/apex/taClientSearch']")).click();		
+	    try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}  
 	}
 	
 	//@AfterClass(alwaysRun=true)
@@ -429,7 +433,7 @@ public class SalesNominaciones extends TestBase{
 		}
 		
 		driver.findElement(By.id("PermanencyDueDate")).sendKeys("30/06/2021");
-		assertTrue(driver.findElement(By.cssSelector(".message.description.ng-binding.ng-scope")).getText().contains("La permanencia no puede ser mayor a 2 a�os a partir de la fecha o menor a la fecha actual"));
+		assertTrue(driver.findElement(By.cssSelector(".message.description.ng-binding.ng-scope")).getText().contains("La permanencia no puede ser mayor a 2 a\u00f1os a partir de la fecha o menor a la fecha actual"));
 		sleep(1000);
 		driver.findElement(By.id("PermanencyDueDate")).clear();
 		driver.findElement(By.id("PermanencyDueDate")).sendKeys("30/06/2018");
@@ -457,13 +461,13 @@ public class SalesNominaciones extends TestBase{
 		System.out.println("1: "+driver.findElement(By.id("tab-scoped-1")).findElement(By.tagName("tbody")).findElements(By.tagName("tr")).get(2).findElements(By.tagName("td")).get(1).getText());
 		cua.click();
 		sleep(13000);
-		
 		contact.searchContact2("Pasaporte", "312313214", "femenino");
 		//contact.searchContact("Pasaporte", "312313214","");
 		sleep(6000);
 		driver.findElement(By.cssSelector(".slds-input.form-control.ng-pristine.ng-untouched.ng-valid.ng-empty")).sendKeys("algoaqui@yahoo.com.ar");
 		driver.findElement(By.id("PermanencyDueDate")).sendKeys("30/06/2018");
 		//driver.findElement(By.cssSelector(".slds-input.form-control.ng-pristine.ng-untouched.ng-valid.ng-empty")).sendKeys("algoaqui@yahoo.com.ar");
+		Assert.assertTrue(driver.findElement(By.id("Contact_nextBtn")).isDisplayed());
 		CC.obligarclick(driver.findElement(By.id("Contact_nextBtn")));
 		sleep(7000);
 		Assert.assertFalse(driver.findElement(By.id("ValidationMethod_nextBtn")).isDisplayed());

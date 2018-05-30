@@ -1,6 +1,10 @@
 package Tests;
 
+import java.util.List;
+
+import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.BeforeMethod;
@@ -51,8 +55,27 @@ public class OM_Mattu extends TestBase{
 	//-------------------------------------------------------------------------------------------------
 	//TCC = 1
 	@Test(groups = "OM")
-	public void TS(){
-		
-	}
+	public void TS8214_OM_Ordenes_Panel_Principal_Busqueda(){
+		 
+	    List<WebElement> wLinks = driver.findElement(By.className("fFooter")).findElements(By.tagName("a"));
+	 
+	    for (WebElement wAux : wLinks) {
+	 
+	      if(wAux.getText().equals("Create New View")) {
+	 
+	        wAux.click();
+	 
+	      }
+	 
+	    }
+	 
+	    
+	 
+	    driver.findElement(By.id("fscope1")).click();
+	 
+	    
+	 
+	  }
+	 
 
 }

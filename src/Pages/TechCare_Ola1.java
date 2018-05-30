@@ -44,7 +44,7 @@ public class TechCare_Ola1 {
 
 	//----------------------------- Busqueda Cuenta ----------------------------//
 	@FindBy(css = ".x-plain-header.sd_primary_tabstrip.x-unselectable .x-tab-strip-closable")
-	private List<WebElement> pestañasPrimarias;
+	private List<WebElement> pestaï¿½asPrimarias;
 	
 	@FindBy(css = ".x-btn-small.x-btn-icon-small-left")
 	private WebElement selector;
@@ -271,12 +271,12 @@ public class TechCare_Ola1 {
 	public void selectAccount(String cuenta) {
 		driver.switchTo().defaultContent();
 		Boolean flag = false;
-		if (pestañasPrimarias.size() > 0) {
-			for (WebElement t : pestañasPrimarias) {
+		if (pestaï¿½asPrimarias.size() > 0) {
+			for (WebElement t : pestaï¿½asPrimarias) {
 				if (t.getText().equals(cuenta)) {
 					flag = true;
 					t.click();
-					// Verificar que exista la pestaña Servicios almenos
+					// Verificar que exista la pestaï¿½a Servicios almenos
 				} else {
 					WebElement btn_cerrar = t.findElement(By.className("x-tab-strip-close"));
 					((JavascriptExecutor) driver).executeScript("arguments[0].click();", btn_cerrar);	
@@ -298,9 +298,9 @@ public class TechCare_Ola1 {
 			Select field = new Select(selectCuentas);
 			if (!field.getFirstSelectedOption().getText().equalsIgnoreCase("All")) {
 				field.selectByVisibleText("All");
-				TestBase.sleep(1500);
+				TestBase.sleep(4000);
 			}
-			
+			sleep(8000);
 			char char0 = cuenta.toUpperCase().charAt(0);
 			driver.findElement(By.xpath("//div[@class='rolodex']//span[contains(.,'" + char0 + "')]")).click();
 			sleep(1800);
