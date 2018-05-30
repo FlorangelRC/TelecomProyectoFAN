@@ -10,6 +10,7 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
+import org.openqa.selenium.support.ui.Select;
 
 public class OM {
 
@@ -93,4 +94,64 @@ static WebDriver driver;
 		nro.click();
 		sleep(5000);
 	}
+	
+	public boolean scrollDown(WebElement Elemento) {
+		try {
+		((JavascriptExecutor)driver).executeScript("window.scrollTo(0,"+Elemento.getLocation().y+")");
+		return true;
+			}catch(NullPointerException e){
+				System.out.println("Error: No se puede hacer Scroll");
+				return false;
+			}
+		}
+	
+	public boolean scrollDownInAView(WebElement Elemento) {
+		try {
+		((JavascriptExecutor)driver).executeScript("arguments[0].scrollIntoView(true);",Elemento);
+		return true;
+			}catch(NullPointerException e){
+				System.out.println("Error: No se puede hacer Scroll");
+				return false;
+			}
+		}
+	
+	public void goToMenuOM() {
+		  sleep(5000);
+		  String actual = driver.findElement(By.id("tsidLabel")).getText();
+		  
+		  if(actual.toLowerCase().contains("sales")||actual.toLowerCase().contains("ventas"))
+					  return;
+		  else {
+				    driver.findElement(By.id("tsid")).click();
+				    try {Thread.sleep(2000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+				    driver.findElement(By.xpath("//a[@href=\"/home/home.jsp?tsid=02u41000000QWha\"]")).click();
+				}
+		  }
+	/**
+	 * Crea una orden desde la vista de todas las ordenes.
+	 */
+	public void crearOrden() {
+		
+		driver.findElement(By.name("new")).click();
+		try {Thread.sleep(3000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+				
+		//Llena los campos
+		driver.findElement(By.id("accid")).sendKeys("Buda OM");
+		
+		/*driver.findElement(By.className("dateFormat")).click();
+		Select Estado= new Select(driver.findElement(By.id("Status")));
+		Estado.selectByVisibleText("Draft");
+		try {Thread.sleep(2000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		driver.findElement(By.name("save")).click();
+		try {Thread.sleep(3000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}*/
+	}
+	
+	/**
+	 * Crea una orden desde la vista de todas las ordenes.
+	 */
+	public void crearCuentaOM(String Cuenta) {
+		
+	}
+	
+	
 }
