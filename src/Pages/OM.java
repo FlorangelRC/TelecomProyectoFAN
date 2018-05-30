@@ -1,7 +1,9 @@
 package Pages;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
+import java.util.Set;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
@@ -130,26 +132,50 @@ static WebDriver driver;
 	/**
 	 * Crea una orden desde la vista de todas las ordenes.
 	 */
-	public void crearOrden() {
+	public void crearOrden(String Cuenta) {
 		
 		driver.findElement(By.name("new")).click();
 		try {Thread.sleep(3000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
-				
-		//Llena los campos
-		driver.findElement(By.id("accid")).sendKeys("Buda OM");
-		
-		/*driver.findElement(By.className("dateFormat")).click();
+		crearCuentaOM(Cuenta);
+		driver.findElement(By.id("accid")).sendKeys(Cuenta);
+		driver.findElement(By.className("dateFormat")).click();
 		Select Estado= new Select(driver.findElement(By.id("Status")));
 		Estado.selectByVisibleText("Draft");
 		try {Thread.sleep(2000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 		driver.findElement(By.name("save")).click();
-		try {Thread.sleep(3000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}*/
+		try {Thread.sleep(3000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 	}
+	
 	
 	/**
 	 * Crea una orden desde la vista de todas las ordenes.
 	 */
 	public void crearCuentaOM(String Cuenta) {
+		sleep(1000);
+		List<WebElement> buscarCuenta=driver.findElements(By.className("lookupIcon"));
+		for(WebElement op: buscarCuenta) {
+			if(op.getAttribute("alt").equalsIgnoreCase("Account Name Lookup (New Window)")) {
+				op.click();
+			}
+		}
+		sleep(3000);
+		cambiarVentanaNavegador(1);
+		sleep(1000);
+		
+		driver.switchTo().frame(driver.findElement(By.id("searchFrame")));
+		driver.findElement(By.name("new")).click();
+		sleep(2000);
+		driver.switchTo().defaultContent();
+		sleep(200);
+		driver.switchTo().frame(driver.findElement(By.id("resultsFrame")));
+
+		WebElement inputNombreCuenta=driver.findElement(By.xpath("//*[@id=\"ep\"]/div[2]/div[2]/table/tbody/tr[1]/td[2]/div/input"));
+		inputNombreCuenta.click();
+		inputNombreCuenta.clear();
+		inputNombreCuenta.sendKeys(Cuenta);
+		driver.findElements(By.name("save")).get(1).click();
+		cambiarVentanaNavegador(0);
+		driver.switchTo().defaultContent();
 		
 	}
 	
