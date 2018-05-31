@@ -96,7 +96,7 @@ public class OMQPage extends BasePage {
 	public void agregarNumerodeLinea() {
 		driver.switchTo().defaultContent();
 		NumerodeLinea.click();
-		Random  rnd = new Random();
+		
 		NumerodeLinea.sendKeys("1123874691");
 		NumerodeLinea.submit();
 		sleep(8000);
