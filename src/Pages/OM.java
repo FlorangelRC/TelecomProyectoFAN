@@ -5,6 +5,7 @@ import java.util.List;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
+import org.openqa.selenium.Keys;
 import org.openqa.selenium.By.ById;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -88,6 +89,8 @@ static WebDriver driver;
 		driver.switchTo().window(newTab.get(Ventana));
 	}
 	
+	
+	
 	public void primeraOrden() {
 		WebElement fila = driver.findElement(By.cssSelector(".dataRow.even.first"));
 		WebElement nro = fila.findElement(By.tagName("th")).findElement(By.tagName("a"));
@@ -144,6 +147,39 @@ static WebDriver driver;
 		try {Thread.sleep(2000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 		driver.findElement(By.name("save")).click();
 		try {Thread.sleep(3000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}*/
+	}
+	
+	/**
+	 * Pasa todas las cajas rojas del flujo de orquestacion a verdes.
+	 */
+	public void completarFlujoOrquestacion() {
+		while (!driver.findElement(By.id("zoomOut")).getAttribute("disabled").equals("disabled")) {
+			driver.findElement(By.id("zoomOut")).click();
+		}
+		
+		List<WebElement> cajas = driver.findElements(By.cssSelector(".item-label-container.item-header.item-failed"));
+		while(cajas.size()>0) {
+			for(WebElement UnaC : cajas) {
+				UnaC.click();
+				sleep(5000);
+				cambiarVentanaNavegador(1);
+				sleep(5000);
+				List<WebElement> botones = driver.findElements(By.cssSelector(".slds-button.slds-button--neutral.ng-binding.ng-scope"));
+				for (WebElement UnB: botones) {
+					if(UnB.getText().equals("Complete")) {
+						UnB.click();
+						break;
+					}
+				}
+				sleep(5000);
+				driver.findElement(By.tagName("body")).sendKeys(Keys.chord(Keys.CONTROL, "w"));
+				cambiarVentanaNavegador(0);
+				break;
+			}
+			cajas = driver.findElements(By.cssSelector(".item-label-container.item-header.item-failed"));
+			
+		}
+		
 	}
 	
 	/**
