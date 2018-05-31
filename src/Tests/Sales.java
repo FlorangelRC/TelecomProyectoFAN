@@ -457,7 +457,7 @@ public class Sales extends TestBase {
 			}
 		CustomerCare page = new CustomerCare(driver);
 		sleep(15000);
-		sb.Crear_DomicilioLegal("Buenos Aires","vicente lopez","falsa", "", "5846", "", "", "5248");
+		sb.Crear_DomicilioLegal("Buenos Aires","Vicente Lopez","falsa", "", "5846", "", "", "5248");
 		sleep(25000);
 		WebElement sig = driver.findElement(By.id("LineAssignment_nextBtn"));
 		page.obligarclick(sig);
