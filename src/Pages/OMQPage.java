@@ -107,7 +107,7 @@ public class OMQPage extends BasePage {
 		//driver.switchTo().defaultContent();
 		driver.findElement(By.xpath("/html/body/div[1]/div[1]/ng-include/div/div[2]/div[2]/div[3]/div/div/ng-include/div/div[1]/div/button")).click();
 		sleep(5000);
-		}
+	}
 	
 	
 	public void SimCard() {
