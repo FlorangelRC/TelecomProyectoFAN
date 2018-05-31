@@ -44,7 +44,7 @@ public class TechCare_Ola1 {
 
 	//----------------------------- Busqueda Cuenta ----------------------------//
 	@FindBy(css = ".x-plain-header.sd_primary_tabstrip.x-unselectable .x-tab-strip-closable")
-	private List<WebElement> pesta�asPrimarias;
+	private List<WebElement> pestanasPrimarias;
 	
 	@FindBy(css = ".x-btn-small.x-btn-icon-small-left")
 	private WebElement selector;
@@ -271,8 +271,8 @@ public class TechCare_Ola1 {
 	public void selectAccount(String cuenta) {
 		driver.switchTo().defaultContent();
 		Boolean flag = false;
-		if (pesta�asPrimarias.size() > 0) {
-			for (WebElement t : pesta�asPrimarias) {
+		if (pestanasPrimarias.size() > 0) {
+			for (WebElement t : pestanasPrimarias) {
 				if (t.getText().equals(cuenta)) {
 					flag = true;
 					t.click();
