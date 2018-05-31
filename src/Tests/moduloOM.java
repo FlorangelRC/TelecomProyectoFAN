@@ -79,23 +79,31 @@ public class moduloOM extends TestBase {
 	public void TS8231_CRM_OM_Ordenes_Panel_principal_Crear_una_Orden() {
 		OM pageOm=new OM(driver);
 		pageOm.crearOrden("AutomaAll");
-		//assertTrue(driver.findElement(By.cssSelector(".noSecondHeader.pageType")).isDisplayed());
-		assertTrue(pageOm.crearVistaOM("Almer","AutomaAll"));
+		assertTrue(driver.findElement(By.cssSelector(".noSecondHeader.pageType")).isDisplayed());
+		//assertTrue(pageOm.crearVistaOM("Almer","AutomaAll"));
 		
 	}
 	
-	//Si falla revisar los Xpath //*[@id=\"CF00Nc0000001pSu8_ilecell\"] y //*[@id=\"lookupa27c0000005JPh600Nc0000001pSu8\"]
+	
 	@Test(groups="OM")
 	public void TS6727_CRM_OM_Ordenes_Order_Detail_Visualización_del_flujo_de_orquestación() {
+		OM pageOm=new OM(driver);
+		//pageOm.crearVistaOM("AutOrders","AutomaOM");
 		Select allOrder=new Select(driver.findElement(By.id("fcf")));
-		allOrder.selectByVisibleText("All Orders VICTOR OM");
-		try {Thread.sleep(1000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		allOrder.selectByVisibleText("AUTPO");
+		sleep(2000);
 		try {
-		driver.findElement(By.name("go")).click();}
-		catch(Exception e) {};
-		try {Thread.sleep(4000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		driver.findElement(By.name("go")).click();
+		sleep(2000);
+		}catch(Exception e) {};
+		
+		WebElement primeraOrden=driver.findElement(By.cssSelector(".x-grid3-row.x-grid3-row-first"));
+		primeraOrden.findElement(By.xpath("//table/tbody/tr/td[3]")).click();
+		
 		List<WebElement> nPedidos=driver.findElement(By.className("x-grid3-scroller")).findElement(By.className("x-grid3-body"))
 				.findElements(By.cssSelector(".x-grid3-col.x-grid3-cell.x-grid3-td-ORDERS_ORDER_NUMBER"));
+		nPedidos.get(0).click();
+		/*
 		for(WebElement p:nPedidos) {
 			//System.out.println(p.getText());
 			//if(p.getText().endsWith("3879")) {
@@ -104,8 +112,10 @@ public class moduloOM extends TestBase {
 				try {Thread.sleep(1000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 				p.findElement(By.tagName("a")).click();
 				break;}	
-			}
-		try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+			}*/
+		sleep(5000);
+		
+		
 		((JavascriptExecutor)driver).executeScript("window.scrollTo(0,"+driver.findElement(By.xpath("//*[@id=\"CF00Nc0000001pSu8_ilecell\"]")).getLocation().y+")");
 		try {Thread.sleep(500);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 		driver.findElement(By.xpath("//*[@id=\"lookupa27c0000005JPh600Nc0000001pSu8\"]")).click();
