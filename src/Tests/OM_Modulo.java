@@ -76,6 +76,8 @@ public void TS51856_CRM_OM_Ordenes_Cliente_Nuevo_Alta_de_linea_Sin_delivery_Sin_
 	sleep(5000);
 	OM.colocarPlan("Plan Prepago Nacional");
 	OM.configuracion();
+	
+	
 		
 	
 		}
