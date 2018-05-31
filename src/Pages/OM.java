@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
+import java.util.Random;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
@@ -248,5 +249,32 @@ static WebDriver driver;
 			return false;
 		}
 	}
+	
+	
+	
+	/* Obtiene un elemento aleatorio de una lista de WebElements - RR */
+	public WebElement getRandomElementFromList(List<WebElement> lista) {
+		
+		int listaSize = lista.size();
+		Random rand = new Random();
+		WebElement randomWebElement = lista.get(rand.nextInt(listaSize)); 
+		return randomWebElement;
+		
+	}
+	
+	/* Genera un String de numeros al azar de n digitos */
+	public String getRandomNumber(int digitos) {
+		Random rand = new Random();
+		StringBuilder number = new StringBuilder(digitos);
+		//Asegura que el primer digito no sea 0
+		number.append((char)('1' + rand.nextInt(9)));
+		//Genera el resto de los digitos
+		for (int i = 0; i < (digitos - 1); i++) {
+			number.append((char) ('0' + rand.nextInt(10)));
+		}
+		return number.toString();
+	}
+	
+	
 	
 }

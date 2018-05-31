@@ -834,6 +834,9 @@ try{	driver.findElement(By.id("alert-ok-button")).click();	} catch (NoSuchElemen
 			 case "fabiana":
 				 TB.loginFabiana(driver);
 				 break;
+			 case "victor":
+				 TB.loginVictor(driver);
+				 break;
 			 }
 			 sleep(10000);
 		}
