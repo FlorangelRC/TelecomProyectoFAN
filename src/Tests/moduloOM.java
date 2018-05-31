@@ -78,8 +78,9 @@ public class moduloOM extends TestBase {
 	@Test(groups="OM", priority=1)
 	public void TS8231_CRM_OM_Ordenes_Panel_principal_Crear_una_Orden() {
 		OM pageOm=new OM(driver);
-		pageOm.crearOrden("AutomaOM");
-		assertTrue(driver.findElement(By.cssSelector(".noSecondHeader.pageType")).isDisplayed());
+		pageOm.crearOrden("AutomaAll");
+		//assertTrue(driver.findElement(By.cssSelector(".noSecondHeader.pageType")).isDisplayed());
+		assertTrue(pageOm.crearVistaOM("Almer","AutomaAll"));
 		
 	}
 	

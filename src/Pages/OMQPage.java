@@ -1,6 +1,8 @@
 package Pages;
 import static org.testng.Assert.assertTrue;
 
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
@@ -13,6 +15,8 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.Select;
+
+import com.sun.corba.se.pept.transport.Connection;
 
 import javafx.scene.control.ScrollToEvent;
 
@@ -94,12 +98,10 @@ public class OMQPage extends BasePage {
 		
 			
 	public void agregarNumerodeLinea() {
+		Random r = new Random();
 		driver.switchTo().defaultContent();
 		NumerodeLinea.click();
-		Random aleatorio = new Random(System.currentTimeMillis());
-		aleatorio.setSeed(System.currentTimeMillis());
-		int intAleatorio = aleatorio.nextInt(899999999)+1100000000;
-		NumerodeLinea.sendKeys(Integer.toString(intAleatorio));
+		NumerodeLinea.sendKeys("11" + r.nextInt(200000000) );
 		NumerodeLinea.submit();
 		sleep(8000);
 		//driver.switchTo().defaultContent();
@@ -107,7 +109,9 @@ public class OMQPage extends BasePage {
 		sleep(5000);
 		}
 	
+	
 	public void SimCard() {
+		Random r = new Random();
 		driver.findElement(By.cssSelector(".slds-button.cpq-item-has-children")).click();
 		sleep(3000);
 		driver.findElement(By.xpath(".//*[@id='tab-default-1']/div[1]/ng-include/div/div/div/div[4]/div[2]/div/ng-include/div/div[2]/ng-include/div/div[1]/div/div[2]/div[11]")).click();
@@ -117,13 +121,13 @@ public class OMQPage extends BasePage {
 		sleep(3000);
 		 ((JavascriptExecutor)driver).executeScript("window.scrollTo(0,"+driver.findElement(By.className("slds-section")).getLocation().y+" )");
 		 ICCID.click();
-		 ICCID.sendKeys("326548");
+		 ICCID.sendKeys(""+r.nextInt(200000));
 		 sleep(2000);
 		 IMSI.click();
-		 IMSI.sendKeys("45789");
+		 IMSI.sendKeys(""+r.nextInt(200000));
 		 sleep(2000);
 		 KI.click();
-		 KI.sendKeys("94578");
+		 KI.sendKeys(""+r.nextInt(200000));
 		 KI.submit();
 		sleep(5000);
 		//driver.switchTo().defaultContent();

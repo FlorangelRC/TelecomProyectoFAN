@@ -29,7 +29,7 @@ public class CustomerCare360Joaquin extends TestBase {
 		IrA.CajonDeAplicaciones.ConsolaFAN();
 	}
 	
-	@AfterClass(groups= {"CustomerCare", "DebitoAutomatico", "DetalleDeConsumos", "Vista360Layout"})
+	//@AfterClass(groups= {"CustomerCare", "DebitoAutomatico", "DetalleDeConsumos", "Vista360Layout"})
 	public void quit() {
 		Customer.cerrarTodasLasPestañas();
 		IrA.CajonDeAplicaciones.Ventas();
@@ -895,4 +895,161 @@ public class CustomerCare360Joaquin extends TestBase {
 		
 		Assert.assertTrue(filasPorPaginas.isDisplayed());
 	}
+	
+	
+	@Test
+	public void Adrian_Test_Gestion_Exitosa() {
+		Customer.elegirCuenta("aaaaFernando Care");
+		Customer.irAGestion("inconvenientes");
+		sleep(8000);
+		driver.findElement(By.id("CboConcepto")).click();
+		driver.findElement(By.xpath("//*[text() = 'CREDITO PREPAGO']")).click();
+		driver.findElement(By.id("CboItem")).click();
+		driver.findElement(By.xpath("//*[text() = 'Consumos de datos']")).click();
+		driver.findElement(By.id("CboMotivo")).click();
+		driver.findElement(By.xpath("//*[text() = 'Beneficio vencido']")).click();
+		List<WebElement> siClass = driver.findElements(By.cssSelector(".slds-form-element__label.ng-binding.ng-scope"));
+		for(WebElement e : siClass) {
+			if(e.getText().toLowerCase().equals("si")) {
+				e.click();
+				break;
+			}
+		}
+		driver.findElement(By.id("Step-TipodeAjuste_nextBtn")).click();
+		sleep(5000);
+		driver.findElement(By.id("Step-AssetSelection_nextBtn")).click();
+		sleep(5000);
+		driver.switchTo().frame(cambioFrame(driver, By.id("Step-VerifyPreviousAdjustments_prevBtn")));
+		List<WebElement> ajusteClass = driver.findElements(By.cssSelector(".slds-form-element__label.ng-binding.ng-scope"));
+		for(WebElement e: ajusteClass) {
+			if(e.getText().toLowerCase().equals("si, ajustar")){
+				e.click();
+				break;
+			}
+		}
+		driver.findElement(By.id("Step-VerifyPreviousAdjustments_nextBtn")).click();;
+		sleep(5000);
+		List<WebElement> calcularAjusteClass = driver.findElements(By.cssSelector(".slds-form-element__label.ng-binding.ng-scope"));
+		for(WebElement e: calcularAjusteClass) {
+			if(e.getText().toLowerCase().equals("si")) {
+				e.click();
+				break;
+			}
+		}
+		driver.findElement(By.id("Desde")).sendKeys("01-05-2018");
+		driver.findElement(By.id("Hasta")).sendKeys("02-05-2018");
+		driver.findElement(By.id("Unidad")).click();
+		driver.findElement(By.xpath("//*[text() = 'Datos (Mb)']")).click();
+		driver.findElement(By.id("CantidadDatosms")).sendKeys("100");
+		driver.findElement(By.id("Step-AjusteNivelLinea_nextBtn")).click();
+		sleep(5000);
+		driver.findElement(By.id("Step-Summary_nextBtn")).click();
+		sleep(5000);
+		List<WebElement> confirmacionClass = driver.findElements(By.className("slds-form-element__control"));
+		boolean a = false;
+		for(WebElement e: confirmacionClass) {
+			if(e.getText().toLowerCase().contains("tu gestión se realizó con éxito")) {
+				a = true;
+			}
+		}
+		Assert.assertTrue(a);
+	}
+	
+	@Test
+	public void Adrian_Test_Suspensiones() {
+		Customer.elegirCuenta("aaaaFernando Care");
+		Customer.irAGestion("suspensiones");
+		sleep(3000);
+		List<WebElement> suspensionOrHabilitacion = driver.findElements(By.cssSelector(ajustarClase("slds-form-element__label ng-binding ng-scope")));
+		clickOnObjectByText(suspensionOrHabilitacion, "suspensi", "parcial");
+		/*
+		for(WebElement e: suspensionOrHabilitacion) {
+			if(e.getText().toLowerCase().contains("suspensi")) {
+				e.click();
+				break;
+			}
+		}
+		*/
+		driver.findElement(By.id("Step1-SuspensionOrReconnection_nextBtn")).click();
+		sleep(5000);
+		List<WebElement> lineaOrEquipo = driver.findElements(By.cssSelector(".slds-form-element__label.ng-binding.ng-scope"));
+		for(WebElement e: lineaOrEquipo) {
+			if(e.getText().toLowerCase().equals("linea + equipo")) {
+				e.click();
+				break;
+			}
+		}
+		driver.findElement(By.id("Step2-AssetTypeSelection_nextBtn")).click();
+		sleep(3000);
+		List<WebElement> linea = driver.findElements(By.cssSelector(".slds-form-element__label.ng-binding"));
+		for(WebElement e: linea) {
+			if(e.getText().toLowerCase().equals("l\u00EDnea: undefined")){
+				e.click();
+				break;
+			}
+		}
+		driver.findElement(By.id("Step3-AvailableAssetsSelection_nextBtn")).click();
+		sleep(10000);
+		List<WebElement> equipo = driver.findElements(By.cssSelector(".slds-form-element__label.ng-binding.ng-scope"));
+		for(WebElement e: equipo) {
+			if(e.getText().toLowerCase().equals("imei")){
+				e.click();
+				break;
+			}
+		}
+		driver.findElement(By.id("ManualIMEI")).sendKeys("360012345678123");
+		driver.findElement(By.id("Step3.5A-DeviceForLine_nextBtn")).click();
+		sleep(3000);
+		List<WebElement> razon = driver.findElements(By.cssSelector(".slds-form-element__label.ng-binding.ng-scope"));
+		for(WebElement e: razon) {
+			if(e.getText().toLowerCase().equals("robo")){
+				e.click();
+				break;
+			}
+		}
+		driver.findElement(By.id("Step4-SuspensionReason_nextBtn")).click();
+		sleep(3000);
+		List<WebElement> descSiniestro = driver.findElements(By.cssSelector(".slds-form-element__label.ng-binding.ng-scope"));
+		for(WebElement e: descSiniestro) {
+			if(e.getText().toLowerCase().equals("argentina")){
+				e.click();
+				break;
+			}
+		}
+		driver.findElement(By.id("State")).click();
+		driver.findElement(By.xpath("//*[text() = 'Catamarca']")).click();
+		driver.findElement(By.id("Partido")).sendKeys("Catamarca");
+		driver.findElement(By.id("CityTypeAhead")).sendKeys("SAN FDO DE V DE CATAMARCA");
+		for(WebElement e: descSiniestro) {
+			if(e.getText().toLowerCase().equals("si")){
+				e.click();
+				break;
+			}
+		}
+		driver.findElement(By.id("AccountData_nextBtn")).click();
+		sleep(8000);
+		driver.findElement(By.id("Step6-Summary_nextBtn")).click();
+		sleep(3000);
+		List<WebElement> nullObject61 = driver.findElements(By.cssSelector(".slds-button.slds-button--neutral.ng-binding.ng-scope"));
+		for(WebElement e: nullObject61) {
+			if(e.getText().toLowerCase().equals("continue")){
+				e.click();
+				break;
+			}
+		}
+		sleep(3000);
+		List<WebElement> confirmacionClass = driver.findElements(By.className("ta-care-omniscript-done"));
+		boolean a = false;
+		for(WebElement e: confirmacionClass) {
+			if(e.getText().toLowerCase().contains("tu gestión se realizó con éxito")) {
+				a = true;
+			}
+		}
+		Assert.assertTrue(a);
+		sleep(15000);
+		driver.quit();
+	}
+	
+	
+	
 }

@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
+import java.util.Random;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
@@ -225,6 +226,66 @@ static WebDriver driver;
 		driver.switchTo().defaultContent();
 		
 	}
+	
+	/**
+	 * Crea una vista desde la ventana "Ordenes"
+	 * @param 
+	 * @return
+	 */
+	public boolean crearVistaOM(String nombreVista, String nombreCuenta) {
+		clickTab("Order_Tab");
+		sleep(2000);
+		try {
+		driver.findElement(By.xpath("//*[@id=\"filter_element\"]/div/span/span[2]/a[2]")).click();
+		sleep(3000);
+		driver.findElement(By.id("fname")).sendKeys(nombreVista);
+		
+		//Filtros de Busqueda
+		Select campo=new Select(driver.findElement(By.id("fcol1")));
+		campo.selectByValue("SALES.ACCOUNT.NAME");
+		Select operador=new Select(driver.findElement(By.id("fop1")));
+		operador.selectByValue("e");
+		driver.findElement(By.id("fval1")).sendKeys(nombreCuenta);;
+		sleep(1000);
+		//click guardar
+		driver.findElement(By.cssSelector(".btn.primary")).click();
+		sleep(2000);
+		if(driver.findElement(By.name("fcf")).getText().contains(nombreVista))
+			return true;
+		else
+			return false;
+		}catch(Exception e) {
+			System.out.println("Vista '"+nombreVista+"' no creada.");
+			e.printStackTrace();
+			return false;
+		}
+	}
+	
+	
+	
+	/* Obtiene un elemento aleatorio de una lista de WebElements - RR */
+	public WebElement getRandomElementFromList(List<WebElement> lista) {
+		
+		int listaSize = lista.size();
+		Random rand = new Random();
+		WebElement randomWebElement = lista.get(rand.nextInt(listaSize)); 
+		return randomWebElement;
+		
+	}
+	
+	/* Genera un String de numeros al azar de n digitos */
+	public String getRandomNumber(int digitos) {
+		Random rand = new Random();
+		StringBuilder number = new StringBuilder(digitos);
+		//Asegura que el primer digito no sea 0
+		number.append((char)('1' + rand.nextInt(9)));
+		//Genera el resto de los digitos
+		for (int i = 0; i < (digitos - 1); i++) {
+			number.append((char) ('0' + rand.nextInt(10)));
+		}
+		return number.toString();
+	}
+	
 	
 	
 }
