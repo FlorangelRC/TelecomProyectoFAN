@@ -3,6 +3,7 @@ package Pages;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
+import java.util.NoSuchElementException;
 import java.util.Set;
 import java.util.Random;
 
@@ -296,6 +297,16 @@ static WebDriver driver;
 		driver.switchTo().window(mainWindowHandle);
 	}
 	
-	
+	/* Selecciona una Vista por Texto Visible */
+	public void selectVistaByVisibleText(String vista) {
+		Select vistaSelect = new Select(driver.findElement(By.name("fcf")));
+		vistaSelect.selectByVisibleText(vista);
+		try{
+				driver.findElement(By.name("go")).click();
+		}
+		catch(org.openqa.selenium.NoSuchElementException e) {
+			System.out.println("Go Button not found exception");
+		}
+	}
 	
 }
