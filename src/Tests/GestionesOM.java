@@ -54,11 +54,11 @@ public class GestionesOM extends TestBase {
 	public void TS_CRM_OM_Gestion_Alta_De_Linea() throws InterruptedException {
 		OM pageOm=new OM(driver);
 		OMQPage OM=new OMQPage (driver);
-		pageOm.crearOrden("AutomaOM");
+		pageOm.crearOrden("LineasPlanConTarjeta");
 		assertTrue(driver.findElement(By.cssSelector(".noSecondHeader.pageType")).isDisplayed());
 		OM.getCPQ().click();
 		sleep(5000);
-		OM.colocarPlan("Plan Prepago Nacional");
+		OM.colocarPlan("Plan con Tarjeta");
 		OM.configuracion();
 		sleep(5000);
 		driver.findElement(By.name("ta_submit_order")).click();
@@ -68,7 +68,7 @@ public class GestionesOM extends TestBase {
 		driver.findElement(By.id("idlist")).click();
 		sleep(5000);
 		pageOm.cambiarVentanaNavegador(0);
-		sleep(8000);
+		sleep(12000);
 		pageOm.completarFlujoOrquestacion();
 	}
 
