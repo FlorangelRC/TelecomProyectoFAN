@@ -215,5 +215,38 @@ static WebDriver driver;
 		
 	}
 	
+	/**
+	 * Crea una vista desde la ventana "Ordenes"
+	 * @param 
+	 * @return
+	 */
+	public boolean crearVistaOM(String nombreVista, String nombreCuenta) {
+		clickTab("Order_Tab");
+		sleep(2000);
+		try {
+		driver.findElement(By.xpath("//*[@id=\"filter_element\"]/div/span/span[2]/a[2]")).click();
+		sleep(3000);
+		driver.findElement(By.id("fname")).sendKeys(nombreVista);
+		
+		//Filtros de Busqueda
+		Select campo=new Select(driver.findElement(By.id("fcol1")));
+		campo.selectByValue("SALES.ACCOUNT.NAME");
+		Select operador=new Select(driver.findElement(By.id("fop1")));
+		operador.selectByValue("e");
+		driver.findElement(By.id("fval1")).sendKeys(nombreCuenta);;
+		sleep(1000);
+		//click guardar
+		driver.findElement(By.cssSelector(".btn.primary")).click();
+		sleep(2000);
+		if(driver.findElement(By.name("fcf")).getText().contains(nombreVista))
+			return true;
+		else
+			return false;
+		}catch(Exception e) {
+			System.out.println("Vista '"+nombreVista+"' no creada.");
+			e.printStackTrace();
+			return false;
+		}
+	}
 	
 }
