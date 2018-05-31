@@ -1,15 +1,19 @@
 package Pages;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
+import java.util.Set;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
+import org.openqa.selenium.Keys;
 import org.openqa.selenium.By.ById;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
+import org.openqa.selenium.support.ui.Select;
 
 public class OM {
 
@@ -87,10 +91,129 @@ static WebDriver driver;
 		driver.switchTo().window(newTab.get(Ventana));
 	}
 	
+	
+	
 	public void primeraOrden() {
 		WebElement fila = driver.findElement(By.cssSelector(".dataRow.even.first"));
 		WebElement nro = fila.findElement(By.tagName("th")).findElement(By.tagName("a"));
 		nro.click();
 		sleep(5000);
 	}
+	
+	public boolean scrollDown(WebElement Elemento) {
+		try {
+		((JavascriptExecutor)driver).executeScript("window.scrollTo(0,"+Elemento.getLocation().y+")");
+		return true;
+			}catch(NullPointerException e){
+				System.out.println("Error: No se puede hacer Scroll");
+				return false;
+			}
+		}
+	
+	public boolean scrollDownInAView(WebElement Elemento) {
+		try {
+		((JavascriptExecutor)driver).executeScript("arguments[0].scrollIntoView(true);",Elemento);
+		return true;
+			}catch(NullPointerException e){
+				System.out.println("Error: No se puede hacer Scroll");
+				return false;
+			}
+		}
+	
+	public void goToMenuOM() {
+		  sleep(5000);
+		  String actual = driver.findElement(By.id("tsidLabel")).getText();
+		  
+		  if(actual.toLowerCase().contains("sales")||actual.toLowerCase().contains("ventas"))
+					  return;
+		  else {
+				    driver.findElement(By.id("tsid")).click();
+				    try {Thread.sleep(2000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+				    driver.findElement(By.xpath("//a[@href=\"/home/home.jsp?tsid=02u41000000QWha\"]")).click();
+				}
+		  }
+	/**
+	 * Crea una orden desde la vista de todas las ordenes.
+	 */
+	public void crearOrden(String Cuenta) {
+		
+		driver.findElement(By.name("new")).click();
+		try {Thread.sleep(3000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		crearCuentaOM(Cuenta);
+		driver.findElement(By.id("accid")).sendKeys(Cuenta);
+		driver.findElement(By.className("dateFormat")).click();
+		Select Estado= new Select(driver.findElement(By.id("Status")));
+		Estado.selectByVisibleText("Draft");
+		try {Thread.sleep(2000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		driver.findElement(By.name("save")).click();
+		try {Thread.sleep(3000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+	}
+	
+	
+	/**
+	 * Pasa todas las cajas rojas del flujo de orquestacion a verdes.
+	 */
+	public void completarFlujoOrquestacion() {
+		while (!driver.findElement(By.id("zoomOut")).getAttribute("disabled").equals("disabled")) {
+			driver.findElement(By.id("zoomOut")).click();
+		}
+		
+		List<WebElement> cajas = driver.findElements(By.cssSelector(".item-label-container.item-header.item-failed"));
+		while(cajas.size()>0) {
+			for(WebElement UnaC : cajas) {
+				UnaC.click();
+				sleep(5000);
+				cambiarVentanaNavegador(1);
+				sleep(5000);
+				List<WebElement> botones = driver.findElements(By.cssSelector(".slds-button.slds-button--neutral.ng-binding.ng-scope"));
+				for (WebElement UnB: botones) {
+					if(UnB.getText().equals("Complete")) {
+						UnB.click();
+						break;
+					}
+				}
+				sleep(5000);
+				driver.findElement(By.tagName("body")).sendKeys(Keys.chord(Keys.CONTROL, "w"));
+				cambiarVentanaNavegador(0);
+				break;
+			}
+			cajas = driver.findElements(By.cssSelector(".item-label-container.item-header.item-failed"));
+			
+		}
+		
+	}
+	
+	/**
+	 * Crea una orden desde la vista de todas las ordenes.
+	 */
+	public void crearCuentaOM(String Cuenta) {
+		sleep(1000);
+		List<WebElement> buscarCuenta=driver.findElements(By.className("lookupIcon"));
+		for(WebElement op: buscarCuenta) {
+			if(op.getAttribute("alt").equalsIgnoreCase("Account Name Lookup (New Window)")) {
+				op.click();
+			}
+		}
+		sleep(3000);
+		cambiarVentanaNavegador(1);
+		sleep(1000);
+		
+		driver.switchTo().frame(driver.findElement(By.id("searchFrame")));
+		driver.findElement(By.name("new")).click();
+		sleep(2000);
+		driver.switchTo().defaultContent();
+		sleep(200);
+		driver.switchTo().frame(driver.findElement(By.id("resultsFrame")));
+
+		WebElement inputNombreCuenta=driver.findElement(By.xpath("//*[@id=\"ep\"]/div[2]/div[2]/table/tbody/tr[1]/td[2]/div/input"));
+		inputNombreCuenta.click();
+		inputNombreCuenta.clear();
+		inputNombreCuenta.sendKeys(Cuenta);
+		driver.findElements(By.name("save")).get(1).click();
+		cambiarVentanaNavegador(0);
+		driver.switchTo().defaultContent();
+		
+	}
+	
+	
 }
