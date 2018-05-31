@@ -250,9 +250,7 @@ static WebDriver driver;
 		}
 	}
 	
-	
-	
-	/* Obtiene un elemento aleatorio de una lista de WebElements - RR */
+	/* Obtiene un elemento aleatorio de una lista de WebElements */
 	public WebElement getRandomElementFromList(List<WebElement> lista) {
 		
 		int listaSize = lista.size();
@@ -273,6 +271,19 @@ static WebDriver driver;
 			number.append((char) ('0' + rand.nextInt(10)));
 		}
 		return number.toString();
+	}
+	
+	/* Cierra todas las ventanas que no sean la principal */
+	public void closeAllOtherTabs() {
+		String mainWindowHandle = driver.getWindowHandle();
+		ArrayList<String> tabs = new ArrayList<String>(driver.getWindowHandles());
+		for(String t: tabs) {
+			if(!t.equals(mainWindowHandle)) {
+				driver.switchTo().window(t);
+				driver.close();
+			}
+		}
+		driver.switchTo().window(mainWindowHandle);
 	}
 	
 	
