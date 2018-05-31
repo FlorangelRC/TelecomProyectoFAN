@@ -10,20 +10,17 @@ import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
 import Pages.BasePage;
-import Pages.CustomerCare;
 import Pages.OM;
-import Pages.SCP;
 import Pages.setConexion;
 
 public class OMN extends TestBase {
 
 	private WebDriver driver;
 	protected OM om;
-	protected SCP scp;
 	protected BasePage bp;
 
 
-	@BeforeClass (alwaysRun = true)
+	@BeforeClass (alwaysRun = true, groups = "OM")
 	public void init() {
 		driver = setConexion.setupEze();
 		sleep(5000);
@@ -33,17 +30,15 @@ public class OMN extends TestBase {
 		bp = new BasePage(driver);
 	}
 	
-	@BeforeMethod (alwaysRun = true)
+	@BeforeMethod (alwaysRun = true, groups = "OM")
 	public void before() {
-		driver.switchTo().defaultContent();
-		sleep(2000);
 		bp.cajonDeAplicaciones("Sales");
 		sleep(5000);
 		driver.findElement(By.id("Order_Tab")).click();
 		sleep(3000);
 	}
 	
-	//@AfterClass (alwaysRun = true)
+	//@AfterClass (alwaysRun = true, groups = "OM")
 	public void quit() {
 		driver.quit();
 		sleep(5000);
@@ -190,9 +185,16 @@ public class OMN extends TestBase {
 		sleep(3000);
 		driver.findElement(By.name("cancel")).click();
 		sleep(5000);
-		WebElement row = driver.findElements(By.cssSelector(".dataRow.even.last.first")).get(0);
-		WebElement file = row.findElements(By.tagName("td")).get(1);
-		System.out.println(file.getText());
-		//file.click();
+		driver.findElements(By.cssSelector(".dataRow.even.last.first")).get(0).findElements(By.tagName("td")).get(1).findElement(By.tagName("a")).click();
+		sleep(5000);
+		WebElement title = driver.findElement(By.className("bPageTitle"));
+		boolean a = false, b = false;
+		if (title.getText().toLowerCase().contains("attached file")) {
+			a = true;
+		}
+		if (title.getText().toLowerCase().contains("jpg.jpg")) {
+			b = true;
+		}
+		Assert.assertTrue(a && b);
 	}
 }

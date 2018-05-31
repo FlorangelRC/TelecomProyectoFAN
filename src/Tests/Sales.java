@@ -441,12 +441,12 @@ public class Sales extends TestBase {
 		SalesBase sb = new SalesBase(driver);
 		sb.DesloguearLoguear("call");
 		sleep(5000);
-		try {
+		//try {
 			driver.findElement(By.xpath("//a[@href=\'https://crm--sit--c.cs14.visual.force.com/apex/taClientSearch']")).click();
 			sleep(10000);
 			sb.BuscarCuenta(DNI, sDni);
 			sb.acciondecontacto("catalogo");
-			sleep(18000);
+			sleep(25000);
 			sb.elegirplan("Plan prepago nacional");
 			sb.continuar();
 			sleep(18000);
@@ -455,15 +455,17 @@ public class Sales extends TestBase {
 					c.getText().equals("Continuar");
 					c.click();
 			}
-		sleep(5000);
 		CustomerCare page = new CustomerCare(driver);
-		
+		sleep(15000);
+		sb.Crear_DomicilioLegal("Buenos Aires","Vicente Lopez","falsa", "", "5846", "", "", "5248");
+		sleep(25000);
 		WebElement sig = driver.findElement(By.id("LineAssignment_nextBtn"));
 		page.obligarclick(sig);
 		sleep(10000);
 		page.obligarclick(driver.findElement(By.id("DeliveryMethodConfiguration_nextBtn")));
-		sleep(10000);
-		
+		sleep(15000);
+		sb.Crear_DireccionEnvio("Buenos Aires","Vicente Lopez","falsa", "", "5846", "", "", "c5248aaa","01125348657","01125348658");
+		sleep(12000);
 		/*page.obligarclick(driver.findElement(By.id("ICCDAssignment_nextBtn")));
 		sleep(10000);*/
 		page.obligarclick(driver.findElement(By.id("InvoicePreview_nextBtn")));
@@ -482,41 +484,51 @@ public class Sales extends TestBase {
 		assertTrue(TDC&&DPF);
 		sleep(4000);
 		sb.DesloguearLoguear("venta");
-		}catch(Exception ex1) {
+		/*}catch(Exception ex1) {
 			sb.DesloguearLoguear("venta");
 			Assert.assertTrue(false);
-		}
+		}*/
 	}
 		
 	
 	@Test(groups={"Sales", "AltaDeLinea", "Ola1"}, priority=7, dataProvider="SalesCuentaActiva")  
 	public void TS94831_Ventas_General_Verificar_No_Asignacion_De_Seriales_Perfil_Representante_Telefonico(String sCuenta, String sDni, String sLinea) throws IOException {
-		perfil = "venta";
 		SalesBase sb = new SalesBase(driver);
-		sb.BuscarCuenta(DNI, sDni);
-		sb.acciondecontacto("catalogo");
-		sleep(15000);
-		sb.elegirplan("Plan prepago nacional");  
-		sb.continuar();
-		sleep(10000);
-		List<WebElement> cont = driver.findElements(By.cssSelector(".slds-button.slds-m-left--large.slds-button--brand.ta-button-brand"));
-			for(WebElement c : cont){
-				c.getText().equals("Continuar");
-					c.click();
-			}
+		sb.DesloguearLoguear("call");
 		sleep(5000);
-		CustomerCare page = new CustomerCare(driver);
-		
-		WebElement sig = driver.findElement(By.id("LineAssignment_nextBtn"));
-		page.obligarclick(sig);
-		sleep(10000);
-		page.obligarclick(driver.findElement(By.id("DeliveryMethodConfiguration_nextBtn")));
-		sleep(10000);
 		try {
-			page.obligarclick(driver.findElement(By.id("ICCDAssignment_nextBtn")));
-			assertTrue(false);
-		}catch(NoSuchElementException ex1) {
-			assertTrue(true);
+			driver.findElement(By.xpath("//a[@href=\'https://crm--sit--c.cs14.visual.force.com/apex/taClientSearch']")).click();
+			sleep(10000);
+			sb.BuscarCuenta(DNI, sDni);
+			sb.acciondecontacto("catalogo");
+			sleep(15000);
+			sb.elegirplan("Plan prepago nacional");  
+			sb.continuar();
+			sleep(10000);
+			List<WebElement> cont = driver.findElements(By.cssSelector(".slds-button.slds-m-left--large.slds-button--brand.ta-button-brand"));
+				for(WebElement c : cont){
+					c.getText().equals("Continuar");
+						c.click();
+				}
+			sleep(5000);
+			CustomerCare page = new CustomerCare(driver);
+			
+			WebElement sig = driver.findElement(By.id("LineAssignment_nextBtn"));
+			page.obligarclick(sig);
+			sleep(10000);
+			page.obligarclick(driver.findElement(By.id("DeliveryMethodConfiguration_nextBtn")));
+			sleep(10000);
+			try {
+				page.obligarclick(driver.findElement(By.id("ICCDAssignment_nextBtn")));
+				assertTrue(false);
+			}catch(NoSuchElementException ex1) {
+				assertTrue(true);
+			}
+			sleep(4000);
+			sb.DesloguearLoguear("venta");
+		}catch(Exception ex1) {
+			sb.DesloguearLoguear("venta");
+			Assert.assertTrue(false);
 		}
 		
 	}
@@ -2484,28 +2496,38 @@ public class Sales extends TestBase {
 	
 	@Test(groups={"Sales", "AltaDeLinea", "Ola1"}, priority=3, dataProvider="SalesCuentaActiva")
 	public void TS94830_Ventas_General_Verificar_Metodo_De_Entrega_Por_Default_Perfil_Representante_Telefonico(String sCuenta, String sDni, String sLinea) throws IOException{
-		perfil = "venta";
 		SalesBase SB = new SalesBase(driver);
-		SB.BuscarCuenta(DNI, sDni);
-		SB.acciondecontacto("catalogo");
-		boolean x = false;
-		sleep(18000);
-		assertTrue(driver.findElement(By.cssSelector(".slds-col.taChangeDeliveryMethod.slds-text-body--small.slds-m-left--large")).findElement(By.tagName("strong")).getText().contains("Delivery"));
-		List<WebElement> cam = driver.findElements(By.cssSelector(".slds-m-left--x-small.slds-button.slds-button--brand"));
-		for(WebElement c : cam ){	
-			if(c.getText().toLowerCase().equals("cambiar")){
-				c.click();
-			}
-		}
-		sleep(7000);	
-		List<WebElement> frame2 = driver.findElements(By.tagName("iframe"));
-		driver.switchTo().frame(frame2.get(0));
-		Select env = new Select (driver.findElement(By.id("DeliveryMethodSelection")));
+		SB.DesloguearLoguear("call");
+		sleep(5000);
 		try {
-			env.selectByVisibleText("Presencial");
-			assertTrue(false);
-		}catch(org.openqa.selenium.NoSuchElementException ex1) {
-			assertTrue(true);
+			driver.findElement(By.xpath("//a[@href=\'https://crm--sit--c.cs14.visual.force.com/apex/taClientSearch']")).click();
+			sleep(10000);
+			SB.BuscarCuenta(DNI, sDni);
+			SB.acciondecontacto("catalogo");
+			boolean x = false;
+			sleep(18000);
+			assertTrue(driver.findElement(By.cssSelector(".slds-col.taChangeDeliveryMethod.slds-text-body--small.slds-m-left--large")).findElement(By.tagName("strong")).getText().contains("Delivery"));
+			List<WebElement> cam = driver.findElements(By.cssSelector(".slds-m-left--x-small.slds-button.slds-button--brand"));
+			for(WebElement c : cam ){	
+				if(c.getText().toLowerCase().equals("cambiar")){
+					c.click();
+				}
+			}
+			sleep(7000);	
+			List<WebElement> frame2 = driver.findElements(By.tagName("iframe"));
+			driver.switchTo().frame(frame2.get(0));
+			Select env = new Select (driver.findElement(By.id("DeliveryMethodSelection")));
+			try {
+				env.selectByVisibleText("Presencial");
+				assertTrue(false);
+			}catch(org.openqa.selenium.NoSuchElementException ex1) {
+				assertTrue(true);
+			}
+			sleep(4000);
+			SB.DesloguearLoguear("venta");
+		}catch(Exception ex1) {
+			SB.DesloguearLoguear("venta");
+			Assert.assertTrue(false);
 		}
 		
 	}

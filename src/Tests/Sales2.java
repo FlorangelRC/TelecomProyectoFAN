@@ -1840,7 +1840,7 @@ public class Sales2 extends TestBase{
 		sb.elegirplan("Plan Prepago Nacional");
 		sleep(25000);
 		driver.findElement(By.cssSelector(".cpq-product-link.slds-text-body_small.slds-float_right")).click();
-		sleep(10000);
+		sleep(20000);
 		List <WebElement> detalles = driver.findElement(By.className("services")).findElements(By.className("margin-space"));
 	    boolean voz = false, sms = false, datos = false, amigos = false; 
 	    for (WebElement x : detalles) { 
