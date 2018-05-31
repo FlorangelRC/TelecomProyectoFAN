@@ -60,7 +60,16 @@ public class GestionesOM extends TestBase {
 		sleep(5000);
 		OM.colocarPlan("Plan Prepago Nacional");
 		OM.configuracion();
-		
+		sleep(5000);
+		driver.findElement(By.name("ta_submit_order")).click();
+		sleep(25000);
+		pageOm.cambiarVentanaNavegador(1);
+		sleep(2000);
+		driver.findElement(By.id("idlist")).click();
+		sleep(5000);
+		pageOm.cambiarVentanaNavegador(0);
+		sleep(8000);
+		pageOm.completarFlujoOrquestacion();
 	}
 
 }

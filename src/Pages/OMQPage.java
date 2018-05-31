@@ -66,12 +66,12 @@ public class OMQPage extends BasePage {
 		public void colocarPlan(String PlandeServicio) throws InterruptedException{
 	       sleep(3000);
 	       driver.switchTo().defaultContent();
-	       sleep(3000);
+	       sleep(6000);
 	      	    driver.findElement(By.cssSelector(".slds-input.ng-pristine.ng-untouched.ng-valid")).sendKeys(PlandeServicio);		
 	      	  sleep(3000);
 	      	    		List<WebElement> agregar = driver.findElements(By.cssSelector(".slds-button.slds-button_neutral.cpq-add-button")); 
 	      	    			agregar.get(0).click();
-	      	    			sleep(3000);
+	      	    			sleep(6000);
 			
 	      }
 		
@@ -96,8 +96,10 @@ public class OMQPage extends BasePage {
 	public void agregarNumerodeLinea() {
 		driver.switchTo().defaultContent();
 		NumerodeLinea.click();
-		
-		NumerodeLinea.sendKeys("1123874691");
+		Random aleatorio = new Random(System.currentTimeMillis());
+		aleatorio.setSeed(System.currentTimeMillis());
+		int intAleatorio = aleatorio.nextInt(899999999)+1100000000;
+		NumerodeLinea.sendKeys(Integer.toString(intAleatorio));
 		NumerodeLinea.submit();
 		sleep(8000);
 		//driver.switchTo().defaultContent();
