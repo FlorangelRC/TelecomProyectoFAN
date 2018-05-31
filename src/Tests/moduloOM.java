@@ -77,24 +77,9 @@ public class moduloOM extends TestBase {
 	
 	@Test(groups="OM", priority=1)
 	public void TS8231_CRM_OM_Ordenes_Panel_principal_Crear_una_Orden() {
-		//Click Nuevo
-		
 		OM pageOm=new OM(driver);
-		pageOm.crearOrden();
-		
-	/*	driver.findElement(By.name("new")).click();
-		try {Thread.sleep(3000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
-		
-		
-		//Llena los campos
-		driver.findElement(By.id("accid")).sendKeys("Buda OM");
-		driver.findElement(By.className("dateFormat")).click();
-		Select Estado= new Select(driver.findElement(By.id("Status")));
-		Estado.selectByVisibleText("Draft");
-		try {Thread.sleep(2000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
-		driver.findElement(By.name("save")).click();
-		try {Thread.sleep(3000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
-		assertTrue(driver.findElement(By.cssSelector(".noSecondHeader.pageType")).isDisplayed());*/
+		pageOm.crearOrden("AutomaOM");
+		assertTrue(driver.findElement(By.cssSelector(".noSecondHeader.pageType")).isDisplayed());
 		
 	}
 	
