@@ -184,7 +184,6 @@ static WebDriver driver;
 					}
 				}
 				sleep(5000);
-				driver.findElement(By.tagName("body")).sendKeys(Keys.chord(Keys.CONTROL, "w"));
 				cambiarVentanaNavegador(0);
 				sleep(5000);
 				break;
@@ -192,7 +191,7 @@ static WebDriver driver;
 			cajas = driver.findElements(By.cssSelector(".item-label-container.item-header.item-failed"));
 			
 		}
-		
+		closeAllOtherTabs();
 	}
 	
 	/**
