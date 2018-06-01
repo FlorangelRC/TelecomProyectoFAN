@@ -85,6 +85,13 @@ public class OM_Flujos_Ruben extends TestBase {
 		statusSelect.selectByVisibleText("Draft");
 		driver.findElement(By.name("save")).click();
 
+		// sleep(5000);
+		// System.out.println(driver.findElement(By.id("Status_ileinner")).getText());
+		// System.out.println(driver.findElement(By.xpath("//*[@id=\"Status_ileinner\"]")).getText());
+		// System.out.println(driver.findElement(By.id("Status_ilecell")).getText());
+		// System.out.println(driver.findElement(By.xpath("//*[@id=\"Status_ilecell\"]")).getText());
+		// sleep(10000);
+
 		// Click en CPQ
 		sleep(3000);
 		WebElement cpqButton = wait
@@ -162,28 +169,30 @@ public class OM_Flujos_Ruben extends TestBase {
 		// Descomponer Orden
 		sleep(10000);
 		driver.findElement(By.name("ta_submit_order")).click();
-		
+
 		// Popup Login
 		sleep(20000);
-		String mainWindowHandle = driver.getWindowHandle();
-		ArrayList<String> tabs = new ArrayList<String>(driver.getWindowHandles());
-		for(String t: tabs) {
-			if(!t.equals(mainWindowHandle)) {
-				driver.switchTo().window(t);
-				break;
-			}
-		}
+		String currentWindowHandle = driver.getWindowHandle();
+		pageOm.switchToPopup(currentWindowHandle);
 		driver.findElement(By.id("hint_00Dc0000003w19T005c0000003FI6A")).click();
-		
-		// Plan de orquestacion
-	    driver.switchTo().window(mainWindowHandle); 
-	    sleep(20000); 
-	    pageOm.completarFlujoOrquestacion(); 
-	    pageOm.closeAllOtherTabs(); 
 
-		
-		
-		
+		// Plan de orquestacion
+		driver.switchTo().window(currentWindowHandle);
+		sleep(20000);
+		pageOm.completarFlujoOrquestacion();
+
+		WebElement viewOriginalOrderButton = driver
+				.findElement(By.xpath("//*[@id=\"wholepage\"]/div/ng-include/div/div[1]/div/div[1]/a"));
+		viewOriginalOrderButton.click();
+
+		sleep(30000);
+
+		currentWindowHandle = driver.getWindowHandle();
+		pageOm.switchToPopup(currentWindowHandle);
+		WebElement orderStatus = driver.findElement(By.id("Status_ileinner"));
+
+		Assert.assertEquals(orderStatus.getText(), "Activated");
+
 	}
 
 }
