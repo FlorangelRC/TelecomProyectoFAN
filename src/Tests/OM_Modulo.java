@@ -26,6 +26,7 @@ import Pages.Accounts;
 import Pages.BasePage;
 import Pages.HomeBase;
 import Pages.OM;
+import Pages.OMQPage;
 import Pages.RegistroEventoMasivo;
 import Pages.SCP;
 import Pages.setConexion;
@@ -66,10 +67,18 @@ public void setUp() throws Exception {
 		driver.quit();
 		sleep(1000);
 	}
-	
-	
+
 @Test(groups="OM")
-public void OM () {
+public void TS51856_CRM_OM_Ordenes_Cliente_Nuevo_Alta_de_linea_Sin_delivery_Sin_VAS_Paso_1 () throws InterruptedException {
+	OMQPage OM=new OMQPage (driver);
+	OM.CrearOrden();
+	OM.getCPQ().click();
+	sleep(5000);
+	OM.colocarPlan("Plan Prepago Nacional");
+	OM.configuracion();
+	
+	
+		
 	
 		}
 }

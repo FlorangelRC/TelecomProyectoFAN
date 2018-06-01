@@ -834,7 +834,40 @@ try{	driver.findElement(By.id("alert-ok-button")).click();	} catch (NoSuchElemen
 			 case "fabiana":
 				 TB.loginFabiana(driver);
 				 break;
+			 case "victor":
+				 TB.loginVictor(driver);
+				 break;
 			 }
 			 sleep(10000);
 		}
+		
+		public void Crear_DireccionEnvio(String provincia, String localidad, 
+				 String calle, String local, String altura, String piso, String dpto,
+				 String CP, String Celu, String Alternativo){
+			
+				try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		
+			 setSimpleDropdown(driver.findElements(By.id("State")).get(1), provincia);
+			 sleep(4000);
+				setSimpleDropdown(driver.findElement(By.id("City")), localidad);
+			//driver.findElement(By.id("City")).sendKeys(localidad);
+			try {Thread.sleep(10000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();} 
+			/*driver.findElement(By.id("City")).sendKeys(Keys.ARROW_DOWN);
+			driver.findElement(By.id("City")).sendKeys(Keys.ENTER);*/
+			driver.findElement(By.id("Street")).sendKeys(calle); 
+			/*try {Thread.sleep(10000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+			driver.findElement(By.id("Street")).sendKeys(Keys.ARROW_DOWN);
+			driver.findElement(By.id("Street")).sendKeys(Keys.ENTER);
+			driver.findElement(By.id("NewStreetName")).sendKeys(calle);*/
+			
+			driver.findElement(By.id("StreetNumber")).sendKeys(altura);
+			driver.findElement(By.id("FloorNumber")).sendKeys(piso);
+			driver.findElement(By.id("Department")).sendKeys(dpto);
+			driver.findElement(By.id("PostalCode")).sendKeys(CP);
+			driver.findElement(By.id("ContactMobilePhone")).sendKeys(Celu);
+			driver.findElement(By.id("AlternativeTelephone")).sendKeys(Alternativo);
+		
+			try {Thread.sleep(3000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+			driver.findElement(By.id("ShippingAddressData_nextBtn")).click();
+		 }
  }
