@@ -82,7 +82,7 @@ public class MarketingOla1_Joaquin extends TestBase {
 		
 		Page.cerrarTodasLasPestañas();
 		Page.irACasos();
-		Assert.assertTrue(Page.obtenerEstadoDelCaso(numeroCaso).contentEquals("Closed"));
+		Assert.assertTrue(Page.corroborarCasoCerrado(numeroCaso));
 	}
 	
 	@Test(groups = {"Marketing", "Ola1", "GestionDelSocioDeClubPersonal"}, dataProvider="MarketingCuentaNormal")
@@ -141,7 +141,7 @@ public class MarketingOla1_Joaquin extends TestBase {
 	    Page.cerrarTodasLasPestañas();
 		Page.irACasos();
 		
-		Assert.assertTrue(Page.obtenerEstadoDelCaso(numeroCaso).contentEquals("Closed"));
+		Assert.assertTrue(Page.corroborarCasoCerrado(numeroCaso));
 	}
 	
 	@Test(groups = {"Marketing", "Ola1", "GestionDelSocioDeClubPersonal"}, dataProvider="MarketingCuentaNormal")
