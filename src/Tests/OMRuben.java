@@ -79,7 +79,7 @@ public class OMRuben extends TestBase {
 
 		sleep(5000);
 
-		// //Borrar Vista
+		// Borrar Vista
 		try {
 			driver.findElement(By.name("delID")).click();
 			sleep(5000);
@@ -188,12 +188,12 @@ public class OMRuben extends TestBase {
 		// Verificar que la Vista no sea la del Primer Usuario
 		vistaSelect = new Select(driver.findElement(By.name("fcf")));
 		String vistaOtroUsuario = vistaSelect.getFirstSelectedOption().getText();
-		
+
 		Assert.assertNotEquals(vistaOtroUsuario, vistaPrimerUsuario);
 
 	}
 
-//	@Test(groups = "OM")
-//	public void TS
-	
+	// @Test(groups = "OM")
+	// public void TS
+
 }

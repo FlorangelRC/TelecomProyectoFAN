@@ -7,9 +7,12 @@ import java.util.NoSuchElementException;
 import java.util.Set;
 import java.util.Random;
 
+import org.openqa.selenium.Alert;
 import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.Keys;
+import org.openqa.selenium.NoAlertPresentException;
+import org.openqa.selenium.UnhandledAlertException;
 import org.openqa.selenium.By.ById;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -308,5 +311,24 @@ static WebDriver driver;
 			System.out.println("Go Button not found exception");
 		}
 	}
+	
+	/* Elimina la Vista Seleccionada */
+	public void eliminarVista() {
+		try {
+			driver.findElement(By.name("delID")).click();
+			Alert confirmDelete = driver.switchTo().alert();
+			confirmDelete.accept();
+//			sleep(5000);
+		} catch (UnhandledAlertException f) {
+			try {
+				// Aceptar Alerta para Borrar Lista
+				Alert confirmDelete = driver.switchTo().alert();
+				confirmDelete.accept();
+			} catch (NoAlertPresentException e) {
+				e.printStackTrace();
+			}
+		}
+	}
+	
 	
 }

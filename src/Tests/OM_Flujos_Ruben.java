@@ -176,12 +176,14 @@ public class OM_Flujos_Ruben extends TestBase {
 		driver.findElement(By.id("hint_00Dc0000003w19T005c0000003FI6A")).click();
 		
 		// Plan de orquestacion
-		
-		
-		
-		// sleep(60000);
-		// driver.quit();
+	    driver.switchTo().window(mainWindowHandle); 
+	    sleep(20000); 
+	    pageOm.completarFlujoOrquestacion(); 
+	    pageOm.closeAllOtherTabs(); 
 
+		
+		
+		
 	}
 
 }
