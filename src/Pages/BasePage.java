@@ -28,7 +28,7 @@ public class BasePage {
 	@FindBy (how = How.ID, using = "tsid-menuItems")
 	private WebElement menuOptionsWrapper;
 	
-	@FindBy (how = How.ID, using = "tabBar")
+	@FindBy (how = How.ID, using = "ext-gen213")
 	private WebElement tabsWrapperBar;
 		
 	public BasePage() {
