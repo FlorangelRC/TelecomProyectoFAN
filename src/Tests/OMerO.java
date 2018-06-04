@@ -80,10 +80,9 @@ public class OMerO extends TestBase {
 		List<WebElement> acc = driver.findElement(By.id("ext-gen15")).findElement(By.tagName("table")).findElement(By.tagName("thead")).findElements(By.tagName("td"));
 			if(acc.get(0).getText().contains("Action"))
 				acc.remove(0);
-				acc.remove(0);
 		System.out.println(acc.size());		
-		Assert.assertTrue(acc.get(0).getText().contains("Account Name"));
-		Assert.assertTrue(acc.get(1).getText().contains("Status"));
+		Assert.assertTrue(acc.get(2).getText().contains("Account Name"));
+		Assert.assertTrue(acc.get(3).getText().contains("Status"));
 		Boolean chk = false;
 		WebElement llsstt = driver.findElement(By.className("x-grid3-body")).findElement(By.tagName("div")).findElement(By.tagName("tbody")).findElement(By.tagName("tr"));
 		List<WebElement> list = llsstt.findElements(By.tagName("td"));
@@ -91,9 +90,11 @@ public class OMerO extends TestBase {
 				list.get(2).equals("AutomaOM");
 				chk = true;
 			}
-		Assert.assertTrue(chk);
-					
-		
+		Assert.assertTrue(chk);	
+		sleep(3000);
+		WebElement dele = driver.findElement(By.className("filterLinks")).findElements(By.tagName("a")).get(1);
+		dele.click();
+		try {driver.switchTo().alert().accept();}catch(org.openqa.selenium.NoAlertPresentException e) {}
 	}
 	
 }
