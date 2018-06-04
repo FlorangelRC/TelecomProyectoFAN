@@ -40,7 +40,7 @@ public class Marketing_Mattu extends TestBase{
 		mMarketing.cajonDeAplicaciones("Consola FAN");
 	}
 	
-	@AfterClass(alwaysRun=true)
+	//@AfterClass(alwaysRun=true)
 	public void tearDown() {
 		driver.close();
 	}
@@ -454,7 +454,8 @@ public class Marketing_Mattu extends TestBase{
 	@Test(groups = {"Marketing", "Ola1", "GestionDelSocioDeClubPersonal"}, priority = 8, dataProvider="MarketingCuentaConFraude")
 	public void TS98048_Generar_Caso_error_Fraude_Baja_CP(String sCuenta) throws IOException {
 		Marketing page = new Marketing(driver);
-		page.seleccionarCuentaMarketing(sCuenta, "Todas las cuentas");
+		//page.seleccionarCuentaMarketing(sCuenta, "Todas las cuentas");
+		page.seleccionarCuentaMarketing(sCuenta, "All");
 		mMarketing.clubPersonal("Baja");
 		mMarketing.sleepMedium(0);
 		WebElement wMessage = driver.findElement(By.cssSelector(".slds-form-element.vlc-flex.vlc-slds-text-block.vlc-slds-rte.ng-pristine.ng-valid.ng-scope"));
@@ -861,6 +862,60 @@ public class Marketing_Mattu extends TestBase{
 		Assert.assertTrue(driver.findElement(By.id("lea2_ileinner")).getText().equals("Name Last Name"));
 		
 		mMarketing.cajonDeAplicaciones("Consola FAN");
+	}
+	
+	//-------------------------------------------------------------------------------------------------
+	//TCC = 46
+	@Test(groups = {"Marketing", "Ola1", "CapacidadDeAdministrarLaSegmentaciónDeLosClientes"}, dataProvider = "MarketingCuentaNormal")
+	public void TS98035_Label_TyC_Alta_CP(String sCuenta) throws IOException {
+		mMarketing.seleccionarCuentaMarketing(sCuenta, "Vista Marketing");
+		mMarketing.estadoAltaBaja("Alta");
+		mMarketing.seleccionarCuenta("consumerAccounts");
+		driver.findElement(By.id("AltaClubPersonal_nextBtn")).click();
+		mMarketing.sleepShort(0);
+		Assert.assertTrue(driver.findElement(By.id("TxtBkTerminosCondiciones")).findElement(By.tagName("p")).getText().equals("Al presionar siguiente está aceptando los Términos y Condiciones del Programa"));
+	}
+	
+	//-------------------------------------------------------------------------------------------------
+	//TCC = 47
+	@Test(groups = {"Marketing", "Ola1", "CapacidadDeAdministrarLaSegmentaciónDeLosClientes"}, dataProvider = "MarketingCuentaNormal")
+	public void TS98034_Link_TyC_Alta_CP(String sCuenta) throws IOException {
+		mMarketing.seleccionarCuentaMarketing(sCuenta, "Vista Marketing");
+		mMarketing.estadoAltaBaja("Alta");
+		mMarketing.seleccionarCuenta("consumerAccounts");
+		driver.findElement(By.id("AltaClubPersonal_nextBtn")).click();
+		mMarketing.sleepShort(0);
+		Assert.assertTrue(driver.findElement(By.id("TxtBkTerminosCondiciones")).findElement(By.tagName("a")).isDisplayed());
+	}
+	
+	//-------------------------------------------------------------------------------------------------
+	//TCC = 48
+	@Test(groups = {"Marketing", "Ola1", "CapacidadDeAdministrarLaSegmentaciónDeLosClientes"}, dataProvider = "MarketingCuentaNormal")
+	public void TS90288_Eliminación_de_Campo_Segmento_Segment_C(String sCuenta) throws IOException {
+		mMarketing.seleccionarCuentaMarketing(sCuenta, "Vista Marketing");
+		CustomerCare cCC = new CustomerCare(driver);
+		cCC.selectMainTabByName(sCuenta);
+		BasePage cambioFrame=new BasePage();
+		mMarketing.sleepMedium(0);
+		driver.switchTo().defaultContent();
+		driver.switchTo().frame(cambioFrame.getFrameForElement(driver, By.className("detailList")));
+		List<WebElement> wTd = driver.findElement(By.className("detailList")).findElements(By.tagName("td"));
+		boolean bFound = false;
+		for (WebElement wAux : wTd) {
+			if (wAux.getText().equals("Segment__C")) {
+				System.out.println("wAux.getText: " + wAux.getText());
+				bFound = true;
+				break;
+			}
+		}
+		Assert.assertTrue(!bFound);
+	}
+	
+	//-------------------------------------------------------------------------------------------------
+	//TCC = 49
+	//@Test(groups = {"Marketing", "Ola1", "CapacidadDeAdministrarLaSegmentaciónDeLosClientes"}, dataProvider = "MarketingCuentaAtributosYExclusiones")
+	public void TS(String sCuenta) throws IOException {
+		mMarketing.seleccionarCuentaMarketing(sCuenta, "Vista Marketing");
 	}
 	
 	//-------------------------------------------------------------------------------------------------

@@ -18,6 +18,7 @@ import org.openqa.selenium.support.ui.Select;
 
 import com.sun.corba.se.pept.transport.Connection;
 
+import Tests.TestBase;
 import javafx.scene.control.ScrollToEvent;
 
 public class OMQPage extends BasePage {
@@ -74,7 +75,7 @@ public class OMQPage extends BasePage {
 	      	    driver.findElement(By.cssSelector(".slds-input.ng-pristine.ng-untouched.ng-valid")).sendKeys(PlandeServicio);		
 	      	  sleep(3000);
 	      	    		List<WebElement> agregar = driver.findElements(By.cssSelector(".slds-button.slds-button_neutral.cpq-add-button")); 
-	      	    			agregar.get(0).click();
+	      	    			agregar.get(1).click();
 	      	    			sleep(6000);
 			
 	      }
