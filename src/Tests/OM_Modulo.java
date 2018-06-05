@@ -31,6 +31,7 @@ import Pages.RegistroEventoMasivo;
 import Pages.SCP;
 import Pages.setConexion;
 
+
 public class OM_Modulo extends TestBase {
 private WebDriver driver;
 	
@@ -70,13 +71,25 @@ public void setUp() throws Exception {
 
 @Test(groups="OM")
 public void TS51856_CRM_OM_Ordenes_Cliente_Nuevo_Alta_de_linea_Sin_delivery_Sin_VAS_Paso_1 () throws InterruptedException {
+	OM pageOm=new OM(driver);
 	OMQPage OM=new OMQPage (driver);
-	OM.CrearOrden();
+	pageOm.crearOrden("LineasPlanConTarjeta");
+	assertTrue(driver.findElement(By.cssSelector(".noSecondHeader.pageType")).isDisplayed());
 	OM.getCPQ().click();
 	sleep(5000);
-	OM.colocarPlan("Plan Prepago Nacional");
+	OM.colocarPlan("Plan con Tarjeta");
 	OM.configuracion();
-	
+	sleep(5000);
+	driver.findElement(By.name("ta_submit_order")).click();
+	sleep(25000);
+	pageOm.cambiarVentanaNavegador(1);
+	sleep(2000);
+	driver.findElement(By.id("idlist")).click();
+	sleep(5000);
+	pageOm.cambiarVentanaNavegador(0);
+	sleep(12000);
+	pageOm.completarFlujoOrquestacion();
+
 	
 		
 	
