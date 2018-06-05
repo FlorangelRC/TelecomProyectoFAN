@@ -364,5 +364,16 @@ public class OM {
 			}
 		}
 	}
+	
+	public List<String> traerColumna(WebElement wBody, int iColumn) {
+		List<WebElement> wRows = wBody.findElements(By.tagName("tr"));
+		List<String> sColumn = new ArrayList<String>();
+		for(WebElement wAux : wRows) {
+			List<WebElement> wTd = wAux.findElements(By.tagName("td"));
+			sColumn.add(wTd.get(iColumn).getText());
+		}
+
+		return sColumn;
+	}
 
 }
