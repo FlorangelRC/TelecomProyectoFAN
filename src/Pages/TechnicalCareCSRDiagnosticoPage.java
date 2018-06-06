@@ -162,7 +162,6 @@ public class TechnicalCareCSRDiagnosticoPage extends BasePage{
 	    Accounts accPage = new Accounts(driver);
 	    sleep(8000);
 	    driver.switchTo().frame(accPage.getFrameForElement(driver, By.cssSelector(".console-card.active")));
-
 	    List<WebElement> asset=driver.findElements(By.cssSelector(".console-card.active"));
 	    for(WebElement a:asset) {
 	      
@@ -208,7 +207,7 @@ public class TechnicalCareCSRDiagnosticoPage extends BasePage{
 	        System.out.println(service.getText());
 	        if(service.getText().toLowerCase().contains(servicio.toLowerCase())) {
 	          ((JavascriptExecutor)driver).executeScript("window.scrollTo(0," + service.getLocation().y+")");
-	          sleep(1000);
+	          sleep(2000);
 	          service.findElement(By.className("slds-cell-shrink")).click();
 	          sleep(2000);
 	          try {
@@ -276,7 +275,7 @@ public class TechnicalCareCSRDiagnosticoPage extends BasePage{
 	              }
 	            }
 	          }
-	          }    
+	          }    	sleep(3000);
 	  }
 	
 ////////////////////////////////////VALIDAR SERVICIO////////////////////////////////////////////////////
@@ -351,7 +350,7 @@ public class TechnicalCareCSRDiagnosticoPage extends BasePage{
 	      		for (WebElement opt : getlistaDeInconvenientes()) {
 	      			if (opt.getText().equalsIgnoreCase(inconvenientName)) {
 	      				opt.click();
-	      				sleep(2000);
+	      				sleep(3000);
 	      				break;
 	        }
 	    
@@ -360,6 +359,7 @@ public class TechnicalCareCSRDiagnosticoPage extends BasePage{
 	
 
 	public boolean validarInconveniente(String inconvenientName) {
+			sleep(3000);
 			driver.switchTo().frame(getFrameForElement(driver, By.id("IssueSelectStep")));
 			for (WebElement opt : getlistaDeInconvenientes()) {
 				if(opt.getText().contains(inconvenientName)) {

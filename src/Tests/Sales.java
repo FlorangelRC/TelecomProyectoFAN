@@ -464,7 +464,7 @@ public class Sales extends TestBase {
 		sleep(10000);
 		page.obligarclick(driver.findElement(By.id("DeliveryMethodConfiguration_nextBtn")));
 		sleep(15000);
-		sb.Crear_DireccionEnvio("Buenos Aires","Vicente Lopez","falsa", "", "5846", "", "", "c5248aaa","01125348657","01125348658");
+		sb.Crear_DireccionEnvio("Buenos Aires","VICENTE LOPEZ","falsa", "", "5846", "", "", "c5248aaa","01125348657","01125348658");
 		sleep(12000);
 		/*page.obligarclick(driver.findElement(By.id("ICCDAssignment_nextBtn")));
 		sleep(10000);*/
@@ -1663,9 +1663,9 @@ public class Sales extends TestBase {
 		sb.continuar();
 		sleep(25000);
 		sb.Crear_DomicilioLegal("Buenos Aires", "Vicente Lopez", "falsa", "", "1000", "", "", "1549");
-		sleep(25000);
+		sleep(35000);
 		page.obligarclick(driver.findElement(By.id("LineAssignment_nextBtn")));
-		sleep(16000);
+		sleep(20000);
 		sb.elegirvalidacion("DOC");
 		sleep(5000);
 		driver.findElement(By.id("FileDocumentImage")).sendKeys("C:\\Users\\florangel\\Downloads\\arbolito.jpg");
@@ -1994,10 +1994,19 @@ public class Sales extends TestBase {
 	 @Test(groups = {"Sales", "AltaDeContacto","Ola1"}, priority=4,  dataProvider="SalesContactoSinCuenta")
 	  public void TS94734_Alta_de_Contacto_Persona_Fisica_Verificar_seleccion_de_localidad_existente(String sCuenta, String sDni) throws IOException{ 
 	    SalesBase SB = new SalesBase(driver); 
-	    SB.BuscarCuenta(DNI, sDni); 
-	    SB.acciondecontacto("nueva cuenta"); 
-	    boolean h = false; 
-	    sleep(5000); 
+	    boolean h = false;
+	    SB.BtnCrearNuevoCliente();
+		ContactSearch contact = new ContactSearch(driver);
+		try {Thread.sleep(10000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		driver.findElement(By.id("FirstName")).sendKeys("Malan");
+		driver.findElement(By.id("LastName")).sendKeys("Fazetto");
+		driver.findElement(By.id("Birthdate")).sendKeys("27/12/1999");
+		contact.sex("masculino");
+		driver.findElement(By.id("Contact_nextBtn")).click();
+		sleep(20000);
+		SB.elegirplan("Plan prepago nacional");
+		SB.continuar();
+		sleep(25000);
 	    Select regio = new Select (driver.findElement(By.id("State"))); 
 	    regio.selectByVisibleText("Buenos Aires");   
 	    driver.findElement(By.id("CityTypeAhead")).sendKeys("a"); 
@@ -2595,19 +2604,16 @@ public class Sales extends TestBase {
 		driver.switchTo().defaultContent();
 		
 		SB.elegirplan("Plan prepago nacional");
-		sleep(20000);
-		List<WebElement> cont = driver.findElements(By.cssSelector(".slds-button.slds-m-left--large.slds-button--brand.ta-button-brand"));
-			for(WebElement c : cont){
-				if(c.getText().equals("Continuar")){
-					c.click();
-				}
-			}
-		sleep(20000);			
+		SB.continuar();
+		sleep(25000);
+		SB.Crear_DomicilioLegal(provincia, localidad, "falsa", "", "1000", "", "", "1549");
+		sleep(25000);
 		WebElement sig = driver.findElement(By.id("LineAssignment_nextBtn"));
 		sig.click();
-		sleep(5000);
-		WebElement deliv = driver.findElement(By.id("DeliveryMethod"));
-		Assert.assertTrue(deliv.getText().equals("Delivery"));
+		sleep(12000);
+		Select deliv = new Select(driver.findElement(By.id("DeliveryMethod")));
+		System.out.println(deliv.getFirstSelectedOption());
+		Assert.assertTrue(deliv.getFirstSelectedOption().getText().equals("Delivery"));
 	}		
 	
 	@Test(groups={"Sales", "AltaDeCuenta","Ola1"}, dataProvider="SalesCuentaBolsa")  //si 215 213 078 135 094 114 119 118 157

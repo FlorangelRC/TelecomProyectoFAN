@@ -66,14 +66,14 @@ public class TechCareOla1A extends TestBase {
 	}
 	
 	
-	@AfterMethod(alwaysRun=true)
+	//@AfterMethod(alwaysRun=true)
 	public void after() {
 		CustomerCare cerrar = new CustomerCare(driver);
 	    cerrar.cerrarultimapestaña();
 	    sleep(2000);
 	}
 	
-	@AfterClass(alwaysRun=true)
+	//@AfterClass(alwaysRun=true)
 	public void tearDown() {
 		try {Thread.sleep(1000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 		CustomerCare cerrar = new CustomerCare(driver);
@@ -301,7 +301,7 @@ public class TechCareOla1A extends TestBase {
 		sleep(3000);
 		page.selectAccount(sCuenta);
 		driver.switchTo().defaultContent();
-		sleep(10000);
+		sleep(20000);
 		
 		page.clickOpcionEnAsset(sLinea, "mis servicios");
 		sleep(7000);
@@ -349,7 +349,7 @@ public class TechCareOla1A extends TestBase {
 		sleep(3000);
 		page.selectAccount(sCuenta);
 		driver.switchTo().defaultContent();
-		sleep(10000);
+		sleep(20000);
 		
 		page.clickOpcionEnAsset(sLinea, "mis servicios");
 		sleep(7000);
@@ -358,8 +358,10 @@ public class TechCareOla1A extends TestBase {
 		page.clickDiagnosticarServicio("sms","sms saliente");
 		sleep(5000);
 		Accounts accPage = new Accounts(driver);
+		sleep(5000);
 	    driver.switchTo().frame(accPage.getFrameForElement(driver, By.cssSelector(".imgItemContainer.ng-scope")));
-	    assertTrue(driver.findElements(By.cssSelector(".imgItemContainer.ng-scope")).get(1).getText().toLowerCase().contains("sms emisión a algún destino en particular"));
+		sleep(5000);
+	    assertTrue(driver.findElements(By.cssSelector(".imgItemContainer.ng-scope")).get(1).getText().toLowerCase().contains("SMS Emisión a algún destino en particular"));
 	}
 	
 	@Test(groups= {"TechnicalCare","SVA","Ola1"}, priority=3, dataProvider="Tech")
@@ -563,7 +565,7 @@ public class TechCareOla1A extends TestBase {
 		sleep(3000);
 		page.selectAccount(sCuenta);
 		driver.switchTo().defaultContent();
-		sleep(10000);
+		sleep(20000);
 		
 		page.clickOpcionEnAsset(sLinea, "mis servicios");
 		sleep(7000);
@@ -620,7 +622,7 @@ public class TechCareOla1A extends TestBase {
 		sleep(3000);
 		page.selectAccount(sCuenta);
 		driver.switchTo().defaultContent();
-		sleep(10000);
+		sleep(20000);
 		
 		page.clickOpcionEnAsset(sLinea, "mis servicios");
 		sleep(7000);
@@ -629,6 +631,7 @@ public class TechCareOla1A extends TestBase {
 		page.clickDiagnosticarServicio("SMS","sms saliente");
 		sleep(5000);
 		page.seleccionarRespuesta("sms emisión a algún destino en particular");
+		sleep(5000);
 	    page.BajaryContinuar();
 	    sleep(5000);
 	    page.seleccionarRespuesta("no");
