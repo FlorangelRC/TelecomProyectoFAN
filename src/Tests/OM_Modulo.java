@@ -64,7 +64,7 @@ public void setUp() throws Exception {
 	//@AfterClass(alwaysRun=true)
 	public void tearDown() {
 		sleep(2000);
-		driver.quit();
+		driver.quit(); 
 		sleep(1000);
 	}
 

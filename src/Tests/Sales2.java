@@ -37,7 +37,7 @@ import Pages.TechCare_Ola1;
 public class Sales2 extends TestBase{
 
 	SalesBase sb;
-	String DNI = "DNI";
+	String DNI = "DNI"; 
 	String provincia="Buenos Aires" ;
 	String localidad="Vicente Lopez";
 	protected  WebDriverWait wait;
