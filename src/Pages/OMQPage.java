@@ -73,9 +73,9 @@ public class OMQPage extends BasePage {
 	       driver.switchTo().defaultContent();
 	       sleep(6000);
 	      	    driver.findElement(By.cssSelector(".slds-input.ng-pristine.ng-untouched.ng-valid")).sendKeys(PlandeServicio);		
-	      	  sleep(3000);
+	      	  sleep(6000);
 	      	    		List<WebElement> agregar = driver.findElements(By.cssSelector(".slds-button.slds-button_neutral.cpq-add-button")); 
-	      	    			agregar.get(1).click();
+	      	    			agregar.get(0).click();
 	      	    			sleep(6000);
 			
 	      }
@@ -102,6 +102,7 @@ public class OMQPage extends BasePage {
 		Random r = new Random();
 		driver.switchTo().defaultContent();
 		NumerodeLinea.click();
+		//NumerodeLinea.sendKeys("3413103661");
 		NumerodeLinea.sendKeys("11" + r.nextInt(200000000) );
 		NumerodeLinea.submit();
 		sleep(8000);

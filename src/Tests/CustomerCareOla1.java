@@ -255,7 +255,7 @@ public class CustomerCareOla1 extends TestBase {
 		buscarYClick(driver.findElements(By.cssSelector(".slds-form-element__label.ng-binding")), "contains", "equipo facturado");
 		driver.findElement(By.id("Step3.5A-DeviceForLine_nextBtn")).click();
 		sleep(3000);
-		buscarYClick(driver.findElements(By.cssSelector(".slds-form-element__label.ng-binding.ng-scop")), "contains", "robo");
+		buscarYClick(driver.findElements(By.cssSelector(".slds-form-element__label.ng-binding.ng-scope")), "contains", "robo");
 		driver.findElement(By.id("Step4-SuspensionReason_nextBtn")).click();
 		sleep(3000);
 		List <WebElement> pais = driver.findElements(By.cssSelector(".slds-form-element__label.ng-binding.ng-scope"));
@@ -875,7 +875,7 @@ public class CustomerCareOla1 extends TestBase {
 	    Assert.assertTrue(num.toLowerCase().equals("n\u00famero"));
 	}
 	
-	@Test(groups = {"CustomerCare", "ProblemasConRecargas", "Ola1"}, dataProvider = "CustomerCuentaActiva")
+	@Test(groups = {"CustomerCare", "ProblemasConRecargas", "Ola1"}, dataProvider = "CustomerCuentaActiva")  //Rompe porque no ordena en orden alfabetico
 	public void TS69182_360_View_Visualizacion_de_gestiones_desde_el_asset_Estado_Ordenar_ascendente(String cCuenta) throws ParseException {
 		cc.elegirCuenta(cCuenta);
 		driver.switchTo().frame(cambioFrame(driver, By.className("card-top")));

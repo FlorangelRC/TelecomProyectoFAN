@@ -2,6 +2,7 @@ package Tests;
 
 import static org.testng.Assert.assertTrue;
 
+import org.junit.Assert;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.testng.annotations.BeforeClass;
@@ -54,15 +55,17 @@ public class GestionesOM extends TestBase {
 	public void TS_CRM_OM_Gestion_Alta_De_Linea() throws InterruptedException {
 		OM pageOm=new OM(driver);
 		OMQPage OM=new OMQPage (driver);
-		pageOm.crearOrden("LineasPlanConTarjeta");
+		pageOm.crearOrden("AutomaOM");
 		assertTrue(driver.findElement(By.cssSelector(".noSecondHeader.pageType")).isDisplayed());
+		pageOm.agregarGestion("Venta");
+		sleep(2000);
 		OM.getCPQ().click();
 		sleep(5000);
-		OM.colocarPlan("Plan con Tarjeta");
+		OM.colocarPlan("Plan Prepago Nacional");
 		OM.configuracion();
 		sleep(5000);
 		driver.findElement(By.name("ta_submit_order")).click();
-		sleep(25000);
+		sleep(35000);
 		pageOm.cambiarVentanaNavegador(1);
 		sleep(2000);
 		driver.findElement(By.id("idlist")).click();
@@ -70,6 +73,9 @@ public class GestionesOM extends TestBase {
 		pageOm.cambiarVentanaNavegador(0);
 		sleep(12000);
 		pageOm.completarFlujoOrquestacion();
+		sleep(5000);
+		pageOm.irAChangeToOrder();
+		
 	}
 
 }
