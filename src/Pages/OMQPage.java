@@ -18,6 +18,7 @@ import org.openqa.selenium.support.ui.Select;
 
 import com.sun.corba.se.pept.transport.Connection;
 
+import Tests.TestBase;
 import javafx.scene.control.ScrollToEvent;
 
 public class OMQPage extends BasePage {
