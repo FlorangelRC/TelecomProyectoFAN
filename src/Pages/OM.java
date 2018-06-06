@@ -201,8 +201,7 @@ public class OM {
 				cambiarVentanaNavegador(i);
 				i++;
 				sleep(5000);
-				List<WebElement> botones = driver
-						.findElements(By.cssSelector(".slds-button.slds-button--neutral.ng-binding.ng-scope"));
+				List<WebElement> botones = driver.findElements(By.cssSelector(".slds-button.slds-button--neutral.ng-binding.ng-scope"));
 				for (WebElement UnB : botones) {
 					if (UnB.getText().equals("Complete")) {
 						UnB.click();
