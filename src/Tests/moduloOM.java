@@ -251,7 +251,7 @@ public class moduloOM extends TestBase {
 		//Selecciono fecha
 		Calendar fecha=Calendar.getInstance();
 		
-		//driver.findElement(By.id("RequestDate")).sendKeys(fecha);
+		driver.findElement(By.id("RequestDate")).sendKeys("06-17-18");
 
 	}
 	
