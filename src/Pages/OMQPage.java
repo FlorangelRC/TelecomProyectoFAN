@@ -37,13 +37,13 @@ public class OMQPage extends BasePage {
 	@FindBy(xpath="//*[@id=\"js-cpq-product-cart-config-form\"]/div[1]/div/form/div[4]/div[1]/input")
 	private WebElement NumerodeLinea;
 	
-	@FindBy(xpath=".//*[@id='js-cpq-product-cart-config-form']/div[1]/div/form/div[14]/div/input")
+	@FindBy(xpath=".//*[@id='js-cpq-product-cart-config-form']/div[1]/div/form/div[13]/div/input") 
 	private WebElement ICCID;
 	
-	@FindBy(xpath=".//*[@id='js-cpq-product-cart-config-form']/div[1]/div/form/div[15]/div/input")
+	@FindBy(xpath=".//*[@id='js-cpq-product-cart-config-form']/div[1]/div/form/div[14]/div/input") 
 	private WebElement IMSI;
 	
-	@FindBy(xpath=".//*[@id='js-cpq-product-cart-config-form']/div[1]/div/form/div[16]/div/input")
+	@FindBy(xpath=".//*[@id='js-cpq-product-cart-config-form']/div[1]/div/form/div[15]/div/input")
 	private WebElement KI;
 	
 
@@ -89,7 +89,7 @@ public class OMQPage extends BasePage {
 		List<WebElement> list = driver.findElements(By.cssSelector(".slds-dropdown__item.cpq-item-actions-dropdown__item")); 
 		//System.out.println(list.size());
 		list.get(2).click();
-		agregarNumerodeLinea();
+		agregarNumerodeLinea();  
 		SimCard();
 		driver.findElement(By.id("-import-btn")).click();
 		sleep(5000);
