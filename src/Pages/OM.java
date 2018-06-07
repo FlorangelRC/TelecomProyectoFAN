@@ -29,6 +29,8 @@ import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.Select;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
+import com.gargoylesoftware.htmlunit.ElementNotFoundException;
+
 public class OM {
 
 	static WebDriver driver;
@@ -506,6 +508,23 @@ public class OM {
 				"//*[@id=\"tab-default-1\"]/div[1]/ng-include/div/div/div/div[4]/div[2]/div/ng-include/div/div[2]/ng-include/div/div[1]/div/div[2]/div[11]/div[2]/div/ul/li[3]/a/span"))
 				.click();
 
+	}
+	
+	// Cambia el número
+	public void cambiarNumero(String numero) {
+		WebElement cambiarNumero;
+		try {
+			cambiarNumero = driver.findElement(By.xpath("//*[@id=\"js-cpq-product-cart-config-form\"]/div[1]/div/form/div[2]/div[1]/input"));
+		}catch(org.openqa.selenium.NoSuchElementException e) {
+			cambiarNumero = driver.findElement(By.xpath("//*[@id=\"js-cpq-product-cart-config-form\"]/div[1]/div/form/div[17]/div[1]/input"));
+		};
+		cambiarNumero.clear();
+		cambiarNumero.sendKeys(numero);
+		// Close Sim Input
+		sleep(1000);
+		driver.findElement(By.xpath(
+				"/html/body/div[1]/div/ng-include/div/div[2]/div[2]/div[3]/div/div/ng-include/div/div[1]/div/button"))
+				.click();
 	}
 
 	// Edita el campo de Gestión

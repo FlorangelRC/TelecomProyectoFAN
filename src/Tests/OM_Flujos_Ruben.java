@@ -346,44 +346,19 @@ public class OM_Flujos_Ruben extends TestBase {
 		sleep(6000);
 		pageOm.irAChangeToOrder();
 		sleep(6000);
+
+		// Ingresar Fecha Futura
 		// driver.findElement(By.id("RequestDate")).sendKeys(pageOm.getFechaAvanzadaFormateada_MM_dd_yyyy());
-		driver.findElement(By.id("RequestDate")).sendKeys("09-13-2018");
+		driver.findElement(By.id("RequestDate")).sendKeys("09-22-2018");
 		sleep(2000);
 		driver.findElement(By.xpath("//*[@id=\"a1zc0000003XcLmAAK-1\"]/div[2]/div[3]/button")).click();
-
 		sleep(30000);
-
-		// Plan
-//		sleep(1000);
-//		driver.findElement(
-//				By.xpath("//*[@id=\"tab-default-1\"]/div[1]/ng-include/div/div/div/div[3]/div[1]/div[1]/button"))
-//				.click();
-//		// Sim
-//		sleep(1000);
-//		driver.findElement(By.xpath(
-//				"//*[@id=\"tab-default-1\"]/div[1]/ng-include/div/div/div/div[4]/div[2]/div/ng-include/div/div[2]/ng-include/div/div[1]/div/div[2]/div[11]/div[2]/button"))
-//				.click();
-//		// Sim Config
-//		sleep(1000);
-//		driver.findElement(By.xpath(
-//				"//*[@id=\"tab-default-1\"]/div[1]/ng-include/div/div/div/div[4]/div[2]/div/ng-include/div/div[2]/ng-include/div/div[1]/div/div[2]/div[11]/div[2]/div/ul/li[3]/a/span"))
-//				.click();
-		
 		pageOm.goToSimConfig();
-		
-		// Cambiar Numero
-		sleep(1000);
-		WebElement cambiarNumero = driver.findElement(
-				By.xpath("//*[@id=\"js-cpq-product-cart-config-form\"]/div[1]/div/form/div[17]/div[1]/input"));
-		cambiarNumero.clear();
-		cambiarNumero.sendKeys(pageOm.getRandomNumber(10));
-		// Close Sim Input
-		sleep(1000);
-		driver.findElement(By.xpath(
-				"/html/body/div[1]/div/ng-include/div/div[2]/div[2]/div[3]/div/div/ng-include/div/div[1]/div/button"))
-				.click();
+		sleep(2000);
+		pageOm.cambiarNumero(pageOm.getRandomNumber(10));
 
 		// View Record
+		sleep(2000);
 		driver.findElement(By.xpath("//*[@id=\"-import-btn\"]")).click();
 
 		sleep(8000);
@@ -395,6 +370,11 @@ public class OM_Flujos_Ruben extends TestBase {
 
 		sleep(8000);
 		pageOm.completarFlujoOrquestacion();
+
+		/*
+		 * Lanza error el último método por problemas en el ambiente An unknown error
+		 * has occurred. Please contact your system administrator for assistance.
+		 */
 
 	}
 
