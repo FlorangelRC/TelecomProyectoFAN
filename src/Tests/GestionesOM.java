@@ -2,6 +2,11 @@ package Tests;
 
 import static org.testng.Assert.assertTrue;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
+
 import org.junit.Assert;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
@@ -76,6 +81,19 @@ public class GestionesOM extends TestBase {
 		sleep(5000);
 		pageOm.irAChangeToOrder();
 		
+	}
+	
+	@Test(groups="OM", priority=1)
+	public void TS_CRM_Cambio_De_SimCard() throws InterruptedException {
+		TS_CRM_OM_Gestion_Alta_De_Linea();
+		Date date = new Date();
+		Calendar cal = Calendar.getInstance(); 
+        cal.setTime(date); 
+        cal.add(Calendar.MONTH, +1);
+        cal.add(Calendar.DATE, +1);
+        date = cal.getTime();
+		DateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy");
+		driver.findElement(By.id("RequestDate")).sendKeys(dateFormat.format(date));
 	}
 
 }

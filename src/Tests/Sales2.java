@@ -42,12 +42,12 @@ public class Sales2 extends TestBase{
 	String localidad="VICENTE LOPEZ";
 	protected  WebDriverWait wait;
 	
-	@AfterClass(alwaysRun=true)
+	//@AfterClass(alwaysRun=true)
 	public void tearDown() {
 		driver.quit();
 	}
 	
-	@AfterMethod(alwaysRun=true)
+	//@AfterMethod(alwaysRun=true)
 	public void deslogin() {
 		sleep(3000);
 		driver.get("https://crm--sit.cs14.my.salesforce.com/home/home.jsp?tsid=02u41000000QWha/");
@@ -437,16 +437,18 @@ public class Sales2 extends TestBase{
 		sleep(25000);
 		driver.findElement(By.cssSelector(".slds-button.slds-m-left--large.slds-button--brand.ta-button-brand")).click();
 		sleep(25000);
-		sb.Crear_DomicilioLegal("Buenos Aires","vicente lopez","falsa", "", "2154", "", "", "2453");
+		sb.Crear_DomicilioLegal( provincia, localidad,"falsa", "", "2154", "", "", "2453");
 		sleep(20000);
-		List <WebElement> num = driver.findElements(By.className("	slds-form-element__control"));
 		boolean a = false;
-		for (WebElement x : num) {
-			if (x.getText().contains("Nro. orden:")) {
-				a = true;
+		List <WebElement> ord = driver.findElements(By.cssSelector(".slds-form-element__control"));
+			for(WebElement o : ord){
+				if(o.getText().contains("Nro. orden:")){
+					o.isDisplayed();
+					a= true;
+				}
+					
 			}
-		}
-		Assert.assertTrue(a);
+			Assert.assertTrue(a);
 	}
 	
 	@Test(groups={"Sales", "AltaDeLinea", "Ola1"}, priority=8, dataProvider="SalesCuentaActiva" )  
@@ -1290,11 +1292,9 @@ public class Sales2 extends TestBase{
 		sb.Crear_DomicilioLegal( provincia, localidad,"falsa", "", "5846", "", "", "5248");
 		sleep(10000);
 		WebElement line = driver.findElement(By.id("tree0-node1__label"));
-		WebElement line2 = driver.findElement(By.id("tree0-node1-0"));
+		WebElement line2 = driver.findElement(By.id("id-0-0"));
 		boolean a = false;
 		boolean b = false;
-		System.out.println(line.getText());
-		System.out.println(line2.getText());
 		if (line.getText().toLowerCase().contains("lineas disponibles")) {
 			a = true;
 		}
@@ -1359,13 +1359,8 @@ public class Sales2 extends TestBase{
 		sleep(15000);
 		sb.elegirplan("Plan Prepago Nacional");
 		sleep(15000);
-		List <WebElement> plan = driver.findElements(By.cssSelector(".slds-button.cpq-item-has-children"));
-		for (WebElement x : plan) {
-			if (x.getText().toLowerCase().contains("Plan Prepago Nacional")) {
-				x.click();
-				break;
-			}
-		}
+		WebElement plan = driver.findElements(By.cssSelector(".slds-button.cpq-item-has-children")).get(0);
+		plan.click();
 		sleep(5000);
 		List <WebElement> sim = driver.findElements(By.className("cpq-item-no-children"));
 		boolean a = false;
