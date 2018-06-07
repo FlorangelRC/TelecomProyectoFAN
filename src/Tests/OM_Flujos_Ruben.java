@@ -343,4 +343,19 @@ public class OM_Flujos_Ruben extends TestBase {
 
 	}
 	
+	@Test(groups = "OM")
+	public void TS_CRM_OM_Gestion_Cambio_De_Numero() {
+		pageOm.selectVistaByVisibleText("RubenOM-Activated");
+		sleep(6000);
+		WebElement accountName = driver.findElement(By.xpath("//*[@id=\"801c0000000KzlI_SALES_ACCOUNT_NAME\"]/a"));
+		accountName.click();
+		sleep(6000);
+		pageOm.scrollDown(driver.findElement(By.xpath("//*[@id=\"head_01Bc0000002Frm3_ep_Account_View_j_id4\"]")));
+//		WebElement mostRecentAsset = pageOm.getMostRecentAsset();
+		
+	}
+	
+	
+	
+	
 }
