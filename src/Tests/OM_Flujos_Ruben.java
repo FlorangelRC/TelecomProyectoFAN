@@ -74,7 +74,7 @@ public class OM_Flujos_Ruben extends TestBase {
 		driver.quit();
 		sleep(1000);
 	}
-
+	
 	@Test(groups = "OM")
 	public void F_Alta_de_linea_en_salesforce() {
 
@@ -246,7 +246,14 @@ public class OM_Flujos_Ruben extends TestBase {
 		// DocumentationError #1
 		// Los elementos no aparecen en la lista como dice la documentación
 		sleep(5000);
+//		WebElement newOrderButton = wait.until(new Function<WebDriver, WebElement>(){
+//			public WebElement apply(WebDriver driver) {
+//				return driver.findElement(By.name("new"));
+//			}
+//		});
 		SalesBase sb = new SalesBase(driver);
+		
+//		driver.findElement(By.cssSelector(".slds-button.custom-view-dropdown-button.slds-button_neutral.slds-p-right_small.slds-picklist__label.cpq-base-header-picklist-label"))
 		sb.elegirplan(plan);
 
 		// Ingreso Linea
@@ -319,7 +326,7 @@ public class OM_Flujos_Ruben extends TestBase {
 
 		// Plan de orquestacion
 		driver.switchTo().window(currentWindowHandle);
-		sleep(20000);
+//		sleep(20000);
 		pageOm.completarFlujoOrquestacion();
 
 		WebElement viewOriginalOrderButton = driver

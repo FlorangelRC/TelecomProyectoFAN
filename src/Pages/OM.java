@@ -1,5 +1,7 @@
 package Pages;
 
+import static org.testng.Assert.assertTrue;
+
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
@@ -8,12 +10,14 @@ import java.util.Set;
 import java.util.Random;
 
 import org.openqa.selenium.Alert;
+import org.junit.Assert;
 import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.Keys;
 import org.openqa.selenium.NoAlertPresentException;
 import org.openqa.selenium.UnhandledAlertException;
 import org.openqa.selenium.By.ById;
+import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -153,12 +157,9 @@ public class OM {
 	public void crearOrden(String Cuenta) {
 
 		driver.findElement(By.name("new")).click();
-		try {
-			Thread.sleep(3000);
-		} catch (InterruptedException ex) {
-			Thread.currentThread().interrupt();
-		}
-		// crearCuentaOM(Cuenta);
+		try {Thread.sleep(3000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		//crearCuentaOM(Cuenta);
+		//buscarCuentaOMenOrden(Cuenta);
 		driver.findElement(By.id("accid")).sendKeys(Cuenta);
 		driver.findElement(By.className("dateFormat")).click();
 		Select Estado = new Select(driver.findElement(By.id("Status")));
@@ -169,11 +170,7 @@ public class OM {
 			Thread.currentThread().interrupt();
 		}
 		driver.findElement(By.name("save")).click();
-		try {
-			Thread.sleep(3000);
-		} catch (InterruptedException ex) {
-			Thread.currentThread().interrupt();
-		}
+		try {Thread.sleep(3000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();} 
 	}
 
 	/**
@@ -191,8 +188,9 @@ public class OM {
 			}
 
 		}
-
+		sleep(10000);
 		List<WebElement> cajas = driver.findElements(By.cssSelector(".item-label-container.item-header.item-failed"));
+		//cajas.addAll(driver.findElements(By.cssSelector(".item-label-container.item-header.item-fatally-failed")));
 		int i = 1;
 		while (cajas.size() > 0) {
 			for (WebElement UnaC : cajas) {
@@ -201,22 +199,32 @@ public class OM {
 				cambiarVentanaNavegador(i);
 				i++;
 				sleep(5000);
-				List<WebElement> botones = driver
-						.findElements(By.cssSelector(".slds-button.slds-button--neutral.ng-binding.ng-scope"));
+				List<WebElement> botones = driver.findElements(By.cssSelector(".slds-button.slds-button--neutral.ng-binding.ng-scope"));
 				for (WebElement UnB : botones) {
 					if (UnB.getText().equals("Complete")) {
+						UnB.click();
+						sleep(2000);
 						UnB.click();
 						break;
 					}
 				}
-				sleep(5000);
+				sleep(10000);
 				cambiarVentanaNavegador(0);
-				sleep(5000);
+				sleep(1000);
+				//closeAllOtherTabs();
+				sleep(15000);
 				break;
 			}
 			cajas = driver.findElements(By.cssSelector(".item-label-container.item-header.item-failed"));
-
+			//cajas.addAll(driver.findElements(By.cssSelector(".item-label-container.item-header.item-fatally-failed")));
+			
 		}
+		closeAllOtherTabs();
+		sleep(5000);
+		driver.findElement(By.className("submit-button")).click();
+		sleep(6000);
+		cambiarVentanaNavegador(1);
+		sleep(5000);
 		closeAllOtherTabs();
 	}
 
@@ -253,6 +261,45 @@ public class OM {
 
 	}
 
+	/**
+	 * Crea una orden desde la vista de todas las ordenes.
+	 */
+	public void buscarCuentaOMenOrden(String Cuenta) {
+		sleep(1000);
+		List<WebElement> buscarCuenta=driver.findElements(By.className("lookupIcon"));
+		for(WebElement op: buscarCuenta) {
+			if(op.getAttribute("alt").equalsIgnoreCase("Account Name Lookup (New Window)")) {
+				op.click();
+			}
+		}
+		sleep(3000);
+		cambiarVentanaNavegador(1);
+		sleep(1000);
+		
+		driver.switchTo().frame(driver.findElement(By.id("searchFrame")));
+		driver.findElement(By.id("lksrch")).sendKeys(Cuenta);
+		driver.findElement(By.name("go")).click();
+		sleep(4000);
+		driver.switchTo().defaultContent();
+		driver.switchTo().frame(driver.findElement(By.id("resultsFrame")));
+		int i = -1;
+		List<WebElement> cuentas = driver.findElement(By.tagName("table")).findElements(By.tagName("tr"));
+		cuentas.remove(0);
+		for (WebElement UnaC: cuentas) {
+			if(UnaC.findElement(By.tagName("th")).getText().equals(Cuenta)) {
+				i++;
+			}else {
+				System.out.println(UnaC.findElement(By.tagName("th")).getText());
+				break;
+			}
+		}
+		cuentas.get(i).findElement(By.tagName("th")).click();
+		sleep(5000);
+		cambiarVentanaNavegador(0);
+		driver.switchTo().defaultContent();
+		
+	}
+	
 	/**
 	 * Crea una vista desde la ventana "Ordenes"
 	 * 
@@ -363,6 +410,52 @@ public class OM {
 				e.printStackTrace();
 			}
 		}
+	}
+	
+	public void agregarGestion(String Gestion) {
+		boolean esta = false;
+		List<WebElement> campos = driver.findElement(By.className("detailList")).findElements(By.tagName("td"));
+		for (WebElement UnC : campos) {
+			if(esta == true) {
+				Actions action = new Actions(driver);
+				action.moveToElement(UnC).doubleClick().build().perform();
+				sleep(2000);
+			    Select gestiones = new Select(driver.findElement(By.tagName("select")));
+				gestiones.selectByVisibleText(Gestion);
+				break;
+			}
+			if (UnC.getText().equalsIgnoreCase("gestion")) {
+				esta = true;  
+			}
+		}
+		sleep(2000);
+		driver.findElement(By.id("topButtonRow")).findElement(By.tagName("input")).click();
+		sleep(3000);
+	}
+	
+	
+	public void irAChangeToOrder() {
+		driver.findElement(By.id("accid_ileinner")).findElement(By.tagName("a")).click();
+		sleep(10000);
+		Accounts accountPage = new Accounts(driver);
+		driver.switchTo().defaultContent(); 
+        driver.switchTo().frame(accountPage.getFrameForElement(driver, By.cssSelector(".panel.panel-default.panel-assets")));
+		List <WebElement> assets= driver.findElement(By.cssSelector(".panel.panel-default.panel-assets")).findElements(By.cssSelector(".root-asset.ng-scope"));
+		assets.get(assets.size()-1).findElement(By.className("p-check")).click();
+		driver.findElement(By.className("asset-action")).findElements(By.cssSelector(".btn.btn-default")).get(1).click();;
+		
+	}
+	
+	
+	public List<String> traerColumna(WebElement wBody, int iColumn) {
+		List<WebElement> wRows = wBody.findElements(By.tagName("tr"));
+		List<String> sColumn = new ArrayList<String>();
+		for(WebElement wAux : wRows) {
+			List<WebElement> wTd = wAux.findElements(By.tagName("td"));
+			sColumn.add(wTd.get(iColumn).getText());
+		}
+
+		return sColumn;
 	}
 
 }
