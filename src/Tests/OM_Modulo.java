@@ -43,7 +43,7 @@ public void init() throws Exception
 		//Usuario Victor OM
 		login(driver, "https://crm--sit.cs14.my.salesforce.com/", "U585991", "Testa10k");
 		sleep(5000);	
-	}
+	} 
 
 @BeforeMethod(alwaysRun=true)
 public void setUp() throws Exception {
