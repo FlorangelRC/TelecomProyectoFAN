@@ -439,8 +439,6 @@ public class OM {
 	
 	
 	public void irAChangeToOrder() {
-		driver.findElement(By.id("accid_ileinner")).findElement(By.tagName("a")).click();
-		sleep(10000);
 		Accounts accountPage = new Accounts(driver);
 		driver.switchTo().defaultContent(); 
         driver.switchTo().frame(accountPage.getFrameForElement(driver, By.cssSelector(".panel.panel-default.panel-assets")));
