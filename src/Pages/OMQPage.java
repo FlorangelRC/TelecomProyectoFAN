@@ -37,13 +37,13 @@ public class OMQPage extends BasePage {
 	@FindBy(xpath="//*[@id=\"js-cpq-product-cart-config-form\"]/div[1]/div/form/div[4]/div[1]/input")
 	private WebElement NumerodeLinea;
 	
-	@FindBy(xpath=".//*[@id='js-cpq-product-cart-config-form']/div[1]/div/form/div[14]/div/input")
+	@FindBy(xpath=".//*[@id='js-cpq-product-cart-config-form']/div[1]/div/form/div[13]/div/input") 
 	private WebElement ICCID;
 	
-	@FindBy(xpath=".//*[@id='js-cpq-product-cart-config-form']/div[1]/div/form/div[15]/div/input")
+	@FindBy(xpath=".//*[@id='js-cpq-product-cart-config-form']/div[1]/div/form/div[14]/div/input") 
 	private WebElement IMSI;
 	
-	@FindBy(xpath=".//*[@id='js-cpq-product-cart-config-form']/div[1]/div/form/div[16]/div/input")
+	@FindBy(xpath=".//*[@id='js-cpq-product-cart-config-form']/div[1]/div/form/div[15]/div/input")
 	private WebElement KI;
 	
 
@@ -73,9 +73,9 @@ public class OMQPage extends BasePage {
 	       driver.switchTo().defaultContent();
 	       sleep(6000);
 	      	    driver.findElement(By.cssSelector(".slds-input.ng-pristine.ng-untouched.ng-valid")).sendKeys(PlandeServicio);		
-	      	  sleep(3000);
+	      	  sleep(6000);
 	      	    		List<WebElement> agregar = driver.findElements(By.cssSelector(".slds-button.slds-button_neutral.cpq-add-button")); 
-	      	    			agregar.get(1).click();
+	      	    			agregar.get(0).click();
 	      	    			sleep(6000);
 			
 	      }
@@ -89,7 +89,7 @@ public class OMQPage extends BasePage {
 		List<WebElement> list = driver.findElements(By.cssSelector(".slds-dropdown__item.cpq-item-actions-dropdown__item")); 
 		//System.out.println(list.size());
 		list.get(2).click();
-		agregarNumerodeLinea();
+		agregarNumerodeLinea();  
 		SimCard();
 		driver.findElement(By.id("-import-btn")).click();
 		sleep(5000);
@@ -102,6 +102,7 @@ public class OMQPage extends BasePage {
 		Random r = new Random();
 		driver.switchTo().defaultContent();
 		NumerodeLinea.click();
+		//NumerodeLinea.sendKeys("3413103661");
 		NumerodeLinea.sendKeys("11" + r.nextInt(200000000) );
 		NumerodeLinea.submit();
 		sleep(8000);

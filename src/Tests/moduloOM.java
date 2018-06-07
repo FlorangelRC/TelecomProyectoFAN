@@ -5,6 +5,7 @@ import static org.testng.Assert.assertEquals;
 import static org.testng.Assert.assertTrue;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 
 import org.openqa.selenium.By;
@@ -217,6 +218,41 @@ public class moduloOM extends TestBase {
 					assertTrue(pageOM.scrollDownInAView(ultimaOrden));
 		}
 	
+	}
+	
+	@Test
+	public void cambioDeTitularidad() {
+		
+		//Mientras, seleccion de vista
+		Select allOrder=new Select(driver.findElement(By.id("fcf")));
+		allOrder.selectByVisibleText("AlmerOM");
+		sleep(1000);
+		try {driver.findElement(By.name("go")).click();}catch(org.openqa.selenium.NoSuchElementException e) {}
+		sleep(3000);
+
+		//Selecciona la primera cuenta de la lista en la vista seleccionada
+		WebElement primeraCuenta=driver.findElement(By.cssSelector(".x-grid3-col.x-grid3-cell.x-grid3-td-SALES_ACCOUNT_NAME"));
+		primeraCuenta.findElement(By.tagName("div")).findElement(By.tagName("a")).click();
+		sleep(5000);
+		
+		BasePage frame=new BasePage(driver);
+		driver.switchTo().frame(frame.getFrameForElement(driver, By.cssSelector(".panel.panel-default.panel-assets")));
+		
+		//Selecciona el ultimo asset
+		List <WebElement> assets= driver.findElement(By.cssSelector(".panel.panel-default.panel-assets")).findElements(By.cssSelector(".root-asset.ng-scope"));
+		assets.get(assets.size()-1).findElement(By.className("p-check")).click();
+		
+		//click en boton
+		WebElement changeToOrder=driver.findElement(By.className("asset-action")).findElement(By.xpath("//button[2]"));
+		changeToOrder.click();
+		sleep(3000);
+		driver.switchTo().defaultContent();
+		
+		//Selecciono fecha
+		Calendar fecha=Calendar.getInstance();
+		
+		driver.findElement(By.id("RequestDate")).sendKeys("06-17-18");
+
 	}
 	
 	

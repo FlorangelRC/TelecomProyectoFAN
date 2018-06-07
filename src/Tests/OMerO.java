@@ -97,4 +97,48 @@ public class OMerO extends TestBase {
 		try {driver.switchTo().alert().accept();}catch(org.openqa.selenium.NoAlertPresentException e) {}
 	}
 	
+	@Test (groups = "OM")
+	public void TS6722_OM_Ordenes_Vista_Configuración_Cargar_Vista(){
+		driver.findElement(By.className("fFooter")).click();
+		sleep(5000);
+		driver.findElement(By.id("fname")).sendKeys("CambiodeVista");
+		Select env = new Select (driver.findElement(By.id("colselector_select_1")));
+		env.selectByVisibleText("Order Number");
+		driver.findElement(By.id("colselector_select_0_left")).click();
+		sleep(2000);
+		env.selectByVisibleText("Order Start Date");
+		driver.findElement(By.id("colselector_select_0_left")).click();
+		sleep(2000);
+		env.selectByVisibleText("Order Amount");
+		driver.findElement(By.id("colselector_select_0_left")).click();
+		sleep(2000);
+		env.selectByVisibleText("Contract Number");
+		driver.findElement(By.id("colselector_select_0_left")).click();
+		sleep(3000);	
+		Select field = new Select (driver.findElement(By.id("fcol1")));
+		field.selectByVisibleText("Account Name");
+		Select oper = new Select (driver.findElement(By.id("fop1")));
+		oper.selectByVisibleText("equals");
+		driver.findElement(By.id("fval1")).sendKeys("AutomaOM");
+		WebElement a = driver.findElement(By.cssSelector(".pbButtonb")).findElement(By.tagName("input"));
+		a.click();
+		sleep(5000);
+		om.selectVistaByVisibleText("All");
+		sleep(5000);
+		om.selectVistaByVisibleText("CambiodeVista");
+		sleep(5000);
+		List<WebElement> acc = driver.findElement(By.id("ext-gen15")).findElement(By.tagName("table")).findElement(By.tagName("thead")).findElements(By.tagName("td"));
+			if(acc.get(0).getText().contains("Action"))
+				acc.remove(0);
+		System.out.println(acc.size());		
+		Assert.assertTrue(acc.get(2).getText().contains("Account Name"));
+		Assert.assertTrue(acc.get(3).getText().contains("Status"));
+	}
+	
+	@Test (groups = "OM")
+	public void TS_OM_Cambio_de_Numero(){
+		
+		
+	}
+	
 }
