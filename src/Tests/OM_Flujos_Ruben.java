@@ -1,5 +1,6 @@
 package Tests;
 
+import java.util.Date;
 import java.util.concurrent.TimeUnit;
 
 import org.openqa.selenium.By;
@@ -335,18 +336,65 @@ public class OM_Flujos_Ruben extends TestBase {
 
 	@Test(groups = "OM")
 	public void TS_CRM_OM_Gestion_Cambio_De_Numero() {
+
+		String gestion = "Cambio de número";
+
 		pageOm.selectVistaByVisibleText("RubenOM-Activated");
 		sleep(6000);
 		WebElement accountName = driver.findElement(By.xpath("//*[@id=\"801c0000000KzlI_SALES_ACCOUNT_NAME\"]/a"));
 		accountName.click();
 		sleep(6000);
-//		pageOm.scrollDown(driver.findElement(By.xpath("//*[@id=\"head_01Bc0000002Frm3_ep_Account_View_j_id4\"]")));
 		pageOm.irAChangeToOrder();
 		sleep(6000);
-		driver.findElement(By.className("input-group")).sendKeys(pageOm.fechaAvanzada().toString());
-		sleep(12000);
-		driver.findElement(By.cssSelector(".form-control btn.btn-primary.ng-binding"));
+		// driver.findElement(By.id("RequestDate")).sendKeys(pageOm.getFechaAvanzadaFormateada_MM_dd_yyyy());
+		driver.findElement(By.id("RequestDate")).sendKeys("09-13-2018");
+		sleep(2000);
+		driver.findElement(By.xpath("//*[@id=\"a1zc0000003XcLmAAK-1\"]/div[2]/div[3]/button")).click();
+
+		sleep(30000);
+
+		// Plan
+//		sleep(1000);
+//		driver.findElement(
+//				By.xpath("//*[@id=\"tab-default-1\"]/div[1]/ng-include/div/div/div/div[3]/div[1]/div[1]/button"))
+//				.click();
+//		// Sim
+//		sleep(1000);
+//		driver.findElement(By.xpath(
+//				"//*[@id=\"tab-default-1\"]/div[1]/ng-include/div/div/div/div[4]/div[2]/div/ng-include/div/div[2]/ng-include/div/div[1]/div/div[2]/div[11]/div[2]/button"))
+//				.click();
+//		// Sim Config
+//		sleep(1000);
+//		driver.findElement(By.xpath(
+//				"//*[@id=\"tab-default-1\"]/div[1]/ng-include/div/div/div/div[4]/div[2]/div/ng-include/div/div[2]/ng-include/div/div[1]/div/div[2]/div[11]/div[2]/div/ul/li[3]/a/span"))
+//				.click();
 		
+		pageOm.goToSimConfig();
+		
+		// Cambiar Numero
+		sleep(1000);
+		WebElement cambiarNumero = driver.findElement(
+				By.xpath("//*[@id=\"js-cpq-product-cart-config-form\"]/div[1]/div/form/div[17]/div[1]/input"));
+		cambiarNumero.clear();
+		cambiarNumero.sendKeys(pageOm.getRandomNumber(10));
+		// Close Sim Input
+		sleep(1000);
+		driver.findElement(By.xpath(
+				"/html/body/div[1]/div/ng-include/div/div[2]/div[2]/div[3]/div/div/ng-include/div/div[1]/div/button"))
+				.click();
+
+		// View Record
+		driver.findElement(By.xpath("//*[@id=\"-import-btn\"]")).click();
+
+		sleep(8000);
+		pageOm.setGestionField(gestion);
+
+		// Descomponer Orden
+		sleep(10000);
+		driver.findElement(By.name("ta_submit_order")).click();
+
+		sleep(8000);
+		pageOm.completarFlujoOrquestacion();
 
 	}
 
