@@ -3,11 +3,13 @@ package Pages;
 import static org.testng.Assert.assertTrue;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Iterator;
 import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.Set;
 import java.util.Random;
+import java.util.Date;
 
 import org.openqa.selenium.Alert;
 import org.junit.Assert;
@@ -23,6 +25,8 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.Select;
+
+
 
 public class OM {
 
@@ -398,7 +402,7 @@ public class OM {
 	public void eliminarVista() {
 		try {
 			driver.findElement(By.name("delID")).click();
-			Alert confirmDelete = driver.switchTo().alert();
+			Alert confirmDelete = driver.switchTo().alert();  
 			confirmDelete.accept();
 			// sleep(5000);
 		} catch (UnhandledAlertException f) {
@@ -456,6 +460,17 @@ public class OM {
 		}
 
 		return sColumn;
+	}
+	
+	public Date fechaAvanzada() {
+		Date date = new Date();
+		Calendar cal = Calendar.getInstance(); 
+        cal.setTime(date); 
+        cal.add(Calendar.MONTH, +1);
+        cal.add(Calendar.DATE, +1);
+        date = cal.getTime();
+        return(date);
+		
 	}
 
 }
