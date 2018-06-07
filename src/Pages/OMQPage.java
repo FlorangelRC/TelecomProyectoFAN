@@ -38,6 +38,7 @@ public class OMQPage extends BasePage {
 	private WebElement NumerodeLinea;
 	
 	@FindBy(xpath=".//*[@id='js-cpq-product-cart-config-form']/div[1]/div/form/div[14]/div/input")
+									//.//*[@id='js-cpq-product-cart-config-form']/div[1]/div/form/div[14]/div/input
 	private WebElement ICCID;
 	
 	@FindBy(xpath=".//*[@id='js-cpq-product-cart-config-form']/div[1]/div/form/div[15]/div/input")
