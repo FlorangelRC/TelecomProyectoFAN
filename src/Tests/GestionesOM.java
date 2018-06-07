@@ -2,6 +2,12 @@ package Tests;
 
 import static org.testng.Assert.assertTrue;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
+
+import org.junit.Assert;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.testng.annotations.BeforeClass;
@@ -54,15 +60,17 @@ public class GestionesOM extends TestBase {
 	public void TS_CRM_OM_Gestion_Alta_De_Linea() throws InterruptedException {
 		OM pageOm=new OM(driver);
 		OMQPage OM=new OMQPage (driver);
-		pageOm.crearOrden("LineasPlanConTarjeta");
+		pageOm.crearOrden("AutomaOM");
 		assertTrue(driver.findElement(By.cssSelector(".noSecondHeader.pageType")).isDisplayed());
+		pageOm.agregarGestion("Venta");
+		sleep(2000);
 		OM.getCPQ().click();
 		sleep(5000);
-		OM.colocarPlan("Plan con Tarjeta");
+		OM.colocarPlan("Plan Prepago Nacional");
 		OM.configuracion();
 		sleep(5000);
 		driver.findElement(By.name("ta_submit_order")).click();
-		sleep(25000);
+		sleep(35000);
 		pageOm.cambiarVentanaNavegador(1);
 		sleep(2000);
 		driver.findElement(By.id("idlist")).click();
@@ -70,6 +78,22 @@ public class GestionesOM extends TestBase {
 		pageOm.cambiarVentanaNavegador(0);
 		sleep(12000);
 		pageOm.completarFlujoOrquestacion();
+		sleep(5000);
+		pageOm.irAChangeToOrder();
+		
+	}
+	
+	@Test(groups="OM", priority=1)
+	public void TS_CRM_Cambio_De_SimCard() throws InterruptedException {
+		TS_CRM_OM_Gestion_Alta_De_Linea();
+		Date date = new Date();
+		Calendar cal = Calendar.getInstance(); 
+        cal.setTime(date); 
+        cal.add(Calendar.MONTH, +1);
+        cal.add(Calendar.DATE, +1);
+        date = cal.getTime();
+		DateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy");
+		driver.findElement(By.id("RequestDate")).sendKeys(dateFormat.format(date));
 	}
 
 }
