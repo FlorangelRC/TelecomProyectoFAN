@@ -472,5 +472,39 @@ public class OM {
         return(date);
 		
 	}
+	
+public void deleteOrdersNoActivated(String Vista) {
+		
+		Select allOrder=new Select(driver.findElement(By.id("fcf")));
+		allOrder.selectByVisibleText(Vista);
+		sleep(1000);
+		try {driver.findElement(By.name("go")).click();}catch(org.openqa.selenium.NoSuchElementException e) {}
+		sleep(3000);
+		
+		//Solo para listar la cantidad de Ordenes que hay
+		List<WebElement> listadoDeOrdenes=driver.findElement(By.className("x-panel-bwrap")).findElement(By.className("x-grid3-body")).findElements(By.className("x-grid3-row"));
+		listadoDeOrdenes.add(driver.findElement(By.className("x-panel-bwrap")).findElement(By.className("x-grid3-body")).findElement(By.cssSelector(".x-grid3-row.x-grid3-row-first")));
+		listadoDeOrdenes.add(driver.findElement(By.className("x-panel-bwrap")).findElement(By.className("x-grid3-body")).findElement(By.cssSelector(".x-grid3-row.x-grid3-row-last")));
+		
+		//System.out.println("aqui: "+listadoDeOrdenes.get(0).getText());
+		int i=0;
+		System.out.println("Cantidad de Ordenes: "+listadoDeOrdenes.size());
+		while(i<=listadoDeOrdenes.size()-2){ //OJO Aca con el 2 se hizo para dos elementos fantasmas.
+			System.out.println("ejecucion: "+i);
+			WebElement ordenes=driver.findElement(By.className("x-panel-bwrap")).findElement(By.className("x-grid3-body")).findElements(By.tagName("div")).get(0);
+			try {
+			//Eliminar
+			ordenes.findElement(By.xpath("//table/tbody/tr/td[2]/div/a[2]")).click();
+			sleep(1000);
+			}catch(org.openqa.selenium.NoSuchElementException e) {}
+			try {
+				driver.switchTo().alert().accept();
+				driver.switchTo().defaultContent();
+			}catch(org.openqa.selenium.NoAlertPresentException e) {}
+		i++;
+		sleep(3000);
+		}
+		
+	}
 
 }
