@@ -349,7 +349,7 @@ public class OM_Flujos_Ruben extends TestBase {
 
 		// Ingresar Fecha Futura
 		// driver.findElement(By.id("RequestDate")).sendKeys(pageOm.getFechaAvanzadaFormateada_MM_dd_yyyy());
-		driver.findElement(By.id("RequestDate")).sendKeys("09-22-2018");
+		driver.findElement(By.id("RequestDate")).sendKeys("09-24-2018");
 		sleep(2000);
 		driver.findElement(By.xpath("//*[@id=\"a1zc0000003XcLmAAK-1\"]/div[2]/div[3]/button")).click();
 		sleep(30000);
