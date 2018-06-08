@@ -52,6 +52,10 @@ public class OM {
 
 	@FindBy(id = "fileinput")
 	private WebElement adjuntar;
+	
+	
+	@FindBy(css=".form-control.btn.btn-primary.ng-binding")
+	private WebElement Next;
 
 	// ********************************METODOS*******************************************************//
 	public void sleep(long s) {
@@ -394,7 +398,7 @@ public class OM {
 		try {
 			driver.findElement(By.name("go")).click();
 		} catch (org.openqa.selenium.NoSuchElementException e) {
-			System.out.println("Go Button not found exception");
+			//System.out.println("Go Button not found exception");
 		}
 	}
 
@@ -462,7 +466,7 @@ public class OM {
 		return sColumn;
 	}
 	
-	public Date fechaAvanzada() {
+	/*public Date fechaAvanzada() {
 		Date date = new Date();
 		Calendar cal = Calendar.getInstance(); 
         cal.setTime(date); 
@@ -470,7 +474,20 @@ public class OM {
         cal.add(Calendar.DATE, +1);
         date = cal.getTime();
         return(date);
+       		
+	}*/
+	public void fechaAvanzada() {
+		//Accounts accountPage = new Accounts(driver);
+		/*DateFormat dateFormat = new SimpleDateFormat("MM-dd-yyyy");
+		driver.findElement(By.id("RequestDate")).sendKeys(dateFormat.format(om.fechaAvanzada()));*/
+		driver.findElement(By.id("RequestDate")).sendKeys("09-11-2019");
+		driver.findElement(By.cssSelector(".form-control.btn.btn-primary.ng-binding")).click();
+		sleep(15000);
 		
+	}
+	
+	public WebElement getNext() {
+		return Next;
 	}
 
 }

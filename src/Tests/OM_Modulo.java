@@ -4,6 +4,8 @@ import org.testng.annotations.BeforeClass;
 import static org.testng.Assert.assertEquals;
 import static org.testng.Assert.assertTrue;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
@@ -51,7 +53,7 @@ public void init() throws Exception
 		//Usuario Victor OM
 		login(driver, "https://crm--sit.cs14.my.salesforce.com/", "U585991", "Testa10k");
 		sleep(5000);	
-	} 
+	}
 
 @BeforeMethod(alwaysRun=true)
 public void setUp() throws Exception {
@@ -103,11 +105,9 @@ public void TS102205_CRM_OM_Ola_2_Ordenes_Cliente_existente_Alta_de_linea_con_1_
 
 	@Test(groups="OM")
 	public void TS102205_CRM_OM_Ola_2_Ordenes_Cliente_existente_Alta_de_linea_con_1_pack_Plan_con_tarjeta_Sin_delivery_Sin_VAS_Paso_0() {
-				//Mientras, seleccion de vista
-				Select allOrder=new Select(driver.findElement(By.id("fcf")));
-				allOrder.selectByVisibleText("Quelys");
-				sleep(1000);
-				try {driver.findElement(By.name("go")).click();}catch(org.openqa.selenium.NoSuchElementException e) {}
+				OM pageOm=new OM(driver);
+				OMQPage OM=new OMQPage (driver);
+				pageOm.selectVistaByVisibleText("Quelys");
 				sleep(3000);
 
 				//Selecciona la primera cuenta de la lista en la vista seleccionada
@@ -125,8 +125,14 @@ public void TS102205_CRM_OM_Ola_2_Ordenes_Cliente_existente_Alta_de_linea_con_1_
 				//click en boton
 				WebElement changeToOrder=driver.findElement(By.className("asset-action")).findElement(By.xpath("//button[2]"));
 				changeToOrder.click();
-				sleep(3000);
+				sleep(8000);
 				driver.switchTo().defaultContent();
+				
+				//fecha avanzada
+				pageOm.fechaAvanzada();
+				//driver.findElement(By.id("RequestDate")).sendKeys(dateFormat.format(pageOm.fechaAvanzada()));
+				OM.agregarPack();
+				
 		
 	}
 }

@@ -23,6 +23,8 @@ import javafx.scene.control.ScrollToEvent;
 
 public class OMQPage extends BasePage {
 
+	private static final String pDatos = null;
+
 	final WebDriver driver;
 	
 	@FindBy(xpath=".//*[@id='hotlist']/table/tbody/tr/td[2]/input")
@@ -46,6 +48,11 @@ public class OMQPage extends BasePage {
 	
 	@FindBy(xpath=".//*[@id='js-cpq-product-cart-config-form']/div[1]/div/form/div[16]/div/input")
 	private WebElement KI;
+	
+
+	
+
+
 	
 
 
@@ -140,6 +147,28 @@ public class OMQPage extends BasePage {
 		
 	}
 	
+
+	
+	public void agregarPack() {
+		sleep(8000);
+		driver.findElement(By.cssSelector(".slds-button.cpq-item-has-children")).click();
+		List<WebElement> list1 = driver.findElements(By.xpath("//*[@class='cpq-item-product-child-level-1 cpq-item-child-product-name-wrapper']//*[@class='slds-button slds-button_icon-small']"));
+		list1.get(3).click();
+		sleep(8000);
+		List<WebElement> pDatos = driver.findElements(By.xpath("//*[@class='cpq-item-product-child-level-2 cpq-item-child-product-name-wrapper']//*[@class='slds-button slds-button_icon-small']"));
+		((JavascriptExecutor)driver).executeScript("window.scrollTo(0,"+driver.findElement(By.xpath("//*[@class='cpq-item-product-child-level-2 cpq-item-child-product-name-wrapper']//*[@class='slds-button slds-button_icon-small']")).getLocation().y+")");
+		//((JavascriptExecutor)driver).executeScript("window.scrollTo(0,"+pDatos.getLocation().y+")");
+		
+		//scrollToElement(pDatos);
+		pDatos.get(2).click();
+			
+			
+		//                          .//*[@class='slds-button slds-button_icon-small']
+		//*[@class='cpq-item-product-child-level-1 cpq-item-child-product-name-wrapper']//*[@class='slds-button slds-button_icon-small']
+		
+		
+	}
+	
 			
 		
 
@@ -153,10 +182,19 @@ public class OMQPage extends BasePage {
 		return CPQ;
 	}
 	
-	public void scrollToElement(WebElement element) {
+	public void scrollToElement(List<WebElement> pDatos2) {
 		((JavascriptExecutor)driver)
-	        .executeScript("arguments[0].scrollIntoView();", element);
+	        .executeScript("arguments[0].scrollIntoView();", pDatos2);
 	  }
+	
+
+
+
+public void scrollToElement(WebElement element) {
+	((JavascriptExecutor)driver)
+    .executeScript("arguments[0].scrollIntoView();", element);
 
 }
+}
+
 
