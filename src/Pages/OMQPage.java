@@ -123,12 +123,15 @@ public class OMQPage extends BasePage {
 		sleep(3000);
 		 ((JavascriptExecutor)driver).executeScript("window.scrollTo(0,"+driver.findElement(By.className("slds-section")).getLocation().y+" )");
 		 ICCID.click();
+		 ICCID.clear();
 		 ICCID.sendKeys(""+r.nextInt(200000));
 		 sleep(2000);
 		 IMSI.click();
+		 IMSI.clear();
 		 IMSI.sendKeys(""+r.nextInt(200000));
 		 sleep(2000);
 		 KI.click();
+		 KI.clear();
 		 KI.sendKeys(""+r.nextInt(200000));
 		 KI.submit();
 		sleep(5000);
