@@ -157,17 +157,13 @@ public class OMQPage extends BasePage {
 		sleep(8000);
 		List<WebElement> pDatos = driver.findElements(By.xpath("//*[@class='cpq-item-product-child-level-2 cpq-item-child-product-name-wrapper']//*[@class='slds-button slds-button_icon-small']"));
 		((JavascriptExecutor)driver).executeScript("window.scrollTo(0,"+driver.findElement(By.xpath("//*[@class='cpq-item-product-child-level-2 cpq-item-child-product-name-wrapper']//*[@class='slds-button slds-button_icon-small']")).getLocation().y+")");
-		//((JavascriptExecutor)driver).executeScript("window.scrollTo(0,"+pDatos.getLocation().y+")");
-		
-		//scrollToElement(pDatos);
 		pDatos.get(2).click();
-			
-			
-		//                          .//*[@class='slds-button slds-button_icon-small']
-		//*[@class='cpq-item-product-child-level-1 cpq-item-child-product-name-wrapper']//*[@class='slds-button slds-button_icon-small']
-		
+		List<WebElement>add=driver.findElements(By.xpath("//*[@id=\"tab-default-1\"]//div/ng-include/div//div[2]/div[11]"));
+		((JavascriptExecutor)driver).executeScript("window.scrollTo(0,"+driver.findElement(By.xpath("//*[@id=\\\"tab-default-1\\\"]//div/ng-include/div//div[2]/div[11]")).getLocation().y+")");
+		add.get(11).click();
 		
 	}
+	
 	
 			
 		
