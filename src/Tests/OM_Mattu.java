@@ -51,7 +51,7 @@ public class OM_Mattu extends TestBase{
 		pageOm.clickOnListTabs("Orders");
 	}
 	
-	//@AfterClass(alwaysRun=true)
+	@AfterClass(alwaysRun=true)
 	public void tearDown() {
 		sleep(2000);
 		driver.quit();
@@ -104,7 +104,7 @@ public class OM_Mattu extends TestBase{
 		
 		for (String sAux : sColumn) {
 			int iAux = Integer.parseInt(sAux);
-			if (iAux < 350 || iAux == 372) {
+			if (iAux <= 350 || iAux == 372) {
 				bAssert = false;
 			}
 		}
@@ -113,7 +113,7 @@ public class OM_Mattu extends TestBase{
 		for (String sAux : sColumn) {
 			sAux = sAux.substring(1, sAux.length()).replace(",", ".");
 			double fAux = Double.parseDouble(sAux);
-			if (fAux > 80 || fAux == 423) {
+			if (fAux >= 80 || fAux == 423) {
 				bAssert = false;
 			}
 		}
@@ -161,7 +161,7 @@ public class OM_Mattu extends TestBase{
 		
 		for (String sAux : sColumn) {
 			int iAux = Integer.parseInt(sAux);
-			if (iAux < 350 || iAux == 372) {
+			if (iAux <= 350 || iAux == 372) {
 				bAssert = false;
 			}
 		}
@@ -204,6 +204,406 @@ public class OM_Mattu extends TestBase{
 		for (String sAux : sColumn) {
 			int iAux = Integer.parseInt(sAux);
 			if (iAux != 350) {
+				bAssert = false;
+			}
+		}
+		
+		List<WebElement> wFilterLinks = driver.findElement(By.className("filterLinks")).findElements(By.tagName("a"));
+		wFilterLinks.get(1).click();
+		
+		Alert confirmDelete = driver.switchTo().alert();
+		confirmDelete.accept();
+		
+		Assert.assertTrue(bAssert);
+	}
+	
+	//-------------------------------------------------------------------------------------------------
+	//TCC = 4
+	@Test(groups = "OM")
+	public void TS8219_OM_Ordenes_Panel_Principal_Busqueda_Operador_No_Igual_a(){		 
+	    List<WebElement> wLinks = driver.findElement(By.className("fFooter")).findElements(By.tagName("a"));
+	    for (WebElement wAux : wLinks) {
+	      if(wAux.getText().equals("Create New View")) {
+	        wAux.click();
+	      }
+	    }
+	    
+	    driver.findElement(By.id("fname")).sendKeys("OM_View_Mattu");
+	    
+	    Select sSelectDropdown = new Select(driver.findElement(By.id("fcol1")));
+		sSelectDropdown.selectByVisibleText("Order Number");
+		sSelectDropdown = new Select(driver.findElement(By.id("fop1")));
+		sSelectDropdown.selectByVisibleText("not equal to");
+		driver.findElement(By.id("fval1")).sendKeys("00000350");
+		
+		sSelectDropdown = new Select(driver.findElement(By.id("fcol2")));
+		sSelectDropdown.selectByVisibleText("Order Number");
+		sSelectDropdown = new Select(driver.findElement(By.id("fop2")));
+		sSelectDropdown.selectByVisibleText("less than");
+		driver.findElement(By.id("fval2")).sendKeys("00000404");
+		
+		driver.findElement(By.name("save")).click();
+		
+		sleep(5000);
+		boolean bAssert = true;
+		WebElement wBody = driver.findElement(By.id("ext-gen10"));
+		List<String> sColumn = traerColumna(wBody, 2);
+		
+		for (String sAux : sColumn) {
+			int iAux = Integer.parseInt(sAux);
+			if (iAux == 350) {
+				bAssert = false;
+			}
+		}
+		
+		sColumn = traerColumna(wBody, 2);
+		for (String sAux : sColumn) {
+			int iAux = Integer.parseInt(sAux);
+			if (iAux >= 404) {
+				bAssert = false;
+			}
+		}
+		
+		List<WebElement> wFilterLinks = driver.findElement(By.className("filterLinks")).findElements(By.tagName("a"));
+		wFilterLinks.get(1).click();
+		
+		Alert confirmDelete = driver.switchTo().alert();
+		confirmDelete.accept();
+		
+		Assert.assertTrue(bAssert);
+	}
+	
+	//-------------------------------------------------------------------------------------------------
+	//TCC = 5
+	@Test(groups = "OM")
+	public void TS8220_OM_Ordenes_Panel_Principal_Busqueda_Operador_Menor_que(){		 
+	    List<WebElement> wLinks = driver.findElement(By.className("fFooter")).findElements(By.tagName("a"));
+	    for (WebElement wAux : wLinks) {
+	      if(wAux.getText().equals("Create New View")) {
+	        wAux.click();
+	      }
+	    }
+	    
+	    driver.findElement(By.id("fname")).sendKeys("OM_View_Mattu");
+	    
+	    Select sSelectDropdown = new Select(driver.findElement(By.id("fcol1")));
+		sSelectDropdown.selectByVisibleText("Order Number");
+		sSelectDropdown = new Select(driver.findElement(By.id("fop1")));
+		sSelectDropdown.selectByVisibleText("less than");
+		driver.findElement(By.id("fval1")).sendKeys("00000404");
+		
+		driver.findElement(By.name("save")).click();
+		
+		sleep(5000);
+		boolean bAssert = true;
+		WebElement wBody = driver.findElement(By.id("ext-gen10"));
+		List<String> sColumn = traerColumna(wBody, 2);
+		
+		for (String sAux : sColumn) {
+			int iAux = Integer.parseInt(sAux);
+			if (iAux >= 404) {
+				bAssert = false;
+			}
+		}
+		
+		List<WebElement> wFilterLinks = driver.findElement(By.className("filterLinks")).findElements(By.tagName("a"));
+		wFilterLinks.get(1).click();
+		
+		Alert confirmDelete = driver.switchTo().alert();
+		confirmDelete.accept();
+		
+		Assert.assertTrue(bAssert);
+	}
+	
+	//-------------------------------------------------------------------------------------------------
+	//TCC = 6
+	@Test(groups = "OM")
+	public void TS8221_OM_Ordenes_Panel_Principal_Busqueda_Operador_Mayor_que(){		 
+	    List<WebElement> wLinks = driver.findElement(By.className("fFooter")).findElements(By.tagName("a"));
+	    for (WebElement wAux : wLinks) {
+	      if(wAux.getText().equals("Create New View")) {
+	        wAux.click();
+	      }
+	    }
+	    
+	    driver.findElement(By.id("fname")).sendKeys("OM_View_Mattu");
+	    
+	    Select sSelectDropdown = new Select(driver.findElement(By.id("fcol1")));
+		sSelectDropdown.selectByVisibleText("Order Number");
+		sSelectDropdown = new Select(driver.findElement(By.id("fop1")));
+		sSelectDropdown.selectByVisibleText("greater than");
+		driver.findElement(By.id("fval1")).sendKeys("00030321");
+		
+		driver.findElement(By.name("save")).click();
+		
+		sleep(5000);
+		boolean bAssert = true;
+		WebElement wBody = driver.findElement(By.id("ext-gen10"));
+		List<String> sColumn = traerColumna(wBody, 2);
+		
+		for (String sAux : sColumn) {
+			int iAux = Integer.parseInt(sAux);
+			if (iAux <= 30321) {
+				bAssert = false;
+			}
+		}
+		
+		List<WebElement> wFilterLinks = driver.findElement(By.className("filterLinks")).findElements(By.tagName("a"));
+		wFilterLinks.get(1).click();
+		
+		Alert confirmDelete = driver.switchTo().alert();
+		confirmDelete.accept();
+		
+		Assert.assertTrue(bAssert);
+	}
+	
+	//-------------------------------------------------------------------------------------------------
+	//TCC = 7
+	@Test(groups = "OM")
+	public void TS8222_OM_Ordenes_Panel_Principal_Busqueda_Operador_Menor_o_Igual(){		 
+	    List<WebElement> wLinks = driver.findElement(By.className("fFooter")).findElements(By.tagName("a"));
+	    for (WebElement wAux : wLinks) {
+	      if(wAux.getText().equals("Create New View")) {
+	        wAux.click();
+	      }
+	    }
+	    
+	    driver.findElement(By.id("fname")).sendKeys("OM_View_Mattu");
+	    
+	    Select sSelectDropdown = new Select(driver.findElement(By.id("fcol1")));
+		sSelectDropdown.selectByVisibleText("Order Number");
+		sSelectDropdown = new Select(driver.findElement(By.id("fop1")));
+		sSelectDropdown.selectByVisibleText("less or equal");
+		driver.findElement(By.id("fval1")).sendKeys("00000404");
+		
+		driver.findElement(By.name("save")).click();
+		
+		sleep(5000);
+		boolean bAssert = true;
+		WebElement wBody = driver.findElement(By.id("ext-gen10"));
+		List<String> sColumn = traerColumna(wBody, 2);
+		
+		for (String sAux : sColumn) {
+			int iAux = Integer.parseInt(sAux);
+			if (iAux > 404) {
+				bAssert = false;
+			}
+		}
+		
+		List<WebElement> wFilterLinks = driver.findElement(By.className("filterLinks")).findElements(By.tagName("a"));
+		wFilterLinks.get(1).click();
+		
+		Alert confirmDelete = driver.switchTo().alert();
+		confirmDelete.accept();
+		
+		Assert.assertTrue(bAssert);
+	}
+	
+	//-------------------------------------------------------------------------------------------------
+	//TCC = 8
+	@Test(groups = "OM")
+	public void TS8223_OM_Ordenes_Panel_Principal_Busqueda_Operador_Mayor_o_Igual(){		 
+	    List<WebElement> wLinks = driver.findElement(By.className("fFooter")).findElements(By.tagName("a"));
+	    for (WebElement wAux : wLinks) {
+	      if(wAux.getText().equals("Create New View")) {
+	        wAux.click();
+	      }
+	    }
+	    
+	    driver.findElement(By.id("fname")).sendKeys("OM_View_Mattu");
+	    
+	    Select sSelectDropdown = new Select(driver.findElement(By.id("fcol1")));
+		sSelectDropdown.selectByVisibleText("Order Number");
+		sSelectDropdown = new Select(driver.findElement(By.id("fop1")));
+		sSelectDropdown.selectByVisibleText("greater or equal");
+		driver.findElement(By.id("fval1")).sendKeys("00030321");
+		
+		driver.findElement(By.name("save")).click();
+		
+		sleep(5000);
+		boolean bAssert = true;
+		WebElement wBody = driver.findElement(By.id("ext-gen10"));
+		List<String> sColumn = traerColumna(wBody, 2);
+		
+		for (String sAux : sColumn) {
+			int iAux = Integer.parseInt(sAux);
+			if (iAux < 30321) {
+				bAssert = false;
+			}
+		}
+		
+		List<WebElement> wFilterLinks = driver.findElement(By.className("filterLinks")).findElements(By.tagName("a"));
+		wFilterLinks.get(1).click();
+		
+		Alert confirmDelete = driver.switchTo().alert();
+		confirmDelete.accept();
+		
+		Assert.assertTrue(bAssert);
+	}
+	
+	//-------------------------------------------------------------------------------------------------
+	//TCC = 9
+	@Test(groups = "OM")
+	public void TS8224_OM_Ordenes_Panel_Principal_Busqueda_Operador_Contiene(){		 
+	    List<WebElement> wLinks = driver.findElement(By.className("fFooter")).findElements(By.tagName("a"));
+	    for (WebElement wAux : wLinks) {
+	      if(wAux.getText().equals("Create New View")) {
+	        wAux.click();
+	      }
+	    }
+	    
+	    driver.findElement(By.id("fname")).sendKeys("OM_View_Mattu");
+	    
+	    Select sSelectDropdown = new Select(driver.findElement(By.id("fcol1")));
+		sSelectDropdown.selectByVisibleText("Account Name");
+		sSelectDropdown = new Select(driver.findElement(By.id("fop1")));
+		sSelectDropdown.selectByVisibleText("contains");
+		driver.findElement(By.id("fval1")).sendKeys("Mattu");
+		
+		driver.findElement(By.name("save")).click();
+		
+		sleep(5000);
+		boolean bAssert = true;
+		WebElement wBody = driver.findElement(By.id("ext-gen10"));
+		List<String> sColumn = traerColumna(wBody, 3);
+		
+		for (String sAux : sColumn) {
+			if (!sAux.contains("Mattu")) {
+				bAssert = false;
+			}
+		}
+		
+		List<WebElement> wFilterLinks = driver.findElement(By.className("filterLinks")).findElements(By.tagName("a"));
+		wFilterLinks.get(1).click();
+		
+		Alert confirmDelete = driver.switchTo().alert();
+		confirmDelete.accept();
+		
+		Assert.assertTrue(bAssert);
+	}
+	
+	//-------------------------------------------------------------------------------------------------
+	//TCC = 10
+	@Test(groups = "OM")
+	public void TS8225_OM_Ordenes_Panel_Principal_Busqueda_Operador_No_Contiene(){		 
+	    List<WebElement> wLinks = driver.findElement(By.className("fFooter")).findElements(By.tagName("a"));
+	    for (WebElement wAux : wLinks) {
+	      if(wAux.getText().equals("Create New View")) {
+	        wAux.click();
+	      }
+	    }
+	    
+	    driver.findElement(By.id("fname")).sendKeys("OM_View_Mattu");
+	    
+	    Select sSelectDropdown = new Select(driver.findElement(By.id("fcol1")));
+		sSelectDropdown.selectByVisibleText("Order Number");
+		sSelectDropdown = new Select(driver.findElement(By.id("fop1")));
+		sSelectDropdown.selectByVisibleText("less than");
+		driver.findElement(By.id("fval1")).sendKeys("00025375");
+		
+		sSelectDropdown = new Select(driver.findElement(By.id("fcol2")));
+		sSelectDropdown.selectByVisibleText("Order Number");
+		sSelectDropdown = new Select(driver.findElement(By.id("fop2")));
+		sSelectDropdown.selectByVisibleText("greater than");
+		driver.findElement(By.id("fval2")).sendKeys("00025365");
+		
+		sSelectDropdown = new Select(driver.findElement(By.id("fcol3")));
+		sSelectDropdown.selectByVisibleText("Account Name");
+		sSelectDropdown = new Select(driver.findElement(By.id("fop3")));
+		sSelectDropdown.selectByVisibleText("does not contain");
+		driver.findElement(By.id("fval3")).sendKeys("Mattu");
+		
+		driver.findElement(By.name("save")).click();
+		
+		sleep(5000);
+		boolean bAssert = true;
+		WebElement wBody = driver.findElement(By.id("ext-gen10"));
+		List<String> sColumn = traerColumna(wBody, 3);
+		
+		for (String sAux : sColumn) {
+			if (sAux.contains("Mattu")) {
+				bAssert = false;
+			}
+		}
+		
+		List<WebElement> wFilterLinks = driver.findElement(By.className("filterLinks")).findElements(By.tagName("a"));
+		wFilterLinks.get(1).click();
+		
+		Alert confirmDelete = driver.switchTo().alert();
+		confirmDelete.accept();
+		
+		Assert.assertTrue(bAssert);
+	}
+	
+	//-------------------------------------------------------------------------------------------------
+	//TCC = 11
+	@Test(groups = "OM")
+	public void TS8226_OM_Ordenes_Panel_Principal_Busqueda_Operador_Comienza_Por(){		 
+	    List<WebElement> wLinks = driver.findElement(By.className("fFooter")).findElements(By.tagName("a"));
+	    for (WebElement wAux : wLinks) {
+	      if(wAux.getText().equals("Create New View")) {
+	        wAux.click();
+	      }
+	    }
+	    
+	    driver.findElement(By.id("fname")).sendKeys("OM_View_Mattu");
+	    
+	    Select sSelectDropdown = new Select(driver.findElement(By.id("fcol1")));
+		sSelectDropdown.selectByVisibleText("Account Name");
+		sSelectDropdown = new Select(driver.findElement(By.id("fop1")));
+		sSelectDropdown.selectByVisibleText("starts with");
+		driver.findElement(By.id("fval1")).sendKeys("Mattu");
+		
+		driver.findElement(By.name("save")).click();
+		
+		sleep(5000);
+		boolean bAssert = true;
+		WebElement wBody = driver.findElement(By.id("ext-gen10"));
+		List<String> sColumn = traerColumna(wBody, 3);
+		
+		for (String sAux : sColumn) {
+			if (!sAux.startsWith("Mattu")) {
+				bAssert = false;
+			}
+		}
+		
+		List<WebElement> wFilterLinks = driver.findElement(By.className("filterLinks")).findElements(By.tagName("a"));
+		wFilterLinks.get(1).click();
+		
+		Alert confirmDelete = driver.switchTo().alert();
+		confirmDelete.accept();
+		
+		Assert.assertTrue(bAssert);
+	}
+	
+	//-------------------------------------------------------------------------------------------------
+	//TCC = 12
+	@Test(groups = "OM")
+	public void TS8230_OM_Ordenes_Panel_Principal_Busqueda_Separado_Por_Comas(){		 
+	    List<WebElement> wLinks = driver.findElement(By.className("fFooter")).findElements(By.tagName("a"));
+	    for (WebElement wAux : wLinks) {
+	      if(wAux.getText().equals("Create New View")) {
+	        wAux.click();
+	      }
+	    }
+	    
+	    driver.findElement(By.id("fname")).sendKeys("OM_View_Mattu");
+	    
+	    Select sSelectDropdown = new Select(driver.findElement(By.id("fcol1")));
+		sSelectDropdown.selectByVisibleText("Account Name");
+		sSelectDropdown = new Select(driver.findElement(By.id("fop1")));
+		sSelectDropdown.selectByVisibleText("contains");
+		driver.findElement(By.id("fval1")).sendKeys("FlorOM, Mattu");
+		
+		driver.findElement(By.name("save")).click();
+		
+		sleep(5000);
+		boolean bAssert = true;
+		WebElement wBody = driver.findElement(By.id("ext-gen10"));
+		List<String> sColumn = traerColumna(wBody, 3);
+		
+		for (String sAux : sColumn) {
+			if (!sAux.contains("Mattu") && !sAux.contains("Flor")) {
 				bAssert = false;
 			}
 		}

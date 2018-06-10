@@ -1,15 +1,10 @@
 package Tests;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.Date;
 import java.util.concurrent.TimeUnit;
 
-import org.openqa.selenium.Alert;
 import org.openqa.selenium.By;
-import org.openqa.selenium.interactions.*;
-import org.openqa.selenium.NoAlertPresentException;
 import org.openqa.selenium.NoSuchElementException;
-import org.openqa.selenium.UnhandledAlertException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedConditions;
@@ -26,7 +21,6 @@ import com.google.common.base.Function;
 
 import Pages.BasePage;
 import Pages.OM;
-import Pages.SCP;
 import Pages.SalesBase;
 import Pages.setConexion;
 
@@ -34,17 +28,15 @@ public class OM_Flujos_Ruben extends TestBase {
 
 	private WebDriver driver;
 	private WebDriverWait wait;
-	private Wait<WebDriver> fWait; //Fluent Wait
+	private Wait<WebDriver> fWait; // Fluent Wait
 	private OM pageOm;
 
 	@BeforeClass(alwaysRun = true)
 	public void init() throws Exception {
 		this.driver = setConexion.setupEze();
 		wait = new WebDriverWait(driver, 20);
-		fWait = new FluentWait<WebDriver>(driver)
-				.withTimeout(100, TimeUnit.SECONDS)
-				.pollingEvery(500, TimeUnit.MILLISECONDS)
-				.ignoring(NoSuchElementException.class);
+		fWait = new FluentWait<WebDriver>(driver).withTimeout(100, TimeUnit.SECONDS)
+				.pollingEvery(500, TimeUnit.MILLISECONDS).ignoring(NoSuchElementException.class);
 		pageOm = new OM(driver);
 		sleep(5000);
 		// Usuario Victor OM
@@ -74,7 +66,7 @@ public class OM_Flujos_Ruben extends TestBase {
 		driver.quit();
 		sleep(1000);
 	}
-	
+
 	@Test(groups = "OM")
 	public void F_Alta_de_linea_en_salesforce() {
 
@@ -205,7 +197,6 @@ public class OM_Flujos_Ruben extends TestBase {
 
 	}
 
-	
 	@Test(groups = "OM")
 	public void F_Alta_de_linea_en_salesforce_Test_de_Esperas() {
 
@@ -213,15 +204,15 @@ public class OM_Flujos_Ruben extends TestBase {
 		String plan = "Plan Prepago Nacional";
 
 		// Crear Orden
-		
-		WebElement newOrderButton = wait.until(new Function<WebDriver, WebElement>(){
+
+		WebElement newOrderButton = wait.until(new Function<WebDriver, WebElement>() {
 			public WebElement apply(WebDriver driver) {
 				return driver.findElement(By.name("new"));
 			}
 		});
-		
-//		WebElement newOrderButton = wait
-//				.until(ExpectedConditions.elementToBeClickable(driver.findElement(By.name("new"))));
+
+		// WebElement newOrderButton = wait
+		// .until(ExpectedConditions.elementToBeClickable(driver.findElement(By.name("new"))));
 		newOrderButton.click();
 
 		// Completar Formulario de Nueva Orden
@@ -246,14 +237,14 @@ public class OM_Flujos_Ruben extends TestBase {
 		// DocumentationError #1
 		// Los elementos no aparecen en la lista como dice la documentación
 		sleep(5000);
-//		WebElement newOrderButton = wait.until(new Function<WebDriver, WebElement>(){
-//			public WebElement apply(WebDriver driver) {
-//				return driver.findElement(By.name("new"));
-//			}
-//		});
+		// WebElement newOrderButton = wait.until(new Function<WebDriver, WebElement>(){
+		// public WebElement apply(WebDriver driver) {
+		// return driver.findElement(By.name("new"));
+		// }
+		// });
 		SalesBase sb = new SalesBase(driver);
-		
-//		driver.findElement(By.cssSelector(".slds-button.custom-view-dropdown-button.slds-button_neutral.slds-p-right_small.slds-picklist__label.cpq-base-header-picklist-label"))
+
+		// driver.findElement(By.cssSelector(".slds-button.custom-view-dropdown-button.slds-button_neutral.slds-p-right_small.slds-picklist__label.cpq-base-header-picklist-label"))
 		sb.elegirplan(plan);
 
 		// Ingreso Linea
@@ -326,7 +317,7 @@ public class OM_Flujos_Ruben extends TestBase {
 
 		// Plan de orquestacion
 		driver.switchTo().window(currentWindowHandle);
-//		sleep(20000);
+		// sleep(20000);
 		pageOm.completarFlujoOrquestacion();
 
 		WebElement viewOriginalOrderButton = driver
@@ -342,5 +333,49 @@ public class OM_Flujos_Ruben extends TestBase {
 		Assert.assertEquals(orderStatus.getText(), "Activated");
 
 	}
-	
+
+	@Test(groups = "OM")
+	public void TS_CRM_OM_Gestion_Cambio_De_Numero() {
+
+		String gestion = "Cambio de número";
+
+		pageOm.selectVistaByVisibleText("RubenOM-Activated");
+		sleep(6000);
+		WebElement accountName = driver.findElement(By.xpath("//*[@id=\"801c0000000KzlI_SALES_ACCOUNT_NAME\"]/a"));
+		accountName.click();
+		sleep(6000);
+		pageOm.irAChangeToOrder();
+		sleep(6000);
+
+		// Ingresar Fecha Futura
+		// driver.findElement(By.id("RequestDate")).sendKeys(pageOm.getFechaAvanzadaFormateada_MM_dd_yyyy());
+		driver.findElement(By.id("RequestDate")).sendKeys("09-24-2018");
+		sleep(2000);
+		driver.findElement(By.xpath("//*[@id=\"a1zc0000003XcLmAAK-1\"]/div[2]/div[3]/button")).click();
+		sleep(30000);
+		pageOm.goToSimConfig();
+		sleep(2000);
+		pageOm.cambiarNumero(pageOm.getRandomNumber(10));
+
+		// View Record
+		sleep(2000);
+		driver.findElement(By.xpath("//*[@id=\"-import-btn\"]")).click();
+
+		sleep(8000);
+		pageOm.setGestionField(gestion);
+
+		// Descomponer Orden
+		sleep(10000);
+		driver.findElement(By.name("ta_submit_order")).click();
+
+		sleep(8000);
+		pageOm.completarFlujoOrquestacion();
+
+		/*
+		 * Lanza error el último método por problemas en el ambiente An unknown error
+		 * has occurred. Please contact your system administrator for assistance.
+		 */
+
+	}
+
 }

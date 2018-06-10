@@ -2,6 +2,7 @@ package Pages;
 
 import static org.testng.Assert.assertTrue;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Iterator;
@@ -24,9 +25,11 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
+import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.Select;
+import org.openqa.selenium.support.ui.WebDriverWait;
 
-
+import com.gargoylesoftware.htmlunit.ElementNotFoundException;
 
 public class OM {
 
@@ -165,9 +168,13 @@ public class OM {
 	public void crearOrden(String Cuenta) {
 
 		driver.findElement(By.name("new")).click();
-		try {Thread.sleep(3000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
-		//crearCuentaOM(Cuenta);
-		//buscarCuentaOMenOrden(Cuenta);
+		try {
+			Thread.sleep(3000);
+		} catch (InterruptedException ex) {
+			Thread.currentThread().interrupt();
+		}
+		// crearCuentaOM(Cuenta);
+		// buscarCuentaOMenOrden(Cuenta);
 		driver.findElement(By.id("accid")).sendKeys(Cuenta);
 		driver.findElement(By.className("dateFormat")).click();
 		Select Estado = new Select(driver.findElement(By.id("Status")));
@@ -178,7 +185,11 @@ public class OM {
 			Thread.currentThread().interrupt();
 		}
 		driver.findElement(By.name("save")).click();
-		try {Thread.sleep(3000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();} 
+		try {
+			Thread.sleep(3000);
+		} catch (InterruptedException ex) {
+			Thread.currentThread().interrupt();
+		}
 	}
 
 	/**
@@ -198,7 +209,7 @@ public class OM {
 		}
 		sleep(10000);
 		List<WebElement> cajas = driver.findElements(By.cssSelector(".item-label-container.item-header.item-failed"));
-		//cajas.addAll(driver.findElements(By.cssSelector(".item-label-container.item-header.item-fatally-failed")));
+		// cajas.addAll(driver.findElements(By.cssSelector(".item-label-container.item-header.item-fatally-failed")));
 		int i = 1;
 		while (cajas.size() > 0) {
 			for (WebElement UnaC : cajas) {
@@ -207,7 +218,8 @@ public class OM {
 				cambiarVentanaNavegador(i);
 				i++;
 				sleep(5000);
-				List<WebElement> botones = driver.findElements(By.cssSelector(".slds-button.slds-button--neutral.ng-binding.ng-scope"));
+				List<WebElement> botones = driver
+						.findElements(By.cssSelector(".slds-button.slds-button--neutral.ng-binding.ng-scope"));
 				for (WebElement UnB : botones) {
 					if (UnB.getText().equals("Complete")) {
 						UnB.click();
@@ -219,13 +231,13 @@ public class OM {
 				sleep(10000);
 				cambiarVentanaNavegador(0);
 				sleep(1000);
-				//closeAllOtherTabs();
+				// closeAllOtherTabs();
 				sleep(15000);
 				break;
 			}
 			cajas = driver.findElements(By.cssSelector(".item-label-container.item-header.item-failed"));
-			//cajas.addAll(driver.findElements(By.cssSelector(".item-label-container.item-header.item-fatally-failed")));
-			
+			// cajas.addAll(driver.findElements(By.cssSelector(".item-label-container.item-header.item-fatally-failed")));
+
 		}
 		closeAllOtherTabs();
 		sleep(5000);
@@ -274,16 +286,16 @@ public class OM {
 	 */
 	public void buscarCuentaOMenOrden(String Cuenta) {
 		sleep(1000);
-		List<WebElement> buscarCuenta=driver.findElements(By.className("lookupIcon"));
-		for(WebElement op: buscarCuenta) {
-			if(op.getAttribute("alt").equalsIgnoreCase("Account Name Lookup (New Window)")) {
+		List<WebElement> buscarCuenta = driver.findElements(By.className("lookupIcon"));
+		for (WebElement op : buscarCuenta) {
+			if (op.getAttribute("alt").equalsIgnoreCase("Account Name Lookup (New Window)")) {
 				op.click();
 			}
 		}
 		sleep(3000);
 		cambiarVentanaNavegador(1);
 		sleep(1000);
-		
+
 		driver.switchTo().frame(driver.findElement(By.id("searchFrame")));
 		driver.findElement(By.id("lksrch")).sendKeys(Cuenta);
 		driver.findElement(By.name("go")).click();
@@ -293,10 +305,10 @@ public class OM {
 		int i = -1;
 		List<WebElement> cuentas = driver.findElement(By.tagName("table")).findElements(By.tagName("tr"));
 		cuentas.remove(0);
-		for (WebElement UnaC: cuentas) {
-			if(UnaC.findElement(By.tagName("th")).getText().equals(Cuenta)) {
+		for (WebElement UnaC : cuentas) {
+			if (UnaC.findElement(By.tagName("th")).getText().equals(Cuenta)) {
 				i++;
-			}else {
+			} else {
 				System.out.println(UnaC.findElement(By.tagName("th")).getText());
 				break;
 			}
@@ -305,9 +317,9 @@ public class OM {
 		sleep(5000);
 		cambiarVentanaNavegador(0);
 		driver.switchTo().defaultContent();
-		
+
 	}
-	
+
 	/**
 	 * Crea una vista desde la ventana "Ordenes"
 	 * 
@@ -406,7 +418,7 @@ public class OM {
 	public void eliminarVista() {
 		try {
 			driver.findElement(By.name("delID")).click();
-			Alert confirmDelete = driver.switchTo().alert();  
+			Alert confirmDelete = driver.switchTo().alert();
 			confirmDelete.accept();
 			// sleep(5000);
 		} catch (UnhandledAlertException f) {
@@ -419,52 +431,53 @@ public class OM {
 			}
 		}
 	}
-	
+
 	public void agregarGestion(String Gestion) {
 		boolean esta = false;
 		List<WebElement> campos = driver.findElement(By.className("detailList")).findElements(By.tagName("td"));
 		for (WebElement UnC : campos) {
-			if(esta == true) {
+			if (esta == true) {
 				Actions action = new Actions(driver);
 				action.moveToElement(UnC).doubleClick().build().perform();
 				sleep(2000);
-			    Select gestiones = new Select(driver.findElement(By.tagName("select")));
+				Select gestiones = new Select(driver.findElement(By.tagName("select")));
 				gestiones.selectByVisibleText(Gestion);
 				break;
 			}
 			if (UnC.getText().equalsIgnoreCase("gestion")) {
-				esta = true;  
+				esta = true;
 			}
 		}
 		sleep(2000);
 		driver.findElement(By.id("topButtonRow")).findElement(By.tagName("input")).click();
 		sleep(3000);
 	}
-	
-	
+
 	public void irAChangeToOrder() {
-		driver.findElement(By.id("accid_ileinner")).findElement(By.tagName("a")).click();
-		sleep(10000);
 		Accounts accountPage = new Accounts(driver);
-		driver.switchTo().defaultContent(); 
-        driver.switchTo().frame(accountPage.getFrameForElement(driver, By.cssSelector(".panel.panel-default.panel-assets")));
-		List <WebElement> assets= driver.findElement(By.cssSelector(".panel.panel-default.panel-assets")).findElements(By.cssSelector(".root-asset.ng-scope"));
-		assets.get(assets.size()-1).findElement(By.className("p-check")).click();
-		driver.findElement(By.className("asset-action")).findElements(By.cssSelector(".btn.btn-default")).get(1).click();;
-		
+		driver.switchTo().defaultContent();
+		driver.switchTo()
+				.frame(accountPage.getFrameForElement(driver, By.cssSelector(".panel.panel-default.panel-assets")));
+		List<WebElement> assets = driver.findElement(By.cssSelector(".panel.panel-default.panel-assets"))
+				.findElements(By.cssSelector(".root-asset.ng-scope"));
+		assets.get(assets.size() - 1).findElement(By.className("p-check")).click();
+		driver.findElement(By.className("asset-action")).findElements(By.cssSelector(".btn.btn-default")).get(1)
+				.click();
+		;
+
 	}
-	
-	
+
 	public List<String> traerColumna(WebElement wBody, int iColumn) {
 		List<WebElement> wRows = wBody.findElements(By.tagName("tr"));
 		List<String> sColumn = new ArrayList<String>();
-		for(WebElement wAux : wRows) {
+		for (WebElement wAux : wRows) {
 			List<WebElement> wTd = wAux.findElements(By.tagName("td"));
 			sColumn.add(wTd.get(iColumn).getText());
 		}
 
 		return sColumn;
 	}
+
 	
 	/*public Date fechaAvanzada() {
 		Date date = new Date();
@@ -483,6 +496,108 @@ public class OM {
 		driver.findElement(By.id("RequestDate")).sendKeys("09-17-2019");
 		driver.findElement(By.cssSelector(".form-control.btn.btn-primary.ng-binding")).click();
 		sleep(15000);
+		}
+
+
+	/*public Date fechaAvanzada() {
+		Date date = new Date();
+		Calendar cal = Calendar.getInstance();
+		cal.setTime(date);
+		cal.add(Calendar.MONTH, +1);
+		cal.add(Calendar.DATE, +1);
+		date = cal.getTime();
+		return (date);
+
+	}*/
+
+	/*public String getFechaAvanzadaFormateada_MM_dd_yyyy() {
+		SimpleDateFormat simpleDateFormat = new SimpleDateFormat("MM-dd-yyyy");
+		String formattedDate = simpleDateFormat.format(fechaAvanzada());
+		return formattedDate;
+	}
+*/
+	// Ir hasta SIM config
+	public void goToSimConfig() {
+		// Plan
+		driver.findElement(
+				By.xpath("//*[@id=\"tab-default-1\"]/div[1]/ng-include/div/div/div/div[3]/div[1]/div[1]/button"))
+				.click();
+		// Sim
+		sleep(1000);
+		driver.findElement(By.xpath(
+				"//*[@id=\"tab-default-1\"]/div[1]/ng-include/div/div/div/div[4]/div[2]/div/ng-include/div/div[2]/ng-include/div/div[1]/div/div[2]/div[11]/div[2]/button"))
+				.click();
+		// Sim Config
+		sleep(1000);
+		driver.findElement(By.xpath(
+				"//*[@id=\"tab-default-1\"]/div[1]/ng-include/div/div/div/div[4]/div[2]/div/ng-include/div/div[2]/ng-include/div/div[1]/div/div[2]/div[11]/div[2]/div/ul/li[3]/a/span"))
+				.click();
+
+	}
+	
+	// Cambia el número
+	public void cambiarNumero(String numero) {
+		WebElement cambiarNumero;
+		try {
+			cambiarNumero = driver.findElement(By.xpath("//*[@id=\"js-cpq-product-cart-config-form\"]/div[1]/div/form/div[2]/div[1]/input"));
+		}catch(org.openqa.selenium.NoSuchElementException e) {
+			cambiarNumero = driver.findElement(By.xpath("//*[@id=\"js-cpq-product-cart-config-form\"]/div[1]/div/form/div[17]/div[1]/input"));
+		};
+		cambiarNumero.clear();
+		cambiarNumero.sendKeys(numero);
+		// Close Sim Input
+		sleep(1000);
+		driver.findElement(By.xpath(
+				"/html/body/div[1]/div/ng-include/div/div[2]/div[2]/div[3]/div/div/ng-include/div/div[1]/div/button"))
+				.click();
+	}
+
+	// Edita el campo de Gestión
+	public void setGestionField(String gestion) {
+		WebDriverWait wait;
+		wait = new WebDriverWait(driver, 20);
+		WebElement editOrderButton = wait
+				.until(ExpectedConditions.elementToBeClickable(driver.findElement(By.name("edit"))));
+		editOrderButton.click();
+		WebElement gestionElement = wait
+				.until(ExpectedConditions.elementToBeClickable(driver.findElement(By.id("00Nc0000002IvyM"))));
+		Select gestionSelect = new Select(gestionElement);
+		gestionSelect.selectByVisibleText(gestion);
+		driver.findElement(By.name("save")).click();
+	}
+	
+public void deleteOrdersNoActivated(String Vista) {
+		
+		Select allOrder=new Select(driver.findElement(By.id("fcf")));
+		allOrder.selectByVisibleText(Vista);
+		sleep(1000);
+		try {driver.findElement(By.name("go")).click();}catch(org.openqa.selenium.NoSuchElementException e) {}
+		sleep(3000);
+		
+		//Solo para listar la cantidad de Ordenes que hay
+		List<WebElement> listadoDeOrdenes=driver.findElement(By.className("x-panel-bwrap")).findElement(By.className("x-grid3-body")).findElements(By.className("x-grid3-row"));
+		listadoDeOrdenes.add(driver.findElement(By.className("x-panel-bwrap")).findElement(By.className("x-grid3-body")).findElement(By.cssSelector(".x-grid3-row.x-grid3-row-first")));
+		listadoDeOrdenes.add(driver.findElement(By.className("x-panel-bwrap")).findElement(By.className("x-grid3-body")).findElement(By.cssSelector(".x-grid3-row.x-grid3-row-last")));
+		
+		//System.out.println("aqui: "+listadoDeOrdenes.get(0).getText());
+		int i=0;
+		System.out.println("Cantidad de Ordenes: "+listadoDeOrdenes.size());
+		while(i<=listadoDeOrdenes.size()-2){ //OJO Aca con el 2 se hizo para dos elementos fantasmas.
+			System.out.println("ejecucion: "+i);
+			WebElement ordenes=driver.findElement(By.className("x-panel-bwrap")).findElement(By.className("x-grid3-body")).findElements(By.tagName("div")).get(0);
+			try {
+			//Eliminar
+			ordenes.findElement(By.xpath("//table/tbody/tr/td[2]/div/a[2]")).click();
+			sleep(1000);
+			}catch(org.openqa.selenium.NoSuchElementException e) {}
+			try {
+				driver.switchTo().alert().accept();
+				driver.switchTo().defaultContent();
+			}catch(org.openqa.selenium.NoAlertPresentException e) {}
+		i++;
+		sleep(3000);
+		}
+
 		
 	}
 	
