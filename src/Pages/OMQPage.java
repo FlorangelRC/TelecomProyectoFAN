@@ -23,6 +23,8 @@ import javafx.scene.control.ScrollToEvent;
 
 public class OMQPage extends BasePage {
 
+	private static final String pDatos = null;
+
 	final WebDriver driver;
 	
 	@FindBy(xpath=".//*[@id='hotlist']/table/tbody/tr/td[2]/input")
@@ -37,6 +39,7 @@ public class OMQPage extends BasePage {
 	@FindBy(xpath="//*[@id=\"js-cpq-product-cart-config-form\"]/div[1]/div/form/div[4]/div[1]/input")
 	private WebElement NumerodeLinea;
 	
+								
 	@FindBy(xpath=".//*[@id='js-cpq-product-cart-config-form']/div[1]/div/form/div[13]/div/input") 
 	private WebElement ICCID;
 	
@@ -45,6 +48,11 @@ public class OMQPage extends BasePage {
 	
 	@FindBy(xpath=".//*[@id='js-cpq-product-cart-config-form']/div[1]/div/form/div[15]/div/input")
 	private WebElement KI;
+	
+
+	
+
+
 	
 
 
@@ -123,12 +131,15 @@ public class OMQPage extends BasePage {
 		sleep(3000);
 		 ((JavascriptExecutor)driver).executeScript("window.scrollTo(0,"+driver.findElement(By.className("slds-section")).getLocation().y+" )");
 		 ICCID.click();
+		 ICCID.clear();
 		 ICCID.sendKeys(""+r.nextInt(200000));
 		 sleep(2000);
 		 IMSI.click();
+		 IMSI.clear();
 		 IMSI.sendKeys(""+r.nextInt(200000));
 		 sleep(2000);
 		 KI.click();
+		 KI.clear();
 		 KI.sendKeys(""+r.nextInt(200000));
 		 KI.submit();
 		sleep(5000);
@@ -138,6 +149,24 @@ public class OMQPage extends BasePage {
 		 
 		
 	}
+	
+
+	
+	public void agregarPack() {
+		sleep(8000);
+		driver.findElement(By.cssSelector(".slds-button.cpq-item-has-children")).click();
+		List<WebElement> list1 = driver.findElements(By.xpath("//*[@class='cpq-item-product-child-level-1 cpq-item-child-product-name-wrapper']//*[@class='slds-button slds-button_icon-small']"));
+		list1.get(3).click();
+		sleep(8000);
+		List<WebElement> pDatos = driver.findElements(By.xpath("//*[@class='cpq-item-product-child-level-2 cpq-item-child-product-name-wrapper']//*[@class='slds-button slds-button_icon-small']"));
+		((JavascriptExecutor)driver).executeScript("window.scrollTo(0,"+driver.findElement(By.xpath("//*[@class='cpq-item-product-child-level-2 cpq-item-child-product-name-wrapper']//*[@class='slds-button slds-button_icon-small']")).getLocation().y+")");
+		pDatos.get(2).click();
+		List<WebElement>add=driver.findElements(By.xpath("//*[@id=\"tab-default-1\"]//div/ng-include/div//div[2]/div[11]"));
+		((JavascriptExecutor)driver).executeScript("window.scrollTo(0,"+driver.findElement(By.xpath("//*[@id=\\\"tab-default-1\\\"]//div/ng-include/div//div[2]/div[11]")).getLocation().y+")");
+		add.get(11).click();
+		
+	}
+	
 	
 			
 		
@@ -152,10 +181,19 @@ public class OMQPage extends BasePage {
 		return CPQ;
 	}
 	
-	public void scrollToElement(WebElement element) {
+	public void scrollToElement(List<WebElement> pDatos2) {
 		((JavascriptExecutor)driver)
-	        .executeScript("arguments[0].scrollIntoView();", element);
+	        .executeScript("arguments[0].scrollIntoView();", pDatos2);
 	  }
+	
+
+
+
+public void scrollToElement(WebElement element) {
+	((JavascriptExecutor)driver)
+    .executeScript("arguments[0].scrollIntoView();", element);
 
 }
+}
+
 
