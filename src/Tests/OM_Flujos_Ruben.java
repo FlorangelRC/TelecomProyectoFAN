@@ -10,7 +10,6 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.FluentWait;
 import org.openqa.selenium.support.ui.Select;
-import org.openqa.selenium.support.ui.Wait;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.Assert;
 import org.testng.annotations.BeforeClass;
@@ -28,15 +27,15 @@ public class OM_Flujos_Ruben extends TestBase {
 
 	private WebDriver driver;
 	private WebDriverWait wait;
-	private Wait<WebDriver> fWait; // Fluent Wait
+	private FluentWait<WebDriver> fluentWait; // Fluent Wait
 	private OM pageOm;
 
 	@BeforeClass(alwaysRun = true)
 	public void init() throws Exception {
 		this.driver = setConexion.setupEze();
 		wait = new WebDriverWait(driver, 20);
-		fWait = new FluentWait<WebDriver>(driver).withTimeout(100, TimeUnit.SECONDS)
-				.pollingEvery(500, TimeUnit.MILLISECONDS).ignoring(NoSuchElementException.class);
+		fluentWait = new FluentWait<WebDriver>(driver).withTimeout(30, TimeUnit.SECONDS)
+				.pollingEvery(1, TimeUnit.SECONDS).ignoring(NoSuchElementException.class);
 		pageOm = new OM(driver);
 		sleep(5000);
 		// Usuario Victor OM
@@ -334,26 +333,29 @@ public class OM_Flujos_Ruben extends TestBase {
 
 	}
 
+	//TS_CRM_OM_Gestion_Cambio_De_Numero utiliza FluentWaits
 	@Test(groups = "OM")
 	public void TS_CRM_OM_Gestion_Cambio_De_Numero() {
-
+		
 		String gestion = "Cambio de número";
 
 		pageOm.selectVistaByVisibleText("RubenOM-Activated");
-		sleep(6000);
+		sleep(5000);
 		WebElement accountName = driver.findElement(By.xpath("//*[@id=\"801c0000000KzlI_SALES_ACCOUNT_NAME\"]/a"));
 		accountName.click();
-		sleep(6000);
+		sleep(5000);
 		pageOm.irAChangeToOrder();
-		sleep(6000);
+		sleep(5000);
 
 		// Ingresar Fecha Futura
 		// driver.findElement(By.id("RequestDate")).sendKeys(pageOm.getFechaAvanzadaFormateada_MM_dd_yyyy());
-		driver.findElement(By.id("RequestDate")).sendKeys("09-24-2018");
-		sleep(2000);
+		driver.findElement(By.id("RequestDate")).sendKeys("10-09-2018");
+		sleep(1000);
 		driver.findElement(By.xpath("//*[@id=\"a1zc0000003XcLmAAK-1\"]/div[2]/div[3]/button")).click();
-		sleep(30000);
+		
+		//FluentWait por la demora incierta luego de ingresar la fecha
 		pageOm.goToSimConfig();
+		
 		sleep(2000);
 		pageOm.cambiarNumero(pageOm.getRandomNumber(10));
 
@@ -361,14 +363,14 @@ public class OM_Flujos_Ruben extends TestBase {
 		sleep(2000);
 		driver.findElement(By.xpath("//*[@id=\"-import-btn\"]")).click();
 
-		sleep(8000);
+		sleep(5000);
 		pageOm.setGestionField(gestion);
 
 		// Descomponer Orden
-		sleep(10000);
+		sleep(5000);
 		driver.findElement(By.name("ta_submit_order")).click();
 
-		sleep(8000);
+		sleep(5000);
 		pageOm.completarFlujoOrquestacion();
 
 		/*
