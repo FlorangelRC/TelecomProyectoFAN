@@ -249,7 +249,7 @@ public boolean btnnoexiste(String boton){
  public void gestiondeusuarios(){
 	 driver.navigate().back();
 		try {Thread.sleep(10000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
-		driver.findElement(By.id("userNavButton")).click();
+		driver.findElement(By.className("zen-selectArrow")).click();
 		driver.findElement(By.xpath("//a[@href=\"/ui/setup/Setup\"]")).click();
 		driver.findElement(By.id("setupSearch")).sendKeys("gestion");
 		try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
@@ -806,18 +806,24 @@ try{	driver.findElement(By.id("alert-ok-button")).click();	} catch (NoSuchElemen
 			TestBase TB= new TestBase();
 			driver.get("https://crm--sit.cs14.my.salesforce.com/home/home.jsp?tsid=02u41000000QWha/");
 			try {Thread.sleep(10000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
-			driver.findElement(By.id("userNavButton")).click();
+			driver.findElement(By.className("zen-selectArrow")).click();
 			sleep(6000);
-			System.out.println(driver.findElement(By.id("userNav-menuItems")).findElements(By.tagName("a")).get(num).getText());
-			driver.findElement(By.id("userNav-menuItems")).findElements(By.tagName("a")).get(num).click();
+			//System.out.println(driver.findElement(By.id("userNav-menuItems")).findElements(By.tagName("a")).get(num).getText());
+			if (num == 4) {
+				driver.findElement(By.xpath("//a[@href=\"/secur/logout.jsp\"]")).click();
+				driver.findElement(By.id("userNav-menuItems")).findElements(By.tagName("a")).get(num).click();
+			}
 			sleep(4000);
 			if(num == 3) {
-				sleep(2000);
-				driver.findElement(By.id("userDropdown")).click();
-				sleep(3000);
-				driver.findElement(By.id("logout")).click();
-				sleep(5000);
+				driver.findElement(By.id("userNav-menuItems")).findElements(By.tagName("a")).get(num).click();
+				sleep(4000);
+				
 			}
+			sleep(2000);
+			driver.findElement(By.id("userDropdown")).click();
+			sleep(3000);
+			driver.findElement(By.id("logout")).click();
+			sleep(5000);
 			driver.get("https://crm--sit.cs14.my.salesforce.com/");
 			driver.findElement(By.id("cancel_idp_hint")).click();
 			 switch(perfil){

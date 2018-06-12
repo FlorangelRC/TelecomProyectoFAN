@@ -67,16 +67,19 @@ public class GestionesOM extends TestBase {
 	}
 	
 	@Test(groups="OM", priority=1)
-	public void TS_CRM_OM_Gestion_Alta_De_Linea() throws InterruptedException {
+	public void AltaLinea() throws InterruptedException {
+		TS_CRM_OM_Gestion_Alta_De_Linea("FlorOM", "Plan Prepago Nacional");
+	}
+	public void TS_CRM_OM_Gestion_Alta_De_Linea(String Cuenta, String Plan) throws InterruptedException {
 		OM pageOm=new OM(driver);
 		OMQPage OM=new OMQPage (driver);
-		pageOm.crearOrden("AutomaOM");
+		pageOm.crearOrden(Cuenta);
 		assertTrue(driver.findElement(By.cssSelector(".noSecondHeader.pageType")).isDisplayed());
 		pageOm.agregarGestion("Venta");
 		sleep(2000);
 		OM.getCPQ().click();
 		sleep(5000);
-		OM.colocarPlan("Plan Prepago Nacional");
+		OM.colocarPlan(Plan);
 		OM.configuracion();
 		sleep(5000);
 		driver.findElement(By.name("ta_submit_order")).click();
@@ -91,7 +94,7 @@ public class GestionesOM extends TestBase {
 		sleep(5000);
 		driver.findElement(By.id("accid_ileinner")).findElement(By.tagName("a")).click();
 		sleep(10000);
-		pageOm.irAChangeToOrder();
+		//pageOm.irAChangeToOrder();
 		
 	}
 	

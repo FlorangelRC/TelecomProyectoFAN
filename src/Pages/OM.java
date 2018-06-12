@@ -219,35 +219,37 @@ public class OM {
 		}
 		sleep(10000);
 		List<WebElement> cajas = driver.findElements(By.cssSelector(".item-label-container.item-header.item-failed"));
-		// cajas.addAll(driver.findElements(By.cssSelector(".item-label-container.item-header.item-fatally-failed")));
+		cajas.addAll(driver.findElements(By.cssSelector(".item-label-container.item-header.item-fatally-failed")));
+		cajas.addAll(driver.findElements(By.cssSelector(".item-label-container.item-header.item-running")));
 		int i = 1;
 		while (cajas.size() > 0) {
 			for (WebElement UnaC : cajas) {
 				UnaC.click();
 				sleep(5000);
 				cambiarVentanaNavegador(i);
-				i++;
+				//i++;
 				sleep(5000);
 				List<WebElement> botones = driver
-						.findElements(By.cssSelector(".slds-button.slds-button--neutral.ng-binding.ng-scope"));
+						.findElements(By.cssSelector(".slds-button.slds-button--neutral.ng-scope"));
 				for (WebElement UnB : botones) {
 					if (UnB.getText().equals("Complete")) {
 						UnB.click();
-						sleep(2000);
-						UnB.click();
+						sleep(4000);
+						System.out.println("Hizo click");
 						break;
 					}
 				}
 				sleep(10000);
 				cambiarVentanaNavegador(0);
-				sleep(1000);
-				// closeAllOtherTabs();
-				sleep(15000);
+				sleep(10000);
+				closeAllOtherTabs();
+				sleep(35000);
 				break;
 			}
 			cajas = driver.findElements(By.cssSelector(".item-label-container.item-header.item-failed"));
-			// cajas.addAll(driver.findElements(By.cssSelector(".item-label-container.item-header.item-fatally-failed")));
-
+			cajas.addAll(driver.findElements(By.cssSelector(".item-label-container.item-header.item-fatally-failed")));
+			cajas.addAll(driver.findElements(By.cssSelector(".item-label-container.item-header.item-running")));
+			
 		}
 		closeAllOtherTabs();
 		sleep(5000);
