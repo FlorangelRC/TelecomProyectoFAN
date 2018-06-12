@@ -152,7 +152,7 @@ public class OMQPage extends BasePage {
 	
 
 	
-	public void agregarPack() {
+	public void agregarPack(String servicio) {
 		sleep(8000);
 		driver.findElement(By.cssSelector(".slds-button.cpq-item-has-children")).click();
 		List<WebElement> list1 = driver.findElements(By.xpath("//*[@class='cpq-item-product-child-level-1 cpq-item-child-product-name-wrapper']//*[@class='slds-button slds-button_icon-small']"));
@@ -161,9 +161,20 @@ public class OMQPage extends BasePage {
 		List<WebElement> pDatos = driver.findElements(By.xpath("//*[@class='cpq-item-product-child-level-2 cpq-item-child-product-name-wrapper']//*[@class='slds-button slds-button_icon-small']"));
 		((JavascriptExecutor)driver).executeScript("window.scrollTo(0,"+driver.findElement(By.xpath("//*[@class='cpq-item-product-child-level-2 cpq-item-child-product-name-wrapper']//*[@class='slds-button slds-button_icon-small']")).getLocation().y+")");
 		pDatos.get(2).click();
-		List<WebElement>add=driver.findElements(By.xpath("//*[@id=\"tab-default-1\"]//div/ng-include/div//div[2]/div[11]"));
-		((JavascriptExecutor)driver).executeScript("window.scrollTo(0,"+driver.findElement(By.xpath("//*[@id=\\\"tab-default-1\\\"]//div/ng-include/div//div[2]/div[11]")).getLocation().y+")");
-		add.get(11).click();
+		 List<WebElement> tablas=driver.findElements(By.className("cpq-item-base-product"));
+		 List<WebElement> servicios=tablas.get(0).findElements(By.xpath("//table//tdiv[11]"));
+		 for(WebElement S:servicios) {
+			   if(S.getText().toLowerCase().contains(servicio.toLowerCase())) {
+				   S.findElement(By.className("slds-button slds-button_neutral")).click();
+			        sleep(2000);
+			   }
+			//   .//*[@id='tab-default-1']/div[1]/ng-include/div/div/div/div[4]/div[2]/div/ng-include/div/div[2]/ng-include/div/div[6]/div/div[3]/div/div/ng-include/div/div[2]/ng-include/div/div[3]/div/div[3]/div/div/ng-include/div/div[2]/ng-include/div/div[2]/div/div[2]/div[11]
+			   //.//*[@id='tab-default-1']/div[1]/ng-include/div/div/div/div[4]/div[2]/div/ng-include/div/div[2]/ng-include/div/div[6]/div/div[3]/div/div/ng-include/div/div[2]/ng-include/div/div[3]/div/div[3]/div/div/ng-include/div/div[2]/ng-include/div/div[3]/div/div[2]/div[11]
+		      // .//*[@id='tab-default-1']/div[1]/ng-include/div/div/div/div[4]/div[2]/div/ng-include/div/div[2]/ng-include/div/div[6]/div/div[3]/div/div/ng-include/div/div[2]/ng-include/div/div[2]/div/div[2]/div[1]
+		 }
+		//List<WebElement>add=driver.findElements(By.xpath("//*[@id=\"tab-default-1\"]//div/ng-include/div//div[2]/div[11]"));
+		//((JavascriptExecutor)driver).executeScript("window.scrollTo(0,"+driver.findElement(By.xpath("//*[@id=\\\"tab-default-1\\\"]//div/ng-include/div//div[2]/div[11]")).getLocation().y+")");
+		//add.get(11).click();
 		
 	}
 	

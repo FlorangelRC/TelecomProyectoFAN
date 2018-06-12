@@ -131,7 +131,7 @@ public void TS102205_CRM_OM_Ola_2_Ordenes_Cliente_existente_Alta_de_linea_con_1_
 				//fecha avanzada
 				pageOm.fechaAvanzada();
 				//driver.findElement(By.id("RequestDate")).sendKeys(dateFormat.format(pageOm.fechaAvanzada()));
-				OM.agregarPack();
+				OM.agregarPack("Pack 1Gb + WhasApp x 7 días");
 				
 		
 	}

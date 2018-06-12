@@ -275,7 +275,7 @@ public class TechnicalCareCSRDiagnosticoPage extends BasePage{
 	              }
 	            }
 	          }
-	          }    	sleep(3000);
+	          }    	sleep(5000);
 	  }
 	
 ////////////////////////////////////VALIDAR SERVICIO////////////////////////////////////////////////////
