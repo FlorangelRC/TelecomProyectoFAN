@@ -146,6 +146,7 @@ public class OM_Flujos_Ruben extends TestBase {
 		WebElement imsiInput = driver.findElement(
 				By.xpath("//*[@id=\"js-cpq-product-cart-config-form\"]/div[1]/div/form/div[15]/div[1]/input"));
 		imsiInput.sendKeys(pageOm.getRandomNumber(8));
+		sleep(2000);
 		WebElement kiInput = driver.findElement(
 				By.xpath("//*[@id=\"js-cpq-product-cart-config-form\"]/div[1]/div/form/div[16]/div[1]/input"));
 		kiInput.sendKeys(pageOm.getRandomNumber(9));
@@ -195,6 +196,7 @@ public class OM_Flujos_Ruben extends TestBase {
 		Assert.assertEquals(orderStatus.getText(), "Activated");
 
 	}
+
 
 	@Test(groups = "OM")
 	public void F_Alta_de_linea_en_salesforce_Test_de_Esperas() {
@@ -349,7 +351,7 @@ public class OM_Flujos_Ruben extends TestBase {
 
 		// Ingresar Fecha Futura
 		// driver.findElement(By.id("RequestDate")).sendKeys(pageOm.getFechaAvanzadaFormateada_MM_dd_yyyy());
-		driver.findElement(By.id("RequestDate")).sendKeys("10-11-2018");
+		driver.findElement(By.id("RequestDate")).sendKeys("10-16-2018");
 		sleep(1000);
 		driver.findElement(By.xpath("//*[@id=\"a1zc0000003XcLmAAK-1\"]/div[2]/div[3]/button")).click();
 		

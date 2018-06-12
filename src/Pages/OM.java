@@ -552,10 +552,19 @@ public class OM {
 		WebElement cambiarNumero;
 		try {
 			cambiarNumero = driver.findElement(
-					By.xpath("//*[@id=\"js-cpq-product-cart-config-form\"]/div[1]/div/form/div[2]/div[1]/input"));
+					By.name("productconfig_field_3_0")
+					/*
+					 * By.xpath("//*[@id=\"js-cpq-product-cart-config-form\"]/div[1]/div/form/div[2]/div[1]/input")
+					 */
+					);
+					
 		} catch (org.openqa.selenium.NoSuchElementException e) {
 			cambiarNumero = driver.findElement(
-					By.xpath("//*[@id=\"js-cpq-product-cart-config-form\"]/div[1]/div/form/div[17]/div[1]/input"));
+					By.name("productconfig_field_3_0")
+					/*
+					* By.xpath("//*[@id=\"js-cpq-product-cart-config-form\"]/div[1]/div/form/div[17]/div[1]/input")
+					*/
+					);
 		};
 		cambiarNumero.clear();
 		cambiarNumero.sendKeys(numero);
