@@ -1,5 +1,7 @@
 package Tests;
 
+import static org.junit.Assert.assertThat;
+
 import java.util.List;
 
 import org.openqa.selenium.Alert;
@@ -16,7 +18,6 @@ import org.testng.annotations.Test;
 
 import Pages.BasePage;
 import Pages.OM;
-import Pages.SCP;
 import Pages.setConexion;
 
 public class OMRuben extends TestBase {
@@ -57,7 +58,7 @@ public class OMRuben extends TestBase {
 	}
 
 	@Test(groups = "OM")
-	public void TS6723_CRM_OM_Ordenes_Vista_Configuración_Borrar_Vista() {
+	public void TS6723_CRM_OM_Ordenes_Vista_Configuracion_Borrar_Vista() {
 
 		// Crear Nueva Vista
 		sleep(3000);
@@ -153,7 +154,10 @@ public class OMRuben extends TestBase {
 	}
 
 	/* El test TS6725 puede fallar si ambos usuarios seleccionen la misma vista */
+	// 20180611 No hace logout, login entra con el mismo usuario
+
 	@Test(groups = "OM")
+
 	public void TS6725_CRM_OM_Ordenes_Vista_Log_in_con_vista_previamente_utilizada_por_otro_usuario() {
 
 		// Seleccionar una Vista Random para un Primer Usuario
@@ -168,6 +172,8 @@ public class OMRuben extends TestBase {
 		sleep(3000);
 		omLogout(driver);
 
+		/* No hace logout y continua con el mismo usuario */
+
 		// Login con otro Usuario
 		sleep(2000);
 		omInternalLoginWithCredentials(driver, "u589831", "Testa10k");
@@ -177,20 +183,25 @@ public class OMRuben extends TestBase {
 		driver.switchTo().defaultContent();
 		sleep(5000);
 		BasePage bp = new BasePage(driver);
-		bp.cajonDeAplicaciones("Ventas");
+		bp.cajonDeAplicaciones("Sales"); /* Valor Anterior: Ventas - Fallaba porque encuentras Sales */
 		sleep(2000);
 		pageOm.clickMore();
 		sleep(3000);
 		pageOm.clickOnListTabs("Orders");
 		sleep(5000);
-		driver.findElement(By.cssSelector(".listRelatedObject.orderBlock.title")).click();
+		// driver.findElement(By.cssSelector(".listRelatedObject.orderBlock.title")).click();
 
 		// Verificar que la Vista no sea la del Primer Usuario
 		vistaSelect = new Select(driver.findElement(By.name("fcf")));
 		String vistaOtroUsuario = vistaSelect.getFirstSelectedOption().getText();
 
-		Assert.assertNotEquals(vistaOtroUsuario, vistaPrimerUsuario);
+		System.out.println(vistaPrimerUsuario);
+		System.out.println(vistaOtroUsuario);
 
+		Assert.assertFalse(vistaPrimerUsuario.equals(vistaOtroUsuario));
+
+		
+				
 	}
 
 	// @Test(groups = "OM")
