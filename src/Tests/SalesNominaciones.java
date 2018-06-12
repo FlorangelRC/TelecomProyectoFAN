@@ -34,7 +34,7 @@ public class SalesNominaciones extends TestBase{
 	public void Init() {
 		driver = setConexion.setupEze();
 		try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}		
-			 loginFranciso(driver);
+			 loginFranciso(driver);  
 		try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 		HomeBase homePage = new HomeBase(driver);
 		try {Thread.sleep(6000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
@@ -76,8 +76,8 @@ public class SalesNominaciones extends TestBase{
 			cli.findElement(By.tagName("tbody")).findElement(By.tagName("tr")).click();
 		}
 		sleep(3000);
-		WebElement cua = driver.findElement(By.id("tab-scoped-1")).findElement(By.tagName("tbody")).findElements(By.tagName("tr")).get(2).findElements(By.tagName("td")).get(6).findElement(By.tagName("svg"));
-		System.out.println("1: "+driver.findElement(By.id("tab-scoped-1")).findElement(By.tagName("tbody")).findElements(By.tagName("tr")).get(2).findElements(By.tagName("td")).get(1).getText());
+		WebElement cua = driver.findElement(By.id("tab-scoped-1")).findElement(By.tagName("tbody")).findElements(By.tagName("tr")).get(34).findElements(By.tagName("td")).get(6).findElement(By.tagName("svg"));
+		System.out.println("1: "+driver.findElement(By.id("tab-scoped-1")).findElement(By.tagName("tbody")).findElements(By.tagName("tr")).get(34).findElements(By.tagName("td")).get(1).getText());
 		cua.click();
 		sleep(10000);
 		perfil = "call";
@@ -109,8 +109,8 @@ public class SalesNominaciones extends TestBase{
 			cli.findElement(By.tagName("tbody")).findElement(By.tagName("tr")).click();
 		}
 		sleep(3000);
-		WebElement cua = driver.findElement(By.id("tab-scoped-1")).findElement(By.tagName("tbody")).findElements(By.tagName("tr")).get(9).findElements(By.tagName("td")).get(6).findElement(By.tagName("svg"));
-		System.out.println("1: "+driver.findElement(By.id("tab-scoped-1")).findElement(By.tagName("tbody")).findElements(By.tagName("tr")).get(2).findElements(By.tagName("td")).get(1).getText());
+		WebElement cua = driver.findElement(By.id("tab-scoped-1")).findElement(By.tagName("tbody")).findElements(By.tagName("tr")).get(33).findElements(By.tagName("td")).get(6).findElement(By.tagName("svg"));
+		System.out.println("1: "+driver.findElement(By.id("tab-scoped-1")).findElement(By.tagName("tbody")).findElements(By.tagName("tr")).get(33).findElements(By.tagName("td")).get(1).getText());
 		cua.click();
 		sleep(10000);
 		perfil = "call";
@@ -165,7 +165,7 @@ public class SalesNominaciones extends TestBase{
 		WebElement lis = driver.findElement(By.id("tab-scoped-2")).findElement(By.tagName("div")).findElement(By.tagName("tbody"));
 		System.out.println(lis.getSize());
 	}
-	@Test(groups ={ "Sales"}, dataProvider="SalesCuentaBolsa")//si
+	@Test(groups ={ "Sales", "Nominacion","Ola1"}, dataProvider="SalesCuentaBolsa")//si
 	public void TS95078_Nominacion_Argentino_Validar_metodo_Ident_por_DNI(String sCuenta, String sDni, String sLinea){
 		ContactSearch contact = new ContactSearch(driver);
 		String NyA = sCuenta;
@@ -176,8 +176,8 @@ public class SalesNominaciones extends TestBase{
 			cli.findElement(By.tagName("tbody")).findElement(By.tagName("tr")).click();
 		}
 		sleep(3000);
-		WebElement cua = driver.findElement(By.id("tab-scoped-1")).findElement(By.tagName("tbody")).findElements(By.tagName("tr")).get(2).findElements(By.tagName("td")).get(6).findElement(By.tagName("svg"));
-		System.out.println("1: "+driver.findElement(By.id("tab-scoped-1")).findElement(By.tagName("tbody")).findElements(By.tagName("tr")).get(2).findElements(By.tagName("td")).get(1).getText());
+		WebElement cua = driver.findElement(By.id("tab-scoped-1")).findElement(By.tagName("tbody")).findElements(By.tagName("tr")).get(37).findElements(By.tagName("td")).get(6).findElement(By.tagName("svg"));
+		System.out.println("1: "+driver.findElement(By.id("tab-scoped-1")).findElement(By.tagName("tbody")).findElements(By.tagName("tr")).get(37).findElements(By.tagName("td")).get(1).getText());
 		cua.click();
 		sleep(10000);
 		perfil = "call";
@@ -234,8 +234,8 @@ public class SalesNominaciones extends TestBase{
 			cli.findElement(By.tagName("tbody")).findElement(By.tagName("tr")).click();
 		}
 		sleep(3000);
-		WebElement cua = driver.findElement(By.id("tab-scoped-1")).findElement(By.tagName("tbody")).findElements(By.tagName("tr")).get(2).findElements(By.tagName("td")).get(6).findElement(By.tagName("svg"));
-		System.out.println("1: "+driver.findElement(By.id("tab-scoped-1")).findElement(By.tagName("tbody")).findElements(By.tagName("tr")).get(2).findElements(By.tagName("td")).get(1).getText());
+		WebElement cua = driver.findElement(By.id("tab-scoped-1")).findElement(By.tagName("tbody")).findElements(By.tagName("tr")).get(32).findElements(By.tagName("td")).get(6).findElement(By.tagName("svg"));
+		System.out.println("1: "+driver.findElement(By.id("tab-scoped-1")).findElement(By.tagName("tbody")).findElements(By.tagName("tr")).get(32).findElements(By.tagName("td")).get(1).getText());
 		cua.click();
 		sleep(10000);
 		perfil = "call";
@@ -262,8 +262,8 @@ public class SalesNominaciones extends TestBase{
 			cli.findElement(By.tagName("tbody")).findElement(By.tagName("tr")).click();
 		}
 		sleep(3000);
-		WebElement cua = driver.findElement(By.id("tab-scoped-1")).findElement(By.tagName("tbody")).findElements(By.tagName("tr")).get(2).findElements(By.tagName("td")).get(6).findElement(By.tagName("svg"));
-		System.out.println("1: "+driver.findElement(By.id("tab-scoped-1")).findElement(By.tagName("tbody")).findElements(By.tagName("tr")).get(2).findElements(By.tagName("td")).get(1).getText());
+		WebElement cua = driver.findElement(By.id("tab-scoped-1")).findElement(By.tagName("tbody")).findElements(By.tagName("tr")).get(31).findElements(By.tagName("td")).get(6).findElement(By.tagName("svg"));
+		System.out.println("1: "+driver.findElement(By.id("tab-scoped-1")).findElement(By.tagName("tbody")).findElements(By.tagName("tr")).get(31).findElements(By.tagName("td")).get(1).getText());
 		cua.click();
 		sleep(13000);
 		perfil = "call";
@@ -323,8 +323,8 @@ public class SalesNominaciones extends TestBase{
 			cli.findElement(By.tagName("tbody")).findElement(By.tagName("tr")).click();
 		}
 		sleep(3000);
-		WebElement cua = driver.findElement(By.id("tab-scoped-1")).findElement(By.tagName("tbody")).findElements(By.tagName("tr")).get(2).findElements(By.tagName("td")).get(6).findElement(By.tagName("svg"));
-		System.out.println("1: "+driver.findElement(By.id("tab-scoped-1")).findElement(By.tagName("tbody")).findElements(By.tagName("tr")).get(2).findElements(By.tagName("td")).get(1).getText());
+		WebElement cua = driver.findElement(By.id("tab-scoped-1")).findElement(By.tagName("tbody")).findElements(By.tagName("tr")).get(30).findElements(By.tagName("td")).get(6).findElement(By.tagName("svg"));
+		System.out.println("1: "+driver.findElement(By.id("tab-scoped-1")).findElement(By.tagName("tbody")).findElements(By.tagName("tr")).get(30).findElements(By.tagName("td")).get(1).getText());
 		cua.click();
 		sleep(13000);
 		perfil = "call";
@@ -347,8 +347,8 @@ public class SalesNominaciones extends TestBase{
 			cli.findElement(By.tagName("tbody")).findElement(By.tagName("tr")).click();
 		}
 		sleep(3000);
-		WebElement cua = driver.findElement(By.id("tab-scoped-1")).findElement(By.tagName("tbody")).findElements(By.tagName("tr")).get(2).findElements(By.tagName("td")).get(6).findElement(By.tagName("svg"));
-		System.out.println("1: "+driver.findElement(By.id("tab-scoped-1")).findElement(By.tagName("tbody")).findElements(By.tagName("tr")).get(2).findElements(By.tagName("td")).get(1).getText());
+		WebElement cua = driver.findElement(By.id("tab-scoped-1")).findElement(By.tagName("tbody")).findElements(By.tagName("tr")).get(41).findElements(By.tagName("td")).get(6).findElement(By.tagName("svg"));
+		System.out.println("1: "+driver.findElement(By.id("tab-scoped-1")).findElement(By.tagName("tbody")).findElements(By.tagName("tr")).get(41).findElements(By.tagName("td")).get(1).getText());
 		cua.click();
 		sleep(13000);
 		perfil = "call";
@@ -396,8 +396,8 @@ public class SalesNominaciones extends TestBase{
 			cli.findElement(By.tagName("tbody")).findElement(By.tagName("tr")).click();
 		}
 		sleep(3000);
-		WebElement cua = driver.findElement(By.id("tab-scoped-1")).findElement(By.tagName("tbody")).findElements(By.tagName("tr")).get(2).findElements(By.tagName("td")).get(6).findElement(By.tagName("svg"));
-		System.out.println("1: "+driver.findElement(By.id("tab-scoped-1")).findElement(By.tagName("tbody")).findElements(By.tagName("tr")).get(2).findElements(By.tagName("td")).get(1).getText());
+		WebElement cua = driver.findElement(By.id("tab-scoped-1")).findElement(By.tagName("tbody")).findElements(By.tagName("tr")).get(28).findElements(By.tagName("td")).get(6).findElement(By.tagName("svg"));
+		System.out.println("1: "+driver.findElement(By.id("tab-scoped-1")).findElement(By.tagName("tbody")).findElements(By.tagName("tr")).get(28).findElements(By.tagName("td")).get(1).getText());
 		cua.click();
 		sleep(13000);
 		perfil = "call";
@@ -419,8 +419,8 @@ public class SalesNominaciones extends TestBase{
 			cli.findElement(By.tagName("tbody")).findElement(By.tagName("tr")).click();
 		}
 		sleep(3000);
-		WebElement cua = driver.findElement(By.id("tab-scoped-1")).findElement(By.tagName("tbody")).findElements(By.tagName("tr")).get(2).findElements(By.tagName("td")).get(6).findElement(By.tagName("svg"));
-		System.out.println("1: "+driver.findElement(By.id("tab-scoped-1")).findElement(By.tagName("tbody")).findElements(By.tagName("tr")).get(2).findElements(By.tagName("td")).get(1).getText());
+		WebElement cua = driver.findElement(By.id("tab-scoped-1")).findElement(By.tagName("tbody")).findElements(By.tagName("tr")).get(27).findElements(By.tagName("td")).get(6).findElement(By.tagName("svg"));
+		System.out.println("1: "+driver.findElement(By.id("tab-scoped-1")).findElement(By.tagName("tbody")).findElements(By.tagName("tr")).get(27).findElements(By.tagName("td")).get(1).getText());
 		cua.click();
 		sleep(13000);
 		perfil = "call";
@@ -457,8 +457,8 @@ public class SalesNominaciones extends TestBase{
 			cli.findElement(By.tagName("tbody")).findElement(By.tagName("tr")).click();
 		}
 		sleep(3000);
-		WebElement cua = driver.findElement(By.id("tab-scoped-1")).findElement(By.tagName("tbody")).findElements(By.tagName("tr")).get(2).findElements(By.tagName("td")).get(6).findElement(By.tagName("svg"));
-		System.out.println("1: "+driver.findElement(By.id("tab-scoped-1")).findElement(By.tagName("tbody")).findElements(By.tagName("tr")).get(2).findElements(By.tagName("td")).get(1).getText());
+		WebElement cua = driver.findElement(By.id("tab-scoped-1")).findElement(By.tagName("tbody")).findElements(By.tagName("tr")).get(26).findElements(By.tagName("td")).get(6).findElement(By.tagName("svg"));
+		System.out.println("1: "+driver.findElement(By.id("tab-scoped-1")).findElement(By.tagName("tbody")).findElements(By.tagName("tr")).get(26).findElements(By.tagName("td")).get(1).getText());
 		cua.click();
 		sleep(13000);
 		contact.searchContact2("Pasaporte", "312313214", "femenino");
@@ -489,8 +489,8 @@ public class SalesNominaciones extends TestBase{
 			cli.findElement(By.tagName("tbody")).findElement(By.tagName("tr")).click();
 		}
 		sleep(3000);
-		WebElement cua = driver.findElement(By.id("tab-scoped-1")).findElement(By.tagName("tbody")).findElements(By.tagName("tr")).get(2).findElements(By.tagName("td")).get(6).findElement(By.tagName("svg"));
-		System.out.println("1: "+driver.findElement(By.id("tab-scoped-1")).findElement(By.tagName("tbody")).findElements(By.tagName("tr")).get(2).findElements(By.tagName("td")).get(1).getText());
+		WebElement cua = driver.findElement(By.id("tab-scoped-1")).findElement(By.tagName("tbody")).findElements(By.tagName("tr")).get(25).findElements(By.tagName("td")).get(6).findElement(By.tagName("svg"));
+		System.out.println("1: "+driver.findElement(By.id("tab-scoped-1")).findElement(By.tagName("tbody")).findElements(By.tagName("tr")).get(25).findElements(By.tagName("td")).get(1).getText());
 		cua.click();
 		sleep(13000);
 		perfil = "call";
@@ -568,8 +568,8 @@ public class SalesNominaciones extends TestBase{
 			cli.findElement(By.tagName("tbody")).findElement(By.tagName("tr")).click();
 		}
 		sleep(3000);
-		WebElement cua = driver.findElement(By.id("tab-scoped-1")).findElement(By.tagName("tbody")).findElements(By.tagName("tr")).get(2).findElements(By.tagName("td")).get(6).findElement(By.tagName("svg"));
-		System.out.println("1: "+driver.findElement(By.id("tab-scoped-1")).findElement(By.tagName("tbody")).findElements(By.tagName("tr")).get(2).findElements(By.tagName("td")).get(1).getText());
+		WebElement cua = driver.findElement(By.id("tab-scoped-1")).findElement(By.tagName("tbody")).findElements(By.tagName("tr")).get(24).findElements(By.tagName("td")).get(6).findElement(By.tagName("svg"));
+		System.out.println("1: "+driver.findElement(By.id("tab-scoped-1")).findElement(By.tagName("tbody")).findElements(By.tagName("tr")).get(24).findElements(By.tagName("td")).get(1).getText());
 		cua.click();
 		sleep(13000);
 		perfil = "call";
@@ -620,8 +620,8 @@ public class SalesNominaciones extends TestBase{
 			cli.findElement(By.tagName("tbody")).findElement(By.tagName("tr")).click();
 		}
 		sleep(3000);
-		WebElement cua = driver.findElement(By.id("tab-scoped-1")).findElement(By.tagName("tbody")).findElements(By.tagName("tr")).get(2).findElements(By.tagName("td")).get(6).findElement(By.tagName("svg"));
-		System.out.println("1: "+driver.findElement(By.id("tab-scoped-1")).findElement(By.tagName("tbody")).findElements(By.tagName("tr")).get(2).findElements(By.tagName("td")).get(1).getText());
+		WebElement cua = driver.findElement(By.id("tab-scoped-1")).findElement(By.tagName("tbody")).findElements(By.tagName("tr")).get(40).findElements(By.tagName("td")).get(6).findElement(By.tagName("svg"));
+		System.out.println("1: "+driver.findElement(By.id("tab-scoped-1")).findElement(By.tagName("tbody")).findElements(By.tagName("tr")).get(40).findElements(By.tagName("td")).get(1).getText());
 		cua.click();
 		sleep(13000);
 		perfil = "call";

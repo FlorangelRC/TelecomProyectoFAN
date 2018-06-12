@@ -31,7 +31,7 @@ public class OMerO extends TestBase {
 	private WebDriver driver;
 	protected OM om;
 	protected BasePage bp;
-
+	protected OMQPage omq;
 
 	@BeforeClass (alwaysRun = true, groups = "OM")
 	public void init() {
@@ -41,6 +41,7 @@ public class OMerO extends TestBase {
 		sleep(5000);
 		om = new OM(driver);
 		bp = new BasePage(driver);
+		omq = new OMQPage(driver);
 	}
 	
 	@BeforeMethod (alwaysRun = true, groups = "OM")
@@ -144,50 +145,20 @@ public class OMerO extends TestBase {
 //=======================================================================================================================================================================
 	
 	@Test (groups = "OM")
-	public void TS_OM_Cambio_de_Numero(){
-		Date date = new Date();
-		
-	//Mientras, seleccion de vista
+	public void TS80241_OM_Ordenes_Cliente_existente_Cambio_de_numero_Plan_con_tarjeta_Sin_delivery_Paso_0() throws InterruptedException{
 		Select allOrder=new Select(driver.findElement(By.id("fcf")));
 		allOrder.selectByVisibleText("AlanOM");
 		sleep(1000);
 		try {driver.findElement(By.name("go")).click();}catch(org.openqa.selenium.NoSuchElementException e) {}
-		sleep(3000);
+		sleep(5000);
 	//Selecciona la primera cuenta de la lista en la vista seleccionada
-		WebElement primeraCuenta=driver.findElement(By.cssSelector(".x-grid3-col.x-grid3-cell.x-grid3-td-SALES_ACCOUNT_NAME"));
-		primeraCuenta.findElement(By.tagName("div")).findElement(By.tagName("a")).click();
-		sleep(8000);
-	//Seleccion del ultimo Asset
-		om.irAChangeToOrder();	
-		sleep(8000);
-	//Ingreso de fecha avanzada
-		Accounts accountPage = new Accounts(driver);
-		/*DateFormat dateFormat = new SimpleDateFormat("MM-dd-yyyy");
-		driver.findElement(By.id("RequestDate")).sendKeys(dateFormat.format(om.fechaAvanzada()));*/
-		driver.findElement(By.id("RequestDate")).sendKeys("08-08-2018");
-		driver.findElement(By.cssSelector(".form-control.btn.btn-primary.ng-binding")).click();
-		sleep(15000);
-	//SIM
-		driver.findElement(By.cssSelector(".slds-button.cpq-item-has-children")).click();
+		om.crearOrden("AlOM");
 		sleep(3000);
-		driver.switchTo().defaultContent();
-		driver.findElement(By.xpath(".//*[@id='tab-default-1']/div[1]/ng-include/div/div/div/div[4]/div[2]/div/ng-include/div/div[2]/ng-include/div/div[1]/div/div[2]/div[11]")).click();
-		sleep(3000);
-		driver.findElement(By.xpath(".//*[@id='tab-default-1']/div[1]/ng-include/div/div/div/div[4]/div[2]/div/ng-include/div/div[2]/ng-include/div/div[1]/div/div[2]/div[11]/div[2]/div/ul/li[3]/a")).click();
+		omq.getCPQ().click();
 		sleep(5000);
-		((JavascriptExecutor)driver).executeScript("window.scrollTo(0,"+driver.findElement(By.className("slds-section")).getLocation().y+" )");
-		WebElement msi = driver.findElement(By.xpath("//*[@id='js-cpq-product-cart-config-form']/div[1]/div/form/div[17]/div[1]/input"));
-		Random r = new Random();
-		msi.clear();
-		msi.sendKeys("11" + r.nextInt(200000000) );
-		msi.submit();
-		sleep(30000);
-		driver.findElement(By.id("-import-btn")).click();
+		omq.colocarPlan("Plan con Tarjeta");
+		omq.configuracion(); 
 		sleep(5000);
-	//Gestion
-		om.agregarGestion("Cambio de n\u00famero");
-		driver.findElements(By.id("topButtonRow")).get(0);
-		sleep(7000);
 		driver.findElement(By.name("ta_submit_order")).click();
 		sleep(35000);
 		om.cambiarVentanaNavegador(1);
@@ -197,7 +168,8 @@ public class OMerO extends TestBase {
 		om.cambiarVentanaNavegador(0);
 		sleep(12000);
 		om.completarFlujoOrquestacion();
-		
+		sleep(5000);
+		//driver.findElement(By.id("accid_ileinner")).findElement(By.tagName("a")).click();
 		}
 			
 }

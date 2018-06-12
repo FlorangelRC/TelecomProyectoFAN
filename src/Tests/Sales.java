@@ -433,13 +433,13 @@ public class Sales extends TestBase {
 		assertTrue(esta);
 	}
 	
-	@Test(groups={"Sales", "AltaDeLinea", "Ola1"}, priority=3, dataProvider="SalesCuentaActiva")  
+	//@Test(groups={"Sales", "AltaDeLinea", "Ola1"}, priority=3, dataProvider="SalesCuentaActiva")  
 	public void TS94827_Ventas_General_Verificar_Metodos_De_Pago_Perfil_Representante_Telefonico(String sCuenta, String sDni, String sLinea) throws IOException {
 		perfil = "venta";
 		boolean TDC = false;
 		boolean DPF = false;
 		SalesBase sb = new SalesBase(driver);
-		sb.DesloguearLoguear("call");
+		sb.DesloguearLoguear("call", 4);
 		sleep(5000);
 		//try {
 			driver.findElement(By.xpath("//a[@href=\'https://crm--sit--c.cs14.visual.force.com/apex/taClientSearch']")).click();
@@ -483,7 +483,7 @@ public class Sales extends TestBase {
 		}
 		assertTrue(TDC&&DPF);
 		sleep(4000);
-		sb.DesloguearLoguear("venta");
+		sb.DesloguearLoguear("venta", 4);
 		/*}catch(Exception ex1) {
 			sb.DesloguearLoguear("venta");
 			Assert.assertTrue(false);
@@ -491,10 +491,10 @@ public class Sales extends TestBase {
 	}
 		
 	
-	@Test(groups={"Sales", "AltaDeLinea", "Ola1"}, priority=7, dataProvider="SalesCuentaActiva")  
+	//@Test(groups={"Sales", "AltaDeLinea", "Ola1"}, priority=7, dataProvider="SalesCuentaActiva")  
 	public void TS94831_Ventas_General_Verificar_No_Asignacion_De_Seriales_Perfil_Representante_Telefonico(String sCuenta, String sDni, String sLinea) throws IOException {
 		SalesBase sb = new SalesBase(driver);
-		sb.DesloguearLoguear("call");
+		sb.DesloguearLoguear("call", 4);
 		sleep(5000);
 		try {
 			driver.findElement(By.xpath("//a[@href=\'https://crm--sit--c.cs14.visual.force.com/apex/taClientSearch']")).click();
@@ -525,9 +525,9 @@ public class Sales extends TestBase {
 				assertTrue(true);
 			}
 			sleep(4000);
-			sb.DesloguearLoguear("venta");
+			sb.DesloguearLoguear("venta", 4);
 		}catch(Exception ex1) {
-			sb.DesloguearLoguear("venta");
+			sb.DesloguearLoguear("venta", 4);
 			Assert.assertTrue(false);
 		}
 		
@@ -2506,7 +2506,7 @@ public class Sales extends TestBase {
 	@Test(groups={"Sales", "AltaDeLinea", "Ola1"}, priority=3, dataProvider="SalesCuentaActiva")
 	public void TS94830_Ventas_General_Verificar_Metodo_De_Entrega_Por_Default_Perfil_Representante_Telefonico(String sCuenta, String sDni, String sLinea) throws IOException{
 		SalesBase SB = new SalesBase(driver);
-		SB.DesloguearLoguear("call");
+		SB.DesloguearLoguear("call", 4);
 		sleep(5000);
 		try {
 			driver.findElement(By.xpath("//a[@href=\'https://crm--sit--c.cs14.visual.force.com/apex/taClientSearch']")).click();
@@ -2533,9 +2533,9 @@ public class Sales extends TestBase {
 				assertTrue(true);
 			}
 			sleep(4000);
-			SB.DesloguearLoguear("venta");
+			SB.DesloguearLoguear("venta", 4);
 		}catch(Exception ex1) {
-			SB.DesloguearLoguear("venta");
+			SB.DesloguearLoguear("venta", 4);
 			Assert.assertTrue(false);
 		}
 		
