@@ -801,15 +801,23 @@ try{	driver.findElement(By.id("alert-ok-button")).click();	} catch (NoSuchElemen
 			}
 		}
 		
-		public void DesloguearLoguear(String perfil) {
+		public void DesloguearLoguear(String perfil, int num) {
 			sleep(5000);
 			TestBase TB= new TestBase();
 			driver.get("https://crm--sit.cs14.my.salesforce.com/home/home.jsp?tsid=02u41000000QWha/");
 			try {Thread.sleep(10000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 			driver.findElement(By.id("userNavButton")).click();
-			sleep(2000);
-			driver.findElement(By.id("userNav-menuItems")).findElements(By.tagName("a")).get(4).click();
+			sleep(6000);
+			System.out.println(driver.findElement(By.id("userNav-menuItems")).findElements(By.tagName("a")).get(num).getText());
+			driver.findElement(By.id("userNav-menuItems")).findElements(By.tagName("a")).get(num).click();
 			sleep(4000);
+			if(num == 3) {
+				sleep(2000);
+				driver.findElement(By.id("userDropdown")).click();
+				sleep(3000);
+				driver.findElement(By.id("logout")).click();
+				sleep(5000);
+			}
 			driver.get("https://crm--sit.cs14.my.salesforce.com/");
 			driver.findElement(By.id("cancel_idp_hint")).click();
 			 switch(perfil){
