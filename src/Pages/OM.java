@@ -3,12 +3,13 @@ package Pages;
 import static org.testng.Assert.assertTrue;
 
 import java.text.SimpleDateFormat;
+import java.time.Duration;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Iterator;
 import java.util.List;
-import java.util.NoSuchElementException;
 import java.util.Set;
+import java.util.concurrent.TimeUnit;
 import java.util.Random;
 import java.util.Date;
 
@@ -20,12 +21,14 @@ import org.openqa.selenium.Keys;
 import org.openqa.selenium.NoAlertPresentException;
 import org.openqa.selenium.UnhandledAlertException;
 import org.openqa.selenium.By.ById;
+import org.openqa.selenium.ElementNotVisibleException;
 import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.FluentWait;
 import org.openqa.selenium.support.ui.Select;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
@@ -34,12 +37,19 @@ import com.gargoylesoftware.htmlunit.ElementNotFoundException;
 public class OM {
 
 	static WebDriver driver;
+	static FluentWait<WebDriver> fluentWait;
 
 	// *********************************CONSTRUCTOR******************************************************//
 
 	public OM(WebDriver driver) {
 		this.driver = driver;
 		PageFactory.initElements(driver, this);
+		fluentWait = new FluentWait<WebDriver>(driver);
+		fluentWait.withTimeout(30, TimeUnit.SECONDS)
+			.pollingEvery(5, TimeUnit.SECONDS)
+			.ignoring(org.openqa.selenium.NoSuchElementException.class)
+			.ignoring(org.openqa.selenium.ElementNotVisibleException.class);
+		
 	}
 
 	// *********************************ELEMENTOS******************************************************//
@@ -519,9 +529,9 @@ public class OM {
 	// Ir hasta SIM config
 	public void goToSimConfig() {
 		// Plan
-		driver.findElement(
-				By.xpath("//*[@id=\"tab-default-1\"]/div[1]/ng-include/div/div/div/div[3]/div[1]/div[1]/button"))
-				.click();
+		WebElement plan = fluentWait.until(ExpectedConditions.elementToBeClickable(
+				By.xpath("//*[@id=\"tab-default-1\"]/div[1]/ng-include/div/div/div/div[3]/div[1]/div[1]/button")));
+		plan.click();
 		// Sim
 		sleep(1000);
 		driver.findElement(By.xpath(
@@ -534,14 +544,16 @@ public class OM {
 				.click();
 
 	}
-	
+
 	// Cambia el número
 	public void cambiarNumero(String numero) {
 		WebElement cambiarNumero;
 		try {
-			cambiarNumero = driver.findElement(By.xpath("//*[@id=\"js-cpq-product-cart-config-form\"]/div[1]/div/form/div[2]/div[1]/input"));
-		}catch(org.openqa.selenium.NoSuchElementException e) {
-			cambiarNumero = driver.findElement(By.xpath("//*[@id=\"js-cpq-product-cart-config-form\"]/div[1]/div/form/div[17]/div[1]/input"));
+			cambiarNumero = driver.findElement(
+					By.xpath("//*[@id=\"js-cpq-product-cart-config-form\"]/div[1]/div/form/div[2]/div[1]/input"));
+		} catch (org.openqa.selenium.NoSuchElementException e) {
+			cambiarNumero = driver.findElement(
+					By.xpath("//*[@id=\"js-cpq-product-cart-config-form\"]/div[1]/div/form/div[17]/div[1]/input"));
 		};
 		cambiarNumero.clear();
 		cambiarNumero.sendKeys(numero);
