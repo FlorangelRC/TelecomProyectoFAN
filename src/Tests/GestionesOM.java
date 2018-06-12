@@ -68,35 +68,10 @@ public class GestionesOM extends TestBase {
 	
 	@Test(groups="OM", priority=1)
 	public void AltaLinea() throws InterruptedException {
-		TS_CRM_OM_Gestion_Alta_De_Linea("FlorOM", "Plan Prepago Nacional");
-	}
-	public void TS_CRM_OM_Gestion_Alta_De_Linea(String Cuenta, String Plan) throws InterruptedException {
 		OM pageOm=new OM(driver);
-		OMQPage OM=new OMQPage (driver);
-		pageOm.crearOrden(Cuenta);
-		assertTrue(driver.findElement(By.cssSelector(".noSecondHeader.pageType")).isDisplayed());
-		pageOm.agregarGestion("Venta");
-		sleep(2000);
-		OM.getCPQ().click();
-		sleep(5000);
-		OM.colocarPlan(Plan);
-		OM.configuracion();
-		sleep(5000);
-		driver.findElement(By.name("ta_submit_order")).click();
-		sleep(35000);
-		pageOm.cambiarVentanaNavegador(1);
-		sleep(2000);
-		driver.findElement(By.id("idlist")).click();
-		sleep(5000);
-		pageOm.cambiarVentanaNavegador(0);
-		sleep(12000);
-		pageOm.completarFlujoOrquestacion();
-		sleep(5000);
-		driver.findElement(By.id("accid_ileinner")).findElement(By.tagName("a")).click();
-		sleep(10000);
-		//pageOm.irAChangeToOrder();
-		
+		pageOm.Gestion_Alta_De_Linea("FlorOM", "Plan Prepago Nacional");
 	}
+	
 	
 	@Test(groups="OM", priority=1)
 	public void TS_CRM_Cambio_De_SimCard() throws InterruptedException {
