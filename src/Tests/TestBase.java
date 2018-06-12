@@ -159,9 +159,9 @@ public class TestBase {
 		driver.navigate().to("https://crm--sit.cs14.my.salesforce.com/");
 		driver.findElement(By.xpath("//*[@id=\"idp_hint\"]/button")).click();
 		sleep(3000);
-		driver.findElement(By.name("Ecom_User_ID")).sendKeys(userName);
-		driver.findElement(By.name("Ecom_Password")).sendKeys(password);
-		driver.findElement(By.id("loginButton2")).click();
+//		driver.findElement(By.name("Ecom_User_ID")).sendKeys(userName);
+//		driver.findElement(By.name("Ecom_Password")).sendKeys(password);
+//		driver.findElement(By.id("loginButton2")).click();
 	}
 	
 	public void omLogout(WebDriver driver) {
