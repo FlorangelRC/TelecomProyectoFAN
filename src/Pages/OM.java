@@ -219,35 +219,37 @@ public class OM {
 		}
 		sleep(10000);
 		List<WebElement> cajas = driver.findElements(By.cssSelector(".item-label-container.item-header.item-failed"));
-		// cajas.addAll(driver.findElements(By.cssSelector(".item-label-container.item-header.item-fatally-failed")));
+		cajas.addAll(driver.findElements(By.cssSelector(".item-label-container.item-header.item-fatally-failed")));
+		cajas.addAll(driver.findElements(By.cssSelector(".item-label-container.item-header.item-running")));
 		int i = 1;
 		while (cajas.size() > 0) {
 			for (WebElement UnaC : cajas) {
 				UnaC.click();
 				sleep(5000);
 				cambiarVentanaNavegador(i);
-				i++;
+				//i++;
 				sleep(5000);
 				List<WebElement> botones = driver
-						.findElements(By.cssSelector(".slds-button.slds-button--neutral.ng-binding.ng-scope"));
+						.findElements(By.cssSelector(".slds-button.slds-button--neutral.ng-scope"));
 				for (WebElement UnB : botones) {
 					if (UnB.getText().equals("Complete")) {
 						UnB.click();
-						sleep(2000);
-						UnB.click();
+						sleep(4000);
+						System.out.println("Hizo click");
 						break;
 					}
 				}
 				sleep(10000);
 				cambiarVentanaNavegador(0);
-				sleep(1000);
-				// closeAllOtherTabs();
-				sleep(15000);
+				sleep(10000);
+				closeAllOtherTabs();
+				sleep(35000);
 				break;
 			}
 			cajas = driver.findElements(By.cssSelector(".item-label-container.item-header.item-failed"));
-			// cajas.addAll(driver.findElements(By.cssSelector(".item-label-container.item-header.item-fatally-failed")));
-
+			cajas.addAll(driver.findElements(By.cssSelector(".item-label-container.item-header.item-fatally-failed")));
+			cajas.addAll(driver.findElements(By.cssSelector(".item-label-container.item-header.item-running")));
+			
 		}
 		closeAllOtherTabs();
 		sleep(5000);
@@ -617,4 +619,39 @@ public void deleteOrdersNoActivated(String Vista) {
 		return Next;
 	}
 
+	public void Cambio_De_SimCard() throws InterruptedException {
+		//TS_CRM_OM_Gestion_Alta_De_Linea();
+		OM pageOm=new OM(driver);
+		OMQPage OM=new OMQPage (driver);
+		//Mientras, seleccion de vista
+		pageOm.selectVistaByVisibleText("LineasFlor");
+		sleep(3000);
+		//Selecciona la primera cuenta de la lista en la vista seleccionada
+		WebElement primeraCuenta=driver.findElement(By.cssSelector(".x-grid3-col.x-grid3-cell.x-grid3-td-SALES_ACCOUNT_NAME"));
+		primeraCuenta.findElement(By.tagName("div")).findElement(By.tagName("a")).click();
+		sleep(5000);
+		pageOm.irAChangeToOrder();	
+		sleep(10000);
+		Accounts accountPage = new Accounts(driver);
+		driver.switchTo().defaultContent(); 
+        /*DateFormat dateFormat = new SimpleDateFormat("MM-dd-yyyy");
+		driver.findElement(By.id("RequestDate")).sendKeys(dateFormat.format(pageOm.fechaAvanzada()));*/
+		driver.findElement(By.id("RequestDate")).sendKeys("07-12-2018");
+		driver.findElement(By.cssSelector(".form-control.btn.btn-primary.ng-binding")).click();
+		sleep(12000);
+		OM.SimCard();
+		driver.findElement(By.id("-import-btn")).click();
+		sleep(8000);
+		pageOm.agregarGestion("Cambio de SIM");
+		sleep(5000);
+		/*driver.findElement(By.name("ta_submit_order")).click();
+		sleep(35000);
+		pageOm.cambiarVentanaNavegador(1);
+		sleep(2000);
+		driver.findElement(By.id("idlist")).click();
+		sleep(5000);
+		pageOm.cambiarVentanaNavegador(0);
+		sleep(12000);*/
+	}
+	
 }

@@ -42,12 +42,12 @@ public class Sales2 extends TestBase{
 	String localidad="VICENTE LOPEZ";
 	protected  WebDriverWait wait;
 	
-	@AfterClass(alwaysRun=true)
+	//@AfterClass(alwaysRun=true)
 	public void tearDown() {
 		driver.quit();
 	}
 	
-	@AfterMethod(alwaysRun=true)
+	//@AfterMethod(alwaysRun=true)
 	public void deslogin() {
 		sleep(3000);
 		driver.get("https://crm--sit.cs14.my.salesforce.com/home/home.jsp?tsid=02u41000000QWha/");
@@ -142,6 +142,8 @@ public class Sales2 extends TestBase{
 		sb.elegirplan("Plan Prepago Nacional");
 		sb.continuar();
 		sleep(18000);
+		sb.Crear_DomicilioLegal(provincia, localidad, "falsa", "", "1000", "", "", "1549");
+		sleep(20000);
 		CustomerCare page = new CustomerCare(driver);
 		WebElement sig = driver.findElement(By.id("LineAssignment_nextBtn"));
 		page.obligarclick(sig);
@@ -294,9 +296,10 @@ public class Sales2 extends TestBase{
 		sleep(10000);
 		driver.switchTo().defaultContent();
 		sb.elegirplan("Plan Prepago Nacional");
+		sb.continuar();
 		sleep(15000);
-		driver.findElement(By.cssSelector(".slds-button.slds-m-left--large.slds-button--brand.ta-button-brand")).click();
-		sleep(15000);
+		sb.Crear_DomicilioLegal( provincia, localidad, "falsa", "", "4537", "", "", "5384");
+		sleep(20000);
 		driver.findElement(By.id("LineAssignment_nextBtn")).click();
 		sleep(10000);
 		List <WebElement> num = driver.findElements(By.className("slds-form-element__control"));
@@ -459,9 +462,10 @@ public class Sales2 extends TestBase{
 		sleep(5000);
 		IrA.CajonDeAplicaciones.ConsolaFAN();
 		TechCare_Ola1 tc = new TechCare_Ola1(driver);
-		sb.cerrarTodasLasPestanias();
-		tc.selectAccount (sCuenta);
-		sleep(5000);
+		//sb.cerrarTodasLasPestanias();
+		//sleep(8000);
+	//	tc.selectAccount (sCuenta);
+		sleep(8000);
 		driver.switchTo().frame(cambioFrame(driver, By.cssSelector(".console-card.open")));
 		driver.findElement(By.cssSelector(".console-card.open")).click();
 		sleep(10000);
@@ -512,9 +516,10 @@ public class Sales2 extends TestBase{
 		sleep(5000);
 		IrA.CajonDeAplicaciones.ConsolaFAN();
 		TechCare_Ola1 tc = new TechCare_Ola1(driver);
-		sb.cerrarTodasLasPestanias();
+		//sb.cerrarTodasLasPestanias();
+		//sleep(5000);
 		tc.selectAccount (sCuenta);
-		sleep(5000);
+		sleep(8000);
 		driver.switchTo().frame(cambioFrame(driver, By.cssSelector(".console-card.open")));
 		WebElement nv = driver.findElement(By.cssSelector(".console-card.open"));
 		Assert.assertTrue(nv.getText().contains("Nueva Venta"));
@@ -724,10 +729,12 @@ public class Sales2 extends TestBase{
 		sleep(15000);
 		driver.findElement(By.cssSelector(".slds-button.slds-m-left--large.slds-button--brand.ta-button-brand")).click();
 		sleep(15000);
+		sb.Crear_DomicilioLegal( provincia, localidad,"falsa", "", "5846", "", "", "5248");
+		sleep(20000);
 		driver.findElement(By.id("LineAssignment_nextBtn")).click();
 		sleep(10000);
 		WebElement mde = driver.findElement(By.id("DeliveryMethod"));
-		Assert.assertTrue(mde.getAttribute("disabled").equals("true"));
+		Assert.assertTrue(mde.getAttribute("disabled").equals("disabled"));	
 	}
 	
 	@Test(groups={"Sales", "AltaDeLinea", "Ola1"}, priority=3, dataProvider="SalesCuentaActiva")
@@ -990,7 +997,8 @@ public class Sales2 extends TestBase{
 		sleep(15000);
 		sb.elegirplan("Plan Prepago Nacional");
 		sb.continuar();
-		sleep(15000);
+		sleep(20000);
+		sb.Crear_DomicilioLegal( provincia, localidad,"falsa", "", "5846", "", "", "5248");
 		CustomerCare page = new CustomerCare(driver);
 		WebElement sig = driver.findElement(By.id("LineAssignment_nextBtn"));
 		page.obligarclick(sig);
@@ -1099,6 +1107,7 @@ public class Sales2 extends TestBase{
 		sb.elegirplan("Plan Prepago Nacional");
 		sb.continuar();
 		sleep(20000);
+		
 		CustomerCare page = new CustomerCare(driver);
 		try {
 			driver.findElement(By.id("Step_Error_Huawei_S013_nextBtn")).click();
@@ -1759,8 +1768,11 @@ public class Sales2 extends TestBase{
 		sb.acciondecontacto("catalogo");
 		sleep(15000);
 		sb.elegirplan("Plan Prepago Nacional");
+		sb.continuar();
 		sleep(15000);
-		driver.findElement(By.cssSelector(".slds-button.slds-m-left--large.slds-button--brand.ta-button-brand")).click();
+		sb.Crear_DomicilioLegal(provincia, localidad, "falsa", "", "1000", "", "", "1549");
+		sleep(20000);
+		//driver.findElement(By.cssSelector(".slds-button.slds-m-left--large.slds-button--brand.ta-button-brand")).click();
 		sleep(15000);
 		driver.findElement(By.id("LineAssignment_nextBtn")).click();
 		sleep(10000);
@@ -2234,7 +2246,7 @@ public class Sales2 extends TestBase{
 		//sb.BuscarCuenta(DNI, buscarCampoExcel(1, "Cuenta Activa", 2));
 		sb.acciondecontacto("catalogo");
 		try {Thread.sleep(4000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
-		sb.elegirplan("Plan Prepago Nacional");
+		sb.elegirplan("Plan Prepago Nacional"); 
 		try {Thread.sleep(8000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 		sb.continuar();
 		sleep(8000);
