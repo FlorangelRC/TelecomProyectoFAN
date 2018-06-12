@@ -42,12 +42,12 @@ public class Sales2 extends TestBase{
 	String localidad="VICENTE LOPEZ";
 	protected  WebDriverWait wait;
 	
-	@AfterClass(alwaysRun=true)
+	//@AfterClass(alwaysRun=true)
 	public void tearDown() {
 		driver.quit();
 	}
 	
-	@AfterMethod(alwaysRun=true)
+	//@AfterMethod(alwaysRun=true)
 	public void deslogin() {
 		sleep(3000);
 		driver.get("https://crm--sit.cs14.my.salesforce.com/home/home.jsp?tsid=02u41000000QWha/");
@@ -2234,7 +2234,7 @@ public class Sales2 extends TestBase{
 		//sb.BuscarCuenta(DNI, buscarCampoExcel(1, "Cuenta Activa", 2));
 		sb.acciondecontacto("catalogo");
 		try {Thread.sleep(4000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
-		sb.elegirplan("Plan Prepago Nacional");
+		sb.elegirplan("Plan Prepago Nacional"); 
 		try {Thread.sleep(8000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 		sb.continuar();
 		sleep(8000);
