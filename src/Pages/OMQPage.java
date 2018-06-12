@@ -152,7 +152,7 @@ public class OMQPage extends BasePage {
 	
 
 	
-	public void agregarPack() {
+	public void agregarPack(String servicio) {
 		sleep(8000);
 		driver.findElement(By.cssSelector(".slds-button.cpq-item-has-children")).click();
 		List<WebElement> list1 = driver.findElements(By.xpath("//*[@class='cpq-item-product-child-level-1 cpq-item-child-product-name-wrapper']//*[@class='slds-button slds-button_icon-small']"));
@@ -161,11 +161,28 @@ public class OMQPage extends BasePage {
 		List<WebElement> pDatos = driver.findElements(By.xpath("//*[@class='cpq-item-product-child-level-2 cpq-item-child-product-name-wrapper']//*[@class='slds-button slds-button_icon-small']"));
 		((JavascriptExecutor)driver).executeScript("window.scrollTo(0,"+driver.findElement(By.xpath("//*[@class='cpq-item-product-child-level-2 cpq-item-child-product-name-wrapper']//*[@class='slds-button slds-button_icon-small']")).getLocation().y+")");
 		pDatos.get(2).click();
-		List<WebElement>add=driver.findElements(By.xpath("//*[@id=\"tab-default-1\"]//div/ng-include/div//div[2]/div[11]"));
-		((JavascriptExecutor)driver).executeScript("window.scrollTo(0,"+driver.findElement(By.xpath("//*[@id=\\\"tab-default-1\\\"]//div/ng-include/div//div[2]/div[11]")).getLocation().y+")");
-		add.get(11).click();
-		
-	}
+		 List<WebElement> tablas=driver.findElements(By.className("cpq-item-base-product-details"));
+
+		 //subtista
+		 List<WebElement> servicios=tablas.get(0).findElements(By.cssSelector(".cpq-item-base-product-name-field.cpq-item-text-value.cpq-item-product-title"));
+		 for(WebElement S:servicios) {
+			   if(S.getText().toLowerCase().contains(servicio.toLowerCase())) {
+				   System.out.println(servicio);
+				   try {Thread.sleep(2000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();	}
+				   		List<WebElement> Agregar=driver.findElements(By.xpath(".//*[@id='tab-default-1']/div[1]//ng-include/div//div[11]/button")); //findElement(By.className("slds-button slds-button_neutral")).findElements(By.tagName("div")).get(0);
+				   			Agregar.get(10).click();
+							break;
+							
+				  		}
+			 //Click ViewRecord
+				driver.findElement(By.id("-import-btn")).click();
+				sleep(7000);
+		 }
+
+ }
+		 
+
+			   
 	
 	
 			

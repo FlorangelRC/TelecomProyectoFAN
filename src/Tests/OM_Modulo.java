@@ -130,9 +130,23 @@ public void TS102205_CRM_OM_Ola_2_Ordenes_Cliente_existente_Alta_de_linea_con_1_
 				
 				//fecha avanzada
 				pageOm.fechaAvanzada();
-				//driver.findElement(By.id("RequestDate")).sendKeys(dateFormat.format(pageOm.fechaAvanzada()));
-				OM.agregarPack();
+				//agregar Pack
+				OM.agregarPack("Pack 2GB + WhasApp x 7 días");
+				//agregar gestion
+				pageOm.agregarGestion("Alta producto genérico");
+				//Orquestacion
+				driver.findElements(By.id("topButtonRow")).get(0);
+				sleep(7000);
+				driver.findElement(By.name("ta_submit_order")).click();
+				sleep(35000);
+				pageOm.cambiarVentanaNavegador(1);
+				sleep(2000);
+				driver.findElement(By.id("idlist")).click();
+				sleep(5000);
+				pageOm.cambiarVentanaNavegador(0);
+				sleep(12000);
+				pageOm.completarFlujoOrquestacion();
 				
-		
+			
 	}
 }

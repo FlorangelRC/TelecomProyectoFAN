@@ -7,9 +7,11 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
+import java.util.Random;
 
 import org.junit.Assert;
 import org.openqa.selenium.By;
+import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.Select;
@@ -65,16 +67,19 @@ public class GestionesOM extends TestBase {
 	}
 	
 	@Test(groups="OM", priority=1)
-	public void TS_CRM_OM_Gestion_Alta_De_Linea() throws InterruptedException {
+	public void AltaLinea() throws InterruptedException {
+		TS_CRM_OM_Gestion_Alta_De_Linea("FlorOM", "Plan Prepago Nacional");
+	}
+	public void TS_CRM_OM_Gestion_Alta_De_Linea(String Cuenta, String Plan) throws InterruptedException {
 		OM pageOm=new OM(driver);
 		OMQPage OM=new OMQPage (driver);
-		pageOm.crearOrden("AutomaOM");
+		pageOm.crearOrden(Cuenta);
 		assertTrue(driver.findElement(By.cssSelector(".noSecondHeader.pageType")).isDisplayed());
 		pageOm.agregarGestion("Venta");
 		sleep(2000);
 		OM.getCPQ().click();
 		sleep(5000);
-		OM.colocarPlan("Plan Prepago Nacional");
+		OM.colocarPlan(Plan);
 		OM.configuracion();
 		sleep(5000);
 		driver.findElement(By.name("ta_submit_order")).click();
@@ -89,7 +94,7 @@ public class GestionesOM extends TestBase {
 		sleep(5000);
 		driver.findElement(By.id("accid_ileinner")).findElement(By.tagName("a")).click();
 		sleep(10000);
-		pageOm.irAChangeToOrder();
+		//pageOm.irAChangeToOrder();
 		
 	}
 	
@@ -97,36 +102,7 @@ public class GestionesOM extends TestBase {
 	public void TS_CRM_Cambio_De_SimCard() throws InterruptedException {
 		//TS_CRM_OM_Gestion_Alta_De_Linea();
 		OM pageOm=new OM(driver);
-		OMQPage OM=new OMQPage (driver);
-		//Mientras, seleccion de vista
-		pageOm.selectVistaByVisibleText("LineasFlor");
-		sleep(3000);
-		//Selecciona la primera cuenta de la lista en la vista seleccionada
-		WebElement primeraCuenta=driver.findElement(By.cssSelector(".x-grid3-col.x-grid3-cell.x-grid3-td-SALES_ACCOUNT_NAME"));
-		primeraCuenta.findElement(By.tagName("div")).findElement(By.tagName("a")).click();
-		sleep(5000);
-		pageOm.irAChangeToOrder();	
-		sleep(10000);
-		Accounts accountPage = new Accounts(driver);
-		driver.switchTo().defaultContent(); 
-        /*DateFormat dateFormat = new SimpleDateFormat("MM-dd-yyyy");
-		driver.findElement(By.id("RequestDate")).sendKeys(dateFormat.format(pageOm.fechaAvanzada()));*/
-		driver.findElement(By.id("RequestDate")).sendKeys("07-12-2018");
-		driver.findElement(By.cssSelector(".form-control.btn.btn-primary.ng-binding")).click();
-		sleep(12000);
-		OM.SimCard();
-		driver.findElement(By.id("-import-btn")).click();
-		sleep(8000);
-		pageOm.agregarGestion("Cambio de SIM");
-		sleep(5000);
-		/*driver.findElement(By.name("ta_submit_order")).click();
-		sleep(35000);
-		pageOm.cambiarVentanaNavegador(1);
-		sleep(2000);
-		driver.findElement(By.id("idlist")).click();
-		sleep(5000);
-		pageOm.cambiarVentanaNavegador(0);
-		sleep(12000);*/
+		pageOm.Cambio_De_SimCard();
 	}
 	
 	@Test(groups="OM", priority=1, dataProvider="SalesCuentaBolsa") 
@@ -188,6 +164,8 @@ public class GestionesOM extends TestBase {
 		sleep(5000);
 		pageOm.primeraOrden();
 	}
+	
+	
 		
 
 }
