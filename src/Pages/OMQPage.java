@@ -40,13 +40,13 @@ public class OMQPage extends BasePage {
 	private WebElement NumerodeLinea;
 	
 								
-	@FindBy(xpath=".//*[@id='js-cpq-product-cart-config-form']/div[1]/div/form/div[13]/div/input") 
+	@FindBy(name = "productconfig_field_3_1") 
 	private WebElement ICCID;
 	
-	@FindBy(xpath=".//*[@id='js-cpq-product-cart-config-form']/div[1]/div/form/div[14]/div/input") 
+	@FindBy(name = "productconfig_field_3_2") 
 	private WebElement IMSI;
 	
-	@FindBy(xpath=".//*[@id='js-cpq-product-cart-config-form']/div[1]/div/form/div[15]/div/input")
+	@FindBy(name = "productconfig_field_3_3")
 	private WebElement KI;
 	
 
@@ -122,6 +122,7 @@ public class OMQPage extends BasePage {
 	
 	public void SimCard() {
 		Random r = new Random();
+		sleep(5000);
 		driver.findElement(By.cssSelector(".slds-button.cpq-item-has-children")).click();
 		sleep(3000);
 		driver.findElement(By.xpath(".//*[@id='tab-default-1']/div[1]/ng-include/div/div/div/div[4]/div[2]/div/ng-include/div/div[2]/ng-include/div/div[1]/div/div[2]/div[11]")).click();
@@ -130,9 +131,12 @@ public class OMQPage extends BasePage {
 		lista.get(1).click();
 		sleep(3000);
 		 ((JavascriptExecutor)driver).executeScript("window.scrollTo(0,"+driver.findElement(By.className("slds-section")).getLocation().y+" )");
-		 ICCID.click();
+		 driver.findElement(By.name("productconfig_field_3_1")).click();
+		 driver.findElement(By.name("productconfig_field_3_1")).clear();
+		 driver.findElement(By.name("productconfig_field_3_1")).sendKeys(""+r.nextInt(200000));
+		 /*ICCID.click();
 		 ICCID.clear();
-		 ICCID.sendKeys(""+r.nextInt(200000));
+		 ICCID.sendKeys(""+r.nextInt(200000));*/
 		 sleep(2000);
 		 IMSI.click();
 		 IMSI.clear();
