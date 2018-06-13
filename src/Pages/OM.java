@@ -631,9 +631,10 @@ public void deleteOrdersNoActivated(String Vista) {
 		sleep(10000);
 		Accounts accountPage = new Accounts(driver);
 		driver.switchTo().defaultContent(); 
+		sleep(4000);
         /*DateFormat dateFormat = new SimpleDateFormat("MM-dd-yyyy");
 		driver.findElement(By.id("RequestDate")).sendKeys(dateFormat.format(pageOm.fechaAvanzada()));*/
-		driver.findElement(By.id("RequestDate")).sendKeys("09-03-2018");
+		driver.findElement(By.id("RequestDate")).sendKeys("09-04-2018");
 		driver.findElement(By.cssSelector(".form-control.btn.btn-primary.ng-binding")).click();
 		sleep(12000);
 		OM.SimCard();
