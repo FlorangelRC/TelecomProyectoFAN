@@ -616,8 +616,8 @@ public void deleteOrdersNoActivated(String Vista) {
 		return Next;
 	}
 
-	public void Cambio_De_SimCard() throws InterruptedException {
-		//TS_CRM_OM_Gestion_Alta_De_Linea();
+	public void Cambio_De_SimCard(String fecha) throws InterruptedException {
+		sleep(5000);
 		OM pageOm=new OM(driver);
 		OMQPage OM=new OMQPage (driver);
 		//Mientras, seleccion de vista
@@ -628,12 +628,12 @@ public void deleteOrdersNoActivated(String Vista) {
 		primeraCuenta.findElement(By.tagName("div")).findElement(By.tagName("a")).click();
 		sleep(5000);
 		pageOm.irAChangeToOrder();	
-		sleep(10000);
+		sleep(20000);
 		Accounts accountPage = new Accounts(driver);
 		driver.switchTo().defaultContent(); 
         /*DateFormat dateFormat = new SimpleDateFormat("MM-dd-yyyy");
 		driver.findElement(By.id("RequestDate")).sendKeys(dateFormat.format(pageOm.fechaAvanzada()));*/
-		driver.findElement(By.id("RequestDate")).sendKeys("09-03-2018");
+		driver.findElement(By.id("RequestDate")).sendKeys(fecha);
 		driver.findElement(By.cssSelector(".form-control.btn.btn-primary.ng-binding")).click();
 		sleep(12000);
 		OM.SimCard();
