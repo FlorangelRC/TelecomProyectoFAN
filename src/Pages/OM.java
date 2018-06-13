@@ -707,7 +707,7 @@ public void deleteOrdersNoActivated(String Vista) {
 		OM.configuracion();
 		sleep(5000);
 		driver.findElement(By.name("ta_submit_order")).click();
-		sleep(35000);
+		sleep(45000);
 		pageOm.cambiarVentanaNavegador(1);
 		sleep(2000);
 		driver.findElement(By.id("idlist")).click();
