@@ -359,7 +359,7 @@ public class OM_Flujos_Ruben extends TestBase {
 
 		// Ingresar Fecha Futura
 		// driver.findElement(By.id("RequestDate")).sendKeys(pageOm.getFechaAvanzadaFormateada_MM_dd_yyyy());
-		driver.findElement(By.id("RequestDate")).sendKeys("10-30-2018");
+		driver.findElement(By.id("RequestDate")).sendKeys("11-01-2018");
 				
 		sleep(1000);
 		driver.findElement(By.xpath("//*[@id=\"a1zc0000003XcLmAAK-1\"]/div[2]/div[3]/button")).click();
@@ -400,14 +400,22 @@ public class OM_Flujos_Ruben extends TestBase {
 		pageOm.Cambio_De_SimCard();
 	}
 	
+	@Test(groups = "OM")
+	public void CambioDeNumeroTest() throws InterruptedException {
+//		String accountName = "Buda OM";
+//		String plan = "Plan Prepago Nacional";
+//		pageOm.Gestion_Alta_De_Linea(accountName,plan);
+		pageOm.Gestion_Cambio_de_Numero("RubenOM-Activated");
+	}
 	
-	//Avisa si se ingresó una fecha incorrecta y da unos segundos para cambiarla y continuar el test
+	
+	//Metodo para pruebas pre UAT - Avisa si se ingresó una fecha incorrecta y da unos segundos para cambiarla y continuar el test
 	public void checkFutureDateRestriction() {
 		try {
 			String futureDateText = driver.findElement(By.cssSelector(".col-md-12.col-sm-12.vlc-header")).getText();
 			if (futureDateText
 					.contains("Can not create the Order as there is already an Order with Request Date greater than")) {
-				System.out.println("Invalid Date. Please select a valid date and update your code.");
+				System.out.println("Invalid Date. Please select a valid date to continue. Don't forget to update your code =)");
 				Toolkit.getDefaultToolkit().beep();
 				sleep(30000);
 			}

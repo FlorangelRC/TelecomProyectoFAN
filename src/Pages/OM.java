@@ -2,6 +2,7 @@ package Pages;
 
 import static org.testng.Assert.assertTrue;
 
+import java.awt.Toolkit;
 import java.text.SimpleDateFormat;
 import java.time.Duration;
 import java.util.ArrayList;
@@ -20,6 +21,7 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.Keys;
 import org.openqa.selenium.NoAlertPresentException;
+import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.UnhandledAlertException;
 import org.openqa.selenium.By.ById;
 import org.openqa.selenium.ElementNotVisibleException;
@@ -730,8 +732,8 @@ public void deleteOrdersNoActivated(String Vista) {
 	      Accounts accountPage = new Accounts(driver); 
 	      /*DateFormat dateFormat = new SimpleDateFormat("MM-dd-yyyy"); 
 	      driver.findElement(By.id("RequestDate")).sendKeys(dateFormat.format(om.fechaAvanzada()));*/ 
-	      driver.findElement(By.id("RequestDate")).sendKeys("08-10-2018"); 
-	      driver.findElement(By.cssSelector(".form-control.btn.btn-primary.ng-binding")).click(); 
+	      driver.findElement(By.id("RequestDate")).sendKeys("11-01-2018"); 
+	      driver.findElement(By.cssSelector(".form-control.btn.btn-primary.ng-binding")).click();
 	      sleep(15000); 
 	    //SIM 
 	      driver.findElement(By.cssSelector(".slds-button.cpq-item-has-children")).click(); 
@@ -764,5 +766,24 @@ public void deleteOrdersNoActivated(String Vista) {
 	      sleep(12000); 
 	      om.completarFlujoOrquestacion(); 
 	       
-	      } 
+	      }
+	    
+		// Metodo para cuando olvidamos cambiar la fecha para ejecutar gestiones
+	    // Avisa si se ingresó una fecha incorrecta y da unos segundos para cambiarla y continuar el test
+	    // ¡¡ATENCION!! No olvidar quitarlo del codigo una vez que funcione
+		public void checkFutureDateRestriction() {
+			try {
+				String futureDateText = driver.findElement(By.cssSelector(".col-md-12.col-sm-12.vlc-header")).getText();
+				if (futureDateText
+						.contains("Can not create the Order as there is already an Order with Request Date greater than")) {
+					System.out.println("Invalid Date. Please select a valid date to continue. Don't forget to update your code =)");
+					Toolkit.getDefaultToolkit().beep();
+					sleep(30000);
+				}
+
+			} catch (NoSuchElementException e) {
+				System.out.println("Date OK");
+			};
+		}
+	    
 }
