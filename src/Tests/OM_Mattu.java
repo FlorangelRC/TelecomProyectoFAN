@@ -51,7 +51,7 @@ public class OM_Mattu extends TestBase{
 		pageOm.clickOnListTabs("Orders");
 	}
 	
-	@AfterClass(alwaysRun=true)
+	//@AfterClass(alwaysRun=true)
 	public void tearDown() {
 		sleep(2000);
 		driver.quit();
@@ -641,6 +641,25 @@ public class OM_Mattu extends TestBase{
 		confirmDelete.accept();
 	}
 	
+	//-------------------------------------------------------------------------------------------------
+	//TCC = 114
+	@Test(groups = "OM")
+	public void TS6727_OM_Ordenes_Order_Detail_Visualización_del_flujo_de_orquestacion(){
+		selectVistaByVisibleText("OM_View_Mattu_Static");
+		WebElement wBody = driver.findElement(By.id("ext-gen10"));
+		List<WebElement> wColumn = traerElementoColumna(wBody, 2);
+		for (WebElement wAux : wColumn) {
+			if (wAux.getText().equals("00025365")) {
+				wAux.click();
+			}
+		}
+		WebElement wTopMenu = driver.findElement(By.id("topButtonRow"));
+		wTopMenu.findElement(By.name("vlocity_cmt__vieworchestrationplan")).click();
+		String sOrderLabel = driver.findElement(By.className("order-label-container")).getText();
+		System.out.println("sOrderLabel.getText: " + sOrderLabel);
+		Assert.assertTrue(sOrderLabel.equals("00025365"));
+	}
+	
 	public List<String> traerColumna(WebElement wBody, int iColumn) {
 		List<WebElement> wRows = wBody.findElements(By.tagName("tr"));
 		List<String> sColumn = new ArrayList<String>();
@@ -650,6 +669,17 @@ public class OM_Mattu extends TestBase{
 		}
 
 		return sColumn;
+	}
+	
+	public List<WebElement> traerElementoColumna(WebElement wBody, int iColumn) {
+		List<WebElement> wRows = wBody.findElements(By.tagName("tr"));
+		List<WebElement> wColumn = new ArrayList<WebElement>();
+		for(WebElement wAux : wRows) {
+			List<WebElement> wTd = wAux.findElements(By.tagName("td"));
+			wColumn.add(wTd.get(iColumn));
+		}
+
+		return wColumn;
 	}
 	
 	public boolean crearVistaOM(String nombreVista, String nombreCuenta) {

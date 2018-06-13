@@ -77,6 +77,7 @@ public class GestionesOM extends TestBase {
 	public void TS_CRM_Cambio_De_SimCard() throws InterruptedException {
 		//TS_CRM_OM_Gestion_Alta_De_Linea();
 		OM pageOm=new OM(driver);
+		pageOm.Gestion_Alta_De_Linea("FlorOM", "Plan Con Tarjeta");
 		pageOm.Cambio_De_SimCard();
 	}
 	
