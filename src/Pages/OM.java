@@ -712,7 +712,7 @@ public void deleteOrdersNoActivated(String Vista) {
 		
 	}
 	
-	    public void Gestion_Cambio_de_Numero(String Vista) throws InterruptedException{ 
+	    public void Gestion_Cambio_de_Numero(String Vista, String Fecha) throws InterruptedException{ 
 	      Date date = new Date(); 
 	      OM om = new OM(driver); 
 	    //Mientras, seleccion de vista 
@@ -732,9 +732,9 @@ public void deleteOrdersNoActivated(String Vista) {
 	      Accounts accountPage = new Accounts(driver); 
 	      /*DateFormat dateFormat = new SimpleDateFormat("MM-dd-yyyy"); 
 	      driver.findElement(By.id("RequestDate")).sendKeys(dateFormat.format(om.fechaAvanzada()));*/ 
-	      driver.findElement(By.id("RequestDate")).sendKeys("11-01-2018"); 
+	      driver.findElement(By.id("RequestDate")).sendKeys(Fecha); 
 	      driver.findElement(By.cssSelector(".form-control.btn.btn-primary.ng-binding")).click();
-	      sleep(15000); 
+	      sleep(35000); 
 	    //SIM 
 	      driver.findElement(By.cssSelector(".slds-button.cpq-item-has-children")).click(); 
 	      sleep(3000); 
@@ -744,7 +744,7 @@ public void deleteOrdersNoActivated(String Vista) {
 	      driver.findElement(By.xpath(".//*[@id='tab-default-1']/div[1]/ng-include/div/div/div/div[4]/div[2]/div/ng-include/div/div[2]/ng-include/div/div[1]/div/div[2]/div[11]/div[2]/div/ul/li[3]/a")).click(); 
 	      sleep(5000); 
 	      ((JavascriptExecutor)driver).executeScript("window.scrollTo(0,"+driver.findElement(By.className("slds-section")).getLocation().y+" )"); 
-	      WebElement msi = driver.findElement(By.xpath("//*[@id='js-cpq-product-cart-config-form']/div[1]/div/form/div[17]/div[1]/input")); 
+	      WebElement msi = driver.findElement(By.xpath("//*[@id='js-cpq-product-cart-config-form']/div[1]/div/form/div[18]/div[1]/input")); 
 	      Random r = new Random(); 
 	      msi.clear(); 
 	      msi.sendKeys("11" + r.nextInt(200000000) ); 
