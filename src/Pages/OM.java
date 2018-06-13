@@ -535,25 +535,20 @@ public class OM {
 		// Sim
 		sleep(1000);
 		driver.findElement(By.xpath(
-				"//*[@id=\"tab-default-1\"]/div[1]/ng-include/div/div/div/div[4]/div[2]/div/ng-include/div/div[2]/ng-include/div/div[1]/div/div[2]/div[11]/div[2]/button"))
-				.click();
+				"//*[@id=\"tab-default-1\"]/div[1]/ng-include/div/div/div/div[4]/div[2]/div/ng-include/div/div[2]/ng-include/div/div[1]/div/div[2]/div[11]/div[2]/button")).click();
 		// Sim Config
 		sleep(1000);
-		driver.findElement(By.xpath(
-				"//*[@id=\"tab-default-1\"]/div[1]/ng-include/div/div/div/div[4]/div[2]/div/ng-include/div/div[2]/ng-include/div/div[1]/div/div[2]/div[11]/div[2]/div/ul/li[3]/a/span"))
-				.click();
+		driver.findElement(By.xpath("//*[@id=\"tab-default-1\"]/div[1]/ng-include/div/div/div/div[4]/div[2]/div/ng-include/div/div[2]/ng-include/div/div[1]/div/div[2]/div[11]/div[2]/div/ul/li[3]/a/span")).click();}
 
-	}
+	
 
-	// Cambia el n�mer	public void cambiarNumero(String numero) {
-		WebElement cambiarNumero;
-		try {
-			cambiarNumero = driver.findElement(
-					By.name("productconfig_field_3_0")
+	// Cambia el n�mer
+	public void cambiarNumero(String numero) {WebElement cambiarNumero;
+		try {cambiarNumero = driver.findElement(By.name("productconfig_field_3_0"));
 					/*
 					 * By.xpath("//*[@id=\"js-cpq-product-cart-config-form\"]/div[1]/div/form/div[2]/div[1]/input")
 					 */
-					);
+					
 					
 		} catch (org.openqa.selenium.NoSuchElementException e) {
 			cambiarNumero = driver.findElement(
@@ -567,19 +562,16 @@ public class OM {
 		cambiarNumero.sendKeys(numero);
 		// Close Sim Input
 		sleep(1000);
-		driver.findElement(By.xpath(
-				"/html/body/div[1]/div/ng-include/div/div[2]/div[2]/div[3]/div/div/ng-include/div/div[1]/div/button"))
-				.click();
+		driver.findElement(By.xpath("/html/body/div[1]/div/ng-include/div/div[2]/div[2]/div[3]/div/div/ng-include/div/div[1]/div/button")).click();
 	}
 
-	// Edita el campo de Gesti�	public void setGestionField(String gestion) {
+	// Edita el campo de Gesti�	
+	public void setGestionField(String gestion) {
 		WebDriverWait wait;
 		wait = new WebDriverWait(driver, 20);
-		WebElement editOrderButton = wait
-				.until(ExpectedConditions.elementToBeClickable(driver.findElement(By.name("edit"))));
+		WebElement editOrderButton = wait.until(ExpectedConditions.elementToBeClickable(driver.findElement(By.name("edit"))));
 		editOrderButton.click();
-		WebElement gestionElement = wait
-				.until(ExpectedConditions.elementToBeClickable(driver.findElement(By.id("00Nc0000002IvyM"))));
+		WebElement gestionElement = wait.until(ExpectedConditions.elementToBeClickable(driver.findElement(By.id("00Nc0000002IvyM"))));
 		Select gestionSelect = new Select(gestionElement);
 		gestionSelect.selectByVisibleText(gestion);
 		driver.findElement(By.name("save")).click();
