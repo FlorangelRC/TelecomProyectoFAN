@@ -657,11 +657,11 @@ public void deleteOrdersNoActivated(String Vista) {
 		OM pageOm=new OM(driver);
 		OMQPage OM=new OMQPage (driver);
 		//Mientras, seleccion de vista
-		pageOm.selectVistaByVisibleText(Vista);
+		/*pageOm.selectVistaByVisibleText(Vista);
 		sleep(3000);
 		//Selecciona la primera cuenta de la lista en la vista seleccionada
 		WebElement primeraCuenta=driver.findElement(By.cssSelector(".x-grid3-col.x-grid3-cell.x-grid3-td-SALES_ACCOUNT_NAME"));
-		primeraCuenta.findElement(By.tagName("div")).findElement(By.tagName("a")).click();
+		primeraCuenta.findElement(By.tagName("div")).findElement(By.tagName("a")).click();*/
 		sleep(5000);
 		pageOm.irAChangeToOrder();	
 		sleep(10000);
@@ -677,14 +677,18 @@ public void deleteOrdersNoActivated(String Vista) {
 		sleep(8000);
 		pageOm.agregarGestion("Cambio de SIM por siniestro");
 		sleep(5000);
-		/*driver.findElement(By.name("ta_submit_order")).click();
-		sleep(35000);
-		pageOm.cambiarVentanaNavegador(1);
-		sleep(2000);
-		driver.findElement(By.id("idlist")).click();
+		driver.findElement(By.name("ta_submit_order")).click();
+		sleep(45000);
+		try {
+			pageOm.cambiarVentanaNavegador(1);
+			sleep(2000);
+			driver.findElement(By.id("idlist")).click();
+			sleep(5000);
+			pageOm.cambiarVentanaNavegador(0);
+		}catch(java.lang.IndexOutOfBoundsException ex1) {}
+		sleep(12000);
+		pageOm.completarFlujoOrquestacion();
 		sleep(5000);
-		pageOm.cambiarVentanaNavegador(0);
-		sleep(12000);*/
 	}
 	
 	public void Gestion_Alta_De_Linea(String Cuenta, String Plan) throws InterruptedException {
