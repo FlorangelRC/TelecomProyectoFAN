@@ -552,19 +552,10 @@ public class OM {
 		WebElement cambiarNumero;
 		try {
 			cambiarNumero = driver.findElement(
-					By.name("productconfig_field_3_0")
-					/*
-					 * By.xpath("//*[@id=\"js-cpq-product-cart-config-form\"]/div[1]/div/form/div[2]/div[1]/input")
-					 */
-					);
+					By.name("productconfig_field_3_0"));
 					
 		} catch (org.openqa.selenium.NoSuchElementException e) {
-			cambiarNumero = driver.findElement(
-					By.name("productconfig_field_3_0")
-					/*
-					* By.xpath("//*[@id=\"js-cpq-product-cart-config-form\"]/div[1]/div/form/div[17]/div[1]/input")
-					*/
-					);
+			cambiarNumero = driver.findElement(By.xpath("//*[@id=\"js-cpq-product-cart-config-form\"]/div[1]/div/form/div[2]/div[1]/input"));
 		};
 		cambiarNumero.clear();
 		cambiarNumero.sendKeys(numero);
@@ -645,7 +636,7 @@ public void deleteOrdersNoActivated(String Vista) {
 		driver.switchTo().defaultContent(); 
         /*DateFormat dateFormat = new SimpleDateFormat("MM-dd-yyyy");
 		driver.findElement(By.id("RequestDate")).sendKeys(dateFormat.format(pageOm.fechaAvanzada()));*/
-		driver.findElement(By.id("RequestDate")).sendKeys("09-03-2018");
+		driver.findElement(By.id("RequestDate")).sendKeys("09-04-2018");
 		driver.findElement(By.cssSelector(".form-control.btn.btn-primary.ng-binding")).click();
 		sleep(12000);
 		OM.SimCard();
