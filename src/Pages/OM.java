@@ -2,6 +2,7 @@ package Pages;
 
 import static org.testng.Assert.assertTrue;
 
+import java.awt.Toolkit;
 import java.text.SimpleDateFormat;
 import java.time.Duration;
 import java.util.ArrayList;
@@ -20,6 +21,7 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.Keys;
 import org.openqa.selenium.NoAlertPresentException;
+import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.UnhandledAlertException;
 import org.openqa.selenium.By.ById;
 import org.openqa.selenium.ElementNotVisibleException;
@@ -542,21 +544,16 @@ public class OM {
 
 	
 
-	// Cambia el n�mer
-	public void cambiarNumero(String numero) {WebElement cambiarNumero;
-		try {cambiarNumero = driver.findElement(By.name("productconfig_field_3_0"));
-					/*
-					 * By.xpath("//*[@id=\"js-cpq-product-cart-config-form\"]/div[1]/div/form/div[2]/div[1]/input")
-					 */
+	// Cambia el n�mero
+	public void cambiarNumero(String numero) {
+		WebElement cambiarNumero;
+		try {
+			cambiarNumero = driver.findElement(
+					By.name("productconfig_field_3_0"));
 					
 					
 		} catch (org.openqa.selenium.NoSuchElementException e) {
-			cambiarNumero = driver.findElement(
-					By.name("productconfig_field_3_0")
-					/*
-					* By.xpath("//*[@id=\"js-cpq-product-cart-config-form\"]/div[1]/div/form/div[17]/div[1]/input")
-					*/
-					);
+			cambiarNumero = driver.findElement(By.xpath("//*[@id=\"js-cpq-product-cart-config-form\"]/div[1]/div/form/div[2]/div[1]/input"));
 		};
 		cambiarNumero.clear();
 		cambiarNumero.sendKeys(numero);
@@ -616,8 +613,8 @@ public void deleteOrdersNoActivated(String Vista) {
 		return Next;
 	}
 
-	public void Cambio_De_SimCard() throws InterruptedException {
-		//TS_CRM_OM_Gestion_Alta_De_Linea();
+	public void Cambio_De_SimCard(String fecha) throws InterruptedException {
+		sleep(5000);
 		OM pageOm=new OM(driver);
 		OMQPage OM=new OMQPage (driver);
 		//Mientras, seleccion de vista
@@ -628,13 +625,13 @@ public void deleteOrdersNoActivated(String Vista) {
 		primeraCuenta.findElement(By.tagName("div")).findElement(By.tagName("a")).click();
 		sleep(5000);
 		pageOm.irAChangeToOrder();	
-		sleep(10000);
+		sleep(20000);
 		Accounts accountPage = new Accounts(driver);
 		driver.switchTo().defaultContent(); 
 		sleep(4000);
         /*DateFormat dateFormat = new SimpleDateFormat("MM-dd-yyyy");
 		driver.findElement(By.id("RequestDate")).sendKeys(dateFormat.format(pageOm.fechaAvanzada()));*/
-		driver.findElement(By.id("RequestDate")).sendKeys("09-04-2018");
+		driver.findElement(By.id("RequestDate")).sendKeys(fecha);
 		driver.findElement(By.cssSelector(".form-control.btn.btn-primary.ng-binding")).click();
 		sleep(12000);
 		OM.SimCard();
@@ -719,7 +716,7 @@ public void deleteOrdersNoActivated(String Vista) {
 		
 	}
 	
-	    public void Gestion_Cambio_de_Numero(String Vista) throws InterruptedException{ 
+	    public void Gestion_Cambio_de_Numero(String Vista, String Fecha) throws InterruptedException{ 
 	      Date date = new Date(); 
 	      OM om = new OM(driver); 
 	    //Mientras, seleccion de vista 
@@ -739,9 +736,9 @@ public void deleteOrdersNoActivated(String Vista) {
 	      Accounts accountPage = new Accounts(driver); 
 	      /*DateFormat dateFormat = new SimpleDateFormat("MM-dd-yyyy"); 
 	      driver.findElement(By.id("RequestDate")).sendKeys(dateFormat.format(om.fechaAvanzada()));*/ 
-	      driver.findElement(By.id("RequestDate")).sendKeys("08-10-2018"); 
-	      driver.findElement(By.cssSelector(".form-control.btn.btn-primary.ng-binding")).click(); 
-	      sleep(15000); 
+	      driver.findElement(By.id("RequestDate")).sendKeys(Fecha); 
+	      driver.findElement(By.cssSelector(".form-control.btn.btn-primary.ng-binding")).click();
+	      sleep(35000); 
 	    //SIM 
 	      driver.findElement(By.cssSelector(".slds-button.cpq-item-has-children")).click(); 
 	      sleep(3000); 
@@ -751,7 +748,7 @@ public void deleteOrdersNoActivated(String Vista) {
 	      driver.findElement(By.xpath(".//*[@id='tab-default-1']/div[1]/ng-include/div/div/div/div[4]/div[2]/div/ng-include/div/div[2]/ng-include/div/div[1]/div/div[2]/div[11]/div[2]/div/ul/li[3]/a")).click(); 
 	      sleep(5000); 
 	      ((JavascriptExecutor)driver).executeScript("window.scrollTo(0,"+driver.findElement(By.className("slds-section")).getLocation().y+" )"); 
-	      WebElement msi = driver.findElement(By.xpath("//*[@id='js-cpq-product-cart-config-form']/div[1]/div/form/div[17]/div[1]/input")); 
+	      WebElement msi = driver.findElement(By.xpath("//*[@id='js-cpq-product-cart-config-form']/div[1]/div/form/div[18]/div[1]/input")); 
 	      Random r = new Random(); 
 	      msi.clear(); 
 	      msi.sendKeys("11" + r.nextInt(200000000) ); 
@@ -773,5 +770,51 @@ public void deleteOrdersNoActivated(String Vista) {
 	      sleep(12000); 
 	      om.completarFlujoOrquestacion(); 
 	       
-	      } 
+	      }
+	    
+		// Metodo para cuando olvidamos cambiar la fecha para ejecutar gestiones
+	    // Avisa si se ingres� una fecha incorrecta y da unos segundos para cambiarla y continuar el test
+	    // ��ATENCION!! No olvidar quitarlo del codigo una vez que funcione
+		public void checkFutureDateRestriction() {
+			try {
+				String futureDateText = driver.findElement(By.cssSelector(".col-md-12.col-sm-12.vlc-header")).getText();
+				if (futureDateText
+						.contains("Can not create the Order as there is already an Order with Request Date greater than")) {
+					System.out.println("Invalid Date. Please select a valid date to continue. Don't forget to update your code =)");
+					Toolkit.getDefaultToolkit().beep();
+					sleep(30000);
+				}
+
+			} catch (NoSuchElementException e) {
+				System.out.println("Date OK");
+			};
+		}
+		
+		public boolean ordenCajasVerdes(String primeraCaja, String segundaCaja, String terceraCaja) {
+			boolean ordenCajas = false;
+			Integer a = 0, b = 0, c = 0;
+			List <WebElement> cajasVerdes1 = driver.findElements(By.cssSelector(".item-header.item-completed"));
+			for (WebElement x : cajasVerdes1) {
+				if (x.getText().toLowerCase().equals(primeraCaja)) {
+					a = x.getLocation().getX();
+				}
+			}
+			List <WebElement> cajasVerdes2 = driver.findElements(By.cssSelector(".item-header.item-completed"));
+			for (WebElement x : cajasVerdes2) {
+				if (x.getText().toLowerCase().equals(segundaCaja)) {
+					b = x.getLocation().getX();
+				}
+			}
+			List <WebElement> cajasVerdes3 = driver.findElements(By.cssSelector(".item-header.item-completed"));
+			for (WebElement x : cajasVerdes3) {
+				if (x.getText().toLowerCase().equals(terceraCaja)) {
+					c = x.getLocation().getX();
+				}
+			}			
+			if (a < b && b < c) {
+				ordenCajas = true;
+			}			
+			return ordenCajas;
+		}
+	    
 }

@@ -1,5 +1,6 @@
 package Tests;
 
+import java.awt.Toolkit;
 import java.util.Date;
 import java.util.concurrent.TimeUnit;
 
@@ -7,6 +8,7 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.FluentWait;
 import org.openqa.selenium.support.ui.Select;
@@ -30,6 +32,10 @@ public class OM_Flujos_Ruben extends TestBase {
 	private FluentWait<WebDriver> fluentWait; // Fluent Wait
 	private OM pageOm;
 
+	/* Elementos */
+	@FindBy(xpath = "//*[@id=\"-import-btn\"]")
+	private WebElement viewRecordButton;
+	
 	@BeforeClass(alwaysRun = true)
 	public void init() throws Exception {
 		this.driver = setConexion.setupEze();
@@ -335,6 +341,8 @@ public class OM_Flujos_Ruben extends TestBase {
 
 	}
 
+	
+	//Borrar linea checkFutureDateRestriction(); luego de que el test funcione correctamente 
 	//TS_CRM_OM_Gestion_Cambio_De_Numero utiliza FluentWaits
 	@Test(groups = "OM")
 	public void TS_CRM_OM_Gestion_Cambio_De_Numero() {
@@ -351,9 +359,13 @@ public class OM_Flujos_Ruben extends TestBase {
 
 		// Ingresar Fecha Futura
 		// driver.findElement(By.id("RequestDate")).sendKeys(pageOm.getFechaAvanzadaFormateada_MM_dd_yyyy());
-		driver.findElement(By.id("RequestDate")).sendKeys("10-16-2018");
+		driver.findElement(By.id("RequestDate")).sendKeys("11-01-2018");
+				
 		sleep(1000);
 		driver.findElement(By.xpath("//*[@id=\"a1zc0000003XcLmAAK-1\"]/div[2]/div[3]/button")).click();
+		
+		sleep(2000);
+		checkFutureDateRestriction();
 		
 		//FluentWait por la demora incierta luego de ingresar la fecha
 		pageOm.goToSimConfig();
@@ -363,7 +375,8 @@ public class OM_Flujos_Ruben extends TestBase {
 
 		// View Record
 		sleep(2000);
-		driver.findElement(By.xpath("//*[@id=\"-import-btn\"]")).click();
+		viewRecordButton.click();
+//		driver.findElement(By.xpath("//*[@id=\"-import-btn\"]")).click();
 
 		sleep(5000);
 		pageOm.setGestionField(gestion);
@@ -380,6 +393,36 @@ public class OM_Flujos_Ruben extends TestBase {
 		 * has occurred. Please contact your system administrator for assistance.
 		 */
 
+	}
+	
+	@Test(groups = "OM")
+	public void AltaLineaTest() throws InterruptedException{
+		pageOm.Cambio_De_SimCard();
+	}
+	
+	@Test(groups = "OM")
+	public void CambioDeNumeroTest() throws InterruptedException {
+//		String accountName = "Buda OM";
+//		String plan = "Plan Prepago Nacional";
+//		pageOm.Gestion_Alta_De_Linea(accountName,plan);
+		pageOm.Gestion_Cambio_de_Numero("RubenOM-Activated");
+	}
+	
+	
+	//Metodo para pruebas pre UAT - Avisa si se ingresó una fecha incorrecta y da unos segundos para cambiarla y continuar el test
+	public void checkFutureDateRestriction() {
+		try {
+			String futureDateText = driver.findElement(By.cssSelector(".col-md-12.col-sm-12.vlc-header")).getText();
+			if (futureDateText
+					.contains("Can not create the Order as there is already an Order with Request Date greater than")) {
+				System.out.println("Invalid Date. Please select a valid date to continue. Don't forget to update your code =)");
+				Toolkit.getDefaultToolkit().beep();
+				sleep(30000);
+			}
+
+		} catch (NoSuchElementException e) {
+			System.out.println("Date OK");
+		};
 	}
 
 }
