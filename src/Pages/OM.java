@@ -785,5 +785,32 @@ public void deleteOrdersNoActivated(String Vista) {
 				System.out.println("Date OK");
 			};
 		}
+		
+		public boolean ordenCajasVerdes(String primeraCaja, String segundaCaja, String terceraCaja) {
+			boolean ordenCajas = false;
+			Integer a = 0, b = 0, c = 0;
+			List <WebElement> cajasVerdes1 = driver.findElements(By.cssSelector(".item-header.item-completed"));
+			for (WebElement x : cajasVerdes1) {
+				if (x.getText().toLowerCase().equals(primeraCaja)) {
+					a = x.getLocation().getX();
+				}
+			}
+			List <WebElement> cajasVerdes2 = driver.findElements(By.cssSelector(".item-header.item-completed"));
+			for (WebElement x : cajasVerdes2) {
+				if (x.getText().toLowerCase().equals(segundaCaja)) {
+					b = x.getLocation().getX();
+				}
+			}
+			List <WebElement> cajasVerdes3 = driver.findElements(By.cssSelector(".item-header.item-completed"));
+			for (WebElement x : cajasVerdes3) {
+				if (x.getText().toLowerCase().equals(terceraCaja)) {
+					c = x.getLocation().getX();
+				}
+			}			
+			if (a < b && b < c) {
+				ordenCajas = true;
+			}			
+			return ordenCajas;
+		}
 	    
 }

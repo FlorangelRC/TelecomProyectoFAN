@@ -205,5 +205,6 @@ public class OMN extends TestBase {
 		driver.findElement(By.name("ta_submit_order")).click();
 		sleep(15000);
 		om.completarFlujoOrquestacion();
+		om.ordenCajasVerdes("Cambio de N\u00famero o SIM", "Env\u00edo de Actualizaci\u00f3n de Par\u00e1metros a la Red (SIM Card)(IMSI, KI e ICCID)", "En progreso | Comptel - Par\u00e1metros de la Red actualizados");
 	}
 }
