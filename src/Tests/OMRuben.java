@@ -10,11 +10,14 @@ import org.openqa.selenium.NoAlertPresentException;
 import org.openqa.selenium.UnhandledAlertException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.ui.Select;
 import org.testng.Assert;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
+
+import com.gargoylesoftware.htmlunit.Page;
 
 import Pages.BasePage;
 import Pages.OM;
@@ -23,6 +26,7 @@ import Pages.setConexion;
 public class OMRuben extends TestBase {
 
 	private WebDriver driver;
+	private OM pageOm;
 
 	@BeforeClass(alwaysRun = true)
 	public void init() throws Exception {
@@ -42,7 +46,7 @@ public class OMRuben extends TestBase {
 
 		// click +
 		sleep(5000);
-		OM pageOm = new OM(driver);
+		pageOm = new OM(driver);
 		pageOm.clickMore();
 		sleep(3000);
 
@@ -56,6 +60,11 @@ public class OMRuben extends TestBase {
 		driver.quit();
 		sleep(1000);
 	}
+	
+	/* Elementos */
+	@FindBy(xpath = "//*[ends-with(@id,'_SALES_ACCOUNT_NAME')]")
+	//https://stackoverflow.com/questions/33499405/selenium-webdriver-how-to-get-the-dynamic-id-using-xpath
+	private WebElement accountName;
 
 	@Test(groups = "OM")
 	public void TS6723_CRM_OM_Ordenes_Vista_Configuracion_Borrar_Vista() {
@@ -199,12 +208,12 @@ public class OMRuben extends TestBase {
 		System.out.println(vistaOtroUsuario);
 
 		Assert.assertFalse(vistaPrimerUsuario.equals(vistaOtroUsuario));
-
-		
-				
 	}
-
-	// @Test(groups = "OM")
-	// public void TS
-
+	
+	@Test(groups = "OM")
+	public void TS_52660_CRM_OM_Ordenes_Cliente_Existente_Baja_de_linea_Sin_VAS_Paso_0() {
+		pageOm.selectVistaByVisibleText("RubenOM-Activated");
+		sleep(6000);
+		accountName.click();
+	}
 }

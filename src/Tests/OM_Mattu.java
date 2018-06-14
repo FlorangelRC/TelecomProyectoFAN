@@ -14,6 +14,8 @@ import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
+
+import Pages.BasePage;
 import Pages.OM;
 import Pages.SCP;
 import Pages.setConexion;
@@ -642,23 +644,42 @@ public class OM_Mattu extends TestBase{
 	}
 	
 	//-------------------------------------------------------------------------------------------------
-	//TCC = 114
+	//TCC = 14
 	@Test(groups = "OM")
 	public void TS6727_OM_Ordenes_Order_Detail_Visualización_del_flujo_de_orquestacion(){
+		selectVistaByVisibleText("All Orders");
 		selectVistaByVisibleText("OM_View_Mattu_Static");
+		sleep(10000);
+		driver.switchTo().defaultContent();
 		WebElement wBody = driver.findElement(By.id("ext-gen10"));
 		List<WebElement> wColumn = traerElementoColumna(wBody, 2);
 		for (WebElement wAux : wColumn) {
-			if (wAux.getText().equals("00025365")) {
-				wAux.click();
+			if (wAux.getText().contains("25365")) {
+				wAux.findElement(By.tagName("a")).click();
+				break;
 			}
 		}
+		sleep(3000);
 		WebElement wTopMenu = driver.findElement(By.id("topButtonRow"));
 		wTopMenu.findElement(By.name("vlocity_cmt__vieworchestrationplan")).click();
+		
+		sleep(15000);
+		ArrayList<String> newTab = new ArrayList<String>(driver.getWindowHandles());
+		driver.switchTo().window(newTab.get(1));
+		sleep(5000);
+		driver.findElement(By.id("idlist")).click();
+		sleep(10000);
+		newTab = new ArrayList<String>(driver.getWindowHandles());
+		driver.switchTo().window(newTab.get(0));
+		sleep(10000);
+		
 		String sOrderLabel = driver.findElement(By.className("order-label-container")).getText();
 		System.out.println("sOrderLabel.getText: " + sOrderLabel);
-		Assert.assertTrue(sOrderLabel.equals("00025365"));
+		Assert.assertTrue(sOrderLabel.contains("25365"));
 	}
+	
+	//-------------------------------------------------------------------------------------------------
+	//Methods
 	
 	public List<String> traerColumna(WebElement wBody, int iColumn) {
 		List<WebElement> wRows = wBody.findElements(By.tagName("tr"));
