@@ -395,11 +395,20 @@ public class OM_Flujos_Ruben extends TestBase {
 
 	}
 	
+
+	
 	@Test(groups = "OM")
 	public void AltaLineaTest() throws InterruptedException{
-		pageOm.Cambio_De_SimCard();
+		String accountName = "Buda OM";
+		String plan = "Plan Prepago Nacional";
+		pageOm.Gestion_Alta_De_Linea(accountName,plan);
 	}
 	
+	@Test(groups = "OM")
+	public void CambioDeSimCardTest() throws InterruptedException {
+		pageOm.Cambio_De_SimCard();
+	}
+		
 	@Test(groups = "OM")
 	public void CambioDeNumeroTest() throws InterruptedException {
 //		String accountName = "Buda OM";
@@ -408,6 +417,10 @@ public class OM_Flujos_Ruben extends TestBase {
 		pageOm.Gestion_Cambio_de_Numero("RubenOM-Activated");
 	}
 	
+	@Test(groups= "OM")
+	public void deleteOrdersNotActivated() { 
+		pageOm.deleteOrdersNoActivated("RubenOM-All");
+	}
 	
 	//Metodo para pruebas pre UAT - Avisa si se ingresó una fecha incorrecta y da unos segundos para cambiarla y continuar el test
 	public void checkFutureDateRestriction() {
