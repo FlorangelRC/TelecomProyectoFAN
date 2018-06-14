@@ -23,6 +23,8 @@ import javafx.scene.control.ScrollToEvent;
 
 public class OMQPage extends BasePage {
 
+	private static final String pDatos = null;
+
 	final WebDriver driver;
 	
 	@FindBy(xpath=".//*[@id='hotlist']/table/tbody/tr/td[2]/input")
@@ -37,14 +39,20 @@ public class OMQPage extends BasePage {
 	@FindBy(xpath="//*[@id=\"js-cpq-product-cart-config-form\"]/div[1]/div/form/div[4]/div[1]/input")
 	private WebElement NumerodeLinea;
 	
-	@FindBy(xpath=".//*[@id='js-cpq-product-cart-config-form']/div[1]/div/form/div[13]/div/input") 
+								
+	@FindBy(name = "productconfig_field_3_1") 
 	private WebElement ICCID;
 	
-	@FindBy(xpath=".//*[@id='js-cpq-product-cart-config-form']/div[1]/div/form/div[14]/div/input") 
+	@FindBy(name = "productconfig_field_3_2") 
 	private WebElement IMSI;
 	
-	@FindBy(xpath=".//*[@id='js-cpq-product-cart-config-form']/div[1]/div/form/div[15]/div/input")
+	@FindBy(name = "productconfig_field_3_3")
 	private WebElement KI;
+	
+
+	
+
+
 	
 
 
@@ -83,7 +91,7 @@ public class OMQPage extends BasePage {
 		public void configuracion() {
 		sleep(2000);
 		driver.switchTo().defaultContent();
-		sleep(2000);
+		sleep(4000);
 		driver.findElement(By.xpath(".//*[@id='tab-default-1']/div/ng-include//div[10]//button")).click();
 		sleep(2000);
 		List<WebElement> list = driver.findElements(By.cssSelector(".slds-dropdown__item.cpq-item-actions-dropdown__item")); 
@@ -114,6 +122,7 @@ public class OMQPage extends BasePage {
 	
 	public void SimCard() {
 		Random r = new Random();
+		sleep(5000);
 		driver.findElement(By.cssSelector(".slds-button.cpq-item-has-children")).click();
 		sleep(3000);
 		driver.findElement(By.xpath(".//*[@id='tab-default-1']/div[1]/ng-include/div/div/div/div[4]/div[2]/div/ng-include/div/div[2]/ng-include/div/div[1]/div/div[2]/div[11]")).click();
@@ -121,19 +130,43 @@ public class OMQPage extends BasePage {
 		//System.out.println(lista.size());
 		lista.get(1).click();
 		sleep(3000);
+		List<WebElement> todos = driver.findElements(By.cssSelector(".slds-form_stacked.ng-pristine.ng-untouched.ng-valid.vlocity-dynamic-form.ng-valid-required.ng-valid-step")).get(1).findElements(By.className("slds-form-element"));
 		 ((JavascriptExecutor)driver).executeScript("window.scrollTo(0,"+driver.findElement(By.className("slds-section")).getLocation().y+" )");
-		 ICCID.click();
+		 for (WebElement uno : todos) {
+			 if(uno.findElement(By.tagName("label")).getText().equalsIgnoreCase("ICCID")) {
+				 uno.click();
+				 uno.findElement(By.tagName("input")).clear();
+				 uno.findElement(By.tagName("input")).sendKeys(""+r.nextInt(200000));
+			 }
+			 if(uno.findElement(By.tagName("label")).getText().equalsIgnoreCase("IMSI")) {
+				 uno.click();
+				 uno.findElement(By.tagName("input")).clear();
+				 uno.findElement(By.tagName("input")).sendKeys(""+r.nextInt(200000));
+			 }
+			 if(uno.findElement(By.tagName("label")).getText().equalsIgnoreCase("KI")) {
+				 uno.click();
+				 uno.findElement(By.tagName("input")).clear();
+				 uno.findElement(By.tagName("input")).sendKeys(""+r.nextInt(200000));
+				 uno.findElement(By.tagName("input")).submit();
+				 break;
+			 }
+			 
+		 }
+		/* driver.findElement(By.name("productconfig_field_3_1")).click();
+		 driver.findElement(By.name("productconfig_field_3_1")).clear();
+		 driver.findElement(By.name("productconfig_field_3_1")).sendKeys(""+r.nextInt(200000));
+		 /*ICCID.click();
 		 ICCID.clear();
-		 ICCID.sendKeys(""+r.nextInt(200000));
-		 sleep(2000);
+		 ICCID.sendKeys(""+r.nextInt(200000));*/
+		 /*sleep(2000);
 		 IMSI.click();
 		 IMSI.clear();
 		 IMSI.sendKeys(""+r.nextInt(200000));
 		 sleep(2000);
 		 KI.click();
 		 KI.clear();
-		 KI.sendKeys(""+r.nextInt(200000));
-		 KI.submit();
+		 KI.sendKeys(""+r.nextInt(200000));*/
+		 //KI.submit();
 		sleep(5000);
 		//driver.switchTo().defaultContent();
 		driver.findElement(By.xpath("/html/body/div[1]/div[1]/ng-include/div/div[2]/div[2]/div[3]/div/div/ng-include/div/div[1]/div/button")).click();
@@ -141,6 +174,63 @@ public class OMQPage extends BasePage {
 		 
 		
 	}
+	
+
+	
+	public void agregarPack() {
+		sleep(12000);
+		driver.findElement(By.cssSelector(".slds-button.cpq-item-has-children")).click();
+		List<WebElement> list1 = driver.findElements(By.xpath("//*[@class='cpq-item-product-child-level-1 cpq-item-child-product-name-wrapper']//*[@class='slds-button slds-button_icon-small']"));
+		list1. get(3).click();
+		sleep(8000);
+		List<WebElement> pDatos = driver.findElements(By.xpath("//*[@class='cpq-item-product-child-level-2 cpq-item-child-product-name-wrapper']//*[@class='slds-button slds-button_icon-small']"));
+		((JavascriptExecutor)driver).executeScript("window.scrollTo(0,"+driver.findElement(By.xpath("//*[@class='cpq-item-product-child-level-2 cpq-item-child-product-name-wrapper']//*[@class='slds-button slds-button_icon-small']")).getLocation().y+")");
+		sleep(8000);
+		pDatos.get(2).click();
+		 List<WebElement> tablas=driver.findElements(By.className("cpq-product-cart-item-child"));
+		 sleep(8000);
+		 //subtablas
+		 List<WebElement> servicios=driver.findElements(By.xpath("//*[@class='cpq-item-child-product-name-wrapper']"));
+		 List<WebElement> s=driver.findElements(By.xpath("//*[@class='cpq-item-base-product']"));
+		 List<WebElement> Agregar=driver.findElements(By.xpath("//*[@class='slds-button slds-button_neutral']"));
+		 for(WebElement serv: servicios){
+				if(serv.getText().equals("Pack 2GB + WhasApp x 7 días")){
+				((JavascriptExecutor)driver).executeScript("window.scrollTo(0,"+ serv.getLocation().y+")");
+				System.out.println(serv.getText());
+				}
+				for(WebElement a:Agregar) {
+				if(s.contains(serv)) {
+					a.getText().equals("Add to Card");
+					a.click();
+
+	   				sleep(12000);
+	   				break;
+				
+							
+				//	
+					
+				  	
+				   		
+					   		
+					   			
+					   			
+					   			// System.out.println(a);
+
+
+					   			}
+					   		}
+						}
+		 
+				   		//Agregar.get(10).click();
+				   		//sleep(8000);
+						
+							
+				  		}
+		 
+		 
+
+			   
+	
 	
 			
 		
@@ -155,10 +245,19 @@ public class OMQPage extends BasePage {
 		return CPQ;
 	}
 	
-	public void scrollToElement(WebElement element) {
+	public void scrollToElement(List<WebElement> pDatos2) {
 		((JavascriptExecutor)driver)
-	        .executeScript("arguments[0].scrollIntoView();", element);
+	        .executeScript("arguments[0].scrollIntoView();", pDatos2);
 	  }
+	
+
+
+
+public void scrollToElement(WebElement element) {
+	((JavascriptExecutor)driver)
+    .executeScript("arguments[0].scrollIntoView();", element);
 
 }
+}
+
 

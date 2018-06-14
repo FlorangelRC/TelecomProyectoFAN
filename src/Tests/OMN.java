@@ -17,7 +17,6 @@ public class OMN extends TestBase {
 
 	private WebDriver driver;
 	protected OM om;
-	protected BasePage bp;
 
 
 	@BeforeClass (alwaysRun = true, groups = "OM")
@@ -27,11 +26,11 @@ public class OMN extends TestBase {
 		login(driver, "https://crm--sit.cs14.my.salesforce.com/", "U585991", "Testa10k");
 		sleep(5000);
 		om = new OM(driver);
-		bp = new BasePage(driver);
 	}
 	
 	@BeforeMethod (alwaysRun = true, groups = "OM")
 	public void before() {
+		BasePage bp = new BasePage(driver);
 		bp.cajonDeAplicaciones("Sales");
 		sleep(5000);
 		driver.findElement(By.id("Order_Tab")).click();
@@ -196,5 +195,18 @@ public class OMN extends TestBase {
 			b = true;
 		}
 		Assert.assertTrue(a && b);
+	}
+	
+	@Test (groups = "OM")
+	public void TS80196_Ordenes_Cliente_existente_Cambio_de_SIM_Plan_con_tarjeta_Sin_delivery_Paso_3() throws InterruptedException {
+		om.Gestion_Alta_De_Linea("FlorOM", "Plan con tarjeta");
+		driver.findElement(By.id("Order_Tab")).click();
+		om.Cambio_De_SimCard("11-29-2019");
+		driver.findElement(By.name("ta_submit_order")).click();
+		sleep(15000);
+		om.completarFlujoOrquestacion();
+		driver.findElement(By.name("vlocity_cmt__vieworchestrationplan")).click();
+		sleep(10000);
+		Assert.assertTrue(om.ordenCajasVerdes("Cambio de N\u00famero o SIM", "Env\u00edo de Actualizaci\u00f3n de Par\u00e1metros a la Red (SIM Card)(IMSI, KI e ICCID)", "En progreso | Comptel - Par\u00e1metros de la Red actualizados"));
 	}
 }

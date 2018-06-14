@@ -255,11 +255,17 @@ public class Marketing extends CustomerCare {
 	public String estadoAltaBaja (String sAltaBaja) {
 		BasePage cambioFrame=new BasePage();
 		WebElement wConsumerBox;
+		WebElement wBusinessBox;
 		WebElement wConsumerTable;
+		WebElement wBusinessTable;
 		List<WebElement> wConsumerTableRows;
-		WebElement wCTCheckBox;
-		WebElement wCTCheckBoxLabel;
-		WebElement wCTCheckBoxDisable;
+		List<WebElement> wBusinessTableRows;
+		WebElement wCTCheckBoxConsumer;
+		WebElement wCTCheckBoxBusiness;
+		WebElement wCTCheckBoxLabelConsumer;
+		WebElement wCTCheckBoxLabelBusiness;
+		WebElement wCTCheckBoxDisableConsumer;
+		WebElement wCTCheckBoxDisableBusiness;
 		String sCaso = "";
 		switch (sAltaBaja.toLowerCase()) {
 			case "alta":
@@ -269,12 +275,20 @@ public class Marketing extends CustomerCare {
 				driver.switchTo().defaultContent();
 				driver.switchTo().frame(cambioFrame.getFrameForElement(driver, By.id("consumerAccounts")));
 				wConsumerBox = driver.findElement(By.id("consumerAccounts"));
+				driver.switchTo().defaultContent();
+				driver.switchTo().frame(cambioFrame.getFrameForElement(driver, By.id("businessAccounts")));
+				wBusinessBox = driver.findElement(By.id("businessAccounts"));
 				wConsumerTable = wConsumerBox.findElement(By.tagName("tbody"));
 				wConsumerTableRows = wConsumerTable.findElements(By.tagName("tr"));
-				wCTCheckBox = wConsumerTableRows.get(0).findElement(By.tagName("th"));
-				wCTCheckBoxLabel = wCTCheckBox.findElement(By.tagName("label"));
-				wCTCheckBoxDisable = wCTCheckBoxLabel.findElement(By.tagName("input"));
-				if (wCTCheckBoxDisable.getAttribute("ng-disabled").equals("true")) {
+				wCTCheckBoxConsumer = wConsumerTableRows.get(0).findElement(By.tagName("th"));
+				wCTCheckBoxLabelConsumer = wCTCheckBoxConsumer.findElement(By.tagName("label"));
+				wCTCheckBoxDisableConsumer = wCTCheckBoxLabelConsumer.findElement(By.tagName("input"));
+				wBusinessTable = wBusinessBox.findElement(By.tagName("tbody"));
+				wBusinessTableRows = wBusinessTable.findElements(By.tagName("tr"));
+				wCTCheckBoxBusiness = wBusinessTableRows.get(0).findElement(By.tagName("th"));
+				wCTCheckBoxLabelBusiness = wCTCheckBoxBusiness.findElement(By.tagName("label"));
+				wCTCheckBoxDisableBusiness = wCTCheckBoxLabelBusiness.findElement(By.tagName("input"));
+				if (wCTCheckBoxDisableConsumer.getAttribute("ng-disabled").equals("true") || wCTCheckBoxDisableBusiness.getAttribute("ng-disabled").equals("true")) {
 					closeActiveTab();
 					sCaso = darDeBajaCP("No lo uso", "");
 					sleepShort(3);
@@ -296,12 +310,20 @@ public class Marketing extends CustomerCare {
 				driver.switchTo().defaultContent();
 				driver.switchTo().frame(cambioFrame.getFrameForElement(driver, By.id("consumerAccounts")));
 				wConsumerBox = driver.findElement(By.id("consumerAccounts"));
+				driver.switchTo().defaultContent();
+				driver.switchTo().frame(cambioFrame.getFrameForElement(driver, By.id("businessAccounts")));
+				wBusinessBox = driver.findElement(By.id("businessAccounts"));
 				wConsumerTable = wConsumerBox.findElement(By.tagName("tbody"));
 				wConsumerTableRows = wConsumerTable.findElements(By.tagName("tr"));
-				wCTCheckBox = wConsumerTableRows.get(0).findElement(By.tagName("th"));
-				wCTCheckBoxLabel = wCTCheckBox.findElement(By.tagName("label"));
-				wCTCheckBoxDisable = wCTCheckBoxLabel.findElement(By.tagName("input"));
-				if (wCTCheckBoxDisable.getAttribute("ng-disabled").equals("true")) {
+				wCTCheckBoxConsumer = wConsumerTableRows.get(0).findElement(By.tagName("th"));
+				wCTCheckBoxLabelConsumer = wCTCheckBoxConsumer.findElement(By.tagName("label"));
+				wCTCheckBoxDisableConsumer = wCTCheckBoxLabelConsumer.findElement(By.tagName("input"));
+				wBusinessTable = wBusinessBox.findElement(By.tagName("tbody"));
+				wBusinessTableRows = wBusinessTable.findElements(By.tagName("tr"));
+				wCTCheckBoxBusiness = wBusinessTableRows.get(0).findElement(By.tagName("th"));
+				wCTCheckBoxLabelBusiness = wCTCheckBoxBusiness.findElement(By.tagName("label"));
+				wCTCheckBoxDisableBusiness = wCTCheckBoxLabelBusiness.findElement(By.tagName("input"));
+				if (wCTCheckBoxDisableConsumer.getAttribute("ng-disabled").equals("true") || wCTCheckBoxDisableBusiness.getAttribute("ng-disabled").equals("true")) {
 					closeActiveTab();
 					sCaso = darDeAltaCP();
 					sleepShort(3);
