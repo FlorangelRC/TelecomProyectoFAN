@@ -145,10 +145,10 @@ public class GestionesOM extends TestBase {
 	@Test(groups="GestionOM") 
 	public void TS_CRM_CambioDeTitularidad() throws InterruptedException {
 		
-		TS_CRM_OM_Gestion_Alta_De_Linea();
+		OM pageOm=new OM(driver);
+		pageOm.AltaLinea();
 		driver.switchTo().defaultContent();
 		sleep(12000);
-		OM pageOm=new OM(driver);
 		DateFormat dateFormat = new SimpleDateFormat("MM-dd-yyyy");
 		driver.findElement(By.id("RequestDate")).sendKeys(dateFormat.format(pageOm.fechaAvanzada()));
 		//driver.findElement(By.id("RequestDate")).sendKeys("11-01-2018");
