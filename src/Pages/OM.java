@@ -793,27 +793,25 @@ public void deleteOrdersNoActivated(String Vista) {
 		public boolean ordenCajasVerdes(String primeraCaja, String segundaCaja, String terceraCaja) {
 			boolean ordenCajas = false;
 			Integer a = 0, b = 0, c = 0;
-			List <WebElement> cajasVerdes1 = driver.findElements(By.cssSelector(".item-header.item-completed"));
-			for (WebElement x : cajasVerdes1) {
-				if (x.getText().toLowerCase().equals(primeraCaja)) {
+			List <WebElement> cajasVerdes = driver.findElements(By.cssSelector(".item-header.item-completed"));
+			for (WebElement x : cajasVerdes) {
+				if (x.getText().equalsIgnoreCase(primeraCaja)) {
 					a = x.getLocation().getX();
 				}
 			}
-			List <WebElement> cajasVerdes2 = driver.findElements(By.cssSelector(".item-header.item-completed"));
-			for (WebElement x : cajasVerdes2) {
-				if (x.getText().toLowerCase().equals(segundaCaja)) {
+			for (WebElement x : cajasVerdes) {
+				if (x.getText().equalsIgnoreCase(segundaCaja)) {
 					b = x.getLocation().getX();
 				}
 			}
-			List <WebElement> cajasVerdes3 = driver.findElements(By.cssSelector(".item-header.item-completed"));
-			for (WebElement x : cajasVerdes3) {
-				if (x.getText().toLowerCase().equals(terceraCaja)) {
+			for (WebElement x : cajasVerdes) {
+				if (x.getText().equalsIgnoreCase(terceraCaja)) {
 					c = x.getLocation().getX();
 				}
-			}			
+			}	
 			if (a < b && b < c) {
 				ordenCajas = true;
-			}			
+			}
 			return ordenCajas;
 		}
 	    
