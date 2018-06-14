@@ -177,34 +177,56 @@ public class OMQPage extends BasePage {
 	
 
 	
-	public void agregarPack(String servicio) {
-		sleep(8000);
+	public void agregarPack() {
+		sleep(12000);
 		driver.findElement(By.cssSelector(".slds-button.cpq-item-has-children")).click();
 		List<WebElement> list1 = driver.findElements(By.xpath("//*[@class='cpq-item-product-child-level-1 cpq-item-child-product-name-wrapper']//*[@class='slds-button slds-button_icon-small']"));
-		list1.get(3).click();
+		list1. get(3).click();
 		sleep(8000);
 		List<WebElement> pDatos = driver.findElements(By.xpath("//*[@class='cpq-item-product-child-level-2 cpq-item-child-product-name-wrapper']//*[@class='slds-button slds-button_icon-small']"));
 		((JavascriptExecutor)driver).executeScript("window.scrollTo(0,"+driver.findElement(By.xpath("//*[@class='cpq-item-product-child-level-2 cpq-item-child-product-name-wrapper']//*[@class='slds-button slds-button_icon-small']")).getLocation().y+")");
+		sleep(8000);
 		pDatos.get(2).click();
-		 List<WebElement> tablas=driver.findElements(By.className("cpq-item-base-product-details"));
+		 List<WebElement> tablas=driver.findElements(By.className("cpq-product-cart-item-child"));
+		 sleep(8000);
+		 //subtablas
+		 List<WebElement> servicios=driver.findElements(By.xpath("//*[@class='cpq-item-child-product-name-wrapper']"));
+		 List<WebElement> s=driver.findElements(By.xpath("//*[@class='cpq-item-base-product']"));
+		 List<WebElement> Agregar=driver.findElements(By.xpath("//*[@class='slds-button slds-button_neutral']"));
+		 for(WebElement serv: servicios){
+				if(serv.getText().equals("Pack 2GB + WhasApp x 7 días")){
+				((JavascriptExecutor)driver).executeScript("window.scrollTo(0,"+ serv.getLocation().y+")");
+				System.out.println(serv.getText());
+				}
+				for(WebElement a:Agregar) {
+				if(s.contains(serv)) {
+					a.getText().equals("Add to Card");
+					a.click();
 
-		 //subtista
-		 List<WebElement> servicios=tablas.get(0).findElements(By.cssSelector(".cpq-item-base-product-name-field.cpq-item-text-value.cpq-item-product-title"));
-		 for(WebElement S:servicios) {
-			   if(S.getText().toLowerCase().contains(servicio.toLowerCase())) {
-				   System.out.println(servicio);
-				   try {Thread.sleep(2000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();	}
-				   		List<WebElement> Agregar=driver.findElements(By.xpath(".//*[@id='tab-default-1']/div[1]//ng-include/div//div[11]/button")); //findElement(By.className("slds-button slds-button_neutral")).findElements(By.tagName("div")).get(0);
-				   			Agregar.get(10).click();
-							break;
+	   				sleep(12000);
+	   				break;
+				
+							
+				//	
+					
+				  	
+				   		
+					   		
+					   			
+					   			
+					   			// System.out.println(a);
+
+
+					   			}
+					   		}
+						}
+		 
+				   		//Agregar.get(10).click();
+				   		//sleep(8000);
+						
 							
 				  		}
-			 //Click ViewRecord
-				driver.findElement(By.id("-import-btn")).click();
-				sleep(7000);
-		 }
-
- }
+		 
 		 
 
 			   

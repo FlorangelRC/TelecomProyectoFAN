@@ -615,6 +615,70 @@ public void deleteOrdersNoActivated(String Vista) {
 		return Next;
 	}
 
+	/**
+	 * Metodo para cambiar el nombre de la cuenta en todos los servicios de un asset, usado para la gestion cambio de titularidad
+	 * Recibe como parametro el nombre de la cuenta a la que se va a cambiar el asset.
+	 */
+	public void cambioDeCuentaServicios(String Cuenta) {
+		
+		List<WebElement> listadoDeServicios=driver.findElement(By.className("pbBody")).findElement(By.className("list")).findElements(By.tagName("tr"));
+		if(listadoDeServicios.get(0).getAttribute("class").equalsIgnoreCase("headerRow"))
+			listadoDeServicios.remove(0);
+		int i=1;
+		//System.out.println("aqui: "+listadoDeServicios.get(0).getText());
+		while(i<listadoDeServicios.size()+1){
+			driver.switchTo().defaultContent();
+			sleep(1000);
+			
+			WebElement servicio=driver.findElement(By.className("pbBody")).findElement(By.className("list")).findElements(By.tagName("tr")).get(i);
+			servicio.findElement(By.className("actionColumn")).findElements(By.tagName("a")).get(0).click();
+			sleep(3000);
+			
+			Select action=new Select(driver.findElement(By.xpath("//*[@id=\"ep\"]/div[2]/div[3]/table/tbody/tr[6]/td[2]")).findElement(By.tagName("select")));
+			action.selectByVisibleText("Change");
+			
+			WebElement billingAccount=driver.findElement(By.xpath("//*[@id=\"ep\"]/div[2]/div[3]/table/tbody/tr[11]/td[2]/span")).findElement(By.tagName("input"));
+			billingAccount.click();
+			billingAccount.clear();
+			billingAccount.sendKeys(Cuenta);
+			sleep(300);
+			
+			//FALTA SERVICE ACCOUNT
+			WebElement serviceAccount=driver.findElement(By.xpath("//*[@id=\"ep\"]/div[2]/div[3]/table/tbody/tr[35]/td[4]/span")).findElement(By.tagName("input"));
+			serviceAccount.click();
+			serviceAccount.clear();
+			serviceAccount.sendKeys(Cuenta);
+			
+			sleep(500);
+			//Guardar
+			driver.findElement(By.name("save")).click();
+			sleep(3000);
+			i++;
+		}
+		
+	}
+	
+	/**
+	 * Hace click en editar orden, y cambia los valores, cuenta y gestion. Usada en Cambio de titularidad.
+	 * 
+	 * @param Cuenta
+	 * @param Gestion
+	 */
+	public void cambiarCuentaYGestionEnOrden(String Cuenta, String Gestion) {
+		//Click en editar
+		driver.findElement(By.name("edit")).click();
+		sleep(4000);
+		WebElement accountName=driver.findElement(By.xpath("//*[@id=\"ep\"]/div[2]/div[3]/table/tbody/tr[3]/td[2]/div/span")).findElement(By.tagName("input"));
+		accountName.click();
+		accountName.clear();
+		accountName.sendKeys(Cuenta);
+		sleep(1000);
+		Select gestion=new Select(driver.findElement(By.xpath("//*[@id=\"ep\"]/div[2]/div[3]/table/tbody/tr[14]/td[4]/span")).findElement(By.tagName("select")));
+		gestion.selectByValue(Gestion);
+		//Guardamos
+		driver.findElement(By.name("save")).click();
+		sleep(4000);
+	}
 	public void Cambio_De_SimCard(String fecha) throws InterruptedException {
 		sleep(5000);
 		OM pageOm=new OM(driver);
@@ -798,27 +862,25 @@ public void deleteOrdersNoActivated(String Vista) {
 		public boolean ordenCajasVerdes(String primeraCaja, String segundaCaja, String terceraCaja) {
 			boolean ordenCajas = false;
 			Integer a = 0, b = 0, c = 0;
-			List <WebElement> cajasVerdes1 = driver.findElements(By.cssSelector(".item-header.item-completed"));
-			for (WebElement x : cajasVerdes1) {
-				if (x.getText().toLowerCase().equals(primeraCaja)) {
+			List <WebElement> cajasVerdes = driver.findElements(By.cssSelector(".item-header.item-completed"));
+			for (WebElement x : cajasVerdes) {
+				if (x.getText().equalsIgnoreCase(primeraCaja)) {
 					a = x.getLocation().getX();
 				}
 			}
-			List <WebElement> cajasVerdes2 = driver.findElements(By.cssSelector(".item-header.item-completed"));
-			for (WebElement x : cajasVerdes2) {
-				if (x.getText().toLowerCase().equals(segundaCaja)) {
+			for (WebElement x : cajasVerdes) {
+				if (x.getText().equalsIgnoreCase(segundaCaja)) {
 					b = x.getLocation().getX();
 				}
 			}
-			List <WebElement> cajasVerdes3 = driver.findElements(By.cssSelector(".item-header.item-completed"));
-			for (WebElement x : cajasVerdes3) {
-				if (x.getText().toLowerCase().equals(terceraCaja)) {
+			for (WebElement x : cajasVerdes) {
+				if (x.getText().equalsIgnoreCase(terceraCaja)) {
 					c = x.getLocation().getX();
 				}
-			}			
+			}	
 			if (a < b && b < c) {
 				ordenCajas = true;
-			}			
+			}
 			return ordenCajas;
 		}
 		
