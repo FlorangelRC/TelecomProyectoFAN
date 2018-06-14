@@ -137,6 +137,13 @@ public class GestionesOM extends TestBase {
 		pageOm.Gestion_Alta_De_Linea("FlorOM", "Plan Con Tarjeta");
 		pageOm.Gestion_Alta_De_Servicio("LineasFlor", "Blackberry");
 	}
+	
+	@Test(groups="OM", priority=1)
+	public void TS_CRM_Cambio_De_SimCard_Por_Siniestro() throws InterruptedException {
+		OM pageOm=new OM(driver);
+		pageOm.Gestion_Alta_De_Linea("FlorOM", "Plan Con Tarjeta");
+		pageOm.Cambio_De_SimCard_Por_Siniestro("LineasFlor");
+	}
 		
 
 }

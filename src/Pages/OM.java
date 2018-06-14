@@ -493,7 +493,7 @@ public class OM {
 	}
 
 	
-	/*public Date fechaAvanzada() {
+	public Date fechaAvanzada() {
 		Date date = new Date();
 		Calendar cal = Calendar.getInstance(); 
         cal.setTime(date); 
@@ -502,8 +502,8 @@ public class OM {
         date = cal.getTime();
         return(date);
        		
-	}*/
-	public void fechaAvanzada() {
+	}
+	public void fechaAvanzada2() {
 		//Accounts accountPage = new Accounts(driver);
 		/*DateFormat dateFormat = new SimpleDateFormat("MM-dd-yyyy");
 		driver.findElement(By.id("RequestDate")).sendKeys(dateFormat.format(om.fechaAvanzada()));*/
@@ -512,17 +512,6 @@ public class OM {
 		sleep(15000);
 		}
 
-
-	/*public Date fechaAvanzada() {
-		Date date = new Date();
-		Calendar cal = Calendar.getInstance();
-		cal.setTime(date);
-		cal.add(Calendar.MONTH, +1);
-		cal.add(Calendar.DATE, +1);
-		date = cal.getTime();
-		return (date);
-
-	}*/
 
 	/*public String getFechaAvanzadaFormateada_MM_dd_yyyy() {
 		SimpleDateFormat simpleDateFormat = new SimpleDateFormat("MM-dd-yyyy");
