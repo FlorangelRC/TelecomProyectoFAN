@@ -188,6 +188,49 @@ public class GestionesOM extends TestBase {
 		sleep(5000);
 		pageOm.primeraOrden();
 	}
+	
+	
+	@Test(groups="GestionOM") 
+	public void TS_CRM_CambioDeTitularidad() throws InterruptedException {
 		
+		TS_CRM_OM_Gestion_Alta_De_Linea();
+		driver.switchTo().defaultContent();
+		sleep(12000);
+		OM pageOm=new OM(driver);
+		DateFormat dateFormat = new SimpleDateFormat("MM-dd-yyyy");
+		driver.findElement(By.id("RequestDate")).sendKeys(dateFormat.format(pageOm.fechaAvanzada()));
+		//driver.findElement(By.id("RequestDate")).sendKeys("11-01-2018");
+		
+		//click Next
+		WebElement next=driver.findElement(By.cssSelector(".form-control.btn.btn-primary.ng-binding"));
+		next.click();
+		sleep(30000);
+		
+		//Click ViewRecord
+		driver.findElement(By.id("-import-btn")).click();
+		sleep(7000);
+		
+		//click en goto list en (TA Price Book)
+		WebElement goToList=driver.findElement(By.className("pShowMore")).findElements(By.tagName("a")).get(1);
+		sleep(500);
+		pageOm.scrollDown(driver.findElement(By.className("pShowMore")));
+		sleep(500);
+		goToList.click();
+		sleep(7000);
+		
+		//Cambiar Cuenta en Servicios
+		pageOm.cambioDeCuentaServicios("CambioDeTitularidad");
+		
+		//Click para retonar a la orden
+		driver.findElement(By.className("ptBreadcrumb")).findElement(By.tagName("a")).click();
+		sleep(4000);
+		
+		//Editamos Orden
+		pageOm.cambiarCuentaYGestionEnOrden("CambioDeTitularidad","Cambio de titularidad");
+		sleep(4000);
+		
+		//Finalizamos el proceso con TA SUBMIT ORDER
+		driver.findElement(By.name("ta_submit_order")).click();
+	}
 
 }
