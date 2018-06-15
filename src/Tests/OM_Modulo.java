@@ -131,14 +131,14 @@ public void TS102205_CRM_OM_Ola_2_Ordenes_Cliente_existente_Alta_de_linea_con_1_
 	pageOm.fechaAvanzada();
 	sleep(8000);
 	//agregar Pack
-	OM.agregarPack();
+	OM.agregarPack("Pack 200Mb + WhasApp x 1 día");
 				
 	//Click ViewRecord
 	sleep(8000);	
 	driver.findElement(By.id("-import-btn")).click();
 	sleep(7000);
 	//agregar gestion
-	pageOm.agregarGestion("Alta producto genérico");
+	pageOm.agregarGestion("Compra de Pack");
 	//Orquestacion
 	driver.findElements(By.id("topButtonRow")).get(0);
 	sleep(7000);

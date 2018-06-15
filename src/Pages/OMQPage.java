@@ -49,6 +49,9 @@ public class OMQPage extends BasePage {
 	@FindBy(name = "productconfig_field_3_3")
 	private WebElement KI;
 	
+	@FindBy(xpath = "//*[@class='cpq-item-child-product-name-wrapper']")
+	private List<WebElement> Pack;
+	
 
 	
 
@@ -177,80 +180,48 @@ public class OMQPage extends BasePage {
 	
 
 	
-	public void agregarPack() {
+	public void agregarPack(String servicio) {
 		sleep(12000);
 		driver.findElement(By.cssSelector(".slds-button.cpq-item-has-children")).click();
 		List<WebElement> list1 = driver.findElements(By.xpath("//*[@class='cpq-item-product-child-level-1 cpq-item-child-product-name-wrapper']//*[@class='slds-button slds-button_icon-small']"));
+		
 		list1. get(3).click();
 		sleep(8000);
 		List<WebElement> pDatos = driver.findElements(By.xpath("//*[@class='cpq-item-product-child-level-2 cpq-item-child-product-name-wrapper']//*[@class='slds-button slds-button_icon-small']"));
 		((JavascriptExecutor)driver).executeScript("window.scrollTo(0,"+driver.findElement(By.xpath("//*[@class='cpq-item-product-child-level-2 cpq-item-child-product-name-wrapper']//*[@class='slds-button slds-button_icon-small']")).getLocation().y+")");
 		sleep(8000);
 		pDatos.get(2).click();
-		 List<WebElement> tablas=driver.findElements(By.className("cpq-product-cart-item-child"));
 		 sleep(8000);
+		driver.switchTo().defaultContent();
 		 //subtablas
-		 List<WebElement> servicios=driver.findElements(By.xpath("//*[@class='cpq-item-child-product-name-wrapper']"));
-		 List<WebElement> s=driver.findElements(By.xpath("//*[@class='cpq-item-base-product']"));
+		 WebElement tabla=driver.findElement(By.xpath("//*[@class='cpq-item-product-child-level-3 ng-not-empty ng-valid']"));
+		 List<WebElement> Pack = driver.findElements( By.xpath("//*[@class='cpq-item-child-product-name-wrapper']"));
 		 List<WebElement> Agregar=driver.findElements(By.xpath("//*[@class='slds-button slds-button_neutral']"));
-		 for(WebElement serv: servicios){
-				if(serv.getText().equals("Pack 2GB + WhasApp x 7 días")){
-				((JavascriptExecutor)driver).executeScript("window.scrollTo(0,"+ serv.getLocation().y+")");
-				System.out.println(serv.getText());
-				}
-				for(WebElement a:Agregar) {
-				if(s.contains(serv)) {
-					a.getText().equals("Add to Card");
-					a.click();
-
-	   				sleep(12000);
-	   				break;
-				
-							
-				//	
-					
-				  	
-				   		
-					   		
-					   			
-					   			
-					   			// System.out.println(a);
-
-
-					   			}
-					   		}
-						}
 		 
-				   		//Agregar.get(10).click();
-				   		//sleep(8000);
-						
-							
-				  		}
-		 
-		 
-
-			   
-	
-	
+		 if (Pack.size() == Agregar.size()) {
+				for (int i = 0; i < Agregar.size(); i++) {
+					if (Pack.get(i).getText().equals(servicio)) {
+						Agregar.get(i).click();
+						break;
 			
-		
+					}
+				sleep(8000);
+				}
+				
+			}
+		}
 
 
-	public WebElement getNewOrder() {
-		return NewOrder;
+	
+
+public WebElement getNewOrder() {
+	return NewOrder;
 	}
 
 
 	public WebElement getCPQ() {
 		return CPQ;
 	}
-	
-	public void scrollToElement(List<WebElement> pDatos2) {
-		((JavascriptExecutor)driver)
-	        .executeScript("arguments[0].scrollIntoView();", pDatos2);
-	  }
-	
-
 
 
 public void scrollToElement(WebElement element) {
@@ -258,6 +229,8 @@ public void scrollToElement(WebElement element) {
     .executeScript("arguments[0].scrollIntoView();", element);
 
 }
+
+
 }
 
 
