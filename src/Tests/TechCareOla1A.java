@@ -66,14 +66,14 @@ public class TechCareOla1A extends TestBase {
 	}
 	
 	
-	//@AfterMethod(alwaysRun=true)
+	@AfterMethod(alwaysRun=true)
 	public void after() {
 		CustomerCare cerrar = new CustomerCare(driver);
 	    cerrar.cerrarultimapestaña();
 	    sleep(2000);
 	}
 	
-	//@AfterClass(alwaysRun=true)
+	@AfterClass(alwaysRun=true)
 	public void tearDown() {
 		try {Thread.sleep(1000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 		CustomerCare cerrar = new CustomerCare(driver);
@@ -205,7 +205,7 @@ public class TechCareOla1A extends TestBase {
 	    sleep(5000);
 	    page.seleccionarRespuesta("no");
 	    page.BajaryContinuar();
-	    sleep(4000);
+	    sleep(5000);
 	    assertTrue(driver.findElement(By.id("NetworkCategory_nextBtn")).isDisplayed());
 	}
 	
@@ -361,7 +361,7 @@ public class TechCareOla1A extends TestBase {
 		sleep(5000);
 	    driver.switchTo().frame(accPage.getFrameForElement(driver, By.cssSelector(".imgItemContainer.ng-scope")));
 		sleep(5000);
-	    assertTrue(driver.findElements(By.cssSelector(".imgItemContainer.ng-scope")).get(1).getText().toLowerCase().contains("SMS Emisión a algún destino en particular"));
+	    assertTrue(driver.findElements(By.cssSelector(".imgItemContainer.ng-scope")).get(1).getText().toLowerCase().contains("sms emisión a algún destino en particular"));
 	}
 	
 	@Test(groups= {"TechnicalCare","SVA","Ola1"}, priority=3, dataProvider="Tech")

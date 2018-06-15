@@ -303,7 +303,7 @@ public class TechCare_Ola1 {
 			sleep(8000);
 			char char0 = cuenta.toUpperCase().charAt(0);
 			driver.findElement(By.xpath("//div[@class='rolodex']//span[contains(.,'" + char0 + "')]")).click();
-			sleep(1800);
+			sleep(10000);
 			
 			try {
 				List<WebElement>  lCuentas1=driver.findElements(By.cssSelector(".dataRow.odd"));
@@ -315,7 +315,7 @@ public class TechCare_Ola1 {
 					if (c.getText().toLowerCase().contains(cuenta.toLowerCase())) {
 						sleep(500);
 						c.findElement(By.tagName("th")).findElement(By.tagName("a")).click();
-						TestBase.sleep(1000);
+						TestBase.sleep(10000);
 						return;
 					}
 				}
@@ -325,8 +325,12 @@ public class TechCare_Ola1 {
 				if (c.getText().equalsIgnoreCase(cuenta)) {
 					(new Actions(driver)).click(c.findElement(By.tagName("a"))).build().perform();
 					sleep(500);
-					c.findElement(By.tagName("a")).click();
-					TestBase.sleep(1000);
+					try {
+						((JavascriptExecutor)driver).executeScript("window.scrollTo(0,"+c.findElement(By.tagName("a")).getLocation().y+")");
+						sleep(300);
+						c.findElement(By.tagName("a")).click();
+						}catch(org.openqa.selenium.ElementNotVisibleException a) {}
+					TestBase.sleep(10000);
 					return;
 				}
 			}
@@ -378,7 +382,7 @@ public class TechCare_Ola1 {
 	 * @param opcion
 	 */
 	public void seleccionarRespuesta(String opcion) {
-		
+		sleep(2000);
 		Accounts accPage = new Accounts(driver);
 	    driver.switchTo().frame(accPage.getFrameForElement(driver, By.cssSelector(".imgItemContainer.ng-scope")));
 	    List<WebElement> preguntas=driver.findElements(By.cssSelector(".imgItemContainer.ng-scope"));
