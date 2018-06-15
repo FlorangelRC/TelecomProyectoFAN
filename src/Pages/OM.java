@@ -3,6 +3,7 @@ package Pages;
 import static org.testng.Assert.assertTrue;
 
 import java.awt.Toolkit;
+import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.time.Duration;
 import java.util.ArrayList;
@@ -722,11 +723,17 @@ public void deleteOrdersNoActivated(String Vista) {
 		sleep(10000);
 		Accounts accountPage = new Accounts(driver);
 		driver.switchTo().defaultContent(); 
-        /*DateFormat dateFormat = new SimpleDateFormat("MM-dd-yyyy");
-		driver.findElement(By.id("RequestDate")).sendKeys(dateFormat.format(pageOm.fechaAvanzada()));*/
-		driver.findElement(By.id("RequestDate")).sendKeys("07-14-2018");
+        DateFormat dateFormat = new SimpleDateFormat("MM-dd-yyyy");
+		driver.findElement(By.id("RequestDate")).sendKeys(dateFormat.format(pageOm.fechaAvanzada()));
+		//driver.findElement(By.id("RequestDate")).sendKeys("07-14-2018");
 		driver.findElement(By.cssSelector(".form-control.btn.btn-primary.ng-binding")).click();
 		sleep(12000);
+		driver.findElement(By.id("-import-btn")).click();
+		sleep(8000);
+		pageOm.agregarGestion("Suspension");
+		sleep(5000);
+		SuspenderProductos(0);
+		sleep(5000);
 		OM.SimCard();
 		driver.findElement(By.id("-import-btn")).click();
 		sleep(8000);
@@ -991,6 +998,59 @@ public void deleteOrdersNoActivated(String Vista) {
 				}
 			}
 			 
+		}
+		
+		public void SuspenderProductos(int i) {
+			CustomerCare cc = new CustomerCare(driver);
+			try {
+				cc.obligarclick(driver.findElement(By.cssSelector(".listRelatedObject.orderBlock")).findElement(By.className("pShowMore")).findElement(By.tagName("a")));
+				sleep(3000);
+			}catch(Exception ex1) {}
+			List<WebElement> Productos = driver.findElement(By.cssSelector(".listRelatedObject.orderBlock")).findElement(By.tagName("tbody")).findElements(By.tagName("tr"));
+			Productos.remove(0);
+			if(i<=Productos.size()) {
+				Productos.get(i).findElement(By.tagName("th")).findElement(By.tagName("a")).click();
+				sleep(5000);
+				boolean esta = false;
+				List<WebElement> campos = driver.findElement(By.className("detailList")).findElements(By.tagName("td"));
+				for (WebElement UnC : campos) {
+					if (esta == true) {
+						Actions action = new Actions(driver);
+						action.moveToElement(UnC).doubleClick().build().perform();
+						sleep(2000);
+						Select gestiones = new Select(driver.findElement(By.tagName("select")));
+						gestiones.selectByVisibleText("Suspend-Siniestro");
+						break;
+					}
+					if (UnC.getText().equalsIgnoreCase("sub action")) {
+						esta = true;
+					}
+				}
+				esta = false;
+				for (WebElement UnC : campos) {
+					if (esta == true) {
+						Actions action = new Actions(driver);
+						action.moveToElement(UnC).doubleClick().build().perform();
+						sleep(2000);
+						UnC.findElement(By.tagName("input")).clear();
+						UnC.findElement(By.tagName("input")).sendKeys("Suspend");
+						break;
+					}
+					if (UnC.getText().equalsIgnoreCase("provisioning status")) {
+						esta = true;
+					}
+				}
+				sleep(2000);
+				driver.findElement(By.id("topButtonRow")).findElement(By.tagName("input")).click();
+				sleep(3000);
+				cc.obligarclick(driver.findElement(By.id("Order_ileinner")).findElement(By.tagName("a")));
+				sleep(4000);
+				SuspenderProductos(i++);
+			}else {
+				System.out.println("llegue aqui");
+			}
+			
+			
 		}
 	    
 }

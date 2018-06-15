@@ -92,7 +92,7 @@ public class GestionesOM extends TestBase {
 	public void TS_CRM_CambioDeTitularidad() throws InterruptedException {
 		
 		OM pageOm=new OM(driver);
-		pageOm.AltaLinea();
+		//pageOm.AltaLinea();
 		driver.switchTo().defaultContent();
 		sleep(12000);
 		DateFormat dateFormat = new SimpleDateFormat("MM-dd-yyyy");

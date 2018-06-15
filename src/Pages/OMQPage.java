@@ -152,21 +152,7 @@ public class OMQPage extends BasePage {
 			 }
 			 
 		 }
-		/* driver.findElement(By.name("productconfig_field_3_1")).click();
-		 driver.findElement(By.name("productconfig_field_3_1")).clear();
-		 driver.findElement(By.name("productconfig_field_3_1")).sendKeys(""+r.nextInt(200000));
-		 /*ICCID.click();
-		 ICCID.clear();
-		 ICCID.sendKeys(""+r.nextInt(200000));*/
-		 /*sleep(2000);
-		 IMSI.click();
-		 IMSI.clear();
-		 IMSI.sendKeys(""+r.nextInt(200000));
-		 sleep(2000);
-		 KI.click();
-		 KI.clear();
-		 KI.sendKeys(""+r.nextInt(200000));*/
-		 //KI.submit();
+		
 		sleep(5000);
 		//driver.switchTo().defaultContent();
 		driver.findElement(By.xpath("/html/body/div[1]/div[1]/ng-include/div/div[2]/div[2]/div[3]/div/div/ng-include/div/div[1]/div/button")).click();
@@ -175,6 +161,49 @@ public class OMQPage extends BasePage {
 		
 	}
 	
+	public void SimCard2(String Iccid, String Imsi, String Ki) {
+		Random r = new Random();
+		sleep(5000);
+		driver.findElement(By.cssSelector(".slds-button.cpq-item-has-children")).click();
+		sleep(3000);
+		driver.findElement(By.xpath(".//*[@id='tab-default-1']/div[1]/ng-include/div/div/div/div[4]/div[2]/div/ng-include/div/div[2]/ng-include/div/div[1]/div/div[2]/div[11]")).click();
+		List<WebElement> lista = driver.findElements(By.cssSelector(".slds-dropdown__list.cpq-item-actions-dropdown__list"));
+		//System.out.println(lista.size());
+		lista.get(1).click();
+		sleep(3000);
+		List<WebElement> todos = driver.findElements(By.cssSelector(".slds-form_stacked.ng-pristine.ng-untouched.ng-valid.vlocity-dynamic-form.ng-valid-required.ng-valid-step")).get(1).findElements(By.className("slds-form-element"));
+		 ((JavascriptExecutor)driver).executeScript("window.scrollTo(0,"+driver.findElement(By.className("slds-section")).getLocation().y+" )");
+		 for (WebElement uno : todos) {
+			 if(uno.findElement(By.tagName("label")).getText().equalsIgnoreCase("ICCID")) {
+				 uno.click();
+				 uno.findElement(By.tagName("input")).clear();
+				 uno.findElement(By.tagName("input")).sendKeys(""+r.nextInt(200000));
+				 Iccid = uno.findElement(By.tagName("input")).getText();
+			 }
+			 if(uno.findElement(By.tagName("label")).getText().equalsIgnoreCase("IMSI")) {
+				 uno.click();
+				 uno.findElement(By.tagName("input")).clear();
+				 uno.findElement(By.tagName("input")).sendKeys(""+r.nextInt(200000));
+				 Imsi = uno.findElement(By.tagName("input")).getText();
+			 }
+			 if(uno.findElement(By.tagName("label")).getText().equalsIgnoreCase("KI")) {
+				 uno.click();
+				 uno.findElement(By.tagName("input")).clear();
+				 uno.findElement(By.tagName("input")).sendKeys(""+r.nextInt(200000));
+				 Ki = uno.findElement(By.tagName("input")).getText();
+				 uno.findElement(By.tagName("input")).submit();
+				 break;
+			 }
+			 
+		 }
+		
+		sleep(5000);
+		//driver.switchTo().defaultContent();
+		driver.findElement(By.xpath("/html/body/div[1]/div[1]/ng-include/div/div[2]/div[2]/div[3]/div/div/ng-include/div/div[1]/div/button")).click();
+		sleep(5000);
+		 
+		
+	}
 
 	
 	public void agregarPack() {
