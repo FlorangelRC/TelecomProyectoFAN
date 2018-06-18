@@ -62,9 +62,8 @@ public class OMRuben extends TestBase {
 	}
 	
 	/* Elementos */
-	@FindBy(xpath = "//*[ends-with(@id,'_SALES_ACCOUNT_NAME')]")
-	//https://stackoverflow.com/questions/33499405/selenium-webdriver-how-to-get-the-dynamic-id-using-xpath
-	private WebElement accountName;
+	@FindBy(css = ".x-grid3-col.x-grid3-cell.x-grid3-td-SALES_ACCOUNT_NAME")
+	private List<WebElement> accountsList;
 
 	@Test(groups = "OM")
 	public void TS6723_CRM_OM_Ordenes_Vista_Configuracion_Borrar_Vista() {
@@ -214,6 +213,6 @@ public class OMRuben extends TestBase {
 	public void TS_52660_CRM_OM_Ordenes_Cliente_Existente_Baja_de_linea_Sin_VAS_Paso_0() {
 		pageOm.selectVistaByVisibleText("RubenOM-Activated");
 		sleep(6000);
-		accountName.click();
+		accountsList.get(0).click();
 	}
 }

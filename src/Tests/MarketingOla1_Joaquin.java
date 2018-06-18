@@ -24,6 +24,7 @@ public class MarketingOla1_Joaquin extends TestBase {
 		driver = setConexion.setupEze();
 		Page = new Marketing(driver);
 		Page.login("SIT");
+		cambiarListaLightningAVistaClasica(driver);
 		Page.cajonDeAplicaciones("Consola FAN");
 	}
 	
@@ -31,7 +32,7 @@ public class MarketingOla1_Joaquin extends TestBase {
 	public void exit() {
 		Page.cerrarTodasLasPestañas();
 		Page.cajonDeAplicaciones("Ventas");
-		cerrarTodo();
+		driver.close();
 	}
 	
 	@BeforeMethod(alwaysRun = true, groups = {"Marketing", "Ola1"})
