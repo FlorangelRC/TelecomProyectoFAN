@@ -773,8 +773,8 @@ public void deleteOrdersNoActivated(String Vista) {
 	      }
 	    
 		// Metodo para cuando olvidamos cambiar la fecha para ejecutar gestiones
-	    // Avisa si se ingres� una fecha incorrecta y da unos segundos para cambiarla y continuar el test
-	    // ��ATENCION!! No olvidar quitarlo del codigo una vez que funcione
+	    // Avisa si se ingreso una fecha incorrecta y da unos segundos para cambiarla y continuar el test
+	    // ATENCION!! No olvidar quitarlo del codigo una vez que funcione
 		public void checkFutureDateRestriction() {
 			try {
 				String futureDateText = driver.findElement(By.cssSelector(".col-md-12.col-sm-12.vlc-header")).getText();
