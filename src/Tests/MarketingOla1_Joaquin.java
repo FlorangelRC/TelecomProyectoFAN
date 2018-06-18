@@ -31,7 +31,7 @@ public class MarketingOla1_Joaquin extends TestBase {
 	public void exit() {
 		Page.cerrarTodasLasPestañas();
 		Page.cajonDeAplicaciones("Ventas");
-		cerrarTodo();
+		driver.close();
 	}
 	
 	@BeforeMethod(alwaysRun = true, groups = {"Marketing", "Ola1"})

@@ -679,6 +679,14 @@ public class OM_Mattu extends TestBase{
 	}
 	
 	//-------------------------------------------------------------------------------------------------
+	//TCC = 15
+	@Test(groups = "OM")
+	public void TS79026_OM_Ordenes_Cliente_existente_Alta_de_linea_Sin_delivery_Sin_VAS(){
+		page.crearOrden("MattuOM");
+		
+	}
+	
+	//-------------------------------------------------------------------------------------------------
 	//Methods
 	
 	public List<String> traerColumna(WebElement wBody, int iColumn) {

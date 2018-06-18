@@ -36,15 +36,19 @@ public class Marketing_Mattu_Wave2 extends TestBase{
 		mMarketing = new Marketing(driver);
 		loginMarketing(driver);
 		try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
-		if (!driver.findElement(By.id("tsidLabel")).getText().toLowerCase().equals("marketing")) {
-			driver.findElement(By.id("tsidLabel")).click();
-			WebElement wMenu = driver.findElement(By.id("tsid-menuItems"));
-			List<WebElement> wMenuOptions = wMenu.findElements(By.tagName("a"));
-			for (WebElement wAux:wMenuOptions) {
-				if(wAux.getText().toLowerCase().equals("marketing")) {
-					wAux.click();
+		try {
+			if (!driver.findElement(By.id("tsidLabel")).getText().toLowerCase().equals("marketing")) {
+				driver.findElement(By.id("tsidLabel")).click();
+				WebElement wMenu = driver.findElement(By.id("tsid-menuItems"));
+				List<WebElement> wMenuOptions = wMenu.findElements(By.tagName("a"));
+				for (WebElement wAux:wMenuOptions) {
+					if(wAux.getText().toLowerCase().equals("marketing")) {
+						wAux.click();
+					}
 				}
 			}
+		} catch (org.openqa.selenium.StaleElementReferenceException ex) {
+			//Empty
 		}
 	}
 	@BeforeMethod(alwaysRun=true)
@@ -94,6 +98,7 @@ public class Marketing_Mattu_Wave2 extends TestBase{
 		WebElement wContinuar = driver.findElement(By.id("bottomButtonRow"));
 		wContinuar.findElement(By.name("save")).click();
 		
+		sleep(2000);
 		WebElement wTable = driver.findElement(By.className("pbBody"));
 		List<WebElement> wBody = wTable.findElements(By.tagName("tbody"));
 		List<WebElement> wTd = wBody.get(0).findElements(By.tagName("td"));
@@ -127,6 +132,7 @@ public class Marketing_Mattu_Wave2 extends TestBase{
 		WebElement wContinuar = driver.findElement(By.id("bottomButtonRow"));
 		wContinuar.findElement(By.name("save")).click();
 		
+		sleep(2000);
 		WebElement wInfoCampania = driver.findElement(By.className("pbBody"));
 		wInfoCampania.findElement(By.id("cpn1")).sendKeys("Nombre de la campania");
 		driver.findElement(By.className("requiredBlock")).click();
@@ -194,6 +200,7 @@ public class Marketing_Mattu_Wave2 extends TestBase{
 		WebElement wContinuar = driver.findElement(By.id("bottomButtonRow"));
 		wContinuar.findElement(By.name("save")).click();
 		
+		sleep(2000);
 		WebElement wInfoCampania = driver.findElement(By.className("pbBody"));
 		wInfoCampania.findElement(By.id("cpn1")).sendKeys("Nombre de la campania");
 		driver.findElement(By.className("requiredBlock")).click();
@@ -227,6 +234,7 @@ public class Marketing_Mattu_Wave2 extends TestBase{
 		WebElement wContinuar = driver.findElement(By.id("bottomButtonRow"));
 		wContinuar.findElement(By.name("save")).click();
 		
+		sleep(2000);
 		WebElement wBody = driver.findElement(By.className("pbSubsection")).findElement(By.tagName("tbody"));
 		List<WebElement> wTd = wBody.findElements(By.tagName("td"));
 		Assert.assertTrue(wTd.get(1).findElement(By.tagName("div")).getAttribute("class").equals("requiredInput"));
@@ -251,6 +259,7 @@ public class Marketing_Mattu_Wave2 extends TestBase{
 		WebElement wContinuar = driver.findElement(By.id("bottomButtonRow"));
 		wContinuar.findElement(By.name("save")).click();
 		
+		sleep(2000);
 		WebElement wInfoCampania = driver.findElement(By.className("pbBody"));
 		List<WebElement> wTd = wInfoCampania.findElement(By.tagName("tbody")).findElements(By.tagName("td"));
 		WebElement wNombreDeCampania = wTd.get(1);
@@ -277,6 +286,7 @@ public class Marketing_Mattu_Wave2 extends TestBase{
 		WebElement wContinuar = driver.findElement(By.id("bottomButtonRow"));
 		wContinuar.findElement(By.name("save")).click();
 		
+		sleep(2000);
 		WebElement wInfoCampania = driver.findElement(By.className("pbBody"));
 		List<WebElement> wTd = wInfoCampania.findElement(By.tagName("tbody")).findElements(By.tagName("td"));
 		WebElement wNombreDeCampania = wTd.get(27);
@@ -304,6 +314,7 @@ public class Marketing_Mattu_Wave2 extends TestBase{
 		WebElement wContinuar = driver.findElement(By.id("bottomButtonRow"));
 		wContinuar.findElement(By.name("save")).click();
 		
+		sleep(2000);
 		WebElement wInfoCampania = driver.findElement(By.className("pbBody"));
 		List<WebElement> wTd = wInfoCampania.findElement(By.tagName("tbody")).findElements(By.tagName("td"));
 		WebElement wNombreDeCampania = wTd.get(3);
@@ -331,6 +342,7 @@ public class Marketing_Mattu_Wave2 extends TestBase{
 		WebElement wContinuar = driver.findElement(By.id("bottomButtonRow"));
 		wContinuar.findElement(By.name("save")).click();
 		
+		sleep(2000);
 		WebElement wInfoCampania = driver.findElement(By.className("pbBody"));
 		List<WebElement> wTr = wInfoCampania.findElement(By.tagName("tbody")).findElements(By.tagName("tr"));
 		List<WebElement> wTd = wTr.get(1).findElements(By.tagName("td"));
@@ -398,6 +410,7 @@ public class Marketing_Mattu_Wave2 extends TestBase{
 		WebElement wContinuar = driver.findElement(By.id("bottomButtonRow"));
 		wContinuar.findElement(By.name("save")).click();
 		
+		sleep(2000);
 		String sEmpty = "--Ninguno--";
 		WebElement wInfoCampania = driver.findElement(By.className("pbBody"));
 		List<WebElement> wTr = wInfoCampania.findElement(By.tagName("tbody")).findElements(By.tagName("tr"));
