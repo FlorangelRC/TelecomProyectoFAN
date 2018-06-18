@@ -34,6 +34,7 @@ public class OM_Mattu extends TestBase{
 		//Usuario Victor OM
 		login(driver, "https://crm--sit.cs14.my.salesforce.com/", "U585991", "Testa10k");
 		sleep(5000);
+		cambiarListaLightningAVistaClasica(driver);
 	}
 	
 	@BeforeMethod(alwaysRun=true)

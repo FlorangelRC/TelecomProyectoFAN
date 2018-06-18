@@ -782,4 +782,19 @@ public class TestBase {
 		}
 		sleep(2000);
 	}
+	
+	public void cambiarListaLightningAVistaClasica(WebDriver driver) {
+		try {
+			sleep(2000);
+			driver.findElement(By.cssSelector(".bare.branding-userProfile-button.slds-button.uiButton.forceHeaderButton.oneUserProfileCardTrigger")).click();
+			sleep(1000);
+			WebElement wSalesforceClassic = driver.findElement(By.className("profile-card-footer"));
+			wSalesforceClassic.findElement(By.tagName("a")).click();
+			sleep(2000);
+		}
+		catch(Exception ex) {
+			//Always Empty
+		}
+	}
+	
 }

@@ -36,6 +36,7 @@ public class Marketing_Mattu extends TestBase{
 		loginMarketing(driver);
 		//login(driver);
 		try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		cambiarListaLightningAVistaClasica(driver);
 		//driver.get("https://crm--sit.cs14.my.salesforce.com/console?tsid=02uc0000000D6Hd");
 		mMarketing.cajonDeAplicaciones("Consola FAN");
 	}

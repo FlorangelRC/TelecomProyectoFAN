@@ -1,24 +1,16 @@
 package Tests;
 
-import static org.testng.Assert.assertTrue;
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
-
-import javax.xml.bind.ParseConversionEvent;
-
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver; 
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.Select; 
 import org.testng.Assert;
 import org.testng.annotations.AfterClass;
-import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
-import Pages.BasePage;
-import Pages.CustomerCare;
 import Pages.Marketing;
 import Pages.setConexion;
 
@@ -36,6 +28,7 @@ public class Marketing_Mattu_Wave2 extends TestBase{
 		mMarketing = new Marketing(driver);
 		loginMarketing(driver);
 		try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		cambiarListaLightningAVistaClasica(driver);
 		try {
 			if (!driver.findElement(By.id("tsidLabel")).getText().toLowerCase().equals("marketing")) {
 				driver.findElement(By.id("tsidLabel")).click();
@@ -137,29 +130,33 @@ public class Marketing_Mattu_Wave2 extends TestBase{
 		wInfoCampania.findElement(By.id("cpn1")).sendKeys("Nombre de la campania");
 		driver.findElement(By.className("requiredBlock")).click();
 
-		Select sSelectDropdown = new Select(driver.findElement(By.id("00Nc00000036par")));
+		Select sSelectDropdown = new Select(driver.findElement(By.id("cpn2")));
 		sSelectDropdown.selectByVisibleText("Captura");
 		
-		sSelectDropdown = new Select(driver.findElement(By.id("00Nc00000036paq")));
+		sSelectDropdown = new Select(driver.findElement(By.id("00Nc00000038dxx")));
 		sSelectDropdown.selectByVisibleText("Alta/Portin Nuevo Cliente  (Nuevo DNI/CUIT)");
 		
-		sSelectDropdown = new Select(driver.findElement(By.id("00Nc00000036pap")));
+		sSelectDropdown = new Select(driver.findElement(By.id("00Nc00000038dxy")));
 		sSelectDropdown.selectByVisibleText("N/A");
 		
-		sSelectDropdown = new Select(driver.findElement(By.id("00Nc00000036pas")));
-		sSelectDropdown.selectByVisibleText("IN");
+		/*sSelectDropdown = new Select(driver.findElement(By.id("00Nc00000036pas")));
+		sSelectDropdown.selectByVisibleText("IN");*/
 		
-		sSelectDropdown = new Select(driver.findElement(By.id("00Nc00000036pat_unselected")));
+		sSelectDropdown = new Select(driver.findElement(By.id("00Nc00000038dxi")));
+		sSelectDropdown.selectByVisibleText("Empresa");
+		/*sSelectDropdown = new Select(driver.findElement(By.id("00Nc00000036pat_unselected")));
 		sSelectDropdown.selectByVisibleText("SMS");
 		WebElement wAdd = driver.findElement(By.className("multiSelectPicklistCell"));
 		List<WebElement> wOption = wAdd.findElements(By.tagName("a"));
-		wOption.get(0).click();
+		wOption.get(0).click();*/
 		
-		driver.findElement(By.id("00Nc00000036pao")).sendKeys("Campaign Objetive");
+		driver.findElement(By.id("00Nc00000038dxj")).sendKeys("Campaign Objetive");
 		
 		java.util.Date dFechaCompleta = new Date();
 	    String sFecha =  mMarketing.unDigitoADosDigitos(dFechaCompleta.getDate()) + "/" + mMarketing.unDigitoADosDigitos(dFechaCompleta.getMonth()+1) + "/" + dFechaCompleta.toString().substring(24, 28);
 		driver.findElement(By.id("cpn5")).sendKeys(sFecha);
+		
+		driver.findElement(By.id("00Nc00000038dxj")).click();// Solo para quitar el date picker
 		
 		List<WebElement> wGuardar = driver.findElement(By.id("bottomButtonRow")).findElements(By.tagName("input"));
 		boolean bGuardar = false;
@@ -170,14 +167,16 @@ public class Marketing_Mattu_Wave2 extends TestBase{
 				break;
 			}
 		}
+		
+		mMarketing.sleepShort(0);
 		Assert.assertTrue(bGuardar);
 		Assert.assertTrue(driver.findElement(By.id("cpn1_ileinner")).getText().equals("Nombre de la campania"));
-		Assert.assertTrue(driver.findElement(By.id("00Nc00000036par_ileinner")).getText().equals("Captura"));
-		Assert.assertTrue(driver.findElement(By.id("00Nc00000036paq_ileinner")).getText().equals("Alta/Portin Nuevo Cliente (Nuevo DNI/CUIT)"));
-		Assert.assertTrue(driver.findElement(By.id("00Nc00000036pap_ilecell")).getText().equals("N/A"));
-		Assert.assertTrue(driver.findElement(By.id("00Nc00000036pas_ileinner")).getText().equals("IN"));
-		Assert.assertTrue(driver.findElement(By.id("00Nc00000036pat_ileinner")).getText().equals("SMS"));
-		Assert.assertTrue(driver.findElement(By.id("00Nc00000036pao_ileinner")).getText().equals("Campaign Objetive"));
+		Assert.assertTrue(driver.findElement(By.id("cpn2_ileinner")).getText().equals("Captura"));
+		Assert.assertTrue(driver.findElement(By.id("00Nc00000038dxx_ileinner")).getText().equals("Alta/Portin Nuevo Cliente (Nuevo DNI/CUIT)"));
+		Assert.assertTrue(driver.findElement(By.id("00Nc00000038dxy_ileinner")).getText().equals("N/A"));
+		/*Assert.assertTrue(driver.findElement(By.id("00Nc00000036pas_ileinner")).getText().equals("IN"));
+		Assert.assertTrue(driver.findElement(By.id("00Nc00000036pat_ileinner")).getText().equals("SMS"));*/
+		Assert.assertTrue(driver.findElement(By.id("00Nc00000038dxj_ileinner")).getText().equals("Campaign Objetive"));
 		Assert.assertTrue(driver.findElement(By.id("cpn5_ileinner")).getText().equals(sFecha));
 	}
 	
@@ -205,7 +204,7 @@ public class Marketing_Mattu_Wave2 extends TestBase{
 		wInfoCampania.findElement(By.id("cpn1")).sendKeys("Nombre de la campania");
 		driver.findElement(By.className("requiredBlock")).click();
 
-		Select sSelectDropdown = new Select(driver.findElement(By.id("00Nc00000036par")));
+		Select sSelectDropdown = new Select(driver.findElement(By.id("cpn2")));
 		sSelectDropdown.selectByVisibleText("Captura");
 		
 		List<WebElement> wTd = wInfoCampania.findElement(By.tagName("tbody")).findElements(By.tagName("tr"));
@@ -292,7 +291,7 @@ public class Marketing_Mattu_Wave2 extends TestBase{
 		WebElement wNombreDeCampania = wTd.get(27);
 		
 		Assert.assertTrue(wNombreDeCampania.findElement(By.tagName("div")).getAttribute("class").equals("requiredInput"));
-		Assert.assertTrue(wNombreDeCampania.findElement(By.tagName("textarea")).getAttribute("id").equals("00Nc00000036pao"));
+		Assert.assertTrue(wNombreDeCampania.findElement(By.tagName("textarea")).getAttribute("id").equals("00Nc00000038dxj"));
 	}
 	
 	//-------------------------------------------------------------------------------------------------
@@ -320,7 +319,7 @@ public class Marketing_Mattu_Wave2 extends TestBase{
 		WebElement wNombreDeCampania = wTd.get(3);
 		
 		Assert.assertTrue(wNombreDeCampania.findElement(By.tagName("div")).getAttribute("class").equals("requiredInput"));
-		Assert.assertTrue(wNombreDeCampania.findElement(By.tagName("select")).getAttribute("id").equals("00Nc00000036par"));
+		Assert.assertTrue(wNombreDeCampania.findElement(By.tagName("select")).getAttribute("id").equals("cpn2"));
 	}
 	
 	//-------------------------------------------------------------------------------------------------
@@ -348,14 +347,14 @@ public class Marketing_Mattu_Wave2 extends TestBase{
 		List<WebElement> wTd = wTr.get(1).findElements(By.tagName("td"));
 		Assert.assertTrue(wTd.get(3).findElement(By.tagName("div")).getAttribute("class").equals("condRequiredInput"));
 		
-		Select sSelectDropdown = new Select(driver.findElement(By.id("00Nc00000036par")));
+		Select sSelectDropdown = new Select(driver.findElement(By.id("cpn2")));
 		sSelectDropdown.selectByVisibleText("Captura");
 		wInfoCampania = driver.findElement(By.className("pbBody"));
 		wTr = wInfoCampania.findElement(By.tagName("tbody")).findElements(By.tagName("tr"));
 		wTd = wTr.get(2).findElements(By.tagName("td"));
-		Assert.assertTrue(wTd.get(3).findElement(By.tagName("div")).getAttribute("class").equals("condRequiredInput"));
+		Assert.assertTrue(wTd.get(3).findElement(By.tagName("div")).getAttribute("class").equals("requiredInput"));
 		
-		sSelectDropdown = new Select(driver.findElement(By.id("00Nc00000036paq")));
+		sSelectDropdown = new Select(driver.findElement(By.id("00Nc00000038dxx")));
 		sSelectDropdown.selectByVisibleText("Alta/Portin Nuevo Cliente  (Nuevo DNI/CUIT)");
 		wInfoCampania = driver.findElement(By.className("pbBody"));
 		wTr = wInfoCampania.findElement(By.tagName("tbody")).findElements(By.tagName("tr"));
@@ -383,6 +382,7 @@ public class Marketing_Mattu_Wave2 extends TestBase{
 		WebElement wContinuar = driver.findElement(By.id("bottomButtonRow"));
 		wContinuar.findElement(By.name("save")).click();
 		
+		sleep(2000);
 		List<WebElement> wFecha = driver.findElements(By.className("dateFormat"));
 		
 		java.util.Date dFechaCompleta = new Date();

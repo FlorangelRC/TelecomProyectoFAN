@@ -24,6 +24,7 @@ public class MarketingOla1_Joaquin extends TestBase {
 		driver = setConexion.setupEze();
 		Page = new Marketing(driver);
 		Page.login("SIT");
+		cambiarListaLightningAVistaClasica(driver);
 		Page.cajonDeAplicaciones("Consola FAN");
 	}
 	
