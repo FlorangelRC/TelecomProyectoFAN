@@ -841,8 +841,8 @@ public void deleteOrdersNoActivated(String Vista) {
 	      }
 	    
 		// Metodo para cuando olvidamos cambiar la fecha para ejecutar gestiones
-	    // Avisa si se ingres� una fecha incorrecta y da unos segundos para cambiarla y continuar el test
-	    // ��ATENCION!! No olvidar quitarlo del codigo una vez que funcione
+	    // Avisa si se ingreso una fecha incorrecta y da unos segundos para cambiarla y continuar el test
+	    // ATENCION!! No olvidar quitarlo del codigo una vez que funcione
 		public void checkFutureDateRestriction() {
 			try {
 				String futureDateText = driver.findElement(By.cssSelector(".col-md-12.col-sm-12.vlc-header")).getText();
@@ -1060,6 +1060,31 @@ public void deleteOrdersNoActivated(String Vista) {
 					System.out.println("llegue aqui");
 				}
 			}while(i<Productos.size());
+		}
+		
+		public void Cambio_De_SimCard2(String fecha, String Iccid, String Imsi, String Ki) throws InterruptedException {
+			sleep(5000);
+			OM pageOm=new OM(driver);
+			OMQPage OM=new OMQPage (driver);
+			//Mientras, seleccion de vista
+			pageOm.selectVistaByVisibleText("LineasFlor");
+			sleep(3000);
+			//Selecciona la primera cuenta de la lista en la vista seleccionada
+			WebElement primeraCuenta=driver.findElement(By.cssSelector(".x-grid3-col.x-grid3-cell.x-grid3-td-SALES_ACCOUNT_NAME"));
+			primeraCuenta.findElement(By.tagName("div")).findElement(By.tagName("a")).click();
+			sleep(5000);
+			pageOm.irAChangeToOrder();	
+			sleep(20000);
+			driver.switchTo().defaultContent(); 
+			sleep(4000);
+			driver.findElement(By.id("RequestDate")).sendKeys(fecha);
+			driver.findElement(By.cssSelector(".form-control.btn.btn-primary.ng-binding")).click();
+			sleep(12000);
+			OM.SimCard2(Iccid, Imsi, Ki);
+			driver.findElement(By.id("-import-btn")).click();
+			sleep(8000);
+			pageOm.agregarGestion("Cambio de SIM");
+			sleep(5000);
 		}
 	    
 }
