@@ -225,12 +225,9 @@ public class moduloOM extends TestBase {
 	@Test
 	public void cambioDeTitularidad() {
 		
-		//Mientras, seleccion de vista
-		Select allOrder=new Select(driver.findElement(By.id("fcf")));
-		allOrder.selectByVisibleText("AlmerOM");
-		sleep(1000);
-		try {driver.findElement(By.name("go")).click();}catch(org.openqa.selenium.NoSuchElementException e) {}
-		sleep(3000);
+	
+		OM pageOm=new OM(driver);
+		pageOm.selectVistaByVisibleText("AlmerOM");
 
 		//Selecciona la primera cuenta de la lista en la vista seleccionada
 		WebElement primeraCuenta=driver.findElement(By.cssSelector(".x-grid3-col.x-grid3-cell.x-grid3-td-SALES_ACCOUNT_NAME"));
@@ -252,11 +249,13 @@ public class moduloOM extends TestBase {
 		
 		//Selecciono fecha
 		//driver.switchTo().frame(frame.getFrameForElement(driver, By.id("RequestDate")));
-		OM pageOm=new OM(driver);
+		//OM pageOm=new OM(driver);
 		DateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy");
-		//driver.findElement(By.id("RequestDate")).sendKeys(dateFormat.format(pageOm.fechaAvanzada()));
+		//driver.findElement(By.id("RequestDate")).sendKeys(dateFormat.format(pageOm.fechaAvanzada()));*/
 		
-		driver.findElement(By.id("RequestDate")).sendKeys("10-20-2018");
+		
+		
+		driver.findElement(By.id("RequestDate")).sendKeys("10-29-2018");
 		
 		WebElement next=driver.findElement(By.cssSelector(".form-control.btn.btn-primary.ng-binding"));
 		next.click();
@@ -280,7 +279,7 @@ public class moduloOM extends TestBase {
 		if(listadoDeServicios.get(0).getAttribute("class").equalsIgnoreCase("headerRow"))
 			listadoDeServicios.remove(0);
 		int i=1;
-		System.out.println("aqui: "+listadoDeServicios.get(0).getText());
+		//System.out.println("aqui: "+listadoDeServicios.get(0).getText());
 		while(i<listadoDeServicios.size()+1){
 			driver.switchTo().defaultContent();
 			sleep(1000);
@@ -323,10 +322,15 @@ public class moduloOM extends TestBase {
 		accountName.click();
 		accountName.clear();
 		accountName.sendKeys("CambioDeTitularidad");
-		Select gestion=new Select(driver.findElement(By.xpath("//*[@id=\"ep\"]/div[2]/div[3]/table/tbody/tr[13]/td[4]/span")).findElement(By.tagName("select")));
-		gestion.selectByVisibleText("Cambio de titularidad");
+		sleep(1000);
+		Select gestion=new Select(driver.findElement(By.xpath("//*[@id=\"ep\"]/div[2]/div[3]/table/tbody/tr[14]/td[4]/span")).findElement(By.tagName("select")));
+		gestion.selectByValue("Cambio de titularidad");
 		//Guardamos
+		//System.out.println("Select: "+gestion.getAllSelectedOptions().get(5).getText());
+		//gestion.selectByIndex(5);
 		driver.findElement(By.name("save")).click();
+
+		
 		sleep(4000);
 		
 		//Finalizamos el proceso con TA SUBMIT ORDER
@@ -341,7 +345,7 @@ public class moduloOM extends TestBase {
 	
 	
 	@Test
-	public void EliminarVistas() {
+	public void EliminarOrdersDeVista() {
 		OM page=new OM(driver);
 		page.deleteOrdersNoActivated("AlmerOM");
 	}
