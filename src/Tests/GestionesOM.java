@@ -158,6 +158,13 @@ public class GestionesOM extends TestBase {
 		sleep(5000);
 		driver.findElements(By.cssSelector(".slds-button.slds-button_icon-small")).get(1).click();
 		sleep(3000);
+	
+	@Test(groups="OM", priority=1)
+	public void TS_CRM_Cambio_De_Numero() throws InterruptedException {
+		OM pageOm=new OM(driver);
+		pageOm.Gestion_Alta_De_Linea("AlOM", "Plan Con Tarjeta");
+		pageOm.Gestion_Cambio_de_Numero("AlanOM", "06-30-2018");
+	}
 		
 		//buscarYClick(driver.findElements(By.cssSelector(".cpq-item-product-child-level-1.cpq-item-child-product-name-wrapper")), "equals", "servicios basicos general movil");
 		driver.findElement(By.xpath("//*[@id=\"tab-default-1\"]/div[1]/ng-include/div/div/div/div[4]/div[2]/div/ng-include/div/div[2]/ng-include/div/div[3]/div/div[3]/div/div/ng-include/div/div[2]/ng-include/div/div[3]/div/div[2]/div[11]/button")).click();
