@@ -151,11 +151,11 @@ public class GestionesOM extends TestBase {
 		om.Gestion_Alta_De_Linea("FlorOM", "Plan Prepago Nacional");
 		om.irAChangeToOrder();
 		sleep(15000);
-		driver.findElement(By.id("RequestDate")).sendKeys("11-27-2019");
+		driver.findElement(By.id("RequestDate")).sendKeys("11-28-2019");
 		driver.findElement(By.cssSelector(".form-control.btn.btn-primary.ng-binding")).click();
 		sleep(10000);
 		driver.findElement(By.xpath("//*[@id=\"tab-default-1\"]/div[1]/ng-include/div/div/div/div[3]/div[1]/div[1]/button/span[2]")).click();
-		sleep(5000);
+		sleep(10000);
 		driver.findElements(By.cssSelector(".slds-button.slds-button_icon-small")).get(1).click();
 		sleep(3000);
 		driver.findElement(By.xpath("//*[@id=\"tab-default-1\"]/div[1]/ng-include/div/div/div/div[4]/div[2]/div/ng-include/div/div[2]/ng-include/div/div[3]/div/div[3]/div/div/ng-include/div/div[2]/ng-include/div/div[3]/div/div[2]/div[11]/button")).click();
@@ -168,7 +168,12 @@ public class GestionesOM extends TestBase {
 		sleep(7000);
 		buscarYClick(driver.findElements(By.cssSelector(".slds-button.slds-button_neutral")), "contains", "view record");
 		sleep(5000);
-		om.agregarGestion("Alta o Baja SVA");		
+		om.agregarGestion("Alta o Baja SVA");
+		sleep(3000);
+		driver.findElement(By.name("ta_submit_order")).click();
+		sleep(10000);
+		om.completarFlujoOrquestacion();
+		
 	}
 	
 	@Test(groups="OM", priority=1)
