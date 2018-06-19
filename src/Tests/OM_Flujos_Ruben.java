@@ -2,6 +2,7 @@ package Tests;
 
 import java.awt.Toolkit;
 import java.util.Date;
+import java.util.List;
 import java.util.concurrent.TimeUnit;
 
 import org.openqa.selenium.By;
@@ -404,18 +405,18 @@ public class OM_Flujos_Ruben extends TestBase {
 		pageOm.Gestion_Alta_De_Linea(accountName,plan);
 	}
 	
-	@Test(groups = "OM")
-	public void CambioDeSimCardTest() throws InterruptedException {
-		pageOm.Cambio_De_SimCard();
-	}
+//	@Test(groups = "OM")
+//	public void CambioDeSimCardTest() throws InterruptedException {
+//		pageOm.Cambio_De_SimCard();
+//	}
 		
-	@Test(groups = "OM")
-	public void CambioDeNumeroTest() throws InterruptedException {
-//		String accountName = "Buda OM";
-//		String plan = "Plan Prepago Nacional";
-//		pageOm.Gestion_Alta_De_Linea(accountName,plan);
-		pageOm.Gestion_Cambio_de_Numero("RubenOM-Activated");
-	}
+//	@Test(groups = "OM")
+//	public void CambioDeNumeroTest() throws InterruptedException {
+////		String accountName = "Buda OM";
+////		String plan = "Plan Prepago Nacional";
+////		pageOm.Gestion_Alta_De_Linea(accountName,plan);
+//		pageOm.Gestion_Cambio_de_Numero("RubenOM-Activated");
+//	}
 	
 	@Test(groups= "OM")
 	public void deleteOrdersNotActivated() { 
@@ -436,6 +437,38 @@ public class OM_Flujos_Ruben extends TestBase {
 		} catch (NoSuchElementException e) {
 			System.out.println("Date OK");
 		};
+	}
+	
+	
+	@Test(groups = "OM")
+	public void TS_CRM_OM_Gestion_Baja_De_Servicios() {
+		pageOm.selectVistaByVisibleText("RubenOM-Activated");
+		sleep(3000);
+		pageOm.getAccountList().get(0).click();
+		pageOm.irAChangeToOrder();
+		sleep(10000);
+		// Ingresar Fecha Futura
+//		driver.findElement(By.id("RequestDate")).sendKeys(pageOm.getFechaAvanzadaFormateada_MM_dd_yyyy());
+		driver.findElement(By.id("RequestDate")).sendKeys("07-05-2018");
+		sleep(1000);
+		pageOm.getCreatingFutureDateOrdersNextButton().click();
+		sleep(3000);
+		pageOm.checkFutureDateRestriction();
+		pageOm.
+		sleep(30000);
+		pageOm.getPlanButton().click();
+		sleep(1000);
+		pageOm.getServiciosBasicosGeneralMovil().click();
+		sleep(6000);
+		pageOm.getSBGMContestador().click();
+		sleep(6000);
+		pageOm.getSBGMDDI().click();
+		sleep(1000);
+		driver.findElements(By.xpath("//div[class,'cpq-item-base-product']"));
+		
+		//div[contains(concat(' ',normalize-space(@class),' '),' foo ')]
+//		List<WebElement> servicesFirstLevel = driver.findElements(By.cssSelector(".cpq-item-product-child-level-1.cpq-item-child-product-name-wrapper"));
+		
 	}
 
 }
