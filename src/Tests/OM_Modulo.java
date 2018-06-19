@@ -124,14 +124,13 @@ public void TS102205_CRM_OM_Ola_2_Ordenes_Cliente_existente_Alta_de_linea_con_1_
 	//click en boton
 	WebElement changeToOrder=driver.findElement(By.className("asset-action")).findElement(By.xpath("//button[2]"));
 	changeToOrder.click();
-	sleep(8000);
+	sleep(10000);
 	driver.switchTo().defaultContent();
-				
 	//fecha avanzada
-	pageOm.fechaAvanzada();
-	sleep(8000);
+	OM.fechaAv("06-20-2018");
+	sleep(10000);
 	//agregar Pack
-	OM.agregarPack("Pack 200Mb + WhasApp x 1 día");
+	OM.agregarPack("Pack 2GB + WhasApp x 3 días");
 				
 	//Click ViewRecord
 	sleep(8000);	
@@ -139,6 +138,8 @@ public void TS102205_CRM_OM_Ola_2_Ordenes_Cliente_existente_Alta_de_linea_con_1_
 	sleep(7000);
 	//agregar gestion
 	pageOm.agregarGestion("Compra de Pack");
+	pageOm.clickTab("Product2_Tab");
+	OM.sincroProducto("Datos CFS");
 	//Orquestacion
 	driver.findElements(By.id("topButtonRow")).get(0);
 	sleep(7000);
@@ -151,7 +152,6 @@ public void TS102205_CRM_OM_Ola_2_Ordenes_Cliente_existente_Alta_de_linea_con_1_
 	pageOm.cambiarVentanaNavegador(0);
 	sleep(12000);
 	pageOm.completarFlujoOrquestacion();
-				
 			
 	}
 }

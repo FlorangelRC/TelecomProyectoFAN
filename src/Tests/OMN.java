@@ -209,4 +209,16 @@ public class OMN extends TestBase {
 		sleep(10000);
 		Assert.assertTrue(om.ordenCajasVerdes("Cambio de N\u00famero o SIM", "Env\u00edo de Actualizaci\u00f3n de Par\u00e1metros a la Red (SIM Card)(IMSI, KI e ICCID)", "En progreso | Comptel - Par\u00e1metros de la Red actualizados"));
 	}
+	
+	@Test (groups = "OM")
+	public void TS80191_Ordenes_Cliente_existente_Cambio_de_SIM_Plan_con_tarjeta_Sin_delivery_Verificacion_de_assets() throws InterruptedException {
+		String a = "", b = "", c = "";
+		om.Gestion_Alta_De_Linea("FlorOM", "Plan con tarjeta");
+		driver.findElement(By.id("Order_Tab")).click();
+		om.Cambio_De_SimCard2("31-08-2020", a, b, c);
+		driver.findElement(By.name("ta_submit_order")).click();
+		sleep(15000);
+		om.completarFlujoOrquestacion();
+		
+	}
 }
