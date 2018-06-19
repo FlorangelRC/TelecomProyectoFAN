@@ -101,7 +101,22 @@ public class OM {
 	
 	 @FindBys(@FindBy(xpath = "//div[starts-with(@id,'801c0000000Kz') and contains(@id,'_SALES_ACCOUNT_NAME')]/a"))
 	private List<WebElement> accountList;
-
+	 
+	 @FindBy(css = ".form-control.btn.btn-primary.ng-binding")
+	 private WebElement creatingFutureDatedOrdersNextButton;
+	 
+	 @FindBy(css = ".slds-button.cpq-item-has-children")
+	 private WebElement planButton;
+	 
+	 @FindBy(xpath = "//div[contains(concat(' ',normalize-space(@class),' '),'cpq-item-base-product-name cpq-item-product-group js-cpq-cart-product-hierarchy-path-01tc000000578LBAAY<01tc000000578KIAAY')]//button")
+	 private WebElement serviciosBasicosGeneralMovil;
+	 
+	 @FindBy(xpath = "//div[contains(concat(' ',normalize-space(@class),' '),'cpq-item-base-product-name cpq-item-product-group js-cpq-cart-product-hierarchy-path-01tc000000578LBAAY<01tc000000578KIAAY<01tc0000005M7ySAAS')]//button")
+	 private WebElement sbgmContestador;
+	 
+	 @FindBy(xpath = "//div[contains(concat(' ',normalize-space(@class),' '),'cpq-item-base-product-name cpq-item-product-group js-cpq-cart-product-hierarchy-path-01tc000000578LBAAY<01tc000000578KIAAY<01tc0000005JSuAAAW')]//button")
+	 private WebElement sbgmDDI;
+	 
 	// ********************************METODOS*******************************************************//
 	 
 	public WebElement getNewOrderButton() {
@@ -123,7 +138,27 @@ public class OM {
 	public List<WebElement> getAccountList() {
 		return accountList;
 	}
-	 
+	
+	public WebElement getCreatingFutureDateOrdersNextButton() {
+		return creatingFutureDatedOrdersNextButton;
+	}
+
+	public WebElement getPlanButton() {
+		return planButton;
+	}
+
+	public WebElement getServiciosBasicosGeneralMovil() {
+		return serviciosBasicosGeneralMovil;
+	}
+
+	public WebElement getSBGMContestador() {
+		return sbgmContestador;
+	}
+
+	public WebElement getSBGMDDI() {
+		return sbgmDDI;
+	}
+
 	public void sleep(long s) {
 		try {
 			Thread.sleep(s);
