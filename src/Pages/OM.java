@@ -29,7 +29,9 @@ import org.openqa.selenium.ElementNotVisibleException;
 import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.FindAll;
 import org.openqa.selenium.support.FindBy;
+import org.openqa.selenium.support.FindBys;
 import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.FluentWait;
@@ -72,11 +74,56 @@ public class OM {
 	@FindBy(id = "fileinput")
 	private WebElement adjuntar;
 	
-	
 	@FindBy(css=".form-control.btn.btn-primary.ng-binding")
 	private WebElement Next;
+	
+	@FindAll({@FindBy(name = "addOrder"),
+		@FindBy(name = "new")})
+	private WebElement newOrderButton;
+	
+	@FindBy(id = "accid")
+	private WebElement accountNameField;
+	
+	@FindBy(className = "dateFormat")
+	private WebElement orderStartDateField;
+	
+	@FindBy(id = "Status")
+	private WebElement selectStatusDDM;
+	
+	@FindBy(id = "00Nc0000002IvyM")
+	private WebElement selectGestionDDM;
+	
+	@FindBy(name = "save")
+	private WebElement saveOrderButton;
+	
+	@FindBy(name = "ta_submit_order")
+	private WebElement taSubmitOrderButton;
+	
+	 @FindBys(@FindBy(xpath = "//div[starts-with(@id,'801c0000000Kz') and contains(@id,'_SALES_ACCOUNT_NAME')]/a"))
+	private List<WebElement> accountList;
 
 	// ********************************METODOS*******************************************************//
+	 
+	public WebElement getNewOrderButton() {
+		return newOrderButton;
+	}
+
+	public Select getSelectStatusDDM() {
+		return new Select((WebElement) selectStatusDDM);
+	}
+
+	public Select getSelectGestionDDM() {
+		return new Select((WebElement) selectGestionDDM);
+	}
+
+	public WebElement getTaSubmitOrderButton() {
+		return taSubmitOrderButton;
+	}
+
+	public List<WebElement> getAccountList() {
+		return accountList;
+	}
+	 
 	public void sleep(long s) {
 		try {
 			Thread.sleep(s);
@@ -177,7 +224,7 @@ public class OM {
 			driver.findElement(By.xpath("//a[@href=\"/home/home.jsp?tsid=02u41000000QWha\"]")).click();
 		}
 	}
-
+	
 	/**
 	 * Crea una orden desde la vista de todas las ordenes.
 	 */
@@ -207,6 +254,20 @@ public class OM {
 			Thread.currentThread().interrupt();
 		}
 	}
+	
+	/*Crear Una Orden con Gestion desde cualquier Vista*/
+	public void crearOrdenConGestion(String accountName, String gestionName) {
+		newOrderButton.click();
+		sleep(3000);
+		accountNameField.sendKeys(accountName);
+		orderStartDateField.click();
+		getSelectStatusDDM().selectByVisibleText("Draft");
+		getSelectGestionDDM().selectByVisibleText(gestionName);
+		sleep(1000);
+		saveOrderButton.click();
+	}
+	
+
 
 	/**
 	 * Pasa todas las cajas rojas del flujo de orquestacion a verdes.
@@ -514,12 +575,12 @@ public class OM {
 		}
 
 
-	/*public String getFechaAvanzadaFormateada_MM_dd_yyyy() {
+	public String getFechaAvanzadaFormateada_MM_dd_yyyy() {
 		SimpleDateFormat simpleDateFormat = new SimpleDateFormat("MM-dd-yyyy");
 		String formattedDate = simpleDateFormat.format(fechaAvanzada());
 		return formattedDate;
 	}
-*/
+
 	// Ir hasta SIM config
 	public void goToSimConfig() {
 		// Plan

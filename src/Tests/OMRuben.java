@@ -10,7 +10,10 @@ import org.openqa.selenium.NoAlertPresentException;
 import org.openqa.selenium.UnhandledAlertException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.FindAll;
 import org.openqa.selenium.support.FindBy;
+import org.openqa.selenium.support.FindBys;
+import org.openqa.selenium.support.How;
 import org.openqa.selenium.support.ui.Select;
 import org.testng.Assert;
 import org.testng.annotations.BeforeClass;
@@ -60,10 +63,6 @@ public class OMRuben extends TestBase {
 		driver.quit();
 		sleep(1000);
 	}
-	
-	/* Elementos */
-	@FindBy(css = ".x-grid3-col.x-grid3-cell.x-grid3-td-SALES_ACCOUNT_NAME")
-	private List<WebElement> accountsList;
 
 	@Test(groups = "OM")
 	public void TS6723_CRM_OM_Ordenes_Vista_Configuracion_Borrar_Vista() {
@@ -208,11 +207,25 @@ public class OMRuben extends TestBase {
 
 		Assert.assertFalse(vistaPrimerUsuario.equals(vistaOtroUsuario));
 	}
-	
+
 	@Test(groups = "OM")
 	public void TS_52660_CRM_OM_Ordenes_Cliente_Existente_Baja_de_linea_Sin_VAS_Paso_0() {
 		pageOm.selectVistaByVisibleText("RubenOM-Activated");
 		sleep(6000);
-		accountsList.get(0).click();
+		pageOm.getAccountList().get(0).click();
+		pageOm.irAChangeToOrder();
+		sleep(6000);
+		// Ingresar Fecha Futura
+		driver.findElement(By.id("RequestDate")).sendKeys(pageOm.getFechaAvanzadaFormateada_MM_dd_yyyy());
+//		driver.findElement(By.id("RequestDate")).sendKeys("06-21-2018");
+//		sleep(1000);
+//		driver.findElement(By.xpath("//*[@id=\"a1zc0000003XcLmAAK-1\"]/div[2]/div[3]/button")).click();
+//		sleep(2000);
+//		pageOm.checkFutureDateRestriction();
+		 
+//		pageOm.crearOrdenConGestion("RubenOM", "Desconexi\u00f3n");
+//		sleep(6000);
+//		pageOm.getTaSubmitOrderButton().click();
 	}
+
 }
