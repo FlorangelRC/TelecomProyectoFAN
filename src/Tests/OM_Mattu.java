@@ -34,6 +34,7 @@ public class OM_Mattu extends TestBase{
 		//Usuario Victor OM
 		login(driver, "https://crm--sit.cs14.my.salesforce.com/", "U585991", "Testa10k");
 		sleep(5000);
+		cambiarListaLightningAVistaClasica(driver);
 	}
 	
 	@BeforeMethod(alwaysRun=true)
@@ -676,6 +677,14 @@ public class OM_Mattu extends TestBase{
 		String sOrderLabel = driver.findElement(By.className("order-label-container")).getText();
 		System.out.println("sOrderLabel.getText: " + sOrderLabel);
 		Assert.assertTrue(sOrderLabel.contains("25365"));
+	}
+	
+	//-------------------------------------------------------------------------------------------------
+	//TCC = 15
+	@Test(groups = "OM")
+	public void TS79026_OM_Ordenes_Cliente_existente_Alta_de_linea_Sin_delivery_Sin_VAS(){
+		page.crearOrden("MattuOM");
+		
 	}
 	
 	//-------------------------------------------------------------------------------------------------

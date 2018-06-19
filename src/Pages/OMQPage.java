@@ -163,6 +163,12 @@ public class OMQPage extends BasePage {
 		 
 		
 	}
+	public void fechaAv(String fecha) {
+	driver.findElement(By.id("RequestDate")).sendKeys(fecha);
+	driver.findElement(By.cssSelector(".form-control.btn.btn-primary.ng-binding")).click();
+	sleep(12000);
+	
+}
 	
 	public void SimCard2(String Iccid, String Imsi, String Ki) {
 		Random r = new Random();
@@ -204,7 +210,6 @@ public class OMQPage extends BasePage {
 		//driver.switchTo().defaultContent();
 		driver.findElement(By.xpath("/html/body/div[1]/div[1]/ng-include/div/div[2]/div[2]/div[3]/div/div/ng-include/div/div[1]/div/button")).click();
 		sleep(5000);
-		 
 		
 	}
 
@@ -213,32 +218,57 @@ public class OMQPage extends BasePage {
 		sleep(12000);
 		driver.findElement(By.cssSelector(".slds-button.cpq-item-has-children")).click();
 		List<WebElement> list1 = driver.findElements(By.xpath("//*[@class='cpq-item-product-child-level-1 cpq-item-child-product-name-wrapper']//*[@class='slds-button slds-button_icon-small']"));
-		
+		sleep(8000);
 		list1. get(3).click();
 		sleep(8000);
+		
 		List<WebElement> pDatos = driver.findElements(By.xpath("//*[@class='cpq-item-product-child-level-2 cpq-item-child-product-name-wrapper']//*[@class='slds-button slds-button_icon-small']"));
 		((JavascriptExecutor)driver).executeScript("window.scrollTo(0,"+driver.findElement(By.xpath("//*[@class='cpq-item-product-child-level-2 cpq-item-child-product-name-wrapper']//*[@class='slds-button slds-button_icon-small']")).getLocation().y+")");
 		sleep(8000);
 		pDatos.get(2).click();
 		 sleep(8000);
-		driver.switchTo().defaultContent();
+		
+		 driver.switchTo().defaultContent();
 		 //subtablas
-		 WebElement tabla=driver.findElement(By.xpath("//*[@class='cpq-item-product-child-level-3 ng-not-empty ng-valid']"));
-		 List<WebElement> Pack = driver.findElements( By.xpath("//*[@class='cpq-item-child-product-name-wrapper']"));
-		 List<WebElement> Agregar=driver.findElements(By.xpath("//*[@class='slds-button slds-button_neutral']"));
-		 
+		// WebElement tabla=driver.findElement(By.xpath("//*[@class='cpq-item-product-child-level-3 ng-not-empty ng-valid']"));
+		 List<WebElement> Pack = driver.findElements( By.xpath("//*[@class='cpq-item-product-child-level-3 ng-not-empty ng-valid']//*[@class='cpq-item-no-children']"));
+		 List<WebElement> Agregar=driver.findElements(By.xpath("//*[@class='cpq-item-product-child-level-3 ng-not-empty ng-valid']//*[@class='slds-button slds-button_neutral']"));
 		 if (Pack.size() == Agregar.size()) {
-				for (int i = 0; i < Agregar.size(); i++) {
-					if (Pack.get(i).getText().equals(servicio)) {
-						Agregar.get(i).click();
-						break;
-			
-					}
-				sleep(8000);
+		 for (int i = 0; i < Pack.size(); i++) {
+				if (Pack.get(i).getText().equals(servicio)) {
+					System.out.println(servicio);
+					Agregar.get(i).click();
+					break;
 				}
-				
 			}
-		}
+		}	
+				sleep(12000);
+	}
+public void sincroProducto(String Products){
+	boolean a= false;
+	driver.switchTo().defaultContent();
+	((JavascriptExecutor)driver).executeScript("window.scrollTo(0,"+driver.findElement(By.xpath("//*[@id='bodyCell']/div[6]/div[1]/div/div[2]/table")).getLocation().y+")");
+	List<WebElement> prod=driver.findElements(By.xpath("//*[@id='bodyCell']/div[6]/div[1]/div/div[2]/table/tbody/tr[*]/th/a"));
+	for (int i = 0; i < prod.size(); i++) {
+		if (prod.get(i).getText().equals(Products)) {
+			a=true;
+			 System.out.println(prod.get(i).getText());
+			 prod.get(i).click();
+			 break;
+	}
+}
+	//Boton sincronizar
+		WebElement sincronizar= driver.findElement(By.id("topButtonRow")).findElement(By.xpath("//*[@id=\"topButtonRow\"]/input[6]"));
+		sincronizar.click();
+		driver.switchTo().defaultContent();
+		driver.findElement(By.xpath("//*[@id=\"bodyCell\"]/div/div/div[1]/div/form/div[3]/button")).click();
+		//driver.switchTo().defaultContent();
+		//driver.findElement(By.xpath("//*[@id=\"bodyCell\"]/div/div/div[1]/div/form/div[3]/button")).click();
+		
+	
+}
+			
+		
 
 
 	
