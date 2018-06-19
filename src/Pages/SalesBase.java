@@ -811,7 +811,7 @@ try{	driver.findElement(By.id("alert-ok-button")).click();	} catch (NoSuchElemen
 			//System.out.println(driver.findElement(By.id("userNav-menuItems")).findElements(By.tagName("a")).get(num).getText());
 			if (num == 4) {
 				driver.findElement(By.xpath("//a[@href=\"/secur/logout.jsp\"]")).click();
-				driver.findElement(By.id("userNav-menuItems")).findElements(By.tagName("a")).get(num).click();
+				//driver.findElement(By.id("userNav-menuItems")).findElements(By.tagName("a")).get(num).click();
 			}
 			sleep(4000);
 			if(num == 3) {

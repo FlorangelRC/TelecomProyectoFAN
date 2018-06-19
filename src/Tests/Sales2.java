@@ -42,12 +42,12 @@ public class Sales2 extends TestBase{
 	String localidad="VICENTE LOPEZ";
 	protected  WebDriverWait wait;
 	
-	@AfterClass(alwaysRun=true)
+	//@AfterClass(alwaysRun=true)
 	public void tearDown() {
 		driver.quit();
 	}
 	
-	@AfterMethod(alwaysRun=true)
+	//@AfterMethod(alwaysRun=true)
 	public void deslogin() {
 		sleep(3000);
 		driver.get("https://crm--sit.cs14.my.salesforce.com/home/home.jsp?tsid=02u41000000QWha/");
@@ -441,17 +441,11 @@ public class Sales2 extends TestBase{
 		driver.findElement(By.cssSelector(".slds-button.slds-m-left--large.slds-button--brand.ta-button-brand")).click();
 		sleep(25000);
 		sb.Crear_DomicilioLegal( provincia, localidad,"falsa", "", "2154", "", "", "2453");
-		sleep(20000);
-		boolean a = false;
-		List <WebElement> ord = driver.findElements(By.cssSelector(".slds-form-element__control"));
-			for(WebElement o : ord){
-				if(o.getText().contains("Nro. orden:")){
-					o.isDisplayed();
-					a= true;
-				}
-					
-			}
-			Assert.assertTrue(a);
+		sleep(30000);
+		WebElement ord = driver.findElement(By.id("OrderStatus"));
+		Assert.assertTrue(ord.getText().contains("Nro. orden:"));
+		Assert.assertTrue(ord.isDisplayed());			
+		
 	}
 	
 	@Test(groups={"Sales", "AltaDeLinea", "Ola1"}, priority=8, dataProvider="SalesCuentaActiva" )  
@@ -463,12 +457,12 @@ public class Sales2 extends TestBase{
 		IrA.CajonDeAplicaciones.ConsolaFAN();
 		TechCare_Ola1 tc = new TechCare_Ola1(driver);
 		//sb.cerrarTodasLasPestanias();
-		//sleep(8000);
-	//	tc.selectAccount (sCuenta);
+		sleep(8000);
+		tc.selectAccount (sCuenta);
 		sleep(8000);
 		driver.switchTo().frame(cambioFrame(driver, By.cssSelector(".console-card.open")));
 		driver.findElement(By.cssSelector(".console-card.open")).click();
-		sleep(10000);
+		sleep(20000);
 		driver.switchTo().frame(cambioFrame(driver, By.cssSelector(".slds-col.slds-no-flex.cpq-base-header")));
 		List <WebElement> num = driver.findElements(By.cssSelector(".slds-text-body--small.slds-page-header__info.taDevider"));
 		boolean a = false;
@@ -696,9 +690,10 @@ public class Sales2 extends TestBase{
 		sleep(10000);
 		driver.switchTo().defaultContent();
 		sb.elegirplan("Plan Prepago Nacional");
-		sleep(15000);
-		driver.findElement(By.cssSelector(".slds-button.slds-m-left--large.slds-button--brand.ta-button-brand")).click();
-		sleep(15000);
+		sb.continuar();
+		sleep(10000);
+		sb.Crear_DomicilioLegal( provincia, localidad,"falsa", "", "2154", "", "", "2453");
+		sleep(25000);	
 		driver.findElement(By.id("LineAssignment_nextBtn")).click();
 		sleep(10000);
 		WebElement mde = driver.findElement(By.id("DeliveryMethod"));
@@ -752,9 +747,10 @@ public class Sales2 extends TestBase{
 		sleep(10000);
 		driver.switchTo().defaultContent();
 		sb.elegirplan("Plan Prepago Nacional");
+		sb.continuar();
 		sleep(15000);
-		driver.findElement(By.cssSelector(".slds-button.slds-m-left--large.slds-button--brand.ta-button-brand")).click();
-		sleep(15000);
+		sb.Crear_DomicilioLegal( provincia, localidad,"falsa", "", "5846", "", "", "5248");
+		sleep(20000);
 		driver.findElement(By.id("LineAssignment_nextBtn")).click();
 		sleep(10000);
 		Assert.assertTrue(driver.findElement(By.id("DeliveryServiceType")).isEnabled());
@@ -1294,14 +1290,16 @@ public class Sales2 extends TestBase{
 		//sb.BuscarCuenta(DNI, buscarCampoExcel(1, "Cuenta Activas", 2));
 		sb.acciondecontacto("catalogo");
 		sleep(15000);
-		sb.elegirplan("Plan Prepago Nacional");
+		sb.elegirplan("Plan Prepago Nacional");	
 		//driver.findElement(By.cssSelector(".slds-button.slds-m-left--large.slds-button--brand.ta-button-brand")).click();
 		sb.continuar();
-		sleep(20000);
+		sleep(25000);
 		sb.Crear_DomicilioLegal( provincia, localidad,"falsa", "", "5846", "", "", "5248");
-		sleep(10000);
+		sleep(35000);
 		WebElement line = driver.findElement(By.id("tree0-node1__label"));
 		WebElement line2 = driver.findElement(By.id("id-0-0"));
+		System.out.println(line.getAttribute("value"));
+		System.out.println(line2.getAttribute("value"));
 		boolean a = false;
 		boolean b = false;
 		if (line.getText().toLowerCase().contains("lineas disponibles")) {
@@ -1402,8 +1400,10 @@ public class Sales2 extends TestBase{
 		sleep(15000);
 		sb.elegirplan("Plan Prepago Nacional");
 		sleep(15000);
-		driver.findElement(By.cssSelector(".slds-button.slds-m-left--large.slds-button--brand.ta-button-brand")).click();
-		sleep(10000);
+		sb.continuar();
+		sleep(20000);
+		sb.Crear_DomicilioLegal(provincia, localidad, "falsa", "", "1000", "", "", "1549");
+		sleep(25000);
 		CustomerCare CC = new CustomerCare(driver);
 		WebElement sig = driver.findElement(By.id("LineAssignment_nextBtn"));
  		sleep(15000);
@@ -1426,8 +1426,10 @@ public class Sales2 extends TestBase{
 		sb.acciondecontacto("catalogo");
 		sleep(15000);
 		sb.elegirplan("Plan Prepago Nacional");
-		sleep(15000);
-		driver.findElement(By.cssSelector(".slds-button.slds-m-left--large.slds-button--brand.ta-button-brand")).click();
+		sb.continuar();
+		sleep(20000);
+		sb.Crear_DomicilioLegal(provincia, localidad, "falsa", "", "1000", "", "", "1549");
+		sleep(25000);
 		sleep(12000);
 		driver.findElement(By.id("LineAssignment_nextBtn")).click();
 		sleep(15000);
@@ -2182,7 +2184,7 @@ public class Sales2 extends TestBase{
 		sb.BuscarCuenta(DNI, sDni);
 		//sb.BuscarCuenta(DNI, buscarCampoExcel(1, "Cuenta Activa", 2));
 		sb.acciondecontacto("catalogo");
-		sleep(10000);
+		sleep(15000);
 		WebElement produc = driver.findElement(By.cssSelector(".cpq-categories-container")).findElements(By.tagName("li")).get(1);
 		produc.click();
 		driver.findElement(By.cssSelector(".slds-input.ng-pristine.ng-untouched.ng-valid")).sendKeys("Galaxy S8");		
@@ -2196,7 +2198,10 @@ public class Sales2 extends TestBase{
 		List<WebElement> values = driver.findElements(By.cssSelector(".slds-item--detail.slds-truncate"));
 		String[] precissionCounter = values.get(3).getText().split(",");
 		Assert.assertEquals(precissionCounter[1].length(), 2);
+		List<WebElement> frame2 = driver.findElements(By.tagName("iframe"));
+		driver.switchTo().frame(frame2.get(0));
 		driver.findElements(By.cssSelector(".slds-button.slds-button--neutral")).get(3).click();
+		driver.switchTo().defaultContent();
 		sleep(10000);
 		List<WebElement> montos = driver.findElements(By.className("cpq-underline"));
 		//montos = montos.subList(0, 3);
