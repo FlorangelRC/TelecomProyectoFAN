@@ -29,7 +29,9 @@ import org.openqa.selenium.ElementNotVisibleException;
 import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.FindAll;
 import org.openqa.selenium.support.FindBy;
+import org.openqa.selenium.support.FindBys;
 import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.FluentWait;
@@ -72,11 +74,91 @@ public class OM {
 	@FindBy(id = "fileinput")
 	private WebElement adjuntar;
 	
-	
 	@FindBy(css=".form-control.btn.btn-primary.ng-binding")
 	private WebElement Next;
-
+	
+	@FindAll({@FindBy(name = "addOrder"),
+		@FindBy(name = "new")})
+	private WebElement newOrderButton;
+	
+	@FindBy(id = "accid")
+	private WebElement accountNameField;
+	
+	@FindBy(className = "dateFormat")
+	private WebElement orderStartDateField;
+	
+	@FindBy(id = "Status")
+	private WebElement selectStatusDDM;
+	
+	@FindBy(id = "00Nc0000002IvyM")
+	private WebElement selectGestionDDM;
+	
+	@FindBy(name = "save")
+	private WebElement saveOrderButton;
+	
+	@FindBy(name = "ta_submit_order")
+	private WebElement taSubmitOrderButton;
+	
+	 @FindBys(@FindBy(xpath = "//div[starts-with(@id,'801c0000000Kz') and contains(@id,'_SALES_ACCOUNT_NAME')]/a"))
+	private List<WebElement> accountList;
+	 
+	 @FindBy(css = ".form-control.btn.btn-primary.ng-binding")
+	 private WebElement creatingFutureDatedOrdersNextButton;
+	 
+	 @FindBy(css = ".slds-button.cpq-item-has-children")
+	 private WebElement planButton;
+	 
+	 @FindBy(xpath = "//div[contains(concat(' ',normalize-space(@class),' '),'cpq-item-base-product-name cpq-item-product-group js-cpq-cart-product-hierarchy-path-01tc000000578LBAAY<01tc000000578KIAAY')]//button")
+	 private WebElement serviciosBasicosGeneralMovil;
+	 
+	 @FindBy(xpath = "//div[contains(concat(' ',normalize-space(@class),' '),'cpq-item-base-product-name cpq-item-product-group js-cpq-cart-product-hierarchy-path-01tc000000578LBAAY<01tc000000578KIAAY<01tc0000005M7ySAAS')]//button")
+	 private WebElement sbgmContestador;
+	 
+	 @FindBy(xpath = "//div[contains(concat(' ',normalize-space(@class),' '),'cpq-item-base-product-name cpq-item-product-group js-cpq-cart-product-hierarchy-path-01tc000000578LBAAY<01tc000000578KIAAY<01tc0000005JSuAAAW')]//button")
+	 private WebElement sbgmDDI;
+	 
 	// ********************************METODOS*******************************************************//
+	 
+	public WebElement getNewOrderButton() {
+		return newOrderButton;
+	}
+
+	public Select getSelectStatusDDM() {
+		return new Select((WebElement) selectStatusDDM);
+	}
+
+	public Select getSelectGestionDDM() {
+		return new Select((WebElement) selectGestionDDM);
+	}
+
+	public WebElement getTaSubmitOrderButton() {
+		return taSubmitOrderButton;
+	}
+
+	public List<WebElement> getAccountList() {
+		return accountList;
+	}
+	
+	public WebElement getCreatingFutureDateOrdersNextButton() {
+		return creatingFutureDatedOrdersNextButton;
+	}
+
+	public WebElement getPlanButton() {
+		return planButton;
+	}
+
+	public WebElement getServiciosBasicosGeneralMovil() {
+		return serviciosBasicosGeneralMovil;
+	}
+
+	public WebElement getSBGMContestador() {
+		return sbgmContestador;
+	}
+
+	public WebElement getSBGMDDI() {
+		return sbgmDDI;
+	}
+
 	public void sleep(long s) {
 		try {
 			Thread.sleep(s);
@@ -177,7 +259,7 @@ public class OM {
 			driver.findElement(By.xpath("//a[@href=\"/home/home.jsp?tsid=02u41000000QWha\"]")).click();
 		}
 	}
-
+	
 	/**
 	 * Crea una orden desde la vista de todas las ordenes.
 	 */
@@ -207,6 +289,20 @@ public class OM {
 			Thread.currentThread().interrupt();
 		}
 	}
+	
+	/*Crear Una Orden con Gestion desde cualquier Vista*/
+	public void crearOrdenConGestion(String accountName, String gestionName) {
+		newOrderButton.click();
+		sleep(3000);
+		accountNameField.sendKeys(accountName);
+		orderStartDateField.click();
+		getSelectStatusDDM().selectByVisibleText("Draft");
+		getSelectGestionDDM().selectByVisibleText(gestionName);
+		sleep(1000);
+		saveOrderButton.click();
+	}
+	
+
 
 	/**
 	 * Pasa todas las cajas rojas del flujo de orquestacion a verdes.
@@ -514,12 +610,12 @@ public class OM {
 		}
 
 
-	/*public String getFechaAvanzadaFormateada_MM_dd_yyyy() {
+	public String getFechaAvanzadaFormateada_MM_dd_yyyy() {
 		SimpleDateFormat simpleDateFormat = new SimpleDateFormat("MM-dd-yyyy");
 		String formattedDate = simpleDateFormat.format(fechaAvanzada());
 		return formattedDate;
 	}
-*/
+
 	// Ir hasta SIM config
 	public void goToSimConfig() {
 		// Plan
@@ -727,7 +823,7 @@ public void deleteOrdersNoActivated(String Vista) {
 		driver.findElement(By.id("RequestDate")).sendKeys(dateFormat.format(pageOm.fechaAvanzada()));
 		//driver.findElement(By.id("RequestDate")).sendKeys("07-14-2018");
 		driver.findElement(By.cssSelector(".form-control.btn.btn-primary.ng-binding")).click();
-		sleep(14000);
+		sleep(18000);
 		driver.findElement(By.id("-import-btn")).click();
 		sleep(8000);
 		pageOm.agregarGestion("Suspension");
@@ -735,7 +831,7 @@ public void deleteOrdersNoActivated(String Vista) {
 		SuspenderProductos();
 		sleep(5000);
 		driver.findElement(By.id("accid_ileinner")).findElement(By.tagName("a")).click();
-		sleep(10000);
+		sleep(12000);
 		irAChangeToOrder();
 		OM.SimCard();
 		driver.findElement(By.id("-import-btn")).click();
@@ -788,14 +884,14 @@ public void deleteOrdersNoActivated(String Vista) {
 	      Date date = new Date(); 
 	      OM om = new OM(driver); 
 	    //Mientras, seleccion de vista 
-	      Select allOrder=new Select(driver.findElement(By.id("fcf"))); 
+	     /* Select allOrder=new Select(driver.findElement(By.id("fcf"))); 
 	      allOrder.selectByVisibleText(Vista); 
 	      sleep(1000); 
 	      try {driver.findElement(By.name("go")).click();}catch(org.openqa.selenium.NoSuchElementException e) {} 
 	      sleep(3000); 
 	    //Selecciona la primera cuenta de la lista en la vista seleccionada 
 	      WebElement primeraCuenta=driver.findElement(By.cssSelector(".x-grid3-col.x-grid3-cell.x-grid3-td-SALES_ACCOUNT_NAME")); 
-	      primeraCuenta.findElement(By.tagName("div")).findElement(By.tagName("a")).click(); 
+	      primeraCuenta.findElement(By.tagName("div")).findElement(By.tagName("a")).click(); */
 	      sleep(8000); 
 	    //Seleccion del ultimo Asset 
 	      om.irAChangeToOrder();   
@@ -829,14 +925,17 @@ public void deleteOrdersNoActivated(String Vista) {
 	      driver.findElements(By.id("topButtonRow")).get(0); 
 	      sleep(7000); 
 	      driver.findElement(By.name("ta_submit_order")).click(); 
-	      sleep(35000); 
-	      om.cambiarVentanaNavegador(1); 
-	      sleep(2000); 
-	      driver.findElement(By.id("idlist")).click(); 
-	      sleep(5000); 
-	      om.cambiarVentanaNavegador(0); 
-	      sleep(12000); 
-	      om.completarFlujoOrquestacion(); 
+	      sleep(45000);
+			try {
+				om.cambiarVentanaNavegador(1);
+				sleep(2000);
+				driver.findElement(By.id("idlist")).click();
+				sleep(5000);
+				om.cambiarVentanaNavegador(0);
+			}catch(java.lang.IndexOutOfBoundsException ex1) {}
+			sleep(12000);
+			om.completarFlujoOrquestacion();
+			sleep(5000);
 	       
 	      }
 	    
