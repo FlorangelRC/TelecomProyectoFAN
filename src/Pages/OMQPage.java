@@ -1,9 +1,12 @@
 package Pages;
 import static org.testng.Assert.assertTrue;
 
+import java.net.MalformedURLException;
+import java.net.URL;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.Random;
 
@@ -215,22 +218,21 @@ public class OMQPage extends BasePage {
 
 	
 	public void agregarPack(String servicio) {
-		sleep(12000);
+		sleep(15000);
 		driver.findElement(By.cssSelector(".slds-button.cpq-item-has-children")).click();
 		List<WebElement> list1 = driver.findElements(By.xpath("//*[@class='cpq-item-product-child-level-1 cpq-item-child-product-name-wrapper']//*[@class='slds-button slds-button_icon-small']"));
-		sleep(8000);
-		list1. get(3).click();
-		sleep(8000);
+		sleep(10000);
+		list1. get(4).click();
+		sleep(10000);
 		
 		List<WebElement> pDatos = driver.findElements(By.xpath("//*[@class='cpq-item-product-child-level-2 cpq-item-child-product-name-wrapper']//*[@class='slds-button slds-button_icon-small']"));
 		((JavascriptExecutor)driver).executeScript("window.scrollTo(0,"+driver.findElement(By.xpath("//*[@class='cpq-item-product-child-level-2 cpq-item-child-product-name-wrapper']//*[@class='slds-button slds-button_icon-small']")).getLocation().y+")");
-		sleep(8000);
+		sleep(10000);
 		pDatos.get(2).click();
-		 sleep(8000);
+		 sleep(10000);
 		
 		 driver.switchTo().defaultContent();
 		 //subtablas
-		// WebElement tabla=driver.findElement(By.xpath("//*[@class='cpq-item-product-child-level-3 ng-not-empty ng-valid']"));
 		 List<WebElement> Pack = driver.findElements( By.xpath("//*[@class='cpq-item-product-child-level-3 ng-not-empty ng-valid']//*[@class='cpq-item-no-children']"));
 		 List<WebElement> Agregar=driver.findElements(By.xpath("//*[@class='cpq-item-product-child-level-3 ng-not-empty ng-valid']//*[@class='slds-button slds-button_neutral']"));
 		 if (Pack.size() == Agregar.size()) {
@@ -238,13 +240,19 @@ public class OMQPage extends BasePage {
 				if (Pack.get(i).getText().equals(servicio)) {
 					System.out.println(servicio);
 					Agregar.get(i).click();
+					sleep(5000);
 					break;
 				}
 			}
-		}	
-				sleep(12000);
-	}
-public void sincroProducto(String Products){
+		 sleep(12000);
+			
+		}
+		 	
+		
+}
+			
+public void sincroProducto(String Products) {
+	
 	boolean a= false;
 	driver.switchTo().defaultContent();
 	((JavascriptExecutor)driver).executeScript("window.scrollTo(0,"+driver.findElement(By.xpath("//*[@id='bodyCell']/div[6]/div[1]/div/div[2]/table")).getLocation().y+")");
@@ -254,6 +262,7 @@ public void sincroProducto(String Products){
 			a=true;
 			 System.out.println(prod.get(i).getText());
 			 prod.get(i).click();
+				sleep(5000);
 			 break;
 	}
 }
@@ -262,11 +271,11 @@ public void sincroProducto(String Products){
 		sincronizar.click();
 		driver.switchTo().defaultContent();
 		driver.findElement(By.xpath("//*[@id=\"bodyCell\"]/div/div/div[1]/div/form/div[3]/button")).click();
-		//driver.switchTo().defaultContent();
-		//driver.findElement(By.xpath("//*[@id=\"bodyCell\"]/div/div/div[1]/div/form/div[3]/button")).click();
+		sleep(12000);
 		
 	
 }
+
 			
 		
 
