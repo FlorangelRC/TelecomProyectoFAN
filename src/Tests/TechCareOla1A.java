@@ -248,7 +248,7 @@ public class TechCareOla1A extends TestBase {
 		page.clickVerDetalle();
 		sleep(5000);
 		page.clickDiagnosticarServicio("SMS","sms saliente");
-		sleep(5000);
+		sleep(10000);//AQUI
 		page.seleccionarRespuesta("sms emisión a algún destino en particular");
 	    page.BajaryContinuar();
 	    sleep(5000);
@@ -534,7 +534,7 @@ public class TechCareOla1A extends TestBase {
 		sleep(10000);
 		
 		page.clickOpcionEnAsset(sLinea, "mis servicios");
-		sleep(7000);
+		sleep(10000);
 		page.clickVerDetalle();
 		sleep(5000);
 		page.clickDiagnosticarServicio("SMS","sms saliente");
@@ -568,7 +568,7 @@ public class TechCareOla1A extends TestBase {
 		sleep(20000);
 		
 		page.clickOpcionEnAsset(sLinea, "mis servicios");
-		sleep(7000);
+		sleep(10000);
 		page.clickVerDetalle();
 		sleep(5000);
 		page.clickDiagnosticarServicio("SMS","sms saliente");

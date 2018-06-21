@@ -3,6 +3,7 @@ package Pages;
 import static org.testng.Assert.assertTrue;
 
 import java.awt.Toolkit;
+import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.time.Duration;
 import java.util.ArrayList;
@@ -993,4 +994,42 @@ public void deleteOrdersNoActivated(String Vista) {
 			 
 		}
 	    
+	public void Gestion_Cambio_De_Titularidad(String CuentaNueva) {
+		driver.switchTo().defaultContent();
+		sleep(12000);
+		DateFormat dateFormat = new SimpleDateFormat("MM-dd-yyyy");
+		driver.findElement(By.id("RequestDate")).sendKeys(dateFormat.format(fechaAvanzada()));
+		//driver.findElement(By.id("RequestDate")).sendKeys("06-15-2018");
+		
+		//click Next
+		WebElement next=driver.findElement(By.cssSelector(".form-control.btn.btn-primary.ng-binding"));
+		next.click();
+		sleep(30000);
+		
+		//Click ViewRecord
+		driver.findElement(By.id("-import-btn")).click();
+		sleep(7000);
+		
+		//click en goto list en (TA Price Book)
+		WebElement goToList=driver.findElement(By.className("pShowMore")).findElements(By.tagName("a")).get(1);
+		sleep(500);
+		scrollDown(driver.findElement(By.className("pShowMore")));
+		sleep(500);
+		goToList.click();
+		sleep(7000);
+		
+		//Cambiar Cuenta en Servicios
+		cambioDeCuentaServicios("CambioDeTitularidad");
+		
+		//Click para retonar a la orden
+		driver.findElement(By.className("ptBreadcrumb")).findElement(By.tagName("a")).click();
+		sleep(4000);
+		
+		//Editamos Orden
+		cambiarCuentaYGestionEnOrden(CuentaNueva,"Cambio de titularidad");
+		sleep(4000);
+		
+		//Finalizamos el proceso con TA SUBMIT ORDER
+		driver.findElement(By.name("ta_submit_order")).click();
+	}
 }
