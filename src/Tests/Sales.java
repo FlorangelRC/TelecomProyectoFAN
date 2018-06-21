@@ -1489,7 +1489,7 @@ public class Sales extends TestBase {
 		List <WebElement> plan = driver.findElements(By.cssSelector(".slds-button.cpq-item-has-children"));
 		boolean a = false;
 		for (WebElement x : plan) {
-			if (x.getText().toLowerCase().contains("plan con tarjeta")) {
+			if (x.getText().toLowerCase().contains("plan prepago nacional")) {
 				a = true;
 			}
 		}

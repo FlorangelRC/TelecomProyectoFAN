@@ -29,7 +29,9 @@ import org.openqa.selenium.ElementNotVisibleException;
 import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.FindAll;
 import org.openqa.selenium.support.FindBy;
+import org.openqa.selenium.support.FindBys;
 import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.FluentWait;
@@ -72,11 +74,91 @@ public class OM {
 	@FindBy(id = "fileinput")
 	private WebElement adjuntar;
 	
-	
 	@FindBy(css=".form-control.btn.btn-primary.ng-binding")
 	private WebElement Next;
-
+	
+	@FindAll({@FindBy(name = "addOrder"),
+		@FindBy(name = "new")})
+	private WebElement newOrderButton;
+	
+	@FindBy(id = "accid")
+	private WebElement accountNameField;
+	
+	@FindBy(className = "dateFormat")
+	private WebElement orderStartDateField;
+	
+	@FindBy(id = "Status")
+	private WebElement selectStatusDDM;
+	
+	@FindBy(id = "00Nc0000002IvyM")
+	private WebElement selectGestionDDM;
+	
+	@FindBy(name = "save")
+	private WebElement saveOrderButton;
+	
+	@FindBy(name = "ta_submit_order")
+	private WebElement taSubmitOrderButton;
+	
+	 @FindBys(@FindBy(xpath = "//div[starts-with(@id,'801c0000000Kz') and contains(@id,'_SALES_ACCOUNT_NAME')]/a"))
+	private List<WebElement> accountList;
+	 
+	 @FindBy(css = ".form-control.btn.btn-primary.ng-binding")
+	 private WebElement creatingFutureDatedOrdersNextButton;
+	 
+	 @FindBy(css = ".slds-button.cpq-item-has-children")
+	 private WebElement planButton;
+	 
+	 @FindBy(xpath = "//div[contains(concat(' ',normalize-space(@class),' '),'cpq-item-base-product-name cpq-item-product-group js-cpq-cart-product-hierarchy-path-01tc000000578LBAAY<01tc000000578KIAAY')]//button")
+	 private WebElement serviciosBasicosGeneralMovil;
+	 
+	 @FindBy(xpath = "//div[contains(concat(' ',normalize-space(@class),' '),'cpq-item-base-product-name cpq-item-product-group js-cpq-cart-product-hierarchy-path-01tc000000578LBAAY<01tc000000578KIAAY<01tc0000005M7ySAAS')]//button")
+	 private WebElement sbgmContestador;
+	 
+	 @FindBy(xpath = "//div[contains(concat(' ',normalize-space(@class),' '),'cpq-item-base-product-name cpq-item-product-group js-cpq-cart-product-hierarchy-path-01tc000000578LBAAY<01tc000000578KIAAY<01tc0000005JSuAAAW')]//button")
+	 private WebElement sbgmDDI;
+	 
 	// ********************************METODOS*******************************************************//
+	 
+	public WebElement getNewOrderButton() {
+		return newOrderButton;
+	}
+
+	public Select getSelectStatusDDM() {
+		return new Select((WebElement) selectStatusDDM);
+	}
+
+	public Select getSelectGestionDDM() {
+		return new Select((WebElement) selectGestionDDM);
+	}
+
+	public WebElement getTaSubmitOrderButton() {
+		return taSubmitOrderButton;
+	}
+
+	public List<WebElement> getAccountList() {
+		return accountList;
+	}
+	
+	public WebElement getCreatingFutureDateOrdersNextButton() {
+		return creatingFutureDatedOrdersNextButton;
+	}
+
+	public WebElement getPlanButton() {
+		return planButton;
+	}
+
+	public WebElement getServiciosBasicosGeneralMovil() {
+		return serviciosBasicosGeneralMovil;
+	}
+
+	public WebElement getSBGMContestador() {
+		return sbgmContestador;
+	}
+
+	public WebElement getSBGMDDI() {
+		return sbgmDDI;
+	}
+
 	public void sleep(long s) {
 		try {
 			Thread.sleep(s);
@@ -177,7 +259,7 @@ public class OM {
 			driver.findElement(By.xpath("//a[@href=\"/home/home.jsp?tsid=02u41000000QWha\"]")).click();
 		}
 	}
-
+	
 	/**
 	 * Crea una orden desde la vista de todas las ordenes.
 	 */
@@ -207,6 +289,20 @@ public class OM {
 			Thread.currentThread().interrupt();
 		}
 	}
+	
+	/*Crear Una Orden con Gestion desde cualquier Vista*/
+	public void crearOrdenConGestion(String accountName, String gestionName) {
+		newOrderButton.click();
+		sleep(3000);
+		accountNameField.sendKeys(accountName);
+		orderStartDateField.click();
+		getSelectStatusDDM().selectByVisibleText("Draft");
+		getSelectGestionDDM().selectByVisibleText(gestionName);
+		sleep(1000);
+		saveOrderButton.click();
+	}
+	
+
 
 	/**
 	 * Pasa todas las cajas rojas del flujo de orquestacion a verdes.
@@ -514,12 +610,12 @@ public class OM {
 		}
 
 
-	/*public String getFechaAvanzadaFormateada_MM_dd_yyyy() {
+	public String getFechaAvanzadaFormateada_MM_dd_yyyy() {
 		SimpleDateFormat simpleDateFormat = new SimpleDateFormat("MM-dd-yyyy");
 		String formattedDate = simpleDateFormat.format(fechaAvanzada());
 		return formattedDate;
 	}
-*/
+
 	// Ir hasta SIM config
 	public void goToSimConfig() {
 		// Plan
@@ -719,15 +815,24 @@ public void deleteOrdersNoActivated(String Vista) {
 		WebElement primeraCuenta=driver.findElement(By.cssSelector(".x-grid3-col.x-grid3-cell.x-grid3-td-SALES_ACCOUNT_NAME"));
 		primeraCuenta.findElement(By.tagName("div")).findElement(By.tagName("a")).click();*/
 		sleep(5000);
-		pageOm.irAChangeToOrder();	
+		irAChangeToOrder();	
 		sleep(10000);
 		Accounts accountPage = new Accounts(driver);
 		driver.switchTo().defaultContent(); 
-        /*DateFormat dateFormat = new SimpleDateFormat("MM-dd-yyyy");
-		driver.findElement(By.id("RequestDate")).sendKeys(dateFormat.format(pageOm.fechaAvanzada()));*/
-		driver.findElement(By.id("RequestDate")).sendKeys("07-14-2018");
+        DateFormat dateFormat = new SimpleDateFormat("MM-dd-yyyy");
+		driver.findElement(By.id("RequestDate")).sendKeys(dateFormat.format(pageOm.fechaAvanzada()));
+		//driver.findElement(By.id("RequestDate")).sendKeys("07-14-2018");
 		driver.findElement(By.cssSelector(".form-control.btn.btn-primary.ng-binding")).click();
+		sleep(18000);
+		driver.findElement(By.id("-import-btn")).click();
+		sleep(8000);
+		pageOm.agregarGestion("Suspension");
+		sleep(5000);
+		SuspenderProductos();
+		sleep(5000);
+		driver.findElement(By.id("accid_ileinner")).findElement(By.tagName("a")).click();
 		sleep(12000);
+		irAChangeToOrder();
 		OM.SimCard();
 		driver.findElement(By.id("-import-btn")).click();
 		sleep(8000);
@@ -779,14 +884,14 @@ public void deleteOrdersNoActivated(String Vista) {
 	      Date date = new Date(); 
 	      OM om = new OM(driver); 
 	    //Mientras, seleccion de vista 
-	      Select allOrder=new Select(driver.findElement(By.id("fcf"))); 
+	     /* Select allOrder=new Select(driver.findElement(By.id("fcf"))); 
 	      allOrder.selectByVisibleText(Vista); 
 	      sleep(1000); 
 	      try {driver.findElement(By.name("go")).click();}catch(org.openqa.selenium.NoSuchElementException e) {} 
 	      sleep(3000); 
 	    //Selecciona la primera cuenta de la lista en la vista seleccionada 
 	      WebElement primeraCuenta=driver.findElement(By.cssSelector(".x-grid3-col.x-grid3-cell.x-grid3-td-SALES_ACCOUNT_NAME")); 
-	      primeraCuenta.findElement(By.tagName("div")).findElement(By.tagName("a")).click(); 
+	      primeraCuenta.findElement(By.tagName("div")).findElement(By.tagName("a")).click(); */
 	      sleep(8000); 
 	    //Seleccion del ultimo Asset 
 	      om.irAChangeToOrder();   
@@ -820,20 +925,23 @@ public void deleteOrdersNoActivated(String Vista) {
 	      driver.findElements(By.id("topButtonRow")).get(0); 
 	      sleep(7000); 
 	      driver.findElement(By.name("ta_submit_order")).click(); 
-	      sleep(35000); 
-	      om.cambiarVentanaNavegador(1); 
-	      sleep(2000); 
-	      driver.findElement(By.id("idlist")).click(); 
-	      sleep(5000); 
-	      om.cambiarVentanaNavegador(0); 
-	      sleep(12000); 
-	      om.completarFlujoOrquestacion(); 
+	      sleep(45000);
+			try {
+				om.cambiarVentanaNavegador(1);
+				sleep(2000);
+				driver.findElement(By.id("idlist")).click();
+				sleep(5000);
+				om.cambiarVentanaNavegador(0);
+			}catch(java.lang.IndexOutOfBoundsException ex1) {}
+			sleep(12000);
+			om.completarFlujoOrquestacion();
+			sleep(5000);
 	       
 	      }
 	    
 		// Metodo para cuando olvidamos cambiar la fecha para ejecutar gestiones
-	    // Avisa si se ingres� una fecha incorrecta y da unos segundos para cambiarla y continuar el test
-	    // ��ATENCION!! No olvidar quitarlo del codigo una vez que funcione
+	    // Avisa si se ingreso una fecha incorrecta y da unos segundos para cambiarla y continuar el test
+	    // ATENCION!! No olvidar quitarlo del codigo una vez que funcione
 		public void checkFutureDateRestriction() {
 			try {
 				String futureDateText = driver.findElement(By.cssSelector(".col-md-12.col-sm-12.vlc-header")).getText();
@@ -992,6 +1100,90 @@ public void deleteOrdersNoActivated(String Vista) {
 				}
 			}
 			 
+		}
+		
+		public void SuspenderProductos() {
+			int i=0;
+			CustomerCare cc = new CustomerCare(driver);
+			List<WebElement> Productos = new ArrayList<WebElement>();
+			do {
+				try {
+					cc.obligarclick(driver.findElement(By.cssSelector(".listRelatedObject.orderBlock")).findElement(By.className("pShowMore")).findElement(By.tagName("a")));
+					sleep(5000);
+				}catch(Exception ex1) {}
+				Productos = driver.findElement(By.cssSelector(".listRelatedObject.orderBlock")).findElement(By.className("pbBody")).findElements(By.tagName("tr"));
+				Productos.remove(0);
+				if(i<Productos.size()) {
+					cc.obligarclick(Productos.get(i).findElement(By.tagName("th")).findElement(By.tagName("a")));
+					i=i+1;
+					System.out.println("i="+i);
+					sleep(5000);
+					boolean esta = false;
+					List<WebElement> campos = driver.findElement(By.className("detailList")).findElements(By.tagName("td"));
+					for (WebElement UnC : campos) {
+						if (esta == true) {
+							Actions action = new Actions(driver);
+							action.moveToElement(UnC).doubleClick().build().perform();
+							sleep(2000);
+							Select gestiones = new Select(driver.findElement(By.tagName("select")));
+							gestiones.selectByVisibleText("Suspend-Siniestro");
+							break;
+						}
+						if (UnC.getText().equalsIgnoreCase("sub action")) {
+							esta = true;
+						}
+					}
+					esta = false;
+					for (WebElement UnC : campos) {
+						if (esta == true) {
+							Actions action = new Actions(driver);
+							action.moveToElement(UnC).doubleClick().build().perform();
+							sleep(2000);
+							UnC.findElement(By.tagName("input")).clear();
+							UnC.findElement(By.tagName("input")).sendKeys("Suspend");
+							break;
+						}
+						if (UnC.getText().equalsIgnoreCase("provisioning status")) {
+							esta = true;
+						}
+						
+					}
+					sleep(2000);
+					driver.findElement(By.id("topButtonRow")).findElement(By.tagName("input")).click();
+					sleep(3000);
+					cc.obligarclick(driver.findElement(By.id("Order_ileinner")).findElement(By.tagName("a")));
+					sleep(4000);
+					
+					//SuspenderProductos(i++);
+				}else {
+					System.out.println("llegue aqui");
+				}
+			}while(i<Productos.size());
+		}
+		
+		public void Cambio_De_SimCard2(String fecha, String Iccid, String Imsi, String Ki) throws InterruptedException {
+			sleep(5000);
+			OM pageOm=new OM(driver);
+			OMQPage OM=new OMQPage (driver);
+			//Mientras, seleccion de vista
+			pageOm.selectVistaByVisibleText("LineasFlor");
+			sleep(3000);
+			//Selecciona la primera cuenta de la lista en la vista seleccionada
+			WebElement primeraCuenta=driver.findElement(By.cssSelector(".x-grid3-col.x-grid3-cell.x-grid3-td-SALES_ACCOUNT_NAME"));
+			primeraCuenta.findElement(By.tagName("div")).findElement(By.tagName("a")).click();
+			sleep(5000);
+			pageOm.irAChangeToOrder();	
+			sleep(20000);
+			driver.switchTo().defaultContent(); 
+			sleep(4000);
+			driver.findElement(By.id("RequestDate")).sendKeys(fecha);
+			driver.findElement(By.cssSelector(".form-control.btn.btn-primary.ng-binding")).click();
+			sleep(12000);
+			OM.SimCard2(Iccid, Imsi, Ki);
+			driver.findElement(By.id("-import-btn")).click();
+			sleep(8000);
+			pageOm.agregarGestion("Cambio de SIM");
+			sleep(5000);
 		}
 	    
 	public void Gestion_Cambio_De_Titularidad(String CuentaNueva) {
