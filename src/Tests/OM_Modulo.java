@@ -93,11 +93,11 @@ public void setUp() throws Exception {
 	driver.switchTo().defaultContent();
 	
 	//fecha avanzada
-	OM.fechaAv("06-20-2018");
+	OM.fechaAv("06-23-2018");
 	sleep(12000);
 	
 	//agregar Pack
-	OM.agregarPack("Pack 1GB de dia + 3GB de Noche");
+	OM.agregarPack("Packs Opcionales"," Packs de Datos", "Pack Internet x 7 dias","Pack 1GB de dia + 3GB de Noche,","Pack 500Mb + WhasApp x 3 días");
 				
 	//Click ViewRecord
 	sleep(8000);	
@@ -136,11 +136,11 @@ public void setUp() throws Exception {
 	driver.switchTo().defaultContent();
 	
 	//fecha avanzada
-	OM.fechaAv("06-28-2018");
+	OM.fechaAv("06-23-2018");
 	sleep(12000);
 	
 	//agregar Pack
-	OM.agregarPack("Pack 2GB + WhasApp x 3 días");
+	OM.agregarPack("Packs Opcionales"," Packs de Datos", "Pack Internet x 7 dias","Pack 1GB de dia + 3GB de Noche,","Pack 500Mb + WhasApp x 3 días");
 				
 	//Click ViewRecord
 	sleep(8000);	

@@ -217,19 +217,52 @@ public class OMQPage extends BasePage {
 	}
 
 	
-	public void agregarPack(String servicio) {
-		sleep(15000);
+	public void agregarPack(String servicio1, String servicio2,String Pack1,String Pack2,String Pack3) {
+		//sleep(15000);
 		driver.findElement(By.cssSelector(".slds-button.cpq-item-has-children")).click();
-		List<WebElement> list1 = driver.findElements(By.xpath("//*[@class='cpq-item-product-child-level-1 cpq-item-child-product-name-wrapper']//*[@class='slds-button slds-button_icon-small']"));
-		sleep(10000);
-		list1. get(4).click();
-		sleep(10000);
+		List<WebElement> NomPack = driver.findElements(By.xpath("//*[@class='cpq-item-product-child-level-1 cpq-item-child-product-name-wrapper']"));
+		//List<WebElement> BotPack = driver.findElements(By.xpath("//*[@class='cpq-item-product-child-level-1 cpq-item-child-product-name-wrapper']//*[@class='slds-button slds-button_icon-small']"));
 		
-		List<WebElement> pDatos = driver.findElements(By.xpath("//*[@class='cpq-item-product-child-level-2 cpq-item-child-product-name-wrapper']//*[@class='slds-button slds-button_icon-small']"));
-		((JavascriptExecutor)driver).executeScript("window.scrollTo(0,"+driver.findElement(By.xpath("//*[@class='cpq-item-product-child-level-2 cpq-item-child-product-name-wrapper']//*[@class='slds-button slds-button_icon-small']")).getLocation().y+")");
-		sleep(10000);
-		pDatos.get(2).click();
-		 sleep(10000);
+			// for (int i = 0; i < NomPack.size(); i++) {
+		for(WebElement a: NomPack) {
+			System.out.print(a.getText().toLowerCase());
+			System.out.println(" : "+servicio1.toLowerCase());
+					if (a.getText().toLowerCase().contains(servicio1.toLowerCase())) {
+						System.out.println(servicio1);
+						a.findElement(By.tagName("button")).click();
+						sleep(5000);
+						break;
+					}
+				
+		sleep(12000);
+			 }
+		
+		List<WebElement> subPack = driver.findElements(By.xpath("//*[@class='cpq-item-product-child-level-2 cpq-item-child-product-name-wrapper']"));
+		//List<WebElement> Btnsubpack = driver.findElements(By.xpath("//*[@class='cpq-item-product-child-level-2 cpq-item-child-product-name-wrapper']//*[@class='slds-button slds-button_icon-small']"));
+		//((JavascriptExecutor)driver).executeScript("window.scrollTo(0,"+driver.findElement(By.xpath("//*[@class='cpq-item-product-child-level-2 cpq-item-child-product-name-wrapper']//*[@class='slds-button slds-button_icon-small']")).getLocation().y+")");
+		for(WebElement a: subPack) {
+			System.out.print(a.getText().toLowerCase());
+			System.out.println(" : "+servicio2.toLowerCase());
+					if (a.getText().toLowerCase().contains(servicio2.toLowerCase())) {
+						System.out.println(servicio2);
+						  a.findElement(By.tagName("button")).click();
+						   sleep(5000);
+						     break;
+					}
+				}
+	
+
+		
+//		List<WebElement> list1 = driver.findElements(By.xpath("//*[@class='cpq-item-product-child-level-1 cpq-item-child-product-name-wrapper']//*[@class='slds-button slds-button_icon-small']"));
+//		sleep(10000);
+//		list1. get(4).click();
+//		sleep(10000);
+//		
+//		List<WebElement> pDatos = driver.findElements(By.xpath("//*[@class='cpq-item-product-child-level-2 cpq-item-child-product-name-wrapper']//*[@class='slds-button slds-button_icon-small']"));
+//		((JavascriptExecutor)driver).executeScript("window.scrollTo(0,"+driver.findElement(By.xpath("//*[@class='cpq-item-product-child-level-2 cpq-item-child-product-name-wrapper']//*[@class='slds-button slds-button_icon-small']")).getLocation().y+")");
+//		sleep(10000);
+//		pDatos.get(2).click();
+//		sleep(10000);
 		
 		 driver.switchTo().defaultContent();
 		 //subtablas
@@ -237,19 +270,30 @@ public class OMQPage extends BasePage {
 		 List<WebElement> Agregar=driver.findElements(By.xpath("//*[@class='cpq-item-product-child-level-3 ng-not-empty ng-valid']//*[@class='slds-button slds-button_neutral']"));
 		 if (Pack.size() == Agregar.size()) {
 		 for (int i = 0; i < Pack.size(); i++) {
-				if (Pack.get(i).getText().equals(servicio)) {
-					System.out.println(servicio);
+				if (Pack.get(i).getText().equals(Pack1)) {
+					System.out.println(Pack1);
+					Agregar.get(i).click();
+					sleep(5000);
+					
+				}
+				if (Pack.get(i).getText().equals(Pack2)) {
+					System.out.println(Pack2);
+					Agregar.get(i).click();
+					sleep(5000);
+					
+				}
+				if (Pack.get(i).getText().equals(Pack3)) {
+					System.out.println(Pack3);
 					Agregar.get(i).click();
 					sleep(5000);
 					break;
 				}
-			}
-		 sleep(12000);
-			
-		}
-		 	
+		 	}
+		 }	
+	  }
+	
 		
-}
+
 			
 public void sincroProducto(String Products) {
 	
