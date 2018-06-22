@@ -444,39 +444,47 @@ public class OM_Flujos_Ruben extends TestBase {
 	
 	@Test(groups = "OM")
 	public void TS_CRM_OM_Gestion_Baja_De_Servicios() {
+//		driver.manage().timeouts().pageLoadTimeout(30, TimeUnit.SECONDS);
+		int minimalWait = 1000, shortWait = 3000, mediumWait = 6000, longWait = 10000, stupidLongWait = 30000;
 		pageOm.selectVistaByVisibleText("RubenOM-Activated");
-		sleep(3000);
+		sleep(shortWait);
 		pageOm.getAccountList().get(0).click();
-		sleep(3000);
+		sleep(shortWait);
 		pageOm.irAChangeToOrder();
-		sleep(10000);
+		sleep(longWait);
 		// Ingresar Fecha Futura
 //		driver.findElement(By.id("RequestDate")).sendKeys(pageOm.getFechaAvanzadaFormateada_MM_dd_yyyy());
-		driver.findElement(By.id("RequestDate")).sendKeys("07-11-2018");
-		sleep(1000);
+		driver.findElement(By.id("RequestDate")).sendKeys("07-17-2018");
+		sleep(minimalWait);
 		pageOm.getCreatingFutureDateOrdersNextButton().click();
-		sleep(3000);
+		sleep(shortWait);
 		pageOm.checkFutureDateRestriction();
-		pageOm.
-		sleep(30000);
+		sleep(stupidLongWait);
 		pageOm.getPlanButton().click();
-		sleep(1000);
+		sleep(minimalWait);
 		pageOm.getServiciosBasicosGeneralMovil().click();
-		sleep(6000);
+		sleep(mediumWait);
 		pageOm.getSBGMContestador().click();
-		sleep(6000);
+		sleep(mediumWait);
 		pageOm.getSBGMDDI().click();
-		sleep(1000);
+		sleep(mediumWait);
 		List<WebElement> addToCart = driver.findElements(By.xpath("//*[contains(@class,'cpq-item-base-product')]//*[contains(text(),'Add to Cart')]"));
-		
 		
 		//cpq-item-base-product-name-field cpq-item-text-value cpq-item-product-title
 		//cpq-item-no-children
+		
+		//Classes:
+		//Top: cpq-item-product-messages
+		//Servicios Basicos Arrow: class="cpq-item-base-product"
+		//All Items: cpq-item-base-product-details
+		
+		
+		
 		int i = 1;
 		for(WebElement a: addToCart) {
 			if(a.isDisplayed()) {
 				a.click();
-				sleep(6000);
+				sleep(mediumWait);
 				System.out.println("Item #" + i + " clickeado");
 			}
 			else {
