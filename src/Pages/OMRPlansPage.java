@@ -23,8 +23,14 @@ public class OMRPlansPage extends BasePage {
 	
 	//button[contains(concat(' ',normalize-space(@class),' '),'slds-button slds-button_neutral') and contains(text(),'Add to Cart')]//../preceding-sibling::*//*[contains(text(),'Llamada en espera')]
 	
-		
+	//*[contains(text(),'Llamada en espera')]//../preceding-sibling::*//*[contains(concat(' ',normalize-space(@class),' '),'slds-button slds-button_neutral') and contains(text(),'Add to Cart')]//button
+	
+	//*[contains(text(),'Llamada en espera')]//../parent::*//../following-sibling::*//*[contains(concat(' ',normalize-space(@class),' '),'slds-button slds-button_neutral') and contains(text(),'Add to Cart')]//button
 
+	
+	//PERFECT!!!
+	//*[contains(text(),'Llamada en espera')]//../parent::*//../following-sibling::*//*[contains(concat(' ',normalize-space(@class),' '),'slds-button slds-button_neutral') and contains(text(),'Add to Cart')]
+	
 	
 	[../preceding-sibling::div[contains(text(),'Llamada en espera')]]
 
