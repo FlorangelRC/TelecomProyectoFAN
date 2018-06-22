@@ -114,43 +114,44 @@ public class GestionesOM extends TestBase {
 	public void TS_CRM_CambioDeTitularidad() throws InterruptedException {
 		
 		OM pageOm=new OM(driver);
-		AltaLinea();
-		driver.switchTo().defaultContent();
-		sleep(12000);
-		//DateFormat dateFormat = new SimpleDateFormat("MM-dd-yyyy");
-		//driver.findElement(By.id("RequestDate")).sendKeys(dateFormat.format(pageOm.fechaAvanzada()));
-		driver.findElement(By.id("RequestDate")).sendKeys("06-15-2018");
-		
-		//click Next
-		WebElement next=driver.findElement(By.cssSelector(".form-control.btn.btn-primary.ng-binding"));
-		next.click();
-		sleep(30000);
-		
-		//Click ViewRecord
-		driver.findElement(By.id("-import-btn")).click();
-		sleep(7000);
-		
-		//click en goto list en (TA Price Book)
-		WebElement goToList=driver.findElement(By.className("pShowMore")).findElements(By.tagName("a")).get(1);
-		sleep(500);
-		pageOm.scrollDown(driver.findElement(By.className("pShowMore")));
-		sleep(500);
-		goToList.click();
-		sleep(7000);
-		
-		//Cambiar Cuenta en Servicios
-		pageOm.cambioDeCuentaServicios("CambioDeTitularidad");
-		
-		//Click para retonar a la orden
-		driver.findElement(By.className("ptBreadcrumb")).findElement(By.tagName("a")).click();
-		sleep(4000);
-		
-		//Editamos Orden
-		pageOm.cambiarCuentaYGestionEnOrden("CambioDeTitularidad","Cambio de titularidad");
-		sleep(4000);
-		
-		//Finalizamos el proceso con TA SUBMIT ORDER
-		driver.findElement(By.name("ta_submit_order")).click();
+		pageOm.Gestion_Alta_De_Linea("AutomaOM", "Plan Prepago Nacional");
+		pageOm.Gestion_Cambio_De_Titularidad("CambioDeTitularidad");
+//		driver.switchTo().defaultContent();
+//		sleep(12000);
+//		DateFormat dateFormat = new SimpleDateFormat("MM-dd-yyyy");
+//		driver.findElement(By.id("RequestDate")).sendKeys(dateFormat.format(pageOm.fechaAvanzada()));
+//		//driver.findElement(By.id("RequestDate")).sendKeys("06-15-2018");
+//		
+//		//click Next
+//		WebElement next=driver.findElement(By.cssSelector(".form-control.btn.btn-primary.ng-binding"));
+//		next.click();
+//		sleep(30000);
+//		
+//		//Click ViewRecord
+//		driver.findElement(By.id("-import-btn")).click();
+//		sleep(7000);
+//		
+//		//click en goto list en (TA Price Book)
+//		WebElement goToList=driver.findElement(By.className("pShowMore")).findElements(By.tagName("a")).get(1);
+//		sleep(500);
+//		pageOm.scrollDown(driver.findElement(By.className("pShowMore")));
+//		sleep(500);
+//		goToList.click();
+//		sleep(7000);
+//		
+//		//Cambiar Cuenta en Servicios
+//		pageOm.cambioDeCuentaServicios("CambioDeTitularidad");
+//		
+//		//Click para retonar a la orden
+//		driver.findElement(By.className("ptBreadcrumb")).findElement(By.tagName("a")).click();
+//		sleep(4000);
+//		
+//		//Editamos Orden
+//		pageOm.cambiarCuentaYGestionEnOrden("CambioDeTitularidad","Cambio de titularidad");
+//		sleep(4000);
+//		
+//		//Finalizamos el proceso con TA SUBMIT ORDER
+//		driver.findElement(By.name("ta_submit_order")).click();
 	}
 	
 	@Test(groups="OM", priority=1)
@@ -167,12 +168,42 @@ public class GestionesOM extends TestBase {
 		pageOm.Cambio_De_SimCard_Por_Siniestro("LineasFlor");
 	}
 	
+	@Test
+	public void AltaDeServicio() throws InterruptedException {
+		OM om = new OM(driver);
+		om.Gestion_Alta_De_Linea("FlorOM", "Plan Prepago Nacional");
+		om.irAChangeToOrder();
+		sleep(15000);
+		driver.findElement(By.id("RequestDate")).sendKeys("11-28-2019");
+		driver.findElement(By.cssSelector(".form-control.btn.btn-primary.ng-binding")).click();
+		sleep(10000);
+		driver.findElement(By.xpath("//*[@id=\"tab-default-1\"]/div[1]/ng-include/div/div/div/div[3]/div[1]/div[1]/button/span[2]")).click();
+		sleep(10000);
+		driver.findElements(By.cssSelector(".slds-button.slds-button_icon-small")).get(1).click();
+		sleep(3000);
+		driver.findElement(By.xpath("//*[@id=\"tab-default-1\"]/div[1]/ng-include/div/div/div/div[4]/div[2]/div/ng-include/div/div[2]/ng-include/div/div[3]/div/div[3]/div/div/ng-include/div/div[2]/ng-include/div/div[3]/div/div[2]/div[11]/button")).click();
+		sleep(7000);
+		driver.findElement(By.xpath("//*[@id=\"tab-default-1\"]/div[1]/ng-include/div/div/div/div[4]/div[2]/div/ng-include/div/div[2]/ng-include/div/div[3]/div/div[3]/div/div/ng-include/div/div[2]/ng-include/div/div[5]/div/div[2]/div[11]/button")).click();
+		sleep(7000);
+		driver.findElement(By.xpath("//*[@id=\"tab-default-1\"]/div[1]/ng-include/div/div/div/div[4]/div[2]/div/ng-include/div/div[2]/ng-include/div/div[3]/div/div[3]/div/div/ng-include/div/div[2]/ng-include/div/div[6]/div/div[2]/div[11]/button")).click();
+		sleep(7000);
+		driver.findElement(By.xpath("//*[@id=\"tab-default-1\"]/div[1]/ng-include/div/div/div/div[4]/div[2]/div/ng-include/div/div[2]/ng-include/div/div[3]/div/div[3]/div/div/ng-include/div/div[2]/ng-include/div/div[8]/div/div[2]/div[11]/button")).click();
+		sleep(7000);
+		buscarYClick(driver.findElements(By.cssSelector(".slds-button.slds-button_neutral")), "contains", "view record");
+		sleep(5000);
+		om.agregarGestion("Alta o Baja SVA");
+		sleep(3000);
+		driver.findElement(By.name("ta_submit_order")).click();
+		sleep(10000);
+		om.completarFlujoOrquestacion();
+		
+	}
+	
 	@Test(groups="OM", priority=1)
 	public void TS_CRM_Cambio_De_Numero() throws InterruptedException {
 		OM pageOm=new OM(driver);
 		pageOm.Gestion_Alta_De_Linea("AlOM", "Plan Con Tarjeta");
 		pageOm.Gestion_Cambio_de_Numero("AlanOM", "06-30-2018");
 	}
-		
 
 }

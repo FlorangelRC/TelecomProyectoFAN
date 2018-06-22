@@ -101,7 +101,22 @@ public class OM {
 	
 	 @FindBys(@FindBy(xpath = "//div[starts-with(@id,'801c0000000Kz') and contains(@id,'_SALES_ACCOUNT_NAME')]/a"))
 	private List<WebElement> accountList;
-
+	 
+	 @FindBy(css = ".form-control.btn.btn-primary.ng-binding")
+	 private WebElement creatingFutureDatedOrdersNextButton;
+	 
+	 @FindBy(css = ".slds-button.cpq-item-has-children")
+	 private WebElement planButton;
+	 
+	 @FindBy(xpath = "//div[contains(concat(' ',normalize-space(@class),' '),'cpq-item-base-product-name cpq-item-product-group js-cpq-cart-product-hierarchy-path-01tc000000578LBAAY<01tc000000578KIAAY')]//button")
+	 private WebElement serviciosBasicosGeneralMovil;
+	 
+	 @FindBy(xpath = "//div[contains(concat(' ',normalize-space(@class),' '),'cpq-item-base-product-name cpq-item-product-group js-cpq-cart-product-hierarchy-path-01tc000000578LBAAY<01tc000000578KIAAY<01tc0000005M7ySAAS')]//button")
+	 private WebElement sbgmContestador;
+	 
+	 @FindBy(xpath = "//div[contains(concat(' ',normalize-space(@class),' '),'cpq-item-base-product-name cpq-item-product-group js-cpq-cart-product-hierarchy-path-01tc000000578LBAAY<01tc000000578KIAAY<01tc0000005JSuAAAW')]//button")
+	 private WebElement sbgmDDI;
+	 
 	// ********************************METODOS*******************************************************//
 	 
 	public WebElement getNewOrderButton() {
@@ -123,7 +138,27 @@ public class OM {
 	public List<WebElement> getAccountList() {
 		return accountList;
 	}
-	 
+	
+	public WebElement getCreatingFutureDateOrdersNextButton() {
+		return creatingFutureDatedOrdersNextButton;
+	}
+
+	public WebElement getPlanButton() {
+		return planButton;
+	}
+
+	public WebElement getServiciosBasicosGeneralMovil() {
+		return serviciosBasicosGeneralMovil;
+	}
+
+	public WebElement getSBGMContestador() {
+		return sbgmContestador;
+	}
+
+	public WebElement getSBGMDDI() {
+		return sbgmDDI;
+	}
+
 	public void sleep(long s) {
 		try {
 			Thread.sleep(s);
@@ -1368,4 +1403,92 @@ public void deleteOrdersNoActivated(String Vista) {
 			sleep(5000);
 		}
 	    
+	public void Gestion_Cambio_De_Titularidad(String CuentaNueva) {
+		driver.switchTo().defaultContent();
+		sleep(12000);
+		DateFormat dateFormat = new SimpleDateFormat("MM-dd-yyyy");
+		driver.findElement(By.id("RequestDate")).sendKeys(dateFormat.format(fechaAvanzada()));
+		//driver.findElement(By.id("RequestDate")).sendKeys("06-15-2018");
+		
+		//click Next
+		WebElement next=driver.findElement(By.cssSelector(".form-control.btn.btn-primary.ng-binding"));
+		next.click();
+		sleep(30000);
+		
+		//Click ViewRecord
+		driver.findElement(By.id("-import-btn")).click();
+		sleep(7000);
+		
+		//click en goto list en (TA Price Book)
+		WebElement goToList=driver.findElement(By.className("pShowMore")).findElements(By.tagName("a")).get(1);
+		sleep(500);
+		scrollDown(driver.findElement(By.className("pShowMore")));
+		sleep(500);
+		goToList.click();
+		sleep(7000);
+		
+		//Cambiar Cuenta en Servicios
+		cambioDeCuentaServicios("CambioDeTitularidad");
+		
+		//Click para retonar a la orden
+		driver.findElement(By.className("ptBreadcrumb")).findElement(By.tagName("a")).click();
+		sleep(4000);
+		
+		//Editamos Orden
+		cambiarCuentaYGestionEnOrden(CuentaNueva,"Cambio de titularidad");
+		sleep(4000);
+		
+		//Finalizamos el proceso con TA SUBMIT ORDER
+		driver.findElement(By.name("ta_submit_order")).click();
+	}
+	
+	public List<WebElement> traerElementoColumna(WebElement wBody, int iColumn) {
+		List<WebElement> wRows = wBody.findElements(By.tagName("tr"));
+		List<WebElement> wColumn = new ArrayList<WebElement>();
+		for(WebElement wAux : wRows) {
+			List<WebElement> wTd = wAux.findElements(By.tagName("td"));
+			wColumn.add(wTd.get(iColumn));
+		}
+
+		return wColumn;
+	}
+	
+	public void suspencionPorSiniestro(String sCuenta, String sPlan) throws InterruptedException {
+		OM oOM = new OM(driver);
+		oOM.Gestion_Alta_De_Linea(sCuenta, sPlan);
+		
+		oOM.irAChangeToOrder();
+		
+		sleep(7000);
+		DateFormat dateFormat = new SimpleDateFormat("MM-dd-yyyy");
+		driver.findElement(By.id("RequestDate")).sendKeys(dateFormat.format(oOM.fechaAvanzada()));
+		driver.findElement(By.cssSelector(".form-control.btn.btn-primary.ng-binding")).click();
+		
+		sleep(10000);
+		List<WebElement> wTopRightButtons = driver.findElements(By.id("-import-btn"));
+		for (WebElement wAux : wTopRightButtons){
+			if (wAux.getAttribute("title").equalsIgnoreCase("View Record")) {
+				wAux.click();
+			}
+		}
+		
+		driver.findElement(By.id("topButtonRow")).findElement(By.name("edit")).click();
+		
+		Select sSelectDropdown = new Select(driver.findElement(By.id("00Nc0000002IvyM")));
+		sSelectDropdown.selectByVisibleText("Suspension");
+		
+		driver.findElement(By.id("topButtonRow")).findElement(By.name("save")).click();
+		
+		oOM.SuspenderProductos();
+		
+		driver.findElement(By.id("Order_ileinner")).click();
+		
+		WebElement wTopButtonRow = driver.findElement(By.id("topButtonRow"));
+		List<WebElement> wTopButtonRowButtons = wTopButtonRow.findElements(By.tagName("input"));
+		for (WebElement wAux : wTopButtonRowButtons) {
+			if (wAux.getAttribute("value").equalsIgnoreCase("TA Submit Order")) {
+				wAux.click();
+			}
+		}
+	}
 }

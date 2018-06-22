@@ -1,7 +1,10 @@
 package Tests;
 
+import static org.testng.Assert.ARRAY_MISMATCH_TEMPLATE;
+
 import java.awt.Toolkit;
 import java.util.Date;
+import java.util.List;
 import java.util.concurrent.TimeUnit;
 
 import org.openqa.selenium.By;
@@ -404,18 +407,18 @@ public class OM_Flujos_Ruben extends TestBase {
 		pageOm.Gestion_Alta_De_Linea(accountName,plan);
 	}
 	
-	@Test(groups = "OM")
-	public void CambioDeSimCardTest() throws InterruptedException {
-		pageOm.Cambio_De_SimCard();
-	}
+//	@Test(groups = "OM")
+//	public void CambioDeSimCardTest() throws InterruptedException {
+//		pageOm.Cambio_De_SimCard();
+//	}
 		
-	@Test(groups = "OM")
-	public void CambioDeNumeroTest() throws InterruptedException {
-//		String accountName = "Buda OM";
-//		String plan = "Plan Prepago Nacional";
-//		pageOm.Gestion_Alta_De_Linea(accountName,plan);
-		pageOm.Gestion_Cambio_de_Numero("RubenOM-Activated");
-	}
+//	@Test(groups = "OM")
+//	public void CambioDeNumeroTest() throws InterruptedException {
+////		String accountName = "Buda OM";
+////		String plan = "Plan Prepago Nacional";
+////		pageOm.Gestion_Alta_De_Linea(accountName,plan);
+//		pageOm.Gestion_Cambio_de_Numero("RubenOM-Activated");
+//	}
 	
 	@Test(groups= "OM")
 	public void deleteOrdersNotActivated() { 
@@ -436,6 +439,61 @@ public class OM_Flujos_Ruben extends TestBase {
 		} catch (NoSuchElementException e) {
 			System.out.println("Date OK");
 		};
+	}
+	
+	
+	@Test(groups = "OM")
+	public void TS_CRM_OM_Gestion_Baja_De_Servicios() {
+		pageOm.selectVistaByVisibleText("RubenOM-Activated");
+		sleep(3000);
+		pageOm.getAccountList().get(0).click();
+		sleep(3000);
+		pageOm.irAChangeToOrder();
+		sleep(10000);
+		// Ingresar Fecha Futura
+//		driver.findElement(By.id("RequestDate")).sendKeys(pageOm.getFechaAvanzadaFormateada_MM_dd_yyyy());
+		driver.findElement(By.id("RequestDate")).sendKeys("07-11-2018");
+		sleep(1000);
+		pageOm.getCreatingFutureDateOrdersNextButton().click();
+		sleep(3000);
+		pageOm.checkFutureDateRestriction();
+		pageOm.
+		sleep(30000);
+		pageOm.getPlanButton().click();
+		sleep(1000);
+		pageOm.getServiciosBasicosGeneralMovil().click();
+		sleep(6000);
+		pageOm.getSBGMContestador().click();
+		sleep(6000);
+		pageOm.getSBGMDDI().click();
+		sleep(1000);
+		List<WebElement> addToCart = driver.findElements(By.xpath("//*[contains(@class,'cpq-item-base-product')]//*[contains(text(),'Add to Cart')]"));
+		
+		
+		//cpq-item-base-product-name-field cpq-item-text-value cpq-item-product-title
+		//cpq-item-no-children
+		int i = 1;
+		for(WebElement a: addToCart) {
+			if(a.isDisplayed()) {
+				a.click();
+				sleep(6000);
+				System.out.println("Item #" + i + " clickeado");
+			}
+			else {
+				System.out.println("Item #" + i + " no está visible");
+			}
+			i++;
+			
+		}
+		
+		
+		
+		//*[text() = 'Add to Cart']
+		//*[contains(text(),'Add to Cart')].
+		//*[contains(@class,"cpq-item-base-product")]//*[contains(text(),'Add to Cart')]
+		//div[contains(concat(' ',normalize-space(@class),' '),' foo ')]
+//		List<WebElement> servicesFirstLevel = driver.findElements(By.cssSelector(".cpq-item-product-child-level-1.cpq-item-child-product-name-wrapper"));
+		
 	}
 
 }
