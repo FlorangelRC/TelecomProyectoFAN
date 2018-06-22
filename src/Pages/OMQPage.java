@@ -1,9 +1,12 @@
 package Pages;
 import static org.testng.Assert.assertTrue;
 
+import java.net.MalformedURLException;
+import java.net.URL;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.Random;
 
@@ -214,37 +217,86 @@ public class OMQPage extends BasePage {
 	}
 
 	
-	public void agregarPack(String servicio) {
-		sleep(12000);
+	public void agregarPack(String servicio1, String servicio2,String Pack1,String Pack2,String Pack3) {
+		//sleep(15000);
 		driver.findElement(By.cssSelector(".slds-button.cpq-item-has-children")).click();
-		List<WebElement> list1 = driver.findElements(By.xpath("//*[@class='cpq-item-product-child-level-1 cpq-item-child-product-name-wrapper']//*[@class='slds-button slds-button_icon-small']"));
-		sleep(8000);
-		list1. get(3).click();
-		sleep(8000);
+		List<WebElement> NomPack = driver.findElements(By.xpath("//*[@class='cpq-item-product-child-level-1 cpq-item-child-product-name-wrapper']"));
+		//List<WebElement> BotPack = driver.findElements(By.xpath("//*[@class='cpq-item-product-child-level-1 cpq-item-child-product-name-wrapper']//*[@class='slds-button slds-button_icon-small']"));
 		
-		List<WebElement> pDatos = driver.findElements(By.xpath("//*[@class='cpq-item-product-child-level-2 cpq-item-child-product-name-wrapper']//*[@class='slds-button slds-button_icon-small']"));
-		((JavascriptExecutor)driver).executeScript("window.scrollTo(0,"+driver.findElement(By.xpath("//*[@class='cpq-item-product-child-level-2 cpq-item-child-product-name-wrapper']//*[@class='slds-button slds-button_icon-small']")).getLocation().y+")");
-		sleep(8000);
-		pDatos.get(2).click();
-		 sleep(8000);
+			// for (int i = 0; i < NomPack.size(); i++) {
+		for(WebElement a: NomPack) {
+			System.out.print(a.getText().toLowerCase());
+			System.out.println(" : "+servicio1.toLowerCase());
+					if (a.getText().toLowerCase().contains(servicio1.toLowerCase())) {
+						System.out.println(servicio1);
+						a.findElement(By.tagName("button")).click();
+						sleep(5000);
+						break;
+					}
+				
+		sleep(12000);
+			 }
+		
+		List<WebElement> subPack = driver.findElements(By.xpath("//*[@class='cpq-item-product-child-level-2 cpq-item-child-product-name-wrapper']"));
+		//List<WebElement> Btnsubpack = driver.findElements(By.xpath("//*[@class='cpq-item-product-child-level-2 cpq-item-child-product-name-wrapper']//*[@class='slds-button slds-button_icon-small']"));
+		//((JavascriptExecutor)driver).executeScript("window.scrollTo(0,"+driver.findElement(By.xpath("//*[@class='cpq-item-product-child-level-2 cpq-item-child-product-name-wrapper']//*[@class='slds-button slds-button_icon-small']")).getLocation().y+")");
+		for(WebElement a: subPack) {
+			System.out.print(a.getText().toLowerCase());
+			System.out.println(" : "+servicio2.toLowerCase());
+					if (a.getText().toLowerCase().contains(servicio2.toLowerCase())) {
+						System.out.println(servicio2);
+						  a.findElement(By.tagName("button")).click();
+						   sleep(5000);
+						     break;
+					}
+				}
+	
+
+		
+//		List<WebElement> list1 = driver.findElements(By.xpath("//*[@class='cpq-item-product-child-level-1 cpq-item-child-product-name-wrapper']//*[@class='slds-button slds-button_icon-small']"));
+//		sleep(10000);
+//		list1. get(4).click();
+//		sleep(10000);
+//		
+//		List<WebElement> pDatos = driver.findElements(By.xpath("//*[@class='cpq-item-product-child-level-2 cpq-item-child-product-name-wrapper']//*[@class='slds-button slds-button_icon-small']"));
+//		((JavascriptExecutor)driver).executeScript("window.scrollTo(0,"+driver.findElement(By.xpath("//*[@class='cpq-item-product-child-level-2 cpq-item-child-product-name-wrapper']//*[@class='slds-button slds-button_icon-small']")).getLocation().y+")");
+//		sleep(10000);
+//		pDatos.get(2).click();
+//		sleep(10000);
 		
 		 driver.switchTo().defaultContent();
 		 //subtablas
-		// WebElement tabla=driver.findElement(By.xpath("//*[@class='cpq-item-product-child-level-3 ng-not-empty ng-valid']"));
 		 List<WebElement> Pack = driver.findElements( By.xpath("//*[@class='cpq-item-product-child-level-3 ng-not-empty ng-valid']//*[@class='cpq-item-no-children']"));
 		 List<WebElement> Agregar=driver.findElements(By.xpath("//*[@class='cpq-item-product-child-level-3 ng-not-empty ng-valid']//*[@class='slds-button slds-button_neutral']"));
 		 if (Pack.size() == Agregar.size()) {
 		 for (int i = 0; i < Pack.size(); i++) {
-				if (Pack.get(i).getText().equals(servicio)) {
-					System.out.println(servicio);
+				if (Pack.get(i).getText().equals(Pack1)) {
+					System.out.println(Pack1);
 					Agregar.get(i).click();
+					sleep(5000);
+					
+				}
+				if (Pack.get(i).getText().equals(Pack2)) {
+					System.out.println(Pack2);
+					Agregar.get(i).click();
+					sleep(5000);
+					
+				}
+				if (Pack.get(i).getText().equals(Pack3)) {
+					System.out.println(Pack3);
+					Agregar.get(i).click();
+					sleep(5000);
 					break;
 				}
-			}
-		}	
-				sleep(12000);
-	}
-public void sincroProducto(String Products){
+		 	}
+		 }	
+	  }
+	
+		
+
+			
+public void sincroProducto(String Products) {
+	
 	boolean a= false;
 	driver.switchTo().defaultContent();
 	((JavascriptExecutor)driver).executeScript("window.scrollTo(0,"+driver.findElement(By.xpath("//*[@id='bodyCell']/div[6]/div[1]/div/div[2]/table")).getLocation().y+")");
@@ -254,6 +306,7 @@ public void sincroProducto(String Products){
 			a=true;
 			 System.out.println(prod.get(i).getText());
 			 prod.get(i).click();
+				sleep(5000);
 			 break;
 	}
 }
@@ -262,11 +315,11 @@ public void sincroProducto(String Products){
 		sincronizar.click();
 		driver.switchTo().defaultContent();
 		driver.findElement(By.xpath("//*[@id=\"bodyCell\"]/div/div/div[1]/div/form/div[3]/button")).click();
-		//driver.switchTo().defaultContent();
-		//driver.findElement(By.xpath("//*[@id=\"bodyCell\"]/div/div/div[1]/div/form/div[3]/button")).click();
+		sleep(12000);
 		
 	
 }
+
 			
 		
 
