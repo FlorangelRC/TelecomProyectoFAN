@@ -1224,4 +1224,54 @@ public void deleteOrdersNoActivated(String Vista) {
 		//Finalizamos el proceso con TA SUBMIT ORDER
 		driver.findElement(By.name("ta_submit_order")).click();
 	}
+	
+	public List<WebElement> traerElementoColumna(WebElement wBody, int iColumn) {
+		List<WebElement> wRows = wBody.findElements(By.tagName("tr"));
+		List<WebElement> wColumn = new ArrayList<WebElement>();
+		for(WebElement wAux : wRows) {
+			List<WebElement> wTd = wAux.findElements(By.tagName("td"));
+			wColumn.add(wTd.get(iColumn));
+		}
+
+		return wColumn;
+	}
+	
+	public void suspencionPorSiniestro(String sCuenta, String sPlan) throws InterruptedException {
+		OM oOM = new OM(driver);
+		oOM.Gestion_Alta_De_Linea(sCuenta, sPlan);
+		
+		oOM.irAChangeToOrder();
+		
+		sleep(7000);
+		DateFormat dateFormat = new SimpleDateFormat("MM-dd-yyyy");
+		driver.findElement(By.id("RequestDate")).sendKeys(dateFormat.format(oOM.fechaAvanzada()));
+		driver.findElement(By.cssSelector(".form-control.btn.btn-primary.ng-binding")).click();
+		
+		sleep(10000);
+		List<WebElement> wTopRightButtons = driver.findElements(By.id("-import-btn"));
+		for (WebElement wAux : wTopRightButtons){
+			if (wAux.getAttribute("title").equalsIgnoreCase("View Record")) {
+				wAux.click();
+			}
+		}
+		
+		driver.findElement(By.id("topButtonRow")).findElement(By.name("edit")).click();
+		
+		Select sSelectDropdown = new Select(driver.findElement(By.id("00Nc0000002IvyM")));
+		sSelectDropdown.selectByVisibleText("Suspension");
+		
+		driver.findElement(By.id("topButtonRow")).findElement(By.name("save")).click();
+		
+		oOM.SuspenderProductos();
+		
+		driver.findElement(By.id("Order_ileinner")).click();
+		
+		WebElement wTopButtonRow = driver.findElement(By.id("topButtonRow"));
+		List<WebElement> wTopButtonRowButtons = wTopButtonRow.findElements(By.tagName("input"));
+		for (WebElement wAux : wTopButtonRowButtons) {
+			if (wAux.getAttribute("value").equalsIgnoreCase("TA Submit Order")) {
+				wAux.click();
+			}
+		}
+	}
 }
