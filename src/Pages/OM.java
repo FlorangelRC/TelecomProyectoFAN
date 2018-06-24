@@ -217,6 +217,7 @@ public class OM {
 	}
 
 	public void primeraOrden() {
+		
 		WebElement fila = driver.findElement(By.cssSelector(".dataRow.even.first"));
 		WebElement nro = fila.findElement(By.tagName("th")).findElement(By.tagName("a"));
 		nro.click();
@@ -272,6 +273,7 @@ public class OM {
 			Thread.currentThread().interrupt();
 		}
 		// crearCuentaOM(Cuenta);
+		System.out.println(Cuenta);
 		// buscarCuentaOMenOrden(Cuenta);
 		driver.findElement(By.id("accid")).sendKeys(Cuenta);
 		driver.findElement(By.className("dateFormat")).click();
@@ -765,25 +767,25 @@ public void deleteOrdersNoActivated(String Vista) {
 		driver.findElement(By.name("save")).click();
 		sleep(4000);
 	}
+	
+	
 	public void Cambio_De_SimCard(String fecha) throws InterruptedException {
 		sleep(5000);
 		OM pageOm=new OM(driver);
 		OMQPage OM=new OMQPage (driver);
 		//Mientras, seleccion de vista
-		pageOm.selectVistaByVisibleText("LineasFlor");
+		/*pageOm.selectVistaByVisibleText("LineasFlor");
 		sleep(3000);
 		//Selecciona la primera cuenta de la lista en la vista seleccionada
 		WebElement primeraCuenta=driver.findElement(By.cssSelector(".x-grid3-col.x-grid3-cell.x-grid3-td-SALES_ACCOUNT_NAME"));
-		primeraCuenta.findElement(By.tagName("div")).findElement(By.tagName("a")).click();
+		primeraCuenta.findElement(By.tagName("div")).findElement(By.tagName("a")).click();*/
 		sleep(5000);
 		pageOm.irAChangeToOrder();	
 		sleep(20000);
-		Accounts accountPage = new Accounts(driver);
 		driver.switchTo().defaultContent(); 
 		sleep(4000);
-        /*DateFormat dateFormat = new SimpleDateFormat("MM-dd-yyyy");
-		driver.findElement(By.id("RequestDate")).sendKeys(dateFormat.format(pageOm.fechaAvanzada()));*/
-		driver.findElement(By.id("RequestDate")).sendKeys(fecha);
+        DateFormat dateFormat = new SimpleDateFormat("MM-dd-yyyy");
+		driver.findElement(By.id("RequestDate")).sendKeys(dateFormat.format(pageOm.fechaAvanzada()));
 		driver.findElement(By.cssSelector(".form-control.btn.btn-primary.ng-binding")).click();
 		sleep(12000);
 		OM.SimCard();
@@ -791,14 +793,50 @@ public void deleteOrdersNoActivated(String Vista) {
 		sleep(8000);
 		pageOm.agregarGestion("Cambio de SIM");
 		sleep(5000);
-		/*driver.findElement(By.name("ta_submit_order")).click();
-		sleep(35000);
-		pageOm.cambiarVentanaNavegador(1);
-		sleep(2000);
-		driver.findElement(By.id("idlist")).click();
+		driver.findElement(By.name("ta_submit_order")).click();
+		sleep(45000);
+		try {
+			pageOm.cambiarVentanaNavegador(1);
+			sleep(2000);
+			driver.findElement(By.id("idlist")).click();
+			sleep(5000);
+			pageOm.cambiarVentanaNavegador(0);
+		}catch(java.lang.IndexOutOfBoundsException ex1) {}
+		sleep(12000);
+		pageOm.completarFlujoOrquestacion();
 		sleep(5000);
-		pageOm.cambiarVentanaNavegador(0);
-		sleep(12000);*/
+	}
+	
+	public void Cambio_De_SimCard_Parametros(String ICCID, String IMSI, String KI) throws InterruptedException {
+		sleep(5000);
+		OM pageOm=new OM(driver);
+		OMQPage OM=new OMQPage (driver);
+		sleep(5000);
+		pageOm.irAChangeToOrder();	
+		sleep(20000);
+		driver.switchTo().defaultContent(); 
+		sleep(4000);
+        DateFormat dateFormat = new SimpleDateFormat("MM-dd-yyyy");
+		driver.findElement(By.id("RequestDate")).sendKeys(dateFormat.format(pageOm.fechaAvanzada()));
+		driver.findElement(By.cssSelector(".form-control.btn.btn-primary.ng-binding")).click();
+		sleep(12000);
+		SimCard(ICCID, IMSI, KI);
+		driver.findElement(By.id("-import-btn")).click();
+		sleep(8000);
+		pageOm.agregarGestion("Cambio de SIM");
+		sleep(5000);
+		driver.findElement(By.name("ta_submit_order")).click();
+		sleep(45000);
+		try {
+			pageOm.cambiarVentanaNavegador(1);
+			sleep(2000);
+			driver.findElement(By.id("idlist")).click();
+			sleep(5000);
+			pageOm.cambiarVentanaNavegador(0);
+		}catch(java.lang.IndexOutOfBoundsException ex1) {}
+		sleep(12000);
+		pageOm.completarFlujoOrquestacion();
+		sleep(5000);
 	}
 	
 	
@@ -816,7 +854,7 @@ public void deleteOrdersNoActivated(String Vista) {
 		primeraCuenta.findElement(By.tagName("div")).findElement(By.tagName("a")).click();*/
 		sleep(5000);
 		irAChangeToOrder();	
-		sleep(10000);
+		sleep(14000);
 		Accounts accountPage = new Accounts(driver);
 		driver.switchTo().defaultContent(); 
         DateFormat dateFormat = new SimpleDateFormat("MM-dd-yyyy");
@@ -833,6 +871,11 @@ public void deleteOrdersNoActivated(String Vista) {
 		driver.findElement(By.id("accid_ileinner")).findElement(By.tagName("a")).click();
 		sleep(12000);
 		irAChangeToOrder();
+		driver.switchTo().defaultContent(); 
+		sleep(4000);
+        driver.findElement(By.id("RequestDate")).sendKeys(dateFormat.format(pageOm.fechaAvanzada()));
+		driver.findElement(By.cssSelector(".form-control.btn.btn-primary.ng-binding")).click();
+		sleep(12000);
 		OM.SimCard();
 		driver.findElement(By.id("-import-btn")).click();
 		sleep(8000);
@@ -852,6 +895,53 @@ public void deleteOrdersNoActivated(String Vista) {
 		sleep(5000);
 	}
 	
+	public void Cambio_De_SimCard_Por_Siniestro_Parametros(String Iccid, String Imsi, String Ki) throws InterruptedException {
+		//TS_CRM_OM_Gestion_Alta_De_Linea();
+		OM pageOm=new OM(driver);
+		OMQPage OM=new OMQPage (driver);
+		sleep(5000);
+		irAChangeToOrder();	
+		sleep(14000);
+		Accounts accountPage = new Accounts(driver);
+		driver.switchTo().defaultContent(); 
+        DateFormat dateFormat = new SimpleDateFormat("MM-dd-yyyy");
+		driver.findElement(By.id("RequestDate")).sendKeys(dateFormat.format(pageOm.fechaAvanzada()));
+		driver.findElement(By.cssSelector(".form-control.btn.btn-primary.ng-binding")).click();
+		sleep(18000);
+		driver.findElement(By.id("-import-btn")).click();
+		sleep(8000);
+		pageOm.agregarGestion("Suspension");
+		sleep(5000);
+		SuspenderProductos();
+		sleep(5000);
+		driver.findElement(By.id("accid_ileinner")).findElement(By.tagName("a")).click();
+		sleep(12000);
+		irAChangeToOrder();
+		driver.switchTo().defaultContent(); 
+		sleep(4000);
+        driver.findElement(By.id("RequestDate")).sendKeys(dateFormat.format(pageOm.fechaAvanzada()));
+		driver.findElement(By.cssSelector(".form-control.btn.btn-primary.ng-binding")).click();
+		sleep(12000);
+		SimCard(Iccid, Imsi, Ki);
+		driver.findElement(By.id("-import-btn")).click();
+		sleep(8000);
+		pageOm.agregarGestion("Cambio de SIM por siniestro");
+		sleep(5000);
+		driver.findElement(By.name("ta_submit_order")).click();
+		sleep(45000);
+		try {
+			pageOm.cambiarVentanaNavegador(1);
+			sleep(2000);
+			driver.findElement(By.id("idlist")).click();
+			sleep(5000);
+			pageOm.cambiarVentanaNavegador(0);
+		}catch(java.lang.IndexOutOfBoundsException ex1) {}
+		sleep(12000);
+		pageOm.completarFlujoOrquestacion();
+		sleep(5000);
+	}
+	
+	
 	public void Gestion_Alta_De_Linea(String Cuenta, String Plan) throws InterruptedException {
 		OM pageOm=new OM(driver);
 		OMQPage OM=new OMQPage (driver);
@@ -865,12 +955,52 @@ public void deleteOrdersNoActivated(String Vista) {
 		OM.configuracion();
 		sleep(5000);
 		driver.findElement(By.name("ta_submit_order")).click();
+		sleep(15000);
+		try {System.out.println(driver.switchTo().alert().getText());
+			driver.switchTo().alert().accept();
+			driver.switchTo().alert().dismiss();
+			driver.switchTo().defaultContent();
+			driver.findElement(By.name("ta_submit_order")).click();
+		} catch (org.openqa.selenium.NoAlertPresentException e) {
+			System.out.println(driver.switchTo().alert().getText());
+			driver.switchTo().defaultContent();
+		}
 		sleep(45000);
 		pageOm.cambiarVentanaNavegador(1);
 		sleep(2000);
 		driver.findElement(By.id("idlist")).click();
 		sleep(5000);
 		pageOm.cambiarVentanaNavegador(0);
+		sleep(12000);
+		pageOm.completarFlujoOrquestacion();
+		sleep(5000);
+		driver.findElement(By.id("accid_ileinner")).findElement(By.tagName("a")).click();
+		sleep(10000);
+		//pageOm.irAChangeToOrder();
+		
+	}
+	
+	public void Gestion_Alta_De_Linea_Parametros(String Cuenta, String Plan, String Linea, String ICCID, String IMSI, String KI) throws InterruptedException {
+		OM pageOm=new OM(driver);
+		OMQPage OM=new OMQPage (driver);
+		pageOm.crearOrden(Cuenta);
+		assertTrue(driver.findElement(By.cssSelector(".noSecondHeader.pageType")).isDisplayed());
+		pageOm.agregarGestion("Venta");
+		sleep(2000);
+		OM.getCPQ().click();
+		sleep(5000);
+		OM.colocarPlan(Plan);
+		configuracion(Linea, ICCID, IMSI, KI);
+		sleep(5000);
+		driver.findElement(By.name("ta_submit_order")).click();
+		sleep(45000);
+		try {
+			pageOm.cambiarVentanaNavegador(1);
+			sleep(2000);
+			driver.findElement(By.id("idlist")).click();
+			sleep(5000);
+			pageOm.cambiarVentanaNavegador(0);
+		}catch(java.lang.IndexOutOfBoundsException ex1) {}
 		sleep(12000);
 		pageOm.completarFlujoOrquestacion();
 		sleep(5000);
@@ -1035,7 +1165,22 @@ public void deleteOrdersNoActivated(String Vista) {
 			//click en Ordenes
 			pageOm.clickOnListTabs("Pedidos");
 			sleep(5000);
+			selectVistaByVisibleText("Todos los pedidos");
 			pageOm.primeraOrden();
+			pageOm.agregarGestion("Nominacion");
+			sleep(5000);
+			driver.findElement(By.name("ta_submit_order")).click();
+			sleep(45000);
+			try {
+				pageOm.cambiarVentanaNavegador(1);
+				sleep(2000);
+				driver.findElement(By.id("idlist")).click();
+				sleep(5000);
+				pageOm.cambiarVentanaNavegador(0);
+			}catch(java.lang.IndexOutOfBoundsException ex1) {}
+			sleep(12000);
+			pageOm.completarFlujoOrquestacion();
+			sleep(5000);
 		}
 		
 		public void Gestion_Alta_De_Servicio(String Vista, String Servicio) throws InterruptedException {
@@ -1104,6 +1249,7 @@ public void deleteOrdersNoActivated(String Vista) {
 		
 		public void SuspenderProductos() {
 			int i=0;
+			sleep(3000);
 			CustomerCare cc = new CustomerCare(driver);
 			List<WebElement> Productos = new ArrayList<WebElement>();
 			do {
@@ -1183,6 +1329,77 @@ public void deleteOrdersNoActivated(String Vista) {
 			driver.findElement(By.id("-import-btn")).click();
 			sleep(8000);
 			pageOm.agregarGestion("Cambio de SIM");
+			sleep(5000);
+		}
+		
+		public void SimCard(String ICCID, String IMSI, String KI) {
+			sleep(8000);
+			driver.findElement(By.cssSelector(".slds-button.cpq-item-has-children")).click();
+			sleep(3000);
+			driver.findElement(By.xpath(".//*[@id='tab-default-1']/div[1]/ng-include/div/div/div/div[4]/div[2]/div/ng-include/div/div[2]/ng-include/div/div[1]/div/div[2]/div[11]")).click();
+			List<WebElement> lista = driver.findElements(By.cssSelector(".slds-dropdown__list.cpq-item-actions-dropdown__list"));
+			//System.out.println(lista.size());
+			lista.get(1).click();
+			sleep(3000);
+			List<WebElement> todos = driver.findElements(By.cssSelector(".slds-form_stacked.ng-pristine.ng-untouched.ng-valid.vlocity-dynamic-form.ng-valid-required.ng-valid-step")).get(1).findElements(By.className("slds-form-element"));
+			 ((JavascriptExecutor)driver).executeScript("window.scrollTo(0,"+driver.findElement(By.className("slds-section")).getLocation().y+" )");
+			 for (WebElement uno : todos) {
+				 if(uno.findElement(By.tagName("label")).getText().equalsIgnoreCase("ICCID")) {
+					 uno.click();
+					 uno.findElement(By.tagName("input")).clear();
+					 uno.findElement(By.tagName("input")).sendKeys(ICCID);
+				 }
+				 if(uno.findElement(By.tagName("label")).getText().equalsIgnoreCase("IMSI")) {
+					 uno.click();
+					 uno.findElement(By.tagName("input")).clear();
+					 uno.findElement(By.tagName("input")).sendKeys(IMSI);
+				 }
+				 if(uno.findElement(By.tagName("label")).getText().equalsIgnoreCase("KI")) {
+					 uno.click();
+					 uno.findElement(By.tagName("input")).clear();
+					 uno.findElement(By.tagName("input")).sendKeys(KI);
+					 uno.findElement(By.tagName("input")).submit();
+					 break;
+				 }
+				 
+			 }
+			
+			sleep(5000);
+			//driver.switchTo().defaultContent();
+			driver.findElement(By.xpath("/html/body/div[1]/div[1]/ng-include/div/div[2]/div[2]/div[3]/div/div/ng-include/div/div[1]/div/button")).click();
+			sleep(5000);
+			 
+			
+		}
+		
+		public void configuracion(String Linea, String ICCID, String IMSI, String KI) {
+			sleep(2000);
+			driver.switchTo().defaultContent();
+			sleep(4000);
+			driver.findElement(By.xpath(".//*[@id='tab-default-1']/div/ng-include//div[10]//button")).click();
+			sleep(2000);
+			List<WebElement> list = driver.findElements(By.cssSelector(".slds-dropdown__item.cpq-item-actions-dropdown__item")); 
+			//System.out.println(list.size());
+			list.get(2).click();
+			agregarNumerodeLinea(Linea);  
+			SimCard(ICCID, IMSI, KI);
+			driver.findElement(By.id("-import-btn")).click();
+			sleep(5000);
+				
+							
+			}
+			
+				
+		public void agregarNumerodeLinea(String Linea) { 
+			WebElement NumerodeLinea = driver.findElement(By.xpath("//*[@id=\"js-cpq-product-cart-config-form\"]/div[1]/div/form/div[2]/div[1]/input"));
+			driver.switchTo().defaultContent();
+			NumerodeLinea.click();
+			//NumerodeLinea.sendKeys("3413103661");
+			NumerodeLinea.sendKeys(Linea);
+			NumerodeLinea.submit();
+			sleep(8000);
+			//driver.switchTo().defaultContent();
+			driver.findElement(By.xpath("/html/body/div[1]/div[1]/ng-include/div/div[2]/div[2]/div[3]/div/div/ng-include/div/div[1]/div/button")).click();
 			sleep(5000);
 		}
 	    
