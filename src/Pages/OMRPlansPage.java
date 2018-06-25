@@ -56,7 +56,8 @@ public class OMRPlansPage extends BasePage {
 		fluentWait.withTimeout(45, TimeUnit.SECONDS)
 			.pollingEvery(3, TimeUnit.SECONDS)
 			.ignoring(org.openqa.selenium.NoSuchElementException.class)
-			.ignoring(org.openqa.selenium.ElementNotVisibleException.class);
+			.ignoring(org.openqa.selenium.ElementNotVisibleException.class)
+			;
 	}
 		
 	public WebElement getPlanButton() {
@@ -75,12 +76,12 @@ public class OMRPlansPage extends BasePage {
 	}
 
 	public WebElement getSBGMContestador() {
-		fluentWait.until(ExpectedConditions.elementToBeClickable(sbgmContestador));
+		fluentWait.until(ExpectedConditions.visibilityOf(sbgmContestador));
 		return sbgmContestador;
 	}
 
 	public WebElement getSBGMDDI() {
-		fluentWait.until(ExpectedConditions.elementToBeClickable(sbgmDDI));
+		fluentWait.until(ExpectedConditions.visibilityOf(sbgmDDI));
 		return sbgmDDI;
 	}
 
@@ -116,7 +117,7 @@ public class OMRPlansPage extends BasePage {
 	}
 	
 	public void addServiceToCartByName(String service) {
-		WebElement addToCartButton = fluentWait.until(ExpectedConditions.elementToBeClickable(findAddToCartButtonByServiceName(service)));
+		WebElement addToCartButton = fluentWait.until(ExpectedConditions.visibilityOf(findAddToCartButtonByServiceName(service)));
 		addToCartButton.click();
 	}
 		
@@ -125,6 +126,8 @@ public class OMRPlansPage extends BasePage {
 		showActionsButton.click();
 		sleep(1000);
 		WebElement deleteServiceButton = showActionsButton.findElement(By.xpath("//../following-sibling::*//span[contains(.,'Delete')]"));
+//		fluentWait.until(ExpectedConditions.elementToBeClickable(deleteServiceButton));
+		sleep(5000);
 		deleteServiceButton.click();
 		sleep(1000);
 		WebElement confirmDeleteButton = driver.findElement(By.cssSelector(".slds-button.slds-button--destructive"));
