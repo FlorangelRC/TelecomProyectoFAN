@@ -405,7 +405,7 @@ public class OM_Flujos_Ruben extends TestBase {
 	
 	@Test(groups = "OM")
 	public void AltaLineaTest() throws InterruptedException{
-		String accountName = "Buda OM";
+		String accountName = "RubenOM";
 		String plan = "Plan Prepago Nacional";
 		pageOm.Gestion_Alta_De_Linea(accountName,plan);
 	}
@@ -510,35 +510,36 @@ public class OM_Flujos_Ruben extends TestBase {
 
 	@Test(groups = "OM")
 	public void TS_CRM_OM_Gestion_Baja_De_Servicios() {
-		int minimalWait = 2000, 
+		int minimalWait = 3000, 
 				shortWait = minimalWait * 2,
 				mediumWait = shortWait * 2,
 				longWait = mediumWait * 2,
 				stupidLongWait = 60000;
 		pageOm.selectVistaByVisibleText("RubenOM-Activated");
 		sleep(shortWait);
-		pageOm.getAccountList().get(0).click();
+		pageOm.getAccountList().get(1).click();
 		sleep(shortWait);
 		pageOm.irAChangeToOrder();
 		sleep(longWait);
 		// Ingresar Fecha Futura
 //		driver.findElement(By.id("RequestDate")).sendKeys(pageOm.getFechaAvanzadaFormateada_MM_dd_yyyy());
-		driver.findElement(By.id("RequestDate")).sendKeys("07-22-2018");
+		driver.findElement(By.id("RequestDate")).sendKeys("07-29-2018");
 		sleep(minimalWait);
 		pageOm.getCreatingFutureDateOrdersNextButton().click();
 		sleep(shortWait);
 		pageOm.checkFutureDateRestriction();
-		sleep(stupidLongWait);
+//		sleep(stupidLongWait);
 		omPlansAndServicesPage.getPlanButton().click();
-		sleep(minimalWait);
+//		sleep(minimalWait);
 		omPlansAndServicesPage.getServiciosBasicosGeneralMovil().click();
-		sleep(mediumWait);
+//		sleep(mediumWait);
 		omPlansAndServicesPage.getSBGMContestador().click();
-		sleep(mediumWait);
+//		sleep(mediumWait);
 		omPlansAndServicesPage.getSBGMDDI().click();
-		sleep(mediumWait);
+//		sleep(mediumWait);
 		omPlansAndServicesPage.addServiceToCartByName("Llamada en espera");
-		omPlansAndServicesPage.addServiceToCartByName("Tripartita");
+//		sleep(mediumWait);
+		omPlansAndServicesPage.deleteService("Llamada en espera");
 		
 	}
 	

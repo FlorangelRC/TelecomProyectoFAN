@@ -1,13 +1,18 @@
 package Pages;
 
+import java.util.concurrent.TimeUnit;
+
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.FluentWait;
 
 public class OMRPlansPage extends BasePage {
 	final WebDriver driver;
+	static FluentWait<WebDriver> fluentWait;
 
 	/* ELEMENTS */
 	@FindBy(css = ".slds-button.cpq-item-has-children")
@@ -47,60 +52,81 @@ public class OMRPlansPage extends BasePage {
 	public OMRPlansPage(WebDriver driver) {
 		this.driver = driver;
 		PageFactory.initElements(driver, this);
+		fluentWait = new FluentWait<WebDriver>(driver);
+		fluentWait.withTimeout(45, TimeUnit.SECONDS)
+			.pollingEvery(3, TimeUnit.SECONDS)
+			.ignoring(org.openqa.selenium.NoSuchElementException.class)
+			.ignoring(org.openqa.selenium.ElementNotVisibleException.class);
 	}
 		
 	public WebElement getPlanButton() {
+		fluentWait.until(ExpectedConditions.elementToBeClickable(planButton));
 		return planButton;
 	}
 	
 	public WebElement getServiciosTelefoniaMovil() {
+		fluentWait.until(ExpectedConditions.elementToBeClickable(serviciosTelefoniaMovil));
 		return serviciosTelefoniaMovil;
 	}
 
 	public WebElement getServiciosBasicosGeneralMovil() {
+		fluentWait.until(ExpectedConditions.elementToBeClickable(serviciosBasicosGeneralMovil));
 		return serviciosBasicosGeneralMovil;
 	}
 
 	public WebElement getSBGMContestador() {
+		fluentWait.until(ExpectedConditions.elementToBeClickable(sbgmContestador));
 		return sbgmContestador;
 	}
 
 	public WebElement getSBGMDDI() {
+		fluentWait.until(ExpectedConditions.elementToBeClickable(sbgmDDI));
 		return sbgmDDI;
 	}
 
 	public WebElement getServiciosInternetPorDia() {
+		fluentWait.until(ExpectedConditions.elementToBeClickable(serviciosInternetPorDia));
 		return serviciosInternetPorDia;
 	}
 
 	public WebElement getFriendsAndFamily() {
+		fluentWait.until(ExpectedConditions.elementToBeClickable(friendsAndFamily));
 		return friendsAndFamily;
 	}
 
 	public WebElement getPacksOpcionales() {
+		fluentWait.until(ExpectedConditions.elementToBeClickable(packsOpcionales));
 		return packsOpcionales;
 	}
 
 	public WebElement getRenovacionDeCuota() {
+		fluentWait.until(ExpectedConditions.elementToBeClickable(renovacionDeCuota));
 		return renovacionDeCuota;
 	}
-
-	public void addServiceToCartByName(String service) {
-		String addToCartButtonXpath = "//*[contains(text(),'" + service + "')]//../parent::*//../following-sibling::*//*[contains(concat(' ',normalize-space(@class),' '),'slds-button slds-button_neutral') and contains(text(),'Add to Cart')]";
-		WebElement addToCartButton = driver.findElement(By.xpath(addToCartButtonXpath));
-		addToCartButton.click();
-	}
 	
+	private WebElement findAddToCartButtonByServiceName(String service) {
+		String addToCartButtonXpath = "//*[contains(text(),'" + service + "')]//../parent::*//../following-sibling::*//*[contains(concat(' ',normalize-space(@class),' '),'slds-button slds-button_neutral') and contains(text(),'Add to Cart')]";
+		return driver.findElement(By.xpath(addToCartButtonXpath));
+	}
+
 	private WebElement findShowActionsButtonByServiceName(String service) {
 		String showActionsButtonXpath = "//*[contains(text(),'" + service + "')]//../parent::*//../following-sibling::*//*[contains(concat(' ',normalize-space(@class),' '),'slds-button slds-button_icon-border-filled cpq-item-actions-dropdown-button')]";
-		return driver.findElement(By.xpath(showActionsButtonXpath));
+		WebElement showActionsButton = fluentWait.until(ExpectedConditions.elementToBeClickable(driver.findElement(By.xpath(showActionsButtonXpath))));
+		return showActionsButton;
 	}
 	
+	public void addServiceToCartByName(String service) {
+		WebElement addToCartButton = fluentWait.until(ExpectedConditions.elementToBeClickable(findAddToCartButtonByServiceName(service)));
+		addToCartButton.click();
+	}
+		
 	public void deleteService(String service) {
 		WebElement showActionsButton = findShowActionsButtonByServiceName(service);
 		showActionsButton.click();
+		sleep(1000);
 		WebElement deleteServiceButton = showActionsButton.findElement(By.xpath("//../following-sibling::*//span[contains(.,'Delete')]"));
 		deleteServiceButton.click();
+		sleep(1000);
 		WebElement confirmDeleteButton = driver.findElement(By.cssSelector(".slds-button.slds-button--destructive"));
 		confirmDeleteButton.click();
 	}
