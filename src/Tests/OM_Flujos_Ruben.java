@@ -25,6 +25,7 @@ import com.google.common.base.Function;
 
 import Pages.BasePage;
 import Pages.OM;
+import Pages.OMRPlansPage;
 import Pages.SalesBase;
 import Pages.setConexion;
 
@@ -34,7 +35,8 @@ public class OM_Flujos_Ruben extends TestBase {
 	private WebDriverWait wait;
 	private FluentWait<WebDriver> fluentWait; // Fluent Wait
 	private OM pageOm;
-
+	private OMRPlansPage omPlansAndServicesPage;
+	
 	/* Elementos */
 	@FindBy(xpath = "//*[@id=\"-import-btn\"]")
 	private WebElement viewRecordButton;
@@ -46,6 +48,7 @@ public class OM_Flujos_Ruben extends TestBase {
 		fluentWait = new FluentWait<WebDriver>(driver).withTimeout(30, TimeUnit.SECONDS)
 				.pollingEvery(1, TimeUnit.SECONDS).ignoring(NoSuchElementException.class);
 		pageOm = new OM(driver);
+		omPlansAndServicesPage = new OMRPlansPage(driver);
 		sleep(5000);
 		// Usuario Victor OM
 		login(driver, "https://crm--sit.cs14.my.salesforce.com/", "U585991", "Testa10k");
@@ -443,7 +446,7 @@ public class OM_Flujos_Ruben extends TestBase {
 	
 	
 	@Test(groups = "OM")
-	public void TS_CRM_OM_Gestion_Baja_De_Servicios() {
+	public void TS_CRM_OM_Gestion_Baja_De_Servicios_OLD() {
 //		driver.manage().timeouts().pageLoadTimeout(30, TimeUnit.SECONDS);
 		int minimalWait = 1000, shortWait = 3000, mediumWait = 6000, longWait = 10000, stupidLongWait = 30000;
 		pageOm.selectVistaByVisibleText("RubenOM-Activated");
@@ -454,7 +457,7 @@ public class OM_Flujos_Ruben extends TestBase {
 		sleep(longWait);
 		// Ingresar Fecha Futura
 //		driver.findElement(By.id("RequestDate")).sendKeys(pageOm.getFechaAvanzadaFormateada_MM_dd_yyyy());
-		driver.findElement(By.id("RequestDate")).sendKeys("07-17-2018");
+		driver.findElement(By.id("RequestDate")).sendKeys("07-18-2018");
 		sleep(minimalWait);
 		pageOm.getCreatingFutureDateOrdersNextButton().click();
 		sleep(shortWait);
@@ -504,4 +507,41 @@ public class OM_Flujos_Ruben extends TestBase {
 		
 	}
 
+
+	@Test(groups = "OM")
+	public void TS_CRM_OM_Gestion_Baja_De_Servicios() {
+		int minimalWait = 2000, 
+				shortWait = minimalWait * 2,
+				mediumWait = shortWait * 2,
+				longWait = mediumWait * 2,
+				stupidLongWait = 60000;
+		pageOm.selectVistaByVisibleText("RubenOM-Activated");
+		sleep(shortWait);
+		pageOm.getAccountList().get(0).click();
+		sleep(shortWait);
+		pageOm.irAChangeToOrder();
+		sleep(longWait);
+		// Ingresar Fecha Futura
+//		driver.findElement(By.id("RequestDate")).sendKeys(pageOm.getFechaAvanzadaFormateada_MM_dd_yyyy());
+		driver.findElement(By.id("RequestDate")).sendKeys("07-22-2018");
+		sleep(minimalWait);
+		pageOm.getCreatingFutureDateOrdersNextButton().click();
+		sleep(shortWait);
+		pageOm.checkFutureDateRestriction();
+		sleep(stupidLongWait);
+		omPlansAndServicesPage.getPlanButton().click();
+		sleep(minimalWait);
+		omPlansAndServicesPage.getServiciosBasicosGeneralMovil().click();
+		sleep(mediumWait);
+		omPlansAndServicesPage.getSBGMContestador().click();
+		sleep(mediumWait);
+		omPlansAndServicesPage.getSBGMDDI().click();
+		sleep(mediumWait);
+		omPlansAndServicesPage.addServiceToCartByName("Llamada en espera");
+		omPlansAndServicesPage.addServiceToCartByName("Tripartita");
+		
+	}
+	
+	
+	
 }
