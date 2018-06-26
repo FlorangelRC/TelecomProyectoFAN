@@ -35,7 +35,7 @@ public class CustomerCareOla2 extends TestBase {
 		cc.cajonDeAplicaciones("Consola FAN");
 	}
 	
-	//@AfterClass (alwaysRun = true, groups = {"CustomerCare", "Ola2", "Marcas"})
+	@AfterClass (alwaysRun = true, groups = {"CustomerCare", "Ola2", "Marcas"})
 	public void exit() {
 		driver.quit();
 		sleep(5000);
