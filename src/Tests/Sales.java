@@ -1837,10 +1837,9 @@ public class Sales extends TestBase {
 			driver.findElement(By.cssSelector(".slds-button.slds-button--neutral.add-button")).click();
 			sleep(15000);
 			driver.findElement(By.cssSelector(".slds-button.slds-button--neutral.add-button")).click();
-			
-	    	sleep(20000); 
+			 	sleep(20000); 
 			int a = 0; 
-			List <WebElement> plan = driver.findElements(By.className("cpq-item-no-children")); 
+			List <WebElement> plan = driver.findElements(By.className("cpq-product-name")); 
 			for (WebElement x : plan) { 
 				if (x.getText().toLowerCase().contains("galaxy")) { 
 					a++; 
