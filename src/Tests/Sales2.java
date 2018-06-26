@@ -1827,10 +1827,10 @@ public class Sales2 extends TestBase{
 	      for (WebElement UnaM : mas) {
 	    	  if (UnaM.getText().toLowerCase().contains("packs opcionales")) {
 	    		  UnaM.findElement(By.tagName("button")).click();
-	    		  sleep(3000);
-	    		  mas = driver.findElement(By.id("js-cpq-lineitem-details-modal-content")).findElements(By.cssSelector(".cpq-item-base-product-name-field.cpq-item-text-value.cpq-item-product-title"));
+	    		  sleep(7000);
+	    		  mas = driver.findElement(By.id("js-cpq-lineitem-details-modal-content")).findElements(By.cssSelector(".cpq-item-base-product"));
 	    		  for(WebElement x : mas) {
-	    			 if( x.getText().toLowerCase().contains("5 dias de sms")) {
+	    			 if( x.getText().toLowerCase().contains("packs de sms")) {
 	    			  a = true;
 	    			  break;
 	    			 }
@@ -1861,10 +1861,10 @@ public class Sales2 extends TestBase{
 	        if (x.getText().toLowerCase().contains("sms")) { 
 		          sms = true;
 		    } 
-	        if (x.getText().toLowerCase().contains("datos")) { 
+	        if (x.getText().toLowerCase().contains("mms")) { 
 		          datos = true;
 		    } 
-	        if (x.getText().toLowerCase().contains("amigos")) { 
+	        if (x.getText().toLowerCase().contains("datos")) { 
 		          amigos = true;
 		    } 
 	    } 
@@ -1911,7 +1911,12 @@ public class Sales2 extends TestBase{
 		driver.findElement(By.cssSelector(".slds-input.ng-pristine.ng-untouched.ng-valid")).sendKeys("pack");		
 		
 		Assert.assertTrue(driver.findElement(By.cssSelector(".cpq-product-link.slds-text-body_small.slds-float_right")).getText().equalsIgnoreCase("more"));
-		driver.findElement(By.cssSelector(".cpq-product-link.slds-text-body_small.slds-float_right")).click();
+		/*List <WebElement> more = driver.findElements(By.cssSelector(".cpq-product-link.slds-text-body_small.slds-float_right"));
+			for(WebElement m : more){
+				if(m.getText().toLowerCase().equals("more")){
+					m.click();
+				}
+			}*/
 		sleep(8000);
 		Assert.assertTrue(driver.findElement(By.cssSelector(".slds-modal.slds-fade-in-open.slds-modal--large")).findElement(By.tagName("h2")).getText().equalsIgnoreCase("product details"));
 	}
@@ -2193,13 +2198,13 @@ public class Sales2 extends TestBase{
 		sleep(15000);
 		WebElement more	 = driver.findElements(By.cssSelector(".product-link.slds-text-body--small.slds-float--right")).get(0);
 		more.click();
-		sleep(12000);
+		sleep(15000);
 		//WebElement waiter = wait.until(ExpectedConditions.presenceOfElementLocated(By.cssSelector(".slds-item--detail.slds-truncate")));
 		List<WebElement> values = driver.findElements(By.cssSelector(".slds-item--detail.slds-truncate"));
 		String[] precissionCounter = values.get(3).getText().split(",");
 		Assert.assertEquals(precissionCounter[1].length(), 2);
 		List<WebElement> frame2 = driver.findElements(By.tagName("iframe"));
-		driver.switchTo().frame(frame2.get(0));
+		//driver.switchTo().frame(frame2.get(0));
 		driver.findElements(By.cssSelector(".slds-button.slds-button--neutral")).get(3).click();
 		driver.switchTo().defaultContent();
 		sleep(10000);
