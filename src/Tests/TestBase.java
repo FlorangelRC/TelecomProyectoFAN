@@ -694,6 +694,39 @@ public class TestBase {
 	}
 	
 	@DataProvider
+	public Object[][] OMAltaLinea() throws Exception{
+
+	 Object[][] testObjArray = ExcelUtils.getTableArray("Cuentas.xlsx","OM",1,1,6,"AltaLinea");
+
+	 return (testObjArray);
+
+	}
+	@DataProvider
+	public Object[][] OMCambioSim() throws Exception{
+
+	 Object[][] testObjArray = ExcelUtils.getTableArray("Cuentas.xlsx","OM",1,1,9,"CambioSim");
+
+	 return (testObjArray);
+
+	}
+	@DataProvider
+	public Object[][] OMCambioSimSiniestro() throws Exception{
+
+	 Object[][] testObjArray = ExcelUtils.getTableArray("Cuentas.xlsx","OM",1,1,9,"CambioSimSiniestro");
+
+	 return (testObjArray);
+
+	}
+	@DataProvider
+	public Object[][] OMNominacion() throws Exception{
+
+		 Object[][] testObjArray = ExcelUtils.getTableArray("Cuentas.xlsx","Sales",1,1,3,"Nominacion");
+
+		 return (testObjArray);
+
+		}
+	
+	@DataProvider
 	public Object[][] SalesPasaporteBolsa() throws Exception{
 
 	 Object[][] testObjArray = ExcelUtils.getTableArray("Cuentas.xlsx","Sales",1,1,3,"Pasaporte Bolsa");

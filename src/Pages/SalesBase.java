@@ -806,15 +806,17 @@ try{	driver.findElement(By.id("alert-ok-button")).click();	} catch (NoSuchElemen
 			TestBase TB= new TestBase();
 			driver.get("https://crm--sit.cs14.my.salesforce.com/home/home.jsp?tsid=02u41000000QWha/");
 			try {Thread.sleep(10000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
-			driver.findElement(By.className("zen-selectArrow")).click();
-			sleep(6000);
 			//System.out.println(driver.findElement(By.id("userNav-menuItems")).findElements(By.tagName("a")).get(num).getText());
 			if (num == 4) {
+				driver.findElement(By.className("zen-selectArrow")).click();
+				sleep(6000);
 				driver.findElement(By.xpath("//a[@href=\"/secur/logout.jsp\"]")).click();
 				//driver.findElement(By.id("userNav-menuItems")).findElements(By.tagName("a")).get(num).click();
 			}
 			sleep(4000);
 			if(num == 3) {
+				driver.findElement(By.cssSelector(".userNav-buttonArrow.mbrButtonArrow")).click();
+				sleep(6000);
 				driver.findElement(By.id("userNav-menuItems")).findElements(By.tagName("a")).get(num).click();
 				sleep(4000);
 				
@@ -850,6 +852,9 @@ try{	driver.findElement(By.id("alert-ok-button")).click();	} catch (NoSuchElemen
 				 break;
 			 case "victor":
 				 TB.loginVictor(driver);
+				 break;
+			 case "OM":
+				 TB.login(driver, "https://crm--sit.cs14.my.salesforce.com/", "U585991", "Testa10k");
 				 break;
 			 }
 			 sleep(10000);

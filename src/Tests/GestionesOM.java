@@ -66,6 +66,26 @@ public class GestionesOM extends TestBase {
 		sleep(1000);
 	}
 	
+	@Test(groups="OM", priority=1, dataProvider="OMAltaLinea")
+	public void AltaLinea_Datos(String sCuenta, String sPlan, String sLinea, String sIccid, String sImsi, String sKi) throws InterruptedException {
+		OM pageOm=new OM(driver);
+		pageOm.Gestion_Alta_De_Linea_Parametros(sCuenta, sPlan, sLinea, sIccid, sImsi, sKi);
+	}
+	
+	@Test(groups="OM", priority=1, dataProvider="OMCambioSim")
+	public void TS_CRM_Cambio_De_SimCard_Datos(String sCuenta, String sPlan, String sLinea, String sIccid, String sImsi, String sKi, String sIccid2, String sImsi2, String sKi2) throws InterruptedException {
+		OM pageOm=new OM(driver);
+		pageOm.Gestion_Alta_De_Linea_Parametros(sCuenta, sPlan, sLinea, sIccid, sImsi, sKi);
+		pageOm.Cambio_De_SimCard_Parametros(sIccid2,sImsi2,sKi2);
+	}
+	
+	@Test(groups="OM", priority=1, dataProvider="OMCambioSimSiniestro")
+	public void TS_CRM_Cambio_De_SimCard_Por_Siniestro_Datos(String sCuenta, String sPlan, String sLinea, String sIccid, String sImsi, String sKi, String sIccid2, String sImsi2, String sKi2) throws InterruptedException {
+		OM pageOm=new OM(driver);
+		pageOm.Gestion_Alta_De_Linea_Parametros(sCuenta, sPlan, sLinea, sIccid, sImsi, sKi);
+		pageOm.Cambio_De_SimCard_Por_Siniestro_Parametros(sIccid2,sImsi2,sKi2);
+	}
+	
 	@Test(groups="OM", priority=1)
 	public void AltaLinea() throws InterruptedException {
 		OM pageOm=new OM(driver);
@@ -77,14 +97,16 @@ public class GestionesOM extends TestBase {
 	public void TS_CRM_Cambio_De_SimCard() throws InterruptedException {
 		OM pageOm=new OM(driver);
 		pageOm.Gestion_Alta_De_Linea("FlorOM", "Plan Con Tarjeta");
-		pageOm.Cambio_De_SimCard("07/13/2018");
+		pageOm.Cambio_De_SimCard("07-13-2018");
 	}
 	
-	@Test(groups="OM", priority=1, dataProvider="SalesCuentaBolsa") 
-	public void Gestion_Nominacion(String sCuenta, String sDni, String sLinea) throws Exception {
+	@Test(groups="OM", priority=1, dataProvider="OMNominacion") 
+	public void TS_CRM_Gestion_Nominacion(String sCuenta, String sDni, String sLinea) throws Exception {
+		OM pageOm=new OM(driver);
 		SalesBase sb = new SalesBase(driver);
 		sb.DesloguearLoguear("venta", 3);
-		
+		pageOm.Gestion_Nominacion(sCuenta, sDni, sLinea);
+		sb.DesloguearLoguear("OM", 4);
 	}
 	
 	

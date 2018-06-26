@@ -25,6 +25,7 @@ import com.google.common.base.Function;
 
 import Pages.BasePage;
 import Pages.OM;
+import Pages.OMRPlansPage;
 import Pages.SalesBase;
 import Pages.setConexion;
 
@@ -34,7 +35,8 @@ public class OM_Flujos_Ruben extends TestBase {
 	private WebDriverWait wait;
 	private FluentWait<WebDriver> fluentWait; // Fluent Wait
 	private OM pageOm;
-
+	private OMRPlansPage omPlansAndServicesPage;
+	
 	/* Elementos */
 	@FindBy(xpath = "//*[@id=\"-import-btn\"]")
 	private WebElement viewRecordButton;
@@ -46,6 +48,7 @@ public class OM_Flujos_Ruben extends TestBase {
 		fluentWait = new FluentWait<WebDriver>(driver).withTimeout(30, TimeUnit.SECONDS)
 				.pollingEvery(1, TimeUnit.SECONDS).ignoring(NoSuchElementException.class);
 		pageOm = new OM(driver);
+		omPlansAndServicesPage = new OMRPlansPage(driver);
 		sleep(5000);
 		// Usuario Victor OM
 		login(driver, "https://crm--sit.cs14.my.salesforce.com/", "U585991", "Testa10k");
@@ -402,7 +405,7 @@ public class OM_Flujos_Ruben extends TestBase {
 	
 	@Test(groups = "OM")
 	public void AltaLineaTest() throws InterruptedException{
-		String accountName = "Buda OM";
+		String accountName = "RubenOM";
 		String plan = "Plan Prepago Nacional";
 		pageOm.Gestion_Alta_De_Linea(accountName,plan);
 	}
@@ -443,40 +446,48 @@ public class OM_Flujos_Ruben extends TestBase {
 	
 	
 	@Test(groups = "OM")
-	public void TS_CRM_OM_Gestion_Baja_De_Servicios() {
+	public void TS_CRM_OM_Gestion_Baja_De_Servicios_OLD() {
+//		driver.manage().timeouts().pageLoadTimeout(30, TimeUnit.SECONDS);
+		int minimalWait = 1000, shortWait = 3000, mediumWait = 6000, longWait = 10000, stupidLongWait = 30000;
 		pageOm.selectVistaByVisibleText("RubenOM-Activated");
-		sleep(3000);
+		sleep(shortWait);
 		pageOm.getAccountList().get(0).click();
-		sleep(3000);
+		sleep(shortWait);
 		pageOm.irAChangeToOrder();
-		sleep(10000);
+		sleep(longWait);
 		// Ingresar Fecha Futura
 //		driver.findElement(By.id("RequestDate")).sendKeys(pageOm.getFechaAvanzadaFormateada_MM_dd_yyyy());
-		driver.findElement(By.id("RequestDate")).sendKeys("07-11-2018");
-		sleep(1000);
+		driver.findElement(By.id("RequestDate")).sendKeys("07-18-2018");
+		sleep(minimalWait);
 		pageOm.getCreatingFutureDateOrdersNextButton().click();
-		sleep(3000);
+		sleep(shortWait);
 		pageOm.checkFutureDateRestriction();
-		pageOm.
-		sleep(30000);
+		sleep(stupidLongWait);
 		pageOm.getPlanButton().click();
-		sleep(1000);
+		sleep(minimalWait);
 		pageOm.getServiciosBasicosGeneralMovil().click();
-		sleep(6000);
+		sleep(mediumWait);
 		pageOm.getSBGMContestador().click();
-		sleep(6000);
+		sleep(mediumWait);
 		pageOm.getSBGMDDI().click();
-		sleep(1000);
+		sleep(mediumWait);
 		List<WebElement> addToCart = driver.findElements(By.xpath("//*[contains(@class,'cpq-item-base-product')]//*[contains(text(),'Add to Cart')]"));
-		
 		
 		//cpq-item-base-product-name-field cpq-item-text-value cpq-item-product-title
 		//cpq-item-no-children
+		
+		//Classes:
+		//Top: cpq-item-product-messages
+		//Servicios Basicos Arrow: class="cpq-item-base-product"
+		//All Items: cpq-item-base-product-details
+		
+		
+		
 		int i = 1;
 		for(WebElement a: addToCart) {
 			if(a.isDisplayed()) {
 				a.click();
-				sleep(6000);
+				sleep(mediumWait);
 				System.out.println("Item #" + i + " clickeado");
 			}
 			else {
@@ -496,4 +507,39 @@ public class OM_Flujos_Ruben extends TestBase {
 		
 	}
 
+
+	@Test(groups = "OM")
+	public void TS_CRM_OM_Gestion_Baja_De_Servicios() {
+		int minimalWait = 3000, shortWait = minimalWait * 2, mediumWait = shortWait * 2, longWait = mediumWait * 2,
+				stupidLongWait = 60000;
+		pageOm.selectVistaByVisibleText("RubenOM-Activated");
+		sleep(shortWait);
+		pageOm.getAccountList().get(1).click();
+		sleep(shortWait);
+		pageOm.irAChangeToOrder();
+		sleep(longWait);
+		// Ingresar Fecha Futura
+//		driver.findElement(By.id("RequestDate")).sendKeys(pageOm.getFechaAvanzadaFormateada_MM_dd_yyyy());
+		driver.findElement(By.id("RequestDate")).sendKeys("08-13-2018");
+		sleep(minimalWait);
+		pageOm.getCreatingFutureDateOrdersNextButton().click();
+		sleep(shortWait);
+		pageOm.checkFutureDateRestriction();
+//		sleep(stupidLongWait);
+		omPlansAndServicesPage.getPlanButton().click();
+//		sleep(minimalWait);
+		omPlansAndServicesPage.getServiciosBasicosGeneralMovil().click();
+//		sleep(mediumWait);
+		omPlansAndServicesPage.getSBGMContestador().click();
+//		sleep(mediumWait);
+		omPlansAndServicesPage.getSBGMDDI().click();
+//		sleep(mediumWait);
+		omPlansAndServicesPage.addServiceToCartByName("Llamada en espera");
+		sleep(mediumWait);
+		omPlansAndServicesPage.deleteService("Llamada en espera");
+		
+	}
+	
+	
+	
 }
