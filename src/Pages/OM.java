@@ -854,7 +854,7 @@ public void deleteOrdersNoActivated(String Vista) {
 		primeraCuenta.findElement(By.tagName("div")).findElement(By.tagName("a")).click();*/
 		sleep(5000);
 		irAChangeToOrder();	
-		sleep(14000);
+		sleep(16000);
 		Accounts accountPage = new Accounts(driver);
 		driver.switchTo().defaultContent(); 
         DateFormat dateFormat = new SimpleDateFormat("MM-dd-yyyy");
@@ -962,7 +962,6 @@ public void deleteOrdersNoActivated(String Vista) {
 			driver.switchTo().defaultContent();
 			driver.findElement(By.name("ta_submit_order")).click();
 		} catch (org.openqa.selenium.NoAlertPresentException e) {
-			System.out.println(driver.switchTo().alert().getText());
 			driver.switchTo().defaultContent();
 		}
 		sleep(45000);

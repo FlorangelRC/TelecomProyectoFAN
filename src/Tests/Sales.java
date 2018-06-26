@@ -70,13 +70,13 @@ public class Sales extends TestBase {
 	String[] genero = {"masculino","femenino"};
 	String[] DocValue = {"52698550","3569874563","365","ssss"};
 	
-	@AfterClass(alwaysRun=true)
+	//@AfterClass(alwaysRun=true)
 	public void tearDown() {
 		driver.close();
 		driver.quit();
 	}
 	
-	@AfterMethod(alwaysRun=true)
+	//@AfterMethod(alwaysRun=true)
 	public void deslogin(){
 		try {Thread.sleep(10000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 		driver.get("https://crm--sit.cs14.my.salesforce.com/home/home.jsp?tsid=02u41000000QWha/");
@@ -1837,10 +1837,9 @@ public class Sales extends TestBase {
 			driver.findElement(By.cssSelector(".slds-button.slds-button--neutral.add-button")).click();
 			sleep(15000);
 			driver.findElement(By.cssSelector(".slds-button.slds-button--neutral.add-button")).click();
-			
-	    	sleep(20000); 
+			 	sleep(20000); 
 			int a = 0; 
-			List <WebElement> plan = driver.findElements(By.className("cpq-item-no-children")); 
+			List <WebElement> plan = driver.findElements(By.className("cpq-product-name")); 
 			for (WebElement x : plan) { 
 				if (x.getText().toLowerCase().contains("galaxy")) { 
 					a++; 
