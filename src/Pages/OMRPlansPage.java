@@ -1,12 +1,18 @@
 package Pages;
 
+import java.util.concurrent.TimeUnit;
+
+import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.FluentWait;
 
 public class OMRPlansPage extends BasePage {
 	final WebDriver driver;
+	static FluentWait<WebDriver> fluentWait;
 
 	/* ELEMENTS */
 	@FindBy(css = ".slds-button.cpq-item-has-children")
@@ -20,28 +26,6 @@ public class OMRPlansPage extends BasePage {
 	@FindBy(xpath = "//div[contains(concat(' ',normalize-space(@class),' '),'cpq-item-base-product-name cpq-item-product-group js-cpq-cart-product-hierarchy-path-01tc000000578LBAAY<01tc000000578KIAAY')]//button")
 	private WebElement serviciosBasicosGeneralMovil;
 	
-	
-	//button[contains(concat(' ',normalize-space(@class),' '),'slds-button slds-button_neutral') and contains(text(),'Add to Cart')]//../preceding-sibling::*//*[contains(text(),'Llamada en espera')]
-	
-		
-
-	
-	[../preceding-sibling::div[contains(text(),'Llamada en espera')]]
-
-			
-	
-	//*[(class = slds-button slds-button_neutral) and contains(text(),'Add to cart')]//*[contains(text(),'Llamada en espera')]
-	
-	//
-	cpq-product-cart-item-child
-	//cpq-product-name js-cpq-cart-product-hierarchy-path-01tc000000578LBAAY<01tc000000578KIAAY
-	
-	//CallerID
-	cpq-item-base-product
-	/* Caller ID Text -->>*/ cpq-product-name js-cpq-cart-product-hierarchy-path-01tc000000578LBAAY<01tc000000578KIAAY<01tc000000578KDAAY
-	slds-button slds-button_icon-border-filled cpq-item-actions-dropdown-button
-	//*[contains(text(),'Caller Id')]
-
 	@FindBy(xpath = "//div[contains(concat(' ',normalize-space(@class),' '),'cpq-item-base-product-name cpq-item-product-group js-cpq-cart-product-hierarchy-path-01tc000000578LBAAY<01tc000000578KIAAY<01tc0000005M7ySAAS')]//button")
 	private WebElement sbgmContestador;
 
@@ -68,5 +52,94 @@ public class OMRPlansPage extends BasePage {
 	public OMRPlansPage(WebDriver driver) {
 		this.driver = driver;
 		PageFactory.initElements(driver, this);
+		fluentWait = new FluentWait<WebDriver>(driver);
+		fluentWait.withTimeout(45, TimeUnit.SECONDS)
+			.pollingEvery(3, TimeUnit.SECONDS)
+			.ignoring(org.openqa.selenium.NoSuchElementException.class)
+			.ignoring(org.openqa.selenium.ElementNotVisibleException.class)
+			;
 	}
+		
+	public WebElement getPlanButton() {
+		fluentWait.until(ExpectedConditions.elementToBeClickable(planButton));
+		return planButton;
+	}
+	
+	public WebElement getServiciosTelefoniaMovil() {
+		fluentWait.until(ExpectedConditions.elementToBeClickable(serviciosTelefoniaMovil));
+		return serviciosTelefoniaMovil;
+	}
+
+	public WebElement getServiciosBasicosGeneralMovil() {
+		fluentWait.until(ExpectedConditions.elementToBeClickable(serviciosBasicosGeneralMovil));
+		return serviciosBasicosGeneralMovil;
+	}
+
+	public WebElement getSBGMContestador() {
+		fluentWait.until(ExpectedConditions.visibilityOf(sbgmContestador));
+		return sbgmContestador;
+	}
+
+	public WebElement getSBGMDDI() {
+		fluentWait.until(ExpectedConditions.visibilityOf(sbgmDDI));
+		return sbgmDDI;
+	}
+
+	public WebElement getServiciosInternetPorDia() {
+		fluentWait.until(ExpectedConditions.elementToBeClickable(serviciosInternetPorDia));
+		return serviciosInternetPorDia;
+	}
+
+	public WebElement getFriendsAndFamily() {
+		fluentWait.until(ExpectedConditions.elementToBeClickable(friendsAndFamily));
+		return friendsAndFamily;
+	}
+
+	public WebElement getPacksOpcionales() {
+		fluentWait.until(ExpectedConditions.elementToBeClickable(packsOpcionales));
+		return packsOpcionales;
+	}
+
+	public WebElement getRenovacionDeCuota() {
+		fluentWait.until(ExpectedConditions.elementToBeClickable(renovacionDeCuota));
+		return renovacionDeCuota;
+	}
+	
+	private WebElement findAddToCartButtonByServiceName(String service) {
+		String addToCartButtonXpath = "//*[contains(text(),'" + service + "')]//../parent::*//../following-sibling::*//*[contains(concat(' ',normalize-space(@class),' '),'slds-button slds-button_neutral') and contains(text(),'Add to Cart')]";
+		return driver.findElement(By.xpath(addToCartButtonXpath));
+	}
+
+	private WebElement findShowActionsButtonByServiceName(String service) {
+		String showActionsButtonXpath = "//*[contains(text(),'" + service + "')]//../parent::*//../following-sibling::*//*[contains(concat(' ',normalize-space(@class),' '),'slds-button slds-button_icon-border-filled cpq-item-actions-dropdown-button')]";
+		WebElement showActionsButton = fluentWait.until(ExpectedConditions.elementToBeClickable(driver.findElement(By.xpath(showActionsButtonXpath))));
+		return showActionsButton;
+	}
+	
+	public void addServiceToCartByName(String service) {
+		WebElement addToCartButton = fluentWait.until(ExpectedConditions.visibilityOf(findAddToCartButtonByServiceName(service)));
+		addToCartButton.click();
+	}
+		
+	public void deleteService(String service) {
+		WebElement showActionsButton = findShowActionsButtonByServiceName(service);
+		showActionsButton.click();
+		sleep(1000);
+		WebElement deleteServiceButton = showActionsButton.findElement(By.xpath("//../following-sibling::*//span[contains(.,'Delete')]"));
+//		fluentWait.until(ExpectedConditions.elementToBeClickable(deleteServiceButton));
+		sleep(5000);
+		deleteServiceButton.click();
+		sleep(1000);
+		WebElement confirmDeleteButton = driver.findElement(By.cssSelector(".slds-button.slds-button--destructive"));
+		confirmDeleteButton.click();
+	}
+	
+	public void configureService(String service) {
+		WebElement showActionsButton = findShowActionsButtonByServiceName(service);
+		showActionsButton.click();
+		WebElement configureServiceButton = showActionsButton.findElement(By.xpath("//../following-sibling::*//span[contains(.,'Configure')]"));
+		configureServiceButton.click();
+	}
+	
+	//*[contains(text(),'Llamada en espera')]//../parent::*//../following-sibling::*//*[contains(concat(' ',normalize-space(@class),' '),'slds-button slds-button_icon-border-filled cpq-item-actions-dropdown-button')]//../following-sibling::*//span[contains(.,'Delete')]
 }
