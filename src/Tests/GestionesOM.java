@@ -110,13 +110,13 @@ public class GestionesOM extends TestBase {
 	}
 	
 	
-	@Test(groups="GestionOM") 
-	public void TS_CRM_CambioDeTitularidad() throws InterruptedException {
+	@Test(groups="GestionOM", dataProvider="OMCambioTitularidad") 
+	public void TS_CRM_CambioDeTitularidad(String sCuenta, String sPlan, String sLinea, String sIccid, String sImsi, String sKi) throws InterruptedException {
 		
 		OM pageOm=new OM(driver);
-		pageOm.Gestion_Alta_De_Linea("AutomaOM", "Plan Prepago Nacional");
+		pageOm.Gestion_Alta_De_Linea_Parametros("AutomaOM", sPlan, sLinea, sIccid, sImsi, sKi);
 		pageOm.irAChangeToOrder();
-		pageOm.Gestion_Cambio_De_Titularidad("CambioDeTitularidad");
+		pageOm.Gestion_Cambio_De_Titularidad(sCuenta);
 		driver.switchTo().defaultContent();
 		sleep(5000);
 		System.out.println(driver.findElement(By.id("accid_ileinner")).findElement(By.tagName("a")).getText());
@@ -180,7 +180,7 @@ public class GestionesOM extends TestBase {
 	public void TS_CRM_Cambio_De_Numero() throws InterruptedException {
 		OM pageOm=new OM(driver);
 		pageOm.Gestion_Alta_De_Linea("AlOM", "Plan Con Tarjeta");
-		pageOm.Gestion_Cambio_de_Numero("AlanOM", "07-07-2018");
+		pageOm.Gestion_Cambio_de_Numero("AlanOM", "07-15-2018");
 	}
 	
 }

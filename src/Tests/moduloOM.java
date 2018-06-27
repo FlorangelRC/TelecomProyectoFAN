@@ -72,7 +72,7 @@ public class moduloOM extends TestBase {
 	}
 	
 	
-	@AfterClass(alwaysRun=true)
+	//@AfterClass(alwaysRun=true)
 	public void tearDown() {
 		
 		sleep(2000);
@@ -176,7 +176,7 @@ public class moduloOM extends TestBase {
 	@Test(groups="OM")
 	public void TS6716_CRM_OM_Ordenes_Panel_principal_Ingreso() {
 		Select allOrder=new Select(driver.findElement(By.id("fcf")));
-		allOrder.selectByVisibleText("All Orders VICTOR OM");
+		allOrder.selectByVisibleText("All");
 		sleep(1000);
 		try {driver.findElement(By.name("go")).click();}catch(org.openqa.selenium.NoSuchElementException e) {}
 		sleep(3000);
