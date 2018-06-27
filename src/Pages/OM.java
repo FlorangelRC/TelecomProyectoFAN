@@ -317,6 +317,7 @@ public class OM {
 				driver.findElement(By.id("zoomOut")).click();
 			} catch (Exception ex1) {
 				chiqui = true;
+				driver.findElement(By.id("zoomIn")).click();
 				break;
 			}
 
@@ -1046,12 +1047,20 @@ public void deleteOrdersNoActivated(String Vista) {
 	      driver.findElement(By.xpath(".//*[@id='tab-default-1']/div[1]/ng-include/div/div/div/div[4]/div[2]/div/ng-include/div/div[2]/ng-include/div/div[1]/div/div[2]/div[11]/div[2]/div/ul/li[3]/a")).click(); 
 	      sleep(5000); 
 	      ((JavascriptExecutor)driver).executeScript("window.scrollTo(0,"+driver.findElement(By.className("slds-section")).getLocation().y+" )"); 
-	      WebElement msi = driver.findElement(By.xpath("//*[@id='js-cpq-product-cart-config-form']/div[1]/div/form/div[18]/div[1]/input")); 
+	      List<WebElement> todos = driver.findElements(By.cssSelector(".slds-form_stacked.ng-pristine.ng-untouched.ng-valid.vlocity-dynamic-form.ng-valid-required.ng-valid-step")).get(1).findElements(By.className("slds-form-element"));
 	      WebElement msi = driver.findElement(By.xpath("//*[@id='js-cpq-product-cart-config-form']/div[1]/div/form/div[2]/div[1]/input")); 
 	      Random r = new Random(); 
-	      msi.clear(); 
+	      for (WebElement UnT: todos) {
+	    	  if(UnT.findElement(By.tagName("label")).getText().equalsIgnoreCase("MSISDN")) {
+	    		  UnT.click();
+	    		  UnT.findElement(By.tagName("input")).clear();
+	    		  UnT.findElement(By.tagName("input")).sendKeys("11" + r.nextInt(200000000) ); 
+	    		  UnT.submit();
+	    	  }
+	      }
+	      /*msi.clear(); 
 	      msi.sendKeys("11" + r.nextInt(200000000) ); 
-	      msi.submit(); 
+	      msi.submit(); */
 	      sleep(30000); 
 	      driver.findElement(By.id("-import-btn")).click(); 
 	      sleep(5000); 
@@ -1074,6 +1083,61 @@ public void deleteOrdersNoActivated(String Vista) {
 	       
 	      }
 	    
+	    public void Gestion_Cambio_de_Numero_Parametros(String Msisdn) throws InterruptedException{ 
+		      Date date = new Date(); 
+		      OM om = new OM(driver); 
+		      sleep(8000); 
+		    //Seleccion del ultimo Asset 
+		      om.irAChangeToOrder();   
+		      sleep(8000); 
+		    //Ingreso de fecha avanzada 
+		      Accounts accountPage = new Accounts(driver); 
+		      DateFormat dateFormat = new SimpleDateFormat("MM-dd-yyyy"); 
+		      driver.findElement(By.id("RequestDate")).sendKeys(dateFormat.format(om.fechaAvanzada()));
+		      driver.findElement(By.cssSelector(".form-control.btn.btn-primary.ng-binding")).click();
+		      sleep(35000); 
+		    //SIM 
+		      driver.findElement(By.cssSelector(".slds-button.cpq-item-has-children")).click(); 
+		      sleep(3000); 
+		      driver.switchTo().defaultContent(); 
+		      driver.findElement(By.xpath(".//*[@id='tab-default-1']/div[1]/ng-include/div/div/div/div[4]/div[2]/div/ng-include/div/div[2]/ng-include/div/div[1]/div/div[2]/div[11]")).click(); 
+		      sleep(3000); 
+		      driver.findElement(By.xpath(".//*[@id='tab-default-1']/div[1]/ng-include/div/div/div/div[4]/div[2]/div/ng-include/div/div[2]/ng-include/div/div[1]/div/div[2]/div[11]/div[2]/div/ul/li[3]/a")).click(); 
+		      sleep(5000); 
+		      ((JavascriptExecutor)driver).executeScript("window.scrollTo(0,"+driver.findElement(By.className("slds-section")).getLocation().y+" )"); 
+		      List<WebElement> todos = driver.findElements(By.cssSelector(".slds-form_stacked.ng-pristine.ng-untouched.ng-valid.vlocity-dynamic-form.ng-valid-required.ng-valid-step")).get(1).findElements(By.className("slds-form-element"));
+		      WebElement msi = driver.findElement(By.xpath("//*[@id='js-cpq-product-cart-config-form']/div[1]/div/form/div[2]/div[1]/input")); 
+		      Random r = new Random(); 
+		      for (WebElement UnT: todos) {
+		    	  if(UnT.findElement(By.tagName("label")).getText().equalsIgnoreCase("MSISDN")) {
+		    		  UnT.click();
+		    		  UnT.findElement(By.tagName("input")).clear();
+		    		  UnT.findElement(By.tagName("input")).sendKeys(Msisdn); 
+		    		  UnT.submit();
+		    	  }
+		      }
+		      sleep(30000); 
+		      driver.findElement(By.id("-import-btn")).click(); 
+		      sleep(5000); 
+		    //Gestion 
+		      om.agregarGestion("Cambio de n\u00famero"); 
+		      driver.findElements(By.id("topButtonRow")).get(0); 
+		      sleep(7000); 
+		      driver.findElement(By.name("ta_submit_order")).click(); 
+		      sleep(45000);
+				try {
+					om.cambiarVentanaNavegador(1);
+					sleep(2000);
+					driver.findElement(By.id("idlist")).click();
+					sleep(5000);
+					om.cambiarVentanaNavegador(0);
+				}catch(java.lang.IndexOutOfBoundsException ex1) {}
+				sleep(12000);
+				om.completarFlujoOrquestacion();
+				sleep(5000);
+		       
+		      }
+		    
 		// Metodo para cuando olvidamos cambiar la fecha para ejecutar gestiones
 	    // Avisa si se ingreso una fecha incorrecta y da unos segundos para cambiarla y continuar el test
 	    // ATENCION!! No olvidar quitarlo del codigo una vez que funcione
@@ -1144,12 +1208,13 @@ public void deleteOrdersNoActivated(String Vista) {
 			sleep(13000);
 			ContactSearch contact = new ContactSearch(driver);
 			contact.searchContact2("DNI", sDni, sLinea);
+			sleep(5000);
 			try {contact.ingresarMail("asdads@gmail.com", "si");}catch (org.openqa.selenium.ElementNotVisibleException ex1) {}
-			contact.tipoValidacion("documento");
+			contact.tipoValidacion2("documento");
 			contact.subirArchivo("C:\\Users\\florangel\\Downloads\\mapache.jpg", "si");
 			BasePage bp = new BasePage(driver);
 			bp.setSimpleDropdown(driver.findElement(By.id("ImpositiveCondition")), "IVA Consumidor Final");
-			sb.Crear_DomicilioLegal("Buenos Aires", "Vicente Lopez", "falsa", "", "1000", "", "", "1549");
+			sb.Crear_DomicilioLegalNuevo("Buenos Aires", "Vicente Lopez", "falsa", "", "1000", "", "", "1549");
 			//sleep(10000);
 			//contact.subirformulario("C:\\Users\\florangel\\Downloads\\form.pdf", "si");
 			sleep(35000);

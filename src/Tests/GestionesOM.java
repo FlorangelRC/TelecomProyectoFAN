@@ -86,6 +86,24 @@ public class GestionesOM extends TestBase {
 		pageOm.Cambio_De_SimCard_Por_Siniestro_Parametros(sIccid2,sImsi2,sKi2);
 	}
 	
+	@Test(groups="OM", priority=1, dataProvider="OMCambioDeNumero")
+	public void TS_CRM_Cambio_De_Numero_Datos(String sCuenta, String sPlan, String sLinea, String sIccid, String sImsi, String sKi,String sMsisdn) throws InterruptedException {
+		OM pageOm=new OM(driver);
+		boolean gestion = false;
+		pageOm.Gestion_Alta_De_Linea_Parametros(sCuenta, sPlan, sLinea, sIccid, sImsi, sKi);
+		pageOm.Gestion_Cambio_de_Numero_Parametros(sMsisdn);
+		sleep(5000);
+		WebElement status = driver.findElement(By.id("Status_ilecell"));
+		List <WebElement> gest = driver.findElements(By.cssSelector(".dataCol.inlineEditWrite"));
+		for (WebElement x : gest) {
+			if (x.getText().equalsIgnoreCase("Cambio de n\\u00famero")) {
+				gestion = true;
+			}
+		}
+		Assert.assertTrue(status.getText().equalsIgnoreCase("Activated"));
+		Assert.assertTrue(gestion);
+	}
+	
 	@Test(groups="OM", priority=1)
 	public void AltaLinea() throws InterruptedException {
 		OM pageOm=new OM(driver);
@@ -164,8 +182,19 @@ public class GestionesOM extends TestBase {
 	@Test(groups="OM", priority=1)
 	public void TS_CRM_Cambio_De_SimCard_Por_Siniestro() throws InterruptedException {
 		OM pageOm=new OM(driver);
+		boolean gestion = false;
 		pageOm.Gestion_Alta_De_Linea("FlorOM", "Plan Con Tarjeta");
 		pageOm.Cambio_De_SimCard_Por_Siniestro("LineasFlor");
+		sleep(5000);
+		WebElement status = driver.findElement(By.id("Status_ilecell"));
+		List <WebElement> gest = driver.findElements(By.cssSelector(".dataCol.inlineEditWrite"));
+		for (WebElement x : gest) {
+			if (x.getText().equalsIgnoreCase("Cambio de SIM por siniestro")) {
+				gestion = true;
+			}
+		}
+		Assert.assertTrue(status.getText().equalsIgnoreCase("Activated"));
+		Assert.assertTrue(gestion);
 	}
 	
 	@Test(groups="OM", priority=1)
@@ -211,8 +240,19 @@ public class GestionesOM extends TestBase {
 	@Test(groups="OM", priority=1)
 	public void TS_CRM_Cambio_De_Numero() throws InterruptedException {
 		OM pageOm=new OM(driver);
+		boolean gestion = false;
 		pageOm.Gestion_Alta_De_Linea("AlOM", "Plan Con Tarjeta");
 		pageOm.Gestion_Cambio_de_Numero("AlanOM", "07-07-2018");
+		sleep(5000);
+		WebElement status = driver.findElement(By.id("Status_ilecell"));
+		List <WebElement> gest = driver.findElements(By.cssSelector(".dataCol.inlineEditWrite"));
+		for (WebElement x : gest) {
+			if (x.getText().equalsIgnoreCase("Cambio de n\\u00famero")) {
+				gestion = true;
+			}
+		}
+		Assert.assertTrue(status.getText().equalsIgnoreCase("Activated"));
+		Assert.assertTrue(gestion);
 	}
 	
 }

@@ -718,6 +718,14 @@ public class TestBase {
 
 	}
 	@DataProvider
+	public Object[][] OMCambioDeNumero() throws Exception{
+
+	 Object[][] testObjArray = ExcelUtils.getTableArray("Cuentas.xlsx","OM",1,1,7,"CambioDeNumero");
+
+	 return (testObjArray);
+
+	}
+	@DataProvider
 	public Object[][] OMNominacion() throws Exception{
 
 		 Object[][] testObjArray = ExcelUtils.getTableArray("Cuentas.xlsx","OM",1,1,3,"Nominacion");
