@@ -520,7 +520,7 @@ public class OM_Flujos_Ruben extends TestBase {
 		sleep(longWait);
 		// Ingresar Fecha Futura
 //		driver.findElement(By.id("RequestDate")).sendKeys(pageOm.getFechaAvanzadaFormateada_MM_dd_yyyy());
-		driver.findElement(By.id("RequestDate")).sendKeys("09-08-2018");
+		driver.findElement(By.id("RequestDate")).sendKeys("09-15-2018");
 		sleep(minimalWait);
 		pageOm.getCreatingFutureDateOrdersNextButton().click();
 		sleep(shortWait);
