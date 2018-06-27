@@ -838,4 +838,12 @@ public class TestBase {
 		}
 	}
 	
+	@DataProvider
+	public Object[][] OMCambioTitularidad() throws Exception{
+
+	 Object[][] testObjArray = ExcelUtils.getTableArray("Gestiones OM Objetivos.xlsx","DatosAGenerar",2,1,6,"Cambio de Titularidad");
+
+	 return (testObjArray);
+
+	}
 }

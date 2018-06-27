@@ -116,6 +116,7 @@ public class OMRPlansPage extends BasePage {
 
 	private WebElement findShowActionsButtonByServiceName(String service) {
 		String showActionsButtonXpath = "//*[contains(text(),'" + service + "')]//../parent::*//../following-sibling::*//*[contains(concat(' ',normalize-space(@class),' '),'slds-button slds-button_icon-border-filled cpq-item-actions-dropdown-button')]";
+		sleep(6000);
 		WebElement showActionsButton = fluentWait.until(ExpectedConditions.elementToBeClickable(driver.findElement(By.xpath(showActionsButtonXpath))));
 		return showActionsButton;
 	}
@@ -132,25 +133,27 @@ public class OMRPlansPage extends BasePage {
 	public void deleteService(String service) {
 		WebElement showActionsButton = findShowActionsButtonByServiceName(service);
 		showActionsButton.click();
-		String deleteServiceButtonXpath = "//../following-sibling::*//li[contains(.,'Delete')]";
-		WebElement deleteServiceButton = fluentWait.until(ExpectedConditions.elementToBeClickable(showActionsButton.findElement(By.xpath(deleteServiceButtonXpath))));
+//		String deleteServiceButtonXpath = "//../following-sibling::*//li[contains(.,'Delete')]";
+//		WebElement deleteServiceButton = fluentWait.until(ExpectedConditions.elementToBeClickable(showActionsButton.findElement(By.xpath(deleteServiceButtonXpath))));
 		sleep(5000);
+		WebElement deleteServiceButton = driver.findElement(By.xpath("//*[contains(text(),'Llamada en espera')]//../parent::*//../following-sibling::*//*[contains(concat(' ',normalize-space(@class),' '),'slds-button slds-button_icon-border-filled cpq-item-actions-dropdown-button')]//../following-sibling::*//span[contains(.,'Delete')]"));
 		deleteServiceButton.click();
-//		WebElement confirmDeleteButton = fluentWait.until(ExpectedConditions.elementToBeClickable(driver.findElement(By.xpath("//button[contains(text(),'Delete')]"))));
-//		confirmDeleteButton.click();
-		
-		try {
-			WebElement confirmDeleteButton = fluentWait.until(ExpectedConditions.elementToBeClickable(driver.findElement(By.xpath("//button[contains(text(),'Delete')]"))));
-			confirmDeleteButton.click();
-		} catch (NoSuchElementException e) {
-			try {
-				Alert confirmDelete = driver.switchTo().alert();
-				confirmDelete.accept();
-			} catch (NoAlertPresentException a) {
-				e.printStackTrace();
-			}
-		}
-		
+		sleep(5000);
+		WebElement confirmDeleteButton = fluentWait.until(ExpectedConditions.elementToBeClickable(driver.findElement(By.xpath("//button[contains(text(),'Delete')]"))));
+		confirmDeleteButton.click();
+//		
+//		try {
+//			WebElement confirmDeleteButton = fluentWait.until(ExpectedConditions.elementToBeClickable(driver.findElement(By.xpath("//button[contains(text(),'Delete')]"))));
+//			confirmDeleteButton.click();
+//		} catch (NoSuchElementException e) {
+//			try {
+//				Alert confirmDelete = driver.switchTo().alert();
+//				confirmDelete.accept();
+//			} catch (NoAlertPresentException a) {
+//				e.printStackTrace();
+//			}
+//		}
+//		
 	}
 	
 	//By.cssSelector(".slds-button.slds-button--destructive")

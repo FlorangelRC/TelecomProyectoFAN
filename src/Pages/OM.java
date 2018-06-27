@@ -709,6 +709,8 @@ public void deleteOrdersNoActivated(String Vista) {
 	/**
 	 * Metodo para cambiar el nombre de la cuenta en todos los servicios de un asset, usado para la gestion cambio de titularidad
 	 * Recibe como parametro el nombre de la cuenta a la que se va a cambiar el asset.
+	 * 
+	 * Si Falla por xPath revisar todos los xpath ya que si uno falla fue porque se agrego o quito un campo por el cual el xPath se rueda.
 	 */
 	public void cambioDeCuentaServicios(String Cuenta) {
 		
@@ -723,19 +725,19 @@ public void deleteOrdersNoActivated(String Vista) {
 			
 			WebElement servicio=driver.findElement(By.className("pbBody")).findElement(By.className("list")).findElements(By.tagName("tr")).get(i);
 			servicio.findElement(By.className("actionColumn")).findElements(By.tagName("a")).get(0).click();
-			sleep(3000);
+			sleep(7000);
 			
-			Select action=new Select(driver.findElement(By.xpath("//*[@id=\"ep\"]/div[2]/div[3]/table/tbody/tr[6]/td[2]")).findElement(By.tagName("select")));
+			Select action=new Select(driver.findElement(By.xpath("//*[@id=\"ep\"]/div[2]/div[3]/table/tbody/tr[7]/td[2]")).findElement(By.tagName("select")));
 			action.selectByVisibleText("Change");
 			
-			WebElement billingAccount=driver.findElement(By.xpath("//*[@id=\"ep\"]/div[2]/div[3]/table/tbody/tr[11]/td[2]/span")).findElement(By.tagName("input"));
+			WebElement billingAccount=driver.findElement(By.xpath("//*[@id=\"ep\"]/div[2]/div[3]/table/tbody/tr[12]/td[2]/span")).findElement(By.tagName("input"));
 			billingAccount.click();
 			billingAccount.clear();
 			billingAccount.sendKeys(Cuenta);
 			sleep(300);
 			
-			//FALTA SERVICE ACCOUNT
-			WebElement serviceAccount=driver.findElement(By.xpath("//*[@id=\"ep\"]/div[2]/div[3]/table/tbody/tr[35]/td[4]/span")).findElement(By.tagName("input"));
+			//SERVICE ACCOUNT
+			WebElement serviceAccount=driver.findElement(By.xpath("//*[@id=\"ep\"]/div[2]/div[3]/table/tbody/tr[36]/td[4]/span")).findElement(By.tagName("input"));
 			serviceAccount.click();
 			serviceAccount.clear();
 			serviceAccount.sendKeys(Cuenta);
@@ -743,7 +745,7 @@ public void deleteOrdersNoActivated(String Vista) {
 			sleep(500);
 			//Guardar
 			driver.findElement(By.name("save")).click();
-			sleep(3000);
+			sleep(4000);
 			i++;
 		}
 		
@@ -758,7 +760,7 @@ public void deleteOrdersNoActivated(String Vista) {
 	public void cambiarCuentaYGestionEnOrden(String Cuenta, String Gestion) {
 		//Click en editar
 		driver.findElement(By.name("edit")).click();
-		sleep(4000);
+		sleep(7000);
 		WebElement accountName=driver.findElement(By.xpath("//*[@id=\"ep\"]/div[2]/div[3]/table/tbody/tr[3]/td[2]/div/span")).findElement(By.tagName("input"));
 		accountName.click();
 		accountName.clear();
@@ -768,7 +770,7 @@ public void deleteOrdersNoActivated(String Vista) {
 		gestion.selectByValue(Gestion);
 		//Guardamos
 		driver.findElement(By.name("save")).click();
-		sleep(4000);
+		sleep(5000);
 	}
 	
 	
@@ -1475,7 +1477,7 @@ public void deleteOrdersNoActivated(String Vista) {
 	    
 	public void Gestion_Cambio_De_Titularidad(String CuentaNueva) {
 		driver.switchTo().defaultContent();
-		sleep(12000);
+		sleep(15000);
 		DateFormat dateFormat = new SimpleDateFormat("MM-dd-yyyy");
 		driver.findElement(By.id("RequestDate")).sendKeys(dateFormat.format(fechaAvanzada()));
 		//driver.findElement(By.id("RequestDate")).sendKeys("06-15-2018");
@@ -1483,11 +1485,11 @@ public void deleteOrdersNoActivated(String Vista) {
 		//click Next
 		WebElement next=driver.findElement(By.cssSelector(".form-control.btn.btn-primary.ng-binding"));
 		next.click();
-		sleep(30000);
+		sleep(35000);
 		
 		//Click ViewRecord
 		driver.findElement(By.id("-import-btn")).click();
-		sleep(7000);
+		sleep(8000);
 		
 		//click en goto list en (TA Price Book)
 		WebElement goToList=driver.findElement(By.className("pShowMore")).findElements(By.tagName("a")).get(1);
@@ -1495,21 +1497,51 @@ public void deleteOrdersNoActivated(String Vista) {
 		scrollDown(driver.findElement(By.className("pShowMore")));
 		sleep(500);
 		goToList.click();
-		sleep(7000);
+		sleep(10000);
 		
 		//Cambiar Cuenta en Servicios
 		cambioDeCuentaServicios("CambioDeTitularidad");
 		
 		//Click para retonar a la orden
 		driver.findElement(By.className("ptBreadcrumb")).findElement(By.tagName("a")).click();
-		sleep(4000);
+		sleep(7000);
 		
 		//Editamos Orden
 		cambiarCuentaYGestionEnOrden(CuentaNueva,"Cambio de titularidad");
-		sleep(4000);
+		sleep(5000);
 		
 		//Finalizamos el proceso con TA SUBMIT ORDER
 		driver.findElement(By.name("ta_submit_order")).click();
+		sleep(45000);
+//		cambiarVentanaNavegador(1);
+//		sleep(2000);
+//		driver.findElement(By.id("idlist")).click();
+//		sleep(5000);
+//		cambiarVentanaNavegador(0);
+//		sleep(12000);
+		completarFlujoOrquestacion();
+	}
+	
+	public void irAUltimoAssetSegunCuentaEnVista(String Vista) {
+		selectVistaByVisibleText(Vista);
+
+		//Selecciona la primera cuenta de la lista en la vista seleccionada
+		WebElement primeraCuenta=driver.findElement(By.cssSelector(".x-grid3-col.x-grid3-cell.x-grid3-td-SALES_ACCOUNT_NAME"));
+		primeraCuenta.findElement(By.tagName("div")).findElement(By.tagName("a")).click();
+		sleep(5000);
+		
+		BasePage frame=new BasePage(driver);
+		driver.switchTo().frame(frame.getFrameForElement(driver, By.cssSelector(".panel.panel-default.panel-assets")));
+		
+		//Selecciona el ultimo asset
+		List <WebElement> assets= driver.findElement(By.cssSelector(".panel.panel-default.panel-assets")).findElements(By.cssSelector(".root-asset.ng-scope"));
+		assets.get(assets.size()-1).findElement(By.className("p-check")).click();
+		
+		//click en boton
+		WebElement changeToOrder=driver.findElement(By.className("asset-action")).findElement(By.xpath("//button[2]"));
+		changeToOrder.click();
+		sleep(10000);
+		driver.switchTo().defaultContent();
 	}
 	
 	public List<WebElement> traerElementoColumna(WebElement wBody, int iColumn) {
