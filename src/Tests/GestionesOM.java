@@ -168,13 +168,14 @@ public class GestionesOM extends TestBase {
 		pageOm.Cambio_De_SimCard_Por_Siniestro("LineasFlor");
 	}
 	
-	@Test
+	@Test(groups="OM", priority=1)
 	public void AltaDeServicio() throws InterruptedException {
+		boolean gestion = false;
 		OM om = new OM(driver);
 		om.Gestion_Alta_De_Linea("FlorOM", "Plan Prepago Nacional");
 		om.irAChangeToOrder();
 		sleep(15000);
-		driver.findElement(By.id("RequestDate")).sendKeys("11-28-2019");
+		driver.findElement(By.id("RequestDate")).sendKeys("12-09-2019");
 		driver.findElement(By.cssSelector(".form-control.btn.btn-primary.ng-binding")).click();
 		sleep(10000);
 		driver.findElement(By.xpath("//*[@id=\"tab-default-1\"]/div[1]/ng-include/div/div/div/div[3]/div[1]/div[1]/button/span[2]")).click();
@@ -185,9 +186,7 @@ public class GestionesOM extends TestBase {
 		sleep(7000);
 		driver.findElement(By.xpath("//*[@id=\"tab-default-1\"]/div[1]/ng-include/div/div/div/div[4]/div[2]/div/ng-include/div/div[2]/ng-include/div/div[3]/div/div[3]/div/div/ng-include/div/div[2]/ng-include/div/div[5]/div/div[2]/div[11]/button")).click();
 		sleep(7000);
-		driver.findElement(By.xpath("//*[@id=\"tab-default-1\"]/div[1]/ng-include/div/div/div/div[4]/div[2]/div/ng-include/div/div[2]/ng-include/div/div[3]/div/div[3]/div/div/ng-include/div/div[2]/ng-include/div/div[6]/div/div[2]/div[11]/button")).click();
-		sleep(7000);
-		driver.findElement(By.xpath("//*[@id=\"tab-default-1\"]/div[1]/ng-include/div/div/div/div[4]/div[2]/div/ng-include/div/div[2]/ng-include/div/div[3]/div/div[3]/div/div/ng-include/div/div[2]/ng-include/div/div[8]/div/div[2]/div[11]/button")).click();
+		driver.findElement(By.xpath("//*[@id=\"tab-default-1\"]/div[1]/ng-include/div/div/div/div[4]/div[2]/div/ng-include/div/div[2]/ng-include/div/div[3]/div/div[3]/div/div/ng-include/div/div[2]/ng-include/div/div[7]/div/div[2]/div[11]/button")).click();
 		sleep(7000);
 		buscarYClick(driver.findElements(By.cssSelector(".slds-button.slds-button_neutral")), "contains", "view record");
 		sleep(5000);
@@ -196,8 +195,18 @@ public class GestionesOM extends TestBase {
 		driver.findElement(By.name("ta_submit_order")).click();
 		sleep(10000);
 		om.completarFlujoOrquestacion();
-		
+		sleep(10000);
+		WebElement status = driver.findElement(By.id("Status_ilecell"));
+		List <WebElement> gest = driver.findElements(By.cssSelector(".dataCol.inlineEditWrite"));
+		for (WebElement x : gest) {
+			if (x.getText().equalsIgnoreCase("Alta o Baja SVA")) {
+				gestion = true;
+			}
+		}
+		Assert.assertTrue(status.getText().equalsIgnoreCase("Activated"));
+		Assert.assertTrue(gestion);
 	}
+	
 	
 	@Test(groups="OM", priority=1)
 	public void TS_CRM_Cambio_De_Numero() throws InterruptedException {
