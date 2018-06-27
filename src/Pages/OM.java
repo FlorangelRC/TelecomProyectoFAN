@@ -1042,6 +1042,7 @@ public void deleteOrdersNoActivated(String Vista) {
 	      sleep(5000); 
 	      ((JavascriptExecutor)driver).executeScript("window.scrollTo(0,"+driver.findElement(By.className("slds-section")).getLocation().y+" )"); 
 	      WebElement msi = driver.findElement(By.xpath("//*[@id='js-cpq-product-cart-config-form']/div[1]/div/form/div[18]/div[1]/input")); 
+	      WebElement msi = driver.findElement(By.xpath("//*[@id='js-cpq-product-cart-config-form']/div[1]/div/form/div[2]/div[1]/input")); 
 	      Random r = new Random(); 
 	      msi.clear(); 
 	      msi.sendKeys("11" + r.nextInt(200000000) ); 
