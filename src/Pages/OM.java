@@ -602,6 +602,8 @@ public class OM {
         return(date);
        		
 	}
+	
+	
 	public void fechaAvanzada2() {
 		//Accounts accountPage = new Accounts(driver);
 		/*DateFormat dateFormat = new SimpleDateFormat("MM-dd-yyyy");
@@ -873,8 +875,9 @@ public void deleteOrdersNoActivated(String Vista) {
 		irAChangeToOrder();
 		driver.switchTo().defaultContent(); 
 		sleep(4000);
-        driver.findElement(By.id("RequestDate")).sendKeys(dateFormat.format(pageOm.fechaAvanzada()));
-		driver.findElement(By.cssSelector(".form-control.btn.btn-primary.ng-binding")).click();
+		fechaAvanzada2();
+        //driver.findElement(By.id("RequestDate")).sendKeys(dateFormat.format(pageOm.fechaAvanzada()));
+		//driver.findElement(By.cssSelector(".form-control.btn.btn-primary.ng-binding")).click();
 		sleep(12000);
 		OM.SimCard();
 		driver.findElement(By.id("-import-btn")).click();
@@ -901,11 +904,12 @@ public void deleteOrdersNoActivated(String Vista) {
 		OMQPage OM=new OMQPage (driver);
 		sleep(5000);
 		irAChangeToOrder();	
-		sleep(14000);
+		sleep(16000);
 		Accounts accountPage = new Accounts(driver);
 		driver.switchTo().defaultContent(); 
         DateFormat dateFormat = new SimpleDateFormat("MM-dd-yyyy");
 		driver.findElement(By.id("RequestDate")).sendKeys(dateFormat.format(pageOm.fechaAvanzada()));
+		//driver.findElement(By.id("RequestDate")).sendKeys("07-14-2018");
 		driver.findElement(By.cssSelector(".form-control.btn.btn-primary.ng-binding")).click();
 		sleep(18000);
 		driver.findElement(By.id("-import-btn")).click();
@@ -919,8 +923,9 @@ public void deleteOrdersNoActivated(String Vista) {
 		irAChangeToOrder();
 		driver.switchTo().defaultContent(); 
 		sleep(4000);
-        driver.findElement(By.id("RequestDate")).sendKeys(dateFormat.format(pageOm.fechaAvanzada()));
-		driver.findElement(By.cssSelector(".form-control.btn.btn-primary.ng-binding")).click();
+		fechaAvanzada2();
+        //driver.findElement(By.id("RequestDate")).sendKeys(dateFormat.format(pageOm.fechaAvanzada()));
+		//driver.findElement(By.cssSelector(".form-control.btn.btn-primary.ng-binding")).click();
 		sleep(12000);
 		SimCard(Iccid, Imsi, Ki);
 		driver.findElement(By.id("-import-btn")).click();

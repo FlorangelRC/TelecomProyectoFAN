@@ -133,8 +133,7 @@ public class OMQPage extends BasePage {
 		      	    		List<WebElement> botones = driver.findElements(By.cssSelector(".slds-button.slds-button_neutral.cpq-add-button"));
 		      	    		for(int i=0;i<= productos.size();i++) {
 		      	    			System.out.println(i + ". " +productos.get(i).getText());
-		      	    		if (productos.get(i).getText().substring(0,
-		      	    				productos.get(i).getText().indexOf("\n")).equalsIgnoreCase(PlandeServicio)) {
+		      	    		if (productos.get(i).getText().substring(0,productos.get(i).getText().indexOf("\n")).equalsIgnoreCase(PlandeServicio)) {
 								System.out.println(PlandeServicio);
 								botones.get(i).click();
 									break;
