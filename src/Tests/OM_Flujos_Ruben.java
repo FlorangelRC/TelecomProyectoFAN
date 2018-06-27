@@ -510,7 +510,7 @@ public class OM_Flujos_Ruben extends TestBase {
 
 	@Test(groups = "OM")
 	public void TS_CRM_OM_Gestion_Baja_De_Servicios() {
-		int minimalWait = 3000, shortWait = minimalWait * 2, mediumWait = shortWait * 2, longWait = mediumWait * 2,
+		int minimalWait = 1000, shortWait = minimalWait * 2, mediumWait = shortWait * 2, longWait = mediumWait * 2,
 				stupidLongWait = 60000;
 		pageOm.selectVistaByVisibleText("RubenOM-Activated");
 		sleep(shortWait);
@@ -520,21 +520,18 @@ public class OM_Flujos_Ruben extends TestBase {
 		sleep(longWait);
 		// Ingresar Fecha Futura
 //		driver.findElement(By.id("RequestDate")).sendKeys(pageOm.getFechaAvanzadaFormateada_MM_dd_yyyy());
-		driver.findElement(By.id("RequestDate")).sendKeys("08-13-2018");
+		driver.findElement(By.id("RequestDate")).sendKeys("09-08-2018");
 		sleep(minimalWait);
 		pageOm.getCreatingFutureDateOrdersNextButton().click();
 		sleep(shortWait);
 		pageOm.checkFutureDateRestriction();
-//		sleep(stupidLongWait);
 		omPlansAndServicesPage.getPlanButton().click();
-//		sleep(minimalWait);
 		omPlansAndServicesPage.getServiciosBasicosGeneralMovil().click();
-//		sleep(mediumWait);
 		omPlansAndServicesPage.getSBGMContestador().click();
-//		sleep(mediumWait);
 		omPlansAndServicesPage.getSBGMDDI().click();
-//		sleep(mediumWait);
 		omPlansAndServicesPage.addServiceToCartByName("Llamada en espera");
+//		sleep(mediumWait);
+//		omPlansAndServicesPage.configureService("Llamada en espera");
 		sleep(mediumWait);
 		omPlansAndServicesPage.deleteService("Llamada en espera");
 		
