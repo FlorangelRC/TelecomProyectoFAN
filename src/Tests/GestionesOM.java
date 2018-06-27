@@ -212,7 +212,9 @@ public class GestionesOM extends TestBase {
 	public void TS_CRM_Cambio_De_Numero() throws InterruptedException {
 		OM pageOm=new OM(driver);
 		pageOm.Gestion_Alta_De_Linea("AlOM", "Plan Con Tarjeta");
-		pageOm.Gestion_Cambio_de_Numero("AlanOM", "06-30-2018");
+		pageOm.Gestion_Cambio_de_Numero("AlanOM", "07-07-2018");
 	}
-
+	
 }
+
+

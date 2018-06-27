@@ -720,7 +720,7 @@ public class TestBase {
 	@DataProvider
 	public Object[][] OMNominacion() throws Exception{
 
-		 Object[][] testObjArray = ExcelUtils.getTableArray("Cuentas.xlsx","Sales",1,1,3,"Nominacion");
+		 Object[][] testObjArray = ExcelUtils.getTableArray("Cuentas.xlsx","OM",1,1,3,"Nominacion");
 
 		 return (testObjArray);
 
