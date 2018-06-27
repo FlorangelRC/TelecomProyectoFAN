@@ -86,18 +86,19 @@ public void setUp() throws Exception {
 	String Url;
 	OM pageOm=new OM(driver);
 	OMQPage OM=new OMQPage (driver);
-	pageOm.Gestion_Alta_De_Linea("QuelysOM", "Plan con tarjeta");
+	//pageOm.Gestion_Alta_De_Linea("QuelysOM", "Plan con tarjeta");
+	OM.Gestion_Alta_De_Linea("QuelysOM", "Plan con tarjeta");
 	sleep(5000);
 	pageOm.irAChangeToOrder();
 	sleep(12000);
 	driver.switchTo().defaultContent();
 	
 	//fecha avanzada
-	OM.fechaAv("06-20-2018");
+	OM.fechaAv("06-26-2018");
 	sleep(12000);
 	
 	//agregar Pack
-	OM.agregarPack("Pack 1GB de dia + 3GB de Noche");
+	OM.agregarPack("Packs Opcionales"," Packs de Datos", "Pack Internet x 7 dias","Pack 1GB de dia + 3GB de Noche,","Pack 500Mb + WhasApp x 3 días");
 				
 	//Click ViewRecord
 	sleep(8000);	
@@ -129,18 +130,27 @@ public void setUp() throws Exception {
 	String Url;
 	OM pageOm=new OM(driver);
 	OMQPage OM=new OMQPage (driver);
-	pageOm.Gestion_Alta_De_Linea("QuelysOM", "Plan Prepago Nacional");
+	Select allOrder=new Select(driver.findElement(By.id("fcf"))); 
+    allOrder.selectByVisibleText("Quelys"); 
+    sleep(1000); 
+    try {driver.findElement(By.name("go")).click();}catch(org.openqa.selenium.NoSuchElementException e) {} 
+    sleep(3000); 
+//  //Selecciona la primera cuenta de la lista en la vista seleccionada 
+    WebElement primeraCuenta=driver.findElement(By.cssSelector(".x-grid3-col.x-grid3-cell.x-grid3-td-SALES_ACCOUNT_NAME")); 
+    primeraCuenta.findElement(By.tagName("div")).findElement(By.tagName("a")).click(); 
+    sleep(8000); 
+	//pageOm.Gestion_Alta_De_Linea("QuelysOM", "Plan Prepago Nacional");
 	sleep(5000);
 	pageOm.irAChangeToOrder();
 	sleep(12000);
 	driver.switchTo().defaultContent();
 	
 	//fecha avanzada
-	OM.fechaAv("06-28-2018");
+	OM.fechaAv("07-01-2018");
 	sleep(12000);
 	
 	//agregar Pack
-	OM.agregarPack("Pack 2GB + WhasApp x 3 días");
+	OM.agregarPack("Packs Opcionales","Packs de Datos", "Pack 500MB de dia + 1,5GB de Noche","Pack 1GB de dia + 3GB de Noche","Pack 2Gb + WhasApp x 30 días");
 				
 	//Click ViewRecord
 	sleep(8000);	

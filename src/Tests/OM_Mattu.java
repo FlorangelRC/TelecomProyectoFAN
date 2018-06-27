@@ -2,10 +2,8 @@ package Tests;
 
 import java.util.ArrayList;
 import java.util.List;
-
 import org.openqa.selenium.Alert;
 import org.openqa.selenium.By;
-import org.openqa.selenium.UnhandledAlertException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.Select;
@@ -15,7 +13,6 @@ import org.testng.annotations.BeforeClass;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
-import Pages.BasePage;
 import Pages.OM;
 import Pages.SCP;
 import Pages.setConexion;
@@ -54,7 +51,7 @@ public class OM_Mattu extends TestBase{
 		pageOm.clickOnListTabs("Orders");
 	}
 	
-	//@AfterClass(alwaysRun=true)
+	@AfterClass(alwaysRun=true)
 	public void tearDown() {
 		sleep(2000);
 		driver.quit();
@@ -102,8 +99,9 @@ public class OM_Mattu extends TestBase{
 		
 		sleep(5000);
 		boolean bAssert = true;
+		OM oOM = new OM(driver);
 		WebElement wBody = driver.findElement(By.id("ext-gen10"));
-		List<String> sColumn = traerColumna(wBody, 2);
+		List<String> sColumn = oOM.traerColumna(wBody, 2);
 		
 		for (String sAux : sColumn) {
 			int iAux = Integer.parseInt(sAux);
@@ -112,7 +110,7 @@ public class OM_Mattu extends TestBase{
 			}
 		}
 		
-		sColumn = traerColumna(wBody, 4);
+		sColumn = oOM.traerColumna(wBody, 4);
 		for (String sAux : sColumn) {
 			sAux = sAux.substring(1, sAux.length()).replace(",", ".");
 			double fAux = Double.parseDouble(sAux);
@@ -159,8 +157,9 @@ public class OM_Mattu extends TestBase{
 		
 		sleep(5000);
 		boolean bAssert = true;
+		OM oOM = new OM(driver);
 		WebElement wBody = driver.findElement(By.id("ext-gen10"));
-		List<String> sColumn = traerColumna(wBody, 2);
+		List<String> sColumn = oOM.traerColumna(wBody, 2);
 		
 		for (String sAux : sColumn) {
 			int iAux = Integer.parseInt(sAux);
@@ -201,8 +200,9 @@ public class OM_Mattu extends TestBase{
 		
 		sleep(5000);
 		boolean bAssert = true;
+		OM oOM = new OM(driver);
 		WebElement wBody = driver.findElement(By.id("ext-gen10"));
-		List<String> sColumn = traerColumna(wBody, 2);
+		List<String> sColumn = oOM.traerColumna(wBody, 2);
 		
 		for (String sAux : sColumn) {
 			int iAux = Integer.parseInt(sAux);
@@ -249,8 +249,9 @@ public class OM_Mattu extends TestBase{
 		
 		sleep(5000);
 		boolean bAssert = true;
+		OM oOM = new OM(driver);
 		WebElement wBody = driver.findElement(By.id("ext-gen10"));
-		List<String> sColumn = traerColumna(wBody, 2);
+		List<String> sColumn = oOM.traerColumna(wBody, 2);
 		
 		for (String sAux : sColumn) {
 			int iAux = Integer.parseInt(sAux);
@@ -259,7 +260,7 @@ public class OM_Mattu extends TestBase{
 			}
 		}
 		
-		sColumn = traerColumna(wBody, 2);
+		sColumn = oOM.traerColumna(wBody, 2);
 		for (String sAux : sColumn) {
 			int iAux = Integer.parseInt(sAux);
 			if (iAux >= 404) {
@@ -299,8 +300,9 @@ public class OM_Mattu extends TestBase{
 		
 		sleep(5000);
 		boolean bAssert = true;
+		OM oOM = new OM(driver);
 		WebElement wBody = driver.findElement(By.id("ext-gen10"));
-		List<String> sColumn = traerColumna(wBody, 2);
+		List<String> sColumn = oOM.traerColumna(wBody, 2);
 		
 		for (String sAux : sColumn) {
 			int iAux = Integer.parseInt(sAux);
@@ -341,8 +343,9 @@ public class OM_Mattu extends TestBase{
 		
 		sleep(5000);
 		boolean bAssert = true;
+		OM oOM = new OM(driver);
 		WebElement wBody = driver.findElement(By.id("ext-gen10"));
-		List<String> sColumn = traerColumna(wBody, 2);
+		List<String> sColumn = oOM.traerColumna(wBody, 2);
 		
 		for (String sAux : sColumn) {
 			int iAux = Integer.parseInt(sAux);
@@ -383,8 +386,9 @@ public class OM_Mattu extends TestBase{
 		
 		sleep(5000);
 		boolean bAssert = true;
+		OM oOM = new OM(driver);
 		WebElement wBody = driver.findElement(By.id("ext-gen10"));
-		List<String> sColumn = traerColumna(wBody, 2);
+		List<String> sColumn = oOM.traerColumna(wBody, 2);
 		
 		for (String sAux : sColumn) {
 			int iAux = Integer.parseInt(sAux);
@@ -425,8 +429,9 @@ public class OM_Mattu extends TestBase{
 		
 		sleep(5000);
 		boolean bAssert = true;
+		OM oOM = new OM(driver);
 		WebElement wBody = driver.findElement(By.id("ext-gen10"));
-		List<String> sColumn = traerColumna(wBody, 2);
+		List<String> sColumn = oOM.traerColumna(wBody, 2);
 		
 		for (String sAux : sColumn) {
 			int iAux = Integer.parseInt(sAux);
@@ -467,8 +472,9 @@ public class OM_Mattu extends TestBase{
 		
 		sleep(5000);
 		boolean bAssert = true;
+		OM oOM = new OM(driver);
 		WebElement wBody = driver.findElement(By.id("ext-gen10"));
-		List<String> sColumn = traerColumna(wBody, 3);
+		List<String> sColumn = oOM.traerColumna(wBody, 3);
 		
 		for (String sAux : sColumn) {
 			if (!sAux.contains("Mattu")) {
@@ -520,8 +526,9 @@ public class OM_Mattu extends TestBase{
 		
 		sleep(5000);
 		boolean bAssert = true;
+		OM oOM = new OM(driver);
 		WebElement wBody = driver.findElement(By.id("ext-gen10"));
-		List<String> sColumn = traerColumna(wBody, 3);
+		List<String> sColumn = oOM.traerColumna(wBody, 3);
 		
 		for (String sAux : sColumn) {
 			if (sAux.contains("Mattu")) {
@@ -561,8 +568,9 @@ public class OM_Mattu extends TestBase{
 		
 		sleep(5000);
 		boolean bAssert = true;
+		OM oOM = new OM(driver);
 		WebElement wBody = driver.findElement(By.id("ext-gen10"));
-		List<String> sColumn = traerColumna(wBody, 3);
+		List<String> sColumn = oOM.traerColumna(wBody, 3);
 		
 		for (String sAux : sColumn) {
 			if (!sAux.startsWith("Mattu")) {
@@ -602,8 +610,9 @@ public class OM_Mattu extends TestBase{
 		
 		sleep(5000);
 		boolean bAssert = true;
+		OM oOM = new OM(driver);
 		WebElement wBody = driver.findElement(By.id("ext-gen10"));
-		List<String> sColumn = traerColumna(wBody, 3);
+		List<String> sColumn = oOM.traerColumna(wBody, 3);
 		
 		for (String sAux : sColumn) {
 			if (!sAux.contains("Mattu") && !sAux.contains("Flor")) {
@@ -624,11 +633,13 @@ public class OM_Mattu extends TestBase{
 	//TCC = 12 Bis
 	@Test(groups = "OM")
 	public void TS6723_OM_Ordenes_Vista_Configuración_Borrar_Vista(){
-		crearVistaOM("OM_View_Mattu", "OM_Test_Mattu");
-		crearVistaOM("OM_View_Mattu_2", "OM_Test_Mattu");
+		OM oOM = new OM(driver);
+		oOM.crearVistaOM("OM_View_Mattu", "OM_Test_Mattu");
+		sleep(2000);
+		oOM.crearVistaOM("OM_View_Mattu_2", "OM_Test_Mattu");
 		
 		sleep(5000);
-		selectVistaByVisibleText("OM_View_Mattu");
+		oOM.selectVistaByVisibleText("OM_View_Mattu");
 		sleep(2000);
 		List<WebElement> wFilterLinks = driver.findElement(By.className("filterLinks")).findElements(By.tagName("a"));
 		wFilterLinks.get(1).click();
@@ -636,7 +647,7 @@ public class OM_Mattu extends TestBase{
 		confirmDelete.accept();
 		
 		sleep(5000);
-		selectVistaByVisibleText("OM_View_Mattu_2");
+		oOM.selectVistaByVisibleText("OM_View_Mattu_2");
 		sleep(2000);
 		wFilterLinks = driver.findElement(By.className("filterLinks")).findElements(By.tagName("a"));
 		wFilterLinks.get(1).click();
@@ -648,12 +659,13 @@ public class OM_Mattu extends TestBase{
 	//TCC = 14
 	@Test(groups = "OM")
 	public void TS6727_OM_Ordenes_Order_Detail_Visualización_del_flujo_de_orquestacion(){
-		selectVistaByVisibleText("All Orders");
-		selectVistaByVisibleText("OM_View_Mattu_Static");
+		OM oOM = new OM(driver);
+		oOM.selectVistaByVisibleText("All Orders");
+		oOM.selectVistaByVisibleText("OM_View_Mattu_Static");
 		sleep(10000);
 		driver.switchTo().defaultContent();
 		WebElement wBody = driver.findElement(By.id("ext-gen10"));
-		List<WebElement> wColumn = traerElementoColumna(wBody, 2);
+		List<WebElement> wColumn = oOM.traerElementoColumna(wBody, 2);
 		for (WebElement wAux : wColumn) {
 			if (wAux.getText().contains("25365")) {
 				wAux.findElement(By.tagName("a")).click();
@@ -681,70 +693,18 @@ public class OM_Mattu extends TestBase{
 	
 	//-------------------------------------------------------------------------------------------------
 	//TCC = 15
-	@Test(groups = "OM")
+	//@Test(groups = "OM")
 	public void TS79026_OM_Ordenes_Cliente_existente_Alta_de_linea_Sin_delivery_Sin_VAS(){
 		page.crearOrden("MattuOM");
 		
 	}
 	
 	//-------------------------------------------------------------------------------------------------
-	//Methods
-	
-	public List<String> traerColumna(WebElement wBody, int iColumn) {
-		List<WebElement> wRows = wBody.findElements(By.tagName("tr"));
-		List<String> sColumn = new ArrayList<String>();
-		for(WebElement wAux : wRows) {
-			List<WebElement> wTd = wAux.findElements(By.tagName("td"));
-			sColumn.add(wTd.get(iColumn).getText());
-		}
-
-		return sColumn;
-	}
-	
-	public List<WebElement> traerElementoColumna(WebElement wBody, int iColumn) {
-		List<WebElement> wRows = wBody.findElements(By.tagName("tr"));
-		List<WebElement> wColumn = new ArrayList<WebElement>();
-		for(WebElement wAux : wRows) {
-			List<WebElement> wTd = wAux.findElements(By.tagName("td"));
-			wColumn.add(wTd.get(iColumn));
-		}
-
-		return wColumn;
-	}
-	
-	public boolean crearVistaOM(String nombreVista, String nombreCuenta) {
-		driver.findElement(By.id("tabBar")).findElement(By.id("Order_Tab")).click();
-		sleep(2000);
-		try {
-			driver.findElement(By.xpath("//*[@id=\"filter_element\"]/div/span/span[2]/a[2]")).click();
-			sleep(3000);
-			driver.findElement(By.id("fname")).sendKeys(nombreVista);
-
-			// Filtros de Busqueda
-			Select campo = new Select(driver.findElement(By.id("fcol1")));
-			campo.selectByValue("SALES.ACCOUNT.NAME");
-			Select operador = new Select(driver.findElement(By.id("fop1")));
-			operador.selectByValue("e");
-			driver.findElement(By.id("fval1")).sendKeys(nombreCuenta);
-			;
-			sleep(1000);
-			// click guardar
-			driver.findElement(By.cssSelector(".btn.primary")).click();
-			sleep(2000);
-			if (driver.findElement(By.name("fcf")).getText().contains(nombreVista))
-				return true;
-			else
-				return false;
-		} catch (Exception e) {
-			System.out.println("Vista '" + nombreVista + "' no creada.");
-			e.printStackTrace();
-			return false;
-		}
-	}
-	
-	public void selectVistaByVisibleText(String vista) {
-		Select vistaSelect = new Select(driver.findElement(By.name("fcf")));
-		vistaSelect.selectByVisibleText(vista);
+	//Open Page
+	//@Test()
+	public void OpenPage() throws InterruptedException{
+		OM oOM = new OM(driver);
+		oOM.suspencionPorSiniestro("MattuOM", "Plan Prepago Nacional SIT");
 	}
 
 }

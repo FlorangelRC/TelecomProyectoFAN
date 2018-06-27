@@ -350,7 +350,7 @@ public class TechnicalCareCSRDiagnosticoPage extends BasePage{
 	      		for (WebElement opt : getlistaDeInconvenientes()) {
 	      			if (opt.getText().equalsIgnoreCase(inconvenientName)) {
 	      				opt.click();
-	      				sleep(3000);
+	      				sleep(8000);
 	      				break;
 	        }
 	    
@@ -359,7 +359,7 @@ public class TechnicalCareCSRDiagnosticoPage extends BasePage{
 	
 
 	public boolean validarInconveniente(String inconvenientName) {
-			sleep(3000);
+			sleep(5000);
 			driver.switchTo().frame(getFrameForElement(driver, By.id("IssueSelectStep")));
 			for (WebElement opt : getlistaDeInconvenientes()) {
 				if(opt.getText().contains(inconvenientName)) {

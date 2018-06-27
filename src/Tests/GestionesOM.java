@@ -66,6 +66,26 @@ public class GestionesOM extends TestBase {
 		sleep(1000);
 	}
 	
+	@Test(groups="OM", priority=1, dataProvider="OMAltaLinea")
+	public void AltaLinea_Datos(String sCuenta, String sPlan, String sLinea, String sIccid, String sImsi, String sKi) throws InterruptedException {
+		OM pageOm=new OM(driver);
+		pageOm.Gestion_Alta_De_Linea_Parametros(sCuenta, sPlan, sLinea, sIccid, sImsi, sKi);
+	}
+	
+	@Test(groups="OM", priority=1, dataProvider="OMCambioSim")
+	public void TS_CRM_Cambio_De_SimCard_Datos(String sCuenta, String sPlan, String sLinea, String sIccid, String sImsi, String sKi, String sIccid2, String sImsi2, String sKi2) throws InterruptedException {
+		OM pageOm=new OM(driver);
+		pageOm.Gestion_Alta_De_Linea_Parametros(sCuenta, sPlan, sLinea, sIccid, sImsi, sKi);
+		pageOm.Cambio_De_SimCard_Parametros(sIccid2,sImsi2,sKi2);
+	}
+	
+	@Test(groups="OM", priority=1, dataProvider="OMCambioSimSiniestro")
+	public void TS_CRM_Cambio_De_SimCard_Por_Siniestro_Datos(String sCuenta, String sPlan, String sLinea, String sIccid, String sImsi, String sKi, String sIccid2, String sImsi2, String sKi2) throws InterruptedException {
+		OM pageOm=new OM(driver);
+		pageOm.Gestion_Alta_De_Linea_Parametros(sCuenta, sPlan, sLinea, sIccid, sImsi, sKi);
+		pageOm.Cambio_De_SimCard_Por_Siniestro_Parametros(sIccid2,sImsi2,sKi2);
+	}
+	
 	@Test(groups="OM", priority=1)
 	public void AltaLinea() throws InterruptedException {
 		OM pageOm=new OM(driver);
@@ -77,14 +97,16 @@ public class GestionesOM extends TestBase {
 	public void TS_CRM_Cambio_De_SimCard() throws InterruptedException {
 		OM pageOm=new OM(driver);
 		pageOm.Gestion_Alta_De_Linea("FlorOM", "Plan Con Tarjeta");
-		pageOm.Cambio_De_SimCard("07/13/2018");
+		pageOm.Cambio_De_SimCard("07-13-2018");
 	}
 	
-	@Test(groups="OM", priority=1, dataProvider="SalesCuentaBolsa") 
-	public void Gestion_Nominacion(String sCuenta, String sDni, String sLinea) throws Exception {
+	@Test(groups="OM", priority=1, dataProvider="OMNominacion") 
+	public void TS_CRM_Gestion_Nominacion(String sCuenta, String sDni, String sLinea) throws Exception {
+		OM pageOm=new OM(driver);
 		SalesBase sb = new SalesBase(driver);
 		sb.DesloguearLoguear("venta", 3);
-		
+		pageOm.Gestion_Nominacion(sCuenta, sDni, sLinea);
+		sb.DesloguearLoguear("OM", 4);
 	}
 	
 	
@@ -114,13 +136,14 @@ public class GestionesOM extends TestBase {
 		pageOm.Cambio_De_SimCard_Por_Siniestro("LineasFlor");
 	}
 	
-	@Test
+	@Test(groups="OM", priority=1)
 	public void AltaDeServicio() throws InterruptedException {
+		boolean gestion = false;
 		OM om = new OM(driver);
 		om.Gestion_Alta_De_Linea("FlorOM", "Plan Prepago Nacional");
 		om.irAChangeToOrder();
 		sleep(15000);
-		driver.findElement(By.id("RequestDate")).sendKeys("11-28-2019");
+		driver.findElement(By.id("RequestDate")).sendKeys("12-09-2019");
 		driver.findElement(By.cssSelector(".form-control.btn.btn-primary.ng-binding")).click();
 		sleep(10000);
 		driver.findElement(By.xpath("//*[@id=\"tab-default-1\"]/div[1]/ng-include/div/div/div/div[3]/div[1]/div[1]/button/span[2]")).click();
@@ -131,9 +154,7 @@ public class GestionesOM extends TestBase {
 		sleep(7000);
 		driver.findElement(By.xpath("//*[@id=\"tab-default-1\"]/div[1]/ng-include/div/div/div/div[4]/div[2]/div/ng-include/div/div[2]/ng-include/div/div[3]/div/div[3]/div/div/ng-include/div/div[2]/ng-include/div/div[5]/div/div[2]/div[11]/button")).click();
 		sleep(7000);
-		driver.findElement(By.xpath("//*[@id=\"tab-default-1\"]/div[1]/ng-include/div/div/div/div[4]/div[2]/div/ng-include/div/div[2]/ng-include/div/div[3]/div/div[3]/div/div/ng-include/div/div[2]/ng-include/div/div[6]/div/div[2]/div[11]/button")).click();
-		sleep(7000);
-		driver.findElement(By.xpath("//*[@id=\"tab-default-1\"]/div[1]/ng-include/div/div/div/div[4]/div[2]/div/ng-include/div/div[2]/ng-include/div/div[3]/div/div[3]/div/div/ng-include/div/div[2]/ng-include/div/div[8]/div/div[2]/div[11]/button")).click();
+		driver.findElement(By.xpath("//*[@id=\"tab-default-1\"]/div[1]/ng-include/div/div/div/div[4]/div[2]/div/ng-include/div/div[2]/ng-include/div/div[3]/div/div[3]/div/div/ng-include/div/div[2]/ng-include/div/div[7]/div/div[2]/div[11]/button")).click();
 		sleep(7000);
 		buscarYClick(driver.findElements(By.cssSelector(".slds-button.slds-button_neutral")), "contains", "view record");
 		sleep(5000);
@@ -142,14 +163,26 @@ public class GestionesOM extends TestBase {
 		driver.findElement(By.name("ta_submit_order")).click();
 		sleep(10000);
 		om.completarFlujoOrquestacion();
-		
+		sleep(10000);
+		WebElement status = driver.findElement(By.id("Status_ilecell"));
+		List <WebElement> gest = driver.findElements(By.cssSelector(".dataCol.inlineEditWrite"));
+		for (WebElement x : gest) {
+			if (x.getText().equalsIgnoreCase("Alta o Baja SVA")) {
+				gestion = true;
+			}
+		}
+		Assert.assertTrue(status.getText().equalsIgnoreCase("Activated"));
+		Assert.assertTrue(gestion);
 	}
+	
 	
 	@Test(groups="OM", priority=1)
 	public void TS_CRM_Cambio_De_Numero() throws InterruptedException {
 		OM pageOm=new OM(driver);
 		pageOm.Gestion_Alta_De_Linea("AlOM", "Plan Con Tarjeta");
-		pageOm.Gestion_Cambio_de_Numero("AlanOM", "06-30-2018");
+		pageOm.Gestion_Cambio_de_Numero("AlanOM", "07-07-2018");
 	}
-
+	
 }
+
+
