@@ -710,9 +710,17 @@ public class TestBase {
 
 	}
 	@DataProvider
-	public Object[][] OMCambioSimSiniestro() throws Exception{
+	public Object[][] OMCambioDeSimSiniestro() throws Exception{
 
-	 Object[][] testObjArray = ExcelUtils.getTableArray("Cuentas.xlsx","OM",1,1,9,"CambioSimSiniestro");
+	 Object[][] testObjArray = ExcelUtils.getTableArray("Cuentas.xlsx","OM",1,1,9,"CambioDeSimSiniestro");
+
+	 return (testObjArray);
+
+	}
+	@DataProvider
+	public Object[][] OMCambioDeNumero() throws Exception{
+
+	 Object[][] testObjArray = ExcelUtils.getTableArray("Cuentas.xlsx","OM",1,1,7,"CambioDeNumero");
 
 	 return (testObjArray);
 
@@ -833,7 +841,7 @@ public class TestBase {
 	@DataProvider
 	public Object[][] OMCambioTitularidad() throws Exception{
 
-	 Object[][] testObjArray = ExcelUtils.getTableArray("Gestiones OM Objetivos.xlsx","DatosAGenerar",2,1,6,"Cambio de Titularidad");
+	 Object[][] testObjArray = ExcelUtils.getTableArray("Cuentas.xlsx","OM",1,1,6,"Cambio de Titularidad");
 
 	 return (testObjArray);
 

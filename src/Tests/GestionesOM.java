@@ -15,6 +15,7 @@ import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.Select;
+import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
@@ -79,11 +80,29 @@ public class GestionesOM extends TestBase {
 		pageOm.Cambio_De_SimCard_Parametros(sIccid2,sImsi2,sKi2);
 	}
 	
-	@Test(groups="OM", priority=1, dataProvider="OMCambioSimSiniestro")
+	@Test(groups="OM", priority=1, dataProvider="OMCambioDeSimSiniestro")
 	public void TS_CRM_Cambio_De_SimCard_Por_Siniestro_Datos(String sCuenta, String sPlan, String sLinea, String sIccid, String sImsi, String sKi, String sIccid2, String sImsi2, String sKi2) throws InterruptedException {
 		OM pageOm=new OM(driver);
 		pageOm.Gestion_Alta_De_Linea_Parametros(sCuenta, sPlan, sLinea, sIccid, sImsi, sKi);
 		pageOm.Cambio_De_SimCard_Por_Siniestro_Parametros(sIccid2,sImsi2,sKi2);
+	}
+	
+	@Test(groups="OM", priority=1, dataProvider="OMCambioDeNumero")
+	public void TS_CRM_Cambio_De_Numero_Datos(String sCuenta, String sPlan, String sLinea, String sIccid, String sImsi, String sKi,String sMsisdn) throws InterruptedException {
+		OM pageOm=new OM(driver);
+		boolean gestion = false;
+		pageOm.Gestion_Alta_De_Linea_Parametros(sCuenta, sPlan, sLinea, sIccid, sImsi, sKi);
+		pageOm.Gestion_Cambio_de_Numero_Parametros(sMsisdn);
+		sleep(5000);
+		WebElement status = driver.findElement(By.id("Status_ilecell"));
+		List <WebElement> gest = driver.findElements(By.cssSelector(".dataCol.inlineEditWrite"));
+		for (WebElement x : gest) {
+			if (x.getText().equalsIgnoreCase("Cambio de n\\u00famero")) {
+				gestion = true;
+			}
+		}
+		Assert.assertTrue(status.getText().equalsIgnoreCase("Activated"));
+		Assert.assertTrue(gestion);
 	}
 	
 	@Test(groups="OM", priority=1)
@@ -97,7 +116,7 @@ public class GestionesOM extends TestBase {
 	public void TS_CRM_Cambio_De_SimCard() throws InterruptedException {
 		OM pageOm=new OM(driver);
 		pageOm.Gestion_Alta_De_Linea("FlorOM", "Plan Con Tarjeta");
-		pageOm.Cambio_De_SimCard("07-13-2018");
+		pageOm.Cambio_De_SimCard("07-14-2018");
 	}
 	
 	@Test(groups="OM", priority=1, dataProvider="OMNominacion") 
@@ -132,8 +151,19 @@ public class GestionesOM extends TestBase {
 	@Test(groups="OM", priority=1)
 	public void TS_CRM_Cambio_De_SimCard_Por_Siniestro() throws InterruptedException {
 		OM pageOm=new OM(driver);
+		boolean gestion = false;
 		pageOm.Gestion_Alta_De_Linea("FlorOM", "Plan Con Tarjeta");
 		pageOm.Cambio_De_SimCard_Por_Siniestro("LineasFlor");
+		sleep(5000);
+		WebElement status = driver.findElement(By.id("Status_ilecell"));
+		List <WebElement> gest = driver.findElements(By.cssSelector(".dataCol.inlineEditWrite"));
+		for (WebElement x : gest) {
+			if (x.getText().equalsIgnoreCase("Cambio de SIM por siniestro")) {
+				gestion = true;
+			}
+		}
+		Assert.assertTrue(status.getText().equalsIgnoreCase("Activated"));
+		Assert.assertTrue(gestion);
 	}
 	
 	@Test(groups="OM", priority=1)
@@ -171,6 +201,7 @@ public class GestionesOM extends TestBase {
 				gestion = true;
 			}
 		}
+		
 		Assert.assertTrue(status.getText().equalsIgnoreCase("Activated"));
 		Assert.assertTrue(gestion);
 	}
@@ -179,8 +210,19 @@ public class GestionesOM extends TestBase {
 	@Test(groups="OM", priority=1)
 	public void TS_CRM_Cambio_De_Numero() throws InterruptedException {
 		OM pageOm=new OM(driver);
+		boolean gestion = false;
 		pageOm.Gestion_Alta_De_Linea("AlOM", "Plan Con Tarjeta");
-		pageOm.Gestion_Cambio_de_Numero("AlanOM", "07-15-2018");
+		pageOm.Gestion_Cambio_de_Numero("AlanOM", "07-07-2018");
+		sleep(5000);
+		WebElement status = driver.findElement(By.id("Status_ilecell"));
+		List <WebElement> gest = driver.findElements(By.cssSelector(".dataCol.inlineEditWrite"));
+		for (WebElement x : gest) {
+			if (x.getText().equalsIgnoreCase("Cambio de n\\u00famero")) {
+				gestion = true;
+			}
+		}
+		Assert.assertTrue(status.getText().equalsIgnoreCase("Activated"));
+		Assert.assertTrue(gestion);
 	}
 	
 }

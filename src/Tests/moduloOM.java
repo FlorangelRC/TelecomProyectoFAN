@@ -90,7 +90,7 @@ public class moduloOM extends TestBase {
 	
 	//Hay que Ajustar
 	//@Test(groups="OM") 
-	public void TS6727_CRM_OM_Ordenes_Order_Detail_Visualización_del_flujo_de_orquestación() {
+	public void TS6727_CRM_OM_Ordenes_Order_Detail_Visualizaciï¿½n_del_flujo_de_orquestaciï¿½n() {
 		OM pageOm=new OM(driver);
 		//pageOm.crearVistaOM("AutOrders","AutomaOM");
 		Select allOrder=new Select(driver.findElement(By.id("fcf")));
@@ -275,5 +275,108 @@ public class moduloOM extends TestBase {
 		public void TS80342_CRM_OM_Ordenes_Cliente_existente_Cambio_de_titularidad_Plan_con_tarjeta_Repro_Paso_1() {
 				assertTrue(true);
 			}
+	
+	@Test(groups= {"OM","CambioDeSimCard"} )
+	public void TS52668_CRM_OM_Ordenes_Cliente_Existente_Cambio_De_SIM_Sin_Delivery_Paso_3() throws InterruptedException {
+		OM pageOm=new OM(driver);
+		boolean gestion = false;
+		pageOm.Gestion_Alta_De_Linea("FlorOM", "Plan Con Tarjeta");
+		pageOm.Cambio_De_SimCard("07-13-2018");
+		sleep(10000);
+		WebElement status = driver.findElement(By.id("Status_ilecell"));
+		List <WebElement> gest = driver.findElements(By.cssSelector(".dataCol.inlineEditWrite"));
+		for (WebElement x : gest) {
+			if (x.getText().equalsIgnoreCase("Cambio de SIM")) {
+				gestion = true;
+			}
+		}
+		Assert.assertTrue(status.getText().equalsIgnoreCase("Activated"));
+		Assert.assertTrue(gestion);
+		
+	}
+	
+	@Test(groups= {"OM","CambioDeSimCard"},dependsOnMethods = "TS52668_CRM_OM_Ordenes_Cliente_Existente_Cambio_De_SIM_Sin_Delivery_Paso_3")
+	public void TS52667_CRM_OM_Ordenes_Cliente_Existente_Cambio_De_SIM_Sin_Delivery_Paso_2() throws InterruptedException {
+		Assert.assertTrue(true);
+	}
+	@Test(groups= {"OM","CambioDeSimCard"},dependsOnMethods = "TS52668_CRM_OM_Ordenes_Cliente_Existente_Cambio_De_SIM_Sin_Delivery_Paso_3")
+	public void TS52666_CRM_OM_Ordenes_Cliente_Existente_Cambio_De_SIM_Sin_Delivery_Paso_1() throws InterruptedException {
+		Assert.assertTrue(true);
+	}
+	@Test(groups= {"OM","CambioDeSimCard"},dependsOnMethods = "TS52668_CRM_OM_Ordenes_Cliente_Existente_Cambio_De_SIM_Sin_Delivery_Paso_3")
+	public void TS52665_CRM_OM_Ordenes_Cliente_Existente_Cambio_De_SIM_Sin_Delivery_Paso_0() throws InterruptedException {
+		Assert.assertTrue(true);
+	}
+	
+	@Test(groups= {"OM","CambioDeSimCardSiniestro"})
+	public void TS79634_CRM_OM_Ordenes_Cliente_Existente_Cambio_De_SIM_Por_Siniestro_Sin_Delivery_Paso_3() throws InterruptedException {
+		OM pageOm=new OM(driver);
+		boolean gestion = false;
+		pageOm.Gestion_Alta_De_Linea("FlorOM", "Plan Prepago Nacional");
+		pageOm.Cambio_De_SimCard_Por_Siniestro("LineasFlor");
+		sleep(5000);
+		WebElement status = driver.findElement(By.id("Status_ilecell"));
+		List <WebElement> gest = driver.findElements(By.cssSelector(".dataCol.inlineEditWrite"));
+		for (WebElement x : gest) {
+			if (x.getText().equalsIgnoreCase("Cambio de SIM por siniestro")) {
+				gestion = true;
+			}
+		}
+		Assert.assertTrue(status.getText().equalsIgnoreCase("Activated"));
+		Assert.assertTrue(gestion);
+	}
+	
+	@Test(groups= {"OM","CambioDeSimCardSiniestro"}, dependsOnMethods = "TS79634_CRM_OM_Ordenes_Cliente_Existente_Cambio_De_SIM_Por_Siniestro_Sin_Delivery_Paso_3")
+	public void TS79632_CRM_OM_Ordenes_Cliente_Existente_Cambio_De_SIM_Por_Siniestro_Sin_Delivery_Paso_2() throws InterruptedException {
+		Assert.assertTrue(true);
+	}
+	@Test(groups= {"OM","CambioDeSimCardSiniestro"}, dependsOnMethods = "TS79634_CRM_OM_Ordenes_Cliente_Existente_Cambio_De_SIM_Por_Siniestro_Sin_Delivery_Paso_3")
+	public void TS79631_CRM_OM_Ordenes_Cliente_Existente_Cambio_De_SIM_Por_Siniestro_Sin_Delivery_Paso_1() throws InterruptedException {
+		Assert.assertTrue(true);
+	}
+	@Test(groups= {"OM","CambioDeSimCardSiniestro"}, dependsOnMethods = "TS79634_CRM_OM_Ordenes_Cliente_Existente_Cambio_De_SIM_Por_Siniestro_Sin_Delivery_Paso_3")
+	public void TS79630_CRM_OM_Ordenes_Cliente_Existente_Cambio_De_SIM_Por_Siniestro_Sin_Delivery_Paso_0() throws InterruptedException {
+		Assert.assertTrue(true);
+	}
+	
+	@Test(groups= {"OM","CambioDeSimCardSiniestro"})
+	public void TS80323_OM_Ordenes_Cliente_Existente_Cambio_De_SIM_Por_Siniestro_Plan_Con_Tarjeta_Sin_Delivery_Paso_5() throws InterruptedException {
+		OM pageOm=new OM(driver);
+		boolean gestion = false;
+		pageOm.Gestion_Alta_De_Linea("FlorOM", "Plan con Tarjeta");
+		pageOm.Cambio_De_SimCard_Por_Siniestro("LineasFlor");
+		sleep(5000);
+		WebElement status = driver.findElement(By.id("Status_ilecell"));
+		List <WebElement> gest = driver.findElements(By.cssSelector(".dataCol.inlineEditWrite"));
+		for (WebElement x : gest) {
+			if (x.getText().equalsIgnoreCase("Cambio de SIM por siniestro")) {
+				gestion = true;
+			}
+		}
+		Assert.assertTrue(status.getText().equalsIgnoreCase("Activated"));
+		Assert.assertTrue(gestion);
+	}
+	
+	@Test(groups= {"OM","CambioDeSimCardSiniestro"}, dependsOnMethods = "TS80323_OM_Ordenes_Cliente_Existente_Cambio_De_SIM_Por_Siniestro_Plan_Con_Tarjeta_Sin_Delivery_Paso_5")
+	public void TS80322_OM_Ordenes_Cliente_Existente_Cambio_De_SIM_Por_Siniestro_Plan_Con_Tarjeta_Sin_Delivery_Paso_4() throws InterruptedException {
+		Assert.assertTrue(true);
+	}
+	@Test(groups= {"OM","CambioDeSimCardSiniestro"}, dependsOnMethods = "TS80323_OM_Ordenes_Cliente_Existente_Cambio_De_SIM_Por_Siniestro_Plan_Con_Tarjeta_Sin_Delivery_Paso_5")
+	public void TS80321_OM_Ordenes_Cliente_Existente_Cambio_De_SIM_Por_Siniestro_Plan_Con_Tarjeta_Sin_Delivery_Paso_3() throws InterruptedException {
+		Assert.assertTrue(true);
+	}
+	@Test(groups= {"OM","CambioDeSimCardSiniestro"}, dependsOnMethods = "TS80323_OM_Ordenes_Cliente_Existente_Cambio_De_SIM_Por_Siniestro_Plan_Con_Tarjeta_Sin_Delivery_Paso_5")
+	public void TS80320_OM_Ordenes_Cliente_Existente_Cambio_De_SIM_Por_Siniestro_Plan_Con_Tarjeta_Sin_Delivery_Paso_2() throws InterruptedException {
+		Assert.assertTrue(true);
+	}
+	@Test(groups= {"OM","CambioDeSimCardSiniestro"}, dependsOnMethods = "TS80323_OM_Ordenes_Cliente_Existente_Cambio_De_SIM_Por_Siniestro_Plan_Con_Tarjeta_Sin_Delivery_Paso_5")
+	public void TS80319_OM_Ordenes_Cliente_Existente_Cambio_De_SIM_Por_Siniestro_Plan_Con_Tarjeta_Sin_Delivery_Paso_1() throws InterruptedException {
+		Assert.assertTrue(true);
+	}
+	@Test(groups= {"OM","CambioDeSimCardSiniestro"}, dependsOnMethods = "TS80323_OM_Ordenes_Cliente_Existente_Cambio_De_SIM_Por_Siniestro_Plan_Con_Tarjeta_Sin_Delivery_Paso_5")
+	public void TS80318_OM_Ordenes_Cliente_Existente_Cambio_De_SIM_Por_Siniestro_Plan_Con_Tarjeta_Sin_Delivery_Paso_0() throws InterruptedException {
+		Assert.assertTrue(true);
+	}
+	
 	
 }//Fin Clase
