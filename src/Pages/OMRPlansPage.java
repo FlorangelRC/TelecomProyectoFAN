@@ -2,7 +2,11 @@ package Pages;
 
 import java.util.concurrent.TimeUnit;
 
+import org.openqa.selenium.Alert;
 import org.openqa.selenium.By;
+import org.openqa.selenium.NoAlertPresentException;
+import org.openqa.selenium.NoSuchElementException;
+import org.openqa.selenium.UnhandledAlertException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -112,9 +116,14 @@ public class OMRPlansPage extends BasePage {
 
 	private WebElement findShowActionsButtonByServiceName(String service) {
 		String showActionsButtonXpath = "//*[contains(text(),'" + service + "')]//../parent::*//../following-sibling::*//*[contains(concat(' ',normalize-space(@class),' '),'slds-button slds-button_icon-border-filled cpq-item-actions-dropdown-button')]";
+		sleep(6000);
 		WebElement showActionsButton = fluentWait.until(ExpectedConditions.elementToBeClickable(driver.findElement(By.xpath(showActionsButtonXpath))));
 		return showActionsButton;
 	}
+	
+	
+	//*[contains(text(),'Llamada en espera')]//../parent::*//../following-sibling::*//*[contains(concat(' ',normalize-space(@class),' '),'slds-button slds-button_icon-border-filled cpq-item-actions-dropdown-button')]//../following-sibling::*//span[contains(.,'Delete')]
+
 	
 	public void addServiceToCartByName(String service) {
 		WebElement addToCartButton = fluentWait.until(ExpectedConditions.visibilityOf(findAddToCartButtonByServiceName(service)));
@@ -124,20 +133,35 @@ public class OMRPlansPage extends BasePage {
 	public void deleteService(String service) {
 		WebElement showActionsButton = findShowActionsButtonByServiceName(service);
 		showActionsButton.click();
-		sleep(1000);
-		WebElement deleteServiceButton = showActionsButton.findElement(By.xpath("//../following-sibling::*//span[contains(.,'Delete')]"));
-//		fluentWait.until(ExpectedConditions.elementToBeClickable(deleteServiceButton));
+//		String deleteServiceButtonXpath = "//../following-sibling::*//li[contains(.,'Delete')]";
+//		WebElement deleteServiceButton = fluentWait.until(ExpectedConditions.elementToBeClickable(showActionsButton.findElement(By.xpath(deleteServiceButtonXpath))));
 		sleep(5000);
+		WebElement deleteServiceButton = driver.findElement(By.xpath("//*[contains(text(),'Llamada en espera')]//../parent::*//../following-sibling::*//*[contains(concat(' ',normalize-space(@class),' '),'slds-button slds-button_icon-border-filled cpq-item-actions-dropdown-button')]//../following-sibling::*//span[contains(.,'Delete')]"));
 		deleteServiceButton.click();
-		sleep(1000);
-		WebElement confirmDeleteButton = driver.findElement(By.cssSelector(".slds-button.slds-button--destructive"));
+		sleep(5000);
+		WebElement confirmDeleteButton = fluentWait.until(ExpectedConditions.elementToBeClickable(driver.findElement(By.xpath("//button[contains(text(),'Delete')]"))));
 		confirmDeleteButton.click();
+//		
+//		try {
+//			WebElement confirmDeleteButton = fluentWait.until(ExpectedConditions.elementToBeClickable(driver.findElement(By.xpath("//button[contains(text(),'Delete')]"))));
+//			confirmDeleteButton.click();
+//		} catch (NoSuchElementException e) {
+//			try {
+//				Alert confirmDelete = driver.switchTo().alert();
+//				confirmDelete.accept();
+//			} catch (NoAlertPresentException a) {
+//				e.printStackTrace();
+//			}
+//		}
+//		
 	}
+	
+	//By.cssSelector(".slds-button.slds-button--destructive")
 	
 	public void configureService(String service) {
 		WebElement showActionsButton = findShowActionsButtonByServiceName(service);
 		showActionsButton.click();
-		WebElement configureServiceButton = showActionsButton.findElement(By.xpath("//../following-sibling::*//span[contains(.,'Configure')]"));
+		WebElement configureServiceButton = fluentWait.until(ExpectedConditions.elementToBeClickable(showActionsButton.findElement(By.xpath("//../following-sibling::*//*[contains(.,'Configure')]"))));
 		configureServiceButton.click();
 	}
 	

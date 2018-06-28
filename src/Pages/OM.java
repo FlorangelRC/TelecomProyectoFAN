@@ -317,6 +317,7 @@ public class OM {
 				driver.findElement(By.id("zoomOut")).click();
 			} catch (Exception ex1) {
 				chiqui = true;
+				driver.findElement(By.id("zoomIn")).click();
 				break;
 			}
 
@@ -602,6 +603,8 @@ public class OM {
         return(date);
        		
 	}
+	
+	
 	public void fechaAvanzada2() {
 		//Accounts accountPage = new Accounts(driver);
 		/*DateFormat dateFormat = new SimpleDateFormat("MM-dd-yyyy");
@@ -706,6 +709,8 @@ public void deleteOrdersNoActivated(String Vista) {
 	/**
 	 * Metodo para cambiar el nombre de la cuenta en todos los servicios de un asset, usado para la gestion cambio de titularidad
 	 * Recibe como parametro el nombre de la cuenta a la que se va a cambiar el asset.
+	 * 
+	 * Si Falla por xPath revisar todos los xpath ya que si uno falla fue porque se agrego o quito un campo por el cual el xPath se rueda.
 	 */
 	public void cambioDeCuentaServicios(String Cuenta) {
 		
@@ -720,19 +725,19 @@ public void deleteOrdersNoActivated(String Vista) {
 			
 			WebElement servicio=driver.findElement(By.className("pbBody")).findElement(By.className("list")).findElements(By.tagName("tr")).get(i);
 			servicio.findElement(By.className("actionColumn")).findElements(By.tagName("a")).get(0).click();
-			sleep(3000);
+			sleep(7000);
 			
-			Select action=new Select(driver.findElement(By.xpath("//*[@id=\"ep\"]/div[2]/div[3]/table/tbody/tr[6]/td[2]")).findElement(By.tagName("select")));
+			Select action=new Select(driver.findElement(By.xpath("//*[@id=\"ep\"]/div[2]/div[3]/table/tbody/tr[7]/td[2]")).findElement(By.tagName("select")));
 			action.selectByVisibleText("Change");
 			
-			WebElement billingAccount=driver.findElement(By.xpath("//*[@id=\"ep\"]/div[2]/div[3]/table/tbody/tr[11]/td[2]/span")).findElement(By.tagName("input"));
+			WebElement billingAccount=driver.findElement(By.xpath("//*[@id=\"ep\"]/div[2]/div[3]/table/tbody/tr[12]/td[2]/span")).findElement(By.tagName("input"));
 			billingAccount.click();
 			billingAccount.clear();
 			billingAccount.sendKeys(Cuenta);
 			sleep(300);
 			
-			//FALTA SERVICE ACCOUNT
-			WebElement serviceAccount=driver.findElement(By.xpath("//*[@id=\"ep\"]/div[2]/div[3]/table/tbody/tr[35]/td[4]/span")).findElement(By.tagName("input"));
+			//SERVICE ACCOUNT
+			WebElement serviceAccount=driver.findElement(By.xpath("//*[@id=\"ep\"]/div[2]/div[3]/table/tbody/tr[36]/td[4]/span")).findElement(By.tagName("input"));
 			serviceAccount.click();
 			serviceAccount.clear();
 			serviceAccount.sendKeys(Cuenta);
@@ -740,7 +745,7 @@ public void deleteOrdersNoActivated(String Vista) {
 			sleep(500);
 			//Guardar
 			driver.findElement(By.name("save")).click();
-			sleep(3000);
+			sleep(4000);
 			i++;
 		}
 		
@@ -755,7 +760,7 @@ public void deleteOrdersNoActivated(String Vista) {
 	public void cambiarCuentaYGestionEnOrden(String Cuenta, String Gestion) {
 		//Click en editar
 		driver.findElement(By.name("edit")).click();
-		sleep(4000);
+		sleep(7000);
 		WebElement accountName=driver.findElement(By.xpath("//*[@id=\"ep\"]/div[2]/div[3]/table/tbody/tr[3]/td[2]/div/span")).findElement(By.tagName("input"));
 		accountName.click();
 		accountName.clear();
@@ -765,7 +770,7 @@ public void deleteOrdersNoActivated(String Vista) {
 		gestion.selectByValue(Gestion);
 		//Guardamos
 		driver.findElement(By.name("save")).click();
-		sleep(4000);
+		sleep(5000);
 	}
 	
 	
@@ -873,8 +878,9 @@ public void deleteOrdersNoActivated(String Vista) {
 		irAChangeToOrder();
 		driver.switchTo().defaultContent(); 
 		sleep(4000);
-        driver.findElement(By.id("RequestDate")).sendKeys(dateFormat.format(pageOm.fechaAvanzada()));
-		driver.findElement(By.cssSelector(".form-control.btn.btn-primary.ng-binding")).click();
+		fechaAvanzada2();
+        //driver.findElement(By.id("RequestDate")).sendKeys(dateFormat.format(pageOm.fechaAvanzada()));
+		//driver.findElement(By.cssSelector(".form-control.btn.btn-primary.ng-binding")).click();
 		sleep(12000);
 		OM.SimCard();
 		driver.findElement(By.id("-import-btn")).click();
@@ -901,11 +907,12 @@ public void deleteOrdersNoActivated(String Vista) {
 		OMQPage OM=new OMQPage (driver);
 		sleep(5000);
 		irAChangeToOrder();	
-		sleep(14000);
+		sleep(16000);
 		Accounts accountPage = new Accounts(driver);
 		driver.switchTo().defaultContent(); 
         DateFormat dateFormat = new SimpleDateFormat("MM-dd-yyyy");
 		driver.findElement(By.id("RequestDate")).sendKeys(dateFormat.format(pageOm.fechaAvanzada()));
+		//driver.findElement(By.id("RequestDate")).sendKeys("07-14-2018");
 		driver.findElement(By.cssSelector(".form-control.btn.btn-primary.ng-binding")).click();
 		sleep(18000);
 		driver.findElement(By.id("-import-btn")).click();
@@ -919,8 +926,9 @@ public void deleteOrdersNoActivated(String Vista) {
 		irAChangeToOrder();
 		driver.switchTo().defaultContent(); 
 		sleep(4000);
-        driver.findElement(By.id("RequestDate")).sendKeys(dateFormat.format(pageOm.fechaAvanzada()));
-		driver.findElement(By.cssSelector(".form-control.btn.btn-primary.ng-binding")).click();
+		fechaAvanzada2();
+        //driver.findElement(By.id("RequestDate")).sendKeys(dateFormat.format(pageOm.fechaAvanzada()));
+		//driver.findElement(By.cssSelector(".form-control.btn.btn-primary.ng-binding")).click();
 		sleep(12000);
 		SimCard(Iccid, Imsi, Ki);
 		driver.findElement(By.id("-import-btn")).click();
@@ -1041,11 +1049,20 @@ public void deleteOrdersNoActivated(String Vista) {
 	      driver.findElement(By.xpath(".//*[@id='tab-default-1']/div[1]/ng-include/div/div/div/div[4]/div[2]/div/ng-include/div/div[2]/ng-include/div/div[1]/div/div[2]/div[11]/div[2]/div/ul/li[3]/a")).click(); 
 	      sleep(5000); 
 	      ((JavascriptExecutor)driver).executeScript("window.scrollTo(0,"+driver.findElement(By.className("slds-section")).getLocation().y+" )"); 
-	      WebElement msi = driver.findElement(By.xpath("//*[@id='js-cpq-product-cart-config-form']/div[1]/div/form/div[18]/div[1]/input")); 
+	      List<WebElement> todos = driver.findElements(By.cssSelector(".slds-form_stacked.ng-pristine.ng-untouched.ng-valid.vlocity-dynamic-form.ng-valid-required.ng-valid-step")).get(1).findElements(By.className("slds-form-element"));
+	      WebElement msi = driver.findElement(By.xpath("//*[@id='js-cpq-product-cart-config-form']/div[1]/div/form/div[2]/div[1]/input")); 
 	      Random r = new Random(); 
-	      msi.clear(); 
+	      for (WebElement UnT: todos) {
+	    	  if(UnT.findElement(By.tagName("label")).getText().equalsIgnoreCase("MSISDN")) {
+	    		  UnT.click();
+	    		  UnT.findElement(By.tagName("input")).clear();
+	    		  UnT.findElement(By.tagName("input")).sendKeys("11" + r.nextInt(200000000) ); 
+	    		  UnT.submit();
+	    	  }
+	      }
+	      /*msi.clear(); 
 	      msi.sendKeys("11" + r.nextInt(200000000) ); 
-	      msi.submit(); 
+	      msi.submit(); */
 	      sleep(30000); 
 	      driver.findElement(By.id("-import-btn")).click(); 
 	      sleep(5000); 
@@ -1068,6 +1085,61 @@ public void deleteOrdersNoActivated(String Vista) {
 	       
 	      }
 	    
+	    public void Gestion_Cambio_de_Numero_Parametros(String Msisdn) throws InterruptedException{ 
+		      Date date = new Date(); 
+		      OM om = new OM(driver); 
+		      sleep(8000); 
+		    //Seleccion del ultimo Asset 
+		      om.irAChangeToOrder();   
+		      sleep(8000); 
+		    //Ingreso de fecha avanzada 
+		      Accounts accountPage = new Accounts(driver); 
+		      DateFormat dateFormat = new SimpleDateFormat("MM-dd-yyyy"); 
+		      driver.findElement(By.id("RequestDate")).sendKeys(dateFormat.format(om.fechaAvanzada()));
+		      driver.findElement(By.cssSelector(".form-control.btn.btn-primary.ng-binding")).click();
+		      sleep(35000); 
+		    //SIM 
+		      driver.findElement(By.cssSelector(".slds-button.cpq-item-has-children")).click(); 
+		      sleep(3000); 
+		      driver.switchTo().defaultContent(); 
+		      driver.findElement(By.xpath(".//*[@id='tab-default-1']/div[1]/ng-include/div/div/div/div[4]/div[2]/div/ng-include/div/div[2]/ng-include/div/div[1]/div/div[2]/div[11]")).click(); 
+		      sleep(3000); 
+		      driver.findElement(By.xpath(".//*[@id='tab-default-1']/div[1]/ng-include/div/div/div/div[4]/div[2]/div/ng-include/div/div[2]/ng-include/div/div[1]/div/div[2]/div[11]/div[2]/div/ul/li[3]/a")).click(); 
+		      sleep(5000); 
+		      ((JavascriptExecutor)driver).executeScript("window.scrollTo(0,"+driver.findElement(By.className("slds-section")).getLocation().y+" )"); 
+		      List<WebElement> todos = driver.findElements(By.cssSelector(".slds-form_stacked.ng-pristine.ng-untouched.ng-valid.vlocity-dynamic-form.ng-valid-required.ng-valid-step")).get(1).findElements(By.className("slds-form-element"));
+		      WebElement msi = driver.findElement(By.xpath("//*[@id='js-cpq-product-cart-config-form']/div[1]/div/form/div[2]/div[1]/input")); 
+		      Random r = new Random(); 
+		      for (WebElement UnT: todos) {
+		    	  if(UnT.findElement(By.tagName("label")).getText().equalsIgnoreCase("MSISDN")) {
+		    		  UnT.click();
+		    		  UnT.findElement(By.tagName("input")).clear();
+		    		  UnT.findElement(By.tagName("input")).sendKeys(Msisdn); 
+		    		  UnT.submit();
+		    	  }
+		      }
+		      sleep(30000); 
+		      driver.findElement(By.id("-import-btn")).click(); 
+		      sleep(5000); 
+		    //Gestion 
+		      om.agregarGestion("Cambio de n\u00famero"); 
+		      driver.findElements(By.id("topButtonRow")).get(0); 
+		      sleep(7000); 
+		      driver.findElement(By.name("ta_submit_order")).click(); 
+		      sleep(45000);
+				try {
+					om.cambiarVentanaNavegador(1);
+					sleep(2000);
+					driver.findElement(By.id("idlist")).click();
+					sleep(5000);
+					om.cambiarVentanaNavegador(0);
+				}catch(java.lang.IndexOutOfBoundsException ex1) {}
+				sleep(12000);
+				om.completarFlujoOrquestacion();
+				sleep(5000);
+		       
+		      }
+		    
 		// Metodo para cuando olvidamos cambiar la fecha para ejecutar gestiones
 	    // Avisa si se ingreso una fecha incorrecta y da unos segundos para cambiarla y continuar el test
 	    // ATENCION!! No olvidar quitarlo del codigo una vez que funcione
@@ -1138,12 +1210,13 @@ public void deleteOrdersNoActivated(String Vista) {
 			sleep(13000);
 			ContactSearch contact = new ContactSearch(driver);
 			contact.searchContact2("DNI", sDni, sLinea);
+			sleep(5000);
 			try {contact.ingresarMail("asdads@gmail.com", "si");}catch (org.openqa.selenium.ElementNotVisibleException ex1) {}
-			contact.tipoValidacion("documento");
+			contact.tipoValidacion2("documento");
 			contact.subirArchivo("C:\\Users\\florangel\\Downloads\\mapache.jpg", "si");
 			BasePage bp = new BasePage(driver);
 			bp.setSimpleDropdown(driver.findElement(By.id("ImpositiveCondition")), "IVA Consumidor Final");
-			sb.Crear_DomicilioLegal("Buenos Aires", "Vicente Lopez", "falsa", "", "1000", "", "", "1549");
+			sb.Crear_DomicilioLegalNuevo("Buenos Aires", "Vicente Lopez", "falsa", "", "1000", "", "", "1549");
 			//sleep(10000);
 			//contact.subirformulario("C:\\Users\\florangel\\Downloads\\form.pdf", "si");
 			sleep(35000);
@@ -1404,7 +1477,7 @@ public void deleteOrdersNoActivated(String Vista) {
 	    
 	public void Gestion_Cambio_De_Titularidad(String CuentaNueva) {
 		driver.switchTo().defaultContent();
-		sleep(12000);
+		sleep(15000);
 		DateFormat dateFormat = new SimpleDateFormat("MM-dd-yyyy");
 		driver.findElement(By.id("RequestDate")).sendKeys(dateFormat.format(fechaAvanzada()));
 		//driver.findElement(By.id("RequestDate")).sendKeys("06-15-2018");
@@ -1412,11 +1485,11 @@ public void deleteOrdersNoActivated(String Vista) {
 		//click Next
 		WebElement next=driver.findElement(By.cssSelector(".form-control.btn.btn-primary.ng-binding"));
 		next.click();
-		sleep(30000);
+		sleep(35000);
 		
 		//Click ViewRecord
 		driver.findElement(By.id("-import-btn")).click();
-		sleep(7000);
+		sleep(8000);
 		
 		//click en goto list en (TA Price Book)
 		WebElement goToList=driver.findElement(By.className("pShowMore")).findElements(By.tagName("a")).get(1);
@@ -1424,21 +1497,51 @@ public void deleteOrdersNoActivated(String Vista) {
 		scrollDown(driver.findElement(By.className("pShowMore")));
 		sleep(500);
 		goToList.click();
-		sleep(7000);
+		sleep(10000);
 		
 		//Cambiar Cuenta en Servicios
 		cambioDeCuentaServicios("CambioDeTitularidad");
 		
 		//Click para retonar a la orden
 		driver.findElement(By.className("ptBreadcrumb")).findElement(By.tagName("a")).click();
-		sleep(4000);
+		sleep(7000);
 		
 		//Editamos Orden
 		cambiarCuentaYGestionEnOrden(CuentaNueva,"Cambio de titularidad");
-		sleep(4000);
+		sleep(5000);
 		
 		//Finalizamos el proceso con TA SUBMIT ORDER
 		driver.findElement(By.name("ta_submit_order")).click();
+		sleep(45000);
+//		cambiarVentanaNavegador(1);
+//		sleep(2000);
+//		driver.findElement(By.id("idlist")).click();
+//		sleep(5000);
+//		cambiarVentanaNavegador(0);
+//		sleep(12000);
+		completarFlujoOrquestacion();
+	}
+	
+	public void irAUltimoAssetSegunCuentaEnVista(String Vista) {
+		selectVistaByVisibleText(Vista);
+
+		//Selecciona la primera cuenta de la lista en la vista seleccionada
+		WebElement primeraCuenta=driver.findElement(By.cssSelector(".x-grid3-col.x-grid3-cell.x-grid3-td-SALES_ACCOUNT_NAME"));
+		primeraCuenta.findElement(By.tagName("div")).findElement(By.tagName("a")).click();
+		sleep(5000);
+		
+		BasePage frame=new BasePage(driver);
+		driver.switchTo().frame(frame.getFrameForElement(driver, By.cssSelector(".panel.panel-default.panel-assets")));
+		
+		//Selecciona el ultimo asset
+		List <WebElement> assets= driver.findElement(By.cssSelector(".panel.panel-default.panel-assets")).findElements(By.cssSelector(".root-asset.ng-scope"));
+		assets.get(assets.size()-1).findElement(By.className("p-check")).click();
+		
+		//click en boton
+		WebElement changeToOrder=driver.findElement(By.className("asset-action")).findElement(By.xpath("//button[2]"));
+		changeToOrder.click();
+		sleep(10000);
+		driver.switchTo().defaultContent();
 	}
 	
 	public List<WebElement> traerElementoColumna(WebElement wBody, int iColumn) {

@@ -622,6 +622,26 @@ try{	driver.findElement(By.id("alert-ok-button")).click();	} catch (NoSuchElemen
 	driver.findElement(By.id("AccountData_nextBtn")).click();
  }
  
+ public void Crear_DomicilioLegalNuevo(String provincia, String localidad, 
+		 String calle, String local, String altura, String piso, String dpto,
+		 String CP){
+	
+		try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		List<WebElement> check = driver.findElements(By.cssSelector(".slds-checkbox--faux"));
+
+	 setSimpleDropdown(driver.findElement(By.id("ShippingProvince")), provincia);
+
+	driver.findElement(By.id("ShippingLocalidad")).sendKeys(localidad);
+	setSimpleDropdown(driver.findElement(By.id("ShippingTipoDeZona")), "Urbana");
+	driver.findElement(By.id("ShippingCalle")).sendKeys(calle); 
+	driver.findElement(By.id("ShippingAltitude")).sendKeys(altura);
+	driver.findElement(By.id("ShippingCodigoPostal")).sendKeys(CP);
+	try {Thread.sleep(10000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+	driver.findElement(By.id("btnSameAsLegalAddress")).click();
+	try {Thread.sleep(3000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+	driver.findElement(By.id("AccountData_nextBtn")).click();
+ }
+ 
  
  	public void Crear_CopiarDatosLegal(){
 		try {Thread.sleep(15000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
