@@ -90,7 +90,7 @@ public class moduloOM extends TestBase {
 	
 	//Hay que Ajustar
 	//@Test(groups="OM") 
-	public void TS6727_CRM_OM_Ordenes_Order_Detail_Visualizaci�n_del_flujo_de_orquestaci�n() {
+	public void TS6727_CRM_OM_Ordenes_Order_Detail_Visualizacion_del_flujo_de_orquestacion() {
 		OM pageOm=new OM(driver);
 		//pageOm.crearVistaOM("AutOrders","AutomaOM");
 		Select allOrder=new Select(driver.findElement(By.id("fcf")));
