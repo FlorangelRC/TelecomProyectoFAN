@@ -15,6 +15,7 @@ import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.Select;
+import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
@@ -79,7 +80,7 @@ public class GestionesOM extends TestBase {
 		pageOm.Cambio_De_SimCard_Parametros(sIccid2,sImsi2,sKi2);
 	}
 	
-	@Test(groups="OM", priority=1, dataProvider="OMCambioSimSiniestro")
+	@Test(groups="OM", priority=1, dataProvider="OMCambioDeSimSiniestro")
 	public void TS_CRM_Cambio_De_SimCard_Por_Siniestro_Datos(String sCuenta, String sPlan, String sLinea, String sIccid, String sImsi, String sKi, String sIccid2, String sImsi2, String sKi2) throws InterruptedException {
 		OM pageOm=new OM(driver);
 		pageOm.Gestion_Alta_De_Linea_Parametros(sCuenta, sPlan, sLinea, sIccid, sImsi, sKi);

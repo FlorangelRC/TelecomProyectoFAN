@@ -959,7 +959,7 @@ public void deleteOrdersNoActivated(String Vista) {
 		sleep(2000);
 		OM.getCPQ().click();
 		sleep(5000);
-		OM.colocarPlan(Plan);
+		OM.colocarPlan1(Plan);
 		OM.configuracion();
 		sleep(5000);
 		driver.findElement(By.name("ta_submit_order")).click();
@@ -973,11 +973,13 @@ public void deleteOrdersNoActivated(String Vista) {
 			driver.switchTo().defaultContent();
 		}
 		sleep(45000);
-		pageOm.cambiarVentanaNavegador(1);
-		sleep(2000);
-		driver.findElement(By.id("idlist")).click();
-		sleep(5000);
-		pageOm.cambiarVentanaNavegador(0);
+		try {
+			pageOm.cambiarVentanaNavegador(1);
+			sleep(2000);
+			driver.findElement(By.id("idlist")).click();
+			sleep(5000);
+			pageOm.cambiarVentanaNavegador(0);
+		}catch(java.lang.IndexOutOfBoundsException ex1) {}
 		sleep(12000);
 		pageOm.completarFlujoOrquestacion();
 		sleep(5000);
