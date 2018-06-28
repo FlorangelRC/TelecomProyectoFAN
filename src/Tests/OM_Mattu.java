@@ -703,8 +703,7 @@ public class OM_Mattu extends TestBase{
 	//Open Page
 	//@Test()
 	public void OpenPage() throws InterruptedException{
-		OM oOM = new OM(driver);
-		oOM.suspencionPorSiniestro("MattuOM", "Plan Prepago Nacional SIT");
+		
 	}
 
 }

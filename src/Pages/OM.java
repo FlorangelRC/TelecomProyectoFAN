@@ -1456,9 +1456,10 @@ public void deleteOrdersNoActivated(String Vista) {
 		OM oOM = new OM(driver);
 		oOM.Gestion_Alta_De_Linea(sCuenta, sPlan);
 		
+		sleep(5000);
 		oOM.irAChangeToOrder();
 		
-		sleep(7000);
+		sleep(10000);
 		DateFormat dateFormat = new SimpleDateFormat("MM-dd-yyyy");
 		driver.findElement(By.id("RequestDate")).sendKeys(dateFormat.format(oOM.fechaAvanzada()));
 		driver.findElement(By.cssSelector(".form-control.btn.btn-primary.ng-binding")).click();
@@ -1471,6 +1472,7 @@ public void deleteOrdersNoActivated(String Vista) {
 			}
 		}
 		
+		sleep(5000);
 		driver.findElement(By.id("topButtonRow")).findElement(By.name("edit")).click();
 		
 		Select sSelectDropdown = new Select(driver.findElement(By.id("00Nc0000002IvyM")));
@@ -1478,9 +1480,11 @@ public void deleteOrdersNoActivated(String Vista) {
 		
 		driver.findElement(By.id("topButtonRow")).findElement(By.name("save")).click();
 		
+		sleep(5000);
 		oOM.SuspenderProductos();
 		
-		driver.findElement(By.id("Order_ileinner")).click();
+		sleep(10000);
+		//driver.findElement(By.id("Order_ileinner")).click();
 		
 		WebElement wTopButtonRow = driver.findElement(By.id("topButtonRow"));
 		List<WebElement> wTopButtonRowButtons = wTopButtonRow.findElements(By.tagName("input"));
