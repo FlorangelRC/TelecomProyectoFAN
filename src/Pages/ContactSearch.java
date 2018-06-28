@@ -130,6 +130,31 @@ public class ContactSearch extends BasePage {
 		try {Thread.sleep(7000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 	}
 	
+	public void tipoValidacion2(String tipoValidacion) {
+		switch (tipoValidacion) {
+		case "documento":
+			List<WebElement> valdni = driver.findElements(By.cssSelector(".ta-radioBtnContainer.taBorderOverlay.slds-grid.slds-grid--align-center.slds-grid--vertical-align-center.ng-scope"));
+			for (WebElement x : valdni) {
+				if (x.getText().toLowerCase().equals("validaci\u00f3n por documento de identidad")) {
+					x.click();
+					break;
+				}
+			}
+			break;
+		case "preguntas y respuestas":
+			List<WebElement> valqa = driver.findElements(By.cssSelector(".ta-radioBtnContainer.taBorderOverlay.slds-grid.slds-grid--align-center.slds-grid--vertical-align-center.ng-scope"));
+			for (WebElement x : valqa) {
+				if (x.getText().toLowerCase().equals("validaci\u00f3n por preguntas y respuestas")) {
+					x.click();
+					break;
+				}
+			}
+			break;
+		}
+		driver.findElement(By.id("ValidationMethod_nextBtn")).click();
+		try {Thread.sleep(7000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+	}
+	
 	public void subirArchivo(String uploadPath, String continuar) {
 		driver.findElement(By.id("FileDocumentImage")).sendKeys(uploadPath);
 		try {Thread.sleep(3000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}

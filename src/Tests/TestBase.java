@@ -718,9 +718,17 @@ public class TestBase {
 
 	}
 	@DataProvider
+	public Object[][] OMCambioDeNumero() throws Exception{
+
+	 Object[][] testObjArray = ExcelUtils.getTableArray("Cuentas.xlsx","OM",1,1,7,"CambioDeNumero");
+
+	 return (testObjArray);
+
+	}
+	@DataProvider
 	public Object[][] OMNominacion() throws Exception{
 
-		 Object[][] testObjArray = ExcelUtils.getTableArray("Cuentas.xlsx","Sales",1,1,3,"Nominacion");
+		 Object[][] testObjArray = ExcelUtils.getTableArray("Cuentas.xlsx","OM",1,1,3,"Nominacion");
 
 		 return (testObjArray);
 
@@ -830,4 +838,12 @@ public class TestBase {
 		}
 	}
 	
+	@DataProvider
+	public Object[][] OMCambioTitularidad() throws Exception{
+
+	 Object[][] testObjArray = ExcelUtils.getTableArray("Gestiones OM Objetivos.xlsx","DatosAGenerar",2,1,6,"Cambio de Titularidad");
+
+	 return (testObjArray);
+
+	}
 }
