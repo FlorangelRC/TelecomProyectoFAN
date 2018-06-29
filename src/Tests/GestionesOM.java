@@ -116,7 +116,7 @@ public class GestionesOM extends TestBase {
 	public void TS_CRM_Cambio_De_SimCard() throws InterruptedException {
 		OM pageOm=new OM(driver);
 		pageOm.Gestion_Alta_De_Linea("FlorOM", "Plan Con Tarjeta");
-		pageOm.Cambio_De_SimCard("07-14-2018");
+		pageOm.Cambio_De_SimCard("07-13-2018");
 	}
 	
 	@Test(groups="OM", priority=1, dataProvider="OMNominacion") 
@@ -201,7 +201,6 @@ public class GestionesOM extends TestBase {
 				gestion = true;
 			}
 		}
-		
 		Assert.assertTrue(status.getText().equalsIgnoreCase("Activated"));
 		Assert.assertTrue(gestion);
 	}

@@ -72,7 +72,7 @@ public class moduloOM extends TestBase {
 	}
 	
 	
-	//@AfterClass(alwaysRun=true)
+	@AfterClass(alwaysRun=true)
 	public void tearDown() {
 		
 		sleep(2000);
@@ -90,7 +90,7 @@ public class moduloOM extends TestBase {
 	
 	//Hay que Ajustar
 	//@Test(groups="OM") 
-	public void TS6727_CRM_OM_Ordenes_Order_Detail_Visualización_del_flujo_de_orquestación() {
+	public void TS6727_CRM_OM_Ordenes_Order_Detail_Visualizacion_del_flujo_de_orquestacion() {
 		OM pageOm=new OM(driver);
 		//pageOm.crearVistaOM("AutOrders","AutomaOM");
 		Select allOrder=new Select(driver.findElement(By.id("fcf")));
@@ -176,7 +176,7 @@ public class moduloOM extends TestBase {
 	@Test(groups="OM")
 	public void TS6716_CRM_OM_Ordenes_Panel_principal_Ingreso() {
 		Select allOrder=new Select(driver.findElement(By.id("fcf")));
-		allOrder.selectByVisibleText("All");
+		allOrder.selectByVisibleText("AlanOM");
 		sleep(1000);
 		try {driver.findElement(By.name("go")).click();}catch(org.openqa.selenium.NoSuchElementException e) {}
 		sleep(3000);
@@ -251,6 +251,30 @@ public class moduloOM extends TestBase {
 		OM page=new OM(driver);
 		page.deleteOrdersNoActivated("AlmerOM");
 	}
+	
+	
+	//Paso 2 Flujo Completo
+		@Test(groups= {"OM","CambioDeTitularidad"},retryAnalyzer = retry.class)
+		public void TS80343_CRM_OM_Ordenes_Cliente_existente_Cambio_de_titularidad_Plan_con_tarjeta_Repro_Paso_2() throws InterruptedException {
+			
+			OM pageOm=new OM(driver);
+			//pageOm.irAUltimoAssetSegunCuentaEnVista("AlmerOM"); //Descomentar y comentar la siguiente linea, para lanzar el test sobre una linea existente.
+			pageOm.Gestion_Alta_De_Linea("AutomaOM", "Plan con tarjeta");
+			pageOm.irAChangeToOrder();
+			pageOm.Gestion_Cambio_De_Titularidad("CambioDeTitularidad");
+			driver.switchTo().defaultContent();
+		}
+		
+		//Paso 0
+		@Test(groups= {"OM","CambioDeTitularidad"}, dependsOnMethods ="TS80343_CRM_OM_Ordenes_Cliente_existente_Cambio_de_titularidad_Plan_con_tarjeta_Repro_Paso_2")
+		public void TS80341_CRM_OM_Ordenes_Cliente_existente_Cambio_de_titularidad_Plan_con_tarjeta_Repro_Paso_0() {
+				assertTrue(true);
+			}
+		//Paso 1
+		@Test(groups= {"OM","CambioDeTitularidad"}, dependsOnMethods ="TS80343_CRM_OM_Ordenes_Cliente_existente_Cambio_de_titularidad_Plan_con_tarjeta_Repro_Paso_2")
+		public void TS80342_CRM_OM_Ordenes_Cliente_existente_Cambio_de_titularidad_Plan_con_tarjeta_Repro_Paso_1() {
+				assertTrue(true);
+			}
 	
 	@Test(groups= {"OM","CambioDeSimCard"} )
 	public void TS52668_CRM_OM_Ordenes_Cliente_Existente_Cambio_De_SIM_Sin_Delivery_Paso_3() throws InterruptedException {
