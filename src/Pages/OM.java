@@ -959,7 +959,7 @@ public void deleteOrdersNoActivated(String Vista) {
 		sleep(2000);
 		OM.getCPQ().click();
 		sleep(5000);
-		OM.colocarPlan1(Plan);
+		OM.colocarPlan(Plan);
 		OM.configuracion();
 		sleep(5000);
 		driver.findElement(By.name("ta_submit_order")).click();
@@ -973,13 +973,11 @@ public void deleteOrdersNoActivated(String Vista) {
 			driver.switchTo().defaultContent();
 		}
 		sleep(45000);
-		try {
-			pageOm.cambiarVentanaNavegador(1);
-			sleep(2000);
-			driver.findElement(By.id("idlist")).click();
-			sleep(5000);
-			pageOm.cambiarVentanaNavegador(0);
-		}catch(java.lang.IndexOutOfBoundsException ex1) {}
+		pageOm.cambiarVentanaNavegador(1);
+		sleep(2000);
+		driver.findElement(By.id("idlist")).click();
+		sleep(5000);
+		pageOm.cambiarVentanaNavegador(0);
 		sleep(12000);
 		pageOm.completarFlujoOrquestacion();
 		sleep(5000);
@@ -1084,17 +1082,7 @@ public void deleteOrdersNoActivated(String Vista) {
 			sleep(12000);
 			om.completarFlujoOrquestacion();
 			sleep(5000);
-	       boolean gestion = false;
-			WebElement status = driver.findElement(By.id("Status_ilecell"));
-			List <WebElement> gest = driver.findElements(By.cssSelector(".dataCol.inlineEditWrite"));
-			for (WebElement x : gest) {
-				if (x.getText().toLowerCase().contains("cambio de n\\u00famero")) {
-					gestion = true;
-				}
-			}
-			Assert.assertTrue(status.getText().equalsIgnoreCase("Activated"));
-			Assert.assertTrue(gestion);
-			sleep(3000);
+	       
 	      }
 	    
 	    public void Gestion_Cambio_de_Numero_Parametros(String Msisdn) throws InterruptedException{ 
@@ -1608,5 +1596,6 @@ public void deleteOrdersNoActivated(String Vista) {
 				wAux.click();
 			}
 		}
+		oOM.completarFlujoOrquestacion();
 	}
 }
