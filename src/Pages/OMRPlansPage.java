@@ -133,9 +133,8 @@ public class OMRPlansPage extends BasePage {
 		WebElement showActionsButton = findShowActionsButtonByServiceName(service);
 		showActionsButton.click();
 //		WebElement deleteServiceButton = driver.findElement(By.xpath("//*[contains(text(),'Llamada en espera')]//../parent::*//../following-sibling::*//*[contains(concat(' ',normalize-space(@class),' '),'slds-button slds-button_icon-border-filled cpq-item-actions-dropdown-button')]//../following-sibling::*//span[contains(.,'Delete')]"));
-		WebElement deleteServiceButton = showActionsButton.findElement(By.xpath("//../child::*//span[contains(.,'Delete')]")); //
+		WebElement deleteServiceButton = fluentWait.until(ExpectedConditions.elementToBeClickable(showActionsButton.findElement(By.xpath("//../child::*//span[contains(.,'Delete')]"))));
 		//*[contains(text(),'espera')]//../parent::*//../following-sibling::*//*[contains(concat(' ',normalize-space(@class),' '),'slds-button slds-button_icon-border-filled cpq-item-actions-dropdown-button')]//../following-sibling::*//span[contains(.,'Delete')]
-		
 		deleteServiceButton.click();
 		WebElement confirmDeleteButton = fluentWait.until(ExpectedConditions.elementToBeClickable(driver.findElement(By.xpath("//button[contains(text(),'Delete')]"))));
 		confirmDeleteButton.click();
