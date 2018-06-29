@@ -959,7 +959,7 @@ public void deleteOrdersNoActivated(String Vista) {
 		sleep(2000);
 		OM.getCPQ().click();
 		sleep(5000);
-		OM.colocarPlan(Plan);
+		OM.colocarPlan1(Plan);
 		OM.configuracion();
 		sleep(5000);
 		driver.findElement(By.name("ta_submit_order")).click();
@@ -1082,7 +1082,17 @@ public void deleteOrdersNoActivated(String Vista) {
 			sleep(12000);
 			om.completarFlujoOrquestacion();
 			sleep(5000);
-	       
+	       boolean gestion = false;
+			WebElement status = driver.findElement(By.id("Status_ilecell"));
+			List <WebElement> gest = driver.findElements(By.cssSelector(".dataCol.inlineEditWrite"));
+			for (WebElement x : gest) {
+				if (x.getText().toLowerCase().contains("cambio de n\\u00famero")) {
+					gestion = true;
+				}
+			}
+			Assert.assertTrue(status.getText().equalsIgnoreCase("Activated"));
+			Assert.assertTrue(gestion);
+			sleep(3000);
 	      }
 	    
 	    public void Gestion_Cambio_de_Numero_Parametros(String Msisdn) throws InterruptedException{ 
