@@ -1,6 +1,8 @@
 package Tests;
 
 import org.testng.annotations.BeforeClass;
+
+import static org.junit.Assert.assertTrue;
 import static org.testng.Assert.assertEquals;
 import static org.testng.Assert.assertTrue;
 
@@ -86,19 +88,19 @@ public void setUp() throws Exception {
 	String Url;
 	OM pageOm=new OM(driver);
 	OMQPage OM=new OMQPage (driver);
-	//pageOm.Gestion_Alta_De_Linea("QuelysOM", "Plan con tarjeta");
-	OM.Gestion_Alta_De_Linea("QuelysOM", "Plan con tarjeta");
+	pageOm.Gestion_Alta_De_Linea("QuelysOM", "Plan con tarjeta");
+	
 	sleep(5000);
 	pageOm.irAChangeToOrder();
 	sleep(12000);
 	driver.switchTo().defaultContent();
 	
 	//fecha avanzada
-	OM.fechaAv("06-26-2018");
+	OM.fechaAv("06-29-2018");
 	sleep(12000);
 	
 	//agregar Pack
-	OM.agregarPack("Packs Opcionales"," Packs de Datos", "Pack Internet x 7 dias","Pack 1GB de dia + 3GB de Noche,","Pack 500Mb + WhasApp x 3 días");
+	OM.agregarPack("Packs Opcionales","Packs de Datos", "Pack 200Mb + WhasApp x 1 día","Pack 1GB de dia + 3GB de Noche","Pack 500Mb + WhasApp x 3 días");
 				
 	//Click ViewRecord
 	sleep(8000);	
@@ -107,20 +109,17 @@ public void setUp() throws Exception {
 	
 	//agregar gestion
 	pageOm.agregarGestion("Alta producto gen\u00e9rico");
+	
+	//sincronizar producto
 	Url = driver.getCurrentUrl();
 	pageOm.clickTab("Product2_Tab");
-	OM.sincroProducto("Llamada en espera CFS");
+	OM.sincroProducto("Friend&Family VOZ CFS");
+	OM.clickSincronizar();
 	driver.get(Url);
 	
 	//Orquestacion
 	driver.findElement(By.name("ta_submit_order")).click();
 	sleep(35000);
-	pageOm.cambiarVentanaNavegador(1);
-	sleep(2000);
-	driver.findElement(By.id("idlist")).click();
-	sleep(5000);
-	pageOm.cambiarVentanaNavegador(0);
-	sleep(12000);
 	pageOm.completarFlujoOrquestacion();
 			
 	}
@@ -130,49 +129,38 @@ public void setUp() throws Exception {
 	String Url;
 	OM pageOm=new OM(driver);
 	OMQPage OM=new OMQPage (driver);
-	Select allOrder=new Select(driver.findElement(By.id("fcf"))); 
-    allOrder.selectByVisibleText("Quelys"); 
-    sleep(1000); 
-    try {driver.findElement(By.name("go")).click();}catch(org.openqa.selenium.NoSuchElementException e) {} 
-    sleep(3000); 
-//  //Selecciona la primera cuenta de la lista en la vista seleccionada 
-    WebElement primeraCuenta=driver.findElement(By.cssSelector(".x-grid3-col.x-grid3-cell.x-grid3-td-SALES_ACCOUNT_NAME")); 
-    primeraCuenta.findElement(By.tagName("div")).findElement(By.tagName("a")).click(); 
-    sleep(8000); 
-	//pageOm.Gestion_Alta_De_Linea("QuelysOM", "Plan Prepago Nacional");
+
+    pageOm.Gestion_Alta_De_Linea("QuelysOM", "Plan Prepago Nacional");
 	sleep(5000);
 	pageOm.irAChangeToOrder();
 	sleep(12000);
 	driver.switchTo().defaultContent();
 	
 	//fecha avanzada
-	OM.fechaAv("07-01-2018");
+	OM.fechaAv("06-29-2018");
 	sleep(12000);
 	
 	//agregar Pack
-	OM.agregarPack("Packs Opcionales","Packs de Datos", "Pack 500MB de dia + 1,5GB de Noche","Pack 1GB de dia + 3GB de Noche","Pack 2Gb + WhasApp x 30 días");
+	OM.agregarPack("Packs Opcionales","Packs de Datos", "Pack 2GB + WhasApp x 3 días","Pack 1GB de dia + 3GB de Noche","Pack 2Gb + WhasApp x 30 días");
 				
 	//Click ViewRecord
 	sleep(8000);	
 	driver.findElement(By.id("-import-btn")).click();
-	sleep(7000);
+	sleep(8000);
 	
 	//agregar gestion
 	pageOm.agregarGestion("Alta producto gen\u00e9rico");
+	
+	//sincronizar
 	Url = driver.getCurrentUrl();
 	pageOm.clickTab("Product2_Tab");
-	OM.sincroProducto("Datos CFS");
+	OM.sincroProducto("Contestador Personal CFS");
+	OM.clickSincronizar();
 	driver.get(Url);
 	
 	//Orquestacion
 	driver.findElement(By.name("ta_submit_order")).click();
 	sleep(35000);
-	pageOm.cambiarVentanaNavegador(1);
-	sleep(2000);
-	driver.findElement(By.id("idlist")).click();
-	sleep(5000);
-	pageOm.cambiarVentanaNavegador(0);
-	sleep(12000);
 	pageOm.completarFlujoOrquestacion();
 			
 	}

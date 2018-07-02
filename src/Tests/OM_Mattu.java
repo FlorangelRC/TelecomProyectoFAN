@@ -20,7 +20,6 @@ import Pages.setConexion;
 public class OM_Mattu extends TestBase{
 
 	private WebDriver driver;
-	protected OM page;
 	
 	//-------------------------------------------------------------------------------------------------
 	//@Befor&After
@@ -51,7 +50,7 @@ public class OM_Mattu extends TestBase{
 		pageOm.clickOnListTabs("Orders");
 	}
 	
-	@AfterClass(alwaysRun=true)
+	//@AfterClass(alwaysRun=true)
 	public void tearDown() {
 		sleep(2000);
 		driver.quit();
@@ -693,18 +692,19 @@ public class OM_Mattu extends TestBase{
 	
 	//-------------------------------------------------------------------------------------------------
 	//TCC = 15
-	//@Test(groups = "OM")
-	public void TS79026_OM_Ordenes_Cliente_existente_Alta_de_linea_Sin_delivery_Sin_VAS(){
-		page.crearOrden("MattuOM");
-		
+	@Test(groups = "OM")
+	public void TS79026_OM_Ordenes_Cliente_existente_Alta_de_linea_Sin_delivery_Sin_VAS() throws InterruptedException{
+		OM oOM = new OM(driver);
+		oOM.Gestion_Alta_De_Linea("MattuOM", "Plan Prepago Nacional");
+		//oOM.crearOrden("MattuOM");
 	}
 	
 	//-------------------------------------------------------------------------------------------------
 	//Open Page
-	//@Test()
+	@Test()
 	public void OpenPage() throws InterruptedException{
 		OM oOM = new OM(driver);
-		oOM.suspencionPorSiniestro("MattuOM", "Plan Prepago Nacional SIT");
+		oOM.suspencionPorSiniestro("MattuOM", "Plan Prepago Nacional");
 	}
 
 }
