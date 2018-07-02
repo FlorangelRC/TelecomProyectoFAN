@@ -96,7 +96,7 @@ public void setUp() throws Exception {
 	driver.switchTo().defaultContent();
 	
 	//fecha avanzada
-	OM.fechaAv("07-02-2018");
+	OM.fechaAv("06-29-2018");
 	sleep(12000);
 	
 	//agregar Pack
@@ -120,12 +120,6 @@ public void setUp() throws Exception {
 	//Orquestacion
 	driver.findElement(By.name("ta_submit_order")).click();
 	sleep(35000);
-//	pageOm.cambiarVentanaNavegador(1);
-//	sleep(2000);
-//	driver.findElement(By.id("idlist")).click();
-//	sleep(5000);
-//	pageOm.cambiarVentanaNavegador(0);
-//	sleep(12000);
 	pageOm.completarFlujoOrquestacion();
 			
 	}
@@ -152,10 +146,12 @@ public void setUp() throws Exception {
 	//Click ViewRecord
 	sleep(8000);	
 	driver.findElement(By.id("-import-btn")).click();
-	sleep(7000);
+	sleep(8000);
 	
 	//agregar gestion
 	pageOm.agregarGestion("Alta producto gen\u00e9rico");
+	
+	//sincronizar
 	Url = driver.getCurrentUrl();
 	pageOm.clickTab("Product2_Tab");
 	OM.sincroProducto("Contestador Personal CFS");
@@ -165,12 +161,6 @@ public void setUp() throws Exception {
 	//Orquestacion
 	driver.findElement(By.name("ta_submit_order")).click();
 	sleep(35000);
-//	pageOm.cambiarVentanaNavegador(1);
-//	sleep(8000);
-//	driver.findElement(By.id("idlist")).click();
-//	sleep(5000);
-//	pageOm.cambiarVentanaNavegador(0);
-//	sleep(12000);
 	pageOm.completarFlujoOrquestacion();
 			
 	}
