@@ -27,7 +27,7 @@ public class OMRPlansPage extends BasePage {
 	private WebElement serviciosTelefoniaMovil;
 	
 	//Servicios Basicos General Movil
-	@FindBy(xpath = "//div[contains(concat(' ',normalize-space(@class),' '),'cpq-item-base-product-name cpq-item-product-group js-cpq-cart-product-hierarchy-path-01tc000000578LBAAY<01tc000000578KIAAY')]//button")
+	@FindBy(xpath = "//*[contains(text(),'Servicios Basicos General Movil')]//../parent::*//*[contains(concat(' ',normalize-space(@class),' '),'slds-button slds-button_icon-small')]")
 	private WebElement serviciosBasicosGeneralMovil;
 	
 	@FindBy(xpath = "//div[contains(concat(' ',normalize-space(@class),' '),'cpq-item-base-product-name cpq-item-product-group js-cpq-cart-product-hierarchy-path-01tc000000578LBAAY<01tc000000578KIAAY<01tc0000005M7ySAAS')]//button")
@@ -109,51 +109,40 @@ public class OMRPlansPage extends BasePage {
 		return renovacionDeCuota;
 	}
 	
+	
+	
 	private WebElement findAddToCartButtonByServiceName(String service) {
 		String addToCartButtonXpath = "//*[contains(text(),'" + service + "')]//../parent::*//../following-sibling::*//*[contains(concat(' ',normalize-space(@class),' '),'slds-button slds-button_neutral') and contains(text(),'Add to Cart')]";
-		return driver.findElement(By.xpath(addToCartButtonXpath));
+		WebElement addToCartButton = fluentWait.until(ExpectedConditions.elementToBeClickable(driver.findElement(By.xpath(addToCartButtonXpath)))); 
+		return addToCartButton; 
 	}
 
 	private WebElement findShowActionsButtonByServiceName(String service) {
 		String showActionsButtonXpath = "//*[contains(text(),'" + service + "')]//../parent::*//../following-sibling::*//*[contains(concat(' ',normalize-space(@class),' '),'slds-button slds-button_icon-border-filled cpq-item-actions-dropdown-button')]";
-		sleep(6000);
 		WebElement showActionsButton = fluentWait.until(ExpectedConditions.elementToBeClickable(driver.findElement(By.xpath(showActionsButtonXpath))));
 		return showActionsButton;
 	}
 	
-	
+	private WebElement findDeleteServiceButton(WebElement s) {
+		
+	}
 	//*[contains(text(),'Llamada en espera')]//../parent::*//../following-sibling::*//*[contains(concat(' ',normalize-space(@class),' '),'slds-button slds-button_icon-border-filled cpq-item-actions-dropdown-button')]//../following-sibling::*//span[contains(.,'Delete')]
 
 	
 	public void addServiceToCartByName(String service) {
-		WebElement addToCartButton = fluentWait.until(ExpectedConditions.visibilityOf(findAddToCartButtonByServiceName(service)));
-		addToCartButton.click();
+		findAddToCartButtonByServiceName(service).click();
 	}
 		
 	public void deleteService(String service) {
 		WebElement showActionsButton = findShowActionsButtonByServiceName(service);
 		showActionsButton.click();
-//		String deleteServiceButtonXpath = "//../following-sibling::*//li[contains(.,'Delete')]";
-//		WebElement deleteServiceButton = fluentWait.until(ExpectedConditions.elementToBeClickable(showActionsButton.findElement(By.xpath(deleteServiceButtonXpath))));
-		sleep(5000);
-		WebElement deleteServiceButton = driver.findElement(By.xpath("//*[contains(text(),'Llamada en espera')]//../parent::*//../following-sibling::*//*[contains(concat(' ',normalize-space(@class),' '),'slds-button slds-button_icon-border-filled cpq-item-actions-dropdown-button')]//../following-sibling::*//span[contains(.,'Delete')]"));
+//		WebElement deleteServiceButton = driver.findElement(By.xpath("//*[contains(text(),'Llamada en espera')]//../parent::*//../following-sibling::*//*[contains(concat(' ',normalize-space(@class),' '),'slds-button slds-button_icon-border-filled cpq-item-actions-dropdown-button')]//../following-sibling::*//span[contains(.,'Delete')]"));
+		WebElement deleteServiceButton = fluentWait.until(ExpectedConditions.elementToBeClickable(showActionsButton.findElement(By.xpath("//../child::*//span[contains(.,'Delete')]"))));	
+		
+		//*[contains(text(),'espera')]//../parent::*//../following-sibling::*//*[contains(concat(' ',normalize-space(@class),' '),'slds-button slds-button_icon-border-filled cpq-item-actions-dropdown-button')]//../following-sibling::*//span[contains(.,'Delete')]
 		deleteServiceButton.click();
-		sleep(5000);
 		WebElement confirmDeleteButton = fluentWait.until(ExpectedConditions.elementToBeClickable(driver.findElement(By.xpath("//button[contains(text(),'Delete')]"))));
 		confirmDeleteButton.click();
-//		
-//		try {
-//			WebElement confirmDeleteButton = fluentWait.until(ExpectedConditions.elementToBeClickable(driver.findElement(By.xpath("//button[contains(text(),'Delete')]"))));
-//			confirmDeleteButton.click();
-//		} catch (NoSuchElementException e) {
-//			try {
-//				Alert confirmDelete = driver.switchTo().alert();
-//				confirmDelete.accept();
-//			} catch (NoAlertPresentException a) {
-//				e.printStackTrace();
-//			}
-//		}
-//		
 	}
 	
 	//By.cssSelector(".slds-button.slds-button--destructive")
