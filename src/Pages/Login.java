@@ -134,6 +134,15 @@ public class Login extends BasePage {
 			  try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 			 }
 		
+		public void ingresarNominaciones() {
+			  logininterno.click();
+			  try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+			  Ecom_User_ID.sendKeys("UAT195528");
+			  Ecom_Password.sendKeys("Testa10k");
+			  loginButton2.click();
+			  try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+			 }
+		
 		//Para el Modulo Sales tiene vinculado el perfil de Logistica
 		public void ingresarNicolas() {
 			  logininterno.click();

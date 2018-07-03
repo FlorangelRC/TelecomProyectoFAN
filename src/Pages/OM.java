@@ -959,8 +959,9 @@ public void deleteOrdersNoActivated(String Vista) {
 		sleep(2000);
 		OM.getCPQ().click();
 		sleep(5000);
-		OM.colocarPlan(Plan);
+		OM.colocarPlan1(Plan);
 		OM.configuracion();
+		AgregarDomicilio();
 		sleep(5000);
 		driver.findElement(By.name("ta_submit_order")).click();
 		sleep(15000);
@@ -973,11 +974,13 @@ public void deleteOrdersNoActivated(String Vista) {
 			driver.switchTo().defaultContent();
 		}
 		sleep(45000);
-		pageOm.cambiarVentanaNavegador(1);
-		sleep(2000);
-		driver.findElement(By.id("idlist")).click();
-		sleep(5000);
-		pageOm.cambiarVentanaNavegador(0);
+		 try { 
+		      pageOm.cambiarVentanaNavegador(1); 
+		      sleep(2000); 
+		      driver.findElement(By.id("idlist")).click(); 
+		      sleep(5000); 
+		      pageOm.cambiarVentanaNavegador(0); 
+		    }catch(java.lang.IndexOutOfBoundsException ex1) {} 
 		sleep(12000);
 		pageOm.completarFlujoOrquestacion();
 		sleep(5000);
@@ -1187,14 +1190,14 @@ public void deleteOrdersNoActivated(String Vista) {
 			SalesBase sb = new SalesBase(driver);
 			HomeBase homePage = new HomeBase(driver);
 			try {Thread.sleep(6000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
-		    String a = driver.findElement(By.id("tsidLabel")).getText(); 
+		   /* String a = driver.findElement(By.id("tsidLabel")).getText(); 
 		    if (a.contains("Ventas")){}
 		    else {
 		    	homePage.switchAppsMenu();
 		    	try {Thread.sleep(2000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 		    	homePage.selectAppFromMenuByName("Ventas");
 		    	try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}            
-		    }
+		    }*/
 		    driver.findElement(By.xpath("//a[@href=\'https://crm--sit--c.cs14.visual.force.com/apex/taClientSearch']")).click();		
 		    try {Thread.sleep(10000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}    
 		    String NyA = sCuenta;
@@ -1216,7 +1219,7 @@ public void deleteOrdersNoActivated(String Vista) {
 			contact.subirArchivo("C:\\Users\\florangel\\Downloads\\mapache.jpg", "si");
 			BasePage bp = new BasePage(driver);
 			bp.setSimpleDropdown(driver.findElement(By.id("ImpositiveCondition")), "IVA Consumidor Final");
-			sb.Crear_DomicilioLegalNuevo("Buenos Aires", "Vicente Lopez", "falsa", "", "1000", "", "", "1549");
+			sb.Crear_DomicilioLegal("Buenos Aires", "Vicente Lopez", "falsa", "", "1000", "", "", "1549");
 			//sleep(10000);
 			//contact.subirformulario("C:\\Users\\florangel\\Downloads\\form.pdf", "si");
 			sleep(35000);
@@ -1317,6 +1320,39 @@ public void deleteOrdersNoActivated(String Vista) {
 				}
 			}
 			 
+		}
+		
+		public void AgregarDomicilio() {
+			CustomerCare cc = new CustomerCare(driver);
+			List<WebElement> Productos = new ArrayList<WebElement>();
+			int i = -1;
+			boolean enc = false;
+			
+			do {
+				Productos = driver.findElement(By.cssSelector(".listRelatedObject.orderBlock")).findElement(By.className("pbBody")).findElements(By.tagName("tr"));
+				Productos.remove(0);
+				i++;
+				enc = false;
+				cc.obligarclick(Productos.get(i).findElement(By.tagName("th")).findElement(By.tagName("a")));
+				List<WebElement> Campos= driver.findElement(By.className("detailList")).findElements(By.tagName("td"));
+				for(WebElement UnC:Campos) {
+					if (enc == true) {
+						Actions action = new Actions(driver);
+						action.moveToElement(UnC).doubleClick().build().perform();
+						sleep(2000);
+						UnC.findElements(By.tagName("input")).get(3).sendKeys("Vicente Lopez");
+						break;
+					}
+					if(UnC.getText().equalsIgnoreCase("Location")) {
+						enc = true;
+					}
+				}
+				driver.findElement(By.id("topButtonRow")).findElement(By.tagName("input")).click();
+				sleep(3000);
+				cc.obligarclick(driver.findElement(By.id("Order_ileinner")).findElement(By.tagName("a")));
+				sleep(4000);
+			}while(i<1);
+			
 		}
 		
 		public void SuspenderProductos() {

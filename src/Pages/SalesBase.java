@@ -338,7 +338,7 @@ public boolean btnnoexiste(String boton){
 		Select DNI = new Select( driver.findElement(By.id("DocumentType")));
 		
 		
-	WebElement NDNI = driver.findElement(By.id("DocumentNumber"));
+	WebElement NDNI = driver.findElement(By.id("DNI"));
 	String Type =DNI.getFirstSelectedOption().getText();
 	String numero=NDNI.getAttribute("value");
 	System.out.println(Type);
@@ -872,6 +872,9 @@ try{	driver.findElement(By.id("alert-ok-button")).click();	} catch (NoSuchElemen
 				 break;
 			 case "victor":
 				 TB.loginVictor(driver);
+				 break;
+			 case "nominaciones":
+				 TB.loginNominaciones(driver);
 				 break;
 			 case "OM":
 				 TB.login(driver, "https://crm--sit.cs14.my.salesforce.com/", "U585991", "Testa10k");
