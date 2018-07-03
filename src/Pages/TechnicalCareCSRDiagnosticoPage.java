@@ -198,7 +198,7 @@ public class TechnicalCareCSRDiagnosticoPage extends BasePage{
 ////////////////////////////////////SELECT DIAGNOSTICAR////////////////////////////////////////////////////
 	
 	public void clickDiagnosticarServicio(String servicio) {
-	      sleep(5000);
+	      sleep(8000);
 	      Accounts accPage = new Accounts(driver);
 	      driver.switchTo().frame(accPage.getFrameForElement(driver, By.cssSelector(".slds-card__body.cards-container")));
 	      List<WebElement> tablas=driver.findElements(By.cssSelector(".slds-card__body.cards-container"));
@@ -207,11 +207,11 @@ public class TechnicalCareCSRDiagnosticoPage extends BasePage{
 	        System.out.println(service.getText());
 	        if(service.getText().toLowerCase().contains(servicio.toLowerCase())) {
 	          ((JavascriptExecutor)driver).executeScript("window.scrollTo(0," + service.getLocation().y+")");
-	          sleep(2000);
+	          sleep(5000);
 	          service.findElement(By.className("slds-cell-shrink")).click();
-	          sleep(2000);
+	          sleep(5000);
 	          try {
-	             sleep(2000);
+	             sleep(8000);
 	           List<WebElement> actions=  service.findElement(By.className("slds-cell-shrink")).findElements(By.xpath("//*[@class='dropdown__list']//li"));
 	        for (WebElement opt : actions) {
 	         if (opt.isDisplayed()) {
@@ -359,7 +359,7 @@ public class TechnicalCareCSRDiagnosticoPage extends BasePage{
 	
 
 	public boolean validarInconveniente(String inconvenientName) {
-			sleep(5000);
+			sleep(8000);
 			driver.switchTo().frame(getFrameForElement(driver, By.id("IssueSelectStep")));
 			for (WebElement opt : getlistaDeInconvenientes()) {
 				if(opt.getText().contains(inconvenientName)) {

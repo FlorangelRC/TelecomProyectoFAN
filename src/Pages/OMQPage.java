@@ -357,7 +357,7 @@ public void sincroProducto(String Products) {
 		sleep(8000);
 		OM pageOm=new OM(driver);
 		pageOm.cambiarVentanaNavegador(1);
-		sleep(5000);
+		sleep(6000);
 		driver.findElement(By.id("idlist")).click();
 		sleep(5000);
 		pageOm.cambiarVentanaNavegador(0);

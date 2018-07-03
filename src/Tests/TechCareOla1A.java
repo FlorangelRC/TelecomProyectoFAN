@@ -515,6 +515,7 @@ public class TechCareOla1A extends TestBase {
 	    page.seleccionarRespuesta("no");
 	    page.clickContinuar();
 	    sleep(5000);
+	    //page.seleccionarPreguntaFinal("Sí");
 	    page.clickContinuar();
 	    sleep(4000);
 	    page.buscarDireccion("Av. Congreso 3940, Buenos Aires, Argentina");

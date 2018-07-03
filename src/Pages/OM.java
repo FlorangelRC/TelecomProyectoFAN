@@ -99,7 +99,7 @@ public class OM {
 	@FindBy(name = "ta_submit_order")
 	private WebElement taSubmitOrderButton;
 	
-	 @FindBys(@FindBy(xpath = "//div[starts-with(@id,'801c0000000Kz') and contains(@id,'_SALES_ACCOUNT_NAME')]/a"))
+	 @FindBys(@FindBy(xpath = "//div[starts-with(@id,'801c0000000') and contains(@id,'_SALES_ACCOUNT_NAME')]/a"))
 	private List<WebElement> accountList;
 	 
 	 @FindBy(css = ".form-control.btn.btn-primary.ng-binding")
