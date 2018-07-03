@@ -389,8 +389,9 @@ public class TechCare_Ola1 {
 	    for(WebElement p:preguntas) {
 	    	//System.out.println(p.getText());
 	    	if(p.getText().toLowerCase().contains(opcion)) {
+	    		sleep(8000);
 	    		p.click();
-	    		sleep(2000);
+	    		sleep(5000);
 	    		return;
 	    	}
 	    }

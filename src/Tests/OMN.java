@@ -1,7 +1,10 @@
 package Tests;
 
+import java.util.List;
+
 import org.junit.Assert;
 import org.openqa.selenium.By;
+import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.testng.annotations.AfterClass;
@@ -10,6 +13,7 @@ import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
 import Pages.BasePage;
+import Pages.CustomerCare;
 import Pages.OM;
 import Pages.setConexion;
 
@@ -43,6 +47,14 @@ public class OMN extends TestBase {
 		sleep(5000);
 	}
 	
+	
+	public void debugger() {
+		sleep(10000);
+		//WebElement imsi = driver.findElements(By.cssSelector(".table.table-condensed.attributes")).get(0);
+		om.scrollDownInAView(driver.findElement(By.xpath("//*[contains(text(),'MSISDN')]")));
+		//System.out.println(imsi.getText());
+		sleep(5000);
+	}
 	
 	@Test (groups = "OM")
 	public void TS6729_Ordenes_Order_Detail_Adjunto_de_archivos_Formato_JPG() {
@@ -210,15 +222,48 @@ public class OMN extends TestBase {
 		Assert.assertTrue(om.ordenCajasVerdes("Cambio de N\u00famero o SIM", "Env\u00edo de Actualizaci\u00f3n de Par\u00e1metros a la Red (SIM Card)(IMSI, KI e ICCID)", "En progreso | Comptel - Par\u00e1metros de la Red actualizados"));
 	}
 	
+	@Test (groups = "OM", dependsOnMethods = "TS80196_Ordenes_Cliente_existente_Cambio_de_SIM_Plan_con_tarjeta_Sin_delivery_Paso_3")
+	public void TS80193_Ordenes_Cliente_existente_Cambio_de_SIM_Plan_con_tarjeta_Sin_delivery_Paso_0() {
+		Assert.assertTrue(true);
+	}
+	
+	@Test (groups = "OM", dependsOnMethods = "TS80196_Ordenes_Cliente_existente_Cambio_de_SIM_Plan_con_tarjeta_Sin_delivery_Paso_3")
+	public void TS80194_Ordenes_Cliente_existente_Cambio_de_SIM_Plan_con_tarjeta_Sin_delivery_Paso_1() {
+		Assert.assertTrue(true);
+	}
+	
+	@Test (groups = "OM", dependsOnMethods = "TS80196_Ordenes_Cliente_existente_Cambio_de_SIM_Plan_con_tarjeta_Sin_delivery_Paso_3")
+	public void TS80195_Ordenes_Cliente_existente_Cambio_de_SIM_Plan_con_tarjeta_Sin_delivery_Paso_2() {
+		Assert.assertTrue(true);
+	}
+	
 	@Test (groups = "OM")
 	public void TS80191_Ordenes_Cliente_existente_Cambio_de_SIM_Plan_con_tarjeta_Sin_delivery_Verificacion_de_assets() throws InterruptedException {
 		String a = "", b = "", c = "";
 		om.Gestion_Alta_De_Linea("FlorOM", "Plan con tarjeta");
 		driver.findElement(By.id("Order_Tab")).click();
-		om.Cambio_De_SimCard2("31-08-2020", a, b, c);
+		om.Cambio_De_SimCard2("07-22-2020", a, b, c);
 		driver.findElement(By.name("ta_submit_order")).click();
 		sleep(15000);
 		om.completarFlujoOrquestacion();
-		
+		driver.findElement(By.id("accid_ileinner")).findElement(By.tagName("a")).click();
+		sleep(20000);
+		driver.switchTo().frame(cambioFrame(driver, By.cssSelector(".panel.panel-default.panel-assets")));
+		List <WebElement> assets = driver.findElement(By.cssSelector(".panel.panel-default.panel-assets")).findElements(By.cssSelector(".root-asset.ng-scope"));
+		assets.get(assets.size() -1).findElement(By.className("p-expand")).click();
+		sleep(3000);
+		int ultimoSim=0;
+		List <WebElement> asd = driver.findElements(By.className("p-name"));
+		for (int i=0; i<asd.size(); i++) {
+			if (asd.get(i).getText().equalsIgnoreCase("Simcard")) {
+				ultimoSim = i;
+			}
+		}
+		asd.get(ultimoSim).findElement(By.tagName("a")).click();
+		sleep(15000);
+		List <WebElement> asdd = driver.findElements(By.cssSelector(".table.table-condensed.attributes"));
+		for (int i=0; i<asdd.size(); i++) {
+			System.out.println(asdd.get(i).getText());
+		}
 	}
 }

@@ -8,6 +8,7 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 import java.util.Random;
+import java.util.Set;
 
 import org.junit.Assert;
 import org.openqa.selenium.By;
@@ -223,7 +224,82 @@ public class GestionesOM extends TestBase {
 		Assert.assertTrue(status.getText().equalsIgnoreCase("Activated"));
 		Assert.assertTrue(gestion);
 	}
+
+	@Test(groups="OM", priority=1)
+	public void BajaDeLineaOM() throws InterruptedException {
+		boolean gestion = false;
+		OM om = new OM(driver);
+		om.Gestion_Alta_De_Linea("FlorOM", "Plan Prepago Nacional");
+		om.irAChangeToOrder();
+		sleep(15000);
+		driver.findElement(By.id("RequestDate")).sendKeys("12-09-2019");
+		driver.findElement(By.cssSelector(".form-control.btn.btn-primary.ng-binding")).click();
+		sleep(10000);
+		driver.findElement(By.xpath(".//*[@id='tab-default-1']/div/ng-include//div[10]//button")).click();
+		sleep(2000);		
+		buscarYClick(driver.findElements(By.cssSelector(".slds-dropdown__item.cpq-item-actions-dropdown__item")), "contains", "delete");
+		sleep(5000);
+		driver.findElement(By.cssSelector(".slds-button.slds-button--destructive")).click();
+		sleep(7000);
+		buscarYClick(driver.findElements(By.cssSelector(".slds-button.slds-button_neutral")), "contains", "view record");
+		sleep(5000);
+		om.agregarGestion("Desconexi\u00f3n");
+		sleep(3000);
+		driver.findElement(By.name("ta_submit_order")).click();
+		sleep(10000);
+		om.completarFlujoOrquestacion();
+		sleep(10000);
+		WebElement status = driver.findElement(By.id("Status_ilecell"));
+		List <WebElement> gest = driver.findElements(By.cssSelector(".dataCol.inlineEditWrite"));
+		for (WebElement x : gest) {
+			if (x.getText().equalsIgnoreCase("Desconexi\u00f3n")) {
+				gestion = true;
+			}
+		}
+		Assert.assertTrue(status.getText().equalsIgnoreCase("Activated"));
+		Assert.assertTrue(gestion);
+	}
 	
+	@Test
+	public void ConciliacionOM() throws InterruptedException {
+		OM om = new OM(driver);
+		om.Gestion_Alta_De_Linea("FlorOM", "Plan Prepago Nacional");
+		om.irAChangeToOrder();
+		sleep(15000);
+		driver.findElement(By.id("RequestDate")).sendKeys("12-09-2019");
+		driver.findElement(By.cssSelector(".form-control.btn.btn-primary.ng-binding")).click();
+		sleep(10000);
+		buscarYClick(driver.findElements(By.cssSelector(".slds-button.slds-button_neutral")), "contains", "view record");
+		om.agregarGestion("Conciliate");
+		driver.findElement(By.cssSelector(".userNav-buttonArrow.mbrButtonArrow")).click();
+		sleep(6000);
+		driver.findElement(By.id("userNav-menuItems")).findElements(By.tagName("a")).get(3).click();
+		sleep(4000);
+		driver.findElement(By.id("userDropdown")).click();
+		sleep(3000);
+		driver.findElement(By.id("logout")).click();
+		sleep(5000);
+		driver.get("https://crm--sit.cs14.my.salesforce.com/");
+		driver.findElement(By.id("cancel_idp_hint")).click();
+		sleep(3000);
+		driver.findElement(By.id("username")).sendKeys("usit@telecom.sit");
+		driver.findElement(By.id("password")).sendKeys("pruebas10");
+		driver.findElement(By.id("Login")).click();
+		BasePage bp = new BasePage(driver);
+		bp.cajonDeAplicaciones("Ventas");
+		sleep(5000);
+		driver.findElement(By.id("userNavLabel")).click();
+		sleep(2000);
+		driver.findElement(By.cssSelector(".debugLogLink.menuButtonMenuLink")).click();
+		sleep(20000);
+		/*Set <String> handle = driver.getWindowHandles();
+		for (int i=0; i<handle.size(); i++) {
+			System.out.println(handle);
+		}*/
+		driver.switchTo().window("Developer Console - Google Chrome");
+		driver.findElement(By.id("debugMenuEntry-btnInnerEl")).click();
+		
+	}
 }
 
 

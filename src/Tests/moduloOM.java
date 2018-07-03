@@ -178,8 +178,8 @@ public class moduloOM extends TestBase {
 		Select allOrder=new Select(driver.findElement(By.id("fcf")));
 		allOrder.selectByVisibleText("All");
 		sleep(1000);
-		try {driver.findElement(By.name("go")).click();}catch(org.openqa.selenium.NoSuchElementException e) {}
-		sleep(3000);
+		//try {driver.findElement(By.name("go")).click();}catch(org.openqa.selenium.NoSuchElementException e) {}
+		//sleep(3000);
 		List<WebElement> Orders=driver.findElement(By.className("x-grid3-scroller")).findElement(By.className("x-grid3-body"))
 				.findElements(By.cssSelector(".x-grid3-col.x-grid3-cell.x-grid3-td-ORDERS_ORDER_NUMBER"));
 		assertTrue(Orders.get(0).isDisplayed());

@@ -77,7 +77,7 @@ private WebDriver driver;
  	
 	}
  	 	
- 		//@AfterMethod(alwaysRun=true)
+ 		@AfterMethod(alwaysRun=true)
  		public void after() {
 		try {Thread.sleep(2000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 		driver.switchTo().defaultContent(); 
@@ -86,7 +86,7 @@ private WebDriver driver;
 	    driver.switchTo().defaultContent(); 
 	}
  	
- 		//@AfterClass(alwaysRun=true)
+ 		@AfterClass(alwaysRun=true)
  		public void tearDown() {
 		try {Thread.sleep(1000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 		CustomerCare cerrar = new CustomerCare(driver);
@@ -101,7 +101,7 @@ private WebDriver driver;
 	
 	
 
-	@Test (groups= {"TechnicalCare", "SVA", "Ola1"}, dataProvider="Tech")//listo
+	@Test (groups= {"TechnicalCare", "SVA", "Ola1"},priority=2, dataProvider="Tech")
 	public void TS94226_CRM_Ola_1_Technical_Care_CSR_SVA_Actualización_de_matriz_Servicio_Transferencia_de_llamadas_inconveniente_No_funciona_transferencia_de_llamadas_No_funciona_transferencia_de_llamadas_No_puede_configurar(String sCuenta, String sDni, String sLinea) throws Exception {
 	TechnicalCareCSRDiagnosticoPage tech = new TechnicalCareCSRDiagnosticoPage(driver);
 	TechCare_Ola1 page=new TechCare_Ola1(driver);
