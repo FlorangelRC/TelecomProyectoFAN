@@ -79,7 +79,7 @@ public class GestionesOM extends TestBase {
 		pageOm.Cambio_De_SimCard_Parametros(sIccid2,sImsi2,sKi2);
 	}
 	
-	@Test(groups="OM", priority=1, dataProvider="OMCambioSimSiniestro")
+	@Test(groups="OM", priority=1, dataProvider="OMCambioDeSimSiniestro")
 	public void TS_CRM_Cambio_De_SimCard_Por_Siniestro_Datos(String sCuenta, String sPlan, String sLinea, String sIccid, String sImsi, String sKi, String sIccid2, String sImsi2, String sKi2) throws InterruptedException {
 		OM pageOm=new OM(driver);
 		pageOm.Gestion_Alta_De_Linea_Parametros(sCuenta, sPlan, sLinea, sIccid, sImsi, sKi);
@@ -122,9 +122,9 @@ public class GestionesOM extends TestBase {
 	public void TS_CRM_Gestion_Nominacion(String sCuenta, String sDni, String sLinea) throws Exception {
 		OM pageOm=new OM(driver);
 		SalesBase sb = new SalesBase(driver);
-		sb.DesloguearLoguear("venta", 3);
+		sb.DesloguearLoguear("nominaciones", 3);
 		pageOm.Gestion_Nominacion(sCuenta, sDni, sLinea);
-		sb.DesloguearLoguear("OM", 4);
+		sb.DesloguearLoguear("OM", 3);
 	}
 	
 	

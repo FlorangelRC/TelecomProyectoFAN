@@ -1389,6 +1389,7 @@ public class Sales extends TestBase {
 		SB.validarpasos();			
 	}
 	
+	
 	//@Test(groups= {"Fase2", "Sales"})
 	public void TS7005_mandatoryTaxCondition()
 	{
@@ -1471,12 +1472,12 @@ public class Sales extends TestBase {
 		driver.findElement(By.id("tab-scoped-3__item")).click();
 		driver.findElement(By.xpath("//*[@id=\"tab-scoped-3\"]/section/div/table/tbody/tr/td[1]/a")).click();
 		sleep(7000);
-		WebElement numdni = driver.findElement(By.id("DocumentNumber"));
+		WebElement numdni = driver.findElement(By.id("DNI"));
 		WebElement nomb = driver.findElement(By.id("FirstName"));
 		WebElement apel = driver.findElement(By.id("LastName"));
 		Assert.assertTrue(numdni.getAttribute("value").equals(sDni));
 		Assert.assertTrue(nomb.getAttribute("value").toLowerCase().equals(sCuenta.split(" ")[0].toLowerCase()));
-		Assert.assertTrue(apel.getAttribute("value").toLowerCase().equals(sCuenta.split(" ")[1].toLowerCase()));
+		Assert.assertTrue(apel.getAttribute("value").toLowerCase().contains(sCuenta.split(" ")[1].toLowerCase()));
 	}
 
 	@Test(groups={"Sales", "AltaDeLinea","Ola1"}, priority=3)

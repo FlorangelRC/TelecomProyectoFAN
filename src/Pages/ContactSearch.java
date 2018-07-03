@@ -108,7 +108,7 @@ public class ContactSearch extends BasePage {
 	public void tipoValidacion(String tipoValidacion) {
 		switch (tipoValidacion) {
 		case "documento":
-			List<WebElement> valdni = driver.findElements(By.cssSelector(".slds-form-element__label.ng-binding.ng-scope"));
+			List<WebElement> valdni = driver.findElements(By.cssSelector(".slds-form-element__label.ng-binding"));
 			for (WebElement x : valdni) {
 				if (x.getText().toLowerCase().equals("validaci\u00f3n por documento de identidad")) {
 					x.click();
@@ -117,7 +117,7 @@ public class ContactSearch extends BasePage {
 			}
 			break;
 		case "preguntas y respuestas":
-			List<WebElement> valqa = driver.findElements(By.cssSelector(".slds-form-element__label.ng-binding.ng-scope"));
+			List<WebElement> valqa = driver.findElements(By.cssSelector(".slds-form-element__label.ng-binding"));
 			for (WebElement x : valqa) {
 				if (x.getText().toLowerCase().equals("validaci\u00f3n por preguntas y respuestas")) {
 					x.click();

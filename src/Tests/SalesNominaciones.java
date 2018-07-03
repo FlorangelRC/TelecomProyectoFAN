@@ -34,18 +34,18 @@ public class SalesNominaciones extends TestBase{
 	public void Init() {
 		driver = setConexion.setupEze();
 		try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}		
-			 loginFranciso(driver);  
+			 loginNominaciones(driver);  
 		try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 		HomeBase homePage = new HomeBase(driver);
 		try {Thread.sleep(6000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
-	    String a = driver.findElement(By.id("tsidLabel")).getText(); 
+	   /* String a = driver.findElement(By.id("tsidLabel")).getText(); 
 	    if (a.contains("Ventas")){}
 	    else {
 	    	homePage.switchAppsMenu();
 	    	try {Thread.sleep(2000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 	    	homePage.selectAppFromMenuByName("Ventas");
 	    	try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}            
-	    }
+	    }*/
 	    driver.findElement(By.xpath("//a[@href=\'https://crm--sit--c.cs14.visual.force.com/apex/taClientSearch']")).click();		
 	    try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}    
 		
@@ -359,15 +359,15 @@ public class SalesNominaciones extends TestBase{
 			driver.findElement(By.id("LastName")).sendKeys("Faretto");
 			driver.findElement(By.id("Birthdate")).sendKeys("30/06/1980");
 		}
-		driver.findElement(By.id("PermanencyDueDate")).sendKeys("30/06/2018");
+		driver.findElement(By.id("PermanencyDueDate")).sendKeys("30/08/2018");
 		CC.obligarclick(driver.findElement(By.id("Contact_nextBtn")));
 		sleep(5000);
 		contact.tipoValidacion("documento");
 		contact.subirArchivo("C:\\Users\\florangel\\Downloads\\mapache.jpg", "si");
 			BasePage bp = new BasePage(driver);
 			sleep(5000);
-	//	bp.setSimpleDropdown(driver.findElement(By.id("ImpositiveCondition")), "IVA Consumidor Final");
-	//	SB.Crear_DomicilioLegal("Buenos Aires", "aba", "falsa", "", "1000", "", "", "1549");
+		bp.setSimpleDropdown(driver.findElement(By.id("ImpositiveCondition")), "IVA Consumidor Final");
+		SB.Crear_DomicilioLegal("Buenos Aires", "aba", "falsa", "", "1000", "", "", "1549");
 		sleep(10000);
 		contact.subirformulario("C:\\Users\\florangel\\Downloads\\form.pdf", "si");
 		sleep(25000);
@@ -429,14 +429,14 @@ public class SalesNominaciones extends TestBase{
 		if (driver.findElement(By.id("FirstName")).getAttribute("value").isEmpty()) {
 			driver.findElement(By.id("FirstName")).sendKeys("Malan");
 			driver.findElement(By.id("LastName")).sendKeys("Faretto");
-			driver.findElement(By.id("Birthdate")).sendKeys("30/06/1980");
+			driver.findElement(By.id("Birthdate")).sendKeys("30/08/1980");
 		}
 		
 		driver.findElement(By.id("PermanencyDueDate")).sendKeys("30/06/2021");
 		assertTrue(driver.findElement(By.cssSelector(".message.description.ng-binding.ng-scope")).getText().contains("La permanencia no puede ser mayor a 2 a\u00f1os a partir de la fecha o menor a la fecha actual"));
 		sleep(1000);
 		driver.findElement(By.id("PermanencyDueDate")).clear();
-		driver.findElement(By.id("PermanencyDueDate")).sendKeys("30/06/2018");
+		driver.findElement(By.id("PermanencyDueDate")).sendKeys("30/08/2018");
 		//driver.findElement(By.cssSelector(".slds-input.form-control.ng-pristine.ng-untouched.ng-valid.ng-empty")).sendKeys("algoaqui@yahoo.com.ar");
 		CC.obligarclick(driver.findElement(By.id("Contact_nextBtn")));
 		sleep(7000);
