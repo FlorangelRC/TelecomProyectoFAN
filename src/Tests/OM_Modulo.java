@@ -46,6 +46,7 @@ import Pages.setConexion;
 
 
 public class OM_Modulo extends TestBase {
+	
 private WebDriver driver;
 	
 @BeforeClass(alwaysRun=true)
@@ -82,9 +83,9 @@ public void setUp() throws Exception {
 		sleep(1000);
 	}
 
-
-	@Test(groups="OM")
-	public void TS102205_CRM_OM_Ola_2_Ordenes_Cliente_existente_Alta_de_linea_con_1_pack_Plan_con_tarjeta_Sin_delivery_Sin_VAS_Paso_0() throws InterruptedException, MalformedURLException {
+	//flujo completo
+	@Test(groups= {"OM","agregarPack"}, retryAnalyzer = retry.class)
+	public void TS102209_CRM_OM_Ola_2_Ordenes_Cliente_existente_Alta_de_linea_con_1_pack_Plan_con_tarjeta_Sin_delivery_Sin_VAS_Paso_4() throws InterruptedException, MalformedURLException {
 	String Url;
 	OM pageOm=new OM(driver);
 	OMQPage OM=new OMQPage (driver);
@@ -95,13 +96,14 @@ public void setUp() throws Exception {
 	sleep(12000);
 	driver.switchTo().defaultContent();
 	
+	
 	//fecha avanzada
-	OM.fechaAv("06-29-2018");
+	OM.fechaAv("07-04-2018");
 	sleep(12000);
 	
 	//agregar Pack
 	OM.agregarPack("Packs Opcionales","Packs de Datos", "Pack 200Mb + WhasApp x 1 día","Pack 1GB de dia + 3GB de Noche","Pack 500Mb + WhasApp x 3 días");
-				
+		
 	//Click ViewRecord
 	sleep(8000);	
 	driver.findElement(By.id("-import-btn")).click();
@@ -121,11 +123,35 @@ public void setUp() throws Exception {
 	driver.findElement(By.name("ta_submit_order")).click();
 	sleep(35000);
 	pageOm.completarFlujoOrquestacion();
-			
-	}
 	
-	@Test(groups="OM")
-	public void TS102212_CRM_OM_Ola_2_Ordenes_Cliente_existente_Alta_de_linea_con_1_pack_Plan_prepago_nacional_Sin_delivery_Sin_VAS_Paso_0() throws InterruptedException, MalformedURLException {
+	 
+	}
+	//Paso 0
+		@Test(groups= {"OM","AgregarPAck"}, dependsOnMethods ="TS102209_CRM_OM_Ola_2_Ordenes_Cliente_existente_Alta_de_linea_con_1_pack_Plan_con_tarjeta_Sin_delivery_Sin_VAS_Paso_4")
+		public void TS102205_CRM_M_Ola_2_Ordenes_Cliente_existente_Alta_de_linea_con_1_pack_Plan_con_tarjeta_Sin_delivery_Sin_VAS_Paso_0() {
+			Assert.assertTrue(true);
+		}
+	//Paso 1
+		@Test(groups= {"OM","agregarPack"}, dependsOnMethods ="TS102209_CRM_OM_Ola_2_Ordenes_Cliente_existente_Alta_de_linea_con_1_pack_Plan_con_tarjeta_Sin_delivery_Sin_VAS_Paso_4")
+		public void TS102206_CRM_M_Ola_2_Ordenes_Cliente_existente_Alta_de_linea_con_1_pack_Plan_con_tarjeta_Sin_delivery_Sin_VAS_Paso_1() {
+			Assert.assertTrue(true);
+		}
+	//Paso 2
+		@Test(groups= {"OM","AgregarPAck"}, dependsOnMethods ="TS102209_CRM_OM_Ola_2_Ordenes_Cliente_existente_Alta_de_linea_con_1_pack_Plan_con_tarjeta_Sin_delivery_Sin_VAS_Paso_4")
+		public void TS102207_CRM_M_Ola_2_Ordenes_Cliente_existente_Alta_de_linea_con_1_pack_Plan_con_tarjeta_Sin_delivery_Sin_VAS_Paso_2() {
+			Assert.assertTrue(true);		
+		}
+		
+	//Paso 3
+		@Test(groups= {"OM","AgregarPAck"}, dependsOnMethods ="TS102209_CRM_OM_Ola_2_Ordenes_Cliente_existente_Alta_de_linea_con_1_pack_Plan_con_tarjeta_Sin_delivery_Sin_VAS_Paso_4")
+		public void TS102208_CRM_M_Ola_2_Ordenes_Cliente_existente_Alta_de_linea_con_1_pack_Plan_con_tarjeta_Sin_delivery_Sin_VAS_Paso_3() {
+			Assert.assertTrue(true);	
+		}
+		
+		
+	//flujo completo
+	@Test(groups= {"OM","agregarPack"}, retryAnalyzer = retry.class)
+	public void TS102216_CRM_OM_Ola_2_Ordenes_Cliente_existente_Alta_de_linea_con_1_pack_Plan_prepago_nacional_Sin_delivery_Sin_VAS_Paso_4() throws InterruptedException, MalformedURLException {
 	String Url;
 	OM pageOm=new OM(driver);
 	OMQPage OM=new OMQPage (driver);
@@ -164,4 +190,28 @@ public void setUp() throws Exception {
 	pageOm.completarFlujoOrquestacion();
 			
 	}
+	
+	//Paso 0
+		@Test(groups= {"OM","AgregarPAck"}, dependsOnMethods ="TS102216_CRM_OM_Ola_2_Ordenes_Cliente_existente_Alta_de_linea_con_1_pack_Plan_prepago_nacional_Sin_delivery_Sin_VAS_Paso_4")
+		public void TS102212_CRM_OM_Ola_2_Ordenes_Cliente_existente_Alta_de_linea_con_1_pack_Plan_prepago_nacional_Sin_delivery_Sin_VAS_Paso_0() {
+			Assert.assertTrue(true);
+			}
+	
+	//Paso 1
+		@Test(groups= {"OM","AgregarPAck"}, dependsOnMethods ="TS102216_CRM_OM_Ola_2_Ordenes_Cliente_existente_Alta_de_linea_con_1_pack_Plan_prepago_nacional_Sin_delivery_Sin_VAS_Paso_4")
+		public void TS102213_CRM_OM_Ola_2_Ordenes_Cliente_existente_Alta_de_linea_con_1_pack_Plan_prepago_nacional_Sin_delivery_Sin_VAS_Paso_1() {
+			Assert.assertTrue(true);
+			}
+	
+	//Paso 2
+		@Test(groups= {"OM","AgregarPAck"}, dependsOnMethods ="TS102216_CRM_OM_Ola_2_Ordenes_Cliente_existente_Alta_de_linea_con_1_pack_Plan_prepago_nacional_Sin_delivery_Sin_VAS_Paso_4")
+		public void TS102214_CRM_OM_Ola_2_Ordenes_Cliente_existente_Alta_de_linea_con_1_pack_Plan_prepago_nacional_Sin_delivery_Sin_VAS_Paso_2() {
+			Assert.assertTrue(true);
+			}
+
+	//Paso 3
+		@Test(groups= {"OM","AgregarPAck"}, dependsOnMethods ="TS102216_CRM_OM_Ola_2_Ordenes_Cliente_existente_Alta_de_linea_con_1_pack_Plan_prepago_nacional_Sin_delivery_Sin_VAS_Paso_4")
+		public void TS102215_CRM_OM_Ola_2_Ordenes_Cliente_existente_Alta_de_linea_con_1_pack_Plan_prepago_nacional_Sin_delivery_Sin_VAS_Paso_3() {
+			Assert.assertTrue(true);
+			}
 }
