@@ -268,13 +268,13 @@ public class GestionesOM extends TestBase {
 		sleep(15000);
 		driver.findElement(By.id("RequestDate")).sendKeys("12-09-2019");
 		driver.findElement(By.cssSelector(".form-control.btn.btn-primary.ng-binding")).click();
-		sleep(10000);
+		sleep(15000);
 		buscarYClick(driver.findElements(By.cssSelector(".slds-button.slds-button_neutral")), "contains", "view record");
 		om.agregarGestion("Conciliate");
 		driver.findElement(By.cssSelector(".userNav-buttonArrow.mbrButtonArrow")).click();
 		sleep(6000);
 		driver.findElement(By.id("userNav-menuItems")).findElements(By.tagName("a")).get(3).click();
-		sleep(4000);
+		sleep(7000);
 		driver.findElement(By.id("userDropdown")).click();
 		sleep(3000);
 		driver.findElement(By.id("logout")).click();
@@ -290,14 +290,16 @@ public class GestionesOM extends TestBase {
 		sleep(5000);
 		driver.findElement(By.id("userNavLabel")).click();
 		sleep(2000);
+		String ventanaPrincipal = driver.getWindowHandle();
 		driver.findElement(By.cssSelector(".debugLogLink.menuButtonMenuLink")).click();
 		sleep(20000);
-		/*Set <String> handle = driver.getWindowHandles();
-		for (int i=0; i<handle.size(); i++) {
-			System.out.println(handle);
-		}*/
-		driver.switchTo().window("Developer Console - Google Chrome");
+		for(String nuevaVentana : driver.getWindowHandles()){
+		    driver.switchTo().window(nuevaVentana);
+		}
 		driver.findElement(By.id("debugMenuEntry-btnInnerEl")).click();
+		buscarYClick(driver.findElements(By.className("menuEntryLeft")), "equals", "open execute anonymous window");
+		sleep(8000);
+		driver.findElement(By.id("openExternalEditorToolButton-toolEl")).click();
 		
 	}
 }

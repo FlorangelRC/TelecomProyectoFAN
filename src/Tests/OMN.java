@@ -237,7 +237,7 @@ public class OMN extends TestBase {
 		Assert.assertTrue(true);
 	}
 	
-	@Test (groups = "OM")
+	@Test (groups = "OM")  //Falta terminar
 	public void TS80191_Ordenes_Cliente_existente_Cambio_de_SIM_Plan_con_tarjeta_Sin_delivery_Verificacion_de_assets() throws InterruptedException {
 		String a = "", b = "", c = "";
 		om.Gestion_Alta_De_Linea("FlorOM", "Plan con tarjeta");
@@ -265,5 +265,52 @@ public class OMN extends TestBase {
 		for (int i=0; i<asdd.size(); i++) {
 			System.out.println(asdd.get(i).getText());
 		}
+		Assert.assertTrue(false);
 	}
+	
+	@Test (groups = "OM", dependsOnMethods = "TS79026_Ordenes_Cliente_existente_Alta_de_linea_Sin_delivery_Sin_VAS_Paso_4")
+	public void TS79021_Ordenes_Cliente_existente_Alta_de_linea_Sin_delivery_Sin_VAS_Paso_0() {
+		Assert.assertTrue(true);
+	}
+	
+	@Test (groups = "OM", dependsOnMethods = "TS79026_Ordenes_Cliente_existente_Alta_de_linea_Sin_delivery_Sin_VAS_Paso_4")
+	public void TS79022_Ordenes_Cliente_existente_Alta_de_linea_Sin_delivery_Sin_VAS_Paso_1() {
+		Assert.assertTrue(true);
+	}
+	
+	@Test (groups = "OM", dependsOnMethods = "TS79026_Ordenes_Cliente_existente_Alta_de_linea_Sin_delivery_Sin_VAS_Paso_4")
+	public void TS79023_Ordenes_Cliente_existente_Alta_de_linea_Sin_delivery_Sin_VAS_Paso_2_NA() {
+		Assert.assertTrue(true);
+	}
+	
+	@Test (groups = "OM", dependsOnMethods = "TS79026_Ordenes_Cliente_existente_Alta_de_linea_Sin_delivery_Sin_VAS_Paso_4")
+	public void TS79024_Ordenes_Cliente_existente_Alta_de_linea_Sin_delivery_Sin_VAS_Paso_2() {
+		Assert.assertTrue(true);
+	}
+	
+	@Test (groups = "OM", dependsOnMethods = "TS79026_Ordenes_Cliente_existente_Alta_de_linea_Sin_delivery_Sin_VAS_Paso_4")
+	public void TS79025_Ordenes_Cliente_existente_Alta_de_linea_Sin_delivery_Sin_VAS_Paso_3() {
+		Assert.assertTrue(true);
+	}
+	
+	@Test (groups = "OM")
+	public void TS79026_Ordenes_Cliente_existente_Alta_de_linea_Sin_delivery_Sin_VAS_Paso_4() throws InterruptedException {
+		om.Gestion_Alta_De_Linea("FlorOM", "Plan prepago nacional");
+		driver.findElement(By.id("Order_Tab")).click();
+		sleep(5000);
+		om.selectVistaByVisibleText("LineasFlor");
+		sleep(3000);		
+		WebElement orden = driver.findElement(By.cssSelector(".x-grid3-col.x-grid3-cell.x-grid3-td-ORDERS_ORDER_NUMBER"));
+		orden.findElement(By.tagName("div")).findElement(By.tagName("a")).click();
+		sleep(5000);
+		driver.findElement(By.name("vlocity_cmt__vieworchestrationplan")).click();
+		sleep(10000);
+		om.ordenCajasVerdes("CreateSubscriber - S203", "Env\u00edo de Activaci\u00f3n de Servicios a la Red", "updateNumerStatus - S326");
+	}
+	
+	@Test
+	public void TS79046_Ordenes_Cliente_existente_Alta_de_linea_Sin_delivery_Sin_VAS_Verficacion_de_ASSETs_creados() throws InterruptedException {
+		om.Gestion_Alta_De_Linea("FlorOM", "Plan prepago nacional");
+		
+	}	
 }
