@@ -1634,4 +1634,57 @@ public void deleteOrdersNoActivated(String Vista) {
 		}
 		oOM.completarFlujoOrquestacion();
 	}
+	
+	public void AltaDeLineaCon1Servicio(String Cuenta, String Plan) throws InterruptedException {
+		OM pageOm = new OM(driver);
+		OMQPage OM = new OMQPage(driver);
+		pageOm.crearOrden(Cuenta);
+		assertTrue(driver.findElement(By.cssSelector(".noSecondHeader.pageType")).isDisplayed());
+		pageOm.agregarGestion("Venta");
+		sleep(2000);
+		OM.getCPQ().click();
+		sleep(5000);
+		OM.colocarPlan1(Plan);
+		sleep(2000);
+		driver.switchTo().defaultContent();
+		sleep(7000);
+		driver.findElement(By.xpath(".//*[@id='tab-default-1']/div/ng-include//div[10]//button")).click();
+		sleep(2000);
+		List<WebElement> list = driver.findElements(By.cssSelector(".slds-dropdown__item.cpq-item-actions-dropdown__item"));
+		list.get(2).click();
+		OM.agregarNumerodeLinea();
+		OM.SimCard();
+		driver.findElements(By.cssSelector(".slds-button.slds-button_icon-small")).get(1).click();
+		sleep(7000);
+		driver.findElement(By.xpath("//*[@id=\"tab-default-1\"]/div[1]/ng-include/div/div/div/div[4]/div[2]/div/ng-include/div/div[2]/ng-include/div/div[3]/div/div[3]/div/div/ng-include/div/div[2]/ng-include/div/div[1]/div/div[2]/div[2]/div/div/input")).sendKeys("1");
+		sleep(10000);
+		driver.findElement(By.id("-import-btn")).click();
+		sleep(5000);
+		AgregarDomicilio();
+		sleep(5000);
+		driver.findElement(By.name("ta_submit_order")).click();
+		sleep(15000);
+		try {
+			System.out.println(driver.switchTo().alert().getText());
+			driver.switchTo().alert().accept();
+			driver.switchTo().alert().dismiss();
+			driver.switchTo().defaultContent();
+			driver.findElement(By.name("ta_submit_order")).click();
+		} catch (org.openqa.selenium.NoAlertPresentException e) {
+			driver.switchTo().defaultContent();
+		}
+		sleep(45000);
+		try {
+			pageOm.cambiarVentanaNavegador(1);
+			sleep(2000);
+			driver.findElement(By.id("idlist")).click();
+			sleep(5000);
+			pageOm.cambiarVentanaNavegador(0);
+		} catch (java.lang.IndexOutOfBoundsException ex1) {}
+		sleep(12000);
+		pageOm.completarFlujoOrquestacion();
+		sleep(5000);
+		driver.findElement(By.id("accid_ileinner")).findElement(By.tagName("a")).click();
+		sleep(10000);
+	}
 }

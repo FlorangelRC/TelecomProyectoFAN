@@ -299,7 +299,7 @@ public class OMN extends TestBase {
 		driver.findElement(By.id("Order_Tab")).click();
 		sleep(5000);
 		om.selectVistaByVisibleText("LineasFlor");
-		sleep(3000);		
+		sleep(3000);
 		WebElement orden = driver.findElement(By.cssSelector(".x-grid3-col.x-grid3-cell.x-grid3-td-ORDERS_ORDER_NUMBER"));
 		orden.findElement(By.tagName("div")).findElement(By.tagName("a")).click();
 		sleep(5000);
@@ -308,9 +308,170 @@ public class OMN extends TestBase {
 		om.ordenCajasVerdes("CreateSubscriber - S203", "Env\u00edo de Activaci\u00f3n de Servicios a la Red", "updateNumerStatus - S326");
 	}
 	
-	@Test
+	@Test (groups = "OM")
 	public void TS79046_Ordenes_Cliente_existente_Alta_de_linea_Sin_delivery_Sin_VAS_Verficacion_de_ASSETs_creados() throws InterruptedException {
+		boolean a = false, b = false;
 		om.Gestion_Alta_De_Linea("FlorOM", "Plan prepago nacional");
-		
-	}	
+		driver.switchTo().frame(cambioFrame(driver, By.cssSelector(".panel.panel-default.panel-assets")));
+		List <WebElement> assets = driver.findElement(By.cssSelector(".panel.panel-default.panel-assets")).findElements(By.cssSelector(".root-asset.ng-scope"));
+		assets.get(assets.size() -1).findElement(By.className("p-expand")).click();
+		sleep(3000);
+		List <WebElement> contAsset = driver.findElements(By.className("p-name"));
+		for (int i=0; i<contAsset.size(); i++) {
+			if (contAsset.get(i).getText().equalsIgnoreCase("Simcard")) {
+				a = true;
+			}
+			if (contAsset.get(i).getText().equalsIgnoreCase("Voz")) {
+				b = true;
+			}
+			/*if (contAsset.get(i).getText().equalsIgnoreCase("SMS Saliente")) {
+				a = true;
+			}
+			if (contAsset.get(i).getText().equalsIgnoreCase("SMS Entrante")) {
+				a = true;
+			}
+			if (contAsset.get(i).getText().equalsIgnoreCase("MMS")) {
+				a = true;
+			}
+			if (contAsset.get(i).getText().equalsIgnoreCase("Datos")) {
+				a = true;
+			}
+			if (contAsset.get(i).getText().equalsIgnoreCase("Caller Id")) {
+				a = true;
+			}
+			if (contAsset.get(i).getText().equalsIgnoreCase("Transferencia de Llamadas")) {
+				a = true;
+			}
+			if (contAsset.get(i).getText().equalsIgnoreCase("Conferencia Tripartita")) {
+				a = true;
+			}
+			if (contAsset.get(i).getText().equalsIgnoreCase("Barrings Configurables por el Usuario")) {
+				a = true;
+			}
+			if (contAsset.get(i).getText().equalsIgnoreCase("Contestador Personal")) {
+				a = true;
+			}
+			if (contAsset.get(i).getText().equalsIgnoreCase("DDI con Roaming Internacional")) {
+				a = true;
+			}
+			if (contAsset.get(i).getText().equalsIgnoreCase("InternetXDia")) {
+				a = true;
+			}
+			if (contAsset.get(i).getText().equalsIgnoreCase("Numeros gratis a Personal 1 para voz contra recarga")) {
+				a = true;
+			}
+			if (contAsset.get(i).getText().equalsIgnoreCase("Numeros gratis a Personal 1 para sms contra recarga")) {
+				a = true;
+			}*/
+		}
+		Assert.assertTrue(a && b);
+	}
+	
+	@Test (groups = "OM")
+	public void TS122436_Ordenes_Cliente_existente_Alta_de_linea_Plan_prepago_nacional_Actualizacion_del_campo_Activation_Date() throws InterruptedException {
+		om.Gestion_Alta_De_Linea("FlorOM", "Plan prepago nacional");
+		driver.navigate().back();
+		sleep(5000);
+		driver.findElement(By.name("vlocity_cmt__vieworchestrationplan")).click();
+		sleep(10000);
+		String caja = driver.findElement(By.xpath("//*[@id=\"canvas\"]/div[15]/div[2]/div/div/ng-include/div/div[2]/span[2]")).getText();
+		caja = caja.substring(0, caja.indexOf(":"));
+		driver.navigate().back();
+		sleep(5000);
+		sleep(5000);
+		String date = driver.findElement(By.id("ActivatedDate_ilecell")).getText();
+		date = date.substring(0, date.indexOf(":"));
+		Assert.assertTrue(caja.equals(date));
+	}
+	
+	@Test (groups = "OM")
+	public void TS122437_Ordenes_Cliente_existente_Alta_de_linea_Plan_con_tarjeta_Actualizacion_del_campo_Activation_Date() throws InterruptedException {
+		om.Gestion_Alta_De_Linea("FlorOM", "Plan con tarjeta");
+		driver.navigate().back();
+		sleep(5000);
+		driver.findElement(By.name("vlocity_cmt__vieworchestrationplan")).click();
+		sleep(10000);
+		String caja = driver.findElement(By.xpath("//*[@id=\"canvas\"]/div[15]/div[2]/div/div/ng-include/div/div[2]/span[2]")).getText();
+		caja = caja.substring(0, caja.indexOf(":"));
+		driver.navigate().back();
+		sleep(5000);
+		String date = driver.findElement(By.id("ActivatedDate_ilecell")).getText();
+		date = date.substring(0, date.indexOf(":"));
+		Assert.assertTrue(caja.equals(date));
+	}
+	
+	@Test (groups = "OM", dependsOnMethods = "TS80350_Ordenes_Cliente_existente_Alta_de_1_servicio_adicional_Plan_con_tarjeta_Paso_3")
+	public void TS80346_Ordenes_Cliente_existente_Alta_de_1_servicio_adicional_Plan_con_tarjeta_Paso_0() {
+		Assert.assertTrue(true);
+	}
+	
+	@Test (groups = "OM", dependsOnMethods = "TS80350_Ordenes_Cliente_existente_Alta_de_1_servicio_adicional_Plan_con_tarjeta_Paso_3")
+	public void TS80347_Ordenes_Cliente_existente_Alta_de_1_servicio_adicional_Plan_con_tarjeta_Paso_1() {
+		Assert.assertTrue(true);
+	}
+	
+	@Test (groups = "OM", dependsOnMethods = "TS80350_Ordenes_Cliente_existente_Alta_de_1_servicio_adicional_Plan_con_tarjeta_Paso_3")
+	public void TS80348_Ordenes_Cliente_existente_Alta_de_1_servicio_adicional_Plan_con_tarjeta_Paso_2() {
+		Assert.assertTrue(true);
+	}
+	
+	@Test (groups = "OM")
+	public void TS80350_Ordenes_Cliente_existente_Alta_de_1_servicio_adicional_Plan_con_tarjeta_Paso_3() throws InterruptedException {
+		boolean gestion = false;
+		om.AltaDeLineaCon1Servicio("FlorOM", "Plan con tarjeta");
+		driver.navigate().back();
+		sleep(7000);
+		String status = driver.findElement(By.id("Status_ilecell")).getText();
+		List <WebElement> gest = driver.findElements(By.cssSelector(".dataCol.inlineEditWrite"));
+		for (WebElement x : gest) {
+			if (x.getText().equalsIgnoreCase("Venta")) {
+				gestion = true;
+			}
+		}
+		driver.findElement(By.name("vlocity_cmt__vieworchestrationplan")).click();
+		sleep(10000);
+		Assert.assertTrue(status.equals("Activated"));
+		Assert.assertTrue(gestion);
+		om.ordenCajasVerdes("CreateSubscriber - S203", "Env\u00edo de Activaci\u00f3n de Servicios a la Red", "updateNumerStatus - S326");
+	}
+	
+	@Test (groups = "OM", dependsOnMethods = "TS79209_Ordenes_Cliente_existente_Alta_de_1_servicio_adicional_Plan_prepago_nacional_Sin_delivery_Sin_VAS_Paso_4")
+	public void TS79205_Ordenes_Cliente_existente_Alta_de_1_servicio_adicional_Plan_prepago_nacional_Sin_delivery_Sin_VAS_Paso_0() {
+		Assert.assertTrue(true);
+	}
+	
+	@Test (groups = "OM", dependsOnMethods = "TS79209_Ordenes_Cliente_existente_Alta_de_1_servicio_adicional_Plan_prepago_nacional_Sin_delivery_Sin_VAS_Paso_4")
+	public void TS79206_Ordenes_Cliente_existente_Alta_de_1_servicio_adicional_Plan_prepago_nacional_Sin_delivery_Sin_VAS_Paso_1() {
+		Assert.assertTrue(true);
+	}
+	
+	@Test (groups = "OM", dependsOnMethods = "TS79209_Ordenes_Cliente_existente_Alta_de_1_servicio_adicional_Plan_prepago_nacional_Sin_delivery_Sin_VAS_Paso_4")
+	public void TS79207_Ordenes_Cliente_existente_Alta_de_1_servicio_adicional_Plan_prepago_nacional_Sin_delivery_Sin_VAS_Paso_2() {
+		Assert.assertTrue(true);
+	}
+	
+	@Test (groups = "OM", dependsOnMethods = "TS79209_Ordenes_Cliente_existente_Alta_de_1_servicio_adicional_Plan_prepago_nacional_Sin_delivery_Sin_VAS_Paso_4")
+	public void TS79208_Ordenes_Cliente_existente_Alta_de_1_servicio_adicional_Plan_prepago_nacional_Sin_delivery_Sin_VAS_Paso_3() {
+		Assert.assertTrue(true);
+	}
+	
+	@Test (groups = "OM")
+	public void TS79209_Ordenes_Cliente_existente_Alta_de_1_servicio_adicional_Plan_prepago_nacional_Sin_delivery_Sin_VAS_Paso_4() throws InterruptedException {
+		boolean gestion = false;
+		om.AltaDeLineaCon1Servicio("FlorOM", "Plan Prepago Nacional");
+		driver.navigate().back();
+		sleep(7000);
+		String status = driver.findElement(By.id("Status_ilecell")).getText();
+		List <WebElement> gest = driver.findElements(By.cssSelector(".dataCol.inlineEditWrite"));
+		for (WebElement x : gest) {
+			if (x.getText().equalsIgnoreCase("Venta")) {
+				gestion = true;
+			}
+		}
+		driver.findElement(By.name("vlocity_cmt__vieworchestrationplan")).click();
+		sleep(10000);
+		Assert.assertTrue(status.equals("Activated"));
+		Assert.assertTrue(gestion);
+		om.ordenCajasVerdes("CreateSubscriber - S203", "Env\u00edo de Activaci\u00f3n de Servicios a la Red", "updateNumerStatus - S326");
+	}
 }
