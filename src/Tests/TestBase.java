@@ -281,6 +281,15 @@ public class TestBase {
 		    page0.ingresarFrancisco();
 		}
 		
+		public void loginNominaciones(WebDriver driver) {
+			driver.get("https://crm--sit.cs14.my.salesforce.com/");
+			try {Thread.sleep(6000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		    Login page0 = new Login(driver);
+		    page0.ingresarNominaciones();
+		}
+		
+		
+		
 		/**Ingresa con los datos de la cuenta Nicolas.
 		 * Para el Modulo Sales tiene vinculado el perfil de Logistica	 */
 		public void loginNicolas(WebDriver driver) {
@@ -841,7 +850,7 @@ public class TestBase {
 	@DataProvider
 	public Object[][] OMCambioTitularidad() throws Exception{
 
-	 Object[][] testObjArray = ExcelUtils.getTableArray("Cuentas.xlsx","OM",1,1,6,"Cambio de Titularidad");
+		Object[][] testObjArray = ExcelUtils.getTableArray("Cuentas.xlsx","OM",1,1,6,"Cambio de Titularidad"); 
 
 	 return (testObjArray);
 

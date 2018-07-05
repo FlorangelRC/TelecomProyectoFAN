@@ -107,7 +107,7 @@ public class OMerO extends TestBase {
 //========================================================================================================================================================================
 	
 	@Test (groups = "OM")
-	public void TS6722_OM_Ordenes_Vista_Configuración_Cargar_Vista(){
+	public void TS6722_OM_Ordenes_Vista_Configuraciï¿½n_Cargar_Vista(){
 		driver.findElement(By.className("fFooter")).click();
 		sleep(5000);
 		driver.findElement(By.id("fname")).sendKeys("CambiodeVista");

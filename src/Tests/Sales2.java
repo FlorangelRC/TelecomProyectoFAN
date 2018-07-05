@@ -1462,7 +1462,7 @@ public class Sales2 extends TestBase{
 		}
 		Assert.assertTrue(fem && masc);
 		Assert.assertTrue(driver.findElement(By.id("DocumentType")).isEnabled());
-		Assert.assertTrue(driver.findElement(By.id("DocumentNumber")).getAttribute("disabled").equals("true"));
+		Assert.assertTrue(driver.findElement(By.id("DNI")).getAttribute("disabled").equals("true"));
 		Assert.assertTrue(driver.findElement(By.id("FirstName")).isEnabled());
 		Assert.assertTrue(driver.findElement(By.id("LastName")).isEnabled());
 		Assert.assertTrue(driver.findElement(By.id("Birthdate")).isEnabled());

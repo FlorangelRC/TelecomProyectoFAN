@@ -27,7 +27,7 @@ public class OMRPlansPage extends BasePage {
 	private WebElement serviciosTelefoniaMovil;
 	
 	//Servicios Basicos General Movil
-	@FindBy(xpath = "//div[contains(concat(' ',normalize-space(@class),' '),'cpq-item-base-product-name cpq-item-product-group js-cpq-cart-product-hierarchy-path-01tc000000578LBAAY<01tc000000578KIAAY')]//button")
+	@FindBy(xpath = "//*[contains(text(),'Servicios Basicos General Movil')]//../parent::*//*[contains(concat(' ',normalize-space(@class),' '),'slds-button slds-button_icon-small')]")
 	private WebElement serviciosBasicosGeneralMovil;
 	
 	@FindBy(xpath = "//div[contains(concat(' ',normalize-space(@class),' '),'cpq-item-base-product-name cpq-item-product-group js-cpq-cart-product-hierarchy-path-01tc000000578LBAAY<01tc000000578KIAAY<01tc0000005M7ySAAS')]//button")
@@ -59,101 +59,116 @@ public class OMRPlansPage extends BasePage {
 		fluentWait = new FluentWait<WebDriver>(driver);
 		fluentWait.withTimeout(45, TimeUnit.SECONDS)
 			.pollingEvery(3, TimeUnit.SECONDS)
-			.ignoring(org.openqa.selenium.NoSuchElementException.class)
-			.ignoring(org.openqa.selenium.ElementNotVisibleException.class)
-			;
+			.ignoring(org.openqa.selenium.NoSuchElementException.class);
+//			.fluentWait.ignoring(org.openqa.selenium.ElementNotVisibleException.class);
 	}
 		
 	public WebElement getPlanButton() {
 		fluentWait.until(ExpectedConditions.elementToBeClickable(planButton));
+		System.out.println("getPlanButton");
 		return planButton;
 	}
 	
 	public WebElement getServiciosTelefoniaMovil() {
 		fluentWait.until(ExpectedConditions.elementToBeClickable(serviciosTelefoniaMovil));
+		System.out.println("getServiciosTelefoniaMovil");
 		return serviciosTelefoniaMovil;
 	}
 
 	public WebElement getServiciosBasicosGeneralMovil() {
 		fluentWait.until(ExpectedConditions.elementToBeClickable(serviciosBasicosGeneralMovil));
+		System.out.println("getServiciosBasicosGeneralMovil");
 		return serviciosBasicosGeneralMovil;
 	}
 
 	public WebElement getSBGMContestador() {
 		fluentWait.until(ExpectedConditions.visibilityOf(sbgmContestador));
+		System.out.println("getSBGMContestador");
 		return sbgmContestador;
 	}
 
 	public WebElement getSBGMDDI() {
 		fluentWait.until(ExpectedConditions.visibilityOf(sbgmDDI));
+		System.out.println("getSBGMDDI");
 		return sbgmDDI;
 	}
 
 	public WebElement getServiciosInternetPorDia() {
 		fluentWait.until(ExpectedConditions.elementToBeClickable(serviciosInternetPorDia));
+		System.out.println("getServiciosInternetPorDia");
 		return serviciosInternetPorDia;
 	}
 
 	public WebElement getFriendsAndFamily() {
 		fluentWait.until(ExpectedConditions.elementToBeClickable(friendsAndFamily));
+		System.out.println("getFriendsAndFamily");
 		return friendsAndFamily;
 	}
 
 	public WebElement getPacksOpcionales() {
 		fluentWait.until(ExpectedConditions.elementToBeClickable(packsOpcionales));
+		System.out.println("getPacksOpcionales");
 		return packsOpcionales;
 	}
 
 	public WebElement getRenovacionDeCuota() {
 		fluentWait.until(ExpectedConditions.elementToBeClickable(renovacionDeCuota));
+		System.out.println("getRenovacionDeCuota");
 		return renovacionDeCuota;
 	}
 	
+	
+	
 	private WebElement findAddToCartButtonByServiceName(String service) {
 		String addToCartButtonXpath = "//*[contains(text(),'" + service + "')]//../parent::*//../following-sibling::*//*[contains(concat(' ',normalize-space(@class),' '),'slds-button slds-button_neutral') and contains(text(),'Add to Cart')]";
+		System.out.println("findAddToCartButtonByServiceName");
 		return driver.findElement(By.xpath(addToCartButtonXpath));
+//		WebElement addToCartButton = fluentWait.until(ExpectedConditions.elementToBeClickable(driver.findElement(By.xpath(addToCartButtonXpath)))); 
+//		return addToCartButton; 
 	}
 
 	private WebElement findShowActionsButtonByServiceName(String service) {
 		String showActionsButtonXpath = "//*[contains(text(),'" + service + "')]//../parent::*//../following-sibling::*//*[contains(concat(' ',normalize-space(@class),' '),'slds-button slds-button_icon-border-filled cpq-item-actions-dropdown-button')]";
-		sleep(6000);
-		WebElement showActionsButton = fluentWait.until(ExpectedConditions.elementToBeClickable(driver.findElement(By.xpath(showActionsButtonXpath))));
-		return showActionsButton;
+		System.out.println("findShowActionsButtonByServiceName");
+		return driver.findElement(By.xpath(showActionsButtonXpath));
+//		WebElement showActionsButton = fluentWait.until(ExpectedConditions.elementToBeClickable(driver.findElement(By.xpath(showActionsButtonXpath))));
+//		return showActionsButton;
 	}
 	
+	private WebElement findDeleteServiceButton(WebElement showActionsButton) {
+		System.out.println("findDeleteServiceButton");
+		return showActionsButton.findElement(By.xpath("//../child::*//span[contains(.,'Delete')]"));
+//		WebElement deleteServiceButton = fluentWait.until(ExpectedConditions.elementToBeClickable(
+//				showActionsButton.findElement(By.xpath("//../child::*//span[contains(.,'Delete')]"))));	
+//		return deleteServiceButton;	
+	}
 	
+	//*[contains(text(),'espera')]//../parent::*//../following-sibling::*//*[contains(concat(' ',normalize-space(@class),' '),'slds-button slds-button_icon-border-filled cpq-item-actions-dropdown-button')]//../following-sibling::*//span[contains(.,'Delete')]
+	//	WebElement deleteServiceButton = driver.findElement(By.xpath("//*[contains(text(),'Llamada en espera')]//../parent::*//../following-sibling::*//*[contains(concat(' ',normalize-space(@class),' '),'slds-button slds-button_icon-border-filled cpq-item-actions-dropdown-button')]//../following-sibling::*//span[contains(.,'Delete')]"));
 	//*[contains(text(),'Llamada en espera')]//../parent::*//../following-sibling::*//*[contains(concat(' ',normalize-space(@class),' '),'slds-button slds-button_icon-border-filled cpq-item-actions-dropdown-button')]//../following-sibling::*//span[contains(.,'Delete')]
 
 	
 	public void addServiceToCartByName(String service) {
-		WebElement addToCartButton = fluentWait.until(ExpectedConditions.visibilityOf(findAddToCartButtonByServiceName(service)));
-		addToCartButton.click();
+		sleep(5000);
+		findAddToCartButtonByServiceName(service).click();
 	}
 		
 	public void deleteService(String service) {
+		sleep(5000);
 		WebElement showActionsButton = findShowActionsButtonByServiceName(service);
 		showActionsButton.click();
-//		String deleteServiceButtonXpath = "//../following-sibling::*//li[contains(.,'Delete')]";
-//		WebElement deleteServiceButton = fluentWait.until(ExpectedConditions.elementToBeClickable(showActionsButton.findElement(By.xpath(deleteServiceButtonXpath))));
-		sleep(5000);
-		WebElement deleteServiceButton = driver.findElement(By.xpath("//*[contains(text(),'Llamada en espera')]//../parent::*//../following-sibling::*//*[contains(concat(' ',normalize-space(@class),' '),'slds-button slds-button_icon-border-filled cpq-item-actions-dropdown-button')]//../following-sibling::*//span[contains(.,'Delete')]"));
+		System.out.println("Click showActionsButton");
+		sleep(10000);
+		WebElement deleteServiceButton = findDeleteServiceButton(showActionsButton);
 		deleteServiceButton.click();
-		sleep(5000);
-		WebElement confirmDeleteButton = fluentWait.until(ExpectedConditions.elementToBeClickable(driver.findElement(By.xpath("//button[contains(text(),'Delete')]"))));
+		System.out.println("Click deleteServiceButton");
+		sleep(2000);
+		WebElement confirmDeleteButton = driver.findElement(By.xpath("//button[contains(text(),'Delete')]"));
+		System.out.println("confirmDeleteButton");
 		confirmDeleteButton.click();
-//		
-//		try {
-//			WebElement confirmDeleteButton = fluentWait.until(ExpectedConditions.elementToBeClickable(driver.findElement(By.xpath("//button[contains(text(),'Delete')]"))));
-//			confirmDeleteButton.click();
-//		} catch (NoSuchElementException e) {
-//			try {
-//				Alert confirmDelete = driver.switchTo().alert();
-//				confirmDelete.accept();
-//			} catch (NoAlertPresentException a) {
-//				e.printStackTrace();
-//			}
-//		}
-//		
+		System.out.println("Click confirmDeleteButton");
+//		WebElement confirmDeleteButton = fluentWait.until(ExpectedConditions.elementToBeClickable(driver.findElement(By.xpath("//button[contains(text(),'Delete')]"))));
+//		confirmDeleteButton.click();
 	}
 	
 	//By.cssSelector(".slds-button.slds-button--destructive")
