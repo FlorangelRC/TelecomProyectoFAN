@@ -146,7 +146,7 @@ public class OMQPage extends BasePage {
 		public void configuracion() {
 		sleep(2000);
 		driver.switchTo().defaultContent();
-		sleep(7000);
+		sleep(4000);
 		driver.findElement(By.xpath(".//*[@id='tab-default-1']/div/ng-include//div[10]//button")).click();
 		sleep(2000);
 		List<WebElement> list = driver.findElements(By.cssSelector(".slds-dropdown__item.cpq-item-actions-dropdown__item")); 
