@@ -286,43 +286,20 @@ public class GestionesOM extends TestBase {
 	@Test
 	public void ConciliacionOM() throws InterruptedException {
 		OM om = new OM(driver);
+		boolean gestion = false;
 		om.Gestion_Alta_De_Linea("FlorOM", "Plan Prepago Nacional");
-		om.irAChangeToOrder();
-		sleep(15000);
-		driver.findElement(By.id("RequestDate")).sendKeys("12-09-2019");
-		driver.findElement(By.cssSelector(".form-control.btn.btn-primary.ng-binding")).click();
-		sleep(15000);
-		buscarYClick(driver.findElements(By.cssSelector(".slds-button.slds-button_neutral")), "contains", "view record");
-		om.agregarGestion("Conciliate");
-		driver.findElement(By.cssSelector(".userNav-buttonArrow.mbrButtonArrow")).click();
-		sleep(6000);
-		driver.findElement(By.id("userNav-menuItems")).findElements(By.tagName("a")).get(3).click();
-		sleep(7000);
-		driver.findElement(By.id("userDropdown")).click();
-		sleep(3000);
-		driver.findElement(By.id("logout")).click();
+		om.Conciliacion();
 		sleep(5000);
-		driver.get("https://crm--sit.cs14.my.salesforce.com/");
-		driver.findElement(By.id("cancel_idp_hint")).click();
-		sleep(3000);
-		driver.findElement(By.id("username")).sendKeys("usit@telecom.sit");
-		driver.findElement(By.id("password")).sendKeys("pruebas10");
-		driver.findElement(By.id("Login")).click();
-		BasePage bp = new BasePage(driver);
-		bp.cajonDeAplicaciones("Ventas");
-		sleep(5000);
-		driver.findElement(By.id("userNavLabel")).click();
-		sleep(2000);
-		String ventanaPrincipal = driver.getWindowHandle();
-		driver.findElement(By.cssSelector(".debugLogLink.menuButtonMenuLink")).click();
-		sleep(20000);
-		for(String nuevaVentana : driver.getWindowHandles()){
-		    driver.switchTo().window(nuevaVentana);
+		WebElement status = driver.findElement(By.id("Status_ilecell"));
+		List <WebElement> gest = driver.findElements(By.cssSelector(".dataCol.inlineEditWrite"));
+		for (WebElement x : gest) {
+			if (x.getText().equalsIgnoreCase("Cambio de SIM por siniestro")) {
+				gestion = true;
+			}
 		}
-		driver.findElement(By.id("debugMenuEntry-btnInnerEl")).click();
-		buscarYClick(driver.findElements(By.className("menuEntryLeft")), "equals", "open execute anonymous window");
-		sleep(8000);
-		driver.findElement(By.id("openExternalEditorToolButton-toolEl")).click();
+		Assert.assertTrue(status.getText().equalsIgnoreCase("Activated"));
+		Assert.assertTrue(gestion);
+		
 		
 	}
 	
