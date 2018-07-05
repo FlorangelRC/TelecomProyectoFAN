@@ -52,12 +52,12 @@ public class OMerO extends TestBase {
 		sleep(3000);
 	}
 	
-	@AfterClass (alwaysRun = true, groups = "OM")
+	//@AfterClass (alwaysRun = true, groups = "OM")
 	public void quit() {
 		driver.quit();
 		sleep(5000);
 	}
-
+//==============================================================  VISTA  ========================================================
 	@Test (groups = "OM")
 	public void TS6721_OM_Ordenes_Vista_Configuracion(){
 		driver.findElement(By.className("fFooter")).click();
@@ -143,25 +143,23 @@ public class OMerO extends TestBase {
 		Assert.assertTrue(acc.get(2).getText().contains("Account Name"));
 		Assert.assertTrue(acc.get(3).getText().contains("Status"));
 	}
-//============================================================================================================================================================================
+//========================================================  CAMBIO DE NUMERO  ============================================================================
 	
 	@Test (groups = {"OM","CambioDeNumero"})
 	public void TS79682CRM_OM_Ordenes_Cliente_existente_Cambio_de_numero_Sin_delivery_Paso_5() throws InterruptedException{
 		OM pageOm=new OM(driver);
-		boolean gestion = false;
 		pageOm.Gestion_Alta_De_Linea("AlOM", "Plan Prepago Nacional");
-		pageOm.Gestion_Cambio_de_Numero("AlanOM", "07-07-2018");
+		pageOm.Gestion_Cambio_de_Numero("AlanOM", "07-10-2018");
 		sleep(15000);
-		/*WebElement status = driver.findElement(By.id("Status_ilecell"));
-		List <WebElement> gest = driver.findElements(By.cssSelector(".dataCol.inlineEditWrite"));
-		for (WebElement x : gest) {
-			if (x.getText().toLowerCase().contains("cambio de n\\u00famero")) {
+		boolean gestion = false;
+		WebElement status = driver.findElement(By.id("Status_ilecell"));
+		WebElement gest = driver.findElements(By.cssSelector(".dataCol.inlineEditWrite")).get(12);
+		if (gest.getText().toLowerCase().contains("cambio de n\u00famero")) {
 				gestion = true;
 			}
-		}
 		Assert.assertTrue(status.getText().equalsIgnoreCase("Activated"));
 		Assert.assertTrue(gestion);
-		sleep(3000);*/
+		
 	}      
 		
 			
@@ -195,27 +193,23 @@ public class OMerO extends TestBase {
 		sleep(3000);
 	}
 	
+//==============================================================================================================================================
 	
-	/*
-	
-//=======================================================================================================================================================================
 	
 	@Test (groups = {"OM","CambioDeNumero"})
 	public void TS80246_OM_Ordenes_Cliente_existente_Cambio_de_numero_Plan_con_tarjeta_Sin_delivery_Paso_5() throws InterruptedException{
 		OM pageOm=new OM(driver);
 		boolean gestion = false;
 		pageOm.Gestion_Alta_De_Linea("AlOM", "Plan con tarjeta");
-		pageOm.Gestion_Cambio_de_Numero("AlanOM", "07-07-2018");
+		pageOm.Gestion_Cambio_de_Numero("AlanOM", "07-09-2018");
 		sleep(15000);
 		WebElement status = driver.findElement(By.id("Status_ilecell"));
-		List <WebElement> gest = driver.findElements(By.cssSelector(".dataCol.inlineEditWrite"));
-		for (WebElement x : gest) {
-			if (x.getText().toLowerCase().contains("cambio de n\\u00famero")) {
+		WebElement gest = driver.findElements(By.cssSelector(".dataCol.inlineEditWrite")).get(12);
+		if (gest.getText().toLowerCase().contains("cambio de n\u00famero")) {
 				gestion = true;
 			}
-		}
 		Assert.assertTrue(status.getText().equalsIgnoreCase("Activated"));
-		//Assert.assertTrue(gestion);
+		Assert.assertTrue(gestion);
 		sleep(3000);
 	}      
 		
@@ -249,6 +243,110 @@ public class OMerO extends TestBase {
 		Assert.assertTrue(true);
 		sleep(3000);
 	}
-	*/
+	
+	
+//==============================================            ALTA DE LINEA         ==================================================================	
+	
+	@Test(groups = {"OM","AltadeLinea"})                  // FALTAN NOMINAR
+	public void TS51856_Ordenes_Cliente_Nuevo_Alta_de_linea_Sin_delivery_Sin_VAS_Paso_4() throws InterruptedException{
+		OM pageOm=new OM(driver);
+		pageOm.Gestion_Alta_De_Linea("AlOM", "Plan Prepago Nacional");
+		driver.navigate().back();
+		sleep(5000);
+		driver.findElement(By.xpath("//*[@id='topButtonRow']/input[6]")).click();
+		sleep(10000);
+		boolean chiqui = false;
+		while (chiqui == false) {
 
+			try {
+				driver.findElement(By.id("zoomOut")).click();
+			} catch (Exception ex1) {
+				chiqui = true;
+				driver.findElement(By.id("zoomIn")).click();
+				break;
+			}
+		}
+		pageOm.ordenCajasVerdes("CreateSubscriber - S203", "Env\u00edo de Activaci\u00f3n de Servicios de la Red", "updateNumberStatus - S326");
+	}
+	
+	@Test(groups = {"OM","AltadeLinea"}, dependsOnMethods="TS51856_Ordenes_Cliente_Nuevo_Alta_de_linea_Sin_delivery_Sin_VAS_Paso_4")
+	public void TS51856_Ordenes_Cliente_Nuevo_Alta_de_linea_Sin_delivery_Sin_VAS_Paso_0(){
+		Assert.assertTrue(true);
+	
+	}
+	
+	@Test(groups = {"OM","AltadeLinea"}, dependsOnMethods="TS51856_Ordenes_Cliente_Nuevo_Alta_de_linea_Sin_delivery_Sin_VAS_Paso_4")
+	public void TS51857_Ordenes_Cliente_Nuevo_Alta_de_linea_Sin_delivery_Sin_VAS_Paso_1(){
+		Assert.assertTrue(true);
+	}
+	
+	@Test(groups = {"OM","AltadeLinea"}, dependsOnMethods="TS51856_Ordenes_Cliente_Nuevo_Alta_de_linea_Sin_delivery_Sin_VAS_Paso_4")
+	public void TS51858_Ordenes_Cliente_Nuevo_Alta_de_linea_Sin_delivery_Sin_VAS_Paso_2(){
+		Assert.assertTrue(true);
+	}
+	
+	@Test(groups = {"OM","AltadeLinea"}, dependsOnMethods="TS51856_Ordenes_Cliente_Nuevo_Alta_de_linea_Sin_delivery_Sin_VAS_Paso_4")
+	public void TS51859_Ordenes_Cliente_Nuevo_Alta_de_linea_Sin_delivery_Sin_VAS_Paso_2(){
+		Assert.assertTrue(true);
+	}
+	
+//===================================================== CAMBIO DE TITULARIDAD ========================================================================	
+
+	@Test(groups = {"OM","CambiodeTitularidad"})
+	public void TS125660_Ordenes_Cliente_Existente_Cambio_de_titularidad_Plan_prepago_nacional_Paso_2() throws InterruptedException{
+		om.Gestion_Alta_De_Linea("CambiodeTitularidad", "Plan prepago nacional");
+		om.irAChangeToOrder();
+		om.Gestion_Cambio_De_Titularidad("CambiodeTitularidad");
+		boolean gestion = false;
+		sleep(15000);
+		WebElement status = driver.findElement(By.id("Status_ilecell"));
+		WebElement gest = driver.findElements(By.cssSelector(".dataCol.inlineEditWrite")).get(12);
+		if (gest.getText().toLowerCase().contains("cambio de titularidad")) {
+				gestion = true;
+			}
+		Assert.assertTrue(status.getText().equalsIgnoreCase("Activated"));
+		Assert.assertTrue(gestion);
+		sleep(3000);
+	}
+	
+	@Test(groups = {"OM","CambiodeTitularidad"}, dependsOnMethods="TS125660_Ordenes_Cliente_Existente_Cambio_de_titularidad_Plan_prepago_nacional_Paso_2")
+	public void TS125659_Ordenes_Cliente_Existente_Cambio_de_titularidad_Plan_prepago_nacional_Paso_1(){
+		Assert.assertTrue(true);
+	}
+	
+	@Test(groups = {"OM","CambiodeTitularidad"}, dependsOnMethods="TS125660_Ordenes_Cliente_Existente_Cambio_de_titularidad_Plan_prepago_nacional_Paso_2")
+	public void TS125658_Ordenes_Cliente_Existente_Cambio_de_titularidad_Plan_prepago_nacional_Paso_0(){
+		Assert.assertTrue(true);
+	}
+
+	
+//===================================================================================================================================================
+	
+	
+	@Test(groups = {"OM","CambiodeTitularidad"})
+	public void TS125673_Ordenes_Cliente_Existente_Cambio_de_titularidad_Plan_con_tarjeta_Paso_2() throws InterruptedException{
+		om.Gestion_Alta_De_Linea("CambiodeTitularidad", "Plan con tarjeta");
+		om.irAChangeToOrder();
+		om.Gestion_Cambio_De_Titularidad("CambiodeTitularidad");
+		boolean gestion = false;
+		sleep(15000);
+		WebElement status = driver.findElement(By.id("Status_ilecell"));
+		WebElement gest = driver.findElements(By.cssSelector(".dataCol.inlineEditWrite")).get(12);
+		if (gest.getText().toLowerCase().contains("cambio de titularidad")) {
+				gestion = true;
+			}
+		Assert.assertTrue(status.getText().equalsIgnoreCase("Activated"));
+		Assert.assertTrue(gestion);
+		sleep(3000);
+	}
+	
+	@Test(groups = {"OM","CambiodeTitularidad"}, dependsOnMethods="TS125673_Ordenes_Cliente_Existente_Cambio_de_titularidad_Plan_con_tarjeta_Paso_2")
+	public void TS125672_Ordenes_Cliente_Existente_Cambio_de_titularidad_Plan_con_tarjeta_Paso_1(){
+		Assert.assertTrue(true);
+	}
+	
+	@Test(groups = {"OM","CambiodeTitularidad"}, dependsOnMethods="TS125673_Ordenes_Cliente_Existente_Cambio_de_titularidad_Plan_con_tarjeta_Paso_2")
+	public void TS125671_Ordenes_Cliente_Existente_Cambio_de_titularidad_Plan_con_tarjeta_Paso_0(){
+		Assert.assertTrue(true);
+	}
 }
