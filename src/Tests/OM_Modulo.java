@@ -76,7 +76,7 @@ public void setUp() throws Exception {
 		pageOm.clickOnListTabs("Orders");
 	}
 	
-	//@AfterClass(alwaysRun=true)
+	@AfterClass(alwaysRun=true)
 	public void tearDown() {
 		sleep(2000);
 		driver.quit(); 
@@ -192,26 +192,62 @@ public void setUp() throws Exception {
 	}
 	
 	//Paso 0
-		@Test(groups= {"OM","AgregarPAck"}, dependsOnMethods ="TS102216_CRM_OM_Ola_2_Ordenes_Cliente_existente_Alta_de_linea_con_1_pack_Plan_prepago_nacional_Sin_delivery_Sin_VAS_Paso_4")
-		public void TS102212_CRM_OM_Ola_2_Ordenes_Cliente_existente_Alta_de_linea_con_1_pack_Plan_prepago_nacional_Sin_delivery_Sin_VAS_Paso_0() {
-			Assert.assertTrue(true);
+	@Test(groups= {"OM","AgregarPAck"}, dependsOnMethods ="TS102216_CRM_OM_Ola_2_Ordenes_Cliente_existente_Alta_de_linea_con_1_pack_Plan_prepago_nacional_Sin_delivery_Sin_VAS_Paso_4")
+	public void TS102212_CRM_OM_Ola_2_Ordenes_Cliente_existente_Alta_de_linea_con_1_pack_Plan_prepago_nacional_Sin_delivery_Sin_VAS_Paso_0() {
+		Assert.assertTrue(true);
 			}
 	
 	//Paso 1
-		@Test(groups= {"OM","AgregarPAck"}, dependsOnMethods ="TS102216_CRM_OM_Ola_2_Ordenes_Cliente_existente_Alta_de_linea_con_1_pack_Plan_prepago_nacional_Sin_delivery_Sin_VAS_Paso_4")
-		public void TS102213_CRM_OM_Ola_2_Ordenes_Cliente_existente_Alta_de_linea_con_1_pack_Plan_prepago_nacional_Sin_delivery_Sin_VAS_Paso_1() {
-			Assert.assertTrue(true);
+	@Test(groups= {"OM","AgregarPAck"}, dependsOnMethods ="TS102216_CRM_OM_Ola_2_Ordenes_Cliente_existente_Alta_de_linea_con_1_pack_Plan_prepago_nacional_Sin_delivery_Sin_VAS_Paso_4")
+	public void TS102213_CRM_OM_Ola_2_Ordenes_Cliente_existente_Alta_de_linea_con_1_pack_Plan_prepago_nacional_Sin_delivery_Sin_VAS_Paso_1() {
+		Assert.assertTrue(true);
 			}
 	
 	//Paso 2
-		@Test(groups= {"OM","AgregarPAck"}, dependsOnMethods ="TS102216_CRM_OM_Ola_2_Ordenes_Cliente_existente_Alta_de_linea_con_1_pack_Plan_prepago_nacional_Sin_delivery_Sin_VAS_Paso_4")
-		public void TS102214_CRM_OM_Ola_2_Ordenes_Cliente_existente_Alta_de_linea_con_1_pack_Plan_prepago_nacional_Sin_delivery_Sin_VAS_Paso_2() {
-			Assert.assertTrue(true);
+	@Test(groups= {"OM","AgregarPAck"}, dependsOnMethods ="TS102216_CRM_OM_Ola_2_Ordenes_Cliente_existente_Alta_de_linea_con_1_pack_Plan_prepago_nacional_Sin_delivery_Sin_VAS_Paso_4")
+	public void TS102214_CRM_OM_Ola_2_Ordenes_Cliente_existente_Alta_de_linea_con_1_pack_Plan_prepago_nacional_Sin_delivery_Sin_VAS_Paso_2() {
+		Assert.assertTrue(true);
 			}
 
 	//Paso 3
-		@Test(groups= {"OM","AgregarPAck"}, dependsOnMethods ="TS102216_CRM_OM_Ola_2_Ordenes_Cliente_existente_Alta_de_linea_con_1_pack_Plan_prepago_nacional_Sin_delivery_Sin_VAS_Paso_4")
-		public void TS102215_CRM_OM_Ola_2_Ordenes_Cliente_existente_Alta_de_linea_con_1_pack_Plan_prepago_nacional_Sin_delivery_Sin_VAS_Paso_3() {
-			Assert.assertTrue(true);
+	@Test(groups= {"OM","AgregarPAck"}, dependsOnMethods ="TS102216_CRM_OM_Ola_2_Ordenes_Cliente_existente_Alta_de_linea_con_1_pack_Plan_prepago_nacional_Sin_delivery_Sin_VAS_Paso_4")
+	public void TS102215_CRM_OM_Ola_2_Ordenes_Cliente_existente_Alta_de_linea_con_1_pack_Plan_prepago_nacional_Sin_delivery_Sin_VAS_Paso_3() {
+		Assert.assertTrue(true);
 			}
+		
+	 @Test(groups= "OM") //retryAnalyzer = retry.class)
+	 public void TS102300_CRM_OM_Ola_2_Interfaces_Alta_de_linea_con_1_pack_Plan_con_tarjeta_Sin_delivery_Sin_VAS_Huawei_S203_createSubscriber_Verificacion_de_campos_enviados_en_el_request() throws InterruptedException, MalformedURLException {    
+	 OM pageOm=new OM(driver);
+	 OMQPage OM=new OMQPage (driver);
+	 pageOm.Gestion_Alta_De_Linea("QuelysOM", "Plan con tarjeta");
+	 sleep(5000);
+	 pageOm.irAChangeToOrder();
+	 sleep(12000);
+	 driver.switchTo().defaultContent();
+		      
+	//fecha avanzada
+	 OM.fechaAv("07-05-2018");
+	 sleep(12000);
+	 
+   //agregar Pack
+	 OM.agregarPack("Packs Opcionales","Packs de Datos", "Pack 1GB de dia + 3GB de Noche", "","");
+		 
+	//Click ViewRecord
+	 sleep(8000);  
+	 driver.findElement(By.id("-import-btn")).click();
+	 sleep(7000);
+
+	//agregar gestion
+	pageOm.agregarGestion("Alta producto gen\u00e9rico");
+		 
+	//Orquestacion
+	driver.findElement(By.name("ta_submit_order")).click();
+	sleep(35000);
+		
+	//pageOm.completarFlujoOrquestacion();
+	
+	 }    
+		 
+
+
 }

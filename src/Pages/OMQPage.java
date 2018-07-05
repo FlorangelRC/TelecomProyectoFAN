@@ -164,10 +164,16 @@ public class OMQPage extends BasePage {
 	public void agregarNumerodeLinea() {
 		Random r = new Random();
 		driver.switchTo().defaultContent();
-		NumerodeLinea.click();
-		//NumerodeLinea.sendKeys("3413103661");
-		NumerodeLinea.sendKeys("11" + r.nextInt(200000000) );
-		NumerodeLinea.submit();
+		List<WebElement> posibles = driver.findElement(By.name("productconfig")).findElements(By.className("slds-form-element"));
+		for(WebElement UnP : posibles) {
+			if(UnP.findElement(By.tagName("label")).getText().equalsIgnoreCase("numero de linea")) {
+				 UnP.click();
+				 UnP.findElement(By.tagName("input")).clear();
+				 UnP.findElement(By.tagName("input")).sendKeys("11" + r.nextInt(200000000));
+				 UnP.submit();
+				 break;
+			}
+		}
 		sleep(8000);
 		//driver.switchTo().defaultContent();
 		driver.findElement(By.xpath("/html/body/div[1]/div[1]/ng-include/div/div[2]/div[2]/div[3]/div/div/ng-include/div/div[1]/div/button")).click();
