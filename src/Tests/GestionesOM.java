@@ -110,6 +110,11 @@ public class GestionesOM extends TestBase {
 		OM pageOm=new OM(driver);
 		pageOm.Gestion_Alta_De_Linea("FlorOM", "Plan Prepago Nacional");
 	}
+	@Test(groups="OM", priority=1)
+	public void AltaLinea_1_Servicio() throws InterruptedException {
+		OM pageOm=new OM(driver);
+		pageOm.Gestion_Alta_De_Linea_Con_1_Servicio("FlorOM", "Plan Prepago Nacional","Llamada en espera");
+	}
 	
 	
 	@Test(groups="OM", priority=1)
@@ -154,6 +159,24 @@ public class GestionesOM extends TestBase {
 		boolean gestion = false;
 		pageOm.Gestion_Alta_De_Linea("FlorOM", "Plan Con Tarjeta");
 		pageOm.Cambio_De_SimCard_Por_Siniestro("LineasFlor");
+		sleep(5000);
+		WebElement status = driver.findElement(By.id("Status_ilecell"));
+		List <WebElement> gest = driver.findElements(By.cssSelector(".dataCol.inlineEditWrite"));
+		for (WebElement x : gest) {
+			if (x.getText().equalsIgnoreCase("Cambio de SIM por siniestro")) {
+				gestion = true;
+			}
+		}
+		Assert.assertTrue(status.getText().equalsIgnoreCase("Activated"));
+		Assert.assertTrue(gestion);
+	}
+	
+	@Test(groups="OM", priority=1)
+	public void TS_CRM_Rehabilitacion_Por_Siniestro() throws InterruptedException {
+		OM pageOm=new OM(driver);
+		boolean gestion = false;
+		pageOm.Gestion_Alta_De_Linea("FlorOM", "Plan Con Tarjeta");
+		pageOm.Rehabilitacion_Por_Siniestro();
 		sleep(5000);
 		WebElement status = driver.findElement(By.id("Status_ilecell"));
 		List <WebElement> gest = driver.findElements(By.cssSelector(".dataCol.inlineEditWrite"));
