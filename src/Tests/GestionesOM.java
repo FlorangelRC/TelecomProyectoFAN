@@ -29,18 +29,24 @@ import Pages.OMQPage;
 import Pages.SalesBase;
 import Pages.setConexion;
 
-public class GestionesOM extends TestBase {
+public class GestionesOM extends OM {
 	
+	public GestionesOM(WebDriver driver) {
+		super(driver);
+	}
+
 	private WebDriver driver;
+	private TestBase tb;
 	
 	@BeforeClass(alwaysRun=true)
 	public void init() throws Exception
 	{
 		this.driver = setConexion.setupEze();
 		sleep(5000);
+		tb = new TestBase();
 		//Usuario Victor OM
-		login(driver, "https://crm--sit.cs14.my.salesforce.com/", "U585991", "Testa10k");
-		sleep(5000);	
+		tb.login(driver, "https://crm--sit.cs14.my.salesforce.com/", "U585991", "Testa10k");
+		sleep(5000);
 	}
 
 	@BeforeMethod(alwaysRun=true)
@@ -186,7 +192,7 @@ public class GestionesOM extends TestBase {
 		sleep(7000);
 		driver.findElement(By.xpath("//*[@id=\"tab-default-1\"]/div[1]/ng-include/div/div/div/div[4]/div[2]/div/ng-include/div/div[2]/ng-include/div/div[3]/div/div[3]/div/div/ng-include/div/div[2]/ng-include/div/div[7]/div/div[2]/div[11]/button")).click();
 		sleep(7000);
-		buscarYClick(driver.findElements(By.cssSelector(".slds-button.slds-button_neutral")), "contains", "view record");
+		tb.buscarYClick(driver.findElements(By.cssSelector(".slds-button.slds-button_neutral")), "contains", "view record");
 		sleep(5000);
 		om.agregarGestion("Alta o Baja SVA");
 		sleep(3000);
@@ -226,28 +232,27 @@ public class GestionesOM extends TestBase {
 	}
 
 	@Test(groups="OM", priority=1)
-	public void BajaDeLineaOM() throws InterruptedException {
+	public void BajaDeLineaOM(String Cuenta, String Plan) throws InterruptedException {
 		boolean gestion = false;
-		OM om = new OM(driver);
-		om.Gestion_Alta_De_Linea("FlorOM", "Plan Prepago Nacional");
-		om.irAChangeToOrder();
+		Gestion_Alta_De_Linea(Cuenta, Plan);
+		irAChangeToOrder();
 		sleep(15000);
 		driver.findElement(By.id("RequestDate")).sendKeys("12-09-2019");
 		driver.findElement(By.cssSelector(".form-control.btn.btn-primary.ng-binding")).click();
 		sleep(10000);
 		driver.findElement(By.xpath(".//*[@id='tab-default-1']/div/ng-include//div[10]//button")).click();
 		sleep(2000);		
-		buscarYClick(driver.findElements(By.cssSelector(".slds-dropdown__item.cpq-item-actions-dropdown__item")), "contains", "delete");
+		tb.buscarYClick(driver.findElements(By.cssSelector(".slds-dropdown__item.cpq-item-actions-dropdown__item")), "contains", "delete");
 		sleep(5000);
 		driver.findElement(By.cssSelector(".slds-button.slds-button--destructive")).click();
 		sleep(7000);
-		buscarYClick(driver.findElements(By.cssSelector(".slds-button.slds-button_neutral")), "contains", "view record");
+		tb.buscarYClick(driver.findElements(By.cssSelector(".slds-button.slds-button_neutral")), "contains", "view record");
 		sleep(5000);
-		om.agregarGestion("Desconexi\u00f3n");
+		agregarGestion("Desconexi\u00f3n");
 		sleep(3000);
 		driver.findElement(By.name("ta_submit_order")).click();
 		sleep(10000);
-		om.completarFlujoOrquestacion();
+		completarFlujoOrquestacion();
 		sleep(10000);
 		WebElement status = driver.findElement(By.id("Status_ilecell"));
 		List <WebElement> gest = driver.findElements(By.cssSelector(".dataCol.inlineEditWrite"));
@@ -262,15 +267,14 @@ public class GestionesOM extends TestBase {
 	
 	@Test
 	public void ConciliacionOM() throws InterruptedException {
-		OM om = new OM(driver);
-		om.Gestion_Alta_De_Linea("FlorOM", "Plan Prepago Nacional");
-		om.irAChangeToOrder();
+		Gestion_Alta_De_Linea("FlorOM", "Plan Prepago Nacional");
+		irAChangeToOrder();
 		sleep(15000);
 		driver.findElement(By.id("RequestDate")).sendKeys("12-09-2019");
 		driver.findElement(By.cssSelector(".form-control.btn.btn-primary.ng-binding")).click();
 		sleep(15000);
-		buscarYClick(driver.findElements(By.cssSelector(".slds-button.slds-button_neutral")), "contains", "view record");
-		om.agregarGestion("Conciliate");
+		tb.buscarYClick(driver.findElements(By.cssSelector(".slds-button.slds-button_neutral")), "contains", "view record");
+		agregarGestion("Conciliate");
 		driver.findElement(By.cssSelector(".userNav-buttonArrow.mbrButtonArrow")).click();
 		sleep(6000);
 		driver.findElement(By.id("userNav-menuItems")).findElements(By.tagName("a")).get(3).click();
@@ -297,7 +301,7 @@ public class GestionesOM extends TestBase {
 		    driver.switchTo().window(nuevaVentana);
 		}
 		driver.findElement(By.id("debugMenuEntry-btnInnerEl")).click();
-		buscarYClick(driver.findElements(By.className("menuEntryLeft")), "equals", "open execute anonymous window");
+		tb.buscarYClick(driver.findElements(By.className("menuEntryLeft")), "equals", "open execute anonymous window");
 		sleep(8000);
 		driver.findElement(By.id("openExternalEditorToolButton-toolEl")).click();
 		
