@@ -14,7 +14,6 @@ import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
 import Pages.BasePage;
-import Pages.CustomerCare;
 import Pages.OM;
 import Pages.setConexion;
 
@@ -50,14 +49,6 @@ public class OMN extends TestBase {
 		sleep(5000);
 	}
 	
-	
-	public void debugger() {
-		sleep(10000);
-		//WebElement imsi = driver.findElements(By.cssSelector(".table.table-condensed.attributes")).get(0);
-		om.scrollDownInAView(driver.findElement(By.xpath("//*[contains(text(),'MSISDN')]")));
-		//System.out.println(imsi.getText());
-		sleep(5000);
-	}
 	
 	@Test (groups = "OM")
 	public void TS6729_Ordenes_Order_Detail_Adjunto_de_archivos_Formato_JPG() {
@@ -547,22 +538,22 @@ public class OMN extends TestBase {
 		om.BajaDeLineaOM("FlorOM", "Plan con tarjeta");
 	}
 	
-	@Test (groups = "OM", dependsOnMethods = "TS101373_Ordenes_Cliente_existente_Anulacion_de_venta_Plan_con_tarjeta_repro_Paso_4")
+	@Test (groups = "OM", dependsOnMethods = "TS101374_Ordenes_Cliente_existente_Anulacion_de_venta_Plan_con_tarjeta_repro_Paso_5")
 	public void TS101370_Ordenes_Cliente_existente_Anulacion_de_venta_Plan_con_tarjeta_repro_Paso_1() throws InterruptedException {
 		Assert.assertTrue(true);
 	}
 	
-	@Test (groups = "OM", dependsOnMethods = "TS101373_Ordenes_Cliente_existente_Anulacion_de_venta_Plan_con_tarjeta_repro_Paso_4")
+	@Test (groups = "OM", dependsOnMethods = "TS101374_Ordenes_Cliente_existente_Anulacion_de_venta_Plan_con_tarjeta_repro_Paso_5")
 	public void TS101371_Ordenes_Cliente_existente_Anulacion_de_venta_Plan_con_tarjeta_repro_Paso_2() throws InterruptedException {
 		Assert.assertTrue(true);
 	}
 	
-	@Test (groups = "OM", dependsOnMethods = "TS101373_Ordenes_Cliente_existente_Anulacion_de_venta_Plan_con_tarjeta_repro_Paso_4")
+	@Test (groups = "OM", dependsOnMethods = "TS101374_Ordenes_Cliente_existente_Anulacion_de_venta_Plan_con_tarjeta_repro_Paso_5")
 	public void TS101372_Ordenes_Cliente_existente_Anulacion_de_venta_Plan_con_tarjeta_repro_Paso_3() throws InterruptedException {
 		Assert.assertTrue(true);
 	}
 	
-	@Test (groups = "OM", dependsOnMethods = "TS101373_Ordenes_Cliente_existente_Anulacion_de_venta_Plan_con_tarjeta_repro_Paso_4")
+	@Test (groups = "OM", dependsOnMethods = "TS101374_Ordenes_Cliente_existente_Anulacion_de_venta_Plan_con_tarjeta_repro_Paso_5")
 	public void TS101373_Ordenes_Cliente_existente_Anulacion_de_venta_Plan_con_tarjeta_repro_Paso_4() throws InterruptedException {
 		Assert.assertTrue(true);
 	}
