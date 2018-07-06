@@ -57,7 +57,7 @@ public class OMerO extends TestBase {
 		driver.quit();
 		sleep(5000);
 	}
-
+//==============================================================  VISTA  ========================================================
 	@Test (groups = "OM")
 	public void TS6721_OM_Ordenes_Vista_Configuracion(){
 		driver.findElement(By.className("fFooter")).click();
@@ -107,7 +107,7 @@ public class OMerO extends TestBase {
 //========================================================================================================================================================================
 	
 	@Test (groups = "OM")
-	public void TS6722_OM_Ordenes_Vista_Configuración_Cargar_Vista(){
+	public void TS6722_OM_Ordenes_Vista_Configuraciï¿½n_Cargar_Vista(){
 		driver.findElement(By.className("fFooter")).click();
 		sleep(5000);
 		driver.findElement(By.id("fname")).sendKeys("CambiodeVista");
@@ -143,119 +143,210 @@ public class OMerO extends TestBase {
 		Assert.assertTrue(acc.get(2).getText().contains("Account Name"));
 		Assert.assertTrue(acc.get(3).getText().contains("Status"));
 	}
+//========================================================  CAMBIO DE NUMERO  ============================================================================
 	
-//=======================================================================================================================================================================
-	
-	@Test (groups = "OM")
-	public void TS80241_OM_Ordenes_Cliente_existente_Cambio_de_numero_Plan_con_tarjeta_Sin_delivery_Paso_0() throws InterruptedException{
-			  Select allOrder=new Select(driver.findElement(By.id("fcf"))); 
-		      allOrder.selectByVisibleText("AlanOM"); 
-		      sleep(1000); 
-		      try {driver.findElement(By.name("go")).click();}catch(org.openqa.selenium.NoSuchElementException e) {} 
-		      sleep(3000); 
-		    //Selecciona la primera cuenta de la lista en la vista seleccionada 
-		      WebElement primeraCuenta=driver.findElement(By.cssSelector(".x-grid3-col.x-grid3-cell.x-grid3-td-SALES_ACCOUNT_NAME")); 
-		      primeraCuenta.findElement(By.tagName("div")).findElement(By.tagName("a")).click(); 
-		      sleep(8000); 
-		    //Seleccion del ultimo Asset 
-		      om.irAChangeToOrder();   
-		      sleep(8000); 
-		    //Ingreso de fecha avanzada 
-		      Accounts accountPage = new Accounts(driver); 
-		    //  DateFormat dateFormat = new SimpleDateFormat("MM-dd-yyyy"); 
-		   //   driver.findElement(By.id("RequestDate")).sendKeys(dateFormat.format(om.fechaAvanzada()));
-		     driver.findElement(By.id("RequestDate")).sendKeys("08-31-2018"); 
-		      driver.findElement(By.cssSelector(".form-control.btn.btn-primary.ng-binding")).click(); 
-		      sleep(20000); 
-		    //SIM 
-		      driver.findElement(By.cssSelector(".slds-button.cpq-item-has-children")).click(); 
-		      sleep(3000); 
-		      driver.switchTo().defaultContent(); 
-		      driver.findElement(By.xpath(".//*[@id='tab-default-1']/div[1]/ng-include/div/div/div/div[4]/div[2]/div/ng-include/div/div[2]/ng-include/div/div[1]/div/div[2]/div[11]")).click(); 
-		      sleep(3000); 
-		      driver.findElement(By.xpath(".//*[@id='tab-default-1']/div[1]/ng-include/div/div/div/div[4]/div[2]/div/ng-include/div/div[2]/ng-include/div/div[1]/div/div[2]/div[11]/div[2]/div/ul/li[3]/a")).click(); 
-		      sleep(7000); 
-		      ((JavascriptExecutor)driver).executeScript("window.scrollTo(0,"+driver.findElement(By.className("slds-section")).getLocation().y+" )"); 
-		      WebElement msi = driver.findElement(By.xpath("//*[@id='js-cpq-product-cart-config-form']/div[1]/div/form/div[18]/div[1]/input")); 
-		      Random r = new Random(); 
-		      msi.clear(); 
-		      msi.sendKeys("11" + r.nextInt(200000000) ); 
-		      msi.submit(); 
-		      sleep(30000); 
-		      driver.findElement(By.id("-import-btn")).click(); 
-		      sleep(5000); 
-		    //Gestion 
-		      om.agregarGestion("Cambio de n\u00famero"); 
-		      driver.findElements(By.id("topButtonRow")).get(0); 
-		      sleep(7000); 
-		      driver.findElement(By.name("ta_submit_order")).click(); 
-		      sleep(35000); 
-		      om.cambiarVentanaNavegador(1); 
-		      sleep(2000); 
-		      driver.findElement(By.id("idlist")).click(); 
-		      sleep(15000); 
-		      om.cambiarVentanaNavegador(0);
-		      om.completarFlujoOrquestacion();
-		   /*   boolean chiqui = false;
-				while (chiqui == false) {
-
-					try {
-						driver.findElement(By.id("zoomOut")).click();
-					} catch (Exception ex1) {
-						chiqui = true;
-						break;
-					}
-
-				}
-				sleep(8000);
-		  	List<WebElement> cajas = driver.findElements(By.cssSelector(".item-label-container.item-header.item-failed"));
-			cajas.addAll(driver.findElements(By.cssSelector(".item-label-container.item-header.item-fatally-failed")));
-			cajas.addAll(driver.findElements(By.cssSelector(".item-label-container.item-header.item-running")));
-			int i = 1;
-			System.out.println(cajas.size());
-			while (cajas.size() > 0) {
-				for (WebElement UnaC : cajas) {
-					UnaC.click();
-					sleep(12000);
-					om.cambiarVentanaNavegador(i);
-					i++;
-					sleep(5000);
-					
-					
-					List<WebElement> botones = driver.findElements(By.cssSelector(".slds-button.slds-button--neutral.ng-scope"));
-					for (WebElement UnB : botones) {
-						if (UnB.getText().equals("Complete")) {
-							UnB.click();
-							sleep(4000);
-							System.out.println("Hizo click");
-							break;
-						}
-					}
-					sleep(9000);
-					WebElement fecha = driver.findElement(By.cssSelector(".slds-table.slds-table--bordered.slds-table--cell-buffer")).findElement(By.tagName("tbody")).findElements(By.tagName("tr")).get(23).findElement(By.tagName("td"));
-				    
-					System.out.println(fecha.getText());
-					sleep(10000);
-					om.cambiarVentanaNavegador(0);
-					sleep(10000);
-					om.closeAllOtherTabs();
-					sleep(35000);
-					break;
-				}
-				cajas = driver.findElements(By.cssSelector(".item-label-container.item-header.item-failed"));
-				cajas.addAll(driver.findElements(By.cssSelector(".item-label-container.item-header.item-fatally-failed")));
-				cajas.addAll(driver.findElements(By.cssSelector(".item-label-container.item-header.item-running")));
-				
+	@Test (groups = {"OM","CambioDeNumero"})
+	public void TS79682CRM_OM_Ordenes_Cliente_existente_Cambio_de_numero_Sin_delivery_Paso_5() throws InterruptedException{
+		OM pageOm=new OM(driver);
+		pageOm.Gestion_Alta_De_Linea("AlOM", "Plan Prepago Nacional");
+		pageOm.Gestion_Cambio_de_Numero("AlanOM", "07-10-2018");
+		sleep(15000);
+		boolean gestion = false;
+		WebElement status = driver.findElement(By.id("Status_ilecell"));
+		WebElement gest = driver.findElements(By.cssSelector(".dataCol.inlineEditWrite")).get(12);
+		if (gest.getText().toLowerCase().contains("cambio de n\u00famero")) {
+				gestion = true;
 			}
-			om.closeAllOtherTabs();
-			sleep(5000);
-			driver.findElement(By.className("submit-button")).click();
-			sleep(6000);
-			om.cambiarVentanaNavegador(1);
-			sleep(5000);
-			om.closeAllOtherTabs();
-				}}*/
-		      
-		}
+		Assert.assertTrue(status.getText().equalsIgnoreCase("Activated"));
+		Assert.assertTrue(gestion);
+		
+	}      
+		
 			
+	@Test (groups = {"OM","CambioDeNumero"}, dependsOnMethods="TS79682CRM_OM_Ordenes_Cliente_existente_Cambio_de_numero_Sin_delivery_Paso_5")
+	public void TS79681_OM_Ordenes_Cliente_existente_Cambio_de_numero_Sin_delivery_Paso_4(){
+		Assert.assertTrue(true);
+		sleep(3000);
+	}
+	
+	@Test (groups = {"OM","CambioDeNumero"}, dependsOnMethods="TS79682CRM_OM_Ordenes_Cliente_existente_Cambio_de_numero_Sin_delivery_Paso_5")
+	public void TS79680_OM_Ordenes_Cliente_existente_Cambio_de_numero_Sin_delivery_Paso_3(){
+		Assert.assertTrue(true);
+		sleep(3000);
+	}
+	
+	@Test (groups = {"OM","CambioDeNumero"}, dependsOnMethods="TS79682CRM_OM_Ordenes_Cliente_existente_Cambio_de_numero_Sin_delivery_Paso_5")
+	public void TS79678_OM_Ordenes_Cliente_existente_Cambio_de_numero_Sin_delivery_Paso_2(){
+		Assert.assertTrue(true);
+		sleep(3000);
+	}
+	
+	@Test (groups = {"OM","CambioDeNumero"}, dependsOnMethods="TS79682CRM_OM_Ordenes_Cliente_existente_Cambio_de_numero_Sin_delivery_Paso_5")
+	public void TS79677_OM_Ordenes_Cliente_existente_Cambio_de_numero_Sin_delivery_Paso_1(){
+		Assert.assertTrue(true);
+		sleep(3000);
+	}
+	
+	@Test (groups = {"OM","CambioDeNumero"}, dependsOnMethods="TS79682CRM_OM_Ordenes_Cliente_existente_Cambio_de_numero_Sin_delivery_Paso_5")
+	public void TS79676_OM_Ordenes_Cliente_existente_Cambio_de_numero_Sin_delivery_Paso_0(){
+		Assert.assertTrue(true);
+		sleep(3000);
+	}
+	
+//==============================================================================================================================================
+	
+	
+	@Test (groups = {"OM","CambioDeNumero"})
+	public void TS80246_OM_Ordenes_Cliente_existente_Cambio_de_numero_Plan_con_tarjeta_Sin_delivery_Paso_5() throws InterruptedException{
+		OM pageOm=new OM(driver);
+		boolean gestion = false;
+		pageOm.Gestion_Alta_De_Linea("AlOM", "Plan con tarjeta");
+		pageOm.Gestion_Cambio_de_Numero("AlanOM", "07-09-2018");
+		sleep(15000);
+		WebElement status = driver.findElement(By.id("Status_ilecell"));
+		WebElement gest = driver.findElements(By.cssSelector(".dataCol.inlineEditWrite")).get(12);
+		if (gest.getText().toLowerCase().contains("cambio de n\u00famero")) {
+				gestion = true;
+			}
+		Assert.assertTrue(status.getText().equalsIgnoreCase("Activated"));
+		Assert.assertTrue(gestion);
+		sleep(3000);
+	}      
+		
+			
+	@Test (groups = {"OM","CambioDeNumero"},dependsOnMethods="TS80246_OM_Ordenes_Cliente_existente_Cambio_de_numero_Plan_con_tarjeta_Sin_delivery_Paso_5")
+	public void TS80245_OM_Ordenes_Cliente_existente_Cambio_de_numero_Plan_con_tarjeta_Sin_delivery_Paso_4(){
+		Assert.assertTrue(true);
+		sleep(3000);
+	}
+	
+	@Test (groups = {"OM","CambioDeNumero"}, dependsOnMethods="TS80246_OM_Ordenes_Cliente_existente_Cambio_de_numero_Plan_con_tarjeta_Sin_delivery_Paso_5")
+	public void TS80244_OM_Ordenes_Cliente_existente_Cambio_de_numero_Plan_con_tarjeta_Sin_delivery_Paso_3(){
+		Assert.assertTrue(true);
+		sleep(3000);
+	}
+	
+	@Test (groups = {"OM","CambioDeNumero"}, dependsOnMethods="TS80246_OM_Ordenes_Cliente_existente_Cambio_de_numero_Plan_con_tarjeta_Sin_delivery_Paso_5")
+	public void TS80243_OM_Ordenes_Cliente_existente_Cambio_de_numero_Plan_con_tarjeta_Sin_delivery_Paso_2(){
+		Assert.assertTrue(true);
+		sleep(3000);
+	}
+	
+	@Test (groups = {"OM","CambioDeNumero"}, dependsOnMethods="TS80246_OM_Ordenes_Cliente_existente_Cambio_de_numero_Plan_con_tarjeta_Sin_delivery_Paso_5")
+	public void TS80242_OM_Ordenes_Cliente_existente_Cambio_de_numero_Plan_con_tarjeta_Sin_delivery_Paso_1(){
+		Assert.assertTrue(true);
+		sleep(3000);
+	}
+	
+	@Test (groups = {"OM","CambioDeNumero"}, dependsOnMethods="TS80246_OM_Ordenes_Cliente_existente_Cambio_de_numero_Plan_con_tarjeta_Sin_delivery_Paso_5")
+	public void TS80241_OM_Ordenes_Cliente_existente_Cambio_de_numero_Plan_con_tarjeta_Sin_delivery_Paso_0(){
+		Assert.assertTrue(true);
+		sleep(3000);
+	}
+	
+	
+//==============================================            ALTA DE LINEA         ==================================================================	
+	
+	@Test(groups = {"OM","AltadeLinea"})                  // FALTAN NOMINAR
+	public void TS51856_Ordenes_Cliente_Nuevo_Alta_de_linea_Sin_delivery_Sin_VAS_Paso_4() throws InterruptedException{
+		OM pageOm=new OM(driver);
+		pageOm.Gestion_Alta_De_Linea("AlOM", "Plan Prepago Nacional");
+		driver.navigate().back();
+		sleep(5000);
+		driver.findElement(By.xpath("//*[@id='topButtonRow']/input[6]")).click();
+		sleep(10000);
+		boolean chiqui = false;
+		while (chiqui == false) {
+
+			try {
+				driver.findElement(By.id("zoomOut")).click();
+			} catch (Exception ex1) {
+				chiqui = true;
+				driver.findElement(By.id("zoomIn")).click();
+				break;
+			}
+		}
+		pageOm.ordenCajasVerdes("CreateSubscriber - S203", "Env\u00edo de Activaci\u00f3n de Servicios de la Red", "updateNumberStatus - S326");
+	}
+	
+	@Test(groups = {"OM","AltadeLinea"}, dependsOnMethods="TS51856_Ordenes_Cliente_Nuevo_Alta_de_linea_Sin_delivery_Sin_VAS_Paso_4")
+	public void TS51856_Ordenes_Cliente_Nuevo_Alta_de_linea_Sin_delivery_Sin_VAS_Paso_0(){
+		Assert.assertTrue(true);
+	
+	}
+	
+	@Test(groups = {"OM","AltadeLinea"}, dependsOnMethods="TS51856_Ordenes_Cliente_Nuevo_Alta_de_linea_Sin_delivery_Sin_VAS_Paso_4")
+	public void TS51857_Ordenes_Cliente_Nuevo_Alta_de_linea_Sin_delivery_Sin_VAS_Paso_1(){
+		Assert.assertTrue(true);
+	}
+	
+	@Test(groups = {"OM","AltadeLinea"}, dependsOnMethods="TS51856_Ordenes_Cliente_Nuevo_Alta_de_linea_Sin_delivery_Sin_VAS_Paso_4")
+	public void TS51858_Ordenes_Cliente_Nuevo_Alta_de_linea_Sin_delivery_Sin_VAS_Paso_2(){
+		Assert.assertTrue(true);
+	}
+	
+	@Test(groups = {"OM","AltadeLinea"}, dependsOnMethods="TS51856_Ordenes_Cliente_Nuevo_Alta_de_linea_Sin_delivery_Sin_VAS_Paso_4")
+	public void TS51859_Ordenes_Cliente_Nuevo_Alta_de_linea_Sin_delivery_Sin_VAS_Paso_2(){
+		Assert.assertTrue(true);
+	}
+	
+//===================================================== CAMBIO DE TITULARIDAD ========================================================================	
+
+	@Test(groups = {"OM","CambiodeTitularidad"})
+	public void TS125660_Ordenes_Cliente_Existente_Cambio_de_titularidad_Plan_prepago_nacional_Paso_2() throws InterruptedException{
+		om.Gestion_Alta_De_Linea("CambiodeTitularidad", "Plan prepago nacional");
+		om.irAChangeToOrder();
+		om.Gestion_Cambio_De_Titularidad("CambiodeTitularidad");
+		boolean gestion = false;
+		sleep(15000);
+		WebElement status = driver.findElement(By.id("Status_ilecell"));
+		WebElement gest = driver.findElements(By.cssSelector(".dataCol.inlineEditWrite")).get(12);
+		if (gest.getText().toLowerCase().contains("cambio de titularidad")) {
+				gestion = true;
+			}
+		Assert.assertTrue(status.getText().equalsIgnoreCase("Activated"));
+		Assert.assertTrue(gestion);
+		sleep(3000);
+	}
+	
+	@Test(groups = {"OM","CambiodeTitularidad"}, dependsOnMethods="TS125660_Ordenes_Cliente_Existente_Cambio_de_titularidad_Plan_prepago_nacional_Paso_2")
+	public void TS125659_Ordenes_Cliente_Existente_Cambio_de_titularidad_Plan_prepago_nacional_Paso_1(){
+		Assert.assertTrue(true);
+	}
+	
+	@Test(groups = {"OM","CambiodeTitularidad"}, dependsOnMethods="TS125660_Ordenes_Cliente_Existente_Cambio_de_titularidad_Plan_prepago_nacional_Paso_2")
+	public void TS125658_Ordenes_Cliente_Existente_Cambio_de_titularidad_Plan_prepago_nacional_Paso_0(){
+		Assert.assertTrue(true);
+	}
+
+	
+//===================================================================================================================================================
+	
+	
+	@Test(groups = {"OM","CambiodeTitularidad"})
+	public void TS125673_Ordenes_Cliente_Existente_Cambio_de_titularidad_Plan_con_tarjeta_Paso_2() throws InterruptedException{
+		om.Gestion_Alta_De_Linea("CambiodeTitularidad", "Plan con tarjeta");
+		om.irAChangeToOrder();
+		om.Gestion_Cambio_De_Titularidad("CambiodeTitularidad");
+		boolean gestion = false;
+		sleep(15000);
+		WebElement status = driver.findElement(By.id("Status_ilecell"));
+		WebElement gest = driver.findElements(By.cssSelector(".dataCol.inlineEditWrite")).get(12);
+		if (gest.getText().toLowerCase().contains("cambio de titularidad")) {
+				gestion = true;
+			}
+		Assert.assertTrue(status.getText().equalsIgnoreCase("Activated"));
+		Assert.assertTrue(gestion);
+		sleep(3000);
+	}
+	
+	@Test(groups = {"OM","CambiodeTitularidad"}, dependsOnMethods="TS125673_Ordenes_Cliente_Existente_Cambio_de_titularidad_Plan_con_tarjeta_Paso_2")
+	public void TS125672_Ordenes_Cliente_Existente_Cambio_de_titularidad_Plan_con_tarjeta_Paso_1(){
+		Assert.assertTrue(true);
+	}
+	
+	@Test(groups = {"OM","CambiodeTitularidad"}, dependsOnMethods="TS125673_Ordenes_Cliente_Existente_Cambio_de_titularidad_Plan_con_tarjeta_Paso_2")
+	public void TS125671_Ordenes_Cliente_Existente_Cambio_de_titularidad_Plan_con_tarjeta_Paso_0(){
+		Assert.assertTrue(true);
+	}
 }

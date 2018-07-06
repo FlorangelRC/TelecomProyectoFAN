@@ -116,6 +116,11 @@ public class GestionesOM extends OM {
 		OM pageOm=new OM(driver);
 		pageOm.Gestion_Alta_De_Linea("FlorOM", "Plan Prepago Nacional");
 	}
+	@Test(groups="OM", priority=1)
+	public void AltaLinea_1_Servicio() throws InterruptedException {
+		OM pageOm=new OM(driver);
+		pageOm.Gestion_Alta_De_Linea_Con_1_Servicio("FlorOM", "Plan Prepago Nacional","Llamada en espera");
+	}
 	
 	
 	@Test(groups="OM", priority=1)
@@ -160,6 +165,24 @@ public class GestionesOM extends OM {
 		boolean gestion = false;
 		pageOm.Gestion_Alta_De_Linea("FlorOM", "Plan Con Tarjeta");
 		pageOm.Cambio_De_SimCard_Por_Siniestro("LineasFlor");
+		sleep(5000);
+		WebElement status = driver.findElement(By.id("Status_ilecell"));
+		List <WebElement> gest = driver.findElements(By.cssSelector(".dataCol.inlineEditWrite"));
+		for (WebElement x : gest) {
+			if (x.getText().equalsIgnoreCase("Cambio de SIM por siniestro")) {
+				gestion = true;
+			}
+		}
+		Assert.assertTrue(status.getText().equalsIgnoreCase("Activated"));
+		Assert.assertTrue(gestion);
+	}
+	
+	@Test(groups="OM", priority=1)
+	public void TS_CRM_Rehabilitacion_Por_Siniestro() throws InterruptedException {
+		OM pageOm=new OM(driver);
+		boolean gestion = false;
+		pageOm.Gestion_Alta_De_Linea("FlorOM", "Plan Con Tarjeta");
+		pageOm.Rehabilitacion_Por_Siniestro();
 		sleep(5000);
 		WebElement status = driver.findElement(By.id("Status_ilecell"));
 		List <WebElement> gest = driver.findElements(By.cssSelector(".dataCol.inlineEditWrite"));
@@ -267,44 +290,116 @@ public class GestionesOM extends OM {
 	
 	@Test
 	public void ConciliacionOM() throws InterruptedException {
-		Gestion_Alta_De_Linea("FlorOM", "Plan Prepago Nacional");
-		irAChangeToOrder();
-		sleep(15000);
-		driver.findElement(By.id("RequestDate")).sendKeys("12-09-2019");
-		driver.findElement(By.cssSelector(".form-control.btn.btn-primary.ng-binding")).click();
-		sleep(15000);
-		tb.buscarYClick(driver.findElements(By.cssSelector(".slds-button.slds-button_neutral")), "contains", "view record");
-		agregarGestion("Conciliate");
-		driver.findElement(By.cssSelector(".userNav-buttonArrow.mbrButtonArrow")).click();
-		sleep(6000);
-		driver.findElement(By.id("userNav-menuItems")).findElements(By.tagName("a")).get(3).click();
-		sleep(7000);
-		driver.findElement(By.id("userDropdown")).click();
-		sleep(3000);
-		driver.findElement(By.id("logout")).click();
+		OM om = new OM(driver);
+		boolean gestion = false;
+		om.Gestion_Alta_De_Linea("FlorOM", "Plan Prepago Nacional");
+		om.Conciliacion();
 		sleep(5000);
-		driver.get("https://crm--sit.cs14.my.salesforce.com/");
-		driver.findElement(By.id("cancel_idp_hint")).click();
-		sleep(3000);
-		driver.findElement(By.id("username")).sendKeys("usit@telecom.sit");
-		driver.findElement(By.id("password")).sendKeys("pruebas10");
-		driver.findElement(By.id("Login")).click();
-		BasePage bp = new BasePage(driver);
-		bp.cajonDeAplicaciones("Ventas");
-		sleep(5000);
-		driver.findElement(By.id("userNavLabel")).click();
-		sleep(2000);
-		String ventanaPrincipal = driver.getWindowHandle();
-		driver.findElement(By.cssSelector(".debugLogLink.menuButtonMenuLink")).click();
-		sleep(20000);
-		for(String nuevaVentana : driver.getWindowHandles()){
-		    driver.switchTo().window(nuevaVentana);
+		WebElement status = driver.findElement(By.id("Status_ilecell"));
+		List <WebElement> gest = driver.findElements(By.cssSelector(".dataCol.inlineEditWrite"));
+		for (WebElement x : gest) {
+			if (x.getText().equalsIgnoreCase("Cambio de SIM por siniestro")) {
+				gestion = true;
+			}
 		}
-		driver.findElement(By.id("debugMenuEntry-btnInnerEl")).click();
-		tb.buscarYClick(driver.findElements(By.className("menuEntryLeft")), "equals", "open execute anonymous window");
-		sleep(8000);
-		driver.findElement(By.id("openExternalEditorToolButton-toolEl")).click();
+		Assert.assertTrue(status.getText().equalsIgnoreCase("Activated"));
+		Assert.assertTrue(gestion);
 		
+		
+	}
+	
+	@Test (groups="OM", priority=1)
+	public void suspencionPorSiniestro(String sCuenta, String sPlan) throws InterruptedException {
+		OM oOM = new OM(driver);
+		oOM.Gestion_Alta_De_Linea(sCuenta, sPlan);
+		
+		sleep(5000);
+		oOM.irAChangeToOrder();
+		
+		sleep(10000);
+		DateFormat dateFormat = new SimpleDateFormat("MM-dd-yyyy");
+		driver.findElement(By.id("RequestDate")).sendKeys(dateFormat.format(oOM.fechaAvanzada()));
+		driver.findElement(By.cssSelector(".form-control.btn.btn-primary.ng-binding")).click();
+		
+		sleep(12000);
+		List<WebElement> wTopRightButtons = driver.findElements(By.id("-import-btn"));
+		for (WebElement wAux : wTopRightButtons){
+			if (wAux.getAttribute("title").equalsIgnoreCase("View Record")) {
+				wAux.click();
+			}
+		}
+		
+		sleep(5000);
+		driver.findElement(By.id("topButtonRow")).findElement(By.name("edit")).click();
+		
+		Select sSelectDropdown = new Select(driver.findElement(By.id("00Nc0000002IvyM")));
+		sSelectDropdown.selectByVisibleText("Suspension");
+		
+		driver.findElement(By.id("topButtonRow")).findElement(By.name("save")).click();
+		
+		sleep(5000);
+		oOM.cambiarProductos("Suspend-Siniestro", "Suspend");
+		
+		sleep(10000);
+		//driver.findElement(By.id("Order_ileinner")).click();
+		
+		WebElement wTopButtonRow = driver.findElement(By.id("topButtonRow"));
+		List<WebElement> wTopButtonRowButtons = wTopButtonRow.findElements(By.tagName("input"));
+		for (WebElement wAux : wTopButtonRowButtons) {
+			if (wAux.getAttribute("value").equalsIgnoreCase("TA Submit Order")) {
+				wAux.click();
+			}
+		}
+		
+		sleep(10000);
+		oOM.completarFlujoOrquestacion();
+	}
+	
+	//@Test (groups="OM", priority=1)
+	public void suspencionPorFraude(String sCuenta, String sPlan) throws InterruptedException {
+		OM oOM = new OM(driver);
+		oOM.Gestion_Alta_De_Linea(sCuenta, sPlan);
+		
+		sleep(5000);
+		oOM.irAChangeToOrder();
+		
+		sleep(10000);
+		DateFormat dateFormat = new SimpleDateFormat("MM-dd-yyyy");
+		driver.findElement(By.id("RequestDate")).sendKeys(dateFormat.format(oOM.fechaAvanzada()));
+		driver.findElement(By.cssSelector(".form-control.btn.btn-primary.ng-binding")).click();
+		
+		sleep(12000);
+		List<WebElement> wTopRightButtons = driver.findElements(By.id("-import-btn"));
+		for (WebElement wAux : wTopRightButtons){
+			if (wAux.getAttribute("title").equalsIgnoreCase("View Record")) {
+				wAux.click();
+			}
+		}
+		
+		sleep(5000);
+		driver.findElement(By.id("topButtonRow")).findElement(By.name("edit")).click();
+		
+		Select sSelectDropdown = new Select(driver.findElement(By.id("00Nc0000002IvyM")));
+		sSelectDropdown.selectByVisibleText("Suspension");
+		
+		driver.findElement(By.id("topButtonRow")).findElement(By.name("save")).click();
+		
+		sleep(5000);
+		oOM.SuspenderProductos();
+		
+		sleep(10000);
+		//driver.findElement(By.id("Order_ileinner")).click();
+		
+		WebElement wTopButtonRow = driver.findElement(By.id("topButtonRow"));
+		List<WebElement> wTopButtonRowButtons = wTopButtonRow.findElements(By.tagName("input"));
+		for (WebElement wAux : wTopButtonRowButtons) {
+			if (wAux.getAttribute("value").equalsIgnoreCase("TA Submit Order")) {
+				wAux.click();
+			}
+		}
+		
+		sleep(10000);
+		oOM.completarFlujoOrquestacion();
 	}
 }
 

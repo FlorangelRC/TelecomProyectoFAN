@@ -94,7 +94,7 @@ public class Sales2 extends TestBase{
 		sleep(7000);	
 		List<WebElement> frame2 = driver.findElements(By.tagName("iframe"));
 		driver.switchTo().frame(frame2.get(0));
-		Select env = new Select (driver.findElement(By.id("DeliveryMethodSelection")));
+		Select env = new Select (driver.findElement(By.id("DeliveryMethod")));
 		env.selectByVisibleText("Delivery");
 		driver.findElement(By.id("SalesChannelConfiguration_nextBtn")).click();
 		sleep(10000);
@@ -102,14 +102,9 @@ public class Sales2 extends TestBase{
 		}
 		sb.elegirplan("Plan Prepago Nacional");
 		sb.continuar();
-		sleep(10000);
-		List<WebElement> cont = driver.findElements(By.cssSelector(".slds-button.slds-m-left--large.slds-button--brand.ta-button-brand"));
-		for(WebElement c : cont){
-			c.getText().equals("Continuar");
-			c.click();
-				
-		}
-		sleep(5000);
+		sleep(25000);
+		sb.Crear_DomicilioLegal( provincia, localidad,"falsa", "", "2154", "", "", "2453");
+		sleep(30000);
 		CustomerCare page = new CustomerCare(driver);
 		WebElement sig = driver.findElement(By.id("LineAssignment_nextBtn"));
 		page.obligarclick(sig);
@@ -171,7 +166,7 @@ public class Sales2 extends TestBase{
 			sleep(7000);
 			List<WebElement> frame2 = driver.findElements(By.tagName("iframe"));
 			driver.switchTo().frame(frame2.get(0));
-			Select env = new Select(driver.findElement(By.id("DeliveryMethodSelection")));
+			Select env = new Select(driver.findElement(By.id("DeliveryMethod")));
 			env.selectByVisibleText("Delivery");
 			driver.findElement(By.id("SalesChannelConfiguration_nextBtn")).click();
 			sleep(10000);
@@ -179,14 +174,9 @@ public class Sales2 extends TestBase{
 		}
 		sb.elegirplan("Plan Prepago Nacional");
 		sb.continuar();
-		sleep(10000);
-		List<WebElement> cont = driver.findElements(By.cssSelector(".slds-button.slds-m-left--large.slds-button--brand.ta-button-brand"));
-		for (WebElement c : cont) {
-			c.getText().equals("Continuar");
-			c.click();
-
-		}
-		sleep(5000);
+		sleep(25000);
+		sb.Crear_DomicilioLegal( provincia, localidad,"falsa", "", "2154", "", "", "2453");
+		sleep(30000);
 		CustomerCare page = new CustomerCare(driver);
 		WebElement sig = driver.findElement(By.id("LineAssignment_nextBtn"));
 		page.obligarclick(sig);
@@ -289,8 +279,8 @@ public class Sales2 extends TestBase{
 		sleep(15000);
 		driver.findElement(By.cssSelector(".slds-m-left--x-small.slds-button.slds-button--brand")).click();
 		sleep(7000);
-		driver.switchTo().frame(cambioFrame(driver, By.id("DeliveryMethodSelection")));
-		Select env = new Select (driver.findElement(By.id("DeliveryMethodSelection")));
+		driver.switchTo().frame(cambioFrame(driver, By.id("DeliveryMethod")));
+		Select env = new Select (driver.findElement(By.id("DeliveryMethod")));
 		env.selectByVisibleText("Delivery");
 		driver.findElement(By.id("SalesChannelConfiguration_nextBtn")).click();
 		sleep(10000);
@@ -348,7 +338,7 @@ public class Sales2 extends TestBase{
 		sleep(7000);	
 		List<WebElement> frame2 = driver.findElements(By.tagName("iframe"));
 		driver.switchTo().frame(frame2.get(0));
-		Select env = new Select (driver.findElement(By.id("DeliveryMethodSelection")));
+		Select env = new Select (driver.findElement(By.id("DeliveryMethod")));
 		env.selectByVisibleText("Store Pick Up");
 		sleep(2000);
 		Select sta = new Select (driver.findElement(By.id("State")));
@@ -656,16 +646,18 @@ public class Sales2 extends TestBase{
 		sleep(15000);
 		driver.findElement(By.cssSelector(".slds-m-left--x-small.slds-button.slds-button--brand")).click();
 		sleep(7000);
-		driver.switchTo().frame(cambioFrame(driver, By.id("DeliveryMethodSelection")));
-		Select env = new Select (driver.findElement(By.id("DeliveryMethodSelection")));
+		driver.switchTo().frame(cambioFrame(driver, By.id("DeliveryMethod")));
+		Select env = new Select (driver.findElement(By.id("DeliveryMethod")));
 		env.selectByVisibleText("Delivery");
 		driver.findElement(By.id("SalesChannelConfiguration_nextBtn")).click();
 		sleep(10000);
 		driver.switchTo().defaultContent();
 		sb.elegirplan("Plan Prepago Nacional");
 		sleep(15000);
-		driver.findElement(By.cssSelector(".slds-button.slds-m-left--large.slds-button--brand.ta-button-brand")).click();
-		sleep(15000);
+		sb.continuar();
+		sleep(25000);
+		sb.Crear_DomicilioLegal( provincia, localidad,"falsa", "", "2154", "", "", "2453");
+		sleep(30000);
 		driver.findElement(By.id("LineAssignment_nextBtn")).click();
 		sleep(10000);
 		driver.findElement(By.id("DeliveryServiceType")).click();
@@ -683,8 +675,8 @@ public class Sales2 extends TestBase{
 		sleep(15000);
 		driver.findElement(By.cssSelector(".slds-m-left--x-small.slds-button.slds-button--brand")).click();
 		sleep(7000);
-		driver.switchTo().frame(cambioFrame(driver, By.id("DeliveryMethodSelection")));
-		Select env = new Select (driver.findElement(By.id("DeliveryMethodSelection")));
+		driver.switchTo().frame(cambioFrame(driver, By.id("DeliveryMethod")));
+		Select env = new Select (driver.findElement(By.id("DeliveryMethod")));
 		env.selectByVisibleText("Delivery");
 		driver.findElement(By.id("SalesChannelConfiguration_nextBtn")).click();
 		sleep(10000);
@@ -708,8 +700,8 @@ public class Sales2 extends TestBase{
 		sleep(15000);
 		driver.findElement(By.cssSelector(".slds-m-left--x-small.slds-button.slds-button--brand")).click();
 		sleep(7000);
-		driver.switchTo().frame(cambioFrame(driver, By.id("DeliveryMethodSelection")));
-		Select env = new Select (driver.findElement(By.id("DeliveryMethodSelection")));
+		driver.switchTo().frame(cambioFrame(driver, By.id("DeliveryMethod")));
+		Select env = new Select (driver.findElement(By.id("DeliveryMethod")));
 		env.selectByVisibleText("Store Pick Up");
 		Select prov = new Select (driver.findElement(By.id("State")));
 		prov.selectByVisibleText("Ciudad Aut\u00f3noma de Buenos Aires");
@@ -740,8 +732,8 @@ public class Sales2 extends TestBase{
 		sleep(15000);
 		driver.findElement(By.cssSelector(".slds-m-left--x-small.slds-button.slds-button--brand")).click();
 		sleep(7000);
-		driver.switchTo().frame(cambioFrame(driver, By.id("DeliveryMethodSelection")));
-		Select env = new Select (driver.findElement(By.id("DeliveryMethodSelection")));
+		driver.switchTo().frame(cambioFrame(driver, By.id("DeliveryMethod")));
+		Select env = new Select (driver.findElement(By.id("DeliveryMethod")));
 		env.selectByVisibleText("Delivery");
 		driver.findElement(By.id("SalesChannelConfiguration_nextBtn")).click();
 		sleep(10000);
@@ -767,8 +759,8 @@ public class Sales2 extends TestBase{
 		sleep(15000);
 		driver.findElement(By.cssSelector(".slds-m-left--x-small.slds-button.slds-button--brand")).click();
 		sleep(7000);
-		driver.switchTo().frame(sb.getFrameForElement(driver, By.id("DeliveryMethodSelection")));
-		List<WebElement> OMdE = new Select(driver.findElement(By.id("SalesChannelConfiguration")).findElement(By.id("DeliveryMethodSelection"))).getOptions();
+		driver.switchTo().frame(sb.getFrameForElement(driver, By.id("DeliveryMethod")));
+		List<WebElement> OMdE = new Select(driver.findElement(By.id("SalesChannelConfiguration")).findElement(By.id("DeliveryMethod"))).getOptions();
 		for (WebElement UnM : OMdE) {
 			if (UnM.getText().equalsIgnoreCase("presencial"))
 				Pr = true;
@@ -873,8 +865,8 @@ public class Sales2 extends TestBase{
 		String a = driver.findElement(By.cssSelector(".slds-col.taChangeDeliveryMethod.slds-text-body--small.slds-m-left--large")).getText();
 		driver.findElement(By.cssSelector(".slds-m-left--x-small.slds-button.slds-button--brand")).click();
 		sleep(7000);
-		driver.switchTo().frame(cambioFrame(driver, By.id("DeliveryMethodSelection")));
-		Select env = new Select (driver.findElement(By.id("DeliveryMethodSelection")));
+		driver.switchTo().frame(cambioFrame(driver, By.id("DeliveryMethod")));
+		Select env = new Select (driver.findElement(By.id("DeliveryMethod")));
 		env.selectByVisibleText("Delivery");
 		driver.findElement(By.id("SalesChannelConfiguration_nextBtn")).click();
 		sleep(7000);
@@ -934,8 +926,8 @@ public class Sales2 extends TestBase{
 		sleep(15000);
 		driver.findElement(By.cssSelector(".slds-m-left--x-small.slds-button.slds-button--brand")).click();
 		sleep(7000);
-		driver.switchTo().frame(cambioFrame(driver, By.id("DeliveryMethodSelection")));
-		Select env = new Select (driver.findElement(By.id("DeliveryMethodSelection")));
+		driver.switchTo().frame(cambioFrame(driver, By.id("DeliveryMethod")));
+		Select env = new Select (driver.findElement(By.id("DeliveryMethod")));
 		env.selectByVisibleText("Store Pick Up");
 		sleep(2000);
 		Select prov = new Select (driver.findElement(By.id("State")));
@@ -1247,8 +1239,8 @@ public class Sales2 extends TestBase{
 		sleep(15000);
 		driver.findElement(By.cssSelector(".slds-m-left--x-small.slds-button.slds-button--brand")).click();
 		sleep(7000);
-		driver.switchTo().frame(cambioFrame(driver, By.id("DeliveryMethodSelection")));
-		Select env = new Select (driver.findElement(By.id("DeliveryMethodSelection")));
+		driver.switchTo().frame(cambioFrame(driver, By.id("DeliveryMethod")));
+		Select env = new Select (driver.findElement(By.id("DeliveryMethod")));
 		env.selectByVisibleText("Store Pick Up");
 		sleep(2000);
 		Select prov = new Select (driver.findElement(By.id("State")));
@@ -1271,8 +1263,8 @@ public class Sales2 extends TestBase{
 		sleep(15000);
 		driver.findElement(By.cssSelector(".slds-m-left--x-small.slds-button.slds-button--brand")).click();
 		sleep(7000);
-		driver.switchTo().frame(cambioFrame(driver, By.id("DeliveryMethodSelection")));
-		Select env = new Select (driver.findElement(By.id("DeliveryMethodSelection")));
+		driver.switchTo().frame(cambioFrame(driver, By.id("DeliveryMethod")));
+		Select env = new Select (driver.findElement(By.id("DeliveryMethod")));
 		env.selectByVisibleText("Store Pick Up");
 		sleep(2000);
 		driver.findElement(By.id("State")).click();
@@ -1349,8 +1341,8 @@ public class Sales2 extends TestBase{
 		sleep(15000);
 		driver.findElement(By.cssSelector(".slds-m-left--x-small.slds-button.slds-button--brand")).click();
 		sleep(7000);
-		driver.switchTo().frame(cambioFrame(driver, By.id("DeliveryMethodSelection")));
-		Select env = new Select (driver.findElement(By.id("DeliveryMethodSelection")));
+		driver.switchTo().frame(cambioFrame(driver, By.id("DeliveryMethod")));
+		Select env = new Select (driver.findElement(By.id("DeliveryMethod")));
 		env.selectByVisibleText("Presencial");
 		driver.findElement(By.id("SalesChannelConfiguration_nextBtn")).click();
 		sleep(7000);
@@ -1711,8 +1703,8 @@ public class Sales2 extends TestBase{
 		sleep(15000);
 		driver.findElement(By.cssSelector(".slds-m-left--x-small.slds-button.slds-button--brand")).click();
 		sleep(7000);
-		driver.switchTo().frame(cambioFrame(driver, By.id("DeliveryMethodSelection")));
-		Select env = new Select (driver.findElement(By.id("DeliveryMethodSelection")));
+		driver.switchTo().frame(cambioFrame(driver, By.id("DeliveryMethod")));
+		Select env = new Select (driver.findElement(By.id("DeliveryMethod")));
 		env.selectByVisibleText("Store Pick Up");
 		Select prov = new Select (driver.findElement(By.id("State")));
 		prov.selectByVisibleText("Ciudad Aut\u00f3noma de Buenos Aires");
@@ -1726,11 +1718,9 @@ public class Sales2 extends TestBase{
 			if (x.getText().toLowerCase().contains("centro de servicio santa fe - juan de garay 444")) {
 				a = true;
 			}
-			if (x.getText().toLowerCase().contains("centro de servicio santa fe - rivadavia null")) {
-				b = true;
-			}
+			
 		}
-		Assert.assertTrue(a && b);
+		Assert.assertTrue(a);
 	}
 	
 	@Test(groups={"Sales", "AltaDeLinea", "Ola1"}, priority=5, dataProvider="SalesCuentaActiva")
@@ -1741,8 +1731,8 @@ public class Sales2 extends TestBase{
 		sleep(15000);
 		driver.findElement(By.cssSelector(".slds-m-left--x-small.slds-button.slds-button--brand")).click();
 		sleep(7000);
-		driver.switchTo().frame(cambioFrame(driver, By.id("DeliveryMethodSelection")));
-		Select env = new Select (driver.findElement(By.id("DeliveryMethodSelection")));
+		driver.switchTo().frame(cambioFrame(driver, By.id("DeliveryMethod")));
+		Select env = new Select (driver.findElement(By.id("DeliveryMethod")));
 		env.selectByVisibleText("Store Pick Up");
 		Select prov = new Select (driver.findElement(By.id("State")));
 		prov.selectByVisibleText("Ciudad Aut\u00f3noma de Buenos Aires");
@@ -1755,8 +1745,8 @@ public class Sales2 extends TestBase{
 		Assert.assertTrue(driver.findElement(By.cssSelector(".slds-col.taChangeDeliveryMethod.slds-text-body--small.slds-m-left--large")).getText().contains("Store Pick Up"));
 		driver.findElement(By.cssSelector(".slds-m-left--x-small.slds-button.slds-button--brand")).click();
 		sleep(7000);
-		driver.switchTo().frame(cambioFrame(driver, By.id("DeliveryMethodSelection")));
-		Select nenv = new Select (driver.findElement(By.id("DeliveryMethodSelection")));
+		driver.switchTo().frame(cambioFrame(driver, By.id("DeliveryMethod")));
+		Select nenv = new Select (driver.findElement(By.id("DeliveryMethod")));
 		nenv.selectByVisibleText("Delivery");
 		driver.findElement(By.id("SalesChannelConfiguration_nextBtn")).click();
 		sleep(7000);
@@ -1932,6 +1922,8 @@ public class Sales2 extends TestBase{
 		sleep(15000);
 		sb.elegirplan("Plan Prepago Nacional");
 		sb.continuar();
+		sleep(25000);
+		sb.Crear_DomicilioLegal( provincia, localidad,"falsa", "", "2154", "", "", "2453");
 		sleep(25000);
 		CustomerCare page = new CustomerCare(driver);
 		WebElement sig = driver.findElement(By.id("LineAssignment_nextBtn"));
@@ -2209,7 +2201,7 @@ public class Sales2 extends TestBase{
 		driver.switchTo().defaultContent();
 		sleep(10000);
 		List<WebElement> montos = driver.findElements(By.className("cpq-underline"));
-		//montos = montos.subList(0, 3);
+		montos = montos.subList(0, 3);
 		for (WebElement UnM : montos) {
 			System.out.println("monto="+UnM.getText());
 			precissionCounter =UnM.getText().split(",");

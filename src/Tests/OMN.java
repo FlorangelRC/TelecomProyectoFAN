@@ -296,7 +296,7 @@ public class OMN extends TestBase {
 		driver.findElement(By.id("Order_Tab")).click();
 		sleep(5000);
 		om.selectVistaByVisibleText("LineasFlor");
-		sleep(3000);
+		sleep(3000);		
 		WebElement orden = driver.findElement(By.cssSelector(".x-grid3-col.x-grid3-cell.x-grid3-td-ORDERS_ORDER_NUMBER"));
 		orden.findElement(By.tagName("div")).findElement(By.tagName("a")).click();
 		sleep(5000);
@@ -305,9 +305,8 @@ public class OMN extends TestBase {
 		om.ordenCajasVerdes("CreateSubscriber - S203", "Env\u00edo de Activaci\u00f3n de Servicios a la Red", "updateNumerStatus - S326");
 	}
 	
-	@Test (groups = "OM")
+	@Test
 	public void TS79046_Ordenes_Cliente_existente_Alta_de_linea_Sin_delivery_Sin_VAS_Verficacion_de_ASSETs_creados() throws InterruptedException {
-		boolean a = false, b = false;
 		om.Gestion_Alta_De_Linea("FlorOM", "Plan prepago nacional");
 		driver.switchTo().frame(cambioFrame(driver, By.cssSelector(".panel.panel-default.panel-assets")));
 		List <WebElement> assets = driver.findElement(By.cssSelector(".panel.panel-default.panel-assets")).findElements(By.cssSelector(".root-asset.ng-scope"));
