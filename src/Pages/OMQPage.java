@@ -146,12 +146,13 @@ public class OMQPage extends BasePage {
 		public void configuracion() {
 		sleep(2000);
 		driver.switchTo().defaultContent();
-		sleep(4000);
+		sleep(6000);
 		driver.findElement(By.xpath(".//*[@id='tab-default-1']/div/ng-include//div[10]//button")).click();
 		sleep(2000);
 		List<WebElement> list = driver.findElements(By.cssSelector(".slds-dropdown__item.cpq-item-actions-dropdown__item")); 
 		//System.out.println(list.size());
 		list.get(2).click();
+		sleep(2000);
 		agregarNumerodeLinea();  
 		SimCard();
 		driver.findElement(By.id("-import-btn")).click();

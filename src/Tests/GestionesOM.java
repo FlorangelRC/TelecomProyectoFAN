@@ -283,7 +283,7 @@ public class GestionesOM extends TestBase {
 		Assert.assertTrue(gestion);
 	}
 	
-	@Test
+	@Test(groups="OM", priority=1)
 	public void ConciliacionOM() throws InterruptedException {
 		OM om = new OM(driver);
 		boolean gestion = false;
@@ -293,7 +293,7 @@ public class GestionesOM extends TestBase {
 		WebElement status = driver.findElement(By.id("Status_ilecell"));
 		List <WebElement> gest = driver.findElements(By.cssSelector(".dataCol.inlineEditWrite"));
 		for (WebElement x : gest) {
-			if (x.getText().equalsIgnoreCase("Cambio de SIM por siniestro")) {
+			if (x.getText().equalsIgnoreCase("Conciliate")) {
 				gestion = true;
 			}
 		}
@@ -333,7 +333,7 @@ public class GestionesOM extends TestBase {
 		driver.findElement(By.id("topButtonRow")).findElement(By.name("save")).click();
 		
 		sleep(5000);
-		oOM.cambiarProductos("Suspend-Siniestro", "Suspend");
+		//oOM.cambiarProductos("Suspend-Siniestro", "Suspend");
 		
 		sleep(10000);
 		//driver.findElement(By.id("Order_ileinner")).click();
