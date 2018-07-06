@@ -42,6 +42,7 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 //import com.gargoylesoftware.htmlunit.ElementNotFoundException;
 
 import Tests.SalesNominaciones;
+import Tests.TestBase;
 
 public class OM {
 
@@ -2051,4 +2052,40 @@ public void deleteOrdersNoActivated(String Vista) {
 		 }	*/
 	}
 
+	public void BajaDeLineaOM(String Cuenta, String Plan) throws InterruptedException {
+		boolean gestion = false;
+		OM om = new OM(driver);
+		TestBase tb = new TestBase();
+		om.Gestion_Alta_De_Linea(Cuenta, Plan);
+		om.irAChangeToOrder();
+		sleep(15000);
+		driver.switchTo().defaultContent(); 
+		DateFormat dateFormat = new SimpleDateFormat("MM-dd-yyyy");
+		driver.findElement(By.id("RequestDate")).sendKeys(dateFormat.format(om.fechaAvanzada()));
+		driver.findElement(By.cssSelector(".form-control.btn.btn-primary.ng-binding")).click();
+		sleep(10000);
+		driver.findElement(By.xpath(".//*[@id='tab-default-1']/div/ng-include//div[10]//button")).click();
+		sleep(2000);		
+		tb.buscarYClick(driver.findElements(By.cssSelector(".slds-dropdown__item.cpq-item-actions-dropdown__item")), "contains", "delete");
+		sleep(5000);
+		driver.findElement(By.cssSelector(".slds-button.slds-button--destructive")).click();
+		sleep(7000);
+		tb.buscarYClick(driver.findElements(By.cssSelector(".slds-button.slds-button_neutral")), "contains", "view record");
+		sleep(5000);
+		om.agregarGestion("Desconexi\u00f3n");
+		sleep(3000);
+		driver.findElement(By.name("ta_submit_order")).click();
+		sleep(10000);
+		om.completarFlujoOrquestacion();
+		sleep(10000);
+		WebElement status = driver.findElement(By.id("Status_ilecell"));
+		List <WebElement> gest = driver.findElements(By.cssSelector(".dataCol.inlineEditWrite"));
+		for (WebElement x : gest) {
+			if (x.getText().equalsIgnoreCase("Desconexi\u00f3n")) {
+				gestion = true;
+			}
+		}
+		Assert.assertTrue(status.getText().equalsIgnoreCase("Activated"));
+		Assert.assertTrue(gestion);
+	}
 }
