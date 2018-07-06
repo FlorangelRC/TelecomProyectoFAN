@@ -1,5 +1,6 @@
 package Tests;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.junit.Assert;
@@ -21,6 +22,7 @@ public class OMN extends TestBase {
 
 	private WebDriver driver;
 	protected OM om;
+	protected GestionesOM gom;
 
 
 	@BeforeClass (alwaysRun = true, groups = "OM")
@@ -30,6 +32,7 @@ public class OMN extends TestBase {
 		login(driver, "https://crm--sit.cs14.my.salesforce.com/", "U585991", "Testa10k");
 		sleep(5000);
 		om = new OM(driver);
+		gom = new GestionesOM(driver);
 	}
 	
 	@BeforeMethod (alwaysRun = true, groups = "OM")
@@ -237,35 +240,29 @@ public class OMN extends TestBase {
 		Assert.assertTrue(true);
 	}
 	
-	@Test (groups = "OM")  //Falta terminar
+	@Test (groups = "OM")
 	public void TS80191_Ordenes_Cliente_existente_Cambio_de_SIM_Plan_con_tarjeta_Sin_delivery_Verificacion_de_assets() throws InterruptedException {
-		String a = "", b = "", c = "";
+		List<String> datos = new ArrayList<String>();		
 		om.Gestion_Alta_De_Linea("FlorOM", "Plan con tarjeta");
 		driver.findElement(By.id("Order_Tab")).click();
-		om.Cambio_De_SimCard2("07-22-2020", a, b, c);
+		datos = om.Cambio_De_SimCard2();
 		driver.findElement(By.name("ta_submit_order")).click();
 		sleep(15000);
 		om.completarFlujoOrquestacion();
 		driver.findElement(By.id("accid_ileinner")).findElement(By.tagName("a")).click();
 		sleep(20000);
-		driver.switchTo().frame(cambioFrame(driver, By.cssSelector(".panel.panel-default.panel-assets")));
-		List <WebElement> assets = driver.findElement(By.cssSelector(".panel.panel-default.panel-assets")).findElements(By.cssSelector(".root-asset.ng-scope"));
-		assets.get(assets.size() -1).findElement(By.className("p-expand")).click();
+		om.irAChangeToOrder();
+		sleep(10000);
+		om.fechaAvanzada2();
+		driver.findElement(By.cssSelector(".slds-button.cpq-item-has-children")).click();
 		sleep(3000);
-		int ultimoSim=0;
-		List <WebElement> asd = driver.findElements(By.className("p-name"));
-		for (int i=0; i<asd.size(); i++) {
-			if (asd.get(i).getText().equalsIgnoreCase("Simcard")) {
-				ultimoSim = i;
-			}
-		}
-		asd.get(ultimoSim).findElement(By.tagName("a")).click();
-		sleep(15000);
-		List <WebElement> asdd = driver.findElements(By.cssSelector(".table.table-condensed.attributes"));
-		for (int i=0; i<asdd.size(); i++) {
-			System.out.println(asdd.get(i).getText());
-		}
-		Assert.assertTrue(false);
+		driver.findElement(By.xpath(".//*[@id='tab-default-1']/div[1]/ng-include/div/div/div/div[4]/div[2]/div/ng-include/div/div[2]/ng-include/div/div[1]/div/div[2]/div[11]")).click();
+		List<WebElement> lista = driver.findElements(By.cssSelector(".slds-dropdown__list.cpq-item-actions-dropdown__list"));
+		lista.get(1).click();
+		sleep(3000);
+		((JavascriptExecutor)driver).executeScript("window.scrollTo(0,"+driver.findElement(By.className("slds-section")).getLocation().y+" )");
+		String nroImsi = driver.findElement(By.xpath("//*[@id=\"js-cpq-product-cart-config-form\"]/div[1]/div/form/div[18]/div/input")).getAttribute("value");
+		Assert.assertTrue(nroImsi.equals(datos.get(1)));
 	}
 	
 	@Test (groups = "OM", dependsOnMethods = "TS79026_Ordenes_Cliente_existente_Alta_de_linea_Sin_delivery_Sin_VAS_Paso_4")
@@ -311,6 +308,192 @@ public class OMN extends TestBase {
 	@Test
 	public void TS79046_Ordenes_Cliente_existente_Alta_de_linea_Sin_delivery_Sin_VAS_Verficacion_de_ASSETs_creados() throws InterruptedException {
 		om.Gestion_Alta_De_Linea("FlorOM", "Plan prepago nacional");
+		driver.switchTo().frame(cambioFrame(driver, By.cssSelector(".panel.panel-default.panel-assets")));
+		List <WebElement> assets = driver.findElement(By.cssSelector(".panel.panel-default.panel-assets")).findElements(By.cssSelector(".root-asset.ng-scope"));
+		assets.get(assets.size() -1).findElement(By.className("p-expand")).click();
+		sleep(3000);
+		List <WebElement> contAsset = driver.findElements(By.className("p-name"));
+		for (int i=0; i<contAsset.size(); i++) {
+			if (contAsset.get(i).getText().equalsIgnoreCase("Simcard")) {
+				a = true;
+			}
+			if (contAsset.get(i).getText().equalsIgnoreCase("Voz")) {
+				b = true;
+			}
+			/*if (contAsset.get(i).getText().equalsIgnoreCase("SMS Saliente")) {
+				a = true;
+			}
+			if (contAsset.get(i).getText().equalsIgnoreCase("SMS Entrante")) {
+				a = true;
+			}
+			if (contAsset.get(i).getText().equalsIgnoreCase("MMS")) {
+				a = true;
+			}
+			if (contAsset.get(i).getText().equalsIgnoreCase("Datos")) {
+				a = true;
+			}
+			if (contAsset.get(i).getText().equalsIgnoreCase("Caller Id")) {
+				a = true;
+			}
+			if (contAsset.get(i).getText().equalsIgnoreCase("Transferencia de Llamadas")) {
+				a = true;
+			}
+			if (contAsset.get(i).getText().equalsIgnoreCase("Conferencia Tripartita")) {
+				a = true;
+			}
+			if (contAsset.get(i).getText().equalsIgnoreCase("Barrings Configurables por el Usuario")) {
+				a = true;
+			}
+			if (contAsset.get(i).getText().equalsIgnoreCase("Contestador Personal")) {
+				a = true;
+			}
+			if (contAsset.get(i).getText().equalsIgnoreCase("DDI con Roaming Internacional")) {
+				a = true;
+			}
+			if (contAsset.get(i).getText().equalsIgnoreCase("InternetXDia")) {
+				a = true;
+			}
+			if (contAsset.get(i).getText().equalsIgnoreCase("Numeros gratis a Personal 1 para voz contra recarga")) {
+				a = true;
+			}
+			if (contAsset.get(i).getText().equalsIgnoreCase("Numeros gratis a Personal 1 para sms contra recarga")) {
+				a = true;
+			}*/
+		}
+		Assert.assertTrue(a && b);
+	}
+	
+	@Test (groups = "OM")
+	public void TS122436_Ordenes_Cliente_existente_Alta_de_linea_Plan_prepago_nacional_Actualizacion_del_campo_Activation_Date() throws InterruptedException {
+		om.Gestion_Alta_De_Linea("FlorOM", "Plan prepago nacional");
+		driver.navigate().back();
+		sleep(5000);
+		driver.findElement(By.name("vlocity_cmt__vieworchestrationplan")).click();
+		sleep(10000);
+		String caja = driver.findElement(By.xpath("//*[@id=\"canvas\"]/div[15]/div[2]/div/div/ng-include/div/div[2]/span[2]")).getText();
+		caja = caja.substring(0, caja.indexOf(":"));
+		driver.navigate().back();
+		sleep(5000);
+		sleep(5000);
+		String date = driver.findElement(By.id("ActivatedDate_ilecell")).getText();
+		date = date.substring(0, date.indexOf(":"));
+		Assert.assertTrue(caja.equals(date));
+	}
+	
+	@Test (groups = "OM")
+	public void TS122437_Ordenes_Cliente_existente_Alta_de_linea_Plan_con_tarjeta_Actualizacion_del_campo_Activation_Date() throws InterruptedException {
+		om.Gestion_Alta_De_Linea("FlorOM", "Plan con tarjeta");
+		driver.navigate().back();
+		sleep(5000);
+		driver.findElement(By.name("vlocity_cmt__vieworchestrationplan")).click();
+		sleep(10000);
+		String caja = driver.findElement(By.xpath("//*[@id=\"canvas\"]/div[15]/div[2]/div/div/ng-include/div/div[2]/span[2]")).getText();
+		caja = caja.substring(0, caja.indexOf(":"));
+		driver.navigate().back();
+		sleep(5000);
+		String date = driver.findElement(By.id("ActivatedDate_ilecell")).getText();
+		date = date.substring(0, date.indexOf(":"));
+		Assert.assertTrue(caja.equals(date));
+	}
+	
+	@Test (groups = "OM", dependsOnMethods = "TS80350_Ordenes_Cliente_existente_Alta_de_1_servicio_adicional_Plan_con_tarjeta_Paso_3")
+	public void TS80346_Ordenes_Cliente_existente_Alta_de_1_servicio_adicional_Plan_con_tarjeta_Paso_0() {
+		Assert.assertTrue(true);
+	}
+	
+	@Test (groups = "OM", dependsOnMethods = "TS80350_Ordenes_Cliente_existente_Alta_de_1_servicio_adicional_Plan_con_tarjeta_Paso_3")
+	public void TS80347_Ordenes_Cliente_existente_Alta_de_1_servicio_adicional_Plan_con_tarjeta_Paso_1() {
+		Assert.assertTrue(true);
+	}
+	
+	@Test (groups = "OM", dependsOnMethods = "TS80350_Ordenes_Cliente_existente_Alta_de_1_servicio_adicional_Plan_con_tarjeta_Paso_3")
+	public void TS80348_Ordenes_Cliente_existente_Alta_de_1_servicio_adicional_Plan_con_tarjeta_Paso_2() {
+		Assert.assertTrue(true);
+	}
+	
+	@Test (groups = "OM")
+	public void TS80350_Ordenes_Cliente_existente_Alta_de_1_servicio_adicional_Plan_con_tarjeta_Paso_3() throws InterruptedException {
+		boolean gestion = false;
+		om.AltaDeLineaCon1Servicio("FlorOM", "Plan con tarjeta");
+		driver.navigate().back();
+		sleep(7000);
+		String status = driver.findElement(By.id("Status_ilecell")).getText();
+		List <WebElement> gest = driver.findElements(By.cssSelector(".dataCol.inlineEditWrite"));
+		for (WebElement x : gest) {
+			if (x.getText().equalsIgnoreCase("Venta")) {
+				gestion = true;
+			}
+		}
+		driver.findElement(By.name("vlocity_cmt__vieworchestrationplan")).click();
+		sleep(10000);
+		Assert.assertTrue(status.equals("Activated"));
+		Assert.assertTrue(gestion);
+		om.ordenCajasVerdes("CreateSubscriber - S203", "Env\u00edo de Activaci\u00f3n de Servicios a la Red", "updateNumerStatus - S326");
+	}
+	
+	@Test (groups = "OM", dependsOnMethods = "TS79209_Ordenes_Cliente_existente_Alta_de_1_servicio_adicional_Plan_prepago_nacional_Sin_delivery_Sin_VAS_Paso_4")
+	public void TS79205_Ordenes_Cliente_existente_Alta_de_1_servicio_adicional_Plan_prepago_nacional_Sin_delivery_Sin_VAS_Paso_0() {
+		Assert.assertTrue(true);
+	}
+	
+	@Test (groups = "OM", dependsOnMethods = "TS79209_Ordenes_Cliente_existente_Alta_de_1_servicio_adicional_Plan_prepago_nacional_Sin_delivery_Sin_VAS_Paso_4")
+	public void TS79206_Ordenes_Cliente_existente_Alta_de_1_servicio_adicional_Plan_prepago_nacional_Sin_delivery_Sin_VAS_Paso_1() {
+		Assert.assertTrue(true);
+	}
+	
+	@Test (groups = "OM", dependsOnMethods = "TS79209_Ordenes_Cliente_existente_Alta_de_1_servicio_adicional_Plan_prepago_nacional_Sin_delivery_Sin_VAS_Paso_4")
+	public void TS79207_Ordenes_Cliente_existente_Alta_de_1_servicio_adicional_Plan_prepago_nacional_Sin_delivery_Sin_VAS_Paso_2() {
+		Assert.assertTrue(true);
+	}
+	
+	@Test (groups = "OM", dependsOnMethods = "TS79209_Ordenes_Cliente_existente_Alta_de_1_servicio_adicional_Plan_prepago_nacional_Sin_delivery_Sin_VAS_Paso_4")
+	public void TS79208_Ordenes_Cliente_existente_Alta_de_1_servicio_adicional_Plan_prepago_nacional_Sin_delivery_Sin_VAS_Paso_3() {
+		Assert.assertTrue(true);
+	}
+	
+	@Test (groups = "OM")
+	public void TS79209_Ordenes_Cliente_existente_Alta_de_1_servicio_adicional_Plan_prepago_nacional_Sin_delivery_Sin_VAS_Paso_4() throws InterruptedException {
+		boolean gestion = false;
+		om.AltaDeLineaCon1Servicio("FlorOM", "Plan Prepago Nacional");
+		driver.navigate().back();
+		sleep(7000);
+		String status = driver.findElement(By.id("Status_ilecell")).getText();
+		List <WebElement> gest = driver.findElements(By.cssSelector(".dataCol.inlineEditWrite"));
+		for (WebElement x : gest) {
+			if (x.getText().equalsIgnoreCase("Venta")) {
+				gestion = true;
+			}
+		}
+		driver.findElement(By.name("vlocity_cmt__vieworchestrationplan")).click();
+		sleep(10000);
+		Assert.assertTrue(status.equals("Activated"));
+		Assert.assertTrue(gestion);
+		om.ordenCajasVerdes("CreateSubscriber - S203", "Env\u00edo de Activaci\u00f3n de Servicios a la Red", "updateNumerStatus - S326");
+	}
+	
+	@Test (groups = "OM")
+	public void TS79210_Ordenes_Cliente_existente_Alta_de_1_servicio_adicional_Plan_prepago_nacional_Sin_delivery_Sin_VAS_Actualizar_los_assets() throws InterruptedException {
+		int ultimaVoz = 0;
+		om.AltaDeLineaCon1Servicio("FlorOM", "Plan Prepago Nacional");
+		driver.switchTo().frame(cambioFrame(driver, By.cssSelector(".panel.panel-default.panel-assets")));
+		List <WebElement> assets = driver.findElement(By.cssSelector(".panel.panel-default.panel-assets")).findElements(By.cssSelector(".root-asset.ng-scope"));
+		assets.get(assets.size() -1).findElement(By.className("p-expand")).click();
+		sleep(3000);
+		List <WebElement> asd = driver.findElements(By.className("p-name"));
+		for (int i=0; i<asd.size(); i++) {
+			if (asd.get(i).getText().equalsIgnoreCase("Caller Id")) {
+				ultimaVoz = i;
+			}
+		}
+		asd.get(ultimaVoz).findElement(By.tagName("a")).click();
+		sleep(7000);
+		WebElement status = driver.findElement(By.id("Status_ilecell"));
+		Assert.assertTrue(status.getText().equalsIgnoreCase("Active"));
+	}
+	
+	@Test
+	public void TS101360_Ordenes_Cliente_existente_Anulacion_de_venta_Plan_prepago_nacional_Paso_5() throws InterruptedException {
+		gom.BajaDeLineaOM("FlorOM", "Plan Prepago Nacional");
 		
-	}	
+	}
 }

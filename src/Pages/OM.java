@@ -39,7 +39,7 @@ import org.openqa.selenium.support.ui.FluentWait;
 import org.openqa.selenium.support.ui.Select;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
-import com.gargoylesoftware.htmlunit.ElementNotFoundException;
+//import com.gargoylesoftware.htmlunit.ElementNotFoundException;
 
 import Tests.SalesNominaciones;
 
@@ -1672,8 +1672,10 @@ public void deleteOrdersNoActivated(String Vista) {
 			}while(i<Productos.size());
 		}
 		
-		public void Cambio_De_SimCard2(String fecha, String Iccid, String Imsi, String Ki) throws InterruptedException {
+		public List <String> Cambio_De_SimCard2() throws InterruptedException {
 			sleep(5000);
+			List<String> datos = new ArrayList<String>();
+			OM pageOm=new OM(driver);
 			OMQPage OM=new OMQPage (driver);
 			//Mientras, seleccion de vista
 			selectVistaByVisibleText("LineasFlor");
@@ -1686,14 +1688,17 @@ public void deleteOrdersNoActivated(String Vista) {
 			sleep(20000);
 			driver.switchTo().defaultContent(); 
 			sleep(4000);
-			driver.findElement(By.id("RequestDate")).sendKeys(fecha);
+			DateFormat dateFormat = new SimpleDateFormat("MM-dd-yyyy");
+			driver.findElement(By.id("RequestDate")).sendKeys(dateFormat.format(pageOm.fechaAvanzada()));
+			//driver.findElement(By.id("RequestDate")).sendKeys(fecha);
 			driver.findElement(By.cssSelector(".form-control.btn.btn-primary.ng-binding")).click();
 			sleep(12000);
-			OM.SimCard2(Iccid, Imsi, Ki);
+			datos = OM.SimCard2();
 			driver.findElement(By.id("-import-btn")).click();
 			sleep(8000);
 			agregarGestion("Cambio de SIM");
 			sleep(5000);
+			return(datos);			
 		}
 		
 		public void SimCard(String ICCID, String IMSI, String KI) {

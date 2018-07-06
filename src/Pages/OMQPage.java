@@ -146,7 +146,7 @@ public class OMQPage extends BasePage {
 		public void configuracion() {
 		sleep(2000);
 		driver.switchTo().defaultContent();
-		sleep(6000);
+		sleep(9000);
 		driver.findElement(By.xpath(".//*[@id='tab-default-1']/div/ng-include//div[10]//button")).click();
 		sleep(2000);
 		List<WebElement> list = driver.findElements(By.cssSelector(".slds-dropdown__item.cpq-item-actions-dropdown__item")); 
@@ -229,9 +229,10 @@ public class OMQPage extends BasePage {
 	
 }
 	
-	public void SimCard2(String Iccid, String Imsi, String Ki) {
+	public List <String> SimCard2() {
 		Random r = new Random();
-		sleep(5000);
+		List<String> datos = new ArrayList<String>();
+		sleep(7000);
 		driver.findElement(By.cssSelector(".slds-button.cpq-item-has-children")).click();
 		sleep(3000);
 		driver.findElement(By.xpath(".//*[@id='tab-default-1']/div[1]/ng-include/div/div/div/div[4]/div[2]/div/ng-include/div/div[2]/ng-include/div/div[1]/div/div[2]/div[11]")).click();
@@ -246,29 +247,32 @@ public class OMQPage extends BasePage {
 				 uno.click();
 				 uno.findElement(By.tagName("input")).clear();
 				 uno.findElement(By.tagName("input")).sendKeys(""+r.nextInt(200000));
-				 Iccid = uno.findElement(By.tagName("input")).getText();
+				 datos.add(uno.findElement(By.tagName("input")).getAttribute("value"));
+				 
 			 }
 			 if(uno.findElement(By.tagName("label")).getText().equalsIgnoreCase("IMSI")) {
 				 uno.click();
 				 uno.findElement(By.tagName("input")).clear();
 				 uno.findElement(By.tagName("input")).sendKeys(""+r.nextInt(200000));
-				 Imsi = uno.findElement(By.tagName("input")).getText();
+				 datos.add(uno.findElement(By.tagName("input")).getAttribute("value"));
 			 }
 			 if(uno.findElement(By.tagName("label")).getText().equalsIgnoreCase("KI")) {
 				 uno.click();
 				 uno.findElement(By.tagName("input")).clear();
 				 uno.findElement(By.tagName("input")).sendKeys(""+r.nextInt(200000));
-				 Ki = uno.findElement(By.tagName("input")).getText();
+				 datos.add(uno.findElement(By.tagName("input")).getAttribute("value"));
 				 uno.findElement(By.tagName("input")).submit();
 				 break;
 			 }
 			 
+			 
 		 }
-		
+		 
 		sleep(5000);
 	
 		driver.findElement(By.xpath("/html/body/div[1]/div[1]/ng-include/div/div[2]/div[2]/div[3]/div/div/ng-include/div/div[1]/div/button")).click();
 		sleep(5000);
+		return(datos);
 		
 	}
 
