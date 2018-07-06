@@ -38,7 +38,7 @@ import org.openqa.selenium.support.ui.FluentWait;
 import org.openqa.selenium.support.ui.Select;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
-import com.gargoylesoftware.htmlunit.ElementNotFoundException;
+//import com.gargoylesoftware.htmlunit.ElementNotFoundException;
 
 import Tests.SalesNominaciones;
 
@@ -1682,7 +1682,6 @@ public void deleteOrdersNoActivated(String Vista) {
 			}while(i<Productos.size());
 		}
 		
-		public void Cambio_De_SimCard2(String fecha, String Iccid, String Imsi, String Ki) throws InterruptedException {
 		public List <String> Cambio_De_SimCard2() throws InterruptedException {
 			sleep(5000);
 			List<String> datos = new ArrayList<String>();
@@ -1709,8 +1708,7 @@ public void deleteOrdersNoActivated(String Vista) {
 			sleep(8000);
 			pageOm.agregarGestion("Cambio de SIM");
 			sleep(5000);
-			return(datos);
-			
+			return(datos);			
 		}
 		
 		public void SimCard(String ICCID, String IMSI, String KI) {
