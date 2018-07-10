@@ -455,8 +455,8 @@ public class Marketing_Mattu extends TestBase{
 	@Test(groups = {"Marketing", "Ola1", "GestionDelSocioDeClubPersonal"}, priority = 8, dataProvider="MarketingCuentaConFraude")
 	public void TS98048_Generar_Caso_error_Fraude_Baja_CP(String sCuenta) throws IOException {
 		Marketing page = new Marketing(driver);
-		//page.seleccionarCuentaMarketing(sCuenta, "Todas las cuentas");
-		page.seleccionarCuentaMarketing(sCuenta, "All");
+		page.seleccionarCuentaMarketing(sCuenta, "Todas las cuentas");
+		//page.seleccionarCuentaMarketing(sCuenta, "All");
 		mMarketing.clubPersonal("Baja");
 		mMarketing.sleepMedium(0);
 		WebElement wMessage = driver.findElement(By.cssSelector(".slds-form-element.vlc-flex.vlc-slds-text-block.vlc-slds-rte.ng-pristine.ng-valid.ng-scope"));
@@ -586,7 +586,7 @@ public class Marketing_Mattu extends TestBase{
 		wCTCheckBox.findElement(By.tagName("label")).click();
 		
 		List <String> sCorrectOptions = new ArrayList<String>();
-		sCorrectOptions.add("-- clear --");
+		sCorrectOptions.add("-- limpiar --");
 		sCorrectOptions.add("no puedo acceder a los descuentos");
 		sCorrectOptions.add("no puedo acceder a los premios");
 		sCorrectOptions.add("demasiada publicidad");
