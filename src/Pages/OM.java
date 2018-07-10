@@ -1437,7 +1437,7 @@ public void deleteOrdersNoActivated(String Vista) {
 			driver.findElement(By.id("-import-btn")).click();
 			sleep(8000);
 			pageOm.agregarGestion("Cambio de SIM");
-			sleep(5000);
+			sleep(6000);
 		}
 		
 		public void SimCard(String ICCID, String IMSI, String KI) {
