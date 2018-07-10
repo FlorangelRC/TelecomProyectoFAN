@@ -4,6 +4,7 @@ import static org.testng.Assert.assertTrue;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 import java.util.Random;
@@ -18,6 +19,8 @@ import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
+
+import com.sun.xml.internal.ws.api.server.Container;
 
 import Pages.Accounts;
 import Pages.BasePage;
@@ -107,7 +110,7 @@ public class OMerO extends TestBase {
 //========================================================================================================================================================================
 	
 	@Test (groups = "OM")
-	public void TS6722_OM_Ordenes_Vista_Configuraci�n_Cargar_Vista(){
+	public void TS6722_OM_Ordenes_Vista_Configuracion_Cargar_Vista(){
 		driver.findElement(By.className("fFooter")).click();
 		sleep(5000);
 		driver.findElement(By.id("fname")).sendKeys("CambiodeVista");
@@ -293,7 +296,7 @@ public class OMerO extends TestBase {
 //===================================================== CAMBIO DE TITULARIDAD ========================================================================	
 
 	@Test(groups = {"OM","CambiodeTitularidad"})
-	public void TS125660_Ordenes_Cliente_Existente_Cambio_de_titularidad_Plan_prepago_nacional_Paso_2() throws InterruptedException{
+	public void TS127336_Ordenes_Cliente_Existente_Cambio_de_titularidad_Plan_prepago_nacional_Paso_2() throws InterruptedException{
 		om.Gestion_Alta_De_Linea("CambiodeTitularidad", "Plan prepago nacional");
 		om.irAChangeToOrder();
 		om.Gestion_Cambio_De_Titularidad("CambiodeTitularidad");
@@ -309,13 +312,13 @@ public class OMerO extends TestBase {
 		sleep(3000);
 	}
 	
-	@Test(groups = {"OM","CambiodeTitularidad"}, dependsOnMethods="TS125660_Ordenes_Cliente_Existente_Cambio_de_titularidad_Plan_prepago_nacional_Paso_2")
-	public void TS125659_Ordenes_Cliente_Existente_Cambio_de_titularidad_Plan_prepago_nacional_Paso_1(){
+	@Test(groups = {"OM","CambiodeTitularidad"}, dependsOnMethods="TS127336_Ordenes_Cliente_Existente_Cambio_de_titularidad_Plan_prepago_nacional_Paso_2")
+	public void TS127335_Ordenes_Cliente_Existente_Cambio_de_titularidad_Plan_prepago_nacional_Paso_1(){
 		Assert.assertTrue(true);
 	}
 	
-	@Test(groups = {"OM","CambiodeTitularidad"}, dependsOnMethods="TS125660_Ordenes_Cliente_Existente_Cambio_de_titularidad_Plan_prepago_nacional_Paso_2")
-	public void TS125658_Ordenes_Cliente_Existente_Cambio_de_titularidad_Plan_prepago_nacional_Paso_0(){
+	@Test(groups = {"OM","CambiodeTitularidad"}, dependsOnMethods="TS127336_Ordenes_Cliente_Existente_Cambio_de_titularidad_Plan_prepago_nacional_Paso_2")
+	public void TS127334_Ordenes_Cliente_Existente_Cambio_de_titularidad_Plan_prepago_nacional_Paso_0(){
 		Assert.assertTrue(true);
 	}
 
@@ -324,7 +327,7 @@ public class OMerO extends TestBase {
 	
 	
 	@Test(groups = {"OM","CambiodeTitularidad"})
-	public void TS125673_Ordenes_Cliente_Existente_Cambio_de_titularidad_Plan_con_tarjeta_Paso_2() throws InterruptedException{
+	public void TS127349_Ordenes_Cliente_Existente_Cambio_de_titularidad_Plan_con_tarjeta_Paso_2() throws InterruptedException{
 		om.Gestion_Alta_De_Linea("CambiodeTitularidad", "Plan con tarjeta");
 		om.irAChangeToOrder();
 		om.Gestion_Cambio_De_Titularidad("CambiodeTitularidad");
@@ -340,13 +343,138 @@ public class OMerO extends TestBase {
 		sleep(3000);
 	}
 	
-	@Test(groups = {"OM","CambiodeTitularidad"}, dependsOnMethods="TS125673_Ordenes_Cliente_Existente_Cambio_de_titularidad_Plan_con_tarjeta_Paso_2")
-	public void TS125672_Ordenes_Cliente_Existente_Cambio_de_titularidad_Plan_con_tarjeta_Paso_1(){
+	@Test(groups = {"OM","CambiodeTitularidad"}, dependsOnMethods="TS127349_Ordenes_Cliente_Existente_Cambio_de_titularidad_Plan_con_tarjeta_Paso_2")
+	public void TS127348_Ordenes_Cliente_Existente_Cambio_de_titularidad_Plan_con_tarjeta_Paso_1(){
 		Assert.assertTrue(true);
 	}
 	
-	@Test(groups = {"OM","CambiodeTitularidad"}, dependsOnMethods="TS125673_Ordenes_Cliente_Existente_Cambio_de_titularidad_Plan_con_tarjeta_Paso_2")
-	public void TS125671_Ordenes_Cliente_Existente_Cambio_de_titularidad_Plan_con_tarjeta_Paso_0(){
+	@Test(groups = {"OM","CambiodeTitularidad"}, dependsOnMethods="TS127349_Ordenes_Cliente_Existente_Cambio_de_titularidad_Plan_con_tarjeta_Paso_2")
+	public void TS127347_Ordenes_Cliente_Existente_Cambio_de_titularidad_Plan_con_tarjeta_Paso_0(){
 		Assert.assertTrue(true);
 	}
+//========================================================== TIMESTAMP  =================================================================================	
+	
+	@Test(groups = {"OM"})
+	public void TS11483_Ordenes_Tareas_Timestamp_Completed_Automatica() throws InterruptedException{
+		//Alta de linea
+		om.crearOrden("AlOM");
+		assertTrue(driver.findElement(By.cssSelector(".noSecondHeader.pageType")).isDisplayed());
+		om.agregarGestion("Venta");
+		sleep(2000);
+		omq.getCPQ().click();
+		sleep(5000);
+		omq.colocarPlan1("Plan Prepago Nacional");
+		omq.configuracion();
+		om.AgregarDomicilio();
+		sleep(5000);
+		driver.findElement(By.name("ta_submit_order")).click();
+		sleep(15000);
+		try {System.out.println(driver.switchTo().alert().getText());
+			driver.switchTo().alert().accept();
+			driver.switchTo().alert().dismiss();
+			driver.switchTo().defaultContent();
+			driver.findElement(By.name("ta_submit_order")).click();
+		} catch (org.openqa.selenium.NoAlertPresentException e) {
+			driver.switchTo().defaultContent();
+		}
+		sleep(45000);
+		 try { 
+		      om.cambiarVentanaNavegador(1); 
+		      sleep(2000); 
+		      driver.findElement(By.id("idlist")).click(); 
+		      sleep(5000); 
+		      om.cambiarVentanaNavegador(0); 
+		    }catch(java.lang.IndexOutOfBoundsException ex1) {} 
+		sleep(12000);
+		
+		//  Orquestacion
+		
+		boolean chiqui = false;
+		while (chiqui == false) {
+
+			try {
+				driver.findElement(By.id("zoomOut")).click();
+			} catch (Exception ex1) {
+				chiqui = true;
+				driver.findElement(By.id("zoomIn")).click();
+				break;
+			}
+
+		}
+		sleep(10000);
+		List<WebElement> cajas = driver.findElements(By.cssSelector(".item-label-container.item-header.item-failed"));
+		cajas.addAll(driver.findElements(By.cssSelector(".item-label-container.item-header.item-fatally-failed")));
+		cajas.addAll(driver.findElements(By.cssSelector(".item-label-container.item-header.item-running")));
+		int i = 1;
+		while (cajas.size() > 0) {
+			for (WebElement UnaC : cajas) {
+				UnaC.click();
+				sleep(5000);
+				om.cambiarVentanaNavegador(i);
+				//i++;
+				sleep(5000);
+				WebElement stat = driver.findElement(By.xpath("//*[@id='bodyCell']/div/ng-view/div/div/div/div/div/facet/facet-4412964684870411902/table/tbody/tr[27]/td/attribute-value/div/div/picklist-value"));
+				WebElement box1 = driver.findElement(By.xpath("//*[@id='bodyCell']/div/ng-view/div/div/div/div/div/facet/facet-4412964684870411902/table/tbody/tr[29]/td"));
+				List<WebElement> botones = driver.findElements(By.cssSelector(".slds-button.slds-button--neutral.ng-scope"));
+				for (WebElement UnB : botones) {
+					if (UnB.getText().equals("Complete")) {
+						UnB.click();
+						sleep(4000);
+						System.out.println("Hizo click");
+						break;
+					}
+					for (i= 0;i<4 ;i++){
+						if(stat.getText().toLowerCase().equals("completed")){
+							String a = box1.getText();
+						} else {
+							driver.navigate().refresh();
+							sleep(5000);
+						break;
+						
+						}
+					}
+				}
+		
+		om.cambiarVentanaNavegador(0);
+		sleep(10000);
+			}	
+		}
+		
+	/*	driver.navigate().back();
+		sleep(5000);
+		driver.findElement(By.name("vlocity_cmt__vieworchestrationplan")).click();
+		sleep(10000);
+		boolean chiqui = false;
+		while (chiqui == false) {
+
+			try {
+				driver.findElement(By.id("zoomOut")).click();
+			} catch (Exception ex1) {
+				chiqui = true;
+				driver.findElement(By.id("zoomIn")).click();
+				break;
+			}
+
+		}
+		List <WebElement> cajasVerdes = driver.findElements(By.cssSelector(".item-header.item-completed"));
+		for (WebElement x : cajasVerdes) {
+			if (x.getText().equalsIgnoreCase("CreateSubscriber - S203")) {
+				x.click();
+				}
+		}
+	/*	sleep(8000);
+		int h = 1;
+		om.cambiarVentanaNavegador(i);
+		WebElement box1 = driver.findElement(By.xpath("//*[@id='bodyCell']/div/ng-view/div/div/div/div/div/facet/facet-4412964684870411902/table/tbody/tr[29]/td/attribute-value/div/div/datetime-value"));
+		String a = box1.getText().split(" ")[1];
+		System.out.println(a);*/
+	/*	Date date = new Date();
+		Calendar cal = Calendar.getInstance(); 
+        cal.setTime(date); 
+        date = cal.getTime();
+        DateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
+		Assert.assertTrue(date.equals(box1.getText()));*/
+		
+	}
+	
 }
