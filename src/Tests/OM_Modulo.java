@@ -2,6 +2,7 @@ package Tests;
 
 import org.testng.annotations.BeforeClass;
 
+
 import static org.junit.Assert.assertTrue;
 import static org.testng.Assert.assertEquals;
 import static org.testng.Assert.assertTrue;
@@ -41,7 +42,6 @@ import Pages.RegistroEventoMasivo;
 import Pages.SCP;
 import Pages.setConexion;
 
-import Pages.setConexion;
 
 
 
@@ -76,7 +76,7 @@ public void setUp() throws Exception {
 		pageOm.clickOnListTabs("Orders");
 	}
 	
-	@AfterClass(alwaysRun=true)
+	//@AfterClass(alwaysRun=true)
 	public void tearDown() {
 		sleep(2000);
 		driver.quit(); 
@@ -98,7 +98,7 @@ public void setUp() throws Exception {
 	
 	
 	//fecha avanzada
-	OM.fechaAv("07-04-2018");
+	OM.fechaAv("07-07-2018");
 	sleep(12000);
 	
 	//agregar Pack
@@ -115,7 +115,7 @@ public void setUp() throws Exception {
 	//sincronizar producto
 	Url = driver.getCurrentUrl();
 	pageOm.clickTab("Product2_Tab");
-	OM.sincroProducto("Friend&Family VOZ CFS");
+	OM.sincroProducto("Samsung Cargador - Negro");
 	OM.clickSincronizar();
 	driver.get(Url);
 	
@@ -123,6 +123,9 @@ public void setUp() throws Exception {
 	driver.findElement(By.name("ta_submit_order")).click();
 	sleep(35000);
 	pageOm.completarFlujoOrquestacion();
+	sleep(8000);	
+	WebElement status = driver.findElement(By.id("Status_ilecell")); 
+	Assert.assertTrue(status.getText().equalsIgnoreCase("Activated")); 
 	
 	 
 	}
@@ -155,7 +158,6 @@ public void setUp() throws Exception {
 	String Url;
 	OM pageOm=new OM(driver);
 	OMQPage OM=new OMQPage (driver);
-
     pageOm.Gestion_Alta_De_Linea("QuelysOM", "Plan Prepago Nacional");
 	sleep(5000);
 	pageOm.irAChangeToOrder();
@@ -163,7 +165,7 @@ public void setUp() throws Exception {
 	driver.switchTo().defaultContent();
 	
 	//fecha avanzada
-	OM.fechaAv("06-29-2018");
+	OM.fechaAv("07-07-2018");
 	sleep(12000);
 	
 	//agregar Pack
@@ -180,7 +182,7 @@ public void setUp() throws Exception {
 	//sincronizar
 	Url = driver.getCurrentUrl();
 	pageOm.clickTab("Product2_Tab");
-	OM.sincroProducto("Contestador Personal CFS");
+	OM.sincroProducto("Friend&Family VOZ CFS");
 	OM.clickSincronizar();
 	driver.get(Url);
 	
@@ -188,6 +190,10 @@ public void setUp() throws Exception {
 	driver.findElement(By.name("ta_submit_order")).click();
 	sleep(35000);
 	pageOm.completarFlujoOrquestacion();
+	sleep(8000);
+	WebElement status = driver.findElement(By.id("Status_ilecell")); 
+	Assert.assertTrue(status.getText().equalsIgnoreCase("Activated")); 
+	
 			
 	}
 	
@@ -218,36 +224,9 @@ public void setUp() throws Exception {
 	 @Test(groups= "OM") //retryAnalyzer = retry.class)
 	 public void TS102300_CRM_OM_Ola_2_Interfaces_Alta_de_linea_con_1_pack_Plan_con_tarjeta_Sin_delivery_Sin_VAS_Huawei_S203_createSubscriber_Verificacion_de_campos_enviados_en_el_request() throws InterruptedException, MalformedURLException {    
 	 OM pageOm=new OM(driver);
-	 OMQPage OM=new OMQPage (driver);
-	 pageOm.Gestion_Alta_De_Linea("QuelysOM", "Plan con tarjeta");
+	 pageOm.Alta_de_linea_con_Pack("QuelysOM", "Plan con tarjeta");
 	 sleep(5000);
-	 pageOm.irAChangeToOrder();
-	 sleep(12000);
-	 driver.switchTo().defaultContent();
-		      
-	//fecha avanzada
-	 OM.fechaAv("07-05-2018");
-	 sleep(12000);
-	 
-   //agregar Pack
-	 OM.agregarPack("Packs Opcionales","Packs de Datos", "Pack 1GB de dia + 3GB de Noche", "","");
-		 
-	//Click ViewRecord
-	 sleep(8000);  
-	 driver.findElement(By.id("-import-btn")).click();
-	 sleep(7000);
+	 pageOm.verificacionDeCamposEnviadosenelRequest();
 
-	//agregar gestion
-	pageOm.agregarGestion("Alta producto gen\u00e9rico");
-		 
-	//Orquestacion
-	driver.findElement(By.name("ta_submit_order")).click();
-	sleep(35000);
-		
-	//pageOm.completarFlujoOrquestacion();
-	
 	 }    
-		 
-
-
 }

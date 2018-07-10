@@ -1,5 +1,6 @@
 package Tests;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.junit.Assert;
@@ -13,7 +14,6 @@ import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
 import Pages.BasePage;
-import Pages.CustomerCare;
 import Pages.OM;
 import Pages.setConexion;
 
@@ -21,6 +21,7 @@ public class OMN extends TestBase {
 
 	private WebDriver driver;
 	protected OM om;
+	protected GestionesOM gom;
 
 
 	@BeforeClass (alwaysRun = true, groups = "OM")
@@ -30,6 +31,7 @@ public class OMN extends TestBase {
 		login(driver, "https://crm--sit.cs14.my.salesforce.com/", "U585991", "Testa10k");
 		sleep(5000);
 		om = new OM(driver);
+		gom = new GestionesOM();
 	}
 	
 	@BeforeMethod (alwaysRun = true, groups = "OM")
@@ -47,14 +49,6 @@ public class OMN extends TestBase {
 		sleep(5000);
 	}
 	
-	
-	public void debugger() {
-		sleep(10000);
-		//WebElement imsi = driver.findElements(By.cssSelector(".table.table-condensed.attributes")).get(0);
-		om.scrollDownInAView(driver.findElement(By.xpath("//*[contains(text(),'MSISDN')]")));
-		//System.out.println(imsi.getText());
-		sleep(5000);
-	}
 	
 	@Test (groups = "OM")
 	public void TS6729_Ordenes_Order_Detail_Adjunto_de_archivos_Formato_JPG() {
@@ -237,35 +231,29 @@ public class OMN extends TestBase {
 		Assert.assertTrue(true);
 	}
 	
-	@Test (groups = "OM")  //Falta terminar
+	@Test (groups = "OM")
 	public void TS80191_Ordenes_Cliente_existente_Cambio_de_SIM_Plan_con_tarjeta_Sin_delivery_Verificacion_de_assets() throws InterruptedException {
-		String a = "", b = "", c = "";
+		List<String> datos = new ArrayList<String>();		
 		om.Gestion_Alta_De_Linea("FlorOM", "Plan con tarjeta");
 		driver.findElement(By.id("Order_Tab")).click();
-		om.Cambio_De_SimCard2("07-22-2020", a, b, c);
+		datos = om.Cambio_De_SimCard2();
 		driver.findElement(By.name("ta_submit_order")).click();
 		sleep(15000);
 		om.completarFlujoOrquestacion();
 		driver.findElement(By.id("accid_ileinner")).findElement(By.tagName("a")).click();
 		sleep(20000);
-		driver.switchTo().frame(cambioFrame(driver, By.cssSelector(".panel.panel-default.panel-assets")));
-		List <WebElement> assets = driver.findElement(By.cssSelector(".panel.panel-default.panel-assets")).findElements(By.cssSelector(".root-asset.ng-scope"));
-		assets.get(assets.size() -1).findElement(By.className("p-expand")).click();
+		om.irAChangeToOrder();
+		sleep(10000);
+		om.fechaAvanzada2();
+		driver.findElement(By.cssSelector(".slds-button.cpq-item-has-children")).click();
 		sleep(3000);
-		int ultimoSim=0;
-		List <WebElement> asd = driver.findElements(By.className("p-name"));
-		for (int i=0; i<asd.size(); i++) {
-			if (asd.get(i).getText().equalsIgnoreCase("Simcard")) {
-				ultimoSim = i;
-			}
-		}
-		asd.get(ultimoSim).findElement(By.tagName("a")).click();
-		sleep(15000);
-		List <WebElement> asdd = driver.findElements(By.cssSelector(".table.table-condensed.attributes"));
-		for (int i=0; i<asdd.size(); i++) {
-			System.out.println(asdd.get(i).getText());
-		}
-		Assert.assertTrue(false);
+		driver.findElement(By.xpath(".//*[@id='tab-default-1']/div[1]/ng-include/div/div/div/div[4]/div[2]/div/ng-include/div/div[2]/ng-include/div/div[1]/div/div[2]/div[11]")).click();
+		List<WebElement> lista = driver.findElements(By.cssSelector(".slds-dropdown__list.cpq-item-actions-dropdown__list"));
+		lista.get(1).click();
+		sleep(3000);
+		((JavascriptExecutor)driver).executeScript("window.scrollTo(0,"+driver.findElement(By.className("slds-section")).getLocation().y+" )");
+		String nroImsi = driver.findElement(By.xpath("//*[@id=\"js-cpq-product-cart-config-form\"]/div[1]/div/form/div[18]/div/input")).getAttribute("value");
+		Assert.assertTrue(nroImsi.equals(datos.get(1)));
 	}
 	
 	@Test (groups = "OM", dependsOnMethods = "TS79026_Ordenes_Cliente_existente_Alta_de_linea_Sin_delivery_Sin_VAS_Paso_4")
@@ -299,7 +287,7 @@ public class OMN extends TestBase {
 		driver.findElement(By.id("Order_Tab")).click();
 		sleep(5000);
 		om.selectVistaByVisibleText("LineasFlor");
-		sleep(3000);
+		sleep(3000);		
 		WebElement orden = driver.findElement(By.cssSelector(".x-grid3-col.x-grid3-cell.x-grid3-td-ORDERS_ORDER_NUMBER"));
 		orden.findElement(By.tagName("div")).findElement(By.tagName("a")).click();
 		sleep(5000);
@@ -308,7 +296,7 @@ public class OMN extends TestBase {
 		om.ordenCajasVerdes("CreateSubscriber - S203", "Env\u00edo de Activaci\u00f3n de Servicios a la Red", "updateNumerStatus - S326");
 	}
 	
-	@Test (groups = "OM")
+	@Test
 	public void TS79046_Ordenes_Cliente_existente_Alta_de_linea_Sin_delivery_Sin_VAS_Verficacion_de_ASSETs_creados() throws InterruptedException {
 		boolean a = false, b = false;
 		om.Gestion_Alta_De_Linea("FlorOM", "Plan prepago nacional");
@@ -473,5 +461,105 @@ public class OMN extends TestBase {
 		Assert.assertTrue(status.equals("Activated"));
 		Assert.assertTrue(gestion);
 		om.ordenCajasVerdes("CreateSubscriber - S203", "Env\u00edo de Activaci\u00f3n de Servicios a la Red", "updateNumerStatus - S326");
+	}
+	
+	@Test (groups = "OM")
+	public void TS79210_Ordenes_Cliente_existente_Alta_de_1_servicio_adicional_Plan_prepago_nacional_Sin_delivery_Sin_VAS_Actualizar_los_assets() throws InterruptedException {
+		int ultimaVoz = 0;
+		om.AltaDeLineaCon1Servicio("FlorOM", "Plan Prepago Nacional");
+		driver.switchTo().frame(cambioFrame(driver, By.cssSelector(".panel.panel-default.panel-assets")));
+		List <WebElement> assets = driver.findElement(By.cssSelector(".panel.panel-default.panel-assets")).findElements(By.cssSelector(".root-asset.ng-scope"));
+		assets.get(assets.size() -1).findElement(By.className("p-expand")).click();
+		sleep(3000);
+		List <WebElement> asd = driver.findElements(By.className("p-name"));
+		for (int i=0; i<asd.size(); i++) {
+			if (asd.get(i).getText().equalsIgnoreCase("Caller Id")) {
+				ultimaVoz = i;
+			}
+		}
+		asd.get(ultimaVoz).findElement(By.tagName("a")).click();
+		sleep(7000);
+		WebElement status = driver.findElement(By.id("Status_ilecell"));
+		Assert.assertTrue(status.getText().equalsIgnoreCase("Active"));
+	}
+	
+	@Test (groups = "OM", dependsOnMethods = "TS101360_Ordenes_Cliente_existente_Anulacion_de_venta_Plan_prepago_nacional_Paso_5")
+	public void TS101355_TS101360_Ordenes_Cliente_existente_Anulacion_de_venta_Plan_prepago_nacional_Paso_0() {
+		Assert.assertTrue(true);
+	}
+	
+	@Test (groups = "OM", dependsOnMethods = "TS101360_Ordenes_Cliente_existente_Anulacion_de_venta_Plan_prepago_nacional_Paso_5")
+	public void TS101356_TS101360_Ordenes_Cliente_existente_Anulacion_de_venta_Plan_prepago_nacional_Paso_1() {
+		Assert.assertTrue(true);
+	}
+	
+	@Test (groups = "OM", dependsOnMethods = "TS101360_Ordenes_Cliente_existente_Anulacion_de_venta_Plan_prepago_nacional_Paso_5")
+	public void TS101357_TS101360_Ordenes_Cliente_existente_Anulacion_de_venta_Plan_prepago_nacional_Paso_2() {
+		Assert.assertTrue(true);
+	}
+	
+	@Test (groups = "OM", dependsOnMethods = "TS101360_Ordenes_Cliente_existente_Anulacion_de_venta_Plan_prepago_nacional_Paso_5")
+	public void TS101358_TS101360_Ordenes_Cliente_existente_Anulacion_de_venta_Plan_prepago_nacional_Paso_3() {
+		Assert.assertTrue(true);
+	}
+	
+	@Test (groups = "OM", dependsOnMethods = "TS101360_Ordenes_Cliente_existente_Anulacion_de_venta_Plan_prepago_nacional_Paso_5")
+	public void TS101359_TS101360_Ordenes_Cliente_existente_Anulacion_de_venta_Plan_prepago_nacional_Paso_4() {
+		Assert.assertTrue(true);
+	}
+	
+	@Test (groups = "OM")
+	public void TS101360_Ordenes_Cliente_existente_Anulacion_de_venta_Plan_prepago_nacional_Paso_5() throws InterruptedException {
+		om.BajaDeLineaOM("FlorOM", "Plan Prepago Nacional");	
+	}
+	
+	@Test (groups = "OM", dependsOnMethods = "TS101367_Ordenes_Cliente_existente_Anulacion_de_venta_Plan_con_tarjeta_Paso_5")
+	public void TS101363_Ordenes_Cliente_existente_Anulacion_de_venta_Plan_con_tarjeta_Paso_1() {
+		Assert.assertTrue(true);
+	}
+	
+	@Test (groups = "OM", dependsOnMethods = "TS101367_Ordenes_Cliente_existente_Anulacion_de_venta_Plan_con_tarjeta_Paso_5")
+	public void TS101364_Ordenes_Cliente_existente_Anulacion_de_venta_Plan_con_tarjeta_Paso_2() {
+		Assert.assertTrue(true);
+	}
+	
+	@Test (groups = "OM", dependsOnMethods = "TS101367_Ordenes_Cliente_existente_Anulacion_de_venta_Plan_con_tarjeta_Paso_5")
+	public void TS101365_Ordenes_Cliente_existente_Anulacion_de_venta_Plan_con_tarjeta_Paso_3() {
+		Assert.assertTrue(true);
+	}
+	
+	@Test (groups = "OM", dependsOnMethods = "TS101367_Ordenes_Cliente_existente_Anulacion_de_venta_Plan_con_tarjeta_Paso_5")
+	public void TS101366_Ordenes_Cliente_existente_Anulacion_de_venta_Plan_con_tarjeta_Paso_4() {
+		Assert.assertTrue(true);
+	}
+	
+	@Test (groups = "OM")
+	public void TS101367_Ordenes_Cliente_existente_Anulacion_de_venta_Plan_con_tarjeta_Paso_5() throws InterruptedException {
+		om.BajaDeLineaOM("FlorOM", "Plan con tarjeta");
+	}
+	
+	@Test (groups = "OM", dependsOnMethods = "TS101374_Ordenes_Cliente_existente_Anulacion_de_venta_Plan_con_tarjeta_repro_Paso_5")
+	public void TS101370_Ordenes_Cliente_existente_Anulacion_de_venta_Plan_con_tarjeta_repro_Paso_1() throws InterruptedException {
+		Assert.assertTrue(true);
+	}
+	
+	@Test (groups = "OM", dependsOnMethods = "TS101374_Ordenes_Cliente_existente_Anulacion_de_venta_Plan_con_tarjeta_repro_Paso_5")
+	public void TS101371_Ordenes_Cliente_existente_Anulacion_de_venta_Plan_con_tarjeta_repro_Paso_2() throws InterruptedException {
+		Assert.assertTrue(true);
+	}
+	
+	@Test (groups = "OM", dependsOnMethods = "TS101374_Ordenes_Cliente_existente_Anulacion_de_venta_Plan_con_tarjeta_repro_Paso_5")
+	public void TS101372_Ordenes_Cliente_existente_Anulacion_de_venta_Plan_con_tarjeta_repro_Paso_3() throws InterruptedException {
+		Assert.assertTrue(true);
+	}
+	
+	@Test (groups = "OM", dependsOnMethods = "TS101374_Ordenes_Cliente_existente_Anulacion_de_venta_Plan_con_tarjeta_repro_Paso_5")
+	public void TS101373_Ordenes_Cliente_existente_Anulacion_de_venta_Plan_con_tarjeta_repro_Paso_4() throws InterruptedException {
+		Assert.assertTrue(true);
+	}
+	
+	@Test (groups = "OM")
+	public void TS101374_Ordenes_Cliente_existente_Anulacion_de_venta_Plan_con_tarjeta_repro_Paso_5() throws InterruptedException {
+		om.BajaDeLineaOM("FlorOM", "Plan con tarjeta repro");
 	}
 }
