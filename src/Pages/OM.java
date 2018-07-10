@@ -1865,10 +1865,6 @@ public void deleteOrdersNoActivated(String Vista) {
 			cambiarVentanaNavegador(0);
 		}catch(java.lang.IndexOutOfBoundsException ex1) {}
 		sleep(12000);
-		//completarFlujoOrquestacion();
-		//sleep(5000);
-		//driver.findElement(By.id("accid_ileinner")).findElement(By.tagName("a")).click();
-		//sleep(10000);
 	}
 	
 	public void verificacionDeCamposEnviadosenelRequest() {

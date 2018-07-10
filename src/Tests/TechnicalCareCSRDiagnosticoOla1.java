@@ -77,7 +77,7 @@ private WebDriver driver;
  	
 	}
  	 	
- 		@AfterMethod(alwaysRun=true)
+ 		//@AfterMethod(alwaysRun=true)
  		public void after() {
 		try {Thread.sleep(2000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 		driver.switchTo().defaultContent(); 
@@ -86,7 +86,7 @@ private WebDriver driver;
 	    driver.switchTo().defaultContent(); 
 	}
  	
- 		@AfterClass(alwaysRun=true)
+ 		//@AfterClass(alwaysRun=true)
  		public void tearDown() {
 		try {Thread.sleep(1000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 		CustomerCare cerrar = new CustomerCare(driver);
