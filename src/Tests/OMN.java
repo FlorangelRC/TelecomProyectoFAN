@@ -510,7 +510,16 @@ public class OMN extends TestBase {
 	
 	@Test (groups = "OM")
 	public void TS101360_Ordenes_Cliente_existente_Anulacion_de_venta_Plan_prepago_nacional_Paso_5() throws InterruptedException {
-		om.BajaDeLineaOM("FlorOM", "Plan Prepago Nacional");	
+		om.BajaDeLineaOM("FlorOM", "Plan Prepago Nacional");
+	}
+	
+	@Test
+	public void TS101361_Ordenes_Cliente_existente_Anulacion_de_venta_Plan_prepago_nacional_Actualizacion_de_assets() throws InterruptedException {
+		om.BajaDeLineaOM("FlorOM", "Plan Prepago Nacional");
+		driver.findElement(By.id("accid_ileinner")).findElement(By.tagName("a")).click();
+		sleep(10000);
+		om.irAChangeToOrder();
+		
 	}
 	
 	@Test (groups = "OM", dependsOnMethods = "TS101367_Ordenes_Cliente_existente_Anulacion_de_venta_Plan_con_tarjeta_Paso_5")
