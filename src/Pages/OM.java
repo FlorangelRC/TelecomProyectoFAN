@@ -2009,7 +2009,7 @@ public void deleteOrdersNoActivated(String Vista) {
 			DateFormat dateFormat = new SimpleDateFormat("MM-dd-yyyy");
 			driver.findElement(By.id("RequestDate")).sendKeys(dateFormat.format(Pom.fechaAvanzada()));
 			driver.findElement(By.cssSelector(".form-control.btn.btn-primary.ng-binding")).click();
-			sleep(10000);
+			sleep(15000);
 			driver.findElement(By.xpath(".//*[@id='tab-default-1']/div/ng-include//div[10]//button")).click();
 			sleep(2000);		
 			tb.buscarYClick(driver.findElements(By.cssSelector(".slds-dropdown__item.cpq-item-actions-dropdown__item")), "contains", "delete");
