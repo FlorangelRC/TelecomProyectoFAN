@@ -36,7 +36,7 @@ private WebDriver driver;
 		goInitToConsolaFanF3(driver);
 		     
 	    CustomerCare cerrar = new CustomerCare(driver);
-	    cerrar.cerrarultimapestaña();
+	    cerrar.cerrarultimapestana();
 		
 		//Selecciona Cuentas
 		try {Thread.sleep(4000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
@@ -59,7 +59,7 @@ private WebDriver driver;
 	public void after() {
 		try {Thread.sleep(2000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 		CustomerCare cerrar = new CustomerCare(driver);
-		cerrar.cerrarultimapestaña();
+		cerrar.cerrarultimapestana();
 	}
 	
 	@AfterClass(alwaysRun=true)

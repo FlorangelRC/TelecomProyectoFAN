@@ -65,7 +65,7 @@ public class diagnosis extends TestBase {
 	     homePage.selectAppFromMenuByName("Consola FAN");
 	     try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();} 
 	     CustomerCare cerrar = new CustomerCare(driver);
-	     cerrar.cerrarultimapestaña();
+	     cerrar.cerrarultimapestana();
 	     goToLeftPanel2(driver, "Cuentas");
 	     try {Thread.sleep(15000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 	}

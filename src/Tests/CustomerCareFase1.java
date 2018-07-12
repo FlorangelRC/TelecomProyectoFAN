@@ -315,14 +315,14 @@ public class CustomerCareFase1 extends TestBase {
 	
 	@Test(groups = {"CustomerCare", "Vista360Layout"})
     public void TS7148_Customer_Account_Management_Customer_Segmentation_Estado_inactivo_Usuario_Externo() {
-        cc.cerrarTodasLasPestañas();
+        cc.cerrarTodasLasPestanas();
         cc.elegircuenta("aaaaAndres Care");
         List <WebElement> pest = driver.findElements(By.className("x-tab-left"));
         pest.get(3).click();
         driver.switchTo().frame(cambioFrame(driver, By.className("detailList")));
 		WebElement status = driver.findElement(By.xpath("//*[@id=\"ep_Account_View_j_id4\"]/div[2]/div[2]/table/tbody/tr[2]/td[4]"));
 		Assert.assertTrue(status.getText().equals("Inactive"));
-		cc.cerrarTodasLasPestañas();
+		cc.cerrarTodasLasPestanas();
 		cc.elegircuenta("aaaaFernando Care");
     }
 		
@@ -350,7 +350,7 @@ public class CustomerCareFase1 extends TestBase {
 	@Test(groups = {"CustomerCare", "Vista360Layout"})
 	public void TS7070_ValidationClubPersonalBasico (){
 		sleep(10000);
-		cc.cerrarultimapestaña();
+		cc.cerrarultimapestana();
 		cc.elegircuenta("aaaaAndres Care");
 		List<WebElement> profileinfo = driver.findElements(By.className("acct-info"));
 		for (WebElement x : profileinfo) {
@@ -371,13 +371,13 @@ public class CustomerCareFase1 extends TestBase {
 	@Test(groups = {"CustomerCare", "Vista360Layout"})
 	public void TS7071_ValidationClubPersonalPremium (){
 		sleep(10000);
-		cc.cerrarultimapestaña();
+		cc.cerrarultimapestana();
 		cc.elegircuenta("aaaaAndres Care");
 		List<WebElement> profileinfo = driver.findElements(By.className("acct-info"));
 		for (WebElement x : profileinfo) {
 			Assert.assertTrue(x.getText().toLowerCase().contains("premium"));
 		}
-		cc.cerrarultimapestaña();
+		cc.cerrarultimapestana();
 		cc.elegircuenta("aaaaFernando Care");
 	}
 	

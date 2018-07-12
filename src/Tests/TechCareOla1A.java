@@ -44,7 +44,14 @@ public class TechCareOla1A extends TestBase {
 		try {Thread.sleep(4000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 		login(driver);
 		try {Thread.sleep(3000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
-		goInitToConsolaFanF3(driver);
+		try {
+			goInitToConsolaFanF3(driver);
+		}catch(Exception ex) {
+			sleep(3000);
+			driver.findElement(By.id("tabBar")).findElement(By.tagName("a")).click();
+			sleep(6000);
+		}
+		
 	    try {Thread.sleep(3000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 	     //Alerta Aparece Ocasionalmente
 	       try {
@@ -53,7 +60,7 @@ public class TechCareOla1A extends TestBase {
 			}catch(org.openqa.selenium.NoAlertPresentException e) {}
 
        CustomerCare cerrar = new CustomerCare(driver);
-       cerrar.cerrarultimapestaña();
+       cerrar.cerrarultimapestana();
 	}
 	
 	
@@ -66,18 +73,18 @@ public class TechCareOla1A extends TestBase {
 	}
 	
 	
-	@AfterMethod(alwaysRun=true)
+	//@AfterMethod(alwaysRun=true)
 	public void after() {
 		CustomerCare cerrar = new CustomerCare(driver);
-	    cerrar.cerrarultimapestaña();
+	    cerrar.cerrarultimapestana();
 	    sleep(2000);
 	}
 	
-	@AfterClass(alwaysRun=true)
+	//@AfterClass(alwaysRun=true)
 	public void tearDown() {
 		try {Thread.sleep(1000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 		CustomerCare cerrar = new CustomerCare(driver);
-		cerrar.cerrarultimapestaña();
+		cerrar.cerrarultimapestana();
 		HomeBase homePage = new HomeBase(driver);
 		try {Thread.sleep(1000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 		homePage.selectAppFromMenuByName("Ventas");

@@ -236,7 +236,10 @@ public class BasePage {
 		switch(ambiente) {
 		case "SIT":
 			driver.get(SITpage);
-			driver.findElement(By.xpath("//input[@name='Ecom_User_ID']")).sendKeys("u589831");
+			//Usuario de Daniel
+			//driver.findElement(By.xpath("//input[@name='Ecom_User_ID']")).sendKeys("u589831");
+			//Usuario UAT OOCC
+			driver.findElement(By.xpath("//input[@name='Ecom_User_ID']")).sendKeys("UAT195528");
 			driver.findElement(By.xpath("//input[@name='Ecom_Password']")).sendKeys("Testa10k");
 			break;
 		}
