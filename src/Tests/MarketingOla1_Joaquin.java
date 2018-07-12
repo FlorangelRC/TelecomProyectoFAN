@@ -38,14 +38,14 @@ public class MarketingOla1_Joaquin extends TestBase {
 	
 	@AfterClass(alwaysRun = true, groups = {"Marketing", "Ola1"})
 	public void exit() {
-		Page.cerrarTodasLasPestañas();
+		Page.cerrarTodasLasPestanas();
 		//Page.cajonDeAplicaciones("Ventas");
 		driver.close();
 	}
 	
 	@BeforeMethod(alwaysRun = true, groups = {"Marketing", "Ola1"})
 	public void before() {
-		Page.cerrarTodasLasPestañas();
+		Page.cerrarTodasLasPestanas();
 	}
 	
 	@Test(groups = {"Marketing", "Ola1", "GestionDelSocioDeClubPersonal"}, dataProvider="MarketingCuentaSinServicio")
@@ -89,7 +89,7 @@ public class MarketingOla1_Joaquin extends TestBase {
 		}
 		else Assert.assertTrue(false);
 		
-		Page.cerrarTodasLasPestañas();
+		Page.cerrarTodasLasPestanas();
 		Page.irACasos();
 		Assert.assertTrue(Page.corroborarCasoCerrado(numeroCaso));
 	}
@@ -147,7 +147,7 @@ public class MarketingOla1_Joaquin extends TestBase {
 		sleep(1500);
 		
 	    String numeroCaso = Page.obtenerNumeroCasoAltaOBaja(); 
-	    Page.cerrarTodasLasPestañas();
+	    Page.cerrarTodasLasPestanas();
 		Page.irACasos();
 		
 		Assert.assertTrue(Page.corroborarCasoCerrado(numeroCaso));

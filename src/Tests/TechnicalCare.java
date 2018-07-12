@@ -48,7 +48,7 @@ public class TechnicalCare extends TestBase  {
 	       homePage.selectAppFromMenuByName("Consola FAN");
 	       
 	       CustomerCare cerrar = new CustomerCare(driver);
-			cerrar.cerrarultimapestaña();
+			cerrar.cerrarultimapestana();
 	       
 		try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}			
 		goToLeftPanel2(driver, "Cuentas");

@@ -50,7 +50,7 @@ public class CustomerCareOla1 extends TestBase {
 	
 	@BeforeMethod (alwaysRun = true, groups = {"CustomerCare", "AjustesYEscalamiento", "SuspensionYRehabilitacion", "ProblemasConRecargas", "Ola1"})
 	public void before() {
-		cc.cerrarTodasLasPestañas();
+		cc.cerrarTodasLasPestanas();
 	}
 	
 	

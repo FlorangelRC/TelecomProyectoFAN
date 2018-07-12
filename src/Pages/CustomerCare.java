@@ -100,7 +100,7 @@ public class CustomerCare extends BasePage {
 	private WebElement buscargestion;
 	
 	@FindBy(css = ".x-plain-header.sd_primary_tabstrip.x-unselectable .x-tab-strip-closable")
-	private List<WebElement> pesta�asPrimarias;
+	private List<WebElement> pestanasPrimarias;
 	
 	@FindBy(css = ".x-grid3-cell-inner.x-grid3-col-ACCOUNT_NAME")
 	private List<WebElement> cuentas;
@@ -109,7 +109,7 @@ public class CustomerCare extends BasePage {
 	private List<WebElement> desplegable;
 	
 	@FindBy(css = ".x-plain-body.sd_nav_tabpanel_body.x-tab-panel-body-top .x-tab-strip-closable")
-	private List<WebElement> pesta�asSecundarias;
+	private List<WebElement> pestanasSecundarias;
 	
 	@FindBy(css = ".console-card.active")
 	public List<WebElement> lineasPrepago;
@@ -151,8 +151,8 @@ public class CustomerCare extends BasePage {
 	public void elegirCuenta(String nombreCuenta) {		
 		driver.switchTo().defaultContent();
 		Boolean flag = false;
-		if (pesta�asPrimarias.size() > 0) {
-			for (WebElement t : pesta�asPrimarias) {
+		if (pestanasPrimarias.size() > 0) {
+			for (WebElement t : pestanasPrimarias) {
 				if (t.getText().equals(nombreCuenta)) {
 					flag = true;
 					t.click();
@@ -241,10 +241,10 @@ public class CustomerCare extends BasePage {
 		TestBase.sleep(2000);
 	}
 	
-	public void cerrarTodasLasPesta�as() {
+	public void cerrarTodasLasPestanas() {
 		driver.switchTo().defaultContent();
-		if (pesta�asPrimarias.size() > 0) {
-			for (WebElement t : pesta�asPrimarias) {
+		if (pestanasPrimarias.size() > 0) {
+			for (WebElement t : pestanasPrimarias) {
 					WebElement btn_cerrar = t.findElement(By.className("x-tab-strip-close"));
 					((JavascriptExecutor) driver).executeScript("arguments[0].click();", btn_cerrar);	
 			}
@@ -272,7 +272,7 @@ public class CustomerCare extends BasePage {
 	
 	public void limpiarTodo() {
 		driver.switchTo().defaultContent();
-		for (WebElement t : pesta�asSecundarias) {
+		for (WebElement t : pestanasSecundarias) {
 			if(t.getText().equals("Servicios")) t.click();
 			else {
 				WebElement btn_cerrar = t.findElement(By.className("x-tab-strip-close"));
@@ -370,8 +370,8 @@ public class CustomerCare extends BasePage {
 		cambiarAFrameActivo();
 	}
 	
-	public void irAAhorr�() {
-		obtenerAccionLineaPrepago("Ahorr�").click();
+	public void irAAhorra() {
+		obtenerAccionLineaPrepago("Ahorr\u00e1").click();
 		TestBase.sleep(3000);
 		cambiarAFrameActivo();
 	}
@@ -426,7 +426,7 @@ public class CustomerCare extends BasePage {
 		cambiarAFrameActivo();
 	}
 	
-	public WebElement obtenerPesta�aActiva() {
+	public WebElement obtenerPestanaActiva() {
 		driver.switchTo().defaultContent();
 		TestBase.sleep(3000);
 		return driver.findElement(By.cssSelector(".sd_secondary_tabstrip .x-tab-strip-closable.x-tab-strip-active"));
@@ -746,10 +746,10 @@ public class CustomerCare extends BasePage {
 
     }
 	
-	public void usarpanelcentral(String pesta�a) {
+	public void usarpanelcentral(String pestana) {
 		driver.switchTo().defaultContent();
 		try {Thread.sleep(10000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
-		switch(pesta�a){
+		switch(pestana){
 		case "Detalles":
 			driver.findElement(By.xpath("//*[text() ='Detalles']")).click();
 			driver.findElement(By.cssSelector(".x-tab-right.primaryPalette")).click();
@@ -933,7 +933,7 @@ public class CustomerCare extends BasePage {
 		try {Thread.sleep(10000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 	}
 		
-	public void cerrarultimapesta�a() {
+	public void cerrarultimapestana() {
 		try {Thread.sleep(10000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 		try {driver.switchTo().alert().accept();} catch (org.openqa.selenium.NoAlertPresentException e) {}
 		driver.switchTo().defaultContent();
@@ -1181,7 +1181,7 @@ public class CustomerCare extends BasePage {
 		seleccionarfraude(fraude);
 		obligarclick(editsave);
 		try {Thread.sleep(10000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
-		cerrarultimapesta�a();
+		cerrarultimapestana();
 	}
 
 	public void clienteactivo2() {

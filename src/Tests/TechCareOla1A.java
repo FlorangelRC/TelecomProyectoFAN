@@ -60,7 +60,7 @@ public class TechCareOla1A extends TestBase {
 			}catch(org.openqa.selenium.NoAlertPresentException e) {}
 
        CustomerCare cerrar = new CustomerCare(driver);
-       cerrar.cerrarultimapestaña();
+       cerrar.cerrarultimapestana();
 	}
 	
 	
@@ -76,7 +76,7 @@ public class TechCareOla1A extends TestBase {
 	//@AfterMethod(alwaysRun=true)
 	public void after() {
 		CustomerCare cerrar = new CustomerCare(driver);
-	    cerrar.cerrarultimapestaña();
+	    cerrar.cerrarultimapestana();
 	    sleep(2000);
 	}
 	
@@ -84,7 +84,7 @@ public class TechCareOla1A extends TestBase {
 	public void tearDown() {
 		try {Thread.sleep(1000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 		CustomerCare cerrar = new CustomerCare(driver);
-		cerrar.cerrarultimapestaña();
+		cerrar.cerrarultimapestana();
 		HomeBase homePage = new HomeBase(driver);
 		try {Thread.sleep(1000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 		homePage.selectAppFromMenuByName("Ventas");

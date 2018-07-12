@@ -45,7 +45,7 @@ public class CustomerCareFase3 extends TestBase{
 	public void setup(){
 		try {driver.switchTo().alert().accept();} catch (org.openqa.selenium.NoAlertPresentException e) {}
 		driver.switchTo().defaultContent();
-		cc.cerrarultimapestaña();
+		cc.cerrarultimapestana();
 	}
 	
 	@AfterClass (groups = {"CustomerCare", "DebitoAutomatico", "Vista360Layout", "DetalleDeConsumos"})
@@ -1140,7 +1140,7 @@ public class CustomerCareFase3 extends TestBase{
 		List <WebElement> element = driver.findElements(By.cssSelector(".slds-button.slds-button--neutral.slds-truncate"));
 		Assert.assertTrue(element.get(0).getText().toLowerCase().contains("facturación"));
 		sleep(3000);
-		cc.cerrarultimapestaña();
+		cc.cerrarultimapestana();
 		cc.elegircuenta("aaaaFernando Care");
 		driver.switchTo().defaultContent();
 		driver.switchTo().frame(cambioFrame(driver, By.className("actions-content")));

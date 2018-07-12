@@ -884,7 +884,8 @@ public void deleteOrdersNoActivated(String Vista) {
 		driver.switchTo().defaultContent(); 
 		sleep(4000);
         DateFormat dateFormat = new SimpleDateFormat("MM-dd-yyyy");
-		driver.findElement(By.id("RequestDate")).sendKeys(dateFormat.format(fechaAvanzada()));
+		//driver.findElement(By.id("RequestDate")).sendKeys(dateFormat.format(fechaAvanzada()));
+        driver.findElement(By.id("RequestDate")).sendKeys("08-02-2019");
 		driver.findElement(By.cssSelector(".form-control.btn.btn-primary.ng-binding")).click();
 		sleep(12000);
 		driver.findElement(By.cssSelector(".slds-button.cpq-item-has-children")).click();
@@ -1964,6 +1965,7 @@ public void deleteOrdersNoActivated(String Vista) {
 		    Agregar_Servicio(Servicio); 
 		    driver.findElement(By.cssSelector(".slds-button.cpq-item-has-children")).click(); 
 		    OM.configuracion(); 
+		    sleep(4000);
 		    AgregarDomicilio(); 
 		    sleep(5000); 
 		    driver.findElement(By.name("ta_submit_order")).click(); 

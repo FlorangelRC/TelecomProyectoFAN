@@ -57,7 +57,7 @@ public class testListaEventosMasivos extends TestBase{
 		goInitToConsolaFanF3(driver);
 		//Cierra ultima cuenta
 		CustomerCare cerrar = new CustomerCare(driver);
-		cerrar.cerrarultimapestaña();
+		cerrar.cerrarultimapestana();
 		//Selecciona Cuentas
 		seleccionCuentaPorNombre(driver, "Adrian Techh");
 		try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
