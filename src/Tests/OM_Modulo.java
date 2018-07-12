@@ -224,9 +224,14 @@ public void setUp() throws Exception {
 	 @Test(groups= "OM") //retryAnalyzer = retry.class)
 	 public void TS102300_CRM_OM_Ola_2_Interfaces_Alta_de_linea_con_1_pack_Plan_con_tarjeta_Sin_delivery_Sin_VAS_Huawei_S203_createSubscriber_Verificacion_de_campos_enviados_en_el_request() throws InterruptedException, MalformedURLException {    
 	 OM pageOm=new OM(driver);
-	 pageOm.Alta_de_linea_con_Pack("QuelysOM", "Plan con tarjeta");
+	 OMQPage OM=new OMQPage (driver);
+	 pageOm.Alta_de_linea_con_Pack("QuelysOM", "Plan con tarjeta","Pack Internet x 30 dias");
 	 sleep(5000);
 	 pageOm.verificacionDeCamposEnviadosenelRequest();
+	 //pageOm.completarFlujoOrquestacion();
+	
+	 OM.request("\"codProducto\": \"10000087\"", "\"codProducto\": \"10000087\""); //"\"codProducto\": \"10000087\"", " \"modo\": \"I\"", fechaDesdeCaracteristicaProd, fechaHastaCaracteristicaProd)
+		
 
 	 }    
 }
