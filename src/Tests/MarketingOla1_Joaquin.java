@@ -11,6 +11,7 @@ import Pages.setConexion;
 import java.io.IOException;
 import java.util.List;
 
+import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.testng.Assert;
@@ -25,13 +26,20 @@ public class MarketingOla1_Joaquin extends TestBase {
 		Page = new Marketing(driver);
 		Page.login("SIT");
 		cambiarListaLightningAVistaClasica(driver);
-		Page.cajonDeAplicaciones("Consola FAN");
+		try {
+			Page.cajonDeAplicaciones("Consola FAN");
+		}catch(Exception ex) {
+			sleep(3000);
+			driver.findElement(By.id("tabBar")).findElement(By.tagName("a")).click();
+			sleep(6000);
+		}
+		
 	}
 	
 	@AfterClass(alwaysRun = true, groups = {"Marketing", "Ola1"})
 	public void exit() {
 		Page.cerrarTodasLasPestañas();
-		Page.cajonDeAplicaciones("Ventas");
+		//Page.cajonDeAplicaciones("Ventas");
 		driver.close();
 	}
 	

@@ -74,6 +74,17 @@ public class GestionesOM extends TestBase {
 		pageOm.Gestion_Alta_De_Linea_Parametros(sCuenta, sPlan, sLinea, sIccid, sImsi, sKi);
 	}
 	
+	@Test(groups="OM", priority=1, dataProvider="OMAltaLinea")
+	public void AltaLinea_Servicios_Datos(String sCuenta, String sPlan, String sLinea, String sIccid, String sImsi, String sKi, String sServicios) throws InterruptedException {
+		OM pageOm=new OM(driver);
+		if(sServicios.toLowerCase().equals("nada")){
+			pageOm.Gestion_Alta_De_Linea_Parametros(sCuenta, sPlan, sLinea, sIccid, sImsi, sKi);
+		}
+		if(sServicios.toLowerCase().equals("todo")){
+			pageOm.Gestion_Alta_De_Linea_Con_Todos_Los_Servicios(sCuenta, sPlan, sLinea, sIccid, sImsi, sKi,"servicios basicos general movil");
+		}
+	}
+	
 	@Test(groups="OM", priority=1, dataProvider="OMCambioSim")
 	public void TS_CRM_Cambio_De_SimCard_Datos(String sCuenta, String sPlan, String sLinea, String sIccid, String sImsi, String sKi, String sIccid2, String sImsi2, String sKi2) throws InterruptedException {
 		OM pageOm=new OM(driver);
@@ -120,7 +131,20 @@ public class GestionesOM extends TestBase {
 	@Test(groups="OM", priority=1)
 	public void AltaLinea_Numeros_Amigos() throws InterruptedException {
 		OM pageOm=new OM(driver);
-		pageOm.Gestion_Alta_De_Linea_Con_Amigos("FlorOM", "Plan Prepago Nacional","Friends&Family","2153","5986");
+		pageOm.Gestion_Alta_De_Linea_Con_Amigos("FlorOM", "Plan Prepago Nacional","Friends&Family","7586","5428");
+	}
+	
+	@Test(groups="OM", priority=1)
+	public void AltaLinea_Varios_Packs() throws InterruptedException {
+		OM pageOm=new OM(driver);
+		pageOm.Gestion_Alta_De_Linea_Con_Varios_Packs("FlorOM", "Plan Prepago Nacional","Packs Opcionales",10);
+	}
+	
+	@Test(groups="OM", priority=1)
+	public void TS_CRM_Baja_De_Servicio() throws InterruptedException {
+		OM pageOm=new OM(driver);
+		pageOm.Gestion_Alta_De_Linea_Con_1_Servicio("FlorOM", "Plan Prepago Nacional","Llamada en espera");
+		pageOm.Baja_De_Servicio("Llamada en espera");
 	}
 	
 	
@@ -135,9 +159,9 @@ public class GestionesOM extends TestBase {
 	public void TS_CRM_Gestion_Nominacion(String sCuenta, String sDni, String sLinea) throws Exception {
 		OM pageOm=new OM(driver);
 		SalesBase sb = new SalesBase(driver);
-		sb.DesloguearLoguear("nominaciones", 3);
+		sb.DesloguearLoguear("nominaciones", 4);
 		pageOm.Gestion_Nominacion(sCuenta, sDni, sLinea);
-		sb.DesloguearLoguear("OM", 3);
+		sb.DesloguearLoguear("OM", 4);
 	}
 	
 	
@@ -157,7 +181,14 @@ public class GestionesOM extends TestBase {
 	public void TS_CRM_Alta_De_Servicio() throws InterruptedException {
 		OM pageOm=new OM(driver);
 		pageOm.Gestion_Alta_De_Linea("FlorOM", "Plan Con Tarjeta");
-		pageOm.Gestion_Alta_De_Servicio("LineasFlor", "Blackberry");
+		pageOm.Gestion_Alta_De_Servicio("LineasFlor", "Llamada en espera");
+	}
+	
+	@Test(groups="OM", priority=1)
+	public void TS_CRM_Venta_De_Packs() throws InterruptedException {
+		OM pageOm=new OM(driver);
+		pageOm.Gestion_Alta_De_Linea("FlorOM", "Plan Con Tarjeta");
+		pageOm.Venta_De_Packs("Packs Opcionales", 1);
 	}
 	
 	@Test(groups="OM", priority=1)

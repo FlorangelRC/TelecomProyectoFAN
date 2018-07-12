@@ -40,15 +40,22 @@ private WebDriver driver;
     sleep(5000);
     HomeBase homePage = new HomeBase(driver);
     Accounts accountPage = new Accounts(driver);
-    if(driver.findElement(By.id("tsidLabel")).getText().equals("Consola FAN")) {
-    homePage.switchAppsMenu();
-    sleep(2000);
-    homePage.selectAppFromMenuByName("Ventas");
-    sleep(5000);
-       }
-    homePage.switchAppsMenu();
-    sleep(2000);
-    homePage.selectAppFromMenuByName("Consola FAN");
+    try {
+    	if(driver.findElement(By.id("tsidLabel")).getText().equals("Consola FAN")) {
+    	    homePage.switchAppsMenu();
+    	    sleep(2000);
+    	    homePage.selectAppFromMenuByName("Ventas");
+    	    sleep(5000);
+    	       }
+    	    homePage.switchAppsMenu();
+    	    sleep(2000);
+    	    homePage.selectAppFromMenuByName("Consola FAN");
+	}catch(Exception ex) {
+		sleep(3000);
+		driver.findElement(By.id("tabBar")).findElement(By.tagName("a")).click();
+		sleep(6000);
+	}
+    
     sleep(5000);
 	goToLeftPanel2(driver, "Cuentas");
 	sleep(2000);  
@@ -77,7 +84,7 @@ private WebDriver driver;
  	
 	}
  	 	
- 		@AfterMethod(alwaysRun=true)
+ 		//@AfterMethod(alwaysRun=true)
  		public void after() {
 		try {Thread.sleep(2000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 		driver.switchTo().defaultContent(); 
@@ -86,7 +93,7 @@ private WebDriver driver;
 	    driver.switchTo().defaultContent(); 
 	}
  	
- 		@AfterClass(alwaysRun=true)
+ 		//@AfterClass(alwaysRun=true)
  		public void tearDown() {
 		try {Thread.sleep(1000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 		CustomerCare cerrar = new CustomerCare(driver);

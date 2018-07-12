@@ -296,8 +296,8 @@ public class TechCare_Ola1 {
 					
 			driver.switchTo().frame(marcoCuentas);
 			Select field = new Select(selectCuentas);
-			if (!field.getFirstSelectedOption().getText().equalsIgnoreCase("All")) {
-				field.selectByVisibleText("All");
+			if (!field.getFirstSelectedOption().getText().equalsIgnoreCase("Todas las cuentas")) {
+				field.selectByVisibleText("Todas las cuentas");
 				TestBase.sleep(4000);
 			}
 			sleep(8000);
