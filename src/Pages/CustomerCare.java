@@ -100,7 +100,7 @@ public class CustomerCare extends BasePage {
 	private WebElement buscargestion;
 	
 	@FindBy(css = ".x-plain-header.sd_primary_tabstrip.x-unselectable .x-tab-strip-closable")
-	private List<WebElement> pestañasPrimarias;
+	private List<WebElement> pestanasPrimarias;
 	
 	@FindBy(css = ".x-grid3-cell-inner.x-grid3-col-ACCOUNT_NAME")
 	private List<WebElement> cuentas;
@@ -109,7 +109,7 @@ public class CustomerCare extends BasePage {
 	private List<WebElement> desplegable;
 	
 	@FindBy(css = ".x-plain-body.sd_nav_tabpanel_body.x-tab-panel-body-top .x-tab-strip-closable")
-	private List<WebElement> pestañasSecundarias;
+	private List<WebElement> pestanasSecundarias;
 	
 	@FindBy(css = ".console-card.active")
 	public List<WebElement> lineasPrepago;
@@ -151,12 +151,12 @@ public class CustomerCare extends BasePage {
 	public void elegirCuenta(String nombreCuenta) {		
 		driver.switchTo().defaultContent();
 		Boolean flag = false;
-		if (pestañasPrimarias.size() > 0) {
-			for (WebElement t : pestañasPrimarias) {
+		if (pestanasPrimarias.size() > 0) {
+			for (WebElement t : pestanasPrimarias) {
 				if (t.getText().equals(nombreCuenta)) {
 					flag = true;
 					t.click();
-					// Verificar que exista la pestaña Servicios almenos
+					// Verificar que exista la pestaï¿½a Servicios almenos
 				} else {
 					WebElement btn_cerrar = t.findElement(By.className("x-tab-strip-close"));
 					((JavascriptExecutor) driver).executeScript("arguments[0].click();", btn_cerrar);	
@@ -177,8 +177,8 @@ public class CustomerCare extends BasePage {
 			sleep(2500);
 			driver.switchTo().frame(marcoCuentas);
 			Select field = new Select(selectCuentas);
-			if (!field.getFirstSelectedOption().getText().equalsIgnoreCase("All")) {
-				field.selectByVisibleText("All");
+			if (!field.getFirstSelectedOption().getText().equalsIgnoreCase("Todas las cuentas")) {
+				field.selectByVisibleText("Todas las cuentas");
 				TestBase.sleep(1500);
 			}
 			
@@ -241,10 +241,10 @@ public class CustomerCare extends BasePage {
 		TestBase.sleep(2000);
 	}
 	
-	public void cerrarTodasLasPestañas() {
+	public void cerrarTodasLasPestanas() {
 		driver.switchTo().defaultContent();
-		if (pestañasPrimarias.size() > 0) {
-			for (WebElement t : pestañasPrimarias) {
+		if (pestanasPrimarias.size() > 0) {
+			for (WebElement t : pestanasPrimarias) {
 					WebElement btn_cerrar = t.findElement(By.className("x-tab-strip-close"));
 					((JavascriptExecutor) driver).executeScript("arguments[0].click();", btn_cerrar);	
 			}
@@ -272,7 +272,7 @@ public class CustomerCare extends BasePage {
 	
 	public void limpiarTodo() {
 		driver.switchTo().defaultContent();
-		for (WebElement t : pestañasSecundarias) {
+		for (WebElement t : pestanasSecundarias) {
 			if(t.getText().equals("Servicios")) t.click();
 			else {
 				WebElement btn_cerrar = t.findElement(By.className("x-tab-strip-close"));
@@ -313,7 +313,7 @@ public class CustomerCare extends BasePage {
 				return t;
 			}
 		}
-		System.err.println("ERROR: No se encontró la tarjeta \'" + tituloTarjeta + "\'");
+		System.err.println("ERROR: No se encontrï¿½ la tarjeta \'" + tituloTarjeta + "\'");
 		return null;
 	}
 	
@@ -328,18 +328,18 @@ public class CustomerCare extends BasePage {
 				}
 			}
 		}
-		System.err.println("ERROR: No se encontró una línea Prepago activa");
+		System.err.println("ERROR: No se encontrï¿½ una lï¿½nea Prepago activa");
 		return null;
 	}
 	
 	public void irAGestion(String gest) {
 		buscarGestion(gest);
 		if (gestionesEncontradas.isEmpty()) {
-			System.err.println("ERROR: No existe la gestión \'" + gest + "\'");
+			System.err.println("ERROR: No existe la gestiï¿½n \'" + gest + "\'");
 			Assert.assertFalse(gestionesEncontradas.isEmpty());
 		}
 		gestionesEncontradas.get(0).click();
-		if (gest.equals("Débito automático")) TestBase.sleep(6500);
+		if (gest.equals("Dï¿½bito automï¿½tico")) TestBase.sleep(6500);
 		else TestBase.sleep(3000);
 		if (gest.equals("Historial de Packs")) TestBase.sleep(1500);
 		cambiarAFrameActivo();
@@ -370,8 +370,8 @@ public class CustomerCare extends BasePage {
 		cambiarAFrameActivo();
 	}
 	
-	public void irAAhorrá() {
-		obtenerAccionLineaPrepago("Ahorrá").click();
+	public void irAAhorra() {
+		obtenerAccionLineaPrepago("Ahorr\u00e1").click();
 		TestBase.sleep(3000);
 		cambiarAFrameActivo();
 	}
@@ -426,7 +426,7 @@ public class CustomerCare extends BasePage {
 		cambiarAFrameActivo();
 	}
 	
-	public WebElement obtenerPestañaActiva() {
+	public WebElement obtenerPestanaActiva() {
 		driver.switchTo().defaultContent();
 		TestBase.sleep(3000);
 		return driver.findElement(By.cssSelector(".sd_secondary_tabstrip .x-tab-strip-closable.x-tab-strip-active"));
@@ -746,10 +746,10 @@ public class CustomerCare extends BasePage {
 
     }
 	
-	public void usarpanelcentral(String pestaña) {
+	public void usarpanelcentral(String pestana) {
 		driver.switchTo().defaultContent();
 		try {Thread.sleep(10000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
-		switch(pestaña){
+		switch(pestana){
 		case "Detalles":
 			driver.findElement(By.xpath("//*[text() ='Detalles']")).click();
 			driver.findElement(By.cssSelector(".x-tab-right.primaryPalette")).click();
@@ -836,7 +836,7 @@ public class CustomerCare extends BasePage {
 		//driver.findElement(By.cssSelector("slds-form-element__control"));
 		List <WebElement> asl = driver.findElements(By.className("slds-form-element__control"));
 		for (WebElement x : asl) {
-			Assert.assertTrue(x.getText().toLowerCase().contains("En este formulario podrás cambiar la fecha en la cual se te empieza a facturar cada mes"));
+			Assert.assertTrue(x.getText().toLowerCase().contains("En este formulario podrï¿½s cambiar la fecha en la cual se te empieza a facturar cada mes"));
 		}
 	}
 		
@@ -933,7 +933,7 @@ public class CustomerCare extends BasePage {
 		try {Thread.sleep(10000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 	}
 		
-	public void cerrarultimapestaña() {
+	public void cerrarultimapestana() {
 		try {Thread.sleep(10000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 		try {driver.switchTo().alert().accept();} catch (org.openqa.selenium.NoAlertPresentException e) {}
 		driver.switchTo().defaultContent();
@@ -953,7 +953,7 @@ public class CustomerCare extends BasePage {
 		BasePage cambioFrameByID=new BasePage();
 		driver.switchTo().frame(cambioFrameByID.getFrameForElement(driver, By.cssSelector(".message.description.ng-binding.ng-scope")));
 		WebElement element = driver.findElement(By.cssSelector(".message.description.ng-binding.ng-scope"));
-		Assert.assertTrue(element.getText().toLowerCase().contains("en este momento no se puede efectuar este tipo de gestión porque su cuenta está en estado inactiva."));
+		Assert.assertTrue(element.getText().toLowerCase().contains("en este momento no se puede efectuar este tipo de gestiï¿½n porque su cuenta estï¿½ en estado inactiva."));
 		driver.switchTo().defaultContent();
 	}
 		
@@ -988,7 +988,7 @@ public class CustomerCare extends BasePage {
 		obligarclick(driver.findElement(By.id("OrderReview_nextBtn")));
 		try {Thread.sleep(10000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 		List<WebElement> service = driver.findElements(By.cssSelector(".slds-checkbox__label"));
-		//System.out.println("Tamaño: "+service.size());
+		//System.out.println("Tamaï¿½o: "+service.size());
 		for(int i=0; i<service.size() ; i++){
 			if(service.get(i).getText().equals(servicio)) {
 				service.get(i).click();
@@ -1181,7 +1181,7 @@ public class CustomerCare extends BasePage {
 		seleccionarfraude(fraude);
 		obligarclick(editsave);
 		try {Thread.sleep(10000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
-		cerrarultimapestaña();
+		cerrarultimapestana();
 	}
 
 	public void clienteactivo2() {
@@ -1233,7 +1233,7 @@ public class CustomerCare extends BasePage {
 		try {Thread.sleep(10000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 		driver.switchTo().frame(cambioFrameByID.getFrameForElement(driver, By.cssSelector(".message.description.ng-binding.ng-scope")));
 		WebElement msg = driver.findElement(By.cssSelector(".message.description.ng-binding.ng-scope"));
-		if (msg.getText().contains("su cuenta está en estado inactiva")) {
+		if (msg.getText().contains("su cuenta estï¿½ en estado inactiva")) {
 			a = true;
 		}
 		return a;
@@ -1253,7 +1253,7 @@ public class CustomerCare extends BasePage {
 		BasePage cambioFrameByID = new BasePage();
 		driver.switchTo().frame(cambioFrameByID.getFrameForElement(driver, By.className("slds-form-element__control")));
 		List<WebElement> asl = driver.findElements(By.className("slds-form-element__control"));
-		Assert.assertEquals(asl.get(0).getText(),"En este formulario podrás cambiar la fecha en la cual se te empieza a facturar cada mes.");
+		Assert.assertEquals(asl.get(0).getText(),"En este formulario podrï¿½s cambiar la fecha en la cual se te empieza a facturar cada mes.");
 		driver.switchTo().defaultContent();
 	}
 		
@@ -1330,7 +1330,7 @@ public class CustomerCare extends BasePage {
 		driver.switchTo().frame(cambioFrameByID.getFrameForElement(driver, By.id("bottomButtonRow")));
 		List <WebElement> dc = driver.findElements(By.name("save"));
 		for (WebElement x : dc) {
-			if (x.getAttribute("value").contains("¿Desea continuar?")) {
+			if (x.getAttribute("value").contains("ï¿½Desea continuar?")) {
 				x.click();
 				break;
 			}
@@ -1356,7 +1356,7 @@ public class CustomerCare extends BasePage {
 		for (WebElement boton : botones) {
 			if (boton.isDisplayed()) return boton;
 		}		
-		System.out.println("ERROR: No se encontró botón siguiente");
+		System.out.println("ERROR: No se encontrï¿½ botï¿½n siguiente");
 		return null;
 	}
 	
@@ -1367,7 +1367,7 @@ public class CustomerCare extends BasePage {
 		driver.findElement(By.id("CboItem")).click();
 		driver.findElement(By.xpath("//*[text() = 'Consumos de datos']")).click();
 		driver.findElement(By.id("CboMotivo")).click();
-		driver.findElement(By.xpath("//*[text() = 'Error/omisión/demora gestión']")).click();
+		driver.findElement(By.xpath("//*[text() = 'Error/omisiï¿½n/demora gestiï¿½n']")).click();
 		List <WebElement> si = driver.findElements(By.cssSelector(".slds-form-element__label.ng-binding.ng-scope"));
 		for (WebElement x : si) {
 			if (x.getText().toLowerCase().equals("si")) {

@@ -53,7 +53,7 @@ public class TechnicalCareCSRAutogestionOla2 extends TestBase{
 		
 
 	 	 CustomerCare cerrar = new CustomerCare(driver);
-	 	 cerrar.cerrarultimapestaña();		
+	 	 cerrar.cerrarultimapestana();		
 	 	 sleep(4000);
 	}
 	
@@ -79,7 +79,7 @@ public class TechnicalCareCSRAutogestionOla2 extends TestBase{
 		try {Thread.sleep(2000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 		driver.switchTo().defaultContent(); 
 		CustomerCare cerrar = new CustomerCare(driver);
-	    cerrar.cerrarultimapestaña();
+	    cerrar.cerrarultimapestana();
 	    driver.switchTo().defaultContent(); 
 	}
 	
@@ -87,7 +87,7 @@ public class TechnicalCareCSRAutogestionOla2 extends TestBase{
 		public void tearDown() {
 			try {Thread.sleep(1000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 			CustomerCare cerrar = new CustomerCare(driver);
-			cerrar.cerrarultimapestaña();
+			cerrar.cerrarultimapestana();
 			HomeBase homePage = new HomeBase(driver);
 			try {Thread.sleep(1000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 			homePage.selectAppFromMenuByName("Ventas");

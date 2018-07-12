@@ -33,7 +33,13 @@ public class CustomerCareOla1 extends TestBase {
 		sleep(5000);
 		cc = new CustomerCare(driver);
 		cc.login("SIT");
+		try {
 		cc.cajonDeAplicaciones("Consola FAN");
+		}catch(Exception ex) {
+			sleep(3000);
+			driver.findElement(By.id("tabBar")).findElement(By.tagName("a")).click();
+			sleep(6000);
+		}
 	}
 	
 	@AfterClass (alwaysRun = true, groups = {"CustomerCare", "AjustesYEscalamiento", "SuspensionYRehabilitacion", "ProblemasConRecargas", "Ola1"})
@@ -44,7 +50,7 @@ public class CustomerCareOla1 extends TestBase {
 	
 	@BeforeMethod (alwaysRun = true, groups = {"CustomerCare", "AjustesYEscalamiento", "SuspensionYRehabilitacion", "ProblemasConRecargas", "Ola1"})
 	public void before() {
-		cc.cerrarTodasLasPestañas();
+		cc.cerrarTodasLasPestanas();
 	}
 	
 	

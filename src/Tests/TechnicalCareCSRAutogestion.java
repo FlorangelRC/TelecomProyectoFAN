@@ -96,7 +96,7 @@ public class TechnicalCareCSRAutogestion extends TestBase {
 	     homePage.selectAppFromMenuByName("Consola FAN");
 	     try {Thread.sleep(6000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}  
 	     CustomerCare cerrar = new CustomerCare(driver);
-	     cerrar.cerrarultimapestaña();
+	     cerrar.cerrarultimapestana();
 	     goToLeftPanel2(driver, "Cuentas");
 	     try {Thread.sleep(12000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 	}

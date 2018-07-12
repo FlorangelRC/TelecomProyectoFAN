@@ -52,7 +52,7 @@ public class CustomerCareCaseManagement extends TestBase {
 	       
 	    sleep(5000);
 		CustomerCare cerrar = new CustomerCare(driver);
-	       cerrar.cerrarultimapestaña();		
+	       cerrar.cerrarultimapestana();		
 	    sleep(4000);	
 		goToLeftPanel(driver, "Casos");
 		WebElement frame0 = driver.findElement(By.tagName("iframe"));

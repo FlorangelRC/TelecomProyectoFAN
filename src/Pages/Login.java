@@ -87,7 +87,10 @@ public class Login extends BasePage {
 		public void ingresar() {
 			logininterno.click();
 			try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
-			username.sendKeys("u589831");
+			//Usuario Daniel
+			//username.sendKeys("u589831");
+			//Usuario UAT OOCC
+			username.sendKeys("UAT195528");
 			password.sendKeys("Testa10k");
 	    	//rememberMe.click();
 			login.click();
@@ -97,7 +100,10 @@ public class Login extends BasePage {
 		public void ingresarMarketing() {
 			try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 			logininterno.click();
-			username.sendKeys("u198427");
+			//Usuario Cesar
+			//username.sendKeys("u198427");
+			//Usuario UAT OOCC
+			username.sendKeys("UAT195528");
 			password.sendKeys("Testa10k");
 			login.click();
 			try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
@@ -108,7 +114,10 @@ public class Login extends BasePage {
 		public void ingresarAndres() {
 			  logininterno.click();
 			  try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
-			  Ecom_User_ID.sendKeys("u590422");
+			  //usuario andres
+			  //Ecom_User_ID.sendKeys("u590422");
+			  //usuario UAT Agente
+			  Ecom_User_ID.sendKeys("UAT549492");
 			  Ecom_Password.sendKeys("Testa10k");
 			  loginButton2.click();
 			  try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
@@ -118,7 +127,10 @@ public class Login extends BasePage {
 		public void ingresarElena() {
 			  logininterno.click();
 			  try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
-			  Ecom_User_ID.sendKeys("u580714");
+			  //Usuario ELena
+			  //Ecom_User_ID.sendKeys("u580714");
+			  //Usuario UAT call
+			  Ecom_User_ID.sendKeys("UAT569076");
 			  Ecom_Password.sendKeys("Testa10k");
 			  loginButton2.click();
 			  try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}

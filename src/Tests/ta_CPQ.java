@@ -48,7 +48,7 @@ import org.testng.Assert;
 public class ta_CPQ extends TestBase {
 	
 	private String province = "Buenos Aires";
-	private String locality = "BALCARCE";
+	private String locality = "VICENTE LOPEZ";
 	private String street = "Av. Gonzalez Chavez";
 	private String streetNumber = "485";
 	private String postalCode = "7620";
@@ -68,13 +68,13 @@ public class ta_CPQ extends TestBase {
 	{
 		this.driver = setConexion.setupEze();
 		wait = new WebDriverWait(driver, 10);
-		loginFranciso(driver);
+		loginAndres(driver);
 		sleep(5000);
 		//Ir a Ventas:
-		if (!driver.findElement(By.id("tsidLabel")).getText().equals("Ventas")){
+		/*if (!driver.findElement(By.id("tsidLabel")).getText().equals("Ventas")){
 			driver.findElement(By.id("tsidLabel")).click();
 			driver.findElement(By.xpath("//a[@href=\"/home/home.jsp?tsid=02u41000000QWha\"]")).click();
-		}
+		}*/
 	}
 
 	@BeforeMethod(alwaysRun=true)

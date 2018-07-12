@@ -46,7 +46,7 @@ public class CustomerCare_Mattu extends TestBase{
     public void setup(){
         try {Thread.sleep(4000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
         CustomerCare page = new CustomerCare(driver);
-        page.cerrarultimapestaña();
+        page.cerrarultimapestana();
     }
     @AfterClass(groups = {"CustomerCare", "ActualizarDatos", "DetalleDeConsumos", "Vista360Layout"})
     public void quit() {

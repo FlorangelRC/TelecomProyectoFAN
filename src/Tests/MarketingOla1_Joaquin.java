@@ -11,6 +11,7 @@ import Pages.setConexion;
 import java.io.IOException;
 import java.util.List;
 
+import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.testng.Assert;
@@ -25,19 +26,26 @@ public class MarketingOla1_Joaquin extends TestBase {
 		Page = new Marketing(driver);
 		Page.login("SIT");
 		cambiarListaLightningAVistaClasica(driver);
-		Page.cajonDeAplicaciones("Consola FAN");
+		try {
+			Page.cajonDeAplicaciones("Consola FAN");
+		}catch(Exception ex) {
+			sleep(3000);
+			driver.findElement(By.id("tabBar")).findElement(By.tagName("a")).click();
+			sleep(6000);
+		}
+		
 	}
 	
 	@AfterClass(alwaysRun = true, groups = {"Marketing", "Ola1"})
 	public void exit() {
-		Page.cerrarTodasLasPestañas();
-		Page.cajonDeAplicaciones("Ventas");
+		Page.cerrarTodasLasPestanas();
+		//Page.cajonDeAplicaciones("Ventas");
 		driver.close();
 	}
 	
 	@BeforeMethod(alwaysRun = true, groups = {"Marketing", "Ola1"})
 	public void before() {
-		Page.cerrarTodasLasPestañas();
+		Page.cerrarTodasLasPestanas();
 	}
 	
 	@Test(groups = {"Marketing", "Ola1", "GestionDelSocioDeClubPersonal"}, dataProvider="MarketingCuentaSinServicio")
@@ -81,7 +89,7 @@ public class MarketingOla1_Joaquin extends TestBase {
 		}
 		else Assert.assertTrue(false);
 		
-		Page.cerrarTodasLasPestañas();
+		Page.cerrarTodasLasPestanas();
 		Page.irACasos();
 		Assert.assertTrue(Page.corroborarCasoCerrado(numeroCaso));
 	}
@@ -139,15 +147,15 @@ public class MarketingOla1_Joaquin extends TestBase {
 		sleep(1500);
 		
 	    String numeroCaso = Page.obtenerNumeroCasoAltaOBaja(); 
-	    Page.cerrarTodasLasPestañas();
+	    Page.cerrarTodasLasPestanas();
 		Page.irACasos();
 		
 		Assert.assertTrue(Page.corroborarCasoCerrado(numeroCaso));
 	}
 	
 	@Test(groups = {"Marketing", "Ola1", "GestionDelSocioDeClubPersonal"}, dataProvider="MarketingCuentaNormal")
-	public void TS98064_Visualizar_mensaje_al_cerrar_el_caso_Notificacion_Baja_CP(String nombreCuenta) {
-		Page.elegirCuenta(nombreCuenta);
+	public void TS98064_Visualizar_mensaje_al_cerrar_el_caso_Notificacion_Baja_CP(String nombreCuenta) throws IOException {
+		Page.seleccionarCuentaMarketing(nombreCuenta, "Vista Marketing");
 		Page.irAGestionMarketing();
 		Page.estadoAltaBaja("baja");
 		Page.seleccionarCuenta("businessAccounts");

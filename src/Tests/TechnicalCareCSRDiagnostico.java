@@ -67,7 +67,7 @@ public class TechnicalCareCSRDiagnostico extends TestBase{
 	public void closeTechCareTab() {
 		driver.switchTo().defaultContent();
 		CustomerCare page = new CustomerCare(driver);
-		page.cerrarultimapestaña();
+		page.cerrarultimapestana();
 		try {Thread.sleep(2000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 		
 	}

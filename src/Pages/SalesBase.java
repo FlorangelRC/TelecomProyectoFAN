@@ -827,17 +827,18 @@ try{	driver.findElement(By.id("alert-ok-button")).click();	} catch (NoSuchElemen
 			driver.get("https://crm--sit.cs14.my.salesforce.com/home/home.jsp?tsid=02u41000000QWha/");
 			try {Thread.sleep(10000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 			//System.out.println(driver.findElement(By.id("userNav-menuItems")).findElements(By.tagName("a")).get(num).getText());
-			if (num == 4) {
+			/*if (num == 4) {
 				driver.findElement(By.className("zen-selectArrow")).click();
 				sleep(6000);
 				driver.findElement(By.xpath("//a[@href=\"/secur/logout.jsp\"]")).click();
 				//driver.findElement(By.id("userNav-menuItems")).findElements(By.tagName("a")).get(num).click();
-			}
+			}*/
 			sleep(4000);
-			if(num == 3) {
+			if(num >= 4) {
+				System.out.println("llegue aqui");
 				driver.findElement(By.cssSelector(".userNav-buttonArrow.mbrButtonArrow")).click();
 				sleep(6000);
-				driver.findElement(By.id("userNav-menuItems")).findElements(By.tagName("a")).get(num).click();
+				driver.findElement(By.id("userNav-menuItems")).findElements(By.tagName("a")).get(num-2).click();
 				sleep(4000);
 				
 			}

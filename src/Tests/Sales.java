@@ -46,7 +46,7 @@ import Tests.TestBase.IrA;
 
 public class Sales extends TestBase {
 	
-	protected String perfil = "venta";
+	protected String perfil = "agente";
 	protected WebDriver driver;
 	protected  WebDriverWait wait;
 	String nombre="Roberto";
@@ -117,14 +117,14 @@ public class Sales extends TestBase {
 		try {Thread.sleep(15000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 		HomeBase homePage = new HomeBase(driver);
 		try {Thread.sleep(6000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
-	    String a = driver.findElement(By.id("tsidLabel")).getText(); 
+	    /*String a = driver.findElement(By.id("tsidLabel")).getText(); 
 	    if (a.contains("Ventas")){}
 	    else {
 	    	homePage.switchAppsMenu();
 	    	try {Thread.sleep(2000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 	    	homePage.selectAppFromMenuByName("Ventas");
 	    	try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}            
-	    }
+	    }*/
 		//IrA.CajonDeAplicaciones.Ventas();
 		/*CustomerCare cc = new CustomerCare(driver);
 		cc.cajonDeAplicaciones("Consola FAN");
@@ -433,7 +433,7 @@ public class Sales extends TestBase {
 		assertTrue(esta);
 	}
 	
-	//@Test(groups={"Sales", "AltaDeLinea", "Ola1"}, priority=3, dataProvider="SalesCuentaActiva")  
+	@Test(groups={"Sales", "AltaDeLinea", "Ola1"}, priority=3, dataProvider="SalesCuentaActiva")  
 	public void TS94827_Ventas_General_Verificar_Metodos_De_Pago_Perfil_Representante_Telefonico(String sCuenta, String sDni, String sLinea) throws IOException {
 		perfil = "venta";
 		boolean TDC = false;
@@ -441,7 +441,7 @@ public class Sales extends TestBase {
 		SalesBase sb = new SalesBase(driver);
 		sb.DesloguearLoguear("call", 4);
 		sleep(5000);
-		//try {
+		try {
 			driver.findElement(By.xpath("//a[@href=\'https://crm--sit--c.cs14.visual.force.com/apex/taClientSearch']")).click();
 			sleep(10000);
 			sb.BuscarCuenta(DNI, sDni);
@@ -483,11 +483,11 @@ public class Sales extends TestBase {
 		}
 		assertTrue(TDC&&DPF);
 		sleep(4000);
-		sb.DesloguearLoguear("venta", 4);
-		/*}catch(Exception ex1) {
-			sb.DesloguearLoguear("venta");
+		sb.DesloguearLoguear("agente", 4);
+		}catch(Exception ex1) {
+			sb.DesloguearLoguear("agente",4);
 			Assert.assertTrue(false);
-		}*/
+		}
 	}
 		
 	
@@ -525,9 +525,9 @@ public class Sales extends TestBase {
 				assertTrue(true);
 			}
 			sleep(4000);
-			sb.DesloguearLoguear("venta", 4);
+			sb.DesloguearLoguear("agente", 4);
 		}catch(Exception ex1) {
-			sb.DesloguearLoguear("venta", 4);
+			sb.DesloguearLoguear("agente", 4);
 			Assert.assertTrue(false);
 		}
 		
@@ -1651,6 +1651,7 @@ public class Sales extends TestBase {
     public void TS94583_Alta_de_Contacto_Persona_Fisica_Verificar_estado_fallido_de_la_validacion_de_identidad_por_DNI_con_documentacion_invalida_XX(String sCuenta, String sDni, String sLinea) { 
 	    SalesBase sb = new SalesBase(driver); 
 	    CustomerCare page = new CustomerCare(driver);
+	    sleep(5000);
 	    sb.BtnCrearNuevoCliente();
 		ContactSearch contact = new ContactSearch(driver);
 		try {Thread.sleep(10000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
@@ -2237,8 +2238,8 @@ public class Sales extends TestBase {
 				}
 			}
 			sleep(12000);
-			driver.switchTo().frame(SB.getFrameForElement(driver, By.id("DeliveryMethodSelection")));
-			Select MdE= new Select(driver.findElement(By.id("SalesChannelConfiguration")).findElement(By.id("DeliveryMethodSelection")));
+			driver.switchTo().frame(SB.getFrameForElement(driver, By.id("DeliveryMethod")));
+			Select MdE= new Select(driver.findElement(By.id("SalesChannelConfiguration")).findElement(By.id("DeliveryMethod")));
 			MdE.selectByVisibleText("Presencial");
 			assertTrue(MdE.getFirstSelectedOption().getText().equalsIgnoreCase("presencial"));
 			MdE.selectByVisibleText("Delivery");
@@ -2261,8 +2262,8 @@ public class Sales extends TestBase {
 				}
 			}
 			sleep(14000);
-			driver.switchTo().frame(SB.getFrameForElement(driver, By.id("DeliveryMethodSelection")));
-			Select MdE= new Select(driver.findElement(By.id("SalesChannelConfiguration")).findElement(By.id("DeliveryMethodSelection")));
+			driver.switchTo().frame(SB.getFrameForElement(driver, By.id("DeliveryMethod")));
+			Select MdE= new Select(driver.findElement(By.id("SalesChannelConfiguration")).findElement(By.id("DeliveryMethod")));
 			MdE.selectByVisibleText("Store Pick Up");
 			assertTrue(MdE.getFirstSelectedOption().getText().equalsIgnoreCase("Store Pick Up"));
 			//1157602860
@@ -2525,7 +2526,7 @@ public class Sales extends TestBase {
 			sleep(7000);	
 			List<WebElement> frame2 = driver.findElements(By.tagName("iframe"));
 			driver.switchTo().frame(frame2.get(0));
-			Select env = new Select (driver.findElement(By.id("DeliveryMethodSelection")));
+			Select env = new Select (driver.findElement(By.id("DeliveryMethod")));
 			try {
 				env.selectByVisibleText("Presencial");
 				assertTrue(false);
@@ -2533,9 +2534,9 @@ public class Sales extends TestBase {
 				assertTrue(true);
 			}
 			sleep(4000);
-			SB.DesloguearLoguear("venta", 4);
+			SB.DesloguearLoguear("agente", 4);
 		}catch(Exception ex1) {
-			SB.DesloguearLoguear("venta", 4);
+			SB.DesloguearLoguear("agente", 4);
 			Assert.assertTrue(false);
 		}
 		
@@ -2556,7 +2557,7 @@ public class Sales extends TestBase {
 		sleep(7000);	
 		List<WebElement> frame2 = driver.findElements(By.tagName("iframe"));
 		driver.switchTo().frame(frame2.get(0));
-		Select env = new Select (driver.findElement(By.id("DeliveryMethodSelection")));
+		Select env = new Select (driver.findElement(By.id("DeliveryMethod")));
 		env.selectByVisibleText("Delivery");
 		driver.findElement(By.id("SalesChannelConfiguration_nextBtn")).click();
 		sleep(7000);
@@ -2597,7 +2598,7 @@ public class Sales extends TestBase {
 		sleep(7000);	
 		List<WebElement> frame2 = driver.findElements(By.tagName("iframe"));
 		driver.switchTo().frame(frame2.get(0));
-		Select env = new Select (driver.findElement(By.id("DeliveryMethodSelection")));
+		Select env = new Select (driver.findElement(By.id("DeliveryMethod")));
 		env.selectByVisibleText("Delivery");
 		driver.findElement(By.id("SalesChannelConfiguration_nextBtn")).click();
 		sleep(7000);
