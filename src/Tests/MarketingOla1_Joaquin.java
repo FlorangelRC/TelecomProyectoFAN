@@ -154,8 +154,8 @@ public class MarketingOla1_Joaquin extends TestBase {
 	}
 	
 	@Test(groups = {"Marketing", "Ola1", "GestionDelSocioDeClubPersonal"}, dataProvider="MarketingCuentaNormal")
-	public void TS98064_Visualizar_mensaje_al_cerrar_el_caso_Notificacion_Baja_CP(String nombreCuenta) {
-		Page.elegirCuenta(nombreCuenta);
+	public void TS98064_Visualizar_mensaje_al_cerrar_el_caso_Notificacion_Baja_CP(String nombreCuenta) throws IOException {
+		Page.seleccionarCuentaMarketing(nombreCuenta, "Vista Marketing");
 		Page.irAGestionMarketing();
 		Page.estadoAltaBaja("baja");
 		Page.seleccionarCuenta("businessAccounts");

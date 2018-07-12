@@ -394,7 +394,7 @@ public class Marketing_Mattu_Wave2 extends TestBase{
 	//-------------------------------------------------------------------------------------------------
 	//TCC = 10
 	@Test(groups = {"Marketing", "Ola2", "ConfiguracionDeCampaniasEnMarketingCloudDeClubPersonal"})
-	public void TS102107_Picklist_Sin_Valores_Pre_selecionados_Alta_Campaña() {
+	public void TS102107_Picklist_Sin_Valores_Pre_selecionados_Alta_Campania() {
 		driver.findElement(By.className("pbButton")).findElement(By.tagName("input")).click();
 		WebElement wSelect = driver.findElement(By.id("p3"));
 		wSelect.click();
