@@ -343,8 +343,18 @@ public class GestionesOM extends TestBase {
 		
 	}
 	
-	@Test (groups="OM", priority=1)
-	public void suspencionPorSiniestro(String sCuenta, String sPlan) throws InterruptedException {
+	@Test()
+	public void OpenPage() throws InterruptedException{
+		suspencionPorFraude("MattuOM", "Plan Prepago Nacional");
+	}
+	
+	@Test(groups="OM", priority=1)
+	public void suspencionPorSiniestro(String sCuenta, String sPlan, String sTipoSiniestro) throws InterruptedException {
+		
+		//Suspension por siniestro por hurto = STCH
+		//Suspension por siniestro por robo = STCR
+		//Suspension por siniestro por extravio = STCE
+		
 		OM oOM = new OM(driver);
 		oOM.Gestion_Alta_De_Linea(sCuenta, sPlan);
 		
@@ -373,11 +383,52 @@ public class GestionesOM extends TestBase {
 		driver.findElement(By.id("topButtonRow")).findElement(By.name("save")).click();
 		
 		sleep(5000);
-		//oOM.cambiarProductos("Suspend-Siniestro", "Suspend");
+		oOM.CambiarProductos("Suspend-Siniestro", "Change", "Suspend");
+		String sOrderURL = driver.getCurrentUrl();
 		
-		sleep(10000);
+		List<WebElement> wProductos = driver.findElement(By.cssSelector(".listRelatedObject.orderBlock")).findElement(By.className("pbBody")).findElements(By.tagName("tr")); 
+        for (WebElement wAux : wProductos) {
+        	System.out.println(wAux.findElement(By.tagName("th")).getText());
+        	if(wAux.findElement(By.tagName("th")).getText().contains("Simcard")) {
+        		wAux.findElement(By.tagName("th")).findElement(By.tagName("a")).click();
+        		System.out.println("Hice click");
+        		sleep(5000);
+        		break;
+        	}
+        }
+		String sID = driver.getCurrentUrl().substring(40);
+		
+		//sleep(10000);
 		//driver.findElement(By.id("Order_ileinner")).click();
 		
+		sleep(5000);
+		driver.get("https://workbench.developerforce.com/login.php?startUrl=%2Fquery.php");
+		Select sEnviroment = new Select(driver.findElement(By.id("oauth_env"))); 
+        sEnviroment.selectByVisibleText("Sandbox");
+		driver.findElement(By.id("termsAccepted")).click();
+		driver.findElement(By.id("loginBtn")).click();
+		
+		sleep(5000);
+		String s1 = "SELECT Id From OrderItem WHERE Id = '";
+		driver.findElement(By.id("soql_query_textarea")).sendKeys(s1 + sID + "'");
+		driver.findElement(By.name("querySubmit")).click();
+		sleep(5000);
+		driver.findElement(By.id("query_results")).findElement(By.tagName("a")).click();
+		sleep(5000);
+		List<WebElement> wTopButtons = driver.findElements(By.tagName("input"));
+		for (WebElement wAux : wTopButtons) {
+			if (wAux.getAttribute("value").equalsIgnoreCase("Update")) {
+				wAux.click();
+				break;
+			}
+		}
+		sleep(5000);
+		driver.findElement(By.name("Codigo_Movimiento_Inventario__c")).sendKeys(sTipoSiniestro);
+		driver.findElement(By.name("action")).click();
+		
+		sleep(5000);
+		driver.get(sOrderURL);
+		sleep(5000);
 		WebElement wTopButtonRow = driver.findElement(By.id("topButtonRow"));
 		List<WebElement> wTopButtonRowButtons = wTopButtonRow.findElements(By.tagName("input"));
 		for (WebElement wAux : wTopButtonRowButtons) {
@@ -390,7 +441,7 @@ public class GestionesOM extends TestBase {
 		oOM.completarFlujoOrquestacion();
 	}
 	
-	//@Test (groups="OM", priority=1)
+	@Test (groups="OM", priority=1)
 	public void suspencionPorFraude(String sCuenta, String sPlan) throws InterruptedException {
 		OM oOM = new OM(driver);
 		oOM.Gestion_Alta_De_Linea(sCuenta, sPlan);
@@ -420,9 +471,9 @@ public class GestionesOM extends TestBase {
 		driver.findElement(By.id("topButtonRow")).findElement(By.name("save")).click();
 		
 		sleep(5000);
-		oOM.SuspenderProductos();
+		oOM.CambiarProductos("Suspend-Fraude", "Change", "Suspend");
 		
-		sleep(10000);
+		//sleep(10000);
 		//driver.findElement(By.id("Order_ileinner")).click();
 		
 		WebElement wTopButtonRow = driver.findElement(By.id("topButtonRow"));
@@ -436,6 +487,94 @@ public class GestionesOM extends TestBase {
 		sleep(10000);
 		oOM.completarFlujoOrquestacion();
 	}
+	
+	@Test(groups="OM", priority=1)
+	public void rehabilitacionPorSiniestro(String sNumeroOrden, String sTipoSiniestro) throws InterruptedException {
+		
+		//Rehabilitacion por siniestro por hurto = RTCH
+		//Rehabilitacion por siniestro por robo = RTCR
+		//Rehabilitacion por siniestro por extravio = RTCE
+		
+		OM oOM = new OM(driver);
+		oOM.irAChangeToOrder();
+		
+		sleep(10000);
+		DateFormat dateFormat = new SimpleDateFormat("MM-dd-yyyy");
+		driver.findElement(By.id("RequestDate")).sendKeys(dateFormat.format(oOM.fechaAvanzada()));
+		driver.findElement(By.cssSelector(".form-control.btn.btn-primary.ng-binding")).click();
+		
+		sleep(12000);
+		List<WebElement> wTopRightButtons = driver.findElements(By.id("-import-btn"));
+		for (WebElement wAux : wTopRightButtons){
+			if (wAux.getAttribute("title").equalsIgnoreCase("View Record")) {
+				wAux.click();
+			}
+		}
+		
+		sleep(5000);
+		driver.findElement(By.id("topButtonRow")).findElement(By.name("edit")).click();
+		
+		Select sSelectDropdown = new Select(driver.findElement(By.id("00Nc0000002IvyM")));
+		sSelectDropdown.selectByVisibleText("Suspension");
+		
+		driver.findElement(By.id("topButtonRow")).findElement(By.name("save")).click();
+		
+		sleep(5000);
+		oOM.CambiarProductos("Suspend-Siniestro", "Change", "Suspend");
+		String sOrderURL = driver.getCurrentUrl();
+		
+		List<WebElement> wProductos = driver.findElement(By.cssSelector(".listRelatedObject.orderBlock")).findElement(By.className("pbBody")).findElements(By.tagName("tr")); 
+        for (WebElement wAux : wProductos) {
+        	System.out.println(wAux.findElement(By.tagName("th")).getText());
+        	if(wAux.findElement(By.tagName("th")).getText().contains("Simcard")) {
+        		wAux.findElement(By.tagName("th")).findElement(By.tagName("a")).click();
+        		System.out.println("Hice click");
+        		sleep(5000);
+        		break;
+        	}
+        }
+		String sID = driver.getCurrentUrl().substring(40);
+		
+		//sleep(10000);
+		//driver.findElement(By.id("Order_ileinner")).click();
+		
+		sleep(5000);
+		driver.get("https://workbench.developerforce.com/login.php?startUrl=%2Fquery.php");
+		Select sEnviroment = new Select(driver.findElement(By.id("oauth_env"))); 
+        sEnviroment.selectByVisibleText("Sandbox");
+		driver.findElement(By.id("termsAccepted")).click();
+		driver.findElement(By.id("loginBtn")).click();
+		
+		sleep(5000);
+		String s1 = "SELECT Id From OrderItem WHERE Id = '";
+		driver.findElement(By.id("soql_query_textarea")).sendKeys(s1 + sID + "'");
+		driver.findElement(By.name("querySubmit")).click();
+		sleep(5000);
+		driver.findElement(By.id("query_results")).findElement(By.tagName("a")).click();
+		sleep(5000);
+		List<WebElement> wTopButtons = driver.findElements(By.tagName("input"));
+		for (WebElement wAux : wTopButtons) {
+			if (wAux.getAttribute("value").equalsIgnoreCase("Update")) {
+				wAux.click();
+				break;
+			}
+		}
+		sleep(5000);
+		driver.findElement(By.name("Codigo_Movimiento_Inventario__c")).sendKeys(sTipoSiniestro);
+		driver.findElement(By.name("action")).click();
+		
+		sleep(5000);
+		driver.get(sOrderURL);
+		sleep(5000);
+		WebElement wTopButtonRow = driver.findElement(By.id("topButtonRow"));
+		List<WebElement> wTopButtonRowButtons = wTopButtonRow.findElements(By.tagName("input"));
+		for (WebElement wAux : wTopButtonRowButtons) {
+			if (wAux.getAttribute("value").equalsIgnoreCase("TA Submit Order")) {
+				wAux.click();
+			}
+		}
+		
+		sleep(10000);
+		oOM.completarFlujoOrquestacion();
+	}
 }
-
-
