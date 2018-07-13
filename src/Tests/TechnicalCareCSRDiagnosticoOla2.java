@@ -50,7 +50,7 @@ private WebDriver driver;
 	
 
  	 CustomerCare cerrar = new CustomerCare(driver);
- 	 cerrar.cerrarultimapestaña();		
+ 	 cerrar.cerrarultimapestana();		
  	 sleep(4000);
  	
 	
@@ -68,7 +68,7 @@ private WebDriver driver;
 		try {Thread.sleep(2000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 		driver.switchTo().defaultContent(); 
 		CustomerCare cerrar = new CustomerCare(driver);
-	    cerrar.cerrarultimapestaña();
+	    cerrar.cerrarultimapestana();
 	    driver.switchTo().defaultContent(); 
 	}
  	
@@ -76,7 +76,7 @@ private WebDriver driver;
  		public void tearDown() {
 		try {Thread.sleep(1000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 		CustomerCare cerrar = new CustomerCare(driver);
-		cerrar.cerrarultimapestaña();
+		cerrar.cerrarultimapestana();
 		HomeBase homePage = new HomeBase(driver);
 		try {Thread.sleep(1000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 		homePage.selectAppFromMenuByName("Ventas");

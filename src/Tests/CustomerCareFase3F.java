@@ -63,7 +63,7 @@ public class CustomerCareFase3F  extends TestBase {
 	@BeforeMethod(groups = {"CustomerCare", "Vista360Layout"})
 	public void setUp() throws Exception {
 		sleep(6000);
-		cc.cerrarultimapestaña();
+		cc.cerrarultimapestana();
 		sleep(12000);
 		cc.elegircuenta("aaaaFernando Care");
 		sleep(14000);		

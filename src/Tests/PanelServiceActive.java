@@ -57,7 +57,7 @@ public class PanelServiceActive extends TestBase {
 		     try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}  
 		     try {Thread.sleep(4000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 				CustomerCare page = new CustomerCare(driver);
-				page.cerrarultimapestaña();
+				page.cerrarultimapestana();
 				page.elegircuenta("aaaaFernando Care");
 		}	
 		

@@ -54,14 +54,14 @@ public class servicioIndiferente extends TestBase {
 			try {Thread.sleep(4000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 			goInitToConsolaFanF3(driver);
 		     CustomerCare cerrar = new CustomerCare(driver);
-		     cerrar.cerrarultimapestaña();
+		     cerrar.cerrarultimapestana();
 			}
 	
 	@AfterMethod(groups = "Fase2")
 	public void afterMethod() {
 		try {Thread.sleep(3000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 		CustomerCare cerrar = new CustomerCare(driver);
-	     cerrar.cerrarultimapestaña();
+	     cerrar.cerrarultimapestana();
 	}
 
 	

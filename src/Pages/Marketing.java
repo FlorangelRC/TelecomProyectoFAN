@@ -83,7 +83,7 @@ public class Marketing extends CustomerCare {
 	
 	public void closeActiveTab () {
 		CustomerCare cCC = new CustomerCare(driver);
-		WebElement wCloseTab = cCC.obtenerPestañaActiva();
+		WebElement wCloseTab = cCC.obtenerPestanaActiva();
 		Actions aAction = new Actions(driver);
 		WebElement wClose = wCloseTab.findElement(By.className("x-tab-strip-close"));
 		aAction.moveToElement(wClose).perform();
@@ -186,7 +186,7 @@ public class Marketing extends CustomerCare {
 	public void cambioCuenta(String sVista, String sCliente) throws IOException {
 		TestBase tTB = new TestBase();
 		CustomerCare cCC = new CustomerCare(driver);
-		cCC.cerrarTodasLasPestañas();
+		cCC.cerrarTodasLasPestanas();
 		tTB.goToLeftPanel(driver, "Cuentas");
 		WebElement frame0 = driver.findElement(By.tagName("iframe"));
 		driver.switchTo().frame(frame0);
@@ -501,7 +501,7 @@ public class Marketing extends CustomerCare {
 	
 	public void seleccionarCuentaMarketing(String sCuenta, String sVista) throws IOException {
 		CustomerCare cCC = new CustomerCare(driver);
-		cCC.cerrarTodasLasPestañas();
+		cCC.cerrarTodasLasPestanas();
 		goToLeftPanel(driver, "Cuentas");
 		WebElement frame0 = driver.findElement(By.tagName("iframe"));
 		driver.switchTo().frame(frame0);

@@ -63,7 +63,7 @@ public class CustomerCareFase2 extends TestBase {
 
 	@BeforeMethod(groups = {"CustomerCare", "Vista360Layout", "CambiosDeCondiciónImpositiva", "Sugerencias", "DetalleDeConsumos", "CambioDeCiclo", "MovimientoDeCuentasDeFacturación", "AdministraciónDeCasos", "CostoDeCambios"})
 	public void setup() {
-		cc.cerrarultimapestaña();
+		cc.cerrarultimapestana();
 	}
 
 	
@@ -141,7 +141,7 @@ public class CustomerCareFase2 extends TestBase {
 		cc.elegircuenta("aaaaFernando Care");
 		cc.SelectGestion("sugerencia");
 		cc.crearsugerencia("Sugerencias", "Productos/Servicios", "cancel");
-		cc.cerrarultimapestaña();
+		cc.cerrarultimapestana();
 		cc.elegircaso();
 		page1.validarcasocerrado("", "", "Sugerencias", "nico");
 	}
@@ -945,7 +945,7 @@ public class CustomerCareFase2 extends TestBase {
 		
 	@Test(groups = {"CustomerCare", "AdministraciónDeCasos"})
 	public void TS14601_Case_Management__Casos_Ordernados_Por_Tipos_Vista_Todos_Los_Casos_Abiertos(){
-		 cc.cerrarultimapestaña();
+		 cc.cerrarultimapestana();
 	     driver.switchTo().defaultContent();
 	     goToLeftPanel2(driver, "Casos");
 	     ac.accountSelect("Todos Los Casos Abiertos");
@@ -965,7 +965,7 @@ public class CustomerCareFase2 extends TestBase {
 			field.selectByVisibleText("Todas las cuentas");
 		}
 		sleep(9000);
-		cc.cerrarultimapestaña();
+		cc.cerrarultimapestana();
 		sleep(5000);
 		cc.elegircuenta("aaaaFernando Care");
 		sleep(9000);
@@ -984,7 +984,7 @@ public class CustomerCareFase2 extends TestBase {
 	     try {field.selectByVisibleText("Todas Las cuentas");}
 	     catch (org.openqa.selenium.NoSuchElementException ExM) {field.selectByVisibleText("Todas las cuentas");}
 	     sleep(9000);
-	     cc.cerrarultimapestaña();
+	     cc.cerrarultimapestana();
 		 sleep(5000); 
 		 cc.elegircuenta("Empresa Care");
 		 sleep(9000); 
@@ -1020,7 +1020,7 @@ public class CustomerCareFase2 extends TestBase {
 	     try {field.selectByVisibleText("Todas Las cuentas");}
 	     catch (org.openqa.selenium.NoSuchElementException ExM) {field.selectByVisibleText("Todas las cuentas");}
 	     sleep(9000);
-	     cc.cerrarultimapestaña();
+	     cc.cerrarultimapestana();
 		 sleep(5000); 
 		 cc.elegircuenta("aaaaFernando Care");
 		 ac.findAndClickButton("Detalle de Consumos");

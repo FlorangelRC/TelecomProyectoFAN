@@ -41,7 +41,7 @@ public class TechnicalCareCSRAutogestionF4 extends TestBase{
 			}catch(org.openqa.selenium.NoAlertPresentException e) {}
 
        CustomerCare cerrar = new CustomerCare(driver);
-       cerrar.cerrarultimapestaña();		
+       cerrar.cerrarultimapestana();		
        sleep(4000);
 	}
 	
@@ -62,7 +62,7 @@ public class TechnicalCareCSRAutogestionF4 extends TestBase{
 		try {Thread.sleep(2000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 		driver.switchTo().defaultContent(); 
 		CustomerCare cerrar = new CustomerCare(driver);
-	    cerrar.cerrarultimapestaña();
+	    cerrar.cerrarultimapestana();
 	    driver.switchTo().defaultContent(); 
 	}
 	

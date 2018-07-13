@@ -24,6 +24,7 @@ import com.sun.corba.se.pept.transport.Connection;
 
 import Tests.TestBase;
 import javafx.scene.control.ScrollToEvent;
+import org.json.JSONObject;
 
 public class OMQPage extends BasePage {
 
@@ -380,10 +381,165 @@ public void sincroProducto(String Products) {
 		
 	
 }
+	
+	public boolean request(String infoProducto, String infoGrupoDeProducto) {// String infoProductoPrimario, String modoEfectividad, String fechaDesdeCaracteristicaProd, String fechaHastaCaracteristicaProd) {
+		boolean request = false;
+		Integer a = 0, b = 0; //c = 0;
+		List<WebElement> verirequest = driver.findElements(By.xpath(".//*[@id='bodyCell']//table/tbody/tr[2]/td//json-value/pre"));
+		for (WebElement r : verirequest) {
+			if (r.getText().equalsIgnoreCase(infoProducto)){
+				a=r.getLocation().getX();
+			}
+			for (WebElement e : verirequest) {
+				if (e.getText().equalsIgnoreCase(infoGrupoDeProducto)){
+					b=e.getLocation().getX();
+				}
+			}
+		}
+		if (a < b ) {
+			request = true;
+		}
+				
+		return request;
+	}
+	
+	// .//*[@id='bodyCell']//table/tbody/tr[2]/td//json-value/pre
+	
+	//infoProducto, infoGrupoDeProducto, infoProductoPrimario, modoEfectividad, fechaDesdeCaracteristicaProd,fechaHastaCaracteristicaProd
 
-			
+		 public static void main(String[]args) {
+		  String json= "{\r\n" + 
+		  		"  \"suscriptor\": {\r\n" + 
+		  		"    \"codSuscripcion\": \"057dcbb6-277e-4a92-947b-3a155738663b\",\r\n" + 
+		  		"    \"infoSuscriptor\": {\r\n" + 
+		  		"      \"estadoProductoAdq\": \"2\",\r\n" + 
+		  		"      \"infoBasicaSuscriptor\": {\r\n" + 
+		  		"        \"listaDatosAdicionales\": [\r\n" + 
+		  		"          {\r\n" + 
+		  		"            \"valorParametro\": \"1\",\r\n" + 
+		  		"            \"nombreParametro\": \"C_SUB_DDICRI_SERV\"\r\n" + 
+		  		"          },\r\n" + 
+		  		"          {\r\n" + 
+		  		"            \"valorParametro\": \"VILONI\",\r\n" + 
+		  		"            \"nombreParametro\": \"C_Sub_Monicipality\"\r\n" + 
+		  		"          },\r\n" + 
+		  		"          {\r\n" + 
+		  		"            \"valorParametro\": \"VICENTE\",\r\n" + 
+		  		"            \"nombreParametro\": \"C_Sub_Province\"\r\n" + 
+		  		"          }\r\n" + 
+		  		"        ]\r\n" + 
+		  		"      },\r\n" + 
+		  		"      \"listaIdentificacionSuscriptor\": [\r\n" + 
+		  		"        {\r\n" + 
+		  		"          \"tipoRecurso\": \"1\",\r\n" + 
+		  		"          \"identificadorRecurso\": \"null\",\r\n" + 
+		  		"          \"marcaRecursoPrincipal\": \"1\"\r\n" + 
+		  		"        },\r\n" + 
+		  		"        {\r\n" + 
+		  		"          \"tipoRecurso\": \"60\",\r\n" + 
+		  		"          \"identificadorRecurso\": \"160875\",\r\n" + 
+		  		"          \"marcaRecursoPrincipal\": \"0\"\r\n" + 
+		  		"        },\r\n" + 
+		  		"        {\r\n" + 
+		  		"          \"tipoRecurso\": \"2\",\r\n" + 
+		  		"          \"identificadorRecurso\": \"145936\",\r\n" + 
+		  		"          \"marcaRecursoPrincipal\": \"0\"\r\n" + 
+		  		"        }\r\n" + 
+		  		"      ]\r\n" + 
+		  		"    },\r\n" + 
+		  		"    \"modoPagoSecundario\": {\r\n" + 
+		  		"      \"idCuenta\": \"4d25b8c4-05fd-44ea-9581-8c1421ef885b\",\r\n" + 
+		  		"      \"modoPago\": \"0\",\r\n" + 
+		  		"      \"idRelacionPago\": \"9e00fa33-0a3d-4591-9865-aae4f606c2da\"\r\n" + 
+		  		"    }\r\n" + 
+		  		"  },\r\n" + 
+		  		"  \"listaCuentas\": [\r\n" + 
+		  		"    {\r\n" + 
+		  		"      \"idCuenta\": \"4d25b8c4-05fd-44ea-9581-8c1421ef885b\",\r\n" + 
+		  		"      \"infoCuenta\": {\r\n" + 
+		  		"        \"idCliente\": \"99000002062\",\r\n" + 
+		  		"        \"condicionPago\": \"PRE\"\r\n" + 
+		  		"      }\r\n" + 
+		  		"    }\r\n" + 
+		  		"  ],\r\n" + 
+		  		"  \"ofertaPrimaria\": {\r\n" + 
+		  		"    \"producto\": {\r\n" + 
+		  		"      \"infoProducto\": {\r\n" + 
+		  		"        \"tipoRed\": \"1\",\r\n" + 
+		  		"        \"codProducto\": \"100147\"\r\n" + 
+		  		"      }\r\n" + 
+		  		"    }\r\n" + 
+		  		"  },\r\n" + 
+		  		"  \"registrarCliente\": {\r\n" + 
+		  		"    \"codCliente\": \"99000002062\",\r\n" + 
+		  		"    \"tipoOperacion\": \"2\"\r\n" + 
+		  		"  },\r\n" + 
+		  		"  \"listaOfertasAdicionales\": [\r\n" + 
+		  		"    {\r\n" + 
+		  		"      \"producto\": {\r\n" + 
+		  		"        \"infoProducto\": {\r\n" + 
+		  		"          \"codProducto\": \"10000087\"\r\n" + 
+		  		"        },\r\n" + 
+		  		"        \"infoGrupoDeProducto\": {\r\n" + 
+		  		"          \"codProducto\": \"10000087\"\r\n" + 
+		  		"        },\r\n" + 
+		  		"        \"infoProductoPrimario\": {\r\n" + 
+		  		"          \"codProducto\": \"10000087\"\r\n" + 
+		  		"        }\r\n" + 
+		  		"      },\r\n" + 
+		  		"      \"modoEfectividad\": {\r\n" + 
+		  		"        \"modo\": \"I\"\r\n" + 
+		  		"      },\r\n" + 
+		  		"      \"fechaDesdeCaracteristicaProd\": \"2018-07-11 21:08:13\",\r\n" + 
+		  		"      \"fechaHastaCaracteristicaProd\": \"2030-01-01 03:00:00\"\r\n" + 
+		  		"    },\r\n" + 
+		  		"    {\r\n" + 
+		  		"      \"producto\": {\r\n" + 
+		  		"        \"infoProducto\": {\r\n" + 
+		  		"          \"codProducto\": \"11000032\"\r\n" + 
+		  		"        },\r\n" + 
+		  		"        \"infoGrupoDeProducto\": {\r\n" + 
+		  		"          \"codProducto\": \"11000032\"\r\n" + 
+		  		"        },\r\n" + 
+		  		"        \"infoProductoPrimario\": {\r\n" + 
+		  		"          \"codProducto\": \"11000032\"\r\n" + 
+		  		"        }\r\n" + 
+		  		"      },\r\n" + 
+		  		"      \"modoEfectividad\": {\r\n" + 
+		  		"        \"modo\": \"I\"\r\n" + 
+		  		"      },\r\n" + 
+		  		"      \"fechaDesdeCaracteristicaProd\": \"2018-07-11 21:08:13\",\r\n" + 
+		  		"      \"fechaHastaCaracteristicaProd\": \"2030-01-01 03:00:00\"\r\n" + 
+		  		"    },\r\n" + 
+		  		"    {\r\n" + 
+		  		"      \"producto\": {\r\n" + 
+		  		"        \"infoProducto\": {\r\n" + 
+		  		"          \"codProducto\": \"11000029\"\r\n" + 
+		  		"        },\r\n" + 
+		  		"        \"infoGrupoDeProducto\": {\r\n" + 
+		  		"          \"codProducto\": \"11000029\"\r\n" + 
+		  		"        },\r\n" + 
+		  		"        \"infoProductoPrimario\": {\r\n" + 
+		  		"          \"codProducto\": \"11000029\"\r\n" + 
+		  		"        }\r\n" + 
+		  		"      },\r\n" + 
+		  		"      \"modoEfectividad\": {\r\n" + 
+		  		"        \"modo\": \"I\"\r\n" + 
+		  		"      },\r\n" + 
+		  		"      \"fechaDesdeCaracteristicaProd\": \"2018-07-11 21:08:13\",\r\n" + 
+		  		"      \"fechaHastaCaracteristicaProd\": \"2030-01-01 03:00:00\"\r\n" + 
+		  		"    }\r\n" + 
+		  		"  ]\r\n" + 
+		  		"}";
+		 		  
+		  JSONObject obj = new JSONObject(json);
+		  System.out.println(obj);
+		  
+		  System.out.println(obj.getJSONObject("listaOfertasAdicionales").getJSONObject("").getJSONObject(""));
+
+		 }
+
 		
-
 public WebElement getNewOrder() {
 	return NewOrder;
 	}
@@ -402,5 +558,6 @@ public void scrollToElement(WebElement element) {
 
 
 }
+
 
 

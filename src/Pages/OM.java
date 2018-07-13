@@ -40,6 +40,7 @@ import org.openqa.selenium.support.ui.Select;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
 import com.gargoylesoftware.htmlunit.ElementNotFoundException;
+import com.sun.org.apache.xerces.internal.impl.xpath.XPath;
 
 import Tests.SalesNominaciones;
 import Tests.TestBase;
@@ -226,8 +227,8 @@ public class OM {
 
 	public void primeraOrden() {
 		
-		WebElement fila = driver.findElement(By.cssSelector(".dataRow.even.first"));
-		WebElement nro = fila.findElement(By.tagName("th")).findElement(By.tagName("a"));
+		WebElement fila = driver.findElement(By.cssSelector(".x-grid3-row.x-grid3-row-first"));
+		WebElement nro = fila.findElements(By.tagName("td")).get(2);
 		nro.click();
 		sleep(5000);
 	}
@@ -884,7 +885,8 @@ public void deleteOrdersNoActivated(String Vista) {
 		driver.switchTo().defaultContent(); 
 		sleep(4000);
         DateFormat dateFormat = new SimpleDateFormat("MM-dd-yyyy");
-		driver.findElement(By.id("RequestDate")).sendKeys(dateFormat.format(fechaAvanzada()));
+		//driver.findElement(By.id("RequestDate")).sendKeys(dateFormat.format(fechaAvanzada()));
+        driver.findElement(By.id("RequestDate")).sendKeys("08-02-2019");
 		driver.findElement(By.cssSelector(".form-control.btn.btn-primary.ng-binding")).click();
 		sleep(12000);
 		driver.findElement(By.cssSelector(".slds-button.cpq-item-has-children")).click();
@@ -1964,6 +1966,7 @@ public void deleteOrdersNoActivated(String Vista) {
 		    Agregar_Servicio(Servicio); 
 		    driver.findElement(By.cssSelector(".slds-button.cpq-item-has-children")).click(); 
 		    OM.configuracion(); 
+		    sleep(4000);
 		    AgregarDomicilio(); 
 		    sleep(5000); 
 		    driver.findElement(By.name("ta_submit_order")).click(); 
@@ -1993,7 +1996,7 @@ public void deleteOrdersNoActivated(String Vista) {
 		     
 		  } 
 	
-	public void Alta_de_linea_con_Pack(String Cuenta, String Plan) throws InterruptedException {
+	public void Alta_de_linea_con_Pack(String Cuenta, String Plan, String Pack) throws InterruptedException {
 		crearOrden(Cuenta);
 		assertTrue(driver.findElement(By.cssSelector(".noSecondHeader.pageType")).isDisplayed());
 		agregarGestion("Venta");
@@ -2014,7 +2017,7 @@ public void deleteOrdersNoActivated(String Vista) {
 		agregarNumerodeLinea();
 		SimCard();
 		driver.findElement(By.cssSelector(".slds-button.cpq-item-has-children")).click();
-		agregarPack("Packs Opcionales","Packs de Datos", "Pack 1GB de dia + 3GB de Noche", " "," ");
+		agregarPack("Packs Opcionales","Packs de Datos", Pack, "","");
 		//Click ViewRecord
 		sleep(8000);	
 		driver.findElement(By.id("-import-btn")).click();
@@ -2038,36 +2041,19 @@ public void deleteOrdersNoActivated(String Vista) {
 			sleep(5000);
 			cambiarVentanaNavegador(0);
 		}catch(java.lang.IndexOutOfBoundsException ex1) {}
-		sleep(12000);
+		sleep(12000); 
+	    completarFlujoOrquestacion(); 
+	    sleep(5000); 
+	   
 	}
 	
 	public void verificacionDeCamposEnviadosenelRequest() {
-		boolean chiqui = false;
-		while (chiqui == false) {
-
-			try {
-				driver.findElement(By.id("zoomOut")).click();
-			} catch (Exception ex1) {
-				chiqui = true;
-				driver.findElement(By.id("zoomIn")).click();
-				break;
-			}
-
-		}
-		sleep(10000);
-		List<WebElement> cajas = driver.findElements(By.cssSelector(".item-label-container.item-header.item-failed"));
-		cajas.addAll(driver.findElements(By.cssSelector(".item-label-container.item-header.item-fatally-failed")));
-		cajas.addAll(driver.findElements(By.cssSelector(".item-label-container.item-header.item-running")));
-		int i = 1;
-		while (cajas.size() > 0) {
-			for (WebElement UnaC : cajas) {
-				UnaC.click();
-				sleep(5000);
-				cambiarVentanaNavegador(i);
-				//i++;
-				sleep(5000);
-			}
-		}
+		 driver.findElement(By.name("ta_submit_order")).click();
+		 driver.findElement(By.xpath("//*[@id=\"bodyCell\"]/div/ng-view/div/div/div/ul/li[2]/a")).click();
+		 sleep(4000);
+		 driver.findElement(By.xpath(".//*[@id='bodyCell']//table/tbody/tr/td[3]//a")).click();
+		 sleep(4000);
+		 
 	}
 		 
 		public void BajaDeLineaOM(String Cuenta, String Plan) throws InterruptedException {

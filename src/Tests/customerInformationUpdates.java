@@ -59,7 +59,7 @@ public class customerInformationUpdates extends TestBase {
 	 		driver.findElement(By.xpath("//a[@href=\'/console?tsid=02uc0000000D6Hd\']")).click();	 		
 	 	}
 	 	sleep(10000);
-		cc.cerrarultimapestaña();
+		cc.cerrarultimapestana();
 		cc.elegircuenta("aaaaFernando Care");
 		driver.switchTo().frame(cambioFrame(driver, By.className("profile-edit")));
 		List <WebElement> actualizar = driver.findElements(By.className("profile-edit"));
@@ -214,7 +214,7 @@ public class customerInformationUpdates extends TestBase {
 		}
 		driver.switchTo().frame(cambioFrame(driver, By.id("alert-ok-button")));
 		driver.findElement(By.id("alert-ok-button")).click();
-		cc.cerrarultimapestaña();
+		cc.cerrarultimapestana();
 		cc.elegircuenta("aaaaFernando Care");
 		driver.switchTo().frame(cambioFrame(driver, By.className("profile-edit")));
 		List <WebElement> actualizar = driver.findElements(By.className("profile-edit"));
