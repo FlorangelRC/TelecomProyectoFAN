@@ -22,7 +22,6 @@ public class OMN extends TestBase {
 
 	private WebDriver driver;
 	protected OM om;
-	protected GestionesOM gom;
 
 
 	@BeforeClass (alwaysRun = true, groups = "OM")
@@ -32,7 +31,6 @@ public class OMN extends TestBase {
 		login(driver, "https://crm--sit.cs14.my.salesforce.com/", "U585991", "Testa10k");
 		sleep(5000);
 		om = new OM(driver);
-		gom = new GestionesOM();
 	}
 	
 	@BeforeMethod (alwaysRun = true, groups = "OM")
@@ -667,5 +665,24 @@ public class OMN extends TestBase {
 		Assert.assertTrue(order.equals(order2));
 		driver.switchTo().window(tabs.get(0));
 		om.closeAllOtherTabs();
+	}
+	
+	@Test (groups = "OM")
+	public void TS6728_Ordenes_Order_Detail_Visualizacion_del_flujo_de_orquestacion_Luego_de_hacer_un_cambio() throws InterruptedException {
+		boolean cajaRoja = true;
+		om.Gestion_Alta_De_Linea("FlorOM", "Plan Prepago Nacional");
+		driver.navigate().back();
+		sleep(5000);
+		driver.findElement(By.name("vlocity_cmt__vieworchestrationplan")).click();
+		sleep(10000);
+		List <WebElement> cajas = driver.findElements(By.cssSelector(".item-label-container.item-header.item-failed"));
+		cajas.addAll(driver.findElements(By.cssSelector(".item-label-container.item-header.item-fatally-failed")));
+		cajas.addAll(driver.findElements(By.cssSelector(".item-label-container.item-header.item-running")));
+		for (int i=0; i<cajas.size(); i++) {
+			if (cajas.get(i).isDisplayed() || cajas.get(i).isEnabled()) {
+				cajaRoja = false;
+			}
+		}
+		Assert.assertTrue(cajaRoja);
 	}
 }
