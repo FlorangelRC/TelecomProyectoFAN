@@ -2017,13 +2017,15 @@ public class Sales2 extends TestBase{
 		boolean x = false;
 		sleep(18000);
 		sb.elegirplan("Plan prepago nacional");
-		driver.findElement(By.cssSelector(".slds-input.ng-valid.ng-not-empty.ng-dirty.ng-valid-parse.ng-touched")).clear();
+	/*	driver.findElement(By.cssSelector(".slds-input.ng-valid.ng-not-empty.ng-dirty.ng-valid-parse.ng-touched")).clear();
 		driver.findElement(By.cssSelector(".slds-input.ng-valid.ng-dirty.ng-valid-parse.ng-touched.ng-empty")).sendKeys("Plan Prepago Nacional");		
 		try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 		List<WebElement> agregar = driver.findElements(By.cssSelector(".slds-button.slds-button_neutral.cpq-add-button")); 
-		agregar.get(0).click();
+		agregar.get(0).click();*/
 		sb.continuar();
-		sleep(25000);
+		sleep(20000);
+		sb.Crear_DomicilioLegal(provincia, "ABEL", "falsa", "", "1000", "", "", "1549");
+		sleep(7000);
 		CustomerCare page = new CustomerCare(driver);
 		try {
 			driver.findElement(By.id("Step_Error_Huawei_S013_nextBtn")).click();

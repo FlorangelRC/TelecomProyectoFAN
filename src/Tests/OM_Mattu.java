@@ -701,10 +701,9 @@ public class OM_Mattu extends TestBase{
 	
 	//-------------------------------------------------------------------------------------------------
 	//Open Page
-	//@Test()
+	@Test()
 	public void OpenPage() throws InterruptedException{
-		GestionesOM gOM = new GestionesOM();
-		gOM.suspencionPorSiniestro("MattuOM", "Plan Prepago Nacional");
+		
 	}
 
 }
