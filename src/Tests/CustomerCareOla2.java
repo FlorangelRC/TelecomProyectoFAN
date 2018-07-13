@@ -43,7 +43,7 @@ public class CustomerCareOla2 extends TestBase {
 	
 	@BeforeMethod (alwaysRun = true, groups = {"CustomerCare", "Ola2", "Marcas"})
 	public void before() {
-		cc.cerrarTodasLasPestañas();
+		cc.cerrarTodasLasPestanas();
 	}
 	
 	
@@ -79,7 +79,7 @@ public class CustomerCareOla2 extends TestBase {
 	public void TS100971_Marks_Management_Marcas_Session_Guiada_Botón_en_Iniciar_gestiones(String cCuenta) {
 		cc.elegirCuenta(cCuenta);
 		cc.irAGestion("marcas");
-		WebElement tab = cc.obtenerPestañaActiva();		
+		WebElement tab = cc.obtenerPestanaActiva();		
 		Assert.assertTrue(tab.getText().contentEquals("Gestión de Marcas"));
 	}
 	

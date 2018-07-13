@@ -188,7 +188,7 @@ public class SalesNominaciones extends TestBase{
 		driver.findElement(By.xpath("//*[@id=\"EmailSelectableItems\"]/div/ng-include/div/ng-form/div[1]/div[1]/input")).sendKeys("asdasd@gmail.com");
 		driver.findElement(By.id("Contact_nextBtn")).click();
 		sleep(7000);
-		List <WebElement> valdni = driver.findElements(By.cssSelector(".slds-form-element__label.ng-binding.ng-scope"));
+		List <WebElement> valdni = driver.findElements(By.cssSelector(".slds-form-element__label.ng-binding"));
 		for (WebElement x : valdni) {
 			if (x.getText().toLowerCase().contains("validaci\u00f3n por documento de identidad")) {
 				x.click();
@@ -275,10 +275,11 @@ public class SalesNominaciones extends TestBase{
 			BasePage bp = new BasePage(driver);
 		bp.setSimpleDropdown(driver.findElement(By.id("ImpositiveCondition")), "IVA Consumidor Final");
 		SB.Crear_DomicilioLegal("Buenos Aires", "aba", "falsa", "", "1000", "", "", "1549");
-		sleep(10000);
-		contact.subirformulario("C:\\Users\\florangel\\Downloads\\form.pdf", "si");
-		sleep(30000);
-		List <WebElement> element = driver.findElements(By.cssSelector(".slds-form-element.vlc-flex.vlc-slds-text-block.vlc-slds-rte.ng-pristine.ng-valid.ng-scope"));
+		sleep(18000);
+		//contact.subirformulario("C:\\Users\\florangel\\Downloads\\form.pdf", "si");
+		//sleep(30000);
+		List <WebElement> element = driver.findElement(By.id("NominacionExitosa")).findElements(By.tagName("p"));
+		System.out.println("tam ="+element.size());
 		boolean a = false;
 		for (WebElement x : element) {
 			if (x.getText().toLowerCase().contains("nominaci\u00f3n exitosa!")) {
@@ -359,6 +360,9 @@ public class SalesNominaciones extends TestBase{
 			driver.findElement(By.id("LastName")).sendKeys("Faretto");
 			driver.findElement(By.id("Birthdate")).sendKeys("30/06/1980");
 		}
+		if(driver.findElement(By.cssSelector(".message.description.ng-binding.ng-scope")).getText().contains("email"))
+			driver.findElement(By.cssSelector(".slds-input.form-control.ng-pristine.ng-untouched.ng-valid.ng-empty")).sendKeys("algoaqui@yahoo.com.ar");
+		
 		driver.findElement(By.id("PermanencyDueDate")).sendKeys("30/08/2018");
 		CC.obligarclick(driver.findElement(By.id("Contact_nextBtn")));
 		sleep(5000);
@@ -431,6 +435,9 @@ public class SalesNominaciones extends TestBase{
 			driver.findElement(By.id("LastName")).sendKeys("Faretto");
 			driver.findElement(By.id("Birthdate")).sendKeys("30/08/1980");
 		}
+		if(driver.findElement(By.cssSelector(".message.description.ng-binding.ng-scope")).getText().contains("email"))
+			driver.findElement(By.cssSelector(".slds-input.form-control.ng-pristine.ng-untouched.ng-valid.ng-empty")).sendKeys("algoaqui@yahoo.com.ar");
+		
 		
 		driver.findElement(By.id("PermanencyDueDate")).sendKeys("30/06/2021");
 		assertTrue(driver.findElement(By.cssSelector(".message.description.ng-binding.ng-scope")).getText().contains("La permanencia no puede ser mayor a 2 a\u00f1os a partir de la fecha o menor a la fecha actual"));
@@ -483,53 +490,63 @@ public class SalesNominaciones extends TestBase{
 		CustomerCare CC = new CustomerCare(driver);
 		ContactSearch contact = new ContactSearch(driver);
 		String NyA = sCuenta;
-		SB.DesloguearLoguear("call", 4);
-		try {Thread.sleep(6000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
-		HomeBase homePage = new HomeBase(driver);
-		try {Thread.sleep(6000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
-	    String a = driver.findElement(By.id("tsidLabel")).getText(); 
-	    if (a.contains("Ventas")){}
-	    else {
-	    	homePage.switchAppsMenu();
-	    	try {Thread.sleep(2000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
-	    	homePage.selectAppFromMenuByName("Ventas");
-	    	try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}            
-	    }
-	    driver.findElement(By.xpath("//a[@href=\'https://crm--sit--c.cs14.visual.force.com/apex/taClientSearch']")).click();		
-	    try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}  
-		SB.BuscarAvanzada(NyA.split(" ")[0], NyA.split(" ")[1], "", "", "");
-		WebElement cli = driver.findElement(By.id("tab-scoped-1"));
-		if (cli.findElement(By.tagName("tbody")).findElement(By.tagName("tr")).findElement(By.tagName("div")).getText().equals("Cliente Wholesale")) {
-			cli.findElement(By.tagName("tbody")).findElement(By.tagName("tr")).click();
+		try {
+			SB.DesloguearLoguear("call", 4);
+			try {Thread.sleep(6000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+			HomeBase homePage = new HomeBase(driver);
+			try {Thread.sleep(6000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		    /*String a = driver.findElement(By.id("tsidLabel")).getText(); 
+		    if (a.contains("Ventas")){}
+		    else {
+		    	homePage.switchAppsMenu();
+		    	try {Thread.sleep(2000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		    	homePage.selectAppFromMenuByName("Ventas");
+		    	try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}            
+		    }*/
+		    driver.findElement(By.xpath("//a[@href=\'https://crm--sit--c.cs14.visual.force.com/apex/taClientSearch']")).click();		
+		    try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}  
+			SB.BuscarAvanzada(NyA.split(" ")[0], NyA.split(" ")[1], "", "", "");
+			WebElement cli = driver.findElement(By.id("tab-scoped-1"));
+			if (cli.findElement(By.tagName("tbody")).findElement(By.tagName("tr")).findElement(By.tagName("div")).getText().equals("Cliente Wholesale")) {
+				cli.findElement(By.tagName("tbody")).findElement(By.tagName("tr")).click();
+			}
+			sleep(3000);
+			WebElement cua = driver.findElement(By.id("tab-scoped-1")).findElement(By.tagName("tbody")).findElements(By.tagName("tr")).get(25).findElements(By.tagName("td")).get(6).findElement(By.tagName("svg"));
+			System.out.println("1: "+driver.findElement(By.id("tab-scoped-1")).findElement(By.tagName("tbody")).findElements(By.tagName("tr")).get(25).findElements(By.tagName("td")).get(1).getText());
+			cua.click();
+			sleep(13000);
+			perfil = "call";
+			contact.searchContact2("DNI", sDni , sLinea);
+			sleep(8000);		
+			driver.findElement(By.cssSelector(".slds-input.form-control.ng-pristine.ng-untouched.ng-valid.ng-empty")).sendKeys("algoaqui@yahoo.com.ar");
+			CC.obligarclick(driver.findElement(By.id("Contact_nextBtn")));
+			sleep(7000);
+			List <WebElement> valdni = driver.findElements(By.cssSelector(".slds-form-element__label.ng-binding"));
+			for (WebElement x : valdni) {
+				if (x.getText().toLowerCase().contains("validaci\u00f3n por documento de identidad")) {
+					x.click();
+					break;
+				}
+			}
+			driver.findElement(By.id("ValidationMethod_nextBtn")).click();
+			sleep(18000);
+			contact.subirArchivo("C:\\Users\\florangel\\Downloads\\mapache.jpg", "si");
+			BasePage bp = new BasePage(driver);
+			//driver.findElement(By.id("FormUpload_nextBtn")).click();
+			sleep(8000);
+			bp.setSimpleDropdown(driver.findElement(By.id("ImpositiveCondition")), "IVA Consumidor Final");
+			SB.Crear_DomicilioLegal("Buenos Aires", "aba", "falsa", "", "1000", "", "", "1549");
+			sleep(20000);
+			//contact.subirformulario("C:\\Users\\florangel\\Downloads\\form.pdf", "si");
+			//sleep(8000);
+			SB.continuar();
+			System.out.println(driver.findElement(By.cssSelector(".slds-grid.slds-wrap.ng-pristine.ng-valid")).findElement(By.id("TextBlock2")).findElement(By.className("ng-binding")).findElements(By.tagName("p")).get(2).getText());
+			assertTrue(driver.findElements(By.id("TextBlock2")).get(1).findElements(By.tagName("p")).get(3).getText().toLowerCase().contains("nominaci\u00f3n exitosa"));
+			SB.DesloguearLoguear("nominaciones", 4);
+		}catch(Exception ex1) {
+			SB.DesloguearLoguear("nominaciones", 4);
+			assertTrue(false);
 		}
-		sleep(3000);
-		WebElement cua = driver.findElement(By.id("tab-scoped-1")).findElement(By.tagName("tbody")).findElements(By.tagName("tr")).get(25).findElements(By.tagName("td")).get(6).findElement(By.tagName("svg"));
-		System.out.println("1: "+driver.findElement(By.id("tab-scoped-1")).findElement(By.tagName("tbody")).findElements(By.tagName("tr")).get(25).findElements(By.tagName("td")).get(1).getText());
-		cua.click();
-		sleep(13000);
-		perfil = "call";
-		contact.searchContact2("DNI", sDni , sLinea);
-		sleep(8000);		
-		driver.findElement(By.cssSelector(".slds-input.form-control.ng-pristine.ng-untouched.ng-valid.ng-empty")).sendKeys("algoaqui@yahoo.com.ar");
-		CC.obligarclick(driver.findElement(By.id("Contact_nextBtn")));
-		sleep(5000);
-		driver.findElement(By.id("MethodSelection|0")).findElement(By.cssSelector(".slds-radio--faux.ng-scope")).click();
-		driver.findElement(By.id("ValidationMethod_nextBtn")).click();
-		sleep(5000);
-		sleep(18000);
-		contact.subirArchivo("C:\\Users\\florangel\\Downloads\\mapache.jpg", "si");
-		BasePage bp = new BasePage(driver);
-		//driver.findElement(By.id("FormUpload_nextBtn")).click();
-		sleep(8000);
-		bp.setSimpleDropdown(driver.findElement(By.id("ImpositiveCondition")), "IVA Consumidor Final");
-		SB.Crear_DomicilioLegal("Buenos Aires", "aba", "falsa", "", "1000", "", "", "1549");
-		sleep(20000);
-		contact.subirformulario("C:\\Users\\florangel\\Downloads\\form.pdf", "si");
-		sleep(8000);
-		SB.continuar();
-		System.out.println(driver.findElement(By.cssSelector(".slds-grid.slds-wrap.ng-pristine.ng-valid")).findElement(By.id("TextBlock2")).findElement(By.className("ng-binding")).findElements(By.tagName("p")).get(2).getText());
-		assertTrue(driver.findElements(By.id("TextBlock2")).get(1).findElements(By.tagName("p")).get(3).getText().toLowerCase().contains("nominaci\u00f3n exitosa"));
-		
 	}
 	
 	
@@ -591,7 +608,7 @@ public class SalesNominaciones extends TestBase{
 		int intAletorio = aleatorio.nextInt(899999999)+100000000;
 		contact.searchContact2("Pasaporte", Integer.toString(intAletorio), sLinea);
 		sleep(6000);
-		driver.findElement(By.id("PermanencyDueDate")).sendKeys("30/06/2018");
+		driver.findElement(By.id("PermanencyDueDate")).sendKeys("30/06/2019");
 		driver.findElement(By.id("FirstName")).sendKeys("Malan");
 		driver.findElement(By.id("LastName")).sendKeys("Faretto");
 		driver.findElement(By.id("Birthdate")).sendKeys("30/06/1980");

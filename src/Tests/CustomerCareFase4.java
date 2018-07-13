@@ -28,14 +28,14 @@ public class CustomerCareFase4 extends TestBase{
 	
 	@AfterClass (groups = {"CustomerCare", "Vista360Layout", "DetalleDeConsumos", "ActualizarDatos", "DebitoAutomatico"})
 	public void quit() {
-		cc.cerrarTodasLasPestañas();
+		cc.cerrarTodasLasPestanas();
 		IrA.CajonDeAplicaciones.Ventas();
 		cerrarTodo();
 	}
 	
 	@BeforeMethod (groups = {"CustomerCare", "Vista360Layout", "DetalleDeConsumos", "ActualizarDatos", "DebitoAutomatico"})
 	public void after() {
-		cc.cerrarTodasLasPestañas();
+		cc.cerrarTodasLasPestanas();
 	}
 	
 	//@Test (groups = {"CustomerCare", "Vista360Layout"})
@@ -153,7 +153,7 @@ public class CustomerCareFase4 extends TestBase{
 				break;
 			}
 		}
-		WebElement element = cc.obtenerPestañaActiva();
+		WebElement element = cc.obtenerPestanaActiva();
 		Assert.assertTrue(element.getText().equals("Historiales"));
 	}
 	
@@ -168,7 +168,7 @@ public class CustomerCareFase4 extends TestBase{
 				break;
 			}
 		}
-		WebElement element = cc.obtenerPestañaActiva();
+		WebElement element = cc.obtenerPestanaActiva();
 		Assert.assertTrue(element.getText().equals("Historiales"));
 	}
 	

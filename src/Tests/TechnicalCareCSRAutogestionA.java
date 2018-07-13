@@ -40,7 +40,7 @@ public class TechnicalCareCSRAutogestionA extends TestBase{
 			}catch(org.openqa.selenium.NoAlertPresentException e) {}
 
        CustomerCare cerrar = new CustomerCare(driver);
-       cerrar.cerrarultimapestaña();
+       cerrar.cerrarultimapestana();
 		
 		//Selecciona Cuentas
        TechCare_Ola1 page=new TechCare_Ola1(driver);
@@ -72,7 +72,7 @@ public class TechnicalCareCSRAutogestionA extends TestBase{
 	public void tearDown() {
 		sleep(1000);
 		CustomerCare cerrar = new CustomerCare(driver);
-		cerrar.cerrarultimapestaña();
+		cerrar.cerrarultimapestana();
 		HomeBase homePage = new HomeBase(driver);
 		sleep(1000);
 		homePage.selectAppFromMenuByName("Ventas");

@@ -31,14 +31,14 @@ public class CustomerCare360Joaquin extends TestBase {
 	
 	//@AfterClass(groups= {"CustomerCare", "DebitoAutomatico", "DetalleDeConsumos", "Vista360Layout"})
 	public void quit() {
-		Customer.cerrarTodasLasPestañas();
+		Customer.cerrarTodasLasPestanas();
 		IrA.CajonDeAplicaciones.Ventas();
 		cerrarTodo();
 	}
 	
 	@BeforeMethod(groups= {"CustomerCare", "DebitoAutomatico", "DetalleDeConsumos", "Vista360Layout"})
 	public void after() {
-		Customer.cerrarTodasLasPestañas();
+		Customer.cerrarTodasLasPestanas();
 	}
 	
 	@Test(groups= {"CustomerCare", "DetalleDeConsumos"})
@@ -747,7 +747,7 @@ public class CustomerCare360Joaquin extends TestBase {
 			}
 		}
 		
-		WebElement pestaña = Customer.obtenerPestañaActiva();
+		WebElement pestaña = Customer.obtenerPestanaActiva();
 		Assert.assertTrue(pestaña.getText().contains("Gestiones"));
 	}
 	

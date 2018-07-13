@@ -115,7 +115,7 @@ public class TestBase {
 	
 	public void loginMarketing(WebDriver driver) {
 		driver.get("https://crm--sit.cs14.my.salesforce.com/");
-		try {Thread.sleep(4000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 	    Login lLogin = new Login(driver);
 	    lLogin.ingresarMarketing();
 	}
@@ -705,7 +705,7 @@ public class TestBase {
 	@DataProvider
 	public Object[][] OMAltaLinea() throws Exception{
 
-	 Object[][] testObjArray = ExcelUtils.getTableArray("Cuentas.xlsx","OM",1,1,6,"AltaLinea");
+	 Object[][] testObjArray = ExcelUtils.getTableArray("Cuentas.xlsx","OM",1,1,7,"AltaLinea");
 
 	 return (testObjArray);
 

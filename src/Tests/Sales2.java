@@ -58,17 +58,17 @@ public class Sales2 extends TestBase{
 	public void init() {
 		inicializarDriver();
 		sb = new SalesBase(driver);
-		 loginFranciso(driver);
+		 loginAndres(driver);
 		 HomeBase homePage = new HomeBase(driver);
 			try {Thread.sleep(6000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
-		    String a = driver.findElement(By.id("tsidLabel")).getText(); 
+		    /*String a = driver.findElement(By.id("tsidLabel")).getText(); 
 		    if (a.contains("Ventas")){}
 		    else {
 		    	homePage.switchAppsMenu();
 		    	try {Thread.sleep(2000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 		    	homePage.selectAppFromMenuByName("Ventas");
 		    	try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}            
-		    }
+		    }*/
 		//IrA.CajonDeAplicaciones.Ventas();
 	}
 	
@@ -128,7 +128,7 @@ public class Sales2 extends TestBase{
 		sleep(7000);	
 		List<WebElement> frame2 = driver.findElements(By.tagName("iframe"));
 		driver.switchTo().frame(frame2.get(0));
-		Select env = new Select (driver.findElement(By.id("DeliveryMethodSelection")));
+		Select env = new Select (driver.findElement(By.id("DeliveryMethod")));
 		env.selectByVisibleText("Delivery");
 		driver.findElement(By.id("SalesChannelConfiguration_nextBtn")).click();
 		sleep(10000);
