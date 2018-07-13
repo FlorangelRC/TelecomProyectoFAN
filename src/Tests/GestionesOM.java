@@ -494,6 +494,7 @@ public class GestionesOM extends TestBase {
 		OM oOM = new OM(driver);
 		oOM.buscarOrdenPorNumero(sNumeroOrden);
 		
+		sleep(5000);
 		oOM.irAChangeToOrder();
 		
 		sleep(10000);
@@ -513,7 +514,7 @@ public class GestionesOM extends TestBase {
 		driver.findElement(By.id("topButtonRow")).findElement(By.name("edit")).click();
 		
 		Select sSelectDropdown = new Select(driver.findElement(By.id("00Nc0000002IvyM")));
-		sSelectDropdown.selectByVisibleText("Suspension");
+		sSelectDropdown.selectByVisibleText("Resume");
 		
 		driver.findElement(By.id("topButtonRow")).findElement(By.name("save")).click();
 		
@@ -564,6 +565,54 @@ public class GestionesOM extends TestBase {
 		sleep(5000);
 		driver.get(sOrderURL);
 		sleep(5000);
+		WebElement wTopButtonRow = driver.findElement(By.id("topButtonRow"));
+		List<WebElement> wTopButtonRowButtons = wTopButtonRow.findElements(By.tagName("input"));
+		for (WebElement wAux : wTopButtonRowButtons) {
+			if (wAux.getAttribute("value").equalsIgnoreCase("TA Submit Order")) {
+				wAux.click();
+			}
+		}
+		
+		sleep(10000);
+		oOM.completarFlujoOrquestacion();
+	}
+	
+	@Test(groups="OM", priority=1)
+	public void rehabilitacionPorFraude(String sNumeroOrden, String sTipoSiniestro) {
+		OM oOM = new OM(driver);
+		oOM.buscarOrdenPorNumero(sNumeroOrden);
+		
+		sleep(5000);
+		oOM.irAChangeToOrder();
+		
+		sleep(10000);
+		DateFormat dateFormat = new SimpleDateFormat("MM-dd-yyyy");
+		driver.findElement(By.id("RequestDate")).sendKeys(dateFormat.format(oOM.fechaAvanzada()));
+		//driver.findElement(By.id("RequestDate")).sendKeys("07-15-2019");
+		driver.findElement(By.cssSelector(".form-control.btn.btn-primary.ng-binding")).click();
+		
+		sleep(12000);
+		List<WebElement> wTopRightButtons = driver.findElements(By.id("-import-btn"));
+		for (WebElement wAux : wTopRightButtons){
+			if (wAux.getAttribute("title").equalsIgnoreCase("View Record")) {
+				wAux.click();
+			}
+		}
+		
+		sleep(5000);
+		driver.findElement(By.id("topButtonRow")).findElement(By.name("edit")).click();
+		
+		Select sSelectDropdown = new Select(driver.findElement(By.id("00Nc0000002IvyM")));
+		sSelectDropdown.selectByVisibleText("Resume");
+		
+		driver.findElement(By.id("topButtonRow")).findElement(By.name("save")).click();
+		
+		sleep(5000);
+		oOM.CambiarProductos("Resume-Fraude", "Change", "Resume");
+		
+		//sleep(10000);
+		//driver.findElement(By.id("Order_ileinner")).click();
+		
 		WebElement wTopButtonRow = driver.findElement(By.id("topButtonRow"));
 		List<WebElement> wTopButtonRowButtons = wTopButtonRow.findElements(By.tagName("input"));
 		for (WebElement wAux : wTopButtonRowButtons) {
