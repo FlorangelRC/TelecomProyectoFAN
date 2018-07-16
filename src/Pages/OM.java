@@ -2012,7 +2012,6 @@ public void deleteOrdersNoActivated(String Vista) {
 		driver.findElement(By.xpath(".//*[@id='tab-default-1']/div/ng-include//div[10]//button")).click();
 		sleep(2000);
 		List<WebElement> list = driver.findElements(By.cssSelector(".slds-dropdown__item.cpq-item-actions-dropdown__item")); 
-		//System.out.println(list.size());
 		list.get(2).click();
 		agregarNumerodeLinea();
 		SimCard();
@@ -2042,19 +2041,69 @@ public void deleteOrdersNoActivated(String Vista) {
 			cambiarVentanaNavegador(0);
 		}catch(java.lang.IndexOutOfBoundsException ex1) {}
 		sleep(12000); 
-	    completarFlujoOrquestacion(); 
-	    sleep(5000); 
+	    
 	   
 	}
 	
-	public void verificacionDeCamposEnviadosenelRequest() {
-		 driver.findElement(By.name("ta_submit_order")).click();
-		 driver.findElement(By.xpath("//*[@id=\"bodyCell\"]/div/ng-view/div/div/div/ul/li[2]/a")).click();
-		 sleep(4000);
-		 driver.findElement(By.xpath(".//*[@id='bodyCell']//table/tbody/tr/td[3]//a")).click();
-		 sleep(4000);
-		 
+	public boolean verificacionDeCamposEnviadosenelRequest(String S203,String envio, String S326) {
+		 driver.findElement(By.name("vlocity_cmt__vieworchestrationplan")).click();
+		 sleep(12000); 
+		 boolean chiqui = false;
+			while (chiqui == false) {
+
+				try {
+					driver.findElement(By.id("zoomOut")).click();
+			  } catch (Exception ex1) {
+					chiqui = true;
+					driver.findElement(By.id("zoomIn")).click();
+					break;
+				   }
+			}
+
+			sleep(10000);
+			List<WebElement> cajas = driver.findElements(By.cssSelector(".item-header.item-completed"));
+			boolean caja=false;
+			int i = 1;
+			 Integer a = 0, b = 0, c = 0;
+			  for (WebElement s203: cajas) {
+				if (s203.getText().equalsIgnoreCase(S203)) {
+					a = s203.getLocation().getX();
+					s203.click();
+					break;
+				}
+			}
+				sleep(5000);
+				cambiarVentanaNavegador(i);
+				OMQPage OM=new OMQPage (driver); 
+				OM.request();	
+				sleep(10000);
+				cambiarVentanaNavegador(0);
+				sleep(10000);
+				closeAllOtherTabs();
+				sleep(35000);
+					
+	
+			for (WebElement env: cajas) {
+				if (env.getText().equalsIgnoreCase(envio)) {
+					b = env.getLocation().getX();
+					break;
+		}
 	}
+			for (WebElement s326: cajas) {
+				if (s326.getText().equalsIgnoreCase(S326)) {
+					c = s326.getLocation().getX();
+					break;
+				}
+			}
+		
+	if (a < b && b < c) {
+		caja = true;
+	}
+	return caja;
+			
+			
+	}
+	
 		 
 		public void BajaDeLineaOM(String Cuenta, String Plan) throws InterruptedException {
 			boolean gestion = false;
