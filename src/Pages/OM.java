@@ -2596,5 +2596,28 @@ public void Gestion_Alta_De_Linea_Con_Amigos(String Cuenta, String Plan, String 
 	
 }
 
+	public void buscarOrdenPorNumero(String sOrderNumber) {
+		List<WebElement> wLinks = driver.findElement(By.className("fFooter")).findElements(By.tagName("a"));
+	    for (WebElement wAux : wLinks) {
+	      if(wAux.getText().equals("Create New View")) {
+	        wAux.click();
+	      }
+	    }
+	    
+	    driver.findElement(By.id("fname")).sendKeys("OM_View");
+	    
+	    Select sSelectDropdown = new Select(driver.findElement(By.id("fcol1")));
+		sSelectDropdown.selectByVisibleText("Order Number");
+		sSelectDropdown = new Select(driver.findElement(By.id("fop1")));
+		sSelectDropdown.selectByVisibleText("equals");
+		driver.findElement(By.id("fval1")).sendKeys(sOrderNumber);
+		
+		driver.findElement(By.name("save")).click();
+		
+		sleep(5000);
+		OM oOM = new OM(driver);
+		WebElement wBody = driver.findElement(By.id("ext-gen10"));
+		oOM.traerElementoColumna(wBody, 2).get(0).click();
+	}
 
 }
