@@ -227,8 +227,8 @@ public class OM {
 
 	public void primeraOrden() {
 		
-		WebElement fila = driver.findElement(By.cssSelector(".x-grid3-row.x-grid3-row-first"));
-		WebElement nro = fila.findElements(By.tagName("td")).get(2);
+		WebElement fila = driver.findElement(By.cssSelector(".dataRow.even.first"));
+		WebElement nro = fila.findElement(By.tagName("th")).findElement(By.tagName("a"));
 		nro.click();
 		sleep(5000);
 	}

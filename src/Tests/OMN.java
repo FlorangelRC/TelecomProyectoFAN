@@ -685,4 +685,34 @@ public class OMN extends TestBase {
 		}
 		Assert.assertTrue(cajaRoja);
 	}
+	
+	@Test (groups = "OM")
+	public void TS6738_Ordenes_Order_Detail_Descarga_de_archivos_Todos_los_formatos() {
+		om.primeraOrden();
+		driver.findElement(By.name("attachFile")).click();
+		sleep(5000);
+		driver.findElement(By.id("file")).sendKeys("C:\\Users\\Nicolas\\Desktop\\Archivos\\jpg.jpg");
+		sleep(3000);
+		driver.findElement(By.id("Attach")).click();
+		sleep(7000);
+		driver.findElement(By.name("cancel")).click();
+		sleep(5000);
+		driver.findElement(By.name("viewAll")).click();
+		sleep(3000);
+		driver.findElement(By.cssSelector(".last.data2Col")).findElement(By.tagName("a")).click();
+		sleep(5000);
+		Assert.assertTrue(driver.findElement(By.tagName("img")).getAttribute("style").equals("user-select: none;"));
+		driver.navigate().back();
+	}
+	
+	@Test
+	public void TS52669_Ordenes_Cliente_Nuevo_Alta_de_linea_Sin_delivery_Sin_VAS_Inicio_automatico() throws InterruptedException {
+		om.Gestion_Alta_De_Linea("FlorOM", "Plan Prepago Nacional");
+		driver.navigate().back();
+		sleep(5000);
+		driver.findElement(By.name("vlocity_cmt__vieworchestrationplan")).click();
+		sleep(10000);
+		WebElement cajaVerde = driver.findElement(By.cssSelector(".item-completed.item-milestone.item"));
+		Assert.assertTrue(cajaVerde.isDisplayed() || cajaVerde.isEnabled());
+	}
 }
