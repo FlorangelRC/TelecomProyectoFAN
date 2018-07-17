@@ -433,7 +433,21 @@ public class GestionesOM extends TestBase {
 		}
 		
 		sleep(10000);
+		driver.findElement(By.name("ta_submit_order")).click();
+		sleep(45000);
+		try {
+			oOM.cambiarVentanaNavegador(1);
+			sleep(2000);
+			driver.findElement(By.id("idlist")).click();
+			sleep(5000);
+			oOM.cambiarVentanaNavegador(0);
+		}
+		catch(java.lang.IndexOutOfBoundsException ex1) {
+			//Empty
+		}
+		sleep(12000);
 		oOM.completarFlujoOrquestacion();
+		sleep(5000);
 	}
 	
 	@Test (groups="OM", priority=1)
@@ -574,7 +588,21 @@ public class GestionesOM extends TestBase {
 		}
 		
 		sleep(10000);
+		driver.findElement(By.name("ta_submit_order")).click();
+		sleep(45000);
+		try {
+			oOM.cambiarVentanaNavegador(1);
+			sleep(2000);
+			driver.findElement(By.id("idlist")).click();
+			sleep(5000);
+			oOM.cambiarVentanaNavegador(0);
+		}
+		catch(java.lang.IndexOutOfBoundsException ex1) {
+			//Empty
+		}
+		sleep(12000);
 		oOM.completarFlujoOrquestacion();
+		sleep(5000);
 	}
 	
 	@Test(groups="OM", priority=1)
@@ -625,7 +653,7 @@ public class GestionesOM extends TestBase {
 		oOM.completarFlujoOrquestacion();
 	}
 	
-	@Test()
+	//@Test()
 	public void OpenPage() throws InterruptedException{
 		suspencionPorSiniestro("MattuOM", "Plan Prepago Nacional", "STCH");
 		String sNumeroDeOrden = driver.findElement(By.id("OrderNumber_ileinner")).getText();
