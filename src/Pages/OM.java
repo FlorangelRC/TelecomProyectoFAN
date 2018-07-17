@@ -40,6 +40,7 @@ import org.openqa.selenium.support.ui.Select;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
 import com.gargoylesoftware.htmlunit.ElementNotFoundException;
+import com.sun.org.apache.xerces.internal.impl.xpath.XPath;
 
 import Tests.SalesNominaciones;
 import Tests.TestBase;
@@ -2002,7 +2003,7 @@ public void deleteOrdersNoActivated(String Vista) {
 		     
 		  } 
 	
-	public void Alta_de_linea_con_Pack(String Cuenta, String Plan) throws InterruptedException {
+	public void Alta_de_linea_con_Pack(String Cuenta, String Plan, String Pack) throws InterruptedException {
 		crearOrden(Cuenta);
 		assertTrue(driver.findElement(By.cssSelector(".noSecondHeader.pageType")).isDisplayed());
 		agregarGestion("Venta");
@@ -2018,12 +2019,11 @@ public void deleteOrdersNoActivated(String Vista) {
 		driver.findElement(By.xpath(".//*[@id='tab-default-1']/div/ng-include//div[10]//button")).click();
 		sleep(2000);
 		List<WebElement> list = driver.findElements(By.cssSelector(".slds-dropdown__item.cpq-item-actions-dropdown__item")); 
-		//System.out.println(list.size());
 		list.get(2).click();
 		agregarNumerodeLinea();
 		SimCard();
 		driver.findElement(By.cssSelector(".slds-button.cpq-item-has-children")).click();
-		agregarPack("Packs Opcionales","Packs de Datos", "Pack 1GB de dia + 3GB de Noche", " "," ");
+		agregarPack("Packs Opcionales","Packs de Datos", Pack, "","");
 		//Click ViewRecord
 		sleep(8000);	
 		driver.findElement(By.id("-import-btn")).click();
@@ -2047,37 +2047,70 @@ public void deleteOrdersNoActivated(String Vista) {
 			sleep(5000);
 			cambiarVentanaNavegador(0);
 		}catch(java.lang.IndexOutOfBoundsException ex1) {}
-		sleep(12000);
+		sleep(12000); 
+	    
+	   
 	}
 	
-	public void verificacionDeCamposEnviadosenelRequest() {
-		boolean chiqui = false;
-		while (chiqui == false) {
+	public boolean verificacionDeCamposEnviadosenelRequest(String S203,String envio, String S326) {
+		 driver.findElement(By.name("vlocity_cmt__vieworchestrationplan")).click();
+		 sleep(12000); 
+		 boolean chiqui = false;
+			while (chiqui == false) {
 
-			try {
-				driver.findElement(By.id("zoomOut")).click();
-			} catch (Exception ex1) {
-				chiqui = true;
-				driver.findElement(By.id("zoomIn")).click();
-				break;
+				try {
+					driver.findElement(By.id("zoomOut")).click();
+			  } catch (Exception ex1) {
+					chiqui = true;
+					driver.findElement(By.id("zoomIn")).click();
+					break;
+				   }
 			}
 
-		}
-		sleep(10000);
-		List<WebElement> cajas = driver.findElements(By.cssSelector(".item-label-container.item-header.item-failed"));
-		cajas.addAll(driver.findElements(By.cssSelector(".item-label-container.item-header.item-fatally-failed")));
-		cajas.addAll(driver.findElements(By.cssSelector(".item-label-container.item-header.item-running")));
-		int i = 1;
-		while (cajas.size() > 0) {
-			for (WebElement UnaC : cajas) {
-				UnaC.click();
+			sleep(10000);
+			List<WebElement> cajas = driver.findElements(By.cssSelector(".item-header.item-completed"));
+			boolean caja=false;
+			int i = 1;
+			 Integer a = 0, b = 0, c = 0;
+			  for (WebElement s203: cajas) {
+				if (s203.getText().equalsIgnoreCase(S203)) {
+					a = s203.getLocation().getX();
+					s203.click();
+					break;
+				}
+			}
 				sleep(5000);
 				cambiarVentanaNavegador(i);
-				//i++;
-				sleep(5000);
-			}
+				OMQPage OM=new OMQPage (driver); 
+				OM.request();	
+				sleep(10000);
+				cambiarVentanaNavegador(0);
+				sleep(10000);
+				closeAllOtherTabs();
+				sleep(35000);
+					
+	
+			for (WebElement env: cajas) {
+				if (env.getText().equalsIgnoreCase(envio)) {
+					b = env.getLocation().getX();
+					break;
 		}
 	}
+			for (WebElement s326: cajas) {
+				if (s326.getText().equalsIgnoreCase(S326)) {
+					c = s326.getLocation().getX();
+					break;
+				}
+			}
+		
+	if (a < b && b < c) {
+		caja = true;
+	}
+	return caja;
+			
+			
+	}
+	
 		 
 		public void BajaDeLineaOM(String Cuenta, String Plan) throws InterruptedException {
 			boolean gestion = false;
@@ -2570,5 +2603,28 @@ public void Gestion_Alta_De_Linea_Con_Amigos(String Cuenta, String Plan, String 
 	
 }
 
+	public void buscarOrdenPorNumero(String sOrderNumber) {
+		List<WebElement> wLinks = driver.findElement(By.className("fFooter")).findElements(By.tagName("a"));
+	    for (WebElement wAux : wLinks) {
+	      if(wAux.getText().equals("Create New View")) {
+	        wAux.click();
+	      }
+	    }
+	    
+	    driver.findElement(By.id("fname")).sendKeys("OM_View");
+	    
+	    Select sSelectDropdown = new Select(driver.findElement(By.id("fcol1")));
+		sSelectDropdown.selectByVisibleText("Order Number");
+		sSelectDropdown = new Select(driver.findElement(By.id("fop1")));
+		sSelectDropdown.selectByVisibleText("equals");
+		driver.findElement(By.id("fval1")).sendKeys(sOrderNumber);
+		
+		driver.findElement(By.name("save")).click();
+		
+		sleep(5000);
+		OM oOM = new OM(driver);
+		WebElement wBody = driver.findElement(By.id("ext-gen10"));
+		oOM.traerElementoColumna(wBody, 2).get(0).click();
+	}
 
 }

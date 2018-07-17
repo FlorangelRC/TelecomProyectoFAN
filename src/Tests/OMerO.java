@@ -410,35 +410,39 @@ public class OMerO extends TestBase {
 			for (WebElement UnaC : cajas) {
 				UnaC.click();
 				sleep(5000);
+				//om.closeAllOtherTabs();
 				om.cambiarVentanaNavegador(i);
 				//i++;
-				sleep(5000);
-				WebElement stat = driver.findElement(By.xpath("//*[@id='bodyCell']/div/ng-view/div/div/div/div/div/facet/facet-4412964684870411902/table/tbody/tr[27]/td/attribute-value/div/div/picklist-value"));
-				WebElement box1 = driver.findElement(By.xpath("//*[@id='bodyCell']/div/ng-view/div/div/div/div/div/facet/facet-4412964684870411902/table/tbody/tr[29]/td"));
+				sleep(7000);
 				List<WebElement> botones = driver.findElements(By.cssSelector(".slds-button.slds-button--neutral.ng-scope"));
-				for (WebElement UnB : botones) {
-					if (UnB.getText().equals("Complete")) {
-						UnB.click();
-						sleep(4000);
-						System.out.println("Hizo click");
-						break;
-					}
-					for (i= 0;i<4 ;i++){
-						if(stat.getText().toLowerCase().equals("completed")){
-							String a = box1.getText();
-						} else {
-							driver.navigate().refresh();
-							sleep(5000);
-						break;
-						
-						}
+					for (WebElement UnB : botones) {
+						if (UnB.getText().equals("Complete")) {
+							UnB.click();
+							//System.out.println("Hizo click");
+							for (i= 0;i<3 ;i++){
+							WebElement stat = driver.findElement(By.xpath("//*[@id='bodyCell']/div/ng-view/div/div/div/div/div/facet/facet-4412964684870411902/table/tbody/tr[27]/td/attribute-value/div/div/picklist-value"));
+							WebElement box1 = driver.findElement(By.xpath("//*[@id='bodyCell']/div/ng-view/div/div/div/div/div/facet/facet-4412964684870411902/table/tbody/tr[29]/td/attribute-value/div/div"));
+								if(stat.getText().toLowerCase().equals("fatally failed")){
+									driver.navigate().refresh();
+									sleep(5000);
+								} else {
+									String a = box1.getText();
+									System.out.println(a);
+									om.cambiarVentanaNavegador(0);
+									sleep(10000);
+									om.closeAllOtherTabs();
+								break;
+										}
+							}
+						break;	
+						} 
 					}
 				}
 		
-		om.cambiarVentanaNavegador(0);
-		sleep(10000);
-			}	
 		}
+		Assert.assertTrue(driver.findElement(By.id("Status_ilecell")).getText().equalsIgnoreCase("Activated"));
+		
+	}
 		
 	/*	driver.navigate().back();
 		sleep(5000);
@@ -475,6 +479,7 @@ public class OMerO extends TestBase {
         DateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
 		Assert.assertTrue(date.equals(box1.getText()));*/
 		
-	}
 	
-}
+
+		
+	}

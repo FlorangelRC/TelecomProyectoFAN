@@ -2024,7 +2024,9 @@ public class Sales2 extends TestBase{
 		List<WebElement> agregar = driver.findElements(By.cssSelector(".slds-button.slds-button_neutral.cpq-add-button")); 
 		agregar.get(0).click();*/
 		sb.continuar();
-		sleep(25000);
+		sleep(20000);
+		sb.Crear_DomicilioLegal(provincia, "ABEL", "falsa", "", "1000", "", "", "1549");
+		sleep(7000);
 		CustomerCare page = new CustomerCare(driver);
 		sb.Crear_DomicilioLegal("Buenos Aires","Vicente Lopez","falsa", "", "5846", "", "", "5248");
 		sleep(15000);

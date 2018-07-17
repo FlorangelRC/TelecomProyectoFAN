@@ -19,11 +19,13 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.Select;
+import org.testng.Assert;
 
 import com.sun.corba.se.pept.transport.Connection;
 
 import Tests.TestBase;
 import javafx.scene.control.ScrollToEvent;
+import org.json.JSONObject;
 
 public class OMQPage extends BasePage {
 
@@ -380,10 +382,19 @@ public void sincroProducto(String Products) {
 		
 	
 }
-
-			
+		public boolean request() {
+		driver.findElement(By.xpath("//*[@id=\"bodyCell\"]/div/ng-view/div/div/div/ul/li[2]/a")).click();
+		sleep(4000);
+		driver.findElement(By.xpath(".//*[@id='bodyCell']//table/tbody/tr/td[3]//a")).click();
+		sleep(4000);
+		WebElement verirequest = driver.findElement(By.xpath(".//*[@id='bodyCell']//table/tbody/tr[2]/td//json-value/pre"));
+		JSONObject obj = new JSONObject(verirequest.getText());
+		String infoProducto=obj.getJSONArray("listaOfertasAdicionales").getJSONObject(0).toString();
+		return !infoProducto.isEmpty();
 		
-
+}
+		 
+		
 public WebElement getNewOrder() {
 	return NewOrder;
 	}
@@ -402,5 +413,6 @@ public void scrollToElement(WebElement element) {
 
 
 }
+
 
 

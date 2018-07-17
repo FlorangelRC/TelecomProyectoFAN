@@ -344,11 +344,6 @@ public class GestionesOM extends TestBase {
 		
 	}
 	
-	@Test()
-	public void OpenPage() throws InterruptedException{
-		suspencionPorFraude("MattuOM", "Plan Prepago Nacional");
-	}
-	
 	@Test(groups="OM", priority=1)
 	public void suspencionPorSiniestro(String sCuenta, String sPlan, String sTipoSiniestro) throws InterruptedException {
 		
@@ -439,7 +434,21 @@ public class GestionesOM extends TestBase {
 		}
 		
 		sleep(10000);
+		driver.findElement(By.name("ta_submit_order")).click();
+		sleep(45000);
+		try {
+			oOM.cambiarVentanaNavegador(1);
+			sleep(2000);
+			driver.findElement(By.id("idlist")).click();
+			sleep(5000);
+			oOM.cambiarVentanaNavegador(0);
+		}
+		catch(java.lang.IndexOutOfBoundsException ex1) {
+			//Empty
+		}
+		sleep(12000);
 		oOM.completarFlujoOrquestacion();
+		sleep(5000);
 	}
 	
 	@Test (groups="OM", priority=1)
@@ -453,6 +462,7 @@ public class GestionesOM extends TestBase {
 		sleep(10000);
 		DateFormat dateFormat = new SimpleDateFormat("MM-dd-yyyy");
 		driver.findElement(By.id("RequestDate")).sendKeys(dateFormat.format(oOM.fechaAvanzada()));
+		//driver.findElement(By.id("RequestDate")).sendKeys("07-15-2019");
 		driver.findElement(By.cssSelector(".form-control.btn.btn-primary.ng-binding")).click();
 		
 		sleep(12000);
@@ -497,6 +507,9 @@ public class GestionesOM extends TestBase {
 		//Rehabilitacion por siniestro por extravio = RTCE
 		
 		OM oOM = new OM(driver);
+		oOM.buscarOrdenPorNumero(sNumeroOrden);
+		
+		sleep(5000);
 		oOM.irAChangeToOrder();
 		
 		sleep(10000);
@@ -516,12 +529,12 @@ public class GestionesOM extends TestBase {
 		driver.findElement(By.id("topButtonRow")).findElement(By.name("edit")).click();
 		
 		Select sSelectDropdown = new Select(driver.findElement(By.id("00Nc0000002IvyM")));
-		sSelectDropdown.selectByVisibleText("Suspension");
+		sSelectDropdown.selectByVisibleText("Resume");
 		
 		driver.findElement(By.id("topButtonRow")).findElement(By.name("save")).click();
 		
 		sleep(5000);
-		oOM.CambiarProductos("Suspend-Siniestro", "Change", "Suspend");
+		oOM.CambiarProductos("Resume-Siniestro", "Change", "Resume");
 		String sOrderURL = driver.getCurrentUrl();
 		
 		List<WebElement> wProductos = driver.findElement(By.cssSelector(".listRelatedObject.orderBlock")).findElement(By.className("pbBody")).findElements(By.tagName("tr")); 
@@ -576,6 +589,75 @@ public class GestionesOM extends TestBase {
 		}
 		
 		sleep(10000);
+		driver.findElement(By.name("ta_submit_order")).click();
+		sleep(45000);
+		try {
+			oOM.cambiarVentanaNavegador(1);
+			sleep(2000);
+			driver.findElement(By.id("idlist")).click();
+			sleep(5000);
+			oOM.cambiarVentanaNavegador(0);
+		}
+		catch(java.lang.IndexOutOfBoundsException ex1) {
+			//Empty
+		}
+		sleep(12000);
 		oOM.completarFlujoOrquestacion();
+		sleep(5000);
+	}
+	
+	@Test(groups="OM", priority=1)
+	public void rehabilitacionPorFraude(String sNumeroOrden, String sTipoSiniestro) {
+		OM oOM = new OM(driver);
+		oOM.buscarOrdenPorNumero(sNumeroOrden);
+		
+		sleep(5000);
+		oOM.irAChangeToOrder();
+		
+		sleep(10000);
+		DateFormat dateFormat = new SimpleDateFormat("MM-dd-yyyy");
+		driver.findElement(By.id("RequestDate")).sendKeys(dateFormat.format(oOM.fechaAvanzada()));
+		//driver.findElement(By.id("RequestDate")).sendKeys("07-15-2019");
+		driver.findElement(By.cssSelector(".form-control.btn.btn-primary.ng-binding")).click();
+		
+		sleep(12000);
+		List<WebElement> wTopRightButtons = driver.findElements(By.id("-import-btn"));
+		for (WebElement wAux : wTopRightButtons){
+			if (wAux.getAttribute("title").equalsIgnoreCase("View Record")) {
+				wAux.click();
+			}
+		}
+		
+		sleep(5000);
+		driver.findElement(By.id("topButtonRow")).findElement(By.name("edit")).click();
+		
+		Select sSelectDropdown = new Select(driver.findElement(By.id("00Nc0000002IvyM")));
+		sSelectDropdown.selectByVisibleText("Resume");
+		
+		driver.findElement(By.id("topButtonRow")).findElement(By.name("save")).click();
+		
+		sleep(5000);
+		oOM.CambiarProductos("Resume-Fraude", "Change", "Resume");
+		
+		//sleep(10000);
+		//driver.findElement(By.id("Order_ileinner")).click();
+		
+		WebElement wTopButtonRow = driver.findElement(By.id("topButtonRow"));
+		List<WebElement> wTopButtonRowButtons = wTopButtonRow.findElements(By.tagName("input"));
+		for (WebElement wAux : wTopButtonRowButtons) {
+			if (wAux.getAttribute("value").equalsIgnoreCase("TA Submit Order")) {
+				wAux.click();
+			}
+		}
+		
+		sleep(10000);
+		oOM.completarFlujoOrquestacion();
+	}
+	
+	//@Test()
+	public void OpenPage() throws InterruptedException{
+		suspencionPorSiniestro("MattuOM", "Plan Prepago Nacional", "STCH");
+		String sNumeroDeOrden = driver.findElement(By.id("OrderNumber_ileinner")).getText();
+		rehabilitacionPorSiniestro(sNumeroDeOrden, "RTCH");
 	}
 }
