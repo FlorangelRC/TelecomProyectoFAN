@@ -112,6 +112,17 @@ public class TestBase {
 			//driver.findElement(By.id("chooser")).click();
 	//	}
 	}
+	public void loginDani(WebDriver driver) {
+		driver.get("https://crm--sit.cs14.my.salesforce.com/");
+		try {Thread.sleep(4000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		//if(driver.findElement(By.id("idcard")).isDisplayed())
+		//{
+	    Login page0 = new Login(driver);
+	    page0.ingresarDani();
+		//}else{
+			//driver.findElement(By.id("chooser")).click();
+	//	}
+	}
 	
 	public void loginMarketing(WebDriver driver) {
 		driver.get("https://crm--sit.cs14.my.salesforce.com/");

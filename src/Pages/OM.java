@@ -879,6 +879,7 @@ public void deleteOrdersNoActivated(String Vista) {
 		OMQPage OM=new OMQPage (driver);
 		OMRPlansPage OMR = new OMRPlansPage(driver);
 		sleep(5000);
+		 
 		irAChangeToOrder();	
 		sleep(20000);
 		driver.switchTo().defaultContent(); 
@@ -887,10 +888,12 @@ public void deleteOrdersNoActivated(String Vista) {
 		//driver.findElement(By.id("RequestDate")).sendKeys(dateFormat.format(fechaAvanzada()));
         driver.findElement(By.id("RequestDate")).sendKeys("08-02-2019");
 		driver.findElement(By.cssSelector(".form-control.btn.btn-primary.ng-binding")).click();
-		sleep(12000);
+		sleep(18000);
 		driver.findElement(By.cssSelector(".slds-button.cpq-item-has-children")).click();
 		sleep(5000);
 		OMR.getServiciosBasicosGeneralMovil().click();
+		OMR.addServiceToCartByName(Servicio);
+		sleep(8000);
 		OMR.deleteService(Servicio);
 		driver.findElement(By.id("-import-btn")).click();
 		sleep(8000);
@@ -1548,7 +1551,7 @@ public void deleteOrdersNoActivated(String Vista) {
 		}
 		
 		public void Agregar_Servicio(String Servicio) {
-			sleep(5000);
+			sleep(8000);
 			driver.findElement(By.cssSelector(".slds-button.cpq-item-has-children")).click();
 			sleep(3000);
 			List<WebElement> lista = driver.findElements(By.cssSelector(".slds-button__icon.slds-button__icon--.cpq-fix-slds-close-switch"));
@@ -1969,12 +1972,15 @@ public void deleteOrdersNoActivated(String Vista) {
 		    AgregarDomicilio(); 
 		    sleep(5000); 
 		    driver.findElement(By.name("ta_submit_order")).click(); 
-		    sleep(15000); 
-		    try {System.out.println(driver.switchTo().alert().getText()); 
+		    sleep(35000); 
+		    System.out.println("Llegue aqui");
+		    try {//System.out.println(driver.switchTo().alert().getText()); 
 		      driver.switchTo().alert().accept(); 
+		      System.out.println("Aqui tambien");
 		      driver.switchTo().alert().dismiss(); 
 		      driver.switchTo().defaultContent(); 
 		      driver.findElement(By.name("ta_submit_order")).click(); 
+		      System.out.println("Entre aca");
 		    } catch (org.openqa.selenium.NoAlertPresentException e) { 
 		      driver.switchTo().defaultContent(); 
 		    } 
@@ -1989,6 +1995,7 @@ public void deleteOrdersNoActivated(String Vista) {
 		    sleep(12000); 
 		    completarFlujoOrquestacion(); 
 		    sleep(5000); 
+		    Assert.assertTrue(driver.findElement(By.id("Status_ilecell")).getText().equalsIgnoreCase("Activated"));
 		    driver.findElement(By.id("accid_ileinner")).findElement(By.tagName("a")).click(); 
 		    sleep(10000); 
 		    //pageOm.irAChangeToOrder(); 

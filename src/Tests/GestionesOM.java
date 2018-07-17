@@ -144,6 +144,7 @@ public class GestionesOM extends TestBase {
 	public void TS_CRM_Baja_De_Servicio() throws InterruptedException {
 		OM pageOm=new OM(driver);
 		pageOm.Gestion_Alta_De_Linea_Con_1_Servicio("FlorOM", "Plan Prepago Nacional","Llamada en espera");
+		System.out.println("No tiene sentido");
 		pageOm.Baja_De_Servicio("Llamada en espera");
 	}
 	
