@@ -654,7 +654,7 @@ public class GestionesOM extends TestBase {
 		oOM.completarFlujoOrquestacion();
 	}
 	
-	//@Test()
+	@Test
 	public void OpenPage() throws InterruptedException{
 		suspencionPorSiniestro("MattuOM", "Plan Prepago Nacional", "STCH");
 		String sNumeroDeOrden = driver.findElement(By.id("OrderNumber_ileinner")).getText();
