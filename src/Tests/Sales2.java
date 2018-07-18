@@ -517,10 +517,11 @@ public class Sales2 extends TestBase{
 		sb.BuscarCuenta(DNI, sDni);
 		//sb.BuscarCuenta(DNI, buscarCampoExcel(1, "Cuenta Activa", 2));
 		sb.acciondecontacto("catalogo");
+		sleep(25000);
 		sb.elegirplan("plan prepago nacional");
-		sleep(15000);
+		sleep(25000);
 		driver.findElement(By.cssSelector(".slds-button.slds-m-left--large.slds-button--brand.ta-button-brand")).click();
-		sleep(10000);
+		sleep(20000);
 		Assert.assertTrue(driver.findElement(By.id("ContactName")).getAttribute("value").toLowerCase().contains(sCuenta.toLowerCase()));
 		List <WebElement> prov = driver.findElements(By.cssSelector(".slds-form-element__label.ng-binding"));
 		boolean a = false;
@@ -561,7 +562,7 @@ public class Sales2 extends TestBase{
 		sleep(8000);
 		driver.findElement(By.id("FileDocumentImage")).sendKeys("C:\\Users\\florangel\\Downloads\\mapache.jpg");
 		sleep(3000);
-		WebElement up = driver.findElement(By.cssSelector(".slds-box.vlc-slds-box__italic.slds-input-has-icon.slds-input-has-icon--right"));
+		WebElement up = driver.findElement(By.cssSelector(".slds-box.slds-input-has-icon.slds-input-has-icon--right.ta-boxImageName"));
 		Assert.assertTrue(up.getText().toLowerCase().contains("mapache.jpg"));
 		Assert.assertTrue(up.getText().toLowerCase().contains("30.55 kb"));
 	}
@@ -1467,8 +1468,8 @@ public class Sales2 extends TestBase{
 			}
 		}
 		Assert.assertTrue(fem && masc);
-		Assert.assertTrue(driver.findElement(By.id("DocumentType")).isEnabled());
-		Assert.assertTrue(driver.findElement(By.id("DNI")).getAttribute("disabled").equals("true"));
+		Assert.assertTrue(driver.findElement(By.id("DocumentType")).getAttribute("disabled").equals("true"));
+		Assert.assertTrue(driver.findElement(By.id("DNI")).isEnabled());
 		Assert.assertTrue(driver.findElement(By.id("FirstName")).isEnabled());
 		Assert.assertTrue(driver.findElement(By.id("LastName")).isEnabled());
 		Assert.assertTrue(driver.findElement(By.id("Birthdate")).isEnabled());
@@ -2019,7 +2020,7 @@ public class Sales2 extends TestBase{
 		boolean x = false;
 		sleep(18000);
 		sb.elegirplan("Plan prepago nacional");
-	/*	driver.findElement(By.cssSelector(".slds-input.ng-valid.ng-not-empty.ng-dirty.ng-valid-parse.ng-touched")).clear();
+		/*driver.findElement(By.cssSelector(".slds-input.ng-valid.ng-not-empty.ng-dirty.ng-valid-parse.ng-touched")).clear();
 		driver.findElement(By.cssSelector(".slds-input.ng-valid.ng-dirty.ng-valid-parse.ng-touched.ng-empty")).sendKeys("Plan Prepago Nacional");		
 		try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 		List<WebElement> agregar = driver.findElements(By.cssSelector(".slds-button.slds-button_neutral.cpq-add-button")); 
@@ -2029,6 +2030,8 @@ public class Sales2 extends TestBase{
 		sb.Crear_DomicilioLegal(provincia, "ABEL", "falsa", "", "1000", "", "", "1549");
 		sleep(7000);
 		CustomerCare page = new CustomerCare(driver);
+		sb.Crear_DomicilioLegal("Buenos Aires","Vicente Lopez","falsa", "", "5846", "", "", "5248");
+		sleep(15000);
 		try {
 			driver.findElement(By.id("Step_Error_Huawei_S013_nextBtn")).click();
 			sleep(8000);

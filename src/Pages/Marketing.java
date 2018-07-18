@@ -97,7 +97,12 @@ public class Marketing extends CustomerCare {
 			System.err.println("ERROR: No existe la gestión 'Club Personal'");
 			Assert.assertFalse(gestionesEncontradas.isEmpty());
 		}
-		gestionesEncontradas.get(1).click();
+		for (WebElement wAux:gestionesEncontradas) {
+			if (wAux.getText().equalsIgnoreCase("Club Personal")) {
+				wAux.click();
+			}
+		}
+		//gestionesEncontradas.get(1).click();
 		TestBase.sleep(3000);
 		cambiarAFrameActivo();
 		/*BasePage cambioFrame=new BasePage(driver);

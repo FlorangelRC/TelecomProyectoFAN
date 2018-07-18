@@ -221,17 +221,53 @@ public void setUp() throws Exception {
 		Assert.assertTrue(true);
 			}
 		
-	 @Test(groups= "OM") //retryAnalyzer = retry.class)
-	 public void TS102300_CRM_OM_Ola_2_Interfaces_Alta_de_linea_con_1_pack_Plan_con_tarjeta_Sin_delivery_Sin_VAS_Huawei_S203_createSubscriber_Verificacion_de_campos_enviados_en_el_request() throws InterruptedException, MalformedURLException {    
+	@Test(groups= {"OM","altaconPack","Verificacionderequest"}, retryAnalyzer = retry.class)
+	 public void TS102304_CRM_OM_Ola_2_Interfaces_Alta_de_linea_con_1_pack_Plan_con_tarjeta_Sin_delivery_Sin_VAS_Numeracion_Movil_S326_updateNumberStatus_Verificacion_de_parametros_enviados() throws InterruptedException, MalformedURLException {    
 	 OM pageOm=new OM(driver);
-	 OMQPage OM=new OMQPage (driver);
 	 pageOm.Alta_de_linea_con_Pack("QuelysOM", "Plan con tarjeta","Pack Internet x 30 dias");
 	 sleep(5000);
-	 pageOm.verificacionDeCamposEnviadosenelRequest();
-	 //pageOm.completarFlujoOrquestacion();
-	
-	 OM.request("\"codProducto\": \"10000087\"", "\"codProducto\": \"10000087\""); //"\"codProducto\": \"10000087\"", " \"modo\": \"I\"", fechaDesdeCaracteristicaProd, fechaHastaCaracteristicaProd)
-		
+	 pageOm.completarFlujoOrquestacion();
+	 pageOm.verificacionDeCamposEnviadosenelRequest("CreateSubscriber - S203", "Env\u00edo de Activaci\u00f3n de Servicios a la Red", "updateNumerStatus - S326");
 
-	 }    
+	}
+	
+	@Test(groups= {"OM","altaconPack","Verificacionderequest"}, dependsOnMethods ="TS102304_CRM_OM_Ola_2_Interfaces_Alta_de_linea_con_1_pack_Plan_con_tarjeta_Sin_delivery_Sin_VAS_Numeracion_Movil_S326_updateNumberStatus_Verificacion_de_parametros_enviados")
+	public void TS102300_CRM_OM_Ola_2_Interfaces_Alta_de_linea_con_1_pack_Plan_con_tarjeta_Sin_delivery_Sin_VAS_Huawei_S203_createSubscriber_Verificacion_de_campos_enviados_en_el_request() {
+		Assert.assertTrue(true);
+			}
+	
+	@Test(groups= {"OM","altaconPack","Verificacionderequest"}, dependsOnMethods ="TS102304_CRM_OM_Ola_2_Interfaces_Alta_de_linea_con_1_pack_Plan_con_tarjeta_Sin_delivery_Sin_VAS_Numeracion_Movil_S326_updateNumberStatus_Verificacion_de_parametros_enviados")
+	public void TS102301_CRM_OM_Ola_2_Interfaces_Alta_de_linea_con_1_pack_Plan_con_tarjeta_Sin_delivery_Sin_VAS_Huawei_S203_createSubscriber_Verificacion_de_parametros_enviados() {
+		Assert.assertTrue(true);
+			}
+	
+	@Test(groups= {"OM","altaconPack","Verificacionderequest"}, dependsOnMethods ="TS102304_CRM_OM_Ola_2_Interfaces_Alta_de_linea_con_1_pack_Plan_con_tarjeta_Sin_delivery_Sin_VAS_Numeracion_Movil_S326_updateNumberStatus_Verificacion_de_parametros_enviados")
+	public void TS102303_CRM_OM_Ola_2_Interfaces_Alta_de_linea_con_1_pack_Plan_con_tarjeta_Sin_delivery_Sin_VAS_Numeracion_Movil_S326_updateNumberStatus_Verificacion_de_campos_enviados_en_el_request() {
+		Assert.assertTrue(true);
+			}
+	
+	@Test(groups= {"OM","altaconPack","Verificacionderequest"}, retryAnalyzer = retry.class)
+	 public void TS102309_CRM_OM_Ola_2_Interfaces_Alta_de_linea_con_1_pack_Plan_prepago_nacional_Sin_delivery_Sin_VAS_Numeracion_Movil_S326_updateNumberStatus_Verificacion_de_parametros_enviados() throws InterruptedException, MalformedURLException {    
+	 OM pageOm=new OM(driver);
+	 pageOm.Alta_de_linea_con_Pack("QuelysOM", "Plan prepago nacional","Pack Internet x 30 dias");
+	 sleep(5000);
+	 pageOm.completarFlujoOrquestacion();
+	 pageOm.verificacionDeCamposEnviadosenelRequest("CreateSubscriber - S203", "Env\u00edo de Activaci\u00f3n de Servicios a la Red", "updateNumerStatus - S326");
+
+	}
+	
+	@Test(groups= {"OM","altaconPack","Verificacionderequest"}, dependsOnMethods ="TS102309_CRM_OM_Ola_2_Interfaces_Alta_de_linea_con_1_pack_Plan_prepago_nacional_Sin_delivery_Sin_VAS_Numeracion_Movil_S326_updateNumberStatus_Verificacion_de_parametros_enviados")
+	public void TS102305_CRM_OM_Ola_2_Interfaces_Alta_de_linea_con_1_pack_Plan_prepago_nacional_Sin_delivery_Sin_VAS_Huawei_S203_createSubscriber_Verificacion_de_campos_enviados_en_el_request() {
+		Assert.assertTrue(true);
+			}
+	
+	@Test(groups= {"OM","altaconPack","Verificacionderequest"}, dependsOnMethods ="TS102309_CRM_OM_Ola_2_Interfaces_Alta_de_linea_con_1_pack_Plan_prepago_nacional_Sin_delivery_Sin_VAS_Numeracion_Movil_S326_updateNumberStatus_Verificacion_de_parametros_enviados")
+	public void TS102306_CRM_OM_Ola_2_Interfaces_Alta_de_linea_con_1_pack_Plan_prepago_nacional_Sin_delivery_Sin_VAS_Huawei_S203_createSubscriber_Verificacion_de_parametros_enviados() {
+		Assert.assertTrue(true);
+			}
+	
+	@Test(groups= {"OM","altaconPack","Verificacionderequest"}, dependsOnMethods ="TS102309_CRM_OM_Ola_2_Interfaces_Alta_de_linea_con_1_pack_Plan_prepago_nacional_Sin_delivery_Sin_VAS_Numeracion_Movil_S326_updateNumberStatus_Verificacion_de_parametros_enviados")
+	public void TS102308_CRM_OM_Ola_2_Interfaces_Alta_de_linea_con_1_pack_Plan_prepago_nacional_Sin_delivery_Sin_VAS_Numeracion_Movil_S326_updateNumberStatus_Verificacion_de_campos_enviados_en_el_request() {
+		Assert.assertTrue(true);
+			}
 }
