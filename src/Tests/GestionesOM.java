@@ -85,6 +85,13 @@ public class GestionesOM extends TestBase {
 		}
 	}
 	
+	@Test(groups="OM", priority=1, dataProvider="OMAltaCompleta")
+	public void AltaLinea_Completa_Datos(String sCuenta, String sPlan, String sLinea, String sIccid, String sImsi, String sKi, String sToN, String sCantPac, String sAmiVoz, String sAmiSms) throws InterruptedException {
+		OM pageOm=new OM(driver);
+		int iCantPac = Integer.parseInt(sCantPac);
+		pageOm.Gestion_Alta_De_Linea_Completa(sCuenta, sPlan, sLinea, sIccid, sImsi, sKi, sToN, iCantPac, sAmiVoz, sAmiSms);
+	}
+	
 	@Test(groups="OM", priority=1, dataProvider="OMCambioSim")
 	public void TS_CRM_Cambio_De_SimCard_Datos(String sCuenta, String sPlan, String sLinea, String sIccid, String sImsi, String sKi, String sIccid2, String sImsi2, String sKi2) throws InterruptedException {
 		OM pageOm=new OM(driver);

@@ -721,6 +721,16 @@ public class TestBase {
 	 return (testObjArray);
 
 	}
+	
+	@DataProvider
+	public Object[][] OMAltaCompleta() throws Exception{
+
+	 Object[][] testObjArray = ExcelUtils.getTableArray("Cuentas.xlsx","OM",1,1,10,"AltaLineaC");
+
+	 return (testObjArray);
+
+	}
+	
 	@DataProvider
 	public Object[][] OMCambioSim() throws Exception{
 

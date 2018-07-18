@@ -2447,6 +2447,7 @@ public void TodosLosServicios() {
 	sleep(4000);
 	driver.findElement(By.cssSelector(".slds-button.cpq-item-has-children")).click();
 	sleep(5000);
+	CustomerCare cc = new CustomerCare(driver);
 	List<WebElement> NomPest = driver.findElements(By.xpath("//*[@class='cpq-item-product-child-level-1 cpq-item-child-product-name-wrapper']"));
 	
 	for(WebElement a: NomPest) {
@@ -2460,7 +2461,6 @@ public void TodosLosServicios() {
 	for(WebElement a: NomPest) {
 		if (a.getText().toLowerCase().contains("caller id") && !a.getText().toLowerCase().contains("servicios basicos general movil")) {
 			System.out.println("Lo encontre");
-			CustomerCare cc = new CustomerCare(driver);
 			List<WebElement> servicios = a.findElements(By.cssSelector(".slds-button.slds-button_neutral"));
 			System.out.println("Tam = "+servicios.size());
 			for (WebElement UnS : servicios) {
@@ -2470,12 +2470,20 @@ public void TodosLosServicios() {
 			break;
 		}
 	}
+	for(WebElement a: NomPest) {
+		if (a.getText().toLowerCase().contains("servicios basicos general movil")) {
+			cc.obligarclick(a.findElement(By.tagName("button")));
+			sleep(8000);
+			break;
+		}
+	}
 }
 
 public void Agregar_Varios_Packs(int packs) {
 	sleep(6000);
 	driver.findElement(By.cssSelector(".slds-button.cpq-item-has-children")).click();
 	sleep(5000);
+	CustomerCare cc = new CustomerCare(driver);
 	List<WebElement> NomPack = driver.findElements(By.xpath("//*[@class='cpq-item-product-child-level-1 cpq-item-child-product-name-wrapper']"));
 	WebElement x;
 	for(WebElement a: NomPack) {
@@ -2492,7 +2500,7 @@ public void Agregar_Varios_Packs(int packs) {
 	if (subPack.size() == Btnsubpack.size()) {
 		for(WebElement b: subPack) {
 			sleep(8000);
-			System.out.println(b);
+			System.out.println(b.getText());
 			b.findElement(By.tagName("button")).click();
 		}
 			
@@ -2508,6 +2516,14 @@ public void Agregar_Varios_Packs(int packs) {
 			Agregar.get(i).click();					
 		}
 	}
+	 for(WebElement a: NomPack) {
+			if (a.getText().toLowerCase().contains("packs opcionales")) {
+				x=a;
+				cc.obligarclick(a.findElement(By.tagName("button")));
+				sleep(8000);
+				break;
+			}
+		}
 }
 
 public void Gestion_Alta_De_Linea_Con_Todos_Los_Servicios(String Cuenta, String Plan, String Linea, String ICCID, String IMSI, String KI, String Pestana) throws InterruptedException {
