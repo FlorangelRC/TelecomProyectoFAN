@@ -685,4 +685,54 @@ public class OMN extends TestBase {
 		}
 		Assert.assertTrue(cajaRoja);
 	}
+	
+	@Test (groups = "OM")
+	public void TS6738_Ordenes_Order_Detail_Descarga_de_archivos_Todos_los_formatos() {
+		om.primeraOrden();
+		driver.findElement(By.name("attachFile")).click();
+		sleep(5000);
+		driver.findElement(By.id("file")).sendKeys("C:\\Users\\Nicolas\\Desktop\\Archivos\\jpg.jpg");
+		sleep(3000);
+		driver.findElement(By.id("Attach")).click();
+		sleep(7000);
+		driver.findElement(By.name("cancel")).click();
+		sleep(5000);
+		driver.findElement(By.name("viewAll")).click();
+		sleep(3000);
+		driver.findElement(By.cssSelector(".last.data2Col")).findElement(By.tagName("a")).click();
+		sleep(5000);
+		Assert.assertTrue(driver.findElement(By.tagName("img")).getAttribute("style").equals("user-select: none;"));
+		driver.navigate().back();
+	}
+	
+	@Test (groups = "OM")
+	public void TS52669_Ordenes_Cliente_Nuevo_Alta_de_linea_Sin_delivery_Sin_VAS_Inicio_automatico() throws InterruptedException {
+		om.Gestion_Alta_De_Linea("FlorOM", "Plan Prepago Nacional");
+		driver.navigate().back();
+		sleep(5000);
+		driver.findElement(By.name("vlocity_cmt__vieworchestrationplan")).click();
+		sleep(10000);
+		WebElement cajaVerde = driver.findElement(By.cssSelector(".item-completed.item-milestone.item"));
+		Assert.assertTrue(cajaVerde.isDisplayed() || cajaVerde.isEnabled());
+	}
+	
+	@Test (groups = "OM")
+	public void TS80076_Interfaces_Alta_de_linea_Plan_con_tarjeta_Sin_delivery_Sin_VAS_Numeracion_Movil_S326_updateNumberStatus_Verificacion_de_parametros_enviados() throws InterruptedException {
+		om.Gestion_Alta_De_Linea("FlorOM", "Plan Prepago Nacional");
+		driver.navigate().back();
+		sleep(5000);
+		driver.findElement(By.name("vlocity_cmt__vieworchestrationplan")).click();
+		sleep(10000);
+		buscarYClick(driver.findElements(By.cssSelector(".item-label.item-header")), "equals", "updatenumberstatus - s326");
+		sleep(7000);
+		ArrayList<String> tabs = new ArrayList<String> (driver.getWindowHandles());
+		driver.switchTo().window(tabs.get(1));
+		buscarYClick(driver.findElements(By.className("slds-tabs--scoped__link")), "equals", "children");
+		sleep(5000);
+		driver.findElement(By.xpath("//*[@id=\"bodyCell\"]/div/ng-view/div/div/div/div/div/facet/facet-4412964684870431361/table/tbody/tr/td[3]")).click();
+		sleep(10000);
+		WebElement acc = driver.findElement(By.className("json"));
+		Assert.assertTrue(acc.getText().contains("ACTIVAR"));
+		
+	}	
 }
