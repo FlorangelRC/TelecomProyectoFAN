@@ -444,9 +444,10 @@ public class Sales2 extends TestBase{
 		sleep(2000);
 		driver.findElement(By.id("alert-ok-button")).click();
 		sleep(5000);
-		IrA.CajonDeAplicaciones.ConsolaFAN();
+		driver.findElement(By.id("tabBar")).findElement(By.tagName("a")).click();
+		sleep(6000);
 		TechCare_Ola1 tc = new TechCare_Ola1(driver);
-		//sb.cerrarTodasLasPestanias();
+		sb.cerrarTodasLasPestanias();
 		sleep(8000);
 		tc.selectAccount (sCuenta);
 		sleep(8000);
@@ -471,7 +472,8 @@ public class Sales2 extends TestBase{
 		sleep(2000);
 		driver.findElement(By.id("alert-ok-button")).click();
 		sleep(5000);
-		IrA.CajonDeAplicaciones.ConsolaFAN();
+		driver.findElement(By.id("tabBar")).findElement(By.tagName("a")).click();
+		sleep(6000);
 		TechCare_Ola1 tc = new TechCare_Ola1(driver);
 		sb.cerrarTodasLasPestanias();
 		tc.selectAccount (sCuenta);
@@ -498,10 +500,11 @@ public class Sales2 extends TestBase{
 		sleep(2000);
 		driver.findElement(By.id("alert-ok-button")).click();
 		sleep(5000);
-		IrA.CajonDeAplicaciones.ConsolaFAN();
+		driver.findElement(By.id("tabBar")).findElement(By.tagName("a")).click();
+		sleep(6000);
 		TechCare_Ola1 tc = new TechCare_Ola1(driver);
-		//sb.cerrarTodasLasPestanias();
-		//sleep(5000);
+		sb.cerrarTodasLasPestanias();
+		sleep(5000);
 		tc.selectAccount (sCuenta);
 		sleep(8000);
 		driver.switchTo().frame(cambioFrame(driver, By.cssSelector(".console-card.open")));
@@ -910,10 +913,13 @@ public class Sales2 extends TestBase{
 		sleep(15000);
 		sb.elegirplan("Plan Prepago Nacional");
 		sb.continuar();
-		sleep(10000);
-		CustomerCare page = new CustomerCare(driver);
+		sleep(45000);
+		sb.Crear_DomicilioLegal( provincia, localidad,"falsa", "", "5846", "", "", "5248");
+		sleep(15000);
+		//CustomerCare page = new CustomerCare(driver);
 		WebElement sig = driver.findElement(By.id("LineAssignment_nextBtn"));
-		page.obligarclick(sig);
+		//page.obligarclick(sig);
+		sig.click();
 		sleep(10000);
 		WebElement serial = driver.findElement(By.id("ICCIDConfiguration")).findElement(By.tagName("tbody")).findElement(By.tagName("tr")).findElements(By.tagName("td")).get(1);
 		Assert.assertTrue(!serial.findElement(By.tagName("input")).getAttribute("value").isEmpty());
@@ -1288,9 +1294,9 @@ public class Sales2 extends TestBase{
 		sb.continuar();
 		sleep(25000);
 		sb.Crear_DomicilioLegal( provincia, localidad,"falsa", "", "5846", "", "", "5248");
-		sleep(35000);
+		sleep(45000);
 		WebElement line = driver.findElement(By.id("tree0-node1__label"));
-		WebElement line2 = driver.findElement(By.id("id-0-0"));
+		WebElement line2 = driver.findElement(By.id("tree0-node1-0"));
 		System.out.println(line.getAttribute("value"));
 		System.out.println(line2.getAttribute("value"));
 		boolean a = false;
@@ -1481,20 +1487,20 @@ public class Sales2 extends TestBase{
 		sb.continuar();
 		sleep(25000);
 		sb.Crear_DomicilioLegal(provincia, localidad, "falsa", "", "1000", "", "", "1549");
-		sleep(30000);
+		sleep(35000);
 		WebElement bx = driver.findElement(By.id("tree0-node1__label"));
 		bx.click();
-		sleep(3000);
+		sleep(5000);
 		WebElement sig = driver.findElement(By.id("LineAssignment_nextBtn"));
 		CC.obligarclick(sig);
-		sleep(8000);
-		boolean x = true;
-		List<WebElement> serial = driver.findElements(By.cssSelector(".slds-page-header__title.vlc-slds-page-header__title.slds-truncate.ng-binding"));
+		sleep(15000);
+		boolean x = false;
+		List<WebElement> serial = driver.findElements(By.cssSelector(".slds-page-header__title.vlc-slds-page-header__title.slds-truncate ng-binding"));
 			for(WebElement s : serial){
 				s.getText().equals("Ingreso de serial");
 				System.out.println(s.getText());
 				s.isDisplayed();
-				x=false;
+				x=true;
 			}
 		Assert.assertTrue(x);
 	}
@@ -1900,14 +1906,10 @@ public class Sales2 extends TestBase{
 		}
 		sleep(5000);
 		driver.findElement(By.cssSelector(".slds-input.ng-pristine.ng-untouched.ng-valid")).sendKeys("pack");		
-		
+		sleep(8000);
 		Assert.assertTrue(driver.findElement(By.cssSelector(".cpq-product-link.slds-text-body_small.slds-float_right")).getText().equalsIgnoreCase("more"));
-		/*List <WebElement> more = driver.findElements(By.cssSelector(".cpq-product-link.slds-text-body_small.slds-float_right"));
-			for(WebElement m : more){
-				if(m.getText().toLowerCase().equals("more")){
-					m.click();
-				}
-			}*/
+		WebElement more = driver.findElements(By.cssSelector(".cpq-product-link.slds-text-body_small.slds-float_right")).get(0);
+		more.click();
 		sleep(8000);
 		Assert.assertTrue(driver.findElement(By.cssSelector(".slds-modal.slds-fade-in-open.slds-modal--large")).findElement(By.tagName("h2")).getText().equalsIgnoreCase("product details"));
 	}
@@ -1969,10 +1971,10 @@ public class Sales2 extends TestBase{
 		sb.continuar();
 		sleep(25000);
 		sb.Crear_DomicilioLegal(provincia, "ABEL", "falsa", "", "1000", "", "", "1549");
-		sleep(7000);
+		sleep(15000);
 		List<WebElement> mns = driver.findElements(By.cssSelector(".message.description.ng-binding.ng-scope"));
 		for(WebElement UnM : mns) {
-			if(UnM.getText().toLowerCase().contains("sin l\u00ednea decisoria"))
+			if(UnM.getText().toLowerCase().contains("sin l\u00ednea decisoria."))
 				estaM = true;
 		}
 		Assert.assertTrue(estaM);
@@ -2147,12 +2149,13 @@ public class Sales2 extends TestBase{
 			try {Thread.sleep(2000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 		} } catch (java.lang.IndexOutOfBoundsException e) {}
 		try {Thread.sleep(3000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
-		page3.addPlan("plan prepago nacional");
+		page3.addPlan("Galaxy S8");
 		try {Thread.sleep(3000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 		driver.findElement(By.cssSelector(".slds-input.ng-valid.ng-not-empty.ng-dirty.ng-valid-parse.ng-touched")).clear();
-		driver.findElement(By.cssSelector(".slds-input.ng-valid.ng-not-empty.ng-dirty.ng-valid-parse.ng-touched")).sendKeys("Galaxy S8");		
-		try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
-		driver.findElement(By.cssSelector(".slds-button.slds-button--neutral.add-button")).click();
+		/*driver.findElement(By.cssSelector(".slds-input.ng-valid.ng-not-empty.ng-dirty.ng-valid-parse.ng-touched")).sendKeys("Galaxy S8");		
+		try {Thread.sleep(8000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		driver.findElement(By.cssSelector(".slds-button.slds-button--neutral.add-button")).click();*/
+		sb.elegirplan("Galaxy S8");
 		sleep(15000);
 		page3.abrirprimeraflecha();
 		sleep(3000);
@@ -2162,7 +2165,8 @@ public class Sales2 extends TestBase{
 		sleep(3000);
 		page3.deleteoneplan();
 		try {Thread.sleep(4000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
-		Assert.assertEquals("Cart is empty.", page3.getEmptyCartMessage());
+		WebElement cart = driver.findElement(By.cssSelector(".slds-grid.slds-grid_vertical-align-center.slds-grid_align-center.cpq-no-cart-items-msg"));
+		Assert.assertTrue((cart.getText().equals("Cart is empty.")));
 	}
 	@Test(groups={"Sales", "AltaDeLinea", "Ola1"}, priority=3, dataProvider="SalesCuentaActiva")
 	public void TS94522_CRM_Fase_1_SalesCPQ_Alta_Linea_Carrito_Verificar_el_mensaje_al_vaciar_el_carrito_XX(String sCuenta, String sDni, String sLinea) throws IOException {

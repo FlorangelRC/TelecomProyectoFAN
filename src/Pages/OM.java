@@ -17,6 +17,7 @@ import java.util.Random;
 import java.util.Date;
 
 import org.openqa.selenium.Alert;
+import org.json.JSONObject;
 import org.junit.Assert;
 import org.junit.Test;
 import org.openqa.selenium.By;
@@ -2054,64 +2055,115 @@ public void deleteOrdersNoActivated(String Vista) {
 	   
 	}
 	
-	public boolean verificacionDeCamposEnviadosenelRequest(String S203,String envio, String S326) {
-		 driver.findElement(By.name("vlocity_cmt__vieworchestrationplan")).click();
-		 sleep(12000); 
-		 boolean chiqui = false;
+	public void verificacionDeCamposEnviadosenelRequest(String S203,String envio, String S326) {
+		// driver.findElement(By.name("vlocity_cmt__vieworchestrationplan")).click();
+			boolean chiqui = false;
 			while (chiqui == false) {
 
 				try {
 					driver.findElement(By.id("zoomOut")).click();
-			  } catch (Exception ex1) {
+				} catch (Exception ex1) {
 					chiqui = true;
 					driver.findElement(By.id("zoomIn")).click();
 					break;
-				   }
-			}
-
-			sleep(10000);
-			List<WebElement> cajas = driver.findElements(By.cssSelector(".item-header.item-completed"));
-			boolean caja=false;
-			int i = 1;
-			 Integer a = 0, b = 0, c = 0;
-			  for (WebElement s203: cajas) {
-				if (s203.getText().equalsIgnoreCase(S203)) {
-					a = s203.getLocation().getX();
-					s203.click();
-					break;
 				}
+
 			}
+			sleep(10000);
+			List<WebElement> cajas = driver.findElements(By.cssSelector(".item-label-container.item-header.item-failed"));
+			cajas.addAll(driver.findElements(By.cssSelector(".item-label-container.item-header.item-fatally-failed")));
+			cajas.addAll(driver.findElements(By.cssSelector(".item-label-container.item-header.item-running")));
+			int i = 1;
+			while (cajas.size() > 0) {
+			for (WebElement UnaC : cajas) {
+				if (UnaC.getText().equalsIgnoreCase(S203)) {
+				UnaC.click();
 				sleep(5000);
 				cambiarVentanaNavegador(i);
-				OMQPage OM=new OMQPage (driver); 
-				OM.request();	
+				//i++;
+				sleep(5000);
+				List<WebElement> botones = driver.findElements(By.cssSelector(".slds-button.slds-button--neutral.ng-scope"));
+				for (WebElement UnB : botones) {
+					if (UnB.getText().equals("Complete")) {
+						UnB.click();
+						sleep(4000);
+						System.out.println("Hizo click");
+						driver.findElement(By.xpath("//*[@id=\"bodyCell\"]/div/ng-view/div/div/div/ul/li[2]/a")).click();
+						sleep(4000);
+						driver.findElement(By.xpath(".//*[@id='bodyCell']//table/tbody/tr/td[3]//a")).click();
+						sleep(4000);								WebElement verirequest = driver.findElement(By.xpath(".//*[@id='bodyCell']//table/tbody/tr[2]/td//json-value/pre"));
+						JSONObject obj = new JSONObject(verirequest.getText());
+						String infoProducto=obj.getJSONArray("listaOfertasAdicionales").getJSONObject(0).toString(0);
+						System.out.println(infoProducto);
+						cambiarVentanaNavegador(0);
+								//return !infoProducto.isEmpty();
+								//sleep(4000);
+						break;
+						 
+				
+						}
+					}
+				}
+		
+				if (UnaC.getText().equalsIgnoreCase(envio)) {
+					UnaC.click();
+					sleep(5000);
+					cambiarVentanaNavegador(i);
+					//i++;
+					sleep(5000);
+					List<WebElement> botones = driver.findElements(By.cssSelector(".slds-button.slds-button--neutral.ng-scope"));
+				for (WebElement UnB : botones) {
+					if (UnB.getText().equals("Complete")) {
+						UnB.click();
+						sleep(4000);
+						System.out.println("Hizo click");
+						cambiarVentanaNavegador(0);
+						break;
+				}
+			}
+		}
+				
+				if (UnaC.getText().equalsIgnoreCase(S326)) {
+					UnaC.click();
+						sleep(5000);
+							cambiarVentanaNavegador(i);
+					//i++;
+					sleep(5000);
+				List<WebElement> botones = driver.findElements(By.cssSelector(".slds-button.slds-button--neutral.ng-scope"));
+				for (WebElement UnB : botones) {
+					if (UnB.getText().equals("Complete")) {
+						UnB.click();
+						sleep(4000);
+							System.out.println("Hizo click");
+								cambiarVentanaNavegador(0);
+									break;
+				}
+			}
+		}
+				
 				sleep(10000);
 				cambiarVentanaNavegador(0);
 				sleep(10000);
 				closeAllOtherTabs();
 				sleep(35000);
-					
-	
-			for (WebElement env: cajas) {
-				if (env.getText().equalsIgnoreCase(envio)) {
-					b = env.getLocation().getX();
-					break;
-		}
-	}
-			for (WebElement s326: cajas) {
-				if (s326.getText().equalsIgnoreCase(S326)) {
-					c = s326.getLocation().getX();
-					break;
-				}
+				break;
+						
 			}
-		
-	if (a < b && b < c) {
-		caja = true;
-	}
-	return caja;
-			
-			
-	}
+						cajas = driver.findElements(By.cssSelector(".item-label-container.item-header.item-failed"));
+						cajas.addAll(driver.findElements(By.cssSelector(".item-label-container.item-header.item-fatally-failed")));
+						cajas.addAll(driver.findElements(By.cssSelector(".item-label-container.item-header.item-running")));
+			}
+				
+						closeAllOtherTabs();
+						sleep(5000);
+						driver.findElement(By.className("submit-button")).click();
+						sleep(6000);
+						cambiarVentanaNavegador(1);
+						sleep(5000);
+						closeAllOtherTabs();
+					
+						
+		}
 	
 		 
 		public void BajaDeLineaOM(String Cuenta, String Plan) throws InterruptedException {
