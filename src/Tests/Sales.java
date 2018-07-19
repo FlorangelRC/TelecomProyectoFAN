@@ -401,7 +401,7 @@ public class Sales extends TestBase {
 		assertTrue(esta);
 	}
 	
-	@Test(groups={"Sales", "AltaDeContacto","Ola1"}, priority=2)
+	//@Test(groups={"Sales", "AltaDeContacto","Ola1"}, priority=2)
 	public void TS94536_Numero_De_Cuit_Con_Guiones(){
 		String CUIT = "22-35689987-4";
 		boolean esta = false;
@@ -611,7 +611,7 @@ public class Sales extends TestBase {
 		Assert.assertTrue(as);
 	}
 	
-	@Test(groups={"Sales", "AltaDeContacto","Ola1"}, priority=2)  // ALFANUMERICO
+	//@Test(groups={"Sales", "AltaDeContacto","Ola1"}, priority=2)  // ALFANUMERICO
 	public void TS94558_Verificar_error_al_ingresar_CUIT_con_cero_al_inicio(){
 		try {Thread.sleep(10000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 		boolean as = false;
@@ -626,7 +626,7 @@ public class Sales extends TestBase {
 		Assert.assertTrue(as);
 	}
 	
-	@Test(groups={"Sales", "AltaDeContacto","Ola1"}, priority=2)
+	//@Test(groups={"Sales", "AltaDeContacto","Ola1"}, priority=2)
 	public void TS94557_Verificar_error_al_ingresar_caracteres_alfanumericos_en_el_CUIT(){
 		try {Thread.sleep(10000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 		boolean as = false;
@@ -641,7 +641,7 @@ public class Sales extends TestBase {
 		Assert.assertTrue(as);
 	}
 	
-	@Test(groups={"Sales", "AltaDeContacto", "Ola1"}, priority=2)
+	//@Test(groups={"Sales", "AltaDeContacto", "Ola1"}, priority=2)
 	public void TS94550_Verificar_campo_CUIT_obligatorio(){
 		try {Thread.sleep(10000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 		ContactSearch contact = new ContactSearch(driver);
@@ -686,6 +686,7 @@ public class Sales extends TestBase {
 		boolean existe = false;
 		boolean doc = false, qya = false;
 		BasePage Bp= new BasePage();
+		sleep(5000);
 		do {
 			Random aleatorio = new Random(System.currentTimeMillis());
 			aleatorio.setSeed(System.currentTimeMillis());
@@ -719,6 +720,8 @@ public class Sales extends TestBase {
 		CustomerCare cc = new CustomerCare(driver);
 		WebElement este = driver.findElement(By.id("LineAssignment_nextBtn"));
 		cc.obligarclick(este);
+		sleep(20000);
+		cc.obligarclick(driver.findElement(By.id("ICCDAssignment_nextBtn")));
 		sleep(20000);
 		cc.obligarclick(driver.findElement(By.id("InvoicePreview_nextBtn")));
 		sleep(20000);

@@ -88,8 +88,19 @@ public class GestionesOM extends TestBase {
 	@Test(groups="OM", priority=1, dataProvider="OMAltaCompleta")
 	public void AltaLinea_Completa_Datos(String sCuenta, String sPlan, String sLinea, String sIccid, String sImsi, String sKi, String sToN, String sCantPac, String sAmiVoz, String sAmiSms) throws InterruptedException {
 		OM pageOm=new OM(driver);
+		boolean gestion = false;
 		int iCantPac = Integer.parseInt(sCantPac);
+		iCantPac = iCantPac/10;
 		pageOm.Gestion_Alta_De_Linea_Completa(sCuenta, sPlan, sLinea, sIccid, sImsi, sKi, sToN, iCantPac, sAmiVoz, sAmiSms);
+		WebElement status = driver.findElement(By.id("Status_ilecell"));
+		List <WebElement> gest = driver.findElements(By.cssSelector(".dataCol.inlineEditWrite"));
+		for (WebElement x : gest) {
+			if (x.getText().equalsIgnoreCase("Venta")) {
+				gestion = true;
+			}
+		}
+		Assert.assertTrue(status.getText().equalsIgnoreCase("Activated"));
+		Assert.assertTrue(gestion);
 	}
 	
 	@Test(groups="OM", priority=1, dataProvider="OMCambioSim")
@@ -144,7 +155,7 @@ public class GestionesOM extends TestBase {
 	@Test(groups="OM", priority=1)
 	public void AltaLinea_Varios_Packs() throws InterruptedException {
 		OM pageOm=new OM(driver);
-		pageOm.Gestion_Alta_De_Linea_Con_Varios_Packs("FlorOM", "Plan Prepago Nacional","Packs Opcionales",10);
+		pageOm.Gestion_Alta_De_Linea_Con_Varios_Packs("FlorOM", "Plan Prepago Nacional","Packs Opcionales",5);
 	}
 	
 	@Test(groups="OM", priority=1)
