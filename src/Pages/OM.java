@@ -2597,6 +2597,7 @@ public void Gestion_Alta_De_Linea_Con_Amigos(String Cuenta, String Plan, String 
 }
 
 	public void buscarOrdenPorNumero(String sOrderNumber) {
+		driver.findElement(By.id("Order_Tab")).findElement(By.tagName("a")).click();
 		List<WebElement> wLinks = driver.findElement(By.className("fFooter")).findElements(By.tagName("a"));
 	    for (WebElement wAux : wLinks) {
 	      if(wAux.getText().equals("Create New View")) {
@@ -2604,7 +2605,7 @@ public void Gestion_Alta_De_Linea_Con_Amigos(String Cuenta, String Plan, String 
 	      }
 	    }
 	    
-	    driver.findElement(By.id("fname")).sendKeys("OM_View");
+	    driver.findElement(By.id("fname")).sendKeys("OM_View_Delete");
 	    
 	    Select sSelectDropdown = new Select(driver.findElement(By.id("fcol1")));
 		sSelectDropdown.selectByVisibleText("Order Number");
@@ -2617,7 +2618,10 @@ public void Gestion_Alta_De_Linea_Con_Amigos(String Cuenta, String Plan, String 
 		sleep(5000);
 		OM oOM = new OM(driver);
 		WebElement wBody = driver.findElement(By.id("ext-gen10"));
-		oOM.traerElementoColumna(wBody, 2).get(0).click();
+		for(WebElement wAux : oOM.traerElementoColumna(wBody, 2)) {
+			System.out.println("Elemento: " + wAux.findElement(By.tagName("span")).getText());
+		}
+		oOM.traerElementoColumna(wBody, 2).get(0).findElement(By.tagName("a")).click();
 	}
 
 }
