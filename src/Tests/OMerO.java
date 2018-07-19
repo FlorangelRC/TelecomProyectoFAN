@@ -4,11 +4,13 @@ import static org.testng.Assert.assertTrue;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 import java.util.Random;
 
+import org.apache.log4j.net.SimpleSocketServer;
 import org.junit.Assert;
 import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
@@ -20,6 +22,7 @@ import org.testng.annotations.BeforeClass;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
+import com.sun.jna.platform.win32.OaIdl.DATE;
 import com.sun.xml.internal.ws.api.server.Container;
 
 import Pages.Accounts;
@@ -356,6 +359,7 @@ public class OMerO extends TestBase {
 	
 	@Test(groups = {"OM"})
 	public void TS11483_Ordenes_Tareas_Timestamp_Completed_Automatica() throws InterruptedException{
+		
 		//Alta de linea
 		om.crearOrden("AlOM");
 		assertTrue(driver.findElement(By.cssSelector(".noSecondHeader.pageType")).isDisplayed());
@@ -410,76 +414,72 @@ public class OMerO extends TestBase {
 			for (WebElement UnaC : cajas) {
 				UnaC.click();
 				sleep(5000);
-				//om.closeAllOtherTabs();
 				om.cambiarVentanaNavegador(i);
 				//i++;
-				sleep(7000);
-				List<WebElement> botones = driver.findElements(By.cssSelector(".slds-button.slds-button--neutral.ng-scope"));
-					for (WebElement UnB : botones) {
-						if (UnB.getText().equals("Complete")) {
-							UnB.click();
-							//System.out.println("Hizo click");
-							for (i= 0;i<3 ;i++){
-							WebElement stat = driver.findElement(By.xpath("//*[@id='bodyCell']/div/ng-view/div/div/div/div/div/facet/facet-4412964684870411902/table/tbody/tr[27]/td/attribute-value/div/div/picklist-value"));
-							WebElement box1 = driver.findElement(By.xpath("//*[@id='bodyCell']/div/ng-view/div/div/div/div/div/facet/facet-4412964684870411902/table/tbody/tr[29]/td/attribute-value/div/div"));
-								if(stat.getText().toLowerCase().equals("fatally failed")){
-									driver.navigate().refresh();
-									sleep(5000);
-								} else {
-									String a = box1.getText();
-									System.out.println(a);
-									om.cambiarVentanaNavegador(0);
-									sleep(10000);
-									om.closeAllOtherTabs();
-								break;
-										}
-							}
-						break;	
-						} 
+				sleep(5000);
+				List<WebElement> botones = driver
+						.findElements(By.cssSelector(".slds-button.slds-button--neutral.ng-scope"));
+				for (WebElement UnB : botones) {
+					if (UnB.getText().equals("Complete")) {
+						UnB.click();
+						sleep(4000);
+						System.out.println("Hizo click");
+						break;
 					}
 				}
+				WebElement comp = driver.findElements(By.cssSelector(".ng-scope.ng-isolate-scope")).get(13);
+				String a = null;
+				System.out.println(comp.getText());
+					if(comp.getText().toLowerCase().equals("fatally failed")||comp.getText().toLowerCase().equals("running")){
+						sleep(5000);
+						driver.navigate().refresh();
+						sleep(25000);
+						List<WebElement> hora = driver.findElement(By.cssSelector(".slds-table.slds-table--bordered.slds-table--cell-buffer")).findElements(By.tagName("tr"));
+							for(WebElement hor : hora){
+								if(hor.findElement(By.tagName("th")).getText().equals("Completed")){
+									a=hor.findElement(By.tagName("td")).getText();
+									
+								}
+							}
+						a = a.substring(0, 15);
+						System.out.println(a);
+						Date date = new Date();
+						Calendar cal = Calendar.getInstance(); 
+				        cal.setTime(date); 
+				        if(Integer.parseInt(a.substring(a.length()-2,a.length()))!=date.getMinutes()){
+				         cal.add(Calendar.MINUTE, -1);
+				        }
+				        date = cal.getTime();
+				        DateFormat dateFormat = new SimpleDateFormat();
+				        if(date.getMonth()<10){
+				        	dateFormat = new SimpleDateFormat("dd/M/yyyy HH:mm");
+				        }else{
+				        	dateFormat = new SimpleDateFormat("dd/MM/yyyy HH:mm");
+				        }
+				        System.out.println(dateFormat.format(date));
+				        Assert.assertTrue(dateFormat.format(date).equals(a));   
+					}	
+				sleep(10000);
+				om.cambiarVentanaNavegador(0);
+				sleep(10000);
+				om.closeAllOtherTabs();
+				sleep(35000);
+				
+			}
 		
+			cajas = driver.findElements(By.cssSelector(".item-label-container.item-header.item-failed"));
+			cajas.addAll(driver.findElements(By.cssSelector(".item-label-container.item-header.item-fatally-failed")));
+			cajas.addAll(driver.findElements(By.cssSelector(".item-label-container.item-header.item-running")));
 		}
+		om.closeAllOtherTabs();
+		sleep(5000);
+		driver.findElement(By.className("submit-button")).click();
+		sleep(6000);
+		om.cambiarVentanaNavegador(1);
+		sleep(5000);
+		om.closeAllOtherTabs();
 		Assert.assertTrue(driver.findElement(By.id("Status_ilecell")).getText().equalsIgnoreCase("Activated"));
 		
-	}
-		
-	/*	driver.navigate().back();
-		sleep(5000);
-		driver.findElement(By.name("vlocity_cmt__vieworchestrationplan")).click();
-		sleep(10000);
-		boolean chiqui = false;
-		while (chiqui == false) {
-
-			try {
-				driver.findElement(By.id("zoomOut")).click();
-			} catch (Exception ex1) {
-				chiqui = true;
-				driver.findElement(By.id("zoomIn")).click();
-				break;
-			}
-
-		}
-		List <WebElement> cajasVerdes = driver.findElements(By.cssSelector(".item-header.item-completed"));
-		for (WebElement x : cajasVerdes) {
-			if (x.getText().equalsIgnoreCase("CreateSubscriber - S203")) {
-				x.click();
-				}
-		}
-	/*	sleep(8000);
-		int h = 1;
-		om.cambiarVentanaNavegador(i);
-		WebElement box1 = driver.findElement(By.xpath("//*[@id='bodyCell']/div/ng-view/div/div/div/div/div/facet/facet-4412964684870411902/table/tbody/tr[29]/td/attribute-value/div/div/datetime-value"));
-		String a = box1.getText().split(" ")[1];
-		System.out.println(a);*/
-	/*	Date date = new Date();
-		Calendar cal = Calendar.getInstance(); 
-        cal.setTime(date); 
-        date = cal.getTime();
-        DateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
-		Assert.assertTrue(date.equals(box1.getText()));*/
-		
-	
-
+      }
 		
 	}

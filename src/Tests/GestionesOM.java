@@ -85,6 +85,13 @@ public class GestionesOM extends TestBase {
 		}
 	}
 	
+	@Test(groups="OM", priority=1, dataProvider="OMAltaCompleta")
+	public void AltaLinea_Completa_Datos(String sCuenta, String sPlan, String sLinea, String sIccid, String sImsi, String sKi, String sToN, String sCantPac, String sAmiVoz, String sAmiSms) throws InterruptedException {
+		OM pageOm=new OM(driver);
+		int iCantPac = Integer.parseInt(sCantPac);
+		pageOm.Gestion_Alta_De_Linea_Completa(sCuenta, sPlan, sLinea, sIccid, sImsi, sKi, sToN, iCantPac, sAmiVoz, sAmiSms);
+	}
+	
 	@Test(groups="OM", priority=1, dataProvider="OMCambioSim")
 	public void TS_CRM_Cambio_De_SimCard_Datos(String sCuenta, String sPlan, String sLinea, String sIccid, String sImsi, String sKi, String sIccid2, String sImsi2, String sKi2) throws InterruptedException {
 		OM pageOm=new OM(driver);
@@ -144,6 +151,7 @@ public class GestionesOM extends TestBase {
 	public void TS_CRM_Baja_De_Servicio() throws InterruptedException {
 		OM pageOm=new OM(driver);
 		pageOm.Gestion_Alta_De_Linea_Con_1_Servicio("FlorOM", "Plan Prepago Nacional","Llamada en espera");
+		System.out.println("No tiene sentido");
 		pageOm.Baja_De_Servicio("Llamada en espera");
 	}
 	
@@ -433,7 +441,21 @@ public class GestionesOM extends TestBase {
 		}
 		
 		sleep(10000);
+		driver.findElement(By.name("ta_submit_order")).click();
+		sleep(45000);
+		try {
+			oOM.cambiarVentanaNavegador(1);
+			sleep(2000);
+			driver.findElement(By.id("idlist")).click();
+			sleep(5000);
+			oOM.cambiarVentanaNavegador(0);
+		}
+		catch(java.lang.IndexOutOfBoundsException ex1) {
+			//Empty
+		}
+		sleep(12000);
 		oOM.completarFlujoOrquestacion();
+		sleep(5000);
 	}
 	
 	@Test (groups="OM", priority=1)
@@ -574,7 +596,21 @@ public class GestionesOM extends TestBase {
 		}
 		
 		sleep(10000);
+		driver.findElement(By.name("ta_submit_order")).click();
+		sleep(45000);
+		try {
+			oOM.cambiarVentanaNavegador(1);
+			sleep(2000);
+			driver.findElement(By.id("idlist")).click();
+			sleep(5000);
+			oOM.cambiarVentanaNavegador(0);
+		}
+		catch(java.lang.IndexOutOfBoundsException ex1) {
+			//Empty
+		}
+		sleep(12000);
 		oOM.completarFlujoOrquestacion();
+		sleep(5000);
 	}
 	
 	@Test(groups="OM", priority=1)
@@ -625,7 +661,7 @@ public class GestionesOM extends TestBase {
 		oOM.completarFlujoOrquestacion();
 	}
 	
-	@Test()
+	@Test
 	public void OpenPage() throws InterruptedException{
 		suspencionPorSiniestro("MattuOM", "Plan Prepago Nacional", "STCH");
 		String sNumeroDeOrden = driver.findElement(By.id("OrderNumber_ileinner")).getText();
