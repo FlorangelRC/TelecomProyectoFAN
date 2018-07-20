@@ -96,18 +96,6 @@ public class Login extends BasePage {
 			login.click();
 			try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 		}
-		public void ingresarDani() {
-			logininterno.click();
-			try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
-			//Usuario Daniel
-			username.sendKeys("u589831");
-			//Usuario UAT OOCC
-			//username.sendKeys("UAT195528");
-			password.sendKeys("Testa10k");
-	    	//rememberMe.click();
-			login.click();
-			try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
-		}
 		
 		public void ingresarMarketing() {
 			try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}

@@ -442,14 +442,6 @@ public class GestionesOM extends TestBase {
 		
 		sleep(5000);
 		driver.get(sOrderURL);
-		sleep(5000);
-		WebElement wTopButtonRow = driver.findElement(By.id("topButtonRow"));
-		List<WebElement> wTopButtonRowButtons = wTopButtonRow.findElements(By.tagName("input"));
-		for (WebElement wAux : wTopButtonRowButtons) {
-			if (wAux.getAttribute("value").equalsIgnoreCase("TA Submit Order")) {
-				wAux.click();
-			}
-		}
 		
 		sleep(10000);
 		driver.findElement(By.name("ta_submit_order")).click();
@@ -528,12 +520,13 @@ public class GestionesOM extends TestBase {
 		oOM.buscarOrdenPorNumero(sNumeroOrden);
 		
 		sleep(5000);
+		driver.findElement(By.id("accid_ileinner")).findElement(By.tagName("a")).click();
+		
+		sleep(5000);
 		oOM.irAChangeToOrder();
 		
 		sleep(10000);
-		DateFormat dateFormat = new SimpleDateFormat("MM-dd-yyyy");
-		driver.findElement(By.id("RequestDate")).sendKeys(dateFormat.format(oOM.fechaAvanzada()));
-		driver.findElement(By.cssSelector(".form-control.btn.btn-primary.ng-binding")).click();
+		oOM.fechaAvanzada2();
 		
 		sleep(12000);
 		List<WebElement> wTopRightButtons = driver.findElements(By.id("-import-btn"));
@@ -597,18 +590,10 @@ public class GestionesOM extends TestBase {
 		
 		sleep(5000);
 		driver.get(sOrderURL);
-		sleep(5000);
-		WebElement wTopButtonRow = driver.findElement(By.id("topButtonRow"));
-		List<WebElement> wTopButtonRowButtons = wTopButtonRow.findElements(By.tagName("input"));
-		for (WebElement wAux : wTopButtonRowButtons) {
-			if (wAux.getAttribute("value").equalsIgnoreCase("TA Submit Order")) {
-				wAux.click();
-			}
-		}
 		
 		sleep(10000);
 		driver.findElement(By.name("ta_submit_order")).click();
-		sleep(45000);
+		sleep(5000);
 		try {
 			oOM.cambiarVentanaNavegador(1);
 			sleep(2000);
@@ -622,21 +607,26 @@ public class GestionesOM extends TestBase {
 		sleep(12000);
 		oOM.completarFlujoOrquestacion();
 		sleep(5000);
+		
+		driver.findElement(By.id("Order_Tab")).findElement(By.tagName("a")).click();
+		oOM.selectVistaByVisibleText("OM_View_Delete");
+		sleep(5000);
+		oOM.eliminarVista();
 	}
 	
 	@Test(groups="OM", priority=1)
-	public void rehabilitacionPorFraude(String sNumeroOrden, String sTipoSiniestro) {
+	public void rehabilitacionPorFraude(String sNumeroOrden) {
 		OM oOM = new OM(driver);
 		oOM.buscarOrdenPorNumero(sNumeroOrden);
+		
+		sleep(5000);
+		driver.findElement(By.id("accid_ileinner")).findElement(By.tagName("a")).click();
 		
 		sleep(5000);
 		oOM.irAChangeToOrder();
 		
 		sleep(10000);
-		DateFormat dateFormat = new SimpleDateFormat("MM-dd-yyyy");
-		driver.findElement(By.id("RequestDate")).sendKeys(dateFormat.format(oOM.fechaAvanzada()));
-		//driver.findElement(By.id("RequestDate")).sendKeys("07-15-2019");
-		driver.findElement(By.cssSelector(".form-control.btn.btn-primary.ng-binding")).click();
+		oOM.fechaAvanzada2();
 		
 		sleep(12000);
 		List<WebElement> wTopRightButtons = driver.findElements(By.id("-import-btn"));
@@ -660,22 +650,34 @@ public class GestionesOM extends TestBase {
 		//sleep(10000);
 		//driver.findElement(By.id("Order_ileinner")).click();
 		
-		WebElement wTopButtonRow = driver.findElement(By.id("topButtonRow"));
-		List<WebElement> wTopButtonRowButtons = wTopButtonRow.findElements(By.tagName("input"));
-		for (WebElement wAux : wTopButtonRowButtons) {
-			if (wAux.getAttribute("value").equalsIgnoreCase("TA Submit Order")) {
-				wAux.click();
-			}
-		}
-		
 		sleep(10000);
+		driver.findElement(By.name("ta_submit_order")).click();
+		sleep(5000);
+		try {
+			oOM.cambiarVentanaNavegador(1);
+			sleep(2000);
+			driver.findElement(By.id("idlist")).click();
+			sleep(5000);
+			oOM.cambiarVentanaNavegador(0);
+		}
+		catch(java.lang.IndexOutOfBoundsException ex1) {
+			//Empty
+		}
+		sleep(12000);
 		oOM.completarFlujoOrquestacion();
+		sleep(5000);
+		
+		driver.findElement(By.id("Order_Tab")).findElement(By.tagName("a")).click();
+		oOM.selectVistaByVisibleText("OM_View_Delete");
+		sleep(5000);
+		oOM.eliminarVista();
 	}
 	
-	@Test
+
+	//@Test()
 	public void OpenPage() throws InterruptedException{
-		suspencionPorSiniestro("MattuOM", "Plan Prepago Nacional", "STCH");
+		suspencionPorFraude("MattuOM", "Plan Prepago Nacional");
 		String sNumeroDeOrden = driver.findElement(By.id("OrderNumber_ileinner")).getText();
-		rehabilitacionPorSiniestro(sNumeroDeOrden, "RTCH");
+		rehabilitacionPorFraude(sNumeroDeOrden);
 	}
 }

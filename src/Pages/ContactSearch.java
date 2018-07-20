@@ -174,7 +174,7 @@ public class ContactSearch extends BasePage {
 		try {Thread.sleep(3000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 		switch (continuar) {
 		case "si":
-			try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+			try {Thread.sleep(2000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 			driver.findElement(By.id("PDFForm_nextBtn")).click();
 			break;
 		case "no":

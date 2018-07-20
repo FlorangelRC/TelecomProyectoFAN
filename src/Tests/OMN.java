@@ -710,7 +710,7 @@ public class OMN extends TestBase {
 		}
 	}
 	
-	@Test (groups = "OM")
+	@Test
 	public void TS52669_Ordenes_Cliente_Nuevo_Alta_de_linea_Sin_delivery_Sin_VAS_Inicio_automatico() throws InterruptedException {
 		om.Gestion_Alta_De_Linea("FlorOM", "Plan Prepago Nacional");
 		driver.navigate().back();

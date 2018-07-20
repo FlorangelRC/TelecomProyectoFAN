@@ -1,6 +1,5 @@
 package Pages;
 
-import java.util.List;
 import java.util.concurrent.TimeUnit;
 
 import org.openqa.selenium.Alert;
@@ -156,13 +155,12 @@ public class OMRPlansPage extends BasePage {
 		
 	public void deleteService(String service) {
 		sleep(5000);
-		CustomerCare page = new CustomerCare(driver);
 		WebElement showActionsButton = findShowActionsButtonByServiceName(service);
-		page.obligarclick(showActionsButton);
+		showActionsButton.click();
 		System.out.println("Click showActionsButton");
 		sleep(10000);
 		WebElement deleteServiceButton = findDeleteServiceButton(showActionsButton);
-		page.obligarclick(deleteServiceButton);
+		deleteServiceButton.click();
 		System.out.println("Click deleteServiceButton");
 		sleep(2000);
 		WebElement confirmDeleteButton = driver.findElement(By.xpath("//button[contains(text(),'Delete')]"));
@@ -180,37 +178,6 @@ public class OMRPlansPage extends BasePage {
 		showActionsButton.click();
 		WebElement configureServiceButton = fluentWait.until(ExpectedConditions.elementToBeClickable(showActionsButton.findElement(By.xpath("//../following-sibling::*//*[contains(.,'Configure')]"))));
 		configureServiceButton.click();
-	}
-	
-	public void borrarServicio(String service) {
-		sleep(5000);
-		CustomerCare page = new CustomerCare(driver);
-		WebElement showActionsButton = findShowActionsButtonByServiceName(service);
-		page.obligarclick(showActionsButton);
-		System.out.println("Click showActionsButton");
-		sleep(10000);
-		List<WebElement> opc = driver.findElements(By.cssSelector(".slds-dropdown.slds-dropdown_right.cpq-item-actions-dropdown"));
-		for(WebElement UnaO: opc) {
-			if(UnaO.getText().toLowerCase().contains("delete")) {
-				List<WebElement> opc2 = UnaO.findElements(By.tagName("a"));
-				for(WebElement OtraO: opc2) {
-					if(OtraO.getText().toLowerCase().contains("delete")) {
-						page.obligarclick(OtraO);
-						break;
-					}
-				}
-			}
-		}
-		//WebElement deleteServiceButton = findDeleteServiceButton(showActionsButton);
-		//page.obligarclick(deleteServiceButton);
-		System.out.println("Click deleteServiceButton");
-		sleep(2000);
-		WebElement confirmDeleteButton = driver.findElement(By.xpath("//button[contains(text(),'Delete')]"));
-		System.out.println("confirmDeleteButton");
-		confirmDeleteButton.click();
-		System.out.println("Click confirmDeleteButton");
-//		WebElement confirmDeleteButton = fluentWait.until(ExpectedConditions.elementToBeClickable(driver.findElement(By.xpath("//button[contains(text(),'Delete')]"))));
-//		confirmDeleteButton.click();
 	}
 	
 	//*[contains(text(),'Llamada en espera')]//../parent::*//../following-sibling::*//*[contains(concat(' ',normalize-space(@class),' '),'slds-button slds-button_icon-border-filled cpq-item-actions-dropdown-button')]//../following-sibling::*//span[contains(.,'Delete')]

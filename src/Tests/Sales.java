@@ -401,7 +401,7 @@ public class Sales extends TestBase {
 		assertTrue(esta);
 	}
 	
-	//@Test(groups={"Sales", "AltaDeContacto","Ola1"}, priority=2)
+	@Test(groups={"Sales", "AltaDeContacto","Ola1"}, priority=2)
 	public void TS94536_Numero_De_Cuit_Con_Guiones(){
 		String CUIT = "22-35689987-4";
 		boolean esta = false;
@@ -462,7 +462,7 @@ public class Sales extends TestBase {
 		WebElement sig = driver.findElement(By.id("LineAssignment_nextBtn"));
 		page.obligarclick(sig);
 		sleep(10000);
-		page.obligarclick(driver.findElement(By.id("DeliveryMethodSelection_nextBtn")));
+		page.obligarclick(driver.findElement(By.id("DeliveryMethodConfiguration_nextBtn")));
 		sleep(15000);
 		sb.Crear_DireccionEnvio("Buenos Aires","VICENTE LOPEZ","falsa", "", "5846", "", "", "c5248aaa","01125348657","01125348658");
 		sleep(12000);
@@ -611,7 +611,7 @@ public class Sales extends TestBase {
 		Assert.assertTrue(as);
 	}
 	
-	//@Test(groups={"Sales", "AltaDeContacto","Ola1"}, priority=2)  // ALFANUMERICO
+	@Test(groups={"Sales", "AltaDeContacto","Ola1"}, priority=2)  // ALFANUMERICO
 	public void TS94558_Verificar_error_al_ingresar_CUIT_con_cero_al_inicio(){
 		try {Thread.sleep(10000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 		boolean as = false;
@@ -626,7 +626,7 @@ public class Sales extends TestBase {
 		Assert.assertTrue(as);
 	}
 	
-	//@Test(groups={"Sales", "AltaDeContacto","Ola1"}, priority=2)
+	@Test(groups={"Sales", "AltaDeContacto","Ola1"}, priority=2)
 	public void TS94557_Verificar_error_al_ingresar_caracteres_alfanumericos_en_el_CUIT(){
 		try {Thread.sleep(10000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 		boolean as = false;
@@ -641,7 +641,7 @@ public class Sales extends TestBase {
 		Assert.assertTrue(as);
 	}
 	
-	//@Test(groups={"Sales", "AltaDeContacto", "Ola1"}, priority=2)
+	@Test(groups={"Sales", "AltaDeContacto", "Ola1"}, priority=2)
 	public void TS94550_Verificar_campo_CUIT_obligatorio(){
 		try {Thread.sleep(10000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 		ContactSearch contact = new ContactSearch(driver);
@@ -681,12 +681,11 @@ public class Sales extends TestBase {
 	}
 	
 	@Test(groups={"Sales", "AltaDeContacto", "Ola1"}, priority=2)
-	public void TS94588_Seleccionar_opcion_de_validacion_de_identidad(){
+	public void TS94588_Seleccionar_opcion_de_validacion_de_identidad(){//la validacion de identidad no esta mas
 		SalesBase SB = new SalesBase(driver);
 		boolean existe = false;
 		boolean doc = false, qya = false;
 		BasePage Bp= new BasePage();
-		sleep(5000);
 		do {
 			Random aleatorio = new Random(System.currentTimeMillis());
 			aleatorio.setSeed(System.currentTimeMillis());
@@ -720,10 +719,6 @@ public class Sales extends TestBase {
 		CustomerCare cc = new CustomerCare(driver);
 		WebElement este = driver.findElement(By.id("LineAssignment_nextBtn"));
 		cc.obligarclick(este);
-		sleep(20000);
-		cc.obligarclick(driver.findElement(By.id("ICCDAssignment_nextBtn")));
-		sleep(20000);
-		cc.obligarclick(driver.findElement(By.id("InvoicePreview_nextBtn")));
 		sleep(20000);
 		try {Thread.sleep(15000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 		List<WebElement> valid =driver.findElements(By.xpath("//input[@id='ValidationMethodInValidContact' and @type='radio']"));
@@ -1035,7 +1030,7 @@ public class Sales extends TestBase {
 	public void TS94791_Alta_Contacto_Busqueda_Verificar_resultado_busqueda_cliente_activo_inactivo() {
 		SalesBase SB = new SalesBase(driver);
 		SB.BuscarCuenta("DNI", "");
-		try {Thread.sleep(15000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		try {Thread.sleep(10000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 		WebElement act = driver.findElement(By.id("tab-scoped-1__item"));
 		Assert.assertTrue(act.getText().equals("Clientes Activos"));
 		WebElement ina = driver.findElement(By.id("tab-scoped-2__item"));
@@ -1388,9 +1383,7 @@ public class Sales extends TestBase {
 	public void TS94912_Ventas_General_Verificar_que_se_muestre_el_estado_de_una_OV(){
 		SalesBase SB= new SalesBase(driver);
 		SB.BuscarCuenta("DNI", "");
-		sleep(20000);
 		SB.acciondecontacto("catalogo");
-		sleep(15000);
 		SB.elegirplan("plan prepago nacional");
 		SB.continuar();
 		SB.validarpasos();			
@@ -1475,7 +1468,7 @@ public class Sales extends TestBase {
 		dni.setSimpleDropdown(driver.findElement(By.id("SearchClientDocumentType")), "DNI");
 		driver.findElement(By.id("SearchClientDocumentNumber")).sendKeys(sDni);
 		driver.findElement(By.id("SearchClientsDummy")).click();
-		sleep(12000);
+		sleep(4000);
 		driver.findElement(By.id("tab-scoped-3__item")).click();
 		driver.findElement(By.xpath("//*[@id=\"tab-scoped-3\"]/section/div/table/tbody/tr/td[1]/a")).click();
 		sleep(7000);
@@ -1492,7 +1485,6 @@ public class Sales extends TestBase {
 		SalesBase SB = new SalesBase(driver);
 		SB.BuscarCuenta(DNI, "");
 		SB.acciondecontacto("catalogo");
-		sleep(20000);
 		SB.elegirplan("Plan prepago nacional");
 		sleep(20000);
 		List <WebElement> plan = driver.findElements(By.cssSelector(".slds-button.cpq-item-has-children"));
@@ -1676,8 +1668,6 @@ public class Sales extends TestBase {
 		sleep(35000);
 		page.obligarclick(driver.findElement(By.id("LineAssignment_nextBtn")));
 		sleep(20000);
-		//page.obligarclick(driver.findElement(By.id("InvoicePreview_nextBtn")));
-		//sleep(15000);
 		sb.elegirvalidacion("DOC");
 		sleep(5000);
 		driver.findElement(By.id("FileDocumentImage")).sendKeys("C:\\Users\\florangel\\Downloads\\arbolito.jpg");
@@ -2034,20 +2024,13 @@ public class Sales extends TestBase {
 	 
 	  @Test(groups = {"Sales", "AltaDeContacto","Ola1"}, priority=2,  dataProvider="SalesCuentaActiva")
 	  public void TS94737_Alta_de_Contacto_Persona_Fisica_Verificar_seleccion_de_calle_existente(String sCuenta, String sDni, String sLinea) throws IOException{ 
-		  SalesBase SB = new SalesBase(driver); 
-	    boolean h = false;
-	    SB.BtnCrearNuevoCliente();
-		ContactSearch contact = new ContactSearch(driver);
-		try {Thread.sleep(10000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
-		driver.findElement(By.id("FirstName")).sendKeys("Malan");
-		driver.findElement(By.id("LastName")).sendKeys("Fazetto");
-		driver.findElement(By.id("Birthdate")).sendKeys("27/12/1999");
-		contact.sex("masculino");
-		driver.findElement(By.id("Contact_nextBtn")).click();
-		sleep(20000);
-		SB.elegirplan("Plan prepago nacional");
-		SB.continuar();
-		sleep(25000);
+	    SalesBase SB = new SalesBase(driver); 
+	    SB.BuscarCuenta(DNI, sDni); 
+	    driver.findElement(By.id("tab-scoped-3__item")).click();
+	    sleep(3000);
+	    SB.acciondecontacto("nueva cuenta"); 
+	    boolean h = false; 
+	    sleep(5000); 
 	    Select regio = new Select (driver.findElement(By.id("State"))); 
 	    regio.selectByVisibleText("Buenos Aires");   
 	    driver.findElement(By.id("CityTypeAhead")).sendKeys("VILLA LUZURIAGA"); 
@@ -2065,20 +2048,10 @@ public class Sales extends TestBase {
 	  
 	  @Test(groups = {"Sales", "AltaDeContacto","Ola1"}, priority=4, dataProvider="SalesCuentaActiva") 
 	  public void TS94735_Alta_de_Contacto_Persona_Fisica_Verificar_ingreso_manual_de_localidad_inexistente(String sCuenta, String sDni, String sLinea) throws IOException{ 
-		SalesBase SB = new SalesBase(driver); 
-	    boolean h = false;
-	    SB.BtnCrearNuevoCliente();
-		ContactSearch contact = new ContactSearch(driver);
-		try {Thread.sleep(10000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
-		driver.findElement(By.id("FirstName")).sendKeys("Malan");
-		driver.findElement(By.id("LastName")).sendKeys("Fazetto");
-		driver.findElement(By.id("Birthdate")).sendKeys("27/12/1999");
-		contact.sex("masculino");
-		driver.findElement(By.id("Contact_nextBtn")).click();
-		sleep(20000);
-		SB.elegirplan("Plan prepago nacional");
-		SB.continuar();
-		sleep(25000);
+	    SalesBase SB = new SalesBase(driver); 
+	    SB.BuscarCuenta(DNI, sDni); 
+	    SB.acciondecontacto("nueva cuenta"); 
+	    sleep(5000); 
 	    Select regio = new Select (driver.findElement(By.id("State"))); 
 	    regio.selectByVisibleText("Buenos Aires");   
 	    WebElement loc = driver.findElement(By.id("CityTypeAhead")); 
@@ -2092,20 +2065,10 @@ public class Sales extends TestBase {
 	  
 	  @Test(groups = {"Sales", "AltaDeContacto","Ola1"}, priority=4, dataProvider="SalesCuentaActiva") 
 	  public void TS94739_Alta_de_Contacto_Persona_Fisica_Verificar_ingreso_manual_de_cod_postal_inexistente(String sCuenta, String sDni, String sLinea) throws IOException{ 
-		SalesBase SB = new SalesBase(driver); 
-	    boolean h = false;
-	    SB.BtnCrearNuevoCliente();
-		ContactSearch contact = new ContactSearch(driver);
-		try {Thread.sleep(10000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
-		driver.findElement(By.id("FirstName")).sendKeys("Malan");
-		driver.findElement(By.id("LastName")).sendKeys("Fazetto");
-		driver.findElement(By.id("Birthdate")).sendKeys("27/12/1999");
-		contact.sex("masculino");
-		driver.findElement(By.id("Contact_nextBtn")).click();
-		sleep(20000);
-		SB.elegirplan("Plan prepago nacional");
-		SB.continuar();
-		sleep(25000);
+	    SalesBase SB = new SalesBase(driver); 
+	    SB.BuscarCuenta(DNI, sDni); 
+	    SB.acciondecontacto("nueva cuenta"); 
+	    sleep(5000); 
 	    Select regio = new Select (driver.findElement(By.id("State"))); 
 	    regio.selectByVisibleText("Buenos Aires");   
 	    WebElement loc = driver.findElement(By.id("CityTypeAhead")); 
@@ -2122,20 +2085,10 @@ public class Sales extends TestBase {
 	  
 	  @Test(groups = {"Sales", "AltaDeContacto","Ola1"}, priority=4, dataProvider="SalesCuentaActiva")
 	  public void TS94736_Alta_de_Contacto_Persona_Fisica_Verificar_ingreso_manual_de_calle_inexistente(String sCuenta, String sDni, String sLinea) throws IOException{ 
-		SalesBase SB = new SalesBase(driver); 
-	    boolean h = false;
-	    SB.BtnCrearNuevoCliente();
-		ContactSearch contact = new ContactSearch(driver);
-		try {Thread.sleep(10000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
-		driver.findElement(By.id("FirstName")).sendKeys("Malan");
-		driver.findElement(By.id("LastName")).sendKeys("Fazetto");
-		driver.findElement(By.id("Birthdate")).sendKeys("27/12/1999");
-		contact.sex("masculino");
-		driver.findElement(By.id("Contact_nextBtn")).click();
-		sleep(20000);
-		SB.elegirplan("Plan prepago nacional");
-		SB.continuar();
-		sleep(25000);
+	    SalesBase SB = new SalesBase(driver); 
+	    SB.BuscarCuenta(DNI, sDni); 
+	    SB.acciondecontacto("nueva cuenta"); 
+	    sleep(5000); 
 	    Select regio = new Select (driver.findElement(By.id("State"))); 
 	    regio.selectByVisibleText("Buenos Aires");   
 	    WebElement loc = driver.findElement(By.id("CityTypeAhead")); 
@@ -2392,14 +2345,9 @@ public class Sales extends TestBase {
 	  public void TS94799_Alta_Contacto_Busqueda_Verificar_accion_Crear_Nuevo_Contacto() {
 		  SalesBase SB = new SalesBase(driver); 
 		  SB.BuscarCuenta(DNI, "74195213");
-		  sleep(5000);List <WebElement> cc = driver.findElements(By.cssSelector(".slds-form-element__label.ng-binding"));
-			for (WebElement x : cc) {
-				if (x.getText().toLowerCase().contains("+ crear nuevo cliente")) {
-					x.click();
-					break;
-				}
-			}
-			sleep(15000);	
+		  sleep(3000);
+		  driver.findElement(By.cssSelector(".OSradioButton.ng-scope.only-buttom")).click();
+		  sleep(7000);
 		  WebElement msj = driver.findElement(By.id("TextBlock1"));
 		  Assert.assertTrue(msj.getText().contains("El contacto no existe. Complet\u00e1 los datos para crear un nuevo cliente"));
 	  }
@@ -2623,9 +2571,7 @@ public class Sales extends TestBase {
 					c.click();
 				}
 			}
-		sleep(20000);		
-		SB.Crear_DomicilioLegal(provincia, localidad, "falsa", "", "1000", "", "", "1549");
-		sleep(30000);
+		sleep(20000);			
 		WebElement sig = driver.findElement(By.id("LineAssignment_nextBtn"));
 		sig.click();
 		sleep(5000);

@@ -26,7 +26,7 @@ public class SalesMatrix extends TestBase {
 		driver = setConexion.setupEze();
 		sleep(5000);
 		sb = new SalesBase(driver);
-		loginDani(driver);
+		login(driver);
 		sleep(5000);
 		HomeBase homePage = new HomeBase(driver);
 		sleep(6000);
