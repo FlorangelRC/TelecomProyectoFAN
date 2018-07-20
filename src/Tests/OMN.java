@@ -701,8 +701,13 @@ public class OMN extends TestBase {
 		sleep(3000);
 		driver.findElement(By.cssSelector(".last.data2Col")).findElement(By.tagName("a")).click();
 		sleep(5000);
-		Assert.assertTrue(driver.findElement(By.tagName("img")).getAttribute("style").equals("user-select: none;"));
-		driver.navigate().back();
+		try {
+			Assert.assertTrue(driver.findElement(By.tagName("img")).getAttribute("style").equals("user-select: none;"));
+			driver.navigate().back();
+		} catch(org.openqa.selenium.NoSuchElementException e) {
+			driver.navigate().back();
+			Assert.assertTrue(false);
+		}
 	}
 	
 	@Test (groups = "OM")
@@ -731,8 +736,33 @@ public class OMN extends TestBase {
 		sleep(5000);
 		driver.findElement(By.xpath("//*[@id=\"bodyCell\"]/div/ng-view/div/div/div/div/div/facet/facet-4412964684870431361/table/tbody/tr/td[3]")).click();
 		sleep(10000);
-		WebElement acc = driver.findElement(By.className("json"));
-		Assert.assertTrue(acc.getText().contains("ACTIVAR"));
+		try {
+			WebElement acc = driver.findElement(By.className("json"));
+			Assert.assertTrue(acc.getText().contains("ACTIVAR"));
+			driver.switchTo().window(tabs.get(0));
+			om.closeAllOtherTabs();
+		} catch(java.lang.AssertionError e) {
+			driver.switchTo().window(tabs.get(0));
+			om.closeAllOtherTabs();
+			Assert.assertTrue(false);
+		}
+	}
+	
+	@Test
+	public void TS80074_Interfaces_Alta_de_linea_Plan_con_tarjeta_Sin_delivery_Sin_VAS_Numeracion_Movil_S326_updateNumberStatus_Verificacion_de_campos_enviados_en_el_request() throws InterruptedException {
+		om.Gestion_Alta_De_Linea("FlorOM", "Plan Prepago Nacional");
+		driver.navigate().back();
+		sleep(5000);
+		driver.findElement(By.name("vlocity_cmt__vieworchestrationplan")).click();
+		sleep(10000);
+		buscarYClick(driver.findElements(By.cssSelector(".item-label.item-header")), "equals", "updatenumberstatus - s326");
+		sleep(7000);
+		ArrayList<String> tabs = new ArrayList<String> (driver.getWindowHandles());
+		driver.switchTo().window(tabs.get(1));
+		buscarYClick(driver.findElements(By.className("slds-tabs--scoped__link")), "equals", "children");
+		sleep(5000);
+		driver.findElement(By.xpath("//*[@id=\"bodyCell\"]/div/ng-view/div/div/div/div/div/facet/facet-4412964684870431361/table/tbody/tr/td[3]")).click();
+		sleep(10000);
 		
-	}	
+	}
 }
