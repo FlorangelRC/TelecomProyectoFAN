@@ -27,6 +27,15 @@ public class ContactSearch extends BasePage {
 
 	@FindBy(how = How.ID, using = "ContactInfo_nextBtn")
 	private WebElement next;
+	
+	@FindBy(how = How.ID, using = "FirstName")
+	private WebElement nombre;
+	
+	@FindBy(how = How.ID, using = "LastName")
+	private WebElement apellido;
+	
+	@FindBy(how = How.ID, using = "Birthdate")
+	private WebElement fNac;
 
 	@FindBy(how = How.CSS, using = ".vlc-slds-button--tertiary.ng-binding.ng-scope")
 	private WebElement cancel;
@@ -61,7 +70,7 @@ public class ContactSearch extends BasePage {
 		driver.findElement(By.id("DocumentInputSearch")).click();
 		driver.findElement(By.id("DocumentInputSearch")).sendKeys(docValue);
 		try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
-		switch (genero) {
+		switch (genero.toLowerCase()) {
 		case "femenino":
 			gender.get(0).click();
 			break;
@@ -181,5 +190,12 @@ public class ContactSearch extends BasePage {
 			//Nada
 		}
 		try {Thread.sleep(7000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+	}
+	
+	public void Llenar_Contacto(String sNom, String sAp, String sFN ) {
+		nombre.sendKeys(sNom);
+		apellido.sendKeys(sAp);
+		fNac.sendKeys(sFN);
+		sleep(2000);
 	}
 }

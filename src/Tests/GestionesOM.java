@@ -88,6 +88,7 @@ public class GestionesOM extends TestBase {
 	@Test(groups="OM", priority=1, dataProvider="OMAltaCompleta")
 	public void AltaLinea_Completa_Datos(String sCuenta, String sPlan, String sLinea, String sIccid, String sImsi, String sKi, String sToN, String sCantPac, String sAmiVoz, String sAmiSms) throws InterruptedException {
 		OM pageOm=new OM(driver);
+		System.out.println("Es tu culpa Mati");
 		boolean gestion = false;
 		int iCantPac = Integer.parseInt(sCantPac);
 		iCantPac = iCantPac/10;

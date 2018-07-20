@@ -38,6 +38,10 @@ public class SalesNominaciones extends TestBase{
 		try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 		HomeBase homePage = new HomeBase(driver);
 		try {Thread.sleep(6000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		WebElement barraL= driver.findElement(By.id("sidebarCell"));
+		if(barraL.getAttribute("class").contains("sidebarCollapsed")){
+			driver.findElement(By.id("handlebarContainer")).click();
+		}
 	   /* String a = driver.findElement(By.id("tsidLabel")).getText(); 
 	    if (a.contains("Ventas")){}
 	    else {
@@ -51,7 +55,7 @@ public class SalesNominaciones extends TestBase{
 		
 	}
 
-	@AfterMethod(alwaysRun=true)
+	//@AfterMethod(alwaysRun=true)
 	public void IceB() {
 		try {Thread.sleep(10000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();} 
 	    driver.get("https://crm--sit.cs14.my.salesforce.com/home/home.jsp?tsid=02u41000000QWha/"); 
@@ -60,7 +64,7 @@ public class SalesNominaciones extends TestBase{
 	    try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}  
 	}
 	
-	@AfterClass(alwaysRun=true)
+	//@AfterClass(alwaysRun=true)
 	public void Exit() {
 		driver.quit();
 		sleep(2000);
@@ -663,7 +667,54 @@ public class SalesNominaciones extends TestBase{
 		assertTrue(driver.findElement(By.id("PermanencyDueDate")).isEnabled());
 		assertTrue(driver.findElements(By.cssSelector(".slds-form-element__control.slds-input-has-icon.slds-input-has-icon--right")).get(2).findElement(By.tagName("label")).getText().toLowerCase().contains("plazo de permanencia"));
 	}
-	
+
+	@Test(groups = {"Sales", "PreparacionNominacion"}, dataProvider="PreparacionDeDatosSales") 
+	public void TS_CRM_Nominacion_Argentino(String sCuenta, String sLinea, String sDni, String sNombre, String sApellido, String sSexo, String sFnac, String sEmail) { 
+		SalesBase SB = new SalesBase(driver);
+		String NyA = sCuenta;
+		SB.BuscarAvanzada(NyA.split(" ")[0], NyA.split(" ")[1], "", "", "");
+		WebElement cli = driver.findElement(By.id("tab-scoped-1"));
+		if (cli.findElement(By.tagName("tbody")).findElement(By.tagName("tr")).findElement(By.tagName("div")).getText().equals(sCuenta)) {
+			cli.findElement(By.tagName("tbody")).findElement(By.tagName("tr")).click();
+		}
+		sleep(3000);
+		List<WebElement> Lineas = driver.findElement(By.id("tab-scoped-1")).findElement(By.tagName("tbody")).findElements(By.tagName("tr"));
+		for(WebElement UnaL: Lineas) {
+			//System.out.println("********"+UnaL.getText()+"  FIN");
+			if(UnaL.getText().contains(sLinea)) {
+				UnaL.findElements(By.tagName("td")).get(6).findElement(By.tagName("svg")).click();
+				System.out.println("Linea Encontrada");
+				break;
+			}
+		}
+		sleep(13000);
+		ContactSearch contact = new ContactSearch(driver);
+		contact.searchContact2("DNI", sDni, sSexo);
+		contact.Llenar_Contacto(sNombre, sApellido, sFnac);
+		try {contact.ingresarMail(sEmail, "si");}catch (org.openqa.selenium.ElementNotVisibleException ex1) {}
+		contact.tipoValidacion("documento");
+		try {
+			contact.subirArchivo("C:\\Users\\florangel\\Downloads\\mapache.jpg", "si");
+		}catch(Exception ex1) {}
+			BasePage bp = new BasePage(driver);
+		bp.setSimpleDropdown(driver.findElement(By.id("ImpositiveCondition")), "IVA Consumidor Final");
+		SB.Crear_DomicilioLegal("Buenos Aires", "aba", "falsa", "", "1000", "", "", "1549");
+		sleep(38000);
+		//contact.subirformulario("C:\\Users\\florangel\\Downloads\\form.pdf", "si");
+		//sleep(30000);
+		List <WebElement> element = driver.findElement(By.id("NominacionExitosa")).findElements(By.tagName("p"));
+		System.out.println("cont="+element.get(0).getText());
+		boolean a = false;
+		for (WebElement x : element) {
+			if (x.getText().toLowerCase().contains("nominaci\u00f3n exitosa!")) {
+				a = true;
+				//System.out.println(x.getText());
+			}
+		}
+		Assert.assertTrue(a);
+		//driver.findElement(By.id("FinishProcess_nextBtn")).click();
+		
+	}	
 }
 
 	

@@ -477,8 +477,6 @@ for(WebElement e: btns){
 	 //DOC SMS o QA
 	 CustomerCare cc = new CustomerCare(driver);
 	 CustomerCare page = new CustomerCare(driver);
-	 sleep(10000);
-	 page.obligarclick(driver.findElement(By.id("InvoicePreview_nextBtn")));
 		sleep(15000);
 	try {Thread.sleep(15000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 	List<WebElement> valid =driver.findElements(By.id("ValidationMethodInValidContact"));
@@ -906,7 +904,7 @@ try{	driver.findElement(By.id("alert-ok-button")).click();	} catch (NoSuchElemen
 			driver.findElement(By.id("Street")).sendKeys(Keys.ARROW_DOWN);
 			driver.findElement(By.id("Street")).sendKeys(Keys.ENTER);
 			driver.findElement(By.id("NewStreetName")).sendKeys(calle);*/
-			
+			sleep(3000);
 			driver.findElement(By.id("StreetNumber")).sendKeys(altura);
 			driver.findElement(By.id("FloorNumber")).sendKeys(piso);
 			driver.findElement(By.id("Department")).sendKeys(dpto);
@@ -917,4 +915,23 @@ try{	driver.findElement(By.id("alert-ok-button")).click();	} catch (NoSuchElemen
 			try {Thread.sleep(3000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 			driver.findElement(By.id("ShippingAddressData_nextBtn")).click();
 		 }
+		
+		public void Crear_Cliente(String DNI){
+			try {Thread.sleep(10000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+			boolean existe = false;
+			BasePage dni = new BasePage(driver);
+			dni.setSimpleDropdown(driver.findElement(By.id("SearchClientDocumentType")),"DNI");
+			driver.findElement(By.id("SearchClientDocumentNumber")).click();
+			driver.findElement(By.id("SearchClientDocumentNumber")).sendKeys(DNI);
+			driver.findElement(By.id("SearchClientsDummy")).click();
+			try {Thread.sleep(3000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+			List <WebElement> cc = driver.findElements(By.cssSelector(".slds-form-element__label.ng-binding"));
+			for (WebElement x : cc) {
+				if (x.getText().toLowerCase().contains("+ crear nuevo cliente")) {
+					x.click();
+					break;
+				}
+			}
+			try {Thread.sleep(7000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		}
  }

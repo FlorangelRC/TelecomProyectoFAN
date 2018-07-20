@@ -440,8 +440,8 @@ public class Sales extends TestBase {
 		boolean DPF = false;
 		SalesBase sb = new SalesBase(driver);
 		sb.DesloguearLoguear("call", 4);
-		sleep(5000);
-		try {
+		sleep(25000);
+		//try {
 			driver.findElement(By.xpath("//a[@href=\'https://crm--sit--c.cs14.visual.force.com/apex/taClientSearch']")).click();
 			sleep(10000);
 			sb.BuscarCuenta(DNI, sDni);
@@ -467,9 +467,9 @@ public class Sales extends TestBase {
 		sb.Crear_DireccionEnvio("Buenos Aires","VICENTE LOPEZ","falsa", "", "5846", "", "", "c5248aaa","01125348657","01125348658");
 		sleep(12000);
 		/*page.obligarclick(driver.findElement(By.id("ICCDAssignment_nextBtn")));
-		sleep(10000);*/
-		page.obligarclick(driver.findElement(By.id("InvoicePreview_nextBtn")));
 		sleep(10000);
+		page.obligarclick(driver.findElement(By.id("InvoicePreview_nextBtn")));
+		sleep(10000);*/
 		driver.findElement(By.id("PaymentMethodRadio")).click();
 		sleep(4000);
 		List<WebElement> mediosP = driver.findElements(By.cssSelector(".slds-list__item.ng-binding.ng-scope"));
@@ -484,10 +484,10 @@ public class Sales extends TestBase {
 		assertTrue(TDC&&DPF);
 		sleep(4000);
 		sb.DesloguearLoguear("agente", 4);
-		}catch(Exception ex1) {
+		/*}catch(Exception ex1) {
 			sb.DesloguearLoguear("agente",4);
 			Assert.assertTrue(false);
-		}
+		}*/
 	}
 		
 	
@@ -724,6 +724,8 @@ public class Sales extends TestBase {
 		cc.obligarclick(driver.findElement(By.id("ICCDAssignment_nextBtn")));
 		sleep(20000);
 		cc.obligarclick(driver.findElement(By.id("InvoicePreview_nextBtn")));
+		sleep(20000);
+		cc.obligarclick(driver.findElement(By.id("SelectPaymentMethodsStep_nextBtn")));
 		sleep(20000);
 		try {Thread.sleep(15000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 		List<WebElement> valid =driver.findElements(By.xpath("//input[@id='ValidationMethodInValidContact' and @type='radio']"));
@@ -1658,6 +1660,7 @@ public class Sales extends TestBase {
 	@Test(groups = {"Sales", "AltaDeContacto"}, priority=2, dataProvider="SalesCuentaActiva") 
     public void TS94583_Alta_de_Contacto_Persona_Fisica_Verificar_estado_fallido_de_la_validacion_de_identidad_por_DNI_con_documentacion_invalida_XX(String sCuenta, String sDni, String sLinea) { 
 	    SalesBase sb = new SalesBase(driver); 
+	    CustomerCare cc = new CustomerCare(driver);
 	    CustomerCare page = new CustomerCare(driver);
 	    sleep(5000);
 	    sb.BtnCrearNuevoCliente();
@@ -1676,8 +1679,12 @@ public class Sales extends TestBase {
 		sleep(35000);
 		page.obligarclick(driver.findElement(By.id("LineAssignment_nextBtn")));
 		sleep(20000);
-		//page.obligarclick(driver.findElement(By.id("InvoicePreview_nextBtn")));
-		//sleep(15000);
+		cc.obligarclick(driver.findElement(By.id("ICCDAssignment_nextBtn")));
+		sleep(20000);
+		cc.obligarclick(driver.findElement(By.id("InvoicePreview_nextBtn")));
+		sleep(20000);
+		cc.obligarclick(driver.findElement(By.id("SelectPaymentMethodsStep_nextBtn")));
+		sleep(20000);
 		sb.elegirvalidacion("DOC");
 		sleep(5000);
 		driver.findElement(By.id("FileDocumentImage")).sendKeys("C:\\Users\\florangel\\Downloads\\arbolito.jpg");
@@ -2737,6 +2744,52 @@ public class Sales extends TestBase {
 		catch(org.openqa.selenium.NoSuchElementException ex1) {
 			Assert.assertTrue(true);
 		}
+	}
+	
+	@Test(groups={"Sales", "AltaDeContacto", "Ola1"}, priority=4, dataProvider="SalesCuentaActiva")
+	public void TS_CRM_Alta_de_Linea(String sCuenta, String sDni, String sLinea) throws IOException {
+		CustomerCare cc = new CustomerCare(driver);
+		SalesBase sb = new SalesBase(driver);
+		sleep(5000);
+		sb.Crear_Cliente("59885627");
+		ContactSearch contact = new ContactSearch(driver);
+		contact.sex("masculino");
+		contact.Llenar_Contacto("Malan", "Fareto", "08/08/1992");
+		try {contact.ingresarMail("malannominacion@gmail.com", "si");}catch (org.openqa.selenium.ElementNotVisibleException ex1) {}
+		String asd = driver.findElement(By.id("SearchClientDocumentNumber")).getAttribute("value");
+		try {Thread.sleep(10000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		driver.findElement(By.id("Contact_nextBtn")).click();
+		sleep(18000);
+		sb.elegirplan("Plan prepago nacional");
+		sb.continuar();
+		sleep(20000);
+		sb.Crear_DomicilioLegal(provincia, localidad, "falsa", "", "1000", "", "", "1549");
+		sleep(24000);
+		WebElement sig = driver.findElement(By.id("LineAssignment_nextBtn"));
+		cc.obligarclick(sig);
+		sleep(10000);
+		cc.obligarclick(driver.findElement(By.id("ICCDAssignment_nextBtn")));
+		sleep(20000);
+		cc.obligarclick(driver.findElement(By.id("InvoicePreview_nextBtn")));
+		sleep(20000);
+		cc.obligarclick(driver.findElement(By.id("SelectPaymentMethodsStep_nextBtn")));
+		sleep(20000);
+		sb.elegirvalidacion("DOC");
+		sleep(8000);
+		driver.findElement(By.id("FileDocumentImage")).sendKeys("C:\\Users\\florangel\\Downloads\\mapache.jpg");
+		sleep(3000);
+		cc.obligarclick(driver.findElement(By.id("DocumentMethod_nextBtn")));
+		sleep(10000);
+		cc.obligarclick(driver.findElement(By.id("ValidationResult_nextBtn")));
+		sleep(10000);
+		cc.obligarclick(driver.findElement(By.id("OrderSumary_nextBtn")));
+		sleep(10000);
+		try {
+			cc.obligarclick(driver.findElement(By.id("Step_Error_Huawei_S029_nextBtn")));
+		}catch(Exception ex1) {}
+		
+		
+		
 	}
 	
 }
