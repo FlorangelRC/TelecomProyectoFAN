@@ -57,7 +57,7 @@ public class ta_CPQ extends TestBase {
 	protected WebDriver driver;
 	protected  WebDriverWait wait;
 
-	//@AfterClass(alwaysRun=true)
+	@AfterClass(alwaysRun=true)
 	public void tearDown() {
 		driver.quit();
 		sleep(1000);
@@ -505,20 +505,6 @@ public class ta_CPQ extends TestBase {
 	
 	@Test(groups={"Sales", "AltaDeLinea", "Ola1"})
 	public void TS94520_CRM_Fase_1_SalesCPQ_Alta_Linea_Costo_Operacion_Visualizar_costo_cero_en_modo_de_entrega() {
-		SalesBase SB = new SalesBase(driver);
-		sleep(20000);
-		SB.elegirplan("Galaxy s8");
-		sleep(20000);
-		List <WebElement> plan = driver.findElements(By.cssSelector(".slds-button.cpq-item-has-children"));
-		boolean a = false;
-		for (WebElement x : plan) {
-			if (x.getText().toLowerCase().contains("galaxy s8")) {
-				a = true;
-			}
-		}
-		List <WebElement> precio = driver.findElements(By.cssSelector(".slds-col.slds-shrink.slds-text-align--center"));
-		Assert.assertTrue(a);
-		Assert.assertTrue(precio.get(3).getText().contains("0,00"));
 		assertTrue(false);
 	}
 	
