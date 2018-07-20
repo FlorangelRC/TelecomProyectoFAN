@@ -85,6 +85,24 @@ public class GestionesOM extends TestBase {
 		}
 	}
 	
+	@Test(groups="OM", priority=1, dataProvider="OMAltaCompleta")
+	public void AltaLinea_Completa_Datos(String sCuenta, String sPlan, String sLinea, String sIccid, String sImsi, String sKi, String sToN, String sCantPac, String sAmiVoz, String sAmiSms) throws InterruptedException {
+		OM pageOm=new OM(driver);
+		boolean gestion = false;
+		int iCantPac = Integer.parseInt(sCantPac);
+		iCantPac = iCantPac/10;
+		pageOm.Gestion_Alta_De_Linea_Completa(sCuenta, sPlan, sLinea, sIccid, sImsi, sKi, sToN, iCantPac, sAmiVoz, sAmiSms);
+		WebElement status = driver.findElement(By.id("Status_ilecell"));
+		List <WebElement> gest = driver.findElements(By.cssSelector(".dataCol.inlineEditWrite"));
+		for (WebElement x : gest) {
+			if (x.getText().equalsIgnoreCase("Venta")) {
+				gestion = true;
+			}
+		}
+		Assert.assertTrue(status.getText().equalsIgnoreCase("Activated"));
+		Assert.assertTrue(gestion);
+	}
+	
 	@Test(groups="OM", priority=1, dataProvider="OMCambioSim")
 	public void TS_CRM_Cambio_De_SimCard_Datos(String sCuenta, String sPlan, String sLinea, String sIccid, String sImsi, String sKi, String sIccid2, String sImsi2, String sKi2) throws InterruptedException {
 		OM pageOm=new OM(driver);
@@ -137,13 +155,14 @@ public class GestionesOM extends TestBase {
 	@Test(groups="OM", priority=1)
 	public void AltaLinea_Varios_Packs() throws InterruptedException {
 		OM pageOm=new OM(driver);
-		pageOm.Gestion_Alta_De_Linea_Con_Varios_Packs("FlorOM", "Plan Prepago Nacional","Packs Opcionales",10);
+		pageOm.Gestion_Alta_De_Linea_Con_Varios_Packs("FlorOM", "Plan Prepago Nacional","Packs Opcionales",5);
 	}
 	
 	@Test(groups="OM", priority=1)
 	public void TS_CRM_Baja_De_Servicio() throws InterruptedException {
 		OM pageOm=new OM(driver);
 		pageOm.Gestion_Alta_De_Linea_Con_1_Servicio("FlorOM", "Plan Prepago Nacional","Llamada en espera");
+		System.out.println("No tiene sentido");
 		pageOm.Baja_De_Servicio("Llamada en espera");
 	}
 	
@@ -589,23 +608,25 @@ public class GestionesOM extends TestBase {
 		oOM.completarFlujoOrquestacion();
 		sleep(5000);
 		
+		driver.findElement(By.id("Order_Tab")).findElement(By.tagName("a")).click();
 		oOM.selectVistaByVisibleText("OM_View_Delete");
+		sleep(5000);
 		oOM.eliminarVista();
 	}
 	
 	@Test(groups="OM", priority=1)
-	public void rehabilitacionPorFraude(String sNumeroOrden, String sTipoSiniestro) {
+	public void rehabilitacionPorFraude(String sNumeroOrden) {
 		OM oOM = new OM(driver);
 		oOM.buscarOrdenPorNumero(sNumeroOrden);
+		
+		sleep(5000);
+		driver.findElement(By.id("accid_ileinner")).findElement(By.tagName("a")).click();
 		
 		sleep(5000);
 		oOM.irAChangeToOrder();
 		
 		sleep(10000);
-		DateFormat dateFormat = new SimpleDateFormat("MM-dd-yyyy");
-		driver.findElement(By.id("RequestDate")).sendKeys(dateFormat.format(oOM.fechaAvanzada()));
-		//driver.findElement(By.id("RequestDate")).sendKeys("07-15-2019");
-		driver.findElement(By.cssSelector(".form-control.btn.btn-primary.ng-binding")).click();
+		oOM.fechaAvanzada2();
 		
 		sleep(12000);
 		List<WebElement> wTopRightButtons = driver.findElements(By.id("-import-btn"));
@@ -629,22 +650,34 @@ public class GestionesOM extends TestBase {
 		//sleep(10000);
 		//driver.findElement(By.id("Order_ileinner")).click();
 		
-		WebElement wTopButtonRow = driver.findElement(By.id("topButtonRow"));
-		List<WebElement> wTopButtonRowButtons = wTopButtonRow.findElements(By.tagName("input"));
-		for (WebElement wAux : wTopButtonRowButtons) {
-			if (wAux.getAttribute("value").equalsIgnoreCase("TA Submit Order")) {
-				wAux.click();
-			}
-		}
-		
 		sleep(10000);
+		driver.findElement(By.name("ta_submit_order")).click();
+		sleep(5000);
+		try {
+			oOM.cambiarVentanaNavegador(1);
+			sleep(2000);
+			driver.findElement(By.id("idlist")).click();
+			sleep(5000);
+			oOM.cambiarVentanaNavegador(0);
+		}
+		catch(java.lang.IndexOutOfBoundsException ex1) {
+			//Empty
+		}
+		sleep(12000);
 		oOM.completarFlujoOrquestacion();
+		sleep(5000);
+		
+		driver.findElement(By.id("Order_Tab")).findElement(By.tagName("a")).click();
+		oOM.selectVistaByVisibleText("OM_View_Delete");
+		sleep(5000);
+		oOM.eliminarVista();
 	}
 	
-	@Test()
+
+	//@Test()
 	public void OpenPage() throws InterruptedException{
-		suspencionPorSiniestro("MattuOM", "Plan Prepago Nacional", "STCH");
+		suspencionPorFraude("MattuOM", "Plan Prepago Nacional");
 		String sNumeroDeOrden = driver.findElement(By.id("OrderNumber_ileinner")).getText();
-		rehabilitacionPorSiniestro(sNumeroDeOrden, "RTCH");
+		rehabilitacionPorFraude(sNumeroDeOrden);
 	}
 }
