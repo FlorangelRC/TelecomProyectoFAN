@@ -763,6 +763,18 @@ public class OMN extends TestBase {
 		sleep(5000);
 		driver.findElement(By.xpath("//*[@id=\"bodyCell\"]/div/ng-view/div/div/div/div/div/facet/facet-4412964684870431361/table/tbody/tr/td[3]")).click();
 		sleep(10000);
-		
+		System.out.println(driver.findElement(By.className("json")).getText());
+		try {
+			WebElement acc = driver.findElement(By.className("json"));
+			Assert.assertTrue(acc.getText().contains("{\r\n" + 
+					"  \"ListaNumeros\": [\r\n" + 
+					"    {\r\n"));
+			driver.switchTo().window(tabs.get(0));
+			om.closeAllOtherTabs();
+		} catch(java.lang.AssertionError e) {
+			driver.switchTo().window(tabs.get(0));
+			om.closeAllOtherTabs();
+			Assert.assertTrue(false);
+		}
 	}
 }
