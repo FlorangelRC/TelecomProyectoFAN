@@ -226,9 +226,9 @@ public void setUp() throws Exception {
 	 OM pageOm=new OM(driver);
 	 pageOm.Alta_de_linea_con_Pack("QuelysOM", "Plan con tarjeta","Pack Internet x 30 dias");
 	 sleep(5000);
-	 pageOm.completarFlujoOrquestacion();
-	 pageOm.verificacionDeCamposEnviadosenelRequest("CreateSubscriber - S203", "Env\u00edo de Activaci\u00f3n de Servicios a la Red", "updateNumerStatus - S326");
-
+	 pageOm.verificacionDeCamposEnviadosenelRequest("CreateSubscriber - S203", "Env\u00edo de Activaci\u00f3n de Servicios a la Red", "updateNumberStatus - S326");
+	 WebElement status = driver.findElement(By.id("Status_ilecell"));
+	 Assert.assertTrue(status.getText().equalsIgnoreCase("Activated"));	
 	}
 	
 	@Test(groups= {"OM","altaconPack","Verificacionderequest"}, dependsOnMethods ="TS102304_CRM_OM_Ola_2_Interfaces_Alta_de_linea_con_1_pack_Plan_con_tarjeta_Sin_delivery_Sin_VAS_Numeracion_Movil_S326_updateNumberStatus_Verificacion_de_parametros_enviados")
@@ -251,9 +251,9 @@ public void setUp() throws Exception {
 	 OM pageOm=new OM(driver);
 	 pageOm.Alta_de_linea_con_Pack("QuelysOM", "Plan prepago nacional","Pack Internet x 30 dias");
 	 sleep(5000);
-	 pageOm.completarFlujoOrquestacion();
-	 pageOm.verificacionDeCamposEnviadosenelRequest("CreateSubscriber - S203", "Env\u00edo de Activaci\u00f3n de Servicios a la Red", "updateNumerStatus - S326");
-
+	 pageOm.verificacionDeCamposEnviadosenelRequest("CreateSubscriber - S203", "Env\u00edo de Activaci\u00f3n de Servicios a la Red", "updateNumberStatus - S326");
+	 WebElement status = driver.findElement(By.id("Status_ilecell"));
+	 Assert.assertTrue(status.getText().equalsIgnoreCase("Activated"));
 	}
 	
 	@Test(groups= {"OM","altaconPack","Verificacionderequest"}, dependsOnMethods ="TS102309_CRM_OM_Ola_2_Interfaces_Alta_de_linea_con_1_pack_Plan_prepago_nacional_Sin_delivery_Sin_VAS_Numeracion_Movil_S326_updateNumberStatus_Verificacion_de_parametros_enviados")

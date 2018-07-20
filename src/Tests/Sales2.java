@@ -841,7 +841,7 @@ public class Sales2 extends TestBase{
 		
 	}
 	
-	@Test(groups={"Sales", "AltaDeContacto","Ola1"}, priority=2)  
+	//@Test(groups={"Sales", "AltaDeContacto","Ola1"}, priority=2)  
 	public void TS94566_Alta_De_Contacto_Persona_Fisica_Verificar_Mascara_Del_Campo_CUIT(){
 		try {Thread.sleep(10000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 		ContactSearch contact = new ContactSearch(driver);
