@@ -929,7 +929,7 @@ public void deleteOrdersNoActivated(String Vista) {
 		driver.findElement(By.id("RequestDate")).sendKeys(dateFormat.format(fechaAvanzada()));
 		driver.findElement(By.cssSelector(".form-control.btn.btn-primary.ng-binding")).click();
 		sleep(12000);
-		Agregar_Varios_Packs(pestana,packs);
+		Agregar_Varios_Packs(packs);
 		driver.findElement(By.id("-import-btn")).click();
 		sleep(8000);
 		agregarGestion("Alta producto gen\u00e9rico");
@@ -1209,7 +1209,7 @@ public void deleteOrdersNoActivated(String Vista) {
 		sleep(2000);
 		driver.switchTo().defaultContent();
 		sleep(4000);
-		Agregar_Varios_Packs(Servicio,packs);
+		Agregar_Varios_Packs(packs);
 		sleep(5000);
 		driver.findElement(By.cssSelector(".slds-button.cpq-item-has-children")).click();
 		OM.configuracion();
@@ -2361,17 +2361,16 @@ public void agregarNumAmigo(WebElement boton,String num1){
 	driver.findElement(By.cssSelector(".slds-button__icon.slds-button__icon--large")).click();
 }
 
-public void configAmigos(String servicio1,String num1,String num2) {
+public void configAmigos(String num1,String num2) {
 	sleep(4000);
+	CustomerCare cc = new CustomerCare(driver);
 	driver.findElement(By.cssSelector(".slds-button.cpq-item-has-children")).click();
 	sleep(5000);
 	List<WebElement> NomPest = driver.findElements(By.xpath("//*[@class='cpq-item-product-child-level-1 cpq-item-child-product-name-wrapper']"));
 	
 	for(WebElement a: NomPest) {
 		System.out.print(a.getText().toLowerCase());
-		System.out.println(" : "+servicio1.toLowerCase());
-		if (a.getText().toLowerCase().contains(servicio1.toLowerCase())) {
-			System.out.println(servicio1);
+		if (a.getText().toLowerCase().contains("friends&family")) {
 			a.findElement(By.tagName("button")).click();
 			sleep(8000);
 			break;
@@ -2379,14 +2378,13 @@ public void configAmigos(String servicio1,String num1,String num2) {
 	}
 	
 	List<WebElement> subPack = driver.findElement(By.cssSelector(".cpq-item-product-child-level-2.ng-not-empty.ng-valid")).findElements(By.cssSelector(".slds-button.cpq-item-has-children"));
-	subPack.get(0).click();
-	subPack.get(1).click();
+	cc.obligarclick(subPack.get(0));
+	cc.obligarclick(subPack.get(1));
 	sleep(3000);
 	List<WebElement> subAmigos = driver.findElements(By.cssSelector(".cpq-item-product-child-level-3.ng-not-empty.ng-valid"));
 	subAmigos.get(0).findElement(By.cssSelector(".slds-button.cpq-item-has-children")).click();
 	subAmigos.get(1).findElement(By.cssSelector(".slds-button.cpq-item-has-children")).click();
 	sleep(4000);
-	CustomerCare cc = new CustomerCare(driver);
 	List<WebElement> servAmigos = driver.findElements(By.cssSelector(".cpq-item-product-child-level-4.ng-not-empty.ng-valid"));
 	int i = -1;
 	if(!num1.equals("*")) {
@@ -2434,18 +2432,28 @@ public void configAmigos(String servicio1,String num1,String num2) {
 		agregarNumAmigo(servAmigos.get(i),num2);
 	}
 	sleep(5000);
+	cc.obligarclick(subPack.get(0));
+	cc.obligarclick(subPack.get(1));
+	for(WebElement a: NomPest) {
+		System.out.print(a.getText().toLowerCase());
+		if (a.getText().toLowerCase().contains("friends&family")) {
+			a.findElement(By.tagName("button")).click();
+			sleep(8000);
+			break;
+		}
+	}
 	
 }
 
-public void TodosLosServicios(String servicio1) {
+public void TodosLosServicios() {
 	sleep(4000);
 	driver.findElement(By.cssSelector(".slds-button.cpq-item-has-children")).click();
 	sleep(5000);
-	List<WebElement> NomPest = driver.findElements(By.xpath("//*[@class='cpq-item-product-child-level-1 cpq-item-child-product-name-wrapper']"));
+	CustomerCare cc = new CustomerCare(driver);
+	List<WebElement> NomPest = driver.findElements(By.cssSelector(".cpq-item-product-child-level-1.cpq-item-child-product-name-wrapper"));
 	
 	for(WebElement a: NomPest) {
-		if (a.getText().toLowerCase().contains(servicio1.toLowerCase())) {
-			System.out.println(servicio1);
+		if (a.getText().toLowerCase().contains("servicios basicos general movil")) {
 			a.findElement(By.tagName("button")).click();
 			sleep(8000);
 			break;
@@ -2453,9 +2461,8 @@ public void TodosLosServicios(String servicio1) {
 	}
 	NomPest = driver.findElements(By.className("cpq-item-base-product-details"));
 	for(WebElement a: NomPest) {
-		if (a.getText().toLowerCase().contains("caller id") && !a.getText().toLowerCase().contains(servicio1.toLowerCase())) {
+		if (a.getText().toLowerCase().contains("caller id") && !a.getText().toLowerCase().contains("servicios basicos general movil")) {
 			System.out.println("Lo encontre");
-			CustomerCare cc = new CustomerCare(driver);
 			List<WebElement> servicios = a.findElements(By.cssSelector(".slds-button.slds-button_neutral"));
 			System.out.println("Tam = "+servicios.size());
 			for (WebElement UnS : servicios) {
@@ -2465,30 +2472,36 @@ public void TodosLosServicios(String servicio1) {
 			break;
 		}
 	}
+	NomPest = driver.findElements(By.cssSelector(".cpq-item-product-child-level-1.cpq-item-child-product-name-wrapper"));
+	for(WebElement a: NomPest) {
+		if (a.getText().toLowerCase().contains("servicios basicos general movil")) {
+			cc.obligarclick(a.findElement(By.tagName("button")));
+			sleep(8000);
+			break;
+		}
+	}
 }
-
-public void Agregar_Varios_Packs(String servicio1, int packs) {
+public void Agregar_Varios_Packs(int packs) {
 	sleep(6000);
 	driver.findElement(By.cssSelector(".slds-button.cpq-item-has-children")).click();
 	sleep(5000);
+	CustomerCare cc = new CustomerCare(driver);
 	List<WebElement> NomPack = driver.findElements(By.xpath("//*[@class='cpq-item-product-child-level-1 cpq-item-child-product-name-wrapper']"));
 	WebElement x;
 	for(WebElement a: NomPack) {
-		if (a.getText().toLowerCase().contains(servicio1.toLowerCase())) {
-			System.out.println(servicio1);
+		if (a.getText().toLowerCase().contains("packs opcionales")) {
 			x=a;
 			a.findElement(By.tagName("button")).click();
 			sleep(8000);
 			break;
 		}
 	}
-
 	List<WebElement> subPack = driver.findElements(By.xpath("//*[@class='cpq-item-product-child-level-2 cpq-item-child-product-name-wrapper']"));
 	List<WebElement> Btnsubpack = driver.findElements(By.xpath("//*[@class='cpq-item-product-child-level-2 cpq-item-child-product-name-wrapper']//*[@class='slds-button slds-button_icon-small']"));			
 	if (subPack.size() == Btnsubpack.size()) {
 		for(WebElement b: subPack) {
 			sleep(8000);
-			System.out.println(b);
+			System.out.println(b.getText());
 			b.findElement(By.tagName("button")).click();
 		}
 			
@@ -2501,9 +2514,17 @@ public void Agregar_Varios_Packs(String servicio1, int packs) {
 		 for (int i = 0; i < packs; i++) {
 			 sleep(8000);
 			System.out.println(Pack.get(i).getText());
-			Agregar.get(i).click();					
+			cc.obligarclick(Agregar.get(i));					
 		}
 	}
+	 for(WebElement a: NomPack) {
+			if (a.getText().toLowerCase().contains("packs opcionales")) {
+				x=a;
+				cc.obligarclick(a.findElement(By.tagName("button")));
+				sleep(8000);
+				break;
+			}
+		}
 }
 
 public void Gestion_Alta_De_Linea_Con_Todos_Los_Servicios(String Cuenta, String Plan, String Linea, String ICCID, String IMSI, String KI, String Pestana) throws InterruptedException {
@@ -2518,7 +2539,7 @@ public void Gestion_Alta_De_Linea_Con_Todos_Los_Servicios(String Cuenta, String 
 	sleep(2000);
 	driver.switchTo().defaultContent();
 	sleep(4000);
-	TodosLosServicios(Pestana);
+	TodosLosServicios();
 	driver.findElement(By.cssSelector(".slds-button.cpq-item-has-children")).click();
 	configuracion(Linea, ICCID, IMSI, KI);
 	AgregarDomicilio();
@@ -2563,7 +2584,7 @@ public void Gestion_Alta_De_Linea_Con_Amigos(String Cuenta, String Plan, String 
 	sleep(2000);
 	driver.switchTo().defaultContent();
 	sleep(4000);
-	configAmigos(Servicio,Num1,Num2);
+	configAmigos(Num1,Num2);
 	sleep(5000);
 	driver.findElement(By.cssSelector(".slds-button.cpq-item-has-children")).click();
 	OM.configuracion();
@@ -2624,4 +2645,65 @@ public void Gestion_Alta_De_Linea_Con_Amigos(String Cuenta, String Plan, String 
 		oOM.traerElementoColumna(wBody, 2).get(0).findElement(By.tagName("a")).click();
 	}
 
+	public void Gestion_Alta_De_Linea_Completa(String Cuenta, String Plan, String Linea, String ICCID, String IMSI, String KI,String ToN, int CantPac, String AmiVoz, String AmiSms) throws InterruptedException {
+		OMQPage OM=new OMQPage (driver);
+		crearOrden(Cuenta);
+		assertTrue(driver.findElement(By.cssSelector(".noSecondHeader.pageType")).isDisplayed());
+		agregarGestion("Venta");
+		sleep(2000);
+		OM.getCPQ().click();
+		sleep(5000);
+		OM.colocarPlan1(Plan);
+		sleep(10000);
+		driver.switchTo().defaultContent();
+		sleep(4000);
+		
+		if(CantPac>0) {
+			Agregar_Varios_Packs(CantPac);
+			sleep(5000);
+			driver.findElement(By.cssSelector(".slds-button.cpq-item-has-children")).click();
+		}
+		if(!AmiVoz.equals("*")||!AmiSms.equals("*")) {
+			sleep(4000);
+			System.out.println("Amigos");
+			configAmigos(AmiVoz,AmiSms);
+			sleep(5000);
+			driver.findElement(By.cssSelector(".slds-button.cpq-item-has-children")).click();
+		}
+		if(ToN.toLowerCase().equals("todo")) {
+			TodosLosServicios();
+			driver.findElement(By.cssSelector(".slds-button.cpq-item-has-children")).click();
+			sleep(4000);
+		}
+		
+		
+		
+		configuracion(Linea, ICCID, IMSI, KI);
+		AgregarDomicilio();
+		sleep(5000);
+		driver.findElement(By.name("ta_submit_order")).click();
+		sleep(15000);
+		try {System.out.println(driver.switchTo().alert().getText());
+			driver.switchTo().alert().accept();
+			driver.switchTo().alert().dismiss();
+			driver.switchTo().defaultContent();
+			driver.findElement(By.name("ta_submit_order")).click();
+		} catch (org.openqa.selenium.NoAlertPresentException e) {
+			driver.switchTo().defaultContent();
+		}
+		sleep(45000);
+		 try { 
+		      cambiarVentanaNavegador(1); 
+		      sleep(2000); 
+		      driver.findElement(By.id("idlist")).click(); 
+		      sleep(5000); 
+		      cambiarVentanaNavegador(0); 
+		    }catch(java.lang.IndexOutOfBoundsException ex1) {} 
+		sleep(12000);
+		completarFlujoOrquestacion();
+		sleep(5000);
+
+		
+	}
+	
 }
