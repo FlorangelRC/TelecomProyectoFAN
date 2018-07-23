@@ -3,6 +3,8 @@ package Tests;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.json.JSONException;
+import org.json.JSONObject;
 import org.junit.Assert;
 import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
@@ -748,8 +750,8 @@ public class OMN extends TestBase {
 		}
 	}
 	
-	@Test
-	public void TS80074_Interfaces_Alta_de_linea_Plan_con_tarjeta_Sin_delivery_Sin_VAS_Numeracion_Movil_S326_updateNumberStatus_Verificacion_de_campos_enviados_en_el_request() throws InterruptedException {
+	@Test (groups = "OM")
+	public void TS80074_Interfaces_Alta_de_linea_Plan_con_tarjeta_Sin_delivery_Sin_VAS_Numeracion_Movil_S326_updateNumberStatus_Verificacion_de_campos_enviados_en_el_request() throws InterruptedException, JSONException {
 		om.Gestion_Alta_De_Linea("FlorOM", "Plan Prepago Nacional");
 		driver.navigate().back();
 		sleep(5000);
@@ -763,15 +765,15 @@ public class OMN extends TestBase {
 		sleep(5000);
 		driver.findElement(By.xpath("//*[@id=\"bodyCell\"]/div/ng-view/div/div/div/div/div/facet/facet-4412964684870431361/table/tbody/tr/td[3]")).click();
 		sleep(10000);
-		System.out.println(driver.findElement(By.className("json")).getText());
 		try {
-			WebElement acc = driver.findElement(By.className("json"));
-			Assert.assertTrue(acc.getText().contains("{\r\n" + 
-					"  \"ListaNumeros\": [\r\n" + 
-					"    {\r\n"));
+			om.request(driver.findElement(By.className("json")), "\\{\\\"ListaNumeros\\\"\\:\\[\\{\\\"nroLinea\\\"\\:\\\"+\\d{10}\\\",\\\"Accion\\\"\\:\\\"ACTIVAR\\\"\\}\\]\\}");
 			driver.switchTo().window(tabs.get(0));
 			om.closeAllOtherTabs();
 		} catch(java.lang.AssertionError e) {
+			driver.switchTo().window(tabs.get(0));
+			om.closeAllOtherTabs();
+			Assert.assertTrue(false);
+		} catch(Exception e) {
 			driver.switchTo().window(tabs.get(0));
 			om.closeAllOtherTabs();
 			Assert.assertTrue(false);
