@@ -898,7 +898,7 @@ public class Marketing_Mattu extends TestBase{
 	//-------------------------------------------------------------------------------------------------
 	//TCC = 48
 	@Test(groups = {"Marketing", "Ola1", "CapacidadDeAdministrarLaSegmentaciónDeLosClientes"}, dataProvider = "MarketingCuentaNormal")
-	public void TS90288_Eliminación_de_Campo_Segmento_Segment_C(String sCuenta) throws IOException {
+	public void TS90288_Eliminacion_de_Campo_Segmento_Segment_C(String sCuenta) throws IOException {
 		mMarketing.seleccionarCuentaMarketing(sCuenta, "Vista Marketing");
 		CustomerCare cCC = new CustomerCare(driver);
 		cCC.selectMainTabByName(sCuenta);
