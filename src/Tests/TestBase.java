@@ -844,11 +844,24 @@ public class TestBase {
 	
 	public void cambiarListaLightningAVistaClasica(WebDriver driver) {
 		try {
+			driver.findElement(By.cssSelector(".slds-button.slds-button--icon-inverse.slds-modal.close.uiButton--modal-closeBtn.uiButton")).click();
+		}
+		catch (Exception ex){
+			//Always Empty
+		}
+		try {
 			sleep(2000);
 			driver.findElement(By.cssSelector(".bare.branding-userProfile-button.slds-button.uiButton.forceHeaderButton.oneUserProfileCardTrigger")).click();
 			sleep(1000);
 			WebElement wSalesforceClassic = driver.findElement(By.className("profile-card-footer"));
-			wSalesforceClassic.findElement(By.tagName("a")).click();
+			List<WebElement> wOptions = wSalesforceClassic.findElements(By.tagName("a"));
+			for (WebElement wAux : wOptions) {
+				if (wAux.getText().equalsIgnoreCase("Cambiar a Salesforce Classic")) {
+					wAux.click();
+					System.out.println("I've change to Salesforce Classic");
+				}
+			}
+			//wSalesforceClassic.findElement(By.tagName("a")).click();
 			sleep(2000);
 		}
 		catch(Exception ex) {
