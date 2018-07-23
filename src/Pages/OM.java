@@ -17,6 +17,8 @@ import java.util.Random;
 import java.util.Date;
 
 import org.openqa.selenium.Alert;
+import org.json.JSONException;
+import org.json.JSONObject;
 import org.junit.Assert;
 import org.junit.Test;
 import org.openqa.selenium.By;
@@ -2704,6 +2706,18 @@ public void Gestion_Alta_De_Linea_Con_Amigos(String Cuenta, String Plan, String 
 		sleep(5000);
 
 		
+	}
+	
+	public boolean request(WebElement element, String request) throws JSONException {
+		boolean verificacion = false;
+		String requestText = element.getText();
+		JSONObject json = new JSONObject(requestText);
+		String req = json.toString();
+		System.out.println(req);
+		if (req.matches(request)) {
+			verificacion = true;
+		}
+		return verificacion;
 	}
 	
 }
