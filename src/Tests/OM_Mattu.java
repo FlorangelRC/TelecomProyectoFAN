@@ -692,16 +692,14 @@ public class OM_Mattu extends TestBase{
 	
 	//-------------------------------------------------------------------------------------------------
 	//TCC = 15
-	@Test(groups = "OM")
-	public void TS79026_OM_Ordenes_Cliente_existente_Alta_de_linea_Sin_delivery_Sin_VAS() throws InterruptedException{
-		OM oOM = new OM(driver);
-		oOM.Gestion_Alta_De_Linea("MattuOM", "Plan Prepago Nacional");
-		//oOM.crearOrden("MattuOM");
+	//@Test(groups = "OM")
+	public void TS() throws InterruptedException{
+		
 	}
 	
 	//-------------------------------------------------------------------------------------------------
 	//Open Page
-	//@Test()
+	@Test()
 	public void OpenPage() throws InterruptedException{
 		
 	}
