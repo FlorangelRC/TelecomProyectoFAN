@@ -2119,7 +2119,7 @@ public void deleteOrdersNoActivated(String Vista) {
 			driver.findElement(By.id("RequestDate")).sendKeys(dateFormat.format(Pom.fechaAvanzada()));
 			driver.findElement(By.cssSelector(".form-control.btn.btn-primary.ng-binding")).click();
 			sleep(15000);
-			driver.findElement(By.xpath(".//*[@id='tab-default-1']/div/ng-include//div[10]//button")).click();
+			driver.findElement(By.xpath("//*[@id=\"tab-default-1\"]/div[1]/ng-include/div/div/div/div[3]/div[10]/div/button")).click();
 			sleep(2000);		
 			tb.buscarYClick(driver.findElements(By.cssSelector(".slds-dropdown__item.cpq-item-actions-dropdown__item")), "contains", "delete");
 			sleep(5000);
@@ -2130,7 +2130,7 @@ public void deleteOrdersNoActivated(String Vista) {
 			Pom.agregarGestion("Desconexi\u00f3n");
 			sleep(3000);
 			driver.findElement(By.name("ta_submit_order")).click();
-			sleep(10000);
+			sleep(15000);
 			Pom.completarFlujoOrquestacion();
 			sleep(10000);
 			WebElement status = driver.findElement(By.id("Status_ilecell"));

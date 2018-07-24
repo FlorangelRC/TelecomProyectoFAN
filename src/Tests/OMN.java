@@ -766,7 +766,7 @@ public class OMN extends TestBase {
 		driver.findElement(By.xpath("//*[@id=\"bodyCell\"]/div/ng-view/div/div/div/div/div/facet/facet-4412964684870431361/table/tbody/tr/td[3]")).click();
 		sleep(10000);
 		try {
-			om.request(driver.findElement(By.className("json")), "\\{\\\"ListaNumeros\\\"\\:\\[\\{\\\"nroLinea\\\"\\:\\\"+\\d{10}\\\",\\\"Accion\\\"\\:\\\"ACTIVAR\\\"\\}\\]\\}");
+			Assert.assertTrue(om.request(driver.findElement(By.className("json")), "\\{\\\"ListaNumeros\\\"\\:\\[\\{\\\"nroLinea\\\"\\:\\\"+\\d{10}\\\",\\\"Accion\\\"\\:\\\"ACTIVAR\\\"\\}\\]\\}"));
 			driver.switchTo().window(tabs.get(0));
 			om.closeAllOtherTabs();
 		} catch(java.lang.AssertionError e) {
@@ -778,5 +778,21 @@ public class OMN extends TestBase {
 			om.closeAllOtherTabs();
 			Assert.assertTrue(false);
 		}
+	}
+	
+	@Test
+	public void asd() throws InterruptedException, JSONException {
+		om.BajaDeLineaOM("FlorOM", "Plan Prepago Nacional");
+		driver.findElement(By.name("vlocity_cmt__vieworchestrationplan")).click();
+		sleep(10000);
+		buscarYClick(driver.findElements(By.cssSelector(".item-label.item-header")), "equals", "updatenumberstatus - s326");
+		sleep(7000);
+		ArrayList<String> tabs = new ArrayList<String> (driver.getWindowHandles());
+		driver.switchTo().window(tabs.get(1));
+		buscarYClick(driver.findElements(By.className("slds-tabs--scoped__link")), "equals", "children");
+		sleep(5000);
+		driver.findElement(By.xpath("//*[@id=\"bodyCell\"]/div/ng-view/div/div/div/div/div/facet/facet-4412964684870431361/table/tbody/tr/td[3]")).click();
+		sleep(10000);
+		Assert.assertTrue(om.request(driver.findElement(By.className("json")), ""));
 	}
 }
