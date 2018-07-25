@@ -16,7 +16,6 @@ import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.By.ById;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
-import org.openqa.selenium.remote.internal.WebElementToJsonConverter;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.Select;
@@ -310,7 +309,8 @@ public class OMQPage extends BasePage {
 						   sleep(8000);
 						     break;
 						}
-					}
+			
+			    }
 			}
 		
 		
@@ -437,76 +437,7 @@ public void sincroProducto() {//(String Products) {
 					}
 				}
 		
-				if (UnaC.getText().equalsIgnoreCase(envio)) {
-					UnaC.click();
-					sleep(5000);
-					pageOm.cambiarVentanaNavegador(i);
-					//i++;
-					sleep(5000);
-					List<WebElement> botones = driver.findElements(By.cssSelector(".slds-button.slds-button--neutral.ng-scope"));
-				for (WebElement UnB : botones) {
-					if (UnB.getText().equals("Complete")) {
-						UnB.click();
-						sleep(4000);
-						System.out.println("Hizo click");
-						pageOm.cambiarVentanaNavegador(0);
-						break;
-				}
-			}
-		}
-				
-				if (UnaC.getText().equalsIgnoreCase(S326)) {
-					UnaC.click();
-					sleep(5000);
-					pageOm.cambiarVentanaNavegador(i);
-					//i++;
-					sleep(5000);
-					List<WebElement> botones = driver.findElements(By.cssSelector(".slds-button.slds-button--neutral.ng-scope"));
-				for (WebElement UnB : botones) {
-					if (UnB.getText().equals("Complete")) {
-						UnB.click();
-						sleep(4000);
-						System.out.println("Hizo click");
-						pageOm.cambiarVentanaNavegador(0);
-						break;
-				}
-			}
-		}
-				
-				sleep(10000);
-				pageOm.cambiarVentanaNavegador(0);
-				sleep(10000);
-				pageOm.closeAllOtherTabs();
-				sleep(35000);
-				break;
-						
-			}
-						cajas = driver.findElements(By.cssSelector(".item-label-container.item-header.item-failed"));
-						cajas.addAll(driver.findElements(By.cssSelector(".item-label-container.item-header.item-fatally-failed")));
-						cajas.addAll(driver.findElements(By.cssSelector(".item-label-container.item-header.item-running")));
-			}
-				
-						pageOm.closeAllOtherTabs();
-						sleep(5000);
-						driver.findElement(By.className("submit-button")).click();
-						sleep(6000);
-						pageOm.cambiarVentanaNavegador(1);
-						sleep(5000);
-						pageOm.closeAllOtherTabs();
-					
-						
-					}
-				
-			
-					
-					
-							
-			
-				
-		
-
-		
-		
+}
 		 
 		
 public WebElement getNewOrder() {
