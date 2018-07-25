@@ -399,7 +399,7 @@ for(WebElement e: btns){
  
  public void elegirplan(String plan){
 		try {Thread.sleep(15000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
-		driver.findElement(By.cssSelector(".slds-button.custom-view-dropdown-button.slds-button_neutral.slds-p-right_small.slds-picklist__label.cpq-base-header-picklist-label")).click();
+		/*driver.findElement(By.cssSelector(".slds-button.custom-view-dropdown-button.slds-button_neutral.slds-p-right_small.slds-picklist__label.cpq-base-header-picklist-label")).click();
 		try {Thread.sleep(3000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 		List<WebElement> list = driver.findElements(By.className("slds-dropdown__item"));
 		System.out.println(list.size());
@@ -407,7 +407,7 @@ for(WebElement e: btns){
 			if(e.getText().equals("Telecom Price List")){
 				System.out.println(e.getText());
 				e.click();
-				break;}}
+				break;}}*/
 		try {Thread.sleep(10000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 		driver.findElement(By.cssSelector(".slds-input.ng-pristine.ng-untouched.ng-valid")).sendKeys(plan);		
 		try {Thread.sleep(20000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
@@ -478,8 +478,8 @@ for(WebElement e: btns){
 	 CustomerCare cc = new CustomerCare(driver);
 	 CustomerCare page = new CustomerCare(driver);
 	 sleep(10000);
-	 page.obligarclick(driver.findElement(By.id("InvoicePreview_nextBtn")));
-		sleep(15000);
+	// page.obligarclick(driver.findElement(By.id("InvoicePreview_nextBtn")));
+		//sleep(15000);
 	try {Thread.sleep(15000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 	List<WebElement> valid =driver.findElements(By.id("ValidationMethodInValidContact"));
 	List<WebElement> radio =driver.findElements(By.className("imgItemContainer"));
