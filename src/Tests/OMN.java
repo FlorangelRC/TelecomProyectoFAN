@@ -731,8 +731,56 @@ public class OMN extends TestBase {
 		sleep(5000);
 		driver.findElement(By.xpath("//*[@id=\"bodyCell\"]/div/ng-view/div/div/div/div/div/facet/facet-4412964684870431361/table/tbody/tr/td[3]")).click();
 		sleep(10000);
-		WebElement acc = driver.findElement(By.className("json"));
-		Assert.assertTrue(acc.getText().contains("ACTIVAR"));
+		try {
+			WebElement acc = driver.findElement(By.className("json"));
+			Assert.assertTrue(acc.getText().contains("ACTIVAR"));
+			driver.switchTo().window(tabs.get(0));
+			om.closeAllOtherTabs();
+		} catch(java.lang.AssertionError e) {
+			driver.switchTo().window(tabs.get(0));
+			om.closeAllOtherTabs();
+			Assert.assertTrue(false);
+		}
+	}
+	
+	@Test (groups = "OM")
+	public void TS80074_Interfaces_Alta_de_linea_Plan_con_tarjeta_Sin_delivery_Sin_VAS_Numeracion_Movil_S326_updateNumberStatus_Verificacion_de_campos_enviados_en_el_request() throws InterruptedException, JSONException {
+		om.Gestion_Alta_De_Linea("FlorOM", "Plan Prepago Nacional");
+		driver.navigate().back();
+		sleep(5000);
+		driver.findElement(By.name("vlocity_cmt__vieworchestrationplan")).click();
+		sleep(10000);
+		buscarYClick(driver.findElements(By.cssSelector(".item-label.item-header")), "equals", "updatenumberstatus - s326");
+		sleep(7000);
+		ArrayList<String> tabs = new ArrayList<String> (driver.getWindowHandles());
+		driver.switchTo().window(tabs.get(1));
+		buscarYClick(driver.findElements(By.className("slds-tabs--scoped__link")), "equals", "children");
+		sleep(5000);
+		driver.findElement(By.xpath("//*[@id=\"bodyCell\"]/div/ng-view/div/div/div/div/div/facet/facet-4412964684870431361/table/tbody/tr/td[3]")).click();
+		sleep(10000);
+		try {
+			Assert.assertTrue(om.request(driver.findElement(By.className("json")), "\\{\\\"ListaNumeros\\\"\\:\\[\\{\\\"nroLinea\\\"\\:\\\"+\\d{10}\\\",\\\"Accion\\\"\\:\\\"ACTIVAR\\\"\\}\\]\\}"));
+			driver.switchTo().window(tabs.get(0));
+			om.closeAllOtherTabs();
+		} catch(java.lang.AssertionError e) {
+			driver.switchTo().window(tabs.get(0));
+			om.closeAllOtherTabs();
+			Assert.assertTrue(false);
+		} catch(Exception e) {
+			driver.switchTo().window(tabs.get(0));
+			om.closeAllOtherTabs();
+			Assert.assertTrue(false);
+		}
+	}
+	
+	@Test
+	public void asd() throws InterruptedException, JSONException {
+		om.Gestion_Alta_De_Linea("FlorOM", "Plan con tarjeta");
+		om.Cambio_De_SimCard("29/11/2019");
+		driver.navigate().back();
+		sleep(5000);
+		driver.findElement(By.name("vlocity_cmt__vieworchestrationplan")).click();
+		sleep(10000);
 		
 	}	
 }
