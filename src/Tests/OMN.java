@@ -782,17 +782,12 @@ public class OMN extends TestBase {
 	
 	@Test
 	public void asd() throws InterruptedException, JSONException {
-		om.BajaDeLineaOM("FlorOM", "Plan Prepago Nacional");
+		om.Gestion_Alta_De_Linea("FlorOM", "Plan Prepago Nacional");
+		om.Cambio_De_SimCard("29/11/2019");
+		driver.navigate().back();
+		sleep(5000);
 		driver.findElement(By.name("vlocity_cmt__vieworchestrationplan")).click();
 		sleep(10000);
-		buscarYClick(driver.findElements(By.cssSelector(".item-label.item-header")), "equals", "updatenumberstatus - s326");
-		sleep(7000);
-		ArrayList<String> tabs = new ArrayList<String> (driver.getWindowHandles());
-		driver.switchTo().window(tabs.get(1));
-		buscarYClick(driver.findElements(By.className("slds-tabs--scoped__link")), "equals", "children");
-		sleep(5000);
-		driver.findElement(By.xpath("//*[@id=\"bodyCell\"]/div/ng-view/div/div/div/div/div/facet/facet-4412964684870431361/table/tbody/tr/td[3]")).click();
-		sleep(10000);
-		Assert.assertTrue(om.request(driver.findElement(By.className("json")), ""));
+		
 	}
 }
