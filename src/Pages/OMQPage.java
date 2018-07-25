@@ -342,22 +342,26 @@ public class OMQPage extends BasePage {
 		
 
 			
-public void sincroProducto(String Products) {
+public void sincroProducto() {//(String Products) {
 	
-	boolean a= false;
+	//boolean a= false;
 	driver.switchTo().defaultContent();
 	((JavascriptExecutor)driver).executeScript("window.scrollTo(0,"+driver.findElement(By.xpath("//*[@id='bodyCell']/div[6]/div[1]/div/div[2]/table")).getLocation().y+")");
-	List<WebElement> prod=driver.findElements(By.xpath("//*[@id='bodyCell']/div[6]/div[1]/div/div[2]/table/tbody/tr[*]/th/a"));
+	WebElement productos=driver.findElement(By.xpath("//*[@id='bodyCell']/div[6]/div[1]/div/div[2]/table/tbody/tr[*]/th/a"));
+	productos.findElement(By.xpath("//*[@id=\"bodyCell\"]/div[6]/div[1]/div/div[2]/table/tbody/tr[2]/th/a")).click();
+	System.out.println(productos.getText());	
+	sleep(25000);
+	/*List<WebElement> prod=driver.findElements(By.xpath("//*[@id='bodyCell']/div[6]/div[1]/div/div[2]/table/tbody/tr[*]/th/a"));
+	
 	for (int i = 0; i < prod.size(); i++) {
 		if (prod.get(i).getText().equals(Products)) {
 			a=true;
 			 System.out.println(prod.get(i).getText());
 			 prod.get(i).click();
 				sleep(5000);
-			 break;
+			 break;*/
 	}
-}
-}
+
 	//Boton sincronizar
 	
 	public void clickSincronizar() {
@@ -367,14 +371,14 @@ public void sincroProducto(String Products) {
 		try{driver.findElement(By.xpath("//*[@id=\"bodyCell\"]/div/div/div[1]/div/form/div[3]/button")).click();
 		
 		}catch(org.openqa.selenium.NoSuchElementException e) {
-		sleep(8000);
+		sleep(18000);
 		OM pageOm=new OM(driver);
 		pageOm.cambiarVentanaNavegador(1);
-		sleep(6000);
+		sleep(16000);
 		driver.findElement(By.id("idlist")).click();
-		sleep(5000);
+		sleep(15000);
 		pageOm.cambiarVentanaNavegador(0);
-		sleep(5000);
+		sleep(15000);
 		driver.findElement(By.xpath("//*[@id=\"bodyCell\"]/div/div/div[1]/div/form/div[3]/button")).click();
 		sleep(40000);
 		
@@ -418,7 +422,8 @@ public void sincroProducto(String Products) {
 						driver.findElement(By.xpath("//*[@id=\"bodyCell\"]/div/ng-view/div/div/div/ul/li[2]/a")).click();
 						sleep(4000);
 						driver.findElement(By.xpath(".//*[@id='bodyCell']//table/tbody/tr/td[3]//a")).click();
-						sleep(4000);								WebElement verirequest = driver.findElement(By.xpath(".//*[@id='bodyCell']//table/tbody/tr[2]/td//json-value/pre"));
+						sleep(4000);								
+						WebElement verirequest = driver.findElement(By.xpath(".//*[@id='bodyCell']//table/tbody/tr[2]/td//json-value/pre"));
 						JSONObject obj = new JSONObject(verirequest.getText());
 						String infoProducto=obj.getJSONArray("listaOfertasAdicionales").getJSONObject(0).toString(0);
 						System.out.println(infoProducto);
@@ -520,8 +525,19 @@ public void scrollToElement(WebElement element) {
 
 }
 
-
 }
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
