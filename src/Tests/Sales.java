@@ -39,6 +39,7 @@ import Pages.ContactInformation;
 import Pages.ContactSearch;
 import Pages.CustomerCare;
 import Pages.HomeBase;
+import Pages.OM;
 import Pages.SalesBase;
 import Pages.setConexion;
 import Tests.TestBase.IrA;
@@ -70,13 +71,13 @@ public class Sales extends TestBase {
 	String[] genero = {"masculino","femenino"};
 	String[] DocValue = {"52698550","3569874563","365","ssss"};
 	
-	//@AfterClass(alwaysRun=true)
+	@AfterClass(alwaysRun=true)
 	public void tearDown() {
 		driver.close();
 		driver.quit();
 	}
 	
-	//@AfterMethod(alwaysRun=true)
+	@AfterMethod(alwaysRun=true)
 	public void deslogin(){
 		try {Thread.sleep(10000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 		driver.get("https://crm--sit.cs14.my.salesforce.com/home/home.jsp?tsid=02u41000000QWha/");
@@ -441,7 +442,7 @@ public class Sales extends TestBase {
 		SalesBase sb = new SalesBase(driver);
 		sb.DesloguearLoguear("call", 4);
 		sleep(25000);
-		//try {
+		try {
 			driver.findElement(By.xpath("//a[@href=\'https://crm--sit--c.cs14.visual.force.com/apex/taClientSearch']")).click();
 			sleep(10000);
 			sb.BuscarCuenta(DNI, sDni);
@@ -484,10 +485,10 @@ public class Sales extends TestBase {
 		assertTrue(TDC&&DPF);
 		sleep(4000);
 		sb.DesloguearLoguear("agente", 4);
-		/*}catch(Exception ex1) {
+		}catch(Exception ex1) {
 			sb.DesloguearLoguear("agente",4);
 			Assert.assertTrue(false);
-		}*/
+		}
 	}
 		
 	
@@ -1036,7 +1037,7 @@ public class Sales extends TestBase {
 	public void TS94791_Alta_Contacto_Busqueda_Verificar_resultado_busqueda_cliente_activo_inactivo() {
 		SalesBase SB = new SalesBase(driver);
 		SB.BuscarCuenta("DNI", "");
-		try {Thread.sleep(10000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		try {Thread.sleep(16000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 		WebElement act = driver.findElement(By.id("tab-scoped-1__item"));
 		Assert.assertTrue(act.getText().equals("Clientes Activos"));
 		WebElement ina = driver.findElement(By.id("tab-scoped-2__item"));
@@ -1125,7 +1126,7 @@ public class Sales extends TestBase {
 	@Test(groups={"Sales", "AltaDeContacto","Ola1"}, priority=2)
 	public void TS94565_Alta_Contacto_Persona_Fisica_Verificar_LOV_Del_Campo_Tipo_De_Documento() {
 		SalesBase SB = new SalesBase(driver);
-		String[] todos = {"dni","cuit","pasaporte","libreta civica","libreta de enrolamiento","cedula de identidad"};
+		String[] todos = {"dni","pasaporte","libreta civica","libreta de enrolamiento","cedula de identidad"};
 		Select listSelect = new Select(driver.findElement(By.id("SearchClientDocumentType")));
 		List<WebElement> motivos = listSelect.getOptions();
 	    assertTrue(verificarContenidoLista(todos,motivos));
@@ -2523,6 +2524,8 @@ public class Sales extends TestBase {
 		SB.DesloguearLoguear("call", 4);
 		sleep(5000);
 		try {
+			driver.findElement(By.id("pinIndicator")).click();
+			sleep(2000);
 			driver.findElement(By.xpath("//a[@href=\'https://crm--sit--c.cs14.visual.force.com/apex/taClientSearch']")).click();
 			sleep(10000);
 			SB.BuscarCuenta(DNI, sDni);
@@ -2698,50 +2701,5 @@ public class Sales extends TestBase {
 		}
 	}
 	
-	@Test(groups={"Sales", "AltaDeContacto", "Ola1"}, priority=4, dataProvider="SalesCuentaActiva")
-	public void TS_CRM_Alta_de_Linea(String sCuenta, String sDni, String sLinea) throws IOException {
-		CustomerCare cc = new CustomerCare(driver);
-		SalesBase sb = new SalesBase(driver);
-		sleep(5000);
-		sb.Crear_Cliente("59885627");
-		ContactSearch contact = new ContactSearch(driver);
-		contact.sex("masculino");
-		contact.Llenar_Contacto("Malan", "Fareto", "08/08/1992");
-		try {contact.ingresarMail("malannominacion@gmail.com", "si");}catch (org.openqa.selenium.ElementNotVisibleException ex1) {}
-		String asd = driver.findElement(By.id("SearchClientDocumentNumber")).getAttribute("value");
-		try {Thread.sleep(10000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
-		driver.findElement(By.id("Contact_nextBtn")).click();
-		sleep(18000);
-		sb.elegirplan("Plan prepago nacional");
-		sb.continuar();
-		sleep(20000);
-		sb.Crear_DomicilioLegal(provincia, localidad, "falsa", "", "1000", "", "", "1549");
-		sleep(24000);
-		WebElement sig = driver.findElement(By.id("LineAssignment_nextBtn"));
-		cc.obligarclick(sig);
-		sleep(10000);
-		cc.obligarclick(driver.findElement(By.id("ICCDAssignment_nextBtn")));
-		sleep(20000);
-		cc.obligarclick(driver.findElement(By.id("InvoicePreview_nextBtn")));
-		sleep(20000);
-		cc.obligarclick(driver.findElement(By.id("SelectPaymentMethodsStep_nextBtn")));
-		sleep(20000);
-		sb.elegirvalidacion("DOC");
-		sleep(8000);
-		driver.findElement(By.id("FileDocumentImage")).sendKeys("C:\\Users\\florangel\\Downloads\\mapache.jpg");
-		sleep(3000);
-		cc.obligarclick(driver.findElement(By.id("DocumentMethod_nextBtn")));
-		sleep(10000);
-		cc.obligarclick(driver.findElement(By.id("ValidationResult_nextBtn")));
-		sleep(10000);
-		cc.obligarclick(driver.findElement(By.id("OrderSumary_nextBtn")));
-		sleep(10000);
-		try {
-			cc.obligarclick(driver.findElement(By.id("Step_Error_Huawei_S029_nextBtn")));
-		}catch(Exception ex1) {}
-		
-		
-		
-	}
 	
 }

@@ -1440,17 +1440,54 @@ public void deleteOrdersNoActivated(String Vista) {
 		
 		public void Gestion_Nominacion(String sCuenta, String sDni, String sLinea) throws Exception {
 			SalesBase sb = new SalesBase(driver);
-			HomeBase homePage = new HomeBase(driver);
-			try {Thread.sleep(6000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
-		   /* String a = driver.findElement(By.id("tsidLabel")).getText(); 
-		    if (a.contains("Ventas")){}
-		    else {
-		    	homePage.switchAppsMenu();
-		    	try {Thread.sleep(2000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
-		    	homePage.selectAppFromMenuByName("Ventas");
-		    	try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}            
-		    }*/
-		    driver.findElement(By.xpath("//a[@href=\'https://crm--sit--c.cs14.visual.force.com/apex/taClientSearch']")).click();		
+			CustomerCare cc = new CustomerCare(driver);
+			sleep(18000);
+			try{cc.cerrarTodasLasPestanas();}
+			catch(Exception ex1) {
+			}
+			SalesBase SB = new SalesBase(driver);
+			Accounts accountPage = new Accounts(driver);
+			driver.switchTo().frame(accountPage.getFrameForElement(driver, By.cssSelector(".hasMotif.homeTab.homepage.ext-webkit.ext-chrome.sfdcBody.brandQuaternaryBgr")));
+			List<WebElement> frames = driver.findElements(By.tagName("iframe"));
+			boolean enc = false;
+			int index = 0;
+			for(WebElement frame : frames) {
+				try {
+					System.out.println("aca");
+					driver.switchTo().frame(frame);
+
+					driver.findElement(By.cssSelector(".slds-grid.slds-m-bottom_small.slds-wrap.cards-container")).getText(); //each element is in the same iframe.
+					//System.out.println(index); //prints the used index.
+
+					driver.findElement(By.cssSelector(".slds-grid.slds-m-bottom_small.slds-wrap.cards-container")).isDisplayed(); //each element is in the same iframe.
+					//System.out.println(index); //prints the used index.
+
+					driver.switchTo().frame(accountPage.getFrameForElement(driver, By.cssSelector(".hasMotif.homeTab.homepage.ext-webkit.ext-chrome.sfdcBody.brandQuaternaryBgr")));
+					enc = true;
+					break;
+				}catch(NoSuchElementException noSuchElemExcept) {
+					index++;
+					driver.switchTo().frame(accountPage.getFrameForElement(driver, By.cssSelector(".hasMotif.homeTab.homepage.ext-webkit.ext-chrome.sfdcBody.brandQuaternaryBgr")));
+				}
+			}
+			if(enc == false)
+				index = -1;
+			try {
+					driver.switchTo().frame(frames.get(index));
+			}catch(ArrayIndexOutOfBoundsException iobExcept) {System.out.println("Elemento no encontrado en ningun frame 2.");
+				
+			}
+			List<WebElement> botones = driver.findElements(By.tagName("button"));
+			for (WebElement UnB : botones) {
+				System.out.println(UnB.getText());
+				if(UnB.getText().equalsIgnoreCase("gesti\u00f3n de clientes")) {
+					UnB.click();
+					break;
+				}
+			}
+			
+			sleep(18000);
+			driver.switchTo().frame(accountPage.getFrameForElement(driver, By.id("ContactFirstName")));	
 		    try {Thread.sleep(10000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}    
 		    String NyA = sCuenta;
 			sb.BuscarAvanzada(NyA.split(" ")[0], NyA.split(" ")[1], "", "", "");

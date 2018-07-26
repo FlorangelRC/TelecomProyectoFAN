@@ -18,6 +18,7 @@ import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 
+import Pages.Accounts;
 import Pages.BasePage;
 import Pages.ContactSearch;
 import Pages.CustomerCare;
@@ -30,8 +31,9 @@ public class SalesNominaciones extends TestBase{
 	private WebDriver driver;
 	protected String perfil = "call";
 	
-	@BeforeClass(alwaysRun=true)
+	//@BeforeClass(alwaysRun=true)
 	public void Init() {
+		//System.out.println("{\"ListaNumeros\":[{\"nroLinea\":\"12354976148\",\"Accion\":\"ACTIVAR\"}]}".matches("/{\"ListaNumeros\"/:/[/{\"nroLinea\"/:\"/[0-9]{11}\",\"Accion\"/:\"ACTIVAR\"/}/]/}"));
 		driver = setConexion.setupEze();
 		try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}		
 			 loginNominaciones(driver);  
@@ -55,13 +57,118 @@ public class SalesNominaciones extends TestBase{
 		
 	}
 
-	//@AfterMethod(alwaysRun=true)
+	@BeforeClass(alwaysRun=true)
+	public void Init2() {
+		CustomerCare cc = new CustomerCare(driver);
+		driver = setConexion.setupEze();
+		try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}		
+			 loginNominaciones(driver);  
+		try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		HomeBase homePage = new HomeBase(driver);
+		sleep(9000);
+		driver.findElement(By.id("tabBar")).findElement(By.tagName("a")).click();
+		sleep(18000);
+		
+		driver.switchTo().defaultContent();
+		sleep(3000);
+		goToLeftPanel2(driver, "Inicio");
+		sleep(18000);
+		try{cc.cerrarTodasLasPestanas();}
+		catch(Exception ex1) {
+		}
+		SalesBase SB = new SalesBase(driver);
+		Accounts accountPage = new Accounts(driver);
+		driver.switchTo().frame(accountPage.getFrameForElement(driver, By.cssSelector(".hasMotif.homeTab.homepage.ext-webkit.ext-chrome.sfdcBody.brandQuaternaryBgr")));
+		List<WebElement> frames = driver.findElements(By.tagName("iframe"));
+		boolean enc = false;
+		int index = 0;
+		for(WebElement frame : frames) {
+			try {
+				System.out.println("aca");
+				driver.switchTo().frame(frame);
+
+				driver.findElement(By.cssSelector(".slds-grid.slds-m-bottom_small.slds-wrap.cards-container")).getText(); //each element is in the same iframe.
+				//System.out.println(index); //prints the used index.
+
+				driver.findElement(By.cssSelector(".slds-grid.slds-m-bottom_small.slds-wrap.cards-container")).isDisplayed(); //each element is in the same iframe.
+				//System.out.println(index); //prints the used index.
+
+				driver.switchTo().frame(accountPage.getFrameForElement(driver, By.cssSelector(".hasMotif.homeTab.homepage.ext-webkit.ext-chrome.sfdcBody.brandQuaternaryBgr")));
+				enc = true;
+				break;
+			}catch(NoSuchElementException noSuchElemExcept) {
+				index++;
+				driver.switchTo().frame(accountPage.getFrameForElement(driver, By.cssSelector(".hasMotif.homeTab.homepage.ext-webkit.ext-chrome.sfdcBody.brandQuaternaryBgr")));
+			}
+		}
+		if(enc == false)
+			index = -1;
+		try {
+				driver.switchTo().frame(frames.get(index));
+		}catch(ArrayIndexOutOfBoundsException iobExcept) {System.out.println("Elemento no encontrado en ningun frame 2.");
+			
+		}
+		List<WebElement> botones = driver.findElements(By.tagName("button"));
+		for (WebElement UnB : botones) {
+			System.out.println(UnB.getText());
+			if(UnB.getText().equalsIgnoreCase("gesti\u00f3n de clientes")) {
+				UnB.click();
+				break;
+			}
+		}
+		
+		sleep(18000);
+		driver.switchTo().frame(accountPage.getFrameForElement(driver, By.id("ContactFirstName")));
+		
+	}
+	
+	@AfterMethod(alwaysRun=true)
 	public void IceB() {
-		try {Thread.sleep(10000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();} 
-	    driver.get("https://crm--sit.cs14.my.salesforce.com/home/home.jsp?tsid=02u41000000QWha/"); 
-	    try {Thread.sleep(10000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
-	    driver.findElement(By.xpath("//a[@href=\'https://crm--sit--c.cs14.visual.force.com/apex/taClientSearch']")).click();		
-	    try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}  
+		Accounts accountPage = new Accounts(driver);
+		driver.navigate().refresh();
+		sleep(12000);
+		/*driver.switchTo().frame(accountPage.getFrameForElement(driver, By.cssSelector(".hasMotif.homeTab.homepage.ext-webkit.ext-chrome.sfdcBody.brandQuaternaryBgr")));
+		List<WebElement> frames = driver.findElements(By.tagName("iframe"));
+		boolean enc = false;
+		int index = 0;
+		for(WebElement frame : frames) {
+			try {
+				System.out.println("aca");
+				driver.switchTo().frame(frame);
+
+				driver.findElement(By.cssSelector(".slds-grid.slds-m-bottom_small.slds-wrap.cards-container")).getText(); //each element is in the same iframe.
+				//System.out.println(index); //prints the used index.
+
+				driver.findElement(By.cssSelector(".slds-grid.slds-m-bottom_small.slds-wrap.cards-container")).isDisplayed(); //each element is in the same iframe.
+				//System.out.println(index); //prints the used index.
+
+				driver.switchTo().frame(accountPage.getFrameForElement(driver, By.cssSelector(".hasMotif.homeTab.homepage.ext-webkit.ext-chrome.sfdcBody.brandQuaternaryBgr")));
+				enc = true;
+				break;
+			}catch(NoSuchElementException noSuchElemExcept) {
+				index++;
+				driver.switchTo().frame(accountPage.getFrameForElement(driver, By.cssSelector(".hasMotif.homeTab.homepage.ext-webkit.ext-chrome.sfdcBody.brandQuaternaryBgr")));
+			}
+		}
+		if(enc == false)
+			index = -1;
+		try {
+				driver.switchTo().frame(frames.get(index));
+		}catch(ArrayIndexOutOfBoundsException iobExcept) {System.out.println("Elemento no encontrado en ningun frame 2.");
+			
+		}
+		List<WebElement> botones = driver.findElements(By.tagName("button"));
+		for (WebElement UnB : botones) {
+			System.out.println(UnB.getText());
+			if(UnB.getText().equalsIgnoreCase("gesti\u00f3n de clientes")) {
+				UnB.click();
+				break;
+			}
+		}
+		
+		sleep(18000);*/
+		driver.switchTo().frame(accountPage.getFrameForElement(driver, By.id("ContactFirstName")));
+		
 	}
 	
 	//@AfterClass(alwaysRun=true)
@@ -74,6 +181,8 @@ public class SalesNominaciones extends TestBase{
 	  public void TS95215_Nominacion_Argentino_Nominar_personas_mayores_a_16_anios_cliente_mayor_de_edad_con_linea_existente_plan_repro(String sCuenta, String sDni, String sLinea){
 		SalesBase SB = new SalesBase(driver);
 		String NyA = sCuenta;
+		Accounts accountPage = new Accounts(driver);
+		//driver.switchTo().frame(accountPage.getFrameForElement(driver, By.id("ContactFirstName")));
 		SB.BuscarAvanzada(NyA.split(" ")[0], NyA.split(" ")[1], "", "", "");
 		WebElement cli = driver.findElement(By.id("tab-scoped-1"));
 		if (cli.findElement(By.tagName("tbody")).findElement(By.tagName("tr")).findElement(By.tagName("div")).getText().equals("Cliente Wholesale")) {
@@ -275,13 +384,13 @@ public class SalesNominaciones extends TestBase{
 		contact.searchContact2("DNI", sDni, sLinea);
 		try {contact.ingresarMail("asdads@gmail.com", "si");}catch (org.openqa.selenium.ElementNotVisibleException ex1) {}
 		contact.tipoValidacion("documento");
-		contact.subirArchivo("C:\\Users\\florangel\\Downloads\\mapache.jpg", "si");
+		//contact.subirArchivo("C:\\Users\\florangel\\Downloads\\mapache.jpg", "si");
 			BasePage bp = new BasePage(driver);
 		bp.setSimpleDropdown(driver.findElement(By.id("ImpositiveCondition")), "IVA Consumidor Final");
 		SB.Crear_DomicilioLegal("Buenos Aires", "aba", "falsa", "", "1000", "", "", "1549");
 		sleep(18000);
 		//contact.subirformulario("C:\\Users\\florangel\\Downloads\\form.pdf", "si");
-		//sleep(30000);
+		sleep(30000);
 		List <WebElement> element = driver.findElement(By.id("NominacionExitosa")).findElements(By.tagName("p"));
 		System.out.println("tam ="+element.size());
 		boolean a = false;
@@ -368,6 +477,7 @@ public class SalesNominaciones extends TestBase{
 			driver.findElement(By.cssSelector(".slds-input.form-control.ng-pristine.ng-untouched.ng-valid.ng-empty")).sendKeys("algoaqui@yahoo.com.ar");
 		
 		driver.findElement(By.id("PermanencyDueDate")).sendKeys("30/08/2018");
+		sleep(2000);
 		CC.obligarclick(driver.findElement(By.id("Contact_nextBtn")));
 		sleep(5000);
 		contact.tipoValidacion("documento");
@@ -378,8 +488,8 @@ public class SalesNominaciones extends TestBase{
 		SB.Crear_DomicilioLegal("Buenos Aires", "aba", "falsa", "", "1000", "", "", "1549");
 		sleep(10000);
 		contact.subirformulario("C:\\Users\\florangel\\Downloads\\form.pdf", "si");
-		sleep(25000);
-		List <WebElement> element = driver.findElements(By.cssSelector(".slds-form-element.vlc-flex.vlc-slds-text-block.vlc-slds-rte.ng-pristine.ng-valid.ng-scope"));
+		sleep(40000);
+		List <WebElement> element = driver.findElement(By.id("NominacionExitosa")).findElements(By.tagName("p"));
 		boolean a = false;
 		for (WebElement x : element) {
 			if (x.getText().toLowerCase().contains("nominaci\u00f3n exitosa!")) {
@@ -476,7 +586,7 @@ public class SalesNominaciones extends TestBase{
 		//contact.searchContact("Pasaporte", "312313214","");
 		sleep(6000);
 		driver.findElement(By.cssSelector(".slds-input.form-control.ng-pristine.ng-untouched.ng-valid.ng-empty")).sendKeys("algoaqui@yahoo.com.ar");
-		driver.findElement(By.id("PermanencyDueDate")).sendKeys("30/06/2018");
+		driver.findElement(By.id("PermanencyDueDate")).sendKeys("30/06/2019");
 		//driver.findElement(By.cssSelector(".slds-input.form-control.ng-pristine.ng-untouched.ng-valid.ng-empty")).sendKeys("algoaqui@yahoo.com.ar");
 		Assert.assertTrue(driver.findElement(By.id("Contact_nextBtn")).isDisplayed());
 		CC.obligarclick(driver.findElement(By.id("Contact_nextBtn")));
@@ -507,6 +617,8 @@ public class SalesNominaciones extends TestBase{
 		    	homePage.selectAppFromMenuByName("Ventas");
 		    	try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}            
 		    }*/
+			driver.findElement(By.id("handlebarContainer")).click();
+			sleep(2000);
 		    driver.findElement(By.xpath("//a[@href=\'https://crm--sit--c.cs14.visual.force.com/apex/taClientSearch']")).click();		
 		    try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}  
 			SB.BuscarAvanzada(NyA.split(" ")[0], NyA.split(" ")[1], "", "", "");
@@ -666,15 +778,18 @@ public class SalesNominaciones extends TestBase{
 		assertTrue(driver.findElements(By.cssSelector(".slds-form-element__control.slds-input-has-icon.slds-input-has-icon--right")).get(2).findElement(By.tagName("label")).getText().toLowerCase().contains("plazo de permanencia"));
 	}
 
-	@Test(groups = {"Sales", "PreparacionNominacion"}, dataProvider="PreparacionDeDatosSales") 
+	@Test(groups = {"Sales", "PreparacionNominacion"}, dataProvider="DatosSalesNominacion") 
 	public void TS_CRM_Nominacion_Argentino(String sCuenta, String sLinea, String sDni, String sNombre, String sApellido, String sSexo, String sFnac, String sEmail) { 
 		SalesBase SB = new SalesBase(driver);
 		String NyA = sCuenta;
-		SB.BuscarAvanzada(NyA.split(" ")[0], NyA.split(" ")[1], "", "", "");
+		driver.findElement(By.id("PhoneNumber")).sendKeys(sLinea);
+		  driver.findElement(By.id("SearchClientsDummy")).click();
+		  
+		//SB.BuscarAvanzada(NyA.split(" ")[0], NyA.split(" ")[1], "", "", "");
 		WebElement cli = driver.findElement(By.id("tab-scoped-1"));
-		if (cli.findElement(By.tagName("tbody")).findElement(By.tagName("tr")).findElement(By.tagName("div")).getText().equals(sCuenta)) {
+		//if (cli.findElement(By.tagName("tbody")).findElement(By.tagName("tr")).findElement(By.tagName("div")).getText().equals(sCuenta)) {
 			cli.findElement(By.tagName("tbody")).findElement(By.tagName("tr")).click();
-		}
+		//}
 		sleep(3000);
 		List<WebElement> Lineas = driver.findElement(By.id("tab-scoped-1")).findElement(By.tagName("tbody")).findElements(By.tagName("tr"));
 		for(WebElement UnaL: Lineas) {

@@ -89,7 +89,7 @@ public class ContactSearch extends BasePage {
 	}
 
 	public void sex(String genero) {
-		switch (genero) {
+		switch (genero.toLowerCase()) {
 		case "femenino":
 			gender.get(0).click();
 			break;
@@ -102,7 +102,7 @@ public class ContactSearch extends BasePage {
 	public void ingresarMail(String mail, String continuar) {
 		driver.findElement(By.cssSelector(".slds-input.form-control.ng-pristine.ng-untouched.ng-valid.ng-empty")).click();
 		try {Thread.sleep(2000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
-		driver.findElement(By.xpath("//*[@id=\"EmailSelectableItems\"]/div/ng-include/div/ng-form/div[1]/div[1]/input")).sendKeys(mail);
+		driver.findElement(By.id("EmailSelectableItems")).findElement(By.tagName("input")).sendKeys(mail);
 		switch (continuar) {
 		case "si":
 			try {Thread.sleep(2000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
@@ -115,6 +115,7 @@ public class ContactSearch extends BasePage {
 	}
 	
 	public void tipoValidacion(String tipoValidacion) {
+		sleep(8000);
 		switch (tipoValidacion) {
 		case "documento":
 			List<WebElement> valdni = driver.findElements(By.cssSelector(".slds-form-element__label.ng-binding"));
