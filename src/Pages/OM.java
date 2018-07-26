@@ -1527,72 +1527,93 @@ public class OM {
 
 	public void Gestion_Nominacion(String sCuenta, String sDni, String sLinea) throws Exception {
 		SalesBase sb = new SalesBase(driver);
-		try {
-			Thread.sleep(6000);
-		} catch (InterruptedException ex) {
-			Thread.currentThread().interrupt();
+		CustomerCare cc = new CustomerCare(driver);
+		sleep(18000);
+		try{cc.cerrarTodasLasPestanas();}
+		catch(Exception ex1) {
 		}
-		/*
-		 * String a = driver.findElement(By.id("tsidLabel")).getText(); if
-		 * (a.contains("Ventas")){} else { homePage.switchAppsMenu(); try
-		 * {Thread.sleep(2000);} catch (InterruptedException ex)
-		 * {Thread.currentThread().interrupt();}
-		 * homePage.selectAppFromMenuByName("Ventas"); try {Thread.sleep(5000);}
-		 * catch (InterruptedException ex) {Thread.currentThread().interrupt();}
-		 * }
-		 */
-		driver.findElement(By.xpath("//a[@href=\'https://crm--sit--c.cs14.visual.force.com/apex/taClientSearch']"))
-				.click();
-		try {
-			Thread.sleep(10000);
-		} catch (InterruptedException ex) {
-			Thread.currentThread().interrupt();
+		SalesBase SB = new SalesBase(driver);
+		Accounts accountPage = new Accounts(driver);
+		driver.switchTo().frame(accountPage.getFrameForElement(driver, By.cssSelector(".hasMotif.homeTab.homepage.ext-webkit.ext-chrome.sfdcBody.brandQuaternaryBgr")));
+		List<WebElement> frames = driver.findElements(By.tagName("iframe"));
+		boolean enc = false;
+		int index = 0;
+		for(WebElement frame : frames) {
+			try {
+				System.out.println("aca");
+				driver.switchTo().frame(frame);
+
+				driver.findElement(By.cssSelector(".slds-grid.slds-m-bottom_small.slds-wrap.cards-container")).getText(); //each element is in the same iframe.
+				//System.out.println(index); //prints the used index.
+
+				driver.findElement(By.cssSelector(".slds-grid.slds-m-bottom_small.slds-wrap.cards-container")).isDisplayed(); //each element is in the same iframe.
+				//System.out.println(index); //prints the used index.
+
+				driver.switchTo().frame(accountPage.getFrameForElement(driver, By.cssSelector(".hasMotif.homeTab.homepage.ext-webkit.ext-chrome.sfdcBody.brandQuaternaryBgr")));
+				enc = true;
+				break;
+			}catch(NoSuchElementException noSuchElemExcept) {
+				index++;
+				driver.switchTo().frame(accountPage.getFrameForElement(driver, By.cssSelector(".hasMotif.homeTab.homepage.ext-webkit.ext-chrome.sfdcBody.brandQuaternaryBgr")));
+			}
 		}
-		String NyA = sCuenta;
+		if(enc == false)
+			index = -1;
+		try {
+				driver.switchTo().frame(frames.get(index));
+		}catch(ArrayIndexOutOfBoundsException iobExcept) {System.out.println("Elemento no encontrado en ningun frame 2.");
+			
+		}
+		List<WebElement> botones = driver.findElements(By.tagName("button"));
+		for (WebElement UnB : botones) {
+			System.out.println(UnB.getText());
+			if(UnB.getText().equalsIgnoreCase("gesti\u00f3n de clientes")) {
+				UnB.click();
+				break;
+			}
+		}
+		
+		sleep(18000);
+		driver.switchTo().frame(accountPage.getFrameForElement(driver, By.id("ContactFirstName")));	
+	    try {Thread.sleep(10000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}    
+	    String NyA = sCuenta;
 		sb.BuscarAvanzada(NyA.split(" ")[0], NyA.split(" ")[1], "", "", "");
 		WebElement cli = driver.findElement(By.id("tab-scoped-1"));
-		if (cli.findElement(By.tagName("tbody")).findElement(By.tagName("tr")).findElement(By.tagName("div")).getText()
-				.equals("Cliente Wholesale")) {
+		if (cli.findElement(By.tagName("tbody")).findElement(By.tagName("tr")).findElement(By.tagName("div")).getText().equals("Cliente Wholesale")) {
 			cli.findElement(By.tagName("tbody")).findElement(By.tagName("tr")).click();
 		}
 		sleep(3000);
-		WebElement cua = driver.findElement(By.id("tab-scoped-1")).findElement(By.tagName("tbody"))
-				.findElements(By.tagName("tr")).get(36).findElements(By.tagName("td")).get(6)
-				.findElement(By.tagName("svg"));
-		System.out.println("1: " + driver.findElement(By.id("tab-scoped-1")).findElement(By.tagName("tbody"))
-				.findElements(By.tagName("tr")).get(36).findElements(By.tagName("td")).get(1).getText());
+		WebElement cua = driver.findElement(By.id("tab-scoped-1")).findElement(By.tagName("tbody")).findElements(By.tagName("tr")).get(36).findElements(By.tagName("td")).get(6).findElement(By.tagName("svg"));
+		System.out.println("1: "+driver.findElement(By.id("tab-scoped-1")).findElement(By.tagName("tbody")).findElements(By.tagName("tr")).get(36).findElements(By.tagName("td")).get(1).getText());
 		cua.click();
 		sleep(13000);
 		ContactSearch contact = new ContactSearch(driver);
 		contact.searchContact2("DNI", sDni, sLinea);
 		sleep(5000);
-		try {
-			contact.ingresarMail("asdads@gmail.com", "si");
-		} catch (org.openqa.selenium.ElementNotVisibleException ex1) {
-		}
+		try {contact.ingresarMail("asdads@gmail.com", "si");}catch (org.openqa.selenium.ElementNotVisibleException ex1) {}
 		contact.tipoValidacion2("documento");
 		contact.subirArchivo("C:\\Users\\florangel\\Downloads\\mapache.jpg", "si");
 		BasePage bp = new BasePage(driver);
 		bp.setSimpleDropdown(driver.findElement(By.id("ImpositiveCondition")), "IVA Consumidor Final");
 		sb.Crear_DomicilioLegal("Buenos Aires", "Vicente Lopez", "falsa", "", "1000", "", "", "1549");
-		// sleep(10000);
-		// contact.subirformulario("C:\\Users\\florangel\\Downloads\\form.pdf",
-		// "si");
+		//sleep(10000);
+		//contact.subirformulario("C:\\Users\\florangel\\Downloads\\form.pdf", "si");
 		sleep(35000);
+		List <WebElement> element = driver.findElements(By.cssSelector(".slds-form-element.vlc-flex.vlc-slds-text-block.vlc-slds-rte.ng-pristine.ng-valid.ng-scope"));
 		driver.findElement(By.id("FinishProcess_nextBtn")).click();
 		sleep(10000);
 		driver.switchTo().defaultContent();
 		sleep(2000);
-		OM pageOm = new OM(driver);
+		OM pageOm=new OM(driver);
 		pageOm.goToMenuOM();
-
-		// click +
+		
+		//click +
 		sleep(5000);
-
+		
 		pageOm.clickMore();
 		sleep(3000);
-
-		// click en Ordenes
+		
+		//click en Ordenes
 		pageOm.clickOnListTabs("Pedidos");
 		sleep(5000);
 		selectVistaByVisibleText("Todos los pedidos");
@@ -1607,8 +1628,7 @@ public class OM {
 			driver.findElement(By.id("idlist")).click();
 			sleep(5000);
 			pageOm.cambiarVentanaNavegador(0);
-		} catch (java.lang.IndexOutOfBoundsException ex1) {
-		}
+		}catch(java.lang.IndexOutOfBoundsException ex1) {}
 		sleep(12000);
 		pageOm.completarFlujoOrquestacion();
 		sleep(5000);
