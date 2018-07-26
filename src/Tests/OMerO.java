@@ -1,14 +1,20 @@
 package Tests;
 
+import org.testng.annotations.Test;
+import org.testng.annotations.BeforeClass;
+import org.testng.AssertJUnit;
 import static org.testng.Assert.assertTrue;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 import java.util.Random;
 
+import org.json.JSONException;
+import org.json.JSONObject;
 import org.junit.Assert;
 import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
@@ -20,6 +26,7 @@ import org.testng.annotations.BeforeClass;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
+import com.sun.jna.platform.win32.OaIdl.DATE;
 import com.sun.xml.internal.ws.api.server.Container;
 
 import Pages.Accounts;
@@ -91,8 +98,8 @@ public class OMerO extends TestBase {
 			if(acc.get(0).getText().contains("Action"))
 				acc.remove(0);
 		System.out.println(acc.size());		
-		Assert.assertTrue(acc.get(2).getText().contains("Account Name"));
-		Assert.assertTrue(acc.get(3).getText().contains("Status"));
+		AssertJUnit.assertTrue(acc.get(2).getText().contains("Account Name"));
+		AssertJUnit.assertTrue(acc.get(3).getText().contains("Status"));
 		Boolean chk = false;
 		WebElement llsstt = driver.findElement(By.className("x-grid3-body")).findElement(By.tagName("div")).findElement(By.tagName("tbody")).findElement(By.tagName("tr"));
 		List<WebElement> list = llsstt.findElements(By.tagName("td"));
@@ -143,8 +150,8 @@ public class OMerO extends TestBase {
 			if(acc.get(0).getText().contains("Action"))
 				acc.remove(0);
 		System.out.println(acc.size());		
-		Assert.assertTrue(acc.get(2).getText().contains("Account Name"));
-		Assert.assertTrue(acc.get(3).getText().contains("Status"));
+		AssertJUnit.assertTrue(acc.get(2).getText().contains("Account Name"));
+		AssertJUnit.assertTrue(acc.get(3).getText().contains("Status"));
 	}
 //========================================================  CAMBIO DE NUMERO  ============================================================================
 	
@@ -160,39 +167,39 @@ public class OMerO extends TestBase {
 		if (gest.getText().toLowerCase().contains("cambio de n\u00famero")) {
 				gestion = true;
 			}
-		Assert.assertTrue(status.getText().equalsIgnoreCase("Activated"));
-		Assert.assertTrue(gestion);
+		AssertJUnit.assertTrue(status.getText().equalsIgnoreCase("Activated"));
+		AssertJUnit.assertTrue(gestion);
 		
 	}      
 		
 			
 	@Test (groups = {"OM","CambioDeNumero"}, dependsOnMethods="TS79682CRM_OM_Ordenes_Cliente_existente_Cambio_de_numero_Sin_delivery_Paso_5")
 	public void TS79681_OM_Ordenes_Cliente_existente_Cambio_de_numero_Sin_delivery_Paso_4(){
-		Assert.assertTrue(true);
+		AssertJUnit.assertTrue(true);
 		sleep(3000);
 	}
 	
 	@Test (groups = {"OM","CambioDeNumero"}, dependsOnMethods="TS79682CRM_OM_Ordenes_Cliente_existente_Cambio_de_numero_Sin_delivery_Paso_5")
 	public void TS79680_OM_Ordenes_Cliente_existente_Cambio_de_numero_Sin_delivery_Paso_3(){
-		Assert.assertTrue(true);
+		AssertJUnit.assertTrue(true);
 		sleep(3000);
 	}
 	
 	@Test (groups = {"OM","CambioDeNumero"}, dependsOnMethods="TS79682CRM_OM_Ordenes_Cliente_existente_Cambio_de_numero_Sin_delivery_Paso_5")
 	public void TS79678_OM_Ordenes_Cliente_existente_Cambio_de_numero_Sin_delivery_Paso_2(){
-		Assert.assertTrue(true);
+		AssertJUnit.assertTrue(true);
 		sleep(3000);
 	}
 	
 	@Test (groups = {"OM","CambioDeNumero"}, dependsOnMethods="TS79682CRM_OM_Ordenes_Cliente_existente_Cambio_de_numero_Sin_delivery_Paso_5")
 	public void TS79677_OM_Ordenes_Cliente_existente_Cambio_de_numero_Sin_delivery_Paso_1(){
-		Assert.assertTrue(true);
+		AssertJUnit.assertTrue(true);
 		sleep(3000);
 	}
 	
 	@Test (groups = {"OM","CambioDeNumero"}, dependsOnMethods="TS79682CRM_OM_Ordenes_Cliente_existente_Cambio_de_numero_Sin_delivery_Paso_5")
 	public void TS79676_OM_Ordenes_Cliente_existente_Cambio_de_numero_Sin_delivery_Paso_0(){
-		Assert.assertTrue(true);
+		AssertJUnit.assertTrue(true);
 		sleep(3000);
 	}
 	
@@ -211,39 +218,39 @@ public class OMerO extends TestBase {
 		if (gest.getText().toLowerCase().contains("cambio de n\u00famero")) {
 				gestion = true;
 			}
-		Assert.assertTrue(status.getText().equalsIgnoreCase("Activated"));
-		Assert.assertTrue(gestion);
+		AssertJUnit.assertTrue(status.getText().equalsIgnoreCase("Activated"));
+		AssertJUnit.assertTrue(gestion);
 		sleep(3000);
 	}      
 		
 			
 	@Test (groups = {"OM","CambioDeNumero"},dependsOnMethods="TS80246_OM_Ordenes_Cliente_existente_Cambio_de_numero_Plan_con_tarjeta_Sin_delivery_Paso_5")
 	public void TS80245_OM_Ordenes_Cliente_existente_Cambio_de_numero_Plan_con_tarjeta_Sin_delivery_Paso_4(){
-		Assert.assertTrue(true);
+		AssertJUnit.assertTrue(true);
 		sleep(3000);
 	}
 	
 	@Test (groups = {"OM","CambioDeNumero"}, dependsOnMethods="TS80246_OM_Ordenes_Cliente_existente_Cambio_de_numero_Plan_con_tarjeta_Sin_delivery_Paso_5")
 	public void TS80244_OM_Ordenes_Cliente_existente_Cambio_de_numero_Plan_con_tarjeta_Sin_delivery_Paso_3(){
-		Assert.assertTrue(true);
+		AssertJUnit.assertTrue(true);
 		sleep(3000);
 	}
 	
 	@Test (groups = {"OM","CambioDeNumero"}, dependsOnMethods="TS80246_OM_Ordenes_Cliente_existente_Cambio_de_numero_Plan_con_tarjeta_Sin_delivery_Paso_5")
 	public void TS80243_OM_Ordenes_Cliente_existente_Cambio_de_numero_Plan_con_tarjeta_Sin_delivery_Paso_2(){
-		Assert.assertTrue(true);
+		AssertJUnit.assertTrue(true);
 		sleep(3000);
 	}
 	
 	@Test (groups = {"OM","CambioDeNumero"}, dependsOnMethods="TS80246_OM_Ordenes_Cliente_existente_Cambio_de_numero_Plan_con_tarjeta_Sin_delivery_Paso_5")
 	public void TS80242_OM_Ordenes_Cliente_existente_Cambio_de_numero_Plan_con_tarjeta_Sin_delivery_Paso_1(){
-		Assert.assertTrue(true);
+		AssertJUnit.assertTrue(true);
 		sleep(3000);
 	}
 	
 	@Test (groups = {"OM","CambioDeNumero"}, dependsOnMethods="TS80246_OM_Ordenes_Cliente_existente_Cambio_de_numero_Plan_con_tarjeta_Sin_delivery_Paso_5")
 	public void TS80241_OM_Ordenes_Cliente_existente_Cambio_de_numero_Plan_con_tarjeta_Sin_delivery_Paso_0(){
-		Assert.assertTrue(true);
+		AssertJUnit.assertTrue(true);
 		sleep(3000);
 	}
 	
@@ -274,23 +281,23 @@ public class OMerO extends TestBase {
 	
 	@Test(groups = {"OM","AltadeLinea"}, dependsOnMethods="TS51856_Ordenes_Cliente_Nuevo_Alta_de_linea_Sin_delivery_Sin_VAS_Paso_4")
 	public void TS51856_Ordenes_Cliente_Nuevo_Alta_de_linea_Sin_delivery_Sin_VAS_Paso_0(){
-		Assert.assertTrue(true);
+		AssertJUnit.assertTrue(true);
 	
 	}
 	
 	@Test(groups = {"OM","AltadeLinea"}, dependsOnMethods="TS51856_Ordenes_Cliente_Nuevo_Alta_de_linea_Sin_delivery_Sin_VAS_Paso_4")
 	public void TS51857_Ordenes_Cliente_Nuevo_Alta_de_linea_Sin_delivery_Sin_VAS_Paso_1(){
-		Assert.assertTrue(true);
+		AssertJUnit.assertTrue(true);
 	}
 	
 	@Test(groups = {"OM","AltadeLinea"}, dependsOnMethods="TS51856_Ordenes_Cliente_Nuevo_Alta_de_linea_Sin_delivery_Sin_VAS_Paso_4")
 	public void TS51858_Ordenes_Cliente_Nuevo_Alta_de_linea_Sin_delivery_Sin_VAS_Paso_2(){
-		Assert.assertTrue(true);
+		AssertJUnit.assertTrue(true);
 	}
 	
 	@Test(groups = {"OM","AltadeLinea"}, dependsOnMethods="TS51856_Ordenes_Cliente_Nuevo_Alta_de_linea_Sin_delivery_Sin_VAS_Paso_4")
 	public void TS51859_Ordenes_Cliente_Nuevo_Alta_de_linea_Sin_delivery_Sin_VAS_Paso_2(){
-		Assert.assertTrue(true);
+		AssertJUnit.assertTrue(true);
 	}
 	
 //===================================================== CAMBIO DE TITULARIDAD ========================================================================	
@@ -307,19 +314,19 @@ public class OMerO extends TestBase {
 		if (gest.getText().toLowerCase().contains("cambio de titularidad")) {
 				gestion = true;
 			}
-		Assert.assertTrue(status.getText().equalsIgnoreCase("Activated"));
-		Assert.assertTrue(gestion);
+		AssertJUnit.assertTrue(status.getText().equalsIgnoreCase("Activated"));
+		AssertJUnit.assertTrue(gestion);
 		sleep(3000);
 	}
 	
 	@Test(groups = {"OM","CambiodeTitularidad"}, dependsOnMethods="TS127336_Ordenes_Cliente_Existente_Cambio_de_titularidad_Plan_prepago_nacional_Paso_2")
 	public void TS127335_Ordenes_Cliente_Existente_Cambio_de_titularidad_Plan_prepago_nacional_Paso_1(){
-		Assert.assertTrue(true);
+		AssertJUnit.assertTrue(true);
 	}
 	
 	@Test(groups = {"OM","CambiodeTitularidad"}, dependsOnMethods="TS127336_Ordenes_Cliente_Existente_Cambio_de_titularidad_Plan_prepago_nacional_Paso_2")
 	public void TS127334_Ordenes_Cliente_Existente_Cambio_de_titularidad_Plan_prepago_nacional_Paso_0(){
-		Assert.assertTrue(true);
+		AssertJUnit.assertTrue(true);
 	}
 
 	
@@ -338,27 +345,28 @@ public class OMerO extends TestBase {
 		if (gest.getText().toLowerCase().contains("cambio de titularidad")) {
 				gestion = true;
 			}
-		Assert.assertTrue(status.getText().equalsIgnoreCase("Activated"));
-		Assert.assertTrue(gestion);
+		AssertJUnit.assertTrue(status.getText().equalsIgnoreCase("Activated"));
+		AssertJUnit.assertTrue(gestion);
 		sleep(3000);
 	}
 	
 	@Test(groups = {"OM","CambiodeTitularidad"}, dependsOnMethods="TS127349_Ordenes_Cliente_Existente_Cambio_de_titularidad_Plan_con_tarjeta_Paso_2")
 	public void TS127348_Ordenes_Cliente_Existente_Cambio_de_titularidad_Plan_con_tarjeta_Paso_1(){
-		Assert.assertTrue(true);
+		AssertJUnit.assertTrue(true);
 	}
 	
 	@Test(groups = {"OM","CambiodeTitularidad"}, dependsOnMethods="TS127349_Ordenes_Cliente_Existente_Cambio_de_titularidad_Plan_con_tarjeta_Paso_2")
 	public void TS127347_Ordenes_Cliente_Existente_Cambio_de_titularidad_Plan_con_tarjeta_Paso_0(){
-		Assert.assertTrue(true);
+		AssertJUnit.assertTrue(true);
 	}
 //========================================================== TIMESTAMP  =================================================================================	
 	
 	@Test(groups = {"OM"})
 	public void TS11483_Ordenes_Tareas_Timestamp_Completed_Automatica() throws InterruptedException{
+		
 		//Alta de linea
 		om.crearOrden("AlOM");
-		assertTrue(driver.findElement(By.cssSelector(".noSecondHeader.pageType")).isDisplayed());
+		AssertJUnit.assertTrue(driver.findElement(By.cssSelector(".noSecondHeader.pageType")).isDisplayed());
 		om.agregarGestion("Venta");
 		sleep(2000);
 		omq.getCPQ().click();
@@ -410,44 +418,110 @@ public class OMerO extends TestBase {
 			for (WebElement UnaC : cajas) {
 				UnaC.click();
 				sleep(5000);
-				//om.closeAllOtherTabs();
 				om.cambiarVentanaNavegador(i);
 				//i++;
-				sleep(7000);
-				List<WebElement> botones = driver.findElements(By.cssSelector(".slds-button.slds-button--neutral.ng-scope"));
-					for (WebElement UnB : botones) {
-						if (UnB.getText().equals("Complete")) {
-							UnB.click();
-							//System.out.println("Hizo click");
-							for (i= 0;i<3 ;i++){
-							WebElement stat = driver.findElement(By.xpath("//*[@id='bodyCell']/div/ng-view/div/div/div/div/div/facet/facet-4412964684870411902/table/tbody/tr[27]/td/attribute-value/div/div/picklist-value"));
-							WebElement box1 = driver.findElement(By.xpath("//*[@id='bodyCell']/div/ng-view/div/div/div/div/div/facet/facet-4412964684870411902/table/tbody/tr[29]/td/attribute-value/div/div"));
-								if(stat.getText().toLowerCase().equals("fatally failed")){
-									driver.navigate().refresh();
-									sleep(5000);
-								} else {
-									String a = box1.getText();
-									System.out.println(a);
-									om.cambiarVentanaNavegador(0);
-									sleep(10000);
-									om.closeAllOtherTabs();
-								break;
-										}
-							}
-						break;	
-						} 
+				sleep(5000);
+				List<WebElement> botones = driver
+						.findElements(By.cssSelector(".slds-button.slds-button--neutral.ng-scope"));
+				for (WebElement UnB : botones) {
+					if (UnB.getText().equals("Complete")) {
+						UnB.click();
+						sleep(4000);
+						System.out.println("Hizo click");
+						break;
 					}
 				}
+				WebElement comp = driver.findElements(By.cssSelector(".ng-scope.ng-isolate-scope")).get(13);
+				String a = null;
+				System.out.println(comp.getText());
+					if(comp.getText().toLowerCase().equals("fatally failed")||comp.getText().toLowerCase().equals("running")){
+						sleep(5000);
+						driver.navigate().refresh();
+						sleep(25000);
+						List<WebElement> hora = driver.findElement(By.cssSelector(".slds-table.slds-table--bordered.slds-table--cell-buffer")).findElements(By.tagName("tr"));
+							for(WebElement hor : hora){
+								if(hor.findElement(By.tagName("th")).getText().equals("Completed")){
+									a=hor.findElement(By.tagName("td")).getText();
+									
+								}
+							}
+						a = a.substring(0, 15);
+						System.out.println(a);
+						Date date = new Date();
+						Calendar cal = Calendar.getInstance(); 
+				        cal.setTime(date); 
+				        if(Integer.parseInt(a.substring(a.length()-2,a.length()))!=date.getMinutes()){
+				         cal.add(Calendar.MINUTE, -1);
+				        }
+				        date = cal.getTime();
+				        DateFormat dateFormat = new SimpleDateFormat();
+				        if(date.getMonth()<10){
+				        	dateFormat = new SimpleDateFormat("dd/M/yyyy HH:mm");
+				        }else{
+				        	dateFormat = new SimpleDateFormat("dd/MM/yyyy HH:mm");
+				        }
+				        System.out.println(dateFormat.format(date));
+				        AssertJUnit.assertTrue(dateFormat.format(date).equals(a));   
+					}	
+				sleep(10000);
+				om.cambiarVentanaNavegador(0);
+				sleep(10000);
+				om.closeAllOtherTabs();
+				sleep(35000);
+				
+			}
 		
+			cajas = driver.findElements(By.cssSelector(".item-label-container.item-header.item-failed"));
+			cajas.addAll(driver.findElements(By.cssSelector(".item-label-container.item-header.item-fatally-failed")));
+			cajas.addAll(driver.findElements(By.cssSelector(".item-label-container.item-header.item-running")));
 		}
-		Assert.assertTrue(driver.findElement(By.id("Status_ilecell")).getText().equalsIgnoreCase("Activated"));
-		
-	}
-		
-	/*	driver.navigate().back();
+		om.closeAllOtherTabs();
 		sleep(5000);
-		driver.findElement(By.name("vlocity_cmt__vieworchestrationplan")).click();
-		sleep(10000);
+		driver.findElement(By.className("submit-button")).click();
+		sleep(6000);
+		om.cambiarVentanaNavegador(1);
+		sleep(5000);
+		om.closeAllOtherTabs();
+		AssertJUnit.assertTrue(driver.findElement(By.id("Status_ilecell")).getText().equalsIgnoreCase("Activated"));
+		
+      }
+//-----------------------------------------------------    ALTA DE LINEA  INTERFACES    -----------------------------------------------------------------
+	
+	
+	@Test(groups = {"OM"})
+	public void TS52688_Ordenes_Interfaces_Cliente_nuevo_Alta_de_linea_Sin_VAS_Sin_delivery_Paso_4_Instalink_S323_create_provision_FLOWONE_Verificacion_de_request_response() throws InterruptedException, JSONException{
+		OM pageOm=new OM(driver);
+		OMQPage OM=new OMQPage (driver);
+		pageOm.crearOrden("AlOM");
+		assertTrue(driver.findElement(By.cssSelector(".noSecondHeader.pageType")).isDisplayed());
+		pageOm.agregarGestion("Venta");
+		sleep(2000);
+		OM.getCPQ().click();
+		sleep(5000);
+		om.colocarPlan("Plan Prepago Nacional");
+		OM.configuracion();
+		sleep(4000);
+		om.AgregarDomicilio();
+		sleep(5000);
+		driver.findElement(By.name("ta_submit_order")).click();
+		sleep(15000);
+		try {System.out.println(driver.switchTo().alert().getText());
+			driver.switchTo().alert().accept();
+			driver.switchTo().alert().dismiss();
+			driver.switchTo().defaultContent();
+			driver.findElement(By.name("ta_submit_order")).click();
+		} catch (org.openqa.selenium.NoAlertPresentException e) {
+			driver.switchTo().defaultContent();
+		}
+		sleep(45000);
+		 try { 
+		      pageOm.cambiarVentanaNavegador(1); 
+		      sleep(2000); 
+		      driver.findElement(By.id("idlist")).click(); 
+		      sleep(5000); 
+		      pageOm.cambiarVentanaNavegador(0); 
+		    }catch(java.lang.IndexOutOfBoundsException ex1) {} 
+		sleep(12000);
 		boolean chiqui = false;
 		while (chiqui == false) {
 
@@ -460,26 +534,64 @@ public class OMerO extends TestBase {
 			}
 
 		}
-		List <WebElement> cajasVerdes = driver.findElements(By.cssSelector(".item-header.item-completed"));
-		for (WebElement x : cajasVerdes) {
-			if (x.getText().equalsIgnoreCase("CreateSubscriber - S203")) {
-				x.click();
+		sleep(10000);
+		List<WebElement> cajas = driver.findElements(By.cssSelector(".item-label-container.item-header.item-failed"));
+		cajas.addAll(driver.findElements(By.cssSelector(".item-label-container.item-header.item-fatally-failed")));
+		cajas.addAll(driver.findElements(By.cssSelector(".item-label-container.item-header.item-running")));
+		int i = 1;
+		while (cajas.size() > 0) {
+			for (WebElement UnaC : cajas) {
+				UnaC.click();
+				sleep(5000);
+				om.cambiarVentanaNavegador(i);
+				//i++;
+				sleep(5000);
+				List<WebElement> botones = driver.findElements(By.cssSelector(".slds-button.slds-button--neutral.ng-scope"));
+				for (WebElement UnB : botones) {
+					if (UnB.getText().equals("Complete")) {
+						UnB.click();
+						sleep(4000);
+						break;
+					}
 				}
+				sleep(10000);
+				om.cambiarVentanaNavegador(0);
+				sleep(15000);
+				om.closeAllOtherTabs();
+				sleep(45000);
+				break;
+			}
+			cajas = driver.findElements(By.cssSelector(".item-label-container.item-header.item-failed"));
+			cajas.addAll(driver.findElements(By.cssSelector(".item-label-container.item-header.item-fatally-failed")));
+			cajas.addAll(driver.findElements(By.cssSelector(".item-label-container.item-header.item-running")));	
 		}
-	/*	sleep(8000);
-		int h = 1;
-		om.cambiarVentanaNavegador(i);
-		WebElement box1 = driver.findElement(By.xpath("//*[@id='bodyCell']/div/ng-view/div/div/div/div/div/facet/facet-4412964684870411902/table/tbody/tr[29]/td/attribute-value/div/div/datetime-value"));
-		String a = box1.getText().split(" ")[1];
-		System.out.println(a);*/
-	/*	Date date = new Date();
-		Calendar cal = Calendar.getInstance(); 
-        cal.setTime(date); 
-        date = cal.getTime();
-        DateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
-		Assert.assertTrue(date.equals(box1.getText()));*/
-		
+	sleep(10000);
+	List <WebElement> cajasVerdes = driver.findElements(By.cssSelector(".item-header.item-completed"));
+		for (WebElement x : cajasVerdes) { 
+			if (x.getText().contains("Env\u00edo de Activaci\u00f3n de Servicios")) {
+				x.click();
+			}
+		}
+	sleep(5000);
+	om.cambiarVentanaNavegador(i);
+	List<WebElement> child = driver.findElements(By.cssSelector(".ng-scope.slds-tabs--scoped__item"));
+		for(WebElement c : child){
+			if(c.getText().equals("Children")){
+					c.click();
+			}
+		}
+					// CHILDREN
+	sleep(3000);
+	WebElement bod = driver.findElement(By.cssSelector(".slds-box.slds-table.slds-table_bordered.slds-table--cell-buffer.slds-m-top--small")).findElement(By.tagName("tbody")).findElement(By.tagName("tr")).findElements(By.tagName("td")).get(2).findElement(By.tagName("div")).findElement(By.tagName("a"));
+	System.out.println(bod.getText());
+	bod.click();
+	sleep(5000);
+	String requestText = driver.findElement(By.className("json")).getText();
+	JSONObject json = new JSONObject(requestText);
+	String req = json.toString();
+	System.out.println(req);
+	 	
+	}	
 	
-
-		
-	}
+	
+}

@@ -1,5 +1,9 @@
 package Tests;
 
+import org.testng.annotations.AfterMethod;
+import org.testng.annotations.Test;
+import org.testng.annotations.BeforeClass;
+import org.testng.AssertJUnit;
 import static org.testng.Assert.assertEquals;
 import static org.testng.Assert.assertTrue;
 
@@ -110,7 +114,7 @@ public class Sales2 extends TestBase{
 		page.obligarclick(sig);
 		Select delir= new Select (driver.findElement(By.id("DeliveryServiceType")));
 		delir.selectByVisibleText("Env\u00edo Est\u00e1ndar");	
-		Assert.assertEquals(delir.getFirstSelectedOption().getText(),"Env\u00edo Est\u00e1ndar");
+		AssertJUnit.assertEquals(delir.getFirstSelectedOption().getText(),"Env\u00edo Est\u00e1ndar");
 	}
 	
 	@Test(groups={"Sales", "AltaDeLinea", "Ola1"}, priority=5,dataProvider="SalesCuentaActiva")
@@ -149,7 +153,7 @@ public class Sales2 extends TestBase{
 			if(UnT.getText().toLowerCase().contains("modo de entrega"))
 				esta = true;
 		}
-		Assert.assertTrue(esta);
+		AssertJUnit.assertTrue(esta);
 	}
 	
 	@Test(groups = { "Sales", "AltaDeLinea", "Ola1" }, priority=5, dataProvider="SalesCuentaActiva")
@@ -182,7 +186,7 @@ public class Sales2 extends TestBase{
 		page.obligarclick(sig);
 		Select delir = new Select(driver.findElement(By.id("DeliveryServiceType")));
 		delir.selectByVisibleText("Env\u00edo Express");
-		Assert.assertEquals(delir.getFirstSelectedOption().getText(), "Env\u00edo Express");
+		AssertJUnit.assertEquals(delir.getFirstSelectedOption().getText(), "Env\u00edo Express");
 	}
 	
 	@Test(groups={"Sales", "AltaDeContacto", "Ola1"}, priority=2, dataProvider="SalesCuentaActiva")
@@ -201,7 +205,7 @@ public class Sales2 extends TestBase{
 				}
 			}
 		}
-		Assert.assertTrue(cat&&dc);
+		AssertJUnit.assertTrue(cat&&dc);
 	} 
 
 	
@@ -232,7 +236,7 @@ public class Sales2 extends TestBase{
 		sb.continuar();
 		sleep(15000);
 		Select condI = new Select(driver.findElement(By.id("ImpositiveCondition")));
-		Assert.assertTrue(condI.getFirstSelectedOption().getText().equalsIgnoreCase("iva consumidor final"));
+		AssertJUnit.assertTrue(condI.getFirstSelectedOption().getText().equalsIgnoreCase("iva consumidor final"));
 	}
 	
 	@Test(groups={"Sales", "AltaDeCuenta", "Ola1"}, priority=4, dataProvider="SalesCuentaActiva")
@@ -257,7 +261,7 @@ public class Sales2 extends TestBase{
 		sleep(2000);
 		WebElement dom = driver.findElement(By.id("State"));
 		WebElement doc = driver.findElement(By.id("ImageDNI"));
-		Assert.assertTrue(doc.getLocation().y > dom.getLocation().y);
+		AssertJUnit.assertTrue(doc.getLocation().y > dom.getLocation().y);
 	}
 	
 	@Test(groups={"Sales", "AltaDeLinea", "Ola1"}, priority=8, dataProvider="SalesCuentaActiva") 
@@ -268,7 +272,7 @@ public class Sales2 extends TestBase{
 		sleep(10000);
 		sb.elegirplan("plan con tarjeta");
 		WebElement num = driver.findElement(By.cssSelector(".slds-text-body--small.slds-page-header__info.taDevider"));
-		Assert.assertTrue(num.getText().contains("Nro. Orden:"));
+		AssertJUnit.assertTrue(num.getText().contains("Nro. Orden:"));
 	}
 	
 	@Test(groups={"Sales", "AltaDeLinea", "Ola1"}, priority=3, dataProvider="SalesCuentaActiva")
@@ -299,7 +303,7 @@ public class Sales2 extends TestBase{
 				a = true;
 			}
 		}
-		Assert.assertTrue(a);
+		AssertJUnit.assertTrue(a);
 	}
 	
 	@Test(groups={"Sales", "AltaDeLinea", "Ola1"}, priority=3, dataProvider="SalesCuentaActiva")
@@ -321,7 +325,7 @@ public class Sales2 extends TestBase{
 				a = true;
 			
 			}}
-		Assert.assertTrue(a);
+		AssertJUnit.assertTrue(a);
 	}
 	
 	@Test(groups={"Sales", "AltaDeLinea", "Ola1"}, priority=3, dataProvider="SalesCuentaActiva") 
@@ -367,7 +371,7 @@ public class Sales2 extends TestBase{
 		WebElement sig = driver.findElement(By.id("DeliveryMethodConfiguration_nextBtn"));
 		page.obligarclick(sig);
 		sleep(7000);
-		Assert.assertFalse(driver.findElement(By.id("DeliveryMethod")).isEnabled());
+		AssertJUnit.assertFalse(driver.findElement(By.id("DeliveryMethod")).isEnabled());
 	
 	}
 	
@@ -403,7 +407,7 @@ public class Sales2 extends TestBase{
 				x=true;
 				}
 			}
-		Assert.assertTrue(x);
+		AssertJUnit.assertTrue(x);
 	}
 	
 	@Test(groups={"Sales", "AltaDeLinea", "Ola1"}, priority=3,dataProvider="SalesCuentaActiva")
@@ -433,8 +437,8 @@ public class Sales2 extends TestBase{
 		sb.Crear_DomicilioLegal( provincia, localidad,"falsa", "", "2154", "", "", "2453");
 		sleep(30000);
 		WebElement ord = driver.findElement(By.id("OrderStatus"));
-		Assert.assertTrue(ord.getText().contains("Nro. orden:"));
-		Assert.assertTrue(ord.isDisplayed());			
+		AssertJUnit.assertTrue(ord.getText().contains("Nro. orden:"));
+		AssertJUnit.assertTrue(ord.isDisplayed());			
 		
 	}
 	
@@ -444,9 +448,10 @@ public class Sales2 extends TestBase{
 		sleep(2000);
 		driver.findElement(By.id("alert-ok-button")).click();
 		sleep(5000);
-		IrA.CajonDeAplicaciones.ConsolaFAN();
+		driver.findElement(By.id("tabBar")).findElement(By.tagName("a")).click();
+		sleep(6000);
 		TechCare_Ola1 tc = new TechCare_Ola1(driver);
-		//sb.cerrarTodasLasPestanias();
+		sb.cerrarTodasLasPestanias();
 		sleep(8000);
 		tc.selectAccount (sCuenta);
 		sleep(8000);
@@ -462,7 +467,7 @@ public class Sales2 extends TestBase{
 				a = true;
 			}
 		}	
-		Assert.assertTrue(a);
+		AssertJUnit.assertTrue(a);
 	}
 	
 	@Test(groups={"Sales", "AltaDeLinea", "Ola1"}, priority=1, dataProvider="SalesCuentaActiva" )//luego pasar a cuenta con gestiones
@@ -471,7 +476,8 @@ public class Sales2 extends TestBase{
 		sleep(2000);
 		driver.findElement(By.id("alert-ok-button")).click();
 		sleep(5000);
-		IrA.CajonDeAplicaciones.ConsolaFAN();
+		driver.findElement(By.id("tabBar")).findElement(By.tagName("a")).click();
+		sleep(6000);
 		TechCare_Ola1 tc = new TechCare_Ola1(driver);
 		sb.cerrarTodasLasPestanias();
 		tc.selectAccount (sCuenta);
@@ -489,7 +495,7 @@ public class Sales2 extends TestBase{
 				b = true;
 			}
 		}
-		Assert.assertTrue(a && b);
+		AssertJUnit.assertTrue(a && b);
 	}
 	
 	@Test(groups={"Sales", "AltaDeLinea", "Ola1"}, priority=1, dataProvider="SalesCuentaActiva")//agregar luego uno de cuenta con gestiones
@@ -498,15 +504,16 @@ public class Sales2 extends TestBase{
 		sleep(2000);
 		driver.findElement(By.id("alert-ok-button")).click();
 		sleep(5000);
-		IrA.CajonDeAplicaciones.ConsolaFAN();
+		driver.findElement(By.id("tabBar")).findElement(By.tagName("a")).click();
+		sleep(6000);
 		TechCare_Ola1 tc = new TechCare_Ola1(driver);
-		//sb.cerrarTodasLasPestanias();
-		//sleep(5000);
+		sb.cerrarTodasLasPestanias();
+		sleep(5000);
 		tc.selectAccount (sCuenta);
 		sleep(8000);
 		driver.switchTo().frame(cambioFrame(driver, By.cssSelector(".console-card.open")));
 		WebElement nv = driver.findElement(By.cssSelector(".console-card.open"));
-		Assert.assertTrue(nv.getText().contains("Nueva Venta"));
+		AssertJUnit.assertTrue(nv.getText().contains("Nueva Venta"));
 	}
 	
 	@Test(groups={"Sales", "AltaDeCuenta", "Ola1"}, priority=2, dataProvider="SalesCuentaActiva")
@@ -514,11 +521,12 @@ public class Sales2 extends TestBase{
 		sb.BuscarCuenta(DNI, sDni);
 		//sb.BuscarCuenta(DNI, buscarCampoExcel(1, "Cuenta Activa", 2));
 		sb.acciondecontacto("catalogo");
+		sleep(25000);
 		sb.elegirplan("plan prepago nacional");
-		sleep(15000);
+		sleep(25000);
 		driver.findElement(By.cssSelector(".slds-button.slds-m-left--large.slds-button--brand.ta-button-brand")).click();
-		sleep(10000);
-		Assert.assertTrue(driver.findElement(By.id("ContactName")).getAttribute("value").toLowerCase().contains(sCuenta.toLowerCase()));
+		sleep(20000);
+		AssertJUnit.assertTrue(driver.findElement(By.id("ContactName")).getAttribute("value").toLowerCase().contains(sCuenta.toLowerCase()));
 		List <WebElement> prov = driver.findElements(By.cssSelector(".slds-form-element__label.ng-binding"));
 		boolean a = false;
 		for (WebElement x : prov) {
@@ -526,7 +534,7 @@ public class Sales2 extends TestBase{
 				a = true;
 			}
 		}
-		Assert.assertTrue(a);
+		AssertJUnit.assertTrue(a);
 	}
 	
 	@Test(groups={"Sales", "AltaDeContacto", "Ola1"}, priority=4, dataProvider="SalesCuentaActiva")
@@ -554,19 +562,13 @@ public class Sales2 extends TestBase{
 		WebElement sig = driver.findElement(By.id("LineAssignment_nextBtn"));
 		cc.obligarclick(sig);
 		sleep(10000);
-		cc.obligarclick(driver.findElement(By.id("ICCDAssignment_nextBtn")));
-		sleep(20000);
-		cc.obligarclick(driver.findElement(By.id("InvoicePreview_nextBtn")));
-		sleep(20000);
-		cc.obligarclick(driver.findElement(By.id("SelectPaymentMethodsStep_nextBtn")));
-		sleep(20000);
 		sb.elegirvalidacion("DOC");
 		sleep(8000);
 		driver.findElement(By.id("FileDocumentImage")).sendKeys("C:\\Users\\florangel\\Downloads\\mapache.jpg");
 		sleep(3000);
-		WebElement up = driver.findElement(By.cssSelector(".slds-box.vlc-slds-box__italic.slds-input-has-icon.slds-input-has-icon--right"));
-		Assert.assertTrue(up.getText().toLowerCase().contains("mapache.jpg"));
-		Assert.assertTrue(up.getText().toLowerCase().contains("30.55 kb"));
+		WebElement up = driver.findElement(By.cssSelector(".slds-box.slds-input-has-icon.slds-input-has-icon--right.ta-boxImageName"));
+		AssertJUnit.assertTrue(up.getText().toLowerCase().contains("mapache.jpg"));
+		AssertJUnit.assertTrue(up.getText().toLowerCase().contains("30.55 kb"));
 	}
 	
 	@Test(groups={"Sales", "AltaDeContacto", "Ola1"}, priority=2, dataProvider="SalesContactoSinCuenta")
@@ -583,7 +585,7 @@ public class Sales2 extends TestBase{
 		}
 		sleep(7000);
 		String b = driver.findElement(By.cssSelector(".slds-input.form-control.ng-pristine.ng-untouched.ng-valid.ng-not-empty.ng-dirty")).getAttribute("value");
-		Assert.assertTrue(a.equals(b));
+		AssertJUnit.assertTrue(a.equals(b));
 	}
 	
 	@Test(groups={"Sales", "AltaDeLinea", "Ola1"}, priority=3, dataProvider="SalesCuentaActiva")
@@ -595,7 +597,7 @@ public class Sales2 extends TestBase{
 		sleep(15000);
 		driver.findElement(By.cssSelector(".slds-button.slds-m-left--large.slds-button--brand.ta-button-brand")).click();
 		sleep(7000);
-		Assert.assertTrue(driver.findElement(By.cssSelector(".list-group.vertical-steps.ng-scope")).isDisplayed());
+		AssertJUnit.assertTrue(driver.findElement(By.cssSelector(".list-group.vertical-steps.ng-scope")).isDisplayed());
 	}
 	
 	@Test(groups={"Sales", "AltaDeContacto", "Ola1"}, priority=2)
@@ -640,8 +642,8 @@ public class Sales2 extends TestBase{
 			}
 		}
 		WebElement verdni = driver.findElement(By.xpath("//*[@id=\"tab-scoped-3\"]/section/div/table/tbody/tr/td[3]"));
-		Assert.assertTrue(b);
-		Assert.assertTrue(verdni.getText().toLowerCase().contains(a));
+		AssertJUnit.assertTrue(b);
+		AssertJUnit.assertTrue(verdni.getText().toLowerCase().contains(a));
 	}
 	
 	@Test(groups={"Sales", "AltaDeLinea", "Ola1"}, priority=3, dataProvider="SalesCuentaActiva")
@@ -667,9 +669,9 @@ public class Sales2 extends TestBase{
 		driver.findElement(By.id("LineAssignment_nextBtn")).click();
 		sleep(10000);
 		driver.findElement(By.id("DeliveryServiceType")).click();
-		Assert.assertTrue(driver.findElement(By.xpath("//*[text() = 'Env\u00edo Est\u00e1ndar']")).isDisplayed());
-		Assert.assertTrue(driver.findElement(By.xpath("//*[text() = 'Env\u00edo Express']")).isDisplayed());
-		Assert.assertTrue(driver.findElement(By.xpath("//*[text() = 'Retiro en Sucursal de Correo']")).isDisplayed());
+		AssertJUnit.assertTrue(driver.findElement(By.xpath("//*[text() = 'Env\u00edo Est\u00e1ndar']")).isDisplayed());
+		AssertJUnit.assertTrue(driver.findElement(By.xpath("//*[text() = 'Env\u00edo Express']")).isDisplayed());
+		AssertJUnit.assertTrue(driver.findElement(By.xpath("//*[text() = 'Retiro en Sucursal de Correo']")).isDisplayed());
 		
 	}
 	
@@ -695,7 +697,7 @@ public class Sales2 extends TestBase{
 		driver.findElement(By.id("LineAssignment_nextBtn")).click();
 		sleep(10000);
 		WebElement mde = driver.findElement(By.id("DeliveryMethod"));
-		Assert.assertTrue(mde.getAttribute("disabled").equals("true"));
+		AssertJUnit.assertTrue(mde.getAttribute("disabled").equals("true"));
 	}
 	
 	@Test(groups={"Sales", "AltaDeLinea", "Ola1"}, priority=3, dataProvider="SalesCuentaActiva")
@@ -727,7 +729,7 @@ public class Sales2 extends TestBase{
 		driver.findElement(By.id("LineAssignment_nextBtn")).click();
 		sleep(10000);
 		WebElement mde = driver.findElement(By.id("DeliveryMethod"));
-		Assert.assertTrue(mde.getAttribute("disabled").equals("disabled"));	
+		AssertJUnit.assertTrue(mde.getAttribute("disabled").equals("disabled"));	
 	}
 	
 	@Test(groups={"Sales", "AltaDeLinea", "Ola1"}, priority=3, dataProvider="SalesCuentaActiva")
@@ -751,7 +753,7 @@ public class Sales2 extends TestBase{
 		sleep(20000);
 		driver.findElement(By.id("LineAssignment_nextBtn")).click();
 		sleep(10000);
-		Assert.assertTrue(driver.findElement(By.id("DeliveryServiceType")).isEnabled());
+		AssertJUnit.assertTrue(driver.findElement(By.id("DeliveryServiceType")).isEnabled());
 	}
 	
 	@Test(groups={"Sales", "AltaDeLinea", "Ola1"}, priority=3, dataProvider="SalesCuentaActiva")
@@ -775,7 +777,7 @@ public class Sales2 extends TestBase{
 			if (UnM.getText().equalsIgnoreCase("store pick up"))
 				St = true;
 		}
-		Assert.assertTrue(Pr&&Dl&&St);
+		AssertJUnit.assertTrue(Pr&&Dl&&St);
 	}
 	
 	@Test(groups={"Sales", "AltaDeLinea", "Ola1"}, priority=3, dataProvider="SalesCuentaActiva")
@@ -785,7 +787,7 @@ public class Sales2 extends TestBase{
 		//sb.BuscarCuenta(DNI, buscarCampoExcel(1, "Cuenta Activa", 2));
 		SB.acciondecontacto("catalogo");
 		sleep(15000);
-		assertTrue(driver.findElement(By.cssSelector(".slds-col.taChangeDeliveryMethod.slds-text-body--small.slds-m-left--large")).findElement(By.tagName("span")).findElement(By.tagName("strong")).getText().equals("Presencial"));
+		AssertJUnit.assertTrue(driver.findElement(By.cssSelector(".slds-col.taChangeDeliveryMethod.slds-text-body--small.slds-m-left--large")).findElement(By.tagName("span")).findElement(By.tagName("strong")).getText().equals("Presencial"));
 	}
 	
 	 @Test(groups = {"Sales", "AltaDeLinea","Ola1"}, priority=2, dataProvider="SalesCuentaInactiva")
@@ -797,9 +799,9 @@ public class Sales2 extends TestBase{
 		  sleep(5000);
 		  List <WebElement> cai = driver.findElement(By.className("slds-tabs--scoped__nav")).findElements(By.tagName("li"));
 		  if (cai.get(0).isDisplayed() || !cai.get(1).isDisplayed()) {
-			  Assert.assertTrue(false);
+			  AssertJUnit.assertTrue(false);
 		  }
-		  Assert.assertTrue(cai.get(1).findElement(By.tagName("a")).getText().contains("Inactivos"));
+		  AssertJUnit.assertTrue(cai.get(1).findElement(By.tagName("a")).getText().contains("Inactivos"));
 	 }
 	
 	@Test(groups={"Sales", "AltaDeLinea", "Ola1"}, priority=4, dataProvider="SalesCuentaActiva")
@@ -819,7 +821,7 @@ public class Sales2 extends TestBase{
 			if (UnLD.getText().equalsIgnoreCase("elegir como l\u00ednea decisora"))
 				esta = true;
 		}
-		Assert.assertFalse(esta);
+		AssertJUnit.assertFalse(esta);
 	}
 	
 	@Test(groups={"Sales", "AltaDeContacto", "Ola1"}, priority=2)
@@ -839,7 +841,7 @@ public class Sales2 extends TestBase{
 		}
 		sleep(5000);
 		System.out.println(new Select(driver.findElement(By.id("DocumentType"))).getFirstSelectedOption().getText());
-		Assert.assertTrue(new Select(driver.findElement(By.id("DocumentType"))).getFirstSelectedOption().getText().equalsIgnoreCase("DNI"));
+		AssertJUnit.assertTrue(new Select(driver.findElement(By.id("DocumentType"))).getFirstSelectedOption().getText().equalsIgnoreCase("DNI"));
 		
 	}
 	
@@ -849,7 +851,7 @@ public class Sales2 extends TestBase{
 		ContactSearch contact = new ContactSearch(driver);
 		contact.searchContact("CUIT", "22458954", "");
 		WebElement num = driver.findElement(By.id("SearchClientDocumentNumber"));
-		Assert.assertTrue(num.getText().matches("\\d{2}-\\d{8}-\\d{1}"));
+		AssertJUnit.assertTrue(num.getText().matches("\\d{2}-\\d{8}-\\d{1}"));
 		List <WebElement> cc = driver.findElements(By.cssSelector(".slds-form-element__label.ng-binding"));
 		for (WebElement x : cc) {
 			if (x.getText().toLowerCase().contains("+ crear nuevo cliente")) {
@@ -858,7 +860,7 @@ public class Sales2 extends TestBase{
 			}
 		}
 		sleep(5000);
-		Assert.assertTrue(driver.findElement(By.id("DocumentNumber")).getAttribute("value").matches("\\d{2}-\\d{8}-\\d{1}"));
+		AssertJUnit.assertTrue(driver.findElement(By.id("DocumentNumber")).getAttribute("value").matches("\\d{2}-\\d{8}-\\d{1}"));
 	}
 	
 	@Test(groups={"Sales", "AltaDeLinea", "Ola1"}, priority=5, dataProvider="SalesCuentaActiva")
@@ -877,7 +879,7 @@ public class Sales2 extends TestBase{
 		driver.findElement(By.id("SalesChannelConfiguration_nextBtn")).click();
 		sleep(7000);
 		String b = driver.findElement(By.cssSelector(".slds-col.taChangeDeliveryMethod.slds-text-body--small.slds-m-left--large")).getText();
-		Assert.assertTrue(!a.equals(b));
+		AssertJUnit.assertTrue(!a.equals(b));
 	}
 	
 	@Test(groups={"Sales","AltaDeLinea","Ola1"}, priority=4, dataProvider="SalesCuentaActiva")
@@ -904,7 +906,7 @@ public class Sales2 extends TestBase{
 		sleep(8000);
 		WebElement ultnum = driver.findElement(By.cssSelector(".slds-checkbox__label.ta-cyan-color-dark")).findElements(By.tagName("span")).get(1);
 		System.out.println(ultnum.getText());
-		Assert.assertTrue(ultnum.getText().contains("7354"));
+		AssertJUnit.assertTrue(ultnum.getText().contains("7354"));
  	}
 	
 	@Test(groups={"Sales", "AltaDeLinea", "Ola1"}, priority=7, dataProvider="SalesCuentaActiva")  
@@ -915,13 +917,16 @@ public class Sales2 extends TestBase{
 		sleep(15000);
 		sb.elegirplan("Plan Prepago Nacional");
 		sb.continuar();
-		sleep(10000);
-		CustomerCare page = new CustomerCare(driver);
+		sleep(45000);
+		sb.Crear_DomicilioLegal( provincia, localidad,"falsa", "", "5846", "", "", "5248");
+		sleep(15000);
+		//CustomerCare page = new CustomerCare(driver);
 		WebElement sig = driver.findElement(By.id("LineAssignment_nextBtn"));
-		page.obligarclick(sig);
+		//page.obligarclick(sig);
+		sig.click();
 		sleep(10000);
 		WebElement serial = driver.findElement(By.id("ICCIDConfiguration")).findElement(By.tagName("tbody")).findElement(By.tagName("tr")).findElements(By.tagName("td")).get(1);
-		Assert.assertTrue(!serial.findElement(By.tagName("input")).getAttribute("value").isEmpty());
+		AssertJUnit.assertTrue(!serial.findElement(By.tagName("input")).getAttribute("value").isEmpty());
 	}
 	
 	@Test(groups={"Sales", "AltaDeLinea", "Ola1"}, priority=0, dataProvider="SalesCuentaActiva")
@@ -942,9 +947,9 @@ public class Sales2 extends TestBase{
 		Select loc = new Select(driver.findElement(By.id("City")));
 		loc.selectByVisibleText("CIUD AUTON D BUENOS AIRES");
 		sleep(3000);
-		Assert.assertTrue(driver.findElement(By.id("State")).isEnabled());
-		Assert.assertTrue(driver.findElement(By.id("City")).isEnabled());
-		Assert.assertTrue(driver.findElement(By.id("Store")).isEnabled());
+		AssertJUnit.assertTrue(driver.findElement(By.id("State")).isEnabled());
+		AssertJUnit.assertTrue(driver.findElement(By.id("City")).isEnabled());
+		AssertJUnit.assertTrue(driver.findElement(By.id("Store")).isEnabled());
 	}
 	
 	@Test(groups={"Sales", "AltaDeLinea", "Ola1"}, priority=6, dataProvider="SalesCuentaActiva")  //falta validar los campos porque los campos no son opcionales
@@ -979,7 +984,7 @@ public class Sales2 extends TestBase{
 		}
 		sleep(4000);
 		System.out.println(driver.findElement(By.id("CardBankingEntity")).getAttribute("required"));
-		Assert.assertTrue(false);
+		AssertJUnit.assertTrue(false);
 		//Assert.assertTrue(driver.findElement(By.id("CardBankingEntity")).getAttribute("required"));
 	}
 	
@@ -1011,8 +1016,8 @@ public class Sales2 extends TestBase{
 		sleep(5000);
 		driver.findElement(By.id("CreditCardData")).click();
 		sleep(1000);
-		Assert.assertTrue(false);
-		Assert.assertTrue(driver.findElement(By.id("CardBankingEntity")).getAttribute("required").equals("true"));
+		AssertJUnit.assertTrue(false);
+		AssertJUnit.assertTrue(driver.findElement(By.id("CardBankingEntity")).getAttribute("required").equals("true"));
 		//Assert.assertTrue(driver.findElement(By.id("CardBankingEntity")).getAttribute("required"));
 	}
 	
@@ -1053,7 +1058,7 @@ public class Sales2 extends TestBase{
 		sleep(1000);
 		driver.findElement(By.id("CardBankingEntity-0")).click();
 		sleep(1000);
-		Assert.assertTrue(driver.findElement(By.id("CardBankingEntity-0")).findElements(By.tagName("option")).size()>1);
+		AssertJUnit.assertTrue(driver.findElement(By.id("CardBankingEntity-0")).findElements(By.tagName("option")).size()>1);
 	}
 	
 	@Test(groups={"Sales", "AltaDeLinea", "Ola1"}, priority=6, dataProvider="SalesCuentaActiva")  
@@ -1089,7 +1094,7 @@ public class Sales2 extends TestBase{
 		sleep(5000);
 		driver.findElement(By.id("BankingEntity-0")).click();
 		sleep(1000);
-		Assert.assertTrue(driver.findElement(By.id("BankingEntity-0")).findElements(By.tagName("option")).size()>1);
+		AssertJUnit.assertTrue(driver.findElement(By.id("BankingEntity-0")).findElements(By.tagName("option")).size()>1);
 	}
 	
 	@Test(groups={"Sales", "AltaDeLinea", "Ola1"}, priority=6, dataProvider="SalesCuentaActiva")  
@@ -1134,7 +1139,7 @@ public class Sales2 extends TestBase{
 		sleep(1500);
 		driver.findElement(By.id("promotionsByCardsBank-0")).click();
 		sleep(1500);
-		Assert.assertTrue(driver.findElement(By.id("promotionsByCardsBank-0")).findElements(By.tagName("option")).size()>1);
+		AssertJUnit.assertTrue(driver.findElement(By.id("promotionsByCardsBank-0")).findElements(By.tagName("option")).size()>1);
 	}
 	
 	@Test(groups={"Sales", "AltaDeLinea", "Ola1"}, priority=6, dataProvider="SalesBuscarCuenta")  
@@ -1182,7 +1187,7 @@ public class Sales2 extends TestBase{
 		sleep(1500);
 		driver.findElement(By.id("Installment-0")).click();
 		sleep(1500);
-		Assert.assertTrue(driver.findElement(By.id("Installment-0")).findElements(By.tagName("option")).size()>1);
+		AssertJUnit.assertTrue(driver.findElement(By.id("Installment-0")).findElements(By.tagName("option")).size()>1);
 	}
 	
 	@Test(groups={"Sales", "AltaDeLinea", "Ola1"}, priority=6, dataProvider="SalesCuentaActiva")  
@@ -1234,7 +1239,7 @@ public class Sales2 extends TestBase{
 		sleep(2000);
 		driver.findElement(By.id("Installment-0")).click();
 		sleep(1500);
-		Assert.assertTrue(driver.findElement(By.cssSelector(".padding-custom.ng-binding")).getText().toLowerCase().contains("costo financiero"));
+		AssertJUnit.assertTrue(driver.findElement(By.cssSelector(".padding-custom.ng-binding")).getText().toLowerCase().contains("costo financiero"));
 	}
 	
 	@Test(groups={"Sales", "AltaDeLinea", "Ola1"}, priority=0, dataProvider="SalesCuentaActiva")
@@ -1258,7 +1263,7 @@ public class Sales2 extends TestBase{
 		if (list.size() >= 2) {
 			a = true;
 		}
-		Assert.assertTrue(a);
+		AssertJUnit.assertTrue(a);
 	}
 	
 	@Test(groups={"Sales", "AltaDeLinea", "Ola1"}, priority=0, dataProvider="SalesCuentaActiva")
@@ -1279,7 +1284,7 @@ public class Sales2 extends TestBase{
 		if (list.size() >= 2) {
 			a = true;
 		}
-		Assert.assertTrue(a);
+		AssertJUnit.assertTrue(a);
 	}
 	
 	@Test(groups={"Sales", "AltaDeLinea", "Ola1"}, priority=4, dataProvider="SalesCuentaActiva")
@@ -1293,9 +1298,9 @@ public class Sales2 extends TestBase{
 		sb.continuar();
 		sleep(25000);
 		sb.Crear_DomicilioLegal( provincia, localidad,"falsa", "", "5846", "", "", "5248");
-		sleep(35000);
+		sleep(45000);
 		WebElement line = driver.findElement(By.id("tree0-node1__label"));
-		WebElement line2 = driver.findElement(By.id("id-0-0"));
+		WebElement line2 = driver.findElement(By.id("tree0-node1-0"));
 		System.out.println(line.getAttribute("value"));
 		System.out.println(line2.getAttribute("value"));
 		boolean a = false;
@@ -1306,7 +1311,7 @@ public class Sales2 extends TestBase{
 		if (line2.getText().toLowerCase().contains("011")) {
 			b = true;
 		}
-		Assert.assertTrue(a && b);
+		AssertJUnit.assertTrue(a && b);
 		}
 			
 	@Test(groups={"Sales", "AltaDeLinea", "Ola1"}, priority=4, dataProvider="SalesCuentaActiva")
@@ -1335,8 +1340,8 @@ public class Sales2 extends TestBase{
 			a = true;
 		}
 		WebElement canc = driver.findElements(By.cssSelector(".vlc-slds-button--tertiary.ng-binding.ng-scope")).get(0);
-		Assert.assertTrue(a);
-		Assert.assertTrue(canc.isDisplayed());
+		AssertJUnit.assertTrue(a);
+		AssertJUnit.assertTrue(canc.isDisplayed());
 	}
 	
 	@Test(groups={"Sales", "AltaDeLinea", "Ola1"}, priority=3, dataProvider="SalesCuentaActiva")
@@ -1353,7 +1358,7 @@ public class Sales2 extends TestBase{
 		driver.findElement(By.id("SalesChannelConfiguration_nextBtn")).click();
 		sleep(7000);
 		WebElement mde = driver.findElement(By.cssSelector(".slds-col.taChangeDeliveryMethod.slds-text-body--small.slds-m-left--large"));
-		Assert.assertTrue(mde.getText().contains("Presencial"));
+		AssertJUnit.assertTrue(mde.getText().contains("Presencial"));
 	}
 	
 	@Test(groups={"Sales", "AltaDeLinea", "Ola1"}, priority=3, dataProvider="SalesCuentaActiva")
@@ -1374,7 +1379,7 @@ public class Sales2 extends TestBase{
 				a = true;
 			}
 		}
-		Assert.assertTrue(a);
+		AssertJUnit.assertTrue(a);
 	}
 	
 	@Test(groups={"Sales", "AltaDeLinea", "Ola1"}, priority=3, dataProvider="SalesCuentaActiva")
@@ -1387,7 +1392,7 @@ public class Sales2 extends TestBase{
 		sleep(15000);
 		WebElement num = driver.findElement(By.cssSelector(".slds-m-bottom--x-small"));
 		System.out.println(num.getText());
-		Assert.assertTrue(num.getText().contains("Nro. Orden:"));
+		AssertJUnit.assertTrue(num.getText().contains("Nro. Orden:"));
 	}
 	
 	@Test(groups={"Sales", "AltaDeLinea", "Ola1"}, priority=3, dataProvider="SalesCuentaActiva")
@@ -1396,12 +1401,26 @@ public class Sales2 extends TestBase{
 		//sb.BuscarCuenta(DNI, buscarCampoExcel(1, "Cuenta Activa", 2));
 		sb.acciondecontacto("catalogo");
 		sleep(15000);
+		List<WebElement> cam = driver.findElements(By.cssSelector(".slds-m-left--x-small.slds-button.slds-button--brand"));
+		for(WebElement c : cam ){	
+			if(c.getText().toLowerCase().equals("cambiar")){
+				c.click();
+			}
+		sleep(7000);	
+		List<WebElement> frame2 = driver.findElements(By.tagName("iframe"));
+		driver.switchTo().frame(frame2.get(0));
+		Select env = new Select (driver.findElement(By.id("DeliveryMethod")));
+		env.selectByVisibleText("Delivery");
+		driver.findElement(By.id("SalesChannelConfiguration_nextBtn")).click();
+		sleep(10000);
+		driver.switchTo().defaultContent();
+		}
 		sb.elegirplan("Plan Prepago Nacional");
 		sleep(15000);
 		sb.continuar();
 		sleep(20000);
 		sb.Crear_DomicilioLegal(provincia, localidad, "falsa", "", "1000", "", "", "1549");
-		sleep(25000);
+		sleep(35000);
 		CustomerCare CC = new CustomerCare(driver);
 		WebElement sig = driver.findElement(By.id("LineAssignment_nextBtn"));
  		sleep(15000);
@@ -1414,7 +1433,7 @@ public class Sales2 extends TestBase{
 				a = true;
 			}
 		}
-		Assert.assertTrue(a);
+		AssertJUnit.assertTrue(a);
 	}
 	
 	@Test(groups={"Sales", "AltaDeLinea", "Ola1"}, priority=3, dataProvider="SalesCuentaActiva")
@@ -1438,7 +1457,7 @@ public class Sales2 extends TestBase{
 				a = true;
 			}
 		}
-		Assert.assertTrue(a);
+		AssertJUnit.assertTrue(a);
 	}
 	
 	@Test(groups={"Sales", "AltaDeCuenta", "Ola1"}, priority=6, dataProvider="SalesCuentaActiva")
@@ -1449,7 +1468,7 @@ public class Sales2 extends TestBase{
 		sb.acciondecontacto("catalogo");
 		sleep(10000);
 		WebElement name = driver.findElement(By.cssSelector(".slds-page-header__title.slds-m-right--small.slds-truncate.slds-align-middle"));
-		Assert.assertTrue(name.getText().equals(a));	
+		AssertJUnit.assertTrue(name.getText().equals(a));	
 	}
 	
 	@Test(groups={"Sales", "AltaDeCuenta", "Ola1"}, priority=6)
@@ -1476,7 +1495,7 @@ public class Sales2 extends TestBase{
 	}
 	
 	
-	@Test(groups={"Sales","AltaDeLinea","Ola1"}, priority=4, dataProvider="SalesCuentaActiva")  //Continua aunque no se asigne las lianeas
+	@Test(groups={"Sales","AltaDeLinea","Ola1"}, priority=4, dataProvider="SalesCuentaActiva")  
 	public void TS94497_Alta_Linea_Configurar_Nueva_Linea_Intentar_pasar_al_siguiente_paso_lineas_incompletas_XX(String sCuenta, String sDni, String sLinea) throws IOException{
 		CustomerCare CC = new CustomerCare(driver);
 		sb.BuscarCuenta(DNI, sDni);
@@ -1487,22 +1506,23 @@ public class Sales2 extends TestBase{
 		sb.continuar();
 		sleep(25000);
 		sb.Crear_DomicilioLegal(provincia, localidad, "falsa", "", "1000", "", "", "1549");
-		sleep(30000);
+		sleep(35000);
 		WebElement bx = driver.findElement(By.id("tree0-node1__label"));
 		bx.click();
-		sleep(3000);
+		sleep(5000);
 		WebElement sig = driver.findElement(By.id("LineAssignment_nextBtn"));
 		CC.obligarclick(sig);
-		sleep(8000);
-		boolean x = true;
+		sleep(20000);
+		boolean x = false;
 		List<WebElement> serial = driver.findElements(By.cssSelector(".slds-page-header__title.vlc-slds-page-header__title.slds-truncate.ng-binding"));
-			for(WebElement s : serial){
-				s.getText().equals("Ingreso de serial");
-				System.out.println(s.getText());
-				s.isDisplayed();
-				x=false;
+			for(WebElement seg: serial){
+				if(seg.getText().toLowerCase().equals("ingreso de serial")){
+					x = true;
+				}
 			}
-		Assert.assertTrue(x);
+				
+		AssertJUnit.assertTrue(x);
+		 
 	}
 	
 	@Test(groups={"Sales","AltaDeLinea","Ola1"}, priority=4, dataProvider="SalesCuentaActiva") // No figura el lote de lineas
@@ -1512,7 +1532,7 @@ public class Sales2 extends TestBase{
 		//sb.BuscarCuenta(DNI, buscarCampoExcel(1, "Cuenta Activa", 2));
 		sb.acciondecontacto("catalogo");
 		sleep(15000);
-		sb.elegirplan("Plan Prepago Nacional");
+		sb.agregarplan("Plan Prepago Nacional");
 		sb.continuar();
 		sleep(20000);
 		sb.Crear_DomicilioLegal(provincia, localidad, "falsa", "", "1000", "", "", "1549");
@@ -1526,7 +1546,7 @@ public class Sales2 extends TestBase{
 		sleep(15000);
 		String lineaNueva = driver.findElement(By.id("tree0-node1")).findElement(By.cssSelector(".slds-checkbox__label.ta-cyan-color-dark")).findElement(By.className("ng-binding")).getText();
 		System.out.println("nueva ="+lineaNueva);
-		Assert.assertTrue(!lineaVieja.equals(lineaNueva));
+		AssertJUnit.assertTrue(!lineaVieja.equals(lineaNueva));
 	}
 	
 	@Test(groups={"Sales","AltaDeLinea","Ola1"}, priority=4, dataProvider="SalesCuentaActiva") 	
@@ -1542,7 +1562,7 @@ public class Sales2 extends TestBase{
 		sleep(20000);
 		WebElement bx = driver.findElement(By.id("OrderStatus"));
 		System.out.println(bx.getText());
-		Assert.assertTrue(bx.isDisplayed());
+		AssertJUnit.assertTrue(bx.isDisplayed());
 	}
 	
 	@Test(groups={"Sales","AltaDeLinea","Ola1"}, priority=4, dataProvider="SalesCuentaActiva") 	
@@ -1573,9 +1593,9 @@ public class Sales2 extends TestBase{
 		CC.obligarclick(cont);
 		sleep(8000);
 		WebElement txt = driver.findElement(By.id("LineAssingmentMessage")).findElement(By.tagName("div")).findElements(By.tagName("strong")).get(0);
-		Assert.assertTrue((txt.getText().equals("Catamarca")));
+		AssertJUnit.assertTrue((txt.getText().equals("Catamarca")));
 		WebElement txt2 = driver.findElement(By.id("LineAssingmentMessage")).findElement(By.tagName("div")).findElements(By.tagName("strong")).get(1);
-		Assert.assertTrue(txt2.getText().equals("ACHALCO"));
+		AssertJUnit.assertTrue(txt2.getText().equals("ACHALCO"));
 	}
 	
 	@Test(groups={"Sales","AltaDeLinea","Ola1"}, priority=4, dataProvider="SalesCuentaActiva") 	
@@ -1604,9 +1624,9 @@ public class Sales2 extends TestBase{
 		sleep(3000);
 		try{ driver.findElement(By.id("SelectProvincia")).click();
 		driver.findElement(By.id("SelectLocalidad")).click();
-		Assert.assertTrue(true);}
+		AssertJUnit.assertTrue(true);}
 		catch(org.openqa.selenium.ElementNotVisibleException ex1){
-		Assert.assertTrue(false);	
+		AssertJUnit.assertTrue(false);	
 		}
 	}	
 	
@@ -1630,8 +1650,8 @@ public class Sales2 extends TestBase{
 		WebElement text2 = driver.findElement(By.id("LineAssingmentMessage")).findElement(By.tagName("div")).findElement(By.tagName("p")).findElement(By.tagName("p")).findElements(By.tagName("strong")).get(1);
 		//System.out.println(text.getText());
 		//System.out.println(text2.getText());
-		Assert.assertTrue(text.getText().equals(provincia));
-		Assert.assertTrue(text2.getText().equals(localidad));
+		AssertJUnit.assertTrue(text.getText().equals(provincia));
+		AssertJUnit.assertTrue(text2.getText().equals(localidad));
 	
 	}
 	
@@ -1663,9 +1683,9 @@ public class Sales2 extends TestBase{
 		sleep(3000);
 		try{ driver.findElement(By.id("SelectProvincia")).click();
 		driver.findElement(By.id("SelectLocalidad")).click();
-		Assert.assertTrue(true);}
+		AssertJUnit.assertTrue(true);}
 		catch(org.openqa.selenium.ElementNotVisibleException ex1){
-		Assert.assertTrue(false);}
+		AssertJUnit.assertTrue(false);}
 	}
 
 		
@@ -1699,7 +1719,7 @@ public class Sales2 extends TestBase{
 		driver.findElement(By.id("SearchClientDocumentNumber")).sendKeys(Integer.toString(intAletorio));
 		driver.findElement(By.id("SearchClientsDummy")).click();
 		sleep(5000);
-		Assert.assertTrue(driver.findElement(By.cssSelector(".OSradioButton.ng-scope.only-buttom")).isEnabled());
+		AssertJUnit.assertTrue(driver.findElement(By.cssSelector(".OSradioButton.ng-scope.only-buttom")).isEnabled());
 	}
 	
 	@Test(groups={"Sales", "AltaDeLinea", "Ola1"}, priority=0, dataProvider="SalesCuentaActiva")
@@ -1727,7 +1747,7 @@ public class Sales2 extends TestBase{
 			}
 			
 		}
-		Assert.assertTrue(a);
+		AssertJUnit.assertTrue(a);
 	}
 	
 	@Test(groups={"Sales", "AltaDeLinea", "Ola1"}, priority=5, dataProvider="SalesCuentaActiva")
@@ -1749,7 +1769,7 @@ public class Sales2 extends TestBase{
 		driver.findElements(By.cssSelector(".slds-list__item.ng-binding.ng-scope")).get(0).click();
 		driver.findElement(By.id("SalesChannelConfiguration_nextBtn")).click();
 		sleep(7000);
-		Assert.assertTrue(driver.findElement(By.cssSelector(".slds-col.taChangeDeliveryMethod.slds-text-body--small.slds-m-left--large")).getText().contains("Store Pick Up"));
+		AssertJUnit.assertTrue(driver.findElement(By.cssSelector(".slds-col.taChangeDeliveryMethod.slds-text-body--small.slds-m-left--large")).getText().contains("Store Pick Up"));
 		driver.findElement(By.cssSelector(".slds-m-left--x-small.slds-button.slds-button--brand")).click();
 		sleep(7000);
 		driver.switchTo().frame(cambioFrame(driver, By.id("DeliveryMethod")));
@@ -1757,7 +1777,7 @@ public class Sales2 extends TestBase{
 		nenv.selectByVisibleText("Delivery");
 		driver.findElement(By.id("SalesChannelConfiguration_nextBtn")).click();
 		sleep(7000);
-		Assert.assertTrue(driver.findElement(By.cssSelector(".slds-col.taChangeDeliveryMethod.slds-text-body--small.slds-m-left--large")).getText().contains("Delivery"));		
+		AssertJUnit.assertTrue(driver.findElement(By.cssSelector(".slds-col.taChangeDeliveryMethod.slds-text-body--small.slds-m-left--large")).getText().contains("Delivery"));		
 	}
 	
 	@Test(groups={"Sales", "AltaDeLinea", "Ola1"}, priority=6, dataProvider="SalesCuentaActiva")
@@ -1796,7 +1816,7 @@ public class Sales2 extends TestBase{
 				c = true;
 			}
 		}
-		Assert.assertTrue(a && b && c);
+		AssertJUnit.assertTrue(a && b && c);
 	}
 	
 	@Test(groups={"Sales", "AltaDeLinea", "Ola1"}, priority=4, dataProvider="SalesCuentaActiva")
@@ -1835,7 +1855,7 @@ public class Sales2 extends TestBase{
 	    		  break;
 	    	  }
 	      }
-	     Assert.assertTrue(a);
+	     AssertJUnit.assertTrue(a);
 	}
 	
 	
@@ -1865,10 +1885,10 @@ public class Sales2 extends TestBase{
 		          amigos = true;
 		    } 
 	    } 
-	     Assert.assertTrue(voz);
-	     Assert.assertTrue(sms);
-	     Assert.assertTrue(datos);
-	     Assert.assertTrue(amigos);
+	     AssertJUnit.assertTrue(voz);
+	     AssertJUnit.assertTrue(sms);
+	     AssertJUnit.assertTrue(datos);
+	     AssertJUnit.assertTrue(amigos);
 	}
 	
 	@Test(groups={"Sales","AltaDeLinea","Ola1"}, priority=3, dataProvider="SalesCuentaActiva")
@@ -1885,10 +1905,10 @@ public class Sales2 extends TestBase{
 			}
 		}
 		sleep(5000);
-		Assert.assertTrue(driver.findElement(By.cssSelector(".cpq-product-link.slds-text-body_small.slds-float_right")).getText().equalsIgnoreCase("more"));
+		AssertJUnit.assertTrue(driver.findElement(By.cssSelector(".cpq-product-link.slds-text-body_small.slds-float_right")).getText().equalsIgnoreCase("more"));
 		driver.findElement(By.cssSelector(".cpq-product-link.slds-text-body_small.slds-float_right")).click();
 		sleep(8000);
-		Assert.assertTrue(driver.findElement(By.cssSelector(".slds-modal.slds-fade-in-open.slds-modal--large")).findElement(By.tagName("h2")).getText().equalsIgnoreCase("product details"));
+		AssertJUnit.assertTrue(driver.findElement(By.cssSelector(".slds-modal.slds-fade-in-open.slds-modal--large")).findElement(By.tagName("h2")).getText().equalsIgnoreCase("product details"));
 	}
 	
 	@Test(groups={"Sales","AltaDeLinea","Ola1"}, priority=3, dataProvider="SalesCuentaActiva")
@@ -1906,16 +1926,12 @@ public class Sales2 extends TestBase{
 		}
 		sleep(5000);
 		driver.findElement(By.cssSelector(".slds-input.ng-pristine.ng-untouched.ng-valid")).sendKeys("pack");		
-		
-		Assert.assertTrue(driver.findElement(By.cssSelector(".cpq-product-link.slds-text-body_small.slds-float_right")).getText().equalsIgnoreCase("more"));
-		/*List <WebElement> more = driver.findElements(By.cssSelector(".cpq-product-link.slds-text-body_small.slds-float_right"));
-			for(WebElement m : more){
-				if(m.getText().toLowerCase().equals("more")){
-					m.click();
-				}
-			}*/
 		sleep(8000);
-		Assert.assertTrue(driver.findElement(By.cssSelector(".slds-modal.slds-fade-in-open.slds-modal--large")).findElement(By.tagName("h2")).getText().equalsIgnoreCase("product details"));
+		AssertJUnit.assertTrue(driver.findElement(By.cssSelector(".cpq-product-link.slds-text-body_small.slds-float_right")).getText().equalsIgnoreCase("more"));
+		WebElement more = driver.findElements(By.cssSelector(".cpq-product-link.slds-text-body_small.slds-float_right")).get(0);
+		more.click();
+		sleep(8000);
+		AssertJUnit.assertTrue(driver.findElement(By.cssSelector(".slds-modal.slds-fade-in-open.slds-modal--large")).findElement(By.tagName("h2")).getText().equalsIgnoreCase("product details"));
 	}
 	
 	@Test(groups={"Sales","AltaDeLinea","Ola1"}, priority=6, dataProvider="SalesCuentaActiva")//*******************Arreglar
@@ -1955,7 +1971,7 @@ public class Sales2 extends TestBase{
 			DPF = true;
 		}
 		}
-		Assert.assertTrue(TC&&E&&DPF);
+		AssertJUnit.assertTrue(TC&&E&&DPF);
 		sleep(5000);
 	}
 	
@@ -1975,14 +1991,14 @@ public class Sales2 extends TestBase{
 		sb.continuar();
 		sleep(25000);
 		sb.Crear_DomicilioLegal(provincia, "ABEL", "falsa", "", "1000", "", "", "1549");
-		sleep(7000);
+		sleep(15000);
 		List<WebElement> mns = driver.findElements(By.cssSelector(".message.description.ng-binding.ng-scope"));
 		for(WebElement UnM : mns) {
-			if(UnM.getText().toLowerCase().contains("sin l\u00ednea decisoria"))
+			if(UnM.getText().toLowerCase().contains("sin l\u00ednea decisoria."))
 				estaM = true;
 		}
-		Assert.assertTrue(estaM);
-		Assert.assertTrue(driver.findElement(By.id("text-input-01")).isDisplayed());
+		AssertJUnit.assertTrue(estaM);
+		AssertJUnit.assertTrue(driver.findElement(By.id("text-input-01")).isDisplayed());
 	}
 	
 	@Test(groups={"Sales", "AltaDeContacto", "Ola1"}, priority=2, dataProvider="SalesCuentaActiva")
@@ -1996,7 +2012,7 @@ public class Sales2 extends TestBase{
 				a = true;
 			}
 		}
-		Assert.assertTrue(a);
+		AssertJUnit.assertTrue(a);
 	}
 	
 	@Test(groups={"Sales", "AltaDeCuenta","Ola1"}, priority=2, dataProvider="SalesCuentaActiva")
@@ -2010,9 +2026,9 @@ public class Sales2 extends TestBase{
 		SalesBase SB = new SalesBase(driver);
 		SB.BuscarAvanzada(NyA.split(" ")[0], NyA.split(" ")[1], "", "", "");
 		WebElement tTel = driver.findElement(By.id("tab-scoped-3")).findElement(By.tagName("tbody")).findElements(By.tagName("td")).get(2);
-		Assert.assertTrue(!tTel.getText().equals("5849652"));
+		AssertJUnit.assertTrue(!tTel.getText().equals("5849652"));
 		WebElement tNom = driver.findElement(By.id("tab-scoped-3")).findElement(By.tagName("tbody")).findElements(By.tagName("td")).get(0);
-		Assert.assertTrue(tNom.getText().toLowerCase().contains(sCuenta.toLowerCase()));
+		AssertJUnit.assertTrue(tNom.getText().toLowerCase().contains(sCuenta.toLowerCase()));
 	}
 
 	@Test(groups={"Sales", "AltaDeLinea", "Ola1"}, priority=8,dataProvider="SalesCuentaActiva")
@@ -2024,7 +2040,7 @@ public class Sales2 extends TestBase{
 		boolean x = false;
 		sleep(18000);
 		sb.elegirplan("Plan prepago nacional");
-	/*	driver.findElement(By.cssSelector(".slds-input.ng-valid.ng-not-empty.ng-dirty.ng-valid-parse.ng-touched")).clear();
+		/*driver.findElement(By.cssSelector(".slds-input.ng-valid.ng-not-empty.ng-dirty.ng-valid-parse.ng-touched")).clear();
 		driver.findElement(By.cssSelector(".slds-input.ng-valid.ng-dirty.ng-valid-parse.ng-touched.ng-empty")).sendKeys("Plan Prepago Nacional");		
 		try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 		List<WebElement> agregar = driver.findElements(By.cssSelector(".slds-button.slds-button_neutral.cpq-add-button")); 
@@ -2034,6 +2050,8 @@ public class Sales2 extends TestBase{
 		sb.Crear_DomicilioLegal(provincia, "ABEL", "falsa", "", "1000", "", "", "1549");
 		sleep(7000);
 		CustomerCare page = new CustomerCare(driver);
+		sb.Crear_DomicilioLegal("Buenos Aires","Vicente Lopez","falsa", "", "5846", "", "", "5248");
+		sleep(15000);
 		try {
 			driver.findElement(By.id("Step_Error_Huawei_S013_nextBtn")).click();
 			sleep(8000);
@@ -2073,7 +2091,7 @@ public class Sales2 extends TestBase{
 			if (UnD.getText().toLowerCase().contains("entrega"))
 				entrega = true;
 		}
-		Assert.assertTrue(nOrden&&nyA&&dni&&pago&&entrega&&modelo&&serial&&linea&&plan);
+		AssertJUnit.assertTrue(nOrden&&nyA&&dni&&pago&&entrega&&modelo&&serial&&linea&&plan);
 		
 		/*sig = driver.findElement(By.id("LineAssignment_nextBtn"));
 		page.obligarclick(sig);
@@ -2117,9 +2135,9 @@ public class Sales2 extends TestBase{
 		for (WebElement UnE : lst) {
 			if(UnE.findElement(By.className("pbTitle")).getText().toLowerCase().contains("productos de pedido")) {
 				if (UnE.findElement(By.cssSelector(".dataRow.even.first")).getText().toLowerCase().contains("plan prepago nacional"))
-					Assert.assertTrue(true);
+					AssertJUnit.assertTrue(true);
 				else 
-					Assert.assertTrue(false);
+					AssertJUnit.assertTrue(false);
 			}
 		}
 	}
@@ -2151,12 +2169,13 @@ public class Sales2 extends TestBase{
 			try {Thread.sleep(2000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 		} } catch (java.lang.IndexOutOfBoundsException e) {}
 		try {Thread.sleep(3000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
-		page3.addPlan("plan prepago nacional");
+		page3.addPlan("Galaxy S8");
 		try {Thread.sleep(3000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 		driver.findElement(By.cssSelector(".slds-input.ng-valid.ng-not-empty.ng-dirty.ng-valid-parse.ng-touched")).clear();
-		driver.findElement(By.cssSelector(".slds-input.ng-valid.ng-not-empty.ng-dirty.ng-valid-parse.ng-touched")).sendKeys("Galaxy S8");		
-		try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
-		driver.findElement(By.cssSelector(".slds-button.slds-button--neutral.add-button")).click();
+		/*driver.findElement(By.cssSelector(".slds-input.ng-valid.ng-not-empty.ng-dirty.ng-valid-parse.ng-touched")).sendKeys("Galaxy S8");		
+		try {Thread.sleep(8000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		driver.findElement(By.cssSelector(".slds-button.slds-button--neutral.add-button")).click();*/
+		sb.elegirplan("Galaxy S8");
 		sleep(15000);
 		page3.abrirprimeraflecha();
 		sleep(3000);
@@ -2166,7 +2185,8 @@ public class Sales2 extends TestBase{
 		sleep(3000);
 		page3.deleteoneplan();
 		try {Thread.sleep(4000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
-		Assert.assertEquals("Cart is empty.", page3.getEmptyCartMessage());
+		WebElement cart = driver.findElement(By.cssSelector(".slds-grid.slds-grid_vertical-align-center.slds-grid_align-center.cpq-no-cart-items-msg"));
+		AssertJUnit.assertTrue((cart.getText().equals("Cart is empty.")));
 	}
 	@Test(groups={"Sales", "AltaDeLinea", "Ola1"}, priority=3, dataProvider="SalesCuentaActiva")
 	public void TS94522_CRM_Fase_1_SalesCPQ_Alta_Linea_Carrito_Verificar_el_mensaje_al_vaciar_el_carrito_XX(String sCuenta, String sDni, String sLinea) throws IOException {
@@ -2182,7 +2202,7 @@ public class Sales2 extends TestBase{
 		try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 		//WebElement messageEmptyCart = driver.findElement(By.xpath(".//div[@class=\"slds-grid slds-grid--vertical-align-center slds-grid--align-center cpq-no-cart-items-msg\"]"));
 		//Assert.assertEquals(messageEmptyCart.getText().trim(), "Cart is empty.");
-		Assert.assertEquals("Cart is empty.", cart.getEmptyCartMessage());
+		AssertJUnit.assertEquals("Cart is empty.", cart.getEmptyCartMessage());
 	}
 	@Test(groups={"Sales", "AltaDeLinea", "Ola1"}, priority=9, dataProvider="SalesCuentaActiva")
 	public void TS94515_CRM_Fase_1_SalesCPQ_Alta_Linea_Costo_Operacion_Validar_formato_del_monto(String sCuenta, String sDni, String sLinea) throws IOException {
@@ -2203,7 +2223,7 @@ public class Sales2 extends TestBase{
 		//WebElement waiter = wait.until(ExpectedConditions.presenceOfElementLocated(By.cssSelector(".slds-item--detail.slds-truncate")));
 		List<WebElement> values = driver.findElements(By.cssSelector(".slds-item--detail.slds-truncate"));
 		String[] precissionCounter = values.get(3).getText().split(",");
-		Assert.assertEquals(precissionCounter[1].length(), 2);
+		AssertJUnit.assertEquals(precissionCounter[1].length(), 2);
 		List<WebElement> frame2 = driver.findElements(By.tagName("iframe"));
 		//driver.switchTo().frame(frame2.get(0));
 		driver.findElements(By.cssSelector(".slds-button.slds-button--neutral")).get(3).click();
@@ -2214,7 +2234,7 @@ public class Sales2 extends TestBase{
 		for (WebElement UnM : montos) {
 			System.out.println("monto="+UnM.getText());
 			precissionCounter =UnM.getText().split(",");
-			Assert.assertEquals(precissionCounter[1].length(), 2);
+			AssertJUnit.assertEquals(precissionCounter[1].length(), 2);
 		}
 	}
 	@Test(groups={"Sales", "AltaLinea", "Ola1"},dataProvider="SalesCuentaActiva")              
@@ -2229,7 +2249,7 @@ public class Sales2 extends TestBase{
 		WebElement boton = driver.findElements(By.cssSelector(".slds-button.slds-button_icon-border-filled.cpq-item-actions-dropdown-button")).get(0);
 		boton.click();
 		WebElement delet = driver.findElements(By.cssSelector(".slds-dropdown.slds-dropdown_right.cpq-item-actions-dropdown")).get(0);
-		Assert.assertTrue(delet.getText().contains("Delete"));
+		AssertJUnit.assertTrue(delet.getText().contains("Delete"));
 	}
 	
 	
@@ -2261,7 +2281,7 @@ public class Sales2 extends TestBase{
 		try {Thread.sleep(8000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 		sb.continuar();
 		sleep(8000);
-		Assert.assertTrue(false);
+		AssertJUnit.assertTrue(false);
 	/*	LineAssignment lineAssignment = new LineAssignment (driver);
 		lineAssignment.clickOnNext();
 		BillSimulation billSimulation = new BillSimulation (driver);
@@ -2283,7 +2303,7 @@ public class Sales2 extends TestBase{
 		try {Thread.sleep(8000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 		sb.continuar();
 		sleep(8000);
-		Assert.assertTrue(false);
+		AssertJUnit.assertTrue(false);
 	/*	LineAssignment lineAssignmentPage = new LineAssignment(driver);
 		lineAssignmentPage.clickOnNext();
 		BillSimulation billSimulationPage = new BillSimulation(driver);
@@ -2303,7 +2323,7 @@ public class Sales2 extends TestBase{
 		try {Thread.sleep(8000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 		sb.continuar();
 		sleep(8000);
-		Assert.assertTrue(false);
+		AssertJUnit.assertTrue(false);
 		/*
 		LineAssignment lineAssignment = new LineAssignment (driver);
 		lineAssignment.clickOnNext();
@@ -2329,7 +2349,7 @@ public class Sales2 extends TestBase{
 		
 		WebElement result = driver.findElement(By.cssSelector(".slds-tile__title.slds-truncate.cpq-product-name"));
 		System.out.println(result.getText());
-		Assert.assertTrue(result.getText().contains("Plan Prepago Nacional"));
+		AssertJUnit.assertTrue(result.getText().contains("Plan Prepago Nacional"));
 			
 	}
 	
@@ -2343,7 +2363,64 @@ public class Sales2 extends TestBase{
 		sleep(5000);
 		driver.findElement(By.cssSelector(".slds-button__icon.slds-button__icon--.slds-icon-text-default")).click();
 		WebElement icon = driver.findElements(By.cssSelector(".slds-icon.slds-icon--x-small")).get(4);
-		Assert.assertTrue(icon.isDisplayed());
+		AssertJUnit.assertTrue(icon.isDisplayed());
+	}
+	
+	@Test(groups={"Sales", "AltaLinea", "Ola1"},  dataProvider="SalesCuentaActiva")
+	public void Alta_Linea(String sCuenta, String sDni, String sLinea){
+		//sb.BuscarCuenta(DNI, sDni);
+		//sb.acciondecontacto("catalogo");
+		//try {Thread.sleep(4000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		CustomerCare cc = new CustomerCare(driver);
+		sb.BtnCrearNuevoCliente();
+		String asd = driver.findElement(By.id("SearchClientDocumentNumber")).getAttribute("value");
+		ContactSearch contact = new ContactSearch(driver);
+		try {Thread.sleep(10000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		driver.findElement(By.id("FirstName")).sendKeys("yy");
+		driver.findElement(By.id("LastName")).sendKeys("z");
+		driver.findElement(By.id("Birthdate")).sendKeys("28/12/1999");
+		contact.sex("masculino");
+		driver.findElement(By.id("Contact_nextBtn")).click();
+		sb.elegirplan("Plan Prepago Nacional");
+		sb.continuar();
+		sleep(15000);
+		sb.Crear_DomicilioLegal(provincia, localidad, "falsa", "", "1000", "", "", "1549");
+		sleep(20000);
+		//driver.findElement(By.cssSelector(".slds-button.slds-m-left--large.slds-button--brand.ta-button-brand")).click();
+		driver.findElement(By.id("LineAssignment_nextBtn")).click();
+		sleep(12000);
+		driver.findElement(By.id("ICCDAssignment_nextBtn")).click();
+		sleep(25000);
+		driver.findElement(By.id("InvoicePreview_nextBtn")).click();
+		sleep(10000);
+		driver.findElement(By.id("SelectPaymentMethodsStep_nextBtn")).click();
+		sleep(13000);
+		//VALIDACI�N DE IDENTIDAD
+		sleep(10000);
+		// page.obligarclick(driver.findElement(By.id("InvoicePreview_nextBtn")));
+			//sleep(15000);
+		try {Thread.sleep(15000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		List<WebElement> valid =driver.findElements(By.id("ValidationMethodInValidContact"));
+		List<WebElement> radio =driver.findElements(By.className("imgItemContainer"));
+		
+		for(int i=0; i<valid.size();i++){
+			String value=valid.get(i).getAttribute("value");
+			if(value.equals("DOC")){
+				cc.obligarclick(radio.get(i));
+				break;}}
+		try {Thread.sleep(3000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		 driver.findElement(By.id("MethodSelection_nextBtn")).click();
+		sleep(10000);
+		try {Thread.sleep(3000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		driver.findElement(By.id("FileDocumentImage")).sendKeys("C:\\Users\\Sofia Chardin\\Desktop\\DNI.jpg");
+		sleep(5000);
+		driver.findElement(By.id("DocumentMethod_nextBtn")).click();
+		sleep(3000);
+		// driver.findElement(By.id("ValidationResult_nextBtn")).click();
+		//RESUMEN DE LA ORDEN DE VENTA	
+		driver.findElement(By.id("OrderSumary_nextBtn")).click();
+		sleep(10000);
+		
 	}
 }
 

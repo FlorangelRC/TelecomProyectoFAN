@@ -314,7 +314,7 @@ public boolean btnnoexiste(String boton){
 	 ArrayList<String> txt1 = new ArrayList<String>();
 	 ArrayList<String> txt2 = new ArrayList<String>();
 	 txt2.add("ASIGNACI\u00d3N DE L\u00cdNEA");
-	 txt2.add("SELECCI\u00d3N DE L\u00cdNEA DECISORA");
+	 txt2.add("DATOS DE LA CUENTA");
 	 txt2.add("RESUMEN DE LA ORDEN DE VENTA");
 	 txt2.add("INFORMACI\u00d3N");
 
@@ -476,6 +476,10 @@ for(WebElement e: btns){
  public void elegirvalidacion(String validacion){
 	 //DOC SMS o QA
 	 CustomerCare cc = new CustomerCare(driver);
+	 CustomerCare page = new CustomerCare(driver);
+	 sleep(10000);
+	// page.obligarclick(driver.findElement(By.id("InvoicePreview_nextBtn")));
+		//sleep(15000);
 	try {Thread.sleep(15000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 	List<WebElement> valid =driver.findElements(By.id("ValidationMethodInValidContact"));
 	List<WebElement> radio =driver.findElements(By.cssSelector(".ta-radioBtnContainer.taBorderOverlay.slds-grid.slds-grid--align-center.slds-grid--vertical-align-center.ng-scope"));
@@ -902,7 +906,7 @@ try{	driver.findElement(By.id("alert-ok-button")).click();	} catch (NoSuchElemen
 			driver.findElement(By.id("Street")).sendKeys(Keys.ARROW_DOWN);
 			driver.findElement(By.id("Street")).sendKeys(Keys.ENTER);
 			driver.findElement(By.id("NewStreetName")).sendKeys(calle);*/
-			sleep(3000);
+			
 			driver.findElement(By.id("StreetNumber")).sendKeys(altura);
 			driver.findElement(By.id("FloorNumber")).sendKeys(piso);
 			driver.findElement(By.id("Department")).sendKeys(dpto);

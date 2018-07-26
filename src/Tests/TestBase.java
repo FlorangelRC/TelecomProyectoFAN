@@ -112,6 +112,17 @@ public class TestBase {
 			//driver.findElement(By.id("chooser")).click();
 	//	}
 	}
+	public void loginDani(WebDriver driver) {
+		driver.get("https://crm--sit.cs14.my.salesforce.com/");
+		try {Thread.sleep(4000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		//if(driver.findElement(By.id("idcard")).isDisplayed())
+		//{
+	    Login page0 = new Login(driver);
+	    page0.ingresarDani();
+		//}else{
+			//driver.findElement(By.id("chooser")).click();
+	//	}
+	}
 	
 	public void loginMarketing(WebDriver driver) {
 		driver.get("https://crm--sit.cs14.my.salesforce.com/");
@@ -703,24 +714,6 @@ public class TestBase {
 	}
 	
 	@DataProvider
-	public Object[][] DatosSalesNominacion() throws Exception{
-
-	 Object[][] testObjArray = ExcelUtils.getTableArray("Cuentas.xlsx","PreparacionDatos",1,1,8,"Nominacion");
-
-	 return (testObjArray);
-
-	}
-	
-	@DataProvider
-	public Object[][] DatosSalesAltaLinea() throws Exception{
-
-	 Object[][] testObjArray = ExcelUtils.getTableArray("Cuentas.xlsx","PreparacionDatos",1,1,13,"Alta Linea");
-
-	 return (testObjArray);
-
-	}
-	
-	@DataProvider
 	public Object[][] OMAltaLinea() throws Exception{
 
 	 Object[][] testObjArray = ExcelUtils.getTableArray("Cuentas.xlsx","OM",1,1,7,"AltaLinea");
@@ -728,6 +721,16 @@ public class TestBase {
 	 return (testObjArray);
 
 	}
+	
+	@DataProvider
+	public Object[][] OMAltaCompleta() throws Exception{
+
+	 Object[][] testObjArray = ExcelUtils.getTableArray("Cuentas.xlsx","OM",1,1,10,"AltaLineaC");
+
+	 return (testObjArray);
+
+	}
+	
 	@DataProvider
 	public Object[][] OMCambioSim() throws Exception{
 

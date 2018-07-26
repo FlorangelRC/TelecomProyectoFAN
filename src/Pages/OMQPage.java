@@ -342,22 +342,26 @@ public class OMQPage extends BasePage {
 		
 
 			
-public void sincroProducto(String Products) {
+public void sincroProducto() {//(String Products) {
 	
-	boolean a= false;
+	//boolean a= false;
 	driver.switchTo().defaultContent();
 	((JavascriptExecutor)driver).executeScript("window.scrollTo(0,"+driver.findElement(By.xpath("//*[@id='bodyCell']/div[6]/div[1]/div/div[2]/table")).getLocation().y+")");
-	List<WebElement> prod=driver.findElements(By.xpath("//*[@id='bodyCell']/div[6]/div[1]/div/div[2]/table/tbody/tr[*]/th/a"));
+	WebElement productos=driver.findElement(By.xpath("//*[@id='bodyCell']/div[6]/div[1]/div/div[2]/table/tbody/tr[*]/th/a"));
+	productos.findElement(By.xpath("//*[@id=\"bodyCell\"]/div[6]/div[1]/div/div[2]/table/tbody/tr[2]/th/a")).click();
+	System.out.println(productos.getText());	
+	sleep(25000);
+	/*List<WebElement> prod=driver.findElements(By.xpath("//*[@id='bodyCell']/div[6]/div[1]/div/div[2]/table/tbody/tr[*]/th/a"));
+	
 	for (int i = 0; i < prod.size(); i++) {
 		if (prod.get(i).getText().equals(Products)) {
 			a=true;
 			 System.out.println(prod.get(i).getText());
 			 prod.get(i).click();
 				sleep(5000);
-			 break;
+			 break;*/
 	}
-}
-}
+
 	//Boton sincronizar
 	
 	public void clickSincronizar() {
@@ -367,14 +371,14 @@ public void sincroProducto(String Products) {
 		try{driver.findElement(By.xpath("//*[@id=\"bodyCell\"]/div/div/div[1]/div/form/div[3]/button")).click();
 		
 		}catch(org.openqa.selenium.NoSuchElementException e) {
-		sleep(8000);
+		sleep(18000);
 		OM pageOm=new OM(driver);
 		pageOm.cambiarVentanaNavegador(1);
-		sleep(6000);
+		sleep(16000);
 		driver.findElement(By.id("idlist")).click();
-		sleep(5000);
+		sleep(15000);
 		pageOm.cambiarVentanaNavegador(0);
-		sleep(5000);
+		sleep(15000);
 		driver.findElement(By.xpath("//*[@id=\"bodyCell\"]/div/div/div[1]/div/form/div[3]/button")).click();
 		sleep(40000);
 		
@@ -382,15 +386,56 @@ public void sincroProducto(String Products) {
 		
 	
 }
-		public boolean request() {
-		driver.findElement(By.xpath("//*[@id=\"bodyCell\"]/div/ng-view/div/div/div/ul/li[2]/a")).click();
-		sleep(4000);
-		driver.findElement(By.xpath(".//*[@id='bodyCell']//table/tbody/tr/td[3]//a")).click();
-		sleep(4000);
-		WebElement verirequest = driver.findElement(By.xpath(".//*[@id='bodyCell']//table/tbody/tr[2]/td//json-value/pre"));
-		JSONObject obj = new JSONObject(verirequest.getText());
-		String infoProducto=obj.getJSONArray("listaOfertasAdicionales").getJSONObject(0).toString();
-		return !infoProducto.isEmpty();
+		public void request(String S203,String envio, String S326) {
+			OM pageOm=new OM(driver);
+			boolean chiqui = false;
+			while (chiqui == false) {
+
+				try {
+					driver.findElement(By.id("zoomOut")).click();
+				} catch (Exception ex1) {
+					chiqui = true;
+					driver.findElement(By.id("zoomIn")).click();
+					break;
+				}
+
+			}
+			sleep(10000);
+			List<WebElement> cajas = driver.findElements(By.cssSelector(".item-label-container.item-header.item-failed"));
+			cajas.addAll(driver.findElements(By.cssSelector(".item-label-container.item-header.item-fatally-failed")));
+			cajas.addAll(driver.findElements(By.cssSelector(".item-label-container.item-header.item-running")));
+			int i = 1;
+			while (cajas.size() > 0) {
+			for (WebElement UnaC : cajas) {
+				if (UnaC.getText().equalsIgnoreCase(S203)) {
+				UnaC.click();
+				sleep(5000);
+				pageOm.cambiarVentanaNavegador(i);
+				//i++;
+				sleep(5000);
+				List<WebElement> botones = driver.findElements(By.cssSelector(".slds-button.slds-button--neutral.ng-scope"));
+				for (WebElement UnB : botones) {
+					if (UnB.getText().equals("Complete")) {
+						UnB.click();
+						sleep(4000);
+						System.out.println("Hizo click");
+						driver.findElement(By.xpath("//*[@id=\"bodyCell\"]/div/ng-view/div/div/div/ul/li[2]/a")).click();
+						sleep(4000);
+						driver.findElement(By.xpath(".//*[@id='bodyCell']//table/tbody/tr/td[3]//a")).click();
+						sleep(4000);								
+						WebElement verirequest = driver.findElement(By.xpath(".//*[@id='bodyCell']//table/tbody/tr[2]/td//json-value/pre"));
+						JSONObject obj = new JSONObject(verirequest.getText());
+						String infoProducto=obj.getJSONArray("listaOfertasAdicionales").getJSONObject(0).toString(0);
+						System.out.println(infoProducto);
+						pageOm.cambiarVentanaNavegador(0);
+								//return !infoProducto.isEmpty();
+								//sleep(4000);
+						break;
+						 
+				
+						}
+					}
+				}
 		
 }
 		 
@@ -411,8 +456,19 @@ public void scrollToElement(WebElement element) {
 
 }
 
-
 }
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

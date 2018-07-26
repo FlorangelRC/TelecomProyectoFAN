@@ -49,8 +49,8 @@ public class OM_Modulo extends TestBase {
 	
 private WebDriver driver;
 	
-@BeforeClass(alwaysRun=true)
-public void init() throws Exception
+	@BeforeClass(alwaysRun=true)
+	public void init() throws Exception
 	{
 		this.driver = setConexion.setupEze();
 		sleep(5000);
@@ -59,8 +59,8 @@ public void init() throws Exception
 		sleep(5000);	
 	}
 
-@BeforeMethod(alwaysRun=true)
-public void setUp() throws Exception {
+	@BeforeMethod(alwaysRun=true)
+	public void setUp() throws Exception {
 		driver.switchTo().defaultContent();
 		sleep(2000);
 		SCP pageSCP= new SCP(driver);
@@ -98,11 +98,13 @@ public void setUp() throws Exception {
 	
 	
 	//fecha avanzada
-	OM.fechaAv("07-07-2018");
+	DateFormat dateFormat = new SimpleDateFormat("MM-dd-yyyy");
+	driver.findElement(By.id("RequestDate")).sendKeys(dateFormat.format(pageOm.fechaAvanzada()));
+	driver.findElement(By.cssSelector(".form-control.btn.btn-primary.ng-binding")).click();
 	sleep(12000);
 	
 	//agregar Pack
-	OM.agregarPack("Packs Opcionales","Packs de Datos", "Pack 200Mb + WhasApp x 1 día","Pack 1GB de dia + 3GB de Noche","Pack 500Mb + WhasApp x 3 días");
+	pageOm.agregarPack("Packs Opcionales","Packs de Datos", "Pack 200Mb + WhasApp x 1 día","Pack 1GB de dia + 3GB de Noche","Pack 500Mb + WhasApp x 3 días");
 		
 	//Click ViewRecord
 	sleep(8000);	
@@ -115,7 +117,7 @@ public void setUp() throws Exception {
 	//sincronizar producto
 	Url = driver.getCurrentUrl();
 	pageOm.clickTab("Product2_Tab");
-	OM.sincroProducto("Samsung Cargador - Negro");
+	OM.sincroProducto ();//("Samsung Cargador - Negro");
 	OM.clickSincronizar();
 	driver.get(Url);
 	
@@ -165,7 +167,9 @@ public void setUp() throws Exception {
 	driver.switchTo().defaultContent();
 	
 	//fecha avanzada
-	OM.fechaAv("07-07-2018");
+	DateFormat dateFormat = new SimpleDateFormat("MM-dd-yyyy");
+	driver.findElement(By.id("RequestDate")).sendKeys(dateFormat.format(pageOm.fechaAvanzada()));
+	driver.findElement(By.cssSelector(".form-control.btn.btn-primary.ng-binding")).click();
 	sleep(12000);
 	
 	//agregar Pack
@@ -182,7 +186,7 @@ public void setUp() throws Exception {
 	//sincronizar
 	Url = driver.getCurrentUrl();
 	pageOm.clickTab("Product2_Tab");
-	OM.sincroProducto("Friend&Family VOZ CFS");
+	OM.sincroProducto();//("Friend&Family VOZ CFS");
 	OM.clickSincronizar();
 	driver.get(Url);
 	
@@ -222,7 +226,7 @@ public void setUp() throws Exception {
 			}
 		
 	@Test(groups= {"OM","altaconPack","Verificacionderequest"}, retryAnalyzer = retry.class)
-	 public void TS102304_CRM_OM_Ola_2_Interfaces_Alta_de_linea_con_1_pack_Plan_con_tarjeta_Sin_delivery_Sin_VAS_Numeracion_Movil_S326_updateNumberStatus_Verificacion_de_parametros_enviados() throws InterruptedException, MalformedURLException {    
+	 public void TS102304_CRM_OM_Ola_2_Interfaces_Alta_de_linea_con_1_pack_Plan_con_tarjeta_Sin_delivery_Sin_VAS_Numeracion_Movil_S326_updateNumberStatus_Verificacion_de_parametros_enviados() throws Exception {    
 	 OM pageOm=new OM(driver);
 	 pageOm.Alta_de_linea_con_Pack("QuelysOM", "Plan con tarjeta","Pack Internet x 30 dias");
 	 sleep(5000);
@@ -247,7 +251,7 @@ public void setUp() throws Exception {
 			}
 	
 	@Test(groups= {"OM","altaconPack","Verificacionderequest"}, retryAnalyzer = retry.class)
-	 public void TS102309_CRM_OM_Ola_2_Interfaces_Alta_de_linea_con_1_pack_Plan_prepago_nacional_Sin_delivery_Sin_VAS_Numeracion_Movil_S326_updateNumberStatus_Verificacion_de_parametros_enviados() throws InterruptedException, MalformedURLException {    
+	 public void TS102309_CRM_OM_Ola_2_Interfaces_Alta_de_linea_con_1_pack_Plan_prepago_nacional_Sin_delivery_Sin_VAS_Numeracion_Movil_S326_updateNumberStatus_Verificacion_de_parametros_enviados() throws Exception {    
 	 OM pageOm=new OM(driver);
 	 pageOm.Alta_de_linea_con_Pack("QuelysOM", "Plan prepago nacional","Pack Internet x 30 dias");
 	 sleep(5000);
