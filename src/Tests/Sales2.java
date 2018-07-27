@@ -46,13 +46,12 @@ public class Sales2 extends TestBase{
 	String localidad="VICENTE LOPEZ";
 	protected  WebDriverWait wait;
 	
-	//@AfterClass(alwaysRun=true)
-	//@AfterMethod
+	@AfterClass(alwaysRun=true)
 	public void tearDown() {
 		driver.quit();
 	}
 	
-	//@AfterMethod(alwaysRun=true)
+	@AfterMethod(alwaysRun=true)
 	public void deslogin() {
 		sleep(3000);
 		driver.get("https://crm--sit.cs14.my.salesforce.com/home/home.jsp?tsid=02u41000000QWha/");
@@ -1474,6 +1473,7 @@ public class Sales2 extends TestBase{
 	
 	@Test(groups={"Sales", "AltaDeCuenta", "Ola1"}, priority=6)
 	public void TS95208_Alta_de_Cuenta_Usuario_Verificar_datos_para_la_creacion_de_usuarios() {
+		sleep(5000);
 		sb.BtnCrearNuevoCliente();
 		boolean masc = false;
 		boolean fem = false;
@@ -1486,12 +1486,12 @@ public class Sales2 extends TestBase{
 				masc = true;
 			}
 		}
-		AssertJUnit.assertTrue(fem && masc);
-		AssertJUnit.assertTrue(driver.findElement(By.id("DocumentType")).getAttribute("disabled").equals("true"));
-		AssertJUnit.assertTrue(driver.findElement(By.id("DNI")).isEnabled());
-		AssertJUnit.assertTrue(driver.findElement(By.id("FirstName")).isEnabled());
-		AssertJUnit.assertTrue(driver.findElement(By.id("LastName")).isEnabled());
-		AssertJUnit.assertTrue(driver.findElement(By.id("Birthdate")).isEnabled());
+		Assert.assertTrue(fem && masc);
+		Assert.assertTrue(driver.findElement(By.id("DNI")).isEnabled());
+		Assert.assertTrue(driver.findElement(By.id("DocumentType")).getAttribute("disabled").equals("true"));
+		Assert.assertTrue(driver.findElement(By.id("FirstName")).isEnabled());
+		Assert.assertTrue(driver.findElement(By.id("LastName")).isEnabled());
+		Assert.assertTrue(driver.findElement(By.id("Birthdate")).isEnabled());
 	}
 	
 	
@@ -1824,7 +1824,7 @@ public class Sales2 extends TestBase{
 		sb.BuscarCuenta(DNI, sDni);
 		//sb.BuscarCuenta(DNI, buscarCampoExcel(1, "Cuenta Activa", 2));
 		sb.acciondecontacto("catalogo");
-		sleep(15000);
+		sleep(20000);
 		sb.agregarplan("Plan con Tarjeta");
 		sleep(25000);
 		 driver.findElement(By.cssSelector(".slds-button.slds-button_icon-border-filled.cpq-item-actions-dropdown-button")).click();
@@ -2150,7 +2150,7 @@ public class Sales2 extends TestBase{
 		sb.acciondecontacto("catalogo");
 		sleep(15000);
 		sb.elegirplan("plan prepago nacional");
-		sleep(2000);
+		sleep(15000);
 		page3.abrirprimeraflecha();
 		sleep(3000);
 		page3.deleteoneplan();
@@ -2395,7 +2395,7 @@ public class Sales2 extends TestBase{
 		sleep(10000);
 		driver.findElement(By.id("SelectPaymentMethodsStep_nextBtn")).click();
 		sleep(13000);
-		//VALIDACIÓN DE IDENTIDAD
+		//VALIDACIï¿½N DE IDENTIDAD
 		sleep(10000);
 		// page.obligarclick(driver.findElement(By.id("InvoicePreview_nextBtn")));
 			//sleep(15000);

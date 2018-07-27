@@ -168,6 +168,13 @@ public class GestionesOM extends TestBase {
 		OM pageOm=new OM(driver);
 		SalesBase sb = new SalesBase(driver);
 		sb.DesloguearLoguear("nominaciones", 4);
+		sleep(9000);
+		driver.findElement(By.id("tabBar")).findElement(By.tagName("a")).click();
+		sleep(18000);
+		
+		driver.switchTo().defaultContent();
+		sleep(3000);
+		goToLeftPanel2(driver, "Inicio");
 		pageOm.Gestion_Nominacion(sCuenta, sDni, sLinea);
 		sb.DesloguearLoguear("OM", 4);
 	}

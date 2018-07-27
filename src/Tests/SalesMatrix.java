@@ -26,7 +26,7 @@ public class SalesMatrix extends TestBase {
 		driver = setConexion.setupEze();
 		sleep(5000);
 		sb = new SalesBase(driver);
-		loginDani(driver);
+		login(driver, "https://crm--sit.cs14.my.salesforce.com/", "u589831", "Testa10k");
 		sleep(5000);
 		HomeBase homePage = new HomeBase(driver);
 		sleep(6000);
@@ -61,7 +61,7 @@ public class SalesMatrix extends TestBase {
 		sleep(5000);
 	}
 
-	@AfterClass (alwaysRun = true)
+	//@AfterClass (alwaysRun = true)
 	public void tearDown() {
 		driver.quit();
 	}

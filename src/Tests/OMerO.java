@@ -13,6 +13,8 @@ import java.util.Date;
 import java.util.List;
 import java.util.Random;
 
+import org.json.JSONException;
+import org.json.JSONObject;
 import org.junit.Assert;
 import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
@@ -487,7 +489,7 @@ public class OMerO extends TestBase {
 	
 	
 	@Test(groups = {"OM"})
-	public void TS52688_Ordenes_Interfaces_Cliente_nuevo_Alta_de_linea_Sin_VAS_Sin_delivery_Paso_4_Instalink_S323_create_provision_FLOWONE_Verificacion_de_request_response() throws InterruptedException{
+	public void TS52688_Ordenes_Interfaces_Cliente_nuevo_Alta_de_linea_Sin_VAS_Sin_delivery_Paso_4_Instalink_S323_create_provision_FLOWONE_Verificacion_de_request_response() throws InterruptedException, JSONException{
 		OM pageOm=new OM(driver);
 		OMQPage OM=new OMQPage (driver);
 		pageOm.crearOrden("AlOM");
@@ -578,10 +580,18 @@ public class OMerO extends TestBase {
 					c.click();
 			}
 		}
-						// IMPRIME EL NAME DEL CHILDREN EL NUMERO LARGO
+					// CHILDREN
 	sleep(3000);
 	WebElement bod = driver.findElement(By.cssSelector(".slds-box.slds-table.slds-table_bordered.slds-table--cell-buffer.slds-m-top--small")).findElement(By.tagName("tbody")).findElement(By.tagName("tr")).findElements(By.tagName("td")).get(2).findElement(By.tagName("div")).findElement(By.tagName("a"));
 	System.out.println(bod.getText());
 	bod.click();
+	sleep(5000);
+	String requestText = driver.findElement(By.className("json")).getText();
+	JSONObject json = new JSONObject(requestText);
+	String req = json.toString();
+	System.out.println(req);
+	 	
 	}	
+	
+	
 }

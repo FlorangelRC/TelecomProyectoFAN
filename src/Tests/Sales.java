@@ -39,6 +39,7 @@ import Pages.ContactInformation;
 import Pages.ContactSearch;
 import Pages.CustomerCare;
 import Pages.HomeBase;
+import Pages.OM;
 import Pages.SalesBase;
 import Pages.setConexion;
 import Tests.TestBase.IrA;
@@ -70,13 +71,13 @@ public class Sales extends TestBase {
 	String[] genero = {"masculino","femenino"};
 	String[] DocValue = {"52698550","3569874563","365","ssss"};
 	
-	//@AfterClass(alwaysRun=true)
+	@AfterClass(alwaysRun=true)
 	public void tearDown() {
 		driver.close();
 		driver.quit();
 	}
 	
-	//@AfterMethod(alwaysRun=true)
+	@AfterMethod(alwaysRun=true)
 	public void deslogin(){
 		try {Thread.sleep(10000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 		driver.get("https://crm--sit.cs14.my.salesforce.com/home/home.jsp?tsid=02u41000000QWha/");
@@ -440,7 +441,7 @@ public class Sales extends TestBase {
 		boolean DPF = false;
 		SalesBase sb = new SalesBase(driver);
 		sb.DesloguearLoguear("call", 4);
-		sleep(5000);
+		sleep(25000);
 		try {
 			driver.findElement(By.xpath("//a[@href=\'https://crm--sit--c.cs14.visual.force.com/apex/taClientSearch']")).click();
 			sleep(10000);
@@ -1032,7 +1033,7 @@ public class Sales extends TestBase {
 	public void TS94791_Alta_Contacto_Busqueda_Verificar_resultado_busqueda_cliente_activo_inactivo() {
 		SalesBase SB = new SalesBase(driver);
 		SB.BuscarCuenta("DNI", "");
-		try {Thread.sleep(15000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		try {Thread.sleep(16000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 		WebElement act = driver.findElement(By.id("tab-scoped-1__item"));
 		Assert.assertTrue(act.getText().equals("Clientes Activos"));
 		WebElement ina = driver.findElement(By.id("tab-scoped-2__item"));
@@ -1121,7 +1122,7 @@ public class Sales extends TestBase {
 	@Test(groups={"Sales", "AltaDeContacto","Ola1"}, priority=2)
 	public void TS94565_Alta_Contacto_Persona_Fisica_Verificar_LOV_Del_Campo_Tipo_De_Documento() {
 		SalesBase SB = new SalesBase(driver);
-		String[] todos = {"dni","cuit","pasaporte","libreta civica","libreta de enrolamiento","cedula de identidad"};
+		String[] todos = {"dni","pasaporte","libreta civica","libreta de enrolamiento","cedula de identidad"};
 		Select listSelect = new Select(driver.findElement(By.id("SearchClientDocumentType")));
 		List<WebElement> motivos = listSelect.getOptions();
 	    assertTrue(verificarContenidoLista(todos,motivos));
@@ -2090,7 +2091,6 @@ public class Sales extends TestBase {
 	  @Test(groups = {"Sales", "AltaDeContacto","Ola1"}, priority=4, dataProvider="SalesCuentaActiva") 
 	  public void TS94739_Alta_de_Contacto_Persona_Fisica_Verificar_ingreso_manual_de_cod_postal_inexistente(String sCuenta, String sDni, String sLinea) throws IOException{ 
 		SalesBase SB = new SalesBase(driver); 
-	    boolean h = false;
 	    SB.BtnCrearNuevoCliente();
 		ContactSearch contact = new ContactSearch(driver);
 		try {Thread.sleep(10000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
@@ -2120,7 +2120,6 @@ public class Sales extends TestBase {
 	  @Test(groups = {"Sales", "AltaDeContacto","Ola1"}, priority=4, dataProvider="SalesCuentaActiva")
 	  public void TS94736_Alta_de_Contacto_Persona_Fisica_Verificar_ingreso_manual_de_calle_inexistente(String sCuenta, String sDni, String sLinea) throws IOException{ 
 		SalesBase SB = new SalesBase(driver); 
-	    boolean h = false;
 	    SB.BtnCrearNuevoCliente();
 		ContactSearch contact = new ContactSearch(driver);
 		try {Thread.sleep(10000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
@@ -2559,6 +2558,8 @@ public class Sales extends TestBase {
 		SB.DesloguearLoguear("call", 4);
 		sleep(5000);
 		try {
+			driver.findElement(By.id("pinIndicator")).click();
+			sleep(2000);
 			driver.findElement(By.xpath("//a[@href=\'https://crm--sit--c.cs14.visual.force.com/apex/taClientSearch']")).click();
 			sleep(10000);
 			SB.BuscarCuenta(DNI, sDni);
@@ -2596,7 +2597,6 @@ public class Sales extends TestBase {
 		SalesBase SB = new SalesBase(driver);
 		SB.BuscarCuenta(DNI, sDni);
 		SB.acciondecontacto("catalogo");
-		boolean x = false;
 		sleep(20000);
 		List<WebElement> cam = driver.findElements(By.cssSelector(".slds-m-left--x-small.slds-button.slds-button--brand"));
 		for(WebElement c : cam ){	
@@ -2637,7 +2637,6 @@ public class Sales extends TestBase {
 		SalesBase SB = new SalesBase(driver);
 		SB.BuscarCuenta(DNI, sDni);
 		SB.acciondecontacto("catalogo");
-		boolean x = false;
 		sleep(18000);
 		List<WebElement> cam = driver.findElements(By.cssSelector(".slds-m-left--x-small.slds-button.slds-button--brand"));
 		System.out.println(cam.size());
@@ -2735,5 +2734,6 @@ public class Sales extends TestBase {
 			Assert.assertTrue(true);
 		}
 	}
+	
 	
 }
