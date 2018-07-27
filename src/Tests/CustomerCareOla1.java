@@ -20,6 +20,7 @@ import org.testng.annotations.Test;
 import Pages.CustomerCare;
 import Pages.SCP;
 import Pages.setConexion;
+import Tests.TestBase;
 
 public class CustomerCareOla1 extends TestBase {
 
@@ -27,15 +28,15 @@ public class CustomerCareOla1 extends TestBase {
 	protected CustomerCare cc;
 	
 	
-	@BeforeClass (alwaysRun = true, groups = {"CustomerCare", "AjustesYEscalamiento", "SuspensionYRehabilitacion", "ProblemasConRecargas", "Ola1"})
+	@BeforeClass(alwaysRun = true, groups = { "CustomerCare", "AjustesYEscalamiento", "SuspensionYRehabilitacion", "ProblemasConRecargas", "Ola1" })
 	public void init() {
 		driver = setConexion.setupEze();
 		sleep(5000);
 		cc = new CustomerCare(driver);
 		cc.login("SIT");
 		try {
-		cc.cajonDeAplicaciones("Consola FAN");
-		}catch(Exception ex) {
+			cc.cajonDeAplicaciones("Consola FAN");
+		} catch (Exception ex) {
 			sleep(3000);
 			driver.findElement(By.id("tabBar")).findElement(By.tagName("a")).click();
 			sleep(6000);
