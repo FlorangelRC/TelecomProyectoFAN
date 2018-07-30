@@ -1,5 +1,7 @@
 package Tests;
 
+import static org.testng.Assert.assertTrue;
+
 import java.util.ArrayList;
 import java.util.List;
 import org.openqa.selenium.Alert;
@@ -12,8 +14,10 @@ import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
-
+import org.json.JSONException;
+import org.json.JSONObject;
 import Pages.OM;
+import Pages.OMQPage;
 import Pages.SCP;
 import Pages.setConexion;
 
@@ -631,7 +635,7 @@ public class OM_Mattu extends TestBase{
 	//-------------------------------------------------------------------------------------------------
 	//TCC = 12 Bis
 	@Test(groups = "OM")
-	public void TS6723_OM_Ordenes_Vista_Configuración_Borrar_Vista(){
+	public void TS6723_OM_Ordenes_Vista_Configuraciï¿½n_Borrar_Vista(){
 		OM oOM = new OM(driver);
 		oOM.crearVistaOM("OM_View_Mattu", "OM_Test_Mattu");
 		sleep(2000);
@@ -657,7 +661,7 @@ public class OM_Mattu extends TestBase{
 	//-------------------------------------------------------------------------------------------------
 	//TCC = 14
 	@Test(groups = "OM")
-	public void TS6727_OM_Ordenes_Order_Detail_Visualización_del_flujo_de_orquestacion(){
+	public void TS6727_OM_Ordenes_Order_Detail_Visualizaciï¿½n_del_flujo_de_orquestacion(){
 		OM oOM = new OM(driver);
 		oOM.selectVistaByVisibleText("All Orders");
 		oOM.selectVistaByVisibleText("OM_View_Mattu_Static");
@@ -692,18 +696,48 @@ public class OM_Mattu extends TestBase{
 	
 	//-------------------------------------------------------------------------------------------------
 	//TCC = 15
-	@Test(groups = "OM")
-	public void TS79026_OM_Ordenes_Cliente_existente_Alta_de_linea_Sin_delivery_Sin_VAS() throws InterruptedException{
-		OM oOM = new OM(driver);
-		oOM.Gestion_Alta_De_Linea("MattuOM", "Plan Prepago Nacional");
-		//oOM.crearOrden("MattuOM");
+	//@Test(groups = "OM")
+	public void TS80075_CRM_OM_Interfaces_Alta_de_linea_Plan_con_tarjeta_Sin_delivery_Sin_VAS_Numeracion_Movil_S326_updateNumbe_Status_Verificacion_de_request_response() throws InterruptedException{
+		////*[@id="canvas"]/div[16]
 	}
 	
 	//-------------------------------------------------------------------------------------------------
 	//Open Page
 	@Test()
 	public void OpenPage() throws InterruptedException{
-		
+		OM oOM = new OM(driver);
+		OMQPage OM=new OMQPage (driver);
+		oOM.crearOrden("MattuOM");
+		assertTrue(driver.findElement(By.cssSelector(".noSecondHeader.pageType")).isDisplayed());
+		oOM.agregarGestion("Venta");
+		sleep(2000);
+		OM.getCPQ().click();
+		sleep(5000);
+		oOM.colocarPlan("Plan Prepago Nacional");
+		OM.configuracion();
+		sleep(4000);
+		oOM.AgregarDomicilio();
+		sleep(5000);
+		driver.findElement(By.name("ta_submit_order")).click();
+		sleep(15000);
+		try {System.out.println(driver.switchTo().alert().getText());
+			driver.switchTo().alert().accept();
+			driver.switchTo().alert().dismiss();
+			driver.switchTo().defaultContent();
+			driver.findElement(By.name("ta_submit_order")).click();
+		} catch (org.openqa.selenium.NoAlertPresentException e) {
+			driver.switchTo().defaultContent();
+		}
+		sleep(45000);
+		 try { 
+		      oOM.cambiarVentanaNavegador(1); 
+		      sleep(2000); 
+		      driver.findElement(By.id("idlist")).click(); 
+		      sleep(5000); 
+		      oOM.cambiarVentanaNavegador(0); 
+		    }catch(java.lang.IndexOutOfBoundsException ex1) {} 
+		sleep(12000);
+		oOM.completarFlujoOrquestacionHasta(4, 17,"Numeracion Movil - Update number inventory");
 	}
 
 }
