@@ -3019,4 +3019,162 @@ public class OM {
 		}
 		return verificacion;
 	}
+	
+	public void completarFlujoOrquestacionHasta(int iSecciones, int iCajas, String sNombre) {
+		//*[contains(text(),'Actualizando los inventarios')]//../parent::div//../parent::div//../parent::div
+		//*[contains(@id, 'ctl00_btnAircraftMapCell')]//*[contains(@title, 'Select Seat')]
+		int iAuxCajas = iCajas;
+		int iAuxSecciones = iSecciones;
+		List<WebElement> wCanvas = new ArrayList<WebElement>();
+		while (iAuxCajas != 0) {
+			iAuxSecciones++;
+			iAuxCajas--;
+			String sXpath = "//*[@id='canvas']/div[" + iAuxSecciones + "]";
+			wCanvas.add(driver.findElement(By.xpath(sXpath)));
+		}
+		
+		boolean chiqui = false;
+		while (chiqui == false) {
+
+			try {
+				driver.findElement(By.id("zoomOut")).click();
+			} catch (Exception ex1) {
+				chiqui = true;
+				driver.findElement(By.id("zoomIn")).click();
+				break;
+			}
+
+		}
+		sleep(10000);
+		
+		List<WebElement> cajas = new ArrayList<WebElement>();
+		for (WebElement wAux : wCanvas) {
+			try {
+				cajas.add(wAux.findElement(By.cssSelector(".item-label-container.item-header.item-failed")));
+			}
+			catch (Exception ex) {
+				//Empty
+			}
+		}
+		for (WebElement wAux : wCanvas) {
+			try {
+				cajas.add(wAux.findElement(By.cssSelector(".item-label-container.item-header.item-fatally-failed")));
+			}
+			catch (Exception ex) {
+				//Empty
+			}
+		}
+		for (WebElement wAux : wCanvas) {
+			try {
+				cajas.add(wAux.findElement(By.cssSelector(".item-label-container.item-header.item-running")));
+			}
+			catch (Exception ex) {
+				//Empty
+			}
+		}
+		
+		int i = 1;
+		while (cajas.size() > 0) {
+			for (WebElement UnaC : cajas) {
+				try {
+					if (UnaC.findElement(By.className("item-body-text")).getText().contains(sNombre)) {
+						for (int e = 0; e < cajas.size(); e++) {
+							cajas.remove(e);
+						}
+						break;
+					}
+				}
+				catch (Exception ex){
+					//Emtpy
+				}
+				UnaC.findElement(By.tagName("div")).click();
+				sleep(5000);
+				cambiarVentanaNavegador(i);
+				//i++;
+				sleep(5000);
+				List<WebElement> botones = driver.findElements(By.cssSelector(".slds-button.slds-button--neutral.ng-scope"));
+				for (WebElement UnB : botones) {
+					if (UnB.getText().equals("Complete")) {
+						UnB.click();
+						sleep(4000);
+						System.out.println("Hizo click");
+						break;
+					}
+				}
+				sleep(10000);
+				cambiarVentanaNavegador(0);
+				sleep(10000);
+				closeAllOtherTabs();
+				sleep(35000);
+				break;
+			}
+			for (int e = 0; e < wCanvas.size(); e++) {
+				wCanvas.remove(e);
+			}
+			for (int e = 0; e < cajas.size(); e++) {
+				cajas.remove(e);
+			}
+			
+			iAuxCajas = iCajas;
+			iAuxSecciones = iSecciones;
+			while (iAuxCajas != 0) {
+				iAuxSecciones++;
+				iAuxCajas--;
+				String sXpath = "//*[@id='canvas']/div[" + iAuxSecciones + "]";
+				wCanvas.add(driver.findElement(By.xpath(sXpath)));
+			}
+			//int iPosicion = 0;
+			/*while (iAuxCajas != 0) {
+				iAuxSecciones++;
+				iAuxCajas--;
+				String sXpath = "//*[@id='canvas']/div[" + iAuxSecciones + "]";
+				wCanvas.set(iPosicion, driver.findElement(By.xpath(sXpath)));
+				iPosicion++;
+			}*/
+			
+			//int iPosicionCaja = 0;
+			for (WebElement wAux : wCanvas) {
+				try {
+					wAux.findElement(By.cssSelector(".item-label-container.item-header.item-failed"));
+					cajas.add(wAux);
+					//cajas.set(iPosicionCaja, wAux);
+					//iPosicionCaja++;
+				}
+				catch (Exception ex) {
+					//Empty
+				}
+			}
+			for (WebElement wAux : wCanvas) {
+				try {
+					wAux.findElement(By.cssSelector(".item-label-container.item-header.item-fatally-failed"));
+					cajas.add(wAux);
+					//cajas.set(iPosicionCaja, wAux);
+					//iPosicionCaja++;
+				}
+				catch (Exception ex) {
+					//Empty
+				}
+			}
+			for (WebElement wAux : wCanvas) {
+				try {
+					wAux.findElement(By.cssSelector(".item-label-container.item-header.item-running"));
+					cajas.add(wAux);
+					//cajas.set(iPosicionCaja, wAux);
+					//iPosicionCaja++;
+				}
+				catch (Exception ex) {
+					//Empty
+				}
+			}
+			
+		}
+		closeAllOtherTabs();
+		sleep(5000);
+		driver.findElement(By.className("submit-button")).click();
+		sleep(6000);
+		cambiarVentanaNavegador(1);
+		sleep(5000);
+		closeAllOtherTabs();
+	}
+	
 }

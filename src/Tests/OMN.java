@@ -3,6 +3,7 @@ package Tests;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.json.JSONException;
 import org.junit.Assert;
 import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
