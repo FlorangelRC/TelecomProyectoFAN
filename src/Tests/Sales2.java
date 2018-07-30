@@ -26,6 +26,7 @@ import org.testng.annotations.BeforeClass;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
+import Pages.Accounts;
 import Pages.BasePage;
 import Pages.BillSimulation;
 import Pages.ContactSearch;
@@ -52,35 +53,82 @@ public class Sales2 extends TestBase{
 	}
 	
 	@AfterMethod(alwaysRun=true)
-	public void deslogin() {
-		sleep(3000);
-		driver.get("https://crm--sit.cs14.my.salesforce.com/home/home.jsp?tsid=02u41000000QWha/");
-		sleep(10000);
+	public void deslogin(){
+		sleep(2000);
+		SalesBase SB = new SalesBase(driver);
+		driver.switchTo().defaultContent();
+		sleep(6000);
+		SB.cerrarPestaniaGestion(driver);
+		
+		sleep(5000);
+
 	}
 		
 	@BeforeClass(alwaysRun=true)
 	public void init() {
 		inicializarDriver();
 		sb = new SalesBase(driver);
-		 loginAndres(driver);
-		 HomeBase homePage = new HomeBase(driver);
-			try {Thread.sleep(6000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
-		    /*String a = driver.findElement(By.id("tsidLabel")).getText(); 
-		    if (a.contains("Ventas")){}
-		    else {
-		    	homePage.switchAppsMenu();
-		    	try {Thread.sleep(2000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
-		    	homePage.selectAppFromMenuByName("Ventas");
-		    	try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}            
-		    }*/
-		//IrA.CajonDeAplicaciones.Ventas();
+		loginAndres(driver);
+		try {Thread.sleep(22000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+			
+		driver.findElement(By.id("tabBar")).findElement(By.tagName("a")).click();
+		sleep(18000);
+		SalesBase SB = new SalesBase(driver);
+		CustomerCare cc = new CustomerCare(driver);
+		driver.switchTo().defaultContent();
+		sleep(3000);
+		goToLeftPanel2(driver, "Inicio");
+		sleep(18000);
+		try{
+			SB.cerrarPestaniaGestion(driver);}
+		catch(Exception ex1) {
+		}
 	}
 	
 	@BeforeMethod(alwaysRun=true)
 	public void setup() throws Exception {
-		sleep(5000);
-		driver.findElement(By.xpath("//a[@href=\'https://crm--sit--c.cs14.visual.force.com/apex/taClientSearch']")).click();
-		sleep(7000);
+		Accounts accountPage = new Accounts(driver);
+		driver.switchTo().frame(accountPage.getFrameForElement(driver, By.cssSelector(".hasMotif.homeTab.homepage.ext-webkit.ext-chrome.sfdcBody.brandQuaternaryBgr")));
+		List<WebElement> frames = driver.findElements(By.tagName("iframe"));
+		boolean enc = false;
+		int index = 0;
+		for(WebElement frame : frames) {
+			try {
+				System.out.println("aca");
+				driver.switchTo().frame(frame);
+
+				driver.findElement(By.cssSelector(".slds-grid.slds-m-bottom_small.slds-wrap.cards-container")).getText(); //each element is in the same iframe.
+				//System.out.println(index); //prints the used index.
+
+				driver.findElement(By.cssSelector(".slds-grid.slds-m-bottom_small.slds-wrap.cards-container")).isDisplayed(); //each element is in the same iframe.
+				//System.out.println(index); //prints the used index.
+
+				driver.switchTo().frame(accountPage.getFrameForElement(driver, By.cssSelector(".hasMotif.homeTab.homepage.ext-webkit.ext-chrome.sfdcBody.brandQuaternaryBgr")));
+				enc = true;
+				break;
+			}catch(NoSuchElementException noSuchElemExcept) {
+				index++;
+				driver.switchTo().frame(accountPage.getFrameForElement(driver, By.cssSelector(".hasMotif.homeTab.homepage.ext-webkit.ext-chrome.sfdcBody.brandQuaternaryBgr")));
+			}
+		}
+		if(enc == false)
+			index = -1;
+		try {
+				driver.switchTo().frame(frames.get(index));
+		}catch(ArrayIndexOutOfBoundsException iobExcept) {System.out.println("Elemento no encontrado en ningun frame 2.");
+			
+		}
+		List<WebElement> botones = driver.findElements(By.tagName("button"));
+		for (WebElement UnB : botones) {
+			System.out.println(UnB.getText());
+			if(UnB.getText().equalsIgnoreCase("gesti\u00f3n de clientes")) {
+				UnB.click();
+				break;
+			}
+		}
+		
+		sleep(14000);
+		driver.switchTo().frame(accountPage.getFrameForElement(driver, By.id("ContactFirstName")));
 	}
 	
 	@Test(groups={"Sales", "AltaDeLinea", "Ola1"}, priority=5, dataProvider="SalesCuentaActiva")
@@ -629,9 +677,43 @@ public class Sales2 extends TestBase{
 		driver.findElements(By.cssSelector(".slds-form-element__control.slds-input-has-icon.slds-input-has-icon--right")).get(2).findElement(By.tagName("input")).sendKeys("asdasd@gmail.com");
 		driver.findElement(By.id("Contact_nextBtn")).click();
 		sleep(10000);
-		driver.get("https://crm--sit.cs14.my.salesforce.com/home/home.jsp?tsid=02u41000000QWha/");
-		sleep(7000);
-		driver.findElement(By.xpath("//a[@href=\'https://crm--sit--c.cs14.visual.force.com/apex/taClientSearch']")).click();
+		Accounts accountPage = new Accounts(driver);
+		driver.navigate().refresh();
+		sleep(4000);
+		driver.switchTo().frame(accountPage.getFrameForElement(driver, By.cssSelector(".hasMotif.homeTab.homepage.ext-webkit.ext-chrome.sfdcBody.brandQuaternaryBgr")));
+		List<WebElement> frames = driver.findElements(By.tagName("iframe"));
+		boolean enc = false;
+		int index = 0;
+		for(WebElement frame : frames) {
+			try {
+				System.out.println("aca");
+				driver.switchTo().frame(frame);
+
+				driver.findElement(By.cssSelector(".slds-grid.slds-m-bottom_small.slds-wrap.cards-container")).getText(); //each element is in the same iframe.
+				//System.out.println(index); //prints the used index.
+
+				driver.findElement(By.cssSelector(".slds-grid.slds-m-bottom_small.slds-wrap.cards-container")).isDisplayed(); //each element is in the same iframe.
+				//System.out.println(index); //prints the used index.
+
+				driver.switchTo().frame(accountPage.getFrameForElement(driver, By.cssSelector(".hasMotif.homeTab.homepage.ext-webkit.ext-chrome.sfdcBody.brandQuaternaryBgr")));
+				enc = true;
+				break;
+			}catch(NoSuchElementException noSuchElemExcept) {
+				index++;
+				driver.switchTo().frame(accountPage.getFrameForElement(driver, By.cssSelector(".hasMotif.homeTab.homepage.ext-webkit.ext-chrome.sfdcBody.brandQuaternaryBgr")));
+			}
+		}
+		if(enc == false)
+			index = -1;
+		try {
+				driver.switchTo().frame(frames.get(index));
+		}catch(ArrayIndexOutOfBoundsException iobExcept) {System.out.println("Elemento no encontrado en ningun frame 2.");
+			
+		}
+		
+		sleep(14000);
+		driver.switchTo().frame(accountPage.getFrameForElement(driver, By.id("ContactFirstName")));
+		
 		sleep(7000);
 		sb.BuscarCuenta(DNI, a);
 		List <WebElement> cuenta = driver.findElements(By.cssSelector(".slds-truncate.ng-binding"));

@@ -190,7 +190,7 @@ public class AltadeLineas extends TestBase {
 		
 	}
 	
-	@AfterClass(alwaysRun=true)
+	//@AfterClass(alwaysRun=true)
 	public void Exit() {
 		driver.quit();
 		sleep(2000);

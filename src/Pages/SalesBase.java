@@ -247,7 +247,7 @@ public boolean btnnoexiste(String boton){
 
 
  public void gestiondeusuarios(){
-	 driver.navigate().back();
+	// driver.navigate().back();
 		try {Thread.sleep(10000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 		driver.findElement(By.className("zen-selectArrow")).click();
 		driver.findElement(By.xpath("//a[@href=\"/ui/setup/Setup\"]")).click();
@@ -600,6 +600,7 @@ try{	driver.findElement(By.id("alert-ok-button")).click();	} catch (NoSuchElemen
 	driver.findElement(By.id("LegalStreetTypeAhead")).sendKeys(Keys.ENTER);
 	driver.findElement(By.id("NewStreetName")).sendKeys(calle);
 	
+	
 
 	switch(local){
 	case "si":
@@ -885,7 +886,7 @@ try{	driver.findElement(By.id("alert-ok-button")).click();	} catch (NoSuchElemen
 				 TB.login(driver, "https://crm--sit.cs14.my.salesforce.com/", "U585991", "Testa10k");
 				 break;
 			 }
-			 sleep(10000);
+			 sleep(15000);
 		}
 		
 		public void Crear_DireccionEnvio(String provincia, String localidad, 
@@ -1054,12 +1055,17 @@ try{	driver.findElement(By.id("alert-ok-button")).click();	} catch (NoSuchElemen
 		
 		public void cerrarPestaniaGestion(WebDriver driver) {
 			List<WebElement> pestas = driver.findElements(By.className("x-tab-strip-closable"));
+			//System.out.println(driver.findElement(By.cssSelector(".x-tab-strip-closable.x-tab-strip-active")).getText());
+			pestas.addAll(driver.findElements(By.cssSelector(".x-tab-strip-closable.x-tab-strip-active")));
 			for (WebElement UnB : pestas) {
+				try {
 				System.out.println(UnB.getText());
-				if(UnB.getText().equalsIgnoreCase("gesti\u00f3n de clientes")) {
+				//if(UnB.getText().equalsIgnoreCase("gesti\u00f3n de clientes")) {
 					((JavascriptExecutor) driver).executeScript("arguments[0].click();", UnB.findElement(By.className("x-tab-strip-close")));	
-					break;
-				}
+					sleep(2000);
+					//break;
+				//}
+				}catch(Exception ex1) {} 
 			}
 		}
  }
