@@ -2747,4 +2747,236 @@ public class OM {
 		}
 		return verificacion;
 	}
+	
+	public void completarFlujoOrquestacionHasta(int iSecciones, int iCajas, String sNombre, String sOperacion) throws InterruptedException {
+		//*[contains(text(),'Actualizando los inventarios')]//../parent::div//../parent::div//../parent::div
+		//*[contains(@id, 'ctl00_btnAircraftMapCell')]//*[contains(@title, 'Select Seat')]
+		
+		switch (sOperacion) {
+			case "Alta de Linea":
+				OMQPage OM=new OMQPage (driver);
+				crearOrden("MattuOM");
+				assertTrue(driver.findElement(By.cssSelector(".noSecondHeader.pageType")).isDisplayed());
+				agregarGestion("Venta");
+				sleep(2000);
+				OM.getCPQ().click();
+				sleep(5000);
+				colocarPlan("Plan Prepago Nacional");
+				OM.configuracion();
+				sleep(4000);
+				AgregarDomicilio();
+				sleep(5000);
+				driver.findElement(By.name("ta_submit_order")).click();
+				sleep(15000);
+				try {System.out.println(driver.switchTo().alert().getText());
+					driver.switchTo().alert().accept();
+					driver.switchTo().alert().dismiss();
+					driver.switchTo().defaultContent();
+					driver.findElement(By.name("ta_submit_order")).click();
+				} catch (org.openqa.selenium.NoAlertPresentException e) {
+					driver.switchTo().defaultContent();
+				}
+				sleep(45000);
+				 try { 
+				      cambiarVentanaNavegador(1); 
+				      sleep(2000); 
+				      driver.findElement(By.id("idlist")).click(); 
+				      sleep(5000); 
+				      cambiarVentanaNavegador(0); 
+				    }catch(java.lang.IndexOutOfBoundsException ex1) {} 
+				sleep(12000);
+				break;
+			case "Baja de Linea":
+				TestBase tb = new TestBase();
+				OM Pom = new OM(driver);
+				Pom.Gestion_Alta_De_Linea("MattuOM", "Plan Prepago Nacional");
+				Pom.irAChangeToOrder();
+				sleep(15000);
+				driver.switchTo().defaultContent();
+				DateFormat dateFormat = new SimpleDateFormat("MM-dd-yyyy");
+				driver.findElement(By.id("RequestDate")).sendKeys(dateFormat.format(Pom.fechaAvanzada()));
+				driver.findElement(By.cssSelector(".form-control.btn.btn-primary.ng-binding")).click();
+				sleep(15000);
+				driver.findElement(By.xpath(".//*[@id='tab-default-1']/div/ng-include//div[10]//button")).click();
+				sleep(2000);
+				tb.buscarYClick(driver.findElements(By.cssSelector(".slds-dropdown__item.cpq-item-actions-dropdown__item")),
+						"contains", "delete");
+				sleep(5000);
+				driver.findElement(By.cssSelector(".slds-button.slds-button--destructive")).click();
+				sleep(7000);
+				tb.buscarYClick(driver.findElements(By.cssSelector(".slds-button.slds-button_neutral")), "contains",
+						"view record");
+				sleep(5000);
+				Pom.agregarGestion("Desconexi\u00f3n");
+				sleep(3000);
+				driver.findElement(By.name("ta_submit_order")).click();
+				sleep(12000);
+				break;
+		}
+		
+		
+		
+		
+		
+		
+		int iAuxCajas = iCajas;
+		int iAuxSecciones = iSecciones;
+		boolean bFailed = true;
+		boolean bFatallyFailed = true;
+		boolean bRunning = true;
+		List<WebElement> wCanvas = new ArrayList<WebElement>();
+		sleep(35000);
+		while (iAuxCajas != 0) {
+			iAuxSecciones++;
+			iAuxCajas--;
+			String sXpath = "//*[@id='canvas']/div[" + iAuxSecciones + "]";
+			wCanvas.add(driver.findElement(By.xpath(sXpath)));
+		}
+		
+		boolean chiqui = false;
+		while (chiqui == false) {
+
+			try {
+				driver.findElement(By.id("zoomOut")).click();
+			} catch (Exception ex1) {
+				chiqui = true;
+				driver.findElement(By.id("zoomIn")).click();
+				break;
+			}
+
+		}
+		sleep(10000);
+		
+		List<WebElement> cajas = new ArrayList<WebElement>();
+		for (WebElement wAux : wCanvas) {
+			try {
+				cajas.add(wAux.findElement(By.cssSelector(".item-label-container.item-header.item-failed")));
+			}
+			catch (Exception ex) {
+				//Empty
+			}
+		}
+		for (WebElement wAux : wCanvas) {
+			try {
+				cajas.add(wAux.findElement(By.cssSelector(".item-label-container.item-header.item-fatally-failed")));
+			}
+			catch (Exception ex) {
+				//Empty
+			}
+		}
+		for (WebElement wAux : wCanvas) {
+			try {
+				cajas.add(wAux.findElement(By.cssSelector(".item-label-container.item-header.item-running")));
+			}
+			catch (Exception ex) {
+				//Empty
+			}
+		}
+		
+		int i = 1;
+		boolean bContinue = true;
+		while (bContinue == true) {
+			for (WebElement UnaC : cajas) {
+				try {
+					if (UnaC.findElement(By.className("item-body-text")).getText().contains(sNombre)) {
+						for (int e = 0; e < cajas.size(); e++) {
+							cajas.remove(e);
+						}
+						bContinue = false;
+						break;
+					}
+				}
+				catch (Exception ex){
+					//Emtpy
+				}
+				UnaC.findElement(By.tagName("div")).click();
+				sleep(5000);
+				cambiarVentanaNavegador(i);
+				//i++;
+				sleep(5000);
+				List<WebElement> botones = driver.findElements(By.cssSelector(".slds-button.slds-button--neutral.ng-scope"));
+				for (WebElement UnB : botones) {
+					if (UnB.getText().equals("Complete")) {
+						UnB.click();
+						sleep(4000);
+						System.out.println("Hizo click");
+						break;
+					}
+				}
+				sleep(10000);
+				cambiarVentanaNavegador(0);
+				sleep(10000);
+				closeAllOtherTabs();
+				sleep(35000);
+				break;
+			}
+			for (int e = 0; e < wCanvas.size(); e++) {
+				wCanvas.remove(e);
+			}
+			for (int e = 0; e < cajas.size(); e++) {
+				cajas.remove(e);
+			}
+			
+			iAuxCajas = iCajas;
+			iAuxSecciones = iSecciones;
+			while (iAuxCajas != 0) {
+				iAuxSecciones++;
+				iAuxCajas--;
+				String sXpath = "//*[@id='canvas']/div[" + iAuxSecciones + "]";
+				wCanvas.add(driver.findElement(By.xpath(sXpath)));
+			}
+			//int iPosicion = 0;
+			/*while (iAuxCajas != 0) {
+				iAuxSecciones++;
+				iAuxCajas--;
+				String sXpath = "//*[@id='canvas']/div[" + iAuxSecciones + "]";
+				wCanvas.set(iPosicion, driver.findElement(By.xpath(sXpath)));
+				iPosicion++;
+			}*/
+			
+			//int iPosicionCaja = 0;
+			
+			for (WebElement wAux : wCanvas) {
+				try {
+					wAux.findElement(By.cssSelector(".item-label-container.item-header.item-failed"));
+					cajas.add(wAux);
+					//cajas.set(iPosicionCaja, wAux);
+					//iPosicionCaja++;
+					bFailed = true;
+				}
+				catch (Exception ex) {
+					bFailed = false;
+				}
+			}
+			for (WebElement wAux : wCanvas) {
+				try {
+					wAux.findElement(By.cssSelector(".item-label-container.item-header.item-fatally-failed"));
+					cajas.add(wAux);
+					//cajas.set(iPosicionCaja, wAux);
+					//iPosicionCaja++;
+					bFatallyFailed = true;
+				}
+				catch (Exception ex) {
+					bFatallyFailed = false;
+				}
+			}
+			for (WebElement wAux : wCanvas) {
+				try {
+					wAux.findElement(By.cssSelector(".item-label-container.item-header.item-running"));
+					cajas.add(wAux);
+					//cajas.set(iPosicionCaja, wAux);
+					//iPosicionCaja++;
+					bRunning = true;
+				}
+				catch (Exception ex) {
+					bRunning = false;
+				}
+			}
+			if (bFailed == false && bFatallyFailed == false && bContinue == false) {
+				bContinue = false;
+			}
+			
+		}
+	}
+	
 }
