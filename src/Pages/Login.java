@@ -121,27 +121,21 @@ public class Login extends BasePage {
 			try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 		}
 		
-		
+		//******************Agente
 	   //Para el Modulo Sales tiene vinculado el perfil de Agente y Atención a clientes
 		public void ingresarAndres() {
 			  logininterno.click();
 			  try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
-			  //usuario andres
-			  //Ecom_User_ID.sendKeys("u590422");
-			  //usuario UAT Agente
-			  Ecom_User_ID.sendKeys("UAT549492");
+			   Ecom_User_ID.sendKeys("UAT549492");
 			  Ecom_Password.sendKeys("Testa10k");
 			  loginButton2.click();
 			  try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 			 }
-		
+		//*************************Telefonico
 		//Para el Modulo Sales tiene vinculado el perfil de Call center
 		public void ingresarElena() {
 			  logininterno.click();
 			  try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
-			  //Usuario ELena
-			  //Ecom_User_ID.sendKeys("u580714");
-			  //Usuario UAT call
 			  Ecom_User_ID.sendKeys("UAT569076");
 			  Ecom_Password.sendKeys("Testa10k");
 			  loginButton2.click();
@@ -157,7 +151,7 @@ public class Login extends BasePage {
 			  loginButton2.click();
 			  try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 			 }
-		
+		//***********************Oficina comercial
 		public void ingresarNominaciones() {
 			  logininterno.click();
 			  try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}

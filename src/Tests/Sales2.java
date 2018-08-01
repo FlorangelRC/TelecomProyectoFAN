@@ -53,7 +53,7 @@ public class Sales2 extends TestBase{
 		driver.quit();
 	}
 	
-	@AfterMethod(alwaysRun=true)
+	//@AfterMethod(alwaysRun=true)
 	public void deslogin(){
 		sleep(2000);
 		SalesBase SB = new SalesBase(driver);
@@ -69,7 +69,7 @@ public class Sales2 extends TestBase{
 	public void init() {
 		inicializarDriver();
 		sb = new SalesBase(driver);
-		loginAndres(driver);
+		loginAgente(driver);
 		try {Thread.sleep(22000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 			
 		driver.findElement(By.id("tabBar")).findElement(By.tagName("a")).click();
@@ -129,7 +129,7 @@ public class Sales2 extends TestBase{
 		}
 		
 		sleep(14000);
-		driver.switchTo().frame(accountPage.getFrameForElement(driver, By.id("ContactFirstName")));
+		driver.switchTo().frame(accountPage.getFrameForElement(driver, By.id("SearchClientDocumentNumber")));
 	}
 	
 	@Test(groups={"Sales", "AltaDeLinea", "Ola1"}, priority=5, dataProvider="SalesCuentaActiva")
@@ -588,10 +588,6 @@ public class Sales2 extends TestBase{
 	
 	@Test(groups={"Sales", "AltaDeContacto", "Ola1"}, priority=4, dataProvider="SalesCuentaActiva")
 	public void TS94582_Alta_de_Contacto_Persona_Fisica_Verificar_confirmacion_de_adjunto_exitoso_XX(String sCuenta, String sDni, String sLinea) throws IOException {
-		/*sb.BuscarCuenta(DNI, sDni);
-		//sb.BuscarCuenta(DNI, buscarCampoExcel(1, "Cuenta Activa", 2));
-		sb.acciondecontacto("nueva cuenta");
-		sleep(7000);*/
 		CustomerCare cc = new CustomerCare(driver);
 		sb.BtnCrearNuevoCliente();
 		String asd = driver.findElement(By.id("SearchClientDocumentNumber")).getAttribute("value");
@@ -611,6 +607,13 @@ public class Sales2 extends TestBase{
 		WebElement sig = driver.findElement(By.id("LineAssignment_nextBtn"));
 		cc.obligarclick(sig);
 		sleep(10000);
+		cc.obligarclick(driver.findElement(By.id("ICCDAssignment_nextBtn")));
+		sleep(15000);
+		
+		cc.obligarclick(driver.findElement(By.id("InvoicePreview_nextBtn")));
+		sleep(15000);
+		cc.obligarclick(driver.findElement(By.id("SelectPaymentMethodsStep_nextBtn")));
+		sleep(15000);
 		sb.elegirvalidacion("DOC");
 		sleep(8000);
 		driver.findElement(By.id("FileDocumentImage")).sendKeys("C:\\Users\\florangel\\Downloads\\mapache.jpg");
@@ -713,7 +716,7 @@ public class Sales2 extends TestBase{
 		}
 		
 		sleep(14000);
-		driver.switchTo().frame(accountPage.getFrameForElement(driver, By.id("ContactFirstName")));
+		driver.switchTo().frame(accountPage.getFrameForElement(driver, By.id("SearchClientDocumentNumber")));
 		
 		sleep(7000);
 		sb.BuscarCuenta(DNI, a);

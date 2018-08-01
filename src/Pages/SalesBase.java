@@ -409,7 +409,9 @@ for(WebElement e: btns){
 				e.click();
 				break;}}*/
 		try {Thread.sleep(10000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
-		driver.findElement(By.cssSelector(".slds-input.ng-pristine.ng-untouched.ng-valid")).sendKeys(plan);		
+		try {
+			driver.findElement(By.cssSelector(".slds-input.ng-pristine.ng-untouched.ng-valid")).sendKeys(plan);	}
+		catch(Exception ex1) {driver.findElement(By.cssSelector(".slds-input.ng-pristine.ng-untouched.ng-valid.ng-empty")).sendKeys(plan);}
 		try {Thread.sleep(20000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 		List<WebElement> agregar = driver.findElements(By.cssSelector(".slds-button.slds-button_neutral.cpq-add-button")); 
 		agregar.get(0).click();
@@ -591,13 +593,15 @@ try{	driver.findElement(By.id("alert-ok-button")).click();	} catch (NoSuchElemen
 	 setSimpleDropdown(driver.findElement(By.id("State")), provincia);
 
 	driver.findElement(By.id("CityTypeAhead")).sendKeys(localidad);
-	try {Thread.sleep(10000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();} 
+	try {Thread.sleep(8000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();} 
 	driver.findElement(By.id("CityTypeAhead")).sendKeys(Keys.ARROW_DOWN);
 	driver.findElement(By.id("CityTypeAhead")).sendKeys(Keys.ENTER);
 	driver.findElement(By.id("LegalStreetTypeAhead")).sendKeys(calle); 
-	try {Thread.sleep(10000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+	try {Thread.sleep(8000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 	driver.findElement(By.id("LegalStreetTypeAhead")).sendKeys(Keys.ARROW_DOWN);
 	driver.findElement(By.id("LegalStreetTypeAhead")).sendKeys(Keys.ENTER);
+	try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+	
 	driver.findElement(By.id("NewStreetName")).sendKeys(calle);
 	
 	
@@ -859,10 +863,10 @@ try{	driver.findElement(By.id("alert-ok-button")).click();	} catch (NoSuchElemen
 				TB.login(driver);
 				break;
 			 case "agente":
-				 TB.loginAndres(driver);
+				 TB.loginAgente(driver);
 				 break;
 			 case "call":
-				 TB.loginElena(driver);  
+				 TB.loginTelefonico(driver);  
 				 break;
 			 case "venta":
 				 TB.loginFranciso(driver);
@@ -880,7 +884,7 @@ try{	driver.findElement(By.id("alert-ok-button")).click();	} catch (NoSuchElemen
 				 TB.loginVictor(driver);
 				 break;
 			 case "nominaciones":
-				 TB.loginNominaciones(driver);
+				 TB.loginOfCom(driver);
 				 break;
 			 case "OM":
 				 TB.login(driver, "https://crm--sit.cs14.my.salesforce.com/", "U585991", "Testa10k");
@@ -1068,4 +1072,105 @@ try{	driver.findElement(By.id("alert-ok-button")).click();	} catch (NoSuchElemen
 				}catch(Exception ex1) {} 
 			}
 		}
+		
+		public void configAmigos(String num1, String num2) {
+			OM pOM = new OM(driver);
+			sleep(4000);
+			driver.findElement(By.cssSelector(".slds-button.cpq-item-has-children")).click();
+			sleep(5000);
+			List<WebElement> NomPest = driver.findElements(
+					By.xpath("//*[@class='cpq-item-product-child-level-1 cpq-item-child-product-name-wrapper']"));
+
+			for (WebElement a : NomPest) {
+				System.out.print(a.getText().toLowerCase());
+				if (a.getText().toLowerCase().contains("friends&family")) {
+					a.findElement(By.tagName("button")).click();
+					sleep(8000);
+					break;
+				}
+			}
+
+			List<WebElement> subPack = driver
+					.findElement(By.cssSelector(".cpq-item-product-child-level-2.ng-not-empty.ng-valid"))
+					.findElements(By.cssSelector(".slds-button.cpq-item-has-children"));
+			subPack.get(0).click();
+			subPack.get(1).click();
+			sleep(3000);
+			List<WebElement> subAmigos = driver
+					.findElements(By.cssSelector(".cpq-item-product-child-level-3.ng-not-empty.ng-valid"));
+			subAmigos.get(0).findElement(By.cssSelector(".slds-button.cpq-item-has-children")).click();
+			subAmigos.get(1).findElement(By.cssSelector(".slds-button.cpq-item-has-children")).click();
+			sleep(5000);
+			CustomerCare cc = new CustomerCare(driver);
+			List<WebElement> servAmigos = driver
+					.findElements(By.cssSelector(".cpq-item-product-child-level-4.ng-not-empty.ng-valid"));
+			int i = -1;
+			if (!num1.equals("*")) {
+				if (servAmigos.get(0).getText().toLowerCase().contains("voz")) {
+					System.out.println(servAmigos.get(0).getText());
+					//*[@id="tab-default-1"]/div[5]/div/div[3]/div/div/ng-include/div/div[2]/ng-include/div/div[1]/div/div[3]/div/div/ng-include/div/div[2]/ng-include/div/div/div/div[3]/div/div/ng-include/div/div[2]/ng-include/div/div/div/div[2]/div[11]/button
+					cc.obligarclick(servAmigos.get(0).findElement(By.tagName("button")));
+					i = 0;
+				}
+				if (servAmigos.get(1).getText().toLowerCase().contains("voz")) {
+					cc.obligarclick(servAmigos.get(1).findElement(By.cssSelector(".slds-button.slds-button_neutral")));
+					i = 1;
+				}
+				sleep(5000);
+				servAmigos.get(i).findElement(
+						By.cssSelector(".slds-button.slds-button_icon-border-filled.cpq-item-actions-dropdown-button"))
+						.click();
+				sleep(2000);
+				List<WebElement> opc = servAmigos.get(i)
+						.findElement(By.cssSelector(".slds-dropdown.slds-dropdown_right.cpq-item-actions-dropdown"))
+						.findElements(By.tagName("a"));
+				for (WebElement UnaO : opc) {
+					if (UnaO.getText().toLowerCase().contains("configure")) {
+						cc.obligarclick(UnaO);
+						break;
+					}
+				}
+				pOM.agregarNumAmigo(servAmigos.get(i), num1);
+			}
+			sleep(5000);
+			i = -1;
+			if (!num2.equals("*")) {
+				if (servAmigos.get(0).getText().toLowerCase().contains("sms")) {
+					cc.obligarclick(servAmigos.get(0).findElement(By.cssSelector(".slds-button.slds-button_neutral")));
+					i = 0;
+				}
+				if (servAmigos.get(1).getText().toLowerCase().contains("sms")) {
+					cc.obligarclick(servAmigos.get(1).findElement(By.cssSelector(".slds-button.slds-button_neutral")));
+					i = 1;
+				}
+				sleep(5000);
+				servAmigos.get(i).findElement(
+						By.cssSelector(".slds-button.slds-button_icon-border-filled.cpq-item-actions-dropdown-button"))
+						.click();
+				sleep(2000);
+				List<WebElement> opc = servAmigos.get(i)
+						.findElement(By.cssSelector(".slds-dropdown.slds-dropdown_right.cpq-item-actions-dropdown"))
+						.findElements(By.tagName("a"));
+				for (WebElement UnaO : opc) {
+					if (UnaO.getText().toLowerCase().contains("configure")) {
+						cc.obligarclick(UnaO);
+						break;
+					}
+				}
+				pOM.agregarNumAmigo(servAmigos.get(i), num2);
+			}
+			sleep(5000);
+			cc.obligarclick(subPack.get(0));
+			cc.obligarclick(subPack.get(1));
+			for (WebElement a : NomPest) {
+				System.out.print(a.getText().toLowerCase());
+				if (a.getText().toLowerCase().contains("friends&family")) {
+					a.findElement(By.tagName("button")).click();
+					sleep(8000);
+					break;
+				}
+			}
+
+		}
+
  }

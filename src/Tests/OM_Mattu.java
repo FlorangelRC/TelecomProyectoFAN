@@ -635,7 +635,7 @@ public class OM_Mattu extends TestBase{
 	//-------------------------------------------------------------------------------------------------
 	//TCC = 12 Bis
 	@Test(groups = "OM")
-	public void TS6723_OM_Ordenes_Vista_Configuraci�n_Borrar_Vista(){
+	public void TS6723_OM_Ordenes_Vista_Configuracion_Borrar_Vista(){
 		OM oOM = new OM(driver);
 		oOM.crearVistaOM("OM_View_Mattu", "OM_Test_Mattu");
 		sleep(2000);
@@ -661,7 +661,7 @@ public class OM_Mattu extends TestBase{
 	//-------------------------------------------------------------------------------------------------
 	//TCC = 14
 	@Test(groups = "OM")
-	public void TS6727_OM_Ordenes_Order_Detail_Visualizaci�n_del_flujo_de_orquestacion(){
+	public void TS6727_OM_Ordenes_Order_Detail_Visualizacion_del_flujo_de_orquestacion(){
 		OM oOM = new OM(driver);
 		oOM.selectVistaByVisibleText("All Orders");
 		oOM.selectVistaByVisibleText("OM_View_Mattu_Static");

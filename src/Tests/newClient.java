@@ -68,7 +68,7 @@ public class newClient extends TestBase {
 			 loginAndres(driver);
 			 break;
 		 case "call":
-			 loginElena(driver);
+			 loginTelefonico(driver);
 			 break;
 		 case "venta":
 			 loginFranciso(driver);

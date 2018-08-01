@@ -266,7 +266,7 @@ public class TestBase {
 	}
 		/**Ingresa con los datos de la cuenta Andres
 		 * Para el Modulo Sales tiene vinculado el perfil de Agente y Atenci�n a clientes		 */
-		public void loginAndres(WebDriver driver) {
+		public void loginAgente(WebDriver driver) {
 			driver.get("https://crm--sit.cs14.my.salesforce.com/");
 			try {Thread.sleep(6000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 		    Login page0 = new Login(driver);
@@ -275,7 +275,7 @@ public class TestBase {
 		
 		/**Ingresa con los datos de la cuenta Elena
 		 * Para el Modulo Sales tiene vinculado el perfil de Call center		 */
-		public void loginElena(WebDriver driver) {
+		public void loginTelefonico(WebDriver driver) {
 			driver.get("https://crm--sit.cs14.my.salesforce.com/");
 			try {Thread.sleep(6000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 		    Login page0 = new Login(driver);
@@ -292,7 +292,7 @@ public class TestBase {
 		    page0.ingresarFrancisco();
 		}
 		
-		public void loginNominaciones(WebDriver driver) {
+		public void loginOfCom(WebDriver driver) {
 			driver.get("https://crm--sit.cs14.my.salesforce.com/");
 			try {Thread.sleep(6000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 		    Login page0 = new Login(driver);
@@ -887,9 +887,18 @@ public class TestBase {
 	}
 	
 	@DataProvider
-	public Object[][] DatosSalesAltaLinea() throws Exception{
+	public Object[][] DatosAltaLineaAgente() throws Exception{
 
-	 Object[][] testObjArray = ExcelUtils.getTableArray("Cuentas.xlsx","PreparacionDatos",1,1,13,"Alta Linea");
+	 Object[][] testObjArray = ExcelUtils.getTableArray("Cuentas.xlsx","PreparacionDatos",1,1,9,"Alta Linea Agente");
+
+	 return (testObjArray);
+
+	}
+	
+	@DataProvider
+	public Object[][] DatosSalesNumerosAmigos() throws Exception{
+
+	 Object[][] testObjArray = ExcelUtils.getTableArray("Cuentas.xlsx","PreparacionDatos",1,1,11,"Numeros Amigos");
 
 	 return (testObjArray);
 

@@ -36,7 +36,7 @@ public class SalesNominaciones extends TestBase{
 		//System.out.println("{\"ListaNumeros\":[{\"nroLinea\":\"12354976148\",\"Accion\":\"ACTIVAR\"}]}".matches("/{\"ListaNumeros\"/:/[/{\"nroLinea\"/:\"/[0-9]{11}\",\"Accion\"/:\"ACTIVAR\"/}/]/}"));
 		driver = setConexion.setupEze();
 		try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}		
-			 loginNominaciones(driver);  
+			 loginOfCom(driver);  
 		try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 		HomeBase homePage = new HomeBase(driver);
 		try {Thread.sleep(6000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
@@ -58,7 +58,7 @@ public class SalesNominaciones extends TestBase{
 		CustomerCare cc = new CustomerCare(driver);
 		driver = setConexion.setupEze();
 		try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}		
-			 loginNominaciones(driver);  
+			 loginOfCom(driver);  
 		try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 		HomeBase homePage = new HomeBase(driver);
 		sleep(9000);
@@ -118,7 +118,7 @@ public class SalesNominaciones extends TestBase{
 		
 	}
 	
-	@AfterMethod(alwaysRun=true)
+	//@AfterMethod(alwaysRun=true)
 	public void IceB() {
 		Accounts accountPage = new Accounts(driver);
 		driver.navigate().refresh();
@@ -163,7 +163,7 @@ public class SalesNominaciones extends TestBase{
 		}
 		
 		sleep(18000);*/
-		driver.switchTo().frame(accountPage.getFrameForElement(driver, By.id("ContactFirstName")));
+		driver.switchTo().frame(accountPage.getFrameForElement(driver, By.id("SearchClientDocumentNumber")));
 		
 	}
 	

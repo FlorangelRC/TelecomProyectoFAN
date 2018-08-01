@@ -68,7 +68,7 @@ public class ta_CPQ extends TestBase {
 	{
 		this.driver = setConexion.setupEze();
 		wait = new WebDriverWait(driver, 10);
-		loginAndres(driver);
+		loginAgente(driver);
 		sleep(5000);
 		//Ir a Ventas:
 		/*if (!driver.findElement(By.id("tsidLabel")).getText().equals("Ventas")){
