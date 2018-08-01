@@ -26,6 +26,8 @@ import com.sun.corba.se.pept.transport.Connection;
 
 import Tests.TestBase;
 import javafx.scene.control.ScrollToEvent;
+
+import org.json.JSONArray;
 import org.json.JSONObject;
 
 public class OMQPage extends BasePage {
@@ -473,6 +475,28 @@ public void scrollToElement(WebElement element) {
 	((JavascriptExecutor)driver)
     .executeScript("arguments[0].scrollIntoView();", element);
 
+}
+public void buscarYClick(List <WebElement> elements, String match, String texto) {
+	sleep(2000);
+	switch (match) {
+	case "contains":
+		for (WebElement x : elements) {
+			if (x.getText().toLowerCase().contains(texto)) {
+				x.click();
+				break;
+			}
+		}
+		break;
+	case "equals":
+		for (WebElement x : elements) {
+			if (x.getText().toLowerCase().equals(texto)) {
+				x.click();
+				break;
+			}
+		}
+		break;
+	}
+	sleep(2000);
 }
 
 }

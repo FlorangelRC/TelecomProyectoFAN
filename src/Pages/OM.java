@@ -2372,60 +2372,62 @@ public class OM {
 
 	
 
-	public boolean requestValidator(WebElement element) throws JSONException {
-		boolean validator = false;
+			public void verificacionDeCamposEnviadosenelRequest(String S203) throws Exception {
 
-		JSONObject obj = new JSONObject(element.getText());
+				OMQPage OM = new OMQPage(driver);
+				driver.findElement(By.name("vlocity_cmt__vieworchestrationplan")).click();
+				sleep(12000);
+				//int i = 1;
+				boolean zoom = false;
+				while (zoom == false) {
 
-<<<<<<< HEAD
-		//Esto valida que el codigo de suscricion no este vacio
-		String regexValidator = "\\w{8}-\\w{4}-\\w{4}-\\w{4}-\\w{12}";
-		validator = obj.getJSONObject("suscriptor").getString("codSuscripcion").matches(regexValidator);//isEmpty();
-		System.out.println("codSuscripcion: " + validator);
-=======
-		// Esto valida que e; codigp de suscri[tor este
-		validator = !obj.getJSONObject("suscriptor").getString("codSuscripcion").isEmpty();
->>>>>>> master
+					try {
+						driver.findElement(By.id("zoomOut")).click();
+					} catch (Exception ex1) {
+						zoom = true;
+						driver.findElement(By.id("zoomIn")).click();
+						break;
+					}
 
-		// Estpo valida que la lista de datos adicioneles esten los datos de
-		// valorpametro y nombreparametro
-		if (validator) {
-
-			JSONArray listaDatosAdicionales = obj.getJSONObject("suscriptor").getJSONObject("infoSuscriptor")
-					.getJSONObject("infoBasicaSuscriptor").getJSONArray("listaDatosAdicionales");
-			// System.out.println(listaDatosAdicionales.getJSONObject(1).get("valorParametro"));
-
-			for (int i = 0; i < listaDatosAdicionales.length(); i++) {
-				if (!listaDatosAdicionales.getJSONObject(i).getString("valorParametro"). isEmpty()
-						&& !listaDatosAdicionales.getJSONObject(i).getString("nombreParametro").isEmpty()) {
-					System.out.println("valorParametro: " + listaDatosAdicionales);
-					System.out.println("nombreParametro: " + listaDatosAdicionales);
-					validator = true;
-				} else {
-					return false;
 				}
-			}
-		}
-		
-		if (validator) {
-			JSONArray listaIdentificacionSuscriptor = obj.getJSONObject("suscriptor").getJSONObject("infoSuscriptor")
-					.getJSONArray("listaIdentificacionSuscriptor");
-
-			for (int i = 0; i < listaIdentificacionSuscriptor.length(); i++) {
-				if (!listaIdentificacionSuscriptor.getJSONObject(i).getString("identificadorRecurso").isEmpty()) {
-					validator = true;
-				} else {
-					return false;
+				sleep(12000);
+				
+				
+				List <WebElement> cajasVerdes = driver.findElements(By.cssSelector(".item-header.item-completed"));//(".item-label.item-header"));
+				for (WebElement x : cajasVerdes) { 
+					if (x.getText().contains(S203)) {
+						System.out.println(S203);
+						x.click();
+						break;
+						
+					}
 				}
-			}
-			JSONObject modoPagoSecundario = obj.getJSONObject("suscriptor").getJSONObject("modoPagoSecundario");
-			validator = !modoPagoSecundario.getString("idCuenta").isEmpty()
-					&& !modoPagoSecundario.getString("idRelacionPago").isEmpty();
+					sleep(10000);
+					ArrayList<String> tabs = new ArrayList<String> (driver.getWindowHandles());
+					driver.switchTo().window(tabs.get(1));
+					OM.buscarYClick(driver.findElements(By.className("slds-tabs--scoped__link")), "equals", "children");
+		   
+				
+					sleep(4000);
+					driver.findElement(By.xpath(".//*[@id='bodyCell']//table/tbody/tr/td[3]//a")).click();
+					sleep(4000);								
+					WebElement json = driver.findElement(By.xpath(".//*[@id='bodyCell']//table/tbody/tr[2]/td//json-value/pre"));
+						
+					if (!OM.requestValidator(json)) {
+						throw new Exception("Fallo en la validacion de los campos del Json Request");
+						
+						}
+						cambiarVentanaNavegador(0);
+						closeAllOtherTabs();
+						sleep(5000);
+						driver.findElement(By.className("submit-button")).click();
+						sleep(6000);
+						cambiarVentanaNavegador(1);
+						sleep(5000);
+						closeAllOtherTabs();
+								
 
-		}
-		return validator;
-	}
-
+				}
 	public void BajaDeLineaOM(String Cuenta, String Plan) throws InterruptedException {
 		boolean gestion = false;
 		TestBase tb = new TestBase();
