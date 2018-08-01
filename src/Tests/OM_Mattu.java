@@ -631,7 +631,7 @@ public class OM_Mattu extends TestBase{
 	//-------------------------------------------------------------------------------------------------
 	//TCC = 12 Bis
 	@Test(groups = "OM")
-	public void TS6723_OM_Ordenes_Vista_Configuracion_Borrar_Vista(){
+	public void TS6723_OM_Ordenes_Vista_Configuración_Borrar_Vista(){
 		OM oOM = new OM(driver);
 		oOM.crearVistaOM("OM_View_Mattu", "OM_Test_Mattu");
 		sleep(2000);
@@ -657,7 +657,7 @@ public class OM_Mattu extends TestBase{
 	//-------------------------------------------------------------------------------------------------
 	//TCC = 14
 	@Test(groups = "OM")
-	public void TS6727_OM_Ordenes_Order_Detail_Visualizacion_del_flujo_de_orquestacion(){
+	public void TS6727_OM_Ordenes_Order_Detail_Visualización_del_flujo_de_orquestacion(){
 		OM oOM = new OM(driver);
 		oOM.selectVistaByVisibleText("All Orders");
 		oOM.selectVistaByVisibleText("OM_View_Mattu_Static");
@@ -703,40 +703,7 @@ public class OM_Mattu extends TestBase{
 	//Open Page
 	@Test()
 	public void OpenPage() throws InterruptedException{
-		/*OM oOM = new OM(driver);
-		OMQPage OM=new OMQPage (driver);
-		oOM.crearOrden("MattuOM");
-		assertTrue(driver.findElement(By.cssSelector(".noSecondHeader.pageType")).isDisplayed());
-		oOM.agregarGestion("Venta");
-		sleep(2000);
-		OM.getCPQ().click();
-		sleep(5000);
-		oOM.colocarPlan("Plan Prepago Nacional");
-		OM.configuracion();
-		sleep(4000);
-		oOM.AgregarDomicilio();
-		sleep(5000);
-		driver.findElement(By.name("ta_submit_order")).click();
-		sleep(15000);
-		try {System.out.println(driver.switchTo().alert().getText());
-			driver.switchTo().alert().accept();
-			driver.switchTo().alert().dismiss();
-			driver.switchTo().defaultContent();
-			driver.findElement(By.name("ta_submit_order")).click();
-		} catch (org.openqa.selenium.NoAlertPresentException e) {
-			driver.switchTo().defaultContent();
-		}
-		sleep(45000);
-		 try { 
-		      oOM.cambiarVentanaNavegador(1); 
-		      sleep(2000); 
-		      driver.findElement(By.id("idlist")).click(); 
-		      sleep(5000); 
-		      oOM.cambiarVentanaNavegador(0); 
-		    }catch(java.lang.IndexOutOfBoundsException ex1) {} 
-		sleep(12000);*/
-		OM oOM = new OM(driver);
-		oOM.completarFlujoOrquestacionHasta(4, 14,"Numeracion Movil - Update number inventory","Baja de Linea");
+		
 	}
 
 }

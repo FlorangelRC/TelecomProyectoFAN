@@ -10,6 +10,7 @@ import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
 import java.util.Random;
+import java.util.regex.Pattern;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
@@ -25,8 +26,6 @@ import com.sun.corba.se.pept.transport.Connection;
 
 import Tests.TestBase;
 import javafx.scene.control.ScrollToEvent;
-
-import org.json.JSONArray;
 import org.json.JSONObject;
 
 public class OMQPage extends BasePage {
@@ -388,122 +387,77 @@ public void sincroProducto() {//(String Products) {
 		
 	
 }
-		public void request(String S203,String envio, String S326) {
-			OM pageOm=new OM(driver);
-			boolean chiqui = false;
-			while (chiqui == false) {
+	
+public boolean requestValidator(WebElement element) {
+	boolean validator = false;
+		    
+	JSONObject obj = new JSONObject(element.getText());
+	String regexValidator = "\\w{8}-\\w{4}-\\w{4}-\\w{4}-\\w{12}";
+			    
+	validator = obj.getJSONObject("suscriptor").getString("codSuscripcion").matches(regexValidator);
+			    
+					//Estpo valida que la lista de datos adicioneles esten los datos de valorpametro y nombreparametro
 
-				try {
-					driver.findElement(By.id("zoomOut")).click();
-				} catch (Exception ex1) {
-					chiqui = true;
-					driver.findElement(By.id("zoomIn")).click();
-					break;
+					    
+	JSONArray listaDatosAdicionales = obj.getJSONObject("suscriptor").getJSONObject("infoSuscriptor").getJSONObject("infoBasicaSuscriptor").getJSONArray("listaDatosAdicionales");	    
+			for (int i = 0; i < listaDatosAdicionales.length(); i++) {				      
+					if (validator) {
+					validator = !listaDatosAdicionales.getJSONObject(i).getString("valorParametro").isEmpty() && !listaDatosAdicionales.getJSONObject(i).getString("nombreParametro").isEmpty();
+					      
+					}   
 				}
+	JSONArray listaIdentificacionSuscriptor = obj.getJSONObject("suscriptor").getJSONObject("infoSuscriptor").getJSONArray("listaIdentificacionSuscriptor");
+					    
+	for (int i = 0; i < listaIdentificacionSuscriptor.length(); i++) {
+	      if (validator) {
+	        validator = listaIdentificacionSuscriptor.getJSONObject(i).getString("identificadorRecurso").matches("\\d[0-9]{4,6}|null");
+	        System.out.println("identificadorRecurso: " + validator);
+	      }
+	    }
+					 
 
-			}
-			sleep(10000);
-			List<WebElement> cajas = driver.findElements(By.cssSelector(".item-label-container.item-header.item-failed"));
-			cajas.addAll(driver.findElements(By.cssSelector(".item-label-container.item-header.item-fatally-failed")));
-			cajas.addAll(driver.findElements(By.cssSelector(".item-label-container.item-header.item-running")));
-			int i = 1;
-			while (cajas.size() > 0) {
-			for (WebElement UnaC : cajas) {
-				if (UnaC.getText().equalsIgnoreCase(S203)) {
-				UnaC.click();
-				sleep(5000);
-				pageOm.cambiarVentanaNavegador(i);
-				//i++;
-				sleep(5000);
-				List<WebElement> botones = driver.findElements(By.cssSelector(".slds-button.slds-button--neutral.ng-scope"));
-				for (WebElement UnB : botones) {
-					if (UnB.getText().equals("Complete")) {
-						UnB.click();
-						sleep(4000);
-						System.out.println("Hizo click");
-						driver.findElement(By.xpath("//*[@id=\"bodyCell\"]/div/ng-view/div/div/div/ul/li[2]/a")).click();
-						sleep(4000);
-						driver.findElement(By.xpath(".//*[@id='bodyCell']//table/tbody/tr/td[3]//a")).click();
-						sleep(4000);								
-						WebElement verirequest = driver.findElement(By.xpath(".//*[@id='bodyCell']//table/tbody/tr[2]/td//json-value/pre"));
-						JSONObject obj = new JSONObject(verirequest.getText());
-						String infoProducto=obj.getJSONArray("listaOfertasAdicionales").getJSONObject(0).toString(0);
-						System.out.println(infoProducto);
-						pageOm.cambiarVentanaNavegador(0);
-								//return !infoProducto.isEmpty();
-								//sleep(4000);
-						break;
-						 
-				
-						}
-					}
-				}
-			}
-			}
+	if (validator) {
+	      boolean idCuenta = obj.getJSONObject("suscriptor").getJSONObject("modoPagoSecundario").getString("idcuenta").matches(regexValidator);
+
+	      boolean modoPagoSecundario = obj.getJSONObject("suscriptor").getJSONObject("modoPagoSecundario").getString("modoPago").matches("\\w{1}");
+
+	      boolean idRelacionPago = obj.getJSONObject("suscriptor").getJSONObject("modoPagoSecundario").getString("idRelacionPago").matches(regexValidator);
+
+	      validator = idCuenta && modoPagoSecundario && idRelacionPago;
+	      System.out.println("modoPagoSecundario  " + validator);
+	    }
+								
+	JSONArray listaCuentas = obj.getJSONArray("listaCuentas");
+    for (int i = 0; i < listaCuentas.length(); i++) {
+      if (validator) {
+        validator = listaCuentas.getJSONObject(i).getString("idCuenta").matches(regexValidator) &&listaCuentas.getJSONObject(i).getString("idCliente").matches("\\d[0-9]{10}");
+        System.out.println("listaCuentas  " + validator);
+      }
+    }
+    if (validator) {
+      validator = obj.optJSONObject("registrarCliente").getJSONObject("codCliente").toString().matches("\\w{11}");
+    }
+    
+    JSONArray listaOfertasAdicionales = obj.getJSONArray("listaOfertasAdicionales");
+    String dateRegex = "(\\d{4})-(\\d{2})-(\\d{2}) (\\d{2}):(\\d{2}):(\\d{2})";
+    for (int i = 0; i < listaOfertasAdicionales.length(); i++) {
+      if (validator) {
+        validator =listaOfertasAdicionales.getJSONObject(i).getString("fechaDesdeCaracteristicaProd").matches(dateRegex) && listaOfertasAdicionales.getJSONObject(i).getString("fechaHastaCaracteristicaProd").matches(dateRegex);
+        System.out.println("fechas: " + validator);
+      }
+
+    }
+    return validator;
+  }
 		
-}
 		
-		
-		
-		public boolean requestValidator(WebElement element) {
-			boolean validator = false;
 
-			JSONObject obj = new JSONObject(element.getText());
 
-			//Esto valida que el codigo de suscricion no este vacio
-			//String regexValidator = "\\w{8}-\\w{4}-\\w{4}-\\w{4}-\\w{12}".toString();
-			String codSuscripcion = obj.getJSONObject("suscriptor").getString("codSuscripcion").toString();//matches(regexValidator);//isEmpty();
-			Assert.assertTrue(codSuscripcion.toString().contains(codSuscripcion));
-//			for(int i=0; i<codSuscripcion.length(); i++) {
-//				
-//				String cod = codSuscripcion.toString();
-//				System.out.println("codSuscripcion: " + cod);
-//			
-			if(codSuscripcion.length()==36){
-				System.out.println("codSuscripcion: " + codSuscripcion);
 
-			}
-			
 
-			//Estpo valida que la lista de datos adicioneles esten los datos de valorpametro y nombreparametro
-			if (validator) {
-
-				JSONArray listaDatosAdicionales = obj.getJSONObject("suscriptor").getJSONObject("infoSuscriptor")
-						.getJSONObject("infoBasicaSuscriptor").getJSONArray("listaDatosAdicionales");
-				// System.out.println(listaDatosAdicionales.getJSONObject(1).get("valorParametro"));
-
-				for (int i = 0; i < listaDatosAdicionales.length(); i++) {
-					if (!listaDatosAdicionales.getJSONObject(i).getString("valorParametro").isEmpty()
-							&& !listaDatosAdicionales.getJSONObject(i).getString("nombreParametro").isEmpty()) {
-						System.out.println("valorParametro: " + listaDatosAdicionales);
-						System.out.println("nombreParametro: " + listaDatosAdicionales);
-						validator = true;
-					} else {
-						return false;
-					}
-				}
-			}
-			
-			if (validator) {
-			JSONArray listaIdentificacionSuscriptor = obj.getJSONObject("suscriptor").getJSONObject("infoSuscriptor")
-					.getJSONArray("listaIdentificacionSuscriptor");
-
-			for (int i = 0; i < listaIdentificacionSuscriptor.length(); i++) {
-					if (!listaIdentificacionSuscriptor.getJSONObject(i).getString("identificadorRecurso").isEmpty()) {
-				validator = true;
-			}
-			else {
-				return false;
-			}
-			}
-			JSONObject modoPagoSecundario = obj.getJSONObject("suscriptor").getJSONObject("modoPagoSecundario");
-			validator =!modoPagoSecundario.getString("idCuenta").isEmpty()&&
-					!modoPagoSecundario.getString("idRelacionPago").isEmpty();
-			
-			}
-			return validator;
-		}
-		 
+public  boolean validateRegex(String str, String regex) {
+		    return Pattern.compile(regex, Pattern.CASE_INSENSITIVE).matcher(str).matches();
+		  }
 		
 public WebElement getNewOrder() {
 	return NewOrder;
@@ -519,29 +473,6 @@ public void scrollToElement(WebElement element) {
 	((JavascriptExecutor)driver)
     .executeScript("arguments[0].scrollIntoView();", element);
 
-}
-
-public void buscarYClick(List <WebElement> elements, String match, String texto) {
-	sleep(2000);
-	switch (match) {
-	case "contains":
-		for (WebElement x : elements) {
-			if (x.getText().toLowerCase().contains(texto)) {
-				x.click();
-				break;
-			}
-		}
-		break;
-	case "equals":
-		for (WebElement x : elements) {
-			if (x.getText().toLowerCase().equals(texto)) {
-				x.click();
-				break;
-			}
-		}
-		break;
-	}
-	sleep(2000);
 }
 
 }
