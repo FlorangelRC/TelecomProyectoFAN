@@ -53,7 +53,7 @@ public class Sales2 extends TestBase{
 		driver.quit();
 	}
 	
-	@AfterMethod(alwaysRun=true)
+	//@AfterMethod(alwaysRun=true)
 	public void deslogin(){
 		sleep(2000);
 		SalesBase SB = new SalesBase(driver);
@@ -331,13 +331,49 @@ public class Sales2 extends TestBase{
 		sb.acciondecontacto("catalogo");
 		sleep(15000);
 		driver.findElement(By.cssSelector(".slds-m-left--x-small.slds-button.slds-button--brand")).click();
-		sleep(7000);
-		driver.switchTo().frame(cambioFrame(driver, By.id("DeliveryMethod")));
+		sleep(18000);
+		List<WebElement> frame2 = driver.findElements(By.tagName("iframe"));
+		driver.switchTo().frame(frame2.get(0));
 		Select env = new Select (driver.findElement(By.id("DeliveryMethod")));
 		env.selectByVisibleText("Delivery");
 		driver.findElement(By.id("SalesChannelConfiguration_nextBtn")).click();
-		sleep(10000);
+		sleep(7000);
 		driver.switchTo().defaultContent();
+		CustomerCare cc = new CustomerCare(driver);
+		Accounts accountPage = new Accounts(driver);
+		driver.switchTo().frame(accountPage.getFrameForElement(driver, By.cssSelector(".hasMotif.homeTab.homepage.ext-webkit.ext-chrome.sfdcBody.brandQuaternaryBgr")));
+		List<WebElement> frames = driver.findElements(By.tagName("iframe"));
+		boolean enc = false;
+		int index = 0;
+		for(WebElement frame : frames) {
+			try {
+				System.out.println("aca");
+				driver.switchTo().frame(frame);
+
+				driver.findElement(By.cssSelector(".slds-grid.slds-m-bottom_small.slds-wrap.cards-container")).getText(); //each element is in the same iframe.
+				//System.out.println(index); //prints the used index.
+
+				driver.findElement(By.cssSelector(".slds-grid.slds-m-bottom_small.slds-wrap.cards-container")).isDisplayed(); //each element is in the same iframe.
+				//System.out.println(index); //prints the used index.
+
+				driver.switchTo().frame(accountPage.getFrameForElement(driver, By.cssSelector(".hasMotif.homeTab.homepage.ext-webkit.ext-chrome.sfdcBody.brandQuaternaryBgr")));
+				enc = true;
+				break;
+			}catch(NoSuchElementException noSuchElemExcept) {
+				index++;
+				driver.switchTo().frame(accountPage.getFrameForElement(driver, By.cssSelector(".hasMotif.homeTab.homepage.ext-webkit.ext-chrome.sfdcBody.brandQuaternaryBgr")));
+			}
+		}
+		if(enc == false)
+			index = -1;
+		try {
+				driver.switchTo().frame(frames.get(index));
+		}catch(ArrayIndexOutOfBoundsException iobExcept) {System.out.println("Elemento no encontrado en ningun frame 2.");
+			
+		}
+		
+		sleep(14000);
+		driver.switchTo().frame(accountPage.getFrameForElement(driver, By.cssSelector(".slds-input.ng-pristine.ng-untouched.ng-valid.ng-empty")));
 		sb.elegirplan("Plan Prepago Nacional");
 		sb.continuar();
 		sleep(15000);
@@ -401,12 +437,14 @@ public class Sales2 extends TestBase{
 		cit.selectByVisibleText("CIUD AUTON D BUENOS AIRES");
 		sleep(3000);
 		driver.findElement(By.id("Store")).click();
-		driver.findElements(By.cssSelector(".slds-list__item.ng-binding.ng-scope")).get(1).click();
+		sleep(3000);		
+		driver.findElement(By.cssSelector(".slds-list__item.ng-binding.ng-scope")).click();
 		sleep(2000);
 		driver.findElement(By.id("SalesChannelConfiguration_nextBtn")).click();
 		sleep(10000);
 		driver.switchTo().defaultContent();
 		}
+		sleep(3500);
 		sb.elegirplan("Plan Prepago Nacional");
 		sb.continuar();
 		sleep(10000);
@@ -415,14 +453,16 @@ public class Sales2 extends TestBase{
 				c.getText().equals("Continuar");
 					c.click();
 			}
-		sleep(5000);
+		sb.Crear_DomicilioLegal( provincia, localidad, "falsa", "", "4537", "", "", "5384");
+		sleep(25000);
 		CustomerCare page = new CustomerCare(driver);
-		WebElement sig = driver.findElement(By.id("DeliveryMethodConfiguration_nextBtn"));
+		WebElement sig = driver.findElement(By.id("LineAssignment_nextBtn"));
 		page.obligarclick(sig);
+		WebElement sigg = driver.findElement(By.id("DeliveryMethodConfiguration_nextBtn"));
+		page.obligarclick(sigg);
 		sleep(7000);
 		Assert.assertFalse(driver.findElement(By.id("DeliveryMethod")).isEnabled());
-	
-	}
+		}
 	
 	@Test(groups={"Sales", "AltaDeLinea", "Ola1"}, priority=3, dataProvider="SalesCuentaActiva")  
 	public void TS94646_Ventas_NumeroOrden_Verificar_Orden_de_Venta_Abierta_Medio_de_Pago(String sCuenta, String sDni, String sLinea) throws IOException {
@@ -438,11 +478,13 @@ public class Sales2 extends TestBase{
 				c.getText().equals("Continuar");
 					c.click();
 			}
-		sleep(5000);
+		sleep(10000);
+		sb.Crear_DomicilioLegal( provincia, localidad, "falsa", "", "4537", "", "", "5384");
+		sleep(25000);
 		CustomerCare page = new CustomerCare(driver);
 		WebElement sig = driver.findElement(By.id("LineAssignment_nextBtn"));
 		page.obligarclick(sig);
-		sleep(8000);
+		sleep(12000);
 		driver.findElement(By.id("ICCDAssignment_nextBtn")).click();
 		sleep(8000);
 		WebElement sigue = driver.findElement(By.id("InvoicePreview_nextBtn"));
@@ -1621,7 +1663,7 @@ public class Sales2 extends TestBase{
 		//sb.BuscarCuenta(DNI, buscarCampoExcel(1, "Cuenta Activa", 2));
 		sb.acciondecontacto("catalogo");
 		sleep(15000);
-		sb.agregarplan("Plan Prepago Nacional");
+		sb.elegirplan("Plan Prepago Nacional");
 		sb.continuar();
 		sleep(20000);
 		sb.Crear_DomicilioLegal(provincia, localidad, "falsa", "", "1000", "", "", "1549");
@@ -2255,7 +2297,7 @@ public class Sales2 extends TestBase{
 			try {Thread.sleep(2000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 		} } catch (java.lang.IndexOutOfBoundsException e) {}
 		try {Thread.sleep(3000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
-		page3.addPlan("Galaxy S8");
+		sb.elegirplan("Galaxy S8");
 		try {Thread.sleep(3000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 		driver.findElement(By.cssSelector(".slds-input.ng-valid.ng-not-empty.ng-dirty.ng-valid-parse.ng-touched")).clear();
 		/*driver.findElement(By.cssSelector(".slds-input.ng-valid.ng-not-empty.ng-dirty.ng-valid-parse.ng-touched")).sendKeys("Galaxy S8");		
