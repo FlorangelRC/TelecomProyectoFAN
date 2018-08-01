@@ -1,7 +1,5 @@
 package Tests;
 
-import static org.testng.Assert.assertTrue;
-
 import java.util.ArrayList;
 import java.util.List;
 import org.openqa.selenium.Alert;
@@ -14,10 +12,8 @@ import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
-import org.json.JSONException;
-import org.json.JSONObject;
+
 import Pages.OM;
-import Pages.OMQPage;
 import Pages.SCP;
 import Pages.setConexion;
 
@@ -696,16 +692,18 @@ public class OM_Mattu extends TestBase{
 	
 	//-------------------------------------------------------------------------------------------------
 	//TCC = 15
-	//@Test(groups = "OM")
-	public void TS80075_CRM_OM_Interfaces_Alta_de_linea_Plan_con_tarjeta_Sin_delivery_Sin_VAS_Numeracion_Movil_S326_updateNumbe_Status_Verificacion_de_request_response() throws InterruptedException{
-		////*[@id="canvas"]/div[16]
+	@Test(groups = "OM")
+	public void TS79026_OM_Ordenes_Cliente_existente_Alta_de_linea_Sin_delivery_Sin_VAS() throws InterruptedException{
+		OM oOM = new OM(driver);
+		oOM.Gestion_Alta_De_Linea("MattuOM", "Plan Prepago Nacional");
+		//oOM.crearOrden("MattuOM");
 	}
 	
 	//-------------------------------------------------------------------------------------------------
 	//Open Page
 	@Test()
 	public void OpenPage() throws InterruptedException{
-		OM oOM = new OM(driver);
+		/*OM oOM = new OM(driver);
 		OMQPage OM=new OMQPage (driver);
 		oOM.crearOrden("MattuOM");
 		assertTrue(driver.findElement(By.cssSelector(".noSecondHeader.pageType")).isDisplayed());
@@ -736,8 +734,9 @@ public class OM_Mattu extends TestBase{
 		      sleep(5000); 
 		      oOM.cambiarVentanaNavegador(0); 
 		    }catch(java.lang.IndexOutOfBoundsException ex1) {} 
-		sleep(12000);
-		oOM.completarFlujoOrquestacionHasta(4, 17,"Numeracion Movil - Update number inventory");
+		sleep(12000);*/
+		OM oOM = new OM(driver);
+		oOM.completarFlujoOrquestacionHasta(4, 14,"Numeracion Movil - Update number inventory","Baja de Linea");
 	}
 
 }

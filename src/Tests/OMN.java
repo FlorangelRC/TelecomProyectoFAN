@@ -702,8 +702,13 @@ public class OMN extends TestBase {
 		sleep(3000);
 		driver.findElement(By.cssSelector(".last.data2Col")).findElement(By.tagName("a")).click();
 		sleep(5000);
-		Assert.assertTrue(driver.findElement(By.tagName("img")).getAttribute("style").equals("user-select: none;"));
-		driver.navigate().back();
+		try {
+			Assert.assertTrue(driver.findElement(By.tagName("img")).getAttribute("style").equals("user-select: none;"));
+			driver.navigate().back();
+		} catch(org.openqa.selenium.NoSuchElementException e) {
+			driver.navigate().back();
+			Assert.assertTrue(false);
+		}
 	}
 	
 	@Test (groups = "OM")
@@ -773,15 +778,4 @@ public class OMN extends TestBase {
 			Assert.assertTrue(false);
 		}
 	}
-	
-	@Test
-	public void asd() throws InterruptedException, JSONException {
-		om.Gestion_Alta_De_Linea("FlorOM", "Plan con tarjeta");
-		om.Cambio_De_SimCard("29/11/2019");
-		driver.navigate().back();
-		sleep(5000);
-		driver.findElement(By.name("vlocity_cmt__vieworchestrationplan")).click();
-		sleep(10000);
-		
-	}	
 }

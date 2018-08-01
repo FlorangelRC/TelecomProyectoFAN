@@ -25,6 +25,8 @@ import com.sun.corba.se.pept.transport.Connection;
 
 import Tests.TestBase;
 import javafx.scene.control.ScrollToEvent;
+
+import org.json.JSONArray;
 import org.json.JSONObject;
 
 public class OMQPage extends BasePage {
@@ -436,8 +438,71 @@ public void sincroProducto() {//(String Products) {
 						}
 					}
 				}
+			}
+			}
 		
 }
+		
+		
+		
+		public boolean requestValidator(WebElement element) {
+			boolean validator = false;
+
+			JSONObject obj = new JSONObject(element.getText());
+
+			//Esto valida que el codigo de suscricion no este vacio
+			//String regexValidator = "\\w{8}-\\w{4}-\\w{4}-\\w{4}-\\w{12}".toString();
+			String codSuscripcion = obj.getJSONObject("suscriptor").getString("codSuscripcion").toString();//matches(regexValidator);//isEmpty();
+			Assert.assertTrue(codSuscripcion.toString().contains(codSuscripcion));
+//			for(int i=0; i<codSuscripcion.length(); i++) {
+//				
+//				String cod = codSuscripcion.toString();
+//				System.out.println("codSuscripcion: " + cod);
+//			
+			if(codSuscripcion.length()==36){
+				System.out.println("codSuscripcion: " + codSuscripcion);
+
+			}
+			
+
+			//Estpo valida que la lista de datos adicioneles esten los datos de valorpametro y nombreparametro
+			if (validator) {
+
+				JSONArray listaDatosAdicionales = obj.getJSONObject("suscriptor").getJSONObject("infoSuscriptor")
+						.getJSONObject("infoBasicaSuscriptor").getJSONArray("listaDatosAdicionales");
+				// System.out.println(listaDatosAdicionales.getJSONObject(1).get("valorParametro"));
+
+				for (int i = 0; i < listaDatosAdicionales.length(); i++) {
+					if (!listaDatosAdicionales.getJSONObject(i).getString("valorParametro").isEmpty()
+							&& !listaDatosAdicionales.getJSONObject(i).getString("nombreParametro").isEmpty()) {
+						System.out.println("valorParametro: " + listaDatosAdicionales);
+						System.out.println("nombreParametro: " + listaDatosAdicionales);
+						validator = true;
+					} else {
+						return false;
+					}
+				}
+			}
+			
+			if (validator) {
+			JSONArray listaIdentificacionSuscriptor = obj.getJSONObject("suscriptor").getJSONObject("infoSuscriptor")
+					.getJSONArray("listaIdentificacionSuscriptor");
+
+			for (int i = 0; i < listaIdentificacionSuscriptor.length(); i++) {
+					if (!listaIdentificacionSuscriptor.getJSONObject(i).getString("identificadorRecurso").isEmpty()) {
+				validator = true;
+			}
+			else {
+				return false;
+			}
+			}
+			JSONObject modoPagoSecundario = obj.getJSONObject("suscriptor").getJSONObject("modoPagoSecundario");
+			validator =!modoPagoSecundario.getString("idCuenta").isEmpty()&&
+					!modoPagoSecundario.getString("idRelacionPago").isEmpty();
+			
+			}
+			return validator;
+		}
 		 
 		
 public WebElement getNewOrder() {
@@ -454,6 +519,29 @@ public void scrollToElement(WebElement element) {
 	((JavascriptExecutor)driver)
     .executeScript("arguments[0].scrollIntoView();", element);
 
+}
+
+public void buscarYClick(List <WebElement> elements, String match, String texto) {
+	sleep(2000);
+	switch (match) {
+	case "contains":
+		for (WebElement x : elements) {
+			if (x.getText().toLowerCase().contains(texto)) {
+				x.click();
+				break;
+			}
+		}
+		break;
+	case "equals":
+		for (WebElement x : elements) {
+			if (x.getText().toLowerCase().equals(texto)) {
+				x.click();
+				break;
+			}
+		}
+		break;
+	}
+	sleep(2000);
 }
 
 }

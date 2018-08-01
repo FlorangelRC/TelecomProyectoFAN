@@ -247,7 +247,7 @@ public boolean btnnoexiste(String boton){
 
 
  public void gestiondeusuarios(){
-	// driver.navigate().back();
+	 driver.navigate().back();
 		try {Thread.sleep(10000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 		driver.findElement(By.className("zen-selectArrow")).click();
 		driver.findElement(By.xpath("//a[@href=\"/ui/setup/Setup\"]")).click();
@@ -399,7 +399,7 @@ for(WebElement e: btns){
  
  public void elegirplan(String plan){
 		try {Thread.sleep(15000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
-		/*driver.findElement(By.cssSelector(".slds-button.custom-view-dropdown-button.slds-button_neutral.slds-p-right_small.slds-picklist__label.cpq-base-header-picklist-label")).click();
+		driver.findElement(By.cssSelector(".slds-button.custom-view-dropdown-button.slds-button_neutral.slds-p-right_small.slds-picklist__label.cpq-base-header-picklist-label")).click();
 		try {Thread.sleep(3000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 		List<WebElement> list = driver.findElements(By.className("slds-dropdown__item"));
 		System.out.println(list.size());
@@ -407,7 +407,7 @@ for(WebElement e: btns){
 			if(e.getText().equals("Telecom Price List")){
 				System.out.println(e.getText());
 				e.click();
-				break;}}*/
+				break;}}
 		try {Thread.sleep(10000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 		try {
 			driver.findElement(By.cssSelector(".slds-input.ng-pristine.ng-untouched.ng-valid")).sendKeys(plan);	}
@@ -418,7 +418,7 @@ for(WebElement e: btns){
 }
  public void agregarplan(String plan){
 		try {Thread.sleep(30000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
-		/*driver.findElement(By.cssSelector(".slds-button.custom-view-dropdown-button.slds-button_neutral.slds-p-right_small.slds-picklist__label.cpq-base-header-picklist-label")).click();
+		driver.findElement(By.cssSelector(".slds-button.custom-view-dropdown-button.slds-button_neutral.slds-p-right_small.slds-picklist__label.cpq-base-header-picklist-label")).click();
 		try {Thread.sleep(3000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 		List<WebElement> list = driver.findElements(By.className("slds-dropdown__item"));
 		System.out.println(list.size());
@@ -426,7 +426,7 @@ for(WebElement e: btns){
 			if(e.getText().equals("Telecom Price List")){
 				System.out.println(e.getText());
 				e.click();
-				break;}}*/
+				break;}}
 		try {Thread.sleep(10000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 		driver.findElement(By.cssSelector(".slds-input.ng-pristine.ng-untouched.ng-valid")).sendKeys(plan);		
 		try {Thread.sleep(20000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
@@ -480,11 +480,11 @@ for(WebElement e: btns){
 	 CustomerCare cc = new CustomerCare(driver);
 	 CustomerCare page = new CustomerCare(driver);
 	 sleep(10000);
-	// page.obligarclick(driver.findElement(By.id("InvoicePreview_nextBtn")));
-		//sleep(15000);
+	 page.obligarclick(driver.findElement(By.id("InvoicePreview_nextBtn")));
+		sleep(15000);
 	try {Thread.sleep(15000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 	List<WebElement> valid =driver.findElements(By.id("ValidationMethodInValidContact"));
-	List<WebElement> radio =driver.findElements(By.cssSelector(".ta-radioBtnContainer.taBorderOverlay.slds-grid.slds-grid--align-center.slds-grid--vertical-align-center.ng-scope"));
+	List<WebElement> radio =driver.findElements(By.className("imgItemContainer"));
 	
 	for(int i=0; i<valid.size();i++){
 		String value=valid.get(i).getAttribute("value");
@@ -603,7 +603,6 @@ try{	driver.findElement(By.id("alert-ok-button")).click();	} catch (NoSuchElemen
 	try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 	
 	driver.findElement(By.id("NewStreetName")).sendKeys(calle);
-	
 	
 
 	switch(local){
@@ -890,7 +889,7 @@ try{	driver.findElement(By.id("alert-ok-button")).click();	} catch (NoSuchElemen
 				 TB.login(driver, "https://crm--sit.cs14.my.salesforce.com/", "U585991", "Testa10k");
 				 break;
 			 }
-			 sleep(15000);
+			 sleep(10000);
 		}
 		
 		public void Crear_DireccionEnvio(String provincia, String localidad, 
