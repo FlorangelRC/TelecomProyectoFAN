@@ -5,13 +5,10 @@ import static org.testng.Assert.assertTrue;
 import java.awt.Toolkit;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
-import java.time.Duration;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Calendar;
-import java.util.Iterator;
 import java.util.List;
-import java.util.Set;
 import java.util.concurrent.TimeUnit;
 import java.util.Random;
 import java.util.Date;
@@ -21,15 +18,11 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 import org.junit.Assert;
-import org.junit.Test;
 import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
-import org.openqa.selenium.Keys;
 import org.openqa.selenium.NoAlertPresentException;
 import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.UnhandledAlertException;
-import org.openqa.selenium.By.ById;
-import org.openqa.selenium.ElementNotVisibleException;
 import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -42,15 +35,12 @@ import org.openqa.selenium.support.ui.FluentWait;
 import org.openqa.selenium.support.ui.Select;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
-import com.gargoylesoftware.htmlunit.ElementNotFoundException;
-import com.sun.org.apache.xerces.internal.impl.xpath.XPath;
 
-import Tests.SalesNominaciones;
 import Tests.TestBase;
 
 public class OM {
 
-	static WebDriver driver;
+	private WebDriver driver;
 	static FluentWait<WebDriver> fluentWait;
 
 	// *********************************CONSTRUCTOR******************************************************//
@@ -59,10 +49,7 @@ public class OM {
 		this.driver = driver;
 		PageFactory.initElements(driver, this);
 		fluentWait = new FluentWait<WebDriver>(driver);
-		fluentWait.withTimeout(30, TimeUnit.SECONDS).pollingEvery(5, TimeUnit.SECONDS)
-				.ignoring(org.openqa.selenium.NoSuchElementException.class)
-				.ignoring(org.openqa.selenium.ElementNotVisibleException.class);
-
+		fluentWait.withTimeout(30, TimeUnit.SECONDS).pollingEvery(5, TimeUnit.SECONDS).ignoring(org.openqa.selenium.NoSuchElementException.class).ignoring(org.openqa.selenium.ElementNotVisibleException.class);
 	}
 
 	// *********************************ELEMENTOS******************************************************//
@@ -228,7 +215,6 @@ public class OM {
 	}
 
 	public void primeraOrden() {
-
 		WebElement fila = driver.findElement(By.cssSelector(".dataRow.even.first"));
 		WebElement nro = fila.findElement(By.tagName("th")).findElement(By.tagName("a"));
 		nro.click();
@@ -258,7 +244,6 @@ public class OM {
 	public void goToMenuOM() {
 		sleep(5000);
 		String actual = driver.findElement(By.id("tsidLabel")).getText();
-
 		if (actual.toLowerCase().contains("sales") || actual.toLowerCase().contains("ventas"))
 			return;
 		else {
@@ -395,16 +380,13 @@ public class OM {
 		driver.switchTo().defaultContent();
 		sleep(200);
 		driver.switchTo().frame(driver.findElement(By.id("resultsFrame")));
-
-		WebElement inputNombreCuenta = driver
-				.findElement(By.xpath("//*[@id=\"ep\"]/div[2]/div[2]/table/tbody/tr[1]/td[2]/div/input"));
+		WebElement inputNombreCuenta = driver.findElement(By.xpath("//*[@id=\"ep\"]/div[2]/div[2]/table/tbody/tr[1]/td[2]/div/input"));
 		inputNombreCuenta.click();
 		inputNombreCuenta.clear();
 		inputNombreCuenta.sendKeys(Cuenta);
 		driver.findElements(By.name("save")).get(1).click();
 		cambiarVentanaNavegador(0);
 		driver.switchTo().defaultContent();
-
 	}
 
 	/**
@@ -421,7 +403,6 @@ public class OM {
 		sleep(3000);
 		cambiarVentanaNavegador(1);
 		sleep(1000);
-
 		driver.switchTo().frame(driver.findElement(By.id("searchFrame")));
 		driver.findElement(By.id("lksrch")).sendKeys(Cuenta);
 		driver.findElement(By.name("go")).click();
@@ -443,7 +424,6 @@ public class OM {
 		sleep(5000);
 		cambiarVentanaNavegador(0);
 		driver.switchTo().defaultContent();
-
 	}
 
 	/**
@@ -484,12 +464,10 @@ public class OM {
 
 	/* Obtiene un elemento aleatorio de una lista de WebElements */
 	public WebElement getRandomElementFromList(List<WebElement> lista) {
-
 		int listaSize = lista.size();
 		Random rand = new Random();
 		WebElement randomWebElement = lista.get(rand.nextInt(listaSize));
 		return randomWebElement;
-
 	}
 
 	/* Genera un String de numeros al azar de n digitos */
@@ -582,15 +560,10 @@ public class OM {
 	public void irAChangeToOrder() {
 		Accounts accountPage = new Accounts(driver);
 		driver.switchTo().defaultContent();
-		driver.switchTo()
-				.frame(accountPage.getFrameForElement(driver, By.cssSelector(".panel.panel-default.panel-assets")));
-		List<WebElement> assets = driver.findElement(By.cssSelector(".panel.panel-default.panel-assets"))
-				.findElements(By.cssSelector(".root-asset.ng-scope"));
+		driver.switchTo().frame(accountPage.getFrameForElement(driver, By.cssSelector(".panel.panel-default.panel-assets")));
+		List<WebElement> assets = driver.findElement(By.cssSelector(".panel.panel-default.panel-assets")).findElements(By.cssSelector(".root-asset.ng-scope"));
 		assets.get(assets.size() - 1).findElement(By.className("p-check")).click();
-		driver.findElement(By.className("asset-action")).findElements(By.cssSelector(".btn.btn-default")).get(1)
-				.click();
-		
-
+		driver.findElement(By.className("asset-action")).findElements(By.cssSelector(".btn.btn-default")).get(1).click();
 	}
 
 	public List<String> traerColumna(WebElement wBody, int iColumn) {
@@ -600,7 +573,6 @@ public class OM {
 			List<WebElement> wTd = wAux.findElements(By.tagName("td"));
 			sColumn.add(wTd.get(iColumn).getText());
 		}
-
 		return sColumn;
 	}
 
@@ -613,26 +585,19 @@ public class OM {
 		cal.add(Calendar.DATE, +1);
 		date = cal.getTime();
 		return (date);
-
 	}
 
 	public void fechaAvanzada2() {
-<<<<<<< HEAD
-		//Accounts accountPage = new Accounts(driver);
-		/*DateFormat dateFormat = new SimpleDateFormat("MM-dd-yyyy");
-		driver.findElement(By.id("RequestDate")).sendKeys(dateFormat.format(om.fechaAvanzada()));*/
-=======
 		// Accounts accountPage = new Accounts(driver);
 		/*
 		 * DateFormat dateFormat = new SimpleDateFormat("MM-dd-yyyy");
 		 * driver.findElement(By.id("RequestDate")).sendKeys(dateFormat.format(
 		 * om. fechaAvanzada()));
 		 */
->>>>>>> master
 		driver.findElement(By.id("RequestDate")).sendKeys("09-19-2019");
 		driver.findElement(By.cssSelector(".form-control.btn.btn-primary.ng-binding")).click();
 		sleep(15000);
-		}
+	}
 
 	public String getFechaAvanzadaFormateada_MM_dd_yyyy() {
 		SimpleDateFormat simpleDateFormat = new SimpleDateFormat("MM-dd-yyyy");
@@ -643,19 +608,14 @@ public class OM {
 	// Ir hasta SIM config
 	public void goToSimConfig() {
 		// Plan
-		WebElement plan = fluentWait.until(ExpectedConditions.elementToBeClickable(
-				By.xpath("//*[@id=\"tab-default-1\"]/div[1]/ng-include/div/div/div/div[3]/div[1]/div[1]/button")));
+		WebElement plan = fluentWait.until(ExpectedConditions.elementToBeClickable(By.xpath("//*[@id=\"tab-default-1\"]/div[1]/ng-include/div/div/div/div[3]/div[1]/div[1]/button")));
 		plan.click();
 		// Sim
 		sleep(1000);
-		driver.findElement(By
-				.xpath("//*[@id=\"tab-default-1\"]/div[1]/ng-include/div/div/div/div[4]/div[2]/div/ng-include/div/div[2]/ng-include/div/div[1]/div/div[2]/div[11]/div[2]/button"))
-				.click();
+		driver.findElement(By.xpath("//*[@id=\"tab-default-1\"]/div[1]/ng-include/div/div/div/div[4]/div[2]/div/ng-include/div/div[2]/ng-include/div/div[1]/div/div[2]/div[11]/div[2]/button")).click();
 		// Sim Config
 		sleep(1000);
-		driver.findElement(By
-				.xpath("//*[@id=\"tab-default-1\"]/div[1]/ng-include/div/div/div/div[4]/div[2]/div/ng-include/div/div[2]/ng-include/div/div[1]/div/div[2]/div[11]/div[2]/div/ul/li[3]/a/span"))
-				.click();
+		driver.findElement(By.xpath("//*[@id=\"tab-default-1\"]/div[1]/ng-include/div/div/div/div[4]/div[2]/div/ng-include/div/div[2]/ng-include/div/div[1]/div/div[2]/div[11]/div[2]/div/ul/li[3]/a/span")).click();
 	}
 
 	// Cambia el n�mero
@@ -663,7 +623,6 @@ public class OM {
 		WebElement cambiarNumero;
 		try {
 			cambiarNumero = driver.findElement(By.name("productconfig_field_3_0"));
-
 		} catch (org.openqa.selenium.NoSuchElementException e) {
 			cambiarNumero = driver.findElement(By.xpath("//*[@id=\"js-cpq-product-cart-config-form\"]/div[1]/div/form/div[2]/div[1]/input"));
 		}
@@ -671,31 +630,22 @@ public class OM {
 		cambiarNumero.sendKeys(numero);
 		// Close Sim Input
 		sleep(1000);
-<<<<<<< HEAD
 		driver.findElement(By.xpath("/html/body/div[1]/div/ng-include/div/div[2]/div[2]/div[3]/div/div/ng-include/div/div[1]/div/button")).click();
-=======
-		driver.findElement(By
-				.xpath("/html/body/div[1]/div/ng-include/div/div[2]/div[2]/div[3]/div/div/ng-include/div/div[1]/div/button"))
-				.click();
->>>>>>> master
 	}
 
 	// Edita el campo de Gesti�
 	public void setGestionField(String gestion) {
 		WebDriverWait wait;
 		wait = new WebDriverWait(driver, 20);
-		WebElement editOrderButton = wait
-				.until(ExpectedConditions.elementToBeClickable(driver.findElement(By.name("edit"))));
+		WebElement editOrderButton = wait.until(ExpectedConditions.elementToBeClickable(driver.findElement(By.name("edit"))));
 		editOrderButton.click();
-		WebElement gestionElement = wait
-				.until(ExpectedConditions.elementToBeClickable(driver.findElement(By.id("00Nc0000002IvyM"))));
+		WebElement gestionElement = wait.until(ExpectedConditions.elementToBeClickable(driver.findElement(By.id("00Nc0000002IvyM"))));
 		Select gestionSelect = new Select(gestionElement);
 		gestionSelect.selectByVisibleText(gestion);
 		driver.findElement(By.name("save")).click();
 	}
 
 	public void deleteOrdersNoActivated(String Vista) {
-
 		Select allOrder = new Select(driver.findElement(By.id("fcf")));
 		allOrder.selectByVisibleText(Vista);
 		sleep(1000);
@@ -704,15 +654,10 @@ public class OM {
 		} catch (org.openqa.selenium.NoSuchElementException e) {
 		}
 		sleep(3000);
-
 		// Solo para listar la cantidad de Ordenes que hay
-		List<WebElement> listadoDeOrdenes = driver.findElement(By.className("x-panel-bwrap"))
-				.findElement(By.className("x-grid3-body")).findElements(By.className("x-grid3-row"));
-		listadoDeOrdenes.add(driver.findElement(By.className("x-panel-bwrap")).findElement(By.className("x-grid3-body"))
-				.findElement(By.cssSelector(".x-grid3-row.x-grid3-row-first")));
-		listadoDeOrdenes.add(driver.findElement(By.className("x-panel-bwrap")).findElement(By.className("x-grid3-body"))
-				.findElement(By.cssSelector(".x-grid3-row.x-grid3-row-last")));
-
+		List<WebElement> listadoDeOrdenes = driver.findElement(By.className("x-panel-bwrap")).findElement(By.className("x-grid3-body")).findElements(By.className("x-grid3-row"));
+		listadoDeOrdenes.add(driver.findElement(By.className("x-panel-bwrap")).findElement(By.className("x-grid3-body")).findElement(By.cssSelector(".x-grid3-row.x-grid3-row-first")));
+		listadoDeOrdenes.add(driver.findElement(By.className("x-panel-bwrap")).findElement(By.className("x-grid3-body")).findElement(By.cssSelector(".x-grid3-row.x-grid3-row-last")));
 		// System.out.println("aqui: "+listadoDeOrdenes.get(0).getText());
 		int i = 0;
 		System.out.println("Cantidad de Ordenes: " + listadoDeOrdenes.size());
@@ -720,8 +665,7 @@ public class OM {
 													// para dos elementos
 													// fantasmas.
 			System.out.println("ejecucion: " + i);
-			WebElement ordenes = driver.findElement(By.className("x-panel-bwrap"))
-					.findElement(By.className("x-grid3-body")).findElements(By.tagName("div")).get(0);
+			WebElement ordenes = driver.findElement(By.className("x-panel-bwrap")).findElement(By.className("x-grid3-body")).findElements(By.tagName("div")).get(0);
 			try {
 				// Eliminar
 				ordenes.findElement(By.xpath("//table/tbody/tr/td[2]/div/a[2]")).click();
@@ -736,7 +680,6 @@ public class OM {
 			i++;
 			sleep(3000);
 		}
-
 	}
 
 	public WebElement getNext() {
@@ -752,7 +695,6 @@ public class OM {
 	 * se agrego o quito un campo por el cual el xPath se rueda.
 	 */
 	public void cambioDeCuentaServicios(String Cuenta) {
-
 		List<WebElement> listadoDeServicios = driver.findElement(By.className("pbBody")).findElement(By.className("list")).findElements(By.tagName("tr"));
 		if (listadoDeServicios.get(0).getAttribute("class").equalsIgnoreCase("headerRow"))
 			listadoDeServicios.remove(0);
@@ -761,40 +703,27 @@ public class OM {
 		while (i < listadoDeServicios.size() + 1) {
 			driver.switchTo().defaultContent();
 			sleep(1000);
-
-			WebElement servicio = driver.findElement(By.className("pbBody")).findElement(By.className("list"))
-					.findElements(By.tagName("tr")).get(i);
+			WebElement servicio = driver.findElement(By.className("pbBody")).findElement(By.className("list")).findElements(By.tagName("tr")).get(i);
 			servicio.findElement(By.className("actionColumn")).findElements(By.tagName("a")).get(0).click();
 			sleep(7000);
-
-			Select action = new Select(
-					driver.findElement(By.xpath("//*[@id=\"ep\"]/div[2]/div[3]/table/tbody/tr[7]/td[2]"))
-							.findElement(By.tagName("select")));
+			Select action = new Select(driver.findElement(By.xpath("//*[@id=\"ep\"]/div[2]/div[3]/table/tbody/tr[7]/td[2]")).findElement(By.tagName("select")));
 			action.selectByVisibleText("Change");
-
-			WebElement billingAccount = driver
-					.findElement(By.xpath("//*[@id=\"ep\"]/div[2]/div[3]/table/tbody/tr[12]/td[2]/span"))
-					.findElement(By.tagName("input"));
+			WebElement billingAccount = driver.findElement(By.xpath("//*[@id=\"ep\"]/div[2]/div[3]/table/tbody/tr[12]/td[2]/span")).findElement(By.tagName("input"));
 			billingAccount.click();
 			billingAccount.clear();
 			billingAccount.sendKeys(Cuenta);
 			sleep(300);
-
 			// SERVICE ACCOUNT
-			WebElement serviceAccount = driver
-					.findElement(By.xpath("//*[@id=\"ep\"]/div[2]/div[3]/table/tbody/tr[36]/td[4]/span"))
-					.findElement(By.tagName("input"));
+			WebElement serviceAccount = driver.findElement(By.xpath("//*[@id=\"ep\"]/div[2]/div[3]/table/tbody/tr[36]/td[4]/span")).findElement(By.tagName("input"));
 			serviceAccount.click();
 			serviceAccount.clear();
 			serviceAccount.sendKeys(Cuenta);
-
 			sleep(500);
 			// Guardar
 			driver.findElement(By.name("save")).click();
 			sleep(4000);
 			i++;
 		}
-
 	}
 
 	/**
@@ -808,16 +737,12 @@ public class OM {
 		// Click en editar
 		driver.findElement(By.name("edit")).click();
 		sleep(7000);
-		WebElement accountName = driver
-				.findElement(By.xpath("//*[@id=\"ep\"]/div[2]/div[3]/table/tbody/tr[3]/td[2]/div/span"))
-				.findElement(By.tagName("input"));
+		WebElement accountName = driver.findElement(By.xpath("//*[@id=\"ep\"]/div[2]/div[3]/table/tbody/tr[3]/td[2]/div/span")).findElement(By.tagName("input"));
 		accountName.click();
 		accountName.clear();
 		accountName.sendKeys(Cuenta);
 		sleep(1000);
-		Select gestion = new Select(
-				driver.findElement(By.xpath("//*[@id=\"ep\"]/div[2]/div[3]/table/tbody/tr[14]/td[4]/span"))
-						.findElement(By.tagName("select")));
+		Select gestion = new Select(driver.findElement(By.xpath("//*[@id=\"ep\"]/div[2]/div[3]/table/tbody/tr[14]/td[4]/span")).findElement(By.tagName("select")));
 		gestion.selectByValue(Gestion);
 		// Guardamos
 		driver.findElement(By.name("save")).click();
@@ -828,7 +753,6 @@ public class OM {
 		driver.findElement(By.cssSelector(".slds-button.cpq-item-has-children")).click();
 		sleep(5000);
 		List<WebElement> NomPack = driver.findElements(By.xpath("//*[@class='cpq-item-product-child-level-1 cpq-item-child-product-name-wrapper']"));
-
 		for (WebElement a : NomPack) {
 			System.out.print(a.getText().toLowerCase());
 			System.out.println(" : " + servicio1.toLowerCase());
@@ -839,19 +763,19 @@ public class OM {
 				break;
 			}
 		}
-
 		List<WebElement> subPack = driver.findElements(By.xpath("//*[@class='cpq-item-product-child-level-2 cpq-item-child-product-name-wrapper']"));
 		List<WebElement> Btnsubpack = driver.findElements(By.xpath("//*[@class='cpq-item-product-child-level-2 cpq-item-child-product-name-wrapper']//*[@class='slds-button slds-button_icon-small']"));
 		if (subPack.size() == Btnsubpack.size()) {
 			for (WebElement b : subPack) {
 				System.out.println("+++++" + b.getText().substring(b.getText().indexOf("\n") + 1, b.getText().length())+ "++++++");
+				// System.out.print(b.getText().toLowerCase());
+				// System.out.println(" : "+servicio2.toLowerCase());
 				if (b.getText().substring(b.getText().indexOf("\n") + 1, b.getText().length()).toLowerCase().contains(servicio2.toLowerCase())) {
 					System.out.println(servicio2);
 					b.findElement(By.tagName("button")).click();
 					sleep(8000);
 					break;
 				}
-
 			}
 		}
 
@@ -879,21 +803,13 @@ public class OM {
 		OMQPage OM = new OMQPage(driver);
 		// Mientras, seleccion de vista
 		/*
-<<<<<<< HEAD
-		 * pageOm.selectVistaByVisibleText("LineasFlor"); sleep(3000); //Selecciona la
-		 * primera cuenta de la lista en la vista seleccionada 
-		 * WebElement primeraCuenta=driver.findElement(By.cssSelector(".x-grid3-col.x-grid3-cell.x-grid3-td-SALES_ACCOUNT_NAME"));
-		 * primeraCuenta.findElement(By.tagName("div")).findElement(By.tagName("a")). click();
-=======
 		 * pageOm.selectVistaByVisibleText("LineasFlor"); sleep(3000);
 		 * //Selecciona la primera cuenta de la lista en la vista seleccionada
 		 * WebElement primeraCuenta=driver.findElement(By.cssSelector(
 		 * ".x-grid3-col.x-grid3-cell.x-grid3-td-SALES_ACCOUNT_NAME"));
 		 * primeraCuenta.findElement(By.tagName("div")).findElement(By.tagName(
 		 * "a")). click();
->>>>>>> master
 		 */
-		
 		sleep(5000);
 		pageOm.irAChangeToOrder();
 		sleep(20000);
@@ -1036,29 +952,13 @@ public class OM {
 		sleep(5000);
 		driver.findElement(By.cssSelector(".slds-button.cpq-item-has-children")).click();
 		sleep(3000);
-<<<<<<< HEAD
 		driver.findElement(By.xpath(".//*[@id='tab-default-1']/div[1]/ng-include/div/div/div/div[4]/div[2]/div/ng-include/div/div[2]/ng-include/div/div[1]/div/div[2]/div[11]")).click();
 		List<WebElement> lista = driver.findElements(By.cssSelector(".slds-dropdown__list.cpq-item-actions-dropdown__list"));
+		// System.out.println(lista.size());
 		lista.get(1).click();
 		sleep(3000);
 		List<WebElement> todos = driver.findElements(By.cssSelector(".slds-form_stacked.ng-pristine.ng-untouched.ng-valid.vlocity-dynamic-form.ng-valid-required.ng-valid-step")).get(1).findElements(By.className("slds-form-element"));
 		((JavascriptExecutor) driver).executeScript("window.scrollTo(0," + driver.findElement(By.className("slds-section")).getLocation().y + " )");
-=======
-		driver.findElement(By
-				.xpath(".//*[@id='tab-default-1']/div[1]/ng-include/div/div/div/div[4]/div[2]/div/ng-include/div/div[2]/ng-include/div/div[1]/div/div[2]/div[11]"))
-				.click();
-		List<WebElement> lista = driver
-				.findElements(By.cssSelector(".slds-dropdown__list.cpq-item-actions-dropdown__list"));
-		// System.out.println(lista.size());
-		lista.get(1).click();
-		sleep(3000);
-		List<WebElement> todos = driver
-				.findElements(By.cssSelector(
-						".slds-form_stacked.ng-pristine.ng-untouched.ng-valid.vlocity-dynamic-form.ng-valid-required.ng-valid-step"))
-				.get(1).findElements(By.className("slds-form-element"));
-		((JavascriptExecutor) driver).executeScript(
-				"window.scrollTo(0," + driver.findElement(By.className("slds-section")).getLocation().y + " )");
->>>>>>> master
 		for (WebElement uno : todos) {
 			if (uno.findElement(By.tagName("label")).getText().equalsIgnoreCase("ICCID")) {
 				uno.click();
@@ -1079,14 +979,10 @@ public class OM {
 			}
 
 		}
-
 		sleep(5000);
 		// driver.switchTo().defaultContent();
-		driver.findElement(By
-				.xpath("/html/body/div[1]/div[1]/ng-include/div/div[2]/div[2]/div[3]/div/div/ng-include/div/div[1]/div/button"))
-				.click();
+		driver.findElement(By.xpath("/html/body/div[1]/div[1]/ng-include/div/div[2]/div[2]/div[3]/div/div/ng-include/div/div[1]/div/button")).click();
 		sleep(5000);
-
 	}
 
 	public void Cambio_De_SimCard_Por_Siniestro(String Vista) throws InterruptedException {
@@ -1146,8 +1042,7 @@ public class OM {
 		sleep(5000);
 	}
 
-	public void Cambio_De_SimCard_Por_Siniestro_Parametros(String Iccid, String Imsi, String Ki)
-			throws InterruptedException {
+	public void Cambio_De_SimCard_Por_Siniestro_Parametros(String Iccid, String Imsi, String Ki) throws InterruptedException {
 		// TS_CRM_OM_Gestion_Alta_De_Linea();
 		OM pageOm = new OM(driver);
 		sleep(5000);
@@ -1234,7 +1129,6 @@ public class OM {
 		driver.findElement(By.id("accid_ileinner")).findElement(By.tagName("a")).click();
 		sleep(10000);
 		// pageOm.irAChangeToOrder();
-
 	}
 
 	public void colocarPlan(String Plan) throws InterruptedException {
@@ -1244,12 +1138,10 @@ public class OM {
 		driver.findElement(By.cssSelector(".slds-input.ng-pristine.ng-untouched.ng-valid")).sendKeys(Plan);
 		sleep(6000);
 		List<WebElement> productos = driver.findElements(By.cssSelector(".slds-media.cpq-product-item-container"));
-		List<WebElement> botones = driver
-				.findElements(By.cssSelector(".slds-button.slds-button_neutral.cpq-add-button"));
+		List<WebElement> botones = driver.findElements(By.cssSelector(".slds-button.slds-button_neutral.cpq-add-button"));
 		for (int i = 0; i <= productos.size(); i++) {
 			System.out.println(i + ". " + productos.get(i).getText());
-			if (productos.get(i).getText().substring(0, productos.get(i).getText().indexOf("\n"))
-					.equalsIgnoreCase(Plan)) {
+			if (productos.get(i).getText().substring(0, productos.get(i).getText().indexOf("\n")).equalsIgnoreCase(Plan)) {
 				System.out.println(Plan);
 				botones.get(i).click();
 				break;
@@ -1264,13 +1156,11 @@ public class OM {
 		NumerodeLinea.sendKeys("11" + r.nextInt(200000000));
 		NumerodeLinea.submit();
 		sleep(8000);
-		driver.findElement(By
-				.xpath("/html/body/div[1]/div[1]/ng-include/div/div[2]/div[2]/div[3]/div/div/ng-include/div/div[1]/div/button"))
-				.click();
+		driver.findElement(By.xpath("/html/body/div[1]/div[1]/ng-include/div/div[2]/div[2]/div[3]/div/div/ng-include/div/div[1]/div/button")).click();
 		sleep(5000);
 	}
 
-	public void Gestion_Alta_De_Linea_Con_Varios_Packs(String Cuenta, String Plan, String Servicio, int packs)throws InterruptedException {
+	public void Gestion_Alta_De_Linea_Con_Varios_Packs(String Cuenta, String Plan, String Servicio, int packs) throws InterruptedException {
 		OMQPage OM = new OMQPage(driver);
 		OM Pom = new OM(driver);
 		Pom.crearOrden(Cuenta);
@@ -1315,11 +1205,9 @@ public class OM {
 		driver.findElement(By.id("accid_ileinner")).findElement(By.tagName("a")).click();
 		sleep(10000);
 		// pageOm.irAChangeToOrder();
-
 	}
 
-	public void Gestion_Alta_De_Linea_Parametros(String Cuenta, String Plan, String Linea, String ICCID, String IMSI,
-			String KI) throws InterruptedException {
+	public void Gestion_Alta_De_Linea_Parametros(String Cuenta, String Plan, String Linea, String ICCID, String IMSI, String KI) throws InterruptedException {
 		OM pageOm = new OM(driver);
 		OMQPage OM = new OMQPage(driver);
 		pageOm.crearOrden(Cuenta);
@@ -1347,7 +1235,6 @@ public class OM {
 		driver.findElement(By.id("accid_ileinner")).findElement(By.tagName("a")).click();
 		sleep(10000);
 		// pageOm.irAChangeToOrder();
-
 	}
 
 	public void Gestion_Cambio_de_Numero(String Vista, String Fecha) throws InterruptedException {
@@ -1381,20 +1268,12 @@ public class OM {
 		driver.findElement(By.cssSelector(".slds-button.cpq-item-has-children")).click();
 		sleep(3000);
 		driver.switchTo().defaultContent();
-		driver.findElement(By
-				.xpath(".//*[@id='tab-default-1']/div[1]/ng-include/div/div/div/div[4]/div[2]/div/ng-include/div/div[2]/ng-include/div/div[1]/div/div[2]/div[11]"))
-				.click();
+		driver.findElement(By.xpath(".//*[@id='tab-default-1']/div[1]/ng-include/div/div/div/div[4]/div[2]/div/ng-include/div/div[2]/ng-include/div/div[1]/div/div[2]/div[11]")).click();
 		sleep(3000);
-		driver.findElement(By
-				.xpath(".//*[@id='tab-default-1']/div[1]/ng-include/div/div/div/div[4]/div[2]/div/ng-include/div/div[2]/ng-include/div/div[1]/div/div[2]/div[11]/div[2]/div/ul/li[3]/a"))
-				.click();
+		driver.findElement(By.xpath(".//*[@id='tab-default-1']/div[1]/ng-include/div/div/div/div[4]/div[2]/div/ng-include/div/div[2]/ng-include/div/div[1]/div/div[2]/div[11]/div[2]/div/ul/li[3]/a")).click();
 		sleep(5000);
-		((JavascriptExecutor) driver).executeScript(
-				"window.scrollTo(0," + driver.findElement(By.className("slds-section")).getLocation().y + " )");
-		List<WebElement> todos = driver
-				.findElements(By.cssSelector(
-						".slds-form_stacked.ng-pristine.ng-untouched.ng-valid.vlocity-dynamic-form.ng-valid-required.ng-valid-step"))
-				.get(1).findElements(By.className("slds-form-element"));
+		((JavascriptExecutor) driver).executeScript("window.scrollTo(0," + driver.findElement(By.className("slds-section")).getLocation().y + " )");
+		List<WebElement> todos = driver.findElements(By.cssSelector(".slds-form_stacked.ng-pristine.ng-untouched.ng-valid.vlocity-dynamic-form.ng-valid-required.ng-valid-step")).get(1).findElements(By.className("slds-form-element"));
 		Random r = new Random();
 		for (WebElement UnT : todos) {
 			if (UnT.findElement(By.tagName("label")).getText().equalsIgnoreCase("MSISDN")) {
@@ -1428,7 +1307,6 @@ public class OM {
 		sleep(12000);
 		om.completarFlujoOrquestacion();
 		sleep(5000);
-
 	}
 
 	public void Gestion_Cambio_de_Numero_Parametros(String Msisdn) throws InterruptedException {
@@ -1446,20 +1324,12 @@ public class OM {
 		driver.findElement(By.cssSelector(".slds-button.cpq-item-has-children")).click();
 		sleep(3000);
 		driver.switchTo().defaultContent();
-		driver.findElement(By
-				.xpath(".//*[@id='tab-default-1']/div[1]/ng-include/div/div/div/div[4]/div[2]/div/ng-include/div/div[2]/ng-include/div/div[1]/div/div[2]/div[11]"))
-				.click();
+		driver.findElement(By.xpath(".//*[@id='tab-default-1']/div[1]/ng-include/div/div/div/div[4]/div[2]/div/ng-include/div/div[2]/ng-include/div/div[1]/div/div[2]/div[11]")).click();
 		sleep(3000);
-		driver.findElement(By
-				.xpath(".//*[@id='tab-default-1']/div[1]/ng-include/div/div/div/div[4]/div[2]/div/ng-include/div/div[2]/ng-include/div/div[1]/div/div[2]/div[11]/div[2]/div/ul/li[3]/a"))
-				.click();
+		driver.findElement(By.xpath(".//*[@id='tab-default-1']/div[1]/ng-include/div/div/div/div[4]/div[2]/div/ng-include/div/div[2]/ng-include/div/div[1]/div/div[2]/div[11]/div[2]/div/ul/li[3]/a")).click();
 		sleep(5000);
-		((JavascriptExecutor) driver).executeScript(
-				"window.scrollTo(0," + driver.findElement(By.className("slds-section")).getLocation().y + " )");
-		List<WebElement> todos = driver
-				.findElements(By.cssSelector(
-						".slds-form_stacked.ng-pristine.ng-untouched.ng-valid.vlocity-dynamic-form.ng-valid-required.ng-valid-step"))
-				.get(1).findElements(By.className("slds-form-element"));
+		((JavascriptExecutor) driver).executeScript("window.scrollTo(0," + driver.findElement(By.className("slds-section")).getLocation().y + " )");
+		List<WebElement> todos = driver.findElements(By.cssSelector(".slds-form_stacked.ng-pristine.ng-untouched.ng-valid.vlocity-dynamic-form.ng-valid-required.ng-valid-step")).get(1).findElements(By.className("slds-form-element"));
 		for (WebElement UnT : todos) {
 			if (UnT.findElement(By.tagName("label")).getText().equalsIgnoreCase("MSISDN")) {
 				UnT.click();
@@ -1488,29 +1358,24 @@ public class OM {
 		sleep(12000);
 		om.completarFlujoOrquestacion();
 		sleep(5000);
-
 	}
-
 	// Metodo para cuando olvidamos cambiar la fecha para ejecutar gestiones
 	// Avisa si se ingreso una fecha incorrecta y da unos segundos para
 	// cambiarla y
 	// continuar el test
 	// ATENCION!! No olvidar quitarlo del codigo una vez que funcione
+	
 	public void checkFutureDateRestriction() {
 		try {
 			String futureDateText = driver.findElement(By.cssSelector(".col-md-12.col-sm-12.vlc-header")).getText();
-			if (futureDateText
-					.contains("Can not create the Order as there is already an Order with Request Date greater than")) {
-				System.out.println(
-						"Invalid Date. Please select a valid date to continue. Don't forget to update your code =)");
+			if (futureDateText.contains("Can not create the Order as there is already an Order with Request Date greater than")) {
+				System.out.println("Invalid Date. Please select a valid date to continue. Don't forget to update your code =)");
 				Toolkit.getDefaultToolkit().beep();
 				sleep(30000);
 			}
-
 		} catch (NoSuchElementException e) {
 			System.out.println("Date OK");
 		}
-		
 	}
 
 	public boolean ordenCajasVerdes(String primeraCaja, String segundaCaja, String terceraCaja) {
@@ -1543,9 +1408,7 @@ public class OM {
 		CustomerCare cc = new CustomerCare(driver);
 		sleep(18000);
 		try{cc.cerrarTodasLasPestanas();}
-		catch(Exception ex1) {
-		}
-		SalesBase SB = new SalesBase(driver);
+		catch(Exception ex1) {}
 		Accounts accountPage = new Accounts(driver);
 		driver.switchTo().frame(accountPage.getFrameForElement(driver, By.cssSelector(".hasMotif.homeTab.homepage.ext-webkit.ext-chrome.sfdcBody.brandQuaternaryBgr")));
 		List<WebElement> frames = driver.findElements(By.tagName("iframe"));
@@ -1555,17 +1418,14 @@ public class OM {
 			try {
 				System.out.println("aca");
 				driver.switchTo().frame(frame);
-
 				driver.findElement(By.cssSelector(".slds-grid.slds-m-bottom_small.slds-wrap.cards-container")).getText(); //each element is in the same iframe.
 				//System.out.println(index); //prints the used index.
-
 				driver.findElement(By.cssSelector(".slds-grid.slds-m-bottom_small.slds-wrap.cards-container")).isDisplayed(); //each element is in the same iframe.
 				//System.out.println(index); //prints the used index.
-
 				driver.switchTo().frame(accountPage.getFrameForElement(driver, By.cssSelector(".hasMotif.homeTab.homepage.ext-webkit.ext-chrome.sfdcBody.brandQuaternaryBgr")));
 				enc = true;
 				break;
-			}catch(NoSuchElementException noSuchElemExcept) {
+			} catch(NoSuchElementException noSuchElemExcept) {
 				index++;
 				driver.switchTo().frame(accountPage.getFrameForElement(driver, By.cssSelector(".hasMotif.homeTab.homepage.ext-webkit.ext-chrome.sfdcBody.brandQuaternaryBgr")));
 			}
@@ -1574,8 +1434,8 @@ public class OM {
 			index = -1;
 		try {
 				driver.switchTo().frame(frames.get(index));
-		}catch(ArrayIndexOutOfBoundsException iobExcept) {System.out.println("Elemento no encontrado en ningun frame 2.");
-			
+		} catch(ArrayIndexOutOfBoundsException iobExcept) {
+			System.out.println("Elemento no encontrado en ningun frame 2.");			
 		}
 		List<WebElement> botones = driver.findElements(By.tagName("button"));
 		for (WebElement UnB : botones) {
@@ -1584,8 +1444,7 @@ public class OM {
 				UnB.click();
 				break;
 			}
-		}
-		
+		}		
 		sleep(18000);
 		driver.switchTo().frame(accountPage.getFrameForElement(driver, By.id("ContactFirstName")));	
 	    try {Thread.sleep(10000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}    
@@ -1612,20 +1471,16 @@ public class OM {
 		//sleep(10000);
 		//contact.subirformulario("C:\\Users\\florangel\\Downloads\\form.pdf", "si");
 		sleep(35000);
-		List <WebElement> element = driver.findElements(By.cssSelector(".slds-form-element.vlc-flex.vlc-slds-text-block.vlc-slds-rte.ng-pristine.ng-valid.ng-scope"));
 		driver.findElement(By.id("FinishProcess_nextBtn")).click();
 		sleep(10000);
 		driver.switchTo().defaultContent();
 		sleep(2000);
 		OM pageOm=new OM(driver);
-		pageOm.goToMenuOM();
-		
+		pageOm.goToMenuOM();		
 		//click +
-		sleep(5000);
-		
+		sleep(5000);		
 		pageOm.clickMore();
-		sleep(3000);
-		
+		sleep(3000);		
 		//click en Ordenes
 		pageOm.clickOnListTabs("Pedidos");
 		sleep(5000);
@@ -1641,7 +1496,7 @@ public class OM {
 			driver.findElement(By.id("idlist")).click();
 			sleep(5000);
 			pageOm.cambiarVentanaNavegador(0);
-		}catch(java.lang.IndexOutOfBoundsException ex1) {}
+		} catch(java.lang.IndexOutOfBoundsException ex1) {}
 		sleep(12000);
 		pageOm.completarFlujoOrquestacion();
 		sleep(5000);
@@ -1703,8 +1558,7 @@ public class OM {
 		// System.out.println(lista.size());
 		sleep(3000);
 		lista = driver.findElements(By.className("cpq-item-base-product"));
-		((JavascriptExecutor) driver).executeScript(
-				"window.scrollTo(0," + driver.findElement(By.className("slds-section")).getLocation().y + " )");
+		((JavascriptExecutor) driver).executeScript("window.scrollTo(0," + driver.findElement(By.className("slds-section")).getLocation().y + " )");
 		for (WebElement UnaL : lista) {
 			try {
 				if (UnaL.getText().toLowerCase().contains(Servicio.toLowerCase())) {
@@ -1714,11 +1568,8 @@ public class OM {
 					sleep(4000);
 					break;
 				}
-			} catch (Exception ex1) {
-			}
-
+			} catch (Exception ex1) {}
 		}
-
 	}
 
 	public void AgregarDomicilio() {
@@ -1726,10 +1577,8 @@ public class OM {
 		List<WebElement> Productos = new ArrayList<WebElement>();
 		int i = -1;
 		boolean enc = false;
-
 		do {
-			Productos = driver.findElement(By.cssSelector(".listRelatedObject.orderBlock"))
-					.findElement(By.className("pbBody")).findElements(By.tagName("tr"));
+			Productos = driver.findElement(By.cssSelector(".listRelatedObject.orderBlock")).findElement(By.className("pbBody")).findElements(By.tagName("tr"));
 			Productos.remove(0);
 			i++;
 			enc = false;
@@ -1752,7 +1601,6 @@ public class OM {
 			cc.obligarclick(driver.findElement(By.id("Order_ileinner")).findElement(By.tagName("a")));
 			sleep(4000);
 		} while (i < 1);
-
 	}
 
 	public void SuspenderProductos() {
@@ -1763,12 +1611,8 @@ public class OM {
 		do {
 			try {
 				cc.obligarclick(driver.findElement(By.cssSelector(".listRelatedObject.orderBlock")).findElement(By.className("pShowMore")).findElement(By.tagName("a")));
-<<<<<<< HEAD
-				sleep(5000);}catch(Exception ex1) {}
-=======
 				sleep(5000);
-			}catch(Exception ex1) {}
->>>>>>> master
+			} catch(Exception ex1) {}
 			Productos = driver.findElement(By.cssSelector(".listRelatedObject.orderBlock")).findElement(By.className("pbBody")).findElements(By.tagName("tr"));
 			Productos.remove(0);
 			if(i<Productos.size()) {
@@ -1810,13 +1654,12 @@ public class OM {
 				driver.findElement(By.id("topButtonRow")).findElement(By.tagName("input")).click();
 				sleep(3000);
 				cc.obligarclick(driver.findElement(By.id("Order_ileinner")).findElement(By.tagName("a")));
-				sleep(4000);
-				
+				sleep(4000);				
 				//SuspenderProductos(i++);
 			}else {
 				System.out.println("llegue aqui");
 			}
-		}while(i<Productos.size());
+		} while(i<Productos.size());
 	}
 
 	public List<String> Cambio_De_SimCard2() throws InterruptedException {
@@ -1828,8 +1671,7 @@ public class OM {
 		selectVistaByVisibleText("LineasFlor");
 		sleep(3000);
 		// Selecciona la primera cuenta de la lista en la vista seleccionada
-		WebElement primeraCuenta = driver
-				.findElement(By.cssSelector(".x-grid3-col.x-grid3-cell.x-grid3-td-SALES_ACCOUNT_NAME"));
+		WebElement primeraCuenta = driver.findElement(By.cssSelector(".x-grid3-col.x-grid3-cell.x-grid3-td-SALES_ACCOUNT_NAME"));
 		primeraCuenta.findElement(By.tagName("div")).findElement(By.tagName("a")).click();
 		sleep(5000);
 		irAChangeToOrder();
@@ -1853,25 +1695,13 @@ public class OM {
 		sleep(8000);
 		driver.findElement(By.cssSelector(".slds-button.cpq-item-has-children")).click();
 		sleep(3000);
-<<<<<<< HEAD
 		driver.findElement(By.xpath(".//*[@id='tab-default-1']/div[1]/ng-include/div/div/div/div[4]/div[2]/div/ng-include/div/div[2]/ng-include/div/div[1]/div/div[2]/div[11]")).click();
 		List<WebElement> lista = driver.findElements(By.cssSelector(".slds-dropdown__list.cpq-item-actions-dropdown__list"));
-=======
-		driver.findElement(By
-				.xpath(".//*[@id='tab-default-1']/div[1]/ng-include/div/div/div/div[4]/div[2]/div/ng-include/div/div[2]/ng-include/div/div[1]/div/div[2]/div[11]"))
-				.click();
-		List<WebElement> lista = driver
-				.findElements(By.cssSelector(".slds-dropdown__list.cpq-item-actions-dropdown__list"));
->>>>>>> master
 		// System.out.println(lista.size());
 		lista.get(1).click();
 		sleep(3000);
-		List<WebElement> todos = driver
-				.findElements(By.cssSelector(
-						".slds-form_stacked.ng-pristine.ng-untouched.ng-valid.vlocity-dynamic-form.ng-valid-required.ng-valid-step"))
-				.get(1).findElements(By.className("slds-form-element"));
-		((JavascriptExecutor) driver).executeScript(
-				"window.scrollTo(0," + driver.findElement(By.className("slds-section")).getLocation().y + " )");
+		List<WebElement> todos = driver.findElements(By.cssSelector(".slds-form_stacked.ng-pristine.ng-untouched.ng-valid.vlocity-dynamic-form.ng-valid-required.ng-valid-step")).get(1).findElements(By.className("slds-form-element"));
+		((JavascriptExecutor) driver).executeScript("window.scrollTo(0," + driver.findElement(By.className("slds-section")).getLocation().y + " )");
 		for (WebElement uno : todos) {
 			if (uno.findElement(By.tagName("label")).getText().equalsIgnoreCase("ICCID")) {
 				uno.click();
@@ -1890,20 +1720,11 @@ public class OM {
 				uno.findElement(By.tagName("input")).submit();
 				break;
 			}
-
 		}
-
 		sleep(5000);
 		// driver.switchTo().defaultContent();
-<<<<<<< HEAD
 		driver.findElement(By.xpath("/html/body/div[1]/div[1]/ng-include/div/div[2]/div[2]/div[3]/div/div/ng-include/div/div[1]/div/button")).click();
-=======
-		driver.findElement(By
-				.xpath("/html/body/div[1]/div[1]/ng-include/div/div[2]/div[2]/div[3]/div/div/ng-include/div/div[1]/div/button"))
-				.click();
->>>>>>> master
 		sleep(5000);
-
 	}
 
 	public void configuracion(String Linea, String ICCID, String IMSI, String KI) {
@@ -1912,20 +1733,17 @@ public class OM {
 		sleep(4000);
 		driver.findElement(By.xpath(".//*[@id='tab-default-1']/div/ng-include//div[10]//button")).click();
 		sleep(2000);
-		List<WebElement> list = driver
-				.findElements(By.cssSelector(".slds-dropdown__item.cpq-item-actions-dropdown__item"));
+		List<WebElement> list = driver.findElements(By.cssSelector(".slds-dropdown__item.cpq-item-actions-dropdown__item"));
 		// System.out.println(list.size());
 		list.get(2).click();
 		agregarNumerodeLinea(Linea);
 		SimCard(ICCID, IMSI, KI);
 		driver.findElement(By.id("-import-btn")).click();
 		sleep(5000);
-
 	}
 
 	public void agregarNumerodeLinea(String Linea) {
-		WebElement NumerodeLinea = driver.findElement(
-				By.xpath("//*[@id=\"js-cpq-product-cart-config-form\"]/div[1]/div/form/div[2]/div[1]/input"));
+		WebElement NumerodeLinea = driver.findElement(By.xpath("//*[@id=\"js-cpq-product-cart-config-form\"]/div[1]/div/form/div[2]/div[1]/input"));
 		driver.switchTo().defaultContent();
 		NumerodeLinea.click();
 		// NumerodeLinea.sendKeys("3413103661");
@@ -1933,13 +1751,7 @@ public class OM {
 		NumerodeLinea.submit();
 		sleep(8000);
 		// driver.switchTo().defaultContent();
-<<<<<<< HEAD
 		driver.findElement(By.xpath("/html/body/div[1]/div[1]/ng-include/div/div[2]/div[2]/div[3]/div/div/ng-include/div/div[1]/div/button")).click();
-=======
-		driver.findElement(By
-				.xpath("/html/body/div[1]/div[1]/ng-include/div/div[2]/div[2]/div[3]/div/div/ng-include/div/div[1]/div/button"))
-				.click();
->>>>>>> master
 		sleep(5000);
 	}
 
@@ -1949,16 +1761,13 @@ public class OM {
 		DateFormat dateFormat = new SimpleDateFormat("MM-dd-yyyy");
 		driver.findElement(By.id("RequestDate")).sendKeys(dateFormat.format(fechaAvanzada()));
 		// driver.findElement(By.id("RequestDate")).sendKeys("06-15-2018");
-
 		// click Next
 		WebElement next = driver.findElement(By.cssSelector(".form-control.btn.btn-primary.ng-binding"));
 		next.click();
 		sleep(35000);
-
 		// Click ViewRecord
 		driver.findElement(By.id("-import-btn")).click();
 		sleep(8000);
-
 		// click en goto list en (TA Price Book)
 		WebElement goToList = driver.findElement(By.className("pShowMore")).findElements(By.tagName("a")).get(1);
 		sleep(500);
@@ -1966,18 +1775,14 @@ public class OM {
 		sleep(500);
 		goToList.click();
 		sleep(10000);
-
 		// Cambiar Cuenta en Servicios
 		cambioDeCuentaServicios("CambioDeTitularidad");
-
 		// Click para retonar a la orden
 		driver.findElement(By.className("ptBreadcrumb")).findElement(By.tagName("a")).click();
 		sleep(7000);
-
 		// Editamos Orden
 		cambiarCuentaYGestionEnOrden(CuentaNueva, "Cambio de titularidad");
 		sleep(5000);
-
 		// Finalizamos el proceso con TA SUBMIT ORDER
 		driver.findElement(By.name("ta_submit_order")).click();
 		sleep(45000);
@@ -1992,19 +1797,15 @@ public class OM {
 
 	public void irAUltimoAssetSegunCuentaEnVista(String Vista) {
 		selectVistaByVisibleText(Vista);
-
 		// Selecciona la primera cuenta de la lista en la vista seleccionada
 		WebElement primeraCuenta = driver.findElement(By.cssSelector(".x-grid3-col.x-grid3-cell.x-grid3-td-SALES_ACCOUNT_NAME"));
 		primeraCuenta.findElement(By.tagName("div")).findElement(By.tagName("a")).click();
 		sleep(5000);
-
 		BasePage frame = new BasePage(driver);
 		driver.switchTo().frame(frame.getFrameForElement(driver, By.cssSelector(".panel.panel-default.panel-assets")));
-
 		// Selecciona el ultimo asset
 		List<WebElement> assets = driver.findElement(By.cssSelector(".panel.panel-default.panel-assets")).findElements(By.cssSelector(".root-asset.ng-scope"));
 		assets.get(assets.size() - 1).findElement(By.className("p-check")).click();
-
 		// click en boton
 		WebElement changeToOrder = driver.findElement(By.className("asset-action")).findElement(By.xpath("//button[2]"));
 		changeToOrder.click();
@@ -2019,22 +1820,18 @@ public class OM {
 			List<WebElement> wTd = wAux.findElements(By.tagName("td"));
 			wColumn.add(wTd.get(iColumn));
 		}
-
 		return wColumn;
 	}
 
 	public void suspencionPorSiniestro(String sCuenta, String sPlan) throws InterruptedException {
 		OM oOM = new OM(driver);
 		oOM.Gestion_Alta_De_Linea(sCuenta, sPlan);
-
 		sleep(5000);
 		oOM.irAChangeToOrder();
-
 		sleep(10000);
 		DateFormat dateFormat = new SimpleDateFormat("MM-dd-yyyy");
 		driver.findElement(By.id("RequestDate")).sendKeys(dateFormat.format(oOM.fechaAvanzada()));
 		driver.findElement(By.cssSelector(".form-control.btn.btn-primary.ng-binding")).click();
-
 		sleep(10000);
 		List<WebElement> wTopRightButtons = driver.findElements(By.id("-import-btn"));
 		for (WebElement wAux : wTopRightButtons) {
@@ -2042,21 +1839,15 @@ public class OM {
 				wAux.click();
 			}
 		}
-
 		sleep(5000);
 		driver.findElement(By.id("topButtonRow")).findElement(By.name("edit")).click();
-
 		Select sSelectDropdown = new Select(driver.findElement(By.id("00Nc0000002IvyM")));
 		sSelectDropdown.selectByVisibleText("Suspension");
-
 		driver.findElement(By.id("topButtonRow")).findElement(By.name("save")).click();
-
 		sleep(5000);
 		oOM.SuspenderProductos();
-
 		sleep(10000);
 		// driver.findElement(By.id("Order_ileinner")).click();
-
 		WebElement wTopButtonRow = driver.findElement(By.id("topButtonRow"));
 		List<WebElement> wTopButtonRowButtons = wTopButtonRow.findElements(By.tagName("input"));
 		for (WebElement wAux : wTopButtonRowButtons) {
@@ -2082,20 +1873,13 @@ public class OM {
 		sleep(7000);
 		driver.findElement(By.xpath(".//*[@id='tab-default-1']/div/ng-include//div[10]//button")).click();
 		sleep(2000);
-		List<WebElement> list = driver
-				.findElements(By.cssSelector(".slds-dropdown__item.cpq-item-actions-dropdown__item"));
+		List<WebElement> list = driver.findElements(By.cssSelector(".slds-dropdown__item.cpq-item-actions-dropdown__item"));
 		list.get(2).click();
 		OM.agregarNumerodeLinea();
 		OM.SimCard();
 		driver.findElements(By.cssSelector(".slds-button.slds-button_icon-small")).get(1).click();
 		sleep(7000);
-<<<<<<< HEAD
-		driver.findElement(By.xpath("//*[@id=\"tab-default-1\"]/div[1]/ng-include/div/div/div/div[4]/div[2]/div/ng-include/div/div[2]/ng-include/div/div[3]/div/div[3]/div/div/ng-include/div/div[2]/ng-include/div/div[1]/div/div[2]/div[2]/div/div/input"))
-=======
-		driver.findElement(By
-				.xpath("//*[@id=\"tab-default-1\"]/div[1]/ng-include/div/div/div/div[4]/div[2]/div/ng-include/div/div[2]/ng-include/div/div[3]/div/div[3]/div/div/ng-include/div/div[2]/ng-include/div/div[1]/div/div[2]/div[2]/div/div/input"))
->>>>>>> master
-				.sendKeys("1");
+		driver.findElement(By.xpath("//*[@id=\"tab-default-1\"]/div[1]/ng-include/div/div/div/div[4]/div[2]/div/ng-include/div/div[2]/ng-include/div/div[3]/div/div[3]/div/div/ng-include/div/div[2]/ng-include/div/div[1]/div/div[2]/div[2]/div/div/input")).sendKeys("1");
 		sleep(10000);
 		driver.findElement(By.id("-import-btn")).click();
 		sleep(5000);
@@ -2128,8 +1912,7 @@ public class OM {
 		sleep(10000);
 	}
 
-	public void Gestion_Alta_De_Linea_Con_1_Servicio(String Cuenta, String Plan, String Servicio)
-			throws InterruptedException {
+	public void Gestion_Alta_De_Linea_Con_1_Servicio(String Cuenta, String Plan, String Servicio) throws InterruptedException {
 		OMQPage OM = new OMQPage(driver);
 		crearOrden(Cuenta);
 		assertTrue(driver.findElement(By.cssSelector(".noSecondHeader.pageType")).isDisplayed());
@@ -2176,7 +1959,6 @@ public class OM {
 		driver.findElement(By.id("accid_ileinner")).findElement(By.tagName("a")).click();
 		sleep(10000);
 		// pageOm.irAChangeToOrder();
-
 	}
 
 	public void Alta_de_linea_con_Pack(String Cuenta, String Plan, String Pack) throws InterruptedException {
@@ -2199,7 +1981,6 @@ public class OM {
 		agregarNumerodeLinea();
 		SimCard();
 		driver.findElement(By.cssSelector(".slds-button.cpq-item-has-children")).click();
-		sleep (8000);
 		agregarPack("Packs Opcionales", "Packs de Datos", Pack, "", "");
 		// Click ViewRecord
 		sleep(8000);
@@ -2227,51 +2008,21 @@ public class OM {
 		} catch (java.lang.IndexOutOfBoundsException ex1) {
 		}
 		sleep(12000);
-		completarFlujoOrquestacion();
 	}
 
-	public void verificacionDeCamposEnviadosenelRequest(String S203) throws Exception {
-
-		OMQPage OM = new OMQPage(driver);
-		driver.findElement(By.name("vlocity_cmt__vieworchestrationplan")).click();
-		sleep(10000);
-		int i = 1;
-		boolean zoom = false;
-		while (zoom == false) {
-
+	public void verificacionDeCamposEnviadosenelRequest(String S203, String envio, String S326) throws Exception {
+		// driver.findElement(By.name("vlocity_cmt__vieworchestrationplan")).click();
+		boolean chiqui = false;
+		while (chiqui == false) {
 			try {
 				driver.findElement(By.id("zoomOut")).click();
 			} catch (Exception ex1) {
-				zoom = true;
+				chiqui = true;
 				driver.findElement(By.id("zoomIn")).click();
 				break;
 			}
-
 		}
 		sleep(10000);
-<<<<<<< HEAD
-		
-		
-		List <WebElement> cajasVerdes = driver.findElements(By.cssSelector(".item-header.item-completed"));//(".item-label.item-header"));
-		for (WebElement x : cajasVerdes) { 
-			if (x.getText().contains(S203)) {
-				System.out.println(S203);
-				x.click();
-				break;
-				
-			}
-		}
-			sleep(10000);
-			ArrayList<String> tabs = new ArrayList<String> (driver.getWindowHandles());
-			driver.switchTo().window(tabs.get(1));
-			OM.buscarYClick(driver.findElements(By.className("slds-tabs--scoped__link")), "equals", "children");
-   
-		
-			sleep(4000);
-			driver.findElement(By.xpath(".//*[@id='bodyCell']//table/tbody/tr/td[3]//a")).click();
-			sleep(4000);								
-			WebElement verirequest = driver.findElement(By.xpath(".//*[@id='bodyCell']//table/tbody/tr[2]/td//json-value/pre"));
-=======
 		List<WebElement> cajas = driver.findElements(By.cssSelector(".item-label-container.item-header.item-failed"));
 		cajas.addAll(driver.findElements(By.cssSelector(".item-label-container.item-header.item-fatally-failed")));
 		cajas.addAll(driver.findElements(By.cssSelector(".item-label-container.item-header.item-running")));
@@ -2284,8 +2035,7 @@ public class OM {
 					cambiarVentanaNavegador(i);
 					// i++;
 					sleep(5000);
-					List<WebElement> botones = driver
-							.findElements(By.cssSelector(".slds-button.slds-button--neutral.ng-scope"));
+					List<WebElement> botones = driver.findElements(By.cssSelector(".slds-button.slds-button--neutral.ng-scope"));
 					for (WebElement UnB : botones) {
 						if (UnB.getText().equals("Complete")) {
 							UnB.click();
@@ -2296,31 +2046,24 @@ public class OM {
 							sleep(4000);
 							driver.findElement(By.xpath(".//*[@id='bodyCell']//table/tbody/tr/td[3]//a")).click();
 							sleep(4000);
-							WebElement verirequest = driver.findElement(
-									By.xpath(".//*[@id='bodyCell']//table/tbody/tr[2]/td//json-value/pre"));
-
+							WebElement verirequest = driver.findElement(By.xpath(".//*[@id='bodyCell']//table/tbody/tr[2]/td//json-value/pre"));
 							if (!requestValidator(verirequest)) {
 								throw new Exception("Fallo en la validacion de los campos del Json Request");
 							}
-
 							cambiarVentanaNavegador(0);
-
 							// return !infoProducto.isEmpty();
 							// sleep(4000);
 							break;
-
 						}
 					}
 				}
-
 				if (UnaC.getText().equalsIgnoreCase(envio)) {
 					UnaC.click();
 					sleep(5000);
 					cambiarVentanaNavegador(i);
 					// i++;
 					sleep(5000);
-					List<WebElement> botones = driver
-							.findElements(By.cssSelector(".slds-button.slds-button--neutral.ng-scope"));
+					List<WebElement> botones = driver.findElements(By.cssSelector(".slds-button.slds-button--neutral.ng-scope"));
 					for (WebElement UnB : botones) {
 						if (UnB.getText().equals("Complete")) {
 							UnB.click();
@@ -2331,15 +2074,13 @@ public class OM {
 						}
 					}
 				}
-
 				if (UnaC.getText().equalsIgnoreCase(S326)) {
 					UnaC.click();
 					sleep(5000);
 					cambiarVentanaNavegador(i);
 					// i++;
 					sleep(5000);
-					List<WebElement> botones = driver
-							.findElements(By.cssSelector(".slds-button.slds-button--neutral.ng-scope"));
+					List<WebElement> botones = driver.findElements(By.cssSelector(".slds-button.slds-button--neutral.ng-scope"));
 					for (WebElement UnB : botones) {
 						if (UnB.getText().equals("Complete")) {
 							UnB.click();
@@ -2350,67 +2091,46 @@ public class OM {
 						}
 					}
 				}
->>>>>>> master
-
-			if (OM.requestValidator(verirequest)) {
-				throw new Exception("Fallo en la validacion de los campos del Json Request");
-			}
+				sleep(10000);
 				cambiarVentanaNavegador(0);
+				sleep(10000);
 				closeAllOtherTabs();
-				sleep(5000);
-				driver.findElement(By.className("submit-button")).click();
-				sleep(6000);
-				cambiarVentanaNavegador(1);
-				sleep(5000);
-				closeAllOtherTabs();
-						
-
+				sleep(35000);
+				break;
+			}
+			cajas = driver.findElements(By.cssSelector(".item-label-container.item-header.item-failed"));
+			cajas.addAll(driver.findElements(By.cssSelector(".item-label-container.item-header.item-fatally-failed")));
+			cajas.addAll(driver.findElements(By.cssSelector(".item-label-container.item-header.item-running")));
 		}
-
-					
-		
-
-	
+		closeAllOtherTabs();
+		sleep(5000);
+		driver.findElement(By.className("submit-button")).click();
+		sleep(6000);
+		cambiarVentanaNavegador(1);
+		sleep(5000);
+		closeAllOtherTabs();
+	}
 
 	public boolean requestValidator(WebElement element) throws JSONException {
 		boolean validator = false;
-
 		JSONObject obj = new JSONObject(element.getText());
-
-<<<<<<< HEAD
-		//Esto valida que el codigo de suscricion no este vacio
-		String regexValidator = "\\w{8}-\\w{4}-\\w{4}-\\w{4}-\\w{12}";
-		validator = obj.getJSONObject("suscriptor").getString("codSuscripcion").matches(regexValidator);//isEmpty();
-		System.out.println("codSuscripcion: " + validator);
-=======
 		// Esto valida que e; codigp de suscri[tor este
 		validator = !obj.getJSONObject("suscriptor").getString("codSuscripcion").isEmpty();
->>>>>>> master
-
 		// Estpo valida que la lista de datos adicioneles esten los datos de
 		// valorpametro y nombreparametro
 		if (validator) {
-
-			JSONArray listaDatosAdicionales = obj.getJSONObject("suscriptor").getJSONObject("infoSuscriptor")
-					.getJSONObject("infoBasicaSuscriptor").getJSONArray("listaDatosAdicionales");
+			JSONArray listaDatosAdicionales = obj.getJSONObject("suscriptor").getJSONObject("infoSuscriptor").getJSONObject("infoBasicaSuscriptor").getJSONArray("listaDatosAdicionales");
 			// System.out.println(listaDatosAdicionales.getJSONObject(1).get("valorParametro"));
-
 			for (int i = 0; i < listaDatosAdicionales.length(); i++) {
-				if (!listaDatosAdicionales.getJSONObject(i).getString("valorParametro"). isEmpty()
-						&& !listaDatosAdicionales.getJSONObject(i).getString("nombreParametro").isEmpty()) {
-					System.out.println("valorParametro: " + listaDatosAdicionales);
-					System.out.println("nombreParametro: " + listaDatosAdicionales);
+				if (!listaDatosAdicionales.getJSONObject(i).getString("valorParametro").isEmpty() && !listaDatosAdicionales.getJSONObject(i).getString("nombreParametro").isEmpty()) {
 					validator = true;
 				} else {
 					return false;
 				}
 			}
 		}
-		
 		if (validator) {
-			JSONArray listaIdentificacionSuscriptor = obj.getJSONObject("suscriptor").getJSONObject("infoSuscriptor")
-					.getJSONArray("listaIdentificacionSuscriptor");
-
+			JSONArray listaIdentificacionSuscriptor = obj.getJSONObject("suscriptor").getJSONObject("infoSuscriptor").getJSONArray("listaIdentificacionSuscriptor");
 			for (int i = 0; i < listaIdentificacionSuscriptor.length(); i++) {
 				if (!listaIdentificacionSuscriptor.getJSONObject(i).getString("identificadorRecurso").isEmpty()) {
 					validator = true;
@@ -2419,9 +2139,7 @@ public class OM {
 				}
 			}
 			JSONObject modoPagoSecundario = obj.getJSONObject("suscriptor").getJSONObject("modoPagoSecundario");
-			validator = !modoPagoSecundario.getString("idCuenta").isEmpty()
-					&& !modoPagoSecundario.getString("idRelacionPago").isEmpty();
-
+			validator = !modoPagoSecundario.getString("idCuenta").isEmpty() && !modoPagoSecundario.getString("idRelacionPago").isEmpty();
 		}
 		return validator;
 	}
@@ -2470,13 +2188,11 @@ public class OM {
 		List<WebElement> Productos = new ArrayList<WebElement>();
 		do {
 			try {
-				cc.obligarclick(driver.findElement(By.cssSelector(".listRelatedObject.orderBlock"))
-						.findElement(By.className("pShowMore")).findElement(By.tagName("a")));
+				cc.obligarclick(driver.findElement(By.cssSelector(".listRelatedObject.orderBlock")).findElement(By.className("pShowMore")).findElement(By.tagName("a")));
 				sleep(5000);
 			} catch (Exception ex1) {
 			}
-			Productos = driver.findElement(By.cssSelector(".listRelatedObject.orderBlock"))
-					.findElement(By.className("pbBody")).findElements(By.tagName("tr"));
+			Productos = driver.findElement(By.cssSelector(".listRelatedObject.orderBlock")).findElement(By.className("pbBody")).findElements(By.tagName("tr"));
 			Productos.remove(0);
 			if (i < Productos.size()) {
 				cc.obligarclick(Productos.get(i).findElement(By.tagName("th")).findElement(By.tagName("a")));
@@ -2498,7 +2214,6 @@ public class OM {
 						esta = true;
 					}
 				}
-
 				esta = false;
 				campos = driver.findElement(By.className("detailList")).findElements(By.tagName("td"));
 				for (WebElement UnC : campos) {
@@ -2527,15 +2242,12 @@ public class OM {
 					if (UnC.getText().equalsIgnoreCase("provisioning status")) {
 						esta = true;
 					}
-
 				}
 				sleep(2000);
-
 				driver.findElement(By.id("topButtonRow")).findElement(By.tagName("input")).click();
 				sleep(3000);
 				cc.obligarclick(driver.findElement(By.id("Order_ileinner")).findElement(By.tagName("a")));
 				sleep(4000);
-
 				// SuspenderProductos(i++);
 			} else {
 				System.out.println("llegue aqui");
@@ -2550,13 +2262,11 @@ public class OM {
 		List<WebElement> Productos = new ArrayList<WebElement>();
 		do {
 			try {
-				cc.obligarclick(driver.findElement(By.cssSelector(".listRelatedObject.orderBlock"))
-						.findElement(By.className("pShowMore")).findElement(By.tagName("a")));
+				cc.obligarclick(driver.findElement(By.cssSelector(".listRelatedObject.orderBlock")).findElement(By.className("pShowMore")).findElement(By.tagName("a")));
 				sleep(5000);
 			} catch (Exception ex1) {
 			}
-			Productos = driver.findElement(By.cssSelector(".listRelatedObject.orderBlock"))
-					.findElement(By.className("pbBody")).findElements(By.tagName("tr"));
+			Productos = driver.findElement(By.cssSelector(".listRelatedObject.orderBlock")).findElement(By.className("pbBody")).findElements(By.tagName("tr"));
 			Productos.remove(0);
 			if (i < Productos.size()) {
 				cc.obligarclick(Productos.get(i).findElement(By.tagName("th")).findElement(By.tagName("a")));
@@ -2578,9 +2288,7 @@ public class OM {
 						esta = true;
 					}
 				}
-
 				sleep(2000);
-
 				driver.findElement(By.id("topButtonRow")).findElement(By.tagName("input")).click();
 				sleep(3000);
 				cc.obligarclick(driver.findElement(By.id("Order_ileinner")).findElement(By.tagName("a")));
@@ -2672,8 +2380,7 @@ public class OM {
 		// boton.findElement(By.cssSelector(".slds-button.slds-button_icon-border-filled.cpq-item-actions-dropdown-button")).click();
 		sleep(3000);
 		driver.switchTo().defaultContent();
-		List<WebElement> posibles = driver.findElement(By.name("productconfig"))
-				.findElements(By.className("slds-form-element"));
+		List<WebElement> posibles = driver.findElement(By.name("productconfig")).findElements(By.className("slds-form-element"));
 		for (WebElement UnP : posibles) {
 			if (UnP.findElement(By.tagName("label")).getText().equalsIgnoreCase("numero amigo")) {
 				UnP.click();
@@ -2691,9 +2398,7 @@ public class OM {
 		sleep(4000);
 		driver.findElement(By.cssSelector(".slds-button.cpq-item-has-children")).click();
 		sleep(5000);
-		List<WebElement> NomPest = driver.findElements(
-				By.xpath("//*[@class='cpq-item-product-child-level-1 cpq-item-child-product-name-wrapper']"));
-
+		List<WebElement> NomPest = driver.findElements(By.xpath("//*[@class='cpq-item-product-child-level-1 cpq-item-child-product-name-wrapper']"));
 		for (WebElement a : NomPest) {
 			System.out.print(a.getText().toLowerCase());
 			if (a.getText().toLowerCase().contains("friends&family")) {
@@ -2702,15 +2407,11 @@ public class OM {
 				break;
 			}
 		}
-
-		List<WebElement> subPack = driver
-				.findElement(By.cssSelector(".cpq-item-product-child-level-2.ng-not-empty.ng-valid"))
-				.findElements(By.cssSelector(".slds-button.cpq-item-has-children"));
+		List<WebElement> subPack = driver.findElement(By.cssSelector(".cpq-item-product-child-level-2.ng-not-empty.ng-valid")).findElements(By.cssSelector(".slds-button.cpq-item-has-children"));
 		subPack.get(0).click();
 		subPack.get(1).click();
 		sleep(3000);
-		List<WebElement> subAmigos = driver
-				.findElements(By.cssSelector(".cpq-item-product-child-level-3.ng-not-empty.ng-valid"));
+		List<WebElement> subAmigos = driver.findElements(By.cssSelector(".cpq-item-product-child-level-3.ng-not-empty.ng-valid"));
 		subAmigos.get(0).findElement(By.cssSelector(".slds-button.cpq-item-has-children")).click();
 		subAmigos.get(1).findElement(By.cssSelector(".slds-button.cpq-item-has-children")).click();
 		sleep(4000);
@@ -2727,9 +2428,7 @@ public class OM {
 				i = 1;
 			}
 			sleep(5000);
-			servAmigos.get(i).findElement(
-					By.cssSelector(".slds-button.slds-button_icon-border-filled.cpq-item-actions-dropdown-button"))
-					.click();
+			servAmigos.get(i).findElement(By.cssSelector(".slds-button.slds-button_icon-border-filled.cpq-item-actions-dropdown-button")).click();
 			sleep(2000);
 			List<WebElement> opc = servAmigos.get(i).findElement(By.cssSelector(".slds-dropdown.slds-dropdown_right.cpq-item-actions-dropdown")).findElements(By.tagName("a"));
 			for (WebElement UnaO : opc) {
@@ -2763,20 +2462,6 @@ public class OM {
 			}
 			agregarNumAmigo(servAmigos.get(i), num2);
 		}
-<<<<<<< HEAD
-	
-
-	
-	sleep(5000);
-	cc.obligarclick(subPack.get(0));
-	cc.obligarclick(subPack.get(1));
-	for(WebElement a: NomPest) {
-		System.out.print(a.getText().toLowerCase());
-		if (a.getText().toLowerCase().contains("friends&family")) {
-			a.findElement(By.tagName("button")).click();
-			sleep(8000);
-			break;
-=======
 		sleep(5000);
 		cc.obligarclick(subPack.get(0));
 		cc.obligarclick(subPack.get(1));
@@ -2787,40 +2472,15 @@ public class OM {
 				sleep(8000);
 				break;
 			}
->>>>>>> master
-		}
-
-	}
-<<<<<<< HEAD
-	
-}
-
-public void TodosLosServicios() {
-	sleep(4000);
-	driver.findElement(By.cssSelector(".slds-button.cpq-item-has-children")).click();
-	sleep(5000);
-	CustomerCare cc = new CustomerCare(driver);
-	List<WebElement> NomPest = driver.findElements(By.cssSelector(".cpq-item-product-child-level-1.cpq-item-child-product-name-wrapper"));
-	
-	for(WebElement a: NomPest) {
-		if (a.getText().toLowerCase().contains("servicios basicos general movil")) {
-			a.findElement(By.tagName("button")).click();
-			sleep(8000);
-			break;
 		}
 	}
-		NomPest = driver.findElements(By.className("cpq-item-base-product-details"));
-=======
 
 	public void TodosLosServicios() {
 		sleep(4000);
 		driver.findElement(By.cssSelector(".slds-button.cpq-item-has-children")).click();
 		sleep(5000);
 		CustomerCare cc = new CustomerCare(driver);
-		List<WebElement> NomPest = driver
-				.findElements(By.cssSelector(".cpq-item-product-child-level-1.cpq-item-child-product-name-wrapper"));
-
->>>>>>> master
+		List<WebElement> NomPest = driver.findElements(By.cssSelector(".cpq-item-product-child-level-1.cpq-item-child-product-name-wrapper"));
 		for (WebElement a : NomPest) {
 			if (a.getText().toLowerCase().contains("servicios basicos general movil")) {
 				a.findElement(By.tagName("button")).click();
@@ -2829,8 +2489,7 @@ public void TodosLosServicios() {
 			}
 			NomPest = driver.findElements(By.className("cpq-item-base-product-details"));
 			for (WebElement b : NomPest) {
-				if (b.getText().toLowerCase().contains("caller id")
-						&& !b.getText().toLowerCase().contains("servicios basicos general movil")) {
+				if (b.getText().toLowerCase().contains("caller id") && !b.getText().toLowerCase().contains("servicios basicos general movil")) {
 					System.out.println("Lo encontre");
 					List<WebElement> servicios = a.findElements(By.cssSelector(".slds-button.slds-button_neutral"));
 					System.out.println("Tam = " + servicios.size());
@@ -2849,13 +2508,7 @@ public void TodosLosServicios() {
 				}
 			}
 		}
-<<<<<<< HEAD
 		NomPest = driver.findElements(By.cssSelector(".cpq-item-product-child-level-1.cpq-item-child-product-name-wrapper"));
-		
-=======
-		NomPest = driver
-				.findElements(By.cssSelector(".cpq-item-product-child-level-1.cpq-item-child-product-name-wrapper"));
->>>>>>> master
 		for (WebElement a : NomPest) {
 			if (a.getText().toLowerCase().contains("servicios basicos general movil")) {
 				cc.obligarclick(a.findElement(By.tagName("button")));
@@ -2865,40 +2518,12 @@ public void TodosLosServicios() {
 		}
 	}
 
-<<<<<<< HEAD
-
-	
-
-public void Agregar_Varios_Packs(int packs) {
-	sleep(6000);
-	driver.findElement(By.cssSelector(".slds-button.cpq-item-has-children")).click();
-	sleep(5000);
-	CustomerCare cc = new CustomerCare(driver);
-	List<WebElement> NomPack = driver.findElements(By.xpath("//*[@class='cpq-item-product-child-level-1 cpq-item-child-product-name-wrapper']"));
-	WebElement x;
-	for(WebElement a: NomPack) {
-		if (a.getText().toLowerCase().contains("packs opcionales")) {
-			x=a;
-			a.findElement(By.tagName("button")).click();
-			sleep(8000);
-			break;
-		}
-	}
-	List<WebElement> subPack = driver.findElements(By.xpath("//*[@class='cpq-item-product-child-level-2 cpq-item-child-product-name-wrapper']"));
-	List<WebElement> Btnsubpack = driver.findElements(By.xpath("//*[@class='cpq-item-product-child-level-2 cpq-item-child-product-name-wrapper']//*[@class='slds-button slds-button_icon-small']"));			
-	if (subPack.size() == Btnsubpack.size()) {
-		for(WebElement b: subPack) {
-			sleep(8000);
-			System.out.println(b.getText());
-			b.findElement(By.tagName("button")).click();
-=======
 	public void Agregar_Varios_Packs(int packs) {
 		sleep(6000);
 		driver.findElement(By.cssSelector(".slds-button.cpq-item-has-children")).click();
 		sleep(5000);
 		CustomerCare cc = new CustomerCare(driver);
-		List<WebElement> NomPack = driver.findElements(
-				By.xpath("//*[@class='cpq-item-product-child-level-1 cpq-item-child-product-name-wrapper']"));
+		List<WebElement> NomPack = driver.findElements(By.xpath("//*[@class='cpq-item-product-child-level-1 cpq-item-child-product-name-wrapper']"));
 		WebElement x;
 		for (WebElement a : NomPack) {
 			if (a.getText().toLowerCase().contains("packs opcionales")) {
@@ -2908,25 +2533,18 @@ public void Agregar_Varios_Packs(int packs) {
 				break;
 			}
 		}
-		List<WebElement> subPack = driver.findElements(
-				By.xpath("//*[@class='cpq-item-product-child-level-2 cpq-item-child-product-name-wrapper']"));
-		List<WebElement> Btnsubpack = driver.findElements(By.xpath(
-				"//*[@class='cpq-item-product-child-level-2 cpq-item-child-product-name-wrapper']//*[@class='slds-button slds-button_icon-small']"));
+		List<WebElement> subPack = driver.findElements(By.xpath("//*[@class='cpq-item-product-child-level-2 cpq-item-child-product-name-wrapper']"));
+		List<WebElement> Btnsubpack = driver.findElements(By.xpath("//*[@class='cpq-item-product-child-level-2 cpq-item-child-product-name-wrapper']//*[@class='slds-button slds-button_icon-small']"));
 		if (subPack.size() == Btnsubpack.size()) {
 			for (WebElement b : subPack) {
 				sleep(8000);
 				System.out.println(b.getText());
 				b.findElement(By.tagName("button")).click();
 			}
-
->>>>>>> master
 		}
-
 		// subtablas
-		List<WebElement> Pack = driver.findElements(By.xpath(
-				"//*[@class='cpq-item-product-child-level-3 ng-not-empty ng-valid']//*[@class='cpq-item-no-children']"));
-		List<WebElement> Agregar = driver.findElements(By.xpath(
-				"//*[@class='cpq-item-product-child-level-3 ng-not-empty ng-valid']//*[@class='slds-button slds-button_neutral']"));
+		List<WebElement> Pack = driver.findElements(By.xpath("//*[@class='cpq-item-product-child-level-3 ng-not-empty ng-valid']//*[@class='cpq-item-no-children']"));
+		List<WebElement> Agregar = driver.findElements(By.xpath("//*[@class='cpq-item-product-child-level-3 ng-not-empty ng-valid']//*[@class='slds-button slds-button_neutral']"));
 		if (Pack.size() == Agregar.size()) {
 			for (int i = 0; i < packs; i++) {
 				sleep(8000);
@@ -2944,8 +2562,7 @@ public void Agregar_Varios_Packs(int packs) {
 		}
 	}
 
-	public void Gestion_Alta_De_Linea_Con_Todos_Los_Servicios(String Cuenta, String Plan, String Linea, String ICCID,
-			String IMSI, String KI, String Pestana) throws InterruptedException {
+	public void Gestion_Alta_De_Linea_Con_Todos_Los_Servicios(String Cuenta, String Plan, String Linea, String ICCID, String IMSI, String KI, String Pestana) throws InterruptedException {
 		OMQPage OM = new OMQPage(driver);
 		crearOrden(Cuenta);
 		assertTrue(driver.findElement(By.cssSelector(".noSecondHeader.pageType")).isDisplayed());
@@ -2988,11 +2605,9 @@ public void Agregar_Varios_Packs(int packs) {
 		driver.findElement(By.id("accid_ileinner")).findElement(By.tagName("a")).click();
 		sleep(10000);
 		// pageOm.irAChangeToOrder();
-
 	}
 
-	public void Gestion_Alta_De_Linea_Con_Amigos(String Cuenta, String Plan, String Servicio, String Num1, String Num2)
-			throws InterruptedException {
+	public void Gestion_Alta_De_Linea_Con_Amigos(String Cuenta, String Plan, String Servicio, String Num1, String Num2) throws InterruptedException {
 		OMQPage OM = new OMQPage(driver);
 		OM Pom = new OM(driver);
 		Pom.crearOrden(Cuenta);
@@ -3029,15 +2644,13 @@ public void Agregar_Varios_Packs(int packs) {
 			driver.findElement(By.id("idlist")).click();
 			sleep(5000);
 			cambiarVentanaNavegador(0);
-		} catch (java.lang.IndexOutOfBoundsException ex1) {
-		}
+		} catch (java.lang.IndexOutOfBoundsException ex1) {}
 		sleep(12000);
 		completarFlujoOrquestacion();
 		sleep(5000);
 		driver.findElement(By.id("accid_ileinner")).findElement(By.tagName("a")).click();
 		sleep(10000);
 		// pageOm.irAChangeToOrder();
-
 	}
 
 	public void buscarOrdenPorNumero(String sOrderNumber) {
@@ -3048,17 +2661,13 @@ public void Agregar_Varios_Packs(int packs) {
 				wAux.click();
 			}
 		}
-
 		driver.findElement(By.id("fname")).sendKeys("OM_View_Delete");
-
 		Select sSelectDropdown = new Select(driver.findElement(By.id("fcol1")));
 		sSelectDropdown.selectByVisibleText("Order Number");
 		sSelectDropdown = new Select(driver.findElement(By.id("fop1")));
 		sSelectDropdown.selectByVisibleText("equals");
 		driver.findElement(By.id("fval1")).sendKeys(sOrderNumber);
-
 		driver.findElement(By.name("save")).click();
-
 		sleep(5000);
 		OM oOM = new OM(driver);
 		WebElement wBody = driver.findElement(By.id("ext-gen10"));
@@ -3068,8 +2677,7 @@ public void Agregar_Varios_Packs(int packs) {
 		oOM.traerElementoColumna(wBody, 2).get(0).findElement(By.tagName("a")).click();
 	}
 
-	public void Gestion_Alta_De_Linea_Completa(String Cuenta, String Plan, String Linea, String ICCID, String IMSI,
-			String KI, String ToN, int CantPac, String AmiVoz, String AmiSms) throws InterruptedException {
+	public void Gestion_Alta_De_Linea_Completa(String Cuenta, String Plan, String Linea, String ICCID, String IMSI, String KI, String ToN, int CantPac, String AmiVoz, String AmiSms) throws InterruptedException {
 		OMQPage OM = new OMQPage(driver);
 		crearOrden(Cuenta);
 		assertTrue(driver.findElement(By.cssSelector(".noSecondHeader.pageType")).isDisplayed());
@@ -3081,7 +2689,6 @@ public void Agregar_Varios_Packs(int packs) {
 		sleep(10000);
 		driver.switchTo().defaultContent();
 		sleep(4000);
-
 		if (CantPac > 0) {
 			Agregar_Varios_Packs(CantPac);
 			sleep(5000);
@@ -3099,7 +2706,6 @@ public void Agregar_Varios_Packs(int packs) {
 			driver.findElement(By.cssSelector(".slds-button.cpq-item-has-children")).click();
 			sleep(4000);
 		}
-
 		configuracion(Linea, ICCID, IMSI, KI);
 		AgregarDomicilio();
 		sleep(5000);
@@ -3121,15 +2727,13 @@ public void Agregar_Varios_Packs(int packs) {
 			driver.findElement(By.id("idlist")).click();
 			sleep(5000);
 			cambiarVentanaNavegador(0);
-		} catch (java.lang.IndexOutOfBoundsException ex1) {
-		}
+		} catch (java.lang.IndexOutOfBoundsException ex1) {}
 		sleep(12000);
 		completarFlujoOrquestacion();
 		sleep(5000);
 		driver.findElement(By.id("accid_ileinner")).findElement(By.tagName("a")).click();
 		sleep(10000);
 		// pageOm.irAChangeToOrder();
-
 	}
 
 	public boolean request(WebElement element, String request) throws JSONException {
@@ -3143,162 +2747,4 @@ public void Agregar_Varios_Packs(int packs) {
 		}
 		return verificacion;
 	}
-	
-	public void completarFlujoOrquestacionHasta(int iSecciones, int iCajas, String sNombre) {
-		//*[contains(text(),'Actualizando los inventarios')]//../parent::div//../parent::div//../parent::div
-		//*[contains(@id, 'ctl00_btnAircraftMapCell')]//*[contains(@title, 'Select Seat')]
-		int iAuxCajas = iCajas;
-		int iAuxSecciones = iSecciones;
-		List<WebElement> wCanvas = new ArrayList<WebElement>();
-		while (iAuxCajas != 0) {
-			iAuxSecciones++;
-			iAuxCajas--;
-			String sXpath = "//*[@id='canvas']/div[" + iAuxSecciones + "]";
-			wCanvas.add(driver.findElement(By.xpath(sXpath)));
-		}
-		
-		boolean chiqui = false;
-		while (chiqui == false) {
-
-			try {
-				driver.findElement(By.id("zoomOut")).click();
-			} catch (Exception ex1) {
-				chiqui = true;
-				driver.findElement(By.id("zoomIn")).click();
-				break;
-			}
-
-		}
-		sleep(10000);
-		
-		List<WebElement> cajas = new ArrayList<WebElement>();
-		for (WebElement wAux : wCanvas) {
-			try {
-				cajas.add(wAux.findElement(By.cssSelector(".item-label-container.item-header.item-failed")));
-			}
-			catch (Exception ex) {
-				//Empty
-			}
-		}
-		for (WebElement wAux : wCanvas) {
-			try {
-				cajas.add(wAux.findElement(By.cssSelector(".item-label-container.item-header.item-fatally-failed")));
-			}
-			catch (Exception ex) {
-				//Empty
-			}
-		}
-		for (WebElement wAux : wCanvas) {
-			try {
-				cajas.add(wAux.findElement(By.cssSelector(".item-label-container.item-header.item-running")));
-			}
-			catch (Exception ex) {
-				//Empty
-			}
-		}
-		
-		int i = 1;
-		while (cajas.size() > 0) {
-			for (WebElement UnaC : cajas) {
-				try {
-					if (UnaC.findElement(By.className("item-body-text")).getText().contains(sNombre)) {
-						for (int e = 0; e < cajas.size(); e++) {
-							cajas.remove(e);
-						}
-						break;
-					}
-				}
-				catch (Exception ex){
-					//Emtpy
-				}
-				UnaC.findElement(By.tagName("div")).click();
-				sleep(5000);
-				cambiarVentanaNavegador(i);
-				//i++;
-				sleep(5000);
-				List<WebElement> botones = driver.findElements(By.cssSelector(".slds-button.slds-button--neutral.ng-scope"));
-				for (WebElement UnB : botones) {
-					if (UnB.getText().equals("Complete")) {
-						UnB.click();
-						sleep(4000);
-						System.out.println("Hizo click");
-						break;
-					}
-				}
-				sleep(10000);
-				cambiarVentanaNavegador(0);
-				sleep(10000);
-				closeAllOtherTabs();
-				sleep(35000);
-				break;
-			}
-			for (int e = 0; e < wCanvas.size(); e++) {
-				wCanvas.remove(e);
-			}
-			for (int e = 0; e < cajas.size(); e++) {
-				cajas.remove(e);
-			}
-			
-			iAuxCajas = iCajas;
-			iAuxSecciones = iSecciones;
-			while (iAuxCajas != 0) {
-				iAuxSecciones++;
-				iAuxCajas--;
-				String sXpath = "//*[@id='canvas']/div[" + iAuxSecciones + "]";
-				wCanvas.add(driver.findElement(By.xpath(sXpath)));
-			}
-			//int iPosicion = 0;
-			/*while (iAuxCajas != 0) {
-				iAuxSecciones++;
-				iAuxCajas--;
-				String sXpath = "//*[@id='canvas']/div[" + iAuxSecciones + "]";
-				wCanvas.set(iPosicion, driver.findElement(By.xpath(sXpath)));
-				iPosicion++;
-			}*/
-			
-			//int iPosicionCaja = 0;
-			for (WebElement wAux : wCanvas) {
-				try {
-					wAux.findElement(By.cssSelector(".item-label-container.item-header.item-failed"));
-					cajas.add(wAux);
-					//cajas.set(iPosicionCaja, wAux);
-					//iPosicionCaja++;
-				}
-				catch (Exception ex) {
-					//Empty
-				}
-			}
-			for (WebElement wAux : wCanvas) {
-				try {
-					wAux.findElement(By.cssSelector(".item-label-container.item-header.item-fatally-failed"));
-					cajas.add(wAux);
-					//cajas.set(iPosicionCaja, wAux);
-					//iPosicionCaja++;
-				}
-				catch (Exception ex) {
-					//Empty
-				}
-			}
-			for (WebElement wAux : wCanvas) {
-				try {
-					wAux.findElement(By.cssSelector(".item-label-container.item-header.item-running"));
-					cajas.add(wAux);
-					//cajas.set(iPosicionCaja, wAux);
-					//iPosicionCaja++;
-				}
-				catch (Exception ex) {
-					//Empty
-				}
-			}
-			
-		}
-		closeAllOtherTabs();
-		sleep(5000);
-		driver.findElement(By.className("submit-button")).click();
-		sleep(6000);
-		cambiarVentanaNavegador(1);
-		sleep(5000);
-		closeAllOtherTabs();
-	}
-	
 }
