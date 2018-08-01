@@ -24,9 +24,6 @@ public class ContactSearch extends BasePage {
 
 	@FindBy(how = How.CSS, using = ".slds-radio--faux.ng-scope")
 	private List<WebElement> gender;
-
-	@FindBy(how = How.ID, using = "ContactInfo_nextBtn")
-	private WebElement next;
 	
 	@FindBy(how = How.ID, using = "FirstName")
 	private WebElement nombre;
@@ -36,6 +33,9 @@ public class ContactSearch extends BasePage {
 	
 	@FindBy(how = How.ID, using = "Birthdate")
 	private WebElement fNac;
+
+	@FindBy(how = How.ID, using = "ContactInfo_nextBtn")
+	private WebElement next;
 
 	@FindBy(how = How.CSS, using = ".vlc-slds-button--tertiary.ng-binding.ng-scope")
 	private WebElement cancel;
@@ -102,7 +102,7 @@ public class ContactSearch extends BasePage {
 	public void ingresarMail(String mail, String continuar) {
 		driver.findElement(By.cssSelector(".slds-input.form-control.ng-pristine.ng-untouched.ng-valid.ng-empty")).click();
 		try {Thread.sleep(2000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
-		driver.findElement(By.id("EmailSelectableItems")).findElement(By.tagName("input")).sendKeys(mail);
+		driver.findElement(By.xpath("//*[@id=\"EmailSelectableItems\"]/div/ng-include/div/ng-form/div[1]/div[1]/input")).sendKeys(mail);
 		switch (continuar) {
 		case "si":
 			try {Thread.sleep(2000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
@@ -115,7 +115,6 @@ public class ContactSearch extends BasePage {
 	}
 	
 	public void tipoValidacion(String tipoValidacion) {
-		sleep(8000);
 		switch (tipoValidacion) {
 		case "documento":
 			List<WebElement> valdni = driver.findElements(By.cssSelector(".slds-form-element__label.ng-binding"));
@@ -192,7 +191,6 @@ public class ContactSearch extends BasePage {
 		}
 		try {Thread.sleep(7000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 	}
-	
 	public void Llenar_Contacto(String sNom, String sAp, String sFN ) {
 		nombre.sendKeys(sNom);
 		apellido.sendKeys(sAp);
