@@ -917,4 +917,20 @@ try{	driver.findElement(By.id("alert-ok-button")).click();	} catch (NoSuchElemen
 			try {Thread.sleep(3000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 			driver.findElement(By.id("ShippingAddressData_nextBtn")).click();
 		 }
+		
+		public void cerrarPestaniaGestion(WebDriver driver) {
+			List<WebElement> pestas = driver.findElements(By.className("x-tab-strip-closable"));
+			//System.out.println(driver.findElement(By.cssSelector(".x-tab-strip-closable.x-tab-strip-active")).getText());
+			pestas.addAll(driver.findElements(By.cssSelector(".x-tab-strip-closable.x-tab-strip-active")));
+			for (WebElement UnB : pestas) {
+				try {
+				System.out.println(UnB.getText());
+				//if(UnB.getText().equalsIgnoreCase("gesti\u00f3n de clientes")) {
+					((JavascriptExecutor) driver).executeScript("arguments[0].click();", UnB.findElement(By.className("x-tab-strip-close")));	
+					sleep(2000);
+					//break;
+				//}
+				}catch(Exception ex1) {} 
+			}
+		}
  }
