@@ -22,7 +22,6 @@ import org.testng.annotations.BeforeClass;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
-import Pages.Accounts;
 import Pages.BasePage;
 import Pages.BillSimulation;
 import Pages.ContactSearch;
@@ -49,15 +48,10 @@ public class Sales2 extends TestBase{
 	}
 	
 	//@AfterMethod(alwaysRun=true)
-	public void deslogin(){
-		sleep(2000);
-		SalesBase SB = new SalesBase(driver);
-		driver.switchTo().defaultContent();
-		sleep(6000);
-		SB.cerrarPestaniaGestion(driver);
-		
-		sleep(5000);
-
+	public void deslogin() {
+		sleep(3000);
+		driver.get("https://crm--sit.cs14.my.salesforce.com/home/home.jsp?tsid=02u41000000QWha/");
+		sleep(10000);
 	}
 		
 	@BeforeClass(alwaysRun=true)

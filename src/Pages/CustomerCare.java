@@ -1483,5 +1483,18 @@ public class CustomerCare extends BasePage {
 	    	}
 	    }
 	    sleep(5000);
-	}	
+	}
+	
+	public void irAGestionEnCard(String sGestion) {
+		WebElement wFlyOutActionCard = driver.findElement(By.className("community-flyout-actions-card"));
+		List<WebElement> wGestiones = wFlyOutActionCard.findElements(By.tagName("li"));
+		for (WebElement wAux : wGestiones) {
+			if (wAux.getText().contains(sGestion)) {
+					wAux.findElement(By.tagName("a")).click();
+					break;
+			}
+		}
+		TestBase.sleep(4000);
+		cambiarAFrameActivo();
+	}
 }

@@ -26,6 +26,7 @@ import org.openqa.selenium.remote.RemoteWebDriver;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.How;
 import org.openqa.selenium.support.PageFactory;
+import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.Select;
 import org.testng.Assert;
 
@@ -589,15 +590,13 @@ try{	driver.findElement(By.id("alert-ok-button")).click();	} catch (NoSuchElemen
 	 setSimpleDropdown(driver.findElement(By.id("State")), provincia);
 
 	driver.findElement(By.id("CityTypeAhead")).sendKeys(localidad);
-	try {Thread.sleep(8000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();} 
+	try {Thread.sleep(10000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();} 
 	driver.findElement(By.id("CityTypeAhead")).sendKeys(Keys.ARROW_DOWN);
 	driver.findElement(By.id("CityTypeAhead")).sendKeys(Keys.ENTER);
 	driver.findElement(By.id("LegalStreetTypeAhead")).sendKeys(calle); 
-	try {Thread.sleep(8000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+	try {Thread.sleep(10000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 	driver.findElement(By.id("LegalStreetTypeAhead")).sendKeys(Keys.ARROW_DOWN);
 	driver.findElement(By.id("LegalStreetTypeAhead")).sendKeys(Keys.ENTER);
-	try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
-	
 	driver.findElement(By.id("NewStreetName")).sendKeys(calle);
 	
 
@@ -933,8 +932,6 @@ try{	driver.findElement(By.id("alert-ok-button")).click();	} catch (NoSuchElemen
 				}catch(Exception ex1) {} 
 			}
 		}
-		
-		
 		public void Crear_Cliente(String DNI){
 			try {Thread.sleep(10000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 			boolean existe = false;
@@ -986,7 +983,7 @@ try{	driver.findElement(By.id("alert-ok-button")).click();	} catch (NoSuchElemen
 			sleep(10000);
 			driver.findElement(By.cssSelector(".slds-button.slds-button_icon-border-filled.cpq-item-actions-dropdown-button")).click();
 			sleep(2000);
-			List<WebElement> list = driver.findElements(By.cssSelector(".slds-dropdown__item.cpq-item-actions-dropdown__item")); 
+			List<WebElement> list = driver.findElements(By.cssSelector(".slds-dropdown_item.cpq-item-actions-dropdown_item")); 
 			//System.out.println(list.size());
 			list.get(3).click();
 			agregarNumerodeLinea(Linea);  
@@ -1001,7 +998,7 @@ try{	driver.findElement(By.id("alert-ok-button")).click();	} catch (NoSuchElemen
 			driver.findElement(By.cssSelector(".slds-button.cpq-item-has-children")).click();
 			sleep(3000);
 			driver.findElements(By.cssSelector(".slds-button.slds-button_icon-border-filled.cpq-item-actions-dropdown-button")).get(1).click();
-			List<WebElement> lista = driver.findElements(By.cssSelector(".slds-dropdown__list.cpq-item-actions-dropdown__list"));
+			List<WebElement> lista = driver.findElements(By.cssSelector(".slds-dropdown_list.cpq-item-actions-dropdown_list"));
 			//System.out.println(lista.size());
 			lista.get(1).click();
 			sleep(3000);
@@ -1030,7 +1027,7 @@ try{	driver.findElement(By.id("alert-ok-button")).click();	} catch (NoSuchElemen
 			
 			sleep(5000);
 			//driver.switchTo().defaultContent();
-			List<WebElement> cerrar = driver.findElements(By.cssSelector(".slds-button__icon.slds-button__icon--large"));
+			List<WebElement> cerrar = driver.findElements(By.cssSelector(".slds-button_icon.slds-button_icon--large"));
 			//verificar atributo icon = close
 			for(WebElement UnC : cerrar) {
 				try {
@@ -1045,8 +1042,7 @@ try{	driver.findElement(By.id("alert-ok-button")).click();	} catch (NoSuchElemen
 			
 		}
 		
-		
-		public void agregarNumerodeLinea(String Linea) { 
+			public void agregarNumerodeLinea(String Linea) { 
 			sleep(3000);
 			WebElement NumerodeLinea = driver.findElement(By.xpath("//*[@id=\"js-cpq-product-cart-config-form\"]/div[1]/div/form/div[2]/div[1]/input"));
 			driver.switchTo().defaultContent();
@@ -1056,7 +1052,7 @@ try{	driver.findElement(By.id("alert-ok-button")).click();	} catch (NoSuchElemen
 			NumerodeLinea.submit();
 			sleep(8000);
 			//driver.switchTo().defaultContent();
-			List<WebElement> cerrar = driver.findElements(By.cssSelector(".slds-button__icon.slds-button__icon--large"));
+			List<WebElement> cerrar = driver.findElements(By.cssSelector(".slds-button_icon.slds-button_icon--large"));
 			//verificar atributo icon = close
 			for(WebElement UnC : cerrar) {
 				try {
@@ -1167,7 +1163,6 @@ try{	driver.findElement(By.id("alert-ok-button")).click();	} catch (NoSuchElemen
 					break;
 				}
 			}
-
 		}
 		
 		public void ResolverEntrega(WebDriver driver, String entrega, String provincia, String localidad) {

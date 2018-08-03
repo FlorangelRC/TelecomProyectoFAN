@@ -485,4 +485,70 @@ public class AltadeLineas extends TestBase {
 		}
 
 	}
+	@Test(groups={"Sales", "AltaLinea"}, priority=1, dataProvider="DatosSalesAltaLineaEquipo")
+	public void TS_CRM_Alta_de_Linea_Equipo(String sDni, String sNombre, String sApellido, String sSexo, String sFNac, String sEmail, String sPlan, String sProvincia, String sLocalidad) throws IOException {
+		CustomerCare cc = new CustomerCare(driver);
+		SalesBase sb = new SalesBase(driver);
+		sleep(5000);
+		sb.Crear_Cliente(sDni);
+		ContactSearch contact = new ContactSearch(driver);
+		contact.sex(sSexo);
+		contact.Llenar_Contacto(sNombre, sApellido, sFNac);
+		driver.findElement(By.id("EmailSelectableItems")).findElement(By.tagName("input")).sendKeys(sEmail);
+		driver.findElement(By.id("Contact_nextBtn")).click();
+		sleep(20000);
+		WebElement plan = driver.findElement(By.cssSelector(".slds-input.ng-pristine.ng-untouched.ng-valid.ng-empty"));
+		plan.sendKeys(sPlan);
+		sleep(12000);
+		WebElement agre = driver.findElements(By.cssSelector(".slds-button.slds-button_neutral.cpq-add-button")).get(0);
+		cc.obligarclick(agre);
+		driver.findElement(By.cssSelector(".slds-input.ng-valid.ng-not-empty.ng-dirty.ng-valid-parse.ng-touched")).clear();
+		sleep(3000);
+		//class search slds-input ng-valid ng-dirty ng-valid-parse ng-touched ng-empty
+		driver.findElement(By.xpath("//*[@id='j_id0:j_id5']/div/div[1]/ng-include/div/div[2]/div[2]/div[2]/div/div/ng-include/div/div[2]/div[1]/input")).sendKeys("Galaxy S8 - Negro");
+		sleep(10000);
+		WebElement agregar = driver.findElement(By.xpath("//*[@id='j_id0:j_id5']/div/div/ng-include/div/div[2]/div[2]/div[2]/div/div/ng-include/div/div[5]/div/ng-include/div/div/div[2]/ng-include/div/div[3]/div/div/div[2]/div/div[2]/button")); 
+		agregar.click();
+		//sb.configuracion(sLinea, sIccid, sImsi, sKi);
+		sb.continuar();
+		sleep(23000);
+		sb.Crear_DomicilioLegal(sProvincia, sLocalidad, "falsa", "", "1000", "", "", "1549");
+		sleep(24000);
+		WebElement sig = driver.findElement(By.id("LineAssignment_nextBtn"));
+		cc.obligarclick(sig);
+		sleep(25000);
+		try{
+			driver.findElements(By.cssSelector(".slds-button.slds-button--neutral.ng-binding.ng-scope")).get(1).click();
+			sleep(15000);
+		}catch(Exception ex1){}
+		//String ICCID = driver.findElement(By.cssSelector(".ng-pristine.ng-untouched.ng-valid.ng-scope.ng-not-empty")).getText();
+		sleep(10000);
+		cc.obligarclick(driver.findElement(By.id("RemoteAction2")));
+		sleep(10000);
+		cc.obligarclick(driver.findElement(By.id("InvoicePreview_nextBtn")));
+		sleep(20000);
+		cc.obligarclick(driver.findElement(By.id("SelectPaymentMethodsStep_nextBtn")));
+		sleep(20000);
+		sb.elegirvalidacion("DOC");
+		sleep(8000);
+		driver.findElement(By.id("FileDocumentImage")).sendKeys("C:\\Users\\Sofia Chardin\\Desktop\\DNI.jpg");
+		sleep(3000);
+		cc.obligarclick(driver.findElement(By.id("DocumentMethod_nextBtn")));
+		sleep(10000);
+		cc.obligarclick(driver.findElement(By.id("ValidationResult_nextBtn")));
+		sleep(10000);
+		try {
+			driver.findElements(By.cssSelector(".slds-button.slds-button--neutral.ng-binding.ng-scope")).get(1).click();
+			sleep(15000);
+		}catch(Exception ex1) {}
+		cc.obligarclick(driver.findElement(By.id("ICCDAssignment_nextBtn")));
+		sleep(15000);
+		cc.obligarclick(driver.findElement(By.id("OrderSumary_nextBtn")));
+		sleep(20000);
+		try {
+			cc.obligarclick(driver.findElement(By.id("Step_Error_Huawei_S029_nextBtn")));
+		}catch(Exception ex1) {
+			driver.findElement(By.id("SaleOrderMessages_nextBtn")).click();
+		}	
+	}
 }
