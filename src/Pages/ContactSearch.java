@@ -89,7 +89,7 @@ public class ContactSearch extends BasePage {
 	}
 
 	public void sex(String genero) {
-		switch (genero) {
+		switch (genero.toLowerCase()) {
 		case "femenino":
 			gender.get(0).click();
 			break;

@@ -7,11 +7,13 @@ import java.util.List;
 import org.openqa.selenium.By;
 import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
+import Pages.Accounts;
 import Pages.ContactSearch;
 import Pages.CustomerCare;
 import Pages.SalesBase;
@@ -219,9 +221,12 @@ public class AltadeLineas extends TestBase {
 		contact.Llenar_Contacto(sNombre, sApellido, sFNac);
 		driver.findElement(By.id("EmailSelectableItems")).findElement(By.tagName("input")).sendKeys(sEmail);
 		driver.findElement(By.id("Contact_nextBtn")).click();
-		sleep(18000);
-		sb.elegirplan(sPlan);
-		sleep(4000);
+		sleep(20000);
+		WebElement plan = driver.findElement(By.cssSelector(".slds-input.ng-pristine.ng-untouched.ng-valid.ng-empty"));
+		plan.sendKeys(sPlan);
+		sleep(12000);
+		WebElement agre = driver.findElements(By.cssSelector(".slds-button.slds-button_neutral.cpq-add-button")).get(0);
+		cc.obligarclick(agre);
 		driver.findElement(By.cssSelector(".slds-input.ng-valid.ng-not-empty.ng-dirty.ng-valid-parse.ng-touched")).clear();
 		sleep(3000);
 		//class search slds-input ng-valid ng-dirty ng-valid-parse ng-touched ng-empty
@@ -237,7 +242,14 @@ public class AltadeLineas extends TestBase {
 		WebElement sig = driver.findElement(By.id("LineAssignment_nextBtn"));
 		cc.obligarclick(sig);
 		sleep(25000);
+		try{
+			driver.findElements(By.cssSelector(".slds-button.slds-button--neutral.ng-binding.ng-scope")).get(1).click();
+			sleep(15000);
+		}catch(Exception ex1){}
 		//String ICCID = driver.findElement(By.cssSelector(".ng-pristine.ng-untouched.ng-valid.ng-scope.ng-not-empty")).getText();
+		sleep(10000);
+		cc.obligarclick(driver.findElement(By.id("RemoteAction2")));
+		sleep(10000);
 		cc.obligarclick(driver.findElement(By.id("InvoicePreview_nextBtn")));
 		sleep(20000);
 		cc.obligarclick(driver.findElement(By.id("SelectPaymentMethodsStep_nextBtn")));
