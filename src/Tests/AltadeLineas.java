@@ -1,18 +1,11 @@
 package Tests;
 
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
 
-import org.apache.poi.ss.usermodel.Row;
-import org.apache.poi.xssf.usermodel.XSSFRow;
-import org.apache.poi.xssf.usermodel.XSSFSheet;
-import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.openqa.selenium.By;
+import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.annotations.BeforeClass;
@@ -24,40 +17,9 @@ import Pages.CustomerCare;
 import Pages.SalesBase;
 import Pages.setConexion;
 
-class linea{
-	String tProducto, mercado, plan, segmento, iva, iibb, provincia;
-	int cantidad;
-	
-	linea(XSSFRow row){
-		tProducto = row.getCell(1).getStringCellValue();
-		mercado = row.getCell(2).getStringCellValue();
-		plan = row.getCell(3).getStringCellValue();
-		segmento = row.getCell(4).getStringCellValue();
-		iva = row.getCell(5).getStringCellValue();
-		if (!row.getCell(6).getStringCellValue().isEmpty())
-			iibb = row.getCell(6).getStringCellValue();
-		else
-			iibb = "";
-		provincia = row.getCell(8).getStringCellValue(); 
-		Double x = row.getCell(13).getNumericCellValue();
-		cantidad = Integer.parseInt(x.toString().substring(0, x.toString().length()-2));
-	}
-	
-	void VerLinea() {
-		System.out.println("-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*");
-		System.out.println("Tipo de producto: "+tProducto);
-		System.out.println("Mercado: "+mercado);
-		System.out.println("Plan: "+plan);
-		System.out.println("Segmento: "+segmento);
-		System.out.println("IVA: "+iva);
-		System.out.println("IIBB: "+iibb);
-		System.out.println("Provincia: "+provincia);
-		System.out.println("Cantidad: "+cantidad);
-	}
-}
+
 
 public class AltadeLineas extends TestBase {
-	List<linea> lineas = new ArrayList<linea>();
 	String nombre="Matias";
 	String apellido="Rodriguez";
 	String fNacimiento="19/08/1989";
@@ -68,68 +30,238 @@ public class AltadeLineas extends TestBase {
 	protected  WebDriverWait wait;
 	
 	@BeforeClass(alwaysRun=true)
-	public void setup() throws Exception {		
-		this.driver = setConexion.setupEze();
-		 wait = new WebDriverWait(driver, 10);
-		 loginAndres(driver);
-		 sleep(5000);
+	public void Init2() {
+		driver = setConexion.setupEze();
+		try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}		
+			 loginAgente(driver);  
+			 try {Thread.sleep(22000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+				
+				driver.findElement(By.id("tabBar")).findElement(By.tagName("a")).click();
+				sleep(18000);
+				SalesBase SB = new SalesBase(driver);
+				driver.switchTo().defaultContent();
+				sleep(3000);
+				goToLeftPanel2(driver, "Inicio");
+				sleep(18000);
+				try{
+					SB.cerrarPestaniaGestion(driver);}
+				catch(Exception ex1) {
+				}
+			}
+	
+	@BeforeMethod(alwaysRun=true)
+	public void setup() throws Exception {
+		Accounts accountPage = new Accounts(driver);
+		driver.switchTo().frame(accountPage.getFrameForElement(driver, By.cssSelector(".hasMotif.homeTab.homepage.ext-webkit.ext-chrome.sfdcBody.brandQuaternaryBgr")));
+		List<WebElement> frames = driver.findElements(By.tagName("iframe"));
+		boolean enc = false;
+		int index = 0;
+		for(WebElement frame : frames) {
+			try {
+				System.out.println("aca");
+				driver.switchTo().frame(frame);
+
+				driver.findElement(By.cssSelector(".slds-grid.slds-m-bottom_small.slds-wrap.cards-container")).getText(); //each element is in the same iframe.
+				//System.out.println(index); //prints the used index.
+
+				driver.findElement(By.cssSelector(".slds-grid.slds-m-bottom_small.slds-wrap.cards-container")).isDisplayed(); //each element is in the same iframe.
+				//System.out.println(index); //prints the used index.
+
+				driver.switchTo().frame(accountPage.getFrameForElement(driver, By.cssSelector(".hasMotif.homeTab.homepage.ext-webkit.ext-chrome.sfdcBody.brandQuaternaryBgr")));
+				enc = true;
+				break;
+			}catch(NoSuchElementException noSuchElemExcept) {
+				index++;
+				driver.switchTo().frame(accountPage.getFrameForElement(driver, By.cssSelector(".hasMotif.homeTab.homepage.ext-webkit.ext-chrome.sfdcBody.brandQuaternaryBgr")));
+			}
+		}
+		if(enc == false)
+			index = -1;
+		try {
+				driver.switchTo().frame(frames.get(index));
+		}catch(ArrayIndexOutOfBoundsException iobExcept) {System.out.println("Elemento no encontrado en ningun frame 2.");
+			
+		}
+		List<WebElement> botones = driver.findElements(By.tagName("button"));
+		for (WebElement UnB : botones) {
+			System.out.println(UnB.getText());
+			if(UnB.getText().equalsIgnoreCase("gesti\u00f3n de clientes")) {
+				UnB.click();
+				break;
+			}
+		}
+		
+		sleep(14000);
+		driver.switchTo().frame(accountPage.getFrameForElement(driver, By.id("SearchClientDocumentNumber")));
+	}
+	
+	//@AfterMethod(alwaysRun=true)
+		public void deslogin(){
+			sleep(2000);
+			SalesBase SB = new SalesBase(driver);
+			driver.switchTo().defaultContent();
+			sleep(6000);
+			SB.cerrarPestaniaGestion(driver);
+			
+			sleep(5000);
+
+		}
+	
+	//@AfterClass(alwaysRun=true)
+	public void Exit() {
+		driver.quit();
+		sleep(2000);
+	}
+	
+	
+	@Test(groups={"Sales", "AltaLineaDatos"}, priority=1, dataProvider="DatosAltaLineaAgente")
+	public void TS_CRM_Alta_de_Linea_Agente(String sDni, String sNombre, String sApellido, String sSexo, String sFNac, String sEmail, String sPlan, String sProvincia, String sLocalidad) throws IOException {
+		CustomerCare cc = new CustomerCare(driver);
+		SalesBase sb = new SalesBase(driver);
+		sleep(5000);
+		sb.Crear_Cliente(sDni);
+		ContactSearch contact = new ContactSearch(driver);
+		contact.sex(sSexo);
+		contact.Llenar_Contacto(sNombre, sApellido, sFNac);
+		driver.findElement(By.id("EmailSelectableItems")).findElement(By.tagName("input")).sendKeys(sEmail);
+		driver.findElement(By.id("Contact_nextBtn")).click();
+		sleep(18000);
+		sb.elegirplan(sPlan);
+		sb.continuar();
+		sleep(20000);
+		sb.Crear_DomicilioLegal(sProvincia, sLocalidad, "falsa", "", "1000", "", "", "1549");
+		sleep(24000);
+		WebElement sig = driver.findElement(By.id("LineAssignment_nextBtn"));
+		cc.obligarclick(sig);
+		sleep(20000);
+		String ICCID = driver.findElement(By.cssSelector(".ng-pristine.ng-untouched.ng-valid.ng-scope.ng-not-empty")).getText();
+		cc.obligarclick(driver.findElement(By.id("ICCDAssignment_nextBtn")));
+		sleep(20000);
+		cc.obligarclick(driver.findElement(By.id("InvoicePreview_nextBtn")));
+		sleep(20000);
+		cc.obligarclick(driver.findElement(By.id("SelectPaymentMethodsStep_nextBtn")));
+		sleep(20000);
+		sb.elegirvalidacion("DOC");
+		sleep(8000);
+		driver.findElement(By.id("FileDocumentImage")).sendKeys("C:\\Users\\florangel\\Downloads\\mapache.jpg");
+		sleep(3000);
+		cc.obligarclick(driver.findElement(By.id("DocumentMethod_nextBtn")));
+		sleep(10000);
+		cc.obligarclick(driver.findElement(By.id("ValidationResult_nextBtn")));
+		sleep(10000);
+		try {
+			driver.findElements(By.cssSelector(".slds-button.slds-button--neutral.ng-binding.ng-scope")).get(1).click();
+			sleep(10000);
+		}catch(Exception ex1) {}
+		cc.obligarclick(driver.findElement(By.id("OrderSumary_nextBtn")));
+		sleep(20000);
+		try {
+			cc.obligarclick(driver.findElement(By.id("Step_Error_Huawei_S029_nextBtn")));
+		}catch(Exception ex1) {
+			driver.findElement(By.id("SaleOrderMessages_nextBtn")).click();
+		}
 		
 	}
 	
-	@BeforeMethod(alwaysRun=true)
-	 void cargarDatos() throws IOException {
-		 File archivo = new File("C:\\Users\\florangel\\Desktop\\Altas_Necesarias.xlsx");
-		 FileInputStream file = new FileInputStream(archivo);
-	     XSSFWorkbook workbook = new XSSFWorkbook(file); 
-	     XSSFSheet sheet = workbook.getSheetAt(0);
-	     Iterator<Row> rows = sheet.rowIterator();
-	     rows.next();
-		 while (rows.hasNext()) {
-		     XSSFRow row = (XSSFRow) rows.next();
-		     lineas.add(new linea(row));
-		 }
-		 workbook.close();
-		 for (linea UnaL : lineas) {
-			 UnaL.VerLinea();
-		 }
-		 try {Thread.sleep(10000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
-		 driver.findElement(By.xpath("//a[@href=\'https://crm--sit--c.cs14.visual.force.com/apex/taClientSearch']")).click();
-		try {Thread.sleep(10000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
-		 
-	}
-	
-	@Test(groups={"Sales", "AltaDeContacto", "Ola1"}) 
-	//public void TS_Alta_De_Lineas(String sProducto, String sPlan, String sIva, String sProvinci){
-	public void TS_Alta_De_Lineas(){
-		SalesBase SB = new SalesBase(driver);
-		SB.BtnCrearNuevoCliente();
-		String asd = driver.findElement(By.id("SearchClientDocumentNumber")).getAttribute("value");
-		CustomerCare CC = new CustomerCare(driver);
+	@Test(groups={"Sales", "AltaLineaDatos"}, priority=2, dataProvider="DatosAltaLineaOfCom")
+	public void TS_CRM_Alta_de_Linea_OfCom(String sDni, String sNombre, String sApellido, String sSexo, String sFNac, String sEmail, String sPlan, String sProvincia, String sLocalidad) throws IOException {
+		CustomerCare cc = new CustomerCare(driver);
+		SalesBase sb = new SalesBase(driver);
+		sleep(15000);
+		sb.Crear_Cliente(sDni);
 		ContactSearch contact = new ContactSearch(driver);
-		try {Thread.sleep(10000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
-		driver.findElement(By.id("FirstName")).sendKeys(nombre);
-		driver.findElement(By.id("LastName")).sendKeys(apellido);
-		driver.findElement(By.id("Birthdate")).sendKeys(fNacimiento);
-		contact.sex("masculino");
+		contact.sex(sSexo);
+		contact.Llenar_Contacto(sNombre, sApellido, sFNac);
+		driver.findElement(By.id("EmailSelectableItems")).findElement(By.tagName("input")).sendKeys(sEmail);
 		driver.findElement(By.id("Contact_nextBtn")).click();
-		try {Thread.sleep(8000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
-		sleep(15000);
-		SB.agregarplan("Plan con Tarjeta");
-		SB.continuar();
+		sleep(18000);
+		sb.elegirplan(sPlan);
+		sleep(10000);
+		sb.continuar();
 		sleep(20000);
-		SB.Crear_DomicilioLegal("Buenos Aires","ab", calle, "", altura, "", "", CP);
-		sleep(15000);
-		driver.findElement(By.id("LineAssignment_nextBtn")).click();
+		sb.Crear_DomicilioLegal(sProvincia, sLocalidad, "falsa", "", "1000", "", "", "1549");
+		sleep(24000);
+		WebElement sig = driver.findElement(By.id("LineAssignment_nextBtn"));
+		cc.obligarclick(sig);
+		sleep(20000);
+		cc.obligarclick(driver.findElement(By.id("InvoicePreview_nextBtn")));
+		sleep(20000);
+		cc.obligarclick(driver.findElement(By.id("SelectPaymentMethodsStep_nextBtn")));
+		sleep(20000);
+		sb.elegirvalidacion("DOC");
+		sleep(8000);
+		driver.findElement(By.id("FileDocumentImage")).sendKeys("C:\\Users\\florangel\\Downloads\\mapache.jpg");
+		sleep(3000);
+		cc.obligarclick(driver.findElement(By.id("DocumentMethod_nextBtn")));
 		sleep(10000);
-		driver.findElement(By.id("GetStockAvailableCode")).findElement(By.cssSelector(".slds-button.slds-button--neutral.ng-binding.ng-scope")).click();
-		sleep(30000);
-		driver.findElement(By.id("DecisiveLineSelection_nextBtn")).click();
-		sleep(5000);
-		CC.obligarclick(driver.findElement(By.id("OrderSumary_nextBtn")));
-		sleep(5000);
-		CC.obligarclick(driver.findElement(By.id("SaleOrderMessages_nextBtn")));
+		cc.obligarclick(driver.findElement(By.id("ValidationResult_nextBtn")));
 		sleep(10000);
+		try {
+			driver.findElements(By.cssSelector(".slds-button.slds-button--neutral.ng-binding.ng-scope")).get(1).click();
+			sleep(10000);
+		}catch(Exception ex1) {}
+		cc.obligarclick(driver.findElement(By.id("OrderSumary_nextBtn")));
+		sleep(20000);
+		try {
+			cc.obligarclick(driver.findElement(By.id("Step_Error_Huawei_S029_nextBtn")));
+		}catch(Exception ex1) {
+			driver.findElement(By.id("SaleOrderMessages_nextBtn")).click();
+		}
 	}
-	
-	
+	@Test(groups={"Sales", "AltaLinea"}, priority=1, dataProvider="DatosSalesAltaLineaEquipo")
+	public void TS_CRM_Alta_de_Linea_Equipo(String sDni, String sNombre, String sApellido, String sSexo, String sFNac, String sEmail, String sPlan, String sProvincia, String sLocalidad) throws IOException {
+		CustomerCare cc = new CustomerCare(driver);
+		SalesBase sb = new SalesBase(driver);
+		sleep(5000);
+		sb.Crear_Cliente(sDni);
+		ContactSearch contact = new ContactSearch(driver);
+		contact.sex(sSexo);
+		contact.Llenar_Contacto(sNombre, sApellido, sFNac);
+		driver.findElement(By.id("EmailSelectableItems")).findElement(By.tagName("input")).sendKeys(sEmail);
+		driver.findElement(By.id("Contact_nextBtn")).click();
+		sleep(18000);
+		sb.elegirplan(sPlan);
+		sleep(4000);
+		driver.findElement(By.cssSelector(".slds-input.ng-valid.ng-not-empty.ng-dirty.ng-valid-parse.ng-touched")).clear();
+		sleep(3000);
+		//class search slds-input ng-valid ng-dirty ng-valid-parse ng-touched ng-empty
+		driver.findElement(By.xpath("//*[@id='j_id0:j_id5']/div/div[1]/ng-include/div/div[2]/div[2]/div[2]/div/div/ng-include/div/div[2]/div[1]/input")).sendKeys("Galaxy S8 - Negro");
+		sleep(10000);
+		WebElement agregar = driver.findElement(By.xpath("//*[@id='j_id0:j_id5']/div/div/ng-include/div/div[2]/div[2]/div[2]/div/div/ng-include/div/div[5]/div/ng-include/div/div/div[2]/ng-include/div/div[3]/div/div/div[2]/div/div[2]/button")); 
+		agregar.click();
+		//sb.configuracion(sLinea, sIccid, sImsi, sKi);
+		sb.continuar();
+		sleep(23000);
+		sb.Crear_DomicilioLegal(sProvincia, sLocalidad, "falsa", "", "1000", "", "", "1549");
+		sleep(24000);
+		WebElement sig = driver.findElement(By.id("LineAssignment_nextBtn"));
+		cc.obligarclick(sig);
+		sleep(25000);
+		//String ICCID = driver.findElement(By.cssSelector(".ng-pristine.ng-untouched.ng-valid.ng-scope.ng-not-empty")).getText();
+		cc.obligarclick(driver.findElement(By.id("InvoicePreview_nextBtn")));
+		sleep(20000);
+		cc.obligarclick(driver.findElement(By.id("SelectPaymentMethodsStep_nextBtn")));
+		sleep(20000);
+		sb.elegirvalidacion("DOC");
+		sleep(8000);
+		driver.findElement(By.id("FileDocumentImage")).sendKeys("C:\\Users\\Sofia Chardin\\Desktop\\DNI.jpg");
+		sleep(3000);
+		cc.obligarclick(driver.findElement(By.id("DocumentMethod_nextBtn")));
+		sleep(10000);
+		cc.obligarclick(driver.findElement(By.id("ValidationResult_nextBtn")));
+		sleep(10000);
+		try {
+			driver.findElements(By.cssSelector(".slds-button.slds-button--neutral.ng-binding.ng-scope")).get(1).click();
+			sleep(15000);
+		}catch(Exception ex1) {}
+		cc.obligarclick(driver.findElement(By.id("ICCDAssignment_nextBtn")));
+		sleep(15000);
+		cc.obligarclick(driver.findElement(By.id("OrderSumary_nextBtn")));
+		sleep(20000);
+		try {
+			cc.obligarclick(driver.findElement(By.id("Step_Error_Huawei_S029_nextBtn")));
+		}catch(Exception ex1) {
+			driver.findElement(By.id("SaleOrderMessages_nextBtn")).click();
+		}	
+	}
 }

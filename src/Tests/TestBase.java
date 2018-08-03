@@ -876,4 +876,41 @@ public class TestBase {
 	 return (testObjArray);
 
 	}
+	
+	@DataProvider
+	public Object[][] DatosSalesNominacion() throws Exception{
+
+	 Object[][] testObjArray = ExcelUtils.getTableArray("Cuentas.xlsx","PreparacionDatos",1,1,8,"Nominacion");
+
+	 return (testObjArray);
+
+	}
+	
+	@DataProvider
+	public Object[][] DatosAltaLineaAgente() throws Exception{
+
+	 Object[][] testObjArray = ExcelUtils.getTableArray("Cuentas.xlsx","PreparacionDatos",1,1,9,"Alta Linea Agente");
+
+	 return (testObjArray);
+
+	}
+	
+	@DataProvider
+	public Object[][] DatosSalesNumerosAmigos() throws Exception{
+
+	 Object[][] testObjArray = ExcelUtils.getTableArray("Cuentas.xlsx","PreparacionDatos",1,1,11,"Numeros Amigos");
+
+	 return (testObjArray);
+
+	}
+	
+
+	@DataProvider
+	public Object[][] DatosSalesAltaLineaEquipo() throws Exception{
+
+	 Object[][] testObjArray = ExcelUtils.getTableArray("Cuentas.xlsx","PreparacionDatos",1,1,9,"Alta Linea Equipo");
+
+	 return (testObjArray);
+
+	}
 }

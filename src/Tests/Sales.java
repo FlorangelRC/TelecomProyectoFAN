@@ -95,10 +95,10 @@ public class Sales extends TestBase {
 			login(driver);
 			break;
 		 case "agente":
-			 loginAndres(driver);
+			 loginAgente(driver);
 			 break;
 		 case "call":
-			 loginElena(driver);  
+			 loginTelefonico(driver);  
 			 break;
 		 case "venta":
 			 loginFranciso(driver);
@@ -141,11 +141,23 @@ public class Sales extends TestBase {
 		 driver.findElement(By.cssSelector(".slds-grid.slds-m-bottom_small.slds-wrap.cards-container")).findElement(By.tagName("button")).click();*/
 		 driver.findElement(By.xpath("//a[@href=\'https://crm--sit--c.cs14.visual.force.com/apex/taClientSearch']")).click();
 			
-		try {Thread.sleep(10000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		}
+		List<WebElement> botones = driver.findElements(By.tagName("button"));
+		for (WebElement UnB : botones) {
+			System.out.println(UnB.getText());
+			if(UnB.getText().equalsIgnoreCase("gesti\u00f3n de clientes")) {
+				UnB.click();
+				break;
+			}
+		}
+		
+		sleep(14000);
+		driver.switchTo().frame(accountPage.getFrameForElement(driver, By.id("SearchClientDocumentNumber")));
 	}
 
 	@Test(groups={"Sales", "AltaDeContacto", "Ola1"}, priority=2) 
 	public void TS94544_createdNewValidContact(){
+		Accounts accountPage = new Accounts(driver);
 		SalesBase SB = new SalesBase(driver);
 		SB.BtnCrearNuevoCliente();
 		String asd = driver.findElement(By.id("SearchClientDocumentNumber")).getAttribute("value");
@@ -157,7 +169,41 @@ public class Sales extends TestBase {
 		contact.sex("masculino");
 		driver.findElement(By.id("Contact_nextBtn")).click();
 		try {Thread.sleep(8000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
-		driver.get("https://crm--sit--c.cs14.visual.force.com/apex/taClientSearch#/");
+		driver.navigate().refresh();
+		sleep(4000);
+		driver.switchTo().frame(accountPage.getFrameForElement(driver, By.cssSelector(".hasMotif.homeTab.homepage.ext-webkit.ext-chrome.sfdcBody.brandQuaternaryBgr")));
+		List<WebElement> frames = driver.findElements(By.tagName("iframe"));
+		boolean enc = false;
+		int index = 0;
+		for(WebElement frame : frames) {
+			try {
+				System.out.println("aca");
+				driver.switchTo().frame(frame);
+
+				driver.findElement(By.cssSelector(".slds-grid.slds-m-bottom_small.slds-wrap.cards-container")).getText(); //each element is in the same iframe.
+				//System.out.println(index); //prints the used index.
+
+				driver.findElement(By.cssSelector(".slds-grid.slds-m-bottom_small.slds-wrap.cards-container")).isDisplayed(); //each element is in the same iframe.
+				//System.out.println(index); //prints the used index.
+
+				driver.switchTo().frame(accountPage.getFrameForElement(driver, By.cssSelector(".hasMotif.homeTab.homepage.ext-webkit.ext-chrome.sfdcBody.brandQuaternaryBgr")));
+				enc = true;
+				break;
+			}catch(NoSuchElementException noSuchElemExcept) {
+				index++;
+				driver.switchTo().frame(accountPage.getFrameForElement(driver, By.cssSelector(".hasMotif.homeTab.homepage.ext-webkit.ext-chrome.sfdcBody.brandQuaternaryBgr")));
+			}
+		}
+		if(enc == false)
+			index = -1;
+		try {
+				driver.switchTo().frame(frames.get(index));
+		}catch(ArrayIndexOutOfBoundsException iobExcept) {System.out.println("Elemento no encontrado en ningun frame 2.");
+			
+		}
+		
+		sleep(14000);
+		driver.switchTo().frame(accountPage.getFrameForElement(driver, By.id("ContactFirstName")));
 		try {Thread.sleep(8000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 		contact.searchContact(DNI, asd, "");
 		driver.findElement(By.id("SearchClientsDummy")).click();
@@ -720,8 +766,13 @@ public class Sales extends TestBase {
 		WebElement este = driver.findElement(By.id("LineAssignment_nextBtn"));
 		cc.obligarclick(este);
 		sleep(20000);
+		cc.obligarclick(driver.findElement(By.id("ICCDAssignment_nextBtn")));
+		sleep(15000);
+		
 		cc.obligarclick(driver.findElement(By.id("InvoicePreview_nextBtn")));
-		sleep(20000);
+		sleep(15000);
+		cc.obligarclick(driver.findElement(By.id("SelectPaymentMethodsStep_nextBtn")));
+		sleep(15000);
 		try {Thread.sleep(15000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 		List<WebElement> valid =driver.findElements(By.xpath("//input[@id='ValidationMethodInValidContact' and @type='radio']"));
 		for(int i=0; i<valid.size();i++){
@@ -1147,25 +1198,15 @@ public class Sales extends TestBase {
 		assertTrue(btns.get(0).getText().equalsIgnoreCase("ver contacto")||btns.get(1).getText().equalsIgnoreCase("ver contacto")||btns.get(2).getText().equalsIgnoreCase("ver contacto"));
 	}
 	
-	@Test(groups={"Sales", "AltaDeContacto","Ola1"}, priority=2, dataProvider="SalesContactoSinCuenta")
-	public void TS94574_Alta_Contacto_Persona_Fisica_Verificar_Sugerencia_De_Dominio_En_Campo_Email(String sCuenta, String sDni) throws IOException {
+	@Test(groups={"Sales", "AltaDeContacto","Ola1"}, priority=2)
+	public void TS94574_Alta_Contacto_Persona_Fisica_Verificar_Sugerencia_De_Dominio_En_Campo_Email() throws IOException {
 		SalesBase SB = new SalesBase(driver);
-		SB.BuscarCuenta("DNI", sDni);
+		SB.BtnCrearNuevoCliente();
 		try {Thread.sleep(6000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
-		List<WebElement> solapas = driver.findElement(By.className("slds-tabs--scoped__nav")).findElements(By.tagName("li"));
-		for (WebElement UnaS : solapas) {
-			if (UnaS.findElement(By.tagName("a")).getText().equals("Contactos")) {
-				UnaS.findElement(By.tagName("a")).click();
-				break;
-			}
-		}
-		sleep(1000);
-		driver.findElement(By.id("tab-scoped-3")).findElement(By.tagName("tbody")).findElements(By.tagName("tr")).get(0).findElements(By.tagName("td")).get(0).findElement(By.tagName("a")).click();
-		sleep(6000);
 		WebElement email = driver.findElement(By.id("EmailSelectableItems"));
 		email.findElement(By.tagName("input")).clear();
 		email.findElement(By.tagName("input")).sendKeys("abc");
-		solapas = driver.findElement(By.cssSelector(".slds-dropdown.slds-dropdown--left.slds-dropdown--length-5.suggestion")).findElements(By.cssSelector(".slds-lookup__item-action.slds-lookup__item-action--label"));
+		List<WebElement> solapas = driver.findElement(By.cssSelector(".slds-dropdown.slds-dropdown--left.slds-dropdown--length-5.suggestion")).findElements(By.cssSelector(".slds-lookup__item-action.slds-lookup__item-action--label"));
 		List<WebElement> sugerencias = driver.findElements(By.cssSelector(".slds-dropdown.slds-dropdown--left.slds-dropdown--length-5.suggestion"));
 		sugerencias.clear();
 		for(WebElement UnaS : solapas) {
@@ -1176,21 +1217,11 @@ public class Sales extends TestBase {
 		
 	}
 	
-	@Test(groups={"Sales", "AltaDeContacto","Ola1"}, priority=2, dataProvider="SalesCuentaActiva")
-	public void TS94564_Alta_Contacto_Persona_Fisica_Verificar_Formato_De_Email(String sCuenta, String sDni, String sLinea) throws IOException {
+	@Test(groups={"Sales", "AltaDeContacto","Ola1"}, priority=2)
+	public void TS94564_Alta_Contacto_Persona_Fisica_Verificar_Formato_De_Email() throws IOException {
 		SalesBase SB = new SalesBase(driver);
-		SB.BuscarCuenta("DNI", sDni);
+		SB.BtnCrearNuevoCliente();
 		try {Thread.sleep(6000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
-		List<WebElement> solapas = driver.findElement(By.className("slds-tabs--scoped__nav")).findElements(By.tagName("li"));
-		for (WebElement UnaS : solapas) {
-			if (UnaS.findElement(By.tagName("a")).getText().equals("Contactos")) {
-				UnaS.findElement(By.tagName("a")).click();
-				break;
-			}
-		}
-		sleep(1000);
-		driver.findElement(By.id("tab-scoped-3")).findElement(By.tagName("tbody")).findElements(By.tagName("tr")).get(0).findElements(By.tagName("td")).get(0).findElement(By.tagName("a")).click();
-		sleep(6000);
 		WebElement email = driver.findElement(By.id("EmailSelectableItems"));
 		email.findElement(By.tagName("input")).clear();
 		email.findElement(By.tagName("input")).sendKeys("abc@telecom");
@@ -1619,8 +1650,45 @@ public class Sales extends TestBase {
 		driver.findElement(By.id("LastName")).sendKeys("Generica");
 		driver.findElement(By.id("Birthdate")).sendKeys("15/07/1980");
 		sleep(7000);
-		driver.get("https://crm--sit.cs14.my.salesforce.com/home/home.jsp");
-		driver.findElement(By.xpath("//a[@href=\'https://crm--sit--c.cs14.visual.force.com/apex/taClientSearch']")).click();
+		/*driver.get("https://crm--sit.cs14.my.salesforce.com/home/home.jsp");
+		driver.findElement(By.xpath("//a[@href=\'https://crm--sit--c.cs14.visual.force.com/apex/taClientSearch']")).click();*/
+		Accounts accountPage = new Accounts(driver);
+		driver.navigate().refresh();
+		sleep(4000);
+		driver.switchTo().frame(accountPage.getFrameForElement(driver, By.cssSelector(".hasMotif.homeTab.homepage.ext-webkit.ext-chrome.sfdcBody.brandQuaternaryBgr")));
+		List<WebElement> frames = driver.findElements(By.tagName("iframe"));
+		boolean enc = false;
+		int index = 0;
+		for(WebElement frame : frames) {
+			try {
+				System.out.println("aca");
+				driver.switchTo().frame(frame);
+
+				driver.findElement(By.cssSelector(".slds-grid.slds-m-bottom_small.slds-wrap.cards-container")).getText(); //each element is in the same iframe.
+				//System.out.println(index); //prints the used index.
+
+				driver.findElement(By.cssSelector(".slds-grid.slds-m-bottom_small.slds-wrap.cards-container")).isDisplayed(); //each element is in the same iframe.
+				//System.out.println(index); //prints the used index.
+
+				driver.switchTo().frame(accountPage.getFrameForElement(driver, By.cssSelector(".hasMotif.homeTab.homepage.ext-webkit.ext-chrome.sfdcBody.brandQuaternaryBgr")));
+				enc = true;
+				break;
+			}catch(NoSuchElementException noSuchElemExcept) {
+				index++;
+				driver.switchTo().frame(accountPage.getFrameForElement(driver, By.cssSelector(".hasMotif.homeTab.homepage.ext-webkit.ext-chrome.sfdcBody.brandQuaternaryBgr")));
+			}
+		}
+		if(enc == false)
+			index = -1;
+		try {
+				driver.switchTo().frame(frames.get(index));
+		}catch(ArrayIndexOutOfBoundsException iobExcept) {System.out.println("Elemento no encontrado en ningun frame 2.");
+			
+		}
+		
+		sleep(14000);
+		driver.switchTo().frame(accountPage.getFrameForElement(driver, By.id("SearchClientDocumentNumber")));
+		
 		SB.BuscarAvanzada("cuenta", "generica", "", "", "");
 		List<WebElement> cont = driver.findElements(By.cssSelector(".slds-button.slds-button.slds-button--icon"));
 		for (WebElement x : cont) {
@@ -1672,9 +1740,17 @@ public class Sales extends TestBase {
 		sb.Crear_DomicilioLegal("Buenos Aires", "Vicente Lopez", "falsa", "", "1000", "", "", "1549");
 		sleep(35000);
 		page.obligarclick(driver.findElement(By.id("LineAssignment_nextBtn")));
+		sleep(15000);
+		page.obligarclick(driver.findElement(By.id("ICCDAssignment_nextBtn")));
 		sleep(20000);
-		//page.obligarclick(driver.findElement(By.id("InvoicePreview_nextBtn")));
-		//sleep(15000);
+		/*Accounts accountPage = new Accounts(driver);
+		
+		driver.switchTo().frame(accountPage.getFrameForElement(driver, By.id("InvoicePreview_nextBtn")));*/
+		
+		page.obligarclick(driver.findElement(By.id("InvoicePreview_nextBtn")));
+		sleep(15000);
+		page.obligarclick(driver.findElement(By.id("SelectPaymentMethodsStep_nextBtn")));
+		sleep(15000);
 		sb.elegirvalidacion("DOC");
 		sleep(5000);
 		driver.findElement(By.id("FileDocumentImage")).sendKeys("C:\\Users\\florangel\\Downloads\\arbolito.jpg");
@@ -2646,7 +2722,7 @@ public class Sales extends TestBase {
 				c.click();
 				break;
 			}}
-		sleep(7000);	
+		sleep(17000);	
 		List<WebElement> frame2 = driver.findElements(By.tagName("iframe"));
 		driver.switchTo().frame(frame2.get(0));
 		Select env = new Select (driver.findElement(By.id("DeliveryMethod")));
@@ -2654,7 +2730,41 @@ public class Sales extends TestBase {
 		driver.findElement(By.id("SalesChannelConfiguration_nextBtn")).click();
 		sleep(7000);
 		driver.switchTo().defaultContent();
+		CustomerCare cc = new CustomerCare(driver);
+		Accounts accountPage = new Accounts(driver);
+		driver.switchTo().frame(accountPage.getFrameForElement(driver, By.cssSelector(".hasMotif.homeTab.homepage.ext-webkit.ext-chrome.sfdcBody.brandQuaternaryBgr")));
+		List<WebElement> frames = driver.findElements(By.tagName("iframe"));
+		boolean enc = false;
+		int index = 0;
+		for(WebElement frame : frames) {
+			try {
+				System.out.println("aca");
+				driver.switchTo().frame(frame);
+
+				driver.findElement(By.cssSelector(".slds-grid.slds-m-bottom_small.slds-wrap.cards-container")).getText(); //each element is in the same iframe.
+				//System.out.println(index); //prints the used index.
+
+				driver.findElement(By.cssSelector(".slds-grid.slds-m-bottom_small.slds-wrap.cards-container")).isDisplayed(); //each element is in the same iframe.
+				//System.out.println(index); //prints the used index.
+
+				driver.switchTo().frame(accountPage.getFrameForElement(driver, By.cssSelector(".hasMotif.homeTab.homepage.ext-webkit.ext-chrome.sfdcBody.brandQuaternaryBgr")));
+				enc = true;
+				break;
+			}catch(NoSuchElementException noSuchElemExcept) {
+				index++;
+				driver.switchTo().frame(accountPage.getFrameForElement(driver, By.cssSelector(".hasMotif.homeTab.homepage.ext-webkit.ext-chrome.sfdcBody.brandQuaternaryBgr")));
+			}
+		}
+		if(enc == false)
+			index = -1;
+		try {
+				driver.switchTo().frame(frames.get(index));
+		}catch(ArrayIndexOutOfBoundsException iobExcept) {System.out.println("Elemento no encontrado en ningun frame 2.");
+			
+		}
 		
+		sleep(14000);
+		driver.switchTo().frame(accountPage.getFrameForElement(driver, By.cssSelector(".slds-input.ng-pristine.ng-untouched.ng-valid.ng-empty")));
 		SB.elegirplan("Plan prepago nacional");
 		SB.continuar();
 		sleep(25000);
@@ -2663,6 +2773,8 @@ public class Sales extends TestBase {
 		WebElement sig = driver.findElement(By.id("LineAssignment_nextBtn"));
 		sig.click();
 		sleep(12000);
+		cc.obligarclick(driver.findElement(By.id("ICCDAssignment_nextBtn")));
+		sleep(20000);
 		Select deliv = new Select(driver.findElement(By.id("DeliveryMethod")));
 		System.out.println(deliv.getFirstSelectedOption());
 		Assert.assertTrue(deliv.getFirstSelectedOption().getText().equals("Delivery"));

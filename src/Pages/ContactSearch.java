@@ -24,6 +24,15 @@ public class ContactSearch extends BasePage {
 
 	@FindBy(how = How.CSS, using = ".slds-radio--faux.ng-scope")
 	private List<WebElement> gender;
+	
+	@FindBy(how = How.ID, using = "FirstName")
+	private WebElement nombre;
+	
+	@FindBy(how = How.ID, using = "LastName")
+	private WebElement apellido;
+	
+	@FindBy(how = How.ID, using = "Birthdate")
+	private WebElement fNac;
 
 	@FindBy(how = How.ID, using = "ContactInfo_nextBtn")
 	private WebElement next;
@@ -181,5 +190,11 @@ public class ContactSearch extends BasePage {
 			//Nada
 		}
 		try {Thread.sleep(7000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+	}
+	public void Llenar_Contacto(String sNom, String sAp, String sFN ) {
+		nombre.sendKeys(sNom);
+		apellido.sendKeys(sAp);
+		fNac.sendKeys(sFN);
+		sleep(2000);
 	}
 }

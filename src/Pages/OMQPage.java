@@ -491,6 +491,29 @@ public void buscarYClick(List <WebElement> elements, String match, String texto)
 	sleep(2000);
 }
 
+public void buscarYClick(List <WebElement> elements, String match, String texto) {
+	sleep(2000);
+	switch (match) {
+	case "contains":
+		for (WebElement x : elements) {
+			if (x.getText().toLowerCase().contains(texto)) {
+				x.click();
+				break;
+			}
+		}
+		break;
+	case "equals":
+		for (WebElement x : elements) {
+			if (x.getText().toLowerCase().equals(texto)) {
+				x.click();
+				break;
+			}
+		}
+		break;
+	}
+	sleep(2000);
+}
+
 }
 
 
