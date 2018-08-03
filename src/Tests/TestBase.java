@@ -41,6 +41,7 @@ import DataProvider.ExcelUtils;
 
 public class TestBase {
 	protected static WebDriver driver;//
+	protected String urlAmbiente = "https://crm--sit.cs14.my.salesforce.com/";
 	
 	
 	public void leftDropdown(WebDriver driver, String selection) {
@@ -102,7 +103,7 @@ public class TestBase {
 	}
 	
 	public void login(WebDriver driver) {
-		driver.get("https://crm--sit.cs14.my.salesforce.com/");
+		driver.get(urlAmbiente);
 		try {Thread.sleep(4000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 		//if(driver.findElement(By.id("idcard")).isDisplayed())
 		//{
@@ -113,7 +114,7 @@ public class TestBase {
 	//	}
 	}
 	public void loginDani(WebDriver driver) {
-		driver.get("https://crm--sit.cs14.my.salesforce.com/");
+		driver.get(urlAmbiente);
 		try {Thread.sleep(4000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 		//if(driver.findElement(By.id("idcard")).isDisplayed())
 		//{
@@ -125,7 +126,7 @@ public class TestBase {
 	}
 	
 	public void loginMarketing(WebDriver driver) {
-		driver.get("https://crm--sit.cs14.my.salesforce.com/");
+		driver.get(urlAmbiente);
 		try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 	    Login lLogin = new Login(driver);
 	    lLogin.ingresarMarketing();
@@ -167,7 +168,7 @@ public class TestBase {
 		     }
 	     
 	public void omInternalLoginWithCredentials(WebDriver driver, String userName, String password) {
-		driver.navigate().to("https://crm--sit.cs14.my.salesforce.com/");
+		driver.navigate().to(urlAmbiente);
 		driver.findElement(By.xpath("//*[@id=\"idp_hint\"]/button")).click();
 		sleep(3000);
 //		driver.findElement(By.name("Ecom_User_ID")).sendKeys(userName);
@@ -241,7 +242,7 @@ public class TestBase {
 	
 		public void loginsales(WebDriver driver, String tipo){
 	
-		driver.get("https://crm--sit.cs14.my.salesforce.com/");
+		driver.get(urlAmbiente);
 		try {Thread.sleep(6000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 	    Login page0 = new Login(driver);
 	    switch (tipo){
@@ -267,7 +268,7 @@ public class TestBase {
 		/**Ingresa con los datos de la cuenta Andres
 		 * Para el Modulo Sales tiene vinculado el perfil de Agente y Atenci�n a clientes		 */
 		public void loginAgente(WebDriver driver) {
-			driver.get("https://crm--sit.cs14.my.salesforce.com/");
+			driver.get(urlAmbiente);
 			try {Thread.sleep(6000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 		    Login page0 = new Login(driver);
 		    page0.ingresarAndres();
@@ -276,7 +277,7 @@ public class TestBase {
 		/**Ingresa con los datos de la cuenta Elena
 		 * Para el Modulo Sales tiene vinculado el perfil de Call center		 */
 		public void loginTelefonico(WebDriver driver) {
-			driver.get("https://crm--sit.cs14.my.salesforce.com/");
+			driver.get(urlAmbiente);
 			try {Thread.sleep(6000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 		    Login page0 = new Login(driver);
 		    page0.ingresarElena();
@@ -286,14 +287,14 @@ public class TestBase {
 		/**Ingresa con los datos de la cuenta Francisco
 		 * Para el Modulo Sales tiene vinculado el perfil de Vendedor Oficina Comercial		 */
 		public void loginFranciso(WebDriver driver) {
-			driver.get("https://crm--sit.cs14.my.salesforce.com/");
+			driver.get(urlAmbiente);
 			try {Thread.sleep(6000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 		    Login page0 = new Login(driver);
 		    page0.ingresarFrancisco();
 		}
 		
 		public void loginOfCom(WebDriver driver) {
-			driver.get("https://crm--sit.cs14.my.salesforce.com/");
+			driver.get(urlAmbiente);
 			try {Thread.sleep(6000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 		    Login page0 = new Login(driver);
 		    page0.ingresarNominaciones();
@@ -304,7 +305,7 @@ public class TestBase {
 		/**Ingresa con los datos de la cuenta Nicolas.
 		 * Para el Modulo Sales tiene vinculado el perfil de Logistica	 */
 		public void loginNicolas(WebDriver driver) {
-			driver.get("https://crm--sit.cs14.my.salesforce.com/");
+			driver.get(urlAmbiente);
 			try {Thread.sleep(6000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 		    Login page0 = new Login(driver);
 		    page0.ingresarNicolas();
@@ -313,19 +314,19 @@ public class TestBase {
 		/**Ingresa con los datos de la cuenta de Marcela
 		 * Para el Modulo Sales tiene vinculado el perfil de Entregas y Configuraciones	 */
 		public void loginMarcela(WebDriver driver) {
-			driver.get("https://crm--sit.cs14.my.salesforce.com/");
+			driver.get(urlAmbiente);
 			try {Thread.sleep(6000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 		    Login page0 = new Login(driver);
 		    page0.ingresarMarcela();
 		}
 		public void loginFabiana(WebDriver driver) {
-			driver.get("https://crm--sit.cs14.my.salesforce.com/");
+			driver.get(urlAmbiente);
 			try {Thread.sleep(6000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 		    Login page0 = new Login(driver);
 		    page0.ingresarFabiana();
 		}
 		public void loginVictor(WebDriver driver) {
-			driver.get("https://crm--sit.cs14.my.salesforce.com/");
+			driver.get(urlAmbiente);
 			try {Thread.sleep(6000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 		    Login page0 = new Login(driver);
 		    page0.ingresarVictor();
@@ -889,7 +890,7 @@ public class TestBase {
 	@DataProvider
 	public Object[][] DatosAltaLineaAgente() throws Exception{
 
-	 Object[][] testObjArray = ExcelUtils.getTableArray("Cuentas.xlsx","PreparacionDatos",1,1,9,"Alta Linea Agente");
+	 Object[][] testObjArray = ExcelUtils.getTableArray("Cuentas.xlsx","PreparacionDatos",1,1,13,"Alta Linea Agente");
 
 	 return (testObjArray);
 
@@ -899,6 +900,30 @@ public class TestBase {
 	public Object[][] DatosSalesNumerosAmigos() throws Exception{
 
 	 Object[][] testObjArray = ExcelUtils.getTableArray("Cuentas.xlsx","PreparacionDatos",1,1,11,"Numeros Amigos");
+
+	 return (testObjArray);
+
+	}
+	@DataProvider
+	public Object[][] DatosAltaLineaOfCom() throws Exception{
+
+	 Object[][] testObjArray = ExcelUtils.getTableArray("Cuentas.xlsx","PreparacionDatos",1,1,13,"Alta Linea OFCOM");
+
+	 return (testObjArray);
+
+	}
+	@DataProvider
+	public Object[][] AltaLineaNuevoAgentePresencial() throws Exception{
+
+	 Object[][] testObjArray = ExcelUtils.getTableArray("Cuentas.xlsx","Sales",1,1,8,"Alta Linea Nuevo Agente Presencial");
+
+	 return (testObjArray);
+
+	}
+	@DataProvider
+	public Object[][] AltaLineaExistenteOfComPresencial() throws Exception{
+
+	 Object[][] testObjArray = ExcelUtils.getTableArray("Cuentas.xlsx","Sales",1,1,5,"Alta Linea Existente OfCom Presencial");
 
 	 return (testObjArray);
 

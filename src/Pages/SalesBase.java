@@ -247,7 +247,7 @@ public boolean btnnoexiste(String boton){
 
 
  public void gestiondeusuarios(){
-	 driver.navigate().back();
+	// driver.navigate().back();
 		try {Thread.sleep(10000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 		driver.findElement(By.className("zen-selectArrow")).click();
 		driver.findElement(By.xpath("//a[@href=\"/ui/setup/Setup\"]")).click();
@@ -399,7 +399,7 @@ for(WebElement e: btns){
  
  public void elegirplan(String plan){
 		try {Thread.sleep(15000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
-		driver.findElement(By.cssSelector(".slds-button.custom-view-dropdown-button.slds-button_neutral.slds-p-right_small.slds-picklist__label.cpq-base-header-picklist-label")).click();
+		/*driver.findElement(By.cssSelector(".slds-button.custom-view-dropdown-button.slds-button_neutral.slds-p-right_small.slds-picklist__label.cpq-base-header-picklist-label")).click();
 		try {Thread.sleep(3000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 		List<WebElement> list = driver.findElements(By.className("slds-dropdown__item"));
 		System.out.println(list.size());
@@ -408,7 +408,7 @@ for(WebElement e: btns){
 				System.out.println(e.getText());
 				e.click();
 				break;}}
-		try {Thread.sleep(10000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		try {Thread.sleep(10000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}*/
 		try {
 			driver.findElement(By.cssSelector(".slds-input.ng-pristine.ng-untouched.ng-valid")).sendKeys(plan);	}
 		catch(Exception ex1) {driver.findElement(By.cssSelector(".slds-input.ng-pristine.ng-untouched.ng-valid.ng-empty")).sendKeys(plan);}
@@ -418,7 +418,7 @@ for(WebElement e: btns){
 }
  public void agregarplan(String plan){
 		try {Thread.sleep(30000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
-		driver.findElement(By.cssSelector(".slds-button.custom-view-dropdown-button.slds-button_neutral.slds-p-right_small.slds-picklist__label.cpq-base-header-picklist-label")).click();
+		/*driver.findElement(By.cssSelector(".slds-button.custom-view-dropdown-button.slds-button_neutral.slds-p-right_small.slds-picklist__label.cpq-base-header-picklist-label")).click();
 		try {Thread.sleep(3000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 		List<WebElement> list = driver.findElements(By.className("slds-dropdown__item"));
 		System.out.println(list.size());
@@ -427,7 +427,7 @@ for(WebElement e: btns){
 				System.out.println(e.getText());
 				e.click();
 				break;}}
-		try {Thread.sleep(10000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		try {Thread.sleep(10000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}*/
 		driver.findElement(By.cssSelector(".slds-input.ng-pristine.ng-untouched.ng-valid")).sendKeys(plan);		
 		try {Thread.sleep(20000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 		List<WebElement> agregar = driver.findElements(By.cssSelector(".slds-button.slds-button_neutral.cpq-add-button")); 
@@ -479,13 +479,9 @@ for(WebElement e: btns){
 	 //DOC SMS o QA
 	 CustomerCare cc = new CustomerCare(driver);
 	 CustomerCare page = new CustomerCare(driver);
-	 sleep(10000);
-	 page.obligarclick(driver.findElement(By.id("InvoicePreview_nextBtn")));
-		sleep(15000);
 	try {Thread.sleep(15000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 	List<WebElement> valid =driver.findElements(By.id("ValidationMethodInValidContact"));
-	List<WebElement> radio =driver.findElements(By.className("imgItemContainer"));
-	
+	List<WebElement> radio =driver.findElements(By.cssSelector(".ta-radioBtnContainer.taBorderOverlay.slds-grid.slds-grid--align-center.slds-grid--vertical-align-center.ng-scope"));
 	for(int i=0; i<valid.size();i++){
 		String value=valid.get(i).getAttribute("value");
 		if(value.equals(validacion)){
@@ -922,6 +918,23 @@ try{	driver.findElement(By.id("alert-ok-button")).click();	} catch (NoSuchElemen
 			driver.findElement(By.id("ShippingAddressData_nextBtn")).click();
 		 }
 		
+		public void cerrarPestaniaGestion(WebDriver driver) {
+			List<WebElement> pestas = driver.findElements(By.className("x-tab-strip-closable"));
+			//System.out.println(driver.findElement(By.cssSelector(".x-tab-strip-closable.x-tab-strip-active")).getText());
+			pestas.addAll(driver.findElements(By.cssSelector(".x-tab-strip-closable.x-tab-strip-active")));
+			for (WebElement UnB : pestas) {
+				try {
+				System.out.println(UnB.getText());
+				//if(UnB.getText().equalsIgnoreCase("gesti\u00f3n de clientes")) {
+					((JavascriptExecutor) driver).executeScript("arguments[0].click();", UnB.findElement(By.className("x-tab-strip-close")));	
+					sleep(2000);
+					//break;
+				//}
+				}catch(Exception ex1) {} 
+			}
+		}
+		
+		
 		public void Crear_Cliente(String DNI){
 			try {Thread.sleep(10000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 			boolean existe = false;
@@ -938,7 +951,7 @@ try{	driver.findElement(By.id("alert-ok-button")).click();	} catch (NoSuchElemen
 					break;
 				}
 			}
-			try {Thread.sleep(7000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+			try {Thread.sleep(9000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 		}
 		
 		public int frameDeSales(WebDriver driver) {
@@ -1056,21 +1069,6 @@ try{	driver.findElement(By.id("alert-ok-button")).click();	} catch (NoSuchElemen
 			sleep(5000);
 		}
 		
-		public void cerrarPestaniaGestion(WebDriver driver) {
-			List<WebElement> pestas = driver.findElements(By.className("x-tab-strip-closable"));
-			//System.out.println(driver.findElement(By.cssSelector(".x-tab-strip-closable.x-tab-strip-active")).getText());
-			pestas.addAll(driver.findElements(By.cssSelector(".x-tab-strip-closable.x-tab-strip-active")));
-			for (WebElement UnB : pestas) {
-				try {
-				System.out.println(UnB.getText());
-				//if(UnB.getText().equalsIgnoreCase("gesti\u00f3n de clientes")) {
-					((JavascriptExecutor) driver).executeScript("arguments[0].click();", UnB.findElement(By.className("x-tab-strip-close")));	
-					sleep(2000);
-					//break;
-				//}
-				}catch(Exception ex1) {} 
-			}
-		}
 		
 		public void configAmigos(String num1, String num2) {
 			OM pOM = new OM(driver);
@@ -1171,5 +1169,55 @@ try{	driver.findElement(By.id("alert-ok-button")).click();	} catch (NoSuchElemen
 			}
 
 		}
+		
+		public void ResolverEntrega(WebDriver driver, String entrega, String provincia, String localidad) {
+			List<WebElement> botones = driver.findElements(By.cssSelector(".slds-m-left--x-small.slds-button.slds-button--brand"));
+			for(WebElement UnB : botones) {
+				System.out.println("UnBoton= "+UnB.getText());
+				if(UnB.getText().equalsIgnoreCase("cambiar")) {
+					UnB.click();
+					break;
+				}
+			}
+			sleep(12000);
+			List<WebElement> frame2 = driver.findElements(By.tagName("iframe"));
+			driver.switchTo().frame(frame2.get(0));
+			Select env = new Select (driver.findElement(By.id("DeliveryMethod")));
+			env.selectByVisibleText(entrega);
+			sleep(2000);
+			if(entrega.toLowerCase().contains("store")) {
+				env = new Select (driver.findElement(By.id("State")));
+				env.selectByVisibleText(provincia);
+				sleep(2000);
+				env = new Select (driver.findElement(By.id("City")));
+				env.selectByVisibleText(localidad);
+				sleep(2000);
+				driver.findElement(By.id("Store")).click();
+				sleep(2000);
+				driver.findElement(By.cssSelector(".slds-list__item.ng-binding.ng-scope")).click();
+				sleep(2000);
+			}
+			driver.findElement(By.id("SalesChannelConfiguration_nextBtn")).click();
+			sleep(4000);
+		}
 
+		public void EnvioDelivery(WebDriver driver, String TipoDel, String Provincia, String Localidad, String Calle, String Altura, String CP, String TCelular, String TAlternativo) {
+			CustomerCare cc = new CustomerCare(driver);
+			Select env = new Select (driver.findElement(By.id("DeliveryServiceType")));
+			env.selectByVisibleText(TipoDel);
+			cc.obligarclick(driver.findElement(By.id("DeliveryMethodSelection_nextBtn")));
+			sleep(12000);
+			env = new Select (driver.findElement(By.id("State")));
+			env.selectByVisibleText(Provincia);
+			env = new Select (driver.findElement(By.id("City")));
+			env.selectByVisibleText(Localidad);
+			driver.findElement(By.id("Street")).sendKeys(Calle); 
+			driver.findElement(By.id("StreetNumber")).sendKeys(Altura);
+			driver.findElement(By.id("PostalCode")).sendKeys(CP);
+			driver.findElement(By.id("ContactMobilePhone")).sendKeys(TCelular);
+			driver.findElement(By.id("AlternativeTelephone")).sendKeys(TAlternativo);
+			cc.obligarclick(driver.findElement(By.id("ShippingAddressData_nextBtn")));
+			
+			
+		}
  }
