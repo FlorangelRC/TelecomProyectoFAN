@@ -2014,7 +2014,7 @@ public class OM {
 				OMQPage OM = new OMQPage(driver);
 				driver.findElement(By.name("vlocity_cmt__vieworchestrationplan")).click();
 				sleep(12000);
-				//int i = 1;
+				int i = 1;
 				boolean zoom = false;
 				while (zoom == false) {
 
@@ -2036,15 +2036,14 @@ public class OM {
 						System.out.println(S203);
 						x.click();
 						break;
-						
 					}
 				}
+				
 					sleep(10000);
 					ArrayList<String> tabs = new ArrayList<String> (driver.getWindowHandles());
 					driver.switchTo().window(tabs.get(1));
 					OM.buscarYClick(driver.findElements(By.className("slds-tabs--scoped__link")), "equals", "children");
-		   
-				
+		   				
 					sleep(4000);
 					driver.findElement(By.xpath(".//*[@id='bodyCell']//table/tbody/tr/td[3]//a")).click();
 					sleep(4000);								
@@ -2052,19 +2051,21 @@ public class OM {
 						
 					if (!OM.requestValidator(json)) {
 						throw new Exception("Fallo en la validacion de los campos del Json Request");
-						
-						}
+					}
+						sleep(10000);
 						cambiarVentanaNavegador(0);
+						sleep(10000);
 						closeAllOtherTabs();
-						sleep(5000);
+						sleep(35000);
 						driver.findElement(By.className("submit-button")).click();
 						sleep(6000);
 						cambiarVentanaNavegador(1);
 						sleep(5000);
 						closeAllOtherTabs();
-								
-
-				}
+						
+					}
+					
+			
 	public void BajaDeLineaOM(String Cuenta, String Plan) throws InterruptedException {
 		boolean gestion = false;
 		TestBase tb = new TestBase();
