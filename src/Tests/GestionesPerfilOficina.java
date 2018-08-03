@@ -106,7 +106,7 @@ public class GestionesPerfilOficina extends TestBase {
 		sleep(3000);
 		
 		CustomerCare cCC = new CustomerCare(driver);
-		cCC.irAGesiton("Números Gratis");
+		cCC.irAGestionEnCard("Números Gratis");
 		
 		WebElement wNumeros = driver.findElement(By.cssSelector(".slds-grid.slds-grid--pull-padded"));
 		List<WebElement> wNumerosAmigos = wNumeros.findElements(By.cssSelector(".slds-col--padded.slds-size--1-of-2"));
