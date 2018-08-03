@@ -2669,12 +2669,79 @@ public class OM {
 		return verificacion;
 	}
 	
-	public void completarFlujoOrquestacionHasta(int iSecciones, int iCajas, String sNombre) {
+	public void completarFlujoOrquestacionHasta(int iSecciones, int iCajas, String sNombre, String sOperacion) throws InterruptedException {
 		//*[contains(text(),'Actualizando los inventarios')]//../parent::div//../parent::div//../parent::div
 		//*[contains(@id, 'ctl00_btnAircraftMapCell')]//*[contains(@title, 'Select Seat')]
+		
+		switch (sOperacion) { 
+	      case "Alta de Linea": 
+	        OMQPage OM=new OMQPage (driver); 
+	        crearOrden("MattuOM"); 
+	        assertTrue(driver.findElement(By.cssSelector(".noSecondHeader.pageType")).isDisplayed()); 
+	        agregarGestion("Venta"); 
+	        sleep(2000); 
+	        OM.getCPQ().click(); 
+	        sleep(5000); 
+	        colocarPlan("Plan Prepago Nacional"); 
+	        OM.configuracion(); 
+	        sleep(4000); 
+	        AgregarDomicilio(); 
+	        sleep(5000); 
+	        driver.findElement(By.name("ta_submit_order")).click(); 
+	        sleep(15000); 
+	        try {System.out.println(driver.switchTo().alert().getText()); 
+	          driver.switchTo().alert().accept(); 
+	          driver.switchTo().alert().dismiss(); 
+	          driver.switchTo().defaultContent(); 
+	          driver.findElement(By.name("ta_submit_order")).click(); 
+	        } catch (org.openqa.selenium.NoAlertPresentException e) { 
+	          driver.switchTo().defaultContent(); 
+	        } 
+	        sleep(45000); 
+	         try {  
+	              cambiarVentanaNavegador(1);  
+	              sleep(2000);  
+	              driver.findElement(By.id("idlist")).click();  
+	              sleep(5000);  
+	              cambiarVentanaNavegador(0);  
+	            }catch(java.lang.IndexOutOfBoundsException ex1) {}  
+	        sleep(12000); 
+	        break; 
+	      case "Baja de Linea": 
+	        TestBase tb = new TestBase(); 
+	        OM Pom = new OM(driver); 
+	        Pom.Gestion_Alta_De_Linea("MattuOM", "Plan Prepago Nacional"); 
+	        Pom.irAChangeToOrder(); 
+	        sleep(15000); 
+	        driver.switchTo().defaultContent(); 
+	        DateFormat dateFormat = new SimpleDateFormat("MM-dd-yyyy"); 
+	        driver.findElement(By.id("RequestDate")).sendKeys(dateFormat.format(Pom.fechaAvanzada())); 
+	        driver.findElement(By.cssSelector(".form-control.btn.btn-primary.ng-binding")).click(); 
+	        sleep(15000); 
+	        driver.findElement(By.xpath(".//*[@id='tab-default-1']/div/ng-include//div[10]//button")).click(); 
+	        sleep(2000); 
+	        tb.buscarYClick(driver.findElements(By.cssSelector(".slds-dropdown__item.cpq-item-actions-dropdown__item")), 
+	            "contains", "delete"); 
+	        sleep(5000); 
+	        driver.findElement(By.cssSelector(".slds-button.slds-button--destructive")).click(); 
+	        sleep(7000); 
+	        tb.buscarYClick(driver.findElements(By.cssSelector(".slds-button.slds-button_neutral")), "contains", 
+	            "view record"); 
+	        sleep(5000); 
+	        Pom.agregarGestion("Desconexi\u00f3n"); 
+	        sleep(3000); 
+	        driver.findElement(By.name("ta_submit_order")).click(); 
+	        sleep(12000); 
+	        break; 
+	    } 
+		
+		boolean bFailed = true; 
+	    boolean bFatallyFailed = true; 
+	    boolean bRunning = true; 
 		int iAuxCajas = iCajas;
 		int iAuxSecciones = iSecciones;
 		List<WebElement> wCanvas = new ArrayList<WebElement>();
+		sleep(35000);
 		while (iAuxCajas != 0) {
 			iAuxSecciones++;
 			iAuxCajas--;
@@ -2723,13 +2790,15 @@ public class OM {
 		}
 		
 		int i = 1;
-		while (cajas.size() > 0) {
+		boolean bContinue = true; 
+	    while (bContinue == true) {
 			for (WebElement UnaC : cajas) {
 				try {
 					if (UnaC.findElement(By.className("item-body-text")).getText().contains(sNombre)) {
 						for (int e = 0; e < cajas.size(); e++) {
 							cajas.remove(e);
 						}
+						bContinue = false;
 						break;
 					}
 				}
@@ -2788,9 +2857,10 @@ public class OM {
 					cajas.add(wAux);
 					//cajas.set(iPosicionCaja, wAux);
 					//iPosicionCaja++;
+					bFailed = true; 
 				}
 				catch (Exception ex) {
-					//Empty
+					bFailed = false;
 				}
 			}
 			for (WebElement wAux : wCanvas) {
@@ -2799,9 +2869,10 @@ public class OM {
 					cajas.add(wAux);
 					//cajas.set(iPosicionCaja, wAux);
 					//iPosicionCaja++;
+					bFatallyFailed = true;
 				}
 				catch (Exception ex) {
-					//Empty
+					bFatallyFailed = false;
 				}
 			}
 			for (WebElement wAux : wCanvas) {
@@ -2810,11 +2881,16 @@ public class OM {
 					cajas.add(wAux);
 					//cajas.set(iPosicionCaja, wAux);
 					//iPosicionCaja++;
+					bRunning = true;
 				}
 				catch (Exception ex) {
-					//Empty
+					bRunning = false;
 				}
 			}
+			
+			if (bFailed == false && bFatallyFailed == false && bContinue == false) { 
+		        bContinue = false; 
+		      } 
 			
 		}
 		closeAllOtherTabs();
