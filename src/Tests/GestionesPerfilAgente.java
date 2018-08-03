@@ -27,7 +27,7 @@ public class GestionesPerfilAgente extends TestBase{
 	public void init() {
 		driver = setConexion.setupEze();
 		sleep(5000);
-		loginOfCom(driver);
+		loginAgente(driver);
 		sleep(22000);
 		driver.findElement(By.id("tabBar")).findElement(By.tagName("a")).click();
 		sleep(18000);
