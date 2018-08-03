@@ -92,13 +92,13 @@ public class GestionesPerfilOficina extends TestBase {
 		sleep(5000);
 	}
 	
-	@Test (groups = {"GestionesPerfilOficina"}/*, dataProvider="NumeroAmigo"*/)
-	public void OpenPage(/*String sNumeroAmigoVOZ, String sNumeroAmigoSMS*/) {
+	@Test (groups = {"GestionesPerfilOficina"}, dataProvider="PerfilCuentaSeiscientos")
+	public void OpenPage(String sDNI, String sCuenta, String sNumeroDeCuenta, String sLinea/*String sNumeroAmigoVOZ, String sNumeroAmigoSMS*/) {
 		BasePage cambioFrameByID=new BasePage();
 		driver.switchTo().frame(cambioFrameByID.getFrameForElement(driver, By.id("SearchClientDocumentType")));
 		sleep(1000);
 		SalesBase sSB = new SalesBase(driver);
-		sSB.BuscarCuenta("DNI", "46534534");
+		sSB.BuscarCuenta("DNI", sDNI);
 		driver.findElement(By.cssSelector(".slds-tree__item.ng-scope")).findElement(By.tagName("div")).click();
 		sleep(15000);
 		driver.switchTo().frame(cambioFrame(driver, By.className("card-top")));
