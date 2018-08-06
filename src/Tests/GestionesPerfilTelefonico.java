@@ -16,6 +16,8 @@ import org.testng.annotations.Test;
 
 import Pages.Accounts;
 import Pages.CustomerCare;
+import Pages.BasePage;
+import Pages.CustomerCare;
 import Pages.Marketing;
 import Pages.SalesBase;
 import Pages.setConexion;
@@ -146,4 +148,74 @@ public class GestionesPerfilTelefonico extends TestBase{
 		Assert.assertTrue(msj.toLowerCase().contains("se ha enviado correctamente la factura a huawei. dirigirse a caja para realizar el pago de la misma"));
 		Assert.assertTrue(check.toLowerCase().contains("la orden se realiz\u00f3 con \u00e9xito"));*/
 	}
+	
+	@Test (groups = {"GestionesPerfilTelefonico", "RenovacioDeCuota"}, dataProvider="RenovacionCuotaSinSaldo")
+	public void TS130067_CRM_Movil_REPRO_Renovacion_De_Cuota_Telefonico_Descuento_De_Saldo_Sin_Credito(String sCuenta, String sDNI) {
+		BasePage cambioFrameByID=new BasePage();
+		driver.switchTo().frame(cambioFrameByID.getFrameForElement(driver, By.id("SearchClientDocumentType")));
+		sleep(1000);
+		SalesBase sSB = new SalesBase(driver);
+		sSB.BuscarCuenta("DNI", sDNI);
+		driver.findElement(By.cssSelector(".slds-tree__item.ng-scope")).findElement(By.tagName("div")).click();
+		sleep(20000);
+		driver.switchTo().frame(cambioFrame(driver, By.className("card-top")));
+		driver.findElement(By.className("card-top")).click();
+		sleep(3000);
+		
+		CustomerCare cCC = new CustomerCare(driver);
+		cCC.irAGestionEnCard("Renovacion de Datos");
+		sleep(10000);
+		driver.switchTo().frame(cambioFrame(driver, By.id("combosMegas")));
+		driver.findElement(By.id("combosMegas")).findElements(By.className("slds-checkbox")).get(2).click();
+		sleep(2000);
+		Assert.assertTrue(driver.findElement(By.cssSelector(".message.description.ng-binding.ng-scope")).getText().equalsIgnoreCase("saldo insuficiente"));
+	}
+	@Test (groups = {"GestionesPerfilTelefonico", "RenovacioDeCuota"}, dataProvider="RenovacionCuotaConSaldo")
+	public void TS_CRM_Movil_REPRO_Renovacion_De_Cuota_Telefonico_Descuento_De_Saldo_Con_Credito(String sCuenta, String sDNI, String sLinea) {
+		BasePage cambioFrameByID=new BasePage();
+		driver.switchTo().frame(cambioFrameByID.getFrameForElement(driver, By.id("SearchClientDocumentType")));
+		sleep(1000);
+		SalesBase sSB = new SalesBase(driver);
+		sSB.BuscarCuenta("DNI", sDNI);
+		driver.findElement(By.cssSelector(".slds-tree__item.ng-scope")).findElement(By.tagName("div")).click();
+		sleep(20000);
+		driver.switchTo().frame(cambioFrame(driver, By.className("card-top")));
+		driver.findElement(By.className("card-top")).click();
+		sleep(3000);
+		CustomerCare cCC = new CustomerCare(driver);
+		cCC.irAGestionEnCard("Renovacion de Datos");
+		sleep(12000);
+		driver.switchTo().frame(cambioFrame(driver, By.id("combosMegas")));
+		driver.findElement(By.id("combosMegas")).findElements(By.className("slds-checkbox")).get(0).click();
+		sleep(2000);
+		cCC.obligarclick(driver.findElement(By.id("CombosDeMegas_nextBtn")));
+		sleep(10000);
+		List<WebElement> pago = driver.findElement(By.id("PaymentTypeRadio|0")).findElements(By.cssSelector(".slds-radio.ng-scope"));
+		for (WebElement UnP : pago) {
+			if (UnP.getText().toLowerCase().contains("saldo")){
+				UnP.click();
+				break;
+			}
+		}
+		
+		cCC.obligarclick(driver.findElement(By.id("SetPaymentType_nextBtn")));
+		sleep(12000);
+		driver.findElement(By.cssSelector(".message.description.ng-binding.ng-scope")).getText().equalsIgnoreCase("la compra se realiz\u00f3 exitosamente");
+		cCC.obligarclick(driver.findElement(By.id("AltaHuawei_nextBtn")));
+		sleep(12000);
+		/*driver.navigate().refresh();
+		try {
+			driver.switchTo().frame(cambioFrameByID.getFrameForElement(driver, By.className("story-container")));
+			driver.findElement(By.className("story-container")).findElement(By.cssSelector(".slds-text-body.regular.story-title"));
+		} catch(Exception ex1) {
+			driver.switchTo().frame(cambioFrameByID.getFrameForElement(driver, By.cssSelector(".x-layout-mini.x-layout-mini-west")));
+			driver.findElement(By.cssSelector(".x-layout-mini.x-layout-mini-west")).click();
+			sleep(4000);*/
+		String sOrder = cCC.obtenerOrden(driver);
+			
+		
+		System.out.println("Order: " + sOrder + " Fin");
+		//Assert.assertTrue(driver.findElement(By.cssSelector(".slds-form-element.vlc-flex.vlc-slds-text-block.vlc-slds-rte.ng-pristine.ng-valid.ng-scope")).getText().contains("�La orden se realiz� con �xito!"));
+	}
+	
 }
