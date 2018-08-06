@@ -1494,7 +1494,25 @@ public class CustomerCare extends BasePage {
 					break;
 			}
 		}
-		TestBase.sleep(4000);
-		//cambiarAFrameActivo();
+		TestBase.sleep(8000);
+		try {
+			cambiarAFrameActivo();
+		}catch(org.openqa.selenium.StaleElementReferenceException ex1) {}
+	}
+	
+	public String obtenerOrden(WebDriver driver) {
+		TestBase tb = new TestBase();
+		driver.navigate().refresh();
+		driver.switchTo().frame(tb.cambioFrame(driver, By.className("story-container")));
+	//}
+	
+		List<WebElement> wStoryContainer = driver.findElements(By.className("story-container"));
+		for (WebElement wAux : wStoryContainer) {
+			if (wAux.findElement(By.cssSelector(".slds-text-body_regular.story-title")).getText().equalsIgnoreCase("Reseteo de Cuota")) {
+				List<WebElement> wStoryField = wAux.findElements(By.cssSelector(".slds-text-body_regular.story-field"));
+				return( wStoryField.get(0).getText());
+			}
+		}
+		return(null);
 	}
 }
