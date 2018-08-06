@@ -174,12 +174,12 @@ public class CustomerCare extends BasePage {
 				}
 			}
 				
-			sleep(2500);
+			sleep(5000);
 			driver.switchTo().frame(marcoCuentas);
 			Select field = new Select(selectCuentas);
-			if (!field.getFirstSelectedOption().getText().equalsIgnoreCase("Todas las cuentas")) {
-				field.selectByVisibleText("Todas las cuentas");
-				TestBase.sleep(1500);
+			if (!field.getFirstSelectedOption().getText().equalsIgnoreCase("All")) {
+				field.selectByVisibleText("All");
+				TestBase.sleep(5000);
 			}
 			
 			char char0 = nombreCuenta.toUpperCase().charAt(0);
