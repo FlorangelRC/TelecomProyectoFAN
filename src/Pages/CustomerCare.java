@@ -1495,6 +1495,6 @@ public class CustomerCare extends BasePage {
 			}
 		}
 		TestBase.sleep(4000);
-		cambiarAFrameActivo();
+		//cambiarAFrameActivo();
 	}
 }
