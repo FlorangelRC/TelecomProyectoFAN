@@ -956,4 +956,22 @@ public class TestBase {
 	 return (testObjArray);
 
 	}
+	
+	@DataProvider
+	public Object[][] RenovacionCuotaConSaldo() throws Exception{
+
+	 Object[][] testObjArray = ExcelUtils.getTableArray("Cuentas.xlsx","Sales",1,1,3,"Renovacion Cuota Con Saldo");
+
+	 return (testObjArray);
+
+	}
+	
+	@DataProvider
+	public Object[][] RenovacionCuotaSinSaldo() throws Exception{
+
+	 Object[][] testObjArray = ExcelUtils.getTableArray("Cuentas.xlsx","Sales",1,1,2,"Renovacion Cuota Sin Saldo");
+
+	 return (testObjArray);
+
+	}
 }
