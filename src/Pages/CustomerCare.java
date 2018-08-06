@@ -1515,4 +1515,20 @@ public class CustomerCare extends BasePage {
 		}
 		return(null);
 	}
+	
+	public void seleccionarCardPornumeroLinea(String sLinea) {
+		TestBase tTB = new TestBase();
+		driver.switchTo().frame(tTB.cambioFrame(driver, By.className("card-top")));
+		
+		List<WebElement> wCard = driver.findElements(By.className("card-top"));
+		
+		for (WebElement wAux : wCard) {
+			if (wAux.getText().contains(sLinea)) {
+				wAux.click();
+				break;
+			}
+		}
+		
+		sleep(3000);
+	}
 }
