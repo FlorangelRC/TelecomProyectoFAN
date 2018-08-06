@@ -354,15 +354,7 @@ public void sincroProducto() {//(String Products) {
 	productos.findElement(By.xpath("//*[@id=\"bodyCell\"]/div[6]/div[1]/div/div[2]/table/tbody/tr[2]/th/a")).click();
 	System.out.println(productos.getText());	
 	sleep(25000);
-	/*List<WebElement> prod=driver.findElements(By.xpath("//*[@id='bodyCell']/div[6]/div[1]/div/div[2]/table/tbody/tr[*]/th/a"));
-	
-	for (int i = 0; i < prod.size(); i++) {
-		if (prod.get(i).getText().equals(Products)) {
-			a=true;
-			 System.out.println(prod.get(i).getText());
-			 prod.get(i).click();
-				sleep(5000);
-			 break;*/
+
 	}
 
 	//Boton sincronizar
@@ -386,8 +378,6 @@ public void sincroProducto() {//(String Products) {
 		sleep(40000);
 		
 	}
-		
-	
 }
 	
 public boolean requestValidator(WebElement element) {
@@ -419,44 +409,46 @@ public boolean requestValidator(WebElement element) {
 					 
 
 	if (validator) {
-	      boolean idCuenta = obj.getJSONObject("suscriptor").getJSONObject("modoPagoSecundario").getString("idcuenta").matches(regexValidator);
+		System.out.println("*******"+obj.getJSONObject("suscriptor").getJSONObject("modoPagoSecundario").getString("idCuenta")+"*********");
+	      boolean idCuenta = obj.getJSONObject("suscriptor").getJSONObject("modoPagoSecundario").getString("idCuenta").matches(regexValidator);
+	      
 
-	      boolean modoPagoSecundario = obj.getJSONObject("suscriptor").getJSONObject("modoPagoSecundario").getString("modoPago").matches("\\w{1}");
+	      boolean modoPago = obj.getJSONObject("suscriptor").getJSONObject("modoPagoSecundario").getString("modoPago").matches("\\w{1}");
+	      System.out.println("*******"+obj.getJSONObject("suscriptor").getJSONObject("modoPagoSecundario").getString("modoPago")+"*********");
 
 	      boolean idRelacionPago = obj.getJSONObject("suscriptor").getJSONObject("modoPagoSecundario").getString("idRelacionPago").matches(regexValidator);
+	      System.out.println("*******"+obj.getJSONObject("suscriptor").getJSONObject("modoPagoSecundario").getString("idRelacionPago")+"*********");
 
-	      validator = idCuenta && modoPagoSecundario && idRelacionPago;
+	      validator = idCuenta && modoPago && idRelacionPago;
 	      System.out.println("modoPagoSecundario  " + validator);
 	    }
 								
 	JSONArray listaCuentas = obj.getJSONArray("listaCuentas");
     for (int i = 0; i < listaCuentas.length(); i++) {
       if (validator) {
-        validator = listaCuentas.getJSONObject(i).getString("idCuenta").matches(regexValidator) &&listaCuentas.getJSONObject(i).getString("idCliente").matches("\\d[0-9]{10}");
+        validator = listaCuentas.getJSONObject(i).getString("idCuenta").matches(regexValidator) && listaCuentas.getJSONObject(i).getJSONObject("infoCuenta").getString("idCliente").matches("\\d[0-9]{10}");
         System.out.println("listaCuentas  " + validator);
       }
     }
+
+    //getJSONObject(0).getString("idCuenta").matches(regexValidator);
     if (validator) {
-      validator = obj.optJSONObject("registrarCliente").getJSONObject("codCliente").toString().matches("\\w{11}");
+      validator = obj.getJSONObject("registrarCliente").getString("codCliente").matches("\\w{11}");
     }
-    
+
     JSONArray listaOfertasAdicionales = obj.getJSONArray("listaOfertasAdicionales");
     String dateRegex = "(\\d{4})-(\\d{2})-(\\d{2}) (\\d{2}):(\\d{2}):(\\d{2})";
-    for (int i = 0; i < listaOfertasAdicionales.length(); i++) {
-      if (validator) {
-        validator =listaOfertasAdicionales.getJSONObject(i).getString("fechaDesdeCaracteristicaProd").matches(dateRegex) && listaOfertasAdicionales.getJSONObject(i).getString("fechaHastaCaracteristicaProd").matches(dateRegex);
-        System.out.println("fechas: " + validator);
-      }
+	    for (int i = 0; i < listaOfertasAdicionales.length(); i++) {
+	        if (validator) {
+	          validator =listaOfertasAdicionales.getJSONObject(i).getString("fechaDesdeCaracteristicaProd").matches(dateRegex) && listaOfertasAdicionales.getJSONObject(i).getString("fechaHastaCaracteristicaProd").matches(dateRegex);
+	          System.out.println("fechas: " + validator);
+	        }
 
     }
     return validator;
-  }
+}
 		
 		
-
-
-
-
 public  boolean validateRegex(String str, String regex) {
 		    return Pattern.compile(regex, Pattern.CASE_INSENSITIVE).matcher(str).matches();
 		  }
