@@ -165,4 +165,33 @@ public class GestionesPerfilOficina extends TestBase {
 		
 		
 	}
+	
+	@Test (groups = {"GestionesPerfilOficina", "Recargas"}, dataProvider = "PerfilCuentaTomRiddle")
+	public void TS134330_CRM_Movil_REPRO_Recargas_Presencial_TC_Ofcom_Financiacion(String cDNI) {
+		driver.switchTo().frame(cambioFrame(driver, By.id("SearchClientDocumentType")));
+		sb.BuscarCuenta("DNI", cDNI);
+		driver.findElement(By.cssSelector(".slds-tree__item.ng-scope")).click();
+		sleep(15000);
+		driver.switchTo().frame(cambioFrame(driver, By.className("card-top")));
+		driver.findElement(By.className("card-top")).click();
+		sleep(5000);
+		cc.irAGestionEnCard("Recarga de cr\u00e9dito");
+		sleep(15000);
+		driver.switchTo().frame(cambioFrame(driver, By.id("RefillAmount")));
+		driver.findElement(By.id("RefillAmount")).sendKeys("360");
+		sleep(15000);
+		driver.findElement(By.id("AmountSelectionStep_nextBtn")).click();
+		sleep(15000);
+		driver.findElement(By.xpath("//*[@id=\"InvoicePreview_nextBtn\"]")).click();
+		sleep(15000);
+		List <WebElement> tarj = driver.findElements(By.cssSelector(".slds-form-element__label.ng-binding"));
+		for(WebElement x : tarj) {
+			if(x.getText().toLowerCase().equals("tarjeta de credito")) {
+				x.click();
+			}
+		}
+		sb.selectByText(driver.findElement(By.name("loopname")), "BANCO SANTANDER RIO S.A.");
+	
+		
+	}
 }
