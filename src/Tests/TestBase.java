@@ -572,6 +572,7 @@ public class TestBase {
 	public void selectByText(WebElement element, String data){
 		Select select = new Select(element);
 		select.selectByVisibleText(data);
+		sleep(2000);
 	}
 	
 	public int getIndexFrame(WebDriver driver, By byForElement) { //working correctly
@@ -927,7 +928,7 @@ public class TestBase {
 	@DataProvider
 	public Object[][] PerfilCuentaTomRiddle() throws Exception{
 
-	 Object[][] testObjArray = ExcelUtils.getTableArray("Cuentas.xlsx","PerfilGestiones",1,1,1,"Tom Riddle");
+	 Object[][] testObjArray = ExcelUtils.getTableArray("Cuentas.xlsx","PerfilGestiones",1,1,13,"Recargas");
 
 	 return (testObjArray);
 
@@ -955,5 +956,27 @@ public class TestBase {
 
 	 return (testObjArray);
 
+	}
+	
+	@DataProvider
+	public Object[][] RenovacionCuotaConSaldo() throws Exception{
+
+	 Object[][] testObjArray = ExcelUtils.getTableArray("Cuentas.xlsx","Sales",1,1,3,"Renovacion Cuota Con Saldo");
+
+	 return (testObjArray);
+
+	}
+	
+	@DataProvider
+	public Object[][] RenovacionCuotaSinSaldo() throws Exception{
+
+	 Object[][] testObjArray = ExcelUtils.getTableArray("Cuentas.xlsx","Sales",1,1,2,"Renovacion Cuota Sin Saldo");
+
+	 return (testObjArray);
+
+	}
+	
+	public void guardarListaTxt(List<String> datosOrden) {
+		
 	}
 }
