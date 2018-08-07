@@ -15,6 +15,8 @@ import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
 import Pages.Accounts;
+import Pages.BasePage;
+import Pages.CustomerCare;
 import Pages.Marketing;
 import Pages.OM;
 import Pages.SalesBase;
