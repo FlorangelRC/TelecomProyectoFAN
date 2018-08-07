@@ -165,7 +165,19 @@ public class GestionesPerfilOficina extends TestBase {
 	}
 	
 	@Test (groups = {"GestionesPerfilOficina", "Recargas"}, dataProvider = "PerfilCuentaTomRiddle")
-	public void TS134330_CRM_Movil_REPRO_Recargas_Presencial_TC_Ofcom_Financiacion(String cDNI) {
+	public void TS134330_CRM_Movil_REPRO_Recargas_Presencial_TC_Ofcom_Financiacion(String cDNI, String cMonto, String cBanco, String cTarjeta, String cPromo, String cCuotas, String cNumTarjeta, String cVenceMes, String cVenceAno, String cCodSeg, String cTipoDNI, String cDNITarjeta, String cTitular) {
+		if(cMonto.length() >= 4) {
+			cMonto = cMonto.substring(0, cMonto.length() - 1);
+		}
+		if(cVenceMes.length() >= 2) {
+			cVenceMes = cVenceMes.substring(0, cVenceMes.length() - 1);
+		}
+		if(cVenceAno.length() >= 5) {
+			cVenceAno = cVenceAno.substring(0, cVenceAno.length() - 1);
+		}
+		if(cCodSeg.length() >= 5) {
+			cCodSeg = cCodSeg.substring(0, cCodSeg.length() - 1);
+		}
 		driver.switchTo().frame(cambioFrame(driver, By.id("SearchClientDocumentType")));
 		sb.BuscarCuenta("DNI", cDNI);
 		driver.findElement(By.cssSelector(".slds-tree__item.ng-scope")).click();
@@ -176,7 +188,7 @@ public class GestionesPerfilOficina extends TestBase {
 		cc.irAGestionEnCard("Recarga de cr\u00e9dito");
 		sleep(15000);
 		driver.switchTo().frame(cambioFrame(driver, By.id("RefillAmount")));
-		driver.findElement(By.id("RefillAmount")).sendKeys("360");
+		driver.findElement(By.id("RefillAmount")).sendKeys(cMonto);
 		sleep(15000);
 		driver.findElement(By.id("AmountSelectionStep_nextBtn")).click();
 		sleep(15000);
@@ -188,7 +200,7 @@ public class GestionesPerfilOficina extends TestBase {
 				x.click();
 			}
 		}
-		sb.selectByText(driver.findElement(By.name("loopname")), "BANCO SANTANDER RIO S.A.");
+		selectByText(driver.findElement(By.id("BankingEntity-0")), cBanco);
 	
 		
 	}
