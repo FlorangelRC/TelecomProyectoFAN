@@ -28,6 +28,7 @@ public class GestionesPerfilTelefonico extends TestBase{
 	private SalesBase sb;
 	private CustomerCare cc;
 	
+	List <String> datosOrden;
 	@BeforeClass
 	public void init() {
 		driver = setConexion.setupEze();
@@ -93,6 +94,7 @@ public class GestionesPerfilTelefonico extends TestBase{
 
 	//@AfterClass
 	public void quit() {
+		
 		driver.quit();
 		sleep(5000);
 	}
@@ -212,7 +214,7 @@ public class GestionesPerfilTelefonico extends TestBase{
 			driver.findElement(By.cssSelector(".x-layout-mini.x-layout-mini-west")).click();
 			sleep(4000);*/
 		String sOrder = cCC.obtenerOrden(driver);
-			
+		datosOrden.add("Operacion: Renovacion Cuota, Orden: "+sOrder+", Cuenta: "+sCuenta+", DNI: "+sDNI+", Linea: "+sLinea);	
 		
 		System.out.println("Order: " + sOrder + " Fin");
 		//Assert.assertTrue(driver.findElement(By.cssSelector(".slds-form-element.vlc-flex.vlc-slds-text-block.vlc-slds-rte.ng-pristine.ng-valid.ng-scope")).getText().contains("�La orden se realiz� con �xito!"));
