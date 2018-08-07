@@ -975,4 +975,13 @@ public class TestBase {
 	 return (testObjArray);
 
 	}
+	
+	@DataProvider
+	public Object[][] NumerosAmigos() throws Exception{
+
+	 Object[][] testObjArray = ExcelUtils.getTableArray("Cuentas.xlsx","PerfilGestiones",1,1,6,"Amigos");
+
+	 return (testObjArray);
+
+	}
 }
