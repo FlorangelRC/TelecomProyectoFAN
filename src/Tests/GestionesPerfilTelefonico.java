@@ -140,12 +140,12 @@ public class GestionesPerfilTelefonico extends TestBase{
 		driver.findElement(By.id("securityCode-0")).sendKeys(cCodSeg);
 		selectByText(driver.findElement(By.id("documentType-0")), cTipoDNI);
 		driver.findElement(By.id("documentNumber-0")).sendKeys(cDNITarjeta);
-		driver.findElement(By.id("cardHolder-0")).sendKeys(cTitular);
+		driver.findElement(By.id("cardHolder-0")).sendKeys(cTitular);				
+		driver.findElement(By.id("SelectPaymentMethodsStep_nextBtn")).click();
+		sleep(10000);
+		driver.findElement(By.id("InvoicePreview_nextBtn")).click();
 		
-		
-		/*driver.findElement(By.id("SelectPaymentMethodsStep_nextBtn")).click();
-		sleep(15000);
-		String msj = driver.findElement(By.cssSelector(".message.description.ng-binding.ng-scope")).getText();
+		/*String msj = driver.findElement(By.cssSelector(".message.description.ng-binding.ng-scope")).getText();
 		String check = driver.findElement(By.id("GeneralMessageDesing")).getText();
 		Assert.assertTrue(msj.toLowerCase().contains("se ha enviado correctamente la factura a huawei. dirigirse a caja para realizar el pago de la misma"));
 		Assert.assertTrue(check.toLowerCase().contains("la orden se realiz\u00f3 con \u00e9xito"));*/
