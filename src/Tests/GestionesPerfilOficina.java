@@ -129,7 +129,10 @@ public class GestionesPerfilOficina extends TestBase {
 	}
 	
 	@Test (groups = {"GestionesPerfilOficina", "Recargas"}, dataProvider = "PerfilCuentaTomRiddle")
-	public void TS134318_CRM_Movil_REPRO_Recargas_Presencial_Efectivo_Ofcom(String cDNI) {
+	public void TS134318_CRM_Movil_REPRO_Recargas_Presencial_Efectivo_Ofcom(String cDNI, String cMonto, String cBanco, String cTarjeta, String cPromo, String cCuotas, String cNumTarjeta, String cVenceMes, String cVenceAno, String cCodSeg, String cTipoDNI, String cDNITarjeta, String cTitular) {
+		if(cMonto.length() >= 4) {
+			cMonto = cMonto.substring(0, cMonto.length()-1);
+		}
 		driver.switchTo().frame(cambioFrame(driver, By.id("SearchClientDocumentType")));
 		sb.BuscarCuenta("DNI", cDNI);
 		driver.findElement(By.cssSelector(".slds-tree__item.ng-scope")).click();
@@ -140,7 +143,7 @@ public class GestionesPerfilOficina extends TestBase {
 		cc.irAGestionEnCard("Recarga de cr\u00e9dito");
 		sleep(15000);
 		driver.switchTo().frame(cambioFrame(driver, By.id("RefillAmount")));
-		driver.findElement(By.id("RefillAmount")).sendKeys("123");
+		driver.findElement(By.id("RefillAmount")).sendKeys(cMonto);
 		driver.findElement(By.id("AmountSelectionStep_nextBtn")).click();
 		sleep(15000);
 		driver.findElement(By.id("InvoicePreview_nextBtn")).click();
