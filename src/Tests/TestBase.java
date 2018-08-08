@@ -976,6 +976,14 @@ public class TestBase {
 
 	}
 	
+	@DataProvider
+	public Object[][] SteveServicios() throws Exception{
+
+	 Object[][] testObjArray = ExcelUtils.getTableArray("Cuentas.xlsx","PerfilGestiones",1,1,4,"Cuenta Steve");
+
+	 return (testObjArray);
+
+	}
 	public void guardarListaTxt(List<String> datosOrden) {
 		
 	}

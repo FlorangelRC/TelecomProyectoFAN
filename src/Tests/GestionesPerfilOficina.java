@@ -201,7 +201,22 @@ public class GestionesPerfilOficina extends TestBase {
 			}
 		}
 		selectByText(driver.findElement(By.id("BankingEntity-0")), cBanco);
-	
-		
 	}
+	@Test (groups = {"GestionesPerfilOficina"}, dataProvider="SteveServicios")
+	public void TS_134338_CRM_Movil_PRE_Baja_de_Servicio_sin_costo_DDI_con_Roaming_Internacional_Presencial(String sDNI, String sCuenta, String sNumeroDeCuenta, String sLinea){
+		BasePage cambioFrameByID=new BasePage();
+		driver.switchTo().frame(cambioFrameByID.getFrameForElement(driver, By.id("SearchClientDocumentType")));
+		sleep(1000);
+		SalesBase sSB = new SalesBase(driver);
+		sSB.BuscarCuenta("DNI", sDNI);
+		driver.findElement(By.cssSelector(".slds-tree__item.ng-scope")).findElement(By.tagName("div")).click();
+		sleep(15000);
+		driver.switchTo().frame(cambioFrame(driver, By.className("card-top")));
+		driver.findElement(By.className("card-top")).click();
+		sleep(3000);
+		cc.irAGestionEnCard("Alta/Baja de Servicios");
+		sleep(15000);
+		// ROMPE CUANDO ENTRA ALTA/BAJA DE SERVICIOS CDTMALLBOYS
+	}
+	
 }
