@@ -977,6 +977,39 @@ public class TestBase {
 
 	}
 	
+	@DataProvider
+	public Object[][] NumerosAmigos() throws Exception{
+
+	 Object[][] testObjArray = ExcelUtils.getTableArray("Cuentas.xlsx","PerfilGestiones",1,1,6,"Amigos");
+
+	 return (testObjArray);
+
+	}
+	
+	@DataProvider
+	public Object[][] AltaServicios() throws Exception{
+
+	 Object[][] testObjArray = ExcelUtils.getTableArray("Cuentas.xlsx","PerfilGestiones",1,1,4,"Alta Servicio");
+
+	 return (testObjArray);
+
+	}
+	@DataProvider
+	public Object[][] BajaServicios() throws Exception{
+
+	 Object[][] testObjArray = ExcelUtils.getTableArray("Cuentas.xlsx","PerfilGestiones",1,1,4,"Baja Servicio");
+
+	 return (testObjArray);
+
+	}
+	@DataProvider
+	public Object[][] VentaPacks() throws Exception{
+
+	 Object[][] testObjArray = ExcelUtils.getTableArray("Cuentas.xlsx","PerfilGestiones",1,1,4,"Venta de packs");
+
+	 return (testObjArray);
+
+	}
 	public void guardarListaTxt(List<String> datosOrden) throws IOException {
 		File archivo=new File("DatosOrdenes.txt");
 		if (archivo.exists())
@@ -990,5 +1023,13 @@ public class TestBase {
 			ArchiSa.write("--------------------------------------------------------------------\r\n");
 		}
 		ArchiSa.close();
+	}
+	
+	public void loginCBS(WebDriver driver) {
+		driver.get(urlAmbiente);
+		try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+	    Login lLogin = new Login(driver);
+	    lLogin.ingresarCBS();
+	    driver.get("https://10.75.39.140:8081/main.action?ssLogin=true&BMEWebToken=be935f78-f517-441c-a299-c5a1ba3f1f411b7c8915-7f90-4b1d-bee6-15837afe7b05");
 	}
 }
