@@ -988,4 +988,12 @@ public class TestBase {
 	public void guardarListaTxt(List<String> datosOrden) {
 		
 	}
+	
+	public void loginCBS(WebDriver driver) {
+		driver.get(urlAmbiente);
+		try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+	    Login lLogin = new Login(driver);
+	    lLogin.ingresarCBS();
+	    driver.get("https://10.75.39.140:8081/main.action?ssLogin=true&BMEWebToken=be935f78-f517-441c-a299-c5a1ba3f1f411b7c8915-7f90-4b1d-bee6-15837afe7b05");
+	}
 }

@@ -231,4 +231,13 @@ public class Login extends BasePage {
 			login.click();
 			try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 		}
+		
+		public void ingresarCBS() {
+			try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+			logininterno.click();
+			username.sendKeys("CBS543438");
+			password.sendKeys("Keke136!");
+			login.click();
+			try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		}
 }
