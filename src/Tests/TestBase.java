@@ -976,6 +976,15 @@ public class TestBase {
 
 	}
 	
+	@DataProvider
+	public Object[][] NumerosAmigos() throws Exception{
+
+	 Object[][] testObjArray = ExcelUtils.getTableArray("Cuentas.xlsx","PerfilGestiones",1,1,6,"Amigos");
+
+	 return (testObjArray);
+
+	}
+	
 	public void guardarListaTxt(List<String> datosOrden) {
 		
 	}
