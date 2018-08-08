@@ -111,7 +111,7 @@ public class GestionesPerfilOficina extends TestBase {
 		//driver.findElement(By.className("card-top")).click();
 		//sleep(3000);
 		
-		cCC.irAGestionEnCard("Números Gratis");
+		cCC.irAGestionEnCard("Nï¿½meros Gratis");
 		
 		sleep(5000);
 		driver.switchTo().defaultContent();
@@ -124,7 +124,7 @@ public class GestionesPerfilOficina extends TestBase {
 		driver.findElement(By.cssSelector(".OSradioButton.ng-scope.only-buttom")).click();
 		
 		sleep(5000);
-		Assert.assertTrue(driver.findElement(By.cssSelector(".slds-form-element.vlc-flex.vlc-slds-text-block.vlc-slds-rte.ng-pristine.ng-valid.ng-scope")).getText().contains("¡La orden se realizó con éxito!"));
+		Assert.assertTrue(driver.findElement(By.cssSelector(".slds-form-element.vlc-flex.vlc-slds-text-block.vlc-slds-rte.ng-pristine.ng-valid.ng-scope")).getText().contains("ï¿½La orden se realizï¿½ con ï¿½xito!"));
 		cCC.obtenerOrden(driver);
 	}
 	
@@ -177,14 +177,10 @@ public class GestionesPerfilOficina extends TestBase {
 		sleep(15000);
 		driver.findElement(By.xpath("//*[@id=\"InvoicePreview_nextBtn\"]")).click();
 		sleep(15000);
-		List <WebElement> tarj = driver.findElements(By.cssSelector(".slds-form-element__label.ng-binding"));
-		for(WebElement x : tarj) {
-			if(x.getText().toLowerCase().equals("tarjeta de credito")) {
-				x.click();
-			}
-		}
-		sb.selectByText(driver.findElement(By.name("loopname")), "BANCO SANTANDER RIO S.A.");
-	
+		buscarYClick(driver.findElements(By.cssSelector(".slds-form-element__label.ng-binding")), "equals", "tarjeta de credito");
+		sleep(25000);
+		System.out.println(driver.findElement(By.id("BankingEntity-0")));
+		selectByText(driver.findElement(By.id("BankingEntity-0")), cBanco);
 		
 	}
 }
