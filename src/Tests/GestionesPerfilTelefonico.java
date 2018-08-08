@@ -1,9 +1,9 @@
 package Tests;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.openqa.selenium.By;
-import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -11,15 +11,15 @@ import org.testng.Assert;
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeClass;
-import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
 import Pages.Accounts;
-import Pages.CustomerCare;
 import Pages.BasePage;
 import Pages.CustomerCare;
 import Pages.Marketing;
+import Pages.OM;
 import Pages.SalesBase;
+import Pages.compraPackPerfilTelefonico;
 import Pages.setConexion;
 
 public class GestionesPerfilTelefonico extends TestBase{
@@ -27,6 +27,8 @@ public class GestionesPerfilTelefonico extends TestBase{
 	private WebDriver driver;
 	private SalesBase sb;
 	private CustomerCare cc;
+	List <String> datosOrden =new ArrayList<String>();
+	
 	
 	@BeforeClass
 	public void init() {
@@ -97,7 +99,7 @@ public class GestionesPerfilTelefonico extends TestBase{
 		sleep(5000);
 	}
 	
-	@Test (groups = {"GestionesPerfilOficina", "Recargas"}, dataProvider = "PerfilCuentaTomRiddle")
+	@Test (groups = {"GestionesPerfilOficina", "Recargas"}, dataProvider = "PerfilCuentaTomRiddle")  //Error despues de ingresar la tarjeta
 	public void TS134332_CRM_Movil_REPRO_Recargas_Telefonico_TC_Callcenter_Financiacion(String cDNI, String cMonto, String cBanco, String cTarjeta, String cPromo, String cCuotas, String cNumTarjeta, String cVenceMes, String cVenceAno, String cCodSeg, String cTipoDNI, String cDNITarjeta, String cTitular) {
 		if(cMonto.length() >= 4) {
 			cMonto = cMonto.substring(0, cMonto.length()-1);
@@ -138,15 +140,11 @@ public class GestionesPerfilTelefonico extends TestBase{
 		driver.findElement(By.id("securityCode-0")).sendKeys(cCodSeg);
 		selectByText(driver.findElement(By.id("documentType-0")), cTipoDNI);
 		driver.findElement(By.id("documentNumber-0")).sendKeys(cDNITarjeta);
-		driver.findElement(By.id("cardHolder-0")).sendKeys(cTitular);
-		
-		
-		/*driver.findElement(By.id("SelectPaymentMethodsStep_nextBtn")).click();
-		sleep(15000);
-		String msj = driver.findElement(By.cssSelector(".message.description.ng-binding.ng-scope")).getText();
-		String check = driver.findElement(By.id("GeneralMessageDesing")).getText();
-		Assert.assertTrue(msj.toLowerCase().contains("se ha enviado correctamente la factura a huawei. dirigirse a caja para realizar el pago de la misma"));
-		Assert.assertTrue(check.toLowerCase().contains("la orden se realiz\u00f3 con \u00e9xito"));*/
+		driver.findElement(By.id("cardHolder-0")).sendKeys(cTitular);				
+		driver.findElement(By.id("SelectPaymentMethodsStep_nextBtn")).click();
+		sleep(10000);
+		driver.findElement(By.id("InvoicePreview_nextBtn")).click();
+		Assert.assertTrue(false);
 	}
 	
 	@Test (groups = {"GestionesPerfilTelefonico", "RenovacioDeCuota"}, dataProvider="RenovacionCuotaSinSaldo")
@@ -170,6 +168,7 @@ public class GestionesPerfilTelefonico extends TestBase{
 		sleep(2000);
 		Assert.assertTrue(driver.findElement(By.cssSelector(".message.description.ng-binding.ng-scope")).getText().equalsIgnoreCase("saldo insuficiente"));
 	}
+	
 	@Test (groups = {"GestionesPerfilTelefonico", "RenovacioDeCuota"}, dataProvider="RenovacionCuotaConSaldo")
 	public void TS_CRM_Movil_REPRO_Renovacion_De_Cuota_Telefonico_Descuento_De_Saldo_Con_Credito(String sCuenta, String sDNI, String sLinea) {
 		BasePage cambioFrameByID=new BasePage();
@@ -211,11 +210,30 @@ public class GestionesPerfilTelefonico extends TestBase{
 			driver.switchTo().frame(cambioFrameByID.getFrameForElement(driver, By.cssSelector(".x-layout-mini.x-layout-mini-west")));
 			driver.findElement(By.cssSelector(".x-layout-mini.x-layout-mini-west")).click();
 			sleep(4000);*/
-		String sOrder = cCC.obtenerOrden(driver);
-			
+		String sOrder = cCC.obtenerOrden(driver, "Reseteo de Cuota");
+		System.out.println("Orden"+sOrder);
+		datosOrden.add("Operacion: Renovacion Cuota, Orden: "+sOrder+", Cuenta: "+sCuenta+", DNI: "+sDNI+", Linea: "+sLinea);	
 		
 		System.out.println("Order: " + sOrder + " Fin");
 		//Assert.assertTrue(driver.findElement(By.cssSelector(".slds-form-element.vlc-flex.vlc-slds-text-block.vlc-slds-rte.ng-pristine.ng-valid.ng-scope")).getText().contains("�La orden se realiz� con �xito!"));
 	}
 	
+	
+	@Test (groups= {"GestionesPerfilTelefonico","CompradePack"},priority=1, dataProvider="PerfilCuentaSeiscientos")
+	public void TS123314(String sDNI, String sCuenta, String sNumeroDeCuenta, String sLinea ){
+	SalesBase sale = new SalesBase(driver);
+	BasePage cambioFrameByID=new BasePage();
+	CustomerCare cCC = new CustomerCare(driver);
+	compraPackPerfilTelefonico compraPack = new compraPackPerfilTelefonico(driver);
+	driver.switchTo().frame(cambioFrameByID.getFrameForElement(driver, By.id("SearchClientDocumentType")));	
+	sleep(8000);
+	sale.BuscarCuenta("DNI", sDNI);
+	compraPack.buscarAssert();
+	compraPack.comprarPack("comprar sms");
+	compraPack.agregarPack("Pack Internet x 30 dias");
+	compraPack.tipoDePago("descuento de saldo");
+	String sOrder = cCC.obtenerOrden(driver,"");
+	datosOrden.add("Operacion: Compra de Pack, Orden: "+sOrder+", Cuenta: "+sCuenta+", DNI: "+sDNI+", Linea: "+sLinea);	
+	System.out.println("Order: " + sOrder + " Fin");
+	}
 }
