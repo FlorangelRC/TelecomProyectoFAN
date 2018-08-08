@@ -1500,7 +1500,7 @@ public class CustomerCare extends BasePage {
 		}catch(org.openqa.selenium.StaleElementReferenceException ex1) {}
 	}
 	
-	public String obtenerOrden(WebDriver driver) {
+	public String obtenerOrden(WebDriver driver, String gestion) {
 		TestBase tb = new TestBase();
 		driver.navigate().refresh();
 		driver.switchTo().frame(tb.cambioFrame(driver, By.className("story-container")));
@@ -1508,7 +1508,7 @@ public class CustomerCare extends BasePage {
 	
 		List<WebElement> wStoryContainer = driver.findElements(By.className("story-container"));
 		for (WebElement wAux : wStoryContainer) {
-			if (wAux.findElement(By.cssSelector(".slds-text-body_regular.story-title")).getText().equalsIgnoreCase("Reseteo de Cuota")) {
+			if (wAux.findElement(By.cssSelector(".slds-text-body_regular.story-title")).getText().equalsIgnoreCase(gestion)) {
 				List<WebElement> wStoryField = wAux.findElements(By.cssSelector(".slds-text-body_regular.story-field"));
 				return( wStoryField.get(0).getText());
 			}

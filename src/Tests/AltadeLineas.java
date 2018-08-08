@@ -504,10 +504,12 @@ public class AltadeLineas extends TestBase {
 		cc.obligarclick(agre);
 		driver.findElement(By.cssSelector(".slds-input.ng-valid.ng-not-empty.ng-dirty.ng-valid-parse.ng-touched")).clear();
 		sleep(3000);
-		driver.findElement(By.cssSelector(".slds-input.ng-valid.ng-dirty.ng-valid-parse.ng-touched.ng-empty")).sendKeys("Galaxy S8 - Negro");
+		//class search slds-input ng-valid ng-dirty ng-valid-parse ng-touched ng-empty
+		driver.findElement(By.xpath("//*[@id='j_id0:j_id5']/div/div[1]/ng-include/div/div[2]/div[2]/div[2]/div/div/ng-include/div/div[2]/div[1]/input")).sendKeys("Galaxy S8 - Negro");
 		sleep(10000);
-		WebElement agregar = driver.findElement(By.cssSelector(".slds-button.slds-button--neutral.add-button")); 
+		WebElement agregar = driver.findElement(By.xpath("//*[@id='j_id0:j_id5']/div/div/ng-include/div/div[2]/div[2]/div[2]/div/div/ng-include/div/div[5]/div/ng-include/div/div/div[2]/ng-include/div/div[3]/div/div/div[2]/div/div[2]/button")); 
 		agregar.click();
+		//sb.configuracion(sLinea, sIccid, sImsi, sKi);
 		sb.continuar();
 		sleep(23000);
 		sb.Crear_DomicilioLegal(sProvincia, sLocalidad, "falsa", "", "1000", "", "", "1549");
@@ -523,6 +525,7 @@ public class AltadeLineas extends TestBase {
 			driver.findElements(By.cssSelector(".slds-button.slds-button--neutral.ng-binding.ng-scope")).get(1).click();
 			sleep(15000);
 		}catch(Exception ex1){}
+		//String ICCID = driver.findElement(By.cssSelector(".ng-pristine.ng-untouched.ng-valid.ng-scope.ng-not-empty")).getText();
 		sleep(10000);
 		cc.obligarclick(driver.findElement(By.id("RemoteAction2")));
 		sleep(10000);
@@ -554,28 +557,29 @@ public class AltadeLineas extends TestBase {
 	}
 	
 	@Test(groups={"Sales", "AltaLineaDatos"}, priority=1, dataProvider="PerfilCuentaSeiscientos")
-	public void TS125214_CRM_Movil_PRE_Alta_Linea_con_Equipo_Cliente_existente_Presencial_OfCom(String sDni, String sNombre, String sCuenta, String sLinea) throws IOException {
+	public void TS125214_CRM_Movil_PRE_Alta_Linea_con_Equipo_Cliente_existente_Presencial_OFCOM(String sDni, String sNombre, String sCuenta, String sLinea) throws IOException {
 		CustomerCare cc = new CustomerCare(driver);
 		SalesBase sb = new SalesBase(driver);
 		sleep(5000);
 		sb.BuscarCuenta("DNI", sDni);
 		sleep(5000);
 		List<WebElement> btns = driver.findElements(By.cssSelector(".slds-button.slds-button.slds-button--icon"));
-			for(WebElement e: btns){
-				if(e.getText().toLowerCase().equals("catalogo")){ 
-					e.click();
-					break;
-				}
+		for(WebElement e: btns){
+			if(e.getText().toLowerCase().equals("catalogo")){ 
+				e.click();
+				break;
 			}
+		}
 		sleep(25000);
 		sb.elegirplan("Plan Prepago Nacional");
 		sleep(12000);
 		driver.findElement(By.cssSelector(".slds-input.ng-valid.ng-not-empty.ng-dirty.ng-valid-parse.ng-touched")).clear();
 		sleep(3000);
-		driver.findElement(By.cssSelector(".slds-input.ng-valid.ng-dirty.ng-valid-parse.ng-touched.ng-empty")).sendKeys("Galaxy S8 - Negro");
+		driver.findElement(By.xpath("//*[@id='j_id0:j_id5']/div/div[1]/ng-include/div/div[2]/div[2]/div[2]/div/div/ng-include/div/div[2]/div[1]/input")).sendKeys("Galaxy S8 - Negro");
 		sleep(10000);
-		WebElement agregar = driver.findElement(By.cssSelector(".slds-button.slds-button--neutral.add-button")); 
+		WebElement agregar = driver.findElement(By.xpath("//*[@id='j_id0:j_id5']/div/div/ng-include/div/div[2]/div[2]/div[2]/div/div/ng-include/div/div[5]/div/ng-include/div/div/div[2]/ng-include/div/div[3]/div/div/div[2]/div/div[2]/button")); 
 		agregar.click();
+		//sb.configuracion(sLinea, sIccid, sImsi, sKi);
 		sb.continuar();
 		sleep(24000);
 		WebElement ord = driver.findElement(By.cssSelector(".slds-form-element__control")).findElement(By.tagName("p")).findElements(By.tagName("p")).get(0);
@@ -591,11 +595,10 @@ public class AltadeLineas extends TestBase {
 			cc.obligarclick(driver.findElement(By.id("SelectPaymentMethodsStep_nextBtn")));
 			sleep(20000);
 		}catch(Exception ex1) {}
-		sb.elegirvalidacion("DOC");
+		//sb.elegirvalidacion("DOC");
 		sleep(8000);
 		driver.findElement(By.id("MethodSelection_nextBtn")).click();
-		sleep(10000);
-		driver.findElement(By.id("FileDocumentImage")).sendKeys("C:\\Users\\Sofia Chardin\\Desktop\\DNI.jpg");
+		//driver.findElement(By.id("FileDocumentImage")).sendKeys("C:\\Users\\Sofia Chardin\\Desktop\\DNI.jpg");
 		sleep(3000);
 		cc.obligarclick(driver.findElement(By.id("DocumentMethod_nextBtn")));
 		sleep(10000);
