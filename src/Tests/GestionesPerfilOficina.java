@@ -111,7 +111,7 @@ public class GestionesPerfilOficina extends TestBase {
 		//driver.findElement(By.className("card-top")).click();
 		//sleep(3000);
 		
-		cCC.irAGestionEnCard("N�meros Gratis");
+		cCC.irAGestionEnCard("N\u00fameros Gratis");
 		
 		sleep(5000);
 		driver.switchTo().defaultContent();
@@ -124,8 +124,8 @@ public class GestionesPerfilOficina extends TestBase {
 		driver.findElement(By.cssSelector(".OSradioButton.ng-scope.only-buttom")).click();
 		
 		sleep(5000);
-		Assert.assertTrue(driver.findElement(By.cssSelector(".slds-form-element.vlc-flex.vlc-slds-text-block.vlc-slds-rte.ng-pristine.ng-valid.ng-scope")).getText().contains("�La orden se realiz� con �xito!"));
-		cCC.obtenerOrden(driver);
+		Assert.assertTrue(driver.findElement(By.cssSelector(".slds-form-element.vlc-flex.vlc-slds-text-block.vlc-slds-rte.ng-pristine.ng-valid.ng-scope")).getText().contains("La orden se realiz\u00f3 con \u00e9xito!"));
+		cCC.obtenerOrden(driver, "N\u00fameros Gratis");
 	}
 	
 	@Test (groups = {"GestionesPerfilOficina", "Recargas"}, dataProvider = "PerfilCuentaTomRiddle")
@@ -160,7 +160,7 @@ public class GestionesPerfilOficina extends TestBase {
 	}
 	
 	@Test (groups = {"GestionesPerfilOficina", "Recargas"}, dataProvider = "PerfilCuentaTomRiddle")
-	public void TS134330_CRM_Movil_REPRO_Recargas_Presencial_TC_Ofcom_Financiacion(String cDNI) {
+	public void TS134330_CRM_Movil_REPRO_Recargas_Presencial_TC_Ofcom_Financiacion(String cDNI, String cBanco) {
 		driver.switchTo().frame(cambioFrame(driver, By.id("SearchClientDocumentType")));
 		sb.BuscarCuenta("DNI", cDNI);
 		driver.findElement(By.cssSelector(".slds-tree__item.ng-scope")).click();
@@ -182,7 +182,7 @@ public class GestionesPerfilOficina extends TestBase {
 		System.out.println(driver.findElement(By.id("BankingEntity-0")));
 		selectByText(driver.findElement(By.id("BankingEntity-0")), cBanco);
 	}
-	@Test (groups = {"GestionesPerfilOficina"}, dataProvider="SteveServicios")
+	@Test (groups = {"GestionesPerfilOficina"}, dataProvider="BajaServicio")
 	public void TS_134338_CRM_Movil_PRE_Baja_de_Servicio_sin_costo_DDI_con_Roaming_Internacional_Presencial(String sDNI, String sCuenta, String sNumeroDeCuenta, String sLinea){
 		BasePage cambioFrameByID=new BasePage();
 		driver.switchTo().frame(cambioFrameByID.getFrameForElement(driver, By.id("SearchClientDocumentType")));
