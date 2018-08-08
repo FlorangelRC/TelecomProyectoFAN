@@ -15,14 +15,12 @@ import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
 import Pages.Accounts;
+import Pages.CustomerCare;
 import Pages.BasePage;
 import Pages.CustomerCare;
 import Pages.Marketing;
-import Pages.OM;
 import Pages.SalesBase;
-import Pages.compraPackPerfilTelefonico;
 import Pages.setConexion;
-import javafx.scene.control.ScrollToEvent;
 
 public class GestionesPerfilTelefonico extends TestBase{
 
@@ -30,7 +28,6 @@ public class GestionesPerfilTelefonico extends TestBase{
 	private SalesBase sb;
 	private CustomerCare cc;
 	
-	List <String> datosOrden;
 	@BeforeClass
 	public void init() {
 		driver = setConexion.setupEze();
@@ -96,7 +93,6 @@ public class GestionesPerfilTelefonico extends TestBase{
 
 	//@AfterClass
 	public void quit() {
-		
 		driver.quit();
 		sleep(5000);
 	}
@@ -212,28 +208,10 @@ public class GestionesPerfilTelefonico extends TestBase{
 			driver.findElement(By.cssSelector(".x-layout-mini.x-layout-mini-west")).click();
 			sleep(4000);*/
 		String sOrder = cCC.obtenerOrden(driver);
-		datosOrden.add("Operacion: Renovacion Cuota, Orden: "+sOrder+", Cuenta: "+sCuenta+", DNI: "+sDNI+", Linea: "+sLinea);	
+			
 		
 		System.out.println("Order: " + sOrder + " Fin");
 		//Assert.assertTrue(driver.findElement(By.cssSelector(".slds-form-element.vlc-flex.vlc-slds-text-block.vlc-slds-rte.ng-pristine.ng-valid.ng-scope")).getText().contains("�La orden se realiz� con �xito!"));
 	}
 	
-	
-	@Test (groups= {"CompraPack"},priority=1, dataProvider="PerfilCuentaSeiscientos")
-	public void TS123314(String sDNI, String sCuenta, String sNumeroDeCuenta, String sLinea ){
-	SalesBase sale = new SalesBase(driver);
-	BasePage cambioFrameByID=new BasePage();
-	compraPackPerfilTelefonico compraPack = new compraPackPerfilTelefonico(driver);
-	driver.switchTo().frame(cambioFrameByID.getFrameForElement(driver, By.id("SearchClientDocumentType")));	
-	sleep(8000);
-	sale.BuscarCuenta("DNI", sDNI);
-	compraPack.buscarAssert();
-	compraPack.comprarPack("comprar sms");
-	compraPack.agregarPack("Pack Internet x 30 dias");
-	compraPack.tipoDePago("descuento de saldo");
-	
-	}
-	
-	
-
 }
