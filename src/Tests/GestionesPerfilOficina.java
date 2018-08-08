@@ -194,14 +194,10 @@ public class GestionesPerfilOficina extends TestBase {
 		sleep(15000);
 		driver.findElement(By.xpath("//*[@id=\"InvoicePreview_nextBtn\"]")).click();
 		sleep(15000);
-		List <WebElement> tarj = driver.findElements(By.cssSelector(".slds-form-element__label.ng-binding"));
-		for(WebElement x : tarj) {
-			if(x.getText().toLowerCase().equals("tarjeta de credito")) {
-				x.click();
-			}
-		}
+		buscarYClick(driver.findElements(By.cssSelector(".slds-form-element__label.ng-binding")), "equals", "tarjeta de credito");
+		sleep(25000);
+		System.out.println(driver.findElement(By.id("BankingEntity-0")));
 		selectByText(driver.findElement(By.id("BankingEntity-0")), cBanco);
-	
 		
 	}
 }
