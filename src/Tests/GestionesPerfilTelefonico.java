@@ -1,5 +1,7 @@
 package Tests;
 
+import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 
 import org.openqa.selenium.By;
@@ -28,7 +30,7 @@ public class GestionesPerfilTelefonico extends TestBase{
 	private SalesBase sb;
 	private CustomerCare cc;
 	
-	List <String> datosOrden;
+	List <String> datosOrden =new ArrayList<String>();
 	@BeforeClass
 	public void init() {
 		driver = setConexion.setupEze();
@@ -92,10 +94,11 @@ public class GestionesPerfilTelefonico extends TestBase{
 		sb.cerrarPestaniaGestion(driver);
 	}
 
-	//@AfterClass
-	public void quit() {
-		
-		driver.quit();
+	@AfterClass
+	public void quit() throws IOException {
+		guardarListaTxt(datosOrden);
+		System.out.println("Se supone que guardo");
+		//driver.quit();
 		sleep(5000);
 	}
 	
@@ -213,11 +216,12 @@ public class GestionesPerfilTelefonico extends TestBase{
 			driver.switchTo().frame(cambioFrameByID.getFrameForElement(driver, By.cssSelector(".x-layout-mini.x-layout-mini-west")));
 			driver.findElement(By.cssSelector(".x-layout-mini.x-layout-mini-west")).click();
 			sleep(4000);*/
-		String sOrder = cCC.obtenerOrden(driver);
+		String sOrder = cCC.obtenerOrden(driver, "Reseteo de Cuota");
+		System.out.println("Orden"+sOrder);
 		datosOrden.add("Operacion: Renovacion Cuota, Orden: "+sOrder+", Cuenta: "+sCuenta+", DNI: "+sDNI+", Linea: "+sLinea);	
 		
 		System.out.println("Order: " + sOrder + " Fin");
-		//Assert.assertTrue(driver.findElement(By.cssSelector(".slds-form-element.vlc-flex.vlc-slds-text-block.vlc-slds-rte.ng-pristine.ng-valid.ng-scope")).getText().contains("�La orden se realiz� con �xito!"));
+		//Assert.assertTrue(driver.findElement(By.cssSelector(".slds-form-element.vlc-flex.vlc-slds-text-block.vlc-slds-rte.ng-pristine.ng-valid.ng-scope")).getText().contains("La orden se realiz\u00f3 con \u00e9xito!"));
 	}
 	
 }

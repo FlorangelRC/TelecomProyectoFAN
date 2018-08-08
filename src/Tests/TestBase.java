@@ -4,6 +4,7 @@ import java.io.File;
 
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
@@ -976,7 +977,18 @@ public class TestBase {
 
 	}
 	
-	public void guardarListaTxt(List<String> datosOrden) {
+	public void guardarListaTxt(List<String> datosOrden) throws IOException {
+		File archivo=new File("DatosOrdenes.txt");
+		if (archivo.exists())
+			archivo.delete();
+		//Crear objeto FileWriter que sera el que nos ayude a escribir sobre archivo
+		FileWriter ArchiSa=new FileWriter(archivo,true);
 		
+		for (String UnD : datosOrden) {
+			ArchiSa.write("--------------------------------------------------------------------\r\n");
+			ArchiSa.write(UnD+"\r\n");
+			ArchiSa.write("--------------------------------------------------------------------\r\n");
+		}
+		ArchiSa.close();
 	}
 }

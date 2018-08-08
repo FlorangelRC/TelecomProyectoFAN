@@ -141,6 +141,9 @@ public class CustomerCare extends BasePage {
 	@FindBy(css = ".x-layout-collapsed.x-layout-collapsed-east.x-layout-cmini-east")
 	private WebElement panelDerechoColapsado;
 	
+	@FindBy(css = ".x-layout-collapsed.x-layout-collapsed-west.x-layout-cmini-west")
+	private WebElement panelIzquierdoColapsado;
+	
 	@FindBy(css = "icon icon-v-close")
 	private WebElement cerrarFlyout;
 
@@ -296,6 +299,7 @@ public class CustomerCare extends BasePage {
 	public void panelIzquierdo() {
 		driver.switchTo().defaultContent();
 		WebElement panelIzquierdo = null;
+		intentarAbrirPanelIzquierdo();
 		panelIzquierdo = panelesLaterales.get(1);
 		driver.switchTo().frame(panelIzquierdo.findElement(By.cssSelector("iframe")));
 	}
@@ -335,7 +339,7 @@ public class CustomerCare extends BasePage {
 	public void irAGestion(String gest) {
 		buscarGestion(gest);
 		if (gestionesEncontradas.isEmpty()) {
-			System.err.println("ERROR: No existe la gesti�n \'" + gest + "\'");
+			System.err.println("ERROR: No existe la gestion \'" + gest + "\'");
 			Assert.assertFalse(gestionesEncontradas.isEmpty());
 		}
 		gestionesEncontradas.get(0).click();
@@ -1500,15 +1504,16 @@ public class CustomerCare extends BasePage {
 		}catch(org.openqa.selenium.StaleElementReferenceException ex1) {}
 	}
 	
-	public String obtenerOrden(WebDriver driver) {
+	public String obtenerOrden(WebDriver driver, String gestion) {
 		TestBase tb = new TestBase();
 		driver.navigate().refresh();
-		driver.switchTo().frame(tb.cambioFrame(driver, By.className("story-container")));
-	//}
+		sleep(18000);
+		panelIzquierdo();
+		//driver.switchTo().frame(tb.cambioFrame(driver, By.className("story-container")));
 	
 		List<WebElement> wStoryContainer = driver.findElements(By.className("story-container"));
 		for (WebElement wAux : wStoryContainer) {
-			if (wAux.findElement(By.cssSelector(".slds-text-body_regular.story-title")).getText().equalsIgnoreCase("Reseteo de Cuota")) {
+			if (wAux.findElement(By.cssSelector(".slds-text-body_regular.story-title")).getText().equalsIgnoreCase(gestion)) {
 				List<WebElement> wStoryField = wAux.findElements(By.cssSelector(".slds-text-body_regular.story-field"));
 				return( wStoryField.get(0).getText());
 			}
@@ -1530,5 +1535,16 @@ public class CustomerCare extends BasePage {
 		}
 		
 		sleep(3000);
+	}
+	
+	private void intentarAbrirPanelIzquierdo() {
+		try { 
+			driver.manage().timeouts().implicitlyWait(1, TimeUnit.SECONDS);
+			panelIzquierdoColapsado.click();
+		} catch (NoSuchElementException|ElementNotVisibleException e) {	}
+		finally {
+			TestBase.sleep(2000);
+			driver.manage().timeouts().implicitlyWait(3, TimeUnit.SECONDS);
+		}
 	}
 }
