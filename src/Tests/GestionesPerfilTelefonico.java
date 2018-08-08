@@ -1,9 +1,9 @@
 package Tests;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.openqa.selenium.By;
-import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -11,7 +11,6 @@ import org.testng.Assert;
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeClass;
-import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
 import Pages.Accounts;
@@ -20,17 +19,16 @@ import Pages.CustomerCare;
 import Pages.Marketing;
 import Pages.OM;
 import Pages.SalesBase;
-import Pages.compraPackPerfilTelefonico;
 import Pages.setConexion;
-import javafx.scene.control.ScrollToEvent;
 
 public class GestionesPerfilTelefonico extends TestBase{
 
 	private WebDriver driver;
 	private SalesBase sb;
 	private CustomerCare cc;
+	List <String> datosOrden =new ArrayList<String>();
 	
-	List <String> datosOrden;
+	
 	@BeforeClass
 	public void init() {
 		driver = setConexion.setupEze();
@@ -96,12 +94,11 @@ public class GestionesPerfilTelefonico extends TestBase{
 
 	//@AfterClass
 	public void quit() {
-		
 		driver.quit();
 		sleep(5000);
 	}
 	
-	@Test (groups = {"GestionesPerfilOficina", "Recargas"}, dataProvider = "PerfilCuentaTomRiddle")
+	@Test (groups = {"GestionesPerfilOficina", "Recargas"}, dataProvider = "PerfilCuentaTomRiddle")  //Error despues de ingresar la tarjeta
 	public void TS134332_CRM_Movil_REPRO_Recargas_Telefonico_TC_Callcenter_Financiacion(String cDNI, String cMonto, String cBanco, String cTarjeta, String cPromo, String cCuotas, String cNumTarjeta, String cVenceMes, String cVenceAno, String cCodSeg, String cTipoDNI, String cDNITarjeta, String cTitular) {
 		if(cMonto.length() >= 4) {
 			cMonto = cMonto.substring(0, cMonto.length()-1);
@@ -142,15 +139,11 @@ public class GestionesPerfilTelefonico extends TestBase{
 		driver.findElement(By.id("securityCode-0")).sendKeys(cCodSeg);
 		selectByText(driver.findElement(By.id("documentType-0")), cTipoDNI);
 		driver.findElement(By.id("documentNumber-0")).sendKeys(cDNITarjeta);
-		driver.findElement(By.id("cardHolder-0")).sendKeys(cTitular);
-		
-		
-		/*driver.findElement(By.id("SelectPaymentMethodsStep_nextBtn")).click();
-		sleep(15000);
-		String msj = driver.findElement(By.cssSelector(".message.description.ng-binding.ng-scope")).getText();
-		String check = driver.findElement(By.id("GeneralMessageDesing")).getText();
-		Assert.assertTrue(msj.toLowerCase().contains("se ha enviado correctamente la factura a huawei. dirigirse a caja para realizar el pago de la misma"));
-		Assert.assertTrue(check.toLowerCase().contains("la orden se realiz\u00f3 con \u00e9xito"));*/
+		driver.findElement(By.id("cardHolder-0")).sendKeys(cTitular);				
+		driver.findElement(By.id("SelectPaymentMethodsStep_nextBtn")).click();
+		sleep(10000);
+		driver.findElement(By.id("InvoicePreview_nextBtn")).click();
+		Assert.assertTrue(false);
 	}
 	
 	@Test (groups = {"GestionesPerfilTelefonico", "RenovacioDeCuota"}, dataProvider="RenovacionCuotaSinSaldo")
@@ -216,7 +209,8 @@ public class GestionesPerfilTelefonico extends TestBase{
 			driver.switchTo().frame(cambioFrameByID.getFrameForElement(driver, By.cssSelector(".x-layout-mini.x-layout-mini-west")));
 			driver.findElement(By.cssSelector(".x-layout-mini.x-layout-mini-west")).click();
 			sleep(4000);*/
-		String sOrder = cCC.obtenerOrden(driver);
+		String sOrder = cCC.obtenerOrden(driver, "Reseteo de Cuota");
+		System.out.println("Orden"+sOrder);
 		datosOrden.add("Operacion: Renovacion Cuota, Orden: "+sOrder+", Cuenta: "+sCuenta+", DNI: "+sDNI+", Linea: "+sLinea);	
 		
 		System.out.println("Order: " + sOrder + " Fin");
