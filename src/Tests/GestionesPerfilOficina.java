@@ -129,7 +129,10 @@ public class GestionesPerfilOficina extends TestBase {
 	}
 	
 	@Test (groups = {"GestionesPerfilOficina", "Recargas"}, dataProvider = "PerfilCuentaTomRiddle")
-	public void TS134318_CRM_Movil_REPRO_Recargas_Presencial_Efectivo_Ofcom(String cDNI) {
+	public void TS134318_CRM_Movil_REPRO_Recargas_Presencial_Efectivo_Ofcom(String cDNI, String cMonto, String cBanco, String cTarjeta, String cPromo, String cCuotas, String cNumTarjeta, String cVenceMes, String cVenceAno, String cCodSeg, String cTipoDNI, String cDNITarjeta, String cTitular) {
+		if(cMonto.length() >= 4) {
+			cMonto = cMonto.substring(0, cMonto.length()-1);
+		}
 		driver.switchTo().frame(cambioFrame(driver, By.id("SearchClientDocumentType")));
 		sb.BuscarCuenta("DNI", cDNI);
 		driver.findElement(By.cssSelector(".slds-tree__item.ng-scope")).click();
@@ -140,7 +143,7 @@ public class GestionesPerfilOficina extends TestBase {
 		cc.irAGestionEnCard("Recarga de cr\u00e9dito");
 		sleep(15000);
 		driver.switchTo().frame(cambioFrame(driver, By.id("RefillAmount")));
-		driver.findElement(By.id("RefillAmount")).sendKeys("123");
+		driver.findElement(By.id("RefillAmount")).sendKeys(cMonto);
 		driver.findElement(By.id("AmountSelectionStep_nextBtn")).click();
 		sleep(15000);
 		driver.findElement(By.id("InvoicePreview_nextBtn")).click();
@@ -178,6 +181,22 @@ public class GestionesPerfilOficina extends TestBase {
 		sleep(25000);
 		System.out.println(driver.findElement(By.id("BankingEntity-0")));
 		selectByText(driver.findElement(By.id("BankingEntity-0")), cBanco);
-		
 	}
+	@Test (groups = {"GestionesPerfilOficina"}, dataProvider="SteveServicios")
+	public void TS_134338_CRM_Movil_PRE_Baja_de_Servicio_sin_costo_DDI_con_Roaming_Internacional_Presencial(String sDNI, String sCuenta, String sNumeroDeCuenta, String sLinea){
+		BasePage cambioFrameByID=new BasePage();
+		driver.switchTo().frame(cambioFrameByID.getFrameForElement(driver, By.id("SearchClientDocumentType")));
+		sleep(1000);
+		SalesBase sSB = new SalesBase(driver);
+		sSB.BuscarCuenta("DNI", sDNI);
+		driver.findElement(By.cssSelector(".slds-tree__item.ng-scope")).findElement(By.tagName("div")).click();
+		sleep(15000);
+		driver.switchTo().frame(cambioFrame(driver, By.className("card-top")));
+		driver.findElement(By.className("card-top")).click();
+		sleep(3000);
+		cc.irAGestionEnCard("Alta/Baja de Servicios");
+		sleep(15000);
+		// ROMPE CUANDO ENTRA ALTA/BAJA DE SERVICIOS CDTMALLBOYS
+	}
+	
 }

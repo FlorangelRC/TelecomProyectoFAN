@@ -14,8 +14,10 @@ import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 
 import Pages.Accounts;
-import Pages.CustomerCare;
 import Pages.BasePage;
+import Pages.CustomerCare;
+import Pages.Marketing;
+import Pages.OM;
 import Pages.SalesBase;
 import Pages.setConexion;
 
@@ -165,6 +167,7 @@ public class GestionesPerfilTelefonico extends TestBase{
 		sleep(2000);
 		Assert.assertTrue(driver.findElement(By.cssSelector(".message.description.ng-binding.ng-scope")).getText().equalsIgnoreCase("saldo insuficiente"));
 	}
+	
 	@Test (groups = {"GestionesPerfilTelefonico", "RenovacioDeCuota"}, dataProvider="RenovacionCuotaConSaldo")
 	public void TS_CRM_Movil_REPRO_Renovacion_De_Cuota_Telefonico_Descuento_De_Saldo_Con_Credito(String sCuenta, String sDNI, String sLinea) {
 		BasePage cambioFrameByID=new BasePage();
@@ -214,4 +217,26 @@ public class GestionesPerfilTelefonico extends TestBase{
 		//Assert.assertTrue(driver.findElement(By.cssSelector(".slds-form-element.vlc-flex.vlc-slds-text-block.vlc-slds-rte.ng-pristine.ng-valid.ng-scope")).getText().contains("�La orden se realiz� con �xito!"));
 	}
 	
+	
+	@Test (groups= {"GestionesPerfilTelefonico","CompradePack"},priority=1, dataProvider="PerfilCuentaSeiscientos")
+	public void TS123314(String sDNI, String sCuenta, String sNumeroDeCuenta, String sLinea ){
+	SalesBase sale = new SalesBase(driver);
+	BasePage cambioFrameByID=new BasePage();
+	CustomerCare cCC = new CustomerCare(driver);
+	compraPackPerfilTelefonico compraPack = new compraPackPerfilTelefonico(driver);
+	driver.switchTo().frame(cambioFrameByID.getFrameForElement(driver, By.id("SearchClientDocumentType")));	
+	sleep(8000);
+	sale.BuscarCuenta("DNI", sDNI);
+	compraPack.buscarAssert();
+	compraPack.comprarPack("comprar sms");
+	compraPack.agregarPack("Pack Internet x 30 dias");
+	compraPack.tipoDePago("descuento de saldo");
+	String sOrder = cCC.obtenerOrden(driver);
+	datosOrden.add("Operacion: Compra de Pack, Orden: "+sOrder+", Cuenta: "+sCuenta+", DNI: "+sDNI+", Linea: "+sLinea);	
+	System.out.println("Order: " + sOrder + " Fin");
+	
+	}
+	
+	
+
 }
