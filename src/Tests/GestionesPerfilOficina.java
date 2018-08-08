@@ -153,6 +153,7 @@ public class GestionesPerfilOficina extends TestBase {
 		Assert.assertTrue(msj.toLowerCase().contains("se ha enviado correctamente la factura a huawei. dirigirse a caja para realizar el pago de la misma"));
 		Assert.assertTrue(check.toLowerCase().contains("la orden se realiz\u00f3 con \u00e9xito"));
 		String orden = cc.obtenerOrden(driver, "Recargas");
+		sOrders.add("Recargas, numero de orden: " + orden + " de cuenta con DNI: " + cDNI);
 	}
 	
 	@Test (groups = {"GestionesPerfilOficina", "Recargas"}, dataProvider = "PerfilCuentaTomRiddle")
