@@ -101,7 +101,7 @@ public class GestionesPerfilTelefonico extends TestBase{
 		sleep(5000);
 	}
 	
-	@Test (groups = {"GestionesPerfilOficina", "Recargas"}, dataProvider = "PerfilCuentaTomRiddle")
+	@Test (groups = {"GestionesPerfilOficina", "Recargas"}, dataProvider = "PerfilCuentaTomRiddle")  //Error despues de ingresar la tarjeta
 	public void TS134332_CRM_Movil_REPRO_Recargas_Telefonico_TC_Callcenter_Financiacion(String cDNI, String cMonto, String cBanco, String cTarjeta, String cPromo, String cCuotas, String cNumTarjeta, String cVenceMes, String cVenceAno, String cCodSeg, String cTipoDNI, String cDNITarjeta, String cTitular) {
 		if(cMonto.length() >= 4) {
 			cMonto = cMonto.substring(0, cMonto.length()-1);
@@ -146,11 +146,7 @@ public class GestionesPerfilTelefonico extends TestBase{
 		driver.findElement(By.id("SelectPaymentMethodsStep_nextBtn")).click();
 		sleep(10000);
 		driver.findElement(By.id("InvoicePreview_nextBtn")).click();
-		
-		/*String msj = driver.findElement(By.cssSelector(".message.description.ng-binding.ng-scope")).getText();
-		String check = driver.findElement(By.id("GeneralMessageDesing")).getText();
-		Assert.assertTrue(msj.toLowerCase().contains("se ha enviado correctamente la factura a huawei. dirigirse a caja para realizar el pago de la misma"));
-		Assert.assertTrue(check.toLowerCase().contains("la orden se realiz\u00f3 con \u00e9xito"));*/
+		Assert.assertTrue(false);
 	}
 	
 	@Test (groups = {"GestionesPerfilTelefonico", "RenovacioDeCuota"}, dataProvider="RenovacionCuotaSinSaldo")
