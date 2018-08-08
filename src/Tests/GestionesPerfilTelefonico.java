@@ -19,6 +19,7 @@ import Pages.CustomerCare;
 import Pages.Marketing;
 import Pages.OM;
 import Pages.SalesBase;
+import Pages.compraPackPerfilTelefonico;
 import Pages.setConexion;
 
 public class GestionesPerfilTelefonico extends TestBase{
@@ -231,12 +232,8 @@ public class GestionesPerfilTelefonico extends TestBase{
 	compraPack.comprarPack("comprar sms");
 	compraPack.agregarPack("Pack Internet x 30 dias");
 	compraPack.tipoDePago("descuento de saldo");
-	String sOrder = cCC.obtenerOrden(driver);
+	String sOrder = cCC.obtenerOrden(driver,"");
 	datosOrden.add("Operacion: Compra de Pack, Orden: "+sOrder+", Cuenta: "+sCuenta+", DNI: "+sDNI+", Linea: "+sLinea);	
 	System.out.println("Order: " + sOrder + " Fin");
-	
 	}
-	
-	
-
 }
