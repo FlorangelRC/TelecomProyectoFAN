@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.openqa.selenium.By;
-import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -12,13 +11,11 @@ import org.testng.Assert;
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeClass;
-import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
 import Pages.Accounts;
 import Pages.BasePage;
 import Pages.CustomerCare;
-import Pages.Marketing;
 import Pages.SalesBase;
 import Pages.setConexion;
 
@@ -26,9 +23,8 @@ public class GestionesPerfilOficina extends TestBase {
 
 	private WebDriver driver;
 	private SalesBase sb;
-	private CustomerCare cc;
-	
-	public static List<String> sOrders = new ArrayList<String>();
+	private CustomerCare cc;	
+	List<String> sOrders = new ArrayList<String>();
 	
 	@BeforeClass(alwaysRun=true)
 	public void init() {
@@ -156,6 +152,7 @@ public class GestionesPerfilOficina extends TestBase {
 		String check = driver.findElement(By.id("GeneralMessageDesing")).getText();
 		Assert.assertTrue(msj.toLowerCase().contains("se ha enviado correctamente la factura a huawei. dirigirse a caja para realizar el pago de la misma"));
 		Assert.assertTrue(check.toLowerCase().contains("la orden se realiz\u00f3 con \u00e9xito"));
+		String orden = cc.obtenerOrden(driver, "Recargas");
 	}
 	
 	@Test (groups = {"GestionesPerfilOficina", "Recargas"}, dataProvider = "PerfilCuentaTomRiddle")

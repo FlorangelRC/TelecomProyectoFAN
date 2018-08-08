@@ -1,9 +1,9 @@
 package Tests;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.openqa.selenium.By;
-import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -11,14 +11,11 @@ import org.testng.Assert;
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeClass;
-import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
 import Pages.Accounts;
 import Pages.CustomerCare;
 import Pages.BasePage;
-import Pages.CustomerCare;
-import Pages.Marketing;
 import Pages.SalesBase;
 import Pages.setConexion;
 
@@ -27,6 +24,8 @@ public class GestionesPerfilTelefonico extends TestBase{
 	private WebDriver driver;
 	private SalesBase sb;
 	private CustomerCare cc;
+	List <String> datosOrden =new ArrayList<String>();
+	
 	
 	@BeforeClass
 	public void init() {
@@ -207,8 +206,9 @@ public class GestionesPerfilTelefonico extends TestBase{
 			driver.switchTo().frame(cambioFrameByID.getFrameForElement(driver, By.cssSelector(".x-layout-mini.x-layout-mini-west")));
 			driver.findElement(By.cssSelector(".x-layout-mini.x-layout-mini-west")).click();
 			sleep(4000);*/
-		String sOrder = cCC.obtenerOrden(driver);
-			
+		String sOrder = cCC.obtenerOrden(driver, "Reseteo de Cuota");
+		System.out.println("Orden"+sOrder);
+		datosOrden.add("Operacion: Renovacion Cuota, Orden: "+sOrder+", Cuenta: "+sCuenta+", DNI: "+sDNI+", Linea: "+sLinea);	
 		
 		System.out.println("Order: " + sOrder + " Fin");
 		//Assert.assertTrue(driver.findElement(By.cssSelector(".slds-form-element.vlc-flex.vlc-slds-text-block.vlc-slds-rte.ng-pristine.ng-valid.ng-scope")).getText().contains("�La orden se realiz� con �xito!"));
