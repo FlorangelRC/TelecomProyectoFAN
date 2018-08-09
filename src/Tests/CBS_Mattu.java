@@ -1,5 +1,7 @@
 package Tests;
 
+import java.util.Date;
+
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.testng.Assert;
@@ -37,9 +39,9 @@ public class CBS_Mattu extends TestBase {
 		String sPaymentChannelID = "1003";
 		String sAccountKey = "9900000718810001";
 		String sPaymentMethod = "1001";
-		String sAmount = "5310000";
+		String sAmount = "10";
 		String sInvoiceno = "20180808000000056448";
-		String sPaymentSerialNo = "${=(new java.text.SimpleDateFormat('yyyyMMddHHmmss')).format(new Date())}${=(int)(Math.random()*1000)}";
+		String sPaymentSerialNo = ((new java.text.SimpleDateFormat("yyyyMMddHHmmss")).format(new Date())).toString()+Integer.toString((int)(Math.random()*1000));
 		
 		SOAPClientSAAJ sSCS = new SOAPClientSAAJ();
 		CBS cCBS = new CBS();

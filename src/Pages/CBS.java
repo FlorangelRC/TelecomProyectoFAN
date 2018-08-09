@@ -41,7 +41,9 @@ public class CBS {
 				+ "\r\n            <RequestHeader>\r\n"
 				+ "      	       		<cbs:Version>5.5</cbs:Version>\r\n"
 				+ "      	       		<cbs:BusinessCode>Charge2AR</cbs:BusinessCode>\r\n"
-				+ "       	       		<cbs:MessageSeq>${=(new java.text.SimpleDateFormat(\"yyyyMMddHHmmss\")).format(new Date())}${=(int)(Math.random()*1000)}</cbs:MessageSeq>\r\n"
+				+ "       	       		<cbs:MessageSeq>" + sPaymentSerialNo;
+		
+		sRequest+="</cbs:MessageSeq>\r\n"
 				+ "       	       		<cbs:OwnershipInfo>\r\n"
 				+ "       	         		<cbs:BEID>10101</cbs:BEID>\r\n"
 				+ "       	         		<cbs:BRID>101</cbs:BRID>\r\n"
