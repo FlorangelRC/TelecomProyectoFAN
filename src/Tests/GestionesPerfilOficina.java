@@ -15,6 +15,7 @@ import org.testng.annotations.Test;
 
 import Pages.Accounts;
 import Pages.BasePage;
+import Pages.ContactSearch;
 import Pages.CustomerCare;
 import Pages.SalesBase;
 import Pages.setConexion;
@@ -199,4 +200,55 @@ public class GestionesPerfilOficina extends TestBase {
 		// ROMPE CUANDO ENTRA ALTA/BAJA DE SERVICIOS CDTMALLBOYS
 	}
 	
+	@Test(groups = {"Sales", "PreparacionNominacion"}, dataProvider="DatosSalesNominacion") 
+	public void TS_CRM_Nominacion_Argentino(String sCuenta, String sLinea, String sDni, String sNombre, String sApellido, String sSexo, String sFnac, String sEmail) { 
+		driver.switchTo().frame(cambioFrame(driver, By.id("SearchClientDocumentType")));
+		SalesBase SB = new SalesBase(driver);
+		String NyA = sCuenta;
+		driver.findElement(By.id("PhoneNumber")).sendKeys(sLinea);
+		  driver.findElement(By.id("SearchClientsDummy")).click();
+		  sleep(10000);
+		//SB.BuscarAvanzada(NyA.split(" ")[0], NyA.split(" ")[1], "", "", "");
+		WebElement cli = driver.findElement(By.id("tab-scoped-1"));
+		//if (cli.findElement(By.tagName("tbody")).findElement(By.tagName("tr")).findElement(By.tagName("div")).getText().equals(sCuenta)) {
+			cli.findElement(By.tagName("tbody")).findElement(By.tagName("tr")).click();
+		//}
+		sleep(3000);
+		List<WebElement> Lineas = driver.findElement(By.id("tab-scoped-1")).findElement(By.tagName("tbody")).findElements(By.tagName("tr"));
+		for(WebElement UnaL: Lineas) {
+			//System.out.println("********"+UnaL.getText()+"  FIN");
+			if(UnaL.getText().contains(sLinea)) {
+				UnaL.findElements(By.tagName("td")).get(6).findElement(By.tagName("svg")).click();
+				System.out.println("Linea Encontrada");
+				break;
+			}
+		}
+		sleep(13000);
+		ContactSearch contact = new ContactSearch(driver);
+		contact.searchContact2("DNI", sDni, sSexo);
+		contact.Llenar_Contacto(sNombre, sApellido, sFnac);
+		try {contact.ingresarMail(sEmail, "si");}catch (org.openqa.selenium.ElementNotVisibleException ex1) {}
+		contact.tipoValidacion("documento");
+		try {
+			contact.subirArchivo("C:\\Users\\florangel\\Downloads\\mapache.jpg", "si");
+		}catch(Exception ex1) {}
+			BasePage bp = new BasePage(driver);
+		bp.setSimpleDropdown(driver.findElement(By.id("ImpositiveCondition")), "IVA Consumidor Final");
+		SB.Crear_DomicilioLegal("Buenos Aires", "aba", "falsa", "", "1000", "", "", "1549");
+		sleep(38000);
+		//contact.subirformulario("C:\\Users\\florangel\\Downloads\\form.pdf", "si");
+		//sleep(30000);
+		List <WebElement> element = driver.findElement(By.id("NominacionExitosa")).findElements(By.tagName("p"));
+		System.out.println("cont="+element.get(0).getText());
+		boolean a = false;
+		for (WebElement x : element) {
+			if (x.getText().toLowerCase().contains("nominaci\u00f3n exitosa!")) {
+				a = true;
+				//System.out.println(x.getText());
+			}
+		}
+		Assert.assertTrue(a);
+		//driver.findElement(By.id("FinishProcess_nextBtn")).click();
+		
+	}	
 }

@@ -70,7 +70,7 @@ public class ContactSearch extends BasePage {
 		driver.findElement(By.id("DocumentInputSearch")).click();
 		driver.findElement(By.id("DocumentInputSearch")).sendKeys(docValue);
 		try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
-		switch (genero) {
+		switch (genero.toLowerCase()) {
 		case "femenino":
 			gender.get(0).click();
 			break;
