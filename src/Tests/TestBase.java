@@ -4,6 +4,7 @@ import java.io.File;
 
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
@@ -1009,7 +1010,26 @@ public class TestBase {
 	 return (testObjArray);
 
 	}
-	public void guardarListaTxt(List<String> datosOrden) {
+	public void guardarListaTxt(List<String> datosOrden) throws IOException {
+		File archivo=new File("DatosOrdenes.txt");
+		if (archivo.exists())
+			archivo.delete();
+		//Crear objeto FileWriter que sera el que nos ayude a escribir sobre archivo
+		FileWriter ArchiSa=new FileWriter(archivo,true);
 		
+		for (String UnD : datosOrden) {
+			ArchiSa.write("--------------------------------------------------------------------\r\n");
+			ArchiSa.write(UnD+"\r\n");
+			ArchiSa.write("--------------------------------------------------------------------\r\n");
+		}
+		ArchiSa.close();
+	}
+	
+	public void loginCBS(WebDriver driver) {
+		driver.get(urlAmbiente);
+		try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+	    Login lLogin = new Login(driver);
+	    lLogin.ingresarCBS();
+	    driver.get("https://10.75.39.140:8081/main.action?ssLogin=true&BMEWebToken=be935f78-f517-441c-a299-c5a1ba3f1f411b7c8915-7f90-4b1d-bee6-15837afe7b05");
 	}
 }

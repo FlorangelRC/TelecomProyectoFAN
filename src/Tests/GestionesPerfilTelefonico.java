@@ -1,5 +1,6 @@
 package Tests;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -93,9 +94,11 @@ public class GestionesPerfilTelefonico extends TestBase{
 		sb.cerrarPestaniaGestion(driver);
 	}
 
-	//@AfterClass
-	public void quit() {
-		driver.quit();
+	@AfterClass
+	public void quit() throws IOException {
+		guardarListaTxt(datosOrden);
+		System.out.println("Se supone que guardo");
+		//driver.quit();
 		sleep(5000);
 	}
 	
@@ -215,12 +218,12 @@ public class GestionesPerfilTelefonico extends TestBase{
 		datosOrden.add("Operacion: Renovacion Cuota, Orden: "+sOrder+", Cuenta: "+sCuenta+", DNI: "+sDNI+", Linea: "+sLinea);	
 		
 		System.out.println("Order: " + sOrder + " Fin");
-		//Assert.assertTrue(driver.findElement(By.cssSelector(".slds-form-element.vlc-flex.vlc-slds-text-block.vlc-slds-rte.ng-pristine.ng-valid.ng-scope")).getText().contains("�La orden se realiz� con �xito!"));
+		//Assert.assertTrue(driver.findElement(By.cssSelector(".slds-form-element.vlc-flex.vlc-slds-text-block.vlc-slds-rte.ng-pristine.ng-valid.ng-scope")).getText().contains("La orden se realiz\u00f3 con \u00e9xito!"));
 	}
 	
 	
-	@Test (groups= {"GestionesPerfilTelefonico","CompradePack"},priority=1, dataProvider="PerfilCuentaSeiscientos")
-	public void TS123314(String sDNI, String sCuenta, String sNumeroDeCuenta, String sLinea ){
+	@Test (groups= {"GestionesPerfilTelefonico"},priority=1, dataProvider="VentaPacks")
+	public void TS123314(String sDNI, String sCuenta, String sNumeroDeCuenta, String sLinea, String sVentaPack){
 	SalesBase sale = new SalesBase(driver);
 	BasePage cambioFrameByID=new BasePage();
 	CustomerCare cCC = new CustomerCare(driver);
@@ -230,9 +233,10 @@ public class GestionesPerfilTelefonico extends TestBase{
 	sale.BuscarCuenta("DNI", sDNI);
 	compraPack.buscarAssert();
 	compraPack.comprarPack("comprar sms");
-	compraPack.agregarPack("Pack Internet x 30 dias");
+	compraPack.agregarPack(sVentaPack);
 	compraPack.tipoDePago("descuento de saldo");
-	String sOrder = cCC.obtenerOrden(driver,"");
+	String sOrder = cCC.obtenerOrden(driver,"Compra de Pack");
+	System.out.println("Orden: "+sOrder);
 	datosOrden.add("Operacion: Compra de Pack, Orden: "+sOrder+", Cuenta: "+sCuenta+", DNI: "+sDNI+", Linea: "+sLinea);	
 	System.out.println("Order: " + sOrder + " Fin");
 	}

@@ -75,15 +75,16 @@ public class compraPackPerfilTelefonico extends TestBase{
 		System.out.print(pago.getText().toLowerCase());
 		if (pago.getText().toLowerCase().contains(tipodepago)) {
 			pago.findElement(By.tagName("span")).click();
-			sleep(15000);
+			sleep(8000);
 			break;
 		}
 	}
 	((JavascriptExecutor)driver).executeScript("window.scrollTo(0,"+driver.findElement(By.id("SetPaymentType_nextBtn")).getLocation().y+")");
 	driver.findElement(By.id("SetPaymentType_nextBtn")).click();
-	sleep(45000);
+	sleep(10000);
 	((JavascriptExecutor)driver).executeScript("window.scrollTo(0,"+driver.findElement(By.id("SaleOrderMessages_nextBtn")).getLocation().y+")");
+	sleep(15000);
 	driver.findElement(By.id("SaleOrderMessages_nextBtn")).click();
-	
+		
 	}
 }
