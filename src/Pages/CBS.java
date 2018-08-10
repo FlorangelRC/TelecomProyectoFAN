@@ -106,13 +106,16 @@ public class CBS {
 		return sRequest;
 	}
 	
-	public boolean sCBS_Request_ServicioWeb_Validador(String sResponse) {
-		boolean bAssert = false;
+	public String sCBS_Request_ServicioWeb_Validador(String sResponse) {
+		String sAssert = "false";
 		
 		if (sResponse.equalsIgnoreCase("0OK")) {
-			bAssert = true;
+			sAssert = "true";
+		}
+		else {
+			sAssert = sResponse;
 		}
 		
-		return bAssert;
+		return sAssert;
 	}
 }
