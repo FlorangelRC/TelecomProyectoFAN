@@ -313,6 +313,7 @@ public class AltadeLineas extends TestBase {
 			cc.obligarclick(driver.findElement(By.id("Step_Error_Huawei_S029_nextBtn")));
 		}catch(Exception ex1) {
 			driver.findElement(By.id("SaleOrderMessages_nextBtn")).click();
+			sleep(15000);
 		}
 
 	}

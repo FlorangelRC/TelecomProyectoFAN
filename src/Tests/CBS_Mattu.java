@@ -50,9 +50,9 @@ public class CBS_Mattu extends TestBase {
 	}
 	
 	@Test
-	public void openPage2() {
+	public void openPage2(String sOrder) {
 		String sEndPoint = "Pago Simulado";
-		String sOrder = "00072466";
+		//String sOrder = "00072466";
 		
 		SOAPClientSAAJ sSCS = new SOAPClientSAAJ();
 		CBS cCBS = new CBS();
