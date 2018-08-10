@@ -140,8 +140,23 @@ public class Login extends BasePage {
 			  Ecom_Password.sendKeys("Testa10k");
 			  loginButton2.click();
 			  try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
-			 }
-		
+		}
+		public void ingresarLogistica() {
+			  logininterno.click();
+			  try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+			   Ecom_User_ID.sendKeys("UAT178596");
+			  Ecom_Password.sendKeys("Testa10k");
+			  loginButton2.click();
+			  try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		}
+		public void ingresarEntrega() {
+			  logininterno.click();
+			  try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+			   Ecom_User_ID.sendKeys("UAT544381");
+			  Ecom_Password.sendKeys("Testa10k");
+			  loginButton2.click();
+			  try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		}
 		//Para el Modulo Sales tiene vinculado el perfil de Vendedor Oficina Comercial
 		public void ingresarFrancisco() {
 			  logininterno.click();
