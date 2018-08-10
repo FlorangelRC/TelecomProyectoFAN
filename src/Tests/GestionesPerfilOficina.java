@@ -156,7 +156,7 @@ public class GestionesPerfilOficina extends TestBase {
 		String check = driver.findElement(By.id("GeneralMessageDesing")).getText();
 		Assert.assertTrue(msj.toLowerCase().contains("se ha enviado correctamente la factura a huawei. dirigirse a caja para realizar el pago de la misma"));
 		Assert.assertTrue(check.toLowerCase().contains("la orden se realiz\u00f3 con \u00e9xito"));
-		String orden = cc.obtenerOrden(driver, "Recargas");
+		String orden = cc.obtenerOrden(driver, "Recarga");
 		sOrders.add("Recargas, numero de orden: " + orden + " de cuenta con DNI: " + cDNI);
 	}
 	
