@@ -156,7 +156,7 @@ public class GestionesPerfilOficina extends TestBase {
 		String check = driver.findElement(By.id("GeneralMessageDesing")).getText();
 		Assert.assertTrue(msj.toLowerCase().contains("se ha enviado correctamente la factura a huawei. dirigirse a caja para realizar el pago de la misma"));
 		Assert.assertTrue(check.toLowerCase().contains("la orden se realiz\u00f3 con \u00e9xito"));
-		String orden = cc.obtenerOrden(driver, "Recargas");
+		String orden = cc.obtenerOrden(driver, "Recarga");
 		sOrders.add("Recargas, numero de orden: " + orden + " de cuenta con DNI: " + cDNI);
 	}
 	
@@ -183,9 +183,10 @@ public class GestionesPerfilOficina extends TestBase {
 		System.out.println(driver.findElement(By.id("BankingEntity-0")));
 		selectByText(driver.findElement(By.id("BankingEntity-0")), cBanco);
 	}
-	@Test (groups = {"GestionesPerfilOficina"}, dataProvider="BajaServicio")
+	@Test (groups = {"GestionesPerfilOficina"}, dataProvider="BajaServicios")
 	public void TS_134338_CRM_Movil_PRE_Baja_de_Servicio_sin_costo_DDI_con_Roaming_Internacional_Presencial(String sDNI, String sCuenta, String sNumeroDeCuenta, String sLinea){
 		BasePage cambioFrameByID=new BasePage();
+		sleep(30000);
 		driver.switchTo().frame(cambioFrameByID.getFrameForElement(driver, By.id("SearchClientDocumentType")));
 		sleep(1000);
 		SalesBase sSB = new SalesBase(driver);
@@ -196,12 +197,42 @@ public class GestionesPerfilOficina extends TestBase {
 		driver.findElement(By.className("card-top")).click();
 		sleep(3000);
 		cc.irAGestionEnCard("Alta/Baja de Servicios");
-		sleep(15000);
-		// ROMPE CUANDO ENTRA ALTA/BAJA DE SERVICIOS CDTMALLBOYS
+		sleep(30000);
+		cc.closerightpanel();
+		driver.switchTo().frame(cambioFrame(driver, By.id("tab-default-1")));
+		sleep(5000);
+		WebElement plan = driver.findElements(By.cssSelector(".slds-button.cpq-item-has-children")).get(0);
+		cc.obligarclick(plan);
+		sleep(3000);
+		driver.findElement(By.id("tab-default-2__item")).click();
+		sleep(4000);
+		driver.findElement(By.id("tab-default-2")).findElements(By.tagName("div")).get(2).click();
+		sleep(2000);
+		driver.findElements(By.cssSelector(".slds-button__icon.slds-button__icon--.cpq-fix-slds-close-switch")).get(1);
+		sleep(2000);
+		driver.findElement(By.cssSelector(".slds-button.slds-button_icon-border-filled.cpq-item-actions-dropdown-button")).click();
+		sleep(5000);
+		List<WebElement> btn = driver.findElements(By.cssSelector(".slds-is-relative"));
+			for(WebElement b : btn){
+				b.getText().equals("DDI");
+				b.findElement(By.cssSelector(".slds-button.slds-button_icon-border-filled.cpq-item-actions-dropdown-button")).click();
+			}
+		sleep(3000);
+		List <WebElement> dell = driver.findElements(By.cssSelector(".slds-dropdown__item.cpq-item-actions-dropdown__item"));
+			for(WebElement d : dell){
+				d.getText().equals("Delete");
+				d.click();
+			}
+		sleep(5000);
+			try {
+				cc.obligarclick(driver.findElement(By.cssSelector(".slds-button.slds-button--destructive")));
+				sleep(20000);
+			}catch(Exception ex1) {}	
+			
 	}
 	
 	@Test(groups = {"Sales", "PreparacionNominacion"}, dataProvider="DatosSalesNominacion") 
-	public void TS_CRM_Nominacion_Argentino(String sCuenta, String sLinea, String sDni, String sNombre, String sApellido, String sSexo, String sFnac, String sEmail) { 
+	public void TS_CRM_Nominacion_Argentino(String sCuenta, String sLinea, String sDni, String sNombre, String sApellido, String sSexo, String sFnac, String sEmail, String sProvincia, String sLocalidad, String sCalle, String sNumCa, String sCP) { 
 		driver.switchTo().frame(cambioFrame(driver, By.id("SearchClientDocumentType")));
 		SalesBase SB = new SalesBase(driver);
 		String NyA = sCuenta;
@@ -234,7 +265,7 @@ public class GestionesPerfilOficina extends TestBase {
 		}catch(Exception ex1) {}
 			BasePage bp = new BasePage(driver);
 		bp.setSimpleDropdown(driver.findElement(By.id("ImpositiveCondition")), "IVA Consumidor Final");
-		SB.Crear_DomicilioLegal("Buenos Aires", "aba", "falsa", "", "1000", "", "", "1549");
+		SB.Crear_DomicilioLegal(sProvincia, sLocalidad, sCalle, "", sNumCa, "", "", sCP);
 		sleep(38000);
 		//contact.subirformulario("C:\\Users\\florangel\\Downloads\\form.pdf", "si");
 		//sleep(30000);

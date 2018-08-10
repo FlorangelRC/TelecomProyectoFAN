@@ -36,7 +36,7 @@ public class AltadeLineas extends TestBase {
 	public void Init2() {
 		driver = setConexion.setupEze();
 		try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}		
-			 loginOfCom(driver);  
+			 loginAgente(driver);  
 			 try {Thread.sleep(15000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 				
 				driver.findElement(By.id("tabBar")).findElement(By.tagName("a")).click();
@@ -300,6 +300,13 @@ public class AltadeLineas extends TestBase {
 			driver.findElements(By.cssSelector(".slds-button.slds-button--neutral.ng-binding.ng-scope")).get(1).click();
 			sleep(10000);
 		}catch(Exception ex1) {}
+		String orden = driver.findElement(By.className("top-data")).findElement(By.className("ng-binding")).getText();
+		String NCuenta = driver.findElements(By.className("top-data")).get(1).findElements(By.className("ng-binding")).get(2).getText();
+		String Linea = driver.findElement(By.cssSelector(".top-data.ng-scope")).findElements(By.className("ng-binding")).get(1).getText();
+		orden = orden.substring(orden.length()-8);
+		NCuenta = NCuenta.substring(NCuenta.length()-16);
+		Linea = Linea.substring(Linea.length()-10);
+		//00072466 9900000724810001
 		cc.obligarclick(driver.findElement(By.id("OrderSumary_nextBtn")));
 		sleep(20000);
 		try {
@@ -497,27 +504,34 @@ public class AltadeLineas extends TestBase {
 		driver.findElement(By.id("EmailSelectableItems")).findElement(By.tagName("input")).sendKeys(sEmail);
 		driver.findElement(By.id("Contact_nextBtn")).click();
 		sleep(20000);
-		WebElement plan = driver.findElement(By.cssSelector(".slds-input.ng-pristine.ng-untouched.ng-valid.ng-empty"));
-		plan.sendKeys(sPlan);
+		List<WebElement> btns = driver.findElements(By.cssSelector(".slds-button.slds-button.slds-button--icon"));
+			for(WebElement e: btns){
+				if(e.getText().toLowerCase().equals("catalogo")){ 
+					e.click();
+					break;
+				}
+			}
+		sleep(25000);
+		sb.elegirplan("Plan Prepago Nacional");
 		sleep(12000);
-		WebElement agre = driver.findElements(By.cssSelector(".slds-button.slds-button_neutral.cpq-add-button")).get(0);
-		cc.obligarclick(agre);
 		driver.findElement(By.cssSelector(".slds-input.ng-valid.ng-not-empty.ng-dirty.ng-valid-parse.ng-touched")).clear();
 		sleep(3000);
-		//class search slds-input ng-valid ng-dirty ng-valid-parse ng-touched ng-empty
-		driver.findElement(By.xpath("//*[@id='j_id0:j_id5']/div/div[1]/ng-include/div/div[2]/div[2]/div[2]/div/div/ng-include/div/div[2]/div[1]/input")).sendKeys("Galaxy S8 - Negro");
+		driver.findElement(By.cssSelector(".slds-input.ng-valid.ng-dirty.ng-valid-parse.ng-touched.ng-empty")).sendKeys("Galaxy S8 - Negro");
 		sleep(10000);
-		WebElement agregar = driver.findElement(By.xpath("//*[@id='j_id0:j_id5']/div/div/ng-include/div/div[2]/div[2]/div[2]/div/div/ng-include/div/div[5]/div/ng-include/div/div/div[2]/ng-include/div/div[3]/div/div/div[2]/div/div[2]/button")); 
-		agregar.click();
-		//sb.configuracion(sLinea, sIccid, sImsi, sKi);
+		List<WebElement> agregar = driver.findElements(By.cssSelector(".slds-button.slds-button--neutral.add-button")); 
+			for(WebElement a : agregar){
+				a.getText().equals("Agregar");
+				a.click();
+			}
+		sleep(5000);	
 		sb.continuar();
-		sleep(23000);
+		sleep(30000);
 		sb.Crear_DomicilioLegal(sProvincia, sLocalidad, "falsa", "", "1000", "", "", "1549");
 		sleep(24000);
-		WebElement ord = driver.findElement(By.cssSelector(".slds-form-element__control")).findElement(By.tagName("p")).findElements(By.tagName("p")).get(0);
-		String or = ord.getText();
-		or =or.substring(or.length()-8, or.length());
-		System.out.println(or);
+		//WebElement ord = driver.findElement(By.cssSelector(".slds-form-element__control")).findElement(By.tagName("div")).findElement(By.tagName("p")).findElements(By.tagName("p")).get(0);
+		//String or = ord.getText();
+		//or =or.substring(or.length()-8, or.length());
+		//System.out.println(or);
 		WebElement sig = driver.findElement(By.id("LineAssignment_nextBtn"));
 		cc.obligarclick(sig);
 		sleep(25000);
@@ -575,11 +589,14 @@ public class AltadeLineas extends TestBase {
 		sleep(12000);
 		driver.findElement(By.cssSelector(".slds-input.ng-valid.ng-not-empty.ng-dirty.ng-valid-parse.ng-touched")).clear();
 		sleep(3000);
-		driver.findElement(By.xpath("//*[@id='j_id0:j_id5']/div/div[1]/ng-include/div/div[2]/div[2]/div[2]/div/div/ng-include/div/div[2]/div[1]/input")).sendKeys("Galaxy S8 - Negro");
+		driver.findElement(By.cssSelector(".slds-input.ng-valid.ng-dirty.ng-valid-parse.ng-touched.ng-empty")).sendKeys("Galaxy S8 - Negro");
 		sleep(10000);
-		WebElement agregar = driver.findElement(By.xpath("//*[@id='j_id0:j_id5']/div/div/ng-include/div/div[2]/div[2]/div[2]/div/div/ng-include/div/div[5]/div/ng-include/div/div/div[2]/ng-include/div/div[3]/div/div/div[2]/div/div[2]/button")); 
-		agregar.click();
-		//sb.configuracion(sLinea, sIccid, sImsi, sKi);
+		List<WebElement> agregar = driver.findElements(By.cssSelector(".slds-button.slds-button--neutral.add-button")); 
+			for(WebElement a : agregar){
+				a.getText().equals("Agregar");
+				a.click();
+			}
+		sleep(5000);	
 		sb.continuar();
 		sleep(24000);
 		WebElement ord = driver.findElement(By.cssSelector(".slds-form-element__control")).findElement(By.tagName("p")).findElements(By.tagName("p")).get(0);
@@ -617,3 +634,5 @@ public class AltadeLineas extends TestBase {
 		}
 	}
 }
+
+

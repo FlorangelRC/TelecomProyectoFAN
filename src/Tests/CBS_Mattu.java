@@ -37,10 +37,10 @@ public class CBS_Mattu extends TestBase {
 	public void openPage() {
 		String sEndPoint = "Pago en Caja";
 		String sPaymentChannelID = "1006";
-		String sAccountKey = "9900000326610001";
+		String sAccountKey = "9900000721410001";
 		String sPaymentMethod = "1001";
-		String sAmount = "100000000";
-		String sInvoiceno = "20180810000000056498";
+		String sAmount = "0000001";
+		String sInvoiceno = "20180809000000056466";
 		String sPaymentSerialNo = ((new java.text.SimpleDateFormat("yyyyMMddHHmmss")).format(new Date())).toString()+Integer.toString((int)(Math.random()*1000));
 		
 		SOAPClientSAAJ sSCS = new SOAPClientSAAJ();
@@ -50,8 +50,14 @@ public class CBS_Mattu extends TestBase {
 	}
 	
 	@Test
-	public void test() {
+	public void openPage2() {
+		String sEndPoint = "Pago Simulado";
+		String sOrder = "00072466";
 		
+		SOAPClientSAAJ sSCS = new SOAPClientSAAJ();
+		CBS cCBS = new CBS();
+		String sResponse = sSCS.callSoapWebService(cCBS.sRequestByOrder(sOrder), sEndPoint);
+		System.out.println("sResponse: " + sResponse);
 	}
 	
 }
