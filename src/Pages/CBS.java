@@ -41,7 +41,7 @@ public class CBS {
 				+ "\r\n            <RequestHeader>\r\n"
 				+ "      	       		<cbs:Version>5.5</cbs:Version>\r\n"
 				+ "      	       		<cbs:BusinessCode>Charge2AR</cbs:BusinessCode>\r\n"
-				+ "       	       		<cbs:MessageSeq>" + sPaymentSerialNo;
+				+ "       	       		<cbs:MessageSeq>20180809151425662";
 		
 		sRequest+="</cbs:MessageSeq>\r\n"
 				+ "       	       		<cbs:OwnershipInfo>\r\n"
