@@ -79,9 +79,12 @@ public class compraPackPerfilTelefonico extends TestBase{
 			break;
 		}
 	}
+	try {
 	((JavascriptExecutor)driver).executeScript("window.scrollTo(0,"+driver.findElement(By.id("SetPaymentType_nextBtn")).getLocation().y+")");
 	driver.findElement(By.id("SetPaymentType_nextBtn")).click();
 	sleep(10000);
+	}catch (Exception ex1) {}
+	
 	((JavascriptExecutor)driver).executeScript("window.scrollTo(0,"+driver.findElement(By.id("SaleOrderMessages_nextBtn")).getLocation().y+")");
 	sleep(15000);
 	driver.findElement(By.id("SaleOrderMessages_nextBtn")).click();

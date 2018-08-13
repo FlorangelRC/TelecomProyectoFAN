@@ -118,4 +118,17 @@ public class CBS {
 		
 		return sAssert;
 	}
+	
+	public String sCBS_Request_Validador(String sResponse) {
+		String sAssert = "false";
+		
+		if (sResponse.contains("Operation successfully")) {
+			sAssert = "true";
+		}
+		else {
+			sAssert = sResponse;
+		}
+		
+		return sAssert;
+	}
 }
