@@ -118,6 +118,7 @@ public class GestionesPerfilTelefonico extends TestBase{
 		}
 		driver.switchTo().frame(cambioFrame(driver, By.id("SearchClientDocumentType")));
 		sb.BuscarCuenta("DNI", cDNI);
+		String accid = driver.findElements(By.cssSelector(".slds-truncate.ng-binding")).get(5).getText();
 		driver.findElement(By.cssSelector(".slds-tree__item.ng-scope")).click();
 		sleep(15000);
 		driver.switchTo().frame(cambioFrame(driver, By.className("card-top")));

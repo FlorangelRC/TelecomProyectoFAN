@@ -1070,7 +1070,7 @@ public class TestBase {
 		 case "logistica":
 			 loginLogistica(driver);
 			 break;
-		 case "entregas":
+		 case "entrega":
 			 loginEntrega(driver);
 			 break;
 		 case "OM":
@@ -1078,5 +1078,14 @@ public class TestBase {
 			 break;
 		 }
 		 sleep(10000);
+	}
+	
+	@DataProvider
+	public Object[][] RecargaEfectivo() throws Exception{
+
+	 Object[][] testObjArray = ExcelUtils.getTableArray("Cuentas.xlsx","PerfilGestiones",1,1,3,"Recarga Efectivo");
+
+	 return (testObjArray);
+
 	}
 }

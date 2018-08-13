@@ -1521,7 +1521,7 @@ public class CustomerCare extends BasePage {
 		return(null);
 	}
 	
-	public void seleccionarCardPornumeroLinea(String sLinea) {
+	public void seleccionarCardPornumeroLinea(String sLinea, WebDriver driver) {
 		TestBase tTB = new TestBase();
 		driver.switchTo().frame(tTB.cambioFrame(driver, By.className("card-top")));
 		
