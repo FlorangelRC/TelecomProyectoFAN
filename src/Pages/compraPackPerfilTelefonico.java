@@ -72,9 +72,10 @@ public class compraPackPerfilTelefonico extends TestBase{
 	public void tipoDePago(String tipodepago) {
 	List<WebElement> tipodePago = driver.findElements(By.cssSelector(".slds-radio.ng-scope"));
 	for (WebElement pago : tipodePago) {
-		System.out.print(pago.getText().toLowerCase());
+		//System.out.print(pago.getText().toLowerCase());
 		if (pago.getText().toLowerCase().contains(tipodepago)) {
 			pago.findElement(By.tagName("span")).click();
+			System.out.println(tipodepago);
 			sleep(8000);
 			break;
 		}
