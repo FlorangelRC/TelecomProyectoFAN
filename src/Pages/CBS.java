@@ -41,7 +41,7 @@ public class CBS {
 				+ "\r\n            <RequestHeader>\r\n"
 				+ "      	       		<cbs:Version>5.5</cbs:Version>\r\n"
 				+ "      	       		<cbs:BusinessCode>Charge2AR</cbs:BusinessCode>\r\n"
-				+ "       	       		<cbs:MessageSeq>" + sPaymentSerialNo;
+				+ "       	       		<cbs:MessageSeq>20180809151425662";
 		
 		sRequest+="</cbs:MessageSeq>\r\n"
 				+ "       	       		<cbs:OwnershipInfo>\r\n"
@@ -106,13 +106,29 @@ public class CBS {
 		return sRequest;
 	}
 	
-	public boolean sCBS_Request_ServicioWeb_Validador(String sResponse) {
-		boolean bAssert = false;
+	public String sCBS_Request_ServicioWeb_Validador(String sResponse) {
+		String sAssert = "false";
 		
 		if (sResponse.equalsIgnoreCase("0OK")) {
-			bAssert = true;
+			sAssert = "true";
+		}
+		else {
+			sAssert = sResponse;
 		}
 		
-		return bAssert;
+		return sAssert;
+	}
+	
+	public String sCBS_Request_Validador(String sResponse) {
+		String sAssert = "false";
+		
+		if (sResponse.contains("Operation successfully")) {
+			sAssert = "true";
+		}
+		else {
+			sAssert = sResponse;
+		}
+		
+		return sAssert;
 	}
 }
