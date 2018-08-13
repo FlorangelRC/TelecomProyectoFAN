@@ -281,5 +281,15 @@ public class GestionesPerfilOficina extends TestBase {
 		Assert.assertTrue(a);
 		//driver.findElement(By.id("FinishProcess_nextBtn")).click();
 		
-	}	
+	}
+	
+	@Test (groups = {"GestionesPerfilOficina", "Ajustes"})
+	public void Gestion_Ajustes() {
+		driver.switchTo().frame(cambioFrame(driver, By.id("SearchClientDocumentType")));
+		sb.BuscarCuenta("DNI", "18766558");
+		driver.findElement(By.cssSelector(".slds-tree__item.ng-scope")).click();
+		sleep(15000);
+		cc.irAGestion("inconvenientes");
+		
+	}
 }

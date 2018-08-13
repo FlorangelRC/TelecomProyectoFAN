@@ -346,7 +346,7 @@ public class CustomerCare extends BasePage {
 		if (gest.equals("D�bito autom�tico")) TestBase.sleep(6500);
 		else TestBase.sleep(3000);
 		if (gest.equals("Historial de Packs")) TestBase.sleep(1500);
-		cambiarAFrameActivo();
+		//cambiarAFrameActivo();
 	}
 	
 	public void irAGestiones() {
@@ -1371,7 +1371,7 @@ public class CustomerCare extends BasePage {
 		driver.findElement(By.id("CboItem")).click();
 		driver.findElement(By.xpath("//*[text() = 'Consumos de datos']")).click();
 		driver.findElement(By.id("CboMotivo")).click();
-		driver.findElement(By.xpath("//*[text() = 'Error/omisi�n/demora gesti�n']")).click();
+		driver.findElement(By.xpath("//*[text() = 'Error/omisi\u00f3n/demora gesti\u00f3n']")).click();
 		List <WebElement> si = driver.findElements(By.cssSelector(".slds-form-element__label.ng-binding.ng-scope"));
 		for (WebElement x : si) {
 			if (x.getText().toLowerCase().equals("si")) {

@@ -300,12 +300,20 @@ public class AltadeLineas extends TestBase {
 			driver.findElements(By.cssSelector(".slds-button.slds-button--neutral.ng-binding.ng-scope")).get(1).click();
 			sleep(10000);
 		}catch(Exception ex1) {}
+		String orden = driver.findElement(By.className("top-data")).findElement(By.className("ng-binding")).getText();
+		String NCuenta = driver.findElements(By.className("top-data")).get(1).findElements(By.className("ng-binding")).get(2).getText();
+		String Linea = driver.findElement(By.cssSelector(".top-data.ng-scope")).findElements(By.className("ng-binding")).get(1).getText();
+		orden = orden.substring(orden.length()-8);
+		NCuenta = NCuenta.substring(NCuenta.length()-16);
+		Linea = Linea.substring(Linea.length()-10);
+		//00072466 9900000724810001
 		cc.obligarclick(driver.findElement(By.id("OrderSumary_nextBtn")));
 		sleep(20000);
 		try {
 			cc.obligarclick(driver.findElement(By.id("Step_Error_Huawei_S029_nextBtn")));
 		}catch(Exception ex1) {
 			driver.findElement(By.id("SaleOrderMessages_nextBtn")).click();
+			sleep(15000);
 		}
 
 	}

@@ -1215,4 +1215,76 @@ try{	driver.findElement(By.id("alert-ok-button")).click();	} catch (NoSuchElemen
 			
 			
 		}
+		
+		public boolean completarLogistica(String sOrder) {
+			DesloguearLoguear("Logistica");
+			
+			CustomerCare cCC = new CustomerCare(driver);
+			cCC.cerrarTodasLasPestanas();
+			
+			driver.findElement(By.id("BackToServiceDesk_Tab")).click();
+			WebElement wBody = driver.findElement(By.cssSelector(".slds-table.slds-table--bordered:slds-no-row-hover.slds-table--cell-buffer.slds-max-medium-table--stacked-horizontal"));
+			List<WebElement> wOrders = wBody.findElements(By.tagName("tbody"));
+			for (WebElement wAux : wOrders) {
+				List<WebElement> wItems = wAux.findElements(By.cssSelector(".slds-truncate.slds-text-align--center"));
+				if (wItems.get(0).getText().equals(sOrder)) {
+					wAux.findElement(By.cssSelector(".slds-button.slds-button--neutral")).click();
+					break;
+				}
+			}
+			sleep(5000);
+			
+			List<WebElement> wSerialVerificationItems = driver.findElements(By.cssSelector(".slds-truncate.ng-binding"));
+			driver.findElement(By.name("serial")).sendKeys(wSerialVerificationItems.get(1).getText());
+			driver.findElement(By.id("SerialNumberValidation_nextBtn")).click();
+			sleep(5000);
+			
+			boolean bAssert = false;
+			List<WebElement> wMessage = driver.findElement(By.cssSelector(".slds-form-element.vlc-flex.vlc-slds-text-block.vlc-slds-rte.ng-pristine.ng-valid.ng-scope")).findElement(By.className("slds-form-element__control")).findElement(By.className("ng-binding")).findElements(By.tagName("p"));
+			if (wMessage.get(1).getText().equals("¡La orden se realizó con \u00e9xito!")) {
+				bAssert = true;
+			}
+			driver.findElement(By.id("Confirmation_nextBtn")).click();
+			sleep(5000);
+			
+			DesloguearLoguear("");
+			
+			return bAssert;
+		}
+		
+		public boolean entrega(String sOrder) {
+			DesloguearLoguear("");
+			driver.findElement(By.id("BackToServiceDesk_Tab")).click();
+			
+			CustomerCare cCC = new CustomerCare(driver);
+			cCC.cerrarTodasLasPestanas();
+			
+			WebElement wBody = driver.findElement(By.cssSelector(".slds-table.slds-table--bordered.slds-no-row-hover.slds-table--cell-buffer.slds-max-medium-table--stacked-horizontal"));
+			List<WebElement> wOrders = wBody.findElements(By.tagName("tbody"));
+			for (WebElement wAux : wOrders) {
+				List<WebElement> wItems = wAux.findElements(By.cssSelector(".slds-truncate.slds-text-align--center"));
+				if (wItems.get(0).getText().equals(sOrder)) {
+					wAux.findElement(By.cssSelector(".slds-button.slds-button--neutral")).click();
+					break;
+				}
+			}
+			sleep(5000);
+			
+			driver.findElement(By.id("checkbox-1")).click();
+			driver.findElement(By.id("OrderItemVerification_nextBtn")).click();
+			sleep(5000);
+			
+			boolean bAssert = false;
+			//Check Verification - There's no message shown by now
+			List<WebElement> wMessage = driver.findElement(By.cssSelector(".slds-form-element.vlc-flex.vlc-slds-text-block.vlc-slds-rte.ng-pristine.ng-valid.ng-scope")).findElement(By.className("slds-form-element__control")).findElement(By.className("ng-binding")).findElements(By.tagName("p"));
+			if (wMessage.get(1).getText().equals("¡La orden se realizó con \u00e9xito!")) {
+				bAssert = true;
+			}
+			driver.findElement(By.id("Confirmation_nextBtn")).click();
+			sleep(5000);
+			
+			DesloguearLoguear("");
+			
+			return bAssert;
+		}
  }
