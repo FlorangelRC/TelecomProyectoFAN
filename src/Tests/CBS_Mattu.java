@@ -37,10 +37,10 @@ public class CBS_Mattu extends TestBase {
 	public void openPage() {
 		String sEndPoint = "Pago en Caja";
 		String sPaymentChannelID = "1006";
-		String sAccountKey = "9900000721410001";
+		String sAccountKey = "9900000687010001";
 		String sPaymentMethod = "1001";
-		String sAmount = "0000001";
-		String sInvoiceno = "20180809000000056466";
+		String sAmount = "97420000";
+		String sInvoiceno = "20180812000000056508";
 		String sPaymentSerialNo = ((new java.text.SimpleDateFormat("yyyyMMddHHmmss")).format(new Date())).toString()+Integer.toString((int)(Math.random()*1000));
 		
 		SOAPClientSAAJ sSCS = new SOAPClientSAAJ();

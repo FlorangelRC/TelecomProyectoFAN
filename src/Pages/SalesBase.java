@@ -230,7 +230,6 @@ public void BuscarCuenta(String Type, String NDNI){
 	sleep(2000);
 	btnbuscar.click();
 	try {Thread.sleep(10000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
-
 }
 
 
@@ -940,7 +939,7 @@ try{	driver.findElement(By.id("alert-ok-button")).click();	} catch (NoSuchElemen
 			driver.findElement(By.id("SearchClientDocumentNumber")).click();
 			driver.findElement(By.id("SearchClientDocumentNumber")).sendKeys(DNI);
 			driver.findElement(By.id("SearchClientsDummy")).click();
-			try {Thread.sleep(3000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+			try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 			List <WebElement> cc = driver.findElements(By.cssSelector(".slds-form-element__label.ng-binding"));
 			for (WebElement x : cc) {
 				if (x.getText().toLowerCase().contains("+ crear nuevo cliente")) {
@@ -1216,49 +1215,20 @@ try{	driver.findElement(By.id("alert-ok-button")).click();	} catch (NoSuchElemen
 			
 		}
 		
-		public boolean completarLogistica(String sOrder) {
-			DesloguearLoguear("Logistica");
-			
-			CustomerCare cCC = new CustomerCare(driver);
-			cCC.cerrarTodasLasPestanas();
-			
-			driver.findElement(By.id("BackToServiceDesk_Tab")).click();
-			WebElement wBody = driver.findElement(By.cssSelector(".slds-table.slds-table--bordered:slds-no-row-hover.slds-table--cell-buffer.slds-max-medium-table--stacked-horizontal"));
-			List<WebElement> wOrders = wBody.findElements(By.tagName("tbody"));
-			for (WebElement wAux : wOrders) {
-				List<WebElement> wItems = wAux.findElements(By.cssSelector(".slds-truncate.slds-text-align--center"));
-				if (wItems.get(0).getText().equals(sOrder)) {
-					wAux.findElement(By.cssSelector(".slds-button.slds-button--neutral")).click();
-					break;
-				}
-			}
-			sleep(5000);
-			
-			List<WebElement> wSerialVerificationItems = driver.findElements(By.cssSelector(".slds-truncate.ng-binding"));
-			driver.findElement(By.name("serial")).sendKeys(wSerialVerificationItems.get(1).getText());
-			driver.findElement(By.id("SerialNumberValidation_nextBtn")).click();
-			sleep(5000);
-			
-			boolean bAssert = false;
-			List<WebElement> wMessage = driver.findElement(By.cssSelector(".slds-form-element.vlc-flex.vlc-slds-text-block.vlc-slds-rte.ng-pristine.ng-valid.ng-scope")).findElement(By.className("slds-form-element__control")).findElement(By.className("ng-binding")).findElements(By.tagName("p"));
-			if (wMessage.get(1).getText().equals("¡La orden se realizó con \u00e9xito!")) {
-				bAssert = true;
-			}
-			driver.findElement(By.id("Confirmation_nextBtn")).click();
-			sleep(5000);
-			
-			DesloguearLoguear("");
-			
-			return bAssert;
-		}
-		
-		public boolean entrega(String sOrder) {
-			DesloguearLoguear("");
-			driver.findElement(By.id("BackToServiceDesk_Tab")).click();
-			
-			CustomerCare cCC = new CustomerCare(driver);
-			cCC.cerrarTodasLasPestanas();
-			
+		public boolean completarLogistica(String sOrder, WebDriver driver) {
+			TestBase TB = new TestBase();
+			try {Thread.sleep(15000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+			driver.findElement(By.id("tabBar")).findElement(By.tagName("a")).click();
+			sleep(12000);
+			SalesBase SB = new SalesBase(driver);
+			driver.switchTo().defaultContent();
+			sleep(3000);
+			TB.goToLeftPanel2(driver, "Logistica");
+			sleep(12000);
+			try{
+				SB.cerrarPestaniaGestion(driver);}
+			catch(Exception ex2) {}
+			driver.switchTo().frame(TB.cambioFrame(driver, By.className("taNotificactionPanel")));
 			WebElement wBody = driver.findElement(By.cssSelector(".slds-table.slds-table--bordered.slds-no-row-hover.slds-table--cell-buffer.slds-max-medium-table--stacked-horizontal"));
 			List<WebElement> wOrders = wBody.findElements(By.tagName("tbody"));
 			for (WebElement wAux : wOrders) {
@@ -1268,23 +1238,67 @@ try{	driver.findElement(By.id("alert-ok-button")).click();	} catch (NoSuchElemen
 					break;
 				}
 			}
-			sleep(5000);
+			sleep(12000);
+			driver.switchTo().frame(TB.cambioFrame(driver, By.cssSelector(".slds-truncate.ng-binding")));
 			
-			driver.findElement(By.id("checkbox-1")).click();
-			driver.findElement(By.id("OrderItemVerification_nextBtn")).click();
-			sleep(5000);
-			
+			String serial = driver.findElement(By.cssSelector(".slds-table.slds-table--bordered.slds-table--cell-buffer.vlc-slds-table")).findElements(By.cssSelector(".slds-truncate.ng-binding")).get(1).getText();
+			System.out.println("S="+serial);
+			driver.findElement(By.cssSelector(".slds-input.ng-pristine.ng-untouched.ng-empty.ng-invalid.ng-invalid-required.ng-valid-pattern")).sendKeys(serial);
+			driver.findElement(By.id("SerialNumberValidation_nextBtn")).click();
+			sleep(8000);
 			boolean bAssert = false;
-			//Check Verification - There's no message shown by now
 			List<WebElement> wMessage = driver.findElement(By.cssSelector(".slds-form-element.vlc-flex.vlc-slds-text-block.vlc-slds-rte.ng-pristine.ng-valid.ng-scope")).findElement(By.className("slds-form-element__control")).findElement(By.className("ng-binding")).findElements(By.tagName("p"));
 			if (wMessage.get(1).getText().equals("¡La orden se realizó con \u00e9xito!")) {
 				bAssert = true;
 			}
 			driver.findElement(By.id("Confirmation_nextBtn")).click();
 			sleep(5000);
-			
-			DesloguearLoguear("");
-			
+
 			return bAssert;
+		}
+		
+		public boolean completarEntrega(String sOrder,WebDriver driver) {
+			TestBase TB = new TestBase();
+			try {Thread.sleep(15000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+			driver.findElement(By.id("tabBar")).findElement(By.tagName("a")).click();
+			sleep(12000);
+			SalesBase SB = new SalesBase(driver);
+			driver.switchTo().defaultContent();
+			sleep(3000);
+			TB.goToLeftPanel2(driver, "Entregas");
+			sleep(12000);
+			try{
+				SB.cerrarPestaniaGestion(driver);}
+			catch(Exception ex2) {}
+			driver.switchTo().frame(TB.cambioFrame(driver, By.className("taNotificactionPanel")));
+			WebElement wBody = driver.findElement(By.cssSelector(".slds-table.slds-table--bordered.slds-no-row-hover.slds-table--cell-buffer.slds-max-medium-table--stacked-horizontal"));
+			List<WebElement> wOrders = wBody.findElements(By.tagName("tbody"));
+			for (WebElement wAux : wOrders) {
+				List<WebElement> wItems = wAux.findElements(By.cssSelector(".slds-truncate.slds-text-align--center"));
+				if (wItems.get(0).getText().equals(sOrder)) {
+					wAux.findElement(By.cssSelector(".slds-button.slds-button--neutral")).click();
+					break;
+				}
+			}
+			sleep(12000);
+			driver.switchTo().frame(TB.cambioFrame(driver, By.cssSelector(".slds-truncate.ng-binding")));
+			System.out.println("No lo encontreeeee");
+			driver.findElement(By.className("slds-checkbox--faux")).click();
+			driver.findElement(By.id("OrderItemVerification_nextBtn")).click();
+			sleep(8000);
+			
+			boolean bAssert = false;
+			//Check Verification - There's no message shown by now
+			try {
+				List<WebElement> wMessage = driver.findElement(By.cssSelector(".slds-form-element.vlc-flex.vlc-slds-text-block.vlc-slds-rte.ng-pristine.ng-valid.ng-scope")).findElement(By.className("slds-form-element__control")).findElement(By.className("ng-binding")).findElements(By.tagName("p"));
+				if (wMessage.get(1).getText().equals("¡La orden se realizó con \u00e9xito!")) {
+					bAssert = true;
+				}
+				driver.findElement(By.id("Confirmation_nextBtn")).click();
+				sleep(5000);
+			}catch(Exception ex1) {}
+			sleep(5000);
+			return bAssert;
+			
 		}
  }
