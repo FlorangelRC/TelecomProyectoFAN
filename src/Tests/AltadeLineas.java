@@ -36,21 +36,21 @@ public class AltadeLineas extends TestBase {
 	public void Init2() {
 		driver = setConexion.setupEze();
 		try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}		
-			 loginAgente(driver);  
-			 try {Thread.sleep(15000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
-				
-				driver.findElement(By.id("tabBar")).findElement(By.tagName("a")).click();
-				sleep(12000);
-				SalesBase SB = new SalesBase(driver);
-				driver.switchTo().defaultContent();
-				sleep(3000);
-				goToLeftPanel2(driver, "Inicio");
-				sleep(12000);
-				try{
-					SB.cerrarPestaniaGestion(driver);}
-				catch(Exception ex1) {
-				}
+		SalesBase SB = new SalesBase(driver);
+		loginOfCom(driver);  
+		 try {Thread.sleep(15000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+			
+			driver.findElement(By.id("tabBar")).findElement(By.tagName("a")).click();
+			sleep(12000);
+			driver.switchTo().defaultContent();
+			sleep(3000);
+			goToLeftPanel2(driver, "Inicio");
+			sleep(12000);
+			try{
+				SB.cerrarPestaniaGestion(driver);}
+			catch(Exception ex1) {
 			}
+		}
 	
 	@BeforeMethod(alwaysRun=true)
 	public void setup() throws Exception {
@@ -220,15 +220,15 @@ public class AltadeLineas extends TestBase {
 	public void TS_CRM_Alta_de_Linea_OfCom(String sDni, String sNombre, String sApellido, String sSexo, String sFNac, String sEmail, String sPlan, String sProvincia, String sLocalidad, String sEntrega, String sStoreProv, String sStoreLoc, String sTipoDelivery) throws IOException {
 		CustomerCare cc = new CustomerCare(driver);
 		SalesBase sb = new SalesBase(driver);
-		sleep(5000);
+		sleep(8000);
 		sb.Crear_Cliente(sDni);
 		ContactSearch contact = new ContactSearch(driver);
 		contact.sex(sSexo);
 		contact.Llenar_Contacto(sNombre, sApellido, sFNac);
 		driver.findElement(By.id("EmailSelectableItems")).findElement(By.tagName("input")).sendKeys(sEmail);
 		driver.findElement(By.id("Contact_nextBtn")).click();
-		sleep(18000);
-		sb.ResolverEntrega(driver, sEntrega,sStoreProv,sStoreLoc);
+		sleep(35000);
+		//sb.ResolverEntrega(driver, sEntrega,sStoreProv,sStoreLoc);
 		sleep(7000);
 		driver.switchTo().defaultContent();
 		Accounts accountPage = new Accounts(driver);
@@ -314,6 +314,14 @@ public class AltadeLineas extends TestBase {
 		}catch(Exception ex1) {
 			driver.findElement(By.id("SaleOrderMessages_nextBtn")).click();
 			sleep(15000);
+			CBS_Mattu invoSer = new CBS_Mattu();
+			invoSer.openPage2(orden);
+			sleep(5000);
+			CambiarPerfil("logistica");
+			sb.completarLogistica(orden, driver);
+			CambiarPerfil("entrega");
+			sb.completarEntrega(orden, driver);
+			CambiarPerfil("ofcom");
 		}
 
 	}
