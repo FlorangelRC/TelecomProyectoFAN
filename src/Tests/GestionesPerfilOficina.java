@@ -192,6 +192,7 @@ public class GestionesPerfilOficina extends TestBase {
 		System.out.println(driver.findElement(By.id("BankingEntity-0")));
 		selectByText(driver.findElement(By.id("BankingEntity-0")), cBanco);
 	}
+	
 	@Test (groups = {"GestionesPerfilOficina"}, dataProvider="BajaServicios")
 	public void TS_134338_CRM_Movil_PRE_Baja_de_Servicio_sin_costo_DDI_con_Roaming_Internacional_Presencial(String sDNI, String sCuenta, String sNumeroDeCuenta, String sLinea){
 		BasePage cambioFrameByID=new BasePage();
@@ -294,7 +295,7 @@ public class GestionesPerfilOficina extends TestBase {
 	}
 	
 	@Test (groups = {"GestionesPerfilOficina", "Ajustes"}, dataProvider = "CuentaAjustes")
-	public void Gestion_Ajustes(String cDNI) {
+	public void Gestion_Ajustes_Credito_Prepago(String cDNI) {
 		boolean gest = false;
 		driver.switchTo().frame(cambioFrame(driver, By.id("SearchClientDocumentType")));
 		sb.BuscarCuenta("DNI", cDNI);
@@ -332,11 +333,13 @@ public class GestionesPerfilOficina extends TestBase {
 		}
 		Assert.assertTrue(gest);
 		String orden = cc.obtenerOrden(driver, "Inconvenientes con cargos tasados y facturados");
-		sOrders.add("Inconvenientes con cargos tasados y facturados, numero de orden: " + orden + " de cuenta con DNI: " + cDNI);
+		sOrders.add("Inconvenientes con cargos tasados y facturados, Credito Prepago, numero de orden: " + orden + " de cuenta con DNI: " + cDNI);
 	}
 	
-	@Test
+	@Test (groups = {"GestionesPerfilOficina", "Ajustes"}) //No se puede modificar el DNI 2 veces en un mes
 	public void GestionActualizacionDatos() {
+		OM om = new OM(driver);
+		//boolean gest = false;
 		driver.switchTo().frame(cambioFrame(driver, By.id("SearchClientDocumentType")));
 		driver.findElement(By.cssSelector(".slds-form-element__label--toggleText.ng-binding")).click();
 		sleep(3000);
@@ -351,12 +354,98 @@ public class GestionesPerfilOficina extends TestBase {
 		sleep(10000);
 		driver.switchTo().frame(cambioFrame(driver, By.id("DocumentNumber")));
 		String nroDNI = driver.findElement(By.id("DocumentNumber")).getAttribute("value");
-		nroDNI = nroDNI.substring(0, nroDNI.length()-2);
-		System.out.println(nroDNI);
+		String old2 = nroDNI.substring(0, nroDNI.length()-2);
 		driver.findElement(By.id("DocumentNumber")).clear();
-		OM om = new OM(driver);
-		String a = om.getRandomNumber(2);
-		System.out.println(a);
+		String ultimos2 = om.getRandomNumber(2);
+		driver.findElement(By.id("DocumentNumber")).sendKeys(old2 + ultimos2);
+		String asd = driver.findElement(By.id("DocumentNumber")).getAttribute("value");
+		System.out.println(asd);
+		/*driver.findElement(By.id("ClientInformation_nextBtn")).click();
+		sleep(10000);
+		List <WebElement> element = driver.findElements(By.className("ta-care-omniscript-done"));
+		for (WebElement x : element) {
+			if (x.getText().toLowerCase().contains("se realizaron correctamente las modificaciones")) {
+				gest = true;
+			}
+		}
+		Assert.assertTrue(gest);*/		
+	}
+	
+	@Test (groups = {"GestionesPerfilOficina", "ProblemasConRecargas"}, dataProvider = "CuentaAjustes")  //Se necesitan nuevos numeros de tarjeta, solo se pueden usar 1 vez
+	public void GestionProblemasConRecargasTarjetaPrepaga(String cDNI) {
+		boolean gest = false;
+		driver.switchTo().frame(cambioFrame(driver, By.id("SearchClientDocumentType")));
+		sb.BuscarCuenta("DNI", cDNI);
+		driver.findElement(By.cssSelector(".slds-tree__item.ng-scope")).click();
+		sleep(20000);
+		driver.switchTo().frame(cambioFrame(driver, By.className("card-top")));
+		driver.findElement(By.className("card-top")).click();
+		sleep(5000);
+		cc.irAGestionEnCard("Problemas con Recargas");
+		sleep(10000);
+		driver.switchTo().frame(cambioFrame(driver, By.id("RefillMethods_nextBtn")));
+		buscarYClick(driver.findElements(By.className("borderOverlay")), "equals", "tarjeta prepaga");
+		driver.findElement(By.id("RefillMethods_nextBtn")).click();
+		sleep(5000);
+		driver.findElement(By.id("BatchNumber")).sendKeys("11120000000210");
+		driver.findElement(By.id("PIN")).sendKeys("0257");
+		driver.findElement(By.id("PrepaidCardData_nextBtn")).click();
+		sleep(7000);
+		buscarYClick(driver.findElements(By.className("borderOverlay")), "equals", "crear un caso nuevo");
+		driver.findElement(By.id("ExistingCase_nextBtn")).click();
+		sleep(7000);
+		driver.findElement(By.id("Summary_nextBtn")).click();
+		sleep(10000);
+		List <WebElement> element = driver.findElements(By.className("ta-care-omniscript-done"));
+		for (WebElement x : element) {
+			if (x.getText().toLowerCase().contains("recarga realizada con \u00e9xito")) {
+				gest = true;
+			}
+		}
+		Assert.assertTrue(gest);
+		String orden = cc.obtenerOrden(driver, "Problema con recarga con tarjeta prepaga");
+		sOrders.add("Problema con recarga con tarjeta prepaga, numero de orden: " + orden + " de cuenta con DNI: " + cDNI);
+		System.out.println(sOrders);
+	}
+	
+	@Test (groups = {"GestionesPerfilOficina", "Ajustes"}, dataProvider = "CuentaAjustes")
+	public void Gestion_Ajustes_Credito_Pospago(String cDNI) {
+		boolean gest = false;
+		driver.switchTo().frame(cambioFrame(driver, By.id("SearchClientDocumentType")));
+		sb.BuscarCuenta("DNI", cDNI);
+		driver.findElement(By.cssSelector(".slds-tree__item.ng-scope")).click();
+		sleep(15000);
+		cc.irAGestion("inconvenientes");
+		sleep(10000);
+		driver.switchTo().frame(cambioFrame(driver, By.id("Step-TipodeAjuste_nextBtn")));
+		selectByText(driver.findElement(By.id("CboConcepto")), "CREDITO POSPAGO");
+		selectByText(driver.findElement(By.id("CboItem")), "Minutos/SMS");
+		selectByText(driver.findElement(By.id("CboMotivo")), "Error/omisi\u00f3n/demora gesti\u00f3n");
+		buscarYClick(driver.findElements(By.cssSelector(".slds-form-element__label.ng-binding.ng-scope")), "equals", "si");
+		driver.findElement(By.id("Step-TipodeAjuste_nextBtn")).click();
+		sleep(7000);
+		buscarYClick(driver.findElements(By.cssSelector(".slds-form-element__label.ng-binding")), "equals", "cuenta: 9900000325210001");
+		driver.findElement(By.id("Step1-SelectBillingAccount_nextBtn")).click();
+		sleep(7000);
+		buscarYClick(driver.findElements(By.cssSelector(".slds-form-element__label.ng-binding.ng-scope")), "equals", "si, ajustar");
+		driver.findElement(By.id("Step-VerifyPreviousAdjustments_nextBtn")).click();
+		sleep(7000);
+		buscarYClick(driver.findElements(By.cssSelector(".slds-form-element__label.ng-binding.ng-scope")), "equals", "nota de cr\u00e9dito");
+		buscarYClick(driver.findElements(By.cssSelector(".slds-form-element__label.ng-binding.ng-scope")), "equals", "si");
+		driver.findElements(By.className("slds-cell-shrink")).get(0).click();
+		driver.findElement(By.id("Step-AjusteNivelCuenta_nextBtn")).click();
+		sleep(7000);
+		driver.findElement(By.id("Step-Summary_nextBtn")).click();
+		sleep(7000);
+		List <WebElement> element = driver.findElements(By.cssSelector(".slds-form-element.vlc-flex.vlc-slds-text-block.vlc-slds-rte.ng-pristine.ng-valid.ng-scope"));
+		for (WebElement x : element) {
+			if (x.getText().toLowerCase().contains("tu gesti\u00f3n se realiz\u00f3 con \u00e9xito")) {
+				gest = true;
+			}
+		}
+		Assert.assertTrue(gest);
+		String orden = cc.obtenerOrden(driver, "Inconvenientes con cargos tasados y facturados");
+		sOrders.add("Inconvenientes con cargos tasados y facturados, Credito Pospago, numero de orden: " + orden + " de cuenta con DNI: " + cDNI);
 	}
 	
 }
