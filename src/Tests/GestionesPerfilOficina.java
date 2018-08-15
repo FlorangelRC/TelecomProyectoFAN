@@ -127,7 +127,7 @@ public class GestionesPerfilOficina extends TestBase {
 		
 		sleep(5000);
 		boolean bAssert = driver.findElement(By.cssSelector(".slds-form-element.vlc-flex.vlc-slds-text-block.vlc-slds-rte.ng-pristine.ng-valid.ng-scope")).getText().contains("La orden se realiz\u00f3 con \u00e9xito!");
-		cCC.obtenerOrden(driver, "N\u00fameros Gratis");
+		sOrders.add(cCC.obtenerOrden(driver, "N\u00fameros Gratis"));
 		Assert.assertTrue(bAssert);
 	}
 	
