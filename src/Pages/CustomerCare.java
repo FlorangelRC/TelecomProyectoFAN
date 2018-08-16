@@ -1620,4 +1620,21 @@ public class CustomerCare extends BasePage {
 		}
 		return(null);
 	}
+	
+	public String obtenerOrden(WebDriver driver, String gestion) {
+		TestBase tb = new TestBase();
+		driver.navigate().refresh();
+		sleep(18000);
+		panelIzquierdo();
+		//driver.switchTo().frame(tb.cambioFrame(driver, By.className("story-container")));
+	
+		List<WebElement> wStoryContainer = driver.findElements(By.className("story-container"));
+		for (WebElement wAux : wStoryContainer) {
+			if (wAux.findElement(By.cssSelector(".slds-text-body_regular.story-title")).getText().equalsIgnoreCase(gestion)) {
+				List<WebElement> wStoryField = wAux.findElements(By.cssSelector(".slds-text-body_regular.story-field"));
+				return( wStoryField.get(0).getText());
+			}
+		}
+		return(null);
+	}
 }
