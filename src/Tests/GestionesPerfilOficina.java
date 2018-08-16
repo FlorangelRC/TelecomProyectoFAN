@@ -139,7 +139,7 @@ public class GestionesPerfilOficina extends TestBase {
 		}
 		driver.switchTo().frame(cambioFrame(driver, By.id("SearchClientDocumentType")));
 		sb.BuscarCuenta("DNI", cDNI);
-		String accid = driver.findElement(By.cssSelector(".searchClient-body.slds-hint-parent.ng-scope")).findElements(By.tagName("td")).get(5).getText();
+		String accid = driver.findElements(By.cssSelector(".slds-truncate.ng-binding")).get(5).getText();
 		driver.findElement(By.cssSelector(".slds-tree__item.ng-scope")).click();
 		sleep(18000);
 		CustomerCare cCC = new CustomerCare(driver);
@@ -160,12 +160,11 @@ public class GestionesPerfilOficina extends TestBase {
 		String check = driver.findElement(By.id("GeneralMessageDesing")).getText();
 		Assert.assertTrue(msj.toLowerCase().contains("se ha enviado correctamente la factura a huawei. dirigirse a caja para realizar el pago de la misma"));
 		Assert.assertTrue(check.toLowerCase().contains("la orden se realiz\u00f3 con \u00e9xito"));
-		String orden = cc.obtenerOrdenMontoyTN(driver, "Recarga");
-		String[] datos = orden.split("-");
+		String orden = cc.obtenerOrden(driver, "Recarga");
 		System.out.println("orden = "+orden);
 		sOrders.add("Recargas, numero de orden: " + orden + " de cuenta con DNI: " + cDNI);
 		CBS_Mattu invoSer = new CBS_Mattu();
-		invoSer.PagoEnCaja("1006",accid,"1001",datos[2], datos[1]);
+		invoSer.openPage2(orden);
 		sleep(5000);
 	}
 	
@@ -275,17 +274,23 @@ public class GestionesPerfilOficina extends TestBase {
 		try {
 			contact.subirArchivo("C:\\Users\\florangel\\Downloads\\mapache.jpg", "si");
 		}catch(Exception ex1) {}
-		BasePage bp = new BasePage(driver);
-		sNumCa = sNumCa.substring(0, sNumCa.length()-1);
-		sCP = sCP.substring(0, sCP.length()-1);
+			BasePage bp = new BasePage(driver);
 		bp.setSimpleDropdown(driver.findElement(By.id("ImpositiveCondition")), "IVA Consumidor Final");
 		SB.Crear_DomicilioLegal(sProvincia, sLocalidad, sCalle, "", sNumCa, "", "", sCP);
 		sleep(38000);
 		//contact.subirformulario("C:\\Users\\florangel\\Downloads\\form.pdf", "si");
 		//sleep(30000);
-		System.out.println("t "+driver.findElement(By.id("NominacionExitosa")).getText());
-		Assert.assertTrue(driver.findElement(By.id("NominacionExitosa")).getText().toLowerCase().contains("nominaci\u00f3n exitosa"));
-		driver.findElement(By.id("FinishProcess_nextBtn")).click();
+		List <WebElement> element = driver.findElement(By.id("NominacionExitosa")).findElements(By.tagName("p"));
+		System.out.println("cont="+element.get(0).getText());
+		boolean a = false;
+		for (WebElement x : element) {
+			if (x.getText().toLowerCase().contains("nominaci\u00f3n exitosa!")) {
+				a = true;
+				//System.out.println(x.getText());
+			}
+		}
+		Assert.assertTrue(a);
+		//driver.findElement(By.id("FinishProcess_nextBtn")).click();
 		
 	}
 	
