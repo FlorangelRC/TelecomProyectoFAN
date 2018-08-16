@@ -1504,7 +1504,7 @@ public class CustomerCare extends BasePage {
 		}catch(org.openqa.selenium.StaleElementReferenceException ex1) {}
 	}
 	
-	public String obtenerOrden(WebDriver driver, String gestion) {
+	public String obtenerOrdenMontoyTN(WebDriver driver, String gestion) {
 		TestBase tb = new TestBase();
 		driver.navigate().refresh();
 		sleep(18000);
@@ -1515,7 +1515,7 @@ public class CustomerCare extends BasePage {
 		for (WebElement wAux : wStoryContainer) {
 			if (wAux.findElement(By.cssSelector(".slds-text-body_regular.story-title")).getText().equalsIgnoreCase(gestion)) {
 				List<WebElement> wStoryField = wAux.findElements(By.cssSelector(".slds-text-body_regular.story-field"));
-				return( wStoryField.get(0).getText());
+				return( wStoryField.get(0).getText()+"-"+obtenerTNyMonto(driver,wAux.findElement(By.cssSelector(".slds-text-body_regular.story-title"))));
 			}
 		}
 		return(null);
@@ -1546,6 +1546,79 @@ public class CustomerCare extends BasePage {
 			TestBase.sleep(2000);
 			driver.manage().timeouts().implicitlyWait(3, TimeUnit.SECONDS);
 		}
+	}
+	
+	public String obtenerTNyMonto(WebDriver driver, WebElement orden) {
+		String datos = null;
+		TestBase TB = new TestBase();
+		boolean esta = false;
+		String texto = null;
+		orden.click();
+		sleep(8000);
+		driver.switchTo().frame(TB.cambioFrame(driver, By.id("OrderNumber_ilecell")));
+		WebElement tabla = driver.findElement(By.id("ep")).findElements(By.tagName("table")).get(1);
+		datos = tabla.findElement(By.tagName("tr")).findElements(By.tagName("td")).get(3).getText();
+		List<WebElement> todo = tabla.findElements(By.tagName("td"));
+		for(WebElement UnT : todo) {
+			if(esta == true) {
+				texto = UnT.getText();
+				break;
+			}
+			if(UnT.getText().equalsIgnoreCase("Bill Simulation Payload")) {
+				esta = true;
+			}
+		}
+		texto = texto.split(",")[0].split(":")[2];
+		texto = texto.substring(1, texto.length()-1);
+		texto = texto.replace(",", "");
+		texto = texto.replace(".", "").concat("00");
+		datos = datos+"-"+texto;
+		return (datos);
+	}
+	
+	public String obtenerMontoyTNparaAlta(WebDriver driver, String orden) {
+		TestBase TB = new TestBase();
+		String datos = null;
+		boolean esta = false;
+		String texto = null;
+		OM pageOm=new OM(driver);
+		usarbuscadorsalesforce(orden);
+		
+		pageOm.cambiarVentanaNavegador(1);
+		sleep(1000);
+		pageOm.closeAllOtherTabs();
+		sleep(1000);
+		driver.switchTo().frame(TB.cambioFrame(driver, By.className("taNotificactionPanel")));
+		WebElement wBody = driver.findElement(By.cssSelector(".slds-table.slds-table--bordered.slds-no-row-hover.slds-table--cell-buffer.slds-max-medium-table--stacked-horizontal"));
+		List<WebElement> wOrders = wBody.findElements(By.tagName("tbody"));
+		for (WebElement wAux : wOrders) {
+			List<WebElement> wItems = wAux.findElements(By.cssSelector(".slds-truncate.slds-text-align--center"));
+			if (wItems.get(0).getText().equals(orden)) {
+				wItems.get(0).click();
+				sleep(8000);
+				driver.switchTo().frame(TB.cambioFrame(driver, By.id("OrderNumber_ilecell")));
+				WebElement tabla = driver.findElement(By.id("ep")).findElements(By.tagName("table")).get(1);
+				datos = tabla.findElement(By.tagName("tr")).findElements(By.tagName("td")).get(3).getText();
+				List<WebElement> todo = tabla.findElements(By.tagName("td"));
+				for(WebElement UnT : todo) {
+					if(esta == true) {
+						texto = UnT.getText();
+						break;
+					}
+					if(UnT.getText().equalsIgnoreCase("Bill Simulation Payload")) {
+						esta = true;
+					}
+				}
+				texto = texto.split(",")[0].split(":")[2];
+				texto = texto.substring(1, texto.length()-1);
+				texto = texto.replace(",", "");
+				texto = texto.replace(".", "").concat("00");
+				datos = datos+"-"+texto;
+				return (datos);
+				
+			}
+		}
+		return(null);
 	}
 	
 	public String sIccdImsi() {
