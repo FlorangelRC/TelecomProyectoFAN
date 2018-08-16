@@ -29,6 +29,7 @@ public class AltadeLineas extends TestBase {
 	String calle="Santa Fe";
 	String CP= "1609";
 	String altura="1234";
+	String urlAmbiente = "https://crm--sit.cs14.my.salesforce.com/console";
 	protected WebDriver driver;
 	protected  WebDriverWait wait;
 	
@@ -37,7 +38,7 @@ public class AltadeLineas extends TestBase {
 		driver = setConexion.setupEze();
 		try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}		
 		SalesBase SB = new SalesBase(driver);
-		loginOfCom(driver);  
+		loginAgente(driver);  
 		 try {Thread.sleep(15000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 			
 			driver.findElement(By.id("tabBar")).findElement(By.tagName("a")).click();
@@ -118,7 +119,7 @@ public class AltadeLineas extends TestBase {
 	
 	
 	@Test(groups={"Sales", "AltaLineaDatos"}, priority=1, dataProvider="DatosAltaLineaAgente")
-	public void TS_CRM_Alta_de_Linea_Agente(String sDni, String sNombre, String sApellido, String sSexo, String sFNac, String sEmail, String sPlan, String sProvincia, String sLocalidad, String sEntrega, String sStoreProv, String sStoreLoc, String sTipoDelivery) throws IOException {
+	public void TS_CRM_Alta_de_Linea_Agente(String sDni, String sNombre, String sApellido, String sSexo, String sFNac, String sEmail, String sPlan, String sProvincia, String sLocalidad, String sEntrega, String sStoreProv, String sStoreLoc, String sTipoDelivery, String sCalle, String sNumCa, String sCP) throws IOException {
 		CustomerCare cc = new CustomerCare(driver);
 		SalesBase sb = new SalesBase(driver);
 		sleep(5000);
@@ -169,7 +170,7 @@ public class AltadeLineas extends TestBase {
 		sb.elegirplan(sPlan);
 		sb.continuar();
 		sleep(22000);
-		sb.Crear_DomicilioLegal(sProvincia, sLocalidad, "falsa", "", "1000", "", "", "1549");
+		sb.Crear_DomicilioLegal(sProvincia, sLocalidad, sCalle, "", sNumCa, "", "", sCP);
 		sleep(24000);
 		WebElement sig = driver.findElement(By.id("LineAssignment_nextBtn"));
 		cc.obligarclick(sig);
@@ -186,7 +187,9 @@ public class AltadeLineas extends TestBase {
 			cc.obligarclick(driver.findElement(By.id("ICCDAssignment_nextBtn")));
 			sleep(20000);
 		}
-		
+		try {
+			cc.obligarclick(driver.findElement(By.id("Step_Error_Huawei_S015_nextBtn")));
+		}catch(Exception ex1) {}
 		cc.obligarclick(driver.findElement(By.id("InvoicePreview_nextBtn")));
 		sleep(20000);
 		try {
@@ -206,13 +209,35 @@ public class AltadeLineas extends TestBase {
 			driver.findElements(By.cssSelector(".slds-button.slds-button--neutral.ng-binding.ng-scope")).get(1).click();
 			sleep(10000);
 		}catch(Exception ex1) {}
+		String orden = driver.findElement(By.className("top-data")).findElement(By.className("ng-binding")).getText();
+		String NCuenta = driver.findElements(By.className("top-data")).get(1).findElements(By.className("ng-binding")).get(3).getText();
+		String Linea = driver.findElement(By.cssSelector(".top-data.ng-scope")).findElements(By.className("ng-binding")).get(1).getText();
+		System.out.println("Orden "+orden);
+		System.out.println("cuenta "+NCuenta);
+		System.out.println("Linea "+Linea);
+		orden = orden.substring(orden.length()-8);
+		NCuenta = NCuenta.substring(NCuenta.length()-16);
+		Linea = Linea.substring(Linea.length()-10);
 		cc.obligarclick(driver.findElement(By.id("OrderSumary_nextBtn")));
 		sleep(20000);
 		try {
 			cc.obligarclick(driver.findElement(By.id("Step_Error_Huawei_S029_nextBtn")));
-		}catch(Exception ex1) {
+		}catch(Exception ex1) {}
 			driver.findElement(By.id("SaleOrderMessages_nextBtn")).click();
-		}
+			driver.findElement(By.id("SaleOrderMessages_nextBtn")).click();
+			sleep(15000);
+			CBS_Mattu invoSer = new CBS_Mattu();
+			invoSer.openPage2(orden);
+			sleep(20000);
+			driver.close();
+			driver.quit();
+			Init2();
+			System.out.println(cc.obtenerMontoyTNparaAlta(driver, orden));
+			CambiarPerfil("logistica");
+			sb.completarLogistica(orden, driver);
+			CambiarPerfil("entrega");
+			sb.completarEntrega(orden, driver);
+			CambiarPerfil("agente");
 		
 	}
 	
@@ -269,10 +294,10 @@ public class AltadeLineas extends TestBase {
 		sb.continuar();
 		sleep(22000);
 		sb.Crear_DomicilioLegal(sProvincia, sLocalidad, "falsa", "", "1000", "", "", "1549");
-		sleep(24000);
+		sleep(40000);
 		WebElement sig = driver.findElement(By.id("LineAssignment_nextBtn"));
 		cc.obligarclick(sig);
-		sleep(20000);
+		sleep(40000);
 		if (sEntrega.equalsIgnoreCase("Delivery")) {
 			
 		}
@@ -293,16 +318,19 @@ public class AltadeLineas extends TestBase {
 		driver.findElement(By.id("FileDocumentImage")).sendKeys("C:\\Users\\florangel\\Downloads\\mapache.jpg");
 		sleep(3000);
 		cc.obligarclick(driver.findElement(By.id("DocumentMethod_nextBtn")));
-		sleep(10000);
+		sleep(15000);
 		cc.obligarclick(driver.findElement(By.id("ValidationResult_nextBtn")));
-		sleep(10000);
+		sleep(30000);
 		try {
 			driver.findElements(By.cssSelector(".slds-button.slds-button--neutral.ng-binding.ng-scope")).get(1).click();
-			sleep(10000);
+			sleep(18000);
 		}catch(Exception ex1) {}
 		String orden = driver.findElement(By.className("top-data")).findElement(By.className("ng-binding")).getText();
-		String NCuenta = driver.findElements(By.className("top-data")).get(1).findElements(By.className("ng-binding")).get(2).getText();
+		String NCuenta = driver.findElements(By.className("top-data")).get(1).findElements(By.className("ng-binding")).get(3).getText();
 		String Linea = driver.findElement(By.cssSelector(".top-data.ng-scope")).findElements(By.className("ng-binding")).get(1).getText();
+		System.out.println("Orden "+orden);
+		System.out.println("cuenta "+NCuenta);
+		System.out.println("Linea "+Linea);
 		orden = orden.substring(orden.length()-8);
 		NCuenta = NCuenta.substring(NCuenta.length()-16);
 		Linea = Linea.substring(Linea.length()-10);
@@ -316,7 +344,11 @@ public class AltadeLineas extends TestBase {
 			sleep(15000);
 			CBS_Mattu invoSer = new CBS_Mattu();
 			invoSer.openPage2(orden);
-			sleep(5000);
+			sleep(20000);
+			driver.close();
+			driver.quit();
+			Init2();
+			System.out.println(cc.obtenerMontoyTNparaAlta(driver, orden));
 			CambiarPerfil("logistica");
 			sb.completarLogistica(orden, driver);
 			CambiarPerfil("entrega");

@@ -303,9 +303,4 @@ public class BasePage {
 	protected static void sleep(int miliseconds) {
 		try {Thread.sleep(miliseconds);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 	}
-	public String obtenerTrackingNumber(WebDriver driver) {
-		String tn = null;
-		
-		return tn;
-	}
 }

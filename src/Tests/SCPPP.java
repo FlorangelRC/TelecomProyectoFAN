@@ -116,7 +116,7 @@ private WebDriver driver;
 		 txt2.add("Segmento");
 		 txt2.add("Region");
 		 txt2.add("Territorio");
-		 txt2.add("Domicilio de recepci�n de notificaciones");
+		 txt2.add("Domicilio de recepci\u00f3n de notificaciones");
 		 List<WebElement> campos = driver.findElements(By.className("labelCol"));
 		 System.out.println(campos.size());
 		 for(WebElement c: campos){
