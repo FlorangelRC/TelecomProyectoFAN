@@ -1547,4 +1547,37 @@ public class CustomerCare extends BasePage {
 			driver.manage().timeouts().implicitlyWait(3, TimeUnit.SECONDS);
 		}
 	}
+	
+	public String sIccdImsi() {
+		sleep(5000);
+		driver.findElement(By.name("vlocity_cmt__xomsubmitorder")).click();
+		sleep(5000);
+		try {
+			driver.switchTo().alert().accept();
+		}
+		catch (Exception ex) {
+			//Always Empty
+		}
+		driver.findElement(By.name("vlocity_cmt__viewdecomposedorder")).click();
+		sleep(5000);
+		try {
+			OM oOM = new OM(driver);
+            oOM.cambiarVentanaNavegador(1);  
+            sleep(2000);  
+            driver.findElement(By.id("idlist")).click();  
+            sleep(5000);  
+            oOM.cambiarVentanaNavegador(0);
+            oOM.closeAllOtherTabs();
+        }
+		catch(java.lang.IndexOutOfBoundsException ex1) {
+			//Always Empty
+		}
+		sleep(10000);
+		String sICCD = driver.findElement(By.id("attr_802c0000000g6r1_ICCID")).findElement(By.cssSelector(".field-value.ng-scope.ng-binding")).getText();
+		String sImsi = driver.findElement(By.id("attr_802c0000000g6r1_IMSI")).findElement(By.cssSelector(".field-value.ng-scope.ng-binding")).getText();
+		
+		driver.navigate().back();
+		
+		return sICCD + "-" + sImsi;
+	}
 }
