@@ -443,7 +443,6 @@ public class GestionesPerfilOficina extends TestBase {
 		sOrders.add("Recargas, orden numero: " + orden + " con DNI: " + "18766558" );
 		//System.out.println(sOrders);
 	}
-	}
 	
 	@Test (groups = {"GestionesPerfilOficina", "Ajustes"}, dataProvider = "CuentaAjustes")
 	public void Gestion_Ajustes_Credito_Prepago(String cDNI) {
