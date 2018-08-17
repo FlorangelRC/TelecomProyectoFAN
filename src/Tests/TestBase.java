@@ -1010,6 +1010,16 @@ public class TestBase {
 	 return (testObjArray);
 
 	}
+	
+	@DataProvider
+	public Object[][] CuentaSuspension() throws Exception {
+		
+		Object[][] testObjArray = ExcelUtils.getTableArray("Cuentas.xlsx","PerfilGestiones",1,1,1,"Suspension");
+		
+		return(testObjArray);
+		
+	}
+	
 	public void guardarListaTxt(List<String> datosOrden) throws IOException {
 		File archivo=new File("DatosOrdenes.txt");
 		if (archivo.exists())
