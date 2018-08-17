@@ -139,7 +139,7 @@ public class GestionesPerfilOficina extends TestBase {
 		}
 		driver.switchTo().frame(cambioFrame(driver, By.id("SearchClientDocumentType")));
 		sb.BuscarCuenta("DNI", cDNI);
-		String accid = driver.findElement(By.cssSelector(".searchClient-body.slds-hint-parent.ng-scope")).findElements(By.tagName("td")).get(5).getText();
+		String accid = driver.findElements(By.cssSelector(".slds-truncate.ng-binding")).get(5).getText();
 		driver.findElement(By.cssSelector(".slds-tree__item.ng-scope")).click();
 		sleep(18000);
 		CustomerCare cCC = new CustomerCare(driver);
@@ -160,17 +160,19 @@ public class GestionesPerfilOficina extends TestBase {
 		String check = driver.findElement(By.id("GeneralMessageDesing")).getText();
 		Assert.assertTrue(msj.toLowerCase().contains("se ha enviado correctamente la factura a huawei. dirigirse a caja para realizar el pago de la misma"));
 		Assert.assertTrue(check.toLowerCase().contains("la orden se realiz\u00f3 con \u00e9xito"));
-		String orden = cc.obtenerOrdenMontoyTN(driver, "Recarga");
-		String[] datos = orden.split("-");
+		String orden = cc.obtenerOrden(driver, "Recarga");
 		System.out.println("orden = "+orden);
 		sOrders.add("Recargas, numero de orden: " + orden + " de cuenta con DNI: " + cDNI);
 		CBS_Mattu invoSer = new CBS_Mattu();
-		invoSer.PagoEnCaja("1006",accid,"1001",datos[2], datos[1]);
+		invoSer.openPage2(orden);
 		sleep(5000);
 	}
 	
 	@Test (groups = {"GestionesPerfilOficina", "Recargas"}, dataProvider = "PerfilCuentaTomRiddle")
 	public void TS134330_CRM_Movil_REPRO_Recargas_Presencial_TC_Ofcom_Financiacion(String cDNI, String cMonto, String cBanco, String cTarjeta, String cPromo, String cCuotas, String cNumTarjeta, String cVenceMes, String cVenceAno, String cCodSeg, String cTipoDNI, String cDNITarjeta, String cTitular) {
+		if(cMonto.length() >= 4) {
+			cMonto = cMonto.substring(0, cMonto.length()-1);
+		}
 		driver.switchTo().frame(cambioFrame(driver, By.id("SearchClientDocumentType")));
 		sb.BuscarCuenta("DNI", cDNI);
 		String accid = driver.findElements(By.cssSelector(".slds-truncate.ng-binding")).get(5).getText();
@@ -189,9 +191,31 @@ public class GestionesPerfilOficina extends TestBase {
 		driver.findElement(By.xpath("//*[@id=\"InvoicePreview_nextBtn\"]")).click();
 		sleep(15000);
 		buscarYClick(driver.findElements(By.cssSelector(".slds-form-element__label.ng-binding")), "equals", "tarjeta de credito");
-		sleep(25000);
-		System.out.println(driver.findElement(By.id("BankingEntity-0")));
-		selectByText(driver.findElement(By.id("BankingEntity-0")), cBanco);
+		sleep(20000);
+		driver.switchTo().frame(cambioFrame(driver, By.id("BankingEntity-0")));
+		driver.findElement(By.id("BankingEntity-0")).click();
+		driver.findElement(By.xpath("//*[text() = 'BANCO SANTANDER RIO S.A.']")).click();
+		sleep(5000);
+		selectByText(driver.findElement(By.id("CardBankingEntity-0")), cTarjeta);
+		sleep(5000);
+		selectByText(driver.findElement(By.id("promotionsByCardsBank-0")), cPromo);
+		sleep(5000);
+		selectByText(driver.findElement(By.id("Installment-0")), cCuotas);
+		sleep(5000);
+		driver.findElement(By.id("SelectPaymentMethodsStep_nextBtn")).click();
+		sleep(20000);
+		buscarYClick(driver.findElements(By.id("InvoicePreview_nextBtn")), "equals", "siguiente");
+		sleep(20000);
+		List <WebElement> exis = driver.findElements(By.id("GeneralMessageDesing"));
+		boolean a = false;
+		for(WebElement x : exis) {
+			if(x.getText().toLowerCase().contains("la orden se realiz\u00f3 con \u00e9xito")) {
+				a = true;
+			}
+			Assert.assertTrue(a);
+		}
+		String orden = cc.obtenerOrden(driver, "Recarga");
+		sOrders.add("Recargas, orden numero: " + orden + " De cuenta con DNI: " + cDNI );
 	}
 	
 	@Test (groups = {"GestionesPerfilOficina"}, dataProvider="BajaServicios")
@@ -275,18 +299,149 @@ public class GestionesPerfilOficina extends TestBase {
 		try {
 			contact.subirArchivo("C:\\Users\\florangel\\Downloads\\mapache.jpg", "si");
 		}catch(Exception ex1) {}
-		BasePage bp = new BasePage(driver);
-		sNumCa = sNumCa.substring(0, sNumCa.length()-1);
-		sCP = sCP.substring(0, sCP.length()-1);
+			BasePage bp = new BasePage(driver);
 		bp.setSimpleDropdown(driver.findElement(By.id("ImpositiveCondition")), "IVA Consumidor Final");
 		SB.Crear_DomicilioLegal(sProvincia, sLocalidad, sCalle, "", sNumCa, "", "", sCP);
 		sleep(38000);
 		//contact.subirformulario("C:\\Users\\florangel\\Downloads\\form.pdf", "si");
 		//sleep(30000);
-		System.out.println("t "+driver.findElement(By.id("NominacionExitosa")).getText());
-		Assert.assertTrue(driver.findElement(By.id("NominacionExitosa")).getText().toLowerCase().contains("nominaci\u00f3n exitosa"));
-		driver.findElement(By.id("FinishProcess_nextBtn")).click();
+		List <WebElement> element = driver.findElement(By.id("NominacionExitosa")).findElements(By.tagName("p"));
+		System.out.println("cont="+element.get(0).getText());
+		boolean a = false;
+		for (WebElement x : element) {
+			if (x.getText().toLowerCase().contains("nominaci\u00f3n exitosa!")) {
+				a = true;
+				//System.out.println(x.getText());
+			}
+		}
+		Assert.assertTrue(a);
+		//driver.findElement(By.id("FinishProcess_nextBtn")).click();
 		
+	}
+	@Test (groups = {"Suspension", "GestionesPerfilOficina"}, dataProvider="CuentaSuspension") 
+	public void gestionSuspension(String cDNI) {
+		driver.switchTo().frame(cambioFrame(driver, By.id("SearchClientDocumentType")));
+		sb.BuscarCuenta("DNI", cDNI);
+		driver.findElement(By.cssSelector(".slds-tree__item.ng-scope")).click();
+		cc.irAGestion("suspensiones");
+		sleep(15000);
+		driver.switchTo().frame(cambioFrame(driver, By.id("Step1-SuspensionOrReconnection_nextBtn")));
+		buscarYClick(driver.findElements(By.cssSelector(".slds-form-element__label.ng-binding.ng-scope")), "contains", "suspensi\u00f3n");
+		driver.findElement(By.id("Step1-SuspensionOrReconnection_nextBtn")).click();
+		sleep(10000);
+		buscarYClick(driver.findElements(By.cssSelector(".slds-form-element__label.ng-binding.ng-scope")), "contains", "linea");
+		driver.findElement(By.id("Step2-AssetTypeSelection_nextBtn")).click();
+		sleep(10000);
+		buscarYClick(driver.findElements(By.cssSelector(".slds-form-element__label.ng-binding")),"contains","l\u00ednea: 3463406514");
+		driver.findElement(By.id("Step3-AvailableAssetsSelection_nextBtn")).click();
+		sleep(10000);
+		buscarYClick(driver.findElements(By.cssSelector(".slds-form-element__label.ng-binding.ng-scope")),"contains", "robo");
+		driver.findElement(By.id("Step4-SuspensionReason_nextBtn")).click();
+		sleep(10000);
+		selectByText(driver.findElement(By.id("State")),"Buenos Aires");
+		sleep(10000);
+		driver.findElement(By.id("CityTypeAhead")).sendKeys("SAN ISIDRO");
+		sleep(10000);
+		driver.findElement(By.id("Partido")).sendKeys("Villa martelli");
+		sleep(7000);
+		driver.findElement(By.id("AccountData_nextBtn")).click();
+		sleep(5000);
+		driver.findElement(By.id("Step6-Summary_nextBtn")).click();
+		sleep(15000);
+		buscarYClick(driver.findElements(By.cssSelector(".slds-button.slds-button--neutral.ng-binding.ng-scope")),"contains", "continue");
+		sleep(15000);
+		boolean a = false;
+		List <WebElement> elem = driver.findElements(By.cssSelector(".slds-box.ng-scope"));
+		for(WebElement x : elem) {
+			if(x.getText().toLowerCase().contains("tu solicitud est\u00e1 siendo procesada.")) {
+				a = true;
+			}			
+		}
+		Assert.assertTrue(a);
+		sleep(5000);
+		String orden = cc.obtenerOrden(driver, "Suspensi\u00f3n de Linea");
+		sOrders.add("Recargas, orden numero: " + orden );
+		//System.out.println(sOrders);
+	}
+	
+	@Test
+	public void problemaRecargaOnline() {
+		driver.switchTo().frame(cambioFrame(driver, By.id("SearchClientDocumentType")));
+		sb.BuscarCuenta("DNI", "18766558");
+		driver.findElement(By.cssSelector(".slds-tree__item.ng-scope")).click();
+		sleep(15000);
+		driver.switchTo().frame(cambioFrame(driver, By.className("card-top")));
+		driver.findElement(By.className("card-top")).click();
+		sleep(8000);
+		cc.irAGestionEnCard("Problemas con Recargas");
+		sleep(8000);
+		driver.switchTo().frame(cambioFrame(driver, By.id("RefillMethods_nextBtn")));
+		buscarYClick(driver.findElements(By.cssSelector(".imgItemContainer.ng-scope")),"contains", "recarga online");
+		driver.findElement(By.id("RefillMethods_nextBtn")).click();
+		sleep(8000);
+		driver.findElement(By.id("RefillDate")).sendKeys("23-07-2018");
+		sleep(8000);
+		driver.findElement(By.id("RefillAmount")).sendKeys("123");
+		sleep(8000);
+		driver.findElement(By.id("ReceiptCode")).sendKeys("123");
+		driver.findElement(By.id("OnlineRefillData_nextBtn")).click();
+		sleep(8000);
+		buscarYClick(driver.findElements(By.cssSelector(".slds-form-element__label.ng-binding.ng-scope")),"contains","si");
+		WebElement img = driver.findElement(By.id("FileAttach"));
+		img.sendKeys("C:\\Users\\xappiens\\Pictures\\Saved Pictures\\calavera.jpg");
+		sleep(8000);
+		driver.findElement(By.id("AttachDocuments_nextBtn")).click();
+		sleep(8000);
+		driver.findElement(By.id("Summary_nextBtn")).click();
+		sleep(8000);
+		boolean a = false;
+		List <WebElement> conf = driver.findElements(By.cssSelector(".slds-box.ng-scope"));
+		for(WebElement x : conf) {
+			if(x.getText().toLowerCase().contains("recarga realizada con \u00e9xito!")) {
+				a = true;
+			}
+		}
+		Assert.assertTrue(a);
+		sleep(5000);
+		String orden = cc.obtenerOrden(driver, "Problemas con Recargas");
+		sOrders.add("Recargas, orden numero: " + orden + " con DNI: " + "18766558" );
+		//System.out.println(sOrders);
+	}
+	
+	@Test 
+	public void poblemaRecargaCredito() {
+		driver.switchTo().frame(cambioFrame(driver, By.id("SearchClientDocumentType")));
+		sb.BuscarCuenta("DNI", "18766558");
+		driver.findElement(By.cssSelector(".slds-tree__item.ng-scope")).click();
+		sleep(15000);
+		driver.switchTo().frame(cambioFrame(driver, By.className("card-top")));
+		driver.findElement(By.className("card-top")).click();
+		sleep(8000);
+		cc.irAGestionEnCard("Problemas con Recargas");
+		sleep(8000);
+		driver.switchTo().frame(cambioFrame(driver, By.id("RefillMethods_nextBtn")));
+		buscarYClick(driver.findElements(By.cssSelector(".imgItemContainer.ng-scope")),"contains", "tarjeta de cr\u00e9dito");
+		driver.findElement(By.id("RefillMethods_nextBtn")).click();
+		sleep(8000);
+		buscarYClick(driver.findElements(By.cssSelector(".slds-form-element__label.ng-binding.ng-scope")),"contains", "si");
+		driver.findElement(By.id("CreditCardRefillAmount")).sendKeys("123");
+		driver.findElement(By.id("CreditCardRefillReceipt")).sendKeys("123");
+		driver.findElement(By.id("CreditCardData_nextBtn")).click();
+		sleep(8000);
+		driver.findElement(By.id("Summary_nextBtn")).click();
+		sleep(8000);
+		boolean a = false;
+		List <WebElement> conf = driver.findElements(By.cssSelector(".slds-box.ng-scope"));
+		for(WebElement x : conf) {
+			if(x.getText().toLowerCase().contains("recarga realizada con \u00e9xito!")) {
+				a = true;
+			}
+		}
+		Assert.assertTrue(a);
+		sleep(5000);
+		String orden = cc.obtenerOrden(driver, "Problemas con Recargas");
+		sOrders.add("Recargas, orden numero: " + orden + " con DNI: " + "18766558" );
+		//System.out.println(sOrders);
 	}
 	
 	@Test (groups = {"GestionesPerfilOficina", "Ajustes"}, dataProvider = "CuentaAjustes")

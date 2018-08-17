@@ -38,12 +38,6 @@ public class GestionesPerfilTelefonico extends TestBase{
 	@BeforeClass
 	public void init() {
 		driver = setConexion.setupEze();
-		String texto = "{\"calculoImpuestosRespuesta\":{\"importeComprobante\":\"199.9993\",\"listaDatosAdicionales\":[{\"datoAdicional\":{\"valorParametro\":\"BUENOS AIRES\",\"nombreParametro\":\"C_E_TAXPROVINCE\"}},{\"datoAdicional\":{\"valorParametro\":\"20180813104733\",\"nombreParametro\":\"C_E_TAXDATE\"}}],\"infoResCalculoImpuestos\":[{\"impuestoxItemInfo\":{\"importeItemComprobante\":\"199.9993\",\"listaInfoImpuestos\":[{\"infoImpuesto\":{\"codMoneda\":\"ARS\",\"tipoCategoriaImpositiva\":\"IVA\",\"alicuotaImpuesto\":\"21.00\",\"precioBase\":\"158.3993\",\"importeImpuestoAplicado\":\"33.2600\",\"codImpuesto\":\"C_VAT_21_M_002\"}},{\"infoImpuesto\":{\"codMoneda\":\"ARS\",\"tipoCategoriaImpositiva\":\"IMPUESTOSINTERNOS\",\"alicuotaImpuesto\":\"5.26\",\"precioBase\":\"158.3993\",\"importeImpuestoAplicado\":\"8.3400\",\"codImpuesto\":\"C_INTERNAL_SERVICES_M_002\"}}],\"secuenciaProductoAdquirido\":\"1\"}}],\"idCliente\":\"99000003266\"}}";
-		texto = texto.split(",")[0].split(":")[2];
-		texto = texto.substring(1, texto.length()-1);
-		texto = texto.replace(",", "");
-		texto = texto.replace(".", "").concat("00");
-		System.out.println("texto: "+texto);
 		sleep(5000);
 		sb = new SalesBase(driver);
 		cc = new CustomerCare(driver);
@@ -224,7 +218,7 @@ public class GestionesPerfilTelefonico extends TestBase{
 			driver.switchTo().frame(cambioFrameByID.getFrameForElement(driver, By.cssSelector(".x-layout-mini.x-layout-mini-west")));
 			driver.findElement(By.cssSelector(".x-layout-mini.x-layout-mini-west")).click();
 			sleep(4000);*/
-		String sOrder = cCC.obtenerOrdenMontoyTN(driver, "Reseteo de Cuota");
+		String sOrder = cCC.obtenerOrden(driver, "Reseteo de Cuota");
 		System.out.println("Orden"+sOrder);
 		datosOrden.add("Operacion: Renovacion Cuota, Orden: "+sOrder+", Cuenta: "+sCuenta+", DNI: "+sDNI+", Linea: "+sLinea);	
 		
@@ -246,7 +240,7 @@ public class GestionesPerfilTelefonico extends TestBase{
 	compraPack.comprarPack("comprar sms");
 	compraPack.agregarPack(sVentaPack);
 	compraPack.tipoDePago("descuento de saldo");
-	String sOrder = cCC.obtenerOrdenMontoyTN(driver,"Compra de Pack");
+	String sOrder = cCC.obtenerOrden(driver,"Compra de Pack");
 	System.out.println("Orden: "+sOrder);
 	datosOrden.add("Operacion: Compra de Pack, Orden: "+sOrder+", Cuenta: "+sCuenta+", DNI: "+sDNI+", Linea: "+sLinea);	
 	System.out.println("Order: " + sOrder + " Fin");

@@ -43,7 +43,6 @@ import DataProvider.ExcelUtils;
 public class TestBase {
 	protected static WebDriver driver;//
 	protected String urlAmbiente = "https://crm--sit.cs14.my.salesforce.com/";
-	//protected String urlAmbiente = "https://cs53.salesforce.com";
 	
 	
 	public void leftDropdown(WebDriver driver, String selection) {
@@ -904,7 +903,7 @@ public class TestBase {
 	@DataProvider
 	public Object[][] DatosAltaLineaAgente() throws Exception{
 
-	 Object[][] testObjArray = ExcelUtils.getTableArray("Cuentas.xlsx","PreparacionDatos",1,1,16,"Alta Linea Agente");
+	 Object[][] testObjArray = ExcelUtils.getTableArray("Cuentas.xlsx","PreparacionDatos",1,1,13,"Alta Linea Agente");
 
 	 return (testObjArray);
 
@@ -1024,6 +1023,16 @@ public class TestBase {
 	}
 	
 	@DataProvider
+	public Object[][] CuentaSuspension() throws Exception {
+		
+		Object[][] testObjArray = ExcelUtils.getTableArray("Cuentas.xlsx","PerfilGestiones",1,1,1,"Suspension");
+		
+		return(testObjArray);
+		
+	}
+	
+	
+	@DataProvider
 	public Object [][] CuentaAjustes() throws Exception {
 		
 		Object[][] testObjArray = ExcelUtils.getTableArray("Cuentas.xlsx","PerfilGestiones",1,1,1,"Ajustes");
@@ -1057,7 +1066,7 @@ public class TestBase {
 	public void CambiarPerfil(String perfil) {
 		sleep(2000);
 		System.out.println("llegue aqui");
-		driver.findElement(By.id("userNavButton")).click();
+		driver.findElement(By.id("userNav-arrow")).click();
 		sleep(6000);
 		driver.findElement(By.id("userNav-menuItems")).findElements(By.tagName("a")).get(2).click();
 		sleep(6000);
