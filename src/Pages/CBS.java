@@ -32,6 +32,19 @@ public class CBS {
 		return sOrder;
 	}
 	
+	public String sCBS_Request_ServicioWeb_Validador(String sResponse) {
+		String sAssert = "false";
+		
+		if (sResponse.equalsIgnoreCase("0OK")) {
+			sAssert = "true";
+		}
+		else {
+			sAssert = sResponse;
+		}
+		
+		return sAssert;
+	}
+	
 	public String sRequest(String sPaymentSerialNo, String sPaymentChannelID, String sAccountKey, String sPaymentMethod, String sAmount, String sInvoiceno) {
 		String sRequest = "";
 		sRequest = "<soapenv:Envelope xmlns:soapenv=\"http://schemas.xmlsoap.org/soap/envelope/\" xmlns:ars=\"http://www.huawei.com/bme/cbsinterface/arservices\" xmlns:cbs=\"http://www.huawei.com/bme/cbsinterface/cbscommon\" xmlns:arc=\"http://cbs.huawei.com/ar/wsservice/arcommon\">\r\n"
@@ -41,7 +54,7 @@ public class CBS {
 				+ "\r\n            <RequestHeader>\r\n"
 				+ "      	       		<cbs:Version>5.5</cbs:Version>\r\n"
 				+ "      	       		<cbs:BusinessCode>Charge2AR</cbs:BusinessCode>\r\n"
-				+ "       	       		<cbs:MessageSeq>" + sPaymentSerialNo;
+				+ "       	       		<cbs:MessageSeq>"+sPaymentSerialNo;
 		
 		sRequest+="</cbs:MessageSeq>\r\n"
 				+ "       	       		<cbs:OwnershipInfo>\r\n"
@@ -106,13 +119,79 @@ public class CBS {
 		return sRequest;
 	}
 	
-	public boolean sCBS_Request_ServicioWeb_Validador(String sResponse) {
-		boolean bAssert = false;
+	public String sCBS_Request_Validador(String sResponse) {
+		String sAssert = "false";
 		
-		if (sResponse.equalsIgnoreCase("0OK")) {
-			bAssert = true;
+		if (sResponse.contains("Operation successfully")) {
+			sAssert = "true";
+		}
+		else {
+			sAssert = sResponse;
 		}
 		
-		return bAssert;
+		return sAssert;
+	}
+	
+	public String sRequestByLinea(String sLinea, String sMessageSeq) {
+		String sRequest = "";
+		sRequest = "<soapenv:Envelope xmlns:soapenv=\"http://schemas.xmlsoap.org/soap/envelope/\" xmlns:bcs=\"http://www.huawei.com/bme/cbsinterface/bcservices\" xmlns:cbs=\"http://www.huawei.com/bme/cbsinterface/cbscommon\" xmlns:bcc=\"http://www.huawei.com/bme/cbsinterface/bccommon\">\r\n"
+				+ "\r\n   <soapenv:Header/>\r\n"
+				+ "\r\n   <soapenv:Body>\r\n"
+				+ "\r\n      <bcs:QueryCustomerInfoRequestMsg>\r\n"
+				+ "\r\n                    <RequestHeader>\r\n"
+				+ "\r\n                                               <cbs:Version>5.5</cbs:Version>\r\n"
+				+ "\r\n                                               <cbs:BusinessCode>QueryCustomerInfo</cbs:BusinessCode>\r\n"
+				+ "\r\n                                               <cbs:MessageSeq>" + sMessageSeq;
+		
+		sRequest += "</cbs:MessageSeq>\r\n"
+				+ "\r\n                                               <cbs:OwnershipInfo>\r\n"
+				+ "\r\n                                                               <cbs:BEID>10101</cbs:BEID>\r\n"
+				+ "\r\n                                                               <cbs:BRID>101</cbs:BRID>\r\n"
+				+ "\r\n                                               </cbs:OwnershipInfo>\r\n"
+				+ "\r\n                				<cbs:AccessSecurity>\r\n"
+				+ "\r\n                                                               <cbs:LoginSystemCode>117</cbs:LoginSystemCode>\r\n"
+				+ "\r\n                                                               <cbs:Password>jW6lRxU4leO5Xev+SISea/Ie7Dp5wDPgfGR9MNVDJRo=</cbs:Password>\r\n"
+				+ "\r\n                                                               <cbs:RemoteIP>10.138.22.65</cbs:RemoteIP>\r\n"
+				+ "\r\n                                               </cbs:AccessSecurity>\r\n"
+				+ "\r\n                                               <cbs:OperatorInfo>\r\n"
+				+ "\r\n                                                               <cbs:OperatorID>101</cbs:OperatorID>\r\n"
+				+ "\r\n                                                               <cbs:ChannelID>1</cbs:ChannelID>\r\n"
+				+ "\r\n                                               </cbs:OperatorInfo>\r\n"
+				+ "\r\n                                               <cbs:TimeFormat>\r\n"
+				+ "\r\n                                                               <cbs:TimeType>1</cbs:TimeType>\r\n"
+				+ "\r\n                                                               <cbs:TimeZoneID>8</cbs:TimeZoneID>\r\n"
+				+ "\r\n                                               </cbs:TimeFormat>\r\n"
+				+ "\r\n                                               <cbs:AdditionalProperty>\r\n"
+				+ "\r\n                                                               <cbs:Code>108</cbs:Code>\r\n"
+				+ "\r\n                                                               <cbs:Value>109</cbs:Value>\r\n"
+				+ "\r\n                                               </cbs:AdditionalProperty>\r\n"
+				+ "\r\n                             </RequestHeader> \r\n"
+				+ "\r\n      		<QueryCustomerInfoRequest>\r\n"
+				+ "\r\n            	  		<bcs:QueryObj>\r\n"
+				+ "\r\n               			<bcs:SubAccessCode>\r\n"
+				+ "\r\n                  			<bcc:PrimaryIdentity>" + sLinea;
+		
+		sRequest+= "</bcc:PrimaryIdentity>\r\n"
+				+ "\r\n               			</bcs:SubAccessCode>\r\n"
+				+ "\r\n            			</bcs:QueryObj>\r\n"
+				+ "\r\n         	</QueryCustomerInfoRequest>      \r\n"
+				+ "\r\n      </bcs:QueryCustomerInfoRequestMsg>\r\n"
+				+ "\r\n   </soapenv:Body>\r\n"
+				+ "\r\n</soapenv:Envelope>";
+		return sRequest;
+	}
+	
+	public String sCBS_Request_Validador_Alta_Linea(String sResponse, String sLinea, String sImsi, String sICCD) {
+		String sAssert = "false";
+		sLinea = "SubIdentity>" + sLinea;
+		
+		if (sResponse.contains(sLinea) && sResponse.contains(sImsi) && sResponse.contains(sICCD)) {
+			sAssert = "true";
+		}
+		else {
+			sAssert = sResponse;
+		}
+		
+		return sAssert;
 	}
 }

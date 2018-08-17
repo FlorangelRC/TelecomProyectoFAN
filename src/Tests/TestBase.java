@@ -284,7 +284,18 @@ public class TestBase {
 		    page0.ingresarElena();
 		}
 	
-		
+		public void loginLogistica(WebDriver driver) {
+			driver.get(urlAmbiente);
+			try {Thread.sleep(6000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		    Login page0 = new Login(driver);
+		    page0.ingresarLogistica();
+		}
+		public void loginEntrega(WebDriver driver) {
+			driver.get(urlAmbiente);
+			try {Thread.sleep(6000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		    Login page0 = new Login(driver);
+		    page0.ingresarEntrega();
+		}
 		/**Ingresa con los datos de la cuenta Francisco
 		 * Para el Modulo Sales tiene vinculado el perfil de Vendedor Oficina Comercial		 */
 		public void loginFranciso(WebDriver driver) {
@@ -883,7 +894,7 @@ public class TestBase {
 	@DataProvider
 	public Object[][] DatosSalesNominacion() throws Exception{
 
-	 Object[][] testObjArray = ExcelUtils.getTableArray("Cuentas.xlsx","PreparacionDatos",1,1,8,"Nominacion");
+	 Object[][] testObjArray = ExcelUtils.getTableArray("Cuentas.xlsx","PreparacionDatos",1,1,13,"Nominacion");
 
 	 return (testObjArray);
 
@@ -1005,7 +1016,7 @@ public class TestBase {
 	@DataProvider
 	public Object[][] VentaPacks() throws Exception{
 
-	 Object[][] testObjArray = ExcelUtils.getTableArray("Cuentas.xlsx","PerfilGestiones",1,1,4,"Venta de packs");
+	 Object[][] testObjArray = ExcelUtils.getTableArray("Cuentas.xlsx","PerfilGestiones",1,1,5,"Venta de packs");
 
 	 return (testObjArray);
 
@@ -1018,6 +1029,15 @@ public class TestBase {
 		
 		return(testObjArray);
 		
+	}
+	
+	
+	@DataProvider
+	public Object [][] CuentaAjustes() throws Exception {
+		
+		Object[][] testObjArray = ExcelUtils.getTableArray("Cuentas.xlsx","PerfilGestiones",1,1,1,"Ajustes");
+		
+		return (testObjArray);
 	}
 	
 	public void guardarListaTxt(List<String> datosOrden) throws IOException {
@@ -1041,5 +1061,50 @@ public class TestBase {
 	    Login lLogin = new Login(driver);
 	    lLogin.ingresarCBS();
 	    driver.get("https://10.75.39.140:8081/main.action?ssLogin=true&BMEWebToken=be935f78-f517-441c-a299-c5a1ba3f1f411b7c8915-7f90-4b1d-bee6-15837afe7b05");
+	}
+	
+	public void CambiarPerfil(String perfil) {
+		sleep(2000);
+		System.out.println("llegue aqui");
+		driver.findElement(By.id("userNav-arrow")).click();
+		sleep(6000);
+		driver.findElement(By.id("userNav-menuItems")).findElements(By.tagName("a")).get(2).click();
+		sleep(6000);
+		driver.findElement(By.id("userDropdown")).click();
+		sleep(3000);
+		driver.findElement(By.id("logout")).click();
+		sleep(5000);
+		driver.get(urlAmbiente);
+		driver.findElement(By.id("cancel_idp_hint")).click();
+		 switch(perfil.toLowerCase()){
+		 case "agente":
+			 loginAgente(driver);
+			 break;
+		 case "telefonico":
+			 loginTelefonico(driver);  
+			 break;
+		 case "ofcom":
+			 loginOfCom(driver);
+			 break;
+		 case "logistica":
+			 loginLogistica(driver);
+			 break;
+		 case "entrega":
+			 loginEntrega(driver);
+			 break;
+		 case "OM":
+			 login(driver,urlAmbiente, "U585991", "Testa10k");
+			 break;
+		 }
+		 sleep(10000);
+	}
+	
+	@DataProvider
+	public Object[][] RecargaEfectivo() throws Exception{
+
+	 Object[][] testObjArray = ExcelUtils.getTableArray("Cuentas.xlsx","PerfilGestiones",1,1,3,"Recarga Efectivo");
+
+	 return (testObjArray);
+
 	}
 }
