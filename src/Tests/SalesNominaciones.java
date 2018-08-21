@@ -30,27 +30,6 @@ public class SalesNominaciones extends TestBase{
 
 	private WebDriver driver;
 	protected String perfil = "call";
-	
-	@BeforeClass(alwaysRun=true)
-	public void Init() {
-		driver = setConexion.setupEze();
-		try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}		
-			 loginOfCom(driver);  
-		try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
-		HomeBase homePage = new HomeBase(driver);
-		try {Thread.sleep(6000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
-	   /* String a = driver.findElement(By.id("tsidLabel")).getText(); 
-	    if (a.contains("Ventas")){}
-	    else {
-	    	homePage.switchAppsMenu();
-	    	try {Thread.sleep(2000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
-	    	homePage.selectAppFromMenuByName("Ventas");
-	    	try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}            
-	    }*/
-	    driver.findElement(By.xpath("//a[@href=\'https://crm--sit--c.cs14.visual.force.com/apex/taClientSearch']")).click();		
-	    try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}    
-		
-	}
 
 	@BeforeClass(alwaysRun=true)
 	public void Init2() {
@@ -117,7 +96,7 @@ public class SalesNominaciones extends TestBase{
 		
 	}
 	
-	//@AfterMethod(alwaysRun=true)
+	@AfterMethod(alwaysRun=true)
 	public void IceB() {
 		Accounts accountPage = new Accounts(driver);
 		driver.navigate().refresh();
