@@ -187,7 +187,7 @@ public class CustomerCare extends BasePage {
 			
 			char char0 = nombreCuenta.toUpperCase().charAt(0);
 			driver.findElement(By.xpath("//div[@class='rolodex']//span[contains(.,'" + char0 + "')]")).click();
-			sleep(1800);
+			sleep(3000);
 			
 			//waitForVisibilityOfElementLocated(By.cssSelector(".x-grid3-cell-inner.x-grid3-col-ACCOUNT_NAME"));
 			for (WebElement c : cuentas) {
@@ -1365,7 +1365,9 @@ public class CustomerCare extends BasePage {
 	}
 	
 	public void flujoInconvenientes() {
+		TestBase tb = new TestBase();
 		sleep(5000);
+		driver.switchTo().frame(tb.cambioFrame(driver, By.id("Step-TipodeAjuste_nextBtn")));
 		driver.findElement(By.id("CboConcepto")).click();
 		driver.findElement(By.xpath("//*[text() = 'CREDITO PREPAGO']")).click();
 		driver.findElement(By.id("CboItem")).click();
@@ -1380,7 +1382,14 @@ public class CustomerCare extends BasePage {
 			}
 		}
 		driver.findElement(By.id("Step-TipodeAjuste_nextBtn")).click();
-		sleep(5000);
+		sleep(7000);
+		List <WebElement> pct = driver.findElements(By.cssSelector(".slds-form-element__label.ng-binding"));
+		for (WebElement x : pct) {
+			if (x.getText().toLowerCase().contains("plan con tarjeta")) {
+				x.click();
+				break;
+			}
+		}
 		driver.findElement(By.id("Step-AssetSelection_nextBtn")).click();
 		sleep(5000);
 		List <WebElement> sa = driver.findElements(By.cssSelector(".slds-form-element__label.ng-binding.ng-scope"));
@@ -1468,7 +1477,7 @@ public class CustomerCare extends BasePage {
 	    driver.switchTo().frame(tb.cambioFrame(driver, By.cssSelector(".slds-small-size--3-of-12.slds-medium-size--3-of-12.slds-large-size--3-of-12.flyout-actions")));
 	    ((JavascriptExecutor)driver).executeScript("window.scrollTo(0,"+driver.findElement(By.cssSelector(".console-flyout.active.flyout")).getLocation().y+")");
 	    sleep(3000);
-	    driver.findElement(By.cssSelector(".console-flyout.active.flyout")).findElements(By.tagName("i")).get(1).click();
+	    driver.findElement(By.className("community-flyout-actions-card")).findElements(By.tagName("li")).get(4).click();
 	    sleep(8000);
 	    List<WebElement> wAsd = driver.findElements(By.id("refillMethod"));
 	    for (WebElement x:wAsd) {
