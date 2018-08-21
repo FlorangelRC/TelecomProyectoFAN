@@ -5,14 +5,18 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.openqa.selenium.By;
+import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.ui.Select;
 import org.testng.Assert;
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
+
+import com.sun.org.apache.xalan.internal.xsltc.compiler.sym;
 
 import Pages.Accounts;
 import Pages.BasePage;
@@ -240,5 +244,54 @@ public class GestionesPerfilTelefonico extends TestBase{
 	System.out.println("Orden: "+sOrder);
 	datosOrden.add("Operacion: Compra de Pack, Orden: "+sOrder+", Cuenta: "+sCuenta+", DNI: "+sDNI+", Linea: "+sLinea);	
 	System.out.println("Order: " + sOrder + " Fin");
+	}
+	
+	@Test (groups= {"GestionesPerfilTelefonico"},priority=1, dataProvider="CambioSimCard")
+	public void TSCambioSimCard(String sDNI, String sCuenta,String sLinea, String sCambioSimCard){
+	SalesBase sale = new SalesBase(driver);
+	BasePage cambioFrameByID=new BasePage();
+	CustomerCare cCC = new CustomerCare(driver);
+	compraPackPerfilTelefonico compraPack = new compraPackPerfilTelefonico(driver);
+	driver.switchTo().frame(cambioFrameByID.getFrameForElement(driver, By.id("SearchClientDocumentType")));	
+	sleep(8000);
+	sale.BuscarCuenta("DNI", sDNI);
+	compraPack.buscarAssert();
+	cCC.irAGestionEnCard("Cambio SimCard");
+	sleep(12000);
+	driver.switchTo().frame(cambioFrameByID.getFrameForElement(driver, By.id("DeliveryMethodSelection")));
+	sleep(15000);
+	Select metodoEntrega = new Select (driver.findElement(By.id("DeliveryMethodSelection")));
+	metodoEntrega.selectByVisibleText("Store Pick Up");
+	Select State = new Select (driver.findElement(By.id("PickState")));
+	State.selectByVisibleText("Ciudad Aut\u00f3noma de Buenos Aires");
+	Select City = new Select (driver.findElement(By.id("PickCity")));
+	City.selectByVisibleText("CIUD AUTON D BUENOS AIRES");
+	Select Store = new Select (driver.findElement(By.id("Store")));
+	Store.selectByVisibleText("Centro de Servicio Santa Fe - Juan de Garay 444");
+	driver.findElement(By.id("DeliveryMethodConfiguration_nextBtn")).click();
+	sleep(12000);
+	try{ 
+		driver.findElements(By.cssSelector(".slds-button.slds-button--neutral.ng-binding.ng-scope")).get(1).click();
+	      sleep(8000); 
+	    }
+	catch(Exception ex1){} 
+	sleep(12000); 
+	driver.findElement(By.id("SelectPaymentMethodsStep_nextBtn")).click();
+	sleep(12000);
+	try{ 
+	      driver.findElements(By.cssSelector(".slds-button.slds-button--neutral.ng-binding.ng-scope")).get(1).click(); 
+	      sleep(8000); 
+	    }
+	catch(Exception ex1){} 
+	 
+	String orden = driver.findElement(By.className("top-data")).findElement(By.className("ng-binding")).getText();
+	String NCuenta = driver.findElements(By.className("top-data")).get(1).findElements(By.className("ng-binding")).get(3).getText();
+	System.out.println("Orden "+orden);
+	System.out.println("cuenta "+NCuenta);
+	driver.findElement(By.id("OrderSumary_nextBtn")).click();
+	((JavascriptExecutor)driver).executeScript("window.scrollTo(0,"+driver.findElement(By.id("SaleOrderMessages_nextBtn")).getLocation().y+")");
+	sleep(15000);
+	driver.findElement(By.id("SaleOrderMessages_nextBtn")).click();
+	driver.navigate().refresh();
 	}
 }

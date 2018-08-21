@@ -343,7 +343,7 @@ public class CustomerCare extends BasePage {
 			Assert.assertFalse(gestionesEncontradas.isEmpty());
 		}
 		gestionesEncontradas.get(0).click();
-		if (gest.equals("D�bito autom�tico")) TestBase.sleep(6500);
+		if (gest.equals("D\u00e9bito autom\u00e1tico")) TestBase.sleep(6500);
 		else TestBase.sleep(3000);
 		if (gest.equals("Historial de Packs")) TestBase.sleep(1500);
 		//cambiarAFrameActivo();
@@ -1504,7 +1504,7 @@ public class CustomerCare extends BasePage {
 		}catch(org.openqa.selenium.StaleElementReferenceException ex1) {}
 	}
 	
-	public String obtenerOrden(WebDriver driver, String gestion) {
+	public String obtenerOrdenMontoyTN(WebDriver driver, String gestion) {
 		TestBase tb = new TestBase();
 		driver.navigate().refresh();
 		sleep(18000);
@@ -1515,7 +1515,7 @@ public class CustomerCare extends BasePage {
 		for (WebElement wAux : wStoryContainer) {
 			if (wAux.findElement(By.cssSelector(".slds-text-body_regular.story-title")).getText().equalsIgnoreCase(gestion)) {
 				List<WebElement> wStoryField = wAux.findElements(By.cssSelector(".slds-text-body_regular.story-field"));
-				return( wStoryField.get(0).getText());
+				return( wStoryField.get(0).getText()+"-"+obtenerTNyMonto(driver,wAux.findElement(By.cssSelector(".slds-text-body_regular.story-title"))));
 			}
 		}
 		return(null);
@@ -1546,5 +1546,119 @@ public class CustomerCare extends BasePage {
 			TestBase.sleep(2000);
 			driver.manage().timeouts().implicitlyWait(3, TimeUnit.SECONDS);
 		}
+	}
+	
+	public String obtenerTNyMonto(WebDriver driver, WebElement orden) {
+		String datos = null;
+		TestBase TB = new TestBase();
+		boolean esta = false;
+		String texto = null;
+		orden.click();
+		sleep(8000);
+		driver.switchTo().frame(TB.cambioFrame(driver, By.id("OrderNumber_ilecell")));
+		WebElement tabla = driver.findElement(By.id("ep")).findElements(By.tagName("table")).get(1);
+		datos = tabla.findElement(By.tagName("tr")).findElements(By.tagName("td")).get(3).getText();
+		List<WebElement> todo = tabla.findElements(By.tagName("td"));
+		for(WebElement UnT : todo) {
+			if(esta == true) {
+				texto = UnT.getText();
+				break;
+			}
+			if(UnT.getText().equalsIgnoreCase("Bill Simulation Payload")) {
+				esta = true;
+			}
+		}
+		texto = texto.split(",")[0].split(":")[2];
+		texto = texto.substring(1, texto.length()-1);
+		texto = texto.replace(",", "");
+		texto = texto.replace(".", "").concat("00");
+		datos = datos+"-"+texto;
+		return (datos);
+	}
+	
+	public String obtenerMontoyTNparaAlta(WebDriver driver, String orden) {
+		TestBase TB = new TestBase();
+		String datos = null;
+		boolean esta = false;
+		String texto = null;
+		OM pageOm=new OM(driver);
+		driver.switchTo().defaultContent();
+		usarbuscadorsalesforce(orden);
+		sleep(10000);
+		
+			driver.switchTo().frame(TB.cambioFrame(driver, By.id("Order_body")));
+			System.out.println("orden "+driver.findElement(By.id("Order_body")).findElement(By.cssSelector(".dataRow.even.last.first")).findElement(By.tagName("th")).getText());
+			driver.findElement(By.id("Order_body")).findElement(By.cssSelector(".dataRow.even.last.first")).findElement(By.tagName("th")).findElement(By.tagName("a")).click();
+			sleep(10000);
+			driver.switchTo().frame(TB.cambioFrame(driver, By.id("OrderNumber_ilecell")));
+			WebElement tabla = driver.findElement(By.id("ep")).findElements(By.tagName("table")).get(1);
+			datos = tabla.findElement(By.tagName("tr")).findElements(By.tagName("td")).get(3).getText();
+			List<WebElement> todo = tabla.findElements(By.tagName("td"));
+			for(WebElement UnT : todo) {
+				if(esta == true) {
+					texto = UnT.getText();
+					break;
+				}
+				if(UnT.getText().equalsIgnoreCase("Bill Simulation Payload")) {
+					esta = true;
+				}
+			}
+			texto = texto.split(",")[0].split(":")[2];
+			texto = texto.substring(1, texto.length()-1);
+			texto = texto.replace(",", "");
+			texto = texto.replace(".", "").concat("00");
+			datos = datos+"-"+texto;
+			return (datos);	
+		
+	}
+	
+	public String sIccdImsi() {
+		sleep(5000);
+		driver.findElement(By.name("vlocity_cmt__xomsubmitorder")).click();
+		sleep(5000);
+		try {
+			driver.switchTo().alert().accept();
+		}
+		catch (Exception ex) {
+			//Always Empty
+		}
+		driver.findElement(By.name("vlocity_cmt__viewdecomposedorder")).click();
+		sleep(5000);
+		try {
+			OM oOM = new OM(driver);
+            oOM.cambiarVentanaNavegador(1);  
+            sleep(2000);  
+            driver.findElement(By.id("idlist")).click();  
+            sleep(5000);  
+            oOM.cambiarVentanaNavegador(0);
+            oOM.closeAllOtherTabs();
+        }
+		catch(java.lang.IndexOutOfBoundsException ex1) {
+			//Always Empty
+		}
+		sleep(10000);
+		String sICCD = driver.findElement(By.id("attr_802c0000000g6r1_ICCID")).findElement(By.cssSelector(".field-value.ng-scope.ng-binding")).getText();
+		String sImsi = driver.findElement(By.id("attr_802c0000000g6r1_IMSI")).findElement(By.cssSelector(".field-value.ng-scope.ng-binding")).getText();
+		
+		driver.navigate().back();
+		
+		return sICCD + "-" + sImsi;
+	}
+	
+	public String obtenerOrden(WebDriver driver, String gestion) {
+		TestBase tb = new TestBase();
+		driver.navigate().refresh();
+		sleep(18000);
+		panelIzquierdo();
+		//driver.switchTo().frame(tb.cambioFrame(driver, By.className("story-container")));
+	
+		List<WebElement> wStoryContainer = driver.findElements(By.className("story-container"));
+		for (WebElement wAux : wStoryContainer) {
+			if (wAux.findElement(By.cssSelector(".slds-text-body_regular.story-title")).getText().equalsIgnoreCase(gestion)) {
+				List<WebElement> wStoryField = wAux.findElements(By.cssSelector(".slds-text-body_regular.story-field"));
+				return( wStoryField.get(0).getText());
+			}
+		}
+		return(null);
 	}
 }

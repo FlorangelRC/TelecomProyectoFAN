@@ -161,7 +161,7 @@ public class TechnicalCareCSRDiagnosticoPage extends BasePage{
 	    Opcion=Opcion.toLowerCase();
 	    Accounts accPage = new Accounts(driver);
 	    sleep(8000);
-	    driver.switchTo().frame(accPage.getFrameForElement(driver, By.cssSelector(".console-card.active")));
+	    driver.switchTo().frame(accPage.getFrameForElement(driver, By.cssSelector(".console-card.active.expired")));
 	    List<WebElement> asset=driver.findElements(By.cssSelector(".console-card.active"));
 	    for(WebElement a:asset) {
 	      

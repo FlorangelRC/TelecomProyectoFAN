@@ -98,7 +98,7 @@ public class TechCare_Ola1 {
 		boolean assetEncontrado=false,opcion=false;
 		Opcion=Opcion.toLowerCase();
 		Accounts accPage = new Accounts(driver);
-		driver.switchTo().frame(accPage.getFrameForElement(driver, By.cssSelector(".console-card.active")));
+		driver.switchTo().frame(accPage.getFrameForElement(driver, By.cssSelector(".console-card.active.expired")));
 		List<WebElement> asset=driver.findElements(By.cssSelector(".console-card.active"));
 		for(WebElement a:asset) {
 			//System.out.println(a.getText());
