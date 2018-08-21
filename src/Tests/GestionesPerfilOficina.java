@@ -835,14 +835,17 @@ public class GestionesPerfilOficina extends TestBase {
 		sleep(7000);
 		driver.findElement(By.id("Step-Summary_nextBtn")).click();
 		sleep(10000);
+		String nroCaso = driver.findElement(By.xpath("//*[@id=\"txtSuccessConfirmation\"]/div")).findElement(By.tagName("strong")).getText();
+		System.out.println(nroCaso);
 		List <WebElement> element = driver.findElements(By.cssSelector(".slds-form-element.vlc-flex.vlc-slds-text-block.vlc-slds-rte.ng-pristine.ng-valid.ng-scope"));
 		for (WebElement x : element) {
 			if (x.getText().toLowerCase().contains("tu gesti\u00f3n se realiz\u00f3 con \u00e9xito")) {
 				gest = true;
 			}
 		}
-		Assert.assertTrue(gest);
-		String orden = cc.obtenerOrden(driver, "Inconvenientes con cargos tasados y facturados");
-		sOrders.add("Inconvenientes con cargos tasados y facturados, numero de orden: " + orden + " de cuenta con DNI: " + "18766558");
+		//String orden = cc.obtenerOrden(driver, "Inconvenientes con cargos tasados y facturados");
+		cc.buscarCaso(nroCaso);
+		//Assert.assertTrue(gest);
+		//sOrders.add("Inconvenientes con cargos tasados y facturados, numero de orden: " + orden + " de cuenta con DNI: " + "18766558");
 	}
 }
