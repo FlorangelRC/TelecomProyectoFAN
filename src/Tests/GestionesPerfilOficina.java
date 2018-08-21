@@ -200,22 +200,51 @@ public class GestionesPerfilOficina extends TestBase {
 		driver.switchTo().frame(cambioFrameByID.getFrameForElement(driver, By.id("SearchClientDocumentType")));
 		sleep(1000);
 		SalesBase sSB = new SalesBase(driver);
-		sSB.BuscarCuenta("DNI", sDNI);
+		sSB.BuscarCuenta("DNI",sDNI);
 		String accid = driver.findElements(By.cssSelector(".slds-truncate.ng-binding")).get(5).getText();
 		driver.findElement(By.cssSelector(".slds-tree__item.ng-scope")).findElement(By.tagName("div")).click();
 		sleep(15000);
 		driver.switchTo().frame(cambioFrame(driver, By.className("card-top")));
 		driver.findElement(By.className("card-top")).click();
-		sleep(3000);
+		sleep(5000);
 		cc.irAGestionEnCard("Alta/Baja de Servicios");
-		sleep(30000);
+		sleep(35000);
+		cc.openrightpanel();
 		cc.closerightpanel();
+		sleep(5000);
 		driver.switchTo().frame(cambioFrame(driver, By.id("tab-default-1")));
 		sleep(5000);
-		WebElement plan = driver.findElements(By.cssSelector(".slds-button.cpq-item-has-children")).get(0);
-		cc.obligarclick(plan);
-		sleep(3000);
-		driver.findElement(By.id("tab-default-2__item")).click();
+		driver.findElement(By.cssSelector(".slds-button.cpq-item-has-children")).click();
+		sleep(5000);
+		List<WebElement> servicios= driver.findElements(By.xpath("//*[@class='cpq-item-product-child-level-1 cpq-item-child-product-name-wrapper']"));
+			for(WebElement a: servicios) {
+				if (a.getText().toLowerCase().contains("servicios basicos general movil".toLowerCase())) {
+						a.findElement(By.tagName("button")).click();
+							sleep(8000);
+								break;
+							}
+						}
+		sleep(17000);
+		List <WebElement> ddi = driver.findElements(By.cssSelector(".cpq-item-product-child-level-2.cpq-item-child-product-name-wrapper"));
+			for(WebElement d : ddi){
+				if(d.getText().contains("DDI")){
+				   d.findElement(By.cssSelector(".slds-button.slds-button_icon-small"));
+				   cc.obligarclick(d);
+				   break;
+				}
+			}
+			
+		sleep(15000);
+		driver.findElements(By.cssSelector(".slds-button.slds-button_icon-border-filled.cpq-item-actions-dropdown-button")).get(6).click();
+		sleep(5000);
+		List<WebElement> del = driver.findElements(By.cssSelector(".slds-dropdown__list.cpq-item-actions-dropdown__list"));
+			for(WebElement d : del){
+				if(d.findElement(By.cssSelector(".slds-dropdown__item.cpq-item-actions-dropdown__item")).getText().equals("Delete")){
+					System.out.println(d.getText());
+					d.click();
+				}
+			}
+		/*driver.findElement(By.id("tab-default-2__item")).click();
 		sleep(4000);
 		driver.findElement(By.id("tab-default-2")).findElements(By.tagName("div")).get(2).click();
 		sleep(2000);
@@ -238,8 +267,27 @@ public class GestionesPerfilOficina extends TestBase {
 			try {
 				cc.obligarclick(driver.findElement(By.cssSelector(".slds-button.slds-button--destructive")));
 				sleep(20000);
-			}catch(Exception ex1) {}	
-			
+			}catch(Exception ex1) {}	*/
+	}
+	
+	@Test (groups = {"GestionesPerfilOficina"}, dataProvider="BajaServicios")
+	public void TS_134355_CRM_Movil_PRE_Alta_Servicio_sin_costo_DDI_con_Roaming_Internacional_Presencial(String sDNI, String sCuenta, String sNumeroDeCuenta, String sLinea){
+		BasePage cambioFrameByID=new BasePage();
+		sleep(30000);
+		driver.switchTo().frame(cambioFrameByID.getFrameForElement(driver, By.id("SearchClientDocumentType")));
+		sleep(1000);
+		SalesBase sSB = new SalesBase(driver);
+		sSB.BuscarCuenta("DNI", sDNI);
+		String accid = driver.findElements(By.cssSelector(".slds-truncate.ng-binding")).get(5).getText();
+		driver.findElement(By.cssSelector(".slds-tree__item.ng-scope")).findElement(By.tagName("div")).click();
+		sleep(15000);
+		driver.switchTo().frame(cambioFrame(driver, By.className("card-top")));
+		driver.findElement(By.className("card-top")).click();
+		sleep(3000);
+		cc.irAGestionEnCard("Alta/Baja de Servicios");
+		sleep(30000);
+		driver.switchTo().frame(cambioFrame(driver, By.id("tab-default-1")));
+		sleep(5000);
 	}
 	
 	@Test(groups = {"Sales", "PreparacionNominacion"}, dataProvider="DatosSalesNominacion") 
