@@ -1116,4 +1116,12 @@ public class TestBase {
 		
 		return (testObjArray);
 	}
+	
+	@DataProvider
+	public Object[][] DatosAltaEquipoExiste() throws Exception{
+
+	 Object[][] testObjArray = ExcelUtils.getTableArray("Cuentas.xlsx","PerfilGestiones",1,1,9,"Alta Linea Equipo Existe");
+
+	 return (testObjArray);
+	}
 }
