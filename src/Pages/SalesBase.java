@@ -925,14 +925,14 @@ try{	driver.findElement(By.id("alert-ok-button")).click();	} catch (NoSuchElemen
 				System.out.println(UnB.getText());
 				//if(UnB.getText().equalsIgnoreCase("gesti\u00f3n de clientes")) {
 					((JavascriptExecutor) driver).executeScript("arguments[0].click();", UnB.findElement(By.className("x-tab-strip-close")));	
-					sleep(2000);
+					sleep(1000);
 					//break;
 				//}
 				}catch(Exception ex1) {} 
 			}
 		}
 		public void Crear_Cliente(String DNI){
-			try {Thread.sleep(10000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+			try {Thread.sleep(1000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 			boolean existe = false;
 			BasePage dni = new BasePage(driver);
 			dni.setSimpleDropdown(driver.findElement(By.id("SearchClientDocumentType")),"DNI");
@@ -1165,7 +1165,7 @@ try{	driver.findElement(By.id("alert-ok-button")).click();	} catch (NoSuchElemen
 		}
 		
 		public void ResolverEntrega(WebDriver driver, String entrega, String provincia, String localidad) {
-			List<WebElement> botones = driver.findElements(By.cssSelector(".slds-m-left--x-small.slds-button.slds-button--brand"));
+			List<WebElement> botones = driver.findElements(By.cssSelector(".slds-m-left--x-small.slds-button.slds-button--brand")); //
 			for(WebElement UnB : botones) {
 				System.out.println("UnBoton= "+UnB.getText());
 				if(UnB.getText().equalsIgnoreCase("cambiar")) {
@@ -1173,7 +1173,7 @@ try{	driver.findElement(By.id("alert-ok-button")).click();	} catch (NoSuchElemen
 					break;
 				}
 			}
-			sleep(12000);
+			sleep(15000);
 			List<WebElement> frame2 = driver.findElements(By.tagName("iframe"));
 			driver.switchTo().frame(frame2.get(0));
 			Select env = new Select (driver.findElement(By.id("DeliveryMethod")));
@@ -1241,7 +1241,7 @@ try{	driver.findElement(By.id("alert-ok-button")).click();	} catch (NoSuchElemen
 			sleep(12000);
 			driver.switchTo().frame(TB.cambioFrame(driver, By.cssSelector(".slds-truncate.ng-binding")));
 			
-			String serial = driver.findElement(By.cssSelector(".slds-table.slds-table--bordered.slds-table--cell-buffer.vlc-slds-table")).findElements(By.cssSelector(".slds-truncate.ng-binding")).get(1).getText();
+			String serial = driver.findElement(By.cssSelector(".slds-table.slds-table--bordered.slds-table--cell-buffer.vlc-slds-table")).findElements(By.cssSelector(".slds-truncate.ng-binding")).get(2).getText();
 			System.out.println("S="+serial);
 			driver.findElement(By.cssSelector(".slds-input.ng-pristine.ng-untouched.ng-empty.ng-invalid.ng-invalid-required.ng-valid-pattern")).sendKeys(serial);
 			driver.findElement(By.id("SerialNumberValidation_nextBtn")).click();
@@ -1282,8 +1282,9 @@ try{	driver.findElement(By.id("alert-ok-button")).click();	} catch (NoSuchElemen
 			}
 			sleep(12000);
 			driver.switchTo().frame(TB.cambioFrame(driver, By.cssSelector(".slds-truncate.ng-binding")));
-			System.out.println("No lo encontreeeee");
+			try {
 			driver.findElement(By.className("slds-checkbox--faux")).click();
+			}catch(Exception ex1) {}
 			driver.findElement(By.id("OrderItemVerification_nextBtn")).click();
 			sleep(8000);
 			

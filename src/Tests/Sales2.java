@@ -39,21 +39,30 @@ public class Sales2 extends TestBase{
 
 	SalesBase sb;
 	String DNI = "DNI"; 
-	String provincia="Buenos Aires" ;
-	String localidad="VICENTE LOPEZ";
+	String provincia="Santa Fe" ;
+	String localidad="ROSARIO";
 	protected  WebDriverWait wait;
 	
-	//@AfterClass(alwaysRun=true)
+	@AfterClass(alwaysRun=true)
 	public void tearDown() {
+		driver.close();
 		driver.quit();
 	}
 	
-	//@AfterMethod(alwaysRun=true)
-	public void deslogin() {
-		sleep(3000);
-		driver.get("https://crm--sit.cs14.my.salesforce.com/home/home.jsp?tsid=02u41000000QWha/");
-		sleep(10000);
+	@AfterMethod(alwaysRun=true)
+	public void deslogin(){
+		sleep(2000);
+		SalesBase SB = new SalesBase(driver);
+		driver.switchTo().defaultContent();
+		sleep(6000);
+		SB.cerrarPestaniaGestion(driver);
+		
+		sleep(5000);
+		goToLeftPanel2(driver, "Inicio");
+		sleep(18000);
+
 	}
+
 		
 	@BeforeClass(alwaysRun=true)
 	public void init() {
@@ -79,6 +88,7 @@ public class Sales2 extends TestBase{
 	@BeforeMethod(alwaysRun=true)
 	public void setup() throws Exception {
 		Accounts accountPage = new Accounts(driver);
+		
 		driver.switchTo().frame(accountPage.getFrameForElement(driver, By.cssSelector(".hasMotif.homeTab.homepage.ext-webkit.ext-chrome.sfdcBody.brandQuaternaryBgr")));
 		List<WebElement> frames = driver.findElements(By.tagName("iframe"));
 		boolean enc = false;
@@ -128,13 +138,13 @@ public class Sales2 extends TestBase{
 		sb.BuscarCuenta(DNI, sDni);
 		sb.acciondecontacto("catalogo");
 		boolean x = false;
-		sleep(15000);
+		sleep(25000);
 		List<WebElement> cam = driver.findElements(By.cssSelector(".slds-m-left--x-small.slds-button.slds-button--brand"));
 		for(WebElement c : cam ){	
 			if(c.getText().toLowerCase().equals("cambiar")){
 				c.click();
 			}
-		sleep(7000);	
+		sleep(10000);	
 		List<WebElement> frame2 = driver.findElements(By.tagName("iframe"));
 		driver.switchTo().frame(frame2.get(0));
 		Select env = new Select (driver.findElement(By.id("DeliveryMethod")));
@@ -143,7 +153,7 @@ public class Sales2 extends TestBase{
 		sleep(10000);
 		driver.switchTo().defaultContent();
 		}
-		sb.elegirplan("Plan Prepago Nacional");
+		sb.elegirplan("Plan con tarjeta");
 		sb.continuar();
 		sleep(25000);
 		sb.Crear_DomicilioLegal( provincia, localidad,"falsa", "", "2154", "", "", "2453");
@@ -168,7 +178,7 @@ public class Sales2 extends TestBase{
 			if(c.getText().toLowerCase().equals("cambiar")){
 				c.click();
 			}
-		sleep(7000);	
+		sleep(10000);	
 		List<WebElement> frame2 = driver.findElements(By.tagName("iframe"));
 		driver.switchTo().frame(frame2.get(0));
 		Select env = new Select (driver.findElement(By.id("DeliveryMethod")));
@@ -177,7 +187,7 @@ public class Sales2 extends TestBase{
 		sleep(10000);
 		driver.switchTo().defaultContent();
 		}
-		sb.elegirplan("Plan Prepago Nacional");
+		sb.elegirplan("Plan con tarjeta");
 		sb.continuar();
 		sleep(18000);
 		sb.Crear_DomicilioLegal(provincia, localidad, "falsa", "", "1000", "", "", "1549");
@@ -200,13 +210,13 @@ public class Sales2 extends TestBase{
 		sb.BuscarCuenta(DNI, sDni);
 		//sb.BuscarCuenta(DNI, buscarCampoExcel(1, "Cuenta Activa", 2));
 		sb.acciondecontacto("catalogo");
-		sleep(15000);
+		sleep(25000);
 		List<WebElement> cam = driver.findElements(By.cssSelector(".slds-m-left--x-small.slds-button.slds-button--brand"));
 		for (WebElement c : cam) {
 			if (c.getText().toLowerCase().equals("cambiar")) {
 				c.click();
 			}
-			sleep(7000);
+			sleep(15000);
 			List<WebElement> frame2 = driver.findElements(By.tagName("iframe"));
 			driver.switchTo().frame(frame2.get(0));
 			Select env = new Select(driver.findElement(By.id("DeliveryMethod")));
@@ -215,7 +225,7 @@ public class Sales2 extends TestBase{
 			sleep(10000);
 			driver.switchTo().defaultContent();
 		}
-		sb.elegirplan("Plan Prepago Nacional");
+		sb.elegirplan("Plan con tarjeta");
 		sb.continuar();
 		sleep(25000);
 		sb.Crear_DomicilioLegal( provincia, localidad,"falsa", "", "2154", "", "", "2453");
@@ -255,7 +265,7 @@ public class Sales2 extends TestBase{
 		CustomerCare CC = new CustomerCare(driver);
 		CC.obligarclick(driver.findElement(By.id("tab-scoped-3__item")));
 		sb.acciondecontacto("catalogo");
-		sleep(15000);
+		sleep(25000);
 		/*List<WebElement> cam = driver.findElements(By.cssSelector(".slds-m-left--x-small.slds-button.slds-button--brand"));
 		for(WebElement c : cam ){	
 			if(c.getText().toLowerCase().equals("cambiar")){
@@ -270,7 +280,7 @@ public class Sales2 extends TestBase{
 		sleep(10000);
 		driver.switchTo().defaultContent();
 		}*/
-		sb.elegirplan("Plan Prepago Nacional");
+		sb.elegirplan("Plan con tarjeta");
 		sleep(15000);
 		sb.continuar();
 		sleep(15000);
@@ -291,7 +301,7 @@ public class Sales2 extends TestBase{
 		contact.sex("masculino");
 		driver.findElement(By.id("Contact_nextBtn")).click();
 		sleep(18000);
-		sb.elegirplan("Plan prepago nacional");
+		sb.elegirplan("Plan con tarjeta");
 		sb.continuar();
 		sleep(20000);
 		BasePage imp = new BasePage(driver);
@@ -319,16 +329,16 @@ public class Sales2 extends TestBase{
 		sb.BuscarCuenta(DNI, sDni);
 		//sb.BuscarCuenta(DNI, buscarCampoExcel(1, "Cuenta Activa", 2));
 		sb.acciondecontacto("catalogo");
-		sleep(15000);
+		sleep(25000);
 		driver.findElement(By.cssSelector(".slds-m-left--x-small.slds-button.slds-button--brand")).click();
-		sleep(7000);
+		sleep(15000);
 		driver.switchTo().frame(cambioFrame(driver, By.id("DeliveryMethod")));
 		Select env = new Select (driver.findElement(By.id("DeliveryMethod")));
 		env.selectByVisibleText("Delivery");
 		driver.findElement(By.id("SalesChannelConfiguration_nextBtn")).click();
 		sleep(10000);
 		driver.switchTo().defaultContent();
-		sb.elegirplan("Plan Prepago Nacional");
+		sb.elegirplan("Plan con tarjeta");
 		sb.continuar();
 		sleep(15000);
 		sb.Crear_DomicilioLegal( provincia, localidad, "falsa", "", "4537", "", "", "5384");
@@ -350,7 +360,7 @@ public class Sales2 extends TestBase{
 		sb.BuscarCuenta(DNI, sDni);
 		//sb.BuscarCuenta(DNI, buscarCampoExcel(1, "Cuenta Activa", 2));
 		sb.acciondecontacto("catalogo");
-		sb.agregarplan("Plan Prepago Nacional");
+		sb.agregarplan("Plan con tarjeta");
 		sleep(15000);
 		sb.continuar();
 		sleep(10000);
@@ -372,13 +382,13 @@ public class Sales2 extends TestBase{
 		sb.BuscarCuenta(DNI, sDni);
 		//sb.BuscarCuenta(DNI, buscarCampoExcel(1, "Cuenta Activa", 2));
 		sb.acciondecontacto("catalogo");
-		sleep(15000);
+		sleep(25000);
 		List<WebElement> cam = driver.findElements(By.cssSelector(".slds-m-left--x-small.slds-button.slds-button--brand"));
 			for(WebElement c : cam ){	
 				if(c.getText().toLowerCase().equals("cambiar")){
 				c.click();
 			}
-		sleep(7000);	
+		sleep(15000);	
 		List<WebElement> frame2 = driver.findElements(By.tagName("iframe"));
 		driver.switchTo().frame(frame2.get(0));
 		Select env = new Select (driver.findElement(By.id("DeliveryMethod")));
@@ -397,7 +407,7 @@ public class Sales2 extends TestBase{
 		sleep(10000);
 		driver.switchTo().defaultContent();
 		}
-		sb.elegirplan("Plan Prepago Nacional");
+		sb.elegirplan("Plan con tarjeta");
 		sb.continuar();
 		sleep(10000);
 		List<WebElement> cont = driver.findElements(By.cssSelector(".slds-button.slds-m-left--large.slds-button--brand.ta-button-brand"));
@@ -420,7 +430,7 @@ public class Sales2 extends TestBase{
 		//sb.BuscarCuenta(DNI, buscarCampoExcel(1, "Cuenta Activa", 2));
 		sb.acciondecontacto("catalogo");
 		sleep(10000);
-		sb.elegirplan("Plan Prepago Nacional");
+		sb.elegirplan("Plan con tarjeta");
 		sb.continuar();
 		sleep(10000);
 		List<WebElement> cont = driver.findElements(By.cssSelector(".slds-button.slds-m-left--large.slds-button--brand.ta-button-brand"));
@@ -469,7 +479,7 @@ public class Sales2 extends TestBase{
 		//sb.BuscarCuenta(DNI, buscarCampoExcel(1, "Cuenta Activa", 2));
 		sb.acciondecontacto("catalogo");
 		sleep(15000);
-		sb.elegirplan("Plan Prepago Nacional");
+		sb.elegirplan("Plan con tarjeta");
 		sleep(25000);
 		driver.findElement(By.cssSelector(".slds-button.slds-m-left--large.slds-button--brand.ta-button-brand")).click();
 		sleep(25000);
@@ -561,7 +571,7 @@ public class Sales2 extends TestBase{
 		//sb.BuscarCuenta(DNI, buscarCampoExcel(1, "Cuenta Activa", 2));
 		sb.acciondecontacto("catalogo");
 		sleep(25000);
-		sb.elegirplan("plan prepago nacional");
+		sb.elegirplan("Plan con tarjeta");
 		sleep(25000);
 		driver.findElement(By.cssSelector(".slds-button.slds-m-left--large.slds-button--brand.ta-button-brand")).click();
 		sleep(20000);
@@ -589,7 +599,7 @@ public class Sales2 extends TestBase{
 		contact.sex("masculino");
 		driver.findElement(By.id("Contact_nextBtn")).click();
 		sleep(18000);
-		sb.elegirplan("Plan prepago nacional");
+		sb.elegirplan("Plan con tarjeta");
 		sb.continuar();
 		sleep(20000);
 		sb.Crear_DomicilioLegal(provincia, localidad, "falsa", "", "1000", "", "", "1549");
@@ -729,16 +739,16 @@ public class Sales2 extends TestBase{
 		sb.BuscarCuenta(DNI, sDni);
 		//sb.BuscarCuenta(DNI, buscarCampoExcel(1, "Cuenta Activa", 2));
 		sb.acciondecontacto("catalogo");
-		sleep(15000);
+		sleep(25000);
 		driver.findElement(By.cssSelector(".slds-m-left--x-small.slds-button.slds-button--brand")).click();
-		sleep(7000);
+		sleep(15000);
 		driver.switchTo().frame(cambioFrame(driver, By.id("DeliveryMethod")));
 		Select env = new Select (driver.findElement(By.id("DeliveryMethod")));
 		env.selectByVisibleText("Delivery");
 		driver.findElement(By.id("SalesChannelConfiguration_nextBtn")).click();
 		sleep(10000);
 		driver.switchTo().defaultContent();
-		sb.elegirplan("Plan Prepago Nacional");
+		sb.elegirplan("Plan con tarjeta");
 		sleep(15000);
 		sb.continuar();
 		sleep(25000);
@@ -758,16 +768,16 @@ public class Sales2 extends TestBase{
 		sb.BuscarCuenta(DNI, sDni);
 		//sb.BuscarCuenta(DNI, buscarCampoExcel(1, "Cuenta Activa", 2));
 		sb.acciondecontacto("catalogo");
-		sleep(15000);
+		sleep(25000);
 		driver.findElement(By.cssSelector(".slds-m-left--x-small.slds-button.slds-button--brand")).click();
-		sleep(7000);
+		sleep(15000);
 		driver.switchTo().frame(cambioFrame(driver, By.id("DeliveryMethod")));
 		Select env = new Select (driver.findElement(By.id("DeliveryMethod")));
 		env.selectByVisibleText("Delivery");
 		driver.findElement(By.id("SalesChannelConfiguration_nextBtn")).click();
 		sleep(10000);
 		driver.switchTo().defaultContent();
-		sb.elegirplan("Plan Prepago Nacional");
+		sb.elegirplan("Plan con tarjeta");
 		sb.continuar();
 		sleep(10000);
 		sb.Crear_DomicilioLegal( provincia, localidad,"falsa", "", "2154", "", "", "2453");
@@ -783,9 +793,9 @@ public class Sales2 extends TestBase{
 		sb.BuscarCuenta(DNI, sDni);
 		//sb.BuscarCuenta(DNI, buscarCampoExcel(1, "Cuenta Activa", 2));
 		sb.acciondecontacto("catalogo");
-		sleep(15000);
+		sleep(25000);
 		driver.findElement(By.cssSelector(".slds-m-left--x-small.slds-button.slds-button--brand")).click();
-		sleep(7000);
+		sleep(15000);
 		driver.switchTo().frame(cambioFrame(driver, By.id("DeliveryMethod")));
 		Select env = new Select (driver.findElement(By.id("DeliveryMethod")));
 		env.selectByVisibleText("Store Pick Up");
@@ -798,7 +808,7 @@ public class Sales2 extends TestBase{
 		driver.findElement(By.id("SalesChannelConfiguration_nextBtn")).click();
 		sleep(10000);
 		driver.switchTo().defaultContent();
-		sb.elegirplan("Plan Prepago Nacional");
+		sb.elegirplan("Plan con tarjeta");
 		sleep(15000);
 		driver.findElement(By.cssSelector(".slds-button.slds-m-left--large.slds-button--brand.ta-button-brand")).click();
 		sleep(15000);
@@ -815,16 +825,16 @@ public class Sales2 extends TestBase{
 		sb.BuscarCuenta(DNI, sDni);
 		//sb.BuscarCuenta(DNI, buscarCampoExcel(1, "Cuenta Activa", 2));
 		sb.acciondecontacto("catalogo");
-		sleep(15000);
+		sleep(25000);
 		driver.findElement(By.cssSelector(".slds-m-left--x-small.slds-button.slds-button--brand")).click();
-		sleep(7000);
+		sleep(15000);
 		driver.switchTo().frame(cambioFrame(driver, By.id("DeliveryMethod")));
 		Select env = new Select (driver.findElement(By.id("DeliveryMethod")));
 		env.selectByVisibleText("Delivery");
 		driver.findElement(By.id("SalesChannelConfiguration_nextBtn")).click();
 		sleep(10000);
 		driver.switchTo().defaultContent();
-		sb.elegirplan("Plan Prepago Nacional");
+		sb.elegirplan("Plan con tarjeta");
 		sb.continuar();
 		sleep(15000);
 		sb.Crear_DomicilioLegal( provincia, localidad,"falsa", "", "5846", "", "", "5248");
@@ -842,9 +852,9 @@ public class Sales2 extends TestBase{
 		sb.BuscarCuenta(DNI, sDni);
 		//sb.BuscarCuenta(DNI, buscarCampoExcel(1, "Cuenta Activa", 2));
 		sb.acciondecontacto("catalogo");
-		sleep(15000);
+		sleep(25000);
 		driver.findElement(By.cssSelector(".slds-m-left--x-small.slds-button.slds-button--brand")).click();
-		sleep(7000);
+		sleep(15000);
 		driver.switchTo().frame(sb.getFrameForElement(driver, By.id("DeliveryMethod")));
 		List<WebElement> OMdE = new Select(driver.findElement(By.id("SalesChannelConfiguration")).findElement(By.id("DeliveryMethod"))).getOptions();
 		for (WebElement UnM : OMdE) {
@@ -889,7 +899,7 @@ public class Sales2 extends TestBase{
 		//sb.BuscarCuenta(DNI, buscarCampoExcel(1, "Cuenta Activa", 2));
 		sb.acciondecontacto("catalogo");
 		sleep(15000);
-		sb.elegirplan("Plan Prepago Nacional");
+		sb.elegirplan("Plan con tarjeta");
 		sleep(15000);
 		driver.findElement(By.cssSelector(".slds-button.slds-m-left--large.slds-button--brand.ta-button-brand")).click();
 		sleep(15000);
@@ -946,11 +956,11 @@ public class Sales2 extends TestBase{
 		sb.BuscarCuenta(DNI, sDni);
 		//sb.BuscarCuenta(DNI, buscarCampoExcel(1, "Cuenta Activa", 2));
 		sb.acciondecontacto("catalogo");
-		sleep(15000);
-		sb.elegirplan("Plan Prepago Nacional");
+		sleep(25000);
+		sb.elegirplan("Plan con tarjeta");
 		String a = driver.findElement(By.cssSelector(".slds-col.taChangeDeliveryMethod.slds-text-body--small.slds-m-left--large")).getText();
 		driver.findElement(By.cssSelector(".slds-m-left--x-small.slds-button.slds-button--brand")).click();
-		sleep(7000);
+		sleep(15000);
 		driver.switchTo().frame(cambioFrame(driver, By.id("DeliveryMethod")));
 		Select env = new Select (driver.findElement(By.id("DeliveryMethod")));
 		env.selectByVisibleText("Delivery");
@@ -967,7 +977,7 @@ public class Sales2 extends TestBase{
 		//sb.BuscarCuenta(DNI, buscarCampoExcel(1, "Cuenta Activa", 2));
 		sb.acciondecontacto("catalogo");
 		sleep(15000);
-		sb.elegirplan("Plan Prepago Nacional");
+		sb.elegirplan("Plan con tarjeta");
 		sb.continuar();
 		sleep(10000);
 		sb.Crear_DomicilioLegal( provincia, localidad,"falsa", "", "5846", "", "", "5248");
@@ -993,7 +1003,7 @@ public class Sales2 extends TestBase{
 		//sb.BuscarCuenta(DNI, buscarCampoExcel(1, "Cuenta Activa", 2));
 		sb.acciondecontacto("catalogo");
 		sleep(15000);
-		sb.elegirplan("Plan Prepago Nacional");
+		sb.elegirplan("Plan con tarjeta");
 		sb.continuar();
 		sleep(45000);
 		sb.Crear_DomicilioLegal( provincia, localidad,"falsa", "", "5846", "", "", "5248");
@@ -1012,9 +1022,9 @@ public class Sales2 extends TestBase{
 		sb.BuscarCuenta(DNI, sDni);
 		//sb.BuscarCuenta(DNI, buscarCampoExcel(1, "Cuenta Activa", 2));
 		sb.acciondecontacto("catalogo");
-		sleep(15000);
+		sleep(25000);
 		driver.findElement(By.cssSelector(".slds-m-left--x-small.slds-button.slds-button--brand")).click();
-		sleep(7000);
+		sleep(15000);
 		driver.switchTo().frame(cambioFrame(driver, By.id("DeliveryMethod")));
 		Select env = new Select (driver.findElement(By.id("DeliveryMethod")));
 		env.selectByVisibleText("Store Pick Up");
@@ -1036,7 +1046,7 @@ public class Sales2 extends TestBase{
 		//sb.BuscarCuenta(DNI, buscarCampoExcel(1, "Cuenta Activa", 2));
 		sb.acciondecontacto("catalogo");
 		sleep(15000);
-		sb.elegirplan("Plan Prepago Nacional");
+		sb.elegirplan("Plan con tarjeta");
 		sb.continuar();
 		sleep(10000);
 		List<WebElement> cont = driver.findElements(By.cssSelector(".slds-button.slds-m-left--large.slds-button--brand.ta-button-brand"));
@@ -1072,7 +1082,7 @@ public class Sales2 extends TestBase{
 		//sb.BuscarCuenta(DNI, buscarCampoExcel(1, "Cuenta Activa", 2));
 		sb.acciondecontacto("catalogo");
 		sleep(15000);
-		sb.elegirplan("Plan Prepago Nacional");
+		sb.elegirplan("Plan con tarjeta");
 		sb.continuar();
 		sleep(20000);
 		sb.Crear_DomicilioLegal( provincia, localidad,"falsa", "", "5846", "", "", "5248");
@@ -1105,7 +1115,7 @@ public class Sales2 extends TestBase{
 		//sb.BuscarCuenta(DNI, buscarCampoExcel(1, "Cuenta Activa", 2));
 		sb.acciondecontacto("catalogo");
 		sleep(15000);
-		sb.elegirplan("Plan Prepago Nacional");
+		sb.elegirplan("Plan con tarjeta");
 		sb.continuar();
 		sleep(25000);
 		CustomerCare page = new CustomerCare(driver);
@@ -1145,7 +1155,7 @@ public class Sales2 extends TestBase{
 		sb.BuscarCuenta(DNI, buscarCampoExcel(1, "Cuenta Activa", 2));
 		sb.acciondecontacto("catalogo");
 		sleep(15000);
-		sb.elegirplan("Plan Prepago Nacional");
+		sb.elegirplan("Plan con tarjeta");
 		sb.continuar();
 		sleep(20000);
 		CustomerCare page = new CustomerCare(driver);
@@ -1181,7 +1191,7 @@ public class Sales2 extends TestBase{
 		//sb.BuscarCuenta(DNI, buscarCampoExcel(1, "Cuenta Activa", 2));
 		sb.acciondecontacto("catalogo");
 		sleep(15000);
-		sb.elegirplan("Plan Prepago Nacional");
+		sb.elegirplan("Plan con tarjeta");
 		sb.continuar();
 		sleep(20000);
 		
@@ -1226,7 +1236,7 @@ public class Sales2 extends TestBase{
 		//sb.BuscarCuenta(DNI, buscarCampoExcel(1, "Cuenta Activa", 2));
 		sb.acciondecontacto("catalogo");
 		sleep(15000);
-		sb.elegirplan("Plan Prepago Nacional");
+		sb.elegirplan("Plan con tarjeta");
 		sb.continuar();
 		sleep(20000);
 		CustomerCare page = new CustomerCare(driver);
@@ -1274,7 +1284,7 @@ public class Sales2 extends TestBase{
 		//sb.BuscarCuenta(DNI, buscarCampoExcel(1, "Cuenta Activa", 2));
 		sb.acciondecontacto("catalogo");
 		sleep(15000);
-		sb.elegirplan("Plan Prepago Nacional");
+		sb.elegirplan("Plan con tarjeta");
 		sb.continuar();
 		sleep(20000);
 		CustomerCare page = new CustomerCare(driver);
@@ -1325,9 +1335,9 @@ public class Sales2 extends TestBase{
 		sb.BuscarCuenta(DNI, sDni);
 		//sb.BuscarCuenta(DNI, buscarCampoExcel(1, "Cuenta Activa", 2));
 		sb.acciondecontacto("catalogo");
-		sleep(15000);
+		sleep(25000);
 		driver.findElement(By.cssSelector(".slds-m-left--x-small.slds-button.slds-button--brand")).click();
-		sleep(7000);
+		sleep(15000);
 		driver.switchTo().frame(cambioFrame(driver, By.id("DeliveryMethod")));
 		Select env = new Select (driver.findElement(By.id("DeliveryMethod")));
 		env.selectByVisibleText("Store Pick Up");
@@ -1349,9 +1359,9 @@ public class Sales2 extends TestBase{
 		sb.BuscarCuenta(DNI, sDni);
 		//sb.BuscarCuenta(DNI, buscarCampoExcel(1, "Cuenta Activa", 2));
 		sb.acciondecontacto("catalogo");
-		sleep(15000);
+		sleep(25000);
 		driver.findElement(By.cssSelector(".slds-m-left--x-small.slds-button.slds-button--brand")).click();
-		sleep(7000);
+		sleep(15000);
 		driver.switchTo().frame(cambioFrame(driver, By.id("DeliveryMethod")));
 		Select env = new Select (driver.findElement(By.id("DeliveryMethod")));
 		env.selectByVisibleText("Store Pick Up");
@@ -1371,7 +1381,7 @@ public class Sales2 extends TestBase{
 		//sb.BuscarCuenta(DNI, buscarCampoExcel(1, "Cuenta Activas", 2));
 		sb.acciondecontacto("catalogo");
 		sleep(15000);
-		sb.elegirplan("Plan Prepago Nacional");	
+		sb.elegirplan("Plan con tarjeta");	
 		//driver.findElement(By.cssSelector(".slds-button.slds-m-left--large.slds-button--brand.ta-button-brand")).click();
 		sb.continuar();
 		sleep(25000);
@@ -1398,7 +1408,7 @@ public class Sales2 extends TestBase{
 		//sb.BuscarCuenta(DNI, buscarCampoExcel(1, "Cuenta Activa", 2));
 		sb.acciondecontacto("catalogo");
 		sleep(15000);
-		sb.elegirplan("Plan Prepago Nacional");
+		sb.elegirplan("Plan con tarjeta");
 		sb.continuar();
 		sleep(20000);
 		sb.Crear_DomicilioLegal(provincia, "ABEL", "falsa", "", "1000", "", "", "1549");
@@ -1427,9 +1437,9 @@ public class Sales2 extends TestBase{
 		sb.BuscarCuenta(DNI, sDni);
 		//sb.BuscarCuenta(DNI, buscarCampoExcel(1, "Cuenta Activa", 2));
 		sb.acciondecontacto("catalogo");
-		sleep(15000);
+		sleep(25000);
 		driver.findElement(By.cssSelector(".slds-m-left--x-small.slds-button.slds-button--brand")).click();
-		sleep(7000);
+		sleep(15000);
 		driver.switchTo().frame(cambioFrame(driver, By.id("DeliveryMethod")));
 		Select env = new Select (driver.findElement(By.id("DeliveryMethod")));
 		env.selectByVisibleText("Presencial");
@@ -1445,7 +1455,7 @@ public class Sales2 extends TestBase{
 		//sb.BuscarCuenta(DNI, buscarCampoExcel(1, "Cuenta Activa", 2));
 		sb.acciondecontacto("catalogo");
 		sleep(15000);
-		sb.elegirplan("Plan Prepago Nacional");
+		sb.elegirplan("Plan con tarjeta");
 		sleep(15000);
 		WebElement plan = driver.findElements(By.cssSelector(".slds-button.cpq-item-has-children")).get(0);
 		plan.click();
@@ -1466,7 +1476,7 @@ public class Sales2 extends TestBase{
 		//sb.BuscarCuenta(DNI, buscarCampoExcel(1, "Cuenta Activa", 2));
 		sb.acciondecontacto("catalogo");
 		sleep(15000);
-		sb.elegirplan("Plan Prepago Nacional");
+		sb.elegirplan("Plan con tarjeta");
 		sleep(15000);
 		WebElement num = driver.findElement(By.cssSelector(".slds-m-bottom--x-small"));
 		System.out.println(num.getText());
@@ -1479,7 +1489,7 @@ public class Sales2 extends TestBase{
 		//sb.BuscarCuenta(DNI, buscarCampoExcel(1, "Cuenta Activa", 2));
 		sb.acciondecontacto("catalogo");
 		sleep(15000);
-		sb.elegirplan("Plan Prepago Nacional");
+		sb.elegirplan("Plan con tarjeta");
 		sleep(15000);
 		sb.continuar();
 		sleep(20000);
@@ -1506,7 +1516,7 @@ public class Sales2 extends TestBase{
 		//sb.BuscarCuenta(DNI, buscarCampoExcel(1, "Cuenta Activa", 2));
 		sb.acciondecontacto("catalogo");
 		sleep(15000);
-		sb.elegirplan("Plan Prepago Nacional");
+		sb.elegirplan("Plan con tarjeta");
 		sb.continuar();
 		sleep(20000);
 		sb.Crear_DomicilioLegal(provincia, localidad, "falsa", "", "1000", "", "", "1549");
@@ -1565,7 +1575,7 @@ public class Sales2 extends TestBase{
 		//sb.BuscarCuenta(DNI, buscarCampoExcel(1, "Cuenta Activa", 2));
 		sb.acciondecontacto("catalogo");
 		sleep(15000);
-		sb.elegirplan("Plan Prepago Nacional");
+		sb.elegirplan("Plan con tarjeta");
 		sb.continuar();
 		sleep(25000);
 		sb.Crear_DomicilioLegal(provincia, localidad, "falsa", "", "1000", "", "", "1549");
@@ -1594,7 +1604,7 @@ public class Sales2 extends TestBase{
 		//sb.BuscarCuenta(DNI, buscarCampoExcel(1, "Cuenta Activa", 2));
 		sb.acciondecontacto("catalogo");
 		sleep(15000);
-		sb.elegirplan("Plan Prepago Nacional");
+		sb.elegirplan("Plan con tarjeta");
 		sb.continuar();
 		sleep(20000);
 		sb.Crear_DomicilioLegal(provincia, localidad, "falsa", "", "1000", "", "", "1549");
@@ -1617,7 +1627,7 @@ public class Sales2 extends TestBase{
 		//sb.BuscarCuenta(DNI, buscarCampoExcel(1, "Cuenta Activa", 2));
 		sb.acciondecontacto("catalogo");
 		sleep(15000);
-		sb.elegirplan("Plan Prepago Nacional");
+		sb.elegirplan("Plan con tarjeta");
 		sb.continuar();
 		sleep(15000);
 		sb.Crear_DomicilioLegal(provincia, localidad, "falsa", "", "1000", "", "", "1549");
@@ -1634,7 +1644,7 @@ public class Sales2 extends TestBase{
 		//sb.BuscarCuenta(DNI, buscarCampoExcel(1, "Cuenta Activa", 2));
 		sb.acciondecontacto("catalogo");
 		sleep(15000);
-		sb.elegirplan("Plan prepago nacional");
+		sb.elegirplan("Plan con tarjeta");
 		sb.continuar();
 		sleep(20000);
 		sb.Crear_DomicilioLegal(provincia, localidad, "falsa", "", "1000", "", "", "1549");
@@ -1665,7 +1675,7 @@ public class Sales2 extends TestBase{
 		sb.BuscarCuenta(DNI, sDni);
 		//sb.BuscarCuenta(DNI, buscarCampoExcel(1, "Cuenta Activa", 2));
 		sb.acciondecontacto("catalogo");
-		sleep(15000);
+		sleep(25000);
 		/*driver.findElement(By.cssSelector(".slds-m-left--x-small.slds-button.slds-button--brand")).click();
 		sleep(15000);
 		driver.switchTo().frame(cambioFrame(driver, By.id("DeliveryMethodSelection")));
@@ -1674,7 +1684,7 @@ public class Sales2 extends TestBase{
 		driver.findElement(By.id("SalesChannelConfiguration_nextBtn")).click();
 		sleep(7000);
 		driver.switchTo().defaultContent();*/
-		sb.elegirplan("Plan Prepago Nacional");
+		sb.elegirplan("Plan con tarjeta");
 		sb.continuar();
 		sleep(20000);
 		sb.Crear_DomicilioLegal(provincia, localidad, "falsa", "", "1000", "", "", "1549");
@@ -1703,7 +1713,7 @@ public class Sales2 extends TestBase{
 		contact.sex("masculino");
 		driver.findElement(By.id("Contact_nextBtn")).click();
 		sleep(15000);
-		sb.elegirplan("Plan Prepago Nacional");
+		sb.elegirplan("Plan con tarjeta");
 		sb.continuar();
 		sleep(20000);
 		sb.Crear_DomicilioLegal(provincia, localidad, "falsa", "", "1000", "", "", "1549");
@@ -1728,7 +1738,7 @@ public class Sales2 extends TestBase{
 		contact.sex("masculino");
 		driver.findElement(By.id("Contact_nextBtn")).click();
 		sleep(10000);
-		sb.elegirplan("Plan Prepago Nacional");
+		sb.elegirplan("Plan con tarjeta");
 		sb.continuar();
 		sleep(10000);
 		sb.Crear_DomicilioLegal(provincia, localidad, "falsa", "", "1000", "", "", "1549");
@@ -1757,7 +1767,7 @@ public class Sales2 extends TestBase{
 		//sb.BuscarCuenta(DNI, buscarCampoExcel(1, "Cuenta Activa", 2));
 		sb.acciondecontacto("catalogo");
 		sleep(15000);
-		sb.elegirplan("Plan Prepago Nacional");
+		sb.elegirplan("Plan con tarjeta");
 		sleep(3000);
 		List<WebElement> agregar = driver.findElements(By.cssSelector(".slds-button.slds-button_neutral.cpq-add-button")); 
 		agregar.get(0).click();
@@ -1789,9 +1799,9 @@ public class Sales2 extends TestBase{
 		sb.BuscarCuenta(DNI, sDni);
 		//sb.BuscarCuenta(DNI, buscarCampoExcel(1, "Cuenta Activa", 2));
 		sb.acciondecontacto("catalogo");
-		sleep(15000);
+		sleep(25000);
 		driver.findElement(By.cssSelector(".slds-m-left--x-small.slds-button.slds-button--brand")).click();
-		sleep(7000);
+		sleep(15000);
 		driver.switchTo().frame(cambioFrame(driver, By.id("DeliveryMethod")));
 		Select env = new Select (driver.findElement(By.id("DeliveryMethod")));
 		env.selectByVisibleText("Store Pick Up");
@@ -1817,9 +1827,9 @@ public class Sales2 extends TestBase{
 		sb.BuscarCuenta(DNI, sDni);
 		//sb.BuscarCuenta(DNI, buscarCampoExcel(1, "Cuenta Activa", 2));
 		sb.acciondecontacto("catalogo");
-		sleep(15000);
+		sleep(25000);
 		driver.findElement(By.cssSelector(".slds-m-left--x-small.slds-button.slds-button--brand")).click();
-		sleep(7000);
+		sleep(15000);
 		driver.switchTo().frame(cambioFrame(driver, By.id("DeliveryMethod")));
 		Select env = new Select (driver.findElement(By.id("DeliveryMethod")));
 		env.selectByVisibleText("Store Pick Up");
@@ -1833,7 +1843,7 @@ public class Sales2 extends TestBase{
 		sleep(7000);
 		Assert.assertTrue(driver.findElement(By.cssSelector(".slds-col.taChangeDeliveryMethod.slds-text-body--small.slds-m-left--large")).getText().contains("Store Pick Up"));
 		driver.findElement(By.cssSelector(".slds-m-left--x-small.slds-button.slds-button--brand")).click();
-		sleep(7000);
+		sleep(15000);
 		driver.switchTo().frame(cambioFrame(driver, By.id("DeliveryMethod")));
 		Select nenv = new Select (driver.findElement(By.id("DeliveryMethod")));
 		nenv.selectByVisibleText("Delivery");
@@ -1848,7 +1858,7 @@ public class Sales2 extends TestBase{
 		//sb.BuscarCuenta(DNI, buscarCampoExcel(1, "Cuenta Activa", 2));
 		sb.acciondecontacto("catalogo");
 		sleep(15000);
-		sb.elegirplan("Plan Prepago Nacional");
+		sb.elegirplan("Plan con tarjeta");
 		sb.continuar();
 		sleep(15000);
 		sb.Crear_DomicilioLegal(provincia, localidad, "falsa", "", "1000", "", "", "1549");
@@ -1927,7 +1937,7 @@ public class Sales2 extends TestBase{
 		//sb.BuscarCuenta(DNI, buscarCampoExcel(1, "Cuenta Activa", 2));
 		sb.acciondecontacto("catalogo");
 		sleep(15000);
-		sb.elegirplan("Plan Prepago Nacional");
+		sb.elegirplan("Plan con tarjeta");
 		sleep(25000);
 		driver.findElement(By.cssSelector(".cpq-product-link.slds-text-body_small.slds-float_right")).click();
 		sleep(20000);
@@ -2005,7 +2015,7 @@ public class Sales2 extends TestBase{
 		//sb.BuscarCuenta(DNI, buscarCampoExcel(1, "Cuenta Activa", 2));
 		sb.acciondecontacto("catalogo");
 		sleep(15000);
-		sb.elegirplan("Plan Prepago Nacional");
+		sb.elegirplan("Plan con tarjeta");
 		sb.continuar();
 		sleep(25000);
 		sb.Crear_DomicilioLegal( provincia, localidad,"falsa", "", "2154", "", "", "2453");
@@ -2049,7 +2059,7 @@ public class Sales2 extends TestBase{
 		contact.sex("masculino");
 		driver.findElement(By.id("Contact_nextBtn")).click();
 		sleep(10000);
-		sb.elegirplan("Plan Prepago Nacional");
+		sb.elegirplan("Plan con tarjeta");
 		sb.continuar();
 		sleep(25000);
 		sb.Crear_DomicilioLegal(provincia, "ABEL", "falsa", "", "1000", "", "", "1549");
@@ -2101,9 +2111,9 @@ public class Sales2 extends TestBase{
 		sb.acciondecontacto("catalogo");
 		boolean x = false;
 		sleep(18000);
-		sb.elegirplan("Plan prepago nacional");
+		sb.elegirplan("Plan con tarjeta");
 		/*driver.findElement(By.cssSelector(".slds-input.ng-valid.ng-not-empty.ng-dirty.ng-valid-parse.ng-touched")).clear();
-		driver.findElement(By.cssSelector(".slds-input.ng-valid.ng-dirty.ng-valid-parse.ng-touched.ng-empty")).sendKeys("Plan Prepago Nacional");		
+		driver.findElement(By.cssSelector(".slds-input.ng-valid.ng-dirty.ng-valid-parse.ng-touched.ng-empty")).sendKeys("Plan con tarjeta");		
 		try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 		List<WebElement> agregar = driver.findElements(By.cssSelector(".slds-button.slds-button_neutral.cpq-add-button")); 
 		agregar.get(0).click();*/
@@ -2170,7 +2180,7 @@ public class Sales2 extends TestBase{
 		//sb.BuscarCuenta(DNI, buscarCampoExcel(1, "Cuenta Activa", 2));
 		sb.acciondecontacto("catalogo");
 		sleep(15000);
-		sb.elegirplan("plan prepago nacional");
+		sb.elegirplan("Plan con tarjeta");
 		String ord = driver.findElement(By.cssSelector(".slds-text-body--small.slds-page-header__info.taDevider")).getText();
 		ord=ord.substring(ord.length()-8, ord.length());
 		sb.continuar();
@@ -2196,7 +2206,7 @@ public class Sales2 extends TestBase{
 		List<WebElement> lst = driver.findElements(By.cssSelector(".bPageBlock.brandSecondaryBrd.secondaryPalette"));
 		for (WebElement UnE : lst) {
 			if(UnE.findElement(By.className("pbTitle")).getText().toLowerCase().contains("productos de pedido")) {
-				if (UnE.findElement(By.cssSelector(".dataRow.even.first")).getText().toLowerCase().contains("plan prepago nacional"))
+				if (UnE.findElement(By.cssSelector(".dataRow.even.first")).getText().toLowerCase().contains("Plan con tarjeta"))
 					Assert.assertTrue(true);
 				else 
 					Assert.assertTrue(false);
@@ -2211,7 +2221,7 @@ public class Sales2 extends TestBase{
 		//sb.BuscarCuenta(DNI, buscarCampoExcel(1, "Cuenta Activa", 2));
 		sb.acciondecontacto("catalogo");
 		sleep(15000);
-		sb.elegirplan("plan prepago nacional");
+		sb.elegirplan("Plan con tarjeta");
 		sleep(2000);
 		page3.abrirprimeraflecha();
 		sleep(3000);
@@ -2256,7 +2266,7 @@ public class Sales2 extends TestBase{
 		sb.BuscarCuenta(DNI, sDni);
 		//sb.BuscarCuenta(DNI, buscarCampoExcel(1, "Cuenta Activa", 2));
 		sb.acciondecontacto("catalogo");
-		sb.elegirplan("Plan Prepago Nacional");
+		sb.elegirplan("Plan con tarjeta");
 		sleep(5000);
 		cart.abrirprimeraflecha();
 		sleep(3000);
@@ -2306,7 +2316,7 @@ public class Sales2 extends TestBase{
 		//sb.BuscarCuenta(DNI, buscarCampoExcel(1, "Cuenta Activa", 2));
 		sb.acciondecontacto("catalogo");
 		try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
-		sb.elegirplan("Plan Prepago Nacional");
+		sb.elegirplan("Plan con tarjeta");
 		try {Thread.sleep(8000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 		WebElement boton = driver.findElements(By.cssSelector(".slds-button.slds-button_icon-border-filled.cpq-item-actions-dropdown-button")).get(0);
 		boton.click();
@@ -2321,7 +2331,7 @@ public class Sales2 extends TestBase{
 		//sb.BuscarCuenta(DNI, buscarCampoExcel(1, "Cuenta Activa", 2));
 		sb.acciondecontacto("catalogo");
 		try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
-		sb.elegirplan("Plan Prepago Nacional");
+		sb.elegirplan("Plan con tarjeta");
 		try {Thread.sleep(14000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 		Boolean r = false;
 		List<WebElement> cont = driver.findElements(By.cssSelector(".slds-button.slds-m-left--large.slds-button--brand.ta-button-brand"));
@@ -2339,7 +2349,7 @@ public class Sales2 extends TestBase{
 		//sb.BuscarCuenta(DNI, buscarCampoExcel(1, "Cuenta Activa", 2));
 		sb.acciondecontacto("catalogo");
 		try {Thread.sleep(4000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
-		sb.elegirplan("Plan Prepago Nacional"); 
+		sb.elegirplan("Plan con tarjeta"); 
 		try {Thread.sleep(8000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 		sb.continuar();
 		sleep(8000);
@@ -2361,7 +2371,7 @@ public class Sales2 extends TestBase{
 		//sb.BuscarCuenta(DNI, buscarCampoExcel(1, "Cuenta Activa", 2));
 		sb.acciondecontacto("catalogo");
 		try {Thread.sleep(4000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
-		sb.elegirplan("Plan Prepago Nacional");
+		sb.elegirplan("Plan con tarjeta");
 		try {Thread.sleep(8000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 		sb.continuar();
 		sleep(8000);
@@ -2381,7 +2391,7 @@ public class Sales2 extends TestBase{
 		//sb.BuscarCuenta(DNI, buscarCampoExcel(1, "Cuenta Activa", 2));
 		sb.acciondecontacto("catalogo");
 		try {Thread.sleep(4000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
-		sb.elegirplan("Plan Prepago Nacional");
+		sb.elegirplan("Plan con tarjeta");
 		try {Thread.sleep(8000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 		sb.continuar();
 		sleep(8000);
@@ -2406,12 +2416,12 @@ public class Sales2 extends TestBase{
 		//sb.BuscarCuenta(DNI, buscarCampoExcel(1, "Cuenta Activa", 2));
 		sb.acciondecontacto("catalogo");
 		try {Thread.sleep(4000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
-		sb.elegirplan("Plan Prepago Nacional");
+		sb.elegirplan("Plan con tarjeta");
 		try {Thread.sleep(8000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 		
 		WebElement result = driver.findElement(By.cssSelector(".slds-tile__title.slds-truncate.cpq-product-name"));
 		System.out.println(result.getText());
-		Assert.assertTrue(result.getText().contains("Plan Prepago Nacional"));
+		Assert.assertTrue(result.getText().contains("Plan con tarjeta"));
 			
 	}
 	
@@ -2421,7 +2431,7 @@ public class Sales2 extends TestBase{
 		//sb.BuscarCuenta(DNI, buscarCampoExcel(1, "Cuenta Activa", 2));
 		sb.acciondecontacto("catalogo");
 		try {Thread.sleep(4000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
-		sb.elegirplan("Plan Prepago Nacional");
+		sb.elegirplan("Plan con tarjeta");
 		sleep(5000);
 		driver.findElement(By.cssSelector(".slds-button__icon.slds-button__icon--.slds-icon-text-default")).click();
 		WebElement icon = driver.findElements(By.cssSelector(".slds-icon.slds-icon--x-small")).get(4);

@@ -85,10 +85,10 @@ public class TechCareOla1A extends TestBase {
 		try {Thread.sleep(1000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 		CustomerCare cerrar = new CustomerCare(driver);
 		cerrar.cerrarultimapestana();
-		HomeBase homePage = new HomeBase(driver);
+		/*HomeBase homePage = new HomeBase(driver);
 		try {Thread.sleep(1000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 		homePage.selectAppFromMenuByName("Ventas");
-		try {Thread.sleep(1000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		try {Thread.sleep(1000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}*/
 		driver.quit();
 	}
 	
