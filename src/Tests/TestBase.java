@@ -1023,6 +1023,16 @@ public class TestBase {
 	}
 	
 	@DataProvider
+	public Object[][] CuentaSuspension() throws Exception {
+		
+		Object[][] testObjArray = ExcelUtils.getTableArray("Cuentas.xlsx","PerfilGestiones",1,1,1,"Suspension");
+		
+		return(testObjArray);
+		
+	}
+	
+	
+	@DataProvider
 	public Object [][] CuentaAjustes() throws Exception {
 		
 		Object[][] testObjArray = ExcelUtils.getTableArray("Cuentas.xlsx","PerfilGestiones",1,1,1,"Ajustes");
@@ -1097,5 +1107,13 @@ public class TestBase {
 
 	 return (testObjArray);
 
+	}
+	
+	@DataProvider
+	public Object[][] CambioSimCard() throws Exception{
+		
+		Object[][] testObjArray =  ExcelUtils.getTableArray("Cuentas.xlsx","PerfilGestiones",1,1,4,"Cambio SimCard");
+		
+		return (testObjArray);
 	}
 }
