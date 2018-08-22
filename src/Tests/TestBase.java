@@ -903,7 +903,7 @@ public class TestBase {
 	@DataProvider
 	public Object[][] DatosAltaLineaAgente() throws Exception{
 
-	 Object[][] testObjArray = ExcelUtils.getTableArray("Cuentas.xlsx","PreparacionDatos",1,1,13,"Alta Linea Agente");
+	 Object[][] testObjArray = ExcelUtils.getTableArray("Cuentas.xlsx","PreparacionDatos",1,1,16,"Alta Linea Agente");
 
 	 return (testObjArray);
 
@@ -1071,10 +1071,11 @@ public class TestBase {
 	    driver.get("https://10.75.39.140:8081/main.action?ssLogin=true&BMEWebToken=be935f78-f517-441c-a299-c5a1ba3f1f411b7c8915-7f90-4b1d-bee6-15837afe7b05");
 	}
 	
-	public void CambiarPerfil(String perfil) {
+	public void CambiarPerfil(String perfil, WebDriver driver) {
 		sleep(2000);
 		System.out.println("llegue aqui");
-		driver.findElement(By.id("userNav-arrow")).click();
+		driver.switchTo().defaultContent();
+		driver.findElement(By.id("userNavButton")).click();
 		sleep(6000);
 		driver.findElement(By.id("userNav-menuItems")).findElements(By.tagName("a")).get(2).click();
 		sleep(6000);
@@ -1114,5 +1115,21 @@ public class TestBase {
 
 	 return (testObjArray);
 
+	}
+	
+	@DataProvider
+	public Object[][] CambioSimCard() throws Exception{
+		
+		Object[][] testObjArray =  ExcelUtils.getTableArray("Cuentas.xlsx","PerfilGestiones",1,1,4,"Cambio SimCard");
+		
+		return (testObjArray);
+	}
+	
+	@DataProvider
+	public Object[][] DatosAltaEquipoExiste() throws Exception{
+
+	 Object[][] testObjArray = ExcelUtils.getTableArray("Cuentas.xlsx","PerfilGestiones",1,1,9,"Alta Linea Equipo Existe");
+
+	 return (testObjArray);
 	}
 }

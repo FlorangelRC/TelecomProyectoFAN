@@ -187,7 +187,7 @@ public class CustomerCare extends BasePage {
 			
 			char char0 = nombreCuenta.toUpperCase().charAt(0);
 			driver.findElement(By.xpath("//div[@class='rolodex']//span[contains(.,'" + char0 + "')]")).click();
-			sleep(1800);
+			sleep(3000);
 			
 			//waitForVisibilityOfElementLocated(By.cssSelector(".x-grid3-cell-inner.x-grid3-col-ACCOUNT_NAME"));
 			for (WebElement c : cuentas) {
@@ -343,7 +343,7 @@ public class CustomerCare extends BasePage {
 			Assert.assertFalse(gestionesEncontradas.isEmpty());
 		}
 		gestionesEncontradas.get(0).click();
-		if (gest.equals("D�bito autom�tico")) TestBase.sleep(6500);
+		if (gest.equals("D\u00e9bito autom\u00e1tico")) TestBase.sleep(6500);
 		else TestBase.sleep(3000);
 		if (gest.equals("Historial de Packs")) TestBase.sleep(1500);
 		//cambiarAFrameActivo();
@@ -1365,7 +1365,9 @@ public class CustomerCare extends BasePage {
 	}
 	
 	public void flujoInconvenientes() {
+		TestBase tb = new TestBase();
 		sleep(5000);
+		driver.switchTo().frame(tb.cambioFrame(driver, By.id("Step-TipodeAjuste_nextBtn")));
 		driver.findElement(By.id("CboConcepto")).click();
 		driver.findElement(By.xpath("//*[text() = 'CREDITO PREPAGO']")).click();
 		driver.findElement(By.id("CboItem")).click();
@@ -1380,7 +1382,14 @@ public class CustomerCare extends BasePage {
 			}
 		}
 		driver.findElement(By.id("Step-TipodeAjuste_nextBtn")).click();
-		sleep(5000);
+		sleep(7000);
+		List <WebElement> pct = driver.findElements(By.cssSelector(".slds-form-element__label.ng-binding"));
+		for (WebElement x : pct) {
+			if (x.getText().toLowerCase().contains("plan con tarjeta")) {
+				x.click();
+				break;
+			}
+		}
 		driver.findElement(By.id("Step-AssetSelection_nextBtn")).click();
 		sleep(5000);
 		List <WebElement> sa = driver.findElements(By.cssSelector(".slds-form-element__label.ng-binding.ng-scope"));
@@ -1468,7 +1477,7 @@ public class CustomerCare extends BasePage {
 	    driver.switchTo().frame(tb.cambioFrame(driver, By.cssSelector(".slds-small-size--3-of-12.slds-medium-size--3-of-12.slds-large-size--3-of-12.flyout-actions")));
 	    ((JavascriptExecutor)driver).executeScript("window.scrollTo(0,"+driver.findElement(By.cssSelector(".console-flyout.active.flyout")).getLocation().y+")");
 	    sleep(3000);
-	    driver.findElement(By.cssSelector(".console-flyout.active.flyout")).findElements(By.tagName("i")).get(1).click();
+	    driver.findElement(By.className("community-flyout-actions-card")).findElements(By.tagName("li")).get(4).click();
 	    sleep(8000);
 	    List<WebElement> wAsd = driver.findElements(By.id("refillMethod"));
 	    for (WebElement x:wAsd) {
@@ -1582,43 +1591,34 @@ public class CustomerCare extends BasePage {
 		boolean esta = false;
 		String texto = null;
 		OM pageOm=new OM(driver);
+		driver.switchTo().defaultContent();
 		usarbuscadorsalesforce(orden);
+		sleep(10000);
 		
-		pageOm.cambiarVentanaNavegador(1);
-		sleep(1000);
-		pageOm.closeAllOtherTabs();
-		sleep(1000);
-		driver.switchTo().frame(TB.cambioFrame(driver, By.className("taNotificactionPanel")));
-		WebElement wBody = driver.findElement(By.cssSelector(".slds-table.slds-table--bordered.slds-no-row-hover.slds-table--cell-buffer.slds-max-medium-table--stacked-horizontal"));
-		List<WebElement> wOrders = wBody.findElements(By.tagName("tbody"));
-		for (WebElement wAux : wOrders) {
-			List<WebElement> wItems = wAux.findElements(By.cssSelector(".slds-truncate.slds-text-align--center"));
-			if (wItems.get(0).getText().equals(orden)) {
-				wItems.get(0).click();
-				sleep(8000);
-				driver.switchTo().frame(TB.cambioFrame(driver, By.id("OrderNumber_ilecell")));
-				WebElement tabla = driver.findElement(By.id("ep")).findElements(By.tagName("table")).get(1);
-				datos = tabla.findElement(By.tagName("tr")).findElements(By.tagName("td")).get(3).getText();
-				List<WebElement> todo = tabla.findElements(By.tagName("td"));
-				for(WebElement UnT : todo) {
-					if(esta == true) {
-						texto = UnT.getText();
-						break;
-					}
-					if(UnT.getText().equalsIgnoreCase("Bill Simulation Payload")) {
-						esta = true;
-					}
+			driver.switchTo().frame(TB.cambioFrame(driver, By.id("Order_body")));
+			System.out.println("orden "+driver.findElement(By.id("Order_body")).findElement(By.cssSelector(".dataRow.even.last.first")).findElement(By.tagName("th")).getText());
+			driver.findElement(By.id("Order_body")).findElement(By.cssSelector(".dataRow.even.last.first")).findElement(By.tagName("th")).findElement(By.tagName("a")).click();
+			sleep(10000);
+			driver.switchTo().frame(TB.cambioFrame(driver, By.id("OrderNumber_ilecell")));
+			WebElement tabla = driver.findElement(By.id("ep")).findElements(By.tagName("table")).get(1);
+			datos = tabla.findElement(By.tagName("tr")).findElements(By.tagName("td")).get(3).getText();
+			List<WebElement> todo = tabla.findElements(By.tagName("td"));
+			for(WebElement UnT : todo) {
+				if(esta == true) {
+					texto = UnT.getText();
+					break;
 				}
-				texto = texto.split(",")[0].split(":")[2];
-				texto = texto.substring(1, texto.length()-1);
-				texto = texto.replace(",", "");
-				texto = texto.replace(".", "").concat("00");
-				datos = datos+"-"+texto;
-				return (datos);
-				
+				if(UnT.getText().equalsIgnoreCase("Bill Simulation Payload")) {
+					esta = true;
+				}
 			}
-		}
-		return(null);
+			texto = texto.split(",")[0].split(":")[2];
+			texto = texto.substring(1, texto.length()-1);
+			texto = texto.replace(",", "");
+			texto = texto.replace(".", "").concat("00");
+			datos = datos+"-"+texto;
+			return (datos);	
+		
 	}
 	
 	public String sIccdImsi() {

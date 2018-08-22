@@ -24,7 +24,7 @@ public class MarketingOla1_Joaquin extends TestBase {
 	public void init() {
 		driver = setConexion.setupEze();
 		Page = new Marketing(driver);
-		Page.login("SIT");
+		loginMarketing(driver);
 		cambiarListaLightningAVistaClasica(driver);
 		try {
 			Page.cajonDeAplicaciones("Consola FAN");
@@ -36,16 +36,16 @@ public class MarketingOla1_Joaquin extends TestBase {
 		
 	}
 	
+	@BeforeMethod(alwaysRun = true, groups = {"Marketing", "Ola1"})
+	public void before() {
+		Page.cerrarTodasLasPestanas();
+	}
+	
 	@AfterClass(alwaysRun = true, groups = {"Marketing", "Ola1"})
 	public void exit() {
 		Page.cerrarTodasLasPestanas();
 		//Page.cajonDeAplicaciones("Ventas");
 		driver.close();
-	}
-	
-	@BeforeMethod(alwaysRun = true, groups = {"Marketing", "Ola1"})
-	public void before() {
-		Page.cerrarTodasLasPestanas();
 	}
 	
 	@Test(groups = {"Marketing", "Ola1", "GestionDelSocioDeClubPersonal"}, dataProvider="MarketingCuentaSinServicio")

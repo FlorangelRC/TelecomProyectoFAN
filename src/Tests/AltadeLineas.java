@@ -35,21 +35,23 @@ public class AltadeLineas extends TestBase {
 	@BeforeClass(alwaysRun=true)
 	public void Init2() {
 		driver = setConexion.setupEze();
+		//driver.manage().deleteAllCookies();
 		try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}		
 		SalesBase SB = new SalesBase(driver);
-		loginOfCom(driver);  
-		 try {Thread.sleep(15000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		loginAgente(driver);  
+		CustomerCare cc = new CustomerCare(driver);
+		
+		 try {Thread.sleep(10000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 			
 			driver.findElement(By.id("tabBar")).findElement(By.tagName("a")).click();
-			sleep(12000);
-			driver.switchTo().defaultContent();
-			sleep(3000);
-			goToLeftPanel2(driver, "Inicio");
-			sleep(12000);
+			sleep(10000);
 			try{
 				SB.cerrarPestaniaGestion(driver);}
 			catch(Exception ex1) {
 			}
+			goToLeftPanel2(driver, "Inicio");
+			sleep(5000);
+			
 		}
 	
 	@BeforeMethod(alwaysRun=true)
@@ -94,7 +96,7 @@ public class AltadeLineas extends TestBase {
 			}
 		}
 		
-		sleep(14000);
+		sleep(15000);
 		driver.switchTo().frame(accountPage.getFrameForElement(driver, By.id("SearchClientDocumentNumber")));
 	}
 	
@@ -118,18 +120,17 @@ public class AltadeLineas extends TestBase {
 	
 	
 	@Test(groups={"Sales", "AltaLineaDatos"}, priority=1, dataProvider="DatosAltaLineaAgente")
-	public void TS_CRM_Alta_de_Linea_Agente(String sDni, String sNombre, String sApellido, String sSexo, String sFNac, String sEmail, String sPlan, String sProvincia, String sLocalidad, String sEntrega, String sStoreProv, String sStoreLoc, String sTipoDelivery) throws IOException {
+	public void TS_CRM_Alta_de_Linea_Agente(String sDni, String sNombre, String sApellido, String sSexo, String sFNac, String sEmail, String sPlan, String sProvincia, String sLocalidad, String sCalle, String sNumCa, String sCP, String sEntrega, String sStoreProv, String sStoreLoc, String sTipoDelivery) throws IOException {
 		CustomerCare cc = new CustomerCare(driver);
 		SalesBase sb = new SalesBase(driver);
-		sleep(5000);
 		sb.Crear_Cliente(sDni);
 		ContactSearch contact = new ContactSearch(driver);
 		contact.sex(sSexo);
 		contact.Llenar_Contacto(sNombre, sApellido, sFNac);
 		driver.findElement(By.id("EmailSelectableItems")).findElement(By.tagName("input")).sendKeys(sEmail);
 		driver.findElement(By.id("Contact_nextBtn")).click();
-		sleep(18000);
-		sb.ResolverEntrega(driver, sEntrega,sStoreProv,sStoreLoc);
+		sleep(28000);
+		//sb.ResolverEntrega(driver, sEntrega,sStoreProv,sStoreLoc);
 		sleep(7000);
 		driver.switchTo().defaultContent();
 		Accounts accountPage = new Accounts(driver);
@@ -169,7 +170,7 @@ public class AltadeLineas extends TestBase {
 		sb.elegirplan(sPlan);
 		sb.continuar();
 		sleep(22000);
-		sb.Crear_DomicilioLegal(sProvincia, sLocalidad, "falsa", "", "1000", "", "", "1549");
+		sb.Crear_DomicilioLegal(sProvincia, sLocalidad, sCalle, "", sNumCa, "", "", sCP);
 		sleep(24000);
 		WebElement sig = driver.findElement(By.id("LineAssignment_nextBtn"));
 		cc.obligarclick(sig);
@@ -184,10 +185,11 @@ public class AltadeLineas extends TestBase {
 		if (sEntrega.equalsIgnoreCase("Presencial")) {
 			String ICCID = driver.findElement(By.cssSelector(".ng-pristine.ng-untouched.ng-valid.ng-scope.ng-not-empty")).getText();
 			cc.obligarclick(driver.findElement(By.id("ICCDAssignment_nextBtn")));
-			sleep(20000);
+			sleep(30000);
 		}
-		
-		cc.obligarclick(driver.findElement(By.id("InvoicePreview_nextBtn")));
+		try {
+			cc.obligarclick(driver.findElement(By.id("InvoicePreview_nextBtn")));
+		}catch(Exception ex1) {cc.obligarclick(driver.findElement(By.id("Step_Error_Huawei_S202_nextBtn")));}
 		sleep(20000);
 		try {
 			cc.obligarclick(driver.findElement(By.id("SelectPaymentMethodsStep_nextBtn")));
@@ -195,24 +197,54 @@ public class AltadeLineas extends TestBase {
 		}catch(Exception ex1) {}
 		
 		sb.elegirvalidacion("DOC");
-		sleep(8000);
+		sleep(14000);
 		driver.findElement(By.id("FileDocumentImage")).sendKeys("C:\\Users\\florangel\\Downloads\\mapache.jpg");
 		sleep(3000);
 		cc.obligarclick(driver.findElement(By.id("DocumentMethod_nextBtn")));
-		sleep(10000);
+		sleep(35000);
 		cc.obligarclick(driver.findElement(By.id("ValidationResult_nextBtn")));
-		sleep(10000);
+		sleep(30000);
 		try {
 			driver.findElements(By.cssSelector(".slds-button.slds-button--neutral.ng-binding.ng-scope")).get(1).click();
 			sleep(10000);
 		}catch(Exception ex1) {}
+		String orden = driver.findElement(By.className("top-data")).findElement(By.className("ng-binding")).getText();
+		String NCuenta = driver.findElements(By.className("top-data")).get(1).findElements(By.className("ng-binding")).get(3).getText();
+		String Linea = driver.findElement(By.cssSelector(".top-data.ng-scope")).findElements(By.className("ng-binding")).get(1).getText();
+		System.out.println("Orden "+orden);
+		System.out.println("cuenta "+NCuenta);
+		System.out.println("Linea "+Linea);
+		orden = orden.substring(orden.length()-8);
+		NCuenta = NCuenta.substring(NCuenta.length()-16);
+		Linea = Linea.substring(Linea.length()-10);
 		cc.obligarclick(driver.findElement(By.id("OrderSumary_nextBtn")));
-		sleep(20000);
+		sleep(30000);
 		try {
 			cc.obligarclick(driver.findElement(By.id("Step_Error_Huawei_S029_nextBtn")));
+			sleep(30000);
 		}catch(Exception ex1) {
-			driver.findElement(By.id("SaleOrderMessages_nextBtn")).click();
 		}
+		driver.findElement(By.id("SaleOrderMessages_nextBtn")).click();
+		sleep(15000);
+		driver.close();
+		//driver.quit();
+		/*WebDriver driver = setConexion.setupEze();
+		try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}		
+		SalesBase SB = new SalesBase(driver);
+		loginAgente(driver);  
+		 try {Thread.sleep(10000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}	
+		driver.findElement(By.id("tabBar")).findElement(By.tagName("a")).click();*/
+		sleep(10000);
+		System.out.println(cc.obtenerMontoyTNparaAlta(driver, orden));
+		//CBS_Mattu invoSer = new CBS_Mattu();
+		//invoSer.openPage2(orden);
+		sleep(2000);
+		
+		CambiarPerfil("logistica",driver);
+		sb.completarLogistica(orden, driver);
+		CambiarPerfil("entrega",driver);
+		sb.completarEntrega(orden, driver);
+		CambiarPerfil("agente",driver);
 		
 	}
 	
@@ -228,7 +260,7 @@ public class AltadeLineas extends TestBase {
 		driver.findElement(By.id("EmailSelectableItems")).findElement(By.tagName("input")).sendKeys(sEmail);
 		driver.findElement(By.id("Contact_nextBtn")).click();
 		sleep(35000);
-		//sb.ResolverEntrega(driver, sEntrega,sStoreProv,sStoreLoc);
+		sb.ResolverEntrega(driver, sEntrega,sStoreProv,sStoreLoc);
 		sleep(7000);
 		driver.switchTo().defaultContent();
 		Accounts accountPage = new Accounts(driver);
@@ -317,11 +349,11 @@ public class AltadeLineas extends TestBase {
 			CBS_Mattu invoSer = new CBS_Mattu();
 			invoSer.openPage2(orden);
 			sleep(5000);
-			CambiarPerfil("logistica");
+			CambiarPerfil("logistica",driver);
 			sb.completarLogistica(orden, driver);
-			CambiarPerfil("entrega");
+			CambiarPerfil("entrega",driver);
 			sb.completarEntrega(orden, driver);
-			CambiarPerfil("ofcom");
+			CambiarPerfil("ofcom",driver);
 		}
 
 	}
@@ -537,25 +569,25 @@ public class AltadeLineas extends TestBase {
 		sleep(30000);
 		sb.Crear_DomicilioLegal(sProvincia, sLocalidad, "falsa", "", "1000", "", "", "1549");
 		sleep(24000);
-		//WebElement ord = driver.findElement(By.cssSelector(".slds-form-element__control")).findElement(By.tagName("div")).findElement(By.tagName("p")).findElements(By.tagName("p")).get(0);
-		//String or = ord.getText();
-		//or =or.substring(or.length()-8, or.length());
-		//System.out.println(or);
 		WebElement sig = driver.findElement(By.id("LineAssignment_nextBtn"));
 		cc.obligarclick(sig);
-		sleep(25000);
-		try{
-			driver.findElements(By.cssSelector(".slds-button.slds-button--neutral.ng-binding.ng-scope")).get(1).click();
-			sleep(15000);
-		}catch(Exception ex1){}
-		//String ICCID = driver.findElement(By.cssSelector(".ng-pristine.ng-untouched.ng-valid.ng-scope.ng-not-empty")).getText();
-		sleep(10000);
-		cc.obligarclick(driver.findElement(By.id("RemoteAction2")));
-		sleep(10000);
+		sleep(23000);	
+		WebElement error = driver.findElement(By.id("AutomaticICCIDAssingment")).findElement(By.cssSelector(".slds-button.slds-button--neutral.ng-binding.ng-scope"));
+		try {
+			cc.obligarclick(error);
+			sleep(9000);
+		}catch(Exception ex1) {}
+			String ICCID = driver.findElement(By.cssSelector(".ng-pristine.ng-untouched.ng-valid.ng-scope.ng-not-empty")).getText();
+			cc.obligarclick(driver.findElement(By.id("ICCDAssignment_nextBtn")));
+		
+		//cc.obligarclick(driver.findElement(By.id("ICCDAssignment_nextBtn")));
+		sleep(20000);
 		cc.obligarclick(driver.findElement(By.id("InvoicePreview_nextBtn")));
 		sleep(20000);
-		cc.obligarclick(driver.findElement(By.id("SelectPaymentMethodsStep_nextBtn")));
-		sleep(20000);
+		try {
+			cc.obligarclick(driver.findElement(By.id("SelectPaymentMethodsStep_nextBtn")));
+			sleep(20000);
+		}catch(Exception ex1) {}
 		sb.elegirvalidacion("DOC");
 		sleep(8000);
 		driver.findElement(By.id("FileDocumentImage")).sendKeys("C:\\Users\\Sofia Chardin\\Desktop\\DNI.jpg");
@@ -566,21 +598,25 @@ public class AltadeLineas extends TestBase {
 		sleep(10000);
 		try {
 			driver.findElements(By.cssSelector(".slds-button.slds-button--neutral.ng-binding.ng-scope")).get(1).click();
-			sleep(15000);
+			sleep(10000);
 		}catch(Exception ex1) {}
-		cc.obligarclick(driver.findElement(By.id("ICCDAssignment_nextBtn")));
-		sleep(15000);
+		String orden = driver.findElement(By.className("top-data")).findElement(By.className("ng-binding")).getText();
+		String NCuenta = driver.findElements(By.className("top-data")).get(1).findElements(By.className("ng-binding")).get(2).getText();
+		String Linea = driver.findElement(By.cssSelector(".top-data.ng-scope")).findElements(By.className("ng-binding")).get(1).getText();
+		orden = orden.substring(orden.length()-8);
+		NCuenta = NCuenta.substring(NCuenta.length()-16);
+		Linea = Linea.substring(Linea.length()-10);
 		cc.obligarclick(driver.findElement(By.id("OrderSumary_nextBtn")));
 		sleep(20000);
 		try {
 			cc.obligarclick(driver.findElement(By.id("Step_Error_Huawei_S029_nextBtn")));
 		}catch(Exception ex1) {
 			driver.findElement(By.id("SaleOrderMessages_nextBtn")).click();
-		}	
+		}
 	}
 	
-	@Test(groups={"Sales", "AltaLineaDatos"}, priority=1, dataProvider="PerfilCuentaSeiscientos")
-	public void TS125214_CRM_Movil_PRE_Alta_Linea_con_Equipo_Cliente_existente_Presencial_OFCOM(String sDni, String sNombre, String sCuenta, String sLinea) throws IOException {
+	@Test(groups={"Sales", "AltaLineaDatos"}, priority=1, dataProvider="DatosAltaEquipoExiste")
+	public void TS125214_CRM_Movil_PRE_Alta_Linea_con_Equipo_Cliente_existente_Presencial_OFCOM(String sDni, String sNombre, String sApellido, String sSexo, String sFNac, String sEmail, String sPlan, String sProvincia, String sLocalidad) throws IOException {
 		CustomerCare cc = new CustomerCare(driver);
 		SalesBase sb = new SalesBase(driver);
 		sleep(5000);
@@ -594,7 +630,7 @@ public class AltadeLineas extends TestBase {
 			}
 		}
 		sleep(25000);
-		sb.elegirplan("Plan Prepago Nacional");
+		sb.elegirplan(sPlan);
 		sleep(12000);
 		driver.findElement(By.cssSelector(".slds-input.ng-valid.ng-not-empty.ng-dirty.ng-valid-parse.ng-touched")).clear();
 		sleep(3000);
@@ -608,38 +644,125 @@ public class AltadeLineas extends TestBase {
 		sleep(5000);	
 		sb.continuar();
 		sleep(24000);
-		WebElement ord = driver.findElement(By.cssSelector(".slds-form-element__control")).findElement(By.tagName("p")).findElements(By.tagName("p")).get(0);
-		String or = ord.getText();
-		or =or.substring(or.length()-8, or.length());
-		System.out.println(or);
+		sb.Crear_DomicilioLegal(sProvincia, sLocalidad, "falsa", "", "1000", "", "", "1549");
+		sleep(24000);
 		WebElement sig = driver.findElement(By.id("LineAssignment_nextBtn"));
 		cc.obligarclick(sig);
-		sleep(20000);
+		sleep(23000);
 		cc.obligarclick(driver.findElement(By.id("InvoicePreview_nextBtn")));
 		sleep(20000);
 		try {
 			cc.obligarclick(driver.findElement(By.id("SelectPaymentMethodsStep_nextBtn")));
 			sleep(20000);
 		}catch(Exception ex1) {}
-		//sb.elegirvalidacion("DOC");
+		sb.elegirvalidacion("DOC");
 		sleep(8000);
-		driver.findElement(By.id("MethodSelection_nextBtn")).click();
-		//driver.findElement(By.id("FileDocumentImage")).sendKeys("C:\\Users\\Sofia Chardin\\Desktop\\DNI.jpg");
+		driver.findElement(By.id("FileDocumentImage")).sendKeys("C:\\Users\\Sofia Chardin\\Desktop\\DNI.jpg");
 		sleep(3000);
 		cc.obligarclick(driver.findElement(By.id("DocumentMethod_nextBtn")));
 		sleep(10000);
 		cc.obligarclick(driver.findElement(By.id("ValidationResult_nextBtn")));
-		sleep(15000);
+		sleep(10000);
 		try {
 			driver.findElements(By.cssSelector(".slds-button.slds-button--neutral.ng-binding.ng-scope")).get(1).click();
 			sleep(10000);
 		}catch(Exception ex1) {}
+		String orden = driver.findElement(By.className("top-data")).findElement(By.className("ng-binding")).getText();
+		String NCuenta = driver.findElements(By.className("top-data")).get(1).findElements(By.className("ng-binding")).get(2).getText();
+		String Linea = driver.findElement(By.cssSelector(".top-data.ng-scope")).findElements(By.className("ng-binding")).get(1).getText();
+		orden = orden.substring(orden.length()-8);
+		NCuenta = NCuenta.substring(NCuenta.length()-16);
+		Linea = Linea.substring(Linea.length()-10);
+		//00072466 9900000724810001
 		cc.obligarclick(driver.findElement(By.id("OrderSumary_nextBtn")));
 		sleep(20000);
 		try {
 			cc.obligarclick(driver.findElement(By.id("Step_Error_Huawei_S029_nextBtn")));
 		}catch(Exception ex1) {
 			driver.findElement(By.id("SaleOrderMessages_nextBtn")).click();
+			sleep(15000);
+			CBS_Mattu invoSer = new CBS_Mattu();
+			invoSer.openPage2(orden);
+			sleep(5000);
+			CambiarPerfil("logistica");
+			sb.completarLogistica(orden, driver);
+			CambiarPerfil("entrega");
+			sb.completarEntrega(orden, driver);
+			CambiarPerfil("ofcom");
+		}
+
+	}
+	
+	@Test(groups={"Sales", "AltaLineaDatos"}, priority=1, dataProvider="DatosAltaEquipoExiste")
+	public void TS_CRM_Movil_Equipo_Cliente_existente_Presencial_OFCOM(String sDni, String sNombre, String sApellido, String sSexo, String sFNac, String sEmail, String sPlan, String sProvincia, String sLocalidad) throws IOException {
+		CustomerCare cc = new CustomerCare(driver);
+		SalesBase sb = new SalesBase(driver);
+		sleep(5000);
+		sb.BuscarCuenta("DNI", sDni);
+		sleep(5000);
+		List<WebElement> btns = driver.findElements(By.cssSelector(".slds-button.slds-button.slds-button--icon"));
+		for(WebElement e: btns){
+			if(e.getText().toLowerCase().equals("catalogo")){ 
+				e.click();
+				break;
+			}
+		}
+		sleep(25000);
+		sb.elegirplan("Galaxy S8 - Negro");
+		sleep(10000);
+		List<WebElement> agregar = driver.findElements(By.cssSelector(".slds-button.slds-button--neutral.add-button")); 
+			for(WebElement a : agregar){
+				a.getText().equals("Agregar");
+				a.click();
+			}
+		sleep(5000);	
+		sb.continuar();
+		sleep(24000);
+		sb.Crear_DomicilioLegal(sProvincia, sLocalidad, "falsa", "", "1000", "", "", "1549");
+		sleep(24000);
+		WebElement sig = driver.findElement(By.id("LineAssignment_nextBtn"));
+		cc.obligarclick(sig);
+		sleep(23000);
+		cc.obligarclick(driver.findElement(By.id("InvoicePreview_nextBtn")));
+		sleep(20000);
+		try {
+			cc.obligarclick(driver.findElement(By.id("SelectPaymentMethodsStep_nextBtn")));
+			sleep(20000);
+		}catch(Exception ex1) {}
+		sb.elegirvalidacion("DOC");
+		sleep(8000);
+		driver.findElement(By.id("FileDocumentImage")).sendKeys("C:\\Users\\Sofia Chardin\\Desktop\\DNI.jpg");
+		sleep(3000);
+		cc.obligarclick(driver.findElement(By.id("DocumentMethod_nextBtn")));
+		sleep(10000);
+		cc.obligarclick(driver.findElement(By.id("ValidationResult_nextBtn")));
+		sleep(10000);
+		try {
+			driver.findElements(By.cssSelector(".slds-button.slds-button--neutral.ng-binding.ng-scope")).get(1).click();
+			sleep(10000);
+		}catch(Exception ex1) {}
+		String orden = driver.findElement(By.className("top-data")).findElement(By.className("ng-binding")).getText();
+		String NCuenta = driver.findElements(By.className("top-data")).get(1).findElements(By.className("ng-binding")).get(2).getText();
+		String Linea = driver.findElement(By.cssSelector(".top-data.ng-scope")).findElements(By.className("ng-binding")).get(1).getText();
+		orden = orden.substring(orden.length()-8);
+		NCuenta = NCuenta.substring(NCuenta.length()-16);
+		Linea = Linea.substring(Linea.length()-10);
+		//00072466 9900000724810001
+		cc.obligarclick(driver.findElement(By.id("OrderSumary_nextBtn")));
+		sleep(20000);
+		try {
+			cc.obligarclick(driver.findElement(By.id("Step_Error_Huawei_S029_nextBtn")));
+		}catch(Exception ex1) {
+			driver.findElement(By.id("SaleOrderMessages_nextBtn")).click();
+			sleep(15000);
+			CBS_Mattu invoSer = new CBS_Mattu();
+			invoSer.openPage2(orden);
+			sleep(5000);
+			CambiarPerfil("logistica");
+			sb.completarLogistica(orden, driver);
+			CambiarPerfil("entrega");
+			sb.completarEntrega(orden, driver);
+			CambiarPerfil("ofcom");
 		}
 	}
 }
