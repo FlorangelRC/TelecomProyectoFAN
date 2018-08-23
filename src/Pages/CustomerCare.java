@@ -1661,4 +1661,12 @@ public class CustomerCare extends BasePage {
 		}
 		return(null);
 	}
+	
+	public boolean verificarOrden(String sOrder) {
+		boolean bAssert = true;
+		if (sOrder.contains("No se pudo realizar")) {
+			bAssert = false;
+		}
+		return bAssert;
+	}
 }

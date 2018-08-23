@@ -499,6 +499,7 @@ public class GestionesPerfilOficina extends TestBase {
 		sb.BuscarCuenta("DNI", "16754923");
 		driver.findElement(By.cssSelector(".slds-tree__item.ng-scope")).click();
 		sleep(15000);
+		cc.seleccionarCardPornumeroLinea("3574409479", driver);
 		cc.irAGestion("inconvenientes");
 		sleep(10000);
 		driver.switchTo().frame(cambioFrame(driver, By.id("Step-TipodeAjuste_nextBtn")));
@@ -685,6 +686,7 @@ public class GestionesPerfilOficina extends TestBase {
 		Assert.assertTrue(gest);
 		String orden = cc.obtenerOrden(driver, "Inconvenientes con cargos tasados y facturados");
 		sOrders.add("Inconvenientes con cargos tasados y facturados, numero de orden: " + orden + " de cuenta con DNI: " + "16754923");
+		Assert.assertTrue(cc.verificarOrden(orden));
 	}
 	
 	@Test (groups = {"GestionesPerfilOficina", "Ajustes"})
@@ -727,6 +729,7 @@ public class GestionesPerfilOficina extends TestBase {
 		Assert.assertTrue(gest);
 		String orden = cc.obtenerOrden(driver, "Inconvenientes con cargos tasados y facturados");
 		sOrders.add("Inconvenientes con cargos tasados y facturados, numero de orden: " + orden + " de cuenta con DNI: " + "16754923");
+		Assert.assertTrue(cc.verificarOrden(orden));
 	}
 	
 	@Test (groups = {"GestionesPerfilOficina", "Ajustes"})
@@ -769,6 +772,7 @@ public class GestionesPerfilOficina extends TestBase {
 		Assert.assertTrue(gest);
 		String orden = cc.obtenerOrden(driver, "Inconvenientes con cargos tasados y facturados");
 		sOrders.add("Inconvenientes con cargos tasados y facturados, numero de orden: " + orden + " de cuenta con DNI: " + "16754923");
+		Assert.assertTrue(cc.verificarOrden(orden));
 	}
 	
 	@Test (groups = {"GestionesPerfilOficina", "Ajustes"})
@@ -811,6 +815,7 @@ public class GestionesPerfilOficina extends TestBase {
 		Assert.assertTrue(gest);
 		String orden = cc.obtenerOrden(driver, "Inconvenientes con cargos tasados y facturados");
 		sOrders.add("Inconvenientes con cargos tasados y facturados, numero de orden: " + orden + " de cuenta con DNI: " + "16754923");
+		Assert.assertTrue(cc.verificarOrden(orden));
 	}
 	
 	@Test (groups = {"GestionesPerfilOficina", "Ajustes"})
@@ -851,6 +856,7 @@ public class GestionesPerfilOficina extends TestBase {
 		Assert.assertTrue(gest);
 		String orden = cc.obtenerOrden(driver, "Inconvenientes con cargos tasados y facturados");
 		sOrders.add("Inconvenientes con cargos tasados y facturados, numero de orden: " + orden + " de cuenta con DNI: " + "18766558");
+		Assert.assertTrue(cc.verificarOrden(orden));
 	}
 	
 	@Test (groups = {"GestionesPerfilOficina", "Ajustes"})
