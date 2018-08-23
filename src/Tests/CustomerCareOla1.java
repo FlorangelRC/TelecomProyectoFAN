@@ -867,7 +867,7 @@ public class CustomerCareOla1 extends TestBase {
 	    driver.switchTo().frame(cambioFrame(driver, By.cssSelector(".slds-small-size--3-of-12.slds-medium-size--3-of-12.slds-large-size--3-of-12.flyout-actions")));
 	    ((JavascriptExecutor)driver).executeScript("window.scrollTo(0,"+driver.findElement(By.cssSelector(".console-flyout.active.flyout")).getLocation().y+")");
 	    sleep(3000);
-	    driver.findElement(By.cssSelector(".console-flyout.active.flyout")).findElements(By.tagName("i")).get(1).click();
+	    driver.findElement(By.className("community-flyout-actions-card")).findElements(By.tagName("li")).get(4).click();
 	    sleep(8000);
 	    driver.switchTo().frame(cambioFrame(driver, By.id("RefillMethods_nextBtn")));
 	    ((JavascriptExecutor)driver).executeScript("window.scrollTo(0,"+driver.findElement(By.cssSelector(".vlc-slds-button--tertiary.ng-binding.ng-scope")).getLocation().y+")");
@@ -883,7 +883,7 @@ public class CustomerCareOla1 extends TestBase {
 	    driver.switchTo().frame(cambioFrame(driver, By.cssSelector(".slds-small-size--3-of-12.slds-medium-size--3-of-12.slds-large-size--3-of-12.flyout-actions")));
 	    ((JavascriptExecutor)driver).executeScript("window.scrollTo(0,"+driver.findElement(By.cssSelector(".console-flyout.active.flyout")).getLocation().y+")");
 	    sleep(3000);
-	    driver.findElement(By.cssSelector(".console-flyout.active.flyout")).findElements(By.tagName("i")).get(1).click();
+	    driver.findElement(By.className("community-flyout-actions-card")).findElements(By.tagName("li")).get(4).click();
 	    sleep(8000);
 	    driver.switchTo().frame(cambioFrame(driver, By.id("RefillMethods_nextBtn")));
 	    ((JavascriptExecutor)driver).executeScript("window.scrollTo(0,"+driver.findElement(By.id("RefillMethods_nextBtn")).getLocation().y+")");
@@ -1004,7 +1004,7 @@ public class CustomerCareOla1 extends TestBase {
 	
 	@Test (groups= {"CustomerCare", "ProblemasConRecargas", "Ola1"}, dataProvider = "CustomerCuentaActiva")
 	public void TS38538_Problems_with_Refills_Problemas_con_Recargas_Medio_de_recarga_Seleccion_Multiple(String cCuenta) {
-		cc.elegirCuenta("aaaaFernando Care");
+		cc.elegirCuenta(cCuenta);
 		cc.tarjetaPrepaga();
 		driver.findElement(By.id("PrepaidCardData_prevBtn")).click();
 		sleep(3000);
@@ -1082,7 +1082,7 @@ public class CustomerCareOla1 extends TestBase {
 	
 	@Test (groups= {"CustomerCare", "ProblemasConRecargas", "Ola1"}, dataProvider = "CustomerCuentaActiva")
 	public void TS68982_Problems_with_Refills_UX_Tarjeta_de_Recarga_Pre_paga_Verificacion_Visualizar_Titulo(String cCuenta) {
-		cc.elegirCuenta("aaaaFernando Care");
+		cc.elegirCuenta(cCuenta);
 		cc.tarjetaPrepaga();
 		List <WebElement> title = driver.findElements(By.className("slds-page-header__title"));
 		boolean a = false;
@@ -1174,7 +1174,7 @@ public class CustomerCareOla1 extends TestBase {
 		driver.findElement(By.id("RefillAmount")).sendKeys("150");
 		driver.findElement(By.id("ReceiptCode")).sendKeys("150");
 		driver.findElement(By.id("OnlineRefillData_nextBtn")).click();
-		sleep(5000);
+		sleep(7000);
 		buscarYClick(driver.findElements(By.cssSelector(".slds-form-element__label.ng-binding.ng-scope")), "equals", "si");		
 		driver.findElement(By.id("FileAttach")).sendKeys("C:\\Users\\Nicolas\\Desktop\\descarga.jpg");
 		driver.findElement(By.id("AttachDocuments_nextBtn")).click();
@@ -1184,7 +1184,7 @@ public class CustomerCareOla1 extends TestBase {
 		List <WebElement> msj = driver.findElements(By.className("ta-care-omniscript-done"));
 		boolean a = false;
 		for (WebElement x : msj) {
-			if (x.getText().toLowerCase().contains("recarga realizada con exito!")) {
+			if (x.getText().toLowerCase().contains("recarga realizada con \u00e9xito!")) {
 				a = true;
 			}
 		}
@@ -1207,6 +1207,7 @@ public class CustomerCareOla1 extends TestBase {
 	public void TS68984_Problems_with_Refills_UX_Tarjeta_de_Recarga_Pre_paga_Verificacion_Visualizar_Boton_Consultar(String cCuenta) {
 		cc.elegirCuenta(cCuenta);
 		cc.irAGestion("estado de tarjeta");
+		driver.switchTo().frame(cambioFrame(driver, By.cssSelector(".slds-form-element.vlc-flex.vlc-form-group.vlc-slds-remote-action--button.ng-pristine.ng-valid.ng-scope")));
 		WebElement boton = driver.findElement(By.cssSelector(".slds-form-element.vlc-flex.vlc-form-group.vlc-slds-remote-action--button.ng-pristine.ng-valid.ng-scope"));
 		Assert.assertTrue(boton.getText().equals("Consultar"));
 	}
