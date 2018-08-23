@@ -32,8 +32,7 @@ public class CustomerCare extends BasePage {
 		setupNuevaPage(driver);
         PageFactory.initElements(driver, this);
 	}
-	
-	
+		
 	//Case information
 
 	@FindBy (how = How.CSS, using = ".x-layout-collapsed.x-layout-collapsed-east.x-layout-cmini-east")
@@ -159,14 +158,12 @@ public class CustomerCare extends BasePage {
 				if (t.getText().equals(nombreCuenta)) {
 					flag = true;
 					t.click();
-					// Verificar que exista la pesta�a Servicios almenos
 				} else {
 					WebElement btn_cerrar = t.findElement(By.className("x-tab-strip-close"));
 					((JavascriptExecutor) driver).executeScript("arguments[0].click();", btn_cerrar);	
 				}
 			}
-		}
-	
+		}	
 		if (flag == false) {
 			if  (!selector.getText().equalsIgnoreCase("Cuentas")) {
 				WebElement btnSplit = selector.findElement(By.className("x-btn-split"));
@@ -175,28 +172,22 @@ public class CustomerCare extends BasePage {
 				for (WebElement op : desplegable) {
 					if (op.getText().equalsIgnoreCase("Cuentas")) op.click();
 				}
-			}
-				
+			}				
 			sleep(5000);
 			driver.switchTo().frame(marcoCuentas);
 			Select field = new Select(selectCuentas);
 			if (!field.getFirstSelectedOption().getText().equalsIgnoreCase("All")) {
 				field.selectByVisibleText("All");
-				TestBase.sleep(5000);
-			}
-			
+				sleep(5000);
+			}			
 			char char0 = nombreCuenta.toUpperCase().charAt(0);
 			driver.findElement(By.xpath("//div[@class='rolodex']//span[contains(.,'" + char0 + "')]")).click();
-			sleep(1800);
-			
-			//waitForVisibilityOfElementLocated(By.cssSelector(".x-grid3-cell-inner.x-grid3-col-ACCOUNT_NAME"));
+			sleep(3000);
 			for (WebElement c : cuentas) {
-				//MEJORAR
 				if (c.getText().equalsIgnoreCase(nombreCuenta)) {
 					(new Actions(driver)).click(c.findElement(By.tagName("a"))).build().perform();
 					c.findElement(By.tagName("a")).click();
-					//(new Actions(driver)).click(c.findElement(By.tagName("a"))).build().perform();
-					TestBase.sleep(1000);
+					sleep(1000);
 					esperarAQueCargueLaCuenta();
 					return;
 				}
@@ -206,7 +197,7 @@ public class CustomerCare extends BasePage {
 	
 	public void irACasos() {
 		driver.switchTo().defaultContent();
-		if  (!selector.getText().equalsIgnoreCase("Casos")) {
+		if (!selector.getText().equalsIgnoreCase("Casos")) {
 			WebElement btnSplit = selector.findElement(By.className("x-btn-split"));
 			Actions builder = new Actions(driver);   
 			builder.moveToElement(btnSplit, 245, 20).click().build().perform();
@@ -239,17 +230,17 @@ public class CustomerCare extends BasePage {
 	
 	private void esperarAQueCargueLaCuenta() {
 		driver.switchTo().defaultContent();
-		TestBase.sleep(4000);
+		sleep(4000);
 		cambiarAFrameActivo();
-		TestBase.sleep(2000);
+		sleep(2000);
 	}
 	
 	public void cerrarTodasLasPestanas() {
 		driver.switchTo().defaultContent();
 		if (pestanasPrimarias.size() > 0) {
 			for (WebElement t : pestanasPrimarias) {
-					WebElement btn_cerrar = t.findElement(By.className("x-tab-strip-close"));
-					((JavascriptExecutor) driver).executeScript("arguments[0].click();", btn_cerrar);	
+				WebElement btn_cerrar = t.findElement(By.className("x-tab-strip-close"));
+				((JavascriptExecutor) driver).executeScript("arguments[0].click();", btn_cerrar);
 			}
 		}
 	}
@@ -276,13 +267,13 @@ public class CustomerCare extends BasePage {
 	public void limpiarTodo() {
 		driver.switchTo().defaultContent();
 		for (WebElement t : pestanasSecundarias) {
-			if(t.getText().equals("Servicios")) t.click();
-			else {
+			if (t.getText().equals("Servicios")) {
+				t.click();
+			} else {
 				WebElement btn_cerrar = t.findElement(By.className("x-tab-strip-close"));
 				((JavascriptExecutor) driver).executeScript("arguments[0].click();", btn_cerrar);
 			}
-		}
-	
+		}	
 		intentarAbrirPanelDerecho();
 		cambiarAFrameActivo();
 		cerrarFlyout();
@@ -327,7 +318,7 @@ public class CustomerCare extends BasePage {
 				List<WebElement> elementos = linea.findElements(By.cssSelector(".slds-text-body_regular"));
 				for (WebElement e : elementos) {
 					if (e.getText().toLowerCase().contains(accion.toLowerCase())) {
-							return e;
+						return e;
 					}
 				}
 			}
@@ -343,9 +334,9 @@ public class CustomerCare extends BasePage {
 			Assert.assertFalse(gestionesEncontradas.isEmpty());
 		}
 		gestionesEncontradas.get(0).click();
-		if (gest.equals("D\u00e9bito autom\u00e1tico")) TestBase.sleep(6500);
-		else TestBase.sleep(3000);
-		if (gest.equals("Historial de Packs")) TestBase.sleep(1500);
+		if (gest.equals("D\u00e9bito autom\u00e1tico")) sleep(6500);
+		else sleep(3000);
+		if (gest.equals("Historial de Packs")) sleep(1500);
 		//cambiarAFrameActivo();
 	}
 	
@@ -358,81 +349,80 @@ public class CustomerCare extends BasePage {
 				break;
 			}
 		}
-		TestBase.sleep(4000);
+		sleep(4000);
 		cambiarAFrameActivo();
 	}
 	
 	public void irADetalleDeConsumos() {
 		obtenerAccionLineaPrepago("Detalle de Consumos").click();
-		TestBase.sleep(3000);
+		sleep(3000);
 		cambiarAFrameActivo();
 	}
 	
 	public void irAHistoriales() {
 		obtenerAccionLineaPrepago("Historiales").click();
-		TestBase.sleep(3000);
+		sleep(3000);
 		cambiarAFrameActivo();
 	}
 	
 	public void irAAhorra() {
 		obtenerAccionLineaPrepago("Ahorr\u00e1").click();
-		TestBase.sleep(3000);
+		sleep(3000);
 		cambiarAFrameActivo();
 	}
 	
 	public void irAMisServicios() {
 		obtenerAccionLineaPrepago("Mis Servicios").click();
-		TestBase.sleep(3000);
+		sleep(3000);
 		cambiarAFrameActivo();
 	}
 	
 	public void irAProblemasConRecargas() {
 		for (WebElement linea : lineasPrepago) {
 			if (!linea.getAttribute("class").contains("expired")) {
-					linea.findElement(By.cssSelector(".card-top")).click();
-					//linea.click();
-					TestBase.dynamicWait().until(ExpectedConditions.visibilityOf(btn_ProblemaConRecargas));
-					btn_ProblemaConRecargas.click();
-					break;
+				linea.findElement(By.cssSelector(".card-top")).click();
+				TestBase.dynamicWait().until(ExpectedConditions.visibilityOf(btn_ProblemaConRecargas));
+				btn_ProblemaConRecargas.click();
+				break;
 			}
 		}
-		TestBase.sleep(4000);
+		sleep(4000);
 		//cambiarAFrameActivo();
 	}
 	
 	public void irAHistorialDeRecargas() {
 		verDetallesHistorial("Historial de Recargas");
-		TestBase.sleep(3000);
+		sleep(3000);
 		cambiarAFrameActivo();
 	}
 	
 	public void irAHistorialDePacks() {
 		verDetallesHistorial("Historial de Packs");
-		TestBase.sleep(3000);
+		sleep(3000);
 		cambiarAFrameActivo();		
 	}
 	
 	public void irAHistorialDeRecargasSOS() {
 		verDetallesHistorial("Historial de Recargas S.O.S");
-		TestBase.sleep(3000);
+		sleep(3000);
 		cambiarAFrameActivo();		
 	}
 	
 	public void irAHistorialDeAjustes() {
 		verDetallesHistorial("Historial de Ajustes");
-		TestBase.sleep(3000);
+		sleep(3000);
 		cambiarAFrameActivo();	
 	}
 	
 	public void irAResumenDeCuenta() {
 		driver.findElement(By.xpath("//ul[@class='actions']//a[contains(.,'Resumen de Cuenta')]")).click();
-		TestBase.sleep(4000);
+		sleep(7000);
 		cambiarAFrameActivo();
 	}
 	
 	public WebElement obtenerPestanaActiva() {
 		driver.switchTo().defaultContent();
-		TestBase.sleep(3000);
+		sleep(3000);
 		return driver.findElement(By.cssSelector(".sd_secondary_tabstrip .x-tab-strip-closable.x-tab-strip-active"));
 	}
 	
@@ -460,7 +450,7 @@ public class CustomerCare extends BasePage {
 			panelDerechoColapsado.click();
 		} catch (NoSuchElementException|ElementNotVisibleException e) {	}
 		finally {
-			TestBase.sleep(2000);
+			sleep(2000);
 			driver.manage().timeouts().implicitlyWait(3, TimeUnit.SECONDS);
 		}
 	}
@@ -469,12 +459,11 @@ public class CustomerCare extends BasePage {
 		for (WebElement l : lineasPrepago) {
 			if (l.getAttribute("class").contains("selected")) {
 				l.click();
-				TestBase.sleep(1000);
+				sleep(1000);
 			}
 		}
 	}
-	
-	
+		
 	public void goToLeftPanel(WebDriver driver, String selection) {
 		WebElement element = driver.findElement(By.className("x-btn-split"));	
 		Actions builder = new Actions(driver);   
@@ -495,15 +484,14 @@ public class CustomerCare extends BasePage {
 			}	
 		}
 	}
-	
-	
+		
 	public void obligarclick(WebElement element) {	
 		((JavascriptExecutor)driver).executeScript("window.scrollTo(0,"+element.getLocation().y+")");
 	    element.click();
 	}
 		
 	public void elegircaso() {
-		try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		sleep(5000);
 		goToLeftPanel(driver, "Casos");
 		driver.switchTo().defaultContent();
 		WebElement frame0 = driver.findElement(By.tagName("iframe"));
@@ -513,50 +501,50 @@ public class CustomerCare extends BasePage {
 		driver.switchTo().frame(cambioFrameByID.getFrameForElement(driver, By.name("fcf")));
 		driver.findElement(By.id("00Bc0000001NxcT_listSelect")).click();
 		field.selectByVisibleText("Todos los casos");
-		try {Thread.sleep(10000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}	
+		sleep(10000);	
 	}
 	
 	public void elegircuenta(String cuenta) {
 		goToLeftPanel(driver, "Cuentas");
-		try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		sleep(5000);
 		driver.switchTo().defaultContent();
 		WebElement frame0 = driver.findElement(By.tagName("iframe"));
 		driver.switchTo().frame(frame0);
 		Select field = new Select(driver.findElement(By.name("fcf")));
 		field.selectByVisibleText("Todas las cuentas");		
-		try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}	
+		sleep(5000);	
 		List<WebElement> accounts2 = driver.findElements(By.xpath("//*[text() ='"+cuenta+"']"));
 		accounts2.get(0).click();
 		accounts2.get(0).click();
-		try {Thread.sleep(4000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		sleep(4000);
 		try {driver.switchTo().alert().accept();} catch (org.openqa.selenium.NoAlertPresentException e) {}
 		driver.switchTo().defaultContent();
 	}
 		
 	public void openrightpanel() {		
-		try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		sleep(5000);
 		driver.switchTo().defaultContent();
 		if(driver.findElements(By.cssSelector(".x-layout-collapsed.x-layout-collapsed-east.x-layout-cmini-east")).size() != 0) {
 			panelder.click();
 		}
 		List<WebElement> frame1 = driver.findElements(By.tagName("iframe"));
 		driver.switchTo().frame(frame1.get(3));
-		try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		sleep(5000);
 	}
 	
 	public void openleftpanel() {	
-		try {Thread.sleep(10000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		sleep(10000);
 		driver.switchTo().defaultContent();
 		if(driver.findElements(By.cssSelector(".x-layout-collapsed.x-layout-collapsed-west.x-layout-cmini-west")).size() != 0) {
 			panelizq.click();
 		}
 		List<WebElement> frame1 = driver.findElements(By.tagName("iframe"));
 		driver.switchTo().frame(frame1.get(5));
-		try {Thread.sleep(10000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		sleep(10000);
 	}
 	
 	public void closeleftpanel() {
-		try {Thread.sleep(10000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		sleep(10000);
 		driver.switchTo().defaultContent();
 		if(driver.findElements(By.cssSelector(".x-layout-mini.x-layout-mini-west.x-layout-mini-custom-logo")).size() != 0) {
 			driver.findElement(By.cssSelector(".x-layout-mini.x-layout-mini-west.x-layout-mini-custom-logo")).click();
@@ -565,7 +553,7 @@ public class CustomerCare extends BasePage {
 	}
 	
 	public void closerightpanel() {
-		try {Thread.sleep(10000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		sleep(10000);
 		driver.switchTo().defaultContent();
 		if(driver.findElements(By.cssSelector(".x-layout-mini.x-layout-mini-east.x-layout-mini-custom-logo")).size() != 0) {
 			driver.findElement(By.cssSelector(".x-layout-mini.x-layout-mini-east.x-layout-mini-custom-logo")).click();
@@ -582,9 +570,9 @@ public class CustomerCare extends BasePage {
 	}
 		
 	public void panelizq(String panel) {
-		try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		sleep(5000);
 		List <WebElement> asd = driver.findElements(By.cssSelector(".slds-p-right--x-small.via-slds-story-cards--header-title"));	
-		try {Thread.sleep(10000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		sleep(10000);
 		switch(panel) {
 		case "todosOFF":
 			paneldatospersonaleson.click();
@@ -604,7 +592,6 @@ public class CustomerCare extends BasePage {
 	public void verificacrhideleft(String panel) {
 		List <WebElement> hides = driver.findElements(By.className("ng-hide"));
 		switch(panel) {
-		//validacionesindividuales
 		case "datospersonales":
 			Assert.assertTrue(hides.get(0).isEnabled());
 			break;
@@ -614,7 +601,6 @@ public class CustomerCare extends BasePage {
 		case "ultimasgestiones":
 			Assert.assertTrue(hides.get(0).isEnabled());
 			break;
-			////
 		case "todosOFF":
 			Assert.assertTrue(hides.get(0).isEnabled());
 			Assert.assertTrue(hides.get(1).isEnabled());
@@ -747,12 +733,11 @@ public class CustomerCare extends BasePage {
         } else {
             System.out.println("How to get here?");
         }
-
     }
 	
 	public void usarpanelcentral(String pestana) {
 		driver.switchTo().defaultContent();
-		try {Thread.sleep(10000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		sleep(10000);
 		switch(pestana){
 		case "Detalles":
 			driver.findElement(By.xpath("//*[text() ='Detalles']")).click();
@@ -772,7 +757,6 @@ public class CustomerCare extends BasePage {
 			break;
 		case "aaaaFernando Care":
 			driver.findElements(By.xpath("//*[text() ='aaaaFernando Care']")).get(1).click();
-			//driver.findElement(By.cssSelector(".x-tab-right.primaryPalette")).click();
 			break;
 		}	
 		List<WebElement> frame1 = driver.findElements(By.tagName("iframe"));
@@ -807,7 +791,7 @@ public class CustomerCare extends BasePage {
 		BasePage cambioFrameByID = new BasePage(driver);
 		driver.switchTo().frame(cambioFrameByID.getFrameForElement(driver, By.cssSelector(".slds-input.actionSearch.ng-pristine.ng-untouched.ng-valid.ng-empty")));
 		driver.findElement(By.cssSelector(".slds-input.actionSearch.ng-pristine.ng-untouched.ng-valid.ng-empty")).sendKeys(gestion);
-		try {Thread.sleep(3000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		sleep(3000);
 		List <WebElement> btns = driver.findElements(By.cssSelector(".slds-button.slds-button--neutral.slds-truncate"));
 		((JavascriptExecutor)driver).executeScript("window.scrollTo(0,"+btns.get(0).getLocation().y+")");
 		btns.get(0).click();
@@ -816,8 +800,7 @@ public class CustomerCare extends BasePage {
 		
 	public void detectarframe() {
 		driver.switchTo().defaultContent();
-		try {Thread.sleep(10000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
-		// System.out.println(asl.get(0).getText());
+		sleep(10000);
 		List<WebElement> frame1= driver.findElements(By.tagName("iframe"));
 		int i = 0;
 		String b;
@@ -836,8 +819,7 @@ public class CustomerCare extends BasePage {
 		driver.switchTo().defaultContent();
 		List<WebElement> frame1= driver.findElements(By.tagName("iframe"));
 		driver.switchTo().frame(frame1.get(4));
-		try {Thread.sleep(10000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
-		//driver.findElement(By.cssSelector("slds-form-element__control"));
+		sleep(10000);
 		List <WebElement> asl = driver.findElements(By.className("slds-form-element__control"));
 		for (WebElement x : asl) {
 			Assert.assertTrue(x.getText().toLowerCase().contains("En este formulario podr�s cambiar la fecha en la cual se te empieza a facturar cada mes"));
@@ -847,7 +829,7 @@ public class CustomerCare extends BasePage {
 	public void ValidarBtnsGestion(String gestion) {
 		openrightpanel();	
 		driver.findElement(By.cssSelector(".slds-input.actionSearch.ng-pristine.ng-untouched.ng-valid.ng-empty")).sendKeys(gestion);
-		try {Thread.sleep(10000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		sleep(10000);
 		List <WebElement> btns = driver.findElements(By.cssSelector(".slds-button.slds-button--neutral.slds-truncate"));
 		Assert.assertTrue(btns.get(0).getText().contains(gestion));
 	}
@@ -870,15 +852,12 @@ public class CustomerCare extends BasePage {
 			driver.findElement(By.xpath("//*[@id=\'topButtonRow\']/input[2]")).click();
 			break;
 		}
-			//driver.findElement(By.xpath("//*[@id=\'topButtonRow\']/input[1]"))
 	}
 		
 	public void validarlabusqueda(String busqueda) {
 		List<WebElement> frame1= driver.findElements(By.tagName("iframe"));
 		driver.switchTo().frame(frame1.get(1));
 		List<WebElement>asl = driver.findElements(By.cssSelector(".list0"));
-		//System.out.println(asl.size());
-		//System.out.println(asl.get(0).getText());
 		Assert.assertTrue(asl.get(0).getText().contains(busqueda));
 	}
 		
@@ -887,7 +866,7 @@ public class CustomerCare extends BasePage {
 	}
 	
 	public void clienteinactivo() {
-		try {Thread.sleep(10000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		sleep(10000);
 		Actions action = new Actions(driver);   
 		try {action.moveToElement(editstatus).doubleClick().perform();
 		try {
@@ -896,64 +875,70 @@ public class CustomerCare extends BasePage {
 		} catch (NoSuchElementException e) {}
 		try {
 			action.moveToElement(editstatus2).doubleClick().perform();
-			try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+			sleep(5000);
 			setSimpleDropdown(listeditstatus2, "No");
-		} catch (NoSuchElementException e) {}
-	
-		try {Thread.sleep(10000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		} catch (NoSuchElementException e) {}	
+		sleep(10000);
 	}
 	
 	public void clienteactivo() {
-		try {Thread.sleep(10000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		sleep(10000);
 		Actions action = new Actions(driver);  
 		try {
 			action.moveToElement(editstatus).doubleClick().perform();
-			try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
-		setSimpleDropdown(listeditstatus, "Active");
+			sleep(5000);
+			setSimpleDropdown(listeditstatus, "Active");
 		} catch (NoSuchElementException e) {}
 		try {
 			action.moveToElement(editstatus2).doubleClick().perform();
-			try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+			sleep(5000);
 			setSimpleDropdown(listeditstatus2, "Yes");
 		} catch (NoSuchElementException e) {}
 	}
 		
 	public void seleccionarfraude(String check) {
-		try {Thread.sleep(10000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		sleep(10000);
 		Actions action = new Actions(driver);   
 		((JavascriptExecutor)driver).executeScript("window.scrollTo(0,"+editfraude.getLocation().y+")");
 	    editfraude.click();
 		action.moveToElement(editfraude).doubleClick().perform();
 		switch(check) {
 		case "si":
-			if ( !driver.findElement(By.id("00Nc0000001iLaY")).isSelected() ){
-				driver.findElement(By.id("00Nc0000001iLaY")).click();}
-				break;
+			if (!driver.findElement(By.id("00Nc0000001iLaY")).isSelected() ){
+				driver.findElement(By.id("00Nc0000001iLaY")).click();
+			}
+			break;
 		case "no":
-			if ( driver.findElement(By.id("00Nc0000001iLaY")).isSelected() ){
-				driver.findElement(By.id("00Nc0000001iLaY")).click();}
-				break;
+			if (driver.findElement(By.id("00Nc0000001iLaY")).isSelected() ){
+				driver.findElement(By.id("00Nc0000001iLaY")).click();
+			}
+			break;
 		}
-		try {Thread.sleep(10000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		sleep(10000);
 	}
 		
 	public void cerrarultimapestana() {
-		try {Thread.sleep(10000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
-		try {driver.switchTo().alert().accept();} catch (org.openqa.selenium.NoAlertPresentException e) {}
+		sleep(10000);
+		try {
+			driver.switchTo().alert().accept();
+		} catch(org.openqa.selenium.NoAlertPresentException e) {}
 		driver.switchTo().defaultContent();
 		try {driver.findElement(By.name("cancel")).click();;} catch (NoSuchElementException e) {}
 		List<WebElement> asl = driver.findElements(By.className("x-tab-strip-close"));
 		for (WebElement e : asl) {			
-			try {((JavascriptExecutor) driver).executeScript("arguments[0].click();", e);} catch (org.openqa.selenium.StaleElementReferenceException b) {}
+			try {
+				((JavascriptExecutor) driver).executeScript("arguments[0].click();", e);
+			} catch(org.openqa.selenium.StaleElementReferenceException b) {}
 		}
 		List<WebElement> mainTabs1 = driver.findElements(By.className("x-tab-strip-close"));
 		((JavascriptExecutor) driver).executeScript("arguments[0].click();", mainTabs1.get(1));
-		try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		sleep(5000);
 	}
 		
 	public void validarerrorpaso0() {
 		driver.switchTo().defaultContent();
-		try {Thread.sleep(15000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		sleep(15000);
+		sleep(15000);
 		BasePage cambioFrameByID=new BasePage();
 		driver.switchTo().frame(cambioFrameByID.getFrameForElement(driver, By.cssSelector(".message.description.ng-binding.ng-scope")));
 		WebElement element = driver.findElement(By.cssSelector(".message.description.ng-binding.ng-scope"));
@@ -963,14 +948,14 @@ public class CustomerCare extends BasePage {
 		
 	public void validarerrorpaso1(String valid) {
 		driver.switchTo().defaultContent();
-		try {Thread.sleep(10000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		sleep(10000);
 		List<WebElement> frame1= driver.findElements(By.tagName("iframe"));
 		driver.switchTo().frame(frame1.get(3));
-		try {Thread.sleep(10000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		sleep(10000);
 		obligarclick(driver.findElement(By.id("Validaciones_nextBtn")));
-		try {Thread.sleep(10000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		sleep(10000);
 		obligarclick(driver.findElement(By.id("OrderReview_nextBtn")));
-		try {Thread.sleep(10000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		sleep(10000);
 		switch (valid) {
 		case "cuenta billing fraude no aparece":
 			List<WebElement> asl = driver.findElements(By.id("tree0-node1__label"));
@@ -983,23 +968,22 @@ public class CustomerCare extends BasePage {
 			
 	public void serviciocambiadecuenta(String servicio, String cuenta) {
 		driver.switchTo().defaultContent();
-		try {Thread.sleep(10000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		sleep(10000);
 		List<WebElement> frame1= driver.findElements(By.tagName("iframe"));
 		driver.switchTo().frame(frame1.get(3));
-		try {Thread.sleep(10000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		sleep(10000);
 		obligarclick(driver.findElement(By.id("Validaciones_nextBtn")));
-		try {Thread.sleep(10000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		sleep(10000);
 		obligarclick(driver.findElement(By.id("OrderReview_nextBtn")));
-		try {Thread.sleep(10000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		sleep(10000);
 		List<WebElement> service = driver.findElements(By.cssSelector(".slds-checkbox__label"));
-		//System.out.println("Tama�o: "+service.size());
 		for(int i=0; i<service.size() ; i++){
 			if(service.get(i).getText().equals(servicio)) {
 				service.get(i).click();
 			}
 		}
 		obligarclick(driver.findElement(By.id("BillingAccountFrom_nextBtn")));
-		try {Thread.sleep(10000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		sleep(10000);
 		List<WebElement> cuentas = driver.findElements(By.cssSelector(".slds-radio"));
 		List<WebElement> radiobtn = driver.findElements(By.xpath("//input[@name='options' and @type='radio']"));
 		int a;
@@ -1016,48 +1000,50 @@ public class CustomerCare extends BasePage {
 		
 	public void crearsugerencia(String categoria, String subcategoria, String gestion) {
 		driver.switchTo().defaultContent();
-		try {Thread.sleep(10000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		sleep(10000);
 		List<WebElement> frame1= driver.findElements(By.tagName("iframe"));
 		driver.switchTo().frame(frame1.get(3));
 		setSimpleDropdown(driver.findElement(By.id("Category")), categoria);
 		setSimpleDropdown(driver.findElement(By.id("Subcategory")), subcategoria);
 		driver.findElement(By.id("Comment")).sendKeys("Esto es un comentario");
-		try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}		
+		sleep(5000);		
 		switch(gestion) {
 		case "crear":
 			obligarclick(driver.findElement(By.id("ManagementType_nextBtn")));
 			break;
 		case "cancel":			
 			driver.findElement(By.cssSelector(".vlc-slds-button--tertiary.ng-binding.ng-scope")).click();
-			try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+			sleep(5000);
 			driver.findElement(By.id("alert-ok-button")).click();
 			break;
 		}				
 	}
 		
 	public void clickContinueError() {
-		try {Thread.sleep(20000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		sleep(20000);
 		BasePage cambioFrameByID=new BasePage();
 		driver.switchTo().frame(cambioFrameByID.getFrameForElement(driver, By.cssSelector(".slds-button.slds-button--neutral.ng-binding.ng-scope")));
-	    try {Thread.sleep(3000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+	    sleep(3000);
 	    List <WebElement> emergente= driver.findElements(By.cssSelector(".slds-button.slds-button--neutral.ng-binding.ng-scope"));
 	    emergente.get(1).click();
-	    try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+	    sleep(5000);
 	 }
 		
 	public void validarCheckBox() {
 		WebElement opb= driver.findElement(By.id("TaxConditionDNIOnly"));
-		boolean a=false;
-		if(opb.isDisplayed())
-			a=true;
+		boolean a = false;
+		if(opb.isDisplayed()) {
+			a = true;
+		}
 		assertTrue(a);
 	}
 	
 	public void validarDniACuit() {
 		WebElement dni= driver.findElement(By.cssSelector(".slds-form-element__label.ng-binding.ng-scope"));
-		boolean a=false;
-		if(dni.isDisplayed())
-			a=true;
+		boolean a = false;
+		if(dni.isDisplayed()) {
+			a = true;
+		}
 		assertTrue(a);
 	}
 		
@@ -1066,8 +1052,8 @@ public class CustomerCare extends BasePage {
 		boolean a = false;
 		if (error.isDisplayed()) {
 			a = true;
-			assertTrue(a);
-		}	
+		}
+		assertTrue(a);
 	}
 		
 	public boolean validarDatos() {
@@ -1082,13 +1068,13 @@ public class CustomerCare extends BasePage {
 	public void goToLeftPanel2(WebDriver driver, String selection) {
 		try {
 			driver.findElement(By.className("x-btn-split"));
-		}catch(NoSuchElementException noSuchElemExcept) {
+		} catch(NoSuchElementException noSuchElemExcept) {
 			List<WebElement> frames = driver.findElements(By.tagName("iframe"));
 			for (WebElement frame : frames) {
 				try {
 					driver.findElement(By.className("x-btn-split"));
 					break;
-				}catch(NoSuchElementException noSuchElemExceptInside) {
+				} catch(NoSuchElementException noSuchElemExceptInside) {
 					driver.switchTo().defaultContent();
 					driver.switchTo().frame(frame);
 				}
@@ -1101,7 +1087,6 @@ public class CustomerCare extends BasePage {
 		for(WebElement option : options) {
 			if(option.findElement(By.tagName("span")).getText().toLowerCase().equals(selection.toLowerCase())) {
 				option.findElement(By.tagName("a")).click();
-				//System.out.println("Seleccionado"); //13/09/2017 working.
 				break;
 			}
 		}		
@@ -1127,9 +1112,8 @@ public class CustomerCare extends BasePage {
 	}
 	
 	public void ciclodefacturacionpaso2() {
-		 try {Thread.sleep(15000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		 sleep(15000);
 		 driver.findElement(By.className("slds-checkbox--faux")).click();
-		 //Assert.assertTrue(driver.findElement(By.className("slds-checkbox--faux")).isSelected());
 		 obligarclick(driver.findElement(By.id("BillingCycle_nextBtn")));
 	}
 	
@@ -1151,23 +1135,22 @@ public class CustomerCare extends BasePage {
 	}
 		
 	public void editarcuenta(String cuenta, String fraude,String Status) {
-		try {Thread.sleep(10000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		sleep(10000);
 		try {} catch (org.openqa.selenium.UnhandledAlertException e){driver.switchTo().alert().accept();}
 		WebElement frame0 = driver.findElement(By.tagName("iframe"));
 		goToLeftPanel(driver, "Cuentas");
 		driver.switchTo().frame(frame0);
-
 		Select field = new Select(driver.findElement(By.name("fcf")));
 		field.selectByVisibleText("Todas las cuentas");		
-		try {Thread.sleep(10000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}	
+		sleep(10000);	
 		List<WebElement> accounts2 = driver.findElements(By.xpath("//*[text() ='"+cuenta+"']"));
-		try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}	
+		sleep(5000);	
 		accounts2.get(0).click();
 		accounts2.get(0).click();
-		try {Thread.sleep(10000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		sleep(10000);
 		driver.switchTo().defaultContent();
 		usarpanelcentral("Detalles");
-		try {Thread.sleep(10000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		sleep(10000);
 		switch(Status) {
 		case "active":
 			clienteactivo();
@@ -1184,14 +1167,14 @@ public class CustomerCare extends BasePage {
 		}
 		seleccionarfraude(fraude);
 		obligarclick(editsave);
-		try {Thread.sleep(10000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		sleep(10000);
 		cerrarultimapestana();
 	}
 
 	public void clienteactivo2() {
-		try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		sleep(5000);
 		obligarclick(driver.findElement(By.xpath("//*[@id='lookup003c000000owQym00Nc0000001pSW3']")));	
-		try {Thread.sleep(10000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}			
+		sleep(10000);			
 		BasePage cambioFrameByID=new BasePage();
 		driver.switchTo().frame(cambioFrameByID.getFrameForElement(driver, By.id("00Nc0000001pSdD_ileinner")));
 		Actions action = new Actions(driver);   
@@ -1202,39 +1185,39 @@ public class CustomerCare extends BasePage {
 			driver.findElement(By.id("00Nc0000001pSdD")).click();
 		}
 		action.moveToElement(driver.findElement(By.id("00Nc0000001pSdR_ileinner"))).doubleClick().perform();
-		try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		sleep(5000);
 		setSimpleDropdown(driver.findElement(By.id("00Nc0000001pSdR")), "Activo");
 		obligarclick(editsave);
 		usarpanelcentral("Detalles");			
 	}
 		
 	public void clienteinactivo2() {
-		try {Thread.sleep(10000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		sleep(10000);
 		obligarclick(driver.findElement(By.xpath("//*[@id='lookup003c000000owQym00Nc0000001pSW3']")));	
-		try {Thread.sleep(20000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		sleep(20000);
 		BasePage cambioFrameByID=new BasePage();
 		driver.switchTo().frame(cambioFrameByID.getFrameForElement(driver, By.id("00Nc0000001pSdD_ileinner")));
 		obligarclick(driver.findElement(By.id("00Nc0000001pSdD_ileinner")));
 		Actions action = new Actions(driver);   
 		action.moveToElement(driver.findElement(By.id("00Nc0000001pSdR_ileinner"))).doubleClick().perform();
-		try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		sleep(5000);
 		setSimpleDropdown(driver.findElement(By.id("00Nc0000001pSdR")), "Inactivo");
-		try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		sleep(5000);
 		action.moveToElement(driver.findElement(By.id("00Nc0000001pSdD_ileinner"))).doubleClick().perform();
-		try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		sleep(5000);
 		if (driver.findElement(By.id("00Nc0000001pSdD")).isSelected()){
 			driver.findElement(By.id("00Nc0000001pSdD")).click();
 		}
-		try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		sleep(5000);
 		obligarclick(editsave);
 		usarpanelcentral("Detalles");
 	}
 	
 	public boolean validarpaso0clienteinactivo(){
 		boolean a = false;
-		try {Thread.sleep(10000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		sleep(10000);
 		BasePage cambioFrameByID = new BasePage();
-		try {Thread.sleep(10000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		sleep(10000);
 		driver.switchTo().frame(cambioFrameByID.getFrameForElement(driver, By.cssSelector(".message.description.ng-binding.ng-scope")));
 		WebElement msg = driver.findElement(By.cssSelector(".message.description.ng-binding.ng-scope"));
 		if (msg.getText().contains("su cuenta est� en estado inactiva")) {
@@ -1253,7 +1236,7 @@ public class CustomerCare extends BasePage {
 		
 	public void validarcorrectopaso0() {
 		driver.switchTo().defaultContent();
-		try {Thread.sleep(15000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		sleep(15000);
 		BasePage cambioFrameByID = new BasePage();
 		driver.switchTo().frame(cambioFrameByID.getFrameForElement(driver, By.className("slds-form-element__control")));
 		List<WebElement> asl = driver.findElements(By.className("slds-form-element__control"));
@@ -1267,7 +1250,7 @@ public class CustomerCare extends BasePage {
 		String b = direccion;
 		driver.switchTo().defaultContent();
 		usarpanelcentral("Cambio de ciclo");
-		try {Thread.sleep(15000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		sleep(15000);
 		BasePage cambioFrameByID = new BasePage();
 		driver.switchTo().frame(cambioFrameByID.getFrameForElement(driver,By.cssSelector(".slds-form-element__label.slds-truncate.ng-binding")));
 		List<WebElement> asl = driver.findElements(By.cssSelector(".slds-form-element__label.slds-truncate.ng-binding"));
@@ -1294,16 +1277,15 @@ public class CustomerCare extends BasePage {
 
 	public void validarpicklistmandatorio() {
 		BasePage cambioFrameByID = new BasePage();
-		try {Thread.sleep(10000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		sleep(10000);
 		driver.switchTo().frame(cambioFrameByID.getFrameForElement(driver, By.id("BillingCycleSelect")));
 		obligarclick(driver.findElement(By.id("NewBillingCycle_nextBtn")));
 		System.out.println(driver.findElement(By.xpath("//*[@id=\'alert-container\']/div[2]/p")).getText());
 		Assert.assertTrue(driver.findElement(By.xpath("//*[@id=\'alert-container\']/div[2]/p")).getText().equals("Error: Por favor complete todos los campos requeridos"));
 	}
-		 
-	
+		 	
 	public void paso0CC() {
-		try {Thread.sleep(30000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		sleep(30000);
 		BasePage cambioFrameByID = new BasePage();
 		driver.switchTo().frame(cambioFrameByID.getFrameForElement(driver, By.className("vlc-control-wrapper")));
 		List<WebElement> element = driver.findElements(By.cssSelector(".slds-form-element__label.ng-binding.ng-scope"));
@@ -1314,7 +1296,7 @@ public class CustomerCare extends BasePage {
 			}
 		}
 		driver.findElement(By.id("OrderReview_nextBtn")).click();
-		try {Thread.sleep(10000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		sleep(10000);
 	}
 	
 	public void irAFacturacion() {
@@ -1322,7 +1304,7 @@ public class CustomerCare extends BasePage {
 		driver.switchTo().frame(cambioFrameByID.getFrameForElement(driver, By.cssSelector(".slds-grid.slds-p-around--small.slds-wrap.via-slds-story-cards--header.slds-theme--shade.profile-tags-header")));
 		List <WebElement> fact = driver.findElements(By.cssSelector(".slds-grid.slds-p-around--small.slds-wrap.via-slds-story-cards--header.slds-theme--shade.profile-tags-header"));
 		fact.get(0).click();
-		try {Thread.sleep(6000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		sleep(6000);
 		cambiarAFrameActivo();
 	}
 	
@@ -1330,7 +1312,7 @@ public class CustomerCare extends BasePage {
 		BasePage cambioFrameByID = new BasePage();
 		driver.switchTo().frame(cambioFrameByID.getFrameForElement(driver, By.className("piped")));
 		driver.findElement(By.name("newCase")).click();
-		try {Thread.sleep(15000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		sleep(15000);
 		driver.switchTo().frame(cambioFrameByID.getFrameForElement(driver, By.id("bottomButtonRow")));
 		List <WebElement> dc = driver.findElements(By.name("save"));
 		for (WebElement x : dc) {
@@ -1339,7 +1321,7 @@ public class CustomerCare extends BasePage {
 				break;
 			}
 		}
-		try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		sleep(5000);
 		driver.switchTo().frame(cambioFrameByID.getFrameForElement(driver, By.xpath("//*[@id=\"cas3\"]")));
 		driver.findElement(By.xpath("//*[@id=\"cas3\"]")).sendKeys(contacto);
 		driver.findElement(By.xpath("//*[@id=\"cas7\"]")).click();
@@ -1352,7 +1334,7 @@ public class CustomerCare extends BasePage {
 				break;
 			}
 		}
-		try {Thread.sleep(10000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		sleep(10000);
 	}
 	
 	public WebElement botonSiguiente() {
@@ -1365,7 +1347,9 @@ public class CustomerCare extends BasePage {
 	}
 	
 	public void flujoInconvenientes() {
+		TestBase tb = new TestBase();
 		sleep(5000);
+		driver.switchTo().frame(tb.cambioFrame(driver, By.id("Step-TipodeAjuste_nextBtn")));
 		driver.findElement(By.id("CboConcepto")).click();
 		driver.findElement(By.xpath("//*[text() = 'CREDITO PREPAGO']")).click();
 		driver.findElement(By.id("CboItem")).click();
@@ -1380,7 +1364,14 @@ public class CustomerCare extends BasePage {
 			}
 		}
 		driver.findElement(By.id("Step-TipodeAjuste_nextBtn")).click();
-		sleep(5000);
+		sleep(7000);
+		List <WebElement> pct = driver.findElements(By.cssSelector(".slds-form-element__label.ng-binding"));
+		for (WebElement x : pct) {
+			if (x.getText().toLowerCase().contains("plan con tarjeta")) {
+				x.click();
+				break;
+			}
+		}
 		driver.findElement(By.id("Step-AssetSelection_nextBtn")).click();
 		sleep(5000);
 		List <WebElement> sa = driver.findElements(By.cssSelector(".slds-form-element__label.ng-binding.ng-scope"));
@@ -1427,26 +1418,20 @@ public class CustomerCare extends BasePage {
 			int i = 0;
 			while (i < 3) {
 				try {
-					driver.switchTo()
-							.frame(cambioFrameByID.getFrameForElement(driver, By.id("searchResultsWarningMessageBox")));
+					driver.switchTo().frame(cambioFrameByID.getFrameForElement(driver, By.id("searchResultsWarningMessageBox")));
 					if (driver.findElement(By.id("searchResultsWarningMessageBox")).isDisplayed()) {
 						driver.navigate().refresh();
 						sleep(2000);
 						i++;
-						// System.out.println(i);
 					}
 				} catch (java.lang.NullPointerException a) {
 					sleep(3000);
 					driver.switchTo().frame(cambioFrameByID.getFrameForElement(driver, By.id("searchPageHolderDiv")));
 					i = 4;
-					//System.out.println("Segundo Catch");
 				}
 			}
 			sleep(2000);
-			WebElement Caso = driver.findElement(By.cssSelector(".listRelatedObject.caseBlock"))
-					.findElement(By.cssSelector(".bPageBlock.brandSecondaryBrd.secondaryPalette"))
-					.findElement(By.className("pbBody")).findElement(By.className("list"))
-					.findElements(By.tagName("tr")).get(1).findElement(By.tagName("th")).findElement(By.tagName("a"));
+			WebElement Caso = driver.findElement(By.cssSelector(".listRelatedObject.caseBlock")).findElement(By.cssSelector(".bPageBlock.brandSecondaryBrd.secondaryPalette")).findElement(By.className("pbBody")).findElement(By.className("list")).findElements(By.tagName("tr")).get(1).findElement(By.tagName("th")).findElement(By.tagName("a"));
 			Caso.click();
 		}
 		sleep(5000);
@@ -1468,7 +1453,7 @@ public class CustomerCare extends BasePage {
 	    driver.switchTo().frame(tb.cambioFrame(driver, By.cssSelector(".slds-small-size--3-of-12.slds-medium-size--3-of-12.slds-large-size--3-of-12.flyout-actions")));
 	    ((JavascriptExecutor)driver).executeScript("window.scrollTo(0,"+driver.findElement(By.cssSelector(".console-flyout.active.flyout")).getLocation().y+")");
 	    sleep(3000);
-	    driver.findElement(By.cssSelector(".console-flyout.active.flyout")).findElements(By.tagName("i")).get(1).click();
+	    driver.findElement(By.className("community-flyout-actions-card")).findElements(By.tagName("li")).get(4).click();
 	    sleep(8000);
 	    List<WebElement> wAsd = driver.findElements(By.id("refillMethod"));
 	    for (WebElement x:wAsd) {
@@ -1494,23 +1479,20 @@ public class CustomerCare extends BasePage {
 		List<WebElement> wGestiones = wFlyOutActionCard.findElements(By.tagName("li"));
 		for (WebElement wAux : wGestiones) {
 			if (wAux.getText().contains(sGestion)) {
-					wAux.findElement(By.tagName("a")).click();
-					break;
+				wAux.findElement(By.tagName("a")).click();
+				break;
 			}
 		}
-		TestBase.sleep(8000);
+		sleep(8000);
 		try {
 			cambiarAFrameActivo();
-		}catch(org.openqa.selenium.StaleElementReferenceException ex1) {}
+		} catch(org.openqa.selenium.StaleElementReferenceException ex1) {}
 	}
 	
 	public String obtenerOrdenMontoyTN(WebDriver driver, String gestion) {
-		TestBase tb = new TestBase();
 		driver.navigate().refresh();
 		sleep(18000);
 		panelIzquierdo();
-		//driver.switchTo().frame(tb.cambioFrame(driver, By.className("story-container")));
-	
 		List<WebElement> wStoryContainer = driver.findElements(By.className("story-container"));
 		for (WebElement wAux : wStoryContainer) {
 			if (wAux.findElement(By.cssSelector(".slds-text-body_regular.story-title")).getText().equalsIgnoreCase(gestion)) {
@@ -1523,17 +1505,14 @@ public class CustomerCare extends BasePage {
 	
 	public void seleccionarCardPornumeroLinea(String sLinea, WebDriver driver) {
 		TestBase tTB = new TestBase();
-		driver.switchTo().frame(tTB.cambioFrame(driver, By.className("card-top")));
-		
-		List<WebElement> wCard = driver.findElements(By.className("card-top"));
-		
+		driver.switchTo().frame(tTB.cambioFrame(driver, By.className("card-top")));		
+		List<WebElement> wCard = driver.findElements(By.className("card-top"));		
 		for (WebElement wAux : wCard) {
 			if (wAux.getText().contains(sLinea)) {
 				wAux.click();
 				break;
 			}
-		}
-		
+		}		
 		sleep(3000);
 	}
 	
@@ -1541,9 +1520,9 @@ public class CustomerCare extends BasePage {
 		try { 
 			driver.manage().timeouts().implicitlyWait(1, TimeUnit.SECONDS);
 			panelIzquierdoColapsado.click();
-		} catch (NoSuchElementException|ElementNotVisibleException e) {	}
+		} catch (NoSuchElementException|ElementNotVisibleException e) {}
 		finally {
-			TestBase.sleep(2000);
+			sleep(2000);
 			driver.manage().timeouts().implicitlyWait(3, TimeUnit.SECONDS);
 		}
 	}
@@ -1581,35 +1560,32 @@ public class CustomerCare extends BasePage {
 		String datos = null;
 		boolean esta = false;
 		String texto = null;
-		OM pageOm=new OM(driver);
 		driver.switchTo().defaultContent();
 		usarbuscadorsalesforce(orden);
 		sleep(10000);
-		
-			driver.switchTo().frame(TB.cambioFrame(driver, By.id("Order_body")));
-			System.out.println("orden "+driver.findElement(By.id("Order_body")).findElement(By.cssSelector(".dataRow.even.last.first")).findElement(By.tagName("th")).getText());
-			driver.findElement(By.id("Order_body")).findElement(By.cssSelector(".dataRow.even.last.first")).findElement(By.tagName("th")).findElement(By.tagName("a")).click();
-			sleep(10000);
-			driver.switchTo().frame(TB.cambioFrame(driver, By.id("OrderNumber_ilecell")));
-			WebElement tabla = driver.findElement(By.id("ep")).findElements(By.tagName("table")).get(1);
-			datos = tabla.findElement(By.tagName("tr")).findElements(By.tagName("td")).get(3).getText();
-			List<WebElement> todo = tabla.findElements(By.tagName("td"));
-			for(WebElement UnT : todo) {
-				if(esta == true) {
-					texto = UnT.getText();
-					break;
-				}
-				if(UnT.getText().equalsIgnoreCase("Bill Simulation Payload")) {
-					esta = true;
-				}
+		driver.switchTo().frame(TB.cambioFrame(driver, By.id("Order_body")));
+		System.out.println("orden " + driver.findElement(By.id("Order_body")).findElement(By.cssSelector(".dataRow.even.last.first")).findElement(By.tagName("th")).getText());
+		driver.findElement(By.id("Order_body")).findElement(By.cssSelector(".dataRow.even.last.first")).findElement(By.tagName("th")).findElement(By.tagName("a")).click();
+		sleep(10000);
+		driver.switchTo().frame(TB.cambioFrame(driver, By.id("OrderNumber_ilecell")));
+		WebElement tabla = driver.findElement(By.id("ep")).findElements(By.tagName("table")).get(1);
+		datos = tabla.findElement(By.tagName("tr")).findElements(By.tagName("td")).get(3).getText();
+		List<WebElement> todo = tabla.findElements(By.tagName("td"));
+		for (WebElement UnT : todo) {
+			if (esta == true) {
+				texto = UnT.getText();
+				break;
 			}
-			texto = texto.split(",")[0].split(":")[2];
-			texto = texto.substring(1, texto.length()-1);
-			texto = texto.replace(",", "");
-			texto = texto.replace(".", "").concat("00");
-			datos = datos+"-"+texto;
-			return (datos);	
-		
+			if (UnT.getText().equalsIgnoreCase("Bill Simulation Payload")) {
+				esta = true;
+			}
+		}
+		texto = texto.split(",")[0].split(":")[2];
+		texto = texto.substring(1, texto.length() - 1);
+		texto = texto.replace(",", "");
+		texto = texto.replace(".", "").concat("00");
+		datos = datos + "-" + texto;
+		return (datos);
 	}
 	
 	public String sIccdImsi() {
@@ -1638,20 +1614,15 @@ public class CustomerCare extends BasePage {
 		}
 		sleep(10000);
 		String sICCD = driver.findElement(By.id("attr_802c0000000g6r1_ICCID")).findElement(By.cssSelector(".field-value.ng-scope.ng-binding")).getText();
-		String sImsi = driver.findElement(By.id("attr_802c0000000g6r1_IMSI")).findElement(By.cssSelector(".field-value.ng-scope.ng-binding")).getText();
-		
-		driver.navigate().back();
-		
+		String sImsi = driver.findElement(By.id("attr_802c0000000g6r1_IMSI")).findElement(By.cssSelector(".field-value.ng-scope.ng-binding")).getText();		
+		driver.navigate().back();		
 		return sICCD + "-" + sImsi;
 	}
 	
 	public String obtenerOrden(WebDriver driver, String gestion) {
-		TestBase tb = new TestBase();
 		driver.navigate().refresh();
 		sleep(18000);
 		panelIzquierdo();
-		//driver.switchTo().frame(tb.cambioFrame(driver, By.className("story-container")));
-	
 		List<WebElement> wStoryContainer = driver.findElements(By.className("story-container"));
 		for (WebElement wAux : wStoryContainer) {
 			if (wAux.findElement(By.cssSelector(".slds-text-body_regular.story-title")).getText().equalsIgnoreCase(gestion)) {

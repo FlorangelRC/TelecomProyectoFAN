@@ -23,7 +23,7 @@ import Pages.setConexion;
 public class CustomerCareOla2 extends TestBase {
 	
 	private WebDriver driver;
-	protected CustomerCare cc;
+	private CustomerCare cc;
 	
 	
 	@BeforeClass (alwaysRun = true, groups = {"CustomerCare", "Ola2", "Marcas"})
@@ -32,10 +32,16 @@ public class CustomerCareOla2 extends TestBase {
 		sleep(5000);
 		cc = new CustomerCare(driver);
 		cc.login("SIT");
-		cc.cajonDeAplicaciones("Consola FAN");
+		try {
+			cc.cajonDeAplicaciones("Consola FAN");
+		} catch(Exception e) {
+			sleep(3000);
+			driver.findElement(By.id("tabBar")).findElement(By.tagName("a")).click();
+			sleep(6000);
+		}
 	}
 	
-	@AfterClass (alwaysRun = true, groups = {"CustomerCare", "Ola2", "Marcas"})
+	//@AfterClass (alwaysRun = true, groups = {"CustomerCare", "Ola2", "Marcas"})
 	public void exit() {
 		driver.quit();
 		sleep(5000);

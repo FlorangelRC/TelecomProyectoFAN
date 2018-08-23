@@ -86,24 +86,23 @@ private WebDriver driver;
  	 	
  		@AfterMethod(alwaysRun=true)
  		public void after() {
-		try {Thread.sleep(2000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
-		driver.switchTo().defaultContent(); 
-		CustomerCare cerrar = new CustomerCare(driver);
-	    cerrar.cerrarultimapestana();
-	    driver.switchTo().defaultContent(); 
-	}
- 	
+ 			CustomerCare cerrar = new CustomerCare(driver);
+ 		    cerrar.cerrarultimapestana();
+ 		    sleep(2000);
+ 		}
+ 		
  		@AfterClass(alwaysRun=true)
  		public void tearDown() {
-		try {Thread.sleep(1000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
-		CustomerCare cerrar = new CustomerCare(driver);
-		cerrar.cerrarultimapestana();
-		HomeBase homePage = new HomeBase(driver);
-		try {Thread.sleep(1000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
-		homePage.selectAppFromMenuByName("Ventas");
-		try {Thread.sleep(1000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
-		driver.quit();
-	}
+ 			try {Thread.sleep(1000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+ 			CustomerCare cerrar = new CustomerCare(driver);
+ 			cerrar.cerrarultimapestana();
+ 			/*HomeBase homePage = new HomeBase(driver);
+ 			try {Thread.sleep(1000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+ 			homePage.selectAppFromMenuByName("Ventas");
+ 			try {Thread.sleep(1000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}*/
+ 			driver.quit();
+ 		}
+ 		
 	
 	
 	

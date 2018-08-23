@@ -38,59 +38,75 @@ public class TechCareOla1A extends TestBase {
 	//private String Linea="543416869777";
 	
 	@BeforeClass(alwaysRun=true)
-	public void init() throws Exception
-	{
-		this.driver = setConexion.setupEze();
-		try {Thread.sleep(4000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
-		login(driver);
-		try {Thread.sleep(3000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
-		try {
-			goInitToConsolaFanF3(driver);
-		}catch(Exception ex) {
-			sleep(3000);
-			driver.findElement(By.id("tabBar")).findElement(By.tagName("a")).click();
-			sleep(6000);
-		}
-		
-	    try {Thread.sleep(3000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
-	     //Alerta Aparece Ocasionalmente
-	       try {
-				driver.switchTo().alert().accept();
-				driver.switchTo().defaultContent();
-			}catch(org.openqa.selenium.NoAlertPresentException e) {}
-
-       CustomerCare cerrar = new CustomerCare(driver);
-       cerrar.cerrarultimapestana();
+ 	public void init() throws InterruptedException{
+	this.driver = setConexion.setupEze();
+    sleep(5000);
+    login(driver);
+    sleep(5000);
+    HomeBase homePage = new HomeBase(driver);
+    Accounts accountPage = new Accounts(driver);
+    try {
+    	if(driver.findElement(By.id("tsidLabel")).getText().equals("Consola FAN")) {
+    	    homePage.switchAppsMenu();
+    	    sleep(2000);
+    	    homePage.selectAppFromMenuByName("Ventas");
+    	    sleep(5000);
+    	       }
+    	    homePage.switchAppsMenu();
+    	    sleep(2000);
+    	    homePage.selectAppFromMenuByName("Consola FAN");
+	}catch(Exception ex) {
+		sleep(3000);
+		driver.findElement(By.id("tabBar")).findElement(By.tagName("a")).click();
+		sleep(6000);
 	}
+    
+    sleep(5000);
+	goToLeftPanel2(driver, "Cuentas");
+	sleep(2000);  
+	driver.switchTo().defaultContent();
+	driver.switchTo().frame(accountPage.getFrameForElement(driver, By.cssSelector(".topNav.primaryPalette")));
+	Select field = new Select(driver.findElement(By.name("fcf")));
+	try {field.selectByVisibleText("Todas Las cuentas");}
+	catch (org.openqa.selenium.NoSuchElementException ExM) {field.selectByVisibleText("Todas las cuentas");}
 	
+
+ 	 CustomerCare cerrar = new CustomerCare(driver);
+ 	 cerrar.cerrarultimapestana();		
+ 	 sleep(4000);
+ 	
 	
-	@BeforeMethod(alwaysRun=true)
-	public void setUp() throws Exception {
+ 	}
+ 		@BeforeMethod(alwaysRun=true)
+ 		public void setUp() throws Exception {
 		sleep(3000);
 		driver.switchTo().defaultContent();
 		sleep(3000);
-		
+		//page.selectAccount((  (3, "Cuenta Activa c/ linea y serv", 1)));
+		//page.selectAccount ("Marco Polo");
+		//driver.switchTo().defaultContent();
+		//sleep(3000);
+ 	
 	}
-	
-	
-	@AfterMethod(alwaysRun=true)
-	public void after() {
-		CustomerCare cerrar = new CustomerCare(driver);
-	    cerrar.cerrarultimapestana();
-	    sleep(2000);
-	}
-	
-	@AfterClass(alwaysRun=true)
-	public void tearDown() {
-		try {Thread.sleep(1000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
-		CustomerCare cerrar = new CustomerCare(driver);
-		cerrar.cerrarultimapestana();
-		/*HomeBase homePage = new HomeBase(driver);
-		try {Thread.sleep(1000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
-		homePage.selectAppFromMenuByName("Ventas");
-		try {Thread.sleep(1000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}*/
-		driver.quit();
-	}
+ 	 	
+ 		@AfterMethod(alwaysRun=true)
+ 		public void after() {
+ 			CustomerCare cerrar = new CustomerCare(driver);
+ 		    cerrar.cerrarultimapestana();
+ 		    sleep(2000);
+ 		}
+ 		
+ 		@AfterClass(alwaysRun=true)
+ 		public void tearDown() {
+ 			try {Thread.sleep(1000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+ 			CustomerCare cerrar = new CustomerCare(driver);
+ 			cerrar.cerrarultimapestana();
+ 			/*HomeBase homePage = new HomeBase(driver);
+ 			try {Thread.sleep(1000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+ 			homePage.selectAppFromMenuByName("Ventas");
+ 			try {Thread.sleep(1000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}*/
+ 			driver.quit();
+ 		}
 	
 	/** CASO REPETIDO
 	 * Verifica que aparezca el inconveniente "no puede configurar" luego de diagnosticar el servicio.
