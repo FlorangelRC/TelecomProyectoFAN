@@ -15,8 +15,10 @@ public class SOAPClientSAAJ {
 	    		break;
 	    	case "pago en caja":
 	    		sEndPoint = sPagoEnCaja;
+	    		break;
 	    	case "alta de linea":
 	    		sEndPoint = sAltaDeLinea;
+	    		break;
     	}
     	
     	try {

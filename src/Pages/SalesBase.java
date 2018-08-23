@@ -587,7 +587,7 @@ try{	driver.findElement(By.id("alert-ok-button")).click();	} catch (NoSuchElemen
 		List<WebElement> check = driver.findElements(By.cssSelector(".slds-checkbox--faux"));
 
 	 setSimpleDropdown(driver.findElement(By.id("State")), provincia);
-
+	 sleep(3000);
 	driver.findElement(By.id("CityTypeAhead")).sendKeys(localidad);
 	try {Thread.sleep(10000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();} 
 	driver.findElement(By.id("CityTypeAhead")).sendKeys(Keys.ARROW_DOWN);
