@@ -38,7 +38,7 @@ public class AltadeLineas extends TestBase {
 		//driver.manage().deleteAllCookies();
 		try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}		
 		SalesBase SB = new SalesBase(driver);
-		loginAgente(driver);  
+		loginOfCom(driver);  
 		CustomerCare cc = new CustomerCare(driver);
 		
 		 try {Thread.sleep(10000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
@@ -51,6 +51,7 @@ public class AltadeLineas extends TestBase {
 			}
 			goToLeftPanel2(driver, "Inicio");
 			sleep(5000);
+			
 			
 		}
 	
@@ -96,7 +97,7 @@ public class AltadeLineas extends TestBase {
 			}
 		}
 		
-		sleep(15000);
+		sleep(25000);
 		driver.switchTo().frame(accountPage.getFrameForElement(driver, By.id("SearchClientDocumentNumber")));
 	}
 	
@@ -119,7 +120,7 @@ public class AltadeLineas extends TestBase {
 	}
 	
 	
-	@Test(groups={"Sales", "AltaLineaDatos"}, priority=1, dataProvider="DatosAltaLineaAgente")
+	@Test(groups={"Sales", "AltaLineaDatos","E2E"}, priority=1, dataProvider="DatosAltaLineaAgente")
 	public void TS_CRM_Alta_de_Linea_Agente(String sDni, String sNombre, String sApellido, String sSexo, String sFNac, String sEmail, String sPlan, String sProvincia, String sLocalidad, String sCalle, String sNumCa, String sCP, String sEntrega, String sStoreProv, String sStoreLoc, String sTipoDelivery) throws IOException {
 		CustomerCare cc = new CustomerCare(driver);
 		SalesBase sb = new SalesBase(driver);
@@ -228,12 +229,12 @@ public class AltadeLineas extends TestBase {
 		sleep(15000);
 		driver.close();
 		//driver.quit();
-		/*WebDriver driver = setConexion.setupEze();
+		WebDriver driver = setConexion.setupEze();
 		try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}		
 		SalesBase SB = new SalesBase(driver);
 		loginAgente(driver);  
 		 try {Thread.sleep(10000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}	
-		driver.findElement(By.id("tabBar")).findElement(By.tagName("a")).click();*/
+		driver.findElement(By.id("tabBar")).findElement(By.tagName("a")).click();
 		sleep(10000);
 		System.out.println(cc.obtenerMontoyTNparaAlta(driver, orden));
 		//CBS_Mattu invoSer = new CBS_Mattu();
@@ -248,7 +249,7 @@ public class AltadeLineas extends TestBase {
 		
 	}
 	
-	@Test(groups={"Sales", "AltaLineaDatos"}, priority=2, dataProvider="DatosAltaLineaOfCom")
+	@Test(groups={"Sales", "AltaLineaDatos","E2E"}, priority=2, dataProvider="DatosAltaLineaOfCom")
 	public void TS_CRM_Alta_de_Linea_OfCom(String sDni, String sNombre, String sApellido, String sSexo, String sFNac, String sEmail, String sPlan, String sProvincia, String sLocalidad, String sEntrega, String sStoreProv, String sStoreLoc, String sTipoDelivery) throws IOException {
 		CustomerCare cc = new CustomerCare(driver);
 		SalesBase sb = new SalesBase(driver);
@@ -304,7 +305,7 @@ public class AltadeLineas extends TestBase {
 		sleep(24000);
 		WebElement sig = driver.findElement(By.id("LineAssignment_nextBtn"));
 		cc.obligarclick(sig);
-		sleep(20000);
+		sleep(25000);
 		if (sEntrega.equalsIgnoreCase("Delivery")) {
 			
 		}
@@ -333,8 +334,11 @@ public class AltadeLineas extends TestBase {
 			sleep(10000);
 		}catch(Exception ex1) {}
 		String orden = driver.findElement(By.className("top-data")).findElement(By.className("ng-binding")).getText();
-		String NCuenta = driver.findElements(By.className("top-data")).get(1).findElements(By.className("ng-binding")).get(2).getText();
+		String NCuenta = driver.findElements(By.className("top-data")).get(1).findElements(By.className("ng-binding")).get(3).getText();
 		String Linea = driver.findElement(By.cssSelector(".top-data.ng-scope")).findElements(By.className("ng-binding")).get(1).getText();
+		System.out.println("Orden "+orden);
+		System.out.println("cuenta "+NCuenta);
+		System.out.println("Linea "+Linea);
 		orden = orden.substring(orden.length()-8);
 		NCuenta = NCuenta.substring(NCuenta.length()-16);
 		Linea = Linea.substring(Linea.length()-10);
@@ -346,9 +350,11 @@ public class AltadeLineas extends TestBase {
 		}catch(Exception ex1) {
 			driver.findElement(By.id("SaleOrderMessages_nextBtn")).click();
 			sleep(15000);
-			CBS_Mattu invoSer = new CBS_Mattu();
-			invoSer.openPage2(orden);
-			sleep(5000);
+			System.out.println(cc.obtenerMontoyTNparaAlta(driver, orden));
+			//CBS_Mattu invoSer = new CBS_Mattu();
+			//invoSer.openPage2(orden);
+			sleep(2000);
+			
 			CambiarPerfil("logistica",driver);
 			sb.completarLogistica(orden, driver);
 			CambiarPerfil("entrega",driver);
@@ -357,7 +363,7 @@ public class AltadeLineas extends TestBase {
 		}
 
 	}
-	@Test(groups={"Sales", "AltaLinea"}, priority=1, dataProvider="AltaLineaNuevoAgentePresencial")
+	@Test(groups={"Sales", "AltaLinea","E2E"}, priority=1, dataProvider="AltaLineaNuevoAgentePresencial")
 	public void TS118938_CRM_Movil_PRE_Alta_Linea_Cliente_Nuevo_Agente_Efectivo_Presencial_DNI(String sNombre, String sApellido, String sSexo, String sFNac, String sEmail, String sPlan, String sProvincia, String sLocalidad) throws IOException {
 		CustomerCare cc = new CustomerCare(driver);
 		SalesBase sb = new SalesBase(driver);
@@ -446,14 +452,16 @@ public class AltadeLineas extends TestBase {
 		}
 		
 	}
-	@Test(groups={"Sales", "AltaLineaDatos"}, priority=2, dataProvider="AltaLineaExistenteOfComPresencial")
+	@Test(groups={"Sales", "AltaLineaDatos","E2E"}, priority=2, dataProvider="AltaLineaExistenteOfComPresencial")
 	public void TS119298_CRM_Movil_PRE_Alta_Linea_Cliente_Existente_OFCOM_Efectivo_Presencial_DNI(String sDni, String sEmail, String sPlan, String sProvincia, String sLocalidad) throws IOException {
 		CustomerCare cc = new CustomerCare(driver);
 		SalesBase sb = new SalesBase(driver);
 		sleep(5000);
 		sb.BuscarCuenta("DNI", sDni);
+		sleep(5000);
 		List<WebElement> btns = driver.findElements(By.cssSelector(".slds-button.slds-button.slds-button--icon"));
 		for(WebElement e: btns){
+			System.out.println(e.getText());
 			if(e.getText().toLowerCase().equals("catalogo")){ 
 				e.click();
 				break;
@@ -533,7 +541,7 @@ public class AltadeLineas extends TestBase {
 		}
 
 	}
-	@Test(groups={"Sales", "AltaLineaDatos"}, priority=1, dataProvider="DatosSalesAltaLineaEquipo")
+	@Test(groups={"Sales", "AltaLineaDatos","E2E"}, priority=1, dataProvider="DatosSalesAltaLineaEquipo")
 	public void TS125004_CRM_Movil_PRE_Alta_Linea_con_Equipo_Cliente_Nuevo_Presencial_AG(String sDni, String sNombre, String sApellido, String sSexo, String sFNac, String sEmail, String sPlan, String sProvincia, String sLocalidad) throws IOException {
 		CustomerCare cc = new CustomerCare(driver);
 		SalesBase sb = new SalesBase(driver);
@@ -608,8 +616,8 @@ public class AltadeLineas extends TestBase {
 		}
 	
 	
-	@Test(groups={"Sales", "AltaLineaDatos"}, priority=1, dataProvider="DatosAltaEquipoExiste")
-	public void TS125214_CRM_Movil_PRE_Alta_Linea_con_Equipo_Cliente_existente_Presencial_OFCOM(String sDni, String sNombre, String sApellido, String sSexo, String sFNac, String sEmail, String sPlan, String sProvincia, String sLocalidad) throws IOException {
+	@Test(groups={"Sales", "AltaLineaDatos","E2E"}, priority=1, dataProvider="PerfilCuentaSeiscientos")
+	public void TS125214_CRM_Movil_PRE_Alta_Linea_con_Equipo_Cliente_existente_Presencial_OFCOM(String sDni, String sNombre, String sCuenta, String sLinea) throws IOException {
 		CustomerCare cc = new CustomerCare(driver);
 		SalesBase sb = new SalesBase(driver);
 		sleep(5000);

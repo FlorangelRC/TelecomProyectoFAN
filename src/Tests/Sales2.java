@@ -43,13 +43,13 @@ public class Sales2 extends TestBase{
 	String localidad="ROSARIO";
 	protected  WebDriverWait wait;
 	
-	@AfterClass(alwaysRun=true)
+	//@AfterClass(alwaysRun=true)
 	public void tearDown() {
 		driver.close();
 		driver.quit();
 	}
 	
-	@AfterMethod(alwaysRun=true)
+	//@AfterMethod(alwaysRun=true)
 	public void deslogin(){
 		sleep(2000);
 		SalesBase SB = new SalesBase(driver);
@@ -283,7 +283,7 @@ public class Sales2 extends TestBase{
 		sb.elegirplan("Plan con tarjeta");
 		sleep(15000);
 		sb.continuar();
-		sleep(15000);
+		sleep(20000);
 		Select condI = new Select(driver.findElement(By.id("ImpositiveCondition")));
 		Assert.assertTrue(condI.getFirstSelectedOption().getText().equalsIgnoreCase("iva consumidor final"));
 	}
@@ -719,10 +719,6 @@ public class Sales2 extends TestBase{
 		
 		sleep(14000);
 		driver.switchTo().frame(accountPage.getFrameForElement(driver, By.id("SearchClientDocumentNumber")));
-		
-		sleep(7000);
-		driver.findElement(By.xpath("//a[@href=\'https://crm--sit--c.cs14.visual.force.com/apex/taClientSearch']")).click();
-		sleep(7000);
 		sb.BuscarCuenta(DNI, a);
 		List <WebElement> cuenta = driver.findElements(By.cssSelector(".slds-truncate.ng-binding"));
 		boolean b = false;

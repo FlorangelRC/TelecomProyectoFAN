@@ -1040,6 +1040,14 @@ public class TestBase {
 		return (testObjArray);
 	}
 	
+	@DataProvider
+	public Object [][] CuentaProblemaRecarga() throws Exception{
+		
+		Object[][] testObjArray = ExcelUtils.getTableArray("Cuentas.xlsx","PerfilGestiones",1,1,1,"ProblemaRecarga");
+		
+		return (testObjArray);
+	}
+	
 	public void guardarListaTxt(List<String> datosOrden) throws IOException {
 		File archivo=new File("DatosOrdenes.txt");
 		if (archivo.exists())

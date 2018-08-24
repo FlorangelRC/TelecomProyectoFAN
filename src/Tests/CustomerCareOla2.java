@@ -23,7 +23,7 @@ import Pages.setConexion;
 public class CustomerCareOla2 extends TestBase {
 	
 	private WebDriver driver;
-	protected CustomerCare cc;
+	private CustomerCare cc;
 	
 	
 	@BeforeClass (alwaysRun = true, groups = {"CustomerCare", "Ola2", "Marcas"})
@@ -32,7 +32,13 @@ public class CustomerCareOla2 extends TestBase {
 		sleep(5000);
 		cc = new CustomerCare(driver);
 		cc.login("SIT");
-		cc.cajonDeAplicaciones("Consola FAN");
+		try {
+			cc.cajonDeAplicaciones("Consola FAN");
+		} catch(Exception e) {
+			sleep(3000);
+			driver.findElement(By.id("tabBar")).findElement(By.tagName("a")).click();
+			sleep(6000);
+		}
 	}
 	
 	@AfterClass (alwaysRun = true, groups = {"CustomerCare", "Ola2", "Marcas"})
@@ -56,14 +62,14 @@ public class CustomerCareOla2 extends TestBase {
 		Assert.assertTrue(fechaHasta.getAttribute("value").contentEquals(fechaDeHoy()));
 	}
 	
-	@Test (groups = {"CustomerCare", "Ola2", "Marcas"}, dataProvider = "CustomerCuentaActiva")
+	@Test (groups = {"CustomerCare", "Ola2", "Marcas"}, dataProvider = "CustomerCuentaActiva") //Rompe porque no existe la gestion Marcas, se paso a Ola 3 y no esta en funcionamiento
 	public void TS100963_Marks_Management_Base_Conocimiento_Acceso_a_base_de_conocimiento(String cCuenta) {
 		cc.elegirCuenta(cCuenta);
 		cc.irAGestion("marcas");
 		Assert.assertTrue(cc.verificarBaseConocimientoMarcas());
 	}
 	
-	@Test (groups = {"CustomerCare", "Ola2", "Marcas"}, dataProvider = "CustomerCuentaActiva")
+	@Test (groups = {"CustomerCare", "Ola2", "Marcas"}, dataProvider = "CustomerCuentaActiva")  //Rompe porque no existe la gestion Marcas, se paso a Ola 3 y no esta en funcionamiento
 	public void TS100967_Marks_Management_Escenario_de_Casos_Existentes_Ingresar_comentarios(String cCuenta) {
 		cc.elegirCuenta(cCuenta);
 		cc.irAGestion("marcas");
@@ -75,7 +81,7 @@ public class CustomerCareOla2 extends TestBase {
 		Assert.assertTrue(cc.campoComentarios().isDisplayed());
 	}
 	
-	@Test (groups = {"CustomerCare", "Ola2", "Marcas"}, dataProvider = "CustomerCuentaActiva")
+	@Test (groups = {"CustomerCare", "Ola2", "Marcas"}, dataProvider = "CustomerCuentaActiva")  //Rompe porque no existe la gestion Marcas, se paso a Ola 3 y no esta en funcionamiento
 	public void TS100971_Marks_Management_Marcas_Session_Guiada_Botón_en_Iniciar_gestiones(String cCuenta) {
 		cc.elegirCuenta(cCuenta);
 		cc.irAGestion("marcas");
@@ -95,7 +101,7 @@ public class CustomerCareOla2 extends TestBase {
 		Assert.assertTrue(driver.findElement(By.id("text-input-id-1")).getAttribute("value").equals(date1));
 	}
 	
-	@Test (groups = {"CustomerCare", "Ola2", "Marcas"}, dataProvider = "CustomerCuentaActiva")
+	@Test (groups = {"CustomerCare", "Ola2", "Marcas"}, dataProvider = "CustomerCuentaActiva")  //Rompe porque no existe la gestion Marcas, se paso a Ola 3 y no esta en funcionamiento
 	public void TS100965_Mark_Management_Resumen_Caso_Solicitud_Aplicacion_Marcas_Visualizar_mensaje(String cCuenta) {
 		cc.elegirCuenta(cCuenta);
 		cc.irAGestion("marcas");
@@ -139,7 +145,7 @@ public class CustomerCareOla2 extends TestBase {
 		Assert.assertTrue(fh.getAttribute("max-date").contains(dateFormat.format(date)));
 	}
 	
-	@Test (groups = {"CustomerCare", "Ola2", "Marcas"}, dataProvider = "CustomerCuentaActiva")  //No anda el boton Consultar
+	@Test (groups = {"CustomerCare", "Ola2", "Marcas"}, dataProvider = "CustomerCuentaActiva")  //Los filtros de fecha no funcionan correctamente
 	public void TS118727_360_View_POSTPAGO_Visualizacion_Resumen_de_Facturacion_Resumen_de_Cta_se_muestra_registros_de_los_ultimos_6_meses(String cCuenta) {
 		cc.elegirCuenta(cCuenta);
 		cc.irAFacturacion();
@@ -147,15 +153,18 @@ public class CustomerCareOla2 extends TestBase {
 		Assert.assertTrue(false);
 	}
 	
-	@Test (groups = {"CustomerCare", "Ola2", "Marcas"}, dataProvider = "CustomerCuentaActiva")  //No anda el boton Consultar
+	@Test (groups = {"CustomerCare", "Ola2", "Marcas"}, dataProvider = "CustomerCuentaActiva")  //Hay que preguntar como es el caso
 	public void TS118763_360_View_Resumen_Cta_Cte_Simple_Integracion_historial_de_pagos_S059_Obtener_historial_de_pagos(String cCuenta) {
 		cc.elegirCuenta(cCuenta);
 		cc.irAFacturacion();
 		cc.irAResumenDeCuenta();
-		Assert.assertTrue(false);
+		driver.findElement(By.cssSelector(".slds-button.slds-button--brand.filterNegotiations.slds-p-horizontal--x-large.slds-p-vertical--x-small")).click();
+		sleep(3000);
+		WebElement comp = driver.findElements(By.cssSelector(".slds-grid.slds-wrap.slds-card.slds-m-bottom--small.slds-p-around--medium")).get(0).findElement(By.tagName("p"));
+		Assert.assertTrue(comp.getText().toLowerCase().contains("comprobantes"));
 	}
 	
-	@Test (groups = {"CustomerCare", "Ola2", "Marcas"}, dataProvider = "CustomerCuentaActiva")
+	@Test (groups = {"CustomerCare", "Ola2", "Marcas"}, dataProvider = "CustomerCuentaActiva")  //Requiere actualizacion
 	public void TS118732_360_View_POSTPAGO_Visualizacion_Resumen_de_Facturacion_Fecha_Desde_muestra_griseadas_las_fechas_anteriores_a_6_meses_de_la_fecha_actual(String cCuenta) {
 		Date date = new Date();
 		Calendar cal = Calendar.getInstance(); 
@@ -182,7 +191,7 @@ public class CustomerCareOla2 extends TestBase {
 		Assert.assertTrue((fh.split(" ")[3]+"-"+mes+"-"+fh.split(" ")[2]).contains(dateFormat.format(date)));
 	}
 	
-	@Test (groups = {"CustomerCare", "Ola2", "Marcas"}, dataProvider = "CustomerCuentaActiva")  //No anda el boton Consultar
+	@Test (groups = {"CustomerCare", "Ola2", "Marcas"}, dataProvider = "CustomerCuentaActiva")  //Hay que preguntar como es el caso
 	public void TS96127_360_View_POSTPAGO_UX_Visualizacion_Resumen_de_Facturacion_Verificar_que_mas_detalle_de_un_registro_especifico_de_pago_del_grupo_2_se_muestra_el_campo_Numero_de_Cupon_de_Telecom_Argentina_numero(String cCuenta) {
 		cc.elegirCuenta(cCuenta);
 		cc.irAFacturacion();
@@ -190,15 +199,17 @@ public class CustomerCareOla2 extends TestBase {
 		Assert.assertTrue(false);
 	}
 	
-	@Test (groups = {"CustomerCare", "Ola2", "Marcas"}, dataProvider = "CustomerCuentaActiva")  //No anda el boton Consultar
+	@Test (groups = {"CustomerCare", "Ola2", "Marcas"}, dataProvider = "CustomerCuentaActiva")  //
 	public void TS96125_360_View_POSTPAGO_UX_Visualizacion_Resumen_de_Facturacion_Verificar_que_mas_detalle_de_un_registro_especifico_de_pago_del_grupo_2_se_muestra_el_campo_Numero_de_Tarjeta_cheque_numero(String cCuenta) {
 		cc.elegirCuenta(cCuenta);
 		cc.irAFacturacion();
 		cc.irAResumenDeCuenta();
+		driver.findElement(By.cssSelector(".slds-button.slds-button--brand.filterNegotiations.slds-p-horizontal--x-large.slds-p-vertical--x-small")).click();
+		sleep(3000);
 		Assert.assertTrue(false);
 	}
 	
-	@Test (groups = {"CustomerCare", "Ola2", "Marcas"}, dataProvider = "CustomerCuentaActiva")  //No anda el boton Consultar
+	@Test (groups = {"CustomerCare", "Ola2", "Marcas"}, dataProvider = "CustomerCuentaActiva")  //Hay que preguntar como es el caso
 	public void TS96129_360_View_POSTPAGO_UX_Visualizacion_Resumen_de_Facturacion_Verificar_que_mas_detalle_de_un_registro_especifico_de_pago_del_grupo_2_se_muestra_el_campo_Tipo_Cupon_texto(String cCuenta) {
 		cc.elegirCuenta(cCuenta);
 		cc.irAFacturacion();
@@ -206,7 +217,7 @@ public class CustomerCareOla2 extends TestBase {
 		Assert.assertTrue(false);
 	}
 	
-	@Test (groups = {"CustomerCare", "Ola2", "Marcas"}, dataProvider = "CustomerCuentaActiva")  //No anda el boton Consultar
+	@Test (groups = {"CustomerCare", "Ola2", "Marcas"}, dataProvider = "CustomerCuentaActiva")  //Hay que preguntar como es el caso
 	public void TS96128_360_View_POSTPAGO_UX_Visualizacion_Resumen_de_Facturacion_Verificar_que_mas_detalle_de_un_registro_especifico_de_pago_del_grupo_2_se_muestra_el_campo_Tipo_de_Comprobante_texto(String cCuenta) {
 		cc.elegirCuenta(cCuenta);
 		cc.irAFacturacion();
@@ -214,7 +225,7 @@ public class CustomerCareOla2 extends TestBase {
 		Assert.assertTrue(false);
 	}
 	
-	@Test (groups = {"CustomerCare", "Ola2", "Marcas"}, dataProvider = "CustomerCuentaActiva")  //No anda el boton Consultar
+	@Test (groups = {"CustomerCare", "Ola2", "Marcas"}, dataProvider = "CustomerCuentaActiva")  //Hay que preguntar como es el caso
 	public void TS96133_360_View_POSTPAGO_UX_Visualizacion_Resumen_de_Facturacion_Verificar_que_mas_detalle_de_un_registro_especifico_de_pago_del_grupo_3_se_muestra_el_campo_Descripcion_de_Motivo_texto(String cCuenta) {
 		cc.elegirCuenta(cCuenta);
 		cc.irAFacturacion();
@@ -222,7 +233,7 @@ public class CustomerCareOla2 extends TestBase {
 		Assert.assertTrue(false);
 	}
 	
-	@Test (groups = {"CustomerCare", "Ola2", "Marcas"}, dataProvider = "CustomerCuentaActiva")  //No anda el boton Consultar
+	@Test (groups = {"CustomerCare", "Ola2", "Marcas"}, dataProvider = "CustomerCuentaActiva")  //Hay que preguntar como es el caso
 	public void TS96132_360_View_POSTPAGO_UX_Visualizacion_Resumen_de_Facturacion_Verificar_que_mas_detalle_de_un_registro_especifico_de_pago_del_grupo_3_se_muestra_el_campo_Fecha_ATM_dd_mm_aaaa(String cCuenta) {
 		cc.elegirCuenta(cCuenta);
 		cc.irAFacturacion();
@@ -230,7 +241,7 @@ public class CustomerCareOla2 extends TestBase {
 		Assert.assertTrue(false);
 	}
 	
-	@Test (groups = {"CustomerCare", "Ola2", "Marcas"}, dataProvider = "CustomerCuentaActiva")  //No anda el boton Consultar
+	@Test (groups = {"CustomerCare", "Ola2", "Marcas"}, dataProvider = "CustomerCuentaActiva")  //Hay que preguntar como es el caso
 	public void TS96131_360_View_POSTPAGO_UX_Visualizacion_Resumen_de_Facturacion_Verificar_que_mas_detalle_de_un_registro_especifico_de_pago_del_grupo_3_se_muestra_el_campo_Usuario_Modificacion_texto(String cCuenta) {
 		cc.elegirCuenta(cCuenta);
 		cc.irAFacturacion();
@@ -238,7 +249,7 @@ public class CustomerCareOla2 extends TestBase {
 		Assert.assertTrue(false);
 	}
 	
-	@Test (groups = {"CustomerCare", "Ola2", "Marcas"}, dataProvider = "CustomerCuentaActiva")  //No anda el boton Consultar
+	@Test (groups = {"CustomerCare", "Ola2", "Marcas"}, dataProvider = "CustomerCuentaActiva")  //Hay que preguntar como es el caso
 	public void TS96130_360_View_POSTPAGO_UX_Visualizacion_Resumen_de_Facturacion_Verificar_que_mas_detalle_de_un_registro_especifico_de_pago_del_grupo_3_se_muestra_el_campo_Usuario_texto(String cCuenta) {
 		cc.elegirCuenta(cCuenta);
 		cc.irAFacturacion();

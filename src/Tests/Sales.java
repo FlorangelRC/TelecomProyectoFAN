@@ -57,8 +57,8 @@ public class Sales extends TestBase {
 	String plan="Plan prepago nacional";
 	String telefono="1565987464";
 	String impositiva="IVA Consumidor Final";
-	String provincia="Buenos Aires" ;
-	String localidad="Vicente Lopez";
+	String provincia="Santa Fe" ;
+	String localidad="ROSARIO";
 	String calle="Santa Fe";
 	String local="no"; 
 	String altura="123"; 
@@ -70,13 +70,13 @@ public class Sales extends TestBase {
 	String[] genero = {"masculino","femenino"};
 	String[] DocValue = {"52698550","3569874563","365","ssss"};
 	
-	@AfterClass(alwaysRun=true)
+	//@AfterClass(alwaysRun=true)
 	public void tearDown() {
 		driver.close();
 		driver.quit();
 	}
 	
-	@AfterMethod(alwaysRun=true)
+	//@AfterMethod(alwaysRun=true)
 	public void deslogin(){
 		sleep(2000);
 		SalesBase SB = new SalesBase(driver);
@@ -238,7 +238,7 @@ public class Sales extends TestBase {
 		//System.out.println(coldni.getText());
 		//System.out.println(asd);
 		Assert.assertTrue(coldni.getText().equals(asd));	
-		}
+	}
 	
 	@Test(groups={"Sales", "AltaDeContacto","Ola1"}, priority=2)
 	public void TS94570_Verificar_que_el_campo_Numero_de_documento_no_tenga_menos_de_7_digitos()	{
@@ -543,14 +543,14 @@ public class Sales extends TestBase {
 			}
 		CustomerCare page = new CustomerCare(driver);
 		sleep(15000);
-		sb.Crear_DomicilioLegal("Buenos Aires","Vicente Lopez","falsa", "", "5846", "", "", "5248");
+		sb.Crear_DomicilioLegal(provincia,localidad,"falsa", "", "5846", "", "", "5248");
 		sleep(25000);
 		WebElement sig = driver.findElement(By.id("LineAssignment_nextBtn"));
 		page.obligarclick(sig);
 		sleep(10000);
 		page.obligarclick(driver.findElement(By.id("DeliveryMethodSelection_nextBtn")));
 		sleep(15000);
-		sb.Crear_DireccionEnvio("Buenos Aires","VICENTE LOPEZ","falsa", "", "5846", "", "", "c5248aaa","01125348657","01125348658");
+		sb.Crear_DireccionEnvio(provincia,localidad,"falsa", "", "5846", "", "", "c5248aaa","01125348657","01125348658");
 		sleep(12000);
 		/*page.obligarclick(driver.findElement(By.id("ICCDAssignment_nextBtn")));
 		sleep(10000);*/
@@ -1228,7 +1228,7 @@ public class Sales extends TestBase {
 	@Test(groups={"Sales", "AltaDeContacto","Ola1"}, priority=2)
 	public void TS94565_Alta_Contacto_Persona_Fisica_Verificar_LOV_Del_Campo_Tipo_De_Documento() {
 		SalesBase SB = new SalesBase(driver);
-		String[] todos = {"dni","cuit","pasaporte","libreta civica","libreta de enrolamiento","cedula de identidad"};
+		String[] todos = {"dni","pasaporte","libreta civica","libreta de enrolamiento","cedula de identidad"};
 		Select listSelect = new Select(driver.findElement(By.id("SearchClientDocumentType")));
 		List<WebElement> motivos = listSelect.getOptions();
 	    assertTrue(verificarContenidoLista(todos,motivos));
@@ -1475,7 +1475,7 @@ public class Sales extends TestBase {
 		sleep(20000);
 		SB.acciondecontacto("catalogo");
 		sleep(15000);
-		SB.elegirplan("plan prepago nacional");
+		SB.elegirplan("plan con tarjeta");
 		SB.continuar();
 		SB.validarpasos();			
 	}
@@ -1577,12 +1577,12 @@ public class Sales extends TestBase {
 		SB.BuscarCuenta(DNI, "");
 		SB.acciondecontacto("catalogo");
 		sleep(20000);
-		SB.elegirplan("Plan prepago nacional");
+		SB.elegirplan("Plan con tarjeta");
 		sleep(20000);
 		List <WebElement> plan = driver.findElements(By.cssSelector(".slds-button.cpq-item-has-children"));
 		boolean a = false;
 		for (WebElement x : plan) {
-			if (x.getText().toLowerCase().contains("plan prepago nacional")) {
+			if (x.getText().toLowerCase().contains("plan con tarjeta")) {
 				a = true;
 			}
 		}
@@ -1790,10 +1790,10 @@ public class Sales extends TestBase {
 		contact.sex("masculino");
 		driver.findElement(By.id("Contact_nextBtn")).click();
 		sleep(20000);
-		sb.elegirplan("Plan prepago nacional");
+		sb.elegirplan("Plan con tarjeta");
 		sb.continuar();
 		sleep(25000);
-		sb.Crear_DomicilioLegal("Buenos Aires", "Vicente Lopez", "falsa", "", "1000", "", "", "1549");
+		sb.Crear_DomicilioLegal(provincia, localidad, "falsa", "", "1000", "", "", "1549");
 		sleep(35000);
 		page.obligarclick(driver.findElement(By.id("LineAssignment_nextBtn")));
 		sleep(15000);
@@ -1896,7 +1896,7 @@ public class Sales extends TestBase {
 	      SalesBase SB = new SalesBase(driver); 
 	      SB.BuscarCuenta(DNI, sDni); 
 	      SB.acciondecontacto("catalogo"); 
-	      SB.elegirplan("plan prepago nacional"); 
+	      SB.elegirplan("plan con tarjeta"); 
 	      sleep(15000); 
 	      Assert.assertTrue(driver.findElement(By.cssSelector(".slds-button.slds-m-left--large.slds-button--brand.ta-button-brand")).getText().contains("Continuar")); 
 	    } 
@@ -1994,7 +1994,7 @@ public class Sales extends TestBase {
 	      SalesBase SB = new SalesBase(driver); 
 	      SB.BuscarCuenta(DNI, sDni); 
 	      SB.acciondecontacto("catalogo"); 
-	      SB.elegirplan("plan prepago nacional"); 
+	      SB.elegirplan("plan con tarjeta"); 
 	      sleep(15000); 
 	      driver.findElement(By.cssSelector(".slds-button.slds-button_icon-border-filled.cpq-item-actions-dropdown-button")).click();
 	      sleep(1000);
@@ -2009,7 +2009,7 @@ public class Sales extends TestBase {
 	      List <WebElement> plan = driver.findElements(By.cssSelector(".slds-button.cpq-item-has-children")); 
 	      int a = 0; 
 	      for (WebElement x : plan) { 
-	        if (x.getText().toLowerCase().contains("plan prepago nacional")) { 
+	        if (x.getText().toLowerCase().contains("plan con tarjeta")) { 
 	          a++; 
 	        } 
 	      } 
@@ -2019,10 +2019,11 @@ public class Sales extends TestBase {
 	    @Test(groups = {"Sales", "AltaDeLinea","Ola1"}, priority=3, dataProvider="SalesContactoSinCuenta") 
 	    public void TS95061_Ventas_General_Visualizar_botones_Agregar_Eliminar(String sCuenta, String sDni) { 
 	      SalesBase SB = new SalesBase(driver); 
+	      sleep(4000);
 	      SB.BuscarCuenta(DNI, sDni); 
 	      SB.acciondecontacto("catalogo"); 
-	      SB.elegirplan("plan prepago nacional"); 
-	      sleep(15000); 
+	      SB.elegirplan("plan con tarjeta"); 
+	      sleep(18000); 
 	      boolean a = false; 
 	      boolean b = false; 
 	      driver.findElement(By.cssSelector(".slds-button.slds-button_icon-border-filled.cpq-item-actions-dropdown-button")).click();
@@ -2098,7 +2099,7 @@ public class Sales extends TestBase {
 		contact.sex("masculino");
 		driver.findElement(By.id("Contact_nextBtn")).click();
 		sleep(20000);
-		sb.elegirplan("Plan prepago nacional");
+		sb.elegirplan("Plan con tarjeta");
 		sb.continuar();
 		sleep(25000);
 		WebElement titulo = driver.findElement(By.cssSelector(".slds-page-header__title.vlc-slds-page-header__title.slds-truncate.ng-binding"));
@@ -2292,7 +2293,7 @@ public class Sales extends TestBase {
 			contact.sex("masculino");
 			driver.findElement(By.id("Contact_nextBtn")).click();
 			sleep(20000);
-			SB.elegirplan("Plan prepago nacional");
+			SB.elegirplan("Plan con tarjeta");
 			SB.continuar();
 			sleep(25000);
 			driver.findElement(By.id("ImpositiveCondition")).click();
@@ -2836,7 +2837,7 @@ public class Sales extends TestBase {
 		
 		sleep(14000);
 		driver.switchTo().frame(accountPage.getFrameForElement(driver, By.cssSelector(".slds-input.ng-pristine.ng-untouched.ng-valid.ng-empty")));
-		SB.elegirplan("Plan prepago nacional");
+		SB.elegirplan("Plan con tarjeta");
 		SB.continuar();
 		sleep(25000);
 		SB.Crear_DomicilioLegal(provincia, localidad, "falsa", "", "1000", "", "", "1549");
@@ -2844,8 +2845,8 @@ public class Sales extends TestBase {
 		WebElement sig = driver.findElement(By.id("LineAssignment_nextBtn"));
 		sig.click();
 		sleep(12000);
-		cc.obligarclick(driver.findElement(By.id("ICCDAssignment_nextBtn")));
-		sleep(20000);
+		/*cc.obligarclick(driver.findElement(By.id("ICCDAssignment_nextBtn")));
+		sleep(20000);*/
 		Select deliv = new Select(driver.findElement(By.id("DeliveryMethod")));
 		System.out.println(deliv.getFirstSelectedOption());
 		Assert.assertTrue(deliv.getFirstSelectedOption().getText().equals("Delivery"));
