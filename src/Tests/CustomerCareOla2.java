@@ -41,7 +41,7 @@ public class CustomerCareOla2 extends TestBase {
 		}
 	}
 	
-	//@AfterClass (alwaysRun = true, groups = {"CustomerCare", "Ola2", "Marcas"})
+	@AfterClass (alwaysRun = true, groups = {"CustomerCare", "Ola2", "Marcas"})
 	public void exit() {
 		driver.quit();
 		sleep(5000);
@@ -62,14 +62,14 @@ public class CustomerCareOla2 extends TestBase {
 		Assert.assertTrue(fechaHasta.getAttribute("value").contentEquals(fechaDeHoy()));
 	}
 	
-	@Test (groups = {"CustomerCare", "Ola2", "Marcas"}, dataProvider = "CustomerCuentaActiva")
+	@Test (groups = {"CustomerCare", "Ola2", "Marcas"}, dataProvider = "CustomerCuentaActiva") //Rompe porque no existe la gestion Marcas, se paso a Ola 3 y no esta en funcionamiento
 	public void TS100963_Marks_Management_Base_Conocimiento_Acceso_a_base_de_conocimiento(String cCuenta) {
 		cc.elegirCuenta(cCuenta);
 		cc.irAGestion("marcas");
 		Assert.assertTrue(cc.verificarBaseConocimientoMarcas());
 	}
 	
-	@Test (groups = {"CustomerCare", "Ola2", "Marcas"}, dataProvider = "CustomerCuentaActiva")
+	@Test (groups = {"CustomerCare", "Ola2", "Marcas"}, dataProvider = "CustomerCuentaActiva")  //Rompe porque no existe la gestion Marcas, se paso a Ola 3 y no esta en funcionamiento
 	public void TS100967_Marks_Management_Escenario_de_Casos_Existentes_Ingresar_comentarios(String cCuenta) {
 		cc.elegirCuenta(cCuenta);
 		cc.irAGestion("marcas");
@@ -81,7 +81,7 @@ public class CustomerCareOla2 extends TestBase {
 		Assert.assertTrue(cc.campoComentarios().isDisplayed());
 	}
 	
-	@Test (groups = {"CustomerCare", "Ola2", "Marcas"}, dataProvider = "CustomerCuentaActiva")
+	@Test (groups = {"CustomerCare", "Ola2", "Marcas"}, dataProvider = "CustomerCuentaActiva")  //Rompe porque no existe la gestion Marcas, se paso a Ola 3 y no esta en funcionamiento
 	public void TS100971_Marks_Management_Marcas_Session_Guiada_Botón_en_Iniciar_gestiones(String cCuenta) {
 		cc.elegirCuenta(cCuenta);
 		cc.irAGestion("marcas");
@@ -101,7 +101,7 @@ public class CustomerCareOla2 extends TestBase {
 		Assert.assertTrue(driver.findElement(By.id("text-input-id-1")).getAttribute("value").equals(date1));
 	}
 	
-	@Test (groups = {"CustomerCare", "Ola2", "Marcas"}, dataProvider = "CustomerCuentaActiva")
+	@Test (groups = {"CustomerCare", "Ola2", "Marcas"}, dataProvider = "CustomerCuentaActiva")  //Rompe porque no existe la gestion Marcas, se paso a Ola 3 y no esta en funcionamiento
 	public void TS100965_Mark_Management_Resumen_Caso_Solicitud_Aplicacion_Marcas_Visualizar_mensaje(String cCuenta) {
 		cc.elegirCuenta(cCuenta);
 		cc.irAGestion("marcas");
@@ -164,7 +164,7 @@ public class CustomerCareOla2 extends TestBase {
 		Assert.assertTrue(comp.getText().toLowerCase().contains("comprobantes"));
 	}
 	
-	@Test (groups = {"CustomerCare", "Ola2", "Marcas"}, dataProvider = "CustomerCuentaActiva")
+	@Test (groups = {"CustomerCare", "Ola2", "Marcas"}, dataProvider = "CustomerCuentaActiva")  //Requiere actualizacion
 	public void TS118732_360_View_POSTPAGO_Visualizacion_Resumen_de_Facturacion_Fecha_Desde_muestra_griseadas_las_fechas_anteriores_a_6_meses_de_la_fecha_actual(String cCuenta) {
 		Date date = new Date();
 		Calendar cal = Calendar.getInstance(); 
