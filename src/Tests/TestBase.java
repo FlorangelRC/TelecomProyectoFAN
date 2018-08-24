@@ -42,6 +42,7 @@ import DataProvider.ExcelUtils;
 
 public class TestBase {
 	protected static WebDriver driver;//
+	//protected String urlAmbiente = "https://telecomcrm--uat.cs53.my.salesforce.com";
 	protected String urlAmbiente = "https://crm--sit.cs14.my.salesforce.com/";
 	
 	
@@ -1128,8 +1129,16 @@ public class TestBase {
 	@DataProvider
 	public Object[][] DatosAltaEquipoExiste() throws Exception{
 
-	 Object[][] testObjArray = ExcelUtils.getTableArray("Cuentas.xlsx","PerfilGestiones",1,1,9,"Alta Linea Equipo Existe");
+	 Object[][] testObjArray = ExcelUtils.getTableArray("Cuentas.xlsx","PreparacionDatos",1,1,9,"Alta Linea Equipo Existe");
 
 	 return (testObjArray);
+	}
+	@DataProvider
+	public Object[][] AltaLineaEquipoClienteExistente() throws Exception{
+
+	 Object[][] testObjArray = ExcelUtils.getTableArray("Cuentas.xlsx","PerfilGestiones",1,1,5,"Alta Linea Equipo Cliente Existente");
+
+	 return (testObjArray);
+
 	}
 }

@@ -192,13 +192,18 @@ public class GestionesPerfilTelefonico extends TestBase{
 		CustomerCare cCC = new CustomerCare(driver);
 		cCC.irAGestionEnCard("Renovacion de Datos");
 		sleep(10000);
-		driver.switchTo().frame(cambioFrame(driver, By.id("combosMegas")));
-		driver.findElement(By.id("combosMegas")).findElements(By.className("slds-checkbox")).get(2).click();
+		try {
+			driver.switchTo().frame(cambioFrame(driver, By.id("combosMegas")));
+			driver.findElement(By.id("combosMegas")).findElements(By.className("slds-checkbox")).get(2).click();
+		}
+		catch (Exception ex) {
+			//Allways Empty
+		}
 		sleep(2000);
-		Assert.assertTrue(driver.findElement(By.cssSelector(".message.description.ng-binding.ng-scope")).getText().equalsIgnoreCase("saldo insuficiente"));
+		Assert.assertTrue(driver.findElement(By.cssSelector(".slds-form-element.vlc-flex.vlc-slds-text-block.vlc-slds-rte.ng-pristine.ng-valid.ng-scope")).findElement(By.className("ng-binding")).findElement(By.tagName("p")).getText().equalsIgnoreCase("saldo insuficiente"));
 	}
 	
-	@Test (groups = {"GestionesPerfilTelefonico", "RenovacioDeCuota","E2E"}, dataProvider="RenovacionCuotaConSaldo")
+	@Test (groups = {"GestionesPerfilTelefonico", "RenovacionDeCuota"}, dataProvider="RenovacionCuotaConSaldo")
 	public void TS_CRM_Movil_REPRO_Renovacion_De_Cuota_Telefonico_Descuento_De_Saldo_Con_Credito(String sCuenta, String sDNI, String sLinea) {
 		BasePage cambioFrameByID=new BasePage();
 		driver.switchTo().frame(cambioFrameByID.getFrameForElement(driver, By.id("SearchClientDocumentType")));
