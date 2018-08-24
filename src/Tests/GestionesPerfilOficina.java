@@ -1137,9 +1137,8 @@ public class GestionesPerfilOficina extends TestBase {
 		driver.switchTo().frame(cambioFrame(driver, By.id("SearchClientDocumentType")));
 		sb.BuscarCuenta("DNI", "35653982");
 		driver.findElement(By.cssSelector(".slds-tree__item.ng-scope")).click();
-		driver.findElement(By.cssSelector(".slds-tree__item.ng-scope")).click();
 		cc.irAGestion("suspensiones y reconexion back");
-		sleep(15000);
+		sleep(40000);
 		driver.switchTo().frame(cambioFrame(driver, By.id("Step1SelectSuspensionOrReconnection_nextBtn")));
 		buscarYClick(driver.findElements(By.cssSelector(".slds-form-element__label.ng-binding.ng-scope")), "contains", "habilitaci\u00f3n");
 		driver.findElement(By.id("Step1SelectSuspensionOrReconnection_nextBtn")).click();
@@ -1168,5 +1167,47 @@ public class GestionesPerfilOficina extends TestBase {
 		String orden = cc.obtenerOrden(driver, "Habilitaci\u00f3n administrativa");
 		sOrders.add("Rehabilitacion administrativa, orden numero: " + orden + " con numero de DNI: " + "35653982");
 		System.out.println(sOrders);	
+	}
+	
+	@Test
+	public void TS_98590_CRM_Movil_REPRO_Rehabilitacion_por_Siniestro_Presencial_Robo_Linea() {
+		driver.switchTo().frame(cambioFrame(driver, By.id("SearchClientDocumentType")));
+		sb.BuscarCuenta("DNI", "35653982");
+		driver.findElement(By.cssSelector(".slds-tree__item.ng-scope")).click();
+		sleep(8000);
+		cc.irAGestion("suspensiones");
+		sleep(20000);
+		driver.switchTo().frame(cambioFrame(driver, By.id("Step1-SuspensionOrReconnection_nextBtn")));
+		buscarYClick(driver.findElements(By.cssSelector(".slds-form-element__label.ng-binding.ng-scope")),"contains", "habilitaci\u00f3n");
+		driver.findElement(By.id("Step1-SuspensionOrReconnection_nextBtn")).click();
+		sleep(8000);
+		buscarYClick(driver.findElements(By.cssSelector(".ta-radioBtnContainer.taBorderOverlay.slds-grid.slds-grid--align-center.slds-grid--vertical-align-center.ng-scope")), "contains", "validaci\u00f3n por documento de identidad");
+		driver.findElement(By.id("MethodSelection_nextBtn")).click();
+		sleep(8000);
+		driver.findElement(By.id("FileDocumentImage")).sendKeys("C:\\Users\\xappiens\\Pictures\\Saved Pictures\\calavera.jpg");
+		driver.findElement(By.id("DocumentMethod_nextBtn")).click();
+		sleep(8000);
+		driver.findElement(By.id("ValidationResult_nextBtn")).click();
+		sleep(8000);
+		buscarYClick(driver.findElements(By.cssSelector(".slds-form-element__label.ng-binding.ng-scope")),"contains","linea");
+		driver.findElement(By.id("Step2-AssetTypeSelection_nextBtn")).click();
+		sleep(8000);
+		buscarYClick(driver.findElements(By.cssSelector(".slds-form-element__label.ng-binding")),"contains", "l\u00ednea: 3574409530");
+		driver.findElement(By.id("Step3-AvailableAssetsSelection_nextBtn")).click();
+		sleep(8000);
+		driver.findElement(By.id("Step6-Summary_nextBtn")).click();
+		sleep(15000);
+		boolean b = false;
+		List <WebElement> prov = driver.findElements(By.cssSelector(".slds-box.ng-scope"));
+		for(WebElement x : prov) {
+			if(x.getText().toLowerCase().contains("tu solicitud est\u00e1 siendo procesada.")) {
+				b = true;
+			}			
+		}
+		Assert.assertTrue(b);
+		sleep(8000);
+		String orden = cc.obtenerOrden(driver, "Reconexi\u00f3n de Linea");
+		sOrders.add("Rehabilitacion, orden numero: " + orden + " con numero de DNI: " + "35653982");
+		System.out.println(sOrders);
 	}
 }	
