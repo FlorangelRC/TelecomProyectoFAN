@@ -34,15 +34,15 @@ public class CustomerCareOla1 extends TestBase {
 		cc = new CustomerCare(driver);
 		cc.login("SIT");
 		try {
-		cc.cajonDeAplicaciones("Consola FAN");
-		}catch(Exception ex) {
+			cc.cajonDeAplicaciones("Consola FAN");
+		} catch(Exception e) {
 			sleep(3000);
 			driver.findElement(By.id("tabBar")).findElement(By.tagName("a")).click();
 			sleep(6000);
 		}
 	}
 	
-	//@AfterClass (alwaysRun = true, groups = {"CustomerCare", "AjustesYEscalamiento", "SuspensionYRehabilitacion", "ProblemasConRecargas", "Ola1"})
+	@AfterClass (alwaysRun = true, groups = {"CustomerCare", "AjustesYEscalamiento", "SuspensionYRehabilitacion", "ProblemasConRecargas", "Ola1"})
 	public void quit() {
 		driver.quit();
 		sleep(5000);
@@ -426,7 +426,6 @@ public class CustomerCareOla1 extends TestBase {
 	public void TS96074_360_VIEW_Suspensiones_and_Reconexiones_Seleccionar_tipo_Siniestro_Visualizar_opcion_Tipo_de_Siniestro(String cCuenta) {
 		cc.elegirCuenta(cCuenta);
 		cc.irAGestion("suspensiones");
-		driver.switchTo().frame(cambioFrame(driver, By.id("Step1-SuspensionOrReconnection_nextBtn")));
 		buscarYClick(driver.findElements(By.cssSelector(".slds-form-element__label.ng-binding.ng-scope")), "contains", "suspensi\u00f3n");
 		driver.findElement(By.id("Step1-SuspensionOrReconnection_nextBtn")).click();
 		sleep(5000);
@@ -476,7 +475,6 @@ public class CustomerCareOla1 extends TestBase {
 	public void TS96078_Suspensiones_and_Reconexiones_Seleccionar_Tipo_de_gestion_Suspension_Reconexion_Verficiar_que_al_seleccionar_Suspension_se_muestren_las_opciones_Linea_Linea__Equipo_Equipo(String cCuenta) {
 		cc.elegirCuenta(cCuenta);
 		cc.irAGestion("suspensiones");
-		driver.switchTo().frame(cambioFrame(driver, By.id("Step1-SuspensionOrReconnection_nextBtn")));
 		buscarYClick(driver.findElements(By.cssSelector(".slds-form-element__label.ng-binding.ng-scope")), "contains", "suspensi\u00f3n");
 		driver.findElement(By.id("Step1-SuspensionOrReconnection_nextBtn")).click();
 		sleep(5000);
@@ -909,14 +907,8 @@ public class CustomerCareOla1 extends TestBase {
 	public void TS69190_360_View_Visualizacion_de_gestiones_desde_el_asset_Detalles_Gestion_Columna_numero(String cCuenta) {
 		cc.elegirCuenta(cCuenta);
 		driver.switchTo().frame(cambioFrame(driver, By.className("card-top")));
-		driver.findElement(By.className("card-top")).click();
-	    sleep(5000);
-	    driver.switchTo().frame(cambioFrame(driver, By.className("community-flyout-actions-card")));
-	    ((JavascriptExecutor)driver).executeScript("window.scrollTo(0,"+driver.findElement(By.className("community-flyout-actions-card")).getLocation().y+")");
-	    sleep(3000);
-	    WebElement x = driver.findElement(By.className("community-flyout-actions-card")).findElement(By.tagName("ul"));
-	    List <WebElement> menu = x.findElements(By.tagName("li"));
-	    menu.get(4).click();
+		WebElement card = driver.findElement(By.className("card-info"));
+	    buscarYClick(card.findElements(By.className("slds-text-body_regular")), "equals", "gestiones");
 	    sleep(5000);
 	    driver.switchTo().frame(cambioFrame(driver, By.cssSelector(".slds-button.slds-button--brand.filterNegotiations.slds-p-horizontal--x-large.slds-p-vertical--x-small")));
 	    driver.findElement(By.cssSelector(".slds-button.slds-button--brand.filterNegotiations.slds-p-horizontal--x-large.slds-p-vertical--x-small")).click();
@@ -931,15 +923,10 @@ public class CustomerCareOla1 extends TestBase {
 	@Test(groups = {"CustomerCare", "ProblemasConRecargas", "Ola1"}, dataProvider = "CustomerCuentaActiva")  //Rompe porque no ordena en orden alfabetico
 	public void TS69182_360_View_Visualizacion_de_gestiones_desde_el_asset_Estado_Ordenar_ascendente(String cCuenta) throws ParseException {
 		cc.elegirCuenta(cCuenta);
+		sleep(5000);
 		driver.switchTo().frame(cambioFrame(driver, By.className("card-top")));
-		driver.findElement(By.className("card-top")).click();
-	    sleep(5000);
-	    driver.switchTo().frame(cambioFrame(driver, By.className("community-flyout-actions-card")));   
-	    ((JavascriptExecutor)driver).executeScript("window.scrollTo(0,"+driver.findElement(By.className("community-flyout-actions-card")).getLocation().y+")");
-	    sleep(3000);
-	    WebElement x = driver.findElement(By.className("community-flyout-actions-card")).findElement(By.tagName("ul"));
-	    List <WebElement> menu = x.findElements(By.tagName("li"));
-	    menu.get(4).click();
+	    WebElement card = driver.findElement(By.className("card-info"));
+	    buscarYClick(card.findElements(By.className("slds-text-body_regular")), "equals", "gestiones");
 	    sleep(5000);
 	    driver.switchTo().frame(cambioFrame(driver, By.cssSelector(".slds-button.slds-button--brand.filterNegotiations.slds-p-horizontal--x-large.slds-p-vertical--x-small")));
 	    driver.findElement(By.cssSelector(".slds-button.slds-button--brand.filterNegotiations.slds-p-horizontal--x-large.slds-p-vertical--x-small")).click();
@@ -949,18 +936,13 @@ public class CustomerCareOla1 extends TestBase {
 	    Assert.assertTrue(scp.Triangulo_Ordenador_Validador(driver, By.cssSelector(".slds-table.slds-table--bordered.slds-table--resizable-cols.slds-table--fixed-layout.via-slds-table-pinned-header"), 5, 5));
 	}
 	
-	@Test(groups = {"CustomerCare", "ProblemasConRecargas", "Ola1"}, dataProvider = "CustomerCuentaActiva")
+	@Test(groups = {"CustomerCare", "ProblemasConRecargas", "Ola1"}, dataProvider = "CustomerCuentaActiva")  //Rompe porque no ordena en orden alfabetico
 	public void TS69187_360_View_Visualizacion_de_gestiones_desde_el_asset_Estado_Ordenar_descendente(String cCuenta) throws ParseException {
 		cc.elegirCuenta(cCuenta);
+		sleep(5000);
 		driver.switchTo().frame(cambioFrame(driver, By.className("card-top")));
-		driver.findElement(By.className("card-top")).click();
-	    sleep(5000);
-	    driver.switchTo().frame(cambioFrame(driver, By.className("community-flyout-actions-card")));  
-	    ((JavascriptExecutor)driver).executeScript("window.scrollTo(0,"+driver.findElement(By.className("community-flyout-actions-card")).getLocation().y+")");
-	    sleep(3000);
-	    WebElement x = driver.findElement(By.className("community-flyout-actions-card")).findElement(By.tagName("ul"));
-	    List <WebElement> element = x.findElements(By.tagName("li"));
-	    element.get(4).click();
+	    WebElement card = driver.findElement(By.className("card-info"));
+	    buscarYClick(card.findElements(By.className("slds-text-body_regular")), "equals", "gestiones");
 	    sleep(5000);
 	    driver.switchTo().frame(cambioFrame(driver, By.cssSelector(".slds-button.slds-button--brand.filterNegotiations.slds-p-horizontal--x-large.slds-p-vertical--x-small")));
 	    driver.findElement(By.cssSelector(".slds-button.slds-button--brand.filterNegotiations.slds-p-horizontal--x-large.slds-p-vertical--x-small")).click();
@@ -978,14 +960,14 @@ public class CustomerCareOla1 extends TestBase {
 	    }
 	    list.get(4).click();
 	    list.get(4).click();
-	    List <String> sListOrderedOnPage = scp.TraerColumna(table, 5, 5);
+	    /*List <String> sListOrderedOnPage = scp.TraerColumna(table, 5, 5);
 	    boolean a = false;
 	    for (int i=0; i<sList.size(); i++) {
 	    	if (sListOrdered.get(i).equals(sListOrderedOnPage.get(i))) {
 	    		a = true;
 	    	}
-	    }
-	    Assert.assertTrue(a);
+	    }*/
+	    Assert.assertTrue(false);
 	}
 	
 	@Test (groups= {"CustomerCare", "ProblemasConRecargas", "Ola1"}, dataProvider = "CustomerCuentaActiva")
@@ -1191,7 +1173,7 @@ public class CustomerCareOla1 extends TestBase {
 		Assert.assertTrue(a);
 	}
 	
-	@Test (groups= {"CustomerCare", "ProblemasConRecargas", "Ola1"}, dataProvider = "CustomerCuentaActiva")  //Rompe por falta de privilegios en la Base de Conocimiento
+	@Test (groups= {"CustomerCare", "ProblemasConRecargas", "Ola1"}, dataProvider = "CustomerCuentaActiva")
 	public void TS69021_Problems_with_Refills_Problemas_con_Recargas_Base_de_Conocimiento_Tarjeta_Prepaga_OS_Verificar_articulo_en_Base_de_conocimiento(String cCuenta) {
 		cc.elegirCuenta(cCuenta);
 		cc.tarjetaPrepaga();
