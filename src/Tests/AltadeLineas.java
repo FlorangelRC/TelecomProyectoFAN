@@ -313,7 +313,10 @@ public class AltadeLineas extends TestBase {
 			cc.obligarclick(driver.findElement(By.id("DeliveryMethodConfiguration_nextBtn")));
 			sleep(20000);
 		}
-		
+		try {
+			cc.obligarclick(driver.findElement(By.id("Step_Error_Huawei_S015_nextBtn")));
+		}catch(Exception ex1) {}
+		sleep(15000);
 		cc.obligarclick(driver.findElement(By.id("InvoicePreview_nextBtn")));
 		sleep(20000);
 		try {
@@ -623,8 +626,8 @@ public class AltadeLineas extends TestBase {
 		}
 	}
 	
-	@Test(groups={"Sales", "AltaLineaDatos","E2E"}, priority=1, dataProvider="PerfilCuentaSeiscientos")
-	public void TS125214_CRM_Movil_PRE_Alta_Linea_con_Equipo_Cliente_existente_Presencial_OFCOM(String sDni, String sNombre, String sCuenta, String sLinea) throws IOException {
+	@Test(groups={"Sales", "AltaLineaDatos","E2E"}, priority=1, dataProvider="AltaLineaEquipoClienteExistente")
+	public void TS125214_CRM_Movil_PRE_Alta_Linea_con_Equipo_Cliente_existente_Presencial_OFCOM(String sDni, String sNombre, String sPlan, String sProvincia, String sLocalidad) throws IOException {
 		CustomerCare cc = new CustomerCare(driver);
 		SalesBase sb = new SalesBase(driver);
 		sleep(5000);
@@ -652,8 +655,6 @@ public class AltadeLineas extends TestBase {
 		sleep(5000);	
 		sb.continuar();
 		sleep(24000);
-		sb.Crear_DomicilioLegal(sProvincia, sLocalidad, "falsa", "", "1000", "", "", "1549");
-		sleep(24000);
 		WebElement sig = driver.findElement(By.id("LineAssignment_nextBtn"));
 		cc.obligarclick(sig);
 		sleep(23000);
@@ -665,7 +666,8 @@ public class AltadeLineas extends TestBase {
 		}catch(Exception ex1) {}
 		sb.elegirvalidacion("DOC");
 		sleep(8000);
-		driver.findElement(By.id("FileDocumentImage")).sendKeys("C:\\Users\\Sofia Chardin\\Desktop\\DNI.jpg");
+		driver.findElement(By.id("FileDocumentImage")).sendKeys("C:\\Users\\florangel\\Downloads\\mapache.jpg");
+		//driver.findElement(By.id("FileDocumentImage")).sendKeys("C:\\Users\\Sofia Chardin\\Desktop\\DNI.jpg");
 		sleep(3000);
 		cc.obligarclick(driver.findElement(By.id("DocumentMethod_nextBtn")));
 		sleep(10000);
@@ -692,11 +694,11 @@ public class AltadeLineas extends TestBase {
 			CBS_Mattu invoSer = new CBS_Mattu();
 			invoSer.openPage2(orden);
 			sleep(5000);
-			CambiarPerfil("logistica");
+			CambiarPerfil("logistica",driver);
 			sb.completarLogistica(orden, driver);
-			CambiarPerfil("entrega");
+			CambiarPerfil("entrega",driver);
 			sb.completarEntrega(orden, driver);
-			CambiarPerfil("ofcom");
+			CambiarPerfil("ofcom",driver);
 		}
 
 	}
@@ -766,11 +768,11 @@ public class AltadeLineas extends TestBase {
 			CBS_Mattu invoSer = new CBS_Mattu();
 			invoSer.openPage2(orden);
 			sleep(5000);
-			CambiarPerfil("logistica");
+			CambiarPerfil("logistica",driver);
 			sb.completarLogistica(orden, driver);
-			CambiarPerfil("entrega");
+			CambiarPerfil("entrega",driver);
 			sb.completarEntrega(orden, driver);
-			CambiarPerfil("ofcom");
+			CambiarPerfil("ofcom",driver);
 		}
 	}
 }
