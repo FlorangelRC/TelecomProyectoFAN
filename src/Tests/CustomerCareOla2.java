@@ -62,14 +62,14 @@ public class CustomerCareOla2 extends TestBase {
 		Assert.assertTrue(fechaHasta.getAttribute("value").contentEquals(fechaDeHoy()));
 	}
 	
-	@Test (groups = {"CustomerCare", "Ola2", "Marcas"}, dataProvider = "CustomerCuentaActiva") //Rompe porque no existe la gestion Marcas, se paso a Ola 3 y no esta en funcionamiento
+	//@Test (groups = {"CustomerCare", "Ola2", "Marcas"}, dataProvider = "CustomerCuentaActiva") //Rompe porque no existe la gestion Marcas, se paso a Ola 3 y no esta en funcionamiento
 	public void TS100963_Marks_Management_Base_Conocimiento_Acceso_a_base_de_conocimiento(String cCuenta) {
 		cc.elegirCuenta(cCuenta);
 		cc.irAGestion("marcas");
 		Assert.assertTrue(cc.verificarBaseConocimientoMarcas());
 	}
 	
-	@Test (groups = {"CustomerCare", "Ola2", "Marcas"}, dataProvider = "CustomerCuentaActiva")  //Rompe porque no existe la gestion Marcas, se paso a Ola 3 y no esta en funcionamiento
+	//@Test (groups = {"CustomerCare", "Ola2", "Marcas"}, dataProvider = "CustomerCuentaActiva")  //Rompe porque no existe la gestion Marcas, se paso a Ola 3 y no esta en funcionamiento
 	public void TS100967_Marks_Management_Escenario_de_Casos_Existentes_Ingresar_comentarios(String cCuenta) {
 		cc.elegirCuenta(cCuenta);
 		cc.irAGestion("marcas");
@@ -81,7 +81,7 @@ public class CustomerCareOla2 extends TestBase {
 		Assert.assertTrue(cc.campoComentarios().isDisplayed());
 	}
 	
-	@Test (groups = {"CustomerCare", "Ola2", "Marcas"}, dataProvider = "CustomerCuentaActiva")  //Rompe porque no existe la gestion Marcas, se paso a Ola 3 y no esta en funcionamiento
+	//@Test (groups = {"CustomerCare", "Ola2", "Marcas"}, dataProvider = "CustomerCuentaActiva")  //Rompe porque no existe la gestion Marcas, se paso a Ola 3 y no esta en funcionamiento
 	public void TS100971_Marks_Management_Marcas_Session_Guiada_Botón_en_Iniciar_gestiones(String cCuenta) {
 		cc.elegirCuenta(cCuenta);
 		cc.irAGestion("marcas");
@@ -101,7 +101,7 @@ public class CustomerCareOla2 extends TestBase {
 		Assert.assertTrue(driver.findElement(By.id("text-input-id-1")).getAttribute("value").equals(date1));
 	}
 	
-	@Test (groups = {"CustomerCare", "Ola2", "Marcas"}, dataProvider = "CustomerCuentaActiva")  //Rompe porque no existe la gestion Marcas, se paso a Ola 3 y no esta en funcionamiento
+	//@Test (groups = {"CustomerCare", "Ola2", "Marcas"}, dataProvider = "CustomerCuentaActiva")  //Rompe porque no existe la gestion Marcas, se paso a Ola 3 y no esta en funcionamiento
 	public void TS100965_Mark_Management_Resumen_Caso_Solicitud_Aplicacion_Marcas_Visualizar_mensaje(String cCuenta) {
 		cc.elegirCuenta(cCuenta);
 		cc.irAGestion("marcas");
