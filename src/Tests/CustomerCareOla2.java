@@ -153,7 +153,7 @@ public class CustomerCareOla2 extends TestBase {
 		Assert.assertTrue(false);
 	}
 	
-	@Test (groups = {"CustomerCare", "Ola2", "Marcas"}, dataProvider = "CustomerCuentaActiva")  //No anda el boton Consultar
+	@Test (groups = {"CustomerCare", "Ola2", "Marcas"}, dataProvider = "CustomerCuentaActiva")  //Hay que preguntar como es el caso
 	public void TS118763_360_View_Resumen_Cta_Cte_Simple_Integracion_historial_de_pagos_S059_Obtener_historial_de_pagos(String cCuenta) {
 		cc.elegirCuenta(cCuenta);
 		cc.irAFacturacion();
@@ -191,7 +191,7 @@ public class CustomerCareOla2 extends TestBase {
 		Assert.assertTrue((fh.split(" ")[3]+"-"+mes+"-"+fh.split(" ")[2]).contains(dateFormat.format(date)));
 	}
 	
-	@Test (groups = {"CustomerCare", "Ola2", "Marcas"}, dataProvider = "CustomerCuentaActiva")  //No anda el boton Consultar
+	@Test (groups = {"CustomerCare", "Ola2", "Marcas"}, dataProvider = "CustomerCuentaActiva")  //Hay que preguntar como es el caso
 	public void TS96127_360_View_POSTPAGO_UX_Visualizacion_Resumen_de_Facturacion_Verificar_que_mas_detalle_de_un_registro_especifico_de_pago_del_grupo_2_se_muestra_el_campo_Numero_de_Cupon_de_Telecom_Argentina_numero(String cCuenta) {
 		cc.elegirCuenta(cCuenta);
 		cc.irAFacturacion();
@@ -209,7 +209,7 @@ public class CustomerCareOla2 extends TestBase {
 		Assert.assertTrue(false);
 	}
 	
-	@Test (groups = {"CustomerCare", "Ola2", "Marcas"}, dataProvider = "CustomerCuentaActiva")  //No anda el boton Consultar
+	@Test (groups = {"CustomerCare", "Ola2", "Marcas"}, dataProvider = "CustomerCuentaActiva")  //Hay que preguntar como es el caso
 	public void TS96129_360_View_POSTPAGO_UX_Visualizacion_Resumen_de_Facturacion_Verificar_que_mas_detalle_de_un_registro_especifico_de_pago_del_grupo_2_se_muestra_el_campo_Tipo_Cupon_texto(String cCuenta) {
 		cc.elegirCuenta(cCuenta);
 		cc.irAFacturacion();
@@ -217,7 +217,7 @@ public class CustomerCareOla2 extends TestBase {
 		Assert.assertTrue(false);
 	}
 	
-	@Test (groups = {"CustomerCare", "Ola2", "Marcas"}, dataProvider = "CustomerCuentaActiva")  //No anda el boton Consultar
+	@Test (groups = {"CustomerCare", "Ola2", "Marcas"}, dataProvider = "CustomerCuentaActiva")  //Hay que preguntar como es el caso
 	public void TS96128_360_View_POSTPAGO_UX_Visualizacion_Resumen_de_Facturacion_Verificar_que_mas_detalle_de_un_registro_especifico_de_pago_del_grupo_2_se_muestra_el_campo_Tipo_de_Comprobante_texto(String cCuenta) {
 		cc.elegirCuenta(cCuenta);
 		cc.irAFacturacion();
@@ -225,7 +225,7 @@ public class CustomerCareOla2 extends TestBase {
 		Assert.assertTrue(false);
 	}
 	
-	@Test (groups = {"CustomerCare", "Ola2", "Marcas"}, dataProvider = "CustomerCuentaActiva")  //No anda el boton Consultar
+	@Test (groups = {"CustomerCare", "Ola2", "Marcas"}, dataProvider = "CustomerCuentaActiva")  //Hay que preguntar como es el caso
 	public void TS96133_360_View_POSTPAGO_UX_Visualizacion_Resumen_de_Facturacion_Verificar_que_mas_detalle_de_un_registro_especifico_de_pago_del_grupo_3_se_muestra_el_campo_Descripcion_de_Motivo_texto(String cCuenta) {
 		cc.elegirCuenta(cCuenta);
 		cc.irAFacturacion();
@@ -233,7 +233,7 @@ public class CustomerCareOla2 extends TestBase {
 		Assert.assertTrue(false);
 	}
 	
-	@Test (groups = {"CustomerCare", "Ola2", "Marcas"}, dataProvider = "CustomerCuentaActiva")  //No anda el boton Consultar
+	@Test (groups = {"CustomerCare", "Ola2", "Marcas"}, dataProvider = "CustomerCuentaActiva")  //Hay que preguntar como es el caso
 	public void TS96132_360_View_POSTPAGO_UX_Visualizacion_Resumen_de_Facturacion_Verificar_que_mas_detalle_de_un_registro_especifico_de_pago_del_grupo_3_se_muestra_el_campo_Fecha_ATM_dd_mm_aaaa(String cCuenta) {
 		cc.elegirCuenta(cCuenta);
 		cc.irAFacturacion();
@@ -241,7 +241,7 @@ public class CustomerCareOla2 extends TestBase {
 		Assert.assertTrue(false);
 	}
 	
-	@Test (groups = {"CustomerCare", "Ola2", "Marcas"}, dataProvider = "CustomerCuentaActiva")  //No anda el boton Consultar
+	@Test (groups = {"CustomerCare", "Ola2", "Marcas"}, dataProvider = "CustomerCuentaActiva")  //Hay que preguntar como es el caso
 	public void TS96131_360_View_POSTPAGO_UX_Visualizacion_Resumen_de_Facturacion_Verificar_que_mas_detalle_de_un_registro_especifico_de_pago_del_grupo_3_se_muestra_el_campo_Usuario_Modificacion_texto(String cCuenta) {
 		cc.elegirCuenta(cCuenta);
 		cc.irAFacturacion();
@@ -249,7 +249,7 @@ public class CustomerCareOla2 extends TestBase {
 		Assert.assertTrue(false);
 	}
 	
-	@Test (groups = {"CustomerCare", "Ola2", "Marcas"}, dataProvider = "CustomerCuentaActiva")  //No anda el boton Consultar
+	@Test (groups = {"CustomerCare", "Ola2", "Marcas"}, dataProvider = "CustomerCuentaActiva")  //Hay que preguntar como es el caso
 	public void TS96130_360_View_POSTPAGO_UX_Visualizacion_Resumen_de_Facturacion_Verificar_que_mas_detalle_de_un_registro_especifico_de_pago_del_grupo_3_se_muestra_el_campo_Usuario_texto(String cCuenta) {
 		cc.elegirCuenta(cCuenta);
 		cc.irAFacturacion();
