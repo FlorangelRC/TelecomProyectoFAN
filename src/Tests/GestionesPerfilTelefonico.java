@@ -310,9 +310,7 @@ public class GestionesPerfilTelefonico extends TestBase{
 	Store.selectByVisibleText("Centro de Servicio Santa Fe - Juan de Garay 444");
 	driver.findElement(By.id("DeliveryMethodConfiguration_nextBtn")).click();
 	sleep(12000);
-	((JavascriptExecutor)driver).executeScript("window.scrollTo(0,"+driver.findElement(By.id("InvoicePreview_nextBtn")).getLocation().y+")");
-	sleep(15000);
-	driver.findElement(By.id("InvoicePreview_nextBtn")).click();
+	cCC.obligarclick(driver.findElement(By.id("InvoicePreview_nextBtn")));	
 	sleep(12000);
 	buscarYClick(driver.findElements(By.cssSelector(".slds-form-element__label.ng-binding")), "equals", "tarjeta de credito");
 	selectByText(driver.findElement(By.id("BankingEntity-0")), cBanco);
@@ -328,19 +326,17 @@ public class GestionesPerfilTelefonico extends TestBase{
 	driver.findElement(By.id("documentNumber-0")).sendKeys(cDNITarjeta);
 	driver.findElement(By.id("cardHolder-0")).sendKeys(cTitular);
 	sleep(12000);
-	driver.findElement(By.id("SelectPaymentMethodsStep_nextBtn")).click();
-	sleep(32000);
-	cc.closerightpanel();
-	cCC.obligarclick(driver.findElement(By.id("InvoicePreview_nextBtn")));	
+	cCC.obligarclick(driver.findElement(By.id("SelectPaymentMethodsStep_nextBtn")));
+	sleep(15000);
+	buscarYClick(driver.findElements(By.id("InvoicePreview_nextBtn")),"equals", "siguiente");	
 	sleep(12000);
 	String orden = driver.findElement(By.className("top-data")).findElement(By.className("ng-binding")).getText();
 	String NCuenta = driver.findElements(By.className("top-data")).get(1).findElements(By.className("ng-binding")).get(3).getText();
 	System.out.println("Orden "+orden);
 	System.out.println("cuenta "+NCuenta);
-	driver.findElement(By.id("OrderSumary_nextBtn")).click();
-	((JavascriptExecutor)driver).executeScript("window.scrollTo(0,"+driver.findElement(By.id("SaleOrderMessages_nextBtn")).getLocation().y+")");
+	cCC.obligarclick(driver.findElement(By.id("OrderSumary_nextBtn")));
 	sleep(15000);
-	driver.findElement(By.id("SaleOrderMessages_nextBtn")).click();
+	cCC.obligarclick(driver.findElement(By.id("SaleOrderMessages_nextBtn")));
 	driver.navigate().refresh();
 	}
 }
