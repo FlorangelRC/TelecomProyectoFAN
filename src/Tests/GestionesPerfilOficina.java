@@ -129,8 +129,10 @@ public class GestionesPerfilOficina extends TestBase {
 		sleep(5000);
 		driver.findElement(By.cssSelector(".OSradioButton.ng-scope.only-buttom")).click();
 		
-		sleep(5000);
-		boolean bAssert = driver.findElement(By.cssSelector(".slds-form-element.vlc-flex.vlc-slds-text-block.vlc-slds-rte.ng-pristine.ng-valid.ng-scope")).getText().contains("La orden se realiz\u00f3 con \u00e9xito!");
+		sleep(15000);
+		List <WebElement> wMessage = driver.findElement(By.cssSelector(".slds-form-element.vlc-flex.vlc-slds-text-block.vlc-slds-rte.ng-pristine.ng-valid.ng-scope")).findElement(By.className("ng-binding")).findElements(By.tagName("p"));
+		System.out.println("wMessage.get(1).getText(): " + wMessage.get(1).getText());
+		boolean bAssert = wMessage.get(1).getText().contains("La orden se realiz\u00f3 con \u00e9xito!");
 		sOrders.add(cCC.obtenerOrden(driver, "N\u00fameros Gratis"));
 		Assert.assertTrue(bAssert);
 	}
