@@ -585,6 +585,7 @@ public class GestionesPerfilOficina extends TestBase {
 		Assert.assertTrue(gest);
 		String orden = cc.obtenerOrden(driver, "Inconvenientes con cargos tasados y facturados");
 		sOrders.add("Inconvenientes con cargos tasados y facturados, Credito Prepago, numero de orden: " + orden + " de cuenta con DNI: " + "16754923");
+		Assert.assertTrue(cc.verificarOrden(orden));
 	}
 	
 	@Test (groups = {"GestionesPerfilOficina", "Ajustes","E2E"}) //No se puede modificar el DNI 2 veces en un mes
@@ -656,6 +657,7 @@ public class GestionesPerfilOficina extends TestBase {
 		Assert.assertTrue(gest);
 		String orden = cc.obtenerOrden(driver, "Problema con recarga con tarjeta prepaga");
 		sOrders.add("Problema con recarga con tarjeta prepaga, numero de orden: " + orden + " de cuenta con DNI: " + cDNI);
+		Assert.assertTrue(cc.verificarOrden(orden));
 	}
 	
 	@Test (groups = {"GestionesPerfilOficina", "Ajustes","E2E"})
@@ -696,6 +698,7 @@ public class GestionesPerfilOficina extends TestBase {
 		Assert.assertTrue(gest);
 		String orden = cc.obtenerOrden(driver, "Inconvenientes con cargos tasados y facturados");
 		sOrders.add("Inconvenientes con cargos tasados y facturados, Credito Pospago, numero de orden: " + orden + " de cuenta con DNI: " + "16754923");
+		Assert.assertTrue(cc.verificarOrden(orden));
 	}
 	
 	@Test (groups = {"Suspension", "GestionesPerfilOficina","E2E"}, dataProvider="CuentaSuspension")
@@ -1114,10 +1117,10 @@ public class GestionesPerfilOficina extends TestBase {
 				gest = true;
 			}
 		}
-		//String orden = cc.obtenerOrden(driver, "Inconvenientes con cargos tasados y facturados");
-		cc.buscarCaso(nroCaso);
-		//Assert.assertTrue(gest);
-		//sOrders.add("Inconvenientes con cargos tasados y facturados, numero de orden: " + orden + " de cuenta con DNI: " + "18766558");
+		String orden = cc.obtenerOrden(driver, "Inconvenientes con cargos tasados y facturados");
+		Assert.assertTrue(gest);
+		sOrders.add("Inconvenientes con cargos tasados y facturados, numero de orden: " + orden + " de cuenta con DNI: " + "18766558");
+		Assert.assertTrue(cc.verificarOrden(orden));
 	}
 	
 	@Test (groups = {"Suspension", "GestionesPerfilOficina"}, dataProvider="CuentaSuspension")
@@ -1236,5 +1239,32 @@ public class GestionesPerfilOficina extends TestBase {
 		String orden = cc.obtenerOrden(driver, "Reconexi\u00f3n de Linea");
 		sOrders.add("Rehabilitacion, orden numero: " + orden + " con numero de DNI: " + "35653982");
 		System.out.println(sOrders);
+	}
+	
+	@Test (groups = {"GestionesPerfilOficina", "Ajustes", "E2E"})
+	public void TS112438_CRM_Movil_PRE_Ajuste_Cargos_aun_no_facturados_FAN_Front_OOCC() {
+		boolean gest = false;
+		driver.switchTo().frame(cambioFrame(driver, By.id("SearchClientDocumentType")));
+		sb.BuscarCuenta("DNI", "18766558");
+		driver.findElement(By.cssSelector(".slds-tree__item.ng-scope")).click();
+		sleep(15000);
+		cc.irAGestion("inconvenientes");
+		sleep(10000);
+		driver.switchTo().frame(cambioFrame(driver, By.id("Step-TipodeAjuste_nextBtn")));
+		selectByText(driver.findElement(By.id("CboConcepto")), "CARGOS AUN NO FACTURADOS");
+		selectByText(driver.findElement(By.id("CboTipo")), "Otros cargos no facturados");
+		selectByText(driver.findElement(By.id("CboItem")), "Cargo de reconexi\u00f3n");
+		selectByText(driver.findElement(By.id("CboMotivo")), "Error/omisi\u00f3n/demora gesti\u00f3n");
+		buscarYClick(driver.findElements(By.cssSelector(".slds-form-element__label.ng-binding.ng-scope")), "equals", "si");
+		driver.findElement(By.id("Step-TipodeAjuste_nextBtn")).click();
+		sleep(7000);
+		buscarYClick(driver.findElements(By.cssSelector(".slds-form-element__label.ng-binding.ng-scope")), "equals", "si, ajustar");
+		driver.findElement(By.id("Step-VerifyPreviousAdjustments_nextBtn")).click();
+		sleep(7000);		
+	}
+	
+	@Test (groups = {"GestionesPerfilOficina", "Ajustes", "E2E"})
+	public void TS135708_CRM_Movil_REPRO_Ajuste_Credito_Minutos_FAN_Front_OOCC() {
+		
 	}
 }	
