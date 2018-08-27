@@ -438,7 +438,9 @@ public class Sales2 extends TestBase{
 				c.getText().equals("Continuar");
 					c.click();
 			}
-		sleep(5000);
+		sleep(20000);
+		sb.Crear_DomicilioLegal(provincia, localidad, "falsa", "", "1000", "", "", "1549");
+		sleep(24000);
 		CustomerCare page = new CustomerCare(driver);
 		WebElement sig = driver.findElement(By.id("LineAssignment_nextBtn"));
 		page.obligarclick(sig);
@@ -950,14 +952,14 @@ public class Sales2 extends TestBase{
 	@Test(groups={"Sales", "AltaDeLinea", "Ola1"}, priority=5, dataProvider="SalesCuentaActiva")
 	public void TS94763_Ventas_Entregas_General_Modificar_el_lugar_de_entrega(String sCuenta, String sDni, String sLinea) throws IOException {
 		sb.BuscarCuenta(DNI, sDni);
-		//sb.BuscarCuenta(DNI, buscarCampoExcel(1, "Cuenta Activa", 2));
+		sleep(10000);
 		sb.acciondecontacto("catalogo");
 		sleep(25000);
 		sb.elegirplan("Plan con tarjeta");
 		String a = driver.findElement(By.cssSelector(".slds-col.taChangeDeliveryMethod.slds-text-body--small.slds-m-left--large")).getText();
 		driver.findElement(By.cssSelector(".slds-m-left--x-small.slds-button.slds-button--brand")).click();
 		sleep(15000);
-		driver.switchTo().frame(cambioFrame(driver, By.id("DeliveryMethod")));
+		driver.switchTo().frame(cambioFrame(driver, By.id("SalesChannelConfiguration_nextBtn")));
 		Select env = new Select (driver.findElement(By.id("DeliveryMethod")));
 		env.selectByVisibleText("Delivery");
 		driver.findElement(By.id("SalesChannelConfiguration_nextBtn")).click();
@@ -1392,7 +1394,7 @@ public class Sales2 extends TestBase{
 		if (line.getText().toLowerCase().contains("lineas disponibles")) {
 			a = true;
 		}
-		if (line2.getText().toLowerCase().contains("011")) {
+		if (line2.getText().toLowerCase().contains("034")) {
 			b = true;
 		}
 		Assert.assertTrue(a && b);
@@ -1583,7 +1585,7 @@ public class Sales2 extends TestBase{
 		CC.obligarclick(sig);
 		sleep(15000);
 		boolean x = false;
-		List<WebElement> serial = driver.findElements(By.cssSelector(".slds-page-header__title.vlc-slds-page-header__title.slds-truncate ng-binding"));
+		List<WebElement> serial = driver.findElements(By.cssSelector(".slds-page-header__title.vlc-slds-page-header__title.slds-truncate.ng-binding"));
 			for(WebElement s : serial){
 				s.getText().equals("Ingreso de serial");
 				System.out.println(s.getText());
@@ -2236,8 +2238,6 @@ public class Sales2 extends TestBase{
 			page3.clickOnDelete();
 			try {Thread.sleep(2000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 		} } catch (java.lang.IndexOutOfBoundsException e) {}
-		try {Thread.sleep(3000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
-		page3.addPlan("Galaxy S8");
 		try {Thread.sleep(3000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 		driver.findElement(By.cssSelector(".slds-input.ng-valid.ng-not-empty.ng-dirty.ng-valid-parse.ng-touched")).clear();
 		/*driver.findElement(By.cssSelector(".slds-input.ng-valid.ng-not-empty.ng-dirty.ng-valid-parse.ng-touched")).sendKeys("Galaxy S8");		

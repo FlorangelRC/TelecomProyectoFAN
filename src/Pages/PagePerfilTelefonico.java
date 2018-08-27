@@ -22,11 +22,11 @@ import Pages.SalesBase;
 import Pages.setConexion;
 import Tests.TestBase;
 
-public class compraPackPerfilTelefonico extends TestBase{
+public class PagePerfilTelefonico extends TestBase{
 	
 	
 	
-	public compraPackPerfilTelefonico(WebDriver driver) {
+	public PagePerfilTelefonico(WebDriver driver) {
 		this.driver = driver;
 		PageFactory.initElements(driver, this);
 	}
