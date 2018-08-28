@@ -282,10 +282,10 @@ public class GestionesPerfilOficina extends TestBase {
 				}
 			}
 		sleep(10000);
-		List <WebElement> roam = driver.findElements(By.cssSelector(".cpq-item-base-product"));
+		List <WebElement> roam = driver.findElements(By.cssSelector(".cpq-item-base-productt"));
 			for(WebElement r : roam){
 				if(r.getText().contains("DDI sin Roaming Internacional")){
-					cc.obligarclick(r.findElement(By.cssSelector(".slds-button.slds-button_neutral")));
+					cc.obligarclick(r.findElement(By.xpath("//*[@id='tab-default-2']/div[3]/div/div[3]/div/div/ng-include/div/div[2]/ng-include/div/div[9]/div/div[3]/div/div/ng-include/div/div[2]/ng-include/div/div[2]/div/div[2]/div[11]/button")));
 					sleep(15000);
 				}
 			driver.findElements(By.cssSelector(".slds-button.slds-button_icon-border-filled.cpq-item-actions-dropdown-button")).get(6).click();
