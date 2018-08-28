@@ -314,7 +314,10 @@ public class AltadeLineas extends TestBase {
 			cc.obligarclick(driver.findElement(By.id("DeliveryMethodConfiguration_nextBtn")));
 			sleep(20000);
 		}
-		
+		try {
+			cc.obligarclick(driver.findElement(By.id("Step_Error_Huawei_S015_nextBtn")));
+		}catch(Exception ex1) {}
+		sleep(15000);
 		cc.obligarclick(driver.findElement(By.id("InvoicePreview_nextBtn")));
 		sleep(20000);
 		try {
@@ -748,18 +751,19 @@ public class AltadeLineas extends TestBase {
 		System.out.println(serial);
 		cc.obligarclick(driver.findElement(By.id("OrderSumary_nextBtn")));
 		sleep(20000);
-		 	try {cc.obligarclick(driver.findElement(By.id("SaleOrderMessages_nextBtn")));
-		 	} 
-		 	catch (Exception ex) {Thread.currentThread().interrupt();}
-		cc.obligarclick(driver.findElement(By.id("SaleOrderMessages_nextBtn")));
-		sleep(15000);
-		CBS_Mattu invoSer = new CBS_Mattu();
-		invoSer.openPage2(orden);
-		sleep(5000);
-		CambiarPerfil("logistica",driver);
-		sb.CompletarLogisticaEquipo(orden, driver);
-		CambiarPerfil("entrega",driver);
-		sb.completarEntrega(orden, driver);
+		try {
+			cc.obligarclick(driver.findElement(By.id("Step_Error_Huawei_S029_nextBtn")));
+		}catch(Exception ex1) {
+			driver.findElement(By.id("SaleOrderMessages_nextBtn")).click();
+			sleep(15000);
+			CBS_Mattu invoSer = new CBS_Mattu();
+			invoSer.openPage2(orden);
+			sleep(5000);
+			CambiarPerfil("logistica",driver);
+			sb.completarLogistica(orden, driver);
+			CambiarPerfil("entrega",driver);
+			sb.completarEntrega(orden, driver);
+			CambiarPerfil("ofcom",driver);
 		}
 	}
 
