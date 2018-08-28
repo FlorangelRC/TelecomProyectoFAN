@@ -283,6 +283,7 @@ public class OMQPage extends BasePage {
 
 	
 	public void agregarPack(String servicio1, String servicio2,String Pack1,String Pack2,String Pack3) {
+		sleep(5000);
 		driver.findElement(By.cssSelector(".slds-button.cpq-item-has-children")).click();
 		sleep(5000);
 		List<WebElement> NomPack = driver.findElements(By.xpath("//*[@class='cpq-item-product-child-level-1 cpq-item-child-product-name-wrapper']"));
@@ -344,7 +345,9 @@ public class OMQPage extends BasePage {
 	
 		
 
-			
+
+
+
 public void sincroProducto() {//(String Products) {
 	
 	//boolean a= false;
