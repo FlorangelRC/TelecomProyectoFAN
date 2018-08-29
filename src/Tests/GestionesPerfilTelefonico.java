@@ -23,8 +23,9 @@ import Pages.BasePage;
 import Pages.CustomerCare;
 import Pages.Marketing;
 import Pages.OM;
+import Pages.OMQPage;
 import Pages.SalesBase;
-import Pages.compraPackPerfilTelefonico;
+import Pages.PagePerfilTelefonico;
 import Pages.setConexion;
 
 public class GestionesPerfilTelefonico extends TestBase{
@@ -257,16 +258,16 @@ public class GestionesPerfilTelefonico extends TestBase{
 	SalesBase sale = new SalesBase(driver);
 	BasePage cambioFrameByID=new BasePage();
 	CustomerCare cCC = new CustomerCare(driver);
-	compraPackPerfilTelefonico compraPack = new compraPackPerfilTelefonico(driver);
+	PagePerfilTelefonico pagePTelefo = new PagePerfilTelefonico(driver);
 	driver.switchTo().frame(cambioFrameByID.getFrameForElement(driver, By.id("SearchClientDocumentType")));	
 	sleep(8000);
 	sale.BuscarCuenta("DNI", sDNI);
 	String accid = driver.findElement(By.cssSelector(".searchClient-body.slds-hint-parent.ng-scope")).findElements(By.tagName("td")).get(5).getText();
 	System.out.println("id "+accid);
-	compraPack.buscarAssert();
-	compraPack.comprarPack("comprar sms");
-	compraPack.agregarPack(sVentaPack);
-	compraPack.tipoDePago("descuento de saldo");
+	pagePTelefo.buscarAssert();
+	pagePTelefo.comprarPack("comprar sms");
+	pagePTelefo.agregarPack(sVentaPack);
+	pagePTelefo.tipoDePago("descuento de saldo");
 	String orden = cc.obtenerOrdenMontoyTN(driver, "Compra de Pack");
 	System.out.println("orden = "+orden);
 	datosOrden.add("Recargas" + orden + " de cuenta "+accid+" con DNI: " + sDNI);
@@ -286,15 +287,15 @@ public class GestionesPerfilTelefonico extends TestBase{
 	}
 	
 	@Test (groups= {"GestionesPerfilTelefonico","E2E"},priority=1, dataProvider="CambioSimCard")
-	public void TSCambioSimCard(String sDNI, String sCuenta,String sLinea, String sCambioSimCard){
+	public void TSCambioSimCard(String sDNI, String sCuenta, String cBanco, String cTarjeta, String cPromo, String cCuotas, String cNumTarjeta, String cVenceMes, String cVenceAno, String cCodSeg, String cTipoDNI, String cDNITarjeta, String cTitular ){
 	SalesBase sale = new SalesBase(driver);
 	BasePage cambioFrameByID=new BasePage();
 	CustomerCare cCC = new CustomerCare(driver);
-	compraPackPerfilTelefonico compraPack = new compraPackPerfilTelefonico(driver);
+	PagePerfilTelefonico pagePTelefo = new PagePerfilTelefonico(driver);
 	driver.switchTo().frame(cambioFrameByID.getFrameForElement(driver, By.id("SearchClientDocumentType")));	
 	sleep(8000);
 	sale.BuscarCuenta("DNI", sDNI);
-	compraPack.buscarAssert();
+	pagePTelefo.buscarAssert();
 	cCC.irAGestionEnCard("Cambio SimCard");
 	sleep(12000);
 	driver.switchTo().frame(cambioFrameByID.getFrameForElement(driver, By.id("DeliveryMethodSelection")));
@@ -309,28 +310,58 @@ public class GestionesPerfilTelefonico extends TestBase{
 	Store.selectByVisibleText("Centro de Servicio Santa Fe - Juan de Garay 444");
 	driver.findElement(By.id("DeliveryMethodConfiguration_nextBtn")).click();
 	sleep(12000);
-	try{ 
-		driver.findElements(By.cssSelector(".slds-button.slds-button--neutral.ng-binding.ng-scope")).get(1).click();
-	      sleep(8000); 
-	    }
-	catch(Exception ex1){} 
-	sleep(12000); 
-	driver.findElement(By.id("SelectPaymentMethodsStep_nextBtn")).click();
+	cCC.obligarclick(driver.findElement(By.id("InvoicePreview_nextBtn")));	
 	sleep(12000);
-	try{ 
-	      driver.findElements(By.cssSelector(".slds-button.slds-button--neutral.ng-binding.ng-scope")).get(1).click(); 
-	      sleep(8000); 
-	    }
-	catch(Exception ex1){} 
-	 
+	buscarYClick(driver.findElements(By.cssSelector(".slds-form-element__label.ng-binding")), "equals", "tarjeta de credito");
+	selectByText(driver.findElement(By.id("BankingEntity-0")), cBanco);
+	selectByText(driver.findElement(By.id("CardBankingEntity-0")), cTarjeta);
+	selectByText(driver.findElement(By.id("promotionsByCardsBank-0")), cPromo);
+	sleep(5000);
+	selectByText(driver.findElement(By.id("Installment-0")), cCuotas);
+	driver.findElement(By.id("CardNumber-0")).sendKeys(cNumTarjeta);
+	selectByText(driver.findElement(By.id("expirationMonth-0")), cVenceMes);
+	selectByText(driver.findElement(By.id("expirationYear-0")), cVenceAno);
+	driver.findElement(By.id("securityCode-0")).sendKeys(cCodSeg);
+	selectByText(driver.findElement(By.id("documentType-0")), cTipoDNI);
+	driver.findElement(By.id("documentNumber-0")).sendKeys(cDNITarjeta);
+	driver.findElement(By.id("cardHolder-0")).sendKeys(cTitular);
+	sleep(12000);
+	cCC.obligarclick(driver.findElement(By.id("SelectPaymentMethodsStep_nextBtn")));
+	sleep(15000);
+	//buscarYClick(driver.findElements(By.id("InvoicePreview_nextBtn")),"equals", "siguiente");
+	//sleep(12000);
 	String orden = driver.findElement(By.className("top-data")).findElement(By.className("ng-binding")).getText();
 	String NCuenta = driver.findElements(By.className("top-data")).get(1).findElements(By.className("ng-binding")).get(3).getText();
 	System.out.println("Orden "+orden);
 	System.out.println("cuenta "+NCuenta);
-	driver.findElement(By.id("OrderSumary_nextBtn")).click();
-	((JavascriptExecutor)driver).executeScript("window.scrollTo(0,"+driver.findElement(By.id("SaleOrderMessages_nextBtn")).getLocation().y+")");
+	cCC.obligarclick(driver.findElement(By.id("OrderSumary_nextBtn")));
 	sleep(15000);
-	driver.findElement(By.id("SaleOrderMessages_nextBtn")).click();
+	driver.findElement(By.id("Step_Error_Huawei_S029_nextBtn")).click();
+	//cCC.obligarclick(driver.findElement(By.id("SaleOrderMessages_nextBtn")));
 	driver.navigate().refresh();
+	}
+	
+	
+	@Test (groups= {"GestionesPerfilTelefonico","E2E"},priority=1, dataProvider="ventaPack")
+	public void TS123157_CRM_Movil_PRE_Venta_de_pack_Paquete_M2M_10_MB_Factura_de_Venta_Efectivo_Presencial_Punta_Alta_Agente(String sDNI, String sCuenta, String sventaPack) throws InterruptedException{
+	SalesBase sale = new SalesBase(driver);
+	BasePage cambioFrameByID=new BasePage();
+	CustomerCare cCC = new CustomerCare(driver);
+	OM OM = new OM(driver);
+	PagePerfilTelefonico pagePTelefo = new PagePerfilTelefonico(driver);
+	driver.switchTo().frame(cambioFrameByID.getFrameForElement(driver, By.id("SearchClientDocumentType")));	
+	sleep(8000);
+	sale.BuscarCuenta("DNI", sDNI);
+	String accid = driver.findElement(By.cssSelector(".searchClient-body.slds-hint-parent.ng-scope")).findElements(By.tagName("td")).get(5).getText();
+	System.out.println("id "+accid);
+	pagePTelefo.buscarAssert();
+	pagePTelefo.comprarPack("comprar internet");
+//	OM.colocarPlan(sventaPack);
+//	driver.findElement(By.cssSelector(".slds-button.slds-m-left--large.slds-button--brand.ta-button-brand")).click();
+//	sleep(45000);
+	pagePTelefo.PackCombinado(sventaPack);
+	pagePTelefo.tipoDePago("En Factura de Venta");
+	pagePTelefo.siguiente();
+	
 	}
 }

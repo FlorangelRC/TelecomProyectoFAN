@@ -22,11 +22,11 @@ import Pages.SalesBase;
 import Pages.setConexion;
 import Tests.TestBase;
 
-public class compraPackPerfilTelefonico extends TestBase{
+public class PagePerfilTelefonico extends TestBase{
 	
 	
 	
-	public compraPackPerfilTelefonico(WebDriver driver) {
+	public PagePerfilTelefonico(WebDriver driver) {
 		this.driver = driver;
 		PageFactory.initElements(driver, this);
 	}
@@ -57,6 +57,7 @@ public class compraPackPerfilTelefonico extends TestBase{
 	}
 	
 	public void agregarPack(String Pack1) {
+		sleep(5000);		
 		driver.switchTo().frame(cambioFrame(driver, By.cssSelector(".slds-button.cpq-item-has-children")));
 		OMQPage OM = new OMQPage(driver);
 		OM.agregarPack("Packs Opcionales", "Packs de Datos", Pack1, "", "");
@@ -69,26 +70,60 @@ public class compraPackPerfilTelefonico extends TestBase{
 		sleep(12000); 
 	}
 	
+	public void PackCombinado(String Pack1) {
+		sleep(5000);		
+		driver.switchTo().frame(cambioFrame(driver, By.cssSelector(".slds-button.cpq-item-has-children")));
+		OMQPage OM = new OMQPage(driver);
+		OM.agregarPack("Packs Opcionales", "Packs Combinados", Pack1, "", "");
+		driver.findElement(By.cssSelector(".slds-button.slds-m-left--large.slds-button--brand.ta-button-brand")).click();
+		sleep(45000);
+		try{ 
+		      driver.findElements(By.cssSelector(".slds-button.slds-button--neutral.ng-binding.ng-scope")).get(1).click(); 
+		      sleep(8000); 
+		    }catch(Exception ex1){} 
+		sleep(12000); 
+	}
+	
+	
+	
 	public void tipoDePago(String tipodepago) {
 	List<WebElement> tipodePago = driver.findElements(By.cssSelector(".slds-radio.ng-scope"));
 	for (WebElement pago : tipodePago) {
 		//System.out.print(pago.getText().toLowerCase());
 		if (pago.getText().toLowerCase().contains(tipodepago)) {
-			pago.findElement(By.tagName("span")).click();
-			System.out.println(tipodepago);
-			sleep(8000);
-			break;
+				pago.findElement(By.tagName("span")).click();
+					System.out.println(tipodepago);
+						sleep(8000);
+							break;
+						}
+					}
+				}
+	
+	public void siguiente() {
+	sleep(5000);
+	WebElement siguiente=driver.findElement(By.className("vlc-control-wrapper"));
+	((JavascriptExecutor)driver).executeScript("window.scrollTo(0,"+siguiente.getLocation().y+")");
+	sleep(2000);
+	try {driver.findElement(By.id("SetPaymentType_nextBtn")).click();}
+	catch(org.openqa.selenium.ElementNotVisibleException Tipodepago) {
+		try {driver.findElement(By.id("InvoicePreview_nextBtn")).click();}
+		catch(org.openqa.selenium.ElementNotVisibleException SimulaciondeFactura) {
+			try {driver.findElement(By.id("SelectPaymentMethodsStep_nextBtn")).click();}
+			catch(org.openqa.selenium.ElementNotVisibleException SelecciondemediodePago) {
+				sleep(20000);
+				try {driver.findElements(By.cssSelector(".slds-button.slds-button--neutral.ng-binding.ng-scope")).get(1).click();}
+			     catch(Exception ex1){
+			    	 sleep(20000);
+			       	 try {driver.findElement(By.id("Step_Error_Huawei_S029_nextBtn")).click();}
+						catch(org.openqa.selenium.ElementNotVisibleException EnviodefacturayDatos) {
+							
+						}
+					}
+				}
+			}
 		}
 	}
-	try {
-	((JavascriptExecutor)driver).executeScript("window.scrollTo(0,"+driver.findElement(By.id("SetPaymentType_nextBtn")).getLocation().y+")");
-	driver.findElement(By.id("SetPaymentType_nextBtn")).click();
-	sleep(10000);
-	}catch (Exception ex1) {}
-	
-	((JavascriptExecutor)driver).executeScript("window.scrollTo(0,"+driver.findElement(By.id("SaleOrderMessages_nextBtn")).getLocation().y+")");
-	sleep(15000);
-	driver.findElement(By.id("SaleOrderMessages_nextBtn")).click();
+			     
+}		     
 		
-	}
-}
+	

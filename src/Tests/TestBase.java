@@ -1024,6 +1024,14 @@ public class TestBase {
 	}
 	
 	@DataProvider
+	public Object [][] ventaPack() throws Exception{
+		
+		Object[][] testObjArray = ExcelUtils.getTableArray("Cuentas.xlsx","PerfilGestiones",1,1,3,"venta de pack");
+		
+		return (testObjArray);
+	}
+	
+	@DataProvider
 	public Object[][] CuentaSuspension() throws Exception {
 		
 		Object[][] testObjArray = ExcelUtils.getTableArray("Cuentas.xlsx","PerfilGestiones",1,1,1,"Suspension");
@@ -1049,7 +1057,15 @@ public class TestBase {
 		return (testObjArray);
 	}
 	
-	public void guardarListaTxt(String UnD) throws IOException {
+	@DataProvider
+	public Object [][] CuentaHabilitacion() throws Exception {
+		
+		Object[][] testObjArray = ExcelUtils.getTableArray("Cuentas.xlsx","PerfilGestiones",1,1,1,"Habilitacion");
+		
+		return (testObjArray);
+	} 
+	
+	public void guardarListaTxt(List<String> datosOrden) throws IOException {
 		File archivo=new File("DatosOrdenes.txt");
 		/*if (!archivo.exists())
 			FileWriter ArchiSa=new FileWriter(archivo,true);
@@ -1119,7 +1135,7 @@ public class TestBase {
 	@DataProvider
 	public Object[][] CambioSimCard() throws Exception{
 		
-		Object[][] testObjArray =  ExcelUtils.getTableArray("Cuentas.xlsx","PerfilGestiones",1,1,4,"Cambio SimCard");
+		Object[][] testObjArray =  ExcelUtils.getTableArray("Cuentas.xlsx","PerfilGestiones",1,1,13,"Cambio SimCard");
 		
 		return (testObjArray);
 	}

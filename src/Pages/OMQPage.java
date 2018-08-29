@@ -283,6 +283,7 @@ public class OMQPage extends BasePage {
 
 	
 	public void agregarPack(String servicio1, String servicio2,String Pack1,String Pack2,String Pack3) {
+		sleep(5000);
 		driver.findElement(By.cssSelector(".slds-button.cpq-item-has-children")).click();
 		sleep(5000);
 		List<WebElement> NomPack = driver.findElements(By.xpath("//*[@class='cpq-item-product-child-level-1 cpq-item-child-product-name-wrapper']"));
@@ -304,8 +305,6 @@ public class OMQPage extends BasePage {
 		for(WebElement b: subPack) {			
 			System.out.println("+++++"+b.getText().substring(b.getText().indexOf("\n")+1, b.getText().length())+"++++++");
 			
-			//System.out.print(b.getText().toLowerCase());
-			//System.out.println(" : "+servicio2.toLowerCase());
 					if (b.getText().substring(b.getText().indexOf("\n")+1, b.getText().length()).toLowerCase().contains(servicio2.toLowerCase())) {
 						System.out.println(servicio2);
 						  b.findElement(By.tagName("button")).click();
@@ -316,11 +315,6 @@ public class OMQPage extends BasePage {
 			    }
 			}
 		
-		
-	
-		
-		
-		
 		 //subtablas
 		 List<String> packs= Arrays.asList(Pack1, Pack2, Pack3);
 		 List<WebElement> Pack = driver.findElements( By.xpath("//*[@class='cpq-item-product-child-level-3 ng-not-empty ng-valid']//*[@class='cpq-item-no-children']"));
@@ -330,7 +324,7 @@ public class OMQPage extends BasePage {
 			 for (int j = 0; j < packs.size(); j++) {
 					if (Pack.get(i).getText().equals(packs.get(j))) {
 						System.out.println(packs);
-						Agregar.get(i).click();
+						buscarYClick(Agregar, "equals","Agregar"); //Agregar.get(i).click();
 						sleep(8000);
 						break;						
 					}
@@ -344,7 +338,9 @@ public class OMQPage extends BasePage {
 	
 		
 
-			
+
+
+
 public void sincroProducto() {//(String Products) {
 	
 	//boolean a= false;
