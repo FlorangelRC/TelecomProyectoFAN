@@ -31,7 +31,8 @@ public class CustomerCareOla2 extends TestBase {
 		driver = setConexion.setupEze();
 		sleep(5000);
 		cc = new CustomerCare(driver);
-		cc.login("SIT");
+		loginOfCom(driver);
+		//cc.login("SIT");
 		try {
 			cc.cajonDeAplicaciones("Consola FAN");
 		} catch(Exception e) {
@@ -61,8 +62,8 @@ public class CustomerCareOla2 extends TestBase {
 		WebElement fechaHasta = cc.obtenerFechaHasta();
 		Assert.assertTrue(fechaHasta.getAttribute("value").contentEquals(fechaDeHoy()));
 	}
-	
-	//@Test (groups = {"CustomerCare", "Ola2", "Marcas"}, dataProvider = "CustomerCuentaActiva") //Rompe porque no existe la gestion Marcas, se paso a Ola 3 y no esta en funcionamiento
+	//ojo con este caso
+	@Test (groups = {"CustomerCare", "Ola2", "Marcas","filtrado"}, dataProvider = "CustomerCuentaActiva") //Rompe porque no existe la gestion Marcas, se paso a Ola 3 y no esta en funcionamiento
 	public void TS100963_Marks_Management_Base_Conocimiento_Acceso_a_base_de_conocimiento(String cCuenta) {
 		cc.elegirCuenta(cCuenta);
 		cc.irAGestion("marcas");
@@ -153,7 +154,7 @@ public class CustomerCareOla2 extends TestBase {
 		Assert.assertTrue(false);
 	}
 	
-	@Test (groups = {"CustomerCare", "Ola2", "Marcas"}, dataProvider = "CustomerCuentaActiva")  //Hay que preguntar como es el caso
+	@Test (groups = {"CustomerCare", "Ola2", "Marcas","filtrado"}, dataProvider = "CustomerCuentaActiva")  //Hay que preguntar como es el caso
 	public void TS118763_360_View_Resumen_Cta_Cte_Simple_Integracion_historial_de_pagos_S059_Obtener_historial_de_pagos(String cCuenta) {
 		cc.elegirCuenta(cCuenta);
 		cc.irAFacturacion();

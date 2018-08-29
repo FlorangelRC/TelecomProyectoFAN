@@ -33,7 +33,6 @@ public class GestionesPerfilTelefonico extends TestBase{
 	private SalesBase sb;
 	private CustomerCare cc;
 	List <String> datosOrden =new ArrayList<String>();
-	;
 	
 	
 	@BeforeClass
@@ -99,9 +98,9 @@ public class GestionesPerfilTelefonico extends TestBase{
 		sb.cerrarPestaniaGestion(driver);
 	}
 
-	@AfterClass
+	//@AfterClass
 	public void quit() throws IOException {
-		guardarListaTxt(datosOrden);
+		//guardarListaTxt(datosOrden);
 		System.out.println("Se supone que guardo");
 		//driver.quit();
 		sleep(5000);
@@ -135,7 +134,7 @@ public class GestionesPerfilTelefonico extends TestBase{
 		driver.switchTo().frame(cambioFrame(driver, By.id("RefillAmount")));
 		driver.findElement(By.id("RefillAmount")).sendKeys(cMonto);
 		driver.findElement(By.id("AmountSelectionStep_nextBtn")).click();
-		sleep(15000);
+		sleep(20000);
 		driver.findElement(By.id("InvoicePreview_nextBtn")).click();
 		sleep(10000);
 		buscarYClick(driver.findElements(By.cssSelector(".slds-form-element__label.ng-binding")), "equals", "tarjeta de credito");

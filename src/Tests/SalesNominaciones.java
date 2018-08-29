@@ -16,6 +16,7 @@ import org.testng.Assert;
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeClass;
+import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
 import Pages.Accounts;
@@ -39,18 +40,21 @@ public class SalesNominaciones extends TestBase{
 			 loginOfCom(driver);  
 		try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 		HomeBase homePage = new HomeBase(driver);
+		SalesBase SB = new SalesBase(driver);
 		sleep(9000);
 		driver.findElement(By.id("tabBar")).findElement(By.tagName("a")).click();
 		sleep(18000);
-		
-		driver.switchTo().defaultContent();
-		sleep(3000);
-		goToLeftPanel2(driver, "Inicio");
-		sleep(18000);
-		try{cc.cerrarTodasLasPestanas();}
+		sleep(10000);
+		try{
+			SB.cerrarPestaniaGestion(driver);}
 		catch(Exception ex1) {
 		}
-		SalesBase SB = new SalesBase(driver);
+		goToLeftPanel2(driver, "Inicio");
+		sleep(5000);
+		
+	}
+	@BeforeMethod(alwaysRun=true)
+	public void setup() throws Exception {
 		Accounts accountPage = new Accounts(driver);
 		driver.switchTo().frame(accountPage.getFrameForElement(driver, By.cssSelector(".hasMotif.homeTab.homepage.ext-webkit.ext-chrome.sfdcBody.brandQuaternaryBgr")));
 		List<WebElement> frames = driver.findElements(By.tagName("iframe"));
@@ -91,67 +95,29 @@ public class SalesNominaciones extends TestBase{
 			}
 		}
 		
-		sleep(18000);
-		driver.switchTo().frame(accountPage.getFrameForElement(driver, By.id("ContactFirstName")));
-		
-	}
-	
-	@AfterMethod(alwaysRun=true)
-	public void IceB() {
-		Accounts accountPage = new Accounts(driver);
-		driver.navigate().refresh();
-		sleep(12000);
-		/*driver.switchTo().frame(accountPage.getFrameForElement(driver, By.cssSelector(".hasMotif.homeTab.homepage.ext-webkit.ext-chrome.sfdcBody.brandQuaternaryBgr")));
-		List<WebElement> frames = driver.findElements(By.tagName("iframe"));
-		boolean enc = false;
-		int index = 0;
-		for(WebElement frame : frames) {
-			try {
-				System.out.println("aca");
-				driver.switchTo().frame(frame);
-
-				driver.findElement(By.cssSelector(".slds-grid.slds-m-bottom_small.slds-wrap.cards-container")).getText(); //each element is in the same iframe.
-				//System.out.println(index); //prints the used index.
-
-				driver.findElement(By.cssSelector(".slds-grid.slds-m-bottom_small.slds-wrap.cards-container")).isDisplayed(); //each element is in the same iframe.
-				//System.out.println(index); //prints the used index.
-
-				driver.switchTo().frame(accountPage.getFrameForElement(driver, By.cssSelector(".hasMotif.homeTab.homepage.ext-webkit.ext-chrome.sfdcBody.brandQuaternaryBgr")));
-				enc = true;
-				break;
-			}catch(NoSuchElementException noSuchElemExcept) {
-				index++;
-				driver.switchTo().frame(accountPage.getFrameForElement(driver, By.cssSelector(".hasMotif.homeTab.homepage.ext-webkit.ext-chrome.sfdcBody.brandQuaternaryBgr")));
-			}
-		}
-		if(enc == false)
-			index = -1;
-		try {
-				driver.switchTo().frame(frames.get(index));
-		}catch(ArrayIndexOutOfBoundsException iobExcept) {System.out.println("Elemento no encontrado en ningun frame 2.");
-			
-		}
-		List<WebElement> botones = driver.findElements(By.tagName("button"));
-		for (WebElement UnB : botones) {
-			System.out.println(UnB.getText());
-			if(UnB.getText().equalsIgnoreCase("gesti\u00f3n de clientes")) {
-				UnB.click();
-				break;
-			}
-		}
-		
-		sleep(18000);*/
+		sleep(25000);
 		driver.switchTo().frame(accountPage.getFrameForElement(driver, By.id("SearchClientDocumentNumber")));
-		
 	}
 	
-	@AfterClass(alwaysRun=true)
+	//@AfterMethod(alwaysRun=true)
+		public void deslogin(){
+			sleep(2000);
+			SalesBase SB = new SalesBase(driver);
+			driver.switchTo().defaultContent();
+			sleep(6000);
+			SB.cerrarPestaniaGestion(driver);
+			
+			sleep(5000);
+
+		}
+	
+	//@AfterClass(alwaysRun=true)
 	public void Exit() {
 		driver.quit();
 		sleep(2000);
 	}
 	
-	@Test(groups={"Sales", "Nominacion","Ola1"}, dataProvider="SalesCuentaBolsa")  //si 215 213 078 135 094 114 119 118 157
+	@Test(groups={"Sales", "Nominacion","Ola1","filtrado"}, dataProvider="SalesCuentaBolsa")  //si 215 213 078 135 094 114 119 118 157
 	  public void TS95215_Nominacion_Argentino_Nominar_personas_mayores_a_16_anios_cliente_mayor_de_edad_con_linea_existente_plan_repro(String sCuenta, String sDni, String sLinea){
 		SalesBase SB = new SalesBase(driver);
 		String NyA = sCuenta;
@@ -250,7 +216,7 @@ public class SalesNominaciones extends TestBase{
 		WebElement lis = driver.findElement(By.id("tab-scoped-2")).findElement(By.tagName("div")).findElement(By.tagName("tbody"));
 		System.out.println(lis.getSize());
 	}
-	@Test(groups ={ "Sales", "Nominacion","Ola1"}, dataProvider="SalesCuentaBolsa")//si
+	@Test(groups ={ "Sales", "Nominacion","Ola1","filtrado"}, dataProvider="SalesCuentaBolsa")//si
 	public void TS95078_Nominacion_Argentino_Validar_metodo_Ident_por_DNI(String sCuenta, String sDni, String sLinea){
 		ContactSearch contact = new ContactSearch(driver);
 		String NyA = sCuenta;
@@ -337,7 +303,7 @@ public class SalesNominaciones extends TestBase{
 	}
 	
 	//***************************************************************************************************************************
-	@Test(groups = {"Sales", "Nominacion","Ola1"}, dataProvider="SalesCuentaBolsa") 
+	@Test(groups = {"Sales", "Nominacion","Ola1","filtrado"}, dataProvider="SalesCuentaBolsa") 
 	public void TS95140_Nominacion_Argentino_Verificar_creacion_de_la_cuenta(String sCuenta, String sDni, String sLinea) { 
 		SalesBase SB = new SalesBase(driver);
 		String NyA = sCuenta;
@@ -354,7 +320,9 @@ public class SalesNominaciones extends TestBase{
 		perfil = "call";
 		ContactSearch contact = new ContactSearch(driver);
 		contact.searchContact2("DNI", sDni, sLinea);
-		try {contact.ingresarMail("asdads@gmail.com", "si");}catch (org.openqa.selenium.ElementNotVisibleException ex1) {}
+		if(driver.findElement(By.cssSelector(".message.description.ng-binding.ng-scope")).getText().contains("email"))
+			driver.findElement(By.cssSelector(".slds-input.form-control.ng-pristine.ng-untouched.ng-valid.ng-empty")).sendKeys("algoaqui@yahoo.com.ar");
+		
 		contact.tipoValidacion("documento");
 		contact.subirArchivo("C:\\Users\\florangel\\Downloads\\mapache.jpg", "si");
 			BasePage bp = new BasePage(driver);
@@ -420,7 +388,7 @@ public class SalesNominaciones extends TestBase{
 		
 	}
 	//***********************************************************************************************************************
-	@Test(groups={"Sales","Nominacion","Ola1"},dataProvider="SalesPasaporteBolsa")
+	@Test(groups={"Sales","Nominacion","Ola1","filtrado"},dataProvider="SalesPasaporteBolsa")
 	public void TS95094_SalesCPQ_Nominacion_Extranjero_Verificar_Confirmacion_Exitosa(String sCuenta, String sDni, String sLinea){
 		String FilePath = "C:\\Users\\florangel\\Downloads\\mapache.jpg";
 		SalesBase SB = new SalesBase(driver);
@@ -463,10 +431,10 @@ public class SalesNominaciones extends TestBase{
 		sleep(10000);
 		contact.subirformulario("C:\\Users\\florangel\\Downloads\\form.pdf", "si");
 		sleep(45000);
-		List <WebElement> element = driver.findElements(By.cssSelector(".slds-form-element.vlc-flex.vlc-slds-text-block.vlc-slds-rte.ng-pristine.ng-valid.ng-scope"));
+		List <WebElement> element = driver.findElement(By.id("NominacionExitosa")).findElements(By.tagName("p"));
 		boolean a = false;
 		for (WebElement x : element) {
-			if (x.getText().toLowerCase().contains("nominaci\u00f3n exitosa!")) {
+			if (x.getText().toLowerCase().contains("nominaci\u00f3n exitosa")) {
 				a = true;
 				System.out.println(x.getText());
 			}
@@ -475,7 +443,7 @@ public class SalesNominaciones extends TestBase{
 		driver.findElement(By.id("FinishProcess_nextBtn")).click();
 	}
 	
-	@Test(groups={"Sales","Nominacion","Ola1"}, dataProvider="SalesPasaporteBolsa")
+	@Test(groups={"Sales","Nominacion","Ola1","filtrado"}, dataProvider="SalesPasaporteBolsa")
 	public void TS95114_SalesCPQ_Nominacion_Extranjero_Verificar_Datos_Nominar_Cliente_Extranjero(String sCuenta, String sDni, String sLinea){
 		String FilePath = "C:\\Users\\florangel\\Downloads\\mapache.jpg";;
 		SalesBase SB = new SalesBase(driver);
@@ -574,7 +542,7 @@ public class SalesNominaciones extends TestBase{
 		Assert.assertTrue(false);*/
 		
 	}
-	@Test(groups={"Sales","Nominacion","Ola1"}, dataProvider="SalesCuentaBolsa")
+	@Test(groups={"Sales","Nominacion","Ola1","filtrado"}, dataProvider="SalesCuentaBolsa")
 	public void TS95288_SalesCPQ_Nominacion_Argentino_Verificar_Flujo_De_Nominacion_Arg_Telefonico(String sCuenta, String sDni, String sLinea){
 		SalesBase SB = new SalesBase(driver);
 		CustomerCare CC = new CustomerCare(driver);
@@ -727,7 +695,7 @@ public class SalesNominaciones extends TestBase{
 		driver.findElement(By.cssSelector(".message.description.ng-binding.ng-scope")).getText().toLowerCase().contains("documento de identidad superada");
 	}
 	
-	@Test(groups={"Sales","Nominacion","Ola1"}, dataProvider="SalesPasaporteBolsa")
+	@Test(groups={"Sales","Nominacion","Ola1","filtrado"}, dataProvider="SalesPasaporteBolsa")
 	public void TS95156_SalesCPQ_Nominacion_Extranjero_Verificar_Campo_Fecha_De_Permanencia_Cliente_Nuevo(String sCuenta, String sDni, String sLinea){
 		ContactSearch contact = new ContactSearch(driver);
 		String NyA = sCuenta;

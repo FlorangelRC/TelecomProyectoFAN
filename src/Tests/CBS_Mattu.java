@@ -38,11 +38,11 @@ public class CBS_Mattu extends TestBase {
 	@Test
 	public void openPage() {
 		String sEndPoint = "Pago en Caja";
-		String sPaymentChannelID = "1005";
+		String sPaymentChannelID = "1003";
 		String sAccountKey = "9900000326610001";
-		String sPaymentMethod = "1001";
+		String sPaymentMethod = "2001";
 		String sAmount = "123005600";
-		String sInvoiceno = "20180822000000056707";
+		String sInvoiceno = "20180827000000056800";
 		String sPaymentSerialNo = ((new java.text.SimpleDateFormat("yyyyMMddHHmmss")).format(new Date())).toString()+Integer.toString((int)(Math.random()*1000));
 		
 		SOAPClientSAAJ sSCS = new SOAPClientSAAJ();
@@ -64,7 +64,7 @@ public class CBS_Mattu extends TestBase {
 	@Test
 	public void openPage2(String sOrder) {
 		String sEndPoint = "Pago Simulado";
-		//String sOrder = "00075474";
+		//String sOrder = "00079437";
 		
 		SOAPClientSAAJ sSCS = new SOAPClientSAAJ();
 		CBS cCBS = new CBS();

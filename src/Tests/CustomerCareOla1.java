@@ -32,7 +32,8 @@ public class CustomerCareOla1 extends TestBase {
 		driver = setConexion.setupEze();
 		sleep(5000);
 		cc = new CustomerCare(driver);
-		cc.login("SIT");
+		loginOfCom(driver);
+		//cc.login("SIT");
 		try {
 			cc.cajonDeAplicaciones("Consola FAN");
 		} catch(Exception e) {
@@ -164,7 +165,7 @@ public class CustomerCareOla1 extends TestBase {
 		Assert.assertTrue(a);
 	}
 	
-	@Test (groups = {"CustomerCare", "SuspensionYRehabilitacion", "Ola1"}, dataProvider = "CustomerCuentaActiva", priority = 6)
+	@Test (groups = {"CustomerCare", "SuspensionYRehabilitacion", "Ola1","filtrado"}, dataProvider = "CustomerCuentaActiva", priority = 6)
 	public void TS95637_Suspensiones_and_Reconexiones_Creacion_del_Caso_Back_office_Creacion_caso_comentario_de_resolucion_La_gestion_ha_sido_realizada_exitosamente(String cCuenta) {
 		cc.elegirCuenta(cCuenta);
 		cc.irAGestion("suspensiones y reconexion back");
@@ -233,7 +234,7 @@ public class CustomerCareOla1 extends TestBase {
 		Assert.assertTrue(a);
 	}
 	
-	@Test (groups = {"CustomerCare", "SuspensionYRehabilitacion", "Ola1"}, dataProvider = "CustomerCuentaActiva", priority = 4)  //Rompe poorque la cuenta no posee equipo
+	@Test (groups = {"CustomerCare", "SuspensionYRehabilitacion", "Ola1","filtrado"}, dataProvider = "CustomerCuentaActiva", priority = 4)  //Rompe poorque la cuenta no posee equipo
 	public void TS95647_Suspensiones_and_Reconexiones_Creacion_del_Caso_Creacion_caso_habilitacion_Lineas_y_o_equipos_seleccionados(String cCuenta) {
 		cc.elegirCuenta(cCuenta);
 		cc.irAGestion("suspensiones");
@@ -315,7 +316,7 @@ public class CustomerCareOla1 extends TestBase {
 		Assert.assertTrue(a);
 	}
 	
-	@Test (groups = {"CustomerCare", "SuspensionYRehabilitacion", "Ola1"}, dataProvider = "CustomerCuentaActiva", priority = 6)
+	@Test (groups = {"CustomerCare", "SuspensionYRehabilitacion", "Ola1","filtrado"}, dataProvider = "CustomerCuentaActiva", priority = 6)
 	public void TS95928_Suspensiones_and_Reconexiones_Seleccionar_tipo_Siniestro_Back_Office_Verificar_que_si_selecciono_Suspension_pueda_ser_de_CUENTA_DE_FACTURACION(String cCuenta) {
 		cc.elegirCuenta(cCuenta);
 		cc.irAGestion("suspensiones y reconexion back");
@@ -361,7 +362,7 @@ public class CustomerCareOla1 extends TestBase {
 		Assert.assertTrue(driver.findElement(By.id("Phone")).isEnabled());
 	}
 	
-	@Test (groups = {"CustomerCare", "AjustesYEscalamiento", "Ola1"}, dataProvider = "CustomerCuentaActiva", priority = 2)
+	@Test (groups = {"CustomerCare", "AjustesYEscalamiento", "Ola1","filtrado"}, dataProvider = "CustomerCuentaActiva", priority = 2)
 	public void TS96020_Adjustments_and_Escalations_Consulta_de_Ajuste_Historicos_Visualizar_Ajuste_historico_de_la_cuenta(String cCuenta) {
 		cc.elegirCuenta(cCuenta);
 		sleep(5000);
@@ -856,7 +857,7 @@ public class CustomerCareOla1 extends TestBase {
 	    Assert.assertTrue(!driver.findElement(By.cssSelector(".error.ng-scope")).getText().isEmpty());
 	}
 	
-	@Test(groups = {"CustomerCare", "ProblemasConRecargas", "Ola1"}, dataProvider = "CustomerCuentaActiva")
+	@Test(groups = {"CustomerCare", "ProblemasConRecargas", "Ola1","filtrado"}, dataProvider = "CustomerCuentaActiva")
 	public void TS37331_Problems_with_Refills_UX_Tarjeta_de_Recarga_Pre_paga_Verificacion_Visualizar_Boton_Cancelar(String cCuenta) {
 		cc.elegirCuenta(cCuenta);
 		driver.switchTo().frame(cambioFrame(driver, By.className("card-top")));
@@ -872,7 +873,7 @@ public class CustomerCareOla1 extends TestBase {
 	    Assert.assertTrue(driver.findElement(By.cssSelector(".vlc-slds-button--tertiary.ng-binding.ng-scope")).isDisplayed());
 	}
 	
-	@Test(groups = {"CustomerCare", "ProblemasConRecargas", "Ola1"}, dataProvider = "CustomerCuentaActiva")
+	@Test(groups = {"CustomerCare", "ProblemasConRecargas", "Ola1","filtrado"}, dataProvider = "CustomerCuentaActiva")
 	public void TS37338_Problems_with_Refills_UX_Tarjeta_de_Recarga_Pre_paga_Verificacion_Visualizar_Boton_Consultar(String cCuenta) {
 		cc.elegirCuenta(cCuenta);
 		driver.switchTo().frame(cambioFrame(driver, By.className("card-top")));
@@ -1126,7 +1127,7 @@ public class CustomerCareOla1 extends TestBase {
 		Assert.assertTrue(enc);
 	}
 	
-	@Test (groups= {"CustomerCare", "ProblemasConRecargas", "Ola1"}, dataProvider = "CustomerCuentaActiva")
+	@Test (groups= {"CustomerCare", "ProblemasConRecargas", "Ola1","filtrado"}, dataProvider = "CustomerCuentaActiva")
 	public void TS37325_Problems_With_Refills_Tarjeta_De_Recarga_Prepaga_Verificacion_Numero_De_Lote_Ingresa_16_Digitos(String cCuenta) {
 		cc.elegirCuenta(cCuenta);
 		cc.tarjetaPrepaga();
@@ -1142,7 +1143,7 @@ public class CustomerCareOla1 extends TestBase {
 		Assert.assertTrue(enc);
 	}
 	
-	@Test (groups= {"CustomerCare", "ProblemasConRecargas", "Ola1"}, dataProvider = "CustomerCuentaActiva")  //Rompe por mensaje de error al finalizar la recarga
+	@Test (groups= {"CustomerCare", "ProblemasConRecargas", "Ola1","filtrado"}, dataProvider = "CustomerCuentaActiva")  //Rompe por mensaje de error al finalizar la recarga
 	public void TS37534_Problems_With_Refills_Problemas_Con_Recargas_Medio_De_Recarga_Seleccionar_ROL(String cCuenta) {
 		cc.elegirCuenta(cCuenta);
 		cc.tarjetaPrepaga();

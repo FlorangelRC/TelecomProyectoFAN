@@ -131,7 +131,7 @@ public class TestBase {
 		driver.get(urlAmbiente);
 		try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 	    Login lLogin = new Login(driver);
-	    lLogin.ingresarMarketing();
+	    lLogin.ingresarDani();
 	}
 	
 	public void loginSCPAdmin(WebDriver driver) {
@@ -1049,18 +1049,16 @@ public class TestBase {
 		return (testObjArray);
 	}
 	
-	public void guardarListaTxt(List<String> datosOrden) throws IOException {
+	public void guardarListaTxt(String UnD) throws IOException {
 		File archivo=new File("DatosOrdenes.txt");
-		if (archivo.exists())
-			archivo.delete();
+		/*if (!archivo.exists())
+			FileWriter ArchiSa=new FileWriter(archivo,true);
+			//archivo.delete();*/
 		//Crear objeto FileWriter que sera el que nos ayude a escribir sobre archivo
 		FileWriter ArchiSa=new FileWriter(archivo,true);
-		
-		for (String UnD : datosOrden) {
-			ArchiSa.write("--------------------------------------------------------------------\r\n");
-			ArchiSa.write(UnD+"\r\n");
-			ArchiSa.write("--------------------------------------------------------------------\r\n");
-		}
+		ArchiSa.write("--------------------------------------------------------------------\r\n");
+		ArchiSa.write(UnD+"\r\n");
+		ArchiSa.write("--------------------------------------------------------------------\r\n");
 		ArchiSa.close();
 	}
 	
@@ -1137,6 +1135,14 @@ public class TestBase {
 	public Object[][] AltaLineaEquipoClienteExistente() throws Exception{
 
 	 Object[][] testObjArray = ExcelUtils.getTableArray("Cuentas.xlsx","PerfilGestiones",1,1,5,"Alta Linea Equipo Cliente Existente");
+
+	 return (testObjArray);
+
+	}
+	@DataProvider
+	public Object[][] DatosAltaAgenteCredito() throws Exception{
+
+	 Object[][] testObjArray = ExcelUtils.getTableArray("Cuentas.xlsx","PreparacionDatos",1,1,20,"Alta Linea AG TC");
 
 	 return (testObjArray);
 
