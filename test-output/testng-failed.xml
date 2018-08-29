@@ -5,7 +5,7 @@
     <classes>
       <class name="Tests.GestionesPerfilOficina">
         <methods>
-          <include name="TS_CRM_Nominacion_Argentino" invocation-numbers="0"/>
+          <include name="TS_98599_CRM_Movil_REPRO_Rehabilitacion_Administrativo_Fraude_DNI"/>
           <include name="init"/>
         </methods>
       </class> <!-- Tests.GestionesPerfilOficina -->
