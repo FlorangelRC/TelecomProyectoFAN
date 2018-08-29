@@ -32,6 +32,7 @@ public class AltadeLineas extends TestBase {
 	String altura="1234";
 	protected WebDriver driver;
 	protected  WebDriverWait wait;
+	List<String> sOrders = new ArrayList<String>();
 	
 	@BeforeClass(alwaysRun=true)
 	public void Init2() {
@@ -355,7 +356,8 @@ public class AltadeLineas extends TestBase {
 		}catch(Exception ex1) {
 			driver.findElement(By.id("SaleOrderMessages_nextBtn")).click();
 		}
-			guardarListaTxt("Orden:"+orden+"-DNI:"+sDni+"-Cuenta:"+NCuenta+"-Linea"+Linea);
+		sOrders.add("Orden:"+orden+"-DNI:"+sDni+"-Cuenta:"+NCuenta+"-Linea"+Linea);
+			guardarListaTxt(sOrders);
 			
 			sleep(15000);
 			driver.navigate().refresh();

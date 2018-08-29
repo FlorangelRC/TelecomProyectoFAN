@@ -42,8 +42,8 @@ import DataProvider.ExcelUtils;
 
 public class TestBase {
 	protected static WebDriver driver;//
-	//protected String urlAmbiente = "https://telecomcrm--uat.cs53.my.salesforce.com";
-	protected String urlAmbiente = "https://crm--sit.cs14.my.salesforce.com/";
+	protected String urlAmbiente = "https://telecomcrm--uat.cs53.my.salesforce.com";
+	//protected String urlAmbiente = "https://crm--sit.cs14.my.salesforce.com/";
 	
 	
 	public void leftDropdown(WebDriver driver, String selection) {
@@ -1072,9 +1072,9 @@ public class TestBase {
 			//archivo.delete();*/
 		//Crear objeto FileWriter que sera el que nos ayude a escribir sobre archivo
 		FileWriter ArchiSa=new FileWriter(archivo,true);
-		ArchiSa.write("--------------------------------------------------------------------\r\n");
-		ArchiSa.write(UnD+"\r\n");
-		ArchiSa.write("--------------------------------------------------------------------\r\n");
+		for(String UnD: datosOrden) {
+			ArchiSa.write(UnD+"\r\n");
+		}
 		ArchiSa.close();
 	}
 	
