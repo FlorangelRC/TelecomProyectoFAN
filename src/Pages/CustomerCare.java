@@ -170,7 +170,7 @@ public class CustomerCare extends BasePage {
 				Actions builder = new Actions(driver);   
 				builder.moveToElement(btnSplit, 245, 20).click().build().perform();
 				for (WebElement op : desplegable) {
-					if (op.getText().equalsIgnoreCase("Accounts")) op.click();
+					if (op.getText().equalsIgnoreCase("Cuentas")) op.click();
 				}
 			}				
 			sleep(5000);
@@ -337,7 +337,7 @@ public class CustomerCare extends BasePage {
 		if (gest.equals("D\u00e9bito autom\u00e1tico")) sleep(6500);
 		else sleep(3000);
 		if (gest.equals("Historial de Packs")) sleep(1500);
-		cambiarAFrameActivo();
+		//cambiarAFrameActivo();
 	}
 	
 	public void irAGestiones() {

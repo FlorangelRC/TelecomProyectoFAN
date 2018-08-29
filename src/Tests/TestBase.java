@@ -1024,6 +1024,14 @@ public class TestBase {
 	}
 	
 	@DataProvider
+	public Object [][] ventaPack() throws Exception{
+		
+		Object[][] testObjArray = ExcelUtils.getTableArray("Cuentas.xlsx","PerfilGestiones",1,1,3,"venta de pack");
+		
+		return (testObjArray);
+	}
+	
+	@DataProvider
 	public Object[][] CuentaSuspension() throws Exception {
 		
 		Object[][] testObjArray = ExcelUtils.getTableArray("Cuentas.xlsx","PerfilGestiones",1,1,1,"Suspension");

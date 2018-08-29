@@ -23,6 +23,7 @@ import Pages.BasePage;
 import Pages.CustomerCare;
 import Pages.Marketing;
 import Pages.OM;
+import Pages.OMQPage;
 import Pages.SalesBase;
 import Pages.PagePerfilTelefonico;
 import Pages.setConexion;
@@ -328,15 +329,37 @@ public class GestionesPerfilTelefonico extends TestBase{
 	sleep(12000);
 	cCC.obligarclick(driver.findElement(By.id("SelectPaymentMethodsStep_nextBtn")));
 	sleep(15000);
-	buscarYClick(driver.findElements(By.id("InvoicePreview_nextBtn")),"equals", "siguiente");	
-	sleep(12000);
+	//buscarYClick(driver.findElements(By.id("InvoicePreview_nextBtn")),"equals", "siguiente");
+	//sleep(12000);
 	String orden = driver.findElement(By.className("top-data")).findElement(By.className("ng-binding")).getText();
 	String NCuenta = driver.findElements(By.className("top-data")).get(1).findElements(By.className("ng-binding")).get(3).getText();
 	System.out.println("Orden "+orden);
 	System.out.println("cuenta "+NCuenta);
 	cCC.obligarclick(driver.findElement(By.id("OrderSumary_nextBtn")));
 	sleep(15000);
-	cCC.obligarclick(driver.findElement(By.id("SaleOrderMessages_nextBtn")));
+	driver.findElement(By.id("Step_Error_Huawei_S029_nextBtn")).click();
+	//cCC.obligarclick(driver.findElement(By.id("SaleOrderMessages_nextBtn")));
 	driver.navigate().refresh();
+	}
+	
+	
+	@Test (groups= {"GestionesPerfilTelefonico","E2E"},priority=1, dataProvider="ventaPack")
+	public void TS123157_CRM_Movil_PRE_Venta_de_pack_Paquete_M2M_10_MB_Factura_de_Venta_Efectivo_Presencial_Punta_Alta_Agente(String sDNI, String sCuenta, String sventaPack){
+	SalesBase sale = new SalesBase(driver);
+	BasePage cambioFrameByID=new BasePage();
+	CustomerCare cCC = new CustomerCare(driver);
+	OMQPage OM = new OMQPage(driver);
+	PagePerfilTelefonico pagePTelefo = new PagePerfilTelefonico(driver);
+	driver.switchTo().frame(cambioFrameByID.getFrameForElement(driver, By.id("SearchClientDocumentType")));	
+	sleep(8000);
+	sale.BuscarCuenta("DNI", sDNI);
+	String accid = driver.findElement(By.cssSelector(".searchClient-body.slds-hint-parent.ng-scope")).findElements(By.tagName("td")).get(5).getText();
+	System.out.println("id "+accid);
+	pagePTelefo.buscarAssert();
+	pagePTelefo.comprarPack("comprar internet");
+	pagePTelefo.agregarPack(sventaPack);
+	pagePTelefo.tipoDePago("En Factura de Venta");
+	pagePTelefo.siguiente();
+	
 	}
 }
