@@ -184,6 +184,7 @@ public class CustomerCareOla1 extends TestBase {
 		try {
 			buscarYClick(driver.findElements(By.cssSelector(".slds-button.slds-button--neutral.ng-binding.ng-scope")), "equals", "continue");
 		} catch(Exception e) {}
+		sleep(5000);
 		List <WebElement> gest = driver.findElements(By.className("ta-care-omniscript-done"));
 		boolean a = false;
 		for (WebElement x : gest) {

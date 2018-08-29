@@ -153,13 +153,13 @@ public class CustomerCareOla2 extends TestBase {
 		Assert.assertTrue(false);
 	}
 	
-	@Test (groups = {"CustomerCare", "Ola2", "Marcas"}, dataProvider = "CustomerCuentaActiva")  //Hay que preguntar como es el caso
+	@Test (groups = {"CustomerCare", "Ola2", "Marcas"}, dataProvider = "CustomerCuentaActiva")
 	public void TS118763_360_View_Resumen_Cta_Cte_Simple_Integracion_historial_de_pagos_S059_Obtener_historial_de_pagos(String cCuenta) {
 		cc.elegirCuenta(cCuenta);
 		cc.irAFacturacion();
 		cc.irAResumenDeCuenta();
 		driver.findElement(By.cssSelector(".slds-button.slds-button--brand.filterNegotiations.slds-p-horizontal--x-large.slds-p-vertical--x-small")).click();
-		sleep(3000);
+		sleep(7000);
 		WebElement comp = driver.findElements(By.cssSelector(".slds-grid.slds-wrap.slds-card.slds-m-bottom--small.slds-p-around--medium")).get(0).findElement(By.tagName("p"));
 		Assert.assertTrue(comp.getText().toLowerCase().contains("comprobantes"));
 	}
