@@ -107,7 +107,7 @@ private WebDriver driver;
 	
 	
 
-	@Test (groups= {"TechnicalCare", "SVA", "Ola1"},priority=2, dataProvider="Tech")
+	@Test (groups= {"TechnicalCare", "SVA", "Ola1","filtrado"},priority=2, dataProvider="Tech")
 	public void TS94226_CRM_Ola_1_Technical_Care_CSR_SVA_Actualización_de_matriz_Servicio_Transferencia_de_llamadas_inconveniente_No_funciona_transferencia_de_llamadas_No_funciona_transferencia_de_llamadas_No_puede_configurar(String sCuenta, String sDni, String sLinea) throws Exception {
 	TechnicalCareCSRDiagnosticoPage tech = new TechnicalCareCSRDiagnosticoPage(driver);
 	TechCare_Ola1 page=new TechCare_Ola1(driver);
@@ -241,7 +241,7 @@ private WebDriver driver;
 
     
     }
-	@Test (groups= {"TechnicalCare", "SVA", "Ola1"},priority=3, dataProvider="Tech") //Listo
+	@Test (groups= {"TechnicalCare", "SVA", "Ola1","filtrado"},priority=3, dataProvider="Tech") //Listo
 	public void TS94276_CRM_Ola_1_Technical_Care_CSR_SVA_Validacion_SMS_entrante_no_recibe_ningun_numero(String sCuenta, String sDni, String sLinea) throws Exception {
 	TechnicalCareCSRDiagnosticoPage tech = new TechnicalCareCSRDiagnosticoPage(driver);
 	TechCare_Ola1 page=new TechCare_Ola1(driver);
@@ -421,7 +421,7 @@ private WebDriver driver;
 	    assertTrue(tech.validarEstado("SMS"));
 	}
 	
-	@Test (groups= {"TechnicalCare", "SVA", "Ola1"},priority=2, dataProvider="Tech")
+	@Test (groups= {"TechnicalCare", "SVA", "Ola1","filtrado"},priority=2, dataProvider="Tech")
 	public void TS94393_CRM_Ola_1_Technical_Care_CSR_Mis_Servicios_Identificacion_de_los_Servicios_opcionales_y_obligatorios(String sCuenta, String sDni, String sLinea) throws Exception {
     TechnicalCareCSRDiagnosticoPage tech = new TechnicalCareCSRDiagnosticoPage(driver);
     TechCare_Ola1 page=new TechCare_Ola1(driver);
@@ -453,7 +453,7 @@ private WebDriver driver;
 	}
 	
 
-	@Test (groups= {"TechnicalCare", "SVA", "Ola1"},priority=8, dataProvider="Tech")
+	@Test (groups= {"TechnicalCare", "SVA", "Ola1","filtrado"},priority=8, dataProvider="Tech")
 	public void TS94352_CRM_Ola_1_Technical_Care_CSR_SVA_Verificacion_de_la_posicion_en_el_mapa(String sCuenta, String sDni, String sLinea) throws Exception {
 	TechnicalCareCSRDiagnosticoPage tech = new TechnicalCareCSRDiagnosticoPage(driver);
 	TechCare_Ola1 page=new TechCare_Ola1(driver);

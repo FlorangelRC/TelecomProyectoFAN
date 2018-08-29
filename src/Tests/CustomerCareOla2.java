@@ -31,7 +31,8 @@ public class CustomerCareOla2 extends TestBase {
 		driver = setConexion.setupEze();
 		sleep(5000);
 		cc = new CustomerCare(driver);
-		cc.login("SIT");
+		loginOfCom(driver);
+		//cc.login("SIT");
 		try {
 			cc.cajonDeAplicaciones("Consola FAN");
 		} catch(Exception e) {
@@ -54,15 +55,15 @@ public class CustomerCareOla2 extends TestBase {
 	
 	
 	@Test (groups = {"CustomerCare", "Ola2", "Marcas"}, dataProvider = "CustomerCuentaActiva")
-	public void TS100939_360_View_POSTPAGO_Visualización_Resumen_de_Facturación_Verificación_filtro_Fecha(String cCuenta) {
+	public void TS100939_360_View_POSTPAGO_Visualizaciï¿½n_Resumen_de_Facturaciï¿½n_Verificaciï¿½n_filtro_Fecha(String cCuenta) {
 		cc.elegirCuenta(cCuenta);
 		cc.irAFacturacion();
 		cc.irAResumenDeCuenta();		
 		WebElement fechaHasta = cc.obtenerFechaHasta();
 		Assert.assertTrue(fechaHasta.getAttribute("value").contentEquals(fechaDeHoy()));
 	}
-	
-	//@Test (groups = {"CustomerCare", "Ola2", "Marcas"}, dataProvider = "CustomerCuentaActiva") //Rompe porque no existe la gestion Marcas, se paso a Ola 3 y no esta en funcionamiento
+	//ojo con este caso
+	@Test (groups = {"CustomerCare", "Ola2", "Marcas","filtrado"}, dataProvider = "CustomerCuentaActiva") //Rompe porque no existe la gestion Marcas, se paso a Ola 3 y no esta en funcionamiento
 	public void TS100963_Marks_Management_Base_Conocimiento_Acceso_a_base_de_conocimiento(String cCuenta) {
 		cc.elegirCuenta(cCuenta);
 		cc.irAGestion("marcas");
@@ -82,15 +83,15 @@ public class CustomerCareOla2 extends TestBase {
 	}
 	
 	//@Test (groups = {"CustomerCare", "Ola2", "Marcas"}, dataProvider = "CustomerCuentaActiva")  //Rompe porque no existe la gestion Marcas, se paso a Ola 3 y no esta en funcionamiento
-	public void TS100971_Marks_Management_Marcas_Session_Guiada_Botón_en_Iniciar_gestiones(String cCuenta) {
+	public void TS100971_Marks_Management_Marcas_Session_Guiada_Botï¿½n_en_Iniciar_gestiones(String cCuenta) {
 		cc.elegirCuenta(cCuenta);
 		cc.irAGestion("marcas");
 		WebElement tab = cc.obtenerPestanaActiva();		
-		Assert.assertTrue(tab.getText().contentEquals("Gestión de Marcas"));
+		Assert.assertTrue(tab.getText().contentEquals("Gestiï¿½n de Marcas"));
 	}
 	
 	@Test (groups = {"CustomerCare", "Ola2", "Marcas"}, dataProvider = "CustomerCuentaActiva")
-	public void TS100941_360_View_POSTPAGO_Visualización_Resumen_de_Facturación_Campos_Fecha_no_editables(String cCuenta) {
+	public void TS100941_360_View_POSTPAGO_Visualizaciï¿½n_Resumen_de_Facturaciï¿½n_Campos_Fecha_no_editables(String cCuenta) {
 		cc.elegirCuenta(cCuenta);
 		cc.irAFacturacion();
 		buscarYClick(driver.findElements(By.className("slds-text-body_regular")), "contains", "resumen de cuenta");
@@ -135,7 +136,7 @@ public class CustomerCareOla2 extends TestBase {
 	}
 	
 	@Test (groups = {"CustomerCare", "Ola2", "Marcas"}, dataProvider = "CustomerCuentaActiva")
-	public void TS100940_360_View_POSTPAGO_Visualizacion_Resumen_de_Facturacion_Verificación_grisado_Fecha(String cCuenta) {
+	public void TS100940_360_View_POSTPAGO_Visualizacion_Resumen_de_Facturacion_Verificaciï¿½n_grisado_Fecha(String cCuenta) {
 		DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
 		Date date = new Date();
 		cc.elegirCuenta(cCuenta);

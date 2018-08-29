@@ -835,6 +835,7 @@ public class CustomerCare extends BasePage {
 	}
 		
 	public void usarbuscadorsalesforce(String busqueda) {
+		buscador.clear();
 		buscador.sendKeys(busqueda);
 		buscador.submit();
 	}	

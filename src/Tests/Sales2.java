@@ -41,6 +41,7 @@ public class Sales2 extends TestBase{
 	String DNI = "DNI"; 
 	String provincia="Santa Fe" ;
 	String localidad="ROSARIO";
+	String plan="Plan con tarjeta";
 	protected  WebDriverWait wait;
 	
 	//@AfterClass(alwaysRun=true)
@@ -238,7 +239,7 @@ public class Sales2 extends TestBase{
 		Assert.assertEquals(delir.getFirstSelectedOption().getText(), "Env\u00edo Express");
 	}
 	
-	@Test(groups={"Sales", "AltaDeContacto", "Ola1"}, priority=2, dataProvider="SalesCuentaActiva")
+	@Test(groups={"Sales", "AltaDeContacto", "Ola1","filtrado"}, priority=2, dataProvider="SalesCuentaActiva")
 	public void TS94880_Alta_De_Contacto_Busqueda_Verificar_Accion_De_Ver_Detalle_De_Contacto(String sCuenta, String sDni, String sLinea) throws IOException{//dentro del ver detalles no se muestran las opciones de actualizar ni lanzar carrito
 		SalesBase SB = new SalesBase(driver);
 		boolean cat = false;
@@ -549,7 +550,7 @@ public class Sales2 extends TestBase{
 		Assert.assertTrue(a && b);
 	}
 	
-	@Test(groups={"Sales", "AltaDeLinea", "Ola1"}, priority=1, dataProvider="SalesCuentaActiva")//agregar luego uno de cuenta con gestiones
+	@Test(groups={"Sales", "AltaDeLinea", "Ola1","filtrado"}, priority=1, dataProvider="SalesCuentaActiva")//agregar luego uno de cuenta con gestiones
 	public void TS94611_Alta_Linea_Nueva_Venta_Verificar_acceso_a_Nueva_Venta_desde_vista_360(String sCuenta, String sDni, String sLinea) {
 		driver.findElement(By.cssSelector(".vlc-slds-button--tertiary.ng-binding.ng-scope")).click();
 		sleep(2000);
@@ -654,7 +655,7 @@ public class Sales2 extends TestBase{
 		Assert.assertTrue(driver.findElement(By.cssSelector(".list-group.vertical-steps.ng-scope")).isDisplayed());
 	}
 	
-	@Test(groups={"Sales", "AltaDeContacto", "Ola1"}, priority=2)
+	@Test(groups={"Sales", "AltaDeContacto", "Ola1","filtrado"}, priority=2)
 	public void TS94530_Alta_de_Contacto_Persona_Fisica_Dar_de_alta_un_contacto_nuevo_48() {
 		BasePage dni = new BasePage(driver);
 		Random aleatorio = new Random(System.currentTimeMillis());
@@ -786,7 +787,7 @@ public class Sales2 extends TestBase{
 		Assert.assertTrue(mde.getAttribute("disabled").equals("true"));
 	}
 	
-	@Test(groups={"Sales", "AltaDeLinea", "Ola1"}, priority=3, dataProvider="SalesCuentaActiva")
+	@Test(groups={"Sales", "AltaDeLinea", "Ola1","filtrado"}, priority=3, dataProvider="SalesCuentaActiva")
 	public void TS94691_Nueva_Venta_Modo_de_Entrega_Verificar_que_no_se_puede_cambiar_el_Modo_de_Entrega_Store_Pick_Up(String sCuenta, String sDni, String sLinea) throws IOException {
 		sb.BuscarCuenta(DNI, sDni);
 		//sb.BuscarCuenta(DNI, buscarCampoExcel(1, "Cuenta Activa", 2));
@@ -794,9 +795,9 @@ public class Sales2 extends TestBase{
 		sleep(25000);
 		driver.findElement(By.cssSelector(".slds-m-left--x-small.slds-button.slds-button--brand")).click();
 		sleep(15000);
-		driver.switchTo().frame(cambioFrame(driver, By.id("DeliveryMethod")));
-		Select env = new Select (driver.findElement(By.id("DeliveryMethod")));
-		env.selectByVisibleText("Store Pick Up");
+		List<WebElement> frame2 = driver.findElements(By.tagName("iframe"));
+		driver.switchTo().frame(frame2.get(0));
+		Select env = new Select (driver.findElement(By.id("DeliveryMethod")));env.selectByVisibleText("Store Pick Up");
 		Select prov = new Select (driver.findElement(By.id("State")));
 		prov.selectByVisibleText("Ciudad Aut\u00f3noma de Buenos Aires");
 		Select loc = new Select (driver.findElement(By.id("City")));
@@ -818,7 +819,7 @@ public class Sales2 extends TestBase{
 		Assert.assertTrue(mde.getAttribute("disabled").equals("disabled"));	
 	}
 	
-	@Test(groups={"Sales", "AltaDeLinea", "Ola1"}, priority=3, dataProvider="SalesCuentaActiva")
+	@Test(groups={"Sales", "AltaDeLinea", "Ola1","filtrado"}, priority=3, dataProvider="SalesCuentaActiva")
 	public void TS94694_Nueva_Venta_Modo_de_Entrega_Verificar_que_se_habilite_Tipo_de_Delivery(String sCuenta, String sDni, String sLinea) throws IOException {
 		sb.BuscarCuenta(DNI, sDni);
 		//sb.BuscarCuenta(DNI, buscarCampoExcel(1, "Cuenta Activa", 2));
@@ -826,9 +827,9 @@ public class Sales2 extends TestBase{
 		sleep(25000);
 		driver.findElement(By.cssSelector(".slds-m-left--x-small.slds-button.slds-button--brand")).click();
 		sleep(15000);
-		driver.switchTo().frame(cambioFrame(driver, By.id("DeliveryMethod")));
-		Select env = new Select (driver.findElement(By.id("DeliveryMethod")));
-		env.selectByVisibleText("Delivery");
+		List<WebElement> frame2 = driver.findElements(By.tagName("iframe"));
+		driver.switchTo().frame(frame2.get(0));
+		Select env = new Select (driver.findElement(By.id("DeliveryMethod")));env.selectByVisibleText("Delivery");
 		driver.findElement(By.id("SalesChannelConfiguration_nextBtn")).click();
 		sleep(10000);
 		driver.switchTo().defaultContent();
@@ -995,7 +996,7 @@ public class Sales2 extends TestBase{
 		Assert.assertTrue(ultnum.getText().contains("7354"));
  	}
 	
-	@Test(groups={"Sales", "AltaDeLinea", "Ola1"}, priority=7, dataProvider="SalesCuentaActiva")  
+	@Test(groups={"Sales", "AltaDeLinea", "Ola1","filtrado"}, priority=7, dataProvider="SalesCuentaActiva")  
 	public void TS94807_Configuracion_Verificar_Asignacion_De_Seriales_AgentePresencial(String sCuenta, String sDni, String sLinea) throws IOException {
 		sb.BuscarCuenta(DNI, sDni);
 		//sb.BuscarCuenta(DNI, buscarCampoExcel(1, "Cuenta Activa", 2));
@@ -1074,7 +1075,7 @@ public class Sales2 extends TestBase{
 		//Assert.assertTrue(driver.findElement(By.id("CardBankingEntity")).getAttribute("required"));
 	}
 	
-	@Test(groups={"Sales", "AltaDeLinea", "Ola1"}, priority=6, dataProvider="SalesCuentaActiva")  //falta validar los campos porque el campo requerido no existe
+	@Test(groups={"Sales", "AltaDeLinea", "Ola1","filtrado"}, priority=6, dataProvider="SalesCuentaActiva")  //falta validar los campos porque el campo requerido no existe
 	public void TS94936_Ventas_Modo_De_Pago_Tarjeta_Verificar_Campos_requeridos_Medio_De_Pago_TC(String sCuenta, String sDni, String sLinea) throws IOException {
 		sb.BuscarCuenta(DNI, sDni);
 		//sb.BuscarCuenta(DNI, buscarCampoExcel(1, "Cuenta Activa", 2));
@@ -1228,7 +1229,7 @@ public class Sales2 extends TestBase{
 		Assert.assertTrue(driver.findElement(By.id("promotionsByCardsBank-0")).findElements(By.tagName("option")).size()>1);
 	}
 	
-	@Test(groups={"Sales", "AltaDeLinea", "Ola1"}, priority=6, dataProvider="SalesBuscarCuenta")  
+	@Test(groups={"Sales", "AltaDeLinea", "Ola1","filtrado"}, priority=6, dataProvider="SalesBuscarCuenta")  
 	public void TS94941_Ventas_Modo_De_Pago_Tarjeta_Verificar_Datos_Del_Campo_Cuotas_TC(String sCuenta, String sDni, String sLinea) throws IOException {
 		sb.BuscarCuenta(DNI, sDni);
 		//sb.BuscarCuenta(DNI, buscarCampoExcel(1, "Cuenta Activa", 2));
@@ -1566,7 +1567,7 @@ public class Sales2 extends TestBase{
 	}
 	
 	
-	@Test(groups={"Sales","AltaDeLinea","Ola1"}, priority=4, dataProvider="SalesCuentaActiva")  //Continua aunque no se asigne las lianeas
+	@Test(groups={"Sales","AltaDeLinea","Ola1","filtrado"}, priority=4, dataProvider="SalesCuentaActiva")  //Continua aunque no se asigne las lianeas
 	public void TS94497_Alta_Linea_Configurar_Nueva_Linea_Intentar_pasar_al_siguiente_paso_lineas_incompletas_XX(String sCuenta, String sDni, String sLinea) throws IOException{
 		CustomerCare CC = new CustomerCare(driver);
 		sb.BuscarCuenta(DNI, sDni);
@@ -1595,7 +1596,7 @@ public class Sales2 extends TestBase{
 		Assert.assertTrue(x);
 	}
 	
-	@Test(groups={"Sales","AltaDeLinea","Ola1"}, priority=4, dataProvider="SalesCuentaActiva") // No figura el lote de lineas
+	@Test(groups={"Sales","AltaDeLinea","Ola1","filtrado"}, priority=4, dataProvider="SalesCuentaActiva") // No figura el lote de lineas
 	public void TS94494_Alta_Linea_Configurar_Nueva_Linea_Buscar_nuevo_lote_de_lineas_pre_asignadas_XX(String sCuenta, String sDni, String sLinea) throws IOException{
 		CustomerCare CC = new CustomerCare(driver);
 		sb.BuscarCuenta(DNI, sDni);
@@ -1792,7 +1793,7 @@ public class Sales2 extends TestBase{
 		Assert.assertTrue(driver.findElement(By.cssSelector(".OSradioButton.ng-scope.only-buttom")).isEnabled());
 	}
 	
-	@Test(groups={"Sales", "AltaDeLinea", "Ola1"}, priority=0, dataProvider="SalesCuentaActiva")
+	@Test(groups={"Sales", "AltaDeLinea", "Ola1","filtrado"}, priority=0, dataProvider="SalesCuentaActiva")
 	public void TS94782_Ventas_Entregas_General_Store_Pickup_Consulta_stock_por_PDV_Verificar_que_se_hablilite_solo_las_localidades_con_punto_de_venta_para_Store_Pickup(String sCuenta, String sDni, String sLinea) throws IOException {
 		sb.BuscarCuenta(DNI, sDni);
 		//sb.BuscarCuenta(DNI, buscarCampoExcel(1, "Cuenta Activa", 2));
@@ -1800,7 +1801,8 @@ public class Sales2 extends TestBase{
 		sleep(25000);
 		driver.findElement(By.cssSelector(".slds-m-left--x-small.slds-button.slds-button--brand")).click();
 		sleep(15000);
-		driver.switchTo().frame(cambioFrame(driver, By.id("DeliveryMethod")));
+		List<WebElement> frame2 = driver.findElements(By.tagName("iframe"));
+		driver.switchTo().frame(frame2.get(0));
 		Select env = new Select (driver.findElement(By.id("DeliveryMethod")));
 		env.selectByVisibleText("Store Pick Up");
 		Select prov = new Select (driver.findElement(By.id("State")));
@@ -2212,14 +2214,14 @@ public class Sales2 extends TestBase{
 		}
 	}
 		
-	@Test(groups={"Sales", "AltaDeLinea", "Ola1"}, priority=3, dataProvider="SalesCuentaActiva")
+	@Test(groups={"Sales", "AltaDeLinea", "Ola1","filtrado"}, priority=3, dataProvider="SalesCuentaActiva")
 	public void TS94479_Alta_Linea_Carrito_Eliminar_productos_del_carrito(String sCuenta, String sDni, String sLinea) throws IOException {
 		Ta_CPQ page3 = new Ta_CPQ(driver);
 		sb.BuscarCuenta(DNI, sDni);
 		//sb.BuscarCuenta(DNI, buscarCampoExcel(1, "Cuenta Activa", 2));
 		sb.acciondecontacto("catalogo");
 		sleep(15000);
-		sb.elegirplan("Plan con tarjeta");
+		sb.elegirplan(plan);
 		sleep(2000);
 		page3.abrirprimeraflecha();
 		sleep(3000);
@@ -2227,7 +2229,7 @@ public class Sales2 extends TestBase{
 		try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 		Assert.assertFalse(page3.isPlanPresent());
 	}
-	@Test(groups={"Sales", "AltaDeLinea", "Ola1"}, priority=3, dataProvider="SalesCuentaActiva")
+	@Test(groups={"Sales", "AltaDeLinea", "Ola1","filtrado"}, priority=3, dataProvider="SalesCuentaActiva")
 	public void TS94482_Alta_Linea_Carrito_Eliminar_todos_los_productos_del_carrito1(String sCuenta, String sDni, String sLinea) throws IOException {
 		Ta_CPQ page3 = new Ta_CPQ(driver);
 		sb.BuscarCuenta(DNI, sDni); 
