@@ -96,7 +96,7 @@ public class TechCareOla1A extends TestBase {
  		    sleep(2000);
  		}
  		
- 		@AfterClass(alwaysRun=true)
+ 		//@AfterClass(alwaysRun=true)
  		public void tearDown() {
  			try {Thread.sleep(1000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
  			CustomerCare cerrar = new CustomerCare(driver);
@@ -235,7 +235,7 @@ public class TechCareOla1A extends TestBase {
 	/**
 	 * Verifica que al seleccionar SI, se genere el ticket al final.
 	 */
-	@Test(groups= {"TechnicalCare","MisServicios","Ola1"}, priority=5, dataProvider="Tech")
+	@Test(groups= {"TechnicalCare","MisServicios","Ola1","filtrado"}, priority=5, dataProvider="Tech")
 	public void TS94391_CRM_Ola1_Technical_Care_CSR_Mis_Servicios_Visualizacion_Documento_Base_de_Conocimiento_Respuesta_SI(String sCuenta, String sDni, String sLinea) {
 		TechCare_Ola1 page=new TechCare_Ola1(driver);
 		sleep(3000);
@@ -339,7 +339,7 @@ public class TechCareOla1A extends TestBase {
 		assertEquals(driver.findElements(By.cssSelector(".imgItemContainer.ng-scope")).get(2).getText().toLowerCase(),"mms emisión cliente informa que no puede enviar imagen");
 	}
 
-	@Test(groups= {"TechnicalCare","SVA","Ola1"}, priority=8, dataProvider="Tech")
+	@Test(groups= {"TechnicalCare","SVA","Ola1","filtrado"}, priority=8, dataProvider="Tech")
 	public void TS94351_CRM_Ola1_Technical_Care_CSR_SVA_Verificacion_de_buscar_la_posicion_en_el_mapa(String sCuenta, String sDni, String sLinea) {
 		TechCare_Ola1 page=new TechCare_Ola1(driver);
 		sleep(3000);
@@ -465,7 +465,7 @@ public class TechCareOla1A extends TestBase {
 	    assertTrue(driver.findElements(By.cssSelector(".imgItemContainer.ng-scope")).get(0).isDisplayed());
 	}
 	
-	@Test(groups= {"TechnicalCare","SVA","Ola1"}, priority=7, dataProvider="Tech")
+	@Test(groups= {"TechnicalCare","SVA","Ola1","filtrado"}, priority=7, dataProvider="Tech")
 	public void TS94372_CRM_Ola1_Technical_Care_CSR_SVA_Verificacion_de_Cobertura_y_Señal_en_el_equipo(String sCuenta, String sDni, String sLinea) {
 		TechCare_Ola1 page=new TechCare_Ola1(driver);
 		sleep(3000);
@@ -640,7 +640,7 @@ public class TechCareOla1A extends TestBase {
 	}
 	
 	
-	@Test(groups= {"TechnicalCare","SVA","Ola1"}, priority=6, dataProvider="Tech")
+	@Test(groups= {"TechnicalCare","SVA","Ola1","filtrado"}, priority=6, dataProvider="Tech")
 	public void TS94335_CRM_Ola1_Technical_Care_CSR_SVA_Verificacion_de_desregistro_de_la_linea(String sCuenta, String sDni, String sLinea) {
 		TechCare_Ola1 page=new TechCare_Ola1(driver);
 		sleep(3000);
@@ -667,7 +667,7 @@ public class TechCareOla1A extends TestBase {
 	    assertTrue(driver.findElement(By.xpath("//*[@id=\"DeregisterSpeechMessage\"]/div")).isDisplayed());
 	}
 	
-	@Test(groups= {"TechnicalCare","SVA","Ola1"}, priority=3, dataProvider="Tech")
+	@Test(groups= {"TechnicalCare","SVA","Ola1","filtrado"}, priority=3, dataProvider="Tech")
 	public void TS94478_CRM_Ola1_Technical_Care_CSR_SVA_Validacion_SMS_saliente(String sCuenta, String sDni, String sLinea) {
 		TechCare_Ola1 page=new TechCare_Ola1(driver);
 		sleep(3000);

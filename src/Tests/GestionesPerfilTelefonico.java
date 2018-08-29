@@ -34,7 +34,6 @@ public class GestionesPerfilTelefonico extends TestBase{
 	private SalesBase sb;
 	private CustomerCare cc;
 	List <String> datosOrden =new ArrayList<String>();
-	;
 	
 	
 	@BeforeClass
@@ -100,9 +99,9 @@ public class GestionesPerfilTelefonico extends TestBase{
 		sb.cerrarPestaniaGestion(driver);
 	}
 
-	@AfterClass
+	//@AfterClass
 	public void quit() throws IOException {
-		guardarListaTxt(datosOrden);
+		//guardarListaTxt(datosOrden);
 		System.out.println("Se supone que guardo");
 		//driver.quit();
 		sleep(5000);
@@ -136,7 +135,7 @@ public class GestionesPerfilTelefonico extends TestBase{
 		driver.switchTo().frame(cambioFrame(driver, By.id("RefillAmount")));
 		driver.findElement(By.id("RefillAmount")).sendKeys(cMonto);
 		driver.findElement(By.id("AmountSelectionStep_nextBtn")).click();
-		sleep(15000);
+		sleep(20000);
 		driver.findElement(By.id("InvoicePreview_nextBtn")).click();
 		sleep(10000);
 		buscarYClick(driver.findElements(By.cssSelector(".slds-form-element__label.ng-binding")), "equals", "tarjeta de credito");
@@ -344,11 +343,11 @@ public class GestionesPerfilTelefonico extends TestBase{
 	
 	
 	@Test (groups= {"GestionesPerfilTelefonico","E2E"},priority=1, dataProvider="ventaPack")
-	public void TS123157_CRM_Movil_PRE_Venta_de_pack_Paquete_M2M_10_MB_Factura_de_Venta_Efectivo_Presencial_Punta_Alta_Agente(String sDNI, String sCuenta, String sventaPack){
+	public void TS123157_CRM_Movil_PRE_Venta_de_pack_Paquete_M2M_10_MB_Factura_de_Venta_Efectivo_Presencial_Punta_Alta_Agente(String sDNI, String sCuenta, String sventaPack) throws InterruptedException{
 	SalesBase sale = new SalesBase(driver);
 	BasePage cambioFrameByID=new BasePage();
 	CustomerCare cCC = new CustomerCare(driver);
-	OMQPage OM = new OMQPage(driver);
+	OM OM = new OM(driver);
 	PagePerfilTelefonico pagePTelefo = new PagePerfilTelefonico(driver);
 	driver.switchTo().frame(cambioFrameByID.getFrameForElement(driver, By.id("SearchClientDocumentType")));	
 	sleep(8000);
@@ -357,7 +356,10 @@ public class GestionesPerfilTelefonico extends TestBase{
 	System.out.println("id "+accid);
 	pagePTelefo.buscarAssert();
 	pagePTelefo.comprarPack("comprar internet");
-	pagePTelefo.agregarPack(sventaPack);
+//	OM.colocarPlan(sventaPack);
+//	driver.findElement(By.cssSelector(".slds-button.slds-m-left--large.slds-button--brand.ta-button-brand")).click();
+//	sleep(45000);
+	pagePTelefo.PackCombinado(sventaPack);
 	pagePTelefo.tipoDePago("En Factura de Venta");
 	pagePTelefo.siguiente();
 	

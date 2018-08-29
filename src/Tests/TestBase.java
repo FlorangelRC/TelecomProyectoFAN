@@ -42,8 +42,8 @@ import DataProvider.ExcelUtils;
 
 public class TestBase {
 	protected static WebDriver driver;//
-	//protected String urlAmbiente = "https://telecomcrm--uat.cs53.my.salesforce.com";
-	protected String urlAmbiente = "https://crm--sit.cs14.my.salesforce.com/";
+	protected String urlAmbiente = "https://telecomcrm--uat.cs53.my.salesforce.com";
+	//protected String urlAmbiente = "https://crm--sit.cs14.my.salesforce.com/";
 	
 	
 	public void leftDropdown(WebDriver driver, String selection) {
@@ -131,7 +131,7 @@ public class TestBase {
 		driver.get(urlAmbiente);
 		try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 	    Login lLogin = new Login(driver);
-	    lLogin.ingresarMarketing();
+	    lLogin.ingresarDani();
 	}
 	
 	public void loginSCPAdmin(WebDriver driver) {
@@ -1057,17 +1057,23 @@ public class TestBase {
 		return (testObjArray);
 	}
 	
+	@DataProvider
+	public Object [][] CuentaHabilitacion() throws Exception {
+		
+		Object[][] testObjArray = ExcelUtils.getTableArray("Cuentas.xlsx","PerfilGestiones",1,1,1,"Habilitacion");
+		
+		return (testObjArray);
+	} 
+	
 	public void guardarListaTxt(List<String> datosOrden) throws IOException {
 		File archivo=new File("DatosOrdenes.txt");
-		if (archivo.exists())
-			archivo.delete();
+		/*if (!archivo.exists())
+			FileWriter ArchiSa=new FileWriter(archivo,true);
+			//archivo.delete();*/
 		//Crear objeto FileWriter que sera el que nos ayude a escribir sobre archivo
 		FileWriter ArchiSa=new FileWriter(archivo,true);
-		
-		for (String UnD : datosOrden) {
-			ArchiSa.write("--------------------------------------------------------------------\r\n");
+		for(String UnD: datosOrden) {
 			ArchiSa.write(UnD+"\r\n");
-			ArchiSa.write("--------------------------------------------------------------------\r\n");
 		}
 		ArchiSa.close();
 	}
@@ -1154,6 +1160,14 @@ public class TestBase {
 	public Object[][] AltaLineaNuevoEquipoOfCom() throws Exception{
 
 	 Object[][] testObjArray = ExcelUtils.getTableArray("Cuentas.xlsx","PerfilGestiones",1,1,9,"Alta Linea Equipo New OfCom");
+
+	 return (testObjArray);
+
+	}
+	@DataProvider
+	public Object[][] DatosAltaAgenteCredito() throws Exception{
+
+	 Object[][] testObjArray = ExcelUtils.getTableArray("Cuentas.xlsx","PreparacionDatos",1,1,20,"Alta Linea AG TC");
 
 	 return (testObjArray);
 
