@@ -96,7 +96,7 @@ public class TechCareOla1A extends TestBase {
  		    sleep(2000);
  		}
  		
- 		@AfterClass(alwaysRun=true)
+ 		//@AfterClass(alwaysRun=true)
  		public void tearDown() {
  			try {Thread.sleep(1000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
  			CustomerCare cerrar = new CustomerCare(driver);

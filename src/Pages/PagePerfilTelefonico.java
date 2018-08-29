@@ -57,14 +57,24 @@ public class PagePerfilTelefonico extends TestBase{
 	}
 	
 	public void agregarPack(String Pack1) {
-		//CustomerCare cCC = new CustomerCare(driver);
-		//cCC.closerightpanel();
-		//sleep(5000);
-		//driver.switchTo().frame(cambioFrame(driver, By.id("tab-default-1")));
 		sleep(5000);		
 		driver.switchTo().frame(cambioFrame(driver, By.cssSelector(".slds-button.cpq-item-has-children")));
 		OMQPage OM = new OMQPage(driver);
 		OM.agregarPack("Packs Opcionales", "Packs de Datos", Pack1, "", "");
+		driver.findElement(By.cssSelector(".slds-button.slds-m-left--large.slds-button--brand.ta-button-brand")).click();
+		sleep(45000);
+		try{ 
+		      driver.findElements(By.cssSelector(".slds-button.slds-button--neutral.ng-binding.ng-scope")).get(1).click(); 
+		      sleep(8000); 
+		    }catch(Exception ex1){} 
+		sleep(12000); 
+	}
+	
+	public void PackCombinado(String Pack1) {
+		sleep(5000);		
+		driver.switchTo().frame(cambioFrame(driver, By.cssSelector(".slds-button.cpq-item-has-children")));
+		OMQPage OM = new OMQPage(driver);
+		OM.agregarPack("Packs Opcionales", "Packs Combinados", Pack1, "", "");
 		driver.findElement(By.cssSelector(".slds-button.slds-m-left--large.slds-button--brand.ta-button-brand")).click();
 		sleep(45000);
 		try{ 
@@ -81,13 +91,13 @@ public class PagePerfilTelefonico extends TestBase{
 	for (WebElement pago : tipodePago) {
 		//System.out.print(pago.getText().toLowerCase());
 		if (pago.getText().toLowerCase().contains(tipodepago)) {
-			pago.findElement(By.tagName("span")).click();
-			System.out.println(tipodepago);
-			sleep(8000);
-			break;
-		}
-	}
-	}
+				pago.findElement(By.tagName("span")).click();
+					System.out.println(tipodepago);
+						sleep(8000);
+							break;
+						}
+					}
+				}
 	
 	public void siguiente() {
 	sleep(5000);
