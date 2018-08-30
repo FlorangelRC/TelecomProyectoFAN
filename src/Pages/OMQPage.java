@@ -324,7 +324,8 @@ public class OMQPage extends BasePage {
 			 for (int j = 0; j < packs.size(); j++) {
 					if (Pack.get(i).getText().equals(packs.get(j))) {
 						System.out.println(packs);
-						buscarYClick(Agregar, "equals","Agregar"); //Agregar.get(i).click();
+						//buscarYClick(Agregar, "equals","Agregar"); 
+						Agregar.get(i).click();
 						sleep(8000);
 						break;						
 					}

@@ -361,8 +361,11 @@ public class GestionesPerfilTelefonico extends TestBase{
 //	driver.findElement(By.cssSelector(".slds-button.slds-m-left--large.slds-button--brand.ta-button-brand")).click();
 //	sleep(45000);
 	pagePTelefo.PackCombinado(sventaPack);
-	pagePTelefo.tipoDePago("En Factura de Venta");
+	pagePTelefo.tipoDePago("en factura de venta");
 	pagePTelefo.siguiente();
-	
+	pagePTelefo.siguiente();
+	pagePTelefo.siguiente();
+	pagePTelefo.siguiente();
+	pagePTelefo.siguiente();
 	}
 }
