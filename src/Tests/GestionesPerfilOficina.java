@@ -131,13 +131,21 @@ public class GestionesPerfilOficina extends TestBase {
 		
 		sleep(15000);
 		List <WebElement> wMessage = driver.findElement(By.cssSelector(".slds-form-element.vlc-flex.vlc-slds-text-block.vlc-slds-rte.ng-pristine.ng-valid.ng-scope")).findElement(By.className("ng-binding")).findElements(By.tagName("p"));
-		System.out.println("wMessage.get(1).getText(): " + wMessage.get(1).getText());
 		boolean bAssert = wMessage.get(1).getText().contains("La orden se realiz\u00f3 con \u00e9xito!");
 		sOrders.add(cCC.obtenerOrden(driver, "N\u00fameros Gratis"));
 		Assert.assertTrue(bAssert);
 		sleep(5000);
 		String orden = cc.obtenerOrden(driver, "Numero Gratis");
 		sOrders.add("Numeros amigos, orden numero: " + orden + " con numero de DNI: " + sDNI);
+		List<WebElement> wTabs = driver.findElements(By.className("x-tab-strip-closable"));
+		for (WebElement wAux : wTabs) {
+			if (wAux.findElement(By.className("tabText")).getText().equalsIgnoreCase("N\u00fameros Gratis")) {
+				wAux.findElement(By.className("x-tab-strip-close")).click();
+			}
+		}
+		cCC.seleccionarCardPornumeroLinea(sLinea, driver);
+		cCC.irAGestionEnCard("N\u00fameros Gratis");
+		//Complete when the page works
 	}
 	
 	@Test (groups = {"GestionesPerfilOficina", "Recargas","E2E"}, dataProvider = "RecargaEfectivo")
@@ -356,7 +364,6 @@ public class GestionesPerfilOficina extends TestBase {
 		List <WebElement> roam = driver.findElements(By.cssSelector(".cpq-item-base-product"));
 			for(WebElement r : roam){
 				if(r.getText().contains("DDI sin Roaming Internacional")){
-					driver.findElements(By.cssSelector(".slds-button.slds-button_icon-border-filled.cpq-item-actions-dropdown-button")).get(6).isEnabled();
 					driver.findElements(By.cssSelector(".slds-button.slds-button_icon-border-filled.cpq-item-actions-dropdown-button")).get(6).click();
 					sleep(5000);
 					buscarYClick(driver.findElements(By.cssSelector(".slds-dropdown__item.cpq-item-actions-dropdown__item")), "contains", "delete");
@@ -366,7 +373,9 @@ public class GestionesPerfilOficina extends TestBase {
 							sleep(20000);
 						}catch(Exception ex1) {}
 				}
-			cc.obligarclick(r.findElement(By.cssSelector(".slds-button.slds-button_neutral")));
+			if(r.findElement(By.cssSelector(".cpq-item-base-product-actions.slds-text-align_right")).findElement(By.cssSelector(".slds-button.slds-button_neutral")).equals("Agregar")){
+				cc.obligarclick(r);
+			}
 			sleep(15000);
 			}
 		}
@@ -566,7 +575,7 @@ public class GestionesPerfilOficina extends TestBase {
 		buscarYClick(driver.findElements(By.cssSelector(".slds-form-element__label.ng-binding.ng-scope")), "equals", "si");
 		driver.findElement(By.id("Step-TipodeAjuste_nextBtn")).click();
 		sleep(7000);
-		buscarYClick(driver.findElements(By.cssSelector(".slds-form-element__label.ng-binding")), "equals", "plan con tarjeta repro - 3463406514");
+		buscarYClick(driver.findElements(By.cssSelector(".slds-form-element__label.ng-binding")), "contains", "plan con tarjeta repro");
 		driver.findElement(By.id("Step-AssetSelection_nextBtn")).click();
 		sleep(7000);
 		buscarYClick(driver.findElements(By.cssSelector(".slds-form-element__label.ng-binding.ng-scope")), "equals", "si, ajustar");
@@ -963,7 +972,7 @@ public class GestionesPerfilOficina extends TestBase {
 		driver.switchTo().frame(cambioFrame(driver, By.id("SearchClientDocumentType")));
 		sb.BuscarCuenta("DNI", "16754923");
 		driver.findElement(By.cssSelector(".slds-tree__item.ng-scope")).click();
-		sleep(15000);
+		sleep(20000);
 		cc.irAGestion("inconvenientes");
 		sleep(10000);
 		driver.switchTo().frame(cambioFrame(driver, By.id("Step-TipodeAjuste_nextBtn")));
@@ -1088,7 +1097,7 @@ public class GestionesPerfilOficina extends TestBase {
 	public void TS135707_CRM_Movil_PRE_Ajuste_Nota_de_Debito_FAN_Front_OOCC_Bariloche() {
 		boolean gest = false;
 		driver.switchTo().frame(cambioFrame(driver, By.id("SearchClientDocumentType")));
-		sb.BuscarCuenta("DNI", "18766558");
+		sb.BuscarCuenta("DNI", "16754923");
 		driver.findElement(By.cssSelector(".slds-tree__item.ng-scope")).click();
 		sleep(15000);
 		cc.irAGestion("inconvenientes");
@@ -1124,7 +1133,7 @@ public class GestionesPerfilOficina extends TestBase {
 		}
 		String orden = cc.obtenerOrden(driver, "Inconvenientes con cargos tasados y facturados");
 		Assert.assertTrue(gest);
-		sOrders.add("Inconvenientes con cargos tasados y facturados, numero de orden: " + orden + " de cuenta con DNI: " + "18766558");
+		sOrders.add("Inconvenientes con cargos tasados y facturados, numero de orden: " + orden + " de cuenta con DNI: " + "16754923");
 		Assert.assertTrue(cc.verificarOrden(orden));
 	}
 	

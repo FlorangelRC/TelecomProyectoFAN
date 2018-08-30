@@ -108,7 +108,7 @@ public class Marketing_Mattu_Wave2 extends TestBase{
 	//-------------------------------------------------------------------------------------------------
 	//TCC = 2
 	@SuppressWarnings("deprecation")
-	@Test(groups = {"Marketing", "Ola2", "GestionDeCampaniasEnMarketingCloudDeClubPersonal"})
+	@Test(groups = {"Marketing", "Ola2", "GestionDeCampaniasEnMarketingCloudDeClubPersonal","filtrado"})
 	public void TS102037_Creacion_exitosa_de_una_campania_en_MKT() {
 		driver.findElement(By.className("pbButton")).findElement(By.tagName("input")).click();
 		WebElement wSelect = driver.findElement(By.id("p3"));
@@ -182,7 +182,7 @@ public class Marketing_Mattu_Wave2 extends TestBase{
 	
 	//-------------------------------------------------------------------------------------------------
 	//TCC = 3
-	@Test(groups = {"Marketing", "Ola2", "ConfiguracionDeCampaniasEnMarketingCloudDeClubPersonal"})
+	@Test(groups = {"Marketing", "Ola2", "ConfiguracionDeCampaniasEnMarketingCloudDeClubPersonal","filtrado"})
 	public void TS102092_Campo_Obligatorio_Canal_Alta_de_Campania() {
 		driver.findElement(By.className("pbButton")).findElement(By.tagName("input")).click();
 		WebElement wSelect = driver.findElement(By.id("p3"));
@@ -216,7 +216,7 @@ public class Marketing_Mattu_Wave2 extends TestBase{
 	
 	//-------------------------------------------------------------------------------------------------
 	//TCC = 4
-	@Test(groups = {"Marketing", "Ola2", "ConfiguracionDeCampaniasEnMarketingCloudDeClubPersonal"})
+	@Test(groups = {"Marketing", "Ola2", "ConfiguracionDeCampaniasEnMarketingCloudDeClubPersonal","filtrado"})
 	public void TS102100_Campo_Obligatorio_Fecha_de_Vigencia_desde_Alta_de_Campania() {
 		driver.findElement(By.className("pbButton")).findElement(By.tagName("input")).click();
 		WebElement wSelect = driver.findElement(By.id("p3"));
@@ -241,7 +241,7 @@ public class Marketing_Mattu_Wave2 extends TestBase{
 	
 	//-------------------------------------------------------------------------------------------------
 	//TCC = 5
-	@Test(groups = {"Marketing", "Ola2", "ConfiguracionDeCampaniasEnMarketingCloudDeClubPersonal"})
+	@Test(groups = {"Marketing", "Ola2", "ConfiguracionDeCampaniasEnMarketingCloudDeClubPersonal","filtrado"})
 	public void TS102072_Campo_Obligatorio_Nombre_de_Campania_Alta_de_Campania() {
 		driver.findElement(By.className("pbButton")).findElement(By.tagName("input")).click();
 		WebElement wSelect = driver.findElement(By.id("p3"));
@@ -268,7 +268,7 @@ public class Marketing_Mattu_Wave2 extends TestBase{
 	
 	//-------------------------------------------------------------------------------------------------
 	//TCC = 6
-	@Test(groups = {"Marketing", "Ola2", "ConfiguracionDeCampaniasEnMarketingCloudDeClubPersonal"})
+	@Test(groups = {"Marketing", "Ola2", "ConfiguracionDeCampaniasEnMarketingCloudDeClubPersonal","filtrado"})
 	public void TS102076_Campo_Obligatorio_Objetivo_de_Campania_Alta_de_Campania() {
 		driver.findElement(By.className("pbButton")).findElement(By.tagName("input")).click();
 		WebElement wSelect = driver.findElement(By.id("p3"));
@@ -296,7 +296,7 @@ public class Marketing_Mattu_Wave2 extends TestBase{
 	
 	//-------------------------------------------------------------------------------------------------
 	//TCC = 7
-	@Test(groups = {"Marketing", "Ola2", "ConfiguracionDeCampaniasEnMarketingCloudDeClubPersonal"})
+	@Test(groups = {"Marketing", "Ola2", "ConfiguracionDeCampaniasEnMarketingCloudDeClubPersonal","filtrado"})
 	public void TS102080_Campo_Obligatorio_Tipo_de_Campania_Alta_de_Campania() {
 		driver.findElement(By.className("pbButton")).findElement(By.tagName("input")).click();
 		WebElement wSelect = driver.findElement(By.id("p3"));
