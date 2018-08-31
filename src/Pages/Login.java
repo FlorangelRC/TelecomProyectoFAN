@@ -127,9 +127,9 @@ public class Login extends BasePage {
 			  logininterno.click();
 			  try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 			  //SIT
-			  //Ecom_User_ID.sendKeys("UAT549492");
+			  Ecom_User_ID.sendKeys("UAT549492");
 			  //UAT
-			  Ecom_User_ID.sendKeys("uat195528");
+			  //Ecom_User_ID.sendKeys("uat195528");
 			  Ecom_Password.sendKeys("Testa10k");
 			  loginButton2.click();
 			  try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
@@ -151,7 +151,10 @@ public class Login extends BasePage {
 		public void ingresarLogistica() {
 			  logininterno.click();
 			  try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
-			   Ecom_User_ID.sendKeys("UAT178596");
+			  //SIT
+			  Ecom_User_ID.sendKeys("UAT178596");
+			  //UAT
+			  //Ecom_User_ID.sendKeys("uat196425");
 			  Ecom_Password.sendKeys("Testa10k");
 			  loginButton2.click();
 			  try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}

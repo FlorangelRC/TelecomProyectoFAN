@@ -10,6 +10,8 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.Select;
 import org.openqa.selenium.support.ui.WebDriverWait;
+import org.testng.annotations.AfterClass;
+import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
@@ -32,7 +34,7 @@ public class AltadeLineas extends TestBase {
 	String altura="1234";
 	protected WebDriver driver;
 	protected  WebDriverWait wait;
-	List <String> datosOrden =new ArrayList<String>();
+	List <String> DatosOrden =new ArrayList<String>();
 	
 	@BeforeClass(alwaysRun=true)
 	public void Init2() {
@@ -40,7 +42,7 @@ public class AltadeLineas extends TestBase {
 		//driver.manage().deleteAllCookies();
 		try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}		
 		SalesBase SB = new SalesBase(driver);
-		loginOfCom(driver);  
+		loginAgente(driver);  
 		CustomerCare cc = new CustomerCare(driver);
 		
 		 try {Thread.sleep(10000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
@@ -104,7 +106,8 @@ public class AltadeLineas extends TestBase {
 	}
 	
 	//@AfterMethod(alwaysRun=true)
-		public void deslogin(){
+		public void deslogin() throws IOException{
+			
 			sleep(2000);
 			SalesBase SB = new SalesBase(driver);
 			driver.switchTo().defaultContent();
@@ -115,8 +118,9 @@ public class AltadeLineas extends TestBase {
 
 		}
 	
-	//@AfterClass(alwaysRun=true)
+	@AfterClass(alwaysRun=true)
 	public void Exit() throws IOException {
+		guardarListaTxt(sOrders);
 		//driver.quit();
 		sleep(2000);
 	}
@@ -356,8 +360,9 @@ public class AltadeLineas extends TestBase {
 		}catch(Exception ex1) {
 			driver.findElement(By.id("SaleOrderMessages_nextBtn")).click();
 		}
-		sOrders.add("Orden:"+orden+"-DNI:"+sDni+"-Cuenta:"+NCuenta+"-Linea"+Linea);
-			guardarListaTxt(sOrders);
+		DatosOrden.add("Orden:"+orden+"-DNI:"+sDni+"-Cuenta:"+NCuenta+"-Linea"+Linea);
+			guardarListaTxt(DatosOrden);
+			
 			
 			sleep(15000);
 			driver.navigate().refresh();
@@ -657,12 +662,10 @@ public class AltadeLineas extends TestBase {
 		driver.findElement(By.cssSelector(".slds-input.ng-valid.ng-not-empty.ng-dirty.ng-valid-parse.ng-touched")).clear();
 		sleep(3000);
 		driver.findElement(By.cssSelector(".slds-input.ng-valid.ng-dirty.ng-valid-parse.ng-touched.ng-empty")).sendKeys("Galaxy S8 - Negro");
-		sleep(10000);
-		List<WebElement> agregar = driver.findElements(By.cssSelector(".slds-button.slds-button--neutral.add-button")); 
-			for(WebElement a : agregar){
-				a.getText().equals("Agregar");
-				a.click();
-			}
+		sleep(13000);
+		WebElement acept = driver.findElement(By.cssSelector(".slds-media.cpq-product-item-container")).findElement(By.cssSelector(".slds-button.slds-button.slds-button--icon"));
+		System.out.println(acept.getText());
+		cc.obligarclick(acept);
 		sleep(5000);	
 		sb.continuar();
 		sleep(24000);
@@ -712,7 +715,7 @@ public class AltadeLineas extends TestBase {
 
 	}
 	
-	@Test(groups={"Sales", "AltaLineaDatos"}, priority=1, dataProvider="DatosAltaEquipoExiste")
+	@Test(groups={"Sales", "AltaLineaDatos"}, priority=1, dataProvider="DatosAltaEquipoExiste") // ================= 31-8 no aprecen los seriales y no deja continuar.
 	public void TS_CRM_Movil_Equipo_Cliente_existente_Presencial_OFCOM(String sDni, String sNombre, String sApellido, String sSexo, String sFNac, String sEmail, String sPlan, String sProvincia, String sLocalidad) throws IOException {
 		CustomerCare cc = new CustomerCare(driver);
 		SalesBase sb = new SalesBase(driver);
@@ -731,7 +734,7 @@ public class AltadeLineas extends TestBase {
 		sleep(25000);
 		driver.findElement(By.cssSelector(".slds-input.ng-pristine.ng-untouched.ng-valid")).sendKeys("Galaxy S8 - Negro");
 		sleep(10000);
-		List<WebElement> agregar = driver.findElements(By.cssSelector(".slds-button.slds-button--neutral.add-button")); 
+		List<WebElement> agregar = driver.findElements(By.cssSelector(".slds-button.slds-button_neutral.cpq-add-button")); 
 			for(WebElement a : agregar){
 				a.getText().equals("Agregar");
 				a.click();
@@ -743,7 +746,8 @@ public class AltadeLineas extends TestBase {
 		driver.switchTo().frame(cambioFrameByID.getFrameForElement(driver, By.id("InvoicePreview_nextBtn")));
 		System.out.println(driver.findElement(By.id("VlocityBP")).getText());
 		//buscarYClick(driver.findElements(By.id("InvoicePreview_nextBtn")),"equals", "Siguiente");
-		
+		//cc.obligarclick(driver.findElement(By.id("ICCDAssignment_nextBtn")));
+		sleep(15000);
 		cc.obligarclick(driver.findElement(By.id("InvoicePreview_nextBtn")));
 		sleep(20000);
 		List<WebElement> medpag = driver.findElements(By.cssSelector(".slds-radio.ng-scope"));
@@ -772,7 +776,7 @@ public class AltadeLineas extends TestBase {
 			sleep(15000);
 			String orden = cc.obtenerOrdenMontoyTN(driver, "Recarga");
 			System.out.println("orden = "+orden);
-			datosOrden.add("Recargas" + orden + " de cuenta "+accid+" con DNI: " + sDni);
+			DatosOrden.add("Recargas" + orden + " de cuenta "+accid+" con DNI: " + sDni);
 			CBS_Mattu invoSer = new CBS_Mattu();
 			invoSer.PagoEnCaja("1003", accid, "2001", orden.split("-")[2], orden.split("-")[1]);
 			sleep(5000);
@@ -829,7 +833,6 @@ public class AltadeLineas extends TestBase {
 			}
 		cc.obligarclick(driver.findElement(By.id("SelectPaymentMethodsStep_nextBtn")));
 		sleep(20000);
-		}
 	}
 	
 	@Test(groups={"Sales", "AltaLineaDatos","E2E"}, priority=1, dataProvider="DatosAltaAgenteCredito")

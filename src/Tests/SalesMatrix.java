@@ -26,7 +26,7 @@ public class SalesMatrix extends TestBase {
 		driver = setConexion.setupEze();
 		sleep(5000);
 		sb = new SalesBase(driver);
-		loginDani(driver);
+		loginOfCom(driver);
 		sleep(5000);
 		HomeBase homePage = new HomeBase(driver);
 		sleep(6000);
@@ -53,7 +53,7 @@ public class SalesMatrix extends TestBase {
 	    sleep(5000);
 	}
 	
-	@AfterMethod (alwaysRun = true)
+	//@AfterMethod (alwaysRun = true)
 	public void goBack(){
 		sleep(5000);
 		driver.switchTo().defaultContent();
@@ -61,7 +61,7 @@ public class SalesMatrix extends TestBase {
 		sleep(5000);
 	}
 
-	@AfterClass (alwaysRun = true)
+	//@AfterClass (alwaysRun = true)
 	public void tearDown() {
 		driver.quit();
 	}
