@@ -313,6 +313,13 @@ public class TestBase {
 		    page0.ingresarNominaciones();
 		}
 		
+		public void loginBackOffice(WebDriver driver) {
+			driver.get(urlAmbiente);
+			try {Thread.sleep(6000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		    Login page0 = new Login(driver);
+		    page0.ingresarBackOffice();
+		}
+		
 		
 		
 		/**Ingresa con los datos de la cuenta Nicolas.
@@ -1117,7 +1124,10 @@ public class TestBase {
 			 loginEntrega(driver);
 			 break;
 		 case "OM":
-			 login(driver,urlAmbiente, "U585991", "Testa10k");
+			 login(driver, urlAmbiente, "U585991", "Testa10k");
+			 break;
+		 case "backoffice":
+			 login(driver, urlAmbiente, "UAT544121", "Testa10k");
 			 break;
 		 }
 		 sleep(10000);
