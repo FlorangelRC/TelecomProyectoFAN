@@ -33,7 +33,6 @@ public class CustomerCareOla1 extends TestBase {
 		sleep(5000);
 		cc = new CustomerCare(driver);
 		loginOfCom(driver);
-		//cc.login("SIT");
 		try {
 			cc.cajonDeAplicaciones("Consola FAN");
 		} catch(Exception e) {

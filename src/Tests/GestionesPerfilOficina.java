@@ -362,7 +362,6 @@ public class GestionesPerfilOficina extends TestBase {
 		List <WebElement> roam = driver.findElements(By.cssSelector(".cpq-item-base-product"));
 			for(WebElement r : roam){
 				if(r.getText().contains("DDI sin Roaming Internacional")){
-					driver.findElements(By.cssSelector(".slds-button.slds-button_icon-border-filled.cpq-item-actions-dropdown-button")).get(6).isEnabled();
 					driver.findElements(By.cssSelector(".slds-button.slds-button_icon-border-filled.cpq-item-actions-dropdown-button")).get(6).click();
 					sleep(5000);
 					buscarYClick(driver.findElements(By.cssSelector(".slds-dropdown__item.cpq-item-actions-dropdown__item")), "contains", "delete");
@@ -372,7 +371,7 @@ public class GestionesPerfilOficina extends TestBase {
 							sleep(20000);
 						}catch(Exception ex1) {}
 				}
-			cc.obligarclick(r.findElement(By.cssSelector(".slds-button.slds-button_neutral")));
+			buscarYClick(driver.findElements(By.cssSelector(".slds-button.slds-button_neutral")), "contains", "agregar");	
 			sleep(15000);
 			}
 		}

@@ -313,6 +313,13 @@ public class TestBase {
 		    page0.ingresarNominaciones();
 		}
 		
+		public void loginBackOffice(WebDriver driver) {
+			driver.get(urlAmbiente);
+			try {Thread.sleep(6000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		    Login page0 = new Login(driver);
+		    page0.ingresarBackOffice();
+		}
+		
 		
 		
 		/**Ingresa con los datos de la cuenta Nicolas.
@@ -1119,6 +1126,9 @@ public class TestBase {
 		 case "om":
 			 login(driver,urlAmbiente, "U585991", "Testa10k");
 			 break;
+		 case "backoffice":
+			 login(driver, urlAmbiente, "UAT544121", "Testa10k");
+			 break;
 		 }
 		 sleep(10000);
 	}
@@ -1148,9 +1158,18 @@ public class TestBase {
 	 return (testObjArray);
 	}
 	@DataProvider
-	public Object[][] AltaLineaEquipoClienteExistente() throws Exception{
+	public Object[][] AltaLineaNuevoEquipo() throws Exception{
 
-	 Object[][] testObjArray = ExcelUtils.getTableArray("Cuentas.xlsx","PerfilGestiones",1,1,5,"Alta Linea Equipo Cliente Existente");
+	 Object[][] testObjArray = ExcelUtils.getTableArray("Cuentas.xlsx","PerfilGestiones",1,1,9,"Alta Linea Equip New AG");
+
+	 return (testObjArray);
+
+	}
+	
+	@DataProvider
+	public Object[][] AltaLineaNuevoEquipoOfCom() throws Exception{
+
+	 Object[][] testObjArray = ExcelUtils.getTableArray("Cuentas.xlsx","PerfilGestiones",1,1,9,"Alta Linea Equipo New OfCom");
 
 	 return (testObjArray);
 
@@ -1159,6 +1178,15 @@ public class TestBase {
 	public Object[][] DatosAltaAgenteCredito() throws Exception{
 
 	 Object[][] testObjArray = ExcelUtils.getTableArray("Cuentas.xlsx","PreparacionDatos",1,1,20,"Alta Linea AG TC");
+
+	 return (testObjArray);
+
+	}
+	
+	@DataProvider
+	public Object[][] PerfilCuentaTomRiddleConLinea() throws Exception{
+
+	 Object[][] testObjArray = ExcelUtils.getTableArray("Cuentas.xlsx","PerfilGestiones",1,1,14,"Recargas");
 
 	 return (testObjArray);
 
