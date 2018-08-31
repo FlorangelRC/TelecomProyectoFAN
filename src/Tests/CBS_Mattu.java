@@ -86,4 +86,25 @@ public class CBS_Mattu extends TestBase {
 		System.out.println("Respuesta: " + sResponse);
 	}
 	
+	@Test
+	public void openPage4() {
+		String sEndPoint = "";
+		String sPaymentChannelID = "";
+		String sAccountKey = "";
+		String sPaymentMethod = "";
+		String sAmount = "";
+		String sInvoiceno = "";
+		String sMessageSeq = ((new java.text.SimpleDateFormat("yyyyMMddHHmmss")).format(new Date())).toString()+Integer.toString((int)(Math.random()*1000));
+		String sAccountNumber = "";
+		String sAccountName = "";
+		String sExpirationDate = "";
+		String sCVV = "";
+		String sCardHolderName = "";
+		String sCardHolderNumber = "";
+		
+		SOAPClientSAAJ sSCS = new SOAPClientSAAJ();
+		CBS cCBS = new CBS();
+		String sResponse = cCBS.sCBS_TC_Request_Validador(sSCS.callSoapWebService(cCBS.sRequestByTC(sMessageSeq, sPaymentChannelID, sAccountKey, sPaymentMethod, sAmount, sAccountNumber, sAccountName, sExpirationDate, sCVV, sInvoiceno, sCardHolderName, sCardHolderNumber), sEndPoint));
+		cCBS.sCBS_TC_Request_Validador(sResponse);
+	}
 }

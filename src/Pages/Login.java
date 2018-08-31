@@ -127,9 +127,9 @@ public class Login extends BasePage {
 			  logininterno.click();
 			  try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 			  //SIT
-			  //Ecom_User_ID.sendKeys("UAT549492");
+			  Ecom_User_ID.sendKeys("UAT549492");
 			  //UAT
-			  Ecom_User_ID.sendKeys("uat195528");
+			  //Ecom_User_ID.sendKeys("uat195528");
 			  Ecom_Password.sendKeys("Testa10k");
 			  loginButton2.click();
 			  try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
@@ -141,9 +141,9 @@ public class Login extends BasePage {
 			  try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 			  //TELEFONICO
 			  //SIT
-			  //Ecom_User_ID.sendKeys("UAT569076");
+			  Ecom_User_ID.sendKeys("UAT569076");
 			  //UAT
-			  Ecom_User_ID.sendKeys("uat592149");
+			  //Ecom_User_ID.sendKeys("uat592149");
 			  Ecom_Password.sendKeys("Testa10k");
 			  loginButton2.click();
 			  try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
@@ -178,9 +178,9 @@ public class Login extends BasePage {
 			  logininterno.click();
 			  try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 			  //SIT
-			  //Ecom_User_ID.sendKeys("UAT195528");
+			  Ecom_User_ID.sendKeys("UAT195528");
 			  //UAT OOCC
-			  Ecom_User_ID.sendKeys("uat579805");
+			  //Ecom_User_ID.sendKeys("uat579805");
 			  Ecom_Password.sendKeys("Testa10k");
 			  loginButton2.click();
 			  try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}

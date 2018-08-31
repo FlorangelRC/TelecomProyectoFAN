@@ -82,19 +82,19 @@ public class GestionesPerfilAgente extends TestBase{
 		sleep(14000);
 	}
 	
-	@AfterMethod
+	//@AfterMethod
 	public void after() {
 		SalesBase sb = new SalesBase(driver);
 		sb.cerrarPestaniaGestion(driver);
 	}
 	
-	@AfterClass
+	//@AfterClass
 	public void quit() {
 		driver.quit();
 		sleep(5000);
 	}
 	
-	@Test (groups = {"GestionesPerfilAgente","Recargas"}, dataProvider="PerfilCuentaTomRiddleConDNI")
+	@Test (groups = {"GestionesPerfilAgente","Recargas"}, dataProvider="PerfilCuentaTomRiddleConLinea")
 	public void TS134322_CRM_Movil_REPRO_Recargas_Presencial_TC_Agente(String sDNI, String sMonto, String sBanco, String sTarjeta, String sPromo, String sCuotas, String sNumTarjeta, String sVenceMes, String sVenceAno, String sCodSeg, String sTipoDNI, String sDNITarjeta, String sTitular, String sLinea) {
 		//Check All
 		if(sMonto.length() >= 4) {
@@ -122,7 +122,7 @@ public class GestionesPerfilAgente extends TestBase{
 		CustomerCare cCC = new CustomerCare(driver);
 		cCC.seleccionarCardPornumeroLinea(sLinea, driver);
 		
-		cCC.irAGestionEnCard("Recarga de cr\\u00e9dito");
+		cCC.irAGestionEnCard("Recarga de cr\u00e9dito");
 		sleep(15000);
 		driver.switchTo().frame(cambioFrame(driver, By.id("RefillAmount")));
 		driver.findElement(By.id("RefillAmount")).sendKeys(sMonto);

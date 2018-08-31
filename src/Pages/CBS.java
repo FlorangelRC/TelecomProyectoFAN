@@ -194,4 +194,123 @@ public class CBS {
 		
 		return sAssert;
 	}
+	
+	public String sRequestByTC(String sMessageSeq, String sPaymentChannelID, String sAccountKey, String sPaymentMethod, String sAmount, String sAccountNumber, String sAccountName, String sExpirationDate, String sCVV, String sInvoiceno, String sCardHolderName, String sCardHolderNumber) {
+		String sRequest = "";
+		sRequest = "<soapenv:Envelope xmlns:soapenv=\"http://schemas.xmlsoap.org/soap/envelope/\" xmlns:ars=\"http://www.huawei.com/bme/cbsinterface/arservices\" xmlns:cbs=\"http://www.huawei.com/bme/cbsinterface/cbscommon\" xmlns:arc=\"http://cbs.huawei.com/ar/wsservice/arcommon\">\r\n"
+				+ "<soapenv:Header/>\r\n"
+				+ "<soapenv:Body>\r\n"
+				+ "<ars:PaymentRequestMsg>\r\n"
+				+ "<RequestHeader>\r\n"
+				+ "<cbs:Version>5.5</cbs:Version>\r\n"
+				+ "<cbs:BusinessCode>Charge2AR</cbs:BusinessCode>\r\n"
+				+ "<cbs:MessageSeq>" + sMessageSeq;
+		
+		sRequest+= "</cbs:MessageSeq>\r\n"
+				+ "<cbs:OwnershipInfo>\r\n"
+				+ "<cbs:BEID>10101</cbs:BEID>\r\n"
+				+ "<cbs:BRID>101</cbs:BRID>\r\n"
+				+ "</cbs:OwnershipInfo>\r\n"
+				+ "<cbs:AccessSecurity>\r\n"
+				+ "<cbs:LoginSystemCode>117</cbs:LoginSystemCode>\r\n"
+				+ "<cbs:Password>jW6lRxU4leO5Xev+SISea/Ie7Dp5wDPgfGR9MNVDJRo=</cbs:Password>\r\n"
+				+ "<cbs:RemoteIP>10.75.197.142</cbs:RemoteIP>\r\n"
+				+ "</cbs:AccessSecurity>\r\n"
+				+ "<cbs:OperatorInfo>\r\n"
+				+ "<cbs:OperatorID>101</cbs:OperatorID>\r\n"
+				+ "<cbs:ChannelID>1</cbs:ChannelID>\r\n"
+				+ "</cbs:OperatorInfo>\r\n"
+				+ "<cbs:AccessMode>A</cbs:AccessMode>\r\n"
+				+ "<cbs:MsgLanguageCode>2002</cbs:MsgLanguageCode>\r\n"
+				+ "<cbs:TimeFormat>\r\n"
+				+ "<cbs:TimeType>1</cbs:TimeType>\r\n"
+				+ "<cbs:TimeZoneID>8</cbs:TimeZoneID>\r\n"
+				+ "</cbs:TimeFormat>\r\n"
+				+ "<cbs:AdditionalProperty>\r\n"
+				+ "<cbs:Code>108</cbs:Code>\r\n"
+				+ "<cbs:Value>109</cbs:Value>\r\n"
+				+ "</cbs:AdditionalProperty>\r\n"
+				+ "</RequestHeader>\r\n"
+				+ "<PaymentRequest>\r\n"
+				+ "<ars:PaymentSerialNo>${=(new java.text.SimpleDateFormat(\"yyyyMMddHHmmss\")).format(new Date())}${=(int)(Math.random()*1000)}</ars:PaymentSerialNo>\r\n"
+				+ "<ars:PaymentChannelID>" + sPaymentChannelID;
+		
+		sRequest+= "</ars:PaymentChannelID>\r\n"
+				+ "<ars:OpType>1</ars:OpType>\r\n"
+				+ "<ars:PaymentObj>\r\n"
+				+ "<ars:AcctAccessCode>\r\n"
+				+ "<arc:AccountKey>" + sAccountKey;
+		
+		sRequest+= "</arc:AccountKey>\r\n"
+				+ "</ars:AcctAccessCode>\r\n"
+				+ "</ars:PaymentObj>\r\n"
+				+ "<ars:PaymentInfo>\r\n"
+				+ "<ars:CashPayment>\r\n"
+				+ "<ars:PaymentMethod>" + sPaymentMethod;
+		
+		sRequest+= "</ars:PaymentMethod>\r\n"
+				+ "<ars:Amount>" + sAmount;
+		
+		sRequest+= "</ars:Amount>\r\n"
+				+ "<ars:BankInfo>\r\n"
+				+ "<arc:BankCode>11</arc:BankCode>\r\n"
+				+ "<arc:AcctType>C</arc:AcctType>\r\n"
+				+ "<arc:AcctNo>" + sAccountNumber;
+		
+		sRequest+= "</arc:AcctNo>\r\n"
+				+ "<arc:CreditCardType>403</arc:CreditCardType>\r\n"
+				+ "<arc:AcctName>" + sAccountName;
+		
+		sRequest+= "</arc:AcctName>\r\n"
+				+ "<arc:ExpDate>" + sExpirationDate;
+		
+		sRequest+= "</arc:ExpDate>\r\n"
+				+ "<arc:CVVNumber>" + sCVV;
+		
+		sRequest+= "</arc:CVVNumber>\r\n"
+				+ "<arc:NumberOfInstallment>1</arc:NumberOfInstallment>\r\n"
+				+ "</ars:BankInfo>\r\n"
+				+ "<!--Zero or more repetitions:-->\r\n"
+				+ "<ars:ApplyList>\r\n"
+				+ "<ars:Invoiceno>" + sInvoiceno;
+				
+		sRequest+= "</ars:Invoiceno>\r\n"
+				+ "</ars:ApplyList>\r\n"
+				+ "<ars:PaymentPlan>0</ars:PaymentPlan>\r\n"
+				+ "</ars:CashPayment>\r\n"
+				+ "</ars:PaymentInfo>\r\n"
+				+ "<ars:PointOfSaleID>782</ars:PointOfSaleID>\r\n"
+				+ "<ars:PaymentOperationType>SalesInvoice</ars:PaymentOperationType>\r\n"
+				+ "<ars:CurrencyID>1006</ars:CurrencyID>\r\n"
+				+ "<ars:WondersoftInfo>\r\n"
+				+ "<ars:OriginIP>10.70.26.101</ars:OriginIP>\r\n"
+				+ "<ars:CardHolderName>" + sCardHolderName;
+		
+		sRequest+= "</ars:CardHolderName>\r\n"
+				+ "<ars:CardHolderDocumentType>96</ars:CardHolderDocumentType>\r\n"
+				+ "<ars:CardHolderDocumentNumber>" + sCardHolderNumber;
+		
+		sRequest+= "</ars:CardHolderDocumentNumber>\r\n"
+				+ "<ars:BankPromotionCode>0</ars:BankPromotionCode>\r\n"
+				+ "</ars:WondersoftInfo>\r\n"
+				+ "</PaymentRequest>\r\n"
+				+ "</ars:PaymentRequestMsg>\r\n"
+				+ "</soapenv:Body>\r\n"
+				+ "</soapenv:Envelope>";
+		
+		return sRequest;
+	}
+	
+	public String sCBS_TC_Request_Validador(String sResponse) {
+		String sAssert = "false";
+		
+		if (sResponse.contains("Operation successfully")) {
+			sAssert = "true";
+		}
+		else {
+			sAssert = sResponse;
+		}
+		
+		return sAssert;
+	}
 }
