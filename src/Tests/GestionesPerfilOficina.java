@@ -373,9 +373,7 @@ public class GestionesPerfilOficina extends TestBase {
 							sleep(20000);
 						}catch(Exception ex1) {}
 				}
-			if(r.findElement(By.cssSelector(".cpq-item-base-product-actions.slds-text-align_right")).findElement(By.cssSelector(".slds-button.slds-button_neutral")).equals("Agregar")){
-				cc.obligarclick(r);
-			}
+			buscarYClick(driver.findElements(By.cssSelector(".slds-button.slds-button_neutral")), "contains", "agregar");	
 			sleep(15000);
 			}
 		}
