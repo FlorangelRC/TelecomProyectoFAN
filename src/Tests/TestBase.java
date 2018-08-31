@@ -42,8 +42,8 @@ import DataProvider.ExcelUtils;
 
 public class TestBase {
 	protected static WebDriver driver;//
-	protected String urlAmbiente = "https://telecomcrm--uat.cs53.my.salesforce.com";
-	//protected String urlAmbiente = "https://crm--sit.cs14.my.salesforce.com/";
+	//protected String urlAmbiente = "https://telecomcrm--uat.cs53.my.salesforce.com";
+	protected String urlAmbiente = "https://crm--sit.cs14.my.salesforce.com/";
 	
 	
 	public void leftDropdown(WebDriver driver, String selection) {
@@ -939,9 +939,9 @@ public class TestBase {
 	}
 	
 	@DataProvider
-	public Object[][] PerfilCuentaTomRiddle() throws Exception{
+	public Object[][] RecargaTC() throws Exception{
 
-	 Object[][] testObjArray = ExcelUtils.getTableArray("Cuentas.xlsx","PerfilGestiones",1,1,13,"Recargas");
+	 Object[][] testObjArray = ExcelUtils.getTableArray("Cuentas.xlsx","PerfilGestiones",1,1,14,"Recargas");
 
 	 return (testObjArray);
 
@@ -1116,7 +1116,7 @@ public class TestBase {
 		 case "entrega":
 			 loginEntrega(driver);
 			 break;
-		 case "OM":
+		 case "om":
 			 login(driver,urlAmbiente, "U585991", "Testa10k");
 			 break;
 		 }

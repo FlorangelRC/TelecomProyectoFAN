@@ -51,7 +51,7 @@ public class CBS_Mattu extends TestBase {
 		System.out.println("sResponse: " + sResponse);
 	}
 	
-	public void PagoEnCaja(String sPaymentChannelID, String sAccountKey, String sPaymentMethod, String sAmount, String sInvoiceno) {
+	public boolean PagoEnCaja(String sPaymentChannelID, String sAccountKey, String sPaymentMethod, String sAmount, String sInvoiceno) {
 		String sEndPoint = "Pago en Caja";
 		String sPaymentSerialNo = ((new java.text.SimpleDateFormat("yyyyMMddHHmmss")).format(new Date())).toString()+Integer.toString((int)(Math.random()*1000));
 		
@@ -59,6 +59,7 @@ public class CBS_Mattu extends TestBase {
 		CBS cCBS = new CBS();
 		String sResponse = cCBS.sCBS_Request_ServicioWeb_Validador(sSCS.callSoapWebService(cCBS.sRequest(sPaymentSerialNo, sPaymentChannelID, sAccountKey, sPaymentMethod, sAmount, sInvoiceno), sEndPoint));
 		System.out.println("sResponse: " + sResponse);
+		return(cCBS.sCBS_Request_Validador(sResponse));
 	}
 	
 	@Test
