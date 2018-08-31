@@ -364,4 +364,39 @@ public class GestionesPerfilTelefonico extends TestBase{
 	pagePTelefo.siguiente();
 	
 	}
+	
+	@Test (groups= {"GestionesPerfilTelefonico", "Ajustes", "E2E"})  //Rompe porque no sale el mensaje de gestion exitosa, sale el perfil no configurado correctamente
+	public void TS121333_CRM_Movil_PRE_Ajuste_total_de_comprobantes_FAN_Front_Telefonico() {
+		boolean gest = false;
+		driver.switchTo().frame(cambioFrame(driver, By.id("SearchClientDocumentType")));
+		sb.BuscarCuenta("DNI", "59885133");
+		driver.findElement(By.cssSelector(".slds-tree__item.ng-scope")).click();
+		sleep(15000);
+		cc.irAGestion("inconvenientes");
+		sleep(10000);
+		driver.switchTo().frame(cambioFrame(driver, By.id("Step-TipodeAjuste_nextBtn")));
+		selectByText(driver.findElement(By.id("CboConcepto")), "CREDITO POSPAGO");
+		selectByText(driver.findElement(By.id("CboItem")), "Minutos/SMS");
+		selectByText(driver.findElement(By.id("CboMotivo")), "Error/omisi\u00f3n/demora gesti\u00f3n");
+		buscarYClick(driver.findElements(By.cssSelector(".slds-form-element__label.ng-binding.ng-scope")), "equals", "si");
+		driver.findElement(By.id("Step-TipodeAjuste_nextBtn")).click();
+		sleep(7000);
+		buscarYClick(driver.findElements(By.cssSelector(".slds-form-element__label.ng-binding")), "contains", "cuenta:");
+		driver.findElement(By.id("Step1-SelectBillingAccount_nextBtn")).click();
+		sleep(7000);
+		buscarYClick(driver.findElements(By.cssSelector(".slds-form-element__label.ng-binding.ng-scope")), "equals", "si, ajustar");
+		driver.findElement(By.id("Step-VerifyPreviousAdjustments_nextBtn")).click();
+		sleep(7000);
+		buscarYClick(driver.findElements(By.cssSelector(".slds-form-element__label.ng-binding.ng-scope")), "equals", "nota de cr\u00e9dito");
+		buscarYClick(driver.findElements(By.cssSelector(".slds-form-element__label.ng-binding.ng-scope")), "equals", "si");
+		driver.switchTo().frame(cambioFrame(driver, By.cssSelector(".x-layout-mini.x-layout-mini-west.x-layout-mini-custom-logo")));
+		driver.findElement(By.cssSelector(".x-layout-mini.x-layout-mini-west.x-layout-mini-custom-logo")).click();
+		sleep(3000);
+		driver.findElements(By.className("slds-cell-shrink")).get(0).click();
+		driver.findElement(By.id("Step-AjusteNivelCuenta_nextBtn")).click();
+		sleep(7000);
+		driver.findElement(By.id("Step-Summary_nextBtn")).click();
+		sleep(7000);
+		Assert.assertTrue(false);
+	}
 }

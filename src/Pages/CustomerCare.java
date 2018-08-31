@@ -176,7 +176,7 @@ public class CustomerCare extends BasePage {
 			sleep(5000);
 			driver.switchTo().frame(marcoCuentas);
 			Select field = new Select(selectCuentas);
-			if (!field.getFirstSelectedOption().getText().equalsIgnoreCase("All")) {
+			if (!field.getFirstSelectedOption().getText().equalsIgnoreCase("Todas las cuentas")) {
 				field.selectByVisibleText("All");
 				sleep(5000);
 			}			
