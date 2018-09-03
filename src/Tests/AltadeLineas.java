@@ -11,6 +11,8 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.Select;
 import org.openqa.selenium.support.ui.WebDriverWait;
+import org.testng.annotations.AfterClass;
+import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
@@ -105,7 +107,8 @@ public class AltadeLineas extends TestBase {
 	}
 	
 	//@AfterMethod(alwaysRun=true)
-		public void deslogin(){
+		public void deslogin() throws IOException{
+			
 			sleep(2000);
 			SalesBase SB = new SalesBase(driver);
 			driver.switchTo().defaultContent();
@@ -116,8 +119,9 @@ public class AltadeLineas extends TestBase {
 
 		}
 	
-	//@AfterClass(alwaysRun=true)
+	@AfterClass(alwaysRun=true)
 	public void Exit() throws IOException {
+		guardarListaTxt(sOrders);
 		//driver.quit();
 		sleep(2000);
 	}
@@ -359,6 +363,7 @@ public class AltadeLineas extends TestBase {
 		}
 		DatosOrden.add("Orden:"+orden+"-DNI:"+sDni+"-Cuenta:"+NCuenta+"-Linea"+Linea);
 			guardarListaTxt(DatosOrden);
+			
 			
 			sleep(15000);
 			driver.navigate().refresh();

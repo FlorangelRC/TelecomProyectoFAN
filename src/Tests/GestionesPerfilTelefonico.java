@@ -3,27 +3,17 @@ package Tests;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
-
 import org.openqa.selenium.By;
-import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.Select;
 import org.testng.Assert;
-import org.testng.annotations.AfterClass;
-import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
-
-import com.sun.org.apache.xalan.internal.xsltc.compiler.sym;
-
 import Pages.Accounts;
 import Pages.BasePage;
 import Pages.CustomerCare;
-import Pages.Marketing;
-import Pages.OM;
-import Pages.OMQPage;
 import Pages.SalesBase;
 import Pages.PagePerfilTelefonico;
 import Pages.setConexion;
@@ -99,16 +89,16 @@ public class GestionesPerfilTelefonico extends TestBase{
 		sb.cerrarPestaniaGestion(driver);
 	}
 
-	//@AfterClass
+	@AfterClass
 	public void quit() throws IOException {
-		//guardarListaTxt(datosOrden);
+		guardarListaTxt(datosOrden);
 		System.out.println("Se supone que guardo");
 		//driver.quit();
 		sleep(5000);
 	}
 	
-	@Test (groups = {"GestionesPerfilOficina", "Recargas","E2E"}, dataProvider = "PerfilCuentaTomRiddle")  //Error despues de ingresar la tarjeta
-	public void TS134332_CRM_Movil_REPRO_Recargas_Telefonico_TC_Callcenter_Financiacion(String cDNI, String cMonto, String cBanco, String cTarjeta, String cPromo, String cCuotas, String cNumTarjeta, String cVenceMes, String cVenceAno, String cCodSeg, String cTipoDNI, String cDNITarjeta, String cTitular) {
+	@Test (groups = {"GestionesPerfilOficina", "Recargas","E2E"}, dataProvider = "RecargaTC")  //Error despues de ingresar la tarjeta
+	public void TS134332_CRM_Movil_REPRO_Recargas_Telefonico_TC_Callcenter_Financiacion(String cDNI, String cMonto, String cBanco, String cTarjeta, String cPromo, String cCuotas, String cNumTarjeta, String cVenceMes, String cVenceAno, String cCodSeg, String cTipoDNI, String cDNITarjeta, String cTitular, String cLinea) {
 		if(cMonto.length() >= 4) {
 			cMonto = cMonto.substring(0, cMonto.length()-1);
 		}
@@ -346,19 +336,15 @@ public class GestionesPerfilTelefonico extends TestBase{
 	public void TS123157_CRM_Movil_PRE_Venta_de_pack_Paquete_M2M_10_MB_Factura_de_Venta_Efectivo_Presencial_Punta_Alta_Agente(String sDNI, String sCuenta, String sventaPack) throws InterruptedException{
 	SalesBase sale = new SalesBase(driver);
 	BasePage cambioFrameByID=new BasePage();
-	CustomerCare cCC = new CustomerCare(driver);
-	OM OM = new OM(driver);
 	PagePerfilTelefonico pagePTelefo = new PagePerfilTelefonico(driver);
 	driver.switchTo().frame(cambioFrameByID.getFrameForElement(driver, By.id("SearchClientDocumentType")));	
 	sleep(8000);
 	sale.BuscarCuenta("DNI", sDNI);
 	String accid = driver.findElement(By.cssSelector(".searchClient-body.slds-hint-parent.ng-scope")).findElements(By.tagName("td")).get(5).getText();
-	System.out.println("id "+accid);
+	System.out.prin
+	tln("id "+accid);
 	pagePTelefo.buscarAssert();
 	pagePTelefo.comprarPack("comprar internet");
-//	OM.colocarPlan(sventaPack);
-//	driver.findElement(By.cssSelector(".slds-button.slds-m-left--large.slds-button--brand.ta-button-brand")).click();
-//	sleep(45000);
 	pagePTelefo.PackCombinado(sventaPack);
 	pagePTelefo.tipoDePago("en factura de venta");
 	pagePTelefo.siguiente();
@@ -366,6 +352,7 @@ public class GestionesPerfilTelefonico extends TestBase{
 	pagePTelefo.siguiente();
 	pagePTelefo.siguiente();
 	pagePTelefo.siguiente();
+	driver.navigate().refresh();
 	}
 	
 	@Test (groups= {"GestionesPerfilTelefonico", "Ajustes", "E2E"})  //Rompe porque no sale el mensaje de gestion exitosa, sale el perfil no configurado correctamente
@@ -392,8 +379,6 @@ public class GestionesPerfilTelefonico extends TestBase{
 		sleep(7000);
 		buscarYClick(driver.findElements(By.cssSelector(".slds-form-element__label.ng-binding.ng-scope")), "equals", "nota de cr\u00e9dito");
 		buscarYClick(driver.findElements(By.cssSelector(".slds-form-element__label.ng-binding.ng-scope")), "equals", "si");
-		driver.switchTo().frame(cambioFrame(driver, By.cssSelector(".x-layout-mini.x-layout-mini-west.x-layout-mini-custom-logo")));
-		driver.findElement(By.cssSelector(".x-layout-mini.x-layout-mini-west.x-layout-mini-custom-logo")).click();
 		sleep(3000);
 		driver.findElements(By.className("slds-cell-shrink")).get(0).click();
 		driver.findElement(By.id("Step-AjusteNivelCuenta_nextBtn")).click();
@@ -401,5 +386,64 @@ public class GestionesPerfilTelefonico extends TestBase{
 		driver.findElement(By.id("Step-Summary_nextBtn")).click();
 		sleep(7000);
 		Assert.assertTrue(false);
+	}
+	
+	@Test (groups= {"GestionesPerfilTelefonico", "ModificacionDeDatos", "E2E"})
+	public void TS134835_CRM_Movil_PRE_Modificacion_de_datos_Actualizar_los_datos_del_cliente_completos_FAN_Front_Telefonico() {
+		String nuevoNombre = "Cambiode";
+		String nuevoApellido = "Nombre";
+		String nuevoNacimiento = "10/10/1980";
+		String nuevoMail = "maildeprueba@gmail.com";
+		String nuevoPhone = "3574409238";
+		driver.switchTo().frame(cambioFrame(driver, By.id("SearchClientDocumentType")));
+		sb.BuscarCuenta("DNI", "10777540");
+		driver.findElement(By.cssSelector(".slds-tree__item.ng-scope")).click();
+		sleep(15000);
+		driver.switchTo().frame(cambioFrame(driver, By.className("profile-box")));
+		driver.findElements(By.className("profile-edit")).get(0).click();
+		sleep(10000);
+		driver.switchTo().frame(cambioFrame(driver, By.id("DocumentNumber")));
+		String nombre = driver.findElement(By.id("FirstName")).getAttribute("value");
+		String apellido = driver.findElement(By.id("LastName")).getAttribute("value");
+		String fechaNacimiento = driver.findElement(By.id("Birthdate")).getAttribute("value");
+		String mail = driver.findElement(By.id("Email")).getAttribute("value");
+		String phone = driver.findElement(By.id("MobilePhone")).getAttribute("value");
+		driver.findElement(By.id("FirstName")).clear();
+		driver.findElement(By.id("FirstName")).sendKeys(nuevoNombre);
+		driver.findElement(By.id("LastName")).clear();
+		driver.findElement(By.id("LastName")).sendKeys(nuevoApellido);
+		driver.findElement(By.id("Birthdate")).clear();
+		driver.findElement(By.id("Birthdate")).sendKeys(nuevoNacimiento);
+		driver.findElement(By.id("Email")).clear();
+		driver.findElement(By.id("Email")).sendKeys(nuevoMail);
+		driver.findElement(By.id("MobilePhone")).clear();
+		driver.findElement(By.id("MobilePhone")).sendKeys(nuevoPhone);
+		driver.findElement(By.id("ClientInformation_nextBtn")).click();
+		sleep(5000);
+		Marketing mk = new Marketing(driver);
+		mk.closeActiveTab();
+		driver.switchTo().frame(cambioFrame(driver, By.className("profile-box")));
+		driver.findElements(By.className("profile-edit")).get(0).click();
+		sleep(10000);
+		driver.switchTo().frame(cambioFrame(driver, By.id("DocumentNumber")));
+		Assert.assertTrue(driver.findElement(By.id("FirstName")).getAttribute("value").equals(nuevoNombre));
+		Assert.assertTrue(driver.findElement(By.id("LastName")).getAttribute("value").equals(nuevoApellido));
+		Assert.assertTrue(driver.findElement(By.id("Birthdate")).getAttribute("value").equals(nuevoNacimiento));
+		Assert.assertTrue(driver.findElement(By.id("Email")).getAttribute("value").equals(nuevoMail));
+		Assert.assertTrue(driver.findElement(By.id("MobilePhone")).getAttribute("value").equals(nuevoPhone));
+		Assert.assertTrue(driver.findElement(By.id("DocumentType")).getAttribute("disabled").equals("true"));
+		Assert.assertTrue(driver.findElement(By.id("DocumentNumber")).getAttribute("disabled").equals("true"));
+		driver.findElement(By.id("FirstName")).clear();
+		driver.findElement(By.id("FirstName")).sendKeys(nombre);
+		driver.findElement(By.id("LastName")).clear();
+		driver.findElement(By.id("LastName")).sendKeys(apellido);
+		driver.findElement(By.id("Birthdate")).clear();
+		driver.findElement(By.id("Birthdate")).sendKeys(fechaNacimiento);
+		driver.findElement(By.id("Email")).clear();
+		driver.findElement(By.id("Email")).sendKeys(mail);
+		driver.findElement(By.id("MobilePhone")).clear();
+		driver.findElement(By.id("MobilePhone")).sendKeys(phone);
+		driver.findElement(By.id("ClientInformation_nextBtn")).click();
+		sleep(3000);
 	}
 }

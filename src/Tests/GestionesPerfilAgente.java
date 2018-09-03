@@ -1,5 +1,6 @@
 package Tests;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -82,19 +83,20 @@ public class GestionesPerfilAgente extends TestBase{
 		sleep(14000);
 	}
 	
-	@AfterMethod
+	//@AfterMethod
 	public void after() {
 		SalesBase sb = new SalesBase(driver);
 		sb.cerrarPestaniaGestion(driver);
 	}
 	
 	@AfterClass
-	public void quit() {
-		driver.quit();
+	public void quit() throws IOException {
+		guardarListaTxt(datosOrden);
+		//driver.quit();
 		sleep(5000);
 	}
 	
-	@Test (groups = {"GestionesPerfilAgente","Recargas"}, dataProvider="PerfilCuentaTomRiddleConDNI")
+	@Test (groups = {"GestionesPerfilAgente","Recargas"}, dataProvider="RecargaTC")
 	public void TS134322_CRM_Movil_REPRO_Recargas_Presencial_TC_Agente(String sDNI, String sMonto, String sBanco, String sTarjeta, String sPromo, String sCuotas, String sNumTarjeta, String sVenceMes, String sVenceAno, String sCodSeg, String sTipoDNI, String sDNITarjeta, String sTitular, String sLinea) {
 		//Check All
 		if(sMonto.length() >= 4) {
@@ -110,6 +112,7 @@ public class GestionesPerfilAgente extends TestBase{
 			sCodSeg = sCodSeg.substring(0, sCodSeg.length()-1);
 		}
 		BasePage cambioFrame=new BasePage();
+		sleep(5000);
 		driver.switchTo().frame(cambioFrame.getFrameForElement(driver, By.id("SearchClientDocumentType")));
 		sleep(1000);
 		SalesBase sSB = new SalesBase(driver);
@@ -117,11 +120,11 @@ public class GestionesPerfilAgente extends TestBase{
 		String accid = driver.findElement(By.cssSelector(".searchClient-body.slds-hint-parent.ng-scope")).findElements(By.tagName("td")).get(5).getText();
 		System.out.println("id "+accid);
 		driver.findElement(By.cssSelector(".slds-tree__item.ng-scope")).findElement(By.tagName("div")).click();
-		sleep(15000);
+		sleep(18000);
 		
 		CustomerCare cCC = new CustomerCare(driver);
 		cCC.seleccionarCardPornumeroLinea(sLinea, driver);
-		
+		sleep(15000);
 		cCC.irAGestionEnCard("Recarga de cr\\u00e9dito");
 		sleep(15000);
 		driver.switchTo().frame(cambioFrame(driver, By.id("RefillAmount")));

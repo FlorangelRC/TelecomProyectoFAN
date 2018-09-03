@@ -89,7 +89,7 @@ public class TechCareOla1A extends TestBase {
  	
 	}
  	 	
- 		@AfterMethod(alwaysRun=true)
+ 		//@AfterMethod(alwaysRun=true)
  		public void after() {
  			CustomerCare cerrar = new CustomerCare(driver);
  		    cerrar.cerrarultimapestana();
@@ -538,7 +538,7 @@ public class TechCareOla1A extends TestBase {
 	    page.seleccionarRespuesta("no");
 	    page.clickContinuar();
 	    sleep(5000);
-	    //page.seleccionarPreguntaFinal("Sí");
+	    page.seleccionarPreguntaFinal("Sí");
 	    page.clickContinuar();
 	    sleep(4000);
 	    page.buscarDireccion("Av. Congreso 3940, Buenos Aires, Argentina");
