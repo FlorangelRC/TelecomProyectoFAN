@@ -425,8 +425,8 @@ public class GestionesPerfilOficina extends TestBase {
 						a.findElement(By.tagName("button")).click();
 							sleep(8000);
 								break;
-							}
-						}
+				}
+			}
 		sleep(17000);
 		List <WebElement> ddi = driver.findElements(By.cssSelector(".cpq-item-product-child-level-2.cpq-item-child-product-name-wrapper"));
 			for(WebElement d : ddi){
@@ -441,17 +441,31 @@ public class GestionesPerfilOficina extends TestBase {
 				if(r.getText().contains("DDI sin Roaming Internacional")){
 					driver.findElements(By.cssSelector(".slds-button.slds-button_icon-border-filled.cpq-item-actions-dropdown-button")).get(6).click();
 					sleep(5000);
-					buscarYClick(driver.findElements(By.cssSelector(".slds-dropdown__item.cpq-item-actions-dropdown__item")), "contains", "delete");
+					cc.obligarclick(driver.findElements(By.cssSelector(".slds-dropdown__item.cpq-item-actions-dropdown__item")).get(6));
 					sleep(5000);
 						try {
 							cc.obligarclick(driver.findElement(By.cssSelector(".slds-button.slds-button--destructive")));
 							sleep(20000);
 						}catch(Exception ex1) {}
 				}
-			buscarYClick(driver.findElements(By.cssSelector(".slds-button.slds-button_neutral")), "contains", "agregar");	
+			//cc.obligarclick(driver.findElement(By.cssSelector(".cpq-item-base-product")).findElements(By.tagName("div")).get(9).findElement(By.tagName("button")));
+			cc.obligarclick(driver.findElement(By.xpath("//*[@id='tab-default-2']/div[3]/div/div[3]/div/div/ng-include/div/div[2]/ng-include/div/div[9]/div/div[3]/div/div/ng-include/div/div[2]/ng-include/div/div[1]/div/div[2]/div[11]/button")));
+			sleep(5000);
+			buscarYClick(driver.findElements(By.cssSelector(".slds-button.slds-button--neutral.ng-binding.ng-scope")),"contains", "continue");
 			sleep(15000);
-			break;
+			boolean a = false;
+			List <WebElement> elem = driver.findElements(By.cssSelector(".slds-box.ng-scope"));
+			for(WebElement x : elem) {
+				if(x.getText().toLowerCase().contains("tu solicitud est\u00e1 siendo procesada.")) {
+					a = true;
+				}			
 			}
+			Assert.assertTrue(a);
+			sleep(5000);
+			String orden = cc.obtenerOrden(driver, "Suspensi\u00f3n de Linea");
+			sOrders.add("Suspension, orden numero: " + orden + ", DNI: " + sDNI);
+			//System.out.println(sOrders);
+		}
 		}
 	
 	@Test(groups = {"Sales", "PreparacionNominacion","E2E"}, dataProvider="DatosSalesNominacion") 
