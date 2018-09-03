@@ -204,7 +204,7 @@ public class GestionesPerfilTelefonico extends TestBase{
 		sleep(20000);
 		driver.switchTo().frame(cambioFrame(driver, By.className("card-top")));
 		driver.findElement(By.className("card-top")).click();
-		sleep(3000);
+		sleep(5000);
 		CustomerCare cCC = new CustomerCare(driver);
 		cCC.irAGestionEnCard("Renovacion de Datos");
 		sleep(12000);

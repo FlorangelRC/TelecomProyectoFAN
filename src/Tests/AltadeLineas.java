@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
+import org.junit.Assert;
 import org.openqa.selenium.By;
 import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.WebDriver;
@@ -45,20 +46,16 @@ public class AltadeLineas extends TestBase {
 		SalesBase SB = new SalesBase(driver);
 		loginOfCom(driver);  
 		CustomerCare cc = new CustomerCare(driver);
-		
-		 try {Thread.sleep(10000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
-			
-			driver.findElement(By.id("tabBar")).findElement(By.tagName("a")).click();
-			sleep(10000);
-			try{
-				SB.cerrarPestaniaGestion(driver);}
-			catch(Exception ex1) {
-			}
-			goToLeftPanel2(driver, "Inicio");
-			sleep(5000);
-			
-			
+		try {Thread.sleep(10000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}	
+		driver.findElement(By.id("tabBar")).findElement(By.tagName("a")).click();
+		sleep(10000);
+		try{
+			SB.cerrarPestaniaGestion(driver);}
+		catch(Exception ex1) {
 		}
+		goToLeftPanel2(driver, "Inicio");
+		sleep(5000);
+	}
 	
 	@BeforeMethod(alwaysRun=true)
 	public void setup() throws Exception {
@@ -107,21 +104,21 @@ public class AltadeLineas extends TestBase {
 	}
 	
 	//@AfterMethod(alwaysRun=true)
-		public void deslogin() throws IOException{
-			
-			sleep(2000);
-			SalesBase SB = new SalesBase(driver);
-			driver.switchTo().defaultContent();
-			sleep(6000);
-			SB.cerrarPestaniaGestion(driver);
-			
-			sleep(5000);
+	public void deslogin() throws IOException{
+		
+		sleep(2000);
+		SalesBase SB = new SalesBase(driver);
+		driver.switchTo().defaultContent();
+		sleep(6000);
+		SB.cerrarPestaniaGestion(driver);
+		
+		sleep(5000);
 
-		}
+	}
 	
 	@AfterClass(alwaysRun=true)
 	public void Exit() throws IOException {
-		guardarListaTxt(sOrders);
+		guardarListaTxt(DatosOrden);
 		//driver.quit();
 		sleep(2000);
 	}
@@ -362,27 +359,24 @@ public class AltadeLineas extends TestBase {
 			driver.findElement(By.id("SaleOrderMessages_nextBtn")).click();
 		}
 		DatosOrden.add("Orden:"+orden+"-DNI:"+sDni+"-Cuenta:"+NCuenta+"-Linea"+Linea);
-			guardarListaTxt(DatosOrden);
-			
-			
-			sleep(15000);
-			driver.navigate().refresh();
-			sleep(15000);
-			//try {
-				System.out.println(cc.obtenerMontoyTNparaAlta(driver, orden));
-			/*}catch(org.openqa.selenium.TimeoutException ex2) {
-				driver.manage().deleteAllCookies();
-				driver.navigate().refresh();
-			}*/
+		sleep(15000);
+		driver.navigate().refresh();
+		sleep(15000);
+		//try {
 			System.out.println(cc.obtenerMontoyTNparaAlta(driver, orden));
-			//CBS_Mattu invoSer = new CBS_Mattu();
-			//invoSer.openPage2(orden);
-			sleep(2000);
-			CambiarPerfil("logistica",driver);
-			sb.completarLogistica(orden, driver);
-			CambiarPerfil("entrega",driver);
-			sb.completarEntrega(orden, driver);
-			CambiarPerfil("ofcom",driver);
+		/*}catch(org.openqa.selenium.TimeoutException ex2) {
+			driver.manage().deleteAllCookies();
+			driver.navigate().refresh();
+		}*/
+		System.out.println(cc.obtenerMontoyTNparaAlta(driver, orden));
+		//CBS_Mattu invoSer = new CBS_Mattu();
+		//invoSer.openPage2(orden);
+		sleep(2000);
+		CambiarPerfil("logistica",driver);
+		sb.completarLogistica(orden, driver);
+		CambiarPerfil("entrega",driver);
+		sb.completarEntrega(orden, driver);
+		CambiarPerfil("ofcom",driver);
 	}
 	
 	@Test(groups={"Sales", "AltaLinea","E2E"}, priority=1, dataProvider="AltaLineaNuevoAgentePresencial")
@@ -801,10 +795,10 @@ public class AltadeLineas extends TestBase {
 		CustomerCare cc = new CustomerCare(driver);
 		SalesBase sb = new SalesBase(driver);
 		sleep(5000);
-		Random aleatorio = new Random(System.currentTimeMillis());
-		aleatorio.setSeed(System.currentTimeMillis());
-		int intAleatorio = aleatorio.nextInt(89999999)+10000000;
-		sb.Crear_Cliente(Integer.toString(intAleatorio));
+		sb.BtnCrearNuevoCliente();
+		String asd = driver.findElement(By.id("SearchClientDocumentNumber")).getAttribute("value");
+		
+		//sb.Crear_Cliente(sDni);
 		ContactSearch contact = new ContactSearch(driver);
 		contact.sex(sSexo);
 		contact.Llenar_Contacto(sNombre, sApellido, sFNac);
