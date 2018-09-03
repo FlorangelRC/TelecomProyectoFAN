@@ -3,27 +3,17 @@ package Tests;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
-
 import org.openqa.selenium.By;
-import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.Select;
 import org.testng.Assert;
-import org.testng.annotations.AfterClass;
-import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
-
-import com.sun.org.apache.xalan.internal.xsltc.compiler.sym;
-
 import Pages.Accounts;
 import Pages.BasePage;
 import Pages.CustomerCare;
-import Pages.Marketing;
-import Pages.OM;
-import Pages.OMQPage;
 import Pages.SalesBase;
 import Pages.PagePerfilTelefonico;
 import Pages.setConexion;
@@ -346,19 +336,15 @@ public class GestionesPerfilTelefonico extends TestBase{
 	public void TS123157_CRM_Movil_PRE_Venta_de_pack_Paquete_M2M_10_MB_Factura_de_Venta_Efectivo_Presencial_Punta_Alta_Agente(String sDNI, String sCuenta, String sventaPack) throws InterruptedException{
 	SalesBase sale = new SalesBase(driver);
 	BasePage cambioFrameByID=new BasePage();
-	CustomerCare cCC = new CustomerCare(driver);
-	OM OM = new OM(driver);
 	PagePerfilTelefonico pagePTelefo = new PagePerfilTelefonico(driver);
 	driver.switchTo().frame(cambioFrameByID.getFrameForElement(driver, By.id("SearchClientDocumentType")));	
 	sleep(8000);
 	sale.BuscarCuenta("DNI", sDNI);
 	String accid = driver.findElement(By.cssSelector(".searchClient-body.slds-hint-parent.ng-scope")).findElements(By.tagName("td")).get(5).getText();
-	System.out.println("id "+accid);
+	System.out.prin
+	tln("id "+accid);
 	pagePTelefo.buscarAssert();
 	pagePTelefo.comprarPack("comprar internet");
-//	OM.colocarPlan(sventaPack);
-//	driver.findElement(By.cssSelector(".slds-button.slds-m-left--large.slds-button--brand.ta-button-brand")).click();
-//	sleep(45000);
 	pagePTelefo.PackCombinado(sventaPack);
 	pagePTelefo.tipoDePago("en factura de venta");
 	pagePTelefo.siguiente();
@@ -366,5 +352,6 @@ public class GestionesPerfilTelefonico extends TestBase{
 	pagePTelefo.siguiente();
 	pagePTelefo.siguiente();
 	pagePTelefo.siguiente();
+	driver.navigate().refresh();
 	}
 }
