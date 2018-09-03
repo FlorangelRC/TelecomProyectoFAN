@@ -42,8 +42,8 @@ import DataProvider.ExcelUtils;
 
 public class TestBase {
 	protected static WebDriver driver;//
-	protected String urlAmbiente = "https://telecomcrm--uat.cs53.my.salesforce.com";
-	//protected String urlAmbiente = "https://crm--sit.cs14.my.salesforce.com/";
+	//protected String urlAmbiente = "https://telecomcrm--uat.cs53.my.salesforce.com";
+	protected String urlAmbiente = "https://crm--sit.cs14.my.salesforce.com/";
 	
 	
 	public void leftDropdown(WebDriver driver, String selection) {
@@ -311,6 +311,13 @@ public class TestBase {
 			try {Thread.sleep(6000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 		    Login page0 = new Login(driver);
 		    page0.ingresarNominaciones();
+		}
+		
+		public void loginBackOffice(WebDriver driver) {
+			driver.get(urlAmbiente);
+			try {Thread.sleep(6000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		    Login page0 = new Login(driver);
+		    page0.ingresarBackOffice();
 		}
 		
 		
@@ -939,9 +946,9 @@ public class TestBase {
 	}
 	
 	@DataProvider
-	public Object[][] PerfilCuentaTomRiddle() throws Exception{
+	public Object[][] RecargaTC() throws Exception{
 
-	 Object[][] testObjArray = ExcelUtils.getTableArray("Cuentas.xlsx","PerfilGestiones",1,1,13,"Recargas");
+	 Object[][] testObjArray = ExcelUtils.getTableArray("Cuentas.xlsx","PerfilGestiones",1,1,14,"Recargas");
 
 	 return (testObjArray);
 
@@ -1116,8 +1123,11 @@ public class TestBase {
 		 case "entrega":
 			 loginEntrega(driver);
 			 break;
-		 case "OM":
+		 case "om":
 			 login(driver,urlAmbiente, "U585991", "Testa10k");
+			 break;
+		 case "backoffice":
+			 login(driver, urlAmbiente, "UAT544121", "Testa10k");
 			 break;
 		 }
 		 sleep(10000);
@@ -1150,7 +1160,7 @@ public class TestBase {
 	@DataProvider
 	public Object[][] AltaLineaNuevoEquipo() throws Exception{
 
-	 Object[][] testObjArray = ExcelUtils.getTableArray("Cuentas.xlsx","PerfilGestiones",1,1,9,"Alta Linea");
+	 Object[][] testObjArray = ExcelUtils.getTableArray("Cuentas.xlsx","PerfilGestiones",1,1,9,"Alta Linea Equip New AG");
 
 	 return (testObjArray);
 
@@ -1168,6 +1178,15 @@ public class TestBase {
 	public Object[][] DatosAltaAgenteCredito() throws Exception{
 
 	 Object[][] testObjArray = ExcelUtils.getTableArray("Cuentas.xlsx","PreparacionDatos",1,1,20,"Alta Linea AG TC");
+
+	 return (testObjArray);
+
+	}
+	
+	@DataProvider
+	public Object[][] PerfilCuentaTomRiddleConLinea() throws Exception{
+
+	 Object[][] testObjArray = ExcelUtils.getTableArray("Cuentas.xlsx","PerfilGestiones",1,1,14,"Recargas");
 
 	 return (testObjArray);
 

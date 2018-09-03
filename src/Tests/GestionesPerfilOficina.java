@@ -2,6 +2,7 @@ package Tests;
 
 import static org.testng.Assert.assertTrue;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -93,9 +94,10 @@ public class GestionesPerfilOficina extends TestBase {
 		sb.cerrarPestaniaGestion(driver);
 	}
 
-	//@AfterClass(alwaysRun=true)
-	public void quit() {
-		driver.quit();
+	@AfterClass(alwaysRun=true)
+	public void quit() throws IOException {
+		guardarListaTxt(sOrders);
+		//driver.quit();
 		sleep(5000);
 	}
 	
@@ -179,9 +181,9 @@ public class GestionesPerfilOficina extends TestBase {
 		Assert.assertTrue(check.toLowerCase().contains("la orden se realiz\u00f3 con \u00e9xito"));
 		String orden = cc.obtenerOrdenMontoyTN(driver, "Recarga");
 		System.out.println("orden = "+orden);
-		sOrders.add("Recargas" + orden + " de cuenta "+accid+" con DNI: " + cDNI);
+		sOrders.add("Recargas" + orden + ", cuenta:"+accid+", DNI: " + cDNI +", Monto:"+orden.split("-")[2]);
 		CBS_Mattu invoSer = new CBS_Mattu();
-		invoSer.PagoEnCaja("1006", accid, "1001", orden.split("-")[2], orden.split("-")[1]);
+		Assert.assertTrue(invoSer.PagoEnCaja("1006", accid, "1001", orden.split("-")[2], orden.split("-")[1]));
 		sleep(5000);
 		driver.navigate().refresh();
 		sleep(10000);
@@ -189,13 +191,11 @@ public class GestionesPerfilOficina extends TestBase {
 		sleep(10000);
 		driver.switchTo().frame(cambioFrame(driver, By.id("Status_ilecell")));
 		Assert.assertTrue(driver.findElement(By.id("Status_ilecell")).getText().equalsIgnoreCase("activada"));
-		
-		
-		
+
 	}
 	
-	@Test (groups = {"GestionesPerfilOficina", "Recargas","E2E"}, dataProvider = "PerfilCuentaTomRiddle")
-	public void TS134330_CRM_Movil_REPRO_Recargas_Presencial_TC_Ofcom_Financiacion(String cDNI, String cMonto, String cBanco, String cTarjeta, String cPromo, String cCuotas, String cNumTarjeta, String cVenceMes, String cVenceAno, String cCodSeg, String cTipoDNI, String cDNITarjeta, String cTitular) {
+	@Test (groups = {"GestionesPerfilOficina", "Recargas","E2E"}, dataProvider = "RecargaTC")
+	public void TS134330_CRM_Movil_REPRO_Recargas_Presencial_TC_Ofcom_Financiacion(String cDNI, String cMonto, String cBanco, String cTarjeta, String cPromo, String cCuotas, String cNumTarjeta, String cVenceMes, String cVenceAno, String cCodSeg, String cTipoDNI, String cDNITarjeta, String cTitular,String cLinea) {
 		if(cMonto.length() >= 4) {
 			cMonto = cMonto.substring(0, cMonto.length()-1);
 		}
@@ -205,8 +205,7 @@ public class GestionesPerfilOficina extends TestBase {
 		System.out.println("id "+accid);
 		driver.findElement(By.cssSelector(".slds-tree__item.ng-scope")).click();
 		sleep(25000);
-		driver.switchTo().frame(cambioFrame(driver, By.className("card-top")));
-		driver.findElement(By.className("card-top")).click();
+		cc.seleccionarCardPornumeroLinea(cLinea, driver);
 		sleep(5000);
 		cc.irAGestionEnCard("Recarga de cr\u00e9dito");
 		sleep(15000);
@@ -220,8 +219,7 @@ public class GestionesPerfilOficina extends TestBase {
 		buscarYClick(driver.findElements(By.cssSelector(".slds-form-element__label.ng-binding")), "equals", "tarjeta de credito");
 		sleep(20000);
 		driver.switchTo().frame(cambioFrame(driver, By.id("BankingEntity-0")));
-		driver.findElement(By.id("BankingEntity-0")).click();
-		driver.findElement(By.xpath("//*[text() = 'BANCO SANTANDER RIO S.A.']")).click();
+		selectByText(driver.findElement(By.id("BankingEntity-0")), cBanco);
 		sleep(5000);
 		selectByText(driver.findElement(By.id("CardBankingEntity-0")), cTarjeta);
 		sleep(5000);
@@ -243,9 +241,9 @@ public class GestionesPerfilOficina extends TestBase {
 		}
 		String orden = cc.obtenerOrdenMontoyTN(driver, "Recarga");
 		System.out.println("orden = "+orden);
-		sOrders.add("Recargas" + orden + " de cuenta "+accid+" con DNI: " + cDNI);
+		sOrders.add("Recargas" + orden + ", cuenta:"+accid+", DNI: " + cDNI +", Monto:"+orden.split("-")[2]);
 		CBS_Mattu invoSer = new CBS_Mattu();
-		invoSer.PagoEnCaja("1006", accid, "2001", orden.split("-")[2], orden.split("-")[1]);
+		Assert.assertTrue(invoSer.PagoEnCaja("1006", accid, "2001", orden.split("-")[2], orden.split("-")[1]));
 		sleep(5000);
 		driver.navigate().refresh();
 		sleep(10000);
@@ -373,9 +371,7 @@ public class GestionesPerfilOficina extends TestBase {
 							sleep(20000);
 						}catch(Exception ex1) {}
 				}
-			if(r.findElement(By.cssSelector(".cpq-item-base-product-actions.slds-text-align_right")).findElement(By.cssSelector(".slds-button.slds-button_neutral")).equals("Agregar")){
-				cc.obligarclick(r);
-			}
+			buscarYClick(driver.findElements(By.cssSelector(".slds-button.slds-button_neutral")), "contains", "agregar");	
 			sleep(15000);
 			}
 		}
@@ -425,11 +421,11 @@ public class GestionesPerfilOficina extends TestBase {
 		for (WebElement x : element) {
 			if (x.getText().toLowerCase().contains("nominaci\u00f3n exitosa!")) {
 				a = true;
-				//System.out.println(x.getText());
+				System.out.println(x.getText());
 			}
 		}
 		Assert.assertTrue(a);
-		//driver.findElement(By.id("FinishProcess_nextBtn")).click();
+		driver.findElement(By.id("FinishProcess_nextBtn")).click();
 		
 	}
 	@Test (groups = {"Suspension", "GestionesPerfilOficina","E2E"}, dataProvider="CuentaSuspension") 
@@ -474,7 +470,7 @@ public class GestionesPerfilOficina extends TestBase {
 		Assert.assertTrue(a);
 		sleep(5000);
 		String orden = cc.obtenerOrden(driver, "Suspensi\u00f3n de Linea");
-		sOrders.add("Suspension, orden numero: " + orden + "con numero de DNI: " + cDNI);
+		sOrders.add("Suspension, orden numero: " + orden + ", DNI: " + cDNI);
 		//System.out.println(sOrders);
 	}
 	
