@@ -67,27 +67,28 @@ public class CompletarAltas extends TestBase {
 	public void finalizar_altas() throws IOException {
 		CustomerCare cc = new CustomerCare(driver);
 		SalesBase SB = new SalesBase(driver);
-		BufferedReader archiDatos= new BufferedReader(new FileReader("DatosOrdenes.txt"));
+		String orden = "00080253";
+		/*BufferedReader archiDatos= new BufferedReader(new FileReader("DatosOrdenes.txt"));
 		String linea =archiDatos.readLine();
 		List<String> numordenes = new ArrayList<String>();
 		while (linea!=null) {
-			numordenes.add(linea.split("-")[0].split(":")[1]);
+			numordenes.add(linea.split("-")[0].split(":")[1]);*/
 			/*System.out.println(cc.obtenerMontoyTNparaAlta(driver, linea.split("-")[0].split(":")[1]));
 			SB.cerrarPestaniaGestion(driver);
 			sleep(5000);*/
-			linea =archiDatos.readLine();
+			/*linea =archiDatos.readLine();
 		}
-		sleep(2000);
+		sleep(2000);*/
 		CambiarPerfil("logistica",driver);
-		for(String orden:numordenes) {
+		//for(String orden:numordenes) {
 			SB.completarLogistica(orden, driver);
-		}
+		//}
 		//CBS_Mattu invoSer = new CBS_Mattu();
 		//invoSer.openPage2(orden);
 		CambiarPerfil("entrega",driver);
-		for(String orden:numordenes) {
+		//for(String orden:numordenes) {
 			SB.completarEntrega(orden, driver);
-		}
+		//}
 		
 	}
 	

@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.junit.Assert;
 import org.openqa.selenium.By;
 import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.WebDriver;
@@ -42,22 +43,18 @@ public class AltadeLineas extends TestBase {
 		//driver.manage().deleteAllCookies();
 		try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}		
 		SalesBase SB = new SalesBase(driver);
-		loginAgente(driver);  
+		loginOfCom(driver);  
 		CustomerCare cc = new CustomerCare(driver);
-		
-		 try {Thread.sleep(10000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
-			
-			driver.findElement(By.id("tabBar")).findElement(By.tagName("a")).click();
-			sleep(10000);
-			try{
-				SB.cerrarPestaniaGestion(driver);}
-			catch(Exception ex1) {
-			}
-			goToLeftPanel2(driver, "Inicio");
-			sleep(5000);
-			
-			
+		try {Thread.sleep(10000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}	
+		driver.findElement(By.id("tabBar")).findElement(By.tagName("a")).click();
+		sleep(10000);
+		try{
+			SB.cerrarPestaniaGestion(driver);}
+		catch(Exception ex1) {
 		}
+		goToLeftPanel2(driver, "Inicio");
+		sleep(5000);
+	}
 	
 	@BeforeMethod(alwaysRun=true)
 	public void setup() throws Exception {
@@ -106,21 +103,21 @@ public class AltadeLineas extends TestBase {
 	}
 	
 	//@AfterMethod(alwaysRun=true)
-		public void deslogin() throws IOException{
-			
-			sleep(2000);
-			SalesBase SB = new SalesBase(driver);
-			driver.switchTo().defaultContent();
-			sleep(6000);
-			SB.cerrarPestaniaGestion(driver);
-			
-			sleep(5000);
+	public void deslogin() throws IOException{
+		
+		sleep(2000);
+		SalesBase SB = new SalesBase(driver);
+		driver.switchTo().defaultContent();
+		sleep(6000);
+		SB.cerrarPestaniaGestion(driver);
+		
+		sleep(5000);
 
-		}
+	}
 	
 	@AfterClass(alwaysRun=true)
 	public void Exit() throws IOException {
-		guardarListaTxt(sOrders);
+		guardarListaTxt(DatosOrden);
 		//driver.quit();
 		sleep(2000);
 	}
@@ -361,27 +358,24 @@ public class AltadeLineas extends TestBase {
 			driver.findElement(By.id("SaleOrderMessages_nextBtn")).click();
 		}
 		DatosOrden.add("Orden:"+orden+"-DNI:"+sDni+"-Cuenta:"+NCuenta+"-Linea"+Linea);
-			guardarListaTxt(DatosOrden);
-			
-			
-			sleep(15000);
-			driver.navigate().refresh();
-			sleep(15000);
-			//try {
-				System.out.println(cc.obtenerMontoyTNparaAlta(driver, orden));
-			/*}catch(org.openqa.selenium.TimeoutException ex2) {
-				driver.manage().deleteAllCookies();
-				driver.navigate().refresh();
-			}*/
+		sleep(15000);
+		driver.navigate().refresh();
+		sleep(15000);
+		//try {
 			System.out.println(cc.obtenerMontoyTNparaAlta(driver, orden));
-			//CBS_Mattu invoSer = new CBS_Mattu();
-			//invoSer.openPage2(orden);
-			sleep(2000);
-			CambiarPerfil("logistica",driver);
-			sb.completarLogistica(orden, driver);
-			CambiarPerfil("entrega",driver);
-			sb.completarEntrega(orden, driver);
-			CambiarPerfil("ofcom",driver);
+		/*}catch(org.openqa.selenium.TimeoutException ex2) {
+			driver.manage().deleteAllCookies();
+			driver.navigate().refresh();
+		}*/
+		System.out.println(cc.obtenerMontoyTNparaAlta(driver, orden));
+		//CBS_Mattu invoSer = new CBS_Mattu();
+		//invoSer.openPage2(orden);
+		sleep(2000);
+		CambiarPerfil("logistica",driver);
+		sb.completarLogistica(orden, driver);
+		CambiarPerfil("entrega",driver);
+		sb.completarEntrega(orden, driver);
+		CambiarPerfil("ofcom",driver);
 	}
 	
 	@Test(groups={"Sales", "AltaLinea","E2E"}, priority=1, dataProvider="AltaLineaNuevoAgentePresencial")
@@ -792,7 +786,10 @@ public class AltadeLineas extends TestBase {
 		CustomerCare cc = new CustomerCare(driver);
 		SalesBase sb = new SalesBase(driver);
 		sleep(5000);
-		sb.Crear_Cliente(sDni);
+		sb.BtnCrearNuevoCliente();
+		String asd = driver.findElement(By.id("SearchClientDocumentNumber")).getAttribute("value");
+		
+		//sb.Crear_Cliente(sDni);
 		ContactSearch contact = new ContactSearch(driver);
 		contact.sex(sSexo);
 		contact.Llenar_Contacto(sNombre, sApellido, sFNac);
@@ -809,20 +806,19 @@ public class AltadeLineas extends TestBase {
 		sleep(25000);
 		driver.findElement(By.cssSelector(".slds-input.ng-pristine.ng-untouched.ng-valid")).sendKeys("Galaxy S8 - Negro");
 		sleep(10000);
-		List<WebElement> agregar = driver.findElements(By.cssSelector(".slds-button.slds-button--neutral.add-button")); 
+		List<WebElement> agregar = driver.findElements(By.cssSelector(".slds-button.slds-button_neutral.cpq-add-button")); 
 			for(WebElement a : agregar){
-				a.getText().equals("Agregar");
-				a.click();
+				if(a.getText().equalsIgnoreCase("agregar"))
+				{
+					a.click();
+					break;
+				}
 			}
 		sleep(5000);	
 		sb.continuar();
 		sleep(24000);
 		sb.Crear_DomicilioLegal(sProvincia, sLocalidad, "falsa", "", "1000", "", "", "1549");
 		sleep(24000);
-		cc.obligarclick(driver.findElement(By.id("LineAssignment_nextBtn")));
-		sleep(23000);
-		cc.obligarclick(driver.findElement(By.id("ICCDAssignment_nextBtn")));
-		sleep(20000);
 		cc.obligarclick(driver.findElement(By.id("InvoicePreview_nextBtn")));
 		sleep(20000);
 		List<WebElement> medpag = driver.findElements(By.cssSelector(".slds-radio.ng-scope"));
@@ -833,6 +829,29 @@ public class AltadeLineas extends TestBase {
 			}
 		cc.obligarclick(driver.findElement(By.id("SelectPaymentMethodsStep_nextBtn")));
 		sleep(20000);
+	
+		String orden = driver.findElement(By.className("top-data")).findElement(By.className("ng-binding")).getText();
+		String NCuenta = driver.findElements(By.className("top-data")).get(1).findElements(By.className("ng-binding")).get(3).getText();
+		orden = orden.substring(orden.length()-8);
+		NCuenta = NCuenta.substring(NCuenta.length()-16);
+		cc.obligarclick(driver.findElement(By.id("OrderSumary_nextBtn")));
+		sleep(20000);
+		/*cc.obligarclick(driver.findElement(By.id("ICCDAssignment_nextBtn")));
+		sleep(20000);*/
+		cc.obligarclick(driver.findElement(By.id("SaleOrderMessages_nextBtn")));
+		sleep(20000);
+		String DetaoOrden = cc.obtenerOrdenMontoyTN(driver, "Recarga");
+		System.out.println("orden = "+orden);
+		DatosOrden.add("Recargas" + orden + " de cuenta "+NCuenta+" con DNI: " + sDni);
+		CBS_Mattu invoSer = new CBS_Mattu();
+		Assert.assertTrue(invoSer.PagoEnCaja("1006", NCuenta, "1001", orden.split("-")[2], orden.split("-")[1]));
+		sleep(5000);
+		CambiarPerfil("logistica",driver);
+		sb.CompletarLogisticaEquipo(orden, driver);
+		CambiarPerfil("entrega",driver);
+		sb.completarEntrega(orden, driver);
+		CambiarPerfil("ofcom",driver);
+		
 	}
 	
 	@Test(groups={"Sales", "AltaLineaDatos","E2E"}, priority=1, dataProvider="DatosAltaAgenteCredito")
