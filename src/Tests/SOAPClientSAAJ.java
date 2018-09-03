@@ -4,7 +4,11 @@ import javax.xml.soap.*;
 
 public class SOAPClientSAAJ {
 	
+	//SIT
 	static String sPagoEnCaja = "http://10.75.197.161:8080/services/ArServices";
+	//UAT
+	//static String sPagoEnCaja = "http://10.75.39.146:8080/services/ArServices";
+	
 	static String sPagoSimulado = "http://mdwtpbust1.telecom.com.ar:8701/notificarPago";
 	static String sAltaDeLinea = "http://10.75.39.146:8080/services/BcServices";
 	

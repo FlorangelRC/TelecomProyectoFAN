@@ -104,25 +104,25 @@ public class PagePerfilTelefonico extends TestBase{
 	sleep(5000);
 	WebElement siguiente=driver.findElement(By.className("vlc-control-wrapper"));
 	((JavascriptExecutor)driver).executeScript("window.scrollTo(0,"+siguiente.getLocation().y+")");
-	sleep(2000);
+	sleep(8000);;
 	try {driver.findElement(By.id("SetPaymentType_nextBtn")).click();}
 	catch(org.openqa.selenium.ElementNotVisibleException Tipodepago) {
-		sleep(2000);
+		sleep(8000);
 		try {driver.findElement(By.id("InvoicePreview_nextBtn")).click();}
 		catch(org.openqa.selenium.ElementNotVisibleException SimulaciondeFactura) {
-			sleep(2000);
+			sleep(8000);
 			try {driver.findElement(By.id("SelectPaymentMethodsStep_nextBtn")).click();}
 			catch(org.openqa.selenium.ElementNotVisibleException SelecciondemediodePago) {
-				sleep(20000);
+				sleep(8000);
 				try {driver.findElements(By.cssSelector(".slds-button.slds-button--neutral.ng-binding.ng-scope")).get(1).click();}
 			     catch(Exception ex1){
-			    	 sleep(20000);
+			    	 sleep(8000);
 			       	 try {driver.findElement(By.id("Step_Error_Huawei_S029_nextBtn")).click();}
 						catch(org.openqa.selenium.ElementNotVisibleException EnviodefacturayDatos) {
-							sleep(2000);
+							sleep(8000);;
 							try {driver.findElement(By.id("SaleOrderMessages_nextBtn")).click();}
 							catch(org.openqa.selenium.ElementNotVisibleException OrdenSeRealizoConExito) {
-								sleep(2000);
+								sleep(8000);;
 								
 							}
 							

@@ -115,14 +115,14 @@ public class Login extends BasePage {
 			//Usuario Cesar
 			//username.sendKeys("u198427");
 			//Usuario UAT OOCC
-			username.sendKeys("UAT195528");
+			username.sendKeys("uat195528");
 			password.sendKeys("Testa10k");
 			login.click();
 			try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 		}
 		
 		//******************Agente
-	   //Para el Modulo Sales tiene vinculado el perfil de Agente y Atención a clientes
+	   //Para el Modulo Sales tiene vinculado el perfil de Agente y Atenciï¿½n a clientes
 		public void ingresarAndres() {
 			  logininterno.click();
 			  try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
