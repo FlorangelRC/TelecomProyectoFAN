@@ -375,6 +375,7 @@ public class GestionesPerfilOficina extends TestBase {
 				}
 			buscarYClick(driver.findElements(By.cssSelector(".slds-button.slds-button_neutral")), "contains", "agregar");	
 			sleep(15000);
+			break;
 			}
 		}
 	

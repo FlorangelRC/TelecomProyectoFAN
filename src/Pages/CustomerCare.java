@@ -1566,7 +1566,7 @@ public class CustomerCare extends BasePage {
 		sleep(10000);
 		driver.switchTo().frame(TB.cambioFrame(driver, By.id("Order_body")));
 		System.out.println("orden " + driver.findElement(By.id("Order_body")).findElement(By.cssSelector(".dataRow.even.last.first")).findElement(By.tagName("th")).getText());
-		driver.findElement(By.id("Order_body")).findElement(By.cssSelector(".dataRow.even.last.first")).findElement(By.tagName("th")).findElement(By.tagName("a")).click();
+		obligarclick(driver.findElement(By.id("Order_body")).findElement(By.cssSelector(".dataRow.even.last.first")).findElement(By.tagName("th")).findElement(By.tagName("a")));
 		sleep(10000);
 		driver.switchTo().frame(TB.cambioFrame(driver, By.id("OrderNumber_ilecell")));
 		WebElement tabla = driver.findElement(By.id("ep")).findElements(By.tagName("table")).get(1);
