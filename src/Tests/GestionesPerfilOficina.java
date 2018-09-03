@@ -479,7 +479,7 @@ public class GestionesPerfilOficina extends TestBase {
 	}
 	
 	@Test (groups = {"ProblemaRecarga", "GestionesPerfilOficina","E2E"}, dataProvider="CuentaProblemaRecarga") 
-	public void problemaRecargaOnline(String cDNI) {
+	public void problemaRecargaOnline(String cDNI, String cSerie, String cPIN) {
 		driver.switchTo().frame(cambioFrame(driver, By.id("SearchClientDocumentType")));
 		sb.BuscarCuenta("DNI", cDNI);
 		driver.findElement(By.cssSelector(".slds-tree__item.ng-scope")).click();
@@ -523,7 +523,7 @@ public class GestionesPerfilOficina extends TestBase {
 	}
 	
 	@Test (groups = {"ProblemaRecarga", "GestionesPerfilOficina","E2E"}, dataProvider="CuentaProblemaRecarga") 
-	public void poblemaRecargaCredito(String cDNI) {
+	public void poblemaRecargaCredito(String cDNI, String cSerie, String cPIN) {
 		driver.switchTo().frame(cambioFrame(driver, By.id("SearchClientDocumentType")));
 		sb.BuscarCuenta("DNI", cDNI);
 		driver.findElement(By.cssSelector(".slds-tree__item.ng-scope")).click();
@@ -1476,5 +1476,59 @@ public class GestionesPerfilOficina extends TestBase {
 		}
 		sleep(2000);
 		Assert.assertTrue(driver.findElement(By.cssSelector(".slds-form-element.vlc-flex.vlc-slds-text-block.vlc-slds-rte.ng-pristine.ng-valid.ng-scope")).findElement(By.className("ng-binding")).findElement(By.tagName("p")).getText().equalsIgnoreCase("saldo insuficiente"));
+	}
+	
+	@Test (groups = {"ProblemaRecarga", "GestionesPerfilOficina"}, dataProvider="CuentaProblemaRecarga") 
+	public void TS_135714_CRM_Movil_PRE_Problemas_con_Recarga_Telefonico_Tarjeta_Scratch_Caso_Nuevo_Tarjeta_Activa_y_Disponible(String cDNI, String cSerie, String cPIN){
+		driver.switchTo().frame(cambioFrame(driver, By.id("SearchClientDocumentType")));
+		sb.BuscarCuenta("DNI", cDNI);
+		driver.findElement(By.cssSelector(".slds-tree__item.ng-scope")).click();
+		sleep(15000);
+		driver.switchTo().frame(cambioFrame(driver, By.className("card-top")));
+		driver.findElement(By.className("card-top")).click();
+		sleep(8000);
+		cc.irAGestionEnCard("Problemas con Recargas");
+		sleep(8000);
+		driver.switchTo().frame(cambioFrame(driver, By.id("RefillMethods_nextBtn")));
+		buscarYClick(driver.findElements(By.cssSelector(".imgItemContainer.ng-scope")), "contains", "tarjeta prepaga");
+		driver.findElement(By.id("RefillMethods_nextBtn")).click();
+		sleep(8000);
+		driver.findElement(By.id("BatchNumber")).sendKeys(cSerie);
+		driver.findElement(By.id("PIN")).sendKeys(cPIN);
+		driver.findElement(By.id("PrepaidCardData_nextBtn")).click();
+		sleep(15000);
+		buscarYClick(driver.findElements(By.cssSelector(".imgItemContainer.ng-scope")), "contains", "crear un caso nuevo");
+		driver.findElement(By.id("ExistingCase_nextBtn")).click();
+		sleep(8000);
+		driver.findElement(By.id("Summary_nextBtn")).click();
+		sleep(8000);
+		//Ocurre un error de impacto en la recarga	
+	}
+	
+	@Test (groups = {"ProblemaRecarga", "GestionesPerfilOficina"}, dataProvider="CuentaProblemaRecarga")
+	public void TS_104347_CRM_Movil_REPRO_Problemas_con_Recarga_Presencial_Tarjeta_Scratch_Caso_Nuevo_Quemada(String cDNI, String cSerie, String cPIN){
+		driver.switchTo().frame(cambioFrame(driver, By.id("SearchClientDocumentType")));
+		sb.BuscarCuenta("DNI", cDNI);
+		driver.findElement(By.cssSelector(".slds-tree__item.ng-scope")).click();
+		sleep(15000);
+		driver.switchTo().frame(cambioFrame(driver, By.className("card-top")));
+		driver.findElement(By.className("card-top")).click();
+		sleep(8000);
+		cc.irAGestionEnCard("Problemas con Recargas");
+		sleep(8000);
+		driver.switchTo().frame(cambioFrame(driver, By.id("RefillMethods_nextBtn")));
+		buscarYClick(driver.findElements(By.cssSelector(".imgItemContainer.ng-scope")), "contains", "tarjeta prepaga");
+		driver.findElement(By.id("RefillMethods_nextBtn")).click();
+		sleep(8000);
+		driver.findElement(By.id("BatchNumber")).sendKeys(cSerie);
+		driver.findElement(By.id("PIN")).sendKeys(cPIN);
+		driver.findElement(By.id("PrepaidCardData_nextBtn")).click();
+		sleep(15000);
+		buscarYClick(driver.findElements(By.cssSelector(".imgItemContainer.ng-scope")), "contains", "crear un caso nuevo");
+		driver.findElement(By.id("ExistingCase_nextBtn")).click();
+		sleep(8000);
+		driver.findElement(By.id("Summary_nextBtn")).click();
+		sleep(8000);
+		//Ocurre un error de impacto en la recarga	
 	}
 }	
