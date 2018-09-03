@@ -124,7 +124,7 @@ public class AltadeLineas extends TestBase {
 	}
 	
 	
-	@Test(groups={"Sales", "AltaLineaDatos","E2E"}, priority=1, dataProvider="DatosAltaLineaAgente")
+	@Test(groups={"Sales", "AltaLineaDatos"}, priority=1, dataProvider="DatosAltaLineaAgente")
 	public void TS_CRM_Alta_de_Linea_Agente(String sDni, String sNombre, String sApellido, String sSexo, String sFNac, String sEmail, String sPlan, String sProvincia, String sLocalidad, String sCalle, String sNumCa, String sCP, String sEntrega, String sStoreProv, String sStoreLoc, String sTipoDelivery) throws IOException {
 		CustomerCare cc = new CustomerCare(driver);
 		SalesBase sb = new SalesBase(driver);
@@ -258,7 +258,10 @@ public class AltadeLineas extends TestBase {
 		CustomerCare cc = new CustomerCare(driver);
 		SalesBase sb = new SalesBase(driver);
 		sleep(8000);
-		sb.Crear_Cliente(sDni);
+		sb.BtnCrearNuevoCliente();
+		sDni = driver.findElement(By.id("SearchClientDocumentNumber")).getAttribute("value");
+		
+		//sb.Crear_Cliente(sDni);
 		ContactSearch contact = new ContactSearch(driver);
 		contact.sex(sSexo);
 		contact.Llenar_Contacto(sNombre, sApellido, sFNac);
@@ -379,7 +382,7 @@ public class AltadeLineas extends TestBase {
 		CambiarPerfil("ofcom",driver);
 	}
 	
-	@Test(groups={"Sales", "AltaLinea","E2E"}, priority=1, dataProvider="AltaLineaNuevoAgentePresencial")
+	@Test(groups={"Sales", "AltaLinea"}, priority=1, dataProvider="AltaLineaNuevoAgentePresencial")
 	public void TS118938_CRM_Movil_PRE_Alta_Linea_Cliente_Nuevo_Agente_Efectivo_Presencial_DNI(String sNombre, String sApellido, String sSexo, String sFNac, String sEmail, String sPlan, String sProvincia, String sLocalidad) throws IOException {
 		CustomerCare cc = new CustomerCare(driver);
 		SalesBase sb = new SalesBase(driver);
@@ -562,10 +565,8 @@ public class AltadeLineas extends TestBase {
 		CustomerCare cc = new CustomerCare(driver);
 		SalesBase sb = new SalesBase(driver);
 		sleep(5000);
-		Random aleatorio = new Random(System.currentTimeMillis());
-		aleatorio.setSeed(System.currentTimeMillis());
-		int intAleatorio = aleatorio.nextInt(89999999)+10000000;
-		sb.Crear_Cliente(Integer.toString(intAleatorio));
+		sb.BtnCrearNuevoCliente();
+		sDni = driver.findElement(By.id("SearchClientDocumentNumber")).getAttribute("value");
 		ContactSearch contact = new ContactSearch(driver);
 		contact.sex(sSexo);
 		contact.Llenar_Contacto(sNombre, sApellido, sFNac);
@@ -716,7 +717,7 @@ public class AltadeLineas extends TestBase {
 		
 
 	}
-	@Test(groups={"Sales", "AltaLineaDatos"}, priority=1, dataProvider="DatosAltaEquipoExiste") // ============== 31-8 no aprece el paso de ASIGNACION DE SERIALES
+	@Test(groups={"Sales", "AltaLineaDatos", "E2E"}, priority=1, dataProvider="DatosAltaEquipoExiste") // ============== 31-8 no aprece el paso de ASIGNACION DE SERIALES
 	public void TS_CRM_Movil_Equipo_Cliente_existente_Presencial_OFCOM(String sDni, String sNombre, String sApellido, String sSexo, String sFNac, String sEmail, String sPlan, String sProvincia, String sLocalidad) throws IOException {
 		CustomerCare cc = new CustomerCare(driver);
 		SalesBase sb = new SalesBase(driver);
@@ -790,7 +791,7 @@ public class AltadeLineas extends TestBase {
 			CambiarPerfil("ofcom",driver);
 		}
 	
-	@Test(groups={"Sales", "AltaLineaDatos"}, priority=1, dataProvider="AltaLineaNuevoEquipoOfCom")
+	@Test(groups={"Sales", "AltaLineaDatos", "E2E"}, priority=1, dataProvider="AltaLineaNuevoEquipoOfCom")
 	public void TS135820_CRM_Movil_Venta_Sin_Linea_Cliente_nuevo_Presencial_OFCOM_EF(String sDni, String sNombre, String sApellido, String sSexo, String sFNac, String sEmail, String sPlan, String sProvincia, String sLocalidad) throws IOException {
 		CustomerCare cc = new CustomerCare(driver);
 		SalesBase sb = new SalesBase(driver);
@@ -865,11 +866,14 @@ public class AltadeLineas extends TestBase {
 		
 	}
 	
-	@Test(groups={"Sales", "AltaLineaDatos","E2E"}, priority=1, dataProvider="DatosAltaAgenteCredito")
+	@Test(groups={"Sales", "AltaLineaDatos"}, priority=1, dataProvider="DatosAltaAgenteCredito")
 	public void TS135761_CRM_Movil_PRE_Alta_Linea_Cliente_Nuevo_Agente_TC_Presencial_DNI_Punta_Alta(String sDni, String sNombre, String sApellido, String sSexo, String sFNac, String sEmail, String sPlan, String sProvincia, String sLocalidad, String sCalle, String sNumCa, String sCP, String cBanco, String cTarjeta, String cPromo, String cCuotas, String cNumTarjeta, String cVenceMes, String cVenceAno, String cCodSeg) throws IOException {
 		CustomerCare cc = new CustomerCare(driver);
 		SalesBase sb = new SalesBase(driver);
-		sb.Crear_Cliente(sDni);
+		sb.BtnCrearNuevoCliente();
+		sDni = driver.findElement(By.id("SearchClientDocumentNumber")).getAttribute("value");
+		
+		//sb.Crear_Cliente(sDni);
 		ContactSearch contact = new ContactSearch(driver);
 		contact.sex(sSexo);
 		contact.Llenar_Contacto(sNombre, sApellido, sFNac);

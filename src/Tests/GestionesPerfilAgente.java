@@ -28,7 +28,7 @@ public class GestionesPerfilAgente extends TestBase{
 	private WebDriver driver;
 	List <String> datosOrden =new ArrayList<String>();
 	
-	@BeforeClass
+	@BeforeClass(alwaysRun=true)
 	public void init() {
 		driver = setConexion.setupEze();
 		sleep(5000);
@@ -83,20 +83,20 @@ public class GestionesPerfilAgente extends TestBase{
 		sleep(14000);
 	}
 	
-	//@AfterMethod
+	//@AfterMethod(alwaysRun=true)
 	public void after() {
 		SalesBase sb = new SalesBase(driver);
 		sb.cerrarPestaniaGestion(driver);
 	}
 	
-	@AfterClass
+	@AfterClass(alwaysRun=true)
 	public void quit() throws IOException {
 		guardarListaTxt(datosOrden);
 		//driver.quit();
 		sleep(5000);
 	}
 	
-	@Test (groups = {"GestionesPerfilAgente","Recargas"}, dataProvider="RecargaTC")
+	@Test (groups = {"GestionesPerfilAgente","Recargas","E2E"}, dataProvider="RecargaTC")
 	public void TS134322_CRM_Movil_REPRO_Recargas_Presencial_TC_Agente(String sDNI, String sMonto, String sBanco, String sTarjeta, String sPromo, String sCuotas, String sNumTarjeta, String sVenceMes, String sVenceAno, String sCodSeg, String sTipoDNI, String sDNITarjeta, String sTitular, String sLinea) {
 		//Check All
 		if(sMonto.length() >= 4) {
