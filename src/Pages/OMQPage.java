@@ -61,6 +61,9 @@ public class OMQPage extends BasePage {
 	@FindBy(xpath = "//*[@class='cpq-item-child-product-name-wrapper']")
 	private List<WebElement> Pack;
 	
+	@FindBy(xpath= "//*[@class='cpq-item-product-child-level-3 ng-not-empty ng-valid']//*[@class='slds-button slds-button_neutral']")
+	private List<WebElement> agregar;
+	
 
 	
 
@@ -283,6 +286,7 @@ public class OMQPage extends BasePage {
 
 	
 	public void agregarPack(String servicio1, String servicio2,String Pack1,String Pack2,String Pack3) {
+		CustomerCare cCC = new CustomerCare(driver);
 		sleep(5000);
 		driver.findElement(By.cssSelector(".slds-button.cpq-item-has-children")).click();
 		sleep(5000);
@@ -318,29 +322,21 @@ public class OMQPage extends BasePage {
 		 //subtablas
 		 List<String> packs= Arrays.asList(Pack1, Pack2, Pack3);
 		 List<WebElement> Pack = driver.findElements( By.xpath("//*[@class='cpq-item-product-child-level-3 ng-not-empty ng-valid']//*[@class='cpq-item-no-children']"));
-		 List<WebElement> Agregar=driver.findElements(By.xpath("//*[@class='cpq-item-product-child-level-3 ng-not-empty ng-valid']//*[@class='slds-button slds-button_neutral']"));
+		 List<WebElement> Agregar= agregar;//driver.findElements(By.xpath("//*[@class='cpq-item-product-child-level-3 ng-not-empty ng-valid']//*[@class='slds-button slds-button_neutral']"));
 		 if (Pack.size() == Agregar.size()) {
-		 for (int i = 0; i < Pack.size(); i++) {
-			 for (int j = 0; j < packs.size(); j++) {
-					if (Pack.get(i).getText().equals(packs.get(j))) {
-						System.out.println(packs);
-						//buscarYClick(Agregar, "equals","Agregar"); 
-						Agregar.get(i).click();
-						sleep(8000);
-						break;						
-					}
-			 	}
-		 	}
-		 }	
-	}
-
-
-
-	
-		
-
-
-
+				for (int i = 0; i < Pack.size(); i++) {
+					for (int j = 0; j < packs.size(); j++) {
+						if (Pack.get(i).getText().equals(packs.get(j))) {
+							System.out.println(packs);
+							sleep(8000);
+							Agregar.get(i).click();
+							sleep(8000);
+							break;	
+						}
+					}	
+				}
+		 	}	
+		}
 
 public void sincroProducto() {//(String Products) {
 	
