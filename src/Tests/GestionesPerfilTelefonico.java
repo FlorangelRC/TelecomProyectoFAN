@@ -3,6 +3,8 @@ package Tests;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+
+import org.junit.AfterClass;
 import org.openqa.selenium.By;
 import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.WebDriver;
@@ -287,20 +289,7 @@ public class GestionesPerfilTelefonico extends TestBase{
 	sale.BuscarCuenta("DNI", sDNI);
 	pagePTelefo.buscarAssert();
 	cCC.irAGestionEnCard("Cambio SimCard");
-	sleep(12000);
-	driver.switchTo().frame(cambioFrameByID.getFrameForElement(driver, By.id("DeliveryMethodSelection")));
-	sleep(15000);
-	Select metodoEntrega = new Select (driver.findElement(By.id("DeliveryMethodSelection")));
-	metodoEntrega.selectByVisibleText("Store Pick Up");
-	Select State = new Select (driver.findElement(By.id("PickState")));
-	State.selectByVisibleText("Ciudad Aut\u00f3noma de Buenos Aires");
-	Select City = new Select (driver.findElement(By.id("PickCity")));
-	City.selectByVisibleText("CIUD AUTON D BUENOS AIRES");
-	Select Store = new Select (driver.findElement(By.id("Store")));
-	Store.selectByVisibleText("Centro de Servicio Santa Fe - Juan de Garay 444");
-	driver.findElement(By.id("DeliveryMethodConfiguration_nextBtn")).click();
-	sleep(12000);
-	cCC.obligarclick(driver.findElement(By.id("InvoicePreview_nextBtn")));	
+	pagePTelefo.mododeEntrega();	
 	sleep(12000);
 	buscarYClick(driver.findElements(By.cssSelector(".slds-form-element__label.ng-binding")), "equals", "tarjeta de credito");
 	selectByText(driver.findElement(By.id("BankingEntity-0")), cBanco);
@@ -315,11 +304,8 @@ public class GestionesPerfilTelefonico extends TestBase{
 	selectByText(driver.findElement(By.id("documentType-0")), cTipoDNI);
 	driver.findElement(By.id("documentNumber-0")).sendKeys(cDNITarjeta);
 	driver.findElement(By.id("cardHolder-0")).sendKeys(cTitular);
-	sleep(12000);
 	cCC.obligarclick(driver.findElement(By.id("SelectPaymentMethodsStep_nextBtn")));
 	sleep(15000);
-	//buscarYClick(driver.findElements(By.id("InvoicePreview_nextBtn")),"equals", "siguiente");
-	//sleep(12000);
 	String orden = driver.findElement(By.className("top-data")).findElement(By.className("ng-binding")).getText();
 	String NCuenta = driver.findElements(By.className("top-data")).get(1).findElements(By.className("ng-binding")).get(3).getText();
 	System.out.println("Orden "+orden);
@@ -327,7 +313,6 @@ public class GestionesPerfilTelefonico extends TestBase{
 	cCC.obligarclick(driver.findElement(By.id("OrderSumary_nextBtn")));
 	sleep(15000);
 	driver.findElement(By.id("Step_Error_Huawei_S029_nextBtn")).click();
-	//cCC.obligarclick(driver.findElement(By.id("SaleOrderMessages_nextBtn")));
 	driver.navigate().refresh();
 	}
 	
@@ -340,9 +325,6 @@ public class GestionesPerfilTelefonico extends TestBase{
 	driver.switchTo().frame(cambioFrameByID.getFrameForElement(driver, By.id("SearchClientDocumentType")));	
 	sleep(8000);
 	sale.BuscarCuenta("DNI", sDNI);
-	String accid = driver.findElement(By.cssSelector(".searchClient-body.slds-hint-parent.ng-scope")).findElements(By.tagName("td")).get(5).getText();
-	System.out.prin
-	tln("id "+accid);
 	pagePTelefo.buscarAssert();
 	pagePTelefo.comprarPack("comprar internet");
 	pagePTelefo.PackCombinado(sventaPack);
