@@ -1,33 +1,29 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<testng-results skipped="0" failed="0" ignored="25" total="26" passed="1">
+<testng-results skipped="0" failed="0" ignored="31" total="32" passed="1">
   <reporter-output>
   </reporter-output>
-  <suite name="Default suite" duration-ms="668702" started-at="2018-08-29T15:47:59Z" finished-at="2018-08-29T15:59:08Z">
+  <suite name="Default suite" duration-ms="676457" started-at="2018-08-29T18:30:02Z" finished-at="2018-08-29T18:41:19Z">
     <groups>
       <group name="GestionesPerfilOficina">
-        <method signature="GestionesPerfilOficina.TS_98599_CRM_Movil_REPRO_Rehabilitacion_Administrativo_Fraude_DNI(java.lang.String)[pri:0, instance:Tests.GestionesPerfilOficina@43bd930a]" name="TS_98599_CRM_Movil_REPRO_Rehabilitacion_Administrativo_Fraude_DNI" class="Tests.GestionesPerfilOficina"/>
+        <method signature="GestionesPerfilOficina.TS112452_CRM_Movil_PRE_Ajuste_Nota_de_Credito_Derivacion_a_rango_superior_1900_FAN_Front_OOCC()[pri:0, instance:Tests.GestionesPerfilOficina@43bd930a]" name="TS112452_CRM_Movil_PRE_Ajuste_Nota_de_Credito_Derivacion_a_rango_superior_1900_FAN_Front_OOCC" class="Tests.GestionesPerfilOficina"/>
       </group> <!-- GestionesPerfilOficina -->
-      <group name="Habilitacion">
-        <method signature="GestionesPerfilOficina.TS_98599_CRM_Movil_REPRO_Rehabilitacion_Administrativo_Fraude_DNI(java.lang.String)[pri:0, instance:Tests.GestionesPerfilOficina@43bd930a]" name="TS_98599_CRM_Movil_REPRO_Rehabilitacion_Administrativo_Fraude_DNI" class="Tests.GestionesPerfilOficina"/>
-      </group> <!-- Habilitacion -->
+      <group name="Ajustes">
+        <method signature="GestionesPerfilOficina.TS112452_CRM_Movil_PRE_Ajuste_Nota_de_Credito_Derivacion_a_rango_superior_1900_FAN_Front_OOCC()[pri:0, instance:Tests.GestionesPerfilOficina@43bd930a]" name="TS112452_CRM_Movil_PRE_Ajuste_Nota_de_Credito_Derivacion_a_rango_superior_1900_FAN_Front_OOCC" class="Tests.GestionesPerfilOficina"/>
+      </group> <!-- Ajustes -->
+      <group name="E2E">
+        <method signature="GestionesPerfilOficina.TS112452_CRM_Movil_PRE_Ajuste_Nota_de_Credito_Derivacion_a_rango_superior_1900_FAN_Front_OOCC()[pri:0, instance:Tests.GestionesPerfilOficina@43bd930a]" name="TS112452_CRM_Movil_PRE_Ajuste_Nota_de_Credito_Derivacion_a_rango_superior_1900_FAN_Front_OOCC" class="Tests.GestionesPerfilOficina"/>
+      </group> <!-- E2E -->
     </groups>
-    <test name="Default test" duration-ms="668702" started-at="2018-08-29T15:47:59Z" finished-at="2018-08-29T15:59:08Z">
+    <test name="Default test" duration-ms="676457" started-at="2018-08-29T18:30:02Z" finished-at="2018-08-29T18:41:19Z">
       <class name="Tests.GestionesPerfilOficina">
-        <test-method status="PASS" signature="init()[pri:0, instance:Tests.GestionesPerfilOficina@43bd930a]" name="init" is-config="true" duration-ms="389250" started-at="2018-08-29T15:47:59Z" finished-at="2018-08-29T15:54:28Z">
+        <test-method status="PASS" signature="init()[pri:0, instance:Tests.GestionesPerfilOficina@43bd930a]" name="init" is-config="true" duration-ms="409524" started-at="2018-08-29T18:30:02Z" finished-at="2018-08-29T18:36:52Z">
           <reporter-output>
           </reporter-output>
         </test-method> <!-- init -->
-        <test-method status="PASS" signature="TS_98599_CRM_Movil_REPRO_Rehabilitacion_Administrativo_Fraude_DNI(java.lang.String)[pri:0, instance:Tests.GestionesPerfilOficina@43bd930a]" name="TS_98599_CRM_Movil_REPRO_Rehabilitacion_Administrativo_Fraude_DNI" duration-ms="278724" started-at="2018-08-29T15:54:29Z" data-provider="CuentaHabilitacion" finished-at="2018-08-29T15:59:08Z">
-          <params>
-            <param index="0">
-              <value>
-                <![CDATA[35653982]]>
-              </value>
-            </param>
-          </params>
+        <test-method status="PASS" signature="TS112452_CRM_Movil_PRE_Ajuste_Nota_de_Credito_Derivacion_a_rango_superior_1900_FAN_Front_OOCC()[pri:0, instance:Tests.GestionesPerfilOficina@43bd930a]" name="TS112452_CRM_Movil_PRE_Ajuste_Nota_de_Credito_Derivacion_a_rango_superior_1900_FAN_Front_OOCC" duration-ms="266900" started-at="2018-08-29T18:36:52Z" finished-at="2018-08-29T18:41:19Z">
           <reporter-output>
           </reporter-output>
-        </test-method> <!-- TS_98599_CRM_Movil_REPRO_Rehabilitacion_Administrativo_Fraude_DNI -->
+        </test-method> <!-- TS112452_CRM_Movil_PRE_Ajuste_Nota_de_Credito_Derivacion_a_rango_superior_1900_FAN_Front_OOCC -->
       </class> <!-- Tests.GestionesPerfilOficina -->
     </test> <!-- Default test -->
   </suite> <!-- Default suite -->

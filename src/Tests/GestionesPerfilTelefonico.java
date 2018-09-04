@@ -11,11 +11,13 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.Select;
 import org.testng.Assert;
+import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 import Pages.Accounts;
 import Pages.BasePage;
 import Pages.CustomerCare;
+import Pages.Marketing;
 import Pages.SalesBase;
 import Pages.PagePerfilTelefonico;
 import Pages.setConexion;
@@ -28,7 +30,7 @@ public class GestionesPerfilTelefonico extends TestBase{
 	List <String> datosOrden =new ArrayList<String>();
 	
 	
-	@BeforeClass
+	@BeforeClass(alwaysRun=true)
 	public void init() {
 		driver = setConexion.setupEze();
 		sleep(5000);
@@ -85,13 +87,13 @@ public class GestionesPerfilTelefonico extends TestBase{
 		sleep(14000);
 	}
 
-	//@AfterMethod
+	//@AfterMethod(alwaysRun=true)
 	public void after() {
 		SalesBase sb = new SalesBase(driver);
 		sb.cerrarPestaniaGestion(driver);
 	}
 
-	@AfterClass
+	@AfterClass(alwaysRun=true)
 	public void quit() throws IOException {
 		guardarListaTxt(datosOrden);
 		System.out.println("Se supone que guardo");
@@ -195,7 +197,7 @@ public class GestionesPerfilTelefonico extends TestBase{
 		Assert.assertTrue(driver.findElement(By.cssSelector(".slds-form-element.vlc-flex.vlc-slds-text-block.vlc-slds-rte.ng-pristine.ng-valid.ng-scope")).findElement(By.className("ng-binding")).findElement(By.tagName("p")).getText().equalsIgnoreCase("saldo insuficiente"));
 	}
 	
-	@Test (groups = {"GestionesPerfilTelefonico", "RenovacionDeCuota"}, dataProvider="RenovacionCuotaConSaldo")
+	@Test (groups = {"GestionesPerfilTelefonico", "RenovacionDeCuota","E2E"}, dataProvider="RenovacionCuotaConSaldo")
 	public void TS_CRM_Movil_REPRO_Renovacion_De_Cuota_Telefonico_Descuento_De_Saldo_Con_Credito(String sCuenta, String sDNI, String sLinea) {
 		BasePage cambioFrameByID=new BasePage();
 		driver.switchTo().frame(cambioFrameByID.getFrameForElement(driver, By.id("SearchClientDocumentType")));
@@ -206,7 +208,7 @@ public class GestionesPerfilTelefonico extends TestBase{
 		sleep(20000);
 		driver.switchTo().frame(cambioFrame(driver, By.className("card-top")));
 		driver.findElement(By.className("card-top")).click();
-		sleep(3000);
+		sleep(5000);
 		CustomerCare cCC = new CustomerCare(driver);
 		cCC.irAGestionEnCard("Renovacion de Datos");
 		sleep(12000);
@@ -325,6 +327,8 @@ public class GestionesPerfilTelefonico extends TestBase{
 	driver.switchTo().frame(cambioFrameByID.getFrameForElement(driver, By.id("SearchClientDocumentType")));	
 	sleep(8000);
 	sale.BuscarCuenta("DNI", sDNI);
+	String accid = driver.findElement(By.cssSelector(".searchClient-body.slds-hint-parent.ng-scope")).findElements(By.tagName("td")).get(5).getText();
+	System.out.println("id "+accid);
 	pagePTelefo.buscarAssert();
 	pagePTelefo.comprarPack("comprar internet");
 	pagePTelefo.PackCombinado(sventaPack);

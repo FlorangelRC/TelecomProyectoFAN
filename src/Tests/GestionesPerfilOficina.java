@@ -1,11 +1,9 @@
 package Tests;
 
 import static org.testng.Assert.assertTrue;
-
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
-
 import org.openqa.selenium.By;
 import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.WebDriver;
@@ -14,8 +12,8 @@ import org.testng.Assert;
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeClass;
+import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
-
 import Pages.Accounts;
 import Pages.BasePage;
 import Pages.ContactSearch;
@@ -44,40 +42,49 @@ public class GestionesPerfilOficina extends TestBase {
 		SalesBase sb = new SalesBase(driver);
 		driver.switchTo().defaultContent();
 		sleep(3000);
+		
+	}
+	
+	@BeforeMethod(alwaysRun=true)
+	public void setup() throws Exception {
+		sleep(10000);
 		goToLeftPanel2(driver, "Inicio");
-		sleep(18000);
+		sleep(15000);
 		try {
 			sb.cerrarPestaniaGestion(driver);
 		} catch (Exception ex1) {}
-		Accounts ac = new Accounts(driver);
-		driver.switchTo().frame(ac.getFrameForElement(driver, By.cssSelector(".hasMotif.homeTab.homepage.ext-webkit.ext-chrome.sfdcBody.brandQuaternaryBgr")));
-		List <WebElement> frames = driver.findElements(By.tagName("iframe"));
+		Accounts accountPage = new Accounts(driver);
+		driver.switchTo().frame(accountPage.getFrameForElement(driver, By.cssSelector(".hasMotif.homeTab.homepage.ext-webkit.ext-chrome.sfdcBody.brandQuaternaryBgr")));
+		List<WebElement> frames = driver.findElements(By.tagName("iframe"));
 		boolean enc = false;
 		int index = 0;
 		for(WebElement frame : frames) {
 			try {
-				//System.out.println("aca");
+				System.out.println("aca");
 				driver.switchTo().frame(frame);
+
 				driver.findElement(By.cssSelector(".slds-grid.slds-m-bottom_small.slds-wrap.cards-container")).getText(); //each element is in the same iframe.
 				//System.out.println(index); //prints the used index.
+
 				driver.findElement(By.cssSelector(".slds-grid.slds-m-bottom_small.slds-wrap.cards-container")).isDisplayed(); //each element is in the same iframe.
 				//System.out.println(index); //prints the used index.
-				driver.switchTo().frame(ac.getFrameForElement(driver, By.cssSelector(".hasMotif.homeTab.homepage.ext-webkit.ext-chrome.sfdcBody.brandQuaternaryBgr")));
+
+				driver.switchTo().frame(accountPage.getFrameForElement(driver, By.cssSelector(".hasMotif.homeTab.homepage.ext-webkit.ext-chrome.sfdcBody.brandQuaternaryBgr")));
 				enc = true;
 				break;
-			} catch(NoSuchElementException noSuchElemExcept) {
+			}catch(NoSuchElementException noSuchElemExcept) {
 				index++;
-				driver.switchTo().frame(ac.getFrameForElement(driver, By.cssSelector(".hasMotif.homeTab.homepage.ext-webkit.ext-chrome.sfdcBody.brandQuaternaryBgr")));
+				driver.switchTo().frame(accountPage.getFrameForElement(driver, By.cssSelector(".hasMotif.homeTab.homepage.ext-webkit.ext-chrome.sfdcBody.brandQuaternaryBgr")));
 			}
 		}
 		if(enc == false)
 			index = -1;
 		try {
-			driver.switchTo().frame(frames.get(index));
-		} catch(ArrayIndexOutOfBoundsException iobExcept) {
-			System.out.println("Elemento no encontrado en ningun frame 2.");			
+				driver.switchTo().frame(frames.get(index));
+		}catch(ArrayIndexOutOfBoundsException iobExcept) {System.out.println("Elemento no encontrado en ningun frame 2.");
+			
 		}
-		List <WebElement> botones = driver.findElements(By.tagName("button"));
+		List<WebElement> botones = driver.findElements(By.tagName("button"));
 		for (WebElement UnB : botones) {
 			System.out.println(UnB.getText());
 			if(UnB.getText().equalsIgnoreCase("gesti\u00f3n de clientes")) {
@@ -85,23 +92,25 @@ public class GestionesPerfilOficina extends TestBase {
 				break;
 			}
 		}
-		sleep(14000);
+		
+		sleep(25000);
 	}
 
 	//@AfterMethod(alwaysRun=true)
 	public void after() {
+		sleep(15000);
 		SalesBase sb = new SalesBase(driver);
 		sb.cerrarPestaniaGestion(driver);
 	}
 
-	@AfterClass(alwaysRun=true)
+	//@AfterClass(alwaysRun=true)
 	public void quit() throws IOException {
 		guardarListaTxt(sOrders);
 		//driver.quit();
 		sleep(5000);
 	}
 	
-	@Test (groups = {"GestionesPerfilOficina","NumerosAmigos"}, dataProvider="NumerosAmigos")
+	@Test (groups = {"GestionesPerfilOficina","NumerosAmigos","E2E"}, dataProvider="NumerosAmigos")
 	public void TS100602_CRM_Movil_REPRO_FF_Alta_Presencial(String sDNI, String sCuenta, String sNumeroDeCuenta, String sLinea, String sNumeroVOZ, String sNumeroSMS) {
 		BasePage cambioFrame=new BasePage();
 		driver.switchTo().frame(cambioFrame.getFrameForElement(driver, By.id("SearchClientDocumentType")));
@@ -147,6 +156,86 @@ public class GestionesPerfilOficina extends TestBase {
 		}
 		cCC.seleccionarCardPornumeroLinea(sLinea, driver);
 		cCC.irAGestionEnCard("N\u00fameros Gratis");
+		//Complete when the page works
+	}
+	
+	@Test (groups = {"GestionesPerfilOficina","NumerosAmigos","E2E"}, dataProvider="NumerosAmigos")
+	public void TS100603_CRM_Movil_REPRO_FF_Modificacion_Posventa_Telefonico(String sDNI, String sCuenta, String sNumeroDeCuenta, String sLinea, String sNumeroVOZ, String sNumeroSMS) {
+		BasePage cambioFrame=new BasePage();
+		driver.switchTo().frame(cambioFrame.getFrameForElement(driver, By.id("SearchClientDocumentType")));
+		sleep(1000);
+		SalesBase sSB = new SalesBase(driver);
+		sSB.BuscarCuenta("DNI", sDNI);
+		String accid = driver.findElement(By.cssSelector(".searchClient-body.slds-hint-parent.ng-scope")).findElements(By.tagName("td")).get(5).getText();
+		System.out.println("id "+accid);
+		driver.findElement(By.cssSelector(".slds-tree__item.ng-scope")).findElement(By.tagName("div")).click();
+		sleep(15000);
+		
+		CustomerCare cCC = new CustomerCare(driver);
+		cCC.seleccionarCardPornumeroLinea(sLinea, driver);
+		//driver.switchTo().frame(cambioFrame(driver, By.className("card-top")));
+		//driver.findElement(By.className("card-top")).click();
+		//sleep(3000);
+		
+		cCC.irAGestionEnCard("N\u00fameros Gratis");
+		
+		sleep(5000);
+		driver.switchTo().defaultContent();
+		driver.switchTo().frame(cambioFrame(driver, By.cssSelector(".slds-col--padded.slds-size--1-of-2")));
+		List<WebElement> wNumerosAmigos = driver.findElements(By.cssSelector(".slds-col--padded.slds-size--1-of-2"));
+		System.out.println("sNumeroVOZ: " + sNumeroVOZ + "\nsNumeroSMS: " + sNumeroSMS);
+		//Verify if it's save the previews number
+		wNumerosAmigos.get(0).findElement(By.tagName("input")).sendKeys(sNumeroVOZ);
+		wNumerosAmigos.get(1).findElement(By.tagName("input")).sendKeys(sNumeroSMS);
+		sleep(5000);
+		driver.findElement(By.cssSelector(".OSradioButton.ng-scope.only-buttom")).click();
+		
+		sleep(15000);
+		List <WebElement> wMessage = driver.findElement(By.cssSelector(".slds-form-element.vlc-flex.vlc-slds-text-block.vlc-slds-rte.ng-pristine.ng-valid.ng-scope")).findElement(By.className("ng-binding")).findElements(By.tagName("p"));
+		boolean bAssert = wMessage.get(1).getText().contains("La orden se realiz\u00f3 con \u00e9xito!");
+		sOrders.add(cCC.obtenerOrden(driver, "N\u00fameros Gratis"));
+		Assert.assertTrue(bAssert);
+		sleep(5000);
+		String orden = cc.obtenerOrden(driver, "Numero Gratis");
+		sOrders.add("Numeros amigos, orden numero: " + orden + " con numero de DNI: " + sDNI);
+		List<WebElement> wTabs = driver.findElements(By.className("x-tab-strip-closable"));
+		for (WebElement wAux : wTabs) {
+			if (wAux.findElement(By.className("tabText")).getText().equalsIgnoreCase("N\u00fameros Gratis")) {
+				wAux.findElement(By.className("x-tab-strip-close")).click();
+			}
+		}
+		cCC.seleccionarCardPornumeroLinea(sLinea, driver);
+		cCC.irAGestionEnCard("N\u00fameros Gratis");
+		//Complete when the page works
+	}
+	
+	@Test (groups = {"GestionesPerfilOficina","NumerosAmigos","E2E"}, dataProvider="NumerosAmigos")
+	public void TS100605_CRM_Movil_REPRO_FF_Baja_Presencial(String sDNI, String sCuenta, String sNumeroDeCuenta, String sLinea, String sNumeroVOZ, String sNumeroSMS) {
+		BasePage cambioFrame=new BasePage();
+		driver.switchTo().frame(cambioFrame.getFrameForElement(driver, By.id("SearchClientDocumentType")));
+		sleep(1000);
+		SalesBase sSB = new SalesBase(driver);
+		sSB.BuscarCuenta("DNI", sDNI);
+		String accid = driver.findElement(By.cssSelector(".searchClient-body.slds-hint-parent.ng-scope")).findElements(By.tagName("td")).get(5).getText();
+		System.out.println("id "+accid);
+		driver.findElement(By.cssSelector(".slds-tree__item.ng-scope")).findElement(By.tagName("div")).click();
+		sleep(15000);
+		
+		CustomerCare cCC = new CustomerCare(driver);
+		cCC.seleccionarCardPornumeroLinea(sLinea, driver);
+		//driver.switchTo().frame(cambioFrame(driver, By.className("card-top")));
+		//driver.findElement(By.className("card-top")).click();
+		//sleep(3000);
+		
+		cCC.irAGestionEnCard("N\u00fameros Gratis");
+		
+		sleep(5000);
+		driver.switchTo().defaultContent();
+		driver.switchTo().frame(cambioFrame(driver, By.cssSelector(".slds-col--padded.slds-size--1-of-2")));
+		List<WebElement> wNumerosAmigos = driver.findElements(By.cssSelector(".slds-col--padded.slds-size--1-of-2"));
+		System.out.println("sNumeroVOZ: " + sNumeroVOZ + "\nsNumeroSMS: " + sNumeroSMS);
+		//Verify if it's save the previews number
+		//Delete previews number
 		//Complete when the page works
 	}
 	
@@ -348,8 +437,8 @@ public class GestionesPerfilOficina extends TestBase {
 						a.findElement(By.tagName("button")).click();
 							sleep(8000);
 								break;
-							}
-						}
+				}
+			}
 		sleep(17000);
 		List <WebElement> ddi = driver.findElements(By.cssSelector(".cpq-item-product-child-level-2.cpq-item-child-product-name-wrapper"));
 			for(WebElement d : ddi){
@@ -364,16 +453,31 @@ public class GestionesPerfilOficina extends TestBase {
 				if(r.getText().contains("DDI sin Roaming Internacional")){
 					driver.findElements(By.cssSelector(".slds-button.slds-button_icon-border-filled.cpq-item-actions-dropdown-button")).get(6).click();
 					sleep(5000);
-					buscarYClick(driver.findElements(By.cssSelector(".slds-dropdown__item.cpq-item-actions-dropdown__item")), "contains", "delete");
+					cc.obligarclick(driver.findElements(By.cssSelector(".slds-dropdown__item.cpq-item-actions-dropdown__item")).get(6));
 					sleep(5000);
 						try {
 							cc.obligarclick(driver.findElement(By.cssSelector(".slds-button.slds-button--destructive")));
 							sleep(20000);
 						}catch(Exception ex1) {}
 				}
-			buscarYClick(driver.findElements(By.cssSelector(".slds-button.slds-button_neutral")), "contains", "agregar");	
+			//cc.obligarclick(driver.findElement(By.cssSelector(".cpq-item-base-product")).findElements(By.tagName("div")).get(9).findElement(By.tagName("button")));
+			cc.obligarclick(driver.findElement(By.xpath("//*[@id='tab-default-2']/div[3]/div/div[3]/div/div/ng-include/div/div[2]/ng-include/div/div[9]/div/div[3]/div/div/ng-include/div/div[2]/ng-include/div/div[1]/div/div[2]/div[11]/button")));
+			sleep(5000);
+			buscarYClick(driver.findElements(By.cssSelector(".slds-button.slds-button--neutral.ng-binding.ng-scope")),"contains", "continue");
 			sleep(15000);
+			boolean a = false;
+			List <WebElement> elem = driver.findElements(By.cssSelector(".slds-box.ng-scope"));
+			for(WebElement x : elem) {
+				if(x.getText().toLowerCase().contains("tu solicitud est\u00e1 siendo procesada.")) {
+					a = true;
+				}			
 			}
+			Assert.assertTrue(a);
+			sleep(5000);
+			String orden = cc.obtenerOrden(driver, "Suspensi\u00f3n de Linea");
+			sOrders.add("Suspension, orden numero: " + orden + ", DNI: " + sDNI);
+			//System.out.println(sOrders);
+		}
 		}
 	
 	@Test(groups = {"Sales", "PreparacionNominacion","E2E"}, dataProvider="DatosSalesNominacion") 
@@ -386,15 +490,15 @@ public class GestionesPerfilOficina extends TestBase {
 		  driver.findElement(By.id("SearchClientsDummy")).click();
 		  sleep(10000);
 		//SB.BuscarAvanzada(NyA.split(" ")[0], NyA.split(" ")[1], "", "", "");
-		WebElement cli = driver.findElement(By.id("tab-scoped-1"));
+		WebElement cli = driver.findElement(By.id("tab-scoped-2"));
 		//if (cli.findElement(By.tagName("tbody")).findElement(By.tagName("tr")).findElement(By.tagName("div")).getText().equals(sCuenta)) {
 			cli.findElement(By.tagName("tbody")).findElement(By.tagName("tr")).click();
 		//}
 		sleep(3000);
-		List<WebElement> Lineas = driver.findElement(By.id("tab-scoped-1")).findElement(By.tagName("tbody")).findElements(By.tagName("tr"));
+		List<WebElement> Lineas = driver.findElement(By.id("tab-scoped-2")).findElement(By.tagName("tbody")).findElements(By.tagName("tr"));
 		for(WebElement UnaL: Lineas) {
 			//System.out.println("********"+UnaL.getText()+"  FIN");
-			if(UnaL.getText().contains(sLinea)) {
+			if(UnaL.getText().toLowerCase().contains("plan con tarjeta")||UnaL.getText().toLowerCase().contains("plan prepago nacional")) {
 				UnaL.findElements(By.tagName("td")).get(6).findElement(By.tagName("svg")).click();
 				System.out.println("Linea Encontrada");
 				break;
@@ -475,7 +579,7 @@ public class GestionesPerfilOficina extends TestBase {
 	}
 	
 	@Test (groups = {"ProblemaRecarga", "GestionesPerfilOficina","E2E"}, dataProvider="CuentaProblemaRecarga") 
-	public void problemaRecargaOnline(String cDNI) {
+	public void problemaRecargaOnline(String cDNI, String cSerie, String cPIN) {
 		driver.switchTo().frame(cambioFrame(driver, By.id("SearchClientDocumentType")));
 		sb.BuscarCuenta("DNI", cDNI);
 		driver.findElement(By.cssSelector(".slds-tree__item.ng-scope")).click();
@@ -519,7 +623,7 @@ public class GestionesPerfilOficina extends TestBase {
 	}
 	
 	@Test (groups = {"ProblemaRecarga", "GestionesPerfilOficina","E2E"}, dataProvider="CuentaProblemaRecarga") 
-	public void poblemaRecargaCredito(String cDNI) {
+	public void poblemaRecargaCredito(String cDNI, String cSerie, String cPIN) {
 		driver.switchTo().frame(cambioFrame(driver, By.id("SearchClientDocumentType")));
 		sb.BuscarCuenta("DNI", cDNI);
 		driver.findElement(By.cssSelector(".slds-tree__item.ng-scope")).click();
@@ -1133,7 +1237,7 @@ public class GestionesPerfilOficina extends TestBase {
 		Assert.assertTrue(cc.verificarOrden(orden));
 	}
 	
-	@Test (groups = {"Suspension", "GestionesPerfilOficina"}, dataProvider="CuentaSuspension")
+	@Test (groups = {"Suspension", "GestionesPerfilOficina","E2E"}, dataProvider="CuentaSuspension")
 	public void TS_98498_CRM_Movil_REPRO_Suspension_por_Fraude_Cuenta_de_facturacion_Comercial_Desconocimiento_Administrativo(String cDNI) {
 		driver.switchTo().frame(cambioFrame(driver, By.id("SearchClientDocumentType")));
 		sb.BuscarCuenta("DNI", cDNI);
@@ -1172,7 +1276,7 @@ public class GestionesPerfilOficina extends TestBase {
 		System.out.println(sOrders);	
 	}
 	
-	@Test (groups = {"Habilitacion", "GestionesPerfilOficina"}, dataProvider="CuentaHabilitacion")
+	@Test (groups = {"Habilitacion", "GestionesPerfilOficina","E2E"}, dataProvider="CuentaHabilitacion")
 	public void TS_98599_CRM_Movil_REPRO_Rehabilitacion_Administrativo_Fraude_DNI(String cDNI) {
 		driver.switchTo().frame(cambioFrame(driver, By.id("SearchClientDocumentType")));
 		sb.BuscarCuenta("DNI", cDNI);
@@ -1209,7 +1313,7 @@ public class GestionesPerfilOficina extends TestBase {
 		System.out.println(sOrders);	
 	}
 	
-	@Test (groups = {"Habilitacion", "GestionesPerfilOficina"}, dataProvider="CuentaHabilitacion")
+	@Test (groups = {"Habilitacion", "GestionesPerfilOficina","E2E"}, dataProvider="CuentaHabilitacion")
 	public void TS_98590_CRM_Movil_REPRO_Rehabilitacion_por_Siniestro_Presencial_Robo_Linea(String cDNI) {
 		driver.switchTo().frame(cambioFrame(driver, By.id("SearchClientDocumentType")));
 		sb.BuscarCuenta("DNI", cDNI);
@@ -1447,7 +1551,7 @@ public class GestionesPerfilOficina extends TestBase {
 		Assert.assertTrue(cc.verificarOrden(orden));
 	}
 	
-	@Test (groups = {"GestionesPerfilOficina","RenovacionCuota"}, dataProvider="RenovacionCuotaSinSaldo")
+	@Test (groups = {"GestionesPerfilOficina","RenovacionCuota","E2E"}, dataProvider="RenovacionCuotaSinSaldo")
 	public void TS135396_CRM_Movil_REPRO_Renovacion_de_cuota_Presencial_Internet_50_MB_Dia_Efectivo_sin_Credito(String sCuenta, String sDNI, String sLinea) {
 		//Check all
 		BasePage cambioFrameByID=new BasePage();
@@ -1465,12 +1569,75 @@ public class GestionesPerfilOficina extends TestBase {
 		sleep(10000);
 		try {
 			driver.switchTo().frame(cambioFrame(driver, By.id("combosMegas")));
-			driver.findElement(By.id("combosMegas")).findElements(By.className("slds-checkbox")).get(2).click();
+			driver.findElement(By.id("combosMegas")).findElements(By.className("slds-checkbox")).get(1).click();
 		}
 		catch (Exception ex) {
 			//Allways Empty
 		}
-		sleep(2000);
+		driver.findElement(By.id("CombosDeMegas_nextBtn")).click();
+		sleep(5000);
+		driver.findElement(By.cssSelector(".slds-form-element.vlc-flex.vlc-slds-radio-Control.ng-scope.ng-dirty.ng-valid-parse.ng-valid.ng-valid-required")).findElements(By.cssSelector(".slds-radio--faux.ng-scope")).get(0).click();
+		driver.findElement(By.id("SetPaymentType_nextBtn")).click();
+		sleep(5000);
+		//slds-button slds-button--neutral ng-binding ng-scope.get(1)
+		//Step_Error_Huawei_S013_nextBtn
+		driver.findElement(By.id("SelectPaymentMethodsStep_nextBtn")).click();
+		//Error al validar medios de pago: No se ingresaron los medios de pago
+		//slds-button slds-button--neutral ng-binding ng-scope.get(1)
 		Assert.assertTrue(driver.findElement(By.cssSelector(".slds-form-element.vlc-flex.vlc-slds-text-block.vlc-slds-rte.ng-pristine.ng-valid.ng-scope")).findElement(By.className("ng-binding")).findElement(By.tagName("p")).getText().equalsIgnoreCase("saldo insuficiente"));
+	}
+	
+	@Test (groups = {"ProblemaRecarga", "GestionesPerfilOficina","E2E"}, dataProvider="CuentaProblemaRecarga") 
+	public void TS_135714_CRM_Movil_PRE_Problemas_con_Recarga_Telefonico_Tarjeta_Scratch_Caso_Nuevo_Tarjeta_Activa_y_Disponible(String cDNI, String cSerie, String cPIN){
+		driver.switchTo().frame(cambioFrame(driver, By.id("SearchClientDocumentType")));
+		sb.BuscarCuenta("DNI", cDNI);
+		driver.findElement(By.cssSelector(".slds-tree__item.ng-scope")).click();
+		sleep(15000);
+		driver.switchTo().frame(cambioFrame(driver, By.className("card-top")));
+		driver.findElement(By.className("card-top")).click();
+		sleep(8000);
+		cc.irAGestionEnCard("Problemas con Recargas");
+		sleep(8000);
+		driver.switchTo().frame(cambioFrame(driver, By.id("RefillMethods_nextBtn")));
+		buscarYClick(driver.findElements(By.cssSelector(".imgItemContainer.ng-scope")), "contains", "tarjeta prepaga");
+		driver.findElement(By.id("RefillMethods_nextBtn")).click();
+		sleep(8000);
+		driver.findElement(By.id("BatchNumber")).sendKeys(cSerie);
+		driver.findElement(By.id("PIN")).sendKeys(cPIN);
+		driver.findElement(By.id("PrepaidCardData_nextBtn")).click();
+		sleep(15000);
+		buscarYClick(driver.findElements(By.cssSelector(".imgItemContainer.ng-scope")), "contains", "crear un caso nuevo");
+		driver.findElement(By.id("ExistingCase_nextBtn")).click();
+		sleep(8000);
+		driver.findElement(By.id("Summary_nextBtn")).click();
+		sleep(8000);
+		//Ocurre un error de impacto en la recarga	
+	}
+	
+	@Test (groups = {"ProblemaRecarga", "GestionesPerfilOficina","E2E"}, dataProvider="CuentaProblemaRecarga")
+	public void TS_104347_CRM_Movil_REPRO_Problemas_con_Recarga_Presencial_Tarjeta_Scratch_Caso_Nuevo_Quemada(String cDNI, String cSerie, String cPIN){
+		driver.switchTo().frame(cambioFrame(driver, By.id("SearchClientDocumentType")));
+		sb.BuscarCuenta("DNI", cDNI);
+		driver.findElement(By.cssSelector(".slds-tree__item.ng-scope")).click();
+		sleep(15000);
+		driver.switchTo().frame(cambioFrame(driver, By.className("card-top")));
+		driver.findElement(By.className("card-top")).click();
+		sleep(8000);
+		cc.irAGestionEnCard("Problemas con Recargas");
+		sleep(8000);
+		driver.switchTo().frame(cambioFrame(driver, By.id("RefillMethods_nextBtn")));
+		buscarYClick(driver.findElements(By.cssSelector(".imgItemContainer.ng-scope")), "contains", "tarjeta prepaga");
+		driver.findElement(By.id("RefillMethods_nextBtn")).click();
+		sleep(8000);
+		driver.findElement(By.id("BatchNumber")).sendKeys(cSerie);
+		driver.findElement(By.id("PIN")).sendKeys(cPIN);
+		driver.findElement(By.id("PrepaidCardData_nextBtn")).click();
+		sleep(15000);
+		buscarYClick(driver.findElements(By.cssSelector(".imgItemContainer.ng-scope")), "contains", "crear un caso nuevo");
+		driver.findElement(By.id("ExistingCase_nextBtn")).click();
+		sleep(8000);
+		driver.findElement(By.id("Summary_nextBtn")).click();
+		sleep(8000);
+		//Ocurre un error de impacto en la recarga	
 	}
 }	
