@@ -8,6 +8,7 @@ import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.PageFactory;
+import org.openqa.selenium.support.ui.Select;
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeClass;
@@ -104,18 +105,18 @@ public class PagePerfilTelefonico extends TestBase{
 	sleep(5000);
 	WebElement siguiente=driver.findElement(By.className("vlc-control-wrapper"));
 	((JavascriptExecutor)driver).executeScript("window.scrollTo(0,"+siguiente.getLocation().y+")");
-	sleep(8000);;
-	try {driver.findElement(By.id("SetPaymentType_nextBtn")).click();}
-	catch(org.openqa.selenium.ElementNotVisibleException Tipodepago) {
+	sleep(8000);
+	try {driver.findElement(By.id("DeliveryMethodConfiguration_nextBtn")).click();}
+	catch(org.openqa.selenium.ElementNotVisibleException Delivery) {
 		sleep(8000);
 		try {driver.findElement(By.id("InvoicePreview_nextBtn")).click();}
 		catch(org.openqa.selenium.ElementNotVisibleException SimulaciondeFactura) {
-			sleep(8000);
-			try {driver.findElement(By.id("SelectPaymentMethodsStep_nextBtn")).click();}
-			catch(org.openqa.selenium.ElementNotVisibleException SelecciondemediodePago) {
+			sleep(10000);
+			try {driver.findElement(By.id("SetPaymentType_nextBtn")).click();}
+			catch(org.openqa.selenium.ElementNotVisibleException Tipodepago) {
 				sleep(8000);
-				try {driver.findElements(By.cssSelector(".slds-button.slds-button--neutral.ng-binding.ng-scope")).get(1).click();}
-			     catch(Exception ex1){
+					try {driver.findElements(By.cssSelector(".slds-button.slds-button--neutral.ng-binding.ng-scope")).get(1).click();}
+					catch(Exception ex1){
 			    	 sleep(8000);
 			       	 try {driver.findElement(By.id("Step_Error_Huawei_S029_nextBtn")).click();}
 						catch(org.openqa.selenium.ElementNotVisibleException EnviodefacturayDatos) {
@@ -132,6 +133,24 @@ public class PagePerfilTelefonico extends TestBase{
 			}
 		}
 	}
+
+	
+	public void mododeEntrega() {
+		BasePage cambioFrameByID=new BasePage();
+		sleep(12000);
+		driver.switchTo().frame(cambioFrameByID.getFrameForElement(driver, By.id("DeliveryMethodSelection")));
+		sleep(15000);
+		Select metodoEntrega = new Select (driver.findElement(By.id("DeliveryMethodSelection")));
+		metodoEntrega.selectByVisibleText("Store Pick Up");
+		Select State = new Select (driver.findElement(By.id("PickState")));
+		State.selectByVisibleText("Ciudad Aut\u00f3noma de Buenos Aires");
+		Select City = new Select (driver.findElement(By.id("PickCity")));
+		City.selectByVisibleText("CIUD AUTON D BUENOS AIRES");
+		Select Store = new Select (driver.findElement(By.id("Store")));
+		Store.selectByVisibleText("Centro de Servicio Santa Fe - Juan de Garay 444");
+		siguiente();
+		siguiente();
+		}
 			     
 }		     
 		

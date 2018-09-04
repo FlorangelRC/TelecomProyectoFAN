@@ -110,7 +110,7 @@ public class GestionesPerfilOficina extends TestBase {
 		sleep(5000);
 	}
 	
-	@Test (groups = {"GestionesPerfilOficina","NumerosAmigos"}, dataProvider="NumerosAmigos")
+	@Test (groups = {"GestionesPerfilOficina","NumerosAmigos","E2E"}, dataProvider="NumerosAmigos")
 	public void TS100602_CRM_Movil_REPRO_FF_Alta_Presencial(String sDNI, String sCuenta, String sNumeroDeCuenta, String sLinea, String sNumeroVOZ, String sNumeroSMS) {
 		BasePage cambioFrame=new BasePage();
 		driver.switchTo().frame(cambioFrame.getFrameForElement(driver, By.id("SearchClientDocumentType")));
@@ -159,7 +159,7 @@ public class GestionesPerfilOficina extends TestBase {
 		//Complete when the page works
 	}
 	
-	@Test (groups = {"GestionesPerfilOficina","NumerosAmigos"}, dataProvider="NumerosAmigos")
+	@Test (groups = {"GestionesPerfilOficina","NumerosAmigos","E2E"}, dataProvider="NumerosAmigos")
 	public void TS100603_CRM_Movil_REPRO_FF_Modificacion_Posventa_Telefonico(String sDNI, String sCuenta, String sNumeroDeCuenta, String sLinea, String sNumeroVOZ, String sNumeroSMS) {
 		BasePage cambioFrame=new BasePage();
 		driver.switchTo().frame(cambioFrame.getFrameForElement(driver, By.id("SearchClientDocumentType")));
@@ -209,7 +209,7 @@ public class GestionesPerfilOficina extends TestBase {
 		//Complete when the page works
 	}
 	
-	@Test (groups = {"GestionesPerfilOficina","NumerosAmigos"}, dataProvider="NumerosAmigos")
+	@Test (groups = {"GestionesPerfilOficina","NumerosAmigos","E2E"}, dataProvider="NumerosAmigos")
 	public void TS100605_CRM_Movil_REPRO_FF_Baja_Presencial(String sDNI, String sCuenta, String sNumeroDeCuenta, String sLinea, String sNumeroVOZ, String sNumeroSMS) {
 		BasePage cambioFrame=new BasePage();
 		driver.switchTo().frame(cambioFrame.getFrameForElement(driver, By.id("SearchClientDocumentType")));
@@ -437,8 +437,8 @@ public class GestionesPerfilOficina extends TestBase {
 						a.findElement(By.tagName("button")).click();
 							sleep(8000);
 								break;
-							}
-						}
+				}
+			}
 		sleep(17000);
 		List <WebElement> ddi = driver.findElements(By.cssSelector(".cpq-item-product-child-level-2.cpq-item-child-product-name-wrapper"));
 			for(WebElement d : ddi){
@@ -453,17 +453,31 @@ public class GestionesPerfilOficina extends TestBase {
 				if(r.getText().contains("DDI sin Roaming Internacional")){
 					driver.findElements(By.cssSelector(".slds-button.slds-button_icon-border-filled.cpq-item-actions-dropdown-button")).get(6).click();
 					sleep(5000);
-					buscarYClick(driver.findElements(By.cssSelector(".slds-dropdown__item.cpq-item-actions-dropdown__item")), "contains", "delete");
+					cc.obligarclick(driver.findElements(By.cssSelector(".slds-dropdown__item.cpq-item-actions-dropdown__item")).get(6));
 					sleep(5000);
 						try {
 							cc.obligarclick(driver.findElement(By.cssSelector(".slds-button.slds-button--destructive")));
 							sleep(20000);
 						}catch(Exception ex1) {}
 				}
-			buscarYClick(driver.findElements(By.cssSelector(".slds-button.slds-button_neutral")), "contains", "agregar");	
+			//cc.obligarclick(driver.findElement(By.cssSelector(".cpq-item-base-product")).findElements(By.tagName("div")).get(9).findElement(By.tagName("button")));
+			cc.obligarclick(driver.findElement(By.xpath("//*[@id='tab-default-2']/div[3]/div/div[3]/div/div/ng-include/div/div[2]/ng-include/div/div[9]/div/div[3]/div/div/ng-include/div/div[2]/ng-include/div/div[1]/div/div[2]/div[11]/button")));
+			sleep(5000);
+			buscarYClick(driver.findElements(By.cssSelector(".slds-button.slds-button--neutral.ng-binding.ng-scope")),"contains", "continue");
 			sleep(15000);
-			break;
+			boolean a = false;
+			List <WebElement> elem = driver.findElements(By.cssSelector(".slds-box.ng-scope"));
+			for(WebElement x : elem) {
+				if(x.getText().toLowerCase().contains("tu solicitud est\u00e1 siendo procesada.")) {
+					a = true;
+				}			
 			}
+			Assert.assertTrue(a);
+			sleep(5000);
+			String orden = cc.obtenerOrden(driver, "Suspensi\u00f3n de Linea");
+			sOrders.add("Suspension, orden numero: " + orden + ", DNI: " + sDNI);
+			//System.out.println(sOrders);
+		}
 		}
 	
 	@Test(groups = {"Sales", "PreparacionNominacion","E2E"}, dataProvider="DatosSalesNominacion") 
@@ -1240,7 +1254,7 @@ public class GestionesPerfilOficina extends TestBase {
 		Assert.assertTrue(cc.verificarOrden(orden));
 	}
 	
-	@Test (groups = {"Suspension", "GestionesPerfilOficina"}, dataProvider="CuentaSuspension")
+	@Test (groups = {"Suspension", "GestionesPerfilOficina","E2E"}, dataProvider="CuentaSuspension")
 	public void TS_98498_CRM_Movil_REPRO_Suspension_por_Fraude_Cuenta_de_facturacion_Comercial_Desconocimiento_Administrativo(String cDNI) {
 		driver.switchTo().frame(cambioFrame(driver, By.id("SearchClientDocumentType")));
 		sb.BuscarCuenta("DNI", cDNI);
@@ -1279,7 +1293,7 @@ public class GestionesPerfilOficina extends TestBase {
 		System.out.println(sOrders);	
 	}
 	
-	@Test (groups = {"Habilitacion", "GestionesPerfilOficina"}, dataProvider="CuentaHabilitacion")
+	@Test (groups = {"Habilitacion", "GestionesPerfilOficina","E2E"}, dataProvider="CuentaHabilitacion")
 	public void TS_98599_CRM_Movil_REPRO_Rehabilitacion_Administrativo_Fraude_DNI(String cDNI) {
 		driver.switchTo().frame(cambioFrame(driver, By.id("SearchClientDocumentType")));
 		sb.BuscarCuenta("DNI", cDNI);
@@ -1316,7 +1330,7 @@ public class GestionesPerfilOficina extends TestBase {
 		System.out.println(sOrders);	
 	}
 	
-	@Test (groups = {"Habilitacion", "GestionesPerfilOficina"}, dataProvider="CuentaHabilitacion")
+	@Test (groups = {"Habilitacion", "GestionesPerfilOficina","E2E"}, dataProvider="CuentaHabilitacion")
 	public void TS_98590_CRM_Movil_REPRO_Rehabilitacion_por_Siniestro_Presencial_Robo_Linea(String cDNI) {
 		driver.switchTo().frame(cambioFrame(driver, By.id("SearchClientDocumentType")));
 		sb.BuscarCuenta("DNI", cDNI);
@@ -1554,7 +1568,7 @@ public class GestionesPerfilOficina extends TestBase {
 		Assert.assertTrue(cc.verificarOrden(orden));
 	}
 	
-	@Test (groups = {"GestionesPerfilOficina","RenovacionCuota"}, dataProvider="RenovacionCuotaSinSaldo")
+	@Test (groups = {"GestionesPerfilOficina","RenovacionCuota","E2E"}, dataProvider="RenovacionCuotaSinSaldo")
 	public void TS135396_CRM_Movil_REPRO_Renovacion_de_cuota_Presencial_Internet_50_MB_Dia_Efectivo_sin_Credito(String sCuenta, String sDNI, String sLinea) {
 		//Check all
 		BasePage cambioFrameByID=new BasePage();
