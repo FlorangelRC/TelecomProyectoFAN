@@ -5,8 +5,8 @@
     <classes>
       <class name="Tests.GestionesPerfilOficina">
         <methods>
-          <include name="TS135707_CRM_Movil_PRE_Ajuste_Nota_de_Debito_FAN_Front_OOCC_Bariloche"/>
           <include name="init"/>
+          <include name="TS_104347_CRM_Movil_REPRO_Problemas_con_Recarga_Presencial_Tarjeta_Scratch_Caso_Nuevo_Quemada" invocation-numbers="0"/>
         </methods>
       </class> <!-- Tests.GestionesPerfilOficina -->
     </classes>
