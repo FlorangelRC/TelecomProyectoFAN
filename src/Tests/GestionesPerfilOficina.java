@@ -1295,7 +1295,7 @@ public class GestionesPerfilOficina extends TestBase {
 	}
 	
 	@Test (groups = {"Habilitacion", "GestionesPerfilOficina","E2E"}, dataProvider="CuentaHabilitacion")
-	public void TS_98599_CRM_Movil_REPRO_Rehabilitacion_Administrativo_Fraude_DNI(String cDNI) {
+	public void TS_98599_CRM_Movil_REPRO_Rehabilitacion_Administrativo_Fraude_Linea(String cDNI) {
 		driver.switchTo().frame(cambioFrame(driver, By.id("SearchClientDocumentType")));
 		sb.BuscarCuenta("DNI", cDNI);
 		driver.findElement(By.cssSelector(".slds-tree__item.ng-scope")).click();
@@ -1305,9 +1305,10 @@ public class GestionesPerfilOficina extends TestBase {
 		buscarYClick(driver.findElements(By.cssSelector(".slds-form-element__label.ng-binding.ng-scope")), "contains", "habilitaci\u00f3n");
 		driver.findElement(By.id("Step1SelectSuspensionOrReconnection_nextBtn")).click();
 		sleep(8000);
-		buscarYClick(driver.findElements(By.cssSelector(".slds-form-element__label.ng-binding.ng-scope")), "contains", "dni");
+		buscarYClick(driver.findElements(By.cssSelector(".slds-form-element__label.ng-binding.ng-scope")), "contains", "linea");
 		driver.findElement(By.id("Step2-SelectAssetOrDocument_nextBtn")).click();
 		sleep(8000);
+		buscarYClick(driver.findElements(By.cssSelector(".slds-form-element__label.ng-binding.ng-scope")), "contains", "nombre: ");
 		driver.findElement(By.id("Step3_nextBtn")).click();
 		sleep(8000);
 		driver.findElement(By.id("TxtComment")).sendKeys("Fraude");
@@ -1328,7 +1329,7 @@ public class GestionesPerfilOficina extends TestBase {
 		sleep(8000);
 		String orden = cc.obtenerOrden(driver, "Habilitaci\u00f3n administrativa");
 		sOrders.add("Rehabilitacion administrativa, orden numero: " + orden + " con numero de DNI: " + "35653982");
-		System.out.println(sOrders);	
+		System.out.println(sOrders);
 	}
 	
 	@Test (groups = {"Habilitacion", "GestionesPerfilOficina","E2E"}, dataProvider="CuentaHabilitacion")
@@ -1754,4 +1755,5 @@ public class GestionesPerfilOficina extends TestBase {
 		driver.switchTo().frame(cambioFrame(driver, By.id("Status_ilecell")));
 		Assert.assertTrue(driver.findElement(By.id("Status_ilecell")).getText().equalsIgnoreCase("activada"));
 	}
+	
 }	
