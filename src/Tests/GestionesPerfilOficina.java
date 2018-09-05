@@ -96,14 +96,14 @@ public class GestionesPerfilOficina extends TestBase {
 		sleep(25000);
 	}
 
-	//@AfterMethod(alwaysRun=true)
+	@AfterMethod(alwaysRun=true)
 	public void after() {
 		sleep(15000);
 		SalesBase sb = new SalesBase(driver);
 		sb.cerrarPestaniaGestion(driver);
 	}
 
-	//@AfterClass(alwaysRun=true)
+	@AfterClass(alwaysRun=true)
 	public void quit() throws IOException {
 		guardarListaTxt(sOrders);
 		//driver.quit();
@@ -1639,5 +1639,64 @@ public class GestionesPerfilOficina extends TestBase {
 		driver.findElement(By.id("Summary_nextBtn")).click();
 		sleep(8000);
 		//Ocurre un error de impacto en la recarga	
+	}
+	
+	@Test (groups = {"GestionesPerfilOficina", "Recargas","E2E"}, dataProvider = "RecargaTC")
+	public void TS134320_CRM_Movil_REPRO_Recargas_Presencial_TD_Ofcom(String sDNI, String sMonto, String sBanco, String sTarjeta, String sPromo, String sCuotas, String sNumTarjeta, String sVenceMes, String sVenceAno, String sCodSeg, String sTipoDNI, String sDNITarjeta, String sTitular, String sLinea) {
+		if(sMonto.length() >= 4) {
+			sMonto = sMonto.substring(0, sMonto.length()-1);
+		}
+		driver.switchTo().frame(cambioFrame(driver, By.id("SearchClientDocumentType")));
+		sb.BuscarCuenta("DNI", sDNI);
+		String sAccid = driver.findElement(By.cssSelector(".searchClient-body.slds-hint-parent.ng-scope")).findElements(By.tagName("td")).get(5).getText();
+		System.out.println("id "+ sAccid);
+		driver.findElement(By.cssSelector(".slds-tree__item.ng-scope")).click();
+		sleep(25000);
+		cc.seleccionarCardPornumeroLinea(sLinea, driver);
+		sleep(5000);
+		cc.irAGestionEnCard("Recarga de cr\u00e9dito");
+		sleep(15000);
+		driver.switchTo().frame(cambioFrame(driver, By.id("RefillAmount")));
+		driver.findElement(By.id("RefillAmount")).sendKeys(sMonto);
+		sleep(15000);
+		driver.findElement(By.id("AmountSelectionStep_nextBtn")).click();
+		sleep(15000);
+		driver.findElement(By.xpath("//*[@id=\"InvoicePreview_nextBtn\"]")).click();
+		sleep(15000);
+		buscarYClick(driver.findElements(By.cssSelector(".slds-form-element__label.ng-binding")), "equals", "tarjeta de debito");
+		sleep(20000);
+		driver.switchTo().frame(cambioFrame(driver, By.id("BankingEntity-0")));
+		selectByText(driver.findElement(By.id("BankingEntity-0")), sBanco);
+		sleep(5000);
+		selectByText(driver.findElement(By.id("CardBankingEntity-0")), sTarjeta);
+		sleep(5000);
+		selectByText(driver.findElement(By.id("promotionsByCardsBank-0")), sPromo);
+		sleep(5000);
+		selectByText(driver.findElement(By.id("Installment-0")), sCuotas);
+		sleep(5000);
+		driver.findElement(By.id("SelectPaymentMethodsStep_nextBtn")).click();
+		sleep(20000);
+		buscarYClick(driver.findElements(By.id("InvoicePreview_nextBtn")), "equals", "siguiente");
+		sleep(20000);
+		List <WebElement> wExis = driver.findElements(By.id("GeneralMessageDesing"));
+		boolean bAssert = false;
+		for(WebElement wAux : wExis) {
+			if(wAux.getText().toLowerCase().contains("la orden se realiz\u00f3 con \u00e9xito")) {
+				bAssert = true;
+			}
+			Assert.assertTrue(bAssert);
+		}
+		String sOrden = cc.obtenerOrdenMontoyTN(driver, "Recarga");
+		System.out.println("orden = " + sOrden);
+		sOrders.add("Recargas" + sOrden + ", cuenta:"+ sAccid +", DNI: " + sDNI + ", Monto:" + sOrden.split("-")[2]);
+		CBS_Mattu cInvoSer = new CBS_Mattu();
+		Assert.assertTrue(cInvoSer.PagoEnCaja("1006", sAccid , "4001", sOrden.split("-")[2], sOrden.split("-")[1]));
+		sleep(5000);
+		driver.navigate().refresh();
+		sleep(10000);
+		cc.obtenerOrdenMontoyTN(driver, "Recarga");
+		sleep(10000);
+		driver.switchTo().frame(cambioFrame(driver, By.id("Status_ilecell")));
+		Assert.assertTrue(driver.findElement(By.id("Status_ilecell")).getText().equalsIgnoreCase("activada"));
 	}
 }	
