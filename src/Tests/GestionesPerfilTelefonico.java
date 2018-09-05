@@ -3,6 +3,8 @@ package Tests;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+
+import org.junit.AfterClass;
 import org.openqa.selenium.By;
 import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.WebDriver;
@@ -14,6 +16,7 @@ import org.testng.annotations.Test;
 import Pages.Accounts;
 import Pages.BasePage;
 import Pages.CustomerCare;
+import Pages.Marketing;
 import Pages.SalesBase;
 import Pages.PagePerfilTelefonico;
 import Pages.setConexion;
@@ -341,8 +344,7 @@ public class GestionesPerfilTelefonico extends TestBase{
 	sleep(8000);
 	sale.BuscarCuenta("DNI", sDNI);
 	String accid = driver.findElement(By.cssSelector(".searchClient-body.slds-hint-parent.ng-scope")).findElements(By.tagName("td")).get(5).getText();
-	System.out.prin
-	tln("id "+accid);
+	System.out.println("id "+accid);
 	pagePTelefo.buscarAssert();
 	pagePTelefo.comprarPack("comprar internet");
 	pagePTelefo.PackCombinado(sventaPack);

@@ -1158,9 +1158,9 @@ public class TestBase {
 	 return (testObjArray);
 	}
 	@DataProvider
-	public Object[][] AltaLineaNuevoEquipo() throws Exception{
+	public Object[][] AltaLineaNuevoEquipoTC() throws Exception{
 
-	 Object[][] testObjArray = ExcelUtils.getTableArray("Cuentas.xlsx","PreparacionDatos",1,1,9,"Alta Linea Equip New AG");
+	 Object[][] testObjArray = ExcelUtils.getTableArray("Cuentas.xlsx","PreparacionDatos",1,1,22,"Alta Linea Equip New AG");
 
 	 return (testObjArray);
 
