@@ -20,6 +20,7 @@ import Pages.Accounts;
 import Pages.BasePage;
 import Pages.ContactSearch;
 import Pages.CustomerCare;
+import Pages.Marketing;
 import Pages.OM;
 import Pages.SalesBase;
 import Pages.setConexion;
@@ -923,7 +924,7 @@ public class GestionesPerfilOficina extends TestBase {
 	public void TS112435_CRM_Movil_PRE_Ajuste_Credito_SMS_FAN_Front_OOCC() {
 		boolean gest = false;
 		driver.switchTo().frame(cambioFrame(driver, By.id("SearchClientDocumentType")));
-		sb.BuscarCuenta("DNI", "16754923");
+		sb.BuscarCuenta("DNI", "15907314");
 		driver.findElement(By.cssSelector(".slds-tree__item.ng-scope")).click();
 		sleep(15000);
 		cc.irAGestion("inconvenientes");
@@ -958,7 +959,7 @@ public class GestionesPerfilOficina extends TestBase {
 		}
 		Assert.assertTrue(gest);
 		String orden = cc.obtenerOrden(driver, "Inconvenientes con cargos tasados y facturados");
-		sOrders.add("Inconvenientes con cargos tasados y facturados, numero de orden: " + orden + " de cuenta con DNI: " + "16754923");
+		sOrders.add("Inconvenientes con cargos tasados y facturados, numero de orden: " + orden + " de cuenta con DNI: " + "15907314");
 		Assert.assertTrue(cc.verificarOrden(orden));
 	}
 	
@@ -966,7 +967,7 @@ public class GestionesPerfilOficina extends TestBase {
 	public void TS103599_CRM_Movil_REPRO_Se_crea_caso_de_ajuste_menor_a_500_pesos_FAN_Front_OOCC() {
 		boolean gest = false;
 		driver.switchTo().frame(cambioFrame(driver, By.id("SearchClientDocumentType")));
-		sb.BuscarCuenta("DNI", "16754923");
+		sb.BuscarCuenta("DNI", "15907314");
 		driver.findElement(By.cssSelector(".slds-tree__item.ng-scope")).click();
 		sleep(20000);
 		cc.irAGestion("inconvenientes");
@@ -1001,7 +1002,7 @@ public class GestionesPerfilOficina extends TestBase {
 		}
 		Assert.assertTrue(gest);
 		String orden = cc.obtenerOrden(driver, "Inconvenientes con cargos tasados y facturados");
-		sOrders.add("Inconvenientes con cargos tasados y facturados, numero de orden: " + orden + " de cuenta con DNI: " + "16754923");
+		sOrders.add("Inconvenientes con cargos tasados y facturados, numero de orden: " + orden + " de cuenta con DNI: " + "15907314");
 		Assert.assertTrue(cc.verificarOrden(orden));
 	}
 	
@@ -1472,5 +1473,28 @@ public class GestionesPerfilOficina extends TestBase {
 		}
 		sleep(2000);
 		Assert.assertTrue(driver.findElement(By.cssSelector(".slds-form-element.vlc-flex.vlc-slds-text-block.vlc-slds-rte.ng-pristine.ng-valid.ng-scope")).findElement(By.className("ng-binding")).findElement(By.tagName("p")).getText().equalsIgnoreCase("saldo insuficiente"));
+	}
+	
+	@Test
+	public void TS112598_CRM_Movil_PRE_Pago_con_Tarjeta_de_debito_Reintegro_con_Efectivo_1000() {
+		driver.switchTo().frame(cambioFrame(driver, By.id("SearchClientDocumentType")));
+		sb.BuscarCuenta("DNI", "19006577");
+		driver.findElement(By.cssSelector(".slds-tree__item.ng-scope")).click();
+		sleep(15000);
+		Marketing mk = new Marketing(driver);
+		mk.closeActiveTab();
+		cc.irAFacturacion();
+		driver.switchTo().frame(cambioFrame(driver, By.className("card-top")));
+		//driver.findElement(By.cssSelector(".icon.icon-v-check-circle-line")).click();
+		List <WebElement> asd = driver.findElements(By.className("slds-text-body_regular"));
+		for (WebElement x : asd) {
+			if (x.getText().toLowerCase().contains("solicitud de reintegros")) {
+				x.click();
+			}
+			//System.out.println("esto es attr: " + asd.get(i).getAttribute("value"));
+		}
+		//WebElement card = driver.findElement(By.cssSelector(".console-card.active")).findElement(By.className("actions")).findElements(By.tagName("li")).get(4).click();
+		//buscarYClick(card.findElements(By.tagName("li")), "equals", "solicitud de reintegros");
+		
 	}
 }	
