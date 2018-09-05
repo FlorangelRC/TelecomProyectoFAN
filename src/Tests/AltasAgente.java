@@ -120,7 +120,10 @@ public class AltasAgente extends TestBase{
 	public void TS_CRM_Alta_de_Linea_Agente(String sDni, String sNombre, String sApellido, String sSexo, String sFNac, String sEmail, String sPlan, String sProvincia, String sLocalidad, String sCalle, String sNumCa, String sCP, String sEntrega, String sStoreProv, String sStoreLoc, String sTipoDelivery) throws IOException {
 		CustomerCare cc = new CustomerCare(driver);
 		SalesBase sb = new SalesBase(driver);
-		sb.Crear_Cliente(sDni);
+		sb.BtnCrearNuevoCliente();
+		sDni = driver.findElement(By.id("SearchClientDocumentNumber")).getAttribute("value");
+		
+		//sb.Crear_Cliente(sDni);
 		ContactSearch contact = new ContactSearch(driver);
 		contact.sex(sSexo);
 		contact.Llenar_Contacto(sNombre, sApellido, sFNac);
@@ -251,6 +254,8 @@ public class AltasAgente extends TestBase{
 		SalesBase sb = new SalesBase(driver);
 		sleep(5000);
 		sb.BtnCrearNuevoCliente();
+		String sDni = driver.findElement(By.id("SearchClientDocumentNumber")).getAttribute("value");
+		
 		ContactSearch contact = new ContactSearch(driver);
 		contact.sex(sSexo);
 		contact.Llenar_Contacto(sNombre, sApellido, sFNac);
@@ -340,7 +345,10 @@ public class AltasAgente extends TestBase{
 		CustomerCare cc = new CustomerCare(driver);
 		SalesBase sb = new SalesBase(driver);
 		sleep(5000);
-		sb.Crear_Cliente(sDni);
+		sb.BtnCrearNuevoCliente();
+		sDni = driver.findElement(By.id("SearchClientDocumentNumber")).getAttribute("value");
+		
+		//sb.Crear_Cliente(sDni);
 		ContactSearch contact = new ContactSearch(driver);
 		contact.sex(sSexo);
 		contact.Llenar_Contacto(sNombre, sApellido, sFNac);
@@ -412,7 +420,10 @@ public class AltasAgente extends TestBase{
 	public void TS135761_CRM_Movil_PRE_Alta_Linea_Cliente_Nuevo_Agente_TC_Presencial_DNI_Punta_Alta(String sDni, String sNombre, String sApellido, String sSexo, String sFNac, String sEmail, String sPlan, String sProvincia, String sLocalidad, String sCalle, String sNumCa, String sCP, String cBanco, String cTarjeta, String cPromo, String cCuotas, String cNumTarjeta, String cVenceMes, String cVenceAno, String cCodSeg) throws IOException {
 		CustomerCare cc = new CustomerCare(driver);
 		SalesBase sb = new SalesBase(driver);
-		sb.Crear_Cliente(sDni);
+		sb.BtnCrearNuevoCliente();
+		sDni = driver.findElement(By.id("SearchClientDocumentNumber")).getAttribute("value");
+		
+		//sb.Crear_Cliente(sDni);
 		ContactSearch contact = new ContactSearch(driver);
 		contact.sex(sSexo);
 		contact.Llenar_Contacto(sNombre, sApellido, sFNac);

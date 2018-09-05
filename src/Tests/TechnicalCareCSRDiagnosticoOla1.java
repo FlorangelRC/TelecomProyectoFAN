@@ -84,14 +84,14 @@ private WebDriver driver;
  	
 	}
  	 	
- 		@AfterMethod(alwaysRun=true)
+ 		//@AfterMethod(alwaysRun=true)
  		public void after() {
  			CustomerCare cerrar = new CustomerCare(driver);
  		    cerrar.cerrarultimapestana();
  		    sleep(2000);
  		}
  		
- 		@AfterClass(alwaysRun=true)
+ 		//@AfterClass(alwaysRun=true)
  		public void tearDown() {
  			try {Thread.sleep(1000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
  			CustomerCare cerrar = new CustomerCare(driver);
@@ -352,6 +352,7 @@ private WebDriver driver;
     tech.selectionInconvenient("No recibe de un número particular");
     tech.continuar();
     tech.seleccionarRespuesta("no");
+    page.seleccionarPreguntaFinal("Sí");
     tech.clickContinuar();
     sleep(3000);
     tech.categoriaRed("Desregistrar");
@@ -381,6 +382,8 @@ private WebDriver driver;
     tech.continuar();
     tech.seleccionarRespuesta("no");
     tech.clickContinuar();
+    page.seleccionarPreguntaFinal("Sí");
+    tech.clickContinuar();
     tech.categoriaRed("Desregistrar");
     tech.clickContinuar();
     assertTrue(tech.validarSpeech());
@@ -401,6 +404,7 @@ private WebDriver driver;
     tech.continuar();
     tech.seleccionarRespuesta("no");
     tech.clickContinuar();
+    page.seleccionarPreguntaFinal("Sí");
     tech.categoriaRed("Desregistrar");
     tech.clickContinuar();
     tech.speech();
@@ -466,7 +470,7 @@ private WebDriver driver;
     tech.selectionInconvenient("SMS Emisión a algún destino en particular");
     tech.continuar();
     sleep(5000);
-    tech.Verificacion_de_la_posicion_en_el_mapa("no", "Av. Cabildo", "No son las antenas", "Si", "Test-X Play", "Sí");
+    tech.Verificacion_de_la_posicion_en_el_mapa("no", "Sí", "Av. Cabildo", "No son las antenas", "Si", "Test-X Play", "Sí");
    assertTrue(tech.reclamo());
 
    

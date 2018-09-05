@@ -602,11 +602,13 @@ public class TechnicalCareCSRDiagnosticoPage extends BasePage{
 		}
 		
 	
-	public void Verificacion_de_la_posicion_en_el_mapa(String categoriaRed,String direccion, String catogoriaRed3, String catogoriaRed4, String Equipo, String catogoriaRed5) throws InterruptedException {
+	public void Verificacion_de_la_posicion_en_el_mapa(String categoriaRed,String saldo,String direccion, String catogoriaRed3, String catogoriaRed4, String Equipo, String catogoriaRed5) throws InterruptedException {
 			 // tech.verificarCaso();
+			TechCare_Ola1 page=new TechCare_Ola1(driver);
 		    seleccionarRespuesta(categoriaRed);
 		    clickContinuar();
 		    sleep(5000);
+		    page.seleccionarPreguntaFinal(saldo);
 		    clickContinuar();
 		    sleep(5000);
 		    buscarDireccion(direccion);

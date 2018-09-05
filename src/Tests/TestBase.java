@@ -1033,7 +1033,7 @@ public class TestBase {
 	@DataProvider
 	public Object [][] ventaPack() throws Exception{
 		
-		Object[][] testObjArray = ExcelUtils.getTableArray("Cuentas.xlsx","PerfilGestiones",1,1,3,"venta de pack");
+		Object[][] testObjArray = ExcelUtils.getTableArray("Cuentas.xlsx","PerfilGestiones",1,1,14,"venta de pack");
 		
 		return (testObjArray);
 	}
@@ -1059,7 +1059,7 @@ public class TestBase {
 	@DataProvider
 	public Object [][] CuentaProblemaRecarga() throws Exception{
 		
-		Object[][] testObjArray = ExcelUtils.getTableArray("Cuentas.xlsx","PerfilGestiones",1,1,1,"ProblemaRecarga");
+		Object[][] testObjArray = ExcelUtils.getTableArray("Cuentas.xlsx","PerfilGestiones",1,1,3,"ProblemaRecarga");
 		
 		return (testObjArray);
 	}
@@ -1160,7 +1160,7 @@ public class TestBase {
 	@DataProvider
 	public Object[][] AltaLineaNuevoEquipo() throws Exception{
 
-	 Object[][] testObjArray = ExcelUtils.getTableArray("Cuentas.xlsx","PerfilGestiones",1,1,9,"Alta Linea Equip New AG");
+	 Object[][] testObjArray = ExcelUtils.getTableArray("Cuentas.xlsx","PreparacionDatos",1,1,9,"Alta Linea Equip New AG");
 
 	 return (testObjArray);
 
@@ -1169,7 +1169,7 @@ public class TestBase {
 	@DataProvider
 	public Object[][] AltaLineaNuevoEquipoOfCom() throws Exception{
 
-	 Object[][] testObjArray = ExcelUtils.getTableArray("Cuentas.xlsx","PerfilGestiones",1,1,9,"Alta Linea Equipo New OfCom");
+	 Object[][] testObjArray = ExcelUtils.getTableArray("Cuentas.xlsx","PreparacionDatos",1,1,9,"Alta Linea Equipo New OfCom");
 
 	 return (testObjArray);
 
