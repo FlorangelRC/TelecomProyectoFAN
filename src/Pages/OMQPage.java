@@ -322,7 +322,7 @@ public class OMQPage extends BasePage {
 		 //subtablas
 		 List<String> packs= Arrays.asList(Pack1, Pack2, Pack3);
 		 List<WebElement> Pack = driver.findElements( By.xpath("//*[@class='cpq-item-product-child-level-3 ng-not-empty ng-valid']//*[@class='cpq-item-no-children']"));
-		 List<WebElement> Agregar= agregar;//driver.findElements(By.xpath("//*[@class='cpq-item-product-child-level-3 ng-not-empty ng-valid']//*[@class='slds-button slds-button_neutral']"));
+		 List<WebElement> Agregar= driver.findElements(By.xpath("//*[@class='cpq-item-product-child-level-3 ng-not-empty ng-valid']//*[@class='slds-button slds-button_neutral']"));
 		 if (Pack.size() == Agregar.size()) {
 				for (int i = 0; i < Pack.size(); i++) {
 					for (int j = 0; j < packs.size(); j++) {

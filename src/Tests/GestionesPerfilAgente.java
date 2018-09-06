@@ -27,6 +27,7 @@ public class GestionesPerfilAgente extends TestBase{
 
 	private WebDriver driver;
 	List <String> datosOrden =new ArrayList<String>();
+	String imagen;
 	
 	@BeforeClass(alwaysRun=true)
 	public void init() {
@@ -83,13 +84,16 @@ public class GestionesPerfilAgente extends TestBase{
 		sleep(14000);
 	}
 	
-	//@AfterMethod(alwaysRun=true)
-	public void after() {
+	@AfterMethod(alwaysRun=true)
+	public void after() throws IOException {
+		guardarListaTxt(datosOrden);
+		datosOrden.clear();
+		tomarCaptura(driver,imagen);
 		SalesBase sb = new SalesBase(driver);
-		sb.cerrarPestaniaGestion(driver);
+		//sb.cerrarPestaniaGestion(driver);
 	}
 	
-	@AfterClass(alwaysRun=true)
+	//@AfterClass(alwaysRun=true)
 	public void quit() throws IOException {
 		guardarListaTxt(datosOrden);
 		//driver.quit();
@@ -99,6 +103,7 @@ public class GestionesPerfilAgente extends TestBase{
 	@Test (groups = {"GestionesPerfilAgente","Recargas","E2E"}, dataProvider="RecargaTC")
 	public void TS134322_CRM_Movil_REPRO_Recargas_Presencial_TC_Agente(String sDNI, String sMonto, String sBanco, String sTarjeta, String sPromo, String sCuotas, String sNumTarjeta, String sVenceMes, String sVenceAno, String sCodSeg, String sTipoDNI, String sDNITarjeta, String sTitular, String sLinea) {
 		//Check All
+		imagen = "134322";
 		if(sMonto.length() >= 4) {
 			sMonto = sMonto.substring(0, sMonto.length()-1);
 		}
