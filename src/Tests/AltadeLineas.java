@@ -44,7 +44,7 @@ public class AltadeLineas extends TestBase {
 		//driver.manage().deleteAllCookies();
 		try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}		
 		SalesBase SB = new SalesBase(driver);
-		loginOfCom(driver);  
+		loginAgente(driver);  
 		CustomerCare cc = new CustomerCare(driver);
 		try {Thread.sleep(10000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}	
 		driver.findElement(By.id("tabBar")).findElement(By.tagName("a")).click();
@@ -1082,7 +1082,12 @@ public class AltadeLineas extends TestBase {
 		
 		sleep(14000);
 		driver.switchTo().frame(accountPage.getFrameForElement(driver, By.cssSelector(".slds-input.ng-pristine.ng-untouched.ng-valid.ng-empty")));
-		sb.elegirplan(sEquipo);
+		try {
+			driver.findElement(By.cssSelector(".slds-input.ng-pristine.ng-untouched.ng-valid")).sendKeys(sEquipo);	}
+		catch(Exception ex1) {driver.findElement(By.cssSelector(".slds-input.ng-pristine.ng-untouched.ng-valid.ng-empty")).sendKeys(sEquipo);}
+		try {Thread.sleep(20000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		List<WebElement> agregar = driver.findElements(By.cssSelector(".slds-button.slds-button_neutral.cpq-add-button")); 
+		agregar.get(0).click();
 		sb.continuar();
 		sleep(22000);
 		sb.Crear_DomicilioLegal(sProvincia, sLocalidad, sCalle, "", sAltura, "", "", sCPostal);
@@ -1161,6 +1166,47 @@ public class AltadeLineas extends TestBase {
 		sb.completarEntrega(orden, driver);
 		CambiarPerfil("agente",driver);
 	}	
+	
+	@Test(groups={"Sales", "AltaLineaDatos","E2E"}, priority=1, dataProvider="AltaLineaExisteEquipoOfComTD")
+	public void TS135810_CRM_Movil_Venta_Sin_Linea_Cliente_existente_Presencial_AG_TD(String sDni, String sEquipo, String cBanco, String cTarjeta, String cPromo, String cNumTarjeta, String cVenceMes, String cVenceAno, String cCodSeg) throws IOException {
+		CustomerCare cc = new CustomerCare(driver);
+		SalesBase sb = new SalesBase(driver);
+		sleep(5000);
+		sb.BuscarCuenta("DNI", sDni);
+		sleep(5000);
+		String accid = driver.findElement(By.cssSelector(".searchClient-body.slds-hint-parent.ng-scope")).findElements(By.tagName("td")).get(5).getText();
+		System.out.println("id "+accid);
+		List<WebElement> btns = driver.findElements(By.cssSelector(".slds-button.slds-button.slds-button--icon"));
+		for(WebElement e: btns){
+			if(e.getText().toLowerCase().equals("catalogo")){ 
+				e.click();
+				break;
+			}
+		}
+		sleep(20000);
+		try {
+			driver.findElement(By.cssSelector(".slds-input.ng-pristine.ng-untouched.ng-valid")).sendKeys(sEquipo);	}
+		catch(Exception ex1) {driver.findElement(By.cssSelector(".slds-input.ng-pristine.ng-untouched.ng-valid.ng-empty")).sendKeys(sEquipo);}
+		try {Thread.sleep(20000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		List<WebElement> agregar = driver.findElements(By.cssSelector(".slds-button.slds-button_neutral.cpq-add-button")); 
+		agregar.get(0).click();
+		sb.continuar();
+		sleep(22000);
+		cc.obligarclick(driver.findElement(By.id("InvoicePreview_nextBtn")));
+		sleep(10000);
+		cc.obligarclick(driver.findElement(By.id("InvoicePreview_nextBtn")));       
+		buscarYClick(driver.findElements(By.cssSelector(".slds-form-element__label.ng-binding")), "equals", "tarjeta de credito");
+		selectByText(driver.findElement(By.id("BankingEntity-0")), cBanco);
+		selectByText(driver.findElement(By.id("CardBankingEntity-0")), cTarjeta);
+		selectByText(driver.findElement(By.id("promotionsByCardsBank-0")), cPromo);
+		sleep(5000);
+		driver.findElement(By.id("CardNumber-0")).sendKeys(cNumTarjeta);
+		selectByText(driver.findElement(By.id("expirationMonth-0")), cVenceMes);
+		selectByText(driver.findElement(By.id("expirationYear-0")), cVenceAno);
+		driver.findElement(By.id("securityCode-0")).sendKeys(cCodSeg);
+		selectByText(driver.findElement(By.id("documentType-0")), "DNI");
+	}
+
 }
 
 

@@ -1191,4 +1191,22 @@ public class TestBase {
 	 return (testObjArray);
 
 	}
+	
+	@DataProvider
+	public Object[][] AltaLineaExistenteOfComTD() throws Exception{
+
+	 Object[][] testObjArray = ExcelUtils.getTableArray("Cuentas.xlsx","PreparacionDatos",1,1,9,"Alta Linea Existe OfCom Debito");
+
+	 return (testObjArray);
+
+	}
+	
+	@DataProvider
+	public Object[][] AltaLineaExisteEquipoOfComTD() throws Exception{
+
+	 Object[][] testObjArray = ExcelUtils.getTableArray("Cuentas.xlsx","PreparacionDatos",1,1,9,"Alta Linea Equipo Existe OfCom Debito");
+
+	 return (testObjArray);
+
+	}
 }
