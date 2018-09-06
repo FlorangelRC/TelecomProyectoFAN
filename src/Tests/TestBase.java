@@ -1049,9 +1049,17 @@ public class TestBase {
 	
 	
 	@DataProvider
-	public Object [][] CuentaAjustes() throws Exception {
+	public Object [][] CuentaAjustesPRE() throws Exception {
 		
-		Object[][] testObjArray = ExcelUtils.getTableArray("Cuentas.xlsx","PerfilGestiones",1,1,1,"Ajustes");
+		Object[][] testObjArray = ExcelUtils.getTableArray("Cuentas.xlsx","PerfilGestiones",1,1,1,"Ajustes PRE");
+		
+		return (testObjArray);
+	}
+	
+	@DataProvider
+	public Object [][] CuentaAjustesREPRO() throws Exception {
+		
+		Object[][] testObjArray = ExcelUtils.getTableArray("Cuentas.xlsx","PerfilGestiones",1,1,1,"Ajustes REPRO");
 		
 		return (testObjArray);
 	}

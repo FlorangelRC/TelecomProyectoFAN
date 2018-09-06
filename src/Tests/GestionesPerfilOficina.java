@@ -1605,27 +1605,41 @@ public class GestionesPerfilOficina extends TestBase {
 		Assert.assertTrue(driver.findElement(By.cssSelector(".slds-form-element.vlc-flex.vlc-slds-text-block.vlc-slds-rte.ng-pristine.ng-valid.ng-scope")).findElement(By.className("ng-binding")).findElement(By.tagName("p")).getText().equalsIgnoreCase("saldo insuficiente"));
 	}
 	
-	@Test
+	@Test (groups = {"GestionesPerfilOficina", "Reintegros", "E2E"})
 	public void TS112598_CRM_Movil_PRE_Pago_con_Tarjeta_de_debito_Reintegro_con_Efectivo_1000() {
+		Marketing mk = new Marketing(driver);
+		boolean gest = false;
 		driver.switchTo().frame(cambioFrame(driver, By.id("SearchClientDocumentType")));
 		sb.BuscarCuenta("DNI", "19006577");
 		driver.findElement(By.cssSelector(".slds-tree__item.ng-scope")).click();
 		sleep(15000);
-		Marketing mk = new Marketing(driver);
 		mk.closeActiveTab();
 		cc.irAFacturacion();
+		sleep(5000);
 		driver.switchTo().frame(cambioFrame(driver, By.className("card-top")));
-		//driver.findElement(By.cssSelector(".icon.icon-v-check-circle-line")).click();
-		List <WebElement> asd = driver.findElements(By.className("slds-text-body_regular"));
-		for (WebElement x : asd) {
-			if (x.getText().toLowerCase().contains("solicitud de reintegros")) {
-				x.click();
+		buscarYClick(driver.findElements(By.className("slds-text-body_regular")), "contains", "solicitud de reintegros");
+		sleep(15000);
+		driver.switchTo().frame(cambioFrame(driver, By.id("stepRefundData_nextBtn")));
+		buscarYClick(driver.findElements(By.cssSelector(".slds-form-element__label.ng-binding.ng-scope")), "contains", "tarjeta de d\u00e9bito");
+		selectByText(driver.findElement(By.id("selectReason")), "Pago duplicado");
+		driver.findElement(By.id("inputCurrencyAmount")).sendKeys("100000");
+		driver.findElement(By.id("stepRefundData_nextBtn")).click();
+		sleep(7000);
+		buscarYClick(driver.findElements(By.cssSelector(".slds-form-element__label.ng-binding")), "equals", "efectivo");
+		driver.findElement(By.id("stepRefundMethod_nextBtn")).click();
+		sleep(7000);
+		driver.findElement(By.id("Summary_nextBtn")).click();
+		sleep(10000);
+		List <WebElement> msj = driver.findElements(By.className("ta-care-omniscript-done"));
+		for (WebElement x : msj) {
+			if (x.getText().toLowerCase().contains("la gesti\u00f3n se deriv\u00f3 correctamente")) {
+				gest = true;
 			}
-			//System.out.println("esto es attr: " + asd.get(i).getAttribute("value"));
 		}
-		//WebElement card = driver.findElement(By.cssSelector(".console-card.active")).findElement(By.className("actions")).findElements(By.tagName("li")).get(4).click();
-		//buscarYClick(card.findElements(By.tagName("li")), "equals", "solicitud de reintegros");
-		
+		Assert.assertTrue(gest);
+		String orden = cc.obtenerOrden(driver, "Solicitud de Reintegros");
+		sOrders.add("Solicitud de Reintegros, numero de orden: " + orden + " de cuenta con DNI: " + "19006577");
+		Assert.assertTrue(cc.verificarOrden(orden));
 	}
 	
 	@Test (groups = {"ProblemaRecarga", "GestionesPerfilOficina"}, dataProvider="CuentaProblemaRecarga") //Ocurre un error de impacto en la recarga
@@ -1694,5 +1708,170 @@ public class GestionesPerfilOficina extends TestBase {
 			}
 		}
 		Assert.assertTrue(b);
+	}
+	
+	@Test (groups = {"GestionesPerfilOficina", "Reintegros", "E2E"})
+	public void TS112597_CRM_Movil_PRE_Pago_con_Tarjeta_de_debito_Reintegro_con_Efectivo_Menos_de_1000() {
+		Marketing mk = new Marketing(driver);
+		boolean gest = false;
+		driver.switchTo().frame(cambioFrame(driver, By.id("SearchClientDocumentType")));
+		sb.BuscarCuenta("DNI", "19006577");
+		driver.findElement(By.cssSelector(".slds-tree__item.ng-scope")).click();
+		sleep(15000);
+		mk.closeActiveTab();
+		cc.irAFacturacion();
+		sleep(5000);
+		driver.switchTo().frame(cambioFrame(driver, By.className("card-top")));
+		buscarYClick(driver.findElements(By.className("slds-text-body_regular")), "contains", "solicitud de reintegros");
+		sleep(15000);
+		driver.switchTo().frame(cambioFrame(driver, By.id("stepRefundData_nextBtn")));
+		buscarYClick(driver.findElements(By.cssSelector(".slds-form-element__label.ng-binding.ng-scope")), "contains", "tarjeta de d\u00e9bito");
+		selectByText(driver.findElement(By.id("selectReason")), "Pago duplicado");
+		driver.findElement(By.id("inputCurrencyAmount")).sendKeys("90000");
+		driver.findElement(By.id("stepRefundData_nextBtn")).click();
+		sleep(7000);
+		buscarYClick(driver.findElements(By.cssSelector(".slds-form-element__label.ng-binding")), "equals", "efectivo");
+		driver.findElement(By.id("stepRefundMethod_nextBtn")).click();
+		sleep(7000);
+		driver.findElement(By.id("Summary_nextBtn")).click();
+		sleep(10000);
+		List <WebElement> msj = driver.findElements(By.className("ta-care-omniscript-done"));
+		for (WebElement x : msj) {
+			if (x.getText().toLowerCase().contains("la gesti\u00f3n se deriv\u00f3 correctamente")) {
+				gest = true;
+			}
+		}
+		Assert.assertTrue(gest);
+		String orden = cc.obtenerOrden(driver, "Solicitud de Reintegros");
+		sOrders.add("Solicitud de Reintegros, numero de orden: " + orden + " de cuenta con DNI: " + "19006577");
+		Assert.assertTrue(cc.verificarOrden(orden));
+	}
+	
+	@Test (groups = {"GestionesPerfilOficina", "TriviasYSuscripciones", "E2E"})
+	public void TS119032_CRM_Movil_REPRO_Suscripciones_Baja_de_suscripciones_sin_BlackList_Presencial() {
+		boolean gest = false;
+		driver.switchTo().frame(cambioFrame(driver, By.id("SearchClientDocumentType")));
+		sb.BuscarCuenta("DNI", "59885133");
+		driver.findElement(By.cssSelector(".slds-tree__item.ng-scope")).click();
+		sleep(15000);
+		driver.switchTo().frame(cambioFrame(driver, By.className("card-top")));
+		driver.findElement(By.className("card-top")).click();
+		sleep(3000);
+		cc.irAGestionEnCard("Suscripciones");
+		sleep(5000);
+		driver.switchTo().frame(cambioFrame(driver, By.cssSelector(".slds-button.slds-button--brand")));
+		driver.findElement(By.cssSelector(".addedValueServices-row.ng-pristine.ng-untouched.ng-valid.ng-empty")).findElement(By.className("slds-checkbox")).click();
+		driver.findElements(By.cssSelector(".slds-button.slds-button--brand")).get(1).click();
+		sleep(7000);
+		driver.switchTo().frame(cambioFrame(driver, By.id("UnsubscriptionOptions_nextBtn")));
+		buscarYClick(driver.findElements(By.cssSelector(".slds-form-element__label.ng-binding.ng-scope")), "equals", "nunca me suscrib\u00ed");
+		buscarYClick(driver.findElements(By.cssSelector(".slds-form-element__label.ng-binding.ng-scope")), "equals", "no");
+		driver.findElement(By.id("UnsubscriptionOptions_nextBtn")).click();
+		sleep(10000);
+		try {
+			driver.switchTo().frame(cambioFrame(driver, By.cssSelector(".slds-button.slds-button--neutral.ng-binding.ng-scope")));
+			driver.findElements(By.cssSelector(".slds-button.slds-button--neutral.ng-binding.ng-scope")).get(1).click();
+		} catch (Exception e) {}
+		sleep(10000);
+		driver.findElement(By.id("UnsubscriptionSummary_nextBtn")).click();
+		sleep(10000);
+		List <WebElement> msj = driver.findElements(By.cssSelector(".slds-form-element.vlc-flex.vlc-slds-text-block.vlc-slds-rte.ng-pristine.ng-valid.ng-scope"));
+		for (WebElement x : msj) {
+			if (x.getText().toLowerCase().contains("tu caso se resolvi\u00f3 con \u00e9xito")) {
+				gest = true;
+			}
+		}
+		Assert.assertTrue(gest);
+	}
+	
+	@Test (groups = {"GestionesPerfilOficina", "TriviasYSuscripciones", "E2E"})
+	public void TS110893_CRM_Movil_REPRO_Suscripciones_Baja_de_una_suscripcion_con_BlackList_con_ajuste_Presencial() {
+		boolean gest = false;
+		WebElement blackList = null;
+		driver.switchTo().frame(cambioFrame(driver, By.id("SearchClientDocumentType")));
+		sb.BuscarCuenta("DNI", "59885133");
+		driver.findElement(By.cssSelector(".slds-tree__item.ng-scope")).click();
+		sleep(15000);
+		driver.switchTo().frame(cambioFrame(driver, By.className("card-top")));
+		driver.findElement(By.className("card-top")).click();
+		sleep(3000);
+		cc.irAGestionEnCard("Suscripciones");
+		sleep(5000);
+		driver.switchTo().frame(cambioFrame(driver, By.cssSelector(".slds-button.slds-button--brand")));
+		driver.findElement(By.cssSelector(".addedValueServices-row.ng-pristine.ng-untouched.ng-valid.ng-empty")).findElement(By.className("slds-checkbox")).click();
+		driver.findElements(By.cssSelector(".slds-button.slds-button--brand")).get(1).click();
+		sleep(7000);
+		driver.switchTo().frame(cambioFrame(driver, By.id("UnsubscriptionOptions_nextBtn")));
+		buscarYClick(driver.findElements(By.cssSelector(".slds-form-element__label.ng-binding.ng-scope")), "equals", "nunca me suscrib\u00ed");
+		buscarYClick(driver.findElements(By.cssSelector(".slds-form-element__label.ng-binding.ng-scope")), "equals", "s\u00ed");
+		List <WebElement> bl = driver.findElements(By.className("slds-form-element__control"));
+		for (WebElement x : bl) {
+			if (x.getText().toLowerCase().contains("quer\u00e9s agregar al cliente a la blacklist")) {
+				blackList = x;
+			}
+		}
+		buscarYClick(blackList.findElements(By.cssSelector(".slds-form-element__label.ng-binding.ng-scope")), "equals", "s\u00ed");
+		driver.findElement(By.id("UnsubscriptionOptions_nextBtn")).click();
+		sleep(10000);
+		try {
+			driver.switchTo().frame(cambioFrame(driver, By.cssSelector(".slds-button.slds-button--neutral.ng-binding.ng-scope")));
+			driver.findElements(By.cssSelector(".slds-button.slds-button--neutral.ng-binding.ng-scope")).get(1).click();
+		} catch (Exception e) {}
+		sleep(10000);
+		driver.findElement(By.id("UnsubscriptionSummary_nextBtn")).click();
+		sleep(10000);
+		List <WebElement> msj = driver.findElements(By.cssSelector(".slds-form-element.vlc-flex.vlc-slds-text-block.vlc-slds-rte.ng-pristine.ng-valid.ng-scope"));
+		for (WebElement x : msj) {
+			if (x.getText().toLowerCase().contains("tu caso se resolvi\u00f3 con \u00e9xito")) {
+				gest = true;
+			}
+		}
+		Assert.assertTrue(gest);
+	}
+	
+	@Test (groups = {"GestionesPerfilOficina", "TriviasYSuscripciones", "E2E"})
+	public void TS110877_CRM_Movil_REPRO_Suscripciones_Baja_de_una_suscripcion_sin_BlackList_con_ajuste_Presencial() {
+		boolean gest = false;
+		WebElement blackList = null;
+		driver.switchTo().frame(cambioFrame(driver, By.id("SearchClientDocumentType")));
+		sb.BuscarCuenta("DNI", "59885133");
+		driver.findElement(By.cssSelector(".slds-tree__item.ng-scope")).click();
+		sleep(15000);
+		driver.switchTo().frame(cambioFrame(driver, By.className("card-top")));
+		driver.findElement(By.className("card-top")).click();
+		sleep(3000);
+		cc.irAGestionEnCard("Suscripciones");
+		sleep(5000);
+		driver.switchTo().frame(cambioFrame(driver, By.cssSelector(".slds-button.slds-button--brand")));
+		driver.findElement(By.cssSelector(".addedValueServices-row.ng-pristine.ng-untouched.ng-valid.ng-empty")).findElement(By.className("slds-checkbox")).click();
+		driver.findElements(By.cssSelector(".slds-button.slds-button--brand")).get(1).click();
+		sleep(7000);
+		driver.switchTo().frame(cambioFrame(driver, By.id("UnsubscriptionOptions_nextBtn")));
+		buscarYClick(driver.findElements(By.cssSelector(".slds-form-element__label.ng-binding.ng-scope")), "equals", "nunca me suscrib\u00ed");
+		buscarYClick(driver.findElements(By.cssSelector(".slds-form-element__label.ng-binding.ng-scope")), "equals", "s\u00ed");
+		List <WebElement> bl = driver.findElements(By.className("slds-form-element__control"));
+		for (WebElement x : bl) {
+			if (x.getText().toLowerCase().contains("quer\u00e9s agregar al cliente a la blacklist")) {
+				blackList = x;
+			}
+		}
+		buscarYClick(blackList.findElements(By.cssSelector(".slds-form-element__label.ng-binding.ng-scope")), "equals", "no");
+		driver.findElement(By.id("UnsubscriptionOptions_nextBtn")).click();
+		sleep(10000);
+		try {
+			driver.switchTo().frame(cambioFrame(driver, By.cssSelector(".slds-button.slds-button--neutral.ng-binding.ng-scope")));
+			driver.findElements(By.cssSelector(".slds-button.slds-button--neutral.ng-binding.ng-scope")).get(1).click();
+		} catch (Exception e) {}
+		sleep(10000);
+		driver.switchTo().frame(cambioFrame(driver, By.id("UnsubscriptionSummary_nextBtn")));
+		driver.findElement(By.id("UnsubscriptionSummary_nextBtn")).click();
+		sleep(10000);
+		List <WebElement> msj = driver.findElements(By.cssSelector(".slds-form-element.vlc-flex.vlc-slds-text-block.vlc-slds-rte.ng-pristine.ng-valid.ng-scope"));
+		for (WebElement x : msj) {
+			if (x.getText().toLowerCase().contains("tu caso se resolvi\u00f3 con \u00e9xito")) {
+				gest = true;
+			}
+		}
+		Assert.assertTrue(gest);
 	}
 }	
