@@ -464,7 +464,7 @@ public class GestionesPerfilOficina extends TestBase {
 			//cc.obligarclick(driver.findElement(By.cssSelector(".cpq-item-base-product")).findElements(By.tagName("div")).get(9).findElement(By.tagName("button")));
 			cc.obligarclick(driver.findElement(By.xpath("//*[@id='tab-default-2']/div[3]/div/div[3]/div/div/ng-include/div/div[2]/ng-include/div/div[9]/div/div[3]/div/div/ng-include/div/div[2]/ng-include/div/div[1]/div/div[2]/div[11]/button")));
 			sleep(5000);
-			buscarYClick(driver.findElements(By.cssSelector(".slds-button.slds-button--neutral.ng-binding.ng-scope")),"contains", "continue");
+			buscarYClick(driver.findElements(By.cssSelector(".slds-button.slds-m-left--large.slds-button--brand.ta-button-brand")),"contains", "continuar");
 			sleep(15000);
 			boolean a = false;
 			List <WebElement> elem = driver.findElements(By.cssSelector(".slds-box.ng-scope"));

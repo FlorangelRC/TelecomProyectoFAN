@@ -660,24 +660,26 @@ public class AltadeLineas extends TestBase {
 		sleep(12000);
 		driver.findElement(By.cssSelector(".slds-input.ng-valid.ng-not-empty.ng-dirty.ng-valid-parse.ng-touched")).clear();
 		sleep(3000);
-		driver.findElement(By.cssSelector(".slds-input.ng-valid.ng-dirty.ng-valid-parse.ng-touched.ng-empty")).sendKeys("Galaxy S8 - Negro");
+		driver.findElement(By.cssSelector(".slds-input.ng-valid.ng-dirty.ng-valid-parse.ng-touched.ng-empty")).sendKeys("Galaxy S8+ - Negro");
 		sleep(13000);
 		List<WebElement> acept = driver.findElements(By.cssSelector(".slds-button.slds-button_neutral.cpq-add-button"));
 			for(WebElement a : acept){
 				System.out.println(a.getText());
 				if(a.getText().equals("Agregar")){
 					cc.obligarclick(a);
+					break;
 				}
 			}
 		sleep(5000);	
 		sb.continuar();
-		sleep(24000);
-		cc.obligarclick(driver.findElement(By.id("LineAssignment_nextBtn")));
+		sleep(14000);
+		cc.obligarclick(driver.findElement(By.id("InvoicePreview_nextBtn")));
+		sleep(12000);
+		/*cc.obligarclick(driver.findElement(By.id("LineAssignment_nextBtn")));
 		sleep(15000);
 		cc.obligarclick(driver.findElement(By.id("ICCDAssignment_nextBtn")));
-		sleep(12000);
-		cc.obligarclick(driver.findElement(By.id("InvoicePreview_nextBtn")));
-		sleep(20000);
+		
+		sleep(20000);*/
 		List<WebElement> medpag = driver.findElements(By.cssSelector(".slds-radio.ng-scope"));
 			for(WebElement m :medpag){
 				if(m.getText().equals("Efectivo")){
@@ -1192,9 +1194,10 @@ public class AltadeLineas extends TestBase {
 		agregar.get(0).click();
 		sb.continuar();
 		sleep(22000);
-		cc.obligarclick(driver.findElement(By.id("InvoicePreview_nextBtn")));
+		cc.obligarclick(driver.findElement(By.id("ICCDAssignment_nextBtn")));
 		sleep(10000);
 		cc.obligarclick(driver.findElement(By.id("InvoicePreview_nextBtn")));       
+		// ===================     QUEDA ACA    ==================================
 		buscarYClick(driver.findElements(By.cssSelector(".slds-form-element__label.ng-binding")), "equals", "tarjeta de credito");
 		selectByText(driver.findElement(By.id("BankingEntity-0")), cBanco);
 		selectByText(driver.findElement(By.id("CardBankingEntity-0")), cTarjeta);
@@ -1206,7 +1209,6 @@ public class AltadeLineas extends TestBase {
 		driver.findElement(By.id("securityCode-0")).sendKeys(cCodSeg);
 		selectByText(driver.findElement(By.id("documentType-0")), "DNI");
 	}
-
 }
 
 
