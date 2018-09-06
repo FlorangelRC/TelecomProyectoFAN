@@ -1,43 +1,33 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<testng-results skipped="0" failed="0" ignored="35" total="36" passed="1">
+<testng-results skipped="0" failed="0" ignored="25" total="26" passed="1">
   <reporter-output>
   </reporter-output>
-  <suite name="Default suite" duration-ms="599397" started-at="2018-09-03T18:25:38Z" finished-at="2018-09-03T18:35:37Z">
+  <suite name="Default suite" duration-ms="668702" started-at="2018-08-29T15:47:59Z" finished-at="2018-08-29T15:59:08Z">
     <groups>
-      <group name="ProblemaRecarga">
-        <method signature="GestionesPerfilOficina.TS_104347_CRM_Movil_REPRO_Problemas_con_Recarga_Presencial_Tarjeta_Scratch_Caso_Nuevo_Quemada(java.lang.String, java.lang.String, java.lang.String)[pri:0, instance:Tests.GestionesPerfilOficina@43bd930a]" name="TS_104347_CRM_Movil_REPRO_Problemas_con_Recarga_Presencial_Tarjeta_Scratch_Caso_Nuevo_Quemada" class="Tests.GestionesPerfilOficina"/>
-      </group> <!-- ProblemaRecarga -->
       <group name="GestionesPerfilOficina">
-        <method signature="GestionesPerfilOficina.TS_104347_CRM_Movil_REPRO_Problemas_con_Recarga_Presencial_Tarjeta_Scratch_Caso_Nuevo_Quemada(java.lang.String, java.lang.String, java.lang.String)[pri:0, instance:Tests.GestionesPerfilOficina@43bd930a]" name="TS_104347_CRM_Movil_REPRO_Problemas_con_Recarga_Presencial_Tarjeta_Scratch_Caso_Nuevo_Quemada" class="Tests.GestionesPerfilOficina"/>
+        <method signature="GestionesPerfilOficina.TS_98599_CRM_Movil_REPRO_Rehabilitacion_Administrativo_Fraude_DNI(java.lang.String)[pri:0, instance:Tests.GestionesPerfilOficina@43bd930a]" name="TS_98599_CRM_Movil_REPRO_Rehabilitacion_Administrativo_Fraude_DNI" class="Tests.GestionesPerfilOficina"/>
       </group> <!-- GestionesPerfilOficina -->
+      <group name="Habilitacion">
+        <method signature="GestionesPerfilOficina.TS_98599_CRM_Movil_REPRO_Rehabilitacion_Administrativo_Fraude_DNI(java.lang.String)[pri:0, instance:Tests.GestionesPerfilOficina@43bd930a]" name="TS_98599_CRM_Movil_REPRO_Rehabilitacion_Administrativo_Fraude_DNI" class="Tests.GestionesPerfilOficina"/>
+      </group> <!-- Habilitacion -->
     </groups>
-    <test name="Default test" duration-ms="599397" started-at="2018-09-03T18:25:38Z" finished-at="2018-09-03T18:35:37Z">
+    <test name="Default test" duration-ms="668702" started-at="2018-08-29T15:47:59Z" finished-at="2018-08-29T15:59:08Z">
       <class name="Tests.GestionesPerfilOficina">
-        <test-method status="PASS" signature="init()[pri:0, instance:Tests.GestionesPerfilOficina@43bd930a]" name="init" is-config="true" duration-ms="475712" started-at="2018-09-03T18:25:38Z" finished-at="2018-09-03T18:33:34Z">
+        <test-method status="PASS" signature="init()[pri:0, instance:Tests.GestionesPerfilOficina@43bd930a]" name="init" is-config="true" duration-ms="389250" started-at="2018-08-29T15:47:59Z" finished-at="2018-08-29T15:54:28Z">
           <reporter-output>
           </reporter-output>
         </test-method> <!-- init -->
-        <test-method status="PASS" signature="TS_104347_CRM_Movil_REPRO_Problemas_con_Recarga_Presencial_Tarjeta_Scratch_Caso_Nuevo_Quemada(java.lang.String, java.lang.String, java.lang.String)[pri:0, instance:Tests.GestionesPerfilOficina@43bd930a]" name="TS_104347_CRM_Movil_REPRO_Problemas_con_Recarga_Presencial_Tarjeta_Scratch_Caso_Nuevo_Quemada" duration-ms="122954" started-at="2018-09-03T18:33:34Z" data-provider="CuentaProblemaRecarga" finished-at="2018-09-03T18:35:37Z">
+        <test-method status="PASS" signature="TS_98599_CRM_Movil_REPRO_Rehabilitacion_Administrativo_Fraude_DNI(java.lang.String)[pri:0, instance:Tests.GestionesPerfilOficina@43bd930a]" name="TS_98599_CRM_Movil_REPRO_Rehabilitacion_Administrativo_Fraude_DNI" duration-ms="278724" started-at="2018-08-29T15:54:29Z" data-provider="CuentaHabilitacion" finished-at="2018-08-29T15:59:08Z">
           <params>
             <param index="0">
               <value>
-                <![CDATA[5555555]]>
-              </value>
-            </param>
-            <param index="1">
-              <value>
-                <![CDATA[11120000000212]]>
-              </value>
-            </param>
-            <param index="2">
-              <value>
-                <![CDATA[0818]]>
+                <![CDATA[35653982]]>
               </value>
             </param>
           </params>
           <reporter-output>
           </reporter-output>
-        </test-method> <!-- TS_104347_CRM_Movil_REPRO_Problemas_con_Recarga_Presencial_Tarjeta_Scratch_Caso_Nuevo_Quemada -->
+        </test-method> <!-- TS_98599_CRM_Movil_REPRO_Rehabilitacion_Administrativo_Fraude_DNI -->
       </class> <!-- Tests.GestionesPerfilOficina -->
     </test> <!-- Default test -->
   </suite> <!-- Default suite -->

@@ -47,5 +47,18 @@
 	<classpathentry kind="lib" path="lib/xercesImpl-2.11.0.jar"/>
 	<classpathentry kind="lib" path="lib/xml-apis-1.4.01.jar"/>
 	<classpathentry kind="lib" path="lib/xmlbeans-2.6.0.jar"/>
+	<classpathentry kind="lib" path="C:/Xappia/lib/commons-codec-1.10.jar"/>
+	<classpathentry kind="lib" path="C:/Xappia/lib/commons-collections4-4.1.jar"/>
+	<classpathentry kind="lib" path="C:/Xappia/lib/commons-logging-1.2.jar"/>
+	<classpathentry kind="lib" path="C:/Xappia/lib/curvesapi-1.04.jar"/>
+	<classpathentry kind="lib" path="C:/Xappia/lib/junit-4.12.jar"/>
+	<classpathentry kind="lib" path="C:/Xappia/lib/log4j-1.2.17.jar"/>
+	<classpathentry kind="lib" path="C:/Xappia/lib/poi-3.17.jar"/>
+	<classpathentry kind="lib" path="C:/Xappia/lib/poi-examples-3.17.jar"/>
+	<classpathentry kind="lib" path="C:/Xappia/lib/poi-excelant-3.17.jar"/>
+	<classpathentry kind="lib" path="C:/Xappia/lib/poi-ooxml-3.17.jar"/>
+	<classpathentry kind="lib" path="C:/Xappia/lib/poi-ooxml-schemas-3.17.jar"/>
+	<classpathentry kind="lib" path="C:/Xappia/lib/poi-scratchpad-3.17.jar"/>
+	<classpathentry kind="lib" path="C:/Xappia/lib/xmlbeans-2.6.0.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

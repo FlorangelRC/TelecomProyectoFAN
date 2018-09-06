@@ -5,8 +5,8 @@
     <classes>
       <class name="Tests.GestionesPerfilOficina">
         <methods>
+          <include name="TS_98599_CRM_Movil_REPRO_Rehabilitacion_Administrativo_Fraude_DNI"/>
           <include name="init"/>
-          <include name="TS_104347_CRM_Movil_REPRO_Problemas_con_Recarga_Presencial_Tarjeta_Scratch_Caso_Nuevo_Quemada" invocation-numbers="0"/>
         </methods>
       </class> <!-- Tests.GestionesPerfilOficina -->
     </classes>
