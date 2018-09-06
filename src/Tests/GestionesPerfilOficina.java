@@ -1756,4 +1756,75 @@ public class GestionesPerfilOficina extends TestBase {
 		Assert.assertTrue(driver.findElement(By.id("Status_ilecell")).getText().equalsIgnoreCase("activada"));
 	}
 	
+	@Test (groups = {"Suspension", "GestionesPerfilOficina","E2E"}, dataProvider="CuentaSuspension") //No se puede visualizar en el panel izquierdo el numero de orden en UAT y no se suspende la cuenta; y en SIT no existe la opción de DNI/CUIT
+	public void TS_98484_CRM_Movil_REPRO_Suspension_por_Fraude_DNI_CUIT_Comercial_Fraude_por_suscripcion_Administrativo(String cDNI) {
+	driver.switchTo().frame(cambioFrame(driver, By.id("SearchClientDocumentType")));
+	sb.BuscarCuenta("DNI", cDNI);
+	driver.findElement(By.cssSelector(".slds-tree__item.ng-scope")).click();
+	sleep(5000);
+	cc.irAGestion("suspensiones y reconexion back");
+	sleep(15000);
+	driver.switchTo().frame(cambioFrame(driver, By.id("Step1SelectSuspensionOrReconnection_nextBtn")));
+	buscarYClick(driver.findElements(By.cssSelector(".slds-form-element__label.ng-binding.ng-scope")), "contains", "suspensi\u00f3n");
+	driver.findElement(By.id("Step1SelectSuspensionOrReconnection_nextBtn")).click();
+	sleep(10000);
+	buscarYClick(driver.findElements(By.cssSelector(".slds-form-element__label.ng-binding.ng-scope")), "contains", "dni/cuit");
+	driver.findElement(By.id("Step2-SelectAssetOrDocument_nextBtn")).click();
+	sleep(10000);
+	driver.findElement(By.id("Step3_nextBtn")).click();
+	sleep(8000);
+	selectByText(driver.findElement(By.id("SelectFraud")),"Comercial");
+	selectByText(driver.findElement(By.id("SelectSubFraud")),"Administrativo por suscripci\u00f3n");
+	driver.findElement(By.id("TxtComment")).sendKeys("Fraude");
+	driver.findElement(By.id("Step4_nextBtn")).click();
+	sleep(8000);
+	driver.findElement(By.id("StepSummary_nextBtn")).click();
+	sleep(8000);
+	buscarYClick(driver.findElements(By.cssSelector(".slds-button.slds-button--neutral.ng-binding.ng-scope")),"contains", "continue");
+	boolean a = false;
+	List <WebElement> realiz = driver.findElements(By.cssSelector(".slds-box.ng-scope"));
+	for(WebElement x : realiz) {
+		if(x.getText().toLowerCase().contains("tu gesti\u00f3n se realiz\u00f3 con \u00e9xito")) {
+			a = true;
+		}
+	}
+	Assert.assertTrue(a);
+}
+	
+	@Test (groups = {"Suspension", "GestionesPerfilOficina","E2E"}, dataProvider="CuentaSuspension")//No se puede visualizar en el panel izquierdo el numero de orden en UAT y no se suspende la cuenta
+	public void CRM_Movil_REPRO_Suspension_por_Fraude_Linea_Comercial_Desconocimiento_Administrativo(String cDNI) {
+		driver.switchTo().frame(cambioFrame(driver, By.id("SearchClientDocumentType")));
+		sb.BuscarCuenta("DNI", cDNI);
+		driver.findElement(By.cssSelector(".slds-tree__item.ng-scope")).click();
+		sleep(5000);
+		cc.irAGestion("suspensiones y reconexion back");
+		sleep(15000);
+		driver.switchTo().frame(cambioFrame(driver, By.id("Step1SelectSuspensionOrReconnection_nextBtn")));
+		buscarYClick(driver.findElements(By.cssSelector(".slds-form-element__label.ng-binding.ng-scope")), "contains", "suspensi\u00f3n");
+		driver.findElement(By.id("Step1SelectSuspensionOrReconnection_nextBtn")).click();
+		sleep(10000);
+		buscarYClick(driver.findElements(By.cssSelector(".slds-form-element__label.ng-binding.ng-scope")), "contains", "linea");
+		driver.findElement(By.id("Step2-SelectAssetOrDocument_nextBtn")).click();
+		sleep(8000);
+		buscarYClick(driver.findElements(By.cssSelector(".slds-form-element__label.ng-binding.ng-scope")),"contains", "nombre: ");
+		driver.findElement(By.id("Step3_nextBtn")).click();
+		sleep(8000);
+		selectByText(driver.findElement(By.id("SelectFraud")),"Comercial");
+		selectByText(driver.findElement(By.id("SelectSubFraud")),"Desconocimiento");
+		driver.findElement(By.id("TxtComment")).sendKeys("Fraude");
+		driver.findElement(By.id("Step4_nextBtn")).click();
+		sleep(8000);
+		driver.findElement(By.id("StepSummary_nextBtn")).click();
+		sleep(8000);
+		buscarYClick(driver.findElements(By.cssSelector(".slds-button.slds-button--neutral.ng-binding.ng-scope")),"contains", "continue");
+		sleep(15000);
+		boolean a = false;
+		List <WebElement> realiz = driver.findElements(By.cssSelector(".slds-box.ng-scope"));
+		for(WebElement x : realiz) {
+			if(x.getText().toLowerCase().contains("tu gesti\u00f3n se realiz\u00f3 con \u00e9xito")) {
+				a = true;
+			}
+		}
+		Assert.assertTrue(a);
+	}
 }	
