@@ -3,6 +3,9 @@ package Pages;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.How;
 import org.openqa.selenium.support.PageFactory;
+
+import Tests.TestBase;
+
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -10,6 +13,7 @@ import org.openqa.selenium.WebElement;
 public class Login extends BasePage {
 	
 	final WebDriver driver;
+	TestBase TB = new TestBase();
 	
 	//Fields
 	
@@ -126,10 +130,11 @@ public class Login extends BasePage {
 		public void ingresarAndres() {
 			  logininterno.click();
 			  try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
-			  //SIT
-			  //Ecom_User_ID.sendKeys("UAT549492");
-			  //UAT
-			  Ecom_User_ID.sendKeys("uat195528");
+			  
+			  if (TB.urlAmbiente.contains("sit"))
+				  Ecom_User_ID.sendKeys("UAT549492");//SIT
+			  else
+				  Ecom_User_ID.sendKeys("uat195528");//UAT
 			  Ecom_Password.sendKeys("Testa10k");
 			  loginButton2.click();
 			  try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
@@ -139,11 +144,11 @@ public class Login extends BasePage {
 		public void ingresarElena() {
 			  logininterno.click();
 			  try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
-			  //TELEFONICO
-			  //SIT
-			  //Ecom_User_ID.sendKeys("UAT569076");
-			  //UAT
-			  Ecom_User_ID.sendKeys("uat592149");
+			  
+			  if (TB.urlAmbiente.contains("sit"))
+				  Ecom_User_ID.sendKeys("UAT569076");//SIT
+			  else
+				  Ecom_User_ID.sendKeys("uat592149");//UAT
 			  Ecom_Password.sendKeys("Testa10k");
 			  loginButton2.click();
 			  try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
@@ -151,10 +156,11 @@ public class Login extends BasePage {
 		public void ingresarLogistica() {
 			  logininterno.click();
 			  try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
-			  //SIT
-			  //Ecom_User_ID.sendKeys("UAT178596");
-			  //UAT
-			  Ecom_User_ID.sendKeys("uat196425");
+			  
+			  if (TB.urlAmbiente.contains("sit"))
+				  Ecom_User_ID.sendKeys("UAT178596");//SIT
+			  else
+			  	  Ecom_User_ID.sendKeys("uat196425"); //UAT
 			  Ecom_Password.sendKeys("Testa10k");
 			  loginButton2.click();
 			  try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
@@ -180,10 +186,11 @@ public class Login extends BasePage {
 		public void ingresarNominaciones() {
 			  logininterno.click();
 			  try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
-			  //SIT
-			  Ecom_User_ID.sendKeys("UAT195528");
-			  //UAT OOCC
-			  //Ecom_User_ID.sendKeys("uat579805");
+			  
+			  if (TB.urlAmbiente.contains("sit"))
+					Ecom_User_ID.sendKeys("UAT195528");//SIT
+			  else
+			  		Ecom_User_ID.sendKeys("uat579805");//UAT 
 			  Ecom_Password.sendKeys("Testa10k");
 			  loginButton2.click();
 			  try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}

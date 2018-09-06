@@ -1,6 +1,7 @@
 package Tests;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 
 import org.openqa.selenium.By;
@@ -8,6 +9,7 @@ import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.WebDriverWait;
+import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
@@ -27,6 +29,8 @@ public class AltasAgente extends TestBase{
 	String altura="1234";
 	protected WebDriver driver;
 	protected  WebDriverWait wait;
+	List <String> DatosOrden =new ArrayList<String>();
+	String imagen;
 	
 	@BeforeClass(alwaysRun=true)
 	public void Init2() {
@@ -97,16 +101,17 @@ public class AltasAgente extends TestBase{
 		driver.switchTo().frame(accountPage.getFrameForElement(driver, By.id("SearchClientDocumentNumber")));
 	}
 	
-	//@AfterMethod(alwaysRun=true)
-		public void deslogin(){
+	@AfterMethod(alwaysRun=true)
+		public void deslogin() throws IOException{
+			guardarListaTxt(DatosOrden);
+			DatosOrden.clear();
+			tomarCaptura(driver,imagen);
 			sleep(2000);
 			SalesBase SB = new SalesBase(driver);
 			driver.switchTo().defaultContent();
 			sleep(6000);
 			SB.cerrarPestaniaGestion(driver);
-			
 			sleep(5000);
-
 		}
 	
 	//@AfterClass(alwaysRun=true)
@@ -118,6 +123,7 @@ public class AltasAgente extends TestBase{
 	
 	@Test(groups={"Sales", "AltaLineaDatos","E2E"}, priority=1, dataProvider="DatosAltaLineaAgente")
 	public void TS_CRM_Alta_de_Linea_Agente(String sDni, String sNombre, String sApellido, String sSexo, String sFNac, String sEmail, String sPlan, String sProvincia, String sLocalidad, String sCalle, String sNumCa, String sCP, String sEntrega, String sStoreProv, String sStoreLoc, String sTipoDelivery) throws IOException {
+		imagen = "TS_CRM_Alta_de_Linea_Agente";
 		CustomerCare cc = new CustomerCare(driver);
 		SalesBase sb = new SalesBase(driver);
 		sb.BtnCrearNuevoCliente();
@@ -130,7 +136,7 @@ public class AltasAgente extends TestBase{
 		driver.findElement(By.id("EmailSelectableItems")).findElement(By.tagName("input")).sendKeys(sEmail);
 		driver.findElement(By.id("Contact_nextBtn")).click();
 		sleep(28000);
-		//sb.ResolverEntrega(driver, sEntrega,sStoreProv,sStoreLoc);
+		sb.ResolverEntrega(driver, sEntrega,sStoreProv,sStoreLoc);
 		sleep(7000);
 		driver.switchTo().defaultContent();
 		Accounts accountPage = new Accounts(driver);
@@ -250,6 +256,7 @@ public class AltasAgente extends TestBase{
 	
 	@Test(groups={"Sales", "AltaLinea","E2E"}, priority=1, dataProvider="AltaLineaNuevoAgentePresencial")
 	public void TS118938_CRM_Movil_PRE_Alta_Linea_Cliente_Nuevo_Agente_Efectivo_Presencial_DNI(String sNombre, String sApellido, String sSexo, String sFNac, String sEmail, String sPlan, String sProvincia, String sLocalidad) throws IOException {
+		imagen = "TS118938";
 		CustomerCare cc = new CustomerCare(driver);
 		SalesBase sb = new SalesBase(driver);
 		sleep(5000);
@@ -342,6 +349,7 @@ public class AltasAgente extends TestBase{
 	
 	@Test(groups={"Sales", "AltaLineaDatos","E2E"}, priority=1, dataProvider="DatosSalesAltaLineaEquipo")
 	public void TS125004_CRM_Movil_PRE_Alta_Linea_con_Equipo_Cliente_Nuevo_Presencial_AG(String sDni, String sNombre, String sApellido, String sSexo, String sFNac, String sEmail, String sPlan, String sProvincia, String sLocalidad) throws IOException {
+		imagen = "TS125004";
 		CustomerCare cc = new CustomerCare(driver);
 		SalesBase sb = new SalesBase(driver);
 		sleep(5000);
@@ -383,6 +391,8 @@ public class AltasAgente extends TestBase{
 			WebElement sig = driver.findElement(By.id("LineAssignment_nextBtn"));
 			cc.obligarclick(sig);
 			sleep(23000);
+			cc.obligarclick(driver.findElement(By.id("ICCDAssignment_nextBtn")));
+			sleep(30000);
 			cc.obligarclick(driver.findElement(By.id("InvoicePreview_nextBtn")));
 			sleep(20000);
 			cc.obligarclick(driver.findElement(By.id("SelectPaymentMethodsStep_nextBtn")));
@@ -418,6 +428,7 @@ public class AltasAgente extends TestBase{
 		}
 	@Test(groups={"Sales", "AltaLineaDatos","E2E"}, priority=1, dataProvider="DatosAltaAgenteCredito")
 	public void TS135761_CRM_Movil_PRE_Alta_Linea_Cliente_Nuevo_Agente_TC_Presencial_DNI_Punta_Alta(String sDni, String sNombre, String sApellido, String sSexo, String sFNac, String sEmail, String sPlan, String sProvincia, String sLocalidad, String sCalle, String sNumCa, String sCP, String cBanco, String cTarjeta, String cPromo, String cCuotas, String cNumTarjeta, String cVenceMes, String cVenceAno, String cCodSeg) throws IOException {
+		imagen = "TS135761";
 		CustomerCare cc = new CustomerCare(driver);
 		SalesBase sb = new SalesBase(driver);
 		sb.BtnCrearNuevoCliente();
