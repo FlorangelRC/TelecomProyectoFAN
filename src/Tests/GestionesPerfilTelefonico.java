@@ -320,7 +320,7 @@ public class GestionesPerfilTelefonico extends TestBase{
 	
 	
 	@Test (groups= {"GestionesPerfilTelefonico","E2E"},priority=1, dataProvider="ventaPack")
-	public void TS123157_CRM_Movil_PRE_Venta_de_pack_Paquete_M2M_10_MB_Factura_de_Venta_Efectivo_Presencial_Punta_Alta_Agente(String sDNI, String sCuenta, String cBanco, String cTarjeta, String cPromo, String cCuotas, String cNumTarjeta, String cVenceMes, String cVenceAno, String cCodSeg, String cTipoDNI, String cDNITarjeta, String cTitular, String sventaPack) throws InterruptedException{
+	public void TS123157_CRM_Movil_REPRO_Venta_De_Pack_50_Min_Y_50_SMS_X_7_Dias_Factura_De_Venta_TC_Telefonico(String sDNI, String sCuenta, String cBanco, String cTarjeta, String cPromo, String cCuotas, String cNumTarjeta, String cVenceMes, String cVenceAno, String cCodSeg, String cTipoDNI, String cDNITarjeta, String cTitular, String sventaPack) throws InterruptedException{
 	SalesBase sale = new SalesBase(driver);
 	BasePage cambioFrameByID=new BasePage();
 	CustomerCare cCC = new CustomerCare(driver);
@@ -334,16 +334,15 @@ public class GestionesPerfilTelefonico extends TestBase{
 	pagePTelefo.comprarPack("comprar sms");
 	pagePTelefo.PackCombinado(sventaPack);
 	pagePTelefo.tipoDePago("en factura de venta");
+	pagePTelefo.getTipodepago().click();
 	sleep(12000);
-	pagePTelefo.siguiente();
-	pagePTelefo.siguiente();
-	driver.findElement(By.id("Step_Error_Huawei_S013_nextBtn")).click();
+	pagePTelefo.getSimulaciondeFactura().click();
 	sleep(12000);
 	buscarYClick(driver.findElements(By.cssSelector(".slds-form-element__label.ng-binding")), "equals", "tarjeta de credito");
+	sleep(8000);
 	selectByText(driver.findElement(By.id("BankingEntity-0")), cBanco);
 	selectByText(driver.findElement(By.id("CardBankingEntity-0")), cTarjeta);
 	selectByText(driver.findElement(By.id("promotionsByCardsBank-0")), cPromo);
-	sleep(5000);
 	selectByText(driver.findElement(By.id("Installment-0")), cCuotas);
 	driver.findElement(By.id("CardNumber-0")).sendKeys(cNumTarjeta);
 	selectByText(driver.findElement(By.id("expirationMonth-0")), cVenceMes);
@@ -352,7 +351,7 @@ public class GestionesPerfilTelefonico extends TestBase{
 	selectByText(driver.findElement(By.id("documentType-0")), cTipoDNI);
 	driver.findElement(By.id("documentNumber-0")).sendKeys(cDNITarjeta);
 	driver.findElement(By.id("cardHolder-0")).sendKeys(cTitular);
-	cCC.obligarclick(driver.findElement(By.id("SelectPaymentMethodsStep_nextBtn")));
+	pagePTelefo.getMediodePago().click();
 	sleep(15000);
 	pagePTelefo.siguiente();
 	pagePTelefo.siguiente();
