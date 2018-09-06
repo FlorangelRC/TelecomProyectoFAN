@@ -14,12 +14,15 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 
+import org.apache.commons.io.FileUtils;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.xssf.usermodel.XSSFRow;
 import org.apache.poi.xssf.usermodel.XSSFSheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.openqa.selenium.By;
 import org.openqa.selenium.NoSuchElementException;
+import org.openqa.selenium.OutputType;
+import org.openqa.selenium.TakesScreenshot;
 import org.openqa.selenium.TimeoutException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -42,8 +45,8 @@ import DataProvider.ExcelUtils;
 
 public class TestBase {
 	protected static WebDriver driver;//
-	protected String urlAmbiente = "https://telecomcrm--uat.cs53.my.salesforce.com";
-	//protected String urlAmbiente = "https://crm--sit.cs14.my.salesforce.com/";
+	// public String urlAmbiente = "https://telecomcrm--uat.cs53.my.salesforce.com";
+	 public String urlAmbiente = "https://crm--sit.cs14.my.salesforce.com/";
 	
 	
 	public void leftDropdown(WebDriver driver, String selection) {
@@ -930,7 +933,7 @@ public class TestBase {
 	@DataProvider
 	public Object[][] DatosSalesAltaLineaEquipo() throws Exception{
 
-	 Object[][] testObjArray = ExcelUtils.getTableArray("Cuentas.xlsx","PreparacionDatos",1,1,9,"Alta Linea Equipo");
+	 Object[][] testObjArray = ExcelUtils.getTableArray("Cuentas.xlsx","PreparacionDatos",1,1,9,"Alta Linea Equip New AG");
 
 	 return (testObjArray);
 
@@ -990,7 +993,7 @@ public class TestBase {
 	@DataProvider
 	public Object[][] RenovacionCuotaSinSaldo() throws Exception{
 
-	 Object[][] testObjArray = ExcelUtils.getTableArray("Cuentas.xlsx","Sales",1,1,2,"Renovacion Cuota Sin Saldo");
+	 Object[][] testObjArray = ExcelUtils.getTableArray("Cuentas.xlsx","Sales",1,1,3,"Renovacion Cuota Sin Saldo");
 
 	 return (testObjArray);
 
@@ -1052,6 +1055,14 @@ public class TestBase {
 	public Object [][] CuentaAjustes() throws Exception {
 		
 		Object[][] testObjArray = ExcelUtils.getTableArray("Cuentas.xlsx","PerfilGestiones",1,1,1,"Ajustes");
+		
+		return (testObjArray);
+	}
+	
+	@DataProvider
+	public Object [][] CuentaAjustesLinea() throws Exception {
+		
+		Object[][] testObjArray = ExcelUtils.getTableArray("Cuentas.xlsx","PerfilGestiones",1,1,2,"Ajustes");
 		
 		return (testObjArray);
 	}
@@ -1191,4 +1202,42 @@ public class TestBase {
 	 return (testObjArray);
 
 	}
+	@DataProvider
+	public Object[][] AltaLineaExistenteOfComTD() throws Exception{
+
+	 Object[][] testObjArray = ExcelUtils.getTableArray("Cuentas.xlsx","PreparacionDatos",1,1,9,"Alta Linea Existe OfCom Debito");
+
+	 return (testObjArray);
+
+	}
+	@DataProvider
+	public Object[][] AltaEquipoExisteSPU() throws Exception{
+		
+		 Object[][] testObjArray = ExcelUtils.getTableArray("Cuentas.xlsx","PreparacionDatos",1,1,5,"Linea Equipo Existe SPU");
+
+		 return (testObjArray);
+	}
+	public void tomarCaptura(WebDriver driver, String imageName) {
+	      //Directorio donde quedaran las imagenes guardadas
+		File directory;
+		if(urlAmbiente.contains("sit"))
+	      directory = new File("imagenesSIT");
+		else
+		  directory = new File("imagenesUAT");
+	 
+	      try {
+	         if (directory.isDirectory()) {
+	            //Toma la captura de imagen
+	            File imagen = ((TakesScreenshot) driver).getScreenshotAs(OutputType.FILE);
+	            //Mueve el archivo a la carga especificada con el respectivo nombre
+	            FileUtils.copyFile(imagen, new File(directory.getAbsolutePath()   + "\\" + imageName + ".png"));
+	         } else {
+	            //Se lanza la excepcion cuando no encuentre el directorio
+	            throw new IOException("ERROR : La ruta especificada no es un directorio!");
+	         }
+	      } catch (IOException e) {
+	         //Impresion de Excepciones
+	         e.printStackTrace();
+	      }
+	   }
 }

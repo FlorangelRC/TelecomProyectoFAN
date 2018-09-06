@@ -10,7 +10,9 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.Select;
 import org.testng.Assert;
 import org.testng.annotations.AfterClass;
+import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeClass;
+import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 import Pages.Accounts;
 import Pages.BasePage;
@@ -26,6 +28,7 @@ public class GestionesPerfilTelefonico extends TestBase{
 	private SalesBase sb;
 	private CustomerCare cc;
 	List <String> datosOrden =new ArrayList<String>();
+	String imagen;
 	
 	
 	@BeforeClass(alwaysRun=true)
@@ -38,43 +41,51 @@ public class GestionesPerfilTelefonico extends TestBase{
 		sleep(22000);
 		driver.findElement(By.id("tabBar")).findElement(By.tagName("a")).click();
 		sleep(18000);
-		SalesBase sb = new SalesBase(driver);
 		driver.switchTo().defaultContent();
 		sleep(3000);
+		
+	}
+	
+	@BeforeMethod(alwaysRun=true)
+	public void setup() throws Exception {
+		sleep(10000);
 		goToLeftPanel2(driver, "Inicio");
-		sleep(18000);
+		sleep(15000);
 		try {
 			sb.cerrarPestaniaGestion(driver);
 		} catch (Exception ex1) {}
-		Accounts ac = new Accounts(driver);
-		driver.switchTo().frame(ac.getFrameForElement(driver, By.cssSelector(".hasMotif.homeTab.homepage.ext-webkit.ext-chrome.sfdcBody.brandQuaternaryBgr")));
-		List <WebElement> frames = driver.findElements(By.tagName("iframe"));
+		Accounts accountPage = new Accounts(driver);
+		driver.switchTo().frame(accountPage.getFrameForElement(driver, By.cssSelector(".hasMotif.homeTab.homepage.ext-webkit.ext-chrome.sfdcBody.brandQuaternaryBgr")));
+		List<WebElement> frames = driver.findElements(By.tagName("iframe"));
 		boolean enc = false;
 		int index = 0;
 		for(WebElement frame : frames) {
 			try {
-				//System.out.println("aca");
+				System.out.println("aca");
 				driver.switchTo().frame(frame);
+
 				driver.findElement(By.cssSelector(".slds-grid.slds-m-bottom_small.slds-wrap.cards-container")).getText(); //each element is in the same iframe.
 				//System.out.println(index); //prints the used index.
+
 				driver.findElement(By.cssSelector(".slds-grid.slds-m-bottom_small.slds-wrap.cards-container")).isDisplayed(); //each element is in the same iframe.
 				//System.out.println(index); //prints the used index.
-				driver.switchTo().frame(ac.getFrameForElement(driver, By.cssSelector(".hasMotif.homeTab.homepage.ext-webkit.ext-chrome.sfdcBody.brandQuaternaryBgr")));
+
+				driver.switchTo().frame(accountPage.getFrameForElement(driver, By.cssSelector(".hasMotif.homeTab.homepage.ext-webkit.ext-chrome.sfdcBody.brandQuaternaryBgr")));
 				enc = true;
 				break;
-			} catch(NoSuchElementException noSuchElemExcept) {
+			}catch(NoSuchElementException noSuchElemExcept) {
 				index++;
-				driver.switchTo().frame(ac.getFrameForElement(driver, By.cssSelector(".hasMotif.homeTab.homepage.ext-webkit.ext-chrome.sfdcBody.brandQuaternaryBgr")));
+				driver.switchTo().frame(accountPage.getFrameForElement(driver, By.cssSelector(".hasMotif.homeTab.homepage.ext-webkit.ext-chrome.sfdcBody.brandQuaternaryBgr")));
 			}
 		}
 		if(enc == false)
 			index = -1;
 		try {
-			driver.switchTo().frame(frames.get(index));
-		} catch(ArrayIndexOutOfBoundsException iobExcept) {
-			System.out.println("Elemento no encontrado en ningun frame 2.");			
+				driver.switchTo().frame(frames.get(index));
+		}catch(ArrayIndexOutOfBoundsException iobExcept) {System.out.println("Elemento no encontrado en ningun frame 2.");
+			
 		}
-		List <WebElement> botones = driver.findElements(By.tagName("button"));
+		List<WebElement> botones = driver.findElements(By.tagName("button"));
 		for (WebElement UnB : botones) {
 			System.out.println(UnB.getText());
 			if(UnB.getText().equalsIgnoreCase("gesti\u00f3n de clientes")) {
@@ -82,16 +93,20 @@ public class GestionesPerfilTelefonico extends TestBase{
 				break;
 			}
 		}
-		sleep(14000);
+		
+		sleep(25000);
 	}
 
-	//@AfterMethod(alwaysRun=true)
-	public void after() {
-		SalesBase sb = new SalesBase(driver);
-		sb.cerrarPestaniaGestion(driver);
+	@AfterMethod(alwaysRun=true)
+	public void after() throws IOException {
+		guardarListaTxt(datosOrden);
+		datosOrden.clear();
+		tomarCaptura(driver,imagen);
+		/*SalesBase sb = new SalesBase(driver);
+		sb.cerrarPestaniaGestion(driver);*/
 	}
 
-	@AfterClass(alwaysRun=true)
+	//@AfterClass(alwaysRun=true)
 	public void quit() throws IOException {
 		guardarListaTxt(datosOrden);
 		System.out.println("Se supone que guardo");
@@ -101,6 +116,7 @@ public class GestionesPerfilTelefonico extends TestBase{
 	
 	@Test (groups = {"GestionesPerfilOficina", "Recargas","E2E"}, dataProvider = "RecargaTC")  //Error despues de ingresar la tarjeta
 	public void TS134332_CRM_Movil_REPRO_Recargas_Telefonico_TC_Callcenter_Financiacion(String cDNI, String cMonto, String cBanco, String cTarjeta, String cPromo, String cCuotas, String cNumTarjeta, String cVenceMes, String cVenceAno, String cCodSeg, String cTipoDNI, String cDNITarjeta, String cTitular, String cLinea) {
+		imagen= "TS134332";
 		if(cMonto.length() >= 4) {
 			cMonto = cMonto.substring(0, cMonto.length()-1);
 		}
@@ -169,7 +185,8 @@ public class GestionesPerfilTelefonico extends TestBase{
 	}
 	
 	@Test (groups = {"GestionesPerfilTelefonico", "RenovacioDeCuota","E2E"}, dataProvider="RenovacionCuotaSinSaldo")
-	public void TS130067_CRM_Movil_REPRO_Renovacion_De_Cuota_Telefonico_Descuento_De_Saldo_Sin_Credito(String sCuenta, String sDNI) {
+	public void TS130067_CRM_Movil_REPRO_Renovacion_De_Cuota_Telefonico_Descuento_De_Saldo_Sin_Credito(String sCuenta, String sDNI, String sLinea) {
+		imagen = "TS130067";
 		BasePage cambioFrameByID=new BasePage();
 		driver.switchTo().frame(cambioFrameByID.getFrameForElement(driver, By.id("SearchClientDocumentType")));
 		sleep(1000);
@@ -197,6 +214,7 @@ public class GestionesPerfilTelefonico extends TestBase{
 	
 	@Test (groups = {"GestionesPerfilTelefonico", "RenovacionDeCuota","E2E"}, dataProvider="RenovacionCuotaConSaldo")
 	public void TS_CRM_Movil_REPRO_Renovacion_De_Cuota_Telefonico_Descuento_De_Saldo_Con_Credito(String sCuenta, String sDNI, String sLinea) {
+		imagen = "TS_CRM_Movil_REPRO_Renovacion_De_Cuota_Telefonico_Descuento_De_Saldo_Con_Credito";
 		BasePage cambioFrameByID=new BasePage();
 		driver.switchTo().frame(cambioFrameByID.getFrameForElement(driver, By.id("SearchClientDocumentType")));
 		sleep(1000);
@@ -247,6 +265,7 @@ public class GestionesPerfilTelefonico extends TestBase{
 	
 	@Test (groups= {"GestionesPerfilTelefonico","E2E"},priority=1, dataProvider="VentaPacks")
 	public void TS123314_CRM_Movil_REPRO_Venta_de_Pack_40_Pesos_Exclusivo_Para_Vos_Descuento_De_Saldo_Telefonico(String sDNI, String sCuenta, String sNumeroDeCuenta, String sLinea, String sVentaPack){
+	imagen = "TS123314";
 	SalesBase sale = new SalesBase(driver);
 	BasePage cambioFrameByID=new BasePage();
 	CustomerCare cCC = new CustomerCare(driver);
@@ -280,6 +299,7 @@ public class GestionesPerfilTelefonico extends TestBase{
 	
 	@Test (groups= {"GestionesPerfilTelefonico","E2E"},priority=1, dataProvider="CambioSimCard")
 	public void TSCambioSimCard(String sDNI, String sCuenta, String cBanco, String cTarjeta, String cPromo, String cCuotas, String cNumTarjeta, String cVenceMes, String cVenceAno, String cCodSeg, String cTipoDNI, String cDNITarjeta, String cTitular ){
+	imagen = "TSCambioSimCard";
 	SalesBase sale = new SalesBase(driver);
 	BasePage cambioFrameByID=new BasePage();
 	CustomerCare cCC = new CustomerCare(driver);
@@ -335,7 +355,8 @@ public class GestionesPerfilTelefonico extends TestBase{
 	
 	
 	@Test (groups= {"GestionesPerfilTelefonico","E2E"},priority=1, dataProvider="ventaPack")
-	public void TS123157_CRM_Movil_PRE_Venta_de_pack_Paquete_M2M_10_MB_Factura_de_Venta_Efectivo_Presencial_Punta_Alta_Agente(String sDNI, String sCuenta, String sventaPack) throws InterruptedException{
+	public void TS123157_CRM_Movil_REPRO_Venta_De_Pack_50_Min_Y_50_SMS_X_7_Dias_Factura_De_Venta_TC_Telefonico(String sDNI, String sCuenta, String sventaPack) throws InterruptedException{
+	imagen = "TS123157";
 	SalesBase sale = new SalesBase(driver);
 	BasePage cambioFrameByID=new BasePage();
 	PagePerfilTelefonico pagePTelefo = new PagePerfilTelefonico(driver);
@@ -356,11 +377,13 @@ public class GestionesPerfilTelefonico extends TestBase{
 	driver.navigate().refresh();
 	}
 	
-	@Test (groups= {"GestionesPerfilTelefonico", "Ajustes", "E2E"})  //Rompe porque no sale el mensaje de gestion exitosa, sale el perfil no configurado correctamente
-	public void TS121333_CRM_Movil_PRE_Ajuste_total_de_comprobantes_FAN_Front_Telefonico() {
+	@Test (groups= {"GestionesPerfilTelefonico", "Ajustes", "E2E"},dataProvider = "CuentaAjustes")  //Rompe porque no sale el mensaje de gestion exitosa, sale el perfil no configurado correctamente
+	public void TS121333_CRM_Movil_PRE_Ajuste_total_de_comprobantes_FAN_Front_Telefonico(String sDni) {
+		imagen = "TS121333";
 		boolean gest = false;
 		driver.switchTo().frame(cambioFrame(driver, By.id("SearchClientDocumentType")));
-		sb.BuscarCuenta("DNI", "59885133");
+		//sb.BuscarCuenta("DNI", "59885133");
+		sb.BuscarCuenta("DNI", sDni);
 		driver.findElement(By.cssSelector(".slds-tree__item.ng-scope")).click();
 		sleep(15000);
 		cc.irAGestion("inconvenientes");
@@ -391,11 +414,12 @@ public class GestionesPerfilTelefonico extends TestBase{
 	
 	@Test (groups= {"GestionesPerfilTelefonico", "ModificacionDeDatos", "E2E"})
 	public void TS134835_CRM_Movil_PRE_Modificacion_de_datos_Actualizar_los_datos_del_cliente_completos_FAN_Front_Telefonico() {
-		String nuevoNombre = "Cambiode";
-		String nuevoApellido = "Nombre";
-		String nuevoNacimiento = "10/10/1980";
-		String nuevoMail = "maildeprueba@gmail.com";
-		String nuevoPhone = "3574409238";
+		imagen = "TS134835";
+		String nuevoNombre = "Otro";
+		String nuevoApellido = "Apellido";
+		String nuevoNacimiento = "10/10/1982";
+		String nuevoMail = "maildetest@gmail.com";
+		String nuevoPhone = "3574409239";
 		driver.switchTo().frame(cambioFrame(driver, By.id("SearchClientDocumentType")));
 		sb.BuscarCuenta("DNI", "10777540");
 		driver.findElement(By.cssSelector(".slds-tree__item.ng-scope")).click();
