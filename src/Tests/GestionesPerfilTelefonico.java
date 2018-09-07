@@ -256,39 +256,39 @@ public class GestionesPerfilTelefonico extends TestBase{
 		//Assert.assertTrue(driver.findElement(By.cssSelector(".slds-form-element.vlc-flex.vlc-slds-text-block.vlc-slds-rte.ng-pristine.ng-valid.ng-scope")).getText().contains("La orden se realiz\u00f3 con \u00e9xito!"));
 	}
 	
-	
-	@Test(groups = { "GestionesPerfilTelefonico", "E2E" }, priority = 1, dataProvider = "VentaPacks")
-	public void TS123314_CRM_Movil_REPRO_Venta_de_Pack_40_Pesos_Exclusivo_Para_Vos_Descuento_De_Saldo_Telefonico(String sDNI, String sCuenta, String sNumeroDeCuenta, String sLinea, String sVentaPack) {
-		imagen = "TS123314";
-		SalesBase sale = new SalesBase(driver);
-		BasePage cambioFrameByID = new BasePage();
-		CustomerCare cCC = new CustomerCare(driver);
-		PagePerfilTelefonico pagePTelefo = new PagePerfilTelefonico(driver);
-		driver.switchTo().frame(cambioFrameByID.getFrameForElement(driver, By.id("SearchClientDocumentType")));
-		sleep(8000);
-		sale.BuscarCuenta("DNI", sDNI);
-		String accid = driver.findElement(By.cssSelector(".searchClient-body.slds-hint-parent.ng-scope")).findElements(By.tagName("td")).get(5).getText();
-		System.out.println("id " + accid);
-		pagePTelefo.buscarAssert();
-		pagePTelefo.comprarPack("comprar sms");
-		pagePTelefo.agregarPack(sVentaPack);
-		pagePTelefo.tipoDePago("descuento de saldo");
-		String orden = cc.obtenerOrdenMontoyTN(driver, "Compra de Pack");
-		System.out.println("orden = " + orden);
-		datosOrden.add("Recargas" + orden + " de cuenta " + accid + " con DNI: " + sDNI);
-		CBS_Mattu invoSer = new CBS_Mattu();
-		invoSer.PagoEnCaja("1003", accid, "2001", orden.split("-")[2], orden.split("-")[1]);
-		sleep(5000);
-		driver.navigate().refresh();
-		sleep(10000);
-		cc.obtenerOrdenMontoyTN(driver, "Compra de Pack");
-		sleep(10000);
-		driver.switchTo().frame(cambioFrame(driver, By.id("Status_ilecell")));
-		Assert.assertTrue(driver.findElement(By.id("Status_ilecell")).getText().equalsIgnoreCase("activada"));
-		String sOrder = cCC.obtenerOrden(driver, "Compra de Pack");
-		System.out.println("Orden: " + sOrder);
-		datosOrden.add("Operacion: Compra de Pack, Orden: " + sOrder + ", Cuenta: " + sCuenta + ", DNI: " + sDNI+ ", Linea: " + sLinea);
-		System.out.println("Order: " + sOrder + " Fin");
+	// no existe Pack, se probo el caso con otro
+	@Test (groups= {"GestionesPerfilTelefonico","E2E"},priority=1, dataProvider="VentaPacks")
+	public void TS123314_CRM_Movil_REPRO_Venta_de_Pack_40_Pesos_Exclusivo_Para_Vos_Descuento_De_Saldo_Telefonico(String sDNI, String sCuenta, String sNumeroDeCuenta, String sLinea, String sVentaPack){
+	imagen = "TS123314";
+	SalesBase sale = new SalesBase(driver);
+	BasePage cambioFrameByID=new BasePage();
+	CustomerCare cCC = new CustomerCare(driver);
+	PagePerfilTelefonico pagePTelefo = new PagePerfilTelefonico(driver);
+	driver.switchTo().frame(cambioFrameByID.getFrameForElement(driver, By.id("SearchClientDocumentType")));	
+	sleep(8000);
+	sale.BuscarCuenta("DNI", sDNI);
+	String accid = driver.findElement(By.cssSelector(".searchClient-body.slds-hint-parent.ng-scope")).findElements(By.tagName("td")).get(5).getText();
+	System.out.println("id "+accid);
+	pagePTelefo.buscarAssert();
+	pagePTelefo.comprarPack("comprar sms");
+	pagePTelefo.agregarPack(sVentaPack);
+	pagePTelefo.tipoDePago("descuento de saldo");
+	String orden = cc.obtenerOrdenMontoyTN(driver, "Compra de Pack");
+	System.out.println("orden = "+orden);
+	datosOrden.add("Recargas" + orden + " de cuenta "+accid+" con DNI: " + sDNI);
+	CBS_Mattu invoSer = new CBS_Mattu();
+	invoSer.PagoEnCaja("1003", accid, "2001", orden.split("-")[2], orden.split("-")[1]);
+	sleep(5000);
+	driver.navigate().refresh();
+	sleep(10000);
+	cc.obtenerOrdenMontoyTN(driver, "Compra de Pack");
+	sleep(10000);
+	driver.switchTo().frame(cambioFrame(driver, By.id("Status_ilecell")));
+	Assert.assertTrue(driver.findElement(By.id("Status_ilecell")).getText().equalsIgnoreCase("activada"));
+	String sOrder = cCC.obtenerOrden(driver,"Compra de Pack");
+	System.out.println("Orden: "+sOrder);
+	datosOrden.add("Operacion: Compra de Pack, Orden: "+sOrder+", Cuenta: "+sCuenta+", DNI: "+sDNI+", Linea: "+sLinea);	
+	System.out.println("Order: " + sOrder + " Fin");
 	}
 	
 	@Test(groups = { "GestionesPerfilTelefonico", "E2E" }, priority = 1, dataProvider = "CambioSimCard")
@@ -332,45 +332,45 @@ public class GestionesPerfilTelefonico extends TestBase{
 	}
 	
 	
-	@Test(groups = { "GestionesPerfilTelefonico", "E2E" }, priority = 1, dataProvider = "ventaPack")
-	public void TS123157_CRM_Movil_REPRO_Venta_De_Pack_50_Min_Y_50_SMS_X_7_Dias_Factura_De_Venta_TC_Telefonico(String sDNI, String sCuenta, String cBanco, String cTarjeta, String cPromo, String cCuotas,String cNumTarjeta, String cVenceMes, String cVenceAno, String cCodSeg, String cTipoDNI, String cDNITarjeta,String cTitular, String sventaPack) throws InterruptedException {
-		imagen = "TS123157";
-		SalesBase sale = new SalesBase(driver);
-		BasePage cambioFrameByID = new BasePage();
-		CustomerCare cCC = new CustomerCare(driver);
-		PagePerfilTelefonico pagePTelefo = new PagePerfilTelefonico(driver);
-		driver.switchTo().frame(cambioFrameByID.getFrameForElement(driver, By.id("SearchClientDocumentType")));
-		sleep(8000);
-		sale.BuscarCuenta("DNI", sDNI);
-		String accid = driver.findElement(By.cssSelector(".searchClient-body.slds-hint-parent.ng-scope")).findElements(By.tagName("td")).get(5).getText();
-		System.out.println("id " + accid);
-		pagePTelefo.buscarAssert();
-		pagePTelefo.comprarPack("comprar sms");
-		pagePTelefo.PackCombinado(sventaPack);
-		pagePTelefo.tipoDePago("en factura de venta");
-		pagePTelefo.getTipodepago().click();
-		sleep(12000);
-		pagePTelefo.getSimulaciondeFactura().click();
-		sleep(12000);
-		buscarYClick(driver.findElements(By.cssSelector(".slds-form-element__label.ng-binding")), "equals", "tarjeta de credito");
-		sleep(8000);
-		selectByText(driver.findElement(By.id("BankingEntity-0")), cBanco);
-		selectByText(driver.findElement(By.id("CardBankingEntity-0")), cTarjeta);
-		selectByText(driver.findElement(By.id("promotionsByCardsBank-0")), cPromo);
-		selectByText(driver.findElement(By.id("Installment-0")), cCuotas);
-		driver.findElement(By.id("CardNumber-0")).sendKeys(cNumTarjeta);
-		selectByText(driver.findElement(By.id("expirationMonth-0")), cVenceMes);
-		selectByText(driver.findElement(By.id("expirationYear-0")), cVenceAno);
-		driver.findElement(By.id("securityCode-0")).sendKeys(cCodSeg);
-		selectByText(driver.findElement(By.id("documentType-0")), cTipoDNI);
-		driver.findElement(By.id("documentNumber-0")).sendKeys(cDNITarjeta);
-		driver.findElement(By.id("cardHolder-0")).sendKeys(cTitular);
-		pagePTelefo.getMediodePago().click();
-		sleep(15000);
-		pagePTelefo.siguiente();
-		pagePTelefo.siguiente();
-		pagePTelefo.siguiente();
-		driver.navigate().refresh();
+	@Test (groups= {"GestionesPerfilTelefonico","E2E"},priority=1, dataProvider="ventaPack")
+	public void TS123157_CRM_Movil_REPRO_Venta_De_Pack_50_Min_Y_50_SMS_X_7_Dias_Factura_De_Venta_TC_Telefonico(String sDNI, String sCuenta, String cBanco, String cTarjeta, String cPromo, String cCuotas, String cNumTarjeta, String cVenceMes, String cVenceAno, String cCodSeg, String cTipoDNI, String cDNITarjeta, String cTitular, String sventaPack) throws InterruptedException{
+	imagen = "TS123157";
+	SalesBase sale = new SalesBase(driver);
+	BasePage cambioFrameByID=new BasePage();
+	CustomerCare cCC = new CustomerCare(driver);
+	PagePerfilTelefonico pagePTelefo = new PagePerfilTelefonico(driver);
+	driver.switchTo().frame(cambioFrameByID.getFrameForElement(driver, By.id("SearchClientDocumentType")));	
+	sleep(8000);
+	sale.BuscarCuenta("DNI", sDNI);
+	String accid = driver.findElement(By.cssSelector(".searchClient-body.slds-hint-parent.ng-scope")).findElements(By.tagName("td")).get(5).getText();
+	System.out.println("id "+accid);
+	pagePTelefo.buscarAssert();
+	pagePTelefo.comprarPack("comprar sms");
+	pagePTelefo.PackCombinado(sventaPack);
+	pagePTelefo.tipoDePago("en factura de venta");
+	pagePTelefo.getTipodepago().click();
+	sleep(12000);
+	pagePTelefo.getSimulaciondeFactura().click();
+	sleep(12000);
+	buscarYClick(driver.findElements(By.cssSelector(".slds-form-element__label.ng-binding")), "equals", "tarjeta de credito");
+	sleep(8000);
+	selectByText(driver.findElement(By.id("BankingEntity-0")), cBanco);
+	selectByText(driver.findElement(By.id("CardBankingEntity-0")), cTarjeta);
+	selectByText(driver.findElement(By.id("promotionsByCardsBank-0")), cPromo);
+	selectByText(driver.findElement(By.id("Installment-0")), cCuotas);
+	driver.findElement(By.id("CardNumber-0")).sendKeys(cNumTarjeta);
+	selectByText(driver.findElement(By.id("expirationMonth-0")), cVenceMes);
+	selectByText(driver.findElement(By.id("expirationYear-0")), cVenceAno);
+	driver.findElement(By.id("securityCode-0")).sendKeys(cCodSeg);
+	selectByText(driver.findElement(By.id("documentType-0")), cTipoDNI);
+	driver.findElement(By.id("documentNumber-0")).sendKeys(cDNITarjeta);
+	driver.findElement(By.id("cardHolder-0")).sendKeys(cTitular);
+	pagePTelefo.getMediodePago().click();
+	sleep(15000);
+	pagePTelefo.getOrdenSeRealizoConExito();
+	//pagePTelefo.siguiente();
+	//pagePTelefo.siguiente();
+	driver.navigate().refresh();
 	}
 	
 	@Test (groups= {"GestionesPerfilTelefonico", "Ajustes", "E2E"},dataProvider = "CuentaAjustesPRE")  //Rompe porque no sale el mensaje de gestion exitosa, sale el perfil no configurado correctamente
