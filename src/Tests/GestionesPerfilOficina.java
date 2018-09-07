@@ -109,8 +109,8 @@ public class GestionesPerfilOficina extends TestBase {
 
 	@AfterClass(alwaysRun=true)
 	public void quit() throws IOException {
-		guardarListaTxt(sOrders);
-		//driver.quit();
+		//guardarListaTxt(sOrders);
+		driver.quit();
 		sleep(5000);
 	}
 	
