@@ -373,10 +373,14 @@ public class GestionesPerfilTelefonico extends TestBase{
 	driver.findElement(By.id("documentNumber-0")).sendKeys(cDNITarjeta);
 	driver.findElement(By.id("cardHolder-0")).sendKeys(cTitular);
 	pagePTelefo.getMediodePago().click();
-	sleep(15000);
+	sleep(45000);
+	//nueva pantalla
+	driver.findElement(By.id("PurchaseIntegration_Message_nextBtn")).click();
+	sleep(10000);
 	pagePTelefo.getOrdenSeRealizoConExito();
 	//pagePTelefo.siguiente();
 	//pagePTelefo.siguiente();
+	sleep(10000);
 	driver.navigate().refresh();
 	}
 	
