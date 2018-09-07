@@ -14,7 +14,6 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 
-import org.apache.commons.io.FileUtils;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.xssf.usermodel.XSSFRow;
 import org.apache.poi.xssf.usermodel.XSSFSheet;
@@ -45,8 +44,8 @@ import DataProvider.ExcelUtils;
 
 public class TestBase {
 	protected static WebDriver driver;//
-	// public String urlAmbiente = "https://telecomcrm--uat.cs53.my.salesforce.com";
-	 public String urlAmbiente = "https://crm--sit.cs14.my.salesforce.com/";
+	 public String urlAmbiente = "https://telecomcrm--uat.cs53.my.salesforce.com";
+	 //public String urlAmbiente = "https://crm--sit.cs14.my.salesforce.com/";
 	
 	
 	public void leftDropdown(WebDriver driver, String selection) {
@@ -1068,14 +1067,6 @@ public class TestBase {
 	}
 	
 	@DataProvider
-	public Object [][] CuentaAjustesLinea() throws Exception {
-		
-		Object[][] testObjArray = ExcelUtils.getTableArray("Cuentas.xlsx","PerfilGestiones",1,1,2,"Ajustes");
-		
-		return (testObjArray);
-	}
-	
-	@DataProvider
 	public Object [][] CuentaProblemaRecarga() throws Exception{
 		
 		Object[][] testObjArray = ExcelUtils.getTableArray("Cuentas.xlsx","PerfilGestiones",1,1,3,"ProblemaRecarga");
@@ -1146,7 +1137,7 @@ public class TestBase {
 			 login(driver,urlAmbiente, "U585991", "Testa10k");
 			 break;
 		 case "backoffice":
-			 login(driver, urlAmbiente, "UAT544121", "Testa10k");
+			 login(driver, urlAmbiente, "uat569324", "Testa10k");
 			 break;
 		 }
 		 sleep(10000);
@@ -1225,6 +1216,31 @@ public class TestBase {
 
 		 return (testObjArray);
 	}
+	
+	@DataProvider
+	public Object[][] CuentaTriviasYSuscripciones() throws Exception{
+		
+		 Object[][] testObjArray = ExcelUtils.getTableArray("Cuentas.xlsx","PerfilGestiones",1,1,1,"Trivias Y Suscripciones");
+
+		 return (testObjArray);
+	}
+	
+	@DataProvider
+	public Object[][] CuentaReintegros() throws Exception{
+		
+		 Object[][] testObjArray = ExcelUtils.getTableArray("Cuentas.xlsx","PerfilGestiones",1,1,1,"Reintegros");
+
+		 return (testObjArray);
+	}
+	
+	@DataProvider
+	public Object[][] CuentaModificacionDeDatos() throws Exception{
+		
+		 Object[][] testObjArray = ExcelUtils.getTableArray("Cuentas.xlsx","PerfilGestiones",1,1,1,"Modificacion De Datos");
+
+		 return (testObjArray);
+	}
+	
 	public void tomarCaptura(WebDriver driver, String imageName) {
 	      //Directorio donde quedaran las imagenes guardadas
 		File directory;
