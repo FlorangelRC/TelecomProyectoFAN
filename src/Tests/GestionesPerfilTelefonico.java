@@ -11,7 +11,6 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.Select;
 import org.testng.Assert;
-import org.testng.annotations.AfterClass;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.BeforeMethod;
@@ -264,7 +263,7 @@ public class GestionesPerfilTelefonico extends TestBase{
 		//Assert.assertTrue(driver.findElement(By.cssSelector(".slds-form-element.vlc-flex.vlc-slds-text-block.vlc-slds-rte.ng-pristine.ng-valid.ng-scope")).getText().contains("La orden se realiz\u00f3 con \u00e9xito!"));
 	}
 	
-	
+	// no existe Pack, se probo el caso con otro
 	@Test (groups= {"GestionesPerfilTelefonico","E2E"},priority=1, dataProvider="VentaPacks")
 	public void TS123314_CRM_Movil_REPRO_Venta_de_Pack_40_Pesos_Exclusivo_Para_Vos_Descuento_De_Saldo_Telefonico(String sDNI, String sCuenta, String sNumeroDeCuenta, String sLinea, String sVentaPack){
 	imagen = "TS123314";
@@ -375,9 +374,9 @@ public class GestionesPerfilTelefonico extends TestBase{
 	driver.findElement(By.id("cardHolder-0")).sendKeys(cTitular);
 	pagePTelefo.getMediodePago().click();
 	sleep(15000);
-	pagePTelefo.siguiente();
-	pagePTelefo.siguiente();
-	pagePTelefo.siguiente();
+	pagePTelefo.getOrdenSeRealizoConExito();
+	//pagePTelefo.siguiente();
+	//pagePTelefo.siguiente();
 	driver.navigate().refresh();
 	}
 	
