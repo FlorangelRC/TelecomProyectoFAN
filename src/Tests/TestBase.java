@@ -1179,7 +1179,7 @@ public class TestBase {
 	@DataProvider
 	public Object[][] AltaLineaNuevoEquipoTC() throws Exception{
 
-	 Object[][] testObjArray = ExcelUtils.getTableArray("Cuentas.xlsx","PreparacionDatos",1,1,22,"Alta Linea Equip New AG");
+	 Object[][] testObjArray = ExcelUtils.getTableArray("Cuentas.xlsx","PreparacionDatos",1,1,22,"Alta Linea Equip New AG Credito");
 
 	 return (testObjArray);
 
@@ -1252,6 +1252,15 @@ public class TestBase {
 	public Object[][] AltaLineaExisteEquipoOfComTD() throws Exception{
 
 	 Object[][] testObjArray = ExcelUtils.getTableArray("Cuentas.xlsx","PreparacionDatos",1,1,9,"Alta Linea Equipo Existe OfCom Debito");
+
+	 return (testObjArray);
+
+	}
+	
+	@DataProvider
+	public Object[][] AltaLineaNuevoconEquipo() throws Exception{
+
+	 Object[][] testObjArray = ExcelUtils.getTableArray("Cuentas.xlsx","PreparacionDatos",1,1,12,"Linea Nueva Equipo AG");
 
 	 return (testObjArray);
 
