@@ -21,6 +21,7 @@ public class GestionesPerfilBackOffice extends TestBase {
 	private WebDriver driver;
 	private SalesBase sb;
 	private CustomerCare cc;
+	String imagen;
 	
 	
 	@BeforeClass (alwaysRun = true)
@@ -75,12 +76,12 @@ public class GestionesPerfilBackOffice extends TestBase {
 		sleep(14000);
 	}
 	
-	//@AfterMethod (alwaysRun = true)
+	@AfterMethod (alwaysRun = true)
 	public void after() {
 		sb.cerrarPestaniaGestion(driver);
 	}
 
-	//@AfterClass (alwaysRun = true)
+	@AfterClass (alwaysRun = true)
 	public void quit() {
 		driver.quit();
 		sleep(5000);
@@ -88,6 +89,7 @@ public class GestionesPerfilBackOffice extends TestBase {
 	
 	@Test (groups = {"GestionesPerfilBackOffice", "Ajustes", "E2E"},  dataProvider = "CuentaAjustesPRE")
 	public void TS121329_CRM_Movil_PRE_Ajuste_Backoffice_modifica_cantidades(String cDNI) {
+		imagen = "TS121329";
 		driver.switchTo().frame(cambioFrame(driver, By.id("SearchClientDocumentType")));
 		sb.BuscarCuenta("DNI", cDNI);
 		driver.findElement(By.cssSelector(".slds-tree__item.ng-scope")).click();
