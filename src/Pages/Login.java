@@ -187,10 +187,11 @@ public class Login extends BasePage {
 			  logininterno.click();
 			  try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 			  
-			  if (TB.urlAmbiente.contains("sit"))
-					Ecom_User_ID.sendKeys("UAT195528");//SIT
-			  else
-			  		Ecom_User_ID.sendKeys("uat579805");//UAT 
+			  if (TB.urlAmbiente.contains("sit")) 
+				 Ecom_User_ID.sendKeys("UAT195528");//SIT
+			  else 
+			  	Ecom_User_ID.sendKeys("uat579805");//UAT
+			  		 
 			  Ecom_Password.sendKeys("Testa10k");
 			  loginButton2.click();
 			  try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
@@ -279,7 +280,12 @@ public class Login extends BasePage {
 		public void ingresarBackOffice() {
 			  logininterno.click();
 			  try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
-			  Ecom_User_ID.sendKeys("UAT186579");
+			  //518122
+			  //sit
+			  if (TB.urlAmbiente.contains("sit")) 
+				  Ecom_User_ID.sendKeys("UAT186579");
+			  else
+				  Ecom_User_ID.sendKeys("uat518122");
 			  Ecom_Password.sendKeys("Testa10k");
 			  loginButton2.click();
 			  try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
