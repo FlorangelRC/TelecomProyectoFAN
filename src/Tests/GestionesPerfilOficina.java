@@ -647,10 +647,10 @@ public class GestionesPerfilOficina extends TestBase {
 			}
 		}
 		Assert.assertTrue(a);
-		sleep(5000);
+		sleep(5000);*/
 		String orden = cc.obtenerOrden(driver, "Problemas con Recargas");
 		sOrders.add("Recargas, orden numero: " + orden + " con DNI: " + cDNI );
-		System.out.println(sOrders);*/
+		System.out.println(sOrders);
 	}
 	
 	@Test (groups = {"ProblemaRecarga", "GestionesPerfilOficina","E2E"}, dataProvider="CuentaProblemaRecarga") //Error al intentar impactar la recarga
@@ -691,11 +691,11 @@ public class GestionesPerfilOficina extends TestBase {
 				a = true;
 			}
 		}
-		Assert.assertTrue(a);
+		Assert.assertTrue(a);*/
 		sleep(5000);
 		String orden = cc.obtenerOrden(driver, "Problemas con Recargas");
 		sOrders.add("Recargas, orden numero: " + orden + " con DNI: " + cDNI );
-		System.out.println(sOrders);*/
+		System.out.println(sOrders);
 	}
 	
 	@Test (groups = {"GestionesPerfilOficina", "Ajustes","E2E"}, dataProvider = "CuentaAjustesREPRO")
@@ -863,7 +863,7 @@ public class GestionesPerfilOficina extends TestBase {
 	}
 	
 	@Test (groups = {"Suspension", "GestionesPerfilOficina","E2E"}, dataProvider="CuentaSuspension")
-	public void TS98438_CRM_Movil_REPRO_Suspension_por_Siniestro_Hurto_Linea_Titular_Presencial(String cDNI) {
+	public void TS98438_CRM_Movil_REPRO_Suspension_por_Siniestro_Hurto_Linea_Titular_Presencial(String cDNI, String cProvincia, String cCiudad, String cPartido) {
 		imagen = "TS98438";
 		driver.switchTo().frame(cambioFrame(driver, By.id("SearchClientDocumentType")));
 		sb.BuscarCuenta("DNI", cDNI);
@@ -883,11 +883,11 @@ public class GestionesPerfilOficina extends TestBase {
 		buscarYClick(driver.findElements(By.cssSelector(".slds-form-element__label.ng-binding.ng-scope")),"contains", "hurto");
 		driver.findElement(By.id("Step4-SuspensionReason_nextBtn")).click();
 		sleep(10000);
-		selectByText(driver.findElement(By.id("State")),"Buenos Aires");
+		selectByText(driver.findElement(By.id("State")),cProvincia);
 		sleep(10000);
-		driver.findElement(By.id("CityTypeAhead")).sendKeys("SAN ISIDRO");
+		driver.findElement(By.id("CityTypeAhead")).sendKeys(cCiudad);
 		sleep(10000);
-		driver.findElement(By.id("Partido")).sendKeys("Villa martelli");
+		driver.findElement(By.id("Partido")).sendKeys(cPartido);
 		sleep(10000);
 		driver.findElement(By.id("AccountData_nextBtn")).click();
 		sleep(10000);
@@ -910,7 +910,7 @@ public class GestionesPerfilOficina extends TestBase {
 	}
 	
 	@Test (groups = {"Suspension", "GestionesPerfilOficina","E2E"}, dataProvider="CuentaSuspension")
-	public void TS98442_CRM_Movil_REPRO_Suspension_por_Siniestro_Extravio_Linea_Titular_Presencial(String cDNI) {
+	public void TS98442_CRM_Movil_REPRO_Suspension_por_Siniestro_Extravio_Linea_Titular_Presencial(String cDNI, String cProvincia, String cCiudad, String cPartido) {
 		imagen = "TS98442";
 		driver.switchTo().frame(cambioFrame(driver, By.id("SearchClientDocumentType")));
 		sb.BuscarCuenta("DNI", cDNI);
@@ -930,11 +930,11 @@ public class GestionesPerfilOficina extends TestBase {
 		buscarYClick(driver.findElements(By.cssSelector(".slds-form-element__label.ng-binding.ng-scope")),"contains", "extrav\u00edo");
 		driver.findElement(By.id("Step4-SuspensionReason_nextBtn")).click();
 		sleep(10000);
-		selectByText(driver.findElement(By.id("State")),"Buenos Aires");
+		selectByText(driver.findElement(By.id("State")),cProvincia);
 		sleep(10000);
-		driver.findElement(By.id("CityTypeAhead")).sendKeys("SAN ISIDRO");
+		driver.findElement(By.id("CityTypeAhead")).sendKeys(cCiudad);
 		sleep(10000);
-		driver.findElement(By.id("Partido")).sendKeys("Villa martelli");
+		driver.findElement(By.id("Partido")).sendKeys(cPartido);
 		sleep(7000);
 		driver.findElement(By.id("AccountData_nextBtn")).click();
 		sleep(5000);
@@ -953,11 +953,11 @@ public class GestionesPerfilOficina extends TestBase {
 		sleep(5000);
 		String orden = cc.obtenerOrden(driver, "Suspensi\u00f3n de Linea");
 		sOrders.add("Suspencion, orden numero: " + orden + " con numero de DNI: " + cDNI);
-		//System.out.println(sOrders);	
+		System.out.println(sOrders);
 	}	
 	
 	@Test (groups = {"Suspension", "GestionesPerfilOficina","E2E"}, dataProvider="CuentaSuspension")
-	public void TS98477_CRM_Movil_REPRO_Suspension_por_Fraude_Linea_Comercial_Desconocimiento_Administrativo(String cDNI) {
+	public void TS98477_CRM_Movil_REPRO_Suspension_por_Fraude_Linea_Comercial_Desconocimiento_Administrativo(String cDNI, String cProvincia, String cCiudad, String cPartido) {
 		imagen = "TS98477";
 		driver.switchTo().frame(cambioFrame(driver, By.id("SearchClientDocumentType")));
 		sb.BuscarCuenta("DNI", cDNI);
@@ -993,11 +993,11 @@ public class GestionesPerfilOficina extends TestBase {
 		sleep(10000);
 		String orden = cc.obtenerOrden(driver, "Suspension administrativa");
 		sOrders.add("Suspencion, orden numero: " + orden + " con numero de DNI: " + cDNI);
-		//System.out.println(sOrders);	
+		System.out.println(sOrders);	
 	}	
 	
 	@Test (groups = {"Suspension", "GestionesPerfilOficina","E2E"}, dataProvider="CuentaSuspension")
-	public void TS98487_CRM_Movil_REPRO_Suspension_por_Fraude_DNI_CUIT_Comercial_Irregular_Administrativo(String cDNI) {
+	public void TS98487_CRM_Movil_REPRO_Suspension_por_Fraude_DNI_CUIT_Comercial_Irregular_Administrativo(String cDNI, String cProvincia, String cCiudad, String cPartido) {
 		imagen = "TS98487";
 		driver.switchTo().frame(cambioFrame(driver, By.id("SearchClientDocumentType")));
 		sb.BuscarCuenta("DNI", cDNI);
@@ -1299,7 +1299,7 @@ public class GestionesPerfilOficina extends TestBase {
 	}
 	
 	@Test (groups = {"Suspension", "GestionesPerfilOficina","E2E"}, dataProvider="CuentaSuspension")
-	public void TS98498_CRM_Movil_REPRO_Suspension_por_Fraude_Cuenta_de_facturacion_Comercial_Desconocimiento_Administrativo(String cDNI) {
+	public void TS98498_CRM_Movil_REPRO_Suspension_por_Fraude_Cuenta_de_facturacion_Comercial_Desconocimiento_Administrativo(String cDNI, String cProvincia, String cCiudad, String cPartido) {
 		imagen = "TS98498";
 		driver.switchTo().frame(cambioFrame(driver, By.id("SearchClientDocumentType")));
 		sb.BuscarCuenta("DNI", cDNI);
@@ -2029,7 +2029,7 @@ public class GestionesPerfilOficina extends TestBase {
 }
 	
 	@Test (groups = {"Suspension", "GestionesPerfilOficina","E2E"}, dataProvider="CuentaSuspension")//No se puede visualizar en el panel izquierdo el numero de orden en UAT y no se suspende la cuenta
-	public void CRM_Movil_REPRO_Suspension_por_Fraude_Linea_Comercial_Desconocimiento_Administrativo(String cDNI) {
+	public void TS_98491_CRM_Movil_REPRO_Suspension_por_Fraude_Linea_Comercial_Desconocimiento_Administrativo(String cDNI) {
 		driver.switchTo().frame(cambioFrame(driver, By.id("SearchClientDocumentType")));
 		sb.BuscarCuenta("DNI", cDNI);
 		driver.findElement(By.cssSelector(".slds-tree__item.ng-scope")).click();
