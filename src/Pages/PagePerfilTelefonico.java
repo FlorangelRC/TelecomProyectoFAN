@@ -135,7 +135,7 @@ public class PagePerfilTelefonico extends TestBase{
 	public void tipoDePago(String tipodepago) {
 	List<WebElement> tipodePago = driver.findElements(By.cssSelector(".slds-radio.ng-scope"));
 	for (WebElement pago : tipodePago) {
-		System.out.print(pago.getText().toLowerCase());
+		//System.out.print(pago.getText().toLowerCase());
 			if (pago.getText().toLowerCase().contains(tipodepago)) {
 				System.out.println(tipodepago);
 					pago.findElement(By.tagName("span")).click();
@@ -180,8 +180,9 @@ public class PagePerfilTelefonico extends TestBase{
 		City.selectByVisibleText("CIUD AUTON D BUENOS AIRES");
 		Select Store = new Select (driver.findElement(By.id("Store")));
 		Store.selectByVisibleText("Centro de Servicio Santa Fe - Juan de Garay 444");
-		siguiente();
-		siguiente();
+		Delivery.click();
+		sleep(25000);
+		SimulaciondeFactura.click();
 		}
 	
 	
