@@ -718,15 +718,11 @@ public class AltasAgente extends TestBase{
 		sb.agregarplan(sPlan);
 		sleep(12000);
 		driver.findElement(By.cssSelector(".slds-input.ng-valid.ng-not-empty.ng-dirty.ng-valid-parse.ng-touched")).clear();
-		sleep(3000);
+		sleep(8000);
 		driver.findElement(By.cssSelector(".slds-input.ng-valid.ng-dirty.ng-valid-parse.ng-touched.ng-empty")).sendKeys(sEquipo);
-		sleep(10000);
-		List<WebElement> agregar = driver.findElements(By.cssSelector(".slds-button.slds-button--neutral.add-button")); 
-			for(WebElement a : agregar){
-				if(a.getText().equals("Agregar")){
-				a.click();
-				}
-			}
+		sleep(5000);
+		List<WebElement> agregar = driver.findElements(By.cssSelector(".slds-button.slds-button_neutral.cpq-add-button")); 
+		agregar.get(1).click();
 		sleep(5000);	
 		sb.continuar();
 		sleep(24000);
