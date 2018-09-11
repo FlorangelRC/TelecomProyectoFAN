@@ -4,25 +4,22 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.junit.AfterClass;
 import org.openqa.selenium.By;
 import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
-import org.openqa.selenium.support.ui.Select;
 import org.testng.Assert;
-
-import org.testng.annotations.AfterClass;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
+
 import Pages.Accounts;
 import Pages.BasePage;
 import Pages.CustomerCare;
 import Pages.Marketing;
-import Pages.SalesBase;
 import Pages.PagePerfilTelefonico;
+import Pages.SalesBase;
 import Pages.setConexion;
 
 public class GestionesPerfilTelefonico extends TestBase{
@@ -257,7 +254,7 @@ public class GestionesPerfilTelefonico extends TestBase{
 	}
 	
 	// no existe Pack, se probo el caso con otro
-	@Test (groups= {"GestionesPerfilTelefonico","E2E"},priority=1, dataProvider="VentaPacks")
+	/*@Test (groups= {"GestionesPerfilTelefonico","E2E"},priority=1, dataProvider="VentaPacks")
 	public void TS123314_CRM_Movil_REPRO_Venta_de_Pack_40_Pesos_Exclusivo_Para_Vos_Descuento_De_Saldo_Telefonico(String sDNI, String sCuenta, String sNumeroDeCuenta, String sLinea, String sVentaPack){
 	imagen = "TS123314";
 	SalesBase sale = new SalesBase(driver);
@@ -289,7 +286,7 @@ public class GestionesPerfilTelefonico extends TestBase{
 	System.out.println("Orden: "+sOrder);
 	datosOrden.add("Operacion: Compra de Pack, Orden: "+sOrder+", Cuenta: "+sCuenta+", DNI: "+sDNI+", Linea: "+sLinea);	
 	System.out.println("Order: " + sOrder + " Fin");
-	}
+	}*/
 	
 	@Test(groups = { "GestionesPerfilTelefonico", "E2E" }, priority = 1, dataProvider = "CambioSimCard")
 	public void TSCambioSimCard(String sDNI, String sCuenta, String cBanco, String cTarjeta, String cPromo, String cCuotas, String cNumTarjeta, String cVenceMes, String cVenceAno, String cCodSeg, String cTipoDNI,String cDNITarjeta, String cTitular) {
@@ -345,7 +342,7 @@ public class GestionesPerfilTelefonico extends TestBase{
 	String accid = driver.findElement(By.cssSelector(".searchClient-body.slds-hint-parent.ng-scope")).findElements(By.tagName("td")).get(5).getText();
 	System.out.println("id "+accid);
 	pagePTelefo.buscarAssert();
-	pagePTelefo.comprarPack("comprar sms");
+	pagePTelefo.comprarPack("comprar internet");
 	pagePTelefo.PackCombinado(sventaPack);
 	pagePTelefo.tipoDePago("en factura de venta");
 	pagePTelefo.getTipodepago().click();
@@ -368,13 +365,16 @@ public class GestionesPerfilTelefonico extends TestBase{
 	pagePTelefo.getMediodePago().click();
 	sleep(45000);
 	//nueva pantalla
-	driver.findElement(By.id("PurchaseIntegration_Message_nextBtn")).click();
+	
+	driver.findElement(By.cssSelector(".form-control.btn.btn-primary.btn-ellipsis.ng-binding")).click();
+	sleep(8000);
+	cCC.obligarclick(pagePTelefo.getMediodePago());
+	sleep(45000);
+	pagePTelefo.getOrdenSeRealizoConExito().click();
 	sleep(10000);
-	pagePTelefo.getOrdenSeRealizoConExito();
-	//pagePTelefo.siguiente();
-	//pagePTelefo.siguiente();
-	sleep(10000);
-	driver.navigate().refresh();
+	//String sOrder=cCC.obtenerOrden(driver, "Compra de Pack");
+	//System.out.println("Orden " + sOrder);
+	//cCC.buscarCaso(sOrder);
 	}
 	
 	@Test (groups= {"GestionesPerfilTelefonico", "Ajustes", "E2E"},dataProvider = "CuentaAjustesPRE")  //Rompe porque no sale el mensaje de gestion exitosa, sale el perfil no configurado correctamente

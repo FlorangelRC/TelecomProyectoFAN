@@ -109,8 +109,8 @@ public class GestionesPerfilOficina extends TestBase {
 
 	@AfterClass(alwaysRun=true)
 	public void quit() throws IOException {
-		guardarListaTxt(sOrders);
-		//driver.quit();
+		//guardarListaTxt(sOrders);
+		driver.quit();
 		sleep(5000);
 	}
 	
@@ -438,7 +438,7 @@ public class GestionesPerfilOficina extends TestBase {
 		sSB.BuscarCuenta("DNI",sDNI);
 		String accid = driver.findElements(By.cssSelector(".slds-truncate.ng-binding")).get(5).getText();
 		driver.findElement(By.cssSelector(".slds-tree__item.ng-scope")).findElement(By.tagName("div")).click();
-		sleep(15000);
+		sleep(18000);
 		driver.switchTo().frame(cambioFrame(driver, By.className("card-top")));
 		driver.findElement(By.className("card-top")).click();
 		sleep(5000);
@@ -470,7 +470,7 @@ public class GestionesPerfilOficina extends TestBase {
 		sleep(10000);
 		List <WebElement> roam = driver.findElements(By.cssSelector(".cpq-item-base-product"));
 			for(WebElement r : roam){
-				if(r.getText().contains("DDI sin Roaming Internacional")){
+				if(r.getText().contains("DDI con Roaming Internacional")){
 					driver.findElements(By.cssSelector(".slds-button.slds-button_icon-border-filled.cpq-item-actions-dropdown-button")).get(6).click();
 					sleep(5000);
 					cc.obligarclick(driver.findElements(By.cssSelector(".slds-dropdown__item.cpq-item-actions-dropdown__item")).get(6));
@@ -837,15 +837,15 @@ public class GestionesPerfilOficina extends TestBase {
 		buscarYClick(driver.findElements(By.cssSelector(".slds-form-element__label.ng-binding.ng-scope")), "equals", "si");
 		driver.findElement(By.id("Step-TipodeAjuste_nextBtn")).click();
 		sleep(7000);
-		buscarYClick(driver.findElements(By.cssSelector(".slds-form-element__label.ng-binding")), "equals", "cuenta: 9900000325210001");
+		buscarYClick(driver.findElements(By.cssSelector(".slds-form-element__label.ng-binding")), "contains", "cuenta: 1");
 		driver.findElement(By.id("Step1-SelectBillingAccount_nextBtn")).click();
 		sleep(7000);
 		buscarYClick(driver.findElements(By.cssSelector(".slds-form-element__label.ng-binding.ng-scope")), "equals", "si, ajustar");
 		driver.findElement(By.id("Step-VerifyPreviousAdjustments_nextBtn")).click();
 		sleep(7000);
-		buscarYClick(driver.findElements(By.cssSelector(".slds-form-element__label.ng-binding.ng-scope")), "equals", "nota de cr\u00e9dito");
-		buscarYClick(driver.findElements(By.cssSelector(".slds-form-element__label.ng-binding.ng-scope")), "equals", "si");
-		driver.findElements(By.className("slds-cell-shrink")).get(0).click();
+		buscarYClick(driver.findElements(By.cssSelector(".slds-form-element__label.ng-binding.ng-scope")), "equals", "nota de d\u00e9bito");
+		driver.findElement(By.id("MontoLibre")).sendKeys("123");
+		selectByText(driver.findElement(By.id("SelectItemAjusteLibre")), "Ajuste Minutos");
 		driver.findElement(By.id("Step-AjusteNivelCuenta_nextBtn")).click();
 		sleep(7000);
 		driver.findElement(By.id("Step-Summary_nextBtn")).click();

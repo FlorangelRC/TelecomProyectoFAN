@@ -560,8 +560,11 @@ public class TestBase {
 		}
 	}
 		
-	public static void sleep(int miliseconds) {
-		try {Thread.sleep(miliseconds);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+	public void sleep(int miliseconds) {
+		if(urlAmbiente.contains("sit"))
+			try {Thread.sleep(miliseconds+5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		else
+			try {Thread.sleep(miliseconds);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 	}
 	
 	public List<String> obtenerElAtributoDeLosElementos(String atributo, List<WebElement> elementos) {
@@ -1164,14 +1167,14 @@ public class TestBase {
 	@DataProvider
 	public Object[][] DatosAltaEquipoExiste() throws Exception{
 
-	 Object[][] testObjArray = ExcelUtils.getTableArray("Cuentas.xlsx","PreparacionDatos",1,1,9,"Alta Linea Equipo Existe");
+	 Object[][] testObjArray = ExcelUtils.getTableArray("Cuentas.xlsx","PreparacionDatos",1,1,10,"Alta Linea Equipo Existe");
 
 	 return (testObjArray);
 	}
 	@DataProvider
 	public Object[][] AltaLineaNuevoEquipoTC() throws Exception{
 
-	 Object[][] testObjArray = ExcelUtils.getTableArray("Cuentas.xlsx","PreparacionDatos",1,1,22,"Alta Linea Equip New AG");
+	 Object[][] testObjArray = ExcelUtils.getTableArray("Cuentas.xlsx","PreparacionDatos",1,1,22,"Alta Linea Equip New AG Credito");
 
 	 return (testObjArray);
 
@@ -1180,7 +1183,7 @@ public class TestBase {
 	@DataProvider
 	public Object[][] AltaLineaNuevoEquipoOfCom() throws Exception{
 
-	 Object[][] testObjArray = ExcelUtils.getTableArray("Cuentas.xlsx","PreparacionDatos",1,1,9,"Alta Linea Equipo New OfCom");
+	 Object[][] testObjArray = ExcelUtils.getTableArray("Cuentas.xlsx","PreparacionDatos",1,1,12,"Alta Linea Equipo New OfCom");
 
 	 return (testObjArray);
 
@@ -1269,6 +1272,23 @@ public class TestBase {
 	public Object[][] AltaLineaExisteEquipoOfComTD() throws Exception{
 
 	 Object[][] testObjArray = ExcelUtils.getTableArray("Cuentas.xlsx","PreparacionDatos",1,1,9,"Alta Linea Equipo Existe OfCom Debito");
+
+	 return (testObjArray);
+
+	}
+	
+	@DataProvider
+	public Object[][] AltaLineaNuevoconEquipo() throws Exception{
+
+	 Object[][] testObjArray = ExcelUtils.getTableArray("Cuentas.xlsx","PreparacionDatos",1,1,12,"Linea Nueva Equipo AG");
+
+	 return (testObjArray);
+
+	}
+	@DataProvider
+	public Object[][] AltaLineaEquipoOfCom() throws Exception{
+
+	 Object[][] testObjArray = ExcelUtils.getTableArray("Cuentas.xlsx","PreparacionDatos",1,1,8,"Linea Equipo Nuevo OfCom");
 
 	 return (testObjArray);
 
