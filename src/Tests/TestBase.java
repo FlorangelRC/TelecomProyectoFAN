@@ -14,6 +14,7 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 
+import org.apache.commons.io.FileUtils;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.xssf.usermodel.XSSFRow;
 import org.apache.poi.xssf.usermodel.XSSFSheet;
@@ -44,8 +45,8 @@ import DataProvider.ExcelUtils;
 
 public class TestBase {
 	protected static WebDriver driver;//
-	 //public String urlAmbiente = "https://telecomcrm--uat.cs53.my.salesforce.com";
-	 public String urlAmbiente = "https://crm--sit.cs14.my.salesforce.com/";
+	 public String urlAmbiente = "https://telecomcrm--uat.cs53.my.salesforce.com";
+	 //public String urlAmbiente = "https://crm--sit.cs14.my.salesforce.com/";
 	
 	
 	public void leftDropdown(WebDriver driver, String selection) {
