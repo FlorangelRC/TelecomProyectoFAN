@@ -1634,6 +1634,43 @@ public class CustomerCare extends BasePage {
 		return(null);
 	}
 	
+	public String obtenerOrden2(WebDriver driver) {
+		String sOrder = "";
+		WebElement wBox = driver.findElement(By.cssSelector(".slds-form-element.vlc-flex.vlc-slds-text-block.vlc-slds-rte.ng-pristine.ng-valid.ng-scope"));
+		List <WebElement> wContent = wBox.findElement(By.className("slds-form-element__control")).findElement(By.className("ng-binding")).findElements(By.tagName("p"));
+		sOrder = wContent.get(0).getText().substring(12);
+		System.out.println("sOrder: " + sOrder);
+		return sOrder;
+	}
+	
+	public String obtenerTNyMonto2(WebDriver driver, String sOrder) {
+		buscarCaso(sOrder);
+		String datos = null;
+		TestBase TB = new TestBase();
+		boolean esta = false;
+		String texto = null;
+		sleep(8000);
+		driver.switchTo().frame(TB.cambioFrame(driver, By.id("OrderNumber_ilecell")));
+		WebElement tabla = driver.findElement(By.id("ep")).findElements(By.tagName("table")).get(1);
+		datos = tabla.findElement(By.tagName("tr")).findElements(By.tagName("td")).get(3).getText();
+		List<WebElement> todo = tabla.findElements(By.tagName("td"));
+		for(WebElement UnT : todo) {
+			if(esta == true) {
+				texto = UnT.getText();
+				break;
+			}
+			if(UnT.getText().equalsIgnoreCase("Bill Simulation Payload")) {
+				esta = true;
+			}
+		}
+		texto = texto.split(",")[0].split(":")[2];
+		texto = texto.substring(1, texto.length()-1);
+		texto = texto.replace(",", "");
+		texto = texto.replace(".", "").concat("00");
+		datos = datos+"-"+texto;
+		return (sOrder + "-" + datos);
+	}
+	
 	public boolean verificarOrden(String sOrder) {
 		boolean bAssert = true;
 		if (sOrder.contains("No se pudo realizar")) {
