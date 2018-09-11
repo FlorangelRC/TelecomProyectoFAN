@@ -1,9 +1,9 @@
 package Tests;
 
-import static org.testng.Assert.assertTrue;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+
 import org.openqa.selenium.By;
 import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.WebDriver;
@@ -14,6 +14,7 @@ import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
+
 import Pages.Accounts;
 import Pages.BasePage;
 import Pages.ContactSearch;
@@ -103,13 +104,10 @@ public class GestionesPerfilOficina extends TestBase {
 		sOrders.clear();
 		tomarCaptura(driver,imagen);
 		sleep(5000);
-		/*SalesBase sb = new SalesBase(driver);
-		sb.cerrarPestaniaGestion(driver);*/
 	}
 
 	//@AfterClass(alwaysRun=true)
 	public void quit() throws IOException {
-		//guardarListaTxt(sOrders);
 		driver.quit();
 		sleep(5000);
 	}
@@ -129,18 +127,24 @@ public class GestionesPerfilOficina extends TestBase {
 		
 		CustomerCare cCC = new CustomerCare(driver);
 		cCC.seleccionarCardPornumeroLinea(sLinea, driver);
-		//driver.switchTo().frame(cambioFrame(driver, By.className("card-top")));
-		//driver.findElement(By.className("card-top")).click();
-		//sleep(3000);
-		
 		cCC.irAGestionEnCard("N\u00fameros Gratis");
 		
 		sleep(5000);
 		driver.switchTo().defaultContent();
 		driver.switchTo().frame(cambioFrame(driver, By.cssSelector(".slds-col--padded.slds-size--1-of-2")));
 		List<WebElement> wNumerosAmigos = driver.findElements(By.cssSelector(".slds-col--padded.slds-size--1-of-2"));
-		System.out.println("sNumeroVOZ: " + sNumeroVOZ + "\nsNumeroSMS: " + sNumeroSMS);
-		wNumerosAmigos.get(0).findElement(By.tagName("input")).sendKeys(sNumeroVOZ);
+		Marketing mMarketing = new Marketing(driver);
+		int iIndice = mMarketing.numerosAmigos(sNumeroVOZ, sNumeroSMS);
+		switch (iIndice) {
+			case 0:
+				wNumerosAmigos.get(0).findElement(By.tagName("input")).sendKeys(sNumeroVOZ);
+				break;
+			case 1:
+				wNumerosAmigos.get(1).findElement(By.tagName("input")).sendKeys(sNumeroSMS);
+				break;
+			default:
+				Assert.assertTrue(false);
+		}
 		wNumerosAmigos.get(1).findElement(By.tagName("input")).sendKeys(sNumeroSMS);
 		sleep(5000);
 		driver.findElement(By.cssSelector(".OSradioButton.ng-scope.only-buttom")).click();
@@ -153,18 +157,16 @@ public class GestionesPerfilOficina extends TestBase {
 		sleep(5000);
 		String orden = cc.obtenerOrden(driver, "Numero Gratis");
 		sOrders.add("Numeros amigos, orden numero: " + orden + " con numero de DNI: " + sDNI);
-		List<WebElement> wTabs = driver.findElements(By.className("x-tab-strip-closable"));
-		for (WebElement wAux : wTabs) {
-			if (wAux.findElement(By.className("tabText")).getText().equalsIgnoreCase("N\u00fameros Gratis")) {
-				wAux.findElement(By.className("x-tab-strip-close")).click();
-			}
-		}
+		sleep(10000);
+		BasePage bBP = new BasePage();
+		bBP.closeTabByName(driver, "N\u00fameros Gratis");
 		cCC.seleccionarCardPornumeroLinea(sLinea, driver);
 		cCC.irAGestionEnCard("N\u00fameros Gratis");
-		//Complete when the page works
+		Assert.assertTrue(mMarketing.verificarNumerosAmigos(driver, sNumeroVOZ, sNumeroSMS));
+		//Verify when the page works
 	}
 	
-	@Test (groups = {"GestionesPerfilOficina","NumerosAmigos","E2E"}, dataProvider="NumerosAmigos")
+	@Test (groups = {"GestionesPerfilOficina","NumerosAmigos","E2E"}, dataProvider="NumerosAmigosModificacion")
 	public void TS100603_CRM_Movil_REPRO_FF_Modificacion_Posventa_Telefonico(String sDNI, String sCuenta, String sNumeroDeCuenta, String sLinea, String sNumeroVOZ, String sNumeroSMS) {
 		imagen = "TS100603";
 		BasePage cambioFrame=new BasePage();
@@ -179,20 +181,26 @@ public class GestionesPerfilOficina extends TestBase {
 		
 		CustomerCare cCC = new CustomerCare(driver);
 		cCC.seleccionarCardPornumeroLinea(sLinea, driver);
-		//driver.switchTo().frame(cambioFrame(driver, By.className("card-top")));
-		//driver.findElement(By.className("card-top")).click();
-		//sleep(3000);
-		
 		cCC.irAGestionEnCard("N\u00fameros Gratis");
 		
 		sleep(5000);
 		driver.switchTo().defaultContent();
 		driver.switchTo().frame(cambioFrame(driver, By.cssSelector(".slds-col--padded.slds-size--1-of-2")));
 		List<WebElement> wNumerosAmigos = driver.findElements(By.cssSelector(".slds-col--padded.slds-size--1-of-2"));
-		System.out.println("sNumeroVOZ: " + sNumeroVOZ + "\nsNumeroSMS: " + sNumeroSMS);
-		//Verify if it's save the previews number
-		wNumerosAmigos.get(0).findElement(By.tagName("input")).sendKeys(sNumeroVOZ);
-		wNumerosAmigos.get(1).findElement(By.tagName("input")).sendKeys(sNumeroSMS);
+		Marketing mMarketing = new Marketing(driver);
+		int iIndice = mMarketing.numerosAmigos(sNumeroVOZ, sNumeroSMS);
+		switch (iIndice) {
+		case 0:
+			wNumerosAmigos.get(0).findElement(By.tagName("input")).clear();
+			wNumerosAmigos.get(0).findElement(By.tagName("input")).sendKeys(sNumeroVOZ);
+			break;
+		case 1:
+			wNumerosAmigos.get(0).findElement(By.tagName("input")).clear();
+			wNumerosAmigos.get(1).findElement(By.tagName("input")).sendKeys(sNumeroSMS);
+			break;
+		default:
+			Assert.assertTrue(false);
+	}
 		sleep(5000);
 		driver.findElement(By.cssSelector(".OSradioButton.ng-scope.only-buttom")).click();
 		
@@ -204,19 +212,17 @@ public class GestionesPerfilOficina extends TestBase {
 		sleep(5000);
 		String orden = cc.obtenerOrden(driver, "Numero Gratis");
 		sOrders.add("Numeros amigos, orden numero: " + orden + " con numero de DNI: " + sDNI);
-		List<WebElement> wTabs = driver.findElements(By.className("x-tab-strip-closable"));
-		for (WebElement wAux : wTabs) {
-			if (wAux.findElement(By.className("tabText")).getText().equalsIgnoreCase("N\u00fameros Gratis")) {
-				wAux.findElement(By.className("x-tab-strip-close")).click();
-			}
-		}
+		sleep(10000);
+		BasePage bBP = new BasePage();
+		bBP.closeTabByName(driver, "N\u00fameros Gratis");
 		cCC.seleccionarCardPornumeroLinea(sLinea, driver);
 		cCC.irAGestionEnCard("N\u00fameros Gratis");
-		//Complete when the page works
+		Assert.assertTrue(mMarketing.verificarNumerosAmigos(driver, sNumeroVOZ, sNumeroSMS));
+		//Verify when the page works
 	}
 	
-	@Test (groups = {"GestionesPerfilOficina","NumerosAmigos","E2E"}, dataProvider="NumerosAmigos")
-	public void TS100605_CRM_Movil_REPRO_FF_Baja_Presencial(String sDNI, String sCuenta, String sNumeroDeCuenta, String sLinea, String sNumeroVOZ, String sNumeroSMS) {
+	@Test (groups = {"GestionesPerfilOficina","NumerosAmigos","E2E"}, dataProvider="NumerosAmigosBaja")
+	public void TS100605_CRM_Movil_REPRO_FF_Baja_Presencial(String sDNI, String sCuenta, String sNumeroDeCuenta, String sLinea, String sVOZorSMS) {
 		imagen = "TS100605";
 		BasePage cambioFrame=new BasePage();
 		driver.switchTo().frame(cambioFrame.getFrameForElement(driver, By.id("SearchClientDocumentType")));
@@ -230,20 +236,23 @@ public class GestionesPerfilOficina extends TestBase {
 		
 		CustomerCare cCC = new CustomerCare(driver);
 		cCC.seleccionarCardPornumeroLinea(sLinea, driver);
-		//driver.switchTo().frame(cambioFrame(driver, By.className("card-top")));
-		//driver.findElement(By.className("card-top")).click();
-		//sleep(3000);
-		
 		cCC.irAGestionEnCard("N\u00fameros Gratis");
 		
 		sleep(5000);
 		driver.switchTo().defaultContent();
 		driver.switchTo().frame(cambioFrame(driver, By.cssSelector(".slds-col--padded.slds-size--1-of-2")));
 		List<WebElement> wNumerosAmigos = driver.findElements(By.cssSelector(".slds-col--padded.slds-size--1-of-2"));
-		System.out.println("sNumeroVOZ: " + sNumeroVOZ + "\nsNumeroSMS: " + sNumeroSMS);
-		//Verify if it's save the previews number
-		//Delete previews number
-		//Complete when the page works
+		wNumerosAmigos.get(Integer.parseInt(sVOZorSMS)).clear();
+		
+		sleep(10000);
+		BasePage bBP = new BasePage();
+		bBP.closeTabByName(driver, "N\u00fameros Gratis");
+		cCC.seleccionarCardPornumeroLinea(sLinea, driver);
+		cCC.irAGestionEnCard("N\u00fameros Gratis");
+		
+		wNumerosAmigos = driver.findElements(By.cssSelector(".slds-col--padded.slds-size--1-of-2"));
+		Assert.assertTrue(wNumerosAmigos.get(Integer.parseInt(sVOZorSMS)).getText().isEmpty());
+		//Verify when the page works
 	}
 	
 	@Test (groups = {"GestionesPerfilOficina", "Recargas","E2E"}, dataProvider = "RecargaEfectivo")

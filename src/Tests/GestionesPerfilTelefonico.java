@@ -100,7 +100,7 @@ public class GestionesPerfilTelefonico extends TestBase{
 		sb.cerrarPestaniaGestion(driver);*/
 	}
 
-	//@AfterClass(alwaysRun=true)
+	@AfterClass(alwaysRun=true)
 	public void quit() throws IOException {
 		guardarListaTxt(datosOrden);
 		System.out.println("Se supone que guardo");
