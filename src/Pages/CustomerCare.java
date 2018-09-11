@@ -1634,6 +1634,20 @@ public class CustomerCare extends BasePage {
 		return(null);
 	}
 	
+	public boolean verificarOrdenYGestion(String gestion) {
+		boolean verif = false;
+		TestBase tb = new TestBase();
+		String nroCaso = driver.findElement(By.xpath("//*[@id=\"txtSuccessConfirmation\"]/div")).findElement(By.tagName("strong")).getText();
+		buscarCaso(nroCaso);
+		driver.switchTo().frame(tb.cambioFrame(driver, By.className("rsbody")));
+		String gest = driver.findElement(By.className("rsbody")).findElement(By.className("rstopcontainer")).findElement(By.className("rspropertyvalue")).getText();
+		System.out.println(gestion);
+		if (gest.equalsIgnoreCase(gestion)) {
+			verif = true;
+		}
+		return verif;
+	}
+	
 	public String obtenerOrden2(WebDriver driver) {
 		String sOrder = "";
 		WebElement wBox = driver.findElement(By.cssSelector(".slds-form-element.vlc-flex.vlc-slds-text-block.vlc-slds-rte.ng-pristine.ng-valid.ng-scope"));
