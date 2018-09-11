@@ -109,8 +109,8 @@ public class GestionesPerfilOficina extends TestBase {
 
 	@AfterClass(alwaysRun=true)
 	public void quit() throws IOException {
-		guardarListaTxt(sOrders);
-		//driver.quit();
+		//guardarListaTxt(sOrders);
+		driver.quit();
 		sleep(5000);
 	}
 	
@@ -837,15 +837,15 @@ public class GestionesPerfilOficina extends TestBase {
 		buscarYClick(driver.findElements(By.cssSelector(".slds-form-element__label.ng-binding.ng-scope")), "equals", "si");
 		driver.findElement(By.id("Step-TipodeAjuste_nextBtn")).click();
 		sleep(7000);
-		buscarYClick(driver.findElements(By.cssSelector(".slds-form-element__label.ng-binding")), "equals", "cuenta: 9900000325210001");
+		buscarYClick(driver.findElements(By.cssSelector(".slds-form-element__label.ng-binding")), "contains", "cuenta: 1");
 		driver.findElement(By.id("Step1-SelectBillingAccount_nextBtn")).click();
 		sleep(7000);
 		buscarYClick(driver.findElements(By.cssSelector(".slds-form-element__label.ng-binding.ng-scope")), "equals", "si, ajustar");
 		driver.findElement(By.id("Step-VerifyPreviousAdjustments_nextBtn")).click();
 		sleep(7000);
-		buscarYClick(driver.findElements(By.cssSelector(".slds-form-element__label.ng-binding.ng-scope")), "equals", "nota de cr\u00e9dito");
-		buscarYClick(driver.findElements(By.cssSelector(".slds-form-element__label.ng-binding.ng-scope")), "equals", "si");
-		driver.findElements(By.className("slds-cell-shrink")).get(0).click();
+		buscarYClick(driver.findElements(By.cssSelector(".slds-form-element__label.ng-binding.ng-scope")), "equals", "nota de d\u00e9bito");
+		driver.findElement(By.id("MontoLibre")).sendKeys("123");
+		selectByText(driver.findElement(By.id("SelectItemAjusteLibre")), "Ajuste Minutos");
 		driver.findElement(By.id("Step-AjusteNivelCuenta_nextBtn")).click();
 		sleep(7000);
 		driver.findElement(By.id("Step-Summary_nextBtn")).click();
@@ -906,7 +906,7 @@ public class GestionesPerfilOficina extends TestBase {
 		sleep(5000);
 		String orden = cc.obtenerOrden(driver, "Suspensi\u00f3n de Linea");
 		sOrders.add("Suspension, orden numero: " + orden + " con numero de DNI: " + cDNI);
-		//System.out.println(sOrders);
+		System.out.println(sOrders);
 	}
 	
 	@Test (groups = {"Suspension", "GestionesPerfilOficina","E2E"}, dataProvider="CuentaSuspension")
@@ -979,6 +979,8 @@ public class GestionesPerfilOficina extends TestBase {
 		driver.findElement(By.id("Step4_nextBtn")).click();
 		sleep(15000);
 		driver.findElement(By.id("StepSummary_nextBtn")).click();
+		sleep(15000);
+		buscarYClick(driver.findElements(By.cssSelector(".slds-button.slds-button--neutral.ng-binding.ng-scope")),"contains", "continue");
 		sleep(40000);
 		boolean b = false;
 		List <WebElement> prov = driver.findElements(By.cssSelector(".slds-box.ng-scope"));
@@ -1311,7 +1313,7 @@ public class GestionesPerfilOficina extends TestBase {
 		buscarYClick(driver.findElements(By.cssSelector(".slds-form-element__label.ng-binding.ng-scope")), "contains", "cuenta de facturacion");
 		driver.findElement(By.id("Step2-SelectAssetOrDocument_nextBtn")).click();
 		sleep(8000);
-		buscarYClick(driver.findElements(By.cssSelector(".slds-form-element__label.ng-binding.ng-scope")), "contains", "uno newton");
+		driver.findElement(By.xpath("//*[@id=\"BillingAccs0\"]/div/div/ul/li/label/span[1]")).click();
 		driver.findElement(By.id("Step3_nextBtn")).click();
 		sleep(8000);
 		selectByText(driver.findElement(By.id("SelectFraud")), "Comercial");

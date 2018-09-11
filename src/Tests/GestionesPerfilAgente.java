@@ -93,10 +93,10 @@ public class GestionesPerfilAgente extends TestBase{
 		//sb.cerrarPestaniaGestion(driver);
 	}
 	
-	//@AfterClass(alwaysRun=true)
+	@AfterClass(alwaysRun=true)
 	public void quit() throws IOException {
-		guardarListaTxt(datosOrden);
-		//driver.quit();
+		//guardarListaTxt(datosOrden);
+		driver.quit();
 		sleep(5000);
 	}
 	
