@@ -1,14 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
 <suite guice-stage="DEVELOPMENT" name="Failed suite [Default suite]">
-  <test name="Default test(failed)">
+  <test thread-count="5" name="Default test(failed)">
     <classes>
-      <class name="Tests.GestionesPerfilBackOffice">
+      <class name="Tests.GestionesPerfilOficina">
         <methods>
-          <include name="TS121329_CRM_Movil_PRE_Ajuste_Backoffice_modifica_cantidades" invocation-numbers="0"/>
+          <include name="TS_98599_CRM_Movil_REPRO_Rehabilitacion_Administrativo_Fraude_DNI"/>
           <include name="init"/>
         </methods>
-      </class> <!-- Tests.GestionesPerfilBackOffice -->
+      </class> <!-- Tests.GestionesPerfilOficina -->
     </classes>
   </test> <!-- Default test(failed) -->
 </suite> <!-- Failed suite [Default suite] -->
