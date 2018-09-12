@@ -107,12 +107,12 @@ public class GestionesPerfilOficina extends TestBase {
 		sb.cerrarPestaniaGestion(driver);*/
 	}
 
-	@AfterClass(alwaysRun=true)
+	/*@AfterClass(alwaysRun=true)
 	public void quit() throws IOException {
 		//guardarListaTxt(sOrders);
 		driver.quit();
 		sleep(5000);
-	}
+	}*/
 	
 	@Test (groups = {"GestionesPerfilOficina","NumerosAmigos","E2E"}, dataProvider="NumerosAmigos")
 	public void TS100602_CRM_Movil_REPRO_FF_Alta_Presencial(String sDNI, String sCuenta, String sNumeroDeCuenta, String sLinea, String sNumeroVOZ, String sNumeroSMS) {
@@ -907,6 +907,10 @@ public class GestionesPerfilOficina extends TestBase {
 		String orden = cc.obtenerOrden(driver, "Suspensi\u00f3n de Linea");
 		sOrders.add("Suspension, orden numero: " + orden + " con numero de DNI: " + cDNI);
 		System.out.println(sOrders);
+		if(orden.length() >= 8) {
+			orden = orden.substring(0, orden.length()-25);
+		}
+		cc.buscarCaso(orden);
 	}
 	
 	@Test (groups = {"Suspension", "GestionesPerfilOficina","E2E"}, dataProvider="CuentaSuspension")
@@ -954,6 +958,10 @@ public class GestionesPerfilOficina extends TestBase {
 		String orden = cc.obtenerOrden(driver, "Suspensi\u00f3n de Linea");
 		sOrders.add("Suspencion, orden numero: " + orden + " con numero de DNI: " + cDNI);
 		System.out.println(sOrders);
+		/*if(orden.length() >= 8) {
+			orden = orden.substring(0, orden.length()-25);
+		}*/
+		cc.buscarCaso(orden.substring(0, 7));
 	}	
 	
 	@Test (groups = {"Suspension", "GestionesPerfilOficina","E2E"}, dataProvider="CuentaSuspension")
@@ -1994,7 +2002,7 @@ public class GestionesPerfilOficina extends TestBase {
 	}
 	
 	@Test (groups = {"Suspension", "GestionesPerfilOficina","E2E"}, dataProvider="CuentaSuspension") //No se puede visualizar en el panel izquierdo el numero de orden en UAT y no se suspende la cuenta; y en SIT no existe la opci�n de DNI/CUIT
-	public void TS_98484_CRM_Movil_REPRO_Suspension_por_Fraude_DNI_CUIT_Comercial_Fraude_por_suscripcion_Administrativo(String cDNI) {
+	public void TS_98484_CRM_Movil_REPRO_Suspension_por_Fraude_DNI_CUIT_Comercial_Fraude_por_suscripcion_Administrativo(String cDNI, String cProvincia, String cCiudad, String cPartido) {
 	driver.switchTo().frame(cambioFrame(driver, By.id("SearchClientDocumentType")));
 	sb.BuscarCuenta("DNI", cDNI);
 	driver.findElement(By.cssSelector(".slds-tree__item.ng-scope")).click();
@@ -2026,10 +2034,14 @@ public class GestionesPerfilOficina extends TestBase {
 		}
 	}
 	Assert.assertTrue(a);
+	sleep(8000);
+	String orden = cc.obtenerOrden(driver, "Suspension administrativa");
+	sOrders.add("Suspencion, orden numero: " + orden + " con numero de DNI: " + cDNI);
+	System.out.println(sOrders);
 }
 	
 	@Test (groups = {"Suspension", "GestionesPerfilOficina","E2E"}, dataProvider="CuentaSuspension")//No se puede visualizar en el panel izquierdo el numero de orden en UAT y no se suspende la cuenta
-	public void TS_98491_CRM_Movil_REPRO_Suspension_por_Fraude_Linea_Comercial_Desconocimiento_Administrativo(String cDNI) {
+	public void TS_98491_CRM_Movil_REPRO_Suspension_por_Fraude_Linea_Comercial_Desconocimiento_Administrativo(String cDNI, String cProvincia, String cCiudad, String cPartido) {
 		driver.switchTo().frame(cambioFrame(driver, By.id("SearchClientDocumentType")));
 		sb.BuscarCuenta("DNI", cDNI);
 		driver.findElement(By.cssSelector(".slds-tree__item.ng-scope")).click();
@@ -2063,5 +2075,9 @@ public class GestionesPerfilOficina extends TestBase {
 			}
 		}
 		Assert.assertTrue(a);
+		sleep(8000);
+		String orden = cc.obtenerOrden(driver, "Suspension administrativa");
+		sOrders.add("Suspencion, orden numero: " + orden + " con numero de DNI: " + cDNI);
+		System.out.println(sOrders);
 	}
 }	
