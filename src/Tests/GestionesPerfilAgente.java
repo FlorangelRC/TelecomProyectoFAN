@@ -132,6 +132,7 @@ public class GestionesPerfilAgente extends TestBase{
 		driver.findElement(By.id("RefillAmount")).sendKeys(sMonto);
 		driver.findElement(By.id("AmountSelectionStep_nextBtn")).click();
 		sleep(15000);
+		String sOrden = cCC.obtenerOrden2(driver);
 		driver.findElement(By.id("InvoicePreview_nextBtn")).click();
 		sleep(10000);
 		buscarYClick(driver.findElements(By.cssSelector(".slds-form-element__label.ng-binding")), "equals", "tarjeta de credito");
@@ -158,7 +159,8 @@ public class GestionesPerfilAgente extends TestBase{
 			}
 			Assert.assertTrue(a);
 		}
-		String orden = cCC.obtenerOrdenMontoyTN(driver, "Recarga");
+		String orden = cCC.obtenerTNyMonto2(driver, sOrden);
+		//String orden = cCC.obtenerOrdenMontoyTN(driver, "Recarga");
 		System.out.println("orden = "+orden);
 		datosOrden.add("Recargas" + orden + " de cuenta "+accid+" con DNI: " + sDNI);
 		CBS_Mattu invoSer = new CBS_Mattu();
@@ -166,7 +168,8 @@ public class GestionesPerfilAgente extends TestBase{
 		sleep(5000);
 		driver.navigate().refresh();
 		sleep(10000);
-		cCC.obtenerOrdenMontoyTN(driver, "Recarga");
+		cCC.obtenerTNyMonto2(driver, sOrden);
+		//cCC.obtenerOrdenMontoyTN(driver, "Recarga");
 		sleep(10000);
 		driver.switchTo().frame(cambioFrame(driver, By.id("Status_ilecell")));
 		Assert.assertTrue(driver.findElement(By.id("Status_ilecell")).getText().equalsIgnoreCase("activada"));
