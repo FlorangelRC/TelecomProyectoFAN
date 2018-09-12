@@ -16,6 +16,7 @@ import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.Select;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
+import Tests.TestBase;
 import javafx.scene.control.Tab;
 
 public class BasePage {
@@ -308,4 +309,20 @@ public class BasePage {
 		
 		return tn;
 	}
+	
+	public void closeTabByName(WebDriver driver, String sTabName) {
+		driver.switchTo().defaultContent();
+		WebElement wMenu = driver.findElement(By.id("ext-gen65"));
+		List <WebElement> wTabs = wMenu.findElements(By.tagName("li"));
+		for (WebElement wAux : wTabs) {
+			if (wAux.findElement(By.className("tabText")).getText().equalsIgnoreCase(sTabName)) {
+				Actions builder = new Actions(driver);
+				builder.moveToElement(wMenu).perform();
+				wAux.click();
+				wAux.findElement(By.className("x-tab-strip-close")).click();
+				break;
+			}
+		}
+	}
+	
 }

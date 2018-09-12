@@ -103,7 +103,7 @@ public class Marketing extends CustomerCare {
 			}
 		}
 		//gestionesEncontradas.get(1).click();
-		TestBase.sleep(3000);
+		sleep(3000);
 		cambiarAFrameActivo();
 		/*BasePage cambioFrame=new BasePage(driver);
 		driver.switchTo().defaultContent();
@@ -530,6 +530,43 @@ public class Marketing extends CustomerCare {
 		BasePage cambioFrame=new BasePage();
 		driver.switchTo().defaultContent();
 		driver.switchTo().frame(cambioFrame.getFrameForElement(driver, By.cssSelector(".slds-panel__section.slds-p-around--small")));
+	}
+	
+	public int numerosAmigos(String sVOZ, String sSMS) {
+		int iIndice = 2;
+		if (!sVOZ.isEmpty()) {
+			iIndice = 0;
+		}
+		else {
+			if (!sSMS.isEmpty()) {
+				iIndice = 1;
+			}
+			else {
+				System.out.println("Ambas celdas están vacías en el DataProvider.");			}
+		}
+		
+		return iIndice;
+	}
+	
+	public boolean verificarNumerosAmigos(WebDriver driver, String sNumeroVOZ, String sNumeroSMS) {
+		boolean aAssert = false;
+		
+		sleep(5000);
+		TestBase tTb = new TestBase();
+		driver.switchTo().defaultContent();
+		driver.switchTo().frame(tTb.cambioFrame(driver, By.cssSelector(".slds-col--padded.slds-size--1-of-2")));
+		List<WebElement> wNumerosAmigos = driver.findElements(By.cssSelector(".slds-col--padded.slds-size--1-of-2"));
+		int iIndice = numerosAmigos(sNumeroVOZ, sNumeroSMS);
+		switch (iIndice) {
+		case 0:
+			aAssert = wNumerosAmigos.get(0).findElement(By.tagName("input")).getText().equals(sNumeroVOZ);
+			break;
+		case 1:
+			aAssert = wNumerosAmigos.get(1).findElement(By.tagName("input")).getText().equals(sNumeroSMS);
+			break;
+	}
+		
+		return aAssert;
 	}
 	
 }
