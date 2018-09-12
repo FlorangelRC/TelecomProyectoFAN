@@ -81,9 +81,9 @@ public class PagePerfilTelefonico extends TestBase{
 	public void buscarAssert() {
 	sleep(8000);
 	driver.findElement(By.cssSelector(".slds-tree__item.ng-scope")).findElement(By.tagName("div")).click();
-	sleep(20000);
+	sleep(8000);
 	driver.switchTo().frame(cambioFrame(driver, By.className("card-top"))); 
-	sleep(20000);
+	sleep(8000);
 	driver.findElement(By.className("card-top")).click(); 
 	sleep(12000); 
 	}
