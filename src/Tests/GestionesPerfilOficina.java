@@ -20,6 +20,7 @@ import Pages.ContactSearch;
 import Pages.CustomerCare;
 import Pages.Marketing;
 import Pages.OM;
+import Pages.PagePerfilTelefonico;
 import Pages.SalesBase;
 import Pages.setConexion;
 
@@ -97,7 +98,7 @@ public class GestionesPerfilOficina extends TestBase {
 		sleep(25000);
 	}
 
-	@AfterMethod(alwaysRun=true)
+	//@AfterMethod(alwaysRun=true)
 	public void after() throws IOException {
 		guardarListaTxt(sOrders);
 		sOrders.clear();
@@ -107,7 +108,7 @@ public class GestionesPerfilOficina extends TestBase {
 		sb.cerrarPestaniaGestion(driver);*/
 	}
 
-	@AfterClass(alwaysRun=true)
+	//@AfterClass(alwaysRun=true)
 	public void quit() throws IOException {
 		//guardarListaTxt(sOrders);
 		driver.quit();
@@ -2063,5 +2064,19 @@ public class GestionesPerfilOficina extends TestBase {
 			}
 		}
 		Assert.assertTrue(a);
+	}
+	
+	@Test (groups = {"GestionesPerfilOficina","E2E"}, dataProvider="PackOfCom")
+	public void Venta_de_Pack(String sDNI, String sLinea, String cBanco, String cTarjeta, String cPromo, String cCuotas, String cNumTarjeta, String cVenceMes, String cVenceAno, String cCodSeg, String cTipoDNI, String cDNITarjeta, String cTitular, String sPackOfCom) throws InterruptedException{
+		PagePerfilTelefonico pagePTelefo = new PagePerfilTelefonico(driver);
+		driver.switchTo().frame(cambioFrame(driver, By.id("SearchClientDocumentType")));
+		sb.BuscarCuenta("DNI", sDNI);
+		driver.findElement(By.cssSelector(".slds-tree__item.ng-scope")).click();
+		String accid = driver.findElement(By.cssSelector(".searchClient-body.slds-hint-parent.ng-scope")).findElements(By.tagName("td")).get(5).getText();
+		System.out.println("id "+accid);
+		sleep(20000);
+		pagePTelefo.buscarAssert();
+		pagePTelefo.comprarPack("comprar minutos");
+		
 	}
 }	
