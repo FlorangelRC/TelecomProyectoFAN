@@ -1,9 +1,9 @@
 package Tests;
 
-import static org.testng.Assert.assertTrue;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+
 import org.openqa.selenium.By;
 import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.WebDriver;
@@ -14,12 +14,14 @@ import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
+
 import Pages.Accounts;
 import Pages.BasePage;
 import Pages.ContactSearch;
 import Pages.CustomerCare;
 import Pages.Marketing;
 import Pages.OM;
+import Pages.PagePerfilTelefonico;
 import Pages.SalesBase;
 import Pages.setConexion;
 
@@ -38,7 +40,7 @@ public class GestionesPerfilOficina extends TestBase {
 		sb = new SalesBase(driver);
 		cc = new CustomerCare(driver);
 		loginOfCom(driver);
-		sleep(22000);
+		sleep(8000);
 		driver.findElement(By.id("tabBar")).findElement(By.tagName("a")).click();
 		sleep(18000);
 		driver.switchTo().defaultContent();
@@ -114,23 +116,20 @@ public class GestionesPerfilOficina extends TestBase {
 			}
 		}
 		
-		sleep(25000);
+		sleep(15000);
 	}
 
-	@AfterMethod(alwaysRun=true)
+	//@AfterMethod(alwaysRun=true)
 	public void after() throws IOException {
 		guardarListaTxt(sOrders);
 		sOrders.clear();
 		tomarCaptura(driver,imagen);
 		sleep(5000);
-		/*SalesBase sb = new SalesBase(driver);
-		sb.cerrarPestaniaGestion(driver);*/
 	}
 
-	@AfterClass(alwaysRun=true)
+	//@AfterClass(alwaysRun=true)
 	public void quit() throws IOException {
-		//guardarListaTxt(sOrders);
-		//driver.quit();
+		driver.quit();
 		sleep(5000);
 	}
 	
@@ -149,18 +148,25 @@ public class GestionesPerfilOficina extends TestBase {
 		
 		CustomerCare cCC = new CustomerCare(driver);
 		cCC.seleccionarCardPornumeroLinea(sLinea, driver);
-		//driver.switchTo().frame(cambioFrame(driver, By.className("card-top")));
-		//driver.findElement(By.className("card-top")).click();
 		sleep(3000);
-		
 		cCC.irAGestionEnCard("N\u00fameros Gratis");
 		
 		sleep(5000);
 		driver.switchTo().defaultContent();
 		driver.switchTo().frame(cambioFrame(driver, By.cssSelector(".slds-col--padded.slds-size--1-of-2")));
 		List<WebElement> wNumerosAmigos = driver.findElements(By.cssSelector(".slds-col--padded.slds-size--1-of-2"));
-		System.out.println("sNumeroVOZ: " + sNumeroVOZ + "\nsNumeroSMS: " + sNumeroSMS);
-		wNumerosAmigos.get(0).findElement(By.tagName("input")).sendKeys(sNumeroVOZ);
+		Marketing mMarketing = new Marketing(driver);
+		int iIndice = mMarketing.numerosAmigos(sNumeroVOZ, sNumeroSMS);
+		switch (iIndice) {
+			case 0:
+				wNumerosAmigos.get(0).findElement(By.tagName("input")).sendKeys(sNumeroVOZ);
+				break;
+			case 1:
+				wNumerosAmigos.get(1).findElement(By.tagName("input")).sendKeys(sNumeroSMS);
+				break;
+			default:
+				Assert.assertTrue(false);
+		}
 		wNumerosAmigos.get(1).findElement(By.tagName("input")).sendKeys(sNumeroSMS);
 		sleep(5000);
 		driver.findElement(By.cssSelector(".OSradioButton.ng-scope.only-buttom")).click();
@@ -173,18 +179,16 @@ public class GestionesPerfilOficina extends TestBase {
 		sleep(5000);
 		String orden = cc.obtenerOrden(driver, "Numero Gratis");
 		sOrders.add("Numeros amigos, orden numero: " + orden + " con numero de DNI: " + sDNI);
-		List<WebElement> wTabs = driver.findElements(By.className("x-tab-strip-closable"));
-		for (WebElement wAux : wTabs) {
-			if (wAux.findElement(By.className("tabText")).getText().equalsIgnoreCase("N\u00fameros Gratis")) {
-				wAux.findElement(By.className("x-tab-strip-close")).click();
-			}
-		}
+		sleep(10000);
+		BasePage bBP = new BasePage();
+		bBP.closeTabByName(driver, "N\u00fameros Gratis");
 		cCC.seleccionarCardPornumeroLinea(sLinea, driver);
 		cCC.irAGestionEnCard("N\u00fameros Gratis");
-		//Complete when the page works
+		Assert.assertTrue(mMarketing.verificarNumerosAmigos(driver, sNumeroVOZ, sNumeroSMS));
+		//Verify when the page works
 	}
 	
-	@Test (groups = {"GestionesPerfilOficina","NumerosAmigos","E2E"}, dataProvider="NumerosAmigos")
+	@Test (groups = {"GestionesPerfilOficina","NumerosAmigos","E2E"}, dataProvider="NumerosAmigosModificacion")
 	public void TS100603_CRM_Movil_REPRO_FF_Modificacion_Posventa_Telefonico(String sDNI, String sCuenta, String sNumeroDeCuenta, String sLinea, String sNumeroVOZ, String sNumeroSMS) {
 		imagen = "TS100603";
 		BasePage cambioFrame=new BasePage();
@@ -199,20 +203,27 @@ public class GestionesPerfilOficina extends TestBase {
 		
 		CustomerCare cCC = new CustomerCare(driver);
 		cCC.seleccionarCardPornumeroLinea(sLinea, driver);
-		//driver.switchTo().frame(cambioFrame(driver, By.className("card-top")));
-		//driver.findElement(By.className("card-top")).click();
 		sleep(3000);
-		
 		cCC.irAGestionEnCard("N\u00fameros Gratis");
 		
 		sleep(5000);
 		driver.switchTo().defaultContent();
 		driver.switchTo().frame(cambioFrame(driver, By.cssSelector(".slds-col--padded.slds-size--1-of-2")));
 		List<WebElement> wNumerosAmigos = driver.findElements(By.cssSelector(".slds-col--padded.slds-size--1-of-2"));
-		System.out.println("sNumeroVOZ: " + sNumeroVOZ + "\nsNumeroSMS: " + sNumeroSMS);
-		//Verify if it's save the previews number
-		wNumerosAmigos.get(0).findElement(By.tagName("input")).sendKeys(sNumeroVOZ);
-		wNumerosAmigos.get(1).findElement(By.tagName("input")).sendKeys(sNumeroSMS);
+		Marketing mMarketing = new Marketing(driver);
+		int iIndice = mMarketing.numerosAmigos(sNumeroVOZ, sNumeroSMS);
+		switch (iIndice) {
+		case 0:
+			wNumerosAmigos.get(0).findElement(By.tagName("input")).clear();
+			wNumerosAmigos.get(0).findElement(By.tagName("input")).sendKeys(sNumeroVOZ);
+			break;
+		case 1:
+			wNumerosAmigos.get(0).findElement(By.tagName("input")).clear();
+			wNumerosAmigos.get(1).findElement(By.tagName("input")).sendKeys(sNumeroSMS);
+			break;
+		default:
+			Assert.assertTrue(false);
+	}
 		sleep(5000);
 		driver.findElement(By.cssSelector(".OSradioButton.ng-scope.only-buttom")).click();
 		
@@ -224,19 +235,17 @@ public class GestionesPerfilOficina extends TestBase {
 		sleep(5000);
 		String orden = cc.obtenerOrden(driver, "Numero Gratis");
 		sOrders.add("Numeros amigos, orden numero: " + orden + " con numero de DNI: " + sDNI);
-		List<WebElement> wTabs = driver.findElements(By.className("x-tab-strip-closable"));
-		for (WebElement wAux : wTabs) {
-			if (wAux.findElement(By.className("tabText")).getText().equalsIgnoreCase("N\u00fameros Gratis")) {
-				wAux.findElement(By.className("x-tab-strip-close")).click();
-			}
-		}
+		sleep(10000);
+		BasePage bBP = new BasePage();
+		bBP.closeTabByName(driver, "N\u00fameros Gratis");
 		cCC.seleccionarCardPornumeroLinea(sLinea, driver);
 		cCC.irAGestionEnCard("N\u00fameros Gratis");
-		//Complete when the page works
+		Assert.assertTrue(mMarketing.verificarNumerosAmigos(driver, sNumeroVOZ, sNumeroSMS));
+		//Verify when the page works
 	}
 	
-	@Test (groups = {"GestionesPerfilOficina","NumerosAmigos","E2E"}, dataProvider="NumerosAmigos")
-	public void TS100605_CRM_Movil_REPRO_FF_Baja_Presencial(String sDNI, String sCuenta, String sNumeroDeCuenta, String sLinea, String sNumeroVOZ, String sNumeroSMS) {
+	@Test (groups = {"GestionesPerfilOficina","NumerosAmigos","E2E"}, dataProvider="NumerosAmigosBaja")
+	public void TS100605_CRM_Movil_REPRO_FF_Baja_Presencial(String sDNI, String sCuenta, String sNumeroDeCuenta, String sLinea, String sVOZorSMS) {
 		imagen = "TS100605";
 		BasePage cambioFrame=new BasePage();
 		driver.switchTo().frame(cambioFrame.getFrameForElement(driver, By.id("SearchClientDocumentType")));
@@ -250,20 +259,24 @@ public class GestionesPerfilOficina extends TestBase {
 		
 		CustomerCare cCC = new CustomerCare(driver);
 		cCC.seleccionarCardPornumeroLinea(sLinea, driver);
-		//driver.switchTo().frame(cambioFrame(driver, By.className("card-top")));
-		//driver.findElement(By.className("card-top")).click();
 		sleep(3000);
-		
 		cCC.irAGestionEnCard("N\u00fameros Gratis");
 		
 		sleep(5000);
 		driver.switchTo().defaultContent();
 		driver.switchTo().frame(cambioFrame(driver, By.cssSelector(".slds-col--padded.slds-size--1-of-2")));
 		List<WebElement> wNumerosAmigos = driver.findElements(By.cssSelector(".slds-col--padded.slds-size--1-of-2"));
-		System.out.println("sNumeroVOZ: " + sNumeroVOZ + "\nsNumeroSMS: " + sNumeroSMS);
-		//Verify if it's save the previews number
-		//Delete previews number
-		//Complete when the page works
+		wNumerosAmigos.get(Integer.parseInt(sVOZorSMS)).clear();
+		
+		sleep(10000);
+		BasePage bBP = new BasePage();
+		bBP.closeTabByName(driver, "N\u00fameros Gratis");
+		cCC.seleccionarCardPornumeroLinea(sLinea, driver);
+		cCC.irAGestionEnCard("N\u00fameros Gratis");
+		
+		wNumerosAmigos = driver.findElements(By.cssSelector(".slds-col--padded.slds-size--1-of-2"));
+		Assert.assertTrue(wNumerosAmigos.get(Integer.parseInt(sVOZorSMS)).getText().isEmpty());
+		//Verify when the page works
 	}
 	
 	@Test (groups = {"GestionesPerfilOficina", "Recargas","E2E"}, dataProvider = "RecargaEfectivo")
@@ -287,6 +300,7 @@ public class GestionesPerfilOficina extends TestBase {
 		driver.findElement(By.id("RefillAmount")).sendKeys(cMonto);
 		driver.findElement(By.id("AmountSelectionStep_nextBtn")).click();
 		sleep(15000);
+		String sOrden = cc.obtenerOrden2(driver);
 		driver.findElement(By.id("InvoicePreview_nextBtn")).click();
 		sleep(10000);
 		buscarYClick(driver.findElements(By.cssSelector(".slds-form-element__label.ng-binding")), "equals", "efectivo");
@@ -296,7 +310,8 @@ public class GestionesPerfilOficina extends TestBase {
 		String check = driver.findElement(By.id("GeneralMessageDesing")).getText();
 		Assert.assertTrue(msj.toLowerCase().contains("se ha enviado correctamente la factura a huawei. dirigirse a caja para realizar el pago de la misma"));
 		Assert.assertTrue(check.toLowerCase().contains("la orden se realiz\u00f3 con \u00e9xito"));
-		String orden = cc.obtenerOrdenMontoyTN(driver, "Recarga");
+		String orden = cc.obtenerTNyMonto2(driver, sOrden);
+		//String orden = cc.obtenerOrdenMontoyTN(driver, "Recarga");
 		System.out.println("orden = "+orden);
 		sOrders.add("Recargas" + orden + ", cuenta:"+accid+", DNI: " + cDNI +", Monto:"+orden.split("-")[2]);
 		CBS_Mattu invoSer = new CBS_Mattu();
@@ -304,7 +319,8 @@ public class GestionesPerfilOficina extends TestBase {
 		sleep(5000);
 		driver.navigate().refresh();
 		sleep(10000);
-		cc.obtenerOrdenMontoyTN(driver, "Recarga");
+		cc.obtenerTNyMonto2(driver, sOrden);
+		//cc.obtenerOrdenMontoyTN(driver, "Recarga");
 		sleep(10000);
 		driver.switchTo().frame(cambioFrame(driver, By.id("Status_ilecell")));
 		Assert.assertTrue(driver.findElement(By.id("Status_ilecell")).getText().equalsIgnoreCase("activada"));
@@ -458,7 +474,7 @@ public class GestionesPerfilOficina extends TestBase {
 		sSB.BuscarCuenta("DNI",sDNI);
 		String accid = driver.findElements(By.cssSelector(".slds-truncate.ng-binding")).get(5).getText();
 		driver.findElement(By.cssSelector(".slds-tree__item.ng-scope")).findElement(By.tagName("div")).click();
-		sleep(15000);
+		sleep(18000);
 		driver.switchTo().frame(cambioFrame(driver, By.className("card-top")));
 		driver.findElement(By.className("card-top")).click();
 		sleep(5000);
@@ -490,7 +506,7 @@ public class GestionesPerfilOficina extends TestBase {
 		sleep(10000);
 		List <WebElement> roam = driver.findElements(By.cssSelector(".cpq-item-base-product"));
 			for(WebElement r : roam){
-				if(r.getText().contains("DDI sin Roaming Internacional")){
+				if(r.getText().contains("DDI con Roaming Internacional")){
 					driver.findElements(By.cssSelector(".slds-button.slds-button_icon-border-filled.cpq-item-actions-dropdown-button")).get(6).click();
 					sleep(5000);
 					cc.obligarclick(driver.findElements(By.cssSelector(".slds-dropdown__item.cpq-item-actions-dropdown__item")).get(6));
@@ -667,7 +683,7 @@ public class GestionesPerfilOficina extends TestBase {
 			}
 		}
 		Assert.assertTrue(a);
-		sleep(5000);
+		sleep(5000);*/
 		String orden = cc.obtenerOrden(driver, "Problemas con Recargas");
 		sOrders.add("Recargas, orden numero: " + orden + " con DNI: " + cDNI );
 		System.out.println(sOrders);
@@ -711,7 +727,7 @@ public class GestionesPerfilOficina extends TestBase {
 				a = true;
 			}
 		}
-		Assert.assertTrue(a);
+		Assert.assertTrue(a);*/
 		sleep(5000);
 		String orden = cc.obtenerOrden(driver, "Problemas con Recargas");
 		sOrders.add("Recargas, orden numero: " + orden + " con DNI: " + cDNI );
@@ -723,7 +739,6 @@ public class GestionesPerfilOficina extends TestBase {
 		imagen = "TS103596";
 		boolean gest = false;
 		driver.switchTo().frame(cambioFrame(driver, By.id("SearchClientDocumentType")));
-		//sb.BuscarCuenta("DNI", "16754923");
 		sb.BuscarCuenta("DNI", cDNI);
 		driver.findElement(By.cssSelector(".slds-tree__item.ng-scope")).click();
 		sleep(15000);
@@ -758,9 +773,15 @@ public class GestionesPerfilOficina extends TestBase {
 			}
 		}
 		Assert.assertTrue(gest);
-		String orden = cc.obtenerOrden(driver, "Inconvenientes con cargos tasados y facturados");
-		sOrders.add("Inconvenientes con cargos tasados y facturados, Credito Prepago, numero de orden: " + orden + " de cuenta con DNI: " + cDNI);
-		Assert.assertTrue(cc.verificarOrden(orden));
+		if (TestBase.urlAmbiente.contains("sit")) {
+			String orden = cc.obtenerOrden(driver, "Inconvenientes con cargos tasados y facturados");
+			sOrders.add("Inconvenientes con cargos tasados y facturados, orden numero: " + orden + " con numero de DNI: " + cDNI);
+			Assert.assertTrue(cc.verificarOrden(orden));		
+		} else {
+			String orden = driver.findElement(By.xpath("//*[@id=\"txtSuccessConfirmation\"]/div")).findElement(By.tagName("strong")).getText();
+			sOrders.add("Inconvenientes con cargos tasados y facturados, numero de orden: " + orden + " de cuenta con DNI: " + cDNI);
+			Assert.assertTrue(cc.verificarOrdenYGestion("Inconvenientes con cargos tasados y facturados"));
+		}
 	}
 	
 	@Test (groups = {"GestionesPerfilOficina", "ModificacionDeDatos","E2E"}) //No se puede modificar el DNI 2 veces en un mes
@@ -857,15 +878,15 @@ public class GestionesPerfilOficina extends TestBase {
 		buscarYClick(driver.findElements(By.cssSelector(".slds-form-element__label.ng-binding.ng-scope")), "equals", "si");
 		driver.findElement(By.id("Step-TipodeAjuste_nextBtn")).click();
 		sleep(7000);
-		buscarYClick(driver.findElements(By.cssSelector(".slds-form-element__label.ng-binding")), "equals", "cuenta: 9900000325210001");
+		buscarYClick(driver.findElements(By.cssSelector(".slds-form-element__label.ng-binding")), "contains", "cuenta: 1");
 		driver.findElement(By.id("Step1-SelectBillingAccount_nextBtn")).click();
 		sleep(7000);
 		buscarYClick(driver.findElements(By.cssSelector(".slds-form-element__label.ng-binding.ng-scope")), "equals", "si, ajustar");
 		driver.findElement(By.id("Step-VerifyPreviousAdjustments_nextBtn")).click();
 		sleep(7000);
-		buscarYClick(driver.findElements(By.cssSelector(".slds-form-element__label.ng-binding.ng-scope")), "equals", "nota de cr\u00e9dito");
-		buscarYClick(driver.findElements(By.cssSelector(".slds-form-element__label.ng-binding.ng-scope")), "equals", "si");
-		driver.findElements(By.className("slds-cell-shrink")).get(0).click();
+		buscarYClick(driver.findElements(By.cssSelector(".slds-form-element__label.ng-binding.ng-scope")), "equals", "nota de d\u00e9bito");
+		driver.findElement(By.id("MontoLibre")).sendKeys("123");
+		selectByText(driver.findElement(By.id("SelectItemAjusteLibre")), "Ajuste Minutos");
 		driver.findElement(By.id("Step-AjusteNivelCuenta_nextBtn")).click();
 		sleep(7000);
 		driver.findElement(By.id("Step-Summary_nextBtn")).click();
@@ -877,13 +898,19 @@ public class GestionesPerfilOficina extends TestBase {
 			}
 		}
 		Assert.assertTrue(gest);
-		String orden = cc.obtenerOrden(driver, "Inconvenientes con cargos tasados y facturados");
-		sOrders.add("Inconvenientes con cargos tasados y facturados, Credito Pospago, numero de orden: " + orden + " de cuenta con DNI: " + cDNI);
-		Assert.assertTrue(cc.verificarOrden(orden));
+		if (TestBase.urlAmbiente.contains("sit")) {
+			String orden = cc.obtenerOrden(driver, "Inconvenientes con cargos tasados y facturados");
+			sOrders.add("Inconvenientes con cargos tasados y facturados, orden numero: " + orden + " con numero de DNI: " + cDNI);
+			Assert.assertTrue(cc.verificarOrden(orden));		
+		} else {
+			String orden = driver.findElement(By.xpath("//*[@id=\"txtSuccessConfirmation\"]/div")).findElement(By.tagName("strong")).getText();
+			sOrders.add("Inconvenientes con cargos tasados y facturados, numero de orden: " + orden + " de cuenta con DNI: " + cDNI);
+			Assert.assertTrue(cc.verificarOrdenYGestion("Inconvenientes con cargos tasados y facturados"));
+		}
 	}
 	
 	@Test (groups = {"Suspension", "GestionesPerfilOficina","E2E"}, dataProvider="CuentaSuspension")
-	public void TS98438_CRM_Movil_REPRO_Suspension_por_Siniestro_Hurto_Linea_Titular_Presencial(String cDNI) {
+	public void TS98438_CRM_Movil_REPRO_Suspension_por_Siniestro_Hurto_Linea_Titular_Presencial(String cDNI, String cProvincia, String cCiudad, String cPartido) {
 		imagen = "TS98438";
 		driver.switchTo().frame(cambioFrame(driver, By.id("SearchClientDocumentType")));
 		sb.BuscarCuenta("DNI", cDNI);
@@ -903,11 +930,11 @@ public class GestionesPerfilOficina extends TestBase {
 		buscarYClick(driver.findElements(By.cssSelector(".slds-form-element__label.ng-binding.ng-scope")),"contains", "hurto");
 		driver.findElement(By.id("Step4-SuspensionReason_nextBtn")).click();
 		sleep(10000);
-		selectByText(driver.findElement(By.id("State")),"Buenos Aires");
+		selectByText(driver.findElement(By.id("State")),cProvincia);
 		sleep(10000);
-		driver.findElement(By.id("CityTypeAhead")).sendKeys("SAN ISIDRO");
+		driver.findElement(By.id("CityTypeAhead")).sendKeys(cCiudad);
 		sleep(10000);
-		driver.findElement(By.id("Partido")).sendKeys("Villa martelli");
+		driver.findElement(By.id("Partido")).sendKeys(cPartido);
 		sleep(10000);
 		driver.findElement(By.id("AccountData_nextBtn")).click();
 		sleep(10000);
@@ -927,10 +954,14 @@ public class GestionesPerfilOficina extends TestBase {
 		String orden = cc.obtenerOrden(driver, "Suspensi\u00f3n de Linea");
 		sOrders.add("Suspension, orden numero: " + orden + " con numero de DNI: " + cDNI);
 		System.out.println(sOrders);
+		if(orden.length() >= 8) {
+			orden = orden.substring(0, orden.length()-25);
+		}
+		cc.buscarCaso(orden);
 	}
 	
 	@Test (groups = {"Suspension", "GestionesPerfilOficina","E2E"}, dataProvider="CuentaSuspension")
-	public void TS98442_CRM_Movil_REPRO_Suspension_por_Siniestro_Extravio_Linea_Titular_Presencial(String cDNI) {
+	public void TS98442_CRM_Movil_REPRO_Suspension_por_Siniestro_Extravio_Linea_Titular_Presencial(String cDNI, String cProvincia, String cCiudad, String cPartido) {
 		imagen = "TS98442";
 		driver.switchTo().frame(cambioFrame(driver, By.id("SearchClientDocumentType")));
 		sb.BuscarCuenta("DNI", cDNI);
@@ -950,11 +981,11 @@ public class GestionesPerfilOficina extends TestBase {
 		buscarYClick(driver.findElements(By.cssSelector(".slds-form-element__label.ng-binding.ng-scope")),"contains", "extrav\u00edo");
 		driver.findElement(By.id("Step4-SuspensionReason_nextBtn")).click();
 		sleep(10000);
-		selectByText(driver.findElement(By.id("State")),"Buenos Aires");
+		selectByText(driver.findElement(By.id("State")),cProvincia);
 		sleep(10000);
-		driver.findElement(By.id("CityTypeAhead")).sendKeys("SAN ISIDRO");
+		driver.findElement(By.id("CityTypeAhead")).sendKeys(cCiudad);
 		sleep(10000);
-		driver.findElement(By.id("Partido")).sendKeys("Villa martelli");
+		driver.findElement(By.id("Partido")).sendKeys(cPartido);
 		sleep(7000);
 		driver.findElement(By.id("AccountData_nextBtn")).click();
 		sleep(5000);
@@ -973,11 +1004,15 @@ public class GestionesPerfilOficina extends TestBase {
 		sleep(5000);
 		String orden = cc.obtenerOrden(driver, "Suspensi\u00f3n de Linea");
 		sOrders.add("Suspencion, orden numero: " + orden + " con numero de DNI: " + cDNI);
-		//System.out.println(sOrders);	
+		System.out.println(sOrders);
+		/*if(orden.length() >= 8) {
+			orden = orden.substring(0, orden.length()-25);
+		}*/
+		cc.buscarCaso(orden.substring(0, 7));
 	}	
 	
 	@Test (groups = {"Suspension", "GestionesPerfilOficina","E2E"}, dataProvider="CuentaSuspension")
-	public void TS98477_CRM_Movil_REPRO_Suspension_por_Fraude_Linea_Comercial_Desconocimiento_Administrativo(String cDNI) {
+	public void TS98477_CRM_Movil_REPRO_Suspension_por_Fraude_Linea_Comercial_Desconocimiento_Administrativo(String cDNI, String cProvincia, String cCiudad, String cPartido) {
 		imagen = "TS98477";
 		driver.switchTo().frame(cambioFrame(driver, By.id("SearchClientDocumentType")));
 		sb.BuscarCuenta("DNI", cDNI);
@@ -1013,11 +1048,11 @@ public class GestionesPerfilOficina extends TestBase {
 		sleep(10000);
 		String orden = cc.obtenerOrden(driver, "Suspension administrativa");
 		sOrders.add("Suspencion, orden numero: " + orden + " con numero de DNI: " + cDNI);
-		//System.out.println(sOrders);	
+		System.out.println(sOrders);	
 	}	
 	
 	@Test (groups = {"Suspension", "GestionesPerfilOficina","E2E"}, dataProvider="CuentaSuspension")
-	public void TS98487_CRM_Movil_REPRO_Suspension_por_Fraude_DNI_CUIT_Comercial_Irregular_Administrativo(String cDNI) {
+	public void TS98487_CRM_Movil_REPRO_Suspension_por_Fraude_DNI_CUIT_Comercial_Irregular_Administrativo(String cDNI, String cProvincia, String cCiudad, String cPartido) {
 		imagen = "TS98487";
 		driver.switchTo().frame(cambioFrame(driver, By.id("SearchClientDocumentType")));
 		sb.BuscarCuenta("DNI", cDNI);
@@ -1054,6 +1089,7 @@ public class GestionesPerfilOficina extends TestBase {
 		sOrders.add("Suspencion, orden numero: " + orden + " con numero de DNI: " + cDNI);
 		//System.out.println(sOrders);
 	}
+	
 	@Test (groups = {"GestionesPerfilOficina", "Ajustes","E2E"}, dataProvider = "CuentaAjustesPRE")
 	public void TS112434_CRM_Movil_PRE_Ajuste_Credito_Minutos_FAN_Front_OOCC(String cDNI) {
 		imagen = "TS112434";
@@ -1093,9 +1129,15 @@ public class GestionesPerfilOficina extends TestBase {
 			}
 		}
 		Assert.assertTrue(gest);
-		String orden = cc.obtenerOrden(driver, "Inconvenientes con cargos tasados y facturados");
-		sOrders.add("Inconvenientes con cargos tasados y facturados, numero de orden: " + orden + " de cuenta con DNI: " + cDNI);
-		Assert.assertTrue(cc.verificarOrden(orden));
+		if (TestBase.urlAmbiente.contains("sit")) {
+			String orden = cc.obtenerOrden(driver, "Inconvenientes con cargos tasados y facturados");
+			sOrders.add("Inconvenientes con cargos tasados y facturados, orden numero: " + orden + " con numero de DNI: " + cDNI);
+			Assert.assertTrue(cc.verificarOrden(orden));		
+		} else {
+			String orden = driver.findElement(By.xpath("//*[@id=\"txtSuccessConfirmation\"]/div")).findElement(By.tagName("strong")).getText();
+			sOrders.add("Inconvenientes con cargos tasados y facturados, numero de orden: " + orden + " de cuenta con DNI: " + cDNI);
+			Assert.assertTrue(cc.verificarOrdenYGestion("Inconvenientes con cargos tasados y facturados"));
+		}
 	}
 	
 	@Test (groups = {"GestionesPerfilOficina", "Ajustes","E2E"}, dataProvider = "CuentaAjustesPRE")
@@ -1137,9 +1179,15 @@ public class GestionesPerfilOficina extends TestBase {
 			}
 		}
 		Assert.assertTrue(gest);
-		String orden = cc.obtenerOrden(driver, "Inconvenientes con cargos tasados y facturados");
-		sOrders.add("Inconvenientes con cargos tasados y facturados, numero de orden: " + orden + " de cuenta con DNI: " + cDNI);
-		Assert.assertTrue(cc.verificarOrden(orden));
+		if (TestBase.urlAmbiente.contains("sit")) {
+			String orden = cc.obtenerOrden(driver, "Inconvenientes con cargos tasados y facturados");
+			sOrders.add("Inconvenientes con cargos tasados y facturados, orden numero: " + orden + " con numero de DNI: " + cDNI);
+			Assert.assertTrue(cc.verificarOrden(orden));		
+		} else {
+			String orden = driver.findElement(By.xpath("//*[@id=\"txtSuccessConfirmation\"]/div")).findElement(By.tagName("strong")).getText();
+			sOrders.add("Inconvenientes con cargos tasados y facturados, numero de orden: " + orden + " de cuenta con DNI: " + cDNI);
+			Assert.assertTrue(cc.verificarOrdenYGestion("Inconvenientes con cargos tasados y facturados"));
+		}
 	}
 	
 	@Test (groups = {"GestionesPerfilOficina", "Ajustes","E2E"}, dataProvider = "CuentaAjustesREPRO")
@@ -1147,7 +1195,6 @@ public class GestionesPerfilOficina extends TestBase {
 		imagen = "TS103599";
 		boolean gest = false;
 		driver.switchTo().frame(cambioFrame(driver, By.id("SearchClientDocumentType")));
-		//sb.BuscarCuenta("DNI", "16754923");
 		sb.BuscarCuenta("DNI", cDNI);
 		driver.findElement(By.cssSelector(".slds-tree__item.ng-scope")).click();
 		sleep(20000);
@@ -1182,9 +1229,15 @@ public class GestionesPerfilOficina extends TestBase {
 			}
 		}
 		Assert.assertTrue(gest);
-		String orden = cc.obtenerOrden(driver, "Inconvenientes con cargos tasados y facturados");
-		sOrders.add("Inconvenientes con cargos tasados y facturados, numero de orden: " + orden + " de cuenta con DNI: " + cDNI);
-		Assert.assertTrue(cc.verificarOrden(orden));
+		if (TestBase.urlAmbiente.contains("sit")) {
+			String orden = cc.obtenerOrden(driver, "Inconvenientes con cargos tasados y facturados");
+			sOrders.add("Inconvenientes con cargos tasados y facturados, orden numero: " + orden + " con numero de DNI: " + cDNI);
+			Assert.assertTrue(cc.verificarOrden(orden));		
+		} else {
+			String orden = driver.findElement(By.xpath("//*[@id=\"txtSuccessConfirmation\"]/div")).findElement(By.tagName("strong")).getText();
+			sOrders.add("Inconvenientes con cargos tasados y facturados, numero de orden: " + orden + " de cuenta con DNI: " + cDNI);
+			Assert.assertTrue(cc.verificarOrdenYGestion("Inconvenientes con cargos tasados y facturados"));
+		}
 	}
 	
 	@Test (groups = {"GestionesPerfilOficina", "Ajustes","E2E"}, dataProvider = "CuentaAjustesPRE")
@@ -1226,9 +1279,15 @@ public class GestionesPerfilOficina extends TestBase {
 			}
 		}
 		Assert.assertTrue(gest);
-		String orden = cc.obtenerOrden(driver, "Inconvenientes con cargos tasados y facturados");
-		sOrders.add("Inconvenientes con cargos tasados y facturados, numero de orden: " + orden + " de cuenta con DNI: " + cDNI);
-		Assert.assertTrue(cc.verificarOrden(orden));
+		if (TestBase.urlAmbiente.contains("sit")) {
+			String orden = cc.obtenerOrden(driver, "Inconvenientes con cargos tasados y facturados");
+			sOrders.add("Inconvenientes con cargos tasados y facturados, orden numero: " + orden + " con numero de DNI: " + cDNI);
+			Assert.assertTrue(cc.verificarOrden(orden));		
+		} else {
+			String orden = driver.findElement(By.xpath("//*[@id=\"txtSuccessConfirmation\"]/div")).findElement(By.tagName("strong")).getText();
+			sOrders.add("Inconvenientes con cargos tasados y facturados, numero de orden: " + orden + " de cuenta con DNI: " + cDNI);
+			Assert.assertTrue(cc.verificarOrdenYGestion("Inconvenientes con cargos tasados y facturados"));
+		}
 	}
 	
 	@Test (groups = {"GestionesPerfilOficina", "Ajustes","E2E"}, dataProvider = "CuentaAjustesPRE")
@@ -1268,9 +1327,15 @@ public class GestionesPerfilOficina extends TestBase {
 			}
 		}
 		Assert.assertTrue(gest);
-		String orden = cc.obtenerOrden(driver, "Inconvenientes con cargos tasados y facturados");
-		sOrders.add("Inconvenientes con cargos tasados y facturados, numero de orden: " + orden + " de cuenta con DNI: " + cDNI);
-		Assert.assertTrue(cc.verificarOrden(orden));
+		if (TestBase.urlAmbiente.contains("sit")) {
+			String orden = cc.obtenerOrden(driver, "Inconvenientes con cargos tasados y facturados");
+			sOrders.add("Inconvenientes con cargos tasados y facturados, orden numero: " + orden + " con numero de DNI: " + cDNI);
+			Assert.assertTrue(cc.verificarOrden(orden));		
+		} else {
+			String orden = driver.findElement(By.xpath("//*[@id=\"txtSuccessConfirmation\"]/div")).findElement(By.tagName("strong")).getText();
+			sOrders.add("Inconvenientes con cargos tasados y facturados, numero de orden: " + orden + " de cuenta con DNI: " + cDNI);
+			Assert.assertTrue(cc.verificarOrdenYGestion("Inconvenientes con cargos tasados y facturados"));
+		}
 	}
 	
 	@Test (groups = {"GestionesPerfilOficina", "Ajustes","E2E"}, dataProvider = "CuentaAjustesPRE")
@@ -1312,14 +1377,20 @@ public class GestionesPerfilOficina extends TestBase {
 				gest = true;
 			}
 		}
-		String orden = cc.obtenerOrden(driver, "Inconvenientes con cargos tasados y facturados");
 		Assert.assertTrue(gest);
-		sOrders.add("Inconvenientes con cargos tasados y facturados, numero de orden: " + orden + " de cuenta con DNI: " + cDNI);
-		Assert.assertTrue(cc.verificarOrden(orden));
+		if (TestBase.urlAmbiente.contains("sit")) {
+			String orden = cc.obtenerOrden(driver, "Inconvenientes con cargos tasados y facturados");
+			sOrders.add("Inconvenientes con cargos tasados y facturados, orden numero: " + orden + " con numero de DNI: " + cDNI);
+			Assert.assertTrue(cc.verificarOrden(orden));		
+		} else {
+			String orden = driver.findElement(By.xpath("//*[@id=\"txtSuccessConfirmation\"]/div")).findElement(By.tagName("strong")).getText();
+			sOrders.add("Inconvenientes con cargos tasados y facturados, numero de orden: " + orden + " de cuenta con DNI: " + cDNI);
+			Assert.assertTrue(cc.verificarOrdenYGestion("Inconvenientes con cargos tasados y facturados"));
+		}
 	}
 	
 	@Test (groups = {"Suspension", "GestionesPerfilOficina","E2E"}, dataProvider="CuentaSuspension")
-	public void TS98498_CRM_Movil_REPRO_Suspension_por_Fraude_Cuenta_de_facturacion_Comercial_Desconocimiento_Administrativo(String cDNI) {
+	public void TS98498_CRM_Movil_REPRO_Suspension_por_Fraude_Cuenta_de_facturacion_Comercial_Desconocimiento_Administrativo(String cDNI, String cProvincia, String cCiudad, String cPartido) {
 		imagen = "TS98498";
 		driver.switchTo().frame(cambioFrame(driver, By.id("SearchClientDocumentType")));
 		sb.BuscarCuenta("DNI", cDNI);
@@ -1503,18 +1574,22 @@ public class GestionesPerfilOficina extends TestBase {
 			}
 		}
 		Assert.assertTrue(gest);
-		String orden = cc.obtenerOrden(driver, "Inconvenientes con cargos tasados y facturados");
-		sOrders.add("Inconvenientes con cargos tasados y facturados, numero de orden: " + orden + " de cuenta con DNI: " + cDNI);
-		Assert.assertTrue(cc.verificarOrden(orden));
+		if (TestBase.urlAmbiente.contains("sit")) {
+			String orden = cc.obtenerOrden(driver, "Inconvenientes con cargos tasados y facturados");
+			sOrders.add("Inconvenientes con cargos tasados y facturados, orden numero: " + orden + " con numero de DNI: " + cDNI);
+			Assert.assertTrue(cc.verificarOrden(orden));		
+		} else {
+			String orden = driver.findElement(By.xpath("//*[@id=\"txtSuccessConfirmation\"]/div")).findElement(By.tagName("strong")).getText();
+			sOrders.add("Inconvenientes con cargos tasados y facturados, numero de orden: " + orden + " de cuenta con DNI: " + cDNI);
+			Assert.assertTrue(cc.verificarOrdenYGestion("Inconvenientes con cargos tasados y facturados"));
+		}
 	}
 	
 	@Test (groups = {"GestionesPerfilOficina", "Ajustes", "E2E"}, dataProvider = "CuentaAjustesREPRO")
 	public void TS129317_CRM_Movil_REPRO_Ajuste_RAV_Unidades_Libres_a_Pesos_General_FAN_Front_OOCC(String cDNI) {
 		imagen = "TS129317";
 		WebElement monto = null;
-		boolean gest = false;
 		driver.switchTo().frame(cambioFrame(driver, By.id("SearchClientDocumentType")));
-		//sb.BuscarCuenta("DNI", "38452795");
 		sb.BuscarCuenta("DNI", cDNI);
 		driver.findElement(By.cssSelector(".slds-tree__item.ng-scope")).click();
 		sleep(15000);
@@ -1597,7 +1672,6 @@ public class GestionesPerfilOficina extends TestBase {
 		boolean gest = false;
 		WebElement monto = null;
 		driver.switchTo().frame(cambioFrame(driver, By.id("SearchClientDocumentType")));
-		//sb.BuscarCuenta("DNI", "38452795");
 		sb.BuscarCuenta("DNI", cDNI);
 		driver.findElement(By.cssSelector(".slds-tree__item.ng-scope")).click();
 		sleep(15000);
@@ -1640,9 +1714,15 @@ public class GestionesPerfilOficina extends TestBase {
 			}
 		}
 		Assert.assertTrue(gest);
-		String orden = cc.obtenerOrden(driver, "Inconvenientes con cargos tasados y facturados");
-		sOrders.add("Inconvenientes con cargos tasados y facturados, numero de orden: " + orden + " de cuenta con DNI: " + cDNI);
-		Assert.assertTrue(cc.verificarOrden(orden));
+		if (TestBase.urlAmbiente.contains("sit")) {
+			String orden = cc.obtenerOrden(driver, "Inconvenientes con cargos tasados y facturados");
+			sOrders.add("Inconvenientes con cargos tasados y facturados, orden numero: " + orden + " con numero de DNI: " + cDNI);
+			Assert.assertTrue(cc.verificarOrden(orden));		
+		} else {
+			String orden = driver.findElement(By.xpath("//*[@id=\"txtSuccessConfirmation\"]/div")).findElement(By.tagName("strong")).getText();
+			sOrders.add("Inconvenientes con cargos tasados y facturados, numero de orden: " + orden + " de cuenta con DNI: " + cDNI);
+			Assert.assertTrue(cc.verificarOrdenYGestion("Inconvenientes con cargos tasados y facturados"));
+		}
 	}
 	
 	@Test (groups = {"GestionesPerfilOficina","RenovacionCuota","E2E"}, dataProvider="RenovacionCuotaSinSaldo")
@@ -1682,7 +1762,7 @@ public class GestionesPerfilOficina extends TestBase {
 		Assert.assertTrue(driver.findElement(By.cssSelector(".slds-form-element.vlc-flex.vlc-slds-text-block.vlc-slds-rte.ng-pristine.ng-valid.ng-scope")).findElement(By.className("ng-binding")).findElement(By.tagName("p")).getText().equalsIgnoreCase("saldo insuficiente"));
 	}
 	
-	@Test (groups = {"GestionesPerfilOficina", "Reintegros", "E2E"}, dataProvider = "Reintegros")
+	@Test (groups = {"GestionesPerfilOficina", "Reintegros", "E2E"}, dataProvider = "CuentaReintegros")
 	public void TS112598_CRM_Movil_PRE_Pago_con_Tarjeta_de_debito_Reintegro_con_Efectivo_1000(String cDNI) {
 		Marketing mk = new Marketing(driver);
 		boolean gest = false;
@@ -1715,7 +1795,7 @@ public class GestionesPerfilOficina extends TestBase {
 		}
 		Assert.assertTrue(gest);
 		String orden = cc.obtenerOrden(driver, "Solicitud de Reintegros");
-		sOrders.add("Solicitud de Reintegros, numero de orden: " + orden + " de cuenta con DNI: " + "19006577");
+		sOrders.add("Solicitud de Reintegros, numero de orden: " + orden + " de cuenta con DNI: " + cDNI);
 		Assert.assertTrue(cc.verificarOrden(orden));
 	}
 	
@@ -1789,7 +1869,7 @@ public class GestionesPerfilOficina extends TestBase {
 		Assert.assertTrue(b);
 	}
 	
-	@Test (groups = {"GestionesPerfilOficina", "Reintegros", "E2E"}, dataProvider = "Reintegros")
+	@Test (groups = {"GestionesPerfilOficina", "Reintegros", "E2E"}, dataProvider = "CuentaReintegros")
 	public void TS112597_CRM_Movil_PRE_Pago_con_Tarjeta_de_debito_Reintegro_con_Efectivo_Menos_de_1000(String cDNI) {
 		Marketing mk = new Marketing(driver);
 		boolean gest = false;
@@ -1822,7 +1902,7 @@ public class GestionesPerfilOficina extends TestBase {
 		}
 		Assert.assertTrue(gest);
 		String orden = cc.obtenerOrden(driver, "Solicitud de Reintegros");
-		sOrders.add("Solicitud de Reintegros, numero de orden: " + orden + " de cuenta con DNI: " + "19006577");
+		sOrders.add("Solicitud de Reintegros, numero de orden: " + orden + " de cuenta con DNI: " + cDNI);
 		Assert.assertTrue(cc.verificarOrden(orden));
 	}
 	
@@ -1954,7 +2034,7 @@ public class GestionesPerfilOficina extends TestBase {
 		Assert.assertTrue(gest);
 	}
 	
-	@Test (groups = {"GestionesPerfilOficina", "Recargas","E2E"}, dataProvider = "RecargaTC")
+	@Test (groups = {"GestionesPerfilOficina", "Recargas","E2E"}, dataProvider = "RecargaTD")
 	public void TS134320_CRM_Movil_REPRO_Recargas_Presencial_TD_Ofcom(String sDNI, String sMonto, String sBanco, String sTarjeta, String sPromo, String sCuotas, String sNumTarjeta, String sVenceMes, String sVenceAno, String sCodSeg, String sTipoDNI, String sDNITarjeta, String sTitular, String sLinea) {
 		if(sMonto.length() >= 4) {
 			sMonto = sMonto.substring(0, sMonto.length()-1);
@@ -1972,6 +2052,8 @@ public class GestionesPerfilOficina extends TestBase {
 		driver.switchTo().frame(cambioFrame(driver, By.id("RefillAmount")));
 		driver.findElement(By.id("RefillAmount")).sendKeys(sMonto);
 		sleep(15000);
+		CustomerCare cCC = new CustomerCare(driver);
+		String sOrden = cCC.obtenerOrden2(driver);
 		driver.findElement(By.id("AmountSelectionStep_nextBtn")).click();
 		sleep(15000);
 		driver.findElement(By.xpath("//*[@id=\"InvoicePreview_nextBtn\"]")).click();
@@ -1999,7 +2081,8 @@ public class GestionesPerfilOficina extends TestBase {
 			}
 			Assert.assertTrue(bAssert);
 		}
-		String sOrden = cc.obtenerOrdenMontoyTN(driver, "Recarga");
+		String orden = cCC.obtenerTNyMonto2(driver, sOrden);
+		//String sOrden = cc.obtenerOrdenMontoyTN(driver, "Recarga");
 		System.out.println("orden = " + sOrden);
 		sOrders.add("Recargas" + sOrden + ", cuenta:"+ sAccid +", DNI: " + sDNI + ", Monto:" + sOrden.split("-")[2]);
 		CBS_Mattu cInvoSer = new CBS_Mattu();
@@ -2007,14 +2090,15 @@ public class GestionesPerfilOficina extends TestBase {
 		sleep(5000);
 		driver.navigate().refresh();
 		sleep(10000);
-		cc.obtenerOrdenMontoyTN(driver, "Recarga");
+		cCC.obtenerTNyMonto2(driver, sOrden);
+		//cc.obtenerOrdenMontoyTN(driver, "Recarga");
 		sleep(10000);
 		driver.switchTo().frame(cambioFrame(driver, By.id("Status_ilecell")));
 		Assert.assertTrue(driver.findElement(By.id("Status_ilecell")).getText().equalsIgnoreCase("activada"));
 	}
 	
 	@Test (groups = {"Suspension", "GestionesPerfilOficina","E2E"}, dataProvider="CuentaSuspension") //No se puede visualizar en el panel izquierdo el numero de orden en UAT y no se suspende la cuenta; y en SIT no existe la opci�n de DNI/CUIT
-	public void TS_98484_CRM_Movil_REPRO_Suspension_por_Fraude_DNI_CUIT_Comercial_Fraude_por_suscripcion_Administrativo(String cDNI) {
+	public void TS_98484_CRM_Movil_REPRO_Suspension_por_Fraude_DNI_CUIT_Comercial_Fraude_por_suscripcion_Administrativo(String cDNI, String cProvincia, String cCiudad, String cPartido) {
 	driver.switchTo().frame(cambioFrame(driver, By.id("SearchClientDocumentType")));
 	sb.BuscarCuenta("DNI", cDNI);
 	driver.findElement(By.cssSelector(".slds-tree__item.ng-scope")).click();
@@ -2046,10 +2130,14 @@ public class GestionesPerfilOficina extends TestBase {
 		}
 	}
 	Assert.assertTrue(a);
+	sleep(8000);
+	String orden = cc.obtenerOrden(driver, "Suspension administrativa");
+	sOrders.add("Suspencion, orden numero: " + orden + " con numero de DNI: " + cDNI);
+	System.out.println(sOrders);
 }
 	
 	@Test (groups = {"Suspension", "GestionesPerfilOficina","E2E"}, dataProvider="CuentaSuspension")//No se puede visualizar en el panel izquierdo el numero de orden en UAT y no se suspende la cuenta
-	public void CRM_Movil_REPRO_Suspension_por_Fraude_Linea_Comercial_Desconocimiento_Administrativo(String cDNI) {
+	public void TS_98491_CRM_Movil_REPRO_Suspension_por_Fraude_Linea_Comercial_Desconocimiento_Administrativo(String cDNI, String cProvincia, String cCiudad, String cPartido) {
 		driver.switchTo().frame(cambioFrame(driver, By.id("SearchClientDocumentType")));
 		sb.BuscarCuenta("DNI", cDNI);
 		driver.findElement(By.cssSelector(".slds-tree__item.ng-scope")).click();
@@ -2083,5 +2171,39 @@ public class GestionesPerfilOficina extends TestBase {
 			}
 		}
 		Assert.assertTrue(a);
+		sleep(8000);
+		String orden = cc.obtenerOrden(driver, "Suspension administrativa");
+		sOrders.add("Suspencion, orden numero: " + orden + " con numero de DNI: " + cDNI);
+		System.out.println(sOrders);
+	}
+	
+	@Test (groups = {"GestionesPerfilOficina","E2E"}, dataProvider="PackOfCom")
+	public void Venta_de_Pack(String sDNI, String sCuenta, String cBanco, String cTarjeta, String cPromo, String cCuotas, String sPackOfCom){
+		PagePerfilTelefonico pagePTelefo = new PagePerfilTelefonico(driver);
+		driver.switchTo().frame(cambioFrame(driver, By.id("SearchClientDocumentType")));
+		sb.BuscarCuenta("DNI", sDNI);
+		String accid = driver.findElement(By.cssSelector(".searchClient-body.slds-hint-parent.ng-scope")).findElements(By.tagName("td")).get(5).getText();
+		System.out.println("id "+accid);
+		pagePTelefo.buscarAssert();
+		pagePTelefo.comprarPack("comprar minutos");
+		pagePTelefo.closerightpanel();
+		sleep(8000);
+		pagePTelefo.agregarPack(sPackOfCom);
+		pagePTelefo.tipoDePago("en factura de venta");
+		pagePTelefo.getTipodepago().click();
+		sleep(12000);
+		pagePTelefo.getSimulaciondeFactura().click();
+		sleep(12000);
+		buscarYClick(driver.findElements(By.cssSelector(".slds-form-element__label.ng-binding")), "equals", "efectivo");
+		sleep(12000);
+		buscarYClick(driver.findElements(By.cssSelector(".slds-form-element__label.ng-binding")), "equals", "tarjeta de credito");
+		sleep(12000);
+		selectByText(driver.findElement(By.id("BankingEntity-0")), cBanco);
+		selectByText(driver.findElement(By.id("CardBankingEntity-0")), cTarjeta);
+		selectByText(driver.findElement(By.id("promotionsByCardsBank-0")), cPromo);
+		selectByText(driver.findElement(By.id("Installment-0")), cCuotas);
+		pagePTelefo.getMediodePago().click();
+		sleep(12000);
+		pagePTelefo.getOrdenSeRealizoConExito().click();
 	}
 }	

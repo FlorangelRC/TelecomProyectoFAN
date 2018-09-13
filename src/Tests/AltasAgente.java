@@ -104,7 +104,7 @@ public class AltasAgente extends TestBase{
 		driver.switchTo().frame(accountPage.getFrameForElement(driver, By.id("SearchClientDocumentNumber")));
 	}
 	
-	@AfterMethod(alwaysRun=true)
+	//@AfterMethod(alwaysRun=true)
 		public void deslogin() throws IOException{
 			guardarListaTxt(DatosOrden);
 			DatosOrden.clear();
@@ -561,7 +561,6 @@ public class AltasAgente extends TestBase{
 		sleep(4000);
 		Select prov = new Select (driver.findElement(By.id("State")));
 		prov.selectByVisibleText(sState);
-		
 		sleep(4000);
 		Select city = new Select (driver.findElement(By.id("City")));
 		city.selectByVisibleText(sCity);
@@ -715,18 +714,14 @@ public class AltasAgente extends TestBase{
 				}
 			}
 		sleep(25000);
-		sb.agregarplan(sPlan);
+		sb.elegirplan(sPlan);
 		sleep(12000);
 		driver.findElement(By.cssSelector(".slds-input.ng-valid.ng-not-empty.ng-dirty.ng-valid-parse.ng-touched")).clear();
-		sleep(3000);
+		sleep(8000);
 		driver.findElement(By.cssSelector(".slds-input.ng-valid.ng-dirty.ng-valid-parse.ng-touched.ng-empty")).sendKeys(sEquipo);
-		sleep(10000);
-		List<WebElement> agregar = driver.findElements(By.cssSelector(".slds-button.slds-button--neutral.add-button")); 
-			for(WebElement a : agregar){
-				if(a.getText().equals("Agregar")){
-				a.click();
-				}
-			}
+		sleep(5000);
+		List<WebElement> agregar = driver.findElements(By.cssSelector(".slds-button.slds-button_neutral.cpq-add-button")); 
+		agregar.get(1).click();
 		sleep(5000);	
 		sb.continuar();
 		sleep(24000);

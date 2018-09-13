@@ -104,7 +104,7 @@ public class AltadeLineas extends TestBase {
 		driver.switchTo().frame(accountPage.getFrameForElement(driver, By.id("SearchClientDocumentNumber")));
 	}
 	
-	@AfterMethod(alwaysRun=true)
+	//@AfterMethod(alwaysRun=true)
 	public void deslogin() throws IOException{
 		guardarListaTxt(DatosOrden);
 		DatosOrden.clear();
@@ -119,7 +119,7 @@ public class AltadeLineas extends TestBase {
 
 	}
 	
-	@AfterClass(alwaysRun=true)
+	//@AfterClass(alwaysRun=true)
 	public void Exit() throws IOException {
 		//guardarListaTxt(DatosOrden);
 		//driver.quit();
@@ -448,7 +448,7 @@ public class AltadeLineas extends TestBase {
 	}
 		
 	@Test(groups={"Sales", "AltaLineaDatos","E2E"}, priority=1, dataProvider="DatosAltaEquipoExiste") //========  31- 8 Aparece el paso de carga de datos de la cuenta
-	public void TS125214_CRM_Movil_PRE_Alta_Linea_con_Equipo_Cliente_existente_Presencial_OFCOM(String sDni, String sNombre, String sApellido, String sSexo, String sFNac, String sEmail, String sPlan, String sProvincia, String sLocalidad) throws IOException {
+	public void TS125214_CRM_Movil_PRE_Alta_Linea_con_Equipo_Cliente_existente_Presencial_OFCOM(String sDni, String sNombre, String sApellido, String sSexo, String sFNac, String sEmail, String sPlan, String sEquipo, String sProvincia, String sLocalidad) throws IOException {
 		imagen = "TS125214";
 		CustomerCare cc = new CustomerCare(driver);
 		SalesBase sb = new SalesBase(driver);
@@ -463,11 +463,11 @@ public class AltadeLineas extends TestBase {
 			}
 		}
 		sleep(25000);
-		sb.elegirplan(sPlan);
+		sb.agregarplan(sPlan);
 		sleep(12000);
 		driver.findElement(By.cssSelector(".slds-input.ng-valid.ng-not-empty.ng-dirty.ng-valid-parse.ng-touched")).clear();
 		sleep(3000);
-		driver.findElement(By.cssSelector(".slds-input.ng-valid.ng-dirty.ng-valid-parse.ng-touched.ng-empty")).sendKeys("Galaxy S8+ - Negro");
+		driver.findElement(By.cssSelector(".slds-input.ng-valid.ng-dirty.ng-valid-parse.ng-touched.ng-empty")).sendKeys(sEquipo);
 		sleep(13000);
 		List<WebElement> acept = driver.findElements(By.cssSelector(".slds-button.slds-button_neutral.cpq-add-button"));
 			for(WebElement a : acept){
@@ -479,7 +479,7 @@ public class AltadeLineas extends TestBase {
 			}
 		sleep(5000);	
 		sb.continuar();
-		sleep(14000);
+		sleep(15000);
 		cc.obligarclick(driver.findElement(By.id("InvoicePreview_nextBtn")));
 		sleep(12000);
 		/*cc.obligarclick(driver.findElement(By.id("LineAssignment_nextBtn")));
@@ -525,8 +525,8 @@ public class AltadeLineas extends TestBase {
 		CambiarPerfil("ofcom",driver);
 		sb.completarEntrega(orden, driver);
 	}
-	@Test(groups={"Sales", "AltaLineaDatos", "E2E"}, priority=1, dataProvider="DatosAltaEquipoExiste") 
-	public void TS_CRM_Movil_Equipo_Cliente_existente_Presencial_OFCOM(String sDni, String sNombre, String sApellido, String sSexo, String sFNac, String sEmail, String sPlan, String sProvincia, String sLocalidad) throws IOException {
+	@Test(groups={"Sales", "AltaLineaDatos", "E2E"}, priority=1, dataProvider="DatosAltaEquipoExiste") // ============== 31-8 no aprece el paso de ASIGNACION DE SERIALES
+	public void TS_CRM_Movil_Equipo_Cliente_existente_Presencial_OFCOM(String sDni, String sNombre, String sApellido, String sSexo, String sFNac, String sEmail, String sPlan, String sEquipo, String sProvincia, String sLocalidad) throws IOException {
 		imagen = "TS_CRM_Movil_Equipo_Cliente_existente_Presencial_OFCOM";
 		CustomerCare cc = new CustomerCare(driver);
 		SalesBase sb = new SalesBase(driver);
@@ -543,7 +543,7 @@ public class AltadeLineas extends TestBase {
 			}
 		}
 		sleep(20000);
-		driver.findElement(By.cssSelector(".slds-input.ng-pristine.ng-untouched.ng-valid")).sendKeys("Galaxy");
+		driver.findElement(By.cssSelector(".slds-input.ng-pristine.ng-untouched.ng-valid")).sendKeys(sEquipo);
 		sleep(8000);
 		List<WebElement> agregar = driver.findElements(By.cssSelector(".slds-button.slds-button_neutral.cpq-add-button")); 
 			for(WebElement a : agregar){
@@ -556,7 +556,7 @@ public class AltadeLineas extends TestBase {
 		sb.continuar();
 		sleep(22000);
 		BasePage cambioFrameByID=new BasePage();
-		driver.switchTo().frame(cambioFrameByID.getFrameForElement(driver, By.id("VlocityBP")));
+		//driver.switchTo().frame(cambioFrameByID.getFrameForElement(driver, By.id("VlocityBP")));
 		//System.out.println(driver.findElement(By.id("VlocityBP")).getText());
 		buscarYClick(driver.findElements(By.id("InvoicePreview_nextBtn")),"equals", "Siguiente");
 		System.out.println(driver.findElement(By.id("InvoicePreview_nextBtn")).getText());
@@ -602,7 +602,7 @@ public class AltadeLineas extends TestBase {
 		}
 	
 	@Test(groups={"Sales", "AltaLineaDatos", "E2E"}, priority=1, dataProvider="AltaLineaNuevoEquipoOfCom")
-	public void TS135820_CRM_Movil_Venta_Sin_Linea_Cliente_nuevo_Presencial_OFCOM_EF(String sDni, String sNombre, String sApellido, String sSexo, String sFNac, String sEmail, String sPlan, String sProvincia, String sLocalidad) throws IOException {
+	public void TS135820_CRM_Movil_Venta_Sin_Linea_Cliente_nuevo_Presencial_OFCOM_EF(String sDni, String sNombre, String sApellido, String sSexo, String sFNac, String sEmail, String sEquipo, String sProvincia, String sLocalidad, String sCalle, String sAltura, String sCP) throws IOException {
 		imagen = "TS135820";
 		CustomerCare cc = new CustomerCare(driver);
 		SalesBase sb = new SalesBase(driver);
@@ -625,7 +625,7 @@ public class AltadeLineas extends TestBase {
 				}
 			}
 		sleep(25000);
-		driver.findElements(By.cssSelector(".slds-input.ng-pristine.ng-untouched.ng-valid")).get(0).sendKeys("Galaxy");
+		driver.findElements(By.cssSelector(".slds-input.ng-pristine.ng-untouched.ng-valid")).get(0).sendKeys(sEquipo);
 		sleep(10000);
 		List<WebElement> agregar = driver.findElements(By.cssSelector(".slds-button.slds-button_neutral.cpq-add-button")); 
 			for(WebElement a : agregar){
@@ -637,7 +637,7 @@ public class AltadeLineas extends TestBase {
 		sleep(5000);	
 		sb.continuar();
 		sleep(24000);
-		sb.Crear_DomicilioLegal(sProvincia, sLocalidad, "falsa", "", "1000", "", "", "1549");
+		sb.Crear_DomicilioLegal(sProvincia, sLocalidad, sCalle, "", sAltura, "", "", sCP);
 		sleep(27000);
 		cc.obligarclick(driver.findElement(By.id("InvoicePreview_nextBtn")));
 		sleep(20000);
@@ -675,8 +675,7 @@ public class AltadeLineas extends TestBase {
 		CambiarPerfil("entrega",driver);
 		sb.completarEntrega(orden, driver);
 		CambiarPerfil("ofcom",driver);
-		
-		
+
 	}
 
 		
@@ -739,7 +738,7 @@ public class AltadeLineas extends TestBase {
 		sleep(12000);
 		driver.findElement(By.cssSelector(".slds-input.ng-valid.ng-not-empty.ng-dirty.ng-valid-parse.ng-touched")).clear();
 		sleep(3000);
-		driver.findElement(By.cssSelector(".slds-input.ng-valid.ng-dirty.ng-valid-parse.ng-touched.ng-empty")).sendKeys("Galaxy S8 - Negro");
+		driver.findElement(By.cssSelector(".slds-input.ng-valid.ng-dirty.ng-valid-parse.ng-touched.ng-empty")).sendKeys(sEquipo);
 		sleep(13000);
 		List<WebElement> acept = driver.findElements(By.cssSelector(".slds-button.slds-button_neutral.cpq-add-button"));
 			for(WebElement a : acept){

@@ -1343,7 +1343,6 @@ try{	driver.findElement(By.id("alert-ok-button")).click();	} catch (NoSuchElemen
 				}
 			}
 			sleep(12000);
-			driver.switchTo().frame(TB.cambioFrame(driver, By.cssSelector(".slds-truncate.ng-binding")));
 			
 			String serial = driver.findElement(By.cssSelector(".slds-table.slds-table--bordered.slds-table--cell-buffer.vlc-slds-table")).findElements(By.tagName("td")).get(2).getText();
 			System.out.println("S="+serial);
