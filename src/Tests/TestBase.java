@@ -669,6 +669,32 @@ public class TestBase {
 		return (Campo);
 	}
 	
+	private String dataProviderCuentas() {
+		String sDataProviderCuentas;
+		
+		if (urlAmbiente.contains("SIT")) {
+			sDataProviderCuentas = "CuentasSIT.clsx";
+		}
+		else {
+			sDataProviderCuentas = "CuentasUAT.xlsx";
+		}
+		
+		return sDataProviderCuentas;
+	}
+	
+	private String dataProviderE2E() {
+		String sDataProviderE2E;
+		
+		if (urlAmbiente.contains("SIT")) {
+			sDataProviderE2E = "E2ESIT.clsx";
+		}
+		else {
+			sDataProviderE2E = "E2EUAT.xlsx";
+		}
+		
+		return sDataProviderE2E;
+	}
+	
 	@DataProvider
 	public Object[][] Tech() throws Exception{
 

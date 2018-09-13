@@ -111,7 +111,7 @@ public class GestionesPerfilOficina extends TestBase {
 	public void quit() throws IOException {
 		driver.quit();
 		sleep(5000);
-	}*/
+	}
 	
 	@Test (groups = {"GestionesPerfilOficina","NumerosAmigos","E2E"}, dataProvider="NumerosAmigos")
 	public void TS100602_CRM_Movil_REPRO_FF_Alta_Presencial(String sDNI, String sCuenta, String sNumeroDeCuenta, String sLinea, String sNumeroVOZ, String sNumeroSMS) {
