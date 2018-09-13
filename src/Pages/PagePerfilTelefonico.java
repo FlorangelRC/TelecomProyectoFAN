@@ -3,6 +3,7 @@ import java.util.Arrays;
 import java.util.List;
 
 import org.openqa.selenium.By;
+import org.openqa.selenium.ElementNotVisibleException;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.SearchContext;
@@ -81,7 +82,7 @@ public class PagePerfilTelefonico extends TestBase{
 	public void buscarAssert() {
 	sleep(8000);
 	driver.findElement(By.cssSelector(".slds-tree__item.ng-scope")).findElement(By.tagName("div")).click();
-	sleep(8000);
+	sleep(12000);
 	driver.switchTo().frame(cambioFrame(driver, By.className("card-top"))); 
 	sleep(8000);
 	driver.findElement(By.className("card-top")).click(); 
@@ -194,8 +195,8 @@ public class PagePerfilTelefonico extends TestBase{
 		List<WebElement> NomPack = driver.findElements(By.xpath("//*[@class='cpq-item-product-child-level-1 cpq-item-child-product-name-wrapper']"));
 		
 		for(WebElement a: NomPack) {
-			System.out.print(a.getText().toLowerCase());
-			System.out.println(" : "+servicio1.toLowerCase());
+			//System.out.print(a.getText().toLowerCase());
+			//System.out.println(" : "+servicio1.toLowerCase());
 				if (a.getText().toLowerCase().contains(servicio1.toLowerCase())) {
 					System.out.println(servicio1);
 						a.findElement(By.tagName("button")).click();
@@ -208,7 +209,7 @@ public class PagePerfilTelefonico extends TestBase{
 		List<WebElement> Btnsubpack = driver.findElements(By.xpath("//*[@class='cpq-item-product-child-level-2 cpq-item-child-product-name-wrapper']//*[@class='slds-button slds-button_icon-small']"));			
 		if (subPack.size() == Btnsubpack.size()) {
 		for(WebElement b: subPack) {			
-			System.out.println("+++++"+b.getText().substring(b.getText().indexOf("\n")+1, b.getText().length())+"++++++");
+			//System.out.println("+++++"+b.getText().substring(b.getText().indexOf("\n")+1, b.getText().length())+"++++++");
 			
 					if (b.getText().substring(b.getText().indexOf("\n")+1, b.getText().length()).toLowerCase().contains(servicio2.toLowerCase())) {
 						System.out.println(servicio2);
@@ -237,6 +238,21 @@ public class PagePerfilTelefonico extends TestBase{
 				}
 			}
 		}
+	
+	
+	public void closerightpanel() {
+		sleep(10000);
+		try {
+		driver.switchTo().defaultContent();
+		if(driver.findElements(By.cssSelector(".x-layout-mini.x-layout-mini-east.x-layout-mini-custom-logo")).size() != 0) {
+			driver.findElement(By.cssSelector(".x-layout-mini.x-layout-mini-east.x-layout-mini-custom-logo")).click();
+		}
+		}
+		catch (ElementNotVisibleException e) {
+		
+		}
+		}
+	
 			     
 }		     
 		

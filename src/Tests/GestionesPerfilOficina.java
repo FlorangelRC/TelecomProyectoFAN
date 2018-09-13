@@ -40,7 +40,7 @@ public class GestionesPerfilOficina extends TestBase {
 		sb = new SalesBase(driver);
 		cc = new CustomerCare(driver);
 		loginOfCom(driver);
-		sleep(22000);
+		sleep(8000);
 		driver.findElement(By.id("tabBar")).findElement(By.tagName("a")).click();
 		sleep(18000);
 		driver.switchTo().defaultContent();
@@ -96,7 +96,7 @@ public class GestionesPerfilOficina extends TestBase {
 			}
 		}
 		
-		sleep(25000);
+		sleep(15000);
 	}
 
 	//@AfterMethod(alwaysRun=true)
@@ -2155,16 +2155,32 @@ public class GestionesPerfilOficina extends TestBase {
 	}
 	
 	@Test (groups = {"GestionesPerfilOficina","E2E"}, dataProvider="PackOfCom")
-	public void Venta_de_Pack(String sDNI, String sLinea, String cBanco, String cTarjeta, String cPromo, String cCuotas, String cNumTarjeta, String cVenceMes, String cVenceAno, String cCodSeg, String cTipoDNI, String cDNITarjeta, String cTitular, String sPackOfCom) throws InterruptedException{
+	public void Venta_de_Pack(String sDNI, String sCuenta, String cBanco, String cTarjeta, String cPromo, String cCuotas, String sPackOfCom){
 		PagePerfilTelefonico pagePTelefo = new PagePerfilTelefonico(driver);
 		driver.switchTo().frame(cambioFrame(driver, By.id("SearchClientDocumentType")));
 		sb.BuscarCuenta("DNI", sDNI);
-		driver.findElement(By.cssSelector(".slds-tree__item.ng-scope")).click();
 		String accid = driver.findElement(By.cssSelector(".searchClient-body.slds-hint-parent.ng-scope")).findElements(By.tagName("td")).get(5).getText();
 		System.out.println("id "+accid);
-		sleep(20000);
 		pagePTelefo.buscarAssert();
 		pagePTelefo.comprarPack("comprar minutos");
-		
+		pagePTelefo.closerightpanel();
+		sleep(8000);
+		pagePTelefo.agregarPack(sPackOfCom);
+		pagePTelefo.tipoDePago("en factura de venta");
+		pagePTelefo.getTipodepago().click();
+		sleep(12000);
+		pagePTelefo.getSimulaciondeFactura().click();
+		sleep(12000);
+		buscarYClick(driver.findElements(By.cssSelector(".slds-form-element__label.ng-binding")), "equals", "efectivo");
+		sleep(12000);
+		buscarYClick(driver.findElements(By.cssSelector(".slds-form-element__label.ng-binding")), "equals", "tarjeta de credito");
+		sleep(12000);
+		selectByText(driver.findElement(By.id("BankingEntity-0")), cBanco);
+		selectByText(driver.findElement(By.id("CardBankingEntity-0")), cTarjeta);
+		selectByText(driver.findElement(By.id("promotionsByCardsBank-0")), cPromo);
+		selectByText(driver.findElement(By.id("Installment-0")), cCuotas);
+		pagePTelefo.getMediodePago().click();
+		sleep(12000);
+		pagePTelefo.getOrdenSeRealizoConExito().click();
 	}
 }	
