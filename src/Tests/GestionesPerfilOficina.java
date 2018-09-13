@@ -683,7 +683,7 @@ public class GestionesPerfilOficina extends TestBase {
 			}
 		}
 		Assert.assertTrue(a);
-		sleep(5000);*/
+		sleep(5000);
 		String orden = cc.obtenerOrden(driver, "Problemas con Recargas");
 		sOrders.add("Recargas, orden numero: " + orden + " con DNI: " + cDNI );
 		System.out.println(sOrders);
@@ -727,7 +727,7 @@ public class GestionesPerfilOficina extends TestBase {
 				a = true;
 			}
 		}
-		Assert.assertTrue(a);*/
+		Assert.assertTrue(a);
 		sleep(5000);
 		String orden = cc.obtenerOrden(driver, "Problemas con Recargas");
 		sOrders.add("Recargas, orden numero: " + orden + " con DNI: " + cDNI );
