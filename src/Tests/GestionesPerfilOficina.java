@@ -1739,7 +1739,7 @@ public class GestionesPerfilOficina extends TestBase {
 		Assert.assertTrue(driver.findElement(By.cssSelector(".slds-form-element.vlc-flex.vlc-slds-text-block.vlc-slds-rte.ng-pristine.ng-valid.ng-scope")).findElement(By.className("ng-binding")).findElement(By.tagName("p")).getText().equalsIgnoreCase("saldo insuficiente"));
 	}
 	
-	@Test (groups = {"GestionesPerfilOficina", "Reintegros", "E2E"}, dataProvider = "Reintegros")
+	@Test (groups = {"GestionesPerfilOficina", "Reintegros", "E2E"}, dataProvider = "CuentaReintegros")
 	public void TS112598_CRM_Movil_PRE_Pago_con_Tarjeta_de_debito_Reintegro_con_Efectivo_1000(String cDNI) {
 		Marketing mk = new Marketing(driver);
 		boolean gest = false;
@@ -1772,7 +1772,7 @@ public class GestionesPerfilOficina extends TestBase {
 		}
 		Assert.assertTrue(gest);
 		String orden = cc.obtenerOrden(driver, "Solicitud de Reintegros");
-		sOrders.add("Solicitud de Reintegros, numero de orden: " + orden + " de cuenta con DNI: " + "19006577");
+		sOrders.add("Solicitud de Reintegros, numero de orden: " + orden + " de cuenta con DNI: " + cDNI);
 		Assert.assertTrue(cc.verificarOrden(orden));
 	}
 	
