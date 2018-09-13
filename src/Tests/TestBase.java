@@ -1047,7 +1047,7 @@ public class TestBase {
 	@DataProvider
 	public Object [][] PackOfCom() throws Exception{
 		
-		Object[][] testObjArray = ExcelUtils.getTableArray("Cuentas.xlsx","PerfilGestiones",1,1,15,"packOfCom");
+		Object[][] testObjArray = ExcelUtils.getTableArray("Cuentas.xlsx","PerfilGestiones",1,1,7,"packOfCom");
 		
 		return (testObjArray);
 	}
