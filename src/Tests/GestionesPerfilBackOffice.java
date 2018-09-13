@@ -78,10 +78,10 @@ public class GestionesPerfilBackOffice extends TestBase {
 	
 	@AfterMethod (alwaysRun = true)
 	public void after() {
-		sb.cerrarPestaniaGestion(driver);
+		//sb.cerrarPestaniaGestion(driver);
 	}
 
-	@AfterClass (alwaysRun = true)
+	//@AfterClass (alwaysRun = true)
 	public void quit() {
 		driver.quit();
 		sleep(5000);

@@ -116,7 +116,7 @@ private WebDriver driver;
 		 txt2.add("Segmento");
 		 txt2.add("Region");
 		 txt2.add("Territorio");
-		 txt2.add("Domicilio de recepci�n de notificaciones");
+		 txt2.add("Domicilio de recepci\u00f3n de notificaciones");
 		 List<WebElement> campos = driver.findElements(By.className("labelCol"));
 		 System.out.println(campos.size());
 		 for(WebElement c: campos){
@@ -209,7 +209,7 @@ private WebDriver driver;
 	WebElement msg = driver.findElement(By.className("messageText"));
 	waitFor(driver, By.className("messageText"));
 	System.out.println(msg.getText());
-	Assert.assertTrue((msg.getText().equals("Para agregar o para quitar una Influencia: 1) Arrastrar la caja del contacto influyente 2) Soltarla sobre la caja del contacto influenciado 3) Clickear el bot�n de \"Guardar cambios\" antes de abandonar la p�gina!")));
+	Assert.assertTrue((msg.getText().equals("Para agregar o para quitar una Influencia: 1) Arrastrar la caja del contacto influyente 2) Soltarla sobre la caja del contacto influenciado 3) Clickear el bot\u00f3n de \"Guardar cambios\" antes de abandonar la p\u00e1gina!")));
 	}
 	
 	
@@ -366,9 +366,9 @@ private WebDriver driver;
 		 ArrayList<String> colu = new ArrayList<String>();
 		 ArrayList<String> txt2 = new ArrayList<String>();
 		 txt2.add(": activate to sort column descending");
-		 txt2.add("Fecha de Creaci�n");
+		 txt2.add("Fecha de Creaci\u00f3n");
 		 txt2.add("Tema");
-		 txt2.add("Descripci�n");
+		 txt2.add("Descripci\u00f3n");
 		 txt2.add("Fecha Limite");
 		 txt2.add("Completado");
 		 txt2.add("Estado de la tarea");

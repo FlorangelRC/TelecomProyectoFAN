@@ -1480,11 +1480,12 @@ public class CustomerCare extends BasePage {
 		List<WebElement> wGestiones = wFlyOutActionCard.findElements(By.tagName("li"));
 		for (WebElement wAux : wGestiones) {
 			if (wAux.getText().contains(sGestion)) {
+				System.out.println("Encontre la gestion");
 				wAux.findElement(By.tagName("a")).click();
 				break;
 			}
 		}
-		sleep(8000);
+		sleep(12000);
 		try {
 			cambiarAFrameActivo();
 		} catch(org.openqa.selenium.StaleElementReferenceException ex1) {}
@@ -1506,14 +1507,17 @@ public class CustomerCare extends BasePage {
 	
 	public void seleccionarCardPornumeroLinea(String sLinea, WebDriver driver) {
 		TestBase tTB = new TestBase();
+		boolean esta = false;
 		driver.switchTo().frame(tTB.cambioFrame(driver, By.className("card-top")));		
 		List<WebElement> wCard = driver.findElements(By.className("card-top"));		
 		for (WebElement wAux : wCard) {
 			if (wAux.getText().contains(sLinea)) {
 				wAux.click();
+				esta = true;
 				break;
 			}
-		}		
+		}	
+		assertTrue(esta);
 		sleep(5000);
 	}
 	

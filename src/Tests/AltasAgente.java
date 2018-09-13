@@ -110,14 +110,14 @@ public class AltasAgente extends TestBase{
 			DatosOrden.clear();
 			tomarCaptura(driver,imagen);
 			sleep(2000);
-			SalesBase SB = new SalesBase(driver);
+			/*SalesBase SB = new SalesBase(driver);
 			driver.switchTo().defaultContent();
 			sleep(6000);
 			SB.cerrarPestaniaGestion(driver);
-			sleep(5000);
+			sleep(5000);*/
 		}
 	
-	@AfterClass(alwaysRun=true)
+	//@AfterClass(alwaysRun=true)
 	public void Exit() throws IOException {
 		driver.quit();
 		sleep(2000);

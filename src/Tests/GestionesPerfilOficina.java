@@ -31,7 +31,7 @@ public class GestionesPerfilOficina extends TestBase {
 	List<String> sOrders = new ArrayList<String>();
 	String imagen;
 	
-	@BeforeClass(alwaysRun=true)
+	/*@BeforeClass(alwaysRun=true)
 	public void init() {
 		driver = setConexion.setupEze();
 		sleep(5000);
@@ -41,6 +41,26 @@ public class GestionesPerfilOficina extends TestBase {
 		sleep(22000);
 		driver.findElement(By.id("tabBar")).findElement(By.tagName("a")).click();
 		sleep(18000);
+		driver.switchTo().defaultContent();
+		sleep(3000);
+		
+	}*/
+	
+	@BeforeClass(alwaysRun=true)
+	public void init() {
+		driver = setConexion.setupEze();
+		sleep(5000);
+		sb = new SalesBase(driver);
+		cc = new CustomerCare(driver);
+		loginOfCom(driver);
+		sleep(22000);
+		try {
+			cc.cajonDeAplicaciones("Consola FAN");
+		} catch(Exception e) {
+			sleep(3000);
+			driver.findElement(By.id("tabBar")).findElement(By.tagName("a")).click();
+			sleep(6000);
+		}
 		driver.switchTo().defaultContent();
 		sleep(3000);
 		
@@ -110,7 +130,7 @@ public class GestionesPerfilOficina extends TestBase {
 	@AfterClass(alwaysRun=true)
 	public void quit() throws IOException {
 		//guardarListaTxt(sOrders);
-		driver.quit();
+		//driver.quit();
 		sleep(5000);
 	}
 	
@@ -131,7 +151,7 @@ public class GestionesPerfilOficina extends TestBase {
 		cCC.seleccionarCardPornumeroLinea(sLinea, driver);
 		//driver.switchTo().frame(cambioFrame(driver, By.className("card-top")));
 		//driver.findElement(By.className("card-top")).click();
-		//sleep(3000);
+		sleep(3000);
 		
 		cCC.irAGestionEnCard("N\u00fameros Gratis");
 		
@@ -181,7 +201,7 @@ public class GestionesPerfilOficina extends TestBase {
 		cCC.seleccionarCardPornumeroLinea(sLinea, driver);
 		//driver.switchTo().frame(cambioFrame(driver, By.className("card-top")));
 		//driver.findElement(By.className("card-top")).click();
-		//sleep(3000);
+		sleep(3000);
 		
 		cCC.irAGestionEnCard("N\u00fameros Gratis");
 		
@@ -232,7 +252,7 @@ public class GestionesPerfilOficina extends TestBase {
 		cCC.seleccionarCardPornumeroLinea(sLinea, driver);
 		//driver.switchTo().frame(cambioFrame(driver, By.className("card-top")));
 		//driver.findElement(By.className("card-top")).click();
-		//sleep(3000);
+		sleep(3000);
 		
 		cCC.irAGestionEnCard("N\u00fameros Gratis");
 		
@@ -511,12 +531,12 @@ public class GestionesPerfilOficina extends TestBase {
 		  driver.findElement(By.id("SearchClientsDummy")).click();
 		  sleep(10000);
 		//SB.BuscarAvanzada(NyA.split(" ")[0], NyA.split(" ")[1], "", "", "");
-		WebElement cli = driver.findElement(By.id("tab-scoped-2"));
+		WebElement cli = driver.findElement(By.id("tab-scoped-1"));
 		//if (cli.findElement(By.tagName("tbody")).findElement(By.tagName("tr")).findElement(By.tagName("div")).getText().equals(sCuenta)) {
 			cli.findElement(By.tagName("tbody")).findElement(By.tagName("tr")).click();
 		//}
 		sleep(3000);
-		List<WebElement> Lineas = driver.findElement(By.id("tab-scoped-2")).findElement(By.tagName("tbody")).findElements(By.tagName("tr"));
+		List<WebElement> Lineas = driver.findElement(By.id("tab-scoped-1")).findElement(By.tagName("tbody")).findElements(By.tagName("tr"));
 		for(WebElement UnaL: Lineas) {
 			//System.out.println("********"+UnaL.getText()+"  FIN");
 			if(UnaL.getText().toLowerCase().contains("plan con tarjeta")||UnaL.getText().toLowerCase().contains("plan prepago nacional")) {
@@ -631,15 +651,15 @@ public class GestionesPerfilOficina extends TestBase {
 		sleep(8000);
 		driver.findElement(By.id("Summary_nextBtn")).click();
 		sleep(8000);
-		boolean b = false;
+		/*boolean b = false;
 		List <WebElement> prob = driver.findElements(By.cssSelector(".slds-box.ng-scope"));
 		for(WebElement x : prob) {
 			if(x.getText().toLowerCase().contains("no se pudo realizar la operaci\u00f3n.")) {
 				b = true;
 			}
 		}
-		Assert.assertTrue(b);
-		/*boolean a = false;
+		Assert.assertTrue(b);*/
+		boolean a = false;
 		List <WebElement> conf = driver.findElements(By.cssSelector(".slds-box.ng-scope"));
 		for(WebElement x : conf) {
 			if(x.getText().toLowerCase().contains("recarga realizada con \u00e9xito!")) {
@@ -650,7 +670,7 @@ public class GestionesPerfilOficina extends TestBase {
 		sleep(5000);
 		String orden = cc.obtenerOrden(driver, "Problemas con Recargas");
 		sOrders.add("Recargas, orden numero: " + orden + " con DNI: " + cDNI );
-		System.out.println(sOrders);*/
+		System.out.println(sOrders);
 	}
 	
 	@Test (groups = {"ProblemaRecarga", "GestionesPerfilOficina","E2E"}, dataProvider="CuentaProblemaRecarga") //Error al intentar impactar la recarga
@@ -676,15 +696,15 @@ public class GestionesPerfilOficina extends TestBase {
 		sleep(8000);
 		driver.findElement(By.id("Summary_nextBtn")).click();
 		sleep(8000);
-		boolean b = false;
+		/*boolean b = false;
 		List <WebElement> prob = driver.findElements(By.cssSelector(".slds-box.ng-scope"));
 		for(WebElement x : prob) {
 			if(x.getText().toLowerCase().contains("no se pudo realizar la operaci\u00f3n.")) {
 				b = true;
 			}
 		}
-		Assert.assertTrue(b);
-		/*boolean a = false;
+		Assert.assertTrue(b);*/
+		boolean a = false;
 		List <WebElement> conf = driver.findElements(By.cssSelector(".slds-box.ng-scope"));
 		for(WebElement x : conf) {
 			if(x.getText().toLowerCase().contains("recarga realizada con \u00e9xito!")) {
@@ -695,7 +715,7 @@ public class GestionesPerfilOficina extends TestBase {
 		sleep(5000);
 		String orden = cc.obtenerOrden(driver, "Problemas con Recargas");
 		sOrders.add("Recargas, orden numero: " + orden + " con DNI: " + cDNI );
-		System.out.println(sOrders);*/
+		System.out.println(sOrders);
 	}
 	
 	@Test (groups = {"GestionesPerfilOficina", "Ajustes","E2E"}, dataProvider = "CuentaAjustesREPRO")
