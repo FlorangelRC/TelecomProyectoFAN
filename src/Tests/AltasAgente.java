@@ -104,7 +104,7 @@ public class AltasAgente extends TestBase{
 		driver.switchTo().frame(accountPage.getFrameForElement(driver, By.id("SearchClientDocumentNumber")));
 	}
 	
-	@AfterMethod(alwaysRun=true)
+	//@AfterMethod(alwaysRun=true)
 		public void deslogin() throws IOException{
 			guardarListaTxt(DatosOrden);
 			DatosOrden.clear();
@@ -117,7 +117,7 @@ public class AltasAgente extends TestBase{
 			sleep(5000);
 		}
 	
-	@AfterClass(alwaysRun=true)
+	//@AfterClass(alwaysRun=true)
 	public void Exit() throws IOException {
 		driver.quit();
 		sleep(2000);
@@ -561,7 +561,6 @@ public class AltasAgente extends TestBase{
 		sleep(4000);
 		Select prov = new Select (driver.findElement(By.id("State")));
 		prov.selectByVisibleText(sState);
-		
 		sleep(4000);
 		Select city = new Select (driver.findElement(By.id("City")));
 		city.selectByVisibleText(sCity);
@@ -715,7 +714,7 @@ public class AltasAgente extends TestBase{
 				}
 			}
 		sleep(25000);
-		sb.agregarplan(sPlan);
+		sb.elegirplan(sPlan);
 		sleep(12000);
 		driver.findElement(By.cssSelector(".slds-input.ng-valid.ng-not-empty.ng-dirty.ng-valid-parse.ng-touched")).clear();
 		sleep(8000);
