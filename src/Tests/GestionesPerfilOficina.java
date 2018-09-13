@@ -2011,7 +2011,7 @@ public class GestionesPerfilOficina extends TestBase {
 		Assert.assertTrue(gest);
 	}
 	
-	@Test (groups = {"GestionesPerfilOficina", "Recargas","E2E"}, dataProvider = "RecargaTC")
+	@Test (groups = {"GestionesPerfilOficina", "Recargas","E2E"}, dataProvider = "RecargaTD")
 	public void TS134320_CRM_Movil_REPRO_Recargas_Presencial_TD_Ofcom(String sDNI, String sMonto, String sBanco, String sTarjeta, String sPromo, String sCuotas, String sNumTarjeta, String sVenceMes, String sVenceAno, String sCodSeg, String sTipoDNI, String sDNITarjeta, String sTitular, String sLinea) {
 		if(sMonto.length() >= 4) {
 			sMonto = sMonto.substring(0, sMonto.length()-1);
@@ -2029,6 +2029,8 @@ public class GestionesPerfilOficina extends TestBase {
 		driver.switchTo().frame(cambioFrame(driver, By.id("RefillAmount")));
 		driver.findElement(By.id("RefillAmount")).sendKeys(sMonto);
 		sleep(15000);
+		CustomerCare cCC = new CustomerCare(driver);
+		String sOrden = cCC.obtenerOrden2(driver);
 		driver.findElement(By.id("AmountSelectionStep_nextBtn")).click();
 		sleep(15000);
 		driver.findElement(By.xpath("//*[@id=\"InvoicePreview_nextBtn\"]")).click();
@@ -2056,7 +2058,8 @@ public class GestionesPerfilOficina extends TestBase {
 			}
 			Assert.assertTrue(bAssert);
 		}
-		String sOrden = cc.obtenerOrdenMontoyTN(driver, "Recarga");
+		String orden = cCC.obtenerTNyMonto2(driver, sOrden);
+		//String sOrden = cc.obtenerOrdenMontoyTN(driver, "Recarga");
 		System.out.println("orden = " + sOrden);
 		sOrders.add("Recargas" + sOrden + ", cuenta:"+ sAccid +", DNI: " + sDNI + ", Monto:" + sOrden.split("-")[2]);
 		CBS_Mattu cInvoSer = new CBS_Mattu();
@@ -2064,7 +2067,8 @@ public class GestionesPerfilOficina extends TestBase {
 		sleep(5000);
 		driver.navigate().refresh();
 		sleep(10000);
-		cc.obtenerOrdenMontoyTN(driver, "Recarga");
+		cCC.obtenerTNyMonto2(driver, sOrden);
+		//cc.obtenerOrdenMontoyTN(driver, "Recarga");
 		sleep(10000);
 		driver.switchTo().frame(cambioFrame(driver, By.id("Status_ilecell")));
 		Assert.assertTrue(driver.findElement(By.id("Status_ilecell")).getText().equalsIgnoreCase("activada"));
