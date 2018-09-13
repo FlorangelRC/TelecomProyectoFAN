@@ -1846,7 +1846,7 @@ public class GestionesPerfilOficina extends TestBase {
 		Assert.assertTrue(b);
 	}
 	
-	@Test (groups = {"GestionesPerfilOficina", "Reintegros", "E2E"}, dataProvider = "Reintegros")
+	@Test (groups = {"GestionesPerfilOficina", "Reintegros", "E2E"}, dataProvider = "CuentaReintegros")
 	public void TS112597_CRM_Movil_PRE_Pago_con_Tarjeta_de_debito_Reintegro_con_Efectivo_Menos_de_1000(String cDNI) {
 		Marketing mk = new Marketing(driver);
 		boolean gest = false;
@@ -1879,7 +1879,7 @@ public class GestionesPerfilOficina extends TestBase {
 		}
 		Assert.assertTrue(gest);
 		String orden = cc.obtenerOrden(driver, "Solicitud de Reintegros");
-		sOrders.add("Solicitud de Reintegros, numero de orden: " + orden + " de cuenta con DNI: " + "19006577");
+		sOrders.add("Solicitud de Reintegros, numero de orden: " + orden + " de cuenta con DNI: " + cDNI);
 		Assert.assertTrue(cc.verificarOrden(orden));
 	}
 	
