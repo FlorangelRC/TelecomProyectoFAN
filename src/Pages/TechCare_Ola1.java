@@ -298,7 +298,7 @@ public class TechCare_Ola1 {
 			Select field = new Select(selectCuentas);
 			if (!field.getFirstSelectedOption().getText().equalsIgnoreCase("Todas las cuentas")) {
 				field.selectByVisibleText("Todas las cuentas");
-				TestBase.sleep(4000);
+				sleep(4000);
 			}
 			sleep(8000);
 			char char0 = cuenta.toUpperCase().charAt(0);
@@ -315,7 +315,7 @@ public class TechCare_Ola1 {
 					if (c.getText().toLowerCase().contains(cuenta.toLowerCase())) {
 						sleep(500);
 						c.findElement(By.tagName("th")).findElement(By.tagName("a")).click();
-						TestBase.sleep(10000);
+						sleep(10000);
 						return;
 					}
 				}
@@ -330,7 +330,7 @@ public class TechCare_Ola1 {
 						sleep(300);
 						c.findElement(By.tagName("a")).click();
 						}catch(org.openqa.selenium.ElementNotVisibleException a) {}
-					TestBase.sleep(10000);
+					sleep(10000);
 					return;
 				}
 			}

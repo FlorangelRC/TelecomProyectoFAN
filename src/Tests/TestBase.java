@@ -45,8 +45,8 @@ import DataProvider.ExcelUtils;
 
 public class TestBase {
 	protected static WebDriver driver;//
-	 //public String urlAmbiente = "https://telecomcrm--uat.cs53.my.salesforce.com";
-	 public String urlAmbiente = "https://crm--sit.cs14.my.salesforce.com/";
+		//public static String urlAmbiente = "https://telecomcrm--uat.cs53.my.salesforce.com";
+		public static String urlAmbiente = "https://crm--sit.cs14.my.salesforce.com/";
 	
 	
 	public void leftDropdown(WebDriver driver, String selection) {
@@ -669,6 +669,32 @@ public class TestBase {
 		return (Campo);
 	}
 	
+	private String dataProviderCuentas() {
+		String sDataProviderCuentas;
+		
+		if (urlAmbiente.contains("SIT")) {
+			sDataProviderCuentas = "CuentasSIT.clsx";
+		}
+		else {
+			sDataProviderCuentas = "CuentasUAT.xlsx";
+		}
+		
+		return sDataProviderCuentas;
+	}
+	
+	private String dataProviderE2E() {
+		String sDataProviderE2E;
+		
+		if (urlAmbiente.contains("SIT")) {
+			sDataProviderE2E = "E2ESIT.clsx";
+		}
+		else {
+			sDataProviderE2E = "E2EUAT.xlsx";
+		}
+		
+		return sDataProviderE2E;
+	}
+	
 	@DataProvider
 	public Object[][] Tech() throws Exception{
 
@@ -1005,7 +1031,7 @@ public class TestBase {
 	@DataProvider
 	public Object[][] NumerosAmigos() throws Exception{
 
-	 Object[][] testObjArray = ExcelUtils.getTableArray("Cuentas.xlsx","PerfilGestiones",1,1,6,"Amigos");
+	 Object[][] testObjArray = ExcelUtils.getTableArray("Cuentas.xlsx","PerfilGestiones",1,1,6,"Numeros Amigos");
 
 	 return (testObjArray);
 
@@ -1039,7 +1065,15 @@ public class TestBase {
 	@DataProvider
 	public Object [][] ventaPack() throws Exception{
 		
-		Object[][] testObjArray = ExcelUtils.getTableArray("Cuentas.xlsx","PerfilGestiones",1,1,14,"venta de pack");
+		Object[][] testObjArray = ExcelUtils.getTableArray("Cuentas.xlsx","PerfilGestiones",1,1,15,"venta de pack");
+		
+		return (testObjArray);
+	}
+	
+	@DataProvider
+	public Object [][] PackOfCom() throws Exception{
+		
+		Object[][] testObjArray = ExcelUtils.getTableArray("Cuentas.xlsx","PerfilGestiones",1,1,7,"packOfCom");
 		
 		return (testObjArray);
 	}
@@ -1289,6 +1323,24 @@ public class TestBase {
 	public Object[][] AltaLineaEquipoOfCom() throws Exception{
 
 	 Object[][] testObjArray = ExcelUtils.getTableArray("Cuentas.xlsx","PreparacionDatos",1,1,8,"Linea Equipo Nuevo OfCom");
+
+	 return (testObjArray);
+
+	}
+	
+	@DataProvider
+	public Object[][] NumerosAmigosModificacion() throws Exception{
+
+	 Object[][] testObjArray = ExcelUtils.getTableArray("Cuentas.xlsx","PerfilGestiones",1,1,5,"Amigos Modficacion");
+
+	 return (testObjArray);
+
+	}
+	
+	@DataProvider
+	public Object[][] NumerosAmigosBaja() throws Exception{
+
+	 Object[][] testObjArray = ExcelUtils.getTableArray("Cuentas.xlsx","PerfilGestiones",1,1,5,"Amigos Baja");
 
 	 return (testObjArray);
 
