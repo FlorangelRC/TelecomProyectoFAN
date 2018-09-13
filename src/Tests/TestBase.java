@@ -672,11 +672,17 @@ public class TestBase {
 	private String dataProviderCuentas() {
 		String sDataProviderCuentas;
 		
-		if (urlAmbiente.contains("SIT")) {
-			sDataProviderCuentas = "CuentasSIT.clsx";
+		if (urlAmbiente.contains("sit")) {
+			sDataProviderCuentas = "CuentasSIT.xlsx";
 		}
 		else {
-			sDataProviderCuentas = "CuentasUAT.xlsx";
+			if (urlAmbiente.contains("uat")) {
+				sDataProviderCuentas = "CuentasUAT.xlsx";
+			}
+			else {
+				System.out.println("Error de URL!");
+				sDataProviderCuentas = null;
+			}
 		}
 		
 		return sDataProviderCuentas;
@@ -685,11 +691,17 @@ public class TestBase {
 	private String dataProviderE2E() {
 		String sDataProviderE2E;
 		
-		if (urlAmbiente.contains("SIT")) {
-			sDataProviderE2E = "E2ESIT.clsx";
+		if (urlAmbiente.contains("sit")) {
+			sDataProviderE2E = "E2ESIT.xlsx";
 		}
 		else {
-			sDataProviderE2E = "E2EUAT.xlsx";
+			if (urlAmbiente.contains("uat")) {
+				sDataProviderE2E = "E2EUAT.xlsx";
+			}
+			else {
+				System.out.println("Error de URL!");
+				sDataProviderE2E = null;
+			}
 		}
 		
 		return sDataProviderE2E;
