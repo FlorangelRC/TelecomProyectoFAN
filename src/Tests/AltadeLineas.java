@@ -127,7 +127,7 @@ public class AltadeLineas extends TestBase {
 	}
 	
 	@Test(groups={"Sales", "AltaLineaDatos","E2E"}, priority=2, dataProvider="DatosAltaLineaOfCom")
-	public void TS_CRM_Movil_PRE_Alta_Linea_Cliente_Nuevo_OfCom_Efectivo_Presencial_DNI(String sDni, String sNombre, String sApellido, String sSexo, String sFNac, String sEmail, String sPlan, String sProvincia, String sLocalidad) throws IOException {
+	public void TS_CRM_Movil_PRE_Alta_Linea_Cliente_Nuevo_OfCom_Efectivo_Presencial_DNI(String sDni, String sNombre, String sApellido, String sSexo, String sFNac, String sEmail, String sPlan, String sProvincia, String sLocalidad, String sEntrega, String sStoreProv, String sStoreLoc, String sTipoDelivery) throws IOException {
 		imagen = "TS_CRM_Movil_PRE_Alta_Linea_Cliente_Nuevo_OfCom_Efectivo_Presencial_DNI";
 		CustomerCare cc = new CustomerCare(driver);
 		SalesBase sb = new SalesBase(driver);
@@ -142,7 +142,7 @@ public class AltadeLineas extends TestBase {
 		driver.findElement(By.id("EmailSelectableItems")).findElement(By.tagName("input")).sendKeys(sEmail);
 		driver.findElement(By.id("Contact_nextBtn")).click();
 		sleep(35000);
-		sb.ResolverEntrega(driver, "Presencial","","");
+		sb.ResolverEntrega(driver, sEntrega,sStoreProv,sStoreLoc);
 		sleep(7000);
 		driver.switchTo().defaultContent();
 		Accounts accountPage = new Accounts(driver);
@@ -187,6 +187,13 @@ public class AltadeLineas extends TestBase {
 		WebElement sig = driver.findElement(By.id("LineAssignment_nextBtn"));
 		cc.obligarclick(sig);
 		sleep(25000);
+		if (sEntrega.equalsIgnoreCase("Delivery")) {
+			
+		}
+		if (sEntrega.equalsIgnoreCase("Store pick up")) {
+			cc.obligarclick(driver.findElement(By.id("DeliveryMethodConfiguration_nextBtn")));
+			sleep(20000);
+		}
 		try {
 			cc.obligarclick(driver.findElement(By.id("Step_Error_Huawei_S015_nextBtn")));
 		}catch(Exception ex1) {}
@@ -250,8 +257,8 @@ public class AltadeLineas extends TestBase {
 	}
 	
 	
-	@Test(groups={"Sales", "AltaLineaDatos","E2E"}, priority=2, dataProvider="AltaLineaExistenteOfComPresencial")//verificado
-	public void TS119298_CRM_Movil_PRE_Alta_Linea_Cliente_Existente_OFCOM_Efectivo_Presencial_DNI(String sDni, String sPlan) throws IOException {
+	@Test(groups={"Sales", "AltaLineaDatos","E2E"}, priority=2, dataProvider="AltaLineaExistenteOfComPresencial")
+	public void TS119298_CRM_Movil_PRE_Alta_Linea_Cliente_Existente_OFCOM_Efectivo_Presencial_DNI(String sDni, String sEmail, String sPlan, String sProvincia, String sLocalidad) throws IOException {
 		imagen = "TS119298";
 		CustomerCare cc = new CustomerCare(driver);
 		SalesBase sb = new SalesBase(driver);
@@ -340,8 +347,8 @@ public class AltadeLineas extends TestBase {
 		}
 
 	}
-	@Test(groups={"Sales", "AltaLineaDatos","E2E"}, priority=2, dataProvider="AltaLineaExistenteOfComTD")//verificado
-	public void TS119300_CRM_Movil_PRE_Alta_Linea_Cliente_Existente_OFCOM_TD_Presencial_DNI(String sDni, String sPlan, String sBanco, String sTarjeta, String sPromo, String sCuotas, String sNumTar) throws IOException {
+	@Test(groups={"Sales", "AltaLineaDatos","E2E"}, priority=2, dataProvider="AltaLineaExistenteOfComTD")
+	public void TS119300_CRM_Movil_PRE_Alta_Linea_Cliente_Existente_OFCOM_TD_Presencial_DNI(String sDni, String sPlan, String sBanco, String sTarjeta, String sPromo, String sNumTar, String sMes, String sAnio, String sCodSeg) throws IOException {
 		imagen = "TS119300";
 		CustomerCare cc = new CustomerCare(driver);
 		SalesBase sb = new SalesBase(driver);
@@ -441,7 +448,7 @@ public class AltadeLineas extends TestBase {
 	}
 		
 	@Test(groups={"Sales", "AltaLineaDatos","E2E"}, priority=1, dataProvider="DatosAltaEquipoExiste") //========  31- 8 Aparece el paso de carga de datos de la cuenta
-	public void TS125214_CRM_Movil_PRE_Alta_Linea_con_Equipo_Cliente_existente_Presencial_OFCOM(String sDni, String sNombre, String sApellido, String sSexo, String sFNac, String sEmail, String sPlan, String sEquipo, String sProvincia, String sLocalidad) throws IOException {
+	public void TS125214_CRM_Movil_PRE_Alta_Linea_con_Equipo_Cliente_existente_Presencial_OFCOM(String sDni, String sPlan, String sEquipo, String sProvincia, String sLocalidad) throws IOException {
 		imagen = "TS125214";
 		CustomerCare cc = new CustomerCare(driver);
 		SalesBase sb = new SalesBase(driver);
@@ -594,7 +601,7 @@ public class AltadeLineas extends TestBase {
 			CambiarPerfil("ofcom",driver);
 		}
 	
-	@Test(groups={"Sales", "AltaLineaDatos", "E2E"}, priority=1, dataProvider="VentaNuevoEquipoOfCom")//verificado
+	@Test(groups={"Sales", "AltaLineaDatos", "E2E"}, priority=1, dataProvider="AltaLineaNuevoEquipoOfCom")
 	public void TS135820_CRM_Movil_Venta_Sin_Linea_Cliente_nuevo_Presencial_OFCOM_EF(String sDni, String sNombre, String sApellido, String sSexo, String sFNac, String sEmail, String sEquipo, String sProvincia, String sLocalidad, String sCalle, String sAltura, String sCP) throws IOException {
 		imagen = "TS135820";
 		CustomerCare cc = new CustomerCare(driver);
@@ -674,8 +681,8 @@ public class AltadeLineas extends TestBase {
 		
 	
 	
-	@Test(groups={"Sales", "AltaLineaDatos","E2E"}, priority=1, dataProvider="AltaEquipoExisteSPU") //verificado
-	public void TS125211_CRM_Movil_PRE_Alta_Linea_Con_Equipo_Cliente_Existente_Store_PickUp_OFCOM(String sDni, String sPlan, String sEquipo, String sStoreProv, String sStoreLoc, String sPunto) throws IOException {
+	@Test(groups={"Sales", "AltaLineaDatos","E2E"}, priority=1, dataProvider="AltaEquipoExisteSPU") 
+	public void TS125211_CRM_Movil_PRE_Alta_Linea_Con_Equipo_Cliente_Existente_Store_PickUp_OFCOM(String sDni, String sPlan, String sEquipo, String sStoreProv, String sStoreLoc) throws IOException {
 		imagen = "TS125211";
 		CustomerCare cc = new CustomerCare(driver);
 		SalesBase sb = new SalesBase(driver);
@@ -789,7 +796,7 @@ public class AltadeLineas extends TestBase {
 		sb.completarEntrega(orden, driver);
 	}
 	
-	@Test(groups={"Sales", "AltaLineaDatos","E2E"}, priority=2, dataProvider="AltaLineaEquipoOfCom")//verificado
+	@Test(groups={"Sales", "AltaLineaDatos","E2E"}, priority=2, dataProvider="AltaLineaEquipoOfCom")
 	public void TS135814_CRM_Movil_PRE_Alta_Linea_Con_Equipo_Cliente_Nuevo_Presencial_OFCOM_Baroliche(String sDni, String sNombre, String sApellido, String sSexo, String sFNac, String sEmail, String sPlan, String sEquipo) throws IOException {
 		imagen = "TS135814";
 		CustomerCare cc = new CustomerCare(driver);

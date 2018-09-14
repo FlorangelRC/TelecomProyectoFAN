@@ -5,23 +5,20 @@ import javax.xml.soap.*;
 public class SOAPClientSAAJ {
 	
 	//SIT
-	static String sPagoEnCajaSIT = "http://10.75.197.161:8080/services/ArServices";
+	static String sPagoEnCaja = "http://10.75.197.161:8080/services/ArServices";
 	//UAT
-	static String sPagoEnCajaUAT = "http://10.75.39.146:8080/services/ArServices";
+	//static String sPagoEnCaja = "http://10.75.39.146:8080/services/ArServices";
 	
 	static String sPagoSimulado = "http://mdwtpbust1.telecom.com.ar:8701/notificarPago";
 	static String sAltaDeLinea = "http://10.75.39.146:8080/services/BcServices";
 	
 	public String callSoapWebService(String soapMessageString, String sEndPoint) {
-		switch (sEndPoint.toLowerCase()) {
+    	switch (sEndPoint.toLowerCase()) {
     		case "pago simulado":
 	    		sEndPoint = sPagoSimulado;
 	    		break;
 	    	case "pago en caja":
-	    		if (TestBase.urlAmbiente.contains("sit"))
-	    			sEndPoint = sPagoEnCajaSIT;
-	    		else
-	    			sEndPoint = sPagoEnCajaUAT;
+	    		sEndPoint = sPagoEnCaja;
 	    		break;
 	    	case "alta de linea":
 	    		sEndPoint = sAltaDeLinea;

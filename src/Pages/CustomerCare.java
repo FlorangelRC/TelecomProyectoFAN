@@ -10,6 +10,9 @@ import java.util.List;
 import java.util.concurrent.TimeUnit;
 
 import org.openqa.selenium.By;
+import org.openqa.selenium.ElementNotVisibleException;
+import org.openqa.selenium.JavascriptExecutor;
+import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Actions;
@@ -19,9 +22,6 @@ import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.Select;
 import org.openqa.selenium.support.ui.WebDriverWait;
-import org.openqa.selenium.ElementNotVisibleException;
-import org.openqa.selenium.JavascriptExecutor;
-import org.openqa.selenium.NoSuchElementException;
 import org.testng.Assert;
 
 import Tests.TestBase;
@@ -1641,13 +1641,27 @@ public class CustomerCare extends BasePage {
 	public boolean verificarOrdenYGestion(String gestion) {
 		boolean verif = false;
 		TestBase tb = new TestBase();
+		try {
 		String nroCaso = driver.findElement(By.xpath("//*[@id=\"txtSuccessConfirmation\"]/div")).findElement(By.tagName("strong")).getText();
 		buscarCaso(nroCaso);
-		driver.switchTo().frame(tb.cambioFrame(driver, By.className("rsbody")));
-		String gest = driver.findElement(By.className("rsbody")).findElement(By.className("rstopcontainer")).findElement(By.className("rspropertyvalue")).getText();
-		System.out.println(gestion);
-		if (gest.equalsIgnoreCase(gestion)) {
-			verif = true;
+		driver.switchTo().frame(tb.cambioFrame(driver, By.name("close")));
+		List <WebElement> gest = driver.findElements(By.cssSelector(".dataCol.col02.inlineEditWrite"));
+		for (WebElement x : gest) {
+			if (x.getText().equalsIgnoreCase(gestion)) {
+				verif = true;
+			}
+		}
+		} catch(Exception e) {
+			String orden = driver.findElement(By.cssSelector(".vlc-slds-inline-control__label.ng-binding")).getText();
+			orden = orden.substring(orden.lastIndexOf(" ")+1, orden.lastIndexOf("."));
+			buscarCaso(orden);
+			driver.switchTo().frame(tb.cambioFrame(driver, By.name("close")));
+			List <WebElement> asd = driver.findElements(By.cssSelector(".dataCol.col02.inlineEditWrite"));
+			for (WebElement x : asd) {
+				if (x.getText().equalsIgnoreCase(gestion)) {
+					verif = true;
+				}
+			}
 		}
 		return verif;
 	}
