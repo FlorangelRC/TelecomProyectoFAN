@@ -816,8 +816,8 @@ public class GestionesPerfilOficina extends TestBase {
 		Assert.assertTrue(gest);*/		
 	}
 	
-	@Test (groups = {"GestionesPerfilOficina", "ProblemasConRecargas","E2E"}, dataProvider = "CuentaAjustesPRE")  //Se necesitan nuevos numeros de tarjeta, solo se pueden usar 1 vez
-	public void GestionProblemasConRecargasTarjetaPrepaga(String cDNI) {
+	@Test (groups = {"GestionesPerfilOficina", "ProblemasConRecargas","E2E"}, dataProvider = "ProblemaRecargaPrepaga")  //Se necesitan nuevos numeros de tarjeta, solo se pueden usar 1 vez
+	public void GestionProblemasConRecargasTarjetaPrepaga(String cDNI, String cBatch, String cPin) {
 		imagen = "GestionProblemasConRecargasTarjetaPrepaga";
 		boolean gest = false;
 		driver.switchTo().frame(cambioFrame(driver, By.id("SearchClientDocumentType")));
@@ -833,8 +833,8 @@ public class GestionesPerfilOficina extends TestBase {
 		buscarYClick(driver.findElements(By.className("borderOverlay")), "equals", "tarjeta prepaga");
 		driver.findElement(By.id("RefillMethods_nextBtn")).click();
 		sleep(5000);
-		driver.findElement(By.id("BatchNumber")).sendKeys("11120000000210");
-		driver.findElement(By.id("PIN")).sendKeys("0257");
+		driver.findElement(By.id("BatchNumber")).sendKeys(cBatch);
+		driver.findElement(By.id("PIN")).sendKeys(cPin);
 		driver.findElement(By.id("PrepaidCardData_nextBtn")).click();
 		sleep(7000);
 		buscarYClick(driver.findElements(By.className("borderOverlay")), "equals", "crear un caso nuevo");
@@ -2277,7 +2277,7 @@ public class GestionesPerfilOficina extends TestBase {
 		if(urlAmbiente.contains("sit")) 
 			Assert.assertTrue(invoSer.PagoEnCaja("1006", accid, "2001", invoice.split("-")[2], invoice.split("-")[1]));
 		else
-			invoSer.PagoEnCaja("1006", accid, "2001", invoice.split("-")[2], invoice.split("-")[1]);
+			Assert.assertTrue(invoSer.PagoEnCaja("1006", accid, "2001", invoice.split("-")[2], invoice.split("-")[1]));
 		
 		driver.navigate().refresh();
 		sleep(10000);
