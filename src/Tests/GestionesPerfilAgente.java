@@ -8,6 +8,7 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.ui.Select;
 import org.testng.Assert;
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.AfterMethod;
@@ -17,6 +18,7 @@ import org.testng.annotations.Test;
 import Pages.Accounts;
 import Pages.BasePage;
 import Pages.CustomerCare;
+import Pages.Marketing;
 import Pages.PagePerfilTelefonico;
 import Pages.SalesBase;
 import Pages.setConexion;
@@ -34,7 +36,7 @@ public class GestionesPerfilAgente extends TestBase{
 		driver = setConexion.setupEze();
 		sleep(5000);
 		loginAgente(driver);
-		sleep(22000);
+		sleep(35000);
 		driver.findElement(By.id("tabBar")).findElement(By.tagName("a")).click();
 		sleep(18000);
 		SalesBase sb = new SalesBase(driver);
@@ -95,12 +97,12 @@ public class GestionesPerfilAgente extends TestBase{
 	//@AfterClass(alwaysRun=true)
 	public void quit() throws IOException {
 		//guardarListaTxt(datosOrden);
-		driver.quit();
+		//driver.quit();
 		sleep(5000);
 	}
 	
 	@Test (groups = {"GestionesPerfilAgente","Recargas","E2E"}, dataProvider="RecargaTC")
-	public void TS134322_CRM_Movil_REPRO_Recargas_Presencial_TC_Agente(String sDNI, String sMonto, String sBanco, String sTarjeta, String sPromo, String sCuotas, String sNumTarjeta, String sVenceMes, String sVenceAno, String sCodSeg, String sTipoDNI, String sDNITarjeta, String sTitular, String sLinea) {
+	public void TS134322_CRM_Movil_REPRO_Recargas_Presencial_TC_Agente(String sDNI, String sMonto, String sLinea, String sBanco, String sTarjeta, String sNumTarjeta, String sVenceMes, String sVenceAno, String sCodSeg, String sTipoDNI, String sDNITarjeta, String sTitular, String sPromo, String sCuotas) {
 		//Check All
 		imagen = "134322";
 		if(sMonto.length() >= 4) {
@@ -128,6 +130,8 @@ public class GestionesPerfilAgente extends TestBase{
 		
 		CustomerCare cCC = new CustomerCare(driver);
 		cCC.seleccionarCardPornumeroLinea(sLinea, driver);
+		sleep(12000);
+		cCC.irAGestionEnCard("Recarga de cr\u00e9dito");
 		sleep(15000);
 		cCC.irAGestionEnCard("Recarga de cr\u00e9dito");
 		sleep(15000);
@@ -176,6 +180,49 @@ public class GestionesPerfilAgente extends TestBase{
 		sleep(10000);
 		driver.switchTo().frame(cambioFrame(driver, By.id("Status_ilecell")));
 		Assert.assertTrue(driver.findElement(By.id("Status_ilecell")).getText().equalsIgnoreCase("activada"));
+	}
+	@Test(groups = { "GestionesPerfilAgente", "E2E" }, priority = 1, dataProvider = "CambioSimCardAgente")
+	public void TSCambioSimCardAgente(String sDNI, String sCuenta, String cBanco, String cTarjeta, String cPromo, String cCuotas, String cNumTarjeta, String cVenceMes, String cVenceAno, String cCodSeg, String cTipoDNI,String cDNITarjeta, String cTitular) {
+		imagen = "TSCambioSimCardAgente";
+		SalesBase sale = new SalesBase(driver);
+		BasePage cambioFrameByID = new BasePage();
+		CustomerCare cCC = new CustomerCare(driver);
+		PagePerfilTelefonico pagePTelefo = new PagePerfilTelefonico(driver);
+		driver.switchTo().frame(cambioFrameByID.getFrameForElement(driver, By.id("SearchClientDocumentType")));
+		sleep(8000);
+		sale.BuscarCuenta("DNI", sDNI);
+		String accid = driver.findElement(By.cssSelector(".searchClient-body.slds-hint-parent.ng-scope")).findElements(By.tagName("td")).get(5).getText();
+		System.out.println("id "+accid);
+		pagePTelefo.buscarAssert();
+		sleep(12000);
+		cCC.irAGestionEnCard("Cambio SimCard");
+		sleep(2000);
+		driver.switchTo().frame(cambioFrameByID.getFrameForElement(driver, By.id("DeliveryMethodSelection")));
+		sleep(15000);
+		Select metodoEntrega = new Select (driver.findElement(By.id("DeliveryMethodSelection")));
+		metodoEntrega.selectByVisibleText("Presencial");
+		cCC.obligarclick(driver.findElement(By.id("DeliveryMethodConfiguration_nextBtn")));
+		sleep(12000);
+		cCC.obligarclick(driver.findElement(By.id("ICCDAssignment_nextBtn")));
+		sleep(12000);
+		cCC.obligarclick(driver.findElement(By.id("InvoicePreview_nextBtn")));
+		sleep(12000);
+		buscarYClick(driver.findElements(By.cssSelector(".slds-form-element__label.ng-binding")), "equals","Efectivo");
+		cCC.obligarclick(driver.findElement(By.id("SelectPaymentMethodsStep_nextBtn")));
+		sleep(15000);
+		String orden = driver.findElement(By.className("top-data")).findElement(By.className("ng-binding")).getText();
+		System.out.println("Orden " + orden);
+		orden = orden.substring(orden.length()-8);
+		cCC.obligarclick(driver.findElement(By.id("OrderSumary_nextBtn")));
+		sleep(15000);
+		driver.findElement(By.id("Step_Error_Huawei_S029_nextBtn")).click();
+		sleep(5000);
+		driver.navigate().refresh();
+		sleep(10000);
+		String invoice = cCC.obtenerMontoyTNparaAlta(driver, orden);
+		System.out.println(invoice);
+		sleep(10000);
+		datosOrden.add("Cambio sim card Agente- Cuenta: "+accid+"Invoice: "+invoice.split("-")[0]);
 	}
 	
 	@Test (groups = {"GestionesPerfilOficina","E2E"}, dataProvider="PackAgente")

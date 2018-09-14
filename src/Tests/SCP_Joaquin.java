@@ -439,7 +439,7 @@ public class SCP_Joaquin extends TestBase{
 		driver.findElements(By.xpath("//button[@class='btn btn-default btn-sm']")).get(1).click();
 		sleep(3000);
 		
-		Assert.assertTrue(isFileDownloaded_Ext("C:\\Users\\Joaquin\\Downloads\\", ".xls"));
+		Assert.assertTrue(isFileDownloaded_Ext("C:\\Users\\florangel\\Downloads\\", ".xls"));
 	}
 	
 	@Test(groups = "SCP", priority = 3)
