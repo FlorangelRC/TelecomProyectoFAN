@@ -48,7 +48,7 @@ public class TestBase {
 	protected static WebDriver driver;//
 		//public static String urlAmbiente = "https://telecomcrm--uat.cs53.my.salesforce.com";
 		public static String urlAmbiente = "https://crm--sit.cs14.my.salesforce.com/";
-	
+		public String urlSCP = "https://telecomcrm--uat.cs8.my.salesforce.com";
 	
 	public void leftDropdown(WebDriver driver, String selection) {
 		driver.findElement(By.className("x-btn-mc")).click();
