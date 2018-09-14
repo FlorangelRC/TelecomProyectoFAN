@@ -313,7 +313,7 @@ public class GestionesPerfilOficina extends TestBase {
 		//String orden = cc.obtenerOrdenMontoyTN(driver, "Recarga");
 		System.out.println("orden = "+orden);
 		sOrders.add("Recargas" + orden + ", cuenta:"+accid+", DNI: " + cDNI +", Monto:"+orden.split("-")[2]);
-		CBS_Mattu invoSer = new CBS_Mattu();
+		/*CBS_Mattu invoSer = new CBS_Mattu();
 		Assert.assertTrue(invoSer.PagoEnCaja("1006", accid, "1001", orden.split("-")[2], orden.split("-")[1]));
 		sleep(5000);
 		driver.navigate().refresh();
@@ -322,7 +322,7 @@ public class GestionesPerfilOficina extends TestBase {
 		//cc.obtenerOrdenMontoyTN(driver, "Recarga");
 		sleep(10000);
 		driver.switchTo().frame(cambioFrame(driver, By.id("Status_ilecell")));
-		Assert.assertTrue(driver.findElement(By.id("Status_ilecell")).getText().equalsIgnoreCase("activada"));
+		Assert.assertTrue(driver.findElement(By.id("Status_ilecell")).getText().equalsIgnoreCase("activada"));*/
 
 	}
 	
@@ -2201,4 +2201,42 @@ public class GestionesPerfilOficina extends TestBase {
 		sleep(12000);
 		pagePTelefo.getOrdenSeRealizoConExito().click();
 	}
+	
+	@Test (groups = {"GestionesPerfilOficina","RenovacionCuota","E2E"}, dataProvider="RenovacionCuotaSinSaldoConTC")
+	public void TS135397_CRM_Movil_REPRO_Renovacion_de_cuota_Presencial_Internet_50_MB_Dia_TC_sin_Credito(String sMonto, String sDNI, String sLinea, String sBanco, String sTarjeta, String sNumTarjeta, String sVenceMes, String sVenceAno, String sCodSeg, String sTipoDNI, String sDNITarjeta, String sTitular, String sPromo, String sCuotas) {
+		imagen = "TS135396";
+		//Check all
+		BasePage cambioFrameByID=new BasePage();
+		driver.switchTo().frame(cambioFrameByID.getFrameForElement(driver, By.id("SearchClientDocumentType")));
+		sleep(1000);
+		SalesBase sSB = new SalesBase(driver);
+		sSB.BuscarCuenta("DNI", sDNI);
+		driver.findElement(By.cssSelector(".slds-tree__item.ng-scope")).findElement(By.tagName("div")).click();
+		sleep(25000);
+		CustomerCare cCC = new CustomerCare(driver);
+		cCC.seleccionarCardPornumeroLinea(sLinea, driver);
+		sleep(3000);
+		
+		cCC.irAGestionEnCard("Renovacion de Datos");
+		sleep(10000);
+		try {
+			driver.switchTo().frame(cambioFrame(driver, By.id("combosMegas")));
+			driver.findElement(By.id("combosMegas")).findElements(By.className("slds-checkbox")).get(1).click();
+		}
+		catch (Exception ex) {
+			//Allways Empty
+		}
+		driver.findElement(By.id("CombosDeMegas_nextBtn")).click();
+		sleep(5000);
+		driver.findElement(By.cssSelector(".slds-form-element.vlc-flex.vlc-slds-radio-Control.ng-scope.ng-dirty.ng-valid-parse.ng-valid.ng-valid-required")).findElements(By.cssSelector(".slds-radio--faux.ng-scope")).get(0).click();
+		driver.findElement(By.id("SetPaymentType_nextBtn")).click();
+		sleep(5000);
+		//slds-button slds-button--neutral ng-binding ng-scope.get(1)
+		//Step_Error_Huawei_S013_nextBtn
+		driver.findElement(By.id("SelectPaymentMethodsStep_nextBtn")).click();
+		//Error al validar medios de pago: No se ingresaron los medios de pago
+		//slds-button slds-button--neutral ng-binding ng-scope.get(1)
+		Assert.assertTrue(driver.findElement(By.cssSelector(".slds-form-element.vlc-flex.vlc-slds-text-block.vlc-slds-rte.ng-pristine.ng-valid.ng-scope")).findElement(By.className("ng-binding")).findElement(By.tagName("p")).getText().equalsIgnoreCase("saldo insuficiente"));
+	}
+	
 }	
