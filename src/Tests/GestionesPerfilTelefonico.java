@@ -110,7 +110,7 @@ public class GestionesPerfilTelefonico extends TestBase{
 	}
 	
 	@Test (groups = {"GestionesPerfilOficina", "Recargas","E2E"}, dataProvider = "RecargaTC")  //Error despues de ingresar la tarjeta
-	public void TS134332_CRM_Movil_REPRO_Recargas_Telefonico_TC_Callcenter_Financiacion(String cDNI, String cMonto, String cBanco, String cTarjeta, String cPromo, String cCuotas, String cNumTarjeta, String cVenceMes, String cVenceAno, String cCodSeg, String cTipoDNI, String cDNITarjeta, String cTitular, String cLinea) {
+	public void TS134332_CRM_Movil_REPRO_Recargas_Telefonico_TC_Callcenter_Financiacion(String cDNI, String cMonto, String cLinea, String cBanco, String cTarjeta, String cNumTarjeta, String cVenceMes, String cVenceAno, String cCodSeg, String cTipoDNI, String cDNITarjeta, String cTitular, String cPromo, String cCuotas) {
 		imagen= "TS134332";
 		if(cMonto.length() >= 4) {
 			cMonto = cMonto.substring(0, cMonto.length()-1);
@@ -274,9 +274,9 @@ public class GestionesPerfilTelefonico extends TestBase{
 	String orden = cc.obtenerOrdenMontoyTN(driver, "Compra de Pack");
 	System.out.println("orden = "+orden);
 	datosOrden.add("Recargas" + orden + " de cuenta "+accid+" con DNI: " + sDNI);
-	CBS_Mattu invoSer = new CBS_Mattu();
-	invoSer.PagoEnCaja("1003", accid, "2001", orden.split("-")[2], orden.split("-")[1]);
-	sleep(5000);
+	/*CBS_Mattu invoSer = new CBS_Mattu();
+	invoSer.PagoEnCaja("1003", accid, "2001", orden.split("-")[2], orden.split("-")[1]);*/
+	/*sleep(5000);
 	driver.navigate().refresh();
 	sleep(10000);
 	cc.obtenerOrdenMontoyTN(driver, "Compra de Pack");
@@ -289,7 +289,7 @@ public class GestionesPerfilTelefonico extends TestBase{
 	System.out.println("Order: " + sOrder + " Fin");
 	}*/
 	
-	@Test(groups = { "GestionesPerfilTelefonico", "E2E" }, priority = 1, dataProvider = "CambioSimCard")
+	@Test(groups = { "GestionesPerfilTelefonico", "E2E" }, priority = 1, dataProvider = "CambioSimCardTelef")
 	public void TSCambioSimCard(String sDNI, String sCuenta, String cBanco, String cTarjeta, String cPromo, String cCuotas, String cNumTarjeta, String cVenceMes, String cVenceAno, String cCodSeg, String cTipoDNI,String cDNITarjeta, String cTitular) {
 		imagen = "TSCambioSimCard";
 		SalesBase sale = new SalesBase(driver);

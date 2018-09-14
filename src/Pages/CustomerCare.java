@@ -1480,11 +1480,12 @@ public class CustomerCare extends BasePage {
 		List<WebElement> wGestiones = wFlyOutActionCard.findElements(By.tagName("li"));
 		for (WebElement wAux : wGestiones) {
 			if (wAux.getText().contains(sGestion)) {
+				System.out.println("Encontre la gestion");
 				wAux.findElement(By.tagName("a")).click();
 				break;
 			}
 		}
-		sleep(8000);
+		sleep(12000);
 		try {
 			cambiarAFrameActivo();
 		} catch(org.openqa.selenium.StaleElementReferenceException ex1) {}
@@ -1506,14 +1507,17 @@ public class CustomerCare extends BasePage {
 	
 	public void seleccionarCardPornumeroLinea(String sLinea, WebDriver driver) {
 		TestBase tTB = new TestBase();
+		boolean esta = false;
 		driver.switchTo().frame(tTB.cambioFrame(driver, By.className("card-top")));		
 		List<WebElement> wCard = driver.findElements(By.className("card-top"));		
 		for (WebElement wAux : wCard) {
 			if (wAux.getText().contains(sLinea)) {
 				wAux.click();
+				esta = true;
 				break;
 			}
-		}		
+		}	
+		assertTrue(esta);
 		sleep(5000);
 	}
 	
@@ -1637,13 +1641,27 @@ public class CustomerCare extends BasePage {
 	public boolean verificarOrdenYGestion(String gestion) {
 		boolean verif = false;
 		TestBase tb = new TestBase();
+		try {
 		String nroCaso = driver.findElement(By.xpath("//*[@id=\"txtSuccessConfirmation\"]/div")).findElement(By.tagName("strong")).getText();
 		buscarCaso(nroCaso);
-		driver.switchTo().frame(tb.cambioFrame(driver, By.className("rsbody")));
-		String gest = driver.findElement(By.className("rsbody")).findElement(By.className("rstopcontainer")).findElement(By.className("rspropertyvalue")).getText();
-		System.out.println(gestion);
-		if (gest.equalsIgnoreCase(gestion)) {
-			verif = true;
+		driver.switchTo().frame(tb.cambioFrame(driver, By.name("close")));
+		List <WebElement> gest = driver.findElements(By.cssSelector(".dataCol.col02.inlineEditWrite"));
+		for (WebElement x : gest) {
+			if (x.getText().equalsIgnoreCase(gestion)) {
+				verif = true;
+			}
+		}
+		} catch(Exception e) {
+			String orden = driver.findElement(By.cssSelector(".vlc-slds-inline-control__label.ng-binding")).getText();
+			orden = orden.substring(orden.lastIndexOf(" ")+1, orden.lastIndexOf("."));
+			buscarCaso(orden);
+			driver.switchTo().frame(tb.cambioFrame(driver, By.name("close")));
+			List <WebElement> asd = driver.findElements(By.cssSelector(".dataCol.col02.inlineEditWrite"));
+			for (WebElement x : asd) {
+				if (x.getText().equalsIgnoreCase(gestion)) {
+					verif = true;
+				}
+			}
 		}
 		return verif;
 	}

@@ -86,7 +86,7 @@ public class test_SCP_Base extends TestBase {
 	 * Escribe un comentario y verifica que aparezca (Victor Pidio que lo Obviaramos)
 	 * By: Almer
 	 */
-	@Test(groups= {"SCP", "Almer"}, priority=3)
+	//@Test(groups= {"SCP", "Almer"}, priority=3)
 	public void TS112559_CRM_SCP_Asignación_de_Value_Drivers_a_Oportunidades_Chatter_contextualizado_Escribir_comentario() {
 		
 		try {Thread.sleep(3000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
@@ -195,7 +195,7 @@ public class test_SCP_Base extends TestBase {
 		SCP page=new SCP(driver);
 	    if(page.goToOportunity()) {
 	    	try {Thread.sleep(3000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
-	    	String[] primerBloque= {"información adicional de ventas","valorizado de la oportunidad","estados proyectos en delta"};
+	    	String[] primerBloque= {"informaci\u00f3n adicional de ventas","valorizado de la oportunidad","estados proyectos en delta"};
 	    	String[] segundoBloque= {"detalle de oportunidad","productos (telecom)","contactos","funciones de contactos","actividades abiertas","competidores","notas y archivos adjuntos"};
 	    	
 	    	//Se verifica que el primer bloque
@@ -575,7 +575,7 @@ public class test_SCP_Base extends TestBase {
 			a.click();}} //Baja hasta productos.
 	sleep(1000);
 	//campos a Verificar
-	String[] camposaVerificar= {"Acción","Producto","Cantidad","Moneda","Precio de venta","Cargos Totales por Mes","Plazo (meses)",
+	String[] camposaVerificar= {"Acci\u00f3n","Producto","Cantidad","Moneda","Precio de venta","Cargos Totales por Mes","Plazo (meses)",
 			"Total Mes por Plazo","Cargo unica vez","Cargo por única vez total","Precio Total Contrato"};
 	List<String> listaComparativa = new ArrayList<String>();
 	boolean check=true;

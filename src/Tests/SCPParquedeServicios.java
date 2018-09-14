@@ -75,14 +75,14 @@ public class SCPParquedeServicios extends TestBase{
 		}
 	}
 	
-	//@AfterMethod(groups= "SCP")
+	@AfterMethod(groups= "SCP")
 	public void after(){
 		driver.switchTo().defaultContent();
 		((JavascriptExecutor)driver).executeScript("window.scrollTo(0,"+driver.findElement(By.id("home_Tab")).getLocation().y+")");
 		driver.findElement(By.id("home_Tab")).click();
 	}
 	
-   //@AfterClass(groups= "SCP")
+   @AfterClass(groups= "SCP")
 	public void tearDown() {
 		driver.quit();
 		sleep(4000);
@@ -255,12 +255,12 @@ public class SCPParquedeServicios extends TestBase{
       pcp.Desloguear_Loguear("isabel");
 	  pcp.Desloguear_Loguear_Comentar("persimos", "isabel", fecha.toString(), "cuartoTitulo", 2);    
       try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
-   pcp.clickOnTabByName("cuentas");
-   try {Thread.sleep(7000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
-   try {Thread.sleep(7000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
-   pcp.clickEnCuentaPorNombre("Florencia Di Ci");
-   try {Thread.sleep(10000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
-   pcp.moveToElementOnAccAndClick("cuartoTitulo", 1);
+	  pcp.clickOnTabByName("cuentas");
+	  try {Thread.sleep(7000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+	  try {Thread.sleep(7000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+	  pcp.clickEnCuentaPorNombre("Florencia Di Ci");
+	  try {Thread.sleep(10000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+	  pcp.moveToElementOnAccAndClick("cuartoTitulo", 1);
       pcp.validarcomentarioajeno(fecha.toString());
       pcp.Desloguear_Loguear("permisos");
  }
@@ -271,14 +271,14 @@ public class SCPParquedeServicios extends TestBase{
       java.util.Date fecha = new Date();
       System.out.println (fecha);
       pcp.Desloguear_Loguear("isabel");
-	    pcp.Desloguear_Loguear_Comentar("persimos", "isabel", fecha.toString(), "cuartoTitulo", 2); 
-	     try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
-   pcp.clickOnTabByName("cuentas");
-   try {Thread.sleep(7000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
-   try {Thread.sleep(7000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
-   pcp.clickEnCuentaPorNombre("Florencia Di Ci");
-   try {Thread.sleep(10000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
-   pcp.moveToElementOnAccAndClick("segundoTitulo", 3);
+	  pcp.Desloguear_Loguear_Comentar("persimos", "isabel", fecha.toString(), "cuartoTitulo", 2); 
+	  try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+	  pcp.clickOnTabByName("cuentas");
+	  try {Thread.sleep(7000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+	  try {Thread.sleep(7000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+	  pcp.clickEnCuentaPorNombre("Florencia Di Ci");
+	  try {Thread.sleep(10000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+	  pcp.moveToElementOnAccAndClick("segundoTitulo", 3);
       pcp.validarcomentarioajeno(fecha.toString());
       pcp.Desloguear_Loguear("permisos");
  }
@@ -289,14 +289,14 @@ public class SCPParquedeServicios extends TestBase{
       java.util.Date fecha = new Date();
       System.out.println (fecha);
       pcp.Desloguear_Loguear("isabel");
-	    pcp.Desloguear_Loguear_Comentar("persimos", "isabel", fecha.toString(), "cuartoTitulo", 2); 
-	     try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
-   pcp.clickOnTabByName("cuentas");
-   try {Thread.sleep(7000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
-   try {Thread.sleep(7000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
-   pcp.clickEnCuentaPorNombre("Florencia Di Ci");
-   try {Thread.sleep(10000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
-   pcp.moveToElementOnAccAndClick("tercerTitulo", 2);
+	  pcp.Desloguear_Loguear_Comentar("persimos", "isabel", fecha.toString(), "cuartoTitulo", 2); 
+	  try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+	  pcp.clickOnTabByName("cuentas");
+	  try {Thread.sleep(7000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+	  try {Thread.sleep(7000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+	  pcp.clickEnCuentaPorNombre("Florencia Di Ci");
+	  try {Thread.sleep(10000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+	  pcp.moveToElementOnAccAndClick("tercerTitulo", 2);
       pcp.validarcomentarioajeno(fecha.toString());
       pcp.Desloguear_Loguear("permisos");
  }
@@ -307,14 +307,14 @@ public class SCPParquedeServicios extends TestBase{
       java.util.Date fecha = new Date();
       System.out.println (fecha);
       pcp.Desloguear_Loguear("isabel");
-	    pcp.Desloguear_Loguear_Comentar("persimos", "isabel", fecha.toString(), "cuartoTitulo", 2); 
-	     try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
-   pcp.clickOnTabByName("cuentas");
-   try {Thread.sleep(7000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
-   try {Thread.sleep(7000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
-   pcp.clickEnCuentaPorNombre("Florencia Di Ci");
-   try {Thread.sleep(10000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
-   pcp.moveToElementOnAccAndClick("segundoTitulo", 4);
+	  pcp.Desloguear_Loguear_Comentar("persimos", "isabel", fecha.toString(), "cuartoTitulo", 2); 
+	  try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+	  pcp.clickOnTabByName("cuentas");
+	  try {Thread.sleep(7000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+	  try {Thread.sleep(7000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+	  pcp.clickEnCuentaPorNombre("Florencia Di Ci");
+	  try {Thread.sleep(10000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+	  pcp.moveToElementOnAccAndClick("segundoTitulo", 4);
       pcp.validarcomentarioajeno(fecha.toString());
       pcp.Desloguear_Loguear("permisos");
  }
@@ -325,14 +325,14 @@ public class SCPParquedeServicios extends TestBase{
       java.util.Date fecha = new Date();
       System.out.println (fecha);
       pcp.Desloguear_Loguear("isabel");
-	    pcp.Desloguear_Loguear_Comentar("persimos", "isabel", fecha.toString(), "cuartoTitulo", 2); 
-	     try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
-   pcp.clickOnTabByName("cuentas");
-   try {Thread.sleep(7000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
-   try {Thread.sleep(7000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
-   pcp.clickEnCuentaPorNombre("Florencia Di Ci");
-   try {Thread.sleep(10000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
-   pcp.moveToElementOnAccAndClick("tercerTitulo", 3);
+	  pcp.Desloguear_Loguear_Comentar("persimos", "isabel", fecha.toString(), "cuartoTitulo", 2); 
+	  try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+	  pcp.clickOnTabByName("cuentas");
+	  try {Thread.sleep(7000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+	  try {Thread.sleep(7000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+	  pcp.clickEnCuentaPorNombre("Florencia Di Ci");
+	  try {Thread.sleep(10000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+	  pcp.moveToElementOnAccAndClick("tercerTitulo", 3);
       pcp.validarcomentarioajeno(fecha.toString());
       pcp.Desloguear_Loguear("permisos");
  }
@@ -344,14 +344,14 @@ public class SCPParquedeServicios extends TestBase{
       java.util.Date fecha = new Date();
       System.out.println (fecha);
       pcp.Desloguear_Loguear("isabel");
-	    pcp.Desloguear_Loguear_Comentar("persimos", "isabel", fecha.toString(), "cuartoTitulo", 2); 
-	    try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
-   pcp.clickOnTabByName("cuentas");
-   try {Thread.sleep(7000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
-   try {Thread.sleep(7000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
-   pcp.clickEnCuentaPorNombre("Florencia Di Ci");
-   try {Thread.sleep(10000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
-   pcp.moveToElementOnAccAndClick("primerTitulo", 2);
+	  pcp.Desloguear_Loguear_Comentar("persimos", "isabel", fecha.toString(), "cuartoTitulo", 2); 
+	  try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+	  pcp.clickOnTabByName("cuentas");
+	  try {Thread.sleep(7000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+	  try {Thread.sleep(7000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+	  pcp.clickEnCuentaPorNombre("Florencia Di Ci");
+	  try {Thread.sleep(10000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+	  pcp.moveToElementOnAccAndClick("primerTitulo", 2);
       pcp.validarcomentarioajeno(fecha.toString());
       pcp.Desloguear_Loguear("permisos");
  }
@@ -362,14 +362,14 @@ public class SCPParquedeServicios extends TestBase{
       java.util.Date fecha = new Date();
       System.out.println (fecha);
       pcp.Desloguear_Loguear("isabel");
-	    pcp.Desloguear_Loguear_Comentar("persimos", "isabel", fecha.toString(), "cuartoTitulo", 2); 
-	     try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
-   pcp.clickOnTabByName("cuentas");
-   try {Thread.sleep(7000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
-   try {Thread.sleep(7000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
-   pcp.clickEnCuentaPorNombre("Florencia Di Ci");
-   try {Thread.sleep(10000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
-   pcp.moveToElementOnAccAndClick("segundoTitulo", 2);
+	  pcp.Desloguear_Loguear_Comentar("persimos", "isabel", fecha.toString(), "cuartoTitulo", 2); 
+	  try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+	  pcp.clickOnTabByName("cuentas");
+	  try {Thread.sleep(7000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+	  try {Thread.sleep(7000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+	  pcp.clickEnCuentaPorNombre("Florencia Di Ci");
+	  try {Thread.sleep(10000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+	  pcp.moveToElementOnAccAndClick("segundoTitulo", 2);
       pcp.validarcomentarioajeno(fecha.toString());
       pcp.Desloguear_Loguear("permisos");
  }	
