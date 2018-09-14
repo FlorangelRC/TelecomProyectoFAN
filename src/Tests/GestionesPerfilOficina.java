@@ -2157,6 +2157,7 @@ public class GestionesPerfilOficina extends TestBase {
 	@Test (groups = {"GestionesPerfilOficina","E2E"}, dataProvider="PackOfCom")
 	public void Venta_de_Pack(String sDNI, String sCuenta, String cBanco, String cTarjeta, String cPromo, String cCuotas, String sPackOfCom){
 		PagePerfilTelefonico pagePTelefo = new PagePerfilTelefonico(driver);
+		CustomerCare cCC = new CustomerCare(driver);
 		driver.switchTo().frame(cambioFrame(driver, By.id("SearchClientDocumentType")));
 		sb.BuscarCuenta("DNI", sDNI);
 		String accid = driver.findElement(By.cssSelector(".searchClient-body.slds-hint-parent.ng-scope")).findElements(By.tagName("td")).get(5).getText();
@@ -2179,8 +2180,21 @@ public class GestionesPerfilOficina extends TestBase {
 		selectByText(driver.findElement(By.id("CardBankingEntity-0")), cTarjeta);
 		selectByText(driver.findElement(By.id("promotionsByCardsBank-0")), cPromo);
 		selectByText(driver.findElement(By.id("Installment-0")), cCuotas);
+		String sOrden = cc.obtenerOrden2(driver);
 		pagePTelefo.getMediodePago().click();
 		sleep(12000);
 		pagePTelefo.getOrdenSeRealizoConExito().click();
-	}
+		sleep(10000);
+		String orden = cCC.obtenerTNyMonto2(driver, sOrden);
+		CBS_Mattu invoSer = new CBS_Mattu();
+		invoSer.PagoEnCaja("1006", accid, "2001", orden.split("-")[2], orden.split("-")[1]);
+		cc.obtenerOrdenMontoyTN(driver, "Compra de Pack");
+		sleep(10000);
+		driver.switchTo().frame(cambioFrame(driver, By.id("Status_ilecell")));
+		Assert.assertTrue(driver.findElement(By.id("Status_ilecell")).getText().equalsIgnoreCase("iniciada"));
+		String sOrder = cCC.obtenerOrden(driver,"Compra de Pack");
+		sOrders.add("Operacion: Compra de Pack, Orden: "+sOrder);	
+		System.out.println("Operacion: Compra de Pack "+ "Order: " + sOrder + "Cuenta: "+ accid + "Fin");
+		}
+	
 }	
