@@ -92,7 +92,7 @@ public class GestionesPerfilTelefonico extends TestBase{
 		sleep(25000);
 	}
 
-	@AfterMethod(alwaysRun=true)
+	//@AfterMethod(alwaysRun=true)
 	public void after() throws IOException {
 		guardarListaTxt(datosOrden);
 		datosOrden.clear();
@@ -101,7 +101,7 @@ public class GestionesPerfilTelefonico extends TestBase{
 		sb.cerrarPestaniaGestion(driver);*/
 	}
 
-	@AfterClass(alwaysRun=true)
+	//@AfterClass(alwaysRun=true)
 	public void quit() throws IOException {
 		guardarListaTxt(datosOrden);
 		System.out.println("Se supone que guardo");
@@ -274,9 +274,9 @@ public class GestionesPerfilTelefonico extends TestBase{
 	String orden = cc.obtenerOrdenMontoyTN(driver, "Compra de Pack");
 	System.out.println("orden = "+orden);
 	datosOrden.add("Recargas" + orden + " de cuenta "+accid+" con DNI: " + sDNI);
-	/*CBS_Mattu invoSer = new CBS_Mattu();
-	invoSer.PagoEnCaja("1003", accid, "2001", orden.split("-")[2], orden.split("-")[1]);*/
-	/*sleep(5000);
+	CBS_Mattu invoSer = new CBS_Mattu();
+	invoSer.PagoEnCaja("1003", accid, "2001", orden.split("-")[2], orden.split("-")[1]);
+	sleep(5000);
 	driver.navigate().refresh();
 	sleep(10000);
 	cc.obtenerOrdenMontoyTN(driver, "Compra de Pack");
