@@ -46,8 +46,9 @@ import DataProvider.ExcelUtils;
 
 public class TestBase {
 	protected static WebDriver driver;//
-		//public static String urlAmbiente = "https://telecomcrm--uat.cs53.my.salesforce.com";
-		public static String urlAmbiente = "https://crm--sit.cs14.my.salesforce.com/";
+		public static String urlAmbiente = "https://telecomcrm--uat.cs53.my.salesforce.com";
+		//public static String urlAmbiente = "https://crm--sit.cs14.my.salesforce.com/";
+		public String urlSCP = "https://telecomcrm--uat.cs8.my.salesforce.com";
 	
 	
 	public void leftDropdown(WebDriver driver, String selection) {
@@ -1069,7 +1070,7 @@ public class TestBase {
 	@DataProvider
 	public Object[][] VentaPacks() throws Exception{
 
-	 Object[][] testObjArray = ExcelUtils.getTableArray("Cuentas.xlsx","PerfilGestiones",1,1,5,"Venta de packs");
+	 Object[][] testObjArray = ExcelUtils.getTableArray(dataProviderE2E(),"E2EconPago",1,1,5,"Venta de packs");
 
 	 return (testObjArray);
 
@@ -1078,7 +1079,7 @@ public class TestBase {
 	@DataProvider
 	public Object [][] ventaPack() throws Exception{
 		
-		Object[][] testObjArray = ExcelUtils.getTableArray("Cuentas.xlsx","PerfilGestiones",1,1,15,"venta de pack");
+		Object[][] testObjArray = ExcelUtils.getTableArray(dataProviderE2E(),"E2EconPago",1,1,15,"venta de pack");
 		
 		return (testObjArray);
 	}
@@ -1086,7 +1087,7 @@ public class TestBase {
 	@DataProvider
 	public Object [][] PackOfCom() throws Exception{
 		
-		Object[][] testObjArray = ExcelUtils.getTableArray("Cuentas.xlsx","PerfilGestiones",1,1,7,"packOfCom");
+		Object[][] testObjArray = ExcelUtils.getTableArray(dataProviderE2E(),"E2EconPago",1,1,7,"packOfCom");
 		
 		return (testObjArray);
 	}
@@ -1094,7 +1095,7 @@ public class TestBase {
 	@DataProvider
 	public Object [][] PackAgente() throws Exception{
 		
-		Object[][] testObjArray = ExcelUtils.getTableArray("Cuentas.xlsx","PerfilGestiones",1,1,7,"packAgente");
+		Object[][] testObjArray = ExcelUtils.getTableArray(dataProviderE2E(),"E2EconPago",1,1,7,"packAgente");
 		
 		return (testObjArray);
 	}
@@ -1215,22 +1216,16 @@ public class TestBase {
 	@DataProvider
 	public Object[][] CambioSimCardTelef() throws Exception{
 		
-		Object[][] testObjArray =  ExcelUtils.getTableArray("Cuentas.xlsx","PerfilGestiones",1,1,13,"Cambio SimCard Telef");
-		
-		return (testObjArray);
-	}
-	@DataProvider
-	public Object[][] CambioSimCardAgente() throws Exception{
-		
-		Object[][] testObjArray =  ExcelUtils.getTableArray("Cuentas.xlsx","PerfilGestiones",1,1,13,"Cambio SimCard Agente");
+		Object[][] testObjArray =  ExcelUtils.getTableArray(dataProviderE2E(),"E2EconPago",1,1,13,"Cambio SimCard Telef");
 		
 		return (testObjArray);
 	}
 	
+	
 	@DataProvider
 	public Object[][] CambioSimCardAgente() throws Exception{
 		
-		Object[][] testObjArray =  ExcelUtils.getTableArray("Cuentas.xlsx","PerfilGestiones",1,1,1,"Cambio SimCardAgente");
+		Object[][] testObjArray =  ExcelUtils.getTableArray(dataProviderE2E(),"E2EconPago",1,1,1,"Cambio SimCardAgente");
 		
 		return (testObjArray);
 	}

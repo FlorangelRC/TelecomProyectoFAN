@@ -191,6 +191,7 @@ public class GestionesPerfilAgente extends TestBase{
 		driver.switchTo().frame(cambioFrameByID.getFrameForElement(driver, By.id("SearchClientDocumentType")));
 		sleep(8000);
 		sale.BuscarCuenta("DNI", sDNI);
+		sleep(8000);
 		String accid = driver.findElement(By.cssSelector(".searchClient-body.slds-hint-parent.ng-scope")).findElements(By.tagName("td")).get(5).getText();
 		System.out.println("id "+accid);
 		pagePTelefo.buscarAssert();
@@ -226,7 +227,7 @@ public class GestionesPerfilAgente extends TestBase{
 	}
 	
 	@Test (groups = {"GestionesPerfilOficina","E2E"}, dataProvider="PackAgente")
-	public void Venta_de_Pack(String sDNI, String sCuenta, String cBanco, String cTarjeta, String cPromo, String cCuotas, String sPackAgente){
+	public void Venta_de_Pack(String sDNI, String sPackAgente, String sLinea, String cBanco, String cTarjeta, String cPromo, String cCuotas){
 		PagePerfilTelefonico pagePTelefo = new PagePerfilTelefonico(driver);
 		SalesBase sale = new SalesBase(driver);
 		driver.switchTo().frame(cambioFrame(driver, By.id("SearchClientDocumentType")));
@@ -268,7 +269,7 @@ public class GestionesPerfilAgente extends TestBase{
 		}
 	
 	@Test(groups = { "GestionesPerfilTelefonico", "E2E" }, priority = 1, dataProvider = "CambioSimCardAgente")
-	public void TSCambioSimCard(String sDNI ) {
+	public void TSCambioSimCard_Store_Pick_Up(String sDNI ) {
 		imagen = "TSCambioSimCard";
 		SalesBase sale = new SalesBase(driver);
 		BasePage cambioFrameByID = new BasePage();
@@ -280,6 +281,7 @@ public class GestionesPerfilAgente extends TestBase{
 		String accid = driver.findElement(By.cssSelector(".searchClient-body.slds-hint-parent.ng-scope")).findElements(By.tagName("td")).get(5).getText();
 		System.out.println("id "+accid);
 		pagePTelefo.buscarAssert();
+		sleep(8000);
 		cCC.irAGestionEnCard("Cambio SimCard");
 		pagePTelefo.mododeEntrega();
 		pagePTelefo.getIngresodeSerial().click();
