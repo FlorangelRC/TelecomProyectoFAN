@@ -1122,7 +1122,7 @@ public class TestBase {
 	@DataProvider
 	public Object [][] CuentaAjustesPRE() throws Exception {
 		
-		Object[][] testObjArray = ExcelUtils.getTableArray("Cuentas.xlsx","PerfilGestiones",1,1,1,"Ajustes PRE");
+		Object[][] testObjArray = ExcelUtils.getTableArray(dataProviderE2E(),"E2EsinPago",1,1,1,"Ajustes PRE");
 		
 		return (testObjArray);
 	}
@@ -1130,7 +1130,7 @@ public class TestBase {
 	@DataProvider
 	public Object [][] CuentaAjustesREPRO() throws Exception {
 		
-		Object[][] testObjArray = ExcelUtils.getTableArray("Cuentas.xlsx","PerfilGestiones",1,1,1,"Ajustes REPRO");
+		Object[][] testObjArray = ExcelUtils.getTableArray(dataProviderE2E(),"E2EsinPago",1,1,1,"Ajustes REPRO");
 		
 		return (testObjArray);
 	}
@@ -1138,7 +1138,15 @@ public class TestBase {
 	@DataProvider
 	public Object [][] CuentaProblemaRecarga() throws Exception{
 		
-		Object[][] testObjArray = ExcelUtils.getTableArray("Cuentas.xlsx","PerfilGestiones",1,1,3,"ProblemaRecarga");
+		Object[][] testObjArray = ExcelUtils.getTableArray(dataProviderE2E(),"E2EsinPago",1,1,3,"ProblemaRecargas");
+		
+		return (testObjArray);
+	}
+	
+	@DataProvider
+	public Object [][] ProblemaRecargaPrepaga() throws Exception{
+		
+		Object[][] testObjArray = ExcelUtils.getTableArray(dataProviderE2E(),"E2EsinPago",1,1,3,"ProblemaRecargaPrepaga");
 		
 		return (testObjArray);
 	}
