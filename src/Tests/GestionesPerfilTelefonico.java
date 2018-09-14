@@ -274,9 +274,7 @@ public class GestionesPerfilTelefonico extends TestBase{
 	String orden = cc.obtenerOrdenMontoyTN(driver, "Compra de Pack");
 	System.out.println("orden = "+orden);
 	datosOrden.add("Recargas" + orden + " de cuenta "+accid+" con DNI: " + sDNI);
-	/*CBS_Mattu invoSer = new CBS_Mattu();
-	invoSer.PagoEnCaja("1003", accid, "2001", orden.split("-")[2], orden.split("-")[1]);*/
-	/*sleep(5000);
+	sleep(5000);
 	driver.navigate().refresh();
 	sleep(10000);
 	cc.obtenerOrdenMontoyTN(driver, "Compra de Pack");
