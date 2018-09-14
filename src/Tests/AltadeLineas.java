@@ -110,19 +110,19 @@ public class AltadeLineas extends TestBase {
 		DatosOrden.clear();
 		tomarCaptura(driver,imagen);
 		sleep(2000);
-		SalesBase SB = new SalesBase(driver);
+		/*SalesBase SB = new SalesBase(driver);
 		driver.switchTo().defaultContent();
 		sleep(6000);
 		SB.cerrarPestaniaGestion(driver);
 		
-		sleep(5000);
+		sleep(5000);*/
 
 	}
 	
 	//@AfterClass(alwaysRun=true)
 	public void Exit() throws IOException {
 		//guardarListaTxt(DatosOrden);
-		driver.quit();
+		//driver.quit();
 		sleep(2000);
 	}
 	
@@ -210,7 +210,7 @@ public class AltadeLineas extends TestBase {
 		driver.findElement(By.id("FileDocumentImage")).sendKeys("C:\\Users\\florangel\\Downloads\\mapache.jpg");
 		sleep(3000);
 		cc.obligarclick(driver.findElement(By.id("DocumentMethod_nextBtn")));
-		sleep(10000);
+		sleep(15000);
 		cc.obligarclick(driver.findElement(By.id("ValidationResult_nextBtn")));
 		sleep(15000);
 		try {
@@ -588,7 +588,7 @@ public class AltadeLineas extends TestBase {
 		}catch(Exception ex1) {}
 			driver.findElement(By.id("SaleOrderMessages_nextBtn")).click();
 			sleep(15000);
-			String orden = cc.obtenerOrdenMontoyTN(driver, "Recarga");
+			String orden = cc.obtenerOrdenMontoyTN(driver, "Venta");
 			System.out.println("orden = "+orden);
 			DatosOrden.add("Recargas" + orden + " de cuenta "+accid+" con DNI: " + sDni);
 			CBS_Mattu invoSer = new CBS_Mattu();

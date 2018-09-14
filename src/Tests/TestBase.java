@@ -1,5 +1,6 @@
 package Tests;
 
+import java.io.BufferedWriter;
 import java.io.File;
 
 import java.io.FileInputStream;
@@ -45,8 +46,8 @@ import DataProvider.ExcelUtils;
 
 public class TestBase {
 	protected static WebDriver driver;//
-		public static String urlAmbiente = "https://telecomcrm--uat.cs53.my.salesforce.com";
-		//public static String urlAmbiente = "https://crm--sit.cs14.my.salesforce.com/";
+		//public static String urlAmbiente = "https://telecomcrm--uat.cs53.my.salesforce.com";
+		public static String urlAmbiente = "https://crm--sit.cs14.my.salesforce.com/";
 	
 	
 	public void leftDropdown(WebDriver driver, String selection) {
@@ -145,14 +146,14 @@ public class TestBase {
 	   }
 	   
 	public void loginSCPconTodo(WebDriver driver) {
-	     driver.get("https://telecomcrm--uat.cs8.my.salesforce.com");
+	     driver.get(urlSCP);
 	     try {Thread.sleep(6000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 	       Login page0 = new Login(driver);
 	       page0.ingresarSCPconTodo();
 	   }
 	   
 	     public void loginSCPUsuario(WebDriver driver) {
-	       driver.get("https://telecomcrm--uat.cs8.my.salesforce.com");
+	       driver.get(urlSCP);
 	       try {Thread.sleep(6000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 	         Login page0 = new Login(driver);
 	         page0.ingresarUsuarioSCP();
@@ -160,13 +161,13 @@ public class TestBase {
 	     
 	     
 	     public void loginSCPAdminServices(WebDriver driver) {
-		       driver.get("https://telecomcrm--uat.cs8.my.salesforce.com");
+		       driver.get(urlSCP);
 		       try {Thread.sleep(6000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 		         Login page0 = new Login(driver);
 		         page0.ingresarSCPAdminServices();
 		     }
 	     public void loginSCPConPermisos(WebDriver driver) {
-		       driver.get("https://telecomcrm--uat.cs8.my.salesforce.com");
+		       driver.get(urlSCP);
 		       try {Thread.sleep(6000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 		         Login page0 = new Login(driver);
 		         page0.ingresarSCPConPermisos();
@@ -992,7 +993,7 @@ public class TestBase {
 	@DataProvider
 	public Object[][] RecargaTC() throws Exception{
 
-	 Object[][] testObjArray = ExcelUtils.getTableArray("Cuentas.xlsx","PerfilGestiones",1,1,14,"Recargas");
+	 Object[][] testObjArray = ExcelUtils.getTableArray(dataProviderE2E(),"E2EconPago",1,1,14,"Recargas TC");
 
 	 return (testObjArray);
 
@@ -1041,9 +1042,18 @@ public class TestBase {
 	}
 	
 	@DataProvider
+	public Object[][] RenovacionCuotaSinSaldoConTC() throws Exception{
+
+	 Object[][] testObjArray = ExcelUtils.getTableArray(dataProviderCuentas(),"Sales",1,1,14,"Renovacion Cuota S/Saldo Con Tarjeta TC");
+
+	 return (testObjArray);
+
+	}
+	
+	@DataProvider
 	public Object[][] NumerosAmigos() throws Exception{
 
-	 Object[][] testObjArray = ExcelUtils.getTableArray("Cuentas.xlsx","PerfilGestiones",1,1,6,"Numeros Amigos");
+	 Object[][] testObjArray = ExcelUtils.getTableArray(dataProviderE2E(),"E2EsinPago",1,1,4,"Numeros Amigos");
 
 	 return (testObjArray);
 
@@ -1138,9 +1148,10 @@ public class TestBase {
 			FileWriter ArchiSa=new FileWriter(archivo,true);
 			//archivo.delete();*/
 		//Crear objeto FileWriter que sera el que nos ayude a escribir sobre archivo
-		FileWriter ArchiSa=new FileWriter(archivo,true);
+		FileWriter ArchiSa=new FileWriter(archivo.getAbsoluteFile(),true);
+		BufferedWriter bw = new BufferedWriter(ArchiSa);
 		for(String UnD: datosOrden) {
-			ArchiSa.write(UnD+"\r\n");
+			bw.write(UnD+"\r\n");
 		}
 		ArchiSa.close();
 	}
@@ -1196,16 +1207,23 @@ public class TestBase {
 	@DataProvider
 	public Object[][] RecargaEfectivo() throws Exception{
 
-	 Object[][] testObjArray = ExcelUtils.getTableArray("Cuentas.xlsx","PerfilGestiones",1,1,3,"Recarga Efectivo");
+	 Object[][] testObjArray = ExcelUtils.getTableArray(dataProviderE2E(),"E2EconPago",1,1,3,"Recarga Efectivo");
 
 	 return (testObjArray);
 
 	}
 	
 	@DataProvider
-	public Object[][] CambioSimCard() throws Exception{
+	public Object[][] CambioSimCardTelef() throws Exception{
 		
-		Object[][] testObjArray =  ExcelUtils.getTableArray("Cuentas.xlsx","PerfilGestiones",1,1,13,"Cambio SimCard");
+		Object[][] testObjArray =  ExcelUtils.getTableArray("Cuentas.xlsx","PerfilGestiones",1,1,13,"Cambio SimCard Telef");
+		
+		return (testObjArray);
+	}
+	@DataProvider
+	public Object[][] CambioSimCardAgente() throws Exception{
+		
+		Object[][] testObjArray =  ExcelUtils.getTableArray("Cuentas.xlsx","PerfilGestiones",1,1,13,"Cambio SimCard Agente");
 		
 		return (testObjArray);
 	}
@@ -1246,7 +1264,7 @@ public class TestBase {
 	@DataProvider
 	public Object[][] PerfilCuentaTomRiddleConLinea() throws Exception{
 
-	 Object[][] testObjArray = ExcelUtils.getTableArray("Cuentas.xlsx","PerfilGestiones",1,1,14,"Recargas");
+	 Object[][] testObjArray = ExcelUtils.getTableArray(dataProviderE2E(),"E2EconPago",1,1,14,"Recargas TC");
 
 	 return (testObjArray);
 
@@ -1343,7 +1361,7 @@ public class TestBase {
 	@DataProvider
 	public Object[][] NumerosAmigosModificacion() throws Exception{
 
-	 Object[][] testObjArray = ExcelUtils.getTableArray("Cuentas.xlsx","PerfilGestiones",1,1,5,"Amigos Modficacion");
+	 Object[][] testObjArray = ExcelUtils.getTableArray(dataProviderE2E(),"E2EsinPago",1,1,4,"Amigos Modficacion");
 
 	 return (testObjArray);
 
@@ -1352,7 +1370,16 @@ public class TestBase {
 	@DataProvider
 	public Object[][] NumerosAmigosBaja() throws Exception{
 
-	 Object[][] testObjArray = ExcelUtils.getTableArray("Cuentas.xlsx","PerfilGestiones",1,1,5,"Amigos Baja");
+	 Object[][] testObjArray = ExcelUtils.getTableArray(dataProviderE2E(),"E2EsinPago",1,1,3,"Amigos Baja");
+
+	 return (testObjArray);
+
+	}
+	
+	@DataProvider
+	public Object[][] RecargaTD() throws Exception{
+
+	 Object[][] testObjArray = ExcelUtils.getTableArray(dataProviderE2E(),"E2EconPago",1,1,12,"Recargas TD");
 
 	 return (testObjArray);
 
