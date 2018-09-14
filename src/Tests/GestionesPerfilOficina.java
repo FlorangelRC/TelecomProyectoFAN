@@ -484,9 +484,9 @@ public class GestionesPerfilOficina extends TestBase {
 		List <WebElement> roam = driver.findElements(By.cssSelector(".cpq-item-base-product"));
 			for(WebElement r : roam){
 				if(r.getText().contains("DDI con Roaming Internacional")){
-					driver.findElements(By.cssSelector(".slds-button.slds-button_icon-border-filled.cpq-item-actions-dropdown-button")).get(6).click();
-					sleep(5000);
-					cc.obligarclick(driver.findElements(By.cssSelector(".slds-dropdown__item.cpq-item-actions-dropdown__item")).get(6));
+					cc.obligarclick(r.findElement(By.cssSelector(".slds-button.slds-button_neutral")));
+					sleep(5000);											
+					//cc.obligarclick(driver.findElements(By.cssSelector(".slds-dropdown__item.cpq-item-actions-dropdown__item")).get(6));
 					sleep(5000);
 						try {
 							cc.obligarclick(driver.findElement(By.cssSelector(".slds-button.slds-button--destructive")));
@@ -494,7 +494,7 @@ public class GestionesPerfilOficina extends TestBase {
 						}catch(Exception ex1) {}
 				}
 			//cc.obligarclick(driver.findElement(By.cssSelector(".cpq-item-base-product")).findElements(By.tagName("div")).get(9).findElement(By.tagName("button")));
-			cc.obligarclick(driver.findElement(By.xpath("//*[@id='tab-default-2']/div[3]/div/div[3]/div/div/ng-include/div/div[2]/ng-include/div/div[9]/div/div[3]/div/div/ng-include/div/div[2]/ng-include/div/div[1]/div/div[2]/div[11]/button")));
+			/*cc.obligarclick(driver.findElement(By.xpath("//*[@id='tab-default-2']/div[3]/div/div[3]/div/div/ng-include/div/div[2]/ng-include/div/div[9]/div/div[3]/div/div/ng-include/div/div[2]/ng-include/div/div[1]/div/div[2]/div[11]/button")));
 			sleep(5000);
 			buscarYClick(driver.findElements(By.cssSelector(".slds-button.slds-m-left--large.slds-button--brand.ta-button-brand")),"contains", "continuar");
 			sleep(15000);
@@ -509,7 +509,7 @@ public class GestionesPerfilOficina extends TestBase {
 			sleep(5000);
 			String orden = cc.obtenerOrden(driver, "Suspensi\u00f3n de Linea");
 			sOrders.add("Suspension, orden numero: " + orden + ", DNI: " + sDNI);
-			//System.out.println(sOrders);
+			//System.out.println(sOrders);*/
 		}
 		}
 	
@@ -545,7 +545,7 @@ public class GestionesPerfilOficina extends TestBase {
 		try {contact.ingresarMail(sEmail, "si");}catch (org.openqa.selenium.ElementNotVisibleException ex1) {}
 		contact.tipoValidacion("documento");
 		try {
-			contact.subirArchivo("C:\\Users\\florangel\\Downloads\\mapache.jpg", "si");
+			contact.subirArchivo("C:\\Users\\Sofia Chardin\\Desktop\\DNI.jpg", "si");
 		}catch(Exception ex1) {}
 			BasePage bp = new BasePage(driver);
 		bp.setSimpleDropdown(driver.findElement(By.id("ImpositiveCondition")), "IVA Consumidor Final");

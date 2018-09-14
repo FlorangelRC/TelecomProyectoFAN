@@ -946,7 +946,7 @@ public class TestBase {
 	@DataProvider
 	public Object[][] DatosSalesNominacion() throws Exception{
 
-	 Object[][] testObjArray = ExcelUtils.getTableArray("Cuentas.xlsx","PreparacionDatos",1,1,13,"Nominacion");
+	 Object[][] testObjArray = ExcelUtils.getTableArray(dataProviderE2E(),"Altas y Nominacion",1,1,12,"Nominacion");
 
 	 return (testObjArray);
 
