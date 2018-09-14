@@ -33,7 +33,7 @@ public class GestionesPerfilOficina extends TestBase {
 	List<String> sOrders = new ArrayList<String>();
 	String imagen;
 	
-	@BeforeClass(alwaysRun=true)
+	/*@BeforeClass(alwaysRun=true)
 	public void init() {
 		driver = setConexion.setupEze();
 		sleep(5000);
@@ -43,6 +43,26 @@ public class GestionesPerfilOficina extends TestBase {
 		sleep(8000);
 		driver.findElement(By.id("tabBar")).findElement(By.tagName("a")).click();
 		sleep(18000);
+		driver.switchTo().defaultContent();
+		sleep(3000);
+		
+	}*/
+	
+	@BeforeClass(alwaysRun=true)
+	public void init() {
+		driver = setConexion.setupEze();
+		sleep(5000);
+		sb = new SalesBase(driver);
+		cc = new CustomerCare(driver);
+		loginOfCom(driver);
+		sleep(22000);
+		try {
+			cc.cajonDeAplicaciones("Consola FAN");
+		} catch(Exception e) {
+			sleep(3000);
+			driver.findElement(By.id("tabBar")).findElement(By.tagName("a")).click();
+			sleep(6000);
+		}
 		driver.switchTo().defaultContent();
 		sleep(3000);
 		
@@ -128,6 +148,7 @@ public class GestionesPerfilOficina extends TestBase {
 		
 		CustomerCare cCC = new CustomerCare(driver);
 		cCC.seleccionarCardPornumeroLinea(sLinea, driver);
+		sleep(3000);
 		cCC.irAGestionEnCard("N\u00fameros Gratis");
 		
 		sleep(5000);
@@ -181,6 +202,7 @@ public class GestionesPerfilOficina extends TestBase {
 		
 		CustomerCare cCC = new CustomerCare(driver);
 		cCC.seleccionarCardPornumeroLinea(sLinea, driver);
+		sleep(3000);
 		cCC.irAGestionEnCard("N\u00fameros Gratis");
 		
 		sleep(5000);
@@ -236,6 +258,7 @@ public class GestionesPerfilOficina extends TestBase {
 		
 		CustomerCare cCC = new CustomerCare(driver);
 		cCC.seleccionarCardPornumeroLinea(sLinea, driver);
+		sleep(3000);
 		cCC.irAGestionEnCard("N\u00fameros Gratis");
 		
 		sleep(5000);
@@ -523,12 +546,12 @@ public class GestionesPerfilOficina extends TestBase {
 		  driver.findElement(By.id("SearchClientsDummy")).click();
 		  sleep(10000);
 		//SB.BuscarAvanzada(NyA.split(" ")[0], NyA.split(" ")[1], "", "", "");
-		WebElement cli = driver.findElement(By.id("tab-scoped-2"));
+		WebElement cli = driver.findElement(By.id("tab-scoped-1"));
 		//if (cli.findElement(By.tagName("tbody")).findElement(By.tagName("tr")).findElement(By.tagName("div")).getText().equals(sCuenta)) {
 			cli.findElement(By.tagName("tbody")).findElement(By.tagName("tr")).click();
 		//}
 		sleep(3000);
-		List<WebElement> Lineas = driver.findElement(By.id("tab-scoped-2")).findElement(By.tagName("tbody")).findElements(By.tagName("tr"));
+		List<WebElement> Lineas = driver.findElement(By.id("tab-scoped-1")).findElement(By.tagName("tbody")).findElements(By.tagName("tr"));
 		for(WebElement UnaL: Lineas) {
 			//System.out.println("********"+UnaL.getText()+"  FIN");
 			if(UnaL.getText().toLowerCase().contains("plan con tarjeta")||UnaL.getText().toLowerCase().contains("plan prepago nacional")) {
@@ -643,15 +666,15 @@ public class GestionesPerfilOficina extends TestBase {
 		sleep(8000);
 		driver.findElement(By.id("Summary_nextBtn")).click();
 		sleep(8000);
-		boolean b = false;
+		/*boolean b = false;
 		List <WebElement> prob = driver.findElements(By.cssSelector(".slds-box.ng-scope"));
 		for(WebElement x : prob) {
 			if(x.getText().toLowerCase().contains("no se pudo realizar la operaci\u00f3n.")) {
 				b = true;
 			}
 		}
-		Assert.assertTrue(b);
-		/*boolean a = false;
+		Assert.assertTrue(b);*/
+		boolean a = false;
 		List <WebElement> conf = driver.findElements(By.cssSelector(".slds-box.ng-scope"));
 		for(WebElement x : conf) {
 			if(x.getText().toLowerCase().contains("recarga realizada con \u00e9xito!")) {
@@ -659,7 +682,7 @@ public class GestionesPerfilOficina extends TestBase {
 			}
 		}
 		Assert.assertTrue(a);
-		sleep(5000);*/
+		sleep(5000);
 		String orden = cc.obtenerOrden(driver, "Problemas con Recargas");
 		sOrders.add("Recargas, orden numero: " + orden + " con DNI: " + cDNI );
 		System.out.println(sOrders);
@@ -688,22 +711,22 @@ public class GestionesPerfilOficina extends TestBase {
 		sleep(8000);
 		driver.findElement(By.id("Summary_nextBtn")).click();
 		sleep(8000);
-		boolean b = false;
+		/*boolean b = false;
 		List <WebElement> prob = driver.findElements(By.cssSelector(".slds-box.ng-scope"));
 		for(WebElement x : prob) {
 			if(x.getText().toLowerCase().contains("no se pudo realizar la operaci\u00f3n.")) {
 				b = true;
 			}
 		}
-		Assert.assertTrue(b);
-		/*boolean a = false;
+		Assert.assertTrue(b);*/
+		boolean a = false;
 		List <WebElement> conf = driver.findElements(By.cssSelector(".slds-box.ng-scope"));
 		for(WebElement x : conf) {
 			if(x.getText().toLowerCase().contains("recarga realizada con \u00e9xito!")) {
 				a = true;
 			}
 		}
-		Assert.assertTrue(a);*/
+		Assert.assertTrue(a);
 		sleep(5000);
 		String orden = cc.obtenerOrden(driver, "Problemas con Recargas");
 		sOrders.add("Recargas, orden numero: " + orden + " con DNI: " + cDNI );
@@ -1738,7 +1761,7 @@ public class GestionesPerfilOficina extends TestBase {
 		Assert.assertTrue(driver.findElement(By.cssSelector(".slds-form-element.vlc-flex.vlc-slds-text-block.vlc-slds-rte.ng-pristine.ng-valid.ng-scope")).findElement(By.className("ng-binding")).findElement(By.tagName("p")).getText().equalsIgnoreCase("saldo insuficiente"));
 	}
 	
-	@Test (groups = {"GestionesPerfilOficina", "Reintegros", "E2E"}, dataProvider = "Reintegros")
+	@Test (groups = {"GestionesPerfilOficina", "Reintegros", "E2E"}, dataProvider = "CuentaReintegros")
 	public void TS112598_CRM_Movil_PRE_Pago_con_Tarjeta_de_debito_Reintegro_con_Efectivo_1000(String cDNI) {
 		Marketing mk = new Marketing(driver);
 		boolean gest = false;
@@ -1771,7 +1794,7 @@ public class GestionesPerfilOficina extends TestBase {
 		}
 		Assert.assertTrue(gest);
 		String orden = cc.obtenerOrden(driver, "Solicitud de Reintegros");
-		sOrders.add("Solicitud de Reintegros, numero de orden: " + orden + " de cuenta con DNI: " + "19006577");
+		sOrders.add("Solicitud de Reintegros, numero de orden: " + orden + " de cuenta con DNI: " + cDNI);
 		Assert.assertTrue(cc.verificarOrden(orden));
 	}
 	
@@ -1845,7 +1868,7 @@ public class GestionesPerfilOficina extends TestBase {
 		Assert.assertTrue(b);
 	}
 	
-	@Test (groups = {"GestionesPerfilOficina", "Reintegros", "E2E"}, dataProvider = "Reintegros")
+	@Test (groups = {"GestionesPerfilOficina", "Reintegros", "E2E"}, dataProvider = "CuentaReintegros")
 	public void TS112597_CRM_Movil_PRE_Pago_con_Tarjeta_de_debito_Reintegro_con_Efectivo_Menos_de_1000(String cDNI) {
 		Marketing mk = new Marketing(driver);
 		boolean gest = false;
@@ -1878,7 +1901,7 @@ public class GestionesPerfilOficina extends TestBase {
 		}
 		Assert.assertTrue(gest);
 		String orden = cc.obtenerOrden(driver, "Solicitud de Reintegros");
-		sOrders.add("Solicitud de Reintegros, numero de orden: " + orden + " de cuenta con DNI: " + "19006577");
+		sOrders.add("Solicitud de Reintegros, numero de orden: " + orden + " de cuenta con DNI: " + cDNI);
 		Assert.assertTrue(cc.verificarOrden(orden));
 	}
 	

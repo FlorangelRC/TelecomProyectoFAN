@@ -1,5 +1,6 @@
 package Tests;
 
+import java.io.BufferedWriter;
 import java.io.File;
 
 import java.io.FileInputStream;
@@ -145,14 +146,14 @@ public class TestBase {
 	   }
 	   
 	public void loginSCPconTodo(WebDriver driver) {
-	     driver.get("https://telecomcrm--uat.cs8.my.salesforce.com");
+	     driver.get(urlSCP);
 	     try {Thread.sleep(6000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 	       Login page0 = new Login(driver);
 	       page0.ingresarSCPconTodo();
 	   }
 	   
 	     public void loginSCPUsuario(WebDriver driver) {
-	       driver.get("https://telecomcrm--uat.cs8.my.salesforce.com");
+	       driver.get(urlSCP);
 	       try {Thread.sleep(6000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 	         Login page0 = new Login(driver);
 	         page0.ingresarUsuarioSCP();
@@ -160,13 +161,13 @@ public class TestBase {
 	     
 	     
 	     public void loginSCPAdminServices(WebDriver driver) {
-		       driver.get("https://telecomcrm--uat.cs8.my.salesforce.com");
+		       driver.get(urlSCP);
 		       try {Thread.sleep(6000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 		         Login page0 = new Login(driver);
 		         page0.ingresarSCPAdminServices();
 		     }
 	     public void loginSCPConPermisos(WebDriver driver) {
-		       driver.get("https://telecomcrm--uat.cs8.my.salesforce.com");
+		       driver.get(urlSCP);
 		       try {Thread.sleep(6000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 		         Login page0 = new Login(driver);
 		         page0.ingresarSCPConPermisos();
@@ -1138,9 +1139,10 @@ public class TestBase {
 			FileWriter ArchiSa=new FileWriter(archivo,true);
 			//archivo.delete();*/
 		//Crear objeto FileWriter que sera el que nos ayude a escribir sobre archivo
-		FileWriter ArchiSa=new FileWriter(archivo,true);
+		FileWriter ArchiSa=new FileWriter(archivo.getAbsoluteFile(),true);
+		BufferedWriter bw = new BufferedWriter(ArchiSa);
 		for(String UnD: datosOrden) {
-			ArchiSa.write(UnD+"\r\n");
+			bw.write(UnD+"\r\n");
 		}
 		ArchiSa.close();
 	}
@@ -1203,9 +1205,16 @@ public class TestBase {
 	}
 	
 	@DataProvider
-	public Object[][] CambioSimCard() throws Exception{
+	public Object[][] CambioSimCardTelef() throws Exception{
 		
-		Object[][] testObjArray =  ExcelUtils.getTableArray("Cuentas.xlsx","PerfilGestiones",1,1,13,"Cambio SimCard");
+		Object[][] testObjArray =  ExcelUtils.getTableArray("Cuentas.xlsx","PerfilGestiones",1,1,13,"Cambio SimCard Telef");
+		
+		return (testObjArray);
+	}
+	@DataProvider
+	public Object[][] CambioSimCardAgente() throws Exception{
+		
+		Object[][] testObjArray =  ExcelUtils.getTableArray("Cuentas.xlsx","PerfilGestiones",1,1,13,"Cambio SimCard Agente");
 		
 		return (testObjArray);
 	}
