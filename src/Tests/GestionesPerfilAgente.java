@@ -26,8 +26,6 @@ import Pages.setConexion;
 public class GestionesPerfilAgente extends TestBase{
 
 	private WebDriver driver;
-	private SalesBase sb;
-	private CustomerCare cc;
 	List <String> datosOrden =new ArrayList<String>();
 	String imagen;
 	
@@ -86,7 +84,7 @@ public class GestionesPerfilAgente extends TestBase{
 		sleep(14000);
 	}
 	
-	//@AfterMethod(alwaysRun=true)
+	@AfterMethod(alwaysRun=true)
 	public void after() throws IOException {
 		guardarListaTxt(datosOrden);
 		datosOrden.clear();
@@ -94,7 +92,7 @@ public class GestionesPerfilAgente extends TestBase{
 		sleep(5000);
 	}
 	
-	//@AfterClass(alwaysRun=true)
+	@AfterClass(alwaysRun=true)
 	public void quit() throws IOException {
 		//guardarListaTxt(datosOrden);
 		//driver.quit();
