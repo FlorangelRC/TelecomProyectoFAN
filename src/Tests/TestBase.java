@@ -992,7 +992,7 @@ public class TestBase {
 	@DataProvider
 	public Object[][] RecargaTC() throws Exception{
 
-	 Object[][] testObjArray = ExcelUtils.getTableArray("Cuentas.xlsx","PerfilGestiones",1,1,14,"Recargas");
+	 Object[][] testObjArray = ExcelUtils.getTableArray(dataProviderE2E(),"E2EconPago",1,1,14,"Recargas TC");
 
 	 return (testObjArray);
 
@@ -1043,7 +1043,7 @@ public class TestBase {
 	@DataProvider
 	public Object[][] NumerosAmigos() throws Exception{
 
-	 Object[][] testObjArray = ExcelUtils.getTableArray("Cuentas.xlsx","PerfilGestiones",1,1,6,"Numeros Amigos");
+	 Object[][] testObjArray = ExcelUtils.getTableArray(dataProviderE2E(),"E2EsinPago",1,1,4,"Numeros Amigos");
 
 	 return (testObjArray);
 
@@ -1196,7 +1196,7 @@ public class TestBase {
 	@DataProvider
 	public Object[][] RecargaEfectivo() throws Exception{
 
-	 Object[][] testObjArray = ExcelUtils.getTableArray("Cuentas.xlsx","PerfilGestiones",1,1,3,"Recarga Efectivo");
+	 Object[][] testObjArray = ExcelUtils.getTableArray(dataProviderE2E(),"E2EconPago",1,1,3,"Recarga Efectivo");
 
 	 return (testObjArray);
 
@@ -1246,7 +1246,7 @@ public class TestBase {
 	@DataProvider
 	public Object[][] PerfilCuentaTomRiddleConLinea() throws Exception{
 
-	 Object[][] testObjArray = ExcelUtils.getTableArray("Cuentas.xlsx","PerfilGestiones",1,1,14,"Recargas");
+	 Object[][] testObjArray = ExcelUtils.getTableArray(dataProviderE2E(),"E2EconPago",1,1,14,"Recargas TC");
 
 	 return (testObjArray);
 
@@ -1343,7 +1343,7 @@ public class TestBase {
 	@DataProvider
 	public Object[][] NumerosAmigosModificacion() throws Exception{
 
-	 Object[][] testObjArray = ExcelUtils.getTableArray("Cuentas.xlsx","PerfilGestiones",1,1,5,"Amigos Modficacion");
+	 Object[][] testObjArray = ExcelUtils.getTableArray(dataProviderE2E(),"E2EsinPago",1,1,4,"Amigos Modficacion");
 
 	 return (testObjArray);
 
@@ -1352,7 +1352,16 @@ public class TestBase {
 	@DataProvider
 	public Object[][] NumerosAmigosBaja() throws Exception{
 
-	 Object[][] testObjArray = ExcelUtils.getTableArray("Cuentas.xlsx","PerfilGestiones",1,1,5,"Amigos Baja");
+	 Object[][] testObjArray = ExcelUtils.getTableArray(dataProviderE2E(),"E2EsinPago",1,1,3,"Amigos Baja");
+
+	 return (testObjArray);
+
+	}
+	
+	@DataProvider
+	public Object[][] RecargaTD() throws Exception{
+
+	 Object[][] testObjArray = ExcelUtils.getTableArray(dataProviderE2E(),"E2EconPago",1,1,12,"Recargas TD");
 
 	 return (testObjArray);
 
