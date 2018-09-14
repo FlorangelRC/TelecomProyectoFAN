@@ -1241,7 +1241,7 @@ public class TestBase {
 	@DataProvider
 	public Object[][] CambioSimCardAgente() throws Exception{
 		
-		Object[][] testObjArray =  ExcelUtils.getTableArray(dataProviderE2E(),"E2EconPago",1,1,1,"Cambio SimCardAgente");
+		Object[][] testObjArray =  ExcelUtils.getTableArray(dataProviderE2E(),"E2EconPago",1,1,2,"Cambio SimCard Agente");
 		
 		return (testObjArray);
 	}
