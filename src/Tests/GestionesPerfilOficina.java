@@ -954,10 +954,10 @@ public class GestionesPerfilOficina extends TestBase {
 		String orden = cc.obtenerOrden(driver, "Suspensi\u00f3n de Linea");
 		sOrders.add("Suspension, orden numero: " + orden + " con numero de DNI: " + cDNI);
 		System.out.println(sOrders);
-		if(orden.length() >= 8) {
+		/*if(orden.length() >= 8) {
 			orden = orden.substring(0, orden.length()-25);
-		}
-		cc.buscarCaso(orden);
+		}*/
+		cc.buscarCaso(orden.substring(0, 7));
 	}
 	
 	@Test (groups = {"Suspension", "GestionesPerfilOficina","E2E"}, dataProvider="CuentaSuspension")
