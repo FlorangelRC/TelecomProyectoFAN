@@ -217,7 +217,10 @@ public class GestionesPerfilAgente extends TestBase{
 		orden = orden.substring(orden.length()-8);
 		cCC.obligarclick(driver.findElement(By.id("OrderSumary_nextBtn")));
 		sleep(15000);
-		driver.findElement(By.id("Step_Error_Huawei_S029_nextBtn")).click();
+		try {
+			driver.findElement(By.id("Step_Error_Huawei_S029_nextBtn")).click();
+			System.out.println("Error en prefactura huawei");
+		}catch(Exception ex1) {}
 		sleep(5000);
 		driver.navigate().refresh();
 		sleep(10000);
@@ -225,6 +228,16 @@ public class GestionesPerfilAgente extends TestBase{
 		System.out.println(invoice);
 		sleep(10000);
 		datosOrden.add("Cambio sim card Agente- Cuenta: "+accid+"Invoice: "+invoice.split("-")[0]);
+		CBS_Mattu invoSer = new CBS_Mattu();
+		if(urlAmbiente.contains("sit")) 
+			Assert.assertTrue(invoSer.PagoEnCaja("1006", accid, "2001", invoice.split("-")[2], invoice.split("-")[1]));
+		else
+			Assert.assertTrue(invoSer.PagoEnCaja("1006", accid, "2001", invoice.split("-")[2], invoice.split("-")[1]));
+		driver.navigate().refresh();
+		sleep(10000);
+		driver.switchTo().frame(cambioFrame(driver, By.id("Status_ilecell")));
+		Assert.assertTrue(driver.findElement(By.id("Status_ilecell")).getText().equalsIgnoreCase("activada"));
+		
 	}
 	
 	@Test (groups = {"GestionesPerfilOficina","E2E"}, dataProvider="PackAgente")
