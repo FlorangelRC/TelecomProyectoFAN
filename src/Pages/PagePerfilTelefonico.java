@@ -52,6 +52,14 @@ public class PagePerfilTelefonico extends TestBase{
 	
 	@FindBy(id="SelectPaymentMethodsStep_nextBtn")
 	private WebElement MediodePago;
+	
+	@FindBy(id="ICCDAssignment_nextBtn")
+	private WebElement IngresodeSerial;
+
+	
+	public WebElement getIngresodeSerial() {
+		return IngresodeSerial;
+	}
 
 	
 	
