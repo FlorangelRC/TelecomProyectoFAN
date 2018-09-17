@@ -520,9 +520,9 @@ public class GestionesPerfilOficina extends TestBase {
 		List <WebElement> roam = driver.findElements(By.cssSelector(".cpq-item-base-product"));
 			for(WebElement r : roam){
 				if(r.getText().contains("DDI con Roaming Internacional")){
-					driver.findElements(By.cssSelector(".slds-button.slds-button_icon-border-filled.cpq-item-actions-dropdown-button")).get(6).click();
-					sleep(5000);
-					cc.obligarclick(driver.findElements(By.cssSelector(".slds-dropdown__item.cpq-item-actions-dropdown__item")).get(6));
+					cc.obligarclick(r.findElement(By.cssSelector(".slds-button.slds-button_neutral")));
+					sleep(5000);											
+					//cc.obligarclick(driver.findElements(By.cssSelector(".slds-dropdown__item.cpq-item-actions-dropdown__item")).get(6));
 					sleep(5000);
 						try {
 							cc.obligarclick(driver.findElement(By.cssSelector(".slds-button.slds-button--destructive")));
@@ -530,7 +530,7 @@ public class GestionesPerfilOficina extends TestBase {
 						}catch(Exception ex1) {}
 				}
 			//cc.obligarclick(driver.findElement(By.cssSelector(".cpq-item-base-product")).findElements(By.tagName("div")).get(9).findElement(By.tagName("button")));
-			cc.obligarclick(driver.findElement(By.xpath("//*[@id='tab-default-2']/div[3]/div/div[3]/div/div/ng-include/div/div[2]/ng-include/div/div[9]/div/div[3]/div/div/ng-include/div/div[2]/ng-include/div/div[1]/div/div[2]/div[11]/button")));
+			/*cc.obligarclick(driver.findElement(By.xpath("//*[@id='tab-default-2']/div[3]/div/div[3]/div/div/ng-include/div/div[2]/ng-include/div/div[9]/div/div[3]/div/div/ng-include/div/div[2]/ng-include/div/div[1]/div/div[2]/div[11]/button")));
 			sleep(5000);
 			buscarYClick(driver.findElements(By.cssSelector(".slds-button.slds-m-left--large.slds-button--brand.ta-button-brand")),"contains", "continuar");
 			sleep(15000);
@@ -545,7 +545,7 @@ public class GestionesPerfilOficina extends TestBase {
 			sleep(5000);
 			String orden = cc.obtenerOrden(driver, "Suspensi\u00f3n de Linea");
 			sOrders.add("Suspension, orden numero: " + orden + ", DNI: " + sDNI);
-			//System.out.println(sOrders);
+			//System.out.println(sOrders);*/
 		}
 	}
 	
@@ -577,7 +577,7 @@ public class GestionesPerfilOficina extends TestBase {
 		try {contact.ingresarMail(sEmail, "si");}catch (org.openqa.selenium.ElementNotVisibleException ex1) {}
 		contact.tipoValidacion("documento");
 		try {
-			contact.subirArchivo("C:\\Users\\florangel\\Downloads\\mapache.jpg", "si");
+			contact.subirArchivo("C:\\Users\\Sofia Chardin\\Desktop\\DNI.jpg", "si");
 		}catch(Exception ex1) {}
 			BasePage bp = new BasePage(driver);
 		bp.setSimpleDropdown(driver.findElement(By.id("ImpositiveCondition")), "IVA Consumidor Final");
@@ -829,8 +829,8 @@ public class GestionesPerfilOficina extends TestBase {
 		Assert.assertTrue(gest);*/		
 	}
 	
-	@Test (groups = {"GestionesPerfilOficina", "ProblemasConRecargas","E2E"}, dataProvider = "CuentaAjustesPRE")  //Se necesitan nuevos numeros de tarjeta, solo se pueden usar 1 vez
-	public void GestionProblemasConRecargasTarjetaPrepaga(String cDNI) {
+	@Test (groups = {"GestionesPerfilOficina", "ProblemasConRecargas","E2E"}, dataProvider = "ProblemaRecargaPrepaga")  //Se necesitan nuevos numeros de tarjeta, solo se pueden usar 1 vez
+	public void GestionProblemasConRecargasTarjetaPrepaga(String cDNI, String cBatch, String cPin) {
 		imagen = "GestionProblemasConRecargasTarjetaPrepaga";
 		boolean gest = false;
 		driver.switchTo().frame(cambioFrame(driver, By.id("SearchClientDocumentType")));
@@ -846,8 +846,8 @@ public class GestionesPerfilOficina extends TestBase {
 		buscarYClick(driver.findElements(By.className("borderOverlay")), "equals", "tarjeta prepaga");
 		driver.findElement(By.id("RefillMethods_nextBtn")).click();
 		sleep(5000);
-		driver.findElement(By.id("BatchNumber")).sendKeys("11120000000210");
-		driver.findElement(By.id("PIN")).sendKeys("0257");
+		driver.findElement(By.id("BatchNumber")).sendKeys(cBatch);
+		driver.findElement(By.id("PIN")).sendKeys(cPin);
 		driver.findElement(By.id("PrepaidCardData_nextBtn")).click();
 		sleep(7000);
 		buscarYClick(driver.findElements(By.className("borderOverlay")), "equals", "crear un caso nuevo");
@@ -1057,7 +1057,8 @@ public class GestionesPerfilOficina extends TestBase {
 		sleep(10000);
 		String orden = cc.obtenerOrden(driver, "Suspension administrativa");
 		sOrders.add("Suspencion, orden numero: " + orden + " con numero de DNI: " + cDNI);
-		System.out.println(sOrders);	
+		System.out.println(sOrders);
+		cc.buscarCaso(orden.substring(0, 7));
 	}	
 	
 	@Test (groups = {"Suspension", "GestionesPerfilOficina","E2E"}, dataProvider="CuentaSuspension")
@@ -1097,6 +1098,7 @@ public class GestionesPerfilOficina extends TestBase {
 		String orden = cc.obtenerOrden(driver, "Suspension administrativa");
 		sOrders.add("Suspencion, orden numero: " + orden + " con numero de DNI: " + cDNI);
 		//System.out.println(sOrders);
+		cc.buscarCaso(orden.substring(0, 7));
 	}
 	
 	@Test (groups = {"GestionesPerfilOficina", "Ajustes","E2E"}, dataProvider = "CuentaAjustesPRE")
@@ -1789,7 +1791,7 @@ public class GestionesPerfilOficina extends TestBase {
 		driver.switchTo().frame(cambioFrame(driver, By.id("stepRefundData_nextBtn")));
 		buscarYClick(driver.findElements(By.cssSelector(".slds-form-element__label.ng-binding.ng-scope")), "contains", "tarjeta de d\u00e9bito");
 		selectByText(driver.findElement(By.id("selectReason")), "Pago duplicado");
-		driver.findElement(By.id("inputCurrencyAmount")).sendKeys("100000");
+		driver.findElement(By.id("inputCurrencyAmount")).sendKeys("100");
 		driver.findElement(By.id("stepRefundData_nextBtn")).click();
 		sleep(7000);
 		buscarYClick(driver.findElements(By.cssSelector(".slds-form-element__label.ng-binding")), "equals", "efectivo");
@@ -1804,9 +1806,16 @@ public class GestionesPerfilOficina extends TestBase {
 			}
 		}
 		Assert.assertTrue(gest);
-		String orden = cc.obtenerOrden(driver, "Solicitud de Reintegros");
-		sOrders.add("Solicitud de Reintegros, numero de orden: " + orden + " de cuenta con DNI: " + cDNI);
-		Assert.assertTrue(cc.verificarOrden(orden));
+		if (TestBase.urlAmbiente.contains("sit")) {
+			String orden = cc.obtenerOrden(driver, "Solicitud de Reintegros");
+			sOrders.add("Solicitud de Reintegros, orden numero: " + orden + " con numero de DNI: " + cDNI);
+			Assert.assertTrue(cc.verificarOrden(orden));		
+		} else {
+			String orden = driver.findElement(By.cssSelector(".vlc-slds-inline-control__label.ng-binding")).getText();
+			orden = orden.substring(orden.lastIndexOf(" ")+1, orden.lastIndexOf("."));
+			sOrders.add("Solicitud de Reintegros, numero de orden: " + orden + " de cuenta con DNI: " + cDNI);
+			Assert.assertTrue(cc.verificarOrdenYGestion("Solicitud de Reintegros"));
+		}
 	}
 	
 	@Test (groups = {"ProblemaRecarga", "GestionesPerfilOficina","E2E"}, dataProvider="CuentaProblemaRecarga") 
@@ -1911,9 +1920,16 @@ public class GestionesPerfilOficina extends TestBase {
 			}
 		}
 		Assert.assertTrue(gest);
-		String orden = cc.obtenerOrden(driver, "Solicitud de Reintegros");
-		sOrders.add("Solicitud de Reintegros, numero de orden: " + orden + " de cuenta con DNI: " + cDNI);
-		Assert.assertTrue(cc.verificarOrden(orden));
+		if (TestBase.urlAmbiente.contains("sit")) {
+			String orden = cc.obtenerOrden(driver, "Solicitud de Reintegros");
+			sOrders.add("Solicitud de Reintegros, orden numero: " + orden + " con numero de DNI: " + cDNI);
+			Assert.assertTrue(cc.verificarOrden(orden));		
+		} else {
+			String orden = driver.findElement(By.cssSelector(".vlc-slds-inline-control__label.ng-binding")).getText();
+			orden = orden.substring(orden.lastIndexOf(" ")+1, orden.lastIndexOf("."));
+			sOrders.add("Solicitud de Reintegros, numero de orden: " + orden + " de cuenta con DNI: " + cDNI);
+			Assert.assertTrue(cc.verificarOrdenYGestion("Solicitud de Reintegros"));
+		}
 	}
 	
 	@Test (groups = {"GestionesPerfilOficina", "TriviasYSuscripciones", "E2E"}, dataProvider = "CuentaTriviasYSuscripciones")
@@ -2276,7 +2292,7 @@ public class GestionesPerfilOficina extends TestBase {
 		if(urlAmbiente.contains("sit")) 
 			Assert.assertTrue(invoSer.PagoEnCaja("1006", accid, "2001", invoice.split("-")[2], invoice.split("-")[1]));
 		else
-			invoSer.PagoEnCaja("1006", accid, "2001", invoice.split("-")[2], invoice.split("-")[1]);
+			Assert.assertTrue(invoSer.PagoEnCaja("1006", accid, "2001", invoice.split("-")[2], invoice.split("-")[1]));
 		
 		driver.navigate().refresh();
 		sleep(10000);

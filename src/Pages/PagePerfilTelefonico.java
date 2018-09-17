@@ -57,12 +57,12 @@ public class PagePerfilTelefonico extends TestBase{
 	private WebElement IngresodeSerial;
 
 	
-	
 	public WebElement getIngresodeSerial() {
 		return IngresodeSerial;
 	}
 
-
+	
+	
 	public WebElement getMediodePago() {
 		return MediodePago;
 	}
