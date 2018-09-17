@@ -26,8 +26,6 @@ import Pages.setConexion;
 public class GestionesPerfilAgente extends TestBase{
 
 	private WebDriver driver;
-	private SalesBase sb;
-	private CustomerCare cc;
 	List <String> datosOrden =new ArrayList<String>();
 	String imagen;
 	
@@ -86,7 +84,7 @@ public class GestionesPerfilAgente extends TestBase{
 		sleep(14000);
 	}
 	
-	//@AfterMethod(alwaysRun=true)
+	@AfterMethod(alwaysRun=true)
 	public void after() throws IOException {
 		guardarListaTxt(datosOrden);
 		datosOrden.clear();
@@ -94,7 +92,7 @@ public class GestionesPerfilAgente extends TestBase{
 		sleep(5000);
 	}
 	
-	//@AfterClass(alwaysRun=true)
+	@AfterClass(alwaysRun=true)
 	public void quit() throws IOException {
 		//guardarListaTxt(datosOrden);
 		//driver.quit();
@@ -182,7 +180,7 @@ public class GestionesPerfilAgente extends TestBase{
 		Assert.assertTrue(driver.findElement(By.id("Status_ilecell")).getText().equalsIgnoreCase("activada"));
 	}
 	@Test(groups = { "GestionesPerfilAgente", "E2E" }, priority = 1, dataProvider = "CambioSimCardAgente")
-	public void TSCambioSimCardAgente(String sDNI, String sCuenta, String cBanco, String cTarjeta, String cPromo, String cCuotas, String cNumTarjeta, String cVenceMes, String cVenceAno, String cCodSeg, String cTipoDNI,String cDNITarjeta, String cTitular) {
+	public void TSCambioSimCardAgente(String sDNI, String sLinea) {
 		imagen = "TSCambioSimCardAgente";
 		SalesBase sale = new SalesBase(driver);
 		BasePage cambioFrameByID = new BasePage();
@@ -191,10 +189,13 @@ public class GestionesPerfilAgente extends TestBase{
 		driver.switchTo().frame(cambioFrameByID.getFrameForElement(driver, By.id("SearchClientDocumentType")));
 		sleep(8000);
 		sale.BuscarCuenta("DNI", sDNI);
+		sleep(8000);
 		String accid = driver.findElement(By.cssSelector(".searchClient-body.slds-hint-parent.ng-scope")).findElements(By.tagName("td")).get(5).getText();
 		System.out.println("id "+accid);
-		pagePTelefo.buscarAssert();
-		sleep(12000);
+		driver.findElement(By.cssSelector(".slds-tree__item.ng-scope")).findElement(By.tagName("div")).click();
+		sleep(25000);
+		cCC.seleccionarCardPornumeroLinea(sLinea, driver);
+		sleep(3000);
 		cCC.irAGestionEnCard("Cambio SimCard");
 		sleep(2000);
 		driver.switchTo().frame(cambioFrameByID.getFrameForElement(driver, By.id("DeliveryMethodSelection")));
@@ -215,7 +216,10 @@ public class GestionesPerfilAgente extends TestBase{
 		orden = orden.substring(orden.length()-8);
 		cCC.obligarclick(driver.findElement(By.id("OrderSumary_nextBtn")));
 		sleep(15000);
-		driver.findElement(By.id("Step_Error_Huawei_S029_nextBtn")).click();
+		try {
+			driver.findElement(By.id("Step_Error_Huawei_S029_nextBtn")).click();
+			System.out.println("Error en prefactura huawei");
+		}catch(Exception ex1) {}
 		sleep(5000);
 		driver.navigate().refresh();
 		sleep(10000);
@@ -223,12 +227,23 @@ public class GestionesPerfilAgente extends TestBase{
 		System.out.println(invoice);
 		sleep(10000);
 		datosOrden.add("Cambio sim card Agente- Cuenta: "+accid+"Invoice: "+invoice.split("-")[0]);
+		CBS_Mattu invoSer = new CBS_Mattu();
+		if(urlAmbiente.contains("sit")) 
+			Assert.assertTrue(invoSer.PagoEnCaja("1006", accid, "2001", invoice.split("-")[2], invoice.split("-")[1]));
+		else
+			Assert.assertTrue(invoSer.PagoEnCaja("1006", accid, "2001", invoice.split("-")[2], invoice.split("-")[1]));
+		driver.navigate().refresh();
+		sleep(10000);
+		driver.switchTo().frame(cambioFrame(driver, By.id("Status_ilecell")));
+		Assert.assertTrue(driver.findElement(By.id("Status_ilecell")).getText().equalsIgnoreCase("activada"));
+		
 	}
 	
 	@Test (groups = {"GestionesPerfilOficina","E2E"}, dataProvider="PackAgente")
-	public void Venta_de_Pack(String sDNI, String sCuenta, String cBanco, String cTarjeta, String cPromo, String cCuotas, String sPackAgente){
+	public void Venta_de_Pack(String sDNI, String sPackAgente, String sLinea, String cBanco, String cTarjeta, String cPromo, String cCuotas){
 		PagePerfilTelefonico pagePTelefo = new PagePerfilTelefonico(driver);
 		SalesBase sale = new SalesBase(driver);
+		CustomerCare cCC = new CustomerCare(driver);
 		driver.switchTo().frame(cambioFrame(driver, By.id("SearchClientDocumentType")));
 		sale.BuscarCuenta("DNI", sDNI);
 		String accid = driver.findElement(By.cssSelector(".searchClient-body.slds-hint-parent.ng-scope")).findElements(By.tagName("td")).get(5).getText();
@@ -250,52 +265,22 @@ public class GestionesPerfilAgente extends TestBase{
 		selectByText(driver.findElement(By.id("CardBankingEntity-0")), cTarjeta);
 		selectByText(driver.findElement(By.id("promotionsByCardsBank-0")), cPromo);
 		selectByText(driver.findElement(By.id("Installment-0")), cCuotas);
-		String sOrden = cc.obtenerOrden2(driver);
+		String sOrden = cCC.obtenerOrden2(driver);
 		pagePTelefo.getMediodePago().click();
 		sleep(12000);
 		pagePTelefo.getOrdenSeRealizoConExito().click();
 		sleep(10000);
-		String orden = cc.obtenerTNyMonto2(driver, sOrden);
+		String orden = cCC.obtenerTNyMonto2(driver, sOrden);
 		CBS_Mattu invoSer = new CBS_Mattu();
 		invoSer.PagoEnCaja("1005", accid, "2001", orden.split("-")[2], orden.split("-")[1]);
-		cc.obtenerOrdenMontoyTN(driver, "Compra de Pack");
+		cCC.obtenerOrdenMontoyTN(driver, "Compra de Pack");
 		sleep(10000);
 		driver.switchTo().frame(cambioFrame(driver, By.id("Status_ilecell")));
 		Assert.assertTrue(driver.findElement(By.id("Status_ilecell")).getText().equalsIgnoreCase("iniciada"));
-		String sOrder = cc.obtenerOrden(driver,"Compra de Pack");
+		String sOrder = cCC.obtenerOrden(driver,"Compra de Pack");
 		datosOrden.add("Operacion: Compra de Pack, Orden: "+sOrder);	
 		System.out.println("Operacion: Compra de Pack "+ "Order: " + sOrder + "Cuenta: "+ accid + "Fin");
 		}
 	
-	@Test(groups = { "GestionesPerfilTelefonico", "E2E" }, priority = 1, dataProvider = "CambioSimCardAgente")
-	public void TSCambioSimCard(String sDNI ) {
-		imagen = "TSCambioSimCard";
-		SalesBase sale = new SalesBase(driver);
-		BasePage cambioFrameByID = new BasePage();
-		CustomerCare cCC = new CustomerCare(driver);
-		PagePerfilTelefonico pagePTelefo = new PagePerfilTelefonico(driver);
-		driver.switchTo().frame(cambioFrameByID.getFrameForElement(driver, By.id("SearchClientDocumentType")));
-		sleep(8000);
-		sale.BuscarCuenta("DNI", sDNI);
-		String accid = driver.findElement(By.cssSelector(".searchClient-body.slds-hint-parent.ng-scope")).findElements(By.tagName("td")).get(5).getText();
-		System.out.println("id "+accid);
-		pagePTelefo.buscarAssert();
-		cCC.irAGestionEnCard("Cambio SimCard");
-		pagePTelefo.mododeEntrega();
-		pagePTelefo.getIngresodeSerial().click();
-		sleep(12000);
-		String sOrden = cc.obtenerOrden2(driver);
-		String orden = driver.findElement(By.className("top-data")).findElement(By.className("ng-binding")).getText();
-		String NCuenta = driver.findElements(By.className("top-data")).get(1).findElements(By.className("ng-binding")).get(3).getText();
-		System.out.println("Orden " + orden);
-		System.out.println("cuenta " + NCuenta);
-		cCC.obligarclick(driver.findElement(By.id("OrderSumary_nextBtn")));
-		pagePTelefo.getOrdenSeRealizoConExito();
-		String sorden = cc.obtenerTNyMonto2(driver, sOrden);
-		CBS_Mattu invoSer = new CBS_Mattu();
-		invoSer.PagoEnCaja("1005", accid, "2001", sorden.split("-")[2], sorden.split("-")[1]);
-		cc.obtenerOrdenMontoyTN(driver, "Compra de Pack");
-		sleep(10000);
-	}
 	
 }

@@ -92,7 +92,7 @@ public class GestionesPerfilTelefonico extends TestBase{
 		sleep(25000);
 	}
 
-	@AfterMethod(alwaysRun=true)
+	//@AfterMethod(alwaysRun=true)
 	public void after() throws IOException {
 		guardarListaTxt(datosOrden);
 		datosOrden.clear();
@@ -101,7 +101,7 @@ public class GestionesPerfilTelefonico extends TestBase{
 		sb.cerrarPestaniaGestion(driver);*/
 	}
 
-	@AfterClass(alwaysRun=true)
+	//@AfterClass(alwaysRun=true)
 	public void quit() throws IOException {
 		guardarListaTxt(datosOrden);
 		System.out.println("Se supone que guardo");
@@ -255,7 +255,7 @@ public class GestionesPerfilTelefonico extends TestBase{
 	}
 	
 	// no existe Pack, se probo el caso con otro
-	@Test (groups= {"GestionesPerfilTelefonico","E2E"},priority=1, dataProvider="VentaPacks")
+	/*@Test (groups= {"GestionesPerfilTelefonico","E2E"},priority=1, dataProvider="VentaPacks")
 	public void TS123314_CRM_Movil_REPRO_Venta_de_Pack_40_Pesos_Exclusivo_Para_Vos_Descuento_De_Saldo_Telefonico(String sDNI, String sCuenta, String sNumeroDeCuenta, String sLinea, String sVentaPack){
 	imagen = "TS123314";
 	SalesBase sale = new SalesBase(driver);
@@ -274,9 +274,9 @@ public class GestionesPerfilTelefonico extends TestBase{
 	String orden = cc.obtenerOrdenMontoyTN(driver, "Compra de Pack");
 	System.out.println("orden = "+orden);
 	datosOrden.add("Recargas" + orden + " de cuenta "+accid+" con DNI: " + sDNI);
-	/*CBS_Mattu invoSer = new CBS_Mattu();
-	invoSer.PagoEnCaja("1003", accid, "2001", orden.split("-")[2], orden.split("-")[1]);*/
-	/*sleep(5000);
+	CBS_Mattu invoSer = new CBS_Mattu();
+	invoSer.PagoEnCaja("1003", accid, "2001", orden.split("-")[2], orden.split("-")[1]);
+	sleep(5000);
 	driver.navigate().refresh();
 	sleep(10000);
 	cc.obtenerOrdenMontoyTN(driver, "Compra de Pack");
@@ -287,10 +287,10 @@ public class GestionesPerfilTelefonico extends TestBase{
 	System.out.println("Orden: "+sOrder);
 	datosOrden.add("Operacion: Compra de Pack, Orden: "+sOrder+", Cuenta: "+sCuenta+", DNI: "+sDNI+", Linea: "+sLinea);	
 	System.out.println("Order: " + sOrder + " Fin");
-	}
+	}*/
 	
 	@Test(groups = { "GestionesPerfilTelefonico", "E2E" }, priority = 1, dataProvider = "CambioSimCardTelef")
-	public void TSCambioSimCard(String sDNI, String sCuenta, String cBanco, String cTarjeta, String cPromo, String cCuotas, String cNumTarjeta, String cVenceMes, String cVenceAno, String cCodSeg, String cTipoDNI,String cDNITarjeta, String cTitular) {
+	public void TSCambioSimCardTelef(String sDNI, String sLinea, String cBanco, String cTarjeta, String cPromo, String cCuotas, String cNumTarjeta, String cVenceMes, String cVenceAno, String cCodSeg, String cTipoDNI,String cDNITarjeta, String cTitular) {
 		imagen = "TSCambioSimCard";
 		SalesBase sale = new SalesBase(driver);
 		BasePage cambioFrameByID = new BasePage();
@@ -299,7 +299,12 @@ public class GestionesPerfilTelefonico extends TestBase{
 		driver.switchTo().frame(cambioFrameByID.getFrameForElement(driver, By.id("SearchClientDocumentType")));
 		sleep(8000);
 		sale.BuscarCuenta("DNI", sDNI);
-		pagePTelefo.buscarAssert();
+		String accid = driver.findElement(By.cssSelector(".searchClient-body.slds-hint-parent.ng-scope")).findElements(By.tagName("td")).get(5).getText();
+		System.out.println("id "+accid);
+		driver.findElement(By.cssSelector(".slds-tree__item.ng-scope")).findElement(By.tagName("div")).click();
+		sleep(25000);
+		cCC.seleccionarCardPornumeroLinea(sLinea, driver);
+		sleep(3000);
 		cCC.irAGestionEnCard("Cambio SimCard");
 		pagePTelefo.mododeEntrega();
 		sleep(12000);
@@ -324,9 +329,27 @@ public class GestionesPerfilTelefonico extends TestBase{
 		System.out.println("cuenta " + NCuenta);
 		cCC.obligarclick(driver.findElement(By.id("OrderSumary_nextBtn")));
 		sleep(15000);
-		driver.findElement(By.id("Step_Error_Huawei_S029_nextBtn")).click();
+		try {
+			driver.findElement(By.id("Step_Error_Huawei_S029_nextBtn")).click();
+			System.out.println("Error en prefactura huawei");
+		}catch(Exception ex1) {}
 		sleep(5000);
 		driver.navigate().refresh();
+		sleep(10000);
+		String invoice = cCC.obtenerMontoyTNparaAlta(driver, orden);
+		System.out.println(invoice);
+		sleep(10000);
+		datosOrden.add("Cambio sim card Agente- Cuenta: "+accid+"Invoice: "+invoice.split("-")[0]);
+		CBS_Mattu invoSer = new CBS_Mattu();
+		if(urlAmbiente.contains("sit")) 
+			Assert.assertTrue(invoSer.PagoEnCaja("1006", accid, "2001", invoice.split("-")[2], invoice.split("-")[1]));
+		else
+			Assert.assertTrue(invoSer.PagoEnCaja("1006", accid, "2001", invoice.split("-")[2], invoice.split("-")[1]));
+		
+		driver.navigate().refresh();
+		sleep(10000);
+		driver.switchTo().frame(cambioFrame(driver, By.id("Status_ilecell")));
+		Assert.assertTrue(driver.findElement(By.id("Status_ilecell")).getText().equalsIgnoreCase("activada"));
 	}
 	
 	
@@ -363,7 +386,6 @@ public class GestionesPerfilTelefonico extends TestBase{
 	selectByText(driver.findElement(By.id("documentType-0")), cTipoDNI);
 	driver.findElement(By.id("documentNumber-0")).sendKeys(cDNITarjeta);
 	driver.findElement(By.id("cardHolder-0")).sendKeys(cTitular);
-	String sOrden = cc.obtenerOrden2(driver);
 	pagePTelefo.getMediodePago().click();
 	sleep(45000);
 	//nueva pantalla
@@ -374,16 +396,9 @@ public class GestionesPerfilTelefonico extends TestBase{
 	sleep(45000);
 	pagePTelefo.getOrdenSeRealizoConExito().click();
 	sleep(10000);
-	String orden = cCC.obtenerTNyMonto2(driver, sOrden);
-	CBS_Mattu invoSer = new CBS_Mattu();
-	invoSer.PagoEnCaja("1006", accid, "2001", orden.split("-")[2], orden.split("-")[1]);
-	cc.obtenerOrdenMontoyTN(driver, "Compra de Pack");
-	sleep(10000);
-	driver.switchTo().frame(cambioFrame(driver, By.id("Status_ilecell")));
-	Assert.assertTrue(driver.findElement(By.id("Status_ilecell")).getText().equalsIgnoreCase("iniciada"));
-	String sOrder = cCC.obtenerOrden(driver,"Compra de Pack");
-	datosOrden.add("Operacion: Compra de Pack, Orden: "+sOrder);	
-	System.out.println("Operacion: Compra de Pack "+ "Order: " + sOrder + "Cuenta: "+ accid + "Fin");
+	//String sOrder=cCC.obtenerOrden(driver, "Compra de Pack");
+	//System.out.println("Orden " + sOrder);
+	//cCC.buscarCaso(sOrder);
 	}
 	
 	@Test (groups= {"GestionesPerfilTelefonico", "Ajustes", "E2E"},dataProvider = "CuentaAjustesPRE")  //Rompe porque no sale el mensaje de gestion exitosa, sale el perfil no configurado correctamente
