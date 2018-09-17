@@ -1103,7 +1103,7 @@ public class TestBase {
 	@DataProvider
 	public Object[][] CuentaSuspension() throws Exception {
 		
-		Object[][] testObjArray = ExcelUtils.getTableArray("Cuentas.xlsx","PerfilGestiones",1,1,4,"Suspension");
+		Object[][] testObjArray = ExcelUtils.getTableArray(dataProviderE2E(),"E2EsinPago",1,1,4,"Suspension");
 		
 		return(testObjArray);
 		
@@ -1129,7 +1129,7 @@ public class TestBase {
 	@DataProvider
 	public Object [][] CuentaProblemaRecarga() throws Exception{
 		
-		Object[][] testObjArray = ExcelUtils.getTableArray("Cuentas.xlsx","PerfilGestiones",1,1,3,"ProblemaRecarga");
+		Object[][] testObjArray = ExcelUtils.getTableArray(dataProviderE2E(),"E2EsinPago",1,1,3,"ProblemaRecarga");
 		
 		return (testObjArray);
 	}
@@ -1137,7 +1137,7 @@ public class TestBase {
 	@DataProvider
 	public Object [][] CuentaHabilitacion() throws Exception {
 		
-		Object[][] testObjArray = ExcelUtils.getTableArray("Cuentas.xlsx","PerfilGestiones",1,1,1,"Habilitacion");
+		Object[][] testObjArray = ExcelUtils.getTableArray(dataProviderE2E(),"E2EsinPago",1,1,1,"Habilitacion");
 		
 		return (testObjArray);
 	} 
@@ -1217,13 +1217,6 @@ public class TestBase {
 	public Object[][] CambioSimCardTelef() throws Exception{
 		
 		Object[][] testObjArray =  ExcelUtils.getTableArray("Cuentas.xlsx","PerfilGestiones",1,1,13,"Cambio SimCard Telef");
-		
-		return (testObjArray);
-	}
-	@DataProvider
-	public Object[][] CambioSimCardAgente() throws Exception{
-		
-		Object[][] testObjArray =  ExcelUtils.getTableArray("Cuentas.xlsx","PerfilGestiones",1,1,13,"Cambio SimCard Agente");
 		
 		return (testObjArray);
 	}

@@ -1047,7 +1047,8 @@ public class GestionesPerfilOficina extends TestBase {
 		sleep(10000);
 		String orden = cc.obtenerOrden(driver, "Suspension administrativa");
 		sOrders.add("Suspencion, orden numero: " + orden + " con numero de DNI: " + cDNI);
-		System.out.println(sOrders);	
+		System.out.println(sOrders);
+		cc.buscarCaso(orden.substring(0, 7));
 	}	
 	
 	@Test (groups = {"Suspension", "GestionesPerfilOficina","E2E"}, dataProvider="CuentaSuspension")
@@ -1087,6 +1088,7 @@ public class GestionesPerfilOficina extends TestBase {
 		String orden = cc.obtenerOrden(driver, "Suspension administrativa");
 		sOrders.add("Suspencion, orden numero: " + orden + " con numero de DNI: " + cDNI);
 		//System.out.println(sOrders);
+		cc.buscarCaso(orden.substring(0, 7));
 	}
 	
 	@Test (groups = {"GestionesPerfilOficina", "Ajustes","E2E"}, dataProvider = "CuentaAjustesPRE")
