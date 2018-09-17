@@ -47,9 +47,9 @@ import DataProvider.ExcelUtils;
 
 public class TestBase {
 	protected static WebDriver driver;//
-	public static String urlAmbiente = "https://telecomcrm--uat.cs53.my.salesforce.com";
-	//public static String urlAmbiente = "https://crm--sit.cs14.my.salesforce.com/";
-	public String urlSCP = "https://telecomcrm--uat.cs8.my.salesforce.com";
+		public static String urlAmbiente = "https://telecomcrm--uat.cs53.my.salesforce.com";
+		//public static String urlAmbiente = "https://crm--sit.cs14.my.salesforce.com/";
+		public String urlSCP = "https://telecomcrm--uat.cs8.my.salesforce.com";
 	
 	public void leftDropdown(WebDriver driver, String selection) {
 		driver.findElement(By.className("x-btn-mc")).click();
@@ -1260,14 +1260,14 @@ public class TestBase {
 	@DataProvider
 	public Object[][] DatosAltaEquipoExiste() throws Exception{
 
-	 Object[][] testObjArray = ExcelUtils.getTableArray("Cuentas.xlsx","PreparacionDatos",1,1,10,"Alta Linea Equipo Existe");
+	 Object[][] testObjArray = ExcelUtils.getTableArray(dataProviderE2E(),"Altas y Nominacion",1,1,3,"Alta Linea Equipo Existe");
 
 	 return (testObjArray);
 	}
 	@DataProvider
 	public Object[][] AltaLineaNuevoEquipoTC() throws Exception{
 
-	 Object[][] testObjArray = ExcelUtils.getTableArray("Cuentas.xlsx","PreparacionDatos",1,1,22,"Alta Linea Equip New AG Credito");
+	 Object[][] testObjArray = ExcelUtils.getTableArray(dataProviderE2E(),"Altas y Nominacion",1,1,23,"Alta Linea Equip New AG Credito");
 
 	 return (testObjArray);
 
@@ -1373,7 +1373,7 @@ public class TestBase {
 	@DataProvider
 	public Object[][] AltaLineaNuevoconEquipo() throws Exception{
 
-	 Object[][] testObjArray = ExcelUtils.getTableArray("Cuentas.xlsx","PreparacionDatos",1,1,12,"Linea Nueva Equipo AG");
+	 Object[][] testObjArray = ExcelUtils.getTableArray(dataProviderE2E(),"Altas y Nominacion",1,1,13,"Linea Nueva Equipo AG");
 
 	 return (testObjArray);
 
@@ -1409,6 +1409,15 @@ public class TestBase {
 	public Object[][] RecargaTD() throws Exception{
 
 	 Object[][] testObjArray = ExcelUtils.getTableArray(dataProviderE2E(),"E2EconPago",1,1,12,"Recargas TD");
+
+	 return (testObjArray);
+
+	}
+	
+	@DataProvider
+	public Object[][] VentaExisteEquipoAgTd() throws Exception{
+
+	 Object[][] testObjArray = ExcelUtils.getTableArray(dataProviderE2E(),"Altas y Nominacion",1,1,9,"Venta Equipo Existe AG Debito");
 
 	 return (testObjArray);
 

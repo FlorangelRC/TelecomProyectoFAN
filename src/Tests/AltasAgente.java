@@ -531,7 +531,7 @@ public class AltasAgente extends TestBase{
 	}
 	
 	@Test(groups={"Sales", "AltaLineaDatos","E2E"}, priority=1, dataProvider="AltaLineaNuevoEquipoTC")
-	public void TS135824_CRM_Movil_Venta_Sin_Linea_Cliente_nuevo_SPU_AG_TC(String sNombre, String sApellido, String sSexo, String sFNac, String sEmail, String sState, String sCity, String sStore, String sEquipo, String sProvincia, String sLocalidad, String sCalle, String sAltura, String sCPostal, String cBanco, String cTarjeta, String cPromo, String cCuotas, String cNumTarjeta, String cVenceMes, String cVenceAno, String cCodSeg) throws IOException {
+	public void TS135824_CRM_Movil_Venta_Sin_Linea_Cliente_nuevo_SPU_AG_TC(String cDni, String sNombre, String sApellido, String sSexo, String sFNac, String sEmail,String sPlan, String sEquipo, String sProvincia, String sLocalidad, String sCalle, String sAltura, String sCPostal, String cBanco, String cTarjeta, String cPromo, String cCuotas, String cNumTarjeta, String cVenceMes, String cVenceAno, String cCodSeg, String sState, String sCity) throws IOException {
 		CustomerCare cc = new CustomerCare(driver);
 		SalesBase sb = new SalesBase(driver);
 		sleep(5000);
@@ -633,7 +633,7 @@ public class AltasAgente extends TestBase{
 			selectByText(driver.findElement(By.id("expirationYear-0")), cVenceAno);
 			driver.findElement(By.id("securityCode-0")).sendKeys(cCodSeg);
 			selectByText(driver.findElement(By.id("documentType-0")), "DNI");
-			//driver.findElement(By.id("documentNumber-0")).sendKeys(sDni);
+			driver.findElement(By.id("documentNumber-0")).sendKeys(sDni);
 			driver.findElement(By.id("cardHolder-0")).sendKeys(sNombre+" "+sApellido);			
 		}catch(Exception ex1) {cc.obligarclick(driver.findElement(By.id("Step_Error_Huawei_S202_nextBtn")));}
 		sleep(20000);
@@ -694,7 +694,7 @@ public class AltasAgente extends TestBase{
 	}
 	
 	@Test(groups={"Sales", "AltaLineaDatos","E2E"}, priority=1, dataProvider="AltaLineaNuevoconEquipo") //========= 31 - 8 NO HAY LINEAS
-	public void TS125004_CRM_Movil_PRE_Alta_Linea_con_Equipo_Cliente_Nuevo_Presencial_AG(String sNombre, String sApellido, String sSexo, String sFNac, String sEmail, String sPlan,String sEquipo, String sProvincia, String sLocalidad, String sCalle, String sNumero, String sCP) throws IOException {
+	public void TS125004_CRM_Movil_PRE_Alta_Linea_con_Equipo_Cliente_Nuevo_Presencial_AG(String cDni, String sNombre, String sApellido, String sSexo, String sFNac, String sEmail, String sPlan,String sEquipo, String sProvincia, String sLocalidad, String sCalle, String sNumero, String sCP) throws IOException {
 		imagen = "TS125004";
 		CustomerCare cc = new CustomerCare(driver);
 		SalesBase sb = new SalesBase(driver);
