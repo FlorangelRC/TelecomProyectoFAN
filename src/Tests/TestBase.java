@@ -46,8 +46,8 @@ import DataProvider.ExcelUtils;
 
 public class TestBase {
 	protected static WebDriver driver;//
-		//public static String urlAmbiente = "https://telecomcrm--uat.cs53.my.salesforce.com";
-		public static String urlAmbiente = "https://crm--sit.cs14.my.salesforce.com/";
+		public static String urlAmbiente = "https://telecomcrm--uat.cs53.my.salesforce.com";
+		//public static String urlAmbiente = "https://crm--sit.cs14.my.salesforce.com/";
 		public String urlSCP = "https://telecomcrm--uat.cs8.my.salesforce.com";
 	
 	public void leftDropdown(WebDriver driver, String selection) {
@@ -956,7 +956,7 @@ public class TestBase {
 	@DataProvider
 	public Object[][] DatosAltaLineaAgente() throws Exception{
 
-	 Object[][] testObjArray = ExcelUtils.getTableArray("Cuentas.xlsx","PreparacionDatos",1,1,16,"Alta Linea Agente");
+	 Object[][] testObjArray = ExcelUtils.getTableArray(dataProviderE2E(),"Altas y Nominacion",1,1,16,"Alta Linea Agente");
 
 	 return (testObjArray);
 
@@ -1001,7 +1001,7 @@ public class TestBase {
 	@DataProvider
 	public Object[][] DatosAltaLineaOfCom() throws Exception{
 
-	 Object[][] testObjArray = ExcelUtils.getTableArray("Cuentas.xlsx","PreparacionDatos",1,1,13,"Alta Linea OFCOM");
+	 Object[][] testObjArray = ExcelUtils.getTableArray(dataProviderE2E(),"Altas y Nominacion",1,1,13,"Alta Linea OFCOM");
 
 	 return (testObjArray);
 
@@ -1249,14 +1249,14 @@ public class TestBase {
 	@DataProvider
 	public Object[][] DatosAltaEquipoExiste() throws Exception{
 
-	 Object[][] testObjArray = ExcelUtils.getTableArray("Cuentas.xlsx","PreparacionDatos",1,1,10,"Alta Linea Equipo Existe");
+	 Object[][] testObjArray = ExcelUtils.getTableArray(dataProviderE2E(),"Altas y Nominacion",1,1,3,"Alta Linea Equipo Existe");
 
 	 return (testObjArray);
 	}
 	@DataProvider
 	public Object[][] AltaLineaNuevoEquipoTC() throws Exception{
 
-	 Object[][] testObjArray = ExcelUtils.getTableArray("Cuentas.xlsx","PreparacionDatos",1,1,22,"Alta Linea Equip New AG Credito");
+	 Object[][] testObjArray = ExcelUtils.getTableArray(dataProviderE2E(),"Altas y Nominacion",1,1,23,"Alta Linea Equip New AG Credito");
 
 	 return (testObjArray);
 
@@ -1265,7 +1265,7 @@ public class TestBase {
 	@DataProvider
 	public Object[][] AltaLineaNuevoEquipoOfCom() throws Exception{
 
-	 Object[][] testObjArray = ExcelUtils.getTableArray("Cuentas.xlsx","PreparacionDatos",1,1,12,"Alta Linea Equipo New OfCom");
+	 Object[][] testObjArray = ExcelUtils.getTableArray(dataProviderE2E(),"Altas y Nominacion",1,1,13,"Alta Linea Equipo New OfCom");
 
 	 return (testObjArray);
 
@@ -1273,7 +1273,7 @@ public class TestBase {
 	@DataProvider
 	public Object[][] DatosAltaAgenteCredito() throws Exception{
 
-	 Object[][] testObjArray = ExcelUtils.getTableArray("Cuentas.xlsx","PreparacionDatos",1,1,20,"Alta Linea AG TC");
+	 Object[][] testObjArray = ExcelUtils.getTableArray(dataProviderE2E(),"Altas y Nominacion",1,1,20,"Alta Linea AG TC");
 
 	 return (testObjArray);
 
@@ -1290,7 +1290,7 @@ public class TestBase {
 	@DataProvider
 	public Object[][] AltaLineaExistenteOfComTD() throws Exception{
 
-	 Object[][] testObjArray = ExcelUtils.getTableArray("Cuentas.xlsx","PreparacionDatos",1,1,9,"Alta Linea Existe OfCom Debito");
+	 Object[][] testObjArray = ExcelUtils.getTableArray(dataProviderE2E(),"Altas y Nominacion",1,1,9,"Alta Linea Existe OfCom Debito");
 
 	 return (testObjArray);
 
@@ -1298,7 +1298,7 @@ public class TestBase {
 	@DataProvider
 	public Object[][] AltaEquipoExisteSPU() throws Exception{
 		
-		 Object[][] testObjArray = ExcelUtils.getTableArray("Cuentas.xlsx","PreparacionDatos",1,1,5,"Linea Equipo Existe SPU");
+		 Object[][] testObjArray = ExcelUtils.getTableArray(dataProviderE2E(),"Altas y Nominacion",1,1,5,"Linea Equipo Existe SPU");
 
 		 return (testObjArray);
 	}
@@ -1353,7 +1353,7 @@ public class TestBase {
 	@DataProvider
 	public Object[][] AltaLineaExisteEquipoOfComTD() throws Exception{
 
-	 Object[][] testObjArray = ExcelUtils.getTableArray("Cuentas.xlsx","PreparacionDatos",1,1,9,"Alta Linea Equipo Existe OfCom Debito");
+	 Object[][] testObjArray = ExcelUtils.getTableArray(dataProviderE2E(),"Altas y Nominacion",1,1,9,"Alta Linea Equipo Existe OfCom Debito");
 
 	 return (testObjArray);
 
@@ -1362,7 +1362,7 @@ public class TestBase {
 	@DataProvider
 	public Object[][] AltaLineaNuevoconEquipo() throws Exception{
 
-	 Object[][] testObjArray = ExcelUtils.getTableArray("Cuentas.xlsx","PreparacionDatos",1,1,12,"Linea Nueva Equipo AG");
+	 Object[][] testObjArray = ExcelUtils.getTableArray(dataProviderE2E(),"Altas y Nominacion",1,1,13,"Linea Nueva Equipo AG");
 
 	 return (testObjArray);
 
@@ -1370,7 +1370,7 @@ public class TestBase {
 	@DataProvider
 	public Object[][] AltaLineaEquipoOfCom() throws Exception{
 
-	 Object[][] testObjArray = ExcelUtils.getTableArray("Cuentas.xlsx","PreparacionDatos",1,1,8,"Linea Equipo Nuevo OfCom");
+	 Object[][] testObjArray = ExcelUtils.getTableArray(dataProviderE2E(),"Altas y Nominacion",1,1,8,"Linea Equipo Nuevo OfCom");
 
 	 return (testObjArray);
 
@@ -1398,6 +1398,15 @@ public class TestBase {
 	public Object[][] RecargaTD() throws Exception{
 
 	 Object[][] testObjArray = ExcelUtils.getTableArray(dataProviderE2E(),"E2EconPago",1,1,12,"Recargas TD");
+
+	 return (testObjArray);
+
+	}
+	
+	@DataProvider
+	public Object[][] VentaExisteEquipoAgTd() throws Exception{
+
+	 Object[][] testObjArray = ExcelUtils.getTableArray(dataProviderE2E(),"Altas y Nominacion",1,1,9,"Venta Equipo Existe AG Debito");
 
 	 return (testObjArray);
 
