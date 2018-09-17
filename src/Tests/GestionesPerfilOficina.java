@@ -459,12 +459,12 @@ public class GestionesPerfilOficina extends TestBase {
 			}
 			Assert.assertTrue(a);
 		}
-		}
+	}
 
 	
 	
 	@Test (groups = {"GestionesPerfilOficina","E2E"}, dataProvider="BajaServicios")
-	public void TS134355_CRM_Movil_PRE_Alta_Servicio_sin_costo_DDI_con_Roaming_Internacional_Presencial(String sDNI, String sCuenta, String sNumeroDeCuenta, String sLinea){
+	public void TS134355_CRM_Movil_PRE_Alta_Servicio_sin_costo_DDI_con_Roaming_Internacional_Presencial(String sDNI, String sLinea){
 		imagen = "TS134355";
 		BasePage cambioFrameByID=new BasePage();
 		sleep(30000);
@@ -482,17 +482,30 @@ public class GestionesPerfilOficina extends TestBase {
 		sleep(35000);
 		cc.openrightpanel();
 		cc.closerightpanel();
+		driver.switchTo().defaultContent();
+		driver.switchTo().frame(cambioFrameByID.getFrameForElement(driver, By.cssSelector(".slds-text-body--small.slds-page-header__info.taDevider")));
+		String sOrder = driver.findElement(By.cssSelector(".slds-text-body--small.slds-page-header__info.taDevider")).getText();
+		sOrder = sOrder.replace("Nro. Orden:", "");
+		sOrder = sOrder.replace(" ", "");
+		try {
+			cc.closeleftpanel();
+		}
+		catch (Exception x) {
+			//Always empty
+		}
 		sleep(5000);
 		driver.switchTo().frame(cambioFrame(driver, By.id("tab-default-1")));
 		sleep(5000);
 		driver.findElement(By.cssSelector(".slds-button.cpq-item-has-children")).click();
 		sleep(5000);
+		boolean bAssert = false;
+		//Not finished
 		List<WebElement> servicios= driver.findElements(By.xpath("//*[@class='cpq-item-product-child-level-1 cpq-item-child-product-name-wrapper']"));
 			for(WebElement a: servicios) {
 				if (a.getText().toLowerCase().contains("servicios basicos general movil".toLowerCase())) {
 						a.findElement(By.tagName("button")).click();
 							sleep(8000);
-								break;
+							break;
 				}
 			}
 		sleep(17000);
@@ -524,7 +537,7 @@ public class GestionesPerfilOficina extends TestBase {
 			boolean a = false;
 			List <WebElement> elem = driver.findElements(By.cssSelector(".slds-box.ng-scope"));
 			for(WebElement x : elem) {
-				if(x.getText().toLowerCase().contains("tu solicitud est\u00e1 siendo procesada.")) {
+				if(x.getText().toLowerCase().contains("¡la orden ") && x.getText().toLowerCase().contains(" realiz\u00f3 con \u00e9xito")) {
 					a = true;
 				}			
 			}
