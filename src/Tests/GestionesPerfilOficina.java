@@ -501,36 +501,50 @@ public class GestionesPerfilOficina extends TestBase {
 		boolean bAssert = false;
 		//Not finished
 		List<WebElement> servicios= driver.findElements(By.xpath("//*[@class='cpq-item-product-child-level-1 cpq-item-child-product-name-wrapper']"));
-			for(WebElement a: servicios) {
-				if (a.getText().toLowerCase().contains("servicios basicos general movil".toLowerCase())) {
-						a.findElement(By.tagName("button")).click();
-							sleep(8000);
-							break;
-				}
+		for(WebElement a: servicios) {
+			if (a.getText().toLowerCase().contains("servicios basicos general movil".toLowerCase())) {
+					a.findElement(By.tagName("button")).click();
+						sleep(8000);
+						bAssert= true;
+						break;
 			}
+		}
+		Assert.assertTrue(bAssert);
 		sleep(17000);
+		bAssert = false;
 		List <WebElement> ddi = driver.findElements(By.cssSelector(".cpq-item-product-child-level-2.cpq-item-child-product-name-wrapper"));
-			for(WebElement d : ddi){
-				if(d.getText().contains("DDI")){
-				   cc.obligarclick(d.findElement(By.cssSelector(".slds-button.slds-button_icon-small")));
-				   break;
-				}
+		for(WebElement d : ddi){
+			if(d.getText().contains("DDI")){
+			   cc.obligarclick(d.findElement(By.cssSelector(".slds-button.slds-button_icon-small")));
+			   bAssert = true;
+			   break;
 			}
+		}
+		Assert.assertTrue(bAssert);
 		sleep(10000);
 		List <WebElement> roam = driver.findElements(By.cssSelector(".cpq-item-base-product"));
-			for(WebElement r : roam){
-				if(r.getText().contains("DDI con Roaming Internacional")){
-					cc.obligarclick(r.findElement(By.cssSelector(".slds-button.slds-button_neutral")));
-					sleep(5000);											
-					//cc.obligarclick(driver.findElements(By.cssSelector(".slds-dropdown__item.cpq-item-actions-dropdown__item")).get(6));
-					sleep(5000);
-						try {
-							cc.obligarclick(driver.findElement(By.cssSelector(".slds-button.slds-button--destructive")));
-							sleep(20000);
-						}catch(Exception ex1) {}
+		for(WebElement r : roam){
+			if(r.getText().contains("DDI con Roaming Internacional")){
+				cc.obligarclick(r.findElement(By.cssSelector(".slds-button.slds-button_icon-border-filled.cpq-item-actions-dropdown-button")));
+				sleep(5000);
+				List<WebElement> wItems = r.findElements(By.cssSelector(".slds-dropdown__item.cpq-item-actions-dropdown__item"));
+				for (WebElement wAux : wItems) {
+					if (wAux.getText().contains("Delete")) {
+						wAux.click();
+						break;
+					}
 				}
+				break;
+				//cc.obligarclick(driver.findElements(By.cssSelector(".slds-dropdown__item.cpq-item-actions-dropdown__item")).get(6));
+				/*sleep(5000);
+				try {
+					cc.obligarclick(driver.findElement(By.cssSelector(".slds-button.slds-button--destructive")));
+					sleep(20000);
+				}catch(Exception ex1) {}*/
+			}
+		}
 			//cc.obligarclick(driver.findElement(By.cssSelector(".cpq-item-base-product")).findElements(By.tagName("div")).get(9).findElement(By.tagName("button")));
-			/*cc.obligarclick(driver.findElement(By.xpath("//*[@id='tab-default-2']/div[3]/div/div[3]/div/div/ng-include/div/div[2]/ng-include/div/div[9]/div/div[3]/div/div/ng-include/div/div[2]/ng-include/div/div[1]/div/div[2]/div[11]/button")));
+			cc.obligarclick(driver.findElement(By.xpath("//*[@id='tab-default-2']/div[3]/div/div[3]/div/div/ng-include/div/div[2]/ng-include/div/div[9]/div/div[3]/div/div/ng-include/div/div[2]/ng-include/div/div[1]/div/div[2]/div[11]/button")));
 			sleep(5000);
 			buscarYClick(driver.findElements(By.cssSelector(".slds-button.slds-m-left--large.slds-button--brand.ta-button-brand")),"contains", "continuar");
 			sleep(15000);
@@ -545,8 +559,7 @@ public class GestionesPerfilOficina extends TestBase {
 			sleep(5000);
 			String orden = cc.obtenerOrden(driver, "Suspensi\u00f3n de Linea");
 			sOrders.add("Suspension, orden numero: " + orden + ", DNI: " + sDNI);
-			//System.out.println(sOrders);*/
-		}
+			//System.out.println(sOrders);
 	}
 	
 	@Test(groups = {"Sales", "PreparacionNominacion","E2E"}, dataProvider="DatosSalesNominacion") 
