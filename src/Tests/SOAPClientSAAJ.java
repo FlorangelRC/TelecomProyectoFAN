@@ -18,10 +18,10 @@ public class SOAPClientSAAJ {
 	    		sEndPoint = sPagoSimulado;
 	    		break;
 	    	case "pago en caja":
-	    		if (TestBase.urlAmbiente.contains("sit"))
-	    			sEndPoint = sPagoEnCajaSIT;
-	    		else
-	    			sEndPoint = sPagoEnCajaUAT;
+	    		if (TestBase.urlAmbiente.contains("sit")) //Comment
+	    			sEndPoint = sPagoEnCajaSIT; //Comment
+	    		else //Comment
+	    			sEndPoint = sPagoEnCajaUAT; //Comment
 	    		break;
 	    	case "alta de linea":
 	    		sEndPoint = sAltaDeLinea;
