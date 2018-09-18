@@ -397,7 +397,7 @@ public class GestionesPerfilTelefonico extends TestBase{
 	sleep(10000);
 	String orden = cCC.obtenerTNyMonto2(driver, sOrden);
 	CBS_Mattu invoSer = new CBS_Mattu();
-	invoSer.PagoEnCaja("1006", accid, "2001", orden.split("-")[2], orden.split("-")[1]);
+	invoSer.PagoEnCaja("1003", accid, "2001", orden.split("-")[2], orden.split("-")[1]);
 	cc.obtenerOrdenMontoyTN(driver, "Compra de Pack");
 	sleep(10000);
 	driver.switchTo().frame(cambioFrame(driver, By.id("Status_ilecell")));

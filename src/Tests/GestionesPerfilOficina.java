@@ -2200,7 +2200,7 @@ public class GestionesPerfilOficina extends TestBase {
 	}
 	
 	@Test (groups = {"GestionesPerfilOficina","E2E"}, dataProvider="PackOfCom")
-	public void Venta_de_Pack(String sDNI, String sCuenta, String cBanco, String cTarjeta, String cPromo, String cCuotas, String sPackOfCom){
+	public void Venta_de_Pack(String sDNI, String sLinea, String sPackOfCom, String cBanco, String cTarjeta, String cPromo, String cCuotas){
 		PagePerfilTelefonico pagePTelefo = new PagePerfilTelefonico(driver);
 		CustomerCare cCC = new CustomerCare(driver);
 		driver.switchTo().frame(cambioFrame(driver, By.id("SearchClientDocumentType")));
@@ -2217,7 +2217,7 @@ public class GestionesPerfilOficina extends TestBase {
 		sleep(12000);
 		pagePTelefo.getSimulaciondeFactura().click();
 		sleep(12000);
-		buscarYClick(driver.findElements(By.cssSelector(".slds-form-element__label.ng-binding")), "equals", "efectivo");
+		//buscarYClick(driver.findElements(By.cssSelector(".slds-form-element__label.ng-binding")), "equals", "efectivo");
 		sleep(12000);
 		buscarYClick(driver.findElements(By.cssSelector(".slds-form-element__label.ng-binding")), "equals", "tarjeta de credito");
 		sleep(12000);
@@ -2227,19 +2227,24 @@ public class GestionesPerfilOficina extends TestBase {
 		selectByText(driver.findElement(By.id("Installment-0")), cCuotas);
 		String sOrden = cc.obtenerOrden2(driver);
 		pagePTelefo.getMediodePago().click();
-		sleep(12000);
+		sleep(15000);
 		pagePTelefo.getOrdenSeRealizoConExito().click();
+		sleep(15000);
+		driver.navigate().refresh();
 		sleep(10000);
-		String orden = cCC.obtenerTNyMonto2(driver, sOrden);
+		String invoice = cCC.obtenerMontoyTNparaAlta(driver, sOrden);
+		System.out.println(invoice);
+		sleep(10000);
+		sOrders.add("Operacion: Compra de Pack- Cuenta: "+accid+"Invoice: "+invoice.split("-")[1]+invoice.split("-")[0]);
 		CBS_Mattu invoSer = new CBS_Mattu();
-		invoSer.PagoEnCaja("1006", accid, "2001", orden.split("-")[2], orden.split("-")[1]);
-		cc.obtenerOrdenMontoyTN(driver, "Compra de Pack");
+		Assert.assertTrue(invoSer.PagoEnCaja("1006", accid, "2001", invoice.split("-")[1], invoice.split("-")[0]));
+		
+		driver.navigate().refresh();
 		sleep(10000);
 		driver.switchTo().frame(cambioFrame(driver, By.id("Status_ilecell")));
-		Assert.assertTrue(driver.findElement(By.id("Status_ilecell")).getText().equalsIgnoreCase("iniciada"));
+		Assert.assertTrue(driver.findElement(By.id("Status_ilecell")).getText().equalsIgnoreCase("activada"));
 		String sOrder = cCC.obtenerOrden(driver,"Compra de Pack");
-		sOrders.add("Operacion: Compra de Pack, Orden: "+sOrder);	
-		System.out.println("Operacion: Compra de Pack "+ "Order: " + sOrder + "Cuenta: "+ accid + "Fin");
+		System.out.println("Orden: "+sOrder);
 		}
 	
 	
