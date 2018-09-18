@@ -404,6 +404,14 @@ public class AltadeLineas extends TestBase {
 		sleep(25000);
 		cc.obligarclick(driver.findElement(By.id("InvoicePreview_nextBtn")));
 		sleep(20000);
+		sb.elegirvalidacion("DOC");
+		sleep(8000);
+		driver.findElement(By.id("FileDocumentImage")).sendKeys("C:\\Users\\florangel\\Downloads\\mapache.jpg");
+		sleep(3000);
+		cc.obligarclick(driver.findElement(By.id("DocumentMethod_nextBtn")));
+		sleep(10000);
+		cc.obligarclick(driver.findElement(By.id("ValidationResult_nextBtn")));
+		sleep(15000);
 		buscarYClick(driver.findElements(By.cssSelector(".slds-form-element__label.ng-binding")), "equals", "tarjeta de d\u00e9bito");
 		sleep(20000);
 		driver.switchTo().frame(cambioFrame(driver, By.id("BankingEntity-0")));
@@ -418,14 +426,7 @@ public class AltadeLineas extends TestBase {
 			sleep(20000);
 		}catch(Exception ex1) {}
 		
-		sb.elegirvalidacion("DOC");
-		sleep(8000);
-		driver.findElement(By.id("FileDocumentImage")).sendKeys("C:\\Users\\florangel\\Downloads\\mapache.jpg");
-		sleep(3000);
-		cc.obligarclick(driver.findElement(By.id("DocumentMethod_nextBtn")));
-		sleep(10000);
-		cc.obligarclick(driver.findElement(By.id("ValidationResult_nextBtn")));
-		sleep(15000);
+		
 		try {
 			driver.findElements(By.cssSelector(".slds-button.slds-button--neutral.ng-binding.ng-scope")).get(1).click();
 			sleep(10000);
@@ -618,7 +619,7 @@ public class AltadeLineas extends TestBase {
 			}
 		sleep(25000);
 		driver.findElements(By.cssSelector(".slds-input.ng-pristine.ng-untouched.ng-valid")).get(0).sendKeys(sEquipo);
-		sleep(10000);
+		sleep(15000);
 		List<WebElement> agregar = driver.findElements(By.cssSelector(".slds-button.slds-button_neutral.cpq-add-button")); 
 			for(WebElement a : agregar){
 				if(a.getText().equals("Agregar")){
@@ -631,8 +632,6 @@ public class AltadeLineas extends TestBase {
 		sleep(24000);
 		sb.Crear_DomicilioLegal(sProvincia, sLocalidad, sCalle, "", sAltura, "", "", sCP);
 		sleep(27000);
-		cc.obligarclick(driver.findElement(By.id("InvoicePreview_nextBtn")));
-		sleep(20000);
 		List<WebElement> medpag = driver.findElements(By.cssSelector(".slds-radio.ng-scope"));
 			for(WebElement m :medpag){
 				if(m.getText().equals("Efectivo")){
@@ -743,8 +742,6 @@ public class AltadeLineas extends TestBase {
 		sleep(5000);	
 		sb.continuar();
 		sleep(24000);
-		cc.obligarclick(driver.findElement(By.id("LineAssignment_nextBtn")));
-		sleep(15000);
 		cc.obligarclick(driver.findElement(By.id("DeliveryMethodConfiguration_nextBtn")));
 		sleep(15000);
 		cc.obligarclick(driver.findElement(By.id("InvoicePreview_nextBtn")));

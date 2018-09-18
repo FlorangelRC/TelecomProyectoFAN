@@ -46,7 +46,7 @@ import DataProvider.ExcelUtils;
 
 
 public class TestBase {
-	protected static WebDriver driver;//
+	protected static WebDriver driver;
 		public static String urlAmbiente = "https://telecomcrm--uat.cs53.my.salesforce.com";
 		//public static String urlAmbiente = "https://crm--sit.cs14.my.salesforce.com/";
 		public String urlSCP = "https://telecomcrm--uat.cs8.my.salesforce.com";
@@ -1249,6 +1249,14 @@ public class TestBase {
 		
 		return (testObjArray);
 	}
+	@DataProvider
+	public Object[][] CambioSimCardOficina() throws Exception{
+		
+		Object[][] testObjArray =  ExcelUtils.getTableArray(dataProviderE2E(),"E2EconPago",1,1,2,"Cambio SimCard Oficina");
+		
+		return (testObjArray);
+	}
+	
 	@DataProvider
 	public Object[][] CambioSimCardOficina() throws Exception{
 		
