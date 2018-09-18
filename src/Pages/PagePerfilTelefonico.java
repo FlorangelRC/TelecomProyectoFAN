@@ -117,7 +117,7 @@ public class PagePerfilTelefonico extends TestBase{
 		driver.switchTo().frame(cambioFrame(driver, By.cssSelector(".slds-button.cpq-item-has-children")));
 		Pack("Packs Opcionales", "Packs de Datos", Pack1);
 		driver.findElement(By.cssSelector(".slds-button.slds-m-left--large.slds-button--brand.ta-button-brand")).click();
-		sleep(45000);
+		sleep(25000);
 		try{ 
 		      driver.findElements(By.cssSelector(".slds-button.slds-button--neutral.ng-binding.ng-scope")).get(1).click(); 
 		      sleep(8000); 
@@ -190,8 +190,10 @@ public class PagePerfilTelefonico extends TestBase{
 		Select Store = new Select (driver.findElement(By.id("Store")));
 		Store.selectByVisibleText("Centro de Servicio Santa Fe - Juan de Garay 444");
 		Delivery.click();
+		siguiente();
 		sleep(25000);
 		SimulaciondeFactura.click();
+		
 		}
 	
 	
@@ -201,7 +203,6 @@ public class PagePerfilTelefonico extends TestBase{
 		driver.findElement(By.cssSelector(".slds-button.cpq-item-has-children")).click();
 		sleep(5000);
 		List<WebElement> NomPack = driver.findElements(By.xpath("//*[@class='cpq-item-product-child-level-1 cpq-item-child-product-name-wrapper']"));
-		
 		for(WebElement a: NomPack) {
 			//System.out.print(a.getText().toLowerCase());
 			//System.out.println(" : "+servicio1.toLowerCase());
@@ -218,16 +219,14 @@ public class PagePerfilTelefonico extends TestBase{
 		if (subPack.size() == Btnsubpack.size()) {
 		for(WebElement b: subPack) {			
 			//System.out.println("+++++"+b.getText().substring(b.getText().indexOf("\n")+1, b.getText().length())+"++++++");
-			
 					if (b.getText().substring(b.getText().indexOf("\n")+1, b.getText().length()).toLowerCase().contains(servicio2.toLowerCase())) {
 						System.out.println(servicio2);
 						  b.findElement(By.tagName("button")).click();
 						   sleep(8000);
 						     break;
 						}
-			
-			    }
-			}
+				    }
+				}
 		
 		 //subtablas
 		List<String> packs = Arrays.asList(Pack1);

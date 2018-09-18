@@ -88,7 +88,7 @@ public class GestionesPerfilAgente extends TestBase{
 		sleep(14000);
 	}
 	
-	@AfterMethod(alwaysRun=true)
+	//@AfterMethod(alwaysRun=true)
 	public void after() throws IOException {
 		guardarListaTxt(datosOrden);
 		datosOrden.clear();
@@ -96,7 +96,7 @@ public class GestionesPerfilAgente extends TestBase{
 		sleep(5000);
 	}
 	
-	@AfterClass(alwaysRun=true)
+	//@AfterClass(alwaysRun=true)
 	public void quit() throws IOException {
 		//guardarListaTxt(datosOrden);
 		//driver.quit();
@@ -244,7 +244,7 @@ public class GestionesPerfilAgente extends TestBase{
 	}
 	
 	@Test (groups = {"GestionesPerfilOficina","E2E"}, dataProvider="PackAgente")
-	public void Venta_de_Pack(String sDNI, String sPackAgente, String sLinea, String cBanco, String cTarjeta, String cPromo, String cCuotas){
+	public void Venta_de_Pack(String sDNI, String sLinea, String sPackAgente, String cBanco, String cTarjeta, String cPromo, String cCuotas){
 		PagePerfilTelefonico pagePTelefo = new PagePerfilTelefonico(driver);
 		SalesBase sale = new SalesBase(driver);
 		CustomerCare cCC = new CustomerCare(driver);
@@ -255,12 +255,15 @@ public class GestionesPerfilAgente extends TestBase{
 		pagePTelefo.buscarAssert();
 		pagePTelefo.comprarPack("comprar internet");
 		sleep(8000);
+		pagePTelefo.closerightpanel();
+		sleep(8000);
 		pagePTelefo.agregarPack(sPackAgente);
 		pagePTelefo.tipoDePago("en factura de venta");
 		pagePTelefo.getTipodepago().click();
 		sleep(12000);
 		pagePTelefo.getSimulaciondeFactura().click();
 		sleep(12000);
+		String sOrden = cCC.obtenerOrden2(driver);
 		buscarYClick(driver.findElements(By.cssSelector(".slds-form-element__label.ng-binding")), "equals", "efectivo");
 		sleep(12000);
 		buscarYClick(driver.findElements(By.cssSelector(".slds-form-element__label.ng-binding")), "equals", "tarjeta de credito");
@@ -269,21 +272,27 @@ public class GestionesPerfilAgente extends TestBase{
 		selectByText(driver.findElement(By.id("CardBankingEntity-0")), cTarjeta);
 		selectByText(driver.findElement(By.id("promotionsByCardsBank-0")), cPromo);
 		selectByText(driver.findElement(By.id("Installment-0")), cCuotas);
-		String sOrden = cCC.obtenerOrden2(driver);
 		pagePTelefo.getMediodePago().click();
-		sleep(12000);
+		sleep(15000);
 		pagePTelefo.getOrdenSeRealizoConExito().click();
+		sleep(15000);
+		driver.navigate().refresh();
 		sleep(10000);
-		String orden = cCC.obtenerTNyMonto2(driver, sOrden);
+		String invoice = cCC.obtenerMontoyTNparaAlta(driver, sOrden);
+		System.out.println(invoice);
+		sleep(10000);
+		datosOrden.add("Operacion: Compra de Pack- Cuenta: "+accid+"Invoice: "+invoice.split("-")[0]);
 		CBS_Mattu invoSer = new CBS_Mattu();
-		invoSer.PagoEnCaja("1005", accid, "2001", orden.split("-")[2], orden.split("-")[1]);
-		cCC.obtenerOrdenMontoyTN(driver, "Compra de Pack");
+		if(urlAmbiente.contains("sit")) 
+			Assert.assertTrue(invoSer.PagoEnCaja("1005", accid, "2001", invoice.split("-")[2], invoice.split("-")[1]));
+		else
+			Assert.assertTrue(invoSer.PagoEnCaja("1005", accid, "2001", invoice.split("-")[2], invoice.split("-")[1]));
+		driver.navigate().refresh();
 		sleep(10000);
 		driver.switchTo().frame(cambioFrame(driver, By.id("Status_ilecell")));
-		Assert.assertTrue(driver.findElement(By.id("Status_ilecell")).getText().equalsIgnoreCase("iniciada"));
-		String sOrder = cCC.obtenerOrden(driver,"Compra de Pack");
-		datosOrden.add("Operacion: Compra de Pack, Orden: "+sOrder);	
-		System.out.println("Operacion: Compra de Pack "+ "Order: " + sOrder + "Cuenta: "+ accid + "Fin");
+		Assert.assertTrue(driver.findElement(By.id("Status_ilecell")).getText().equalsIgnoreCase("activada"));
+		
+
 		}
 	
 	@Test (groups = {"GestionesPerfilAgente", "AnulacionDeVenta", "E2E"}, dataProvider = "CuentaAnulacionDeVenta")
