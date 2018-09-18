@@ -281,7 +281,7 @@ public class GestionesPerfilOficina extends TestBase {
 	
 	@Test (groups = {"GestionesPerfilOficina", "Recargas","E2E"}, dataProvider = "RecargaEfectivo")
 	public void TS134318_CRM_Movil_REPRO_Recargas_Presencial_Efectivo_Ofcom(String cDNI, String cMonto, String cLinea) {
-		imagen = "TS134318";
+		imagen = "TS134318"+cDNI;
 		if(cMonto.length() >= 4) {
 			cMonto = cMonto.substring(0, cMonto.length()-1);
 		}
@@ -314,7 +314,7 @@ public class GestionesPerfilOficina extends TestBase {
 		//String orden = cc.obtenerOrdenMontoyTN(driver, "Recarga");
 		System.out.println("orden = "+orden);
 		sOrders.add("Recargas" + orden + ", cuenta:"+accid+", DNI: " + cDNI +", Monto:"+orden.split("-")[2]);
-		/*CBS_Mattu invoSer = new CBS_Mattu();
+		CBS_Mattu invoSer = new CBS_Mattu();
 		Assert.assertTrue(invoSer.PagoEnCaja("1006", accid, "1001", orden.split("-")[2], orden.split("-")[1]));
 		sleep(5000);
 		driver.navigate().refresh();
@@ -323,7 +323,7 @@ public class GestionesPerfilOficina extends TestBase {
 		//cc.obtenerOrdenMontoyTN(driver, "Recarga");
 		sleep(10000);
 		driver.switchTo().frame(cambioFrame(driver, By.id("Status_ilecell")));
-		Assert.assertTrue(driver.findElement(By.id("Status_ilecell")).getText().equalsIgnoreCase("activada"));*/
+		Assert.assertTrue(driver.findElement(By.id("Status_ilecell")).getText().equalsIgnoreCase("activada"));
 
 	}
 	
@@ -459,7 +459,7 @@ public class GestionesPerfilOficina extends TestBase {
 			}
 			Assert.assertTrue(a);
 		}
-		}
+	}
 
 	
 	
@@ -564,7 +564,7 @@ public class GestionesPerfilOficina extends TestBase {
 		try {contact.ingresarMail(sEmail, "si");}catch (org.openqa.selenium.ElementNotVisibleException ex1) {}
 		contact.tipoValidacion("documento");
 		try {
-			contact.subirArchivo("C:\\Users\\Sofia Chardin\\Desktop\\DNI.jpg", "si");
+			contact.subirArchivo("C:\\Users\\florangel\\Downloads\\mapache.jpg", "si");
 		}catch(Exception ex1) {}
 			BasePage bp = new BasePage(driver);
 		bp.setSimpleDropdown(driver.findElement(By.id("ImpositiveCondition")), "IVA Consumidor Final");
@@ -2260,6 +2260,7 @@ public class GestionesPerfilOficina extends TestBase {
 		String orden = driver.findElement(By.className("top-data")).findElement(By.className("ng-binding")).getText();
 		System.out.println("Orden " + orden);
 		orden = orden.substring(orden.length()-8);
+		sOrders.add("Cambio sim card Agente- Cuenta: "+accid+"Invoice: "+orden);
 		cCC.obligarclick(driver.findElement(By.id("OrderSumary_nextBtn")));
 		sleep(15000);
 		try {

@@ -491,6 +491,7 @@ for(WebElement e: btns){
 	 //DOC SMS o QA
 	 CustomerCare cc = new CustomerCare(driver);
 	 CustomerCare page = new CustomerCare(driver);
+	 boolean enc = false;
 	try {Thread.sleep(15000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 	List<WebElement> valid =driver.findElements(By.id("ValidationMethodInValidContact"));
 	List<WebElement> radio =driver.findElements(By.cssSelector(".ta-radioBtnContainer.taBorderOverlay.slds-grid.slds-grid--align-center.slds-grid--vertical-align-center.ng-scope"));
@@ -498,8 +499,11 @@ for(WebElement e: btns){
 		String value=valid.get(i).getAttribute("value");
 		if(value.equals(validacion)){
 			cc.obligarclick(radio.get(i));
+			enc = true;
 			break;}}
 	try {Thread.sleep(3000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+	if(enc == false)
+		System.out.println("No esta el metodo de validacion");
 	 driver.findElement(By.id("MethodSelection_nextBtn")).click();
  }
  

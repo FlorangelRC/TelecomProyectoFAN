@@ -13,6 +13,7 @@ import org.testng.Assert;
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeClass;
+import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
 import Pages.Accounts;
@@ -26,6 +27,8 @@ import Pages.setConexion;
 public class GestionesPerfilAgente extends TestBase{
 
 	private WebDriver driver;
+	private SalesBase sb;
+	private CustomerCare cc;
 	List <String> datosOrden =new ArrayList<String>();
 	String imagen;
 	
@@ -33,47 +36,62 @@ public class GestionesPerfilAgente extends TestBase{
 	public void init() {
 		driver = setConexion.setupEze();
 		sleep(5000);
+		sb = new SalesBase(driver);
+		cc = new CustomerCare(driver);
 		loginAgente(driver);
-		sleep(35000);
-		driver.findElement(By.id("tabBar")).findElement(By.tagName("a")).click();
-		sleep(18000);
-		SalesBase sb = new SalesBase(driver);
+		sleep(22000);
+		try {
+			cc.cajonDeAplicaciones("Consola FAN");
+		} catch(Exception e) {
+			sleep(3000);
+			driver.findElement(By.id("tabBar")).findElement(By.tagName("a")).click();
+			sleep(6000);
+		}
 		driver.switchTo().defaultContent();
 		sleep(3000);
+		
+	}
+	
+	@BeforeMethod(alwaysRun=true)
+	public void setup() throws Exception {
+		sleep(10000);
 		goToLeftPanel2(driver, "Inicio");
-		sleep(18000);
+		sleep(15000);
 		try {
 			sb.cerrarPestaniaGestion(driver);
 		} catch (Exception ex1) {}
-		Accounts ac = new Accounts(driver);
-		driver.switchTo().frame(ac.getFrameForElement(driver, By.cssSelector(".hasMotif.homeTab.homepage.ext-webkit.ext-chrome.sfdcBody.brandQuaternaryBgr")));
-		List <WebElement> frames = driver.findElements(By.tagName("iframe"));
+		Accounts accountPage = new Accounts(driver);
+		driver.switchTo().frame(accountPage.getFrameForElement(driver, By.cssSelector(".hasMotif.homeTab.homepage.ext-webkit.ext-chrome.sfdcBody.brandQuaternaryBgr")));
+		List<WebElement> frames = driver.findElements(By.tagName("iframe"));
 		boolean enc = false;
 		int index = 0;
 		for(WebElement frame : frames) {
 			try {
-				//System.out.println("aca");
+				System.out.println("aca");
 				driver.switchTo().frame(frame);
+
 				driver.findElement(By.cssSelector(".slds-grid.slds-m-bottom_small.slds-wrap.cards-container")).getText(); //each element is in the same iframe.
 				//System.out.println(index); //prints the used index.
+
 				driver.findElement(By.cssSelector(".slds-grid.slds-m-bottom_small.slds-wrap.cards-container")).isDisplayed(); //each element is in the same iframe.
 				//System.out.println(index); //prints the used index.
-				driver.switchTo().frame(ac.getFrameForElement(driver, By.cssSelector(".hasMotif.homeTab.homepage.ext-webkit.ext-chrome.sfdcBody.brandQuaternaryBgr")));
+
+				driver.switchTo().frame(accountPage.getFrameForElement(driver, By.cssSelector(".hasMotif.homeTab.homepage.ext-webkit.ext-chrome.sfdcBody.brandQuaternaryBgr")));
 				enc = true;
 				break;
-			} catch(NoSuchElementException noSuchElemExcept) {
+			}catch(NoSuchElementException noSuchElemExcept) {
 				index++;
-				driver.switchTo().frame(ac.getFrameForElement(driver, By.cssSelector(".hasMotif.homeTab.homepage.ext-webkit.ext-chrome.sfdcBody.brandQuaternaryBgr")));
+				driver.switchTo().frame(accountPage.getFrameForElement(driver, By.cssSelector(".hasMotif.homeTab.homepage.ext-webkit.ext-chrome.sfdcBody.brandQuaternaryBgr")));
 			}
 		}
 		if(enc == false)
 			index = -1;
 		try {
-			driver.switchTo().frame(frames.get(index));
-		} catch(ArrayIndexOutOfBoundsException iobExcept) {
-			System.out.println("Elemento no encontrado en ningun frame 2.");			
+				driver.switchTo().frame(frames.get(index));
+		}catch(ArrayIndexOutOfBoundsException iobExcept) {System.out.println("Elemento no encontrado en ningun frame 2.");
+			
 		}
-		List <WebElement> botones = driver.findElements(By.tagName("button"));
+		List<WebElement> botones = driver.findElements(By.tagName("button"));
 		for (WebElement UnB : botones) {
 			System.out.println(UnB.getText());
 			if(UnB.getText().equalsIgnoreCase("gesti\u00f3n de clientes")) {
@@ -81,7 +99,8 @@ public class GestionesPerfilAgente extends TestBase{
 				break;
 			}
 		}
-		sleep(14000);
+		
+		sleep(15000);
 	}
 	
 	@AfterMethod(alwaysRun=true)
@@ -129,8 +148,6 @@ public class GestionesPerfilAgente extends TestBase{
 		CustomerCare cCC = new CustomerCare(driver);
 		cCC.seleccionarCardPornumeroLinea(sLinea, driver);
 		sleep(12000);
-		cCC.irAGestionEnCard("Recarga de cr\u00e9dito");
-		sleep(15000);
 		cCC.irAGestionEnCard("Recarga de cr\u00e9dito");
 		sleep(15000);
 		driver.switchTo().frame(cambioFrame(driver, By.id("RefillAmount")));
@@ -228,10 +245,7 @@ public class GestionesPerfilAgente extends TestBase{
 		sleep(10000);
 		datosOrden.add("Cambio sim card Agente- Cuenta: "+accid+"Invoice: "+invoice.split("-")[0]);
 		CBS_Mattu invoSer = new CBS_Mattu();
-		if(urlAmbiente.contains("sit")) 
-			Assert.assertTrue(invoSer.PagoEnCaja("1006", accid, "2001", invoice.split("-")[2], invoice.split("-")[1]));
-		else
-			Assert.assertTrue(invoSer.PagoEnCaja("1006", accid, "2001", invoice.split("-")[2], invoice.split("-")[1]));
+		Assert.assertTrue(invoSer.PagoEnCaja("1006", accid, "1001", invoice.split("-")[2], invoice.split("-")[1]));
 		driver.navigate().refresh();
 		sleep(10000);
 		driver.switchTo().frame(cambioFrame(driver, By.id("Status_ilecell")));
