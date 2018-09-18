@@ -13,7 +13,7 @@ public class SOAPClientSAAJ {
 	static String sAltaDeLinea = "http://10.75.39.146:8080/services/BcServices";
 	
 	public String callSoapWebService(String soapMessageString, String sEndPoint) {
-    	switch (sEndPoint.toLowerCase()) {
+		switch (sEndPoint.toLowerCase()) {
     		case "pago simulado":
 	    		sEndPoint = sPagoSimulado;
 	    		break;

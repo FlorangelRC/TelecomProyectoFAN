@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
+import org.junit.Assert;
 import org.openqa.selenium.By;
 import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.WebDriver;
@@ -258,13 +259,13 @@ public class AltasAgente extends TestBase{
 	}
 	
 	@Test(groups={"Sales", "AltaLinea","E2E"}, priority=1, dataProvider="AltaLineaNuevoAgentePresencial")
-	public void TS118938_CRM_Movil_PRE_Alta_Linea_Cliente_Nuevo_Agente_Efectivo_Presencial_DNI(String sNombre, String sApellido, String sSexo, String sFNac, String sEmail, String sPlan, String sProvincia, String sLocalidad) throws IOException {
+	public void TS118938_CRM_Movil_PRE_Alta_Linea_Cliente_Nuevo_Agente_Efectivo_Presencial_DNI(String sDni, String sNombre, String sApellido, String sSexo, String sFNac, String sEmail, String sPlan, String sProvincia, String sLocalidad, String sCalle, String sNumCa, String sCodPos) throws IOException {
 		imagen = "TS118938";
 		CustomerCare cc = new CustomerCare(driver);
 		SalesBase sb = new SalesBase(driver);
 		sleep(5000);
 		sb.BtnCrearNuevoCliente();
-		String sDni = driver.findElement(By.id("SearchClientDocumentNumber")).getAttribute("value");
+		sDni = driver.findElement(By.id("SearchClientDocumentNumber")).getAttribute("value");
 		
 		ContactSearch contact = new ContactSearch(driver);
 		contact.sex(sSexo);
@@ -312,7 +313,7 @@ public class AltasAgente extends TestBase{
 		sb.elegirplan(sPlan);
 		sb.continuar();
 		sleep(22000);
-		sb.Crear_DomicilioLegal(sProvincia, sLocalidad, "falsa", "", "1000", "", "", "1549");
+		sb.Crear_DomicilioLegal(sProvincia, sLocalidad, sCalle, "", sNumCa, "", "", sCodPos);
 		sleep(24000);
 		WebElement sig = driver.findElement(By.id("LineAssignment_nextBtn"));
 		cc.obligarclick(sig);
@@ -351,7 +352,7 @@ public class AltasAgente extends TestBase{
 	}
 	
 	@Test(groups={"Sales", "AltaLineaDatos","E2E"}, priority=1, dataProvider="DatosAltaAgenteCredito")
-	public void TS135761_CRM_Movil_PRE_Alta_Linea_Cliente_Nuevo_Agente_TC_Presencial_DNI_Punta_Alta(String sDni, String sNombre, String sApellido, String sSexo, String sFNac, String sEmail, String sPlan, String sProvincia, String sLocalidad, String sCalle, String sNumCa, String sCP, String cBanco, String cTarjeta, String cPromo, String cCuotas, String cNumTarjeta, String cVenceMes, String cVenceAno, String cCodSeg) throws IOException {
+	public void TS135761_CRM_Movil_PRE_Alta_Linea_Cliente_Nuevo_Agente_TC_Presencial_DNI_Punta_Alta(String sDni, String sNombre, String sApellido, String sSexo, String sFNac, String sEmail, String sPlan, String sProvincia, String sLocalidad, String sCalle, String sNumCa, String sCP, String cBanco, String cTarjeta, String cPromo, String cCuotas, String cNumTarjeta) throws IOException {
 		imagen = "TS135761";
 		CustomerCare cc = new CustomerCare(driver);
 		SalesBase sb = new SalesBase(driver);
@@ -422,9 +423,9 @@ public class AltasAgente extends TestBase{
 			sleep(5000);
 			selectByText(driver.findElement(By.id("Installment-0")), cCuotas);
 			driver.findElement(By.id("CardNumber-0")).sendKeys(cNumTarjeta);
-			selectByText(driver.findElement(By.id("expirationMonth-0")), cVenceMes);
+			/*selectByText(driver.findElement(By.id("expirationMonth-0")), cVenceMes);
 			selectByText(driver.findElement(By.id("expirationYear-0")), cVenceAno);
-			driver.findElement(By.id("securityCode-0")).sendKeys(cCodSeg);
+			driver.findElement(By.id("securityCode-0")).sendKeys(cCodSeg);*/
 			selectByText(driver.findElement(By.id("documentType-0")), "DNI");
 			driver.findElement(By.id("documentNumber-0")).sendKeys(sDni);
 			driver.findElement(By.id("cardHolder-0")).sendKeys(sNombre+" "+sApellido);			
@@ -487,7 +488,7 @@ public class AltasAgente extends TestBase{
 		
 	}
 	
-	@Test(groups={"Sales", "AltaLineaDatos","E2E"}, priority=1, dataProvider="AltaLineaExisteEquipoOfComTD")
+	@Test(groups={"Sales", "AltaLineaDatos","E2E"}, priority=1, dataProvider="VentaEquipoExisteEquipoAGTD")
 	public void TS135810_CRM_Movil_Venta_Sin_Linea_Cliente_existente_Presencial_AG_TD(String sDni, String sEquipo, String cBanco, String cTarjeta, String cPromo, String cNumTarjeta, String cVenceMes, String cVenceAno, String cCodSeg) throws IOException {
 		CustomerCare cc = new CustomerCare(driver);
 		SalesBase sb = new SalesBase(driver);
@@ -526,10 +527,11 @@ public class AltasAgente extends TestBase{
 		selectByText(driver.findElement(By.id("expirationYear-0")), cVenceAno);
 		driver.findElement(By.id("securityCode-0")).sendKeys(cCodSeg);
 		selectByText(driver.findElement(By.id("documentType-0")), "DNI");
+		Assert.assertTrue(false);
 	}
 	
 	@Test(groups={"Sales", "AltaLineaDatos","E2E"}, priority=1, dataProvider="AltaLineaNuevoEquipoTC")
-	public void TS135824_CRM_Movil_Venta_Sin_Linea_Cliente_nuevo_SPU_AG_TC(String sNombre, String sApellido, String sSexo, String sFNac, String sEmail, String sState, String sCity, String sStore, String sEquipo, String sProvincia, String sLocalidad, String sCalle, String sAltura, String sCPostal, String cBanco, String cTarjeta, String cPromo, String cCuotas, String cNumTarjeta, String cVenceMes, String cVenceAno, String cCodSeg) throws IOException {
+	public void TS135824_CRM_Movil_Venta_Sin_Linea_Cliente_nuevo_SPU_AG_TC(String cDni, String sNombre, String sApellido, String sSexo, String sFNac, String sEmail,String sPlan, String sEquipo, String sProvincia, String sLocalidad, String sCalle, String sAltura, String sCPostal, String cBanco, String cTarjeta, String cPromo, String cCuotas, String cNumTarjeta, String cVenceMes, String cVenceAno, String cCodSeg, String sState, String sCity) throws IOException {
 		CustomerCare cc = new CustomerCare(driver);
 		SalesBase sb = new SalesBase(driver);
 		sleep(5000);
@@ -631,7 +633,7 @@ public class AltasAgente extends TestBase{
 			selectByText(driver.findElement(By.id("expirationYear-0")), cVenceAno);
 			driver.findElement(By.id("securityCode-0")).sendKeys(cCodSeg);
 			selectByText(driver.findElement(By.id("documentType-0")), "DNI");
-			//driver.findElement(By.id("documentNumber-0")).sendKeys(sDni);
+			driver.findElement(By.id("documentNumber-0")).sendKeys(sDni);
 			driver.findElement(By.id("cardHolder-0")).sendKeys(sNombre+" "+sApellido);			
 		}catch(Exception ex1) {cc.obligarclick(driver.findElement(By.id("Step_Error_Huawei_S202_nextBtn")));}
 		sleep(20000);
@@ -692,7 +694,7 @@ public class AltasAgente extends TestBase{
 	}
 	
 	@Test(groups={"Sales", "AltaLineaDatos","E2E"}, priority=1, dataProvider="AltaLineaNuevoconEquipo") //========= 31 - 8 NO HAY LINEAS
-	public void TS125004_CRM_Movil_PRE_Alta_Linea_con_Equipo_Cliente_Nuevo_Presencial_AG(String sNombre, String sApellido, String sSexo, String sFNac, String sEmail, String sPlan,String sEquipo, String sProvincia, String sLocalidad, String sCalle, String sNumero, String sCP) throws IOException {
+	public void TS125004_CRM_Movil_PRE_Alta_Linea_con_Equipo_Cliente_Nuevo_Presencial_AG(String cDni, String sNombre, String sApellido, String sSexo, String sFNac, String sEmail, String sPlan,String sEquipo, String sProvincia, String sLocalidad, String sCalle, String sNumero, String sCP) throws IOException {
 		imagen = "TS125004";
 		CustomerCare cc = new CustomerCare(driver);
 		SalesBase sb = new SalesBase(driver);
