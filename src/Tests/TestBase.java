@@ -1025,7 +1025,7 @@ public class TestBase {
 	}
 	
 	@DataProvider
-	public Object[][] RenovacionCuotaConSaldo() throws Exception{
+	public Object[][] cCuotaConSaldo() throws Exception{
 
 	 Object[][] testObjArray = ExcelUtils.getTableArray(dataProviderE2E(),"E2EconPago",1,1,3,"Renovacion Cuota Con Saldo");
 
@@ -1045,7 +1045,7 @@ public class TestBase {
 	@DataProvider
 	public Object[][] RenovacionCuotaSinSaldoConTC() throws Exception{
 
-	 Object[][] testObjArray = ExcelUtils.getTableArray(dataProviderCuentas(),"Sales",1,1,14,"Renovacion Cuota S/Saldo Con Tarjeta TC");
+	 Object[][] testObjArray = ExcelUtils.getTableArray(dataProviderE2E(),"Sales",1,1,14,"Renovacion Cuota S/Saldo Con Tarjeta TC");
 
 	 return (testObjArray);
 

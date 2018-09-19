@@ -88,20 +88,9 @@ public class CBS_Mattu extends TestBase {
 	}
 	
 	@Test
-	public void openPage4() {
-		String sEndPoint = "";
-		String sPaymentChannelID = "";
-		String sAccountKey = "";
-		String sPaymentMethod = "";
-		String sAmount = "";
-		String sInvoiceno = "";
+	public void PagaEnCajaTC(String sPaymentChannelID, String sAccountKey, String sPaymentMethod, String sAmount, String sInvoiceno, String sAccountNumber, String sAccountName, String sExpirationDate, String sCVV, String sCardHolderName, String sCardHolderNumber) {
+		String sEndPoint = "PagoEnCaja";
 		String sMessageSeq = ((new java.text.SimpleDateFormat("yyyyMMddHHmmss")).format(new Date())).toString()+Integer.toString((int)(Math.random()*1000));
-		String sAccountNumber = "";
-		String sAccountName = "";
-		String sExpirationDate = "";
-		String sCVV = "";
-		String sCardHolderName = "";
-		String sCardHolderNumber = "";
 		
 		SOAPClientSAAJ sSCS = new SOAPClientSAAJ();
 		CBS cCBS = new CBS();
