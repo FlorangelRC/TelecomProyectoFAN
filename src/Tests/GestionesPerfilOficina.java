@@ -281,7 +281,7 @@ public class GestionesPerfilOficina extends TestBase {
 	
 	@Test (groups = {"GestionesPerfilOficina", "Recargas","E2E"}, dataProvider = "RecargaEfectivo")
 	public void TS134318_CRM_Movil_REPRO_Recargas_Presencial_Efectivo_Ofcom(String cDNI, String cMonto, String cLinea) {
-		imagen = "TS134318";
+		imagen = "TS134318"+cDNI;
 		if(cMonto.length() >= 4) {
 			cMonto = cMonto.substring(0, cMonto.length()-1);
 		}
@@ -314,7 +314,7 @@ public class GestionesPerfilOficina extends TestBase {
 		//String orden = cc.obtenerOrdenMontoyTN(driver, "Recarga");
 		System.out.println("orden = "+orden);
 		sOrders.add("Recargas" + orden + ", cuenta:"+accid+", DNI: " + cDNI +", Monto:"+orden.split("-")[2]);
-		/*CBS_Mattu invoSer = new CBS_Mattu();
+		CBS_Mattu invoSer = new CBS_Mattu();
 		Assert.assertTrue(invoSer.PagoEnCaja("1006", accid, "1001", orden.split("-")[2], orden.split("-")[1]));
 		sleep(5000);
 		driver.navigate().refresh();
@@ -323,7 +323,7 @@ public class GestionesPerfilOficina extends TestBase {
 		//cc.obtenerOrdenMontoyTN(driver, "Recarga");
 		sleep(10000);
 		driver.switchTo().frame(cambioFrame(driver, By.id("Status_ilecell")));
-		Assert.assertTrue(driver.findElement(By.id("Status_ilecell")).getText().equalsIgnoreCase("activada"));*/
+		Assert.assertTrue(driver.findElement(By.id("Status_ilecell")).getText().equalsIgnoreCase("activada"));
 
 	}
 	
@@ -431,7 +431,7 @@ public class GestionesPerfilOficina extends TestBase {
 		List <WebElement> roam = driver.findElements(By.cssSelector(".cpq-item-base-productt"));
 			for(WebElement r : roam){
 				if(r.getText().contains("DDI sin Roaming Internacional")){
-					cc.obligarclick(r.findElement(By.xpath("//*[@id='tab-default-2']/div[3]/div/div[3]/div/div/ng-include/div/div[2]/ng-include/div/div[9]/div/div[3]/div/div/ng-include/div/div[2]/ng-include/div/div[2]/div/div[2]/div[11]/button")));
+					cc.obligarclick(r.findElement(By.cssSelector(".slds-button.slds-button_icon-border-filled.cpq-item-actions-dropdown-button")));
 					sleep(15000);
 				}
 			driver.findElements(By.cssSelector(".slds-button.slds-button_icon-border-filled.cpq-item-actions-dropdown-button")).get(6).click();
@@ -459,12 +459,12 @@ public class GestionesPerfilOficina extends TestBase {
 			}
 			Assert.assertTrue(a);
 		}
-		}
+	}
 
 	
 	
 	@Test (groups = {"GestionesPerfilOficina","E2E"}, dataProvider="BajaServicios")
-	public void TS134355_CRM_Movil_PRE_Alta_Servicio_sin_costo_DDI_con_Roaming_Internacional_Presencial(String sDNI, String sCuenta, String sNumeroDeCuenta, String sLinea){
+	public void TS134355_CRM_Movil_PRE_Alta_Servicio_sin_costo_DDI_con_Roaming_Internacional_Presencial(String sDNI, String sLinea){
 		imagen = "TS134355";
 		BasePage cambioFrameByID=new BasePage();
 		sleep(30000);
@@ -482,40 +482,64 @@ public class GestionesPerfilOficina extends TestBase {
 		sleep(35000);
 		cc.openrightpanel();
 		cc.closerightpanel();
+		driver.switchTo().defaultContent();
+		driver.switchTo().frame(cambioFrameByID.getFrameForElement(driver, By.cssSelector(".slds-text-body--small.slds-page-header__info.taDevider")));
+		String sOrder = driver.findElement(By.cssSelector(".slds-text-body--small.slds-page-header__info.taDevider")).getText();
+		sOrder = sOrder.replace("Nro. Orden:", "");
+		sOrder = sOrder.replace(" ", "");
+		try {
+			cc.closeleftpanel();
+		}
+		catch (Exception x) {
+			//Always empty
+		}
 		sleep(5000);
 		driver.switchTo().frame(cambioFrame(driver, By.id("tab-default-1")));
-		sleep(5000);
+		sleep(10000);
 		driver.findElement(By.cssSelector(".slds-button.cpq-item-has-children")).click();
 		sleep(5000);
+		boolean bAssert = false;
+		//Not finished
 		List<WebElement> servicios= driver.findElements(By.xpath("//*[@class='cpq-item-product-child-level-1 cpq-item-child-product-name-wrapper']"));
-			for(WebElement a: servicios) {
-				if (a.getText().toLowerCase().contains("servicios basicos general movil".toLowerCase())) {
-						a.findElement(By.tagName("button")).click();
-							sleep(8000);
-								break;
-				}
+		for(WebElement a: servicios) {
+			if (a.getText().toLowerCase().contains("servicios basicos general movil".toLowerCase())) {
+					a.findElement(By.tagName("button")).click();
+						sleep(8000);
+						bAssert= true;
+						break;
 			}
+		}
+		Assert.assertTrue(bAssert);
 		sleep(17000);
+		bAssert = false;
 		List <WebElement> ddi = driver.findElements(By.cssSelector(".cpq-item-product-child-level-2.cpq-item-child-product-name-wrapper"));
-			for(WebElement d : ddi){
-				if(d.getText().contains("DDI")){
-				   cc.obligarclick(d.findElement(By.cssSelector(".slds-button.slds-button_icon-small")));
-				   break;
-				}
+		for(WebElement d : ddi){
+			if(d.getText().contains("DDI")){
+			   cc.obligarclick(d.findElement(By.cssSelector(".slds-button.slds-button_icon-small")));
+			   bAssert = true;
+			   break;
 			}
+		}
+		Assert.assertTrue(bAssert);
 		sleep(10000);
 		List <WebElement> roam = driver.findElements(By.cssSelector(".cpq-item-base-product"));
-			for(WebElement r : roam){
-				if(r.getText().contains("DDI con Roaming Internacional")){
-					cc.obligarclick(r.findElement(By.cssSelector(".slds-button.slds-button_neutral")));
-					sleep(5000);											
-					//cc.obligarclick(driver.findElements(By.cssSelector(".slds-dropdown__item.cpq-item-actions-dropdown__item")).get(6));
-					sleep(5000);
-						try {
-							cc.obligarclick(driver.findElement(By.cssSelector(".slds-button.slds-button--destructive")));
-							sleep(20000);
-						}catch(Exception ex1) {}
-				}
+		for(WebElement r : roam){
+			if(r.getText().contains("DDI con Roaming Internacional")){
+				cc.obligarclick(r.findElement(By.cssSelector(".slds-button.slds-button_neutral")));
+				sleep(5000);
+				break;
+				//cc.obligarclick(driver.findElements(By.cssSelector(".slds-dropdown__item.cpq-item-actions-dropdown__item")).get(6));
+				/*sleep(5000);
+				try {
+					cc.obligarclick(driver.findElement(By.cssSelector(".slds-button.slds-button--destructive")));
+					sleep(20000);
+				}catch(Exception ex1) {}*/
+			}
+		}
+		driver.findElement(By.cssSelector(".slds-button.slds-m-left--large.slds-button--brand.ta-button-brand"));
+		List<WebElement> wMessageBox = driver.findElement(By.id("TextBlock1")).findElement(By.className("ng-binding")).findElements(By.tagName("p"));
+		Assert.assertTrue(wMessageBox.get(1).getText().equalsIgnoreCase("�La orden " + sOrder + " se realiz� con �xito!"));
+		cc.corroborarEstadoCaso(sOrder, "Activated");
 			//cc.obligarclick(driver.findElement(By.cssSelector(".cpq-item-base-product")).findElements(By.tagName("div")).get(9).findElement(By.tagName("button")));
 			/*cc.obligarclick(driver.findElement(By.xpath("//*[@id='tab-default-2']/div[3]/div/div[3]/div/div/ng-include/div/div[2]/ng-include/div/div[9]/div/div[3]/div/div/ng-include/div/div[2]/ng-include/div/div[1]/div/div[2]/div[11]/button")));
 			sleep(5000);
@@ -524,16 +548,15 @@ public class GestionesPerfilOficina extends TestBase {
 			boolean a = false;
 			List <WebElement> elem = driver.findElements(By.cssSelector(".slds-box.ng-scope"));
 			for(WebElement x : elem) {
-				if(x.getText().toLowerCase().contains("tu solicitud est\u00e1 siendo procesada.")) {
+				if(x.getText().toLowerCase().contains("�la orden ") && x.getText().toLowerCase().contains(" realiz\u00f3 con \u00e9xito")) {
 					a = true;
 				}			
 			}
 			Assert.assertTrue(a);
 			sleep(5000);
 			String orden = cc.obtenerOrden(driver, "Suspensi\u00f3n de Linea");
-			sOrders.add("Suspension, orden numero: " + orden + ", DNI: " + sDNI);
-			//System.out.println(sOrders);*/
-		}
+			sOrders.add("Suspension, orden numero: " + orden + ", DNI: " + sDNI);*/
+			//System.out.println(sOrders);
 	}
 	
 	@Test(groups = {"Sales", "PreparacionNominacion","E2E"}, dataProvider="DatosSalesNominacion") 
@@ -564,7 +587,7 @@ public class GestionesPerfilOficina extends TestBase {
 		try {contact.ingresarMail(sEmail, "si");}catch (org.openqa.selenium.ElementNotVisibleException ex1) {}
 		contact.tipoValidacion("documento");
 		try {
-			contact.subirArchivo("C:\\Users\\Sofia Chardin\\Desktop\\DNI.jpg", "si");
+			contact.subirArchivo("C:\\Users\\florangel\\Downloads\\mapache.jpg", "si");
 		}catch(Exception ex1) {}
 			BasePage bp = new BasePage(driver);
 		bp.setSimpleDropdown(driver.findElement(By.id("ImpositiveCondition")), "IVA Consumidor Final");
@@ -2181,7 +2204,7 @@ public class GestionesPerfilOficina extends TestBase {
 	}
 	
 	@Test (groups = {"GestionesPerfilOficina","E2E"}, dataProvider="PackOfCom")
-	public void Venta_de_Pack(String sDNI, String sCuenta, String cBanco, String cTarjeta, String cPromo, String cCuotas, String sPackOfCom){
+	public void Venta_de_Pack(String sDNI, String sLinea, String sPackOfCom, String cBanco, String cTarjeta, String cPromo, String cCuotas){
 		PagePerfilTelefonico pagePTelefo = new PagePerfilTelefonico(driver);
 		CustomerCare cCC = new CustomerCare(driver);
 		driver.switchTo().frame(cambioFrame(driver, By.id("SearchClientDocumentType")));
@@ -2198,7 +2221,7 @@ public class GestionesPerfilOficina extends TestBase {
 		sleep(12000);
 		pagePTelefo.getSimulaciondeFactura().click();
 		sleep(12000);
-		buscarYClick(driver.findElements(By.cssSelector(".slds-form-element__label.ng-binding")), "equals", "efectivo");
+		//buscarYClick(driver.findElements(By.cssSelector(".slds-form-element__label.ng-binding")), "equals", "efectivo");
 		sleep(12000);
 		buscarYClick(driver.findElements(By.cssSelector(".slds-form-element__label.ng-binding")), "equals", "tarjeta de credito");
 		sleep(12000);
@@ -2208,19 +2231,24 @@ public class GestionesPerfilOficina extends TestBase {
 		selectByText(driver.findElement(By.id("Installment-0")), cCuotas);
 		String sOrden = cc.obtenerOrden2(driver);
 		pagePTelefo.getMediodePago().click();
-		sleep(12000);
+		sleep(15000);
 		pagePTelefo.getOrdenSeRealizoConExito().click();
+		sleep(15000);
+		driver.navigate().refresh();
 		sleep(10000);
-		String orden = cCC.obtenerTNyMonto2(driver, sOrden);
+		String invoice = cCC.obtenerMontoyTNparaAlta(driver, sOrden);
+		System.out.println(invoice);
+		sleep(10000);
+		sOrders.add("Operacion: Compra de Pack- Cuenta: "+accid+"Invoice: "+invoice.split("-")[1]+invoice.split("-")[0]);
 		CBS_Mattu invoSer = new CBS_Mattu();
-		invoSer.PagoEnCaja("1006", accid, "2001", orden.split("-")[2], orden.split("-")[1]);
-		cc.obtenerOrdenMontoyTN(driver, "Compra de Pack");
+		Assert.assertTrue(invoSer.PagoEnCaja("1006", accid, "2001", invoice.split("-")[1], invoice.split("-")[0]));
+		
+		driver.navigate().refresh();
 		sleep(10000);
 		driver.switchTo().frame(cambioFrame(driver, By.id("Status_ilecell")));
-		Assert.assertTrue(driver.findElement(By.id("Status_ilecell")).getText().equalsIgnoreCase("iniciada"));
+		Assert.assertTrue(driver.findElement(By.id("Status_ilecell")).getText().equalsIgnoreCase("activada"));
 		String sOrder = cCC.obtenerOrden(driver,"Compra de Pack");
-		sOrders.add("Operacion: Compra de Pack, Orden: "+sOrder);	
-		System.out.println("Operacion: Compra de Pack "+ "Order: " + sOrder + "Cuenta: "+ accid + "Fin");
+		System.out.println("Orden: "+sOrder);
 		}
 	
 	
@@ -2256,6 +2284,7 @@ public class GestionesPerfilOficina extends TestBase {
 		String orden = driver.findElement(By.className("top-data")).findElement(By.className("ng-binding")).getText();
 		System.out.println("Orden " + orden);
 		orden = orden.substring(orden.length()-8);
+		sOrders.add("Cambio sim card Agente- Cuenta: "+accid+"Invoice: "+orden);
 		cCC.obligarclick(driver.findElement(By.id("OrderSumary_nextBtn")));
 		sleep(15000);
 		try {

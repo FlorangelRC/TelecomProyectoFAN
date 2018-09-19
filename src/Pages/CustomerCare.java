@@ -10,9 +10,6 @@ import java.util.List;
 import java.util.concurrent.TimeUnit;
 
 import org.openqa.selenium.By;
-import org.openqa.selenium.ElementNotVisibleException;
-import org.openqa.selenium.JavascriptExecutor;
-import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Actions;
@@ -22,6 +19,9 @@ import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.Select;
 import org.openqa.selenium.support.ui.WebDriverWait;
+import org.openqa.selenium.ElementNotVisibleException;
+import org.openqa.selenium.JavascriptExecutor;
+import org.openqa.selenium.NoSuchElementException;
 import org.testng.Assert;
 
 import Tests.TestBase;
@@ -1668,7 +1668,8 @@ public class CustomerCare extends BasePage {
 	
 	public String obtenerOrden2(WebDriver driver) {
 		String sOrder = "";
-		WebElement wBox = driver.findElement(By.cssSelector(".slds-form-element.vlc-flex.vlc-slds-text-block.vlc-slds-rte.ng-pristine.ng-valid.ng-scope"));
+		//WebElement wBox = driver.findElement(By.cssSelector(".slds-form-element.vlc-flex.vlc-slds-text-block.vlc-slds-rte.ng-pristine.ng-valid.ng-scope"));
+		WebElement wBox = driver.findElement(By.id("OrderStatusWithBillingCycle"));
 		List <WebElement> wContent = wBox.findElement(By.className("slds-form-element__control")).findElement(By.className("ng-binding")).findElements(By.tagName("p"));
 		sOrder = wContent.get(0).getText().substring(12);
 		System.out.println("sOrder: " + sOrder);
@@ -1708,6 +1709,22 @@ public class CustomerCare extends BasePage {
 		if (sOrder.contains("No se pudo realizar")) {
 			bAssert = false;
 		}
+		return bAssert;
+	}
+	
+	public boolean corroborarEstadoCaso(String sCaso, String Status) {
+		BasePage cambioFrame=new BasePage();
+		driver.switchTo().defaultContent();
+		sleep(5000);
+		driver.findElement(By.id("phSearchInput")).clear();
+		driver.findElement(By.id("phSearchInput")).sendKeys(sCaso + "\n");
+		sleep(5000);
+		driver.switchTo().defaultContent();
+		driver.switchTo().frame(cambioFrame.getFrameForElement(driver, By.id("searchResultsHolderDiv")));
+		WebElement wBody = driver.findElement(By.id("Case_body")).findElement(By.tagName("table"));
+		Marketing mMarketing = new Marketing(driver);
+		List <WebElement> wEstado = mMarketing.traerColumnaElement(wBody, 5, 3);
+		Boolean bAssert = wEstado.get(0).getText().toLowerCase().equalsIgnoreCase(Status);
 		return bAssert;
 	}
 }
