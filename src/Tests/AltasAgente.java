@@ -488,7 +488,7 @@ public class AltasAgente extends TestBase{
 		
 	}
 	
-	@Test(groups={"Sales", "AltaLineaDatos","E2E"}, priority=1, dataProvider="VentaEquipoExisteEquipoAGTD")
+	@Test(groups={"Sales", "AltaLineaDatos","E2E"}, priority=1, dataProvider="VentaExisteEquipoAgTd")
 	public void TS135810_CRM_Movil_Venta_Sin_Linea_Cliente_existente_Presencial_AG_TD(String sDni, String sEquipo, String cBanco, String cTarjeta, String cPromo, String cNumTarjeta, String cVenceMes, String cVenceAno, String cCodSeg) throws IOException {
 		CustomerCare cc = new CustomerCare(driver);
 		SalesBase sb = new SalesBase(driver);
@@ -515,9 +515,15 @@ public class AltasAgente extends TestBase{
 		sleep(22000);
 		cc.obligarclick(driver.findElement(By.id("ICCDAssignment_nextBtn")));
 		sleep(10000);
-		cc.obligarclick(driver.findElement(By.id("InvoicePreview_nextBtn")));       
-		// ===================     QUEDA ACA    ==================================
-		buscarYClick(driver.findElements(By.cssSelector(".slds-form-element__label.ng-binding")), "equals", "tarjeta de credito");
+		cc.obligarclick(driver.findElement(By.id("InvoicePreview_nextBtn"))); 
+		sleep(13000);
+		List<WebElement> medpag = driver.findElements(By.className("taPaymentMethodForm"));
+		for(WebElement m :medpag){
+			if(m.getText().equals("Efectivo")){
+			cc.obligarclick(m.findElement(By.cssSelector(".slds-radio--faux")));
+			}
+		}
+		sleep(5000);
 		selectByText(driver.findElement(By.id("BankingEntity-0")), cBanco);
 		selectByText(driver.findElement(By.id("CardBankingEntity-0")), cTarjeta);
 		selectByText(driver.findElement(By.id("promotionsByCardsBank-0")), cPromo);
