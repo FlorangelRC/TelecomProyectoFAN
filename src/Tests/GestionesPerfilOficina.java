@@ -2344,4 +2344,24 @@ public class GestionesPerfilOficina extends TestBase {
 		Assert.assertTrue(driver.findElement(By.cssSelector(".slds-form-element.vlc-flex.vlc-slds-text-block.vlc-slds-rte.ng-pristine.ng-valid.ng-scope")).findElement(By.className("ng-binding")).findElement(By.tagName("p")).getText().equalsIgnoreCase("saldo insuficiente"));
 	}
 	
+	@Test (groups = {"GestionesPerfilOficina", "AnulacionDeVenta", "E2E"}, dataProvider = "CuentaAnulacionDeVenta")
+	public void Anulacion_De_Venta(String cDNI) {
+		imagen = "Anulacion_De_Venta";
+		driver.switchTo().frame(cambioFrame(driver, By.id("SearchClientDocumentType")));
+		sb.BuscarCuenta("DNI", cDNI);
+		driver.findElement(By.cssSelector(".slds-tree__item.ng-scope")).click();
+		sleep(15000);
+		cc.irAGestion("anulacion de ordenes");
+		sleep(15000);
+		driver.switchTo().frame(cambioFrame(driver, By.cssSelector(".slds-select.ng-pristine.ng-untouched.ng-valid.ng-not-empty")));
+		buscarYClick(driver.findElements(By.cssSelector(".slds-button.slds-button--neutral")), "equals", "anulaci\u00f3n de venta");
+		sleep(10000);
+		driver.switchTo().frame(cambioFrame(driver, By.id("AnnulmentReasonSelect")));
+		selectByText(driver.findElement(By.id("AnnulmentReasonSelect")), "Arrepentimiento");
+		driver.findElement(By.id("AnnulmentReason_nextBtn")).click();
+		sleep(20000);
+		driver.switchTo().frame(cambioFrame(driver, By.xpath("//*[@id=\"ep\"]/div[2]/div[2]")));
+		String gestion = driver.findElement(By.xpath("//*[@id=\"ep\"]/div[2]/div[2]")).findElements(By.tagName("tr")).get(4).getText();
+		Assert.assertTrue(gestion.contains("Estado") && (gestion.contains("Cancelada") || gestion.contains("Cancelled")));
+	}
 }	
