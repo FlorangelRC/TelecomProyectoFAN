@@ -1412,14 +1412,5 @@ public class TestBase {
 	 return (testObjArray);
 
 	}
-	
-	@DataProvider
-	public Object[][] CuentaAnulacionDeVenta() throws Exception{
-
-	 Object[][] testObjArray = ExcelUtils.getTableArray(dataProviderE2E(),"E2EsinPago",1,1,1,"Anulacion de venta");
-
-	 return (testObjArray);
-
-	}
-	
+			
 }
