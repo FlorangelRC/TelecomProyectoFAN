@@ -1711,4 +1711,20 @@ public class CustomerCare extends BasePage {
 		}
 		return bAssert;
 	}
+	
+	public boolean corroborarEstadoCaso(String sCaso, String Status) {
+		BasePage cambioFrame=new BasePage();
+		driver.switchTo().defaultContent();
+		sleep(5000);
+		driver.findElement(By.id("phSearchInput")).clear();
+		driver.findElement(By.id("phSearchInput")).sendKeys(sCaso + "\n");
+		sleep(5000);
+		driver.switchTo().defaultContent();
+		driver.switchTo().frame(cambioFrame.getFrameForElement(driver, By.id("searchResultsHolderDiv")));
+		WebElement wBody = driver.findElement(By.id("Order_body")).findElement(By.tagName("table"));
+		Marketing mMarketing = new Marketing(driver);
+		List <WebElement> wEstado = mMarketing.traerColumnaElement(wBody, 5, 3);
+		Boolean bAssert = wEstado.get(0).getText().toLowerCase().equalsIgnoreCase(Status);
+		return bAssert;
+	}
 }
