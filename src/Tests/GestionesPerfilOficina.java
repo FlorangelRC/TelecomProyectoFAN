@@ -120,7 +120,7 @@ public class GestionesPerfilOficina extends TestBase {
 		sleep(15000);
 	}
 
-	@AfterMethod(alwaysRun=true)
+	//@AfterMethod(alwaysRun=true)
 	public void after() throws IOException {
 		guardarListaTxt(sOrders);
 		sOrders.clear();
@@ -387,7 +387,7 @@ public class GestionesPerfilOficina extends TestBase {
 	}
 	
 	@Test (groups = {"GestionesPerfilOficina","E2E"}, dataProvider="BajaServicios")
-	public void TS134338_CRM_Movil_PRE_Baja_de_Servicio_sin_costo_DDI_con_Roaming_Internacional_Presencial(String sDNI, String sCuenta, String sNumeroDeCuenta, String sLinea){
+	public void TS134338_CRM_Movil_PRE_Baja_de_Servicio_sin_costo_DDI_con_Roaming_Internacional_Presencial(String sDNI, String sLinea){
 		imagen = "TS134338";
 		BasePage cambioFrameByID=new BasePage();
 		sleep(30000);
@@ -395,9 +395,8 @@ public class GestionesPerfilOficina extends TestBase {
 		sleep(1000);
 		SalesBase sSB = new SalesBase(driver);
 		sSB.BuscarCuenta("DNI",sDNI);
-		String accid = driver.findElements(By.cssSelector(".slds-truncate.ng-binding")).get(5).getText();
 		driver.findElement(By.cssSelector(".slds-tree__item.ng-scope")).findElement(By.tagName("div")).click();
-		sleep(15000);
+		sleep(18000);
 		driver.switchTo().frame(cambioFrame(driver, By.className("card-top")));
 		driver.findElement(By.className("card-top")).click();
 		sleep(5000);
@@ -405,59 +404,76 @@ public class GestionesPerfilOficina extends TestBase {
 		sleep(35000);
 		cc.openrightpanel();
 		cc.closerightpanel();
+		driver.switchTo().defaultContent();
+		driver.switchTo().frame(cambioFrameByID.getFrameForElement(driver, By.cssSelector(".slds-text-body--small.slds-page-header__info.taDevider")));
+		String sOrder = driver.findElement(By.cssSelector(".slds-text-body--small.slds-page-header__info.taDevider")).getText();
+		sOrder = sOrder.replace("Nro. Orden:", "");
+		sOrder = sOrder.replace(" ", "");
+		try {
+			cc.closeleftpanel();
+		}
+		catch (Exception x) {
+			//Always empty
+		}
+		try {
+			driver.findElement(By.id("ext-comp-1039__scc-st-10")).click();
+		}
+		catch (Exception x) {
+			//Always empty
+		}
 		sleep(5000);
 		driver.switchTo().frame(cambioFrame(driver, By.id("tab-default-1")));
-		sleep(5000);
+		sleep(10000);
 		driver.findElement(By.cssSelector(".slds-button.cpq-item-has-children")).click();
 		sleep(5000);
+		boolean bAssert = false;
+		//Not finished
 		List<WebElement> servicios= driver.findElements(By.xpath("//*[@class='cpq-item-product-child-level-1 cpq-item-child-product-name-wrapper']"));
-			for(WebElement a: servicios) {
-				if (a.getText().toLowerCase().contains("servicios basicos general movil".toLowerCase())) {
-						a.findElement(By.tagName("button")).click();
-							sleep(8000);
-								break;
-							}
-						}
-		sleep(17000);
-		List <WebElement> ddi = driver.findElements(By.cssSelector(".cpq-item-product-child-level-2.cpq-item-child-product-name-wrapper"));
-			for(WebElement d : ddi){
-				if(d.getText().contains("DDI")){
-				   cc.obligarclick(d.findElement(By.cssSelector(".slds-button.slds-button_icon-small")));
-				   break;
-				}
+		for(WebElement a: servicios) {
+			if (a.getText().toLowerCase().contains("servicios basicos general movil".toLowerCase())) {
+					a.findElement(By.tagName("button")).click();
+						sleep(8000);
+						bAssert= true;
+						break;
 			}
-		sleep(10000);
-		List <WebElement> roam = driver.findElements(By.cssSelector(".cpq-item-base-productt"));
-			for(WebElement r : roam){
-				if(r.getText().contains("DDI sin Roaming Internacional")){
-					cc.obligarclick(r.findElement(By.cssSelector(".slds-button.slds-button_icon-border-filled.cpq-item-actions-dropdown-button")));
-					sleep(15000);
-				}
-			driver.findElements(By.cssSelector(".slds-button.slds-button_icon-border-filled.cpq-item-actions-dropdown-button")).get(6).click();
-			sleep(5000);
-			buscarYClick(driver.findElements(By.cssSelector(".slds-dropdown__item.cpq-item-actions-dropdown__item")), "contains", "delete");
-			sleep(5000);
-				try {
-					cc.obligarclick(driver.findElement(By.cssSelector(".slds-button.slds-button--destructive")));
-					sleep(20000);
-				}catch(Exception ex1) {}
-				
-				if(r.getText().contains("DDI con Roaming Internacional"))
-					cc.obligarclick(r.findElement(By.cssSelector(".slds-button.slds-button_neutral")));
-					sleep(15000);
-					
-			}
-		sleep(5000);
-		sb.continuar();
-		sleep(5000);
-		List <WebElement> exis = driver.findElement(By.id("TextBlock1")).findElements(By.tagName("p"));
-		boolean a = false;
-		for(WebElement x : exis) {
-			if(x.getText().toLowerCase().contains("se realiz\u00f3 con \u00e9xito")) {
-				a = true;
-			}
-			Assert.assertTrue(a);
 		}
+		Assert.assertTrue(bAssert);
+		sleep(17000);
+		bAssert = false;
+		List <WebElement> ddi = driver.findElements(By.cssSelector(".cpq-item-product-child-level-2.cpq-item-child-product-name-wrapper"));
+		for(WebElement d : ddi){
+			if(d.getText().contains("DDI")){
+			   cc.obligarclick(d.findElement(By.cssSelector(".slds-button.slds-button_icon-small")));
+			   bAssert = true;
+			   break;
+			}
+		}
+		Assert.assertTrue(bAssert);
+		sleep(10000);
+		List <WebElement> roam = driver.findElements(By.cssSelector(".cpq-item-base-product"));
+		for(WebElement r : roam){
+			if(r.getText().contains("DDI con Roaming Internacional")){
+				sleep(5000);
+				cc.obligarclick(r.findElement(By.cssSelector(".slds-button.slds-button_icon-border-filled.cpq-item-actions-dropdown-button")));
+				sleep(5000);
+				List<WebElement> wButtons = r.findElements(By.cssSelector(".slds-dropdown__item.cpq-item-actions-dropdown__item"));
+				for(WebElement wAux : wButtons) {
+					if(wAux.getText().equalsIgnoreCase("Delete")) {
+						cc.obligarclick(wAux);
+					}
+				}
+				break;
+			}
+		}
+		driver.findElement(By.cssSelector(".slds-button.slds-m-left--large.slds-button--brand.ta-button-brand")).click();
+		sleep(5000);
+		driver.findElement(By.cssSelector(".slds-button.slds-button--destructive"));
+		sleep(10000);
+		WebElement wMessageBox = driver.findElement(By.id("TextBlock1")).findElement(By.className("ng-binding"));
+		sleep(5000);
+		Assert.assertTrue(wMessageBox.getText().equalsIgnoreCase("�La orden " + sOrder + " se realiz� con �xito!"));
+		Assert.assertTrue(cc.corroborarEstadoCaso(sOrder, "Closed"));
+		sOrders.add("Suspension, orden numero: " + sOrder + ", DNI: " + sDNI);
 	}
 
 	
@@ -471,7 +487,6 @@ public class GestionesPerfilOficina extends TestBase {
 		sleep(1000);
 		SalesBase sSB = new SalesBase(driver);
 		sSB.BuscarCuenta("DNI",sDNI);
-		String accid = driver.findElements(By.cssSelector(".slds-truncate.ng-binding")).get(5).getText();
 		driver.findElement(By.cssSelector(".slds-tree__item.ng-scope")).findElement(By.tagName("div")).click();
 		sleep(18000);
 		driver.switchTo().frame(cambioFrame(driver, By.className("card-top")));
@@ -527,35 +542,15 @@ public class GestionesPerfilOficina extends TestBase {
 				cc.obligarclick(r.findElement(By.cssSelector(".slds-button.slds-button_neutral")));
 				sleep(5000);
 				break;
-				//cc.obligarclick(driver.findElements(By.cssSelector(".slds-dropdown__item.cpq-item-actions-dropdown__item")).get(6));
-				/*sleep(5000);
-				try {
-					cc.obligarclick(driver.findElement(By.cssSelector(".slds-button.slds-button--destructive")));
-					sleep(20000);
-				}catch(Exception ex1) {}*/
 			}
 		}
-		driver.findElement(By.cssSelector(".slds-button.slds-m-left--large.slds-button--brand.ta-button-brand"));
-		List<WebElement> wMessageBox = driver.findElement(By.id("TextBlock1")).findElement(By.className("ng-binding")).findElements(By.tagName("p"));
-		Assert.assertTrue(wMessageBox.get(1).getText().equalsIgnoreCase("�La orden " + sOrder + " se realiz� con �xito!"));
-		cc.corroborarEstadoCaso(sOrder, "Activated");
-			//cc.obligarclick(driver.findElement(By.cssSelector(".cpq-item-base-product")).findElements(By.tagName("div")).get(9).findElement(By.tagName("button")));
-			/*cc.obligarclick(driver.findElement(By.xpath("//*[@id='tab-default-2']/div[3]/div/div[3]/div/div/ng-include/div/div[2]/ng-include/div/div[9]/div/div[3]/div/div/ng-include/div/div[2]/ng-include/div/div[1]/div/div[2]/div[11]/button")));
-			sleep(5000);
-			buscarYClick(driver.findElements(By.cssSelector(".slds-button.slds-m-left--large.slds-button--brand.ta-button-brand")),"contains", "continuar");
-			sleep(15000);
-			boolean a = false;
-			List <WebElement> elem = driver.findElements(By.cssSelector(".slds-box.ng-scope"));
-			for(WebElement x : elem) {
-				if(x.getText().toLowerCase().contains("�la orden ") && x.getText().toLowerCase().contains(" realiz\u00f3 con \u00e9xito")) {
-					a = true;
-				}			
-			}
-			Assert.assertTrue(a);
-			sleep(5000);
-			String orden = cc.obtenerOrden(driver, "Suspensi\u00f3n de Linea");
-			sOrders.add("Suspension, orden numero: " + orden + ", DNI: " + sDNI);*/
-			//System.out.println(sOrders);
+		driver.findElement(By.cssSelector(".slds-button.slds-m-left--large.slds-button--brand.ta-button-brand")).click();
+		sleep(10000);
+		WebElement wMessageBox = driver.findElement(By.id("TextBlock1")).findElement(By.className("ng-binding"));
+		sleep(5000);
+		Assert.assertTrue(wMessageBox.getText().equalsIgnoreCase("�La orden " + sOrder + " se realiz� con �xito!"));
+		Assert.assertTrue(cc.corroborarEstadoCaso(sOrder, "Activated"));
+		sOrders.add("Suspension, orden numero: " + sOrder + ", DNI: " + sDNI);
 	}
 	
 	@Test(groups = {"Sales", "PreparacionNominacion","E2E"}, dataProvider="DatosSalesNominacion") 
@@ -2212,7 +2207,7 @@ public class GestionesPerfilOficina extends TestBase {
 	}
 	
 	@Test (groups = {"GestionesPerfilOficina","E2E"}, dataProvider="PackOfCom")
-	public void Venta_de_Pack(String sDNI, String sCuenta, String cBanco, String cTarjeta, String cPromo, String cCuotas, String sPackOfCom){
+	public void Venta_de_Pack(String sDNI, String sLinea, String sPackOfCom, String cBanco, String cTarjeta, String cPromo, String cCuotas){
 		PagePerfilTelefonico pagePTelefo = new PagePerfilTelefonico(driver);
 		CustomerCare cCC = new CustomerCare(driver);
 		driver.switchTo().frame(cambioFrame(driver, By.id("SearchClientDocumentType")));
@@ -2229,7 +2224,7 @@ public class GestionesPerfilOficina extends TestBase {
 		sleep(12000);
 		pagePTelefo.getSimulaciondeFactura().click();
 		sleep(12000);
-		buscarYClick(driver.findElements(By.cssSelector(".slds-form-element__label.ng-binding")), "equals", "efectivo");
+		//buscarYClick(driver.findElements(By.cssSelector(".slds-form-element__label.ng-binding")), "equals", "efectivo");
 		sleep(12000);
 		buscarYClick(driver.findElements(By.cssSelector(".slds-form-element__label.ng-binding")), "equals", "tarjeta de credito");
 		sleep(12000);
@@ -2239,19 +2234,24 @@ public class GestionesPerfilOficina extends TestBase {
 		selectByText(driver.findElement(By.id("Installment-0")), cCuotas);
 		String sOrden = cc.obtenerOrden2(driver);
 		pagePTelefo.getMediodePago().click();
-		sleep(12000);
+		sleep(15000);
 		pagePTelefo.getOrdenSeRealizoConExito().click();
+		sleep(15000);
+		driver.navigate().refresh();
 		sleep(10000);
-		String orden = cCC.obtenerTNyMonto2(driver, sOrden);
+		String invoice = cCC.obtenerMontoyTNparaAlta(driver, sOrden);
+		System.out.println(invoice);
+		sleep(10000);
+		sOrders.add("Operacion: Compra de Pack- Cuenta: "+accid+"Invoice: "+invoice.split("-")[1]+invoice.split("-")[0]);
 		CBS_Mattu invoSer = new CBS_Mattu();
-		invoSer.PagoEnCaja("1006", accid, "2001", orden.split("-")[2], orden.split("-")[1]);
-		cc.obtenerOrdenMontoyTN(driver, "Compra de Pack");
+		Assert.assertTrue(invoSer.PagoEnCaja("1006", accid, "2001", invoice.split("-")[1], invoice.split("-")[0]));
+		
+		driver.navigate().refresh();
 		sleep(10000);
 		driver.switchTo().frame(cambioFrame(driver, By.id("Status_ilecell")));
-		Assert.assertTrue(driver.findElement(By.id("Status_ilecell")).getText().equalsIgnoreCase("iniciada"));
+		Assert.assertTrue(driver.findElement(By.id("Status_ilecell")).getText().equalsIgnoreCase("activada"));
 		String sOrder = cCC.obtenerOrden(driver,"Compra de Pack");
-		sOrders.add("Operacion: Compra de Pack, Orden: "+sOrder);	
-		System.out.println("Operacion: Compra de Pack "+ "Order: " + sOrder + "Cuenta: "+ accid + "Fin");
+		System.out.println("Orden: "+sOrder);
 		}
 	
 	
@@ -2347,4 +2347,26 @@ public class GestionesPerfilOficina extends TestBase {
 		Assert.assertTrue(driver.findElement(By.cssSelector(".slds-form-element.vlc-flex.vlc-slds-text-block.vlc-slds-rte.ng-pristine.ng-valid.ng-scope")).findElement(By.className("ng-binding")).findElement(By.tagName("p")).getText().equalsIgnoreCase("saldo insuficiente"));
 	}
 	
+	@Test (groups = {"GestionesPerfilOficina", "AnulacionDeVenta", "E2E"}, dataProvider = "CuentaAnulacionDeVenta")
+	public void Anulacion_De_Venta(String cDNI) {
+		imagen = "Anulacion_De_Venta";
+		driver.switchTo().frame(cambioFrame(driver, By.id("SearchClientDocumentType")));
+		sb.BuscarCuenta("DNI", cDNI);
+		driver.findElement(By.cssSelector(".slds-tree__item.ng-scope")).click();
+		sleep(15000);
+		cc.irAGestion("anulacion de ordenes");
+		sleep(15000);
+		driver.switchTo().frame(cambioFrame(driver, By.cssSelector(".slds-select.ng-pristine.ng-untouched.ng-valid.ng-not-empty")));
+		buscarYClick(driver.findElements(By.cssSelector(".slds-button.slds-button--neutral")), "equals", "anulaci\u00f3n de venta");
+		sleep(10000);
+		if (TestBase.urlAmbiente.contains("sit")) {
+			driver.switchTo().frame(cambioFrame(driver, By.id("AnnulmentReasonSelect")));
+			selectByText(driver.findElement(By.id("AnnulmentReasonSelect")), "Arrepentimiento");
+			driver.findElement(By.id("AnnulmentReason_nextBtn")).click();
+			sleep(20000);
+		}
+		driver.switchTo().frame(cambioFrame(driver, By.xpath("//*[@id=\"ep\"]/div[2]/div[2]/table")));
+		String gestion = driver.findElement(By.xpath("//*[@id=\"ep\"]/div[2]/div[2]/table")).findElements(By.tagName("tr")).get(4).getText();
+		Assert.assertTrue(gestion.contains("Estado") && (gestion.contains("Cancelada") || gestion.contains("Cancelled")));
+	}
 }	
