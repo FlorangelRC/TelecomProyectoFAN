@@ -104,7 +104,7 @@ public class AltadeLineas extends TestBase {
 		driver.switchTo().frame(accountPage.getFrameForElement(driver, By.id("SearchClientDocumentNumber")));
 	}
 	
-	//@AfterMethod(alwaysRun=true)
+	@AfterMethod(alwaysRun=true)
 	public void deslogin() throws IOException{
 		guardarListaTxt(DatosOrden);
 		DatosOrden.clear();
@@ -404,14 +404,16 @@ public class AltadeLineas extends TestBase {
 		sleep(25000);
 		cc.obligarclick(driver.findElement(By.id("InvoicePreview_nextBtn")));
 		sleep(20000);
-		sb.elegirvalidacion("DOC");
+		cc.obligarclick(driver.findElement(By.id("DecisiveLineSelection_nextBtn")));
+		sleep(20000);
+		/*sb.elegirvalidacion("DOC");
 		sleep(8000);
 		driver.findElement(By.id("FileDocumentImage")).sendKeys("C:\\Users\\florangel\\Downloads\\mapache.jpg");
 		sleep(3000);
 		cc.obligarclick(driver.findElement(By.id("DocumentMethod_nextBtn")));
 		sleep(10000);
 		cc.obligarclick(driver.findElement(By.id("ValidationResult_nextBtn")));
-		sleep(15000);
+		sleep(15000);*/
 		buscarYClick(driver.findElements(By.cssSelector(".slds-form-element__label.ng-binding")), "equals", "tarjeta de d\u00e9bito");
 		sleep(20000);
 		driver.switchTo().frame(cambioFrame(driver, By.id("BankingEntity-0")));

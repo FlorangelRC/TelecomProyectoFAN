@@ -1409,7 +1409,7 @@ public class CustomerCare extends BasePage {
 			driver.findElement(By.className("autoCompleteRowLink")).click();
 			sleep(2000);
 			Buscador.clear();
-		} catch (org.openqa.selenium.NoSuchElementException e) {
+		} catch (Exception e) {
 			sleep(7000);
 			Buscador.submit();
 			sleep(1000);
@@ -1640,17 +1640,21 @@ public class CustomerCare extends BasePage {
 	
 	public boolean verificarOrdenYGestion(String gestion) {
 		boolean verif = false;
+		boolean exitoso = false;
 		TestBase tb = new TestBase();
 		try {
-		String nroCaso = driver.findElement(By.xpath("//*[@id=\"txtSuccessConfirmation\"]/div")).findElement(By.tagName("strong")).getText();
-		buscarCaso(nroCaso);
-		driver.switchTo().frame(tb.cambioFrame(driver, By.name("close")));
-		List <WebElement> gest = driver.findElements(By.cssSelector(".dataCol.col02.inlineEditWrite"));
-		for (WebElement x : gest) {
-			if (x.getText().equalsIgnoreCase(gestion)) {
-				verif = true;
+			String nroCaso = driver.findElement(By.xpath("//*[@id=\"txtSuccessConfirmation\"]/div")).findElement(By.tagName("strong")).getText();
+			buscarCaso(nroCaso);
+			driver.switchTo().frame(tb.cambioFrame(driver, By.name("close")));
+			List <WebElement> gest = driver.findElements(By.cssSelector(".dataCol.col02.inlineEditWrite"));
+			for (WebElement x : gest) {
+				if (x.getText().equalsIgnoreCase(gestion)) {
+					verif = true;
+				}
+				if (x.getText().equalsIgnoreCase("realizada exitosa")) {
+					exitoso = true;
+				}
 			}
-		}
 		} catch(Exception e) {
 			String orden = driver.findElement(By.cssSelector(".vlc-slds-inline-control__label.ng-binding")).getText();
 			orden = orden.substring(orden.lastIndexOf(" ")+1, orden.lastIndexOf("."));
@@ -1661,15 +1665,28 @@ public class CustomerCare extends BasePage {
 				if (x.getText().equalsIgnoreCase(gestion)) {
 					verif = true;
 				}
+				if (x.getText().equalsIgnoreCase("realizada exitosa")) {
+					exitoso = true;
+				}
 			}
 		}
-		return verif;
+		return (verif&&exitoso);
 	}
 	
 	public String obtenerOrden2(WebDriver driver) {
 		String sOrder = "";
 		//WebElement wBox = driver.findElement(By.cssSelector(".slds-form-element.vlc-flex.vlc-slds-text-block.vlc-slds-rte.ng-pristine.ng-valid.ng-scope"));
 		WebElement wBox = driver.findElement(By.id("OrderStatusWithBillingCycle"));
+		List <WebElement> wContent = wBox.findElement(By.className("slds-form-element__control")).findElement(By.className("ng-binding")).findElements(By.tagName("p"));
+		sOrder = wContent.get(0).getText().substring(12);
+		System.out.println("sOrder: " + sOrder);
+		return sOrder;
+	}
+	
+	public String obtenerOrden3(WebDriver driver) {
+		String sOrder = "";
+		//WebElement wBox = driver.findElement(By.cssSelector(".slds-form-element.vlc-flex.vlc-slds-text-block.vlc-slds-rte.ng-pristine.ng-valid.ng-scope"));
+		WebElement wBox = driver.findElement(By.id("OrderStatus"));
 		List <WebElement> wContent = wBox.findElement(By.className("slds-form-element__control")).findElement(By.className("ng-binding")).findElements(By.tagName("p"));
 		sOrder = wContent.get(0).getText().substring(12);
 		System.out.println("sOrder: " + sOrder);

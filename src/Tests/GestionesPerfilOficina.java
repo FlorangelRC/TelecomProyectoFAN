@@ -300,7 +300,7 @@ public class GestionesPerfilOficina extends TestBase {
 		driver.findElement(By.id("RefillAmount")).sendKeys(cMonto);
 		driver.findElement(By.id("AmountSelectionStep_nextBtn")).click();
 		sleep(15000);
-		String sOrden = cc.obtenerOrden2(driver);
+		String sOrden = cc.obtenerOrden3(driver);
 		driver.findElement(By.id("InvoicePreview_nextBtn")).click();
 		sleep(10000);
 		buscarYClick(driver.findElements(By.cssSelector(".slds-form-element__label.ng-binding")), "equals", "efectivo");
@@ -319,9 +319,8 @@ public class GestionesPerfilOficina extends TestBase {
 		sleep(5000);
 		driver.navigate().refresh();
 		sleep(10000);
-		cc.obtenerTNyMonto2(driver, sOrden);
-		//cc.obtenerOrdenMontoyTN(driver, "Recarga");
-		sleep(10000);
+		//cc.obtenerTNyMonto2(driver, sOrden);
+		//sleep(10000);
 		driver.switchTo().frame(cambioFrame(driver, By.id("Status_ilecell")));
 		Assert.assertTrue(driver.findElement(By.id("Status_ilecell")).getText().equalsIgnoreCase("activada"));
 
@@ -606,8 +605,11 @@ public class GestionesPerfilOficina extends TestBase {
 		}
 		Assert.assertTrue(a);
 		driver.findElement(By.id("FinishProcess_nextBtn")).click();
-		
+		sleep(3000);
+		CBS_Mattu invoSer = new CBS_Mattu();
+		invoSer.ValidarInfoCuenta(sLinea, sNombre,sApellido);
 	}
+	
 	@Test (groups = {"Suspension", "GestionesPerfilOficina","E2E"}, dataProvider="CuentaSuspension") 
 	public void gestionSuspension(String cDNI) {
 		imagen = "gestionSuspension";
@@ -2300,11 +2302,7 @@ public class GestionesPerfilOficina extends TestBase {
 		sleep(10000);
 		sOrders.add("Cambio sim card Agente- Cuenta: "+accid+"Invoice: "+invoice.split("-")[0]);
 		CBS_Mattu invoSer = new CBS_Mattu();
-		if(urlAmbiente.contains("sit")) 
-			Assert.assertTrue(invoSer.PagoEnCaja("1006", accid, "2001", invoice.split("-")[2], invoice.split("-")[1]));
-		else
-			Assert.assertTrue(invoSer.PagoEnCaja("1006", accid, "2001", invoice.split("-")[2], invoice.split("-")[1]));
-		
+		Assert.assertTrue(invoSer.PagoEnCaja("1006", accid, "1001", invoice.split("-")[2], invoice.split("-")[1]));
 		driver.navigate().refresh();
 		sleep(10000);
 		driver.switchTo().frame(cambioFrame(driver, By.id("Status_ilecell")));

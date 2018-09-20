@@ -62,8 +62,10 @@ public class Login extends BasePage {
 		 catch(org.openqa.selenium.ElementNotVisibleException ex1) {
 			 driver.findElement(By.id("idp_hint")).click();
 		 }
-		 Ecom_User_ID.sendKeys("UA198998");
-	     Ecom_Password.sendKeys("Teco1234");
+		 //viejo Ecom_User_ID.sendKeys("UA198998");
+		 //viejo Ecom_Password.sendKeys("Teco1234");
+		 Ecom_User_ID.sendKeys("UAT580714");
+	     Ecom_Password.sendKeys("Testa10k");
 	     loginButton2.click();
 	     try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 	}
@@ -241,7 +243,8 @@ public class Login extends BasePage {
 				 driver.findElement(By.id("idp_hint")).click();
 			 }
 			  try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
-			  Ecom_User_ID.sendKeys("UA090571");
+			  //Ecom_User_ID.sendKeys("UA090571");
+			  Ecom_User_ID.sendKeys("UAT551577");
 			  Ecom_Password.sendKeys("Testa10k");
 			  loginButton2.click();
 			  try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
@@ -253,8 +256,9 @@ public class Login extends BasePage {
 				 driver.findElement(By.id("idp_hint")).click();
 			 }
 			  try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
-			  Ecom_User_ID.sendKeys("UAT090022");
-			  Ecom_Password.sendKeys("Testa10K");
+			 //Viejo Ecom_User_ID.sendKeys("UAT090022");
+			  Ecom_User_ID.sendKeys("UAT506677");
+			  Ecom_Password.sendKeys("Testa10k");
 			  loginButton2.click();
 			  try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 		}
