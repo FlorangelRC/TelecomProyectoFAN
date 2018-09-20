@@ -37,8 +37,8 @@ public class GestionesPerfilAgente extends TestBase{
 	public void init() {
 		driver = setConexion.setupEze();
 		sleep(5000);
-		sb = new SalesBase(driver);
 		cc = new CustomerCare(driver);
+		sb = new SalesBase(driver);
 		loginAgente(driver);
 		sleep(22000);
 		try {
@@ -302,9 +302,29 @@ public class GestionesPerfilAgente extends TestBase{
 		sleep(10000);
 		driver.switchTo().frame(cambioFrame(driver, By.id("Status_ilecell")));
 		Assert.assertTrue(driver.findElement(By.id("Status_ilecell")).getText().equalsIgnoreCase("activada"));
-		
-
 		}
 	
+	@Test (groups = {"GestionesPerfilAgente", "AnulacionDeVenta", "E2E"}, dataProvider = "CuentaAnulacionDeVenta")
+	public void Anulacion_De_Venta(String cDNI) {
+		imagen = "Anulacion_De_Venta";
+		driver.switchTo().frame(cambioFrame(driver, By.id("SearchClientDocumentType")));
+		sb.BuscarCuenta("DNI", cDNI);
+		driver.findElement(By.cssSelector(".slds-tree__item.ng-scope")).click();
+		sleep(15000);
+		cc.irAGestion("anulacion de ordenes");
+		sleep(15000);
+		driver.switchTo().frame(cambioFrame(driver, By.cssSelector(".slds-select.ng-pristine.ng-untouched.ng-valid.ng-not-empty")));
+		buscarYClick(driver.findElements(By.cssSelector(".slds-button.slds-button--neutral")), "equals", "anulaci\u00f3n de venta");
+		sleep(10000);
+		if (TestBase.urlAmbiente.contains("sit")) {
+			driver.switchTo().frame(cambioFrame(driver, By.id("AnnulmentReasonSelect")));
+			selectByText(driver.findElement(By.id("AnnulmentReasonSelect")), "Arrepentimiento");
+			driver.findElement(By.id("AnnulmentReason_nextBtn")).click();
+			sleep(20000);
+		}
+		driver.switchTo().frame(cambioFrame(driver, By.xpath("//*[@id=\"ep\"]/div[2]/div[2]/table")));
+		String gestion = driver.findElement(By.xpath("//*[@id=\"ep\"]/div[2]/div[2]/table")).findElements(By.tagName("tr")).get(4).getText();
+		Assert.assertTrue(gestion.contains("Estado") && (gestion.contains("Cancelada") || gestion.contains("Cancelled")));
+	}	
 	
 }

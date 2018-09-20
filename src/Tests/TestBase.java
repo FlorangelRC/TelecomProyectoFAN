@@ -962,19 +962,9 @@ public class TestBase {
 	 return (testObjArray);
 
 	}
-	
-	@DataProvider
-	public Object[][] DatosSalesNumerosAmigos() throws Exception{
-
-	 Object[][] testObjArray = ExcelUtils.getTableArray("Cuentas.xlsx","PreparacionDatos",1,1,11,"Numeros Amigos");
-
-	 return (testObjArray);
-
-	}
-	
 
 	@DataProvider
-	public Object[][] DatosSalesAltaLineaEquipo() throws Exception{
+	public Object[][] DatosSalesAltaLineaEquipo() throws Exception{ //para verificar, por las dudas no se borro.
 
 	 Object[][] testObjArray = ExcelUtils.getTableArray("Cuentas.xlsx","PreparacionDatos",1,1,9,"Alta Linea Equip New AG");
 
@@ -1025,7 +1015,7 @@ public class TestBase {
 	}
 	
 	@DataProvider
-	public Object[][] RenovacionCuotaConSaldo() throws Exception{
+	public Object[][] cCuotaConSaldo() throws Exception{
 
 	 Object[][] testObjArray = ExcelUtils.getTableArray(dataProviderE2E(),"E2EconPago",1,1,3,"Renovacion Cuota Con Saldo");
 
@@ -1045,7 +1035,7 @@ public class TestBase {
 	@DataProvider
 	public Object[][] RenovacionCuotaSinSaldoConTC() throws Exception{
 
-	 Object[][] testObjArray = ExcelUtils.getTableArray(dataProviderCuentas(),"Sales",1,1,14,"Renovacion Cuota S/Saldo Con Tarjeta TC");
+	 Object[][] testObjArray = ExcelUtils.getTableArray(dataProviderE2E(),"Sales",1,1,14,"Renovacion Cuota S/Saldo Con Tarjeta TC");
 
 	 return (testObjArray);
 
@@ -1318,7 +1308,7 @@ public class TestBase {
 	@DataProvider
 	public Object[][] CuentaTriviasYSuscripciones() throws Exception{
 		
-		 Object[][] testObjArray = ExcelUtils.getTableArray("Cuentas.xlsx","PerfilGestiones",1,1,1,"Trivias Y Suscripciones");
+		 Object[][] testObjArray = ExcelUtils.getTableArray(dataProviderE2E(),"E2ESinPago",1,1,1,"Trivias Y Suscripciones");
 
 		 return (testObjArray);
 	}
@@ -1326,7 +1316,7 @@ public class TestBase {
 	@DataProvider
 	public Object[][] CuentaReintegros() throws Exception{
 		
-		 Object[][] testObjArray = ExcelUtils.getTableArray("Cuentas.xlsx","PerfilGestiones",1,1,1,"Reintegros");
+		 Object[][] testObjArray = ExcelUtils.getTableArray(dataProviderE2E(),"E2ESinPago",1,1,1,"Reintegros");
 
 		 return (testObjArray);
 	}
@@ -1334,7 +1324,15 @@ public class TestBase {
 	@DataProvider
 	public Object[][] CuentaModificacionDeDatos() throws Exception{
 		
-		 Object[][] testObjArray = ExcelUtils.getTableArray("Cuentas.xlsx","PerfilGestiones",1,1,1,"Modificacion De Datos");
+		 Object[][] testObjArray = ExcelUtils.getTableArray(dataProviderE2E(),"E2EsinPago",1,1,1,"Modificacion De Datos");
+
+		 return (testObjArray);
+	}
+	
+	@DataProvider
+	public Object[][] CuentaAnulacionDeVenta() throws Exception{
+		
+		 Object[][] testObjArray = ExcelUtils.getTableArray(dataProviderE2E(),"E2EsinPago",1,1,1,"Anulacion De Venta");
 
 		 return (testObjArray);
 	}
@@ -1361,15 +1359,7 @@ public class TestBase {
 	         //Impresion de Excepciones
 	         e.printStackTrace();
 	      }
-	   }
-	@DataProvider
-	public Object[][] VentaEquipoExisteEquipoAGTD() throws Exception{
-
-	 Object[][] testObjArray = ExcelUtils.getTableArray(dataProviderE2E(),"Altas y Nominacion",1,1,9,"Venta Equipo Existe AG Debito");
-
-	 return (testObjArray);
-
-	}
+   }
 	
 	@DataProvider
 	public Object[][] AltaLineaNuevoconEquipo() throws Exception{
@@ -1423,4 +1413,5 @@ public class TestBase {
 	 return (testObjArray);
 
 	}
+			
 }

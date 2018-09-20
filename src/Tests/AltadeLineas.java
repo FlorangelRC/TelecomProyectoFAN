@@ -475,7 +475,7 @@ public class AltadeLineas extends TestBase {
 		sb.continuar();
 		sleep(15000);
 		cc.obligarclick(driver.findElement(By.id("InvoicePreview_nextBtn")));
-		sleep(12000);
+		sleep(13000);
 		/*cc.obligarclick(driver.findElement(By.id("LineAssignment_nextBtn")));
 		sleep(15000);
 		cc.obligarclick(driver.findElement(By.id("ICCDAssignment_nextBtn")));
@@ -631,7 +631,9 @@ public class AltadeLineas extends TestBase {
 		sb.continuar();
 		sleep(24000);
 		sb.Crear_DomicilioLegal(sProvincia, sLocalidad, sCalle, "", sAltura, "", "", sCP);
-		sleep(27000);
+		sleep(17000);
+		cc.obligarclick(driver.findElement(By.id("InvoicePreview_nextBtn")));
+		sleep(5000);
 		List<WebElement> medpag = driver.findElements(By.cssSelector(".slds-radio.ng-scope"));
 			for(WebElement m :medpag){
 				if(m.getText().equals("Efectivo")){
