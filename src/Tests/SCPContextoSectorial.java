@@ -47,7 +47,7 @@ public class SCPContextoSectorial extends TestBase {
 		sleep(5000);
 	}
 	
-	@AfterMethod(groups = "SCP")
+	//@AfterMethod(groups = "SCP")
 	public void after(){
 		sleep(3000);
 		driver.switchTo().defaultContent();
@@ -56,7 +56,7 @@ public class SCPContextoSectorial extends TestBase {
 		driver.findElement(By.id("home_Tab")).click();
 	}
 	
-	@AfterClass(groups = "SCP")
+	//@AfterClass(groups = "SCP")
 	public void teardown() {
 		driver.quit();
 		sleep(5000);
@@ -97,7 +97,7 @@ public class SCPContextoSectorial extends TestBase {
 	public void TS112594_Contexto_Sectorial_Ingreso_Desde_Acerca_del_cliente() {
 		scp.moveToElementOnAccAndClick("primerTitulo", 1);
 		Assert.assertTrue(driver.findElement(By.id("hidden-Con")).isDisplayed());
-		Assert.assertTrue(driver.findElement(By.id("hidden-M�t")).isDisplayed());
+		Assert.assertTrue(driver.findElement(By.id("hidden-M\u00e9t")).isDisplayed());
 		Assert.assertTrue(driver.findElement(By.id("hidden-Pla")).isDisplayed());
 		Assert.assertTrue(driver.findElement(By.id("hidden-Cad")).isDisplayed());
 		Assert.assertTrue(driver.findElement(By.id("hidden-Ten")).isDisplayed());
@@ -108,7 +108,7 @@ public class SCPContextoSectorial extends TestBase {
 	public void TS112595_Contexto_Sectorial_Ingreso_Desde_el_contacto() {
 		scp.moveToElementOnAccAndClick("primerTitulo", 1);		
 		Assert.assertTrue(driver.findElement(By.id("hidden-Con")).isDisplayed());
-		Assert.assertTrue(driver.findElement(By.id("hidden-M�t")).isDisplayed());
+		Assert.assertTrue(driver.findElement(By.id("hidden-M\u00e9t")).isDisplayed());
 		Assert.assertTrue(driver.findElement(By.id("hidden-Pla")).isDisplayed());
 		Assert.assertTrue(driver.findElement(By.id("hidden-Cad")).isDisplayed());
 		Assert.assertTrue(driver.findElement(By.id("hidden-Ten")).isDisplayed());
@@ -723,17 +723,17 @@ public class SCPContextoSectorial extends TestBase {
 		Assert.assertTrue(a);
 	}
 	
-	//@Test(groups = "SCP", priority=2)
+	@Test(groups = "SCP", priority=2)
 	public void TS112716_Mosaico_de_Relacionamiento_General_Ver_Video() {
 		scp.moveToElementOnAccAndClick("segundoTitulo", 4);
 		driver.findElement(By.cssSelector(".btn.btn-xs.btn-default")).click();
 		sleep(10000);
 	    ArrayList<String> tabs2 = new ArrayList<String> (driver.getWindowHandles());
 	    driver.switchTo().window(tabs2.get(1));
-	    BasePage cambioFrameByID = new BasePage();
+	    //BasePage cambioFrameByID = new BasePage();
 	    sleep(10000);
-		driver.switchTo().frame(cambioFrameByID.getFrameForElement(driver, By.className("ytp-cued-thumbnail-overlay")));
-		Assert.assertTrue(driver.findElement(By.cssSelector(".ytp-large-play-button.ytp-button")).isDisplayed());
+	    driver.switchTo().frame(cambioFrame(driver, By.className("ytp-cued-thumbnail-overlay")));
+		Assert.assertTrue(driver.findElement(By.className("ytp-cued-thumbnail-overlay")).isDisplayed());
 		sleep(3000);
 		driver.close();
 		sleep(3000);
@@ -953,7 +953,7 @@ public class SCPContextoSectorial extends TestBase {
 	    driver.switchTo().window(tabs2.get(0));
 	}
 	
-	@Test(groups = "SCP", priority=2)  //Rompe porque no estan las columnas "Posici�n Competitiva de la Competencia" y "Enfoque", dicen "Competidores competitivos de pie" y "Approach"
+	@Test(groups = "SCP", priority=2)  //Rompe porque no estan las columnas "Posicion Competitiva de la Competencia" y "Enfoque", dicen "Competidores competitivos de pie" y "Approach"
 	public void TS112692_Matriz_de_Criterios_de_desicion_Ingreso_Desde_el_contacto() {
 		scp.moveToElementOnAccAndClick("tercerTitulo", 2);
 		List <WebElement> element = driver.findElements(By.cssSelector(".btn.btn-default.btn-sm"));
@@ -980,7 +980,7 @@ public class SCPContextoSectorial extends TestBase {
 	    List<WebElement> composicion= oportunidad.findElement(By.tagName("tr")).findElements(By.tagName("th"));	    
 	    for(WebElement a : composicion) {
 	      titleTabla.add(a.getText());
-	      //System.out.println(a.getText());//Para Verificar que este imprimiendo el texto que buscamos
+	      System.out.println(a.getText());//Para Verificar que este imprimiendo el texto que buscamos
 	    }	    
 	    for(String a:datosOp) {
 	    	if(!(titleTabla.contains(a)))

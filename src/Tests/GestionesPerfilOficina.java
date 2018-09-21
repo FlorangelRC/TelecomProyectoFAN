@@ -185,6 +185,8 @@ public class GestionesPerfilOficina extends TestBase {
 		cCC.seleccionarCardPornumeroLinea(sLinea, driver);
 		cCC.irAGestionEnCard("N\u00fameros Gratis");
 		Assert.assertTrue(mMarketing.verificarNumerosAmigos(driver, sNumeroVOZ, sNumeroSMS));
+		//Assert.assertTrue(cc.corroborarEstadoCaso(sOrder, "Activated"));
+		//sOrders.add("Suspension, orden numero: " + sOrder + ", DNI: " + sDNI);
 		//Verify when the page works
 	}
 	
@@ -767,7 +769,7 @@ public class GestionesPerfilOficina extends TestBase {
 		buscarYClick(driver.findElements(By.cssSelector(".slds-form-element__label.ng-binding.ng-scope")), "equals", "si");
 		driver.findElement(By.id("Step-TipodeAjuste_nextBtn")).click();
 		sleep(7000);
-		buscarYClick(driver.findElements(By.cssSelector(".slds-form-element__label.ng-binding")), "contains", "plan con tarjeta repro");
+		buscarYClick(driver.findElements(By.cssSelector(".slds-form-element__label.ng-binding")), "contains", "plan con tarjeta");
 		driver.findElement(By.id("Step-AssetSelection_nextBtn")).click();
 		sleep(7000);
 		buscarYClick(driver.findElements(By.cssSelector(".slds-form-element__label.ng-binding.ng-scope")), "equals", "si, ajustar");
@@ -1125,7 +1127,7 @@ public class GestionesPerfilOficina extends TestBase {
 		buscarYClick(driver.findElements(By.cssSelector(".slds-form-element__label.ng-binding.ng-scope")), "equals", "si");
 		driver.findElement(By.id("Step-TipodeAjuste_nextBtn")).click();
 		sleep(7000);
-		buscarYClick(driver.findElements(By.cssSelector(".slds-form-element__label.ng-binding")), "contains", "plan con tarjeta repro");
+		buscarYClick(driver.findElements(By.cssSelector(".slds-form-element__label.ng-binding")), "contains", "plan con tarjeta");
 		driver.findElement(By.id("Step-AssetSelection_nextBtn")).click();
 		sleep(7000);
 		buscarYClick(driver.findElements(By.cssSelector(".slds-form-element__label.ng-binding.ng-scope")), "equals", "si, ajustar");
@@ -1175,7 +1177,7 @@ public class GestionesPerfilOficina extends TestBase {
 		buscarYClick(driver.findElements(By.cssSelector(".slds-form-element__label.ng-binding.ng-scope")), "equals", "si");
 		driver.findElement(By.id("Step-TipodeAjuste_nextBtn")).click();
 		sleep(7000);
-		buscarYClick(driver.findElements(By.cssSelector(".slds-form-element__label.ng-binding")), "contains", "plan con tarjeta repro");
+		buscarYClick(driver.findElements(By.cssSelector(".slds-form-element__label.ng-binding")), "contains", "plan con tarjeta");
 		driver.findElement(By.id("Step-AssetSelection_nextBtn")).click();
 		sleep(7000);
 		buscarYClick(driver.findElements(By.cssSelector(".slds-form-element__label.ng-binding.ng-scope")), "equals", "si, ajustar");
@@ -1225,7 +1227,7 @@ public class GestionesPerfilOficina extends TestBase {
 		buscarYClick(driver.findElements(By.cssSelector(".slds-form-element__label.ng-binding.ng-scope")), "equals", "si");
 		driver.findElement(By.id("Step-TipodeAjuste_nextBtn")).click();
 		sleep(7000);
-		buscarYClick(driver.findElements(By.cssSelector(".slds-form-element__label.ng-binding")), "contains", "plan con tarjeta repro");
+		buscarYClick(driver.findElements(By.cssSelector(".slds-form-element__label.ng-binding")), "contains", "plan con tarjeta");
 		driver.findElement(By.id("Step-AssetSelection_nextBtn")).click();
 		sleep(7000);
 		buscarYClick(driver.findElements(By.cssSelector(".slds-form-element__label.ng-binding.ng-scope")), "equals", "si, ajustar");
@@ -2085,10 +2087,10 @@ public class GestionesPerfilOficina extends TestBase {
 		driver.switchTo().frame(cambioFrame(driver, By.id("RefillAmount")));
 		driver.findElement(By.id("RefillAmount")).sendKeys(sMonto);
 		sleep(15000);
-		CustomerCare cCC = new CustomerCare(driver);
-		String sOrden = cCC.obtenerOrden2(driver);
 		driver.findElement(By.id("AmountSelectionStep_nextBtn")).click();
 		sleep(15000);
+		CustomerCare cCC = new CustomerCare(driver);
+		String sOrden = cCC.obtenerOrden2(driver);
 		driver.findElement(By.xpath("//*[@id=\"InvoicePreview_nextBtn\"]")).click();
 		sleep(15000);
 		buscarYClick(driver.findElements(By.cssSelector(".slds-form-element__label.ng-binding")), "equals", "tarjeta de debito");
