@@ -2213,7 +2213,7 @@ public class GestionesPerfilOficina extends TestBase {
 		String accid = driver.findElement(By.cssSelector(".searchClient-body.slds-hint-parent.ng-scope")).findElements(By.tagName("td")).get(5).getText();
 		System.out.println("id "+accid);
 		pagePTelefo.buscarAssert();
-		pagePTelefo.comprarPack("comprar minutos");
+		pagePTelefo.comprarPack("comprar internet");
 		pagePTelefo.closerightpanel();
 		sleep(8000);
 		pagePTelefo.agregarPack(sPackOfCom);
@@ -2241,9 +2241,9 @@ public class GestionesPerfilOficina extends TestBase {
 		System.out.println(invoice);
 		sleep(10000);
 		sOrders.add("Operacion: Compra de Pack- Cuenta: "+accid+"Invoice: "+invoice.split("-")[1]+invoice.split("-")[0]);
+		System.out.println("Operacion: Compra de Pack- Cuenta: "+accid+" Invoice: "+invoice.split("-")[1] + "\tAmmount: " +invoice.split("-")[0]);
 		CBS_Mattu invoSer = new CBS_Mattu();
-		Assert.assertTrue(invoSer.PagoEnCaja("1006", accid, "2001", invoice.split("-")[1], invoice.split("-")[0]));
-		
+		Assert.assertTrue(invoSer.PagoEnCaja("1005", accid, "2001", invoice.split("-")[1], invoice.split("-")[0]));
 		driver.navigate().refresh();
 		sleep(10000);
 		driver.switchTo().frame(cambioFrame(driver, By.id("Status_ilecell")));

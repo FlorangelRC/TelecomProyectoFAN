@@ -292,12 +292,10 @@ public class GestionesPerfilAgente extends TestBase{
 		String invoice = cCC.obtenerMontoyTNparaAlta(driver, sOrden);
 		System.out.println(invoice);
 		sleep(10000);
-		System.out.println(datosOrden.add("Operacion: Compra de Pack- Cuenta: "+accid+"Invoice: "+invoice.split("-")[0]));
+		datosOrden.add("Operacion: Compra de Pack- Cuenta: "+accid+" Invoice: "+invoice.split("-")[0]+invoice.split("-")[1]);
+		System.out.println("Operacion: Compra de Pack- Cuenta: "+accid+" Invoice: "+invoice.split("-")[0] + "\tAmmount: " +invoice.split("-")[1]);
 		CBS_Mattu invoSer = new CBS_Mattu();
-		if(urlAmbiente.contains("sit")) 
-			Assert.assertTrue(invoSer.PagoEnCaja("1005", accid, "2001", invoice.split("-")[2], invoice.split("-")[1]));
-		else
-			Assert.assertTrue(invoSer.PagoEnCaja("1005", accid, "2001", invoice.split("-")[2], invoice.split("-")[1]));
+		Assert.assertTrue(invoSer.PagoEnCaja("1005", accid, "2001", invoice.split("-")[0], invoice.split("-")[1]));
 		driver.navigate().refresh();
 		sleep(10000);
 		driver.switchTo().frame(cambioFrame(driver, By.id("Status_ilecell")));

@@ -57,6 +57,16 @@ public class PagePerfilTelefonico extends TestBase{
 	private WebElement IngresodeSerial;
 
 	
+	@FindBy(id="OrderSumary_nextBtn")
+	private WebElement ResumenOrdenCompra;
+	
+	
+	public WebElement getResumenOrdenCompra() {
+		return ResumenOrdenCompra;
+	}
+
+
+
 	public WebElement getIngresodeSerial() {
 		return IngresodeSerial;
 	}
@@ -190,10 +200,9 @@ public class PagePerfilTelefonico extends TestBase{
 		Select Store = new Select (driver.findElement(By.id("Store")));
 		Store.selectByVisibleText("Centro de Servicio Santa Fe - Juan de Garay 444");
 		Delivery.click();
-		siguiente();
 		sleep(25000);
 		SimulaciondeFactura.click();
-		
+	
 		}
 	
 	
