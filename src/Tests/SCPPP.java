@@ -189,7 +189,7 @@ private WebDriver driver;
 		 txt2.add("Raz\u00f3n Social");  // falta
 		 txt2.add("Numero de clientes"); //falta 
 		 txt2.add("Numero de Holding");
-		 txt2.add("Categor\u00ed WH");
+		 txt2.add("Categor\u00eda WH");
 		 txt2.add("Domicilio de recepci\u00f3n de notificaciones");
 		 List<WebElement> campos = driver.findElements(By.className("labelCol"));
 		 System.out.println(campos.size());
