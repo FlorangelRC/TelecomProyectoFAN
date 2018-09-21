@@ -180,7 +180,7 @@ public class GestionesPerfilTelefonico extends TestBase{
 	}
 	
 	@Test (groups = {"GestionesPerfilTelefonico", "RenovacioDeCuota","E2E"}, dataProvider="RenovacionCuotaSinSaldo")
-	public void TS130067_CRM_Movil_REPRO_Renovacion_De_Cuota_Telefonico_Descuento_De_Saldo_Sin_Credito(String sCuenta, String sDNI, String sLinea) {
+	public void TS130067_CRM_Movil_REPRO_Renovacion_De_Cuota_Telefonico_Descuento_De_Saldo_Sin_Credito(String sDNI, String sLinea) {
 		imagen = "TS130067";
 		BasePage cambioFrameByID=new BasePage();
 		driver.switchTo().frame(cambioFrameByID.getFrameForElement(driver, By.id("SearchClientDocumentType")));
@@ -352,7 +352,7 @@ public class GestionesPerfilTelefonico extends TestBase{
 	
 	
 	@Test (groups= {"GestionesPerfilTelefonico","E2E"},priority=1, dataProvider="ventaPack")
-	public void TS123157_CRM_Movil_REPRO_Venta_De_Pack_50_Min_Y_50_SMS_X_7_Dias_Factura_De_Venta_TC_Telefonico(String sDNI, String sCuenta,String sLinea, String cBanco, String cTarjeta, String cPromo, String cCuotas, String cNumTarjeta, String cVenceMes, String cVenceAno, String cCodSeg, String cTipoDNI, String cDNITarjeta, String cTitular, String sventaPack) throws InterruptedException{
+	public void TS123157_CRM_Movil_REPRO_Venta_De_Pack_50_Min_Y_50_SMS_X_7_Dias_Factura_De_Venta_TC_Telefonico(String sDNI, String sLinea, String sventaPack, String cBanco, String cTarjeta, String cPromo, String cCuotas, String cNumTarjeta, String cVenceMes, String cVenceAno, String cCodSeg, String cTipoDNI, String cDNITarjeta, String cTitular) throws InterruptedException{
 	imagen = "TS123157";
 	SalesBase sale = new SalesBase(driver);
 	BasePage cambioFrameByID=new BasePage();
@@ -397,7 +397,7 @@ public class GestionesPerfilTelefonico extends TestBase{
 	sleep(10000);
 	String orden = cCC.obtenerTNyMonto2(driver, sOrden);
 	CBS_Mattu invoSer = new CBS_Mattu();
-	invoSer.PagoEnCaja("1006", accid, "2001", orden.split("-")[2], orden.split("-")[1]);
+	invoSer.PagoEnCaja("1003", accid, "2001", orden.split("-")[2], orden.split("-")[1]);
 	cc.obtenerOrdenMontoyTN(driver, "Compra de Pack");
 	sleep(10000);
 	driver.switchTo().frame(cambioFrame(driver, By.id("Status_ilecell")));

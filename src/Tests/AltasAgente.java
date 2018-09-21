@@ -536,7 +536,7 @@ public class AltasAgente extends TestBase{
 		Assert.assertTrue(false);
 	}
 	
-	@Test(groups={"Sales", "AltaLineaDatos","E2E"}, priority=1, dataProvider="AltaLineaNuevoEquipoTC")
+	@Test(groups={"Sales", "VentaDeEquipo","E2E"}, priority=1, dataProvider="AltaLineaNuevoEquipoTC")
 	public void TS135824_CRM_Movil_Venta_Sin_Linea_Cliente_nuevo_SPU_AG_TC(String cDni, String sNombre, String sApellido, String sSexo, String sFNac, String sEmail,String sPlan, String sEquipo, String sProvincia, String sLocalidad, String sCalle, String sAltura, String sCPostal, String cBanco, String cTarjeta, String cPromo, String cCuotas, String cNumTarjeta, String cVenceMes, String cVenceAno, String cCodSeg, String sState, String sCity) throws IOException {
 		CustomerCare cc = new CustomerCare(driver);
 		SalesBase sb = new SalesBase(driver);

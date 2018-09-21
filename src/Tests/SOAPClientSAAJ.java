@@ -8,7 +8,7 @@ public class SOAPClientSAAJ {
 	static String sPagoEnCajaSIT = "http://10.75.197.161:8080/services/ArServices";
 	//UAT
 	static String sPagoEnCajaUAT = "http://10.75.39.146:8080/services/ArServices";
-	
+		
 	static String sPagoSimulado = "http://mdwtpbust1.telecom.com.ar:8701/notificarPago";
 	static String sAltaDeLinea = "http://10.75.39.146:8080/services/BcServices";
 	
@@ -18,10 +18,10 @@ public class SOAPClientSAAJ {
 	    		sEndPoint = sPagoSimulado;
 	    		break;
 	    	case "pago en caja":
-	    		if (TestBase.urlAmbiente.contains("sit")) //Comment
-	    			sEndPoint = sPagoEnCajaSIT; //Comment
-	    		else //Comment
-	    			sEndPoint = sPagoEnCajaUAT; //Comment
+	    		if (TestBase.urlAmbiente.contains("sit"))
+	    			sEndPoint = sPagoEnCajaSIT;
+	    		else
+	    			sEndPoint = sPagoEnCajaUAT;
 	    		break;
 	    	case "alta de linea":
 	    		sEndPoint = sAltaDeLinea;

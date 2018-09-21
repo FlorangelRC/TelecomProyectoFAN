@@ -46,12 +46,12 @@ public class test_SCP_Base extends TestBase {
 	
 	@BeforeMethod(alwaysRun=true)
 	public void setUp() throws Exception {
-		try {Thread.sleep(2000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		try {Thread.sleep(4000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 		SCP page= new SCP(driver);
 		//page.goToMenu("SCP");
 		page.clickOnTabByName("cuentas");
-		page.listTypeAcc("Todas Las cuentas");
-		page.clickEnCuentaPorNombre("Florencia Di Cio");
+		page.listTypeAcc("Todas las cuentas");
+		page.clickEnCuentaPorNombre("cuenta bien hecha scp");
 		Cuenta=driver.findElement(By.className("topName")).getText();
 		page.moveToElementOnAccAndClick("tercerTitulo", 1);
 		}
@@ -64,7 +64,7 @@ public class test_SCP_Base extends TestBase {
 		sleep(1000);
 	}
 	
-	@AfterClass(alwaysRun=true)
+	//@AfterClass(alwaysRun=true)
 	public void tearDown() {
 		driver.quit();
 		sleep(4000);

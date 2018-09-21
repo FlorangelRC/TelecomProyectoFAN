@@ -300,7 +300,7 @@ public class GestionesPerfilOficina extends TestBase {
 		driver.findElement(By.id("RefillAmount")).sendKeys(cMonto);
 		driver.findElement(By.id("AmountSelectionStep_nextBtn")).click();
 		sleep(15000);
-		String sOrden = cc.obtenerOrden2(driver);
+		String sOrden = cc.obtenerOrden3(driver);
 		driver.findElement(By.id("InvoicePreview_nextBtn")).click();
 		sleep(10000);
 		buscarYClick(driver.findElements(By.cssSelector(".slds-form-element__label.ng-binding")), "equals", "efectivo");
@@ -314,17 +314,15 @@ public class GestionesPerfilOficina extends TestBase {
 		//String orden = cc.obtenerOrdenMontoyTN(driver, "Recarga");
 		System.out.println("orden = "+orden);
 		sOrders.add("Recargas" + orden + ", cuenta:"+accid+", DNI: " + cDNI +", Monto:"+orden.split("-")[2]);
-		sleep(5000);
-		/*CBS_Mattu invoSer = new CBS_Mattu();
+		CBS_Mattu invoSer = new CBS_Mattu();
 		Assert.assertTrue(invoSer.PagoEnCaja("1006", accid, "1001", orden.split("-")[2], orden.split("-")[1]));
 		sleep(5000);
 		driver.navigate().refresh();
 		sleep(10000);
-		cc.obtenerTNyMonto2(driver, sOrden);
-		//cc.obtenerOrdenMontoyTN(driver, "Recarga");
-		sleep(10000);
+		//cc.obtenerTNyMonto2(driver, sOrden);
+		//sleep(10000);
 		driver.switchTo().frame(cambioFrame(driver, By.id("Status_ilecell")));
-		Assert.assertTrue(driver.findElement(By.id("Status_ilecell")).getText().equalsIgnoreCase("activada"));*/
+		Assert.assertTrue(driver.findElement(By.id("Status_ilecell")).getText().equalsIgnoreCase("activada"));
 
 	}
 	
@@ -473,7 +471,7 @@ public class GestionesPerfilOficina extends TestBase {
 		sleep(10000);
 		WebElement wMessageBox = driver.findElement(By.id("TextBlock1")).findElement(By.className("ng-binding"));
 		sleep(5000);
-		Assert.assertTrue(wMessageBox.getText().equalsIgnoreCase("¡La orden " + sOrder + " se realizó con éxito!"));
+		Assert.assertTrue(wMessageBox.getText().equalsIgnoreCase("ï¿½La orden " + sOrder + " se realizï¿½ con ï¿½xito!"));
 		Assert.assertTrue(cc.corroborarEstadoCaso(sOrder, "Closed"));
 		sOrders.add("Suspension, orden numero: " + sOrder + ", DNI: " + sDNI);
 	}
@@ -550,7 +548,7 @@ public class GestionesPerfilOficina extends TestBase {
 		sleep(10000);
 		WebElement wMessageBox = driver.findElement(By.id("TextBlock1")).findElement(By.className("ng-binding"));
 		sleep(5000);
-		Assert.assertTrue(wMessageBox.getText().equalsIgnoreCase("¡La orden " + sOrder + " se realizó con éxito!"));
+		Assert.assertTrue(wMessageBox.getText().equalsIgnoreCase("ï¿½La orden " + sOrder + " se realizï¿½ con ï¿½xito!"));
 		Assert.assertTrue(cc.corroborarEstadoCaso(sOrder, "Activated"));
 		sOrders.add("Suspension, orden numero: " + sOrder + ", DNI: " + sDNI);
 	}
@@ -583,7 +581,7 @@ public class GestionesPerfilOficina extends TestBase {
 		try {contact.ingresarMail(sEmail, "si");}catch (org.openqa.selenium.ElementNotVisibleException ex1) {}
 		contact.tipoValidacion("documento");
 		try {
-			contact.subirArchivo("C:\\Users\\Sofia Chardin\\Desktop\\DNI.jpg", "si");
+			contact.subirArchivo("C:\\Users\\florangel\\Downloads\\mapache.jpg", "si");
 		}catch(Exception ex1) {}
 			BasePage bp = new BasePage(driver);
 		bp.setSimpleDropdown(driver.findElement(By.id("ImpositiveCondition")), "IVA Consumidor Final");
@@ -602,8 +600,11 @@ public class GestionesPerfilOficina extends TestBase {
 		}
 		Assert.assertTrue(a);
 		driver.findElement(By.id("FinishProcess_nextBtn")).click();
-		
+		sleep(3000);
+		CBS_Mattu invoSer = new CBS_Mattu();
+		invoSer.ValidarInfoCuenta(sLinea, sNombre,sApellido);
 	}
+	
 	@Test (groups = {"Suspension", "GestionesPerfilOficina","E2E"}, dataProvider="CuentaSuspension") 
 	public void gestionSuspension(String cDNI) {
 		imagen = "gestionSuspension";
@@ -2206,7 +2207,7 @@ public class GestionesPerfilOficina extends TestBase {
 	}
 	
 	@Test (groups = {"GestionesPerfilOficina","E2E"}, dataProvider="PackOfCom")
-	public void Venta_de_Pack(String sDNI, String sCuenta, String cBanco, String cTarjeta, String cPromo, String cCuotas, String sPackOfCom){
+	public void Venta_de_Pack(String sDNI, String sLinea, String sPackOfCom, String cBanco, String cTarjeta, String cPromo, String cCuotas){
 		PagePerfilTelefonico pagePTelefo = new PagePerfilTelefonico(driver);
 		CustomerCare cCC = new CustomerCare(driver);
 		driver.switchTo().frame(cambioFrame(driver, By.id("SearchClientDocumentType")));
@@ -2223,7 +2224,7 @@ public class GestionesPerfilOficina extends TestBase {
 		sleep(12000);
 		pagePTelefo.getSimulaciondeFactura().click();
 		sleep(12000);
-		buscarYClick(driver.findElements(By.cssSelector(".slds-form-element__label.ng-binding")), "equals", "efectivo");
+		//buscarYClick(driver.findElements(By.cssSelector(".slds-form-element__label.ng-binding")), "equals", "efectivo");
 		sleep(12000);
 		buscarYClick(driver.findElements(By.cssSelector(".slds-form-element__label.ng-binding")), "equals", "tarjeta de credito");
 		sleep(12000);
@@ -2233,19 +2234,24 @@ public class GestionesPerfilOficina extends TestBase {
 		selectByText(driver.findElement(By.id("Installment-0")), cCuotas);
 		String sOrden = cc.obtenerOrden2(driver);
 		pagePTelefo.getMediodePago().click();
-		sleep(12000);
+		sleep(15000);
 		pagePTelefo.getOrdenSeRealizoConExito().click();
+		sleep(15000);
+		driver.navigate().refresh();
 		sleep(10000);
-		String orden = cCC.obtenerTNyMonto2(driver, sOrden);
+		String invoice = cCC.obtenerMontoyTNparaAlta(driver, sOrden);
+		System.out.println(invoice);
+		sleep(10000);
+		sOrders.add("Operacion: Compra de Pack- Cuenta: "+accid+"Invoice: "+invoice.split("-")[1]+invoice.split("-")[0]);
 		CBS_Mattu invoSer = new CBS_Mattu();
-		invoSer.PagoEnCaja("1006", accid, "2001", orden.split("-")[2], orden.split("-")[1]);
-		cc.obtenerOrdenMontoyTN(driver, "Compra de Pack");
+		Assert.assertTrue(invoSer.PagoEnCaja("1006", accid, "2001", invoice.split("-")[1], invoice.split("-")[0]));
+		
+		driver.navigate().refresh();
 		sleep(10000);
 		driver.switchTo().frame(cambioFrame(driver, By.id("Status_ilecell")));
-		Assert.assertTrue(driver.findElement(By.id("Status_ilecell")).getText().equalsIgnoreCase("iniciada"));
+		Assert.assertTrue(driver.findElement(By.id("Status_ilecell")).getText().equalsIgnoreCase("activada"));
 		String sOrder = cCC.obtenerOrden(driver,"Compra de Pack");
-		sOrders.add("Operacion: Compra de Pack, Orden: "+sOrder);	
-		System.out.println("Operacion: Compra de Pack "+ "Order: " + sOrder + "Cuenta: "+ accid + "Fin");
+		System.out.println("Orden: "+sOrder);
 		}
 	
 	
@@ -2281,6 +2287,7 @@ public class GestionesPerfilOficina extends TestBase {
 		String orden = driver.findElement(By.className("top-data")).findElement(By.className("ng-binding")).getText();
 		System.out.println("Orden " + orden);
 		orden = orden.substring(orden.length()-8);
+		sOrders.add("Cambio sim card Agente- Cuenta: "+accid+"Invoice: "+orden);
 		cCC.obligarclick(driver.findElement(By.id("OrderSumary_nextBtn")));
 		sleep(15000);
 		try {
@@ -2295,11 +2302,7 @@ public class GestionesPerfilOficina extends TestBase {
 		sleep(10000);
 		sOrders.add("Cambio sim card Agente- Cuenta: "+accid+"Invoice: "+invoice.split("-")[0]);
 		CBS_Mattu invoSer = new CBS_Mattu();
-		if(urlAmbiente.contains("sit")) 
-			Assert.assertTrue(invoSer.PagoEnCaja("1006", accid, "2001", invoice.split("-")[2], invoice.split("-")[1]));
-		else
-			Assert.assertTrue(invoSer.PagoEnCaja("1006", accid, "2001", invoice.split("-")[2], invoice.split("-")[1]));
-		
+		Assert.assertTrue(invoSer.PagoEnCaja("1006", accid, "1001", invoice.split("-")[2], invoice.split("-")[1]));
 		driver.navigate().refresh();
 		sleep(10000);
 		driver.switchTo().frame(cambioFrame(driver, By.id("Status_ilecell")));
