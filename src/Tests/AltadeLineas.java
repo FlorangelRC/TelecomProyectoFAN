@@ -519,7 +519,7 @@ public class AltadeLineas extends TestBase {
 		sb.completarEntrega(orden, driver);
 	}
 	@Test(groups={"Sales", "AltaLineaDatos", "E2E"}, priority=1, dataProvider="DatosAltaEquipoExiste") // ============== 31-8 no aprece el paso de ASIGNACION DE SERIALES
-	public void TS_CRM_Movil_Equipo_Cliente_existente_Presencial_OFCOM(String sDni, String sNombre, String sApellido, String sSexo, String sFNac, String sEmail, String sPlan, String sEquipo, String sProvincia, String sLocalidad) throws IOException {
+	public void TS_CRM_Movil_Equipo_Cliente_existente_Presencial_OFCOM(String sDni, String sPlan, String sEquipo) throws IOException {
 		imagen = "TS_CRM_Movil_Equipo_Cliente_existente_Presencial_OFCOM";
 		CustomerCare cc = new CustomerCare(driver);
 		SalesBase sb = new SalesBase(driver);
@@ -538,33 +538,28 @@ public class AltadeLineas extends TestBase {
 		sleep(20000);
 		driver.findElement(By.cssSelector(".slds-input.ng-pristine.ng-untouched.ng-valid")).sendKeys(sEquipo);
 		sleep(8000);
-		List<WebElement> agregar = driver.findElements(By.cssSelector(".slds-button.slds-button_neutral.cpq-add-button")); 
-			for(WebElement a : agregar){
-				if(a.getText().equals("Agregar")){
-					a.click();
-					break;
+		List<WebElement> acept = driver.findElements(By.cssSelector(".slds-button.slds-button_neutral.cpq-add-button"));
+		for(WebElement a : acept){
+			System.out.println(a.getText());
+			if(a.getText().equals("Agregar")){
+				cc.obligarclick(a);
+				break;
+			}
+		}
+		sleep(5000);	
+		sb.continuar();
+		sleep(15000);
+		cc.obligarclick(driver.findElement(By.id("InvoicePreview_nextBtn")));;
+		sleep(14000);
+		//cc.obligarclick(driver.findElement(By.id("ICCDAssignment_nextBtn")));
+		List<WebElement> medpag = driver.findElements(By.cssSelector(".slds-radio.ng-scope"));
+			for(WebElement m :medpag){
+				if(m.getText().equals("Efectivo")){
+				cc.obligarclick(m.findElement(By.cssSelector(".slds-radio--faux")));
 				}
 			}
-		sleep(8000);	
-		sb.continuar();
-		sleep(22000);
-		BasePage cambioFrameByID=new BasePage();
-		//driver.switchTo().frame(cambioFrameByID.getFrameForElement(driver, By.id("VlocityBP")));
-		//System.out.println(driver.findElement(By.id("VlocityBP")).getText());
-		buscarYClick(driver.findElements(By.id("InvoicePreview_nextBtn")),"equals", "Siguiente");
-		System.out.println(driver.findElement(By.id("InvoicePreview_nextBtn")).getText());
-		sleep(12000);
-		//cc.obligarclick(driver.findElement(By.id("ICCDAssignment_nextBtn")));
-		/*List<WebElement> medpag = driver.findElements(By.cssSelector(".slds-radio.ng-scope"));
-		for(WebElement m :medpag){
-			if(m.getText().equals("Efectivo")){
-			cc.obligarclick(m.findElement(By.cssSelector(".slds-radio--faux")));
-			}
-		}*/
 		cc.obligarclick(driver.findElement(By.id("SelectPaymentMethodsStep_nextBtn")));
 		sleep(14000);
-		cc.obligarclick(driver.findElement(By.id("DecisiveLineSelection_nextBtn")));
-		sleep(15000);
 		String oorden = driver.findElement(By.className("top-data")).findElement(By.className("ng-binding")).getText();
 		String NCuenta = driver.findElements(By.className("top-data")).get(1).findElements(By.className("ng-binding")).get(3).getText();
 		//String serial = driver.findElements(By.cssSelector(".top-data.ng-scope")).get(1).findElements(By.className("ng-binding")).get(1).getText();
@@ -743,6 +738,8 @@ public class AltadeLineas extends TestBase {
 		sleep(5000);	
 		sb.continuar();
 		sleep(24000);
+		cc.obligarclick(driver.findElement(By.id("LineAssignment_nextBtn")));
+		sleep(20000);
 		cc.obligarclick(driver.findElement(By.id("DeliveryMethodConfiguration_nextBtn")));
 		sleep(15000);
 		cc.obligarclick(driver.findElement(By.id("InvoicePreview_nextBtn")));
@@ -794,7 +791,6 @@ public class AltadeLineas extends TestBase {
 		sleep(8000);
 		sb.BtnCrearNuevoCliente();
 		sDni = driver.findElement(By.id("SearchClientDocumentNumber")).getAttribute("value");
-		
 		//sb.Crear_Cliente(sDni);
 		ContactSearch contact = new ContactSearch(driver);
 		contact.sex(sSexo);

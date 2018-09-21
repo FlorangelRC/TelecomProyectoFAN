@@ -519,8 +519,9 @@ public class AltasAgente extends TestBase{
 		sleep(13000);
 		List<WebElement> medpag = driver.findElements(By.className("taPaymentMethodForm"));
 		for(WebElement m :medpag){
-			if(m.getText().equals("Efectivo")){
+			if(m.getText().equals("Tarjeta de Credito")){
 			cc.obligarclick(m.findElement(By.cssSelector(".slds-radio--faux")));
+			break;
 			}
 		}
 		sleep(5000);
@@ -727,9 +728,9 @@ public class AltasAgente extends TestBase{
 		driver.findElement(By.cssSelector(".slds-input.ng-valid.ng-not-empty.ng-dirty.ng-valid-parse.ng-touched")).clear();
 		sleep(8000);
 		driver.findElement(By.cssSelector(".slds-input.ng-valid.ng-dirty.ng-valid-parse.ng-touched.ng-empty")).sendKeys(sEquipo);
-		sleep(5000);
+		sleep(8000);
 		List<WebElement> agregar = driver.findElements(By.cssSelector(".slds-button.slds-button_neutral.cpq-add-button")); 
-		agregar.get(1).click();
+		agregar.get(0).click();
 		sleep(5000);	
 		sb.continuar();
 		sleep(24000);
