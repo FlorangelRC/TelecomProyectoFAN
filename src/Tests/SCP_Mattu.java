@@ -39,7 +39,8 @@ private WebDriver driver;
 		try {Thread.sleep(7000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 		try {Thread.sleep(7000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 		
-		pScp.clickEnCuentaPorNombre("Florencia Di Ci");
+		//pScp.clickEnCuentaPorNombre("Florencia Di Ci");
+		pScp.clickEnCuentaPorNombre("Cuenta Bien Hecha SCP");
 		try {Thread.sleep(10000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 	}
 	@AfterClass(groups = "SCP")
