@@ -298,8 +298,8 @@ public class SCPContextoSectorial extends TestBase {
 			}
 		}
 		sleep(5000);
-		WebElement oportunidad = driver.findElement(By.className("panel-body"));
-		Assert.assertTrue(oportunidad.getText().contains("Oportunidad: opAut"));
+		WebElement oportunidad = driver.findElement(By.className("panel-body")).findElement(By.tagName("h2"));
+		Assert.assertTrue(oportunidad.getText().contains("Oportunidad:"));
 	}
 	
 	@Test(groups = "SCP", priority=3)
@@ -418,13 +418,13 @@ public class SCPContextoSectorial extends TestBase {
 		Assert.assertTrue(element.get(2).getText().contains("Value Drivers"));
 		Assert.assertTrue(element.get(3).getText().contains("Propuesta de Valor"));
 		Assert.assertTrue(element.get(4).getText().contains("Mosaico de Relacionamiento por Oportunidad"));
-		Assert.assertTrue(element.get(5).getText().contains("Criterios de Decisi�n por Oportunidad"));		
+		Assert.assertTrue(element.get(5).getText().contains("Criterios de Decisi\u00f3n por Oportunidad"));		
 	}
 	
 	@Test(groups = "SCP", priority=3)
 	public void TS112757_Opportunity_Snapshot_Search() {
 		scp.moveToElementOnAccAndClick("tercerTitulo", 4);
-		String a = "oportunidad";
+		String a = "dulce d\u00eda cafeter\u00eda";
 		driver.findElement(By.xpath("//*[@id=\"mainTable_filter\"]/label/input")).sendKeys(a);
 		WebElement element = driver.findElement(By.xpath("//*[@id=\"mainTable\"]/tbody/tr[1]/td[2]"));
 		Assert.assertTrue(element.getText().toLowerCase().contains(a));
@@ -458,7 +458,7 @@ public class SCPContextoSectorial extends TestBase {
 	@Test(groups = "SCP", priority=3)
 	public void TS112768_Organigrama_y_mapa_de_influencia_Search() {
 		scp.moveToElementOnAccAndClick("primerTitulo", 3);
-		String a = "celina";
+		String a = "lucas";
 		driver.findElement(By.xpath("//*[@id=\"mainTable_filter\"]/label/input")).sendKeys(a);
 		sleep(3000);
 		Assert.assertTrue(driver.findElement(By.className("odd")).getText().toLowerCase().contains(a));
@@ -973,14 +973,14 @@ public class SCPContextoSectorial extends TestBase {
 		if (eliminar.getAttribute("value").contains("Eliminar")) {
 			c = true;
 		}
-		boolean check=true;
+		boolean check = true;
 	    String[] datosOp = {"Criterio", "Consideraci\u00f3n del cliente", "Nuestra posici\u00f3n competitiva", "Posici\u00f3n Competitiva de la Competencia", "Enfoque"};
 	    List<String> titleTabla = new ArrayList<String>();
 	    WebElement oportunidad = driver.findElement(By.id("j_id0:j_id143:j_id146"));
 	    List<WebElement> composicion= oportunidad.findElement(By.tagName("tr")).findElements(By.tagName("th"));	    
 	    for(WebElement a : composicion) {
 	      titleTabla.add(a.getText());
-	      System.out.println(a.getText());//Para Verificar que este imprimiendo el texto que buscamos
+	      //System.out.println(a.getText());//Para Verificar que este imprimiendo el texto que buscamos
 	    }	    
 	    for(String a:datosOp) {
 	    	if(!(titleTabla.contains(a)))
