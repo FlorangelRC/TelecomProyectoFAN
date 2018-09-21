@@ -1406,7 +1406,7 @@ public class TestBase {
 	}
 	
 	@DataProvider
-	public Object[][] VentaExisteEquipoAgTd() throws Exception{
+	public Object[][] VentaExisteEquipoAGTD() throws Exception{
 
 	 Object[][] testObjArray = ExcelUtils.getTableArray(dataProviderE2E(),"Altas y Nominacion",1,1,9,"Venta Equipo Existe AG Debito");
 
