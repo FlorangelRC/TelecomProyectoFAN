@@ -52,7 +52,7 @@ public class SCPAdministracionDeServicios extends TestBase {
 	
 	@AfterClass(groups = "SCP")
 	public void tearDown() {
-		driver.quit();
+		//driver.quit();
 		try {Thread.sleep(2000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 	}
 	
@@ -794,12 +794,12 @@ public class SCPAdministracionDeServicios extends TestBase {
       SCP pcp = new SCP(driver);  
       boolean botonG = false;  
       java.util.Date fecha = new Date();
-      //pcp.Desloguear_Loguear("permisos");
+      pcp.Desloguear_Loguear("permisos");
       try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
-		/*pcp.clickOnTabByName("cuentas");
+		pcp.clickOnTabByName("cuentas");
 		try {Thread.sleep(7000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 		try {Thread.sleep(7000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
-		pcp.clickEnCuentaPorNombre("Florencia Di Ci");*/
+		pcp.clickEnCuentaPorNombre("Cuenta Bien Hecha SCP");
 		try {Thread.sleep(10000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
       pcp.moveToElementOnAccAndClick("tercerTitulo",5);  
       try {Thread.sleep(10000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
