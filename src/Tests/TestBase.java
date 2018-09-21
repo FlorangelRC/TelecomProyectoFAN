@@ -47,10 +47,10 @@ import DataProvider.ExcelUtils;
 
 public class TestBase {
 	protected static WebDriver driver;
-	public static String urlAmbiente = "https://telecomcrm--uat.cs53.my.salesforce.com";
-	//public static String urlAmbiente = "https://crm--sit.cs14.my.salesforce.com/";
-	// viejo public String urlSCP = "https://telecomcrm--uat.cs8.my.salesforce.com";
-	public String urlSCP = "https://telecomcrm--uat.cs53.my.salesforce.com";
+		public static String urlAmbiente = "https://telecomcrm--uat.cs53.my.salesforce.com";
+		//public static String urlAmbiente = "https://crm--sit.cs14.my.salesforce.com/";
+		// viejo public String urlSCP = "https://telecomcrm--uat.cs8.my.salesforce.com";
+		public static String urlSCP = "https://telecomcrm--uat.cs53.my.salesforce.com";
 	
 	public void leftDropdown(WebDriver driver, String selection) {
 		driver.findElement(By.className("x-btn-mc")).click();
@@ -1016,7 +1016,7 @@ public class TestBase {
 	}
 	
 	@DataProvider
-	public Object[][] cCuotaConSaldo() throws Exception{
+	public Object[][] RenovacionCuotaConSaldo() throws Exception{
 
 	 Object[][] testObjArray = ExcelUtils.getTableArray(dataProviderE2E(),"E2EconPago",1,1,2,"Renovacion Cuota Con Saldo");
 
