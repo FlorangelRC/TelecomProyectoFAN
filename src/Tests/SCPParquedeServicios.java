@@ -240,7 +240,7 @@ public class SCPParquedeServicios extends TestBase{
    pcp.clickOnTabByName("cuentas");
    try {Thread.sleep(7000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
    try {Thread.sleep(7000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
-   pcp.clickEnCuentaPorNombre("Florencia Di Ci");
+   pcp.clickEnCuentaPorNombre("Cuenta Bien Hecha SCP");
    try {Thread.sleep(10000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
    pcp.moveToElementOnAccAndClick("tercerTitulo", 5);
       pcp.validarcomentarioajeno(fecha.toString());
@@ -258,7 +258,7 @@ public class SCPParquedeServicios extends TestBase{
 	  pcp.clickOnTabByName("cuentas");
 	  try {Thread.sleep(7000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 	  try {Thread.sleep(7000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
-	  pcp.clickEnCuentaPorNombre("Florencia Di Ci");
+	  pcp.clickEnCuentaPorNombre("Cuenta Bien Hecha SCP");
 	  try {Thread.sleep(10000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 	  pcp.moveToElementOnAccAndClick("cuartoTitulo", 1);
       pcp.validarcomentarioajeno(fecha.toString());
@@ -276,7 +276,7 @@ public class SCPParquedeServicios extends TestBase{
 	  pcp.clickOnTabByName("cuentas");
 	  try {Thread.sleep(7000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 	  try {Thread.sleep(7000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
-	  pcp.clickEnCuentaPorNombre("Florencia Di Ci");
+	  pcp.clickEnCuentaPorNombre("Cuenta Bien Hecha SCP");
 	  try {Thread.sleep(10000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 	  pcp.moveToElementOnAccAndClick("segundoTitulo", 3);
       pcp.validarcomentarioajeno(fecha.toString());
@@ -294,7 +294,7 @@ public class SCPParquedeServicios extends TestBase{
 	  pcp.clickOnTabByName("cuentas");
 	  try {Thread.sleep(7000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 	  try {Thread.sleep(7000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
-	  pcp.clickEnCuentaPorNombre("Florencia Di Ci");
+	  pcp.clickEnCuentaPorNombre("Cuenta Bien Hecha SCP");
 	  try {Thread.sleep(10000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 	  pcp.moveToElementOnAccAndClick("tercerTitulo", 2);
       pcp.validarcomentarioajeno(fecha.toString());
@@ -312,7 +312,7 @@ public class SCPParquedeServicios extends TestBase{
 	  pcp.clickOnTabByName("cuentas");
 	  try {Thread.sleep(7000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 	  try {Thread.sleep(7000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
-	  pcp.clickEnCuentaPorNombre("Florencia Di Ci");
+	  pcp.clickEnCuentaPorNombre("Cuenta Bien Hecha SCP");
 	  try {Thread.sleep(10000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 	  pcp.moveToElementOnAccAndClick("segundoTitulo", 4);
       pcp.validarcomentarioajeno(fecha.toString());
@@ -330,7 +330,7 @@ public class SCPParquedeServicios extends TestBase{
 	  pcp.clickOnTabByName("cuentas");
 	  try {Thread.sleep(7000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 	  try {Thread.sleep(7000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
-	  pcp.clickEnCuentaPorNombre("Florencia Di Ci");
+	  pcp.clickEnCuentaPorNombre("Cuenta Bien Hecha SCP");
 	  try {Thread.sleep(10000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 	  pcp.moveToElementOnAccAndClick("tercerTitulo", 3);
       pcp.validarcomentarioajeno(fecha.toString());
@@ -349,7 +349,7 @@ public class SCPParquedeServicios extends TestBase{
 	  pcp.clickOnTabByName("cuentas");
 	  try {Thread.sleep(7000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 	  try {Thread.sleep(7000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
-	  pcp.clickEnCuentaPorNombre("Florencia Di Ci");
+	  pcp.clickEnCuentaPorNombre("Cuenta Bien Hecha SCP");
 	  try {Thread.sleep(10000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 	  pcp.moveToElementOnAccAndClick("primerTitulo", 2);
       pcp.validarcomentarioajeno(fecha.toString());
@@ -367,7 +367,7 @@ public class SCPParquedeServicios extends TestBase{
 	  pcp.clickOnTabByName("cuentas");
 	  try {Thread.sleep(7000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 	  try {Thread.sleep(7000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
-	  pcp.clickEnCuentaPorNombre("Florencia Di Ci");
+	  pcp.clickEnCuentaPorNombre("Cuenta Bien Hecha SCP");
 	  try {Thread.sleep(10000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 	  pcp.moveToElementOnAccAndClick("segundoTitulo", 2);
       pcp.validarcomentarioajeno(fecha.toString());
@@ -377,18 +377,18 @@ public class SCPParquedeServicios extends TestBase{
 	public void TS112645_Estructura_de_las_oportunidades_Bloques_Estado_de_Proyecto_DELTA_Oportunidad(){
 		SCP page = new SCP(driver);
 		page.clickOnTabByName("cuentas");
-		page.clickEnCuentaPorNombre("Florencia Di Ciocco SRL");
+		page.clickEnCuentaPorNombre("Cuenta Bien Hecha SCP");
 		try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
-		page.elegiroportunidad("Red Nacional - ex Oportunidad 1");
+		page.elegiroportunidad("Dulce D\u00eda Cafeter\u00eda");
 		page.ValidarEstadosDELTA("oportunidad");
 	}
 	@Test(groups = "SCP", priority=6) 
 	public void TS112646_Estructura_de_las_oportunidades_Bloques_Estado_de_Proyecto_DELTA_Proyectos(){
 		SCP page = new SCP(driver);
 		page.clickOnTabByName("cuentas");
-		page.clickEnCuentaPorNombre("Florencia Di Ciocco SRL");
+		page.clickEnCuentaPorNombre("Cuenta Bien Hecha SCP");
 		try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
-		page.elegiroportunidad("Red Nacional - ex Oportunidad 1");
+		page.elegiroportunidad("Dulce D\u00eda Cafeter\u00eda");
 		page.ValidarEstadosDELTA("proyectos");
 	}
 	
@@ -396,18 +396,18 @@ public class SCPParquedeServicios extends TestBase{
 	public void TS112640_Estructura_de_las_oportunidades_Bloques_Competidores(){
 		SCP page = new SCP(driver);
 		page.clickOnTabByName("cuentas");
-		page.clickEnCuentaPorNombre("Florencia Di Ciocco SRL");
+		page.clickEnCuentaPorNombre("Cuenta Bien Hecha SCP");
 		try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
-		page.elegiroportunidad("Red Nacional - ex Oportunidad 1");
+		page.elegiroportunidad("Dulce D\u00eda Cafeter\u00eda");
 		page.validarcompetidores();
 	}
 	@Test(groups = "SCP", priority=6) 
 public void TS112648_Estructura_de_las_oportunidades_Bloques_Informacion_Adicional_de_Ventas(){
 		SCP page = new SCP(driver);
 		page.clickOnTabByName("cuentas");
-		page.clickEnCuentaPorNombre("Florencia Di Ciocco SRL");
+		page.clickEnCuentaPorNombre("Cuenta Bien Hecha SCP");
 		try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
-		page.elegiroportunidad("Red Nacional - ex Oportunidad 1");
+		page.elegiroportunidad("Dulce D\u00eda Cafeter\u00eda");
 		page.validarinfoventas();
 	}
 	
@@ -415,10 +415,10 @@ public void TS112648_Estructura_de_las_oportunidades_Bloques_Informacion_Adicion
 	public void TS112652_Estructura_de_las_oportunidades_Bloques_Productos_de_la_oportunidad_Campos_no_editables(){
 		SCP page = new SCP(driver);
 		page.clickOnTabByName("cuentas");
-		page.clickEnCuentaPorNombre("AIR S.R.L");
+		page.clickEnCuentaPorNombre("Cuenta Bien Hecha SCP");
 		try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
-		page.elegiroportunidad("ALTA Sucursal Jujuy");
-		page.IngresarAlProductos("HYPERWAY HEAD QUARTER");
+		page.elegiroportunidad("Dulce D\u00eda Cafeter\u00eda");
+		page.IngresarAlProductos("Accseo IRIS");
 		page.ModificarProducto("modificar","cantidad", "5,00", "guardar");
 		page.VerificarCampoModificado("cantidad", "5,00");
 	}
@@ -427,10 +427,10 @@ public void TS112648_Estructura_de_las_oportunidades_Bloques_Informacion_Adicion
 	public void TS112658_Estructura_de_las_oportunidades_Bloques_Productos_de_la_oportunidad_Cargo_Unica_Vez_Modificar(){
 		SCP page = new SCP(driver);
 		page.clickOnTabByName("cuentas");
-		page.clickEnCuentaPorNombre("AIR S.R.L");
+		page.clickEnCuentaPorNombre("Cuenta Bien Hecha SCP");
 		try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
-		page.elegiroportunidad("ALTA Sucursal Jujuy");
-		page.IngresarAlProductos("HYPERWAY HEAD QUARTER");
+		page.elegiroportunidad("Dulce D\u00eda Cafeter\u00eda");
+		page.IngresarAlProductos("Accseo IRIS");
 		page.ModificarProducto("modificar","cargo unico", "600,00", "guardar");
 		page.VerificarCampoModificado("cargo unico", "600,00");
 	}
@@ -439,10 +439,10 @@ public void TS112648_Estructura_de_las_oportunidades_Bloques_Informacion_Adicion
 	public void TS1112659_Estructura_de_las_oportunidades_Bloques_Productos_de_la_oportunidad_Cargos_Totales_por_Mes(){
 		SCP page = new SCP(driver);
 		page.clickOnTabByName("cuentas");
-		page.clickEnCuentaPorNombre("AIR S.R.L");
+		page.clickEnCuentaPorNombre("Cuenta Bien Hecha SCP");
 		try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
-		page.elegiroportunidad("ALTA Sucursal Jujuy");
-		page.IngresarAlProductos("HYPERWAY HEAD QUARTER");
+		page.elegiroportunidad("Dulce D\u00eda Cafeter\u00eda");
+		page.IngresarAlProductos("Accseo IRIS");
 		page.ModificarProducto("modificar","cantidad", "8", "guardar");
 		String a = page.CargosTotalesPorMes();
 		page.ModificarProducto("modificar","cantidad", "5", "guardar");
@@ -454,10 +454,10 @@ public void TS112648_Estructura_de_las_oportunidades_Bloques_Informacion_Adicion
 	public void TS112661_Estructura_de_las_oportunidades_Bloques_Productos_de_la_oportunidad_Plazo_Modificar(){
 		SCP page = new SCP(driver);
 		page.clickOnTabByName("cuentas");
-		page.clickEnCuentaPorNombre("AIR S.R.L");
+		page.clickEnCuentaPorNombre("Cuenta Bien Hecha SCP");
 		try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
-		page.elegiroportunidad("ALTA Sucursal Jujuy");
-		page.IngresarAlProductos("HYPERWAY HEAD QUARTER");
+		page.elegiroportunidad("Dulce D\u00eda Cafeter\u00eda");
+		page.IngresarAlProductos("Accseo IRIS");
 		page.ModificarProducto("modificar","plazo", "50", "guardar");
 		page.VerificarCampoModificado("plazo", "50");
 	}
@@ -466,10 +466,10 @@ public void TS112648_Estructura_de_las_oportunidades_Bloques_Informacion_Adicion
 	public void TS1112662_Estructura_de_las_oportunidades_Bloques_Productos_de_la_oportunidad_Precio_total_contrato(){
 		SCP page = new SCP(driver);
 		page.clickOnTabByName("cuentas");
-		page.clickEnCuentaPorNombre("AIR S.R.L");
+		page.clickEnCuentaPorNombre("Cuenta Bien Hecha SCP");
 		try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
-		page.elegiroportunidad("ALTA Sucursal Jujuy");
-		page.IngresarAlProductos("HYPERWAY HEAD QUARTER");
+		page.elegiroportunidad("Dulce D\u00eda Cafeter\u00eda");
+		page.IngresarAlProductos("Accseo IRIS");
 		page.ModificarProducto("modificar","cargo unico", "900,00", "guardar");
 		page.VerificarCampoModificado("cargo unico", "900,00");
 		page.ValidarMontoContrato();
@@ -480,10 +480,10 @@ public void TS112648_Estructura_de_las_oportunidades_Bloques_Informacion_Adicion
 	public void TS112663_Estructura_de_las_oportunidades_Bloques_Productos_de_la_oportunidad_Total_mes_por_plazo(){
 		SCP page = new SCP(driver);
 		page.clickOnTabByName("cuentas");
-		page.clickEnCuentaPorNombre("AIR S.R.L");
+		page.clickEnCuentaPorNombre("Cuenta Bien Hecha SCP");
 		try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
-		page.elegiroportunidad("ALTA Sucursal Jujuy");
-		page.IngresarAlProductos("HYPERWAY HEAD QUARTER");
+		page.elegiroportunidad("Dulce D\u00eda Cafeter\u00eda");
+		page.IngresarAlProductos("Accseo IRIS");
 		String antes = page.SacarTotalMesXPlazo();
 		page.ModificarProducto("modificar","cargo unico", "500", "guardar");
 		page.VerificarCampoModificado("cargo unico", "500,00");

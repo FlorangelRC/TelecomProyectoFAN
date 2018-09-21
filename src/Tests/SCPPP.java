@@ -54,7 +54,7 @@ private WebDriver driver;
 		try {Thread.sleep(7000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 		try {Thread.sleep(7000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 		
-		pScp.clickEnCuentaPorNombre("Florencia Di Ci");
+		pScp.clickEnCuentaPorNombre("Cuenta Bien Hecha SCP");
 		try {Thread.sleep(10000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 	}
 	
@@ -219,7 +219,7 @@ private WebDriver driver;
 		prueba.Desloguear_Loguear("Maximiliano");
 		sleep(15000);
 		WebElement user = driver.findElement(By.id(".sidebarDiv")).findElements(By.tagName("div")).get(1).findElements(By.tagName("div")).get(1).findElements(By.tagName("div")).get(1).findElement(By.id("hoverItem27"));
-		if(user.getText().contains("Florencia Di Ciocco SRL")){
+		if(user.getText().contains("Cuenta Bien Hecha SCP")){
 			user.click();
 		}
 		System.out.println(user.getText());
