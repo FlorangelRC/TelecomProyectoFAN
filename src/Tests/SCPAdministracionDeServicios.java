@@ -32,7 +32,7 @@ public class SCPAdministracionDeServicios extends TestBase {
 	{
 		this.driver = setConexion.setupEze();
 		try {Thread.sleep(15000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
-		loginSCPConPermisos(driver);
+		loginSCPAdminServices(driver);
 		try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 		
 	}
@@ -46,7 +46,7 @@ public class SCPAdministracionDeServicios extends TestBase {
 		try {Thread.sleep(7000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 		try {Thread.sleep(7000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 		
-		pScp.clickEnCuentaPorNombre("Florencia Di Ci");
+		pScp.clickEnCuentaPorNombre("Cuenta Bien Hecha SCP");
 		try {Thread.sleep(10000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 	}
 	
@@ -61,12 +61,12 @@ public class SCPAdministracionDeServicios extends TestBase {
       SCP pcp = new SCP(driver);  
       boolean estaMon= false;
       //pcp.Desloguear_Loguear("fabiana");
-      pcp.clickOnTabByName("cuentas");
+      /*pcp.clickOnTabByName("cuentas");
 		try {Thread.sleep(7000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 		try {Thread.sleep(7000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
-		pcp.clickEnCuentaPorNombre("AIR S.R.L");
+		pcp.clickEnCuentaPorNombre("AIR S.R.L");*/
 		try {Thread.sleep(7000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
-		pcp.elegiroportunidad("ALTA Sucursal Jujuy");
+		pcp.elegiroportunidad("Dulce D\u00eda Cafeter\u00eda");
 		try {Thread.sleep(7000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 		WebElement Producto = driver.findElement(By.cssSelector(".listRelatedObject.opportunityLineItemBlock")).findElement(By.cssSelector(".dataRow.even.first")).findElement(By.tagName("th"));
 		((JavascriptExecutor)driver).executeScript("window.scrollTo(0,"+Producto.getLocation().y+")");
@@ -102,7 +102,7 @@ public class SCPAdministracionDeServicios extends TestBase {
 		try {Thread.sleep(7000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 		pcp.clickEnCuentaPorNombre("AIR S.R.L");
 		try {Thread.sleep(7000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
-		pcp.elegiroportunidad("Integra y SPV");
+		pcp.elegiroportunidad("Prueba UAT");
 		try {Thread.sleep(7000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 		List<WebElement> Detalles = driver.findElement(By.className("detailList")).findElements(By.tagName("tr"));
 		for(WebElement UnaL : Detalles) {
@@ -125,7 +125,7 @@ public class SCPAdministracionDeServicios extends TestBase {
 		try {Thread.sleep(7000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 		pcp.clickEnCuentaPorNombre("AIR S.R.L");
 		try {Thread.sleep(7000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
-		pcp.elegiroportunidad("Integra y SPV");
+		pcp.elegiroportunidad("Prueba UAT");
 		try {Thread.sleep(7000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 		WebElement TMI = driver.findElement(By.className("detailList")).findElements(By.tagName("tr")).get(4).findElements(By.tagName("td")).get(3);
 		int numTMI = Integer.parseInt(TMI.getText())+1;
@@ -145,12 +145,12 @@ public class SCPAdministracionDeServicios extends TestBase {
     public void TS110251_Estructura_De_Los_Proyectos_TMI_Fecha_Pasada() {  
       SCP pcp = new SCP(driver);  
       //pcp.Desloguear_Loguear("fabiana");
-      pcp.clickOnTabByName("cuentas");
+      /*pcp.clickOnTabByName("cuentas");
 		try {Thread.sleep(7000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 		try {Thread.sleep(7000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
-		pcp.clickEnCuentaPorNombre("AIR S.R.L");
+		pcp.clickEnCuentaPorNombre("AIR S.R.L");*/
 		try {Thread.sleep(7000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
-		pcp.elegiroportunidad("Integra y SPV");
+		pcp.elegiroportunidad("Dulce D\u00eda Cafeter\u00eda");
 		try {Thread.sleep(7000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 		WebElement TMI = driver.findElement(By.className("detailList")).findElements(By.tagName("tr")).get(4).findElements(By.tagName("td")).get(3);
 		Actions action = new Actions(driver); 
@@ -169,12 +169,12 @@ public class SCPAdministracionDeServicios extends TestBase {
     public void TS110252_Estructura_De_Las_Oportunidades_Probabilidad() {  
       SCP pcp = new SCP(driver);  
       //pcp.Desloguear_Loguear("fabiana");
-      pcp.clickOnTabByName("cuentas");
+     /* pcp.clickOnTabByName("cuentas");
 		try {Thread.sleep(7000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 		try {Thread.sleep(7000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
-		pcp.clickEnCuentaPorNombre("AIR S.R.L");
+		pcp.clickEnCuentaPorNombre("AIR S.R.L");*/
 		try {Thread.sleep(7000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
-		pcp.elegiroportunidad("Integra y SPV");
+		pcp.elegiroportunidad("Dulce D\u00eda Cafeter\u00eda");
 		try {Thread.sleep(7000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 		WebElement prob = driver.findElement(By.className("detailList")).findElements(By.tagName("tr")).get(2).findElements(By.tagName("td")).get(3);
 		Actions action = new Actions(driver); 
@@ -193,10 +193,10 @@ public class SCPAdministracionDeServicios extends TestBase {
       SCP pcp = new SCP(driver);  
       boolean estaMon= false;
      // pcp.Desloguear_Loguear("fabiana");
-      pcp.clickOnTabByName("cuentas");
+     /* pcp.clickOnTabByName("cuentas");
 		try {Thread.sleep(7000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 		try {Thread.sleep(7000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
-		pcp.clickEnCuentaPorNombre("AIR S.R.L");
+		pcp.clickEnCuentaPorNombre("AIR S.R.L");*/
 		try {Thread.sleep(7000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 		WebElement Producto = driver.findElement(By.cssSelector(".listRelatedObject.accountContactRelationBlock")).findElement(By.cssSelector(".dataRow.even.first")).findElement(By.tagName("th"));
 		((JavascriptExecutor)driver).executeScript("window.scrollTo(0,"+Producto.getLocation().y+")");
@@ -294,7 +294,7 @@ public class SCPAdministracionDeServicios extends TestBase {
 		SCP pScp = new SCP(driver);
 		pScp.clickOnTabByName("cuentas");
 		try {Thread.sleep(7000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
-		pScp.listTypeAcc("Todas Las cuentas");
+		pScp.listTypeAcc("Todas las cuentas");
 		try {Thread.sleep(7000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 		pScp.clickOnFirstAccRe();
 		try {Thread.sleep(10000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
@@ -358,7 +358,7 @@ public class SCPAdministracionDeServicios extends TestBase {
 		SCP pScp = new SCP(driver);
 		pScp.clickOnTabByName("cuentas");
 		try {Thread.sleep(7000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
-		pScp.listTypeAcc("Todas Las cuentas");
+		pScp.listTypeAcc("Todas las cuentas");
 		try {Thread.sleep(7000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 		pScp.clickOnFirstAccRe();
 		try {Thread.sleep(10000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
@@ -680,7 +680,7 @@ public class SCPAdministracionDeServicios extends TestBase {
 		SCP pScp = new SCP(driver);
 		pScp.clickOnTabByName("cuentas");
 		try {Thread.sleep(7000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
-		pScp.listTypeAcc("Todas Las cuentas");
+		pScp.listTypeAcc("Todas las cuentas");
 		try {Thread.sleep(7000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 		pScp.clickOnFirstAccRe();
 		try {Thread.sleep(10000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
@@ -749,7 +749,7 @@ public class SCPAdministracionDeServicios extends TestBase {
 		SCP pScp = new SCP(driver);
 		pScp.clickOnTabByName("cuentas");
 		try {Thread.sleep(7000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
-		pScp.listTypeAcc("Todas Las cuentas");
+		pScp.listTypeAcc("Todas las cuentas");
 		try {Thread.sleep(7000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 		pScp.clickOnFirstAccRe();
 		try {Thread.sleep(10000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
@@ -796,10 +796,10 @@ public class SCPAdministracionDeServicios extends TestBase {
       java.util.Date fecha = new Date();
       //pcp.Desloguear_Loguear("permisos");
       try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
-		pcp.clickOnTabByName("cuentas");
+		/*pcp.clickOnTabByName("cuentas");
 		try {Thread.sleep(7000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 		try {Thread.sleep(7000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
-		pcp.clickEnCuentaPorNombre("Florencia Di Ci");
+		pcp.clickEnCuentaPorNombre("Florencia Di Ci");*/
 		try {Thread.sleep(10000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
       pcp.moveToElementOnAccAndClick("tercerTitulo",5);  
       try {Thread.sleep(10000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
@@ -890,10 +890,10 @@ public class SCPAdministracionDeServicios extends TestBase {
       SCP pcp = new SCP(driver);  
       boolean estaMon= false;
       
-      pcp.clickOnTabByName("cuentas");
+      /*pcp.clickOnTabByName("cuentas");
 		try {Thread.sleep(7000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 		try {Thread.sleep(7000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
-		pcp.clickEnCuentaPorNombre("AIR S.R.L");
+		pcp.clickEnCuentaPorNombre("AIR S.R.L");*/
 		try {Thread.sleep(7000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 		//driver.findElement(By.cssSelector(".listRelatedObject.accountContactRelationBlock")).findElement(By.className("pShowMore")).findElements(By.tagName("a")).get(1).click();
 		try {Thread.sleep(7000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
@@ -969,7 +969,7 @@ public class SCPAdministracionDeServicios extends TestBase {
 			pcp.clickOnTabByName("cuentas");
 			try {Thread.sleep(7000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 			try {Thread.sleep(7000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
-			pcp.clickEnCuentaPorNombre("Florencia Di Ci");
+			pcp.clickEnCuentaPorNombre("Cuenta Bien Hecha SCP");
 			try {Thread.sleep(10000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 			pcp.moveToElementOnAccAndClick("cuartoTitulo", 2);
 		    pcp.validarcomentarioajeno(fecha.toString());
@@ -980,11 +980,11 @@ public class SCPAdministracionDeServicios extends TestBase {
 	  public void TS112791_Plan_de_accion_Doble_Click_Para_Editar() { 
 	    SCP pcp = new SCP(driver); 
 	   // pcp.Desloguear_Loguear("fabiana");
-	    try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+	    /*try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 		pcp.clickOnTabByName("cuentas");
 		try {Thread.sleep(7000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 		try {Thread.sleep(7000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
-		pcp.clickEnCuentaPorNombre("Florencia Di Ci");
+		pcp.clickEnCuentaPorNombre("Florencia Di Ci");*/
 		try {Thread.sleep(10000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 		pcp.moveToElementOnAccAndClick("cuartoTitulo", 2);
 		WebElement modificar= driver.findElement(By.id("mainTable")).findElement(By.className("odd")).findElements(By.tagName("td")).get(2);

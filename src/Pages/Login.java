@@ -64,6 +64,7 @@ public class Login extends BasePage {
 		 }
 		 //viejo Ecom_User_ID.sendKeys("UA198998");
 		 //viejo Ecom_Password.sendKeys("Teco1234");
+		 sleep(2000);
 		 Ecom_User_ID.sendKeys("UAT580714");
 	     Ecom_Password.sendKeys("Testa10k");
 	     loginButton2.click();
