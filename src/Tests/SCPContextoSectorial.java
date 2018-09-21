@@ -28,7 +28,7 @@ public class SCPContextoSectorial extends TestBase {
 
 	private WebDriver driver;
 	private SCP scp;
-	private static String downloadPath = "C:\\Users\\Nicolas\\Downloads";
+	private static String downloadPath = "C:\\Users\\Florangel\\Downloads";
 	
 	
 	@BeforeClass(groups = "SCP")
@@ -43,7 +43,7 @@ public class SCPContextoSectorial extends TestBase {
 	public void setUp() throws Exception {
 		sleep(3000);
 		scp.clickOnTabByName("cuentas");
-		scp.clickEnCuentaPorNombre("Florencia Di Ci");
+		scp.clickEnCuentaPorNombre("Cuenta Bien Hecha SCP");
 		sleep(5000);
 	}
 	

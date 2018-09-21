@@ -1016,7 +1016,7 @@ public class TestBase {
 	}
 	
 	@DataProvider
-	public Object[][] cCuotaConSaldo() throws Exception{
+	public Object[][] RenovacionCuotaConSaldo() throws Exception{
 
 	 Object[][] testObjArray = ExcelUtils.getTableArray(dataProviderE2E(),"E2EconPago",1,1,2,"Renovacion Cuota Con Saldo");
 
