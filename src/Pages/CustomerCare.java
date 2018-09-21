@@ -1669,7 +1669,7 @@ public class CustomerCare extends BasePage {
 	public String obtenerOrden2(WebDriver driver) {
 		String sOrder = "";
 		//WebElement wBox = driver.findElement(By.cssSelector(".slds-form-element.vlc-flex.vlc-slds-text-block.vlc-slds-rte.ng-pristine.ng-valid.ng-scope"));
-		WebElement wBox = driver.findElement(By.id("OrderStatusWithBillingCycle"));
+		WebElement wBox = driver.findElement(By.id("OrderStatus"));
 		List <WebElement> wContent = wBox.findElement(By.className("slds-form-element__control")).findElement(By.className("ng-binding")).findElements(By.tagName("p"));
 		sOrder = wContent.get(0).getText().substring(12);
 		System.out.println("sOrder: " + sOrder);

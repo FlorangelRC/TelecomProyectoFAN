@@ -86,7 +86,7 @@ public class GestionesPerfilAgente extends TestBase{
 		sleep(14000);
 	}
 	
-	//@AfterMethod(alwaysRun=true)
+	@AfterMethod(alwaysRun=true)
 	public void after() throws IOException {
 		guardarListaTxt(datosOrden);
 		datosOrden.clear();
@@ -133,8 +133,6 @@ public class GestionesPerfilAgente extends TestBase{
 		sleep(12000);
 		cCC.irAGestionEnCard("Recarga de cr\u00e9dito");
 		sleep(15000);
-		cCC.irAGestionEnCard("Recarga de cr\u00e9dito");
-		sleep(15000);
 		driver.switchTo().frame(cambioFrame(driver, By.id("RefillAmount")));
 		driver.findElement(By.id("RefillAmount")).sendKeys(sMonto);
 		driver.findElement(By.id("AmountSelectionStep_nextBtn")).click();
@@ -146,6 +144,7 @@ public class GestionesPerfilAgente extends TestBase{
 		selectByText(driver.findElement(By.id("BankingEntity-0")), sBanco);
 		selectByText(driver.findElement(By.id("CardBankingEntity-0")), sTarjeta);
 		selectByText(driver.findElement(By.id("promotionsByCardsBank-0")), sPromo);
+		driver.findElement(By.id("SelectPaymentMethodsStep_nextBtn")).click();
 		sleep(5000);
 		selectByText(driver.findElement(By.id("Installment-0")), sCuotas);
 		driver.findElement(By.id("CardNumber-0")).sendKeys(sNumTarjeta);
