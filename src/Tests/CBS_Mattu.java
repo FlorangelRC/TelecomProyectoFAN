@@ -74,17 +74,17 @@ public class CBS_Mattu extends TestBase {
 	}
 	
 	@Test
-	public void openPage3() {
+	public void ValidarInfoCuenta(String sLinea, String sNombre, String sApellido) {
 		String sEndPoint = "Alta de Linea";
-		String sLinea = "";
+		//String sLinea = "";
 		String sMessageSeq = "QCI"+ ((new java.text.SimpleDateFormat("yyyyMMddHHmmss")).format(new Date())).toString()+Integer.toString((int)(Math.random()*1000));
 		String sImsi = "";
 		String sICCD = "";
-		
 		SOAPClientSAAJ sSCS = new SOAPClientSAAJ();
 		CBS cCBS = new CBS();
-		String sResponse = cCBS.sCBS_Request_Validador_Alta_Linea(sSCS.callSoapWebService(cCBS.sRequestByLinea(sLinea, sMessageSeq), sEndPoint), sLinea, sImsi, sICCD);
-		System.out.println("Respuesta: " + sResponse);
+		String sResponse = cCBS.sCBS_Request_Validador_Alta_Linea(sSCS.callSoapWebService(cCBS.sRequestByLinea(sLinea, sMessageSeq), sEndPoint), sLinea, sImsi, sICCD, sNombre, sApellido);
+		System.out.println("sResponde ="+sResponse);
+		Assert.assertTrue(sResponse.equals("true"));
 	}
 	
 	@Test

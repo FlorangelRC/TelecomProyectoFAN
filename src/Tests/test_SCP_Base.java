@@ -46,12 +46,12 @@ public class test_SCP_Base extends TestBase {
 	
 	@BeforeMethod(alwaysRun=true)
 	public void setUp() throws Exception {
-		try {Thread.sleep(2000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		try {Thread.sleep(4000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 		SCP page= new SCP(driver);
 		//page.goToMenu("SCP");
 		page.clickOnTabByName("cuentas");
-		page.listTypeAcc("Todas Las cuentas");
-		page.clickEnCuentaPorNombre("Florencia Di Cio");
+		page.listTypeAcc("Todas las cuentas");
+		page.clickEnCuentaPorNombre("cuenta bien hecha scp");
 		Cuenta=driver.findElement(By.className("topName")).getText();
 		page.moveToElementOnAccAndClick("tercerTitulo", 1);
 		}
@@ -64,7 +64,7 @@ public class test_SCP_Base extends TestBase {
 		sleep(1000);
 	}
 	
-	@AfterClass(alwaysRun=true)
+	//@AfterClass(alwaysRun=true)
 	public void tearDown() {
 		driver.quit();
 		sleep(4000);
@@ -566,7 +566,9 @@ public class test_SCP_Base extends TestBase {
 	@Test(groups= "SCP", priority=4)
 	public void TS112651_CRM_SCP_Estructura_de_las_oportunidades_Bloques_Productos_de_la_oportunidad() {
 	SCP page=new SCP(driver);
-	page.selectOporunity("alta sucursal entre rios");
+	boolean check=true;
+	//page.selectOporunity("alta sucursal entre rios");
+	 if(page.goToOportunity()) {
 	String idOportunidad=driver.findElement(By.xpath("//*[@id=\"ep\"]/div[2]/div[2]/table/tbody/tr[2]/td[2]")).getText();
 	//System.out.println(idOportunidad);
 	List <WebElement> compBefore = driver.findElements(By.className("listTitle")); //Lista los Elementos de arriba
@@ -578,7 +580,7 @@ public class test_SCP_Base extends TestBase {
 	String[] camposaVerificar= {"Acci\u00f3n","Producto","Cantidad","Moneda","Precio de venta","Cargos Totales por Mes","Plazo (meses)",
 			"Total Mes por Plazo","Cargo unica vez","Cargo por única vez total","Precio Total Contrato"};
 	List<String> listaComparativa = new ArrayList<String>();
-	boolean check=true;
+	check=true;
 	//Elemento con el campo
 	List<WebElement> campos= driver.findElement(By.xpath("//*[@id=\""+idOportunidad+"_RelatedLineItemList_body\"]/table/tbody/tr[1]")).
 			findElements(By.tagName("th"));
@@ -589,7 +591,7 @@ public class test_SCP_Base extends TestBase {
 	for(String a:camposaVerificar) {
 		if(!(listaComparativa.contains(a)))
 			check=false;
-		}
+		}}
 	assertTrue(check);
 	}
 	

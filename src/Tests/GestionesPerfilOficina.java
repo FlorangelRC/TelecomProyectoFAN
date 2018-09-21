@@ -185,6 +185,8 @@ public class GestionesPerfilOficina extends TestBase {
 		cCC.seleccionarCardPornumeroLinea(sLinea, driver);
 		cCC.irAGestionEnCard("N\u00fameros Gratis");
 		Assert.assertTrue(mMarketing.verificarNumerosAmigos(driver, sNumeroVOZ, sNumeroSMS));
+		//Assert.assertTrue(cc.corroborarEstadoCaso(sOrder, "Activated"));
+		//sOrders.add("Suspension, orden numero: " + sOrder + ", DNI: " + sDNI);
 		//Verify when the page works
 	}
 	
@@ -300,7 +302,7 @@ public class GestionesPerfilOficina extends TestBase {
 		driver.findElement(By.id("RefillAmount")).sendKeys(cMonto);
 		driver.findElement(By.id("AmountSelectionStep_nextBtn")).click();
 		sleep(15000);
-		String sOrden = cc.obtenerOrden2(driver);
+		String sOrden = cc.obtenerOrden3(driver);
 		driver.findElement(By.id("InvoicePreview_nextBtn")).click();
 		sleep(10000);
 		buscarYClick(driver.findElements(By.cssSelector(".slds-form-element__label.ng-binding")), "equals", "efectivo");
@@ -319,9 +321,8 @@ public class GestionesPerfilOficina extends TestBase {
 		sleep(5000);
 		driver.navigate().refresh();
 		sleep(10000);
-		cc.obtenerTNyMonto2(driver, sOrden);
-		//cc.obtenerOrdenMontoyTN(driver, "Recarga");
-		sleep(10000);
+		//cc.obtenerTNyMonto2(driver, sOrden);
+		//sleep(10000);
 		driver.switchTo().frame(cambioFrame(driver, By.id("Status_ilecell")));
 		Assert.assertTrue(driver.findElement(By.id("Status_ilecell")).getText().equalsIgnoreCase("activada"));
 
@@ -601,8 +602,11 @@ public class GestionesPerfilOficina extends TestBase {
 		}
 		Assert.assertTrue(a);
 		driver.findElement(By.id("FinishProcess_nextBtn")).click();
-		
+		sleep(3000);
+		CBS_Mattu invoSer = new CBS_Mattu();
+		invoSer.ValidarInfoCuenta(sLinea, sNombre,sApellido);
 	}
+	
 	@Test (groups = {"Suspension", "GestionesPerfilOficina","E2E"}, dataProvider="CuentaSuspension") 
 	public void gestionSuspension(String cDNI) {
 		imagen = "gestionSuspension";
@@ -765,7 +769,7 @@ public class GestionesPerfilOficina extends TestBase {
 		buscarYClick(driver.findElements(By.cssSelector(".slds-form-element__label.ng-binding.ng-scope")), "equals", "si");
 		driver.findElement(By.id("Step-TipodeAjuste_nextBtn")).click();
 		sleep(7000);
-		buscarYClick(driver.findElements(By.cssSelector(".slds-form-element__label.ng-binding")), "contains", "plan con tarjeta repro");
+		buscarYClick(driver.findElements(By.cssSelector(".slds-form-element__label.ng-binding")), "contains", "plan con tarjeta");
 		driver.findElement(By.id("Step-AssetSelection_nextBtn")).click();
 		sleep(7000);
 		buscarYClick(driver.findElements(By.cssSelector(".slds-form-element__label.ng-binding.ng-scope")), "equals", "si, ajustar");
@@ -1123,7 +1127,7 @@ public class GestionesPerfilOficina extends TestBase {
 		buscarYClick(driver.findElements(By.cssSelector(".slds-form-element__label.ng-binding.ng-scope")), "equals", "si");
 		driver.findElement(By.id("Step-TipodeAjuste_nextBtn")).click();
 		sleep(7000);
-		buscarYClick(driver.findElements(By.cssSelector(".slds-form-element__label.ng-binding")), "contains", "plan con tarjeta repro");
+		buscarYClick(driver.findElements(By.cssSelector(".slds-form-element__label.ng-binding")), "contains", "plan con tarjeta");
 		driver.findElement(By.id("Step-AssetSelection_nextBtn")).click();
 		sleep(7000);
 		buscarYClick(driver.findElements(By.cssSelector(".slds-form-element__label.ng-binding.ng-scope")), "equals", "si, ajustar");
@@ -1173,7 +1177,7 @@ public class GestionesPerfilOficina extends TestBase {
 		buscarYClick(driver.findElements(By.cssSelector(".slds-form-element__label.ng-binding.ng-scope")), "equals", "si");
 		driver.findElement(By.id("Step-TipodeAjuste_nextBtn")).click();
 		sleep(7000);
-		buscarYClick(driver.findElements(By.cssSelector(".slds-form-element__label.ng-binding")), "contains", "plan con tarjeta repro");
+		buscarYClick(driver.findElements(By.cssSelector(".slds-form-element__label.ng-binding")), "contains", "plan con tarjeta");
 		driver.findElement(By.id("Step-AssetSelection_nextBtn")).click();
 		sleep(7000);
 		buscarYClick(driver.findElements(By.cssSelector(".slds-form-element__label.ng-binding.ng-scope")), "equals", "si, ajustar");
@@ -1223,7 +1227,7 @@ public class GestionesPerfilOficina extends TestBase {
 		buscarYClick(driver.findElements(By.cssSelector(".slds-form-element__label.ng-binding.ng-scope")), "equals", "si");
 		driver.findElement(By.id("Step-TipodeAjuste_nextBtn")).click();
 		sleep(7000);
-		buscarYClick(driver.findElements(By.cssSelector(".slds-form-element__label.ng-binding")), "contains", "plan con tarjeta repro");
+		buscarYClick(driver.findElements(By.cssSelector(".slds-form-element__label.ng-binding")), "contains", "plan con tarjeta");
 		driver.findElement(By.id("Step-AssetSelection_nextBtn")).click();
 		sleep(7000);
 		buscarYClick(driver.findElements(By.cssSelector(".slds-form-element__label.ng-binding.ng-scope")), "equals", "si, ajustar");
@@ -2083,10 +2087,10 @@ public class GestionesPerfilOficina extends TestBase {
 		driver.switchTo().frame(cambioFrame(driver, By.id("RefillAmount")));
 		driver.findElement(By.id("RefillAmount")).sendKeys(sMonto);
 		sleep(15000);
-		CustomerCare cCC = new CustomerCare(driver);
-		String sOrden = cCC.obtenerOrden2(driver);
 		driver.findElement(By.id("AmountSelectionStep_nextBtn")).click();
 		sleep(15000);
+		CustomerCare cCC = new CustomerCare(driver);
+		String sOrden = cCC.obtenerOrden2(driver);
 		driver.findElement(By.xpath("//*[@id=\"InvoicePreview_nextBtn\"]")).click();
 		sleep(15000);
 		buscarYClick(driver.findElements(By.cssSelector(".slds-form-element__label.ng-binding")), "equals", "tarjeta de debito");
@@ -2300,11 +2304,7 @@ public class GestionesPerfilOficina extends TestBase {
 		sleep(10000);
 		sOrders.add("Cambio sim card Agente- Cuenta: "+accid+"Invoice: "+invoice.split("-")[0]);
 		CBS_Mattu invoSer = new CBS_Mattu();
-		if(urlAmbiente.contains("sit")) 
-			Assert.assertTrue(invoSer.PagoEnCaja("1006", accid, "2001", invoice.split("-")[2], invoice.split("-")[1]));
-		else
-			Assert.assertTrue(invoSer.PagoEnCaja("1006", accid, "2001", invoice.split("-")[2], invoice.split("-")[1]));
-		
+		Assert.assertTrue(invoSer.PagoEnCaja("1006", accid, "1001", invoice.split("-")[2], invoice.split("-")[1]));
 		driver.navigate().refresh();
 		sleep(10000);
 		driver.switchTo().frame(cambioFrame(driver, By.id("Status_ilecell")));

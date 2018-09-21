@@ -28,7 +28,7 @@ public class SCPContextoSectorial extends TestBase {
 
 	private WebDriver driver;
 	private SCP scp;
-	private static String downloadPath = "C:\\Users\\Nicolas\\Downloads";
+	private static String downloadPath = "C:\\Users\\Florangel\\Downloads";
 	
 	
 	@BeforeClass(groups = "SCP")
@@ -43,11 +43,11 @@ public class SCPContextoSectorial extends TestBase {
 	public void setUp() throws Exception {
 		sleep(3000);
 		scp.clickOnTabByName("cuentas");
-		scp.clickEnCuentaPorNombre("Florencia Di Ci");
+		scp.clickEnCuentaPorNombre("Cuenta Bien Hecha SCP");
 		sleep(5000);
 	}
 	
-	@AfterMethod(groups = "SCP")
+	//@AfterMethod(groups = "SCP")
 	public void after(){
 		sleep(3000);
 		driver.switchTo().defaultContent();
@@ -56,7 +56,7 @@ public class SCPContextoSectorial extends TestBase {
 		driver.findElement(By.id("home_Tab")).click();
 	}
 	
-	@AfterClass(groups = "SCP")
+	//@AfterClass(groups = "SCP")
 	public void teardown() {
 		driver.quit();
 		sleep(5000);
@@ -97,7 +97,7 @@ public class SCPContextoSectorial extends TestBase {
 	public void TS112594_Contexto_Sectorial_Ingreso_Desde_Acerca_del_cliente() {
 		scp.moveToElementOnAccAndClick("primerTitulo", 1);
 		Assert.assertTrue(driver.findElement(By.id("hidden-Con")).isDisplayed());
-		Assert.assertTrue(driver.findElement(By.id("hidden-M�t")).isDisplayed());
+		Assert.assertTrue(driver.findElement(By.id("hidden-M\u00e9t")).isDisplayed());
 		Assert.assertTrue(driver.findElement(By.id("hidden-Pla")).isDisplayed());
 		Assert.assertTrue(driver.findElement(By.id("hidden-Cad")).isDisplayed());
 		Assert.assertTrue(driver.findElement(By.id("hidden-Ten")).isDisplayed());
@@ -108,7 +108,7 @@ public class SCPContextoSectorial extends TestBase {
 	public void TS112595_Contexto_Sectorial_Ingreso_Desde_el_contacto() {
 		scp.moveToElementOnAccAndClick("primerTitulo", 1);		
 		Assert.assertTrue(driver.findElement(By.id("hidden-Con")).isDisplayed());
-		Assert.assertTrue(driver.findElement(By.id("hidden-M�t")).isDisplayed());
+		Assert.assertTrue(driver.findElement(By.id("hidden-M\u00e9t")).isDisplayed());
 		Assert.assertTrue(driver.findElement(By.id("hidden-Pla")).isDisplayed());
 		Assert.assertTrue(driver.findElement(By.id("hidden-Cad")).isDisplayed());
 		Assert.assertTrue(driver.findElement(By.id("hidden-Ten")).isDisplayed());
@@ -298,8 +298,8 @@ public class SCPContextoSectorial extends TestBase {
 			}
 		}
 		sleep(5000);
-		WebElement oportunidad = driver.findElement(By.className("panel-body"));
-		Assert.assertTrue(oportunidad.getText().contains("Oportunidad: opAut"));
+		WebElement oportunidad = driver.findElement(By.className("panel-body")).findElement(By.tagName("h2"));
+		Assert.assertTrue(oportunidad.getText().contains("Oportunidad:"));
 	}
 	
 	@Test(groups = "SCP", priority=3)
@@ -418,13 +418,13 @@ public class SCPContextoSectorial extends TestBase {
 		Assert.assertTrue(element.get(2).getText().contains("Value Drivers"));
 		Assert.assertTrue(element.get(3).getText().contains("Propuesta de Valor"));
 		Assert.assertTrue(element.get(4).getText().contains("Mosaico de Relacionamiento por Oportunidad"));
-		Assert.assertTrue(element.get(5).getText().contains("Criterios de Decisi�n por Oportunidad"));		
+		Assert.assertTrue(element.get(5).getText().contains("Criterios de Decisi\u00f3n por Oportunidad"));		
 	}
 	
 	@Test(groups = "SCP", priority=3)
 	public void TS112757_Opportunity_Snapshot_Search() {
 		scp.moveToElementOnAccAndClick("tercerTitulo", 4);
-		String a = "oportunidad";
+		String a = "dulce d\u00eda cafeter\u00eda";
 		driver.findElement(By.xpath("//*[@id=\"mainTable_filter\"]/label/input")).sendKeys(a);
 		WebElement element = driver.findElement(By.xpath("//*[@id=\"mainTable\"]/tbody/tr[1]/td[2]"));
 		Assert.assertTrue(element.getText().toLowerCase().contains(a));
@@ -458,7 +458,7 @@ public class SCPContextoSectorial extends TestBase {
 	@Test(groups = "SCP", priority=3)
 	public void TS112768_Organigrama_y_mapa_de_influencia_Search() {
 		scp.moveToElementOnAccAndClick("primerTitulo", 3);
-		String a = "celina";
+		String a = "lucas";
 		driver.findElement(By.xpath("//*[@id=\"mainTable_filter\"]/label/input")).sendKeys(a);
 		sleep(3000);
 		Assert.assertTrue(driver.findElement(By.className("odd")).getText().toLowerCase().contains(a));
@@ -723,17 +723,17 @@ public class SCPContextoSectorial extends TestBase {
 		Assert.assertTrue(a);
 	}
 	
-	//@Test(groups = "SCP", priority=2)
+	@Test(groups = "SCP", priority=2)
 	public void TS112716_Mosaico_de_Relacionamiento_General_Ver_Video() {
 		scp.moveToElementOnAccAndClick("segundoTitulo", 4);
 		driver.findElement(By.cssSelector(".btn.btn-xs.btn-default")).click();
 		sleep(10000);
 	    ArrayList<String> tabs2 = new ArrayList<String> (driver.getWindowHandles());
 	    driver.switchTo().window(tabs2.get(1));
-	    BasePage cambioFrameByID = new BasePage();
+	    //BasePage cambioFrameByID = new BasePage();
 	    sleep(10000);
-		driver.switchTo().frame(cambioFrameByID.getFrameForElement(driver, By.className("ytp-cued-thumbnail-overlay")));
-		Assert.assertTrue(driver.findElement(By.cssSelector(".ytp-large-play-button.ytp-button")).isDisplayed());
+	    driver.switchTo().frame(cambioFrame(driver, By.className("ytp-cued-thumbnail-overlay")));
+		Assert.assertTrue(driver.findElement(By.className("ytp-cued-thumbnail-overlay")).isDisplayed());
 		sleep(3000);
 		driver.close();
 		sleep(3000);
@@ -953,7 +953,7 @@ public class SCPContextoSectorial extends TestBase {
 	    driver.switchTo().window(tabs2.get(0));
 	}
 	
-	@Test(groups = "SCP", priority=2)  //Rompe porque no estan las columnas "Posici�n Competitiva de la Competencia" y "Enfoque", dicen "Competidores competitivos de pie" y "Approach"
+	@Test(groups = "SCP", priority=2)  //Rompe porque no estan las columnas "Posicion Competitiva de la Competencia" y "Enfoque", dicen "Competidores competitivos de pie" y "Approach"
 	public void TS112692_Matriz_de_Criterios_de_desicion_Ingreso_Desde_el_contacto() {
 		scp.moveToElementOnAccAndClick("tercerTitulo", 2);
 		List <WebElement> element = driver.findElements(By.cssSelector(".btn.btn-default.btn-sm"));
@@ -973,7 +973,7 @@ public class SCPContextoSectorial extends TestBase {
 		if (eliminar.getAttribute("value").contains("Eliminar")) {
 			c = true;
 		}
-		boolean check=true;
+		boolean check = true;
 	    String[] datosOp = {"Criterio", "Consideraci\u00f3n del cliente", "Nuestra posici\u00f3n competitiva", "Posici\u00f3n Competitiva de la Competencia", "Enfoque"};
 	    List<String> titleTabla = new ArrayList<String>();
 	    WebElement oportunidad = driver.findElement(By.id("j_id0:j_id143:j_id146"));
