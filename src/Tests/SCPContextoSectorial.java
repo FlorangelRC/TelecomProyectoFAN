@@ -754,20 +754,20 @@ public class SCPContextoSectorial extends TestBase {
 	    driver.switchTo().window(tabs2.get(0));
 	}
 	
-	@Test (groups = "SCP", priority = 2)  //Rompe porque no estan las columnas "Posicion Competitiva de la Competencia" y "Enfoque", dicen "Competidores competitivos de pie" y "Approach"
+	@Test (groups = "SCP", priority = 2)
 	public void TS112692_Matriz_de_Criterios_de_desicion_Ingreso_Desde_el_contacto() {
 		scp.moveToElementOnAccAndClick("tercerTitulo", 2);
 		buscarYClick(driver.findElements(By.cssSelector(".btn.btn-default.btn-sm")), "contains", "ir a los criterios");
 		sleep(10000);
 		WebElement boton = driver.findElement(By.xpath("//*[@id=\"j_id0:j_id128:j_id140\"]"));
 		boolean b = false, c = false;
-		if (boton.getAttribute("value").contains("Agregar Criterio"))
+		if (boton.getAttribute("value").contains("Agregar Criteria"))
 			b = true;
 		WebElement eliminar = driver.findElement(By.id("j_id0:j_id143:j_id158:0:j_id174"));
 		if (eliminar.getAttribute("value").contains("Eliminar"))
 			c = true;
 		boolean check = true;
-	    String[] datosOp = {"Criterio", "Consideraci\u00f3n del cliente", "Nuestra posici\u00f3n competitiva", "Posici\u00f3n Competitiva de la Competencia", "Enfoque"};
+	    String[] datosOp = {"Criterio", "Consideraci\u00f3n del cliente", "Nuestra posici\u00f3n competitiva", "Competidores competitivos de pie", "Approach"};
 	    List<String> titleTabla = new ArrayList<String>();
 	    WebElement oportunidad = driver.findElement(By.id("j_id0:j_id143:j_id146"));
 	    List<WebElement> composicion = oportunidad.findElement(By.tagName("tr")).findElements(By.tagName("th"));	    
@@ -809,15 +809,17 @@ public class SCPContextoSectorial extends TestBase {
 		buscarYClick(driver.findElements(By.cssSelector(".btn.btn-default")), "contains", "cerrar");
 	}
 	
-	@Test (groups = "SCP", priority = 3)  //Rompe porque no esta el boton Enviar
+	@Test (groups = "SCP", priority = 3)
 	public void TS112720_Mosaico_de_Relacionamiento_por_Oportunidad_Enviar() {
 		scp.moveToElementOnAccAndClick("tercerTitulo", 3);
-		Assert.assertTrue(false);
+		WebElement comp = driver.findElement(By.id("publishersharebutton"));
+		Assert.assertTrue(comp.getAttribute("value").equalsIgnoreCase("Compartir"));
 	}
 	
-	@Test (groups = "SCP", priority = 3) //Rompe porque no esta el boton Enviar
+	@Test (groups = "SCP", priority = 3)
 	public void TS112752_Opportunity_Snapshot_enviar() {
 		scp.moveToElementOnAccAndClick("tercerTitulo", 4);
-		Assert.assertTrue(false);
+		WebElement comp = driver.findElement(By.id("publishersharebutton"));
+		Assert.assertTrue(comp.getAttribute("value").equalsIgnoreCase("Compartir"));
 	}
 }
