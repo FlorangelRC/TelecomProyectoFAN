@@ -299,10 +299,7 @@ public class GestionesPerfilTelefonico extends TestBase{
 		sale.BuscarCuenta("DNI", sDNI);
 		String accid = driver.findElement(By.cssSelector(".searchClient-body.slds-hint-parent.ng-scope")).findElements(By.tagName("td")).get(5).getText();
 		System.out.println("id "+accid);
-		driver.findElement(By.cssSelector(".slds-tree__item.ng-scope")).findElement(By.tagName("div")).click();
-		sleep(25000);
-		cCC.seleccionarCardPornumeroLinea(sLinea, driver);
-		sleep(3000);
+		pagePTelefo.buscarAssert();
 		cCC.irAGestionEnCard("Cambio SimCard");
 		pagePTelefo.mododeEntrega();
 		sleep(12000);
@@ -340,9 +337,9 @@ public class GestionesPerfilTelefonico extends TestBase{
 		datosOrden.add("Cambio sim card Agente- Cuenta: "+accid+"Invoice: "+invoice.split("-")[0]);
 		CBS_Mattu invoSer = new CBS_Mattu();
 		if(urlAmbiente.contains("sit")) 
-			Assert.assertTrue(invoSer.PagoEnCaja("1006", accid, "2001", invoice.split("-")[2], invoice.split("-")[1]));
+			Assert.assertTrue(invoSer.PagoEnCaja("1003", accid, "2001", invoice.split("-")[2], invoice.split("-")[1]));
 		else
-			Assert.assertTrue(invoSer.PagoEnCaja("1006", accid, "2001", invoice.split("-")[2], invoice.split("-")[1]));
+			Assert.assertTrue(invoSer.PagoEnCaja("1003", accid, "2001", invoice.split("-")[2], invoice.split("-")[1]));
 		
 		driver.navigate().refresh();
 		sleep(10000);
@@ -387,18 +384,16 @@ public class GestionesPerfilTelefonico extends TestBase{
 	String sOrden = cc.obtenerOrden2(driver);
 	pagePTelefo.getMediodePago().click();
 	sleep(45000);
-	//nueva pantalla
-	
-	driver.findElement(By.cssSelector(".form-control.btn.btn-primary.btn-ellipsis.ng-binding")).click();
-	sleep(8000);
-	cCC.obligarclick(pagePTelefo.getMediodePago());
-	sleep(45000);
 	pagePTelefo.getOrdenSeRealizoConExito().click();
 	sleep(10000);
-	String orden = cCC.obtenerTNyMonto2(driver, sOrden);
+	String invoice = cCC.obtenerMontoyTNparaAlta(driver, sOrden);
+	System.out.println(invoice);
+	sleep(10000);
+	datosOrden.add("Compra de Pack - Cuenta: "+accid+"Invoice: "+invoice.split("-")[0]);
 	CBS_Mattu invoSer = new CBS_Mattu();
-	invoSer.PagoEnCaja("1003", accid, "2001", orden.split("-")[2], orden.split("-")[1]);
-	cc.obtenerOrdenMontoyTN(driver, "Compra de Pack");
+	Assert.assertTrue(invoSer.PagoEnCaja("1003", accid, "2001", invoice.split("-")[2], invoice.split("-")[1]));
+	
+	//cc.obtenerOrdenMontoyTN(driver, "Compra de Pack");
 	sleep(10000);
 	driver.switchTo().frame(cambioFrame(driver, By.id("Status_ilecell")));
 	Assert.assertTrue(driver.findElement(By.id("Status_ilecell")).getText().equalsIgnoreCase("iniciada"));
