@@ -288,7 +288,7 @@ public class GestionesPerfilTelefonico extends TestBase{
 	}
 	
 	@Test(groups = { "GestionesPerfilTelefonico", "E2E" }, priority = 1, dataProvider = "CambioSimCardTelef")
-	public void TSCambioSimCardTelef(String sDNI, String sLinea, String cBanco, String cTarjeta, String cPromo, String cCuotas, String cNumTarjeta, String cVenceMes, String cVenceAno, String cCodSeg, String cTipoDNI,String cDNITarjeta, String cTitular) {
+	public void TSCambioSimCardTelef(String sDNI, String sLinea,String cEntrega, String cProvincia, String cLocalidad, String cBanco, String cTarjeta, String cPromo, String cCuotas, String cNumTarjeta, String cVenceMes, String cVenceAno, String cCodSeg, String cTipoDNI,String cDNITarjeta, String cTitular) {
 		imagen = "TSCambioSimCard";
 		SalesBase sale = new SalesBase(driver);
 		BasePage cambioFrameByID = new BasePage();
@@ -301,7 +301,7 @@ public class GestionesPerfilTelefonico extends TestBase{
 		System.out.println("id "+accid);
 		pagePTelefo.buscarAssert();
 		cCC.irAGestionEnCard("Cambio SimCard");
-		pagePTelefo.mododeEntrega();
+		pagePTelefo.mododeEntrega(driver, "Store Pick Up", cProvincia, cLocalidad);
 		sleep(12000);
 		buscarYClick(driver.findElements(By.cssSelector(".slds-form-element__label.ng-binding")), "equals","tarjeta de credito");
 		selectByText(driver.findElement(By.id("BankingEntity-0")), cBanco);
@@ -381,7 +381,9 @@ public class GestionesPerfilTelefonico extends TestBase{
 	selectByText(driver.findElement(By.id("documentType-0")), cTipoDNI);
 	driver.findElement(By.id("documentNumber-0")).sendKeys(cDNITarjeta);
 	driver.findElement(By.id("cardHolder-0")).sendKeys(cTitular);
+	sleep(10000);
 	String sOrden = cc.obtenerOrden2(driver);
+	sleep(10000);
 	pagePTelefo.getMediodePago().click();
 	sleep(45000);
 	pagePTelefo.getOrdenSeRealizoConExito().click();
