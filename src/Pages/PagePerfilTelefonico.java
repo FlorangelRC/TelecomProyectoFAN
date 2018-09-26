@@ -186,7 +186,7 @@ public class PagePerfilTelefonico extends TestBase{
 		
 
 	
-	public void mododeEntrega(WebDriver driver, String entrega, String provincia, String localidad)  {
+	public void mododeEntrega(WebDriver driver, String entrega, String provincia, String localidad, String puntodeventa)  {
 		BasePage cambioFrameByID=new BasePage();
 		sleep(12000);
 		driver.switchTo().frame(cambioFrameByID.getFrameForElement(driver, By.id("DeliveryMethodSelection")));
@@ -197,13 +197,13 @@ public class PagePerfilTelefonico extends TestBase{
 		State.selectByVisibleText(provincia);
 		Select City = new Select (driver.findElement(By.id("PickCity")));
 		City.selectByVisibleText(localidad);
-		driver.findElement(By.id("Store")).click();
-		//Select Store = new Select (driver.findElement(By.id("Store")));
-		//Store.selectByVisibleText("Centro de Servicio Santa Fe - Juan de Garay 444");
+		//driver.findElement(By.id("Store")).click();
+		Select Store = new Select (driver.findElement(By.id("Store")));
+		Store.selectByVisibleText(puntodeventa);
 		Delivery.click();
 		sleep(25000);
 		SimulaciondeFactura.click();
-	
+		
 		}
 	
 	
