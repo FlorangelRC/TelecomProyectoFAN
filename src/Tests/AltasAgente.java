@@ -488,7 +488,7 @@ public class AltasAgente extends TestBase{
 		
 	}
 	
-	@Test(groups={"Sales", "AltaLineaDatos","E2E"}, priority=1, dataProvider="VentaEquipoExisteEquipoAGTD")
+	@Test(groups={"Sales","VentaDeEquipo","E2E"}, priority=1, dataProvider="VentaExisteEquipoAGTD")
 	public void TS135810_CRM_Movil_Venta_Sin_Linea_Cliente_existente_Presencial_AG_TD(String sDni, String sEquipo, String cBanco, String cTarjeta, String cPromo, String cNumTarjeta, String cVenceMes, String cVenceAno, String cCodSeg) throws IOException {
 		CustomerCare cc = new CustomerCare(driver);
 		SalesBase sb = new SalesBase(driver);
@@ -515,9 +515,16 @@ public class AltasAgente extends TestBase{
 		sleep(22000);
 		cc.obligarclick(driver.findElement(By.id("ICCDAssignment_nextBtn")));
 		sleep(10000);
-		cc.obligarclick(driver.findElement(By.id("InvoicePreview_nextBtn")));       
-		// ===================     QUEDA ACA    ==================================
-		buscarYClick(driver.findElements(By.cssSelector(".slds-form-element__label.ng-binding")), "equals", "tarjeta de credito");
+		cc.obligarclick(driver.findElement(By.id("InvoicePreview_nextBtn"))); 
+		sleep(13000);
+		List<WebElement> medpag = driver.findElements(By.className("taPaymentMethodForm"));
+		for(WebElement m :medpag){
+			if(m.getText().equals("Tarjeta de Credito")){
+			cc.obligarclick(m.findElement(By.cssSelector(".slds-radio--faux")));
+			break;
+			}
+		}
+		sleep(5000);
 		selectByText(driver.findElement(By.id("BankingEntity-0")), cBanco);
 		selectByText(driver.findElement(By.id("CardBankingEntity-0")), cTarjeta);
 		selectByText(driver.findElement(By.id("promotionsByCardsBank-0")), cPromo);
@@ -530,7 +537,7 @@ public class AltasAgente extends TestBase{
 		Assert.assertTrue(false);
 	}
 	
-	@Test(groups={"Sales", "AltaLineaDatos","E2E"}, priority=1, dataProvider="AltaLineaNuevoEquipoTC")
+	@Test(groups={"Sales","VentaDeEquipo","E2E"}, priority=1, dataProvider="AltaLineaNuevoEquipoTC")
 	public void TS135824_CRM_Movil_Venta_Sin_Linea_Cliente_nuevo_SPU_AG_TC(String cDni, String sNombre, String sApellido, String sSexo, String sFNac, String sEmail,String sPlan, String sEquipo, String sProvincia, String sLocalidad, String sCalle, String sAltura, String sCPostal, String cBanco, String cTarjeta, String cPromo, String cCuotas, String cNumTarjeta, String cVenceMes, String cVenceAno, String cCodSeg, String sState, String sCity) throws IOException {
 		CustomerCare cc = new CustomerCare(driver);
 		SalesBase sb = new SalesBase(driver);
@@ -721,9 +728,9 @@ public class AltasAgente extends TestBase{
 		driver.findElement(By.cssSelector(".slds-input.ng-valid.ng-not-empty.ng-dirty.ng-valid-parse.ng-touched")).clear();
 		sleep(8000);
 		driver.findElement(By.cssSelector(".slds-input.ng-valid.ng-dirty.ng-valid-parse.ng-touched.ng-empty")).sendKeys(sEquipo);
-		sleep(5000);
+		sleep(8000);
 		List<WebElement> agregar = driver.findElements(By.cssSelector(".slds-button.slds-button_neutral.cpq-add-button")); 
-		agregar.get(1).click();
+		agregar.get(0).click();
 		sleep(5000);	
 		sb.continuar();
 		sleep(24000);

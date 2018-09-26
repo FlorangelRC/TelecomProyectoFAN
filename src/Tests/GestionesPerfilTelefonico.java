@@ -180,7 +180,7 @@ public class GestionesPerfilTelefonico extends TestBase{
 	}
 	
 	@Test (groups = {"GestionesPerfilTelefonico", "RenovacioDeCuota","E2E"}, dataProvider="RenovacionCuotaSinSaldo")
-	public void TS130067_CRM_Movil_REPRO_Renovacion_De_Cuota_Telefonico_Descuento_De_Saldo_Sin_Credito(String sCuenta, String sDNI, String sLinea) {
+	public void TS130067_CRM_Movil_REPRO_Renovacion_De_Cuota_Telefonico_Descuento_De_Saldo_Sin_Credito(String sDNI, String sLinea) {
 		imagen = "TS130067";
 		BasePage cambioFrameByID=new BasePage();
 		driver.switchTo().frame(cambioFrameByID.getFrameForElement(driver, By.id("SearchClientDocumentType")));
@@ -288,7 +288,7 @@ public class GestionesPerfilTelefonico extends TestBase{
 	}
 	
 	@Test(groups = { "GestionesPerfilTelefonico", "E2E" }, priority = 1, dataProvider = "CambioSimCardTelef")
-	public void TSCambioSimCardTelef(String sDNI, String sLinea, String cBanco, String cTarjeta, String cPromo, String cCuotas, String cNumTarjeta, String cVenceMes, String cVenceAno, String cCodSeg, String cTipoDNI,String cDNITarjeta, String cTitular) {
+	public void TSCambioSimCardTelef(String sDNI, String sLinea,String cEntrega, String cProvincia, String cLocalidad, String cBanco, String cTarjeta, String cPromo, String cCuotas, String cNumTarjeta, String cVenceMes, String cVenceAno, String cCodSeg, String cTipoDNI,String cDNITarjeta, String cTitular) {
 		imagen = "TSCambioSimCard";
 		SalesBase sale = new SalesBase(driver);
 		BasePage cambioFrameByID = new BasePage();
@@ -299,12 +299,9 @@ public class GestionesPerfilTelefonico extends TestBase{
 		sale.BuscarCuenta("DNI", sDNI);
 		String accid = driver.findElement(By.cssSelector(".searchClient-body.slds-hint-parent.ng-scope")).findElements(By.tagName("td")).get(5).getText();
 		System.out.println("id "+accid);
-		driver.findElement(By.cssSelector(".slds-tree__item.ng-scope")).findElement(By.tagName("div")).click();
-		sleep(25000);
-		cCC.seleccionarCardPornumeroLinea(sLinea, driver);
-		sleep(3000);
+		pagePTelefo.buscarAssert();
 		cCC.irAGestionEnCard("Cambio SimCard");
-		pagePTelefo.mododeEntrega();
+		pagePTelefo.mododeEntrega(driver, "Store Pick Up", cProvincia, cLocalidad);
 		sleep(12000);
 		buscarYClick(driver.findElements(By.cssSelector(".slds-form-element__label.ng-binding")), "equals","tarjeta de credito");
 		selectByText(driver.findElement(By.id("BankingEntity-0")), cBanco);
@@ -340,9 +337,9 @@ public class GestionesPerfilTelefonico extends TestBase{
 		datosOrden.add("Cambio sim card Agente- Cuenta: "+accid+"Invoice: "+invoice.split("-")[0]);
 		CBS_Mattu invoSer = new CBS_Mattu();
 		if(urlAmbiente.contains("sit")) 
-			Assert.assertTrue(invoSer.PagoEnCaja("1006", accid, "2001", invoice.split("-")[2], invoice.split("-")[1]));
+			Assert.assertTrue(invoSer.PagoEnCaja("1003", accid, "2001", invoice.split("-")[2], invoice.split("-")[1]));
 		else
-			Assert.assertTrue(invoSer.PagoEnCaja("1006", accid, "2001", invoice.split("-")[2], invoice.split("-")[1]));
+			Assert.assertTrue(invoSer.PagoEnCaja("1003", accid, "2001", invoice.split("-")[2], invoice.split("-")[1]));
 		
 		driver.navigate().refresh();
 		sleep(10000);
@@ -352,7 +349,7 @@ public class GestionesPerfilTelefonico extends TestBase{
 	
 	
 	@Test (groups= {"GestionesPerfilTelefonico","E2E"},priority=1, dataProvider="ventaPack")
-	public void TS123157_CRM_Movil_REPRO_Venta_De_Pack_50_Min_Y_50_SMS_X_7_Dias_Factura_De_Venta_TC_Telefonico(String sDNI, String sCuenta,String sLinea, String cBanco, String cTarjeta, String cPromo, String cCuotas, String cNumTarjeta, String cVenceMes, String cVenceAno, String cCodSeg, String cTipoDNI, String cDNITarjeta, String cTitular, String sventaPack) throws InterruptedException{
+	public void TS123157_CRM_Movil_REPRO_Venta_De_Pack_50_Min_Y_50_SMS_X_7_Dias_Factura_De_Venta_TC_Telefonico(String sDNI, String sLinea, String sventaPack, String cBanco, String cTarjeta, String cPromo, String cCuotas, String cNumTarjeta, String cVenceMes, String cVenceAno, String cCodSeg, String cTipoDNI, String cDNITarjeta, String cTitular) throws InterruptedException{
 	imagen = "TS123157";
 	SalesBase sale = new SalesBase(driver);
 	BasePage cambioFrameByID=new BasePage();
@@ -384,21 +381,21 @@ public class GestionesPerfilTelefonico extends TestBase{
 	selectByText(driver.findElement(By.id("documentType-0")), cTipoDNI);
 	driver.findElement(By.id("documentNumber-0")).sendKeys(cDNITarjeta);
 	driver.findElement(By.id("cardHolder-0")).sendKeys(cTitular);
+	sleep(10000);
 	String sOrden = cc.obtenerOrden2(driver);
+	sleep(10000);
 	pagePTelefo.getMediodePago().click();
-	sleep(45000);
-	//nueva pantalla
-	
-	driver.findElement(By.cssSelector(".form-control.btn.btn-primary.btn-ellipsis.ng-binding")).click();
-	sleep(8000);
-	cCC.obligarclick(pagePTelefo.getMediodePago());
 	sleep(45000);
 	pagePTelefo.getOrdenSeRealizoConExito().click();
 	sleep(10000);
-	String orden = cCC.obtenerTNyMonto2(driver, sOrden);
+	String invoice = cCC.obtenerMontoyTNparaAlta(driver, sOrden);
+	System.out.println(invoice);
+	sleep(10000);
+	datosOrden.add("Compra de Pack - Cuenta: "+accid+"Invoice: "+invoice.split("-")[0]);
 	CBS_Mattu invoSer = new CBS_Mattu();
-	invoSer.PagoEnCaja("1003", accid, "2001", orden.split("-")[2], orden.split("-")[1]);
-	cc.obtenerOrdenMontoyTN(driver, "Compra de Pack");
+	Assert.assertTrue(invoSer.PagoEnCaja("1003", accid, "2001", invoice.split("-")[2], invoice.split("-")[1]));
+	
+	//cc.obtenerOrdenMontoyTN(driver, "Compra de Pack");
 	sleep(10000);
 	driver.switchTo().frame(cambioFrame(driver, By.id("Status_ilecell")));
 	Assert.assertTrue(driver.findElement(By.id("Status_ilecell")).getText().equalsIgnoreCase("iniciada"));
@@ -486,7 +483,6 @@ public class GestionesPerfilTelefonico extends TestBase{
 		Assert.assertTrue(driver.findElement(By.id("Email")).getAttribute("value").equals(nuevoMail));
 		Assert.assertTrue(driver.findElement(By.id("MobilePhone")).getAttribute("value").equals(nuevoPhone));
 		Assert.assertTrue(driver.findElement(By.id("DocumentType")).getAttribute("disabled").equals("true"));
-		Assert.assertTrue(driver.findElement(By.id("DocumentNumber")).getAttribute("disabled").equals("true"));
 		driver.findElement(By.id("FirstName")).clear();
 		driver.findElement(By.id("FirstName")).sendKeys(nombre);
 		driver.findElement(By.id("LastName")).clear();

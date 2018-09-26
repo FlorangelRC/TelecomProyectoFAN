@@ -57,6 +57,16 @@ public class PagePerfilTelefonico extends TestBase{
 	private WebElement IngresodeSerial;
 
 	
+	@FindBy(id="OrderSumary_nextBtn")
+	private WebElement ResumenOrdenCompra;
+	
+	
+	public WebElement getResumenOrdenCompra() {
+		return ResumenOrdenCompra;
+	}
+
+
+
 	public WebElement getIngresodeSerial() {
 		return IngresodeSerial;
 	}
@@ -176,24 +186,24 @@ public class PagePerfilTelefonico extends TestBase{
 		
 
 	
-	public void mododeEntrega() {
+	public void mododeEntrega(WebDriver driver, String entrega, String provincia, String localidad)  {
 		BasePage cambioFrameByID=new BasePage();
 		sleep(12000);
 		driver.switchTo().frame(cambioFrameByID.getFrameForElement(driver, By.id("DeliveryMethodSelection")));
 		sleep(15000);
 		Select metodoEntrega = new Select (driver.findElement(By.id("DeliveryMethodSelection")));
-		metodoEntrega.selectByVisibleText("Store Pick Up");
+		metodoEntrega.selectByVisibleText(entrega);
 		Select State = new Select (driver.findElement(By.id("PickState")));
-		State.selectByVisibleText("Ciudad Aut\u00f3noma de Buenos Aires");
+		State.selectByVisibleText(provincia);
 		Select City = new Select (driver.findElement(By.id("PickCity")));
-		City.selectByVisibleText("CIUD AUTON D BUENOS AIRES");
-		Select Store = new Select (driver.findElement(By.id("Store")));
-		Store.selectByVisibleText("Centro de Servicio Santa Fe - Juan de Garay 444");
+		City.selectByVisibleText(localidad);
+		driver.findElement(By.id("Store")).click();
+		//Select Store = new Select (driver.findElement(By.id("Store")));
+		//Store.selectByVisibleText("Centro de Servicio Santa Fe - Juan de Garay 444");
 		Delivery.click();
-		siguiente();
 		sleep(25000);
 		SimulaciondeFactura.click();
-		
+	
 		}
 	
 	

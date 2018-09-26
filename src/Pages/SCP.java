@@ -421,6 +421,11 @@ public boolean cuentalogeada(String cuenta){
 			}
 		}
 		try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		driver.findElement(By.id("userDropdown")).click();
+		sleep(3000);
+		driver.findElement(By.id("logout")).click();
+		sleep(5000);
+		driver.get(TestBase.urlSCP);
 		if (usuario.toLowerCase().contains("fabiana"))
 			TB.loginSCPUsuario(driver);
 		else

@@ -178,11 +178,12 @@ public class CBS {
 		return sRequest;
 	}
 	
-	public String sCBS_Request_Validador_Alta_Linea(String sResponse, String sLinea, String sImsi, String sICCD) {
+	public String sCBS_Request_Validador_Alta_Linea(String sResponse, String sLinea, String sImsi, String sICCD, String sNombre, String sApellido) {
 		String sAssert = "false";
 		sLinea = "SubIdentity>" + sLinea;
 		
-		if (sResponse.contains(sLinea) && sResponse.contains(sImsi) && sResponse.contains(sICCD)) {
+		//if (sResponse.contains(sLinea) && sResponse.contains(sImsi) && sResponse.contains(sICCD)) {
+		if (sResponse.contains(sLinea) && sResponse.contains(sNombre) && sResponse.contains(sApellido)) {
 			sAssert = "true";
 		}
 		else {

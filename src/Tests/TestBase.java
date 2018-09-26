@@ -47,10 +47,14 @@ import DataProvider.ExcelUtils;
 
 public class TestBase {
 	protected static WebDriver driver;
-		//public static String urlAmbiente = "https://telecomcrm--uat.cs53.my.salesforce.com";
-		public static String urlAmbiente = "https://crm--sit.cs14.my.salesforce.com/";
-		public String urlSCP = "https://telecomcrm--uat.cs8.my.salesforce.com";
 	
+		public static String urlAmbiente = "https://telecomcrm--uat.cs53.my.salesforce.com";
+		//public static String urlAmbiente = "https://crm--sit.cs14.my.salesforce.com/";
+		
+		// viejo public String urlSCP = "https://telecomcrm--uat.cs8.my.salesforce.com";
+		public static String urlSCP = "https://telecomcrm--uat.cs53.my.salesforce.com";
+	
+		
 	public void leftDropdown(WebDriver driver, String selection) {
 		driver.findElement(By.className("x-btn-mc")).click();
 		switch(selection) {
@@ -962,19 +966,9 @@ public class TestBase {
 	 return (testObjArray);
 
 	}
-	
-	@DataProvider
-	public Object[][] DatosSalesNumerosAmigos() throws Exception{
-
-	 Object[][] testObjArray = ExcelUtils.getTableArray("Cuentas.xlsx","PreparacionDatos",1,1,11,"Numeros Amigos");
-
-	 return (testObjArray);
-
-	}
-	
 
 	@DataProvider
-	public Object[][] DatosSalesAltaLineaEquipo() throws Exception{
+	public Object[][] DatosSalesAltaLineaEquipo() throws Exception{ //para verificar, por las dudas no se borro.
 
 	 Object[][] testObjArray = ExcelUtils.getTableArray("Cuentas.xlsx","PreparacionDatos",1,1,9,"Alta Linea Equip New AG");
 
@@ -1010,7 +1004,7 @@ public class TestBase {
 	@DataProvider
 	public Object[][] AltaLineaNuevoAgentePresencial() throws Exception{
 
-	 Object[][] testObjArray = ExcelUtils.getTableArray(dataProviderE2E(),"Altas y Nominaciones",1,1,12,"Alta Linea Nuevo Agente Presencial");
+	 Object[][] testObjArray = ExcelUtils.getTableArray(dataProviderE2E(),"Altas y Nominacion",1,1,12,"Alta Linea Nuevo Agente Presencial");
 
 	 return (testObjArray);
 
@@ -1027,7 +1021,7 @@ public class TestBase {
 	@DataProvider
 	public Object[][] RenovacionCuotaConSaldo() throws Exception{
 
-	 Object[][] testObjArray = ExcelUtils.getTableArray(dataProviderE2E(),"E2EconPago",1,1,3,"Renovacion Cuota Con Saldo");
+	 Object[][] testObjArray = ExcelUtils.getTableArray(dataProviderE2E(),"E2EconPago",1,1,2,"Renovacion Cuota Con Saldo");
 
 	 return (testObjArray);
 
@@ -1036,7 +1030,7 @@ public class TestBase {
 	@DataProvider
 	public Object[][] RenovacionCuotaSinSaldo() throws Exception{
 
-	 Object[][] testObjArray = ExcelUtils.getTableArray(dataProviderE2E(),"E2EconPago",1,1,3,"Renovacion Cuota Sin Saldo");
+	 Object[][] testObjArray = ExcelUtils.getTableArray(dataProviderE2E(),"E2EconPago",1,1,2,"Renovacion Cuota Sin Saldo");
 
 	 return (testObjArray);
 
@@ -1045,7 +1039,7 @@ public class TestBase {
 	@DataProvider
 	public Object[][] RenovacionCuotaSinSaldoConTC() throws Exception{
 
-	 Object[][] testObjArray = ExcelUtils.getTableArray(dataProviderCuentas(),"Sales",1,1,14,"Renovacion Cuota S/Saldo Con Tarjeta TC");
+	 Object[][] testObjArray = ExcelUtils.getTableArray(dataProviderE2E(),"Sales",1,1,14,"Renovacion Cuota S/Saldo Con Tarjeta TC");
 
 	 return (testObjArray);
 
@@ -1088,7 +1082,7 @@ public class TestBase {
 	@DataProvider
 	public Object [][] ventaPack() throws Exception{
 		
-		Object[][] testObjArray = ExcelUtils.getTableArray(dataProviderE2E(),"E2EconPago",1,1,15,"venta de pack");
+		Object[][] testObjArray = ExcelUtils.getTableArray(dataProviderE2E(),"E2EconPago",1,1,14,"packTelefonico");
 		
 		return (testObjArray);
 	}
@@ -1236,7 +1230,7 @@ public class TestBase {
 	@DataProvider
 	public Object[][] CambioSimCardTelef() throws Exception{
 		
-		Object[][] testObjArray =  ExcelUtils.getTableArray(dataProviderE2E(),"E2EconPago",1,1,13,"Cambio SimCard Telef");
+		Object[][] testObjArray =  ExcelUtils.getTableArray(dataProviderE2E(),"E2EconPago",1,1,16,"Cambio SimCard Telef");
 		
 		return (testObjArray);
 	}
@@ -1317,7 +1311,7 @@ public class TestBase {
 	@DataProvider
 	public Object[][] CuentaTriviasYSuscripciones() throws Exception{
 		
-		 Object[][] testObjArray = ExcelUtils.getTableArray("Cuentas.xlsx","PerfilGestiones",1,1,1,"Trivias Y Suscripciones");
+		 Object[][] testObjArray = ExcelUtils.getTableArray(dataProviderE2E(),"E2ESinPago",1,1,1,"Trivias Y Suscripciones");
 
 		 return (testObjArray);
 	}
@@ -1325,7 +1319,7 @@ public class TestBase {
 	@DataProvider
 	public Object[][] CuentaReintegros() throws Exception{
 		
-		 Object[][] testObjArray = ExcelUtils.getTableArray("Cuentas.xlsx","PerfilGestiones",1,1,1,"Reintegros");
+		 Object[][] testObjArray = ExcelUtils.getTableArray(dataProviderE2E(),"E2ESinPago",1,1,1,"Reintegros");
 
 		 return (testObjArray);
 	}
@@ -1333,7 +1327,15 @@ public class TestBase {
 	@DataProvider
 	public Object[][] CuentaModificacionDeDatos() throws Exception{
 		
-		 Object[][] testObjArray = ExcelUtils.getTableArray("Cuentas.xlsx","PerfilGestiones",1,1,1,"Modificacion De Datos");
+		 Object[][] testObjArray = ExcelUtils.getTableArray(dataProviderE2E(),"E2EsinPago",1,1,1,"Modificacion De Datos");
+
+		 return (testObjArray);
+	}
+	
+	@DataProvider
+	public Object[][] CuentaAnulacionDeVenta() throws Exception{
+		
+		 Object[][] testObjArray = ExcelUtils.getTableArray(dataProviderE2E(),"E2EsinPago",1,1,1,"Anulacion De Venta");
 
 		 return (testObjArray);
 	}
@@ -1360,15 +1362,7 @@ public class TestBase {
 	         //Impresion de Excepciones
 	         e.printStackTrace();
 	      }
-	   }
-	@DataProvider
-	public Object[][] VentaEquipoExisteEquipoAGTD() throws Exception{
-
-	 Object[][] testObjArray = ExcelUtils.getTableArray(dataProviderE2E(),"Altas y Nominacion",1,1,9,"Venta Equipo Existe AG Debito");
-
-	 return (testObjArray);
-
-	}
+   }
 	
 	@DataProvider
 	public Object[][] AltaLineaNuevoconEquipo() throws Exception{
@@ -1415,11 +1409,12 @@ public class TestBase {
 	}
 	
 	@DataProvider
-	public Object[][] VentaExisteEquipoAgTd() throws Exception{
+	public Object[][] VentaExisteEquipoAGTD() throws Exception{
 
 	 Object[][] testObjArray = ExcelUtils.getTableArray(dataProviderE2E(),"Altas y Nominacion",1,1,9,"Venta Equipo Existe AG Debito");
 
 	 return (testObjArray);
 
 	}
+			
 }

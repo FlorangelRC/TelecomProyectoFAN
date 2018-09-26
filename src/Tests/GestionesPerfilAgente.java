@@ -37,8 +37,8 @@ public class GestionesPerfilAgente extends TestBase{
 	public void init() {
 		driver = setConexion.setupEze();
 		sleep(5000);
-		sb = new SalesBase(driver);
 		cc = new CustomerCare(driver);
+		sb = new SalesBase(driver);
 		loginAgente(driver);
 		sleep(22000);
 		try {
@@ -104,7 +104,7 @@ public class GestionesPerfilAgente extends TestBase{
 		sleep(15000);
 	}
 	
-	//@AfterMethod(alwaysRun=true)
+	@AfterMethod(alwaysRun=true)
 	public void after() throws IOException {
 		guardarListaTxt(datosOrden);
 		datosOrden.clear();
@@ -162,6 +162,7 @@ public class GestionesPerfilAgente extends TestBase{
 		selectByText(driver.findElement(By.id("BankingEntity-0")), sBanco);
 		selectByText(driver.findElement(By.id("CardBankingEntity-0")), sTarjeta);
 		selectByText(driver.findElement(By.id("promotionsByCardsBank-0")), sPromo);
+		driver.findElement(By.id("SelectPaymentMethodsStep_nextBtn")).click();
 		sleep(5000);
 		selectByText(driver.findElement(By.id("Installment-0")), sCuotas);
 		driver.findElement(By.id("CardNumber-0")).sendKeys(sNumTarjeta);
@@ -292,19 +293,37 @@ public class GestionesPerfilAgente extends TestBase{
 		String invoice = cCC.obtenerMontoyTNparaAlta(driver, sOrden);
 		System.out.println(invoice);
 		sleep(10000);
-		System.out.println(datosOrden.add("Operacion: Compra de Pack- Cuenta: "+accid+"Invoice: "+invoice.split("-")[0]));
+		datosOrden.add("Operacion: Compra de Pack- Cuenta: "+accid+" Invoice: "+invoice.split("-")[0]+invoice.split("-")[1]);
+		System.out.println("Operacion: Compra de Pack- Cuenta: "+accid+" Invoice: "+invoice.split("-")[0] + "\tAmmount: " +invoice.split("-")[1]);
 		CBS_Mattu invoSer = new CBS_Mattu();
-		if(urlAmbiente.contains("sit")) 
-			Assert.assertTrue(invoSer.PagoEnCaja("1005", accid, "2001", invoice.split("-")[2], invoice.split("-")[1]));
-		else
-			Assert.assertTrue(invoSer.PagoEnCaja("1005", accid, "2001", invoice.split("-")[2], invoice.split("-")[1]));
+		Assert.assertTrue(invoSer.PagoEnCaja("1005", accid, "2001", invoice.split("-")[0], invoice.split("-")[1]));
 		driver.navigate().refresh();
 		sleep(10000);
 		driver.switchTo().frame(cambioFrame(driver, By.id("Status_ilecell")));
 		Assert.assertTrue(driver.findElement(By.id("Status_ilecell")).getText().equalsIgnoreCase("activada"));
-		
-
 		}
 	
+	@Test (groups = {"GestionesPerfilAgente", "AnulacionDeVenta", "E2E"}, dataProvider = "CuentaAnulacionDeVenta")
+	public void Anulacion_De_Venta(String cDNI) {
+		imagen = "Anulacion_De_Venta";
+		driver.switchTo().frame(cambioFrame(driver, By.id("SearchClientDocumentType")));
+		sb.BuscarCuenta("DNI", cDNI);
+		driver.findElement(By.cssSelector(".slds-tree__item.ng-scope")).click();
+		sleep(15000);
+		cc.irAGestion("anulacion de ordenes");
+		sleep(15000);
+		driver.switchTo().frame(cambioFrame(driver, By.cssSelector(".slds-select.ng-pristine.ng-untouched.ng-valid.ng-not-empty")));
+		buscarYClick(driver.findElements(By.cssSelector(".slds-button.slds-button--neutral")), "equals", "anulaci\u00f3n de venta");
+		sleep(10000);
+		if (TestBase.urlAmbiente.contains("sit")) {
+			driver.switchTo().frame(cambioFrame(driver, By.id("AnnulmentReasonSelect")));
+			selectByText(driver.findElement(By.id("AnnulmentReasonSelect")), "Arrepentimiento");
+			driver.findElement(By.id("AnnulmentReason_nextBtn")).click();
+			sleep(20000);
+		}
+		driver.switchTo().frame(cambioFrame(driver, By.xpath("//*[@id=\"ep\"]/div[2]/div[2]/table")));
+		String gestion = driver.findElement(By.xpath("//*[@id=\"ep\"]/div[2]/div[2]/table")).findElements(By.tagName("tr")).get(4).getText();
+		Assert.assertTrue(gestion.contains("Estado") && (gestion.contains("Cancelada") || gestion.contains("Cancelled")));
+	}	
 	
 }
