@@ -467,7 +467,7 @@ public class AltadeLineas extends TestBase {
 			}
 		}
 		sleep(25000);
-		sb.agregarplan(sPlan);
+		sb.elegirplan(sPlan);
 		sleep(12000);
 		driver.findElement(By.cssSelector(".slds-input.ng-valid.ng-not-empty.ng-dirty.ng-valid-parse.ng-touched")).clear();
 		sleep(3000);

@@ -1,3 +1,4 @@
+
 package Tests;
 
 import static org.testng.Assert.assertEquals;
@@ -59,7 +60,7 @@ private WebDriver driver;
 	}
 	
 	
-	@AfterClass(groups = "SCP")
+	//@AfterClass(groups = "SCP")
 	public void teardown() {
 		driver.quit();
 		sleep(10000);
@@ -111,8 +112,7 @@ private WebDriver driver;
 		 ArrayList<String> camp1 = new ArrayList<String>();
 		 ArrayList<String> txt2 = new ArrayList<String>();
 		 txt2.add("CUIT");
-		 txt2.add("Raz\u00f3n Social");  // falta razon social
-		 txt2.add("Holding");
+		 txt2.add("Numero de Holding");
 		 txt2.add("Segmento");
 		 txt2.add("Region");
 		 txt2.add("Territorio");
@@ -214,16 +214,11 @@ private WebDriver driver;
 	
 	
 	@Test(groups = "SCP", priority=3) 
-	public void TS112792_Plan_de_accion_Eliminar_tareas() {  // actualizar
+	public void TS112792_Plan_de_accion_Eliminar_tareas() { 
 		SCP prueba = new SCP(driver); 
 		prueba.Desloguear_Loguear("Maximiliano");
-		sleep(15000);
-		WebElement user = driver.findElement(By.id(".sidebarDiv")).findElements(By.tagName("div")).get(1).findElements(By.tagName("div")).get(1).findElements(By.tagName("div")).get(1).findElement(By.id("hoverItem27"));
-		if(user.getText().contains("Cuenta Bien Hecha SCP")){
-			user.click();
-		}
-		System.out.println(user.getText());
-		user.click();
+		sleep(18000);
+		driver.findElement(By.id("mru0010j00000EYKW0")).click();
 		sleep(10000);
 	    prueba.moveToElementOnAccAndClick("cuartoTitulo", 2);
 	    WebElement tabla= driver.findElement(By.id("mainTable_wrapper")).findElement(By.className("odd")).findElements(By.tagName("td")).get(1);
@@ -250,9 +245,8 @@ private WebDriver driver;
 	@Test(groups = "SCP", priority=3) 
 	public void TS112794_Plan_de_accion_Plan_de_accion_Fusionar_tareas() {
 		SCP prueba = new SCP(driver); 
-		prueba.Desloguear_Loguear("Maximiliano");
 		sleep(15000);
-		driver.findElement(By.id("mru001L000000vmnvl")).click();
+		driver.findElement(By.id("mru0010j00000EYKW0")).click();
 		sleep(3000);
 	    prueba.moveToElementOnAccAndClick("cuartoTitulo", 2);
 	    java.util.Date fechaCompleta = new Date();
@@ -313,7 +307,7 @@ private WebDriver driver;
 	@Test(groups = "SCP", priority=3) 
 	public void TS112795_Plan_de_accion_Guardar() {
 		SCP prueba = new SCP(driver); 
-	    prueba.moveToElementOnAccAndClick("cuartoTitulo", 2);
+		prueba.moveToElementOnAccAndClick("cuartoTitulo", 2);
 	    WebElement tabla= driver.findElement(By.id("mainTable_wrapper")).findElement(By.className("odd")).findElements(By.tagName("td")).get(3);
 	    Actions action = new Actions(driver);   
 		action.moveToElement(tabla).doubleClick().perform();
@@ -401,6 +395,7 @@ private WebDriver driver;
 	    busc.sendKeys(lala);
 	    Assert.assertTrue(lala.contains(tabla.getText()));
 	}
+	
 	@Test(groups = "SCP", priority=3) 
 	public void TS112798_Plan_de_accion_Triangulo_ordenador() throws ParseException {
 		SCP prueba = new SCP(driver); 
@@ -433,7 +428,5 @@ private WebDriver driver;
 	    			}
 	    	}
 	    Assert.assertTrue(true);
-		
+		}
 	}
-
-}

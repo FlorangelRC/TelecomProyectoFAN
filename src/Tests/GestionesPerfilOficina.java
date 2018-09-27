@@ -34,21 +34,6 @@ public class GestionesPerfilOficina extends TestBase {
 	List<String> sOrders = new ArrayList<String>();
 	String imagen;
 	
-	/*@BeforeClass(alwaysRun=true)
-	public void init() {
-		driver = setConexion.setupEze();
-		sleep(5000);
-		sb = new SalesBase(driver);
-		cc = new CustomerCare(driver);
-		loginOfCom(driver);
-		sleep(8000);
-		driver.findElement(By.id("tabBar")).findElement(By.tagName("a")).click();
-		sleep(18000);
-		driver.switchTo().defaultContent();
-		sleep(3000);
-		
-	}*/
-	
 	@BeforeClass(alwaysRun=true)
 	public void init() {
 		driver = setConexion.setupEze();
@@ -972,10 +957,6 @@ public class GestionesPerfilOficina extends TestBase {
 		String orden = cc.obtenerOrden(driver, "Suspensi\u00f3n de Linea");
 		sOrders.add("Suspension, orden numero: " + orden + " con numero de DNI: " + cDNI);
 		System.out.println(sOrders);
-		/*if(orden.length() >= 8) {
-			orden = orden.substring(0, orden.length()-25);
-		}*/
-		cc.buscarCaso(orden.substring(0, 7));
 	}
 	
 	@Test (groups = {"Suspension", "GestionesPerfilOficina","E2E"}, dataProvider="CuentaSuspension")
@@ -1026,7 +1007,6 @@ public class GestionesPerfilOficina extends TestBase {
 		/*if(orden.length() >= 8) {
 			orden = orden.substring(0, orden.length()-25);
 		}*/
-		cc.buscarCaso(orden.substring(0, 7));
 	}	
 	
 	@Test (groups = {"Suspension", "GestionesPerfilOficina","E2E"}, dataProvider="CuentaSuspension")
@@ -1067,7 +1047,6 @@ public class GestionesPerfilOficina extends TestBase {
 		String orden = cc.obtenerOrden(driver, "Suspension administrativa");
 		sOrders.add("Suspencion, orden numero: " + orden + " con numero de DNI: " + cDNI);
 		System.out.println(sOrders);
-		cc.buscarCaso(orden.substring(0, 7));
 	}	
 	
 	@Test (groups = {"Suspension", "GestionesPerfilOficina","E2E"}, dataProvider="CuentaSuspension")
@@ -1106,8 +1085,7 @@ public class GestionesPerfilOficina extends TestBase {
 		sleep(10000);
 		String orden = cc.obtenerOrden(driver, "Suspension administrativa");
 		sOrders.add("Suspencion, orden numero: " + orden + " con numero de DNI: " + cDNI);
-		//System.out.println(sOrders);
-		cc.buscarCaso(orden.substring(0, 7));
+		System.out.println(sOrders);
 	}
 	
 	@Test (groups = {"GestionesPerfilOficina", "Ajustes","E2E"}, dataProvider = "CuentaAjustesPRE")
@@ -2210,6 +2188,7 @@ public class GestionesPerfilOficina extends TestBase {
 		String orden = cc.obtenerOrden(driver, "Suspension administrativa");
 		sOrders.add("Suspencion, orden numero: " + orden + " con numero de DNI: " + cDNI);
 		System.out.println(sOrders);
+		
 	}
 	
 	@Test (groups = {"GestionesPerfilOficina","E2E"}, dataProvider="PackOfCom")
@@ -2221,7 +2200,7 @@ public class GestionesPerfilOficina extends TestBase {
 		String accid = driver.findElement(By.cssSelector(".searchClient-body.slds-hint-parent.ng-scope")).findElements(By.tagName("td")).get(5).getText();
 		System.out.println("id "+accid);
 		pagePTelefo.buscarAssert();
-		pagePTelefo.comprarPack("comprar minutos");
+		pagePTelefo.comprarPack("comprar internet");
 		pagePTelefo.closerightpanel();
 		sleep(8000);
 		pagePTelefo.agregarPack(sPackOfCom);
@@ -2249,9 +2228,9 @@ public class GestionesPerfilOficina extends TestBase {
 		System.out.println(invoice);
 		sleep(10000);
 		sOrders.add("Operacion: Compra de Pack- Cuenta: "+accid+"Invoice: "+invoice.split("-")[1]+invoice.split("-")[0]);
+		System.out.println("Operacion: Compra de Pack- Cuenta: "+accid+" Invoice: "+invoice.split("-")[1] + "\tAmmount: " +invoice.split("-")[0]);
 		CBS_Mattu invoSer = new CBS_Mattu();
-		Assert.assertTrue(invoSer.PagoEnCaja("1006", accid, "2001", invoice.split("-")[1], invoice.split("-")[0]));
-		
+		Assert.assertTrue(invoSer.PagoEnCaja("1005", accid, "2001", invoice.split("-")[1], invoice.split("-")[0]));
 		driver.navigate().refresh();
 		sleep(10000);
 		driver.switchTo().frame(cambioFrame(driver, By.id("Status_ilecell")));

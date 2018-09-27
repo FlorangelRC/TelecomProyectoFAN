@@ -125,11 +125,12 @@ public class GestionesPerfilBackOffice extends TestBase {
 		sleep(18000);
 		cc.cerrarTodasLasPestanas();
 		cc.buscarCaso(nroCaso);
-		driver.switchTo().frame(cambioFrame(driver, By.id("cas1_ileinner")));
-		driver.findElement(By.id("cas1_ileinner")).findElements(By.tagName("a")).get(1).click();		
+		driver.switchTo().frame(cambioFrame(driver, By.name("edit")));
+		WebElement list = driver.findElement(By.xpath("//*[@id=\"ep\"]/div[2]/div[2]/table"));
+		list.findElements(By.tagName("td")).get(1).findElements(By.tagName("a")).get(1).click();
 		sleep(5000);
 		selectByText(driver.findElement(By.id("newOwn_mlktp")), "Usuario");
-		driver.findElement(By.id("newOwn")).sendKeys("Cintia Tschernikoff");
+		driver.findElement(By.id("newOwn")).sendKeys("Marcelo Aletta");
 		driver.findElement(By.name("save")).click();
 		sleep(5000);
 		driver.findElements(By.className("actionLink")).get(2).click();

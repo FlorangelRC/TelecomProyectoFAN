@@ -300,7 +300,7 @@ public class GestionesPerfilTelefonico extends TestBase{
 	}
 	
 	@Test(groups = { "GestionesPerfilTelefonico", "E2E" }, priority = 1, dataProvider = "CambioSimCardTelef")
-	public void TSCambioSimCardTelef(String sDNI, String sLinea, String cBanco, String cTarjeta, String cPromo, String cCuotas, String cNumTarjeta, String cVenceMes, String cVenceAno, String cCodSeg, String cTipoDNI,String cDNITarjeta, String cTitular) {
+	public void TSCambioSimCardTelef(String sDNI, String sLinea,String cEntrega, String cProvincia, String cLocalidad, String cPuntodeVenta, String cBanco, String cTarjeta, String cPromo, String cCuotas, String cNumTarjeta, String cVenceMes, String cVenceAno, String cCodSeg, String cTipoDNI,String cDNITarjeta, String cTitular) {
 		imagen = "TSCambioSimCard";
 		detalles = null;
 		detalles = imagen+"Telef-DNI:"+sDNI;
@@ -319,7 +319,7 @@ public class GestionesPerfilTelefonico extends TestBase{
 		cCC.seleccionarCardPornumeroLinea(sLinea, driver);
 		sleep(3000);
 		cCC.irAGestionEnCard("Cambio SimCard");
-		pagePTelefo.mododeEntrega();
+		pagePTelefo.mododeEntrega(driver, cEntrega, cProvincia, cLocalidad, cPuntodeVenta);
 		sleep(12000);
 		String sOrden = cc.obtenerOrden3(driver);
 		detalles+="-Orden:"+sOrden;
@@ -336,13 +336,8 @@ public class GestionesPerfilTelefonico extends TestBase{
 		selectByText(driver.findElement(By.id("documentType-0")), cTipoDNI);
 		driver.findElement(By.id("documentNumber-0")).sendKeys(cDNITarjeta);
 		driver.findElement(By.id("cardHolder-0")).sendKeys(cTitular);
+		
 		cCC.obligarclick(driver.findElement(By.id("SelectPaymentMethodsStep_nextBtn")));
-		sleep(15000);
-		String orden = driver.findElement(By.className("top-data")).findElement(By.className("ng-binding")).getText();
-		String NCuenta = driver.findElements(By.className("top-data")).get(1).findElements(By.className("ng-binding")).get(3).getText();
-		System.out.println("Orden " + orden);
-		System.out.println("cuenta " + NCuenta);
-		cCC.obligarclick(driver.findElement(By.id("OrderSumary_nextBtn")));
 		sleep(15000);
 		try {
 			driver.findElement(By.id("Step_Error_Huawei_S029_nextBtn")).click();
@@ -405,19 +400,14 @@ public class GestionesPerfilTelefonico extends TestBase{
 	driver.findElement(By.id("cardHolder-0")).sendKeys(cTitular);
 	pagePTelefo.getMediodePago().click();
 	sleep(45000);
-	//nueva pantalla
-	
-	driver.findElement(By.cssSelector(".form-control.btn.btn-primary.btn-ellipsis.ng-binding")).click();
-	sleep(8000);
-	cCC.obligarclick(pagePTelefo.getMediodePago());
-	sleep(45000);
 	pagePTelefo.getOrdenSeRealizoConExito().click();
 	sleep(10000);
 	String orden = cCC.obtenerTNyMonto2(driver, sOrden);
 	detalles+="-Monto:"+orden.split("-")[2]+"-Prefactura:"+orden.split("-")[1];
 	CBS_Mattu invoSer = new CBS_Mattu();
-	invoSer.PagoEnCaja("1003", accid, "2001", orden.split("-")[2], orden.split("-")[1]);
-	cc.obtenerOrdenMontoyTN(driver, "Compra de Pack");
+	Assert.assertTrue(invoSer.PagoEnCaja("1003", accid, "2001", invoice.split("-")[2], invoice.split("-")[1]));
+	
+	//cc.obtenerOrdenMontoyTN(driver, "Compra de Pack");
 	sleep(10000);
 	driver.switchTo().frame(cambioFrame(driver, By.id("Status_ilecell")));
 	Assert.assertTrue(driver.findElement(By.id("Status_ilecell")).getText().equalsIgnoreCase("iniciada"));
