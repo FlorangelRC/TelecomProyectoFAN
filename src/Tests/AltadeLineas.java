@@ -61,10 +61,13 @@ public class AltadeLineas extends TestBase {
 	@BeforeMethod(alwaysRun=true)
 	public void setup() throws Exception {
 		Accounts accountPage = new Accounts(driver);
+		goToLeftPanel2(driver, "Inicio");
+		sleep(5000);
 		SalesBase SB = new SalesBase(driver);
 		driver.switchTo().defaultContent();
 		sleep(6000);
 		SB.cerrarPestaniaGestion(driver);
+		
 		sleep(5000);
 		driver.switchTo().frame(accountPage.getFrameForElement(driver, By.cssSelector(".hasMotif.homeTab.homepage.ext-webkit.ext-chrome.sfdcBody.brandQuaternaryBgr")));
 		List<WebElement> frames = driver.findElements(By.tagName("iframe"));
@@ -480,7 +483,7 @@ public class AltadeLineas extends TestBase {
 			}
 		sleep(5000);	
 		sb.continuar();
-		sleep(15000);
+		sleep(25000);
 		cc.obligarclick(driver.findElement(By.id("InvoicePreview_nextBtn")));
 		sleep(13000);
 		/*cc.obligarclick(driver.findElement(By.id("LineAssignment_nextBtn")));
@@ -526,7 +529,7 @@ public class AltadeLineas extends TestBase {
 		CambiarPerfil("ofcom",driver);
 		sb.completarEntrega(orden, driver);
 	}
-	@Test(groups={"Sales", "AltaLineaDatos", "E2E"}, priority=1, dataProvider="DatosAltaEquipoExiste") // ============== 31-8 no aprece el paso de ASIGNACION DE SERIALES
+	@Test(groups={"Sales", "AltaLineaDatos", "E2E"}, priority=1, dataProvider="DatosAltaEquipoExiste") 
 	public void TS_CRM_Movil_Equipo_Cliente_existente_Presencial_OFCOM(String sDni, String sPlan, String sEquipo) throws IOException {
 		imagen = "TS_CRM_Movil_Equipo_Cliente_existente_Presencial_OFCOM";
 		CustomerCare cc = new CustomerCare(driver);
@@ -556,7 +559,7 @@ public class AltadeLineas extends TestBase {
 		}
 		sleep(5000);	
 		sb.continuar();
-		sleep(15000);
+		sleep(25000);
 		cc.obligarclick(driver.findElement(By.id("InvoicePreview_nextBtn")));;
 		sleep(14000);
 		//cc.obligarclick(driver.findElement(By.id("ICCDAssignment_nextBtn")));
@@ -567,6 +570,8 @@ public class AltadeLineas extends TestBase {
 				}
 			}
 		cc.obligarclick(driver.findElement(By.id("SelectPaymentMethodsStep_nextBtn")));
+		sleep(14000);
+		cc.obligarclick(driver.findElement(By.id("DecisiveLineSelection_nextBtn")));
 		sleep(14000);
 		String oorden = driver.findElement(By.className("top-data")).findElement(By.className("ng-binding")).getText();
 		String NCuenta = driver.findElements(By.className("top-data")).get(1).findElements(By.className("ng-binding")).get(3).getText();

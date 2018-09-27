@@ -15,6 +15,7 @@ import org.testng.annotations.BeforeClass;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 import Pages.BasePage;
+import Pages.Marketing;
 import Pages.SCP;
 import Pages.setConexion;
 
@@ -59,7 +60,7 @@ private WebDriver driver;
 	    List <WebElement> wIrAlMosaico = driver.findElements(By.cssSelector(".sorting_1")); 
 	    wIrAlMosaico.get(1).click(); 
 	    try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();} 
-	    Assert.assertTrue(driver.findElement(By.cssSelector(".row.conteinerDiv")).isDisplayed()); 
+	    Assert.assertTrue(driver.findElement(By.className("panel-title")).getText().contains("Mosaico de Relacionamiento")); 
 	}
 	
 	//------------------------------------------------------------------------------------------------- 
@@ -117,14 +118,22 @@ private WebDriver driver;
 		
 		ArrayList<String> tabs2 = new ArrayList<String> (driver.getWindowHandles());
 		driver.switchTo().window(tabs2.get(1));
-		BasePage cambioFrameByID=new BasePage();
-	    driver.switchTo().defaultContent();
-	    driver.switchTo().frame(cambioFrameByID.getFrameForElement(driver, By.className("ytp-cued-thumbnail-overlay-image")));
-		TB.waitFor(driver, By.className("ytp-cued-thumbnail-overlay-image"));
-		((JavascriptExecutor)driver).executeScript("window.scrollTo(0,"+driver.findElement(By.className("ytp-cued-thumbnail-overlay-image")).getLocation().y+")");
-		Assert.assertTrue(driver.findElement(By.className("ytp-cued-thumbnail-overlay-image")).isDisplayed());
+		sleep(5000);
+		boolean bAssert = false;
+		try {
+			BasePage cambioFrameByID=new BasePage();
+			driver.switchTo().defaultContent();
+		    driver.switchTo().frame(cambioFrameByID.getFrameForElement(driver, By.className("ytp-cued-thumbnail-overlay")));
+			TB.waitFor(driver, By.className("ytp-cued-thumbnail-overlay-image"));
+			((JavascriptExecutor)driver).executeScript("window.scrollTo(0,"+driver.findElement(By.className("ytp-cued-thumbnail-overlay-image")).getLocation().y+")");
+			bAssert = driver.findElement(By.className("ytp-cued-thumbnail-overlay-image")).isDisplayed();
+		}
+		catch (Exception x) {
+			//Always empty
+		}
 		driver.close();
 		driver.switchTo().window(tabs2.get(0));
+		Assert.assertTrue(bAssert);
 	}
 	
 	//------------------------------------------------------------------------------------------------- 
@@ -133,7 +142,7 @@ private WebDriver driver;
 	public void TS112563_Asignacion_de_Value_Drivers_a_Oportunidades_MAS() {
 		SCP prueba = new SCP(driver); 
 		prueba.moveToElementOnAccAndClick("tercerTitulo", 1);
-		((JavascriptExecutor)driver).executeScript("window.scrollTo(0,"+driver.findElement(By.xpath("//*[@id=\"a0l3F0000005ipnQAA\"]/td[2]/span[2]/button")).getLocation().y+")");
+		((JavascriptExecutor)driver).executeScript("window.scrollTo(0,"+driver.findElement(By.id("mainTable")).getLocation().y+")");
 		driver.findElement(By.cssSelector(".btn.btn-default.btn-xs.showMore")).click();
 		
 		try {Thread.sleep(10000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
@@ -151,7 +160,11 @@ private WebDriver driver;
 	public void TS112565_Asignacion_de_Value_Drivers_a_Oportunidades_Oportunidades() {
 		SCP prueba = new SCP(driver); 
 		prueba.moveToElementOnAccAndClick("tercerTitulo", 1);
-		driver.findElement(By.xpath("//*[@id=\"0063F000002UbLjQAK\"]/td[1]/a")).click();
+		Marketing mMarketing = new Marketing(driver);
+		List<WebElement> wList = mMarketing.traerColumnaElement(driver.findElement(By.id("mainOppsTable_wrapper")), 6, 1);
+		String sName = wList.get(0).getText();
+		wList.get(0).findElement(By.tagName("a")).click();
+		Assert.assertTrue(driver.findElement(By.className("pageDescription")).getText().equalsIgnoreCase(sName));
 	}
 	
 	//------------------------------------------------------------------------------------------------- 
@@ -176,6 +189,7 @@ private WebDriver driver;
 		WebElement wNavBar = driver.findElement(By.cssSelector(".zen-inlineList.zen-tabMenu"));
 		List<WebElement> wMenu = wNavBar.findElements(By.tagName("li"));
 		wMenu.get(4).click();
+		sleep(5000);
 		WebElement wMenuSiguiente = driver.findElement(By.cssSelector(".btn-group.pull-right"));
 		List<WebElement> wMenu2 = wMenuSiguiente.findElements(By.tagName("input"));
 		wMenu2.get(2).click();
@@ -185,7 +199,7 @@ private WebDriver driver;
 		wMenu3.get(1).click();
 		try {Thread.sleep(7000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 		WebElement wMenuSiguiente2 = driver.findElement(By.cssSelector(".btn-group.pull-right"));
-		Assert.assertTrue(wMenuSiguiente2.findElement(By.tagName("b")).getText().contains("Página: 1"));
+		Assert.assertTrue(wMenuSiguiente2.findElement(By.tagName("b")).getText().contains("Pï¿½gina: 1"));
 	}
 	
 	//------------------------------------------------------------------------------------------------- 
@@ -313,7 +327,7 @@ private WebDriver driver;
 	//------------------------------------------------------------------------------------------------- 
 	//TCC = 17
 	@Test(groups = "SCP", priority = 3)
-	public void TS112567_Asignacin_de_Value_Drivers_a_Oportunidades_Related_value_drivers() {
+	public void TS112567_Asignacion_de_Value_Drivers_a_Oportunidades_Related_value_drivers() {
 		SCP prueba= new SCP(driver);
 		TestBase tTB = new TestBase();
 		try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}

@@ -420,7 +420,7 @@ public boolean cuentalogeada(String cuenta){
 				break;
 			}
 		}
-		try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		try {Thread.sleep(10000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 		driver.findElement(By.id("userDropdown")).click();
 		sleep(3000);
 		driver.findElement(By.id("logout")).click();
@@ -441,7 +441,7 @@ public boolean cuentalogeada(String cuenta){
 		clickOnTabByName("cuentas");
 		try {Thread.sleep(7000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 		try {Thread.sleep(7000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
-		clickEnCuentaPorNombre("Florencia Di Ci");
+		clickEnCuentaPorNombre("Cuenta Bien Hecha SCP");
 		try {Thread.sleep(10000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 		moveToElementOnAccAndClick(identificador,indice);
 		comentarycompartir(comentario);

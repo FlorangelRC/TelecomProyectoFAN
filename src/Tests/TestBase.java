@@ -48,8 +48,8 @@ import DataProvider.ExcelUtils;
 public class TestBase {
 	protected static WebDriver driver;
 	
-		public static String urlAmbiente = "https://telecomcrm--uat.cs53.my.salesforce.com";
-		//public static String urlAmbiente = "https://crm--sit.cs14.my.salesforce.com/";
+		//public static String urlAmbiente = "https://telecomcrm--uat.cs53.my.salesforce.com";
+		public static String urlAmbiente = "https://crm--sit.cs14.my.salesforce.com/";
 		
 		// viejo public String urlSCP = "https://telecomcrm--uat.cs8.my.salesforce.com";
 		public static String urlSCP = "https://telecomcrm--uat.cs53.my.salesforce.com";
@@ -570,7 +570,7 @@ public class TestBase {
 		if(urlAmbiente.contains("sit"))
 			try {Thread.sleep(miliseconds+5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 		else
-			try {Thread.sleep(miliseconds);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+			try {Thread.sleep(miliseconds+2000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 	}
 	
 	public List<String> obtenerElAtributoDeLosElementos(String atributo, List<WebElement> elementos) {
@@ -1073,7 +1073,7 @@ public class TestBase {
 	@DataProvider
 	public Object[][] VentaPacks() throws Exception{
 
-	 Object[][] testObjArray = ExcelUtils.getTableArray(dataProviderE2E(),"E2EconPago",1,1,5,"Venta de packs");
+	 Object[][] testObjArray = ExcelUtils.getTableArray(dataProviderE2E(),"E2EconPago",1,1,5,"Venta de pack saldo");
 
 	 return (testObjArray);
 
@@ -1212,7 +1212,7 @@ public class TestBase {
 			 login(driver,urlAmbiente, "U585991", "Testa10k");
 			 break;
 		 case "backoffice":
-			 login(driver, urlAmbiente, "uat569324", "Testa10k");
+			 login(driver, urlAmbiente, "uat518122", "Testa10k");
 			 break;
 		 }
 		 sleep(10000);
@@ -1230,7 +1230,7 @@ public class TestBase {
 	@DataProvider
 	public Object[][] CambioSimCardTelef() throws Exception{
 		
-		Object[][] testObjArray =  ExcelUtils.getTableArray(dataProviderE2E(),"E2EconPago",1,1,16,"Cambio SimCard Telef");
+		Object[][] testObjArray =  ExcelUtils.getTableArray(dataProviderE2E(),"E2EconPago",1,1,17,"Cambio SimCard Telef");
 		
 		return (testObjArray);
 	}
