@@ -112,8 +112,7 @@ private WebDriver driver;
 		 ArrayList<String> camp1 = new ArrayList<String>();
 		 ArrayList<String> txt2 = new ArrayList<String>();
 		 txt2.add("CUIT");
-		 txt2.add("Raz\u00f3n Social");  // falta razon social
-		 txt2.add("Holding");
+		 txt2.add("Numero de Holding");
 		 txt2.add("Segmento");
 		 txt2.add("Region");
 		 txt2.add("Territorio");
@@ -187,8 +186,8 @@ private WebDriver driver;
 		 ArrayList<String> camp1 = new ArrayList<String>();
 		 ArrayList<String> txt2 = new ArrayList<String>();
 		 txt2.add("CUIT");
-		// txt2.add("Raz\u00f3n Social");  // falta
-		// txt2.add("Numero de clientes"); //falta 
+		 txt2.add("Raz\u00f3n Social");  // falta
+		 txt2.add("Numero de clientes"); //falta 
 		 txt2.add("Numero de Holding");
 		 txt2.add("Categor\u00eda WH");
 		 txt2.add("Domicilio de recepci\u00f3n de notificaciones");
@@ -246,7 +245,6 @@ private WebDriver driver;
 	@Test(groups = "SCP", priority=3) 
 	public void TS112794_Plan_de_accion_Plan_de_accion_Fusionar_tareas() {
 		SCP prueba = new SCP(driver); 
-		prueba.Desloguear_Loguear("Maximiliano");
 		sleep(15000);
 		driver.findElement(By.id("mru0010j00000EYKW0")).click();
 		sleep(3000);
@@ -397,6 +395,7 @@ private WebDriver driver;
 	    busc.sendKeys(lala);
 	    Assert.assertTrue(lala.contains(tabla.getText()));
 	}
+	
 	@Test(groups = "SCP", priority=3) 
 	public void TS112798_Plan_de_accion_Triangulo_ordenador() throws ParseException {
 		SCP prueba = new SCP(driver); 
@@ -429,7 +428,5 @@ private WebDriver driver;
 	    			}
 	    	}
 	    Assert.assertTrue(true);
-		
+		}
 	}
-
-}
