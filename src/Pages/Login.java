@@ -289,7 +289,7 @@ public class Login extends BasePage {
 			  if (TB.urlAmbiente.contains("sit"))
 					Ecom_User_ID.sendKeys("UAT186579");//SIT
 			  else
-			  		Ecom_User_ID.sendKeys("uat518122");//UAT 
+			  		Ecom_User_ID.sendKeys("uat569076");//UAT 
 			  Ecom_Password.sendKeys("Testa10k");
 			  loginButton2.click();
 			  try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
