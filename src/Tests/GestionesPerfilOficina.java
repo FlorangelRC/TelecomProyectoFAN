@@ -34,21 +34,6 @@ public class GestionesPerfilOficina extends TestBase {
 	List<String> sOrders = new ArrayList<String>();
 	String imagen;
 	
-	/*@BeforeClass(alwaysRun=true)
-	public void init() {
-		driver = setConexion.setupEze();
-		sleep(5000);
-		sb = new SalesBase(driver);
-		cc = new CustomerCare(driver);
-		loginOfCom(driver);
-		sleep(8000);
-		driver.findElement(By.id("tabBar")).findElement(By.tagName("a")).click();
-		sleep(18000);
-		driver.switchTo().defaultContent();
-		sleep(3000);
-		
-	}*/
-	
 	@BeforeClass(alwaysRun=true)
 	public void init() {
 		driver = setConexion.setupEze();
