@@ -346,7 +346,7 @@ public class GestionesPerfilTelefonico extends TestBase{
 		sleep(5000);
 		driver.navigate().refresh();
 		sleep(10000);
-		String invoice = cCC.obtenerMontoyTNparaAlta(driver, orden);
+		String invoice = cCC.obtenerMontoyTNparaAlta(driver, sOrden);
 		System.out.println(invoice);
 		sleep(10000);
 		detalles+="Monto:"+invoice.split("-")[2]+"-Prefactura:"+invoice.split("-")[1];
@@ -405,7 +405,7 @@ public class GestionesPerfilTelefonico extends TestBase{
 	String orden = cCC.obtenerTNyMonto2(driver, sOrden);
 	detalles+="-Monto:"+orden.split("-")[2]+"-Prefactura:"+orden.split("-")[1];
 	CBS_Mattu invoSer = new CBS_Mattu();
-	Assert.assertTrue(invoSer.PagoEnCaja("1003", accid, "2001", invoice.split("-")[2], invoice.split("-")[1]));
+	Assert.assertTrue(invoSer.PagoEnCaja("1003", accid, "2001", orden.split("-")[2], orden.split("-")[1]));
 	
 	//cc.obtenerOrdenMontoyTN(driver, "Compra de Pack");
 	sleep(10000);
