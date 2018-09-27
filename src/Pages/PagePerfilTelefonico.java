@@ -88,9 +88,19 @@ public class PagePerfilTelefonico extends TestBase{
 
 
 	public void buscarAssert() {
+	CustomerCare cc= new CustomerCare(driver);
 	sleep(8000);
 	driver.findElement(By.cssSelector(".slds-tree__item.ng-scope")).findElement(By.tagName("div")).click();
 	sleep(12000);
+	driver.switchTo().defaultContent();
+	if (driver.findElements(By.cssSelector(".x-layout-split.x-layout-split-west.x-splitbar-h")).size()>0) {
+		System.out.println("Entre aqui");
+		cc.panelIzquierdo();
+		driver.switchTo().defaultContent();
+		driver.findElement(By.cssSelector(".x-layout-split.x-layout-split-west.x-splitbar-h")).click();	
+	}
+	//cc.closeleftpanel();
+	sleep(4000);
 	driver.switchTo().frame(cambioFrame(driver, By.className("card-top"))); 
 	sleep(8000);
 	driver.findElement(By.className("card-top")).click(); 

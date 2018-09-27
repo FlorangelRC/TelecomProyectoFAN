@@ -60,11 +60,11 @@ public class SCPAdministracionDeServicios extends TestBase {
     public void TS110248_Estructura_De_Los_Productos_Moneda() {  
       SCP pcp = new SCP(driver);  
       boolean estaMon= false;
-      //pcp.Desloguear_Loguear("fabiana");
-      /*pcp.clickOnTabByName("cuentas");
+     pcp.Desloguear_Loguear("permisos");
+      pcp.clickOnTabByName("cuentas");
 		try {Thread.sleep(7000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 		try {Thread.sleep(7000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
-		pcp.clickEnCuentaPorNombre("AIR S.R.L");*/
+		pcp.clickEnCuentaPorNombre("Cuenta Bien Hecha SCP");
 		try {Thread.sleep(7000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 		pcp.elegiroportunidad("Dulce D\u00eda Cafeter\u00eda");
 		try {Thread.sleep(7000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
@@ -89,7 +89,7 @@ public class SCPAdministracionDeServicios extends TestBase {
 		Detalles = driver.findElement(By.className("detailList")).findElements(By.tagName("tr")).get(8);
 		String MonNuev = Detalles.findElements(By.tagName("td")).get(1).getText();
 		assertFalse(MonActual.equals(MonNuev));
-		//pcp.Desloguear_Loguear("isabel");
+		pcp.Desloguear_Loguear("isabel");
     }  
 	
 	@Test(groups = "SCP", priority=6)  
@@ -119,7 +119,7 @@ public class SCPAdministracionDeServicios extends TestBase {
 	@Test(groups = "SCP", priority=6)  
     public void TS110250_Estructura_De_Los_Proyectos_TMI() {  
       SCP pcp = new SCP(driver);  
-      //pcp.Desloguear_Loguear("fabiana");
+      pcp.Desloguear_Loguear("permisos");
       pcp.clickOnTabByName("cuentas");
 		try {Thread.sleep(7000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 		try {Thread.sleep(7000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
@@ -138,7 +138,7 @@ public class SCPAdministracionDeServicios extends TestBase {
 	    TMI = driver.findElement(By.className("detailList")).findElements(By.tagName("tr")).get(4).findElements(By.tagName("td")).get(3);
 	    assertTrue(TMI.getText().equals(Integer.toString(numTMI)));
 		try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}  
-		//pcp.Desloguear_Loguear("isabel");
+		pcp.Desloguear_Loguear("isabel");
     }  
 	
 	@Test(groups = "SCP", priority=6)  
@@ -168,11 +168,11 @@ public class SCPAdministracionDeServicios extends TestBase {
 	@Test(groups = "SCP", priority=6)  
     public void TS110252_Estructura_De_Las_Oportunidades_Probabilidad() {  
       SCP pcp = new SCP(driver);  
-      //pcp.Desloguear_Loguear("fabiana");
-     /* pcp.clickOnTabByName("cuentas");
+      pcp.Desloguear_Loguear("permisos");
+      pcp.clickOnTabByName("cuentas");
 		try {Thread.sleep(7000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 		try {Thread.sleep(7000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
-		pcp.clickEnCuentaPorNombre("AIR S.R.L");*/
+		pcp.clickEnCuentaPorNombre("Cuenta Bien Hecha SCP");
 		try {Thread.sleep(7000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 		pcp.elegiroportunidad("Dulce D\u00eda Cafeter\u00eda");
 		try {Thread.sleep(7000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
@@ -979,12 +979,12 @@ public class SCPAdministracionDeServicios extends TestBase {
 	@Test(groups = "SCP", priority=3) 
 	  public void TS112791_Plan_de_accion_Doble_Click_Para_Editar() { 
 	    SCP pcp = new SCP(driver); 
-	   // pcp.Desloguear_Loguear("fabiana");
-	    /*try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+	    pcp.Desloguear_Loguear("permisos");
+	    try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 		pcp.clickOnTabByName("cuentas");
 		try {Thread.sleep(7000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 		try {Thread.sleep(7000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
-		pcp.clickEnCuentaPorNombre("Florencia Di Ci");*/
+		pcp.clickEnCuentaPorNombre("Cuenta Bien Hecha SCP");
 		try {Thread.sleep(10000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 		pcp.moveToElementOnAccAndClick("cuartoTitulo", 2);
 		WebElement modificar= driver.findElement(By.id("mainTable")).findElement(By.className("odd")).findElements(By.tagName("td")).get(2);

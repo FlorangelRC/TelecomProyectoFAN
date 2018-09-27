@@ -488,7 +488,7 @@ public class AltasAgente extends TestBase{
 		
 	}
 	
-	@Test(groups={"Sales","VentaDeEquipo","E2E"}, priority=1, dataProvider="VentaExisteEquipoAGTD")
+	@Test(groups={"Sales","VentaDeEquipo","E2E"}, priority=1, dataProvider="VentaExisteEquipoAgTd")
 	public void TS135810_CRM_Movil_Venta_Sin_Linea_Cliente_existente_Presencial_AG_TD(String sDni, String sEquipo, String cBanco, String cTarjeta, String cPromo, String cNumTarjeta, String cVenceMes, String cVenceAno, String cCodSeg) throws IOException {
 		CustomerCare cc = new CustomerCare(driver);
 		SalesBase sb = new SalesBase(driver);
@@ -649,14 +649,14 @@ public class AltasAgente extends TestBase{
 			sleep(20000);
 		}catch(Exception ex1) {}
 		
-		/*sb.elegirvalidacion("DOC");
+		sb.elegirvalidacion("DOC");
 		sleep(14000);
 		driver.findElement(By.id("FileDocumentImage")).sendKeys("C:\\Users\\florangel\\Downloads\\mapache.jpg");
 		sleep(3000);
 		cc.obligarclick(driver.findElement(By.id("DocumentMethod_nextBtn")));
 		sleep(35000);
 		cc.obligarclick(driver.findElement(By.id("ValidationResult_nextBtn")));
-		sleep(30000);*/
+		sleep(30000);
 		try {
 			driver.findElements(By.cssSelector(".slds-button.slds-button--neutral.ng-binding.ng-scope")).get(1).click();
 			sleep(10000);

@@ -275,15 +275,15 @@ public class GestionesPerfilAgente extends TestBase{
 		sleep(12000);
 		pagePTelefo.getSimulaciondeFactura().click();
 		sleep(12000);
-		String sOrden = cCC.obtenerOrden2(driver);
+		String sOrden = cCC.obtenerOrden3(driver);
 		buscarYClick(driver.findElements(By.cssSelector(".slds-form-element__label.ng-binding")), "equals", "efectivo");
 		sleep(12000);
-		buscarYClick(driver.findElements(By.cssSelector(".slds-form-element__label.ng-binding")), "equals", "tarjeta de credito");
+		/*buscarYClick(driver.findElements(By.cssSelector(".slds-form-element__label.ng-binding")), "equals", "tarjeta de credito");
 		sleep(12000);
 		selectByText(driver.findElement(By.id("BankingEntity-0")), cBanco);
 		selectByText(driver.findElement(By.id("CardBankingEntity-0")), cTarjeta);
 		selectByText(driver.findElement(By.id("promotionsByCardsBank-0")), cPromo);
-		selectByText(driver.findElement(By.id("Installment-0")), cCuotas);
+		selectByText(driver.findElement(By.id("Installment-0")), cCuotas);*/
 		pagePTelefo.getMediodePago().click();
 		sleep(15000);
 		pagePTelefo.getOrdenSeRealizoConExito().click();
@@ -294,7 +294,7 @@ public class GestionesPerfilAgente extends TestBase{
 		System.out.println(invoice);
 		sleep(10000);
 		System.out.println(datosOrden.add("Operacion: Compra de Pack- Cuenta: "+accid+"Invoice: "+invoice.split("-")[0]));
-		CBS_Mattu invoSer = new CBS_Mattu();
+		/*CBS_Mattu invoSer = new CBS_Mattu();
 		if(urlAmbiente.contains("sit")) 
 			Assert.assertTrue(invoSer.PagoEnCaja("1005", accid, "2001", invoice.split("-")[2], invoice.split("-")[1]));
 		else
@@ -302,7 +302,7 @@ public class GestionesPerfilAgente extends TestBase{
 		driver.navigate().refresh();
 		sleep(10000);
 		driver.switchTo().frame(cambioFrame(driver, By.id("Status_ilecell")));
-		Assert.assertTrue(driver.findElement(By.id("Status_ilecell")).getText().equalsIgnoreCase("activada"));
+		Assert.assertTrue(driver.findElement(By.id("Status_ilecell")).getText().equalsIgnoreCase("activada"));*/
 		}
 	
 	@Test (groups = {"GestionesPerfilAgente", "AnulacionDeVenta", "E2E"}, dataProvider = "CuentaAnulacionDeVenta")

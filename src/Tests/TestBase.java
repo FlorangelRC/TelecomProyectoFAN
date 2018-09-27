@@ -567,7 +567,7 @@ public class TestBase {
 		if(urlAmbiente.contains("sit"))
 			try {Thread.sleep(miliseconds+5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 		else
-			try {Thread.sleep(miliseconds);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+			try {Thread.sleep(miliseconds+2000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 	}
 	
 	public List<String> obtenerElAtributoDeLosElementos(String atributo, List<WebElement> elementos) {
@@ -1070,7 +1070,7 @@ public class TestBase {
 	@DataProvider
 	public Object[][] VentaPacks() throws Exception{
 
-	 Object[][] testObjArray = ExcelUtils.getTableArray(dataProviderE2E(),"E2EconPago",1,1,5,"Venta de packs");
+	 Object[][] testObjArray = ExcelUtils.getTableArray(dataProviderE2E(),"E2EconPago",1,1,5,"Venta de pack saldo");
 
 	 return (testObjArray);
 
