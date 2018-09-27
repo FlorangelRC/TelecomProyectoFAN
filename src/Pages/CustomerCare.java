@@ -1518,7 +1518,7 @@ public class CustomerCare extends BasePage {
 			}
 		}	
 		assertTrue(esta);
-		sleep(5000);
+		sleep(7000);
 	}
 	
 	private void intentarAbrirPanelIzquierdo() {

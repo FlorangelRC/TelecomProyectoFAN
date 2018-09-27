@@ -2200,7 +2200,8 @@ public class GestionesPerfilOficina extends TestBase {
 		String accid = driver.findElement(By.cssSelector(".searchClient-body.slds-hint-parent.ng-scope")).findElements(By.tagName("td")).get(5).getText();
 		System.out.println("id "+accid);
 		pagePTelefo.buscarAssert();
-		pagePTelefo.comprarPack("comprar internet");
+		cCC.seleccionarCardPornumeroLinea(sLinea, driver);
+		pagePTelefo.comprarPack();
 		pagePTelefo.closerightpanel();
 		sleep(8000);
 		pagePTelefo.agregarPack(sPackOfCom);

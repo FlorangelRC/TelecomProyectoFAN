@@ -111,7 +111,7 @@ public class GestionesPerfilTelefonico extends TestBase{
 	public void TS134332_CRM_Movil_REPRO_Recargas_Telefonico_TC_Callcenter_Financiacion(String cDNI, String cMonto, String cLinea, String cBanco, String cTarjeta, String cNumTarjeta, String cVenceMes, String cVenceAno, String cCodSeg, String cTipoDNI, String cDNITarjeta, String cTitular, String cPromo, String cCuotas) {
 		imagen= "TS134332";
 		detalles = null;
-		detalles = imagen+"Recarga-DNI:"+cDNI;
+		detalles = imagen+"-Recarga-DNI:"+cDNI;
 		if(cMonto.length() >= 4) {
 			cMonto = cMonto.substring(0, cMonto.length()-1);
 		}
@@ -188,7 +188,7 @@ public class GestionesPerfilTelefonico extends TestBase{
 	public void TS130067_CRM_Movil_REPRO_Renovacion_De_Cuota_Telefonico_Descuento_De_Saldo_Sin_Credito(String sDNI, String sLinea) {
 		imagen = "TS130067";
 		detalles = null;
-		detalles = imagen+"Renovacion de cuota-DNI:"+sDNI;
+		detalles = imagen+"-Renovacion de cuota-DNI:"+sDNI;
 		BasePage cambioFrameByID=new BasePage();
 		driver.switchTo().frame(cambioFrameByID.getFrameForElement(driver, By.id("SearchClientDocumentType")));
 		sleep(1000);
@@ -268,7 +268,7 @@ public class GestionesPerfilTelefonico extends TestBase{
 	public void TS123314_CRM_Movil_REPRO_Venta_de_Pack_40_Pesos_Exclusivo_Para_Vos_Descuento_De_Saldo_Telefonico(String sDNI, String sCuenta, String sNumeroDeCuenta, String sLinea, String sVentaPack){
 	imagen = "TS123314";
 	detalles = null;
-	detalles = imagen+"Venta de pack-DNI:"+sDNI;
+	detalles = imagen+"-Venta de pack-DNI:"+sDNI;
 	SalesBase sale = new SalesBase(driver);
 	BasePage cambioFrameByID=new BasePage();
 	CustomerCare cCC = new CustomerCare(driver);
@@ -280,7 +280,8 @@ public class GestionesPerfilTelefonico extends TestBase{
 	System.out.println("id "+accid);
 	detalles+="-Cuenta:"+accid;
 	pagePTelefo.buscarAssert();
-	pagePTelefo.comprarPack("comprar sms");
+	cCC.seleccionarCardPornumeroLinea(sLinea, driver);
+	pagePTelefo.comprarPack();
 	pagePTelefo.agregarPack(sVentaPack);
 	pagePTelefo.tipoDePago("descuento de saldo");
 	String orden = cc.obtenerOrdenMontoyTN(driver, "Compra de Pack");
@@ -303,7 +304,7 @@ public class GestionesPerfilTelefonico extends TestBase{
 	public void TSCambioSimCardTelef(String sDNI, String sLinea,String cEntrega, String cProvincia, String cLocalidad, String cPuntodeVenta, String cBanco, String cTarjeta, String cPromo, String cCuotas, String cNumTarjeta, String cVenceMes, String cVenceAno, String cCodSeg, String cTipoDNI,String cDNITarjeta, String cTitular) {
 		imagen = "TSCambioSimCard";
 		detalles = null;
-		detalles = imagen+"Telef-DNI:"+sDNI;
+		detalles = imagen+"-Telef-DNI:"+sDNI;
 		SalesBase sale = new SalesBase(driver);
 		BasePage cambioFrameByID = new BasePage();
 		CustomerCare cCC = new CustomerCare(driver);
@@ -364,7 +365,7 @@ public class GestionesPerfilTelefonico extends TestBase{
 	public void TS123157_CRM_Movil_REPRO_Venta_De_Pack_50_Min_Y_50_SMS_X_7_Dias_Factura_De_Venta_TC_Telefonico(String sDNI, String sLinea, String sventaPack, String cBanco, String cTarjeta, String cPromo, String cCuotas, String cNumTarjeta, String cVenceMes, String cVenceAno, String cCodSeg, String cTipoDNI, String cDNITarjeta, String cTitular) throws InterruptedException{
 	imagen = "TS123157";
 	detalles = null;
-	detalles = imagen+"Venta de pack-DNI:"+sDNI;
+	detalles = imagen+"-Venta de pack-DNI:"+sDNI;
 	SalesBase sale = new SalesBase(driver);
 	BasePage cambioFrameByID=new BasePage();
 	CustomerCare cCC = new CustomerCare(driver);
@@ -376,7 +377,8 @@ public class GestionesPerfilTelefonico extends TestBase{
 	System.out.println("id "+accid);
 	detalles +="-Cuenta:"+accid;
 	pagePTelefo.buscarAssert();
-	pagePTelefo.comprarPack("comprar internet");
+	cCC.seleccionarCardPornumeroLinea(sLinea, driver);
+	pagePTelefo.comprarPack();
 	pagePTelefo.PackCombinado(sventaPack);
 	pagePTelefo.tipoDePago("en factura de venta");
 	pagePTelefo.getTipodepago().click();
@@ -420,7 +422,7 @@ public class GestionesPerfilTelefonico extends TestBase{
 	public void TS121333_CRM_Movil_PRE_Ajuste_total_de_comprobantes_FAN_Front_Telefonico(String cDNI) {
 		imagen = "TS121333";
 		detalles = null;
-		detalles = imagen+"Ajuste-DNI:"+cDNI;
+		detalles = imagen+"-Ajuste-DNI:"+cDNI;
 		boolean gest = false;
 		driver.switchTo().frame(cambioFrame(driver, By.id("SearchClientDocumentType")));
 		sb.BuscarCuenta("DNI", cDNI);
@@ -469,7 +471,7 @@ public class GestionesPerfilTelefonico extends TestBase{
 	public void TS134835_CRM_Movil_PRE_Modificacion_de_datos_Actualizar_los_datos_del_cliente_completos_FAN_Front_Telefonico(String cDNI) {
 		imagen = "TS134835";
 		detalles = null;
-		detalles = imagen+"Modificacion de datos-DNI:"+cDNI;
+		detalles = imagen+"-Modificacion de datos-DNI:"+cDNI;
 		String nuevoNombre = "Otro";
 		String nuevoApellido = "Apellido";
 		String nuevoNacimiento = "10/10/1982";

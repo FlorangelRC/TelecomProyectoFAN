@@ -32,6 +32,7 @@ public class GestionesPerfilAgente extends TestBase{
 	private CustomerCare cc;
 	List <String> datosOrden =new ArrayList<String>();
 	String imagen;
+	String detalles;
 	
 	@BeforeClass(alwaysRun=true)
 	public void init() {
@@ -106,16 +107,16 @@ public class GestionesPerfilAgente extends TestBase{
 	
 	@AfterMethod(alwaysRun=true)
 	public void after() throws IOException {
+		datosOrden.add(detalles);
 		guardarListaTxt(datosOrden);
 		datosOrden.clear();
 		tomarCaptura(driver,imagen);
-		sleep(5000);
 	}
 	
-	//@AfterClass(alwaysRun=true)
+	@AfterClass(alwaysRun=true)
 	public void quit() throws IOException {
 		//guardarListaTxt(datosOrden);
-		//driver.quit();
+		driver.quit();
 		sleep(5000);
 	}
 	
@@ -123,6 +124,8 @@ public class GestionesPerfilAgente extends TestBase{
 	public void TS134322_CRM_Movil_REPRO_Recargas_Presencial_TC_Agente(String sDNI, String sMonto, String sLinea, String sBanco, String sTarjeta, String sNumTarjeta, String sVenceMes, String sVenceAno, String sCodSeg, String sTipoDNI, String sDNITarjeta, String sTitular, String sPromo, String sCuotas) {
 		//Check All
 		imagen = "134322";
+		detalles = null;
+		detalles = imagen + "-Recarga-DNI:" + sDNI;
 		if(sMonto.length() >= 4) {
 			sMonto = sMonto.substring(0, sMonto.length()-1);
 		}
@@ -143,6 +146,7 @@ public class GestionesPerfilAgente extends TestBase{
 		sSB.BuscarCuenta("DNI", sDNI);
 		String accid = driver.findElement(By.cssSelector(".searchClient-body.slds-hint-parent.ng-scope")).findElements(By.tagName("td")).get(5).getText();
 		System.out.println("id "+accid);
+		detalles += "-Cuenta:" + accid;
 		driver.findElement(By.cssSelector(".slds-tree__item.ng-scope")).findElement(By.tagName("div")).click();
 		sleep(18000);
 		
@@ -156,6 +160,7 @@ public class GestionesPerfilAgente extends TestBase{
 		driver.findElement(By.id("AmountSelectionStep_nextBtn")).click();
 		sleep(15000);
 		String sOrden = cCC.obtenerOrden2(driver);
+		detalles += "-Orden:" + sOrden;
 		driver.findElement(By.id("InvoicePreview_nextBtn")).click();
 		sleep(10000);
 		buscarYClick(driver.findElements(By.cssSelector(".slds-form-element__label.ng-binding")), "equals", "tarjeta de credito");
@@ -186,7 +191,8 @@ public class GestionesPerfilAgente extends TestBase{
 		String orden = cCC.obtenerTNyMonto2(driver, sOrden);
 		//String orden = cCC.obtenerOrdenMontoyTN(driver, "Recarga");
 		System.out.println("orden = "+orden);
-		datosOrden.add("Recargas" + orden + " de cuenta "+accid+" con DNI: " + sDNI);
+		detalles+="-Monto:"+orden.split("-")[2]+"-Prefactura:"+orden.split("-")[1];
+		//datosOrden.add("Recargas" + orden + " de cuenta "+accid+" con DNI: " + sDNI);
 		CBS_Mattu invoSer = new CBS_Mattu();
 		invoSer.PagoEnCaja("1005", accid, "2001", orden.split("-")[2], orden.split("-")[1]);
 		sleep(5000);
@@ -201,6 +207,8 @@ public class GestionesPerfilAgente extends TestBase{
 	@Test(groups = { "GestionesPerfilAgente", "E2E" }, priority = 1, dataProvider = "CambioSimCardAgente")
 	public void TSCambioSimCardAgente(String sDNI, String sLinea) {
 		imagen = "TSCambioSimCardAgente";
+		detalles = null;
+		detalles = imagen + "-Recarga-DNI:" + sDNI;
 		SalesBase sale = new SalesBase(driver);
 		BasePage cambioFrameByID = new BasePage();
 		CustomerCare cCC = new CustomerCare(driver);
@@ -211,6 +219,7 @@ public class GestionesPerfilAgente extends TestBase{
 		sleep(8000);
 		String accid = driver.findElement(By.cssSelector(".searchClient-body.slds-hint-parent.ng-scope")).findElements(By.tagName("td")).get(5).getText();
 		System.out.println("id "+accid);
+		detalles +="-Cuenta:"+accid;
 		driver.findElement(By.cssSelector(".slds-tree__item.ng-scope")).findElement(By.tagName("div")).click();
 		sleep(25000);
 		cCC.seleccionarCardPornumeroLinea(sLinea, driver);
@@ -231,6 +240,7 @@ public class GestionesPerfilAgente extends TestBase{
 		cCC.obligarclick(driver.findElement(By.id("SelectPaymentMethodsStep_nextBtn")));
 		sleep(15000);
 		String orden = driver.findElement(By.className("top-data")).findElement(By.className("ng-binding")).getText();
+		detalles += "-Orden:" + orden;
 		System.out.println("Orden " + orden);
 		orden = orden.substring(orden.length()-8);
 		cCC.obligarclick(driver.findElement(By.id("OrderSumary_nextBtn")));
@@ -244,8 +254,9 @@ public class GestionesPerfilAgente extends TestBase{
 		sleep(10000);
 		String invoice = cCC.obtenerMontoyTNparaAlta(driver, orden);
 		System.out.println(invoice);
+		detalles+="-Monto:"+invoice.split("-")[2]+"-Prefactura:"+invoice.split("-")[1];
 		sleep(10000);
-		datosOrden.add("Cambio sim card Agente- Cuenta: "+accid+"Invoice: "+invoice.split("-")[0]);
+		//datosOrden.add("Cambio sim card Agente- Cuenta: "+accid+"Invoice: "+invoice.split("-")[0]);
 		CBS_Mattu invoSer = new CBS_Mattu();
 		Assert.assertTrue(invoSer.PagoEnCaja("1006", accid, "1001", invoice.split("-")[2], invoice.split("-")[1]));
 		driver.navigate().refresh();
@@ -257,6 +268,9 @@ public class GestionesPerfilAgente extends TestBase{
 	
 	@Test (groups = {"GestionesPerfilOficina","E2E"}, dataProvider="PackAgente")
 	public void Venta_de_Pack(String sDNI, String sLinea, String sPackAgente, String cBanco, String cTarjeta, String cPromo, String cCuotas){
+		imagen = "Venta_de_Pack";
+		detalles = null;
+		detalles = imagen + "-Recarga-DNI:" + sDNI;
 		PagePerfilTelefonico pagePTelefo = new PagePerfilTelefonico(driver);
 		SalesBase sale = new SalesBase(driver);
 		CustomerCare cCC = new CustomerCare(driver);
@@ -264,8 +278,10 @@ public class GestionesPerfilAgente extends TestBase{
 		sale.BuscarCuenta("DNI", sDNI);
 		String accid = driver.findElement(By.cssSelector(".searchClient-body.slds-hint-parent.ng-scope")).findElements(By.tagName("td")).get(5).getText();
 		System.out.println("id "+accid);
+		detalles +="-Cuenta:"+accid;
 		pagePTelefo.buscarAssert();
-		pagePTelefo.comprarPack("comprar internet");
+		cCC.seleccionarCardPornumeroLinea(sLinea, driver);
+		pagePTelefo.comprarPack();
 		sleep(8000);
 		pagePTelefo.closerightpanel();
 		sleep(8000);
@@ -276,6 +292,7 @@ public class GestionesPerfilAgente extends TestBase{
 		pagePTelefo.getSimulaciondeFactura().click();
 		sleep(12000);
 		String sOrden = cCC.obtenerOrden3(driver);
+		detalles += "-Orden:" + sOrden;
 		buscarYClick(driver.findElements(By.cssSelector(".slds-form-element__label.ng-binding")), "equals", "efectivo");
 		sleep(12000);
 		/*buscarYClick(driver.findElements(By.cssSelector(".slds-form-element__label.ng-binding")), "equals", "tarjeta de credito");
@@ -292,8 +309,9 @@ public class GestionesPerfilAgente extends TestBase{
 		sleep(10000);
 		String invoice = cCC.obtenerMontoyTNparaAlta(driver, sOrden);
 		System.out.println(invoice);
+		detalles+="-Monto:"+invoice.split("-")[2]+"-Prefactura:"+invoice.split("-")[1];
 		sleep(10000);
-		datosOrden.add("Operacion: Compra de Pack- Cuenta: "+accid+" Invoice: "+invoice.split("-")[0]+invoice.split("-")[1]);
+		//datosOrden.add("Operacion: Compra de Pack- Cuenta: "+accid+" Invoice: "+invoice.split("-")[0]+invoice.split("-")[1]);
 		System.out.println("Operacion: Compra de Pack- Cuenta: "+accid+" Invoice: "+invoice.split("-")[0] + "\tAmmount: " +invoice.split("-")[1]);
 		CBS_Mattu invoSer = new CBS_Mattu();
 		Assert.assertTrue(invoSer.PagoEnCaja("1005", accid, "2001", invoice.split("-")[0], invoice.split("-")[1]));
@@ -306,6 +324,8 @@ public class GestionesPerfilAgente extends TestBase{
 	@Test (groups = {"GestionesPerfilAgente", "AnulacionDeVenta", "E2E"}, dataProvider = "CuentaAnulacionDeVenta")
 	public void Anulacion_De_Venta(String cDNI) {
 		imagen = "Anulacion_De_Venta";
+		detalles = null;
+		detalles = imagen + "-Recarga-DNI:" + cDNI;
 		driver.switchTo().frame(cambioFrame(driver, By.id("SearchClientDocumentType")));
 		sb.BuscarCuenta("DNI", cDNI);
 		driver.findElement(By.cssSelector(".slds-tree__item.ng-scope")).click();

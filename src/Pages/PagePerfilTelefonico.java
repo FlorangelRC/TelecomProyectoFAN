@@ -113,17 +113,15 @@ public class PagePerfilTelefonico extends TestBase{
 	sleep(4000);
 	driver.switchTo().frame(cambioFrame(driver, By.className("card-top"))); 
 	sleep(8000);
-	driver.findElement(By.className("card-top")).click(); 
-	sleep(12000); 
 	}
 	
 	
-	public void comprarPack(String pack) {
+	public void comprarPack() {
 		driver.switchTo().frame(cambioFrame(driver, By.cssSelector(".items-card.ng-not-empty.ng-valid")));
 		((JavascriptExecutor)driver).executeScript("window.scrollTo(0,"+driver.findElement(By.cssSelector(".slds-grid.community-flyout-content")).getLocation().y+")");
 		List<WebElement> comprar = driver.findElements(By.className("community-flyout-grid-items-card"));
 		for (WebElement comp : comprar) {
-			if (comp.getText().toLowerCase().contains(pack)) {
+			if (comp.getText().toLowerCase().contains("comprar minutos") || comp.getText().toLowerCase().contains("comprar internet") || comp.getText().toLowerCase().contains("comprar sms")) {
 				comp.findElement(By.tagName("button")).click();
 				sleep(45000);
 				break;
