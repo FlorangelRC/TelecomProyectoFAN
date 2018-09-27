@@ -517,9 +517,10 @@ public class AltasAgente extends TestBase{
 		sleep(10000);
 		cc.obligarclick(driver.findElement(By.id("InvoicePreview_nextBtn"))); 
 		sleep(13000);
-		List<WebElement> medpag = driver.findElements(By.className("taPaymentMethodForm"));
+		List<WebElement> medpag = driver.findElements(By.cssSelector(".slds-radio.ng-scope"));
 		for(WebElement m :medpag){
 			if(m.getText().equals("Tarjeta de Credito")){
+				System.out.println(m.getText());
 			cc.obligarclick(m.findElement(By.cssSelector(".slds-radio--faux")));
 			break;
 			}

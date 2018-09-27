@@ -288,7 +288,7 @@ public class GestionesPerfilTelefonico extends TestBase{
 	}
 	
 	@Test(groups = { "GestionesPerfilTelefonico", "E2E" }, priority = 1, dataProvider = "CambioSimCardTelef")
-	public void TSCambioSimCardTelef(String sDNI, String sLinea,String cEntrega, String cProvincia, String cLocalidad, String cBanco, String cTarjeta, String cPromo, String cCuotas, String cNumTarjeta, String cVenceMes, String cVenceAno, String cCodSeg, String cTipoDNI,String cDNITarjeta, String cTitular) {
+	public void TSCambioSimCardTelef(String sDNI, String sLinea,String cEntrega, String cProvincia, String cLocalidad, String cPuntodeVenta, String cBanco, String cTarjeta, String cPromo, String cCuotas, String cNumTarjeta, String cVenceMes, String cVenceAno, String cCodSeg, String cTipoDNI,String cDNITarjeta, String cTitular) {
 		imagen = "TSCambioSimCard";
 		SalesBase sale = new SalesBase(driver);
 		BasePage cambioFrameByID = new BasePage();
@@ -301,8 +301,14 @@ public class GestionesPerfilTelefonico extends TestBase{
 		System.out.println("id "+accid);
 		pagePTelefo.buscarAssert();
 		cCC.irAGestionEnCard("Cambio SimCard");
-		pagePTelefo.mododeEntrega(driver, "Store Pick Up", cProvincia, cLocalidad);
+		pagePTelefo.mododeEntrega(driver, cEntrega, cProvincia, cLocalidad, cPuntodeVenta);
 		sleep(12000);
+		String orden = driver.findElement(By.className("top-data")).findElement(By.className("ng-binding")).getText();
+		String NCuenta = driver.findElements(By.className("top-data")).get(1).findElements(By.className("ng-binding")).get(3).getText();
+		System.out.println("Orden " + orden);
+		System.out.println("cuenta " + NCuenta);
+		cCC.obligarclick(driver.findElement(By.id("OrderSumary_nextBtn")));
+		sleep(15000);
 		buscarYClick(driver.findElements(By.cssSelector(".slds-form-element__label.ng-binding")), "equals","tarjeta de credito");
 		selectByText(driver.findElement(By.id("BankingEntity-0")), cBanco);
 		selectByText(driver.findElement(By.id("CardBankingEntity-0")), cTarjeta);
@@ -316,13 +322,8 @@ public class GestionesPerfilTelefonico extends TestBase{
 		selectByText(driver.findElement(By.id("documentType-0")), cTipoDNI);
 		driver.findElement(By.id("documentNumber-0")).sendKeys(cDNITarjeta);
 		driver.findElement(By.id("cardHolder-0")).sendKeys(cTitular);
+		
 		cCC.obligarclick(driver.findElement(By.id("SelectPaymentMethodsStep_nextBtn")));
-		sleep(15000);
-		String orden = driver.findElement(By.className("top-data")).findElement(By.className("ng-binding")).getText();
-		String NCuenta = driver.findElements(By.className("top-data")).get(1).findElements(By.className("ng-binding")).get(3).getText();
-		System.out.println("Orden " + orden);
-		System.out.println("cuenta " + NCuenta);
-		cCC.obligarclick(driver.findElement(By.id("OrderSumary_nextBtn")));
 		sleep(15000);
 		try {
 			driver.findElement(By.id("Step_Error_Huawei_S029_nextBtn")).click();
@@ -366,7 +367,8 @@ public class GestionesPerfilTelefonico extends TestBase{
 	pagePTelefo.tipoDePago("en factura de venta");
 	pagePTelefo.getTipodepago().click();
 	sleep(12000);
-	pagePTelefo.getSimulaciondeFactura().click();
+	cCC.obligarclick(pagePTelefo.getSimulaciondeFactura());
+	//pagePTelefo.getSimulaciondeFactura().click();
 	sleep(12000);
 	buscarYClick(driver.findElements(By.cssSelector(".slds-form-element__label.ng-binding")), "equals", "tarjeta de credito");
 	sleep(8000);

@@ -972,10 +972,6 @@ public class GestionesPerfilOficina extends TestBase {
 		String orden = cc.obtenerOrden(driver, "Suspensi\u00f3n de Linea");
 		sOrders.add("Suspension, orden numero: " + orden + " con numero de DNI: " + cDNI);
 		System.out.println(sOrders);
-		/*if(orden.length() >= 8) {
-			orden = orden.substring(0, orden.length()-25);
-		}*/
-		cc.buscarCaso(orden.substring(0, 7));
 	}
 	
 	@Test (groups = {"Suspension", "GestionesPerfilOficina","E2E"}, dataProvider="CuentaSuspension")
@@ -1026,7 +1022,6 @@ public class GestionesPerfilOficina extends TestBase {
 		/*if(orden.length() >= 8) {
 			orden = orden.substring(0, orden.length()-25);
 		}*/
-		cc.buscarCaso(orden.substring(0, 7));
 	}	
 	
 	@Test (groups = {"Suspension", "GestionesPerfilOficina","E2E"}, dataProvider="CuentaSuspension")
@@ -1067,7 +1062,6 @@ public class GestionesPerfilOficina extends TestBase {
 		String orden = cc.obtenerOrden(driver, "Suspension administrativa");
 		sOrders.add("Suspencion, orden numero: " + orden + " con numero de DNI: " + cDNI);
 		System.out.println(sOrders);
-		cc.buscarCaso(orden.substring(0, 7));
 	}	
 	
 	@Test (groups = {"Suspension", "GestionesPerfilOficina","E2E"}, dataProvider="CuentaSuspension")
@@ -1106,8 +1100,7 @@ public class GestionesPerfilOficina extends TestBase {
 		sleep(10000);
 		String orden = cc.obtenerOrden(driver, "Suspension administrativa");
 		sOrders.add("Suspencion, orden numero: " + orden + " con numero de DNI: " + cDNI);
-		//System.out.println(sOrders);
-		cc.buscarCaso(orden.substring(0, 7));
+		System.out.println(sOrders);
 	}
 	
 	@Test (groups = {"GestionesPerfilOficina", "Ajustes","E2E"}, dataProvider = "CuentaAjustesPRE")
@@ -1827,7 +1820,7 @@ public class GestionesPerfilOficina extends TestBase {
 		}
 	}
 	
-	@Test (groups = {"ProblemaRecarga", "GestionesPerfilOficina","E2E"}, dataProvider="CuentaProblemaRecarga") 
+	@Test (groups = {"ProblemaRecarga", "GestionesPerfilOficina","E2E"}, dataProvider="CuentaProblemaRecarga") //No se puede efectuar la recarga(Mensaje:"no se impacta la recarga")
 	public void TS135714_CRM_Movil_PRE_Problemas_con_Recarga_Telefonico_Tarjeta_Scratch_Caso_Nuevo_Tarjeta_Activa_y_Disponible(String cDNI, String cSerie, String cPIN){
 		imagen = "TS135714";
 		driver.switchTo().frame(cambioFrame(driver, By.id("SearchClientDocumentType")));
@@ -1862,7 +1855,7 @@ public class GestionesPerfilOficina extends TestBase {
 		Assert.assertTrue(b);
 	}
 	
-	@Test (groups = {"ProblemaRecarga", "GestionesPerfilOficina","E2E"}, dataProvider="CuentaProblemaRecarga")
+	@Test (groups = {"ProblemaRecarga", "GestionesPerfilOficina","E2E"}, dataProvider="CuentaProblemaRecarga") 
 	public void TS104347_CRM_Movil_REPRO_Problemas_con_Recarga_Presencial_Tarjeta_Scratch_Caso_Nuevo_Quemada(String cDNI, String cSerie, String cPIN){
 		imagen = "TS104347";
 		driver.switchTo().frame(cambioFrame(driver, By.id("SearchClientDocumentType")));
@@ -2206,6 +2199,7 @@ public class GestionesPerfilOficina extends TestBase {
 		String orden = cc.obtenerOrden(driver, "Suspension administrativa");
 		sOrders.add("Suspencion, orden numero: " + orden + " con numero de DNI: " + cDNI);
 		System.out.println(sOrders);
+		
 	}
 	
 	@Test (groups = {"GestionesPerfilOficina","E2E"}, dataProvider="PackOfCom")
