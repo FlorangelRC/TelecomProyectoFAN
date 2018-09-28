@@ -2200,7 +2200,8 @@ public class GestionesPerfilOficina extends TestBase {
 		String accid = driver.findElement(By.cssSelector(".searchClient-body.slds-hint-parent.ng-scope")).findElements(By.tagName("td")).get(5).getText();
 		System.out.println("id "+accid);
 		pagePTelefo.buscarAssert();
-		pagePTelefo.comprarPack("comprar internet");
+		cCC.seleccionarCardPornumeroLinea(sLinea, driver);
+		pagePTelefo.comprarPack();
 		pagePTelefo.closerightpanel();
 		sleep(8000);
 		pagePTelefo.agregarPack(sPackOfCom);
@@ -2319,6 +2320,8 @@ public class GestionesPerfilOficina extends TestBase {
 		catch (Exception ex) {
 			//Allways Empty
 		}
+		List<WebElement> wCheckBox = driver.findElements(By.cssSelector(".slds-radio.ng-scope"));
+		wCheckBox.get(0).click();
 		driver.findElement(By.id("CombosDeMegas_nextBtn")).click();
 		sleep(5000);
 		driver.findElement(By.cssSelector(".slds-form-element.vlc-flex.vlc-slds-radio-Control.ng-scope.ng-dirty.ng-valid-parse.ng-valid.ng-valid-required")).findElements(By.cssSelector(".slds-radio--faux.ng-scope")).get(0).click();
