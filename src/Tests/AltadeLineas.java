@@ -484,11 +484,12 @@ public class AltadeLineas extends TestBase {
 		sleep(5000);	
 		sb.continuar();
 		sleep(25000);
+		cc.obligarclick(driver.findElement(By.id("LineAssignment_nextBtn")));
+		sleep(15000);
 		cc.obligarclick(driver.findElement(By.id("InvoicePreview_nextBtn")));
 		sleep(13000);
-		/*cc.obligarclick(driver.findElement(By.id("LineAssignment_nextBtn")));
-		sleep(15000);
-		cc.obligarclick(driver.findElement(By.id("ICCDAssignment_nextBtn")));
+		
+		/*cc.obligarclick(driver.findElement(By.id("ICCDAssignment_nextBtn")));
 		
 		sleep(20000);*/
 		List<WebElement> medpag = driver.findElements(By.cssSelector(".slds-radio.ng-scope"));

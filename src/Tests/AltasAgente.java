@@ -524,7 +524,7 @@ public class AltasAgente extends TestBase{
 		sleep(13000);
 		List<WebElement> medpag = driver.findElements(By.cssSelector(".slds-radio.ng-scope"));
 		for(WebElement m :medpag){
-			if(m.getText().equals("Tarjeta de Credito")){
+			if(m.getText().equals("Tarjeta de Debito")){
 				System.out.println(m.getText());
 			cc.obligarclick(m.findElement(By.cssSelector(".slds-radio--faux")));
 			break;

@@ -1335,7 +1335,7 @@ public class TestBase {
 	@DataProvider
 	public Object[][] CuentaAnulacionDeVenta() throws Exception{
 		
-		 Object[][] testObjArray = ExcelUtils.getTableArray(dataProviderE2E(),"E2EsinPago",1,1,1,"Anulacion De Venta");
+		 Object[][] testObjArray = ExcelUtils.getTableArray(dataProviderE2E(),"E2EsinPago",1,1,1,"Anulacion de venta");
 
 		 return (testObjArray);
 	}
@@ -1409,7 +1409,7 @@ public class TestBase {
 	}
 	
 	@DataProvider
-	public Object[][] VentaExisteEquipoAGTD() throws Exception{
+	public Object[][] VentaExisteEquipoAgTd() throws Exception{
 
 	 Object[][] testObjArray = ExcelUtils.getTableArray(dataProviderE2E(),"Altas y Nominacion",1,1,9,"Venta Equipo Existe AG Debito");
 
