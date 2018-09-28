@@ -2320,6 +2320,8 @@ public class GestionesPerfilOficina extends TestBase {
 		catch (Exception ex) {
 			//Allways Empty
 		}
+		List<WebElement> wCheckBox = driver.findElements(By.cssSelector(".slds-radio.ng-scope"));
+		wCheckBox.get(0).click();
 		driver.findElement(By.id("CombosDeMegas_nextBtn")).click();
 		sleep(5000);
 		driver.findElement(By.cssSelector(".slds-form-element.vlc-flex.vlc-slds-radio-Control.ng-scope.ng-dirty.ng-valid-parse.ng-valid.ng-valid-required")).findElements(By.cssSelector(".slds-radio--faux.ng-scope")).get(0).click();
