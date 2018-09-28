@@ -1834,7 +1834,7 @@ public class GestionesPerfilOficina extends TestBase {
 		boolean b = false;
 		List <WebElement> prob = driver.findElements(By.cssSelector(".slds-box.ng-scope"));
 		for(WebElement x : prob) {
-			if(x.getText().toLowerCase().contains("no se pudo realizar la operaci\u00f3n.")) {
+			if(x.getText().toLowerCase().contains("recarga realizada con \u00e9xito")) {
 				b = true;
 			}
 		}
