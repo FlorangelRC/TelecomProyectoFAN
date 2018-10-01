@@ -12,6 +12,7 @@ import org.testng.annotations.Test;
 
 import Pages.BasePage;
 import Pages.CBS;
+import Pages.ManejoCaja;
 import Pages.setConexion;
 
 public class CBS_Mattu extends TestBase {
@@ -35,6 +36,18 @@ public class CBS_Mattu extends TestBase {
 	
 	//-------------------------------------------------------------------------------------------------
 	//TCC =
+	
+	@Test
+	public void cajita() {
+		ManejoCaja MN = new ManejoCaja();
+		this.driver = setConexion.setupEze();
+		try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		MN.ingresarCaja(driver);
+		MN.configuracionesIniciales(driver);
+		MN.seleccionarOpcionCatalogo(driver, "Cuentas por cobrar");
+		MN.abrirCajaRegistradora(driver);
+		MN.cerrarCajaRegistradora(driver);
+	}
 	@Test
 	public void openPage() {
 		String sEndPoint = "Pago en Caja";

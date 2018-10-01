@@ -30,6 +30,7 @@ public class GestionesPerfilTelefonico extends TestBase{
 	private CustomerCare cc;
 	List <String> datosOrden =new ArrayList<String>();
 	String imagen;
+	String detalles;
 	
 	
 	@BeforeClass(alwaysRun=true)
@@ -92,19 +93,16 @@ public class GestionesPerfilTelefonico extends TestBase{
 		sleep(25000);
 	}
 
-	//@AfterMethod(alwaysRun=true)
+	@AfterMethod(alwaysRun=true)
 	public void after() throws IOException {
+		datosOrden.add(detalles);
 		guardarListaTxt(datosOrden);
 		datosOrden.clear();
 		tomarCaptura(driver,imagen);
-		/*SalesBase sb = new SalesBase(driver);
-		sb.cerrarPestaniaGestion(driver);*/
 	}
 
 	//@AfterClass(alwaysRun=true)
 	public void quit() throws IOException {
-		guardarListaTxt(datosOrden);
-		System.out.println("Se supone que guardo");
 		driver.quit();
 		sleep(5000);
 	}
@@ -112,6 +110,8 @@ public class GestionesPerfilTelefonico extends TestBase{
 	@Test (groups = {"GestionesPerfilOficina", "Recargas","E2E"}, dataProvider = "RecargaTC")  //Error despues de ingresar la tarjeta
 	public void TS134332_CRM_Movil_REPRO_Recargas_Telefonico_TC_Callcenter_Financiacion(String cDNI, String cMonto, String cLinea, String cBanco, String cTarjeta, String cNumTarjeta, String cVenceMes, String cVenceAno, String cCodSeg, String cTipoDNI, String cDNITarjeta, String cTitular, String cPromo, String cCuotas) {
 		imagen= "TS134332";
+		detalles = null;
+		detalles = imagen+"-Recarga-DNI:"+cDNI;
 		if(cMonto.length() >= 4) {
 			cMonto = cMonto.substring(0, cMonto.length()-1);
 		}
@@ -128,6 +128,7 @@ public class GestionesPerfilTelefonico extends TestBase{
 		sb.BuscarCuenta("DNI", cDNI);
 		String accid = driver.findElement(By.cssSelector(".searchClient-body.slds-hint-parent.ng-scope")).findElements(By.tagName("td")).get(5).getText();
 		System.out.println("id "+accid);
+		detalles +="-Cuenta:"+accid;
 		driver.findElement(By.cssSelector(".slds-tree__item.ng-scope")).click();
 		sleep(20000);
 		driver.switchTo().frame(cambioFrame(driver, By.className("card-top")));
@@ -139,11 +140,14 @@ public class GestionesPerfilTelefonico extends TestBase{
 		driver.findElement(By.id("RefillAmount")).sendKeys(cMonto);
 		driver.findElement(By.id("AmountSelectionStep_nextBtn")).click();
 		sleep(20000);
+		String sOrden = cc.obtenerOrden3(driver);
+		detalles +="-Orden:"+sOrden;
 		driver.findElement(By.id("InvoicePreview_nextBtn")).click();
 		sleep(10000);
 		buscarYClick(driver.findElements(By.cssSelector(".slds-form-element__label.ng-binding")), "equals", "tarjeta de credito");
 		selectByText(driver.findElement(By.id("BankingEntity-0")), cBanco);
 		selectByText(driver.findElement(By.id("CardBankingEntity-0")), cTarjeta);
+		sleep(1000);
 		selectByText(driver.findElement(By.id("promotionsByCardsBank-0")), cPromo);
 		sleep(5000);
 		selectByText(driver.findElement(By.id("Installment-0")), cCuotas);
@@ -165,16 +169,17 @@ public class GestionesPerfilTelefonico extends TestBase{
 			}
 			Assert.assertTrue(a);
 		}
-		String orden = cc.obtenerOrdenMontoyTN(driver, "Recarga");
+		String orden = cc.obtenerTNyMonto2(driver, sOrden);
 		System.out.println("orden = "+orden);
-		datosOrden.add("Recargas" + orden + " de cuenta "+accid+" con DNI: " + cDNI);
+		detalles+="-Monto:"+orden.split("-")[2]+"-Prefactura:"+orden.split("-")[1];
+		//datosOrden.add("Recargas" + orden + " de cuenta "+accid+" con DNI: " + cDNI);
 		CBS_Mattu invoSer = new CBS_Mattu();
 		invoSer.PagoEnCaja("1003", accid, "2001", orden.split("-")[2], orden.split("-")[1]);
 		sleep(5000);
 		driver.navigate().refresh();
 		sleep(10000);
-		cc.obtenerOrdenMontoyTN(driver, "Recarga");
-		sleep(10000);
+		/*cc.obtenerOrdenMontoyTN(driver, "Recarga");
+		sleep(10000);*/
 		driver.switchTo().frame(cambioFrame(driver, By.id("Status_ilecell")));
 		Assert.assertTrue(driver.findElement(By.id("Status_ilecell")).getText().equalsIgnoreCase("activada"));
 	}
@@ -182,6 +187,8 @@ public class GestionesPerfilTelefonico extends TestBase{
 	@Test (groups = {"GestionesPerfilTelefonico", "RenovacioDeCuota","E2E"}, dataProvider="RenovacionCuotaSinSaldo")
 	public void TS130067_CRM_Movil_REPRO_Renovacion_De_Cuota_Telefonico_Descuento_De_Saldo_Sin_Credito(String sDNI, String sLinea) {
 		imagen = "TS130067";
+		detalles = null;
+		detalles = imagen+"-Renovacion de cuota-DNI:"+sDNI;
 		BasePage cambioFrameByID=new BasePage();
 		driver.switchTo().frame(cambioFrameByID.getFrameForElement(driver, By.id("SearchClientDocumentType")));
 		sleep(1000);
@@ -209,6 +216,8 @@ public class GestionesPerfilTelefonico extends TestBase{
 	@Test (groups = {"GestionesPerfilTelefonico", "RenovacionDeCuota","E2E"}, dataProvider="RenovacionCuotaConSaldo")
 	public void TS_CRM_Movil_REPRO_Renovacion_De_Cuota_Telefonico_Descuento_De_Saldo_Con_Credito(String sCuenta, String sDNI, String sLinea) {
 		imagen = "TS_CRM_Movil_REPRO_Renovacion_De_Cuota_Telefonico_Descuento_De_Saldo_Con_Credito";
+		detalles = null;
+		detalles = imagen+"-DNI:"+sDNI;
 		BasePage cambioFrameByID=new BasePage();
 		driver.switchTo().frame(cambioFrameByID.getFrameForElement(driver, By.id("SearchClientDocumentType")));
 		sleep(1000);
@@ -258,6 +267,8 @@ public class GestionesPerfilTelefonico extends TestBase{
 	@Test (groups= {"GestionesPerfilTelefonico","E2E"},priority=1, dataProvider="VentaPacks")
 	public void TS123314_CRM_Movil_REPRO_Venta_de_Pack_40_Pesos_Exclusivo_Para_Vos_Descuento_De_Saldo_Telefonico(String sDNI, String sCuenta, String sNumeroDeCuenta, String sLinea, String sVentaPack){
 	imagen = "TS123314";
+	detalles = null;
+	detalles = imagen+"-Venta de pack-DNI:"+sDNI;
 	SalesBase sale = new SalesBase(driver);
 	BasePage cambioFrameByID=new BasePage();
 	CustomerCare cCC = new CustomerCare(driver);
@@ -267,8 +278,10 @@ public class GestionesPerfilTelefonico extends TestBase{
 	sale.BuscarCuenta("DNI", sDNI);
 	String accid = driver.findElement(By.cssSelector(".searchClient-body.slds-hint-parent.ng-scope")).findElements(By.tagName("td")).get(5).getText();
 	System.out.println("id "+accid);
+	detalles+="-Cuenta:"+accid;
 	pagePTelefo.buscarAssert();
-	pagePTelefo.comprarPack("comprar sms");
+	cCC.seleccionarCardPornumeroLinea(sLinea, driver);
+	pagePTelefo.comprarPack();
 	pagePTelefo.agregarPack(sVentaPack);
 	pagePTelefo.tipoDePago("descuento de saldo");
 	String orden = cc.obtenerOrdenMontoyTN(driver, "Compra de Pack");
@@ -290,6 +303,8 @@ public class GestionesPerfilTelefonico extends TestBase{
 	@Test(groups = { "GestionesPerfilTelefonico", "E2E" }, priority = 1, dataProvider = "CambioSimCardTelef")
 	public void TSCambioSimCardTelef(String sDNI, String sLinea,String cEntrega, String cProvincia, String cLocalidad, String cPuntodeVenta, String cBanco, String cTarjeta, String cPromo, String cCuotas, String cNumTarjeta, String cVenceMes, String cVenceAno, String cCodSeg, String cTipoDNI,String cDNITarjeta, String cTitular) {
 		imagen = "TSCambioSimCard";
+		detalles = null;
+		detalles = imagen+"-Telef-DNI:"+sDNI;
 		SalesBase sale = new SalesBase(driver);
 		BasePage cambioFrameByID = new BasePage();
 		CustomerCare cCC = new CustomerCare(driver);
@@ -299,16 +314,20 @@ public class GestionesPerfilTelefonico extends TestBase{
 		sale.BuscarCuenta("DNI", sDNI);
 		String accid = driver.findElement(By.cssSelector(".searchClient-body.slds-hint-parent.ng-scope")).findElements(By.tagName("td")).get(5).getText();
 		System.out.println("id "+accid);
-		pagePTelefo.buscarAssert();
+		detalles+="-Cuenta:"+accid;
+		driver.findElement(By.cssSelector(".slds-tree__item.ng-scope")).findElement(By.tagName("div")).click();
+		sleep(25000);
+		cCC.seleccionarCardPornumeroLinea(sLinea, driver);
+		sleep(3000);
 		cCC.irAGestionEnCard("Cambio SimCard");
 		pagePTelefo.mododeEntrega(driver, cEntrega, cProvincia, cLocalidad, cPuntodeVenta);
 		sleep(12000);
-		String orden = driver.findElement(By.className("top-data")).findElement(By.className("ng-binding")).getText();
-		String NCuenta = driver.findElements(By.className("top-data")).get(1).findElements(By.className("ng-binding")).get(3).getText();
-		System.out.println("Orden " + orden);
-		System.out.println("cuenta " + NCuenta);
-		cCC.obligarclick(driver.findElement(By.id("OrderSumary_nextBtn")));
-		sleep(15000);
+		pagePTelefo.getResumenOrdenCompra().click();
+		String sOrden = cCC.obtenerOrden2(driver);
+		detalles += "-Orden:" + sOrden;
+		
+		
+	
 		buscarYClick(driver.findElements(By.cssSelector(".slds-form-element__label.ng-binding")), "equals","tarjeta de credito");
 		selectByText(driver.findElement(By.id("BankingEntity-0")), cBanco);
 		selectByText(driver.findElement(By.id("CardBankingEntity-0")), cTarjeta);
@@ -332,16 +351,13 @@ public class GestionesPerfilTelefonico extends TestBase{
 		sleep(5000);
 		driver.navigate().refresh();
 		sleep(10000);
-		String invoice = cCC.obtenerMontoyTNparaAlta(driver, orden);
+		String invoice = cCC.obtenerMontoyTNparaAlta(driver, sOrden);
 		System.out.println(invoice);
 		sleep(10000);
-		datosOrden.add("Cambio sim card Agente- Cuenta: "+accid+"Invoice: "+invoice.split("-")[0]);
+		detalles+="Monto:"+invoice.split("-")[1]+"-Prefactura:"+invoice.split("-")[0];
+		//datosOrden.add("Cambio sim card Agente- Cuenta: "+accid+"Invoice: "+invoice.split("-")[0]);
 		CBS_Mattu invoSer = new CBS_Mattu();
-		if(urlAmbiente.contains("sit")) 
-			Assert.assertTrue(invoSer.PagoEnCaja("1003", accid, "2001", invoice.split("-")[2], invoice.split("-")[1]));
-		else
-			Assert.assertTrue(invoSer.PagoEnCaja("1003", accid, "2001", invoice.split("-")[2], invoice.split("-")[1]));
-		
+		Assert.assertTrue(invoSer.PagoEnCaja("1003", accid, "2001", invoice.split("-")[1], invoice.split("-")[0]));
 		driver.navigate().refresh();
 		sleep(10000);
 		driver.switchTo().frame(cambioFrame(driver, By.id("Status_ilecell")));
@@ -352,6 +368,8 @@ public class GestionesPerfilTelefonico extends TestBase{
 	@Test (groups= {"GestionesPerfilTelefonico","E2E"},priority=1, dataProvider="ventaPack")
 	public void TS123157_CRM_Movil_REPRO_Venta_De_Pack_50_Min_Y_50_SMS_X_7_Dias_Factura_De_Venta_TC_Telefonico(String sDNI, String sLinea, String sventaPack, String cBanco, String cTarjeta, String cPromo, String cCuotas, String cNumTarjeta, String cVenceMes, String cVenceAno, String cCodSeg, String cTipoDNI, String cDNITarjeta, String cTitular) throws InterruptedException{
 	imagen = "TS123157";
+	detalles = null;
+	detalles = imagen+"-Venta de pack-DNI:"+sDNI;
 	SalesBase sale = new SalesBase(driver);
 	BasePage cambioFrameByID=new BasePage();
 	CustomerCare cCC = new CustomerCare(driver);
@@ -361,14 +379,17 @@ public class GestionesPerfilTelefonico extends TestBase{
 	sale.BuscarCuenta("DNI", sDNI);
 	String accid = driver.findElement(By.cssSelector(".searchClient-body.slds-hint-parent.ng-scope")).findElements(By.tagName("td")).get(5).getText();
 	System.out.println("id "+accid);
+	detalles +="-Cuenta:"+accid;
 	pagePTelefo.buscarAssert();
-	pagePTelefo.comprarPack("comprar internet");
+	cCC.seleccionarCardPornumeroLinea(sLinea, driver);
+	pagePTelefo.comprarPack();
 	pagePTelefo.PackCombinado(sventaPack);
 	pagePTelefo.tipoDePago("en factura de venta");
 	pagePTelefo.getTipodepago().click();
 	sleep(12000);
-	cCC.obligarclick(pagePTelefo.getSimulaciondeFactura());
-	//pagePTelefo.getSimulaciondeFactura().click();
+	String sOrden = cc.obtenerOrden2(driver);
+	detalles+="-Orden:"+sOrden;
+	pagePTelefo.getSimulaciondeFactura().click();
 	sleep(12000);
 	buscarYClick(driver.findElements(By.cssSelector(".slds-form-element__label.ng-binding")), "equals", "tarjeta de credito");
 	sleep(8000);
@@ -383,19 +404,14 @@ public class GestionesPerfilTelefonico extends TestBase{
 	selectByText(driver.findElement(By.id("documentType-0")), cTipoDNI);
 	driver.findElement(By.id("documentNumber-0")).sendKeys(cDNITarjeta);
 	driver.findElement(By.id("cardHolder-0")).sendKeys(cTitular);
-	sleep(10000);
-	String sOrden = cc.obtenerOrden2(driver);
-	sleep(10000);
 	pagePTelefo.getMediodePago().click();
 	sleep(45000);
 	pagePTelefo.getOrdenSeRealizoConExito().click();
 	sleep(10000);
-	String invoice = cCC.obtenerMontoyTNparaAlta(driver, sOrden);
-	System.out.println(invoice);
-	sleep(10000);
-	datosOrden.add("Compra de Pack - Cuenta: "+accid+"Invoice: "+invoice.split("-")[0]);
+	String orden = cCC.obtenerTNyMonto2(driver, sOrden);
+	detalles+="-Monto:"+orden.split("-")[1]+"-Prefactura:"+orden.split("-")[0];
 	CBS_Mattu invoSer = new CBS_Mattu();
-	Assert.assertTrue(invoSer.PagoEnCaja("1003", accid, "2001", invoice.split("-")[2], invoice.split("-")[1]));
+	Assert.assertTrue(invoSer.PagoEnCaja("1003", accid, "2001", orden.split("-")[1], orden.split("-")[0]));
 	
 	//cc.obtenerOrdenMontoyTN(driver, "Compra de Pack");
 	sleep(10000);
@@ -409,6 +425,8 @@ public class GestionesPerfilTelefonico extends TestBase{
 	@Test (groups= {"GestionesPerfilTelefonico", "Ajustes", "E2E"},dataProvider = "CuentaAjustesPRE")  //Rompe porque no sale el mensaje de gestion exitosa, sale el perfil no configurado correctamente
 	public void TS121333_CRM_Movil_PRE_Ajuste_total_de_comprobantes_FAN_Front_Telefonico(String cDNI) {
 		imagen = "TS121333";
+		detalles = null;
+		detalles = imagen+"-Ajuste-DNI:"+cDNI;
 		boolean gest = false;
 		driver.switchTo().frame(cambioFrame(driver, By.id("SearchClientDocumentType")));
 		sb.BuscarCuenta("DNI", cDNI);
@@ -435,14 +453,29 @@ public class GestionesPerfilTelefonico extends TestBase{
 		driver.findElements(By.className("slds-cell-shrink")).get(0).click();
 		driver.findElement(By.id("Step-AjusteNivelCuenta_nextBtn")).click();
 		sleep(7000);
-		driver.findElement(By.id("Step-Summary_nextBtn")).click();
-		sleep(7000);
-		Assert.assertTrue(false);
+		try {
+			driver.findElement(By.id("Step-Summary_nextBtn")).click();
+			sleep(7000);
+			List <WebElement> element = driver.findElements(By.cssSelector(".slds-form-element.vlc-flex.vlc-slds-text-block.vlc-slds-rte.ng-pristine.ng-valid.ng-scope"));
+			for (WebElement x : element) {
+				if (x.getText().toLowerCase().contains("tu gesti\u00f3n se realiz\u00f3 con \u00e9xito")) {
+					gest = true;
+				}
+			}
+			Assert.assertTrue(gest);
+		}catch(Exception ex1) {
+			String orden = driver.findElement(By.cssSelector(".vlc-slds-inline-control__label.ng-binding")).getText();
+			orden = orden.substring(orden.length()-8);
+			detalles+="-Orden:"+orden;
+			Assert.assertTrue(false);
+		}
 	}
 	
 	@Test (groups= {"GestionesPerfilTelefonico", "ModificacionDeDatos", "E2E"},  dataProvider = "CuentaModificacionDeDatos")
 	public void TS134835_CRM_Movil_PRE_Modificacion_de_datos_Actualizar_los_datos_del_cliente_completos_FAN_Front_Telefonico(String cDNI) {
 		imagen = "TS134835";
+		detalles = null;
+		detalles = imagen+"-Modificacion de datos-DNI:"+cDNI;
 		String nuevoNombre = "Otro";
 		String nuevoApellido = "Apellido";
 		String nuevoNacimiento = "10/10/1982";
@@ -496,6 +529,11 @@ public class GestionesPerfilTelefonico extends TestBase{
 		driver.findElement(By.id("MobilePhone")).clear();
 		driver.findElement(By.id("MobilePhone")).sendKeys(phone);
 		driver.findElement(By.id("ClientInformation_nextBtn")).click();
-		sleep(3000);
+		sleep(8000);
+		Assert.assertTrue(driver.findElement(By.className("ta-care-omniscript-done")).findElement(By.className("ng-binding")).getText().equalsIgnoreCase("Se realizaron correctamente las modificaciones."));
+		String orden = driver.findElement(By.cssSelector(".vlc-slds-inline-control__label.ng-binding")).getText();
+		orden = orden.substring(orden.length()-9, orden.length()-1);
+		detalles +="-Orden:"+orden;
+		
 	}
 }

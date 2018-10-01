@@ -81,7 +81,7 @@ public class GestionesPerfilBackOffice extends TestBase {
 		sb.cerrarPestaniaGestion(driver);
 	}
 
-	@AfterClass (alwaysRun = true)
+	//@AfterClass (alwaysRun = true)
 	public void quit() {
 		driver.quit();
 		sleep(5000);

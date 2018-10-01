@@ -98,22 +98,30 @@ public class PagePerfilTelefonico extends TestBase{
 
 
 	public void buscarAssert() {
+	CustomerCare cc= new CustomerCare(driver);
 	sleep(8000);
 	driver.findElement(By.cssSelector(".slds-tree__item.ng-scope")).findElement(By.tagName("div")).click();
 	sleep(12000);
+	driver.switchTo().defaultContent();
+	if (driver.findElements(By.cssSelector(".x-layout-split.x-layout-split-west.x-splitbar-h")).size()>0) {
+		System.out.println("Entre aqui");
+		cc.panelIzquierdo();
+		driver.switchTo().defaultContent();
+		driver.findElement(By.cssSelector(".x-layout-split.x-layout-split-west.x-splitbar-h")).click();	
+	}
+	//cc.closeleftpanel();
+	sleep(4000);
 	driver.switchTo().frame(cambioFrame(driver, By.className("card-top"))); 
 	sleep(8000);
-	driver.findElement(By.className("card-top")).click(); 
-	sleep(12000); 
 	}
 	
 	
-	public void comprarPack(String pack) {
+	public void comprarPack() {
 		driver.switchTo().frame(cambioFrame(driver, By.cssSelector(".items-card.ng-not-empty.ng-valid")));
 		((JavascriptExecutor)driver).executeScript("window.scrollTo(0,"+driver.findElement(By.cssSelector(".slds-grid.community-flyout-content")).getLocation().y+")");
 		List<WebElement> comprar = driver.findElements(By.className("community-flyout-grid-items-card"));
 		for (WebElement comp : comprar) {
-			if (comp.getText().toLowerCase().contains(pack)) {
+			if (comp.getText().toLowerCase().contains("comprar minutos") || comp.getText().toLowerCase().contains("comprar internet") || comp.getText().toLowerCase().contains("comprar sms")) {
 				comp.findElement(By.tagName("button")).click();
 				sleep(45000);
 				break;
@@ -127,10 +135,10 @@ public class PagePerfilTelefonico extends TestBase{
 		driver.switchTo().frame(cambioFrame(driver, By.cssSelector(".slds-button.cpq-item-has-children")));
 		Pack("Packs Opcionales", "Packs de Datos", Pack1);
 		driver.findElement(By.cssSelector(".slds-button.slds-m-left--large.slds-button--brand.ta-button-brand")).click();
-		sleep(25000);
+		sleep(15000);
 		try{ 
 		      driver.findElements(By.cssSelector(".slds-button.slds-button--neutral.ng-binding.ng-scope")).get(1).click(); 
-		      sleep(8000); 
+		      sleep(12000); 
 		    }catch(Exception ex1){} 
 		sleep(12000); 
 	}

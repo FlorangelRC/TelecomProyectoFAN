@@ -547,7 +547,7 @@ public class CustomerCare extends BasePage {
 		sleep(10000);
 		driver.switchTo().defaultContent();
 		if(driver.findElements(By.cssSelector(".x-layout-mini.x-layout-mini-west.x-layout-mini-custom-logo")).size() != 0) {
-			driver.findElement(By.cssSelector(".x-layout-mini.x-layout-mini-west.x-layout-mini-custom-logo")).click();
+			//driver.findElement(By.cssSelector(".x-layout-mini.x-layout-mini-west.x-layout-mini-custom-logo")).click();
 			driver.findElement(By.cssSelector(".x-layout-mini.x-layout-mini-west.x-layout-mini-custom-logo")).click();
 		}
 	}
@@ -1518,7 +1518,7 @@ public class CustomerCare extends BasePage {
 			}
 		}	
 		assertTrue(esta);
-		sleep(5000);
+		sleep(7000);
 	}
 	
 	private void intentarAbrirPanelIzquierdo() {
@@ -1572,7 +1572,7 @@ public class CustomerCare extends BasePage {
 		System.out.println("orden " + driver.findElement(By.id("Order_body")).findElement(By.cssSelector(".dataRow.even.last.first")).findElement(By.tagName("th")).getText());
 		obligarclick(driver.findElement(By.id("Order_body")).findElement(By.cssSelector(".dataRow.even.last.first")).findElement(By.tagName("th")).findElement(By.tagName("a")));
 		sleep(10000);
-		driver.switchTo().frame(TB.cambioFrame(driver, By.id("OrderNumber_ilecell")));
+		driver.switchTo().frame(TB.cambioFrame(driver, By.cssSelector(".hasMotif.orderTab.detailPage.ext-webkit.ext-chrome.sfdcBody.brandQuaternaryBgr")));
 		WebElement tabla = driver.findElement(By.id("ep")).findElements(By.tagName("table")).get(1);
 		datos = tabla.findElement(By.tagName("tr")).findElements(By.tagName("td")).get(3).getText();
 		List<WebElement> todo = tabla.findElements(By.tagName("td"));
@@ -1668,7 +1668,13 @@ public class CustomerCare extends BasePage {
 		String sOrder = "";
 		//WebElement wBox = driver.findElement(By.cssSelector(".slds-form-element.vlc-flex.vlc-slds-text-block.vlc-slds-rte.ng-pristine.ng-valid.ng-scope"));
 		//WebElement wBox = driver.findElement(By.id("OrderStatus"));
-		WebElement wBox = driver.findElement(By.id("OrderStatusWithBillingCycle"));
+		WebElement wBox = null;
+		try {
+			wBox = driver.findElement(By.id("OrderStatusWithBillingCycle"));
+		}
+		catch (Exception x) {
+			wBox = driver.findElement(By.id("OrderStatus"));
+		}
 		List <WebElement> wContent = wBox.findElement(By.className("slds-form-element__control")).findElement(By.className("ng-binding")).findElements(By.tagName("p"));
 		sOrder = wContent.get(0).getText().substring(12);
 		System.out.println("sOrder: " + sOrder);
