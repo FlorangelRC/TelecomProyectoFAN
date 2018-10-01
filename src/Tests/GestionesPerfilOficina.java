@@ -535,7 +535,7 @@ public class GestionesPerfilOficina extends TestBase {
 		sleep(10000);
 		WebElement wMessageBox = driver.findElement(By.id("TextBlock1")).findElement(By.className("ng-binding"));
 		sleep(5000);
-		Assert.assertTrue(wMessageBox.getText().equalsIgnoreCase("�La orden " + sOrder + " se realiz� con �xito!"));
+		Assert.assertTrue(wMessageBox.getText().toLowerCase().contains("La orden " + sOrder + " se realiz\u00f3 con \u00e9xito!"));
 		Assert.assertTrue(cc.corroborarEstadoCaso(sOrder, "Activated"));
 		sOrders.add("Suspension, orden numero: " + sOrder + ", DNI: " + sDNI);
 	}

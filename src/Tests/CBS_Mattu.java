@@ -46,8 +46,12 @@ public class CBS_Mattu extends TestBase {
 		MN.configuracionesIniciales(driver);
 		MN.seleccionarOpcionCatalogo(driver, "Cuentas por cobrar");
 		MN.abrirCajaRegistradora(driver);
+		//MN.seleccionarOpcionCatalogo(driver, "Cuentas por cobrar");
+		MN.pagar(driver,"345245","456345");
+		MN.seleccionarOpcionCatalogo(driver, "Cuentas por cobrar");
 		MN.cerrarCajaRegistradora(driver);
 	}
+	
 	@Test
 	public void openPage() {
 		String sEndPoint = "Pago en Caja";

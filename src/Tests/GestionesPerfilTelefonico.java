@@ -194,6 +194,9 @@ public class GestionesPerfilTelefonico extends TestBase{
 		sleep(1000);
 		SalesBase sSB = new SalesBase(driver);
 		sSB.BuscarCuenta("DNI", sDNI);
+		String accid = driver.findElement(By.cssSelector(".searchClient-body.slds-hint-parent.ng-scope")).findElements(By.tagName("td")).get(5).getText();
+		System.out.println("id "+accid);
+		detalles +="-Cuenta:"+accid;
 		driver.findElement(By.cssSelector(".slds-tree__item.ng-scope")).findElement(By.tagName("div")).click();
 		sleep(20000);
 		driver.switchTo().frame(cambioFrame(driver, By.className("card-top")));
@@ -214,7 +217,7 @@ public class GestionesPerfilTelefonico extends TestBase{
 	}
 	
 	@Test (groups = {"GestionesPerfilTelefonico", "RenovacionDeCuota","E2E"}, dataProvider="RenovacionCuotaConSaldo")
-	public void TS_CRM_Movil_REPRO_Renovacion_De_Cuota_Telefonico_Descuento_De_Saldo_Con_Credito(String sCuenta, String sDNI, String sLinea) {
+	public void TS_CRM_Movil_REPRO_Renovacion_De_Cuota_Telefonico_Descuento_De_Saldo_Con_Credito(String sDNI, String sLinea) {
 		imagen = "TS_CRM_Movil_REPRO_Renovacion_De_Cuota_Telefonico_Descuento_De_Saldo_Con_Credito";
 		detalles = null;
 		detalles = imagen+"-DNI:"+sDNI;
@@ -223,6 +226,9 @@ public class GestionesPerfilTelefonico extends TestBase{
 		sleep(1000);
 		SalesBase sSB = new SalesBase(driver);
 		sSB.BuscarCuenta("DNI", sDNI);
+		String accid = driver.findElement(By.cssSelector(".searchClient-body.slds-hint-parent.ng-scope")).findElements(By.tagName("td")).get(5).getText();
+		System.out.println("id "+accid);
+		detalles +="-Cuenta:"+accid;
 		driver.findElement(By.cssSelector(".slds-tree__item.ng-scope")).findElement(By.tagName("div")).click();
 		sleep(20000);
 		driver.switchTo().frame(cambioFrame(driver, By.className("card-top")));
@@ -258,7 +264,7 @@ public class GestionesPerfilTelefonico extends TestBase{
 			sleep(4000);*/
 		String sOrder = cCC.obtenerOrden(driver, "Reseteo de Cuota");
 		System.out.println("Orden"+sOrder);
-		datosOrden.add("Operacion: Renovacion Cuota, Orden: "+sOrder+", Cuenta: "+sCuenta+", DNI: "+sDNI+", Linea: "+sLinea);			
+		datosOrden.add("Operacion: Renovacion Cuota, Orden: "+sOrder+", DNI: "+sDNI+", Linea: "+sLinea);			
 		System.out.println("Order: " + sOrder + " Fin");
 		//Assert.assertTrue(driver.findElement(By.cssSelector(".slds-form-element.vlc-flex.vlc-slds-text-block.vlc-slds-rte.ng-pristine.ng-valid.ng-scope")).getText().contains("La orden se realiz\u00f3 con \u00e9xito!"));
 	}
