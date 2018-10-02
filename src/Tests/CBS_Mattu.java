@@ -46,10 +46,9 @@ public class CBS_Mattu extends TestBase {
 		MN.configuracionesIniciales(driver);
 		MN.seleccionarOpcionCatalogo(driver, "Cuentas por cobrar");
 		MN.abrirCajaRegistradora(driver);
-		//MN.seleccionarOpcionCatalogo(driver, "Cuentas por cobrar");
-		MN.pagar(driver,"345245","456345");
-		MN.seleccionarOpcionCatalogo(driver, "Cuentas por cobrar");
-		MN.cerrarCajaRegistradora(driver);
+		MN.pagarTC(driver,"20181002000000095197","1000000025710001");
+		/*MN.seleccionarOpcionCatalogo(driver, "Cuentas por cobrar");
+		MN.cerrarCajaRegistradora(driver);*/
 	}
 	
 	@Test

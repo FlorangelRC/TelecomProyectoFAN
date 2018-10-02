@@ -168,15 +168,36 @@ public class ManejoCaja extends BasePage {
 		}
 	}
 	
-	public void pagar(WebDriver driver,String prefactura, String cuenta) {
+	public void pagarEfectivo(WebDriver driver,String prefactura, String cuenta) {// nueva 20181001000000095169
 		seleccionarOpcionCatalogo(driver, "Cuentas por cobrar");
 		seleccionarOpcionSubMenu(driver, "Pago");
 		sleep(2000);
 		driver.switchTo().frame(TB.cambioFrame(driver,By.id("queryUserInfoButton")));
 		driver.findElement(By.id("balanceAdjustQueryCondition_content")).findElement(By.id("paymentType_condition_input_1")).click();
-		driver.findElement(By.id("balanceAdjustQueryCondition_content")).findElement(By.id("acctCode_condition_input_value")).sendKeys(prefactura);
+		driver.findElement(By.id("balanceAdjustQueryCondition_content")).findElement(By.id("acctCode_condition_input_value")).sendKeys(cuenta);
 		driver.findElement(By.id("balanceAdjustQueryCondition_content")).findElement(By.id("invoiceNo_condition_input_value")).sendKeys(prefactura);
 		driver.findElement(By.id("balanceAdjustQueryCondition_content")).findElement(By.id("queryUserInfoButton")).click();
+		//cerrarPestanias(driver);
+	}
+	
+	public void pagarTC(WebDriver driver,String prefactura, String cuenta) {//otra prefactura 20181001000000095162
+		seleccionarOpcionCatalogo(driver, "Cuentas por cobrar");
+		seleccionarOpcionSubMenu(driver, "Pago");
+		sleep(2000);
+		driver.switchTo().frame(TB.cambioFrame(driver,By.id("queryUserInfoButton")));
+		driver.findElement(By.id("balanceAdjustQueryCondition_content")).findElement(By.id("paymentType_condition_input_1")).click();
+		driver.findElement(By.id("balanceAdjustQueryCondition_content")).findElement(By.id("acctCode_condition_input_value")).sendKeys(cuenta);
+		driver.findElement(By.id("balanceAdjustQueryCondition_content")).findElement(By.id("invoiceNo_condition_input_value")).sendKeys(prefactura);
+		driver.findElement(By.id("balanceAdjustQueryCondition_content")).findElement(By.id("queryUserInfoButton")).click();
+		sleep(4000);
+		driver.findElement(By.id("invoiceInfoPanel_content")).findElement(By.id("selected_0")).click();
+		sleep(4000);
+		driver.findElement(By.id("salesInvoiceDetailIOList")).findElement(By.id("selectedPayment_0")).click();
+		sleep(4000);
+		Select pinpad = new Select(driver.findElement(By.id("wonderSoftPanel")).findElement(By.name("#BMEModel.paymentInfo4WonderSoft.pinPadSerial")));
+		driver.findElement(By.id("paymentMethodPanel_content")).findElement(By.id("submitButton")).click();
 		
+		
+		//cerrarPestanias(driver);
 	}
 }
