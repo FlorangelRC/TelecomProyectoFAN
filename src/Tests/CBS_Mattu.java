@@ -52,6 +52,22 @@ public class CBS_Mattu extends TestBase {
 	}
 	
 	@Test
+	public void cajeta() {
+		ManejoCaja mn = new ManejoCaja();
+		this.driver = setConexion.setupEze();
+		sleep(5000);
+		mn.ingresarCaja(driver);
+		mn.configuracionesIniciales(driver);
+		mn.seleccionarOpcionCatalogo(driver, "Cuentas por cobrar");
+		mn.abrirCajaRegistradora(driver);
+		//MN.seleccionarOpcionCatalogo(driver, "Cuentas por cobrar");
+		mn.pagarEfectivo(driver,"20181002000000095192","1000000026310001");
+		mn.cerrarPestanias(driver);
+		mn.cerrarCajaRegistradora(driver);
+		
+	}
+	
+	@Test
 	public void openPage() {
 		String sEndPoint = "Pago en Caja";
 		String sPaymentChannelID = "1003";
