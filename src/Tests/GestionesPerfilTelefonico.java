@@ -194,6 +194,9 @@ public class GestionesPerfilTelefonico extends TestBase{
 		sleep(1000);
 		SalesBase sSB = new SalesBase(driver);
 		sSB.BuscarCuenta("DNI", sDNI);
+		String accid = driver.findElement(By.cssSelector(".searchClient-body.slds-hint-parent.ng-scope")).findElements(By.tagName("td")).get(5).getText();
+		System.out.println("id "+accid);
+		detalles +="-Cuenta:"+accid;
 		driver.findElement(By.cssSelector(".slds-tree__item.ng-scope")).findElement(By.tagName("div")).click();
 		sleep(20000);
 		driver.switchTo().frame(cambioFrame(driver, By.className("card-top")));
@@ -214,7 +217,7 @@ public class GestionesPerfilTelefonico extends TestBase{
 	}
 	
 	@Test (groups = {"GestionesPerfilTelefonico", "RenovacionDeCuota","E2E"}, dataProvider="RenovacionCuotaConSaldo")
-	public void TS_CRM_Movil_REPRO_Renovacion_De_Cuota_Telefonico_Descuento_De_Saldo_Con_Credito(String sCuenta, String sDNI, String sLinea) {
+	public void TS_CRM_Movil_REPRO_Renovacion_De_Cuota_Telefonico_Descuento_De_Saldo_Con_Credito(String sDNI, String sLinea) {
 		imagen = "TS_CRM_Movil_REPRO_Renovacion_De_Cuota_Telefonico_Descuento_De_Saldo_Con_Credito";
 		detalles = null;
 		detalles = imagen+"-DNI:"+sDNI;
@@ -223,6 +226,9 @@ public class GestionesPerfilTelefonico extends TestBase{
 		sleep(1000);
 		SalesBase sSB = new SalesBase(driver);
 		sSB.BuscarCuenta("DNI", sDNI);
+		String accid = driver.findElement(By.cssSelector(".searchClient-body.slds-hint-parent.ng-scope")).findElements(By.tagName("td")).get(5).getText();
+		System.out.println("id "+accid);
+		detalles +="-Cuenta:"+accid;
 		driver.findElement(By.cssSelector(".slds-tree__item.ng-scope")).findElement(By.tagName("div")).click();
 		sleep(20000);
 		driver.switchTo().frame(cambioFrame(driver, By.className("card-top")));
@@ -258,7 +264,7 @@ public class GestionesPerfilTelefonico extends TestBase{
 			sleep(4000);*/
 		String sOrder = cCC.obtenerOrden(driver, "Reseteo de Cuota");
 		System.out.println("Orden"+sOrder);
-		datosOrden.add("Operacion: Renovacion Cuota, Orden: "+sOrder+", Cuenta: "+sCuenta+", DNI: "+sDNI+", Linea: "+sLinea);			
+		datosOrden.add("Operacion: Renovacion Cuota, Orden: "+sOrder+", DNI: "+sDNI+", Linea: "+sLinea);			
 		System.out.println("Order: " + sOrder + " Fin");
 		//Assert.assertTrue(driver.findElement(By.cssSelector(".slds-form-element.vlc-flex.vlc-slds-text-block.vlc-slds-rte.ng-pristine.ng-valid.ng-scope")).getText().contains("La orden se realiz\u00f3 con \u00e9xito!"));
 	}
@@ -322,8 +328,12 @@ public class GestionesPerfilTelefonico extends TestBase{
 		cCC.irAGestionEnCard("Cambio SimCard");
 		pagePTelefo.mododeEntrega(driver, cEntrega, cProvincia, cLocalidad, cPuntodeVenta);
 		sleep(12000);
-		String sOrden = cc.obtenerOrden3(driver);
-		detalles+="-Orden:"+sOrden;
+		pagePTelefo.getResumenOrdenCompra().click();
+		String sOrden = cCC.obtenerOrden2(driver);
+		detalles += "-Orden:" + sOrden;
+		
+		
+	
 		buscarYClick(driver.findElements(By.cssSelector(".slds-form-element__label.ng-binding")), "equals","tarjeta de credito");
 		selectByText(driver.findElement(By.id("BankingEntity-0")), cBanco);
 		selectByText(driver.findElement(By.id("CardBankingEntity-0")), cTarjeta);
@@ -350,10 +360,10 @@ public class GestionesPerfilTelefonico extends TestBase{
 		String invoice = cCC.obtenerMontoyTNparaAlta(driver, sOrden);
 		System.out.println(invoice);
 		sleep(10000);
-		detalles+="Monto:"+invoice.split("-")[2]+"-Prefactura:"+invoice.split("-")[1];
+		detalles+="Monto:"+invoice.split("-")[1]+"-Prefactura:"+invoice.split("-")[0];
 		//datosOrden.add("Cambio sim card Agente- Cuenta: "+accid+"Invoice: "+invoice.split("-")[0]);
 		CBS_Mattu invoSer = new CBS_Mattu();
-		Assert.assertTrue(invoSer.PagoEnCaja("1003", accid, "2001", invoice.split("-")[2], invoice.split("-")[1]));
+		Assert.assertTrue(invoSer.PagoEnCaja("1003", accid, "2001", invoice.split("-")[1], invoice.split("-")[0]));
 		driver.navigate().refresh();
 		sleep(10000);
 		driver.switchTo().frame(cambioFrame(driver, By.id("Status_ilecell")));
@@ -383,7 +393,7 @@ public class GestionesPerfilTelefonico extends TestBase{
 	pagePTelefo.tipoDePago("en factura de venta");
 	pagePTelefo.getTipodepago().click();
 	sleep(12000);
-	String sOrden = cc.obtenerOrden3(driver);
+	String sOrden = cc.obtenerOrden2(driver);
 	detalles+="-Orden:"+sOrden;
 	pagePTelefo.getSimulaciondeFactura().click();
 	sleep(12000);
@@ -405,9 +415,9 @@ public class GestionesPerfilTelefonico extends TestBase{
 	pagePTelefo.getOrdenSeRealizoConExito().click();
 	sleep(10000);
 	String orden = cCC.obtenerTNyMonto2(driver, sOrden);
-	detalles+="-Monto:"+orden.split("-")[2]+"-Prefactura:"+orden.split("-")[1];
+	detalles+="-Monto:"+orden.split("-")[1]+"-Prefactura:"+orden.split("-")[0];
 	CBS_Mattu invoSer = new CBS_Mattu();
-	Assert.assertTrue(invoSer.PagoEnCaja("1003", accid, "2001", orden.split("-")[2], orden.split("-")[1]));
+	Assert.assertTrue(invoSer.PagoEnCaja("1003", accid, "2001", orden.split("-")[1], orden.split("-")[0]));
 	
 	//cc.obtenerOrdenMontoyTN(driver, "Compra de Pack");
 	sleep(10000);

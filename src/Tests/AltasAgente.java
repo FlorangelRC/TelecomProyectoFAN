@@ -631,30 +631,28 @@ public class AltasAgente extends TestBase{
 		sleep(22000);
 		sb.Crear_DomicilioLegal(sProvincia, sLocalidad, sCalle, "", sAltura, "", "", sCPostal);
 		sleep(24000);
+		cc.obligarclick(driver.findElement(By.id("ICCDAssignment_nextBtn")));
+		sleep(10000);
+		cc.obligarclick(driver.findElement(By.id("InvoicePreview_nextBtn"))); 
+		sleep(13000);
+		List<WebElement> medpag = driver.findElements(By.cssSelector(".slds-radio.ng-scope"));
+		for(WebElement m :medpag){
+			if(m.getText().equals("Tarjeta de Debito")){
+				System.out.println(m.getText());
+			cc.obligarclick(m.findElement(By.cssSelector(".slds-radio--faux")));
+			break;
+			}
+		}
+		sleep(5000);
+		selectByText(driver.findElement(By.id("BankingEntity-0")), cBanco);
+		selectByText(driver.findElement(By.id("CardBankingEntity-0")), cTarjeta);
+		selectByText(driver.findElement(By.id("promotionsByCardsBank-0")), cPromo);
+		sleep(5000);
+		selectByText(driver.findElement(By.id("Installment-0")), cCuotas);
 		cc.obligarclick(driver.findElement(By.id("DeliveryMethodConfiguration_nextBtn")));
 		sleep(12000);
-		try { // ========================================   ACA   QUEDO   ==============================================
-			cc.obligarclick(driver.findElement(By.id("InvoicePreview_nextBtn")));       
-			buscarYClick(driver.findElements(By.cssSelector(".slds-form-element__label.ng-binding")), "equals", "tarjeta de credito");
-			selectByText(driver.findElement(By.id("BankingEntity-0")), cBanco);
-			selectByText(driver.findElement(By.id("CardBankingEntity-0")), cTarjeta);
-			selectByText(driver.findElement(By.id("promotionsByCardsBank-0")), cPromo);
-			sleep(5000);
-			selectByText(driver.findElement(By.id("Installment-0")), cCuotas);
-			driver.findElement(By.id("CardNumber-0")).sendKeys(cNumTarjeta);
-			selectByText(driver.findElement(By.id("expirationMonth-0")), cVenceMes);
-			selectByText(driver.findElement(By.id("expirationYear-0")), cVenceAno);
-			driver.findElement(By.id("securityCode-0")).sendKeys(cCodSeg);
-			selectByText(driver.findElement(By.id("documentType-0")), "DNI");
-			driver.findElement(By.id("documentNumber-0")).sendKeys(sDni);
-			driver.findElement(By.id("cardHolder-0")).sendKeys(sNombre+" "+sApellido);			
-		}catch(Exception ex1) {cc.obligarclick(driver.findElement(By.id("Step_Error_Huawei_S202_nextBtn")));}
+		cc.obligarclick(driver.findElement(By.id("SelectPaymentMethodsStep_nextBtn")));
 		sleep(20000);
-		try {
-			cc.obligarclick(driver.findElement(By.id("SelectPaymentMethodsStep_nextBtn")));
-			sleep(20000);
-		}catch(Exception ex1) {}
-		
 		sb.elegirvalidacion("DOC");
 		sleep(14000);
 		driver.findElement(By.id("FileDocumentImage")).sendKeys("C:\\Users\\florangel\\Downloads\\mapache.jpg");
