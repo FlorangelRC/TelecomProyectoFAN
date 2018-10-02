@@ -168,15 +168,23 @@ public class ManejoCaja extends BasePage {
 		}
 	}
 	
-	public void pagar(WebDriver driver,String prefactura, String cuenta) {
+	public void pagarEfectivo(WebDriver driver,String prefactura, String cuenta) {
 		seleccionarOpcionCatalogo(driver, "Cuentas por cobrar");
 		seleccionarOpcionSubMenu(driver, "Pago");
 		sleep(2000);
 		driver.switchTo().frame(TB.cambioFrame(driver,By.id("queryUserInfoButton")));
 		driver.findElement(By.id("balanceAdjustQueryCondition_content")).findElement(By.id("paymentType_condition_input_1")).click();
-		driver.findElement(By.id("balanceAdjustQueryCondition_content")).findElement(By.id("acctCode_condition_input_value")).sendKeys(prefactura);
+		driver.findElement(By.id("balanceAdjustQueryCondition_content")).findElement(By.id("acctCode_condition_input_value")).sendKeys(cuenta);
 		driver.findElement(By.id("balanceAdjustQueryCondition_content")).findElement(By.id("invoiceNo_condition_input_value")).sendKeys(prefactura);
 		driver.findElement(By.id("balanceAdjustQueryCondition_content")).findElement(By.id("queryUserInfoButton")).click();
+		sleep(3000);
+		driver.findElement(By.id("invoiceInfoPanel_content")).findElement(By.id("selected_0")).click();
+		sleep(2000);
+		driver.findElement(By.id("salesInvoiceDetailIOList")).findElement(By.id("selectedPayment_0")).click();
+		sleep(2000);
+		driver.findElement(By.id("submitButton")).click();
+		sleep(3000);
+		driver.findElement(By.cssSelector(".btn_group.btn_group_aligncenter.bc")).findElement(By.tagName("span")).click();
 		
 	}
 }
