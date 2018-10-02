@@ -184,6 +184,7 @@ public class ManejoCaja extends BasePage {
 		sleep(2000);
 		driver.findElement(By.id("submitButton")).click();
 		sleep(3000);
+		driver.switchTo().frame(TB.cambioFrame(driver, By.cssSelector(".btn_group.btn_group_aligncenter.bc")));
 		driver.findElement(By.cssSelector(".btn_group.btn_group_aligncenter.bc")).findElement(By.tagName("span")).click();
 		
 	}
