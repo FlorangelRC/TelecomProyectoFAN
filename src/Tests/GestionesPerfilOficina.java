@@ -410,11 +410,10 @@ public class GestionesPerfilOficina extends TestBase {
 		}
 		sleep(5000);
 		driver.switchTo().frame(cambioFrame(driver, By.id("tab-default-1")));
-		sleep(10000);
+		sleep(15000);
 		driver.findElement(By.cssSelector(".slds-button.cpq-item-has-children")).click();
 		sleep(5000);
 		boolean bAssert = false;
-		//Not finished
 		List<WebElement> servicios= driver.findElements(By.xpath("//*[@class='cpq-item-product-child-level-1 cpq-item-child-product-name-wrapper']"));
 		for(WebElement a: servicios) {
 			if (a.getText().toLowerCase().contains("servicios basicos general movil".toLowerCase())) {
@@ -452,14 +451,14 @@ public class GestionesPerfilOficina extends TestBase {
 				break;
 			}
 		}
+		driver.findElement(By.cssSelector(".slds-button.slds-button--destructive")).click();
+		sleep(10000);
 		driver.findElement(By.cssSelector(".slds-button.slds-m-left--large.slds-button--brand.ta-button-brand")).click();
-		sleep(5000);
-		driver.findElement(By.cssSelector(".slds-button.slds-button--destructive"));
 		sleep(10000);
 		WebElement wMessageBox = driver.findElement(By.id("TextBlock1")).findElement(By.className("ng-binding"));
 		sleep(5000);
-		Assert.assertTrue(wMessageBox.getText().equalsIgnoreCase("�La orden " + sOrder + " se realiz� con �xito!"));
-		Assert.assertTrue(cc.corroborarEstadoCaso(sOrder, "Closed"));
+		Assert.assertTrue(wMessageBox.getText().equalsIgnoreCase("La orden " + sOrder + " se realiz\u00d3 con \u00c9xito!"));
+		Assert.assertTrue(cc.corroborarEstadoCaso(sOrder, "Activada"));
 		sOrders.add("Suspension, orden numero: " + sOrder + ", DNI: " + sDNI);
 	}
 
