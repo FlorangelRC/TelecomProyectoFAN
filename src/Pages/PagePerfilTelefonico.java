@@ -135,10 +135,10 @@ public class PagePerfilTelefonico extends TestBase{
 		driver.switchTo().frame(cambioFrame(driver, By.cssSelector(".slds-button.cpq-item-has-children")));
 		Pack("Packs Opcionales", "Packs de Datos", Pack1);
 		driver.findElement(By.cssSelector(".slds-button.slds-m-left--large.slds-button--brand.ta-button-brand")).click();
-		sleep(25000);
+		sleep(15000);
 		try{ 
 		      driver.findElements(By.cssSelector(".slds-button.slds-button--neutral.ng-binding.ng-scope")).get(1).click(); 
-		      sleep(8000); 
+		      sleep(12000); 
 		    }catch(Exception ex1){} 
 		sleep(12000); 
 	}

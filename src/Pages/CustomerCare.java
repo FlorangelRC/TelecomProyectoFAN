@@ -1640,37 +1640,28 @@ public class CustomerCare extends BasePage {
 	
 	public boolean verificarOrdenYGestion(String gestion) {
 		boolean verif = false;
-		boolean exitoso = false;
 		TestBase tb = new TestBase();
 		try {
 			String nroCaso = driver.findElement(By.xpath("//*[@id=\"txtSuccessConfirmation\"]/div")).findElement(By.tagName("strong")).getText();
 			buscarCaso(nroCaso);
 			driver.switchTo().frame(tb.cambioFrame(driver, By.name("close")));
-			List <WebElement> gest = driver.findElements(By.cssSelector(".dataCol.col02.inlineEditWrite"));
+			List <WebElement> gest = driver.findElements(By.cssSelector(".dataCol.col02"));
 			for (WebElement x : gest) {
-				if (x.getText().equalsIgnoreCase(gestion)) {
+				if (x.getText().equalsIgnoreCase(gestion))
 					verif = true;
-				}
-				if (x.getText().equalsIgnoreCase("realizada exitosa")) {
-					exitoso = true;
-				}
 			}
 		} catch(Exception e) {
 			String orden = driver.findElement(By.cssSelector(".vlc-slds-inline-control__label.ng-binding")).getText();
 			orden = orden.substring(orden.lastIndexOf(" ")+1, orden.lastIndexOf("."));
 			buscarCaso(orden);
 			driver.switchTo().frame(tb.cambioFrame(driver, By.name("close")));
-			List <WebElement> asd = driver.findElements(By.cssSelector(".dataCol.col02.inlineEditWrite"));
+			List <WebElement> asd = driver.findElements(By.cssSelector(".dataCol.col02"));
 			for (WebElement x : asd) {
-				if (x.getText().equalsIgnoreCase(gestion)) {
+				if (x.getText().equalsIgnoreCase(gestion))
 					verif = true;
-				}
-				if (x.getText().equalsIgnoreCase("realizada exitosa")) {
-					exitoso = true;
-				}
 			}
 		}
-		return (verif&&exitoso);
+		return (verif);
 	}
 	
 	public String obtenerOrden2(WebDriver driver) {
@@ -1707,7 +1698,7 @@ public class CustomerCare extends BasePage {
 		boolean esta = false;
 		String texto = null;
 		sleep(8000);
-		driver.switchTo().frame(TB.cambioFrame(driver, By.id("OrderNumber_ilecell")));
+		driver.switchTo().frame(TB.cambioFrame(driver, By.cssSelector(".hasMotif.orderTab.detailPage.ext-webkit.ext-chrome.sfdcBody.brandQuaternaryBgr")));
 		WebElement tabla = driver.findElement(By.id("ep")).findElements(By.tagName("table")).get(1);
 		datos = tabla.findElement(By.tagName("tr")).findElements(By.tagName("td")).get(3).getText();
 		List<WebElement> todo = tabla.findElements(By.tagName("td"));

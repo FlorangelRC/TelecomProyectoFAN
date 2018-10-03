@@ -46,8 +46,27 @@ public class CBS_Mattu extends TestBase {
 		MN.configuracionesIniciales(driver);
 		MN.seleccionarOpcionCatalogo(driver, "Cuentas por cobrar");
 		MN.abrirCajaRegistradora(driver);
-		MN.cerrarCajaRegistradora(driver);
+		MN.pagarTC(driver,"20181002000000095197","1000000025710001");
+		/*MN.seleccionarOpcionCatalogo(driver, "Cuentas por cobrar");
+		MN.cerrarCajaRegistradora(driver);*/
 	}
+	
+	@Test
+	public void cajeta(WebDriver driver, String prefactura, String cuenta) {
+		ManejoCaja mn = new ManejoCaja();
+		//this.driver = setConexion.setupEze();
+		sleep(5000);
+		mn.ingresarCaja(driver);
+		mn.configuracionesIniciales(driver);
+		mn.seleccionarOpcionCatalogo(driver, "Cuentas por cobrar");
+		mn.abrirCajaRegistradora(driver);
+		//MN.seleccionarOpcionCatalogo(driver, "Cuentas por cobrar");
+		mn.pagarEfectivo(driver,prefactura,cuenta);
+		mn.cerrarPestanias(driver);
+		mn.cerrarCajaRegistradora(driver);
+		
+	}
+	
 	@Test
 	public void openPage() {
 		String sEndPoint = "Pago en Caja";

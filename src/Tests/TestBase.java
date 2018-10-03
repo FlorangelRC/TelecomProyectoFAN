@@ -1,5 +1,8 @@
 package Tests;
 
+import java.awt.AWTException;
+import java.awt.Robot;
+import java.awt.event.KeyEvent;
 import java.io.BufferedWriter;
 import java.io.File;
 
@@ -48,8 +51,8 @@ import DataProvider.ExcelUtils;
 public class TestBase {
 	protected static WebDriver driver;
 	
-		//public static String urlAmbiente = "https://telecomcrm--uat.cs53.my.salesforce.com";
-		public static String urlAmbiente = "https://crm--sit.cs14.my.salesforce.com/";
+		public static String urlAmbiente = "https://telecomcrm--uat.cs53.my.salesforce.com";
+		//public static String urlAmbiente = "https://crm--sit.cs14.my.salesforce.com/";
 		
 		// viejo public String urlSCP = "https://telecomcrm--uat.cs8.my.salesforce.com";
 		public static String urlSCP = "https://telecomcrm--uat.cs53.my.salesforce.com";
@@ -1132,7 +1135,23 @@ public class TestBase {
 	@DataProvider
 	public Object [][] CuentaProblemaRecarga() throws Exception{
 		
-		Object[][] testObjArray = ExcelUtils.getTableArray(dataProviderE2E(),"E2EsinPago",1,1,3,"ProblemaRecargas");
+		Object[][] testObjArray = ExcelUtils.getTableArray(dataProviderE2E(),"E2EsinPago",1,1,1,"ProblemaRecargas");
+		
+		return (testObjArray);
+	}
+	
+	@DataProvider
+	public Object [][] CuentaProblemaRecargaAYD() throws Exception{
+		
+		Object[][] testObjArray = ExcelUtils.getTableArray(dataProviderE2E(),"E2EsinPago",1,1,3,"ProblemaRecargaAyD");
+		
+		return (testObjArray);
+	}
+	
+	@DataProvider
+	public Object [][] CuentaProblemaRecargaQuemada() throws Exception{
+		
+		Object[][] testObjArray = ExcelUtils.getTableArray(dataProviderE2E(),"E2EsinPago",1,1,3,"ProblemaRecargaQuemada");
 		
 		return (testObjArray);
 	}
@@ -1335,7 +1354,7 @@ public class TestBase {
 	@DataProvider
 	public Object[][] CuentaAnulacionDeVenta() throws Exception{
 		
-		 Object[][] testObjArray = ExcelUtils.getTableArray(dataProviderE2E(),"E2EsinPago",1,1,1,"Anulacion De Venta");
+		 Object[][] testObjArray = ExcelUtils.getTableArray(dataProviderE2E(),"E2EsinPago",1,1,1,"Anulacion de venta");
 
 		 return (testObjArray);
 	}
@@ -1409,12 +1428,19 @@ public class TestBase {
 	}
 	
 	@DataProvider
-	public Object[][] VentaExisteEquipoAGTD() throws Exception{
+	public Object[][] VentaExisteEquipoAgTd() throws Exception{
 
 	 Object[][] testObjArray = ExcelUtils.getTableArray(dataProviderE2E(),"Altas y Nominacion",1,1,9,"Venta Equipo Existe AG Debito");
 
 	 return (testObjArray);
 
+	}
+	
+	public void abrirPestaniaNueva(WebDriver driver) throws AWTException
+	{
+		Robot r = new Robot();       
+		r.keyPress(KeyEvent.VK_CONTROL); 
+		r.keyPress(KeyEvent.VK_T); 
 	}
 			
 }
