@@ -272,6 +272,7 @@ public class GestionesPerfilOficina extends TestBase {
 	
 	@Test (groups = {"GestionesPerfilOficina", "Recargas","E2E"}, dataProvider = "RecargaEfectivo")
 	public void TS134318_CRM_Movil_REPRO_Recargas_Presencial_Efectivo_Ofcom(String cDNI, String cMonto, String cLinea) throws AWTException {
+		sleep(3000);
 		imagen = "TS134318"+cDNI;
 		if(cMonto.length() >= 4) {
 			cMonto = cMonto.substring(0, cMonto.length()-1);
@@ -281,7 +282,7 @@ public class GestionesPerfilOficina extends TestBase {
 		String accid = driver.findElement(By.cssSelector(".searchClient-body.slds-hint-parent.ng-scope")).findElements(By.tagName("td")).get(5).getText();
 		System.out.println("id "+accid);
 		driver.findElement(By.cssSelector(".slds-tree__item.ng-scope")).click();
-		sleep(18000);
+		sleep(20000);
 		CustomerCare cCC = new CustomerCare(driver);
 		cCC.seleccionarCardPornumeroLinea(cLinea,driver);
 		sleep(3000);
@@ -306,15 +307,23 @@ public class GestionesPerfilOficina extends TestBase {
 		System.out.println("orden = "+orden);
 		sOrders.add("Recargas" + orden + ", cuenta:"+accid+", DNI: " + cDNI +", Monto:"+orden.split("-")[2]);
 		abrirPestaniaNueva(driver);
-		/*CBS_Mattu invoSer = new CBS_Mattu();
-		Assert.assertTrue(invoSer.PagoEnCaja("1006", accid, "1001", orden.split("-")[2], orden.split("-")[1]));
+		 ArrayList<String> tabs2 = new ArrayList<String> (driver.getWindowHandles());
+		 driver.switchTo().window(tabs2.get(1));
+		CBS_Mattu invoSer = new CBS_Mattu();
+		invoSer.cajeta(driver, orden.split("-")[1], accid);
+		driver.close();
+	    driver.switchTo().window(tabs2.get(0));
+		/*Assert.assertTrue(invoSer.PagoEnCaja("1006", accid, "1001", orden.split("-")[2], orden.split("-")[1]));*/
 		sleep(5000);
 		driver.navigate().refresh();
 		sleep(10000);
 		//cc.obtenerTNyMonto2(driver, sOrden);
 		//sleep(10000);
+		driver.switchTo().frame(cambioFrame(driver, By.cssSelector(".hasMotif.orderTab.detailPage.ext-webkit.ext-chrome.sfdcBody.brandQuaternaryBgr")));
+		WebElement tabla = driver.findElement(By.id("ep")).findElements(By.tagName("table")).get(1);
+		String datos = tabla.findElements(By.tagName("tr")).get(4).findElements(By.tagName("td")).get(2).getText();
 		driver.switchTo().frame(cambioFrame(driver, By.id("Status_ilecell")));
-		Assert.assertTrue(driver.findElement(By.id("Status_ilecell")).getText().equalsIgnoreCase("activada"));*/
+		Assert.assertTrue(datos.equalsIgnoreCase("activada")||datos.equalsIgnoreCase("activated"));
 
 	}
 	

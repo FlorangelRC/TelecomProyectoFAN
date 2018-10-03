@@ -88,7 +88,7 @@ public class ManejoCaja extends BasePage {
 	
 	public void seleccionarOpcionCatalogo(WebDriver driver, String opcion) {
 		driver.findElement(By.id("pluginbar")).findElement(By.id("sitemap")).click();
-		sleep(2000);
+		sleep(4000);
 		driver.switchTo().frame(TB.cambioFrame(driver,By.id("catalog")));
 		List <WebElement> opcMenu = driver.findElement(By.id("catalog")).findElements(By.className("body2"));
 		for(WebElement UnaO: opcMenu) {
@@ -145,7 +145,7 @@ public class ManejoCaja extends BasePage {
 	
 	public void abrirCajaRegistradora(WebDriver driver) {
 		seleccionarOpcionSubMenu(driver, "Abrir caja registradora");
-		sleep(2000);
+		sleep(4000);
 		driver.switchTo().frame(TB.cambioFrame(driver,By.id("openCashRegView")));
 		WebElement montoCaja = driver.findElement(By.id("openCashRegView")).findElement(By.id("inputCurrency_value"));
 		montoCaja.clear();
@@ -192,7 +192,7 @@ public class ManejoCaja extends BasePage {
 	public void pagarTC(WebDriver driver,String prefactura, String cuenta) {//otra prefactura 20181001000000095162
 		seleccionarOpcionCatalogo(driver, "Cuentas por cobrar");
 		seleccionarOpcionSubMenu(driver, "Pago");
-		sleep(2000);
+		sleep(4000);
 		driver.switchTo().frame(TB.cambioFrame(driver,By.id("queryUserInfoButton")));
 		driver.findElement(By.id("balanceAdjustQueryCondition_content")).findElement(By.id("paymentType_condition_input_1")).click();
 		driver.findElement(By.id("balanceAdjustQueryCondition_content")).findElement(By.id("acctCode_condition_input_value")).sendKeys(cuenta);
