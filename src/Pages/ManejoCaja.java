@@ -61,7 +61,7 @@ public class ManejoCaja extends BasePage {
 		driver.findElement(By.id("login")).findElement(By.id("username")).sendKeys(usuario);
 		driver.findElement(By.id("login")).findElement(By.id("password")).sendKeys(clave);
 		driver.findElement(By.id("login")).findElement(By.id("submitBtn")).click();
-		sleep(5000);
+		sleep(10000);
 	}
 	
 	public void configuracionesIniciales(WebDriver driver) {
@@ -118,6 +118,7 @@ public class ManejoCaja extends BasePage {
 	}
 	
 	public void cerrarCajaRegistradora(WebDriver driver) {
+		seleccionarOpcionCatalogo(driver, "Cuentas por cobrar");
 		seleccionarOpcionSubMenu(driver, "Cerrar caja registradora");
 		sleep(2000);
 		driver.switchTo().frame(TB.cambioFrame(driver,By.id("closeview")));
@@ -128,9 +129,9 @@ public class ManejoCaja extends BasePage {
 		sleep(5000);
 		//driver.switchTo().frame(TB.cambioFrame(driver,By.id("print-preview")));
 		ArrayList<String> tabs2 = new ArrayList<String> (driver.getWindowHandles());
-	    driver.switchTo().window(tabs2.get(1));
+	    driver.switchTo().window(tabs2.get(2));
 		driver.findElement(By.className("cancel")).click();
-		driver.switchTo().window(tabs2.get(0));
+		driver.switchTo().window(tabs2.get(1));
 		//driver.findElement(By.className("popwin_close")).sendKeys(Keys.ESCAPE);
 		sleep(1000);
 		driver.findElement(By.id("popwin_close")).click();
@@ -161,6 +162,7 @@ public class ManejoCaja extends BasePage {
 	}
 	
 	public void cerrarPestanias(WebDriver driver) {
+		driver.switchTo().defaultContent();
 		List<WebElement> pestanias = driver.findElement(By.id("tabpage")).findElements(By.className("bc_tabitem_close"));
 		pestanias.remove(0);
 		for(WebElement UnaP:pestanias) {
@@ -174,6 +176,7 @@ public class ManejoCaja extends BasePage {
 		sleep(2000);
 		driver.switchTo().frame(TB.cambioFrame(driver,By.id("queryUserInfoButton")));
 		driver.findElement(By.id("balanceAdjustQueryCondition_content")).findElement(By.id("paymentType_condition_input_1")).click();
+		sleep(2000);
 		driver.findElement(By.id("balanceAdjustQueryCondition_content")).findElement(By.id("acctCode_condition_input_value")).sendKeys(cuenta);
 		driver.findElement(By.id("balanceAdjustQueryCondition_content")).findElement(By.id("invoiceNo_condition_input_value")).sendKeys(prefactura);
 		driver.findElement(By.id("balanceAdjustQueryCondition_content")).findElement(By.id("queryUserInfoButton")).click();
@@ -186,6 +189,7 @@ public class ManejoCaja extends BasePage {
 		sleep(3000);
 		driver.switchTo().frame(TB.cambioFrame(driver, By.cssSelector(".btn_group.btn_group_aligncenter.bc")));
 		driver.findElement(By.cssSelector(".btn_group.btn_group_aligncenter.bc")).findElement(By.tagName("span")).click();
+		sleep(3000);
 		//cerrarPestanias(driver);
 	}
 	

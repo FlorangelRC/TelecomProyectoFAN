@@ -589,7 +589,7 @@ public class AltadeLineas extends TestBase {
 			System.out.println("orden = "+orden);
 			DatosOrden.add("Recargas" + orden + " de cuenta "+accid+" con DNI: " + sDni);
 			CBS_Mattu invoSer = new CBS_Mattu();
-			invoSer.PagoEnCaja("1003", accid, "2001", orden.split("-")[2], orden.split("-")[1]);
+			invoSer.PagoEnCaja("1003", accid, "2001", orden.split("-")[2], orden.split("-")[1],driver);
 			sleep(5000);
 			CambiarPerfil("logistica",driver);
 			sb.CompletarLogisticaEquipo(orden, driver);
@@ -664,7 +664,7 @@ public class AltadeLineas extends TestBase {
 		System.out.println("orden = "+orden);
 		DatosOrden.add("Recargas" + orden + " de cuenta "+NCuenta+" con DNI: " + sDni);
 		CBS_Mattu invoSer = new CBS_Mattu();
-		invoSer.PagoEnCaja("1006", NCuenta, "1001", orden.split("-")[1], orden.split("-")[0]);
+		invoSer.PagoEnCaja("1006", NCuenta, "1001", orden.split("-")[1], orden.split("-")[0],driver);
 		sleep(5000);
 		CambiarPerfil("logistica",driver);
 		sb.CompletarLogisticaEquipo(orden, driver);    //00080481

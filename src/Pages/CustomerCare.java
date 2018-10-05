@@ -1701,6 +1701,7 @@ public class CustomerCare extends BasePage {
 		driver.switchTo().frame(TB.cambioFrame(driver, By.cssSelector(".hasMotif.orderTab.detailPage.ext-webkit.ext-chrome.sfdcBody.brandQuaternaryBgr")));
 		WebElement tabla = driver.findElement(By.id("ep")).findElements(By.tagName("table")).get(1);
 		datos = tabla.findElement(By.tagName("tr")).findElements(By.tagName("td")).get(3).getText();
+		tabla.findElement(By.tagName("tr")).findElements(By.tagName("td")).get(1).click();
 		List<WebElement> todo = tabla.findElements(By.tagName("td"));
 		for(WebElement UnT : todo) {
 			if(esta == true) {
