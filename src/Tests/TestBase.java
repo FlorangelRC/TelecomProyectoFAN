@@ -1441,6 +1441,8 @@ public class TestBase {
 		Robot r = new Robot();       
 		r.keyPress(KeyEvent.VK_CONTROL); 
 		r.keyPress(KeyEvent.VK_T); 
+		r.keyRelease(KeyEvent.VK_CONTROL);
+		r.keyRelease(KeyEvent.VK_T);
 	}
 	
 	@DataProvider

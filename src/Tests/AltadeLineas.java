@@ -1,5 +1,6 @@
 package Tests;
 
+import java.awt.AWTException;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
@@ -528,7 +529,7 @@ public class AltadeLineas extends TestBase {
 		sb.completarEntrega(orden, driver);
 	}
 	@Test(groups={"Sales", "AltaLineaDatos", "E2E"}, priority=1, dataProvider="DatosAltaEquipoExiste") 
-	public void TS_CRM_Movil_Equipo_Cliente_existente_Presencial_OFCOM(String sDni, String sPlan, String sEquipo) throws IOException {
+	public void TS_CRM_Movil_Equipo_Cliente_existente_Presencial_OFCOM(String sDni, String sPlan, String sEquipo) throws IOException, AWTException {
 		imagen = "TS_CRM_Movil_Equipo_Cliente_existente_Presencial_OFCOM";
 		CustomerCare cc = new CustomerCare(driver);
 		SalesBase sb = new SalesBase(driver);
@@ -589,7 +590,7 @@ public class AltadeLineas extends TestBase {
 			System.out.println("orden = "+orden);
 			DatosOrden.add("Recargas" + orden + " de cuenta "+accid+" con DNI: " + sDni);
 			CBS_Mattu invoSer = new CBS_Mattu();
-			invoSer.PagoEnCaja("1003", accid, "2001", orden.split("-")[2], orden.split("-")[1]);
+			invoSer.PagoEnCaja("1003", accid, "2001", orden.split("-")[2], orden.split("-")[1],driver);
 			sleep(5000);
 			CambiarPerfil("logistica",driver);
 			sb.CompletarLogisticaEquipo(orden, driver);
@@ -599,7 +600,7 @@ public class AltadeLineas extends TestBase {
 		}
 	
 	@Test(groups={"Sales", "AltaLineaDatos", "E2E"}, priority=1, dataProvider="VentaNuevoEquipoOfCom")//verificado
-	public void TS135820_CRM_Movil_Venta_Sin_Linea_Cliente_nuevo_Presencial_OFCOM_EF(String sDni, String sNombre, String sApellido, String sSexo, String sFNac, String sEmail, String sEquipo, String sProvincia, String sLocalidad, String sCalle, String sAltura, String sCP) throws IOException {
+	public void TS135820_CRM_Movil_Venta_Sin_Linea_Cliente_nuevo_Presencial_OFCOM_EF(String sDni, String sNombre, String sApellido, String sSexo, String sFNac, String sEmail, String sEquipo, String sProvincia, String sLocalidad, String sCalle, String sAltura, String sCP) throws IOException, AWTException {
 		imagen = "TS135820";
 		CustomerCare cc = new CustomerCare(driver);
 		SalesBase sb = new SalesBase(driver);
@@ -664,7 +665,7 @@ public class AltadeLineas extends TestBase {
 		System.out.println("orden = "+orden);
 		DatosOrden.add("Recargas" + orden + " de cuenta "+NCuenta+" con DNI: " + sDni);
 		CBS_Mattu invoSer = new CBS_Mattu();
-		invoSer.PagoEnCaja("1006", NCuenta, "1001", orden.split("-")[1], orden.split("-")[0]);
+		invoSer.PagoEnCaja("1006", NCuenta, "1001", orden.split("-")[1], orden.split("-")[0],driver);
 		sleep(5000);
 		CambiarPerfil("logistica",driver);
 		sb.CompletarLogisticaEquipo(orden, driver);    //00080481

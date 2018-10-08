@@ -306,15 +306,11 @@ public class GestionesPerfilOficina extends TestBase {
 		//String orden = cc.obtenerOrdenMontoyTN(driver, "Recarga");
 		System.out.println("orden = "+orden);
 		sOrders.add("Recargas" + orden + ", cuenta:"+accid+", DNI: " + cDNI +", Monto:"+orden.split("-")[2]);
-		abrirPestaniaNueva(driver);
-		sleep(5000);
-		 ArrayList<String> tabs2 = new ArrayList<String> (driver.getWindowHandles());
-		 driver.switchTo().window(tabs2.get(1));
+		
 		CBS_Mattu invoSer = new CBS_Mattu();
-		invoSer.cajeta(driver, orden.split("-")[1], accid);
-		//driver.close();
-	    driver.switchTo().window(tabs2.get(0));
-		/*Assert.assertTrue(invoSer.PagoEnCaja("1006", accid, "1001", orden.split("-")[2], orden.split("-")[1]));*/
+		Assert.assertTrue(invoSer.PagoEnCaja("1006", accid, "1001", orden.split("-")[2], orden.split("-")[1],driver));
+		//invoSer.cajeta(driver, orden.split("-")[1], accid);
+
 		sleep(5000);
 		driver.navigate().refresh();
 		sleep(10000);
@@ -322,14 +318,13 @@ public class GestionesPerfilOficina extends TestBase {
 		//sleep(10000);
 		driver.switchTo().frame(cambioFrame(driver, By.cssSelector(".hasMotif.orderTab.detailPage.ext-webkit.ext-chrome.sfdcBody.brandQuaternaryBgr")));
 		WebElement tabla = driver.findElement(By.id("ep")).findElements(By.tagName("table")).get(1);
-		String datos = tabla.findElements(By.tagName("tr")).get(4).findElements(By.tagName("td")).get(2).getText();
-		driver.switchTo().frame(cambioFrame(driver, By.id("Status_ilecell")));
+		String datos = tabla.findElements(By.tagName("tr")).get(4).findElements(By.tagName("td")).get(1).getText();
 		Assert.assertTrue(datos.equalsIgnoreCase("activada")||datos.equalsIgnoreCase("activated"));
 
 	}
 	
 	@Test (groups = {"GestionesPerfilOficina", "Recargas","E2E"}, dataProvider = "RecargaTC")
-	public void TS134330_CRM_Movil_REPRO_Recargas_Presencial_TC_Ofcom_Financiacion(String cDNI, String cMonto, String cLinea, String cBanco, String cTarjeta, String cNumTarjeta, String cVenceMes, String cVenceAno, String cCodSeg, String cTipoDNI, String cDNITarjeta, String cTitular, String cPromo, String cCuotas) {
+	public void TS134330_CRM_Movil_REPRO_Recargas_Presencial_TC_Ofcom_Financiacion(String cDNI, String cMonto, String cLinea, String cBanco, String cTarjeta, String cNumTarjeta, String cVenceMes, String cVenceAno, String cCodSeg, String cTipoDNI, String cDNITarjeta, String cTitular, String cPromo, String cCuotas) throws AWTException {
 		imagen = "TS134330";
 		if(cMonto.length() >= 4) {
 			cMonto = cMonto.substring(0, cMonto.length()-1);
@@ -349,11 +344,13 @@ public class GestionesPerfilOficina extends TestBase {
 		sleep(15000);
 		driver.findElement(By.id("AmountSelectionStep_nextBtn")).click();
 		sleep(15000);
+		String sOrden = cc.obtenerOrden3(driver);
+		//driver.switchTo().frame(cambioFrame(driver, By.id("InvoicePreview_nextBtn")));
 		driver.findElement(By.xpath("//*[@id=\"InvoicePreview_nextBtn\"]")).click();
-		sleep(15000);
+		sleep(20000);
 		buscarYClick(driver.findElements(By.cssSelector(".slds-form-element__label.ng-binding")), "equals", "tarjeta de credito");
 		sleep(20000);
-		driver.switchTo().frame(cambioFrame(driver, By.id("BankingEntity-0")));
+		//driver.switchTo().frame(cambioFrame(driver, By.id("BankingEntity-0")));
 		selectByText(driver.findElement(By.id("BankingEntity-0")), cBanco);
 		sleep(5000);
 		selectByText(driver.findElement(By.id("CardBankingEntity-0")), cTarjeta);
@@ -364,6 +361,7 @@ public class GestionesPerfilOficina extends TestBase {
 		sleep(5000);
 		driver.findElement(By.id("SelectPaymentMethodsStep_nextBtn")).click();
 		sleep(20000);
+		//String sOrden = cc.obtenerOrden3(driver);
 		buscarYClick(driver.findElements(By.id("InvoicePreview_nextBtn")), "equals", "siguiente");
 		sleep(20000);
 		List <WebElement> exis = driver.findElements(By.id("GeneralMessageDesing"));
@@ -374,11 +372,16 @@ public class GestionesPerfilOficina extends TestBase {
 			}
 			Assert.assertTrue(a);
 		}
-		String orden = cc.obtenerOrdenMontoyTN(driver, "Recarga");
+		String orden = cc.obtenerTNyMonto2(driver, sOrden);
+		//String orden = cc.obtenerOrdenMontoyTN(driver, "Recarga");
+		System.out.println("orden = "+orden);
+		sOrders.add("Recargas" + orden + ", cuenta:"+accid+", DNI: " + cDNI +", Monto:"+orden.split("-")[2]);
+		
+		//String orden = cc.obtenerOrdenMontoyTN(driver, "Recarga");
 		System.out.println("orden = "+orden);
 		sOrders.add("Recargas" + orden + ", cuenta:"+accid+", DNI: " + cDNI +", Monto:"+orden.split("-")[2]);
 		CBS_Mattu invoSer = new CBS_Mattu();
-		Assert.assertTrue(invoSer.PagoEnCaja("1006", accid, "2001", orden.split("-")[2], orden.split("-")[1]));
+		Assert.assertTrue(invoSer.PagoEnCaja("1006", accid, "2001", orden.split("-")[2], orden.split("-")[1],driver));
 		sleep(5000);
 		driver.navigate().refresh();
 		sleep(10000);
@@ -2067,7 +2070,7 @@ public class GestionesPerfilOficina extends TestBase {
 	}
 	
 	@Test (groups = {"GestionesPerfilOficina", "Recargas","E2E"}, dataProvider = "RecargaTD")
-	public void TS134320_CRM_Movil_REPRO_Recargas_Presencial_TD_Ofcom(String sDNI, String sMonto, String sLinea, String sBanco, String sTarjeta, String sNumTarjeta, String sVenceMes, String sVenceAno, String sCodSeg, String sTipoDNI, String sDNITarjeta, String sTitular) {
+	public void TS134320_CRM_Movil_REPRO_Recargas_Presencial_TD_Ofcom(String sDNI, String sMonto, String sLinea, String sBanco, String sTarjeta, String sNumTarjeta, String sVenceMes, String sVenceAno, String sCodSeg, String sTipoDNI, String sDNITarjeta, String sTitular) throws AWTException {
 		if(sMonto.length() >= 4) {
 			sMonto = sMonto.substring(0, sMonto.length()-1);
 		}
@@ -2114,7 +2117,7 @@ public class GestionesPerfilOficina extends TestBase {
 		System.out.println("orden = " + orden);
 		sOrders.add("Recargas" + orden + ", cuenta:"+ sAccid +", DNI: " + sDNI + ", Monto:" + sOrden.split("-")[2]);
 		CBS_Mattu cInvoSer = new CBS_Mattu();
-		Assert.assertTrue(cInvoSer.PagoEnCaja("1006", sAccid , "4001", sOrden.split("-")[2], sOrden.split("-")[1]));
+		Assert.assertTrue(cInvoSer.PagoEnCaja("1006", sAccid , "4001", sOrden.split("-")[2], sOrden.split("-")[1],driver));
 		sleep(5000);
 		driver.navigate().refresh();
 		sleep(10000);
@@ -2209,7 +2212,7 @@ public class GestionesPerfilOficina extends TestBase {
 	}
 	
 	@Test (groups = {"GestionesPerfilOficina","E2E"}, dataProvider="PackOfCom")
-	public void Venta_de_Pack(String sDNI, String sLinea, String sPackOfCom, String cBanco, String cTarjeta, String cPromo, String cCuotas){
+	public void Venta_de_Pack(String sDNI, String sLinea, String sPackOfCom, String cBanco, String cTarjeta, String cPromo, String cCuotas) throws AWTException{
 		PagePerfilTelefonico pagePTelefo = new PagePerfilTelefonico(driver);
 		CustomerCare cCC = new CustomerCare(driver);
 		driver.switchTo().frame(cambioFrame(driver, By.id("SearchClientDocumentType")));
@@ -2246,7 +2249,7 @@ public class GestionesPerfilOficina extends TestBase {
 		sOrders.add("Operacion: Compra de Pack- Cuenta: "+accid+"Invoice: "+invoice.split("-")[1]+invoice.split("-")[0]);
 		System.out.println("Operacion: Compra de Pack- Cuenta: "+accid+" Invoice: "+invoice.split("-")[1] + "\tAmmount: " +invoice.split("-")[0]);
 		CBS_Mattu invoSer = new CBS_Mattu();
-		Assert.assertTrue(invoSer.PagoEnCaja("1005", accid, "2001", invoice.split("-")[1], invoice.split("-")[0]));
+		Assert.assertTrue(invoSer.PagoEnCaja("1005", accid, "2001", invoice.split("-")[1], invoice.split("-")[0],driver));
 		driver.navigate().refresh();
 		sleep(10000);
 		driver.switchTo().frame(cambioFrame(driver, By.id("Status_ilecell")));
@@ -2257,7 +2260,7 @@ public class GestionesPerfilOficina extends TestBase {
 	
 	
 	@Test(groups = { "GestionesPerfilOficina", "E2E" }, priority = 1, dataProvider = "CambioSimCardOficina")
-	public void TSCambioSimCardOficina(String sDNI, String sLinea) {
+	public void TSCambioSimCardOficina(String sDNI, String sLinea) throws AWTException {
 		imagen = "TSCambioSimCardOficina";
 		SalesBase sale = new SalesBase(driver);
 		BasePage cambioFrameByID = new BasePage();
@@ -2303,7 +2306,7 @@ public class GestionesPerfilOficina extends TestBase {
 		sleep(10000);
 		sOrders.add("Cambio sim card Agente- Cuenta: "+accid+"Invoice: "+invoice.split("-")[0]);
 		CBS_Mattu invoSer = new CBS_Mattu();
-		Assert.assertTrue(invoSer.PagoEnCaja("1006", accid, "1001", invoice.split("-")[2], invoice.split("-")[1]));
+		Assert.assertTrue(invoSer.PagoEnCaja("1006", accid, "1001", invoice.split("-")[2], invoice.split("-")[1],driver));
 		driver.navigate().refresh();
 		sleep(10000);
 		driver.switchTo().frame(cambioFrame(driver, By.id("Status_ilecell")));
