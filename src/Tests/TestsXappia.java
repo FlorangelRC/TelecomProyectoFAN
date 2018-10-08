@@ -13,9 +13,11 @@ public class TestsXappia extends TestBase{
 	private void loginUAT() {
 		driver = setConexion.setupEze();
 		driver.get("https://telecomcrm--uat.cs53.my.salesforce.com");
+		sleep(2000);
 		driver.findElement(By.id("idp_section_buttons")).click();
+		sleep(2000);
 		driver.findElement(By.name("Ecom_User_ID")).sendKeys("uat579805");
- 		driver.findElement(By.id("Ecom_Password")).sendKeys("Testa10k");
+ 		driver.findElement(By.name("Ecom_Password")).sendKeys("Testa10k");
  		driver.findElement(By.id("loginButton2")).click();
  		sleep(5000);
 	}
@@ -23,9 +25,11 @@ public class TestsXappia extends TestBase{
 	private void loginSIT() {
 		driver = setConexion.setupEze();
 		driver.get("https://crm--sit.cs14.my.salesforce.com/");
+		sleep(2000);
 		driver.findElement(By.id("idp_section_buttons")).click();
+		sleep(2000);
 		driver.findElement(By.name("Ecom_User_ID")).sendKeys("UAT195528");
- 		driver.findElement(By.id("Ecom_Password")).sendKeys("Testa10k");
+ 		driver.findElement(By.name("Ecom_Password")).sendKeys("Testa10k");
  		driver.findElement(By.id("loginButton2")).click();
  		sleep(5000);
 	}
