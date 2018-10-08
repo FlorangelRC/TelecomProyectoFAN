@@ -1,5 +1,7 @@
 package Tests;
 
+import java.awt.AWTException;
+import java.util.ArrayList;
 import java.util.Date;
 
 import org.openqa.selenium.Alert;
@@ -46,10 +48,40 @@ public class CBS_Mattu extends TestBase {
 		MN.configuracionesIniciales(driver);
 		MN.seleccionarOpcionCatalogo(driver, "Cuentas por cobrar");
 		MN.abrirCajaRegistradora(driver);
-		//MN.seleccionarOpcionCatalogo(driver, "Cuentas por cobrar");
-		MN.pagar(driver,"345245","456345");
-		MN.seleccionarOpcionCatalogo(driver, "Cuentas por cobrar");
-		MN.cerrarCajaRegistradora(driver);
+		MN.pagarTC(driver,"20181005000000098056","1000000026310001");
+		/*MN.seleccionarOpcionCatalogo(driver, "Cuentas por cobrar");
+		MN.cerrarCajaRegistradora(driver);*/
+	}
+	
+	@Test
+	public boolean cajeta(WebDriver driver, String prefactura, String cuenta) throws AWTException {
+		ManejoCaja mn = new ManejoCaja();
+		boolean exito = false;
+		//this.driver = setConexion.setupEze();
+		abrirPestaniaNueva(driver);
+		ArrayList<String> tabs2 = new ArrayList<String> (driver.getWindowHandles());
+		sleep(5000);
+		try {
+			driver.switchTo().window(tabs2.get(1));
+			mn.ingresarCaja(driver);
+			exito = true;
+		}catch(Exception ex1) {
+			driver.close();
+		    driver.switchTo().window(tabs2.get(0));
+		}
+		if(exito == true) {
+			mn.configuracionesIniciales(driver);
+			mn.seleccionarOpcionCatalogo(driver, "Cuentas por cobrar");
+			mn.abrirCajaRegistradora(driver);
+			//MN.seleccionarOpcionCatalogo(driver, "Cuentas por cobrar");
+			mn.pagarEfectivo(driver,prefactura,cuenta);
+			//llamar al cerrarcaja registradora
+			mn.cerrarPestanias(driver);
+			mn.cerrarCajaRegistradora(driver);
+			driver.close();
+		    driver.switchTo().window(tabs2.get(0));
+		}
+		return(exito);
 	}
 	
 	@Test
@@ -68,15 +100,17 @@ public class CBS_Mattu extends TestBase {
 		System.out.println("sResponse: " + sResponse);
 	}
 	
-	public boolean PagoEnCaja(String sPaymentChannelID, String sAccountKey, String sPaymentMethod, String sAmount, String sInvoiceno) {
-		String sEndPoint = "Pago en Caja";
-		String sPaymentSerialNo = ((new java.text.SimpleDateFormat("yyyyMMddHHmmss")).format(new Date())).toString()+Integer.toString((int)(Math.random()*1000));
-		
-		SOAPClientSAAJ sSCS = new SOAPClientSAAJ();
-		CBS cCBS = new CBS();
-		String sResponse = cCBS.sCBS_Request_ServicioWeb_Validador(sSCS.callSoapWebService(cCBS.sRequest(sPaymentSerialNo, sPaymentChannelID, sAccountKey, sPaymentMethod, sAmount, sInvoiceno), sEndPoint));
-		System.out.println("sResponse: " + sResponse);
-		return(cCBS.sCBS_Request_Validador(sResponse));
+	public boolean PagoEnCaja(String sPaymentChannelID, String sAccountKey, String sPaymentMethod, String sAmount, String sInvoiceno, WebDriver driver) throws AWTException {
+		if(cajeta(driver,sInvoiceno, sAccountKey)==false) {
+			String sEndPoint = "Pago en Caja";
+			String sPaymentSerialNo = ((new java.text.SimpleDateFormat("yyyyMMddHHmmss")).format(new Date())).toString()+Integer.toString((int)(Math.random()*1000));
+			SOAPClientSAAJ sSCS = new SOAPClientSAAJ();
+			CBS cCBS = new CBS();
+			String sResponse = cCBS.sCBS_Request_ServicioWeb_Validador(sSCS.callSoapWebService(cCBS.sRequest(sPaymentSerialNo, sPaymentChannelID, sAccountKey, sPaymentMethod, sAmount, sInvoiceno), sEndPoint));
+			System.out.println("sResponse: " + sResponse);
+			return(cCBS.sCBS_Request_Validador(sResponse));
+		}
+		return(true);
 	}
 	
 	@Test

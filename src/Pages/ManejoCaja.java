@@ -61,7 +61,7 @@ public class ManejoCaja extends BasePage {
 		driver.findElement(By.id("login")).findElement(By.id("username")).sendKeys(usuario);
 		driver.findElement(By.id("login")).findElement(By.id("password")).sendKeys(clave);
 		driver.findElement(By.id("login")).findElement(By.id("submitBtn")).click();
-		sleep(5000);
+		sleep(10000);
 	}
 	
 	public void configuracionesIniciales(WebDriver driver) {
@@ -88,7 +88,7 @@ public class ManejoCaja extends BasePage {
 	
 	public void seleccionarOpcionCatalogo(WebDriver driver, String opcion) {
 		driver.findElement(By.id("pluginbar")).findElement(By.id("sitemap")).click();
-		sleep(2000);
+		sleep(4000);
 		driver.switchTo().frame(TB.cambioFrame(driver,By.id("catalog")));
 		List <WebElement> opcMenu = driver.findElement(By.id("catalog")).findElements(By.className("body2"));
 		for(WebElement UnaO: opcMenu) {
@@ -118,6 +118,7 @@ public class ManejoCaja extends BasePage {
 	}
 	
 	public void cerrarCajaRegistradora(WebDriver driver) {
+		seleccionarOpcionCatalogo(driver, "Cuentas por cobrar");
 		seleccionarOpcionSubMenu(driver, "Cerrar caja registradora");
 		sleep(2000);
 		driver.switchTo().frame(TB.cambioFrame(driver,By.id("closeview")));
@@ -128,9 +129,9 @@ public class ManejoCaja extends BasePage {
 		sleep(5000);
 		//driver.switchTo().frame(TB.cambioFrame(driver,By.id("print-preview")));
 		ArrayList<String> tabs2 = new ArrayList<String> (driver.getWindowHandles());
-	    driver.switchTo().window(tabs2.get(1));
+	    driver.switchTo().window(tabs2.get(2));
 		driver.findElement(By.className("cancel")).click();
-		driver.switchTo().window(tabs2.get(0));
+		driver.switchTo().window(tabs2.get(1));
 		//driver.findElement(By.className("popwin_close")).sendKeys(Keys.ESCAPE);
 		sleep(1000);
 		driver.findElement(By.id("popwin_close")).click();
@@ -145,7 +146,7 @@ public class ManejoCaja extends BasePage {
 	
 	public void abrirCajaRegistradora(WebDriver driver) {
 		seleccionarOpcionSubMenu(driver, "Abrir caja registradora");
-		sleep(2000);
+		sleep(4000);
 		driver.switchTo().frame(TB.cambioFrame(driver,By.id("openCashRegView")));
 		WebElement montoCaja = driver.findElement(By.id("openCashRegView")).findElement(By.id("inputCurrency_value"));
 		montoCaja.clear();
@@ -161,6 +162,7 @@ public class ManejoCaja extends BasePage {
 	}
 	
 	public void cerrarPestanias(WebDriver driver) {
+		driver.switchTo().defaultContent();
 		List<WebElement> pestanias = driver.findElement(By.id("tabpage")).findElements(By.className("bc_tabitem_close"));
 		pestanias.remove(0);
 		for(WebElement UnaP:pestanias) {
@@ -168,15 +170,52 @@ public class ManejoCaja extends BasePage {
 		}
 	}
 	
-	public void pagar(WebDriver driver,String prefactura, String cuenta) {
+	public void pagarEfectivo(WebDriver driver,String prefactura, String cuenta) {
 		seleccionarOpcionCatalogo(driver, "Cuentas por cobrar");
 		seleccionarOpcionSubMenu(driver, "Pago");
 		sleep(2000);
 		driver.switchTo().frame(TB.cambioFrame(driver,By.id("queryUserInfoButton")));
 		driver.findElement(By.id("balanceAdjustQueryCondition_content")).findElement(By.id("paymentType_condition_input_1")).click();
-		driver.findElement(By.id("balanceAdjustQueryCondition_content")).findElement(By.id("acctCode_condition_input_value")).sendKeys(prefactura);
+		sleep(2000);
+		driver.findElement(By.id("balanceAdjustQueryCondition_content")).findElement(By.id("acctCode_condition_input_value")).sendKeys(cuenta);
 		driver.findElement(By.id("balanceAdjustQueryCondition_content")).findElement(By.id("invoiceNo_condition_input_value")).sendKeys(prefactura);
 		driver.findElement(By.id("balanceAdjustQueryCondition_content")).findElement(By.id("queryUserInfoButton")).click();
-		
+		sleep(3000);
+		driver.findElement(By.id("invoiceInfoPanel_content")).findElement(By.id("selected_0")).click();
+		sleep(2000);
+		driver.findElement(By.id("salesInvoiceDetailIOList")).findElement(By.id("selectedPayment_0")).click();
+		sleep(2000);
+		driver.findElement(By.id("submitButton")).click();
+		sleep(3000);
+		driver.switchTo().frame(TB.cambioFrame(driver, By.cssSelector(".btn_group.btn_group_aligncenter.bc")));
+		driver.findElement(By.cssSelector(".btn_group.btn_group_aligncenter.bc")).findElement(By.tagName("span")).click();
+		sleep(3000);
+		//cerrarPestanias(driver);
+	}
+	
+	public void pagarTC(WebDriver driver,String prefactura, String cuenta) {//otra prefactura 20181001000000095162
+		seleccionarOpcionCatalogo(driver, "Cuentas por cobrar");
+		seleccionarOpcionSubMenu(driver, "Pago");
+		sleep(4000);
+		driver.switchTo().frame(TB.cambioFrame(driver,By.id("queryUserInfoButton")));
+		driver.findElement(By.id("balanceAdjustQueryCondition_content")).findElement(By.id("paymentType_condition_input_1")).click();
+		driver.findElement(By.id("balanceAdjustQueryCondition_content")).findElement(By.id("acctCode_condition_input_value")).sendKeys(cuenta);
+		driver.findElement(By.id("balanceAdjustQueryCondition_content")).findElement(By.id("invoiceNo_condition_input_value")).sendKeys(prefactura);
+		driver.findElement(By.id("balanceAdjustQueryCondition_content")).findElement(By.id("queryUserInfoButton")).click();
+		sleep(4000);
+		driver.findElement(By.id("invoiceInfoPanel_content")).findElement(By.id("selected_0")).click();
+		sleep(4000);
+		driver.findElement(By.id("salesInvoiceDetailIOList")).findElement(By.id("selectedPayment_0")).click();
+		sleep(4000);
+		Select pinpad = new Select(driver.findElement(By.id("wonderSoftPanel")).findElement(By.name("#BMEModel.paymentInfo4WonderSoft.pinPadSerial")));
+		pinpad.selectByVisibleText("524-988-015");
+		driver.findElement(By.id("activePinPadBtn")).click();
+		sleep(15000);
+		driver.switchTo().defaultContent();
+		driver.findElement(By.className("popwin_btn_group")).findElement(By.cssSelector(".bc_btn.bc_ui_ele")).click();
+		sleep(4000);
+		driver.switchTo().frame(TB.cambioFrame(driver,By.id("paymentMethodPanel_content")));
+		driver.findElement(By.id("paymentMethodPanel_content")).findElement(By.id("submitButton")).click();
+		//cerrarPestanias(driver);
 	}
 }
