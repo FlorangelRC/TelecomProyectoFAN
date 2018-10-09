@@ -413,7 +413,7 @@ public class GestionesPerfilTelefonico extends TestBase{
 	driver.findElement(By.id("cardHolder-0")).sendKeys(cTitular);
 	pagePTelefo.getMediodePago().click();
 	sleep(45000);
-	pagePTelefo.getOrdenSeRealizoConExito().click();
+	pagePTelefo.getOrdenSeRealizoConExito().click();// No se puede procesr (Ups, hay problemas para procesar su pago.)
 	sleep(10000);
 	String orden = cCC.obtenerTNyMonto2(driver, sOrden);
 	detalles+="-Monto:"+orden.split("-")[1]+"-Prefactura:"+orden.split("-")[0];
