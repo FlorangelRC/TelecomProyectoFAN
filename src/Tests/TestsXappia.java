@@ -128,4 +128,21 @@ public class TestsXappia extends TestBase {
 		sb.cerrarPestaniaGestion(driver);
 		irAGestionDeClientes();
 	}
+	@Test (groups = "UAT")
+	public void Gestion_De_Verificacion_De_Dos_Idiomas_En_El_Carrito() {
+		SalesBase sb = new SalesBase(driver);
+		loginUAT();
+		irAConsolaFAN();
+		sb.cerrarPestaniaGestion(driver);
+		irAGestionDeClientes();
+		driver.switchTo().frame(cambioFrame(driver, By.id("SearchClientDocumentType")));
+		sb.BuscarCuenta("DNI", "22222001");
+		List <WebElement> boton = driver.findElements(By.cssSelector(".slds-button.slds-button.slds-button--icon"));
+		for(WebElement x : boton) {
+			if(x.getText().toLowerCase().equals("catalogo")) {
+				x.click();
+				break;
+			}
+		}
+	}
 }
