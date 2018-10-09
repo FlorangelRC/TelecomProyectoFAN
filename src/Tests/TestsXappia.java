@@ -23,11 +23,6 @@ public class TestsXappia extends TestBase {
 	private WebDriver driver;
 	private CustomerCare cc;
 	private SalesBase sb;
-	
-	public TestsXappia() {
-		cc = new CustomerCare(driver);
-		sb = new SalesBase(driver);
-	}
 		
 	private void loginUAT() {
 		driver.get("https://telecomcrm--uat.cs53.my.salesforce.com");
@@ -90,6 +85,8 @@ public class TestsXappia extends TestBase {
 	@BeforeMethod (alwaysRun = true)
 	public void before() {
 		driver = setConexion.setupEze();
+		cc = new CustomerCare(driver);
+		sb = new SalesBase(driver);
 	}
 	
 	//@AfterMethod (alwaysRun = true)
@@ -121,11 +118,15 @@ public class TestsXappia extends TestBase {
 		Assert.assertTrue(tiempoTotal < 55);
 	}
 	
-	@Test
+	@Test (groups = "UAT")
 	public void superposicion() {
 		loginUAT();
 		irAConsolaFAN();
 		sb.cerrarPestaniaGestion(driver);
 		irAGestionDeClientes();
+		driver.switchTo().frame(cambioFrame(driver, By.id("SearchClientDocumentType")));
+		sb.BuscarCuenta("DNI", "22222000");
+		driver.findElement(By.cssSelector(".slds-tree__item.ng-scope")).click();
+		sleep(10000);
 	}
 }
