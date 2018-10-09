@@ -1,7 +1,11 @@
 package Tests;
 
+import java.util.Date;
+import java.util.List;
+
 import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
+import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 
@@ -11,12 +15,19 @@ import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
 import Pages.CustomerCare;
+import Pages.SalesBase;
 import Pages.setConexion;
 
 public class TestsXappia extends TestBase {
 
 	private WebDriver driver;
 	private CustomerCare cc;
+	private SalesBase sb;
+	
+	public TestsXappia() {
+		cc = new CustomerCare(driver);
+		sb = new SalesBase(driver);
+	}
 		
 	private void loginUAT() {
 		driver.get("https://telecomcrm--uat.cs53.my.salesforce.com");
@@ -49,14 +60,39 @@ public class TestsXappia extends TestBase {
 		}
 	}
 	
-	
-	@BeforeMethod
-	public void before() {
-		driver = setConexion.setupEze();
-		cc = new CustomerCare(driver);
+	private void irAGestionDeClientes() {
+		driver.switchTo().frame(cambioFrame(driver, By.cssSelector(".hasMotif.homeTab.homepage.ext-webkit.ext-chrome.sfdcBody.brandQuaternaryBgr")));
+		List<WebElement> frames = driver.findElements(By.tagName("iframe"));
+		boolean enc = false;
+		int index = 0;
+		for (WebElement frame : frames) {
+			try {
+				driver.switchTo().frame(frame);
+				driver.findElement(By.cssSelector(".slds-grid.slds-m-bottom_small.slds-wrap.cards-container")).getText();
+				driver.findElement(By.cssSelector(".slds-grid.slds-m-bottom_small.slds-wrap.cards-container")).isDisplayed();
+				driver.switchTo().frame(cambioFrame(driver, By.cssSelector(".hasMotif.homeTab.homepage.ext-webkit.ext-chrome.sfdcBody.brandQuaternaryBgr")));
+				enc = true;
+				break;
+			} catch (NoSuchElementException e) {
+				index++;
+				driver.switchTo().frame(cambioFrame(driver, By.cssSelector(".hasMotif.homeTab.homepage.ext-webkit.ext-chrome.sfdcBody.brandQuaternaryBgr")));
+			}
+		}
+		if (enc == false)
+			index = -1;
+		try {
+			driver.switchTo().frame(frames.get(index));
+		} catch (ArrayIndexOutOfBoundsException e) {}
+		buscarYClick(driver.findElements(By.tagName("button")), "equals", "gesti\u00f3n de clientes");
 	}
 	
-	@AfterMethod (alwaysRun = true)
+	
+	@BeforeMethod (alwaysRun = true)
+	public void before() {
+		driver = setConexion.setupEze();
+	}
+	
+	//@AfterMethod (alwaysRun = true)
 	public void quit() {
 		driver.quit();
 	}
@@ -74,7 +110,22 @@ public class TestsXappia extends TestBase {
 	
 	@Test (groups = "SIT")
 	public void SmokeTest_Tiempo_De_Carga_De_Consola_FAN_En_Ambiente_SIT() {
+		Date start = new Date();
 		loginSIT();
-		
+		irAConsolaFAN();
+		Date end = new Date();
+		long startTime = start.getTime();
+		long endTime = end.getTime();
+		long tiempoTotal = endTime - startTime;
+		tiempoTotal = tiempoTotal / 1000;
+		Assert.assertTrue(tiempoTotal < 55);
+	}
+	
+	@Test
+	public void superposicion() {
+		loginUAT();
+		irAConsolaFAN();
+		sb.cerrarPestaniaGestion(driver);
+		irAGestionDeClientes();
 	}
 }
