@@ -1192,7 +1192,7 @@ try{	driver.findElement(By.id("alert-ok-button")).click();	} catch (NoSuchElemen
 			sleep(15000);
 			List<WebElement> frame2 = driver.findElements(By.tagName("iframe"));
 			driver.switchTo().frame(frame2.get(0));
-			Select env = new Select (driver.findElement(By.id("DeliveryMethod")));
+			Select env = new Select (driver.findElement(By.id("DeliveryMethodSelection")));
 			env.selectByVisibleText(entrega);
 			sleep(2000);
 			if(entrega.toLowerCase().contains("store")) {

@@ -1280,7 +1280,7 @@ public class TestBase {
 	@DataProvider
 	public Object[][] AltaLineaNuevoEquipoTC() throws Exception{
 
-	 Object[][] testObjArray = ExcelUtils.getTableArray(dataProviderE2E(),"Altas y Nominacion",1,1,23,"Alta Linea Equip New AG Credito");
+	 Object[][] testObjArray = ExcelUtils.getTableArray(dataProviderE2E(),"Altas y Nominacion",1,1,22,"Alta Linea Equip New AG Credito");
 
 	 return (testObjArray);
 
@@ -1444,5 +1444,14 @@ public class TestBase {
 		r.keyRelease(KeyEvent.VK_CONTROL);
 		r.keyRelease(KeyEvent.VK_T);
 	}
-			
+	
+	@DataProvider
+	public Object[][] NumerosAmigosLetras() throws Exception{
+
+	 Object[][] testObjArray = ExcelUtils.getTableArray(dataProviderE2E(),"E2EsinPago",1,1,2,"Amigos Letras");
+
+	 return (testObjArray);
+
+	}
+	
 }

@@ -687,14 +687,6 @@ public class GestionesPerfilOficina extends TestBase {
 		sleep(8000);
 		driver.findElement(By.id("Summary_nextBtn")).click();
 		sleep(8000);
-		/*boolean b = false;
-		List <WebElement> prob = driver.findElements(By.cssSelector(".slds-box.ng-scope"));
-		for(WebElement x : prob) {
-			if(x.getText().toLowerCase().contains("no se pudo realizar la operaci\u00f3n.")) {
-				b = true;
-			}
-		}
-		Assert.assertTrue(b);*/
 		boolean a = false;
 		List <WebElement> conf = driver.findElements(By.cssSelector(".slds-box.ng-scope"));
 		for(WebElement x : conf) {
@@ -732,14 +724,6 @@ public class GestionesPerfilOficina extends TestBase {
 		sleep(8000);
 		driver.findElement(By.id("Summary_nextBtn")).click();
 		sleep(8000);
-		/*boolean b = false;
-		List <WebElement> prob = driver.findElements(By.cssSelector(".slds-box.ng-scope"));
-		for(WebElement x : prob) {
-			if(x.getText().toLowerCase().contains("no se pudo realizar la operaci\u00f3n.")) {
-				b = true;
-			}
-		}
-		Assert.assertTrue(b);*/
 		boolean a = false;
 		List <WebElement> conf = driver.findElements(By.cssSelector(".slds-box.ng-scope"));
 		for(WebElement x : conf) {
@@ -2375,4 +2359,34 @@ public class GestionesPerfilOficina extends TestBase {
 		String gestion = driver.findElement(By.xpath("//*[@id=\"ep\"]/div[2]/div[2]/table")).findElements(By.tagName("tr")).get(4).getText();
 		Assert.assertTrue(gestion.contains("Estado") && (gestion.contains("Cancelada") || gestion.contains("Cancelled")));
 	}
+	
+	@Test (groups = {"GestionesPerfilOficina","NumerosAmigos","E2E"}, dataProvider="NumerosAmigosLetras")
+	public void TXGPO0001_CRM_Movil_REPRO_FF_Alta_Presencial_Ingreso_Letras(String sDNI, String sLinea) {
+		imagen = "TS100602";
+		BasePage cambioFrame=new BasePage();
+		driver.switchTo().frame(cambioFrame.getFrameForElement(driver, By.id("SearchClientDocumentType")));
+		sleep(1000);
+		SalesBase sSB = new SalesBase(driver);
+		sSB.BuscarCuenta("DNI", sDNI);
+		String accid = driver.findElement(By.cssSelector(".searchClient-body.slds-hint-parent.ng-scope")).findElements(By.tagName("td")).get(5).getText();
+		System.out.println("id "+accid);
+		driver.findElement(By.cssSelector(".slds-tree__item.ng-scope")).findElement(By.tagName("div")).click();
+		sleep(25000);
+		
+		CustomerCare cCC = new CustomerCare(driver);
+		cCC.seleccionarCardPornumeroLinea(sLinea, driver);
+		sleep(3000);
+		cCC.irAGestionEnCard("N\u00fameros Gratis");
+		
+		sleep(5000);
+		driver.switchTo().defaultContent();
+		driver.switchTo().frame(cambioFrame(driver, By.cssSelector(".slds-col--padded.slds-size--1-of-2")));
+		List<WebElement> wNumerosAmigos = driver.findElements(By.cssSelector(".slds-col--padded.slds-size--1-of-2"));
+		wNumerosAmigos.get(0).findElement(By.tagName("input")).sendKeys("A");
+		wNumerosAmigos.get(1).findElement(By.tagName("input")).sendKeys("B");
+		wNumerosAmigos = driver.findElements(By.cssSelector(".slds-col--padded.slds-size--1-of-2"));
+		Assert.assertFalse(wNumerosAmigos.get(0).findElement(By.tagName("input")).getText().equals("A"));
+		Assert.assertFalse(wNumerosAmigos.get(1).findElement(By.tagName("input")).getText().equals("B"));
+	}
+	
 }	
