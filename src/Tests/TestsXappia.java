@@ -4,8 +4,10 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
+
 import org.testng.Assert;
-import org.testng.annotations.AfterClass;
+import org.testng.annotations.AfterMethod;
+import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
 import Pages.CustomerCare;
@@ -15,11 +17,6 @@ public class TestsXappia extends TestBase {
 
 	private WebDriver driver;
 	private CustomerCare cc;
-	
-	public TestsXappia() {
-		driver = setConexion.setupEze();
-		cc = new CustomerCare(driver);
-	}
 		
 	private void loginUAT() {
 		driver.get("https://telecomcrm--uat.cs53.my.salesforce.com");
@@ -53,7 +50,13 @@ public class TestsXappia extends TestBase {
 	}
 	
 	
-	@AfterClass (alwaysRun = true)
+	@BeforeMethod
+	public void before() {
+		driver = setConexion.setupEze();
+		cc = new CustomerCare(driver);
+	}
+	
+	@AfterMethod (alwaysRun = true)
 	public void quit() {
 		driver.quit();
 	}
