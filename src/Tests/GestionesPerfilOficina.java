@@ -2246,7 +2246,7 @@ public class GestionesPerfilOficina extends TestBase {
 		String invoice = cCC.obtenerMontoyTNparaAlta(driver, sOrden);
 		System.out.println(invoice);
 		sleep(10000);
-		sOrders.add("Operacion: Compra de Pack- Cuenta: "+accid+"Invoice: "+invoice.split("-")[1]+invoice.split("-")[0]);
+		sOrders.add(accid+"Invoice: "+invoice.split("-")[1]+invoice.split("-")[0]);
 		System.out.println("Operacion: Compra de Pack- Cuenta: "+accid+" Invoice: "+invoice.split("-")[1] + "\tAmmount: " +invoice.split("-")[0]);
 		CBS_Mattu invoSer = new CBS_Mattu();
 		Assert.assertTrue(invoSer.PagoEnCaja("1005", accid, "2001", invoice.split("-")[1], invoice.split("-")[0],driver));
