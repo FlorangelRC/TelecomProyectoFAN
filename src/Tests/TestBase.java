@@ -1101,7 +1101,7 @@ public class TestBase {
 	@DataProvider
 	public Object [][] PackAgente() throws Exception{
 		
-		Object[][] testObjArray = ExcelUtils.getTableArray(dataProviderE2E(),"E2EconPago",1,1,7,"packAgente");
+		Object[][] testObjArray = ExcelUtils.getTableArray(dataProviderE2E(),"E2EconPago",1,1,14,"packAgente");
 		
 		return (testObjArray);
 	}

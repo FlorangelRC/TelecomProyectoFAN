@@ -139,13 +139,16 @@ public class CBS_Mattu extends TestBase {
 	}
 	
 	@Test
-	public void PagaEnCajaTC(String sPaymentChannelID, String sAccountKey, String sPaymentMethod, String sAmount, String sInvoiceno, String sAccountNumber, String sAccountName, String sExpirationDate, String sCVV, String sCardHolderName, String sCardHolderNumber) {
+	public boolean PagaEnCajaTC(String sPaymentChannelID, String sAccountKey, String sPaymentMethod, String sAmount, String sInvoiceno, String sAccountNumber, String sAccountName, String sExpirationDate, String sCVV, String sCardHolderName, String sCardHolderNumber) {
 		String sEndPoint = "PagoEnCaja";
 		String sMessageSeq = ((new java.text.SimpleDateFormat("yyyyMMddHHmmss")).format(new Date())).toString()+Integer.toString((int)(Math.random()*1000));
 		
 		SOAPClientSAAJ sSCS = new SOAPClientSAAJ();
 		CBS cCBS = new CBS();
 		String sResponse = cCBS.sCBS_TC_Request_Validador(sSCS.callSoapWebService(cCBS.sRequestByTC(sMessageSeq, sPaymentChannelID, sAccountKey, sPaymentMethod, sAmount, sAccountNumber, sAccountName, sExpirationDate, sCVV, sInvoiceno, sCardHolderName, sCardHolderNumber), sEndPoint));
-		cCBS.sCBS_TC_Request_Validador(sResponse);
+		//cCBS.sCBS_TC_Request_Validador(sResponse);
+		System.out.println("sResponde ="+sResponse);
+		boolean bAssert = sResponse.equals("true");
+		return bAssert;
 	}
 }
