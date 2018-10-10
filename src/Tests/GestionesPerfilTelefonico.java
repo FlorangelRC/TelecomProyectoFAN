@@ -332,8 +332,6 @@ public class GestionesPerfilTelefonico extends TestBase{
 		pagePTelefo.getResumenOrdenCompra().click();
 		String sOrden = cCC.obtenerOrden2(driver);
 		detalles += "-Orden:" + sOrden;
-		
-		
 	
 		buscarYClick(driver.findElements(By.cssSelector(".slds-form-element__label.ng-binding")), "equals","tarjeta de credito");
 		selectByText(driver.findElement(By.id("BankingEntity-0")), cBanco);
