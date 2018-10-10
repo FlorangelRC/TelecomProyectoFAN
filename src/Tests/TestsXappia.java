@@ -165,6 +165,7 @@ public class TestsXappia extends TestBase {
 		}
 		Assert.assertTrue(planConTarjeta.isEnabled());
 	}
+	
 	@Test (groups = "UAT")
 	public void Gestion_De_Verificacion_De_Dos_Idiomas_En_El_Carrito() {
 		SalesBase sb = new SalesBase(driver);
@@ -225,25 +226,5 @@ public class TestsXappia extends TestBase {
 		sleep(5000);
 		WebElement wBox = driver.findElement(By.cssSelector(".slds-form-element.vlc-flex.vlc-slds-tel.ng-scope.ng-dirty.ng-valid-mask.ng-valid.ng-valid-parse.ng-valid-required.ng-valid-minlength.ng-valid-maxlength")).findElement(By.className("error"));
 		Assert.assertFalse(wBox.getText().equalsIgnoreCase("la linea no pertenece a Telecom, verifica el n\u00famero."));
-	}
-	@Test (groups = "UAT")
-	public void Gestion_De_Verificacion_De_Dos_Idiomas_En_El_Carrito() {
-		SalesBase sb = new SalesBase(driver);
-		loginUAT();
-		irAConsolaFAN();
-		sb.cerrarPestaniaGestion(driver);
-		irAGestionDeClientes();
-		driver.switchTo().frame(cambioFrame(driver, By.id("SearchClientDocumentType")));
-		sb.BuscarCuenta("DNI", "22222001");
-		carrito();
-		sleep(2000);
-		boolean text = false;
-		List <WebElement> texto = driver.findElements(By.id("cpq-product-items"));
-		for (WebElement x : texto) {
-			if(x.getText().toLowerCase().equals("productos")) {
-				text = true;
-			}
-			Assert.assertTrue(text);
-		}
 	}
 }
