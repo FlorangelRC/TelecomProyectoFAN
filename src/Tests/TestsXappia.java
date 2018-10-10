@@ -55,6 +55,16 @@ public class TestsXappia extends TestBase {
 		}
 	}
 	
+	public void carrito() {
+		List <WebElement> boton = driver.findElements(By.cssSelector(".slds-button.slds-button.slds-button--icon"));
+		for(WebElement x : boton) {
+			if(x.getText().toLowerCase().equals("catalogo")) {
+				x.click();
+				break;
+			}
+		}
+	}
+	
 	private void irAGestionDeClientes() {
 		driver.switchTo().frame(cambioFrame(driver, By.cssSelector(".hasMotif.homeTab.homepage.ext-webkit.ext-chrome.sfdcBody.brandQuaternaryBgr")));
 		List<WebElement> frames = driver.findElements(By.tagName("iframe"));
@@ -138,12 +148,15 @@ public class TestsXappia extends TestBase {
 		irAGestionDeClientes();
 		driver.switchTo().frame(cambioFrame(driver, By.id("SearchClientDocumentType")));
 		sb.BuscarCuenta("DNI", "22222001");
-		List <WebElement> boton = driver.findElements(By.cssSelector(".slds-button.slds-button.slds-button--icon"));
-		for(WebElement x : boton) {
-			if(x.getText().toLowerCase().equals("catalogo")) {
-				x.click();
-				break;
+		carrito();
+		sleep(2000);
+		boolean text = false;
+		List <WebElement> texto = driver.findElements(By.id("cpq-product-items"));
+		for (WebElement x : texto) {
+			if(x.getText().toLowerCase().equals("productos")) {
+				text = true;
 			}
+			Assert.assertTrue(text);
 		}
 	}
 }
