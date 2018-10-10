@@ -3,12 +3,14 @@ package Pages;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.ui.Select;
 import org.testng.Assert;
+
 import Tests.TestBase;
 
 public class Marketing extends CustomerCare {
@@ -534,17 +536,17 @@ public class Marketing extends CustomerCare {
 	
 	public int numerosAmigos(String sVOZ, String sSMS) {
 		int iIndice = 2;
-		if (!sVOZ.isEmpty()) {
+		System.out.println("sVOZ = " + sVOZ);
+		if (!sVOZ.isEmpty() && !sVOZ.equalsIgnoreCase("**")) {
 			iIndice = 0;
 		}
 		else {
-			if (!sSMS.isEmpty()) {
+			if (!sSMS.isEmpty() && !sSMS.equalsIgnoreCase("**")) {
 				iIndice = 1;
 			}
 			else {
 				System.out.println("Ambas celdas están vacías en el DataProvider.");			}
 		}
-		
 		return iIndice;
 	}
 	
@@ -558,12 +560,12 @@ public class Marketing extends CustomerCare {
 		List<WebElement> wNumerosAmigos = driver.findElements(By.cssSelector(".slds-col--padded.slds-size--1-of-2"));
 		int iIndice = numerosAmigos(sNumeroVOZ, sNumeroSMS);
 		switch (iIndice) {
-		case 0:
-			aAssert = wNumerosAmigos.get(0).findElement(By.tagName("input")).getText().equals(sNumeroVOZ);
-			break;
-		case 1:
-			aAssert = wNumerosAmigos.get(1).findElement(By.tagName("input")).getText().equals(sNumeroSMS);
-			break;
+			case 0:
+				aAssert = wNumerosAmigos.get(0).findElement(By.tagName("input")).getText().equals(sNumeroVOZ);
+				break;
+			case 1:
+				aAssert = wNumerosAmigos.get(1).findElement(By.tagName("input")).getText().equals(sNumeroSMS);
+				break;
 	}
 		
 		return aAssert;

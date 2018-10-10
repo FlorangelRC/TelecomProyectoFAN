@@ -2230,7 +2230,7 @@ public class GestionesPerfilOficina extends TestBase {
 		String invoice = cCC.obtenerMontoyTNparaAlta(driver, sOrden);
 		System.out.println(invoice);
 		sleep(10000);
-		sOrders.add("Operacion: Compra de Pack- Cuenta: "+accid+"Invoice: "+invoice.split("-")[1]+invoice.split("-")[0]);
+		sOrders.add(accid+"Invoice: "+invoice.split("-")[1]+invoice.split("-")[0]);
 		System.out.println("Operacion: Compra de Pack- Cuenta: "+accid+" Invoice: "+invoice.split("-")[1] + "\tAmmount: " +invoice.split("-")[0]);
 		CBS_Mattu invoSer = new CBS_Mattu();
 		Assert.assertTrue(invoSer.PagoEnCaja("1005", accid, "2001", invoice.split("-")[1], invoice.split("-")[0],driver));
@@ -2362,7 +2362,7 @@ public class GestionesPerfilOficina extends TestBase {
 	
 	@Test (groups = {"GestionesPerfilOficina","NumerosAmigos","E2E"}, dataProvider="NumerosAmigosLetras")
 	public void TXGPO0001_CRM_Movil_REPRO_FF_Alta_Presencial_Ingreso_Letras(String sDNI, String sLinea) {
-		imagen = "TS100602";
+		imagen = "TXGPO0001";
 		BasePage cambioFrame=new BasePage();
 		driver.switchTo().frame(cambioFrame.getFrameForElement(driver, By.id("SearchClientDocumentType")));
 		sleep(1000);
