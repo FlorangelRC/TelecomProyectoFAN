@@ -10,12 +10,11 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 
 import org.testng.Assert;
-import org.testng.annotations.AfterMethod;
+import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
-import Pages.BasePage;
 import Pages.CustomerCare;
 import Pages.Marketing;
 import Pages.SalesBase;
@@ -38,6 +37,8 @@ public class TestsXappia extends TestBase {
  		driver.findElement(By.name("Ecom_Password")).sendKeys("Testa10k");
  		driver.findElement(By.id("loginButton2")).click();
  		sleep(5000);
+ 		cc = new CustomerCare(driver);
+		sb = new SalesBase(driver);
 	}
 	
 	/*@BeforeClass (groups = "SIT")
@@ -51,7 +52,9 @@ public class TestsXappia extends TestBase {
  		driver.findElement(By.name("Ecom_Password")).sendKeys("Testa10k");
  		driver.findElement(By.id("loginButton2")).click();
  		sleep(5000);
-	}*/
+ 		cc = new CustomerCare(driver);
+		sb = new SalesBase(driver);
+	}
 	
 	private void irAConsolaFAN() {
 		try {
@@ -99,18 +102,20 @@ public class TestsXappia extends TestBase {
 	}
 	
 	
-	@BeforeMethod (alwaysRun = true)
-	public void before() {
-		driver.get("https://telecomcrm--uat.cs53.my.salesforce.com/home/home.jsp");
-		cc = new CustomerCare(driver);
-		sb = new SalesBase(driver);
+	@BeforeMethod (groups="UAT")
+	public void beforeUAT() {
+		driver.get("https://telecomcrm--uat.cs53.my.salesforce.com");
 	}
 	
-	//@AfterMethod (alwaysRun = true)
+	@BeforeMethod (groups="SIT")
+	public void beforeSIT() {
+		driver.get("https://crm--sit.cs14.my.salesforce.com/");
+	}
+	
+	@AfterClass (alwaysRun = true)
 	public void quit() {
 		driver.quit();
 	}
-	
 	
 	@Test (groups = "UAT")
 	public void Gestiones_Del_Panel_Izquierdo_En_Consola_FAN_En_Ambiente_UAT() {
@@ -188,7 +193,7 @@ public class TestsXappia extends TestBase {
 	}
 	
 	@Test (groups = {"UAT"}, dataProvider="NumerosAmigos")
-	public void TX0001_UAT_FF_No_Acepta_Numeros_De_Personal(String sDNI, String sLinea, String sNumeroVOZ, String sNumeroSMS) {
+	public void TXU0001_FF_No_Acepta_Numeros_De_Personal(String sDNI, String sLinea, String sNumeroVOZ, String sNumeroSMS) {
 		irAConsolaFAN();
 		sb.cerrarPestaniaGestion(driver);
 		irAGestionDeClientes();
@@ -225,5 +230,55 @@ public class TestsXappia extends TestBase {
 		sleep(5000);
 		WebElement wBox = driver.findElement(By.cssSelector(".slds-form-element.vlc-flex.vlc-slds-tel.ng-scope.ng-dirty.ng-valid-mask.ng-valid.ng-valid-parse.ng-valid-required.ng-valid-minlength.ng-valid-maxlength")).findElement(By.className("error"));
 		Assert.assertFalse(wBox.getText().equalsIgnoreCase("la linea no pertenece a Telecom, verifica el n\u00famero."));
+	}
+	
+	@Test (groups = "UAT")
+	public void TXU0002_Informacion_Internet_En_Card() {
+		irAConsolaFAN();
+		sb.cerrarPestaniaGestion(driver);
+		irAGestionDeClientes();
+		driver.switchTo().frame(cambioFrame(driver, By.id("SearchClientDocumentType")));
+		sleep(1000);
+		SalesBase sSB = new SalesBase(driver);
+		sSB.BuscarCuenta("DNI", "22222009");
+		driver.findElement(By.cssSelector(".slds-tree__item.ng-scope")).findElement(By.tagName("div")).click();
+		sleep(25000);
+		
+		driver.switchTo().frame(cambioFrame(driver,By.cssSelector(".console-card.active")));
+		List<WebElement> wDetails = driver.findElements(By.className("detail"));
+		WebElement wDetail = null;
+		for (WebElement wAux : wDetails) {
+			if (wAux.findElement(By.cssSelector(".slds-text-body_regular.detail-label")).getText().equalsIgnoreCase("Internet disponible")) {
+				wDetail = wAux;
+				break;
+			}
+		}
+		List<WebElement> wMessages = wDetail.findElements(By.cssSelector(".slds-text-body_regular.value"));
+		Assert.assertFalse(wMessages.get(1).getText().contains("Informaci\u00f3n no disponible"));
+	}
+	
+	@Test (groups = "UAT")
+	public void TXU0002_Informacion_Credito_En_Card() {
+		irAConsolaFAN();
+		sb.cerrarPestaniaGestion(driver);
+		irAGestionDeClientes();
+		driver.switchTo().frame(cambioFrame(driver, By.id("SearchClientDocumentType")));
+		sleep(1000);
+		SalesBase sSB = new SalesBase(driver);
+		sSB.BuscarCuenta("DNI", "22222009");
+		driver.findElement(By.cssSelector(".slds-tree__item.ng-scope")).findElement(By.tagName("div")).click();
+		sleep(25000);
+		
+		driver.switchTo().frame(cambioFrame(driver,By.cssSelector(".console-card.active")));
+		List<WebElement> wDetails = driver.findElements(By.className("detail"));
+		WebElement wDetail = null;
+		for (WebElement wAux : wDetails) {
+			if (wAux.findElement(By.cssSelector(".slds-text-body_regular.detail-label")).getText().equalsIgnoreCase("Internet disponible")) {
+				wDetail = wAux;
+				break;
+			}
+		}
+		List<WebElement> wMessages = wDetail.findElements(By.cssSelector(".slds-text-body_regular.value"));
+		Assert.assertFalse(wMessages.get(1).getText().contains("Informaci\u00f3n no disponible"));
 	}
 }
