@@ -687,14 +687,6 @@ public class GestionesPerfilOficina extends TestBase {
 		sleep(8000);
 		driver.findElement(By.id("Summary_nextBtn")).click();
 		sleep(8000);
-		/*boolean b = false;
-		List <WebElement> prob = driver.findElements(By.cssSelector(".slds-box.ng-scope"));
-		for(WebElement x : prob) {
-			if(x.getText().toLowerCase().contains("no se pudo realizar la operaci\u00f3n.")) {
-				b = true;
-			}
-		}
-		Assert.assertTrue(b);*/
 		boolean a = false;
 		List <WebElement> conf = driver.findElements(By.cssSelector(".slds-box.ng-scope"));
 		for(WebElement x : conf) {
@@ -732,14 +724,6 @@ public class GestionesPerfilOficina extends TestBase {
 		sleep(8000);
 		driver.findElement(By.id("Summary_nextBtn")).click();
 		sleep(8000);
-		/*boolean b = false;
-		List <WebElement> prob = driver.findElements(By.cssSelector(".slds-box.ng-scope"));
-		for(WebElement x : prob) {
-			if(x.getText().toLowerCase().contains("no se pudo realizar la operaci\u00f3n.")) {
-				b = true;
-			}
-		}
-		Assert.assertTrue(b);*/
 		boolean a = false;
 		List <WebElement> conf = driver.findElements(By.cssSelector(".slds-box.ng-scope"));
 		for(WebElement x : conf) {
@@ -2246,7 +2230,7 @@ public class GestionesPerfilOficina extends TestBase {
 		String invoice = cCC.obtenerMontoyTNparaAlta(driver, sOrden);
 		System.out.println(invoice);
 		sleep(10000);
-		sOrders.add("Operacion: Compra de Pack- Cuenta: "+accid+"Invoice: "+invoice.split("-")[1]+invoice.split("-")[0]);
+		sOrders.add(accid+"Invoice: "+invoice.split("-")[1]+invoice.split("-")[0]);
 		System.out.println("Operacion: Compra de Pack- Cuenta: "+accid+" Invoice: "+invoice.split("-")[1] + "\tAmmount: " +invoice.split("-")[0]);
 		CBS_Mattu invoSer = new CBS_Mattu();
 		Assert.assertTrue(invoSer.PagoEnCaja("1005", accid, "2001", invoice.split("-")[1], invoice.split("-")[0],driver));

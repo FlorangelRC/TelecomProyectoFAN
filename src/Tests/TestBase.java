@@ -1280,7 +1280,7 @@ public class TestBase {
 	@DataProvider
 	public Object[][] AltaLineaNuevoEquipoTC() throws Exception{
 
-	 Object[][] testObjArray = ExcelUtils.getTableArray(dataProviderE2E(),"Altas y Nominacion",1,1,23,"Alta Linea Equip New AG Credito");
+	 Object[][] testObjArray = ExcelUtils.getTableArray(dataProviderE2E(),"Altas y Nominacion",1,1,22,"Alta Linea Equip New AG Credito");
 
 	 return (testObjArray);
 

@@ -170,6 +170,7 @@ public class TestsXappia extends TestBase {
 		}
 		Assert.assertTrue(planConTarjeta.isEnabled());
 	}
+	
 	@Test (groups = "UAT")
 	public void Gestion_De_Verificacion_De_Dos_Idiomas_En_El_Carrito() {
 		SalesBase sb = new SalesBase(driver);

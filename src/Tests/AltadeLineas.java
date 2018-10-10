@@ -113,7 +113,7 @@ public class AltadeLineas extends TestBase {
 		driver.switchTo().frame(accountPage.getFrameForElement(driver, By.id("SearchClientDocumentNumber")));
 	}
 	
-	@AfterMethod(alwaysRun=true)
+	//@AfterMethod(alwaysRun=true)
 	public void deslogin() throws IOException{
 		guardarListaTxt(DatosOrden);
 		DatosOrden.clear();
@@ -128,7 +128,7 @@ public class AltadeLineas extends TestBase {
 
 	}
 	
-	@AfterClass(alwaysRun=true)
+	//@AfterClass(alwaysRun=true)
 	public void Exit() throws IOException {
 		//guardarListaTxt(DatosOrden);
 		driver.quit();
@@ -618,13 +618,13 @@ public class AltadeLineas extends TestBase {
 			for(WebElement e: btns){
 				if(e.getText().toLowerCase().equals("catalogo")){ 
 					e.click();
-					break;
+					break;	
 				}
 			}
 		sleep(25000);
 		driver.findElements(By.cssSelector(".slds-input.ng-pristine.ng-untouched.ng-valid")).get(0).sendKeys(sEquipo);
 		sleep(15000);
-		List<WebElement> agregar = driver.findElements(By.cssSelector(".slds-button.slds-button_neutral.cpq-add-button")); 
+		List<WebElement> agregar = driver.findElements(By.cssSelector(".slds-button.slds-button--neutral.add-button")); 
 			for(WebElement a : agregar){
 				if(a.getText().equals("Agregar")){
 					cc.obligarclick(a);
