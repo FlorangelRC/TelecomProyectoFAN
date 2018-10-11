@@ -20,6 +20,7 @@ import org.testng.annotations.Test;
 
 import Pages.Accounts;
 import Pages.BasePage;
+import Pages.CBS;
 import Pages.CustomerCare;
 import Pages.Marketing;
 import Pages.PagePerfilTelefonico;
@@ -268,7 +269,7 @@ public class GestionesPerfilAgente extends TestBase{
 	}
 	
 	@Test (groups = {"GestionesPerfilOficina","E2E"}, dataProvider="PackAgente")
-	public void Venta_de_Pack(String sDNI, String sLinea, String sPackAgente, String cBanco, String cTarjeta, String cPromo, String cCuotas) throws AWTException{
+	public void Venta_de_Pack(String sDNI, String sLinea, String sPackAgente, String cBanco, String cTarjeta, String cPromo, String cCuotas, String cNumTarjeta, String cVenceMes, String cVenceAno, String cCodSeg, String cTipoDNI, String cDNITarjeta, String cTitular) throws AWTException{
 		imagen = "Venta_de_Pack";
 		detalles = null;
 		detalles = imagen + "-Recarga-DNI:" + sDNI;
@@ -315,7 +316,7 @@ public class GestionesPerfilAgente extends TestBase{
 		//datosOrden.add("Operacion: Compra de Pack- Cuenta: "+accid+" Invoice: "+invoice.split("-")[0]+invoice.split("-")[1]);
 		System.out.println("Operacion: Compra de Pack- Cuenta: "+accid+" Invoice: "+invoice.split("-")[1] + "\tAmmount: " +invoice.split("-")[0]);
 		CBS_Mattu invoSer = new CBS_Mattu();
-		Assert.assertTrue(invoSer.PagoEnCaja("1005", accid, "2001", invoice.split("-")[1], invoice.split("-")[0],driver));
+		Assert.assertTrue(invoSer.PagaEnCajaTC("1005", accid, "2001", invoice.split("-")[1], invoice.split("-")[0],  cDNITarjeta, cTitular, cVenceAno+cVenceMes, cCodSeg, cTitular, cNumTarjeta));
 		driver.navigate().refresh();
 		sleep(10000);
 		driver.switchTo().frame(cambioFrame(driver, By.id("Status_ilecell")));

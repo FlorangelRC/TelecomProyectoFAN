@@ -41,7 +41,7 @@ public class TestsXappia extends TestBase {
 		sb = new SalesBase(driver);
 	}
 	
-	@BeforeClass (groups = "SIT")
+	/*@BeforeClass (groups = "SIT")
 	public void loginSIT() {
 		driver = setConexion.setupEze();
 		driver.get("https://crm--sit.cs14.my.salesforce.com/");
@@ -54,7 +54,7 @@ public class TestsXappia extends TestBase {
  		sleep(5000);
  		cc = new CustomerCare(driver);
 		sb = new SalesBase(driver);
-	}
+	}*/
 	
 	private void irAConsolaFAN() {
 		try {
@@ -112,10 +112,10 @@ public class TestsXappia extends TestBase {
 		driver.get("https://crm--sit.cs14.my.salesforce.com/");
 	}
 	
-	@AfterClass (alwaysRun = true)
+	/*@AfterClass (alwaysRun = true)
 	public void quit() {
 		driver.quit();
-	}
+	}*/
 	
 	@Test (groups = "UAT")
 	public void Gestiones_Del_Panel_Izquierdo_En_Consola_FAN_En_Ambiente_UAT() {
@@ -139,12 +139,12 @@ public class TestsXappia extends TestBase {
 	}
 	
 	@Test (groups = "UAT")
-	public void superposicion() {
+	public void Verificacion_De_Superposicion_De_Elementos_En_El_Carrito() {
 		irAConsolaFAN();
 		sb.cerrarPestaniaGestion(driver);
 		irAGestionDeClientes();
 		driver.switchTo().frame(cambioFrame(driver, By.id("SearchClientDocumentType")));
-		sb.BuscarCuenta("DNI", "22222000");
+		sb.BuscarCuenta("DNI", "22222001");
 		driver.findElement(By.cssSelector(".slds-tree__item.ng-scope")).click();
 		sleep(10000);
 		driver.switchTo().frame(cambioFrame(driver, By.className("card-top")));
@@ -157,7 +157,7 @@ public class TestsXappia extends TestBase {
 				btnComprarInternet = btn.get(i);
 		}
 		btnComprarInternet.click();
-		sleep(25000);
+		sleep(40000);
 		driver.switchTo().defaultContent();
 		if (driver.findElements(By.cssSelector(".x-layout-mini.x-layout-mini-east.x-layout-mini-custom-logo")).size() == 0)
 			driver.findElement(By.cssSelector(".x-layout-mini.x-layout-mini-east.x-layout-mini-custom-logo")).click();
@@ -168,11 +168,15 @@ public class TestsXappia extends TestBase {
 			if (plan.get(i).getText().toLowerCase().contains("plan con tarjeta repro"))
 				planConTarjeta = plan.get(i);
 		}
-		Assert.assertTrue(planConTarjeta.isEnabled());
+		try {
+			planConTarjeta.click();
+		} catch (org.openqa.selenium.WebDriverException e) {
+			Assert.assertTrue(false);
+		}
 	}
 	
 	@Test (groups = "UAT")
-	public void Gestion_De_Verificacion_De_Dos_Idiomas_En_El_Carrito() {
+	public void TXU0001_Gestion_De_Verificacion_De_Dos_Idiomas_En_El_Carrito() {
 		SalesBase sb = new SalesBase(driver);
 		irAConsolaFAN();
 		sb.cerrarPestaniaGestion(driver);
@@ -180,17 +184,25 @@ public class TestsXappia extends TestBase {
 		driver.switchTo().frame(cambioFrame(driver, By.id("SearchClientDocumentType")));
 		sb.BuscarCuenta("DNI", "22222001");
 		carrito();
-		sleep(2000);
-		WebElement texto = driver.findElement(By.id("cpq-product-items"));
-		texto.getText();
-		System.out.println(texto);
-		boolean text = false;
-		for (WebElement x : driver.findElements(By.id("cpq-product-items"))) {
-			if(x.getText().toLowerCase().equals("Producto")) {
-				text = true;
+		sleep(35000);
+		List <WebElement> prod = driver.findElements(By.className("slds-radio_button__label"));
+		System.out.println(prod.get(0).getText());
+		sleep(3000);
+		List <WebElement> agreg = driver.findElements(By.cssSelector(".slds-button.slds-button_neutral.cpq-add-button"));
+		System.out.println(agreg.get(0).getText());
+		boolean conf = false; 
+		for(WebElement x: prod) {
+			if(x.getText().toLowerCase().equals("productos") ) {
+				conf = true;
 			}
+			Assert.assertTrue(conf);
 		}
-		Assert.assertTrue(text);	
+		for(WebElement y : agreg) {
+			if(y.getText().toLowerCase().equals("agregar")) {
+				conf = true;
+			}
+			Assert.assertTrue(conf);
+		}
 	}
 	
 	@Test (groups = {"UAT"}, dataProvider="NumerosAmigos")
@@ -281,6 +293,43 @@ public class TestsXappia extends TestBase {
 		}
 		List<WebElement> wMessages = wDetail.findElements(By.cssSelector(".slds-text-body_regular.value"));
 		Assert.assertTrue(!wMessages.get(1).getText().isEmpty() && wMessages.get(1).getText().matches("([$][0]([,][0-9]{2}))|([$](?![0])[0-9]{0,3}([/.][0-9]{3})*([,][0-9]{2}))"));
+	}
+	
+	@Test (groups = "SIT")
+	public void Verificacion_De_Pestana_Detalles_En_Las_Cuentas() {
+		irAConsolaFAN();
+		sb.cerrarPestaniaGestion(driver);
+		irAGestionDeClientes();
+		driver.switchTo().frame(cambioFrame(driver, By.id("SearchClientDocumentType")));
+		sb.BuscarCuenta("DNI", "41582129");
+		driver.findElement(By.cssSelector(".slds-tree__item.ng-scope")).click();
+		sleep(15000);
+		driver.switchTo().defaultContent();
+		for (WebElement x : driver.findElements(By.className("x-tab-left"))) {
+			if (!x.getText().equalsIgnoreCase("Detalles"))
+				Assert.assertTrue(false);
+		}
+	}
+	
+	@Test (groups = "SIT")
+	public void Busqueda_De_Productos_En_El_Carrito() {
+		irAConsolaFAN();
+		sb.cerrarPestaniaGestion(driver);
+		irAGestionDeClientes();
+		driver.switchTo().frame(cambioFrame(driver, By.id("SearchClientDocumentType")));
+		sb.BuscarCuenta("DNI", "41582129");
+		carrito();
+		sleep(15000);
+		driver.findElement(By.cssSelector(".slds-input.ng-pristine.ng-untouched.ng-valid.ng-empty")).sendKeys("galaxy");
+		sleep(2500);
+		for (WebElement x : driver.findElements(By.cssSelector(".categoryButton.cat-icon"))) {
+			if (x.getText().equalsIgnoreCase("Planes"))
+				x.click();
+		}
+		sleep(2500);
+		WebElement list = driver.findElements(By.cssSelector(".slds-tile.cpq-product-item")).get(0);
+		if (list.getText().toLowerCase().contains("galaxy s8"))
+			Assert.assertTrue(false);
 	}
 	
 	@Test (groups = "SIT")

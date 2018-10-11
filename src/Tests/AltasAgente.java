@@ -514,7 +514,7 @@ public class AltasAgente extends TestBase{
 			driver.findElement(By.cssSelector(".slds-input.ng-pristine.ng-untouched.ng-valid")).sendKeys(sEquipo);	}
 		catch(Exception ex1) {driver.findElement(By.cssSelector(".slds-input.ng-pristine.ng-untouched.ng-valid.ng-empty")).sendKeys(sEquipo);}
 		try {Thread.sleep(20000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
-		cc.obligarclick(driver.findElement(By.cssSelector(".slds-button.slds-button_neutral.cpq-add-button"))); 
+		cc.obligarclick(driver.findElement(By.cssSelector(".slds-button.slds-button--neutral.add-button"))); 
 		sb.continuar();
 		sleep(22000);
 		cc.obligarclick(driver.findElement(By.id("ICCDAssignment_nextBtn")));
