@@ -41,7 +41,7 @@ public class TestsXappia extends TestBase {
 		sb = new SalesBase(driver);
 	}
 	
-	@BeforeClass (groups = "SIT")
+	/*@BeforeClass (groups = "SIT")
 	public void loginSIT() {
 		driver = setConexion.setupEze();
 		driver.get("https://crm--sit.cs14.my.salesforce.com/");
@@ -54,7 +54,7 @@ public class TestsXappia extends TestBase {
  		sleep(5000);
  		cc = new CustomerCare(driver);
 		sb = new SalesBase(driver);
-	}
+	}*/
 	
 	private void irAConsolaFAN() {
 		try {
@@ -112,10 +112,10 @@ public class TestsXappia extends TestBase {
 		driver.get("https://crm--sit.cs14.my.salesforce.com/");
 	}
 	
-	@AfterClass (alwaysRun = true)
+	/*@AfterClass (alwaysRun = true)
 	public void quit() {
 		driver.quit();
-	}
+	}*/
 	
 	@Test (groups = "UAT")
 	public void Gestiones_Del_Panel_Izquierdo_En_Consola_FAN_En_Ambiente_UAT() {
@@ -176,7 +176,7 @@ public class TestsXappia extends TestBase {
 	}
 	
 	@Test (groups = "UAT")
-	public void Gestion_De_Verificacion_De_Dos_Idiomas_En_El_Carrito() {
+	public void TXU0001_Gestion_De_Verificacion_De_Dos_Idiomas_En_El_Carrito() {
 		SalesBase sb = new SalesBase(driver);
 		irAConsolaFAN();
 		sb.cerrarPestaniaGestion(driver);
@@ -184,17 +184,25 @@ public class TestsXappia extends TestBase {
 		driver.switchTo().frame(cambioFrame(driver, By.id("SearchClientDocumentType")));
 		sb.BuscarCuenta("DNI", "22222001");
 		carrito();
-		sleep(2000);
-		WebElement texto = driver.findElement(By.id("cpq-product-items"));
-		texto.getText();
-		System.out.println(texto);
-		boolean text = false;
-		for (WebElement x : driver.findElements(By.id("cpq-product-items"))) {
-			if(x.getText().toLowerCase().equals("Producto")) {
-				text = true;
+		sleep(35000);
+		List <WebElement> prod = driver.findElements(By.className("slds-radio_button__label"));
+		System.out.println(prod.get(0).getText());
+		sleep(3000);
+		List <WebElement> agreg = driver.findElements(By.cssSelector(".slds-button.slds-button_neutral.cpq-add-button"));
+		System.out.println(agreg.get(0).getText());
+		boolean conf = false; 
+		for(WebElement x: prod) {
+			if(x.getText().toLowerCase().equals("productos") ) {
+				conf = true;
 			}
+			Assert.assertTrue(conf);
 		}
-		Assert.assertTrue(text);	
+		for(WebElement y : agreg) {
+			if(y.getText().toLowerCase().equals("agregar")) {
+				conf = true;
+			}
+			Assert.assertTrue(conf);
+		}
 	}
 	
 	@Test (groups = {"UAT"}, dataProvider="NumerosAmigos")
