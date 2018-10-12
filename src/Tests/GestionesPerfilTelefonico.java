@@ -293,7 +293,7 @@ public class GestionesPerfilTelefonico extends TestBase{
 	pagePTelefo.tipoDePago("descuento de saldo");
 	String orden = cc.obtenerOrdenMontoyTN(driver, "Compra de Pack");
 	System.out.println("orden = "+orden);
-	datosOrden.add("Recargas" + orden + " de cuenta "+accid+" con DNI: " + sDNI);
+	datosOrden.add("Venta de Pack" + orden + " de cuenta "+accid+" con DNI: " + sDNI);
 	sleep(5000);
 	driver.navigate().refresh();
 	sleep(10000);
@@ -543,4 +543,15 @@ public class GestionesPerfilTelefonico extends TestBase{
 		detalles +="-Orden:"+orden;
 		
 	}
+	@Test (groups= {"GestionesPerfilTelefonico", "HistorialDePacks", "Ciclo2"},  dataProvider = "CuentaModificacionDeDatos")
+	public void TS135437_CRM_Movil_Prepago_Historial_De_Packs_Fan_Front_Telefonico(String cDNI) {
+		driver.switchTo().frame(cambioFrame(driver, By.id("SearchClientDocumentType")));
+		sb.BuscarCuenta("DNI", cDNI);
+		driver.findElement(By.cssSelector(".slds-tree__item.ng-scope")).click();
+		sleep(15000);
+		CustomerCare cc = new CustomerCare(driver);
+		cc.irAHistoriales();
+	}
+	
+	
 }

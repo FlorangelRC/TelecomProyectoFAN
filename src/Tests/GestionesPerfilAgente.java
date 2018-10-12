@@ -165,19 +165,13 @@ public class GestionesPerfilAgente extends TestBase{
 		driver.findElement(By.id("InvoicePreview_nextBtn")).click();
 		sleep(10000);
 		buscarYClick(driver.findElements(By.cssSelector(".slds-form-element__label.ng-binding")), "equals", "tarjeta de credito");
+		sleep(1000);
+		driver.findElement(By.id("BankingEntity-0")).click();
+		sleep(2000);
 		selectByText(driver.findElement(By.id("BankingEntity-0")), sBanco);
 		selectByText(driver.findElement(By.id("CardBankingEntity-0")), sTarjeta);
 		selectByText(driver.findElement(By.id("promotionsByCardsBank-0")), sPromo);
-		driver.findElement(By.id("SelectPaymentMethodsStep_nextBtn")).click();
-		sleep(5000);
 		selectByText(driver.findElement(By.id("Installment-0")), sCuotas);
-		driver.findElement(By.id("CardNumber-0")).sendKeys(sNumTarjeta);
-		selectByText(driver.findElement(By.id("expirationMonth-0")), sVenceMes);
-		selectByText(driver.findElement(By.id("expirationYear-0")), sVenceAno);
-		driver.findElement(By.id("securityCode-0")).sendKeys(sCodSeg);
-		selectByText(driver.findElement(By.id("documentType-0")), sTipoDNI);
-		driver.findElement(By.id("documentNumber-0")).sendKeys(sDNITarjeta);
-		driver.findElement(By.id("cardHolder-0")).sendKeys(sTitular);				
 		driver.findElement(By.id("SelectPaymentMethodsStep_nextBtn")).click();
 		sleep(20000);
 		buscarYClick(driver.findElements(By.id("InvoicePreview_nextBtn")), "equals", "siguiente");
@@ -199,17 +193,16 @@ public class GestionesPerfilAgente extends TestBase{
 		sleep(5000);
 		driver.navigate().refresh();
 		sleep(10000);
-		cCC.obtenerTNyMonto2(driver, sOrden);
-		//cCC.obtenerOrdenMontoyTN(driver, "Recarga");
-		sleep(10000);
-		driver.switchTo().frame(cambioFrame(driver, By.id("Status_ilecell")));
-		Assert.assertTrue(driver.findElement(By.id("Status_ilecell")).getText().equalsIgnoreCase("activada"));
+		driver.switchTo().frame(cambioFrame(driver, By.cssSelector(".hasMotif.orderTab.detailPage.ext-webkit.ext-chrome.sfdcBody.brandQuaternaryBgr")));
+		WebElement tabla = driver.findElement(By.id("ep")).findElements(By.tagName("table")).get(1);
+		String datos = tabla.findElements(By.tagName("tr")).get(4).findElements(By.tagName("td")).get(1).getText();
+		Assert.assertTrue(datos.equalsIgnoreCase("activada")||datos.equalsIgnoreCase("activated"));
 	}
-	@Test(groups = { "GestionesPerfilAgente", "E2E" }, priority = 1, dataProvider = "CambioSimCardAgente")
+	@Test(groups = { "GestionesPerfilAgente","CambioSimCard", "E2E" }, priority = 1, dataProvider = "CambioSimCardAgente")
 	public void TSCambioSimCardAgente(String sDNI, String sLinea) throws AWTException {
 		imagen = "TSCambioSimCardAgente";
 		detalles = null;
-		detalles = imagen + "-Recarga-DNI:" + sDNI;
+		detalles = imagen + "-DNI:" + sDNI;
 		SalesBase sale = new SalesBase(driver);
 		BasePage cambioFrameByID = new BasePage();
 		CustomerCare cCC = new CustomerCare(driver);
@@ -232,11 +225,11 @@ public class GestionesPerfilAgente extends TestBase{
 		Select metodoEntrega = new Select (driver.findElement(By.id("DeliveryMethodSelection")));
 		metodoEntrega.selectByVisibleText("Presencial");
 		cCC.obligarclick(driver.findElement(By.id("DeliveryMethodConfiguration_nextBtn")));
-		sleep(12000);
+		sleep(16000);
 		cCC.obligarclick(driver.findElement(By.id("ICCDAssignment_nextBtn")));
-		sleep(12000);
+		sleep(16000);
 		cCC.obligarclick(driver.findElement(By.id("InvoicePreview_nextBtn")));
-		sleep(12000);
+		sleep(16000);
 		buscarYClick(driver.findElements(By.cssSelector(".slds-form-element__label.ng-binding")), "equals","Efectivo");
 		cCC.obligarclick(driver.findElement(By.id("SelectPaymentMethodsStep_nextBtn")));
 		sleep(15000);
@@ -246,10 +239,8 @@ public class GestionesPerfilAgente extends TestBase{
 		orden = orden.substring(orden.length()-8);
 		cCC.obligarclick(driver.findElement(By.id("OrderSumary_nextBtn")));
 		sleep(15000);
-		try {
-			driver.findElement(By.id("Step_Error_Huawei_S029_nextBtn")).click();
-			System.out.println("Error en prefactura huawei");
-		}catch(Exception ex1) {}
+		String check = driver.findElement(By.id("GeneralMessageDesing")).getText();
+		Assert.assertTrue(check.toLowerCase().contains("la orden se realiz\u00f3 con \u00e9xito"));
 		sleep(5000);
 		driver.navigate().refresh();
 		sleep(10000);
@@ -260,14 +251,19 @@ public class GestionesPerfilAgente extends TestBase{
 		//datosOrden.add("Cambio sim card Agente- Cuenta: "+accid+"Invoice: "+invoice.split("-")[0]);
 		CBS_Mattu invoSer = new CBS_Mattu();
 		Assert.assertTrue(invoSer.PagoEnCaja("1006", accid, "1001", invoice.split("-")[2], invoice.split("-")[1],driver));
+		sleep(5000);
 		driver.navigate().refresh();
 		sleep(10000);
-		driver.switchTo().frame(cambioFrame(driver, By.id("Status_ilecell")));
-		Assert.assertTrue(driver.findElement(By.id("Status_ilecell")).getText().equalsIgnoreCase("activada"));
+		//cc.obtenerTNyMonto2(driver, sOrden);
+		//sleep(10000);
+		driver.switchTo().frame(cambioFrame(driver, By.cssSelector(".hasMotif.orderTab.detailPage.ext-webkit.ext-chrome.sfdcBody.brandQuaternaryBgr")));
+		WebElement tabla = driver.findElement(By.id("ep")).findElements(By.tagName("table")).get(1);
+		String datos = tabla.findElements(By.tagName("tr")).get(4).findElements(By.tagName("td")).get(1).getText();
+		Assert.assertTrue(datos.equalsIgnoreCase("activada")||datos.equalsIgnoreCase("activated"));
 		
 	}
 	
-	@Test (groups = {"GestionesPerfilOficina","E2E"}, dataProvider="PackAgente")
+	@Test (groups = {"GestionesPerfilOficina","VentaDePack","E2E"}, dataProvider="PackAgente")
 	public void Venta_de_Pack(String sDNI, String sLinea, String sPackAgente, String cBanco, String cTarjeta, String cPromo, String cCuotas) throws AWTException{
 		imagen = "Venta_de_Pack";
 		detalles = null;
@@ -294,14 +290,14 @@ public class GestionesPerfilAgente extends TestBase{
 		sleep(12000);
 		String sOrden = cCC.obtenerOrden2(driver);
 		detalles += "-Orden:" + sOrden;
-		//buscarYClick(driver.findElements(By.cssSelector(".slds-form-element__label.ng-binding")), "equals", "efectivo");
+		buscarYClick(driver.findElements(By.cssSelector(".slds-form-element__label.ng-binding")), "equals", "efectivo");
 		sleep(12000);
-		buscarYClick(driver.findElements(By.cssSelector(".slds-form-element__label.ng-binding")), "equals", "tarjeta de credito");
+		/*buscarYClick(driver.findElements(By.cssSelector(".slds-form-element__label.ng-binding")), "equals", "tarjeta de credito");
 		sleep(12000);
 		selectByText(driver.findElement(By.id("BankingEntity-0")), cBanco);
 		selectByText(driver.findElement(By.id("CardBankingEntity-0")), cTarjeta);
 		selectByText(driver.findElement(By.id("promotionsByCardsBank-0")), cPromo);
-		selectByText(driver.findElement(By.id("Installment-0")), cCuotas);
+		selectByText(driver.findElement(By.id("Installment-0")), cCuotas);*/
 		pagePTelefo.getMediodePago().click();
 		sleep(15000);
 		pagePTelefo.getOrdenSeRealizoConExito().click();
@@ -315,12 +311,17 @@ public class GestionesPerfilAgente extends TestBase{
 		//datosOrden.add("Operacion: Compra de Pack- Cuenta: "+accid+" Invoice: "+invoice.split("-")[0]+invoice.split("-")[1]);
 		System.out.println("Operacion: Compra de Pack- Cuenta: "+accid+" Invoice: "+invoice.split("-")[1] + "\tAmmount: " +invoice.split("-")[0]);
 		CBS_Mattu invoSer = new CBS_Mattu();
-		Assert.assertTrue(invoSer.PagoEnCaja("1005", accid, "2001", invoice.split("-")[1], invoice.split("-")[0],driver));
+		Assert.assertTrue(invoSer.PagoEnCaja("1005", accid, "1001", invoice.split("-")[1], invoice.split("-")[0],driver));
+		sleep(5000);
 		driver.navigate().refresh();
 		sleep(10000);
-		driver.switchTo().frame(cambioFrame(driver, By.id("Status_ilecell")));
-		Assert.assertTrue(driver.findElement(By.id("Status_ilecell")).getText().equalsIgnoreCase("activada"));
-		}
+		//cc.obtenerTNyMonto2(driver, sOrden);
+		//sleep(10000);
+		driver.switchTo().frame(cambioFrame(driver, By.cssSelector(".hasMotif.orderTab.detailPage.ext-webkit.ext-chrome.sfdcBody.brandQuaternaryBgr")));
+		WebElement tabla = driver.findElement(By.id("ep")).findElements(By.tagName("table")).get(1);
+		String datos = tabla.findElements(By.tagName("tr")).get(4).findElements(By.tagName("td")).get(1).getText();
+		Assert.assertTrue(datos.equalsIgnoreCase("activada")||datos.equalsIgnoreCase("activated"));
+	}
 	
 	@Test (groups = {"GestionesPerfilAgente", "AnulacionDeVenta", "E2E"}, dataProvider = "CuentaAnulacionDeVenta")
 	public void Anulacion_De_Venta(String cDNI) {

@@ -16,9 +16,12 @@ import Tests.TestBase;
 
 public class ManejoCaja extends BasePage {
 	
-	private String UrlCaja ="https://10.75.39.140:8081/main.action?ssLogin=true&BMEWebToken=be935f78-f517-441c-a299-c5a1ba3f1f411b7c8915-7f90-4b1d-bee6-15837afe7b05" ;
-	private String usuario = "CBS593572";
-	private String clave = "Testa10k";
+	//private String UrlCaja ="https://10.75.39.140:8081/main.action?ssLogin=true&BMEWebToken=be935f78-f517-441c-a299-c5a1ba3f1f411b7c8915-7f90-4b1d-bee6-15837afe7b05" ;
+	private String UrlCaja = "https://10.75.197.163:8084/login.action?ssoLogin=true";
+	private String usuarioUAT = "CBS593572";
+	private String claveUAT = "Testa10k";
+	private String usuarioSIT = "FLORANGEL";
+	private String claveSIT = "Teco2018";
 	
 	@FindBy(id="login")
 	private WebElement pantaLog;
@@ -49,6 +52,17 @@ public class ManejoCaja extends BasePage {
 	
 	TestBase TB = new TestBase();
 	
+	public void loginCaja(WebDriver driver) {
+		if (UrlCaja.contains("10.75.39.140")){
+			System.out.println("En uat");
+			driver.findElement(By.id("login")).findElement(By.id("username")).sendKeys(usuarioUAT);
+			driver.findElement(By.id("login")).findElement(By.id("password")).sendKeys(claveUAT);
+		}else {
+			System.out.println("En sit");
+			driver.findElement(By.id("login")).findElement(By.id("username")).sendKeys(usuarioSIT);
+			driver.findElement(By.id("login")).findElement(By.id("password")).sendKeys(claveSIT);
+		}
+	}
 	
 	public void ingresarCaja(WebDriver driver) {
 		driver.get(UrlCaja);
@@ -57,15 +71,17 @@ public class ManejoCaja extends BasePage {
 		//System.out.println(driver.findElement(By.id("login")).getText());
 		idiom.selectByVisibleText("Spanish");
 		sleep(3000);
+		loginCaja(driver);
 		//user.sendKeys(usuario);
-		driver.findElement(By.id("login")).findElement(By.id("username")).sendKeys(usuario);
-		driver.findElement(By.id("login")).findElement(By.id("password")).sendKeys(clave);
+		
 		driver.findElement(By.id("login")).findElement(By.id("submitBtn")).click();
 		sleep(10000);
 	}
 	
 	public void configuracionesIniciales(WebDriver driver) {
-		new Select(driver.findElement(By.id("topFrame")).findElement(By.id("prj_select"))).selectByVisibleText("MSC");
+		try {
+			new Select(driver.findElement(By.id("topFrame")).findElement(By.id("prj_select"))).selectByVisibleText("MSC");
+		}catch(Exception ex1) {}
 		if(!driver.findElement(By.id("topFrame")).findElement(By.id("current_BE_ID")).getText().equalsIgnoreCase("TA")) {
 			driver.findElement(By.id("topFrame")).findElement(By.id("current_BE_ID")).click();
 			sleep(2000);
@@ -82,7 +98,6 @@ public class ManejoCaja extends BasePage {
 			}
 			driver.findElement(By.id("bepicker_select")).click();
 			sleep(4000);
-			//driver.findElement(By.className("popwin_middle_center")).findElement(By.cssSelector(".bc_btn.bc_ui_ele")).click();
 		}
 	}
 	

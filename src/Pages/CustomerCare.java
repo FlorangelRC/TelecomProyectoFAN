@@ -308,7 +308,7 @@ public class CustomerCare extends BasePage {
 				return t;
 			}
 		}
-		System.err.println("ERROR: No se encontr� la tarjeta \'" + tituloTarjeta + "\'");
+		System.err.println("ERROR: No se encontr\u00f3 la tarjeta \'" + tituloTarjeta + "\'");
 		return null;
 	}
 	
@@ -323,7 +323,7 @@ public class CustomerCare extends BasePage {
 				}
 			}
 		}
-		System.err.println("ERROR: No se encontr� una l�nea Prepago activa");
+		System.err.println("ERROR: No se encontr\u00f3 una l\u00ednea Prepago activa");
 		return null;
 	}
 	
