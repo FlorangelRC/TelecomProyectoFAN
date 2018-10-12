@@ -1,5 +1,8 @@
 package Tests;
 
+import static org.testng.Assert.assertTrue;
+
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -15,6 +18,8 @@ import org.testng.annotations.BeforeClass;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
+import Pages.Accounts;
+import Pages.ContactSearch;
 import Pages.CustomerCare;
 import Pages.Marketing;
 import Pages.SalesBase;
@@ -25,8 +30,8 @@ public class TestsXappia extends TestBase {
 	private WebDriver driver;
 	private CustomerCare cc;
 	private SalesBase sb;
-	
-	@BeforeClass (groups = "UAT")
+	private TestBase tb;
+	/*@BeforeClass (groups = "UAT")
 	public void loginUAT() {
 		driver = setConexion.setupEze();
 		driver.get("https://telecomcrm--uat.cs53.my.salesforce.com");
@@ -39,9 +44,9 @@ public class TestsXappia extends TestBase {
  		sleep(5000);
  		cc = new CustomerCare(driver);
 		sb = new SalesBase(driver);
-	}
+	}*/
 	
-	/*@BeforeClass (groups = "SIT")
+	@BeforeClass (groups = "SIT")
 	public void loginSIT() {
 		driver = setConexion.setupEze();
 		driver.get("https://crm--sit.cs14.my.salesforce.com/");
@@ -54,7 +59,7 @@ public class TestsXappia extends TestBase {
  		sleep(5000);
  		cc = new CustomerCare(driver);
 		sb = new SalesBase(driver);
-	}*/
+	}
 	
 	private void irAConsolaFAN() {
 		try {
@@ -101,11 +106,30 @@ public class TestsXappia extends TestBase {
 		buscarYClick(driver.findElements(By.tagName("button")), "equals", "gesti\u00f3n de clientes");
 	}
 	
+	public void LoguearAgente(){
+		irAConsolaFAN();
+		driver.findElement(By.id("userNav")).click();
+		driver.findElement(By.id("app_logout")).click();
+		sleep(9000);
+		driver.findElement(By.id("userDropdown")).click();
+		sleep(3000);
+		driver.findElement(By.id("logout")).click();
+		sleep(5000);
+		driver.get(urlAmbiente);
+		driver.findElement(By.id("cancel_idp_hint")).click();
+		sleep(7500);
+		driver.findElement(By.id("idp_section_buttons")).click();
+		sleep(7000);
+		driver.findElement(By.name("Ecom_User_ID")).sendKeys("UAT549492");
+		driver.findElement(By.name("Ecom_Password")).sendKeys("Testa10k");
+		driver.findElement(By.id("loginButton2")).click();
+		sleep(8000);
+	}
 	
-	@BeforeMethod (groups="UAT")
+	/*@BeforeMethod (groups="UAT")
 	public void beforeUAT() {
 		driver.get("https://telecomcrm--uat.cs53.my.salesforce.com");
-	}
+	}*/
 	
 	@BeforeMethod (groups="SIT")
 	public void beforeSIT() {
@@ -289,5 +313,324 @@ public class TestsXappia extends TestBase {
 		}
 		List<WebElement> wMessages = wDetail.findElements(By.cssSelector(".slds-text-body_regular.value"));
 		Assert.assertFalse(wMessages.get(1).getText().contains("Informaci\u00f3n no disponible"));
+	}
+	
+	@Test (groups = "SIT")
+	public void TXS_0004_CRM_Verificar_Pasos_Alta_de_Linea_Cliente_Existente_OfCom(){
+		irAConsolaFAN();
+		sb.cerrarPestaniaGestion(driver);
+		irAGestionDeClientes();
+		driver.switchTo().frame(cambioFrame(driver, By.id("SearchClientDocumentType")));
+		sleep(1000);
+		sb.BuscarCuenta("DNI", "2222203");
+		sleep(5000);
+		carrito();
+		sleep(20000);
+		sb.elegirplan("Plan con Tarjeta");
+		sleep(12000);
+		driver.findElement(By.cssSelector(".slds-input.ng-valid.ng-not-empty.ng-dirty.ng-valid-parse.ng-touched")).clear();
+		sleep(8000);
+		driver.findElement(By.cssSelector(".slds-input.ng-valid.ng-dirty.ng-valid-parse.ng-touched.ng-empty")).sendKeys("Galaxy s8 - Negro");
+		sleep(8000);
+		List<WebElement> agregar = driver.findElements(By.cssSelector(".slds-button.slds-button--neutral.add-button")); 
+			for(WebElement a : agregar){
+				if(a.getText().equals("Agregar")){
+					cc.obligarclick(a);
+				}
+			}
+		sleep(5000);	
+		sb.continuar();
+		sleep(10000);
+		ArrayList<String> txt1 = new ArrayList<String>();
+		ArrayList<String> txt2 = new ArrayList<String>();
+		txt2.add("ASIGNACI\u00d3N DE L\u00cdNEA");
+		txt2.add("VALIDACI\u00d3N DE IDENTIDAD");
+		txt2.add("SIMULACI\u00d3N DE FACTURA");
+		txt2.add("SELECCI\u00d3N DE MEDIO DE PAGO");
+		txt2.add("RESUMEN DE LA ORDEN DE VENTA");
+		txt2.add("ENV\u00edO FACTURA Y DATOS DE COBRO");
+		txt2.add("INFORMACI\u00d3N");
+		List<WebElement> pasos = driver.findElements(By.cssSelector(".list-group.vertical-steps.ng-scope"));
+		System.out.println(pasos.size());
+			for(WebElement e: pasos){
+				txt1.add(e.getText());
+				System.out.println(e.getText());
+			}
+		Assert.assertTrue(txt1.containsAll(txt2));
+		}
+		
+	@Test (groups = "SIT")
+	public void TXS_0005_CRM_Verificar_Pasos_Alta_de_Linea_Cliente_Existente_Agente(){
+	LoguearAgente();
+	irAConsolaFAN();
+	sb.cerrarPestaniaGestion(driver);
+	irAGestionDeClientes();
+	driver.switchTo().frame(cambioFrame(driver, By.id("SearchClientDocumentType")));
+	sleep(1000);
+	sb.BuscarCuenta("DNI", "2222203");
+	sleep(5000);
+	carrito();
+	sleep(20000);
+	sb.elegirplan("Plan con Tarjeta");
+	sleep(12000);
+	driver.findElement(By.cssSelector(".slds-input.ng-valid.ng-not-empty.ng-dirty.ng-valid-parse.ng-touched")).clear();
+	sleep(8000);
+	driver.findElement(By.cssSelector(".slds-input.ng-valid.ng-dirty.ng-valid-parse.ng-touched.ng-empty")).sendKeys("Galaxy s8 - Negro");
+	sleep(8000);
+	List<WebElement> agregar = driver.findElements(By.cssSelector(".slds-button.slds-button--neutral.add-button")); 
+		for(WebElement a : agregar){
+			if(a.getText().equals("Agregar")){
+				cc.obligarclick(a);
+			}
+		}
+	sleep(5000);	
+	sb.continuar();
+	sleep(10000);
+	ArrayList<String> txt1 = new ArrayList<String>();
+	ArrayList<String> txt2 = new ArrayList<String>();
+	txt2.add("ASIGNACI\u00d3N DE L\u00cdNEA");
+	txt2.add("VALIDACI\u00d3N DE IDENTIDAD");
+	txt2.add("INGRESO DE SERIAL");
+	txt2.add("SIMULACI\u00d3N DE FACTURA");
+	txt2.add("SELECCI\u00d3N DE MEDIO DE PAGO");
+	txt2.add("RESUMEN DE LA ORDEN DE VENTA");
+	txt2.add("ENV\u00edO FACTURA Y DATOS DE COBRO");
+	txt2.add("INFORMACI\u00d3N");
+	List<WebElement> pasos = driver.findElements(By.cssSelector(".list-group.vertical-steps.ng-scope"));
+	System.out.println(pasos.size());
+		for(WebElement e: pasos){
+			txt1.add(e.getText());
+			System.out.println(e.getText());
+		}
+	Assert.assertTrue(txt1.containsAll(txt2));
+	}
+	
+	@Test (groups = "SIT")
+	public void TXS_0006_CRM_Verificar_Pasos_Alta_de_Linea_Cliente_Nuevo_OfCom_StorePickUp(){
+		CustomerCare cc = new CustomerCare(driver);
+		SalesBase sb = new SalesBase(driver);
+		Accounts accountPage = new Accounts(driver);
+		irAConsolaFAN();
+		sb.cerrarPestaniaGestion(driver);
+		irAGestionDeClientes();
+		sleep(25000);
+		driver.switchTo().frame(accountPage.getFrameForElement(driver, By.id("SearchClientDocumentNumber")));
+		sb.BtnCrearNuevoCliente();
+		ContactSearch contact = new ContactSearch(driver);
+		contact.sex("Masculino");
+		contact.Llenar_Contacto("Nuevo", "OfCom", "10/10/1990");
+		driver.findElement(By.id("EmailSelectableItems")).findElement(By.tagName("input")).sendKeys("a@a.com");
+		driver.findElement(By.id("Contact_nextBtn")).click();
+		sleep(20000);
+		carrito();
+		sleep(20000);
+		sb.ResolverEntrega(driver, "Store Pick Up", "Ciudad Autónoma de Buenos Aires","CIUD AUTON D BUENOS AIRES");
+		sleep(8000);
+		driver.switchTo().frame(accountPage.getFrameForElement(driver, By.cssSelector(".slds-input.ng-pristine.ng-untouched.ng-valid.ng-empty")));
+		sb.elegirplan("Plan con tarjeta");
+		sleep(12000);
+		driver.findElement(By.cssSelector(".slds-input.ng-valid.ng-not-empty.ng-dirty.ng-valid-parse.ng-touched")).clear();
+		sleep(8000);
+		driver.findElement(By.cssSelector(".slds-input.ng-valid.ng-dirty.ng-valid-parse.ng-touched.ng-empty")).sendKeys("Galaxy s8 - Negro");
+		sleep(8000);
+		List<WebElement> agregar = driver.findElements(By.cssSelector(".slds-button.slds-button--neutral.add-button")); 
+			for(WebElement a : agregar){
+				if(a.getText().equals("Agregar")){
+					cc.obligarclick(a);
+				}
+			}
+		sleep(5000);	
+		sb.continuar();
+		sleep(22000);
+		ArrayList<String> txt1 = new ArrayList<String>();
+		ArrayList<String> txt2 = new ArrayList<String>();
+		txt2.add("DATOS DE LA CUENTA");
+		txt2.add("ASIGNACI\u00d3N DE L\u00cdNEA");
+		txt2.add("SELECCI\u00d3N DE MODO DE ENTREGA");
+		txt2.add("SIMULACI\u00d3N DE FACTURA");
+		txt2.add("SELECCI\u00d3N MEDIO DE PAGO");
+		txt2.add("INGRESO DE SERIAL");
+		//txt2.add("VALIDACI\u00d3N DE IDENTIDAD");
+		txt2.add("RESUMEN DE LA ORDEN DE VENTA");
+		//txt2.add("ENV\u00edO FACTURA Y DATOS DE COBRO");
+		txt2.add("INFORMACI\u00d3N");
+		List<WebElement> pasos = driver.findElements(By.cssSelector(".list-group.vertical-steps.ng-scope"));
+		System.out.println(pasos.size());
+			for(WebElement e: pasos){
+				txt1.add(e.getText());
+				System.out.println(e.getText());
+			}
+		Assert.assertTrue(txt1.containsAll(txt2));
+	}
+	
+	@Test (groups = "SIT")
+	public void TXS_0007_CRM_Verificar_Pasos_Alta_de_Linea_Cliente_Nuevo_Agente_StorePickUp(){
+		CustomerCare cc = new CustomerCare(driver);
+		SalesBase sb = new SalesBase(driver);
+		Accounts accountPage = new Accounts(driver);
+		LoguearAgente();
+		irAConsolaFAN();
+		sb.cerrarPestaniaGestion(driver);
+		irAGestionDeClientes();
+		sleep(25000);
+		driver.switchTo().frame(accountPage.getFrameForElement(driver, By.id("SearchClientDocumentNumber")));
+		sb.BtnCrearNuevoCliente();
+		ContactSearch contact = new ContactSearch(driver);
+		contact.sex("Masculino");
+		contact.Llenar_Contacto("Nuevo", "OfCom", "10/10/1990");
+		driver.findElement(By.id("EmailSelectableItems")).findElement(By.tagName("input")).sendKeys("a@a.com");
+		driver.findElement(By.id("Contact_nextBtn")).click();
+		sleep(20000);
+		carrito();
+		sleep(20000);
+		sb.ResolverEntrega(driver, "Store Pick Up", "Ciudad Autónoma de Buenos Aires","CIUD AUTON D BUENOS AIRES");
+		sleep(8000);
+		driver.switchTo().frame(accountPage.getFrameForElement(driver, By.cssSelector(".slds-input.ng-pristine.ng-untouched.ng-valid.ng-empty")));
+		sb.elegirplan("Plan con tarjeta");
+		sleep(12000);
+		driver.findElement(By.cssSelector(".slds-input.ng-valid.ng-not-empty.ng-dirty.ng-valid-parse.ng-touched")).clear();
+		sleep(8000);
+		driver.findElement(By.cssSelector(".slds-input.ng-valid.ng-dirty.ng-valid-parse.ng-touched.ng-empty")).sendKeys("Galaxy s8 - Negro");
+		sleep(8000);
+		List<WebElement> agregar = driver.findElements(By.cssSelector(".slds-button.slds-button--neutral.add-button")); 
+			for(WebElement a : agregar){
+				if(a.getText().equals("Agregar")){
+					cc.obligarclick(a);
+				}
+			}
+		sleep(5000);	
+		sb.continuar();
+		sleep(22000);
+		ArrayList<String> txt1 = new ArrayList<String>();
+		ArrayList<String> txt2 = new ArrayList<String>();
+		txt2.add("DATOS DE LA CUENTA");
+		txt2.add("ASIGNACI\u00d3N DE L\u00cdNEA");
+		txt2.add("SELECCI\u00d3N DE MODO DE ENTREGA");
+		txt2.add("SIMULACI\u00d3N DE FACTURA");
+		txt2.add("SELECCI\u00d3N MEDIO DE PAGO");
+		txt2.add("INGRESO DE SERIAL");
+		//txt2.add("VALIDACI\u00d3N DE IDENTIDAD");
+		txt2.add("RESUMEN DE LA ORDEN DE VENTA");
+		//txt2.add("ENV\u00edO FACTURA Y DATOS DE COBRO");
+		txt2.add("INFORMACI\u00d3N");
+		List<WebElement> pasos = driver.findElements(By.cssSelector(".list-group.vertical-steps.ng-scope"));
+		System.out.println(pasos.size());
+			for(WebElement e: pasos){
+				txt1.add(e.getText());
+				System.out.println(e.getText());
+			}
+		Assert.assertTrue(txt1.containsAll(txt2));
+	}
+	@Test (groups = "SIT")
+	public void TXS_0010_CRM_Verificar_Pasos_Alta_de_Linea_Cliente_Nuevo_OfCom_Presencial(){
+		CustomerCare cc = new CustomerCare(driver);
+		SalesBase sb = new SalesBase(driver);
+		Accounts accountPage = new Accounts(driver);
+		irAConsolaFAN();
+		sb.cerrarPestaniaGestion(driver);
+		irAGestionDeClientes();
+		sleep(25000);
+		driver.switchTo().frame(accountPage.getFrameForElement(driver, By.id("SearchClientDocumentNumber")));
+		sb.BtnCrearNuevoCliente();
+		ContactSearch contact = new ContactSearch(driver);
+		contact.sex("Masculino");
+		contact.Llenar_Contacto("Nuevo", "OfCom", "10/10/1990");
+		driver.findElement(By.id("EmailSelectableItems")).findElement(By.tagName("input")).sendKeys("a@a.com");
+		driver.findElement(By.id("Contact_nextBtn")).click();
+		sleep(20000);
+		carrito();
+		sleep(20000);
+		driver.switchTo().frame(accountPage.getFrameForElement(driver, By.cssSelector(".slds-input.ng-pristine.ng-untouched.ng-valid.ng-empty")));
+		sb.elegirplan("Plan con tarjeta");
+		sleep(12000);
+		driver.findElement(By.cssSelector(".slds-input.ng-valid.ng-not-empty.ng-dirty.ng-valid-parse.ng-touched")).clear();
+		sleep(8000);
+		driver.findElement(By.cssSelector(".slds-input.ng-valid.ng-dirty.ng-valid-parse.ng-touched.ng-empty")).sendKeys("Galaxy s8 - Negro");
+		sleep(8000);
+		List<WebElement> agregar = driver.findElements(By.cssSelector(".slds-button.slds-button--neutral.add-button")); 
+			for(WebElement a : agregar){
+				if(a.getText().equals("Agregar")){
+					cc.obligarclick(a);
+				}
+			}
+		sleep(5000);	
+		sb.continuar();
+		sleep(22000);
+		ArrayList<String> txt1 = new ArrayList<String>();
+		ArrayList<String> txt2 = new ArrayList<String>();
+		txt2.add("DATOS DE LA CUENTA");
+		txt2.add("ASIGNACI\u00d3N DE L\u00cdNEA");
+		txt2.add("SELECCI\u00d3N DE MODO DE ENTREGA");
+		txt2.add("SIMULACI\u00d3N DE FACTURA");
+		txt2.add("SELECCI\u00d3N MEDIO DE PAGO");
+		txt2.add("INGRESO DE SERIAL");
+		//txt2.add("VALIDACI\u00d3N DE IDENTIDAD");
+		txt2.add("RESUMEN DE LA ORDEN DE VENTA");
+		//txt2.add("ENV\u00edO FACTURA Y DATOS DE COBRO");
+		txt2.add("INFORMACI\u00d3N");
+		List<WebElement> pasos = driver.findElements(By.cssSelector(".list-group.vertical-steps.ng-scope"));
+		System.out.println(pasos.size());
+			for(WebElement e: pasos){
+				txt1.add(e.getText());
+				System.out.println(e.getText());
+			}
+		Assert.assertTrue(txt1.containsAll(txt2));
+	}
+	
+	@Test (groups = "SIT")
+	public void TXS_0011_CRM_Verificar_Pasos_Alta_de_Linea_Cliente_Nuevo_Agente_Presencial(){
+		CustomerCare cc = new CustomerCare(driver);
+		SalesBase sb = new SalesBase(driver);
+		Accounts accountPage = new Accounts(driver);
+		LoguearAgente();
+		irAConsolaFAN();
+		sb.cerrarPestaniaGestion(driver);
+		irAGestionDeClientes();
+		sleep(25000);
+		driver.switchTo().frame(accountPage.getFrameForElement(driver, By.id("SearchClientDocumentNumber")));
+		sb.BtnCrearNuevoCliente();
+		ContactSearch contact = new ContactSearch(driver);
+		contact.sex("Masculino");
+		contact.Llenar_Contacto("Nuevo", "OfCom", "10/10/1990");
+		driver.findElement(By.id("EmailSelectableItems")).findElement(By.tagName("input")).sendKeys("a@a.com");
+		driver.findElement(By.id("Contact_nextBtn")).click();
+		sleep(20000);
+		carrito();
+		sleep(20000);
+		driver.switchTo().frame(accountPage.getFrameForElement(driver, By.cssSelector(".slds-input.ng-pristine.ng-untouched.ng-valid.ng-empty")));
+		sb.elegirplan("Plan con tarjeta");
+		sleep(12000);
+		driver.findElement(By.cssSelector(".slds-input.ng-valid.ng-not-empty.ng-dirty.ng-valid-parse.ng-touched")).clear();
+		sleep(8000);
+		driver.findElement(By.cssSelector(".slds-input.ng-valid.ng-dirty.ng-valid-parse.ng-touched.ng-empty")).sendKeys("Galaxy s8 - Negro");
+		sleep(8000);
+		List<WebElement> agregar = driver.findElements(By.cssSelector(".slds-button.slds-button--neutral.add-button")); 
+			for(WebElement a : agregar){
+				if(a.getText().equals("Agregar")){
+					cc.obligarclick(a);
+				}
+			}
+		sleep(5000);	
+		sb.continuar();
+		sleep(22000);
+		ArrayList<String> txt1 = new ArrayList<String>();
+		ArrayList<String> txt2 = new ArrayList<String>();
+		txt2.add("DATOS DE LA CUENTA");
+		txt2.add("ASIGNACI\u00d3N DE L\u00cdNEA");
+		txt2.add("SELECCI\u00d3N DE MODO DE ENTREGA");
+		txt2.add("SIMULACI\u00d3N DE FACTURA");
+		txt2.add("SELECCI\u00d3N MEDIO DE PAGO");
+		txt2.add("INGRESO DE SERIAL");
+		//txt2.add("VALIDACI\u00d3N DE IDENTIDAD");
+		txt2.add("RESUMEN DE LA ORDEN DE VENTA");
+		//txt2.add("ENV\u00edO FACTURA Y DATOS DE COBRO");
+		txt2.add("INFORMACI\u00d3N");
+		List<WebElement> pasos = driver.findElements(By.cssSelector(".list-group.vertical-steps.ng-scope"));
+		System.out.println(pasos.size());
+			for(WebElement e: pasos){
+				txt1.add(e.getText());
+				System.out.println(e.getText());
+			}
+		Assert.assertTrue(txt1.containsAll(txt2));
 	}
 }
