@@ -541,4 +541,16 @@ public class GestionesPerfilTelefonico extends TestBase{
 		detalles +="-Orden:"+orden;
 		
 	}
+	
+	@Test (groups = {"GestionesPerfilTelefonico", "ConsultaDeSaldo"})
+	public void TS_1344811_CRM_Movil_Prepago_Vista_360_Consulta_de_Saldo_Verificar_credito_prepago_de_la_linea_FAN_Front_Telefonico() {
+		driver.switchTo().frame(cambioFrame(driver, By.id("SearchClientDocumentType")));
+		sb.BuscarCuenta("DNI", "15907314");
+		driver.findElement(By.cssSelector(".slds-tree__item.ng-scope")).click();
+		sleep(15000);
+		cc.openleftpanel();
+		driver.switchTo().frame(cambioFrame(driver, By.className("card-top")));
+		WebElement cred = driver.findElement(By.xpath("//*[@id=\"j_id0:j_id5\"]/div/div/ng-include/div/div[2]/div[1]/ng-include/section[1]/div[2]/ul[2]/li[1]/span[3]"));
+		Assert.assertTrue(!(cred.getText().isEmpty()));
+	}
 }

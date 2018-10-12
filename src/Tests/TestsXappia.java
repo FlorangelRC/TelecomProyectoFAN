@@ -107,10 +107,10 @@ public class TestsXappia extends TestBase {
 		driver.get("https://telecomcrm--uat.cs53.my.salesforce.com");
 	}
 	
-	@BeforeMethod (groups="SIT")
+	/*@BeforeMethod (groups="SIT")
 	public void beforeSIT() {
 		driver.get("https://crm--sit.cs14.my.salesforce.com/");
-	}
+	}*/
 	
 	/*@AfterClass (alwaysRun = true)
 	public void quit() {
@@ -384,5 +384,4 @@ public class TestsXappia extends TestBase {
 		WebElement wMessage = driver.findElement(By.cssSelector("div[class='header-right'] span[class='slds-text-heading_medium expired-date expired-pink']"));
 		Assert.assertTrue(!wMessage.getText().isEmpty() && wMessage.getText().matches("([$][0]([,][0-9]{2}))|([$](?![0])[0-9]{0,3}([/.][0-9]{3})*([,][0-9]{2}))"));
 	}
-	
 }
