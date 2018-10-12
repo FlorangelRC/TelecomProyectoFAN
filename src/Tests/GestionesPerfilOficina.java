@@ -2450,4 +2450,20 @@ public class GestionesPerfilOficina extends TestBase {
 		Assert.assertFalse(wNumerosAmigos.get(1).findElement(By.tagName("input")).getText().equals("B"));
 	}
 	
+	@Test
+	public void TS135346_Historial_de_Recargas_Consultar_detalle_de_Recargas_por_Canal_TODOS_Fan_FRONT_OOCC() {
+		driver.switchTo().frame(cambioFrame(driver, By.id("SearchClientDocumentType")));
+		sb.BuscarCuenta("DNI", "2222203");
+		driver.findElement(By.cssSelector(".slds-tree__item.ng-scope")).click();
+		sleep(10000);
+		
+		driver.switchTo().frame(cambioFrame(driver, By.className("card-top")));
+		WebElement card = driver.findElement(By.cssSelector(".console-card.active")).findElement(By.className("actions"));
+		for (WebElement x : card.findElements(By.className("slds-text-body_regular"))) {
+			System.out.println(x.getText());
+			if (x.getText().contains("Historiales"))
+				x.click();
+		}
+	}
+	
 }	
