@@ -354,15 +354,25 @@ public class CustomerCare extends BasePage {
 	}
 	
 	public void irADetalleDeConsumos() {
-		obtenerAccionLineaPrepago("Detalle de Consumos").click();
-		sleep(3000);
-		cambiarAFrameActivo();
+		TestBase tb = new TestBase();
+		driver.switchTo().frame(tb.cambioFrame(driver, By.className("card-top")));
+		WebElement card = driver.findElement(By.cssSelector(".console-card.active")).findElement(By.className("actions"));
+		for (WebElement x : card.findElements(By.className("slds-text-body_regular"))) {
+			if (x.getText().contains("Detalle de Consumos"))
+				x.click();
+		}
+		sleep(5000);
 	}
 	
 	public void irAHistoriales() {
-		obtenerAccionLineaPrepago("Historiales").click();
-		sleep(3000);
-		cambiarAFrameActivo();
+		TestBase tb = new TestBase();
+		driver.switchTo().frame(tb.cambioFrame(driver, By.className("card-top")));
+		WebElement card = driver.findElement(By.cssSelector(".console-card.active")).findElement(By.className("actions"));
+		for (WebElement x : card.findElements(By.className("slds-text-body_regular"))) {
+			if (x.getText().contains("Historiales"))
+				x.click();
+		}
+		sleep(5000);
 	}
 	
 	public void irAAhorra() {
