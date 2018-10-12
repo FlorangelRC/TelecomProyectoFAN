@@ -172,7 +172,7 @@ public class TestsXappia extends TestBase {
 	}
 	
 	@Test (groups = "UAT")
-	public void TXU0001_Gestion_De_Verificacion_De_Dos_Idiomas_En_El_Carrito() {
+	public void TXU0003_Gestion_De_Verificacion_De_Dos_Idiomas_En_El_Carrito() {
 		SalesBase sb = new SalesBase(driver);
 		irAConsolaFAN();
 		sb.cerrarPestaniaGestion(driver);
