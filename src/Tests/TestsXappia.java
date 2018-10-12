@@ -118,7 +118,7 @@ public class TestsXappia extends TestBase {
 	}*/
 	
 	@Test (groups = "UAT")
-	public void Gestiones_Del_Panel_Izquierdo_En_Consola_FAN_En_Ambiente_UAT() {
+	public void TXU0001_Gestiones_Del_Panel_Izquierdo_En_Consola_FAN() {
 		irAConsolaFAN();
 		driver.switchTo().frame(cambioFrame(driver, By.className("slds-spinner_container")));
 		WebElement gestiones = driver.findElement(By.className("slds-spinner_container"));
@@ -127,7 +127,7 @@ public class TestsXappia extends TestBase {
 	}
 	
 	@Test (groups = "SIT")
-	public void SmokeTest_Tiempo_De_Carga_De_Consola_FAN_En_Ambiente_SIT() {
+	public void TXS0001_SmokeTest_Tiempo_De_Carga_De_Consola_FAN() {
 		Date start = new Date();
 		irAConsolaFAN();
 		Date end = new Date();
@@ -139,12 +139,12 @@ public class TestsXappia extends TestBase {
 	}
 	
 	@Test (groups = "UAT")
-	public void superposicion() {
+	public void TXU0002_Verificacion_De_Superposicion_De_Elementos_En_El_Carrito() {
 		irAConsolaFAN();
 		sb.cerrarPestaniaGestion(driver);
 		irAGestionDeClientes();
 		driver.switchTo().frame(cambioFrame(driver, By.id("SearchClientDocumentType")));
-		sb.BuscarCuenta("DNI", "22222000");
+		sb.BuscarCuenta("DNI", "22222001");
 		driver.findElement(By.cssSelector(".slds-tree__item.ng-scope")).click();
 		sleep(10000);
 		driver.switchTo().frame(cambioFrame(driver, By.className("card-top")));
@@ -157,7 +157,7 @@ public class TestsXappia extends TestBase {
 				btnComprarInternet = btn.get(i);
 		}
 		btnComprarInternet.click();
-		sleep(25000);
+		sleep(40000);
 		driver.switchTo().defaultContent();
 		if (driver.findElements(By.cssSelector(".x-layout-mini.x-layout-mini-east.x-layout-mini-custom-logo")).size() == 0)
 			driver.findElement(By.cssSelector(".x-layout-mini.x-layout-mini-east.x-layout-mini-custom-logo")).click();
@@ -168,7 +168,11 @@ public class TestsXappia extends TestBase {
 			if (plan.get(i).getText().toLowerCase().contains("plan con tarjeta repro"))
 				planConTarjeta = plan.get(i);
 		}
-		Assert.assertTrue(planConTarjeta.isEnabled());
+		try {
+			planConTarjeta.click();
+		} catch (org.openqa.selenium.WebDriverException e) {
+			Assert.assertTrue(false);
+		}
 	}
 	
 	@Test (groups = "UAT")
@@ -267,7 +271,7 @@ public class TestsXappia extends TestBase {
 	}
 	
 	@Test (groups = "UAT")
-	public void TXU0002_Informacion_Credito_En_Card() {
+	public void TXU0003_Informacion_Credito_En_Card() {
 		irAConsolaFAN();
 		sb.cerrarPestaniaGestion(driver);
 		irAGestionDeClientes();
@@ -282,12 +286,103 @@ public class TestsXappia extends TestBase {
 		List<WebElement> wDetails = driver.findElements(By.className("detail"));
 		WebElement wDetail = null;
 		for (WebElement wAux : wDetails) {
-			if (wAux.findElement(By.cssSelector(".slds-text-body_regular.detail-label")).getText().equalsIgnoreCase("Internet disponible")) {
+			if (wAux.findElement(By.cssSelector(".slds-text-body_regular.detail-label")).getText().equalsIgnoreCase("Cr\u00e9dito recarga")) {
 				wDetail = wAux;
 				break;
 			}
 		}
 		List<WebElement> wMessages = wDetail.findElements(By.cssSelector(".slds-text-body_regular.value"));
-		Assert.assertFalse(wMessages.get(1).getText().contains("Informaci\u00f3n no disponible"));
+		Assert.assertTrue(!wMessages.get(1).getText().isEmpty() && wMessages.get(1).getText().matches("([$][0]([,][0-9]{2}))|([$](?![0])[0-9]{0,3}([/.][0-9]{3})*([,][0-9]{2}))"));
 	}
+	
+	@Test (groups = "SIT")
+	public void TXS0002_Verificacion_De_Pestana_Detalles_En_Las_Cuentas() {
+		irAConsolaFAN();
+		sb.cerrarPestaniaGestion(driver);
+		irAGestionDeClientes();
+		driver.switchTo().frame(cambioFrame(driver, By.id("SearchClientDocumentType")));
+		sb.BuscarCuenta("DNI", "41582129");
+		driver.findElement(By.cssSelector(".slds-tree__item.ng-scope")).click();
+		sleep(15000);
+		driver.switchTo().defaultContent();
+		for (WebElement x : driver.findElements(By.className("x-tab-left"))) {
+			if (!x.getText().equalsIgnoreCase("Detalles"))
+				Assert.assertTrue(false);
+		}
+	}
+	
+	@Test (groups = "SIT")
+	public void TXS0003_Busqueda_De_Productos_En_El_Carrito() {
+		irAConsolaFAN();
+		sb.cerrarPestaniaGestion(driver);
+		irAGestionDeClientes();
+		driver.switchTo().frame(cambioFrame(driver, By.id("SearchClientDocumentType")));
+		sb.BuscarCuenta("DNI", "41582129");
+		carrito();
+		sleep(15000);
+		driver.findElement(By.cssSelector(".slds-input.ng-pristine.ng-untouched.ng-valid.ng-empty")).sendKeys("galaxy");
+		sleep(2500);
+		for (WebElement x : driver.findElements(By.cssSelector(".categoryButton.cat-icon"))) {
+			if (x.getText().equalsIgnoreCase("Planes"))
+				x.click();
+		}
+		sleep(2500);
+		WebElement list = driver.findElements(By.cssSelector(".slds-tile.cpq-product-item")).get(0);
+		if (list.getText().toLowerCase().contains("galaxy s8"))
+			Assert.assertTrue(false);
+	}
+	
+	@Test (groups = "SIT")
+	public void TXS0009_Verificacion_De_Historial_De_Suspensiones() {
+		irAConsolaFAN();
+		sb.cerrarPestaniaGestion(driver);
+		irAGestionDeClientes();
+		driver.switchTo().frame(cambioFrame(driver, By.id("SearchClientDocumentType")));
+		sb.BuscarCuenta("DNI", "2222203");
+		driver.findElement(By.cssSelector(".slds-tree__item.ng-scope")).click();
+		sleep(10000);
+		driver.switchTo().frame(cambioFrame(driver, By.className("card-top")));
+		driver.findElement(By.className("card-top")).click();
+		sleep(3000);
+		cc.irAGestionEnCard("Historial de Suspensiones");
+		driver.switchTo().frame(cambioFrame(driver, By.cssSelector(".slds-grid.slds-wrap.slds-grid--pull-padded.slds-m-around--medium.slds-p-around--medium.negotationsfilter")));
+		selectByText(driver.findElement(By.cssSelector(".slds-grid.slds-wrap.slds-grid--pull-padded.slds-m-around--medium.slds-p-around--medium.negotationsfilter")).findElement(By.cssSelector(".slds-input.ng-pristine.ng-untouched.ng-valid.ng-empty")), "Todos");
+		driver.findElement(By.cssSelector(".slds-button.slds-button--brand.filterNegotiations.slds-p-horizontal--x-large.slds-p-vertical--x-small")).click();
+		
+	}
+	
+	@Test (groups = "SIT")
+	public void TXS0001_Informacion_Credito_En_Facturacion() {
+		irAConsolaFAN();
+		sb.cerrarPestaniaGestion(driver);
+		irAGestionDeClientes();
+		driver.switchTo().frame(cambioFrame(driver, By.id("SearchClientDocumentType")));
+		sleep(1000);
+		SalesBase sSB = new SalesBase(driver);
+		sSB.BuscarCuenta("DNI", "41582129");
+		driver.findElement(By.cssSelector(".slds-tree__item.ng-scope")).findElement(By.tagName("div")).click();
+		sleep(25000);
+		
+		try {
+			cc.openleftpanel();
+		}
+		catch (Exception x) {
+			//Always empty
+		}
+		cc.irAFacturacion();
+		/*List<WebElement> wTitle = driver.findElements(By.className("header-right"));
+		WebElement wBalance = null;
+		for (WebElement wAux : wTitle) {
+			if (wAux.findElement(By.cssSelector(".slds-text-body_regular.expired-title")).getText().equalsIgnoreCase("balance")) {
+				wBalance = wAux;
+				break;
+			}
+		}
+		WebElement wMessage = wBalance.findElements(By.tagName("span")).get(1);
+		Assert.assertTrue(!wMessage.getText().isEmpty() && wMessage.getText().matches("([$][0]([,][0-9]{2}))|([$](?![0])[0-9]{0,3}([/.][0-9]{3})*([,][0-9]{2}))"));*/
+		sleep(5000);
+		WebElement wMessage = driver.findElement(By.cssSelector("div[class='header-right'] span[class='slds-text-heading_medium expired-date expired-pink']"));
+		Assert.assertTrue(!wMessage.getText().isEmpty() && wMessage.getText().matches("([$][0]([,][0-9]{2}))|([$](?![0])[0-9]{0,3}([/.][0-9]{3})*([,][0-9]{2}))"));
+	}
+	
 }

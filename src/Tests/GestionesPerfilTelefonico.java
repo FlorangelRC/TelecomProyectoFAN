@@ -362,7 +362,7 @@ public class GestionesPerfilTelefonico extends TestBase{
 		detalles+="Monto:"+invoice.split("-")[1]+"-Prefactura:"+invoice.split("-")[0];
 		//datosOrden.add("Cambio sim card Agente- Cuenta: "+accid+"Invoice: "+invoice.split("-")[0]);
 		CBS_Mattu invoSer = new CBS_Mattu();
-		Assert.assertTrue(invoSer.PagoEnCaja("1003", accid, "2001", invoice.split("-")[1], invoice.split("-")[0],driver));
+		Assert.assertTrue(invoSer.PagaEnCajaTC("1005", accid, "2001", invoice.split("-")[1], invoice.split("-")[0],  cDNITarjeta, cTitular, cVenceAno+cVenceMes, cCodSeg, cTitular, cNumTarjeta));
 		driver.navigate().refresh();
 		sleep(10000);
 		driver.switchTo().frame(cambioFrame(driver, By.id("Status_ilecell")));
@@ -416,7 +416,7 @@ public class GestionesPerfilTelefonico extends TestBase{
 	String orden = cCC.obtenerTNyMonto2(driver, sOrden);
 	detalles+="-Monto:"+orden.split("-")[1]+"-Prefactura:"+orden.split("-")[0];
 	CBS_Mattu invoSer = new CBS_Mattu();
-	Assert.assertTrue(invoSer.PagoEnCaja("1003", accid, "2001", orden.split("-")[1], orden.split("-")[0],driver));
+	Assert.assertTrue(invoSer.PagaEnCajaTC("1005", accid, "2001", orden.split("-")[1], orden.split("-")[0],  cDNITarjeta, cTitular, cVenceAno+cVenceMes, cCodSeg, cTitular, cNumTarjeta));
 	
 	//cc.obtenerOrdenMontoyTN(driver, "Compra de Pack");
 	sleep(10000);
