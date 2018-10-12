@@ -352,7 +352,7 @@ public class TestsXappia extends TestBase {
 	}
 	
 	@Test (groups = "SIT")
-	public void TXS0001_Informacion_Credito_En_Facturaci�n() {
+	public void TXS0001_Informacion_Credito_En_Facturacion() {
 		irAConsolaFAN();
 		sb.cerrarPestaniaGestion(driver);
 		irAGestionDeClientes();
