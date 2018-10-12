@@ -223,9 +223,14 @@ public class ManejoCaja extends BasePage {
 		driver.findElement(By.id("salesInvoiceDetailIOList")).findElement(By.id("selectedPayment_0")).click();
 		sleep(4000);
 		Select pinpad = new Select(driver.findElement(By.id("wonderSoftPanel")).findElement(By.name("#BMEModel.paymentInfo4WonderSoft.pinPadSerial")));
+		pinpad.selectByVisibleText("524-988-015");
+		driver.findElement(By.id("activePinPadBtn")).click();
+		sleep(15000);
+		driver.switchTo().defaultContent();
+		driver.findElement(By.className("popwin_btn_group")).findElement(By.cssSelector(".bc_btn.bc_ui_ele")).click();
+		sleep(4000);
+		driver.switchTo().frame(TB.cambioFrame(driver,By.id("paymentMethodPanel_content")));
 		driver.findElement(By.id("paymentMethodPanel_content")).findElement(By.id("submitButton")).click();
-		
-		
 		//cerrarPestanias(driver);
 	}
 }

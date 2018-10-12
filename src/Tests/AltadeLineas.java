@@ -113,7 +113,7 @@ public class AltadeLineas extends TestBase {
 		driver.switchTo().frame(accountPage.getFrameForElement(driver, By.id("SearchClientDocumentNumber")));
 	}
 	
-	@AfterMethod(alwaysRun=true)
+	//@AfterMethod(alwaysRun=true)
 	public void deslogin() throws IOException{
 		guardarListaTxt(DatosOrden);
 		DatosOrden.clear();
@@ -474,7 +474,7 @@ public class AltadeLineas extends TestBase {
 		sleep(3000);
 		driver.findElement(By.cssSelector(".slds-input.ng-valid.ng-dirty.ng-valid-parse.ng-touched.ng-empty")).sendKeys(sEquipo);
 		sleep(13000);
-		List<WebElement> acept = driver.findElements(By.cssSelector(".slds-button.slds-button_neutral.cpq-add-button"));
+		List<WebElement> acept = driver.findElements(By.cssSelector(".slds-button.slds-button--neutral.add-button"));
 			for(WebElement a : acept){
 				System.out.println(a.getText());
 				if(a.getText().equals("Agregar")){
@@ -548,7 +548,7 @@ public class AltadeLineas extends TestBase {
 		sleep(20000);
 		driver.findElement(By.cssSelector(".slds-input.ng-pristine.ng-untouched.ng-valid")).sendKeys(sEquipo);
 		sleep(8000);
-		List<WebElement> acept = driver.findElements(By.cssSelector(".slds-button.slds-button_neutral.cpq-add-button"));
+		List<WebElement> acept = driver.findElements(By.cssSelector(".slds-button.slds-button--neutral.add-button"));
 		for(WebElement a : acept){
 			System.out.println(a.getText());
 			if(a.getText().equals("Agregar")){
@@ -562,7 +562,7 @@ public class AltadeLineas extends TestBase {
 		cc.obligarclick(driver.findElement(By.id("InvoicePreview_nextBtn")));;
 		sleep(14000);
 		//cc.obligarclick(driver.findElement(By.id("ICCDAssignment_nextBtn")));
-		List<WebElement> medpag = driver.findElements(By.cssSelector(".slds-radio.ng-scope"));
+		List<WebElement> medpag = driver.findElements(By.cssSelector(".slds-radio__label"));
 			for(WebElement m :medpag){
 				if(m.getText().equals("Efectivo")){
 				cc.obligarclick(m.findElement(By.cssSelector(".slds-radio--faux")));
@@ -586,7 +586,7 @@ public class AltadeLineas extends TestBase {
 		}catch(Exception ex1) {}
 			driver.findElement(By.id("SaleOrderMessages_nextBtn")).click();
 			sleep(15000);
-			String orden = cc.obtenerOrdenMontoyTN(driver, "Venta");
+			String orden = cc.obtenerOrdenMontoyTN(driver, "Venta");	
 			System.out.println("orden = "+orden);
 			DatosOrden.add("Recargas" + orden + " de cuenta "+accid+" con DNI: " + sDni);
 			CBS_Mattu invoSer = new CBS_Mattu();
@@ -618,13 +618,13 @@ public class AltadeLineas extends TestBase {
 			for(WebElement e: btns){
 				if(e.getText().toLowerCase().equals("catalogo")){ 
 					e.click();
-					break;
+					break;	
 				}
 			}
 		sleep(25000);
 		driver.findElements(By.cssSelector(".slds-input.ng-pristine.ng-untouched.ng-valid")).get(0).sendKeys(sEquipo);
 		sleep(15000);
-		List<WebElement> agregar = driver.findElements(By.cssSelector(".slds-button.slds-button_neutral.cpq-add-button")); 
+		List<WebElement> agregar = driver.findElements(By.cssSelector(".slds-button.slds-button--neutral.add-button")); 
 			for(WebElement a : agregar){
 				if(a.getText().equals("Agregar")){
 					cc.obligarclick(a);
@@ -737,7 +737,7 @@ public class AltadeLineas extends TestBase {
 		sleep(3000);
 		driver.findElement(By.cssSelector(".slds-input.ng-valid.ng-dirty.ng-valid-parse.ng-touched.ng-empty")).sendKeys(sEquipo);
 		sleep(13000);
-		List<WebElement> acept = driver.findElements(By.cssSelector(".slds-button.slds-button_neutral.cpq-add-button"));
+		List<WebElement> acept = driver.findElements(By.cssSelector(".slds-button.slds-button--neutral.add-button"));
 			for(WebElement a : acept){
 				System.out.println(a.getText());
 				if(a.getText().equals("Agregar")){
@@ -748,8 +748,6 @@ public class AltadeLineas extends TestBase {
 		sleep(5000);	
 		sb.continuar();
 		sleep(24000);
-		cc.obligarclick(driver.findElement(By.id("LineAssignment_nextBtn")));
-		sleep(20000);
 		cc.obligarclick(driver.findElement(By.id("DeliveryMethodConfiguration_nextBtn")));
 		sleep(15000);
 		cc.obligarclick(driver.findElement(By.id("InvoicePreview_nextBtn")));

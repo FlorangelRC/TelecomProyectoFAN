@@ -514,8 +514,7 @@ public class AltasAgente extends TestBase{
 			driver.findElement(By.cssSelector(".slds-input.ng-pristine.ng-untouched.ng-valid")).sendKeys(sEquipo);	}
 		catch(Exception ex1) {driver.findElement(By.cssSelector(".slds-input.ng-pristine.ng-untouched.ng-valid.ng-empty")).sendKeys(sEquipo);}
 		try {Thread.sleep(20000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
-		List<WebElement> agregar = driver.findElements(By.cssSelector(".slds-button.slds-button_neutral.cpq-add-button")); 
-		agregar.get(0).click();
+		cc.obligarclick(driver.findElement(By.cssSelector(".slds-button.slds-button--neutral.add-button"))); 
 		sb.continuar();
 		sleep(22000);
 		cc.obligarclick(driver.findElement(By.id("ICCDAssignment_nextBtn")));
@@ -544,7 +543,7 @@ public class AltasAgente extends TestBase{
 	}
 	
 	@Test(groups={"Sales","VentaDeEquipo","E2E"}, priority=1, dataProvider="AltaLineaNuevoEquipoTC")
-	public void TS135824_CRM_Movil_Venta_Sin_Linea_Cliente_nuevo_SPU_AG_TC(String cDni, String sNombre, String sApellido, String sSexo, String sFNac, String sEmail,String sPlan, String sEquipo, String sProvincia, String sLocalidad, String sCalle, String sAltura, String sCPostal, String cBanco, String cTarjeta, String cPromo, String cCuotas, String cNumTarjeta, String cVenceMes, String cVenceAno, String cCodSeg, String sState, String sCity) throws IOException {
+	public void TS135824_CRM_Movil_Venta_Sin_Linea_Cliente_nuevo_SPU_AG_TC(String cDni, String sNombre, String sApellido, String sSexo, String sFNac, String sEmail,String sState, String sCity, String sEquipo, String sProvincia, String sLocalidad, String sCalle, String sAltura, String sCPostal, String cBanco, String cTarjeta, String cPromo, String cCuotas, String cNumTarjeta, String cVenceMes, String cVenceAno, String cCodSeg) throws IOException {
 		CustomerCare cc = new CustomerCare(driver);
 		SalesBase sb = new SalesBase(driver);
 		sleep(5000);
@@ -571,7 +570,7 @@ public class AltasAgente extends TestBase{
 		sleep(15000);
 		List<WebElement> frame2 = driver.findElements(By.tagName("iframe"));
 		driver.switchTo().frame(frame2.get(0));
-		Select env = new Select (driver.findElement(By.id("DeliveryMethod")));
+		Select env = new Select (driver.findElement(By.id("DeliveryMethodSelection")));
 		env.selectByVisibleText("Store Pick Up");
 		sleep(4000);
 		Select prov = new Select (driver.findElement(By.id("State")));
@@ -625,12 +624,12 @@ public class AltasAgente extends TestBase{
 			driver.findElement(By.cssSelector(".slds-input.ng-pristine.ng-untouched.ng-valid")).sendKeys(sEquipo);	}
 		catch(Exception ex1) {driver.findElement(By.cssSelector(".slds-input.ng-pristine.ng-untouched.ng-valid.ng-empty")).sendKeys(sEquipo);}
 		try {Thread.sleep(20000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
-		List<WebElement> agregar = driver.findElements(By.cssSelector(".slds-button.slds-button_neutral.cpq-add-button")); 
+		List<WebElement> agregar = driver.findElements(By.cssSelector(".slds-button.slds-button--neutral.add-button")); 
 		agregar.get(0).click();
 		sb.continuar();
 		sleep(22000);
 		sb.Crear_DomicilioLegal(sProvincia, sLocalidad, sCalle, "", sAltura, "", "", sCPostal);
-		sleep(24000);
+		sleep(24000);     //DeliveryMethodConfiguration_nextBtn
 		cc.obligarclick(driver.findElement(By.id("ICCDAssignment_nextBtn")));
 		sleep(10000);
 		cc.obligarclick(driver.findElement(By.id("InvoicePreview_nextBtn"))); 
@@ -655,7 +654,7 @@ public class AltasAgente extends TestBase{
 		sleep(20000);
 		sb.elegirvalidacion("DOC");
 		sleep(14000);
-		driver.findElement(By.id("FileDocumentImage")).sendKeys("C:\\Users\\florangel\\Downloads\\mapache.jpg");
+		driver.findElement(By.id("FileDocumentImage")).sendKeys("C:\\Users\\Sofia Chardin\\Desktop\\DNI.jpg");
 		sleep(3000);
 		cc.obligarclick(driver.findElement(By.id("DocumentMethod_nextBtn")));
 		sleep(35000);
@@ -704,7 +703,7 @@ public class AltasAgente extends TestBase{
 		CambiarPerfil("agente",driver);
 	}
 	
-	@Test(groups={"Sales", "AltaLineaDatos","E2E"}, priority=1, dataProvider="AltaLineaNuevoconEquipo") //========= 31 - 8 NO HAY LINEAS
+	@Test(groups={"Sales", "AltaLineaDatos","E2E"}, priority=1, dataProvider="AltaLineaNuevoconEquipo") 
 	public void TS125004_CRM_Movil_PRE_Alta_Linea_con_Equipo_Cliente_Nuevo_Presencial_AG(String cDni, String sNombre, String sApellido, String sSexo, String sFNac, String sEmail, String sPlan,String sEquipo, String sProvincia, String sLocalidad, String sCalle, String sNumero, String sCP) throws IOException {
 		imagen = "TS125004";
 		CustomerCare cc = new CustomerCare(driver);
@@ -733,8 +732,12 @@ public class AltasAgente extends TestBase{
 		sleep(8000);
 		driver.findElement(By.cssSelector(".slds-input.ng-valid.ng-dirty.ng-valid-parse.ng-touched.ng-empty")).sendKeys(sEquipo);
 		sleep(8000);
-		List<WebElement> agregar = driver.findElements(By.cssSelector(".slds-button.slds-button_neutral.cpq-add-button")); 
-		agregar.get(0).click();
+		List<WebElement> agregar = driver.findElements(By.cssSelector(".slds-button.slds-button--neutral.add-button")); 
+			for(WebElement a : agregar){
+				if(a.getText().equals("Agregar")){
+					cc.obligarclick(a);
+				}
+			}
 		sleep(5000);	
 		sb.continuar();
 		sleep(24000);
