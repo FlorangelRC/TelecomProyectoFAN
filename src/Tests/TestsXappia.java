@@ -118,7 +118,7 @@ public class TestsXappia extends TestBase {
 	}*/
 	
 	@Test (groups = "UAT")
-	public void Gestiones_Del_Panel_Izquierdo_En_Consola_FAN_En_Ambiente_UAT() {
+	public void TXU0001_Gestiones_Del_Panel_Izquierdo_En_Consola_FAN() {
 		irAConsolaFAN();
 		driver.switchTo().frame(cambioFrame(driver, By.className("slds-spinner_container")));
 		WebElement gestiones = driver.findElement(By.className("slds-spinner_container"));
@@ -127,7 +127,7 @@ public class TestsXappia extends TestBase {
 	}
 	
 	@Test (groups = "SIT")
-	public void SmokeTest_Tiempo_De_Carga_De_Consola_FAN_En_Ambiente_SIT() {
+	public void TXS0001_SmokeTest_Tiempo_De_Carga_De_Consola_FAN() {
 		Date start = new Date();
 		irAConsolaFAN();
 		Date end = new Date();
@@ -139,7 +139,7 @@ public class TestsXappia extends TestBase {
 	}
 	
 	@Test (groups = "UAT")
-	public void Verificacion_De_Superposicion_De_Elementos_En_El_Carrito() {
+	public void TXU0002_Verificacion_De_Superposicion_De_Elementos_En_El_Carrito() {
 		irAConsolaFAN();
 		sb.cerrarPestaniaGestion(driver);
 		irAGestionDeClientes();
@@ -296,7 +296,7 @@ public class TestsXappia extends TestBase {
 	}
 	
 	@Test (groups = "SIT")
-	public void Verificacion_De_Pestana_Detalles_En_Las_Cuentas() {
+	public void TXS0002_Verificacion_De_Pestana_Detalles_En_Las_Cuentas() {
 		irAConsolaFAN();
 		sb.cerrarPestaniaGestion(driver);
 		irAGestionDeClientes();
@@ -312,7 +312,7 @@ public class TestsXappia extends TestBase {
 	}
 	
 	@Test (groups = "SIT")
-	public void Busqueda_De_Productos_En_El_Carrito() {
+	public void TXS0003_Busqueda_De_Productos_En_El_Carrito() {
 		irAConsolaFAN();
 		sb.cerrarPestaniaGestion(driver);
 		irAGestionDeClientes();
@@ -333,7 +333,26 @@ public class TestsXappia extends TestBase {
 	}
 	
 	@Test (groups = "SIT")
-	public void TXS0001_Informacion_Credito_En_Facturaci�n() {
+	public void TXS0009_Verificacion_De_Historial_De_Suspensiones() {
+		irAConsolaFAN();
+		sb.cerrarPestaniaGestion(driver);
+		irAGestionDeClientes();
+		driver.switchTo().frame(cambioFrame(driver, By.id("SearchClientDocumentType")));
+		sb.BuscarCuenta("DNI", "2222203");
+		driver.findElement(By.cssSelector(".slds-tree__item.ng-scope")).click();
+		sleep(10000);
+		driver.switchTo().frame(cambioFrame(driver, By.className("card-top")));
+		driver.findElement(By.className("card-top")).click();
+		sleep(3000);
+		cc.irAGestionEnCard("Historial de Suspensiones");
+		driver.switchTo().frame(cambioFrame(driver, By.cssSelector(".slds-grid.slds-wrap.slds-grid--pull-padded.slds-m-around--medium.slds-p-around--medium.negotationsfilter")));
+		selectByText(driver.findElement(By.cssSelector(".slds-grid.slds-wrap.slds-grid--pull-padded.slds-m-around--medium.slds-p-around--medium.negotationsfilter")).findElement(By.cssSelector(".slds-input.ng-pristine.ng-untouched.ng-valid.ng-empty")), "Todos");
+		driver.findElement(By.cssSelector(".slds-button.slds-button--brand.filterNegotiations.slds-p-horizontal--x-large.slds-p-vertical--x-small")).click();
+		
+	}
+	
+	@Test (groups = "SIT")
+	public void TXS0001_Informacion_Credito_En_Facturacion() {
 		irAConsolaFAN();
 		sb.cerrarPestaniaGestion(driver);
 		irAGestionDeClientes();
