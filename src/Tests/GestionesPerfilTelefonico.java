@@ -541,4 +541,58 @@ public class GestionesPerfilTelefonico extends TestBase{
 		detalles +="-Orden:"+orden;
 		
 	}
+	
+	@Test (groups = {"GestionesPerfilTelefonico", "Consulta detalle de consumo Datos", "Ciclo2"}, dataProvider = "CuentaTriviasYSuscripciones")
+	public void T134804_CRM_Movil_Prepago_Vista_360_Detalle_de_consumo_Consulta_detalle_de_consumo_Datos_FAN_Telefonico_134804(String cDNI) {
+		driver.switchTo().frame(cambioFrame(driver, By.id("SearchClientDocumentType")));
+		sb.BuscarCuenta("DNI", cDNI);
+		driver.findElement(By.cssSelector(".slds-tree__item.ng-scope")).click();
+		sleep(15000);
+		driver.switchTo().frame(cambioFrame(driver, By.className("card-top")));
+		sleep(3000);
+		driver.findElement(By.className("card-top")).click();
+		sleep(3000);
+		buscarYClick(driver.findElements(By.className("slds-text-body_regular")), "equals", "detalle de consumos");
+		driver.switchTo().frame(cambioFrame(driver, By.className("summary-container")));
+		sleep(15000);
+		WebElement ConsumoDatos = driver.findElements(By.xpath("//*[@id='j_id0:j_id5']/div//div[2]/ng-include/div/div[2]/div[*]")).get(0).findElement(By.className("unit-div"));
+		System.out.println(ConsumoDatos.getText());
+		Assert.assertTrue(ConsumoDatos.isDisplayed());
+			}
+		
+	@Test (groups = {"GestionesPerfilTelefonico", "Consulta detalle de consumo Datos", "Ciclo2"}, dataProvider = "CuentaTriviasYSuscripciones")
+	public void T134805_CRM_Movil_Prepago_Vista_360_Detalle_de_consumo_Consulta_detalle_de_consumo_Voz_FAN_Front_Telefonico_134805(String cDNI) {
+		driver.switchTo().frame(cambioFrame(driver, By.id("SearchClientDocumentType")));
+		sb.BuscarCuenta("DNI", cDNI);
+		driver.findElement(By.cssSelector(".slds-tree__item.ng-scope")).click();
+		sleep(15000);
+		driver.switchTo().frame(cambioFrame(driver, By.className("card-top")));
+		sleep(3000);
+		driver.findElement(By.className("card-top")).click();
+		sleep(3000);
+		buscarYClick(driver.findElements(By.className("slds-text-body_regular")), "equals", "detalle de consumos");
+		driver.switchTo().frame(cambioFrame(driver, By.className("summary-container")));
+		sleep(15000);
+		WebElement ConsumoDatos = driver.findElements(By.xpath("//*[@id='j_id0:j_id5']/div//div[2]/ng-include/div/div[2]/div[*]")).get(1).findElement(By.className("unit-div"));
+		System.out.println(ConsumoDatos.getText());
+		Assert.assertTrue(ConsumoDatos.isDisplayed());
+	}
+	
+	@Test (groups = {"GestionesPerfilTelefonico", "Consulta detalle de consumo Datos", "Ciclo2"}, dataProvider = "CuentaTriviasYSuscripciones")
+	public void T134806_CRM_Movil_Prepago_Vista_360_Detalle_de_consumo_Consulta_detalle_de_Otros_consumos_FAN_Front_Telefonico_134806(String cDNI) {
+		driver.switchTo().frame(cambioFrame(driver, By.id("SearchClientDocumentType")));
+		sb.BuscarCuenta("DNI", cDNI);
+		driver.findElement(By.cssSelector(".slds-tree__item.ng-scope")).click();
+		sleep(15000);
+		driver.switchTo().frame(cambioFrame(driver, By.className("card-top")));
+		sleep(3000);
+		driver.findElement(By.className("card-top")).click();
+		sleep(3000);
+		buscarYClick(driver.findElements(By.className("slds-text-body_regular")), "equals", "detalle de consumos");
+		driver.switchTo().frame(cambioFrame(driver, By.className("summary-container")));
+		sleep(15000);
+		WebElement ConsumoDatos = driver.findElements(By.xpath("//*[@id='j_id0:j_id5']/div//div[2]/ng-include/div/div[2]/div[*]")).get(3).findElement(By.className("unit-div"));
+		System.out.println(ConsumoDatos.getText());
+		Assert.assertTrue(ConsumoDatos.isDisplayed());
+			}
 }
