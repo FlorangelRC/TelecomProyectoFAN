@@ -368,6 +368,56 @@ public class GestionesPerfilAgente extends TestBase{
 		driver.findElement(By.cssSelector(".slds-tree__item.ng-scope")).click();
 		sleep(15000);
 		cCC.irADetalleDeConsumos();
-		
+		sleep(6000);
+		driver.switchTo().frame(cambioFrame(driver, By.id("divConsumptionDetailhead")));
+		WebElement dmso = driver.findElement(By.cssSelector(".summary-container")).findElements(By.tagName("div")).get(0).findElement(By.className("unit-div"));
+		System.out.println(dmso.getText());
+		Assert.assertTrue(dmso.isDisplayed());
+		}
+	
+	@Test (groups = {"GestionesPerfilAgente", "DetalleDeConsumos","Ciclo2"}, dataProvider="CuentaProblemaRecarga")
+	public void TS134826_CRM_Movil_Prepago_Vista_360_Detalle_de_consumo_Consulta_detalle_de_consumo_SMS_FAN_Front_Agentes(String cDNI){
+		CustomerCare cCC = new CustomerCare(driver);
+		driver.switchTo().frame(cambioFrame(driver, By.id("SearchClientDocumentType")));
+		sb.BuscarCuenta("DNI", cDNI);
+		driver.findElement(By.cssSelector(".slds-tree__item.ng-scope")).click();
+		sleep(15000);
+		cCC.irADetalleDeConsumos();
+		sleep(6000);
+		driver.switchTo().frame(cambioFrame(driver, By.id("divConsumptionDetailhead")));
+		WebElement dmso = driver.findElement(By.cssSelector(".summary-container")).findElements(By.tagName("div")).get(2).findElement(By.className("unit-div"));
+		System.out.println(dmso.getText());
+		Assert.assertTrue(dmso.isDisplayed());
 	}
+	
+	@Test (groups = {"GestionesPerfilAgente", "DetalleDeConsumos","Ciclo2"}, dataProvider="CuentaProblemaRecarga")
+	public void TS134828_CRM_Movil_Prepago_Vista_360_Detalle_de_consumo_Consulta_detalle_de_consumo_Voz_FAN_Front_Agentes(String cDNI){
+		CustomerCare cCC = new CustomerCare(driver);
+		driver.switchTo().frame(cambioFrame(driver, By.id("SearchClientDocumentType")));
+		sb.BuscarCuenta("DNI", cDNI);
+		driver.findElement(By.cssSelector(".slds-tree__item.ng-scope")).click();
+		sleep(15000);
+		cCC.irADetalleDeConsumos();
+		sleep(6000);
+		driver.switchTo().frame(cambioFrame(driver, By.id("divConsumptionDetailhead")));
+		WebElement dmso = driver.findElement(By.cssSelector(".summary-container")).findElements(By.tagName("div")).get(1).findElement(By.className("unit-div"));
+		System.out.println(dmso.getText());
+		Assert.assertTrue(dmso.isDisplayed());
+	}
+	
+	@Test (groups = {"GestionesPerfilAgente", "DetalleDeConsumos","Ciclo2"}, dataProvider="CuentaProblemaRecarga")
+	public void TS134829_CRM_Movil_Prepago_Vista_360_Detalle_de_consumo_Consulta_detalle_de_consumo_FAN_Front_Agentes(String cDNI){
+		CustomerCare cCC = new CustomerCare(driver);
+		driver.switchTo().frame(cambioFrame(driver, By.id("SearchClientDocumentType")));
+		sb.BuscarCuenta("DNI", cDNI);
+		driver.findElement(By.cssSelector(".slds-tree__item.ng-scope")).click();
+		sleep(15000);
+		cCC.irADetalleDeConsumos();
+		sleep(6000);
+		driver.switchTo().frame(cambioFrame(driver, By.id("divConsumptionDetailhead")));
+		WebElement dmso = driver.findElement(By.cssSelector(".summary-container")).findElements(By.tagName("div")).get(3).findElement(By.className("unit-div"));
+		System.out.println(dmso.getText());
+		Assert.assertTrue(dmso.isDisplayed());
+	}
+	
 }
