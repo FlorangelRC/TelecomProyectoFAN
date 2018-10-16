@@ -15,6 +15,7 @@ import org.testng.annotations.BeforeClass;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
+import Pages.BasePage;
 import Pages.CustomerCare;
 import Pages.Marketing;
 import Pages.SalesBase;
@@ -206,7 +207,7 @@ public class TestsXappia extends TestBase {
 	}
 	
 	@Test (groups = {"UAT"}, dataProvider="NumerosAmigos")
-	public void TXU0001_FF_No_Acepta_Numeros_De_Personal(String sDNI, String sLinea, String sNumeroVOZ, String sNumeroSMS) {
+	public void TXU0004_FF_No_Acepta_Numeros_De_Personal(String sDNI, String sLinea, String sNumeroVOZ, String sNumeroSMS) {
 		irAConsolaFAN();
 		sb.cerrarPestaniaGestion(driver);
 		irAGestionDeClientes();
@@ -246,7 +247,7 @@ public class TestsXappia extends TestBase {
 	}
 	
 	@Test (groups = "UAT")
-	public void TXU0002_Informacion_Internet_En_Card() {
+	public void TXU0005_Informacion_Internet_En_Card() {
 		irAConsolaFAN();
 		sb.cerrarPestaniaGestion(driver);
 		irAGestionDeClientes();
@@ -271,7 +272,7 @@ public class TestsXappia extends TestBase {
 	}
 	
 	@Test (groups = "UAT")
-	public void TXU0003_Informacion_Credito_En_Card() {
+	public void TXU0006_Informacion_Credito_En_Card() {
 		irAConsolaFAN();
 		sb.cerrarPestaniaGestion(driver);
 		irAGestionDeClientes();
@@ -333,7 +334,7 @@ public class TestsXappia extends TestBase {
 	}
 	
 	@Test (groups = "SIT")
-	public void TXS0001_Informacion_Credito_En_Facturaci�n() {
+	public void TXS0008_Informacion_Credito_En_Facturacion() {
 		irAConsolaFAN();
 		sb.cerrarPestaniaGestion(driver);
 		irAGestionDeClientes();
@@ -351,19 +352,65 @@ public class TestsXappia extends TestBase {
 			//Always empty
 		}
 		cc.irAFacturacion();
-		/*List<WebElement> wTitle = driver.findElements(By.className("header-right"));
-		WebElement wBalance = null;
-		for (WebElement wAux : wTitle) {
-			if (wAux.findElement(By.cssSelector(".slds-text-body_regular.expired-title")).getText().equalsIgnoreCase("balance")) {
-				wBalance = wAux;
-				break;
-			}
-		}
-		WebElement wMessage = wBalance.findElements(By.tagName("span")).get(1);
-		Assert.assertTrue(!wMessage.getText().isEmpty() && wMessage.getText().matches("([$][0]([,][0-9]{2}))|([$](?![0])[0-9]{0,3}([/.][0-9]{3})*([,][0-9]{2}))"));*/
 		sleep(5000);
+		driver.switchTo().frame(cambioFrame(driver, By.cssSelector("div[class='header-right'] span[class='slds-text-heading_medium expired-date expired-pink']")));
 		WebElement wMessage = driver.findElement(By.cssSelector("div[class='header-right'] span[class='slds-text-heading_medium expired-date expired-pink']"));
 		Assert.assertTrue(!wMessage.getText().isEmpty() && wMessage.getText().matches("([$][0]([,][0-9]{2}))|([$](?![0])[0-9]{0,3}([/.][0-9]{3})*([,][0-9]{2}))"));
+	}
+	
+	@Test (groups = {"SIT","UAT"}, dataProvider="NumerosAmigosLetras")
+	public void TXSU0001_CRM_Movil_REPRO_FF_Alta_Presencial_Ingreso_Letras(String sDNI, String sLinea) {
+		irAConsolaFAN();
+		sb.cerrarPestaniaGestion(driver);
+		irAGestionDeClientes();
+		BasePage cambioFrame=new BasePage();
+		driver.switchTo().frame(cambioFrame.getFrameForElement(driver, By.id("SearchClientDocumentType")));
+		sleep(1000);
+		SalesBase sSB = new SalesBase(driver);
+		sSB.BuscarCuenta("DNI", sDNI);
+		String accid = driver.findElement(By.cssSelector(".searchClient-body.slds-hint-parent.ng-scope")).findElements(By.tagName("td")).get(5).getText();
+		System.out.println("id "+accid);
+		driver.findElement(By.cssSelector(".slds-tree__item.ng-scope")).findElement(By.tagName("div")).click();
+		sleep(25000);
+		
+		CustomerCare cCC = new CustomerCare(driver);
+		cCC.seleccionarCardPornumeroLinea(sLinea, driver);
+		sleep(3000);
+		cCC.irAGestionEnCard("N\u00fameros Gratis");
+		
+		sleep(5000);
+		driver.switchTo().defaultContent();
+		driver.switchTo().frame(cambioFrame(driver, By.cssSelector(".slds-col--padded.slds-size--1-of-2")));
+		List<WebElement> wNumerosAmigos = driver.findElements(By.cssSelector(".slds-col--padded.slds-size--1-of-2"));
+		wNumerosAmigos.get(0).findElement(By.tagName("input")).sendKeys("A");
+		wNumerosAmigos.get(1).findElement(By.tagName("input")).sendKeys("B");
+		wNumerosAmigos = driver.findElements(By.cssSelector(".slds-col--padded.slds-size--1-of-2"));
+		Assert.assertFalse(wNumerosAmigos.get(0).findElement(By.tagName("input")).getText().equals("A"));
+		Assert.assertFalse(wNumerosAmigos.get(1).findElement(By.tagName("input")).getText().equals("B"));
+	}
+	
+	@Test (groups = "SIT")
+	public void TXS0010_CRM_() {
+		irAConsolaFAN();
+		sb.cerrarPestaniaGestion(driver);
+		irAGestionDeClientes();
+		BasePage cambioFrame=new BasePage();
+		driver.switchTo().frame(cambioFrame.getFrameForElement(driver, By.id("SearchClientDocumentType")));
+		sleep(1000);
+		SalesBase sSB = new SalesBase(driver);
+		sSB.BuscarCuenta("DNI", "41582129");
+		String accid = driver.findElement(By.cssSelector(".searchClient-body.slds-hint-parent.ng-scope")).findElements(By.tagName("td")).get(5).getText();
+		System.out.println("id "+accid);
+		driver.findElement(By.cssSelector(".slds-tree__item.ng-scope")).findElement(By.tagName("div")).click();
+		sleep(25000);
+		
+		Marketing mM = new Marketing(driver);
+		mM.closeActiveTab();
+		driver.switchTo().frame(cambioFrame(driver, By.className("detailList")));
+		WebElement wBody = driver.findElements(By.className("detailList")).get(1);
+		WebElement wElement = mM.traerColumnaElement(wBody, 4, 1).get(3);
+		System.out.println("wElement = " + wElement.getText());
+		Assert.assertTrue(wElement.equals("Direcci�n de env�o"));
 	}
 	
 }
