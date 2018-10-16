@@ -2468,10 +2468,10 @@ public class GestionesPerfilOficina extends TestBase {
 		}
 	}
 	
-	@Test (groups = {"GestionesPerfilOficina", "ConsultaDeSaldo"})
-	public void TS_134373_CRM_Movil_Prepago_Vista_360_Consulta_de_Saldo_Verificar_credito_prepago_de_la_linea_FAN_Front_OOCC(){
+	@Test (groups = {"GestionesPerfilOficina", "ConsultaDeSaldo", "Ciclo1"}, dataProvider = "ConsultaSaldo")
+	public void TS_134373_CRM_Movil_Prepago_Vista_360_Consulta_de_Saldo_Verificar_credito_prepago_de_la_linea_FAN_Front_OOCC(String sDNI){
 		driver.switchTo().frame(cambioFrame(driver, By.id("SearchClientDocumentType")));
-		sb.BuscarCuenta("DNI", "15907314");
+		sb.BuscarCuenta("DNI", sDNI);
 		driver.findElement(By.cssSelector(".slds-tree__item.ng-scope")).click();
 		sleep(15000);
 		driver.switchTo().frame(cambioFrame(driver, By.className("card-top")));
@@ -2479,17 +2479,25 @@ public class GestionesPerfilOficina extends TestBase {
 		Assert.assertTrue(!(cred.getText().isEmpty()));
 	}
 	
-	@Test (groups = {"GestionesPerfilOficina", "ConsultaDeSaldo"})
-	public void TS_134376_CRM_Movil_Prepago_Vista_360_Consulta_de_Saldo_Verificar_saldo_del_cliente_FAN_Front_OOCC() {
+	@Test (groups = {"GestionesPerfilOficina", "ConsultaDeSaldo", "Ciclo1"}, dataProvider = "ConsultaSaldo")
+	public void TS_134376_CRM_Movil_Prepago_Vista_360_Consulta_de_Saldo_Verificar_saldo_del_cliente_FAN_Front_OOCC(String sDNI) {
 		driver.switchTo().frame(cambioFrame(driver, By.id("SearchClientDocumentType")));
-		sb.BuscarCuenta("DNI", "15907314");
+		sb.BuscarCuenta("DNI", sDNI);
 		driver.findElement(By.cssSelector(".slds-tree__item.ng-scope")).click();
 		sleep(15000);
 		cc.openleftpanel();
 		cc.irAFacturacion();
+		sleep(25000);
 		driver.switchTo().frame(cambioFrame(driver, By.className("card-top")));
-		WebElement saldo = driver.findElement(By.xpath("//*[@id=\"j_id0:j_id5\"]/div/div/ng-include/div/div[2]/div/ng-include/section/div[1]/div/div[2]/span[2]"));
-		System.out.println(saldo.getText());
-		Assert.assertTrue(!(saldo.getText().isEmpty()));
-	}//*[@id="j_id0:j_id5"]/div/div/ng-include/div/div[2]/div/ng-include/section/div[1]/div/div[2]/span[2]
+		WebElement saldo = driver.findElement(By.xpath("//*[@id='j_id0:j_id5']/div/div/ng-include/div/div[2]/div/ng-include/section/div[1]/div/div[2]/span[2]"));
+		
+		System.out.println("el saldo es: " +saldo.getText());
+		/*List <WebElement> saldo = driver.findElements(By.className("header-right"));
+		for (WebElement c :saldo ) {
+			System.out.println(c.getText());
+		}*/
+		/*List <WebElement> saldo = driver.findElements(By.cssSelector(".slds-text-heading_medium.expired-date.expired-pink"));
+		System.out.println(saldo.get(1).getText());*/
+		Assert.assertTrue(saldo.getText().isEmpty());
+	}
 }	
