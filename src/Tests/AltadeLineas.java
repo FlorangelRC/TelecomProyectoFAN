@@ -151,7 +151,7 @@ public class AltadeLineas extends TestBase {
 		driver.findElement(By.id("EmailSelectableItems")).findElement(By.tagName("input")).sendKeys(sEmail);
 		driver.findElement(By.id("Contact_nextBtn")).click();
 		sleep(35000);
-		sb.ResolverEntrega(driver, "Presencial","","");
+		//sb.ResolverEntrega(driver, "Presencial","","");
 		sleep(7000);
 		driver.switchTo().defaultContent();
 		Accounts accountPage = new Accounts(driver);
@@ -668,7 +668,7 @@ public class AltadeLineas extends TestBase {
 		invoSer.PagoEnCaja("1006", NCuenta, "1001", orden.split("-")[1], orden.split("-")[0],driver);
 		sleep(5000);
 		CambiarPerfil("logistica",driver);
-		sb.CompletarLogisticaEquipo(orden, driver);    //00080481
+		sb.CompletarLogisticaEquipo(orden, driver);    
 		CambiarPerfil("entrega",driver);
 		sb.completarEntrega(orden, driver);
 		CambiarPerfil("ofcom",driver);
