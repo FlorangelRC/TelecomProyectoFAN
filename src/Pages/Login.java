@@ -50,10 +50,10 @@ public class Login extends BasePage {
    @FindBy (how = How.ID, using = "loginButton2")
    private WebElement loginButton2;
    
-   @FindBy (how = How.ID, using = "126:0")
+   @FindBy (how = How.CSS, using = ".sfdc_usernameinput.sfdc.input.input")
    private WebElement wLoginCommunity;
    
-   @FindBy (how = How.ID, using = "140:0")
+   @FindBy (how = How.CSS, using = ".sfdc_passwordinput.sfdc.input.input")
    private WebElement wPasswordCommunity;
    
    @FindBy (how = How.CSS , using = ".slds-button.slds-button--neutral.sfdc_button.loginBtn.uiButton--default.uiButton")
