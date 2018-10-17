@@ -368,9 +368,9 @@ public class GestionesPerfilAgente extends TestBase{
 		driver.findElement(By.cssSelector(".slds-tree__item.ng-scope")).click();
 		sleep(15000);
 		cCC.irADetalleDeConsumos();
-		sleep(6000);
+		sleep(12000);
 		driver.switchTo().frame(cambioFrame(driver, By.id("divConsumptionDetailhead")));
-		WebElement dmso = driver.findElement(By.cssSelector(".summary-container")).findElements(By.tagName("div")).get(0).findElement(By.className("unit-div"));
+		WebElement dmso = driver.findElements(By.xpath("//*[@id='j_id0:j_id5']/div//div[2]/ng-include/div/div[2]/div[*]")).get(0).findElement(By.className("unit-div"));
 		System.out.println(dmso.getText());
 		Assert.assertTrue(dmso.isDisplayed());
 		}
@@ -383,9 +383,9 @@ public class GestionesPerfilAgente extends TestBase{
 		driver.findElement(By.cssSelector(".slds-tree__item.ng-scope")).click();
 		sleep(15000);
 		cCC.irADetalleDeConsumos();
-		sleep(6000);
-		driver.switchTo().frame(cambioFrame(driver, By.id("divConsumptionDetailhead")));
-		WebElement dmso = driver.findElement(By.cssSelector(".summary-container")).findElements(By.tagName("div")).get(2).findElement(By.className("unit-div"));
+		sleep(12000);
+		driver.switchTo().frame(cambioFrame(driver, By.id("advancerFilters")));
+		WebElement dmso = driver.findElements(By.xpath("//*[@id='j_id0:j_id5']/div//div[2]/ng-include/div/div[2]/div[*]")).get(2).findElement(By.className("unit-div"));
 		System.out.println(dmso.getText());
 		Assert.assertTrue(dmso.isDisplayed());
 	}
@@ -398,9 +398,9 @@ public class GestionesPerfilAgente extends TestBase{
 		driver.findElement(By.cssSelector(".slds-tree__item.ng-scope")).click();
 		sleep(15000);
 		cCC.irADetalleDeConsumos();
-		sleep(6000);
-		driver.switchTo().frame(cambioFrame(driver, By.id("divConsumptionDetailhead")));
-		WebElement dmso = driver.findElement(By.cssSelector(".summary-container")).findElements(By.tagName("div")).get(1).findElement(By.className("unit-div"));
+		sleep(12000);
+		driver.switchTo().frame(cambioFrame(driver, By.id("advancerFilters")));
+		WebElement dmso = driver.findElements(By.xpath("//*[@id='j_id0:j_id5']/div//div[2]/ng-include/div/div[2]/div[*]")).get(1).findElement(By.className("unit-div"));
 		System.out.println(dmso.getText());
 		Assert.assertTrue(dmso.isDisplayed());
 	}
@@ -413,9 +413,9 @@ public class GestionesPerfilAgente extends TestBase{
 		driver.findElement(By.cssSelector(".slds-tree__item.ng-scope")).click();
 		sleep(15000);
 		cCC.irADetalleDeConsumos();
-		sleep(6000);
-		driver.switchTo().frame(cambioFrame(driver, By.id("divConsumptionDetailhead")));
-		WebElement dmso = driver.findElement(By.cssSelector(".summary-container")).findElements(By.tagName("div")).get(3).findElement(By.className("unit-div"));
+		sleep(12000);
+		driver.switchTo().frame(cambioFrame(driver, By.id("advancerFilters")));
+		WebElement dmso = driver.findElements(By.xpath("//*[@id='j_id0:j_id5']/div//div[2]/ng-include/div/div[2]/div[*]")).get(3).findElement(By.className("unit-div"));
 		System.out.println(dmso.getText());
 		Assert.assertTrue(dmso.isDisplayed());
 	}
