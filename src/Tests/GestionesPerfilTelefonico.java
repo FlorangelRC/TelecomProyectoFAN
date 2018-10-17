@@ -591,3 +591,20 @@ public class GestionesPerfilTelefonico extends TestBase{
 			Assert.assertTrue(false);
 	}
 }
+	
+	@Test (groups = {"GestionesPerfilAgente", "DetalleDeConsumos","Ciclo2"}, dataProvider="CuentaProblemaRecarga")
+	public void TS134803_CRM_Movil_Prepago_Vista_360_Detalle_de_consumo_Consulta_detalle_de_consumo_SMS_FAN_Front_Telefonico(String cDNI){
+		CustomerCare cCC = new CustomerCare(driver);
+		driver.switchTo().frame(cambioFrame(driver, By.id("SearchClientDocumentType")));
+		sb.BuscarCuenta("DNI", cDNI);
+		driver.findElement(By.cssSelector(".slds-tree__item.ng-scope")).click();
+		sleep(15000);
+		cCC.irADetalleDeConsumos();
+		sleep(15000);
+		driver.switchTo().frame(cambioFrame(driver, By.id("advancerFilters")));
+		WebElement dmso = driver.findElements(By.xpath("//*[@id='j_id0:j_id5']/div//div[2]/ng-include/div/div[2]/div[*]")).get(2).findElement(By.className("unit-div"));
+		System.out.println(dmso.getText());
+		System.out.println(dmso.getAttribute("value"));
+		Assert.assertTrue(dmso.isDisplayed());
+		}
+	} 		
