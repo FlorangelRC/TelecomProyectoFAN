@@ -2,7 +2,9 @@ package Tests;
 
 import java.io.IOException;
 
+import org.openqa.selenium.By;
 import org.testng.annotations.AfterClass;
+import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.BeforeMethod;
 
@@ -21,10 +23,10 @@ public class Comunidad extends TestBase {
 		
 	}
 	
-	@BeforeMethod(alwaysRun=true)
-	public void setup() throws Exception {
+	@AfterMethod(alwaysRun=true)
+	public void backToTheInicio() throws Exception {
+		driver.findElement(By.className("slds-container_fluid")).click();
 		sleep(10000);
-		
 	}
 
 	@AfterClass(alwaysRun=true)
