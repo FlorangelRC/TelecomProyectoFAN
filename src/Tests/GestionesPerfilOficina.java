@@ -2487,17 +2487,19 @@ public class GestionesPerfilOficina extends TestBase {
 		sleep(15000);
 		cc.openleftpanel();
 		cc.irAFacturacion();
-		sleep(25000);
+		sleep(5000);
 		driver.switchTo().frame(cambioFrame(driver, By.className("card-top")));
-		WebElement saldo = driver.findElement(By.xpath("//*[@id='j_id0:j_id5']/div/div/ng-include/div/div[2]/div/ng-include/section/div[1]/div/div[2]/span[2]"));
-		
-		System.out.println("el saldo es: " +saldo.getText());
+		List <WebElement> saldo = driver.findElements(By.cssSelector(".slds-text-heading_medium.expired-date.expired-pink"));
+		for(WebElement x : saldo) {
+			System.out.println(x.getText());
+		}
+		System.out.println(saldo.get(0).getText());
 		/*List <WebElement> saldo = driver.findElements(By.className("header-right"));
 		for (WebElement c :saldo ) {
 			System.out.println(c.getText());
 		}*/
 		/*List <WebElement> saldo = driver.findElements(By.cssSelector(".slds-text-heading_medium.expired-date.expired-pink"));
 		System.out.println(saldo.get(1).getText());*/
-		Assert.assertTrue(saldo.getText().isEmpty());
+		Assert.assertTrue(!(saldo.isEmpty()));
 	}
 }	
