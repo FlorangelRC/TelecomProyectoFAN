@@ -1454,4 +1454,12 @@ public class TestBase {
 
 	}
 	
+	@DataProvider
+	public Object[][] ConsultaSaldo() throws Exception{
+		
+		Object[][] testObjArray = ExcelUtils.getTableArray(dataProviderE2E(),"E2EsinPago",1,1,1,"SaldoConsulta");
+		
+		return (testObjArray);
+		
+	}
 }
