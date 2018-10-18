@@ -51,6 +51,21 @@ public class Comunidad extends TestBase {
 					aa = true;
 				}
 			}
-	}
+		}
 	
+	@Test (groups = {"Communities", "E2E"})
+	public void CRM_PRE_Community_Desktop_Mis_gestiones_Filtro_Fecha() {
+		sleep(5000);
+		driver.switchTo().frame(cambioFrame(driver, By.cssSelector(".vlocity.via-slds")));
+		buscarYClick(driver.findElements(By.cssSelector(".slds-col.slds-size--1-of-1")), "equals", "plan con tarjeta repro");
+		sleep(2000);
+		driver.switchTo().frame(cambioFrame(driver, By.cssSelector(".slds-grid.slds-wrap.slds-grid--pull-padded.slds-m-right--medium")));
+		buscarYClick(driver.findElements(By.className("availables_text")),"equals", "mis gestiones");
+		sleep(2000);
+		driver.switchTo().frame(cambioFrame(driver, By.cssSelector(".slds-grid.slds-wrap.slds-grid--pull-padded.slds-m-around--medium.slds-p-around--medium.negotationsfilter")));
+		driver.findElement(By.id("text-input-id-1")).click();
+		
+		
+		}//*[@id="text-input-id-1"]
+	//*[@id="text-input-id-2"]
 }	
