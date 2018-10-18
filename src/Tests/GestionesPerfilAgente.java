@@ -420,4 +420,28 @@ public class GestionesPerfilAgente extends TestBase{
 		Assert.assertTrue(dmso.isDisplayed());
 	}
 	
+	@Test (groups = {"GestionesPerfilAgente", "ConsultaDeSaldo", "Ciclo1"}, dataProvider = "ConsultaSaldo")
+	public void TS_134815_CRM_Movil_Prepago_Vista_360_Consulta_de_Saldo_Verificar_saldo_del_cliente_FAN_Front_Agentes(String sDNI) {
+		driver.switchTo().frame(cambioFrame(driver, By.id("SearchClientDocumentType")));
+		sb.BuscarCuenta("DNI", sDNI);
+		driver.findElement(By.cssSelector(".slds-tree__item.ng-scope")).click();
+		sleep(15000);
+		cc.openleftpanel();
+		cc.irAFacturacion();
+		sleep(5000);
+		driver.switchTo().frame(cambioFrame(driver, By.className("card-top")));
+		List <WebElement> saldo = driver.findElements(By.cssSelector(".slds-text-heading_medium.expired-date.expired-pink"));
+		for(WebElement x : saldo) {
+			System.out.println(x.getText());
+		}
+		System.out.println(saldo.get(0).getText());
+		/*List <WebElement> saldo = driver.findElements(By.className("header-right"));
+		for (WebElement c :saldo ) {
+			System.out.println(c.getText());
+		}*/
+		/*List <WebElement> saldo = driver.findElements(By.cssSelector(".slds-text-heading_medium.expired-date.expired-pink"));
+		System.out.println(saldo.get(1).getText());*/
+		Assert.assertTrue(!(saldo.isEmpty()));
+	}
+	
 }

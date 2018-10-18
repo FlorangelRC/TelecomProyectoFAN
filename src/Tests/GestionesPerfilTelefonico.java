@@ -566,6 +566,31 @@ public class GestionesPerfilTelefonico extends TestBase{
 		Assert.assertTrue(!(cred.getText().isEmpty()));
 	}
 	
+	@Test (groups = {"GestionesPerfilTelefonico", "ConsultaDeSaldo", "Ciclo1"}, dataProvider = "ConsultaSaldo")
+	public void TS_134813_CRM_Movil_Prepago_Vista_360_Consulta_de_Saldo_Verificar_saldo_del_cliente_FAN_Front_Telefonico(String sDNI) {
+		driver.switchTo().frame(cambioFrame(driver, By.id("SearchClientDocumentType")));
+		sb.BuscarCuenta("DNI", sDNI);
+		driver.findElement(By.cssSelector(".slds-tree__item.ng-scope")).click();
+		sleep(15000);
+		cc.openleftpanel();
+		cc.irAFacturacion();
+		sleep(5000);
+		driver.switchTo().frame(cambioFrame(driver, By.className("card-top")));
+		List <WebElement> saldo = driver.findElements(By.cssSelector(".slds-text-heading_medium.expired-date.expired-pink"));
+		for(WebElement x : saldo) {
+			System.out.println(x.getText());
+		}
+		System.out.println(saldo.get(0).getText());
+		/*List <WebElement> saldo = driver.findElements(By.className("header-right"));
+		for (WebElement c :saldo ) {
+			System.out.println(c.getText());
+		}*/
+		/*List <WebElement> saldo = driver.findElements(By.cssSelector(".slds-text-heading_medium.expired-date.expired-pink"));
+		System.out.println(saldo.get(1).getText());*/
+		Assert.assertTrue(!(saldo.isEmpty()));
+	}
+
+	
 	@Test (groups = {"GestionesPerfilTelefonico", "HistorialDeRecargas", "Ciclo2"}, dataProvider = "CuentaProblemaRecarga")
 	public void TS135347_Historial_de_Recargas_Consultar_detalle_de_Recargas_por_Canal_TODOS_Fan_FRONT_Telefonico(String cDNI) {
 		driver.switchTo().frame(cambioFrame(driver, By.id("SearchClientDocumentType")));
