@@ -2436,8 +2436,20 @@ public class GestionesPerfilOficina extends TestBase {
 		sleep(15000);
 		cc.openleftpanel();
 		cc.irAFacturacion();
-		sleep(25000);
+		sleep(5000);
 		driver.switchTo().frame(cambioFrame(driver, By.className("card-top")));
+		List <WebElement> saldo = driver.findElements(By.cssSelector(".slds-text-heading_medium.expired-date.expired-pink"));
+		for(WebElement x : saldo) {
+			System.out.println(x.getText());
+		}
+		System.out.println(saldo.get(0).getText());
+		/*List <WebElement> saldo = driver.findElements(By.className("header-right"));
+		for (WebElement c :saldo ) {
+			System.out.println(c.getText());
+		}*/
+		/*List <WebElement> saldo = driver.findElements(By.cssSelector(".slds-text-heading_medium.expired-date.expired-pink"));
+		System.out.println(saldo.get(1).getText());*/
+		Assert.assertTrue(!(saldo.isEmpty()));
 		sleep(8000);
 		WebElement saldo = driver.findElement(By.className("header-right")).findElements(By.tagName("span")).get(1);
 		sleep(8000);
