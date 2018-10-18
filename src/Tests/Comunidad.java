@@ -1,27 +1,38 @@
 package Tests;
 
 import java.awt.AWTException;
+import java.awt.Robot;
+import java.awt.event.KeyEvent;
 import java.io.IOException;
 import java.util.List;
 
 import org.openqa.selenium.By;
-import org.openqa.selenium.Point;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.testng.Assert;
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeClass;
-import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
-import Pages.Community;
 import Pages.setConexion;
 
 public class Comunidad extends TestBase {
 	
 	private WebDriver driver;
-	private Community cm;
+	
+	private void mobileEmulation() throws AWTException {
+		Robot robot = new Robot();
+        robot.keyPress(KeyEvent.VK_F12);
+        robot.keyPress(KeyEvent.VK_CONTROL);
+        robot.keyPress(KeyEvent.VK_SHIFT);
+        sleep(1);
+        robot.keyPress(KeyEvent.VK_M);
+        sleep(1);
+        robot.keyRelease(KeyEvent.VK_M);
+        robot.keyRelease(KeyEvent.VK_SHIFT);
+        robot.keyRelease(KeyEvent.VK_CONTROL);
+	}
 	
 	//Befores & Afters
 	
@@ -149,7 +160,7 @@ public class Comunidad extends TestBase {
 	
 	@Test (groups = {"Communities", "E2E"})
 	public void asd() throws AWTException {
-		cm.mobileEmulation();
+		mobileEmulation();
 		driver.switchTo().frame(cambioFrame(driver, By.cssSelector(".slds-size--1-of-1.slds-align-middle.slds-p-vertical--small.cursor")));
 		driver.findElement(By.cssSelector(".slds-size--1-of-1.slds-align-middle.slds-p-vertical--small.cursor")).click();
 		sleep(5000);
@@ -177,7 +188,7 @@ public class Comunidad extends TestBase {
 	
 	@Test (groups = {"Communities","E2E"}) //This TC is Mobile
 	public void CRM_PRE_Community_Mobile_Gestiones_en_Curso_y_Completadas_Mayores_a_5() throws AWTException{
-		cm.mobileEmulation();
+		mobileEmulation();
 	}
 	
 	@Test (groups = {"Communities","E2E"}) //This TC is Mobile
