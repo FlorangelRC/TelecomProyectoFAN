@@ -2,12 +2,15 @@ package Tests;
 
 import java.awt.AWTException;
 import java.io.IOException;
+import java.util.Calendar;
 import java.util.List;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.Point;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.interactions.InputSource;
+import org.openqa.selenium.support.ui.Select;
 import org.testng.Assert;
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.AfterMethod;
@@ -16,6 +19,7 @@ import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
 import Pages.Community;
+import Pages.OM;
 import Pages.setConexion;
 
 public class Comunidad extends Community {
@@ -69,10 +73,12 @@ public class Comunidad extends Community {
 		sleep(2000);
 		driver.switchTo().frame(cambioFrame(driver, By.cssSelector(".slds-grid.slds-wrap.slds-grid--pull-padded.slds-m-around--medium.slds-p-around--medium.negotationsfilter")));
 		driver.findElement(By.id("text-input-id-1")).click();
-		
-		
-		}//*[@id="text-input-id-1"]
-	//*[@id="text-input-id-2"]
+		WebElement inicio = driver.findElement(By.cssSelector(".slds-button.slds-button--brand.filterNegotiations.slds-p-horizontal--x-large.slds-p-vertical--x-small"));
+		inicio.click();
+		WebElement fecha = driver.findElement(By.cssSelector(".slds-size--1-of-1.slds-medium-size--1-of-1.slds-large-size--1-of-1.slds-m-top--x-large"));
+		Assert.assertTrue(fecha.isDisplayed());
+		}
+	
 	@Test (groups = {"Communities", "E2E"})
 	public void CRM_PRE_Community_Desktop_Gestiones_en_Curso_y_Completadas_5() {
 		boolean cursoYCompletadas = false;
@@ -168,7 +174,7 @@ public class Comunidad extends Community {
 		Assert.assertTrue(tablaProductos.getText().contains("NOMBRE") && tablaProductos.getText().contains("FECHA DE ACTIVACI\u00d3N") && tablaProductos.getText().contains("MONTO"));
 		Assert.assertTrue(tablaServicios.getText().contains("NOMBRE") && tablaServicios.getText().contains("FECHA DE ESTADO") && tablaServicios.getText().contains("ESTADO"));
 	}
-}	
+	
 
 	@Test (groups = {"Communities","E2E"})
 	public void CRM_PRE_Community_Desktop_Gestiones_Abandonadas_Mayores_a_5(){
