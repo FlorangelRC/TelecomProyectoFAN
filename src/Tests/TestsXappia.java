@@ -428,7 +428,7 @@ public class TestsXappia extends TestBase {
 	}
 	
 	@Test (groups = "SIT")
-	public void TXS0010_CRM_() {
+	public void TXS0012_CRM_Ubicacion_Mapas() {
 		irAConsolaFAN();
 		sb.cerrarPestaniaGestion(driver);
 		irAGestionDeClientes();
@@ -447,8 +447,11 @@ public class TestsXappia extends TestBase {
 		driver.switchTo().frame(cambioFrame(driver, By.className("detailList")));
 		WebElement wBody = driver.findElements(By.className("detailList")).get(1);
 		WebElement wElement = mM.traerColumnaElement(wBody, 4, 1).get(3);
-		System.out.println("wElement = " + wElement.getText());
-		Assert.assertTrue(wElement.equals("Direcci�n de env�o"));
+		//Assert.assertTrue(wElement.getText().equals("Direcci\u00f3n de env\u00edo"));
+		Assert.assertTrue(wElement.getText().equals("Direcci\u00f3n de facturaci\u00f3n"));
+		wBody = mM.traerColumnaElement(wBody, 4, 2).get(3).findElement(By.tagName("table"));
+		wElement = mM.traerColumnaElement(wBody, 1, 1).get(1);
+		Assert.assertTrue(wElement.findElement(By.className("staticMap")).isDisplayed());
 	}
 	
 	@Test (groups = "SIT")

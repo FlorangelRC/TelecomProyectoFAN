@@ -372,7 +372,7 @@ public class CustomerCare extends BasePage {
 			if (x.getText().contains("Historiales"))
 				x.click();
 		}
-		sleep(5000);
+		sleep(8000);
 	}
 	
 	public void irAAhorra() {

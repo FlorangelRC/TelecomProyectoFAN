@@ -41,14 +41,24 @@ public class Login extends BasePage {
 	@FindBy(how = How.ID, using = "idp_section_buttons")
 	private WebElement logininterno;
 	
-	   @FindBy (how= How.NAME, using = "Ecom_User_ID")
-	   private WebElement Ecom_User_ID;
+   @FindBy (how= How.NAME, using = "Ecom_User_ID")
+   private WebElement Ecom_User_ID;
+   
+   @FindBy (how= How.NAME, using = "Ecom_Password")
+   private WebElement Ecom_Password;
+   
+   @FindBy (how = How.ID, using = "loginButton2")
+   private WebElement loginButton2;
+   
+   @FindBy (how = How.CSS, using = ".sfdc_usernameinput.sfdc.input.input")
+   private WebElement wLoginCommunity;
+   
+   @FindBy (how = How.CSS, using = ".sfdc_passwordinput.sfdc.input.input")
+   private WebElement wPasswordCommunity;
+   
+   @FindBy (how = How.CSS , using = ".slds-button.slds-button--neutral.sfdc_button.loginBtn.uiButton--default.uiButton")
+   private WebElement wIngresarCommunity;
 	   
-	   @FindBy (how= How.NAME, using = "Ecom_Password")
-	   private WebElement Ecom_Password;
-	   
-	   @FindBy (how = How.ID, using = "loginButton2")
-	   private WebElement loginButton2;
 	//Constructor
 	
 	public Login(WebDriver driver){
@@ -294,4 +304,19 @@ public class Login extends BasePage {
 			  loginButton2.click();
 			  try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 		}
+		
+		public void ingresarComunidad() {
+			try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+			if (TB.urlCommunity.contains("sit")) {
+				wLoginCommunity.sendKeys("camila.arias@atos.net");//SIT
+				wPasswordCommunity.sendKeys("Salesforce5");
+			}
+			else {
+				wLoginCommunity.sendKeys("rabal@yopmail.com");//UAT 
+				wPasswordCommunity.sendKeys("Salesforce1");
+			}
+			wIngresarCommunity.click();
+			try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		}
+		
 }
