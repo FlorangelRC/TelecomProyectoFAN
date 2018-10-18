@@ -12,6 +12,7 @@ import java.util.List;
 import org.openqa.selenium.By;
 import org.openqa.selenium.Keys;
 import org.openqa.selenium.NoSuchElementException;
+import org.openqa.selenium.SearchContext;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.Select;
@@ -2435,17 +2436,95 @@ public class GestionesPerfilOficina extends TestBase {
 		sleep(15000);
 		cc.openleftpanel();
 		cc.irAFacturacion();
-		sleep(25000);
+		sleep(5000);
 		driver.switchTo().frame(cambioFrame(driver, By.className("card-top")));
-		WebElement saldo = driver.findElement(By.xpath("//*[@id='j_id0:j_id5']/div/div/ng-include/div/div[2]/div/ng-include/section/div[1]/div/div[2]/span[2]"));
-		
-		System.out.println("el saldo es: " +saldo.getText());
+		List <WebElement> saldo = driver.findElements(By.cssSelector(".slds-text-heading_medium.expired-date.expired-pink"));
+		for(WebElement x : saldo) {
+			System.out.println(x.getText());
+		}
+		System.out.println(saldo.get(0).getText());
 		/*List <WebElement> saldo = driver.findElements(By.className("header-right"));
 		for (WebElement c :saldo ) {
 			System.out.println(c.getText());
 		}*/
 		/*List <WebElement> saldo = driver.findElements(By.cssSelector(".slds-text-heading_medium.expired-date.expired-pink"));
 		System.out.println(saldo.get(1).getText());*/
-		Assert.assertTrue(saldo.getText().isEmpty());
+		Assert.assertTrue(!(saldo.isEmpty()));
+		sleep(8000);
+		WebElement saldo = driver.findElement(By.className("header-right")).findElements(By.tagName("span")).get(1);
+		sleep(8000);
+		System.out.println(saldo.getText());
+		//Assert.assertTrue(saldo);
 	}
+	@Test (groups = {"GestionesPerfilOficina", "Consulta detalle de consumo Datos", "Ciclo2"}, dataProvider = "CuentaTriviasYSuscripciones")
+	public void T134783_CRM_Movil_Prepago_Vista_360_Detalle_de_consumo_Consulta_detalle_de_consumo_Datos_FAN_Front_OOCC_134783(String cDNI) {
+		driver.switchTo().frame(cambioFrame(driver, By.id("SearchClientDocumentType")));
+		sb.BuscarCuenta("DNI", cDNI);
+		driver.findElement(By.cssSelector(".slds-tree__item.ng-scope")).click();
+		sleep(15000);
+		driver.switchTo().frame(cambioFrame(driver, By.className("card-top")));
+		sleep(3000);
+		driver.findElement(By.className("card-top")).click();
+		sleep(3000);
+		buscarYClick(driver.findElements(By.className("slds-text-body_regular")), "equals", "detalle de consumos");
+		driver.switchTo().frame(cambioFrame(driver, By.className("summary-container")));
+		WebElement ConsumoDatos =  driver.findElement(By.className("summary-container")).findElements(By.tagName("div")).get(0).findElement(By.className("unit-div"));
+		System.out.println(ConsumoDatos.getText());
+		Assert.assertTrue(ConsumoDatos.isDisplayed());
+		}
+	
+	@Test (groups = {"GestionesPerfilOficina", "Consulta detalle de consumo Datos", "Ciclo2"}, dataProvider = "CuentaTriviasYSuscripciones")
+	public void T134782_CRM_Movil_Prepago_Vista_360_Detalle_de_consumo_Consulta_detalle_de_consumo_SMS_FAN_Front_OOCC_134782(String cDNI) {
+		driver.switchTo().frame(cambioFrame(driver, By.id("SearchClientDocumentType")));
+		sb.BuscarCuenta("DNI", cDNI);
+		driver.findElement(By.cssSelector(".slds-tree__item.ng-scope")).click();
+		sleep(15000);
+		driver.switchTo().frame(cambioFrame(driver, By.className("card-top")));
+		sleep(3000);
+		driver.findElement(By.className("card-top")).click();
+		sleep(3000);
+		buscarYClick(driver.findElements(By.className("slds-text-body_regular")), "equals", "detalle de consumos");
+		driver.switchTo().frame(cambioFrame(driver, By.className("summary-container")));
+		WebElement ConsumoDatos = driver.findElements(By.xpath("//*[@id='j_id0:j_id5']/div//div[2]/ng-include/div/div[2]/div[*]")).get(2).findElement(By.className("unit-div"));										 
+		System.out.println(ConsumoDatos.getText());
+		Assert.assertTrue(ConsumoDatos.isDisplayed());
+		}
+	
+	@Test (groups = {"GestionesPerfilOficina", "Consulta detalle de consumo Datos", "Ciclo2"}, dataProvider = "CuentaTriviasYSuscripciones")
+	public void T134784_CRM_Movil_Prepago_Vista_360_Detalle_de_consumo_Consulta_detalle_de_consumo_Voz_FAN_Front_OOCC_134784(String cDNI) {
+		driver.switchTo().frame(cambioFrame(driver, By.id("SearchClientDocumentType")));
+		sb.BuscarCuenta("DNI", cDNI);
+		driver.findElement(By.cssSelector(".slds-tree__item.ng-scope")).click();
+		sleep(15000);
+		driver.switchTo().frame(cambioFrame(driver, By.className("card-top")));
+		sleep(3000);
+		driver.findElement(By.className("card-top")).click();
+		sleep(3000);
+		buscarYClick(driver.findElements(By.className("slds-text-body_regular")), "equals", "detalle de consumos");
+		driver.switchTo().frame(cambioFrame(driver, By.className("summary-container")));
+		WebElement ConsumoDatos = driver.findElements(By.xpath("//*[@id='j_id0:j_id5']/div//div[2]/ng-include/div/div[2]/div[*]")).get(1).findElement(By.className("unit-div"));
+		System.out.println(ConsumoDatos.getText());
+		Assert.assertTrue(ConsumoDatos.isDisplayed());
+		}
+	
+	@Test (groups = {"GestionesPerfilOficina", "Consulta detalle de consumo Datos", "Ciclo2"}, dataProvider = "CuentaTriviasYSuscripciones")
+	public void T134785_CRM_Movil_Prepago_Vista_360_Detalle_de_consumo_Consulta_detalle_de_Otros_consumos_FAN_Front_OOCC_134785(String cDNI) {
+		driver.switchTo().frame(cambioFrame(driver, By.id("SearchClientDocumentType")));
+		sb.BuscarCuenta("DNI", cDNI);
+		driver.findElement(By.cssSelector(".slds-tree__item.ng-scope")).click();
+		sleep(15000);
+		driver.switchTo().frame(cambioFrame(driver, By.className("card-top")));
+		sleep(3000);
+		driver.findElement(By.className("card-top")).click();
+		sleep(3000);
+		buscarYClick(driver.findElements(By.className("slds-text-body_regular")), "equals", "detalle de consumos");
+		driver.switchTo().frame(cambioFrame(driver, By.className("summary-container")));
+		sleep(15000);
+		WebElement ConsumoDatos = driver.findElements(By.xpath("//*[@id='j_id0:j_id5']/div//div[2]/ng-include/div/div[2]/div[*]")).get(3).findElement(By.className("unit-div"));
+		System.out.println(ConsumoDatos.getText());
+		Assert.assertTrue(ConsumoDatos.isDisplayed());
+		
+	}
+	
+	
 }	
