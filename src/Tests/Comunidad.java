@@ -64,16 +64,16 @@ public class Comunidad extends TestBase {
 		sleep(5000);
 	}
 	
-	@Test (groups = {"Communities","E2E"})
+	@Test (groups = {"Communities","Desktop","E2E"})
 	public void CRM_PRE_Community_Desktop_Pagina_Servicios_Assets(){
-		List <WebElement> gest = driver.findElements(By.cssSelector(".via-slds.ta-community-services"));
-		boolean aa = false;
-		for(WebElement g : gest){
-			if(g.getText().toLowerCase().equals("mis gestiones")){
-				g.isDisplayed();
-				aa = true;
+		List <WebElement> gest = driver.findElements(By.cssSelector(".via-slds.slds-p-bottom--xx-large.ta-community-services"));
+			boolean aa = false;
+			for(WebElement g : gest){
+				if(g.getText().toLowerCase().equals("servicios")){
+					g.isDisplayed();
+					aa = true;
+				}
 			}
-		}
 	}
 	
 	@Test (groups = {"Communities","E2E"})
@@ -94,10 +94,7 @@ public class Comunidad extends TestBase {
 	Assert.assertTrue(gestiones.isDisplayed());
 	
 		}
-	
-	
-	}
-	
+		
 	@Test (groups = {"Communities", "E2E"})
 	public void CRM_PRE_Community_Desktop_Mis_gestiones_Filtro_Fecha() {
 		sleep(5000);
@@ -209,6 +206,61 @@ public class Comunidad extends TestBase {
 		Assert.assertTrue(tablaServicios.getText().contains("NOMBRE") && tablaServicios.getText().contains("FECHA DE ESTADO") && tablaServicios.getText().contains("ESTADO"));
 	}	
 
+	@Test (groups = {"Communities","Desktop","E2E"})
+	public void CRM_PRE_Community_Desktop_Menu(){
+		driver.findElement(By.className("profileName")).click();
+		sleep(5000);
+		System.out.println(driver.findElement(By.cssSelector(".home.uiMenuItem")).getText());
+		Assert.assertTrue(driver.findElement(By.cssSelector(".home.uiMenuItem")).isDisplayed());
+		System.out.println(driver.findElement(By.cssSelector(".profile.uiMenuItem")).getText());
+		Assert.assertTrue(driver.findElement(By.cssSelector(".profile.uiMenuItem")).isDisplayed());
+		System.out.println(driver.findElement(By.cssSelector(".logOut.uiMenuItem")).getText());
+		Assert.assertTrue(driver.findElement(By.cssSelector(".logOut.uiMenuItem")).isDisplayed());
+	}
+	
+	@Test (groups = {"Communities","Desktop","E2E"})
+	public void CRM_PRE_Community_Desktop_Informacion_del_cliente(){
+		driver.findElement(By.className("profileName")).click();
+		sleep(3000);
+		driver.findElement(By.cssSelector(".profile.uiMenuItem")).click();
+		sleep(5000);
+		driver.switchTo().frame(cambioFrame(driver, By.cssSelector(".slds-col.slds-text-align--left")));
+		List<WebElement> datos = driver.findElements(By.cssSelector(".slds-col.slds-text-align--left"));
+			for(WebElement d : datos){
+				if(d.getText().toLowerCase().contains("cambiar datos personales")){
+					d.click();
+				}
+			}
+		sleep(8000);
+		driver.switchTo().frame(cambioFrame(driver, By.id("FirstName")));
+		Assert.assertTrue(driver.findElement(By.id("FirstName")).isEnabled());
+		Assert.assertTrue(driver.findElement(By.id("LastName")).isEnabled());
+		Assert.assertTrue(driver.findElement(By.id("DocumentNumber")).isEnabled());
+		Assert.assertTrue(driver.findElement(By.id("Birthdate")).isEnabled());
+		Assert.assertTrue(driver.findElement(By.id("Cuil")).isEnabled());
+		Assert.assertTrue(driver.findElement(By.id("Gender")).isEnabled());
+		Assert.assertTrue(driver.findElement(By.id("Email")).isEnabled());
+		Assert.assertTrue(driver.findElement(By.id("MobilePhone")).isEnabled());
+		Assert.assertTrue(driver.findElement(By.id("OtherPhone")).isEnabled());
+		driver.findElement(By.cssSelector(".vlc-slds-button--tertiary.ng-binding.ng-scope")).click();
+		driver.switchTo().frame(cambioFrame(driver, By.id("alert-ok-button")));
+		driver.findElement(By.id("alert-ok-button")).click();
+		sleep(5000);
+		driver.switchTo().frame(cambioFrame(driver, By.cssSelector(".slds-col.slds-text-align--left")));
+		List<WebElement> pass = driver.findElements(By.cssSelector(".slds-col.slds-text-align--left"));
+			for(WebElement p : pass){
+				if(p.getText().toLowerCase().contains("cambiar contrase\u00f1a")){
+					p.click();
+				}
+			}
+		sleep(5000);
+		driver.switchTo().frame(cambioFrame(driver, By.className("topPanel")));
+		Assert.assertTrue(driver.findElement(By.id("changePassword:theForm:oldpsw")).isEnabled());
+		Assert.assertTrue(driver.findElement(By.id("changePassword:theForm:psw")).isEnabled());
+		Assert.assertTrue(driver.findElement(By.id("changePassword:theForm:vpsw")).isEnabled());
+		}
+	
+	
 	@Test (groups = {"Communities","E2E"})
 	public void CRM_PRE_Community_Desktop_Gestiones_Abandonadas_Mayores_a_5(){
 		
