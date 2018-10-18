@@ -18,9 +18,10 @@ import org.testng.annotations.Test;
 import Pages.Community;
 import Pages.setConexion;
 
-public class Comunidad extends Community {
+public class Comunidad extends TestBase {
 	
 	private WebDriver driver;
+	private Community cm;
 	
 	//Befores & Afters
 	
@@ -132,8 +133,8 @@ public class Comunidad extends Community {
 	}
 	
 	@Test (groups = {"Communities", "E2E"})
-	public void asd() {
-		
+	public void asd() throws AWTException {
+		cm.mobileEmulation();
 		driver.switchTo().frame(cambioFrame(driver, By.cssSelector(".slds-size--1-of-1.slds-align-middle.slds-p-vertical--small.cursor")));
 		driver.findElement(By.cssSelector(".slds-size--1-of-1.slds-align-middle.slds-p-vertical--small.cursor")).click();
 		sleep(5000);
@@ -152,8 +153,7 @@ public class Comunidad extends Community {
 		WebElement tablaServicios = servicios.findElement(By.className("slds-text-heading--label"));
 		Assert.assertTrue(tablaProductos.getText().contains("NOMBRE") && tablaProductos.getText().contains("FECHA DE ACTIVACI\u00d3N") && tablaProductos.getText().contains("MONTO"));
 		Assert.assertTrue(tablaServicios.getText().contains("NOMBRE") && tablaServicios.getText().contains("FECHA DE ESTADO") && tablaServicios.getText().contains("ESTADO"));
-	}
-}	
+	}	
 
 	@Test (groups = {"Communities","E2E"})
 	public void CRM_PRE_Community_Desktop_Gestiones_Abandonadas_Mayores_a_5(){
@@ -162,7 +162,7 @@ public class Comunidad extends Community {
 	
 	@Test (groups = {"Communities","E2E"}) //This TC is Mobile
 	public void CRM_PRE_Community_Mobile_Gestiones_en_Curso_y_Completadas_Mayores_a_5() throws AWTException{
-		mobileEmulation();
+		cm.mobileEmulation();
 	}
 	
 	@Test (groups = {"Communities","E2E"}) //This TC is Mobile
