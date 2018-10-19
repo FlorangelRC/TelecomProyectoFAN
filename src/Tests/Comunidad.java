@@ -48,12 +48,11 @@ public class Comunidad extends TestBase {
 	@Test (groups = {"Communities","Desktop","E2E"})
 	public void TS135797_CRM_PRE_Community_Desktop_Pagina_Servicios_Assets(){
 		List <WebElement> gest = driver.findElements(By.cssSelector(".via-slds.slds-p-bottom--xx-large.ta-community-services"));
-			boolean aa = false;
-			for(WebElement g : gest){
-				if(g.getText().toLowerCase().equals("servicios")){
-					g.isDisplayed();
-					aa = true;
-				}
+		boolean aa = false;
+		for(WebElement g : gest){
+			if(g.getText().toLowerCase().equals("servicios")){
+				g.isDisplayed();
+				aa = true;
 			}
 		}
 	}
@@ -75,7 +74,7 @@ public class Comunidad extends TestBase {
 		gestiones.click();
 		Assert.assertTrue(gestiones.isDisplayed());	
 	}
-		
+	
 	@Test (groups = {"Communities", "E2E"})
 	public void CRM_PRE_Community_Desktop_Mis_gestiones_Filtro_Fecha() {
 		sleep(5000);
