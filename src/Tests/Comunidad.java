@@ -4,17 +4,25 @@ import java.awt.AWTException;
 import java.awt.Robot;
 import java.awt.event.KeyEvent;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 
 import org.openqa.selenium.By;
+import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.ui.Select;
 import org.testng.Assert;
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 
+import com.gargoylesoftware.htmlunit.html.impl.SelectableTextInput;
+
+import Pages.BasePage;
+import Pages.Community;
+import Pages.OM;
 import Pages.setConexion;
 
 public class Comunidad extends TestBase {
@@ -58,18 +66,37 @@ public class Comunidad extends TestBase {
 		sleep(5000);
 	}
 	
-	@Test (groups = {"Communities","E2E"})
+	@Test (groups = {"Communities","Desktop","E2E"})
 	public void CRM_PRE_Community_Desktop_Pagina_Servicios_Assets(){
-		List <WebElement> gest = driver.findElements(By.cssSelector(".via-slds.ta-community-services"));
-		boolean aa = false;
-		for(WebElement g : gest){
-			if(g.getText().toLowerCase().equals("mis gestiones")){
-				g.isDisplayed();
-				aa = true;
+		List <WebElement> gest = driver.findElements(By.cssSelector(".via-slds.slds-p-bottom--xx-large.ta-community-services"));
+			boolean aa = false;
+			for(WebElement g : gest){
+				if(g.getText().toLowerCase().equals("servicios")){
+					g.isDisplayed();
+					aa = true;
+				}
 			}
-		}
 	}
 	
+	@Test (groups = {"Communities","E2E"})
+	public void CRM_PRE_Community_Desktop_Mis_gestiones_Filtro_Tipo(){
+	BasePage cambioFrameByID=new BasePage();
+	driver.switchTo().frame(cambioFrameByID.getFrameForElement(driver, By.cssSelector(".vlocity.via-slds")));
+	sleep (8000);
+	buscarYClick(driver.findElements(By.cssSelector(".slds-col.slds-size--1-of-1")), "equals", "plan con tarjeta repro");
+	sleep (8000);
+	driver.switchTo().frame(cambioFrameByID.getFrameForElement(driver, By.id("containergestiones")));
+	((JavascriptExecutor)driver).executeScript("window.scrollTo(0,"+driver.findElement(By.id("containergestiones")).getLocation().y+")");
+	buscarYClick(driver.findElements(By.className("slds-grid")),"equals", "mis gestiones");
+	driver.switchTo().frame(cambioFrameByID.getFrameForElement(driver, By.cssSelector(".via-slds.slds-m-around--small.ng-scope")));
+	driver.findElement(By.id("text-input-03")).click();
+	driver.findElement(By.cssSelector(".slds-dropdown.slds-dropdown--left.resize-dropdowns")).findElements(By.tagName("li")).get(1).click();
+	WebElement gestiones =driver.findElement(By.xpath("/html/body/div[1]/div[1]/ng-include/div/div/div[2]/div[4]/div[2]")).findElement(By.tagName("button"));
+	gestiones.click();
+	Assert.assertTrue(gestiones.isDisplayed());
+	
+		}
+		
 	@Test (groups = {"Communities", "E2E"})
 	public void CRM_PRE_Community_Desktop_Mis_gestiones_Filtro_Fecha() {
 		sleep(5000);
@@ -81,10 +108,12 @@ public class Comunidad extends TestBase {
 		sleep(2000);
 		driver.switchTo().frame(cambioFrame(driver, By.cssSelector(".slds-grid.slds-wrap.slds-grid--pull-padded.slds-m-around--medium.slds-p-around--medium.negotationsfilter")));
 		driver.findElement(By.id("text-input-id-1")).click();
-		
-		
-		}//*[@id="text-input-id-1"]
-	//*[@id="text-input-id-2"]
+		WebElement inicio = driver.findElement(By.cssSelector(".slds-button.slds-button--brand.filterNegotiations.slds-p-horizontal--x-large.slds-p-vertical--x-small"));
+		inicio.click();
+		WebElement fecha = driver.findElement(By.cssSelector(".slds-size--1-of-1.slds-medium-size--1-of-1.slds-large-size--1-of-1.slds-m-top--x-large"));
+		Assert.assertTrue(fecha.isDisplayed());
+		}
+	
 	@Test (groups = {"Communities", "E2E"})
 	public void CRM_PRE_Community_Desktop_Gestiones_en_Curso_y_Completadas_5() {
 		boolean cursoYCompletadas = false;
@@ -171,6 +200,61 @@ public class Comunidad extends TestBase {
 		Assert.assertTrue(msj.contains(" ya tiene usuario, seleccione "));
 	}
 
+	@Test (groups = {"Communities","Desktop","E2E"})
+	public void CRM_PRE_Community_Desktop_Menu(){
+		driver.findElement(By.className("profileName")).click();
+		sleep(5000);
+		System.out.println(driver.findElement(By.cssSelector(".home.uiMenuItem")).getText());
+		Assert.assertTrue(driver.findElement(By.cssSelector(".home.uiMenuItem")).isDisplayed());
+		System.out.println(driver.findElement(By.cssSelector(".profile.uiMenuItem")).getText());
+		Assert.assertTrue(driver.findElement(By.cssSelector(".profile.uiMenuItem")).isDisplayed());
+		System.out.println(driver.findElement(By.cssSelector(".logOut.uiMenuItem")).getText());
+		Assert.assertTrue(driver.findElement(By.cssSelector(".logOut.uiMenuItem")).isDisplayed());
+	}
+	
+	@Test (groups = {"Communities","Desktop","E2E"})
+	public void CRM_PRE_Community_Desktop_Informacion_del_cliente(){
+		driver.findElement(By.className("profileName")).click();
+		sleep(3000);
+		driver.findElement(By.cssSelector(".profile.uiMenuItem")).click();
+		sleep(5000);
+		driver.switchTo().frame(cambioFrame(driver, By.cssSelector(".slds-col.slds-text-align--left")));
+		List<WebElement> datos = driver.findElements(By.cssSelector(".slds-col.slds-text-align--left"));
+			for(WebElement d : datos){
+				if(d.getText().toLowerCase().contains("cambiar datos personales")){
+					d.click();
+				}
+			}
+		sleep(8000);
+		driver.switchTo().frame(cambioFrame(driver, By.id("FirstName")));
+		Assert.assertTrue(driver.findElement(By.id("FirstName")).isEnabled());
+		Assert.assertTrue(driver.findElement(By.id("LastName")).isEnabled());
+		Assert.assertTrue(driver.findElement(By.id("DocumentNumber")).isEnabled());
+		Assert.assertTrue(driver.findElement(By.id("Birthdate")).isEnabled());
+		Assert.assertTrue(driver.findElement(By.id("Cuil")).isEnabled());
+		Assert.assertTrue(driver.findElement(By.id("Gender")).isEnabled());
+		Assert.assertTrue(driver.findElement(By.id("Email")).isEnabled());
+		Assert.assertTrue(driver.findElement(By.id("MobilePhone")).isEnabled());
+		Assert.assertTrue(driver.findElement(By.id("OtherPhone")).isEnabled());
+		driver.findElement(By.cssSelector(".vlc-slds-button--tertiary.ng-binding.ng-scope")).click();
+		driver.switchTo().frame(cambioFrame(driver, By.id("alert-ok-button")));
+		driver.findElement(By.id("alert-ok-button")).click();
+		sleep(5000);
+		driver.switchTo().frame(cambioFrame(driver, By.cssSelector(".slds-col.slds-text-align--left")));
+		List<WebElement> pass = driver.findElements(By.cssSelector(".slds-col.slds-text-align--left"));
+			for(WebElement p : pass){
+				if(p.getText().toLowerCase().contains("cambiar contrase\u00f1a")){
+					p.click();
+				}
+			}
+		sleep(5000);
+		driver.switchTo().frame(cambioFrame(driver, By.className("topPanel")));
+		Assert.assertTrue(driver.findElement(By.id("changePassword:theForm:oldpsw")).isEnabled());
+		Assert.assertTrue(driver.findElement(By.id("changePassword:theForm:psw")).isEnabled());
+		Assert.assertTrue(driver.findElement(By.id("changePassword:theForm:vpsw")).isEnabled());
+		}
+	
+	
 	@Test (groups = {"Communities","E2E"})
 	public void CRM_PRE_Community_Desktop_Gestiones_Abandonadas_Mayores_a_5(){
 		
