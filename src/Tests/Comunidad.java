@@ -1,46 +1,25 @@
 package Tests;
 
 import java.awt.AWTException;
-import java.awt.Robot;
-import java.awt.event.KeyEvent;
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.List;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
-import org.openqa.selenium.support.ui.Select;
 import org.testng.Assert;
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 
-import com.gargoylesoftware.htmlunit.html.impl.SelectableTextInput;
-
 import Pages.BasePage;
-import Pages.Community;
-import Pages.OM;
 import Pages.setConexion;
 
 public class Comunidad extends TestBase {
 	
 	private WebDriver driver;
-	
-	private void mobileEmulation() throws AWTException {
-		Robot robot = new Robot();
-        robot.keyPress(KeyEvent.VK_F12);
-        robot.keyPress(KeyEvent.VK_CONTROL);
-        robot.keyPress(KeyEvent.VK_SHIFT);
-        sleep(1);
-        robot.keyPress(KeyEvent.VK_M);
-        sleep(1);
-        robot.keyRelease(KeyEvent.VK_M);
-        robot.keyRelease(KeyEvent.VK_SHIFT);
-        robot.keyRelease(KeyEvent.VK_CONTROL);
-	}
 	
 	//Befores & Afters
 	
@@ -66,36 +45,35 @@ public class Comunidad extends TestBase {
 		sleep(5000);
 	}
 	
-	@Test (groups = {"Communities","Desktop","E2E"})
-	public void CRM_PRE_Community_Desktop_Pagina_Servicios_Assets(){
-		List <WebElement> gest = driver.findElements(By.cssSelector(".via-slds.slds-p-bottom--xx-large.ta-community-services"));
-			boolean aa = false;
-			for(WebElement g : gest){
-				if(g.getText().toLowerCase().equals("servicios")){
-					g.isDisplayed();
-					aa = true;
-				}
+	@Test(groups = { "Communities", "Desktop", "E2E" })
+	public void CRM_PRE_Community_Desktop_Pagina_Servicios_Assets() {
+		List<WebElement> gest = driver.findElements(By.cssSelector(".via-slds.slds-p-bottom--xx-large.ta-community-services"));
+		boolean aa = false;
+		for (WebElement g : gest) {
+			if (g.getText().toLowerCase().equals("servicios")) {
+				g.isDisplayed();
+				aa = true;
 			}
+		}
 	}
 	
 	@Test (groups = {"Communities","E2E"})
 	public void CRM_PRE_Community_Desktop_Mis_gestiones_Filtro_Tipo(){
-	BasePage cambioFrameByID=new BasePage();
-	driver.switchTo().frame(cambioFrameByID.getFrameForElement(driver, By.cssSelector(".vlocity.via-slds")));
-	sleep (8000);
-	buscarYClick(driver.findElements(By.cssSelector(".slds-col.slds-size--1-of-1")), "equals", "plan con tarjeta repro");
-	sleep (8000);
-	driver.switchTo().frame(cambioFrameByID.getFrameForElement(driver, By.id("containergestiones")));
-	((JavascriptExecutor)driver).executeScript("window.scrollTo(0,"+driver.findElement(By.id("containergestiones")).getLocation().y+")");
-	buscarYClick(driver.findElements(By.className("slds-grid")),"equals", "mis gestiones");
-	driver.switchTo().frame(cambioFrameByID.getFrameForElement(driver, By.cssSelector(".via-slds.slds-m-around--small.ng-scope")));
-	driver.findElement(By.id("text-input-03")).click();
-	driver.findElement(By.cssSelector(".slds-dropdown.slds-dropdown--left.resize-dropdowns")).findElements(By.tagName("li")).get(1).click();
-	WebElement gestiones =driver.findElement(By.xpath("/html/body/div[1]/div[1]/ng-include/div/div/div[2]/div[4]/div[2]")).findElement(By.tagName("button"));
-	gestiones.click();
-	Assert.assertTrue(gestiones.isDisplayed());
-	
-		}
+		BasePage cambioFrameByID=new BasePage();
+		driver.switchTo().frame(cambioFrameByID.getFrameForElement(driver, By.cssSelector(".vlocity.via-slds")));
+		sleep (8000);
+		buscarYClick(driver.findElements(By.cssSelector(".slds-col.slds-size--1-of-1")), "equals", "plan con tarjeta repro");
+		sleep (8000);
+		driver.switchTo().frame(cambioFrameByID.getFrameForElement(driver, By.id("containergestiones")));
+		((JavascriptExecutor)driver).executeScript("window.scrollTo(0,"+driver.findElement(By.id("containergestiones")).getLocation().y+")");
+		buscarYClick(driver.findElements(By.className("slds-grid")),"equals", "mis gestiones");
+		driver.switchTo().frame(cambioFrameByID.getFrameForElement(driver, By.cssSelector(".via-slds.slds-m-around--small.ng-scope")));
+		driver.findElement(By.id("text-input-03")).click();
+		driver.findElement(By.cssSelector(".slds-dropdown.slds-dropdown--left.resize-dropdowns")).findElements(By.tagName("li")).get(1).click();
+		WebElement gestiones =driver.findElement(By.xpath("/html/body/div[1]/div[1]/ng-include/div/div/div[2]/div[4]/div[2]")).findElement(By.tagName("button"));
+		gestiones.click();
+		Assert.assertTrue(gestiones.isDisplayed());	
+	}
 		
 	@Test (groups = {"Communities", "E2E"})
 	public void CRM_PRE_Community_Desktop_Mis_gestiones_Filtro_Fecha() {
@@ -112,10 +90,10 @@ public class Comunidad extends TestBase {
 		inicio.click();
 		WebElement fecha = driver.findElement(By.cssSelector(".slds-size--1-of-1.slds-medium-size--1-of-1.slds-large-size--1-of-1.slds-m-top--x-large"));
 		Assert.assertTrue(fecha.isDisplayed());
-		}
+	}
 	
 	@Test (groups = {"Communities", "E2E"})
-	public void CRM_PRE_Community_Desktop_Gestiones_en_Curso_y_Completadas_5() {
+	public void TS135769_CRM_PRE_Community_Desktop_Gestiones_en_Curso_y_Completadas_5() {
 		boolean cursoYCompletadas = false;
 		sleep(3000);
 		driver.switchTo().frame(cambioFrame(driver, By.cssSelector(".slds-grid.slds-wrap.slds-grid--pull-padded.card_misg_desk")));
@@ -127,7 +105,7 @@ public class Comunidad extends TestBase {
 	}
 	
 	@Test (groups = {"Communities", "E2E"})
-	public void CRM_PRE_Community_Desktop_Alta_en_Mi_cuenta_Cliente_inexistente_en_CRM() {
+	public void TS135775_CRM_PRE_Community_Desktop_Alta_en_Mi_cuenta_Cliente_inexistente_en_CRM() {
 		driver.get("https://sit-scrumcella.cs14.force.com/clientes/s/login/?startURL=%2Fclientes%2Fs%2F&ec=302");
 		sleep(3000);
 		driver.findElement(By.cssSelector(".slds-button.slds-button--neutral.sfdc_button.register.uiButton--default.uiButton")).click();
@@ -140,7 +118,7 @@ public class Comunidad extends TestBase {
 	}
 	
 	@Test (groups = {"Communities", "E2E"})
-	public void CRM_PRE_Community_Desktop_Modificar_datos_cliente() {
+	public void TS135781_CRM_PRE_Community_Desktop_Modificar_datos_cliente() {
 		driver.findElement(By.cssSelector(".profileIcon")).click();
 		driver.findElement(By.cssSelector(".profile.uiMenuItem")).click();
 		sleep(3000);
@@ -166,7 +144,7 @@ public class Comunidad extends TestBase {
 	}
 	
 	@Test (groups = {"Communities", "E2E"})
-	public void CRM_PRE_Community_Desktop_Mis_Servicios_Full_Responsive() {
+	public void TS135789_CRM_PRE_Community_Desktop_Mis_Servicios_Full_Responsive() {
 		driver.switchTo().frame(cambioFrame(driver, By.cssSelector(".slds-size--1-of-1.slds-align-middle.slds-p-vertical--small.cursor")));
 		driver.findElement(By.cssSelector(".slds-size--1-of-1.slds-align-middle.slds-p-vertical--small.cursor")).click();
 		sleep(5000);
@@ -188,7 +166,7 @@ public class Comunidad extends TestBase {
 	}
 	
 	@Test (groups = {"Communities", "E2E"})
-	public void CRM_PRE_Community_Desktop_Alta_DNI_existente_en_Mi_cuenta_Cliente_existente_en_CRM() {
+	public void TS135774_CRM_PRE_Community_Desktop_Alta_DNI_existente_en_Mi_cuenta_Cliente_existente_en_CRM() {
 		driver.get("https://sit-scrumcella.cs14.force.com/clientes/s/login/?startURL=%2Fclientes%2Fs%2F&ec=302");
 		sleep(3000);
 		driver.findElement(By.cssSelector(".slds-button.slds-button--neutral.sfdc_button.register.uiButton--default.uiButton")).click();
@@ -220,11 +198,11 @@ public class Comunidad extends TestBase {
 		sleep(5000);
 		driver.switchTo().frame(cambioFrame(driver, By.cssSelector(".slds-col.slds-text-align--left")));
 		List<WebElement> datos = driver.findElements(By.cssSelector(".slds-col.slds-text-align--left"));
-			for(WebElement d : datos){
-				if(d.getText().toLowerCase().contains("cambiar datos personales")){
-					d.click();
-				}
+		for(WebElement d : datos){
+			if(d.getText().toLowerCase().contains("cambiar datos personales")){
+				d.click();
 			}
+		}
 		sleep(8000);
 		driver.switchTo().frame(cambioFrame(driver, By.id("FirstName")));
 		Assert.assertTrue(driver.findElement(By.id("FirstName")).isEnabled());
@@ -242,19 +220,18 @@ public class Comunidad extends TestBase {
 		sleep(5000);
 		driver.switchTo().frame(cambioFrame(driver, By.cssSelector(".slds-col.slds-text-align--left")));
 		List<WebElement> pass = driver.findElements(By.cssSelector(".slds-col.slds-text-align--left"));
-			for(WebElement p : pass){
-				if(p.getText().toLowerCase().contains("cambiar contrase\u00f1a")){
-					p.click();
-				}
+		for(WebElement p : pass){
+			if(p.getText().toLowerCase().contains("cambiar contrase\u00f1a")){
+				p.click();
 			}
+		}
 		sleep(5000);
 		driver.switchTo().frame(cambioFrame(driver, By.className("topPanel")));
 		Assert.assertTrue(driver.findElement(By.id("changePassword:theForm:oldpsw")).isEnabled());
 		Assert.assertTrue(driver.findElement(By.id("changePassword:theForm:psw")).isEnabled());
 		Assert.assertTrue(driver.findElement(By.id("changePassword:theForm:vpsw")).isEnabled());
-		}
-	
-	
+	}
+		
 	@Test (groups = {"Communities","E2E"})
 	public void CRM_PRE_Community_Desktop_Gestiones_Abandonadas_Mayores_a_5(){
 		
@@ -262,12 +239,11 @@ public class Comunidad extends TestBase {
 	
 	@Test (groups = {"Communities","E2E"}) //This TC is Mobile
 	public void CRM_PRE_Community_Mobile_Gestiones_en_Curso_y_Completadas_Mayores_a_5() throws AWTException{
-		mobileEmulation();
+		
 	}
 	
 	@Test (groups = {"Communities","E2E"}) //This TC is Mobile
 	public void CRM_PRE_Community_Mobile_Gestiones_Abandonadas_Mayores_a_5(){
 		
-	}
-	
+	}	
 }
