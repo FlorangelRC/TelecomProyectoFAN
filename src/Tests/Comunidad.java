@@ -4,13 +4,17 @@ import java.awt.AWTException;
 import java.awt.Robot;
 import java.awt.event.KeyEvent;
 import java.io.IOException;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
+import java.util.TimeZone;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.Select;
+import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.Assert;
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.AfterMethod;
@@ -21,6 +25,7 @@ import com.gargoylesoftware.htmlunit.html.impl.SelectableTextInput;
 
 import Pages.BasePage;
 import Pages.setConexion;
+import sun.util.resources.CalendarData;
 
 public class Comunidad extends TestBase {
 	
@@ -76,7 +81,7 @@ public class Comunidad extends TestBase {
 	}
 	
 	@Test (groups = {"Communities","E2E"})
-	public void CRM_PRE_Community_Desktop_Mis_gestiones_Filtro_Tipo(){
+	public void T135792_CRM_PRE_Community_Desktop_Mis_gestiones_Filtro_Tipo(){
 	BasePage cambioFrameByID=new BasePage();
 	driver.switchTo().frame(cambioFrameByID.getFrameForElement(driver, By.cssSelector(".vlocity.via-slds")));
 	sleep (8000);
@@ -94,9 +99,6 @@ public class Comunidad extends TestBase {
 	
 		}
 	
-	
-	}
-	
 	@Test (groups = {"Communities", "E2E"})
 	public void CRM_PRE_Community_Desktop_Mis_gestiones_Filtro_Fecha() {
 		sleep(5000);
@@ -108,9 +110,15 @@ public class Comunidad extends TestBase {
 		sleep(2000);
 		driver.switchTo().frame(cambioFrame(driver, By.cssSelector(".slds-grid.slds-wrap.slds-grid--pull-padded.slds-m-around--medium.slds-p-around--medium.negotationsfilter")));
 		driver.findElement(By.id("text-input-id-1")).click();
+		String month="Sept";
+		String date="28";
 		
+		//String setDatestr = "22/08/2017";
+		//System.out.println(driver.findElement(By.cssSelector(".slds-datepicker.slds-dropdown.slads-dropdown--left")).getText());
+	
 		
-		}//*[@id="text-input-id-1"]
+	}
+	//*[@id="text-input-id-1"]
 	//*[@id="text-input-id-2"]
 	@Test (groups = {"Communities", "E2E"})
 	public void CRM_PRE_Community_Desktop_Gestiones_en_Curso_y_Completadas_5() {
