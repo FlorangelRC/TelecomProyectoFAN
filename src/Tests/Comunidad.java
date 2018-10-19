@@ -65,7 +65,7 @@ public class Comunidad extends TestBase {
 	}
 	
 	@Test (groups = {"Communities","Desktop","E2E"})
-	public void CRM_PRE_Community_Desktop_Pagina_Servicios_Assets(){
+	public void TS135797_CRM_PRE_Community_Desktop_Pagina_Servicios_Assets(){
 		List <WebElement> gest = driver.findElements(By.cssSelector(".via-slds.slds-p-bottom--xx-large.ta-community-services"));
 			boolean aa = false;
 			for(WebElement g : gest){
@@ -207,7 +207,7 @@ public class Comunidad extends TestBase {
 	}	
 
 	@Test (groups = {"Communities","Desktop","E2E"})
-	public void CRM_PRE_Community_Desktop_Menu(){
+	public void TS_135798_CRM_PRE_Community_Desktop_Menu(){
 		driver.findElement(By.className("profileName")).click();
 		sleep(5000);
 		System.out.println(driver.findElement(By.cssSelector(".home.uiMenuItem")).getText());
@@ -219,7 +219,7 @@ public class Comunidad extends TestBase {
 	}
 	
 	@Test (groups = {"Communities","Desktop","E2E"})
-	public void CRM_PRE_Community_Desktop_Informacion_del_cliente(){
+	public void TS135795_CRM_PRE_Community_Desktop_Informacion_del_cliente(){
 		driver.findElement(By.className("profileName")).click();
 		sleep(3000);
 		driver.findElement(By.cssSelector(".profile.uiMenuItem")).click();
