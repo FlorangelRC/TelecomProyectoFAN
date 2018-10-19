@@ -452,6 +452,7 @@ public class TestsXappia extends TestBase {
 		wBody = mM.traerColumnaElement(wBody, 4, 2).get(3).findElement(By.tagName("table"));
 		wElement = mM.traerColumnaElement(wBody, 1, 1).get(1);
 		Assert.assertTrue(wElement.findElement(By.className("staticMap")).isDisplayed());
+		//Not finished
 	}
 	
 	@Test (groups = "SIT")
