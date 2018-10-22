@@ -1,5 +1,9 @@
 package Pages;
 
+import org.w3c.dom.Document;
+
+import org.testng.Assert;
+
 public class CBS {
 	public String sRequestByOrder(String sOrder) {
 		sOrder = "<soapenv:Envelope xmlns:soapenv=\"http://schemas.xmlsoap.org/soap/envelope/\" xmlns:v1=\"http://www.personal.com.ar/Common/RequestMessageHeader/v1.0\" xmlns:v11=\"http://www.personal.com.ar/ESB/NotificarPago/v1.0\">\r\n"
@@ -32,17 +36,16 @@ public class CBS {
 		return sOrder;
 	}
 	
-	public String sCBS_Request_ServicioWeb_Validador(String sResponse) {
+	public String sCBS_Request_ServicioWeb_Validador(Document sResponse) {
 		String sAssert = "false";
-		
-		if (sResponse.equalsIgnoreCase("0OK")) {
-			sAssert = "true";
+		if (sResponse.getElementsByTagName("cbs:ResultDesc").item(0).getTextContent().equalsIgnoreCase("0OK")) {
+			System.out.println("Correcto");
 		}
 		else {
-			sAssert = sResponse;
+			System.out.println(sResponse.getElementsByTagName("cbs:ResultDesc").item(0).getTextContent());
+			Assert.assertTrue(false);
 		}
-		
-		return sAssert;
+		return "true";
 	}
 	
 	public String sRequest(String sPaymentSerialNo, String sPaymentChannelID, String sAccountKey, String sPaymentMethod, String sAmount, String sInvoiceno) {
@@ -178,19 +181,15 @@ public class CBS {
 		return sRequest;
 	}
 	
-	public String sCBS_Request_Validador_Alta_Linea(String sResponse, String sLinea, String sImsi, String sICCD, String sNombre, String sApellido) {
-		String sAssert = "false";
-		sLinea = "SubIdentity>" + sLinea;
-		
-		//if (sResponse.contains(sLinea) && sResponse.contains(sImsi) && sResponse.contains(sICCD)) {
-		if (sResponse.contains(sLinea) && sResponse.contains(sNombre) && sResponse.contains(sApellido)) {
-			sAssert = "true";
+	public boolean sCBS_Request_Validador_Alta_Linea(Document sResponse, String sLinea, String sImsi, String sICCD, String sNombre, String sApellido) {
+		if (sResponse.getElementsByTagName("bcc:FirstName").item(0).getTextContent().contains(sNombre) && sResponse.getElementsByTagName("bcc:LastName").item(0).getTextContent().contains(sApellido)) {
+			System.out.println("Correcto");
 		}
 		else {
-			sAssert = sResponse;
+			System.out.println(sResponse.getElementsByTagName("bcc:FirstName").item(0).getTextContent());
+			Assert.assertTrue(false);
 		}
-		
-		return sAssert;
+		return true;
 	}
 	
 	public String sRequestByTC(String sMessageSeq, String sPaymentChannelID, String sAccountKey, String sPaymentMethod, String sAmount, String sAccountNumber, String sAccountName, String sExpirationDate, String sCVV, String sInvoiceno, String sCardHolderName, String sCardHolderNumber) {
@@ -299,16 +298,79 @@ public class CBS {
 		return sRequest;
 	}
 	
-	public String sCBS_TC_Request_Validador(String sResponse) {
-		String sAssert = "false";
+	public Document sCBS_TC_Request_Validador(Document sResponse) {
 		
-		if (sResponse.contains("Operation successfully")) {
-			sAssert = "true";
+		if (sResponse.getElementsByTagName("cbs:ResultDesc").item(0).getTextContent().contains("Operation successfully")) {
+			System.out.println("Correcto");
 		}
 		else {
-			sAssert = sResponse;
+			System.out.println(sResponse.getElementsByTagName("cbs:ResultDesc").item(0).getTextContent());
+			Assert.assertTrue(false);
 		}
+		return sResponse;
+	}
+	
+	public String sRequestQueryLiteBySubscriber(String sLinea, String sMessageSeq) {
+		String sRequest = "";
+		sRequest = "<soapenv:Envelope xmlns:soapenv=\"http://schemas.xmlsoap.org/soap/envelope/\" xmlns:bcs=\"http://www.huawei.com/bme/cbsinterface/bcservices\" xmlns:cbs=\"http://www.huawei.com/bme/cbsinterface/cbscommon\" xmlns:bcc=\"http://www.huawei.com/bme/cbsinterface/bccommon\">\r\n"
+				+ "\r\n   <soapenv:Header/>\r\n"
+				+ "\r\n   <soapenv:Body>\r\n"
+				+ "\r\n      <bcs:QueryLiteBySubscriberRequestMsg>\r\n"
+				+ "\r\n                    <RequestHeader>\r\n"
+				+ "\r\n                                               <cbs:Version>5.5</cbs:Version>\r\n"
+				+ "\r\n                                               <cbs:BusinessCode>QueryLiteBy</cbs:BusinessCode>\r\n"
+				+ "\r\n                                               <cbs:MessageSeq>" + sMessageSeq;
 		
-		return sAssert;
+		sRequest += "</cbs:MessageSeq>\r\n"
+				+ "\r\n                                               <cbs:OwnershipInfo>\r\n"
+				+ "\r\n                                                               <cbs:BEID>10101</cbs:BEID>\r\n"
+				+ "\r\n                                                               <cbs:BRID>101</cbs:BRID>\r\n"
+				+ "\r\n                                               </cbs:OwnershipInfo>\r\n"
+				+ "\r\n                				<cbs:AccessSecurity>\r\n"
+				+ "\r\n                                                               <cbs:LoginSystemCode>117</cbs:LoginSystemCode>\r\n"
+				+ "\r\n                                                               <cbs:Password>jW6lRxU4leO5Xev+SISea/Ie7Dp5wDPgfGR9MNVDJRo=</cbs:Password>\r\n"
+				+ "\r\n                                                               <cbs:RemoteIP>10.138.22.65</cbs:RemoteIP>\r\n"
+				+ "\r\n                                               </cbs:AccessSecurity>\r\n"
+				+ "\r\n                                               <cbs:OperatorInfo>\r\n"
+				+ "\r\n                                                               <cbs:OperatorID>101</cbs:OperatorID>\r\n"
+				+ "\r\n                                                               <cbs:ChannelID>1</cbs:ChannelID>\r\n"
+				+ "\r\n                                               </cbs:OperatorInfo>\r\n"
+				+ "\r\n                                               <cbs:TimeFormat>\r\n"
+				+ "\r\n                                                               <cbs:TimeType>1</cbs:TimeType>\r\n"
+				+ "\r\n                                                               <cbs:TimeZoneID>8</cbs:TimeZoneID>\r\n"
+				+ "\r\n                                               </cbs:TimeFormat>\r\n"
+				+ "\r\n                                               <cbs:AdditionalProperty>\r\n"
+				+ "\r\n                                                               <cbs:Code>108</cbs:Code>\r\n"
+				+ "\r\n                                                               <cbs:Value>109</cbs:Value>\r\n"
+				+ "\r\n                                               </cbs:AdditionalProperty>\r\n"
+				+ "\r\n                             </RequestHeader> \r\n"
+				+ "\r\n      		<QueryLiteBySubscriberRequest>\r\n"
+				+ "\r\n               			<bcs:SubAccessCode>\r\n"
+				+ "\r\n                  			<bcc:PrimaryIdentity>" + sLinea;
+		
+		sRequest+= "</bcc:PrimaryIdentity>\r\n"
+				+ "\r\n               			</bcs:SubAccessCode>\r\n"
+				+ "\r\n         	</QueryLiteBySubscriberRequest>      \r\n"
+				+ "\r\n      </bcs:QueryLiteBySubscriberRequestMsg>\r\n"
+				+ "\r\n   </soapenv:Body>\r\n"
+				+ "\r\n</soapenv:Envelope>";
+		return sRequest;
+	}
+	
+	public Document sValidacion_ResponseQueryLiteBySubscriber(Document sResponse) {
+		
+		if (sResponse.getElementsByTagName("cbs:ResultDesc").item(0).getTextContent().contains("Operation successfully")) {
+			System.out.println("Correcto");
+		}
+		else {
+			System.out.println(sResponse.getElementsByTagName("cbs:ResultDesc").item(0).getTextContent());
+			Assert.assertTrue(false);
+		}
+		return sResponse;
+	}
+	
+	public String ObtenerValorResponse(Document Response, String Campo) {
+		
+		return Response.getElementsByTagName(Campo).item(0).getTextContent();
 	}
 }
