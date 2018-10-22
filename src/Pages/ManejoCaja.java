@@ -16,8 +16,7 @@ import Tests.TestBase;
 
 public class ManejoCaja extends BasePage {
 	
-	//private String UrlCaja ="https://10.75.39.140:8081/main.action?ssLogin=true&BMEWebToken=be935f78-f517-441c-a299-c5a1ba3f1f411b7c8915-7f90-4b1d-bee6-15837afe7b05" ;
-	private String UrlCaja = "https://10.75.197.163:8084/login.action?ssoLogin=true";
+	private String UrlCaja;
 	private String usuarioUAT = "CBS593572";
 	private String claveUAT = "Testa10k";
 	private String usuarioSIT = "FLORANGEL";
@@ -53,7 +52,7 @@ public class ManejoCaja extends BasePage {
 	TestBase TB = new TestBase();
 	
 	public void loginCaja(WebDriver driver) {
-		if (UrlCaja.contains("10.75.39.140")){
+		if (TB.urlAmbiente.contains("uat")){
 			System.out.println("En uat");
 			driver.findElement(By.id("login")).findElement(By.id("username")).sendKeys(usuarioUAT);
 			driver.findElement(By.id("login")).findElement(By.id("password")).sendKeys(claveUAT);
@@ -65,6 +64,10 @@ public class ManejoCaja extends BasePage {
 	}
 	
 	public void ingresarCaja(WebDriver driver) {
+		if (TB.urlAmbiente.contains("sit"))
+			UrlCaja = "https://10.75.197.163:8084/login.action?ssoLogin=true";
+		else
+			UrlCaja = "https://10.75.39.140:8081/main.action?ssLogin=true&BMEWebToken=be935f78-f517-441c-a299-c5a1ba3f1f411b7c8915-7f90-4b1d-bee6-15837afe7b05" ;
 		driver.get(UrlCaja);
 		sleep(10000);
 		Select idiom = new Select(driver.findElement(By.id("login")).findElement(By.id("language")));
@@ -72,8 +75,6 @@ public class ManejoCaja extends BasePage {
 		idiom.selectByVisibleText("Spanish");
 		sleep(3000);
 		loginCaja(driver);
-		//user.sendKeys(usuario);
-		
 		driver.findElement(By.id("login")).findElement(By.id("submitBtn")).click();
 		sleep(10000);
 	}
@@ -141,7 +142,7 @@ public class ManejoCaja extends BasePage {
 		sleep(1000);
 		driver.switchTo().defaultContent();
 		driver.findElement(By.className("popwin_middle_center")).findElement(By.cssSelector(".bc_btn.bc_ui_ele")).click();
-		sleep(5000);
+		sleep(10000);
 		//driver.switchTo().frame(TB.cambioFrame(driver,By.id("print-preview")));
 		ArrayList<String> tabs2 = new ArrayList<String> (driver.getWindowHandles());
 	    driver.switchTo().window(tabs2.get(2));
@@ -234,3 +235,5 @@ public class ManejoCaja extends BasePage {
 		//cerrarPestanias(driver);
 	}
 }
+
+

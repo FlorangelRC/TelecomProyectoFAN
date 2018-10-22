@@ -423,7 +423,7 @@ public class TestsXappia extends TestBase {
 	}
 	
 	@Test (groups = "SIT")
-	public void TXS0012_CRM_Ubicacion_Mapas() {
+	public void TXS0012_CRM_Ubicacion_Mapa_Direccion_de_Envio() {
 		irAConsolaFAN();
 		sb.cerrarPestaniaGestion(driver);
 		irAGestionDeClientes();
@@ -440,13 +440,10 @@ public class TestsXappia extends TestBase {
 		mM.closeActiveTab();
 		driver.switchTo().frame(cambioFrame(driver, By.className("detailList")));
 		WebElement wBody = driver.findElements(By.className("detailList")).get(1);
-		WebElement wElement = mM.traerColumnaElement(wBody, 4, 1).get(3);
-		//Assert.assertTrue(wElement.getText().equals("Direcci\u00f3n de env\u00edo"));
-		Assert.assertTrue(wElement.getText().equals("Direcci\u00f3n de facturaci\u00f3n"));
-		wBody = mM.traerColumnaElement(wBody, 4, 2).get(3).findElement(By.tagName("table"));
-		wElement = mM.traerColumnaElement(wBody, 1, 1).get(1);
-		Assert.assertTrue(wElement.findElement(By.className("staticMap")).isDisplayed());
-		//Not finished
+		WebElement wElement = mM.traerColumnaElement(wBody, 4, 1).get(4);
+		Assert.assertTrue(wElement.getText().equals("Direcci\u00f3n de env\u00edo"));
+		wElement = driver.findElement(By.xpath("//*[@id=\"ep_Account_View_j_id4\"]/div[2]/div[5]/table/tbody/tr[5]/td[2]/table/tbody/tr[2]/td/div/div"));
+		Assert.assertTrue(wElement.getAttribute("class").equals("staticMap"));
 	}
 	
 	@Test (groups = "SIT")

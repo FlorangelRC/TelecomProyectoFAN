@@ -2,6 +2,10 @@ package Tests;
 
 import javax.xml.soap.*;
 
+import org.w3c.dom.Document;
+import org.w3c.dom.NodeList;
+
+
 public class SOAPClientSAAJ {
 	
 	//SIT
@@ -10,9 +14,12 @@ public class SOAPClientSAAJ {
 	static String sPagoEnCajaUAT = "http://10.75.39.146:8080/services/ArServices";
 		
 	static String sPagoSimulado = "http://mdwtpbust1.telecom.com.ar:8701/notificarPago";
-	static String sAltaDeLinea = "http://10.75.39.146:8080/services/BcServices";
+	static String sQueryCustomerInfoUAT = "http://10.75.39.146:8080/services/BcServices";
+	static String sQueryCustomerInfoSIT = "http://10.75.197.163:8080/services/BcServices";
 	
-	public String callSoapWebService(String soapMessageString, String sEndPoint) {
+	
+	public Document callSoapWebService(String soapMessageString, String sEndPoint) {
+		Document doc = null;
 		switch (sEndPoint.toLowerCase()) {
     		case "pago simulado":
 	    		sEndPoint = sPagoSimulado;
@@ -23,8 +30,11 @@ public class SOAPClientSAAJ {
 	    		else
 	    			sEndPoint = sPagoEnCajaUAT;
 	    		break;
-	    	case "alta de linea":
-	    		sEndPoint = sAltaDeLinea;
+	    	case "datos usuario":
+	    		if (TestBase.urlAmbiente.contains("sit"))
+	    			sEndPoint = sQueryCustomerInfoSIT;
+	    		else
+	    			sEndPoint = sQueryCustomerInfoUAT;
 	    		break;
     	}
     	
@@ -36,18 +46,13 @@ public class SOAPClientSAAJ {
             // Send SOAP Message to SOAP Server
             SOAPMessage soapResponse = soapConnection.call(createSRequest(soapMessageString), sEndPoint);
             
-            //Print the SOAP Response
-            //System.out.println("Response SOAP Message:");
-            //soapResponse.writeTo(System.out);
-            //System.out.println();
-            
             soapConnection.close();
-            
-            return soapResponse.getSOAPBody().getTextContent();
+            doc = soapResponse.getSOAPBody().extractContentAsDocument();
+            return doc;
         } catch (Exception e) {
         	System.err.println("\nError occurred while sending SOAP Request to Server!\nMake sure you have the correct endpoint URL and SOAPAction!\n");
             e.printStackTrace();
-            return "Somthing went wrong... please call Don Barredora";
+            return doc;
         }
 	}
     
