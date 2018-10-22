@@ -56,6 +56,9 @@ public class TestBase {
 		
 		// viejo public String urlSCP = "https://telecomcrm--uat.cs8.my.salesforce.com";
 		public static String urlSCP = "https://telecomcrm--uat.cs53.my.salesforce.com";
+		
+		//public static String urlComunidad = "https://uat-autogestion-uat.cs53.force.com/clientes/s/";
+		public static String urlCommunity = "https://sit-scrumcella.cs14.force.com/clientes/s/";
 	
 		
 	public void leftDropdown(WebDriver driver, String selection) {
@@ -1454,4 +1457,19 @@ public class TestBase {
 
 	}
 	
+	@DataProvider
+	public Object[][] ConsultaSaldo() throws Exception{
+		
+		Object[][] testObjArray = ExcelUtils.getTableArray(dataProviderE2E(),"E2EsinPago",1,1,1,"SaldoConsulta");
+		
+		return (testObjArray);
+		
+	}
+	
+	public void loginCommunity(WebDriver driver) {
+		driver.get(urlCommunity);
+		try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+	    Login lLogin = new Login(driver);
+	    lLogin.ingresarComunidad();
+	}
 }

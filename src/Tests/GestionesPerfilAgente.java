@@ -123,7 +123,7 @@ public class GestionesPerfilAgente extends TestBase{
 		sleep(5000);
 	}
 	
-	@Test (groups = {"GestionesPerfilAgente","Recargas","E2E"}, dataProvider="RecargaTC")
+	@Test (groups = {"GestionesPerfilAgente","Recargas","E2E", "Ciclo1"}, dataProvider="RecargaTC")
 	public void TS134322_CRM_Movil_REPRO_Recargas_Presencial_TC_Agente(String sDNI, String sMonto, String sLinea, String sBanco, String sTarjeta, String sNumTarjeta, String sVenceMes, String sVenceAno, String sCodSeg, String sTipoDNI, String sDNITarjeta, String sTitular, String sPromo, String sCuotas) throws AWTException {
 		//Check All
 		imagen = "134322";
@@ -348,6 +348,101 @@ public class GestionesPerfilAgente extends TestBase{
 		driver.switchTo().frame(cambioFrame(driver, By.xpath("//*[@id=\"ep\"]/div[2]/div[2]/table")));
 		String gestion = driver.findElement(By.xpath("//*[@id=\"ep\"]/div[2]/div[2]/table")).findElements(By.tagName("tr")).get(4).getText();
 		Assert.assertTrue(gestion.contains("Estado") && (gestion.contains("Cancelada") || gestion.contains("Cancelled")));
+	}
+	
+	@Test (groups = {"GestionesPerfilAgente", "ConsultaDeSaldo", "Ciclo1"}, dataProvider = "ConsultaSaldo")
+	public void TS_134814_CRM_Movil_Prepago_Vista_360_Consulta_de_Saldo_Verificar_credito_prepago_de_la_linea_FAN_Front_Agentes(String sDNI){
+		driver.switchTo().frame(cambioFrame(driver, By.id("SearchClientDocumentType")));
+		sb.BuscarCuenta("DNI", sDNI);
+		driver.findElement(By.cssSelector(".slds-tree__item.ng-scope")).click();
+		sleep(15000);
+		cc.openleftpanel();
+		driver.switchTo().frame(cambioFrame(driver, By.className("card-top")));
+		WebElement cred = driver.findElement(By.xpath("//*[@id=\"j_id0:j_id5\"]/div/div/ng-include/div/div[2]/div[1]/ng-include/section[1]/div[2]/ul[2]/li[1]/span[3]"));
+		Assert.assertTrue(!(cred.getText().isEmpty()));
+	}
+	@Test (groups = {"GestionesPerfilAgente", "DetalleDeConsumos","Ciclo2"}, dataProvider="CuentaProblemaRecarga") 
+	public void TS134827_CRM_Movil_Prepago_Vista_360_Detalle_de_consumo_Consulta_detalle_de_consumo_Datos_FAN_Front_Agentes(String cDNI){
+		CustomerCare cCC = new CustomerCare(driver);
+		driver.switchTo().frame(cambioFrame(driver, By.id("SearchClientDocumentType")));
+		sb.BuscarCuenta("DNI", cDNI);
+		driver.findElement(By.cssSelector(".slds-tree__item.ng-scope")).click();
+		sleep(15000);
+		cCC.irADetalleDeConsumos();
+		sleep(12000);
+		driver.switchTo().frame(cambioFrame(driver, By.id("divConsumptionDetailhead")));
+		WebElement dmso = driver.findElements(By.xpath("//*[@id='j_id0:j_id5']/div//div[2]/ng-include/div/div[2]/div[*]")).get(0).findElement(By.className("unit-div"));
+		System.out.println(dmso.getText());
+		Assert.assertTrue(dmso.isDisplayed());
+		}
+	
+	@Test (groups = {"GestionesPerfilAgente", "DetalleDeConsumos","Ciclo2"}, dataProvider="CuentaProblemaRecarga")
+	public void TS134826_CRM_Movil_Prepago_Vista_360_Detalle_de_consumo_Consulta_detalle_de_consumo_SMS_FAN_Front_Agentes(String cDNI){
+		CustomerCare cCC = new CustomerCare(driver);
+		driver.switchTo().frame(cambioFrame(driver, By.id("SearchClientDocumentType")));
+		sb.BuscarCuenta("DNI", cDNI);
+		driver.findElement(By.cssSelector(".slds-tree__item.ng-scope")).click();
+		sleep(15000);
+		cCC.irADetalleDeConsumos();
+		sleep(12000);
+		driver.switchTo().frame(cambioFrame(driver, By.id("advancerFilters")));
+		WebElement dmso = driver.findElements(By.xpath("//*[@id='j_id0:j_id5']/div//div[2]/ng-include/div/div[2]/div[*]")).get(2).findElement(By.className("unit-div"));
+		System.out.println(dmso.getText());
+		Assert.assertTrue(dmso.isDisplayed());
+	}
+	
+	@Test (groups = {"GestionesPerfilAgente", "DetalleDeConsumos","Ciclo2"}, dataProvider="CuentaProblemaRecarga")
+	public void TS134828_CRM_Movil_Prepago_Vista_360_Detalle_de_consumo_Consulta_detalle_de_consumo_Voz_FAN_Front_Agentes(String cDNI){
+		CustomerCare cCC = new CustomerCare(driver);
+		driver.switchTo().frame(cambioFrame(driver, By.id("SearchClientDocumentType")));
+		sb.BuscarCuenta("DNI", cDNI);
+		driver.findElement(By.cssSelector(".slds-tree__item.ng-scope")).click();
+		sleep(15000);
+		cCC.irADetalleDeConsumos();
+		sleep(12000);
+		driver.switchTo().frame(cambioFrame(driver, By.id("advancerFilters")));
+		WebElement dmso = driver.findElements(By.xpath("//*[@id='j_id0:j_id5']/div//div[2]/ng-include/div/div[2]/div[*]")).get(1).findElement(By.className("unit-div"));
+		System.out.println(dmso.getText());
+		Assert.assertTrue(dmso.isDisplayed());
+	}
+	
+	@Test (groups = {"GestionesPerfilAgente", "DetalleDeConsumos","Ciclo2"}, dataProvider="CuentaProblemaRecarga")
+	public void TS134829_CRM_Movil_Prepago_Vista_360_Detalle_de_consumo_Consulta_detalle_de_consumo_FAN_Front_Agentes(String cDNI){
+		CustomerCare cCC = new CustomerCare(driver);
+		driver.switchTo().frame(cambioFrame(driver, By.id("SearchClientDocumentType")));
+		sb.BuscarCuenta("DNI", cDNI);
+		driver.findElement(By.cssSelector(".slds-tree__item.ng-scope")).click();
+		sleep(15000);
+		cCC.irADetalleDeConsumos();
+		sleep(12000);
+		driver.switchTo().frame(cambioFrame(driver, By.id("advancerFilters")));
+		WebElement dmso = driver.findElements(By.xpath("//*[@id='j_id0:j_id5']/div//div[2]/ng-include/div/div[2]/div[*]")).get(3).findElement(By.className("unit-div"));
+		System.out.println(dmso.getText());
+		Assert.assertTrue(dmso.isDisplayed());
+	}
+	
+	@Test (groups = {"GestionesPerfilAgente", "ConsultaDeSaldo", "Ciclo1"}, dataProvider = "ConsultaSaldo")
+	public void TS_134815_CRM_Movil_Prepago_Vista_360_Consulta_de_Saldo_Verificar_saldo_del_cliente_FAN_Front_Agentes(String sDNI) {
+		driver.switchTo().frame(cambioFrame(driver, By.id("SearchClientDocumentType")));
+		sb.BuscarCuenta("DNI", sDNI);
+		driver.findElement(By.cssSelector(".slds-tree__item.ng-scope")).click();
+		sleep(15000);
+		cc.openleftpanel();
+		cc.irAFacturacion();
+		sleep(5000);
+		driver.switchTo().frame(cambioFrame(driver, By.className("card-top")));
+		List <WebElement> saldo = driver.findElements(By.cssSelector(".slds-text-heading_medium.expired-date.expired-pink"));
+		for(WebElement x : saldo) {
+			System.out.println(x.getText());
+		}
+		System.out.println(saldo.get(0).getText());
+		/*List <WebElement> saldo = driver.findElements(By.className("header-right"));
+		for (WebElement c :saldo ) {
+			System.out.println(c.getText());
+		}*/
+		/*List <WebElement> saldo = driver.findElements(By.cssSelector(".slds-text-heading_medium.expired-date.expired-pink"));
+		System.out.println(saldo.get(1).getText());*/
+		Assert.assertTrue(!(saldo.isEmpty()));
 	}
 	
 	@Test(groups = {"Sales", "PreparacionNominacion","E2E","Ciclo1"}, dataProvider="DatosSalesNominacion") 
