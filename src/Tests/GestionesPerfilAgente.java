@@ -122,7 +122,7 @@ public class GestionesPerfilAgente extends TestBase{
 		sleep(5000);
 	}
 	
-	@Test (groups = {"GestionesPerfilAgente","Recargas","E2E"}, dataProvider="RecargaTC")
+	@Test (groups = {"GestionesPerfilAgente","Recargas","E2E", "Ciclo1"}, dataProvider="RecargaTC")
 	public void TS134322_CRM_Movil_REPRO_Recargas_Presencial_TC_Agente(String sDNI, String sMonto, String sLinea, String sBanco, String sTarjeta, String sNumTarjeta, String sVenceMes, String sVenceAno, String sCodSeg, String sTipoDNI, String sDNITarjeta, String sTitular, String sPromo, String sCuotas) throws AWTException {
 		//Check All
 		imagen = "134322";

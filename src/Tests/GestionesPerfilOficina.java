@@ -126,7 +126,7 @@ public class GestionesPerfilOficina extends TestBase {
 		sleep(5000);
 	}
 	
-	@Test (groups = {"GestionesPerfilOficina","NumerosAmigos","E2E"}, dataProvider="NumerosAmigos")
+	@Test (groups = {"GestionesPerfilOficina","NumerosAmigos","E2E", "Ciclo1"}, dataProvider="NumerosAmigos")
 	public void TS100602_CRM_Movil_REPRO_FF_Alta_Presencial(String sDNI, String sLinea, String sNumeroVOZ, String sNumeroSMS) {
 		imagen = "TS100602";
 		BasePage cambioFrame=new BasePage();
@@ -182,7 +182,7 @@ public class GestionesPerfilOficina extends TestBase {
 		//Verify when the page works
 	}
 	
-	@Test (groups = {"GestionesPerfilOficina","NumerosAmigos","E2E"}, dataProvider="NumerosAmigosModificacion")
+	@Test (groups = {"GestionesPerfilOficina","NumerosAmigos","E2E", "Ciclo1"}, dataProvider="NumerosAmigosModificacion")
 	public void TS100603_CRM_Movil_REPRO_FF_Modificacion_Posventa_Telefonico(String sDNI, String sLinea, String sNumeroVOZ, String sNumeroSMS) {
 		imagen = "TS100603";
 		BasePage cambioFrame=new BasePage();
@@ -238,7 +238,7 @@ public class GestionesPerfilOficina extends TestBase {
 		//Verify when the page works
 	}
 	
-	@Test (groups = {"GestionesPerfilOficina","NumerosAmigos","E2E"}, dataProvider="NumerosAmigosBaja")
+	@Test (groups = {"GestionesPerfilOficina","NumerosAmigos","E2E", "Ciclo1"}, dataProvider="NumerosAmigosBaja")
 	public void TS100605_CRM_Movil_REPRO_FF_Baja_Presencial(String sDNI, String sLinea, String sVOZorSMS) {
 		imagen = "TS100605";
 		BasePage cambioFrame=new BasePage();
@@ -2301,9 +2301,9 @@ public class GestionesPerfilOficina extends TestBase {
 		
 	}
 	
-	@Test (groups = {"GestionesPerfilOficina","RenovacionCuota","E2E"}, dataProvider="RenovacionCuotaSinSaldoConTC")
+	@Test (groups = {"GestionesPerfilOficina","RenovacionCuota","E2E", "Ciclo1"}, dataProvider="RenovacionCuotaSinSaldoConTC")
 	public void TS135397_CRM_Movil_REPRO_Renovacion_de_cuota_Presencial_Internet_50_MB_Dia_TC_sin_Credito(String sMonto, String sDNI, String sLinea, String sBanco, String sTarjeta, String sNumTarjeta, String sVenceMes, String sVenceAno, String sCodSeg, String sTipoDNI, String sDNITarjeta, String sTitular, String sPromo, String sCuotas) {
-		imagen = "TS135396";
+		imagen = "TS135397";
 		//Check all
 		BasePage cambioFrameByID=new BasePage();
 		driver.switchTo().frame(cambioFrameByID.getFrameForElement(driver, By.id("SearchClientDocumentType")));
