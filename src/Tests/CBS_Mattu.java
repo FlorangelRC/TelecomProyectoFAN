@@ -11,6 +11,7 @@ import org.testng.Assert;
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
+import org.w3c.dom.Document;
 
 import Pages.BasePage;
 import Pages.CBS;
@@ -120,22 +121,20 @@ public class CBS_Mattu extends TestBase {
 		
 		SOAPClientSAAJ sSCS = new SOAPClientSAAJ();
 		CBS cCBS = new CBS();
-		String sResponse = sSCS.callSoapWebService(cCBS.sRequestByOrder(sOrder), sEndPoint);
+		Document sResponse = sSCS.callSoapWebService(cCBS.sRequestByOrder(sOrder), sEndPoint);
 		System.out.println("sResponse: " + sResponse);
 	}
 	
 	@Test
 	public void ValidarInfoCuenta(String sLinea, String sNombre, String sApellido) {
-		String sEndPoint = "Alta de Linea";
+		String sEndPoint = "Datos Usuario";
 		//String sLinea = "";
 		String sMessageSeq = "QCI"+ ((new java.text.SimpleDateFormat("yyyyMMddHHmmss")).format(new Date())).toString()+Integer.toString((int)(Math.random()*1000));
 		String sImsi = "";
 		String sICCD = "";
 		SOAPClientSAAJ sSCS = new SOAPClientSAAJ();
 		CBS cCBS = new CBS();
-		String sResponse = cCBS.sCBS_Request_Validador_Alta_Linea(sSCS.callSoapWebService(cCBS.sRequestByLinea(sLinea, sMessageSeq), sEndPoint), sLinea, sImsi, sICCD, sNombre, sApellido);
-		System.out.println("sResponde ="+sResponse);
-		Assert.assertTrue(sResponse.equals("true"));
+		cCBS.sCBS_Request_Validador_Alta_Linea(sSCS.callSoapWebService(cCBS.sRequestByLinea(sLinea, sMessageSeq), sEndPoint), sLinea, sImsi, sICCD, sNombre, sApellido);
 	}
 	
 	@Test
@@ -145,10 +144,24 @@ public class CBS_Mattu extends TestBase {
 		
 		SOAPClientSAAJ sSCS = new SOAPClientSAAJ();
 		CBS cCBS = new CBS();
-		String sResponse = cCBS.sCBS_TC_Request_Validador(sSCS.callSoapWebService(cCBS.sRequestByTC(sMessageSeq, sPaymentChannelID, sAccountKey, sPaymentMethod, sAmount, sAccountNumber, sAccountName, sExpirationDate, sCVV, sInvoiceno, sCardHolderName, sCardHolderNumber), sEndPoint));
+		Document sResponse = cCBS.sCBS_TC_Request_Validador(sSCS.callSoapWebService(cCBS.sRequestByTC(sMessageSeq, sPaymentChannelID, sAccountKey, sPaymentMethod, sAmount, sAccountNumber, sAccountName, sExpirationDate, sCVV, sInvoiceno, sCardHolderName, sCardHolderNumber), sEndPoint));
 		//cCBS.sCBS_TC_Request_Validador(sResponse);
 		System.out.println("sResponde ="+sResponse);
 		boolean bAssert = sResponse.equals("true");
 		return bAssert;
+	}
+	
+	@Test
+	public Document Servicio_queryLiteBySubscriber(String sLinea) {
+		String sEndPoint = "Datos Usuario";
+		//String sLinea = "";
+		String sMessageSeq = "QCI"+ ((new java.text.SimpleDateFormat("yyyyMMddHHmmss")).format(new Date())).toString()+Integer.toString((int)(Math.random()*1000));
+		SOAPClientSAAJ sSCS = new SOAPClientSAAJ();
+		CBS cCBS = new CBS();
+		Document sResponse = cCBS.sValidacion_ResponseQueryLiteBySubscriber(sSCS.callSoapWebService(cCBS.sRequestQueryLiteBySubscriber(sLinea, sMessageSeq), sEndPoint));
+		System.out.println("sResponde ="+sResponse);
+		//Assert.assertFalse(sResponse.startsWith("false"));
+		System.out.println(cCBS.ObtenerValorResponse(sResponse, "bcs:MainBalance"));
+		return sResponse;
 	}
 }

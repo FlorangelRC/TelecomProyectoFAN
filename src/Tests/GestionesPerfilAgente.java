@@ -21,6 +21,7 @@ import org.testng.annotations.Test;
 import Pages.Accounts;
 import Pages.BasePage;
 import Pages.CBS;
+import Pages.ContactSearch;
 import Pages.CustomerCare;
 import Pages.Marketing;
 import Pages.PagePerfilTelefonico;
@@ -199,7 +200,7 @@ public class GestionesPerfilAgente extends TestBase{
 		String datos = tabla.findElements(By.tagName("tr")).get(4).findElements(By.tagName("td")).get(1).getText();
 		Assert.assertTrue(datos.equalsIgnoreCase("activada")||datos.equalsIgnoreCase("activated"));
 	}
-	@Test(groups = { "GestionesPerfilAgente","CambioSimCard", "E2E" }, priority = 1, dataProvider = "CambioSimCardAgente")
+	@Test(groups = { "GestionesPerfilAgente","CambioSimCard", "E2E","Ciclo3" }, priority = 1, dataProvider = "CambioSimCardAgente")
 	public void TSCambioSimCardAgente(String sDNI, String sLinea) throws AWTException {
 		imagen = "TSCambioSimCardAgente";
 		detalles = null;
@@ -264,7 +265,7 @@ public class GestionesPerfilAgente extends TestBase{
 		
 	}
 	
-	@Test (groups = {"GestionesPerfilOficina","VentaDePack","E2E"}, dataProvider="PackAgente")
+	@Test (groups = {"GestionesPerfilOficina","VentaDePack","E2E","Ciclo1"}, dataProvider="PackAgente")
 	public void Venta_de_Pack(String sDNI, String sLinea, String sPackAgente, String cBanco, String cTarjeta, String cPromo, String cCuotas, String cNumTarjeta, String cVenceMes, String cVenceAno, String cCodSeg, String cTipoDNI, String cDNITarjeta, String cTitular) throws AWTException{
 		imagen = "Venta_de_Pack";
 		detalles = null;
@@ -312,19 +313,19 @@ public class GestionesPerfilAgente extends TestBase{
 		//datosOrden.add("Operacion: Compra de Pack- Cuenta: "+accid+" Invoice: "+invoice.split("-")[0]+invoice.split("-")[1]);
 		System.out.println("Operacion: Compra de Pack- Cuenta: "+accid+" Invoice: "+invoice.split("-")[1] + "\tAmmount: " +invoice.split("-")[0]);
 		CBS_Mattu invoSer = new CBS_Mattu();
-		Assert.assertTrue(invoSer.PagaEnCajaTC("1005", accid, "2001", invoice.split("-")[1], invoice.split("-")[0],  cDNITarjeta, cTitular, cVenceAno+cVenceMes, cCodSeg, cTitular, cNumTarjeta));
+		Assert.assertTrue(invoSer.PagoEnCaja("1005", accid, "1001", invoice.split("-")[1], invoice.split("-")[1],driver));
+		
+		//Assert.assertTrue(invoSer.PagaEnCajaTC("1005", accid, "2001", invoice.split("-")[1], invoice.split("-")[0],  cDNITarjeta, cTitular, cVenceAno+cVenceMes, cCodSeg, cTitular, cNumTarjeta));
 		sleep(5000);
 		driver.navigate().refresh();
 		sleep(10000);
-		//cc.obtenerTNyMonto2(driver, sOrden);
-		//sleep(10000);
 		driver.switchTo().frame(cambioFrame(driver, By.cssSelector(".hasMotif.orderTab.detailPage.ext-webkit.ext-chrome.sfdcBody.brandQuaternaryBgr")));
 		WebElement tabla = driver.findElement(By.id("ep")).findElements(By.tagName("table")).get(1);
 		String datos = tabla.findElements(By.tagName("tr")).get(4).findElements(By.tagName("td")).get(1).getText();
 		Assert.assertTrue(datos.equalsIgnoreCase("activada")||datos.equalsIgnoreCase("activated"));
 	}
 	
-	@Test (groups = {"GestionesPerfilAgente", "AnulacionDeVenta", "E2E"}, dataProvider = "CuentaAnulacionDeVenta")
+	@Test (groups = {"GestionesPerfilAgente", "AnulacionDeVenta", "E2E","Ciclo4"}, dataProvider = "CuentaAnulacionDeVenta")
 	public void Anulacion_De_Venta(String cDNI) {
 		imagen = "Anulacion_De_Venta";
 		detalles = null;
@@ -347,6 +348,57 @@ public class GestionesPerfilAgente extends TestBase{
 		driver.switchTo().frame(cambioFrame(driver, By.xpath("//*[@id=\"ep\"]/div[2]/div[2]/table")));
 		String gestion = driver.findElement(By.xpath("//*[@id=\"ep\"]/div[2]/div[2]/table")).findElements(By.tagName("tr")).get(4).getText();
 		Assert.assertTrue(gestion.contains("Estado") && (gestion.contains("Cancelada") || gestion.contains("Cancelled")));
+	}
+	
+	@Test(groups = {"Sales", "PreparacionNominacion","E2E","Ciclo1"}, dataProvider="DatosSalesNominacion") 
+	public void TS_CRM_Nominacion_Argentino_Agente(String sLinea, String sDni, String sNombre, String sApellido, String sSexo, String sFnac, String sEmail, String sProvincia, String sLocalidad, String sCalle, String sNumCa, String sCP) { 
+		imagen = "TS_CRM_Nominacion_Argentino_Agente"+sDni;
+		sleep(5000);
+		driver.switchTo().frame(cambioFrame(driver, By.id("SearchClientDocumentType")));
+		SalesBase SB = new SalesBase(driver);
+		driver.findElement(By.id("PhoneNumber")).sendKeys(sLinea);
+		  driver.findElement(By.id("SearchClientsDummy")).click();
+		  sleep(10000);
+		WebElement cli = driver.findElement(By.id("tab-scoped-1"));
+		cli.findElement(By.tagName("tbody")).findElement(By.tagName("tr")).click();
+		sleep(3000);
+		List<WebElement> Lineas = driver.findElement(By.id("tab-scoped-1")).findElement(By.tagName("tbody")).findElements(By.tagName("tr"));
+		for(WebElement UnaL: Lineas) {
+			if(UnaL.getText().toLowerCase().contains("plan con tarjeta")||UnaL.getText().toLowerCase().contains("plan prepago nacional")) {
+				UnaL.findElements(By.tagName("td")).get(6).findElement(By.tagName("svg")).click();
+				System.out.println("Linea Encontrada");
+				break;
+			}
+		}
+		sleep(13000);
+		ContactSearch contact = new ContactSearch(driver);
+		contact.searchContact2("DNI", sDni, sSexo);
+		contact.Llenar_Contacto(sNombre, sApellido, sFnac);
+		try {contact.ingresarMail(sEmail, "si");}catch (org.openqa.selenium.ElementNotVisibleException ex1) {}
+		contact.tipoValidacion("documento");
+		try {
+			contact.subirArchivo("C:\\Users\\florangel\\Downloads\\mapache.jpg", "si");
+		}catch(Exception ex1) {}
+			BasePage bp = new BasePage(driver);
+		bp.setSimpleDropdown(driver.findElement(By.id("ImpositiveCondition")), "IVA Consumidor Final");
+		SB.Crear_DomicilioLegal(sProvincia, sLocalidad, sCalle, "", sNumCa, "", "", sCP);
+		sleep(38000);
+		//contact.subirformulario("C:\\Users\\florangel\\Downloads\\form.pdf", "si");
+		//sleep(30000);
+		List <WebElement> element = driver.findElement(By.id("NominacionExitosa")).findElements(By.tagName("p"));
+		System.out.println("cont="+element.get(0).getText());
+		boolean a = false;
+		for (WebElement x : element) {
+			if (x.getText().toLowerCase().contains("nominaci\u00f3n exitosa!")) {
+				a = true;
+				System.out.println(x.getText());
+			}
+		}
+		Assert.assertTrue(a);
+		driver.findElement(By.id("FinishProcess_nextBtn")).click();
+		sleep(3000);
+		CBS_Mattu invoSer = new CBS_Mattu();
+		invoSer.ValidarInfoCuenta(sLinea, sNombre,sApellido);
 	}
 	
 }
