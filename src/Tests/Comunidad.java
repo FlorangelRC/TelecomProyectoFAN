@@ -83,7 +83,7 @@ public class Comunidad extends TestBase {
 		}
 	
 	@Test (groups = {"Communities", "E2E"})
-	public void CRM_PRE_Community_Desktop_Mis_gestiones_Filtro_Fecha() {
+	public void CRM_PRE_Community_Desktop_Mis_gestiones_Filtro_Fecha(String fecha) {
 		sleep(5000);
 		driver.switchTo().frame(cambioFrame(driver, By.cssSelector(".vlocity.via-slds")));
 		buscarYClick(driver.findElements(By.cssSelector(".slds-col.slds-size--1-of-1")), "equals", "plan con tarjeta repro");
@@ -92,15 +92,19 @@ public class Comunidad extends TestBase {
 		buscarYClick(driver.findElements(By.className("availables_text")),"equals", "mis gestiones");
 		sleep(2000);
 		driver.switchTo().frame(cambioFrame(driver, By.cssSelector(".slds-grid.slds-wrap.slds-grid--pull-padded.slds-m-around--medium.slds-p-around--medium.negotationsfilter")));
-		driver.findElement(By.id("text-input-id-1")).click();
-		String month="Sept";
-		String date="28";
+		WebElement calElement = driver.findElement(By.id("text-input-id-1"));
+		calElement.click();
+		fecha= ("20/08/2018");
+		driver.findElement(By.cssSelector(".slds-datepicker.slds-dropdown.slds-dropdown--left")).getAttribute(fecha);
+		//SelectDayFromMultiDateCalendar ("20");
 		
-		//String setDatestr = "22/08/2017";
-		//System.out.println(driver.findElement(By.cssSelector(".slds-datepicker.slds-dropdown.slads-dropdown--left")).getText());
-	
+		
+		
+		
 		
 	}
+	
+
 	//*[@id="text-input-id-1"]
 	//*[@id="text-input-id-2"]
 	@Test (groups = {"Communities", "E2E"})
