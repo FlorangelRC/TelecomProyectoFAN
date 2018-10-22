@@ -6,9 +6,11 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 import java.util.TimeZone;
+import java.util.concurrent.ConcurrentHashMap.KeySetView;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
+import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.Select;
@@ -92,17 +94,22 @@ public class Comunidad extends TestBase {
 		buscarYClick(driver.findElements(By.className("availables_text")),"equals", "mis gestiones");
 		sleep(2000);
 		driver.switchTo().frame(cambioFrame(driver, By.cssSelector(".slds-grid.slds-wrap.slds-grid--pull-padded.slds-m-around--medium.slds-p-around--medium.negotationsfilter")));
-		driver.findElement(By.id("text-input-id-1")).click();
+		WebElement inicio = driver.findElement(By.id("text-input-id-1"));
+		inicio.click();
+		/*inicio.sendKeys(Keys.ARROW_RIGHT);
+		inicio.sendKeys(Keys.ARROW_DOWN);
+		inicio.sendKeys(Keys.ARROW_DOWN);
+		WebElement fin = driver.findElement(By.id("text-input-id-2"));
+		fin.click();
+		fin.sendKeys(Keys.ARROW_UP);
+		fin.sendKeys(Keys.ARROW_UP);*/
 		String month="Sept";
 		String date="28";
 		
 		//String setDatestr = "22/08/2017";
-		//System.out.println(driver.findElement(By.cssSelector(".slds-datepicker.slds-dropdown.slads-dropdown--left")).getText());
-	
-		
+		System.out.println(driver.findElement(By.cssSelector(".slds-datepicker.slds-dropdown.slds-dropdown--left")).getText());
 	}
-	//*[@id="text-input-id-1"]
-	//*[@id="text-input-id-2"]
+	
 	@Test (groups = {"Communities", "E2E"})
 	public void TS135769_CRM_PRE_Community_Desktop_Gestiones_en_Curso_y_Completadas_5() {
 		boolean cursoYCompletadas = false;
