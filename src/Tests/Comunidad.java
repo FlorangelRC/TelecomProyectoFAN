@@ -101,12 +101,43 @@ public class Comunidad extends TestBase {
 		sleep(2000);
 		driver.switchTo().frame(cambioFrame(driver, By.cssSelector(".slds-grid.slds-wrap.slds-grid--pull-padded.slds-m-around--medium.slds-p-around--medium.negotationsfilter")));
 		driver.findElement(By.id("text-input-id-1")).click();
-		DateTimePicker("12");
+		WebElement table = driver.findElement(By.cssSelector(".slds-datepicker.slds-dropdown.slds-dropdown--left"));
+		sleep(3000);
+		List<WebElement> tableRows = table.findElements(By.xpath("//tr//td"));
+			for (WebElement cell : tableRows) {
+				try {
+				if (cell.getText().equals("13")) {
+					cell.click();
+					}
+				}catch(Exception e) {}
+			}
 		driver.findElement(By.id("text-input-id-2")).click();
-		DateTimePicker("19");
+		WebElement table_2 = driver.findElement(By.cssSelector(".slds-datepicker.slds-dropdown.slds-dropdown--left"));
+		sleep(3000);
+		List<WebElement> tableRows_2 = table_2.findElements(By.xpath("//tr//td"));
+			for (WebElement cell : tableRows_2) {
+				try {
+				if (cell.getText().equals("15")) {
+					cell.click();
+					}
+				}catch(Exception e) {}
+			}
 		WebElement gestiones =driver.findElement(By.xpath("/html/body/div[1]/div[1]/ng-include/div/div/div[2]/div[4]/div[2]")).findElement(By.tagName("button"));
 		gestiones.click();
 		Assert.assertTrue(gestiones.isDisplayed());
+	}
+	
+	public void DateTimePicker(String day) {
+		WebElement table = driver.findElement(By.cssSelector(".slds-datepicker.slds-dropdown.slds-dropdown--left"));
+		sleep(3000);
+		List<WebElement> tableRows = table.findElements(By.xpath("//tr//td"));
+			for (WebElement cell : tableRows) {
+				try {
+				if (cell.getText().equals(day)) {
+					cell.click();
+					}
+				}catch(Exception e) {}
+			}
 	}
 	
 	@Test (groups = {"Communities", "E2E"})
