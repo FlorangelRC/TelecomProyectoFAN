@@ -2617,4 +2617,36 @@ public class GestionesPerfilOficina extends TestBase {
 		Assert.assertTrue(enc);
 	}
 	
+
+	@Test(groups={"Sales", "Ciclo1"},dataProvider = "CuentaModificacionDeDatos")
+	public void TS_135496_CRM_Movil_REPRO_Busqueda_DNI_Numero_de_Documento(String cDNI){
+		driver.switchTo().frame(cambioFrame(driver, By.id("SearchClientDocumentType")));
+		sb.BuscarCuenta("DNI", cDNI);
+		try {Thread.sleep(10000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		List<WebElement> solapas = driver.findElement(By.className("slds-tabs--scoped__nav")).findElements(By.tagName("li"));
+		assertTrue(solapas.get(0).findElement(By.tagName("a")).getText().equals("Clientes Activos"));
+	}
+	
+	@Test(groups={"Sales", "Ciclo1"})
+	public void TS_135503_CRM_Movil_REPRO_Busqueda_Apellido(){
+		driver.switchTo().frame(cambioFrame(driver, By.id("SearchClientDocumentType")));
+		sb.BuscarAvanzada("","Miranda","","","");
+		sleep(1500);
+		driver.findElement(By.id("SearchClientsDummy")).click();
+		try {Thread.sleep(10000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		List<WebElement> solapas = driver.findElement(By.className("slds-tabs--scoped__nav")).findElements(By.tagName("li"));
+		assertTrue(solapas.get(0).findElement(By.tagName("a")).getText().equals("Clientes Activos"));
+	}
+	
+	@Test(groups={"Sales", "Ciclo1"})
+	public void TS_135509_CRM_Movil_REPRO_Busqueda_Numero_de_Cuenta(){
+		driver.switchTo().frame(cambioFrame(driver, By.id("SearchClientDocumentType")));
+		sb.BuscarAvanzada("", "", "", "9900000766810001", "");
+		sleep(1500);
+		driver.findElement(By.id("SearchClientsDummy")).click();
+		try {Thread.sleep(10000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		List<WebElement> solapas = driver.findElement(By.className("slds-tabs--scoped__nav")).findElements(By.tagName("li"));
+		assertTrue(solapas.get(0).findElement(By.tagName("a")).getText().equals("Clientes Activos"));
+	}
+	
 }	
