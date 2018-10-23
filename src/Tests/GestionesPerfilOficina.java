@@ -25,6 +25,7 @@ import org.testng.annotations.Test;
 
 import Pages.Accounts;
 import Pages.BasePage;
+import Pages.CBS;
 import Pages.ContactSearch;
 import Pages.CustomerCare;
 import Pages.Marketing;
@@ -43,8 +44,8 @@ public class GestionesPerfilOficina extends TestBase {
 	
 	@BeforeClass(alwaysRun=true)
 	public void init() {
-		CBS_Mattu serv = new CBS_Mattu();
-		serv.Servicio_queryLiteBySubscriber("2475416739");
+		/*CBS_Mattu serv = new CBS_Mattu();
+		serv.Servicio_queryLiteBySubscriber("2475416739");*/
 		driver = setConexion.setupEze();
 		sleep(5000);
 		sb = new SalesBase(driver);
@@ -657,7 +658,11 @@ public class GestionesPerfilOficina extends TestBase {
 	}
 	
 	@Test (groups = {"ProblemaRecarga", "GestionesPerfilOficina","E2E","Ciclo3"}, dataProvider="CuentaProblemaRecarga") 
-	public void problemaRecargaOnline(String cDNI) {
+	public void problemaRecargaOnline(String cDNI, String sLinea) {
+		CBS_Mattu verifM = new CBS_Mattu();
+		CBS verif = new CBS();
+		String saldo = verif.ObtenerValorResponse(verifM.Servicio_queryLiteBySubscriber(sLinea), "bcs:MainBalance");
+		Integer saldo_1 = Integer.parseInt(saldo.substring(0, 5));
 		imagen = "problemaRecargaOnline";
 		driver.switchTo().frame(cambioFrame(driver, By.id("SearchClientDocumentType")));
 		sb.BuscarCuenta("DNI", cDNI);
@@ -702,7 +707,7 @@ public class GestionesPerfilOficina extends TestBase {
 	}
 	
 	@Test (groups = {"ProblemaRecarga", "GestionesPerfilOficina","E2E","Ciclo3"}, dataProvider="CuentaProblemaRecarga") //Error al intentar impactar la recarga
-	public void poblemaRecargaCredito(String cDNI) {
+	public void poblemaRecargaCredito(String cDNI, String sLinea) {
 		imagen = "poblemaRecargaCredito";
 		driver.switchTo().frame(cambioFrame(driver, By.id("SearchClientDocumentType")));
 		sb.BuscarCuenta("DNI", cDNI);
@@ -2448,9 +2453,9 @@ public class GestionesPerfilOficina extends TestBase {
 		System.out.println(saldo.get(1).getText());*/
 		Assert.assertTrue(!(saldo.isEmpty()));
 		sleep(8000);
-		WebElement saldo = driver.findElement(By.className("header-right")).findElements(By.tagName("span")).get(1);
+		WebElement saldo1 = driver.findElement(By.className("header-right")).findElements(By.tagName("span")).get(1);
 		sleep(8000);
-		System.out.println(saldo.getText());
+		System.out.println(saldo1.getText());
 		//Assert.assertTrue(saldo);
 	}
 	@Test (groups = {"GestionesPerfilOficina", "Consulta detalle de consumo Datos", "Ciclo2"}, dataProvider = "CuentaTriviasYSuscripciones")
