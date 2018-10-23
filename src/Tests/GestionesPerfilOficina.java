@@ -44,8 +44,9 @@ public class GestionesPerfilOficina extends TestBase {
 	
 	@BeforeClass(alwaysRun=true)
 	public void init() {
-		/*CBS_Mattu serv = new CBS_Mattu();
-		serv.Servicio_queryLiteBySubscriber("2475416739");*/
+		CBS_Mattu serv = new CBS_Mattu();
+		CBS sercus = new CBS();
+		Assert.assertTrue(sercus.validarNumeroAmigos(serv.Servicio_QueryCustomerInfo("2475416780"), "voz"));
 		driver = setConexion.setupEze();
 		sleep(5000);
 		sb = new SalesBase(driver);
