@@ -25,6 +25,7 @@ import org.testng.annotations.Test;
 
 import Pages.Accounts;
 import Pages.BasePage;
+import Pages.CBS;
 import Pages.ContactSearch;
 import Pages.CustomerCare;
 import Pages.Marketing;
@@ -37,18 +38,20 @@ public class GestionesPerfilOficina extends TestBase {
 
 	private WebDriver driver;
 	private SalesBase sb;
-	private CustomerCare cc;	
+	private CustomerCare cc;
+	private CBS cbs;
+	private CBS_Mattu cbsm;
 	List<String> sOrders = new ArrayList<String>();
 	String imagen;
 	
 	@BeforeClass(alwaysRun=true)
 	public void init() {
-		CBS_Mattu serv = new CBS_Mattu();
-		serv.Servicio_queryLiteBySubscriber("2475416739");
 		driver = setConexion.setupEze();
 		sleep(5000);
 		sb = new SalesBase(driver);
 		cc = new CustomerCare(driver);
+		cbs = new CBS();
+		cbsm = new CBS_Mattu();
 		loginOfCom(driver);
 		sleep(22000);
 		try {
@@ -59,8 +62,7 @@ public class GestionesPerfilOficina extends TestBase {
 			sleep(6000);
 		}
 		driver.switchTo().defaultContent();
-		sleep(3000);
-		
+		sleep(3000);		
 	}
 	
 	@BeforeMethod(alwaysRun=true)
@@ -780,7 +782,7 @@ public class GestionesPerfilOficina extends TestBase {
 		if (TestBase.urlAmbiente.contains("sit")) {
 			String orden = cc.obtenerOrden(driver, "Inconvenientes con cargos tasados y facturados");
 			sOrders.add("Inconvenientes con cargos tasados y facturados, orden numero: " + orden + " con numero de DNI: " + cDNI);
-			Assert.assertTrue(cc.verificarOrden(orden));		
+			Assert.assertTrue(cc.verificarOrden(orden));
 		} else {
 			String orden = driver.findElement(By.xpath("//*[@id=\"txtSuccessConfirmation\"]/div")).findElement(By.tagName("strong")).getText();
 			sOrders.add("Inconvenientes con cargos tasados y facturados, numero de orden: " + orden + " de cuenta con DNI: " + cDNI);
@@ -1193,6 +1195,8 @@ public class GestionesPerfilOficina extends TestBase {
 	public void TS103599_CRM_Movil_REPRO_Se_crea_caso_de_ajuste_menor_a_500_pesos_FAN_Front_OOCC(String cDNI) {
 		imagen = "TS103599";
 		boolean gest = false;
+		String oldValue = cbs.ObtenerValorResponse(cbsm.Servicio_queryLiteBySubscriber("1160551371"), "bcs:MainBalance");
+		int viejoCredito = Integer.parseInt(oldValue);
 		driver.switchTo().frame(cambioFrame(driver, By.id("SearchClientDocumentType")));
 		sb.BuscarCuenta("DNI", cDNI);
 		driver.findElement(By.cssSelector(".slds-tree__item.ng-scope")).click();
@@ -1227,6 +1231,9 @@ public class GestionesPerfilOficina extends TestBase {
 				gest = true;
 			}
 		}
+		String newValue = cbs.ObtenerValorResponse(cbsm.Servicio_queryLiteBySubscriber("1160551371"), "bcs:MainBalance");
+		int nuevoCredito = Integer.parseInt(newValue);
+		Assert.assertTrue(viejoCredito + 499990000 == nuevoCredito);
 		Assert.assertTrue(gest);
 		if (TestBase.urlAmbiente.contains("sit")) {
 			String orden = cc.obtenerOrden(driver, "Inconvenientes con cargos tasados y facturados");
