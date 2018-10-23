@@ -2,11 +2,16 @@ package Tests;
 
 import java.awt.AWTException;
 import java.io.IOException;
+import java.time.LocalDate;
+import java.time.YearMonth;
+import java.time.format.DateTimeFormatter;
+import java.time.temporal.ChronoUnit;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 import java.util.TimeZone;
 import java.util.concurrent.ConcurrentHashMap.KeySetView;
+import java.util.concurrent.ExecutionException;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
@@ -28,6 +33,7 @@ import sun.util.resources.CalendarData;
 public class Comunidad extends TestBase {
 	
 	private WebDriver driver;
+
 	
 	//Befores & Afters
 	
@@ -85,7 +91,7 @@ public class Comunidad extends TestBase {
 		}
 	
 	@Test (groups = {"Communities", "E2E"})
-	public void CRM_PRE_Community_Desktop_Mis_gestiones_Filtro_Fecha(String fecha) {
+	public void T135791_CRM_PRE_Community_Desktop_Mis_gestiones_Filtro_Fecha()  {
 		sleep(5000);
 		driver.switchTo().frame(cambioFrame(driver, By.cssSelector(".vlocity.via-slds")));
 		buscarYClick(driver.findElements(By.cssSelector(".slds-col.slds-size--1-of-1")), "equals", "plan con tarjeta repro");
@@ -94,25 +100,13 @@ public class Comunidad extends TestBase {
 		buscarYClick(driver.findElements(By.className("availables_text")),"equals", "mis gestiones");
 		sleep(2000);
 		driver.switchTo().frame(cambioFrame(driver, By.cssSelector(".slds-grid.slds-wrap.slds-grid--pull-padded.slds-m-around--medium.slds-p-around--medium.negotationsfilter")));
-		WebElement calElement = driver.findElement(By.id("text-input-id-1"));
-		calElement.click();
-		fecha= ("20/08/2018");
-		driver.findElement(By.cssSelector(".slds-datepicker.slds-dropdown.slds-dropdown--left")).getAttribute(fecha);
-		//SelectDayFromMultiDateCalendar ("20");
-		WebElement inicio = driver.findElement(By.id("text-input-id-1"));
-		inicio.click();
-		/*inicio.sendKeys(Keys.ARROW_RIGHT);
-		inicio.sendKeys(Keys.ARROW_DOWN);
-		inicio.sendKeys(Keys.ARROW_DOWN);
-		WebElement fin = driver.findElement(By.id("text-input-id-2"));
-		fin.click();
-		fin.sendKeys(Keys.ARROW_UP);
-		fin.sendKeys(Keys.ARROW_UP);*/
-		String month="Sept";
-		String date="28";
-		
-		//String setDatestr = "22/08/2017";
-		System.out.println(driver.findElement(By.cssSelector(".slds-datepicker.slds-dropdown.slds-dropdown--left")).getText());
+		driver.findElement(By.id("text-input-id-1")).click();
+		DateTimePicker("12");
+		driver.findElement(By.id("text-input-id-2")).click();
+		DateTimePicker("19");
+		WebElement gestiones =driver.findElement(By.xpath("/html/body/div[1]/div[1]/ng-include/div/div/div[2]/div[4]/div[2]")).findElement(By.tagName("button"));
+		gestiones.click();
+		Assert.assertTrue(gestiones.isDisplayed());
 	}
 	
 	@Test (groups = {"Communities", "E2E"})

@@ -1472,4 +1472,20 @@ public class TestBase {
 	    Login lLogin = new Login(driver);
 	    lLogin.ingresarComunidad();
 	}
-}
+	
+	public void DateTimePicker(String day) {
+		try {
+		WebElement table = driver.findElement(By.cssSelector(".slds-datepicker.slds-dropdown.slds-dropdown--left"));
+		sleep(3000);
+		List<WebElement> tableRows = table.findElements(By.xpath("//tr//td"));
+			for (WebElement cell : tableRows) {
+				try {
+				if (cell.getText().equals(day)) {
+					cell.click();
+					}
+				}catch(Exception e) {}
+			}
+		}catch (Exception e) {}	
+		
+	}
+	}
