@@ -1,7 +1,5 @@
 package Tests;
 
-import static org.testng.Assert.assertTrue;
-
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -31,9 +29,8 @@ public class TestsXappia extends TestBase {
 	private WebDriver driver;
 	private CustomerCare cc;
 	private SalesBase sb;
-	private TestBase tb;
 	
-	@BeforeClass (groups = "UAT")
+	//@BeforeClass (groups = "UAT")
 	public void loginUAT() {
 		driver = setConexion.setupEze();
 		driver.get("https://telecomcrm--uat.cs53.my.salesforce.com");
@@ -63,6 +60,23 @@ public class TestsXappia extends TestBase {
 		sb = new SalesBase(driver);
 	}
 	
+	//@BeforeMethod (groups = "UAT")
+	public void beforeUAT() {
+		driver.get("https://telecomcrm--uat.cs53.my.salesforce.com");
+	}
+	
+	@BeforeMethod (groups = "SIT")
+	public void beforeSIT() {
+		driver.get("https://crm--sit.cs14.my.salesforce.com/");
+	}
+	
+	//@AfterClass (alwaysRun = true)
+	public void quit() {
+		driver.quit();
+	}
+	
+	//---------------------------------------- METODOS PRIVADOS ----------------------------------------\\
+	
 	private void irAConsolaFAN() {
 		try {
 			cc.cajonDeAplicaciones("Consola FAN");
@@ -72,7 +86,7 @@ public class TestsXappia extends TestBase {
 		}
 	}
 	
-	public void carrito() {
+	private void carrito() {
 		List <WebElement> boton = driver.findElements(By.cssSelector(".slds-button.slds-button.slds-button--icon"));
 		for(WebElement x : boton) {
 			if(x.getText().toLowerCase().equals("catalogo")) {
@@ -108,7 +122,7 @@ public class TestsXappia extends TestBase {
 		buscarYClick(driver.findElements(By.tagName("button")), "equals", "gesti\u00f3n de clientes");
 	}
 	
-	public void LoguearAgente(){
+	private void LoguearAgente(){
 		irAConsolaFAN();
 		driver.findElement(By.id("userNav")).click();
 		driver.findElement(By.id("app_logout")).click();
@@ -128,20 +142,8 @@ public class TestsXappia extends TestBase {
 		sleep(8000);
 	}
 	
-	@BeforeMethod (groups="UAT")
-	public void beforeUAT() {
-		driver.get("https://telecomcrm--uat.cs53.my.salesforce.com");
-	}
+	//--------------------------------------------------------------------------------------------------\\
 	
-	@BeforeMethod (groups="SIT")
-	public void beforeSIT() {
-		driver.get("https://crm--sit.cs14.my.salesforce.com/");
-	}
-	
-	@AfterClass (alwaysRun = true)
-	public void quit() {
-		driver.quit();
-	}
 	
 	@Test (groups = "UAT")
 	public void TXU0001_Gestiones_Del_Panel_Izquierdo_En_Consola_FAN() {
@@ -231,7 +233,7 @@ public class TestsXappia extends TestBase {
 		}
 	}
 	
-	@Test (groups = {"UAT"}, dataProvider="NumerosAmigos")
+	@Test (groups = "UAT", dataProvider="NumerosAmigos")
 	public void TXU0004_FF_No_Acepta_Numeros_De_Personal(String sDNI, String sLinea, String sNumeroVOZ, String sNumeroSMS) {
 		irAConsolaFAN();
 		sb.cerrarPestaniaGestion(driver);
@@ -243,13 +245,11 @@ public class TestsXappia extends TestBase {
 		String accid = driver.findElement(By.cssSelector(".searchClient-body.slds-hint-parent.ng-scope")).findElements(By.tagName("td")).get(5).getText();
 		System.out.println("id "+accid);
 		driver.findElement(By.cssSelector(".slds-tree__item.ng-scope")).findElement(By.tagName("div")).click();
-		sleep(25000);
-		
+		sleep(25000);		
 		CustomerCare cCC = new CustomerCare(driver);
 		cCC.seleccionarCardPornumeroLinea(sLinea, driver);
 		sleep(3000);
-		cCC.irAGestionEnCard("N\u00fameros Gratis");
-		
+		cCC.irAGestionEnCard("N\u00fameros Gratis");		
 		sleep(5000);
 		driver.switchTo().defaultContent();
 		driver.switchTo().frame(cambioFrame(driver, By.cssSelector(".slds-col--padded.slds-size--1-of-2")));
@@ -281,8 +281,7 @@ public class TestsXappia extends TestBase {
 		SalesBase sSB = new SalesBase(driver);
 		sSB.BuscarCuenta("DNI", "22222009");
 		driver.findElement(By.cssSelector(".slds-tree__item.ng-scope")).findElement(By.tagName("div")).click();
-		sleep(25000);
-		
+		sleep(25000);		
 		driver.switchTo().frame(cambioFrame(driver,By.cssSelector(".console-card.active")));
 		List<WebElement> wDetails = driver.findElements(By.className("detail"));
 		WebElement wDetail = null;
@@ -306,8 +305,7 @@ public class TestsXappia extends TestBase {
 		SalesBase sSB = new SalesBase(driver);
 		sSB.BuscarCuenta("DNI", "22222009");
 		driver.findElement(By.cssSelector(".slds-tree__item.ng-scope")).findElement(By.tagName("div")).click();
-		sleep(25000);
-		
+		sleep(25000);		
 		driver.switchTo().frame(cambioFrame(driver,By.cssSelector(".console-card.active")));
 		List<WebElement> wDetails = driver.findElements(By.className("detail"));
 		WebElement wDetail = null;
@@ -368,8 +366,7 @@ public class TestsXappia extends TestBase {
 		SalesBase sSB = new SalesBase(driver);
 		sSB.BuscarCuenta("DNI", "41582129");
 		driver.findElement(By.cssSelector(".slds-tree__item.ng-scope")).findElement(By.tagName("div")).click();
-		sleep(25000);
-		
+		sleep(25000);		
 		try {
 			cc.openleftpanel();
 		}
@@ -409,13 +406,11 @@ public class TestsXappia extends TestBase {
 		String accid = driver.findElement(By.cssSelector(".searchClient-body.slds-hint-parent.ng-scope")).findElements(By.tagName("td")).get(5).getText();
 		System.out.println("id "+accid);
 		driver.findElement(By.cssSelector(".slds-tree__item.ng-scope")).findElement(By.tagName("div")).click();
-		sleep(25000);
-		
+		sleep(25000);		
 		CustomerCare cCC = new CustomerCare(driver);
 		cCC.seleccionarCardPornumeroLinea(sLinea, driver);
 		sleep(3000);
-		cCC.irAGestionEnCard("N\u00fameros Gratis");
-		
+		cCC.irAGestionEnCard("N\u00fameros Gratis");		
 		sleep(5000);
 		driver.switchTo().defaultContent();
 		driver.switchTo().frame(cambioFrame(driver, By.cssSelector(".slds-col--padded.slds-size--1-of-2")));
@@ -440,8 +435,7 @@ public class TestsXappia extends TestBase {
 		String accid = driver.findElement(By.cssSelector(".searchClient-body.slds-hint-parent.ng-scope")).findElements(By.tagName("td")).get(5).getText();
 		System.out.println("id "+accid);
 		driver.findElement(By.cssSelector(".slds-tree__item.ng-scope")).findElement(By.tagName("div")).click();
-		sleep(25000);
-		
+		sleep(25000);		
 		Marketing mM = new Marketing(driver);
 		mM.closeActiveTab();
 		driver.switchTo().frame(cambioFrame(driver, By.className("detailList")));
@@ -470,11 +464,10 @@ public class TestsXappia extends TestBase {
 		driver.findElement(By.cssSelector(".slds-input.ng-valid.ng-dirty.ng-valid-parse.ng-touched.ng-empty")).sendKeys("Galaxy s8 - Negro");
 		sleep(8000);
 		List<WebElement> agregar = driver.findElements(By.cssSelector(".slds-button.slds-button--neutral.add-button")); 
-			for(WebElement a : agregar){
-				if(a.getText().equals("Agregar")){
-					cc.obligarclick(a);
-				}
-			}
+		for(WebElement a : agregar){
+			if(a.getText().equals("Agregar"))
+				cc.obligarclick(a);
+		}
 		sleep(5000);	
 		sb.continuar();
 		sleep(10000);
@@ -489,57 +482,56 @@ public class TestsXappia extends TestBase {
 		txt2.add("INFORMACI\u00d3N");
 		List<WebElement> pasos = driver.findElements(By.cssSelector(".list-group.vertical-steps.ng-scope"));
 		System.out.println(pasos.size());
-			for(WebElement e: pasos){
-				txt1.add(e.getText());
-				System.out.println(e.getText());
-			}
-		Assert.assertTrue(txt1.containsAll(txt2));
-		}
-		
-	@Test (groups = "SIT")
-	public void TXS_0005_CRM_Verificar_Pasos_Alta_de_Linea_Cliente_Existente_Agente(){
-	LoguearAgente();
-	irAConsolaFAN();
-	sb.cerrarPestaniaGestion(driver);
-	irAGestionDeClientes();
-	driver.switchTo().frame(cambioFrame(driver, By.id("SearchClientDocumentType")));
-	sleep(1000);
-	sb.BuscarCuenta("DNI", "2222203");
-	sleep(5000);
-	carrito();
-	sleep(20000);
-	sb.elegirplan("Plan con Tarjeta");
-	sleep(12000);
-	driver.findElement(By.cssSelector(".slds-input.ng-valid.ng-not-empty.ng-dirty.ng-valid-parse.ng-touched")).clear();
-	sleep(8000);
-	driver.findElement(By.cssSelector(".slds-input.ng-valid.ng-dirty.ng-valid-parse.ng-touched.ng-empty")).sendKeys("Galaxy s8 - Negro");
-	sleep(8000);
-	List<WebElement> agregar = driver.findElements(By.cssSelector(".slds-button.slds-button--neutral.add-button")); 
-		for(WebElement a : agregar){
-			if(a.getText().equals("Agregar")){
-				cc.obligarclick(a);
-			}
-		}
-	sleep(5000);	
-	sb.continuar();
-	sleep(10000);
-	ArrayList<String> txt1 = new ArrayList<String>();
-	ArrayList<String> txt2 = new ArrayList<String>();
-	txt2.add("ASIGNACI\u00d3N DE L\u00cdNEA");
-	txt2.add("VALIDACI\u00d3N DE IDENTIDAD");
-	txt2.add("INGRESO DE SERIAL");
-	txt2.add("SIMULACI\u00d3N DE FACTURA");
-	txt2.add("SELECCI\u00d3N DE MEDIO DE PAGO");
-	txt2.add("RESUMEN DE LA ORDEN DE VENTA");
-	txt2.add("ENV\u00edO FACTURA Y DATOS DE COBRO");
-	txt2.add("INFORMACI\u00d3N");
-	List<WebElement> pasos = driver.findElements(By.cssSelector(".list-group.vertical-steps.ng-scope"));
-	System.out.println(pasos.size());
 		for(WebElement e: pasos){
 			txt1.add(e.getText());
 			System.out.println(e.getText());
 		}
-	Assert.assertTrue(txt1.containsAll(txt2));
+		Assert.assertTrue(txt1.containsAll(txt2));
+	}
+		
+	@Test (groups = "SIT")
+	public void TXS_0005_CRM_Verificar_Pasos_Alta_de_Linea_Cliente_Existente_Agente(){
+		LoguearAgente();
+		irAConsolaFAN();
+		sb.cerrarPestaniaGestion(driver);
+		irAGestionDeClientes();
+		driver.switchTo().frame(cambioFrame(driver, By.id("SearchClientDocumentType")));
+		sleep(1000);
+		sb.BuscarCuenta("DNI", "2222203");
+		sleep(5000);
+		carrito();
+		sleep(20000);
+		sb.elegirplan("Plan con Tarjeta");
+		sleep(12000);
+		driver.findElement(By.cssSelector(".slds-input.ng-valid.ng-not-empty.ng-dirty.ng-valid-parse.ng-touched")).clear();
+		sleep(8000);
+		driver.findElement(By.cssSelector(".slds-input.ng-valid.ng-dirty.ng-valid-parse.ng-touched.ng-empty")).sendKeys("Galaxy s8 - Negro");
+		sleep(8000);
+		List<WebElement> agregar = driver.findElements(By.cssSelector(".slds-button.slds-button--neutral.add-button")); 
+		for(WebElement a : agregar){
+			if(a.getText().equals("Agregar"))
+				cc.obligarclick(a);
+		}
+		sleep(5000);	
+		sb.continuar();
+		sleep(10000);
+		ArrayList<String> txt1 = new ArrayList<String>();
+		ArrayList<String> txt2 = new ArrayList<String>();
+		txt2.add("ASIGNACI\u00d3N DE L\u00cdNEA");
+		txt2.add("VALIDACI\u00d3N DE IDENTIDAD");
+		txt2.add("INGRESO DE SERIAL");
+		txt2.add("SIMULACI\u00d3N DE FACTURA");
+		txt2.add("SELECCI\u00d3N DE MEDIO DE PAGO");
+		txt2.add("RESUMEN DE LA ORDEN DE VENTA");
+		txt2.add("ENV\u00edO FACTURA Y DATOS DE COBRO");
+		txt2.add("INFORMACI\u00d3N");
+		List<WebElement> pasos = driver.findElements(By.cssSelector(".list-group.vertical-steps.ng-scope"));
+		System.out.println(pasos.size());
+		for(WebElement e: pasos){
+			txt1.add(e.getText());
+			System.out.println(e.getText());
+		}
+		Assert.assertTrue(txt1.containsAll(txt2));
 	}
 	
 	@Test (groups = "SIT")
@@ -571,11 +563,10 @@ public class TestsXappia extends TestBase {
 		driver.findElement(By.cssSelector(".slds-input.ng-valid.ng-dirty.ng-valid-parse.ng-touched.ng-empty")).sendKeys("Galaxy s8 - Negro");
 		sleep(8000);
 		List<WebElement> agregar = driver.findElements(By.cssSelector(".slds-button.slds-button--neutral.add-button")); 
-			for(WebElement a : agregar){
-				if(a.getText().equals("Agregar")){
-					cc.obligarclick(a);
-				}
-			}
+		for(WebElement a : agregar){
+			if(a.getText().equals("Agregar"))
+				cc.obligarclick(a);
+		}
 		sleep(5000);	
 		sb.continuar();
 		sleep(22000);
@@ -593,10 +584,10 @@ public class TestsXappia extends TestBase {
 		txt2.add("INFORMACI\u00d3N");
 		List<WebElement> pasos = driver.findElements(By.cssSelector(".list-group.vertical-steps.ng-scope"));
 		System.out.println(pasos.size());
-			for(WebElement e: pasos){
-				txt1.add(e.getText());
-				System.out.println(e.getText());
-			}
+		for(WebElement e: pasos){
+			txt1.add(e.getText());
+			System.out.println(e.getText());
+		}
 		Assert.assertTrue(txt1.containsAll(txt2));
 	}
 	
@@ -630,11 +621,10 @@ public class TestsXappia extends TestBase {
 		driver.findElement(By.cssSelector(".slds-input.ng-valid.ng-dirty.ng-valid-parse.ng-touched.ng-empty")).sendKeys("Galaxy s8 - Negro");
 		sleep(8000);
 		List<WebElement> agregar = driver.findElements(By.cssSelector(".slds-button.slds-button--neutral.add-button")); 
-			for(WebElement a : agregar){
-				if(a.getText().equals("Agregar")){
-					cc.obligarclick(a);
-				}
-			}
+		for(WebElement a : agregar){
+			if(a.getText().equals("Agregar"))
+				cc.obligarclick(a);
+		}
 		sleep(5000);	
 		sb.continuar();
 		sleep(22000);
@@ -652,12 +642,13 @@ public class TestsXappia extends TestBase {
 		txt2.add("INFORMACI\u00d3N");
 		List<WebElement> pasos = driver.findElements(By.cssSelector(".list-group.vertical-steps.ng-scope"));
 		System.out.println(pasos.size());
-			for(WebElement e: pasos){
-				txt1.add(e.getText());
-				System.out.println(e.getText());
-			}
+		for(WebElement e: pasos){
+			txt1.add(e.getText());
+			System.out.println(e.getText());
+		}
 		Assert.assertTrue(txt1.containsAll(txt2));
 	}
+	
 	@Test (groups = "SIT")
 	public void TXS_0010_CRM_Verificar_Pasos_Alta_de_Linea_Cliente_Nuevo_OfCom_Presencial(){
 		CustomerCare cc = new CustomerCare(driver);
@@ -685,11 +676,10 @@ public class TestsXappia extends TestBase {
 		driver.findElement(By.cssSelector(".slds-input.ng-valid.ng-dirty.ng-valid-parse.ng-touched.ng-empty")).sendKeys("Galaxy s8 - Negro");
 		sleep(8000);
 		List<WebElement> agregar = driver.findElements(By.cssSelector(".slds-button.slds-button--neutral.add-button")); 
-			for(WebElement a : agregar){
-				if(a.getText().equals("Agregar")){
-					cc.obligarclick(a);
-				}
-			}
+		for(WebElement a : agregar){
+			if(a.getText().equals("Agregar"))
+				cc.obligarclick(a);
+		}
 		sleep(5000);	
 		sb.continuar();
 		sleep(22000);
@@ -707,10 +697,10 @@ public class TestsXappia extends TestBase {
 		txt2.add("INFORMACI\u00d3N");
 		List<WebElement> pasos = driver.findElements(By.cssSelector(".list-group.vertical-steps.ng-scope"));
 		System.out.println(pasos.size());
-			for(WebElement e: pasos){
-				txt1.add(e.getText());
-				System.out.println(e.getText());
-			}
+		for(WebElement e: pasos){
+			txt1.add(e.getText());
+			System.out.println(e.getText());
+		}
 		Assert.assertTrue(txt1.containsAll(txt2));
 	}
 	
@@ -742,11 +732,10 @@ public class TestsXappia extends TestBase {
 		driver.findElement(By.cssSelector(".slds-input.ng-valid.ng-dirty.ng-valid-parse.ng-touched.ng-empty")).sendKeys("Galaxy s8 - Negro");
 		sleep(8000);
 		List<WebElement> agregar = driver.findElements(By.cssSelector(".slds-button.slds-button--neutral.add-button")); 
-			for(WebElement a : agregar){
-				if(a.getText().equals("Agregar")){
-					cc.obligarclick(a);
-				}
-			}
+		for(WebElement a : agregar){
+			if(a.getText().equals("Agregar"))
+				cc.obligarclick(a);
+		}
 		sleep(5000);	
 		sb.continuar();
 		sleep(22000);
@@ -764,11 +753,31 @@ public class TestsXappia extends TestBase {
 		txt2.add("INFORMACI\u00d3N");
 		List<WebElement> pasos = driver.findElements(By.cssSelector(".list-group.vertical-steps.ng-scope"));
 		System.out.println(pasos.size());
-			for(WebElement e: pasos){
-				txt1.add(e.getText());
-				System.out.println(e.getText());
-			}
+		for(WebElement e: pasos){
+			txt1.add(e.getText());
+			System.out.println(e.getText());
+		}
 		Assert.assertTrue(txt1.containsAll(txt2));
 	}
 	
+	@Test (groups = "SIT")
+	public void TXS0013_Comunidad_Ingreso_A_Las_Ordenes_Desde_Mis_Gestiones() {
+		loginCommunity(driver);
+		sleep(3000);
+		driver.switchTo().frame(cambioFrame(driver, By.cssSelector(".slds-size--1-of-1.slds-align-middle.slds-p-vertical--small.cursor")));
+		driver.findElement(By.cssSelector(".slds-size--1-of-1.slds-align-middle.slds-p-vertical--small.cursor")).click();
+		sleep(5000);
+		driver.switchTo().frame(cambioFrame(driver, By.cssSelector(".slds-size--1-of-1.slds-p-vertical--medium.slds-m-horizontal--xxx-small.slds-border--bottom.vloc-action-grid-cell.gestionlink")));
+		buscarYClick(driver.findElements(By.cssSelector(".slds-size--1-of-1.slds-p-vertical--medium.slds-m-horizontal--xxx-small.slds-border--bottom.vloc-action-grid-cell.gestionlink")), "contains", "mis gestiones");
+		sleep(3000);
+		driver.switchTo().frame(cambioFrame(driver, By.cssSelector(".slds-button.slds-button--brand.filterNegotiations.slds-p-horizontal--x-large.slds-p-vertical--x-small")));
+		driver.findElement(By.cssSelector(".slds-button.slds-button--brand.filterNegotiations.slds-p-horizontal--x-large.slds-p-vertical--x-small")).click();
+		sleep(3000);
+		WebElement fila = driver.findElement(By.cssSelector(".slds-table.slds-table--bordered.slds-table--resizable-cols.slds-table--fixed-layout.via-slds-table-pinned-header")).findElement(By.tagName("tbody")).findElement(By.tagName("tr"));
+		fila.findElements(By.tagName("td")).get(2).click();
+		if (driver.findElement(By.cssSelector(".slds-button.slds-button--brand.filterNegotiations.slds-p-horizontal--x-large.slds-p-vertical--x-small")).isDisplayed())
+			Assert.assertTrue(false);
+		else
+			Assert.assertTrue(true);
+	}
 }
