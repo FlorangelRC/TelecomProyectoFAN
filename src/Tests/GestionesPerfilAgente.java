@@ -141,6 +141,12 @@ public class GestionesPerfilAgente extends TestBase{
 		if(sCodSeg.length() >= 5) {
 			sCodSeg = sCodSeg.substring(0, sCodSeg.length()-1);
 		}
+		
+		CBS cCBS = new CBS();
+		CBS_Mattu cCBSM = new CBS_Mattu();
+		String sMainBalance = cCBS.ObtenerValorResponse(cCBSM.Servicio_queryLiteBySubscriber(sLinea), "bcs:MainBalance");
+		Integer iMainBalance = Integer.parseInt(sMainBalance.substring(0, 5));
+		
 		BasePage cambioFrame=new BasePage();
 		sleep(5000);
 		driver.switchTo().frame(cambioFrame.getFrameForElement(driver, By.id("SearchClientDocumentType")));
@@ -199,6 +205,11 @@ public class GestionesPerfilAgente extends TestBase{
 		WebElement tabla = driver.findElement(By.id("ep")).findElements(By.tagName("table")).get(1);
 		String datos = tabla.findElements(By.tagName("tr")).get(4).findElements(By.tagName("td")).get(1).getText();
 		Assert.assertTrue(datos.equalsIgnoreCase("activada")||datos.equalsIgnoreCase("activated"));
+		
+		String sNewMainBalance = cCBS.ObtenerValorResponse(cCBSM.Servicio_queryLiteBySubscriber(sLinea), "bcs:MainBalance");
+		Integer iNewMainBalance = Integer.parseInt(sNewMainBalance.substring(0, 5));
+		iMainBalance+= Integer.parseInt(sMonto)*10000;
+		Assert.assertTrue(iNewMainBalance.equals(iNewMainBalance));
 	}
 	@Test(groups = { "GestionesPerfilAgente","CambioSimCard", "E2E","Ciclo3" }, priority = 1, dataProvider = "CambioSimCardAgente")
 	public void TSCambioSimCardAgente(String sDNI, String sLinea) throws AWTException {

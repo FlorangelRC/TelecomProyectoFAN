@@ -1,6 +1,9 @@
 package Pages;
 
 import org.w3c.dom.Document;
+import org.w3c.dom.NodeList;
+
+import javax.xml.soap.Node;
 
 import org.testng.Assert;
 
@@ -327,8 +330,8 @@ public class CBS {
 				+ "\r\n                                                               <cbs:BRID>101</cbs:BRID>\r\n"
 				+ "\r\n                                               </cbs:OwnershipInfo>\r\n"
 				+ "\r\n                				<cbs:AccessSecurity>\r\n"
-				+ "\r\n                                                               <cbs:LoginSystemCode>117</cbs:LoginSystemCode>\r\n"
-				+ "\r\n                                                               <cbs:Password>jW6lRxU4leO5Xev+SISea/Ie7Dp5wDPgfGR9MNVDJRo=</cbs:Password>\r\n"
+				+ "\r\n                                                               <cbs:LoginSystemCode>101</cbs:LoginSystemCode>\r\n"
+				+ "\r\n                                                               <cbs:Password>yVEy3349bxN6lvViA8yK6Cd1JsRRcKO5QMmml3e7qp0=</cbs:Password>\r\n"
 				+ "\r\n                                                               <cbs:RemoteIP>10.138.22.65</cbs:RemoteIP>\r\n"
 				+ "\r\n                                               </cbs:AccessSecurity>\r\n"
 				+ "\r\n                                               <cbs:OperatorInfo>\r\n"
@@ -372,5 +375,22 @@ public class CBS {
 	public String ObtenerValorResponse(Document Response, String Campo) {
 		
 		return Response.getElementsByTagName(Campo).item(0).getTextContent();
+	}
+	
+	public boolean validarNumeroAmigos(Document Response, String tipo) {
+		boolean esta = false;
+		NodeList ofertas = (NodeList) Response.getElementsByTagName("bcc:OfferingCode");
+		if (tipo.equalsIgnoreCase("voz")) {
+			for (int i=0; i<ofertas.getLength();i++) {
+				if(ofertas.item(i).getTextContent().equals("SO_FYF029"))
+					esta = true;
+			}
+		}else {
+			for (int i=0; i<ofertas.getLength();i++) {
+				if(ofertas.item(i).getTextContent().equals("SO_FYF032"))
+					esta = true;
+			}
+		}
+		return esta;
 	}
 }
