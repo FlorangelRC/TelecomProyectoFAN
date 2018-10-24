@@ -41,7 +41,7 @@ public class CBS {
 	
 	public String sCBS_Request_ServicioWeb_Validador(Document sResponse) {
 		String sAssert = "false";
-		if (sResponse.getElementsByTagName("cbs:ResultDesc").item(0).getTextContent().equalsIgnoreCase("0OK")) {
+		if (sResponse.getElementsByTagName("cbs:ResultDesc").item(0).getTextContent().equalsIgnoreCase("0OK")||sResponse.getElementsByTagName("cbs:ResultDesc").item(0).getTextContent().equalsIgnoreCase("Operation successfully."))   {
 			System.out.println("Correcto");
 		}
 		else {

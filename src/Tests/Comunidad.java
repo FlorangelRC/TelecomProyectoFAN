@@ -127,18 +127,7 @@ public class Comunidad extends TestBase {
 		Assert.assertTrue(gestiones.isDisplayed());
 	}
 	
-	public void DateTimePicker(String day) {
-		WebElement table = driver.findElement(By.cssSelector(".slds-datepicker.slds-dropdown.slds-dropdown--left"));
-		sleep(3000);
-		List<WebElement> tableRows = table.findElements(By.xpath("//tr//td"));
-			for (WebElement cell : tableRows) {
-				try {
-				if (cell.getText().equals(day)) {
-					cell.click();
-					}
-				}catch(Exception e) {}
-			}
-	}
+
 	
 	@Test (groups = {"Communities", "E2E"})
 	public void TS135769_CRM_PRE_Community_Desktop_Gestiones_en_Curso_y_Completadas_5() {
