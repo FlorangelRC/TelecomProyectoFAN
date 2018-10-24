@@ -145,7 +145,8 @@ public class GestionesPerfilAgente extends TestBase{
 		CBS cCBS = new CBS();
 		CBS_Mattu cCBSM = new CBS_Mattu();
 		String sMainBalance = cCBS.ObtenerValorResponse(cCBSM.Servicio_queryLiteBySubscriber(sLinea), "bcs:MainBalance");
-		Integer iMainBalance = Integer.parseInt(sMainBalance.substring(0, 5));
+		Integer iMainBalance = Integer.parseInt(sMainBalance.substring(0, (sMainBalance.length()) - 1));
+		//System.out.println("Saldo original: " + iMainBalance);
 		
 		BasePage cambioFrame=new BasePage();
 		sleep(5000);
@@ -207,9 +208,11 @@ public class GestionesPerfilAgente extends TestBase{
 		Assert.assertTrue(datos.equalsIgnoreCase("activada")||datos.equalsIgnoreCase("activated"));
 		
 		String sNewMainBalance = cCBS.ObtenerValorResponse(cCBSM.Servicio_queryLiteBySubscriber(sLinea), "bcs:MainBalance");
-		Integer iNewMainBalance = Integer.parseInt(sNewMainBalance.substring(0, 5));
-		iMainBalance+= Integer.parseInt(sMonto)*10000;
-		Assert.assertTrue(iNewMainBalance.equals(iNewMainBalance));
+		Integer iNewMainBalance = Integer.parseInt(sNewMainBalance.substring(0, (sMainBalance.length()) - 1));
+		iMainBalance+= Integer.parseInt(orden.split("-")[2]);
+		//System.out.println("Carga: " + orden.split("-")[2]);
+		//System.out.println("iNewMainBalance: " + iNewMainBalance + " es igual a iMainBalance: " + iMainBalance);
+		Assert.assertTrue(iMainBalance.equals(iNewMainBalance));
 	}
 	@Test(groups = { "GestionesPerfilAgente","CambioSimCard", "E2E","Ciclo3" }, priority = 1, dataProvider = "CambioSimCardAgente")
 	public void TSCambioSimCardAgente(String sDNI, String sLinea) throws AWTException {
