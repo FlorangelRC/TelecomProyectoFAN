@@ -763,5 +763,38 @@ public class GestionesPerfilTelefonico extends TestBase{
 			}
 		}
 	}
-}
 	
+	@Test (groups = {"GestionesPerfilTelefonico", "ReseteoDeClave", "Ciclo2"})
+	public void TS95981_CRM_Movil_REPRO_Reseteo_de_Clave_Telefonico() {
+		driver.switchTo().frame(cambioFrame(driver, By.id("SearchClientDocumentType")));
+		sb.BuscarCuenta("DNI", "37654318");
+		driver.findElement(By.cssSelector(".slds-tree__item.ng-scope")).click();
+		sleep(5000);
+		driver.switchTo().frame(cambioFrame(driver, By.className("profile-box")));
+		buscarYClick(driver.findElements(By.className("profile-edit")),"contains", "reseteo clave");
+		sleep(3000);
+		driver.switchTo().frame(cambioFrame(driver, By.id("Step 1_nextBtn")));
+		buscarYClick(driver.findElements(By.cssSelector(".slds-form-element__label.ng-binding.ng-scope")), "equals", "si");
+		driver.findElement(By.id("Step 1_nextBtn")).click();
+		sleep(5000);
+		WebElement msj = driver.findElement(By.className("ta-care-omniscript-done"));
+		Assert.assertTrue(msj.getText().contains("Su n\u00famero de confirmaci\u00f3n es: "));
+	}
+	
+	@Test (groups = {"GestionesPerfilTelefonico", "ReseteoDeClave", "Ciclo2"})
+	public void TS95983_CRM_Movil_REPRO_No_Reseteo_de_Clave_Telefonico() {
+		driver.switchTo().frame(cambioFrame(driver, By.id("SearchClientDocumentType")));
+		sb.BuscarCuenta("DNI", "37654318");
+		driver.findElement(By.cssSelector(".slds-tree__item.ng-scope")).click();
+		sleep(5000);
+		driver.switchTo().frame(cambioFrame(driver, By.className("profile-box")));
+		buscarYClick(driver.findElements(By.className("profile-edit")),"contains", "reseteo clave");
+		sleep(3000);
+		driver.switchTo().frame(cambioFrame(driver, By.id("Step 1_nextBtn")));
+		buscarYClick(driver.findElements(By.cssSelector(".slds-form-element__label.ng-binding.ng-scope")), "equals", "no");
+		driver.findElement(By.id("Step 1_nextBtn")).click();
+		sleep(5000);
+		WebElement msj = driver.findElement(By.className("ta-care-omniscript-done"));
+		Assert.assertTrue(msj.getText().contains("Su n\u00famero de confirmaci\u00f3n es: "));
+	}
+}
