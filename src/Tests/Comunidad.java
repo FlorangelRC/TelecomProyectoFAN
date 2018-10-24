@@ -2,24 +2,12 @@ package Tests;
 
 import java.awt.AWTException;
 import java.io.IOException;
-import java.time.LocalDate;
-import java.time.YearMonth;
-import java.time.format.DateTimeFormatter;
-import java.time.temporal.ChronoUnit;
-import java.util.Calendar;
-import java.util.Date;
 import java.util.List;
-import java.util.TimeZone;
-import java.util.concurrent.ConcurrentHashMap.KeySetView;
-import java.util.concurrent.ExecutionException;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
-import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
-import org.openqa.selenium.support.ui.Select;
-import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.Assert;
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.AfterMethod;
@@ -28,12 +16,10 @@ import org.testng.annotations.Test;
 
 import Pages.BasePage;
 import Pages.setConexion;
-import sun.util.resources.CalendarData;
 
 public class Comunidad extends TestBase {
 	
 	private WebDriver driver;
-
 	
 	//Befores & Afters
 	
@@ -73,22 +59,21 @@ public class Comunidad extends TestBase {
 	
 	@Test (groups = {"Communities","E2E"})
 	public void T135792_CRM_PRE_Community_Desktop_Mis_gestiones_Filtro_Tipo(){
-	BasePage cambioFrameByID=new BasePage();
-	driver.switchTo().frame(cambioFrameByID.getFrameForElement(driver, By.cssSelector(".vlocity.via-slds")));
-	sleep (8000);
-	buscarYClick(driver.findElements(By.cssSelector(".slds-col.slds-size--1-of-1")), "equals", "plan con tarjeta repro");
-	sleep (8000);
-	driver.switchTo().frame(cambioFrameByID.getFrameForElement(driver, By.id("containergestiones")));
-	((JavascriptExecutor)driver).executeScript("window.scrollTo(0,"+driver.findElement(By.id("containergestiones")).getLocation().y+")");
-	buscarYClick(driver.findElements(By.className("slds-grid")),"equals", "mis gestiones");
-	driver.switchTo().frame(cambioFrameByID.getFrameForElement(driver, By.cssSelector(".via-slds.slds-m-around--small.ng-scope")));
-	driver.findElement(By.id("text-input-03")).click();
-	driver.findElement(By.cssSelector(".slds-dropdown.slds-dropdown--left.resize-dropdowns")).findElements(By.tagName("li")).get(1).click();
-	WebElement gestiones =driver.findElement(By.xpath("/html/body/div[1]/div[1]/ng-include/div/div/div[2]/div[4]/div[2]")).findElement(By.tagName("button"));
-	gestiones.click();
-	Assert.assertTrue(gestiones.isDisplayed());
-	
-		}
+		BasePage cambioFrameByID=new BasePage();
+		driver.switchTo().frame(cambioFrameByID.getFrameForElement(driver, By.cssSelector(".vlocity.via-slds")));
+		sleep (8000);
+		buscarYClick(driver.findElements(By.cssSelector(".slds-col.slds-size--1-of-1")), "equals", "plan con tarjeta repro");
+		sleep (8000);
+		driver.switchTo().frame(cambioFrameByID.getFrameForElement(driver, By.id("containergestiones")));
+		((JavascriptExecutor)driver).executeScript("window.scrollTo(0,"+driver.findElement(By.id("containergestiones")).getLocation().y+")");
+		buscarYClick(driver.findElements(By.className("slds-grid")),"equals", "mis gestiones");
+		driver.switchTo().frame(cambioFrameByID.getFrameForElement(driver, By.cssSelector(".via-slds.slds-m-around--small.ng-scope")));
+		driver.findElement(By.id("text-input-03")).click();
+		driver.findElement(By.cssSelector(".slds-dropdown.slds-dropdown--left.resize-dropdowns")).findElements(By.tagName("li")).get(1).click();
+		WebElement gestiones =driver.findElement(By.xpath("/html/body/div[1]/div[1]/ng-include/div/div/div[2]/div[4]/div[2]")).findElement(By.tagName("button"));
+		gestiones.click();
+		Assert.assertTrue(gestiones.isDisplayed());
+	}
 	
 	@Test (groups = {"Communities", "E2E"})
 	public void T135791_CRM_PRE_Community_Desktop_Mis_gestiones_Filtro_Fecha()  {
@@ -104,24 +89,24 @@ public class Comunidad extends TestBase {
 		WebElement table = driver.findElement(By.cssSelector(".slds-datepicker.slds-dropdown.slds-dropdown--left"));
 		sleep(3000);
 		List<WebElement> tableRows = table.findElements(By.xpath("//tr//td"));
-			for (WebElement cell : tableRows) {
-				try {
+		for (WebElement cell : tableRows) {
+			try {
 				if (cell.getText().equals("13")) {
 					cell.click();
-					}
-				}catch(Exception e) {}
-			}
+				}
+			}catch(Exception e) {}
+		}
 		driver.findElement(By.id("text-input-id-2")).click();
 		WebElement table_2 = driver.findElement(By.cssSelector(".slds-datepicker.slds-dropdown.slds-dropdown--left"));
 		sleep(3000);
 		List<WebElement> tableRows_2 = table_2.findElements(By.xpath("//tr//td"));
-			for (WebElement cell : tableRows_2) {
-				try {
+		for (WebElement cell : tableRows_2) {
+			try {
 				if (cell.getText().equals("15")) {
-					cell.click();
-					}
-				}catch(Exception e) {}
-			}
+				cell.click();
+				}
+			}catch(Exception e) {}
+		}
 		WebElement gestiones =driver.findElement(By.xpath("/html/body/div[1]/div[1]/ng-include/div/div/div[2]/div[4]/div[2]")).findElement(By.tagName("button"));
 		gestiones.click();
 		Assert.assertTrue(gestiones.isDisplayed());
@@ -290,6 +275,5 @@ public class Comunidad extends TestBase {
 	public void TS135782_CRM_PRE_Community_Mobile_Modificar_datos_cliente(){
 		//mobileEmulation();
 		//Blocked
-	}
-	
+	}	
 }
