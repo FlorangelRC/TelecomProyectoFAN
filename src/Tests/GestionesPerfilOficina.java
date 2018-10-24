@@ -577,14 +577,15 @@ public class GestionesPerfilOficina extends TestBase {
 		driver.switchTo().frame(cambioFrame(driver, By.id("SearchClientDocumentType")));
 		SalesBase SB = new SalesBase(driver);
 		driver.findElement(By.id("PhoneNumber")).sendKeys(sLinea);
-		  driver.findElement(By.id("SearchClientsDummy")).click();
-		  sleep(10000);
+		sleep(1500);
+		driver.findElement(By.id("SearchClientsDummy")).click();
+		sleep(10000);
 		WebElement cli = driver.findElement(By.id("tab-scoped-1"));
 		cli.findElement(By.tagName("tbody")).findElement(By.tagName("tr")).click();
 		sleep(3000);
 		List<WebElement> Lineas = driver.findElement(By.id("tab-scoped-1")).findElement(By.tagName("tbody")).findElements(By.tagName("tr"));
 		for(WebElement UnaL: Lineas) {
-			if(UnaL.getText().toLowerCase().contains("plan con tarjeta")||UnaL.getText().toLowerCase().contains("plan prepago nacional")) {
+			if(UnaL.getText().toLowerCase().contains("plan con tarjeta repro")||UnaL.getText().toLowerCase().contains("plan prepago nacional")) {
 				UnaL.findElements(By.tagName("td")).get(6).findElement(By.tagName("svg")).click();
 				System.out.println("Linea Encontrada");
 				break;
@@ -2618,7 +2619,7 @@ public class GestionesPerfilOficina extends TestBase {
 	}
 	
 
-	@Test(groups={"Sales", "Ciclo1"},dataProvider = "CuentaModificacionDeDatos")
+	@Test(groups={"Sales","GestionDeClientes", "Ciclo1"},dataProvider = "CuentaModificacionDeDatos")
 	public void TS_135496_CRM_Movil_REPRO_Busqueda_DNI_Numero_de_Documento(String cDNI){
 		driver.switchTo().frame(cambioFrame(driver, By.id("SearchClientDocumentType")));
 		sb.BuscarCuenta("DNI", cDNI);
@@ -2627,7 +2628,7 @@ public class GestionesPerfilOficina extends TestBase {
 		assertTrue(solapas.get(0).findElement(By.tagName("a")).getText().equals("Clientes Activos"));
 	}
 	
-	@Test(groups={"Sales", "Ciclo1"})
+	@Test(groups={"Sales","GestionDeClientes", "Ciclo1"})
 	public void TS_135503_CRM_Movil_REPRO_Busqueda_Apellido(){
 		driver.switchTo().frame(cambioFrame(driver, By.id("SearchClientDocumentType")));
 		sb.BuscarAvanzada("","Miranda","","","");
@@ -2638,7 +2639,7 @@ public class GestionesPerfilOficina extends TestBase {
 		assertTrue(solapas.get(0).findElement(By.tagName("a")).getText().equals("Clientes Activos"));
 	}
 	
-	@Test(groups={"Sales", "Ciclo1"})
+	@Test(groups={"Sales","GestionDeClientes", "Ciclo1"})
 	public void TS_135509_CRM_Movil_REPRO_Busqueda_Numero_de_Cuenta(){
 		driver.switchTo().frame(cambioFrame(driver, By.id("SearchClientDocumentType")));
 		sb.BuscarAvanzada("", "", "", "9900000766810001", "");
