@@ -30,7 +30,7 @@ public class TestsXappia extends TestBase {
 	private CustomerCare cc;
 	private SalesBase sb;
 	
-	//@BeforeClass (groups = "UAT")
+	@BeforeClass (groups = "UAT")
 	public void loginUAT() {
 		driver = setConexion.setupEze();
 		driver.get("https://telecomcrm--uat.cs53.my.salesforce.com");
@@ -60,7 +60,7 @@ public class TestsXappia extends TestBase {
 		sb = new SalesBase(driver);
 	}
 	
-	//@BeforeMethod (groups = "UAT")
+	@BeforeMethod (groups = "UAT")
 	public void beforeUAT() {
 		driver.get("https://telecomcrm--uat.cs53.my.salesforce.com");
 	}
@@ -70,7 +70,7 @@ public class TestsXappia extends TestBase {
 		driver.get("https://crm--sit.cs14.my.salesforce.com/");
 	}
 	
-	//@AfterClass (alwaysRun = true)
+	@AfterClass (alwaysRun = true)
 	public void quit() {
 		driver.quit();
 	}
