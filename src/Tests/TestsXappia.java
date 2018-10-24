@@ -442,8 +442,11 @@ public class TestsXappia extends TestBase {
 		WebElement wBody = driver.findElements(By.className("detailList")).get(1);
 		WebElement wElement = mM.traerColumnaElement(wBody, 4, 1).get(4);
 		Assert.assertTrue(wElement.getText().equals("Direcci\u00f3n de env\u00edo"));
-		wElement = driver.findElement(By.xpath("//*[@id=\"ep_Account_View_j_id4\"]/div[2]/div[5]/table/tbody/tr[5]/td[2]/table/tbody/tr[2]/td/div/div"));
-		Assert.assertTrue(wElement.getAttribute("class").equals("staticMap"));
+		//wElement = driver.findElement(By.xpath("//*[@id=\"ep_Account_View_j_id4\"]/div[2]/div[5]/table/tbody/tr[5]/td[2]/table/tbody/tr[2]/td/div/div"));
+		//Assert.assertTrue(wElement.getAttribute("class").equals("staticMap"));
+		System.out.println("Time to erase!");
+		sleep(15000);
+		driver.findElement(By.cssSelector("((((//table[@class='detailList'])[2])/..//tr)[7])/td[2]//div[@class='staticMap']"));
 	}
 	
 	@Test (groups = "SIT")

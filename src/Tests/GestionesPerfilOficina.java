@@ -46,7 +46,7 @@ public class GestionesPerfilOficina extends TestBase {
 	public void init() {
 		CBS_Mattu serv = new CBS_Mattu();
 		CBS sercus = new CBS();
-		Assert.assertTrue(sercus.validarNumeroAmigos(serv.Servicio_QueryCustomerInfo("2475416780"), "voz"));
+		//Assert.assertTrue(sercus.validarNumeroAmigos(serv.Servicio_QueryCustomerInfo("2475416780"), "voz"));
 		driver = setConexion.setupEze();
 		sleep(5000);
 		sb = new SalesBase(driver);
@@ -284,11 +284,6 @@ public class GestionesPerfilOficina extends TestBase {
 		if(cMonto.length() >= 4) {
 			cMonto = cMonto.substring(0, cMonto.length()-1);
 		}
-		CBS cCBS = new CBS();
-		CBS_Mattu cCBSM = new CBS_Mattu();
-		String sMainBalance = cCBS.ObtenerValorResponse(cCBSM.Servicio_queryLiteBySubscriber(cLinea), "bcs:MainBalance");
-		Integer iMainBalance = Integer.parseInt(sMainBalance.substring(0, 5));
-		
 		driver.switchTo().frame(cambioFrame(driver, By.id("SearchClientDocumentType")));
 		sb.BuscarCuenta("DNI", cDNI);
 		String accid = driver.findElement(By.cssSelector(".searchClient-body.slds-hint-parent.ng-scope")).findElements(By.tagName("td")).get(5).getText();
@@ -328,12 +323,6 @@ public class GestionesPerfilOficina extends TestBase {
 		WebElement tabla = driver.findElement(By.id("ep")).findElements(By.tagName("table")).get(1);
 		String datos = tabla.findElements(By.tagName("tr")).get(4).findElements(By.tagName("td")).get(1).getText();
 		Assert.assertTrue(datos.equalsIgnoreCase("activada")||datos.equalsIgnoreCase("activated"));
-		
-		String sNewMainBalance = cCBS.ObtenerValorResponse(cCBSM.Servicio_queryLiteBySubscriber(cLinea), "bcs:MainBalance");
-		Integer iNewMainBalance = Integer.parseInt(sNewMainBalance.substring(0, 5));
-		iMainBalance+= Integer.parseInt(cMonto)*10000;
-		System.out.println("iNewMainBalance: " + iNewMainBalance + " es igual a iMainBalance: " + iMainBalance);
-		Assert.assertTrue(iMainBalance.equals(iNewMainBalance));
 	}
 	
 	@Test (groups = {"GestionesPerfilOficina", "Recargas","E2E","Ciclo1"}, dataProvider = "RecargaTC")
@@ -2078,7 +2067,7 @@ public class GestionesPerfilOficina extends TestBase {
 		CBS cCBS = new CBS();
 		CBS_Mattu cCBSM = new CBS_Mattu();
 		String sMainBalance = cCBS.ObtenerValorResponse(cCBSM.Servicio_queryLiteBySubscriber(sLinea), "bcs:MainBalance");
-		Integer iMainBalance = Integer.parseInt(sMainBalance.substring(0, 5));
+		Integer iMainBalance = Integer.parseInt(sMainBalance.substring(0, (sMainBalance.length()) - 1));
 		
 		driver.switchTo().frame(cambioFrame(driver, By.id("SearchClientDocumentType")));
 		sb.BuscarCuenta("DNI", sDNI);
@@ -2134,11 +2123,9 @@ public class GestionesPerfilOficina extends TestBase {
 		Assert.assertTrue(driver.findElement(By.id("Status_ilecell")).getText().equalsIgnoreCase("activada"));
 		
 		String sNewMainBalance = cCBS.ObtenerValorResponse(cCBSM.Servicio_queryLiteBySubscriber(sLinea), "bcs:MainBalance");
-		Integer iNewMainBalance = Integer.parseInt(sNewMainBalance.substring(0, 5));
-		iMainBalance+= Integer.parseInt(sMonto)*1000000;
-		//Verificar lo de arriba
-		
-		Assert.assertTrue(iNewMainBalance.equals(iNewMainBalance));
+		Integer iNewMainBalance = Integer.parseInt(sNewMainBalance.substring(0, (sMainBalance.length()) - 1));
+		iMainBalance+= Integer.parseInt(orden.split("-")[2]);
+		Assert.assertTrue(iMainBalance.equals(iNewMainBalance));
 	}
 	
 	@Test (groups = {"Suspension", "GestionesPerfilOficina","E2E","Ciclo3"}, dataProvider="CuentaSuspension") //No se puede visualizar en el panel izquierdo el numero de orden en UAT y no se suspende la cuenta; y en SIT no existe la opci�n de DNI/CUIT
@@ -2612,4 +2599,47 @@ public class GestionesPerfilOficina extends TestBase {
 		Assert.assertTrue(enc);
 	}
 	
-}	
+	@Test (groups = {"GestionesPerfilOficina","RenovacionCuota","E2E", "Ciclo1"}, dataProvider="RenovacionCuotaConSaldo")
+	public void TS135395_CRM_Movil_REPRO_Renovacion_de_cuota_Presencial_Internet_50_MB_Dia_Efectivo_con_Credito(String sDNI, String sLinea) {
+		imagen = "TS135397";
+		//Check all
+		BasePage cambioFrameByID=new BasePage();
+		driver.switchTo().frame(cambioFrameByID.getFrameForElement(driver, By.id("SearchClientDocumentType")));
+		sleep(1000);
+		SalesBase sSB = new SalesBase(driver);
+		sSB.BuscarCuenta("DNI", sDNI);
+		driver.findElement(By.cssSelector(".slds-tree__item.ng-scope")).findElement(By.tagName("div")).click();
+		sleep(25000);
+		CustomerCare cCC = new CustomerCare(driver);
+		cCC.seleccionarCardPornumeroLinea(sLinea, driver);
+		sleep(3000);
+		
+		cCC.irAGestionEnCard("Renovacion de Datos");
+		sleep(10000);
+		try {
+			driver.switchTo().frame(cambioFrame(driver, By.id("combosMegas")));
+			driver.findElement(By.id("combosMegas")).findElements(By.className("slds-checkbox")).get(2).click();
+		}
+		catch (Exception ex) {
+			//Allways Empty
+		}
+		driver.findElement(By.id("CombosDeMegas_nextBtn")).click();
+		
+		sleep(5000);
+		List<WebElement> wCheckBox = driver.findElements(By.cssSelector(".slds-radio.ng-scope"));
+		wCheckBox.get(0).click();
+		driver.findElement(By.id("CombosDeMegas_nextBtn")).click();
+		
+		sleep(5000);
+		List<WebElement> wPaymentMethods = driver.findElements(By.className("slds-radio__label"));
+		for (WebElement wAux : wPaymentMethods) {
+			if (wAux.findElement(By.cssSelector(".slds-form-element__label.ng-binding")).getText().equalsIgnoreCase("Efectivo")) {
+				wAux.click();
+			}
+		}
+		driver.findElement(By.id("SelectPaymentMethodsStep_nextBtn")).click();
+		//slds-button slds-button--neutral ng-binding ng-scope.get(1)
+		Assert.assertTrue(driver.findElement(By.id("GeneralMessageDesing")).findElement(By.className("ng-binding")).findElement(By.tagName("h6")).getText().equalsIgnoreCase("Muchas gracias por tu compra."));
+	}
+	
+}
