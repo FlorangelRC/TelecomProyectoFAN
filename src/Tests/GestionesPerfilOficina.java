@@ -2775,8 +2775,42 @@ public class GestionesPerfilOficina extends TestBase {
 		WebElement tabla = driver.findElement(By.id("ep")).findElements(By.tagName("table")).get(1);
 		String datos = tabla.findElements(By.tagName("tr")).get(4).findElements(By.tagName("td")).get(1).getText();
 		Assert.assertTrue(datos.equalsIgnoreCase("activada")||datos.equalsIgnoreCase("activated"));
-
-
+	}
+	
+	@Test (groups = {"GestionesPerfilOficina", "RenovacionCuota","E2E"}, dataProvider="RenovacionCuotaConSaldo")
+	public void TS130069_CRM_Movil_REPRO_Renovacion_de_cuota_Presencial_Reseteo_200_MB_por_Dia_Descuento_de_saldo_con_Credito(String sDNI, String sLinea) {
+		BasePage cambioFrameByID=new BasePage();
+		driver.switchTo().frame(cambioFrameByID.getFrameForElement(driver, By.id("SearchClientDocumentType")));
+		sleep(1000);
+		SalesBase sSB = new SalesBase(driver);
+		sSB.BuscarCuenta("DNI", sDNI);
+		String accid = driver.findElement(By.cssSelector(".searchClient-body.slds-hint-parent.ng-scope")).findElements(By.tagName("td")).get(5).getText();
+		System.out.println("id "+accid);
+		driver.findElement(By.cssSelector(".slds-tree__item.ng-scope")).findElement(By.tagName("div")).click();
+		sleep(20000);
+		driver.switchTo().frame(cambioFrame(driver, By.className("card-top")));
+		driver.findElement(By.className("card-top")).click();
+		sleep(5000);
+		CustomerCare cCC = new CustomerCare(driver);
+		cCC.irAGestionEnCard("Renovacion de Datos");
+		sleep(12000);
+		driver.switchTo().frame(cambioFrame(driver, By.id("combosMegas")));
+		driver.findElement(By.id("combosMegas")).findElements(By.className("slds-checkbox")).get(1).click();
+		sleep(2000);
+		cCC.obligarclick(driver.findElement(By.id("CombosDeMegas_nextBtn")));
+		sleep(10000);
+		List<WebElement> pago = driver.findElement(By.id("PaymentTypeRadio|0")).findElements(By.cssSelector(".slds-radio.ng-scope"));
+		for (WebElement UnP : pago) {
+			if (UnP.getText().toLowerCase().contains("saldo")){
+				UnP.click();
+				break;
+			}
+		}		
+		cCC.obligarclick(driver.findElement(By.id("SetPaymentType_nextBtn")));
+		sleep(12000);
+		String mesj = driver.findElement(By.cssSelector(".slds-box.ng-scope")).getText();
+		System.out.println(mesj);
+		Assert.assertTrue(mesj.equalsIgnoreCase("La operación termino exitosamente"));		
 	}
 	
 }	
