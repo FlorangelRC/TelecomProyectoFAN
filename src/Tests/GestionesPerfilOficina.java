@@ -662,14 +662,14 @@ public class GestionesPerfilOficina extends TestBase {
 	}
 	
 	@Test (groups = {"ProblemaRecarga", "GestionesPerfilOficina","E2E","Ciclo3"}, dataProvider="CuentaProblemaRecarga") 
-	public void problemaRecargaOnline(String cDNI, String sLinea) {
+	public void problemaRecargaOnline(String sDNI, String sLinea) {
 		CBS_Mattu verifM = new CBS_Mattu();
 		CBS verif = new CBS();
 		String saldo = verif.ObtenerValorResponse(verifM.Servicio_queryLiteBySubscriber(sLinea), "bcs:MainBalance");
-		Integer saldo_1 = Integer.parseInt(saldo.substring(0, 5));
+		Integer saldo1 = Integer.parseInt(saldo.substring(0, 5));
 		imagen = "problemaRecargaOnline";
 		driver.switchTo().frame(cambioFrame(driver, By.id("SearchClientDocumentType")));
-		sb.BuscarCuenta("DNI", cDNI);
+		sb.BuscarCuenta("DNI", sDNI);
 		driver.findElement(By.cssSelector(".slds-tree__item.ng-scope")).click();
 		sleep(15000);
 		driver.switchTo().frame(cambioFrame(driver, By.className("card-top")));
@@ -697,6 +697,7 @@ public class GestionesPerfilOficina extends TestBase {
 		driver.findElement(By.id("Summary_nextBtn")).click();
 		sleep(8000);
 		boolean a = false;
+		boolean b = false;
 		List <WebElement> conf = driver.findElements(By.cssSelector(".slds-box.ng-scope"));
 		for(WebElement x : conf) {
 			if(x.getText().toLowerCase().contains("recarga realizada con \u00e9xito!")) {
@@ -704,14 +705,25 @@ public class GestionesPerfilOficina extends TestBase {
 			}
 		}
 		Assert.assertTrue(a);
+		String saldo2 = verif.ObtenerValorResponse(verifM.Servicio_queryLiteBySubscriber(sLinea), "bcs:MainBalance");
+		Integer saldo3 = Integer.parseInt(saldo2.substring(0, 5));
+		if(saldo1*1000000 != saldo3*1000000) {
+			b = true;
+		}
+		Assert.assertTrue(b);
 		sleep(5000);
 		String orden = cc.obtenerOrden(driver, "Problemas con Recargas");
-		sOrders.add("Recargas, orden numero: " + orden + " con DNI: " + cDNI );
+		sOrders.add("Recargas, orden numero: " + orden + " con DNI: " + sDNI );
 		System.out.println(sOrders);
 	}
 	
 	@Test (groups = {"ProblemaRecarga", "GestionesPerfilOficina","E2E","Ciclo3"}, dataProvider="CuentaProblemaRecarga") //Error al intentar impactar la recarga
 	public void poblemaRecargaCredito(String cDNI, String sLinea) {
+		CBS_Mattu verifM = new CBS_Mattu();
+		CBS verif = new CBS();
+		String saldo = verif.ObtenerValorResponse(verifM.Servicio_queryLiteBySubscriber(sLinea), "bcs:MainBalance");
+		Integer saldo1 = Integer.parseInt(saldo.substring(0, 5));
+		System.out.println(saldo1);
 		imagen = "poblemaRecargaCredito";
 		driver.switchTo().frame(cambioFrame(driver, By.id("SearchClientDocumentType")));
 		sb.BuscarCuenta("DNI", cDNI);
@@ -734,6 +746,7 @@ public class GestionesPerfilOficina extends TestBase {
 		driver.findElement(By.id("Summary_nextBtn")).click();
 		sleep(8000);
 		boolean a = false;
+		boolean b = false;
 		List <WebElement> conf = driver.findElements(By.cssSelector(".slds-box.ng-scope"));
 		for(WebElement x : conf) {
 			if(x.getText().toLowerCase().contains("recarga realizada con \u00e9xito!")) {
@@ -741,6 +754,13 @@ public class GestionesPerfilOficina extends TestBase {
 			}
 		}
 		Assert.assertTrue(a);
+		String saldo2 = verif.ObtenerValorResponse(verifM.Servicio_queryLiteBySubscriber(sLinea), "bcs:MainBalance");
+		Integer saldo3 = Integer.parseInt(saldo2.substring(0, 5));
+		System.out.println(saldo3);
+		if(saldo1*1000000 != saldo3*1000000) {
+			b = true;
+		}
+		Assert.assertTrue(b);
 		sleep(5000);
 		String orden = cc.obtenerOrden(driver, "Problemas con Recargas");
 		sOrders.add("Recargas, orden numero: " + orden + " con DNI: " + cDNI );
