@@ -393,4 +393,105 @@ public class CBS {
 		}
 		return esta;
 	}
+	
+	public boolean validarRenovacionDatos(Document Response, String tipo) {
+		boolean esta = false;
+		NodeList ofertas = (NodeList) Response.getElementsByTagName("bcc:OfferingCode");
+		if (tipo.equalsIgnoreCase("internet 50 mb dia")) {
+			for (int i=0; i<ofertas.getLength();i++) {
+				if(ofertas.item(i).getTextContent().equals("SO_DATA_50MBXDIA"))
+					esta = true;
+			}
+		}else {
+			if (tipo.equalsIgnoreCase("reseteo 200 mb por dia")) {
+				for (int i=0; i<ofertas.getLength();i++) {
+					if(ofertas.item(i).getTextContent().equals("SO_DATA_200MB_Diario"))
+						esta = true;
+				}
+			}else {
+				if (tipo.toLowerCase().contains("reseteo internet por dia")) {
+					for (int i=0; i<ofertas.getLength();i++) {
+						if(ofertas.item(i).getTextContent().equals("SO_ROI_P_PYBOL_R"))
+							esta = true;
+					}
+				}
+			}
+		}
+		return esta;
+	}
+	
+	public String sRequestQueryFreeUnit(String sLinea, String sMessageSeq) {
+		String sRequest = "";
+		sRequest = "<soapenv:Envelope xmlns:soapenv=\"http://schemas.xmlsoap.org/soap/envelope/\" xmlns:bcs=\"http://www.huawei.com/bme/cbsinterface/bcservices\" xmlns:cbs=\"http://www.huawei.com/bme/cbsinterface/cbscommon\" xmlns:bcc=\"http://www.huawei.com/bme/cbsinterface/bccommon\">\r\n"
+				+ "\r\n   <soapenv:Header/>\r\n"
+				+ "\r\n   <soapenv:Body>\r\n"
+				+ "\r\n      <bbs:QueryFreeUnitRequestMsg>\r\n"
+				+ "\r\n                    <RequestHeader>\r\n"
+				+ "\r\n                                               <cbs:Version>5.5</cbs:Version>\r\n"
+				+ "\r\n                                               <cbs:BusinessCode>QueryFreeUnit</cbs:BusinessCode>\r\n"
+				+ "\r\n                                               <cbs:MessageSeq>" + sMessageSeq;
+		
+		sRequest += "</cbs:MessageSeq>\r\n"
+				+ "\r\n                                               <cbs:OwnershipInfo>\r\n"
+				+ "\r\n                                                               <cbs:BEID>10101</cbs:BEID>\r\n"
+				+ "\r\n                                                               <cbs:BRID>101</cbs:BRID>\r\n"
+				+ "\r\n                                               </cbs:OwnershipInfo>\r\n"
+				+ "\r\n                				<cbs:AccessSecurity>\r\n"
+				+ "\r\n                                                               <cbs:LoginSystemCode>101</cbs:LoginSystemCode>\r\n"
+				+ "\r\n                                                               <cbs:Password>yVEy3349bxN6lvViA8yK6Cd1JsRRcKO5QMmml3e7qp0=</cbs:Password>\r\n"
+				+ "\r\n                                                               <cbs:RemoteIP>10.75.197.142</cbs:RemoteIP>\r\n"
+				+ "\r\n                                               </cbs:AccessSecurity>\r\n"
+				+ "\r\n                                               <cbs:OperatorInfo>\r\n"
+				+ "\r\n                                                               <cbs:OperatorID>101</cbs:OperatorID>\r\n"
+				+ "\r\n                                                               <cbs:ChannelID>1</cbs:ChannelID>\r\n"
+				+ "\r\n                                               </cbs:OperatorInfo>\r\n"
+				+ "\r\n                                               <cbs:TimeFormat>\r\n"
+				+ "\r\n                                                               <cbs:TimeType>1</cbs:TimeType>\r\n"
+				+ "\r\n                                                               <cbs:TimeZoneID>8</cbs:TimeZoneID>\r\n"
+				+ "\r\n                                               </cbs:TimeFormat>\r\n"
+				+ "\r\n                                               <cbs:AdditionalProperty>\r\n"
+				+ "\r\n                                                               <cbs:Code>108</cbs:Code>\r\n"
+				+ "\r\n                                                               <cbs:Value>109</cbs:Value>\r\n"
+				+ "\r\n                                               </cbs:AdditionalProperty>\r\n"
+				+ "\r\n                             </RequestHeader> \r\n"
+				+ "\r\n      		<QueryFreeUnitRequest>\r\n"
+				+ "\r\n      			<bbs:QueryObj>\r\n"
+				+ "\r\n               			<bcs:SubAccessCode>\r\n"
+				+ "\r\n                  			<bcc:PrimaryIdentity>" + sLinea;
+		
+		sRequest+= "</bcc:PrimaryIdentity>\r\n"
+				+ "\r\n               			</bcs:SubAccessCode>\r\n"
+				+ "\r\n         		</bbs:QueryObj>      \r\n"
+				+ "\r\n         	</QueryFreeUnitRequest>      \r\n"
+				+ "\r\n      </bbs:QueryFreeUnitRequestMsg>\r\n"
+				+ "\r\n   </soapenv:Body>\r\n"
+				+ "\r\n</soapenv:Envelope>";
+		return sRequest;
+	}
+	
+	public boolean validarActivacionPack(Document Response, String tipo) {
+		boolean esta = false;
+		NodeList ofertas = (NodeList) Response.getElementsByTagName("bcc:OfferingCode");
+		if (tipo.equalsIgnoreCase("Pack 50 min y 50 SMS x 7 dias")) {
+			for (int i=0; i<ofertas.getLength();i++) {
+				if(ofertas.item(i).getTextContent().equals("SO_VOICE_50MIN_50SMS_7D"))
+					esta = true;
+			}
+		}else {
+			if (tipo.equalsIgnoreCase("reseteo 200 mb por dia")) {
+				for (int i=0; i<ofertas.getLength();i++) {
+					if(ofertas.item(i).getTextContent().equals("SO_DATA_200MB_Diario"))
+						esta = true;
+				}
+			}else {
+				if (tipo.toLowerCase().contains("reseteo internet por dia")) {
+					for (int i=0; i<ofertas.getLength();i++) {
+						if(ofertas.item(i).getTextContent().equals("SO_ROI_P_PYBOL_R"))
+							esta = true;
+					}
+				}
+			}
+		}
+		return esta;
+	}
 }

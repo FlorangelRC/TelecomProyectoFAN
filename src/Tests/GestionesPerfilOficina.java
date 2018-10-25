@@ -44,9 +44,9 @@ public class GestionesPerfilOficina extends TestBase {
 	
 	@BeforeClass(alwaysRun=true)
 	public void init() {
-		CBS_Mattu serv = new CBS_Mattu();
+		/*CBS_Mattu serv = new CBS_Mattu();
 		CBS sercus = new CBS();
-		Assert.assertTrue(sercus.validarNumeroAmigos(serv.Servicio_QueryCustomerInfo("2475416780"), "voz"));
+		Assert.assertTrue(sercus.validarRenovacionDatos(serv.Servicio_QueryCustomerInfo("2475416780"), "internet 50 mb dia"));*/
 		driver = setConexion.setupEze();
 		sleep(5000);
 		sb = new SalesBase(driver);
@@ -1726,7 +1726,7 @@ public class GestionesPerfilOficina extends TestBase {
 		}
 	}
 	
-	@Test (groups = {"GestionesPerfilOficina","RenovacionCuota","E2E","Ciclo1"}, dataProvider="RenovacionCuotaSinSaldo")
+	@Test (groups = {"GestionesPerfilOficina","RenovacionDeCuota","E2E","Ciclo1"}, dataProvider="RenovacionCuotaSinSaldo")
 	public void TS135396_CRM_Movil_REPRO_Renovacion_de_cuota_Presencial_Internet_50_MB_Dia_Efectivo_sin_Credito(String sDNI, String sLinea) throws AWTException {
 		imagen = "TS135396";
 		//Check all
@@ -2300,7 +2300,7 @@ public class GestionesPerfilOficina extends TestBase {
 		
 	}
 	
-	@Test (groups = {"GestionesPerfilOficina","RenovacionCuota","E2E", "Ciclo1"}, dataProvider="RenovacionCuotaSinSaldoConTC")
+	@Test (groups = {"GestionesPerfilOficina","RenovacionDeCuota","E2E", "Ciclo1"}, dataProvider="RenovacionCuotaSinSaldoConTC")
 	public void TS135397_CRM_Movil_REPRO_Renovacion_de_cuota_Presencial_Internet_50_MB_Dia_TC_sin_Credito(String sMonto, String sDNI, String sLinea, String sBanco, String sTarjeta, String sNumTarjeta, String sVenceMes, String sVenceAno, String sCodSeg, String sTipoDNI, String sDNITarjeta, String sTitular, String sPromo, String sCuotas) {
 		imagen = "TS135397";
 		//Check all
