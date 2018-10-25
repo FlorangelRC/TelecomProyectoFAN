@@ -30,7 +30,7 @@ public class TestsXappia extends TestBase {
 	private CustomerCare cc;
 	private SalesBase sb;
 	
-	//@BeforeClass (groups = "UAT")
+	@BeforeClass (groups = "UAT")
 	public void loginUAT() {
 		driver = setConexion.setupEze();
 		driver.get("https://telecomcrm--uat.cs53.my.salesforce.com");
@@ -60,7 +60,7 @@ public class TestsXappia extends TestBase {
 		sb = new SalesBase(driver);
 	}
 	
-	//@BeforeMethod (groups = "UAT")
+	@BeforeMethod (groups = "UAT")
 	public void beforeUAT() {
 		driver.get("https://telecomcrm--uat.cs53.my.salesforce.com");
 	}
@@ -70,7 +70,7 @@ public class TestsXappia extends TestBase {
 		driver.get("https://crm--sit.cs14.my.salesforce.com/");
 	}
 	
-	//@AfterClass (alwaysRun = true)
+	@AfterClass (alwaysRun = true)
 	public void quit() {
 		driver.quit();
 	}
@@ -442,8 +442,11 @@ public class TestsXappia extends TestBase {
 		WebElement wBody = driver.findElements(By.className("detailList")).get(1);
 		WebElement wElement = mM.traerColumnaElement(wBody, 4, 1).get(4);
 		Assert.assertTrue(wElement.getText().equals("Direcci\u00f3n de env\u00edo"));
-		wElement = driver.findElement(By.xpath("//*[@id=\"ep_Account_View_j_id4\"]/div[2]/div[5]/table/tbody/tr[5]/td[2]/table/tbody/tr[2]/td/div/div"));
-		Assert.assertTrue(wElement.getAttribute("class").equals("staticMap"));
+		//wElement = driver.findElement(By.xpath("//*[@id=\"ep_Account_View_j_id4\"]/div[2]/div[5]/table/tbody/tr[5]/td[2]/table/tbody/tr[2]/td/div/div"));
+		//Assert.assertTrue(wElement.getAttribute("class").equals("staticMap"));
+		System.out.println("Time to erase!");
+		sleep(15000);
+		driver.findElement(By.cssSelector("((((//table[@class='detailList'])[2])/..//tr)[7])/td[2]//div[@class='staticMap']"));
 	}
 	
 	@Test (groups = "SIT")

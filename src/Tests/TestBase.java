@@ -1138,7 +1138,7 @@ public class TestBase {
 	@DataProvider
 	public Object [][] CuentaProblemaRecarga() throws Exception{
 		
-		Object[][] testObjArray = ExcelUtils.getTableArray(dataProviderE2E(),"E2EsinPago",1,1,1,"ProblemaRecargas");
+		Object[][] testObjArray = ExcelUtils.getTableArray(dataProviderE2E(),"E2EsinPago",1,1,2,"ProblemaRecargas");
 		
 		return (testObjArray);
 	}
@@ -1472,4 +1472,6 @@ public class TestBase {
 	    Login lLogin = new Login(driver);
 	    lLogin.ingresarComunidad();
 	}
-}
+	
+	
+	}
