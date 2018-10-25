@@ -727,7 +727,7 @@ public class GestionesPerfilTelefonico extends TestBase{
 		sleep(12000);
 		String mesj = driver.findElement(By.cssSelector(".slds-box.ng-scope")).getText();
 		System.out.println(mesj);
-		Assert.assertTrue(mesj.equalsIgnoreCase("La operación termino exitosamente"));		
+		Assert.assertTrue(mesj.equalsIgnoreCase("La operaciï¿½n termino exitosamente"));		
 	}
 	
 	@Test (groups = {"GestionesPerfilTelefonico", "RenovacionDeCuota","E2E"}, dataProvider="RenovacionCuotaSinSaldoConTC")
@@ -804,10 +804,10 @@ public class GestionesPerfilTelefonico extends TestBase{
 
 	}
 	
-	@Test (groups = {"GestionesPerfilTelefonico", "ReseteoDeClave", "Ciclo2"})
-	public void TS95981_CRM_Movil_REPRO_Reseteo_de_Clave_Telefonico() {
+	@Test (groups = {"GestionesPerfilTelefonico", "ReseteoDeClave", "Ciclo2"}, dataProvider = "CuentaReseteoClave")
+	public void TS95981_CRM_Movil_REPRO_Reseteo_de_Clave_Telefonico(String sDNI) {
 		driver.switchTo().frame(cambioFrame(driver, By.id("SearchClientDocumentType")));
-		sb.BuscarCuenta("DNI", "37654318");
+		sb.BuscarCuenta("DNI", sDNI);
 		driver.findElement(By.cssSelector(".slds-tree__item.ng-scope")).click();
 		sleep(5000);
 		driver.switchTo().frame(cambioFrame(driver, By.className("profile-box")));
@@ -821,10 +821,10 @@ public class GestionesPerfilTelefonico extends TestBase{
 		Assert.assertTrue(msj.getText().contains("Su n\u00famero de confirmaci\u00f3n es: "));
 	}
 	
-	@Test (groups = {"GestionesPerfilTelefonico", "ReseteoDeClave", "Ciclo2"})
-	public void TS95983_CRM_Movil_REPRO_No_Reseteo_de_Clave_Telefonico() {
+	@Test (groups = {"GestionesPerfilTelefonico", "ReseteoDeClave", "Ciclo2"}, dataProvider = "CuentaReseteoClave")
+	public void TS95983_CRM_Movil_REPRO_No_Reseteo_de_Clave_Telefonico(String sDNI) {
 		driver.switchTo().frame(cambioFrame(driver, By.id("SearchClientDocumentType")));
-		sb.BuscarCuenta("DNI", "37654318");
+		sb.BuscarCuenta("DNI", sDNI);
 		driver.findElement(By.cssSelector(".slds-tree__item.ng-scope")).click();
 		sleep(5000);
 		driver.switchTo().frame(cambioFrame(driver, By.className("profile-box")));
@@ -837,4 +837,152 @@ public class GestionesPerfilTelefonico extends TestBase{
 		WebElement msj = driver.findElement(By.className("ta-care-omniscript-done"));
 		Assert.assertTrue(msj.getText().contains("Su n\u00famero de confirmaci\u00f3n es: "));
 	}
+	
+	@Test (groups = {"GestionesPerfilTelefonico","NumerosAmigos","E2E", "Ciclo1"}, dataProvider="NumerosAmigos")
+	public void TS100601_CRM_Movil_REPRO_FF_Alta_Posventa(String sDNI, String sLinea, String sNumeroVOZ, String sNumeroSMS) {
+		imagen = "TS100602";
+		BasePage cambioFrame=new BasePage();
+		driver.switchTo().frame(cambioFrame.getFrameForElement(driver, By.id("SearchClientDocumentType")));
+		sleep(1000);
+		SalesBase sSB = new SalesBase(driver);
+		sSB.BuscarCuenta("DNI", sDNI);
+		String accid = driver.findElement(By.cssSelector(".searchClient-body.slds-hint-parent.ng-scope")).findElements(By.tagName("td")).get(5).getText();
+		System.out.println("id "+accid);
+		driver.findElement(By.cssSelector(".slds-tree__item.ng-scope")).findElement(By.tagName("div")).click();
+		sleep(25000);
+		
+		CustomerCare cCC = new CustomerCare(driver);
+		cCC.seleccionarCardPornumeroLinea(sLinea, driver);
+		sleep(3000);
+		cCC.irAGestionEnCard("N\u00fameros Gratis");
+		
+		sleep(5000);
+		driver.switchTo().defaultContent();
+		driver.switchTo().frame(cambioFrame(driver, By.cssSelector(".slds-col--padded.slds-size--1-of-2")));
+		List<WebElement> wNumerosAmigos = driver.findElements(By.cssSelector(".slds-col--padded.slds-size--1-of-2"));
+		Marketing mMarketing = new Marketing(driver);
+		int iIndice = mMarketing.numerosAmigos(sNumeroVOZ, sNumeroSMS);
+		switch (iIndice) {
+			case 0:
+				wNumerosAmigos.get(0).findElement(By.tagName("input")).sendKeys(sNumeroVOZ);
+				break;
+			case 1:
+				wNumerosAmigos.get(1).findElement(By.tagName("input")).sendKeys(sNumeroSMS);
+				break;
+			default:
+				Assert.assertTrue(false);
+		}
+		sleep(5000);
+		driver.findElement(By.cssSelector(".OSradioButton.ng-scope.only-buttom")).click();
+		
+		sleep(15000);
+		List <WebElement> wMessage = driver.findElement(By.cssSelector(".slds-form-element.vlc-flex.vlc-slds-text-block.vlc-slds-rte.ng-pristine.ng-valid.ng-scope")).findElement(By.className("ng-binding")).findElements(By.tagName("p"));
+		boolean bAssert = wMessage.get(1).getText().contains("La orden se realiz\u00f3 con \u00e9xito!");
+		datosOrden.add(cCC.obtenerOrden(driver, "N\u00fameros Gratis"));
+		Assert.assertTrue(bAssert);
+		sleep(5000);
+		String orden = cc.obtenerOrden(driver, "Numero Gratis");
+		datosOrden.add("Numeros amigos, orden numero: " + orden + " con numero de DNI: " + sDNI);
+		sleep(10000);
+		BasePage bBP = new BasePage();
+		bBP.closeTabByName(driver, "N\u00fameros Gratis");
+		cCC.seleccionarCardPornumeroLinea(sLinea, driver);
+		cCC.irAGestionEnCard("N\u00fameros Gratis");
+		Assert.assertTrue(mMarketing.verificarNumerosAmigos(driver, sNumeroVOZ, sNumeroSMS));
+		//Assert.assertTrue(cc.corroborarEstadoCaso(sOrder, "Activated"));
+		//sOrders.add("Suspension, orden numero: " + sOrder + ", DNI: " + sDNI);
+		//Verify when the page works
+	}
+	
+	@Test (groups = {"GestionesPerfilTelefonico","NumerosAmigos","E2E","Ciclo1"}, dataProvider="NumerosAmigosModificacion")
+	public void TS100604_CRM_Movil_REPRO_FF_Modificacion_Presencial(String sDNI, String sLinea, String sNumeroVOZ, String sNumeroSMS) {
+		imagen = "TS100603";
+		BasePage cambioFrame=new BasePage();
+		driver.switchTo().frame(cambioFrame.getFrameForElement(driver, By.id("SearchClientDocumentType")));
+		sleep(1000);
+		SalesBase sSB = new SalesBase(driver);
+		sSB.BuscarCuenta("DNI", sDNI);
+		String accid = driver.findElement(By.cssSelector(".searchClient-body.slds-hint-parent.ng-scope")).findElements(By.tagName("td")).get(5).getText();
+		System.out.println("id "+accid);
+		driver.findElement(By.cssSelector(".slds-tree__item.ng-scope")).findElement(By.tagName("div")).click();
+		sleep(15000);
+		
+		CustomerCare cCC = new CustomerCare(driver);
+		cCC.seleccionarCardPornumeroLinea(sLinea, driver);
+		sleep(3000);
+		cCC.irAGestionEnCard("N\u00fameros Gratis");
+		
+		sleep(5000);
+		driver.switchTo().defaultContent();
+		driver.switchTo().frame(cambioFrame(driver, By.cssSelector(".slds-col--padded.slds-size--1-of-2")));
+		List<WebElement> wNumerosAmigos = driver.findElements(By.cssSelector(".slds-col--padded.slds-size--1-of-2"));
+		Marketing mMarketing = new Marketing(driver);
+		int iIndice = mMarketing.numerosAmigos(sNumeroVOZ, sNumeroSMS);
+		switch (iIndice) {
+			case 0:
+				wNumerosAmigos.get(0).findElement(By.tagName("input")).clear();
+				wNumerosAmigos.get(0).findElement(By.tagName("input")).sendKeys(sNumeroVOZ);
+				break;
+			case 1:
+				wNumerosAmigos.get(0).findElement(By.tagName("input")).clear();
+				wNumerosAmigos.get(1).findElement(By.tagName("input")).sendKeys(sNumeroSMS);
+				break;
+			default:
+				Assert.assertTrue(false);
+		}
+		sleep(5000);
+		driver.findElement(By.cssSelector(".OSradioButton.ng-scope.only-buttom")).click();
+		
+		sleep(15000);
+		List <WebElement> wMessage = driver.findElement(By.cssSelector(".slds-form-element.vlc-flex.vlc-slds-text-block.vlc-slds-rte.ng-pristine.ng-valid.ng-scope")).findElement(By.className("ng-binding")).findElements(By.tagName("p"));
+		boolean bAssert = wMessage.get(1).getText().contains("La orden se realiz\u00f3 con \u00e9xito!");
+		datosOrden.add(cCC.obtenerOrden(driver, "N\u00fameros Gratis"));
+		Assert.assertTrue(bAssert);
+		sleep(5000);
+		String orden = cc.obtenerOrden(driver, "Numero Gratis");
+		datosOrden.add("Numeros amigos, orden numero: " + orden + " con numero de DNI: " + sDNI);
+		sleep(10000);
+		BasePage bBP = new BasePage();
+		bBP.closeTabByName(driver, "N\u00fameros Gratis");
+		cCC.seleccionarCardPornumeroLinea(sLinea, driver);
+		cCC.irAGestionEnCard("N\u00fameros Gratis");
+		Assert.assertTrue(mMarketing.verificarNumerosAmigos(driver, sNumeroVOZ, sNumeroSMS));
+		//Verify when the page works
+	}
+	
+	@Test (groups = {"GestionesPerfilTelefonico","NumerosAmigos","E2E","Ciclo1"}, dataProvider="NumerosAmigosBaja")
+	public void TS100605_CRM_Movil_REPRO_FF_Baja_Presencial(String sDNI, String sLinea, String sVOZorSMS) {
+		imagen = "TS100605";
+		BasePage cambioFrame=new BasePage();
+		driver.switchTo().frame(cambioFrame.getFrameForElement(driver, By.id("SearchClientDocumentType")));
+		sleep(1000);
+		SalesBase sSB = new SalesBase(driver);
+		sSB.BuscarCuenta("DNI", sDNI);
+		String accid = driver.findElement(By.cssSelector(".searchClient-body.slds-hint-parent.ng-scope")).findElements(By.tagName("td")).get(5).getText();
+		System.out.println("id "+accid);
+		driver.findElement(By.cssSelector(".slds-tree__item.ng-scope")).findElement(By.tagName("div")).click();
+		sleep(15000);
+		
+		CustomerCare cCC = new CustomerCare(driver);
+		cCC.seleccionarCardPornumeroLinea(sLinea, driver);
+		sleep(3000);
+		cCC.irAGestionEnCard("N\u00fameros Gratis");
+		
+		sleep(5000);
+		driver.switchTo().defaultContent();
+		driver.switchTo().frame(cambioFrame(driver, By.cssSelector(".slds-col--padded.slds-size--1-of-2")));
+		List<WebElement> wNumerosAmigos = driver.findElements(By.cssSelector(".slds-col--padded.slds-size--1-of-2"));
+		wNumerosAmigos.get(Integer.parseInt(sVOZorSMS)).clear();
+		
+		sleep(10000);
+		BasePage bBP = new BasePage();
+		bBP.closeTabByName(driver, "N\u00fameros Gratis");
+		cCC.seleccionarCardPornumeroLinea(sLinea, driver);
+		cCC.irAGestionEnCard("N\u00fameros Gratis");
+		
+		wNumerosAmigos = driver.findElements(By.cssSelector(".slds-col--padded.slds-size--1-of-2"));
+		Assert.assertTrue(wNumerosAmigos.get(Integer.parseInt(sVOZorSMS)).getText().isEmpty());
+		//Verify when the page works
+	}
+	
 }

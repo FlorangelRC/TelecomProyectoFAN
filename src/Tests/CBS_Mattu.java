@@ -177,4 +177,17 @@ public class CBS_Mattu extends TestBase {
 		Document Response = cCBS.sValidacion_ResponseQueryLiteBySubscriber(sSCS.callSoapWebService(cCBS.sRequestByLinea(sLinea, sMessageSeq), sEndPoint));
 		return Response;
 	}
+	
+	@Test
+	public Document Servicio_QueryFreeUnit(String sLinea) {
+		String sEndPoint = "unidades libres";
+		//String sLinea = "";
+		String sMessageSeq = "QCI"+ ((new java.text.SimpleDateFormat("yyyyMMddHHmmss")).format(new Date())).toString()+Integer.toString((int)(Math.random()*1000));
+		String sImsi = "";
+		String sICCD = "";
+		SOAPClientSAAJ sSCS = new SOAPClientSAAJ();
+		CBS cCBS = new CBS();
+		Document Response = cCBS.sValidacion_ResponseQueryLiteBySubscriber(sSCS.callSoapWebService(cCBS.sRequestQueryFreeUnit(sLinea, sMessageSeq), sEndPoint));
+		return Response;
+	}
 }
