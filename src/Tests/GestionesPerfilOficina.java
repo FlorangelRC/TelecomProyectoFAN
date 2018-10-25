@@ -2672,10 +2672,10 @@ public class GestionesPerfilOficina extends TestBase {
 		
 	}
 	
-	@Test (groups = {"GestionesPerfilOficina", "ReseteoDeClave", "Ciclo2"})
-	public void TS95980_CRM_Movil_REPRO_Reseteo_de_Clave_Presencial() {
+	@Test (groups = {"GestionesPerfilOficina", "ReseteoDeClave", "Ciclo2"}, dataProvider = "CuentaReseteoClave")
+	public void TS95980_CRM_Movil_REPRO_Reseteo_de_Clave_Presencial(String sDNI) {
 		driver.switchTo().frame(cambioFrame(driver, By.id("SearchClientDocumentType")));
-		sb.BuscarCuenta("DNI", "37654318");
+		sb.BuscarCuenta("DNI", sDNI);
 		driver.findElement(By.cssSelector(".slds-tree__item.ng-scope")).click();
 		sleep(5000);
 		driver.switchTo().frame(cambioFrame(driver, By.className("profile-box")));
@@ -2689,10 +2689,10 @@ public class GestionesPerfilOficina extends TestBase {
 		Assert.assertTrue(msj.getText().contains("Su n\u00famero de confirmaci\u00f3n es: "));
 	}
 	
-	@Test (groups = {"GestionesPerfilOficina", "ReseteoDeClave", "Ciclo2"})
-	public void TS95982_CRM_Movil_REPRO_No_Reseteo_de_Clave_Presencial() {
+	@Test (groups = {"GestionesPerfilOficina", "ReseteoDeClave", "Ciclo2"}, dataProvider = "CuentaReseteoClave")
+	public void TS95982_CRM_Movil_REPRO_No_Reseteo_de_Clave_Presencial(String sDNI) {
 		driver.switchTo().frame(cambioFrame(driver, By.id("SearchClientDocumentType")));
-		sb.BuscarCuenta("DNI", "37654318");
+		sb.BuscarCuenta("DNI", sDNI);
 		driver.findElement(By.cssSelector(".slds-tree__item.ng-scope")).click();
 		sleep(5000);
 		driver.switchTo().frame(cambioFrame(driver, By.className("profile-box")));
@@ -2705,6 +2705,7 @@ public class GestionesPerfilOficina extends TestBase {
 		WebElement msj = driver.findElement(By.className("ta-care-omniscript-done"));
 		Assert.assertTrue(msj.getText().contains("Su n\u00famero de confirmaci\u00f3n es: "));
 	}
+	
 	@Test (groups = {"GestionesPerfilOficina", "RenovacionCuota","E2E"}, dataProvider="RenovacionCuotaConSaldo")
 	public void TS130056_CRM_Movil_REPRO_Renovacion_de_cuota_Presencial_Reseteo_200_MB_por_Dia_Efectivo_con_Credito(String sDNI, String sLinea) throws AWTException {
 		CBS cCBS = new CBS();
@@ -2769,8 +2770,7 @@ public class GestionesPerfilOficina extends TestBase {
 
 
 	}
-	
-}	
+		
 	@Test (groups = {"GestionesPerfilOficina","RenovacionCuota","E2E", "Ciclo1"}, dataProvider="RenovacionCuotaConSaldo")
 	public void TS135395_CRM_Movil_REPRO_Renovacion_de_cuota_Presencial_Internet_50_MB_Dia_Efectivo_con_Credito(String sDNI, String sLinea) {
 		imagen = "TS135397";

@@ -805,10 +805,10 @@ public class GestionesPerfilTelefonico extends TestBase{
 
 	}
 	
-	@Test (groups = {"GestionesPerfilTelefonico", "ReseteoDeClave", "Ciclo2"})
-	public void TS95981_CRM_Movil_REPRO_Reseteo_de_Clave_Telefonico() {
+	@Test (groups = {"GestionesPerfilTelefonico", "ReseteoDeClave", "Ciclo2"}, dataProvider = "CuentaReseteoClave")
+	public void TS95981_CRM_Movil_REPRO_Reseteo_de_Clave_Telefonico(String sDNI) {
 		driver.switchTo().frame(cambioFrame(driver, By.id("SearchClientDocumentType")));
-		sb.BuscarCuenta("DNI", "37654318");
+		sb.BuscarCuenta("DNI", sDNI);
 		driver.findElement(By.cssSelector(".slds-tree__item.ng-scope")).click();
 		sleep(5000);
 		driver.switchTo().frame(cambioFrame(driver, By.className("profile-box")));
@@ -822,10 +822,10 @@ public class GestionesPerfilTelefonico extends TestBase{
 		Assert.assertTrue(msj.getText().contains("Su n\u00famero de confirmaci\u00f3n es: "));
 	}
 	
-	@Test (groups = {"GestionesPerfilTelefonico", "ReseteoDeClave", "Ciclo2"})
-	public void TS95983_CRM_Movil_REPRO_No_Reseteo_de_Clave_Telefonico() {
+	@Test (groups = {"GestionesPerfilTelefonico", "ReseteoDeClave", "Ciclo2"}, dataProvider = "CuentaReseteoClave")
+	public void TS95983_CRM_Movil_REPRO_No_Reseteo_de_Clave_Telefonico(String sDNI) {
 		driver.switchTo().frame(cambioFrame(driver, By.id("SearchClientDocumentType")));
-		sb.BuscarCuenta("DNI", "37654318");
+		sb.BuscarCuenta("DNI", sDNI);
 		driver.findElement(By.cssSelector(".slds-tree__item.ng-scope")).click();
 		sleep(5000);
 		driver.switchTo().frame(cambioFrame(driver, By.className("profile-box")));

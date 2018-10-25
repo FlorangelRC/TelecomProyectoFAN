@@ -1280,6 +1280,7 @@ public class TestBase {
 
 	 return (testObjArray);
 	}
+	
 	@DataProvider
 	public Object[][] AltaLineaNuevoEquipoTC() throws Exception{
 
@@ -1314,6 +1315,7 @@ public class TestBase {
 	 return (testObjArray);
 
 	}
+	
 	@DataProvider
 	public Object[][] AltaLineaExistenteOfComTD() throws Exception{//verificado
 
@@ -1322,6 +1324,7 @@ public class TestBase {
 	 return (testObjArray);
 
 	}
+	
 	@DataProvider
 	public Object[][] AltaEquipoExisteSPU() throws Exception{//verificado
 		
@@ -1358,6 +1361,14 @@ public class TestBase {
 	public Object[][] CuentaAnulacionDeVenta() throws Exception{
 		
 		 Object[][] testObjArray = ExcelUtils.getTableArray(dataProviderE2E(),"E2EsinPago",1,1,1,"Anulacion de venta");
+
+		 return (testObjArray);
+	}
+	
+	@DataProvider
+	public Object[][] CuentaReseteoClave() throws Exception{
+		
+		 Object[][] testObjArray = ExcelUtils.getTableArray(dataProviderE2E(),"E2EsinPago",1,1,1,"Reseteo De Clave");
 
 		 return (testObjArray);
 	}
