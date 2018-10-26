@@ -135,7 +135,7 @@ public class ContactSearch extends BasePage {
 			}
 			break;
 		}
-		driver.findElement(By.id("ValidationMethod_nextBtn")).click();
+		driver.findElement(By.id("MethodSelection_nextBtn")).click();
 		try {Thread.sleep(7000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 	}
 	
