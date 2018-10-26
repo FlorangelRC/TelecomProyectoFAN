@@ -3016,4 +3016,114 @@ public class GestionesPerfilOficina extends TestBase {
 		}
 		Assert.assertTrue(a);
 	}
+	
+	@Test (groups = {"GestionesPerfilOficina", "Nominacion", "Ciclo1"})
+	public void TS128436_CRM_Movil_REPRO_Nominatividad_Presencial_DOC_Pasaporte_OfCom() {
+		imagen = "TS128436";
+		boolean nominacion = false;
+		driver.switchTo().frame(cambioFrame(driver, By.id("SearchClientDocumentType")));
+		driver.findElement(By.id("PhoneNumber")).sendKeys("2932442864");
+		driver.findElement(By.id("SearchClientsDummy")).click();
+		sleep(5000);
+		driver.findElement(By.cssSelector(".slds-button.slds-button--icon.slds-m-right--x-small.ng-scope")).click();
+		sleep(2000);
+		WebElement botonNominar = null;
+		for (WebElement x : driver.findElements(By.cssSelector(".slds-hint-parent.ng-scope"))) {
+			if (x.getText().toLowerCase().contains("plan con tarjeta"))
+				botonNominar = x;
+		}
+		for (WebElement x : botonNominar.findElements(By.tagName("td"))) {
+			if (x.getAttribute("data-label").equals("actions"))
+				botonNominar = x;
+		}
+		botonNominar.findElement(By.tagName("a")).click();
+		sleep(5000);
+		ContactSearch contact = new ContactSearch(driver);
+		contact.searchContact2("DNI", "99241524", "Masculino");
+		driver.findElement(By.id("PermanencyDueDate")).sendKeys("20/10/2019");
+		driver.findElement(By.id("Contact_nextBtn")).click();
+		sleep(10000);
+		contact.tipoValidacion("documento");
+		sleep(5000);
+		driver.findElement(By.id("FileDocumentImage")).sendKeys("C:\\Users\\Nicolas\\Desktop\\descarga.jpg");
+		driver.findElement(By.id("DocumentMethod_nextBtn")).click();
+		sleep(7000);
+		driver.findElement(By.id("UploadSignedForm")).sendKeys("C:\\Users\\Nicolas\\Desktop\\descarga.jpg");
+		driver.findElement(By.id("PDFForm_nextBtn")).click();
+		sleep(30000);
+		for (WebElement x : driver.findElement(By.id("NominacionExitosa")).findElements(By.tagName("p"))) {
+			if (x.getText().toLowerCase().contains("nominaci\u00f3n exitosa!"))
+				nominacion = true;
+		}
+		Assert.assertTrue(nominacion);
+		driver.findElement(By.id("FinishProcess_nextBtn")).click();
+		sleep(3000);
+	}
+	
+	@Test (groups = {"GestionesPerfilOficina", "Nominacion", "Ciclo1"})
+	public void TS130071_CRM_Movil_REPRO_No_Nominatividad_Presencial_DOC_Edad_OfCom() {
+		imagen = "TS130071";
+		driver.switchTo().frame(cambioFrame(driver, By.id("SearchClientDocumentType")));
+		driver.findElement(By.id("PhoneNumber")).sendKeys("2932442870");
+		driver.findElement(By.id("SearchClientsDummy")).click();
+		sleep(5000);
+		driver.findElement(By.cssSelector(".slds-button.slds-button--icon.slds-m-right--x-small.ng-scope")).click();
+		sleep(2000);
+		WebElement botonNominar = null;
+		for (WebElement x : driver.findElements(By.cssSelector(".slds-hint-parent.ng-scope"))) {
+			if (x.getText().toLowerCase().contains("plan con tarjeta"))
+				botonNominar = x;
+		}
+		for (WebElement x : botonNominar.findElements(By.tagName("td"))) {
+			if (x.getAttribute("data-label").equals("actions"))
+				botonNominar = x;
+		}
+		botonNominar.findElement(By.tagName("a")).click();
+		sleep(5000);
+		ContactSearch contact = new ContactSearch(driver);
+		contact.searchContact2("DNI", "99241524", "Masculino");
+		driver.findElement(By.id("Birthdate")).sendKeys("09/10/2018");
+		sleep(3000);
+		WebElement error = driver.findElement(By.cssSelector(".message.description.ng-binding.ng-scope"));
+		Assert.assertTrue(error.getText().toLowerCase().contains("fecha de nacimiento inv\u00e1lida"));
+	}
+	
+	@Test (groups = {"GestionesPerfilOficina", "Vista360", "Ciclo2"})
+	public void TS134495_CRM_Movil_Prepago_Vista_360_Distribucion_de_paneles_Informacion_del_cliente_FAN_Front_OOCC() {
+		imagen = "TS134495";
+		driver.switchTo().frame(cambioFrame(driver, By.id("SearchClientDocumentType")));
+		sb.BuscarCuenta("DNI", "15907314");
+		driver.findElement(By.cssSelector(".slds-tree__item.ng-scope")).click();
+		sleep(15000);
+		driver.switchTo().frame(cambioFrame(driver, By.className("profile-box")));
+		WebElement nombre = driver.findElement(By.cssSelector(".slds-text-heading_large.title-card"));
+		WebElement dni = null;
+		for (WebElement x : driver.findElements(By.cssSelector(".slds-text-body_regular.account-detail-content"))) {
+			if (x.getText().toLowerCase().contains("15907314"))
+				dni = x;
+		}
+		Assert.assertTrue(nombre.getText().contains("Emma Valentina Miranda") && dni.getText().contains("15907314"));
+	}
+	
+	@Test (groups = {"GestionesPerfilOficina", "Vista360", "Ciclo2"})
+	public void TS134745_CRM_Movil_Prepago_Vista_360_Producto_Activo_del_cliente_Datos_FAN_Front_OOCC() {
+		imagen = "TS134745";
+		boolean creditoRecarga = false, creditoPromocional = false, estado = false, internetDisponible = false;
+		driver.switchTo().frame(cambioFrame(driver, By.id("SearchClientDocumentType")));
+		sb.BuscarCuenta("DNI", "15907314");
+		driver.findElement(By.cssSelector(".slds-tree__item.ng-scope")).click();
+		sleep(15000);
+		driver.switchTo().frame(cambioFrame(driver, By.className("card-top")));
+		for (WebElement x : driver.findElements(By.cssSelector(".slds-text-body_regular.detail-label"))) {
+			if (x.getText().toLowerCase().contains("cr\u00e9dito recarga"))
+				creditoRecarga = true;
+			if (x.getText().toLowerCase().contains("cr\u00e9dito promocional"))
+				creditoPromocional = true;
+			if (x.getText().toLowerCase().contains("estado"))
+				estado = true;
+			if (x.getText().toLowerCase().contains("internet disponible"))
+				internetDisponible = true;
+		}
+		Assert.assertTrue(creditoRecarga && creditoPromocional && estado && internetDisponible);
+	}
 }

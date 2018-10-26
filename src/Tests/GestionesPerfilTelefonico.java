@@ -1040,4 +1040,27 @@ public class GestionesPerfilTelefonico extends TestBase{
 		//Verify when the page works
 	}
 	
+	@Test (groups = {"GestionesPerfilTelefonico", "Vista360", "Ciclo2"})
+	public void TS134796_CRM_Movil_Prepago_Vista_360_Distribucion_de_paneles_Visualizacion_e_ingreso_a_las_ultimas_gestiones_FAN_Front_Telefonico() {
+		imagen = "TS134796";
+		driver.switchTo().frame(cambioFrame(driver, By.id("SearchClientDocumentType")));
+		sb.BuscarCuenta("DNI", "15907314");
+		driver.findElement(By.cssSelector(".slds-tree__item.ng-scope")).click();
+		sleep(15000);
+		driver.switchTo().frame(cambioFrame(driver, By.cssSelector(".slds-p-around--small.slds-col")));
+		WebElement gestiones = driver.findElement(By.cssSelector(".slds-p-around--small.slds-col"));
+		Assert.assertTrue(gestiones.getText().toLowerCase().contains("t\u00edtulo") && gestiones.getText().contains("Fecha de creacion"));
+	}
+	
+	@Test (groups = {"GestionesPerfilTelefonico", "Vista360", "Ciclo2"})
+	public void TS134797_CRM_Movil_Prepago_Vista_360_Distribucion_de_paneles_Panel_Derecho_Busqueda_de_gestiones_promociones_y_gestiones_abandonadas_FAN_Front_Telefonico() {
+		imagen = "TS134796";
+		driver.switchTo().frame(cambioFrame(driver, By.id("SearchClientDocumentType")));
+		sb.BuscarCuenta("DNI", "15907314");
+		driver.findElement(By.cssSelector(".slds-tree__item.ng-scope")).click();
+		sleep(15000);
+		driver.switchTo().frame(cambioFrame(driver, By.cssSelector(".abandoned-content.scrollmenu")));
+		WebElement abandoned = driver.findElement(By.className("abandoned-section"));
+		Assert.assertTrue(abandoned.getText().contains("Gestiones Abandonadas") && driver.findElement(By.className("abandoned-section")).isDisplayed());
+	}
 }
