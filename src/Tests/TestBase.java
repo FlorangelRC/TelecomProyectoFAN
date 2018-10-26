@@ -51,8 +51,8 @@ import DataProvider.ExcelUtils;
 public class TestBase {
 	protected static WebDriver driver;
 	
-		//public static String urlAmbiente = "https://telecomcrm--uat.cs53.my.salesforce.com";
-		public static String urlAmbiente = "https://crm--sit.cs14.my.salesforce.com/";
+		public static String urlAmbiente = "https://telecomcrm--uat.cs53.my.salesforce.com";
+		//public static String urlAmbiente = "https://crm--sit.cs14.my.salesforce.com/";
 		
 		// viejo public String urlSCP = "https://telecomcrm--uat.cs8.my.salesforce.com";
 		public static String urlSCP = "https://telecomcrm--uat.cs53.my.salesforce.com";
@@ -1050,6 +1050,15 @@ public class TestBase {
 	 return (testObjArray);
 
 	}
+	@DataProvider
+	public Object[][] RenovacionCuotaconSaldoConTC() throws Exception{
+
+	 Object[][] testObjArray = ExcelUtils.getTableArray(dataProviderE2E(),"E2EconPago",1,1,13,"Renovacion Cuota con Saldo Con TC" + 
+	 		"");
+
+	 return (testObjArray);
+
+	}
 	
 	@DataProvider
 	public Object[][] NumerosAmigos() throws Exception{
@@ -1472,6 +1481,15 @@ public class TestBase {
 	public Object[][] ConsultaSaldo() throws Exception{
 		
 		Object[][] testObjArray = ExcelUtils.getTableArray(dataProviderE2E(),"E2EsinPago",1,1,1,"SaldoConsulta");
+		
+		return (testObjArray);
+		
+	}
+	
+	@DataProvider
+	public Object[][] ProductosyServicios() throws Exception{
+		
+		Object[][] testObjArray = ExcelUtils.getTableArray(dataProviderE2E(),"E2EsinPago",1,1,1,"Productos y Servicios");
 		
 		return (testObjArray);
 		
