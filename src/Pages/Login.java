@@ -58,7 +58,15 @@ public class Login extends BasePage {
    
    @FindBy (how = How.CSS , using = ".slds-button.slds-button--neutral.sfdc_button.loginBtn.uiButton--default.uiButton")
    private WebElement wIngresarCommunity;
-	   
+	 
+   @FindBy (how = How.ID, using = "TxtUsuario")
+   private WebElement UserF;
+   
+   @FindBy (how = How.ID, using = "TxtContrasenia")
+   private WebElement PassF;
+   
+   @FindBy (how = How.ID, using = "btnEntrar")
+   private WebElement ClickF;
 	//Constructor
 	
 	public Login(WebDriver driver){
@@ -319,4 +327,10 @@ public class Login extends BasePage {
 			try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 		}
 		
+		public void ingresarflow(){
+			UserF.sendKeys("wdi593809");
+			PassF.sendKeys("Telecom01!");
+			ClickF.click();
+			try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		}
 }
