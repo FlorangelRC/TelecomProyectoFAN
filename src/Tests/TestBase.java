@@ -51,8 +51,8 @@ import DataProvider.ExcelUtils;
 public class TestBase {
 	protected static WebDriver driver;
 	
-		//public static String urlAmbiente = "https://telecomcrm--uat.cs53.my.salesforce.com";
-		public static String urlAmbiente = "https://crm--sit.cs14.my.salesforce.com/";
+		public static String urlAmbiente = "https://telecomcrm--uat.cs53.my.salesforce.com";
+		//public static String urlAmbiente = "https://crm--sit.cs14.my.salesforce.com/";
 		
 		// viejo public String urlSCP = "https://telecomcrm--uat.cs8.my.salesforce.com";
 		public static String urlSCP = "https://telecomcrm--uat.cs53.my.salesforce.com";
@@ -1484,5 +1484,31 @@ public class TestBase {
 	    lLogin.ingresarComunidad();
 	}
 	
+	@DataProvider
+	public Object[][] validaDocumentacion() throws Exception{
+		
+		Object[][] testObjArray = ExcelUtils.getTableArray(dataProviderE2E(),"E2EsinPago",1,1,7,"DocumentacionValida");
+		
+		return (testObjArray);
+		
+	}
+	
+	@DataProvider
+	public Object[][] invalidaDocumentacion() throws Exception{
+		
+		Object[][] testObjArray = ExcelUtils.getTableArray(dataProviderE2E(),"E2EsinPago",1,1,7,"DocumentacionInvalida");
+		
+		return (testObjArray);
+		
+	}
+	
+	@DataProvider
+	public Object[][] documentacionVista360() throws Exception{
+		
+		Object[][] testObjArray = ExcelUtils.getTableArray(dataProviderE2E(),"E2EsinPago",1,1,1,"VistaDocumentacion");
+		
+		return (testObjArray);
+		
+	}
 	
 	}

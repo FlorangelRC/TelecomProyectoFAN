@@ -2621,19 +2621,19 @@ public class GestionesPerfilOficina extends TestBase {
 	}
 	
 
-	@Test(groups={"Sales","GestionDeClientes", "Ciclo1"},dataProvider = "CuentaModificacionDeDatos")
-	public void TS_135496_CRM_Movil_REPRO_Busqueda_DNI_Numero_de_Documento(String cDNI){
+	@Test(groups={"Sales","GestionDeClientes", "Ciclo1"},dataProvider = "validaDocumentacion")
+	public void TS_135496_CRM_Movil_REPRO_Busqueda_DNI_Numero_de_Documento(String sDNI, String sNumeroDeCuenta, String sNombre, String sApellido, String sLibreta, String sRazon, String sEmail ){
 		driver.switchTo().frame(cambioFrame(driver, By.id("SearchClientDocumentType")));
-		sb.BuscarCuenta("DNI", cDNI);
+		sb.BuscarCuenta("DNI", sDNI);
 		try {Thread.sleep(10000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 		List<WebElement> solapas = driver.findElement(By.className("slds-tabs--scoped__nav")).findElements(By.tagName("li"));
 		assertTrue(solapas.get(0).findElement(By.tagName("a")).getText().equals("Clientes Activos"));
 	}
 	
-	@Test(groups={"Sales","GestionDeClientes", "Ciclo1"})
-	public void TS_135503_CRM_Movil_REPRO_Busqueda_Apellido(){
+	@Test(groups={"Sales","GestionDeClientes", "Ciclo1"}, dataProvider = "validaDocumentacion")
+	public void TS_135503_CRM_Movil_REPRO_Busqueda_Apellido(String sDNI, String sNumeroDeCuenta, String sNombre, String sApellido, String sLibreta, String sRazon, String sEmail){
 		driver.switchTo().frame(cambioFrame(driver, By.id("SearchClientDocumentType")));
-		sb.BuscarAvanzada("","Miranda","","","");
+		sb.BuscarAvanzada("",sApellido,"","","");
 		sleep(1500);
 		driver.findElement(By.id("SearchClientsDummy")).click();
 		try {Thread.sleep(10000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
@@ -2641,10 +2641,10 @@ public class GestionesPerfilOficina extends TestBase {
 		assertTrue(solapas.get(0).findElement(By.tagName("a")).getText().equals("Clientes Activos"));
 	}
 	
-	@Test(groups={"Sales","GestionDeClientes", "Ciclo1"})
-	public void TS_135509_CRM_Movil_REPRO_Busqueda_Numero_de_Cuenta(){
+	@Test(groups={"Sales","GestionDeClientes", "Ciclo1"}, dataProvider = "validaDocumentacion")
+	public void TS_135509_CRM_Movil_REPRO_Busqueda_Numero_de_Cuenta(String sDNI, String sNumeroDeCuenta, String sNombre, String sApellido, String sLibreta, String sRazon, String sEmail){
 		driver.switchTo().frame(cambioFrame(driver, By.id("SearchClientDocumentType")));
-		sb.BuscarAvanzada("", "", "", "9900000766810001", "");
+		sb.BuscarAvanzada("", "", "", sNumeroDeCuenta, "");
 		sleep(1500);
 		driver.findElement(By.id("SearchClientsDummy")).click();
 		try {Thread.sleep(10000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
@@ -2860,10 +2860,10 @@ public class GestionesPerfilOficina extends TestBase {
 		Assert.assertTrue(driver.findElement(By.id("GeneralMessageDesing")).findElement(By.className("ng-binding")).findElement(By.tagName("h6")).getText().equalsIgnoreCase("Muchas gracias por tu compra."));
 	}
 	
-	@Test (groups={"Sales","GestionDeClientes", "Ciclo1"})
-	public void TS_135497_CRM_Movil_REPRO_Busqueda_DNI_Numero_de_Documento_no_existente(){
+	@Test (groups={"Sales","GestionDeClientes", "Ciclo1"},dataProvider = "invalidaDocumentacion")
+	public void TS_135497_CRM_Movil_REPRO_Busqueda_DNI_Numero_de_Documento_no_existente(String sDNI, String sNumeroDeCuenta, String sNombre, String sApellido, String sLibreta, String sRazon, String sEmail){
 		driver.switchTo().frame(cambioFrame(driver, By.id("SearchClientDocumentType")));
-		sb.BuscarCuenta("DNI", "11322145");
+		sb.BuscarCuenta("DNI", sDNI);
 		try {Thread.sleep(10000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 		boolean a = false;
 		for(WebElement x : driver.findElements(By.className("slds-form-element__control"))){
@@ -2874,19 +2874,19 @@ public class GestionesPerfilOficina extends TestBase {
 		Assert.assertTrue(a);
 	}
 	
-	@Test (groups={"Sales","GestionDeClientes", "Ciclo1"})
-	public void TS_135499_CRM_Movil_REPRO_Busqueda_Libreta_de_enrolamiento_Numero_de_Documento(){
+	@Test (groups={"Sales","GestionDeClientes", "Ciclo1"},dataProvider = "validaDocumentacion")
+	public void TS_135499_CRM_Movil_REPRO_Busqueda_Libreta_de_enrolamiento_Numero_de_Documento(String sDNI, String sNumeroDeCuenta, String sNombre, String sApellido, String sLibreta, String sRazon, String sEmail){
 		driver.switchTo().frame(cambioFrame(driver, By.id("SearchClientDocumentType")));
-		sb.BuscarCuenta("Libreta de Enrolamiento", "12345670");
+		sb.BuscarCuenta("Libreta de Enrolamiento", sLibreta);
 		try {Thread.sleep(10000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 		List<WebElement> activo = driver.findElement(By.className("slds-tabs--scoped__nav")).findElements(By.tagName("li"));
 		assertTrue(activo.get(0).findElement(By.tagName("a")).getText().equals("Clientes Activos"));
 	}
 	
-	@Test (groups={"Sales","GestionDeClientes", "Ciclo1"})
-	public void TS_135500_CRM_Movil_REPRO_Busqueda_Libreta_dE_enrolamiento_Numero_de_Documento_no_existente() {
+	@Test (groups={"Sales","GestionDeClientes", "Ciclo1"},dataProvider = "invalidaDocumentacion")
+	public void TS_135500_CRM_Movil_REPRO_Busqueda_Libreta_dE_enrolamiento_Numero_de_Documento_no_existente(String sDNI, String sNumeroDeCuenta, String sNombre, String sApellido, String sLibreta, String sRazon, String sEmail) {
 		driver.switchTo().frame(cambioFrame(driver, By.id("SearchClientDocumentType")));
-		sb.BuscarCuenta("Libreta de Enrolamiento", "12345678");
+		sb.BuscarCuenta("Libreta de Enrolamiento", sLibreta);
 		try {Thread.sleep(10000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 		boolean a = false;
 		for(WebElement x : driver.findElements(By.className("slds-form-element__control"))){
@@ -2897,10 +2897,10 @@ public class GestionesPerfilOficina extends TestBase {
 		Assert.assertTrue(a);
 	}
 	
-	@Test (groups={"Sales","GestionDeClientes", "Ciclo1"})
-	public void TS_135501_CRM_Movil_REPRO_Busqueda_Nombre() {
+	@Test (groups={"Sales","GestionDeClientes", "Ciclo1"},dataProvider = "validaDocumentacion")
+	public void TS_135501_CRM_Movil_REPRO_Busqueda_Nombre(String sDNI, String sNumeroDeCuenta, String sNombre, String sApellido, String sLibreta, String sRazon, String sEmail) {
 		driver.switchTo().frame(cambioFrame(driver, By.id("SearchClientDocumentType")));
-		sb.BuscarAvanzada("Armando","","","","");
+		sb.BuscarAvanzada(sNombre,"","","","");
 		sleep(1500);
 		driver.findElement(By.id("SearchClientsDummy")).click();
 		try {Thread.sleep(10000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
@@ -2908,10 +2908,10 @@ public class GestionesPerfilOficina extends TestBase {
 		assertTrue(activo.get(0).findElement(By.tagName("a")).getText().equals("Clientes Activos"));
 	}
 	
-	@Test (groups={"Sales","GestionDeClientes", "Ciclo1"})
-	public void TS_135502_CRM_Movil_REPRO_Busqueda_Nombre_No_existente() {
+	@Test (groups={"Sales","GestionDeClientes", "Ciclo1"},dataProvider = "invalidaDocumentacion")
+	public void TS_135502_CRM_Movil_REPRO_Busqueda_Nombre_No_existente(String sDNI, String sNumeroDeCuenta, String sNombre, String sApellido, String sLibreta, String sRazon, String sEmail) {
 		driver.switchTo().frame(cambioFrame(driver, By.id("SearchClientDocumentType")));
-		sb.BuscarAvanzada("Pato","","","","");
+		sb.BuscarAvanzada(sNombre,"","","","");
 		sleep(1500);
 		driver.findElement(By.id("SearchClientsDummy")).click();
 		try {Thread.sleep(10000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
@@ -2924,10 +2924,10 @@ public class GestionesPerfilOficina extends TestBase {
 		Assert.assertTrue(a);
 	}
 	
-	@Test (groups={"Sales","GestionDeClientes", "Ciclo1"})
-	public void TS_135504_CRM_Movil_REPRO_Busqueda_Apellido_No_existente() {
+	@Test (groups={"Sales","GestionDeClientes", "Ciclo1"},dataProvider = "invalidaDocumentacion")
+	public void TS_135504_CRM_Movil_REPRO_Busqueda_Apellido_No_existente(String sDNI, String sNumeroDeCuenta, String sNombre, String sApellido, String sLibreta, String sRazon, String sEmail) {
 		driver.switchTo().frame(cambioFrame(driver, By.id("SearchClientDocumentType")));
-		sb.BuscarAvanzada("","Pato","","","");
+		sb.BuscarAvanzada("",sApellido,"","","");
 		sleep(1500);
 		driver.findElement(By.id("SearchClientsDummy")).click();
 		try {Thread.sleep(10000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
@@ -2940,10 +2940,10 @@ public class GestionesPerfilOficina extends TestBase {
 		Assert.assertTrue(a);
 	}
 	
-	@Test (groups={"Sales","GestionDeClientes", "Ciclo1"})
-	public void TS_135505_CRM_Movil_REPRO_Busqueda_Razon_Social() {
+	@Test (groups={"Sales","GestionDeClientes", "Ciclo1"},dataProvider = "validaDocumentacion")
+	public void TS_135505_CRM_Movil_REPRO_Busqueda_Razon_Social(String sDNI, String sNumeroDeCuenta, String sNombre, String sApellido, String sLibreta, String sRazon, String sEmail) {
 		driver.switchTo().frame(cambioFrame(driver, By.id("SearchClientDocumentType")));
-		sb.BuscarAvanzada("","","Armando Torres","","");
+		sb.BuscarAvanzada("","",sRazon,"","");
 		sleep(1500);
 		driver.findElement(By.id("SearchClientsDummy")).click();
 		try {Thread.sleep(10000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
@@ -2951,10 +2951,10 @@ public class GestionesPerfilOficina extends TestBase {
 		assertTrue(activo.get(0).findElement(By.tagName("a")).getText().equals("Clientes Activos"));
 	}
 	
-	@Test (groups={"Sales","GestionDeClientes", "Ciclo1"})
-	public void TS_135506_CRM_Movil_REPRO_Busqueda_Razon_social_No_existente() {
+	@Test (groups={"Sales","GestionDeClientes", "Ciclo1"},dataProvider = "invalidaDocumentacion")
+	public void TS_135506_CRM_Movil_REPRO_Busqueda_Razon_social_No_existente(String sDNI, String sNumeroDeCuenta, String sNombre, String sApellido, String sLibreta, String sRazon, String sEmail) {
 		driver.switchTo().frame(cambioFrame(driver, By.id("SearchClientDocumentType")));
-		sb.BuscarAvanzada("","","Pato","","");
+		sb.BuscarAvanzada("","",sRazon,"","");
 		sleep(1500);
 		driver.findElement(By.id("SearchClientsDummy")).click();
 		try {Thread.sleep(10000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
@@ -2962,10 +2962,10 @@ public class GestionesPerfilOficina extends TestBase {
 		Assert.assertTrue(vacio.get(0).findElement(By.tagName("a")).getText().isEmpty());
 	}
 	
-	@Test (groups={"Sales","GestionDeClientes", "Ciclo1"})
-	public void TS_135507_CRM_Movil_REPRO_Busqueda_Email() {
+	@Test (groups={"Sales","GestionDeClientes", "Ciclo1"},dataProvider = "validaDocumentacion")
+	public void TS_135507_CRM_Movil_REPRO_Busqueda_Email(String sDNI, String sNumeroDeCuenta, String sNombre, String sApellido, String sLibreta, String sRazon, String sEmail) {
 		driver.switchTo().frame(cambioFrame(driver, By.id("SearchClientDocumentType")));
-		sb.BuscarAvanzada("","","","","torrecaida@gmail.com");
+		sb.BuscarAvanzada("","","","",sEmail);
 		sleep(1500);
 		driver.findElement(By.id("SearchClientsDummy")).click();
 		try {Thread.sleep(10000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
@@ -2973,10 +2973,10 @@ public class GestionesPerfilOficina extends TestBase {
 		assertTrue(activo.get(0).findElement(By.tagName("a")).getText().equals("Clientes Activos"));
 	}
 	
-	@Test (groups={"Sales","GestionDeClientes", "Ciclo1"})
-	public void TS_135508_CRM_Movil_REPRO_Busqueda_Email_No_existente() {
+	@Test (groups={"Sales","GestionDeClientes", "Ciclo1"},dataProvider = "invalidaDocumentacion")
+	public void TS_135508_CRM_Movil_REPRO_Busqueda_Email_No_existente(String sDNI, String sNumeroDeCuenta, String sNombre, String sApellido, String sLibreta, String sRazon, String sEmail) {
 		driver.switchTo().frame(cambioFrame(driver, By.id("SearchClientDocumentType")));
-		sb.BuscarAvanzada("","","","","angel.leon@gmail.com");
+		sb.BuscarAvanzada("","","","",sEmail);
 		sleep(1500);
 		driver.findElement(By.id("SearchClientsDummy")).click();
 		try {Thread.sleep(10000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
@@ -2989,10 +2989,10 @@ public class GestionesPerfilOficina extends TestBase {
 		Assert.assertTrue(a);
 	}
 	
-	@Test (groups={"Sales","GestionDeClientes", "Ciclo1"})
-	public void TS_135510_CRM_Movil_REPRO_Busqueda_Numero_de_Cuenta_No_existente() {
+	@Test (groups={"Sales","GestionDeClientes", "Ciclo1"},dataProvider = "invalidaDocumentacion")
+	public void TS_135510_CRM_Movil_REPRO_Busqueda_Numero_de_Cuenta_No_existente(String sDNI, String sNumeroDeCuenta, String sNombre, String sApellido, String sLibreta, String sRazon, String sEmail) {
 		driver.switchTo().frame(cambioFrame(driver, By.id("SearchClientDocumentType")));
-		sb.BuscarAvanzada("", "", "", "9900000766810007", "");
+		sb.BuscarAvanzada("", "", "", sNumeroDeCuenta, "");
 		sleep(1500);
 		driver.findElement(By.id("SearchClientsDummy")).click();
 		try {Thread.sleep(10000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
@@ -3003,13 +3003,44 @@ public class GestionesPerfilOficina extends TestBase {
 	@Test (groups={"Sales","GestionDeClientes", "Ciclo1"})
 	public void TS_135495_CRM_Movil_REPRO_Busqueda_Tipo_de_documento_DNI() {
 		driver.switchTo().frame(cambioFrame(driver, By.id("SearchClientDocumentType")));
-		sb.BuscarCuenta("DNI", "");
+		selectByText(driver.findElement(By.id("SearchClientDocumentType")), "DNI");
 		try {Thread.sleep(10000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 		boolean a = false;
-		for(WebElement x : driver.findElements(By.id("SearchClientDocumentType"))){
-			if(x.getText().toLowerCase().equals("dni")) {
+			if(driver.findElement(By.id("SearchClientDocumentType")).getText().toLowerCase().contains("dni")) {
 				a = true;
 			}
+			Assert.assertTrue(a);
+		}
+	
+	@Test (groups={"Sales","GestionDeClientes", "Ciclo1"})
+	public void TS_135498_CRM_Movil_REPRO_Busqueda_Tipo_de_documento_Libreta_de_enrolamiento() {
+		driver.switchTo().frame(cambioFrame(driver, By.id("SearchClientDocumentType")));
+		selectByText(driver.findElement(By.id("SearchClientDocumentType")), "Libreta de Enrolamiento");
+		try {Thread.sleep(10000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		boolean a = false;
+			if(driver.findElement(By.id("SearchClientDocumentType")).getText().toLowerCase().contains("dni")) {
+				a = true;
+			}
+			Assert.assertTrue(a);
+	}
+	
+	@Test (groups= {"GestionPerfilOficina", "Ciclo2", "Vista360"}, dataProvider = "documentacionVista360")
+	public void TS_134379_CRM_Movil_Prepago_Vista_360_Mis_Servicios_Visualizacion_del_estado_de_los_servicios_activos_FAN_Front_OOCC(String sDNI) {
+		driver.switchTo().frame(cambioFrame(driver, By.id("SearchClientDocumentType")));
+		sb.BuscarCuenta("DNI", sDNI);
+		driver.findElement(By.cssSelector(".slds-tree__item.ng-scope")).click();
+		sleep(10000);
+		driver.switchTo().frame(cambioFrame(driver, By.className("card-top")));
+		sleep(3000);
+		driver.findElement(By.className("card-top")).click();
+		sleep(3000);
+		buscarYClick(driver.findElements(By.className("slds-text-body_regular")), "equals", "productos y servicios");
+		sleep(10000);
+		boolean a = false;
+		driver.switchTo().frame(cambioFrame(driver, By.cssSelector(".slds-grid.slds-wrap.slds-card.slds-m-bottom--small.slds-p-around--medium")));
+		WebElement verif = driver.findElement(By.cssSelector(".via-slds.slds-m-around--small.ng-scope"));
+		if(verif.getText().toLowerCase().contains("servicios incluidos")) {
+			a = true;
 		}
 		Assert.assertTrue(a);
 	}
