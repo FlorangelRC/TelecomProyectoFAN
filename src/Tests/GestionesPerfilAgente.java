@@ -108,7 +108,7 @@ public class GestionesPerfilAgente extends TestBase{
 		sleep(15000);
 	}
 	
-	//@AfterMethod(alwaysRun=true)
+	@AfterMethod(alwaysRun=true)
 	public void after() throws IOException {
 		datosOrden.add(detalles);
 		guardarListaTxt(datosOrden);
@@ -510,6 +510,32 @@ public class GestionesPerfilAgente extends TestBase{
 		invoSer.ValidarInfoCuenta(sLinea, sNombre,sApellido);
 	}
 	
+	@Test (groups = {"GestionesPerfilAgente", "Nominacion", "Ciclo1"})
+	public void TS85100_CRM_Movil_REPRO_No_Nominatividad_No_Valida_Identidad_Cliente_nuevo_Presencial_DOC_Agente() {
+		boolean nominacion = false;
+		driver.switchTo().frame(cambioFrame(driver, By.id("SearchClientDocumentType")));
+		driver.findElement(By.id("PhoneNumber")).sendKeys("2932442870");
+		driver.findElement(By.id("SearchClientsDummy")).click();
+		sleep(5000);
+		driver.findElement(By.cssSelector(".slds-button.slds-button--icon.slds-m-right--x-small.ng-scope")).click();
+		sleep(2000);
+		WebElement botonNominar = null;
+		for (WebElement x : driver.findElements(By.cssSelector(".slds-hint-parent.ng-scope"))) {
+			if (x.getText().toLowerCase().contains("plan con tarjeta"))
+				botonNominar = x;
+		}
+		for (WebElement x : botonNominar.findElements(By.tagName("td"))) {
+			if (x.getAttribute("data-label").equals("actions"))
+				botonNominar = x;
+		}
+		botonNominar.findElement(By.tagName("a")).click();
+		sleep(5000);
+		ContactSearch contact = new ContactSearch(driver);
+		contact.searchContact2("DNI", "99241524", "Masculino");
+		if (driver.findElement(By.id("FirstName")).getText().isEmpty() && driver.findElement(By.id("LastName")).getText().isEmpty())
+			nominacion = true;
+		Assert.assertTrue(nominacion);
+	}
 	@Test(groups = {"GestionesPerfilAgente", "RenovacionCuota","E2E","Ciclo1"}, dataProvider="RenovacionCuotaConSaldo") 
 	public void TS135402_CRM_Movil_REPRO_Renovacion_de_cuota_Presencial_Internet_50_MB_Dia_Descuento_de_saldo_con_Credito(String sDNI, String sLinea){
 		imagen = "TS135402";
