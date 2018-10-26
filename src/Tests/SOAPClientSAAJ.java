@@ -16,6 +16,8 @@ public class SOAPClientSAAJ {
 	static String sPagoSimulado = "http://mdwtpbust1.telecom.com.ar:8701/notificarPago";
 	static String sQueryCustomerInfoUAT = "http://10.75.39.146:8080/services/BcServices";
 	static String sQueryCustomerInfoSIT = "http://10.75.197.163:8080/services/BcServices";
+	static String sQueryFreeUnitSIT = "http://10.75.197.163:8080/services/BbServices";
+	static String sQueryFreeUnitUAT = "http://10.75.39.146:8080/services/BbServices";
 	
 	
 	public Document callSoapWebService(String soapMessageString, String sEndPoint) {
@@ -35,6 +37,12 @@ public class SOAPClientSAAJ {
 	    			sEndPoint = sQueryCustomerInfoSIT;
 	    		else
 	    			sEndPoint = sQueryCustomerInfoUAT;
+	    		break;
+	    	case "unidades libres":
+	    		if (TestBase.urlAmbiente.contains("sit"))
+	    			sEndPoint = sQueryFreeUnitSIT;
+	    		else
+	    			sEndPoint = sQueryFreeUnitUAT;
 	    		break;
     	}
     	
