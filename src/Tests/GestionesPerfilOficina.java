@@ -184,8 +184,8 @@ public class GestionesPerfilOficina extends TestBase {
 		cCC.seleccionarCardPornumeroLinea(sLinea, driver);
 		cCC.irAGestionEnCard("N\u00fameros Gratis");
 		Assert.assertTrue(mMarketing.verificarNumerosAmigos(driver, sNumeroVOZ, sNumeroSMS));
-		//Assert.assertTrue(cc.corroborarEstadoCaso(sOrder, "Activated"));
-		//sOrders.add("Suspension, orden numero: " + sOrder + ", DNI: " + sDNI);
+		Assert.assertTrue(cc.corroborarEstadoCaso(orden, "Activated"));
+		sOrders.add("Numeros amigos, orden numero: " + orden + ", DNI: " + sDNI);
 		//Verify when the page works
 	}
 	
@@ -2769,10 +2769,9 @@ public class GestionesPerfilOficina extends TestBase {
 
 	}
 	
-}	
 	@Test (groups = {"GestionesPerfilOficina","RenovacionCuota","E2E", "Ciclo1"}, dataProvider="RenovacionCuotaConSaldo")
 	public void TS135395_CRM_Movil_REPRO_Renovacion_de_cuota_Presencial_Internet_50_MB_Dia_Efectivo_con_Credito(String sDNI, String sLinea) {
-		imagen = "TS135397";
+		imagen = "TS135395";
 		//Check all
 		BasePage cambioFrameByID=new BasePage();
 		driver.switchTo().frame(cambioFrameByID.getFrameForElement(driver, By.id("SearchClientDocumentType")));

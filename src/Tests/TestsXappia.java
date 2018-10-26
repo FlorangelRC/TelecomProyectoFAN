@@ -435,7 +435,7 @@ public class TestsXappia extends TestBase {
 		String accid = driver.findElement(By.cssSelector(".searchClient-body.slds-hint-parent.ng-scope")).findElements(By.tagName("td")).get(5).getText();
 		System.out.println("id "+accid);
 		driver.findElement(By.cssSelector(".slds-tree__item.ng-scope")).findElement(By.tagName("div")).click();
-		sleep(25000);		
+		sleep(15000);
 		Marketing mM = new Marketing(driver);
 		mM.closeActiveTab();
 		driver.switchTo().frame(cambioFrame(driver, By.className("detailList")));
@@ -444,9 +444,14 @@ public class TestsXappia extends TestBase {
 		Assert.assertTrue(wElement.getText().equals("Direcci\u00f3n de env\u00edo"));
 		//wElement = driver.findElement(By.xpath("//*[@id=\"ep_Account_View_j_id4\"]/div[2]/div[5]/table/tbody/tr[5]/td[2]/table/tbody/tr[2]/td/div/div"));
 		//Assert.assertTrue(wElement.getAttribute("class").equals("staticMap"));
-		System.out.println("Time to erase!");
-		sleep(15000);
-		driver.findElement(By.cssSelector("((((//table[@class='detailList'])[2])/..//tr)[7])/td[2]//div[@class='staticMap']"));
+		try {
+			driver.findElement(By.xpath("((((//table[@class='detailList'])[2])/..//tr)[7])/td[2]//div[@class='staticMap']"));
+			Assert.assertTrue(true);
+		}
+		catch (NoSuchElementException ex) {
+			System.out.println("Elemento no encontrado");
+			Assert.assertTrue(false);
+		}
 	}
 	
 	@Test (groups = "SIT")
