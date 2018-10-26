@@ -59,7 +59,8 @@ public class TestBase {
 		
 		//public static String urlComunidad = "https://uat-autogestion-uat.cs53.force.com/clientes/s/";
 		public static String urlCommunity = "https://sit-scrumcella.cs14.force.com/clientes/s/";
-	
+		
+		public static String urlFlow	= "https://webgestionmoviltesting/default.aspx";
 		
 	public void leftDropdown(WebDriver driver, String selection) {
 		driver.findElement(By.className("x-btn-mc")).click();
@@ -334,7 +335,12 @@ public class TestBase {
 		    Login page0 = new Login(driver);
 		    page0.ingresarBackOffice();
 		}
-		
+		public void loginflow(WebDriver driver){
+			driver.get(urlFlow);
+			try {Thread.sleep(6000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		    Login page0 = new Login(driver);
+		    page0.ingresarflow();
+		}
 		
 		
 		/**Ingresa con los datos de la cuenta Nicolas.

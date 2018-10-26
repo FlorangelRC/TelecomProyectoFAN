@@ -510,4 +510,37 @@ public class GestionesPerfilAgente extends TestBase{
 		invoSer.ValidarInfoCuenta(sLinea, sNombre,sApellido);
 	}
 	
+	@Test(groups = {"GestionesPerfilAgente", "RenovacionCuota","E2E","Ciclo1"}, dataProvider="RenovacionCuotaConSaldo") 
+	public void TS135402_CRM_Movil_REPRO_Renovacion_de_cuota_Presencial_Internet_50_MB_Dia_Descuento_de_saldo_con_Credito(String sDNI, String sLinea){
+		imagen = "TS135402";
+		//Check all
+		BasePage cambioFrameByID=new BasePage();
+		driver.switchTo().frame(cambioFrameByID.getFrameForElement(driver, By.id("SearchClientDocumentType")));
+		sleep(1000);
+		SalesBase sSB = new SalesBase(driver);
+		sSB.BuscarCuenta("DNI", sDNI);
+		driver.findElement(By.cssSelector(".slds-tree__item.ng-scope")).findElement(By.tagName("div")).click();
+		sleep(25000);
+		CustomerCare cCC = new CustomerCare(driver);
+		cCC.seleccionarCardPornumeroLinea(sLinea, driver);
+		sleep(3000);
+		
+		cCC.irAGestionEnCard("Renovacion de Datos");
+		sleep(10000);
+		try {
+			driver.switchTo().frame(cambioFrame(driver, By.id("combosMegas")));
+			driver.findElement(By.id("combosMegas")).findElements(By.className("slds-checkbox")).get(0).click();
+		}
+		catch (Exception ex) {
+			//Allways Empty
+		}
+		driver.findElement(By.id("CombosDeMegas_nextBtn")).click();
+		
+		sleep(5000);
+		List<WebElement> wCheckBox = driver.findElements(By.cssSelector(".slds-radio.ng-scope"));
+		wCheckBox.get(1).click();
+		driver.findElement(By.id("SetPaymentType_nextBtn")).click();
+		
+		Assert.assertTrue(driver.findElement(By.cssSelector(".ta-care-omniscript-done")).findElement(By.cssSelector(".ng-binding")).getText().equals("La operaci\u00f3n termino exitosamente"));
+	}
 }

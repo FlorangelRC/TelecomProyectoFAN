@@ -1764,7 +1764,7 @@ public class GestionesPerfilOficina extends TestBase {
 		}
 		driver.findElement(By.id("CombosDeMegas_nextBtn")).click();
 		sleep(5000);
-		driver.findElement(By.cssSelector(".slds-form-element.vlc-flex.vlc-slds-radio-Control.ng-scope.ng-dirty.ng-valid-parse.ng-valid.ng-valid-required")).findElements(By.cssSelector(".slds-radio--faux.ng-scope")).get(0).click();
+		driver.findElement(By.cssSelector(".slds-radio.ng-scope")).findElement(By.id("PaymentTypeRadio")).click();
 		driver.findElement(By.id("SetPaymentType_nextBtn")).click();
 		sleep(5000);
 		//slds-button slds-button--neutral ng-binding ng-scope.get(1)
@@ -2324,7 +2324,7 @@ public class GestionesPerfilOficina extends TestBase {
 	}
 	
 	@Test (groups = {"GestionesPerfilOficina","RenovacionCuota","E2E", "Ciclo1"}, dataProvider="RenovacionCuotaSinSaldoConTC")
-	public void TS135397_CRM_Movil_REPRO_Renovacion_de_cuota_Presencial_Internet_50_MB_Dia_TC_sin_Credito(String sMonto, String sDNI, String sLinea, String sBanco, String sTarjeta, String sNumTarjeta, String sVenceMes, String sVenceAno, String sCodSeg, String sTipoDNI, String sDNITarjeta, String sTitular, String sPromo, String sCuotas) {
+	public void TS135397_CRM_Movil_REPRO_Renovacion_de_cuota_Presencial_Internet_50_MB_Dia_TC_sin_Credito(String sDNI, String sLinea, String sBanco, String sTarjeta, String sPromo, String sCuota, String sNumTarjeta, String sVenceMes, String sVenceAno, String sCodSeg, String sTipoDNI, String sDNITarjeta, String sTitular) {
 		imagen = "TS135397";
 		//Check all
 		BasePage cambioFrameByID=new BasePage();
@@ -2347,15 +2347,30 @@ public class GestionesPerfilOficina extends TestBase {
 		catch (Exception ex) {
 			//Allways Empty
 		}
-		List<WebElement> wCheckBox = driver.findElements(By.cssSelector(".slds-radio.ng-scope"));
-		wCheckBox.get(0).click();
 		driver.findElement(By.id("CombosDeMegas_nextBtn")).click();
-		sleep(5000);
-		driver.findElement(By.cssSelector(".slds-form-element.vlc-flex.vlc-slds-radio-Control.ng-scope.ng-dirty.ng-valid-parse.ng-valid.ng-valid-required")).findElements(By.cssSelector(".slds-radio--faux.ng-scope")).get(0).click();
+		sleep(9000);
+		/*List<WebElement> wCheckBox = driver.findElements(By.cssSelector(".slds-radio.ng-scope"));
+		wCheckBox.get(0).click();*/
+		driver.findElements(By.cssSelector(".slds-radio--faux.ng-scope")).get(0).click();
 		driver.findElement(By.id("SetPaymentType_nextBtn")).click();
-		sleep(5000);
+		sleep(8000);
 		//slds-button slds-button--neutral ng-binding ng-scope.get(1)
 		//Step_Error_Huawei_S013_nextBtn
+		driver.findElement(By.id("InvoicePreview_nextBtn")).click();
+		sleep(7000);
+		driver.switchTo().frame(cambioFrame(driver, By.id("BankingEntity-0")));
+		selectByText(driver.findElement(By.id("BankingEntity-0")), sBanco);
+		sleep(5000);
+		selectByText(driver.findElement(By.id("CardBankingEntity-0")), sTarjeta);
+		sleep(5000);
+		selectByText(driver.findElement(By.id("promotionsByCardsBank-0")), sPromo);
+		sleep(5000);
+		selectByText(driver.findElement(By.id("Installment-0")), sCuota);
+		sleep(5000);
+		driver.findElement(By.id("SelectPaymentMethodsStep_nextBtn")).click();
+		sleep(20000);
+		//String sOrden = cc.obtenerOrden3(driver);
+		buscarYClick(driver.findElements(By.id("InvoicePreview_nextBtn")), "equals", "siguiente");
 		driver.findElement(By.id("SelectPaymentMethodsStep_nextBtn")).click();
 		//Error al validar medios de pago: No se ingresaron los medios de pago
 		//slds-button slds-button--neutral ng-binding ng-scope.get(1)
@@ -2768,12 +2783,12 @@ public class GestionesPerfilOficina extends TestBase {
 		Assert.assertTrue(datos.equalsIgnoreCase("activada")||datos.equalsIgnoreCase("activated"));
 
 
-	}
+}
 	
-}	
+	
 	@Test (groups = {"GestionesPerfilOficina","RenovacionCuota","E2E", "Ciclo1"}, dataProvider="RenovacionCuotaConSaldo")
 	public void TS135395_CRM_Movil_REPRO_Renovacion_de_cuota_Presencial_Internet_50_MB_Dia_Efectivo_con_Credito(String sDNI, String sLinea) {
-		imagen = "TS135397";
+		imagen = "TS135395";
 		//Check all
 		BasePage cambioFrameByID=new BasePage();
 		driver.switchTo().frame(cambioFrameByID.getFrameForElement(driver, By.id("SearchClientDocumentType")));
@@ -2789,8 +2804,8 @@ public class GestionesPerfilOficina extends TestBase {
 		cCC.irAGestionEnCard("Renovacion de Datos");
 		sleep(10000);
 		try {
-			driver.switchTo().frame(cambioFrame(driver, By.id("combosMegas")));
-			driver.findElement(By.id("combosMegas")).findElements(By.className("slds-checkbox")).get(2).click();
+			driver.switchTo().frame(cambioFrame(driver, By.id("combosMegas"))); 
+			driver.findElement(By.id("combosMegas")).findElements(By.className("slds-checkbox")).get(0).click(); // que combo elegir
 		}
 		catch (Exception ex) {
 			//Allways Empty
@@ -2799,7 +2814,7 @@ public class GestionesPerfilOficina extends TestBase {
 		
 		sleep(5000);
 		List<WebElement> wCheckBox = driver.findElements(By.cssSelector(".slds-radio.ng-scope"));
-		wCheckBox.get(0).click();
+		wCheckBox.get(1).click(); // tipo de pago
 		driver.findElement(By.id("CombosDeMegas_nextBtn")).click();
 		
 		sleep(5000);
@@ -2812,6 +2827,33 @@ public class GestionesPerfilOficina extends TestBase {
 		driver.findElement(By.id("SelectPaymentMethodsStep_nextBtn")).click();
 		//slds-button slds-button--neutral ng-binding ng-scope.get(1)
 		Assert.assertTrue(driver.findElement(By.id("GeneralMessageDesing")).findElement(By.className("ng-binding")).findElement(By.tagName("h6")).getText().equalsIgnoreCase("Muchas gracias por tu compra."));
+	}
+	
+	@Test (groups = {"GestionesPerfilOficina","Vista360","E2E", "Ciclo1"}, dataProvider="RenovacionCuotaConSaldo")
+	public void TS134380_CRM_Movil_Prepago_Vista_360_Mis_Servicios_Visualización_del_estado_de_los_Productos_activos_FAN_Front_OOCC(String sDNI, String sLinea){
+		imagen = "TS134380";
+		//Check all
+		BasePage cambioFrameByID=new BasePage();
+		driver.switchTo().frame(cambioFrameByID.getFrameForElement(driver, By.id("SearchClientDocumentType")));
+		sleep(1000);
+		SalesBase sSB = new SalesBase(driver);
+		sSB.BuscarCuenta("DNI", sDNI);
+		driver.findElement(By.cssSelector(".slds-tree__item.ng-scope")).findElement(By.tagName("div")).click();
+		sleep(25000);
+		CustomerCare cCC = new CustomerCare(driver);
+		cCC.seleccionarCardPornumeroLinea(sLinea, driver);
+		sleep(13000);
+		cCC.irAGestionEnCard("Productos y Servicios");
+		sleep(15000);
+		/*boolean a = false;
+		List <WebElement> plan = driver.findElement(By.cssSelector(".slds-card.slds-m-around--small.ta-fan-slds"));
+			for(WebElement p : plan){
+				if(p.getText().equals("Plan Prepago")){
+					p.isDisplayed();
+					a = true;
+					
+				}
+			}*/
 	}
 	
 }
