@@ -628,15 +628,15 @@ public class GestionesPerfilOficina extends TestBase {
 		contact.Llenar_Contacto(sNombre, sApellido, sFnac);
 		try {contact.ingresarMail(sEmail, "si");}catch (org.openqa.selenium.ElementNotVisibleException ex1) {}
 		contact.tipoValidacion("documento");
-		try {
-			contact.subirArchivo("C:\\Users\\florangel\\Desktop\\mapache.jpg", "si");
-		}catch(Exception ex1) {}
+			contact.subirArchivo("C:\\Users\\florangel\\Downloads\\mapache.jpg", "si");
 			BasePage bp = new BasePage(driver);
 		bp.setSimpleDropdown(driver.findElement(By.id("ImpositiveCondition")), "IVA Consumidor Final");
 		SB.Crear_DomicilioLegal(sProvincia, sLocalidad, sCalle, "", sNumCa, "", "", sCP);
 		sleep(38000);
 		//contact.subirformulario("C:\\Users\\florangel\\Downloads\\form.pdf", "si");
 		//sleep(30000);
+		CBS_Mattu invoSer = new CBS_Mattu();
+		invoSer.ValidarInfoCuenta(sLinea, sNombre,sApellido);
 		List <WebElement> element = driver.findElement(By.id("NominacionExitosa")).findElements(By.tagName("p"));
 		System.out.println("cont="+element.get(0).getText());
 		boolean a = false;
@@ -649,7 +649,6 @@ public class GestionesPerfilOficina extends TestBase {
 		Assert.assertTrue(a);
 		driver.findElement(By.id("FinishProcess_nextBtn")).click();
 		sleep(3000);
-		CBS_Mattu invoSer = new CBS_Mattu();
 		invoSer.ValidarInfoCuenta(sLinea, sNombre,sApellido);
 	}
 	
@@ -2692,7 +2691,7 @@ public class GestionesPerfilOficina extends TestBase {
 	public void TS85097_CRM_Movil_REPRO_Nominatividad_Cliente_Existente_Presencial_DOC_OfCom() {
 		boolean nominacion = false;
 		driver.switchTo().frame(cambioFrame(driver, By.id("SearchClientDocumentType")));
-		driver.findElement(By.id("PhoneNumber")).sendKeys("2932442804");
+		driver.findElement(By.id("PhoneNumber")).sendKeys("2932550051");
 		driver.findElement(By.id("SearchClientsDummy")).click();
 		sleep(5000);
 		driver.findElement(By.cssSelector(".slds-button.slds-button--icon.slds-m-right--x-small.ng-scope")).click();
@@ -2709,12 +2708,12 @@ public class GestionesPerfilOficina extends TestBase {
 		botonNominar.findElement(By.tagName("a")).click();
 		sleep(5000);
 		ContactSearch contact = new ContactSearch(driver);
-		contact.searchContact2("DNI", "15241524", "Masculino");
+		contact.searchContact2("DNI", "2222204", "Masculino");
 		driver.findElement(By.id("Contact_nextBtn")).click();
 		sleep(10000);
 		contact.tipoValidacion("documento");
 		sleep(5000);
-		driver.findElement(By.id("FileDocumentImage")).sendKeys("C:\\Users\\Nicolas\\Desktop\\descarga.jpg");
+		driver.findElement(By.id("FileDocumentImage")).sendKeys("C:\\Users\\florangel\\Downloads\\mapache.jpg");
 		driver.findElement(By.id("DocumentMethod_nextBtn")).click();
 		sleep(30000);
 		for (WebElement x : driver.findElement(By.id("NominacionExitosa")).findElements(By.tagName("p"))) {
