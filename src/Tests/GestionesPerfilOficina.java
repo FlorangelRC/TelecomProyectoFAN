@@ -1820,14 +1820,30 @@ public class GestionesPerfilOficina extends TestBase {
 		catch (Exception ex) {
 			//Allways Empty
 		}
+		List<WebElement> wPacks = driver.findElements(By.cssSelector("[class='ins'] [class='ng-scope']"));
+		for (WebElement wAux : wPacks) {
+			if (wAux.findElement(By.className("ng-binding")).getText().contains("Internet 50 MB Dia")) {
+				wAux.findElement(By.className("slds-cell-shrink")).click();
+				System.out.println("Click");
+			}
+		}
 		driver.findElement(By.id("CombosDeMegas_nextBtn")).click();
 		sleep(5000);
-		driver.findElement(By.cssSelector(".slds-radio.ng-scope")).findElement(By.id("PaymentTypeRadio")).click();
+		PagePerfilTelefonico pagePTelefo = new PagePerfilTelefonico(driver);
+		pagePTelefo.tipoDePago("en factura de venta");
+		//driver.findElement(By.cssSelector(".slds-form-element.vlc-flex.vlc-slds-radio-Control.ng-scope.ng-dirty.ng-valid-parse.ng-valid.ng-valid-required")).findElements(By.cssSelector(".slds-radio--faux.ng-scope")).get(0).click();
 		driver.findElement(By.id("SetPaymentType_nextBtn")).click();
-		sleep(5000);
+		sleep(20000);
 		//slds-button slds-button--neutral ng-binding ng-scope.get(1)
 		//Step_Error_Huawei_S013_nextBtn
-		driver.findElement(By.id("SelectPaymentMethodsStep_nextBtn")).click();
+		//driver.findElement(By.id("SelectPaymentMethodsStep_nextBtn")).click();
+		List<WebElement> wPaymentMethods = driver.findElements(By.cssSelector("[class='slds-list--horizontal'] [class='slds-radio ng-scope']"));
+		for (WebElement wAux : wPaymentMethods) {
+			if (wAux.findElement(By.cssSelector(".slds-form-element__label.ng-binding")).getText().contains("Efectivo")) {
+				wAux.findElement(By.className("slds-radio--faux")).click();
+			}
+		}
+		driver.findElement(By.id("InvoicePreview_nextBtn")).click();
 		//Error al validar medios de pago: No se ingresaron los medios de pago
 		//slds-button slds-button--neutral ng-binding ng-scope.get(1)
 		Assert.assertFalse(driver.findElement(By.cssSelector(".slds-form-element.vlc-flex.vlc-slds-text-block.vlc-slds-rte.ng-pristine.ng-valid.ng-scope")).findElement(By.className("ng-binding")).findElement(By.tagName("p")).getText().equalsIgnoreCase("saldo insuficiente"));
@@ -2901,9 +2917,10 @@ public class GestionesPerfilOficina extends TestBase {
 		
 		sleep(5000);
 		List<WebElement> wCheckBox = driver.findElements(By.cssSelector(".slds-radio.ng-scope"));
-		wCheckBox.get(1).click(); // tipo de pago
-		driver.findElement(By.id("CombosDeMegas_nextBtn")).click();
-		
+		wCheckBox.get(0).click();
+		driver.findElement(By.id("SetPaymentType_nextBtn")).click();
+		sleep(10000);
+		driver.findElement(By.id("InvoicePreview_nextBtn")).click();
 		sleep(5000);
 		List<WebElement> wPaymentMethods = driver.findElements(By.className("slds-radio__label"));
 		for (WebElement wAux : wPaymentMethods) {
@@ -3214,6 +3231,7 @@ public class GestionesPerfilOficina extends TestBase {
 	public void TS134380_CRM_Movil_Prepago_Vista_360_Mis_Servicios_Visualizacion_del_estado_de_los_Productos_activos_FAN_Front_OOCC(String sDNI, String sLinea){
 		imagen = "TS134380";
 		//Check all
+		CustomerCare cCC = new CustomerCare(driver);
 		BasePage cambioFrameByID=new BasePage();
 		driver.switchTo().frame(cambioFrameByID.getFrameForElement(driver, By.id("SearchClientDocumentType")));
 		sleep(1000);
@@ -3221,20 +3239,18 @@ public class GestionesPerfilOficina extends TestBase {
 		sSB.BuscarCuenta("DNI", sDNI);
 		driver.findElement(By.cssSelector(".slds-tree__item.ng-scope")).findElement(By.tagName("div")).click();
 		sleep(25000);
-		CustomerCare cCC = new CustomerCare(driver);
-		cCC.seleccionarCardPornumeroLinea(sLinea, driver);
-		sleep(13000);
-		cCC.irAGestionEnCard("Productos y Servicios");
-		sleep(15000);
-		/*boolean a = false;
-		List <WebElement> plan = driver.findElement(By.cssSelector(".slds-card.slds-m-around--small.ta-fan-slds"));
-			for(WebElement p : plan){
-				if(p.getText().equals("Plan Prepago")){
+		driver.switchTo().frame(cambioFrame(driver, By.className("card-top")));
+		cCC.irAProductosyServicios();
+		driver.switchTo().frame(cambioFrame(driver, By.className("ext-strict")));
+		sleep(8000);
+		boolean a = false;
+		List <WebElement> pp = driver.findElements((By.className("slds-text-heading_mediumtitle")));
+			for(WebElement p : pp){
+				if(p.getText().contains("Plan Prepago")){
 					p.isDisplayed();
 					a = true;
-					
 				}
-			}*/
+			}
 	}
 	
 	@Test (groups = {"GestionesPerfilOficina","Vista360","E2E", "Ciclo1"})
