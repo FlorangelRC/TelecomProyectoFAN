@@ -510,7 +510,7 @@ public class GestionesPerfilAgente extends TestBase{
 		invoSer.ValidarInfoCuenta(sLinea, sNombre,sApellido);
 	}
 	@Test (groups = {"GestionesPerfilAgente", "Vista360","Ciclo2"}, dataProvider="ProductosyServicios")
-	public void TS134818_CRM_Movil_Prepago_Vista_360_Mis_Servicios_Visualizaci�n_del_estado_de_los_Productos_activos_FAN_Front_Agentes(String cDNI){
+	public void TS134818_CRM_Movil_Prepago_Vista_360_Mis_Servicios_Visualizacion_del_estado_de_los_Productos_activos_FAN_Front_Agentes(String cDNI){
 		BasePage cambioFrameByID=new BasePage();
 		CustomerCare cCC = new CustomerCare(driver);
 		driver.switchTo().frame(cambioFrameByID.getFrameForElement(driver, By.id("SearchClientDocumentType")));
@@ -567,7 +567,6 @@ public class GestionesPerfilAgente extends TestBase{
 		CustomerCare cCC = new CustomerCare(driver);
 		cCC.seleccionarCardPornumeroLinea(sLinea, driver);
 		sleep(3000);
-		
 		cCC.irAGestionEnCard("Renovacion de Datos");
 		sleep(10000);
 		try {
