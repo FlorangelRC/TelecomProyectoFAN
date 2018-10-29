@@ -9,11 +9,11 @@ import org.w3c.dom.NodeList;
 public class SOAPClientSAAJ {
 	
 	//SIT
-	static String sPagoEnCajaSIT = "http://10.75.197.161:8080/services/ArServices";
+	static String sPagoEnCajaSIT = "extrahttp://10.75.197.161:8080/services/ArServices";
 	//UAT
-	static String sPagoEnCajaUAT = "http://10.75.39.146:8080/services/ArServices";
+	static String sPagoEnCajaUAT = "extrahttp://10.75.39.146:8080/services/ArServices";
 		
-	static String sPagoSimulado = "http://mdwtpbust1.telecom.com.ar:8701/notificarPago";
+	static String sPagoSimulado = "extrahttp://mdwtpbust1.telecom.com.ar:8701/notificarPago";
 	static String sQueryCustomerInfoUAT = "http://10.75.39.146:8080/services/BcServices";
 	static String sQueryCustomerInfoSIT = "http://10.75.197.163:8080/services/BcServices";
 	static String sQueryFreeUnitSIT = "http://10.75.197.163:8080/services/BbServices";

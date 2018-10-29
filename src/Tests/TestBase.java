@@ -51,15 +51,16 @@ import DataProvider.ExcelUtils;
 public class TestBase {
 	protected static WebDriver driver;
 	
-		//public static String urlAmbiente = "https://telecomcrm--uat.cs53.my.salesforce.com";
-		public static String urlAmbiente = "https://crm--sit.cs14.my.salesforce.com/";
+		public static String urlAmbiente = "https://telecomcrm--uat.cs53.my.salesforce.com";
+		//public static String urlAmbiente = "https://crm--sit.cs14.my.salesforce.com/";
 		
 		// viejo public String urlSCP = "https://telecomcrm--uat.cs8.my.salesforce.com";
 		public static String urlSCP = "https://telecomcrm--uat.cs53.my.salesforce.com";
 		
 		//public static String urlComunidad = "https://uat-autogestion-uat.cs53.force.com/clientes/s/";
 		public static String urlCommunity = "https://sit-scrumcella.cs14.force.com/clientes/s/";
-	
+		
+		public static String urlFlow	= "https://webgestionmoviltesting/default.aspx";
 		
 	public void leftDropdown(WebDriver driver, String selection) {
 		driver.findElement(By.className("x-btn-mc")).click();
@@ -334,7 +335,12 @@ public class TestBase {
 		    Login page0 = new Login(driver);
 		    page0.ingresarBackOffice();
 		}
-		
+		public void loginflow(WebDriver driver){
+			driver.get(urlFlow);
+			try {Thread.sleep(6000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		    Login page0 = new Login(driver);
+		    page0.ingresarflow();
+		}
 		
 		
 		/**Ingresa con los datos de la cuenta Nicolas.
@@ -1050,6 +1056,15 @@ public class TestBase {
 	 return (testObjArray);
 
 	}
+	@DataProvider
+	public Object[][] RenovacionCuotaconSaldoConTC() throws Exception{
+
+	 Object[][] testObjArray = ExcelUtils.getTableArray(dataProviderE2E(),"E2EconPago",1,1,13,"Renovacion Cuota con Saldo Con TC" + 
+	 		"");
+
+	 return (testObjArray);
+
+	}
 	
 	@DataProvider
 	public Object[][] NumerosAmigos() throws Exception{
@@ -1485,6 +1500,15 @@ public class TestBase {
 		
 	}
 	
+	@DataProvider
+	public Object[][] ProductosyServicios() throws Exception{
+		
+		Object[][] testObjArray = ExcelUtils.getTableArray(dataProviderE2E(),"E2EsinPago",1,1,1,"Productos y Servicios");
+		
+		return (testObjArray);
+		
+	}
+	
 	public void loginCommunity(WebDriver driver) {
 		driver.get(urlCommunity);
 		try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
@@ -1492,5 +1516,31 @@ public class TestBase {
 	    lLogin.ingresarComunidad();
 	}
 	
+	@DataProvider
+	public Object[][] validaDocumentacion() throws Exception{
+		
+		Object[][] testObjArray = ExcelUtils.getTableArray(dataProviderE2E(),"E2EsinPago",1,1,7,"DocumentacionValida");
+		
+		return (testObjArray);
+		
+	}
+	
+	@DataProvider
+	public Object[][] invalidaDocumentacion() throws Exception{
+		
+		Object[][] testObjArray = ExcelUtils.getTableArray(dataProviderE2E(),"E2EsinPago",1,1,7,"DocumentacionInvalida");
+		
+		return (testObjArray);
+		
+	}
+	
+	@DataProvider
+	public Object[][] documentacionVista360() throws Exception{
+		
+		Object[][] testObjArray = ExcelUtils.getTableArray(dataProviderE2E(),"E2EsinPago",1,1,1,"VistaDocumentacion");
+		
+		return (testObjArray);
+		
+	}
 	
 	}

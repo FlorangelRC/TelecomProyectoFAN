@@ -375,6 +375,8 @@ public class CustomerCare extends BasePage {
 		sleep(8000);
 	}
 	
+	
+	
 	public void irAAhorra() {
 		obtenerAccionLineaPrepago("Ahorr\u00e1").click();
 		sleep(3000);
@@ -383,6 +385,12 @@ public class CustomerCare extends BasePage {
 	
 	public void irAMisServicios() {
 		obtenerAccionLineaPrepago("Mis Servicios").click();
+		sleep(3000);
+		cambiarAFrameActivo();
+	}
+	
+	public void irAProductosyServicios() {
+		obtenerAccionLineaPrepago("Productos y Servicios").click();
 		sleep(3000);
 		cambiarAFrameActivo();
 	}

@@ -99,7 +99,7 @@ public class SalesNominaciones extends TestBase{
 		driver.switchTo().frame(accountPage.getFrameForElement(driver, By.id("SearchClientDocumentNumber")));
 	}
 	
-	//@AfterMethod(alwaysRun=true)
+	@AfterMethod(alwaysRun=true)
 		public void deslogin(){
 			sleep(2000);
 			SalesBase SB = new SalesBase(driver);
@@ -111,7 +111,7 @@ public class SalesNominaciones extends TestBase{
 
 		}
 	
-	//@AfterClass(alwaysRun=true)
+	@AfterClass(alwaysRun=true)
 	public void Exit() {
 		driver.quit();
 		sleep(2000);
