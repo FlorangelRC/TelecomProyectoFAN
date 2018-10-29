@@ -3211,7 +3211,7 @@ public class GestionesPerfilOficina extends TestBase {
 		Assert.assertTrue(creditoRecarga && creditoPromocional && estado && internetDisponible);
 	}
 	@Test (groups = {"GestionesPerfilOficina","Vista360","E2E", "Ciclo1"}, dataProvider="RenovacionCuotaConSaldo")
-	public void TS134380_CRM_Movil_Prepago_Vista_360_Mis_Servicios_Visualizaci�n_del_estado_de_los_Productos_activos_FAN_Front_OOCC(String sDNI, String sLinea){
+	public void TS134380_CRM_Movil_Prepago_Vista_360_Mis_Servicios_Visualizacion_del_estado_de_los_Productos_activos_FAN_Front_OOCC(String sDNI, String sLinea){
 		imagen = "TS134380";
 		//Check all
 		BasePage cambioFrameByID=new BasePage();
@@ -3237,4 +3237,23 @@ public class GestionesPerfilOficina extends TestBase {
 			}*/
 	}
 	
+	@Test (groups = {"GestionesPerfilOficina","Vista360","E2E", "Ciclo1"})
+	public void TS134496_CRM_Movil_Prepago_Vista_360_Distribucion_de_paneles_Perfil_FAN_Front_OOCC() {
+		boolean cuenta = false;
+		driver.switchTo().frame(cambioFrame(driver, By.id("SearchClientDocumentType")));
+		sb.BuscarCuenta("DNI", "15907314");
+		driver.findElement(By.cssSelector(".slds-tree__item.ng-scope")).click();
+		sleep(10000);
+		driver.switchTo().frame(cambioFrame(driver, By.className("card-top")));
+		sleep(3000);
+		driver.switchTo().defaultContent();
+		List<WebElement> pestanas = driver.findElements(By.className("x-tab-strip-closable"));
+		pestanas.addAll(driver.findElements(By.cssSelector(".x-tab-strip-closable.x-tab-strip-active")));
+		for (WebElement x : pestanas) {
+			if (x.getText().equalsIgnoreCase("Emma Valentina Miranda"))
+				cuenta = true;
+		}
+		driver.switchTo().frame(cambioFrame(driver, By.cssSelector(".console-card.active")));
+		Assert.assertTrue(cuenta && driver.findElement(By.cssSelector(".console-card.active")).isDisplayed());
+	}
 }
