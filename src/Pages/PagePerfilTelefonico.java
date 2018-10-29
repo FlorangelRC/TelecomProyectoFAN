@@ -171,7 +171,19 @@ public class PagePerfilTelefonico extends TestBase{
 		sleep(12000); 
 	}
 	
-	
+	public void PackLDI(String Pack1) {
+		sleep(5000);		
+		driver.switchTo().frame(cambioFrame(driver, By.cssSelector(".slds-button.cpq-item-has-children")));
+		Pack("Packs Opcionales", "Packs LDI", Pack1);
+		sleep(10000);
+		driver.findElement(By.cssSelector(".slds-button.slds-m-left--large.slds-button--brand.ta-button-brand")).click();
+		sleep(25000);
+		try{ 
+		      driver.findElements(By.cssSelector(".slds-button.slds-button--neutral.ng-binding.ng-scope")).get(1).click(); 
+		      sleep(8000); 
+		    }catch(Exception ex1){} 
+		sleep(12000); 
+	}
 	
 	public void tipoDePago(String tipodepago) {
 	List<WebElement> tipodePago = driver.findElements(By.cssSelector(".slds-radio.ng-scope"));

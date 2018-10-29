@@ -569,7 +569,6 @@ public class GestionesPerfilAgente extends TestBase{
 		CustomerCare cCC = new CustomerCare(driver);
 		cCC.seleccionarCardPornumeroLinea(sLinea, driver);
 		sleep(3000);
-		
 		cCC.irAGestionEnCard("Renovacion de Datos");
 		sleep(10000);
 		try {

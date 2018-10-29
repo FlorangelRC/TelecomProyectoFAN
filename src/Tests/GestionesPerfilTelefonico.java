@@ -197,7 +197,7 @@ public class GestionesPerfilTelefonico extends TestBase{
 
 	}
 	
-	@Test (groups = {"GestionesPerfilTelefonico", "RenovacioDeCuota","E2E"}, dataProvider="RenovacionCuotaSinSaldo")
+	@Test (groups = {"GestionesPerfilTelefonico", "RenovacionDeCuota","E2E"}, dataProvider="RenovacionCuotaSinSaldo")
 	public void TS130067_CRM_Movil_REPRO_Renovacion_De_Cuota_Telefonico_Descuento_De_Saldo_Sin_Credito(String sDNI, String sLinea) {
 		imagen = "TS130067";
 		detalles = null;
@@ -1284,7 +1284,8 @@ public class GestionesPerfilTelefonico extends TestBase{
 		pagePTelefo.buscarAssert();
 		cCC.seleccionarCardPornumeroLinea(sLinea, driver);
 		pagePTelefo.comprarPack("comprar sms");
-		pagePTelefo.PackCombinado(sventaPack);
+		sleep(5000);
+		pagePTelefo.PackLDI(sVentaPack);
 		pagePTelefo.tipoDePago("en factura de venta");
 		pagePTelefo.getTipodepago().click();
 		sleep(12000);
@@ -1294,25 +1295,25 @@ public class GestionesPerfilTelefonico extends TestBase{
 		sleep(12000);
 		buscarYClick(driver.findElements(By.cssSelector(".slds-form-element__label.ng-binding")), "equals", "tarjeta de credito");
 		sleep(8000);
-		selectByText(driver.findElement(By.id("BankingEntity-0")), cBanco);
-		selectByText(driver.findElement(By.id("CardBankingEntity-0")), cTarjeta);
-		selectByText(driver.findElement(By.id("promotionsByCardsBank-0")), cPromo);
-		selectByText(driver.findElement(By.id("Installment-0")), cCuotas);
-		driver.findElement(By.id("CardNumber-0")).sendKeys(cNumTarjeta);
-		selectByText(driver.findElement(By.id("expirationMonth-0")), cVenceMes);
-		selectByText(driver.findElement(By.id("expirationYear-0")), cVenceAno);
-		driver.findElement(By.id("securityCode-0")).sendKeys(cCodSeg);
-		selectByText(driver.findElement(By.id("documentType-0")), cTipoDNI);
-		driver.findElement(By.id("documentNumber-0")).sendKeys(cDNITarjeta);
-		driver.findElement(By.id("cardHolder-0")).sendKeys(cTitular);
+		selectByText(driver.findElement(By.id("BankingEntity-0")), sBanco);
+		selectByText(driver.findElement(By.id("CardBankingEntity-0")), sTarjeta);
+		selectByText(driver.findElement(By.id("promotionsByCardsBank-0")), sPromo);
+		selectByText(driver.findElement(By.id("Installment-0")), sCuotas);
+		driver.findElement(By.id("CardNumber-0")).sendKeys(sNumTarjeta);
+		selectByText(driver.findElement(By.id("expirationMonth-0")), sVenceMes);
+		selectByText(driver.findElement(By.id("expirationYear-0")), sVenceAno);
+		driver.findElement(By.id("securityCode-0")).sendKeys(sCodSeg);
+		selectByText(driver.findElement(By.id("documentType-0")), sTipoDNI);
+		driver.findElement(By.id("documentNumber-0")).sendKeys(sDNITarjeta);
+		driver.findElement(By.id("cardHolder-0")).sendKeys(sTitular);
 		pagePTelefo.getMediodePago().click();
 		sleep(45000);
-		pagePTelefo.getOrdenSeRealizoConExito().click();// No se puede procesr (Ups, hay problemas para procesar su pago.)
+		pagePTelefo.getOrdenSeRealizoConExito().click();// No se puede procesr (Ups, se ha producido un error en la prefactura Huawei.)
 		sleep(10000);
 		String orden = cCC.obtenerTNyMonto2(driver, sOrden);
 		detalles+="-Monto:"+orden.split("-")[1]+"-Prefactura:"+orden.split("-")[0];
 		CBS_Mattu invoSer = new CBS_Mattu();
-		Assert.assertTrue(invoSer.PagaEnCajaTC("1005", accid, "2001", orden.split("-")[1], orden.split("-")[0],  cDNITarjeta, cTitular, cVenceAno+cVenceMes, cCodSeg, cTitular, cNumTarjeta));
+		Assert.assertTrue(invoSer.PagaEnCajaTC("1005", accid, "2001", orden.split("-")[1], orden.split("-")[0],  sDNITarjeta, sTitular, sVenceAno+sVenceMes, sCodSeg, sTitular, sNumTarjeta));
 		sleep(10000);
 		driver.navigate().refresh();
 		driver.switchTo().frame(cambioFrame(driver, By.cssSelector(".hasMotif.orderTab.detailPage.ext-webkit.ext-chrome.sfdcBody.brandQuaternaryBgr")));
@@ -1320,7 +1321,7 @@ public class GestionesPerfilTelefonico extends TestBase{
 		String datos = tabla.findElements(By.tagName("tr")).get(4).findElements(By.tagName("td")).get(1).getText();
 		Assert.assertTrue(datos.equalsIgnoreCase("activada")||datos.equalsIgnoreCase("activated"));	
 		System.out.println("Operacion: Compra de Pack "+ "Order: " + sOrden + "Cuenta: "+ accid + "Fin");
-		//Not finished
+		//Blocked
 	}
 	
 	@Test (groups= {"GestionPerfilTelefonico", "Ciclo2", "Vista360"}, dataProvider = "documentacionVista360")
