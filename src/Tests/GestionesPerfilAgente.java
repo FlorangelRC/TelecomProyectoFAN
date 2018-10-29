@@ -1,5 +1,7 @@
 package Tests;
 
+import static org.testng.Assert.assertTrue;
+
 import java.awt.AWTException;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -510,7 +512,7 @@ public class GestionesPerfilAgente extends TestBase{
 		invoSer.ValidarInfoCuenta(sLinea, sNombre,sApellido);
 	}
 	@Test (groups = {"GestionesPerfilAgente", "Vista360","Ciclo2"}, dataProvider="ProductosyServicios")
-	public void TS134818_CRM_Movil_Prepago_Vista_360_Mis_Servicios_Visualizaciï¿½n_del_estado_de_los_Productos_activos_FAN_Front_Agentes(String cDNI){
+	public void TS134818_CRM_Movil_Prepago_Vista_360_Mis_Servicios_Visualizacion_del_estado_de_los_Productos_activos_FAN_Front_Agentes(String cDNI){
 		BasePage cambioFrameByID=new BasePage();
 		CustomerCare cCC = new CustomerCare(driver);
 		driver.switchTo().frame(cambioFrameByID.getFrameForElement(driver, By.id("SearchClientDocumentType")));
@@ -578,12 +580,36 @@ public class GestionesPerfilAgente extends TestBase{
 			//Allways Empty
 		}
 		driver.findElement(By.id("CombosDeMegas_nextBtn")).click();
-		
 		sleep(5000);
 		List<WebElement> wCheckBox = driver.findElements(By.cssSelector(".slds-radio.ng-scope"));
 		wCheckBox.get(1).click();
 		driver.findElement(By.id("SetPaymentType_nextBtn")).click();
-		
-		Assert.assertTrue(driver.findElement(By.cssSelector(".ta-care-omniscript-done")).findElement(By.cssSelector(".ng-binding")).getText().equals("La operaci\u00f3n termino exitosamente"));
+		sleep(7000);
+		driver.switchTo().frame(cambioFrame(driver, By.className("ta-care-omniscript-done")));
+		Assert.assertTrue(driver.findElement(By.className("ta-care-omniscript-done")).getText().equals("La operaci\u00f3n termino exitosamente"));
+	}
+	
+	
+	@Test (groups = {"GestionesPerfilOficina","Vista360","E2E", "Ciclo1"}, dataProvider="RenovacionCuotaConSaldo")
+	public void TS134821_CRM_Movil_Prepago_Vista_360_Distribucion_de_paneles_Visualización_e_ingreso_a_las_ultimas_gestiones_FAN_Front_Agentes(String sDNI, String sLinea){
+		imagen = "TS134821";
+		//Check all
+		CustomerCare cCC = new CustomerCare(driver);
+		BasePage cambioFrameByID=new BasePage();
+		driver.switchTo().frame(cambioFrameByID.getFrameForElement(driver, By.id("SearchClientDocumentType")));
+		sleep(1000);
+		SalesBase sSB = new SalesBase(driver);
+		sSB.BuscarCuenta("DNI", sDNI);
+		driver.findElement(By.cssSelector(".slds-tree__item.ng-scope")).findElement(By.tagName("div")).click();
+		sleep(25000);
+		driver.switchTo().frame(cambioFrame(driver, By.className("card-top")));
+		boolean a = false;
+		List<WebElement> Ugest = driver.findElements(By.cssSelector(".slds-grid.slds-p-around--small.slds-wrap.via-slds-story-cards--header.slds-theme--shade.story-header.customerStory-header"));
+			for(WebElement u : Ugest){
+				if(u.getText().contains("\u00daltimas Gestiones")){
+					a=true;
+				}
+			}
+		Assert.assertTrue(false);
 	}
 }

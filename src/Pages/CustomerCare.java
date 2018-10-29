@@ -392,7 +392,7 @@ public class CustomerCare extends BasePage {
 	public void irAProductosyServicios() {
 		obtenerAccionLineaPrepago("Productos y Servicios").click();
 		sleep(3000);
-		cambiarAFrameActivo();
+		//cambiarAFrameActivo();
 	}
 	
 	public void irAProblemasConRecargas() {

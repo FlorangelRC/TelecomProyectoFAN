@@ -3212,9 +3212,10 @@ public class GestionesPerfilOficina extends TestBase {
 		Assert.assertTrue(creditoRecarga && creditoPromocional && estado && internetDisponible);
 	}
 	@Test (groups = {"GestionesPerfilOficina","Vista360","E2E", "Ciclo1"}, dataProvider="RenovacionCuotaConSaldo")
-	public void TS134380_CRM_Movil_Prepago_Vista_360_Mis_Servicios_Visualizaci�n_del_estado_de_los_Productos_activos_FAN_Front_OOCC(String sDNI, String sLinea){
+	public void TS134380_CRM_Movil_Prepago_Vista_360_Mis_Servicios_Visualizacion_del_estado_de_los_Productos_activos_FAN_Front_OOCC(String sDNI, String sLinea){
 		imagen = "TS134380";
 		//Check all
+		CustomerCare cCC = new CustomerCare(driver);
 		BasePage cambioFrameByID=new BasePage();
 		driver.switchTo().frame(cambioFrameByID.getFrameForElement(driver, By.id("SearchClientDocumentType")));
 		sleep(1000);
@@ -3222,20 +3223,18 @@ public class GestionesPerfilOficina extends TestBase {
 		sSB.BuscarCuenta("DNI", sDNI);
 		driver.findElement(By.cssSelector(".slds-tree__item.ng-scope")).findElement(By.tagName("div")).click();
 		sleep(25000);
-		CustomerCare cCC = new CustomerCare(driver);
-		cCC.seleccionarCardPornumeroLinea(sLinea, driver);
-		sleep(13000);
-		cCC.irAGestionEnCard("Productos y Servicios");
-		sleep(15000);
-		/*boolean a = false;
-		List <WebElement> plan = driver.findElement(By.cssSelector(".slds-card.slds-m-around--small.ta-fan-slds"));
-			for(WebElement p : plan){
-				if(p.getText().equals("Plan Prepago")){
+		driver.switchTo().frame(cambioFrame(driver, By.className("card-top")));
+		cCC.irAProductosyServicios();
+		driver.switchTo().frame(cambioFrame(driver, By.className("ext-strict")));
+		sleep(8000);
+		boolean a = false;
+		List <WebElement> pp = driver.findElements((By.className("slds-text-heading_mediumtitle")));
+			for(WebElement p : pp){
+				if(p.getText().contains("Plan Prepago")){
 					p.isDisplayed();
 					a = true;
-					
 				}
-			}*/
+			}
 	}
 	
 }
