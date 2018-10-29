@@ -1109,6 +1109,14 @@ public class TestBase {
 	}
 	
 	@DataProvider
+	public Object [][] ventaPackInternacional30SMS() throws Exception{
+		
+		Object[][] testObjArray = ExcelUtils.getTableArray(dataProviderE2E(),"E2EconPago",1,1,14,"packTelefonicoInternacional30SMS");
+		
+		return (testObjArray);
+	}
+	
+	@DataProvider
 	public Object [][] PackOfCom() throws Exception{
 		
 		Object[][] testObjArray = ExcelUtils.getTableArray(dataProviderE2E(),"E2EconPago",1,1,7,"packOfCom");
