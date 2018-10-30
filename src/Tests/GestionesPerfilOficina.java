@@ -1893,7 +1893,12 @@ public class GestionesPerfilOficina extends TestBase {
 	}
 	
 	@Test (groups = {"ProblemaRecarga", "GestionesPerfilOficina","E2E","Ciclo3"}, dataProvider="CuentaProblemaRecargaAYD") //Lote: 11120000001688 PIN: 02222
-	public void TS135714_CRM_Movil_PRE_Problemas_con_Recarga_Telefonico_Tarjeta_Scratch_Caso_Nuevo_Tarjeta_Activa_y_Disponible(String cDNI, String cSerie, String cPIN){
+	public void TS135714_CRM_Movil_PRE_Problemas_con_Recarga_Telefonico_Tarjeta_Scratch_Caso_Nuevo_Tarjeta_Activa_y_Disponible(String cDNI,String sLinea, String cSerie, String cPIN){
+		CBS_Mattu verifM = new CBS_Mattu();
+		CBS verif = new CBS();
+		String saldo = verif.ObtenerValorResponse(verifM.Servicio_queryLiteBySubscriber(sLinea), "bcs:MainBalance");
+		Integer saldo1 = Integer.parseInt(saldo.substring(0, 5));
+		System.out.println(saldo1);
 		imagen = "TS135714";
 		driver.switchTo().frame(cambioFrame(driver, By.id("SearchClientDocumentType")));
 		sb.BuscarCuenta("DNI", cDNI);
@@ -1914,10 +1919,11 @@ public class GestionesPerfilOficina extends TestBase {
 		sleep(15000);
 		buscarYClick(driver.findElements(By.cssSelector(".imgItemContainer.ng-scope")), "contains", "crear un caso nuevo");
 		driver.findElement(By.id("ExistingCase_nextBtn")).click();
-		sleep(8000);
+		sleep(10000);
 		driver.findElement(By.id("Summary_nextBtn")).click();
-		sleep(8000);
+		sleep(10000);
 		boolean b = false;
+		boolean a = false;
 		List <WebElement> prob = driver.findElements(By.cssSelector(".slds-box.ng-scope"));
 		for(WebElement x : prob) {
 			if(x.getText().toLowerCase().contains("recarga realizada con \u00e9xito")) {
@@ -1925,10 +1931,22 @@ public class GestionesPerfilOficina extends TestBase {
 			}
 		}
 		Assert.assertTrue(b);
+		String saldo2 = verif.ObtenerValorResponse(verifM.Servicio_queryLiteBySubscriber(sLinea), "bcs:MainBalance");
+		Integer saldo3 = Integer.parseInt(saldo2.substring(0, 5));
+		System.out.println(saldo3);
+		if((saldo1*1000000 != saldo3*1000000) && (saldo1*1000000 < saldo3*1000000)) {
+			a = true;
+		}
+		Assert.assertTrue(a);
 	}
 	
 	@Test (groups = {"ProblemaRecarga", "GestionesPerfilOficina","E2E","Ciclo3"}, dataProvider="CuentaProblemaRecargaQuemada")//Lote: 11120000001689 PIN: 02776
-	public void TS104347_CRM_Movil_REPRO_Problemas_con_Recarga_Presencial_Tarjeta_Scratch_Caso_Nuevo_Quemada(String cDNI, String cSerie, String cPIN){
+	public void TS104347_CRM_Movil_REPRO_Problemas_con_Recarga_Presencial_Tarjeta_Scratch_Caso_Nuevo_Quemada(String cDNI,String sLinea, String cSerie, String cPIN){
+		CBS_Mattu verifM = new CBS_Mattu();
+		CBS verif = new CBS();
+		String saldo = verif.ObtenerValorResponse(verifM.Servicio_queryLiteBySubscriber(sLinea), "bcs:MainBalance");
+		Integer saldo1 = Integer.parseInt(saldo.substring(0, 5));
+		System.out.println(saldo1);
 		imagen = "TS104347";
 		driver.switchTo().frame(cambioFrame(driver, By.id("SearchClientDocumentType")));
 		sb.BuscarCuenta("DNI", cDNI);
@@ -1953,6 +1971,7 @@ public class GestionesPerfilOficina extends TestBase {
 		driver.findElement(By.id("Summary_nextBtn")).click();
 		sleep(8000);
 		boolean b = false;
+		boolean a  = false;
 		List <WebElement> prob = driver.findElements(By.cssSelector(".slds-box.ng-scope"));
 		for(WebElement x : prob) {
 			if(x.getText().toLowerCase().contains("no se pudo realizar la operaci\u00f3n.")) {
@@ -1960,6 +1979,13 @@ public class GestionesPerfilOficina extends TestBase {
 			}
 		}
 		Assert.assertTrue(b);
+		String saldo2 = verif.ObtenerValorResponse(verifM.Servicio_queryLiteBySubscriber(sLinea), "bcs:MainBalance");
+		Integer saldo3 = Integer.parseInt(saldo2.substring(0, 5));
+		System.out.println(saldo3);
+		if((saldo1*1000000 != saldo3*1000000) && (saldo1*1000000 < saldo3*1000000)) {
+			a = true;
+		}
+		Assert.assertTrue(a);
 	}
 	
 	@Test (groups = {"GestionesPerfilOficina", "Reintegros", "E2E","Ciclo4"}, dataProvider = "CuentaReintegros")
@@ -3408,5 +3434,59 @@ public class GestionesPerfilOficina extends TestBase {
 	public void TS84237_CRM_Movil_REPRO_Modificacion_de_datos_Cliente_FAN_Front_OOCC() {
 		imagen = "TS84237";
 		Assert.assertTrue(true);
+	}
+	
+	@Test (groups = {"GestionesPerfilOficina", "HistorialDeRecargas", "Ciclo2"}, dataProvider = "RecargasHistorias")
+	public void TS_134787_CRM_Movil_Prepago_Historial_de_Recargas_Consultar_detalle_de_Recargas_con_Beneficios_FAN_Front_OOCC(String sDNI) {
+		driver.switchTo().frame(cambioFrame(driver, By.id("SearchClientDocumentType")));
+		sb.BuscarCuenta("DNI", sDNI);
+		driver.findElement(By.cssSelector(".slds-tree__item.ng-scope")).click();
+		sleep(10000);
+		cc.irAHistoriales();
+		WebElement historialDeRecargas = null;
+		driver.switchTo().frame(cambioFrame(driver, By.cssSelector(".slds-button.slds-button_brand")));
+		for (WebElement x : driver.findElements(By.className("slds-card"))) {
+			if (x.getText().toLowerCase().contains("historial de recargas"))
+				historialDeRecargas = x;
+		}
+		historialDeRecargas.findElement(By.cssSelector(".slds-button.slds-button_brand")).click();
+		sleep(7000);
+		driver.switchTo().frame(cambioFrame(driver, By.id("text-input-03")));
+		driver.findElement(By.id("text-input-03")).click();
+		driver.findElement(By.xpath("//*[text() = 'Todos']")).click();
+		driver.findElement(By.id("text-input-04")).click();
+		driver.findElement(By.xpath("//*[text() = 'Con Beneficios']")).click();
+		if (driver.findElement(By.cssSelector(".slds-button.slds-button--brand.filterNegotiations.slds-p-horizontal--x-large.slds-p-vertical--x-small")).isDisplayed()) {
+			driver.findElement(By.cssSelector(".slds-button.slds-button--brand.filterNegotiations.slds-p-horizontal--x-large.slds-p-vertical--x-small")).click();
+			Assert.assertTrue(true);
+		} else
+			Assert.assertTrue(false);
+	}
+	
+	@Test (groups = {"GestionesPerfilOficina", "HistorialDeRecargas", "Ciclo2"}, dataProvider = "RecargasHistorias")
+	public void TS_134788_CRM_Movil_Prepago_Historial_de_Recargas_Consultar_detalle_de_Recargas_Sin_Beneficios_FAN_Front_OOCC(String sDNI){
+		driver.switchTo().frame(cambioFrame(driver, By.id("SearchClientDocumentType")));
+		sb.BuscarCuenta("DNI", sDNI);
+		driver.findElement(By.cssSelector(".slds-tree__item.ng-scope")).click();
+		sleep(10000);
+		cc.irAHistoriales();
+		WebElement historialDeRecargas = null;
+		driver.switchTo().frame(cambioFrame(driver, By.cssSelector(".slds-button.slds-button_brand")));
+		for (WebElement x : driver.findElements(By.className("slds-card"))) {
+			if (x.getText().toLowerCase().contains("historial de recargas"))
+				historialDeRecargas = x;
+		}
+		historialDeRecargas.findElement(By.cssSelector(".slds-button.slds-button_brand")).click();
+		sleep(7000);
+		driver.switchTo().frame(cambioFrame(driver, By.id("text-input-03")));
+		driver.findElement(By.id("text-input-03")).click();
+		driver.findElement(By.xpath("//*[text() = 'Todos']")).click();
+		driver.findElement(By.id("text-input-04")).click();
+		driver.findElement(By.xpath("//*[text() = 'Sin Beneficios']")).click();
+		if (driver.findElement(By.cssSelector(".slds-button.slds-button--brand.filterNegotiations.slds-p-horizontal--x-large.slds-p-vertical--x-small")).isDisplayed()) {
+			driver.findElement(By.cssSelector(".slds-button.slds-button--brand.filterNegotiations.slds-p-horizontal--x-large.slds-p-vertical--x-small")).click();
+			Assert.assertTrue(true);
+		} else
+			Assert.assertTrue(false);
 	}
 }
