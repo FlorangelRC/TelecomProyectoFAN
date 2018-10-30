@@ -1260,8 +1260,6 @@ public class GestionesPerfilOficina extends TestBase {
 	public void TS103599_CRM_Movil_REPRO_Se_crea_caso_de_ajuste_menor_a_500_pesos_FAN_Front_OOCC(String cDNI) {
 		imagen = "TS103599";
 		boolean gest = false;
-		String oldValue = cbs.ObtenerValorResponse(cbsm.Servicio_queryLiteBySubscriber("1160551371"), "bcs:MainBalance");
-		int viejoCredito = Integer.parseInt(oldValue);
 		driver.switchTo().frame(cambioFrame(driver, By.id("SearchClientDocumentType")));
 		sb.BuscarCuenta("DNI", cDNI);
 		driver.findElement(By.cssSelector(".slds-tree__item.ng-scope")).click();
@@ -1296,9 +1294,6 @@ public class GestionesPerfilOficina extends TestBase {
 				gest = true;
 			}
 		}
-		String newValue = cbs.ObtenerValorResponse(cbsm.Servicio_queryLiteBySubscriber("1160551371"), "bcs:MainBalance");
-		int nuevoCredito = Integer.parseInt(newValue);
-		Assert.assertTrue(viejoCredito + 499990000 == nuevoCredito);
 		Assert.assertTrue(gest);
 		if (TestBase.urlAmbiente.contains("sit")) {
 			String orden = cc.obtenerOrden(driver, "Inconvenientes con cargos tasados y facturados");
@@ -3215,11 +3210,11 @@ public class GestionesPerfilOficina extends TestBase {
 		Assert.assertTrue(error.getText().toLowerCase().contains("fecha de nacimiento inv\u00e1lida"));
 	}
 	
-	@Test (groups = {"GestionesPerfilOficina", "Vista360", "Ciclo2"})
-	public void TS134495_CRM_Movil_Prepago_Vista_360_Distribucion_de_paneles_Informacion_del_cliente_FAN_Front_OOCC() {
+	@Test (groups = {"GestionesPerfilOficina", "Vista360", "Ciclo2"}, dataProvider = "CuentaVista360")
+	public void TS134495_CRM_Movil_Prepago_Vista_360_Distribucion_de_paneles_Informacion_del_cliente_FAN_Front_OOCC(String sDNI, String sNombre) {
 		imagen = "TS134495";
 		driver.switchTo().frame(cambioFrame(driver, By.id("SearchClientDocumentType")));
-		sb.BuscarCuenta("DNI", "15907314");
+		sb.BuscarCuenta("DNI", sDNI);
 		driver.findElement(By.cssSelector(".slds-tree__item.ng-scope")).click();
 		sleep(15000);
 		driver.switchTo().frame(cambioFrame(driver, By.className("profile-box")));
@@ -3229,15 +3224,15 @@ public class GestionesPerfilOficina extends TestBase {
 			if (x.getText().toLowerCase().contains("15907314"))
 				dni = x;
 		}
-		Assert.assertTrue(nombre.getText().contains("Emma Valentina Miranda") && dni.getText().contains("15907314"));
+		Assert.assertTrue(nombre.getText().contains(sNombre) && dni.getText().contains(sDNI));
 	}
 	
-	@Test (groups = {"GestionesPerfilOficina", "Vista360", "Ciclo2"})
-	public void TS134745_CRM_Movil_Prepago_Vista_360_Producto_Activo_del_cliente_Datos_FAN_Front_OOCC() {
+	@Test (groups = {"GestionesPerfilOficina", "Vista360", "Ciclo2"}, dataProvider = "CuentaVista360")
+	public void TS134745_CRM_Movil_Prepago_Vista_360_Producto_Activo_del_cliente_Datos_FAN_Front_OOCC(String sDNI, String sNombre) {
 		imagen = "TS134745";
 		boolean creditoRecarga = false, creditoPromocional = false, estado = false, internetDisponible = false;
 		driver.switchTo().frame(cambioFrame(driver, By.id("SearchClientDocumentType")));
-		sb.BuscarCuenta("DNI", "15907314");
+		sb.BuscarCuenta("DNI", sDNI);
 		driver.findElement(By.cssSelector(".slds-tree__item.ng-scope")).click();
 		sleep(15000);
 		driver.switchTo().frame(cambioFrame(driver, By.className("card-top")));
@@ -3279,11 +3274,11 @@ public class GestionesPerfilOficina extends TestBase {
 			}
 	}
 	
-	@Test (groups = {"GestionesPerfilOficina","Vista360","E2E", "Ciclo1"})
-	public void TS134496_CRM_Movil_Prepago_Vista_360_Distribucion_de_paneles_Perfil_FAN_Front_OOCC() {
+	@Test (groups = {"GestionesPerfilOficina","Vista360","E2E", "Ciclo2"}, dataProvider = "CuentaVista360")
+	public void TS134496_CRM_Movil_Prepago_Vista_360_Distribucion_de_paneles_Perfil_FAN_Front_OOCC(String sDNI, String sNombre) {
 		boolean cuenta = false;
 		driver.switchTo().frame(cambioFrame(driver, By.id("SearchClientDocumentType")));
-		sb.BuscarCuenta("DNI", "15907314");
+		sb.BuscarCuenta("DNI", sDNI);
 		driver.findElement(By.cssSelector(".slds-tree__item.ng-scope")).click();
 		sleep(10000);
 		driver.switchTo().frame(cambioFrame(driver, By.className("card-top")));
@@ -3292,7 +3287,7 @@ public class GestionesPerfilOficina extends TestBase {
 		List<WebElement> pestanas = driver.findElements(By.className("x-tab-strip-closable"));
 		pestanas.addAll(driver.findElements(By.cssSelector(".x-tab-strip-closable.x-tab-strip-active")));
 		for (WebElement x : pestanas) {
-			if (x.getText().equalsIgnoreCase("Emma Valentina Miranda"))
+			if (x.getText().equalsIgnoreCase(sNombre))
 				cuenta = true;
 		}
 		driver.switchTo().frame(cambioFrame(driver, By.cssSelector(".console-card.active")));
