@@ -41,6 +41,7 @@ public class GestionesPerfilOficina extends TestBase {
 	private CustomerCare cc;
 	private CBS cbs;
 	private CBS_Mattu cbsm;
+	private Marketing mk;
 	List<String> sOrders = new ArrayList<String>();
 	String imagen;
 	
@@ -55,6 +56,7 @@ public class GestionesPerfilOficina extends TestBase {
 		cc = new CustomerCare(driver);
 		cbs = new CBS();
 		cbsm = new CBS_Mattu();
+		mk = new Marketing(driver);
 		loginOfCom(driver);
 		sleep(22000);
 		try {
@@ -3266,5 +3268,145 @@ public class GestionesPerfilOficina extends TestBase {
 		}
 		driver.switchTo().frame(cambioFrame(driver, By.cssSelector(".console-card.active")));
 		Assert.assertTrue(cuenta && driver.findElement(By.cssSelector(".console-card.active")).isDisplayed());
+	}
+	
+	@Test (groups = {"GestionesPerfilOficina", "ActualizarDatos", "E2E", "Ciclo3"},  dataProvider = "CuentaModificacionDeDatos")
+	public void TS134834_CRM_Movil_REPRO_Modificacion_de_datos_Actualizar_los_datos_del_cliente_completos_FAN_Front_OOCC(String sDNI) {
+		imagen = "TS134834";
+		String nuevoNombre = "Otro";
+		String nuevoApellido = "Apellido";
+		String nuevoNacimiento = "10/10/1982";
+		String nuevoMail = "maildetest@gmail.com";
+		String nuevoPhone = "3574409239";
+		driver.switchTo().frame(cambioFrame(driver, By.id("SearchClientDocumentType")));
+		sb.BuscarCuenta("DNI", sDNI);
+		driver.findElement(By.cssSelector(".slds-tree__item.ng-scope")).click();
+		sleep(15000);
+		driver.switchTo().frame(cambioFrame(driver, By.className("profile-box")));
+		driver.findElements(By.className("profile-edit")).get(0).click();
+		sleep(10000);
+		driver.switchTo().frame(cambioFrame(driver, By.id("DocumentNumber")));
+		String nombre = driver.findElement(By.id("FirstName")).getAttribute("value");
+		String apellido = driver.findElement(By.id("LastName")).getAttribute("value");
+		String fechaNacimiento = driver.findElement(By.id("Birthdate")).getAttribute("value");
+		String mail = driver.findElement(By.id("Email")).getAttribute("value");
+		String phone = driver.findElement(By.id("MobilePhone")).getAttribute("value");
+		driver.findElement(By.id("FirstName")).clear();
+		driver.findElement(By.id("FirstName")).sendKeys(nuevoNombre);
+		driver.findElement(By.id("LastName")).clear();
+		driver.findElement(By.id("LastName")).sendKeys(nuevoApellido);
+		driver.findElement(By.id("Birthdate")).clear();
+		driver.findElement(By.id("Birthdate")).sendKeys(nuevoNacimiento);
+		driver.findElement(By.id("Email")).clear();
+		driver.findElement(By.id("Email")).sendKeys(nuevoMail);
+		driver.findElement(By.id("MobilePhone")).clear();
+		driver.findElement(By.id("MobilePhone")).sendKeys(nuevoPhone);
+		driver.findElement(By.id("ClientInformation_nextBtn")).click();
+		sleep(5000);
+		mk.closeActiveTab();
+		driver.switchTo().frame(cambioFrame(driver, By.className("profile-box")));
+		driver.findElements(By.className("profile-edit")).get(0).click();
+		sleep(10000);
+		driver.switchTo().frame(cambioFrame(driver, By.id("DocumentNumber")));
+		Assert.assertTrue(driver.findElement(By.id("FirstName")).getAttribute("value").equals(nuevoNombre));
+		Assert.assertTrue(driver.findElement(By.id("LastName")).getAttribute("value").equals(nuevoApellido));
+		Assert.assertTrue(driver.findElement(By.id("Birthdate")).getAttribute("value").equals(nuevoNacimiento));
+		Assert.assertTrue(driver.findElement(By.id("Email")).getAttribute("value").equals(nuevoMail));
+		Assert.assertTrue(driver.findElement(By.id("MobilePhone")).getAttribute("value").equals(nuevoPhone));
+		Assert.assertTrue(driver.findElement(By.id("DocumentType")).getAttribute("disabled").equals("true"));
+		driver.findElement(By.id("FirstName")).clear();
+		driver.findElement(By.id("FirstName")).sendKeys(nombre);
+		driver.findElement(By.id("LastName")).clear();
+		driver.findElement(By.id("LastName")).sendKeys(apellido);
+		driver.findElement(By.id("Birthdate")).clear();
+		driver.findElement(By.id("Birthdate")).sendKeys(fechaNacimiento);
+		driver.findElement(By.id("Email")).clear();
+		driver.findElement(By.id("Email")).sendKeys(mail);
+		driver.findElement(By.id("MobilePhone")).clear();
+		driver.findElement(By.id("MobilePhone")).sendKeys(phone);
+		driver.findElement(By.id("ClientInformation_nextBtn")).click();
+		sleep(8000);
+		Assert.assertTrue(driver.findElement(By.className("ta-care-omniscript-done")).getText().contains("Las modificaciones se realizaron con \u00e9xito"));
+		String orden = driver.findElement(By.cssSelector(".vlc-slds-inline-control__label.ng-binding")).getText();
+		orden = orden.substring(orden.length()-9, orden.length()-1);
+	}
+	
+	@Test (groups = {"GestionesPerfilOficina", "ActualizarDatos", "E2E", "Ciclo3"},  dataProvider = "CuentaModificacionDeDatos")
+	public void TS129335_CRM_Movil_REPRO_Modificacion_de_datos_Actualizar_datos_campo_Correo_Electronico_Cliente_FAN_Front_OOCC(String sDNI) {
+		imagen = "TS129335";
+		String nuevoMail = "maildetest@gmail.com";
+		driver.switchTo().frame(cambioFrame(driver, By.id("SearchClientDocumentType")));
+		sb.BuscarCuenta("DNI", sDNI);
+		driver.findElement(By.cssSelector(".slds-tree__item.ng-scope")).click();
+		sleep(15000);
+		driver.switchTo().frame(cambioFrame(driver, By.className("profile-box")));
+		driver.findElements(By.className("profile-edit")).get(0).click();
+		sleep(10000);
+		driver.switchTo().frame(cambioFrame(driver, By.id("DocumentNumber")));
+		String mail = driver.findElement(By.id("Email")).getAttribute("value");
+		driver.findElement(By.id("Email")).clear();
+		driver.findElement(By.id("Email")).sendKeys(nuevoMail);
+		driver.findElement(By.id("ClientInformation_nextBtn")).click();
+		sleep(5000);
+		mk.closeActiveTab();
+		driver.switchTo().frame(cambioFrame(driver, By.className("profile-box")));
+		driver.findElements(By.className("profile-edit")).get(0).click();
+		sleep(10000);
+		driver.switchTo().frame(cambioFrame(driver, By.id("DocumentNumber")));
+		Assert.assertTrue(driver.findElement(By.id("Email")).getAttribute("value").equals(nuevoMail));
+		driver.findElement(By.id("Email")).clear();
+		driver.findElement(By.id("Email")).sendKeys(mail);
+		driver.findElement(By.id("ClientInformation_nextBtn")).click();
+		sleep(8000);
+		Assert.assertTrue(driver.findElement(By.className("ta-care-omniscript-done")).getText().contains("Las modificaciones se realizaron con \u00e9xito"));
+		String orden = driver.findElement(By.cssSelector(".vlc-slds-inline-control__label.ng-binding")).getText();
+		orden = orden.substring(orden.length()-9, orden.length()-1);
+	}
+	
+	@Test (groups = {"GestionesPerfilOficina", "ActualizarDatos", "E2E", "Ciclo3"}, dataProvider = "CuentaModificacionDeDatos")
+	public void TS129329_CRM_Movil_REPRO_Modificacion_de_datos_No_Permite_Actualizar_datos_campo_DNI_CUIT_Cliente_FAN_Front_OOCC(String sDNI) {
+		imagen = "TS129329";
+		driver.switchTo().frame(cambioFrame(driver, By.id("SearchClientDocumentType")));
+		sb.BuscarCuenta("DNI", sDNI);
+		driver.findElement(By.cssSelector(".slds-tree__item.ng-scope")).click();
+		sleep(15000);
+		driver.switchTo().frame(cambioFrame(driver, By.className("profile-box")));
+		driver.findElements(By.className("profile-edit")).get(0).click();
+		sleep(10000);
+		driver.switchTo().frame(cambioFrame(driver, By.id("DocumentNumber")));
+		Assert.assertTrue(driver.findElement(By.id("DocumentType")).getAttribute("disabled").equals("true"));
+	}
+	
+	@Test (groups = {"GestionesPerfilOficina", "ActualizarDatos", "E2E", "Ciclo3"}, dataProvider = "CuentaModificacionDeDatos")
+	public void TS103660_CRM_Movil_REPRO_No_Actualizar_datos_Cliente_FAN_Front_OOCC(String sDNI) {
+		imagen = "TS103660";
+		boolean cancelar = false;
+		driver.switchTo().frame(cambioFrame(driver, By.id("SearchClientDocumentType")));
+		sb.BuscarCuenta("DNI", sDNI);
+		driver.findElement(By.cssSelector(".slds-tree__item.ng-scope")).click();
+		sleep(15000);
+		driver.switchTo().frame(cambioFrame(driver, By.className("profile-box")));
+		driver.findElements(By.className("profile-edit")).get(0).click();
+		sleep(10000);
+		driver.switchTo().frame(cambioFrame(driver, By.id("DocumentNumber")));
+		if (driver.findElement(By.cssSelector(".vlc-slds-button--tertiary.ng-binding.ng-scope")).isDisplayed()) {
+			driver.findElement(By.cssSelector(".vlc-slds-button--tertiary.ng-binding.ng-scope")).click();
+			sleep(3000);
+			driver.findElement(By.cssSelector(".slds-button.slds-button--neutral.ng-binding")).click();
+			cancelar = true;
+		}
+		Assert.assertTrue(cancelar);
+	}
+	
+	@Test (groups = {"GestionesPerfilOficina", "ActualizarDatos", "E2E", "Ciclo3"}, dependsOnMethods = "TS129335_CRM_Movil_REPRO_Modificacion_de_datos_Actualizar_datos_campo_Correo_Electronico_Cliente_FAN_Front_OOCC")
+	public void TS103659_CRM_Movil_REPRO_Modificacion_de_datos_Actualizar_datos_Cliente_FAN_Front_OOCC() {
+		imagen = "TS103659";
+		Assert.assertTrue(true);
+	}
+	
+	@Test (groups = {"GestionesPerfilOficina", "ActualizarDatos", "E2E", "Ciclo3"}, dependsOnMethods = "TS134834_CRM_Movil_REPRO_Modificacion_de_datos_Actualizar_los_datos_del_cliente_completos_FAN_Front_OOCC")
+	public void TS84237_CRM_Movil_REPRO_Modificacion_de_datos_Cliente_FAN_Front_OOCC() {
+		imagen = "TS84237";
+		Assert.assertTrue(true);
 	}
 }
