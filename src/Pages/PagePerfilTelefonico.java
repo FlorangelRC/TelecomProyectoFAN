@@ -146,7 +146,7 @@ public class PagePerfilTelefonico extends TestBase{
 	
 	public void agregarPack(String Pack1) {
 		sleep(5000);		
-		driver.switchTo().frame(cambioFrame(driver, By.cssSelector(".slds-button.cpq-item-has-children")));
+		driver.switchTo().frame(cambioFrame(driver, By.cssSelector(".slds-radio_faux")));
 		Pack("Packs Opcionales", "Packs de Datos", Pack1);
 		driver.findElement(By.cssSelector(".slds-button.slds-m-left--large.slds-button--brand.ta-button-brand")).click();
 		sleep(15000);
