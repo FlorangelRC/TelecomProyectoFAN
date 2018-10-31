@@ -43,6 +43,7 @@ public class GestionesPerfilOficina extends TestBase {
 	private CBS_Mattu cbsm;
 	List<String> sOrders = new ArrayList<String>();
 	String imagen;
+	String detalles;
 	
 	@BeforeClass(alwaysRun=true)
 	public void init() {
@@ -3346,5 +3347,35 @@ public class GestionesPerfilOficina extends TestBase {
 			Assert.assertTrue(true);
 		} else
 			Assert.assertTrue(false);
+	}
+	
+	@Test (groups = {"GestionesPerfilOficina", "VentaDeOferta", "Ciclo1"},priority=1, dataProvider = "ventaPack")
+	public void TS139727_CRM_Movil_REPRO_Venta_de_pack_50_min_y_50_SMS_x_7_dias_Factura_de_Venta_Efectivo_OOCC(String sDNI, String sLinea, String sventaPack, String cBanco, String cTarjeta, String cPromo, String cCuotas, String cNumTarjeta, String cVenceMes, String cVenceAno, String cCodSeg, String cTipoDNI, String cDNITarjeta, String cTitular) {
+		imagen = "TS139727";
+		detalles = null;
+		detalles = imagen+"-Venta de pack-DNI:"+sDNI;
+		SalesBase sale = new SalesBase(driver);
+		BasePage cambioFrameByID=new BasePage();
+		CustomerCare cCC = new CustomerCare(driver);
+		PagePerfilTelefonico pagePTelefo = new PagePerfilTelefonico(driver);
+		driver.switchTo().frame(cambioFrameByID.getFrameForElement(driver, By.id("SearchClientDocumentType")));	
+		sleep(8000);
+		sale.BuscarCuenta("DNI", sDNI);
+		String accid = driver.findElement(By.cssSelector(".searchClient-body.slds-hint-parent.ng-scope")).findElements(By.tagName("td")).get(5).getText();
+		System.out.println("id "+accid);
+		detalles +="-Cuenta:"+accid;
+		pagePTelefo.buscarAssert();
+		cCC.seleccionarCardPornumeroLinea(sLinea, driver);
+		pagePTelefo.comprarPack();
+		pagePTelefo.PackCombinado(sventaPack);
+		pagePTelefo.tipoDePago("en factura de venta");
+		pagePTelefo.getTipodepago().click();
+		sleep(12000);
+		String sOrden = cc.obtenerOrden2(driver);
+		detalles+="-Orden:"+sOrden;
+		pagePTelefo.getSimulaciondeFactura().click();
+		sleep(12000);
+		buscarYClick(driver.findElements(By.cssSelector(".slds-form-element__label.ng-binding")), "equals", "tarjeta de credito");
+		sleep(8000);
 	}
 }
