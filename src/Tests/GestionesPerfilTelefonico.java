@@ -1629,4 +1629,54 @@ public class GestionesPerfilTelefonico extends TestBase{
 		}
 	Assert.assertTrue(enc);
 	}
+	
+	@Test (groups = {"GestionesPerfilOficina","HistorialDePacks","E2E", "Ciclo1"},  dataProvider = "CuentaModificacionDeDatos")
+	public void TS135483_CRM_Movil_Prepago_Historial_de_Packs_Seleccion_de_Fechas_FAN_Front_OOCC(String sDNI){
+	//boolean enc = false;
+	driver.switchTo().frame(cambioFrame(driver, By.id("SearchClientDocumentType")));
+	sb.BuscarCuenta("DNI", sDNI);
+	driver.findElement(By.cssSelector(".slds-tree__item.ng-scope")).click();
+	sleep(20000);
+	CustomerCare cc = new CustomerCare(driver);
+	cc.irAHistoriales();
+	sleep(8000);
+	driver.switchTo().frame(cambioFrame(driver, By.cssSelector(".slds-card.slds-m-around--small.ta-fan-slds")));
+	List <WebElement> historiales = driver.findElements(By.className("slds-card"));
+	for (WebElement UnH: historiales) {
+		System.out.println(UnH.findElement(By.cssSelector(".slds-card__header.slds-grid")).getText());
+		if(UnH.findElement(By.cssSelector(".slds-card__header.slds-grid")).getText().equals("Historial de packs")) {
+			//enc = true;
+			driver.findElement(By.cssSelector(".slds-button.slds-button_brand")).click();
+			sleep(2000);
+			driver.switchTo().frame(cambioFrame(driver, By.cssSelector(".slds-grid.slds-wrap.slds-grid--pull-padded.slds-m-around--medium.slds-p-around--medium.negotationsfilter")));
+			driver.findElement(By.id("text-input-id-1")).click();
+			WebElement table = driver.findElement(By.cssSelector(".slds-datepicker.slds-dropdown.slds-dropdown--left"));
+			sleep(3000);
+			List<WebElement> tableRows = table.findElements(By.xpath("//tr//td"));
+			for (WebElement cell : tableRows) {
+				try {
+					if (cell.getText().equals("29")) {
+						cell.click();
+					}
+				}catch(Exception e) {}
+			}
+			driver.findElement(By.id("text-input-id-2")).click();
+			WebElement table_2 = driver.findElement(By.cssSelector(".slds-datepicker.slds-dropdown.slds-dropdown--left"));
+			sleep(3000);
+			List<WebElement> tableRows_2 = table_2.findElements(By.xpath("//tr//td"));
+			for (WebElement cell : tableRows_2) {
+				try {
+					if (cell.getText().equals("15")) {
+					cell.click();
+					}
+				}catch(Exception e) {}
+			}
+			sleep(5000);
+//			driver.switchTo().frame(cambioFrame(driver, By.cssSelector(".slds-button.slds-button--brand.filterNegotiations.slds-p-horizontal--x-large.slds-p-vertical--x-small")));
+			driver.findElement(By.cssSelector(".slds-button.slds-button--brand.filterNegotiations.slds-p-horizontal--x-large.slds-p-vertical--x-small")).click();
+//			sleep(5000);
+//			break;
+		}
+	}
+}
 }
