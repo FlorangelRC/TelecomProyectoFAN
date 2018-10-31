@@ -41,6 +41,7 @@ public class GestionesPerfilOficina extends TestBase {
 	private CustomerCare cc;
 	private CBS cbs;
 	private CBS_Mattu cbsm;
+	private Marketing mk;
 	List<String> sOrders = new ArrayList<String>();
 	String imagen;
 	String detalles;
@@ -56,6 +57,7 @@ public class GestionesPerfilOficina extends TestBase {
 		cc = new CustomerCare(driver);
 		cbs = new CBS();
 		cbsm = new CBS_Mattu();
+		mk = new Marketing(driver);
 		loginOfCom(driver);
 		sleep(22000);
 		try {
@@ -120,7 +122,7 @@ public class GestionesPerfilOficina extends TestBase {
 		sleep(15000);
 	}
 
-	@AfterMethod(alwaysRun=true)
+	//@AfterMethod(alwaysRun=true)
 	public void after() throws IOException {
 		guardarListaTxt(sOrders);
 		sOrders.clear();
@@ -2744,7 +2746,7 @@ public class GestionesPerfilOficina extends TestBase {
 	public void TS85097_CRM_Movil_REPRO_Nominatividad_Cliente_Existente_Presencial_DOC_OfCom() {
 		boolean nominacion = false;
 		driver.switchTo().frame(cambioFrame(driver, By.id("SearchClientDocumentType")));
-		driver.findElement(By.id("PhoneNumber")).sendKeys("2932550051");
+		driver.findElement(By.id("PhoneNumber")).sendKeys("2932550214");
 		driver.findElement(By.id("SearchClientsDummy")).click();
 		sleep(5000);
 		driver.findElement(By.cssSelector(".slds-button.slds-button--icon.slds-m-right--x-small.ng-scope")).click();
@@ -2766,7 +2768,7 @@ public class GestionesPerfilOficina extends TestBase {
 		sleep(10000);
 		contact.tipoValidacion("documento");
 		sleep(5000);
-		driver.findElement(By.id("FileDocumentImage")).sendKeys("C:\\Users\\florangel\\Downloads\\mapache.jpg");
+		driver.findElement(By.id("FileDocumentImage")).sendKeys("C:\\Users\\Sofia Chardin\\Desktop\\DNI.jpg");
 		driver.findElement(By.id("DocumentMethod_nextBtn")).click();
 		sleep(30000);
 		for (WebElement x : driver.findElement(By.id("NominacionExitosa")).findElements(By.tagName("p"))) {
@@ -2798,7 +2800,7 @@ public class GestionesPerfilOficina extends TestBase {
 	@Test (groups = {"GestionesPerfilOficina", "ReseteoDeClave", "Ciclo2"}, dataProvider = "CuentaReseteoClave")
 	public void TS95982_CRM_Movil_REPRO_No_Reseteo_de_Clave_Presencial(String sDNI) {
 		driver.switchTo().frame(cambioFrame(driver, By.id("SearchClientDocumentType")));
-		sb.BuscarCuenta("DNI", sDNI);
+		sb.BuscarCuenta("DNI", "30998801");
 		driver.findElement(By.cssSelector(".slds-tree__item.ng-scope")).click();
 		sleep(5000);
 		driver.switchTo().frame(cambioFrame(driver, By.className("profile-box")));
@@ -2908,7 +2910,7 @@ public class GestionesPerfilOficina extends TestBase {
 		sleep(12000);
 		String mesj = driver.findElement(By.cssSelector(".slds-box.ng-scope")).getText();
 		System.out.println(mesj);
-		Assert.assertTrue(mesj.equalsIgnoreCase("La operaci�n termino exitosamente"));		
+		Assert.assertTrue(mesj.equalsIgnoreCase("La operaci\u00f3n termino exitosamente"));		
 	}
 		
 	@Test (groups = {"GestionesPerfilOficina","RenovacionCuota","E2E", "Ciclo1"}, dataProvider="RenovacionCuotaConSaldo")
@@ -3295,6 +3297,146 @@ public class GestionesPerfilOficina extends TestBase {
 		Assert.assertTrue(cuenta && driver.findElement(By.cssSelector(".console-card.active")).isDisplayed());
 	}
 	
+	@Test (groups = {"GestionesPerfilOficina", "ActualizarDatos", "E2E", "Ciclo3"},  dataProvider = "CuentaModificacionDeDatos")
+	public void TS134834_CRM_Movil_REPRO_Modificacion_de_datos_Actualizar_los_datos_del_cliente_completos_FAN_Front_OOCC(String sDNI) {
+		imagen = "TS134834";
+		String nuevoNombre = "Otro";
+		String nuevoApellido = "Apellido";
+		String nuevoNacimiento = "10/10/1982";
+		String nuevoMail = "maildetest@gmail.com";
+		String nuevoPhone = "3574409239";
+		driver.switchTo().frame(cambioFrame(driver, By.id("SearchClientDocumentType")));
+		sb.BuscarCuenta("DNI", sDNI);
+		driver.findElement(By.cssSelector(".slds-tree__item.ng-scope")).click();
+		sleep(15000);
+		driver.switchTo().frame(cambioFrame(driver, By.className("profile-box")));
+		driver.findElements(By.className("profile-edit")).get(0).click();
+		sleep(10000);
+		driver.switchTo().frame(cambioFrame(driver, By.id("DocumentNumber")));
+		String nombre = driver.findElement(By.id("FirstName")).getAttribute("value");
+		String apellido = driver.findElement(By.id("LastName")).getAttribute("value");
+		String fechaNacimiento = driver.findElement(By.id("Birthdate")).getAttribute("value");
+		String mail = driver.findElement(By.id("Email")).getAttribute("value");
+		String phone = driver.findElement(By.id("MobilePhone")).getAttribute("value");
+		driver.findElement(By.id("FirstName")).clear();
+		driver.findElement(By.id("FirstName")).sendKeys(nuevoNombre);
+		driver.findElement(By.id("LastName")).clear();
+		driver.findElement(By.id("LastName")).sendKeys(nuevoApellido);
+		driver.findElement(By.id("Birthdate")).clear();
+		driver.findElement(By.id("Birthdate")).sendKeys(nuevoNacimiento);
+		driver.findElement(By.id("Email")).clear();
+		driver.findElement(By.id("Email")).sendKeys(nuevoMail);
+		driver.findElement(By.id("MobilePhone")).clear();
+		driver.findElement(By.id("MobilePhone")).sendKeys(nuevoPhone);
+		driver.findElement(By.id("ClientInformation_nextBtn")).click();
+		sleep(5000);
+		mk.closeActiveTab();
+		driver.switchTo().frame(cambioFrame(driver, By.className("profile-box")));
+		driver.findElements(By.className("profile-edit")).get(0).click();
+		sleep(10000);
+		driver.switchTo().frame(cambioFrame(driver, By.id("DocumentNumber")));
+		Assert.assertTrue(driver.findElement(By.id("FirstName")).getAttribute("value").equals(nuevoNombre));
+		Assert.assertTrue(driver.findElement(By.id("LastName")).getAttribute("value").equals(nuevoApellido));
+		Assert.assertTrue(driver.findElement(By.id("Birthdate")).getAttribute("value").equals(nuevoNacimiento));
+		Assert.assertTrue(driver.findElement(By.id("Email")).getAttribute("value").equals(nuevoMail));
+		Assert.assertTrue(driver.findElement(By.id("MobilePhone")).getAttribute("value").equals(nuevoPhone));
+		Assert.assertTrue(driver.findElement(By.id("DocumentType")).getAttribute("disabled").equals("true"));
+		driver.findElement(By.id("FirstName")).clear();
+		driver.findElement(By.id("FirstName")).sendKeys(nombre);
+		driver.findElement(By.id("LastName")).clear();
+		driver.findElement(By.id("LastName")).sendKeys(apellido);
+		driver.findElement(By.id("Birthdate")).clear();
+		driver.findElement(By.id("Birthdate")).sendKeys(fechaNacimiento);
+		driver.findElement(By.id("Email")).clear();
+		driver.findElement(By.id("Email")).sendKeys(mail);
+		driver.findElement(By.id("MobilePhone")).clear();
+		driver.findElement(By.id("MobilePhone")).sendKeys(phone);
+		driver.findElement(By.id("ClientInformation_nextBtn")).click();
+		sleep(8000);
+		Assert.assertTrue(driver.findElement(By.className("ta-care-omniscript-done")).getText().contains("Las modificaciones se realizaron con \u00e9xito"));
+		String orden = driver.findElement(By.cssSelector(".vlc-slds-inline-control__label.ng-binding")).getText();
+		orden = orden.substring(orden.length()-9, orden.length()-1);
+	}
+	
+	@Test (groups = {"GestionesPerfilOficina", "ActualizarDatos", "E2E", "Ciclo3"},  dataProvider = "CuentaModificacionDeDatos")
+	public void TS129335_CRM_Movil_REPRO_Modificacion_de_datos_Actualizar_datos_campo_Correo_Electronico_Cliente_FAN_Front_OOCC(String sDNI) {
+		imagen = "TS129335";
+		String nuevoMail = "maildetest@gmail.com";
+		driver.switchTo().frame(cambioFrame(driver, By.id("SearchClientDocumentType")));
+		sb.BuscarCuenta("DNI", sDNI);
+		driver.findElement(By.cssSelector(".slds-tree__item.ng-scope")).click();
+		sleep(15000);
+		driver.switchTo().frame(cambioFrame(driver, By.className("profile-box")));
+		driver.findElements(By.className("profile-edit")).get(0).click();
+		sleep(10000);
+		driver.switchTo().frame(cambioFrame(driver, By.id("DocumentNumber")));
+		String mail = driver.findElement(By.id("Email")).getAttribute("value");
+		driver.findElement(By.id("Email")).clear();
+		driver.findElement(By.id("Email")).sendKeys(nuevoMail);
+		driver.findElement(By.id("ClientInformation_nextBtn")).click();
+		sleep(5000);
+		mk.closeActiveTab();
+		driver.switchTo().frame(cambioFrame(driver, By.className("profile-box")));
+		driver.findElements(By.className("profile-edit")).get(0).click();
+		sleep(10000);
+		driver.switchTo().frame(cambioFrame(driver, By.id("DocumentNumber")));
+		Assert.assertTrue(driver.findElement(By.id("Email")).getAttribute("value").equals(nuevoMail));
+		driver.findElement(By.id("Email")).clear();
+		driver.findElement(By.id("Email")).sendKeys(mail);
+		driver.findElement(By.id("ClientInformation_nextBtn")).click();
+		sleep(8000);
+		Assert.assertTrue(driver.findElement(By.className("ta-care-omniscript-done")).getText().contains("Las modificaciones se realizaron con \u00e9xito"));
+		String orden = driver.findElement(By.cssSelector(".vlc-slds-inline-control__label.ng-binding")).getText();
+		orden = orden.substring(orden.length()-9, orden.length()-1);
+	}
+	
+	@Test (groups = {"GestionesPerfilOficina", "ActualizarDatos", "E2E", "Ciclo3"}, dataProvider = "CuentaModificacionDeDatos")
+	public void TS129329_CRM_Movil_REPRO_Modificacion_de_datos_No_Permite_Actualizar_datos_campo_DNI_CUIT_Cliente_FAN_Front_OOCC(String sDNI) {
+		imagen = "TS129329";
+		driver.switchTo().frame(cambioFrame(driver, By.id("SearchClientDocumentType")));
+		sb.BuscarCuenta("DNI", sDNI);
+		driver.findElement(By.cssSelector(".slds-tree__item.ng-scope")).click();
+		sleep(15000);
+		driver.switchTo().frame(cambioFrame(driver, By.className("profile-box")));
+		driver.findElements(By.className("profile-edit")).get(0).click();
+		sleep(10000);
+		driver.switchTo().frame(cambioFrame(driver, By.id("DocumentNumber")));
+		Assert.assertTrue(driver.findElement(By.id("DocumentType")).getAttribute("disabled").equals("true"));
+	}
+	
+	@Test (groups = {"GestionesPerfilOficina", "ActualizarDatos", "E2E", "Ciclo3"}, dataProvider = "CuentaModificacionDeDatos")
+	public void TS103660_CRM_Movil_REPRO_No_Actualizar_datos_Cliente_FAN_Front_OOCC(String sDNI) {
+		imagen = "TS103660";
+		boolean cancelar = false;
+		driver.switchTo().frame(cambioFrame(driver, By.id("SearchClientDocumentType")));
+		sb.BuscarCuenta("DNI", sDNI);
+		driver.findElement(By.cssSelector(".slds-tree__item.ng-scope")).click();
+		sleep(15000);
+		driver.switchTo().frame(cambioFrame(driver, By.className("profile-box")));
+		driver.findElements(By.className("profile-edit")).get(0).click();
+		sleep(10000);
+		driver.switchTo().frame(cambioFrame(driver, By.id("DocumentNumber")));
+		if (driver.findElement(By.cssSelector(".vlc-slds-button--tertiary.ng-binding.ng-scope")).isDisplayed()) {
+			driver.findElement(By.cssSelector(".vlc-slds-button--tertiary.ng-binding.ng-scope")).click();
+			sleep(3000);
+			driver.findElement(By.cssSelector(".slds-button.slds-button--neutral.ng-binding")).click();
+			cancelar = true;
+		}
+		Assert.assertTrue(cancelar);
+	}
+	
+	@Test (groups = {"GestionesPerfilOficina", "ActualizarDatos", "E2E", "Ciclo3"}, dependsOnMethods = "TS129335_CRM_Movil_REPRO_Modificacion_de_datos_Actualizar_datos_campo_Correo_Electronico_Cliente_FAN_Front_OOCC")
+	public void TS103659_CRM_Movil_REPRO_Modificacion_de_datos_Actualizar_datos_Cliente_FAN_Front_OOCC() {
+		imagen = "TS103659";
+		Assert.assertTrue(true);
+	}
+	
+	@Test (groups = {"GestionesPerfilOficina", "ActualizarDatos", "E2E", "Ciclo3"}, dependsOnMethods = "TS134834_CRM_Movil_REPRO_Modificacion_de_datos_Actualizar_los_datos_del_cliente_completos_FAN_Front_OOCC")
+	public void TS84237_CRM_Movil_REPRO_Modificacion_de_datos_Cliente_FAN_Front_OOCC() {
+		imagen = "TS84237";
+		Assert.assertTrue(true);
+	}
+	
 	@Test (groups = {"GestionesPerfilOficina", "HistorialDeRecargas", "Ciclo2"}, dataProvider = "RecargasHistorias")
 	public void TS_134787_CRM_Movil_Prepago_Historial_de_Recargas_Consultar_detalle_de_Recargas_con_Beneficios_FAN_Front_OOCC(String sDNI) {
 		driver.switchTo().frame(cambioFrame(driver, By.id("SearchClientDocumentType")));
@@ -3348,6 +3490,96 @@ public class GestionesPerfilOficina extends TestBase {
 		} else
 			Assert.assertTrue(false);
 	}
+	
+	
+	@Test (groups = {"GestionesPerfilOficina","HistorialDePacks","E2E", "Ciclo1"},  dataProvider = "CuentaModificacionDeDatos")
+	public void TS135468_CRM_Movil_Prepago_Historial_de_Packs_Nombre_del_Pack_TODOS_FAN_Front_OOCC(String sDNI){
+		boolean enc = false;
+		driver.switchTo().frame(cambioFrame(driver, By.id("SearchClientDocumentType")));
+		sb.BuscarCuenta("DNI", sDNI);
+		driver.findElement(By.cssSelector(".slds-tree__item.ng-scope")).click();
+		sleep(20000);
+		CustomerCare cc = new CustomerCare(driver);
+		cc.irAHistoriales();
+		sleep(8000);
+		driver.switchTo().frame(cambioFrame(driver, By.cssSelector(".slds-card.slds-m-around--small.ta-fan-slds")));
+		List <WebElement> historiales = driver.findElements(By.className("slds-card"));
+		for (WebElement UnH: historiales) {
+			System.out.println(UnH.findElement(By.cssSelector(".slds-card__header.slds-grid")).getText());
+			if(UnH.findElement(By.cssSelector(".slds-card__header.slds-grid")).getText().equals("Historial de packs")) {
+				enc = true;
+				driver.findElement(By.cssSelector(".slds-button.slds-button_brand")).click();
+				sleep(5000);
+				driver.switchTo().frame(cambioFrame(driver, By.cssSelector(".slds-button.slds-button--brand.filterNegotiations.slds-p-horizontal--x-large.slds-p-vertical--x-small")));
+				driver.findElement(By.cssSelector(".slds-button.slds-button--brand.filterNegotiations.slds-p-horizontal--x-large.slds-p-vertical--x-small")).click();
+				sleep(5000);
+				//Assert.assertTrue(true);
+				break;
+			}
+		}
+		driver.findElement(By.id("text-input-03")).click();
+		sleep(2000);
+		List<WebElement> todos = driver.findElement(By.cssSelector(".slds-dropdown__list.slds-dropdown--length-5")).findElements(By.tagName("li"));
+			for(WebElement t : todos){
+				if(t.getText().equals("Todos")){
+					t.click();
+				}	
+			}
+		Assert.assertTrue(enc);
+	}
+		
+	@Test (groups = {"GestionesPerfilOficina","HistorialDePacks","E2E", "Ciclo1"},  dataProvider = "CuentaModificacionDeDatos")
+	public void TS135483_CRM_Movil_Prepago_Historial_de_Packs_Seleccion_de_Fechas_FAN_Front_OOCC(String sDNI){
+		boolean enc = false;
+		driver.switchTo().frame(cambioFrame(driver, By.id("SearchClientDocumentType")));
+		sb.BuscarCuenta("DNI", sDNI);
+		driver.findElement(By.cssSelector(".slds-tree__item.ng-scope")).click();
+		sleep(20000);
+		CustomerCare cc = new CustomerCare(driver);
+		cc.irAHistoriales();
+		sleep(8000);
+		driver.switchTo().frame(cambioFrame(driver, By.cssSelector(".slds-card.slds-m-around--small.ta-fan-slds")));
+		List <WebElement> historiales = driver.findElements(By.className("slds-card"));
+		for (WebElement UnH: historiales) {
+			System.out.println(UnH.findElement(By.cssSelector(".slds-card__header.slds-grid")).getText());
+			if(UnH.findElement(By.cssSelector(".slds-card__header.slds-grid")).getText().equals("Historial de packs")) {
+				enc = true;
+				driver.findElement(By.cssSelector(".slds-button.slds-button_brand")).click();
+				break;
+			
+			}
+		}
+		sleep(5000);
+		driver.switchTo().frame(cambioFrame(driver, By.cssSelector(".slds-button.slds-button--brand.filterNegotiations.slds-p-horizontal--x-large.slds-p-vertical--x-small")));
+		driver.findElement(By.cssSelector(".slds-button.slds-button--brand.filterNegotiations.slds-p-horizontal--x-large.slds-p-vertical--x-small")).click();
+		sleep(5000);
+		driver.findElement(By.id("text-input-id-1")).click();				
+		
+	}
+	@Test (groups = {"GestionesPerfilOficina","HistorialDePacks","E2E", "Ciclo1"},  dataProvider = "CuentaAjustesREPRO")
+	public void TS135361_CRM_Movil_Prepago_Otros_Historiales_Historial_de_ajustes_FAN_Front_OOCC_S138(String sDNI){
+		driver.switchTo().frame(cambioFrame(driver, By.id("SearchClientDocumentType")));
+		sb.BuscarCuenta("DNI", sDNI);
+		driver.findElement(By.cssSelector(".slds-tree__item.ng-scope")).click();
+		sleep(20000);
+		CustomerCare cc = new CustomerCare(driver);
+		cc.irAHistoriales();
+		sleep(8000);WebElement historialDeRecargas = null;
+		driver.switchTo().frame(cambioFrame(driver, By.cssSelector(".slds-button.slds-button_brand")));
+		for (WebElement x : driver.findElements(By.className("slds-card"))) {
+			if (x.getText().toLowerCase().contains("historial de ajustes")){
+				historialDeRecargas = x;
+				historialDeRecargas.findElement(By.cssSelector(".slds-button.slds-button_brand")).click();
+			}
+		}
+		sleep(5000);
+		driver.switchTo().frame(cambioFrame(driver, By.cssSelector(".slds-button.slds-button--brand.filterNegotiations.slds-p-horizontal--x-large.slds-p-vertical--x-small")));
+		driver.findElement(By.cssSelector(".slds-button.slds-button--brand.filterNegotiations.slds-p-horizontal--x-large.slds-p-vertical--x-small")).click();
+		sleep(5000);
+		Assert.assertTrue(driver.findElement(By.cssSelector(".slds-table.slds-table--bordered.slds-table--resizable-cols.via-slds-table-pinned-header")).isDisplayed());
+		
+	}
+	
 	
 	@Test (groups = {"GestionesPerfilOficina", "VentaDeOferta", "Ciclo1"},priority=1, dataProvider = "ventaPack")
 	public void TS139727_CRM_Movil_REPRO_Venta_de_pack_50_min_y_50_SMS_x_7_dias_Factura_de_Venta_Efectivo_OOCC(String sDNI, String sLinea, String sventaPack, String cBanco, String cTarjeta, String cPromo, String cCuotas, String cNumTarjeta, String cVenceMes, String cVenceAno, String cCodSeg, String cTipoDNI, String cDNITarjeta, String cTitular) {
