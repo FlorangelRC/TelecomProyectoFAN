@@ -1660,7 +1660,7 @@ public class CustomerCare extends BasePage {
 		boolean verif = false;
 		TestBase tb = new TestBase();
 		try {
-			String nroCaso = driver.findElement(By.xpath("//*[@id=\"txtSuccessConfirmation\"]/div")).findElement(By.tagName("strong")).getText();
+			String nroCaso = driver.findElement(By.xpath("//*[@id=\"txtSuccessConfirmation\"]/div/p/p")).findElement(By.tagName("strong")).getText();
 			buscarCaso(nroCaso);
 			driver.switchTo().frame(tb.cambioFrame(driver, By.name("close")));
 			List <WebElement> gest = driver.findElements(By.cssSelector(".dataCol.col02"));
