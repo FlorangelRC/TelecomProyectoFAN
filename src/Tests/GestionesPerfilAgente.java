@@ -611,4 +611,32 @@ public class GestionesPerfilAgente extends TestBase{
 			}
 		Assert.assertTrue(false);
 	}
+	
+	@Test (groups = {"GestionesPerfilOficina","HistorialDePacks","E2E", "Ciclo1"},  dataProvider = "CuentaAjustesREPRO")
+	public void TS135380_CRM_Movil_Prepago_Otros_Historiales_Historial_de_ajustes_Ordenamiento_por_Motivo_de_ajuste_FAN_Front_Agente(String sDNI){
+		driver.switchTo().frame(cambioFrame(driver, By.id("SearchClientDocumentType")));
+		sb.BuscarCuenta("DNI", sDNI);
+		driver.findElement(By.cssSelector(".slds-tree__item.ng-scope")).click();
+		sleep(20000);
+		CustomerCare cc = new CustomerCare(driver);
+		driver.switchTo().frame(cambioFrame(driver, By.className("console-card active")));
+		cc.irAHistoriales();
+		sleep(8000);
+		WebElement historialDeRecargas = null;
+		driver.switchTo().frame(cambioFrame(driver, By.cssSelector(".slds-button.slds-button_brand")));
+			for (WebElement x : driver.findElements(By.className("slds-card"))) {
+				if (x.getText().toLowerCase().contains("historial de ajustes")){
+					historialDeRecargas = x;
+					historialDeRecargas.findElement(By.cssSelector(".slds-button.slds-button_brand")).click();
+				}
+			}
+		sleep(5000);
+		driver.switchTo().frame(cambioFrame(driver, By.cssSelector(".slds-button.slds-button--brand.filterNegotiations.slds-p-horizontal--x-large.slds-p-vertical--x-small")));
+		driver.findElement(By.cssSelector(".slds-button.slds-button--brand.filterNegotiations.slds-p-horizontal--x-large.slds-p-vertical--x-small")).click();
+		sleep(5000);
+		//Assert.assertTrue(driver.findElement(By.cssSelector(".slds-table.slds-table--bordered.slds-table--resizable-cols.via-slds-table-pinned-header")).isDisplayed());
+		WebElement tbody = driver.findElement(By.cssSelector(".slds-table.slds-table--bordered.slds-table--resizable-cols.via-slds-table-pinned-header")).findElement(By.tagName("thead"));
+		tbody.findElement(By.className(".slds-text-heading--label")).findElements(By.tagName("th")).get(2).findElement(By.tagName("a")).click();
+		
+	}
 }
