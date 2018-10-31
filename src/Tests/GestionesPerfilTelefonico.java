@@ -1800,9 +1800,10 @@ public class GestionesPerfilTelefonico extends TestBase{
 				}catch(Exception e) {}
 			}
 			sleep(5000);
-//			driver.switchTo().frame(cambioFrame(driver, By.cssSelector(".slds-button.slds-button--brand.filterNegotiations.slds-p-horizontal--x-large.slds-p-vertical--x-small")));
-			driver.findElement(By.cssSelector(".slds-button.slds-button--brand.filterNegotiations.slds-p-horizontal--x-large.slds-p-vertical--x-small")).click();
-//			sleep(5000);
+			driver.switchTo().frame(cambioFrame(driver, By.cssSelector(".slds-button.slds-button--brand.filterNegotiations.slds-p-horizontal--x-large.slds-p-vertical--x-small")));
+			WebElement visu =driver.findElement(By.cssSelector(".slds-button.slds-button--brand.filterNegotiations.slds-p-horizontal--x-large.slds-p-vertical--x-small"));
+			visu.click();
+			sleep(5000);
 //			break;
 		}
 	}
