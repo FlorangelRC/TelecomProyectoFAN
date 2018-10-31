@@ -3577,7 +3577,7 @@ public class GestionesPerfilOficina extends TestBase {
 		driver.findElement(By.cssSelector(".slds-button.slds-button--brand.filterNegotiations.slds-p-horizontal--x-large.slds-p-vertical--x-small")).click();
 		sleep(5000);
 		Assert.assertTrue(driver.findElement(By.cssSelector(".slds-table.slds-table--bordered.slds-table--resizable-cols.via-slds-table-pinned-header")).isDisplayed());
-	//angel gato	
+	
 	}
 	
 	
