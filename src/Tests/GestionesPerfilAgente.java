@@ -296,6 +296,7 @@ public class GestionesPerfilAgente extends TestBase{
 		String accid = driver.findElement(By.cssSelector(".searchClient-body.slds-hint-parent.ng-scope")).findElements(By.tagName("td")).get(5).getText();
 		System.out.println("id "+accid);
 		detalles +="-Cuenta:"+accid;
+		sleep(5000);
 		pagePTelefo.buscarAssert();
 		cCC.seleccionarCardPornumeroLinea(sLinea, driver);
 		pagePTelefo.comprarPack();
