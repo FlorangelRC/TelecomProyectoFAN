@@ -684,22 +684,23 @@ public class GestionesPerfilTelefonico extends TestBase{
 		CustomerCare cc = new CustomerCare(driver);
 		cc.irAHistoriales();
 		sleep(8000);
-		driver.switchTo().frame(cambioFrame(driver, By.cssSelector(".slds-card.slds-m-around--small.ta-fan-slds")));
-		List <WebElement> historiales = driver.findElements(By.cssSelector(".slds-m-around_small.ta-fan-slds"));
-		for (WebElement UnH: historiales) {
-			System.out.println(UnH.findElement(By.cssSelector(".slds-card__header.slds-grid")).getText());
-			if(UnH.findElement(By.cssSelector(".slds-card__header.slds-grid")).getText().equals("Historial de recargas S.O.S")) {
-				enc = true;
-				driver.findElement(By.cssSelector(".slds-button.slds-button_brand")).click();
-				sleep(5000);
-				driver.switchTo().frame(cambioFrame(driver, By.cssSelector(".slds-button.slds-button--brand.filterNegotiations.slds-p-horizontal--x-large.slds-p-vertical--x-small")));
-				driver.findElement(By.cssSelector(".slds-button.slds-button--brand.filterNegotiations.slds-p-horizontal--x-large.slds-p-vertical--x-small")).click();
-				sleep(5000);
-				Assert.assertTrue(true);
-				break;
+		sleep(7500);
+		driver.switchTo().frame(cambioFrame(driver, By.className("slds-card")));
+		List<WebElement> x = driver.findElements(By.className("slds-card"));
+		for (WebElement a : x) {
+			if (a.getText().toLowerCase().contains("historial de recargas s.o.s.")){
+				driver.switchTo().frame(cambioFrame(driver, By.className("slds-card__footer")));
+				driver.findElement(By.tagName("div")).findElement(By.xpath("//[*@class='slds-button slds-button_brand']")).click();
+				//driver.switchTo().frame(cambioFrame(driver, By.className("slds-card__footer")));
+				//cc.obligarclick(driver.findElement(By.cssSelector(".slds-button.slds-button_brand")));
 			}
 		}
-		Assert.assertTrue(enc);
+
+//		sleep(7000);
+//		driver.switchTo().frame(cambioFrame(driver, By.cssSelector(".slds-button.slds-button--brand.filterNegotiations.slds-p-horizontal--x-large.slds-p-vertical--x-small")));
+//		driver.findElement(By.cssSelector(".slds-button.slds-button--brand.filterNegotiations.slds-p-horizontal--x-large.slds-p-vertical--x-small")).click();
+//		sleep(5000);
+//		Assert.assertTrue(driver.findElement(By.cssSelector(".slds-table.slds-table--bordered.slds-table--resizable-cols.via-slds-table-pinned-header")).isDisplayed());
 	}
 	
 	@Test (groups = {"GestionesPerfilTelefonico", "RenovacionDeCuota","E2E"}, dataProvider="RenovacionCuotaConSaldo")
