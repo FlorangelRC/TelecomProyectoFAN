@@ -3662,8 +3662,8 @@ public class GestionesPerfilOficina extends TestBase {
 	}
 	
 	
-	@Test (groups = {"GestionesPerfilOficina", "VentaDeOferta", "Ciclo1"},priority=1, dataProvider = "ventaPack")
-	public void TS139727_CRM_Movil_REPRO_Venta_de_pack_50_min_y_50_SMS_x_7_dias_Factura_de_Venta_Efectivo_OOCC(String sDNI, String sLinea, String sventaPack, String cBanco, String cTarjeta, String cPromo, String cCuotas, String cNumTarjeta, String cVenceMes, String cVenceAno, String cCodSeg, String cTipoDNI, String cDNITarjeta, String cTitular) {
+	@Test (groups = {"GestionesPerfilOficina", "VentaDeOferta", "Ciclo1"}, dataProvider = "VentaPacks")
+	public void TS139727_CRM_Movil_REPRO_Venta_de_pack_50_min_y_50_SMS_x_7_dias_Factura_de_Venta_Efectivo_OOCC(String sDNI, String sLinea, String sventaPack) throws AWTException {
 		imagen = "TS139727";
 		detalles = null;
 		detalles = imagen+"-Venta de pack-DNI:"+sDNI;
@@ -3679,9 +3679,58 @@ public class GestionesPerfilOficina extends TestBase {
 		detalles +="-Cuenta:"+accid;
 		pagePTelefo.buscarAssert();
 		cCC.seleccionarCardPornumeroLinea(sLinea, driver);
+		cCC.closerightpanel_2();
 		pagePTelefo.comprarPack();
 		pagePTelefo.PackCombinado(sventaPack);
 		pagePTelefo.tipoDePago("en factura de venta");
+		sleep(12000);
+		pagePTelefo.getTipodepago().click();
+		sleep(12000);
+		String sOrden = cc.obtenerOrden2(driver);
+		detalles+="-Orden:"+sOrden;
+		pagePTelefo.getSimulaciondeFactura().click();
+		sleep(12000);
+		buscarYClick(driver.findElements(By.cssSelector(".slds-form-element__label.ng-binding")), "equals", "efectivo");
+		sleep(8000);
+		pagePTelefo.getMediodePago().click();
+		sleep(45000);
+		pagePTelefo.getOrdenSeRealizoConExito().click();// No se puede procesr (Ups, hay problemas para procesar su pago.)
+		sleep(10000);
+		String orden = cCC.obtenerTNyMonto2(driver, sOrden);
+		detalles+="-Monto:"+orden.split("-")[1]+"-Prefactura:"+orden.split("-")[0];
+		CBS_Mattu invoSer = new CBS_Mattu();
+		Assert.assertTrue(invoSer.cajeta(driver, orden.split("-")[1], sLinea));
+		sleep(10000);
+		driver.navigate().refresh();
+		driver.switchTo().frame(cambioFrame(driver, By.cssSelector(".hasMotif.orderTab.detailPage.ext-webkit.ext-chrome.sfdcBody.brandQuaternaryBgr")));
+		WebElement tabla = driver.findElement(By.id("ep")).findElements(By.tagName("table")).get(1);
+		String datos = tabla.findElements(By.tagName("tr")).get(4).findElements(By.tagName("td")).get(1).getText();
+		Assert.assertTrue(datos.equalsIgnoreCase("activada")||datos.equalsIgnoreCase("activated"));	
+		System.out.println("Operacion: Compra de Pack "+ "Order: " + sOrden + "Cuenta: "+ accid + "Fin");
+	}
+	
+	@Test (groups = {"GestionPerfilOficina", "VentaDeOferta", "Ciclo1"}, dataProvider = "ventaX1Dia" )
+	public void TS123163_CRM_Movil_REPRO_Venta_de_pack_1000_min_a_Personal_y_1000_SMS_x_1_dia_Factura_de_Venta_TC_Presencial(String sDNI, String sLinea, String sVentaPack, String sBanco, String sTarjeta, String sPromo, String sCuotas, String sNumTarjeta, String sVenceMes, String sVenceAno, String sCodSeg, String sTipoDNI, String sDNITarjeta, String sTitular){
+		imagen = "TS123163";
+		detalles = null;
+		detalles = imagen+"-Venta de pack-DNI:"+sDNI;
+		SalesBase sale = new SalesBase(driver);
+		BasePage cambioFrameByID=new BasePage();
+		CustomerCare cCC = new CustomerCare(driver);
+		PagePerfilTelefonico pagePTelefo = new PagePerfilTelefonico(driver);
+		driver.switchTo().frame(cambioFrameByID.getFrameForElement(driver, By.id("SearchClientDocumentType")));	
+		sleep(8000);
+		sale.BuscarCuenta("DNI", sDNI);
+		String accid = driver.findElement(By.cssSelector(".searchClient-body.slds-hint-parent.ng-scope")).findElements(By.tagName("td")).get(5).getText();
+		System.out.println("id "+accid);
+		detalles +="-Cuenta:"+accid;
+		pagePTelefo.buscarAssert();
+		cCC.seleccionarCardPornumeroLinea(sLinea, driver);
+		//cCC.closerightpanel();
+		pagePTelefo.comprarPack();
+		pagePTelefo.PackCombinado(sVentaPack);
+		pagePTelefo.tipoDePago("en factura de venta");
+		sleep(12000);
 		pagePTelefo.getTipodepago().click();
 		sleep(12000);
 		String sOrden = cc.obtenerOrden2(driver);
@@ -3690,5 +3739,32 @@ public class GestionesPerfilOficina extends TestBase {
 		sleep(12000);
 		buscarYClick(driver.findElements(By.cssSelector(".slds-form-element__label.ng-binding")), "equals", "tarjeta de credito");
 		sleep(8000);
+		selectByText(driver.findElement(By.id("BankingEntity-0")), sBanco);
+		selectByText(driver.findElement(By.id("CardBankingEntity-0")), sTarjeta);
+		selectByText(driver.findElement(By.id("promotionsByCardsBank-0")), sPromo);
+		selectByText(driver.findElement(By.id("Installment-0")), sCuotas);
+		driver.findElement(By.id("CardNumber-0")).sendKeys(sNumTarjeta);
+		selectByText(driver.findElement(By.id("expirationMonth-0")), sVenceMes);
+		selectByText(driver.findElement(By.id("expirationYear-0")), sVenceAno);
+		driver.findElement(By.id("securityCode-0")).sendKeys(sCodSeg);
+		selectByText(driver.findElement(By.id("documentType-0")), sTipoDNI);
+		driver.findElement(By.id("documentNumber-0")).sendKeys(sDNITarjeta);
+		driver.findElement(By.id("cardHolder-0")).sendKeys(sTitular);
+		pagePTelefo.getMediodePago().click();
+		sleep(45000);
+		pagePTelefo.getOrdenSeRealizoConExito().click();// No se puede procesr (Ups, hay problemas para procesar su pago.)
+		sleep(10000);
+		String orden = cCC.obtenerTNyMonto2(driver, sOrden);
+		detalles+="-Monto:"+orden.split("-")[1]+"-Prefactura:"+orden.split("-")[0];
+		CBS_Mattu invoSer = new CBS_Mattu();
+		Assert.assertTrue(invoSer.PagaEnCajaTC("1005", accid, "2001", orden.split("-")[1], orden.split("-")[0],  sDNITarjeta, sTitular, sVenceAno+sVenceMes, sCodSeg, sTitular, sNumTarjeta));
+		sleep(10000);
+		driver.navigate().refresh();
+		driver.switchTo().frame(cambioFrame(driver, By.cssSelector(".hasMotif.orderTab.detailPage.ext-webkit.ext-chrome.sfdcBody.brandQuaternaryBgr")));
+		WebElement tabla = driver.findElement(By.id("ep")).findElements(By.tagName("table")).get(1);
+		String datos = tabla.findElements(By.tagName("tr")).get(4).findElements(By.tagName("td")).get(1).getText();
+		Assert.assertTrue(datos.equalsIgnoreCase("activada")||datos.equalsIgnoreCase("activated"));	
+		System.out.println("Operacion: Compra de Pack "+ "Order: " + sOrden + "Cuenta: "+ accid + "Fin");
+		//Blocked
 	}
 }
