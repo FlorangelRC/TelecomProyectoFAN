@@ -1094,11 +1094,21 @@ public class TestBase {
 	@DataProvider
 	public Object[][] VentaPacks() throws Exception{
 
-	 Object[][] testObjArray = ExcelUtils.getTableArray(dataProviderE2E(),"E2EconPago",1,1,5,"Venta de pack saldo");
+	 Object[][] testObjArray = ExcelUtils.getTableArray(dataProviderE2E(),"E2EconPago",1,1,3,"Venta de pack saldo");
 
 	 return (testObjArray);
 
 	}
+	
+	@DataProvider
+	public Object[][] packUruguay() throws Exception{
+
+	 Object[][] testObjArray = ExcelUtils.getTableArray(dataProviderE2E(),"E2EconPago",1,1,3,"packUruguay");
+
+	 return (testObjArray);
+
+	}
+	
 	
 	@DataProvider
 	public Object [][] ventaPack() throws Exception{

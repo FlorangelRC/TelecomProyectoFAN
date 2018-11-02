@@ -3608,35 +3608,7 @@ public class GestionesPerfilOficina extends TestBase {
 			}
 		Assert.assertTrue(enc);
 	}
-		
-	@Test (groups = {"GestionesPerfilOficina","HistorialDePacks","E2E", "Ciclo1"},  dataProvider = "CuentaModificacionDeDatos")
-	public void TS135483_CRM_Movil_Prepago_Historial_de_Packs_Seleccion_de_Fechas_FAN_Front_OOCC(String sDNI){
-		boolean enc = false;
-		driver.switchTo().frame(cambioFrame(driver, By.id("SearchClientDocumentType")));
-		sb.BuscarCuenta("DNI", sDNI);
-		driver.findElement(By.cssSelector(".slds-tree__item.ng-scope")).click();
-		sleep(20000);
-		CustomerCare cc = new CustomerCare(driver);
-		cc.irAHistoriales();
-		sleep(8000);
-		driver.switchTo().frame(cambioFrame(driver, By.cssSelector(".slds-card.slds-m-around--small.ta-fan-slds")));
-		List <WebElement> historiales = driver.findElements(By.className("slds-card"));
-		for (WebElement UnH: historiales) {
-			System.out.println(UnH.findElement(By.cssSelector(".slds-card__header.slds-grid")).getText());
-			if(UnH.findElement(By.cssSelector(".slds-card__header.slds-grid")).getText().equals("Historial de packs")) {
-				enc = true;
-				driver.findElement(By.cssSelector(".slds-button.slds-button_brand")).click();
-				break;
-			
-			}
-		}
-		sleep(5000);
-		driver.switchTo().frame(cambioFrame(driver, By.cssSelector(".slds-button.slds-button--brand.filterNegotiations.slds-p-horizontal--x-large.slds-p-vertical--x-small")));
-		driver.findElement(By.cssSelector(".slds-button.slds-button--brand.filterNegotiations.slds-p-horizontal--x-large.slds-p-vertical--x-small")).click();
-		sleep(5000);
-		driver.findElement(By.id("text-input-id-1")).click();				
-		
-	}
+
 	@Test (groups = {"GestionesPerfilOficina","HistorialDePacks","E2E", "Ciclo1"},  dataProvider = "CuentaAjustesREPRO")
 	public void TS135361_CRM_Movil_Prepago_Otros_Historiales_Historial_de_ajustes_FAN_Front_OOCC_S138(String sDNI){
 		driver.switchTo().frame(cambioFrame(driver, By.id("SearchClientDocumentType")));
@@ -3662,8 +3634,8 @@ public class GestionesPerfilOficina extends TestBase {
 	}
 	
 	
-	@Test (groups = {"GestionesPerfilOficina", "VentaDeOferta", "Ciclo1"},priority=1, dataProvider = "ventaPack")
-	public void TS139727_CRM_Movil_REPRO_Venta_de_pack_50_min_y_50_SMS_x_7_dias_Factura_de_Venta_Efectivo_OOCC(String sDNI, String sLinea, String sventaPack, String cBanco, String cTarjeta, String cPromo, String cCuotas, String cNumTarjeta, String cVenceMes, String cVenceAno, String cCodSeg, String cTipoDNI, String cDNITarjeta, String cTitular) {
+	@Test (groups = {"GestionesPerfilOficina", "VentaDeOferta", "Ciclo1"},priority=1, dataProvider = "VentaPacks")
+	public void TS139727_CRM_Movil_REPRO_Venta_de_pack_50_min_y_50_SMS_x_7_dias_Factura_de_Venta_Efectivo_OOCC(String sDNI, String sLinea, String sventaPack) {
 		imagen = "TS139727";
 		detalles = null;
 		detalles = imagen+"-Venta de pack-DNI:"+sDNI;
@@ -3680,6 +3652,7 @@ public class GestionesPerfilOficina extends TestBase {
 		pagePTelefo.buscarAssert();
 		cCC.seleccionarCardPornumeroLinea(sLinea, driver);
 		pagePTelefo.comprarPack();
+		pagePTelefo.closerightpanel();
 		pagePTelefo.PackCombinado(sventaPack);
 		pagePTelefo.tipoDePago("en factura de venta");
 		pagePTelefo.getTipodepago().click();
@@ -3688,7 +3661,55 @@ public class GestionesPerfilOficina extends TestBase {
 		detalles+="-Orden:"+sOrden;
 		pagePTelefo.getSimulaciondeFactura().click();
 		sleep(12000);
-		buscarYClick(driver.findElements(By.cssSelector(".slds-form-element__label.ng-binding")), "equals", "tarjeta de credito");
+		buscarYClick(driver.findElements(By.cssSelector(".slds-form-element__label.ng-binding")), "equals", "efectivo");
 		sleep(8000);
+		pagePTelefo.getMediodePago().click();
+		sleep(45000);
+		pagePTelefo.getOrdenSeRealizoConExito().click();// No se puede procesr (Ups, hay problemas para procesar su pago.)
 	}
+	
+	@Test (groups = {"GestionesPerfilOficina","HistorialDePacks","E2E", "Ciclo1"},  dataProvider = "CuentaModificacionDeDatos")
+	public void TS135483_CRM_Movil_Prepago_Historial_de_Packs_Seleccion_de_Fechas_FAN_Front_OOCC(String sDNI){
+	driver.switchTo().frame(cambioFrame(driver, By.id("SearchClientDocumentType")));
+	sb.BuscarCuenta("DNI", sDNI);
+	driver.findElement(By.cssSelector(".slds-tree__item.ng-scope")).click();
+	sleep(20000);
+	CustomerCare cc = new CustomerCare(driver);
+	cc.irAHistoriales();
+	sleep(8000);
+	driver.switchTo().frame(cambioFrame(driver, By.cssSelector(".slds-card.slds-m-around--small.ta-fan-slds")));
+	driver.findElements(By.className("slds-card"));
+	System.out.println(driver.findElement(By.cssSelector(".slds-card__header.slds-grid")).getText());
+	driver.findElement(By.cssSelector(".slds-card__header.slds-grid")).getText().equals("Historial de packs");
+	driver.findElement(By.cssSelector(".slds-button.slds-button_brand")).click();
+	sleep(2000);
+	driver.switchTo().frame(cambioFrame(driver, By.cssSelector(".slds-grid.slds-wrap.slds-grid--pull-padded.slds-m-around--medium.slds-p-around--medium.negotationsfilter")));
+	driver.findElement(By.id("text-input-id-1")).click();
+	WebElement table = driver.findElement(By.cssSelector(".slds-datepicker.slds-dropdown.slds-dropdown--left"));
+	sleep(3000);
+		List<WebElement> tableRows = table.findElements(By.xpath("//tr//td"));
+			for (WebElement cell : tableRows) {
+				try {
+					if (cell.getText().equals("25")) {
+						cell.click();
+					}
+				}catch(Exception e) {}
+			}
+			driver.findElement(By.id("text-input-id-2")).click();
+			WebElement table_2 = driver.findElement(By.cssSelector(".slds-datepicker.slds-dropdown.slds-dropdown--left"));
+			sleep(3000);
+			List<WebElement> tableRows_2 = table_2.findElements(By.xpath("//tr//td"));
+			for (WebElement cell : tableRows_2) {
+				try {
+					if (cell.getText().equals("01")) {
+					cell.click();
+					}
+				}catch(Exception e) {}
+			}
+			driver.switchTo().frame(cambioFrame(driver, By.cssSelector(".slds-grid.slds-wrap.slds-grid--pull-padded.slds-m-around--medium.slds-p-around--medium.negotationsfilter")));
+			sleep(5000);
+			WebElement visu =driver.findElement(By.cssSelector(".slds-grid.slds-wrap.slds-grid--pull-padded.slds-m-around--medium.slds-p-around--medium.negotationsfilter"));
+			Assert.assertTrue(visu.isDisplayed());
+		}
+	
 }
