@@ -1100,6 +1100,16 @@ public class TestBase {
 	}
 	
 	@DataProvider
+	public Object[][] packUruguay() throws Exception{
+
+	 Object[][] testObjArray = ExcelUtils.getTableArray(dataProviderE2E(),"E2EconPago",1,1,3,"packUruguay");
+
+	 return (testObjArray);
+
+	}
+	
+	
+	@DataProvider
 	public Object [][] ventaPack() throws Exception{
 		
 		Object[][] testObjArray = ExcelUtils.getTableArray(dataProviderE2E(),"E2EconPago",1,1,14,"packTelefonico");
