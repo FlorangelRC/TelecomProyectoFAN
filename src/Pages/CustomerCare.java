@@ -392,7 +392,7 @@ public class CustomerCare extends BasePage {
 	public void irAProductosyServicios() {
 		obtenerAccionLineaPrepago("Productos y Servicios").click();
 		sleep(3000);
-		cambiarAFrameActivo();
+		//cambiarAFrameActivo();
 	}
 	
 	public void irAProblemasConRecargas() {
@@ -565,7 +565,6 @@ public class CustomerCare extends BasePage {
 		sleep(10000);
 		driver.switchTo().defaultContent();
 		if(driver.findElements(By.cssSelector(".x-layout-mini.x-layout-mini-west.x-layout-mini-custom-logo")).size() != 0) {
-			//driver.findElement(By.cssSelector(".x-layout-mini.x-layout-mini-west.x-layout-mini-custom-logo")).click();
 			driver.findElement(By.cssSelector(".x-layout-mini.x-layout-mini-west.x-layout-mini-custom-logo")).click();
 		}
 	}
@@ -1660,7 +1659,7 @@ public class CustomerCare extends BasePage {
 		boolean verif = false;
 		TestBase tb = new TestBase();
 		try {
-			String nroCaso = driver.findElement(By.xpath("//*[@id=\"txtSuccessConfirmation\"]/div")).findElement(By.tagName("strong")).getText();
+			String nroCaso = driver.findElement(By.xpath("//*[@id=\"txtSuccessConfirmation\"]/div/p/p")).findElement(By.tagName("strong")).getText();
 			buscarCaso(nroCaso);
 			driver.switchTo().frame(tb.cambioFrame(driver, By.name("close")));
 			List <WebElement> gest = driver.findElements(By.cssSelector(".dataCol.col02"));
