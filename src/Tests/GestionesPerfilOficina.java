@@ -853,11 +853,14 @@ public class GestionesPerfilOficina extends TestBase {
 	}
 	
 	@Test (groups = {"GestionesPerfilOficina", "Ajustes","E2E","Ciclo3"}, dataProvider = "CuentaAjustesREPRO")
-	public void TS103596_CRM_Movil_REPRO_Ajuste_General_FAN_Front_OOCC(String cDNI) {
+	public void TS103596_CRM_Movil_REPRO_Ajuste_General_FAN_Front_OOCC(String sDNI, String sLinea) {
 		imagen = "TS103596";
+		String datoViejo = cbs.ObtenerUnidadLibre(cbsm.Servicio_QueryFreeUnit(sLinea), "Datos Libres");
+		Integer datosInicial = Integer.parseInt(datoViejo);
+		System.out.println(datosInicial);
 		boolean gest = false;
 		driver.switchTo().frame(cambioFrame(driver, By.id("SearchClientDocumentType")));
-		sb.BuscarCuenta("DNI", cDNI);
+		sb.BuscarCuenta("DNI", sDNI);
 		driver.findElement(By.cssSelector(".slds-tree__item.ng-scope")).click();
 		sleep(15000);
 		cc.irAGestion("inconvenientes");
@@ -890,14 +893,18 @@ public class GestionesPerfilOficina extends TestBase {
 				gest = true;
 			}
 		}
+		String datoNuevo = cbs.ObtenerUnidadLibre(cbsm.Servicio_QueryFreeUnit(sLinea), "Datos Libres");
+		Integer datosFinal = Integer.parseInt(datoNuevo);
+		System.out.println(datosFinal);
+		Assert.assertTrue(datosInicial + (123 * 1024) == datosFinal);
 		Assert.assertTrue(gest);
 		if (TestBase.urlAmbiente.contains("sit")) {
 			String orden = cc.obtenerOrden(driver, "Inconvenientes con cargos tasados y facturados");
-			sOrders.add("Inconvenientes con cargos tasados y facturados, orden numero: " + orden + " con numero de DNI: " + cDNI);
+			sOrders.add("Inconvenientes con cargos tasados y facturados, orden numero: " + orden + " con numero de DNI: " + sDNI);
 			Assert.assertTrue(cc.verificarOrden(orden));
 		} else {
 			String orden = driver.findElement(By.xpath("//*[@id=\"txtSuccessConfirmation\"]/div")).findElement(By.tagName("strong")).getText();
-			sOrders.add("Inconvenientes con cargos tasados y facturados, numero de orden: " + orden + " de cuenta con DNI: " + cDNI);
+			sOrders.add("Inconvenientes con cargos tasados y facturados, numero de orden: " + orden + " de cuenta con DNI: " + sDNI);
 			Assert.assertTrue(cc.verificarOrdenYGestion("Inconvenientes con cargos tasados y facturados"));
 		}
 	}
@@ -1204,11 +1211,13 @@ public class GestionesPerfilOficina extends TestBase {
 	}
 	
 	@Test (groups = {"GestionesPerfilOficina", "Ajustes","E2E","Ciclo3"}, dataProvider = "CuentaAjustesPRE")
-	public void TS112434_CRM_Movil_PRE_Ajuste_Credito_Minutos_FAN_Front_OOCC(String cDNI) {
+	public void TS112434_CRM_Movil_PRE_Ajuste_Credito_Minutos_FAN_Front_OOCC(String sDNI, String sLinea) {
 		imagen = "TS112434";
+		String datoViejo = cbs.ObtenerUnidadLibre(cbsm.Servicio_QueryFreeUnit(sLinea), "Segundos Libres");
+		Integer datosInicial = Integer.parseInt(datoViejo);
 		boolean gest = false;
 		driver.switchTo().frame(cambioFrame(driver, By.id("SearchClientDocumentType")));
-		sb.BuscarCuenta("DNI", cDNI);
+		sb.BuscarCuenta("DNI", sDNI);
 		driver.findElement(By.cssSelector(".slds-tree__item.ng-scope")).click();
 		sleep(15000);
 		cc.irAGestion("inconvenientes");
@@ -1241,24 +1250,29 @@ public class GestionesPerfilOficina extends TestBase {
 				gest = true;
 			}
 		}
+		String datoNuevo = cbs.ObtenerUnidadLibre(cbsm.Servicio_QueryFreeUnit(sLinea), "Segundos Libres");
+		Integer datosFinal = Integer.parseInt(datoNuevo);
+		Assert.assertTrue(datosInicial + (10 * 3600) == datosFinal);
 		Assert.assertTrue(gest);
 		if (TestBase.urlAmbiente.contains("sit")) {
 			String orden = cc.obtenerOrden(driver, "Inconvenientes con cargos tasados y facturados");
-			sOrders.add("Inconvenientes con cargos tasados y facturados, orden numero: " + orden + " con numero de DNI: " + cDNI);
+			sOrders.add("Inconvenientes con cargos tasados y facturados, orden numero: " + orden + " con numero de DNI: " + sDNI);
 			Assert.assertTrue(cc.verificarOrden(orden));		
 		} else {
 			String orden = driver.findElement(By.xpath("//*[@id=\"txtSuccessConfirmation\"]/div")).findElement(By.tagName("strong")).getText();
-			sOrders.add("Inconvenientes con cargos tasados y facturados, numero de orden: " + orden + " de cuenta con DNI: " + cDNI);
+			sOrders.add("Inconvenientes con cargos tasados y facturados, numero de orden: " + orden + " de cuenta con DNI: " + sDNI);
 			Assert.assertTrue(cc.verificarOrdenYGestion("Inconvenientes con cargos tasados y facturados"));
 		}
 	}
 	
 	@Test (groups = {"GestionesPerfilOficina", "Ajustes","E2E", "Ciclo3"}, dataProvider = "CuentaAjustesPRE")
-	public void TS112435_CRM_Movil_PRE_Ajuste_Credito_SMS_FAN_Front_OOCC(String cDNI) {
+	public void TS112435_CRM_Movil_PRE_Ajuste_Credito_SMS_FAN_Front_OOCC(String sDNI, String sLinea) {
 		imagen = "TS112435";
+		String datoViejo = cbs.ObtenerUnidadLibre(cbsm.Servicio_QueryFreeUnit(sLinea), "SMS Libres");
+		Integer datosInicial = Integer.parseInt(datoViejo);
 		boolean gest = false;
 		driver.switchTo().frame(cambioFrame(driver, By.id("SearchClientDocumentType")));
-		sb.BuscarCuenta("DNI", cDNI);
+		sb.BuscarCuenta("DNI", sDNI);
 		driver.findElement(By.cssSelector(".slds-tree__item.ng-scope")).click();
 		sleep(15000);
 		cc.irAGestion("inconvenientes");
@@ -1291,24 +1305,30 @@ public class GestionesPerfilOficina extends TestBase {
 				gest = true;
 			}
 		}
+		String datoNuevo = cbs.ObtenerUnidadLibre(cbsm.Servicio_QueryFreeUnit(sLinea), "SMS Libres");
+		Integer datosFinal = Integer.parseInt(datoNuevo);
+		Assert.assertTrue(datosInicial + 123 == datosFinal);
 		Assert.assertTrue(gest);
 		if (TestBase.urlAmbiente.contains("sit")) {
 			String orden = cc.obtenerOrden(driver, "Inconvenientes con cargos tasados y facturados");
-			sOrders.add("Inconvenientes con cargos tasados y facturados, orden numero: " + orden + " con numero de DNI: " + cDNI);
+			sOrders.add("Inconvenientes con cargos tasados y facturados, orden numero: " + orden + " con numero de DNI: " + sDNI);
 			Assert.assertTrue(cc.verificarOrden(orden));		
 		} else {
 			String orden = driver.findElement(By.xpath("//*[@id=\"txtSuccessConfirmation\"]/div")).findElement(By.tagName("strong")).getText();
-			sOrders.add("Inconvenientes con cargos tasados y facturados, numero de orden: " + orden + " de cuenta con DNI: " + cDNI);
+			sOrders.add("Inconvenientes con cargos tasados y facturados, numero de orden: " + orden + " de cuenta con DNI: " + sDNI);
 			Assert.assertTrue(cc.verificarOrdenYGestion("Inconvenientes con cargos tasados y facturados"));
 		}
 	}
 	
 	@Test (groups = {"GestionesPerfilOficina", "Ajustes","E2E", "Ciclo3"}, dataProvider = "CuentaAjustesREPRO")
-	public void TS103599_CRM_Movil_REPRO_Se_crea_caso_de_ajuste_menor_a_500_pesos_FAN_Front_OOCC(String cDNI) {
+	public void TS103599_CRM_Movil_REPRO_Se_crea_caso_de_ajuste_menor_a_500_pesos_FAN_Front_OOCC(String sDNI, String sLinea) {
 		imagen = "TS103599";
+		String datoViejo = cbs.ObtenerValorResponse(cbsm.Servicio_queryLiteBySubscriber(sLinea), "bcs:MainBalance");
+		Integer datosInicial = Integer.parseInt(datoViejo.substring(0, 5));
+		System.out.println(datosInicial);
 		boolean gest = false;
 		driver.switchTo().frame(cambioFrame(driver, By.id("SearchClientDocumentType")));
-		sb.BuscarCuenta("DNI", cDNI);
+		sb.BuscarCuenta("DNI", sDNI);
 		driver.findElement(By.cssSelector(".slds-tree__item.ng-scope")).click();
 		sleep(20000);
 		cc.irAGestion("inconvenientes");
@@ -1342,13 +1362,16 @@ public class GestionesPerfilOficina extends TestBase {
 			}
 		}
 		Assert.assertTrue(gest);
+		String datoNuevo = cbs.ObtenerValorResponse(cbsm.Servicio_queryLiteBySubscriber(sLinea), "bcs:MainBalance");
+		Integer datosFinal = Integer.parseInt(datoNuevo.substring(0, 5));
+		System.out.println(datosFinal);
 		if (TestBase.urlAmbiente.contains("sit")) {
 			String orden = cc.obtenerOrden(driver, "Inconvenientes con cargos tasados y facturados");
-			sOrders.add("Inconvenientes con cargos tasados y facturados, orden numero: " + orden + " con numero de DNI: " + cDNI);
+			sOrders.add("Inconvenientes con cargos tasados y facturados, orden numero: " + orden + " con numero de DNI: " + sDNI);
 			Assert.assertTrue(cc.verificarOrden(orden));		
 		} else {
 			String orden = driver.findElement(By.xpath("//*[@id=\"txtSuccessConfirmation\"]/div")).findElement(By.tagName("strong")).getText();
-			sOrders.add("Inconvenientes con cargos tasados y facturados, numero de orden: " + orden + " de cuenta con DNI: " + cDNI);
+			sOrders.add("Inconvenientes con cargos tasados y facturados, numero de orden: " + orden + " de cuenta con DNI: " + sDNI);
 			Assert.assertTrue(cc.verificarOrdenYGestion("Inconvenientes con cargos tasados y facturados"));
 		}
 	}

@@ -1826,7 +1826,7 @@ public class GestionesPerfilTelefonico extends TestBase{
 		for (WebElement cell : table2.findElements(By.xpath("//tr//td"))) {
 			try {
 				if (cell.getText().equals("15"))
-				cell.click();
+					cell.click();
 			} catch (Exception e) {}
 		}
 		driver.findElement(By.cssSelector(".slds-button.slds-button--brand.filterNegotiations.slds-p-horizontal--x-large.slds-p-vertical--x-small")).click();
