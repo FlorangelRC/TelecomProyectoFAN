@@ -1059,8 +1059,7 @@ public class TestBase {
 	@DataProvider
 	public Object[][] RenovacionCuotaconSaldoConTC() throws Exception{
 
-	 Object[][] testObjArray = ExcelUtils.getTableArray(dataProviderE2E(),"E2EconPago",1,1,13,"Renovacion Cuota con Saldo Con TC" + 
-	 		"");
+	 Object[][] testObjArray = ExcelUtils.getTableArray(dataProviderE2E(),"E2EconPago",1,1,13,"Renovacion Cuota Con TC Con Saldo");
 
 	 return (testObjArray);
 
@@ -1432,7 +1431,7 @@ public class TestBase {
 	@DataProvider
 	public Object[][] NumerosAmigosModificacion() throws Exception{
 
-	 Object[][] testObjArray = ExcelUtils.getTableArray(dataProviderE2E(),"E2EsinPago",1,1,4,"Amigos Modficacion");
+	 Object[][] testObjArray = ExcelUtils.getTableArray(dataProviderE2E(),"E2EsinPago",1,1,4,"Amigos Modificacion");
 
 	 return (testObjArray);
 
