@@ -1997,9 +1997,8 @@ public class GestionesPerfilOficina extends TestBase {
 		}
 		Assert.assertTrue(b);
 		String saldo2 = verif.ObtenerValorResponse(verifM.Servicio_queryLiteBySubscriber(sLinea), "bcs:MainBalance");
-		Integer saldo3 = Integer.parseInt(saldo2.substring(0, 5));
-		System.out.println(saldo3);
-		if((saldo1*1000000 != saldo3*1000000) && (saldo1*1000000 < saldo3*1000000)) {
+		Integer saldo3 = Integer.parseInt(saldo2.substring(0, (saldo2.length()) - 1));
+		if(saldo1+123000 == saldo3) {
 			a = true;
 		}
 		Assert.assertTrue(a);
@@ -2045,9 +2044,8 @@ public class GestionesPerfilOficina extends TestBase {
 		}
 		Assert.assertTrue(b);
 		String saldo2 = verif.ObtenerValorResponse(verifM.Servicio_queryLiteBySubscriber(sLinea), "bcs:MainBalance");
-		Integer saldo3 = Integer.parseInt(saldo2.substring(0, 5));
-		System.out.println(saldo3);
-		if((saldo1*1000000 != saldo3*1000000) && (saldo1*1000000 < saldo3*1000000)) {
+		Integer saldo3 = Integer.parseInt(saldo2.substring(0, (saldo2.length()) - 1));
+		if(saldo1+123000 == saldo3) {
 			a = true;
 		}
 		Assert.assertTrue(a);
@@ -3830,7 +3828,6 @@ public class GestionesPerfilOficina extends TestBase {
 		detalles +="-Cuenta:"+accid;
 		pagePTelefo.buscarAssert();
 		cCC.seleccionarCardPornumeroLinea(sLinea, driver);
-		cCC.closerightpanel_2();
 		pagePTelefo.comprarPack();
 		pagePTelefo.PackCombinado(sventaPack);
 		pagePTelefo.tipoDePago("en factura de venta");
