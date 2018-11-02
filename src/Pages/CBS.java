@@ -152,8 +152,8 @@ public class CBS {
 				+ "\r\n                                                               <cbs:BRID>101</cbs:BRID>\r\n"
 				+ "\r\n                                               </cbs:OwnershipInfo>\r\n"
 				+ "\r\n                				<cbs:AccessSecurity>\r\n"
-				+ "\r\n                                                               <cbs:LoginSystemCode>117</cbs:LoginSystemCode>\r\n"
-				+ "\r\n                                                               <cbs:Password>jW6lRxU4leO5Xev+SISea/Ie7Dp5wDPgfGR9MNVDJRo=</cbs:Password>\r\n"
+				+ "\r\n                                                               <cbs:LoginSystemCode>101</cbs:LoginSystemCode>\r\n"
+				+ "\r\n                                                               <cbs:Password>yVEy3349bxN6lvViA8yK6Cd1JsRRcKO5QMmml3e7qp0=</cbs:Password>\r\n"
 				+ "\r\n                                                               <cbs:RemoteIP>10.138.22.65</cbs:RemoteIP>\r\n"
 				+ "\r\n                                               </cbs:AccessSecurity>\r\n"
 				+ "\r\n                                               <cbs:OperatorInfo>\r\n"
@@ -185,6 +185,7 @@ public class CBS {
 	}
 	
 	public boolean sCBS_Request_Validador_Alta_Linea(Document sResponse, String sLinea, String sImsi, String sICCD, String sNombre, String sApellido) {
+		System.out.println("nombre: "+sResponse.getElementsByTagName("bcc:FirstName").item(0).getTextContent());
 		if (sResponse.getElementsByTagName("bcc:FirstName").item(0).getTextContent().contains(sNombre) && sResponse.getElementsByTagName("bcc:LastName").item(0).getTextContent().contains(sApellido)) {
 			System.out.println("Correcto");
 		}
@@ -377,18 +378,36 @@ public class CBS {
 		return Response.getElementsByTagName(Campo).item(0).getTextContent();
 	}
 	
-	public boolean validarNumeroAmigos(Document Response, String tipo) {
+	public boolean validarNumeroAmigos(Document Response, String tipo, String numero) {
 		boolean esta = false;
 		NodeList ofertas = (NodeList) Response.getElementsByTagName("bcc:OfferingCode");
 		if (tipo.equalsIgnoreCase("voz")) {
 			for (int i=0; i<ofertas.getLength();i++) {
-				if(ofertas.item(i).getTextContent().equals("SO_FYF029"))
-					esta = true;
+				if(ofertas.item(i).getTextContent().equals("SO_FYF029")) {
+					ofertas = (NodeList) Response.getElementsByTagName("bcc:Value");
+					for (int j=0; j<ofertas.getLength();j++) {
+						if(ofertas.item(i).getTextContent().equals("54"+numero)) {
+							esta = true;
+							break;
+						}
+					}
+					break;
+						
+				}
+					
 			}
 		}else {
 			for (int i=0; i<ofertas.getLength();i++) {
-				if(ofertas.item(i).getTextContent().equals("SO_FYF032"))
-					esta = true;
+				if(ofertas.item(i).getTextContent().equals("SO_FYF032")) {
+					ofertas = (NodeList) Response.getElementsByTagName("bcc:Value");
+					for (int j=0; j<ofertas.getLength();j++) {
+						if(ofertas.item(i).getTextContent().equals("54"+numero)) {
+							esta = true;
+							break;
+						}
+					}
+					break;
+				}
 			}
 		}
 		return esta;
@@ -422,7 +441,7 @@ public class CBS {
 	
 	public String sRequestQueryFreeUnit(String sLinea, String sMessageSeq) {
 		String sRequest = "";
-		sRequest = "<soapenv:Envelope xmlns:soapenv=\"http://schemas.xmlsoap.org/soap/envelope/\" xmlns:bcs=\"http://www.huawei.com/bme/cbsinterface/bcservices\" xmlns:cbs=\"http://www.huawei.com/bme/cbsinterface/cbscommon\" xmlns:bcc=\"http://www.huawei.com/bme/cbsinterface/bccommon\">\r\n"
+		sRequest = "<soapenv:Envelope xmlns:soapenv=\"http://schemas.xmlsoap.org/soap/envelope/\" xmlns:bbs=\"http://www.huawei.com/bme/cbsinterface/bbservices\" xmlns:cbs=\"http://www.huawei.com/bme/cbsinterface/cbscommon\" xmlns:bbc=\"http://www.huawei.com/bme/cbsinterface/bbcommon\">\r\n"
 				+ "\r\n   <soapenv:Header/>\r\n"
 				+ "\r\n   <soapenv:Body>\r\n"
 				+ "\r\n      <bbs:QueryFreeUnitRequestMsg>\r\n"
@@ -453,16 +472,16 @@ public class CBS {
 				+ "\r\n                                                               <cbs:Code>108</cbs:Code>\r\n"
 				+ "\r\n                                                               <cbs:Value>109</cbs:Value>\r\n"
 				+ "\r\n                                               </cbs:AdditionalProperty>\r\n"
-				+ "\r\n                             </RequestHeader> \r\n"
+				+ "\r\n                             </RequestHeader>\r\n"
 				+ "\r\n      		<QueryFreeUnitRequest>\r\n"
 				+ "\r\n      			<bbs:QueryObj>\r\n"
-				+ "\r\n               			<bcs:SubAccessCode>\r\n"
-				+ "\r\n                  			<bcc:PrimaryIdentity>" + sLinea;
+				+ "\r\n               			<bbs:SubAccessCode>\r\n"
+				+ "\r\n                  			<bbc:PrimaryIdentity>" + sLinea;
 		
-		sRequest+= "</bcc:PrimaryIdentity>\r\n"
-				+ "\r\n               			</bcs:SubAccessCode>\r\n"
-				+ "\r\n         		</bbs:QueryObj>      \r\n"
-				+ "\r\n         	</QueryFreeUnitRequest>      \r\n"
+		sRequest+= "</bbc:PrimaryIdentity>\r\n"
+				+ "\r\n               			</bbs:SubAccessCode>\r\n"
+				+ "\r\n         		</bbs:QueryObj>\r\n"
+				+ "\r\n         	</QueryFreeUnitRequest>\r\n"
 				+ "\r\n      </bbs:QueryFreeUnitRequestMsg>\r\n"
 				+ "\r\n   </soapenv:Body>\r\n"
 				+ "\r\n</soapenv:Envelope>";
@@ -493,5 +512,14 @@ public class CBS {
 			}
 		}
 		return esta;
+	}
+	
+	public String ObtenerUnidadLibre(Document Response, String unidad) {
+		NodeList ofertas = (NodeList) Response.getElementsByTagName("bbs:FreeUnitTypeName");
+		for (int i=0; i<ofertas.getLength();i++) {
+			if(ofertas.item(i).getTextContent().toLowerCase().contains(unidad.toLowerCase()))
+				return Response.getElementsByTagName("bbs:TotalInitialAmount").item(i).getTextContent();
+		}
+		return "0";
 	}
 }

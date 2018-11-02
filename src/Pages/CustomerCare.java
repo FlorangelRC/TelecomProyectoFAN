@@ -565,7 +565,6 @@ public class CustomerCare extends BasePage {
 		sleep(10000);
 		driver.switchTo().defaultContent();
 		if(driver.findElements(By.cssSelector(".x-layout-mini.x-layout-mini-west.x-layout-mini-custom-logo")).size() != 0) {
-			//driver.findElement(By.cssSelector(".x-layout-mini.x-layout-mini-west.x-layout-mini-custom-logo")).click();
 			driver.findElement(By.cssSelector(".x-layout-mini.x-layout-mini-west.x-layout-mini-custom-logo")).click();
 		}
 	}
