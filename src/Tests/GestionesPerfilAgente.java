@@ -5,6 +5,7 @@ import static org.testng.Assert.assertTrue;
 import java.awt.AWTException;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import org.apache.commons.collections4.bag.SynchronizedSortedBag;
@@ -42,6 +43,11 @@ public class GestionesPerfilAgente extends TestBase{
 	
 	@BeforeClass(alwaysRun=true)
 	public void init() {
+		/*String CodPago = "DNI       24696363IVR                            28701000000908200001 11";
+		System.out.println("CodPago="+CodPago.length());
+		CodPago = CodPago.substring(10,12);
+		CodPago= CodPago.replace(" ", "");
+		System.out.println("Codigo ="+CodPago);*/
 		driver = setConexion.setupEze();
 		sleep(5000);
 		cc = new CustomerCare(driver);
@@ -120,7 +126,7 @@ public class GestionesPerfilAgente extends TestBase{
 		tomarCaptura(driver,imagen);
 	}
 	
-	@AfterClass(alwaysRun=true)
+	//@AfterClass(alwaysRun=true)
 	public void quit() throws IOException {
 		//guardarListaTxt(datosOrden);
 		driver.quit();

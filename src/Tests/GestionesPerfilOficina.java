@@ -123,7 +123,7 @@ public class GestionesPerfilOficina extends TestBase {
 		sleep(15000);
 	}
 
-	//@AfterMethod(alwaysRun=true)
+	@AfterMethod(alwaysRun=true)
 	public void after() throws IOException {
 		guardarListaTxt(sOrders);
 		sOrders.clear();
@@ -131,7 +131,7 @@ public class GestionesPerfilOficina extends TestBase {
 		sleep(5000);
 	}
 
-	//@AfterClass(alwaysRun=true)
+	@AfterClass(alwaysRun=true)
 	public void quit() throws IOException {
 		driver.quit();
 		sleep(5000);
@@ -341,7 +341,7 @@ public class GestionesPerfilOficina extends TestBase {
 	
 	@Test (groups = {"GestionesPerfilOficina", "Recargas","E2E","Ciclo1"}, dataProvider = "RecargaEfectivo")
 	public void TS134318_CRM_Movil_REPRO_Recargas_Presencial_Efectivo_Ofcom(String cDNI, String cMonto, String cLinea) throws AWTException {
-		sleep(3000);
+		sleep(6000);
 		imagen = "TS134318"+cDNI;
 		CBS cCBS = new CBS();
 		CBS_Mattu cCBSM = new CBS_Mattu();
@@ -652,7 +652,7 @@ public class GestionesPerfilOficina extends TestBase {
 	
 	@Test(groups = {"Sales", "PreparacionNominacion","E2E","Ciclo1"}, dataProvider="DatosSalesNominacion") 
 	public void TS_85094_CRM_Movil_REPRO_Nominatividad_Cliente_Nuevo_Presencial_DOC_OfCom(String sLinea, String sDni, String sNombre, String sApellido, String sSexo, String sFnac, String sEmail, String sProvincia, String sLocalidad, String sCalle, String sNumCa, String sCP) { 
-		imagen = "TS_CRM_Nominacion_Argentino"+sDni;
+		imagen = "85094-Nominacion"+sDni;
 		sleep(5000);
 		driver.switchTo().frame(cambioFrame(driver, By.id("SearchClientDocumentType")));
 		SalesBase SB = new SalesBase(driver);
@@ -2837,7 +2837,7 @@ public class GestionesPerfilOficina extends TestBase {
 	public void TS85097_CRM_Movil_REPRO_Nominatividad_Cliente_Existente_Presencial_DOC_OfCom() {
 		boolean nominacion = false;
 		driver.switchTo().frame(cambioFrame(driver, By.id("SearchClientDocumentType")));
-		driver.findElement(By.id("PhoneNumber")).sendKeys("2932550214");
+		driver.findElement(By.id("PhoneNumber")).sendKeys("2932443389");
 		driver.findElement(By.id("SearchClientsDummy")).click();
 		sleep(5000);
 		driver.findElement(By.cssSelector(".slds-button.slds-button--icon.slds-m-right--x-small.ng-scope")).click();
@@ -2854,7 +2854,7 @@ public class GestionesPerfilOficina extends TestBase {
 		botonNominar.findElement(By.tagName("a")).click();
 		sleep(5000);
 		ContactSearch contact = new ContactSearch(driver);
-		contact.searchContact2("DNI", "2222204", "Masculino");
+		contact.searchContact2("DNI", "22222035", "Masculino");
 		driver.findElement(By.id("Contact_nextBtn")).click();
 		sleep(10000);
 		contact.tipoValidacion("documento");

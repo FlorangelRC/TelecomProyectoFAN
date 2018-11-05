@@ -33,7 +33,7 @@ public class Comunidad extends TestBase {
 		
 	}
 	
-	//@AfterMethod(alwaysRun=true)
+	@AfterMethod(alwaysRun=true)
 	public void backToTheInicio() throws Exception {
 		driver.findElement(By.className("slds-container_fluid")).click();
 		sleep(10000);
@@ -58,7 +58,7 @@ public class Comunidad extends TestBase {
 	}
 	
 	@Test (groups = {"Communities","E2E"})
-	public void T135792_CRM_PRE_Community_Desktop_Mis_gestiones_Filtro_Tipo(){
+	public void TS135792_CRM_PRE_Community_Desktop_Mis_gestiones_Filtro_Tipo(){
 		BasePage cambioFrameByID=new BasePage();
 		driver.switchTo().frame(cambioFrameByID.getFrameForElement(driver, By.cssSelector(".vlocity.via-slds")));
 		sleep (8000);
