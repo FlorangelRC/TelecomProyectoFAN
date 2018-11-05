@@ -1934,20 +1934,18 @@ public class GestionesPerfilTelefonico extends TestBase{
 		detalles +="-Cuenta:"+accid;
 		pagePTelefo.buscarAssert();
 		cCC.seleccionarCardPornumeroLinea(sLinea, driver);
-		//pagePTelefo.comprarPack();
 		pagePTelefo.comprarPack("comprar minutos");
 		sleep(5000);
 		pagePTelefo.PacksRoaming(packUruguay);
 		pagePTelefo.tipoDePago("descuento de saldo");
-		cCC.obligarclick(driver.findElement(By.id("SetPaymentType_nextBtn")));
+		driver.findElement(By.id("SetPaymentType_nextBtn")).click();
 		sleep(12000);
 		List <WebElement> wMessage = driver.findElement(By.cssSelector(".slds-form-element.vlc-flex.vlc-slds-text-block.vlc-slds-rte.ng-pristine.ng-valid.ng-scope")).findElement(By.className("ng-binding")).findElements(By.tagName("p"));
 		boolean bAssert = wMessage.get(1).getText().contains("La orden se realiz\u00f3 con \u00e9xito!");
 		Assert.assertTrue(bAssert);
 	}
 	
-}
-	
+
 	@Test (groups= {"GestionesPerfilOficina", "HistorialDePacks", "Ciclo2"},  dataProvider = "CuentaModificacionDeDatos")
 	public void TS135467_CRM_Movil_Prepago_Historial_de_Packs_Fan_Front_Telefonico(String cDNI) {
 		boolean enc = false;
