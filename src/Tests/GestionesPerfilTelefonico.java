@@ -453,16 +453,15 @@ public class GestionesPerfilTelefonico extends TestBase{
 	}
 	
 	@Test (groups= {"GestionesPerfilTelefonico", "Ajustes", "E2E"},dataProvider = "CuentaAjustesPRE")  //Rompe porque no sale el mensaje de gestion exitosa, sale el perfil no configurado correctamente
-	public void TS121333_CRM_Movil_PRE_Ajuste_total_de_comprobantes_FAN_Front_Telefonico(String cDNI) {
+	public void TS121333_CRM_Movil_PRE_Ajuste_total_de_comprobantes_FAN_Front_Telefonico(String sDNI, String sLinea) {
 		imagen = "TS121333";
 		detalles = null;
-		detalles = imagen+"-Ajuste-DNI:"+cDNI;
+		detalles = imagen + " -Ajuste-DNI: " + sDNI;
 		boolean gest = false;
 		driver.switchTo().frame(cambioFrame(driver, By.id("SearchClientDocumentType")));
-		sb.BuscarCuenta("DNI", cDNI);
+		sb.BuscarCuenta("DNI", sDNI);
 		String accid = driver.findElement(By.cssSelector(".searchClient-body.slds-hint-parent.ng-scope")).findElements(By.tagName("td")).get(5).getText();
-		System.out.println("id "+accid);
-		detalles +="-Cuenta:"+accid;
+		detalles += "-Cuenta: "+ accid;
 		driver.findElement(By.cssSelector(".slds-tree__item.ng-scope")).click();
 		sleep(15000);
 		cc.irAGestion("inconvenientes");
@@ -489,7 +488,7 @@ public class GestionesPerfilTelefonico extends TestBase{
 		try {
 			String orden = driver.findElement(By.cssSelector(".vlc-slds-inline-control__label.ng-binding")).getText();
 			orden = orden.substring(orden.length()-8);
-			detalles+="-Orden:"+orden;
+			detalles += "-Orden: " + orden;
 			driver.findElement(By.id("Step-Summary_nextBtn")).click();
 			sleep(7000);
 			List <WebElement> element = driver.findElements(By.cssSelector(".slds-form-element.vlc-flex.vlc-slds-text-block.vlc-slds-rte.ng-pristine.ng-valid.ng-scope"));
@@ -499,10 +498,10 @@ public class GestionesPerfilTelefonico extends TestBase{
 				}
 			}
 			Assert.assertTrue(gest);
-		}catch(Exception ex1) {
+		} catch (Exception ex1) {
 			String orden = driver.findElement(By.cssSelector(".vlc-slds-inline-control__label.ng-binding")).getText();
 			orden = orden.substring(orden.length()-8);
-			detalles+="-Orden:"+orden;
+			detalles += "-Orden: " + orden;
 			Assert.assertTrue(false);
 		}
 	}
@@ -1934,20 +1933,18 @@ public class GestionesPerfilTelefonico extends TestBase{
 		detalles +="-Cuenta:"+accid;
 		pagePTelefo.buscarAssert();
 		cCC.seleccionarCardPornumeroLinea(sLinea, driver);
-		//pagePTelefo.comprarPack();
 		pagePTelefo.comprarPack("comprar minutos");
 		sleep(5000);
 		pagePTelefo.PacksRoaming(packUruguay);
 		pagePTelefo.tipoDePago("descuento de saldo");
-		cCC.obligarclick(driver.findElement(By.id("SetPaymentType_nextBtn")));
+		driver.findElement(By.id("SetPaymentType_nextBtn")).click();
 		sleep(12000);
 		List <WebElement> wMessage = driver.findElement(By.cssSelector(".slds-form-element.vlc-flex.vlc-slds-text-block.vlc-slds-rte.ng-pristine.ng-valid.ng-scope")).findElement(By.className("ng-binding")).findElements(By.tagName("p"));
 		boolean bAssert = wMessage.get(1).getText().contains("La orden se realiz\u00f3 con \u00e9xito!");
 		Assert.assertTrue(bAssert);
 	
 	
-}
-	
+
 	@Test (groups= {"GestionesPerfilOficina", "HistorialDePacks", "Ciclo2"},  dataProvider = "CuentaModificacionDeDatos")
 	public void TS135467_CRM_Movil_Prepago_Historial_de_Packs_Fan_Front_Telefonico(String cDNI) {
 		boolean enc = false;

@@ -12,6 +12,7 @@ import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 
+import Pages.CBS;
 import Pages.CustomerCare;
 import Pages.SalesBase;
 import Pages.setConexion;
@@ -21,6 +22,8 @@ public class GestionesPerfilBackOffice extends TestBase {
 	private WebDriver driver;
 	private SalesBase sb;
 	private CustomerCare cc;
+	private CBS cbs;
+	private CBS_Mattu cbsm;
 	String imagen;
 	
 	
@@ -30,6 +33,8 @@ public class GestionesPerfilBackOffice extends TestBase {
 		sleep(5000);
 		sb = new SalesBase(driver);
 		cc = new CustomerCare(driver);
+		cbs = new CBS();
+		cbsm = new CBS_Mattu();
 		loginBackOffice(driver);
 		sleep(22000);
 		driver.findElement(By.id("tabBar")).findElement(By.tagName("a")).click();
@@ -88,10 +93,13 @@ public class GestionesPerfilBackOffice extends TestBase {
 	}
 	
 	@Test (groups = {"GestionesPerfilBackOffice", "Ajustes", "E2E"},  dataProvider = "CuentaAjustesPRE")
-	public void TS121329_CRM_Movil_PRE_Ajuste_Backoffice_modifica_cantidades(String cDNI) {
+	public void TS121329_CRM_Movil_PRE_Ajuste_Backoffice_modifica_cantidades(String sDNI, String sLinea) {
 		imagen = "TS121329";
+		String datoViejo = cbs.ObtenerValorResponse(cbsm.Servicio_queryLiteBySubscriber(sLinea), "bcs:MainBalance");
+		Integer datosInicial = Integer.parseInt(datoViejo.substring(0, 5));
+		System.out.println(datosInicial);
 		driver.switchTo().frame(cambioFrame(driver, By.id("SearchClientDocumentType")));
-		sb.BuscarCuenta("DNI", cDNI);
+		sb.BuscarCuenta("DNI", sDNI);
 		driver.findElement(By.cssSelector(".slds-tree__item.ng-scope")).click();
 		sleep(15000);
 		cc.irAGestion("inconvenientes");
@@ -118,6 +126,9 @@ public class GestionesPerfilBackOffice extends TestBase {
 		sleep(10000);
 		driver.findElement(By.id("Step-Summary_nextBtn")).click();
 		sleep(7000);
+		String datoNuevo = cbs.ObtenerValorResponse(cbsm.Servicio_queryLiteBySubscriber(sLinea), "bcs:MainBalance");
+		Integer datosFinal = Integer.parseInt(datoNuevo.substring(0, 5));
+		System.out.println(datosFinal);
 		String nroCaso = driver.findElement(By.cssSelector(".vlc-slds-inline-control__label.ng-binding")).getText();
 		nroCaso = nroCaso.substring(nroCaso.indexOf("0"), nroCaso.length());
 		CambiarPerfil("backoffice", driver);
