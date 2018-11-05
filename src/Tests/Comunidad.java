@@ -254,24 +254,24 @@ public class Comunidad extends TestBase {
 		Assert.assertTrue(driver.findElement(By.id("changePassword:theForm:vpsw")).isEnabled());
 	}
 		
-	@Test (groups = {"Communities","E2E"})
+	//@Test (groups = {"Communities","E2E"})
 	public void TS135770_CRM_PRE_Community_Desktop_Gestiones_Abandonadas_Mayores_a_5(){
 		//Blocked
 	}
 	
-	@Test (groups = {"Communities","E2E"}) //This TC is Mobile
+	//@Test (groups = {"Communities","E2E"}) //This TC is Mobile
 	public void TS135771_CRM_PRE_Community_Mobile_Gestiones_en_Curso_y_Completadas_Mayores_a_5() throws AWTException{
 		//mobileEmulation();
 		//Blocked
 	}
 	
-	@Test (groups = {"Communities","E2E"}) //This TC is Mobile
+	//@Test (groups = {"Communities","E2E"}) //This TC is Mobile
 	public void TS135772_CRM_PRE_Community_Mobile_Gestiones_Abandonadas_Mayores_a_5(){
 		//mobileEmulation();
 		//Blocked
 	}
 	
-	@Test (groups = {"Communities","E2E"}) //This TC is Mobile
+	//@Test (groups = {"Communities","E2E"}) //This TC is Mobile
 	public void TS135782_CRM_PRE_Community_Mobile_Modificar_datos_cliente(){
 		//mobileEmulation();
 		//Blocked
