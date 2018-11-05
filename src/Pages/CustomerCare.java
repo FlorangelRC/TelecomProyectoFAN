@@ -212,6 +212,23 @@ public class CustomerCare extends BasePage {
 		driver.switchTo().frame(marcoCuentas);
 	}
 	
+	public void menu_360_Ir_A(String sMenuOption) {
+		driver.switchTo().defaultContent();
+		if (!selector.getText().equalsIgnoreCase(sMenuOption)) {
+			WebElement btnSplit = selector.findElement(By.className("x-btn-split"));
+			Actions builder = new Actions(driver);   
+			builder.moveToElement(btnSplit, 245, 20).click().build().perform();
+			for (WebElement op : desplegable) {
+				if (op.getText().equalsIgnoreCase(sMenuOption)) {
+					op.click();
+					break;
+				}
+			}
+		}
+		sleep(1500);
+		driver.switchTo().frame(marcoCuentas);
+	}
+	
 	public WebElement obtenerFechaHasta() {
 		waitForVisibilityOfElementLocated(By.xpath("//input[@name='maxDate']"));
 		return driver.findElement(By.xpath("//input[@name='maxDate']"));
@@ -341,16 +358,17 @@ public class CustomerCare extends BasePage {
 	}
 	
 	public void irAGestiones() {
-		driver.findElement(By.cssSelector(".console-card.active .card-top")).click();
-		List<WebElement> accionesFlyout = driver.findElements(By.cssSelector(".community-flyout-actions-card li"));
+		TestBase tb = new TestBase();
+		driver.switchTo().frame(tb.cambioFrame(driver, By.className("card-top")));
+		List<WebElement> accionesFlyout = driver.findElements(By.className("slds-text-body_regular"));
 		for (WebElement accion : accionesFlyout) {
 			if (accion.getText().contains("Gestiones")) {
 				accion.click();
 				break;
 			}
 		}
-		sleep(4000);
-		cambiarAFrameActivo();
+		sleep(7000);
+		//cambiarAFrameActivo();
 	}
 	
 	public void irADetalleDeConsumos() {
