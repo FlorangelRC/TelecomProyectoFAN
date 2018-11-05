@@ -453,16 +453,15 @@ public class GestionesPerfilTelefonico extends TestBase{
 	}
 	
 	@Test (groups= {"GestionesPerfilTelefonico", "Ajustes", "E2E"},dataProvider = "CuentaAjustesPRE")  //Rompe porque no sale el mensaje de gestion exitosa, sale el perfil no configurado correctamente
-	public void TS121333_CRM_Movil_PRE_Ajuste_total_de_comprobantes_FAN_Front_Telefonico(String cDNI) {
+	public void TS121333_CRM_Movil_PRE_Ajuste_total_de_comprobantes_FAN_Front_Telefonico(String sDNI, String sLinea) {
 		imagen = "TS121333";
 		detalles = null;
-		detalles = imagen+"-Ajuste-DNI:"+cDNI;
+		detalles = imagen + " -Ajuste-DNI: " + sDNI;
 		boolean gest = false;
 		driver.switchTo().frame(cambioFrame(driver, By.id("SearchClientDocumentType")));
-		sb.BuscarCuenta("DNI", cDNI);
+		sb.BuscarCuenta("DNI", sDNI);
 		String accid = driver.findElement(By.cssSelector(".searchClient-body.slds-hint-parent.ng-scope")).findElements(By.tagName("td")).get(5).getText();
-		System.out.println("id "+accid);
-		detalles +="-Cuenta:"+accid;
+		detalles += "-Cuenta: "+ accid;
 		driver.findElement(By.cssSelector(".slds-tree__item.ng-scope")).click();
 		sleep(15000);
 		cc.irAGestion("inconvenientes");
@@ -489,7 +488,7 @@ public class GestionesPerfilTelefonico extends TestBase{
 		try {
 			String orden = driver.findElement(By.cssSelector(".vlc-slds-inline-control__label.ng-binding")).getText();
 			orden = orden.substring(orden.length()-8);
-			detalles+="-Orden:"+orden;
+			detalles += "-Orden: " + orden;
 			driver.findElement(By.id("Step-Summary_nextBtn")).click();
 			sleep(7000);
 			List <WebElement> element = driver.findElements(By.cssSelector(".slds-form-element.vlc-flex.vlc-slds-text-block.vlc-slds-rte.ng-pristine.ng-valid.ng-scope"));
@@ -499,10 +498,10 @@ public class GestionesPerfilTelefonico extends TestBase{
 				}
 			}
 			Assert.assertTrue(gest);
-		}catch(Exception ex1) {
+		} catch (Exception ex1) {
 			String orden = driver.findElement(By.cssSelector(".vlc-slds-inline-control__label.ng-binding")).getText();
 			orden = orden.substring(orden.length()-8);
-			detalles+="-Orden:"+orden;
+			detalles += "-Orden: " + orden;
 			Assert.assertTrue(false);
 		}
 	}
@@ -1823,7 +1822,7 @@ public class GestionesPerfilTelefonico extends TestBase{
 		for (WebElement cell : table2.findElements(By.xpath("//tr//td"))) {
 			try {
 				if (cell.getText().equals("15"))
-				cell.click();
+					cell.click();
 			} catch (Exception e) {}
 		}
 		driver.findElement(By.cssSelector(".slds-button.slds-button--brand.filterNegotiations.slds-p-horizontal--x-large.slds-p-vertical--x-small")).click();
