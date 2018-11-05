@@ -3827,7 +3827,7 @@ public class GestionesPerfilOficina extends TestBase {
 	
 	}
 	
-	@Test (groups = {"GestionesPerfilOficina", "VentaDeOferta", "Ciclo1"}, dataProvider = "VentaPacks")
+	@Test (groups = {"GestionesPerfilOficina", "VentaDeOferta", "Ciclo1"},priority=1, dataProvider = "VentaPacks")
 	public void TS139727_CRM_Movil_REPRO_Venta_de_pack_50_min_y_50_SMS_x_7_dias_Factura_de_Venta_Efectivo_OOCC(String sDNI, String sLinea, String sventaPack) throws AWTException {
 		imagen = "TS139727";
 		detalles = null;
