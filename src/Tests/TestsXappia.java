@@ -788,4 +788,86 @@ public class TestsXappia extends TestBase {
 		else
 			Assert.assertTrue(true);
 	}
+	
+	@Test (groups = "UAT")
+	public void TXU0007_En_Casos_Cerrados_o_Realizados_el_Boton_Enviar_a_Aprobacion_No_Debe_Estar_Disponible() {
+		irAConsolaFAN();
+		sb.cerrarPestaniaGestion(driver);
+		cc.menu_360_Ir_A("Casos");
+		
+		List<WebElement> sCaseNumber = driver.findElements(By.cssSelector("[class='x-grid3-cell-inner x-grid3-col-CASES_CASE_NUMBER']"));
+		List<WebElement> sCaseStatus = driver.findElements(By.cssSelector("[class='x-grid3-cell-inner x-grid3-col-CASES_STATUS']"));
+		for (int i = 0; i < sCaseNumber.size(); i++) {
+			if (sCaseStatus.get(i).getText().equalsIgnoreCase("Closed") || sCaseStatus.get(i).getText().equalsIgnoreCase("Resuelta exitosa")) {
+				sCaseNumber.get(i).findElement(By.tagName("a")).click();
+				break;
+			}
+		}
+		sleep(15000);
+		
+		driver.switchTo().frame(cambioFrame(driver, By.id("topButtonRow")));
+		List<WebElement> wTopMenu = driver.findElement(By.id("topButtonRow")).findElements(By.className("btn"));
+		boolean bAssert = false;
+		for (WebElement wAux : wTopMenu) {
+			if (wAux.getAttribute("title").equalsIgnoreCase("Enviar para aprobaci\u00f3n")) {
+				bAssert = true;
+				break;
+			}
+		}
+		cc.menu_360_Ir_A("Inicio");
+		Assert.assertFalse(bAssert);
+	}
+	
+	@Test (groups = {"SIT","UAT"})
+	public void TXSU00003_En_La_Lista_de_Casos_Debe_Haber_un_Nombre_de_Contacto_Relacionado() {
+		irAConsolaFAN();
+		sb.cerrarPestaniaGestion(driver);
+		cc.menu_360_Ir_A("Casos");
+		
+		/*boolean bAssert = false;
+		int iCicle = 0;
+		for (int i = 0; i < 2; i++) {
+			System.out.println("Vuelta " + i);
+			List<WebElement> sCaseContactName = driver.findElements(By.cssSelector("[class='x-grid3-cell-inner x-grid3-col-NAME']"));
+			for (WebElement wAux: sCaseContactName) {
+				
+				System.out.println("wAux.getText: " + wAux.getText());
+				
+				if (wAux.getText().equalsIgnoreCase(" ")) {
+					bAssert = true;
+					break;
+				}
+			}
+			if (bAssert = false) {
+				List<WebElement> wTableHeader = driver.findElement(By.cssSelector("[class='x-grid3-hd-row']")).findElements(By.tagName("td"));
+				wTableHeader.get(3).click();
+				iCicle++;
+			}
+			else {
+				break;
+			}
+		}*/
+		
+		sleep(5000);
+		List<WebElement> wTableHeader = driver.findElement(By.cssSelector("[class='x-grid3-hd-row']")).findElements(By.tagName("td"));
+		wTableHeader.get(3).click();
+		boolean bAssert = false;
+		for (int i = 0; i < 2; i++) {
+			System.out.println("Cicle " + i);
+			WebElement sCaseContactName = driver.findElement(By.cssSelector("[class='x-grid3-cell-inner x-grid3-col-NAME']"));
+			if (sCaseContactName.getText().equalsIgnoreCase(" ")) {
+				bAssert = true;
+				break;
+			}
+			driver.navigate().refresh();
+			sleep(10000);
+			BasePage bBP = new BasePage();
+			driver.switchTo().frame(bBP.getFrameForElement(driver, By.cssSelector("[class='x-grid3-hd-row']")));
+			wTableHeader = driver.findElement(By.cssSelector("[class='x-grid3-hd-row']")).findElements(By.tagName("td"));
+			wTableHeader.get(3).findElement(By.tagName("div")).click();
+		}
+		
+		Assert.assertFalse(bAssert);
+	}
+	
 }
