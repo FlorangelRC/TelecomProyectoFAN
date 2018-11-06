@@ -190,4 +190,40 @@ public class CBS_Mattu extends TestBase {
 		Document Response = cCBS.sValidacion_ResponseQueryLiteBySubscriber(sSCS.callSoapWebService(cCBS.sRequestQueryFreeUnit(sLinea, sMessageSeq), sEndPoint));
 		return Response;
 	}
+	
+	@Test
+	public Document Servicio_obtenerInformacionOrden(String sOrden) {
+		String sEndPoint = "obtener informacion orden";
+		//String sLinea = "";
+		String sFecha =((new java.text.SimpleDateFormat("yyyy-MM-dd HH:mm:ss")).format(new Date())).toString();
+		SOAPClientSAAJ sSCS = new SOAPClientSAAJ();
+		CBS cCBS = new CBS();
+		Document sResponse = cCBS.sValidacion_ResponseObtenerInformacionOrden(sSCS.callSoapWebService(cCBS.sRequestObtenerInformacionOrden(sOrden, sFecha), sEndPoint));
+		System.out.println("sResponde ="+sResponse);
+		//Assert.assertFalse(sResponse.startsWith("false"));
+		System.out.println(cCBS.ObtenerValorResponse(sResponse, "ns2:idCliente1"));
+		return sResponse;
+	}
+	
+	@Test
+	public Document Servicio_notificarResultadoOrden(String sOrden, String sCodPag) {
+		String sEndPoint = "notificar resultado orden";
+		//String sLinea = "";
+		String sFecha =((new java.text.SimpleDateFormat("yyyy-MM-dd HH:mm:ss")).format(new Date())).toString();
+		String sHora =((new java.text.SimpleDateFormat("HHmmss")).format(new Date())).toString();
+		SOAPClientSAAJ sSCS = new SOAPClientSAAJ();
+		CBS cCBS = new CBS();
+		Document sResponse = cCBS.sValidacion_ResponseObtenerInformacionOrden(sSCS.callSoapWebService(cCBS.sRequestNotificarResultadoOrden(sOrden, sFecha, sHora,sCodPag), sEndPoint));
+		System.out.println("sResponde ="+sResponse);
+		//Assert.assertFalse(sResponse.startsWith("false"));
+		return sResponse;
+	}
+	
+	@Test
+	public void PagarTCPorServicio(String sOrden) {
+		Document doc = Servicio_obtenerInformacionOrden(sOrden);
+		CBS cCBS = new CBS();
+		String CodPag = cCBS.obtenerValorCodPago(doc);
+		Servicio_notificarResultadoOrden(sOrden,CodPag);
+	}
 }

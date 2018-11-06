@@ -123,7 +123,7 @@ public class GestionesPerfilOficina extends TestBase {
 		sleep(15000);
 	}
 
-	//@AfterMethod(alwaysRun=true)
+	@AfterMethod(alwaysRun=true)
 	public void after() throws IOException {
 		guardarListaTxt(sOrders);
 		sOrders.clear();
@@ -131,7 +131,7 @@ public class GestionesPerfilOficina extends TestBase {
 		sleep(5000);
 	}
 
-	//@AfterClass(alwaysRun=true)
+	@AfterClass(alwaysRun=true)
 	public void quit() throws IOException {
 		driver.quit();
 		sleep(5000);
@@ -341,7 +341,7 @@ public class GestionesPerfilOficina extends TestBase {
 	
 	@Test (groups = {"GestionesPerfilOficina", "Recargas","E2E","Ciclo1"}, dataProvider = "RecargaEfectivo")
 	public void TS134318_CRM_Movil_REPRO_Recargas_Presencial_Efectivo_Ofcom(String cDNI, String cMonto, String cLinea) throws AWTException {
-		sleep(3000);
+		sleep(6000);
 		imagen = "TS134318"+cDNI;
 		CBS cCBS = new CBS();
 		CBS_Mattu cCBSM = new CBS_Mattu();
@@ -652,7 +652,7 @@ public class GestionesPerfilOficina extends TestBase {
 	
 	@Test(groups = {"Sales", "PreparacionNominacion","E2E","Ciclo1"}, dataProvider="DatosSalesNominacion") 
 	public void TS_85094_CRM_Movil_REPRO_Nominatividad_Cliente_Nuevo_Presencial_DOC_OfCom(String sLinea, String sDni, String sNombre, String sApellido, String sSexo, String sFnac, String sEmail, String sProvincia, String sLocalidad, String sCalle, String sNumCa, String sCP) { 
-		imagen = "TS_CRM_Nominacion_Argentino"+sDni;
+		imagen = "85094-Nominacion"+sDni;
 		sleep(5000);
 		driver.switchTo().frame(cambioFrame(driver, By.id("SearchClientDocumentType")));
 		SalesBase SB = new SalesBase(driver);
@@ -2880,7 +2880,7 @@ public class GestionesPerfilOficina extends TestBase {
 	public void TS85097_CRM_Movil_REPRO_Nominatividad_Cliente_Existente_Presencial_DOC_OfCom() {
 		boolean nominacion = false;
 		driver.switchTo().frame(cambioFrame(driver, By.id("SearchClientDocumentType")));
-		driver.findElement(By.id("PhoneNumber")).sendKeys("2932550214");
+		driver.findElement(By.id("PhoneNumber")).sendKeys("2932443389");
 		driver.findElement(By.id("SearchClientsDummy")).click();
 		sleep(5000);
 		driver.findElement(By.cssSelector(".slds-button.slds-button--icon.slds-m-right--x-small.ng-scope")).click();
@@ -2897,7 +2897,7 @@ public class GestionesPerfilOficina extends TestBase {
 		botonNominar.findElement(By.tagName("a")).click();
 		sleep(5000);
 		ContactSearch contact = new ContactSearch(driver);
-		contact.searchContact2("DNI", "2222204", "Masculino");
+		contact.searchContact2("DNI", "22222035", "Masculino");
 		driver.findElement(By.id("Contact_nextBtn")).click();
 		sleep(10000);
 		contact.tipoValidacion("documento");
@@ -4034,4 +4034,60 @@ public class GestionesPerfilOficina extends TestBase {
 			}
 		}
 	}	
+	
+	@Test (groups = {"GestionesPerfilOficina", "Vista360", "E2E","ConsultaPorGestion", "Ciclo2"}, dataProvider = "CuentaModificacionDeDatos")
+	public void TS134370_CRM_Movil_Prepago_Vista_360_Consulta_por_gestiones_Gestiones_no_registradas_FAN_Front_OOCC(String sDNI) {
+		imagen = "TS134370";
+		detalles = null;
+		detalles = imagen+"-Consulta Por Gestion:"+sDNI;
+		driver.switchTo().frame(cambioFrame(driver, By.id("SearchClientDocumentType")));
+		sb.BuscarCuenta("DNI", sDNI);
+		driver.findElement(By.cssSelector(".slds-tree__item.ng-scope")).click();
+		sleep(15000);
+		driver.switchTo().frame(cambioFrame(driver, By.className("card-top")));
+		driver.findElement(By.className("card-top")).click();
+		buscarYClick(driver.findElements(By.className("slds-text-body_regular")), "equals", "gestiones");
+		sleep(2000);
+		driver.switchTo().frame(cambioFrame(driver, By.cssSelector(".slds-grid.slds-wrap.slds-grid--pull-padded.slds-m-around--medium.slds-p-around--medium.negotationsfilter")));
+		driver.findElement(By.id("text-input-id-1")).click();
+		WebElement table = driver.findElement(By.cssSelector(".slds-datepicker.slds-dropdown.slds-dropdown--left"));
+		sleep(3000);
+		List<WebElement> tableRows = table.findElements(By.xpath("//tr//td"));
+		for (WebElement cell : tableRows) {
+			try {
+				if (cell.getText().equals("06")) {
+					cell.click();
+				}
+			} catch (Exception e) {}
+		}
+		driver.findElement(By.id("text-input-id-2")).click();
+		WebElement table_2 = driver.findElement(By.cssSelector(".slds-datepicker.slds-dropdown.slds-dropdown--left"));
+		sleep(3000);
+		List<WebElement> tableRows_2 = table_2.findElements(By.xpath("//tr//td"));
+		for (WebElement cell : tableRows_2) {
+			try {
+				if (cell.getText().equals("31")) {
+					cell.click();
+				}
+			} catch (Exception e) {}
+		}
+		sleep(3000);
+		driver.findElement(By.id("text-input-id-2")).click();
+		WebElement table_3 = driver.findElement(By.cssSelector(".slds-datepicker.slds-dropdown.slds-dropdown--left"));
+		sleep(3000);
+		List<WebElement> tableRows_3 = table_3.findElements(By.xpath("//tr//td"));
+		for (WebElement cell : tableRows_3) {
+			try {
+				if (cell.getText().equals("06")) {
+					cell.click();
+				}
+			} catch (Exception e) {}
+		}
+		driver.findElement(By.cssSelector(".slds-button.slds-button--brand.filterNegotiations.slds-p-horizontal--x-large.slds-p-vertical--x-small.secondaryFont")).click();
+		sleep(3000);
+		driver.switchTo().frame(cambioFrame(driver, By.cssSelector(".slds-table.slds-table--bordered.slds-table--resizable-cols.slds-table--fixed-layout.via-slds-table-pinned-header")));
+		sleep(5000);
+		WebElement tabla = driver.findElement(By.cssSelector(".slds-truncate.slds-p-vertical--medium.clickablerow"));
+		Assert.assertTrue(!(tabla.isDisplayed()));
+	}
 }
