@@ -4032,7 +4032,7 @@ public class GestionesPerfilOficina extends TestBase {
 		sleep(3000);
 		driver.switchTo().frame(cambioFrame(driver, By.cssSelector(".slds-table.slds-table--bordered.slds-table--resizable-cols.slds-table--fixed-layout.via-slds-table-pinned-header")));
 		sleep(5000);
-		WebElement tabla = driver.findElement(By.cssSelector(".slds-truncate.slds-p-vertical--medium.clickablerow"));
-		Assert.assertTrue(!(tabla.isDisplayed()));
+		WebElement tabla = driver.findElement(By.cssSelector(".ng-pristine.ng-untouched.ng-valid.ng-empty"));
+		Assert.assertTrue(tabla.isEnabled());
 	}
 }
