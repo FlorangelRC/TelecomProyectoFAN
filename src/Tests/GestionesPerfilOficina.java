@@ -123,7 +123,7 @@ public class GestionesPerfilOficina extends TestBase {
 		sleep(15000);
 	}
 
-	@AfterMethod(alwaysRun=true)
+	//@AfterMethod(alwaysRun=true)
 	public void after() throws IOException {
 		guardarListaTxt(sOrders);
 		sOrders.clear();
@@ -131,7 +131,7 @@ public class GestionesPerfilOficina extends TestBase {
 		sleep(5000);
 	}
 
-	@AfterClass(alwaysRun=true)
+//	@AfterClass(alwaysRun=true)
 	public void quit() throws IOException {
 		driver.quit();
 		sleep(5000);
@@ -3958,7 +3958,7 @@ public class GestionesPerfilOficina extends TestBase {
 		List<WebElement> tableRows = table.findElements(By.xpath("//tr//td"));
 		for (WebElement cell : tableRows) {
 			try {
-				if (cell.getText().equals("25")) {
+				if (cell.getText().equals("27")) {
 					cell.click();
 				}
 			} catch (Exception e) {}
@@ -3984,6 +3984,7 @@ public class GestionesPerfilOficina extends TestBase {
 		imagen = "TS134371";
 		detalles = null;
 		detalles = imagen+"-Consulta por Gestiones-DNI:"+sDNI;
+		boolean gestion = false;
 		driver.switchTo().frame(cambioFrame(driver, By.id("SearchClientDocumentType")));
 		sb.BuscarCuenta("DNI", sDNI);
 		driver.findElement(By.cssSelector(".slds-tree__item.ng-scope")).click();
@@ -4001,7 +4002,7 @@ public class GestionesPerfilOficina extends TestBase {
 		List<WebElement> tableRows = table.findElements(By.xpath("//tr//td"));
 		for (WebElement cell : tableRows) {
 			try {
-				if (cell.getText().equals("25")) {
+				if (cell.getText().equals("26")) {
 					cell.click();
 				}
 			} catch (Exception e) {}
@@ -4023,17 +4024,28 @@ public class GestionesPerfilOficina extends TestBase {
 		sleep(5000);
 		driver.findElement(By.cssSelector(".slds-button.slds-button--brand.filterNegotiations.slds-p-horizontal--x-large.slds-p-vertical--x-small.secondaryFont")).click();
 		sleep(5000);
-		boolean NumOrden=true;
-		List<WebElement> tabla= driver.findElements(By.className("slds-m-around--medium"));
-		List<WebElement> ordenes = tabla.get(1).findElements(By.xpath("//table//tbody//tr"));
-		for(WebElement x : ordenes) {
-			if (x.isDisplayed()) {
-				x.findElement(By.cssSelector(".slds-truncate.slds-p-vertical--medium.clickablerow")).click();
-				NumOrden = false;
-				
-			}
+		WebElement nroCaso = driver.findElement(By.cssSelector(".slds-table.slds-table--bordered.slds-table--resizable-cols.slds-table--fixed-layout.via-slds-table-pinned-header")).findElement(By.tagName("tbody")).findElement(By.tagName("tr"));
+		nroCaso.findElements(By.tagName("td")).get(2).click();
+		sleep(5000);
+		WebElement estado = null;
+		driver.switchTo().frame(cambioFrame(driver, By.name("ta_clone")));
+		for (WebElement x : driver.findElements(By.className("detailList"))) {
+			if (x.getText().toLowerCase().contains("n\u00famero de pedido"))
+				estado = x;
 		}
-	}	
+		for (WebElement x : estado.findElements(By.tagName("tr"))) {
+			if (x.getText().toLowerCase().contains("estado"))
+				estado = x;
+		}
+		if (estado.getText().toLowerCase().contains("activada") || (estado.getText().toLowerCase().contains("iniciada")))
+			gestion = true;
+		Assert.assertTrue(gestion);
+	}
+
+				
+	
+		
+	
 	
 	@Test (groups = {"GestionesPerfilOficina", "Vista360", "E2E","ConsultaPorGestion", "Ciclo2"}, dataProvider = "CuentaModificacionDeDatos")
 	public void TS134370_CRM_Movil_Prepago_Vista_360_Consulta_por_gestiones_Gestiones_no_registradas_FAN_Front_OOCC(String sDNI) {
