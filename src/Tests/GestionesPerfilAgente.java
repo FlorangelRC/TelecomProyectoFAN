@@ -629,6 +629,8 @@ public class GestionesPerfilAgente extends TestBase{
 	@Test (groups = {"GestionesPerfilAgente", "ActualizarDatos", "E2E", "Ciclo3"}, dataProvider = "CuentaModificacionDeDatos")
 	public void TS134836_CRM_Movil_REPRO_Modificacion_de_datos_Actualizar_los_datos_del_cliente_completos_FAN_Front_Agentes(String sDNI) {
 		imagen = "TS134836";
+		detalles = null;
+		detalles = imagen + " -ActualizarDatos: " + sDNI;
 		String nuevoNombre = "Otro";
 		String nuevoApellido = "Apellido";
 		String nuevoNacimiento = "10/10/1982";
@@ -690,6 +692,8 @@ public class GestionesPerfilAgente extends TestBase{
 	@Test (groups = {"GestionesPerfilAgente", "ActualizarDatos", "E2E", "Ciclo3"}, dataProvider = "CuentaModificacionDeDatos")
 	public void TS129334_CRM_Movil_REPRO_Modificacion_de_datos_Actualizar_datos_campo_Correo_Electronico_Cliente_FAN_Front_Agentes(String sDNI) {
 		imagen = "TS129334";
+		detalles = null;
+		detalles = imagen + " -ActualizarDatos: " + sDNI;
 		String nuevoMail = "maildetest@gmail.com";
 		driver.switchTo().frame(cambioFrame(driver, By.id("SearchClientDocumentType")));
 		sb.BuscarCuenta("DNI", sDNI);
@@ -743,6 +747,8 @@ public class GestionesPerfilAgente extends TestBase{
 	@Test (groups = {"GestionesPerfilAgente", "ActualizarDatos", "E2E", "Ciclo3"}, dataProvider = "CuentaModificacionDeDatos")
 	public void TS121102_CRM_Movil_REPRO_Modificacion_de_datos_Cliente_FAN_Front_Agentes(String sDNI) {
 		imagen = "TS121102";
+		detalles = null;
+		detalles = imagen + " -ActualizarDatos: " + sDNI;
 		String nuevoNombre = "Otro";
 		String nuevoApellido = "Apellido";
 		String nuevoNacimiento = "10/10/1982";
@@ -810,6 +816,8 @@ public class GestionesPerfilAgente extends TestBase{
 	@Test (groups = {"GestionesPerfilAgente", "ActualizarDatos", "E2E", "Ciclo3"}, dataProvider = "CuentaModificacionDeDatos")
 	public void TS121098_CRM_Movil_REPRO_Modificacion_de_datos_Actualizar_datos_Cliente_Perfil_FAN_Front_Agentes(String sDNI) {
 		imagen = "TS121098";
+		detalles = null;
+		detalles = imagen + " -ActualizarDatos: " + sDNI;
 		String nuevoMail = "maildetest@gmail.com";
 		driver.switchTo().frame(cambioFrame(driver, By.id("SearchClientDocumentType")));
 		sb.BuscarCuenta("DNI", sDNI);
