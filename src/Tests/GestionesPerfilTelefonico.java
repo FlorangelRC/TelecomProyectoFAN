@@ -507,17 +507,17 @@ public class GestionesPerfilTelefonico extends TestBase{
 	}
 	
 	@Test (groups= {"GestionesPerfilTelefonico", "ModificacionDeDatos", "E2E"},  dataProvider = "CuentaModificacionDeDatos")
-	public void TS134835_CRM_Movil_PRE_Modificacion_de_datos_Actualizar_los_datos_del_cliente_completos_FAN_Front_Telefonico(String cDNI) {
+	public void TS134835_CRM_Movil_PRE_Modificacion_de_datos_Actualizar_los_datos_del_cliente_completos_FAN_Front_Telefonico(String sDNI) {
 		imagen = "TS134835";
 		detalles = null;
-		detalles = imagen+"-Modificacion de datos-DNI:"+cDNI;
+		detalles = imagen + " -ActualizarDatos-DNI: "+ sDNI;
 		String nuevoNombre = "Otro";
 		String nuevoApellido = "Apellido";
 		String nuevoNacimiento = "10/10/1982";
 		String nuevoMail = "maildetest@gmail.com";
 		String nuevoPhone = "3574409239";
 		driver.switchTo().frame(cambioFrame(driver, By.id("SearchClientDocumentType")));
-		sb.BuscarCuenta("DNI", cDNI);
+		sb.BuscarCuenta("DNI", sDNI);
 		driver.findElement(By.cssSelector(".slds-tree__item.ng-scope")).click();
 		sleep(15000);
 		driver.switchTo().frame(cambioFrame(driver, By.className("profile-box")));
@@ -639,9 +639,9 @@ public class GestionesPerfilTelefonico extends TestBase{
 
 	
 	@Test (groups = {"GestionesPerfilTelefonico", "HistorialDeRecargas", "Ciclo2"}, dataProvider = "CuentaProblemaRecarga")
-	public void TS135347_Historial_de_Recargas_Consultar_detalle_de_Recargas_por_Canal_TODOS_Fan_FRONT_Telefonico(String cDNI, String cLinea) {
+	public void TS135347_Historial_de_Recargas_Consultar_detalle_de_Recargas_por_Canal_TODOS_Fan_FRONT_Telefonico(String sDNI, String sLinea) {
 		driver.switchTo().frame(cambioFrame(driver, By.id("SearchClientDocumentType")));
-		sb.BuscarCuenta("DNI", cDNI);
+		sb.BuscarCuenta("DNI", sDNI);
 		driver.findElement(By.cssSelector(".slds-tree__item.ng-scope")).click();
 		sleep(10000);
 		cc.irAHistoriales();
@@ -1126,6 +1126,9 @@ public class GestionesPerfilTelefonico extends TestBase{
 		
 	@Test (groups = {"GestionesPerfilTelefonico", "ReseteoDeClave", "Ciclo2"}, dataProvider = "CuentaReseteoClave")
 	public void TS95981_CRM_Movil_REPRO_Reseteo_de_Clave_Telefonico(String sDNI) {
+		imagen = "TS95981";
+		detalles = null;
+		detalles = imagen + "ReseteoDeClave: " + sDNI;
 		driver.switchTo().frame(cambioFrame(driver, By.id("SearchClientDocumentType")));
 		sb.BuscarCuenta("DNI", sDNI);
 		driver.findElement(By.cssSelector(".slds-tree__item.ng-scope")).click();
@@ -1143,6 +1146,9 @@ public class GestionesPerfilTelefonico extends TestBase{
 	
 	@Test (groups = {"GestionesPerfilTelefonico", "ReseteoDeClave", "Ciclo2"}, dataProvider = "CuentaReseteoClave")
 	public void TS95983_CRM_Movil_REPRO_No_Reseteo_de_Clave_Telefonico(String sDNI) {
+		imagen = "TS95983";
+		detalles = null;
+		detalles = imagen + "ReseteoDeClave: " + sDNI;
 		driver.switchTo().frame(cambioFrame(driver, By.id("SearchClientDocumentType")));
 		sb.BuscarCuenta("DNI", sDNI);
 		driver.findElement(By.cssSelector(".slds-tree__item.ng-scope")).click();
@@ -1539,7 +1545,7 @@ public class GestionesPerfilTelefonico extends TestBase{
 	public void TS129336_CRM_Movil_REPRO_Modificacion_de_datos_Actualizar_datos_campo_Correo_Electronico_Cliente_FAN_Front_Telefonico(String sDNI) {
 		imagen = "TS129336";
 		detalles = null;
-		detalles = imagen+"-Modificacion de datos-DNI: "+ sDNI;
+		detalles = imagen + " -ActualizarDatos-DNI: "+ sDNI;
 		String nuevoMail = "maildetest@gmail.com";
 		driver.switchTo().frame(cambioFrame(driver, By.id("SearchClientDocumentType")));
 		sb.BuscarCuenta("DNI", sDNI);
@@ -1602,7 +1608,7 @@ public class GestionesPerfilTelefonico extends TestBase{
 	public void TS121105_CRM_Movil_REPRO_Modificacion_de_datos_Cliente_FAN_Front_Telefonico(String sDNI) {
 		imagen = "TS121105";
 		detalles = null;
-		detalles = imagen+"-Modificacion de datos-DNI: "+ sDNI;
+		detalles = imagen + " -ActualizarDatos-DNI: " + sDNI;
 		String nuevoNombre = "Otro";
 		String nuevoApellido = "Apellido";
 		String nuevoNacimiento = "10/10/1982";
@@ -1666,7 +1672,7 @@ public class GestionesPerfilTelefonico extends TestBase{
 	public void TS121112_CRM_Movil_REPRO_Modificacion_de_datos_Actualizar_datos_Cliente_FAN_Front_Telefonico(String sDNI) {
 		imagen = "TS121112";
 		detalles = null;
-		detalles = imagen+"-ModificaciondeDatosTelefonico-DNI:"+sDNI;
+		detalles = imagen + " -ActualizarDatos-DNI: " + sDNI;
 		String nuevoMail = "maildetest@gmail.com";
 		driver.switchTo().frame(cambioFrame(driver, By.id("SearchClientDocumentType")));
 		sb.BuscarCuenta("DNI", sDNI);
@@ -1760,7 +1766,7 @@ public class GestionesPerfilTelefonico extends TestBase{
 	public void TS121138_CRM_Movil_REPRO_Ajuste_Credito_FAN_Front_Telefonico_BO(String sDNI) {
 		imagen = "TS121138";
 		detalles = null;
-		detalles = imagen+"-AjusteCreditoTelefonico-DNI:"+sDNI;
+		detalles = imagen + " -Ajustes-DNI: " + sDNI;
 		boolean gest = false;
 		driver.switchTo().frame(cambioFrame(driver, By.id("SearchClientDocumentType")));
 		sb.BuscarCuenta("DNI", sDNI);
@@ -1810,8 +1816,6 @@ public class GestionesPerfilTelefonico extends TestBase{
 	@Test (groups = {"GestionesPerfilTelefonico", "Ajustes", "E2E", "Ciclo3"}, dataProvider = "CuentaAjustesPRE")
 	public void TS135376_CRM_Movil_Prepago_Otros_Historiales_Historial_de_ajustes_Seleccion_de_Fechas_Ajuste_positivo_FAN_Front_Telefonico(String sDNI) {
 		imagen = "TS135376";
-		detalles = null;
-		detalles = imagen+"-HistorialDeAjusteTelefonico-DNI:"+sDNI;
 		boolean ajustePositivo = false;
 		driver.switchTo().frame(cambioFrame(driver, By.id("SearchClientDocumentType")));
 		sb.BuscarCuenta("DNI", sDNI);

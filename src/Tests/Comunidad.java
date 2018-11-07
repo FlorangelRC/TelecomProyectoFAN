@@ -102,7 +102,7 @@ public class Comunidad extends TestBase {
 		List<WebElement> tableRows_2 = table_2.findElements(By.xpath("//tr//td"));
 		for (WebElement cell : tableRows_2) {
 			try {
-				if (cell.getText().equals("15")) {
+				if (cell.getText().equals("6")) {
 				cell.click();
 				}
 			}catch(Exception e) {}
@@ -276,4 +276,26 @@ public class Comunidad extends TestBase {
 		//mobileEmulation();
 		//Blocked
 	}	
+	
+	@Test (groups = {"Communities","E2E"})
+	public void TS135766_CRM_PRE_Community_Desktop_Alta_de_mas_de_un_Pack_Descuenta_Saldo(){
+	driver.switchTo().frame(cambioFrame(driver, By.cssSelector(".slds-size--1-of-1.slds-align-middle.slds-p-vertical--small.cursor")));
+	driver.findElement(By.cssSelector(".slds-size--1-of-1.slds-align-middle.slds-p-vertical--small.cursor")).click();
+	sleep(9000);
+	driver.switchTo().frame(cambioFrame(driver, By.cssSelector(".slds-wrap.slds-m-top--xx-small")));
+	WebElement comprapack = driver.findElements(By.cssSelector(".slds-wrap.slds-m-top--xx-small")).get(1).findElement(By.tagName("button"));
+	comprapack.click();
+	sleep(18000);
+	driver.switchTo().frame(cambioFrame(driver, By.cssSelector(".ta-sales-new-packs.slds-medium-size--12-of-12.ng-scope")));
+	WebElement lista = driver.findElement(By.cssSelector(".ta-sales-new-packs.slds-medium-size--12-of-12.ng-scope")).findElements(By.tagName("div")).get(2);
+	List <WebElement> asdf = lista.findElement(By.cssSelector(".ng-scope.odd.border-top"));
+		for(WebElement a : asdf){
+			if(a.getText().toLowerCase().equals("Packs de Datos")){
+				a.click();
+			}
+		}
+	}
+	
+	
+	
 }
