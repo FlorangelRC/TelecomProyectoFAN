@@ -1944,7 +1944,7 @@ public class GestionesPerfilTelefonico extends TestBase{
 		Assert.assertTrue(bAssert);
 	
 	
-
+	}
 	@Test (groups= {"GestionesPerfilOficina", "HistorialDePacks", "Ciclo2"},  dataProvider = "CuentaModificacionDeDatos")
 	public void TS135467_CRM_Movil_Prepago_Historial_de_Packs_Fan_Front_Telefonico(String cDNI) {
 		boolean enc = false;
@@ -1973,18 +1973,4 @@ public class GestionesPerfilTelefonico extends TestBase{
 		Assert.assertTrue(enc);
 	}
 	
-	@Test (groups = {"GestionesPerfilOficina","Vista360","E2E", "Ciclo1"}, dataProvider="RenovacionCuotaConSaldo")
-	public void TS134808_CRM_Movil_Prepago_Vista_360_Consulta_por_gestiones_Gestiones_Cerradas_Información_brindada_FAN_Front_Telefonico(String sDNI, String sLinea){
-		imagen = "TS134808";
-		//Check all
-		CustomerCare cCC = new CustomerCare(driver);
-		BasePage cambioFrameByID=new BasePage();
-		driver.switchTo().frame(cambioFrameByID.getFrameForElement(driver, By.id("SearchClientDocumentType")));
-		sleep(1000);
-		SalesBase sSB = new SalesBase(driver);
-		sSB.BuscarCuenta("DNI", sDNI);
-		driver.findElement(By.cssSelector(".slds-tree__item.ng-scope")).findElement(By.tagName("div")).click();
-		sleep(25000);
-		driver.switchTo().frame(cambioFrame(driver, By.className("card-top")));
-	}
 }
