@@ -51,8 +51,8 @@ import DataProvider.ExcelUtils;
 public class TestBase {
 	protected static WebDriver driver;
 	
-		public static String urlAmbiente = "https://telecomcrm--uat.cs53.my.salesforce.com";
-		//public static String urlAmbiente = "https://crm--sit.cs14.my.salesforce.com/";
+		//public static String urlAmbiente = "https://telecomcrm--uat.cs53.my.salesforce.com";
+		public static String urlAmbiente = "https://crm--sit.cs14.my.salesforce.com/";
 		
 		// viejo public String urlSCP = "https://telecomcrm--uat.cs8.my.salesforce.com";
 		public static String urlSCP = "https://telecomcrm--uat.cs53.my.salesforce.com";
@@ -1392,7 +1392,7 @@ public class TestBase {
 	@DataProvider
 	public Object[][] CuentaModificacionDeDatos() throws Exception{
 		
-		 Object[][] testObjArray = ExcelUtils.getTableArray(dataProviderE2E(),"E2EsinPago",1,1,1,"Modificacion De Datos");
+		 Object[][] testObjArray = ExcelUtils.getTableArray(dataProviderE2E(),"E2EsinPago",1,1,2,"Modificacion De Datos");
 
 		 return (testObjArray);
 	}
