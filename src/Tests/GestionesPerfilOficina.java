@@ -4102,4 +4102,62 @@ public class GestionesPerfilOficina extends TestBase {
 		WebElement tabla = driver.findElement(By.cssSelector(".slds-truncate.slds-p-vertical--medium.clickablerow"));
 		Assert.assertTrue(!(tabla.isDisplayed()));
 	}
+	
+	@Test (groups = {"GestionesPerfilOficina", "RenovacionDeCuota", "E2E", "Ciclo1"}, dataProvider = "RenovacionCuotaSinSaldo")
+	public void TS135512_CRM_Movil_REPRO_No_Renovacion_de_cuota_Pack_de_datos_Activo_Presencial(String sDNI, String sLinea) {
+		imagen = "TS135512";
+		driver.switchTo().frame(cambioFrame(driver, By.id("SearchClientDocumentType")));
+		sb.BuscarCuenta("DNI", sDNI);
+		driver.findElement(By.cssSelector(".slds-tree__item.ng-scope")).click();
+		sleep(15000);
+		driver.switchTo().frame(cambioFrame(driver, By.className("card-top")));
+		driver.findElement(By.className("card-top")).click();
+		sleep(3000);
+		cc.irAGestionEnCard("Renovacion de Datos");
+		sleep(7000);
+		driver.switchTo().frame(cambioFrame(driver, By.className("slds-checkbox--faux")));
+		driver.findElements(By.className("slds-checkbox--faux")).get(2).click();
+		driver.findElement(By.id("CombosDeMegas_nextBtn")).click();
+		sleep(5000);
+		buscarYClick(driver.findElements(By.cssSelector(".slds-form-element__label.ng-binding.ng-scope")), "contains", "descuento de saldo");
+		driver.findElement(By.id("SetPaymentType_nextBtn")).click();
+		sleep(5000);
+		driver.findElement(By.id("alert-ok-button")).click();
+		sleep(3000);
+		WebElement msj = driver.findElement(By.cssSelector(".slds-form-element.vlc-flex.vlc-slds-radio-control.ng-scope.ng-dirty.ng-valid-parse.ng-valid.ng-valid-required"));
+		msj = msj.findElement(By.className("vlc-slds-error-block"));
+		Assert.assertTrue(msj.getText().contains("El Saldo No Es Suficiente Para Comprar El Pack"));
+	}
+	
+	@Test (groups = {"GestionesPerfilOficina", "Vista360", "Ciclo2"},  dataProvider = "CuentaVista360")
+	public void TS134349_CRM_Movil_Prepago_Vista_360_Consulta_por_gestiones_Gestiones_abiertas_Plazo_vencido_Asistencia_registrada_FAN_Front_OOCC(String sDNI, String sNombre) {
+		imagen = "TS134349";
+		driver.switchTo().frame(cambioFrame(driver, By.id("SearchClientDocumentType")));
+		sb.BuscarCuenta("DNI", sDNI);
+		driver.findElement(By.cssSelector(".slds-tree__item.ng-scope")).click();
+		sleep(25000);
+		driver.switchTo().frame(cambioFrame(driver, By.className("card-top")));
+		cc.irAGestiones();
+		driver.switchTo().frame(cambioFrame(driver, By.cssSelector(".slds-button.slds-button--brand.filterNegotiations.slds-p-horizontal--x-large.slds-p-vertical--x-small.secondaryFont")));
+		driver.findElement(By.id("text-input-03")).click();
+		driver.findElement(By.xpath("//*[text() = 'Casos']")).click();
+		driver.findElement(By.cssSelector(".slds-button.slds-button--brand.filterNegotiations.slds-p-horizontal--x-large.slds-p-vertical--x-small.secondaryFont")).click();
+		sleep(3000);
+		WebElement nroCaso = driver.findElement(By.cssSelector(".slds-table.slds-table--bordered.slds-table--resizable-cols.slds-table--fixed-layout.via-slds-table-pinned-header")).findElement(By.tagName("tbody")).findElement(By.tagName("tr"));
+		nroCaso.findElements(By.tagName("td")).get(2).click();
+		sleep(5000);
+		WebElement fechaYHora = null;
+		driver.switchTo().frame(cambioFrame(driver, By.name("close")));
+		for (WebElement x : driver.findElements(By.className("pbSubsection"))) {
+			if (x.getText().toLowerCase().contains("owned by me"))
+				fechaYHora = x;
+		}
+		fechaYHora = fechaYHora.findElement(By.tagName("tbody"));
+		for (WebElement x : fechaYHora.findElements(By.tagName("tr"))) {
+			if (x.getText().toLowerCase().contains("fecha/hora de cierre"))
+				fechaYHora = x;
+		}
+		Assert.assertTrue(fechaYHora.getText().contains("Fecha/Hora de cierre"));
+		Assert.assertTrue(fechaYHora.findElements(By.tagName("td")).get(3).getText().matches("^\\d{2}/\\d{2}/\\d{4} \\d{2}:\\d{2}$"));
+	}
 }
