@@ -3978,6 +3978,61 @@ public class GestionesPerfilOficina extends TestBase {
 		sleep(5000);
 		WebElement visu = driver.findElement(By.cssSelector(".slds-grid.slds-wrap.slds-grid--pull-padded.slds-m-around--medium.slds-p-around--medium.negotationsfilter"));
 		Assert.assertTrue(visu.isDisplayed());
+	}
+	@Test (groups = {"GestionesPerfilOficina","ConsultaPorGestiones","E2E", "Ciclo1"},  dataProvider = "CuentaModificacionDeDatos")
+	public void TS134371_CRM_Movil_Prepago_Vista_360_Consulta_por_gestiones_Gestiones_abiertas_Plazo_No_vencido_Consulta_registrada_FAN_Front_OOCC(String sDNI){
+		imagen = "TS134371";
+		detalles = null;
+		detalles = imagen+"-Consulta por Gestiones-DNI:"+sDNI;
+		driver.switchTo().frame(cambioFrame(driver, By.id("SearchClientDocumentType")));
+		sb.BuscarCuenta("DNI", sDNI);
+		driver.findElement(By.cssSelector(".slds-tree__item.ng-scope")).click();
+		sleep(15000);
+		driver.switchTo().frame(cambioFrame(driver, By.className("card-top")));
+		sleep(3000);
+		driver.findElement(By.className("card-top")).click();
+		sleep(3000);
+		buscarYClick(driver.findElements(By.className("slds-text-body_regular")), "equals", "gestiones");
+		sleep(8000);
+		driver.switchTo().frame(cambioFrame(driver, By.cssSelector(".slds-grid.slds-wrap.slds-grid--pull-padded.slds-m-around--medium.slds-p-around--medium.negotationsfilter")));
+		driver.findElement(By.id("text-input-id-1")).click();
+		WebElement table = driver.findElement(By.cssSelector(".slds-datepicker.slds-dropdown.slds-dropdown--left"));
+		sleep(3000);
+		List<WebElement> tableRows = table.findElements(By.xpath("//tr//td"));
+		for (WebElement cell : tableRows) {
+			try {
+				if (cell.getText().equals("25")) {
+					cell.click();
+				}
+			} catch (Exception e) {}
+		}
+		driver.findElement(By.id("text-input-id-2")).click();
+		WebElement table_2 = driver.findElement(By.cssSelector(".slds-datepicker.slds-dropdown.slds-dropdown--left"));
+		sleep(3000);
+		List<WebElement> tableRows_2 = table_2.findElements(By.xpath("//tr//td"));
+		for (WebElement cell : tableRows_2) {
+			try {
+				if (cell.getText().equals("01")) {
+					cell.click();
+				}
+			} catch (Exception e) {}
+		}
+		driver.switchTo().frame(cambioFrame(driver, By.id("text-input-03")));
+		driver.findElement(By.id("text-input-03")).click();
+		driver.findElement(By.xpath("//*[text() = 'Ordenes']")).click();
+		sleep(5000);
+		driver.findElement(By.cssSelector(".slds-button.slds-button--brand.filterNegotiations.slds-p-horizontal--x-large.slds-p-vertical--x-small.secondaryFont")).click();
+		sleep(5000);
+		boolean NumOrden=true;
+		List<WebElement> tabla= driver.findElements(By.className("slds-m-around--medium"));
+		List<WebElement> ordenes = tabla.get(1).findElements(By.xpath("//table//tbody//tr"));
+		for(WebElement x : ordenes) {
+			if (x.isDisplayed()) {
+				x.findElement(By.cssSelector(".slds-truncate.slds-p-vertical--medium.clickablerow")).click();
+				NumOrden = false;
+				
+			}
+		}
 	}	
 	
 	@Test (groups = {"GestionesPerfilOficina", "Vista360", "E2E","ConsultaPorGestion", "Ciclo2"}, dataProvider = "CuentaModificacionDeDatos")
