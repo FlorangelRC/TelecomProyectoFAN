@@ -753,6 +753,8 @@ public class GestionesPerfilOficina extends TestBase {
 		String saldo = verif.ObtenerValorResponse(verifM.Servicio_queryLiteBySubscriber(sLinea), "bcs:MainBalance");
 		Integer saldo1 = Integer.parseInt(saldo.substring(0, (saldo.length()) - 1));
 		imagen = "problemaRecargaOnline";
+		detalles = null;
+		detalles = imagen+"-Problema Con Recargas-DNI:"+sDNI;
 		driver.switchTo().frame(cambioFrame(driver, By.id("SearchClientDocumentType")));
 		sb.BuscarCuenta("DNI", sDNI);
 		driver.findElement(By.cssSelector(".slds-tree__item.ng-scope")).click();
@@ -810,6 +812,8 @@ public class GestionesPerfilOficina extends TestBase {
 		Integer saldo1 = Integer.parseInt(saldo.substring(0, (saldo.length()) - 1));
 		System.out.println(saldo1);
 		imagen = "poblemaRecargaCredito";
+		detalles = null;
+		detalles = imagen+"-Problema Con Recargas-DNI:"+cDNI;
 		driver.switchTo().frame(cambioFrame(driver, By.id("SearchClientDocumentType")));
 		sb.BuscarCuenta("DNI", cDNI);
 		driver.findElement(By.cssSelector(".slds-tree__item.ng-scope")).click();
@@ -946,8 +950,15 @@ public class GestionesPerfilOficina extends TestBase {
 	}
 	
 	@Test (groups = {"GestionesPerfilOficina", "ProblemasConRecargas","E2E","Ciclo3"}, dataProvider = "ProblemaRecargaPrepaga")  //Se necesitan nuevos numeros de tarjeta, solo se pueden usar 1 vez
-	public void GestionProblemasConRecargasTarjetaPrepaga(String cDNI, String cBatch, String cPin) {
+	public void GestionProblemasConRecargasTarjetaPrepaga(String cDNI,String sLinea, String cBatch, String cPin) {
+		CBS_Mattu verifM = new CBS_Mattu();
+		CBS verif = new CBS();
+		String saldo = verif.ObtenerValorResponse(verifM.Servicio_queryLiteBySubscriber(sLinea), "bcs:MainBalance");
+		Integer saldo1 = Integer.parseInt(saldo.substring(0, 5));
+		System.out.println(saldo1);
 		imagen = "GestionProblemasConRecargasTarjetaPrepaga";
+		detalles = null;
+		detalles = imagen+"-Problema Con Recargas-DNI:"+cDNI;
 		boolean gest = false;
 		driver.switchTo().frame(cambioFrame(driver, By.id("SearchClientDocumentType")));
 		sb.BuscarCuenta("DNI", cDNI);
@@ -971,6 +982,7 @@ public class GestionesPerfilOficina extends TestBase {
 		sleep(7000);
 		driver.findElement(By.id("Summary_nextBtn")).click();
 		sleep(10000);
+		boolean b = false;
 		List <WebElement> element = driver.findElements(By.className("ta-care-omniscript-done"));
 		for (WebElement x : element) {
 			if (x.getText().toLowerCase().contains("recarga realizada con \u00e9xito")) {
@@ -978,6 +990,13 @@ public class GestionesPerfilOficina extends TestBase {
 			}
 		}
 		Assert.assertTrue(gest);
+		String saldo2 = verif.ObtenerValorResponse(verifM.Servicio_queryLiteBySubscriber(sLinea), "bcs:MainBalance");
+		Integer saldo3 = Integer.parseInt(saldo2.substring(0, (saldo2.length()) - 1));
+		System.out.println(saldo3);
+		if((saldo1+1230000 == saldo3)) {
+			b = true;
+		}
+		Assert.assertTrue(b);
 		String orden = cc.obtenerOrden(driver, "Problema con recarga con tarjeta prepaga");
 		sOrders.add("Problema con "
 				+ ""
@@ -3153,6 +3172,9 @@ public class GestionesPerfilOficina extends TestBase {
 	
 	@Test (groups={"Sales","GestionDeClientes", "Ciclo1"},dataProvider = "invalidaDocumentacion")
 	public void TS_135497_CRM_Movil_REPRO_Busqueda_DNI_Numero_de_Documento_no_existente(String sDNI, String sNumeroDeCuenta, String sNombre, String sApellido, String sLibreta, String sRazon, String sEmail){
+		imagen = "TS_135497";
+		detalles = null;
+		detalles = imagen+"-Busqueda-DNI: "+sDNI;
 		driver.switchTo().frame(cambioFrame(driver, By.id("SearchClientDocumentType")));
 		sb.BuscarCuenta("DNI", sDNI);
 		try {Thread.sleep(10000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
@@ -3167,6 +3189,9 @@ public class GestionesPerfilOficina extends TestBase {
 	
 	@Test (groups={"Sales","GestionDeClientes", "Ciclo1"},dataProvider = "validaDocumentacion")
 	public void TS_135499_CRM_Movil_REPRO_Busqueda_Libreta_de_enrolamiento_Numero_de_Documento(String sDNI, String sNumeroDeCuenta, String sNombre, String sApellido, String sLibreta, String sRazon, String sEmail){
+		imagen = "TS_135499";
+		detalles = null;
+		detalles = imagen+"-Busqueda-DNI: "+sDNI;
 		driver.switchTo().frame(cambioFrame(driver, By.id("SearchClientDocumentType")));
 		sb.BuscarCuenta("Libreta de Enrolamiento", sLibreta);
 		try {Thread.sleep(10000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
@@ -3176,6 +3201,9 @@ public class GestionesPerfilOficina extends TestBase {
 	
 	@Test (groups={"Sales","GestionDeClientes", "Ciclo1"},dataProvider = "invalidaDocumentacion")
 	public void TS_135500_CRM_Movil_REPRO_Busqueda_Libreta_dE_enrolamiento_Numero_de_Documento_no_existente(String sDNI, String sNumeroDeCuenta, String sNombre, String sApellido, String sLibreta, String sRazon, String sEmail) {
+		imagen = "TS_135500";
+		detalles = null;
+		detalles = imagen+"-Busqueda-DNI: "+sDNI;
 		driver.switchTo().frame(cambioFrame(driver, By.id("SearchClientDocumentType")));
 		sb.BuscarCuenta("Libreta de Enrolamiento", sLibreta);
 		try {Thread.sleep(10000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
@@ -3190,6 +3218,9 @@ public class GestionesPerfilOficina extends TestBase {
 	
 	@Test (groups={"Sales","GestionDeClientes", "Ciclo1"},dataProvider = "validaDocumentacion")
 	public void TS_135501_CRM_Movil_REPRO_Busqueda_Nombre(String sDNI, String sNumeroDeCuenta, String sNombre, String sApellido, String sLibreta, String sRazon, String sEmail) {
+		imagen = "TS_135501";
+		detalles = null;
+		detalles = imagen+"-Busqueda-DNI: "+sDNI;
 		driver.switchTo().frame(cambioFrame(driver, By.id("SearchClientDocumentType")));
 		sb.BuscarAvanzada(sNombre,"","","","");
 		sleep(1500);
@@ -3201,6 +3232,9 @@ public class GestionesPerfilOficina extends TestBase {
 	
 	@Test (groups={"Sales","GestionDeClientes", "Ciclo1"},dataProvider = "invalidaDocumentacion")
 	public void TS_135502_CRM_Movil_REPRO_Busqueda_Nombre_No_existente(String sDNI, String sNumeroDeCuenta, String sNombre, String sApellido, String sLibreta, String sRazon, String sEmail) {
+		imagen = "TS_135502";
+		detalles = null;
+		detalles = imagen+"-Busqueda-DNI: "+sDNI;
 		driver.switchTo().frame(cambioFrame(driver, By.id("SearchClientDocumentType")));
 		sb.BuscarAvanzada(sNombre,"","","","");
 		sleep(1500);
@@ -3217,6 +3251,9 @@ public class GestionesPerfilOficina extends TestBase {
 	
 	@Test (groups={"Sales","GestionDeClientes", "Ciclo1"},dataProvider = "invalidaDocumentacion")
 	public void TS_135504_CRM_Movil_REPRO_Busqueda_Apellido_No_existente(String sDNI, String sNumeroDeCuenta, String sNombre, String sApellido, String sLibreta, String sRazon, String sEmail) {
+		imagen = "TS_135504";
+		detalles = null;
+		detalles = imagen+"-Busqueda-DNI: "+sDNI;
 		driver.switchTo().frame(cambioFrame(driver, By.id("SearchClientDocumentType")));
 		sb.BuscarAvanzada("",sApellido,"","","");
 		sleep(1500);
@@ -3233,6 +3270,9 @@ public class GestionesPerfilOficina extends TestBase {
 	
 	@Test (groups={"Sales","GestionDeClientes", "Ciclo1"},dataProvider = "validaDocumentacion")
 	public void TS_135505_CRM_Movil_REPRO_Busqueda_Razon_Social(String sDNI, String sNumeroDeCuenta, String sNombre, String sApellido, String sLibreta, String sRazon, String sEmail) {
+		imagen = "TS_135505";
+		detalles = null;
+		detalles = imagen+"-Busqueda-DNI: "+sDNI;
 		driver.switchTo().frame(cambioFrame(driver, By.id("SearchClientDocumentType")));
 		sb.BuscarAvanzada("","",sRazon,"","");
 		sleep(1500);
@@ -3244,6 +3284,9 @@ public class GestionesPerfilOficina extends TestBase {
 	
 	@Test (groups={"Sales","GestionDeClientes", "Ciclo1"},dataProvider = "invalidaDocumentacion")
 	public void TS_135506_CRM_Movil_REPRO_Busqueda_Razon_social_No_existente(String sDNI, String sNumeroDeCuenta, String sNombre, String sApellido, String sLibreta, String sRazon, String sEmail) {
+		imagen = "TS_135506";
+		detalles = null;
+		detalles = imagen+"-Busqueda-DNI: "+sDNI;
 		driver.switchTo().frame(cambioFrame(driver, By.id("SearchClientDocumentType")));
 		sb.BuscarAvanzada("","",sRazon,"","");
 		sleep(1500);
@@ -3255,6 +3298,9 @@ public class GestionesPerfilOficina extends TestBase {
 	
 	@Test (groups={"Sales","GestionDeClientes", "Ciclo1"},dataProvider = "validaDocumentacion")
 	public void TS_135507_CRM_Movil_REPRO_Busqueda_Email(String sDNI, String sNumeroDeCuenta, String sNombre, String sApellido, String sLibreta, String sRazon, String sEmail) {
+		imagen = "TS_135507";
+		detalles = null;
+		detalles = imagen+"-Busqueda-DNI: "+sDNI;
 		driver.switchTo().frame(cambioFrame(driver, By.id("SearchClientDocumentType")));
 		sb.BuscarAvanzada("","","","",sEmail);
 		sleep(1500);
@@ -3266,6 +3312,9 @@ public class GestionesPerfilOficina extends TestBase {
 	
 	@Test (groups={"Sales","GestionDeClientes", "Ciclo1"},dataProvider = "invalidaDocumentacion")
 	public void TS_135508_CRM_Movil_REPRO_Busqueda_Email_No_existente(String sDNI, String sNumeroDeCuenta, String sNombre, String sApellido, String sLibreta, String sRazon, String sEmail) {
+		imagen = "TS_135508";
+		detalles = null;
+		detalles = imagen+"-Busqueda-DNI: "+sDNI;
 		driver.switchTo().frame(cambioFrame(driver, By.id("SearchClientDocumentType")));
 		sb.BuscarAvanzada("","","","",sEmail);
 		sleep(1500);
@@ -3282,6 +3331,9 @@ public class GestionesPerfilOficina extends TestBase {
 	
 	@Test (groups={"Sales","GestionDeClientes", "Ciclo1"},dataProvider = "invalidaDocumentacion")
 	public void TS_135510_CRM_Movil_REPRO_Busqueda_Numero_de_Cuenta_No_existente(String sDNI, String sNumeroDeCuenta, String sNombre, String sApellido, String sLibreta, String sRazon, String sEmail) {
+		imagen = "TS_135510";
+		detalles = null;
+		detalles = imagen+"-Busqueda-DNI: "+sDNI;
 		driver.switchTo().frame(cambioFrame(driver, By.id("SearchClientDocumentType")));
 		sb.BuscarAvanzada("", "", "", sNumeroDeCuenta, "");
 		sleep(1500);
@@ -3293,6 +3345,9 @@ public class GestionesPerfilOficina extends TestBase {
 	
 	@Test (groups={"Sales","GestionDeClientes", "Ciclo1"})
 	public void TS_135495_CRM_Movil_REPRO_Busqueda_Tipo_de_documento_DNI() {
+		imagen = "TS_135495";
+		detalles = null;
+		detalles = imagen;
 		driver.switchTo().frame(cambioFrame(driver, By.id("SearchClientDocumentType")));
 		selectByText(driver.findElement(By.id("SearchClientDocumentType")), "DNI");
 		try {Thread.sleep(10000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
@@ -3305,6 +3360,9 @@ public class GestionesPerfilOficina extends TestBase {
 	
 	@Test (groups={"Sales","GestionDeClientes", "Ciclo1"})
 	public void TS_135498_CRM_Movil_REPRO_Busqueda_Tipo_de_documento_Libreta_de_enrolamiento() {
+		imagen = "TS_135498";
+		detalles = null;
+		detalles = imagen;
 		driver.switchTo().frame(cambioFrame(driver, By.id("SearchClientDocumentType")));
 		selectByText(driver.findElement(By.id("SearchClientDocumentType")), "Libreta de Enrolamiento");
 		try {Thread.sleep(10000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
@@ -4043,10 +4101,6 @@ public class GestionesPerfilOficina extends TestBase {
 	}
 
 				
-	
-		
-	
-	
 	@Test (groups = {"GestionesPerfilOficina", "Vista360", "E2E","ConsultaPorGestion", "Ciclo2"}, dataProvider = "CuentaModificacionDeDatos")
 	public void TS134370_CRM_Movil_Prepago_Vista_360_Consulta_por_gestiones_Gestiones_no_registradas_FAN_Front_OOCC(String sDNI) {
 		imagen = "TS134370";
@@ -4096,11 +4150,17 @@ public class GestionesPerfilOficina extends TestBase {
 			} catch (Exception e) {}
 		}
 		driver.findElement(By.cssSelector(".slds-button.slds-button--brand.filterNegotiations.slds-p-horizontal--x-large.slds-p-vertical--x-small.secondaryFont")).click();
+		driver.findElement(By.cssSelector(".slds-button.slds-button--brand.filterNegotiations.slds-p-horizontal--x-large.slds-p-vertical--x-small.secondaryFont")).click();
 		sleep(3000);
 		driver.switchTo().frame(cambioFrame(driver, By.cssSelector(".slds-table.slds-table--bordered.slds-table--resizable-cols.slds-table--fixed-layout.via-slds-table-pinned-header")));
 		sleep(5000);
-		WebElement tabla = driver.findElement(By.cssSelector(".ng-pristine.ng-untouched.ng-valid.ng-empty"));
-		Assert.assertTrue(tabla.isEnabled());
+		boolean a = false;
+		for(WebElement x : driver.findElements(By.cssSelector(".ng-pristine.ng-untouched.ng-valid.ng-empty"))) {
+			if(x.getText().toLowerCase().equals("order")) {
+				a = true;
+			}
+		}
+		Assert.assertFalse(a);
 	}
 	
 	@Test (groups = {"GestionesPerfilOficina", "RenovacionDeCuota", "E2E", "Ciclo1"}, dataProvider = "RenovacionCuotaSinSaldo")
