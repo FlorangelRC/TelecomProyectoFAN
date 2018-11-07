@@ -25,6 +25,7 @@ public class GestionesPerfilBackOffice extends TestBase {
 	private CBS cbs;
 	private CBS_Mattu cbsm;
 	String imagen;
+	String detalles;
 	
 	
 	@BeforeClass (alwaysRun = true)
@@ -40,12 +41,11 @@ public class GestionesPerfilBackOffice extends TestBase {
 		driver.findElement(By.id("tabBar")).findElement(By.tagName("a")).click();
 		sleep(18000);
 		driver.switchTo().defaultContent();
-		sleep(3000);
 		goToLeftPanel2(driver, "Inicio");
 		sleep(18000);
 		try {
 			sb.cerrarPestaniaGestion(driver);
-		} catch (Exception ex1) {}
+		} catch (Exception e) {}
 		driver.switchTo().frame(cambioFrame(driver, By.cssSelector(".hasMotif.homeTab.homepage.ext-webkit.ext-chrome.sfdcBody.brandQuaternaryBgr")));
 		List <WebElement> frames = driver.findElements(By.tagName("iframe"));
 		boolean enc = false;
@@ -58,7 +58,7 @@ public class GestionesPerfilBackOffice extends TestBase {
 				driver.switchTo().frame(cambioFrame(driver, By.cssSelector(".hasMotif.homeTab.homepage.ext-webkit.ext-chrome.sfdcBody.brandQuaternaryBgr")));
 				enc = true;
 				break;
-			} catch(NoSuchElementException noSuchElemExcept) {
+			} catch (NoSuchElementException e) {
 				index++;
 				driver.switchTo().frame(cambioFrame(driver, By.cssSelector(".hasMotif.homeTab.homepage.ext-webkit.ext-chrome.sfdcBody.brandQuaternaryBgr")));
 			}
@@ -67,13 +67,13 @@ public class GestionesPerfilBackOffice extends TestBase {
 			index = -1;
 		try {
 			driver.switchTo().frame(frames.get(index));
-		} catch(ArrayIndexOutOfBoundsException iobExcept) {
+		} catch (ArrayIndexOutOfBoundsException e) {
 			System.out.println("Elemento no encontrado en ningun frame 2.");			
 		}
 		List <WebElement> botones = driver.findElements(By.tagName("button"));
 		for (WebElement UnB : botones) {
 			System.out.println(UnB.getText());
-			if(UnB.getText().equalsIgnoreCase("gesti\u00f3n de clientes")) {
+			if (UnB.getText().equalsIgnoreCase("gesti\u00f3n de clientes")) {
 				UnB.click();
 				break;
 			}
@@ -95,6 +95,8 @@ public class GestionesPerfilBackOffice extends TestBase {
 	@Test (groups = {"GestionesPerfilBackOffice", "Ajustes", "E2E"},  dataProvider = "CuentaAjustesPRE")
 	public void TS121329_CRM_Movil_PRE_Ajuste_Backoffice_modifica_cantidades(String sDNI, String sLinea) {
 		imagen = "TS121329";
+		detalles = null;
+		detalles = imagen + " -Ajustes-DNI: " + sDNI;
 		String datoViejo = cbs.ObtenerValorResponse(cbsm.Servicio_queryLiteBySubscriber(sLinea), "bcs:MainBalance");
 		Integer datosInicial = Integer.parseInt(datoViejo.substring(0, 5));
 		System.out.println(datosInicial);

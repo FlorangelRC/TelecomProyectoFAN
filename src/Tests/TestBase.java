@@ -1202,7 +1202,7 @@ public class TestBase {
 	@DataProvider
 	public Object [][] ProblemaRecargaPrepaga() throws Exception{
 		
-		Object[][] testObjArray = ExcelUtils.getTableArray(dataProviderE2E(),"E2EsinPago",1,1,3,"ProblemaRecargaPrepaga");
+		Object[][] testObjArray = ExcelUtils.getTableArray(dataProviderE2E(),"E2EsinPago",1,1,4,"ProblemaRecargaPrepaga");
 		
 		return (testObjArray);
 	}
