@@ -358,16 +358,17 @@ public class CustomerCare extends BasePage {
 	}
 	
 	public void irAGestiones() {
-		driver.findElement(By.cssSelector(".console-card.active .card-top")).click();
-		List<WebElement> accionesFlyout = driver.findElements(By.cssSelector(".community-flyout-actions-card li"));
+		TestBase tb = new TestBase();
+		driver.switchTo().frame(tb.cambioFrame(driver, By.className("card-top")));
+		List<WebElement> accionesFlyout = driver.findElements(By.className("slds-text-body_regular"));
 		for (WebElement accion : accionesFlyout) {
 			if (accion.getText().contains("Gestiones")) {
 				accion.click();
 				break;
 			}
 		}
-		sleep(4000);
-		cambiarAFrameActivo();
+		sleep(7000);
+		//cambiarAFrameActivo();
 	}
 	
 	public void irADetalleDeConsumos() {

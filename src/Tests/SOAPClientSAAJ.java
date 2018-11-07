@@ -9,7 +9,7 @@ import org.w3c.dom.NodeList;
 public class SOAPClientSAAJ {
 	
 	//SIT
-	static String sPagoEnCajaSIT = "extrahttp://10.75.197.161:8080/services/ArServices";
+	static String sPagoEnCajaSIT = "http://10.75.197.161:8080/services/ArServices";
 	//UAT
 	static String sPagoEnCajaUAT = "extrahttp://10.75.39.146:8080/services/ArServices";
 		
@@ -18,7 +18,10 @@ public class SOAPClientSAAJ {
 	static String sQueryCustomerInfoSIT = "http://10.75.197.163:8080/services/BcServices";
 	static String sQueryFreeUnitSIT = "http://10.75.197.163:8080/services/BbServices";
 	static String sQueryFreeUnitUAT = "http://10.75.39.146:8080/services/BbServices";
-	
+	static String sObtenerInformacionOrdenUAT = "https://mdwtpbusu1.telecom.com.ar:8702/obtenerInformacionOrden";
+	static String sObtenerInformacionOrdenSIT = "https://mdwtpbust1.telecom.com.ar:8702/obtenerInformacionOrden";
+	static String sNotificarResultadoOrdenUAT = "https://mdwtpbusu1.telecom.com.ar:8702/notificarResultadoOrden";
+	static String sNotificarResultadoOrdenSIT = "https://mdwtpbust1.telecom.com.ar:8702/notificarResultadoOrden";
 	
 	public Document callSoapWebService(String soapMessageString, String sEndPoint) {
 		Document doc = null;
@@ -43,6 +46,18 @@ public class SOAPClientSAAJ {
 	    			sEndPoint = sQueryFreeUnitSIT;
 	    		else
 	    			sEndPoint = sQueryFreeUnitUAT;
+	    		break;
+	    	case "notificar resultado orden":
+	    		if (TestBase.urlAmbiente.contains("sit"))
+	    			sEndPoint = sNotificarResultadoOrdenSIT;
+	    		else
+	    			sEndPoint = sNotificarResultadoOrdenUAT;
+	    		break;
+	    	case "obtener informacion orden":
+	    		if (TestBase.urlAmbiente.contains("sit"))
+	    			sEndPoint = sObtenerInformacionOrdenSIT;
+	    		else
+	    			sEndPoint = sObtenerInformacionOrdenUAT;
 	    		break;
     	}
     	
