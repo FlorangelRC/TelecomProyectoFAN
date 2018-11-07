@@ -317,7 +317,7 @@ public class Login extends BasePage {
 			try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 			if (TB.urlCommunity.contains("sit")) {
 				wLoginCommunity.sendKeys("alan.rodriguez@xappia.com");//SIT
-				wPasswordCommunity.sendKeys("Telecom*87");
+				wPasswordCommunity.sendKeys("Telecom*77");
 			}
 			else {
 				wLoginCommunity.sendKeys("rabal@yopmail.com");//UAT 
