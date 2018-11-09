@@ -70,7 +70,7 @@ public class TestsXappia extends TestBase {
 		driver.get("https://crm--sit.cs14.my.salesforce.com/");
 	}
 	
-	@AfterClass (alwaysRun = true)
+	//@AfterClass (alwaysRun = true)
 	public void quit() {
 		driver.quit();
 	}
@@ -798,7 +798,7 @@ public class TestsXappia extends TestBase {
 		List<WebElement> sCaseNumber = driver.findElements(By.cssSelector("[class='x-grid3-cell-inner x-grid3-col-CASES_CASE_NUMBER']"));
 		List<WebElement> sCaseStatus = driver.findElements(By.cssSelector("[class='x-grid3-cell-inner x-grid3-col-CASES_STATUS']"));
 		for (int i = 0; i < sCaseNumber.size(); i++) {
-			if (sCaseStatus.get(i).getText().equalsIgnoreCase("Closed") || sCaseStatus.get(i).getText().equalsIgnoreCase("Resuelta exitosa")) {
+			if (sCaseStatus.get(i).getText().equalsIgnoreCase("Closed") || sCaseStatus.get(i).getText().equalsIgnoreCase("Realizada exitosa")) {
 				sCaseNumber.get(i).findElement(By.tagName("a")).click();
 				break;
 			}
@@ -854,20 +854,34 @@ public class TestsXappia extends TestBase {
 		boolean bAssert = false;
 		for (int i = 0; i < 2; i++) {
 			System.out.println("Cicle " + i);
-			WebElement sCaseContactName = driver.findElement(By.cssSelector("[class='x-grid3-cell-inner x-grid3-col-NAME']"));
-			if (sCaseContactName.getText().equalsIgnoreCase(" ")) {
+			driver.findElement(By.className("x-grid3-row-table")).findElements(By.tagName("td"));
+			List<WebElement> sCaseContactName = driver.findElements(By.cssSelector(".x-grid3-cell-inner.x-grid3-col-NAME"));
+			if (sCaseContactName.get(i).getText().equals(" ")) {
 				bAssert = true;
 				break;
 			}
-			driver.navigate().refresh();
-			sleep(10000);
-			BasePage bBP = new BasePage();
-			driver.switchTo().frame(bBP.getFrameForElement(driver, By.cssSelector("[class='x-grid3-hd-row']")));
-			wTableHeader = driver.findElement(By.cssSelector("[class='x-grid3-hd-row']")).findElements(By.tagName("td"));
-			wTableHeader.get(3).findElement(By.tagName("div")).click();
-		}
-		
 		Assert.assertFalse(bAssert);
 	}
-	
+		}
+	@Test (groups = {"SIT","UAT"})
+	public void TXSU00004_En_La_Lista_de_Casos_Debe_Haber_un_Tipo_Relacionado() {
+		irAConsolaFAN();
+		sb.cerrarPestaniaGestion(driver);
+		cc.menu_360_Ir_A("Casos");		
+		sleep(5000);
+		List<WebElement> wTableHeader = driver.findElement(By.cssSelector("[class='x-grid3-hd-row']")).findElements(By.tagName("td"));
+		wTableHeader.get(8).click();
+		boolean bAssert = false;
+		for (int i = 0; i < 2; i++) {
+			System.out.println("Cicle " + i);
+			driver.findElement(By.className("x-grid3-row-table")).findElements(By.tagName("td"));
+			List<WebElement> sCaseContactName = driver.findElements(By.cssSelector(".x-grid3-cell-inner.x-grid3-col-CASES_TYPE"));
+			if (sCaseContactName.get(i).getText().equals(" ")) {
+				System.out.println(sCaseContactName.size());
+				bAssert = true;
+				break;
+			}
+		Assert.assertFalse(bAssert);
+	}
+		}
 }

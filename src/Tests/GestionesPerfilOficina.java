@@ -3341,7 +3341,7 @@ public class GestionesPerfilOficina extends TestBase {
 		imagen = "TS128436";
 		boolean nominacion = false;
 		driver.switchTo().frame(cambioFrame(driver, By.id("SearchClientDocumentType")));
-		driver.findElement(By.id("PhoneNumber")).sendKeys("2932442864");
+		driver.findElement(By.id("PhoneNumber")).sendKeys("2932446753");
 		driver.findElement(By.id("SearchClientsDummy")).click();
 		sleep(5000);
 		driver.findElement(By.cssSelector(".slds-button.slds-button--icon.slds-m-right--x-small.ng-scope")).click();
