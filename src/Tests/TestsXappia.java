@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import org.openqa.selenium.Alert;
 import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.NoSuchElementException;
@@ -16,11 +17,14 @@ import org.testng.annotations.BeforeClass;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
+import com.sun.org.apache.xalan.internal.xsltc.compiler.sym;
+
 import Pages.BasePage;
 import Pages.Accounts;
 import Pages.ContactSearch;
 import Pages.CustomerCare;
 import Pages.Marketing;
+import Pages.OM;
 import Pages.SalesBase;
 import Pages.setConexion;
 
@@ -884,4 +888,36 @@ public class TestsXappia extends TestBase {
 		Assert.assertFalse(bAssert);
 	}
 		}
+	@Test (groups = "UAT")
+	public void TXU0008_Verificar_funcionamiento_del_boton_modificar_dentro_de_la_orden() {
+		irAConsolaFAN();
+		sb.cerrarPestaniaGestion(driver);
+		cc.menu_360_Ir_A("Casos");
+		List<WebElement> CaseNumber = driver.findElements(By.cssSelector("[class='x-grid3-cell-inner x-grid3-col-CASES_CASE_NUMBER']"));
+		CaseNumber.get(0).findElement(By.tagName("a")).click();
+		sleep(8000);
+		driver.switchTo().frame(cambioFrame(driver, By.id("topButtonRow")));
+		List<WebElement> Menu = driver.findElement(By.id("topButtonRow")).findElements(By.className("btn"));
+		for (WebElement wAux : Menu) {
+			sleep(8000);
+			if (wAux.getAttribute("title").equalsIgnoreCase("Modificar")) {
+				Assert.assertTrue(wAux.isDisplayed());
+					sleep(8000);
+						wAux.click();
+						break;
+				}
+//		Alert alert = driver.switchTo().alert();
+//		alert.accept();
+//		driver.switchTo().defaultContent();
+//		List<WebElement> error = driver.findElement(By.xpath("/html/body/table")).findElements(By.tagName("span"));
+//		for(WebElement x : error) {
+//			if(x.getText().toLowerCase().contains("no se ha podido enviar para la aprobaci\u00f3n")) {
+//			System.out.println(x.getText());	
+//			}
+//			
+//	}
+		}
+		driver.switchTo().defaultContent();
+		System.out.println("No permite Modificar");
+	}
 }
