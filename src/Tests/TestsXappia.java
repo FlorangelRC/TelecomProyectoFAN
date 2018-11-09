@@ -1,5 +1,6 @@
 package Tests;
 
+import java.awt.AWTException;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -21,6 +22,7 @@ import Pages.Accounts;
 import Pages.ContactSearch;
 import Pages.CustomerCare;
 import Pages.Marketing;
+import Pages.PagePerfilTelefonico;
 import Pages.SalesBase;
 import Pages.setConexion;
 
@@ -885,6 +887,99 @@ public class TestsXappia extends TestBase {
 		}
 	}
 	
+	@Test (groups = {"SIT","UAT"}, dataProvider="ventaPackInternacional30SMS")
+	public void TXSU00011_Al_Cancelar_Una_Compra_De_Pack_Que_No_Quede_Dada_De_Alta(String sDNI, String sLinea, String sVentaPack, String sBanco, String sTarjeta, String sPromo, String sCuotas, String sNumTarjeta, String sVenceMes, String sVenceAno, String sCodSeg, String sTipoDNI, String sDNITarjeta, String sTitular) throws InterruptedException, AWTException{
+		SalesBase sale = new SalesBase(driver);
+		CustomerCare cCC = new CustomerCare(driver);
+		PagePerfilTelefonico pagePTelefo = new PagePerfilTelefonico(driver);
+		irAConsolaFAN();
+		sb.cerrarPestaniaGestion(driver);
+		cc.menu_360_Ir_A("Inicio");
+		irAGestionDeClientes();
+		sleep(5000);
+		driver.switchTo().frame(cambioFrame(driver, By.id("SearchClientDocumentType")));
+		sleep(8000);
+		sale.BuscarCuenta("DNI", sDNI);
+		String accid = driver.findElement(By.cssSelector(".searchClient-body.slds-hint-parent.ng-scope")).findElements(By.tagName("td")).get(5).getText();
+		System.out.println("id "+accid);
+		pagePTelefo.buscarAssert();
+		cCC.seleccionarCardPornumeroLinea(sLinea, driver);
+		pagePTelefo.comprarPack("comprar sms");
+		sleep(5000);
+		cCC.closeleftpanel();
+		pagePTelefo.PackLDI(sVentaPack);
+		String sOrder = cc.obtenerOrden2(driver);
+		pagePTelefo.tipoDePago("en factura de venta");
+		try {
+			pagePTelefo.getSimulaciondeFactura().click();
+		}
+		catch (Exception eE) {
+			pagePTelefo.getTipodepago().click();
+		}
+		sleep(12000);
+		List<WebElement> wMenu = driver.findElements(By.cssSelector(".vlc-slds-button--tertiary.ng-binding.ng-scope"));
+		for (WebElement wAux : wMenu) {
+			if (wAux.getText().equalsIgnoreCase("Cancelar")) {
+				wAux.click();
+				break;
+			}
+		}
+		driver.findElement(By.id("alert-ok-button")).click();
+		Marketing mM = new Marketing(driver);
+		mM.closeActiveTab();
+		sleep(5000);
+		pagePTelefo.comprarPack("comprar sms");
+		sleep(5000);
+		driver.switchTo().frame(cambioFrame(driver, By.cssSelector(".slds-button.cpq-item-has-children")));
+		//pagePTelefo.Pack("Packs Opcionales", "Packs LDI", "Pack internacional 30 SMS al Resto del Mundo");
+		String servicio1 = "Packs Opcionales";
+		String servicio2 = "Packs LDI";
+		sleep(5000);
+		driver.findElement(By.cssSelector(".slds-button.cpq-item-has-children")).click();
+		sleep(5000);
+		List<WebElement> NomPack = driver.findElements(By.xpath("//*[@class='cpq-item-product-child-level-1 cpq-item-child-product-name-wrapper']"));
+		for(WebElement a: NomPack) {
+			//System.out.print(a.getText().toLowerCase());
+			//System.out.println(" : "+servicio1.toLowerCase());
+				if (a.getText().toLowerCase().contains(servicio1.toLowerCase())) {
+					System.out.println(servicio1);
+						a.findElement(By.tagName("button")).click();
+							sleep(8000);
+								break;
+							}
+						}
+	
+		List<WebElement> subPack = driver.findElements(By.xpath("//*[@class='cpq-item-product-child-level-2 cpq-item-child-product-name-wrapper']"));
+		List<WebElement> Btnsubpack = driver.findElements(By.xpath("//*[@class='cpq-item-product-child-level-2 cpq-item-child-product-name-wrapper']//*[@class='slds-button slds-button_icon-small']"));			
+		if (subPack.size() == Btnsubpack.size()) {
+			for(WebElement b: subPack) {			
+				//System.out.println("+++++"+b.getText().substring(b.getText().indexOf("\n")+1, b.getText().length())+"++++++");
+				if (b.getText().substring(b.getText().indexOf("\n")+1, b.getText().length()).toLowerCase().contains(servicio2.toLowerCase())) {
+					System.out.println(servicio2);
+					b.findElement(By.tagName("button")).click();
+					sleep(10000);
+					break;
+				}
+			}
+		}
+		List<WebElement> wServicios = driver.findElements(By.cssSelector("[class='cpq-item-base-product'][class='cpq-item-base-product']"));
+		for(WebElement wAux2 : wServicios) {
+			try {
+				if(wAux2.findElement(By.cssSelector("[class='cpq-item-no-children']")).getText().equalsIgnoreCase(sVentaPack)) {
+					Assert.assertTrue(wAux2.findElement(By.cssSelector("[class='slds-button slds-button_neutral']")).isEnabled());
+					break;
+				}
+			}
+			catch (NoSuchElementException eNSEE) {
+				if(wAux2.findElement(By.cssSelector("[class='cpq-product-name js-cpq-cart-product-hierarchy-path-01tc000000578L1AAI<01tc0000005fMVtAAM<01tc0000005fMY4AAM<01tc0000005vzaPAAQ']")).getText().equalsIgnoreCase(sVentaPack)) {
+					Assert.assertTrue(wAux2.findElement(By.cssSelector("[class='slds-button slds-button_neutral']")).isEnabled());
+					break;
+				}
+			}
+		}
+		Assert.assertTrue(mM.corroborarEstadCaso(sOrder, "Draft"));
+		//Verify when the page works
+	}
 	@Test (groups = {"SIT", "UAT"})
 	public void TXSU00005_En_La_Lista_de_Cuentas_Debe_Haber_un_Estado_o_Provincia_Relacionado() {
 		irAConsolaFAN();
