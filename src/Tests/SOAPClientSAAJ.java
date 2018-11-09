@@ -1,5 +1,13 @@
 package Tests;
 
+import java.security.KeyManagementException;
+import java.security.NoSuchAlgorithmException;
+import java.security.cert.X509Certificate;
+
+import javax.net.ssl.HttpsURLConnection;
+import javax.net.ssl.SSLContext;
+import javax.net.ssl.TrustManager;
+import javax.net.ssl.X509TrustManager;
 import javax.xml.soap.*;
 
 import org.w3c.dom.Document;
@@ -11,7 +19,7 @@ public class SOAPClientSAAJ {
 	//SIT
 	static String sPagoEnCajaSIT = "http://10.75.197.161:8080/services/ArServices";
 	//UAT
-	static String sPagoEnCajaUAT = "extrahttp://10.75.39.146:8080/services/ArServices";
+	static String sPagoEnCajaUAT = "http://10.75.39.146:8080/services/ArServices";
 		
 	static String sPagoSimulado = "extrahttp://mdwtpbust1.telecom.com.ar:8701/notificarPago";
 	static String sQueryCustomerInfoUAT = "http://10.75.39.146:8080/services/BcServices";
@@ -70,6 +78,9 @@ public class SOAPClientSAAJ {
             SOAPMessage soapResponse = soapConnection.call(createSRequest(soapMessageString), sEndPoint);
             
             soapConnection.close();
+            System.out.println("*************************************************************");
+            System.out.println(soapResponse.getSOAPBody().getTextContent());
+            System.out.println("*************************************************************");
             doc = soapResponse.getSOAPBody().extractContentAsDocument();
             return doc;
         } catch (Exception e) {
@@ -103,5 +114,19 @@ public class SOAPClientSAAJ {
         }
         return request;
     }
-
+	private static final TrustManager[] UNQUESTIONING_TRUST_MANAGER = new TrustManager[]{ 
+      new X509TrustManager() { 
+	       public java.security.cert.X509Certificate[] getAcceptedIssuers(){ 
+	    	   return null; 
+	       } 
+	       public void checkClientTrusted(X509Certificate[] certs, String authType){} 
+	       public void checkServerTrusted(X509Certificate[] certs, String authType){} 
+      } 
+    }; 
+	public static void turnOffSslChecking() throws NoSuchAlgorithmException, KeyManagementException { 
+	     // Install the all-trusting trust manager 
+	     final SSLContext sc = SSLContext.getInstance("SSL"); 
+	     sc.init(null, UNQUESTIONING_TRUST_MANAGER, null); 
+	     HttpsURLConnection.setDefaultSSLSocketFactory(sc.getSocketFactory()); 
+   } 
 }

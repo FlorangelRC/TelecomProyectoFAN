@@ -1392,7 +1392,7 @@ public class TestBase {
 	@DataProvider
 	public Object[][] CuentaModificacionDeDatos() throws Exception{
 		
-		 Object[][] testObjArray = ExcelUtils.getTableArray(dataProviderE2E(),"E2EsinPago",1,1,1,"Modificacion De Datos");
+		 Object[][] testObjArray = ExcelUtils.getTableArray(dataProviderE2E(),"E2EsinPago",1,1,2,"Modificacion De Datos");
 
 		 return (testObjArray);
 	}
