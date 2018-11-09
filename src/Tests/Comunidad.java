@@ -1,5 +1,7 @@
 package Tests;
 
+import static org.testng.Assert.assertTrue;
+
 import java.awt.AWTException;
 import java.io.IOException;
 import java.util.List;
@@ -35,11 +37,12 @@ public class Comunidad extends TestBase {
 	
 	@AfterMethod(alwaysRun=true)
 	public void backToTheInicio() throws Exception {
-		driver.findElement(By.className("slds-container_fluid")).click();
+		driver.findElement(By.className("profileName")).click();
+		driver.findElement(By.className("menuList")).findElement(By.cssSelector(".home.uiMenuItem")).click();
 		sleep(10000);
 	}
 
-	//@AfterClass(alwaysRun=true)
+	@AfterClass(alwaysRun=true)
 	public void quit() throws IOException {
 		driver.quit();
 		sleep(5000);
@@ -102,7 +105,7 @@ public class Comunidad extends TestBase {
 		List<WebElement> tableRows_2 = table_2.findElements(By.xpath("//tr//td"));
 		for (WebElement cell : tableRows_2) {
 			try {
-				if (cell.getText().equals("15")) {
+				if (cell.getText().equals("6")) {
 				cell.click();
 				}
 			}catch(Exception e) {}
@@ -276,4 +279,50 @@ public class Comunidad extends TestBase {
 		//mobileEmulation();
 		//Blocked
 	}	
+	
+	//@Test (groups = {"Communities","E2E"})                      CUENTA        
+	public void TS135766_CRM_PRE_Community_Desktop_Alta_de_mas_de_un_Pack_Descuenta_Saldo(){
+	driver.switchTo().frame(cambioFrame(driver, By.cssSelector(".slds-size--1-of-1.slds-align-middle.slds-p-vertical--small.cursor")));
+	driver.findElement(By.cssSelector(".slds-size--1-of-1.slds-align-middle.slds-p-vertical--small.cursor")).click();
+	sleep(9000);
+	driver.switchTo().frame(cambioFrame(driver, By.cssSelector(".slds-wrap.slds-m-top--xx-small")));
+	WebElement comprapack = driver.findElements(By.cssSelector(".slds-wrap.slds-m-top--xx-small")).get(1).findElement(By.tagName("button"));
+	comprapack.click();
+	sleep(18000);
+	driver.switchTo().frame(cambioFrame(driver, By.cssSelector(".ta-sales-new-packs.slds-medium-size--12-of-12.ng-scope")));
+	WebElement lista = driver.findElement(By.cssSelector(".ta-sales-new-packs.slds-medium-size--12-of-12.ng-scope")).findElements(By.tagName("div")).get(2);
+	List <WebElement> asdf = lista.findElement(By.cssSelector(".ng-scope.odd.border-top"));
+		for(WebElement a : asdf){
+			if(a.getText().toLowerCase().equals("Packs de Datos")){
+				a.click();
+			}
+		}
+	}
+	
+	@Test (groups = {"Communities","E2E"})
+	public void TS135787_CRM_PRE_Community_Desktop_Cambiar_Contraseña(){
+		String newpass = "Telecom*66";
+		driver.findElement(By.className("profileName")).click();
+		driver.findElement(By.className("menuList")).findElement(By.cssSelector(".profile.uiMenuItem")).click();
+		sleep(5000);
+		driver.switchTo().frame(cambioFrame(driver, By.cssSelector(".slds-col.slds-text-align--left")));
+		List<WebElement> datos = driver.findElements(By.cssSelector(".slds-col.slds-text-align--left"));
+		for(WebElement d : datos){
+			if(d.getText().toLowerCase().contains("cambiar contrase\u00f1a")){
+				d.click();
+			}
+		}
+		sleep(7000);
+		driver.switchTo().frame(cambioFrame(driver, By.id("changePassword:theForm:oldpsw")));
+		driver.findElement(By.id("changePassword:theForm:oldpsw")).sendKeys("Telecom*77");
+		driver.findElement(By.id("changePassword:theForm:psw")).sendKeys(newpass);
+		driver.findElement(By.id("changePassword:theForm:vpsw")).sendKeys(newpass);
+		driver.findElement(By.id("changePassword:theForm:cpwbtn")).click();
+		sleep(7000);
+		System.out.println(driver.findElement(By.id("changePassword:j_id6")).getText());
+		Assert.assertTrue(driver.findElement(By.id("changePassword:j_id6")).isDisplayed());
+		driver.findElement(By.className("volver")).click();
+	}
+	
+	
 }

@@ -374,7 +374,6 @@ public class CBS {
 	}
 	
 	public Document sValidacion_ResponseObtenerInformacionOrden(Document sResponse) {
-		
 		if (sResponse.getElementsByTagName("ns2:idCliente1").getLength()>0) {
 			System.out.println("Correcto");
 		}
@@ -385,7 +384,7 @@ public class CBS {
 	}
 	public Document sValidacion_ResponseNotificarResultadoOrden(Document sResponse) {
 		
-		if (sResponse.getElementsByTagName("ns2:timestamp").getLength()>0) {
+		if (sResponse.getElementsByTagName("ns2:NotificarResultadoOrdenResponse").getLength()>0) {
 			System.out.println("Correcto");
 		}
 		else {
@@ -546,8 +545,8 @@ public class CBS {
 	
 	public String sRequestObtenerInformacionOrden(String sOrden, String sFecha) {
 		String sRequest = "";
-		sRequest = "<soapenv:Envelope xmlns:soapenv=\"http://schemas.xmlsoap.org/soap/envelope/\" xmlns:v1=\"\"http://www.personal.com.ar/Common/RequestMessageHeader/v1.0\" xmlns:v11=\"http://www.personal.com.ar/ESB/ObtenerInformacionOrden/v1.0\" xmlns:v12=\"http://www.personal.com.ar/Common/Entities/NegocioComun/Orden/v1.0\" xmlns:v2=\"http://www.personal.com.ar/Common/Entities/Cliente/MedioDePago/v2.0\" xmlns:v3=\"http://www.personal.com.ar/Common/Entities/Cliente/Pago/v3.0\">\r\n"
-				+ "\r\n   <soapenv:Header/>\r\n"
+		sRequest = "<soapenv:Envelope xmlns:soapenv=\"http://schemas.xmlsoap.org/soap/envelope/\" xmlns:v1=\"http://www.personal.com.ar/Common/RequestMessageHeader/v1.0\" xmlns:v11=\"http://www.personal.com.ar/ESB/ObtenerInformacionOrden/v1.0\" xmlns:v12=\"http://www.personal.com.ar/Common/Entities/NegocioComun/Orden/v1.0\" xmlns:v2=\"http://www.personal.com.ar/Common/Entities/Cliente/MedioDePago/v2.0\" xmlns:v3=\"http://www.personal.com.ar/Common/Entities/Cliente/Pago/v3.0\">\r\n"
+				+ "\r\n   <soapenv:Header>\r\n"
 				+ "\r\n   <v1:requestHeader>\r\n"
 				+ "\r\n       <v1:consumer code=\"IVR\" channel=\"IVR\" additionalData=\"?\">\r\n"
 				+ "\r\n             <v1:userID>x001412</v1:userID>\r\n"
@@ -561,14 +560,14 @@ public class CBS {
 				+ "\r\n   <soapenv:Body>\r\n"
 				+ "\r\n       <v11:ObtenerInformacionOrdenRequest>\r\n"
 				+ "\r\n       <v12:codOrden>"+sOrden;
-		sRequest+="           </v12:codOrden>\r\n"
+		sRequest+="</v12:codOrden>\r\n"
 				+ "\r\n       <v11:tipoOperacion>COMPRA</v11:tipoOperacion>\r\n"
 				//+ "\r\n       <!-- <v2:nroCuponTarjeta>00003093</v2:nroCuponTarjeta>\r\n"
 				//+ "\r\n       <v3:fechaPago>2018-07-19 00:00:00</v3:fechaPago>-->\r\n"
 				+ "\r\n         <v11:usuario>367</v11:usuario>\r\n"
 				+ "\r\n       </v11:ObtenerInformacionOrdenRequest>\r\n"
 				+ "\r\n   </soapenv:Body>\r\n"
-				+ "\r\n</soapenv:Envelope>\r\n";
+				+ "\r\n</soapenv:Envelope>";
 		return sRequest;
 	}
 	
@@ -582,8 +581,8 @@ public class CBS {
 	
 	public String sRequestNotificarResultadoOrden(String sOrden, String sFecha, String sHora, String sCodPag) {
 		String sRequest = "";
-		sRequest = "<soapenv:Envelope xmlns:soapenv=\"http://schemas.xmlsoap.org/soap/envelope/\" xmlns:v1=\"\"http://www.personal.com.ar/Common/RequestMessageHeader/v1.0\" xmlns:v11=\"http://www.personal.com.ar/ESB/NotificarResultadoOrden/v1.0\" xmlns:v12=\"http://www.personal.com.ar/Common/Entities/NegocioComun/Orden/v1.0\" xmlns:v3=\"http://www.personal.com.ar/Common/Entities/Cliente/Pago/v3.0\" xmlns:v2=\"http://www.personal.com.ar/Common/Entities/Cliente/MedioDePago/v2.0\">\r\n"
-				+ "\r\n   <soapenv:Header/>\r\n"
+		sRequest = "<soapenv:Envelope xmlns:soapenv=\"http://schemas.xmlsoap.org/soap/envelope/\" xmlns:v1=\"http://www.personal.com.ar/Common/RequestMessageHeader/v1.0\" xmlns:v11=\"http://www.personal.com.ar/ESB/NotificarResultadoOrden/v1.0\" xmlns:v12=\"http://www.personal.com.ar/Common/Entities/NegocioComun/Orden/v1.0\" xmlns:v3=\"http://www.personal.com.ar/Common/Entities/Cliente/Pago/v3.0\" xmlns:v2=\"http://www.personal.com.ar/Common/Entities/Cliente/MedioDePago/v2.0\">\r\n"
+				+ "\r\n   <soapenv:Header>\r\n"
 				+ "\r\n   <v1:requestHeader>\r\n"
 				+ "\r\n       <v1:consumer code=\"IVR\" channel=\"IVR\" additionalData=\"?\">\r\n"
 				+ "\r\n             <v1:userID>x001412</v1:userID>\r\n"
@@ -597,18 +596,18 @@ public class CBS {
 				+ "\r\n   <soapenv:Body>\r\n"
 				+ "\r\n       <v11:NotificarResultadoOrdenRequest>\r\n"
 				+ "\r\n       <v12:codOrden>"+sOrden;
-		sRequest+="           </v12:codOrden>\r\n"
+		sRequest+="</v12:codOrden>\r\n"
 				+ "\r\n       <v11:equipo>001</v11:equipo>\r\n"
 				+ "\r\n       <v11:tipoOperacion>COMPRA</v11:tipoOperacion>\r\n"
 				+ "\r\n        <v3:codPago>"+sCodPag;
-		sRequest+="            </v3:codPago>\r\n"
+		sRequest+="</v3:codPago>\r\n"
 				+ "\r\n        <v11:numeroTarjetaEnmascarado>539909******1010</v11:numeroTarjetaEnmascarado>\r\n"
 				+ "\r\n        <v2:nroCuponTarjeta>00002870</v2:nroCuponTarjeta>\r\n"
 				//+ "\r\n         <!--<v11:numeroAutorizacion>?</v11:numeroAutorizacion>-->\r\n"
 				+ "\r\n       <v3:fechaPago>"+sFecha;
-		sRequest+="           </v3:fechaPago>\r\n"
+		sRequest+="</v3:fechaPago>\r\n"
 				+ "\r\n       <v11:horaCompra>"+sHora;
-		sRequest+="           </v11:horaCompra>\r\n"
+		sRequest+="</v11:horaCompra>\r\n"
 				+ "\r\n        <v2:nroComercio>00000413</v2:nroComercio>\r\n"
 				+ "\r\n         <v11:flagPinpadOffline>0</v11:flagPinpadOffline>\r\n"
 				//+ "\r\n         <!--<v11:resultadoOperacion>TEC0001999</v11:resultadoOperacion>-->\r\n"
@@ -616,7 +615,7 @@ public class CBS {
 				//+ "\r\n          <!--<v11:descripcionOperacion>?</v11:descripcionOperacion>-->\r\n"
 				+ "\r\n       </v11:NotificarResultadoOrdenRequest>\r\n"
 				+ "\r\n   </soapenv:Body>\r\n"
-				+ "\r\n</soapenv:Envelope>\r\n";
+				+ "\r\n</soapenv:Envelope>";
 		return sRequest;
 	}
 }

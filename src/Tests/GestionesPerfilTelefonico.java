@@ -507,17 +507,17 @@ public class GestionesPerfilTelefonico extends TestBase{
 	}
 	
 	@Test (groups= {"GestionesPerfilTelefonico", "ModificacionDeDatos", "E2E"},  dataProvider = "CuentaModificacionDeDatos")
-	public void TS134835_CRM_Movil_PRE_Modificacion_de_datos_Actualizar_los_datos_del_cliente_completos_FAN_Front_Telefonico(String cDNI) {
+	public void TS134835_CRM_Movil_PRE_Modificacion_de_datos_Actualizar_los_datos_del_cliente_completos_FAN_Front_Telefonico(String cDNI, String sLinea) {
 		imagen = "TS134835";
 		detalles = null;
-		detalles = imagen+"-Modificacion de datos-DNI:"+cDNI;
+		detalles = imagen + " -ActualizarDatos-DNI: "+ sDNI;
 		String nuevoNombre = "Otro";
 		String nuevoApellido = "Apellido";
 		String nuevoNacimiento = "10/10/1982";
 		String nuevoMail = "maildetest@gmail.com";
 		String nuevoPhone = "3574409239";
 		driver.switchTo().frame(cambioFrame(driver, By.id("SearchClientDocumentType")));
-		sb.BuscarCuenta("DNI", cDNI);
+		sb.BuscarCuenta("DNI", sDNI);
 		driver.findElement(By.cssSelector(".slds-tree__item.ng-scope")).click();
 		sleep(15000);
 		driver.switchTo().frame(cambioFrame(driver, By.className("profile-box")));
@@ -540,8 +540,18 @@ public class GestionesPerfilTelefonico extends TestBase{
 		driver.findElement(By.id("MobilePhone")).clear();
 		driver.findElement(By.id("MobilePhone")).sendKeys(nuevoPhone);
 		driver.findElement(By.id("ClientInformation_nextBtn")).click();
-		sleep(5000);
+		sleep(10000);
+		Assert.assertTrue(driver.findElement(By.className("ta-care-omniscript-done")).findElement(By.className("ng-binding")).getText().equalsIgnoreCase("Las modificaciones se realizaron con \u00e9xito!"));
+		String orden = driver.findElement(By.cssSelector(".vlc-slds-inline-control__label.ng-binding")).getText();
+		orden = orden.substring(orden.length()-9, orden.length()-1);
+		detalles +="-Orden:"+orden;		
 		mk.closeActiveTab();
+		CBS cCBS = new CBS();
+		CBS_Mattu cCBSM = new CBS_Mattu();
+		assertTrue(cCBS.ObtenerValorResponse(cCBSM.Servicio_QueryCustomerInfo(sLinea), "bcc:Email").equals(nuevoMail));
+		assertTrue(cCBS.ObtenerValorResponse(cCBSM.Servicio_QueryCustomerInfo(sLinea), "bcc:FirstName").equalsIgnoreCase(nuevoNombre));
+		assertTrue(cCBS.ObtenerValorResponse(cCBSM.Servicio_QueryCustomerInfo(sLinea), "bcc:LastName").equalsIgnoreCase(nuevoApellido));
+		assertTrue(cCBS.ObtenerValorResponse(cCBSM.Servicio_QueryCustomerInfo(sLinea), "bcc:Birthday").contains("19821010"));
 		driver.switchTo().frame(cambioFrame(driver, By.className("profile-box")));
 		driver.findElements(By.className("profile-edit")).get(0).click();
 		sleep(10000);
@@ -565,7 +575,7 @@ public class GestionesPerfilTelefonico extends TestBase{
 		driver.findElement(By.id("ClientInformation_nextBtn")).click();
 		sleep(8000);
 		Assert.assertTrue(driver.findElement(By.className("ta-care-omniscript-done")).findElement(By.className("ng-binding")).getText().equalsIgnoreCase("Las modificaciones se realizaron con \u00e9xito!"));
-		String orden = driver.findElement(By.cssSelector(".vlc-slds-inline-control__label.ng-binding")).getText();
+		orden = driver.findElement(By.cssSelector(".vlc-slds-inline-control__label.ng-binding")).getText();
 		orden = orden.substring(orden.length()-9, orden.length()-1);
 		detalles +="-Orden:"+orden;		
 	}
@@ -639,9 +649,9 @@ public class GestionesPerfilTelefonico extends TestBase{
 
 	
 	@Test (groups = {"GestionesPerfilTelefonico", "HistorialDeRecargas", "Ciclo2"}, dataProvider = "CuentaProblemaRecarga")
-	public void TS135347_Historial_de_Recargas_Consultar_detalle_de_Recargas_por_Canal_TODOS_Fan_FRONT_Telefonico(String cDNI, String cLinea) {
+	public void TS135347_Historial_de_Recargas_Consultar_detalle_de_Recargas_por_Canal_TODOS_Fan_FRONT_Telefonico(String sDNI, String sLinea) {
 		driver.switchTo().frame(cambioFrame(driver, By.id("SearchClientDocumentType")));
-		sb.BuscarCuenta("DNI", cDNI);
+		sb.BuscarCuenta("DNI", sDNI);
 		driver.findElement(By.cssSelector(".slds-tree__item.ng-scope")).click();
 		sleep(10000);
 		cc.irAHistoriales();
@@ -1126,6 +1136,9 @@ public class GestionesPerfilTelefonico extends TestBase{
 		
 	@Test (groups = {"GestionesPerfilTelefonico", "ReseteoDeClave", "Ciclo2"}, dataProvider = "CuentaReseteoClave")
 	public void TS95981_CRM_Movil_REPRO_Reseteo_de_Clave_Telefonico(String sDNI) {
+		imagen = "TS95981";
+		detalles = null;
+		detalles = imagen + "ReseteoDeClave: " + sDNI;
 		driver.switchTo().frame(cambioFrame(driver, By.id("SearchClientDocumentType")));
 		sb.BuscarCuenta("DNI", sDNI);
 		driver.findElement(By.cssSelector(".slds-tree__item.ng-scope")).click();
@@ -1143,6 +1156,9 @@ public class GestionesPerfilTelefonico extends TestBase{
 	
 	@Test (groups = {"GestionesPerfilTelefonico", "ReseteoDeClave", "Ciclo2"}, dataProvider = "CuentaReseteoClave")
 	public void TS95983_CRM_Movil_REPRO_No_Reseteo_de_Clave_Telefonico(String sDNI) {
+		imagen = "TS95983";
+		detalles = null;
+		detalles = imagen + "ReseteoDeClave: " + sDNI;
 		driver.switchTo().frame(cambioFrame(driver, By.id("SearchClientDocumentType")));
 		sb.BuscarCuenta("DNI", sDNI);
 		driver.findElement(By.cssSelector(".slds-tree__item.ng-scope")).click();
@@ -1473,73 +1489,10 @@ public class GestionesPerfilTelefonico extends TestBase{
 	}
 	
 	@Test (groups = {"GestionesPerfilTelefonico", "ActualizarDatos", "E2E", "Ciclo3"}, dataProvider = "CuentaModificacionDeDatos")
-	public void TS134835_CRM_Movil_REPRO_Modificacion_de_datos_Actualizar_los_datos_del_cliente_completos_FAN_Front_Telefonico(String sDNI) {
-		imagen = "TS134835";
-		detalles = null;
-		detalles = imagen+"-Modificacion de datos-DNI: "+ sDNI;
-		String nuevoNombre = "Otro";
-		String nuevoApellido = "Apellido";
-		String nuevoNacimiento = "10/10/1982";
-		String nuevoMail = "maildetest@gmail.com";
-		String nuevoPhone = "3574409239";
-		driver.switchTo().frame(cambioFrame(driver, By.id("SearchClientDocumentType")));
-		sb.BuscarCuenta("DNI", sDNI);
-		driver.findElement(By.cssSelector(".slds-tree__item.ng-scope")).click();
-		sleep(15000);
-		driver.switchTo().frame(cambioFrame(driver, By.className("profile-box")));
-		driver.findElements(By.className("profile-edit")).get(0).click();
-		sleep(10000);
-		driver.switchTo().frame(cambioFrame(driver, By.id("DocumentNumber")));
-		String nombre = driver.findElement(By.id("FirstName")).getAttribute("value");
-		String apellido = driver.findElement(By.id("LastName")).getAttribute("value");
-		String fechaNacimiento = driver.findElement(By.id("Birthdate")).getAttribute("value");
-		String mail = driver.findElement(By.id("Email")).getAttribute("value");
-		String phone = driver.findElement(By.id("MobilePhone")).getAttribute("value");
-		driver.findElement(By.id("FirstName")).clear();
-		driver.findElement(By.id("FirstName")).sendKeys(nuevoNombre);
-		driver.findElement(By.id("LastName")).clear();
-		driver.findElement(By.id("LastName")).sendKeys(nuevoApellido);
-		driver.findElement(By.id("Birthdate")).clear();
-		driver.findElement(By.id("Birthdate")).sendKeys(nuevoNacimiento);
-		driver.findElement(By.id("Email")).clear();
-		driver.findElement(By.id("Email")).sendKeys(nuevoMail);
-		driver.findElement(By.id("MobilePhone")).clear();
-		driver.findElement(By.id("MobilePhone")).sendKeys(nuevoPhone);
-		driver.findElement(By.id("ClientInformation_nextBtn")).click();
-		sleep(5000);
-		mk.closeActiveTab();
-		driver.switchTo().frame(cambioFrame(driver, By.className("profile-box")));
-		driver.findElements(By.className("profile-edit")).get(0).click();
-		sleep(10000);
-		driver.switchTo().frame(cambioFrame(driver, By.id("DocumentNumber")));
-		Assert.assertTrue(driver.findElement(By.id("FirstName")).getAttribute("value").equals(nuevoNombre));
-		Assert.assertTrue(driver.findElement(By.id("LastName")).getAttribute("value").equals(nuevoApellido));
-		Assert.assertTrue(driver.findElement(By.id("Birthdate")).getAttribute("value").equals(nuevoNacimiento));
-		Assert.assertTrue(driver.findElement(By.id("Email")).getAttribute("value").equals(nuevoMail));
-		Assert.assertTrue(driver.findElement(By.id("MobilePhone")).getAttribute("value").equals(nuevoPhone));
-		Assert.assertTrue(driver.findElement(By.id("DocumentType")).getAttribute("disabled").equals("true"));
-		driver.findElement(By.id("FirstName")).clear();
-		driver.findElement(By.id("FirstName")).sendKeys(nombre);
-		driver.findElement(By.id("LastName")).clear();
-		driver.findElement(By.id("LastName")).sendKeys(apellido);
-		driver.findElement(By.id("Birthdate")).clear();
-		driver.findElement(By.id("Birthdate")).sendKeys(fechaNacimiento);
-		driver.findElement(By.id("Email")).clear();
-		driver.findElement(By.id("Email")).sendKeys(mail);
-		driver.findElement(By.id("MobilePhone")).clear();
-		driver.findElement(By.id("MobilePhone")).sendKeys(phone);
-		driver.findElement(By.id("ClientInformation_nextBtn")).click();
-		sleep(8000);
-		Assert.assertTrue(driver.findElement(By.className("ta-care-omniscript-done")).getText().contains("Las modificaciones se realizaron con \u00e9xito"));
-		String orden = driver.findElement(By.cssSelector(".vlc-slds-inline-control__label.ng-binding")).getText();
-		orden = orden.substring(orden.length()-9, orden.length()-1);
-	}
-	
-	@Test (groups = {"GestionesPerfilTelefonico", "ActualizarDatos", "E2E", "Ciclo3"}, dataProvider = "CuentaModificacionDeDatos")
-	public void TS129336_CRM_Movil_REPRO_Modificacion_de_datos_Actualizar_datos_campo_Correo_Electronico_Cliente_FAN_Front_Telefonico(String sDNI) {
+	public void TS129336_CRM_Movil_REPRO_Modificacion_de_datos_Actualizar_datos_campo_Correo_Electronico_Cliente_FAN_Front_Telefonico(String sDNI, String sLinea) {
 		imagen = "TS129336";
 		detalles = null;
-		detalles = imagen+"-Modificacion de datos-DNI: "+ sDNI;
+		detalles = imagen+"-Modificacion de datos-DNI:"+sDNI;
 		String nuevoMail = "maildetest@gmail.com";
 		driver.switchTo().frame(cambioFrame(driver, By.id("SearchClientDocumentType")));
 		sb.BuscarCuenta("DNI", sDNI);
@@ -1553,8 +1506,15 @@ public class GestionesPerfilTelefonico extends TestBase{
 		driver.findElement(By.id("Email")).clear();
 		driver.findElement(By.id("Email")).sendKeys(nuevoMail);
 		driver.findElement(By.id("ClientInformation_nextBtn")).click();
-		sleep(5000);
+		sleep(10000);
+		Assert.assertTrue(driver.findElement(By.className("ta-care-omniscript-done")).findElement(By.className("ng-binding")).getText().equalsIgnoreCase("Las modificaciones se realizaron con \u00e9xito!"));
+		String orden = driver.findElement(By.cssSelector(".vlc-slds-inline-control__label.ng-binding")).getText();
+		orden = orden.substring(orden.length()-9, orden.length()-1);
+		detalles +="-Orden:"+orden;	
 		mk.closeActiveTab();
+		CBS cCBS = new CBS();
+		CBS_Mattu cCBSM = new CBS_Mattu();
+		assertTrue(cCBS.ObtenerValorResponse(cCBSM.Servicio_QueryCustomerInfo(sLinea), "bcc:Email").equals(nuevoMail));
 		driver.switchTo().frame(cambioFrame(driver, By.className("profile-box")));
 		driver.findElements(By.className("profile-edit")).get(0).click();
 		sleep(10000);
@@ -1565,15 +1525,16 @@ public class GestionesPerfilTelefonico extends TestBase{
 		driver.findElement(By.id("ClientInformation_nextBtn")).click();
 		sleep(8000);
 		Assert.assertTrue(driver.findElement(By.className("ta-care-omniscript-done")).getText().contains("Las modificaciones se realizaron con \u00e9xito"));
-		String orden = driver.findElement(By.cssSelector(".vlc-slds-inline-control__label.ng-binding")).getText();
+		orden = driver.findElement(By.cssSelector(".vlc-slds-inline-control__label.ng-binding")).getText();
 		orden = orden.substring(orden.length()-9, orden.length()-1);
+		detalles +="-Orden:"+orden;	
 	}
 	
 	@Test (groups = {"GestionesPerfilTelefonico", "ActualizarDatos", "E2E", "Ciclo3"}, dataProvider = "CuentaModificacionDeDatos")
-	public void TS121104_CRM_Movil_REPRO_Modificacion_de_datos_No_Actualizar_datos_Cliente_FAN_Front_Telefonico(String sDNI) {
+	public void TS121104_CRM_Movil_REPRO_Modificacion_de_datos_No_Actualizar_datos_Cliente_FAN_Front_Telefonico(String sDNI, String sLinea) {
 		imagen = "TS121104";
 		detalles = null;
-		detalles = imagen+"-Modificacion de datos-DNI: "+ sDNI;
+		detalles = imagen+"-Modificacion de datos No modifica-DNI:"+sDNI;
 		boolean cancelar = false;
 		driver.switchTo().frame(cambioFrame(driver, By.id("SearchClientDocumentType")));
 		sb.BuscarCuenta("DNI", sDNI);
@@ -1595,14 +1556,16 @@ public class GestionesPerfilTelefonico extends TestBase{
 	@Test (groups = {"GestionesPerfilTelefonico", "ActualizarDatos", "E2E", "Ciclo3"}, dependsOnMethods = "TS121104_CRM_Movil_REPRO_Modificacion_de_datos_No_Actualizar_datos_Cliente_FAN_Front_Telefonico")
 	public void TS121113_CRM_Movil_REPRO_No_Actualizar_datos_Cliente_FAN_Front_Telefonico() {
 		imagen = "TS121113";
+		detalles = null;
+		detalles = imagen+"-Modificacion de datos No modifica No modifica";
 		Assert.assertTrue(true);
 	}
 	
 	@Test (groups = {"GestionesPerfilTelefonico", "ActualizarDatos", "E2E", "Ciclo3"}, dataProvider = "CuentaModificacionDeDatos")
-	public void TS121105_CRM_Movil_REPRO_Modificacion_de_datos_Cliente_FAN_Front_Telefonico(String sDNI) {
+	public void TS121105_CRM_Movil_REPRO_Modificacion_de_datos_Cliente_FAN_Front_Telefonico(String sDNI, String sLinea) {
 		imagen = "TS121105";
 		detalles = null;
-		detalles = imagen+"-Modificacion de datos-DNI: "+ sDNI;
+		detalles = imagen + " -ActualizarDatos-DNI: " + sDNI;
 		String nuevoNombre = "Otro";
 		String nuevoApellido = "Apellido";
 		String nuevoNacimiento = "10/10/1982";
@@ -1632,8 +1595,18 @@ public class GestionesPerfilTelefonico extends TestBase{
 		driver.findElement(By.id("MobilePhone")).clear();
 		driver.findElement(By.id("MobilePhone")).sendKeys(nuevoPhone);
 		driver.findElement(By.id("ClientInformation_nextBtn")).click();
-		sleep(5000);
+		sleep(10000);
+		Assert.assertTrue(driver.findElement(By.className("ta-care-omniscript-done")).findElement(By.className("ng-binding")).getText().equalsIgnoreCase("Las modificaciones se realizaron con \u00e9xito!"));
+		String orden = driver.findElement(By.cssSelector(".vlc-slds-inline-control__label.ng-binding")).getText();
+		orden = orden.substring(orden.length()-9, orden.length()-1);
+		detalles +="-Orden:"+orden;	
 		mk.closeActiveTab();
+		CBS cCBS = new CBS();
+		CBS_Mattu cCBSM = new CBS_Mattu();
+		assertTrue(cCBS.ObtenerValorResponse(cCBSM.Servicio_QueryCustomerInfo(sLinea), "bcc:Email").equals(nuevoMail));
+		assertTrue(cCBS.ObtenerValorResponse(cCBSM.Servicio_QueryCustomerInfo(sLinea), "bcc:FirstName").equalsIgnoreCase(nuevoNombre));
+		assertTrue(cCBS.ObtenerValorResponse(cCBSM.Servicio_QueryCustomerInfo(sLinea), "bcc:LastName").equalsIgnoreCase(nuevoApellido));
+		assertTrue(cCBS.ObtenerValorResponse(cCBSM.Servicio_QueryCustomerInfo(sLinea), "bcc:Birthday").contains("19821010"));
 		driver.switchTo().frame(cambioFrame(driver, By.className("profile-box")));
 		driver.findElements(By.className("profile-edit")).get(0).click();
 		sleep(10000);
@@ -1657,16 +1630,16 @@ public class GestionesPerfilTelefonico extends TestBase{
 		driver.findElement(By.id("ClientInformation_nextBtn")).click();
 		sleep(8000);
 		Assert.assertTrue(driver.findElement(By.className("ta-care-omniscript-done")).findElement(By.className("ng-binding")).getText().equalsIgnoreCase("Se realizaron correctamente las modificaciones."));
-		String orden = driver.findElement(By.cssSelector(".vlc-slds-inline-control__label.ng-binding")).getText();
+		orden = driver.findElement(By.cssSelector(".vlc-slds-inline-control__label.ng-binding")).getText();
 		orden = orden.substring(orden.length()-9, orden.length()-1);
 		detalles +="-Orden:"+orden;
 	}
 	
 	@Test (groups = {"GestionesPerfilTelefonico", "ActualizarDatos", "E2E", "Ciclo3"}, dataProvider = "CuentaModificacionDeDatos")
-	public void TS121112_CRM_Movil_REPRO_Modificacion_de_datos_Actualizar_datos_Cliente_FAN_Front_Telefonico(String sDNI) {
+	public void TS121112_CRM_Movil_REPRO_Modificacion_de_datos_Actualizar_datos_Cliente_FAN_Front_Telefonico(String sDNI, String sLinea) {
 		imagen = "TS121112";
 		detalles = null;
-		detalles = imagen+"-ModificaciondeDatosTelefonico-DNI:"+sDNI;
+		detalles = imagen + " -ActualizarDatos-DNI: " + sDNI;
 		String nuevoMail = "maildetest@gmail.com";
 		driver.switchTo().frame(cambioFrame(driver, By.id("SearchClientDocumentType")));
 		sb.BuscarCuenta("DNI", sDNI);
@@ -1680,8 +1653,15 @@ public class GestionesPerfilTelefonico extends TestBase{
 		driver.findElement(By.id("Email")).clear();
 		driver.findElement(By.id("Email")).sendKeys(nuevoMail);
 		driver.findElement(By.id("ClientInformation_nextBtn")).click();
-		sleep(5000);
+		sleep(10000);
+		Assert.assertTrue(driver.findElement(By.className("ta-care-omniscript-done")).findElement(By.className("ng-binding")).getText().equalsIgnoreCase("Las modificaciones se realizaron con \u00e9xito!"));
+		String orden = driver.findElement(By.cssSelector(".vlc-slds-inline-control__label.ng-binding")).getText();
+		orden = orden.substring(orden.length()-9, orden.length()-1);
+		detalles +="-Orden:"+orden;	
 		mk.closeActiveTab();
+		CBS cCBS = new CBS();
+		CBS_Mattu cCBSM = new CBS_Mattu();
+		assertTrue(cCBS.ObtenerValorResponse(cCBSM.Servicio_QueryCustomerInfo(sLinea), "bcc:Email").equals(nuevoMail));
 		driver.switchTo().frame(cambioFrame(driver, By.className("profile-box")));
 		driver.findElements(By.className("profile-edit")).get(0).click();
 		sleep(10000);
@@ -1692,8 +1672,9 @@ public class GestionesPerfilTelefonico extends TestBase{
 		driver.findElement(By.id("ClientInformation_nextBtn")).click();
 		sleep(8000);
 		Assert.assertTrue(driver.findElement(By.className("ta-care-omniscript-done")).getText().contains("Las modificaciones se realizaron con \u00e9xito"));
-		String orden = driver.findElement(By.cssSelector(".vlc-slds-inline-control__label.ng-binding")).getText();
+		orden = driver.findElement(By.cssSelector(".vlc-slds-inline-control__label.ng-binding")).getText();
 		orden = orden.substring(orden.length()-9, orden.length()-1);
+		detalles +="-Orden:"+orden;	
 	}
 	
 	@Test (groups = {"GestionesPerfilOficina", "HistorialDeRecargas", "Ciclo2"}, dataProvider = "RecargasHistorias")
@@ -1760,7 +1741,7 @@ public class GestionesPerfilTelefonico extends TestBase{
 	public void TS121138_CRM_Movil_REPRO_Ajuste_Credito_FAN_Front_Telefonico_BO(String sDNI) {
 		imagen = "TS121138";
 		detalles = null;
-		detalles = imagen+"-AjusteCreditoTelefonico-DNI:"+sDNI;
+		detalles = imagen + " -Ajustes-DNI: " + sDNI;
 		boolean gest = false;
 		driver.switchTo().frame(cambioFrame(driver, By.id("SearchClientDocumentType")));
 		sb.BuscarCuenta("DNI", sDNI);
@@ -1810,8 +1791,6 @@ public class GestionesPerfilTelefonico extends TestBase{
 	@Test (groups = {"GestionesPerfilTelefonico", "Ajustes", "E2E", "Ciclo3"}, dataProvider = "CuentaAjustesPRE")
 	public void TS135376_CRM_Movil_Prepago_Otros_Historiales_Historial_de_ajustes_Seleccion_de_Fechas_Ajuste_positivo_FAN_Front_Telefonico(String sDNI) {
 		imagen = "TS135376";
-		detalles = null;
-		detalles = imagen+"-HistorialDeAjusteTelefonico-DNI:"+sDNI;
 		boolean ajustePositivo = false;
 		driver.switchTo().frame(cambioFrame(driver, By.id("SearchClientDocumentType")));
 		sb.BuscarCuenta("DNI", sDNI);

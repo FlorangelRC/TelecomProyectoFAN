@@ -1,6 +1,8 @@
 package Tests;
 
 import java.awt.AWTException;
+import java.security.KeyManagementException;
+import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
 import java.util.Date;
 
@@ -16,6 +18,7 @@ import org.w3c.dom.Document;
 import Pages.BasePage;
 import Pages.CBS;
 import Pages.ManejoCaja;
+import Pages.SSLUtil;
 import Pages.setConexion;
 
 public class CBS_Mattu extends TestBase {
@@ -199,7 +202,6 @@ public class CBS_Mattu extends TestBase {
 		SOAPClientSAAJ sSCS = new SOAPClientSAAJ();
 		CBS cCBS = new CBS();
 		Document sResponse = cCBS.sValidacion_ResponseObtenerInformacionOrden(sSCS.callSoapWebService(cCBS.sRequestObtenerInformacionOrden(sOrden, sFecha), sEndPoint));
-		System.out.println("sResponde ="+sResponse);
 		//Assert.assertFalse(sResponse.startsWith("false"));
 		System.out.println(cCBS.ObtenerValorResponse(sResponse, "ns2:idCliente1"));
 		return sResponse;
@@ -213,17 +215,21 @@ public class CBS_Mattu extends TestBase {
 		String sHora =((new java.text.SimpleDateFormat("HHmmss")).format(new Date())).toString();
 		SOAPClientSAAJ sSCS = new SOAPClientSAAJ();
 		CBS cCBS = new CBS();
-		Document sResponse = cCBS.sValidacion_ResponseObtenerInformacionOrden(sSCS.callSoapWebService(cCBS.sRequestNotificarResultadoOrden(sOrden, sFecha, sHora,sCodPag), sEndPoint));
-		System.out.println("sResponde ="+sResponse);
+		Document sResponse = cCBS.sValidacion_ResponseNotificarResultadoOrden(sSCS.callSoapWebService(cCBS.sRequestNotificarResultadoOrden(sOrden, sFecha, sHora,sCodPag), sEndPoint));
 		//Assert.assertFalse(sResponse.startsWith("false"));
+		System.out.println(cCBS.ObtenerValorResponse(sResponse, "ns2:NotificarResultadoOrdenResponse"));
 		return sResponse;
 	}
 	
 	@Test
-	public void PagarTCPorServicio(String sOrden) {
+	public void PagarTCPorServicio(/*String sOrden*/) throws KeyManagementException, NoSuchAlgorithmException {
+		String sOrden = "00007249";
+		SOAPClientSAAJ sSCS = new SOAPClientSAAJ();
+		sSCS.turnOffSslChecking();
 		Document doc = Servicio_obtenerInformacionOrden(sOrden);
 		CBS cCBS = new CBS();
 		String CodPag = cCBS.obtenerValorCodPago(doc);
+		System.out.println("CodPago:"+CodPag);
 		Servicio_notificarResultadoOrden(sOrden,CodPag);
 	}
 }
