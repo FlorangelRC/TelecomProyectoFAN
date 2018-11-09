@@ -566,9 +566,24 @@ public class Marketing extends CustomerCare {
 			case 1:
 				aAssert = wNumerosAmigos.get(1).findElement(By.tagName("input")).getText().equals(sNumeroSMS);
 				break;
-	}
+		}
 		
 		return aAssert;
+	}
+	
+	public boolean corroborarEstadCaso(String sCaso, String sEstado) {
+		BasePage cambioFrame=new BasePage();
+		driver.switchTo().defaultContent();
+		sleepShort(0);
+		driver.findElement(By.id("phSearchInput")).clear();
+		driver.findElement(By.id("phSearchInput")).sendKeys(sCaso + "\n");
+		sleepShort(0);
+		driver.switchTo().defaultContent();
+		driver.switchTo().frame(cambioFrame.getFrameForElement(driver, By.id("searchResultsHolderDiv")));
+		WebElement wBody = driver.findElement(By.id("Case_body")).findElement(By.tagName("table"));
+		List <WebElement> wEstado = traerColumnaElement(wBody, 5, 3);
+		Boolean bAssert = wEstado.get(0).getText().toLowerCase().equals(sEstado);
+		return bAssert;
 	}
 	
 }
