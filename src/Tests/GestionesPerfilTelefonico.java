@@ -1981,7 +1981,7 @@ public class GestionesPerfilTelefonico extends TestBase{
 	
 	@Test (groups = {"GestionesPerfilTelefonico","NumerosAmigos","E2E", "Ciclo1"}, dataProvider="NumerosAmigosNoPersonalAlta")
 	public void TS100608_CRM_Movil_REPRO_FF_No_Alta_Posventa_Amigo_No_Personal_Telefonico(String sDNI, String sLinea, String sNumeroVOZ, String sNumeroSMS) {
-		imagen = "TS100607";
+		imagen = "TS100608";
 		detalles = null;
 		detalles = imagen+"-Recarga-DNI:"+sDNI;
 		BasePage cambioFrame=new BasePage();
@@ -2032,7 +2032,7 @@ public class GestionesPerfilTelefonico extends TestBase{
 	
 	@Test (groups = {"GestionesPerfilTelefonico","NumerosAmigos","E2E", "Ciclo1"}, dataProvider="NumerosAmigosNoPersonalModificacion")
 	public void TS100610_CRM_Movil_REPRO_FF_No_Modificacion_Posventa_Telefonico(String sDNI, String sLinea, String sNumeroVOZ, String sNumeroSMS) {
-		imagen = "TS100607";
+		imagen = "TS100610";
 		detalles = null;
 		detalles = imagen+"-Recarga-DNI:"+sDNI;
 		BasePage cambioFrame=new BasePage();

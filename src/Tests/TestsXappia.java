@@ -873,7 +873,7 @@ public class TestsXappia extends TestBase {
 	}
 	
 	@Test (groups = {"SIT","UAT"}, dataProvider="ventaPackInternacional30SMS")
-	public void Al_Cancelar_Una_Compra_De_Pack_Que_No_Quede_Dado_De_Alta(String sDNI, String sLinea, String sVentaPack, String sBanco, String sTarjeta, String sPromo, String sCuotas, String sNumTarjeta, String sVenceMes, String sVenceAno, String sCodSeg, String sTipoDNI, String sDNITarjeta, String sTitular) throws InterruptedException, AWTException{
+	public void TXSU00011_Al_Cancelar_Una_Compra_De_Pack_Que_No_Quede_Dada_De_Alta(String sDNI, String sLinea, String sVentaPack, String sBanco, String sTarjeta, String sPromo, String sCuotas, String sNumTarjeta, String sVenceMes, String sVenceAno, String sCodSeg, String sTipoDNI, String sDNITarjeta, String sTitular) throws InterruptedException, AWTException{
 		SalesBase sale = new SalesBase(driver);
 		CustomerCare cCC = new CustomerCare(driver);
 		PagePerfilTelefonico pagePTelefo = new PagePerfilTelefonico(driver);
