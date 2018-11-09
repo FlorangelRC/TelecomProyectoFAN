@@ -30,7 +30,7 @@ public class TestsXappia extends TestBase {
 	private CustomerCare cc;
 	private SalesBase sb;
 	
-	@BeforeClass (groups = "UAT")
+	//@BeforeClass (groups = "UAT")
 	public void loginUAT() {
 		driver = setConexion.setupEze();
 		driver.get("https://telecomcrm--uat.cs53.my.salesforce.com");
@@ -60,7 +60,7 @@ public class TestsXappia extends TestBase {
 		sb = new SalesBase(driver);
 	}
 	
-	@BeforeMethod (groups = "UAT")
+	//@BeforeMethod (groups = "UAT")
 	public void beforeUAT() {
 		driver.get("https://telecomcrm--uat.cs53.my.salesforce.com");
 	}
@@ -882,6 +882,74 @@ public class TestsXappia extends TestBase {
 				break;
 			}
 		Assert.assertFalse(bAssert);
-	}
 		}
+	}
+	
+	@Test (groups = {"SIT", "UAT"})
+	public void TXSU00005_En_La_Lista_de_Cuentas_Debe_Haber_un_Estado_o_Provincia_Relacionado() {
+		irAConsolaFAN();
+		sb.cerrarPestaniaGestion(driver);
+		cc.menu_360_Ir_A("Cuentas");
+		List<WebElement> tabla = driver.findElement(By.cssSelector("[class='x-grid3-hd-row']")).findElements(By.tagName("td"));
+		tabla.get(9).click();
+		boolean a = false;
+		for(int i = 0; i < 1; i++) {
+			System.out.println("Cicle " + i);
+			driver.findElement(By.className("x-grid3-row-table")).findElements(By.tagName("td"));
+			List<WebElement> estadoOProvincia = driver.findElements(By.cssSelector(".x-grid3-hd-inner.x-grid3-hd-ACCOUNT_ADDRESS1_STATE_CODE"));
+			if (estadoOProvincia.get(i).getText().equals("")) {
+				System.out.println(estadoOProvincia.size());
+				a= true;
+				break;
+			}
+		Assert.assertFalse(a);
+		}
+	}
+	
+	@Test (groups = {"SIT","UAT"})
+	public void TXSU00006_En_La_Lista_de_Cuentas_Debe_Haber_un_Documento_o_CUIT_Relacionado() {
+		irAConsolaFAN();
+		sb.cerrarPestaniaGestion(driver);
+		cc.menu_360_Ir_A("Cuentas");
+		WebElement confirmacion = driver.findElement(By.cssSelector("[class='x-grid3-hd-row']"));
+		if (confirmacion.getText().toLowerCase().contains("documentnumber")) {
+			List<WebElement> tabla = driver.findElement(By.cssSelector("[class='x-grid3-hd-row']")).findElements(By.tagName("td"));
+			tabla.get(9).click();
+			boolean a = false;
+			for(int i = 0; i < 1; i++) {
+			System.out.println("Cicle " + i);
+			driver.findElement(By.className("x-grid3-row-table")).findElements(By.tagName("td"));
+			List<WebElement> estadoOProvincia = driver.findElements(By.cssSelector(".x-grid3-hd-inner.x-grid3-hd-00Nc0000001pWcd"));
+			if (estadoOProvincia.get(i).getText().equals("")) {
+				System.out.println(estadoOProvincia.size());
+				a= true;
+				break;
+				}
+			Assert.assertFalse(a);
+			sleep(5000);
+			List<WebElement> tabla1 = driver.findElement(By.cssSelector("[class='x-grid3-hd-row']")).findElements(By.tagName("td"));
+			tabla1.get(10).click();
+			boolean b = false;
+			for(int j = 0; j < 1; j++) {
+			System.out.println("Cicle " + j);
+			driver.findElement(By.className("x-grid3-row-table")).findElements(By.tagName("td"));
+			List<WebElement> estadoOProvincia1 = driver.findElements(By.cssSelector(".x-grid3-hd-inner.x-grid3-hd-00Nc000000351Kq"));
+			if (estadoOProvincia1.get(i).getText().equals("")) {
+				System.out.println(estadoOProvincia1.size());
+				b= true;
+				break;
+					}
+			Assert.assertFalse(b);
+				}
+			}
+		}
+		else {
+			boolean b = false;
+			WebElement tabla = driver.findElement(By.cssSelector("[class='x-grid3-hd-row']"));
+			if(tabla.getText().toLowerCase().contains("documentnumber") || tabla.getText().toLowerCase().contains("cuit")){
+				b = true;
+			}
+			Assert.assertFalse(b);
+		}
+	}
 }
