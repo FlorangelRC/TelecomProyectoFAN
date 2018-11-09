@@ -1685,7 +1685,7 @@ public class GestionesPerfilOficina extends TestBase {
 		buscarYClick(driver.findElements(By.cssSelector(".slds-form-element__label.ng-binding.ng-scope")),"contains", "habilitaci\u00f3n");
 		driver.findElement(By.id("Step1-SuspensionOrReconnection_nextBtn")).click();
 		sleep(8000);
-		buscarYClick(driver.findElements(By.cssSelector(".ta-radioBtnContainer.taBorderOverlay.slds-grid.slds-grid--align-center.slds-grid--vertical-align-center.ng-scope")), "contains", "validaci\u00f3n por documento de identidad");
+		buscarYClick(driver.findElements(By.cssSelector(".ta-radioBtnContainer.taBorderOverlay.slds-grid.slds-grid--align-center.slds-grid--vertical-align-center")), "contains", "validaci\u00f3n por documento de identidad");
 		driver.findElement(By.id("MethodSelection_nextBtn")).click();
 		sleep(8000);
 		driver.findElement(By.id("FileDocumentImage")).sendKeys("C:\\Users\\xappiens\\Pictures\\Saved Pictures\\calavera.jpg");
@@ -4366,10 +4366,10 @@ public class GestionesPerfilOficina extends TestBase {
 
 				
 	@Test (groups = {"GestionesPerfilOficina", "Vista360", "E2E","ConsultaPorGestion", "Ciclo2"}, dataProvider = "CuentaModificacionDeDatos")
-	public void TS134370_CRM_Movil_Prepago_Vista_360_Consulta_por_gestiones_Gestiones_no_registradas_FAN_Front_OOCC(String sDNI) {
+	public void TS134370_CRM_Movil_Prepago_Vista_360_Consulta_por_gestiones_Gestiones_no_registradas_FAN_Front_OOCC(String sDNI , String sLinea) {
 		imagen = "TS134370";
 		detalles = null;
-		detalles = imagen+"-Consulta Por Gestion:"+sDNI;
+		detalles = imagen+"-Consulta Por Gestio0n:"+sDNI;
 		driver.switchTo().frame(cambioFrame(driver, By.id("SearchClientDocumentType")));
 		sb.BuscarCuenta("DNI", sDNI);
 		driver.findElement(By.cssSelector(".slds-tree__item.ng-scope")).click();

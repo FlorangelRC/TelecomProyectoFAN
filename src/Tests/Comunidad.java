@@ -35,14 +35,14 @@ public class Comunidad extends TestBase {
 		
 	}
 	
-	@AfterMethod(alwaysRun=true)
+	//@AfterMethod(alwaysRun=true)
 	public void backToTheInicio() throws Exception {
 		driver.findElement(By.className("profileName")).click();
 		driver.findElement(By.className("menuList")).findElement(By.cssSelector(".home.uiMenuItem")).click();
 		sleep(10000);
 	}
 
-	@AfterClass(alwaysRun=true)
+	//@AfterClass(alwaysRun=true)
 	public void quit() throws IOException {
 		driver.quit();
 		sleep(5000);
@@ -280,7 +280,7 @@ public class Comunidad extends TestBase {
 		//Blocked
 	}	
 	
-	//@Test (groups = {"Communities","E2E"})                      CUENTA        
+	@Test (groups = {"Communities","E2E"})                      //CUENTA        
 	public void TS135766_CRM_PRE_Community_Desktop_Alta_de_mas_de_un_Pack_Descuenta_Saldo(){
 	driver.switchTo().frame(cambioFrame(driver, By.cssSelector(".slds-size--1-of-1.slds-align-middle.slds-p-vertical--small.cursor")));
 	driver.findElement(By.cssSelector(".slds-size--1-of-1.slds-align-middle.slds-p-vertical--small.cursor")).click();
@@ -288,15 +288,54 @@ public class Comunidad extends TestBase {
 	driver.switchTo().frame(cambioFrame(driver, By.cssSelector(".slds-wrap.slds-m-top--xx-small")));
 	WebElement comprapack = driver.findElements(By.cssSelector(".slds-wrap.slds-m-top--xx-small")).get(1).findElement(By.tagName("button"));
 	comprapack.click();
-	sleep(18000);
-	driver.switchTo().frame(cambioFrame(driver, By.cssSelector(".ta-sales-new-packs.slds-medium-size--12-of-12.ng-scope")));
-	WebElement lista = driver.findElement(By.cssSelector(".ta-sales-new-packs.slds-medium-size--12-of-12.ng-scope")).findElements(By.tagName("div")).get(2);
-	List <WebElement> asdf = lista.findElement(By.cssSelector(".ng-scope.odd.border-top"));
-		for(WebElement a : asdf){
-			if(a.getText().toLowerCase().equals("Packs de Datos")){
-				a.click();
+	sleep(22000);
+	driver.switchTo().frame(cambioFrame(driver, By.id("PackSelection")));
+	List<WebElement> paks = driver.findElements(By.cssSelector(".slds-medium-size--11-of-12.ng-binding"));
+		for(WebElement p : paks){
+			System.out.println(p.getText());
+			if(p.getText().toLowerCase().equals("packs de datos")){
+				p.click();
 			}
 		}
+	sleep(8000);
+	driver.switchTo().frame(cambioFrame(driver, By.className("body-packs")));
+	WebElement dat = driver.findElement(By.className("body-packs")).findElements(By.tagName("div")).get(4);
+	System.out.println(dat.getText());
+		dat.findElement(By.className("slds-text-not-selected")).click();
+		/*for(WebElement d: dat){
+			System.out.println(d.getText());
+			if(d.getText().equals("Pack 200 Mb x 1 dia + whatsapp gratis")){
+				d.findElement(By.cssSelector(".slds-button.btn-cstm.ng-scope")).click();
+			}
+		}*/
+	}
+	
+	@Test (groups = {"Communities","E2E"})                         
+	public void TS135765_CRM_PRE_Community_Desktop_Alta_de_unico_Pack_Descuenta_Saldo(){
+		driver.switchTo().frame(cambioFrame(driver, By.cssSelector(".slds-size--1-of-1.slds-align-middle.slds-p-vertical--small.cursor")));
+		driver.findElement(By.cssSelector(".slds-size--1-of-1.slds-align-middle.slds-p-vertical--small.cursor")).click();
+		sleep(9000);
+		driver.switchTo().frame(cambioFrame(driver, By.cssSelector(".slds-wrap.slds-m-top--xx-small")));
+		WebElement comprapack = driver.findElements(By.cssSelector(".slds-wrap.slds-m-top--xx-small")).get(1).findElement(By.tagName("button"));
+		comprapack.click();
+		sleep(30000);
+		driver.switchTo().frame(cambioFrame(driver, By.id("PackSelection")));
+		List<WebElement> paks = driver.findElements(By.cssSelector(".slds-medium-size--11-of-12.ng-binding"));
+			for(WebElement p : paks){
+				System.out.println(p.getText());
+				if(p.getText().toLowerCase().equals("packs de datos")){
+					p.click();
+				}
+					sleep(3000);
+				if(p.getText().toLowerCase().equals("packs sms")){
+				p.click();
+				}
+			}
+		sleep(8000);
+		driver.findElements(By.cssSelector(".lbl-item.ng-binding")).get(4).click();	
+		sleep(8000);
+		driver.findElements(By.cssSelector(".lbl-item.ng-binding")).get(6).click();	
+			
 	}
 	
 	@Test (groups = {"Communities","E2E"})
