@@ -4141,7 +4141,7 @@ public class GestionesPerfilOficina extends TestBase {
 	public void TS134370_CRM_Movil_Prepago_Vista_360_Consulta_por_gestiones_Gestiones_no_registradas_FAN_Front_OOCC(String sDNI) {
 		imagen = "TS134370";
 		detalles = null;
-		detalles = imagen+"-Consulta Por Gestion:"+sDNI;
+		detalles = imagen+"-Consulta Por Gestio0n:"+sDNI;
 		driver.switchTo().frame(cambioFrame(driver, By.id("SearchClientDocumentType")));
 		sb.BuscarCuenta("DNI", sDNI);
 		driver.findElement(By.cssSelector(".slds-tree__item.ng-scope")).click();
