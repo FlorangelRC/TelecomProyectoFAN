@@ -36,7 +36,7 @@ public class TestsXappia extends TestBase {
 	private CustomerCare cc;
 	private SalesBase sb;
 	
-	//@BeforeClass (groups = "UAT")
+	@BeforeClass (groups = "UAT")
 	public void loginUAT() {
 		driver = setConexion.setupEze();
 		driver.get("https://telecomcrm--uat.cs53.my.salesforce.com");
@@ -51,7 +51,7 @@ public class TestsXappia extends TestBase {
 		sb = new SalesBase(driver);
 	}
 	
-	@BeforeClass (groups = "SIT")
+	//@BeforeClass (groups = "SIT")
 	public void loginSIT() {
 		driver = setConexion.setupEze();
 		driver.get("https://crm--sit.cs14.my.salesforce.com/");
@@ -66,12 +66,12 @@ public class TestsXappia extends TestBase {
 		sb = new SalesBase(driver);
 	}
 	
-	//@BeforeMethod (groups = "UAT")
+	@BeforeMethod (groups = "UAT")
 	public void beforeUAT() {
 		driver.get("https://telecomcrm--uat.cs53.my.salesforce.com");
 	}
 	
-	@BeforeMethod (groups = "SIT")
+	//@BeforeMethod (groups = "SIT")
 	public void beforeSIT() {
 		driver.get("https://crm--sit.cs14.my.salesforce.com/");
 	}
@@ -1051,7 +1051,7 @@ public class TestsXappia extends TestBase {
 			Assert.assertFalse(b);
 		}
 	}
-		}
+		
 	@Test (groups = "UAT")
 	public void TXU0008_Verificar_funcionamiento_del_boton_modificar_dentro_de_la_orden() {
 		irAConsolaFAN();
@@ -1084,4 +1084,43 @@ public class TestsXappia extends TestBase {
 		driver.switchTo().defaultContent();
 		System.out.println("No permite Modificar");
 	}
-}
+	
+	@Test (groups = {"UAT","SIT"}, dataProvider = "CuentaModificacionDeDatos") 
+	public void TXSU00008_Validar_que_el_DNI_solo_se_pueda_modificar_cada_30_dias (String sDNI, String sLinea) {
+		irAConsolaFAN();
+		sb.cerrarPestaniaGestion(driver);
+		cc.menu_360_Ir_A("Inicio");
+		irAGestionDeClientes();
+		sleep(5000);
+		driver.switchTo().frame(cambioFrame(driver, By.id("SearchClientDocumentType")));
+		driver.findElement(By.cssSelector(".slds-form-element__label--toggleText.ng-binding")).click();
+		sleep(3000);
+		sb.BuscarCuenta("DNI", sDNI);
+		driver.findElement(By.cssSelector(".slds-tree__item.ng-scope")).click();
+		sleep(15000);
+		driver.switchTo().frame(cambioFrame(driver, By.className("profile-box")));
+		cc.openleftpanel();
+		List <WebElement> actualizar = driver.findElements(By.className("profile-edit"));
+		actualizar.get(0).click();
+		sleep(10000);
+		driver.switchTo().frame(cambioFrame(driver, By.id("DocumentNumber")));
+		boolean a = false;
+		boolean b = false;
+		for(WebElement x : driver.findElements(By.id("MessagingDocumentNumberModificationNotAllowed"))) {
+			if(x.getText().toLowerCase().contains("aclaración: se realiz\u00f3 un cambio de dni en el \u00faltimo mes. no se permite una nueva modificaci\u00f3n.")) {
+				a = true;
+				System.out.println("No se puede realizar una modificacion de DNI");
+			}
+		}
+		Assert.assertTrue(a);
+		driver.findElement(By.id("ClientInformation_nextBtn")).click();
+		sleep(10000);
+		List <WebElement> element = driver.findElements(By.className("ta-care-omniscript-done"));
+		for (WebElement x : element) {
+			if (x.getText().toLowerCase().contains("se realizaron correctamente las modificaciones")) {
+				b = true;
+			}
+		}
+		Assert.assertFalse(b);
+	}
+}	

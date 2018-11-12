@@ -4055,7 +4055,7 @@ public class GestionesPerfilOficina extends TestBase {
 		detalles +="-Cuenta:"+accid;
 		pagePTelefo.buscarAssert();
 		cCC.seleccionarCardPornumeroLinea(sLinea, driver);
-		//cCC.closerightpanel();
+		cCC.closerightpanel();
 		pagePTelefo.comprarPack();
 		pagePTelefo.PackCombinado(sVentaPack);
 		pagePTelefo.tipoDePago("en factura de venta");
@@ -4300,7 +4300,7 @@ public class GestionesPerfilOficina extends TestBase {
 		//Verify when the page works
 	}
 	
-	}
+
 	@Test (groups = {"GestionesPerfilOficina","ConsultaPorGestiones","E2E", "Ciclo1"},  dataProvider = "CuentaModificacionDeDatos")
 	public void TS134371_CRM_Movil_Prepago_Vista_360_Consulta_por_gestiones_Gestiones_abiertas_Plazo_No_vencido_Consulta_registrada_FAN_Front_OOCC(String sDNI){
 		imagen = "TS134371";
