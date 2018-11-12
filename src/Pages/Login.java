@@ -65,7 +65,7 @@ public class Login extends BasePage {
    @FindBy (how = How.ID, using = "TxtContrasenia")
    private WebElement PassF;
    
-   @FindBy (how = How.ID, using = "btnEntrar")
+   @FindBy (how = How.CSS, using = ".btn.btn-lg.btn-primary.btn-block.btn-signin")
    private WebElement ClickF;
 	//Constructor
 	
