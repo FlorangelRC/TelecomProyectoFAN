@@ -532,7 +532,7 @@ public class GestionesPerfilAgente extends TestBase{
 	public void TS85100_CRM_Movil_REPRO_No_Nominatividad_No_Valida_Identidad_Cliente_nuevo_Presencial_DOC_Agente() {
 		boolean nominacion = false;
 		driver.switchTo().frame(cambioFrame(driver, By.id("SearchClientDocumentType")));
-		driver.findElement(By.id("PhoneNumber")).sendKeys("2932442870");
+		driver.findElement(By.id("PhoneNumber")).sendKeys("2932478872");
 		driver.findElement(By.id("SearchClientsDummy")).click();
 		sleep(5000);
 		driver.findElement(By.cssSelector(".slds-button.slds-button--icon.slds-m-right--x-small.ng-scope")).click();

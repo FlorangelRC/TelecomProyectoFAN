@@ -1,6 +1,9 @@
 package Tests;
 
 import java.awt.AWTException;
+import java.text.DateFormat;
+import java.text.ParsePosition;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -36,7 +39,7 @@ public class TestsXappia extends TestBase {
 	private CustomerCare cc;
 	private SalesBase sb;
 	
-	//@BeforeClass (groups = "UAT")
+	@BeforeClass (groups = "UAT")
 	public void loginUAT() {
 		driver = setConexion.setupEze();
 		driver.get("https://telecomcrm--uat.cs53.my.salesforce.com");
@@ -51,7 +54,7 @@ public class TestsXappia extends TestBase {
 		sb = new SalesBase(driver);
 	}
 	
-	@BeforeClass (groups = "SIT")
+	//@BeforeClass (groups = "SIT")
 	public void loginSIT() {
 		driver = setConexion.setupEze();
 		driver.get("https://crm--sit.cs14.my.salesforce.com/");
@@ -66,12 +69,12 @@ public class TestsXappia extends TestBase {
 		sb = new SalesBase(driver);
 	}
 	
-	//@BeforeMethod (groups = "UAT")
+	@BeforeMethod (groups = "UAT")
 	public void beforeUAT() {
 		driver.get("https://telecomcrm--uat.cs53.my.salesforce.com");
 	}
 	
-	@BeforeMethod (groups = "SIT")
+	//@BeforeMethod (groups = "SIT")
 	public void beforeSIT() {
 		driver.get("https://crm--sit.cs14.my.salesforce.com/");
 	}
@@ -1051,7 +1054,7 @@ public class TestsXappia extends TestBase {
 			Assert.assertFalse(b);
 		}
 	}
-		}
+
 	@Test (groups = "UAT")
 	public void TXU0008_Verificar_funcionamiento_del_boton_modificar_dentro_de_la_orden() {
 		irAConsolaFAN();
@@ -1083,5 +1086,96 @@ public class TestsXappia extends TestBase {
 		}
 		driver.switchTo().defaultContent();
 		System.out.println("No permite Modificar");
+	}
+	
+	@Test (groups = "UAT")
+	public void TXU0010_Validacion_de_fecha_de_modificacion_en_detalles_del_caso() {
+		irAConsolaFAN();
+		sb.cerrarPestaniaGestion(driver);
+		cc.menu_360_Ir_A("Casos");
+		List<WebElement> CaseNumber = driver.findElements(By.cssSelector("[class='x-grid3-cell-inner x-grid3-col-CASES_CASE_NUMBER']"));
+		CaseNumber.get(0).findElement(By.tagName("a")).click();
+		sleep(5000);
+		driver.switchTo().frame(cambioFrame(driver, By.name("close")));
+		driver.findElement(By.name("close")).click();
+		sleep(5000);
+		selectByText(driver.findElement(By.name("cas7")), "Anulada");
+		driver.findElement(By.name("save")).click();
+		WebElement ultModificacion = null;
+		for (WebElement x : driver.findElements(By.className("pbSubsection"))) {
+			if (x.getText().toLowerCase().contains("owned by me"))
+				ultModificacion = x;
+		}
+		ultModificacion = ultModificacion.findElement(By.tagName("tbody"));
+		for (WebElement x : ultModificacion.findElements(By.tagName("tr"))) {
+			if (x.getText().toLowerCase().contains("\u00faltima modificaci\u00f3n por"))
+				ultModificacion = x;
+		}
+		String lastUpdate = ultModificacion.getText();
+		lastUpdate = lastUpdate.substring(lastUpdate.indexOf(",")+2);
+		WebElement fechaYHora = null;
+		for (WebElement x : driver.findElements(By.className("pbSubsection"))) {
+			if (x.getText().toLowerCase().contains("owned by me"))
+				fechaYHora = x;
+		}
+		fechaYHora = fechaYHora.findElement(By.tagName("tbody"));
+		for (WebElement x : fechaYHora.findElements(By.tagName("tr"))) {
+			if (x.getText().toLowerCase().contains("fecha/hora de cierre"))
+				fechaYHora = x;
+		}
+		String closeCase = fechaYHora.getText();
+		closeCase = closeCase.substring(closeCase.lastIndexOf("e")+2);
+		DateFormat format = new SimpleDateFormat("dd/mm/yyyy hh:mm");
+		Date fechaUltimaModificacion  = format.parse(lastUpdate, new ParsePosition(0));
+		Date fechaDeCierre = format.parse(closeCase, new ParsePosition(0));
+		if (!(fechaDeCierre.before(fechaUltimaModificacion)) || !(fechaDeCierre == fechaUltimaModificacion))
+			Assert.assertTrue(false);
+	}
+	
+	@Test (groups = {"SIT", "UAT"})
+	public void TXSU00012_Anulacion_De_Caso_Previamente_Anulado() {
+		irAConsolaFAN();
+		sb.cerrarPestaniaGestion(driver);
+		cc.menu_360_Ir_A("Casos");
+		List<WebElement> CaseNumber = driver.findElements(By.cssSelector("[class='x-grid3-cell-inner x-grid3-col-CASES_CASE_NUMBER']"));
+		CaseNumber.get(0).findElement(By.tagName("a")).click();
+		sleep(5000);
+		driver.switchTo().frame(cambioFrame(driver, By.name("close")));
+		driver.findElement(By.name("close")).click();
+		sleep(5000);
+		selectByText(driver.findElement(By.name("cas7")), "Anulada");
+		driver.findElement(By.name("save")).click();
+		sleep(5000);
+		driver.findElement(By.name("close")).click();
+		sleep(5000);
+		for (WebElement x : driver.findElement(By.name("cas7")).findElements(By.tagName("option"))) {
+			if (x.getText().toLowerCase().equals("anulada")) {
+				driver.findElement(By.name("cancel")).click();
+				Assert.assertTrue(false);
+			} else
+				driver.findElement(By.name("cancel")).click();
+		}
+	}
+	
+	@Test (groups = {"SIT", "UAT"})
+	public void TXSU00007_Verificar_Asunto_En_Detalles_Del_Caso_Al_Realizar_Una_Suspension() {
+		irAConsolaFAN();
+		sb.cerrarPestaniaGestion(driver);
+		if (driver.getCurrentUrl().contains("sit"))
+			cc.buscarCaso("00064566");
+		else
+			cc.buscarCaso("00003522");
+		driver.switchTo().frame(cambioFrame(driver, By.name("close")));
+		WebElement asunto = null;
+		for (WebElement x : driver.findElements(By.className("pbSubsection"))) {
+			if (x.getText().toLowerCase().contains("owned by me"))
+				asunto = x;
+		}
+		asunto = asunto.findElement(By.tagName("tbody"));
+		for (WebElement x : asunto.findElements(By.tagName("tr"))) {
+			if (x.getText().toLowerCase().contains("asunto"))
+				asunto = x;
+		}
+		Assert.assertTrue(asunto.getText().contains("Suspensión de Linea + Equipo"));
 	}
 }

@@ -1138,7 +1138,7 @@ public class GestionesPerfilTelefonico extends TestBase{
 	public void TS95981_CRM_Movil_REPRO_Reseteo_de_Clave_Telefonico(String sDNI) {
 		imagen = "TS95981";
 		detalles = null;
-		detalles = imagen + "ReseteoDeClave: " + sDNI;
+		detalles = imagen + "-ReseteoDeClave: " + sDNI;
 		driver.switchTo().frame(cambioFrame(driver, By.id("SearchClientDocumentType")));
 		sb.BuscarCuenta("DNI", sDNI);
 		driver.findElement(By.cssSelector(".slds-tree__item.ng-scope")).click();
@@ -1158,7 +1158,7 @@ public class GestionesPerfilTelefonico extends TestBase{
 	public void TS95983_CRM_Movil_REPRO_No_Reseteo_de_Clave_Telefonico(String sDNI) {
 		imagen = "TS95983";
 		detalles = null;
-		detalles = imagen + "ReseteoDeClave: " + sDNI;
+		detalles = imagen + "-ReseteoDeClave: " + sDNI;
 		driver.switchTo().frame(cambioFrame(driver, By.id("SearchClientDocumentType")));
 		sb.BuscarCuenta("DNI", sDNI);
 		driver.findElement(By.cssSelector(".slds-tree__item.ng-scope")).click();
