@@ -466,7 +466,7 @@ public class CustomerCare extends BasePage {
 	// 											METODOS PRIVADOS
 	// -----------------------------------------------------------------------------------------------------
 
-	private void cambiarAFrameActivo() {
+	public void cambiarAFrameActivo() {
 		driver.switchTo().defaultContent();
 		for (WebElement t : panelesCentrales) {
 			if (!t.getAttribute("class").contains("x-hide-display")) {
