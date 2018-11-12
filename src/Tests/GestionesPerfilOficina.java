@@ -1472,6 +1472,7 @@ public class GestionesPerfilOficina extends TestBase {
 		}
 		String datoNuevo = cbs.ObtenerValorResponse(cbsm.Servicio_queryLiteBySubscriber(sLinea), "bcs:MainBalance");
 		Integer datosFinal = Integer.parseInt(datoNuevo.substring(0, 5));
+		System.out.println(datosFinal);
 		Assert.assertTrue(gest);
 		if (TestBase.urlAmbiente.contains("sit")) {
 			String orden = cc.obtenerOrden(driver, "Inconvenientes con cargos tasados y facturados");
@@ -2984,7 +2985,7 @@ public class GestionesPerfilOficina extends TestBase {
 	public void TS95980_CRM_Movil_REPRO_Reseteo_de_Clave_Presencial(String sDNI) {
 		imagen = "TS95980";
 		detalles = null;
-		detalles = imagen + "ReseteoDeClave: " + sDNI;
+		detalles = imagen + "-ReseteoDeClave: " + sDNI;
 		driver.switchTo().frame(cambioFrame(driver, By.id("SearchClientDocumentType")));
 		sb.BuscarCuenta("DNI", sDNI);
 		driver.findElement(By.cssSelector(".slds-tree__item.ng-scope")).click();
@@ -3004,7 +3005,7 @@ public class GestionesPerfilOficina extends TestBase {
 	public void TS95982_CRM_Movil_REPRO_No_Reseteo_de_Clave_Presencial(String sDNI) {
 		imagen = "TS95982";
 		detalles = null;
-		detalles = imagen + "ReseteoDeClave: " + sDNI;
+		detalles = imagen + "-ReseteoDeClave: " + sDNI;
 		driver.switchTo().frame(cambioFrame(driver, By.id("SearchClientDocumentType")));
 		sb.BuscarCuenta("DNI", "30998801");
 		driver.findElement(By.cssSelector(".slds-tree__item.ng-scope")).click();
@@ -4300,7 +4301,6 @@ public class GestionesPerfilOficina extends TestBase {
 		//Verify when the page works
 	}
 	
-
 	@Test (groups = {"GestionesPerfilOficina","ConsultaPorGestiones","E2E", "Ciclo1"},  dataProvider = "CuentaModificacionDeDatos")
 	public void TS134371_CRM_Movil_Prepago_Vista_360_Consulta_por_gestiones_Gestiones_abiertas_Plazo_No_vencido_Consulta_registrada_FAN_Front_OOCC(String sDNI){
 		imagen = "TS134371";
