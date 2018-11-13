@@ -19,7 +19,7 @@ public class SOAPClientSAAJ {
 	//SIT
 	static String sPagoEnCajaSIT = "http://10.75.197.161:8080/services/ArServices";
 	//UAT
-	static String sPagoEnCajaUAT = "extrahttp://10.75.39.146:8080/services/ArServices";
+	static String sPagoEnCajaUAT = "http://10.75.39.146:8080/services/ArServices";
 		
 	static String sPagoSimulado = "extrahttp://mdwtpbust1.telecom.com.ar:8701/notificarPago";
 	static String sQueryCustomerInfoUAT = "http://10.75.39.146:8080/services/BcServices";
