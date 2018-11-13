@@ -4484,4 +4484,44 @@ public class GestionesPerfilOficina extends TestBase {
 		Assert.assertTrue(fechaYHora.getText().contains("Fecha/Hora de cierre"));
 		Assert.assertTrue(fechaYHora.findElements(By.tagName("td")).get(3).getText().matches("^\\d{2}/\\d{2}/\\d{4} \\d{2}:\\d{2}$"));
 	}
+	
+	@Test (groups = {"GestionPerfilOficina", "BasedeConocimiento", "Ciclo3"}, dataProvider = "CuentaModificacionDeDatos")
+	public void TS124899_CRM_REPRO_BDC_Technical_Care_CSR_Suscripciones_Base_de_Conocimiento(String sDNI, String sLinea) {
+		imagen = "TS124899";
+		detalles = null;
+		detalles = imagen+"-Base de Conocimiento:"+sDNI;
+		driver.switchTo().frame(cambioFrame(driver, By.id("SearchClientDocumentType")));
+		sb.BuscarCuenta("DNI", sDNI);
+		driver.findElement(By.cssSelector(".slds-tree__item.ng-scope")).click();
+		sleep(15000);
+		driver.switchTo().frame(cambioFrame(driver, By.className("card-top")));
+		driver.findElement(By.className("card-top")).click();
+		sleep(3000);
+		driver.switchTo().frame(cambioFrame(driver, By.className("community-flyout-actions-card")));
+		Assert.assertTrue(driver.findElement(By.className("community-flyout-actions-card")).getText().contains("Suscripciones"));
+		sleep(3000);
+		cc.irAGestionEnCard("Suscripciones");
+		sleep(7000);
+		driver.switchTo().defaultContent();
+		driver.findElement(By.id("scc_widget_knowledgeOne_button")).click();
+		driver.switchTo().frame(cambioFrame(driver, By.cssSelector(".zen-unit.zen-lastUnit.kb-center")));
+		Assert.assertTrue(driver.findElement(By.cssSelector(".zen-unit.zen-lastUnit.kb-center")).isDisplayed());	
+	}
+	
+	@Test (groups = {"GestionPerfilOficina", "BasedeConocimiento", "Ciclo3"}, dataProvider = "CuentaModificacionDeDatos")
+	public void TS125103_CRM_REPRO_BDC_Customer_Care_Suspensiones_y_Rehabilitaciones_Valoracion_positiva_de_un_articulo(String sDNI, String sLine) {
+		imagen = "TS125103";
+		detalles = null;
+		detalles = imagen+"-Base de Conocimiento:"+sDNI;
+		driver.switchTo().frame(cambioFrame(driver, By.id("SearchClientDocumentType")));
+		sb.BuscarCuenta("DNI", sDNI);
+		driver.findElement(By.cssSelector(".slds-tree__item.ng-scope")).click();
+		sleep(15000);
+		driver.switchTo().defaultContent();
+		driver.findElement(By.id("scc_widget_knowledgeOne_button")).click();
+		driver.switchTo().frame(cambioFrame(driver, By.cssSelector(".zen-unit.zen-lastUnit.kb-center")));
+		driver.findElement(By.id("knowledgeSearchInput_kbOneTab")).sendKeys("Suspensiones y Reconexiones - Requisitos");
+		driver.findElement(By.cssSelector(".knowledgeSearchBoxButton.knowledgeSearchButton.leftColumn")).click();
+		
+	}
 }
