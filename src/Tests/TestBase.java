@@ -1647,5 +1647,26 @@ public class TestBase {
 
 	 return (testObjArray);
 
+	
+	@DataProvider
+	public Object[][] NumerosAmigosNoPersonalAlta() throws Exception {
+		Object[][] testObjArray = ExcelUtils.getTableArray(dataProviderE2E(),"E2EsinPago",1,1,4,"No Personal Alta Amigos");
+
+		 return (testObjArray);
 	}
+	
+	@DataProvider
+	public Object[][] NumerosAmigosNoPersonalModificacion() throws Exception {
+		Object[][] testObjArray = ExcelUtils.getTableArray(dataProviderE2E(),"E2EsinPago",1,1,4,"No Personal Modificacion Amigos");
+
+		 return (testObjArray);
+	}
+	
+	@DataProvider
+	public Object[][] NumerosAmigosNoPersonalBaja() throws Exception {
+		Object[][] testObjArray = ExcelUtils.getTableArray(dataProviderE2E(),"E2EsinPago",1,1,3,"No Personal Baja Amigos");
+
+		 return (testObjArray);
+	}
+	
 }

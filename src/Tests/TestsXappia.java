@@ -1,9 +1,14 @@
 package Tests;
 
+import java.awt.AWTException;
+import java.text.DateFormat;
+import java.text.ParsePosition;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import org.openqa.selenium.Alert;
 import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.NoSuchElementException;
@@ -16,11 +21,15 @@ import org.testng.annotations.BeforeClass;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
+import com.sun.org.apache.xalan.internal.xsltc.compiler.sym;
+
 import Pages.BasePage;
 import Pages.Accounts;
 import Pages.ContactSearch;
 import Pages.CustomerCare;
 import Pages.Marketing;
+import Pages.PagePerfilTelefonico;
+import Pages.OM;
 import Pages.SalesBase;
 import Pages.setConexion;
 
@@ -45,7 +54,7 @@ public class TestsXappia extends TestBase {
 		sb = new SalesBase(driver);
 	}
 	
-	@BeforeClass (groups = "SIT")
+	//@BeforeClass (groups = "SIT")
 	public void loginSIT() {
 		driver = setConexion.setupEze();
 		driver.get("https://crm--sit.cs14.my.salesforce.com/");
@@ -65,12 +74,12 @@ public class TestsXappia extends TestBase {
 		driver.get("https://telecomcrm--uat.cs53.my.salesforce.com");
 	}
 	
-	@BeforeMethod (groups = "SIT")
+	//@BeforeMethod (groups = "SIT")
 	public void beforeSIT() {
 		driver.get("https://crm--sit.cs14.my.salesforce.com/");
 	}
 	
-	@AfterClass (alwaysRun = true)
+	//@AfterClass (alwaysRun = true)
 	public void quit() {
 		driver.quit();
 	}
@@ -798,7 +807,7 @@ public class TestsXappia extends TestBase {
 		List<WebElement> sCaseNumber = driver.findElements(By.cssSelector("[class='x-grid3-cell-inner x-grid3-col-CASES_CASE_NUMBER']"));
 		List<WebElement> sCaseStatus = driver.findElements(By.cssSelector("[class='x-grid3-cell-inner x-grid3-col-CASES_STATUS']"));
 		for (int i = 0; i < sCaseNumber.size(); i++) {
-			if (sCaseStatus.get(i).getText().equalsIgnoreCase("Closed") || sCaseStatus.get(i).getText().equalsIgnoreCase("Resuelta exitosa")) {
+			if (sCaseStatus.get(i).getText().equalsIgnoreCase("Closed") || sCaseStatus.get(i).getText().equalsIgnoreCase("Realizada exitosa")) {
 				sCaseNumber.get(i).findElement(By.tagName("a")).click();
 				break;
 			}
@@ -854,20 +863,364 @@ public class TestsXappia extends TestBase {
 		boolean bAssert = false;
 		for (int i = 0; i < 2; i++) {
 			System.out.println("Cicle " + i);
-			WebElement sCaseContactName = driver.findElement(By.cssSelector("[class='x-grid3-cell-inner x-grid3-col-NAME']"));
-			if (sCaseContactName.getText().equalsIgnoreCase(" ")) {
+			driver.findElement(By.className("x-grid3-row-table")).findElements(By.tagName("td"));
+			List<WebElement> sCaseContactName = driver.findElements(By.cssSelector(".x-grid3-cell-inner.x-grid3-col-NAME"));
+			if (sCaseContactName.get(i).getText().equals(" ")) {
 				bAssert = true;
 				break;
 			}
-			driver.navigate().refresh();
-			sleep(10000);
-			BasePage bBP = new BasePage();
-			driver.switchTo().frame(bBP.getFrameForElement(driver, By.cssSelector("[class='x-grid3-hd-row']")));
-			wTableHeader = driver.findElement(By.cssSelector("[class='x-grid3-hd-row']")).findElements(By.tagName("td"));
-			wTableHeader.get(3).findElement(By.tagName("div")).click();
-		}
-		
 		Assert.assertFalse(bAssert);
 	}
+		}
+	@Test (groups = {"SIT","UAT"})
+	public void TXSU00004_En_La_Lista_de_Casos_Debe_Haber_un_Tipo_Relacionado() {
+		irAConsolaFAN();
+		sb.cerrarPestaniaGestion(driver);
+		cc.menu_360_Ir_A("Casos");		
+		sleep(5000);
+		List<WebElement> wTableHeader = driver.findElement(By.cssSelector("[class='x-grid3-hd-row']")).findElements(By.tagName("td"));
+		wTableHeader.get(8).click();
+		boolean bAssert = false;
+		for (int i = 0; i < 2; i++) {
+			System.out.println("Cicle " + i);
+			driver.findElement(By.className("x-grid3-row-table")).findElements(By.tagName("td"));
+			List<WebElement> sCaseContactName = driver.findElements(By.cssSelector(".x-grid3-cell-inner.x-grid3-col-CASES_TYPE"));
+			if (sCaseContactName.get(i).getText().equals(" ")) {
+				System.out.println(sCaseContactName.size());
+				bAssert = true;
+				break;
+			}
+		Assert.assertFalse(bAssert);
+		}
+	}
 	
-}
+	@Test (groups = {"SIT","UAT"}, dataProvider="ventaPackInternacional30SMS")
+	public void TXSU00011_Al_Cancelar_Una_Compra_De_Pack_Que_No_Quede_Dada_De_Alta(String sDNI, String sLinea, String sVentaPack, String sBanco, String sTarjeta, String sPromo, String sCuotas, String sNumTarjeta, String sVenceMes, String sVenceAno, String sCodSeg, String sTipoDNI, String sDNITarjeta, String sTitular) throws InterruptedException, AWTException{
+		SalesBase sale = new SalesBase(driver);
+		CustomerCare cCC = new CustomerCare(driver);
+		PagePerfilTelefonico pagePTelefo = new PagePerfilTelefonico(driver);
+		irAConsolaFAN();
+		sb.cerrarPestaniaGestion(driver);
+		cc.menu_360_Ir_A("Inicio");
+		irAGestionDeClientes();
+		sleep(5000);
+		driver.switchTo().frame(cambioFrame(driver, By.id("SearchClientDocumentType")));
+		sleep(8000);
+		sale.BuscarCuenta("DNI", sDNI);
+		String accid = driver.findElement(By.cssSelector(".searchClient-body.slds-hint-parent.ng-scope")).findElements(By.tagName("td")).get(5).getText();
+		System.out.println("id "+accid);
+		pagePTelefo.buscarAssert();
+		cCC.seleccionarCardPornumeroLinea(sLinea, driver);
+		pagePTelefo.comprarPack("comprar sms");
+		sleep(5000);
+		/*try {
+			cCC.openrightpanel();
+		}
+		catch (Exception eE) {
+			//Always empty
+		}
+		cCC.closerightpanel();*/
+		pagePTelefo.PackLDI(sVentaPack);
+		pagePTelefo.tipoDePago("en factura de venta");
+		try {
+			pagePTelefo.getSimulaciondeFactura().click();
+		}
+		catch (Exception eE) {
+			pagePTelefo.getTipodepago().click();
+		}
+		sleep(12000);
+		String sOrder = cc.obtenerOrden2(driver);
+		List<WebElement> wMenu = driver.findElements(By.cssSelector(".vlc-slds-button--tertiary.ng-binding.ng-scope"));
+		for (WebElement wAux : wMenu) {
+			if (wAux.getText().equalsIgnoreCase("Cancelar")) {
+				wAux.click();
+				break;
+			}
+		}
+		driver.findElement(By.id("alert-ok-button")).click();
+		Marketing mM = new Marketing(driver);
+		mM.closeActiveTab();
+		sleep(5000);
+		pagePTelefo.comprarPack("comprar sms");
+		sleep(5000);
+		driver.switchTo().frame(cambioFrame(driver, By.cssSelector(".slds-button.cpq-item-has-children")));
+		//pagePTelefo.Pack("Packs Opcionales", "Packs LDI", "Pack internacional 30 SMS al Resto del Mundo");
+		String servicio1 = "Packs Opcionales";
+		String servicio2 = "Packs LDI";
+		sleep(5000);
+		driver.findElement(By.cssSelector(".slds-button.cpq-item-has-children")).click();
+		sleep(5000);
+		List<WebElement> NomPack = driver.findElements(By.xpath("//*[@class='cpq-item-product-child-level-1 cpq-item-child-product-name-wrapper']"));
+		for(WebElement a: NomPack) {
+			//System.out.print(a.getText().toLowerCase());
+			//System.out.println(" : "+servicio1.toLowerCase());
+				if (a.getText().toLowerCase().contains(servicio1.toLowerCase())) {
+					System.out.println(servicio1);
+						a.findElement(By.tagName("button")).click();
+							sleep(8000);
+								break;
+							}
+						}
+	
+		List<WebElement> subPack = driver.findElements(By.xpath("//*[@class='cpq-item-product-child-level-2 cpq-item-child-product-name-wrapper']"));
+		List<WebElement> Btnsubpack = driver.findElements(By.xpath("//*[@class='cpq-item-product-child-level-2 cpq-item-child-product-name-wrapper']//*[@class='slds-button slds-button_icon-small']"));			
+		if (subPack.size() == Btnsubpack.size()) {
+			for(WebElement b: subPack) {			
+				//System.out.println("+++++"+b.getText().substring(b.getText().indexOf("\n")+1, b.getText().length())+"++++++");
+				if (b.getText().substring(b.getText().indexOf("\n")+1, b.getText().length()).toLowerCase().contains(servicio2.toLowerCase())) {
+					System.out.println(servicio2);
+					b.findElement(By.tagName("button")).click();
+					sleep(10000);
+					break;
+				}
+			}
+		}
+		List<WebElement> wServicios = driver.findElements(By.cssSelector("[class='cpq-item-base-product'][class='cpq-item-base-product']"));
+		for(WebElement wAux2 : wServicios) {
+			try {
+				if(wAux2.findElement(By.cssSelector("[class='cpq-item-no-children']")).getText().equalsIgnoreCase(sVentaPack)) {
+					Assert.assertTrue(wAux2.findElement(By.cssSelector("[class='slds-button slds-button_neutral']")).isEnabled());
+					break;
+				}
+			}
+			catch (NoSuchElementException eNSEE) {
+				if(wAux2.findElement(By.cssSelector("[class='cpq-product-name js-cpq-cart-product-hierarchy-path-01tc000000578L1AAI<01tc0000005fMVtAAM<01tc0000005fMY4AAM<01tc0000005vzaPAAQ']")).getText().equalsIgnoreCase(sVentaPack)) {
+					Assert.assertTrue(wAux2.findElement(By.cssSelector("[class='slds-button slds-button_neutral']")).isEnabled());
+					break;
+				}
+			}
+		}
+		Assert.assertTrue(mM.corroborarEstadCaso(sOrder, "Draft"));
+		//Verify when the page works
+	}
+	@Test (groups = {"SIT", "UAT"})
+	public void TXSU00005_En_La_Lista_de_Cuentas_Debe_Haber_un_Estado_o_Provincia_Relacionado() {
+		irAConsolaFAN();
+		sb.cerrarPestaniaGestion(driver);
+		cc.menu_360_Ir_A("Cuentas");
+		List<WebElement> tabla = driver.findElement(By.cssSelector("[class='x-grid3-hd-row']")).findElements(By.tagName("td"));
+		tabla.get(9).click();
+		boolean a = false;
+		for(int i = 0; i < 1; i++) {
+			System.out.println("Cicle " + i);
+			driver.findElement(By.className("x-grid3-row-table")).findElements(By.tagName("td"));
+			List<WebElement> estadoOProvincia = driver.findElements(By.cssSelector(".x-grid3-hd-inner.x-grid3-hd-ACCOUNT_ADDRESS1_STATE_CODE"));
+			if (estadoOProvincia.get(i).getText().equals("")) {
+				System.out.println(estadoOProvincia.size());
+				a= true;
+				break;
+			}
+		Assert.assertFalse(a);
+		}
+	}
+	
+	@Test (groups = {"SIT","UAT"})
+	public void TXSU00006_En_La_Lista_de_Cuentas_Debe_Haber_un_Documento_o_CUIT_Relacionado() {
+		irAConsolaFAN();
+		sb.cerrarPestaniaGestion(driver);
+		cc.menu_360_Ir_A("Cuentas");
+		WebElement confirmacion = driver.findElement(By.cssSelector("[class='x-grid3-hd-row']"));
+		if (confirmacion.getText().toLowerCase().contains("documentnumber")) {
+			List<WebElement> tabla = driver.findElement(By.cssSelector("[class='x-grid3-hd-row']")).findElements(By.tagName("td"));
+			tabla.get(9).click();
+			boolean a = false;
+			for(int i = 0; i < 1; i++) {
+			System.out.println("Cicle " + i);
+			driver.findElement(By.className("x-grid3-row-table")).findElements(By.tagName("td"));
+			List<WebElement> estadoOProvincia = driver.findElements(By.cssSelector(".x-grid3-hd-inner.x-grid3-hd-00Nc0000001pWcd"));
+			if (estadoOProvincia.get(i).getText().equals("")) {
+				System.out.println(estadoOProvincia.size());
+				a= true;
+				break;
+				}
+			Assert.assertFalse(a);
+			sleep(5000);
+			List<WebElement> tabla1 = driver.findElement(By.cssSelector("[class='x-grid3-hd-row']")).findElements(By.tagName("td"));
+			tabla1.get(10).click();
+			boolean b = false;
+			for(int j = 0; j < 1; j++) {
+			System.out.println("Cicle " + j);
+			driver.findElement(By.className("x-grid3-row-table")).findElements(By.tagName("td"));
+			List<WebElement> estadoOProvincia1 = driver.findElements(By.cssSelector(".x-grid3-hd-inner.x-grid3-hd-00Nc000000351Kq"));
+			if (estadoOProvincia1.get(i).getText().equals("")) {
+				System.out.println(estadoOProvincia1.size());
+				b= true;
+				break;
+					}
+			Assert.assertFalse(b);
+				}
+			}
+		}
+		else {
+			boolean b = false;
+			WebElement tabla = driver.findElement(By.cssSelector("[class='x-grid3-hd-row']"));
+			if(tabla.getText().toLowerCase().contains("documentnumber") || tabla.getText().toLowerCase().contains("cuit")){
+				b = true;
+			}
+			Assert.assertFalse(b);
+		}
+	}
+
+	@Test (groups = "UAT")
+	public void TXU0008_Verificar_funcionamiento_del_boton_modificar_dentro_de_la_orden() {
+		irAConsolaFAN();
+		sb.cerrarPestaniaGestion(driver);
+		cc.menu_360_Ir_A("Casos");
+		List<WebElement> CaseNumber = driver.findElements(By.cssSelector("[class='x-grid3-cell-inner x-grid3-col-CASES_CASE_NUMBER']"));
+		CaseNumber.get(0).findElement(By.tagName("a")).click();
+		sleep(8000);
+		driver.switchTo().frame(cambioFrame(driver, By.id("topButtonRow")));
+		List<WebElement> Menu = driver.findElement(By.id("topButtonRow")).findElements(By.className("btn"));
+		for (WebElement wAux : Menu) {
+			sleep(8000);
+			if (wAux.getAttribute("title").equalsIgnoreCase("Modificar")) {
+				Assert.assertTrue(wAux.isDisplayed());
+					sleep(8000);
+						wAux.click();
+						break;
+				}
+//		Alert alert = driver.switchTo().alert();
+//		alert.accept();
+//		driver.switchTo().defaultContent();
+//		List<WebElement> error = driver.findElement(By.xpath("/html/body/table")).findElements(By.tagName("span"));
+//		for(WebElement x : error) {
+//			if(x.getText().toLowerCase().contains("no se ha podido enviar para la aprobaci\u00f3n")) {
+//			System.out.println(x.getText());	
+//			}
+//			
+//	}
+		}
+		driver.switchTo().defaultContent();
+		System.out.println("No permite Modificar");
+	}
+	
+	@Test (groups = "UAT")
+	public void TXU0010_Validacion_de_fecha_de_modificacion_en_detalles_del_caso() {
+		irAConsolaFAN();
+		sb.cerrarPestaniaGestion(driver);
+		cc.menu_360_Ir_A("Casos");
+		List<WebElement> CaseNumber = driver.findElements(By.cssSelector("[class='x-grid3-cell-inner x-grid3-col-CASES_CASE_NUMBER']"));
+		CaseNumber.get(0).findElement(By.tagName("a")).click();
+		sleep(5000);
+		driver.switchTo().frame(cambioFrame(driver, By.name("close")));
+		driver.findElement(By.name("close")).click();
+		sleep(5000);
+		selectByText(driver.findElement(By.name("cas7")), "Anulada");
+		driver.findElement(By.name("save")).click();
+		WebElement ultModificacion = null;
+		for (WebElement x : driver.findElements(By.className("pbSubsection"))) {
+			if (x.getText().toLowerCase().contains("owned by me"))
+				ultModificacion = x;
+		}
+		ultModificacion = ultModificacion.findElement(By.tagName("tbody"));
+		for (WebElement x : ultModificacion.findElements(By.tagName("tr"))) {
+			if (x.getText().toLowerCase().contains("\u00faltima modificaci\u00f3n por"))
+				ultModificacion = x;
+		}
+		String lastUpdate = ultModificacion.getText();
+		lastUpdate = lastUpdate.substring(lastUpdate.indexOf(",")+2);
+		WebElement fechaYHora = null;
+		for (WebElement x : driver.findElements(By.className("pbSubsection"))) {
+			if (x.getText().toLowerCase().contains("owned by me"))
+				fechaYHora = x;
+		}
+		fechaYHora = fechaYHora.findElement(By.tagName("tbody"));
+		for (WebElement x : fechaYHora.findElements(By.tagName("tr"))) {
+			if (x.getText().toLowerCase().contains("fecha/hora de cierre"))
+				fechaYHora = x;
+		}
+		String closeCase = fechaYHora.getText();
+		closeCase = closeCase.substring(closeCase.lastIndexOf("e")+2);
+		DateFormat format = new SimpleDateFormat("dd/mm/yyyy hh:mm");
+		Date fechaUltimaModificacion  = format.parse(lastUpdate, new ParsePosition(0));
+		Date fechaDeCierre = format.parse(closeCase, new ParsePosition(0));
+		if (!(fechaDeCierre.before(fechaUltimaModificacion)) || !(fechaDeCierre == fechaUltimaModificacion))
+			Assert.assertTrue(false);
+	}
+	
+	@Test (groups = {"SIT", "UAT"})
+	public void TXSU00012_Anulacion_De_Caso_Previamente_Anulado() {
+		irAConsolaFAN();
+		sb.cerrarPestaniaGestion(driver);
+		cc.menu_360_Ir_A("Casos");
+		List<WebElement> CaseNumber = driver.findElements(By.cssSelector("[class='x-grid3-cell-inner x-grid3-col-CASES_CASE_NUMBER']"));
+		CaseNumber.get(0).findElement(By.tagName("a")).click();
+		sleep(5000);
+		driver.switchTo().frame(cambioFrame(driver, By.name("close")));
+		driver.findElement(By.name("close")).click();
+		sleep(5000);
+		selectByText(driver.findElement(By.name("cas7")), "Anulada");
+		driver.findElement(By.name("save")).click();
+		sleep(5000);
+		driver.findElement(By.name("close")).click();
+		sleep(5000);
+		for (WebElement x : driver.findElement(By.name("cas7")).findElements(By.tagName("option"))) {
+			if (x.getText().toLowerCase().equals("anulada")) {
+				driver.findElement(By.name("cancel")).click();
+				Assert.assertTrue(false);
+			} else
+				driver.findElement(By.name("cancel")).click();
+		}
+	}
+	
+	@Test (groups = {"SIT", "UAT"})
+	public void TXSU00007_Verificar_Asunto_En_Detalles_Del_Caso_Al_Realizar_Una_Suspension() {
+		irAConsolaFAN();
+		sb.cerrarPestaniaGestion(driver);
+		if (driver.getCurrentUrl().contains("sit"))
+			cc.buscarCaso("00064566");
+		else
+			cc.buscarCaso("00003522");
+		driver.switchTo().frame(cambioFrame(driver, By.name("close")));
+		WebElement asunto = null;
+		for (WebElement x : driver.findElements(By.className("pbSubsection"))) {
+			if (x.getText().toLowerCase().contains("owned by me"))
+				asunto = x;
+		}
+		asunto = asunto.findElement(By.tagName("tbody"));
+		for (WebElement x : asunto.findElements(By.tagName("tr"))) {
+			if (x.getText().toLowerCase().contains("asunto"))
+				asunto = x;
+		}
+		Assert.assertTrue(asunto.getText().contains("Suspensi\u00f3n de Linea + Equipo"));
+	}
+	
+	@Test (groups = {"UAT","SIT"}, dataProvider = "CuentaModificacionDeDatos") 
+	public void TXSU00008_Validar_que_el_DNI_solo_se_pueda_modificar_cada_30_dias (String sDNI, String sLinea) {
+		irAConsolaFAN();
+		sb.cerrarPestaniaGestion(driver);
+		cc.menu_360_Ir_A("Inicio");
+		irAGestionDeClientes();
+		sleep(5000);
+		driver.switchTo().frame(cambioFrame(driver, By.id("SearchClientDocumentType")));
+		driver.findElement(By.cssSelector(".slds-form-element__label--toggleText.ng-binding")).click();
+		sleep(3000);
+		sb.BuscarCuenta("DNI", sDNI);
+		driver.findElement(By.cssSelector(".slds-tree__item.ng-scope")).click();
+		sleep(15000);
+		driver.switchTo().frame(cambioFrame(driver, By.className("profile-box")));
+		cc.openleftpanel();
+		List <WebElement> actualizar = driver.findElements(By.className("profile-edit"));
+		actualizar.get(0).click();
+		sleep(10000);
+		driver.switchTo().frame(cambioFrame(driver, By.id("DocumentNumber")));
+		boolean a = false;
+		boolean b = false;
+		for(WebElement x : driver.findElements(By.id("MessagingDocumentNumberModificationNotAllowed"))) {
+			if(x.getText().toLowerCase().contains("aclaraci�n: se realiz\u00f3 un cambio de dni en el \u00faltimo mes. no se permite una nueva modificaci\u00f3n.")) {
+				a = true;
+				System.out.println("No se puede realizar una modificacion de DNI");
+			}
+		}
+		Assert.assertTrue(a);
+		driver.findElement(By.id("ClientInformation_nextBtn")).click();
+		sleep(10000);
+		List <WebElement> element = driver.findElements(By.className("ta-care-omniscript-done"));
+		for (WebElement x : element) {
+			if (x.getText().toLowerCase().contains("se realizaron correctamente las modificaciones")) {
+				b = true;
+			}
+		}
+		Assert.assertFalse(b);
+	}
+}	
