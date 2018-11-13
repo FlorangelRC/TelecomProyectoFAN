@@ -4011,7 +4011,17 @@ public class GestionesPerfilOficina extends TestBase {
 		cCC.seleccionarCardPornumeroLinea(sLinea, driver);
 		pagePTelefo.comprarPack();
 		pagePTelefo.closerightpanel();
-		pagePTelefo.PackCombinado(sventaPack);
+		try {
+			pagePTelefo.PackCombinado(sventaPack);
+		}
+		catch (Exception eE) {
+			driver.navigate().refresh();
+			sleep(10000);
+			mk.closeTabByName(driver, "Comprar SMS");
+			cCC.seleccionarCardPornumeroLinea(sLinea, driver);
+			pagePTelefo.comprarPack("comprar sms");
+			pagePTelefo.PackCombinado(sventaPack);
+		}
 		pagePTelefo.tipoDePago("en factura de venta");
 		sleep(12000);
 		pagePTelefo.getTipodepago().click();

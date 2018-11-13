@@ -1425,9 +1425,20 @@ public class GestionesPerfilTelefonico extends TestBase{
 		pagePTelefo.comprarPack("comprar sms");
 		sleep(5000);
 		cCC.closeleftpanel();
-		pagePTelefo.PackLDI(sVentaPack);
+		try {
+			pagePTelefo.PackLDI(sVentaPack);
+		}
+		catch (Exception eE) {
+			driver.navigate().refresh();
+			sleep(10000);
+			mk.closeTabByName(driver, "Comprar SMS");
+			cCC.seleccionarCardPornumeroLinea(sLinea, driver);
+			pagePTelefo.comprarPack("comprar sms");
+			pagePTelefo.PackLDI(sVentaPack);
+		}
 		pagePTelefo.tipoDePago("en factura de venta");
-		pagePTelefo.getSimulaciondeFactura().click();
+		//pagePTelefo.getSimulaciondeFactura().click();
+		pagePTelefo.getTipodepago();
 		sleep(12000);
 		String sOrden = cc.obtenerOrden2(driver);
 		detalles+="-Orden:"+sOrden;
