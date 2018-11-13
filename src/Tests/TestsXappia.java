@@ -913,9 +913,14 @@ public class TestsXappia extends TestBase {
 		cCC.seleccionarCardPornumeroLinea(sLinea, driver);
 		pagePTelefo.comprarPack("comprar sms");
 		sleep(5000);
-		cCC.closeleftpanel();
+		/*try {
+			cCC.openrightpanel();
+		}
+		catch (Exception eE) {
+			//Always empty
+		}
+		cCC.closerightpanel();*/
 		pagePTelefo.PackLDI(sVentaPack);
-		String sOrder = cc.obtenerOrden2(driver);
 		pagePTelefo.tipoDePago("en factura de venta");
 		try {
 			pagePTelefo.getSimulaciondeFactura().click();
@@ -924,6 +929,7 @@ public class TestsXappia extends TestBase {
 			pagePTelefo.getTipodepago().click();
 		}
 		sleep(12000);
+		String sOrder = cc.obtenerOrden2(driver);
 		List<WebElement> wMenu = driver.findElements(By.cssSelector(".vlc-slds-button--tertiary.ng-binding.ng-scope"));
 		for (WebElement wAux : wMenu) {
 			if (wAux.getText().equalsIgnoreCase("Cancelar")) {
@@ -1176,9 +1182,8 @@ public class TestsXappia extends TestBase {
 			if (x.getText().toLowerCase().contains("asunto"))
 				asunto = x;
 		}
-		Assert.assertTrue(asunto.getText().contains("Suspensi�n de Linea + Equipo"));
+		Assert.assertTrue(asunto.getText().contains("Suspensi\u00f3n de Linea + Equipo"));
 	}
-}
 	
 	@Test (groups = {"UAT","SIT"}, dataProvider = "CuentaModificacionDeDatos") 
 	public void TXSU00008_Validar_que_el_DNI_solo_se_pueda_modificar_cada_30_dias (String sDNI, String sLinea) {
