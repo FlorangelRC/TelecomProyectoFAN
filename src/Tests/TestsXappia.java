@@ -1176,6 +1176,6 @@ public class TestsXappia extends TestBase {
 			if (x.getText().toLowerCase().contains("asunto"))
 				asunto = x;
 		}
-		Assert.assertTrue(asunto.getText().contains("Suspensión de Linea + Equipo"));
+		Assert.assertTrue(asunto.getText().contains("Suspensi\u00f3n de Linea + Equipo"));
 	}
 }
