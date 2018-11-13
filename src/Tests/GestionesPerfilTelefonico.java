@@ -2250,4 +2250,17 @@ public class GestionesPerfilTelefonico extends TestBase{
 		//Verify when the page works
 	}
 	
+	@Test (groups = {"GestionesPerfilOficina", "BaseDeConocimiento", "Ciclo3"}, dataProvider = "CuentaVista360")
+	public void TS118160_CRM_REPRO_BDC_Customer_Care_Actualizacion_de_Datos_Perfil_Telefonico_Acceso_base_de_conocimientos_dentro_OS(String sDNI, String sNombre) {
+		imagen = "TS118160";
+		driver.switchTo().frame(cambioFrame(driver, By.id("SearchClientDocumentType")));
+		sb.BuscarCuenta("DNI", sDNI);
+		driver.findElement(By.cssSelector(".slds-tree__item.ng-scope")).click();
+		sleep(15000);
+		driver.switchTo().frame(cambioFrame(driver, By.className("profile-box")));
+		driver.findElements(By.className("profile-edit")).get(0).click();
+		sleep(5000);
+		driver.switchTo().frame(cambioFrame(driver, By.className("vlc-slds-knowledge-list-item")));
+		Assert.assertTrue(driver.findElement(By.className("vlc-slds-knowledge-list-item")).getText().contains("Actualizaci\u00f3n de Datos"));
+	}
 }
