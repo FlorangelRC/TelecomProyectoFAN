@@ -51,8 +51,8 @@ import DataProvider.ExcelUtils;
 public class TestBase {
 	protected static WebDriver driver;
 	
-		//public static String urlAmbiente = "https://telecomcrm--uat.cs53.my.salesforce.com";
-		public static String urlAmbiente = "https://crm--sit.cs14.my.salesforce.com/";
+		public static String urlAmbiente = "https://telecomcrm--uat.cs53.my.salesforce.com";
+		//public static String urlAmbiente = "https://crm--sit.cs14.my.salesforce.com/";
 		
 		// viejo public String urlSCP = "https://telecomcrm--uat.cs8.my.salesforce.com";
 		public static String urlSCP = "https://telecomcrm--uat.cs53.my.salesforce.com";
@@ -971,6 +971,69 @@ public class TestBase {
 	}
 	
 	@DataProvider
+	public Object[][] DatosSalesNominacionNuevoOfCom() throws Exception{
+
+	 Object[][] testObjArray = ExcelUtils.getTableArray(dataProviderE2E(),"Altas y Nominacion",1,1,12,"NominacionNuevoOfCom");
+
+	 return (testObjArray);
+
+	}
+	
+	
+	@DataProvider
+	public Object[][] DatosSalesNominacionExistenteOfCom() throws Exception{
+
+	 Object[][] testObjArray = ExcelUtils.getTableArray(dataProviderE2E(),"Altas y Nominacion",1,1,2,"NominacionExistenteOfCom");
+
+	 return (testObjArray);
+
+	}
+	
+	@DataProvider
+	public Object[][] DatosNoNominacionNuevoAgente() throws Exception{
+
+	 Object[][] testObjArray = ExcelUtils.getTableArray(dataProviderE2E(),"Altas y Nominacion",1,1,7,"NoNominaNuevoAgente");
+
+	 return (testObjArray);
+
+	}
+	
+	@DataProvider
+	public Object[][] DatosSalesNominacionNuevoAgente() throws Exception{
+
+	 Object[][] testObjArray = ExcelUtils.getTableArray(dataProviderE2E(),"Altas y Nominacion",1,1,12,"NominacionNuevoAgente");
+
+	 return (testObjArray);
+
+	}
+	@DataProvider
+	public Object[][] DatosSalesNominacionNuevoPasaporteOfCom() throws Exception{
+
+	 Object[][] testObjArray = ExcelUtils.getTableArray(dataProviderE2E(),"Altas y Nominacion",1,1,13,"NominacionNuevoPasaporteOfCom");
+
+	 return (testObjArray);
+
+	}
+	@DataProvider
+	public Object[][] DatosNoNominaNuevoEdadOfCom() throws Exception{
+
+	 Object[][] testObjArray = ExcelUtils.getTableArray(dataProviderE2E(),"Altas y Nominacion",1,1,4,"NoNominaNuevoEdadOfCom");
+
+	 return (testObjArray);
+
+	}
+	
+	@DataProvider
+	public Object[][] DatosNoNominacionNuevoTelefonico() throws Exception{
+
+	 Object[][] testObjArray = ExcelUtils.getTableArray(dataProviderE2E(),"Altas y Nominacion",1,1,7,"NoNominaNuevoTelefonico");
+
+	 return (testObjArray);
+
+	}
+	//
+	
+	@DataProvider
 	public Object[][] DatosAltaLineaAgente() throws Exception{
 
 	 Object[][] testObjArray = ExcelUtils.getTableArray(dataProviderE2E(),"Altas y Nominacion",1,1,16,"Alta Linea Agente");
@@ -1152,7 +1215,7 @@ public class TestBase {
 	@DataProvider
 	public Object[][] CuentaSuspension() throws Exception {
 		
-		Object[][] testObjArray = ExcelUtils.getTableArray(dataProviderE2E(),"E2EsinPago",1,1,4,"SuspensionOficina");
+		Object[][] testObjArray = ExcelUtils.getTableArray(dataProviderE2E(),"E2EsinPago",1,1,5,"SuspensionOficina");
 		
 		return(testObjArray);
 		
@@ -1577,6 +1640,13 @@ public class TestBase {
 		return (testObjArray);
 		
 	}
+	@DataProvider
+	public Object[][] DatosSalesNominacionPyRNuevoOfCom() throws Exception{
+
+	 Object[][] testObjArray = ExcelUtils.getTableArray(dataProviderE2E(),"Altas y Nominacion",1,1,12,"NominacionNuevoPyROfCom");
+
+	 return (testObjArray);
+	} 
 	
 	@DataProvider
 	public Object[][] NumerosAmigosNoPersonalAlta() throws Exception {
@@ -1595,6 +1665,20 @@ public class TestBase {
 	@DataProvider
 	public Object[][] NumerosAmigosNoPersonalBaja() throws Exception {
 		Object[][] testObjArray = ExcelUtils.getTableArray(dataProviderE2E(),"E2EsinPago",1,1,3,"No Personal Baja Amigos");
+
+		 return (testObjArray);
+	}
+	
+	@DataProvider
+	public Object[][] serviciotecnico() throws Exception {
+		Object[][] testObjArray = ExcelUtils.getTableArray(dataProviderE2E(),"E2EsinPago",1,1,3,"Servicio Tecnico");
+
+		 return (testObjArray);
+	}
+	
+	@DataProvider
+	public Object[][] Diagnostico() throws Exception {
+		Object[][] testObjArray = ExcelUtils.getTableArray(dataProviderE2E(),"E2EsinPago",1,1,2,"DiagnInconveniente");
 
 		 return (testObjArray);
 	}

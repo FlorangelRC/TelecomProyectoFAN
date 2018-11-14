@@ -29,6 +29,8 @@ import Pages.CustomerCare;
 import Pages.Marketing;
 import Pages.PagePerfilTelefonico;
 import Pages.SalesBase;
+import Pages.TechCare_Ola1;
+import Pages.TechnicalCareCSRDiagnosticoPage;
 import Pages.setConexion;
 
 public class GestionesPerfilAgente extends TestBase{
@@ -325,12 +327,15 @@ public class GestionesPerfilAgente extends TestBase{
 		//datosOrden.add("Operacion: Compra de Pack- Cuenta: "+accid+" Invoice: "+invoice.split("-")[0]+invoice.split("-")[1]);
 		System.out.println("Operacion: Compra de Pack- Cuenta: "+accid+" Invoice: "+invoice.split("-")[1] + "\tAmmount: " +invoice.split("-")[0]);
 		CBS_Mattu invoSer = new CBS_Mattu();
-		Assert.assertTrue(invoSer.PagoEnCaja("1005", accid, "1001", invoice.split("-")[1], invoice.split("-")[1],driver));
+		Assert.assertTrue(invoSer.PagoEnCaja("1005", accid, "1001", invoice.split("-")[0], invoice.split("-")[1],driver));
 		
 		//Assert.assertTrue(invoSer.PagaEnCajaTC("1005", accid, "2001", invoice.split("-")[1], invoice.split("-")[0],  cDNITarjeta, cTitular, cVenceAno+cVenceMes, cCodSeg, cTitular, cNumTarjeta));
 		sleep(5000);
 		driver.navigate().refresh();
 		sleep(10000);
+		CBS cCBS = new CBS();
+		CBS_Mattu cCBSM = new CBS_Mattu();
+		Assert.assertTrue(cCBS.validarActivacionPack(cCBSM.Servicio_QueryFreeUnit(sLinea), sPackAgente));
 		driver.switchTo().frame(cambioFrame(driver, By.cssSelector(".hasMotif.orderTab.detailPage.ext-webkit.ext-chrome.sfdcBody.brandQuaternaryBgr")));
 		WebElement tabla = driver.findElement(By.id("ep")).findElements(By.tagName("table")).get(1);
 		String datos = tabla.findElements(By.tagName("tr")).get(4).findElements(By.tagName("td")).get(1).getText();
@@ -457,15 +462,17 @@ public class GestionesPerfilAgente extends TestBase{
 		Assert.assertTrue(!(saldo.isEmpty()));
 	}
 	
-	@Test(groups = {"Sales", "PreparacionNominacion","E2E","Ciclo1"}, dataProvider="DatosSalesNominacion") 
+	@Test(groups = {"Sales", "PreparacionNominacion","E2E","Ciclo1"}, dataProvider="DatosSalesNominacionNuevoAgente") 
 	public void TS_CRM_Nominacion_Argentino_Agente(String sLinea, String sDni, String sNombre, String sApellido, String sSexo, String sFnac, String sEmail, String sProvincia, String sLocalidad, String sCalle, String sNumCa, String sCP) { 
 		imagen = "TS_CRM_Nominacion_Argentino_Agente"+sDni;
+		detalles = null;
+		detalles = imagen+"-Linea: "+sLinea;
 		sleep(5000);
 		driver.switchTo().frame(cambioFrame(driver, By.id("SearchClientDocumentType")));
 		SalesBase SB = new SalesBase(driver);
 		driver.findElement(By.id("PhoneNumber")).sendKeys(sLinea);
-		  driver.findElement(By.id("SearchClientsDummy")).click();
-		  sleep(10000);
+		driver.findElement(By.id("SearchClientsDummy")).click();
+		sleep(10000);
 		WebElement cli = driver.findElement(By.id("tab-scoped-1"));
 		cli.findElement(By.tagName("tbody")).findElement(By.tagName("tr")).click();
 		sleep(3000);
@@ -490,8 +497,8 @@ public class GestionesPerfilAgente extends TestBase{
 		bp.setSimpleDropdown(driver.findElement(By.id("ImpositiveCondition")), "IVA Consumidor Final");
 		SB.Crear_DomicilioLegal(sProvincia, sLocalidad, sCalle, "", sNumCa, "", "", sCP);
 		sleep(38000);
-		//contact.subirformulario("C:\\Users\\florangel\\Downloads\\form.pdf", "si");
-		//sleep(30000);
+		CBS_Mattu invoSer = new CBS_Mattu();
+		invoSer.ValidarInfoCuenta(sLinea, sNombre,sApellido, "Plan con Tarjeta Repro");
 		List <WebElement> element = driver.findElement(By.id("NominacionExitosa")).findElements(By.tagName("p"));
 		System.out.println("cont="+element.get(0).getText());
 		boolean a = false;
@@ -504,8 +511,7 @@ public class GestionesPerfilAgente extends TestBase{
 		Assert.assertTrue(a);
 		driver.findElement(By.id("FinishProcess_nextBtn")).click();
 		sleep(3000);
-		CBS_Mattu invoSer = new CBS_Mattu();
-		invoSer.ValidarInfoCuenta(sLinea, sNombre,sApellido);
+		invoSer.ValidarInfoCuenta(sLinea, sNombre,sApellido, "Plan con Tarjeta Repro");
 	}
 	@Test (groups = {"GestionesPerfilAgente", "Vista360","Ciclo2"}, dataProvider="ProductosyServicios")
 	public void TS134818_CRM_Movil_Prepago_Vista_360_Mis_Servicios_Visualizacion_del_estado_de_los_Productos_activos_FAN_Front_Agentes(String cDNI){
@@ -528,11 +534,14 @@ public class GestionesPerfilAgente extends TestBase{
 		Assert.assertTrue(driver.findElement(By.cssSelector(".via-slds.slds-m-around--small.ng-scope")).isDisplayed());
 	}
 	
-	@Test (groups = {"GestionesPerfilAgente", "Nominacion", "Ciclo1"})
-	public void TS85100_CRM_Movil_REPRO_No_Nominatividad_No_Valida_Identidad_Cliente_nuevo_Presencial_DOC_Agente() {
-		boolean nominacion = false;
+	@Test (groups = {"GestionesPerfilAgente", "Nominacion", "Ciclo1"}, dataProvider="DatosNoNominacionNuevoAgente")
+	public void TS85100_CRM_Movil_REPRO_No_Nominatividad_No_Valida_Identidad_Cliente_nuevo_Presencial_DOC_Agente(String sLinea, String sDni, String sNombre, String sApellido, String sSexo, String sFnac, String sEmail) {
+		imagen = "TS85100";
+		detalles = null;
+		detalles = imagen+"No nominacion Agente- DNI: "+sDni+"-Linea: "+sLinea;
+		sleep(2000);
 		driver.switchTo().frame(cambioFrame(driver, By.id("SearchClientDocumentType")));
-		driver.findElement(By.id("PhoneNumber")).sendKeys("2932478872");
+		driver.findElement(By.id("PhoneNumber")).sendKeys(sLinea);
 		driver.findElement(By.id("SearchClientsDummy")).click();
 		sleep(5000);
 		driver.findElement(By.cssSelector(".slds-button.slds-button--icon.slds-m-right--x-small.ng-scope")).click();
@@ -547,13 +556,24 @@ public class GestionesPerfilAgente extends TestBase{
 				botonNominar = x;
 		}
 		botonNominar.findElement(By.tagName("a")).click();
-		sleep(5000);
+		sleep(10000);
 		ContactSearch contact = new ContactSearch(driver);
-		contact.searchContact2("DNI", "99241524", "Masculino");
-		if (driver.findElement(By.id("FirstName")).getText().isEmpty() && driver.findElement(By.id("LastName")).getText().isEmpty())
-			nominacion = true;
-		Assert.assertTrue(nominacion);
+		contact.searchContact2("DNI", sDni, sSexo);
+		sleep(2000);
+		contact.Llenar_Contacto(sNombre, sApellido, sFnac);
+		try {contact.ingresarMail(sEmail, "si");}catch (org.openqa.selenium.ElementNotVisibleException ex1) {}
+		contact.tipoValidacion("documento");
+		contact.subirArchivo("C:\\Users\\florangel\\Downloads\\arbolito.jpg", "no");
+		List<WebElement> errores = driver.findElements(By.cssSelector(".message.description.ng-binding.ng-scope")); 
+		boolean error = false;
+		for (WebElement UnE: errores) {
+			if (UnE.getText().toLowerCase().contains("identidad no superada")) {
+				error = true;
+			}
+		}
+		Assert.assertTrue(error);
 	}
+	
 	@Test(groups = {"GestionesPerfilAgente", "RenovacionCuota","E2E","Ciclo1"}, dataProvider="RenovacionCuotaConSaldo") 
 	public void TS135402_CRM_Movil_REPRO_Renovacion_de_cuota_Presencial_Internet_50_MB_Dia_Descuento_de_saldo_con_Credito(String sDNI, String sLinea){
 		imagen = "TS135402";
@@ -1064,5 +1084,71 @@ public class GestionesPerfilAgente extends TestBase{
 				ajustePositivo = true;
 		}
 		Assert.assertTrue(ajustePositivo);
+	}
+	
+	@Test (groups = {"GestionesPerfilAgente", "ServicioTecnico","E2E", "Ciclo4"}, dataProvider = "serviciotecnico")
+	public void TS121364_CRM_Movil_REPRO_Servicio_Técnico_Realiza_reparaciones_de_equipos_Validacion_de_IMEI_Ok_Con_Garantía_Derivado_a_Servicio_Técnico_Sin_Muleto_Terminal_reparada_y_entregada_Agente(String sDNI, String sLinea, String sIMEI) throws InterruptedException {
+		imagen = "TS121364";
+		detalles = null;
+		detalles = imagen + " -ServicioTecnico: " + sDNI;
+		BasePage cambioFrameByID=new BasePage();
+		driver.switchTo().frame(cambioFrame(driver, By.id("SearchClientDocumentType")));
+		sb.BuscarCuenta("DNI", sDNI);
+		driver.findElement(By.cssSelector(".slds-tree__item.ng-scope")).click();
+		sleep(10000);
+		searchAndClick(driver, "Servicio T\u00e9cnico");
+		sleep(8000);
+		driver.switchTo().frame(cambioFrameByID.getFrameForElement(driver, By.cssSelector(".imgItemContainer.ng-scope")));
+		List<WebElement> clickOnButtons= driver.findElements(By.xpath(".//*[@class='borderOverlay']"));
+		clickOnButtons.get(1).click();
+		WebElement IMEI = driver.findElement(By.id("ImeiCode"));
+		IMEI.click();
+		IMEI.sendKeys(sIMEI);
+		driver.findElement(By.id("ImeiInput_nextBtn")).click();
+	}
+	
+	@Test (groups = {"GestionesPerfilAgente", "ServicioTecnico","E2E", "Ciclo4"}, dataProvider = "serviciotecnico")
+	public void TS121367_CRM_Movil_REPRO_Servicio_Técnico_Realiza_configuraciones_de_equipos_Validacion_de_IMEI_Ok_Configuración_Con_Garantía_Sin_Muleto_Reparar_ahora_Agente(String sDNI, String sLinea, String sIMEI) throws InterruptedException {
+		imagen = "TS121367";
+		detalles = null;
+		detalles = imagen + " -ServicioTecnico: " + sDNI;
+		BasePage cambioFrameByID=new BasePage();
+		driver.switchTo().frame(cambioFrame(driver, By.id("SearchClientDocumentType")));
+		sb.BuscarCuenta("DNI", sDNI);
+		driver.findElement(By.cssSelector(".slds-tree__item.ng-scope")).click();
+		sleep(10000);
+		searchAndClick(driver, "Servicio T\u00e9cnico");
+		sleep(8000);
+		driver.switchTo().frame(cambioFrameByID.getFrameForElement(driver, By.cssSelector(".imgItemContainer.ng-scope")));
+		List<WebElement> clickOnButtons= driver.findElements(By.xpath(".//*[@class='borderOverlay']"));
+		clickOnButtons.get(1).click();
+		WebElement IMEI = driver.findElement(By.id("ImeiCode"));
+		IMEI.click();
+		IMEI.sendKeys(sIMEI);
+		driver.findElement(By.id("ImeiInput_nextBtn")).click();
+	}
+	
+	@Test (groups = {"GestionesPerfilAgente", "DiagnosticoInconveniente","E2E", "Ciclo3"}, dataProvider = "Diagnostico")
+	public void TS119283_CRM_Movil_REPRO_Diagnóstico_de_Datos_Valida_Red_y_Navegación_Motivo_de_contacto_No_puedo_navegar_Antena_rojo_NO_BAM_Agente(String sDNI, String sLinea) throws Exception  {
+		imagen = "TS119283";
+		detalles = null;
+		detalles = imagen + " -ServicioTecnico: " + sDNI;
+		CustomerCare cCC=new CustomerCare(driver);
+		TechCare_Ola1 page=new TechCare_Ola1(driver);
+		TechnicalCareCSRDiagnosticoPage tech = new TechnicalCareCSRDiagnosticoPage(driver);
+		driver.switchTo().frame(cambioFrame(driver, By.id("SearchClientDocumentType")));
+		sb.BuscarCuenta("DNI", sDNI);
+		driver.findElement(By.cssSelector(".slds-tree__item.ng-scope")).click();
+		sleep(10000);
+		driver.switchTo().frame(cambioFrame(driver, By.className("card-top")));
+		driver.findElement(By.className("card-top")).click();
+		sleep(5000);
+		cCC.irAProductosyServicios();
+		tech.verDetalles();
+	    tech.clickDiagnosticarServicio("datos", "Datos", true);
+	    tech.selectionInconvenient("No puedo navegar");
+	    tech.continuar();
+	    tech.seleccionarRespuesta("si");
+	    buscarYClick(driver.findElements(By.id("KnowledgeBaseResults_nextBtn")), "equals", "continuar");
 	}
 }
