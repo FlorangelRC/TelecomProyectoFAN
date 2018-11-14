@@ -913,9 +913,14 @@ public class TestsXappia extends TestBase {
 		cCC.seleccionarCardPornumeroLinea(sLinea, driver);
 		pagePTelefo.comprarPack("comprar sms");
 		sleep(5000);
-		cCC.closeleftpanel();
+		/*try {
+			cCC.openrightpanel();
+		}
+		catch (Exception eE) {
+			//Always empty
+		}
+		cCC.closerightpanel();*/
 		pagePTelefo.PackLDI(sVentaPack);
-		String sOrder = cc.obtenerOrden2(driver);
 		pagePTelefo.tipoDePago("en factura de venta");
 		try {
 			pagePTelefo.getSimulaciondeFactura().click();
@@ -924,6 +929,7 @@ public class TestsXappia extends TestBase {
 			pagePTelefo.getTipodepago().click();
 		}
 		sleep(12000);
+		String sOrder = cc.obtenerOrden2(driver);
 		List<WebElement> wMenu = driver.findElements(By.cssSelector(".vlc-slds-button--tertiary.ng-binding.ng-scope"));
 		for (WebElement wAux : wMenu) {
 			if (wAux.getText().equalsIgnoreCase("Cancelar")) {

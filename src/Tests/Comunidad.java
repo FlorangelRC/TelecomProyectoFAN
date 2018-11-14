@@ -326,16 +326,15 @@ public class Comunidad extends TestBase {
 				if(p.getText().toLowerCase().equals("packs de datos")){
 					p.click();
 				}
-					sleep(3000);
-				if(p.getText().toLowerCase().equals("packs sms")){
-				p.click();
-				}
 			}
 		sleep(8000);
-		driver.findElements(By.cssSelector(".lbl-item.ng-binding")).get(4).click();	
+		driver.findElements(By.cssSelector(".lbl-item.ng-binding")).get(4).click();
+		System.out.println(driver.findElements(By.cssSelector(".lbl-item.ng-binding")).get(4));
+		System.out.println(driver.findElements(By.cssSelector(".lbl-item.ng-binding")).get(6));
 		sleep(8000);
 		driver.findElements(By.cssSelector(".lbl-item.ng-binding")).get(6).click();	
-			
+		sleep(5000);
+		driver.findElement(By.id("PackSelection_nextBtn")).click();
 	}
 	
 	@Test (groups = {"Communities","E2E"})
