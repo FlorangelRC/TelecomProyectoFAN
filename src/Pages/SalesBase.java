@@ -1363,4 +1363,11 @@ try{	driver.findElement(By.id("alert-ok-button")).click();	} catch (NoSuchElemen
 
 			return bAssert;
 		}
- }
+	
+	public void BuscarCuenta(String sLinea) {
+		driver.findElement(By.id("PhoneNumber")).sendKeys(sLinea);
+		btnbuscar.click();
+		try {Thread.sleep(20000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+	}
+	
+}

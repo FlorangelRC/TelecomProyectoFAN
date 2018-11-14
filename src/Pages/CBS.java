@@ -184,14 +184,17 @@ public class CBS {
 		return sRequest;
 	}
 	
-	public boolean sCBS_Request_Validador_Alta_Linea(Document sResponse, String sLinea, String sImsi, String sICCD, String sNombre, String sApellido) {
+	public boolean sCBS_Request_Validador_Alta_Linea(Document sResponse, String sLinea, String sImsi, String sICCD, String sNombre, String sApellido, String sPlan) {
 		System.out.println("nombre: "+sResponse.getElementsByTagName("bcc:FirstName").item(0).getTextContent());
 		if (sResponse.getElementsByTagName("bcc:FirstName").item(0).getTextContent().contains(sNombre) && sResponse.getElementsByTagName("bcc:LastName").item(0).getTextContent().contains(sApellido)) {
-			System.out.println("Correcto");
-		}
-		else {
-			System.out.println(sResponse.getElementsByTagName("bcc:FirstName").item(0).getTextContent());
-			Assert.assertTrue(false);
+			if(sResponse.getElementsByTagName("bcc:OfferingName").item(0).getTextContent().contains(sPlan)) {
+				System.out.println("Correcto");
+			
+			}
+			else {
+				System.out.println(sResponse.getElementsByTagName("bcc:FirstName").item(0).getTextContent());
+				Assert.assertTrue(false);
+			}
 		}
 		return true;
 	}
@@ -511,26 +514,39 @@ public class CBS {
 	public boolean validarActivacionPack(Document Response, String tipo) {
 		boolean esta = false;
 		NodeList ofertas = (NodeList) Response.getElementsByTagName("bcc:OfferingCode");
-		if (tipo.equalsIgnoreCase("Pack 50 min y 50 SMS x 7 dias")) {
-			for (int i=0; i<ofertas.getLength();i++) {
-				if(ofertas.item(i).getTextContent().equals("SO_VOICE_50MIN_50SMS_7D"))
-					esta = true;
-			}
-		}else {
-			if (tipo.equalsIgnoreCase("reseteo 200 mb por dia")) {
+		switch(tipo.toLowerCase()) {
+			case "pack 50 min y 50 sms x 7 dias":
 				for (int i=0; i<ofertas.getLength();i++) {
-					if(ofertas.item(i).getTextContent().equals("SO_DATA_200MB_Diario"))
+					if(ofertas.item(i).getTextContent().equals("SO_VOICE_50MIN_50SMS_7D"))
 						esta = true;
 				}
-			}else {
-				if (tipo.toLowerCase().contains("reseteo internet por dia")) {
-					for (int i=0; i<ofertas.getLength();i++) {
-						if(ofertas.item(i).getTextContent().equals("SO_ROI_P_PYBOL_R"))
-							esta = true;
-					}
+			break;
+			case  "pack internacional 30 sms al resto del mundo":
+				for (int i=0; i<ofertas.getLength();i++) {
+					if(ofertas.item(i).getTextContent().equals("SO_LDI_30MIN_REST_MUNDO"))
+						esta = true;
 				}
-			}
+			break;
+			case "pack 1gb x 1 dia + whatsapp gratis":
+				for (int i=0; i<ofertas.getLength();i++) {
+					if(ofertas.item(i).getTextContent().equals("SO_DATA_1GX1D"))
+						esta = true;
+				}
+			break;
+			case "pack 1 dia de sms y minutos a personal  ilimitados":
+				for (int i=0; i<ofertas.getLength();i++) {
+					if(ofertas.item(i).getTextContent().equals("SO_VOICE_SMS_ILIMITADO_1D"))
+						esta = true;
+				}
+			break;
+			case "pack 100mb uruguay":
+				for (int i=0; i<ofertas.getLength();i++) {
+					if(ofertas.item(i).getTextContent().equals("SO_ROI_100MB_URU"))
+						esta = true;
+				}
+			break;
 		}
+		
 		return esta;
 	}
 	
@@ -617,5 +633,34 @@ public class CBS {
 				+ "\r\n   </soapenv:Body>\r\n"
 				+ "\r\n</soapenv:Envelope>";
 		return sRequest;
+	}
+	public String sacarStatusLinea(Document dResponse) {
+		String StatusIndex = ObtenerValorResponse(dResponse, "bcs:CurrentStatusIndex");
+		String StatusDetail = ObtenerValorResponse(dResponse, "bcs:StatusDetail");
+		switch(StatusIndex) {
+			case "1":
+				return ("creada");
+			case "2":
+				if(StatusDetail.equals("000000000000000000000000"))
+					return ("activa");
+			break;
+			case "3":
+				return ("expirada");
+			case "4":
+				if(StatusDetail.equals("200000000000000000000000"))
+					return ("suspendida voluntaria");
+				else
+					if(StatusDetail.equals("020000000000000000000000"))
+						return ("suspendida siniestro");
+					else
+						if(StatusDetail.equals("000002000000000000000000"))
+							return ("suspendida fraude");
+			break;
+			case "8":
+				return ("predesactiva");
+			case "9":
+				return ("desactiva");
+		}
+		return "error";
 	}
 }

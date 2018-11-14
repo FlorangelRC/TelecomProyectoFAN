@@ -129,7 +129,7 @@ public class CBS_Mattu extends TestBase {
 	}
 	
 	@Test
-	public void ValidarInfoCuenta(String sLinea, String sNombre, String sApellido) {
+	public void ValidarInfoCuenta(String sLinea, String sNombre, String sApellido, String sPlan) {
 		String sEndPoint = "Datos Usuario";
 		//String sLinea = "";
 		String sMessageSeq = "QCI"+ ((new java.text.SimpleDateFormat("yyyyMMddHHmmss")).format(new Date())).toString()+Integer.toString((int)(Math.random()*1000));
@@ -137,7 +137,7 @@ public class CBS_Mattu extends TestBase {
 		String sICCD = "";
 		SOAPClientSAAJ sSCS = new SOAPClientSAAJ();
 		CBS cCBS = new CBS();
-		cCBS.sCBS_Request_Validador_Alta_Linea(sSCS.callSoapWebService(cCBS.sRequestByLinea(sLinea, sMessageSeq), sEndPoint), sLinea, sImsi, sICCD, sNombre, sApellido);
+		Assert.assertTrue(cCBS.sCBS_Request_Validador_Alta_Linea(sSCS.callSoapWebService(cCBS.sRequestByLinea(sLinea, sMessageSeq), sEndPoint), sLinea, sImsi, sICCD, sNombre, sApellido,sPlan));
 	}
 	
 	@Test
@@ -222,8 +222,8 @@ public class CBS_Mattu extends TestBase {
 	}
 	
 	@Test
-	public void PagarTCPorServicio(/*String sOrden*/) throws KeyManagementException, NoSuchAlgorithmException {
-		String sOrden = "00007249";
+	public void PagarTCPorServicio(String sOrden) throws KeyManagementException, NoSuchAlgorithmException {
+		//String sOrden = "00007249";
 		SOAPClientSAAJ sSCS = new SOAPClientSAAJ();
 		sSCS.turnOffSslChecking();
 		Document doc = Servicio_obtenerInformacionOrden(sOrden);
@@ -231,5 +231,18 @@ public class CBS_Mattu extends TestBase {
 		String CodPag = cCBS.obtenerValorCodPago(doc);
 		System.out.println("CodPago:"+CodPag);
 		Servicio_notificarResultadoOrden(sOrden,CodPag);
+	}
+	
+	@Test
+	public String obtenerStatusLinea(String sLinea) {
+		String sEndPoint = "Datos Usuario";
+		//String sLinea = "";
+		String sMessageSeq = "QCI"+ ((new java.text.SimpleDateFormat("yyyyMMddHHmmss")).format(new Date())).toString()+Integer.toString((int)(Math.random()*1000));
+		SOAPClientSAAJ sSCS = new SOAPClientSAAJ();
+		CBS cCBS = new CBS();
+		Document sResponse = cCBS.sValidacion_ResponseQueryLiteBySubscriber(sSCS.callSoapWebService(cCBS.sRequestQueryLiteBySubscriber(sLinea, sMessageSeq), sEndPoint));
+		System.out.println("sResponde ="+sResponse);
+		//Assert.assertFalse(sResponse.startsWith("false"));
+		return(cCBS.sacarStatusLinea(sResponse));
 	}
 }
