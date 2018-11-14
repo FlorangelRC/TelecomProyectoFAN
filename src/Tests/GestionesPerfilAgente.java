@@ -4,6 +4,8 @@ import static org.testng.Assert.assertTrue;
 
 import java.awt.AWTException;
 import java.io.IOException;
+import java.security.KeyManagementException;
+import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -129,7 +131,7 @@ public class GestionesPerfilAgente extends TestBase{
 	}
 	
 	@Test (groups = {"GestionesPerfilAgente","Recargas","E2E", "Ciclo1"}, dataProvider="RecargaTC")
-	public void TS134322_CRM_Movil_REPRO_Recargas_Presencial_TC_Agente(String sDNI, String sMonto, String sLinea, String sBanco, String sTarjeta, String sNumTarjeta, String sVenceMes, String sVenceAno, String sCodSeg, String sTipoDNI, String sDNITarjeta, String sTitular, String sPromo, String sCuotas) throws AWTException {
+	public void TS134322_CRM_Movil_REPRO_Recargas_Presencial_TC_Agente(String sDNI, String sMonto, String sLinea, String sBanco, String sTarjeta, String sNumTarjeta, String sVenceMes, String sVenceAno, String sCodSeg, String sTipoDNI, String sDNITarjeta, String sTitular, String sPromo, String sCuotas) throws AWTException, KeyManagementException, NoSuchAlgorithmException {
 		//Check All
 		imagen = "134322";//00006559
 		detalles = null;
@@ -201,7 +203,7 @@ public class GestionesPerfilAgente extends TestBase{
 		System.out.println("orden = "+orden);
 		detalles+="-Monto:"+orden.split("-")[2]+"-Prefactura:"+orden.split("-")[1];
 		CBS_Mattu invoSer = new CBS_Mattu();
-		invoSer.PagoEnCaja("1005", accid, "2001", orden.split("-")[2], orden.split("-")[1],driver);
+		invoSer.PagarTCPorServicio(sOrden);
 		sleep(5000);
 		driver.navigate().refresh();
 		sleep(10000);

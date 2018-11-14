@@ -412,7 +412,7 @@ public class GestionesPerfilOficina extends TestBase {
 	}
 	
 	@Test (groups = {"GestionesPerfilOficina", "Recargas","E2E","Ciclo1"}, dataProvider = "RecargaTC")
-	public void TS134330_CRM_Movil_REPRO_Recargas_Presencial_TC_Ofcom_Financiacion(String cDNI, String cMonto, String cLinea, String cBanco, String cTarjeta, String cNumTarjeta, String cVenceMes, String cVenceAno, String cCodSeg, String cTipoDNI, String cDNITarjeta, String cTitular, String cPromo, String cCuotas) throws AWTException {
+	public void TS134330_CRM_Movil_REPRO_Recargas_Presencial_TC_Ofcom_Financiacion(String cDNI, String cMonto, String cLinea, String cBanco, String cTarjeta, String cNumTarjeta, String cVenceMes, String cVenceAno, String cCodSeg, String cTipoDNI, String cDNITarjeta, String cTitular, String cPromo, String cCuotas) throws AWTException, KeyManagementException, NoSuchAlgorithmException {
 		imagen = "TS134330";
 		CBS cCBS = new CBS();
 		CBS_Mattu cCBSM = new CBS_Mattu();
@@ -466,15 +466,10 @@ public class GestionesPerfilOficina extends TestBase {
 			Assert.assertTrue(a);
 		}
 		String orden = cc.obtenerTNyMonto2(driver, sOrden);
-		//String orden = cc.obtenerOrdenMontoyTN(driver, "Recarga");
-		System.out.println("orden = "+orden);
-		sOrders.add("Recargas" + orden + ", cuenta:"+accid+", DNI: " + cDNI +", Monto:"+orden.split("-")[2]);
-		
-		//String orden = cc.obtenerOrdenMontoyTN(driver, "Recarga");
 		System.out.println("orden = "+orden);
 		sOrders.add("Recargas" + orden + ", cuenta:"+accid+", DNI: " + cDNI +", Monto:"+orden.split("-")[2]);
 		CBS_Mattu invoSer = new CBS_Mattu();
-		Assert.assertTrue(invoSer.PagoEnCaja("1006", accid, "2001", orden.split("-")[2], orden.split("-")[1],driver));
+		invoSer.PagarTCPorServicio(sOrden);
 		sleep(5000);
 		driver.navigate().refresh();
 		sleep(10000);
@@ -701,6 +696,7 @@ public class GestionesPerfilOficina extends TestBase {
 		contact.tipoValidacion("documento");
 			contact.subirArchivo("C:\\Users\\florangel\\Downloads\\mapache.jpg", "si");
 			BasePage bp = new BasePage(driver);
+		sleep(7000);
 		bp.setSimpleDropdown(driver.findElement(By.id("ImpositiveCondition")), "IVA Consumidor Final");
 		SB.Crear_DomicilioLegal(sProvincia, sLocalidad, sCalle, "", sNumCa, "", "", sCP);
 		sleep(38000);
@@ -2532,14 +2528,13 @@ public class GestionesPerfilOficina extends TestBase {
 		String orden = cCC.obtenerTNyMonto2(driver, sOrden);
 		System.out.println("orden = "+orden);
 		detalles+="-Monto:"+orden.split("-")[2]+"-Prefactura:"+orden.split("-")[1];
-		CBS_Mattu invoSer = new CBS_Mattu();
-		invoSer.PagarTCPorServicio(sOrden);
+		CBS_Mattu cCBSM = new CBS_Mattu();
+		cCBSM.PagarTCPorServicio(sOrden);
 		String invoice = cCC.obtenerMontoyTNparaAlta(driver, sOrden);
 		System.out.println(invoice);
 		sleep(10000);
 		driver.navigate().refresh();
 		sleep(10000);
-		CBS_Mattu cCBSM = new CBS_Mattu();
 		CBS cCBS = new CBS();
 		Assert.assertTrue(cCBS.validarActivacionPack(cCBSM.Servicio_QueryFreeUnit(sLinea), sPackOfCom));
 		driver.switchTo().frame(cambioFrame(driver, By.cssSelector(".hasMotif.orderTab.detailPage.ext-webkit.ext-chrome.sfdcBody.brandQuaternaryBgr")));
@@ -2605,7 +2600,7 @@ public class GestionesPerfilOficina extends TestBase {
 	}
 	
 	@Test (groups = {"GestionesPerfilOficina","RenovacionCuota","E2E", "Ciclo1"}, dataProvider="RenovacionCuotaSinSaldoConTC")
-	public void TS135397_CRM_Movil_REPRO_Renovacion_de_cuota_Presencial_Internet_50_MB_Dia_TC_sin_Credito(String sDNI, String sLinea, String sBanco, String sTarjeta, String sPromo, String sCuota, String sNumTarjeta, String sVenceMes, String sVenceAno, String sCodSeg, String sTipoDNI, String sDNITarjeta, String sTitular) throws AWTException {
+	public void TS135397_CRM_Movil_REPRO_Renovacion_de_cuota_Presencial_Internet_50_MB_Dia_TC_sin_Credito(String sDNI, String sLinea, String sBanco, String sTarjeta, String sPromo, String sCuota, String sNumTarjeta, String sVenceMes, String sVenceAno, String sCodSeg, String sTipoDNI, String sDNITarjeta, String sTitular) throws AWTException, KeyManagementException, NoSuchAlgorithmException {
 		imagen = "TS135397";
 		//Check all
 		detalles = "Renocavion de cuota: "+imagen+"DNI: "+sDNI+"Linea: "+sLinea;
@@ -2672,8 +2667,7 @@ public class GestionesPerfilOficina extends TestBase {
 		String orden = cc.obtenerTNyMonto2(driver, sOrden);
 		System.out.println("orden = "+orden);
 		detalles+=", Monto:"+orden.split("-")[2]+"Prefactura: "+orden.split("-")[1];
-		CBS_Mattu invoSer = new CBS_Mattu();
-		Assert.assertTrue(invoSer.PagoEnCaja("1006", accid, "2001", orden.split("-")[2], orden.split("-")[1],driver));
+		cCBSM.PagarTCPorServicio(sOrden);
 		sleep(5000);
 		driver.navigate().refresh();
 		sleep(10000);
@@ -4077,7 +4071,7 @@ public class GestionesPerfilOficina extends TestBase {
 	}
 	
 	@Test (groups = {"GestionPerfilOficina", "VentaDeOferta", "Ciclo1"}, dataProvider = "ventaX1Dia" )
-	public void TS123163_CRM_Movil_REPRO_Venta_de_pack_1000_min_a_Personal_y_1000_SMS_x_1_dia_Factura_de_Venta_TC_Presencial(String sDNI, String sLinea, String sVentaPack, String sBanco, String sTarjeta, String sPromo, String sCuotas, String sNumTarjeta, String sVenceMes, String sVenceAno, String sCodSeg, String sTipoDNI, String sDNITarjeta, String sTitular){
+	public void TS123163_CRM_Movil_REPRO_Venta_de_pack_1000_min_a_Personal_y_1000_SMS_x_1_dia_Factura_de_Venta_TC_Presencial(String sDNI, String sLinea, String sVentaPack, String sBanco, String sTarjeta, String sPromo, String sCuotas, String sNumTarjeta, String sVenceMes, String sVenceAno, String sCodSeg, String sTipoDNI, String sDNITarjeta, String sTitular) throws KeyManagementException, NoSuchAlgorithmException{
 		imagen = "TS123163";
 		detalles = null;
 		detalles = imagen+"-Venta de pack-DNI:"+sDNI;
@@ -4113,25 +4107,17 @@ public class GestionesPerfilOficina extends TestBase {
 		selectByText(driver.findElement(By.id("CardBankingEntity-0")), sTarjeta);
 		selectByText(driver.findElement(By.id("promotionsByCardsBank-0")), sPromo);
 		selectByText(driver.findElement(By.id("Installment-0")), sCuotas);
-		driver.findElement(By.id("CardNumber-0")).sendKeys(sNumTarjeta);
-		selectByText(driver.findElement(By.id("expirationMonth-0")), sVenceMes);
-		selectByText(driver.findElement(By.id("expirationYear-0")), sVenceAno);
-		driver.findElement(By.id("securityCode-0")).sendKeys(sCodSeg);
-		selectByText(driver.findElement(By.id("documentType-0")), sTipoDNI);
-		driver.findElement(By.id("documentNumber-0")).sendKeys(sDNITarjeta);
-		driver.findElement(By.id("cardHolder-0")).sendKeys(sTitular);
 		pagePTelefo.getMediodePago().click();
 		sleep(45000);
 		pagePTelefo.getOrdenSeRealizoConExito().click();// No se puede procesr (Ups, hay problemas para procesar su pago.)
 		sleep(10000);
 		String orden = cCC.obtenerTNyMonto2(driver, sOrden);
 		detalles+="-Monto:"+orden.split("-")[1]+"-Prefactura:"+orden.split("-")[0];
-		CBS_Mattu invoSer = new CBS_Mattu();
-		Assert.assertTrue(invoSer.PagaEnCajaTC("1006", accid, "2001", orden.split("-")[1], orden.split("-")[0],  sDNITarjeta, sTitular, sVenceAno+sVenceMes, sCodSeg, sTitular, sNumTarjeta));
+		CBS_Mattu cCBSM = new CBS_Mattu();
+		cCBSM.PagarTCPorServicio(sOrden);
 		sleep(10000);
 		driver.navigate().refresh();
 		CBS cCBS = new CBS();
-		CBS_Mattu cCBSM = new CBS_Mattu();
 		Assert.assertTrue(cCBS.validarActivacionPack(cCBSM.Servicio_QueryFreeUnit(sLinea), sVentaPack));
 		driver.switchTo().frame(cambioFrame(driver, By.cssSelector(".hasMotif.orderTab.detailPage.ext-webkit.ext-chrome.sfdcBody.brandQuaternaryBgr")));
 		WebElement tabla = driver.findElement(By.id("ep")).findElements(By.tagName("table")).get(1);
@@ -4491,6 +4477,7 @@ public class GestionesPerfilOficina extends TestBase {
 		WebElement msj = driver.findElement(By.cssSelector(".slds-form-element.vlc-flex.vlc-slds-radio-control.ng-scope.ng-dirty.ng-valid-parse.ng-valid.ng-valid-required"));
 		msj = msj.findElement(By.className("vlc-slds-error-block"));
 		Assert.assertTrue(msj.getText().contains("El Saldo No Es Suficiente Para Comprar El Pack"));
+		Assert.assertTrue(false);//investigar si debe ser asi o si debe negar la activacion del pack si ya esta activo
 	}
 	
 	@Test (groups = {"GestionesPerfilOficina", "Vista360", "Ciclo2"}, dataProvider = "CuentaVista360")
