@@ -357,8 +357,9 @@ public class GestionesPerfilTelefonico extends TestBase{
 		driver.findElement(By.cssSelector(".slds-tree__item.ng-scope")).findElement(By.tagName("div")).click();
 		sleep(25000);
 		cCC.seleccionarCardPornumeroLinea(sLinea, driver);
-		sleep(3000);
+		sleep(12000);
 		cCC.irAGestionEnCard("Cambio SimCard");
+		sleep(10000);
 		pagePTelefo.mododeEntrega(driver, cEntrega, cProvincia, cLocalidad, cPuntodeVenta);
 		sleep(12000);
 		pagePTelefo.getResumenOrdenCompra().click();

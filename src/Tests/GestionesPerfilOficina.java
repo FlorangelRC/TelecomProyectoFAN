@@ -2568,7 +2568,7 @@ public class GestionesPerfilOficina extends TestBase {
 		Select metodoEntrega = new Select (driver.findElement(By.id("DeliveryMethodSelection")));
 		metodoEntrega.selectByVisibleText("Presencial");
 		cCC.obligarclick(driver.findElement(By.id("DeliveryMethodConfiguration_nextBtn")));
-		sleep(12000);
+		sleep(18000);
 		cCC.obligarclick(driver.findElement(By.id("InvoicePreview_nextBtn")));
 		sleep(12000);
 		buscarYClick(driver.findElements(By.cssSelector(".slds-form-element__label.ng-binding")), "equals","Efectivo");
@@ -4326,9 +4326,10 @@ public class GestionesPerfilOficina extends TestBase {
 		
 		//Complete when the page works
 		//Verify when the page works
-	}
 	
-	@Test (groups = {"GestionesPerfilOficina","ConsultaPorGestiones","E2E", "Ciclo1"},  dataProvider = "CuentaModificacionDeDatos")
+	}
+
+	@Test (groups = {"GestionesPerfilOficina","ConsultaPorGestiones","E2E", "Ciclo 1"}, dataProvider="CuentaModificacionDeDatos")
 	public void TS134371_CRM_Movil_Prepago_Vista_360_Consulta_por_gestiones_Gestiones_abiertas_Plazo_No_vencido_Consulta_registrada_FAN_Front_OOCC(String sDNI){
 		imagen = "TS134371";
 		detalles = null;

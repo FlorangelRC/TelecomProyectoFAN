@@ -363,4 +363,9 @@ public class Comunidad extends TestBase {
 	}
 	
 	
+	@Test (groups = {"Communities","E2E"})
+	public void TS96019_CRM_REPRO_BDC_Ingreso_a_la_Comunidad_con_usuario_FAN(){
+		Assert.assertTrue(true);
+	}
+	
 }

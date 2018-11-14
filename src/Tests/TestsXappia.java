@@ -40,7 +40,7 @@ public class TestsXappia extends TestBase {
 	private CustomerCare cc;
 	private SalesBase sb;
 	
-	@BeforeClass (groups = "UAT")
+	//@BeforeClass (groups = "UAT")
 	public void loginUAT() {
 		driver = setConexion.setupEze();
 		driver.get("https://telecomcrm--uat.cs53.my.salesforce.com");
@@ -55,7 +55,7 @@ public class TestsXappia extends TestBase {
 		sb = new SalesBase(driver);
 	}
 	
-	//@BeforeClass (groups = "SIT")
+	@BeforeClass (groups = "SIT")
 	public void loginSIT() {
 		driver = setConexion.setupEze();
 		driver.get("https://crm--sit.cs14.my.salesforce.com/");
@@ -70,12 +70,12 @@ public class TestsXappia extends TestBase {
 		sb = new SalesBase(driver);
 	}
 	
-	@BeforeMethod (groups = "UAT")
+	//@BeforeMethod (groups = "UAT")
 	public void beforeUAT() {
 		driver.get("https://telecomcrm--uat.cs53.my.salesforce.com");
 	}
 	
-	//@BeforeMethod (groups = "SIT")
+	@BeforeMethod (groups = "SIT")
 	public void beforeSIT() {
 		driver.get("https://crm--sit.cs14.my.salesforce.com/");
 	}
@@ -1224,6 +1224,41 @@ public class TestsXappia extends TestBase {
 		}
 		Assert.assertFalse(b);
 	}
+	
+	@Test (groups = {"SIT","UAT"})
+	public void TXSU00013_Venta_de_Servicio_a_un_Nuevo_Contacto_Agente(){
+	CustomerCare cc = new CustomerCare(driver);
+	SalesBase sb = new SalesBase(driver);
+	Accounts accountPage = new Accounts(driver);
+	irAConsolaFAN();
+	sb.cerrarPestaniaGestion(driver);
+	irAGestionDeClientes();
+	sleep(25000);
+	driver.switchTo().frame(accountPage.getFrameForElement(driver, By.id("SearchClientDocumentNumber")));
+	sb.BtnCrearNuevoCliente();
+	ContactSearch contact = new ContactSearch(driver);
+	contact.sex("Masculino");
+	contact.Llenar_Contacto("NoVenta", "Pack", "10/10/1990");
+	driver.findElement(By.id("EmailSelectableItems")).findElement(By.tagName("input")).sendKeys("a@a.com");
+	driver.findElement(By.id("Contact_nextBtn")).click();
+	sleep(20000);
+	carrito();
+	sleep(20000);
+	driver.switchTo().frame(accountPage.getFrameForElement(driver, By.cssSelector(".slds-input.ng-pristine.ng-untouched.ng-valid.ng-empty")));
+	driver.findElement(By.cssSelector(".slds-input.ng-pristine.ng-untouched.ng-valid.ng-empty")).sendKeys("Pack 3 dias de SMS ilimitados");
+	sleep(10000);
+	driver.findElements(By.cssSelector(".slds-button.slds-button_neutral.add-button")).get(1).click();
+	sleep(10000);
+	boolean a = true;
+	List<WebElement> cont = driver.findElements(By.cssSelector(".slds-button.slds-m-left--large.slds-button--brand.ta-button-brand"));
+		for(WebElement c : cont){
+			System.out.println(c.getText());
+			if(c.getText().equals("Continuar")){
+				a = false;
+			}
+		}
+	}
+	
 }	
 	
 	@Test (groups = {"SIT","UAT"}, dataProvider="ventaPackInternacional30SMS")

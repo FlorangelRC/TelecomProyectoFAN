@@ -115,7 +115,7 @@ public class GestionesPerfilAgente extends TestBase{
 		sleep(15000);
 	}
 	
-	@AfterMethod(alwaysRun=true)
+	//@AfterMethod(alwaysRun=true)
 	public void after() throws IOException {
 		datosOrden.add(detalles);
 		guardarListaTxt(datosOrden);
@@ -1151,4 +1151,7 @@ public class GestionesPerfilAgente extends TestBase{
 		}
 		Assert.assertTrue(ajustePositivo);
 	}
+	
+	//===================================== CASO PARA PASAR PARA XAPPIA ===============================================
+	
 }
