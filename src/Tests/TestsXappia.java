@@ -29,6 +29,7 @@ import Pages.ContactSearch;
 import Pages.CustomerCare;
 import Pages.Marketing;
 import Pages.PagePerfilTelefonico;
+import Pages.SCP;
 import Pages.OM;
 import Pages.SalesBase;
 import Pages.setConexion;
@@ -1224,3 +1225,108 @@ public class TestsXappia extends TestBase {
 		Assert.assertFalse(b);
 	}
 }	
+	
+	@Test (groups = {"SIT","UAT"}, dataProvider="ventaPackInternacional30SMS")
+	public void TXSU00009_Validar_pantalla_al_finalizar_un_proceso_de_compra_de_pack(String sDNI, String sLinea, String sVentaPack, String sBanco, String sTarjeta, String sPromo, String sCuotas, String sNumTarjeta, String sVenceMes, String sVenceAno, String sCodSeg, String sTipoDNI, String sDNITarjeta, String sTitular) throws InterruptedException, AWTException{
+		SalesBase sale = new SalesBase(driver);
+		BasePage cambioFrameByID=new BasePage();
+		CustomerCare cCC = new CustomerCare(driver);
+		Marketing mk = new Marketing(driver);
+		PagePerfilTelefonico pagePTelefo = new PagePerfilTelefonico(driver);
+		
+		//Delete when UAT loguin works
+		driver = setConexion.setupEze();
+		driver.get("https://telecomcrm--uat.cs53.my.salesforce.com");
+		sleep(2000);
+		driver.findElement(By.id("idp_section_buttons")).click();
+		sleep(2000);
+		driver.findElement(By.name("Ecom_User_ID")).sendKeys("uat195528");
+ 		driver.findElement(By.name("Ecom_Password")).sendKeys("Testa10k");
+ 		driver.findElement(By.id("loginButton2")).click();
+ 		sleep(5000);
+		driver.get("https://telecomcrm--uat.cs53.my.salesforce.com");
+		//End
+		
+		irAConsolaFAN();
+		//sb.cerrarPestaniaGestion(driver);
+		//cc.menu_360_Ir_A("Inicio");
+		//irAGestionDeClientes();
+		sleep(5000);
+		driver.switchTo().frame(cambioFrameByID.getFrameForElement(driver, By.id("SearchClientDocumentType")));	
+		sleep(8000);
+		sale.BuscarCuenta("DNI", sDNI);
+		String accid = driver.findElement(By.cssSelector(".searchClient-body.slds-hint-parent.ng-scope")).findElements(By.tagName("td")).get(5).getText();
+		System.out.println("id "+accid);
+		pagePTelefo.buscarAssert();
+		cCC.seleccionarCardPornumeroLinea(sLinea, driver);
+		pagePTelefo.comprarPack("comprar sms");
+		sleep(5000);
+		cCC.closeleftpanel();
+		try {
+			pagePTelefo.PackLDI(sVentaPack);
+		}
+		catch (Exception eE) {
+			driver.navigate().refresh();
+			sleep(10000);
+			mk.closeTabByName(driver, "Comprar SMS");
+			cCC.seleccionarCardPornumeroLinea(sLinea, driver);
+			pagePTelefo.comprarPack("comprar sms");
+			pagePTelefo.PackLDI(sVentaPack);
+		}
+		pagePTelefo.tipoDePago("en factura de venta");
+		//pagePTelefo.getSimulaciondeFactura().click();
+		pagePTelefo.getTipodepago();
+		sleep(12000);
+		buscarYClick(driver.findElements(By.cssSelector(".slds-form-element__label.ng-binding")), "equals", "efectivo");
+		sleep(8000);
+		pagePTelefo.getMediodePago().click();
+		sleep(45000);
+		pagePTelefo.getOrdenSeRealizoConExito().click();
+		sleep(10000);
+		//AssertFalse on the "Detalle" title
+	}
+	
+	@Test (groups = {"UAT"}, dataProvider="NumerosAmigos")
+	public void TXU0011_UAT_FF_No_Acepta_Numeros_De_Personal(String sDNI, String sLinea, String sNumeroVOZ, String sNumeroSMS) {
+		irAConsolaFAN();
+		sb.cerrarPestaniaGestion(driver);
+		cc.menu_360_Ir_A("Inicio");
+		irAGestionDeClientes();
+		sleep(5000);
+		BasePage cambioFrame=new BasePage();
+		driver.switchTo().frame(cambioFrame.getFrameForElement(driver, By.id("SearchClientDocumentType")));
+		sleep(1000);
+		SalesBase sSB = new SalesBase(driver);
+		sSB.BuscarCuenta("DNI", sDNI);
+		String accid = driver.findElement(By.cssSelector(".searchClient-body.slds-hint-parent.ng-scope")).findElements(By.tagName("td")).get(5).getText();
+		System.out.println("id "+accid);
+		driver.findElement(By.cssSelector(".slds-tree__item.ng-scope")).findElement(By.tagName("div")).click();
+		sleep(25000);
+		
+		CustomerCare cCC = new CustomerCare(driver);
+		cCC.seleccionarCardPornumeroLinea(sLinea, driver);
+		sleep(3000);
+		cCC.irAGestionEnCard("N\u00fameros Gratis");
+		
+		sleep(5000);
+		driver.switchTo().defaultContent();
+		driver.switchTo().frame(cambioFrame(driver, By.cssSelector(".slds-col--padded.slds-size--1-of-2")));
+		List<WebElement> wNumerosAmigos = driver.findElements(By.cssSelector(".slds-col--padded.slds-size--1-of-2"));
+		Marketing mMarketing = new Marketing(driver);
+		int iIndice = mMarketing.numerosAmigos(sNumeroVOZ, sNumeroSMS);
+		switch (iIndice) {
+			case 0:
+				wNumerosAmigos.get(0).findElement(By.tagName("input")).sendKeys(sNumeroVOZ);
+				break;
+			case 1:
+				wNumerosAmigos.get(1).findElement(By.tagName("input")).sendKeys(sNumeroSMS);
+				break;
+			default:
+				Assert.assertTrue(false);
+		}
+		sleep(5000);
+		WebElement wBox = driver.findElement(By.cssSelector(".slds-form-element.vlc-flex.vlc-slds-tel.ng-scope.ng-dirty.ng-valid-mask.ng-valid.ng-valid-parse.ng-valid-required.ng-valid-minlength.ng-valid-maxlength")).findElement(By.className("error"));
+		Assert.assertFalse(wBox.getText().equalsIgnoreCase("la linea no pertenece a Telecom, verifica el n\u00famero."));
+	}
+	
+}
