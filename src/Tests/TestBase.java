@@ -1646,7 +1646,7 @@ public class TestBase {
 	 Object[][] testObjArray = ExcelUtils.getTableArray(dataProviderE2E(),"Altas y Nominacion",1,1,12,"NominacionNuevoPyROfCom");
 
 	 return (testObjArray);
-
+	} 
 	
 	@DataProvider
 	public Object[][] NumerosAmigosNoPersonalAlta() throws Exception {
