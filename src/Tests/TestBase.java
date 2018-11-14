@@ -67,7 +67,7 @@ public class TestBase {
 		switch(selection) {
 		case "Cuentas":
 		driver.findElement(By.id("ext-gen211")).click();;
-		break;
+		break; 
 		}
 	}
 	
@@ -1595,6 +1595,13 @@ public class TestBase {
 	@DataProvider
 	public Object[][] NumerosAmigosNoPersonalBaja() throws Exception {
 		Object[][] testObjArray = ExcelUtils.getTableArray(dataProviderE2E(),"E2EsinPago",1,1,3,"No Personal Baja Amigos");
+
+		 return (testObjArray);
+	}
+	
+	@DataProvider
+	public Object[][] BaseDeConocimiento() throws Exception {
+		Object[][] testObjArray = ExcelUtils.getTableArray(dataProviderE2E(),"E2EsinPago",1,1,2,"DatosConocimientos");
 
 		 return (testObjArray);
 	}
