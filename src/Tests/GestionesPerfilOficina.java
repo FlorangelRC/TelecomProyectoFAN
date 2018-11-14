@@ -4666,4 +4666,34 @@ public class GestionesPerfilOficina extends TestBase {
 		driver.findElement(By.cssSelector(".knowledgeSearchBoxButton.knowledgeSearchButton.leftColumn")).click();
 		
 	}
+	
+	@Test (groups = {"GestionesPerfilOficina", "BaseDeConocimiento", "Ciclo3"}, dataProvider = "CuentaVista360")
+	public void TS125098_CRM_REPRO_BDC_Customer_Care_Problemas_con_recargas_Valoracion_negativa_en_BC(String sDNI, String sNombre) {
+		imagen = "TS125098";
+		boolean downVote = false;
+		driver.switchTo().frame(cambioFrame(driver, By.id("SearchClientDocumentType")));
+		sb.BuscarCuenta("DNI", sDNI);
+		driver.findElement(By.cssSelector(".slds-tree__item.ng-scope")).click();
+		sleep(25000);
+		driver.switchTo().frame(cambioFrame(driver, By.className("card-top")));
+		driver.findElement(By.className("card-top")).click();
+		sleep(3000);
+		cc.irAGestionEnCard("Problemas con Recargas");
+		sleep(5000);
+		sleep(5000);
+		driver.switchTo().defaultContent();
+		buscarYClick(driver.findElements(By.className("x-btn-text")), "contains", "knowledge");
+		driver.switchTo().frame(cambioFrame(driver, By.xpath("//*[@id=\"knowledgeSearchInput_kbOneTab\"]")));
+		driver.findElement(By.xpath("//*[@id=\"knowledgeSearchInput_kbOneTab\"]")).sendKeys("problemas con recargas");
+		driver.findElement(By.xpath("//*[@id=\"knowledgeSearchInput_kbOneTab\"]")).sendKeys(Keys.ENTER);
+		sleep(3000);
+		driver.switchTo().frame(cambioFrame(driver, By.cssSelector(".articleListContainer.loaded")));
+		driver.findElement(By.cssSelector(".articleListContainer.loaded")).findElement(By.className("articleEntry")).findElement(By.tagName("a")).click();
+		sleep(5000);
+		driver.switchTo().frame(cambioFrame(driver, By.className("articleRendererBorderRight")));
+		WebElement negativo = driver.findElement(By.className("articleRendererBorderRight")).findElements(By.tagName("td")).get(1).findElements(By.tagName("a")).get(1);
+		if (negativo.getAttribute("title").contains("Haga clic si no le gusta este art\u00edculo de knowledge"))
+			downVote = true;
+		Assert.assertTrue(downVote);
+	}
 }

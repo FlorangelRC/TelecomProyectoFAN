@@ -519,14 +519,14 @@ public class GestionesPerfilTelefonico extends TestBase{
 	public void TS134835_CRM_Movil_PRE_Modificacion_de_datos_Actualizar_los_datos_del_cliente_completos_FAN_Front_Telefonico(String sDNI, String sLinea) {
 		imagen = "TS134835";
 		detalles = null;
-		detalles = imagen + " -ActualizarDatos-DNI: "+ cDNI;
+		detalles = imagen + " -ActualizarDatos-DNI: "+ sDNI;
 		String nuevoNombre = "Otro";
 		String nuevoApellido = "Apellido";
 		String nuevoNacimiento = "10/10/1982";
 		String nuevoMail = "maildetest@gmail.com";
 		String nuevoPhone = "3574409239";
 		driver.switchTo().frame(cambioFrame(driver, By.id("SearchClientDocumentType")));
-		sb.BuscarCuenta("DNI", cDNI);
+		sb.BuscarCuenta("DNI", sDNI);
 		driver.findElement(By.cssSelector(".slds-tree__item.ng-scope")).click();
 		sleep(15000);
 		driver.switchTo().frame(cambioFrame(driver, By.className("profile-box")));
