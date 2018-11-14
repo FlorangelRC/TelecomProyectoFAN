@@ -608,11 +608,11 @@ try{	driver.findElement(By.id("alert-ok-button")).click();	} catch (NoSuchElemen
 	try {Thread.sleep(10000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();} 
 	driver.findElement(By.id("CityTypeAhead")).sendKeys(Keys.ARROW_DOWN);
 	driver.findElement(By.id("CityTypeAhead")).sendKeys(Keys.ENTER);
-	driver.findElement(By.id("LegalStreetTypeAhead")).sendKeys(calle); 
-	try {Thread.sleep(10000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+	driver.findElement(By.id("StreetCode")).sendKeys(calle); 
+	/*try {Thread.sleep(10000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 	driver.findElement(By.id("LegalStreetTypeAhead")).sendKeys(Keys.ARROW_DOWN);
 	driver.findElement(By.id("LegalStreetTypeAhead")).sendKeys(Keys.ENTER);
-	driver.findElement(By.id("NewStreetName")).sendKeys(calle);
+	driver.findElement(By.id("NewStreetName")).sendKeys(calle);*/
 	
 
 	switch(local){
@@ -627,13 +627,13 @@ try{	driver.findElement(By.id("alert-ok-button")).click();	} catch (NoSuchElemen
 	driver.findElement(By.id("StreetNumber")).sendKeys(altura);
 	driver.findElement(By.id("FloorNumber")).sendKeys(piso);
 	driver.findElement(By.id("Department")).sendKeys(dpto);
-	driver.findElement(By.id("PostalCodeTypeAhead")).sendKeys(CP);
-	try {Thread.sleep(10000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+	driver.findElement(By.id("LegalPostalCode")).sendKeys(CP);
+	/*try {Thread.sleep(10000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 	driver.findElement(By.id("PostalCodeTypeAhead")).sendKeys(Keys.ARROW_DOWN);
 	driver.findElement(By.id("PostalCodeTypeAhead")).sendKeys(Keys.ARROW_DOWN); 
 	driver.findElement(By.id("PostalCodeTypeAhead")).sendKeys(Keys.ENTER);
 	try {Thread.sleep(10000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
-	driver.findElement(By.id("NewPostalCodeName")).sendKeys(CP);
+	driver.findElement(By.id("NewPostalCodeName")).sendKeys(CP);*/
 	driver.findElement(By.id("btnSameAsLegalAddress")).click();
 	try {Thread.sleep(3000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 	if(CP!="6666")
