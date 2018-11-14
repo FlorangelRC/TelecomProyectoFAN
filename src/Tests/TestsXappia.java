@@ -1178,7 +1178,6 @@ public class TestsXappia extends TestBase {
 		}
 		Assert.assertTrue(asunto.getText().contains("Suspensi\u00f3n de Linea + Equipo"));
 	}
-}
 	
 	@Test (groups = {"UAT","SIT"}, dataProvider = "CuentaModificacionDeDatos") 
 	public void TXSU00008_Validar_que_el_DNI_solo_se_pueda_modificar_cada_30_dias (String sDNI, String sLinea) {

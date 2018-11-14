@@ -32,6 +32,9 @@ import Pages.Marketing;
 import Pages.OM;
 import Pages.PagePerfilTelefonico;
 import Pages.SalesBase;
+import Pages.TechCare_Ola1;
+import Pages.TechnicalCareCSRAutogestionPage;
+import Pages.TechnicalCareCSRDiagnosticoPage;
 import Pages.setConexion;
 
 public class GestionesPerfilOficina extends TestBase {
@@ -4483,5 +4486,77 @@ public class GestionesPerfilOficina extends TestBase {
 		}
 		Assert.assertTrue(fechaYHora.getText().contains("Fecha/Hora de cierre"));
 		Assert.assertTrue(fechaYHora.findElements(By.tagName("td")).get(3).getText().matches("^\\d{2}/\\d{2}/\\d{4} \\d{2}:\\d{2}$"));
+	}
+	
+	@Test (groups = {"GestionesPerfilOficina", "ServicioTecnico","E2E", "Ciclo4"}, dataProvider = "serviciotecnico")
+	public void TS121362_CRM_Movil_REPRO_Servicio_Técnico_Realiza_configuraciones_de_equipos_Validacion_de_IMEI_Ok_Sin_Garantía_Sin_Muleto_Reparar_ahora_No_acepta_presupuesto_ofCom(String sDNI, String sLinea, String sIMEI) throws InterruptedException {
+		imagen = "TS121362";
+		detalles = null;
+		detalles = imagen + " -ServicioTecnico: " + sDNI;
+		BasePage cambioFrameByID=new BasePage();
+		driver.switchTo().frame(cambioFrame(driver, By.id("SearchClientDocumentType")));
+		sb.BuscarCuenta("DNI", sDNI);
+		driver.findElement(By.cssSelector(".slds-tree__item.ng-scope")).click();
+		sleep(10000);
+		searchAndClick(driver, "Servicio T\u00e9cnico");
+		sleep(8000);
+		driver.switchTo().frame(cambioFrameByID.getFrameForElement(driver, By.cssSelector(".imgItemContainer.ng-scope")));
+		List<WebElement> clickOnButtons= driver.findElements(By.xpath(".//*[@class='borderOverlay']"));
+		clickOnButtons.get(1).click();
+		WebElement IMEI = driver.findElement(By.id("ImeiCode"));
+		IMEI.click();
+		IMEI.sendKeys(sIMEI);
+		driver.findElement(By.id("ImeiInput_nextBtn")).click();
+	}
+	
+	@Test (groups = {"GestionesPerfilOficina", "ServicioTecnico","E2E", "Ciclo4"}, dataProvider = "serviciotecnico")
+	public void TS121372_CRM_Movil_REPRO_Servicio_Técnico_Realiza_reparaciones_de_equipos_Busqueda_de_cliente_Reparación_Sin_Muleto_Equipo_en_destrucción_total_Con_seguro_de_protección_total_No_se_pudo_realizar_la_reparación_OfCom(String sDNI, String sLinea, String sIMEI) throws InterruptedException {
+		imagen = "TS121372";
+		detalles = null;
+		detalles = imagen + " -ServicioTecnico: " + sDNI;
+		BasePage cambioFrameByID=new BasePage();
+		driver.switchTo().frame(cambioFrame(driver, By.id("SearchClientDocumentType")));
+		sb.BuscarCuenta("DNI", sDNI);
+		driver.findElement(By.cssSelector(".slds-tree__item.ng-scope")).click();
+		sleep(10000);
+		searchAndClick(driver, "Servicio T\u00e9cnico");
+		sleep(8000);
+		driver.switchTo().frame(cambioFrameByID.getFrameForElement(driver, By.cssSelector(".imgItemContainer.ng-scope")));
+		List<WebElement> clickOnButtons= driver.findElements(By.xpath(".//*[@class='borderOverlay']"));
+		clickOnButtons.get(1).click();
+		WebElement IMEI = driver.findElement(By.id("ImeiCode"));
+		IMEI.click();
+		IMEI.sendKeys(sIMEI);
+		driver.findElement(By.id("ImeiInput_nextBtn")).click();
+		//a espera del IMEI valido
+	}
+	
+	@Test (groups = {"GestionesPerfilOficina", "DiagnosticoInconveniente","E2E", "Ciclo3"}, dataProvider = "Diagnostico")
+	public void TS111871_CRM_Movil_REPRO_Diagnostico_SVA_Configuracion_Disponible_Presencial_SMS_Saliente_SMS_a_fijo_Geo_No_Ok_Desregistrar_OfCom(String sDNI, String sLinea) throws Exception  {
+		imagen = "TS111871";
+		detalles = null;
+		detalles = imagen + " -ServicioTecnico: " + sDNI;
+		boolean desregistrar = false;
+		CustomerCare cCC=new CustomerCare(driver);
+		TechCare_Ola1 page=new TechCare_Ola1(driver);
+		TechnicalCareCSRDiagnosticoPage tech = new TechnicalCareCSRDiagnosticoPage(driver);
+		driver.switchTo().frame(cambioFrame(driver, By.id("SearchClientDocumentType")));
+		sb.BuscarCuenta("DNI", sDNI);
+		driver.findElement(By.cssSelector(".slds-tree__item.ng-scope")).click();
+		sleep(10000);
+		driver.switchTo().frame(cambioFrame(driver, By.className("card-top")));
+		driver.findElement(By.className("card-top")).click();
+		sleep(5000);
+		cCC.irAProductosyServicios();
+		tech.verDetalles();
+	    tech.clickDiagnosticarServicio("sms", "SMS Saliente", true);
+	    tech.selectionInconvenient("SMS a fijo");
+	    tech.continuar();
+	    tech.seleccionarRespuesta("no");
+	    buscarYClick(driver.findElements(By.id("KnowledgeBaseResults_nextBtn")), "equals", "continuar");
+	    page.seleccionarPreguntaFinal("Sí");
+	    buscarYClick(driver.findElements(By.id("BalanceValidation_nextBtn")), "equals", "continuar");
+	    tech.categoriaRed("Desregistrar");
+	    Assert.assertTrue(desregistrar);
 	}
 }

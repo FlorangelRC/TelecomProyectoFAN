@@ -29,6 +29,8 @@ import Pages.CustomerCare;
 import Pages.Marketing;
 import Pages.PagePerfilTelefonico;
 import Pages.SalesBase;
+import Pages.TechCare_Ola1;
+import Pages.TechnicalCareCSRDiagnosticoPage;
 import Pages.setConexion;
 
 public class GestionesPerfilAgente extends TestBase{
@@ -968,5 +970,71 @@ public class GestionesPerfilAgente extends TestBase{
 				ajustePositivo = true;
 		}
 		Assert.assertTrue(ajustePositivo);
+	}
+	
+	@Test (groups = {"GestionesPerfilAgente", "ServicioTecnico","E2E", "Ciclo4"}, dataProvider = "serviciotecnico")
+	public void TS121364_CRM_Movil_REPRO_Servicio_Técnico_Realiza_reparaciones_de_equipos_Validacion_de_IMEI_Ok_Con_Garantía_Derivado_a_Servicio_Técnico_Sin_Muleto_Terminal_reparada_y_entregada_Agente(String sDNI, String sLinea, String sIMEI) throws InterruptedException {
+		imagen = "TS121364";
+		detalles = null;
+		detalles = imagen + " -ServicioTecnico: " + sDNI;
+		BasePage cambioFrameByID=new BasePage();
+		driver.switchTo().frame(cambioFrame(driver, By.id("SearchClientDocumentType")));
+		sb.BuscarCuenta("DNI", sDNI);
+		driver.findElement(By.cssSelector(".slds-tree__item.ng-scope")).click();
+		sleep(10000);
+		searchAndClick(driver, "Servicio T\u00e9cnico");
+		sleep(8000);
+		driver.switchTo().frame(cambioFrameByID.getFrameForElement(driver, By.cssSelector(".imgItemContainer.ng-scope")));
+		List<WebElement> clickOnButtons= driver.findElements(By.xpath(".//*[@class='borderOverlay']"));
+		clickOnButtons.get(1).click();
+		WebElement IMEI = driver.findElement(By.id("ImeiCode"));
+		IMEI.click();
+		IMEI.sendKeys(sIMEI);
+		driver.findElement(By.id("ImeiInput_nextBtn")).click();
+	}
+	
+	@Test (groups = {"GestionesPerfilAgente", "ServicioTecnico","E2E", "Ciclo4"}, dataProvider = "serviciotecnico")
+	public void TS121367_CRM_Movil_REPRO_Servicio_Técnico_Realiza_configuraciones_de_equipos_Validacion_de_IMEI_Ok_Configuración_Con_Garantía_Sin_Muleto_Reparar_ahora_Agente(String sDNI, String sLinea, String sIMEI) throws InterruptedException {
+		imagen = "TS121367";
+		detalles = null;
+		detalles = imagen + " -ServicioTecnico: " + sDNI;
+		BasePage cambioFrameByID=new BasePage();
+		driver.switchTo().frame(cambioFrame(driver, By.id("SearchClientDocumentType")));
+		sb.BuscarCuenta("DNI", sDNI);
+		driver.findElement(By.cssSelector(".slds-tree__item.ng-scope")).click();
+		sleep(10000);
+		searchAndClick(driver, "Servicio T\u00e9cnico");
+		sleep(8000);
+		driver.switchTo().frame(cambioFrameByID.getFrameForElement(driver, By.cssSelector(".imgItemContainer.ng-scope")));
+		List<WebElement> clickOnButtons= driver.findElements(By.xpath(".//*[@class='borderOverlay']"));
+		clickOnButtons.get(1).click();
+		WebElement IMEI = driver.findElement(By.id("ImeiCode"));
+		IMEI.click();
+		IMEI.sendKeys(sIMEI);
+		driver.findElement(By.id("ImeiInput_nextBtn")).click();
+	}
+	
+	@Test (groups = {"GestionesPerfilAgente", "DiagnosticoInconveniente","E2E", "Ciclo3"}, dataProvider = "Diagnostico")
+	public void TS119283_CRM_Movil_REPRO_Diagnóstico_de_Datos_Valida_Red_y_Navegación_Motivo_de_contacto_No_puedo_navegar_Antena_rojo_NO_BAM_Agente(String sDNI, String sLinea) throws Exception  {
+		imagen = "TS119283";
+		detalles = null;
+		detalles = imagen + " -ServicioTecnico: " + sDNI;
+		CustomerCare cCC=new CustomerCare(driver);
+		TechCare_Ola1 page=new TechCare_Ola1(driver);
+		TechnicalCareCSRDiagnosticoPage tech = new TechnicalCareCSRDiagnosticoPage(driver);
+		driver.switchTo().frame(cambioFrame(driver, By.id("SearchClientDocumentType")));
+		sb.BuscarCuenta("DNI", sDNI);
+		driver.findElement(By.cssSelector(".slds-tree__item.ng-scope")).click();
+		sleep(10000);
+		driver.switchTo().frame(cambioFrame(driver, By.className("card-top")));
+		driver.findElement(By.className("card-top")).click();
+		sleep(5000);
+		cCC.irAProductosyServicios();
+		tech.verDetalles();
+	    tech.clickDiagnosticarServicio("datos", "Datos", true);
+	    tech.selectionInconvenient("No puedo navegar");
+	    tech.continuar();
+	    tech.seleccionarRespuesta("si");
+	    buscarYClick(driver.findElements(By.id("KnowledgeBaseResults_nextBtn")), "equals", "continuar");
 	}
 }
