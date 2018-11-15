@@ -211,7 +211,7 @@ public class Login extends BasePage {
 			  if (TB.urlAmbiente.contains("sit")) 
 				 Ecom_User_ID.sendKeys("UAT195528");//SIT
 			  else 
-			  	Ecom_User_ID.sendKeys("uat579805");//UAT
+			  	Ecom_User_ID.sendKeys("uat569076");//UAT
 			  		 
 			  Ecom_Password.sendKeys("Testa10k");
 			  loginButton2.click();

@@ -4,6 +4,8 @@ import static org.testng.Assert.assertTrue;
 
 import java.awt.AWTException;
 import java.io.IOException;
+import java.security.KeyManagementException;
+import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -115,7 +117,7 @@ public class GestionesPerfilAgente extends TestBase{
 		sleep(15000);
 	}
 	
-	@AfterMethod(alwaysRun=true)
+	//@AfterMethod(alwaysRun=true)
 	public void after() throws IOException {
 		datosOrden.add(detalles);
 		guardarListaTxt(datosOrden);
@@ -131,7 +133,7 @@ public class GestionesPerfilAgente extends TestBase{
 	}
 	
 	@Test (groups = {"GestionesPerfilAgente","Recargas","E2E", "Ciclo1"}, dataProvider="RecargaTC")
-	public void TS134322_CRM_Movil_REPRO_Recargas_Presencial_TC_Agente(String sDNI, String sMonto, String sLinea, String sBanco, String sTarjeta, String sNumTarjeta, String sVenceMes, String sVenceAno, String sCodSeg, String sTipoDNI, String sDNITarjeta, String sTitular, String sPromo, String sCuotas) throws AWTException {
+	public void TS134322_CRM_Movil_REPRO_Recargas_Presencial_TC_Agente(String sDNI, String sMonto, String sLinea, String sBanco, String sTarjeta, String sNumTarjeta, String sVenceMes, String sVenceAno, String sCodSeg, String sTipoDNI, String sDNITarjeta, String sTitular, String sPromo, String sCuotas) throws AWTException, KeyManagementException, NoSuchAlgorithmException {
 		//Check All
 		imagen = "134322";//00006559
 		detalles = null;
@@ -203,7 +205,7 @@ public class GestionesPerfilAgente extends TestBase{
 		System.out.println("orden = "+orden);
 		detalles+="-Monto:"+orden.split("-")[2]+"-Prefactura:"+orden.split("-")[1];
 		CBS_Mattu invoSer = new CBS_Mattu();
-		invoSer.PagoEnCaja("1005", accid, "2001", orden.split("-")[2], orden.split("-")[1],driver);
+		invoSer.PagarTCPorServicio(sOrden);
 		sleep(5000);
 		driver.navigate().refresh();
 		sleep(10000);
@@ -946,29 +948,29 @@ public class GestionesPerfilAgente extends TestBase{
 		Assert.assertTrue(tabla.isDisplayed());
 	}
 	@Test (groups = {"GestionesPerfilAgente", "ABMServicios", "E2E", "Ciclo3"}, dataProvider = "BajaServicios")
-	public void TC135737_CRM_Movil_REPRO_Baja_de_Servicio_sin_costo_Restriccion_Ident_de_Llamadas_Presencial_Agente(String sDNI, String sLinea){
+	public void TS135737_CRM_Movil_REPRO_Baja_de_Servicio_sin_costo_Restriccion_Ident_de_Llamadas_Presencial_Agente(String sDNI, String sLinea){
 		imagen = "TS135737";
 		detalles = imagen+"-BajaServicio-DNI:"+sDNI;
 		BasePage cambioFrameByID=new BasePage();
 		sleep(30000);
 		driver.switchTo().frame(cambioFrameByID.getFrameForElement(driver, By.id("SearchClientDocumentType")));
 		sleep(1000);
-		//sb.BuscarCuenta("DNI",sDNI);
-		//Erase after it's fixed
-		sb.BuscarCuenta(sLinea);
-		//End
+		sb.BuscarCuenta("DNI",sDNI);
+		//sb.BuscarCuenta(sLinea);
 		String accid = driver.findElement(By.cssSelector(".searchClient-body.slds-hint-parent.ng-scope")).findElements(By.tagName("td")).get(5).getText();
 		System.out.println("id "+accid);
 		detalles +="-Cuenta:"+accid;
 		driver.findElement(By.cssSelector(".slds-tree__item.ng-scope")).findElement(By.tagName("div")).click();
-		sleep(18000);
+		sleep(25000);
 		driver.switchTo().frame(cambioFrame(driver, By.className("card-top")));
-		driver.findElement(By.className("card-top")).click();
+		cc.seleccionarCardPornumeroLinea(sLinea, driver);
 		sleep(5000);
 		cc.irAGestionEnCard("Alta/Baja de Servicios");
 		sleep(35000);
-		cc.openrightpanel();
-		cc.closerightpanel();
+		//cc.openrightpanel();
+		//cc.closerightpanel();
+		//cc.openleftpanel();
+		//cc.closeleftpanel();
 		driver.switchTo().defaultContent();
 		driver.switchTo().frame(cambioFrameByID.getFrameForElement(driver, By.cssSelector(".slds-text-body--small.slds-page-header__info.taDevider")));
 		String sOrder = driver.findElement(By.cssSelector(".slds-text-body--small.slds-page-header__info.taDevider")).getText();
@@ -1005,20 +1007,9 @@ public class GestionesPerfilAgente extends TestBase{
 		}
 		Assert.assertTrue(bAssert);
 		sleep(17000);
-		bAssert = false;
-		List <WebElement> ddi = driver.findElements(By.cssSelector(".cpq-item-product-child-level-2.cpq-item-child-product-name-wrapper"));
-		for(WebElement d : ddi){
-			if(d.getText().contains("DDI")){
-			   cc.obligarclick(d.findElement(By.cssSelector(".slds-button.slds-button_icon-small")));
-			   bAssert = true;
-			   break;
-			}
-		}
-		Assert.assertTrue(bAssert);
-		sleep(10000);
-		List <WebElement> roam = driver.findElements(By.cssSelector(".cpq-item-base-product"));
-		for(WebElement r : roam){
-			if(r.getText().contains("DDI con Roaming Internacional")){
+		List <WebElement> wServicios = driver.findElements(By.cssSelector("[class='cpq-item-product-child-level-2 ng-not-empty ng-valid'] [class='slds-is-relative']"));
+		for(WebElement r : wServicios){
+			if(r.getText().contains("Restriccion Ident. de Llamadas")){
 				sleep(5000);
 				cc.obligarclick(r.findElement(By.cssSelector(".slds-button.slds-button_icon-border-filled.cpq-item-actions-dropdown-button")));
 				sleep(5000);
@@ -1037,9 +1028,86 @@ public class GestionesPerfilAgente extends TestBase{
 		sleep(10000);
 		WebElement wMessageBox = driver.findElement(By.id("TextBlock1")).findElement(By.className("ng-binding"));
 		sleep(5000);
-		Assert.assertTrue(wMessageBox.getText().equalsIgnoreCase("La orden " + sOrder + " se realiz\u00d3 con \u00c9xito!"));
+		Assert.assertTrue(wMessageBox.getText().equalsIgnoreCase("ï¿½La orden " + sOrder + " se realiz\u00d3 con \u00c9xito!"));
 		Assert.assertTrue(cc.corroborarEstadoCaso(sOrder, "Activada"));
-		datosOrden.add("Suspension, orden numero: " + sOrder + ", DNI: " + sDNI);
+		datosOrden.add("Baja de Servicio, orden numero: " + sOrder + ", DNI: " + sDNI);
+	}
+	
+	@Test (groups = {"GestionesPerfilAgente","E2E","Ciclo3"}, dataProvider="BajaServicios")
+	public void TS135754_CRM_Movil_REPRO_Alta_Servicio_sin_costo_Transferencia_de_llamadas_Presencial_Agente(String sDNI, String sLinea){
+		imagen = "TS135754";
+		detalles = imagen+"-AltaServicio-DNI:"+sDNI;
+		BasePage cambioFrameByID=new BasePage();
+		sleep(30000);
+		driver.switchTo().frame(cambioFrameByID.getFrameForElement(driver, By.id("SearchClientDocumentType")));
+		sleep(1000);
+		SalesBase sSB = new SalesBase(driver);
+		sSB.BuscarCuenta("DNI",sDNI);
+		String accid = driver.findElement(By.cssSelector(".searchClient-body.slds-hint-parent.ng-scope")).findElements(By.tagName("td")).get(5).getText();
+		System.out.println("id "+accid);
+		detalles +="-Cuenta:"+accid;
+		driver.findElement(By.cssSelector(".slds-tree__item.ng-scope")).findElement(By.tagName("div")).click();
+		sleep(18000);
+		driver.switchTo().frame(cambioFrame(driver, By.className("card-top")));
+		driver.findElement(By.className("card-top")).click();
+		sleep(5000);
+		cc.irAGestionEnCard("Alta/Baja de Servicios");
+		sleep(35000);
+		cc.openrightpanel();
+		cc.closerightpanel();
+		driver.switchTo().defaultContent();
+		driver.switchTo().frame(cambioFrameByID.getFrameForElement(driver, By.cssSelector(".slds-text-body--small.slds-page-header__info.taDevider")));
+		String sOrder = driver.findElement(By.cssSelector(".slds-text-body--small.slds-page-header__info.taDevider")).getText();
+		sOrder = sOrder.replace("Nro. Orden:", "");
+		sOrder = sOrder.replace(" ", "");
+		detalles +="-Orden:"+sOrder;
+		detalles +="-Servicio:TransferenciaDeLlamadas";
+		try {
+			cc.closeleftpanel();
+		}
+		catch (Exception x) {
+			//Always empty
+		}
+		try {
+			driver.findElement(By.id("ext-comp-1039__scc-st-10")).click();
+		}
+		catch (Exception x) {
+			//Always empty
+		}
+		sleep(5000);
+		driver.switchTo().frame(cambioFrame(driver, By.id("tab-default-1")));
+		sleep(15000);
+		driver.findElement(By.cssSelector(".slds-button.cpq-item-has-children")).click();
+		sleep(5000);
+		boolean bAssert = false;
+		List<WebElement> servicios= driver.findElements(By.xpath("//*[@class='cpq-item-product-child-level-1 cpq-item-child-product-name-wrapper']"));
+		for(WebElement a: servicios) {
+			if (a.getText().toLowerCase().contains("servicios basicos general movil".toLowerCase())) {
+					a.findElement(By.tagName("button")).click();
+						sleep(8000);
+						bAssert= true;
+						break;
+			}
+		}
+		Assert.assertTrue(bAssert);
+		sleep(10000);
+		List <WebElement> roam = driver.findElements(By.cssSelector(".cpq-item-base-product"));
+		for(WebElement r : roam){
+			if(r.getText().contains("Transferencia de Llamadas")){
+				cc.obligarclick(r.findElement(By.cssSelector(".slds-button.slds-button_neutral")));
+				sleep(5000);
+				break;
+			}
+		}
+		driver.findElement(By.cssSelector(".slds-button.slds-button--destructive")).click();
+		sleep(10000);
+		driver.findElement(By.cssSelector(".slds-button.slds-m-left--large.slds-button--brand.ta-button-brand")).click();
+		sleep(10000);
+		WebElement wMessageBox = driver.findElement(By.id("TextBlock1")).findElement(By.className("ng-binding"));
+		sleep(5000);
+		Assert.assertTrue(wMessageBox.getText().equalsIgnoreCase("ï¿½La orden " + sOrder + " se realiz\u00d3 con \u00c9xito!"));
+		Assert.assertTrue(cc.corroborarEstadoCaso(sOrder, "Activada"));
+		datosOrden.add("Alta de Servicio, orden numero: " + sOrder + ", DNI: " + sDNI);
 	}
 	
 	@Test (groups = {"GestionesPerfilTelefonico", "Ajustes", "E2E", "Ciclo3"}, dataProvider = "CuentaAjustesPRE")
@@ -1087,7 +1155,7 @@ public class GestionesPerfilAgente extends TestBase{
 	}
 	
 	@Test (groups = {"GestionesPerfilAgente", "ServicioTecnico","E2E", "Ciclo4"}, dataProvider = "serviciotecnico")
-	public void TS121364_CRM_Movil_REPRO_Servicio_Técnico_Realiza_reparaciones_de_equipos_Validacion_de_IMEI_Ok_Con_Garantía_Derivado_a_Servicio_Técnico_Sin_Muleto_Terminal_reparada_y_entregada_Agente(String sDNI, String sLinea, String sIMEI) throws InterruptedException {
+	public void TS121364_CRM_Movil_REPRO_Servicio_Tï¿½cnico_Realiza_reparaciones_de_equipos_Validacion_de_IMEI_Ok_Con_Garantï¿½a_Derivado_a_Servicio_Tï¿½cnico_Sin_Muleto_Terminal_reparada_y_entregada_Agente(String sDNI, String sLinea, String sIMEI) throws InterruptedException {
 		imagen = "TS121364";
 		detalles = null;
 		detalles = imagen + " -ServicioTecnico: " + sDNI;
@@ -1108,7 +1176,7 @@ public class GestionesPerfilAgente extends TestBase{
 	}
 	
 	@Test (groups = {"GestionesPerfilAgente", "ServicioTecnico","E2E", "Ciclo4"}, dataProvider = "serviciotecnico")
-	public void TS121367_CRM_Movil_REPRO_Servicio_Técnico_Realiza_configuraciones_de_equipos_Validacion_de_IMEI_Ok_Configuración_Con_Garantía_Sin_Muleto_Reparar_ahora_Agente(String sDNI, String sLinea, String sIMEI) throws InterruptedException {
+	public void TS121367_CRM_Movil_REPRO_Servicio_Tï¿½cnico_Realiza_configuraciones_de_equipos_Validacion_de_IMEI_Ok_Configuraciï¿½n_Con_Garantï¿½a_Sin_Muleto_Reparar_ahora_Agente(String sDNI, String sLinea, String sIMEI) throws InterruptedException {
 		imagen = "TS121367";
 		detalles = null;
 		detalles = imagen + " -ServicioTecnico: " + sDNI;
@@ -1129,7 +1197,7 @@ public class GestionesPerfilAgente extends TestBase{
 	}
 	
 	@Test (groups = {"GestionesPerfilAgente", "DiagnosticoInconveniente","E2E", "Ciclo3"}, dataProvider = "Diagnostico")
-	public void TS119283_CRM_Movil_REPRO_Diagnóstico_de_Datos_Valida_Red_y_Navegación_Motivo_de_contacto_No_puedo_navegar_Antena_rojo_NO_BAM_Agente(String sDNI, String sLinea) throws Exception  {
+	public void TS119283_CRM_Movil_REPRO_Diagnï¿½stico_de_Datos_Valida_Red_y_Navegaciï¿½n_Motivo_de_contacto_No_puedo_navegar_Antena_rojo_NO_BAM_Agente(String sDNI, String sLinea) throws Exception  {
 		imagen = "TS119283";
 		detalles = null;
 		detalles = imagen + " -ServicioTecnico: " + sDNI;

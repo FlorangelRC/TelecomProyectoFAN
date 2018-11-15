@@ -122,44 +122,5 @@ public class Xappia extends TestBase {
 		driver.quit();
 		sleep(5000);
 	}
-	
-	@Test (groups = {"UAT"}, dataProvider="NumerosAmigos")
-	public void TX0001_UAT_FF_No_Acepta_Numeros_De_Personal(String sDNI, String sLinea, String sNumeroVOZ, String sNumeroSMS) {
-		imagen = "TS100602";
-		BasePage cambioFrame=new BasePage();
-		driver.switchTo().frame(cambioFrame.getFrameForElement(driver, By.id("SearchClientDocumentType")));
-		sleep(1000);
-		SalesBase sSB = new SalesBase(driver);
-		sSB.BuscarCuenta("DNI", sDNI);
-		String accid = driver.findElement(By.cssSelector(".searchClient-body.slds-hint-parent.ng-scope")).findElements(By.tagName("td")).get(5).getText();
-		System.out.println("id "+accid);
-		driver.findElement(By.cssSelector(".slds-tree__item.ng-scope")).findElement(By.tagName("div")).click();
-		sleep(25000);
-		
-		CustomerCare cCC = new CustomerCare(driver);
-		cCC.seleccionarCardPornumeroLinea(sLinea, driver);
-		sleep(3000);
-		cCC.irAGestionEnCard("N\u00fameros Gratis");
-		
-		sleep(5000);
-		driver.switchTo().defaultContent();
-		driver.switchTo().frame(cambioFrame(driver, By.cssSelector(".slds-col--padded.slds-size--1-of-2")));
-		List<WebElement> wNumerosAmigos = driver.findElements(By.cssSelector(".slds-col--padded.slds-size--1-of-2"));
-		Marketing mMarketing = new Marketing(driver);
-		int iIndice = mMarketing.numerosAmigos(sNumeroVOZ, sNumeroSMS);
-		switch (iIndice) {
-			case 0:
-				wNumerosAmigos.get(0).findElement(By.tagName("input")).sendKeys(sNumeroVOZ);
-				break;
-			case 1:
-				wNumerosAmigos.get(1).findElement(By.tagName("input")).sendKeys(sNumeroSMS);
-				break;
-			default:
-				Assert.assertTrue(false);
-		}
-		sleep(5000);
-		WebElement wBox = driver.findElement(By.cssSelector(".slds-form-element.vlc-flex.vlc-slds-tel.ng-scope.ng-dirty.ng-valid-mask.ng-valid.ng-valid-parse.ng-valid-required.ng-valid-minlength.ng-valid-maxlength")).findElement(By.className("error"));
-		Assert.assertFalse(wBox.getText().equalsIgnoreCase("la linea no pertenece a Telecom, verifica el n\u00famero."));
-	}
 
 }
