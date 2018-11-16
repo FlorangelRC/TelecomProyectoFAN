@@ -35,6 +35,9 @@ import Pages.Marketing;
 import Pages.OM;
 import Pages.PagePerfilTelefonico;
 import Pages.SalesBase;
+import Pages.TechCare_Ola1;
+import Pages.TechnicalCareCSRAutogestionPage;
+import Pages.TechnicalCareCSRDiagnosticoPage;
 import Pages.setConexion;
 
 public class GestionesPerfilOficina extends TestBase {
@@ -68,14 +71,14 @@ public class GestionesPerfilOficina extends TestBase {
 			sleep(6000);
 		}
 		driver.switchTo().defaultContent();
-		sleep(3000);
+		sleep(6000);
 	}
 	
 	@BeforeMethod(alwaysRun=true)
 	public void setup() throws Exception {
-		sleep(10000);
+		sleep(3000);
 		goToLeftPanel2(driver, "Inicio");
-		sleep(15000);
+		sleep(13000);
 		try {
 			sb.cerrarPestaniaGestion(driver);
 		} catch (Exception ex1) {}
@@ -122,12 +125,12 @@ public class GestionesPerfilOficina extends TestBase {
 		sleep(15000);
 	}
 
-	//@AfterMethod(alwaysRun=true)
+	@AfterMethod(alwaysRun=true)
 	public void after() throws IOException {
 		guardarListaTxt(sOrders);
 		sOrders.clear();
 		tomarCaptura(driver,imagen);
-		sleep(5000);
+		sleep(2000);
 	}
 
 //	@AfterClass(alwaysRun=true)
@@ -671,13 +674,13 @@ public class GestionesPerfilOficina extends TestBase {
 		imagen = "85094-Nominacion"+sDni;
 		detalles = null;
 		detalles = imagen +"-Linea: "+sLinea;
-		sleep(5000);
+		sleep(1000);
 		driver.switchTo().frame(cambioFrame(driver, By.id("SearchClientDocumentType")));
 		SalesBase SB = new SalesBase(driver);
 		driver.findElement(By.id("PhoneNumber")).sendKeys(sLinea);
 		sleep(1500);
 		driver.findElement(By.id("SearchClientsDummy")).click();
-		sleep(10000);
+		sleep(6000);
 		WebElement cli = driver.findElement(By.id("tab-scoped-1"));
 		cli.findElement(By.tagName("tbody")).findElement(By.tagName("tr")).click();
 		sleep(3000);
@@ -689,7 +692,7 @@ public class GestionesPerfilOficina extends TestBase {
 				break;
 			}
 		}
-		sleep(13000);
+		sleep(10000);
 		ContactSearch contact = new ContactSearch(driver);
 		contact.searchContact2("DNI", sDni, sSexo);
 		contact.Llenar_Contacto(sNombre, sApellido, sFnac);
@@ -697,10 +700,10 @@ public class GestionesPerfilOficina extends TestBase {
 		contact.tipoValidacion("documento");
 			contact.subirArchivo("C:\\Users\\florangel\\Downloads\\mapache.jpg", "si");
 			BasePage bp = new BasePage(driver);
-		sleep(7000);
+		sleep(6000);
 		bp.setSimpleDropdown(driver.findElement(By.id("ImpositiveCondition")), "IVA Consumidor Final");
 		SB.Crear_DomicilioLegal(sProvincia, sLocalidad, sCalle, "", sNumCa, "", "", sCP);
-		sleep(38000);
+		sleep(32000);
 		CBS_Mattu invoSer = new CBS_Mattu();
 		invoSer.ValidarInfoCuenta(sLinea, sNombre,sApellido, "Plan con Tarjeta Repro");
 		List <WebElement> element = driver.findElement(By.id("NominacionExitosa")).findElements(By.tagName("p"));
@@ -4487,6 +4490,78 @@ public class GestionesPerfilOficina extends TestBase {
 		}
 		Assert.assertTrue(fechaYHora.getText().contains("Fecha/Hora de cierre"));
 		Assert.assertTrue(fechaYHora.findElements(By.tagName("td")).get(3).getText().matches("^\\d{2}/\\d{2}/\\d{4} \\d{2}:\\d{2}$"));
+	}
+	
+	@Test (groups = {"GestionesPerfilOficina", "ServicioTecnico","E2E", "Ciclo4"}, dataProvider = "serviciotecnico")
+	public void TS121362_CRM_Movil_REPRO_Servicio_T�cnico_Realiza_configuraciones_de_equipos_Validacion_de_IMEI_Ok_Sin_Garant�a_Sin_Muleto_Reparar_ahora_No_acepta_presupuesto_ofCom(String sDNI, String sLinea, String sIMEI) throws InterruptedException {
+		imagen = "TS121362";
+		detalles = null;
+		detalles = imagen + " -ServicioTecnico: " + sDNI;
+		BasePage cambioFrameByID=new BasePage();
+		driver.switchTo().frame(cambioFrame(driver, By.id("SearchClientDocumentType")));
+		sb.BuscarCuenta("DNI", sDNI);
+		driver.findElement(By.cssSelector(".slds-tree__item.ng-scope")).click();
+		sleep(10000);
+		searchAndClick(driver, "Servicio T\u00e9cnico");
+		sleep(8000);
+		driver.switchTo().frame(cambioFrameByID.getFrameForElement(driver, By.cssSelector(".imgItemContainer.ng-scope")));
+		List<WebElement> clickOnButtons= driver.findElements(By.xpath(".//*[@class='borderOverlay']"));
+		clickOnButtons.get(1).click();
+		WebElement IMEI = driver.findElement(By.id("ImeiCode"));
+		IMEI.click();
+		IMEI.sendKeys(sIMEI);
+		driver.findElement(By.id("ImeiInput_nextBtn")).click();
+	}
+	
+	@Test (groups = {"GestionesPerfilOficina", "ServicioTecnico","E2E", "Ciclo4"}, dataProvider = "serviciotecnico")
+	public void TS121372_CRM_Movil_REPRO_Servicio_T�cnico_Realiza_reparaciones_de_equipos_Busqueda_de_cliente_Reparaci�n_Sin_Muleto_Equipo_en_destrucci�n_total_Con_seguro_de_protecci�n_total_No_se_pudo_realizar_la_reparaci�n_OfCom(String sDNI, String sLinea, String sIMEI) throws InterruptedException {
+		imagen = "TS121372";
+		detalles = null;
+		detalles = imagen + " -ServicioTecnico: " + sDNI;
+		BasePage cambioFrameByID=new BasePage();
+		driver.switchTo().frame(cambioFrame(driver, By.id("SearchClientDocumentType")));
+		sb.BuscarCuenta("DNI", sDNI);
+		driver.findElement(By.cssSelector(".slds-tree__item.ng-scope")).click();
+		sleep(10000);
+		searchAndClick(driver, "Servicio T\u00e9cnico");
+		sleep(8000);
+		driver.switchTo().frame(cambioFrameByID.getFrameForElement(driver, By.cssSelector(".imgItemContainer.ng-scope")));
+		List<WebElement> clickOnButtons= driver.findElements(By.xpath(".//*[@class='borderOverlay']"));
+		clickOnButtons.get(1).click();
+		WebElement IMEI = driver.findElement(By.id("ImeiCode"));
+		IMEI.click();
+		IMEI.sendKeys(sIMEI);
+		driver.findElement(By.id("ImeiInput_nextBtn")).click();
+		//a espera del IMEI valido
+	}
+	
+	@Test (groups = {"GestionesPerfilOficina", "DiagnosticoInconveniente","E2E", "Ciclo3"}, dataProvider = "Diagnostico")
+	public void TS111871_CRM_Movil_REPRO_Diagnostico_SVA_Configuracion_Disponible_Presencial_SMS_Saliente_SMS_a_fijo_Geo_No_Ok_Desregistrar_OfCom(String sDNI, String sLinea) throws Exception  {
+		imagen = "TS111871";
+		detalles = null;
+		detalles = imagen + " -ServicioTecnico: " + sDNI;
+		boolean desregistrar = false;
+		CustomerCare cCC=new CustomerCare(driver);
+		TechCare_Ola1 page=new TechCare_Ola1(driver);
+		TechnicalCareCSRDiagnosticoPage tech = new TechnicalCareCSRDiagnosticoPage(driver);
+		driver.switchTo().frame(cambioFrame(driver, By.id("SearchClientDocumentType")));
+		sb.BuscarCuenta("DNI", sDNI);
+		driver.findElement(By.cssSelector(".slds-tree__item.ng-scope")).click();
+		sleep(10000);
+		driver.switchTo().frame(cambioFrame(driver, By.className("card-top")));
+		driver.findElement(By.className("card-top")).click();
+		sleep(5000);
+		cCC.irAProductosyServicios();
+		tech.verDetalles();
+	    tech.clickDiagnosticarServicio("sms", "SMS Saliente", true);
+	    tech.selectionInconvenient("SMS a fijo");
+	    tech.continuar();
+	    tech.seleccionarRespuesta("no");
+	    buscarYClick(driver.findElements(By.id("KnowledgeBaseResults_nextBtn")), "equals", "continuar");
+	    page.seleccionarPreguntaFinal("S�");
+	    buscarYClick(driver.findElements(By.id("BalanceValidation_nextBtn")), "equals", "continuar");
+	    tech.categoriaRed("Desregistrar");
+	    Assert.assertTrue(desregistrar);
 	}
 
 	@Test(groups = {"Sales", "PreparacionNominacion","E2E","Ciclo1"}, dataProvider="DatosSalesNominacionPyRNuevoOfCom") 
