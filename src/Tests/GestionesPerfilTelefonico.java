@@ -2348,7 +2348,7 @@ public class GestionesPerfilTelefonico extends TestBase{
 	    tech.continuar();
 	    tech.seleccionarRespuesta("no");
 	    buscarYClick(driver.findElements(By.id("KnowledgeBaseResults_nextBtn")), "equals", "continuar");
-	    page.seleccionarPreguntaFinal("S�");
+	    page.seleccionarPreguntaFinal("S\u00ed");
 	    buscarYClick(driver.findElements(By.id("BalanceValidation_nextBtn")), "equals", "continuar");
 	    tech.categoriaRed("Desregistrar");
 	    tech.validacionDeCobertura("Desregistrar");
@@ -2373,15 +2373,13 @@ public class GestionesPerfilTelefonico extends TestBase{
 		cCC.irAProductosyServicios();
 		tech.verDetalles();
 	    tech.clickDiagnosticarServicio("sms", "SMS Entrante", true);
-	    tech.selectionInconvenient("No recibe de un n�mero particular");
+	    tech.selectionInconvenient("No recibe de un n\u00famero particular");
 	    tech.continuar();
 	    tech.seleccionarRespuesta("no");
 	    buscarYClick(driver.findElements(By.id("KnowledgeBaseResults_nextBtn")), "equals", "continuar");
 	    page.seleccionarPreguntaFinal("No");
 	    buscarYClick(driver.findElements(By.id("BalanceValidation_nextBtn")), "equals", "continuar");
-	    WebElement msj=driver.findElement(By.cssSelector(".slds-page-header__title.vlc-slds-page-header__title.slds-truncate.ng-binding"));
-	    System.out.println(msj.getText());
-	    Assert.assertTrue(msj.getText().equalsIgnoreCase("Saldo Insuficiente"));
+	    Assert.assertTrue(driver.findElement(By.cssSelector(".slds-page-header__title.vlc-slds-page-header__title.slds-truncate.ng-binding")).getText().contains("Saldo Insuficiente"));
 	   
 	}
 	@Test (groups = {"GestionesPerfilOficina", "BaseDeConocimiento", "Ciclo3"}, dataProvider = "CuentaVista360")

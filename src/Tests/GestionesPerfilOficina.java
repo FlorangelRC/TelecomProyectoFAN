@@ -125,7 +125,7 @@ public class GestionesPerfilOficina extends TestBase {
 		sleep(15000);
 	}
 
-	//@AfterMethod(alwaysRun=true)
+	@AfterMethod(alwaysRun=true)
 	public void after() throws IOException {
 		guardarListaTxt(sOrders);
 		sOrders.clear();
@@ -698,7 +698,7 @@ public class GestionesPerfilOficina extends TestBase {
 		contact.Llenar_Contacto(sNombre, sApellido, sFnac);
 		try {contact.ingresarMail(sEmail, "si");}catch (org.openqa.selenium.ElementNotVisibleException ex1) {}
 		contact.tipoValidacion("documento");
-			contact.subirArchivo("C:\\Users\\florangel\\Downloads\\mapache.jpg", "si");
+			contact.subirArchivo("C:\\Users\\Quelys\\Desktop\\DNI.jpg", "si");
 			BasePage bp = new BasePage(driver);
 		sleep(7000);
 		bp.setSimpleDropdown(driver.findElement(By.id("ImpositiveCondition")), "IVA Consumidor Final");
@@ -2863,7 +2863,7 @@ public class GestionesPerfilOficina extends TestBase {
 	
 	
 	@Test (groups= {"GestionesPerfilOficina", "HistorialDeRecargasSOS", "Ciclo2"},  dataProvider = "CuentaModificacionDeDatos")
-	public void TS134470_CRM_Movil_Prepago_Historial_De_Recargas_SOS_S440_FAN_Front_OOCC(String cDNI) {
+	public void TS134470_CRM_Movil_Prepago_Historial_De_Recargas_SOS_S440_FAN_Front_OOCC(String cDNI, String cLinea) {
 		boolean enc = false;
 		driver.switchTo().frame(cambioFrame(driver, By.id("SearchClientDocumentType")));
 		sb.BuscarCuenta("DNI", cDNI);
@@ -2891,7 +2891,7 @@ public class GestionesPerfilOficina extends TestBase {
 	}
 	
 	@Test (groups= {"GestionesPerfilOficina", "HistorialDePacks", "Ciclo2"},  dataProvider = "CuentaModificacionDeDatos")
-	public void TS134473_CRM_Movil_Prepago_Historial_De_Packs_Fan_Front_OOCC(String cDNI) {
+	public void TS134473_CRM_Movil_Prepago_Historial_De_Packs_Fan_Front_OOCC(String cDNI, String sLinea) {
 		boolean enc = false;
 		driver.switchTo().frame(cambioFrame(driver, By.id("SearchClientDocumentType")));
 		sb.BuscarCuenta("DNI", cDNI);
@@ -3991,7 +3991,7 @@ public class GestionesPerfilOficina extends TestBase {
 	}
 
 	@Test (groups = {"GestionesPerfilOficina","HistorialDePacks","E2E", "Ciclo1"},  dataProvider = "CuentaAjustesREPRO")
-	public void TS135361_CRM_Movil_Prepago_Otros_Historiales_Historial_de_ajustes_FAN_Front_OOCC_S138(String sDNI){
+	public void TS135361_CRM_Movil_Prepago_Otros_Historiales_Historial_de_ajustes_FAN_Front_OOCC_S138(String sDNI, String sLinea){
 		driver.switchTo().frame(cambioFrame(driver, By.id("SearchClientDocumentType")));
 		sb.BuscarCuenta("DNI", sDNI);
 		driver.findElement(By.cssSelector(".slds-tree__item.ng-scope")).click();
@@ -4132,7 +4132,7 @@ public class GestionesPerfilOficina extends TestBase {
 	}
 	
 	@Test (groups = {"GestionesPerfilOficina","HistorialDePacks","E2E", "Ciclo1"},  dataProvider = "CuentaModificacionDeDatos")
-	public void TS135483_CRM_Movil_Prepago_Historial_de_Packs_Seleccion_de_Fechas_FAN_Front_OOCC(String sDNI){
+	public void TS135483_CRM_Movil_Prepago_Historial_de_Packs_Seleccion_de_Fechas_FAN_Front_OOCC(String sDNI, String sLinea){
 		driver.switchTo().frame(cambioFrame(driver, By.id("SearchClientDocumentType")));
 		sb.BuscarCuenta("DNI", sDNI);
 		driver.findElement(By.cssSelector(".slds-tree__item.ng-scope")).click();
@@ -4518,7 +4518,7 @@ public class GestionesPerfilOficina extends TestBase {
 	}
 	
 	@Test (groups = {"GestionesPerfilOficina", "ServicioTecnico","E2E", "Ciclo4"}, dataProvider = "serviciotecnico")
-	public void TS121362_CRM_Movil_REPRO_Servicio_T�cnico_Realiza_configuraciones_de_equipos_Validacion_de_IMEI_Ok_Sin_Garant�a_Sin_Muleto_Reparar_ahora_No_acepta_presupuesto_ofCom(String sDNI, String sLinea, String sIMEI) throws InterruptedException {
+	public void TS121362_CRM_Movil_REPRO_Servicio_Tecnico_Realiza_configuraciones_de_equipos_Validacion_de_IMEI_Ok_Sin_Garantia_Sin_Muleto_Reparar_ahora_No_acepta_presupuesto_ofCom(String sDNI, String sLinea, String sIMEI) throws InterruptedException {
 		imagen = "TS121362";
 		detalles = null;
 		detalles = imagen + " -ServicioTecnico: " + sDNI;
@@ -4538,8 +4538,8 @@ public class GestionesPerfilOficina extends TestBase {
 		driver.findElement(By.id("ImeiInput_nextBtn")).click();
 	}
 	
-	@Test (groups = {"GestionesPerfilOficina", "ServicioTecnico","E2E", "Ciclo4"}, dataProvider = "serviciotecnico")
-	public void TS121372_CRM_Movil_REPRO_Servicio_T�cnico_Realiza_reparaciones_de_equipos_Busqueda_de_cliente_Reparaci�n_Sin_Muleto_Equipo_en_destrucci�n_total_Con_seguro_de_protecci�n_total_No_se_pudo_realizar_la_reparaci�n_OfCom(String sDNI, String sLinea, String sIMEI) throws InterruptedException {
+	//@Test (groups = {"GestionesPerfilOficina", "ServicioTecnico","E2E", "Ciclo4"}, dataProvider = "serviciotecnico")
+	public void TS121372_CRM_Movil_REPRO_Servicio_Tecnico_Realiza_reparaciones_de_equipos_Busqueda_de_cliente_Reparacion_Sin_Muleto_Equipo_en_destruccion_total_Con_seguro_de_proteccion_total_No_se_pudo_realizar_la_reparacion_OfCom(String sDNI, String sLinea, String sIMEI) throws InterruptedException {
 		imagen = "TS121372";
 		detalles = null;
 		detalles = imagen + " -ServicioTecnico: " + sDNI;
