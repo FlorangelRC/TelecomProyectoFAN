@@ -51,8 +51,8 @@ import DataProvider.ExcelUtils;
 public class TestBase {
 	protected static WebDriver driver;
 	
-		public static String urlAmbiente = "https://telecomcrm--uat.cs53.my.salesforce.com";
-		//public static String urlAmbiente = "https://crm--sit.cs14.my.salesforce.com/";
+		//public static String urlAmbiente = "https://telecomcrm--uat.cs53.my.salesforce.com";
+		public static String urlAmbiente = "https://crm--sit.cs14.my.salesforce.com/";
 		
 		// viejo public String urlSCP = "https://telecomcrm--uat.cs8.my.salesforce.com";
 		public static String urlSCP = "https://telecomcrm--uat.cs53.my.salesforce.com";
@@ -1665,6 +1665,20 @@ public class TestBase {
 	@DataProvider
 	public Object[][] NumerosAmigosNoPersonalBaja() throws Exception {
 		Object[][] testObjArray = ExcelUtils.getTableArray(dataProviderE2E(),"E2EsinPago",1,1,3,"No Personal Baja Amigos");
+
+		 return (testObjArray);
+	}
+	
+	@DataProvider
+	public Object[][] serviciotecnico() throws Exception {
+		Object[][] testObjArray = ExcelUtils.getTableArray(dataProviderE2E(),"E2EsinPago",1,1,3,"Servicio Tecnico");
+
+		 return (testObjArray);
+	}
+	
+	@DataProvider
+	public Object[][] Diagnostico() throws Exception {
+		Object[][] testObjArray = ExcelUtils.getTableArray(dataProviderE2E(),"E2EsinPago",1,1,2,"DiagnInconveniente");
 
 		 return (testObjArray);
 	}

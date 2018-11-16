@@ -28,6 +28,8 @@ import Pages.CustomerCare;
 import Pages.Marketing;
 import Pages.PagePerfilTelefonico;
 import Pages.SalesBase;
+import Pages.TechCare_Ola1;
+import Pages.TechnicalCareCSRDiagnosticoPage;
 import Pages.setConexion;
 
 public class GestionesPerfilTelefonico extends TestBase{
@@ -357,8 +359,9 @@ public class GestionesPerfilTelefonico extends TestBase{
 		driver.findElement(By.cssSelector(".slds-tree__item.ng-scope")).findElement(By.tagName("div")).click();
 		sleep(25000);
 		cCC.seleccionarCardPornumeroLinea(sLinea, driver);
-		sleep(3000);
+		sleep(12000);
 		cCC.irAGestionEnCard("Cambio SimCard");
+		sleep(10000);
 		pagePTelefo.mododeEntrega(driver, cEntrega, cProvincia, cLocalidad, cPuntodeVenta);
 		sleep(12000);
 		pagePTelefo.getResumenOrdenCompra().click();
@@ -2321,7 +2324,66 @@ public class GestionesPerfilTelefonico extends TestBase{
 		//Complete when the page works
 		//Verify when the page works
 	}
+
+	@Test (groups = {"GestionesPerfilTelefonico", "DiagnosticoInconveniente","E2E", "Ciclo3"}, dataProvider = "Diagnostico")
+	public void TS111300_CRM_Movil_REPRO_Diagnostico_SVA_Telefonico_SMS_Saliente_SMS_a_fijo_Geo_No_Ok_Desregistrar(String sDNI, String sLinea) throws Exception  {
+		imagen = "TS111300";
+		detalles = null;
+		detalles = imagen + " -ServicioTecnico: " + sDNI;
+		boolean desregistrar = false;
+		CustomerCare cCC=new CustomerCare(driver);
+		TechCare_Ola1 page=new TechCare_Ola1(driver);
+		TechnicalCareCSRDiagnosticoPage tech = new TechnicalCareCSRDiagnosticoPage(driver);
+		driver.switchTo().frame(cambioFrame(driver, By.id("SearchClientDocumentType")));
+		sb.BuscarCuenta("DNI", sDNI);
+		driver.findElement(By.cssSelector(".slds-tree__item.ng-scope")).click();
+		sleep(10000);
+		driver.switchTo().frame(cambioFrame(driver, By.className("card-top")));
+		driver.findElement(By.className("card-top")).click();
+		sleep(5000);
+		cCC.irAProductosyServicios();
+		tech.verDetalles();
+	    tech.clickDiagnosticarServicio("sms", "SMS Saliente", true);
+	    tech.selectionInconvenient("SMS a fijo");
+	    tech.continuar();
+	    tech.seleccionarRespuesta("no");
+	    buscarYClick(driver.findElements(By.id("KnowledgeBaseResults_nextBtn")), "equals", "continuar");
+	    page.seleccionarPreguntaFinal("S�");
+	    buscarYClick(driver.findElements(By.id("BalanceValidation_nextBtn")), "equals", "continuar");
+	    tech.categoriaRed("Desregistrar");
+	    tech.validacionDeCobertura("Desregistrar");
+	    Assert.assertTrue(desregistrar);
+	}
 	
+	@Test (groups = {"GestionesPerfilTelefonico", "DiagnosticoInconveniente","E2E", "Ciclo3"}, dataProvider = "Diagnostico")
+	public void TS112441_CRM_Movil_REPRO_Diagnostico_SVA_Telefonico_SMS_Entrante_No_Recibe_De_Un_Numero_En_Particular_Geo_Ok_Rojo(String sDNI, String sLinea) throws Exception  {
+		imagen = "TS112441";
+		detalles = null;
+		detalles = imagen + " -ServicioTecnico: " + sDNI;
+		CustomerCare cCC=new CustomerCare(driver);
+		TechCare_Ola1 page=new TechCare_Ola1(driver);
+		TechnicalCareCSRDiagnosticoPage tech = new TechnicalCareCSRDiagnosticoPage(driver);
+		driver.switchTo().frame(cambioFrame(driver, By.id("SearchClientDocumentType")));
+		sb.BuscarCuenta("DNI", sDNI);
+		driver.findElement(By.cssSelector(".slds-tree__item.ng-scope")).click();
+		sleep(10000);
+		driver.switchTo().frame(cambioFrame(driver, By.className("card-top")));
+		driver.findElement(By.className("card-top")).click();
+		sleep(5000);
+		cCC.irAProductosyServicios();
+		tech.verDetalles();
+	    tech.clickDiagnosticarServicio("sms", "SMS Entrante", true);
+	    tech.selectionInconvenient("No recibe de un n�mero particular");
+	    tech.continuar();
+	    tech.seleccionarRespuesta("no");
+	    buscarYClick(driver.findElements(By.id("KnowledgeBaseResults_nextBtn")), "equals", "continuar");
+	    page.seleccionarPreguntaFinal("No");
+	    buscarYClick(driver.findElements(By.id("BalanceValidation_nextBtn")), "equals", "continuar");
+	    WebElement msj=driver.findElement(By.cssSelector(".slds-page-header__title.vlc-slds-page-header__title.slds-truncate.ng-binding"));
+	    System.out.println(msj.getText());
+	    Assert.assertTrue(msj.getText().equalsIgnoreCase("Saldo Insuficiente"));
+	   
+	}
 	@Test (groups = {"GestionesPerfilOficina", "BaseDeConocimiento", "Ciclo3"}, dataProvider = "CuentaVista360")
 	public void TS118160_CRM_REPRO_BDC_Customer_Care_Actualizacion_de_Datos_Perfil_Telefonico_Acceso_base_de_conocimientos_dentro_OS(String sDNI, String sNombre) {
 		imagen = "TS118160";
