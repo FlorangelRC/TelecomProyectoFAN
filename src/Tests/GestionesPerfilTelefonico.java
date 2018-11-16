@@ -2530,4 +2530,19 @@ public class GestionesPerfilTelefonico extends TestBase{
 		datosOrden.add("Baja de Servicio, orden numero: " + sOrder + ", DNI: " + sDNI);
 	}
 	
+	@Test (groups = {"GestionesPerfilOficina", "BaseDeConocimiento", "Ciclo3"}, dataProvider = "CuentaVista360")
+	public void TS130755_CRM_REPRO_BDC_Customer_Care_Problemas_con_Recargas_PerfilTelefonico_Articulo_de_Medios_de_Recargas(String sDNI, String sNombre) {
+		imagen = "TS125107";
+		driver.switchTo().frame(cambioFrame(driver, By.id("SearchClientDocumentType")));
+		sb.BuscarCuenta("DNI", sDNI);
+		driver.findElement(By.cssSelector(".slds-tree__item.ng-scope")).click();
+		sleep(15000);
+		driver.switchTo().frame(cambioFrame(driver, By.className("card-top")));
+		driver.findElement(By.className("card-top")).click();
+		sleep(3000);
+		cc.irAGestionEnCard("Problemas con Recargas");
+		sleep(5000);
+		driver.switchTo().frame(cambioFrame(driver, By.className("vlc-slds-knowledge-list-item")));
+		Assert.assertTrue(driver.findElement(By.className("vlc-slds-knowledge-list-item")).getText().contains("Problemas con recargas Online"));
+	}
 }

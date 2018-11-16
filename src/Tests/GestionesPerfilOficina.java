@@ -882,7 +882,6 @@ public class GestionesPerfilOficina extends TestBase {
 		detalles = imagen + " -Ajustes-DNI: " + sDNI;
 		String datoViejo = cbs.ObtenerUnidadLibre(cbsm.Servicio_QueryFreeUnit(sLinea), "Datos Libres");
 		Integer datosInicial = Integer.parseInt(datoViejo);
-		System.out.println(datosInicial);
 		boolean gest = false;
 		driver.switchTo().frame(cambioFrame(driver, By.id("SearchClientDocumentType")));
 		sb.BuscarCuenta("DNI", sDNI);
@@ -914,13 +913,11 @@ public class GestionesPerfilOficina extends TestBase {
 		sleep(7000);
 		List <WebElement> element = driver.findElements(By.cssSelector(".slds-form-element.vlc-flex.vlc-slds-text-block.vlc-slds-rte.ng-pristine.ng-valid.ng-scope"));
 		for (WebElement x : element) {
-			if (x.getText().toLowerCase().contains("tu gesti\u00f3n se realiz\u00f3 con \u00e9xito")) {
+			if (x.getText().toLowerCase().contains("tu gesti\u00f3n se realiz\u00f3 con \u00e9xito"))
 				gest = true;
-			}
 		}
 		String datoNuevo = cbs.ObtenerUnidadLibre(cbsm.Servicio_QueryFreeUnit(sLinea), "Datos Libres");
 		Integer datosFinal = Integer.parseInt(datoNuevo);
-		System.out.println(datosFinal);
 		Assert.assertTrue(datosInicial + (123 * 1024) == datosFinal);
 		Assert.assertTrue(gest);
 		if (TestBase.urlAmbiente.contains("sit")) {
@@ -1261,6 +1258,7 @@ public class GestionesPerfilOficina extends TestBase {
 		detalles = imagen + " -Ajustes-DNI: " + sDNI;
 		String datoViejo = cbs.ObtenerUnidadLibre(cbsm.Servicio_QueryFreeUnit(sLinea), "Segundos Libres");
 		Integer datosInicial = Integer.parseInt(datoViejo);
+		System.out.println(datosInicial);
 		boolean gest = false;
 		driver.switchTo().frame(cambioFrame(driver, By.id("SearchClientDocumentType")));
 		sb.BuscarCuenta("DNI", sDNI);
@@ -1292,13 +1290,14 @@ public class GestionesPerfilOficina extends TestBase {
 		sleep(10000);
 		List <WebElement> element = driver.findElements(By.cssSelector(".slds-form-element.vlc-flex.vlc-slds-text-block.vlc-slds-rte.ng-pristine.ng-valid.ng-scope"));
 		for (WebElement x : element) {
-			if (x.getText().toLowerCase().contains("tu gesti\u00f3n se realiz\u00f3 con \u00e9xito")) {
+			if (x.getText().toLowerCase().contains("tu gesti\u00f3n se realiz\u00f3 con \u00e9xito"))
 				gest = true;
-			}
 		}
 		String datoNuevo = cbs.ObtenerUnidadLibre(cbsm.Servicio_QueryFreeUnit(sLinea), "Segundos Libres");
 		Integer datosFinal = Integer.parseInt(datoNuevo);
+		System.out.println(datosFinal);
 		Assert.assertTrue(datosInicial + (10 * 3600) == datosFinal);
+		System.out.println(datosFinal);
 		Assert.assertTrue(gest);
 		if (TestBase.urlAmbiente.contains("sit")) {
 			String orden = cc.obtenerOrden(driver, "Inconvenientes con cargos tasados y facturados");
@@ -1349,9 +1348,8 @@ public class GestionesPerfilOficina extends TestBase {
 		sleep(10000);
 		List <WebElement> element = driver.findElements(By.cssSelector(".slds-form-element.vlc-flex.vlc-slds-text-block.vlc-slds-rte.ng-pristine.ng-valid.ng-scope"));
 		for (WebElement x : element) {
-			if (x.getText().toLowerCase().contains("tu gesti\u00f3n se realiz\u00f3 con \u00e9xito")) {
+			if (x.getText().toLowerCase().contains("tu gesti\u00f3n se realiz\u00f3 con \u00e9xito"))
 				gest = true;
-			}
 		}
 		String datoNuevo = cbs.ObtenerUnidadLibre(cbsm.Servicio_QueryFreeUnit(sLinea), "SMS Libres");
 		Integer datosFinal = Integer.parseInt(datoNuevo);
@@ -1407,14 +1405,14 @@ public class GestionesPerfilOficina extends TestBase {
 		sleep(10000);
 		List <WebElement> element = driver.findElements(By.cssSelector(".slds-form-element.vlc-flex.vlc-slds-text-block.vlc-slds-rte.ng-pristine.ng-valid.ng-scope"));
 		for (WebElement x : element) {
-			if (x.getText().toLowerCase().contains("tu gesti\u00f3n se realiz\u00f3 con \u00e9xito")) {
+			if (x.getText().toLowerCase().contains("tu gesti\u00f3n se realiz\u00f3 con \u00e9xito"))
 				gest = true;
-			}
 		}
 		Assert.assertTrue(gest);
 		String datoNuevo = cbs.ObtenerValorResponse(cbsm.Servicio_queryLiteBySubscriber(sLinea), "bcs:MainBalance");
 		Integer datosFinal = Integer.parseInt(datoNuevo.substring(0, 5));
 		System.out.println(datosFinal);
+		Assert.assertTrue(datosInicial + 4999 == datosFinal);
 		if (TestBase.urlAmbiente.contains("sit")) {
 			String orden = cc.obtenerOrden(driver, "Inconvenientes con cargos tasados y facturados");
 			sOrders.add("Inconvenientes con cargos tasados y facturados, orden numero: " + orden + " con numero de DNI: " + sDNI);
@@ -1431,9 +1429,6 @@ public class GestionesPerfilOficina extends TestBase {
 		imagen = "TS112452";
 		detalles = null;
 		detalles = imagen + " -Ajustes-DNI: " + sDNI;
-		String datoViejo = cbs.ObtenerValorResponse(cbsm.Servicio_queryLiteBySubscriber(sLinea), "bcs:MainBalance");
-		Integer datosInicial = Integer.parseInt(datoViejo.substring(0, 5));
-		System.out.println(datosInicial);
 		boolean gest = false;
 		driver.switchTo().frame(cambioFrame(driver, By.id("SearchClientDocumentType")));
 		sb.BuscarCuenta("DNI", sDNI);
@@ -1465,13 +1460,9 @@ public class GestionesPerfilOficina extends TestBase {
 		sleep(10000);
 		List <WebElement> element = driver.findElements(By.className("ta-care-omniscript-done"));
 		for (WebElement x : element) {
-			if (x.getText().toLowerCase().contains("el caso fue derivado para autorizaci\u00f3n")) {
+			if (x.getText().toLowerCase().contains("el caso fue derivado para autorizaci\u00f3n"))
 				gest = true;
-			}
 		}
-		String datoNuevo = cbs.ObtenerValorResponse(cbsm.Servicio_queryLiteBySubscriber(sLinea), "bcs:MainBalance");
-		Integer datosFinal = Integer.parseInt(datoNuevo.substring(0, 5));
-		System.out.println(datosFinal);
 		Assert.assertTrue(gest);
 		if (TestBase.urlAmbiente.contains("sit")) {
 			String orden = cc.obtenerOrden(driver, "Inconvenientes con cargos tasados y facturados");
@@ -1518,9 +1509,8 @@ public class GestionesPerfilOficina extends TestBase {
 		sleep(7000);
 		List <WebElement> element = driver.findElements(By.cssSelector(".slds-form-element.vlc-flex.vlc-slds-text-block.vlc-slds-rte.ng-pristine.ng-valid.ng-scope"));
 		for (WebElement x : element) {
-			if (x.getText().toLowerCase().contains("tu gesti\u00f3n se realiz\u00f3 con \u00e9xito")) {
+			if (x.getText().toLowerCase().contains("tu gesti\u00f3n se realiz\u00f3 con \u00e9xito"))
 				gest = true;
-			}
 		}
 		Assert.assertTrue(gest);
 		if (TestBase.urlAmbiente.contains("sit")) {
@@ -1539,9 +1529,6 @@ public class GestionesPerfilOficina extends TestBase {
 		imagen = "TS135707";
 		detalles = null;
 		detalles = imagen + " -Ajustes-DNI: " + sDNI;
-		String datoViejo = cbs.ObtenerValorResponse(cbsm.Servicio_queryLiteBySubscriber(sLinea), "bcs:MainBalance");
-		Integer datosInicial = Integer.parseInt(datoViejo.substring(0, 5));
-		System.out.println(datosInicial);
 		boolean gest = false;
 		driver.switchTo().frame(cambioFrame(driver, By.id("SearchClientDocumentType")));
 		sb.BuscarCuenta("DNI", sDNI);
@@ -1574,13 +1561,9 @@ public class GestionesPerfilOficina extends TestBase {
 		System.out.println(nroCaso);
 		List <WebElement> element = driver.findElements(By.cssSelector(".slds-form-element.vlc-flex.vlc-slds-text-block.vlc-slds-rte.ng-pristine.ng-valid.ng-scope"));
 		for (WebElement x : element) {
-			if (x.getText().toLowerCase().contains("tu gesti\u00f3n se realiz\u00f3 con \u00e9xito")) {
+			if (x.getText().toLowerCase().contains("tu gesti\u00f3n se realiz\u00f3 con \u00e9xito"))
 				gest = true;
-			}
 		}
-		String datoNuevo = cbs.ObtenerValorResponse(cbsm.Servicio_queryLiteBySubscriber(sLinea), "bcs:MainBalance");
-		Integer datosFinal = Integer.parseInt(datoNuevo.substring(0, 5));
-		System.out.println(datosFinal);
 		Assert.assertTrue(gest);
 		if (TestBase.urlAmbiente.contains("sit")) {
 			String orden = cc.obtenerOrden(driver, "Inconvenientes con cargos tasados y facturados");
@@ -1748,6 +1731,7 @@ public class GestionesPerfilOficina extends TestBase {
 		detalles = imagen + " -Ajustes-DNI: " + sDNI;
 		String datoViejo = cbs.ObtenerUnidadLibre(cbsm.Servicio_QueryFreeUnit(sLinea), "Segundos Libres");
 		Integer datosInicial = Integer.parseInt(datoViejo);
+		System.out.println(datosInicial);
 		boolean gest = false;
 		driver.switchTo().frame(cambioFrame(driver, By.id("SearchClientDocumentType")));
 		sb.BuscarCuenta("DNI", sDNI);
@@ -1779,12 +1763,12 @@ public class GestionesPerfilOficina extends TestBase {
 		sleep(10000);
 		List <WebElement> element = driver.findElements(By.cssSelector(".slds-form-element.vlc-flex.vlc-slds-text-block.vlc-slds-rte.ng-pristine.ng-valid.ng-scope"));
 		for (WebElement x : element) {
-			if (x.getText().toLowerCase().contains("tu gesti\u00f3n se realiz\u00f3 con \u00e9xito")) {
+			if (x.getText().toLowerCase().contains("tu gesti\u00f3n se realiz\u00f3 con \u00e9xito"))
 				gest = true;
-			}
 		}
 		String datoNuevo = cbs.ObtenerUnidadLibre(cbsm.Servicio_QueryFreeUnit(sLinea), "Segundos Libres");
 		Integer datosFinal = Integer.parseInt(datoNuevo);
+		System.out.println(datosFinal);
 		Assert.assertTrue(datosInicial + (10 * 3600) == datosFinal);
 		Assert.assertTrue(gest);
 		if (TestBase.urlAmbiente.contains("sit")) {
@@ -1831,9 +1815,8 @@ public class GestionesPerfilOficina extends TestBase {
 		WebElement fact = driver.findElement(By.cssSelector(".slds-card.ng-scope")).findElements(By.cssSelector(".slds-card__header.slds-grid")).get(1);
 		List <WebElement> list = fact.findElements(By.tagName("li"));
 		for (WebElement x : list)
-			if (x.getText().toLowerCase().contains("monto")) {
+			if (x.getText().toLowerCase().contains("monto"))
 				monto = x;
-		}
 		Assert.assertTrue(monto.getText().equalsIgnoreCase("Monto: 78.00"));		
 	}
 	
@@ -1881,9 +1864,6 @@ public class GestionesPerfilOficina extends TestBase {
 		imagen = "TS129320";
 		detalles = null;
 		detalles = imagen + " -Ajustes-DNI: " + sDNI;
-		String datoViejo = cbs.ObtenerValorResponse(cbsm.Servicio_queryLiteBySubscriber(sLinea), "bcs:MainBalance");
-		Integer datosInicial = Integer.parseInt(datoViejo.substring(0, 5));
-		System.out.println(datosInicial);
 		boolean gest = false;
 		WebElement monto = null;
 		driver.switchTo().frame(cambioFrame(driver, By.id("SearchClientDocumentType")));
@@ -1915,22 +1895,17 @@ public class GestionesPerfilOficina extends TestBase {
 		WebElement fact = driver.findElement(By.cssSelector(".slds-card.ng-scope")).findElements(By.cssSelector(".slds-card__header.slds-grid")).get(1);
 		List <WebElement> list = fact.findElements(By.tagName("li"));
 		for (WebElement x : list) {
-			if (x.getText().toLowerCase().contains("monto")) {
+			if (x.getText().toLowerCase().contains("monto"))
 				monto = x;
-			}
 		}
 		Assert.assertTrue(monto.getText().equalsIgnoreCase("Monto: 501"));
 		driver.findElement(By.id("Step-Summary_nextBtn")).click();
 		sleep(10000);
 		List <WebElement> element = driver.findElements(By.className("ta-care-omniscript-done"));
 		for (WebElement x : element) {
-			if (x.getText().toLowerCase().contains("el caso fue derivado para autorizaci\u00f3n")) {
+			if (x.getText().toLowerCase().contains("el caso fue derivado para autorizaci\u00f3n"))
 				gest = true;
-			}
 		}
-		String datoNuevo = cbs.ObtenerValorResponse(cbsm.Servicio_queryLiteBySubscriber(sLinea), "bcs:MainBalance");
-		Integer datosFinal = Integer.parseInt(datoNuevo.substring(0, 5));
-		System.out.println(datosFinal);
 		Assert.assertTrue(gest);
 		if (TestBase.urlAmbiente.contains("sit")) {
 			String orden = cc.obtenerOrden(driver, "Inconvenientes con cargos tasados y facturados");
@@ -4600,22 +4575,6 @@ public class GestionesPerfilOficina extends TestBase {
 		Assert.assertTrue(driver.findElement(By.id("knowledge2HomePage_kbOneTab")).isDisplayed());
 	}
 	
-	@Test (groups = {"GestionesPerfilOficina", "BaseDeConocimiento", "Ciclo3"}, dataProvider = "CuentaVista360")
-	public void TS130755_CRM_REPRO_BDC_Customer_Care_Problemas_con_Recargas_PerfilTelefonico_Articulo_de_Medios_de_Recargas(String sDNI, String sNombre) {
-		imagen = "TS125107";
-		driver.switchTo().frame(cambioFrame(driver, By.id("SearchClientDocumentType")));
-		sb.BuscarCuenta("DNI", sDNI);
-		driver.findElement(By.cssSelector(".slds-tree__item.ng-scope")).click();
-		sleep(15000);
-		driver.switchTo().frame(cambioFrame(driver, By.className("card-top")));
-		driver.findElement(By.className("card-top")).click();
-		sleep(3000);
-		cc.irAGestionEnCard("Problemas con Recargas");
-		sleep(5000);
-		driver.switchTo().frame(cambioFrame(driver, By.className("vlc-slds-knowledge-list-item")));
-		Assert.assertTrue(driver.findElement(By.className("vlc-slds-knowledge-list-item")).getText().contains("Problemas con recargas Online"));
-	}
-	
 	@Test (groups = {"GestionPerfilOficina", "BasedeConocimiento", "Ciclo3"}, dataProvider = "CuentaModificacionDeDatos")
 	public void TS124899_CRM_REPRO_BDC_Technical_Care_CSR_Suscripciones_Base_de_Conocimiento(String sDNI, String sLinea) {
 		imagen = "TS124899";
@@ -5117,7 +5076,6 @@ public class GestionesPerfilOficina extends TestBase {
 		driver.findElement(By.className("card-top")).click();
 		sleep(3000);
 		cc.irAGestionEnCard("Problemas con Recargas");
-		sleep(5000);
 		sleep(5000);
 		driver.switchTo().defaultContent();
 		buscarYClick(driver.findElements(By.className("x-btn-text")), "contains", "knowledge");
