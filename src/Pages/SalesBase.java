@@ -605,7 +605,7 @@ try{	driver.findElement(By.id("alert-ok-button")).click();	} catch (NoSuchElemen
 	 setSimpleDropdown(driver.findElement(By.id("State")), provincia);
 	 sleep(3000);
 	driver.findElement(By.id("CityTypeAhead")).sendKeys(localidad);
-	try {Thread.sleep(10000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();} 
+	try {Thread.sleep(6000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();} 
 	driver.findElement(By.id("CityTypeAhead")).sendKeys(Keys.ARROW_DOWN);
 	driver.findElement(By.id("CityTypeAhead")).sendKeys(Keys.ENTER);
 	driver.findElement(By.id("StreetCode")).sendKeys(calle); 

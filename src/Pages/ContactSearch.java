@@ -80,7 +80,7 @@ public class ContactSearch extends BasePage {
 		}
 		if(!genero.equals(""))
 		driver.findElement(By.cssSelector(".OSradioButton.ng-scope.only-buttom")).click();
-		try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		try {Thread.sleep(8000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 	}
 	
 	
@@ -136,7 +136,7 @@ public class ContactSearch extends BasePage {
 			break;
 		}
 		driver.findElement(By.id("MethodSelection_nextBtn")).click();
-		try {Thread.sleep(7000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 	}
 	
 	public void tipoValidacion2(String tipoValidacion) {
@@ -166,7 +166,7 @@ public class ContactSearch extends BasePage {
 	
 	public void subirArchivo(String uploadPath, String continuar) {
 		driver.findElement(By.id("FileDocumentImage")).sendKeys(uploadPath);
-		try {Thread.sleep(3000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		try {Thread.sleep(2000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 		switch (continuar) {
 		case "si":
 			try {Thread.sleep(2000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
