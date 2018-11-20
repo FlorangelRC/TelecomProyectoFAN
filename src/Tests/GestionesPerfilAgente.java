@@ -1155,7 +1155,7 @@ public class GestionesPerfilAgente extends TestBase{
 	}
 	
 	@Test (groups = {"GestionesPerfilAgente", "ServicioTecnico","E2E", "Ciclo4"}, dataProvider = "serviciotecnico")
-	public void TS121364_CRM_Movil_REPRO_Servicio_T�cnico_Realiza_reparaciones_de_equipos_Validacion_de_IMEI_Ok_Con_Garant�a_Derivado_a_Servicio_T�cnico_Sin_Muleto_Terminal_reparada_y_entregada_Agente(String sDNI, String sLinea, String sIMEI) throws InterruptedException {
+	public void TS121364_CRM_Movil_REPRO_Servicio_Tecnico_Realiza_reparaciones_de_equipos_Validacion_de_IMEI_Ok_Con_Garantia_Derivado_a_Servicio_Tecnico_Sin_Muleto_Terminal_reparada_y_entregada_Agente(String sDNI, String sLinea, String sIMEI) throws InterruptedException {
 		imagen = "TS121364";
 		detalles = null;
 		detalles = imagen + " -ServicioTecnico: " + sDNI;
@@ -1176,7 +1176,7 @@ public class GestionesPerfilAgente extends TestBase{
 	}
 	
 	@Test (groups = {"GestionesPerfilAgente", "ServicioTecnico","E2E", "Ciclo4"}, dataProvider = "serviciotecnico")
-	public void TS121367_CRM_Movil_REPRO_Servicio_T�cnico_Realiza_configuraciones_de_equipos_Validacion_de_IMEI_Ok_Configuraci�n_Con_Garant�a_Sin_Muleto_Reparar_ahora_Agente(String sDNI, String sLinea, String sIMEI) throws InterruptedException {
+	public void TS121367_CRM_Movil_REPRO_Servicio_Tecnico_Realiza_configuraciones_de_equipos_Validacion_de_IMEI_Ok_Configuracion_Con_Garantia_Sin_Muleto_Reparar_ahora_Agente(String sDNI, String sLinea, String sIMEI) throws InterruptedException {
 		imagen = "TS121367";
 		detalles = null;
 		detalles = imagen + " -ServicioTecnico: " + sDNI;
@@ -1197,7 +1197,7 @@ public class GestionesPerfilAgente extends TestBase{
 	}
 	
 	@Test (groups = {"GestionesPerfilAgente", "DiagnosticoInconveniente","E2E", "Ciclo3"}, dataProvider = "Diagnostico")
-	public void TS119283_CRM_Movil_REPRO_Diagn�stico_de_Datos_Valida_Red_y_Navegaci�n_Motivo_de_contacto_No_puedo_navegar_Antena_rojo_NO_BAM_Agente(String sDNI, String sLinea) throws Exception  {
+	public void TS119283_CRM_Movil_REPRO_Diagnostico_de_Datos_Valida_Red_y_Navegacion_Motivo_de_contacto_No_puedo_navegar_Antena_rojo_NO_BAM_Agente(String sDNI, String sLinea) throws Exception  {
 		imagen = "TS119283";
 		detalles = null;
 		detalles = imagen + " -ServicioTecnico: " + sDNI;
@@ -1219,7 +1219,4 @@ public class GestionesPerfilAgente extends TestBase{
 	    tech.seleccionarRespuesta("si");
 	    buscarYClick(driver.findElements(By.id("KnowledgeBaseResults_nextBtn")), "equals", "continuar");
 	}
-	
-	//===================================== CASO PARA PASAR PARA XAPPIA ===============================================
-	
 }

@@ -2348,7 +2348,7 @@ public class GestionesPerfilTelefonico extends TestBase{
 	    tech.continuar();
 	    tech.seleccionarRespuesta("no");
 	    buscarYClick(driver.findElements(By.id("KnowledgeBaseResults_nextBtn")), "equals", "continuar");
-	    page.seleccionarPreguntaFinal("S�");
+	    page.seleccionarPreguntaFinal("S\u00ed");
 	    buscarYClick(driver.findElements(By.id("BalanceValidation_nextBtn")), "equals", "continuar");
 	    tech.categoriaRed("Desregistrar");
 	    tech.validacionDeCobertura("Desregistrar");
@@ -2373,15 +2373,13 @@ public class GestionesPerfilTelefonico extends TestBase{
 		cCC.irAProductosyServicios();
 		tech.verDetalles();
 	    tech.clickDiagnosticarServicio("sms", "SMS Entrante", true);
-	    tech.selectionInconvenient("No recibe de un n�mero particular");
+	    tech.selectionInconvenient("No recibe de un n\u00famero particular");
 	    tech.continuar();
 	    tech.seleccionarRespuesta("no");
 	    buscarYClick(driver.findElements(By.id("KnowledgeBaseResults_nextBtn")), "equals", "continuar");
 	    page.seleccionarPreguntaFinal("No");
 	    buscarYClick(driver.findElements(By.id("BalanceValidation_nextBtn")), "equals", "continuar");
-	    WebElement msj=driver.findElement(By.cssSelector(".slds-page-header__title.vlc-slds-page-header__title.slds-truncate.ng-binding"));
-	    System.out.println(msj.getText());
-	    Assert.assertTrue(msj.getText().equalsIgnoreCase("Saldo Insuficiente"));
+	    Assert.assertTrue(driver.findElement(By.cssSelector(".slds-page-header__title.vlc-slds-page-header__title.slds-truncate.ng-binding")).getText().contains("Saldo Insuficiente"));
 	   
 	}
 	@Test (groups = {"GestionesPerfilOficina", "BaseDeConocimiento", "Ciclo3"}, dataProvider = "CuentaVista360")
@@ -2591,4 +2589,19 @@ public class GestionesPerfilTelefonico extends TestBase{
 		datosOrden.add("Baja de Servicio, orden numero: " + sOrder + ", DNI: " + sDNI);
 	}
 	
+	@Test (groups = {"GestionesPerfilOficina", "BaseDeConocimiento", "Ciclo3"}, dataProvider = "CuentaVista360")
+	public void TS130755_CRM_REPRO_BDC_Customer_Care_Problemas_con_Recargas_PerfilTelefonico_Articulo_de_Medios_de_Recargas(String sDNI, String sNombre) {
+		imagen = "TS125107";
+		driver.switchTo().frame(cambioFrame(driver, By.id("SearchClientDocumentType")));
+		sb.BuscarCuenta("DNI", sDNI);
+		driver.findElement(By.cssSelector(".slds-tree__item.ng-scope")).click();
+		sleep(15000);
+		driver.switchTo().frame(cambioFrame(driver, By.className("card-top")));
+		driver.findElement(By.className("card-top")).click();
+		sleep(3000);
+		cc.irAGestionEnCard("Problemas con Recargas");
+		sleep(5000);
+		driver.switchTo().frame(cambioFrame(driver, By.className("vlc-slds-knowledge-list-item")));
+		Assert.assertTrue(driver.findElement(By.className("vlc-slds-knowledge-list-item")).getText().contains("Problemas con recargas Online"));
+	}
 }
