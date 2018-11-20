@@ -1863,7 +1863,7 @@ public class GestionesPerfilTelefonico extends TestBase{
 	}
 	
 	@Test (groups = {"GestionesPerfilOficina","HistorialDePacks","E2E", "Ciclo1"},  dataProvider = "CuentaModificacionDeDatos")
-	public void TS135469_CRM_Movil_Prepago_Historial_de_Packs_Nombre_del_Pack_TODOS_FAN_Front_Telefonico(String sDNI){
+	public void TS135469_CRM_Movil_Prepago_Historial_de_Packs_Nombre_del_Pack_TODOS_FAN_Front_Telefonico(String sDNI, String sLinea){
 	boolean enc = false;
 	imagen = "TS135469";
 	detalles = null;
@@ -1890,6 +1890,31 @@ public class GestionesPerfilTelefonico extends TestBase{
 			break;
 		}
 	}
+	driver.findElement(By.id("text-input-id-1")).click();
+	WebElement table = driver.findElement(By.cssSelector(".slds-datepicker.slds-dropdown.slds-dropdown--left"));
+	sleep(3000);
+	List<WebElement> tableRows = table.findElements(By.xpath("//tr//td"));
+	for (WebElement cell : tableRows) {
+		try {
+			if (cell.getText().equals("25")) {
+				cell.click();
+			}
+		} catch (Exception e) {}
+	}
+	driver.findElement(By.id("text-input-id-2")).click();
+	WebElement table_2 = driver.findElement(By.cssSelector(".slds-datepicker.slds-dropdown.slds-dropdown--left"));
+	sleep(3000);
+	List<WebElement> tableRows_2 = table_2.findElements(By.xpath("//tr//td"));
+	for (WebElement cell : tableRows_2) {
+		try {
+			if (cell.getText().equals("16")) {
+				cell.click();
+			}
+		} catch (Exception e) {}
+	}
+	sleep(3000);
+	driver.findElement(By.cssSelector(".slds-button.slds-button--brand.filterNegotiations.slds-p-horizontal--x-large.slds-p-vertical--x-small")).click();
+	sleep(3000);
 	driver.findElement(By.id("text-input-03")).click();
 	sleep(2000);
 	List<WebElement> todos = driver.findElement(By.cssSelector(".slds-dropdown__list.slds-dropdown--length-5")).findElements(By.tagName("li"));
