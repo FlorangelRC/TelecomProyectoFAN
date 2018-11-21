@@ -250,7 +250,7 @@ public class PagePerfilTelefonico extends TestBase{
 		Store.selectByVisibleText(puntodeventa);
 		Delivery.click();
 		sleep(25000);
-		SimulaciondeFactura.click();
+		//SimulaciondeFactura.click();
 		
 		}
 	
