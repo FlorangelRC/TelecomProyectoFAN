@@ -38,6 +38,8 @@ public class GestionesPerfilTelefonico extends TestBase{
 	private SalesBase sb;
 	private CustomerCare cc;
 	private Marketing mk;
+	private CBS cbs;
+	private CBS_Mattu cbsm;
 	List <String> datosOrden =new ArrayList<String>();
 	String imagen;
 	String detalles;
@@ -50,6 +52,8 @@ public class GestionesPerfilTelefonico extends TestBase{
 		sb = new SalesBase(driver);
 		cc = new CustomerCare(driver);
 		mk = new Marketing(driver);
+		cbs = new CBS();
+		cbsm = new CBS_Mattu();
 		loginTelefonico(driver);
 		sleep(22000);
 		driver.findElement(By.id("tabBar")).findElement(By.tagName("a")).click();
@@ -2643,5 +2647,40 @@ public class GestionesPerfilTelefonico extends TestBase{
 		sleep(5000);
 		driver.switchTo().frame(cambioFrame(driver, By.className("vlc-slds-knowledge-list-item")));
 		Assert.assertTrue(driver.findElement(By.className("vlc-slds-knowledge-list-item")).getText().contains("Problemas con recargas Online"));
+	}
+	
+	@Test (groups = {"ProblemasConRecargas", "GestionesPerfilTelefonico", "E2E", "Ciclo3"}, dataProvider = "CuentaProblemaRecarga") 
+	public void TS104332_CRM_Movil_Repro_Problemas_con_Recarga_Telefonico_Tarjeta_Scratch_Caso_Nuevo_Tarjeta_Activa_y_Disponible(String sDNI, String sLinea) {
+		imagen = "TS104332";
+		detalles = null;
+		detalles = imagen + " -Problemas Con Recargas-DNI: " + sDNI;
+		String datoViejo = cbs.ObtenerValorResponse(cbsm.Servicio_queryLiteBySubscriber(sLinea), "bcs:MainBalance");
+		Integer datosInicial = Integer.parseInt(datoViejo.substring(0, 5));
+		driver.switchTo().frame(cambioFrame(driver, By.id("SearchClientDocumentType")));
+		sb.BuscarCuenta("DNI", sDNI);
+		driver.findElement(By.cssSelector(".slds-tree__item.ng-scope")).click();
+		sleep(25000);
+		driver.switchTo().frame(cambioFrame(driver, By.className("card-top")));
+		driver.findElement(By.className("card-top")).click();
+		sleep(3000);
+		cc.irAGestionEnCard("Problemas con Recargas");
+		sleep(5000);
+		driver.switchTo().frame(cambioFrame(driver, By.className("borderOverlay")));
+		driver.findElements(By.className("borderOverlay")).get(0).click();
+		driver.findElement(By.id("RefillMethods_nextBtn")).click();
+		sleep(5000);
+		driver.findElement(By.id("BatchNumber")).sendKeys("11120000001644");
+		driver.findElement(By.id("PIN")).sendKeys("0906");
+		driver.findElement(By.id("PrepaidCardData_nextBtn")).click();
+		sleep(5000);
+		WebElement estado = driver.findElement(By.id("PrepaidCardStatusLabel"));
+		Assert.assertTrue(estado.getText().toLowerCase().contains("activa"));
+		driver.findElement(By.id("Summary_nextBtn")).click();
+		sleep(5000);
+		WebElement gestion = driver.findElement(By.className("ta-care-omniscript-done")).findElement(By.tagName("header")).findElement(By.tagName("h1"));
+		Assert.assertTrue(gestion.getText().contains("Recarga realizada con \u00e9xito"));
+		String datoNuevo = cbs.ObtenerValorResponse(cbsm.Servicio_queryLiteBySubscriber(sLinea), "bcs:MainBalance");
+		Integer datosFinal = Integer.parseInt(datoNuevo.substring(0, 5));
+		Assert.assertTrue(datosInicial + 500 == datosFinal);
 	}
 }

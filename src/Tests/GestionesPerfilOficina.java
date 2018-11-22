@@ -5199,8 +5199,7 @@ public class GestionesPerfilOficina extends TestBase {
 		Assert.assertTrue(cc.corroborarEstadoCaso(sOrder, "Activada"));
 		sOrders.add("Alta de Servicio, orden numero: " + sOrder + ", DNI: " + sDNI);
 	}
-	
-	
+		
 	@Test (groups = {"GestionesPerfilOficina", "BaseDeConocimiento", "Ciclo3"}, dataProvider = "CuentaVista360")
 	public void TS125098_CRM_REPRO_BDC_Customer_Care_Problemas_con_recargas_Valoracion_negativa_en_BC(String sDNI, String sNombre) {
 		imagen = "TS125098";
@@ -5208,7 +5207,7 @@ public class GestionesPerfilOficina extends TestBase {
 		driver.switchTo().frame(cambioFrame(driver, By.id("SearchClientDocumentType")));
 		sb.BuscarCuenta("DNI", sDNI);
 		driver.findElement(By.cssSelector(".slds-tree__item.ng-scope")).click();
-		sleep(25000);
+		sleep(15000);
 		driver.switchTo().frame(cambioFrame(driver, By.className("card-top")));
 		driver.findElement(By.className("card-top")).click();
 		sleep(3000);
@@ -5228,5 +5227,79 @@ public class GestionesPerfilOficina extends TestBase {
 		if (negativo.getAttribute("title").contains("Haga clic si no le gusta este art\u00edculo de knowledge"))
 			downVote = true;
 		Assert.assertTrue(downVote);
+	}
+	
+	@Test (groups = {"ProblemasConRecargas", "GestionesPerfilOficina", "E2E", "Ciclo3"}, dataProvider = "CuentaProblemaRecarga") 
+	public void TS104346_CRM_Movil_Repro_Problemas_con_Recarga_Presencial_On_Line_Ofcom(String sDNI, String sLinea) {
+		imagen = "TS104346";
+		detalles = null;
+		detalles = imagen + " -Problemas Con Recargas-DNI: " + sDNI;
+		String datoViejo = cbs.ObtenerValorResponse(cbsm.Servicio_queryLiteBySubscriber(sLinea), "bcs:MainBalance");
+		Integer datosInicial = Integer.parseInt(datoViejo.substring(0, 5));
+		driver.switchTo().frame(cambioFrame(driver, By.id("SearchClientDocumentType")));
+		sb.BuscarCuenta("DNI", sDNI);
+		driver.findElement(By.cssSelector(".slds-tree__item.ng-scope")).click();
+		sleep(15000);
+		driver.switchTo().frame(cambioFrame(driver, By.className("card-top")));
+		driver.findElement(By.className("card-top")).click();
+		sleep(3000);
+		cc.irAGestionEnCard("Problemas con Recargas");
+		sleep(5000);
+		driver.switchTo().frame(cambioFrame(driver, By.className("borderOverlay")));
+		driver.findElements(By.className("borderOverlay")).get(1).click();
+		driver.findElement(By.id("RefillMethods_nextBtn")).click();
+		sleep(5000);
+		driver.switchTo().frame(cambioFrame(driver, By.id("OnlineRefillData_nextBtn")));
+		driver.findElement(By.id("RefillDate")).sendKeys("11-08-2018");
+		driver.findElement(By.id("RefillAmount")).sendKeys("5000");
+		driver.findElement(By.id("ReceiptCode")).sendKeys("111");
+		driver.findElement(By.id("OnlineRefillData_nextBtn")).click();
+		sleep(5000);
+		buscarYClick(driver.findElements(By.cssSelector(".slds-form-element__label.ng-binding.ng-scope")), "equals", "si");
+		driver.findElement(By.id("FileAttach")).sendKeys("C:\\Users\\Nicolas\\Desktop\\descarga.jpg");
+		driver.findElement(By.id("AttachDocuments_nextBtn")).click();
+		sleep(5000);
+		driver.findElement(By.id("Summary_nextBtn")).click();
+		sleep(5000);
+		WebElement gestion = driver.findElement(By.className("ta-care-omniscript-done")).findElement(By.tagName("header")).findElement(By.tagName("h1"));
+		Assert.assertTrue(gestion.getText().contains("Recarga realizada con \u00e9xito"));
+		String datoNuevo = cbs.ObtenerValorResponse(cbsm.Servicio_queryLiteBySubscriber(sLinea), "bcs:MainBalance");
+		Integer datosFinal = Integer.parseInt(datoNuevo.substring(0, 5));
+		Assert.assertTrue(datosInicial + 500 == datosFinal);
+	}
+	
+	@Test (groups = {"ProblemasConRecargas", "GestionesPerfilOficina", "E2E", "Ciclo3"}, dataProvider = "CuentaProblemaRecarga") 
+	public void TS104351_CRM_Movil_Repro_Problemas_con_Recarga_On_line_Sin_comprobante_En_espera_del_cliente_Ofcom(String sDNI, String sLinea) {
+		imagen = "TS104351";
+		driver.switchTo().frame(cambioFrame(driver, By.id("SearchClientDocumentType")));
+		sb.BuscarCuenta("DNI", sDNI);
+		driver.findElement(By.cssSelector(".slds-tree__item.ng-scope")).click();
+		sleep(25000);
+		driver.switchTo().frame(cambioFrame(driver, By.className("card-top")));
+		driver.findElement(By.className("card-top")).click();
+		sleep(3000);
+		cc.irAGestionEnCard("Problemas con Recargas");
+		sleep(5000);
+		driver.switchTo().frame(cambioFrame(driver, By.className("borderOverlay")));
+		driver.findElements(By.className("borderOverlay")).get(1).click();
+		driver.findElement(By.id("RefillMethods_nextBtn")).click();
+		sleep(5000);
+		driver.findElement(By.id("RefillDate")).sendKeys("11-08-2018");
+		driver.findElement(By.id("RefillAmount")).sendKeys("5000");
+		driver.findElement(By.id("ReceiptCode")).sendKeys("111");
+		driver.findElement(By.id("OnlineRefillData_nextBtn")).click();
+		sleep(5000);		
+		try {
+			driver.findElement(By.xpath("//*[@id=\"SessionCase|0\"]/div/div[1]/label[2]/span/div/div")).click();
+			driver.findElement(By.id("ExistingCase_nextBtn")).click();
+			sleep(5000);
+		} catch (Exception e) {}	
+		buscarYClick(driver.findElements(By.cssSelector(".slds-form-element__label.ng-binding.ng-scope")), "equals", "no");
+		driver.findElement(By.id("AttachDocuments_nextBtn")).click();
+		sleep(5000);
+		driver.findElement(By.id("Summary_nextBtn")).click();
+		sleep(5000);
+		WebElement gestion = driver.findElement(By.className("ta-care-omniscript-done")).findElement(By.tagName("header")).findElement(By.tagName("h1"));
+		Assert.assertTrue(gestion.getText().contains("La gesti\u00f3n fue derivada"));
 	}
 }
