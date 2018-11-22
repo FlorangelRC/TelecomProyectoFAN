@@ -67,7 +67,7 @@ public class TestBase {
 		switch(selection) {
 		case "Cuentas":
 		driver.findElement(By.id("ext-gen211")).click();;
-		break;
+		break; 
 		}
 	}
 	
@@ -1191,7 +1191,7 @@ public class TestBase {
 	@DataProvider
 	public Object [][] ventaPackInternacional30SMS() throws Exception{
 		
-		Object[][] testObjArray = ExcelUtils.getTableArray(dataProviderE2E(),"E2EconPago",1,1,14,"packTelefonicoInternacional30SMS");
+		Object[][] testObjArray = ExcelUtils.getTableArray(dataProviderE2E(),"E2EconPago",1,1,14,"packTelefInternacional30SMS");
 		
 		return (testObjArray);
 	}
@@ -1679,6 +1679,20 @@ public class TestBase {
 	@DataProvider
 	public Object[][] Diagnostico() throws Exception {
 		Object[][] testObjArray = ExcelUtils.getTableArray(dataProviderE2E(),"E2EsinPago",1,1,2,"DiagnInconveniente");
+
+		 return (testObjArray);
+	}
+	
+	@DataProvider
+	public Object[][] BaseDeConocimiento() throws Exception {
+		Object[][] testObjArray = ExcelUtils.getTableArray(dataProviderE2E(),"E2EsinPago",1,1,2,"DatosConocimientos");
+
+		 return (testObjArray);
+	}
+	
+	@DataProvider
+	public Object[][] HistoriaRecarga() throws Exception {
+		Object[][] testObjArray = ExcelUtils.getTableArray(dataProviderE2E(),"E2EsinPago",1,1,2,"HistorialRecargaSOS");
 
 		 return (testObjArray);
 	}
