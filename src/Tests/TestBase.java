@@ -51,8 +51,8 @@ import DataProvider.ExcelUtils;
 public class TestBase {
 	protected static WebDriver driver;
 	
-		//public static String urlAmbiente = "https://telecomcrm--uat.cs53.my.salesforce.com";
-		public static String urlAmbiente = "https://crm--sit.cs14.my.salesforce.com/";
+		public static String urlAmbiente = "https://telecomcrm--uat.cs53.my.salesforce.com";
+		//public static String urlAmbiente = "https://crm--sit.cs14.my.salesforce.com/";
 		
 		// viejo public String urlSCP = "https://telecomcrm--uat.cs8.my.salesforce.com";
 		public static String urlSCP = "https://telecomcrm--uat.cs53.my.salesforce.com";
@@ -1683,4 +1683,25 @@ public class TestBase {
 		 return (testObjArray);
 	}
 	
+	public void guardarLineasNominadas(String data) throws IOException {
+		File archivo=new File("DatosNominacion.txt");
+		/*if (!archivo.exists())
+			FileWriter ArchiSa=new FileWriter(archivo,true);
+			//archivo.delete();*/
+		//Crear objeto FileWriter que sera el que nos ayude a escribir sobre archivo
+		FileWriter ArchiSa=new FileWriter(archivo.getAbsoluteFile(),true);
+		BufferedWriter bw = new BufferedWriter(ArchiSa);
+		PrintWriter wr = new PrintWriter(bw); 
+		wr.append(data+"\r\n");
+		wr.close();
+		bw.close();
+		ArchiSa.close();
+	}
+	
+	@DataProvider
+	public Object[][] LineasNominadas() throws Exception {
+		Object[][] testObjArray = ExcelUtils.getTableArray(dataProviderE2E(),"ListaLineas",1,1,1,"LineaNominada");
+
+		 return (testObjArray);
+	}
 }

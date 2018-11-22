@@ -1,6 +1,7 @@
 package Tests;
 import static org.testng.Assert.assertTrue;
 
+import java.io.File;
 import java.sql.Driver;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -248,7 +249,8 @@ public class SalesNominaciones extends TestBase{
 		}
 		driver.findElement(By.id("ValidationMethod_nextBtn")).click();
 		sleep(7000);
-		contact.subirArchivo("C:\\Users\\florangel\\Downloads\\mapache.jpg", "si");
+		File directory = new File("Dni.jpg");
+		contact.subirArchivo(new File(directory.getAbsolutePath()).toString(), "si");
 		sleep(7000);
 		boolean b = false;
 		List<WebElement> vali = driver.findElements(By.cssSelector(".slds-page-header__title.vlc-slds-page-header__title.slds-truncate.ng-binding"));
@@ -324,13 +326,12 @@ public class SalesNominaciones extends TestBase{
 			driver.findElement(By.cssSelector(".slds-input.form-control.ng-pristine.ng-untouched.ng-valid.ng-empty")).sendKeys("algoaqui@yahoo.com.ar");
 		
 		contact.tipoValidacion("documento");
-		contact.subirArchivo("C:\\Users\\florangel\\Downloads\\mapache.jpg", "si");
-			BasePage bp = new BasePage(driver);
+		File directory = new File("Dni.jpg");
+		contact.subirArchivo(new File(directory.getAbsolutePath()).toString(), "si");
+		BasePage bp = new BasePage(driver);
 		bp.setSimpleDropdown(driver.findElement(By.id("ImpositiveCondition")), "IVA Consumidor Final");
 		SB.Crear_DomicilioLegal("Buenos Aires", "aba", "falsa", "", "1000", "", "", "1549");
 		sleep(38000);
-		//contact.subirformulario("C:\\Users\\florangel\\Downloads\\form.pdf", "si");
-		//sleep(30000);
 		List <WebElement> element = driver.findElement(By.id("NominacionExitosa")).findElements(By.tagName("p"));
 		System.out.println("tam ="+element.size());
 		boolean a = false;
@@ -352,8 +353,8 @@ public class SalesNominaciones extends TestBase{
 		contact.searchContact("DNI", "10000019", "masculino");
 		contact.ingresarMail("asdads@gmail.com", "si");
 		contact.tipoValidacion("documento");
-		contact.subirArchivo("C:\\Users\\Nicolas\\Desktop\\descarga.jpg", "si");
-		
+		File directory = new File("Dni.jpg");
+		contact.subirArchivo(new File(directory.getAbsolutePath()).toString(), "si");
 		List <WebElement> sms = driver.findElements(By.cssSelector(".slds-form-element__control.ng-scope"));
 		boolean a = false;
 		for (WebElement x : sms) {
@@ -390,7 +391,6 @@ public class SalesNominaciones extends TestBase{
 	//***********************************************************************************************************************
 	@Test(groups={"Sales","Nominacion","Ola1","filtrado"},dataProvider="SalesPasaporteBolsa")
 	public void TS95094_SalesCPQ_Nominacion_Extranjero_Verificar_Confirmacion_Exitosa(String sCuenta, String sDni, String sLinea){
-		String FilePath = "C:\\Users\\florangel\\Downloads\\mapache.jpg";
 		SalesBase SB = new SalesBase(driver);
 		CustomerCare CC = new CustomerCare(driver);
 		ContactSearch contact = new ContactSearch(driver);
@@ -423,13 +423,17 @@ public class SalesNominaciones extends TestBase{
 		}catch(Exception ex1) {}
 		sleep(5000);
 		contact.tipoValidacion("documento");
-		contact.subirArchivo("C:\\Users\\florangel\\Downloads\\mapache.jpg", "si");
-			BasePage bp = new BasePage(driver);
-			sleep(5000);
+		File directory = new File("Dni.jpg");
+		contact.subirArchivo(new File(directory.getAbsolutePath()).toString(), "si");
+		BasePage bp = new BasePage(driver);
+		sleep(5000);
 		bp.setSimpleDropdown(driver.findElement(By.id("ImpositiveCondition")), "IVA Consumidor Final");
 		SB.Crear_DomicilioLegal("Buenos Aires", "aba", "falsa", "", "1000", "", "", "1549");
 		sleep(10000);
-		contact.subirformulario("C:\\Users\\florangel\\Downloads\\form.pdf", "si");
+		directory = new File("form.pdf");
+		contact.subirArchivo(new File(directory.getAbsolutePath()).toString(), "si");
+		
+		contact.subirformulario(new File(directory.getAbsolutePath()).toString(), "si");
 		sleep(45000);
 		List <WebElement> element = driver.findElement(By.id("NominacionExitosa")).findElements(By.tagName("p"));
 		boolean a = false;
@@ -445,7 +449,6 @@ public class SalesNominaciones extends TestBase{
 	
 	@Test(groups={"Sales","Nominacion","Ola1","filtrado"}, dataProvider="SalesPasaporteBolsa")
 	public void TS95114_SalesCPQ_Nominacion_Extranjero_Verificar_Datos_Nominar_Cliente_Extranjero(String sCuenta, String sDni, String sLinea){
-		String FilePath = "C:\\Users\\florangel\\Downloads\\mapache.jpg";;
 		SalesBase SB = new SalesBase(driver);
 		CustomerCare CC = new CustomerCare(driver);
 		ContactSearch contact = new ContactSearch(driver);
@@ -508,7 +511,6 @@ public class SalesNominaciones extends TestBase{
 	
 	@Test(groups={"Sales","Nominacion","Ola1"}, dataProvider="SalesPasaporteBolsa")  //**************************** VER ***********************************//
 	public void TS95116_SalesCPQ_Nominacion_Extranjero_Verificar_Blacklist_Cliente_Existente(String sCuenta, String sDni, String sLinea){
-		String FilePath = "C:\\Users\\florangel\\Downloads\\mapache.jpg";;
 		SalesBase SB = new SalesBase(driver);
 		CustomerCare CC = new CustomerCare(driver);
 		ContactSearch contact = new ContactSearch(driver);
@@ -582,9 +584,8 @@ public class SalesNominaciones extends TestBase{
 			sleep(5000);
 			contact.tipoValidacion("documento");
 			sleep(18000);
-			contact.subirArchivo("C:\\Users\\florangel\\Downloads\\mapache.jpg", "si");
-			//driver.findElement(By.id("QAContactData_nextBtn")).click();
-			
+			File directory = new File("Dni.jpg");
+			contact.subirArchivo(new File(directory.getAbsolutePath()).toString(), "si");
 			BasePage bp = new BasePage(driver);
 			//driver.findElement(By.id("FormUpload_nextBtn")).click();
 			sleep(8000);
@@ -607,7 +608,6 @@ public class SalesNominaciones extends TestBase{
 	
 	//@Test(groups = "Sales")//si
 	public void TS95119_SalesCPQ_Nominacion_Extranjero_Verificar_Documento_Adjunto_Pasaporte(){
-		String FilePath = "C:\\Users\\florangel\\Downloads\\mapache.jpg";
 		SalesBase SB = new SalesBase(driver);
 		CustomerCare CC = new CustomerCare(driver);
 		ContactSearch contact = new ContactSearch(driver);
@@ -620,7 +620,8 @@ public class SalesNominaciones extends TestBase{
 		driver.findElement(By.id("MethodSelectionPassport|0")).findElement(By.cssSelector(".slds-radio--faux.ng-scope")).click();
 		driver.findElement(By.id("ValidationMethod_nextBtn")).click();
 		sleep(5000);
-		driver.findElement(By.id("FileDocumentImage")).sendKeys(FilePath);
+		File directory = new File("Dni.jpg");
+		driver.findElement(By.id("FileDocumentImage")).sendKeys(new File(directory.getAbsolutePath()).toString());
 		sleep(1000);
 		driver.findElement(By.cssSelector(".message.description.ng-binding.ng-scope")).getText().toLowerCase().contains("documento de identidad superada");
 	}
@@ -672,14 +673,14 @@ public class SalesNominaciones extends TestBase{
 		sleep(5000);
 		contact.tipoValidacion("documento");
 		sleep(5000);
-		contact.subirArchivo("C:\\Users\\florangel\\Downloads\\mapache.jpg", "si");
+		File directory = new File("Dni.jpg");
+		contact.subirArchivo(new File(directory.getAbsolutePath()).toString(), "si");
 		sleep(1000);
 		driver.findElement(By.cssSelector(".message.description.ng-binding.ng-scope")).getText().toLowerCase().contains("documento de identidad superada");
 	}
 	
 	//@Test(groups = "Sales")
 	public void TS94977_SalesCPQ_Nominacion_Argentino_Verificar_Formulario_De_Documentacion_Adjunto(){
-		String FilePath = "C:\\Users\\florangel\\Downloads\\mapache.jpg";
 		SalesBase SB = new SalesBase(driver);
 		CustomerCare CC = new CustomerCare(driver);
 		ContactSearch contact = new ContactSearch(driver);
@@ -690,7 +691,8 @@ public class SalesNominaciones extends TestBase{
 		sleep(5000);
 		SB.seleccionarMetodoValidacion("DOC");
 		sleep(5000);
-		driver.findElement(By.id("FileDocumentImage")).sendKeys(FilePath);
+		File directory = new File("Dni.jpg");
+		driver.findElement(By.id("FileDocumentImage")).sendKeys(new File(directory.getAbsolutePath()).toString());
 		sleep(1000);
 		driver.findElement(By.cssSelector(".message.description.ng-binding.ng-scope")).getText().toLowerCase().contains("documento de identidad superada");
 	}
