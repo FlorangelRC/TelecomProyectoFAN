@@ -642,7 +642,7 @@ public class GestionesPerfilAgente extends TestBase{
 		Assert.assertTrue(driver.findElement(By.cssSelector(".slds-table.slds-table--bordered.slds-table--resizable-cols.slds-table--fixed-layout.via-slds-table-pinned-header")).isDisplayed());
 	}
 	
-	@Test (groups = {"GestionesPerfilAgente", "ActualizarDatos", "E2E", "Ciclo3"}, dataProvider = "CuentaModificacionDeDatos")
+	@Test (groups = {"GestionesPerfilAgente", "Actualizar Datos", "E2E", "Ciclo3"}, dataProvider = "CuentaModificacionDeDatos")
 	public void TS134836_CRM_Movil_REPRO_Modificacion_de_datos_Actualizar_los_datos_del_cliente_completos_FAN_Front_Agentes(String sDNI, String sLinea) {
 		imagen = "TS134836";
 		detalles = null;
@@ -716,7 +716,7 @@ public class GestionesPerfilAgente extends TestBase{
 		detalles +="-Orden:"+orden;	
 	}
 	
-	@Test (groups = {"GestionesPerfilAgente", "ActualizarDatos", "E2E", "Ciclo3"}, dataProvider = "CuentaModificacionDeDatos")
+	@Test (groups = {"GestionesPerfilAgente", "Actualizar Datos", "E2E", "Ciclo3"}, dataProvider = "CuentaModificacionDeDatos")
 	public void TS129334_CRM_Movil_REPRO_Modificacion_de_datos_Actualizar_datos_campo_Correo_Electronico_Cliente_FAN_Front_Agentes(String sDNI, String sLinea) {
 		imagen = "TS129334";
 		detalles = null;
@@ -780,7 +780,7 @@ public class GestionesPerfilAgente extends TestBase{
 		Assert.assertTrue(cancelar);
 	}
 	
-	@Test (groups = {"GestionesPerfilAgente", "ActualizarDatos", "E2E", "Ciclo3"}, dataProvider = "CuentaModificacionDeDatos")
+	@Test (groups = {"GestionesPerfilAgente", "Actualizar Datos", "E2E", "Ciclo3"}, dataProvider = "CuentaModificacionDeDatos")
 	public void TS121102_CRM_Movil_REPRO_Modificacion_de_datos_Cliente_FAN_Front_Agentes(String sDNI, String sLinea) {
 		imagen = "TS121102";
 		detalles = null;
@@ -854,7 +854,7 @@ public class GestionesPerfilAgente extends TestBase{
 		detalles +="-Orden:"+orden;		
 	}
 	
-	@Test (groups = {"GestionesPerfilAgente", "ActualizarDatos", "E2E", "Ciclo3"}, dependsOnMethods = "TS121103_CRM_Movil_REPRO_Modificacion_de_datos_No_Actualizar_datos_Cliente_FAN_Front_Agentes")
+	@Test (groups = {"GestionesPerfilAgente", "Actualizar Datos", "E2E", "Ciclo3"}, dependsOnMethods = "TS121103_CRM_Movil_REPRO_Modificacion_de_datos_No_Actualizar_datos_Cliente_FAN_Front_Agentes")
 	public void TS121099_CRM_Movil_REPRO_No_Actualizar_datos_Cliente_Perfil_FAN_Front_Agentes() {
 		imagen = "TS121099";
 		detalles = null;
@@ -862,7 +862,7 @@ public class GestionesPerfilAgente extends TestBase{
 		Assert.assertTrue(true);
 	}
 	
-	@Test (groups = {"GestionesPerfilAgente", "ActualizarDatos", "E2E", "Ciclo3"}, dataProvider = "CuentaModificacionDeDatos")
+	@Test (groups = {"GestionesPerfilAgente", "Actualizar Datos", "E2E", "Ciclo3"}, dataProvider = "CuentaModificacionDeDatos")
 	public void TS121098_CRM_Movil_REPRO_Modificacion_de_datos_Actualizar_datos_Cliente_Perfil_FAN_Front_Agentes(String sDNI, String sLinea) {
 		imagen = "TS121098";
 		detalles = null;
