@@ -2837,7 +2837,7 @@ public class GestionesPerfilOficina extends TestBase {
 	}
 	
 	
-	@Test (groups= {"GestionesPerfilOficina", "HistorialDeRecargasSOS", "Ciclo2"},  dataProvider = "CuentaModificacionDeDatos")
+	@Test (groups= {"GestionesPerfilOficina", "HistorialDeRecargasSOS", "Ciclo2"},  dataProvider = "HistoriaRecarga")
 	public void TS134470_CRM_Movil_Prepago_Historial_De_Recargas_SOS_S440_FAN_Front_OOCC(String cDNI, String cLinea) {
 		boolean enc = false;
 		driver.switchTo().frame(cambioFrame(driver, By.id("SearchClientDocumentType")));
@@ -2845,7 +2845,8 @@ public class GestionesPerfilOficina extends TestBase {
 		driver.findElement(By.cssSelector(".slds-tree__item.ng-scope")).click();
 		sleep(15000);
 		CustomerCare cc = new CustomerCare(driver);
-		cc.irAHistoriales();
+		cc.seleccionarCardPornumeroLinea(cLinea, driver);
+		driver.findElement(By.xpath("//*[@id=\"j_id0:j_id5\"]/div/div/ng-include/div/div[2]/div[2]/ng-include/section[1]/div[2]/ul[1]/li[2]/a/i")).click();
 		sleep(8000);
 		driver.switchTo().frame(cambioFrame(driver, By.cssSelector(".slds-card.slds-m-around--small.ta-fan-slds")));
 		List <WebElement> historiales = driver.findElements(By.cssSelector(".slds-m-around_small.ta-fan-slds"));
@@ -3947,7 +3948,6 @@ public class GestionesPerfilOficina extends TestBase {
 				enc = true;
 				driver.findElement(By.cssSelector(".slds-button.slds-button_brand")).click();
 				sleep(5000);
-				driver.switchTo().frame(cambioFrame(driver, By.cssSelector(".slds-button.slds-button--brand.filterNegotiations.slds-p-horizontal--x-large.slds-p-vertical--x-small")));
 				driver.findElement(By.cssSelector(".slds-button.slds-button--brand.filterNegotiations.slds-p-horizontal--x-large.slds-p-vertical--x-small")).click();
 				sleep(5000);
 				//Assert.assertTrue(true);
@@ -3976,6 +3976,9 @@ public class GestionesPerfilOficina extends TestBase {
 				}
 			} catch (Exception e) {}
 		}	
+		sleep(3000);
+		driver.findElement(By.cssSelector(".slds-button.slds-button--brand.filterNegotiations.slds-p-horizontal--x-large.slds-p-vertical--x-small")).click();
+		sleep(3000);
 		driver.findElement(By.id("text-input-03")).click();
 		sleep(2000);
 		List<WebElement> todos = driver.findElement(By.cssSelector(".slds-dropdown__list.slds-dropdown--length-5")).findElements(By.tagName("li"));

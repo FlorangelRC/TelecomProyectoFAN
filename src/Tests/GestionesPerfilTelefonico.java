@@ -2629,4 +2629,40 @@ public class GestionesPerfilTelefonico extends TestBase{
 		driver.switchTo().frame(cambioFrame(driver, By.className("vlc-slds-knowledge-list-item")));
 		Assert.assertTrue(driver.findElement(By.className("vlc-slds-knowledge-list-item")).getText().contains("Problemas con recargas Online"));
 	}
+	
+	@Test (groups = {"GestionesPerfilTelefonico", "HistorialDeRecargas", "E2E", "Ciclo2"}, dataProvider = "HistoriaRecarga")
+	public void TS134791_CRM_Movil_Prepago_Historial_de_Recargas_Monto_total_FAN_Front_Telefonico(String sDNI, String sLinea) {
+		imagen = "TS134791";
+		detalles = imagen+"-Historial De Recarga-DNI:"+sDNI;
+		driver.switchTo().frame(cambioFrame(driver, By.id("SearchClientDocumentType")));
+		sb.BuscarCuenta("DNI", sDNI);
+		driver.findElement(By.cssSelector(".slds-tree__item.ng-scope")).click();
+		sleep(20000);
+		CustomerCare cc = new CustomerCare(driver);
+		cc.seleccionarCardPornumeroLinea(sLinea, driver);
+		sleep(3000);
+		cc.irAHistoriales();
+		sleep(3000);
+		WebElement historialDeRecargas = null;
+		driver.switchTo().frame(cambioFrame(driver, By.cssSelector(".slds-button.slds-button_brand")));
+		for (WebElement x : driver.findElements(By.className("slds-card"))) {
+			if (x.getText().toLowerCase().contains("historial de recargas")) {
+				historialDeRecargas = x;
+			}
+		}
+		historialDeRecargas.findElement(By.cssSelector(".slds-button.slds-button_brand")).click();
+		sleep(3000);
+		driver.switchTo().frame(cambioFrame(driver, By.cssSelector(".slds-size--1-of-1.slds-medium-size--1-of-1.slds-large-size--1-of-1.slds-p-bottom--small.slds-p-left--medium")));
+		driver.findElement(By.cssSelector(".slds-button.slds-button--brand.filterNegotiations.slds-p-horizontal--x-large.slds-p-vertical--x-small")).click();
+		driver.switchTo().frame(cambioFrame(driver, By.cssSelector(".slds-size--1-of-1.slds-medium-size--1-of-1.slds-large-size--1-of-1.slds-p-bottom--small.slds-p-left--medium")));
+		boolean a = false;
+		List <WebElement> conf = driver.findElements(By.className("slds-text-heading--medium"));
+		for(WebElement x : conf) {
+			if(x.getText().toLowerCase().contains("monto total de recargas: ")) {
+				System.out.println(x);
+				a = true;
+			}
+		}
+		Assert.assertTrue(a);
+	}
 }

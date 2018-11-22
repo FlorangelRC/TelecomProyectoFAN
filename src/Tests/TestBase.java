@@ -1690,4 +1690,11 @@ public class TestBase {
 		 return (testObjArray);
 	}
 	
+	@DataProvider
+	public Object[][] HistoriaRecarga() throws Exception {
+		Object[][] testObjArray = ExcelUtils.getTableArray(dataProviderE2E(),"E2EsinPago",1,1,2,"HistorialRecargaSOS");
+
+		 return (testObjArray);
+	}
+	
 }
