@@ -3,6 +3,7 @@ package Tests;
 import static org.testng.Assert.assertTrue;
 
 import java.awt.AWTException;
+import java.io.File;
 import java.io.IOException;
 import java.security.KeyManagementException;
 import java.security.NoSuchAlgorithmException;
@@ -117,7 +118,7 @@ public class GestionesPerfilAgente extends TestBase{
 		sleep(15000);
 	}
 	
-	//@AfterMethod(alwaysRun=true)
+	@AfterMethod(alwaysRun=true)
 	public void after() throws IOException {
 		datosOrden.add(detalles);
 		guardarListaTxt(datosOrden);
@@ -135,7 +136,7 @@ public class GestionesPerfilAgente extends TestBase{
 	@Test (groups = {"GestionesPerfilAgente","Recargas","E2E", "Ciclo1"}, dataProvider="RecargaTC")
 	public void TS134322_CRM_Movil_REPRO_Recargas_Presencial_TC_Agente(String sDNI, String sMonto, String sLinea, String sBanco, String sTarjeta, String sNumTarjeta, String sVenceMes, String sVenceAno, String sCodSeg, String sTipoDNI, String sDNITarjeta, String sTitular, String sPromo, String sCuotas) throws AWTException, KeyManagementException, NoSuchAlgorithmException {
 		//Check All
-		imagen = "134322";//00006559
+		imagen = "TS134322";//00006559
 		detalles = null;
 		detalles = imagen + "-Recarga-DNI:" + sDNI;
 		if(sMonto.length() >= 4) {
@@ -289,7 +290,7 @@ public class GestionesPerfilAgente extends TestBase{
 	public void Venta_de_Pack(String sDNI, String sLinea, String sPackAgente, String cBanco, String cTarjeta, String cPromo, String cCuotas, String cNumTarjeta, String cVenceMes, String cVenceAno, String cCodSeg, String cTipoDNI, String cDNITarjeta, String cTitular) throws AWTException{
 		imagen = "Venta_de_Pack";
 		detalles = null;
-		detalles = imagen + "-Recarga-DNI:" + sDNI;
+		detalles = imagen + "-Venta de pack-DNI:" + sDNI+ "-Linea: "+sLinea;
 		PagePerfilTelefonico pagePTelefo = new PagePerfilTelefonico(driver);
 		SalesBase sale = new SalesBase(driver);
 		CustomerCare cCC = new CustomerCare(driver);
@@ -326,17 +327,13 @@ public class GestionesPerfilAgente extends TestBase{
 		System.out.println(invoice);
 		detalles+="-Monto:"+invoice.split("-")[1]+"-Prefactura:"+invoice.split("-")[0];
 		sleep(10000);
-		//datosOrden.add("Operacion: Compra de Pack- Cuenta: "+accid+" Invoice: "+invoice.split("-")[0]+invoice.split("-")[1]);
 		System.out.println("Operacion: Compra de Pack- Cuenta: "+accid+" Invoice: "+invoice.split("-")[1] + "\tAmmount: " +invoice.split("-")[0]);
-		CBS_Mattu invoSer = new CBS_Mattu();
-		Assert.assertTrue(invoSer.PagoEnCaja("1005", accid, "1001", invoice.split("-")[0], invoice.split("-")[1],driver));
-		
-		//Assert.assertTrue(invoSer.PagaEnCajaTC("1005", accid, "2001", invoice.split("-")[1], invoice.split("-")[0],  cDNITarjeta, cTitular, cVenceAno+cVenceMes, cCodSeg, cTitular, cNumTarjeta));
+		CBS_Mattu cCBSM = new CBS_Mattu();
+		Assert.assertTrue(cCBSM.PagoEnCaja("1005", accid, "1001", invoice.split("-")[0], invoice.split("-")[1],driver));
 		sleep(5000);
 		driver.navigate().refresh();
 		sleep(10000);
 		CBS cCBS = new CBS();
-		CBS_Mattu cCBSM = new CBS_Mattu();
 		Assert.assertTrue(cCBS.validarActivacionPack(cCBSM.Servicio_QueryFreeUnit(sLinea), sPackAgente));
 		driver.switchTo().frame(cambioFrame(driver, By.cssSelector(".hasMotif.orderTab.detailPage.ext-webkit.ext-chrome.sfdcBody.brandQuaternaryBgr")));
 		WebElement tabla = driver.findElement(By.id("ep")).findElements(By.tagName("table")).get(1);
@@ -348,7 +345,7 @@ public class GestionesPerfilAgente extends TestBase{
 	public void Anulacion_De_Venta(String cDNI) {
 		imagen = "Anulacion_De_Venta";
 		detalles = null;
-		detalles = imagen + "-DNI:" + cDNI;
+		detalles = imagen + "Anulacion de venta -DNI:" + cDNI;
 		driver.switchTo().frame(cambioFrame(driver, By.id("SearchClientDocumentType")));
 		sb.BuscarCuenta("DNI", cDNI);
 		driver.findElement(By.cssSelector(".slds-tree__item.ng-scope")).click();
@@ -371,6 +368,9 @@ public class GestionesPerfilAgente extends TestBase{
 	
 	@Test (groups = {"GestionesPerfilAgente", "ConsultaDeSaldo", "Ciclo1"}, dataProvider = "ConsultaSaldo")
 	public void TS_134814_CRM_Movil_Prepago_Vista_360_Consulta_de_Saldo_Verificar_credito_prepago_de_la_linea_FAN_Front_Agentes(String sDNI){
+		imagen = "TS134814";
+		detalles = null;
+		detalles = imagen + "Consulta de Saldo -DNI:" + sDNI;
 		driver.switchTo().frame(cambioFrame(driver, By.id("SearchClientDocumentType")));
 		sb.BuscarCuenta("DNI", sDNI);
 		driver.findElement(By.cssSelector(".slds-tree__item.ng-scope")).click();
@@ -382,6 +382,9 @@ public class GestionesPerfilAgente extends TestBase{
 	}
 	@Test (groups = {"GestionesPerfilAgente", "DetalleDeConsumos","Ciclo2"}, dataProvider="CuentaProblemaRecarga") 
 	public void TS134827_CRM_Movil_Prepago_Vista_360_Detalle_de_consumo_Consulta_detalle_de_consumo_Datos_FAN_Front_Agentes(String cDNI){
+		imagen = "TS134827";
+		detalles = null;
+		detalles = imagen + "Detalle de consumos -DNI:" + cDNI;
 		CustomerCare cCC = new CustomerCare(driver);
 		driver.switchTo().frame(cambioFrame(driver, By.id("SearchClientDocumentType")));
 		sb.BuscarCuenta("DNI", cDNI);
@@ -398,6 +401,9 @@ public class GestionesPerfilAgente extends TestBase{
 	@Test (groups = {"GestionesPerfilAgente", "DetalleDeConsumos","Ciclo2"}, dataProvider="CuentaProblemaRecarga")
 	public void TS134826_CRM_Movil_Prepago_Vista_360_Detalle_de_consumo_Consulta_detalle_de_consumo_SMS_FAN_Front_Agentes(String cDNI){
 		CustomerCare cCC = new CustomerCare(driver);
+		imagen = "TS134826";
+		detalles = null;
+		detalles = imagen + "Detalle de consumos -DNI:" + cDNI;
 		driver.switchTo().frame(cambioFrame(driver, By.id("SearchClientDocumentType")));
 		sb.BuscarCuenta("DNI", cDNI);
 		driver.findElement(By.cssSelector(".slds-tree__item.ng-scope")).click();
@@ -412,6 +418,9 @@ public class GestionesPerfilAgente extends TestBase{
 	
 	@Test (groups = {"GestionesPerfilAgente", "DetalleDeConsumos","Ciclo2"}, dataProvider="CuentaProblemaRecarga")
 	public void TS134828_CRM_Movil_Prepago_Vista_360_Detalle_de_consumo_Consulta_detalle_de_consumo_Voz_FAN_Front_Agentes(String cDNI, String Linea){
+		imagen = "TS134828";
+		detalles = null;
+		detalles = imagen + "Detalle de Consumos -DNI:" + cDNI+"-Linea: "+Linea;
 		CustomerCare cCC = new CustomerCare(driver);
 		driver.switchTo().frame(cambioFrame(driver, By.id("SearchClientDocumentType")));
 		sb.BuscarCuenta("DNI", cDNI);
@@ -427,6 +436,9 @@ public class GestionesPerfilAgente extends TestBase{
 	
 	@Test (groups = {"GestionesPerfilAgente", "DetalleDeConsumos","Ciclo2"}, dataProvider="CuentaProblemaRecarga")
 	public void TS134829_CRM_Movil_Prepago_Vista_360_Detalle_de_consumo_Consulta_detalle_de_consumo_FAN_Front_Agentes(String cDNI){
+		imagen = "TS134829";
+		detalles = null;
+		detalles = imagen + "Detalle de Consumos -DNI:" + cDNI;
 		CustomerCare cCC = new CustomerCare(driver);
 		driver.switchTo().frame(cambioFrame(driver, By.id("SearchClientDocumentType")));
 		sb.BuscarCuenta("DNI", cDNI);
@@ -442,6 +454,9 @@ public class GestionesPerfilAgente extends TestBase{
 	
 	@Test (groups = {"GestionesPerfilAgente", "ConsultaDeSaldo", "Ciclo1"}, dataProvider = "ConsultaSaldo")
 	public void TS_134815_CRM_Movil_Prepago_Vista_360_Consulta_de_Saldo_Verificar_saldo_del_cliente_FAN_Front_Agentes(String sDNI) {
+		imagen = "TS134815";
+		detalles = null;
+		detalles = imagen + "Consulta de saldo -DNI:" + sDNI;
 		driver.switchTo().frame(cambioFrame(driver, By.id("SearchClientDocumentType")));
 		sb.BuscarCuenta("DNI", sDNI);
 		driver.findElement(By.cssSelector(".slds-tree__item.ng-scope")).click();
@@ -464,9 +479,10 @@ public class GestionesPerfilAgente extends TestBase{
 		Assert.assertTrue(!(saldo.isEmpty()));
 	}
 	
-	@Test(groups = {"Sales", "PreparacionNominacion","E2E","Ciclo1"}, dataProvider="DatosSalesNominacionNuevoAgente") 
+	@Test(groups = {"Sales", "Nominacion","E2E","Ciclo1"}, dataProvider="DatosSalesNominacionNuevoAgente") 
 	public void TS_CRM_Nominacion_Argentino_Agente(String sLinea, String sDni, String sNombre, String sApellido, String sSexo, String sFnac, String sEmail, String sProvincia, String sLocalidad, String sCalle, String sNumCa, String sCP) { 
 		imagen = "TS_CRM_Nominacion_Argentino_Agente"+sDni;
+		File directory = new File("Dni.jpg");
 		detalles = null;
 		detalles = imagen+"-Linea: "+sLinea;
 		sleep(5000);
@@ -492,10 +508,8 @@ public class GestionesPerfilAgente extends TestBase{
 		contact.Llenar_Contacto(sNombre, sApellido, sFnac);
 		try {contact.ingresarMail(sEmail, "si");}catch (org.openqa.selenium.ElementNotVisibleException ex1) {}
 		contact.tipoValidacion("documento");
-		try {
-			contact.subirArchivo("C:\\Users\\florangel\\Downloads\\mapache.jpg", "si");
-		}catch(Exception ex1) {}
-			BasePage bp = new BasePage(driver);
+		contact.subirArchivo(new File(directory.getAbsolutePath()).toString(), "si");
+		BasePage bp = new BasePage(driver);
 		bp.setSimpleDropdown(driver.findElement(By.id("ImpositiveCondition")), "IVA Consumidor Final");
 		SB.Crear_DomicilioLegal(sProvincia, sLocalidad, sCalle, "", sNumCa, "", "", sCP);
 		sleep(38000);
@@ -517,6 +531,9 @@ public class GestionesPerfilAgente extends TestBase{
 	}
 	@Test (groups = {"GestionesPerfilAgente", "Vista360","Ciclo2"}, dataProvider="ProductosyServicios")
 	public void TS134818_CRM_Movil_Prepago_Vista_360_Mis_Servicios_Visualizacion_del_estado_de_los_Productos_activos_FAN_Front_Agentes(String cDNI){
+		imagen = "TS134818";
+		detalles = null;
+		detalles = imagen + "Vista 360-DNI:" + cDNI;
 		BasePage cambioFrameByID=new BasePage();
 		CustomerCare cCC = new CustomerCare(driver);
 		driver.switchTo().frame(cambioFrameByID.getFrameForElement(driver, By.id("SearchClientDocumentType")));
@@ -565,7 +582,8 @@ public class GestionesPerfilAgente extends TestBase{
 		contact.Llenar_Contacto(sNombre, sApellido, sFnac);
 		try {contact.ingresarMail(sEmail, "si");}catch (org.openqa.selenium.ElementNotVisibleException ex1) {}
 		contact.tipoValidacion("documento");
-		contact.subirArchivo("C:\\Users\\florangel\\Downloads\\arbolito.jpg", "no");
+		File directory = new File("DniMal.jpg");
+		contact.subirArchivo(new File(directory.getAbsolutePath()).toString(), "si");
 		List<WebElement> errores = driver.findElements(By.cssSelector(".message.description.ng-binding.ng-scope")); 
 		boolean error = false;
 		for (WebElement UnE: errores) {
@@ -579,7 +597,7 @@ public class GestionesPerfilAgente extends TestBase{
 	@Test(groups = {"GestionesPerfilAgente", "RenovacionCuota","E2E","Ciclo1"}, dataProvider="RenovacionCuotaConSaldo") 
 	public void TS135402_CRM_Movil_REPRO_Renovacion_de_cuota_Presencial_Internet_50_MB_Dia_Descuento_de_saldo_con_Credito(String sDNI, String sLinea){
 		imagen = "TS135402";
-		detalles = "Renocavion de cuota: "+imagen+"DNI: "+sDNI+"Linea: "+sLinea;
+		detalles = "Renovacion de cuota: "+imagen+"DNI: "+sDNI+"Linea: "+sLinea;
 		CBS cCBS = new CBS();
 		CBS_Mattu cCBSM = new CBS_Mattu();
 		String datosInicial = cCBS.ObtenerUnidadLibre(cCBSM.Servicio_QueryFreeUnit(sLinea), "Datos Libres");
@@ -616,7 +634,7 @@ public class GestionesPerfilAgente extends TestBase{
 		System.out.println(mesj);
 		Assert.assertTrue(mesj.equalsIgnoreCase("La operaci\u00f3n termino exitosamente"));
 		String datosFinal = cCBS.ObtenerUnidadLibre(cCBSM.Servicio_QueryFreeUnit(sLinea), "Datos Libres");
-		Assert.assertTrue((Integer.parseInt(datosInicial)+200000)==Integer.parseInt(datosFinal));
+		Assert.assertTrue((Integer.parseInt(datosInicial)+51200)==Integer.parseInt(datosFinal));
 		String uMainBalance = cCBS.ObtenerValorResponse(cCBSM.Servicio_queryLiteBySubscriber(sLinea), "bcs:MainBalance");
 		Integer uiMainBalance = Integer.parseInt(uMainBalance.substring(0, (uMainBalance.length()) - 1));
 		Assert.assertTrue(iMainBalance < uiMainBalance);
@@ -625,6 +643,8 @@ public class GestionesPerfilAgente extends TestBase{
 	@Test (groups = {"GestionesPerfilAgente", "Vista360", "E2E", "Ciclo1"}, dataProvider = "CuentaVista360")
 	public void TS134821_CRM_Movil_Prepago_Vista_360_Distribucion_de_paneles_Visualizacion_e_ingreso_a_las_ultimas_gestiones_FAN_Front_Agentes(String sDNI, String sNombre){
 		imagen = "TS134821";
+		detalles = null;
+		detalles = imagen + "Vista 360 -DNI:" + sDNI;
 		driver.switchTo().frame(cambioFrame(driver, By.id("SearchClientDocumentType")));
 		sleep(1000);
 		sb.BuscarCuenta("DNI", sDNI);
@@ -908,7 +928,7 @@ public class GestionesPerfilAgente extends TestBase{
 	public void TS134831_CRM_Movil_Prepago_Vista_360_Consulta_por_gestiones_Gestiones_Cerrada_Informacion_brindada_FAN_Front_Agentes(String sDNI, String sLinea) {
 		imagen = "TS134831";
 		detalles = null;
-		detalles = imagen+"-Consulta Por Gestion-DNI:"+sDNI;
+		detalles = imagen+"-Vista 360 -DNI:"+sDNI;
 		driver.switchTo().frame(cambioFrame(driver, By.id("SearchClientDocumentType")));
 		sb.BuscarCuenta("DNI", sDNI);
 		driver.findElement(By.cssSelector(".slds-tree__item.ng-scope")).click();
@@ -1033,9 +1053,10 @@ public class GestionesPerfilAgente extends TestBase{
 		datosOrden.add("Baja de Servicio, orden numero: " + sOrder + ", DNI: " + sDNI);
 	}
 	
-	@Test (groups = {"GestionesPerfilAgente","E2E","Ciclo3"}, dataProvider="BajaServicios")
+	@Test (groups = {"GestionesPerfilAgente","E2E","Ciclo3","ABMServicios"}, dataProvider="BajaServicios")
 	public void TS135754_CRM_Movil_REPRO_Alta_Servicio_sin_costo_Transferencia_de_llamadas_Presencial_Agente(String sDNI, String sLinea){
 		imagen = "TS135754";
+		detalles = null;
 		detalles = imagen+"-AltaServicio-DNI:"+sDNI;
 		BasePage cambioFrameByID=new BasePage();
 		sleep(30000);
@@ -1114,6 +1135,8 @@ public class GestionesPerfilAgente extends TestBase{
 	public void TS135380_CRM_Movil_Prepago_Otros_Historiales_Historial_de_ajustes_Ordenamiento_por_Motivo_de_ajuste_FAN_Front_Agente(String sDNI, String sLinea) {
 		imagen = "TS135376";
 		boolean ajustePositivo = false;
+		detalles = null;
+		detalles = imagen+"-Ajuste-DNI:"+sDNI;
 		driver.switchTo().frame(cambioFrame(driver, By.id("SearchClientDocumentType")));
 		sb.BuscarCuenta("DNI", sDNI);
 		driver.findElement(By.cssSelector(".slds-tree__item.ng-scope")).click();
@@ -1173,6 +1196,7 @@ public class GestionesPerfilAgente extends TestBase{
 		IMEI.click();
 		IMEI.sendKeys(sIMEI);
 		driver.findElement(By.id("ImeiInput_nextBtn")).click();
+		Assert.assertTrue(false); 
 	}
 	
 	@Test (groups = {"GestionesPerfilAgente", "ServicioTecnico","E2E", "Ciclo4"}, dataProvider = "serviciotecnico")
@@ -1194,13 +1218,14 @@ public class GestionesPerfilAgente extends TestBase{
 		IMEI.click();
 		IMEI.sendKeys(sIMEI);
 		driver.findElement(By.id("ImeiInput_nextBtn")).click();
+		Assert.assertTrue(false);
 	}
 	
 	@Test (groups = {"GestionesPerfilAgente", "DiagnosticoInconveniente","E2E", "Ciclo3"}, dataProvider = "Diagnostico")
 	public void TS119283_CRM_Movil_REPRO_Diagnostico_de_Datos_Valida_Red_y_Navegacion_Motivo_de_contacto_No_puedo_navegar_Antena_rojo_NO_BAM_Agente(String sDNI, String sLinea) throws Exception  {
 		imagen = "TS119283";
 		detalles = null;
-		detalles = imagen + " -ServicioTecnico: " + sDNI;
+		detalles = imagen + " -ServicioTecnico - DNI: " + sDNI;
 		CustomerCare cCC=new CustomerCare(driver);
 		TechCare_Ola1 page=new TechCare_Ola1(driver);
 		TechnicalCareCSRDiagnosticoPage tech = new TechnicalCareCSRDiagnosticoPage(driver);
