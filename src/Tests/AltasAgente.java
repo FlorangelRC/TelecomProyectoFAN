@@ -1,5 +1,6 @@
 package Tests;
 
+import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
@@ -213,7 +214,8 @@ public class AltasAgente extends TestBase{
 		
 		sb.elegirvalidacion("DOC");
 		sleep(14000);
-		driver.findElement(By.id("FileDocumentImage")).sendKeys("C:\\Users\\florangel\\Downloads\\mapache.jpg");
+		File directory = new File("Dni.jpg");
+		driver.findElement(By.id("FileDocumentImage")).sendKeys(new File(directory.getAbsolutePath()).toString());
 		sleep(3000);
 		cc.obligarclick(driver.findElement(By.id("DocumentMethod_nextBtn")));
 		sleep(35000);
@@ -336,7 +338,8 @@ public class AltasAgente extends TestBase{
 		
 		sb.elegirvalidacion("DOC");
 		sleep(8000);
-		driver.findElement(By.id("FileDocumentImage")).sendKeys("C:\\Users\\florangel\\Downloads\\mapache.jpg");
+		File directory = new File("Dni.jpg");
+		driver.findElement(By.id("FileDocumentImage")).sendKeys(new File(directory.getAbsolutePath()).toString());
 		sleep(3000);
 		cc.obligarclick(driver.findElement(By.id("DocumentMethod_nextBtn")));
 		sleep(10000);
@@ -443,7 +446,8 @@ public class AltasAgente extends TestBase{
 		
 		sb.elegirvalidacion("DOC");
 		sleep(14000);
-		driver.findElement(By.id("FileDocumentImage")).sendKeys("C:\\Users\\florangel\\Downloads\\mapache.jpg");
+		File directory = new File("Dni.jpg");
+		driver.findElement(By.id("FileDocumentImage")).sendKeys(new File(directory.getAbsolutePath()).toString());
 		sleep(3000);
 		cc.obligarclick(driver.findElement(By.id("DocumentMethod_nextBtn")));
 		sleep(35000);
@@ -654,7 +658,8 @@ public class AltasAgente extends TestBase{
 		sleep(20000);
 		sb.elegirvalidacion("DOC");
 		sleep(14000);
-		driver.findElement(By.id("FileDocumentImage")).sendKeys("C:\\Users\\Sofia Chardin\\Desktop\\DNI.jpg");
+		File directory = new File("Dni.jpg");
+		driver.findElement(By.id("FileDocumentImage")).sendKeys(new File(directory.getAbsolutePath()).toString());
 		sleep(3000);
 		cc.obligarclick(driver.findElement(By.id("DocumentMethod_nextBtn")));
 		sleep(35000);
@@ -759,7 +764,8 @@ public class AltasAgente extends TestBase{
 		sleep(20000);
 		sb.elegirvalidacion("DOC");
 		sleep(8000);
-		driver.findElement(By.id("FileDocumentImage")).sendKeys("C:\\Users\\Sofia Chardin\\Desktop\\DNI.jpg");
+		File directory = new File("Dni.jpg");
+		driver.findElement(By.id("FileDocumentImage")).sendKeys(new File(directory.getAbsolutePath()).toString());
 		sleep(3000);
 		cc.obligarclick(driver.findElement(By.id("DocumentMethod_nextBtn")));
 		sleep(10000);
