@@ -1140,7 +1140,7 @@ public class TestBase {
 	@DataProvider
 	public Object[][] AltaServicios() throws Exception{
 
-	 Object[][] testObjArray = ExcelUtils.getTableArray("Cuentas.xlsx","PerfilGestiones",1,1,4,"Alta Servicio");
+	 Object[][] testObjArray = ExcelUtils.getTableArray(dataProviderE2E(),"E2EconPago",1,1,2,"Alta Servicio");
 
 	 return (testObjArray);
 

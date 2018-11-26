@@ -2488,7 +2488,9 @@ public class GestionesPerfilTelefonico extends TestBase{
 		sleep(10000);
 		WebElement wMessageBox = driver.findElement(By.id("TextBlock1")).findElement(By.className("ng-binding"));
 		sleep(5000);
-		Assert.assertTrue(wMessageBox.getText().equalsIgnoreCase("�La orden " + sOrder + " se realiz\u00d3 con \u00c9xito!"));
+		Assert.assertTrue(wMessageBox.getText().toLowerCase().contains("la orden " + sOrder + " se realiz\u00f3 con \u00e9xito!"));
+		sleep(15000);
+		driver.navigate().refresh();
 		Assert.assertTrue(cc.corroborarEstadoCaso(sOrder, "Activada"));
 		datosOrden.add("Alta de Servicio, orden numero: " + sOrder + ", DNI: " + sDNI);
 	}
@@ -2563,6 +2565,7 @@ public class GestionesPerfilTelefonico extends TestBase{
 			}
 		}
 		Assert.assertTrue(bAssert);
+		sleep(5000);
 		List <WebElement> wServicios = driver.findElements(By.cssSelector("[class='cpq-item-product-child-level-2 ng-not-empty ng-valid'] [class='slds-is-relative']"));
 		for(WebElement r : wServicios){
 			if(r.getText().contains("Contestador Personal")){
@@ -2584,7 +2587,9 @@ public class GestionesPerfilTelefonico extends TestBase{
 		sleep(10000);
 		WebElement wMessageBox = driver.findElement(By.id("TextBlock1")).findElement(By.className("ng-binding"));
 		sleep(5000);
-		Assert.assertTrue(wMessageBox.getText().equalsIgnoreCase("�La orden " + sOrder + " se realiz\u00d3 con \u00c9xito!"));
+		Assert.assertTrue(wMessageBox.getText().toLowerCase().contains("la orden " + sOrder + " se realiz\u00f3 con \u00e9xito!"));
+		sleep(15000);
+		driver.navigate().refresh();
 		Assert.assertTrue(cc.corroborarEstadoCaso(sOrder, "Activada"));
 		datosOrden.add("Baja de Servicio, orden numero: " + sOrder + ", DNI: " + sDNI);
 	}

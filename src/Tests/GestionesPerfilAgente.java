@@ -1028,7 +1028,9 @@ public class GestionesPerfilAgente extends TestBase{
 		sleep(10000);
 		WebElement wMessageBox = driver.findElement(By.id("TextBlock1")).findElement(By.className("ng-binding"));
 		sleep(5000);
-		Assert.assertTrue(wMessageBox.getText().equalsIgnoreCase("�La orden " + sOrder + " se realiz\u00d3 con \u00c9xito!"));
+		Assert.assertTrue(wMessageBox.getText().toLowerCase().contains("la orden " + sOrder + " se realiz\u00f3 con \u00e9xito!"));
+		sleep(15000);
+		driver.navigate().refresh();
 		Assert.assertTrue(cc.corroborarEstadoCaso(sOrder, "Activada"));
 		datosOrden.add("Baja de Servicio, orden numero: " + sOrder + ", DNI: " + sDNI);
 	}
@@ -1049,12 +1051,12 @@ public class GestionesPerfilAgente extends TestBase{
 		driver.findElement(By.cssSelector(".slds-tree__item.ng-scope")).findElement(By.tagName("div")).click();
 		sleep(18000);
 		driver.switchTo().frame(cambioFrame(driver, By.className("card-top")));
-		driver.findElement(By.className("card-top")).click();
+		cc.seleccionarCardPornumeroLinea(sLinea, driver);
 		sleep(5000);
 		cc.irAGestionEnCard("Alta/Baja de Servicios");
 		sleep(35000);
-		cc.openrightpanel();
-		cc.closerightpanel();
+		//cc.openrightpanel();
+		//cc.closerightpanel();
 		driver.switchTo().defaultContent();
 		driver.switchTo().frame(cambioFrameByID.getFrameForElement(driver, By.cssSelector(".slds-text-body--small.slds-page-header__info.taDevider")));
 		String sOrder = driver.findElement(By.cssSelector(".slds-text-body--small.slds-page-header__info.taDevider")).getText();
@@ -1105,7 +1107,9 @@ public class GestionesPerfilAgente extends TestBase{
 		sleep(10000);
 		WebElement wMessageBox = driver.findElement(By.id("TextBlock1")).findElement(By.className("ng-binding"));
 		sleep(5000);
-		Assert.assertTrue(wMessageBox.getText().equalsIgnoreCase("�La orden " + sOrder + " se realiz\u00d3 con \u00c9xito!"));
+		Assert.assertTrue(wMessageBox.getText().toLowerCase().contains("la orden " + sOrder + " se realiz\u00f3 con \u00e9xito!"));
+		sleep(15000);
+		driver.navigate().refresh();
 		Assert.assertTrue(cc.corroborarEstadoCaso(sOrder, "Activada"));
 		datosOrden.add("Alta de Servicio, orden numero: " + sOrder + ", DNI: " + sDNI);
 	}
@@ -1219,4 +1223,80 @@ public class GestionesPerfilAgente extends TestBase{
 	    tech.seleccionarRespuesta("si");
 	    buscarYClick(driver.findElements(By.id("KnowledgeBaseResults_nextBtn")), "equals", "continuar");
 	}
+	
+	@Test (groups = {"GestionesPerfilAgente","NumerosAmigos","E2E","Ciclo1"}, dataProvider="NumerosAmigosModificacion")
+	public void TS139724_CRM_Movil_REPRO_FF_Modificacion_Agente(String sDNI, String sLinea, String sNumeroVOZ, String sNumeroSMS) {
+		imagen = "TS139724";
+		BasePage cambioFrame=new BasePage();
+		CBS sCBS = new CBS();
+		CBS_Mattu sCBSM = new CBS_Mattu();
+		String sMainBalance = sCBS.ObtenerValorResponse(sCBSM.Servicio_queryLiteBySubscriber(sLinea), "bcs:MainBalance");
+		Integer iMainBalance = Integer.parseInt(sMainBalance.substring(0, (sMainBalance.length()) - 1));
+		driver.switchTo().frame(cambioFrame.getFrameForElement(driver, By.id("SearchClientDocumentType")));
+		sleep(1000);
+		SalesBase sSB = new SalesBase(driver);
+		sSB.BuscarCuenta("DNI", sDNI);
+		String accid = driver.findElement(By.cssSelector(".searchClient-body.slds-hint-parent.ng-scope")).findElements(By.tagName("td")).get(5).getText();
+		System.out.println("id "+accid);
+		driver.findElement(By.cssSelector(".slds-tree__item.ng-scope")).findElement(By.tagName("div")).click();
+		sleep(15000);
+		
+		CustomerCare cCC = new CustomerCare(driver);
+		cCC.seleccionarCardPornumeroLinea(sLinea, driver);
+		sleep(3000);
+		cCC.irAGestionEnCard("N\u00fameros Gratis");
+		
+		sleep(5000);
+		driver.switchTo().defaultContent();
+		driver.switchTo().frame(cambioFrame(driver, By.cssSelector(".slds-col--padded.slds-size--1-of-2")));
+		List<WebElement> wNumerosAmigos = driver.findElements(By.cssSelector(".slds-col--padded.slds-size--1-of-2"));
+		Marketing mMarketing = new Marketing(driver);
+		int iIndice = mMarketing.numerosAmigos(sNumeroVOZ, sNumeroSMS);
+		switch (iIndice) {
+			case 0:
+				wNumerosAmigos.get(0).findElement(By.tagName("input")).clear();
+				wNumerosAmigos.get(0).findElement(By.tagName("input")).sendKeys(sNumeroVOZ);
+				break;
+			case 1:
+				wNumerosAmigos.get(0).findElement(By.tagName("input")).clear();
+				wNumerosAmigos.get(1).findElement(By.tagName("input")).sendKeys(sNumeroSMS);
+				break;
+			default:
+				Assert.assertTrue(false);
+		}
+		sleep(5000);
+		driver.findElement(By.cssSelector(".OSradioButton.ng-scope.only-buttom")).click();
+		sleep(5000);
+		List<WebElement> opcs = driver.findElements(By.cssSelector(".slds-radio.ng-scope"));
+		for(WebElement UnaO: opcs) {
+			if(UnaO.getText().equalsIgnoreCase("si")) {
+				UnaO.click();
+				break;
+			}
+		}
+		cCC.obligarclick(driver.findElement(By.id("ChargeConfirmation_nextBtn")));
+		sleep(20000);
+		List <WebElement> wMessage = driver.findElement(By.cssSelector(".slds-form-element.vlc-flex.vlc-slds-text-block.vlc-slds-rte.ng-pristine.ng-valid.ng-scope")).findElement(By.className("ng-binding")).findElements(By.tagName("p"));
+		boolean bAssert = wMessage.get(1).getText().contains("La orden se realiz\u00f3 con \u00e9xito!");
+		if (iIndice == 0)
+			Assert.assertTrue(sCBS.validarNumeroAmigos(sCBSM.Servicio_QueryCustomerInfo(sLinea), "voz",sNumeroVOZ));
+		else
+			Assert.assertTrue(sCBS.validarNumeroAmigos(sCBSM.Servicio_QueryCustomerInfo(sLinea), "sms",sNumeroSMS));
+		datosOrden.add(cCC.obtenerOrden(driver, "N\u00fameros Gratis"));
+		Assert.assertTrue(bAssert);
+		sleep(5000);
+		String orden = cc.obtenerOrden(driver, "Numero Gratis");
+		datosOrden.add("Numeros amigos, orden numero: " + orden + " con numero de DNI: " + sDNI);
+		sleep(10000);
+		BasePage bBP = new BasePage();
+		bBP.closeTabByName(driver, "N\u00fameros Gratis");
+		cCC.seleccionarCardPornumeroLinea(sLinea, driver);
+		cCC.irAGestionEnCard("N\u00fameros Gratis");
+		String uMainBalance = sCBS.ObtenerValorResponse(sCBSM.Servicio_queryLiteBySubscriber(sLinea), "bcs:MainBalance");
+		Integer uiMainBalance = Integer.parseInt(uMainBalance.substring(0, (uMainBalance.length()) - 1));
+		Assert.assertTrue(iMainBalance-2050000 >= uiMainBalance);
+		Assert.assertTrue(mMarketing.verificarNumerosAmigos(driver, sNumeroVOZ, sNumeroSMS));
+		//Verify when the page works
+	}
+	
 }

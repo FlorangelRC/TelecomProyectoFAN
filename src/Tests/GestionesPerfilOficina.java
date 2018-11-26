@@ -48,6 +48,7 @@ public class GestionesPerfilOficina extends TestBase {
 	private CBS cbs;
 	private CBS_Mattu cbsm;
 	private Marketing mk;
+	private PagePerfilTelefonico ppt;
 	List<String> sOrders = new ArrayList<String>();
 	String imagen;
 	String detalles;
@@ -4781,7 +4782,9 @@ public class GestionesPerfilOficina extends TestBase {
 		sleep(10000);
 		WebElement wMessageBox = driver.findElement(By.id("TextBlock1")).findElement(By.className("ng-binding"));
 		sleep(5000);
-		Assert.assertTrue(wMessageBox.getText().equalsIgnoreCase("�La orden " + sOrder + " se realiz\u00d3 con \u00c9xito!"));
+		Assert.assertTrue(wMessageBox.getText().toLowerCase().contains("la orden " + sOrder + " se realiz\u00f3 con \u00e9xito!"));
+		sleep(15000);
+		driver.navigate().refresh();
 		Assert.assertTrue(cc.corroborarEstadoCaso(sOrder, "Activada"));
 		sOrders.add("Baja de Servicio, orden numero: " + sOrder + ", DNI: " + sDNI);
 	}
@@ -4876,12 +4879,14 @@ public class GestionesPerfilOficina extends TestBase {
 		sleep(10000);
 		WebElement wMessageBox = driver.findElement(By.id("TextBlock1")).findElement(By.className("ng-binding"));
 		sleep(5000);
-		Assert.assertTrue(wMessageBox.getText().equalsIgnoreCase("�La orden " + sOrder + " se realiz\u00d3 con \u00c9xito!"));
+		Assert.assertTrue(wMessageBox.getText().toLowerCase().contains("la orden " + sOrder + " se realiz\u00f3 con \u00e9xito!"));
+		sleep(15000);
+		driver.navigate().refresh();
 		Assert.assertTrue(cc.corroborarEstadoCaso(sOrder, "Activada"));
 		sOrders.add("Baja de Servicio, orden numero: " + sOrder + ", DNI: " + sDNI);
 	}
 	
-	@Test (groups = {"GestionesPerfilOficina", "ABMServicios", "E2E", "Ciclo3"}, dataProvider = "BajaServicios")
+	@Test (groups = {"GestionesPerfilOficina", "ABMServicios", "E2E", "Ciclo3"}, dataProvider = "AltaServicios")
 	public void TS135743_CRM_Movil_REPRO_Alta_Servicio_sin_costo_Restriccion_Ident_de_Llamadas_Presencial_Agente(String sDNI, String sLinea){
 		imagen = "TS135743";
 		detalles = imagen+"-AltaServicio-DNI:"+sDNI;
@@ -4927,40 +4932,23 @@ public class GestionesPerfilOficina extends TestBase {
 		sleep(5000);
 		driver.switchTo().frame(cambioFrame(driver, By.id("tab-default-1")));
 		sleep(15000);
-		driver.findElement(By.cssSelector(".slds-button.cpq-item-has-children")).click();
+		//driver.findElement(By.cssSelector(".slds-button.cpq-item-has-children")).click();//Plan con Tarjeta Repro button
+		//ppt.getwPlanConTarjetaRepro().click();//Plan con Tarjeta Repro button
 		sleep(5000);
-		boolean bAssert = false;
-		List<WebElement> servicios= driver.findElements(By.xpath("//*[@class='cpq-item-product-child-level-1 cpq-item-child-product-name-wrapper']"));
-		for(WebElement a: servicios) {
-			if (a.getText().toLowerCase().contains("servicios basicos general movil".toLowerCase())) {
-					a.findElement(By.tagName("button")).click();
-						sleep(8000);
-						bAssert= true;
-						break;
-			}
-		}
-		Assert.assertTrue(bAssert);
-		sleep(17000);
-		List <WebElement> wServicios = driver.findElements(By.cssSelector("[class='cpq-item-product-child-level-2 ng-not-empty ng-valid'] [class='slds-is-relative']"));
-		for(WebElement r : wServicios){
-			if(r.getText().contains("Restriccion Ident. de Llamadas")){
-				cc.obligarclick(r.findElement(By.cssSelector(".slds-button.slds-button_neutral")));
-				sleep(5000);
-				break;
-			}
-		}
-		driver.findElement(By.cssSelector(".slds-button.slds-button--destructive")).click();
-		sleep(10000);
-		driver.findElement(By.cssSelector(".slds-button.slds-m-left--large.slds-button--brand.ta-button-brand")).click();
+		ppt = new PagePerfilTelefonico(driver);
+		ppt.altaBajaServicio("Alta", "servicios basicos general movil", "Restriccion Ident. de Llamadas", driver);
+		driver.findElement(By.cssSelector(".slds-button.slds-m-left--large.slds-button--brand.ta-button-brand")).click();//Continuar
+		//ppt.getwAltaBajaContinuar().click();//Continuar
 		sleep(10000);
 		WebElement wMessageBox = driver.findElement(By.id("TextBlock1")).findElement(By.className("ng-binding"));
-		sleep(5000);
-		Assert.assertTrue(wMessageBox.getText().equalsIgnoreCase("�La orden " + sOrder + " se realiz\u00d3 con \u00c9xito!"));
+		Assert.assertTrue(wMessageBox.getText().toLowerCase().contains("la orden " + sOrder + " se realiz\u00f3 con \u00e9xito!".toLowerCase()));
+		sleep(15000);
+		driver.navigate().refresh();
 		Assert.assertTrue(cc.corroborarEstadoCaso(sOrder, "Activada"));
 		sOrders.add("Baja de Servicio, orden numero: " + sOrder + ", DNI: " + sDNI);
 	}
 	
-	@Test (groups = {"GestionesPerfilOficina", "ABMServicios", "E2E", "Ciclo3"}, dataProvider = "BajaServicios")
+	@Test (groups = {"GestionesPerfilOficina", "ABMServicios", "E2E", "Ciclo3"}, dataProvider = "AltaServicios")
 	public void TC135744_CRM_Movil_REPRO_Alta_Servicio_sin_costo_Voice_Mail_con_Clave_Presencial_OfCom(String sDNI, String sLinea){
 		imagen = "TS135744";
 		detalles = imagen+"-AltaServicio-DNI:"+sDNI;
@@ -5045,12 +5033,14 @@ public class GestionesPerfilOficina extends TestBase {
 		sleep(10000);
 		WebElement wMessageBox = driver.findElement(By.id("TextBlock1")).findElement(By.className("ng-binding"));
 		sleep(5000);
-		Assert.assertTrue(wMessageBox.getText().equalsIgnoreCase("�La orden " + sOrder + " se realiz\u00d3 con \u00c9xito!"));
+		Assert.assertTrue(wMessageBox.getText().toLowerCase().contains("la orden " + sOrder + " se realiz\u00f3 con \u00e9xito!"));
+		sleep(15000);
+		driver.navigate().refresh();
 		Assert.assertTrue(cc.corroborarEstadoCaso(sOrder, "Activada"));
 		sOrders.add("Alta de Servicio, orden numero: " + sOrder + ", DNI: " + sDNI);
 	}
 	
-	@Test (groups = {"GestionesPerfilOficina","E2E","Ciclo3"}, dataProvider="BajaServicios")
+	@Test (groups = {"GestionesPerfilOficina","E2E","Ciclo3"}, dataProvider="AltaServicios")
 	public void TS135745_CRM_Movil_REPRO_Alta_Servicio_sin_costo_DDI_sin_Roaming_Internacional_Presencial_OfCom(String sDNI, String sLinea){
 		imagen = "TS135745";
 		detalles = imagen+"-AltaServicio-DNI:"+sDNI;
@@ -5133,7 +5123,9 @@ public class GestionesPerfilOficina extends TestBase {
 		sleep(10000);
 		WebElement wMessageBox = driver.findElement(By.id("TextBlock1")).findElement(By.className("ng-binding"));
 		sleep(5000);
-		Assert.assertTrue(wMessageBox.getText().equalsIgnoreCase("�La orden " + sOrder + " se realiz\u00d3 con \u00c9xito!"));
+		Assert.assertTrue(wMessageBox.getText().toLowerCase().contains("la orden " + sOrder + " se realiz\u00f3 con \u00e9xito!"));
+		sleep(15000);
+		driver.navigate().refresh();
 		Assert.assertTrue(cc.corroborarEstadoCaso(sOrder, "Activada"));
 		sOrders.add("Alta de Servicio, orden numero: " + sOrder + ", DNI: " + sDNI);
 	}

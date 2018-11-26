@@ -1774,7 +1774,7 @@ public class CustomerCare extends BasePage {
 		driver.switchTo().frame(cambioFrame.getFrameForElement(driver, By.id("searchResultsHolderDiv")));
 		WebElement wBody = driver.findElement(By.id("Order_body")).findElement(By.tagName("table"));
 		Marketing mMarketing = new Marketing(driver);
-		List <WebElement> wEstado = mMarketing.traerColumnaElement(wBody, 5, 3);
+		List <WebElement> wEstado = mMarketing.traerColumnaElement(wBody, 6, 5);
 		Boolean bAssert = wEstado.get(0).getText().toLowerCase().equalsIgnoreCase(Status);
 		return bAssert;
 	}
