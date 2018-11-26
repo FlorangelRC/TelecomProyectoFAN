@@ -39,16 +39,17 @@ public class CBS {
 		return sOrder;
 	}
 	
-	public String sCBS_Request_ServicioWeb_Validador(Document sResponse) {
-		String sAssert = "false";
+	public boolean sCBS_Request_ServicioWeb_Validador(Document sResponse) {
+		boolean sAssert = false;
 		if (sResponse.getElementsByTagName("cbs:ResultDesc").item(0).getTextContent().equalsIgnoreCase("0OK")||sResponse.getElementsByTagName("cbs:ResultDesc").item(0).getTextContent().equalsIgnoreCase("Operation successfully."))   {
 			System.out.println("Correcto");
+			sAssert = true;
 		}
 		else {
 			System.out.println(sResponse.getElementsByTagName("cbs:ResultDesc").item(0).getTextContent());
 			Assert.assertTrue(false);
 		}
-		return "true";
+		return sAssert;
 	}
 	
 	public String sRequest(String sPaymentSerialNo, String sPaymentChannelID, String sAccountKey, String sPaymentMethod, String sAmount, String sInvoiceno) {
@@ -68,8 +69,8 @@ public class CBS {
 				+ "       	         		<cbs:BRID>101</cbs:BRID>\r\n"
 				+ "         	   		</cbs:OwnershipInfo>\r\n"
 				+ "             		<cbs:AccessSecurity>\r\n"
-				+ "     	           		<cbs:LoginSystemCode>117</cbs:LoginSystemCode>\r\n"
-				+ "         	       		<cbs:Password>jW6lRxU4leO5Xev+SISea/Ie7Dp5wDPgfGR9MNVDJRo=</cbs:Password>\r\n"
+				+ "     	           		<cbs:LoginSystemCode>101</cbs:LoginSystemCode>\r\n"
+				+ "         	       		<cbs:Password>yVEy3349bxN6lvViA8yK6Cd1JsRRcKO5QMmml3e7qp0=</cbs:Password>\r\n"
 				+ "             	   		<cbs:RemoteIP>10.75.197.142</cbs:RemoteIP>\r\n"
 				+ "       	      		</cbs:AccessSecurity>\r\n"
 				+ "        	       		<cbs:OperatorInfo>\r\n"
@@ -662,5 +663,12 @@ public class CBS {
 				return ("desactiva");
 		}
 		return "error";
+	}
+	
+	public String ObtenerDatosNominacion(Document sResponse) {
+		String datos;
+		datos =" "+sResponse.getElementsByTagName("bcc:IDNumber").item(0).getTextContent()+" ";//
+		datos += sResponse.getElementsByTagName("bcc:FirstName").item(0).getTextContent();
+		return datos;
 	}
 }

@@ -374,6 +374,7 @@ public class CustomerCare extends BasePage {
 	public void irADetalleDeConsumos() {
 		TestBase tb = new TestBase();
 		driver.switchTo().frame(tb.cambioFrame(driver, By.className("card-top")));
+		driver.findElement(By.className("card-top")).click();
 		WebElement card = driver.findElement(By.cssSelector(".console-card.active")).findElement(By.className("actions"));
 		for (WebElement x : card.findElements(By.className("slds-text-body_regular"))) {
 			if (x.getText().contains("Detalle de Consumos"))

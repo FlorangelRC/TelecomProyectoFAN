@@ -39,6 +39,7 @@ public class TestsXappia extends TestBase {
 	private WebDriver driver;
 	private CustomerCare cc;
 	private SalesBase sb;
+	private Marketing m;
 	
 	//@BeforeClass (groups = "UAT")
 	public void loginUAT() {
@@ -47,7 +48,7 @@ public class TestsXappia extends TestBase {
 		sleep(2000);
 		driver.findElement(By.id("idp_section_buttons")).click();
 		sleep(2000);
-		driver.findElement(By.name("Ecom_User_ID")).sendKeys("uat579805");
+		driver.findElement(By.name("Ecom_User_ID")).sendKeys("uat569076");
  		driver.findElement(By.name("Ecom_Password")).sendKeys("Testa10k");
  		driver.findElement(By.id("loginButton2")).click();
  		sleep(5000);
@@ -1257,16 +1258,11 @@ public class TestsXappia extends TestBase {
 				a = false;
 			}
 		}
-	}
-	
-}	
+	}	
 	
 	@Test (groups = {"SIT","UAT"}, dataProvider="ventaPackInternacional30SMS")
 	public void TXSU00009_Validar_pantalla_al_finalizar_un_proceso_de_compra_de_pack(String sDNI, String sLinea, String sVentaPack, String sBanco, String sTarjeta, String sPromo, String sCuotas, String sNumTarjeta, String sVenceMes, String sVenceAno, String sCodSeg, String sTipoDNI, String sDNITarjeta, String sTitular) throws InterruptedException, AWTException{
-		SalesBase sale = new SalesBase(driver);
 		BasePage cambioFrameByID=new BasePage();
-		CustomerCare cCC = new CustomerCare(driver);
-		Marketing mk = new Marketing(driver);
 		PagePerfilTelefonico pagePTelefo = new PagePerfilTelefonico(driver);
 		
 		//Delete when UAT loguin works
@@ -1275,7 +1271,7 @@ public class TestsXappia extends TestBase {
 		sleep(2000);
 		driver.findElement(By.id("idp_section_buttons")).click();
 		sleep(2000);
-		driver.findElement(By.name("Ecom_User_ID")).sendKeys("uat195528");
+		driver.findElement(By.name("Ecom_User_ID")).sendKeys("uat569076");
  		driver.findElement(By.name("Ecom_Password")).sendKeys("Testa10k");
  		driver.findElement(By.id("loginButton2")).click();
  		sleep(5000);
@@ -1283,28 +1279,29 @@ public class TestsXappia extends TestBase {
 		//End
 		
 		irAConsolaFAN();
-		//sb.cerrarPestaniaGestion(driver);
+		sleep(20000);
+		cc.cerrarTodasLasPestanas();;
 		//cc.menu_360_Ir_A("Inicio");
-		//irAGestionDeClientes();
+		irAGestionDeClientes();
 		sleep(5000);
 		driver.switchTo().frame(cambioFrameByID.getFrameForElement(driver, By.id("SearchClientDocumentType")));	
 		sleep(8000);
-		sale.BuscarCuenta("DNI", sDNI);
+		sb.BuscarCuenta("DNI", sDNI);
 		String accid = driver.findElement(By.cssSelector(".searchClient-body.slds-hint-parent.ng-scope")).findElements(By.tagName("td")).get(5).getText();
 		System.out.println("id "+accid);
 		pagePTelefo.buscarAssert();
-		cCC.seleccionarCardPornumeroLinea(sLinea, driver);
+		cc.seleccionarCardPornumeroLinea(sLinea, driver);
 		pagePTelefo.comprarPack("comprar sms");
 		sleep(5000);
-		cCC.closeleftpanel();
+		cc.closeleftpanel();
 		try {
 			pagePTelefo.PackLDI(sVentaPack);
 		}
 		catch (Exception eE) {
 			driver.navigate().refresh();
 			sleep(10000);
-			mk.closeTabByName(driver, "Comprar SMS");
-			cCC.seleccionarCardPornumeroLinea(sLinea, driver);
+			m.closeTabByName(driver, "Comprar SMS");
+			cc.seleccionarCardPornumeroLinea(sLinea, driver);
 			pagePTelefo.comprarPack("comprar sms");
 			pagePTelefo.PackLDI(sVentaPack);
 		}
@@ -1364,4 +1361,44 @@ public class TestsXappia extends TestBase {
 		Assert.assertFalse(wBox.getText().equalsIgnoreCase("la linea no pertenece a Telecom, verifica el n\u00famero."));
 	}
 	
+	@Test (groups = {"SIT","UAT"}, dataProvider = "DatosSalesNominacionExistenteOfCom")
+	public void TXSU00010_Intentar_subir_un_exe_a_la_validacion_del_contacto_al_nominaro(String sLinea, String sDni) {
+		irAConsolaFAN();
+		sb.cerrarPestaniaGestion(driver);
+		cc.menu_360_Ir_A("Inicio");
+		irAGestionDeClientes();
+		boolean nominacion = false;
+		driver.switchTo().frame(cambioFrame(driver, By.id("SearchClientDocumentType")));
+		driver.findElement(By.id("PhoneNumber")).sendKeys(sLinea);
+		driver.findElement(By.id("SearchClientsDummy")).click();
+		sleep(5000);
+		driver.findElement(By.cssSelector(".slds-button.slds-button--icon.slds-m-right--x-small.ng-scope")).click();
+		sleep(2000);
+		WebElement botonNominar = null;
+		for (WebElement x : driver.findElements(By.cssSelector(".slds-hint-parent.ng-scope"))) {
+			if (x.getText().toLowerCase().contains("plan con tarjeta"))
+				botonNominar = x;
+		}
+		for (WebElement x : botonNominar.findElements(By.tagName("td"))) {
+			if (x.getAttribute("data-label").equals("actions"))
+				botonNominar = x;
+		}
+		botonNominar.findElement(By.tagName("a")).click();
+		sleep(5000);
+		ContactSearch contact = new ContactSearch(driver);
+		contact.searchContact2("DNI", sDni, "Masculino");
+		driver.findElement(By.id("Contact_nextBtn")).click();
+		sleep(10000);
+		contact.tipoValidacion("documento");
+		sleep(5000);
+		driver.findElement(By.id("FileDocumentImage")).sendKeys("C:\\Users\\xappiens\\flowerengel\\TelecomProyectoFAN\\chromedriver.exe");
+		sleep(5000);
+		for(WebElement x : driver.findElements(By.className("slds-form-element__control"))) {
+			if(x.getText().toLowerCase().equals("la imagen posee un formato no v\u00e1lido.")) {
+				nominacion = true;
+				
+			}
+		}
+		Assert.assertTrue(nominacion);
+	}	
 }

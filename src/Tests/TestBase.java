@@ -67,7 +67,7 @@ public class TestBase {
 		switch(selection) {
 		case "Cuentas":
 		driver.findElement(By.id("ext-gen211")).click();;
-		break;
+		break; 
 		}
 	}
 	
@@ -1191,7 +1191,7 @@ public class TestBase {
 	@DataProvider
 	public Object [][] ventaPackInternacional30SMS() throws Exception{
 		
-		Object[][] testObjArray = ExcelUtils.getTableArray(dataProviderE2E(),"E2EconPago",1,1,14,"packTelefonicoInternacional30SMS");
+		Object[][] testObjArray = ExcelUtils.getTableArray(dataProviderE2E(),"E2EconPago",1,1,14,"packTelefInternacional30SMS");
 		
 		return (testObjArray);
 	}
@@ -1690,5 +1690,54 @@ public class TestBase {
 		Object[][] testObjArray =  ExcelUtils.getTableArray(dataProviderE2E(),"E2EconPago",1,1,2,"DiagnInconveniente");
 		
 		return (testObjArray);
+	}
+	@DataProvider
+	public Object[][] serviciotecnico() throws Exception {
+		Object[][] testObjArray = ExcelUtils.getTableArray(dataProviderE2E(),"E2EsinPago",1,1,3,"Servicio Tecnico");
+
+		 return (testObjArray);
+	}
+	
+	@DataProvider
+	public Object[][] Diagnostico() throws Exception {
+		Object[][] testObjArray = ExcelUtils.getTableArray(dataProviderE2E(),"E2EsinPago",1,1,2,"DiagnInconveniente");
+
+		 return (testObjArray);
+	}
+	
+	@DataProvider
+	public Object[][] BaseDeConocimiento() throws Exception {
+		Object[][] testObjArray = ExcelUtils.getTableArray(dataProviderE2E(),"E2EsinPago",1,1,2,"DatosConocimientos");
+
+		 return (testObjArray);
+	}
+	
+	@DataProvider
+	public Object[][] HistoriaRecarga() throws Exception {
+		Object[][] testObjArray = ExcelUtils.getTableArray(dataProviderE2E(),"E2EsinPago",1,1,2,"HistorialRecargaSOS");
+
+		 return (testObjArray);
+	}
+	
+	public void guardarLineasNominadas(String data) throws IOException {
+		File archivo=new File("DatosNominacion.txt");
+		/*if (!archivo.exists())
+			FileWriter ArchiSa=new FileWriter(archivo,true);
+			//archivo.delete();*/
+		//Crear objeto FileWriter que sera el que nos ayude a escribir sobre archivo
+		FileWriter ArchiSa=new FileWriter(archivo.getAbsoluteFile(),true);
+		BufferedWriter bw = new BufferedWriter(ArchiSa);
+		PrintWriter wr = new PrintWriter(bw); 
+		wr.append(data+"\r\n");
+		wr.close();
+		bw.close();
+		ArchiSa.close();
+	}
+	
+	@DataProvider
+	public Object[][] LineasNominadas() throws Exception {
+		Object[][] testObjArray = ExcelUtils.getTableArray(dataProviderE2E(),"ListaLineas",1,1,1,"LineaNominada");
+
+		 return (testObjArray);
 	}
 }

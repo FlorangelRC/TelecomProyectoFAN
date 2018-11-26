@@ -1,6 +1,7 @@
 package Tests;
 
 import java.awt.AWTException;
+import java.io.IOException;
 import java.security.KeyManagementException;
 import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
@@ -100,7 +101,7 @@ public class CBS_Mattu extends TestBase {
 		
 		SOAPClientSAAJ sSCS = new SOAPClientSAAJ();
 		CBS cCBS = new CBS();
-		String sResponse = cCBS.sCBS_Request_ServicioWeb_Validador(sSCS.callSoapWebService(cCBS.sRequest(sPaymentSerialNo, sPaymentChannelID, sAccountKey, sPaymentMethod, sAmount, sInvoiceno), sEndPoint));
+		boolean sResponse = cCBS.sCBS_Request_ServicioWeb_Validador(sSCS.callSoapWebService(cCBS.sRequest(sPaymentSerialNo, sPaymentChannelID, sAccountKey, sPaymentMethod, sAmount, sInvoiceno), sEndPoint));
 		System.out.println("sResponse: " + sResponse);
 	}
 	
@@ -110,9 +111,9 @@ public class CBS_Mattu extends TestBase {
 			String sPaymentSerialNo = ((new java.text.SimpleDateFormat("yyyyMMddHHmmss")).format(new Date())).toString()+Integer.toString((int)(Math.random()*1000));
 			SOAPClientSAAJ sSCS = new SOAPClientSAAJ();
 			CBS cCBS = new CBS();
-			String sResponse = cCBS.sCBS_Request_ServicioWeb_Validador(sSCS.callSoapWebService(cCBS.sRequest(sPaymentSerialNo, sPaymentChannelID, sAccountKey, sPaymentMethod, sAmount, sInvoiceno), sEndPoint));
+			boolean sResponse = cCBS.sCBS_Request_ServicioWeb_Validador(sSCS.callSoapWebService(cCBS.sRequest(sPaymentSerialNo, sPaymentChannelID, sAccountKey, sPaymentMethod, sAmount, sInvoiceno), sEndPoint));
 			System.out.println("sResponse: " + sResponse);
-			return(cCBS.sCBS_Request_Validador(sResponse));
+			return(sResponse);
 		}
 		return(true);
 	}
@@ -223,7 +224,7 @@ public class CBS_Mattu extends TestBase {
 	
 	@Test
 	public void PagarTCPorServicio(String sOrden) throws KeyManagementException, NoSuchAlgorithmException {
-		//String sOrden = "00007249";
+		//String sOrden = "00009148";
 		SOAPClientSAAJ sSCS = new SOAPClientSAAJ();
 		sSCS.turnOffSslChecking();
 		Document doc = Servicio_obtenerInformacionOrden(sOrden);
@@ -245,4 +246,18 @@ public class CBS_Mattu extends TestBase {
 		//Assert.assertFalse(sResponse.startsWith("false"));
 		return(cCBS.sacarStatusLinea(sResponse));
 	}
+	
+	@Test(dataProvider = "LineasNominadas")
+	public void ObtenerInfoNominacion(String sLinea) throws IOException {
+		String sEndPoint = "Datos Usuario";
+		//String sLinea = "3572408521";
+		//String sLinea = "";
+		String sMessageSeq = "QCI"+ ((new java.text.SimpleDateFormat("yyyyMMddHHmmss")).format(new Date())).toString()+Integer.toString((int)(Math.random()*1000));
+		SOAPClientSAAJ sSCS = new SOAPClientSAAJ();
+		CBS cCBS = new CBS();
+		String texto = null;
+		texto = sLinea+(cCBS.ObtenerDatosNominacion(sSCS.callSoapWebService(cCBS.sRequestByLinea(sLinea, sMessageSeq), sEndPoint)));
+		guardarLineasNominadas(texto);
+	}
+	
 }
