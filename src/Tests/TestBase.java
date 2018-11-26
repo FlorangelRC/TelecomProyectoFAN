@@ -1675,7 +1675,29 @@ public class TestBase {
 
 		 return (testObjArray);
 	}
+	@DataProvider
+	public Object[][] SimCardSiniestroAG() throws Exception{
+		
+		Object[][] testObjArray =  ExcelUtils.getTableArray(dataProviderE2E(),"E2EconPago",1,1,17,"SimCard Siniestro Agente");
+		
+		return (testObjArray);
+	}
 	
+	@DataProvider
+	public Object[][] SimCardSiniestroOfCom() throws Exception{
+		
+		Object[][] testObjArray =  ExcelUtils.getTableArray(dataProviderE2E(),"E2EconPago",1,1,2,"SimCard Siniestro OfCom");
+		
+		return (testObjArray);
+	}
+	
+	@DataProvider
+	public Object[][] DiagnosticoInc() throws Exception{
+		
+		Object[][] testObjArray =  ExcelUtils.getTableArray(dataProviderE2E(),"E2EconPago",1,1,2,"DiagnInconveniente");
+		
+		return (testObjArray);
+	}
 	@DataProvider
 	public Object[][] serviciotecnico() throws Exception {
 		Object[][] testObjArray = ExcelUtils.getTableArray(dataProviderE2E(),"E2EsinPago",1,1,3,"Servicio Tecnico");
