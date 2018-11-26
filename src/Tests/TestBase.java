@@ -335,6 +335,7 @@ public class TestBase {
 		    Login page0 = new Login(driver);
 		    page0.ingresarBackOffice();
 		}
+		
 		public void loginflow(WebDriver driver){
 			driver.get(urlFlow);
 			try {Thread.sleep(6000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
@@ -342,6 +343,12 @@ public class TestBase {
 		    page0.ingresarflow();
 		}
 		
+		public void loginOperativo(WebDriver driver) {
+			driver.get(urlAmbiente);
+			try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+			Login page0 = new Login(driver);
+		    page0.ingresarOperativo();
+		}
 		
 		/**Ingresa con los datos de la cuenta Nicolas.
 		 * Para el Modulo Sales tiene vinculado el perfil de Logistica	 */
