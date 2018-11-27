@@ -9,6 +9,7 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.interactions.Actions;
 import org.testng.Assert;
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.AfterMethod;
@@ -16,38 +17,39 @@ import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 
 import Pages.BasePage;
+import Pages.Login;
+import Pages.ManejoCaja;
 import Pages.setConexion;
 
 public class GestionFlow extends TestBase {
 	
 	private WebDriver driver;
 	
-	//Befores & Afters
+	//Befores & Afters ===========================================
 	
 	@BeforeClass(alwaysRun=true)
-	public void init() {
-		driver = setConexion.setupEze();
-		sleep(5000);
+		public void readySteady() throws Exception {
+		this.driver = setConexion.setupEze();
+		try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 		loginflow(driver);
 		driver.switchTo().defaultContent();
-		sleep(3000);
+		try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		}
 		
-	}
+		//@AfterClass(alwaysRun=true)
+		public void tearDown() {
+			driver.close();
+		}
 	
-	//@AfterMethod(alwaysRun=true)
-	public void backToTheInicio() throws Exception {
-		driver.findElement(By.className("ui-tabs-anchor")).click();
-		sleep(10000);
-	}
-
-	//@AfterClass(alwaysRun=true)
-	public void quit() throws IOException {
-		driver.quit();
-		sleep(5000);
-	}
 	
 	@Test (groups = {"Flow","E2E"})
-	public void FlowServiciosActivos (String sLinea){
+	public void FlowConsultaServicioInactivo (WebDriver driver, String sLinea, String sServicio) throws AWTException {
+	TestBase ts = new TestBase();
+	ts.abrirPestaniaNueva(driver);
+	sleep(5000);
+	ArrayList<String> tabs2 = new ArrayList<String> (driver.getWindowHandles());
+	driver.switchTo().window(tabs2.get(1));
+	loginflow(driver);
 	WebElement consul = driver.findElement(By.cssSelector(".nav-link.dropdown-toggle.linksMenu"));
 		if(consul.getText().toLowerCase().equals("consultas")){
 			consul.click();
@@ -59,9 +61,120 @@ public class GestionFlow extends TestBase {
 	sleep(5000);
 	WebElement txt = driver.findElement(By.id("txtCampo"));
 	txt.click();
-	txt.sendKeys("2932449333");  
+	txt.sendKeys(sLinea);  
+	driver.findElement(By.name("btnConsultar")).click();
+	sleep(15000);
+	driver.switchTo().frame(cambioFrame(driver, By.id("framederecho"))); 
+	List<WebElement> box = driver.findElements(By.cssSelector(".box.efecto3"));
+		for(WebElement b : box){
+			if(b.getText().toLowerCase().contains("servicios activos")){
+				b.click();
+				break;
+			}
+		}
+	sleep(12000);
+	driver.switchTo().frame(cambioFrame(driver, By.id("laAyuda")));
+	ArrayList<String> txt1 = new ArrayList<String>();
+	String txt2 = "INACTIVO - "+sServicio;
+	driver.findElement(By.id("aVerInactivasServiciosActivos")).click();
+	sleep(3000);
+	List<WebElement> serv = driver.findElement(By.id("laAyuda")).findElements(By.tagName("font"));
+			for(WebElement e: serv){
+				if(e.getAttribute("color").equals("red")){
+					txt1.add(e.getText());
+				}
+			}
+	Assert.assertTrue(txt1.contains(txt2));
+	System.out.println(sServicio+"Servicio Inactivo");
+	driver.switchTo().defaultContent();
+	Actions action = new Actions(driver);
+	action.moveToElement(driver.findElement(By.id("aNavUsuario"))).click(driver.findElements(By.cssSelector(".dropdown-item.navbarItemPersonalizado")).get(2)).perform();
+	sleep(5000);
+	driver.close();
+	sleep(2000);
+    driver.switchTo().window(tabs2.get(0));
+    sleep(1500);
+	}	
+	
+	
+	@Test (groups = {"Flow","E2E"})
+	public void FlowConsultaServicioActivo (WebDriver driver, String sLinea, String sServicio) throws AWTException{
+	TestBase ts = new TestBase();
+	ts.abrirPestaniaNueva(driver);
+	sleep(5000);
+	ArrayList<String> tabs2 = new ArrayList<String> (driver.getWindowHandles());
+	driver.switchTo().window(tabs2.get(1));
+	loginflow(driver);
+	sleep(5000);
+	WebElement consul = driver.findElement(By.cssSelector(".nav-link.dropdown-toggle.linksMenu"));
+		if(consul.getText().toLowerCase().equals("consultas")){
+		consul.click();
+		}
+	driver.findElements(By.cssSelector(".dropdown-item.navbarItemPersonalizado.itemClick")).get(0).click();
+	sleep(5000);
+	driver.switchTo().frame(cambioFrame(driver, By.id("frameizquierdo")));
+	driver.findElement(By.name("btnConsultar")).click();
+	sleep(5000);
+	WebElement txt = driver.findElement(By.id("txtCampo"));
+	txt.click();
+	txt.sendKeys(sLinea);  
 	driver.findElement(By.name("btnConsultar")).click();
 	sleep(7500);
+	driver.switchTo().frame(cambioFrame(driver, By.id("framederecho"))); 
+	List<WebElement> box = driver.findElements(By.cssSelector(".box.efecto3"));
+		for(WebElement b : box){
+			if(b.getText().toLowerCase().contains("servicios activos")){
+				b.click();
+				break;
+			}
+		}
+	sleep(8000);
+	driver.switchTo().frame(cambioFrame(driver, By.id("laAyuda")));
+	ArrayList<String> txt1 = new ArrayList<String>();
+	String txt2 = (sServicio);
+	List<WebElement> serv = driver.findElement(By.id("laAyuda")).findElements(By.tagName("font"));
+		for(WebElement e: serv){
+			if(e.getAttribute("color").equals("#5065BC")){
+				txt1.add(e.getText());
+			}
+		}
+		Assert.assertTrue(txt1.contains(txt2));
+		System.out.println(sServicio+"Activo Correctamente");
+		driver.switchTo().defaultContent();
+		Actions action = new Actions(driver);
+		action.moveToElement(driver.findElement(By.id("aNavUsuario"))).click(driver.findElements(By.cssSelector(".dropdown-item.navbarItemPersonalizado")).get(2)).perform();
+		sleep(5000);
+		driver.close();
+		sleep(2000);
+	    driver.switchTo().window(tabs2.get(0));
+	    sleep(1500);
+		
+}
+	
+	
+	
+	@Test (groups = {"Flow","E2E"})
+	public void FlowServiciosActivos (WebDriver driver, String sLinea) throws AWTException{
+	TestBase ts = new TestBase();
+	ts.abrirPestaniaNueva(driver);
+	sleep(5000);
+	ArrayList<String> tabs2 = new ArrayList<String> (driver.getWindowHandles());
+	loginflow(driver);
+	sleep(5000);
+	WebElement consul = driver.findElement(By.cssSelector(".nav-link.dropdown-toggle.linksMenu"));
+		if(consul.getText().toLowerCase().equals("consultas")){
+		consul.click();
+		}
+	driver.findElements(By.cssSelector(".dropdown-item.navbarItemPersonalizado.itemClick")).get(0).click();
+	sleep(5000);
+	driver.switchTo().frame(cambioFrame(driver, By.id("frameizquierdo")));
+	driver.findElement(By.name("btnConsultar")).click();
+	sleep(5000);
+	WebElement txt = driver.findElement(By.id("txtCampo"));
+	txt.click();
+	txt.sendKeys(sLinea);  
+	driver.findElement(By.name("btnConsultar")).click();
+	sleep(15000);
 	driver.switchTo().frame(cambioFrame(driver, By.id("framederecho"))); 
 	List<WebElement> box = driver.findElements(By.cssSelector(".box.efecto3"));
 		for(WebElement b : box){
@@ -90,18 +203,32 @@ public class GestionFlow extends TestBase {
 		for(WebElement e: serv){
 			if(e.getAttribute("color").equals("#5065BC")){
 				txt1.add(e.getText());
-				System.out.println(e.getText());
 			}
 		}
-	Assert.assertTrue(txt2.containsAll(txt1));
+	System.out.println("Servicios Activos"+txt1);	
+	Assert.assertTrue(txt1.containsAll(txt2));
+	driver.switchTo().defaultContent();
+	Actions action = new Actions(driver);
+	action.moveToElement(driver.findElement(By.id("aNavUsuario"))).click(driver.findElements(By.cssSelector(".dropdown-item.navbarItemPersonalizado")).get(2)).perform();
+	sleep(5000);
+	driver.close();
+	sleep(2000);
+	driver.switchTo().window(tabs2.get(0));
+	sleep(2000);
 	}
-	
+		
 	
 	@Test (groups = {"Flow","E2E"})
-	public String FlowIMSI (String sLinea){
+	public String FlowIMSI (WebDriver driver, String sLinea) throws AWTException{
+	TestBase ts = new TestBase();
+	ts.abrirPestaniaNueva(driver);
+	sleep(5000);
+	ArrayList<String> tabs2 = new ArrayList<String> (driver.getWindowHandles());
+	loginflow(driver);
+	sleep(5000);
 	WebElement consul = driver.findElement(By.cssSelector(".nav-link.dropdown-toggle.linksMenu"));
 		if(consul.getText().toLowerCase().equals("consultas")){
-			consul.click();
+		consul.click();
 		}
 	driver.findElements(By.cssSelector(".dropdown-item.navbarItemPersonalizado.itemClick")).get(0).click();
 	sleep(5000);
@@ -128,8 +255,12 @@ public class GestionFlow extends TestBase {
 	nimsi = driver.findElement(By.id("laAyuda")).getText();
 	nimsi = nimsi.split(" ")[2];
 	System.out.println(nimsi);
+	driver.switchTo().defaultContent();
+	Actions action = new Actions(driver);
+	action.moveToElement(driver.findElement(By.id("aNavUsuario"))).click(driver.findElements(By.cssSelector(".dropdown-item.navbarItemPersonalizado")).get(2)).perform();
+	sleep(5000);
+	driver.close();
+	driver.switchTo().window(tabs2.get(0));
 	return(nimsi);
 	}
-	
-	
 }

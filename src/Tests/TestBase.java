@@ -335,6 +335,7 @@ public class TestBase {
 		    Login page0 = new Login(driver);
 		    page0.ingresarBackOffice();
 		}
+		
 		public void loginflow(WebDriver driver){
 			driver.get(urlFlow);
 			try {Thread.sleep(6000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
@@ -342,6 +343,12 @@ public class TestBase {
 		    page0.ingresarflow();
 		}
 		
+		public void loginOperativo(WebDriver driver) {
+			driver.get(urlAmbiente);
+			try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+			Login page0 = new Login(driver);
+		    page0.ingresarOperativo();
+		}
 		
 		/**Ingresa con los datos de la cuenta Nicolas.
 		 * Para el Modulo Sales tiene vinculado el perfil de Logistica	 */
@@ -1140,7 +1147,7 @@ public class TestBase {
 	@DataProvider
 	public Object[][] AltaServicios() throws Exception{
 
-	 Object[][] testObjArray = ExcelUtils.getTableArray("Cuentas.xlsx","PerfilGestiones",1,1,4,"Alta Servicio");
+	 Object[][] testObjArray = ExcelUtils.getTableArray(dataProviderE2E(),"E2EconPago",1,1,2,"Alta Servicio");
 
 	 return (testObjArray);
 
@@ -1668,7 +1675,29 @@ public class TestBase {
 
 		 return (testObjArray);
 	}
+	@DataProvider
+	public Object[][] SimCardSiniestroAG() throws Exception{
+		
+		Object[][] testObjArray =  ExcelUtils.getTableArray(dataProviderE2E(),"E2EconPago",1,1,17,"SimCard Siniestro Agente");
+		
+		return (testObjArray);
+	}
 	
+	@DataProvider
+	public Object[][] SimCardSiniestroOfCom() throws Exception{
+		
+		Object[][] testObjArray =  ExcelUtils.getTableArray(dataProviderE2E(),"E2EconPago",1,1,2,"SimCard Siniestro OfCom");
+		
+		return (testObjArray);
+	}
+	
+	@DataProvider
+	public Object[][] DiagnosticoInc() throws Exception{
+		
+		Object[][] testObjArray =  ExcelUtils.getTableArray(dataProviderE2E(),"E2EconPago",1,1,2,"DiagnInconveniente");
+		
+		return (testObjArray);
+	}
 	@DataProvider
 	public Object[][] serviciotecnico() throws Exception {
 		Object[][] testObjArray = ExcelUtils.getTableArray(dataProviderE2E(),"E2EsinPago",1,1,3,"Servicio Tecnico");

@@ -49,6 +49,7 @@ public class GestionesPerfilOficina extends TestBase {
 	private CBS cbs;
 	private CBS_Mattu cbsm;
 	private Marketing mk;
+	private PagePerfilTelefonico ppt;
 	List<String> sOrders = new ArrayList<String>();
 	String imagen;
 	String detalles;
@@ -421,7 +422,7 @@ public class GestionesPerfilOficina extends TestBase {
 	}
 	
 	@Test (groups = {"GestionesPerfilOficina", "Recargas","E2E","Ciclo1"}, dataProvider = "RecargaTC")
-	public void TS134330_CRM_Movil_REPRO_Recargas_Presencial_TC_Ofcom_Financiacion(String cDNI, String cMonto, String cLinea, String cBanco, String cTarjeta, String cNumTarjeta, String cVenceMes, String cVenceAno, String cCodSeg, String cTipoDNI, String cDNITarjeta, String cTitular, String cPromo, String cCuotas) throws AWTException, KeyManagementException, NoSuchAlgorithmException {
+	public void TS134330_CRM_Movil_REPRO_Recargas_Presencial_TC_Ofcom_Financiacion(String cDNI, String cMonto, String cLinea, String cBanco, String cTarjeta, String cPromo,String cCuotas,String cNumTarjeta, String cVenceMes, String cVenceAno, String cCodSeg, String cTipoDNI, String cDNITarjeta, String cTitular) throws AWTException, KeyManagementException, NoSuchAlgorithmException {
 		imagen = "TS134330";
 		detalles = null;
 		detalles = imagen+"-Recarga - DNI:"+cDNI;
@@ -574,19 +575,32 @@ public class GestionesPerfilOficina extends TestBase {
 				sleep(5000);
 				cc.obligarclick(r.findElement(By.cssSelector(".slds-button.slds-button_icon-border-filled.cpq-item-actions-dropdown-button")));
 				sleep(5000);
-				List<WebElement> wButtons = r.findElements(By.cssSelector(".slds-dropdown__item.cpq-item-actions-dropdown__item"));
-				for(WebElement wAux : wButtons) {
-					if(wAux.getText().equalsIgnoreCase("Delete")) {
-						cc.obligarclick(wAux);
-					}
-				}
 				break;
 			}
 		}
+		List<WebElement> delet = driver.findElements(By.cssSelector(".slds-dropdown__item.cpq-item-actions-dropdown__item"));
+			for(WebElement d : delet){
+				if(d.equals("Delete")){
+				d.click();
+				sleep(4000);
+				break;
+			}
+		}
+		sleep(10000);
+		driver.switchTo().frame(cambioFrame(driver, By.cssSelector(".slds-button.slds-button--destructive")));
 		driver.findElement(By.cssSelector(".slds-button.slds-button--destructive")).click();
 		sleep(10000);
-		driver.findElement(By.cssSelector(".slds-button.slds-m-left--large.slds-button--brand.ta-button-brand")).click();
-		sleep(10000);
+		List <WebElement> roma = driver.findElements(By.cssSelector(".cpq-item-base-product"));
+		for(WebElement r : roma){
+			if(r.getText().contains("DDI sin Roaming Internacional")){
+				sleep(5000);
+				cc.obligarclick(r.findElement(By.cssSelector(".slds-button.slds-button_neutral")));
+				sleep(5000);
+				break;
+			}
+		}
+		SalesBase sb = new SalesBase(driver);
+		sb.continuar();
 		WebElement wMessageBox = driver.findElement(By.id("TextBlock1")).findElement(By.className("ng-binding"));
 		sleep(5000);
 		Assert.assertTrue(wMessageBox.getText().equalsIgnoreCase("La orden " + sOrder + " se realiz\u00d3 con \u00c9xito!"));
@@ -689,8 +703,8 @@ public class GestionesPerfilOficina extends TestBase {
 		driver.findElement(By.id("PhoneNumber")).sendKeys(sLinea);
 		sleep(1500);
 		driver.findElement(By.id("SearchClientsDummy")).click();
-		sleep(6000);
-		WebElement cli = driver.findElement(By.id("tab-scoped-1"));
+		sleep(10000);
+		WebElement cli = driver.findElement(By.id("tab-scoped-1")); 	
 		cli.findElement(By.tagName("tbody")).findElement(By.tagName("tr")).click();
 		sleep(3000);
 		List<WebElement> Lineas = driver.findElement(By.id("tab-scoped-1")).findElement(By.tagName("tbody")).findElements(By.tagName("tr"));
@@ -4664,7 +4678,7 @@ public class GestionesPerfilOficina extends TestBase {
 		nroCaso.findElements(By.tagName("td")).get(2).click();
 		sleep(5000);
 		WebElement fechaYHora = null;
-		driver.switchTo().frame(cambioFrame(driver, By.name("close")));
+			driver.switchTo().frame(cambioFrame(driver, By.name("close")));
 		for (WebElement x : driver.findElements(By.className("pbSubsection"))) {
 			if (x.getText().toLowerCase().contains("owned by me"))
 				fechaYHora = x;
@@ -5020,7 +5034,9 @@ public class GestionesPerfilOficina extends TestBase {
 		sleep(10000);
 		WebElement wMessageBox = driver.findElement(By.id("TextBlock1")).findElement(By.className("ng-binding"));
 		sleep(5000);
-		Assert.assertTrue(wMessageBox.getText().toLowerCase().contains("La orden " + sOrder + " se realiz\u00d3 con \u00c9xito!".toLowerCase()));
+		Assert.assertTrue(wMessageBox.getText().toLowerCase().contains("la orden " + sOrder + " se realiz\u00f3 con \u00e9xito!"));
+		sleep(15000);
+		driver.navigate().refresh();
 		Assert.assertTrue(cc.corroborarEstadoCaso(sOrder, "Activada"));
 	}
 	
@@ -5115,11 +5131,13 @@ public class GestionesPerfilOficina extends TestBase {
 		sleep(10000);
 		WebElement wMessageBox = driver.findElement(By.id("TextBlock1")).findElement(By.className("ng-binding"));
 		sleep(5000);
-		Assert.assertTrue(wMessageBox.getText().toLowerCase().contains("La orden " + sOrder + " se realiz\u00d3 con \u00c9xito!".toLowerCase()));
+		Assert.assertTrue(wMessageBox.getText().toLowerCase().contains("la orden " + sOrder + " se realiz\u00f3 con \u00e9xito!"));
+		sleep(15000);
+		driver.navigate().refresh();
 		Assert.assertTrue(cc.corroborarEstadoCaso(sOrder, "Activada"));
 	}
 	
-	@Test (groups = {"GestionesPerfilOficina", "ABMServicios", "E2E", "Ciclo3"}, dataProvider = "BajaServicios")
+	@Test (groups = {"GestionesPerfilOficina", "ABMServicios", "E2E", "Ciclo3"}, dataProvider = "AltaServicios")
 	public void TS135743_CRM_Movil_REPRO_Alta_Servicio_sin_costo_Restriccion_Ident_de_Llamadas_Presencial_Agente(String sDNI, String sLinea){
 		imagen = "TS135743";
 		detalles = null;
@@ -5166,40 +5184,23 @@ public class GestionesPerfilOficina extends TestBase {
 		sleep(5000);
 		driver.switchTo().frame(cambioFrame(driver, By.id("tab-default-1")));
 		sleep(15000);
-		driver.findElement(By.cssSelector(".slds-button.cpq-item-has-children")).click();
+		//driver.findElement(By.cssSelector(".slds-button.cpq-item-has-children")).click();//Plan con Tarjeta Repro button
+		//ppt.getwPlanConTarjetaRepro().click();//Plan con Tarjeta Repro button
 		sleep(5000);
-		boolean bAssert = false;
-		List<WebElement> servicios= driver.findElements(By.xpath("//*[@class='cpq-item-product-child-level-1 cpq-item-child-product-name-wrapper']"));
-		for(WebElement a: servicios) {
-			if (a.getText().toLowerCase().contains("servicios basicos general movil".toLowerCase())) {
-					a.findElement(By.tagName("button")).click();
-						sleep(8000);
-						bAssert= true;
-						break;
-			}
-		}
-		Assert.assertTrue(bAssert);
-		sleep(17000);
-		List <WebElement> wServicios = driver.findElements(By.cssSelector("[class='cpq-item-product-child-level-2 ng-not-empty ng-valid'] [class='slds-is-relative']"));
-		for(WebElement r : wServicios){
-			if(r.getText().contains("Restriccion Ident. de Llamadas")){
-				cc.obligarclick(r.findElement(By.cssSelector(".slds-button.slds-button_neutral")));
-				sleep(5000);
-				break;
-			}
-		}
-		driver.findElement(By.cssSelector(".slds-button.slds-button--destructive")).click();
-		sleep(10000);
-		driver.findElement(By.cssSelector(".slds-button.slds-m-left--large.slds-button--brand.ta-button-brand")).click();
+		ppt = new PagePerfilTelefonico(driver);
+		ppt.altaBajaServicio("Alta", "servicios basicos general movil", "Restriccion Ident. de Llamadas", driver);
+		driver.findElement(By.cssSelector(".slds-button.slds-m-left--large.slds-button--brand.ta-button-brand")).click();//Continuar
+		//ppt.getwAltaBajaContinuar().click();//Continuar
 		sleep(10000);
 		WebElement wMessageBox = driver.findElement(By.id("TextBlock1")).findElement(By.className("ng-binding"));
-		sleep(5000);
-		Assert.assertTrue(wMessageBox.getText().toLowerCase().contains("La orden " + sOrder + " se realiz\u00d3 con \u00c9xito!".toLowerCase()));
+		Assert.assertTrue(wMessageBox.getText().toLowerCase().contains("la orden " + sOrder + " se realiz\u00f3 con \u00e9xito!".toLowerCase()));
+		sleep(15000);
+		driver.navigate().refresh();
 		Assert.assertTrue(cc.corroborarEstadoCaso(sOrder, "Activada"));
 		sOrders.add("Baja de Servicio, orden numero: " + sOrder + ", DNI: " + sDNI);
 	}
 	
-	@Test (groups = {"GestionesPerfilOficina", "ABMServicios", "E2E", "Ciclo3"}, dataProvider = "BajaServicios")
+	@Test (groups = {"GestionesPerfilOficina", "ABMServicios", "E2E", "Ciclo3"}, dataProvider = "AltaServicios")
 	public void TC135744_CRM_Movil_REPRO_Alta_Servicio_sin_costo_Voice_Mail_con_Clave_Presencial_OfCom(String sDNI, String sLinea){
 		imagen = "TS135744";
 		detalles = null;
@@ -5285,11 +5286,13 @@ public class GestionesPerfilOficina extends TestBase {
 		sleep(10000);
 		WebElement wMessageBox = driver.findElement(By.id("TextBlock1")).findElement(By.className("ng-binding"));
 		sleep(5000);
-		Assert.assertTrue(wMessageBox.getText().toLowerCase().contains("La orden " + sOrder + " se realiz\u00d3 con \u00c9xito!".toLowerCase()));
+		Assert.assertTrue(wMessageBox.getText().toLowerCase().contains("la orden " + sOrder + " se realiz\u00f3 con \u00e9xito!"));
+		sleep(15000);
+		driver.navigate().refresh();
 		Assert.assertTrue(cc.corroborarEstadoCaso(sOrder, "Activada"));
 	}
 	
-	@Test (groups = {"GestionesPerfilOficina","E2E","Ciclo3"}, dataProvider="BajaServicios")
+	@Test (groups = {"GestionesPerfilOficina","E2E","Ciclo3"}, dataProvider="AltaServicios")
 	public void TS135745_CRM_Movil_REPRO_Alta_Servicio_sin_costo_DDI_sin_Roaming_Internacional_Presencial_OfCom(String sDNI, String sLinea){
 		imagen = "TS135745";
 		detalles = imagen+" - AltaServicio - DNI: "+sDNI+" - Linea: "+sLinea;
@@ -5372,7 +5375,9 @@ public class GestionesPerfilOficina extends TestBase {
 		sleep(10000);
 		WebElement wMessageBox = driver.findElement(By.id("TextBlock1")).findElement(By.className("ng-binding"));
 		sleep(5000);
-		Assert.assertTrue(wMessageBox.getText().toLowerCase().contains("La orden " + sOrder + " se realiz\u00d3 con \u00c9xito!".toLowerCase()));
+		Assert.assertTrue(wMessageBox.getText().toLowerCase().contains("la orden " + sOrder + " se realiz\u00f3 con \u00e9xito!"));
+		sleep(15000);
+		driver.navigate().refresh();
 		Assert.assertTrue(cc.corroborarEstadoCaso(sOrder, "Activada"));
 	}
 		
@@ -5405,6 +5410,142 @@ public class GestionesPerfilOficina extends TestBase {
 		if (negativo.getAttribute("title").contains("Haga clic si no le gusta este art\u00edculo de knowledge"))
 			downVote = true;
 		Assert.assertTrue(downVote);
+	}
+	
+	@Test(groups = { "GestionesPerfilOficina","CambioSimCard", "E2E","Ciclo3" }, priority = 1, dataProvider = "SimCardSiniestroOfCom")
+	public void TS99030_CRM_Movil_REPRO_Cambio_de_SimCard_Presencial_Siniestro_DOC_Delivery_EFE_Ofcom(String sDNI, String sLinea) throws AWTException {
+		imagen = "99030";
+		detalles = null;
+		detalles = imagen + "-DNI:" + sDNI;
+		SalesBase sale = new SalesBase(driver);
+		BasePage cambioFrameByID = new BasePage();
+		CustomerCare cCC = new CustomerCare(driver);
+		PagePerfilTelefonico pagePTelefo = new PagePerfilTelefonico(driver);
+		driver.switchTo().frame(cambioFrameByID.getFrameForElement(driver, By.id("SearchClientDocumentType")));
+		sleep(8000);
+		sale.BuscarCuenta("DNI", sDNI);
+		sleep(8000);
+		String accid = driver.findElement(By.cssSelector(".searchClient-body.slds-hint-parent.ng-scope")).findElements(By.tagName("td")).get(5).getText();
+		System.out.println("id "+accid);
+		detalles +="-Cuenta:"+accid;
+		driver.findElement(By.cssSelector(".slds-tree__item.ng-scope")).findElement(By.tagName("div")).click();
+		sleep(25000);
+		cCC.seleccionarCardPornumeroLinea(sLinea, driver);
+		sleep(3000);
+		cCC.irAGestion("Cambio de Simcard");
+		sleep(10000);
+		driver.switchTo().frame(cambioFrameByID.getFrameForElement(driver, By.id("SelectAsset0")));
+		driver.findElement(By.id("SelectAsset0")).findElement(By.cssSelector(".slds-radio.ng-scope")).click();
+		driver.findElement(By.id("AssetSelection_nextBtn")).click();
+		sleep(5000);
+		driver.switchTo().frame(cambioFrameByID.getFrameForElement(driver, By.id("DeliveryMethodSelection")));
+		sleep(15000);
+		Select metodoEntrega = new Select (driver.findElement(By.id("DeliveryMethodSelection")));
+		metodoEntrega.selectByVisibleText("Presencial");
+		cCC.obligarclick(driver.findElement(By.id("DeliveryMethodConfiguration_nextBtn")));
+		sleep(16000);
+		//cCC.obligarclick(driver.findElement(By.id("ICCDAssignment_nextBtn")));
+		//sleep(16000);
+		cCC.obligarclick(driver.findElement(By.id("InvoicePreview_nextBtn")));
+		sleep(16000);
+		buscarYClick(driver.findElements(By.cssSelector(".slds-form-element__label.ng-binding")), "equals","Efectivo");
+		cCC.obligarclick(driver.findElement(By.id("SelectPaymentMethodsStep_nextBtn")));
+		sleep(15000);
+		String orden = driver.findElement(By.className("top-data")).findElement(By.className("ng-binding")).getText();
+		detalles += "-Orden:" + orden;
+		System.out.println("Orden " + orden);
+		orden = orden.substring(orden.length()-8);
+		cCC.obligarclick(driver.findElement(By.id("OrderSumary_nextBtn")));
+		sleep(15000);
+		String check = driver.findElement(By.id("GeneralMessageDesing")).getText();
+		Assert.assertTrue(check.toLowerCase().contains("la orden se realiz\u00f3 con \u00e9xito"));
+		sleep(5000);
+		driver.navigate().refresh();
+		sleep(10000);
+		String invoice = cCC.obtenerMontoyTNparaAlta(driver, orden);
+		System.out.println(invoice);
+		detalles+="-Monto:"+invoice.split("-")[2]+"-Prefactura:"+invoice.split("-")[1];
+		sleep(10000);
+		//datosOrden.add("Cambio sim card Agente- Cuenta: "+accid+"Invoice: "+invoice.split("-")[0]);
+		CBS_Mattu invoSer = new CBS_Mattu();
+		Assert.assertTrue(invoSer.PagoEnCaja("1006", accid, "1001", invoice.split("-")[2], invoice.split("-")[1],driver));
+		sleep(5000);
+		driver.navigate().refresh();
+		sleep(10000);
+		//cc.obtenerTNyMonto2(driver, sOrden);
+		//sleep(10000);
+		driver.switchTo().frame(cambioFrame(driver, By.cssSelector(".hasMotif.orderTab.detailPage.ext-webkit.ext-chrome.sfdcBody.brandQuaternaryBgr")));
+		WebElement tabla = driver.findElement(By.id("ep")).findElements(By.tagName("table")).get(1);
+		String datos = tabla.findElements(By.tagName("tr")).get(4).findElements(By.tagName("td")).get(1).getText();
+		Assert.assertTrue(datos.equalsIgnoreCase("activada")||datos.equalsIgnoreCase("activated"));
+		
+	}
+	@Test(groups = { "GestionesPerfilOficina","CambioSimCard", "E2E","Ciclo3" }, priority = 1, dataProvider = "CambioSimCardOficina")
+	public void TS134381_CRM_Movil_REPRO_Cambio_de_simcard_sin_costo_Voluntario_Ofcom_Presencial_Con_entega_de_pedido(String sDNI, String sLinea) throws AWTException	{
+		imagen = "134381";
+		detalles = null;
+		detalles = imagen + "-DNI:" + sDNI;
+		SalesBase sale = new SalesBase(driver);
+		BasePage cambioFrameByID = new BasePage();
+		CustomerCare cCC = new CustomerCare(driver);
+		PagePerfilTelefonico pagePTelefo = new PagePerfilTelefonico(driver);
+		driver.switchTo().frame(cambioFrameByID.getFrameForElement(driver, By.id("SearchClientDocumentType")));
+		sleep(8000);
+		sale.BuscarCuenta("DNI", sDNI);
+		sleep(8000);
+		String accid = driver.findElement(By.cssSelector(".searchClient-body.slds-hint-parent.ng-scope")).findElements(By.tagName("td")).get(5).getText();
+		System.out.println("id "+accid);
+		detalles +="-Cuenta:"+accid;
+		driver.findElement(By.cssSelector(".slds-tree__item.ng-scope")).findElement(By.tagName("div")).click();
+		sleep(25000);
+		cCC.seleccionarCardPornumeroLinea(sLinea, driver);
+		sleep(3000);
+		cCC.irAGestion("Cambio de Simcard");
+		sleep(10000);
+		driver.switchTo().frame(cambioFrameByID.getFrameForElement(driver, By.id("SelectAsset0")));
+		driver.findElement(By.id("SelectAsset0")).findElement(By.cssSelector(".slds-radio.ng-scope")).click();
+		driver.findElement(By.id("AssetSelection_nextBtn")).click();
+		sleep(5000);
+		driver.switchTo().frame(cambioFrameByID.getFrameForElement(driver, By.id("DeliveryMethodSelection")));
+		sleep(15000);
+		Select metodoEntrega = new Select (driver.findElement(By.id("DeliveryMethodSelection")));
+		metodoEntrega.selectByVisibleText("Presencial");
+		cCC.obligarclick(driver.findElement(By.id("DeliveryMethodConfiguration_nextBtn")));
+		sleep(16000);
+		//cCC.obligarclick(driver.findElement(By.id("ICCDAssignment_nextBtn")));
+		//sleep(16000);
+		cCC.obligarclick(driver.findElement(By.id("InvoicePreview_nextBtn")));
+		sleep(16000);
+		buscarYClick(driver.findElements(By.cssSelector(".slds-form-element__label.ng-binding")), "equals","Efectivo");
+		cCC.obligarclick(driver.findElement(By.id("SelectPaymentMethodsStep_nextBtn")));
+		sleep(15000);
+		String orden = driver.findElement(By.className("top-data")).findElement(By.className("ng-binding")).getText();
+		detalles += "-Orden:" + orden;
+		System.out.println("Orden " + orden);
+		orden = orden.substring(orden.length()-8);
+		cCC.obligarclick(driver.findElement(By.id("OrderSumary_nextBtn")));
+		sleep(15000);
+		String check = driver.findElement(By.id("GeneralMessageDesing")).getText();
+		Assert.assertTrue(check.toLowerCase().contains("la orden se realiz\u00f3 con \u00e9xito"));
+		sleep(5000);
+		driver.navigate().refresh();
+		sleep(10000);
+		String invoice = cCC.obtenerMontoyTNparaAlta(driver, orden);
+		System.out.println(invoice);
+		detalles+="-Monto:"+invoice.split("-")[2]+"-Prefactura:"+invoice.split("-")[1];
+		sleep(10000);
+		//datosOrden.add("Cambio sim card Agente- Cuenta: "+accid+"Invoice: "+invoice.split("-")[0]);
+		CBS_Mattu invoSer = new CBS_Mattu();
+		Assert.assertTrue(invoSer.PagoEnCaja("1006", accid, "1001", invoice.split("-")[2], invoice.split("-")[1],driver));
+		sleep(5000);
+		driver.navigate().refresh();
+		sleep(10000);
+		//cc.obtenerTNyMonto2(driver, sOrden);
+		//sleep(10000);
+		driver.switchTo().frame(cambioFrame(driver, By.cssSelector(".hasMotif.orderTab.detailPage.ext-webkit.ext-chrome.sfdcBody.brandQuaternaryBgr")));
+		WebElement tabla = driver.findElement(By.id("ep")).findElements(By.tagName("table")).get(1);
+		String datos = tabla.findElements(By.tagName("tr")).get(4).findElements(By.tagName("td")).get(1).getText();
+		Assert.assertTrue(datos.equalsIgnoreCase("activada")||datos.equalsIgnoreCase("activated"));
 	}
 	
 	@Test (groups = {"ProblemasConRecargas", "GestionesPerfilOficina", "E2E", "Ciclo3"}, dataProvider = "CuentaProblemaRecarga") 
@@ -5479,6 +5620,41 @@ public class GestionesPerfilOficina extends TestBase {
 		sleep(5000);
 		WebElement gestion = driver.findElement(By.className("ta-care-omniscript-done")).findElement(By.tagName("header")).findElement(By.tagName("h1"));
 		Assert.assertTrue(gestion.getText().contains("La gesti\u00f3n fue derivada"));
+	}
+	
+	@Test (groups = {"ProblemasConRecargas", "GestionesPerfilOficina", "E2E", "Ciclo3"}, dataProvider = "CuentaProblemaRecarga") 
+	public void TS104353_CRM_Movil_Repro_Problemas_con_Recarga_Presencial_Tarjeta_Scratch_Caso_Nuevo_Tarjeta_Activa_y_Disponible_Ofcom(String sDNI, String sLinea) {
+		imagen = "TS104353";
+		detalles = null;
+		detalles = imagen + " -Problemas Con Recargas-DNI: " + sDNI;
+		String datoViejo = cbs.ObtenerValorResponse(cbsm.Servicio_queryLiteBySubscriber(sLinea), "bcs:MainBalance");
+		Integer datosInicial = Integer.parseInt(datoViejo.substring(0, 5));
+		driver.switchTo().frame(cambioFrame(driver, By.id("SearchClientDocumentType")));
+		sb.BuscarCuenta("DNI", sDNI);
+		driver.findElement(By.cssSelector(".slds-tree__item.ng-scope")).click();
+		sleep(25000);
+		driver.switchTo().frame(cambioFrame(driver, By.className("card-top")));
+		driver.findElement(By.className("card-top")).click();
+		sleep(3000);
+		cc.irAGestionEnCard("Problemas con Recargas");
+		sleep(5000);
+		driver.switchTo().frame(cambioFrame(driver, By.className("borderOverlay")));
+		driver.findElements(By.className("borderOverlay")).get(0).click();
+		driver.findElement(By.id("RefillMethods_nextBtn")).click();
+		sleep(5000);
+		driver.findElement(By.id("BatchNumber")).sendKeys("11120000009300");
+		driver.findElement(By.id("PIN")).sendKeys("0101");
+		driver.findElement(By.id("PrepaidCardData_nextBtn")).click();
+		sleep(5000);
+		WebElement estado = driver.findElement(By.id("PrepaidCardStatusLabel"));
+		Assert.assertTrue(estado.getText().toLowerCase().contains("activa"));
+		driver.findElement(By.id("Summary_nextBtn")).click();
+		sleep(5000);
+		WebElement gestion = driver.findElement(By.className("ta-care-omniscript-done")).findElement(By.tagName("header")).findElement(By.tagName("h1"));
+		Assert.assertTrue(gestion.getText().contains("Recarga realizada con \u00e9xito"));
+		String datoNuevo = cbs.ObtenerValorResponse(cbsm.Servicio_queryLiteBySubscriber(sLinea), "bcs:MainBalance");
+		Integer datosFinal = Integer.parseInt(datoNuevo.substring(0, 5));
+		Assert.assertTrue(datosInicial + 500 == datosFinal);
 	}
 	
 	@Test (groups = {"GestionesPerfilTelefonico", "HistorialDeRecargas", "E2E", "Ciclo2"}, dataProvider = "HistoriaRecarga")
