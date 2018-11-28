@@ -335,6 +335,7 @@ public class TestBase {
 		    Login page0 = new Login(driver);
 		    page0.ingresarBackOffice();
 		}
+		
 		public void loginflow(WebDriver driver){
 			driver.get(urlFlow);
 			try {Thread.sleep(6000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
@@ -342,6 +343,12 @@ public class TestBase {
 		    page0.ingresarflow();
 		}
 		
+		public void loginOperativo(WebDriver driver) {
+			driver.get(urlAmbiente);
+			try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+			Login page0 = new Login(driver);
+		    page0.ingresarOperativo();
+		}
 		
 		/**Ingresa con los datos de la cuenta Nicolas.
 		 * Para el Modulo Sales tiene vinculado el perfil de Logistica	 */
@@ -1140,7 +1147,7 @@ public class TestBase {
 	@DataProvider
 	public Object[][] AltaServicios() throws Exception{
 
-	 Object[][] testObjArray = ExcelUtils.getTableArray("Cuentas.xlsx","PerfilGestiones",1,1,4,"Alta Servicio");
+	 Object[][] testObjArray = ExcelUtils.getTableArray(dataProviderE2E(),"E2EconPago",1,1,2,"Alta Servicio");
 
 	 return (testObjArray);
 
@@ -1668,8 +1675,32 @@ public class TestBase {
 
 		 return (testObjArray);
 	}
+	@DataProvider
+	public Object[][] SimCardSiniestroAG() throws Exception{
+		
+		Object[][] testObjArray =  ExcelUtils.getTableArray(dataProviderE2E(),"E2EconPago",1,1,17,"SimCard Siniestro Agente");
+		
+		return (testObjArray);
+	}
 	
 	@DataProvider
+	public Object[][] SimCardSiniestroOfCom() throws Exception{
+		
+		Object[][] testObjArray =  ExcelUtils.getTableArray(dataProviderE2E(),"E2EconPago",1,1,2,"SimCard Siniestro OfCom");
+		
+		return (testObjArray);
+	}
+	
+	@DataProvider
+	public Object[][] DiagnosticoInc() throws Exception{
+		
+		Object[][] testObjArray =  ExcelUtils.getTableArray(dataProviderE2E(),"E2EconPago",1,1,2,"DiagnInconveniente");
+		
+		return (testObjArray);
+	}
+	@DataProvider
+	public Object[][] serviciotecnico() throws Exception {
+		Object[][] testObjArray = ExcelUtils.getTableArray(dataProviderE2E(),"E2EsinPago",1,1,3,"Servicio Tecnico");
 	public Object[][] serviciotecnicoR() throws Exception {
 		Object[][] testObjArray = ExcelUtils.getTableArray(dataProviderE2E(),"E2EsinPago",1,1,7,"Servicio Tecnico Reparacion");
 
@@ -1697,4 +1728,32 @@ public class TestBase {
 		 return (testObjArray);
 	}
 	
+	@DataProvider
+	public Object[][] HistoriaRecarga() throws Exception {
+		Object[][] testObjArray = ExcelUtils.getTableArray(dataProviderE2E(),"E2EsinPago",1,1,2,"HistorialRecargaSOS");
+
+		 return (testObjArray);
+	}
+	
+	public void guardarLineasNominadas(String data) throws IOException {
+		File archivo=new File("DatosNominacion.txt");
+		/*if (!archivo.exists())
+			FileWriter ArchiSa=new FileWriter(archivo,true);
+			//archivo.delete();*/
+		//Crear objeto FileWriter que sera el que nos ayude a escribir sobre archivo
+		FileWriter ArchiSa=new FileWriter(archivo.getAbsoluteFile(),true);
+		BufferedWriter bw = new BufferedWriter(ArchiSa);
+		PrintWriter wr = new PrintWriter(bw); 
+		wr.append(data+"\r\n");
+		wr.close();
+		bw.close();
+		ArchiSa.close();
+	}
+	
+	@DataProvider
+	public Object[][] LineasNominadas() throws Exception {
+		Object[][] testObjArray = ExcelUtils.getTableArray(dataProviderE2E(),"ListaLineas",1,1,1,"LineaNominada");
+
+		 return (testObjArray);
+	}
 }
