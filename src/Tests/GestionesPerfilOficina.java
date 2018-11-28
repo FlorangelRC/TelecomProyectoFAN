@@ -5186,9 +5186,8 @@ public class GestionesPerfilOficina extends TestBase {
 		sleep(15000);
 		//driver.findElement(By.cssSelector(".slds-button.cpq-item-has-children")).click();//Plan con Tarjeta Repro button
 		//ppt.getwPlanConTarjetaRepro().click();//Plan con Tarjeta Repro button
-		sleep(5000);
 		ppt = new PagePerfilTelefonico(driver);
-		ppt.altaBajaServicio("Alta", "servicios basicos general movil", "Restriccion Ident. de Llamadas", driver);
+		ppt.altaBajaServicio("Baja", "servicios basicos general movil", "Restriccion Ident. de Llamadas", driver);
 		driver.findElement(By.cssSelector(".slds-button.slds-m-left--large.slds-button--brand.ta-button-brand")).click();//Continuar
 		//ppt.getwAltaBajaContinuar().click();//Continuar
 		sleep(10000);
@@ -5247,41 +5246,8 @@ public class GestionesPerfilOficina extends TestBase {
 		sleep(5000);
 		driver.switchTo().frame(cambioFrame(driver, By.id("tab-default-1")));
 		sleep(15000);
-		driver.findElement(By.cssSelector(".slds-button.cpq-item-has-children")).click();
-		sleep(5000);
-		boolean bAssert = false;
-		List<WebElement> sServicios= driver.findElements(By.xpath("//*[@class='cpq-item-product-child-level-1 cpq-item-child-product-name-wrapper']"));
-		for(WebElement a: sServicios) {
-			if (a.getText().toLowerCase().contains("servicios basicos general movil".toLowerCase())) {
-					a.findElement(By.tagName("button")).click();
-						sleep(8000);
-						bAssert= true;
-						break;
-			}
-		}
-		Assert.assertTrue(bAssert);
-		sleep(17000);
-		bAssert = false;
-		List <WebElement> wContestador = driver.findElements(By.cssSelector(".cpq-item-product-child-level-2.cpq-item-child-product-name-wrapper"));
-		for(WebElement d : wContestador){
-			if(d.getText().contains("CONTESTADOR")){
-			   cc.obligarclick(d.findElement(By.cssSelector(".slds-button.slds-button_icon-small")));
-			   bAssert = true;
-			   break;
-			}
-		}
-		Assert.assertTrue(bAssert);
-		sleep(10000);
-		List <WebElement> wServicios = driver.findElements(By.cssSelector("[class='cpq-item-product-child-level-2 ng-not-empty ng-valid'] [class='slds-is-relative']"));
-		for(WebElement r : wServicios){
-			if(r.getText().contains("Voice Mail con Clave")){
-				cc.obligarclick(r.findElement(By.cssSelector(".slds-button.slds-button_neutral")));
-				sleep(5000);
-				break;
-			}
-		}
-		driver.findElement(By.cssSelector(".slds-button.slds-button--destructive")).click();
-		sleep(10000);
+		ppt = new PagePerfilTelefonico(driver);
+		ppt.altaBajaServicio("Alta", "Servicios basicos general movil", "Contestador", "Voice Mail con Clave", driver);
 		driver.findElement(By.cssSelector(".slds-button.slds-m-left--large.slds-button--brand.ta-button-brand")).click();
 		sleep(10000);
 		WebElement wMessageBox = driver.findElement(By.id("TextBlock1")).findElement(By.className("ng-binding"));
