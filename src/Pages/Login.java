@@ -333,4 +333,12 @@ public class Login extends BasePage {
 			ClickF.click();
 			try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 		}
+		
+		public void ingresarOperativo() {
+			logininterno.click();
+			username.sendKeys("UAT552929");
+			password.sendKeys("Testa10k");
+			login.click();
+			try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		}
 }

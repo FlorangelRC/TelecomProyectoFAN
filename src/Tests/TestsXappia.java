@@ -147,8 +147,74 @@ public class TestsXappia extends TestBase {
 		sleep(7500);
 		driver.findElement(By.id("idp_section_buttons")).click();
 		sleep(7000);
-		driver.findElement(By.name("Ecom_User_ID")).sendKeys("UAT549492");
-		driver.findElement(By.name("Ecom_Password")).sendKeys("Testa10k");
+		if(TestBase.urlAmbiente.contains("sit")) {
+			driver.findElement(By.name("Ecom_User_ID")).sendKeys("UAT549492");
+			sleep(3000);
+			driver.findElement(By.name("Ecom_Password")).sendKeys("Testa10k");
+		
+		}else {
+			driver.findElement(By.name("Ecom_User_ID")).sendKeys("uat195528");
+			sleep(3000);
+			driver.findElement(By.name("Ecom_Password")).sendKeys("Testa10k");
+		}
+		sleep(3000);
+		driver.findElement(By.id("loginButton2")).click();
+		sleep(8000);
+	}
+	
+	private void LoguearTelefonico() {
+		irAConsolaFAN();
+		driver.findElement(By.id("userNav")).click();
+		driver.findElement(By.id("app_logout")).click();
+		sleep(9000);
+		driver.findElement(By.id("userDropdown")).click();
+		sleep(3000);
+		driver.findElement(By.id("logout")).click();
+		sleep(5000);
+		driver.get(urlAmbiente);
+		driver.findElement(By.id("cancel_idp_hint")).click();
+		sleep(7500);
+		driver.findElement(By.id("idp_section_buttons")).click();
+		sleep(7000);
+		if(TestBase.urlAmbiente.contains("uat")) {
+			driver.findElement(By.name("Ecom_User_ID")).sendKeys("uat592149");
+			sleep(3000);
+			driver.findElement(By.name("Ecom_Password")).sendKeys("Testa10k");
+		}else {
+			driver.findElement(By.name("Ecom_User_ID")).sendKeys("UAT569076");
+			sleep(3000);
+			driver.findElement(By.name("Ecom_Password")).sendKeys("Testa10k");
+		}
+		sleep(3000);
+		driver.findElement(By.id("loginButton2")).click();
+		sleep(8000);
+		}
+	
+	public void LoguearBackOffice() {
+		irAConsolaFAN();
+		driver.findElement(By.id("userNav")).click();
+		driver.findElement(By.id("app_logout")).click();
+		sleep(9000);
+		driver.findElement(By.id("userDropdown")).click();
+		sleep(3000);
+		driver.findElement(By.id("logout")).click();
+		sleep(5000);
+		driver.get(urlAmbiente);
+		driver.findElement(By.id("cancel_idp_hint")).click();
+		sleep(7500);
+		driver.findElement(By.id("idp_section_buttons")).click();
+		sleep(7000);
+		if(TestBase.urlAmbiente.contains("sit")) {
+			driver.findElement(By.name("Ecom_User_ID")).sendKeys("uat569076");
+			sleep(3000);
+			driver.findElement(By.name("Ecom_Password")).sendKeys("Testa10k");
+			
+		}else {
+			driver.findElement(By.name("Ecom_User_ID")).sendKeys("UAT569076");
+			sleep(3000);
+			driver.findElement(By.name("Ecom_Password")).sendKeys("Testa10k");
+			}
+		sleep(3000);
 		driver.findElement(By.id("loginButton2")).click();
 		sleep(8000);
 	}
@@ -1401,7 +1467,152 @@ public class TestsXappia extends TestBase {
 			}
 		}
 		Assert.assertTrue(nominacion);
-	}	
+	}
 	
+	@Test (groups = {"SIT","UAT"})
+	public void TXSU00014_Validar_existencia_del_boton_gestion_de_clientes_en_perfil_oficina_comercial() {
+		irAConsolaFAN();
+		sb.cerrarPestaniaGestion(driver);
+		cc.menu_360_Ir_A("Inicio");
+		sleep(45000);
+		driver.switchTo().frame(cambioFrame(driver, By.cssSelector(".hasMotif.homeTab.homepage.ext-webkit.ext-chrome.sfdcBody.brandQuaternaryBgr")));
+		List<WebElement> frames = driver.findElements(By.tagName("iframe"));
+		boolean a = false;
+		boolean enc = false;
+		int index = 0;
+		for (WebElement frame : frames) {
+			try {
+				driver.switchTo().frame(frame);
+				driver.findElement(By.cssSelector(".slds-grid.slds-m-bottom_small.slds-wrap.cards-container")).getText();
+				driver.findElement(By.cssSelector(".slds-grid.slds-m-bottom_small.slds-wrap.cards-container")).isDisplayed();
+				driver.switchTo().frame(cambioFrame(driver, By.cssSelector(".hasMotif.homeTab.homepage.ext-webkit.ext-chrome.sfdcBody.brandQuaternaryBgr")));
+				enc = true;
+				break;
+			} catch (NoSuchElementException e) {
+				index++;
+				driver.switchTo().frame(cambioFrame(driver, By.cssSelector(".hasMotif.homeTab.homepage.ext-webkit.ext-chrome.sfdcBody.brandQuaternaryBgr")));
+			}
+		}
+		if (enc == false)
+			index = -1;
+		try {
+			driver.switchTo().frame(frames.get(index));
+		} catch (ArrayIndexOutOfBoundsException e) {}
+		WebElement conf = driver.findElement(By.cssSelector(".slds-grid.slds-m-bottom_small.slds-wrap.cards-container"));
+		if(conf.getText().toLowerCase().contains("gesti\u00f3n de clientes")) {
+			a = true;
+		}
+		Assert.assertTrue(a);
+	}
 	
+	@Test (groups = {"SIT","UAT"})
+	public void TXSU00015_Validar_existencia_del_boton_gestion_de_clientes_en_perfil_Agente() {
+		LoguearAgente();
+		irAConsolaFAN();
+		sb.cerrarPestaniaGestion(driver);
+		cc.menu_360_Ir_A("Inicio");
+		sleep(45000);
+		driver.switchTo().frame(cambioFrame(driver, By.cssSelector(".hasMotif.homeTab.homepage.ext-webkit.ext-chrome.sfdcBody.brandQuaternaryBgr")));
+		List<WebElement> frames = driver.findElements(By.tagName("iframe"));
+		boolean a = false;
+		boolean enc = false;
+		int index = 0;
+		for (WebElement frame : frames) {
+			try {
+				driver.switchTo().frame(frame);
+				driver.findElement(By.cssSelector(".slds-grid.slds-m-bottom_small.slds-wrap.cards-container")).getText();
+				driver.findElement(By.cssSelector(".slds-grid.slds-m-bottom_small.slds-wrap.cards-container")).isDisplayed();
+				driver.switchTo().frame(cambioFrame(driver, By.cssSelector(".hasMotif.homeTab.homepage.ext-webkit.ext-chrome.sfdcBody.brandQuaternaryBgr")));
+				enc = true;
+				break;
+			} catch (NoSuchElementException e) {
+				index++;
+				driver.switchTo().frame(cambioFrame(driver, By.cssSelector(".hasMotif.homeTab.homepage.ext-webkit.ext-chrome.sfdcBody.brandQuaternaryBgr")));
+			}
+		}
+		if (enc == false)
+			index = -1;
+		try {
+			driver.switchTo().frame(frames.get(index));
+		} catch (ArrayIndexOutOfBoundsException e) {}
+		WebElement conf = driver.findElement(By.cssSelector(".slds-grid.slds-m-bottom_small.slds-wrap.cards-container"));
+		if(conf.getText().toLowerCase().contains("gesti\u00f3n de clientes")) {
+			a = true;
+		}
+		Assert.assertTrue(a);
+	}
+	
+	@Test (groups = {"SIT","UAT"})
+	public void TXSU00016_Validar_existencia_del_boton_gestion_de_clientes_en_perfil_Telefonico() {
+		LoguearTelefonico();
+		irAConsolaFAN();
+		sb.cerrarPestaniaGestion(driver);
+		cc.menu_360_Ir_A("Inicio");
+		sleep(45000);
+		driver.switchTo().frame(cambioFrame(driver, By.cssSelector(".hasMotif.homeTab.homepage.ext-webkit.ext-chrome.sfdcBody.brandQuaternaryBgr")));
+		List<WebElement> frames = driver.findElements(By.tagName("iframe"));
+		boolean a = false;
+		boolean enc = false;
+		int index = 0;
+		for (WebElement frame : frames) {
+			try {
+				driver.switchTo().frame(frame);
+				driver.findElement(By.cssSelector(".slds-grid.slds-m-bottom_small.slds-wrap.cards-container")).getText();
+				driver.findElement(By.cssSelector(".slds-grid.slds-m-bottom_small.slds-wrap.cards-container")).isDisplayed();
+				driver.switchTo().frame(cambioFrame(driver, By.cssSelector(".hasMotif.homeTab.homepage.ext-webkit.ext-chrome.sfdcBody.brandQuaternaryBgr")));
+				enc = true;
+				break;
+			} catch (NoSuchElementException e) {
+				index++;
+				driver.switchTo().frame(cambioFrame(driver, By.cssSelector(".hasMotif.homeTab.homepage.ext-webkit.ext-chrome.sfdcBody.brandQuaternaryBgr")));
+			}
+		}
+		if (enc == false)
+			index = -1;
+		try {
+			driver.switchTo().frame(frames.get(index));
+		} catch (ArrayIndexOutOfBoundsException e) {}
+		WebElement conf = driver.findElement(By.cssSelector(".slds-grid.slds-m-bottom_small.slds-wrap.cards-container"));
+		if(conf.getText().toLowerCase().contains("gesti\u00f3n de clientes")) {
+			a = true;
+		}
+		Assert.assertTrue(a);
+	}
+	
+	@Test (groups = {"SIT","UAT"})
+	public void TXSU00017_Validar_existencia_del_boton_gestion_de_clientes_en_perfil_Back_office() {
+		LoguearBackOffice();
+		irAConsolaFAN();
+		sb.cerrarPestaniaGestion(driver);
+		cc.menu_360_Ir_A("Inicio");
+		sleep(45000);
+		driver.switchTo().frame(cambioFrame(driver, By.cssSelector(".hasMotif.homeTab.homepage.ext-webkit.ext-chrome.sfdcBody.brandQuaternaryBgr")));
+		List<WebElement> frames = driver.findElements(By.tagName("iframe"));
+		boolean a = false;
+		boolean enc = false;
+		int index = 0;
+		for (WebElement frame : frames) {
+			try {
+				driver.switchTo().frame(frame);
+				driver.findElement(By.cssSelector(".slds-grid.slds-m-bottom_small.slds-wrap.cards-container")).getText();
+				driver.findElement(By.cssSelector(".slds-grid.slds-m-bottom_small.slds-wrap.cards-container")).isDisplayed();
+				driver.switchTo().frame(cambioFrame(driver, By.cssSelector(".hasMotif.homeTab.homepage.ext-webkit.ext-chrome.sfdcBody.brandQuaternaryBgr")));
+				enc = true;
+				break;
+			} catch (NoSuchElementException e) {
+				index++;
+				driver.switchTo().frame(cambioFrame(driver, By.cssSelector(".hasMotif.homeTab.homepage.ext-webkit.ext-chrome.sfdcBody.brandQuaternaryBgr")));
+			}
+		}
+		if (enc == false)
+			index = -1;
+		try {
+			driver.switchTo().frame(frames.get(index));
+		} catch (ArrayIndexOutOfBoundsException e) {}
+		WebElement conf = driver.findElement(By.cssSelector(".slds-grid.slds-m-bottom_small.slds-wrap.cards-container"));
+		if(conf.getText().toLowerCase().contains("gesti\u00f3n de clientes")) {
+			a = true;
+		}
+		Assert.assertTrue(a);
+	}
 }
