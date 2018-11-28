@@ -41,7 +41,7 @@ public class TestsXappia extends TestBase {
 	private SalesBase sb;
 	private Marketing m;
 	
-	//@BeforeClass (groups = "UAT")
+	@BeforeClass (groups = "UAT")
 	public void loginUAT() {
 		driver = setConexion.setupEze();
 		driver.get("https://telecomcrm--uat.cs53.my.salesforce.com");
@@ -56,7 +56,7 @@ public class TestsXappia extends TestBase {
 		sb = new SalesBase(driver);
 	}
 	
-	@BeforeClass (groups = "SIT")
+	//@BeforeClass (groups = "SIT")
 	public void loginSIT() {
 		driver = setConexion.setupEze();
 		driver.get("https://crm--sit.cs14.my.salesforce.com/");
@@ -71,12 +71,12 @@ public class TestsXappia extends TestBase {
 		sb = new SalesBase(driver);
 	}
 	
-	//@BeforeMethod (groups = "UAT")
+	@BeforeMethod (groups = "UAT")
 	public void beforeUAT() {
 		driver.get("https://telecomcrm--uat.cs53.my.salesforce.com");
 	}
 	
-	@BeforeMethod (groups = "SIT")
+	//@BeforeMethod (groups = "SIT")
 	public void beforeSIT() {
 		driver.get("https://crm--sit.cs14.my.salesforce.com/");
 	}
@@ -1258,6 +1258,7 @@ public class TestsXappia extends TestBase {
 				a = false;
 			}
 		}
+	Assert.assertTrue(a);
 	}	
 	
 	@Test (groups = {"SIT","UAT"}, dataProvider="ventaPackInternacional30SMS")
@@ -1401,4 +1402,6 @@ public class TestsXappia extends TestBase {
 		}
 		Assert.assertTrue(nominacion);
 	}	
+	
+	
 }

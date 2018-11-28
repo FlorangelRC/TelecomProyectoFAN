@@ -4675,6 +4675,7 @@ public class GestionesPerfilOficina extends TestBase {
 		sleep(3000);
 		WebElement nroCaso = driver.findElement(By.cssSelector(".slds-table.slds-table--bordered.slds-table--resizable-cols.slds-table--fixed-layout.via-slds-table-pinned-header")).findElement(By.tagName("tbody")).findElement(By.tagName("tr"));
 		nroCaso.findElements(By.tagName("td")).get(2).click();
+		System.out.println(nroCaso.getText());
 		sleep(5000);
 		WebElement fechaYHora = null;
 			driver.switchTo().frame(cambioFrame(driver, By.name("close")));
