@@ -12,6 +12,8 @@ import java.util.List;
 import java.util.Random;
 import java.util.regex.Pattern;
 
+import org.json.JSONArray;
+import org.json.JSONObject;
 import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.By.ById;
@@ -26,9 +28,6 @@ import com.sun.corba.se.pept.transport.Connection;
 
 import Tests.TestBase;
 import javafx.scene.control.ScrollToEvent;
-
-import org.json.JSONArray;
-import org.json.JSONObject;
 
 public class OMQPage extends BasePage {
 

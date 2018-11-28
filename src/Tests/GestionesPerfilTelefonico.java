@@ -706,11 +706,11 @@ public class GestionesPerfilTelefonico extends TestBase{
 		driver.findElement(By.id("text-input-02")).click();
 		List <WebElement> periodo = driver.findElement(By.id("option-list-01")).findElements(By.tagName("li"));
 		periodo.get(1).click();
-		/*for (WebElement p : periodo) {
-			if(p.getText().equals("Los �ltimos 15 d�as")) {
-				
-			}
-		}*/
+		buscarYClick(driver.findElements(By.cssSelector(".slds-button.slds-button--brand")),"equals", "consultar");
+		WebElement plan = driver.findElement(By.cssSelector(".slds-grid.slds-wrap")).findElements(By.className("unit-div")).get(2);
+		System.out.println(plan.getText());
+		System.out.println(plan.getAttribute("value"));
+		Assert.assertTrue(plan.isDisplayed());
 		/*WebElement dmso = driver.findElements(By.xpath("//*[@id='j_id0:j_id5']/div//div[2]/ng-include/div/div[2]/div[*]")).get(2).findElement(By.className("unit-div"));
 		System.out.println(dmso.getText());
 		System.out.println(dmso.getAttribute("value"));
@@ -2373,7 +2373,7 @@ public class GestionesPerfilTelefonico extends TestBase{
 		detalles = imagen + " -ServicioTecnico: " + sDNI;
 		boolean desregistrar = false;
 		CustomerCare cCC=new CustomerCare(driver);
-		TechCare_Ola1 page=new TechCare_Ola1(driver);;
+		TechCare_Ola1 page=new TechCare_Ola1(driver);
 		TechnicalCareCSRDiagnosticoPage tech = new TechnicalCareCSRDiagnosticoPage(driver);
 		driver.switchTo().frame(cambioFrame(driver, By.id("SearchClientDocumentType")));
 		sb.BuscarCuenta("DNI", sDNI);
@@ -2629,7 +2629,7 @@ public class GestionesPerfilTelefonico extends TestBase{
 		datosOrden.add("Baja de Servicio, orden numero: " + sOrder + ", DNI: " + sDNI);
 	}
 	
-	@Test (groups = {"GestionesPerfilOficina", "BaseDeConocimiento", "Ciclo3"}, dataProvider = "CuentaVista360")
+	@Test (groups = {"GestionesPerfilTelefonico", "BaseDeConocimiento", "Ciclo3"}, dataProvider = "CuentaVista360")
 	public void TS130755_CRM_REPRO_BDC_Customer_Care_Problemas_con_Recargas_PerfilTelefonico_Articulo_de_Medios_de_Recargas(String sDNI, String sNombre) {
 		imagen = "TS125107";
 		driver.switchTo().frame(cambioFrame(driver, By.id("SearchClientDocumentType")));
