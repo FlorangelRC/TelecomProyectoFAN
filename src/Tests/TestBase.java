@@ -1180,9 +1180,17 @@ public class TestBase {
 	
 	
 	@DataProvider
-	public Object [][] ventaPack() throws Exception{
+	public Object [][] ventaPack50Tele() throws Exception{
 		
-		Object[][] testObjArray = ExcelUtils.getTableArray(dataProviderE2E(),"E2EconPago",1,1,14,"packTelefonico");
+		Object[][] testObjArray = ExcelUtils.getTableArray(dataProviderE2E(),"E2EconPago",1,1,14,"Pack 50 min Tel");
+		
+		return (testObjArray);
+	}
+	
+	@DataProvider
+	public Object [][] ventaPack50ofic() throws Exception{
+		
+		Object[][] testObjArray = ExcelUtils.getTableArray(dataProviderE2E(),"E2EconPago",1,1,3,"Pack 50 min Oficina");
 		
 		return (testObjArray);
 	}
@@ -1198,7 +1206,31 @@ public class TestBase {
 	@DataProvider
 	public Object [][] ventaPackInternacional30SMS() throws Exception{
 		
-		Object[][] testObjArray = ExcelUtils.getTableArray(dataProviderE2E(),"E2EconPago",1,1,14,"packTelefInternacional30SMS");
+		Object[][] testObjArray = ExcelUtils.getTableArray(dataProviderE2E(),"E2EconPago",1,1,14,"packTelefoInternacional30SMS");
+		
+		return (testObjArray);
+	}
+	
+	@DataProvider
+	public Object [][] ventaPack500min() throws Exception{
+		
+		Object[][] testObjArray = ExcelUtils.getTableArray(dataProviderE2E(),"E2EconPago",1,1,3,"Pack500min");
+		
+		return (testObjArray);
+	}
+	
+	@DataProvider
+	public Object [][] ventaPackA40() throws Exception{
+		
+		Object[][] testObjArray = ExcelUtils.getTableArray(dataProviderE2E(),"E2EconPago",1,1,3,"PackAdela40");
+		
+		return (testObjArray);
+	}
+	
+	@DataProvider
+	public Object [][] ventaPackM2M() throws Exception{
+		
+		Object[][] testObjArray = ExcelUtils.getTableArray(dataProviderE2E(),"E2EconPago",1,1,3,"Pack M2M 10");
 		
 		return (testObjArray);
 	}
