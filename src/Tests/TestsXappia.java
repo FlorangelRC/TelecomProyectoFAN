@@ -14,7 +14,8 @@ import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
-
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.Assert;
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;
@@ -1400,5 +1401,135 @@ public class TestsXappia extends TestBase {
 			}
 		}
 		Assert.assertTrue(nominacion);
-	}	
+	}
+	
+	@Test (groups = "UAT")
+	public void TXU0011_Crear_Sugerencias_Estado_Del_Caso() {
+		irAConsolaFAN();
+		sb.cerrarPestaniaGestion(driver);
+		irAGestionDeClientes();
+		driver.switchTo().frame(cambioFrame(driver, By.id("SearchClientDocumentType")));
+		sb.BuscarCuenta("DNI", "22223002");
+		driver.findElement(By.cssSelector(".slds-tree__item.ng-scope")).click();
+		sleep(10000);
+		cc.irAGestion("sugerencia");
+		driver.switchTo().frame(cambioFrame(driver, By.id("Category")));
+		selectByText(driver.findElement(By.id("Category")), "Sugerencias");
+		selectByText(driver.findElement(By.id("Subcategory")), "Calidad en la Atenci\u00f3n");
+		driver.findElement(By.id("ManagementType_nextBtn")).click();
+		sleep(5000);
+		WebElement msj = null, estado = null;
+		for (WebElement x : driver.findElements(By.cssSelector(".vlc-slds-inline-control__label.ng-binding"))) {
+			if (x.getText().toLowerCase().contains("el n\u00famero de confirmaci\u00f3n es"))
+				msj = x;
+		}
+		String caso = msj.getText();
+		caso = caso.substring(caso.indexOf("0"), caso.length());
+		cc.buscarCaso(caso);
+		driver.switchTo().frame(cambioFrame(driver, By.name("close")));
+		for (WebElement x : driver.findElements(By.className("pbSubsection"))) {
+			if (x.getText().toLowerCase().contains("propietario del caso"))
+				estado = x;
+		}
+		estado = estado.findElement(By.tagName("tbody"));
+		for (WebElement x : estado.findElements(By.tagName("tr"))) {
+			if (x.getText().toLowerCase().contains("estado"))
+				estado = x;
+		}
+		if (estado.findElements(By.tagName("td")).get(3).getText().equalsIgnoreCase("Closed"))
+			Assert.assertTrue(false);
+	}
+	
+	@Test (groups = "SIT")
+	public void TXS0014_Gestion_Sugerencias() {
+		irAConsolaFAN();
+		sb.cerrarPestaniaGestion(driver);
+		irAGestionDeClientes();
+		driver.switchTo().frame(cambioFrame(driver, By.id("SearchClientDocumentType")));
+		sb.BuscarCuenta("DNI", "22222035");
+		driver.findElement(By.cssSelector(".slds-tree__item.ng-scope")).click();
+		sleep(10000);
+		cc.buscarGestion("sugerencia");
+		sleep(3000);
+		if (!driver.findElement(By.cssSelector(".slds-button.slds-button--neutral.slds-truncate")).isDisplayed())
+			Assert.assertTrue(false);
+	}
+	
+	@Test (groups = {"SIT","UAT"})
+	public void TXSU00018_Mensaje_Guardar_Para_Despues_Recarga_De_Credito() {
+		irAConsolaFAN();
+		sb.cerrarPestaniaGestion(driver);
+		irAGestionDeClientes();
+		driver.switchTo().frame(cambioFrame(driver, By.id("SearchClientDocumentType")));
+		if (TestBase.urlAmbiente.contains("sit"))
+			sb.BuscarCuenta("DNI", "15907314");
+		else
+			sb.BuscarCuenta("DNI", "22223001");
+		driver.findElement(By.cssSelector(".slds-tree__item.ng-scope")).click();
+		sleep(10000);
+		driver.switchTo().frame(cambioFrame(driver, By.className("card-top")));
+		driver.findElement(By.className("card-top")).click();
+		sleep(3000);
+		cc.irAGestionEnCard("Recarga de cr\u00e9dito");
+		driver.switchTo().frame(cambioFrame(driver, By.id("RefillAmount")));
+		driver.findElement(By.id("RefillAmount")).sendKeys("123");
+		driver.findElement(By.id("AmountSelectionStep_nextBtn")).click();
+		sleep(10000);
+		if (TestBase.urlAmbiente.contains("sit"))
+			try {
+				driver.findElements(By.cssSelector(".slds-button.slds-button--neutral.ng-binding.ng-scope")).get(1).click();
+				sleep(5000);
+			} catch (Exception e) {}
+		buscarYClick(driver.findElements(By.cssSelector(".vlc-slds-button--tertiary.ng-binding.ng-scope")), "contains", "guardar para despu\u00e9s");
+		sleep(3000);
+		driver.findElement(By.id("alert-ok-button")).click();
+		sleep(5000);
+		if (driver.findElement(By.className("vlc-slds-figure")).getText().equalsIgnoreCase("Your OmniScript is saved for later"))
+			Assert.assertTrue(false);
+	}
+	
+	@Test (groups = "UAT")
+	public void TXU0012_Existencia_de_Renovacion_De_Cuota_En_Flyout() {
+		irAConsolaFAN();
+		sb.cerrarPestaniaGestion(driver);
+		irAGestionDeClientes();
+		driver.switchTo().frame(cambioFrame(driver, By.id("SearchClientDocumentType")));
+		sb.BuscarCuenta("DNI", "22223001");
+		driver.findElement(By.cssSelector(".slds-tree__item.ng-scope")).click();
+		sleep(10000);
+		driver.switchTo().frame(cambioFrame(driver, By.className("card-top")));
+		driver.findElement(By.className("card-top")).click();
+		sleep(3000);
+		WebElement lista = driver.findElement(By.cssSelector(".slds-small-size--3-of-12.slds-medium-size--3-of-12.slds-large-size--3-of-12.flyout-actions"));
+		for (WebElement x : lista.findElements(By.tagName("li"))) {
+			if (!x.getText().toLowerCase().contains("renovacion de cuota"))
+				Assert.assertTrue(false);
+		}
+	}
+	
+	@Test (groups = {"SIT","UAT"})
+	public void TXSU00019_Funcionamiento_De_Buscador_De_Base_De_Conocimiento() {
+		irAConsolaFAN();
+		sb.cerrarPestaniaGestion(driver);
+		irAGestionDeClientes();
+		driver.switchTo().frame(cambioFrame(driver, By.id("SearchClientDocumentType")));
+		if (TestBase.urlAmbiente.contains("sit"))
+			sb.BuscarCuenta("DNI", "15907314");
+		else
+			sb.BuscarCuenta("DNI", "22223001");
+		driver.findElement(By.cssSelector(".slds-tree__item.ng-scope")).click();
+		sleep(10000);
+		cc.irAGestion("inconvenientes");
+		driver.switchTo().frame(cambioFrame(driver, By.id("Step-TipodeAjuste_nextBtn")));
+		driver.findElement(By.id("vlcKnowledgeKeyword")).clear();
+		driver.findElement(By.id("vlcKnowledgeKeyword")).sendKeys("a");
+		try {
+			WebDriverWait wait = new WebDriverWait(driver, 10); 
+			WebElement element = wait.until(ExpectedConditions.elementToBeClickable(By.cssSelector(".slds-icon.slds-icon--small.slds-input__icon.slds-icon-text-default")));
+			element.click();
+			Assert.assertTrue(true);
+		} catch (Exception e) {
+			Assert.assertTrue(false);
+		}		
+	}
 }
