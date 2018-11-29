@@ -229,7 +229,7 @@ public void BuscarCuenta(String Type, String NDNI){
 	DNI.sendKeys(NDNI);
 	sleep(2000);
 	btnbuscar.click();
-	try {Thread.sleep(20000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+	try {Thread.sleep(10000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 }
 
 

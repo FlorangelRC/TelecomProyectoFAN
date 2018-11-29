@@ -366,6 +366,12 @@ public class PagePerfilTelefonico extends TestBase{
 				switch (sAltaBaja.toLowerCase()) {
 					case "alta":
 						System.out.println("\nSign Up");
+						try {
+							System.out.println("Is Displayed? " + wAux2.findElement(By.cssSelector(".slds-button.slds-button_neutral")).isDisplayed());
+						}
+						catch(Exception eE) {
+							Assert.assertTrue(false);
+						}
 						wAux2.findElement(By.cssSelector(".slds-button.slds-button_neutral")).click();
 						sleep(5000);
 						bAssert = true;
@@ -373,6 +379,12 @@ public class PagePerfilTelefonico extends TestBase{
 					case "baja":
 						System.out.println("\nSign Down");
 						sleep(5000);
+						try {
+							System.out.println("Is Displayed? " + wAux2.findElement(By.cssSelector(".slds-button.slds-button_icon-border-filled.cpq-item-actions-dropdown-button")).isDisplayed());
+						}
+						catch(Exception eE) {
+							Assert.assertTrue(false);
+						}
 						wAux2.findElement(By.cssSelector(".slds-button.slds-button_icon-border-filled.cpq-item-actions-dropdown-button")).click();
 						sleep(10000);
 						List<WebElement> wButtons = wAux2.findElements(By.cssSelector(".slds-dropdown__item.cpq-item-actions-dropdown__item"));
@@ -476,7 +488,12 @@ public class PagePerfilTelefonico extends TestBase{
 					switch (sAltaBaja.toLowerCase()) {
 						case "alta":
 							System.out.println("\nSign Up");
-							System.out.println("Is Displayed? " + wAux3.findElement(By.cssSelector(".slds-button.slds-button_neutral")).isDisplayed());
+							try {
+								System.out.println("Is Displayed? " + wAux3.findElement(By.cssSelector(".slds-button.slds-button_neutral")).isDisplayed());
+							}
+							catch(Exception eE) {
+								Assert.assertTrue(false);
+							}
 							Assert.assertTrue(wAux3.findElement(By.cssSelector(".slds-button.slds-button_neutral")).isDisplayed());
 							wAux3.findElement(By.cssSelector(".slds-button.slds-button_neutral")).click();
 							sleep(5000);
@@ -485,6 +502,12 @@ public class PagePerfilTelefonico extends TestBase{
 						case "baja":
 							System.out.println("\nSign Down");
 							sleep(5000);
+							try {
+								System.out.println("Is Displayed? " + wAux3.findElement(By.cssSelector(".slds-button.slds-button_icon-border-filled.cpq-item-actions-dropdown-button")).isDisplayed());
+							}
+							catch(Exception eE) {
+								Assert.assertTrue(false);
+							}
 							wAux3.findElement(By.cssSelector(".slds-button.slds-button_icon-border-filled.cpq-item-actions-dropdown-button")).click();
 							sleep(10000);
 							List<WebElement> wButtons = wAux3.findElements(By.cssSelector(".slds-dropdown__item.cpq-item-actions-dropdown__item"));
