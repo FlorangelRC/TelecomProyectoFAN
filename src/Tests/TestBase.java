@@ -1698,9 +1698,16 @@ public class TestBase {
 		
 		return (testObjArray);
 	}
+	
+	public Object[][] serviciotecnicoR() throws Exception {
+		Object[][] testObjArray = ExcelUtils.getTableArray(dataProviderE2E(),"E2EsinPago",1,1,7,"Servicio Tecnico Reparacion");
+
+		 return (testObjArray);
+	}
+	
 	@DataProvider
-	public Object[][] serviciotecnico() throws Exception {
-		Object[][] testObjArray = ExcelUtils.getTableArray(dataProviderE2E(),"E2EsinPago",1,1,3,"Servicio Tecnico");
+	public Object[][] serviciotecnicoC() throws Exception {
+		Object[][] testObjArray = ExcelUtils.getTableArray(dataProviderE2E(),"E2EsinPago",1,1,7,"Servicio Tecnico Configuracion");
 
 		 return (testObjArray);
 	}
@@ -1744,6 +1751,14 @@ public class TestBase {
 	@DataProvider
 	public Object[][] LineasNominadas() throws Exception {
 		Object[][] testObjArray = ExcelUtils.getTableArray(dataProviderE2E(),"ListaLineas",1,1,1,"LineaNominada");
+
+		 return (testObjArray);
+	}
+	
+	@DataProvider
+	public Object[][] CuentaModificacionDeDNI() throws Exception{
+		
+		 Object[][] testObjArray = ExcelUtils.getTableArray(dataProviderE2E(),"E2EsinPago",1,1,2,"Modificacion De DNI");
 
 		 return (testObjArray);
 	}

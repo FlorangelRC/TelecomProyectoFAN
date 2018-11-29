@@ -30,7 +30,7 @@ public class CustomerCare extends BasePage {
 	
 	public CustomerCare(WebDriver driver){
 		setupNuevaPage(driver);
-        PageFactory.initElements(driver, this);
+        PageFactory.initElements(driver, this); 
 	}
 		
 	//Case information
@@ -1779,4 +1779,42 @@ public class CustomerCare extends BasePage {
 		Boolean bAssert = wEstado.get(0).getText().toLowerCase().equalsIgnoreCase(Status);
 		return bAssert;
 	}
+	//================================================================================Metodos=====Angel=============================================================================
+	public void seleccionDeHistorial(String sRecarga) {
+		TestBase TB = new TestBase();
+		WebElement historialDeRecargas = null;
+		driver.switchTo().frame(TB.cambioFrame(driver, By.cssSelector(".slds-button.slds-button_brand")));
+		for (WebElement x : driver.findElements(By.className("slds-card"))) {
+			if (x.getText().toLowerCase().contains(sRecarga)) {
+				historialDeRecargas = x;
+			}
+		}
+		historialDeRecargas.findElement(By.cssSelector(".slds-button.slds-button_brand")).click();
+	}
+	
+	public void verificacionDeHistorial(String sHistorial) {
+		TestBase TB = new TestBase();
+		boolean enc = false;
+		/*driver.switchTo().frame(TB.cambioFrame(driver, By.cssSelector(".slds-button.slds-button_brand")));
+		boolean a = false;
+		List <WebElement> pack = driver.findElements(By.cssSelector(".slds-m-around_small.ta-fan-slds"));
+		for(WebElement x : pack) {
+			if(x.getText().toLowerCase().contains(sHistorial)) {
+				System.out.println(x);
+				a = true;
+			}
+		}
+		Assert.assertTrue(a);*/
+		driver.switchTo().frame(TB.cambioFrame(driver, By.cssSelector(".slds-card.slds-m-around--small.ta-fan-slds")));
+		List <WebElement> historiales = driver.findElements(By.className("slds-card"));
+		for (WebElement UnH: historiales) {
+			//System.out.println(UnH.findElement(By.cssSelector(".slds-card__header.slds-grid")).getText());
+			if(UnH.findElement(By.cssSelector(".slds-card__header.slds-grid")).getText().equals(sHistorial)) {
+				enc = true;
+				break;
+			}
+		}
+		Assert.assertTrue(enc);
+	}
+	//================================================================================================================================================================================================================================================
 }
