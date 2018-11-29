@@ -2759,11 +2759,6 @@ public class GestionesPerfilTelefonico extends TestBase{
 		Assert.assertTrue(datos.equalsIgnoreCase("activada")||datos.equalsIgnoreCase("activated"));
 	}
 	
-	@Test(groups = { "GestionesPerfilAgente","Ciclo 3", "E2E" }, priority = 1, dataProvider = "DiagnosticoInc")
-	public void TS119245_CRM_Movil_REPRO_Diagn�stico_de_Voz_Valida_Red_y_Navegaci�n_Motivo_de_contacto_No_puedo_Llamar_desde_otro_pa�s_Conciliaci�n_Exitosa_Telefonico(){
-		
-	}
-	@Test (groups = {"GestionesPerfilOficina", "BaseDeConocimiento", "Ciclo3"}, dataProvider = "CuentaVista360")
 	@Test (groups = {"GestionesPerfilTelefonico", "BaseDeConocimiento", "Ciclo3"}, dataProvider = "CuentaVista360")
 	public void TS130755_CRM_REPRO_BDC_Customer_Care_Problemas_con_Recargas_PerfilTelefonico_Articulo_de_Medios_de_Recargas(String sDNI, String sNombre) {
 		imagen = "TS125107";

@@ -5877,7 +5877,8 @@ public class GestionesPerfilOficina extends TestBase {
 		WebElement gesti = driver.findElement(By.xpath("//*[@id='OutOfCoverageMessage']/div/p/p[2]/span/strong"));
 		String Ncaso = gesti.getText();
 		System.out.println("El numero de caso es: "+Ncaso);
-		assertTrue(Ncaso.equals(Ncaso));
+		caso = true;
+		assertTrue(caso);
 	}
 	
 }
