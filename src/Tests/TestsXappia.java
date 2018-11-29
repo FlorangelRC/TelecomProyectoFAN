@@ -1324,6 +1324,7 @@ public class TestsXappia extends TestBase {
 				a = false;
 			}
 		}
+	Assert.assertTrue(a);
 	}	
 	
 	@Test (groups = {"SIT","UAT"}, dataProvider="ventaPackInternacional30SMS")

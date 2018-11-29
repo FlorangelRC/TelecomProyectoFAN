@@ -43,7 +43,7 @@ public class GestionFlow extends TestBase {
 	
 	
 	@Test (groups = {"Flow","E2E"})
-	public void FlowConsultaServicioInactivo (WebDriver driver, String sLinea, String sServicio) throws AWTException {
+	public boolean FlowConsultaServicioInactivo (WebDriver driver, String sLinea, String sServicio) throws AWTException {
 	TestBase ts = new TestBase();
 	ts.abrirPestaniaNueva(driver);
 	sleep(5000);
@@ -84,21 +84,24 @@ public class GestionFlow extends TestBase {
 					txt1.add(e.getText());
 				}
 			}
-	Assert.assertTrue(txt1.contains(txt2));
-	System.out.println(sServicio+"Servicio Inactivo");
-	driver.switchTo().defaultContent();
-	Actions action = new Actions(driver);
-	action.moveToElement(driver.findElement(By.id("aNavUsuario"))).click(driver.findElements(By.cssSelector(".dropdown-item.navbarItemPersonalizado")).get(2)).perform();
-	sleep(5000);
-	driver.close();
-	sleep(2000);
-    driver.switchTo().window(tabs2.get(0));
-    sleep(1500);
+			boolean bAssert = txt1.contains(txt2);
+			if (bAssert) {
+				System.out.println(sServicio+"Activo Correctamente");
+			}
+			driver.switchTo().defaultContent();
+			Actions action = new Actions(driver);
+			action.moveToElement(driver.findElement(By.id("aNavUsuario"))).click(driver.findElements(By.cssSelector(".dropdown-item.navbarItemPersonalizado")).get(2)).perform();
+			sleep(5000);
+			driver.close();
+			sleep(2000);
+		    driver.switchTo().window(tabs2.get(0));
+		    sleep(1500);
+			return bAssert;
 	}	
 	
 	
 	@Test (groups = {"Flow","E2E"})
-	public void FlowConsultaServicioActivo (WebDriver driver, String sLinea, String sServicio) throws AWTException{
+	public boolean FlowConsultaServicioActivo (WebDriver driver, String sLinea, String sServicio) throws AWTException{
 	TestBase ts = new TestBase();
 	ts.abrirPestaniaNueva(driver);
 	sleep(5000);
@@ -138,8 +141,10 @@ public class GestionFlow extends TestBase {
 				txt1.add(e.getText());
 			}
 		}
-		Assert.assertTrue(txt1.contains(txt2));
-		System.out.println(sServicio+"Activo Correctamente");
+		boolean bAssert = txt1.contains(txt2);
+		if (bAssert) {
+			System.out.println(sServicio+"Activo Correctamente");
+		}
 		driver.switchTo().defaultContent();
 		Actions action = new Actions(driver);
 		action.moveToElement(driver.findElement(By.id("aNavUsuario"))).click(driver.findElements(By.cssSelector(".dropdown-item.navbarItemPersonalizado")).get(2)).perform();
@@ -148,13 +153,13 @@ public class GestionFlow extends TestBase {
 		sleep(2000);
 	    driver.switchTo().window(tabs2.get(0));
 	    sleep(1500);
-		
+		return bAssert;
 }
 	
 	
 	
 	@Test (groups = {"Flow","E2E"})
-	public void FlowServiciosActivos (WebDriver driver, String sLinea) throws AWTException{
+	public boolean FlowServiciosActivos (WebDriver driver, String sLinea) throws AWTException{
 	TestBase ts = new TestBase();
 	ts.abrirPestaniaNueva(driver);
 	sleep(5000);
@@ -206,7 +211,7 @@ public class GestionFlow extends TestBase {
 			}
 		}
 	System.out.println("Servicios Activos"+txt1);	
-	Assert.assertTrue(txt1.containsAll(txt2));
+	boolean bAssert = txt1.containsAll(txt2);
 	driver.switchTo().defaultContent();
 	Actions action = new Actions(driver);
 	action.moveToElement(driver.findElement(By.id("aNavUsuario"))).click(driver.findElements(By.cssSelector(".dropdown-item.navbarItemPersonalizado")).get(2)).perform();
@@ -215,6 +220,7 @@ public class GestionFlow extends TestBase {
 	sleep(2000);
 	driver.switchTo().window(tabs2.get(0));
 	sleep(2000);
+	return bAssert;
 	}
 		
 	
