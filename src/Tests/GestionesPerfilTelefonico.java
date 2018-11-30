@@ -42,6 +42,7 @@ public class GestionesPerfilTelefonico extends TestBase{
 	private CBS cbs;
 	private CBS_Mattu cbsm;
 	List <String> datosOrden =new ArrayList<String>();
+	PagePerfilTelefonico ppt;
 	String imagen;
 	String detalles;
 	
@@ -2489,11 +2490,14 @@ public class GestionesPerfilTelefonico extends TestBase{
 		driver.switchTo().frame(cambioFrame(driver, By.className("vlc-slds-knowledge-list-item")));
 		Assert.assertTrue(driver.findElement(By.className("vlc-slds-knowledge-list-item")).getText().contains("Actualizaci\u00f3n de Datos"));
 	}
-	@Test (groups = {"GestionesPerfilTelefonico", "ABMServicios", "E2E", "Ciclo3"}, dataProvider = "BajaServicios")
-	public void TC135753_CRM_Movil_REPRO_Alta_Servicio_sin_costo_Voice_Mail_con_Clave_y_Transferencia_de_Llamada_Telefonico(String sDNI, String sLinea){
+	@Test (groups = {"GestionesPerfilTelefonico", "ABMServicios", "E2E", "Ciclo3"}, dataProvider = "AltaServicios")
+	public void TC135753_CRM_Movil_REPRO_Alta_Servicio_sin_costo_Voice_Mail_con_Clave_y_Transferencia_de_Llamada_Telefonico(String sDNI, String sLinea) throws AWTException{
 		imagen = "TS135753";
 		detalles = null;
 		detalles = imagen+"-AltaServicio - DNI:"+sDNI;
+		GestionFlow gGF = new GestionFlow();
+		Assert.assertTrue(gGF.FlowConsultaServicioInactivo(driver, sLinea, "Voice Mail con Clave"));
+		Assert.assertTrue(gGF.FlowConsultaServicioInactivo(driver, sLinea, "Transferencia de Llamadas"));
 		BasePage cambioFrameByID=new BasePage();
 		sleep(30000);
 		driver.switchTo().frame(cambioFrameByID.getFrameForElement(driver, By.id("SearchClientDocumentType")));
@@ -2536,65 +2540,31 @@ public class GestionesPerfilTelefonico extends TestBase{
 		sleep(5000);
 		driver.switchTo().frame(cambioFrame(driver, By.id("tab-default-1")));
 		sleep(15000);
-		driver.findElement(By.cssSelector(".slds-button.cpq-item-has-children")).click();
-		sleep(5000);
-		boolean bAssert = false;
-		List<WebElement> sServicios= driver.findElements(By.xpath("//*[@class='cpq-item-product-child-level-1 cpq-item-child-product-name-wrapper']"));
-		for(WebElement a: sServicios) {
-			if (a.getText().toLowerCase().contains("servicios basicos general movil".toLowerCase())) {
-					a.findElement(By.tagName("button")).click();
-						sleep(8000);
-						bAssert= true;
-						break;
-			}
-		}
-		Assert.assertTrue(bAssert);
-		sleep(17000);
-		List <WebElement> wServicios = driver.findElements(By.cssSelector("[class='cpq-item-product-child-level-2 ng-not-empty ng-valid'] [class='slds-is-relative']"));
-		for(WebElement r : wServicios){
-			if(r.getText().contains("Transferencia de Llamadas")){
-				cc.obligarclick(r.findElement(By.cssSelector(".slds-button.slds-button_neutral")));
-				sleep(5000);
-				break;
-			}
-		}
-		bAssert = false;
-		List <WebElement> wContestador = driver.findElements(By.cssSelector(".cpq-item-product-child-level-2.cpq-item-child-product-name-wrapper"));
-		for(WebElement d : wContestador){
-			if(d.getText().contains("CONTESTADOR")){
-			   cc.obligarclick(d.findElement(By.cssSelector(".slds-button.slds-button_icon-small")));
-			   bAssert = true;
-			   break;
-			}
-		}
-		Assert.assertTrue(bAssert);
-		sleep(10000);
-		wServicios = driver.findElements(By.cssSelector("[class='cpq-item-product-child-level-2 ng-not-empty ng-valid'] [class='slds-is-relative']"));
-		for(WebElement r : wServicios){
-			if(r.getText().contains("Voice Mail con Clave")){
-				cc.obligarclick(r.findElement(By.cssSelector(".slds-button.slds-button_neutral")));
-				sleep(5000);
-				break;
-			}
-		}
-		driver.findElement(By.cssSelector(".slds-button.slds-button--destructive")).click();
-		sleep(10000);
-		driver.findElement(By.cssSelector(".slds-button.slds-m-left--large.slds-button--brand.ta-button-brand")).click();
-		sleep(10000);
-		WebElement wMessageBox = driver.findElement(By.id("TextBlock1")).findElement(By.className("ng-binding"));
-		sleep(5000);
-		Assert.assertTrue(wMessageBox.getText().toLowerCase().contains("la orden " + sOrder + " se realiz\u00f3 con \u00e9xito!"));
+		ppt = new PagePerfilTelefonico(driver);
+		ppt.altaBajaServicio("Alta", "Servicios basicos general movil", "Contestador", "Voice Mail con Clave", driver);
+		ppt.altaBajaServicio("Alta", "servicios basicos general movil", "Transferencia de Llamadas", driver);
+		driver.findElement(By.cssSelector(".slds-button.slds-m-left--large.slds-button--brand.ta-button-brand")).click();//Continuar
+		//ppt.getwAltaBajaContinuar().click();//Continuar
+		sleep(20000);
+		WebElement wMessageBox = driver.findElement(By.xpath("//*[@id='TextBlock1']/div/p/p[2]"));
+		System.out.println("wMessage.getText: " + wMessageBox.getText().toLowerCase());
+		Assert.assertTrue(wMessageBox.getText().toLowerCase().contains("la orden " + sOrder + " se realiz\u00f3 con \u00e9xito!".toLowerCase()));
 		sleep(15000);
+		datosOrden.add("Alta de Servicio, orden numero: " + sOrder + ", DNI: " + sDNI);
 		driver.navigate().refresh();
 		Assert.assertTrue(cc.corroborarEstadoCaso(sOrder, "Activada"));
-		datosOrden.add("Alta de Servicio, orden numero: " + sOrder + ", DNI: " + sDNI);
+		sleep(20000);
+		Assert.assertTrue(gGF.FlowConsultaServicioActivo(driver, sLinea, "Voice Mail con Clave"));
+		Assert.assertTrue(gGF.FlowConsultaServicioActivo(driver, sLinea, "Transferencia de Llamadas"));
 	}
 	
 	@Test (groups = {"GestionesPerfilTelefonico", "ABMServicios", "E2E", "Ciclo3"}, dataProvider = "BajaServicios")
-	public void TS135848_CRM_Movil_REPRO_Baja_de_Servicio_sin_costo_Contestador_Personal_Telefonico(String sDNI, String sLinea){
+	public void TS135848_CRM_Movil_REPRO_Baja_de_Servicio_sin_costo_Contestador_Personal_Telefonico(String sDNI, String sLinea) throws AWTException{
 		imagen = "TS135848";
 		detalles = null;
 		detalles = imagen+"-BajaServicio-DNI:"+sDNI;
+		GestionFlow gGF = new GestionFlow();
+		Assert.assertTrue(gGF.FlowConsultaServicioActivo(driver, sLinea, "Contestador Personal"));
 		BasePage cambioFrameByID=new BasePage();
 		sleep(30000);
 		driver.switchTo().frame(cambioFrameByID.getFrameForElement(driver, By.id("SearchClientDocumentType")));
@@ -2637,57 +2607,20 @@ public class GestionesPerfilTelefonico extends TestBase{
 		sleep(5000);
 		driver.switchTo().frame(cambioFrame(driver, By.id("tab-default-1")));
 		sleep(15000);
-		driver.findElement(By.cssSelector(".slds-button.cpq-item-has-children")).click();
-		sleep(5000);
-		boolean bAssert = false;
-		List<WebElement> servicios= driver.findElements(By.xpath("//*[@class='cpq-item-product-child-level-1 cpq-item-child-product-name-wrapper']"));
-		for(WebElement a: servicios) {
-			if (a.getText().toLowerCase().contains("servicios basicos general movil".toLowerCase())) {
-					a.findElement(By.tagName("button")).click();
-						sleep(8000);
-						bAssert= true;
-						break;
-			}
-		}
-		Assert.assertTrue(bAssert);
-		sleep(17000);
-		bAssert = false;
-		List <WebElement> wContestador = driver.findElements(By.cssSelector(".cpq-item-product-child-level-2.cpq-item-child-product-name-wrapper"));
-		for(WebElement d : wContestador){
-			if(d.getText().contains("CONTESTADOR")){
-			   cc.obligarclick(d.findElement(By.cssSelector(".slds-button.slds-button_icon-small")));
-			   bAssert = true;
-			   break;
-			}
-		}
-		Assert.assertTrue(bAssert);
-		sleep(5000);
-		List <WebElement> wServicios = driver.findElements(By.cssSelector("[class='cpq-item-product-child-level-2 ng-not-empty ng-valid'] [class='slds-is-relative']"));
-		for(WebElement r : wServicios){
-			if(r.getText().contains("Contestador Personal")){
-				sleep(5000);
-				cc.obligarclick(r.findElement(By.cssSelector(".slds-button.slds-button_icon-border-filled.cpq-item-actions-dropdown-button")));
-				sleep(5000);
-				List<WebElement> wButtons = r.findElements(By.cssSelector(".slds-dropdown__item.cpq-item-actions-dropdown__item"));
-				for(WebElement wAux : wButtons) {
-					if(wAux.getText().equalsIgnoreCase("Delete")) {
-						cc.obligarclick(wAux);
-					}
-				}
-				break;
-			}
-		}
-		driver.findElement(By.cssSelector(".slds-button.slds-button--destructive")).click();
-		sleep(10000);
-		driver.findElement(By.cssSelector(".slds-button.slds-m-left--large.slds-button--brand.ta-button-brand")).click();
-		sleep(10000);
-		WebElement wMessageBox = driver.findElement(By.id("TextBlock1")).findElement(By.className("ng-binding"));
-		sleep(5000);
-		Assert.assertTrue(wMessageBox.getText().toLowerCase().contains("la orden " + sOrder + " se realiz\u00f3 con \u00e9xito!"));
+		ppt = new PagePerfilTelefonico(driver);
+		ppt.altaBajaServicio("Baja", "Servicios basicos general movil", "Contestador", "Contestador Personal", driver);
+		driver.findElement(By.cssSelector(".slds-button.slds-m-left--large.slds-button--brand.ta-button-brand")).click();//Continuar
+		//ppt.getwAltaBajaContinuar().click();//Continuar
+		sleep(20000);
+		WebElement wMessageBox = driver.findElement(By.xpath("//*[@id='TextBlock1']/div/p/p[2]"));
+		System.out.println("wMessage.getText: " + wMessageBox.getText().toLowerCase());
+		Assert.assertTrue(wMessageBox.getText().toLowerCase().contains("la orden " + sOrder + " se realiz\u00f3 con \u00e9xito!".toLowerCase()));
 		sleep(15000);
+		datosOrden.add("Alta de Servicio, orden numero: " + sOrder + ", DNI: " + sDNI);
 		driver.navigate().refresh();
 		Assert.assertTrue(cc.corroborarEstadoCaso(sOrder, "Activada"));
-		datosOrden.add("Baja de Servicio, orden numero: " + sOrder + ", DNI: " + sDNI);
+		sleep(20000);
+		Assert.assertTrue(gGF.FlowConsultaServicioInactivo(driver, sLinea, "Contestador Personal"));
 	}
 
 	@Test(groups = { "GestionesPerfilAgente","Ciclo 3", "E2E" }, priority = 1, dataProvider = "CambioSimCardTelef")
@@ -2761,7 +2694,7 @@ public class GestionesPerfilTelefonico extends TestBase{
 	}
 	
 	@Test(groups = { "GestionesPerfilAgente","Ciclo 3", "E2E" }, priority = 1, dataProvider = "Diagnostico") 
-	public void TS119281_CRM_Movil_REPRO_Diagn�stico_de_Datos_Valida_Red_y_Navegaci�n_Motivo_de_contacto_No_puedo_Navegar_CONCILIACION_EXITOSA_NO_BAM_Telefonico(String sDNI, String sLinea){
+	public void TS119281_CRM_Movil_REPRO_Diagn\u00f3stico_de_Datos_Valida_Red_y_Navegaci\u00f3n_Motivo_de_contacto_No_puedo_Navegar_CONCILIACION_EXITOSA_NO_BAM_Telefonico(String sDNI, String sLinea){
 		imagen = "TS119281";
 		detalles = null;
 		detalles = imagen + " -Diagnostico Inconveniente - DNI: " + sDNI;
