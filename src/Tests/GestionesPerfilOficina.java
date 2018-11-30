@@ -4115,7 +4115,7 @@ public class GestionesPerfilOficina extends TestBase {
 	
 	}
 	
-	@Test (groups = {"GestionesPerfilOficina", "VentaDePack", "Ciclo1"},priority=1, dataProvider = "VentaPacks")
+	@Test (groups = {"GestionesPerfilOficina", "VentaDePack", "Ciclo1"},priority=1, dataProvider = "ventaPack50ofic")
 	public void TS139727_CRM_Movil_REPRO_Venta_de_pack_50_min_y_50_SMS_x_7_dias_Factura_de_Venta_Efectivo_OOCC(String sDNI, String sLinea, String sventaPack) throws AWTException {
 		imagen = "TS139727";
 		detalles = null;
@@ -4143,21 +4143,22 @@ public class GestionesPerfilOficina extends TestBase {
 			mk.closeTabByName(driver, "Comprar SMS");
 			cCC.seleccionarCardPornumeroLinea(sLinea, driver);
 			pagePTelefo.comprarPack("comprar sms");
+			cc.closerightpanel();
 			pagePTelefo.PackCombinado(sventaPack);
 		}
 		pagePTelefo.tipoDePago("en factura de venta");
 		sleep(12000);
 		pagePTelefo.getTipodepago().click();
 		sleep(12000);
-		String sOrden = cc.obtenerOrden2(driver);
-		detalles+="-Orden:"+sOrden;
 		pagePTelefo.getSimulaciondeFactura().click();
 		sleep(12000);
 		buscarYClick(driver.findElements(By.cssSelector(".slds-form-element__label.ng-binding")), "equals", "efectivo");
+		String sOrden = cc.obtenerOrden2(driver);
+		detalles+="-Orden:"+sOrden;
 		sleep(8000);
 		pagePTelefo.getMediodePago().click();
 		sleep(45000);
-		pagePTelefo.getOrdenSeRealizoConExito().click();// No se puede procesr (Ups, hay problemas para procesar su pago.)
+		pagePTelefo.getOrdenSeRealizoConExito().click();
 		sleep(10000);
 		String orden = cCC.obtenerTNyMonto2(driver, sOrden);
 		detalles+="-Monto:"+orden.split("-")[1]+"-Prefactura:"+orden.split("-")[0];
