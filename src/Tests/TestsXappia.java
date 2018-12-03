@@ -1599,7 +1599,6 @@ public class TestsXappia extends TestBase {
 			Assert.assertTrue(false);
 		}		
 	}
-	}
 	
 	@Test (groups = {"SIT","UAT"})
 	public void TXSU00014_Validar_existencia_del_boton_gestion_de_clientes_en_perfil_oficina_comercial() {
