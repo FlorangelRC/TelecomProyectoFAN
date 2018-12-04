@@ -8,7 +8,6 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-import org.openqa.selenium.Alert;
 import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.NoSuchElementException;
@@ -16,13 +15,12 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
+
 import org.testng.Assert;
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
-
-import com.sun.org.apache.xalan.internal.xsltc.compiler.sym;
 
 import Pages.BasePage;
 import Pages.Accounts;
@@ -30,8 +28,6 @@ import Pages.ContactSearch;
 import Pages.CustomerCare;
 import Pages.Marketing;
 import Pages.PagePerfilTelefonico;
-import Pages.SCP;
-import Pages.OM;
 import Pages.SalesBase;
 import Pages.setConexion;
 
@@ -41,6 +37,7 @@ public class TestsXappia extends TestBase {
 	private CustomerCare cc;
 	private SalesBase sb;
 	private Marketing m;
+	
 	
 	@BeforeClass (groups = "UAT")
 	public void loginUAT() {
@@ -55,6 +52,7 @@ public class TestsXappia extends TestBase {
  		sleep(5000);
  		cc = new CustomerCare(driver);
 		sb = new SalesBase(driver);
+		m = new Marketing(driver);
 	}
 	
 	//@BeforeClass (groups = "SIT")
@@ -70,6 +68,7 @@ public class TestsXappia extends TestBase {
  		sleep(5000);
  		cc = new CustomerCare(driver);
 		sb = new SalesBase(driver);
+		m = new Marketing(driver);
 	}
 	
 	@BeforeMethod (groups = "UAT")
@@ -86,6 +85,7 @@ public class TestsXappia extends TestBase {
 	public void quit() {
 		driver.quit();
 	}
+	
 	
 	//---------------------------------------- METODOS PRIVADOS ----------------------------------------\\
 	
@@ -1295,37 +1295,36 @@ public class TestsXappia extends TestBase {
 	
 	@Test (groups = {"SIT","UAT"})
 	public void TXSU00013_Venta_de_Servicio_a_un_Nuevo_Contacto_Agente(){
-	CustomerCare cc = new CustomerCare(driver);
-	SalesBase sb = new SalesBase(driver);
-	Accounts accountPage = new Accounts(driver);
-	irAConsolaFAN();
-	sb.cerrarPestaniaGestion(driver);
-	irAGestionDeClientes();
-	sleep(25000);
-	driver.switchTo().frame(accountPage.getFrameForElement(driver, By.id("SearchClientDocumentNumber")));
-	sb.BtnCrearNuevoCliente();
-	ContactSearch contact = new ContactSearch(driver);
-	contact.sex("Masculino");
-	contact.Llenar_Contacto("NoVenta", "Pack", "10/10/1990");
-	driver.findElement(By.id("EmailSelectableItems")).findElement(By.tagName("input")).sendKeys("a@a.com");
-	driver.findElement(By.id("Contact_nextBtn")).click();
-	sleep(20000);
-	carrito();
-	sleep(20000);
-	driver.switchTo().frame(accountPage.getFrameForElement(driver, By.cssSelector(".slds-input.ng-pristine.ng-untouched.ng-valid.ng-empty")));
-	driver.findElement(By.cssSelector(".slds-input.ng-pristine.ng-untouched.ng-valid.ng-empty")).sendKeys("Pack 3 dias de SMS ilimitados");
-	sleep(10000);
-	driver.findElements(By.cssSelector(".slds-button.slds-button_neutral.add-button")).get(1).click();
-	sleep(10000);
-	boolean a = true;
-	List<WebElement> cont = driver.findElements(By.cssSelector(".slds-button.slds-m-left--large.slds-button--brand.ta-button-brand"));
-		for(WebElement c : cont){
-			System.out.println(c.getText());
-			if(c.getText().equals("Continuar")){
-				a = false;
+		SalesBase sb = new SalesBase(driver);
+		Accounts accountPage = new Accounts(driver);
+		irAConsolaFAN();
+		sb.cerrarPestaniaGestion(driver);
+		irAGestionDeClientes();
+		sleep(25000);
+		driver.switchTo().frame(accountPage.getFrameForElement(driver, By.id("SearchClientDocumentNumber")));
+		sb.BtnCrearNuevoCliente();
+		ContactSearch contact = new ContactSearch(driver);
+		contact.sex("Masculino");
+		contact.Llenar_Contacto("NoVenta", "Pack", "10/10/1990");
+		driver.findElement(By.id("EmailSelectableItems")).findElement(By.tagName("input")).sendKeys("a@a.com");
+		driver.findElement(By.id("Contact_nextBtn")).click();
+		sleep(20000);
+		carrito();
+		sleep(20000);
+		driver.switchTo().frame(accountPage.getFrameForElement(driver, By.cssSelector(".slds-input.ng-pristine.ng-untouched.ng-valid.ng-empty")));
+		driver.findElement(By.cssSelector(".slds-input.ng-pristine.ng-untouched.ng-valid.ng-empty")).sendKeys("Pack 3 dias de SMS ilimitados");
+		sleep(10000);
+		driver.findElements(By.cssSelector(".slds-button.slds-button_neutral.add-button")).get(1).click();
+		sleep(10000);
+		boolean a = true;
+		List<WebElement> cont = driver.findElements(By.cssSelector(".slds-button.slds-m-left--large.slds-button--brand.ta-button-brand"));
+			for(WebElement c : cont){
+				System.out.println(c.getText());
+				if(c.getText().equals("Continuar")){
+					a = false;
+				}
 			}
-		}
-	Assert.assertTrue(a);
+		Assert.assertTrue(a);
 	}	
 	
 	@Test (groups = {"SIT","UAT"}, dataProvider="ventaPackInternacional30SMS")
@@ -1528,7 +1527,7 @@ public class TestsXappia extends TestBase {
 		sb.cerrarPestaniaGestion(driver);
 		irAGestionDeClientes();
 		driver.switchTo().frame(cambioFrame(driver, By.id("SearchClientDocumentType")));
-		if (TestBase.urlAmbiente.contains("sit"))
+		if (driver.getCurrentUrl().contains("sit"))
 			sb.BuscarCuenta("DNI", "15907314");
 		else
 			sb.BuscarCuenta("DNI", "22223001");
@@ -1542,7 +1541,7 @@ public class TestsXappia extends TestBase {
 		driver.findElement(By.id("RefillAmount")).sendKeys("123");
 		driver.findElement(By.id("AmountSelectionStep_nextBtn")).click();
 		sleep(10000);
-		if (TestBase.urlAmbiente.contains("sit"))
+		if (driver.getCurrentUrl().contains("sit"))
 			try {
 				driver.findElements(By.cssSelector(".slds-button.slds-button--neutral.ng-binding.ng-scope")).get(1).click();
 				sleep(5000);
@@ -1580,7 +1579,7 @@ public class TestsXappia extends TestBase {
 		sb.cerrarPestaniaGestion(driver);
 		irAGestionDeClientes();
 		driver.switchTo().frame(cambioFrame(driver, By.id("SearchClientDocumentType")));
-		if (TestBase.urlAmbiente.contains("sit"))
+		if (driver.getCurrentUrl().contains("sit"))
 			sb.BuscarCuenta("DNI", "15907314");
 		else
 			sb.BuscarCuenta("DNI", "22223001");
@@ -1745,5 +1744,101 @@ public class TestsXappia extends TestBase {
 			a = true;
 		}
 		Assert.assertTrue(a);
+	}
+	
+	@Test (groups = {"SIT","UAT"})
+	public void TXSU00022_Recarga_De_Credito_Ingresar_Valores_Menores_A_5() {
+		irAConsolaFAN();
+		sb.cerrarPestaniaGestion(driver);
+		irAGestionDeClientes();
+		sleep(5000);
+		driver.switchTo().frame(cambioFrame(driver, By.id("SearchClientDocumentType")));
+		if (driver.getCurrentUrl().contains("sit"))
+			sb.BuscarCuenta("DNI", "15907314");
+		else
+			sb.BuscarCuenta("DNI", "22223001");
+		driver.findElement(By.cssSelector(".slds-tree__item.ng-scope")).click();
+		sleep(15000);
+		driver.switchTo().frame(cambioFrame(driver, By.className("card-top")));
+		driver.findElement(By.className("card-top")).click();
+		sleep(3000);
+		cc.irAGestionEnCard("Recarga de cr\u00e9dito");
+		driver.switchTo().frame(cambioFrame(driver, By.id("RefillAmount")));
+		driver.findElement(By.id("RefillAmount")).sendKeys("3");
+		driver.findElement(By.id("AmountSelectionStep_nextBtn")).click();
+		sleep(3000);
+		driver.findElement(By.id("alert-ok-button")).click();
+		Assert.assertTrue(driver.findElement(By.cssSelector(".message.description.ng-binding.ng-scope")).getText().contains("El monto debe estar comprendido entre 5 y 500"));
+	}
+	
+	@Test (groups = {"SIT","UAT"})
+	public void TXSU00023_Recarga_De_Credito_Ingresar_Valores_Mayores_A_500() {
+		irAConsolaFAN();
+		sb.cerrarPestaniaGestion(driver);
+		irAGestionDeClientes();
+		sleep(5000);
+		driver.switchTo().frame(cambioFrame(driver, By.id("SearchClientDocumentType")));
+		if (driver.getCurrentUrl().contains("sit"))
+			sb.BuscarCuenta("DNI", "15907314");
+		else
+			sb.BuscarCuenta("DNI", "22223001");
+		driver.findElement(By.cssSelector(".slds-tree__item.ng-scope")).click();
+		sleep(15000);
+		driver.switchTo().frame(cambioFrame(driver, By.className("card-top")));
+		driver.findElement(By.className("card-top")).click();
+		sleep(3000);
+		cc.irAGestionEnCard("Recarga de cr\u00e9dito");
+		driver.switchTo().frame(cambioFrame(driver, By.id("RefillAmount")));
+		driver.findElement(By.id("RefillAmount")).sendKeys("501");
+		driver.findElement(By.id("AmountSelectionStep_nextBtn")).click();
+		sleep(3000);
+		driver.findElement(By.id("alert-ok-button")).click();
+		Assert.assertTrue(driver.findElement(By.cssSelector(".message.description.ng-binding.ng-scope")).getText().contains("El monto debe estar comprendido entre 5 y 500"));
+	}
+	
+	@Test (groups = {"SIT","UAT"})
+	public void TXSU00024_Recarga_De_Credito_Ingresar_Letras() {
+		irAConsolaFAN();
+		sb.cerrarPestaniaGestion(driver);
+		irAGestionDeClientes();
+		sleep(5000);
+		driver.switchTo().frame(cambioFrame(driver, By.id("SearchClientDocumentType")));
+		if (driver.getCurrentUrl().contains("sit"))
+			sb.BuscarCuenta("DNI", "15907314");
+		else
+			sb.BuscarCuenta("DNI", "22223001");
+		driver.findElement(By.cssSelector(".slds-tree__item.ng-scope")).click();
+		sleep(15000);
+		driver.switchTo().frame(cambioFrame(driver, By.className("card-top")));
+		driver.findElement(By.className("card-top")).click();
+		sleep(3000);
+		cc.irAGestionEnCard("Recarga de cr\u00e9dito");
+		driver.switchTo().frame(cambioFrame(driver, By.id("RefillAmount")));
+		driver.findElement(By.id("RefillAmount")).sendKeys("a");
+		if ((!driver.findElement(By.id("RefillAmount")).getAttribute("value").equals("a")) || driver.findElement(By.id("RefillAmount")).getAttribute("value").equals("0"))
+			Assert.assertTrue(false);
+	}
+	
+	@Test (groups = {"SIT","UAT"})
+	public void TXSU00025_Recarga_De_Credito_Ingresar_Valores_De_Recarga_Con_Decimales() {
+		irAConsolaFAN();
+		sb.cerrarPestaniaGestion(driver);
+		irAGestionDeClientes();
+		sleep(5000);
+		driver.switchTo().frame(cambioFrame(driver, By.id("SearchClientDocumentType")));
+		if (driver.getCurrentUrl().contains("sit"))
+			sb.BuscarCuenta("DNI", "15907314");
+		else
+			sb.BuscarCuenta("DNI", "22223001");
+		driver.findElement(By.cssSelector(".slds-tree__item.ng-scope")).click();
+		sleep(15000);
+		driver.switchTo().frame(cambioFrame(driver, By.className("card-top")));
+		driver.findElement(By.className("card-top")).click();
+		sleep(3000);
+		cc.irAGestionEnCard("Recarga de cr\u00e9dito");
+		driver.switchTo().frame(cambioFrame(driver, By.id("RefillAmount")));
+		driver.findElement(By.id("RefillAmount")).sendKeys("17.50");
+		if ((!driver.findElement(By.id("RefillAmount")).getAttribute("value").equals("17.50")) || (!driver.findElement(By.id("RefillAmount")).getAttribute("value").equals("17,50")))
+			Assert.assertTrue(false);
 	}
 }
