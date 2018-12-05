@@ -4265,7 +4265,7 @@ public class GestionesPerfilOficina extends TestBase {
 		List<WebElement> tableRows_2 = table_2.findElements(By.xpath("//tr//td"));
 		for (WebElement cell : tableRows_2) {
 			try {
-				if (cell.getText().equals("10")) {
+				if (cell.getText().equals("03")) {
 					cell.click();
 				}
 			} catch (Exception e) {}
@@ -5694,4 +5694,37 @@ public class GestionesPerfilOficina extends TestBase {
 		orden = orden.substring(orden.length()-9, orden.length()-1);
 		
 	}
+	@Test (groups = {"GestionesPerfilOficina","Historial de Recargas","E2E", "Ciclo1"},  dataProvider = "CuentaModificacionDeDatos")
+	public void TS135476_CRM_Movil_Prepago_Historial_de_Packs_Nombre_del_Pack_Plan_Internet_50_Mb_FAN_Front_OOCC(String sDNI, String sLinea){
+	imagen = "TS135476";
+	detalles = null;
+	detalles = imagen+"-HistorialDePacksTelefonico - DNI:"+sDNI;
+	driver.switchTo().frame(cambioFrame(driver, By.id("SearchClientDocumentType")));
+	sb.BuscarCuenta("DNI", sDNI);
+	driver.findElement(By.cssSelector(".slds-tree__item.ng-scope")).click();
+	sleep(20000);
+	CustomerCare cc = new CustomerCare(driver);
+	cc.irAHistoriales();
+	sleep(8000);
+	driver.switchTo().frame(cambioFrame(driver, By.cssSelector(".slds-card.slds-m-around--small.ta-fan-slds")));
+	driver.findElements(By.className("slds-card"));
+	System.out.println(driver.findElement(By.cssSelector(".slds-card__header.slds-grid")).getText());
+	driver.findElement(By.cssSelector(".slds-card__header.slds-grid")).getText().equals("Historial de packs");
+	driver.findElement(By.cssSelector(".slds-button.slds-button_brand")).click();
+	sleep(8000);
+	driver.switchTo().frame(cambioFrame(driver, By.cssSelector(".slds-grid.slds-wrap.slds-grid--pull-padded.slds-m-around--medium.slds-p-around--medium.negotationsfilter")));
+	driver.findElement(By.cssSelector(".slds-button.slds-button--brand.filterNegotiations.slds-p-horizontal--x-large.slds-p-vertical--x-small")).click();
+	sleep(8000);
+	driver.findElement(By.id("text-input-03")).click();
+	List <WebElement>NomPack = driver.findElement(By.cssSelector(".slds-dropdown__list.slds-dropdown--length-5")).findElements(By.tagName("li"));
+	String pack = "Internet 50 MB Dia";
+	for(WebElement Pack : NomPack) {
+		if(Pack.getText().equalsIgnoreCase(pack)) {
+			System.out.println(Pack.getText());
+			Pack.click();
+			break;
+			}
+		}assertTrue(pack.equals("Internet 50 MB Dia"));
+	}
+	
 }
