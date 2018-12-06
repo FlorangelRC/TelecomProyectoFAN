@@ -1500,6 +1500,7 @@ public class GestionesPerfilTelefonico extends TestBase{
 		}
 		pagePTelefo.tipoDePago("en factura de venta");
 		buscarYClick(driver.findElements(By.id("SetPaymentType_nextBtn")), "equals", "next");
+		sleep(10000);
 		pagePTelefo.getSimulaciondeFactura().click();
 		sleep(12000);
 		buscarYClick(driver.findElements(By.cssSelector(".slds-form-element__label.ng-binding")), "equals", "tarjeta de credito");
@@ -2426,7 +2427,6 @@ public class GestionesPerfilTelefonico extends TestBase{
 		imagen = "TS111300";
 		detalles = null;
 		detalles = imagen + " -Diagnostico Inconveniente - DNI: " + sDNI;
-		boolean desregistrar = false;
 		CustomerCare cCC=new CustomerCare(driver);
 		TechCare_Ola1 page=new TechCare_Ola1(driver);
 		TechnicalCareCSRDiagnosticoPage tech = new TechnicalCareCSRDiagnosticoPage(driver);
@@ -2625,7 +2625,7 @@ public class GestionesPerfilTelefonico extends TestBase{
 		Assert.assertTrue(gGF.FlowConsultaServicioInactivo(driver, sLinea, "Contestador Personal"));
 	}
 
-	@Test(groups = { "GestionesPerfilAgente","Ciclo 3", "E2E" }, priority = 1, dataProvider = "CambioSimCardTelef")
+	@Test(groups = { "GestionesPerfilTelefonico","Ciclo 3", "E2E" }, priority = 1, dataProvider = "CambioSimCardTelef")
 	public void TS134427_CRM_Movil_REPRO_Cambio_de_simcard_con_costo_Voluntario_Telefonico_Store_pickUp_Con_entega_de_pedido_pago_con_TC_financiacion(String sDNI, String sLinea,String cEntrega, String cProvincia, String cLocalidad, String cPuntodeVenta, String cBanco, String cTarjeta, String cPromo, String cCuotas, String cNumTarjeta, String cVenceMes, String cVenceAno, String cCodSeg, String cTipoDNI,String cDNITarjeta, String cTitular) throws AWTException {
 		imagen = "99020";
 		detalles = null;
@@ -2695,13 +2695,13 @@ public class GestionesPerfilTelefonico extends TestBase{
 		Assert.assertTrue(datos.equalsIgnoreCase("activada")||datos.equalsIgnoreCase("activated"));
 	}
 	
-	@Test(groups = { "GestionesPerfilAgente","Ciclo 3", "E2E" }, priority = 1, dataProvider = "Diagnostico") 
+	@Test(groups = { "GestionesPerfilTelefonico","Ciclo 3", "E2E" }, priority = 1, dataProvider = "Diagnostico") 
 	public void TS119281_CRM_Movil_REPRO_Diagn\u00f3stico_de_Datos_Valida_Red_y_Navegaci\u00f3n_Motivo_de_contacto_No_puedo_Navegar_CONCILIACION_EXITOSA_NO_BAM_Telefonico(String sDNI, String sLinea){
 		imagen = "TS119281";
 		detalles = null;
 		detalles = imagen + " -Diagnostico Inconveniente - DNI: " + sDNI;
 		CustomerCare cCC=new CustomerCare(driver);
-		TechCare_Ola1 page=new TechCare_Ola1(driver);;
+		TechCare_Ola1 page=new TechCare_Ola1(driver);
 		TechnicalCareCSRDiagnosticoPage tech = new TechnicalCareCSRDiagnosticoPage(driver);
 		driver.switchTo().frame(cambioFrame(driver, By.id("SearchClientDocumentType")));
 		sb.BuscarCuenta("DNI", sDNI);
@@ -2725,19 +2725,21 @@ public class GestionesPerfilTelefonico extends TestBase{
 		driver.switchTo().frame(accPage.getFrameForElement(driver, By.className("borderOverlay")));
 		tech.categoriaRed("Conciliar");
 		driver.findElement(By.id("NetworkCategory_nextBtn")).click();
-		sleep(18000);
+		sleep(40000);
 		// encontrar elemento
-		driver.switchTo().frame(accPage.getFrameForElement(driver, By.xpath("//*[@id='OutOfCoverageMessage']/div/p/p[2]/span/strong")));
-		WebElement caso = driver.findElement(By.xpath("//*[@id='OutOfCoverageMessage']/div/p/p[2]/span/strong"));
+		driver.switchTo().frame(accPage.getFrameForElement(driver, By.id("IncorrectCategoriesMessage")));
+		WebElement caso = driver.findElement(By.className("slds-form-element__control")).findElement(By.tagName("div")).findElement(By.tagName("p")).findElements(By.tagName("p")).get(1).findElement(By.tagName("span")).findElement(By.tagName("strong"));
+																	
 		String Ncaso = caso.getText();
 		System.out.println("El numero de caso es: "+Ncaso);
+		driver.switchTo().defaultContent();
 		WebElement buscord = driver.findElement(By.id("phSearchInput"));
 		buscord.click();
 		buscord.sendKeys(Ncaso);
 		buscord.submit();
 		sleep(8000);
 		driver.switchTo().frame(cambioFrame(driver, By.className("bRelatedList")));
-		Assert.assertTrue(tech.getEstado().equals("Realizada exitosa"));
+		Assert.assertTrue(tech.getEstado().getText().equalsIgnoreCase("Realizada exitosa"));
 		
 		
 	    }
