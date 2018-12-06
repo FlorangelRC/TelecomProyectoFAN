@@ -685,11 +685,8 @@ public class GestionesPerfilAgente extends TestBase{
 		driver.findElement(By.cssSelector(".slds-tree__item.ng-scope")).findElement(By.tagName("div")).click();
 		sleep(25000);
 		driver.switchTo().frame(cambioFrame(driver, By.className("card-top")));
-		for (WebElement x : driver.findElements(By.className("slds-text-body_regular"))) {
-			if (x.getText().contains("Gestiones"))
-				x.click();
-		}
-		sleep(7000);
+		cc.irAGestiones();
+		sleep(10000);
 		driver.switchTo().frame(cambioFrame(driver, By.cssSelector(".slds-button.slds-button--brand.filterNegotiations.slds-p-horizontal--x-large.slds-p-vertical--x-small.secondaryFont")));
 		driver.findElement(By.cssSelector(".slds-button.slds-button--brand.filterNegotiations.slds-p-horizontal--x-large.slds-p-vertical--x-small.secondaryFont")).click();
 		sleep(3000);
@@ -1526,6 +1523,9 @@ public class GestionesPerfilAgente extends TestBase{
 	}
 	@Test (groups = {"GestionesPerfilAgente", "Actualizar Datos", "E2E", "Ciclo3"},  dataProvider = "CuentaModificacionDeDNI")
 	public void TS129328_CRM_Movil_REPRO_Modificacion_de_datos_Actualizar_datos_campo_DNI_CUIT_Cliente_FAN_Front_Agentes(String sDNI, String sLinea){
+		imagen = "TS129328";
+		detalles = null;
+		detalles = imagen+"-Modificacion de datos - DNI:"+sDNI;
 		String nuevoDNI = "22222070";
 		String nuevoMail = "maildetest@gmail.com";
 		String numeroTelefono = "1533546987";
