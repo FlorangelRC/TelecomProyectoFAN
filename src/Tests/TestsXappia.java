@@ -1841,4 +1841,101 @@ public class TestsXappia extends TestBase {
 		if ((!driver.findElement(By.id("RefillAmount")).getAttribute("value").equals("17.50")) || (!driver.findElement(By.id("RefillAmount")).getAttribute("value").equals("17,50")))
 			Assert.assertTrue(false);
 	}
+	
+	@Test (groups = {"SIT","UAT"})
+	public void TXSU00026_Modificacion_de_datos_No_Permite_Actualizar_datos_campo_DNI_CUIT_Telefonico() {
+		LoguearTelefonico();
+		irAConsolaFAN();
+		sb.cerrarPestaniaGestion(driver);
+		cc.menu_360_Ir_A("Inicio");
+		irAGestionDeClientes();
+		sleep(5000);
+		driver.switchTo().frame(cambioFrame(driver, By.id("SearchClientDocumentType")));
+		if (driver.getCurrentUrl().contains("sit"))
+			sb.BuscarCuenta("DNI", "10777541");
+		else
+			sb.BuscarCuenta("DNI", "22222070");
+		driver.findElement(By.cssSelector(".slds-tree__item.ng-scope")).click();
+		sleep(15000);
+		driver.switchTo().frame(cambioFrame(driver, By.className("profile-box")));
+		driver.findElements(By.className("profile-edit")).get(0).click();
+		sleep(10000);
+		driver.switchTo().frame(cambioFrame(driver, By.id("DocumentNumber")));
+		Assert.assertTrue(driver.findElement(By.id("DocumentType")).getAttribute("disabled").equals("true"));
+	}
+	
+	@Test (groups = {"SIT","UAT"})
+	public void TXSU00026_Modificacion_de_datos_No_Permite_Actualizar_datos_campo_DNI_CUIT_Agente() {
+		LoguearAgente();
+		irAConsolaFAN();
+		sb.cerrarPestaniaGestion(driver);
+		cc.menu_360_Ir_A("Inicio");
+		irAGestionDeClientes();
+		sleep(5000);
+		driver.switchTo().frame(cambioFrame(driver, By.id("SearchClientDocumentType")));
+		if (driver.getCurrentUrl().contains("sit"))
+			sb.BuscarCuenta("DNI", "10777541");
+		else
+			sb.BuscarCuenta("DNI", "22222070");
+		driver.findElement(By.cssSelector(".slds-tree__item.ng-scope")).click();
+		sleep(15000);
+		driver.switchTo().frame(cambioFrame(driver, By.className("profile-box")));
+		driver.findElements(By.className("profile-edit")).get(0).click();
+		sleep(10000);
+		driver.switchTo().frame(cambioFrame(driver, By.id("DocumentNumber")));
+		Assert.assertTrue(driver.findElement(By.id("DocumentType")).getAttribute("disabled").equals("true"));
+		}
+	
+	@Test (groups = {"SIT","UAT"})
+	public void TXSU00027_Modificacion_de_datos_No_Permitir_actualizar_fecha_de_nacimiento_al_colocar_un_año_mayor_a_120_ofcom() {
+		irAConsolaFAN();
+		sb.cerrarPestaniaGestion(driver);
+		cc.menu_360_Ir_A("Inicio");
+		irAGestionDeClientes();
+		sleep(5000);
+		driver.switchTo().frame(cambioFrame(driver, By.id("SearchClientDocumentType")));
+		if (driver.getCurrentUrl().contains("sit"))
+			sb.BuscarCuenta("DNI", "10777541");
+		else
+			sb.BuscarCuenta("DNI", "22222070");
+		driver.findElement(By.cssSelector(".slds-tree__item.ng-scope")).click();
+		sleep(15000);
+		driver.switchTo().frame(cambioFrame(driver, By.className("profile-box")));
+		driver.findElements(By.className("profile-edit")).get(0).click();
+		sleep(10000);
+		driver.switchTo().frame(cambioFrame(driver, By.id("DocumentNumber")));
+		driver.findElement(By.id("Birthdate")).clear();
+		driver.findElement(By.id("Birthdate")).sendKeys("08/08/1898");
+		sleep(5000);
+		driver.findElement(By.id("ClientInformation_nextBtn")).click();
+		sleep(8000);
+		Assert.assertTrue(!(driver.findElement(By.className("ta-care-omniscript-done")).getText().contains("Las modificaciones se realizaron con \u00e9xito")));
+	}
+	
+	@Test (groups = {"SIT","UAT"})
+	public void TXSU00028_Modificacion_de_datos_No_Permitir_actualizar_fecha_de_nacimiento_al_colocar_un_año_menor_a_16_Telefonico() {
+		LoguearTelefonico();
+		irAConsolaFAN();
+		sb.cerrarPestaniaGestion(driver);
+		cc.menu_360_Ir_A("Inicio");
+		irAGestionDeClientes();
+		sleep(5000);
+		driver.switchTo().frame(cambioFrame(driver, By.id("SearchClientDocumentType")));
+		if (driver.getCurrentUrl().contains("sit"))
+			sb.BuscarCuenta("DNI", "10777541");
+		else
+			sb.BuscarCuenta("DNI", "22222070");
+		driver.findElement(By.cssSelector(".slds-tree__item.ng-scope")).click();
+		sleep(15000);
+		driver.switchTo().frame(cambioFrame(driver, By.className("profile-box")));
+		driver.findElements(By.className("profile-edit")).get(0).click();
+		sleep(10000);
+		driver.switchTo().frame(cambioFrame(driver, By.id("DocumentNumber")));
+		driver.findElement(By.id("Birthdate")).clear();
+		driver.findElement(By.id("Birthdate")).sendKeys("08/08/2016");
+		sleep(5000);
+		driver.findElement(By.id("ClientInformation_nextBtn")).click();
+		sleep(8000);
+		Assert.assertTrue(!(driver.findElement(By.className("ta-care-omniscript-done")).getText().contains("Las modificaciones se realizaron con \u00e9xito")));
+	}
 }
