@@ -231,7 +231,6 @@ public class GestionesPerfilAgente extends TestBase{
 		SalesBase sale = new SalesBase(driver);
 		BasePage cambioFrameByID = new BasePage();
 		CustomerCare cCC = new CustomerCare(driver);
-		PagePerfilTelefonico pagePTelefo = new PagePerfilTelefonico(driver);
 		driver.switchTo().frame(cambioFrameByID.getFrameForElement(driver, By.id("SearchClientDocumentType")));
 		sleep(8000);
 		sale.BuscarCuenta("DNI", sDNI);
@@ -686,11 +685,8 @@ public class GestionesPerfilAgente extends TestBase{
 		driver.findElement(By.cssSelector(".slds-tree__item.ng-scope")).findElement(By.tagName("div")).click();
 		sleep(25000);
 		driver.switchTo().frame(cambioFrame(driver, By.className("card-top")));
-		for (WebElement x : driver.findElements(By.className("slds-text-body_regular"))) {
-			if (x.getText().contains("Gestiones"))
-				x.click();
-		}
-		sleep(7000);
+		cc.irAGestiones();
+		sleep(10000);
 		driver.switchTo().frame(cambioFrame(driver, By.cssSelector(".slds-button.slds-button--brand.filterNegotiations.slds-p-horizontal--x-large.slds-p-vertical--x-small.secondaryFont")));
 		driver.findElement(By.cssSelector(".slds-button.slds-button--brand.filterNegotiations.slds-p-horizontal--x-large.slds-p-vertical--x-small.secondaryFont")).click();
 		sleep(3000);
@@ -1342,7 +1338,7 @@ public class GestionesPerfilAgente extends TestBase{
 		driver.switchTo().frame(cambioFrame(driver, By.className("card-top")));
 		driver.findElement(By.className("card-top")).click();
 		sleep(5000);
-		cCC.irAGestionEnCard("Diagnostico");
+		cCC.irAGestionEnCard("Diagn\u00f3stico");// campo diagnostico no aparece en perfil agente
 	    tech.clickDiagnosticarServicio("datos", "Datos", true);
 	    tech.selectionInconvenient("No puedo navegar");
 	    tech.continuar();
@@ -1478,7 +1474,6 @@ public class GestionesPerfilAgente extends TestBase{
 		pagePTelefo.buscarAssert();
 		cCC.seleccionarCardPornumeroLinea(sLinea, driver);
 		pagePTelefo.comprarPack();
-		sleep(5000);
 		//pagePTelefo.PacksRoaming(sVentaPack);
 
 	}

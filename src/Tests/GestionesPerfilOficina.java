@@ -4603,11 +4603,11 @@ public class GestionesPerfilOficina extends TestBase {
 		driver.findElement(By.id("text-input-03")).click();
 		driver.findElement(By.xpath("//*[text() = 'Casos']")).click();
 		driver.findElement(By.cssSelector(".slds-button.slds-button--brand.filterNegotiations.slds-p-horizontal--x-large.slds-p-vertical--x-small.secondaryFont")).click();
-		sleep(3000);
-		WebElement nroCaso = driver.findElement(By.cssSelector(".slds-table.slds-table--bordered.slds-table--resizable-cols.slds-table--fixed-layout.via-slds-table-pinned-header")).findElement(By.tagName("tbody")).findElement(By.tagName("tr"));
-		nroCaso.findElements(By.tagName("td")).get(2).click();
+		sleep(10000);
+		WebElement nroCaso = driver.findElement(By.cssSelector(".slds-p-bottom--small")).findElement(By.tagName("table")).findElement(By.tagName("tbody")).findElement(By.tagName("tr")).findElements(By.tagName("td")).get(2).findElement(By.tagName("div")).findElement(By.tagName("a"));
 		System.out.println(nroCaso.getText());
-		sleep(5000);
+		nroCaso.click();
+		sleep(8000);
 		WebElement fechaYHora = null;
 			driver.switchTo().frame(cambioFrame(driver, By.name("close")));
 		for (WebElement x : driver.findElements(By.className("pbSubsection"))) {
@@ -4618,6 +4618,7 @@ public class GestionesPerfilOficina extends TestBase {
 		for (WebElement x : fechaYHora.findElements(By.tagName("tr"))) {
 			if (x.getText().toLowerCase().contains("fecha/hora de cierre"))
 				fechaYHora = x;
+			System.out.println(x.getText());
 		}
 		Assert.assertTrue(fechaYHora.getText().contains("Fecha/Hora de cierre"));
 		Assert.assertTrue(fechaYHora.findElements(By.tagName("td")).get(3).getText().matches("^\\d{2}/\\d{2}/\\d{4} \\d{2}:\\d{2}$"));
