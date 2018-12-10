@@ -5728,4 +5728,67 @@ public class GestionesPerfilOficina extends TestBase {
 		}assertTrue(pack.equals("Internet 50 MB Dia"));
 	}
 	
+	@Test (groups = {"GestionesPerfilOficina", "Resumen de Cuenta", "Ciclo4"}, dataProvider = "ConsultaSaldo")
+	public void TS129462_CRM_Movil_Prepago_Resumen_de_Cuenta_Corriente_Validaciones_de_logica_de_filtros_Fecha_FAN_Front_OOCC(String sDNI) {
+		imagen="TS129462";
+		detalles = null;
+		detalles = imagen + "- Resumen de Cuenta - DNI:" +sDNI;
+		driver.switchTo().frame(cambioFrame(driver, By.id("SearchClientDocumentType")));
+		sb.BuscarCuenta("DNI", sDNI);
+		driver.findElement(By.cssSelector(".slds-tree__item.ng-scope")).click();
+		sleep(15000);
+		cc.openleftpanel();
+		mk.closeActiveTab();
+		cc.irAFacturacion();
+		sleep(5000);
+		cc.irAResumenDeCuentaCorriente();
+		driver.switchTo().frame(cambioFrame(driver, By.cssSelector(".slds-grid.slds-wrap.slds-grid--pull-padded.slds-m-around--medium.slds-p-around--medium.negotationsfilter")));
+		driver.findElement(By.id("text-input-id-1")).click();
+		WebElement table = driver.findElement(By.cssSelector(".slds-datepicker.slds-dropdown.slds-dropdown--left"));
+		for (WebElement cell : table.findElements(By.xpath("//tr//td"))) {
+			try {
+				if (cell.getText().equals("29"))
+					cell.click();
+			} catch (Exception e) {}
+		}
+		driver.findElement(By.id("text-input-id-2")).click();
+		WebElement table2 = driver.findElement(By.cssSelector(".slds-datepicker.slds-dropdown.slds-dropdown--left"));
+		for (WebElement cell : table2.findElements(By.xpath("//tr//td"))) {
+			try {
+				if (cell.getText().equals("10"))
+					cell.click();
+			} catch (Exception e) {}
+		}
+		Assert.assertTrue(driver.findElement(By.cssSelector(".slds-p-horizontal--small.slds-size--1-of-2.slds-medium-size--1-of-4.slds-large-size--1-of-4")).isDisplayed());
+	}
+	
+	@Test (groups = {"GestionesPerfilOficina", "ResumenDeCuenta", "E2E", "Ciclo2"}, dataProvider = "CuentaVista360")
+	public void TS129476_CRM_Movil_Prepago_Resumen_de_Cuenta_Corriente_Detalle_ampliado_registro_de_Comprobante_Factura_de_Venta_FAN_Front_OOCC(String sDNI, String sNombre){
+		imagen = "TS129476";
+		detalles = null;
+		detalles = imagen + " -Diagnostico Inconveniente - DNI: " + sDNI;
+		TestBase tb = new TestBase ();
+		driver.switchTo().frame(cambioFrame(driver, By.id("SearchClientDocumentType")));
+		sb.BuscarCuenta("DNI", sDNI);
+		driver.findElement(By.cssSelector(".slds-tree__item.ng-scope")).click();
+		sleep(10000);
+		mk.closeActiveTab();
+		cc.irAFacturacion();
+		sleep(5000);
+		cc.irAResumenDeCuentaCorriente();
+		driver.switchTo().frame(tb.cambioFrame(driver, By.cssSelector(".slds-button.slds-button--brand.filterNegotiations.slds-p-horizontal--x-large.slds-p-vertical--x-small.secondaryFont")));
+		driver.findElement(By.cssSelector(".slds-button.slds-button--brand.filterNegotiations.slds-p-horizontal--x-large.slds-p-vertical--x-small.secondaryFont")).click();
+		sleep(10000);
+		List<WebElement> Tabla = driver.findElement(By.className("slds-p-bottom--small")).findElement(By.tagName("table")).findElement(By.tagName("tbody")).findElements(By.tagName("tr"));
+		for(WebElement x:Tabla) {
+			if (x.findElements(By.tagName("td")).get(2).getText().toLowerCase().contains("fv")) {
+				sleep(10000);
+				x.findElements(By.tagName("td")).get(5).click();
+				break;
+			}
+		}
+		// no se muestra el detalle de factura de venta
+	}
+
 }
+	

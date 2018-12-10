@@ -1131,7 +1131,7 @@ public class TestsXappia extends TestBase {
 	}
 
 	@Test (groups = "UAT")
-	public void TXU0008_Verificar_funcionamiento_del_boton_modificar_dentro_de_la_orden() {
+	public void TXU0009_Verificar_funcionamiento_del_boton_modificar_dentro_del_caso() {
 		irAConsolaFAN();
 		sb.cerrarPestaniaGestion(driver);
 		cc.menu_360_Ir_A("Casos");
@@ -1161,6 +1161,21 @@ public class TestsXappia extends TestBase {
 		}
 		driver.switchTo().defaultContent();
 		System.out.println("No permite Modificar");
+	}
+	
+	@Test (groups = "UAT")
+	public void TXU0008_Verificar_funcionamiento_del_boton_modificar_dentro_de_la_orden() {
+		irAConsolaFAN();
+		sb.cerrarPestaniaGestion(driver);
+		sleep(8000);
+		cc.menu_360_Ir_A("Inicio");
+		sleep(18000);
+		driver.switchTo().defaultContent();
+		List<WebElement> CaseNumber = driver.findElements(By.cssSelector("[class='slds-truncate slds-text-align--center']"));
+		CaseNumber.get(1).click();
+		//sleep(8000);
+		//driver.switchTo().frame(cambioFrame(driver, By.xpath("//*[@id=\"tab-default-1\"]/div/ng-include/div/div/div[3]/table/tbody[1]/tr")));
+		
 	}
 	
 	@Test (groups = "UAT")

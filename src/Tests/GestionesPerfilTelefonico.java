@@ -2725,12 +2725,7 @@ public class GestionesPerfilTelefonico extends TestBase{
 		driver.switchTo().frame(accPage.getFrameForElement(driver, By.className("borderOverlay")));
 		tech.categoriaRed("Conciliar");
 		driver.findElement(By.id("NetworkCategory_nextBtn")).click();
-		sleep(40000);
-		// encontrar elemento
-		driver.switchTo().frame(accPage.getFrameForElement(driver, By.id("IncorrectCategoriesMessage")));
-		WebElement caso = driver.findElement(By.className("slds-form-element__control")).findElement(By.tagName("div")).findElement(By.tagName("p")).findElements(By.tagName("p")).get(1).findElement(By.tagName("span")).findElement(By.tagName("strong"));
-																	
-		sleep(25000);
+		sleep(45000);
 		driver.switchTo().frame(accPage.getFrameForElement(driver, By.id("IncorrectCategoriesMessage")));
 		WebElement caso = driver.findElement(By.id("IncorrectCategoriesMessage")).findElement(By.tagName("div")).findElement(By.tagName("p")).findElements(By.tagName("p")).get(1).findElement(By.tagName("span")).findElement(By.tagName("strong"));
 		System.out.println(caso.getText());
@@ -2745,7 +2740,7 @@ public class GestionesPerfilTelefonico extends TestBase{
 		driver.switchTo().frame(cambioFrame(driver, By.id("Case_body")));
 		WebElement gest = driver.findElement(By.id("Case_body")).findElement(By.tagName("table")).findElement(By.tagName("tbody")).findElement(By.cssSelector(".dataRow.even.last.first")).findElements(By.tagName("td")).get(2);
 		System.out.println(gest.getText());
-		Assert.assertTrue(gest.equals("Realizada exitosa"));
+		Assert.assertTrue(gest.getText().equals("Realizada exitosa"));
 	}
 	
 	
