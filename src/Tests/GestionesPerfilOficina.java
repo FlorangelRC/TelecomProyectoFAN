@@ -5728,4 +5728,62 @@ public class GestionesPerfilOficina extends TestBase {
 		}assertTrue(pack.equals("Internet 50 MB Dia"));
 	}
 	
+	@Test (groups = {"GestionesPerfilOficina","Resumen de Cuenta Corriente","E2E", "Ciclo4"},  dataProvider = "CuentaModificacionDeDatos")
+	public void TS129471_CRM_Movil_Prepago_Resumen_de_Cuenta_Corriente_Columnas_de_informacion_Comprobantes_FAN_Front_OOCC(String sDNI, String sLinea) {
+		imagen = "TS129471";
+		detalles = null;
+		detalles = imagen + " -Resumen de Cuenta Corriente: " + sDNI;
+		driver.switchTo().frame(cambioFrame(driver, By.id("SearchClientDocumentType")));
+		sb.BuscarCuenta("DNI", sDNI);
+		driver.findElement(By.cssSelector(".slds-tree__item.ng-scope")).click();
+		sleep(15000);
+		mk.closeActiveTab();
+		cc.irAFacturacion();
+		sleep(15000);
+		driver.switchTo().frame(cambioFrame(driver, By.className("card-top")));
+		buscarYClick(driver.findElements(By.className("slds-text-body_regular")), "contains", "resumen de cuenta corriente");
+		sleep(15000);
+		driver.switchTo().frame(cambioFrame(driver, By.cssSelector(".slds-button.slds-button--brand.filterNegotiations.slds-p-horizontal--x-large.slds-p-vertical--x-small.secondaryFont")));
+		driver.findElement(By.cssSelector(".slds-button.slds-button--brand.filterNegotiations.slds-p-horizontal--x-large.slds-p-vertical--x-small.secondaryFont")).click();
+		sleep(5000);
+		boolean a = false;
+		for(WebElement x : driver.findElements(By.cssSelector(".via-slds.slds-m-around--small.ng-scope"))) {
+			if(x.getText().toLowerCase().contains("comprobantes")) {
+				a = true;
+			}
+		}
+		Assert.assertTrue(a);
+	}
+	
+	@Test (groups = {"GestionesPerfilOficina","Modificacion de Datos","E2E", "Ciclo3"},  dataProvider = "CuentaModificacionDeDatos")
+	public void TS84240_CRM_Movil_REPRO_Modificacion_de_datos_No_Actualizar_datos_Cliente_FAN_Front_OOCC(String sDNI, String sLinea) {
+		imagen = "TS84240";
+		detalles = null;
+		detalles = imagen + " -ActualizarDatos - DNI: " + sDNI+ " - Linea: "+sLinea;
+		driver.switchTo().frame(cambioFrame(driver, By.id("SearchClientDocumentType")));
+		sb.BuscarCuenta("DNI", sDNI);
+		driver.findElement(By.cssSelector(".slds-tree__item.ng-scope")).click();
+		sleep(15000);
+		driver.switchTo().frame(cambioFrame(driver, By.className("profile-box")));
+		driver.findElements(By.className("profile-edit")).get(0).click();
+		sleep(10000);
+		driver.switchTo().frame(cambioFrame(driver, By.id("DocumentNumber")));
+		driver.findElement(By.id("FirstName")).getAttribute("value");
+		driver.findElement(By.id("LastName")).getAttribute("value");
+		driver.findElement(By.id("Birthdate")).getAttribute("value");
+		driver.findElement(By.id("Email")).getAttribute("value");
+		driver.findElement(By.id("MobilePhone")).getAttribute("value");
+		driver.findElement(By.id("OtherPhone")).getAttribute("value");
+		driver.findElement(By.id("FirstName")).clear();
+		driver.findElement(By.id("LastName")).clear();
+		driver.findElement(By.id("Birthdate")).clear();
+		driver.findElement(By.id("Email")).clear();
+		driver.findElement(By.id("MobilePhone")).clear();
+		driver.findElement(By.id("OtherPhone")).clear();
+		driver.findElement(By.id("ClientInformation_nextBtn")).click();
+		sleep(5000);
+		driver.switchTo().frame(cambioFrame(driver, By.cssSelector(".slds-modal__content.slds-p-around--medium")));
+		WebElement error = driver.findElement(By.cssSelector(".slds-modal__content.slds-p-around--medium"));
+		Assert.assertTrue(error.getText().toLowerCase().contains("error: "));
+	}
 }
