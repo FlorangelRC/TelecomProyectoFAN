@@ -335,6 +335,7 @@ public class TestBase {
 		    Login page0 = new Login(driver);
 		    page0.ingresarBackOffice();
 		}
+		
 		public void loginflow(WebDriver driver){
 			driver.get(urlFlow);
 			try {Thread.sleep(6000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
@@ -342,6 +343,12 @@ public class TestBase {
 		    page0.ingresarflow();
 		}
 		
+		public void loginOperativo(WebDriver driver) {
+			driver.get(urlAmbiente);
+			try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+			Login page0 = new Login(driver);
+		    page0.ingresarOperativo();
+		}
 		
 		/**Ingresa con los datos de la cuenta Nicolas.
 		 * Para el Modulo Sales tiene vinculado el perfil de Logistica	 */
@@ -1140,7 +1147,7 @@ public class TestBase {
 	@DataProvider
 	public Object[][] AltaServicios() throws Exception{
 
-	 Object[][] testObjArray = ExcelUtils.getTableArray("Cuentas.xlsx","PerfilGestiones",1,1,4,"Alta Servicio");
+	 Object[][] testObjArray = ExcelUtils.getTableArray(dataProviderE2E(),"E2EconPago",1,1,2,"Alta Servicio");
 
 	 return (testObjArray);
 
@@ -1173,9 +1180,17 @@ public class TestBase {
 	
 	
 	@DataProvider
-	public Object [][] ventaPack() throws Exception{
+	public Object [][] ventaPack50Tele() throws Exception{
 		
-		Object[][] testObjArray = ExcelUtils.getTableArray(dataProviderE2E(),"E2EconPago",1,1,14,"packTelefonico");
+		Object[][] testObjArray = ExcelUtils.getTableArray(dataProviderE2E(),"E2EconPago",1,1,14,"Pack 50 min Tel");
+		
+		return (testObjArray);
+	}
+	
+	@DataProvider
+	public Object [][] ventaPack50ofic() throws Exception{
+		
+		Object[][] testObjArray = ExcelUtils.getTableArray(dataProviderE2E(),"E2EconPago",1,1,3,"Pack 50 min Oficina");
 		
 		return (testObjArray);
 	}
@@ -1191,7 +1206,31 @@ public class TestBase {
 	@DataProvider
 	public Object [][] ventaPackInternacional30SMS() throws Exception{
 		
-		Object[][] testObjArray = ExcelUtils.getTableArray(dataProviderE2E(),"E2EconPago",1,1,14,"packTelefInternacional30SMS");
+		Object[][] testObjArray = ExcelUtils.getTableArray(dataProviderE2E(),"E2EconPago",1,1,14,"packTelefoInternacional30SMS");
+		
+		return (testObjArray);
+	}
+	
+	@DataProvider
+	public Object [][] ventaPack500min() throws Exception{
+		
+		Object[][] testObjArray = ExcelUtils.getTableArray(dataProviderE2E(),"E2EconPago",1,1,3,"Pack500min");
+		
+		return (testObjArray);
+	}
+	
+	@DataProvider
+	public Object [][] ventaPackA40() throws Exception{
+		
+		Object[][] testObjArray = ExcelUtils.getTableArray(dataProviderE2E(),"E2EconPago",1,1,3,"PackAdela40");
+		
+		return (testObjArray);
+	}
+	
+	@DataProvider
+	public Object [][] ventaPackM2M() throws Exception{
+		
+		Object[][] testObjArray = ExcelUtils.getTableArray(dataProviderE2E(),"E2EconPago",1,1,3,"Pack M2M 10");
 		
 		return (testObjArray);
 	}
@@ -1668,10 +1707,39 @@ public class TestBase {
 
 		 return (testObjArray);
 	}
+	@DataProvider
+	public Object[][] SimCardSiniestroAG() throws Exception{
+		
+		Object[][] testObjArray =  ExcelUtils.getTableArray(dataProviderE2E(),"E2EconPago",1,1,17,"SimCard Siniestro Agente");
+		
+		return (testObjArray);
+	}
 	
 	@DataProvider
-	public Object[][] serviciotecnico() throws Exception {
-		Object[][] testObjArray = ExcelUtils.getTableArray(dataProviderE2E(),"E2EsinPago",1,1,3,"Servicio Tecnico");
+	public Object[][] SimCardSiniestroOfCom() throws Exception{
+		
+		Object[][] testObjArray =  ExcelUtils.getTableArray(dataProviderE2E(),"E2EconPago",1,1,2,"SimCard Siniestro OfCom");
+		
+		return (testObjArray);
+	}
+	
+	@DataProvider
+	public Object[][] DiagnosticoInc() throws Exception{
+		
+		Object[][] testObjArray =  ExcelUtils.getTableArray(dataProviderE2E(),"E2EconPago",1,1,2,"DiagnInconveniente");
+		
+		return (testObjArray);
+	}
+	
+	public Object[][] serviciotecnicoR() throws Exception {
+		Object[][] testObjArray = ExcelUtils.getTableArray(dataProviderE2E(),"E2EsinPago",1,1,7,"Servicio Tecnico Reparacion");
+
+		 return (testObjArray);
+	}
+	
+	@DataProvider
+	public Object[][] serviciotecnicoC() throws Exception {
+		Object[][] testObjArray = ExcelUtils.getTableArray(dataProviderE2E(),"E2EsinPago",1,1,7,"Servicio Tecnico Configuracion");
 
 		 return (testObjArray);
 	}
@@ -1715,6 +1783,14 @@ public class TestBase {
 	@DataProvider
 	public Object[][] LineasNominadas() throws Exception {
 		Object[][] testObjArray = ExcelUtils.getTableArray(dataProviderE2E(),"ListaLineas",1,1,1,"LineaNominada");
+
+		 return (testObjArray);
+	}
+	
+	@DataProvider
+	public Object[][] CuentaModificacionDeDNI() throws Exception{
+		
+		 Object[][] testObjArray = ExcelUtils.getTableArray(dataProviderE2E(),"E2EsinPago",1,1,2,"Modificacion De DNI");
 
 		 return (testObjArray);
 	}

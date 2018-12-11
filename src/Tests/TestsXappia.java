@@ -8,12 +8,13 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-import org.openqa.selenium.Alert;
 import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.WebDriverWait;
 
 import org.testng.Assert;
 import org.testng.annotations.AfterClass;
@@ -21,16 +22,12 @@ import org.testng.annotations.BeforeClass;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
-import com.sun.org.apache.xalan.internal.xsltc.compiler.sym;
-
 import Pages.BasePage;
 import Pages.Accounts;
 import Pages.ContactSearch;
 import Pages.CustomerCare;
 import Pages.Marketing;
 import Pages.PagePerfilTelefonico;
-import Pages.SCP;
-import Pages.OM;
 import Pages.SalesBase;
 import Pages.setConexion;
 
@@ -41,7 +38,8 @@ public class TestsXappia extends TestBase {
 	private SalesBase sb;
 	private Marketing m;
 	
-	//@BeforeClass (groups = "UAT")
+	
+	@BeforeClass (groups = "UAT")
 	public void loginUAT() {
 		driver = setConexion.setupEze();
 		driver.get("https://telecomcrm--uat.cs53.my.salesforce.com");
@@ -54,9 +52,10 @@ public class TestsXappia extends TestBase {
  		sleep(5000);
  		cc = new CustomerCare(driver);
 		sb = new SalesBase(driver);
+		m = new Marketing(driver);
 	}
 	
-	@BeforeClass (groups = "SIT")
+	//@BeforeClass (groups = "SIT")
 	public void loginSIT() {
 		driver = setConexion.setupEze();
 		driver.get("https://crm--sit.cs14.my.salesforce.com/");
@@ -69,14 +68,15 @@ public class TestsXappia extends TestBase {
  		sleep(5000);
  		cc = new CustomerCare(driver);
 		sb = new SalesBase(driver);
+		m = new Marketing(driver);
 	}
 	
-	//@BeforeMethod (groups = "UAT")
+	@BeforeMethod (groups = "UAT")
 	public void beforeUAT() {
 		driver.get("https://telecomcrm--uat.cs53.my.salesforce.com");
 	}
 	
-	@BeforeMethod (groups = "SIT")
+	//@BeforeMethod (groups = "SIT")
 	public void beforeSIT() {
 		driver.get("https://crm--sit.cs14.my.salesforce.com/");
 	}
@@ -85,6 +85,7 @@ public class TestsXappia extends TestBase {
 	public void quit() {
 		driver.quit();
 	}
+	
 	
 	//---------------------------------------- METODOS PRIVADOS ----------------------------------------\\
 	
@@ -147,8 +148,74 @@ public class TestsXappia extends TestBase {
 		sleep(7500);
 		driver.findElement(By.id("idp_section_buttons")).click();
 		sleep(7000);
-		driver.findElement(By.name("Ecom_User_ID")).sendKeys("UAT549492");
-		driver.findElement(By.name("Ecom_Password")).sendKeys("Testa10k");
+		if(TestBase.urlAmbiente.contains("sit")) {
+			driver.findElement(By.name("Ecom_User_ID")).sendKeys("UAT549492");
+			sleep(3000);
+			driver.findElement(By.name("Ecom_Password")).sendKeys("Testa10k");
+		
+		}else {
+			driver.findElement(By.name("Ecom_User_ID")).sendKeys("uat195528");
+			sleep(3000);
+			driver.findElement(By.name("Ecom_Password")).sendKeys("Testa10k");
+		}
+		sleep(3000);
+		driver.findElement(By.id("loginButton2")).click();
+		sleep(8000);
+	}
+	
+	private void LoguearTelefonico() {
+		irAConsolaFAN();
+		driver.findElement(By.id("userNav")).click();
+		driver.findElement(By.id("app_logout")).click();
+		sleep(9000);
+		driver.findElement(By.id("userDropdown")).click();
+		sleep(3000);
+		driver.findElement(By.id("logout")).click();
+		sleep(5000);
+		driver.get(urlAmbiente);
+		driver.findElement(By.id("cancel_idp_hint")).click();
+		sleep(7500);
+		driver.findElement(By.id("idp_section_buttons")).click();
+		sleep(7000);
+		if(TestBase.urlAmbiente.contains("uat")) {
+			driver.findElement(By.name("Ecom_User_ID")).sendKeys("uat592149");
+			sleep(3000);
+			driver.findElement(By.name("Ecom_Password")).sendKeys("Testa10k");
+		}else {
+			driver.findElement(By.name("Ecom_User_ID")).sendKeys("UAT569076");
+			sleep(3000);
+			driver.findElement(By.name("Ecom_Password")).sendKeys("Testa10k");
+		}
+		sleep(3000);
+		driver.findElement(By.id("loginButton2")).click();
+		sleep(8000);
+		}
+	
+	public void LoguearBackOffice() {
+		irAConsolaFAN();
+		driver.findElement(By.id("userNav")).click();
+		driver.findElement(By.id("app_logout")).click();
+		sleep(9000);
+		driver.findElement(By.id("userDropdown")).click();
+		sleep(3000);
+		driver.findElement(By.id("logout")).click();
+		sleep(5000);
+		driver.get(urlAmbiente);
+		driver.findElement(By.id("cancel_idp_hint")).click();
+		sleep(7500);
+		driver.findElement(By.id("idp_section_buttons")).click();
+		sleep(7000);
+		if(TestBase.urlAmbiente.contains("sit")) {
+			driver.findElement(By.name("Ecom_User_ID")).sendKeys("uat569076");
+			sleep(3000);
+			driver.findElement(By.name("Ecom_Password")).sendKeys("Testa10k");
+			
+		}else {
+			driver.findElement(By.name("Ecom_User_ID")).sendKeys("UAT569076");
+			sleep(3000);
+			driver.findElement(By.name("Ecom_Password")).sendKeys("Testa10k");
+			}
+		sleep(3000);
 		driver.findElement(By.id("loginButton2")).click();
 		sleep(8000);
 	}
@@ -1064,7 +1131,7 @@ public class TestsXappia extends TestBase {
 	}
 
 	@Test (groups = "UAT")
-	public void TXU0008_Verificar_funcionamiento_del_boton_modificar_dentro_de_la_orden() {
+	public void TXU0009_Verificar_funcionamiento_del_boton_modificar_dentro_del_caso() {
 		irAConsolaFAN();
 		sb.cerrarPestaniaGestion(driver);
 		cc.menu_360_Ir_A("Casos");
@@ -1094,6 +1161,21 @@ public class TestsXappia extends TestBase {
 		}
 		driver.switchTo().defaultContent();
 		System.out.println("No permite Modificar");
+	}
+	
+	@Test (groups = "UAT")
+	public void TXU0008_Verificar_funcionamiento_del_boton_modificar_dentro_de_la_orden() {
+		irAConsolaFAN();
+		sb.cerrarPestaniaGestion(driver);
+		sleep(8000);
+		cc.menu_360_Ir_A("Inicio");
+		sleep(18000);
+		driver.switchTo().defaultContent();
+		List<WebElement> CaseNumber = driver.findElements(By.cssSelector("[class='slds-truncate slds-text-align--center']"));
+		CaseNumber.get(1).click();
+		//sleep(8000);
+		//driver.switchTo().frame(cambioFrame(driver, By.xpath("//*[@id=\"tab-default-1\"]/div/ng-include/div/div/div[3]/table/tbody[1]/tr")));
+		
 	}
 	
 	@Test (groups = "UAT")
@@ -1228,36 +1310,36 @@ public class TestsXappia extends TestBase {
 	
 	@Test (groups = {"SIT","UAT"})
 	public void TXSU00013_Venta_de_Servicio_a_un_Nuevo_Contacto_Agente(){
-	CustomerCare cc = new CustomerCare(driver);
-	SalesBase sb = new SalesBase(driver);
-	Accounts accountPage = new Accounts(driver);
-	irAConsolaFAN();
-	sb.cerrarPestaniaGestion(driver);
-	irAGestionDeClientes();
-	sleep(25000);
-	driver.switchTo().frame(accountPage.getFrameForElement(driver, By.id("SearchClientDocumentNumber")));
-	sb.BtnCrearNuevoCliente();
-	ContactSearch contact = new ContactSearch(driver);
-	contact.sex("Masculino");
-	contact.Llenar_Contacto("NoVenta", "Pack", "10/10/1990");
-	driver.findElement(By.id("EmailSelectableItems")).findElement(By.tagName("input")).sendKeys("a@a.com");
-	driver.findElement(By.id("Contact_nextBtn")).click();
-	sleep(20000);
-	carrito();
-	sleep(20000);
-	driver.switchTo().frame(accountPage.getFrameForElement(driver, By.cssSelector(".slds-input.ng-pristine.ng-untouched.ng-valid.ng-empty")));
-	driver.findElement(By.cssSelector(".slds-input.ng-pristine.ng-untouched.ng-valid.ng-empty")).sendKeys("Pack 3 dias de SMS ilimitados");
-	sleep(10000);
-	driver.findElements(By.cssSelector(".slds-button.slds-button_neutral.add-button")).get(1).click();
-	sleep(10000);
-	boolean a = true;
-	List<WebElement> cont = driver.findElements(By.cssSelector(".slds-button.slds-m-left--large.slds-button--brand.ta-button-brand"));
-		for(WebElement c : cont){
-			System.out.println(c.getText());
-			if(c.getText().equals("Continuar")){
-				a = false;
+		SalesBase sb = new SalesBase(driver);
+		Accounts accountPage = new Accounts(driver);
+		irAConsolaFAN();
+		sb.cerrarPestaniaGestion(driver);
+		irAGestionDeClientes();
+		sleep(25000);
+		driver.switchTo().frame(accountPage.getFrameForElement(driver, By.id("SearchClientDocumentNumber")));
+		sb.BtnCrearNuevoCliente();
+		ContactSearch contact = new ContactSearch(driver);
+		contact.sex("Masculino");
+		contact.Llenar_Contacto("NoVenta", "Pack", "10/10/1990");
+		driver.findElement(By.id("EmailSelectableItems")).findElement(By.tagName("input")).sendKeys("a@a.com");
+		driver.findElement(By.id("Contact_nextBtn")).click();
+		sleep(20000);
+		carrito();
+		sleep(20000);
+		driver.switchTo().frame(accountPage.getFrameForElement(driver, By.cssSelector(".slds-input.ng-pristine.ng-untouched.ng-valid.ng-empty")));
+		driver.findElement(By.cssSelector(".slds-input.ng-pristine.ng-untouched.ng-valid.ng-empty")).sendKeys("Pack 3 dias de SMS ilimitados");
+		sleep(10000);
+		driver.findElements(By.cssSelector(".slds-button.slds-button_neutral.add-button")).get(1).click();
+		sleep(10000);
+		boolean a = true;
+		List<WebElement> cont = driver.findElements(By.cssSelector(".slds-button.slds-m-left--large.slds-button--brand.ta-button-brand"));
+			for(WebElement c : cont){
+				System.out.println(c.getText());
+				if(c.getText().equals("Continuar")){
+					a = false;
+				}
 			}
-		}
+		Assert.assertTrue(a);
 	}	
 	
 	@Test (groups = {"SIT","UAT"}, dataProvider="ventaPackInternacional30SMS")
@@ -1400,5 +1482,475 @@ public class TestsXappia extends TestBase {
 			}
 		}
 		Assert.assertTrue(nominacion);
-	}	
+	}
+	
+	@Test (groups = "UAT")
+	public void TXU0011_Crear_Sugerencias_Estado_Del_Caso() {
+		irAConsolaFAN();
+		sb.cerrarPestaniaGestion(driver);
+		irAGestionDeClientes();
+		driver.switchTo().frame(cambioFrame(driver, By.id("SearchClientDocumentType")));
+		sb.BuscarCuenta("DNI", "22223002");
+		driver.findElement(By.cssSelector(".slds-tree__item.ng-scope")).click();
+		sleep(10000);
+		cc.irAGestion("sugerencia");
+		driver.switchTo().frame(cambioFrame(driver, By.id("Category")));
+		selectByText(driver.findElement(By.id("Category")), "Sugerencias");
+		selectByText(driver.findElement(By.id("Subcategory")), "Calidad en la Atenci\u00f3n");
+		driver.findElement(By.id("ManagementType_nextBtn")).click();
+		sleep(5000);
+		WebElement msj = null, estado = null;
+		for (WebElement x : driver.findElements(By.cssSelector(".vlc-slds-inline-control__label.ng-binding"))) {
+			if (x.getText().toLowerCase().contains("el n\u00famero de confirmaci\u00f3n es"))
+				msj = x;
+		}
+		String caso = msj.getText();
+		caso = caso.substring(caso.indexOf("0"), caso.length());
+		cc.buscarCaso(caso);
+		driver.switchTo().frame(cambioFrame(driver, By.name("close")));
+		for (WebElement x : driver.findElements(By.className("pbSubsection"))) {
+			if (x.getText().toLowerCase().contains("propietario del caso"))
+				estado = x;
+		}
+		estado = estado.findElement(By.tagName("tbody"));
+		for (WebElement x : estado.findElements(By.tagName("tr"))) {
+			if (x.getText().toLowerCase().contains("estado"))
+				estado = x;
+		}
+		if (estado.findElements(By.tagName("td")).get(3).getText().equalsIgnoreCase("Closed"))
+			Assert.assertTrue(false);
+	}
+	
+	@Test (groups = "SIT")
+	public void TXS0014_Gestion_Sugerencias() {
+		irAConsolaFAN();
+		sb.cerrarPestaniaGestion(driver);
+		irAGestionDeClientes();
+		driver.switchTo().frame(cambioFrame(driver, By.id("SearchClientDocumentType")));
+		sb.BuscarCuenta("DNI", "22222035");
+		driver.findElement(By.cssSelector(".slds-tree__item.ng-scope")).click();
+		sleep(10000);
+		cc.buscarGestion("sugerencia");
+		sleep(3000);
+		if (!driver.findElement(By.cssSelector(".slds-button.slds-button--neutral.slds-truncate")).isDisplayed())
+			Assert.assertTrue(false);
+	}
+	
+	@Test (groups = {"SIT","UAT"})
+	public void TXSU00018_Mensaje_Guardar_Para_Despues_Recarga_De_Credito() {
+		irAConsolaFAN();
+		sb.cerrarPestaniaGestion(driver);
+		irAGestionDeClientes();
+		driver.switchTo().frame(cambioFrame(driver, By.id("SearchClientDocumentType")));
+		if (driver.getCurrentUrl().contains("sit"))
+			sb.BuscarCuenta("DNI", "15907314");
+		else
+			sb.BuscarCuenta("DNI", "22223001");
+		driver.findElement(By.cssSelector(".slds-tree__item.ng-scope")).click();
+		sleep(10000);
+		driver.switchTo().frame(cambioFrame(driver, By.className("card-top")));
+		driver.findElement(By.className("card-top")).click();
+		sleep(3000);
+		cc.irAGestionEnCard("Recarga de cr\u00e9dito");
+		driver.switchTo().frame(cambioFrame(driver, By.id("RefillAmount")));
+		driver.findElement(By.id("RefillAmount")).sendKeys("123");
+		driver.findElement(By.id("AmountSelectionStep_nextBtn")).click();
+		sleep(10000);
+		if (driver.getCurrentUrl().contains("sit"))
+			try {
+				driver.findElements(By.cssSelector(".slds-button.slds-button--neutral.ng-binding.ng-scope")).get(1).click();
+				sleep(5000);
+			} catch (Exception e) {}
+		buscarYClick(driver.findElements(By.cssSelector(".vlc-slds-button--tertiary.ng-binding.ng-scope")), "contains", "guardar para despu\u00e9s");
+		sleep(3000);
+		driver.findElement(By.id("alert-ok-button")).click();
+		sleep(5000);
+		if (driver.findElement(By.className("vlc-slds-figure")).getText().equalsIgnoreCase("Your OmniScript is saved for later"))
+			Assert.assertTrue(false);
+	}
+	
+	@Test (groups = "UAT")
+	public void TXU0012_Existencia_de_Renovacion_De_Cuota_En_Flyout() {
+		irAConsolaFAN();
+		sb.cerrarPestaniaGestion(driver);
+		irAGestionDeClientes();
+		driver.switchTo().frame(cambioFrame(driver, By.id("SearchClientDocumentType")));
+		sb.BuscarCuenta("DNI", "22223001");
+		driver.findElement(By.cssSelector(".slds-tree__item.ng-scope")).click();
+		sleep(10000);
+		driver.switchTo().frame(cambioFrame(driver, By.className("card-top")));
+		driver.findElement(By.className("card-top")).click();
+		sleep(3000);
+		WebElement lista = driver.findElement(By.cssSelector(".slds-small-size--3-of-12.slds-medium-size--3-of-12.slds-large-size--3-of-12.flyout-actions"));
+		for (WebElement x : lista.findElements(By.tagName("li"))) {
+			if (!x.getText().toLowerCase().contains("renovacion de cuota"))
+				Assert.assertTrue(false);
+		}
+	}
+	
+	@Test (groups = {"SIT","UAT"})
+	public void TXSU00019_Funcionamiento_De_Buscador_De_Base_De_Conocimiento() {
+		irAConsolaFAN();
+		sb.cerrarPestaniaGestion(driver);
+		irAGestionDeClientes();
+		driver.switchTo().frame(cambioFrame(driver, By.id("SearchClientDocumentType")));
+		if (driver.getCurrentUrl().contains("sit"))
+			sb.BuscarCuenta("DNI", "15907314");
+		else
+			sb.BuscarCuenta("DNI", "22223001");
+		driver.findElement(By.cssSelector(".slds-tree__item.ng-scope")).click();
+		sleep(10000);
+		cc.irAGestion("inconvenientes");
+		driver.switchTo().frame(cambioFrame(driver, By.id("Step-TipodeAjuste_nextBtn")));
+		driver.findElement(By.id("vlcKnowledgeKeyword")).clear();
+		driver.findElement(By.id("vlcKnowledgeKeyword")).sendKeys("a");
+		try {
+			WebDriverWait wait = new WebDriverWait(driver, 10); 
+			WebElement element = wait.until(ExpectedConditions.elementToBeClickable(By.cssSelector(".slds-icon.slds-icon--small.slds-input__icon.slds-icon-text-default")));
+			element.click();
+			Assert.assertTrue(true);
+		} catch (Exception e) {
+			Assert.assertTrue(false);
+		}		
+	}
+	
+	@Test (groups = {"SIT","UAT"})
+	public void TXSU00014_Validar_existencia_del_boton_gestion_de_clientes_en_perfil_oficina_comercial() {
+		irAConsolaFAN();
+		sb.cerrarPestaniaGestion(driver);
+		cc.menu_360_Ir_A("Inicio");
+		sleep(45000);
+		driver.switchTo().frame(cambioFrame(driver, By.cssSelector(".hasMotif.homeTab.homepage.ext-webkit.ext-chrome.sfdcBody.brandQuaternaryBgr")));
+		List<WebElement> frames = driver.findElements(By.tagName("iframe"));
+		boolean a = false;
+		boolean enc = false;
+		int index = 0;
+		for (WebElement frame : frames) {
+			try {
+				driver.switchTo().frame(frame);
+				driver.findElement(By.cssSelector(".slds-grid.slds-m-bottom_small.slds-wrap.cards-container")).getText();
+				driver.findElement(By.cssSelector(".slds-grid.slds-m-bottom_small.slds-wrap.cards-container")).isDisplayed();
+				driver.switchTo().frame(cambioFrame(driver, By.cssSelector(".hasMotif.homeTab.homepage.ext-webkit.ext-chrome.sfdcBody.brandQuaternaryBgr")));
+				enc = true;
+				break;
+			} catch (NoSuchElementException e) {
+				index++;
+				driver.switchTo().frame(cambioFrame(driver, By.cssSelector(".hasMotif.homeTab.homepage.ext-webkit.ext-chrome.sfdcBody.brandQuaternaryBgr")));
+			}
+		}
+		if (enc == false)
+			index = -1;
+		try {
+			driver.switchTo().frame(frames.get(index));
+		} catch (ArrayIndexOutOfBoundsException e) {}
+		WebElement conf = driver.findElement(By.cssSelector(".slds-grid.slds-m-bottom_small.slds-wrap.cards-container"));
+		if(conf.getText().toLowerCase().contains("gesti\u00f3n de clientes")) {
+			a = true;
+		}
+		Assert.assertTrue(a);
+	}
+	
+	@Test (groups = {"SIT","UAT"})
+	public void TXSU00015_Validar_existencia_del_boton_gestion_de_clientes_en_perfil_Agente() {
+		LoguearAgente();
+		irAConsolaFAN();
+		sb.cerrarPestaniaGestion(driver);
+		cc.menu_360_Ir_A("Inicio");
+		sleep(45000);
+		driver.switchTo().frame(cambioFrame(driver, By.cssSelector(".hasMotif.homeTab.homepage.ext-webkit.ext-chrome.sfdcBody.brandQuaternaryBgr")));
+		List<WebElement> frames = driver.findElements(By.tagName("iframe"));
+		boolean a = false;
+		boolean enc = false;
+		int index = 0;
+		for (WebElement frame : frames) {
+			try {
+				driver.switchTo().frame(frame);
+				driver.findElement(By.cssSelector(".slds-grid.slds-m-bottom_small.slds-wrap.cards-container")).getText();
+				driver.findElement(By.cssSelector(".slds-grid.slds-m-bottom_small.slds-wrap.cards-container")).isDisplayed();
+				driver.switchTo().frame(cambioFrame(driver, By.cssSelector(".hasMotif.homeTab.homepage.ext-webkit.ext-chrome.sfdcBody.brandQuaternaryBgr")));
+				enc = true;
+				break;
+			} catch (NoSuchElementException e) {
+				index++;
+				driver.switchTo().frame(cambioFrame(driver, By.cssSelector(".hasMotif.homeTab.homepage.ext-webkit.ext-chrome.sfdcBody.brandQuaternaryBgr")));
+			}
+		}
+		if (enc == false)
+			index = -1;
+		try {
+			driver.switchTo().frame(frames.get(index));
+		} catch (ArrayIndexOutOfBoundsException e) {}
+		WebElement conf = driver.findElement(By.cssSelector(".slds-grid.slds-m-bottom_small.slds-wrap.cards-container"));
+		if(conf.getText().toLowerCase().contains("gesti\u00f3n de clientes")) {
+			a = true;
+		}
+		Assert.assertTrue(a);
+	}
+	
+	@Test (groups = {"SIT","UAT"})
+	public void TXSU00016_Validar_existencia_del_boton_gestion_de_clientes_en_perfil_Telefonico() {
+		LoguearTelefonico();
+		irAConsolaFAN();
+		sb.cerrarPestaniaGestion(driver);
+		cc.menu_360_Ir_A("Inicio");
+		sleep(45000);
+		driver.switchTo().frame(cambioFrame(driver, By.cssSelector(".hasMotif.homeTab.homepage.ext-webkit.ext-chrome.sfdcBody.brandQuaternaryBgr")));
+		List<WebElement> frames = driver.findElements(By.tagName("iframe"));
+		boolean a = false;
+		boolean enc = false;
+		int index = 0;
+		for (WebElement frame : frames) {
+			try {
+				driver.switchTo().frame(frame);
+				driver.findElement(By.cssSelector(".slds-grid.slds-m-bottom_small.slds-wrap.cards-container")).getText();
+				driver.findElement(By.cssSelector(".slds-grid.slds-m-bottom_small.slds-wrap.cards-container")).isDisplayed();
+				driver.switchTo().frame(cambioFrame(driver, By.cssSelector(".hasMotif.homeTab.homepage.ext-webkit.ext-chrome.sfdcBody.brandQuaternaryBgr")));
+				enc = true;
+				break;
+			} catch (NoSuchElementException e) {
+				index++;
+				driver.switchTo().frame(cambioFrame(driver, By.cssSelector(".hasMotif.homeTab.homepage.ext-webkit.ext-chrome.sfdcBody.brandQuaternaryBgr")));
+			}
+		}
+		if (enc == false)
+			index = -1;
+		try {
+			driver.switchTo().frame(frames.get(index));
+		} catch (ArrayIndexOutOfBoundsException e) {}
+		WebElement conf = driver.findElement(By.cssSelector(".slds-grid.slds-m-bottom_small.slds-wrap.cards-container"));
+		if(conf.getText().toLowerCase().contains("gesti\u00f3n de clientes")) {
+			a = true;
+		}
+		Assert.assertTrue(a);
+	}
+	
+	@Test (groups = {"SIT","UAT"})
+	public void TXSU00017_Validar_existencia_del_boton_gestion_de_clientes_en_perfil_Back_office() {
+		LoguearBackOffice();
+		irAConsolaFAN();
+		sb.cerrarPestaniaGestion(driver);
+		cc.menu_360_Ir_A("Inicio");
+		sleep(45000);
+		driver.switchTo().frame(cambioFrame(driver, By.cssSelector(".hasMotif.homeTab.homepage.ext-webkit.ext-chrome.sfdcBody.brandQuaternaryBgr")));
+		List<WebElement> frames = driver.findElements(By.tagName("iframe"));
+		boolean a = false;
+		boolean enc = false;
+		int index = 0;
+		for (WebElement frame : frames) {
+			try {
+				driver.switchTo().frame(frame);
+				driver.findElement(By.cssSelector(".slds-grid.slds-m-bottom_small.slds-wrap.cards-container")).getText();
+				driver.findElement(By.cssSelector(".slds-grid.slds-m-bottom_small.slds-wrap.cards-container")).isDisplayed();
+				driver.switchTo().frame(cambioFrame(driver, By.cssSelector(".hasMotif.homeTab.homepage.ext-webkit.ext-chrome.sfdcBody.brandQuaternaryBgr")));
+				enc = true;
+				break;
+			} catch (NoSuchElementException e) {
+				index++;
+				driver.switchTo().frame(cambioFrame(driver, By.cssSelector(".hasMotif.homeTab.homepage.ext-webkit.ext-chrome.sfdcBody.brandQuaternaryBgr")));
+			}
+		}
+		if (enc == false)
+			index = -1;
+		try {
+			driver.switchTo().frame(frames.get(index));
+		} catch (ArrayIndexOutOfBoundsException e) {}
+		WebElement conf = driver.findElement(By.cssSelector(".slds-grid.slds-m-bottom_small.slds-wrap.cards-container"));
+		if(conf.getText().toLowerCase().contains("gesti\u00f3n de clientes")) {
+			a = true;
+		}
+		Assert.assertTrue(a);
+	}
+	
+	@Test (groups = {"SIT","UAT"})
+	public void TXSU00022_Recarga_De_Credito_Ingresar_Valores_Menores_A_5() {
+		irAConsolaFAN();
+		sb.cerrarPestaniaGestion(driver);
+		irAGestionDeClientes();
+		sleep(5000);
+		driver.switchTo().frame(cambioFrame(driver, By.id("SearchClientDocumentType")));
+		if (driver.getCurrentUrl().contains("sit"))
+			sb.BuscarCuenta("DNI", "15907314");
+		else
+			sb.BuscarCuenta("DNI", "22223001");
+		driver.findElement(By.cssSelector(".slds-tree__item.ng-scope")).click();
+		sleep(15000);
+		driver.switchTo().frame(cambioFrame(driver, By.className("card-top")));
+		driver.findElement(By.className("card-top")).click();
+		sleep(3000);
+		cc.irAGestionEnCard("Recarga de cr\u00e9dito");
+		driver.switchTo().frame(cambioFrame(driver, By.id("RefillAmount")));
+		driver.findElement(By.id("RefillAmount")).sendKeys("3");
+		driver.findElement(By.id("AmountSelectionStep_nextBtn")).click();
+		sleep(3000);
+		driver.findElement(By.id("alert-ok-button")).click();
+		Assert.assertTrue(driver.findElement(By.cssSelector(".message.description.ng-binding.ng-scope")).getText().contains("El monto debe estar comprendido entre 5 y 500"));
+	}
+	
+	@Test (groups = {"SIT","UAT"})
+	public void TXSU00023_Recarga_De_Credito_Ingresar_Valores_Mayores_A_500() {
+		irAConsolaFAN();
+		sb.cerrarPestaniaGestion(driver);
+		irAGestionDeClientes();
+		sleep(5000);
+		driver.switchTo().frame(cambioFrame(driver, By.id("SearchClientDocumentType")));
+		if (driver.getCurrentUrl().contains("sit"))
+			sb.BuscarCuenta("DNI", "15907314");
+		else
+			sb.BuscarCuenta("DNI", "22223001");
+		driver.findElement(By.cssSelector(".slds-tree__item.ng-scope")).click();
+		sleep(15000);
+		driver.switchTo().frame(cambioFrame(driver, By.className("card-top")));
+		driver.findElement(By.className("card-top")).click();
+		sleep(3000);
+		cc.irAGestionEnCard("Recarga de cr\u00e9dito");
+		driver.switchTo().frame(cambioFrame(driver, By.id("RefillAmount")));
+		driver.findElement(By.id("RefillAmount")).sendKeys("501");
+		driver.findElement(By.id("AmountSelectionStep_nextBtn")).click();
+		sleep(3000);
+		driver.findElement(By.id("alert-ok-button")).click();
+		Assert.assertTrue(driver.findElement(By.cssSelector(".message.description.ng-binding.ng-scope")).getText().contains("El monto debe estar comprendido entre 5 y 500"));
+	}
+	
+	@Test (groups = {"SIT","UAT"})
+	public void TXSU00024_Recarga_De_Credito_Ingresar_Letras() {
+		irAConsolaFAN();
+		sb.cerrarPestaniaGestion(driver);
+		irAGestionDeClientes();
+		sleep(5000);
+		driver.switchTo().frame(cambioFrame(driver, By.id("SearchClientDocumentType")));
+		if (driver.getCurrentUrl().contains("sit"))
+			sb.BuscarCuenta("DNI", "15907314");
+		else
+			sb.BuscarCuenta("DNI", "22223001");
+		driver.findElement(By.cssSelector(".slds-tree__item.ng-scope")).click();
+		sleep(15000);
+		driver.switchTo().frame(cambioFrame(driver, By.className("card-top")));
+		driver.findElement(By.className("card-top")).click();
+		sleep(3000);
+		cc.irAGestionEnCard("Recarga de cr\u00e9dito");
+		driver.switchTo().frame(cambioFrame(driver, By.id("RefillAmount")));
+		driver.findElement(By.id("RefillAmount")).sendKeys("a");
+		if ((!driver.findElement(By.id("RefillAmount")).getAttribute("value").equals("a")) || driver.findElement(By.id("RefillAmount")).getAttribute("value").equals("0"))
+			Assert.assertTrue(false);
+	}
+	
+	@Test (groups = {"SIT","UAT"})
+	public void TXSU00025_Recarga_De_Credito_Ingresar_Valores_De_Recarga_Con_Decimales() {
+		irAConsolaFAN();
+		sb.cerrarPestaniaGestion(driver);
+		irAGestionDeClientes();
+		sleep(5000);
+		driver.switchTo().frame(cambioFrame(driver, By.id("SearchClientDocumentType")));
+		if (driver.getCurrentUrl().contains("sit"))
+			sb.BuscarCuenta("DNI", "15907314");
+		else
+			sb.BuscarCuenta("DNI", "22223001");
+		driver.findElement(By.cssSelector(".slds-tree__item.ng-scope")).click();
+		sleep(15000);
+		driver.switchTo().frame(cambioFrame(driver, By.className("card-top")));
+		driver.findElement(By.className("card-top")).click();
+		sleep(3000);
+		cc.irAGestionEnCard("Recarga de cr\u00e9dito");
+		driver.switchTo().frame(cambioFrame(driver, By.id("RefillAmount")));
+		driver.findElement(By.id("RefillAmount")).sendKeys("17.50");
+		if ((!driver.findElement(By.id("RefillAmount")).getAttribute("value").equals("17.50")) || (!driver.findElement(By.id("RefillAmount")).getAttribute("value").equals("17,50")))
+			Assert.assertTrue(false);
+	}
+	
+	@Test (groups = {"SIT","UAT"})
+	public void TXSU00026_Modificacion_de_datos_No_Permite_Actualizar_datos_campo_DNI_CUIT_Telefonico() {
+		LoguearTelefonico();
+		irAConsolaFAN();
+		sb.cerrarPestaniaGestion(driver);
+		cc.menu_360_Ir_A("Inicio");
+		irAGestionDeClientes();
+		sleep(5000);
+		driver.switchTo().frame(cambioFrame(driver, By.id("SearchClientDocumentType")));
+		if (driver.getCurrentUrl().contains("sit"))
+			sb.BuscarCuenta("DNI", "10777541");
+		else
+			sb.BuscarCuenta("DNI", "22222070");
+		driver.findElement(By.cssSelector(".slds-tree__item.ng-scope")).click();
+		sleep(15000);
+		driver.switchTo().frame(cambioFrame(driver, By.className("profile-box")));
+		driver.findElements(By.className("profile-edit")).get(0).click();
+		sleep(10000);
+		driver.switchTo().frame(cambioFrame(driver, By.id("DocumentNumber")));
+		Assert.assertTrue(driver.findElement(By.id("DocumentType")).getAttribute("disabled").equals("true"));
+	}
+	
+	@Test (groups = {"SIT","UAT"})
+	public void TXSU00026_Modificacion_de_datos_No_Permite_Actualizar_datos_campo_DNI_CUIT_Agente() {
+		LoguearAgente();
+		irAConsolaFAN();
+		sb.cerrarPestaniaGestion(driver);
+		cc.menu_360_Ir_A("Inicio");
+		irAGestionDeClientes();
+		sleep(5000);
+		driver.switchTo().frame(cambioFrame(driver, By.id("SearchClientDocumentType")));
+		if (driver.getCurrentUrl().contains("sit"))
+			sb.BuscarCuenta("DNI", "10777541");
+		else
+			sb.BuscarCuenta("DNI", "22222070");
+		driver.findElement(By.cssSelector(".slds-tree__item.ng-scope")).click();
+		sleep(15000);
+		driver.switchTo().frame(cambioFrame(driver, By.className("profile-box")));
+		driver.findElements(By.className("profile-edit")).get(0).click();
+		sleep(10000);
+		driver.switchTo().frame(cambioFrame(driver, By.id("DocumentNumber")));
+		Assert.assertTrue(driver.findElement(By.id("DocumentType")).getAttribute("disabled").equals("true"));
+		}
+	
+	@Test (groups = {"SIT","UAT"})
+	public void TXSU00027_Modificacion_de_datos_No_Permitir_actualizar_fecha_de_nacimiento_al_colocar_un_año_mayor_a_120_ofcom() {
+		irAConsolaFAN();
+		sb.cerrarPestaniaGestion(driver);
+		cc.menu_360_Ir_A("Inicio");
+		irAGestionDeClientes();
+		sleep(5000);
+		driver.switchTo().frame(cambioFrame(driver, By.id("SearchClientDocumentType")));
+		if (driver.getCurrentUrl().contains("sit"))
+			sb.BuscarCuenta("DNI", "10777541");
+		else
+			sb.BuscarCuenta("DNI", "22222070");
+		driver.findElement(By.cssSelector(".slds-tree__item.ng-scope")).click();
+		sleep(15000);
+		driver.switchTo().frame(cambioFrame(driver, By.className("profile-box")));
+		driver.findElements(By.className("profile-edit")).get(0).click();
+		sleep(10000);
+		driver.switchTo().frame(cambioFrame(driver, By.id("DocumentNumber")));
+		driver.findElement(By.id("Birthdate")).clear();
+		driver.findElement(By.id("Birthdate")).sendKeys("08/08/1898");
+		sleep(5000);
+		driver.findElement(By.id("ClientInformation_nextBtn")).click();
+		sleep(8000);
+		Assert.assertTrue(!(driver.findElement(By.className("ta-care-omniscript-done")).getText().contains("Las modificaciones se realizaron con \u00e9xito")));
+	}
+	
+	@Test (groups = {"SIT","UAT"})
+	public void TXSU00028_Modificacion_de_datos_No_Permitir_actualizar_fecha_de_nacimiento_al_colocar_un_año_menor_a_16_Telefonico() {
+		LoguearTelefonico();
+		irAConsolaFAN();
+		sb.cerrarPestaniaGestion(driver);
+		cc.menu_360_Ir_A("Inicio");
+		irAGestionDeClientes();
+		sleep(5000);
+		driver.switchTo().frame(cambioFrame(driver, By.id("SearchClientDocumentType")));
+		if (driver.getCurrentUrl().contains("sit"))
+			sb.BuscarCuenta("DNI", "10777541");
+		else
+			sb.BuscarCuenta("DNI", "22222070");
+		driver.findElement(By.cssSelector(".slds-tree__item.ng-scope")).click();
+		sleep(15000);
+		driver.switchTo().frame(cambioFrame(driver, By.className("profile-box")));
+		driver.findElements(By.className("profile-edit")).get(0).click();
+		sleep(10000);
+		driver.switchTo().frame(cambioFrame(driver, By.id("DocumentNumber")));
+		driver.findElement(By.id("Birthdate")).clear();
+		driver.findElement(By.id("Birthdate")).sendKeys("08/08/2016");
+		sleep(5000);
+		driver.findElement(By.id("ClientInformation_nextBtn")).click();
+		sleep(8000);
+		Assert.assertTrue(!(driver.findElement(By.className("ta-care-omniscript-done")).getText().contains("Las modificaciones se realizaron con \u00e9xito")));
+	}
 }

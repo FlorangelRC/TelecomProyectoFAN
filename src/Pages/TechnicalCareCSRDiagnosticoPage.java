@@ -396,17 +396,13 @@ public class TechnicalCareCSRDiagnosticoPage extends BasePage{
 	      driver.switchTo().frame(accPage.getFrameForElement(driver, By.cssSelector(".imgItemContainer.ng-scope")));
 	      	List<WebElement> preguntas=driver.findElements(By.cssSelector(".imgItemContainer.ng-scope"));
 	      		for(WebElement p:preguntas) {
-	      			//scrollToElement(p);
-	      			if(p.getText().toLowerCase().contains(opcion)) {
-	      				//scrollToElement(p);
-	      				sleep(3000);
-	      				p.click();    				
-	      					sleep(5000);
-	      							return;
-	      				
-	      						}
-	      		}
-	      		
+	      		if(p.getText().toLowerCase().contains(opcion)) {
+	      			sleep(3000);
+	      			p.click();    				
+	      			sleep(5000);
+	      			return;
+	      	}
+	   	}
 	 }
 	
 	public void categoriaRed(String categoria) {

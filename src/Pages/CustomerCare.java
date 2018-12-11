@@ -30,7 +30,7 @@ public class CustomerCare extends BasePage {
 	
 	public CustomerCare(WebDriver driver){
 		setupNuevaPage(driver);
-        PageFactory.initElements(driver, this);
+        PageFactory.initElements(driver, this); 
 	}
 		
 	//Case information
@@ -381,6 +381,21 @@ public class CustomerCare extends BasePage {
 				x.click();
 		}
 		sleep(5000);
+	}
+	
+	public void irAResumenDeCuentaCorriente() {
+		TestBase tb = new TestBase();
+		driver.switchTo().frame(tb.cambioFrame(driver, By.className("card-top")));
+		List<WebElement> card = driver.findElement(By.cssSelector(".console-card.active")).findElement(By.className("actions")).findElements(By.tagName("li"));
+		for(WebElement x:card) {
+			if (x.findElement(By.tagName("a")).findElement(By.tagName("span")).getText().toLowerCase().contains(("resumen de cuenta corriente"))) {
+				System.out.println(x.getText());
+				sleep(3000);
+            x.click();
+				
+		}
+		sleep(5000);
+	}
 	}
 	
 	public void irAHistoriales() {
@@ -1775,8 +1790,46 @@ public class CustomerCare extends BasePage {
 		driver.switchTo().frame(cambioFrame.getFrameForElement(driver, By.id("searchResultsHolderDiv")));
 		WebElement wBody = driver.findElement(By.id("Order_body")).findElement(By.tagName("table"));
 		Marketing mMarketing = new Marketing(driver);
-		List <WebElement> wEstado = mMarketing.traerColumnaElement(wBody, 5, 3);
+		List <WebElement> wEstado = mMarketing.traerColumnaElement(wBody, 6, 5);
 		Boolean bAssert = wEstado.get(0).getText().toLowerCase().equalsIgnoreCase(Status);
 		return bAssert;
 	}
+	//================================================================================Metodos=====Angel=============================================================================
+	public void seleccionDeHistorial(String sRecarga) {
+		TestBase TB = new TestBase();
+		WebElement historialDeRecargas = null;
+		driver.switchTo().frame(TB.cambioFrame(driver, By.cssSelector(".slds-button.slds-button_brand")));
+		for (WebElement x : driver.findElements(By.className("slds-card"))) {
+			if (x.getText().toLowerCase().contains(sRecarga)) {
+				historialDeRecargas = x;
+			}
+		}
+		historialDeRecargas.findElement(By.cssSelector(".slds-button.slds-button_brand")).click();
+	}
+	
+	public void verificacionDeHistorial(String sHistorial) {
+		TestBase TB = new TestBase();
+		boolean enc = false;
+		/*driver.switchTo().frame(TB.cambioFrame(driver, By.cssSelector(".slds-button.slds-button_brand")));
+		boolean a = false;
+		List <WebElement> pack = driver.findElements(By.cssSelector(".slds-m-around_small.ta-fan-slds"));
+		for(WebElement x : pack) {
+			if(x.getText().toLowerCase().contains(sHistorial)) {
+				System.out.println(x);
+				a = true;
+			}
+		}
+		Assert.assertTrue(a);*/
+		driver.switchTo().frame(TB.cambioFrame(driver, By.cssSelector(".slds-card.slds-m-around--small.ta-fan-slds")));
+		List <WebElement> historiales = driver.findElements(By.className("slds-card"));
+		for (WebElement UnH: historiales) {
+			//System.out.println(UnH.findElement(By.cssSelector(".slds-card__header.slds-grid")).getText());
+			if(UnH.findElement(By.cssSelector(".slds-card__header.slds-grid")).getText().equals(sHistorial)) {
+				enc = true;
+				break;
+			}
+		}
+		Assert.assertTrue(enc);
+	}
+	//================================================================================================================================================================================================================================================
 }

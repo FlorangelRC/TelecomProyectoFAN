@@ -96,7 +96,7 @@ public class Marketing extends CustomerCare {
 		CustomerCare cCC = new CustomerCare(driver);
 		cCC.buscarGestion("Club Personal");
 		if (gestionesEncontradas.isEmpty()) {
-			System.err.println("ERROR: No existe la gestión 'Club Personal'");
+			System.err.println("ERROR: No existe la gestiï¿½n 'Club Personal'");
 			Assert.assertFalse(gestionesEncontradas.isEmpty());
 		}
 		for (WebElement wAux:gestionesEncontradas) {
@@ -121,7 +121,7 @@ public class Marketing extends CustomerCare {
 		buscadorGestiones.sendKeys(gest);
 	}*/
 	
-	private void cambiarAFrameActivo() {
+	public void cambiarAFrameActivo() {
 		driver.switchTo().defaultContent();
 		for (WebElement t : panelesCentrales) {
 			if (!t.getAttribute("class").contains("x-hide-display")) {
@@ -346,7 +346,7 @@ public class Marketing extends CustomerCare {
 				}
 				break;
 			default:
-				System.out.println("Selección incorrecta, por favor selecciona 'Alta' o 'baja'");
+				System.out.println("Selecciï¿½n incorrecta, por favor selecciona 'Alta' o 'baja'");
 		}
 		return sCaso;
 	}
@@ -479,7 +479,7 @@ public class Marketing extends CustomerCare {
 	public Boolean verificarMensajeDeErrorEmail() {
 		waitForVisibilityOfElementLocated(By.xpath("//ng-form[@id='TextEmailValidation']"));
 		Boolean p = driver.findElement(By.xpath("//ng-form[@id='TextEmailValidation']")).isDisplayed();
-		Boolean q = driver.findElement(By.xpath("//ng-form[@id='TextEmailValidation']")).getText().contains("es necesario indicar un email válido");
+		Boolean q = driver.findElement(By.xpath("//ng-form[@id='TextEmailValidation']")).getText().contains("es necesario indicar un email vï¿½lido");
 		return (p && q);
 	}
 	
@@ -545,7 +545,7 @@ public class Marketing extends CustomerCare {
 				iIndice = 1;
 			}
 			else {
-				System.out.println("Ambas celdas están vacías en el DataProvider.");			}
+				System.out.println("Ambas celdas estï¿½n vacï¿½as en el DataProvider.");			}
 		}
 		return iIndice;
 	}
