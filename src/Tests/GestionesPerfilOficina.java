@@ -5848,5 +5848,23 @@ public class GestionesPerfilOficina extends TestBase {
 		// no se muestra el detalle de factura de venta
 	}
 
+	@Test (groups = {"GestionesPerfilOficina","Autogestion","E2E", "Ciclo3"},  dataProvider = "CuentaModificacionDeDatos")
+	public void TS105418_CRM_Movil_Repro_Autogestion_0800_Inconv_con_derivacion_a_representante_Resuelto(String sDNI, String sLinea) throws InterruptedException {
+		TechnicalCareCSRAutogestionPage tech = new TechnicalCareCSRAutogestionPage(driver);
+		driver.switchTo().frame(cambioFrame(driver, By.id("SearchClientDocumentType")));
+		sb.BuscarCuenta("DNI", sDNI);
+		driver.findElement(By.cssSelector(".slds-tree__item.ng-scope")).click();
+		sleep(10000);
+		cc.irAGestion("diagn\u00f3stico de autogesti\u00f3n");
+		sleep(15000);
+		tech.listadoDeSeleccion("800", "Otros", "Incov con derivaci\u00f3n a representante");
+		sleep(8000);
+		tech.verificarNumDeGestion();
+		sleep(5000);
+		tech.cerrarCaso("Resuelta exitosa", "Consulta");
+		
+		
+		
+	}
 }
 	
