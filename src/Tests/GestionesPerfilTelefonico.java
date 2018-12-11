@@ -745,6 +745,15 @@ public class GestionesPerfilTelefonico extends TestBase{
 		detalles = null;
 		detalles = imagen + " -Historial de recargas - DNI: " + cDNI;
 		boolean enc = false;
+		CBS_Mattu cCBSM = new CBS_Mattu();
+		for(int i=0;i<=2;i++) {
+			cCBSM.Servicio_Recharge(sLinea,"25000000");
+			sleep(1000);
+		}
+		cCBSM.Servicio_Loan(sLinea,"15000000");
+		sleep(1000);
+		cCBSM.Servicio_Recharge(sLinea,"25000000");
+		sleep(1000);
 		driver.switchTo().frame(cambioFrame(driver, By.id("SearchClientDocumentType")));
 		sb.BuscarCuenta("DNI", cDNI);
 		driver.findElement(By.cssSelector(".slds-tree__item.ng-scope")).click();

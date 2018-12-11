@@ -30,6 +30,7 @@ import org.testng.annotations.Test;
 import Pages.Accounts;
 import Pages.BasePage;
 import Pages.CBS;
+import Pages.CalculoImpuestos;
 import Pages.ContactSearch;
 import Pages.CustomerCare;
 import Pages.Marketing;
@@ -55,7 +56,21 @@ public class GestionesPerfilOficina extends TestBase {
 	String detalles;
 	
 	@BeforeClass(alwaysRun=true)
-	public void init() {
+	public void init() throws IOException, AWTException {
+		CalculoImpuestos CI = new CalculoImpuestos();
+		CBS_Mattu cCBSM = new CBS_Mattu();
+		//CI.separarFacturaDeInv("3000000006610001", "Recarga");
+		//cCBSM.Servicio_RealizarAltaSuscripcion("3572408875","178");
+		//Assert.assertTrue("3572408875".matches("\\w[0-9]+"));
+		/*cCBSM.Servicio_Recharge("3572408875","35000000");
+		cCBSM.Servicio_Loan("3572408875","15000000");
+		cCBSM.Servicio_Recharge("3572408875","35000000");*/
+		//CI.mostrarProductos(CI.obtenerProductosFacturaInvTxt());
+		//CI.validarMontoProductosInvTxt("Consumidor Final");
+		/*System.out.println(CI.obtenerDatoFacturaDat("<FLD>IVA_C"));
+		CI.mostrarImpuestos(CI.obtenerImpuestos("Consumidor Final", CI.obtenerTaxGroup("C_SVA_MB_PACK_SMS")));
+		CI.calculadoraInversa(CI.obtenerImpuestos("Consumidor Final", CI.obtenerTaxGroup("C_SVA_MB_PACK_SMS")), "100.00", "16.63", "21.00");*/
+		//System.out.println(CI.obtenerTaxGroup("C_SVA_MB_PACK_SMS"));
 		driver = setConexion.setupEze();
 		sleep(5000);
 		sb = new SalesBase(driver);
@@ -74,6 +89,8 @@ public class GestionesPerfilOficina extends TestBase {
 		}
 		driver.switchTo().defaultContent();
 		sleep(6000);
+		Assert.assertTrue(cCBSM.Imprimir(driver,"20181203000000105017", "1000000026310001"));
+		
 	}
 	
 	@BeforeMethod(alwaysRun=true)
@@ -358,6 +375,7 @@ public class GestionesPerfilOficina extends TestBase {
 	@Test (groups = {"GestionesPerfilOficina", "Recargas","E2E","Ciclo1"}, dataProvider = "RecargaEfectivo")
 	public void TS134318_CRM_Movil_REPRO_Recargas_Presencial_Efectivo_Ofcom(String cDNI, String cMonto, String cLinea) throws AWTException {
 		sleep(6000);
+		CBS_Mattu invoSer = new CBS_Mattu();
 		imagen = "TS134318"+cDNI;
 		detalles = null;
 		detalles = imagen+"-Recarga-DNI:"+cDNI;
@@ -393,12 +411,14 @@ public class GestionesPerfilOficina extends TestBase {
 		String check = driver.findElement(By.id("GeneralMessageDesing")).getText();
 		Assert.assertTrue(msj.toLowerCase().contains("se ha enviado correctamente la factura a huawei. dirigirse a caja para realizar el pago de la misma"));
 		Assert.assertTrue(check.toLowerCase().contains("la orden se realiz\u00f3 con \u00e9xito"));
+		driver.switchTo().defaultContent();
+		sb.cerrarPestaniaGestion(driver);
 		String orden = cc.obtenerTNyMonto2(driver, sOrden);
 		//String orden = cc.obtenerOrdenMontoyTN(driver, "Recarga");
 		System.out.println("orden = "+orden);
 		sOrders.add("Recargas" + orden + ", cuenta:"+accid+", DNI: " + cDNI +", Monto:"+orden.split("-")[2]);
 		
-		CBS_Mattu invoSer = new CBS_Mattu();
+		
 		Assert.assertTrue(invoSer.PagoEnCaja("1006", accid, "1001", orden.split("-")[2], orden.split("-")[1],driver));
 		sleep(5000);
 		driver.navigate().refresh();
@@ -418,7 +438,8 @@ public class GestionesPerfilOficina extends TestBase {
 		monto = iMainBalance+monto;
 		System.out.println("Sumatoria :"+monto);
 		Assert.assertTrue(monto == uiMainBalance);
-
+		CalculoImpuestos CI = new CalculoImpuestos();
+		System.out.println(CI.determinarCategoriaIVA(driver));
 	}
 	
 	@Test (groups = {"GestionesPerfilOficina", "Recargas","E2E","Ciclo1"}, dataProvider = "RecargaTC")
@@ -2196,11 +2217,13 @@ public class GestionesPerfilOficina extends TestBase {
 	}
 	
 	@Test (groups = {"GestionesPerfilOficina", "TriviasYSuscripciones", "E2E","Ciclo3"}, dataProvider = "CuentaTriviasYSuscripciones")
-	public void TS119032_CRM_Movil_REPRO_Suscripciones_Baja_de_suscripciones_sin_BlackList_Presencial(String cDNI) {
+	public void TS119032_CRM_Movil_REPRO_Suscripciones_Baja_de_suscripciones_sin_BlackList_Presencial(String cDNI,String cLinea) {
 		imagen = "TS119032";
 		detalles = null;
 		detalles = imagen +" -Trivias y suscripciones - DNI: " +cDNI;
 		boolean gest = false;
+		CBS_Mattu cCBSM = new CBS_Mattu();
+		cCBSM.Servicio_RealizarAltaSuscripcion(cLinea,"178");
 		driver.switchTo().frame(cambioFrame(driver, By.id("SearchClientDocumentType")));
 		sb.BuscarCuenta("DNI", cDNI);
 		driver.findElement(By.cssSelector(".slds-tree__item.ng-scope")).click();
@@ -2237,11 +2260,13 @@ public class GestionesPerfilOficina extends TestBase {
 	}
 	
 	@Test (groups = {"GestionesPerfilOficina", "TriviasYSuscripciones", "E2E","Ciclo3"}, dataProvider = "CuentaTriviasYSuscripciones")
-	public void TS110893_CRM_Movil_REPRO_Suscripciones_Baja_de_una_suscripcion_con_BlackList_con_ajuste_Presencial(String cDNI) {
+	public void TS110893_CRM_Movil_REPRO_Suscripciones_Baja_de_una_suscripcion_con_BlackList_con_ajuste_Presencial(String cDNI, String cLinea) {
 		imagen="TS110893";
 		detalles = null;
 		detalles = imagen + "- Trivias y suscripciones - DNI:" + cDNI;
 		boolean gest = false;
+		CBS_Mattu cCBSM = new CBS_Mattu();
+		cCBSM.Servicio_RealizarAltaSuscripcion(cLinea,"178");
 		WebElement blackList = null;
 		driver.switchTo().frame(cambioFrame(driver, By.id("SearchClientDocumentType")));
 		sb.BuscarCuenta("DNI", cDNI);
@@ -2286,11 +2311,13 @@ public class GestionesPerfilOficina extends TestBase {
 	}
 	
 	@Test (groups = {"GestionesPerfilOficina", "TriviasYSuscripciones", "E2E","Ciclo3"}, dataProvider = "CuentaTriviasYSuscripciones")
-	public void TS110877_CRM_Movil_REPRO_Suscripciones_Baja_de_una_suscripcion_sin_BlackList_con_ajuste_Presencial(String cDNI) {
+	public void TS110877_CRM_Movil_REPRO_Suscripciones_Baja_de_una_suscripcion_sin_BlackList_con_ajuste_Presencial(String cDNI, String cLinea) {
 		imagen = "TS110877";
 		detalles = null;
 		detalles = imagen + "- Trivias y suscripciones - DNI: "+cDNI;
 		boolean gest = false;
+		CBS_Mattu cCBSM = new CBS_Mattu();
+		cCBSM.Servicio_RealizarAltaSuscripcion(cLinea,"178");
 		WebElement blackList = null;
 		driver.switchTo().frame(cambioFrame(driver, By.id("SearchClientDocumentType")));
 		sb.BuscarCuenta("DNI", cDNI);
@@ -2814,7 +2841,7 @@ public class GestionesPerfilOficina extends TestBase {
 	}
 	
 	@Test (groups = {"GestionesPerfilOficina", "DetalleDeConsumo", "Ciclo2"}, dataProvider = "CuentaTriviasYSuscripciones")
-	public void TS134783_CRM_Movil_Prepago_Vista_360_Detalle_de_consumo_Consulta_detalle_de_consumo_Datos_FAN_Front_OOCC_134783(String cDNI) {
+	public void TS134783_CRM_Movil_Prepago_Vista_360_Detalle_de_consumo_Consulta_detalle_de_consumo_Datos_FAN_Front_OOCC_134783(String cDNI, String cLinea) {
 		imagen = "TS134783";
 		detalles = null;
 		detalles = imagen + "- Detalle de Consumo - DNI: "+cDNI;
@@ -2834,7 +2861,7 @@ public class GestionesPerfilOficina extends TestBase {
 		}
 	
 	@Test (groups = {"GestionesPerfilOficina", "DetalleDeConsumo", "Ciclo2"}, dataProvider = "CuentaTriviasYSuscripciones")
-	public void TS134782_CRM_Movil_Prepago_Vista_360_Detalle_de_consumo_Consulta_detalle_de_consumo_SMS_FAN_Front_OOCC_134782(String cDNI) {
+	public void TS134782_CRM_Movil_Prepago_Vista_360_Detalle_de_consumo_Consulta_detalle_de_consumo_SMS_FAN_Front_OOCC_134782(String cDNI, String cLinea) {
 		imagen = "TS134782";
 		detalles = null;
 		detalles = imagen + "- Detalle de Consumos - DNI: "+cDNI;
@@ -2854,7 +2881,7 @@ public class GestionesPerfilOficina extends TestBase {
 		}
 	
 	@Test (groups = {"GestionesPerfilOficina", "DetalleDeConsumo", "Ciclo2"}, dataProvider = "CuentaTriviasYSuscripciones")
-	public void TS134784_CRM_Movil_Prepago_Vista_360_Detalle_de_consumo_Consulta_detalle_de_consumo_Voz_FAN_Front_OOCC(String cDNI) {
+	public void TS134784_CRM_Movil_Prepago_Vista_360_Detalle_de_consumo_Consulta_detalle_de_consumo_Voz_FAN_Front_OOCC(String cDNI, String cLinea) {
 		imagen = "TS134784";
 		detalles = null;
 		detalles = imagen + "-Vista 360 - DNI: "+cDNI;
@@ -2874,7 +2901,7 @@ public class GestionesPerfilOficina extends TestBase {
 		}
 	
 	@Test (groups = {"GestionesPerfilOficina", "DetalleDeConsumo", "Ciclo2"}, dataProvider = "CuentaTriviasYSuscripciones")
-	public void TS134785_CRM_Movil_Prepago_Vista_360_Detalle_de_consumo_Consulta_detalle_de_Otros_consumos_FAN_Front_OOCC_134785(String cDNI) {
+	public void TS134785_CRM_Movil_Prepago_Vista_360_Detalle_de_consumo_Consulta_detalle_de_Otros_consumos_FAN_Front_OOCC_134785(String cDNI, String cLinea) {
 		imagen = "TS134785";
 		detalles = null;
 		detalles = imagen + "- Detalles de Consumos -DNI:" + cDNI;
@@ -2902,6 +2929,15 @@ public class GestionesPerfilOficina extends TestBase {
 		detalles = null;
 		detalles = imagen + "-Historial de recargas - DNI: "+cDNI;
 		boolean enc = false;
+		CBS_Mattu cCBSM = new CBS_Mattu();
+		for(int i=0;i<=2;i++) {
+			cCBSM.Servicio_Recharge(cLinea,"25000000");
+			sleep(1000);
+		}
+		cCBSM.Servicio_Loan(cLinea,"15000000");
+		sleep(1000);
+		cCBSM.Servicio_Recharge(cLinea,"25000000");
+		sleep(1000);
 		driver.switchTo().frame(cambioFrame(driver, By.id("SearchClientDocumentType")));
 		sb.BuscarCuenta("DNI", cDNI);
 		driver.findElement(By.cssSelector(".slds-tree__item.ng-scope")).click();
@@ -3284,6 +3320,7 @@ public class GestionesPerfilOficina extends TestBase {
 		WebElement tabla = driver.findElement(By.id("ep")).findElements(By.tagName("table")).get(1);
 		String datos = tabla.findElements(By.tagName("tr")).get(4).findElements(By.tagName("td")).get(1).getText();
 		Assert.assertTrue(datos.equalsIgnoreCase("activada")||datos.equalsIgnoreCase("activated"));
+		
 	}
 	
 	@Test (groups={"Sales","GestionDeClientes", "Ciclo1"},dataProvider = "invalidaDocumentacion")

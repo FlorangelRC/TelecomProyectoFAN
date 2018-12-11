@@ -30,6 +30,8 @@ public class SOAPClientSAAJ {
 	static String sObtenerInformacionOrdenSIT = "https://mdwtpbust1.telecom.com.ar:8702/obtenerInformacionOrden";
 	static String sNotificarResultadoOrdenUAT = "https://mdwtpbusu1.telecom.com.ar:8702/notificarResultadoOrden";
 	static String sNotificarResultadoOrdenSIT = "https://mdwtpbust1.telecom.com.ar:8702/notificarResultadoOrden";
+	static String sRealizarAltaSuscripUAT = "http://mdwtpbusu1.telecom.com.ar:8701/realizarAltaSuscripInfotaiment?WSDL";
+	static String sRealizarAltaSuscripSIT = "http://mdwtpbust1.telecom.com.ar:8701/realizarAltaSuscripInfotaiment?WSDL";
 	
 	public Document callSoapWebService(String soapMessageString, String sEndPoint) {
 		Document doc = null;
@@ -67,6 +69,12 @@ public class SOAPClientSAAJ {
 	    		else
 	    			sEndPoint = sObtenerInformacionOrdenUAT;
 	    		break;
+	    	case "alta suscripcion":
+	    		if (TestBase.urlAmbiente.contains("sit"))
+	    			sEndPoint = sRealizarAltaSuscripSIT;
+	    		else
+	    			sEndPoint = sRealizarAltaSuscripUAT;
+	    		break;
     	}
     	
     	try {
@@ -78,9 +86,9 @@ public class SOAPClientSAAJ {
             SOAPMessage soapResponse = soapConnection.call(createSRequest(soapMessageString), sEndPoint);
             
             soapConnection.close();
-            System.out.println("*************************************************************");
+            /*System.out.println("*************************************************************");
             System.out.println(soapResponse.getSOAPBody().getTextContent());
-            System.out.println("*************************************************************");
+            System.out.println("*************************************************************");*/
             doc = soapResponse.getSOAPBody().extractContentAsDocument();
             return doc;
         } catch (Exception e) {
