@@ -1127,7 +1127,7 @@ public class GestionesPerfilAgente extends TestBase{
 	
 	@Test (groups = {"GestionesPerfilAgente", "Ajustes", "E2E", "Ciclo3"}, dataProvider = "CuentaAjustesPRE")
 	public void TS135380_CRM_Movil_Prepago_Otros_Historiales_Historial_de_ajustes_Ordenamiento_por_Motivo_de_ajuste_FAN_Front_Agente(String sDNI, String sLinea) {
-		imagen = "TS135376";
+		imagen = "TS135380";
 		boolean ajustePositivo = false;
 		detalles = null;
 		detalles = imagen+"-Ajuste-DNI:"+sDNI;
@@ -1149,7 +1149,7 @@ public class GestionesPerfilAgente extends TestBase{
 		WebElement table = driver.findElement(By.cssSelector(".slds-datepicker.slds-dropdown.slds-dropdown--left"));
 		for (WebElement cell : table.findElements(By.xpath("//tr//td"))) {
 			try {
-				if (cell.getText().equals("13"))
+				if (cell.getText().equals("20"))
 					cell.click();
 			} catch (Exception e) {}
 		}
@@ -1157,7 +1157,7 @@ public class GestionesPerfilAgente extends TestBase{
 		WebElement table2 = driver.findElement(By.cssSelector(".slds-datepicker.slds-dropdown.slds-dropdown--left"));
 		for (WebElement cell : table2.findElements(By.xpath("//tr//td"))) {
 			try {
-				if (cell.getText().equals("15"))
+				if (cell.getText().equals("12"))
 					cell.click();
 			} catch (Exception e) {}
 		}

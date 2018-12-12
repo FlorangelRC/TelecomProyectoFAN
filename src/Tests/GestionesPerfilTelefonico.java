@@ -1910,7 +1910,7 @@ public class GestionesPerfilTelefonico extends TestBase{
 		WebElement table = driver.findElement(By.cssSelector(".slds-datepicker.slds-dropdown.slds-dropdown--left"));
 		for (WebElement cell : table.findElements(By.xpath("//tr//td"))) {
 			try {
-				if (cell.getText().equals("13"))
+				if (cell.getText().equals("19"))
 					cell.click();
 			} catch (Exception e) {}
 		}
@@ -1918,7 +1918,7 @@ public class GestionesPerfilTelefonico extends TestBase{
 		WebElement table2 = driver.findElement(By.cssSelector(".slds-datepicker.slds-dropdown.slds-dropdown--left"));
 		for (WebElement cell : table2.findElements(By.xpath("//tr//td"))) {
 			try {
-				if (cell.getText().equals("15"))
+				if (cell.getText().equals("10"))
 					cell.click();
 			} catch (Exception e) {}
 		}
