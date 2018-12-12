@@ -47,7 +47,7 @@ public class GestionesPerfilOperativo extends TestBase {
 	    driver.switchTo().window(tabs.get(0));
 	}
 	
-	@BeforeMethod (alwaysRun = true)
+	//@BeforeMethod (alwaysRun = true)
 	public void before() {
 		sleep(3000);
 		driver.switchTo().defaultContent();
@@ -55,7 +55,7 @@ public class GestionesPerfilOperativo extends TestBase {
 		sleep(3000);
 	}
 	
-	@AfterClass (alwaysRun = true)
+	//@AfterClass (alwaysRun = true)
 	public void quit() {
 		driver.quit();
 		sleep(5000);

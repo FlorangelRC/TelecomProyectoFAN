@@ -260,4 +260,75 @@ public class CBS_Mattu extends TestBase {
 		guardarLineasNominadas(texto);
 	}
 	
+	@Test
+	public Document Servicio_Recharge(String sLinea, String sMonto) {
+		String sEndPoint = "pago en caja";
+		//String sMonto = "35000000";
+		//String sLinea = "5572408875";
+		String sFecha =((new java.text.SimpleDateFormat("yyyy-MM-dd HH:mm:ss")).format(new Date())).toString();
+		SOAPClientSAAJ sSCS = new SOAPClientSAAJ();
+		CBS cCBS = new CBS();
+		Document sResponse = sSCS.callSoapWebService(cCBS.sRequestRecharge(sLinea, sFecha, sMonto), sEndPoint);
+		Assert.assertTrue(cCBS.sValidacion_ResponseRecharge(sResponse));
+		//Assert.assertFalse(sResponse.startsWith("false"));
+		System.out.println(cCBS.ObtenerValorResponse(sResponse, "cbs:ResultDesc"));
+		return sResponse;
+	}
+	
+	@Test
+	public Document Servicio_Loan(String sLinea, String sMonto) {
+		String sEndPoint = "pago en caja";
+		//String sMonto = "35000000";
+		//String sLinea = "5572408875";
+		String sFecha =((new java.text.SimpleDateFormat("yyyy-MM-dd HH:mm:ss")).format(new Date())).toString();
+		SOAPClientSAAJ sSCS = new SOAPClientSAAJ();
+		CBS cCBS = new CBS();
+		Document sResponse = sSCS.callSoapWebService(cCBS.sRequestLoan(sLinea, sFecha, sMonto), sEndPoint);
+		Assert.assertTrue(cCBS.sValidacion_ResponseRecharge(sResponse));
+		//Assert.assertFalse(sResponse.startsWith("false"));
+		System.out.println(cCBS.ObtenerValorResponse(sResponse, "cbs:ResultDesc"));
+		return sResponse;
+	}
+	@Test
+	public Document Servicio_RealizarAltaSuscripcion(String sLinea, String sCodigo) {
+		String sEndPoint = "alta suscripcion";
+		//String sMonto = "35000000";
+		//String sLinea = "5572408875";
+		SOAPClientSAAJ sSCS = new SOAPClientSAAJ();
+		CBS cCBS = new CBS();
+		Document sResponse = sSCS.callSoapWebService(cCBS.sRequestRealizarAltaSuscripcion(sLinea, sCodigo), sEndPoint);
+		Assert.assertTrue(cCBS.sValidacion_RealizarAltaSuscripcion(sResponse));
+		System.out.println(cCBS.ObtenerValorResponse(sResponse, "v2.:codInteraccionNegocio"));
+		return sResponse;
+	}
+	
+	@Test
+	public boolean Imprimir(WebDriver driver, String prefactura, String cuenta) throws AWTException {
+		/*String prefactura = "20181203000000105017";
+		String cuenta = "1000000026310001";*/
+		ManejoCaja mn = new ManejoCaja();
+		boolean exito = false;
+		//this.driver = setConexion.setupEze();
+		abrirPestaniaNueva(driver);
+		ArrayList<String> tabs2 = new ArrayList<String> (driver.getWindowHandles());
+		sleep(5000);
+		try {
+			driver.switchTo().window(tabs2.get(1));
+			mn.ingresarCaja(driver);
+			exito = true;
+		}catch(Exception ex1) {
+			driver.close();
+		    driver.switchTo().window(tabs2.get(0));
+		}
+		if(exito == true) {
+			mn.configuracionesIniciales(driver);
+			mn.imprimirFactura(driver,prefactura,cuenta);
+			//llamar al cerrarcaja registradora
+			mn.cerrarPestanias(driver);
+			mn.cerrarCajaRegistradora(driver);
+			driver.close();
+		    driver.switchTo().window(tabs2.get(0));
+		}
+		return(exito);
+	}
 }

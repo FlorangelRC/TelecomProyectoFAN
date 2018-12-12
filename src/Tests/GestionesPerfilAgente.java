@@ -231,7 +231,6 @@ public class GestionesPerfilAgente extends TestBase{
 		SalesBase sale = new SalesBase(driver);
 		BasePage cambioFrameByID = new BasePage();
 		CustomerCare cCC = new CustomerCare(driver);
-		PagePerfilTelefonico pagePTelefo = new PagePerfilTelefonico(driver);
 		driver.switchTo().frame(cambioFrameByID.getFrameForElement(driver, By.id("SearchClientDocumentType")));
 		sleep(8000);
 		sale.BuscarCuenta("DNI", sDNI);
@@ -1339,7 +1338,7 @@ public class GestionesPerfilAgente extends TestBase{
 		driver.switchTo().frame(cambioFrame(driver, By.className("card-top")));
 		driver.findElement(By.className("card-top")).click();
 		sleep(5000);
-		cCC.irAGestionEnCard("Diagnostico");
+		cCC.irAGestionEnCard("Diagn\u00f3stico");// campo diagnostico no aparece en perfil agente
 	    tech.clickDiagnosticarServicio("datos", "Datos", true);
 	    tech.selectionInconvenient("No puedo navegar");
 	    tech.continuar();
@@ -1475,7 +1474,6 @@ public class GestionesPerfilAgente extends TestBase{
 		pagePTelefo.buscarAssert();
 		cCC.seleccionarCardPornumeroLinea(sLinea, driver);
 		pagePTelefo.comprarPack();
-		sleep(5000);
 		//pagePTelefo.PacksRoaming(sVentaPack);
 
 	}
@@ -1622,4 +1620,34 @@ public class GestionesPerfilAgente extends TestBase{
 		Assert.assertTrue(gGF.FlowConsultaServicioActivo(driver, sLinea, "Restricci\u00f3n de la Identificaci\u00f3n de Llamadas"));
 	}
 	
+	
+	@Test (groups = {"GestionesPerfilAgente","Modificacion de Datos","E2E", "Ciclo3"},  dataProvider = "CuentaModificacionDeDatos")
+	public void TS129330_CRM_Movil_REPRO_Modificacion_de_datos_No_Permite_Actualizar_datos_campo_DNI_Cliente_FAN_Front_Agentes(String sDNI, String sLinea) {
+		imagen = "TS129330";
+		detalles = null;
+		detalles = imagen + " -ActualizarDatos - DNI: " + sDNI+ " - Linea: "+sLinea;
+		driver.switchTo().frame(cambioFrame(driver, By.id("SearchClientDocumentType")));
+		sb.BuscarCuenta("DNI", sDNI);
+		driver.findElement(By.cssSelector(".slds-tree__item.ng-scope")).click();
+		sleep(15000);
+		driver.switchTo().frame(cambioFrame(driver, By.className("profile-box")));
+		driver.findElements(By.className("profile-edit")).get(0).click();
+		sleep(10000);
+		driver.switchTo().frame(cambioFrame(driver, By.id("DocumentNumber")));
+		WebElement documento = driver.findElement(By.id("DocumentNumber"));
+		documento.getAttribute("value");
+		documento.clear();
+		documento.sendKeys("33331213");
+		driver.findElement(By.id("ClientInformation_nextBtn")).click();
+		sleep(5000);
+		driver.switchTo().frame(cambioFrame(driver, By.id("InvalidModifications_prevBtn")));
+		boolean a = false;
+		for(WebElement x : driver.findElements(By.cssSelector(".slds-form-element.vlc-flex.vlc-slds-text-block.vlc-slds-rte.ng-pristine.ng-valid.ng-scope"))) {
+			if(x.getText().toLowerCase().equals("no se pueden modificar m\u00e1s de dos d\u00edgitos de su dni.")) {
+				a =true;
+				System.out.println(x.getText());
+			}
+		}
+		Assert.assertTrue(a);
+	}
 }

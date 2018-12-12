@@ -43,7 +43,7 @@ public class TechnicalCareCSRAutogestionPage extends BasePage {
 	@FindBy(xpath=".//*[@id='CreatedCaseText']/div/p/p[1]/strong") 
 	private WebElement numCaso;
 	
-	@FindBy(xpath=".//*[@id='CreatedClosedCaseText']/div/p/p[1]/strong[1]")
+	@FindBy(xpath=".//*[@id=\"ClosedCaseText\"]/div/p/p/strong")//*[@id="ClosedCaseText"]/div/p/p/strong
 	private WebElement numGestion;
 	
 	@FindBy(xpath=".//*[@id='SimilCaseInformation']/div/p/p[3]/strong[1]")
@@ -64,7 +64,7 @@ public class TechnicalCareCSRAutogestionPage extends BasePage {
 	@FindBy(xpath="//*[@class='imgItemContainer ng-scope']") 
 	private List<WebElement> listaDeInconvenientes;
 	
-	@FindBy(xpath= ".//*[@id='topButtonRow']/input[5]")
+	@FindBy(xpath= "//*[@id='topButtonRow']/input[2]")
 	private WebElement cerrarcaso;
 	
 	@FindBy(id="cas7")
@@ -211,7 +211,7 @@ public class TechnicalCareCSRAutogestionPage extends BasePage {
 		 selectByText(getMotivo(), motivo);
 		 scrollToElement(guardar);
 		 guardar.click();
-		  return false;
+		  return true;
 		}
 		
 	
