@@ -43,7 +43,7 @@ public class TechnicalCareCSRAutogestionPage extends BasePage {
 	@FindBy(xpath=".//*[@id='CreatedCaseText']/div/p/p[1]/strong") 
 	private WebElement numCaso;
 	
-	@FindBy(xpath=".//*[@id=\"ClosedCaseText\"]/div/p/p/strong")//*[@id="ClosedCaseText"]/div/p/p/strong
+	@FindBy(xpath=".//*[@id=\"ClosedCaseText\"]/div/p/p/strong")
 	private WebElement numGestion;
 	
 	@FindBy(xpath=".//*[@id='SimilCaseInformation']/div/p/p[3]/strong[1]")

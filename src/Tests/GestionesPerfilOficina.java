@@ -2974,7 +2974,7 @@ public class GestionesPerfilOficina extends TestBase {
 				enc = true;
 				driver.findElements(By.cssSelector(".slds-button.slds-button_brand")).get(1).click();
 				sleep(5000);
-				driver.switchTo().frame(cambioFrame(driver, By.cssSelector(".slds-button.slds-button--brand.filterNegotiations.slds-p-horizontal--x-large.slds-p-vertical--x-small")));
+				driver.switchTo().frame(cambioFrame(driver, By.cssSelector(".slds-text-heading--large.slds-size--1-of-1.slds-medium-size--1-of-1.slds-large-size--1-of-1.slds-p-around--medium")));
 				driver.findElement(By.cssSelector(".slds-button.slds-button--brand.filterNegotiations.slds-p-horizontal--x-large.slds-p-vertical--x-small")).click();
 				sleep(5000);
 				Assert.assertTrue(true);
@@ -3540,7 +3540,7 @@ public class GestionesPerfilOficina extends TestBase {
 		selectByText(driver.findElement(By.id("SearchClientDocumentType")), "Libreta de Enrolamiento");
 		try {Thread.sleep(10000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 		boolean a = false;
-			if(driver.findElement(By.id("SearchClientDocumentType")).getText().toLowerCase().contains("dni")) {
+			if(driver.findElement(By.id("SearchClientDocumentType")).getText().toLowerCase().contains("libreta de enrolamiento")) {
 				a = true;
 			}
 			Assert.assertTrue(a);
@@ -4103,7 +4103,8 @@ public class GestionesPerfilOficina extends TestBase {
 				enc = true;
 				driver.findElement(By.cssSelector(".slds-button.slds-button_brand")).click();
 				sleep(5000);
-				driver.findElement(By.cssSelector(".slds-button.slds-button--brand.filterNegotiations.slds-p-horizontal--x-large.slds-p-vertical--x-small")).click();
+				driver.switchTo().frame(cambioFrame(driver, By.cssSelector(".slds-button.slds-button--brand.filterNegotiations.slds-p-horizontal--x-large.slds-p-vertical--x-small")));
+				driver.findElement(By.cssSelector(".slds-button.slds-button--brand.filterNegotiations.slds-p-horizontal--x-large.slds-p-vertical--x-small")).click();				sleep(5000);
 				sleep(5000);
 				//Assert.assertTrue(true);
 				break;
@@ -4115,7 +4116,7 @@ public class GestionesPerfilOficina extends TestBase {
 		List<WebElement> tableRows = table.findElements(By.xpath("//tr//td"));
 		for (WebElement cell : tableRows) {
 			try {
-				if (cell.getText().equals("25")) {
+				if (cell.getText().equals("01")) {
 					cell.click();
 				}
 			} catch (Exception e) {}
@@ -4126,7 +4127,7 @@ public class GestionesPerfilOficina extends TestBase {
 		List<WebElement> tableRows_2 = table_2.findElements(By.xpath("//tr//td"));
 		for (WebElement cell : tableRows_2) {
 			try {
-				if (cell.getText().equals("16")) {
+				if (cell.getText().equals("01")) {
 					cell.click();
 				}
 			} catch (Exception e) {}
