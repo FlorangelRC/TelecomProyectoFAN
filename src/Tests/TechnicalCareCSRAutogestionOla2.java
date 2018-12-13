@@ -1309,7 +1309,8 @@ public class TechnicalCareCSRAutogestionOla2 extends TestBase{
 		TechnicalCareCSRAutogestionPage tech = new TechnicalCareCSRAutogestionPage(driver);
 		tech.listadoDeSeleccion("Asteriscos TP", "*111", "Tono ocupado");  
 		tech.selectionInconvenient("Sí");
-		tech.verificarCaso();		
+		tech.verificarCaso();	
+		sleep(3000);
 		tech.cerrarCaso("Resuelta Masiva", "Instructions not clear");
 	}
 
