@@ -89,7 +89,7 @@ public class GestionesPerfilOficina extends TestBase {
 		}
 		driver.switchTo().defaultContent();
 		sleep(6000);
-		Assert.assertTrue(cCBSM.Imprimir(driver,"20181203000000105017", "1000000026310001"));
+		//Assert.assertTrue(cCBSM.Imprimir(driver,"20181203000000105017", "1000000026310001"));
 		
 	}
 	
@@ -144,7 +144,7 @@ public class GestionesPerfilOficina extends TestBase {
 		sleep(15000);
 	}
 
-	@AfterMethod(alwaysRun=true)
+	//@AfterMethod(alwaysRun=true)
 	public void after() throws IOException {
 		guardarListaTxt(sOrders);
 		sOrders.clear();
@@ -4074,21 +4074,15 @@ public class GestionesPerfilOficina extends TestBase {
 		sleep(20000);
 		CustomerCare cc = new CustomerCare(driver);
 		cc.irAHistoriales();
-		sleep(8000);
-		driver.switchTo().frame(cambioFrame(driver, By.cssSelector(".slds-card.slds-m-around--small.ta-fan-slds")));
-		List <WebElement> historiales = driver.findElements(By.className("slds-card"));
-		for (WebElement UnH: historiales) {
-			System.out.println(UnH.findElement(By.cssSelector(".slds-card__header.slds-grid")).getText());
-			if(UnH.findElement(By.cssSelector(".slds-card__header.slds-grid")).getText().equals("Historial de packs")) {
-				enc = true;
-				driver.findElement(By.cssSelector(".slds-button.slds-button_brand")).click();
-				sleep(5000);
-				driver.findElement(By.cssSelector(".slds-button.slds-button--brand.filterNegotiations.slds-p-horizontal--x-large.slds-p-vertical--x-small")).click();
-				sleep(5000);
-				//Assert.assertTrue(true);
-				break;
-			}
+		WebElement historialDeAjustes = null;
+		driver.switchTo().frame(cambioFrame(driver, By.cssSelector(".slds-button.slds-button_brand")));
+		for (WebElement x : driver.findElements(By.className("slds-card"))) {
+			if (x.getText().toLowerCase().contains("historial de packs"))
+				historialDeAjustes = x;
 		}
+		historialDeAjustes.findElement(By.cssSelector(".slds-button.slds-button_brand")).click();
+		sleep(7000);
+		driver.switchTo().frame(cambioFrame(driver, By.cssSelector(".slds-grid.slds-wrap.slds-grid--pull-padded.slds-m-around--medium.slds-p-around--medium.negotationsfilter")));
 		driver.findElement(By.id("text-input-id-1")).click();
 		WebElement table = driver.findElement(By.cssSelector(".slds-datepicker.slds-dropdown.slds-dropdown--left"));
 		sleep(3000);
@@ -4106,7 +4100,7 @@ public class GestionesPerfilOficina extends TestBase {
 		List<WebElement> tableRows_2 = table_2.findElements(By.xpath("//tr//td"));
 		for (WebElement cell : tableRows_2) {
 			try {
-				if (cell.getText().equals("16")) {
+				if (cell.getText().equals("13")) {
 					cell.click();
 				}
 			} catch (Exception e) {}
@@ -5943,7 +5937,7 @@ public class GestionesPerfilOficina extends TestBase {
 	public void TS105428_CRM_Movil_Repro_Autogestion_USSD_No_Interactua_Resuelto(String cDNI, String cLinea) throws InterruptedException {
 		imagen = "TS105428";
 		detalles = null;
-		detalles = imagen + "- Detalle de Consumo - DNI: "+cDNI;
+		detalles = imagen + "- Autogestion - DNI: "+cDNI;
 		TechnicalCareCSRAutogestionPage tech = new TechnicalCareCSRAutogestionPage(driver);
 		driver.switchTo().frame(cambioFrame(driver, By.id("SearchClientDocumentType")));
 		sb.BuscarCuenta("DNI", cDNI);
@@ -5959,7 +5953,7 @@ public class GestionesPerfilOficina extends TestBase {
 	public void TS105431_CRM_Movil_Repro_Autogestion_WAP_Sitio_Caido_No_carga_informacion_Resuelto(String cDNI, String cLinea) throws InterruptedException {
 		imagen = "TS105431";
 		detalles = null;
-		detalles = imagen + "- Detalle de Consumo - DNI: "+cDNI;
+		detalles = imagen + "- Autogestion - DNI: "+cDNI;
 		TechnicalCareCSRAutogestionPage tech = new TechnicalCareCSRAutogestionPage(driver);
 		driver.switchTo().frame(cambioFrame(driver, By.id("SearchClientDocumentType")));
 		sb.BuscarCuenta("DNI", cDNI);
@@ -5970,11 +5964,30 @@ public class GestionesPerfilOficina extends TestBase {
 		sleep(4000);
 		tech.verificarNumDeGestion();
 		Assert.assertTrue(tech.cerrarCaso("Resuelta exitosa", "Consulta"));
-		
+	}
+	
+	@Test (groups = {"GestionesPerfilOficina", "Diagnostico/Inconvenientes", }, dataProvider = "Diagnostico")
+	public void TS105831_Nros_Emergencia_Informa_Sistema_Fuera_de_Servicio_Resuelto(String cDNI, String cLinea) throws InterruptedException {
+		imagen = "TS105831";
+		detalles = null;
+		detalles = imagen + "- Autogestion - DNI: "+cDNI;
+		TechnicalCareCSRAutogestionPage tech = new TechnicalCareCSRAutogestionPage(driver);
+		driver.switchTo().frame(cambioFrame(driver, By.id("SearchClientDocumentType")));
+		sb.BuscarCuenta("DNI", cDNI);
+		driver.findElement(By.cssSelector(".slds-tree__item.ng-scope")).click();
+		sleep(15000);
+		searchAndClick(driver, "Diagn\u00f3stico de Autogesti\u00f3n");
+		tech.listadoDeSeleccion("Nros. Emergencia", "Otro", "Informa Sistema Fuera de Servicio");
+		sleep(4000);
+		tech.verificarNumDeGestion();
+		Assert.assertTrue(tech.cerrarCaso("Resuelta exitosa", "Consulta"));
 	}
 
 	@Test (groups = {"GestionesPerfilOficina","Autogestion","E2E", "Ciclo3"},  dataProvider = "CuentaModificacionDeDatos")
 	public void TS105418_CRM_Movil_Repro_Autogestion_0800_Inconv_con_derivacion_a_representante_Resuelto(String sDNI, String sLinea) throws InterruptedException {
+		imagen = "TS105418";
+		detalles = null;
+		detalles = imagen + "- Autogestion - DNI: "+sDNI;
 		TechnicalCareCSRAutogestionPage tech = new TechnicalCareCSRAutogestionPage(driver);
 		driver.switchTo().frame(cambioFrame(driver, By.id("SearchClientDocumentType")));
 		sb.BuscarCuenta("DNI", sDNI);
@@ -5987,9 +6000,6 @@ public class GestionesPerfilOficina extends TestBase {
 		tech.verificarNumDeGestion();
 		sleep(5000);
 		tech.cerrarCaso("Resuelta exitosa", "Consulta");
-		
-		
-		
 	}
 	@Test(groups = { "GestionesPerfilOficina","CambioSimCard", "E2E","Ciclo3" }, priority = 1, dataProvider = "SimCardSiniestroOfCom") //NO IMPRIME LA FACTURA CBS EN OFCOM
 	public void TS134382_CRM_Movil_REPRO_Cambio_de_simcard_sin_costo_Siniestro_Ofcom_Presencial_Con_entega_de_pedido(String sDNI, String sLinea) throws AWTException {
@@ -6091,7 +6101,7 @@ public class GestionesPerfilOficina extends TestBase {
 	}
 	
 	@Test (groups = {"GestionesPerfilOficina", "Vista360", "Ciclo2"}, dataProvider = "CuentaVista360") 
-	public void TS134368_OFCOM_CRM_Movil_Prepago_Vista_360_Detalle_de_consumo_Consulta_visualizaci�n_y_busqueda_de_los_distintos_consumos_realizados_por_el_cliente_FAN_Front_OOCC(String sDNI, String sNombre) {
+	public void TS134368_OFCOM_CRM_Movil_Prepago_Vista_360_Detalle_de_consumo_Consulta_visualizacion_y_busqueda_de_los_distintos_consumos_realizados_por_el_cliente_FAN_Front_OOCC(String sDNI, String sNombre) {
 		imagen = "TS134368";
 		detalles = null;
 		detalles = imagen + "-Vista 360 - DNI: "+sDNI+ " - Nombre: "+sNombre;

@@ -31,6 +31,7 @@ import Pages.Marketing;
 import Pages.PagePerfilTelefonico;
 import Pages.SalesBase;
 import Pages.TechCare_Ola1;
+import Pages.TechnicalCareCSRAutogestionPage;
 import Pages.TechnicalCareCSRDiagnosticoPage;
 import Pages.setConexion;
 
@@ -3166,9 +3167,59 @@ public class GestionesPerfilTelefonico extends TestBase{
 		sleep(15000);
 		String check = driver.findElement(By.id("GeneralMessageDesing")).getText();
 		Assert.assertTrue(check.toLowerCase().contains("la orden se realiz\u00f3 con \u00e9xito"));
-		
-		
-		
 	}
-
+	
+	@Test (groups = {"GestionesPerfilTelefonico","Diagnostico/Inconvenientes"},  dataProvider = "Diagnostico")
+	public void TS105845_CRM_Movil_REPRO_Autogestion_APP_Abre_aplicacion_y_cierra_automaticamente_No_Resuelto(String sDNI, String sLinea) throws InterruptedException {
+		imagen = "TS105845";
+		detalles = null;
+		detalles = imagen + "- Autogestion - DNI: "+sDNI;
+		TechnicalCareCSRAutogestionPage tech = new TechnicalCareCSRAutogestionPage(driver);
+		driver.switchTo().frame(cambioFrame(driver, By.id("SearchClientDocumentType")));
+		sb.BuscarCuenta("DNI", sDNI);
+		driver.findElement(By.cssSelector(".slds-tree__item.ng-scope")).click();
+		sleep(10000);
+		cc.irAGestion("diagn\u00f3stico de autogesti\u00f3n");
+		sleep(15000);
+		tech.listadoDeSeleccion("APP", "Otros", "Abre aplicaci\u00f3n y cierra autom\u00e1ticamente");
+		sleep(8000);
+		tech.verificarNumDeGestion();
+		sleep(5000);
+		tech.cerrarCaso("Anulada", "Consulta");
+	}
+	
+	@Test (groups = {"GestionesPerfilTelefonico","Diagnostico/Inconvenientes"}, dataProvider = "Diagnostico")
+	public void TS119272_CRM_Movil_PRE_Diagnostico_de_Datos_Valida_Red_y_Navegacion_Motivo_de_contacto_No_puedo_Navegar_SIN_CUOTA_NO_BAM(String sDNI, String sLinea) throws Exception  {
+		imagen = "TS119272";
+		detalles = null;
+		detalles = imagen + " -ServicioTecnico - DNI: " + sDNI;
+		CustomerCare cCC=new CustomerCare(driver);
+		TechnicalCareCSRAutogestionPage tech = new TechnicalCareCSRAutogestionPage(driver);
+		TechCare_Ola1 page=new TechCare_Ola1(driver);
+		driver.switchTo().frame(cambioFrame(driver, By.id("SearchClientDocumentType")));
+		sb.BuscarCuenta("DNI", sDNI);
+		driver.findElement(By.cssSelector(".slds-tree__item.ng-scope")).click();
+		sleep(10000);
+		driver.switchTo().frame(cambioFrame(driver, By.className("card-top")));
+		driver.findElement(By.className("card-top")).click();
+		sleep(5000);
+		cCC.irAGestionEnCard("Diagn\u00f3stico");
+		driver.switchTo().frame(cambioFrame(driver, By.id("Motive")));
+		driver.findElement(By.name("loopname")).click();
+		selectByText(driver.findElement(By.id("Motive")), "No puedo navegar");
+		buscarYClick(driver.findElements(By.id("MotiveIncidentSelect_nextBtn")), "equals", "continuar");
+		page.seleccionarPreguntaFinal("No");
+		buscarYClick(driver.findElements(By.id("DataQuotaQuery_nextBtn")), "equals", "continuar");
+		boolean Caso = false;
+		driver.switchTo().frame(cambioFrame(driver, By.className("slds-form-element__control")));
+		WebElement MediosDispon = driver.findElement(By.className("slds-form-element__control")).findElement(By.tagName("p"));
+		System.out.println(MediosDispon.getText());
+		Assert.assertTrue(MediosDispon.getText().equalsIgnoreCase("Prob\u00e1 realizar una recarga o comprar un pack de datos"));
+		String caso = driver.findElement(By.xpath("//*[@id='UnavailableQuotaMessage']/div/p/p[2]/span/strong")).getText();
+		System.out.println(caso);
+		assertTrue(Caso);
+		tech.buscarCaso(caso);
+		Assert.assertTrue(tech.cerrarCaso("Informada", "Consulta"));
+				
+	}
 }
