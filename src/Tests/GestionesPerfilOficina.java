@@ -2707,12 +2707,12 @@ public class GestionesPerfilOficina extends TestBase {
 	}
 	
 	@Test (groups = {"GestionesPerfilOficina", "AnulacionDeVenta", "E2E","Ciclo4"}, dataProvider = "CuentaAnulacionDeVenta")
-	public void Anulacion_De_Venta(String cDNI) {
+	public void Anulacion_De_Venta(String sDNI) {
 		imagen = "Anulacion_De_Venta";
 		detalles = null;
-		detalles = imagen + " - DNI: " +cDNI;
+		detalles = imagen + " - DNI: " + sDNI;
 		driver.switchTo().frame(cambioFrame(driver, By.id("SearchClientDocumentType")));
-		sb.BuscarCuenta("DNI", cDNI);
+		sb.BuscarCuenta("DNI", sDNI);
 		driver.findElement(By.cssSelector(".slds-tree__item.ng-scope")).click();
 		sleep(15000);
 		cc.irAGestion("anulaci\u00f3n de ordenes");
@@ -2720,12 +2720,10 @@ public class GestionesPerfilOficina extends TestBase {
 		driver.switchTo().frame(cambioFrame(driver, By.cssSelector(".slds-select.ng-pristine.ng-untouched.ng-valid.ng-not-empty")));
 		buscarYClick(driver.findElements(By.cssSelector(".slds-button.slds-button--neutral")), "equals", "anulaci\u00f3n de venta");
 		sleep(10000);
-		if (TestBase.urlAmbiente.contains("sit")) {
-			driver.switchTo().frame(cambioFrame(driver, By.id("AnnulmentReasonSelect")));
-			selectByText(driver.findElement(By.id("AnnulmentReasonSelect")), "Arrepentimiento");
-			driver.findElement(By.id("AnnulmentReason_nextBtn")).click();
-			sleep(20000);
-		}
+		driver.switchTo().frame(cambioFrame(driver, By.id("AnnulmentReasonSelect")));
+		selectByText(driver.findElement(By.id("AnnulmentReasonSelect")), "Arrepentimiento");
+		driver.findElement(By.id("AnnulmentReason_nextBtn")).click();
+		sleep(20000);
 		driver.switchTo().frame(cambioFrame(driver, By.xpath("//*[@id=\"ep\"]/div[2]/div[2]/table")));
 		String gestion = driver.findElement(By.xpath("//*[@id=\"ep\"]/div[2]/div[2]/table")).findElements(By.tagName("tr")).get(4).getText();
 		Assert.assertTrue(gestion.contains("Estado") && (gestion.contains("Cancelada") || gestion.contains("Cancelled")));
@@ -5770,16 +5768,12 @@ public class GestionesPerfilOficina extends TestBase {
 		Assert.assertTrue(verificacion.equals(columnas));
 	}
 	
-	@Test (groups = {"ProblemaRecarga", "GestionesPerfilOficina","E2E","Ciclo3"}, dataProvider="CuentaProblemaRecarga") 
+	@Test (groups = {"ProblemaRecarga", "GestionesPerfilOficina","E2E","Ciclo3"}, dataProvider="CuentaProblemaRecarga")
 	public void TS104352_CRM_Movil_REPRO_Problemas_con_Recarga_Presencial_Tarjeta_Scratch_Caso_Nuevo_Pin_Borrado(String sDNI, String sLinea) {
 		imagen = "TS104352";
-		detalles = null;
-		boolean gestion = false;
+		boolean gestion = false, error = false;
 		String datoViejo = cbs.ObtenerValorResponse(cbsm.Servicio_queryLiteBySubscriber(sLinea), "bcs:MainBalance");
 		Integer datosInicial = Integer.parseInt(datoViejo.substring(0, 5));
-		System.out.println(datosInicial);
-//		String saldo = cbs.ObtenerValorResponse(cbsm.Servicio_queryLiteBySubscriber(sLinea), "bcs:MainBalance");
-//		Integer saldo1 = Integer.parseInt(saldo.substring(0, (saldo.length()) - 1));
 		driver.switchTo().frame(cambioFrame(driver, By.id("SearchClientDocumentType")));
 		sb.BuscarCuenta("DNI", sDNI);
 		driver.findElement(By.cssSelector(".slds-tree__item.ng-scope")).click();
@@ -5793,8 +5787,8 @@ public class GestionesPerfilOficina extends TestBase {
 		buscarYClick(driver.findElements(By.className("borderOverlay")), "equals", "tarjeta prepaga");
 		driver.findElement(By.id("RefillMethods_nextBtn")).click();
 		sleep(5000);
-		driver.findElement(By.id("BatchNumber")).sendKeys("11120000009306");
-		driver.findElement(By.id("PIN")).sendKeys("0102");
+		driver.findElement(By.id("BatchNumber")).sendKeys("11120000009319");
+		driver.findElement(By.id("PIN")).sendKeys("0386");
 		driver.findElement(By.id("PrepaidCardData_nextBtn")).click();
 		sleep(10000);
 		try {
@@ -5805,62 +5799,65 @@ public class GestionesPerfilOficina extends TestBase {
 		driver.findElement(By.id("Summary_nextBtn")).click();
 		sleep(10000);
 		for (WebElement x : driver.findElements(By.className("ta-care-omniscript-done"))) {
-			System.out.println(x.getText());
 			if (x.getText().toLowerCase().contains("recarga realizada con \u00e9xito"))
 				gestion = true;
 		}
 		Assert.assertTrue(gestion);
 		String datoNuevo = cbs.ObtenerValorResponse(cbsm.Servicio_queryLiteBySubscriber(sLinea), "bcs:MainBalance");
 		Integer datosFinal = Integer.parseInt(datoNuevo.substring(0, 5));
-		System.out.println(datosFinal);
-		Assert.assertTrue(datosInicial + 500 == datosFinal);
+		Assert.assertTrue(datosInicial + 5000 == datosFinal);
 		mk.closeActiveTab();
 		driver.switchTo().frame(cambioFrame(driver, By.className("card-top")));
-		driver.findElement(By.className("card-top")).click();
-		sleep(8000);
 		cc.irAGestionEnCard("Problemas con Recargas");
 		sleep(8000);
 		driver.switchTo().frame(cambioFrame(driver, By.id("RefillMethods_nextBtn")));
 		buscarYClick(driver.findElements(By.className("borderOverlay")), "equals", "tarjeta prepaga");
 		driver.findElement(By.id("RefillMethods_nextBtn")).click();
 		sleep(5000);
-		driver.findElement(By.id("BatchNumber")).sendKeys("11120000009301");
-		driver.findElement(By.id("PIN")).sendKeys("0080");
+		driver.findElement(By.id("BatchNumber")).sendKeys("11120000009319");
+		driver.findElement(By.id("PIN")).sendKeys("0386");
 		driver.findElement(By.id("PrepaidCardData_nextBtn")).click();
 		sleep(7000);
-		
+		driver.switchTo().frame(cambioFrame(driver, By.cssSelector(".slds-icon.slds-icon--large.ta-care-omniscript-error-icon")));
+		for (WebElement x : driver.findElements(By.className("ta-care-omniscript-done"))) {
+			if (x.getText().contains("La tarjeta ya fue utilizada para una recarga"))
+				error = true;
+		}
+		Assert.assertTrue(error);
 	}
+	
 	@Test (groups = {"GestionesPerfilOficina","Historial de Recargas","E2E", "Ciclo1"},  dataProvider = "CuentaModificacionDeDatos")
 	public void TS135476_CRM_Movil_Prepago_Historial_de_Packs_Nombre_del_Pack_Plan_Internet_50_Mb_FAN_Front_OOCC(String sDNI, String sLinea){
-	imagen = "TS135476";
-	detalles = null;
-	detalles = imagen+"-HistorialDePacksTelefonico - DNI:"+sDNI;
-	driver.switchTo().frame(cambioFrame(driver, By.id("SearchClientDocumentType")));
-	sb.BuscarCuenta("DNI", sDNI);
-	driver.findElement(By.cssSelector(".slds-tree__item.ng-scope")).click();
-	sleep(20000);
-	CustomerCare cc = new CustomerCare(driver);
-	cc.irAHistoriales();
-	sleep(8000);
-	driver.switchTo().frame(cambioFrame(driver, By.cssSelector(".slds-card.slds-m-around--small.ta-fan-slds")));
-	driver.findElements(By.className("slds-card"));
-	System.out.println(driver.findElement(By.cssSelector(".slds-card__header.slds-grid")).getText());
-	driver.findElement(By.cssSelector(".slds-card__header.slds-grid")).getText().equals("Historial de packs");
-	driver.findElement(By.cssSelector(".slds-button.slds-button_brand")).click();
-	sleep(8000);
-	driver.switchTo().frame(cambioFrame(driver, By.cssSelector(".slds-grid.slds-wrap.slds-grid--pull-padded.slds-m-around--medium.slds-p-around--medium.negotationsfilter")));
-	driver.findElement(By.cssSelector(".slds-button.slds-button--brand.filterNegotiations.slds-p-horizontal--x-large.slds-p-vertical--x-small")).click();
-	sleep(8000);
-	driver.findElement(By.id("text-input-03")).click();
-	List <WebElement>NomPack = driver.findElement(By.cssSelector(".slds-dropdown__list.slds-dropdown--length-5")).findElements(By.tagName("li"));
-	String pack = "Internet 50 MB Dia";
-	for(WebElement Pack : NomPack) {
-		if(Pack.getText().equalsIgnoreCase(pack)) {
-			System.out.println(Pack.getText());
-			Pack.click();
-			break;
+		imagen = "TS135476";
+		detalles = null;
+		detalles = imagen+"-HistorialDePacksTelefonico - DNI:"+sDNI;
+		driver.switchTo().frame(cambioFrame(driver, By.id("SearchClientDocumentType")));
+		sb.BuscarCuenta("DNI", sDNI);
+		driver.findElement(By.cssSelector(".slds-tree__item.ng-scope")).click();
+		sleep(20000);
+		CustomerCare cc = new CustomerCare(driver);
+		cc.irAHistoriales();
+		sleep(8000);
+		driver.switchTo().frame(cambioFrame(driver, By.cssSelector(".slds-card.slds-m-around--small.ta-fan-slds")));
+		driver.findElements(By.className("slds-card"));
+		System.out.println(driver.findElement(By.cssSelector(".slds-card__header.slds-grid")).getText());
+		driver.findElement(By.cssSelector(".slds-card__header.slds-grid")).getText().equals("Historial de packs");
+		driver.findElement(By.cssSelector(".slds-button.slds-button_brand")).click();
+		sleep(8000);
+		driver.switchTo().frame(cambioFrame(driver, By.cssSelector(".slds-grid.slds-wrap.slds-grid--pull-padded.slds-m-around--medium.slds-p-around--medium.negotationsfilter")));
+		driver.findElement(By.cssSelector(".slds-button.slds-button--brand.filterNegotiations.slds-p-horizontal--x-large.slds-p-vertical--x-small")).click();
+		sleep(8000);
+		driver.findElement(By.id("text-input-03")).click();
+		List <WebElement>NomPack = driver.findElement(By.cssSelector(".slds-dropdown__list.slds-dropdown--length-5")).findElements(By.tagName("li"));
+		String pack = "Internet 50 MB Dia";
+		for(WebElement Pack : NomPack) {
+			if(Pack.getText().equalsIgnoreCase(pack)) {
+				System.out.println(Pack.getText());
+				Pack.click();
+				break;
 			}
-		}assertTrue(pack.equals("Internet 50 MB Dia"));
+		}
+		assertTrue(pack.equals("Internet 50 MB Dia"));
 	}
 	
 	@Test (groups = {"GestionesPerfilOficina","Resumen de Cuenta Corriente","E2E", "Ciclo4"},  dataProvider = "CuentaModificacionDeDatos")
@@ -5921,6 +5918,7 @@ public class GestionesPerfilOficina extends TestBase {
 		WebElement error = driver.findElement(By.cssSelector(".slds-modal__content.slds-p-around--medium"));
 		Assert.assertTrue(error.getText().toLowerCase().contains("error: "));
 	}
+	
 	@Test (groups = {"GestionesPerfilOficina", "Resumen de Cuenta", "Ciclo4"}, dataProvider = "ConsultaSaldo")
 	public void TS129462_CRM_Movil_Prepago_Resumen_de_Cuenta_Corriente_Validaciones_de_logica_de_filtros_Fecha_FAN_Front_OOCC(String sDNI) {
 		imagen="TS129462";
@@ -6034,9 +6032,9 @@ public class GestionesPerfilOficina extends TestBase {
 		
 		String datoNuevo = cbs.ObtenerValorResponse(cbsm.Servicio_queryLiteBySubscriber(sLinea), "bcs:MainBalance");
 		Integer datosFinal = Integer.parseInt(datoNuevo.substring(0, 5));
-		Assert.assertTrue(datosInicial + 500 == datosFinal);
-		
+		Assert.assertTrue(datosInicial + 500 == datosFinal);		
 	}
+	
 	@Test (groups = {"GestionesPerfilOficina", "Diagnostico/Inconvenientes", }, dataProvider = "Diagnostico")
 	public void TS105428_CRM_Movil_Repro_Autogestion_USSD_No_Interactua_Resuelto(String cDNI, String cLinea) throws InterruptedException {
 		imagen = "TS105428";
@@ -6053,6 +6051,7 @@ public class GestionesPerfilOficina extends TestBase {
 		tech.verificarNumDeGestion();
 		Assert.assertTrue(tech.cerrarCaso("Resuelta exitosa", "Consulta"));
 	}
+	
 	@Test (groups = {"GestionesPerfilOficina", "Diagnostico/Inconvenientes", }, dataProvider = "Diagnostico")
 	public void TS105431_CRM_Movil_Repro_Autogestion_WAP_Sitio_Caido_No_carga_informacion_Resuelto(String cDNI, String cLinea) throws InterruptedException {
 		imagen = "TS105431";
@@ -6105,6 +6104,7 @@ public class GestionesPerfilOficina extends TestBase {
 		sleep(5000);
 		tech.cerrarCaso("Resuelta exitosa", "Consulta");
 	}
+	
 	@Test(groups = { "GestionesPerfilOficina","CambioSimCard", "E2E","Ciclo3" }, priority = 1, dataProvider = "SimCardSiniestroOfCom") //NO IMPRIME LA FACTURA CBS EN OFCOM
 	public void TS134382_CRM_Movil_REPRO_Cambio_de_simcard_sin_costo_Siniestro_Ofcom_Presencial_Con_entega_de_pedido(String sDNI, String sLinea) throws AWTException {
 		imagen = "134382";
@@ -6203,41 +6203,42 @@ public class GestionesPerfilOficina extends TestBase {
 		sleep(16000);
 		cCC.obligarclick(driver.findElement(By.id("InvoicePreview_nextBtn")));
 	}
+	
 	@Test(groups = { "GestionesPerfilTelefonico","CambioSimCard", "E2E" }, priority = 1, dataProvider = "SimCardSiniestroAG") //NO APARECE EL MEDIO DE PAGO
 	public void TS134407_CRM_Movil_REPRO_Cambio_de_simcard_con_costo_Siniestro_Ofcom_Store_pickUp_Con_entega_de_pedido_pago_con_TD(String sDNI, String sLinea,String cEntrega, String cProvincia, String cLocalidad, String cPuntodeVenta, String cBanco, String cTarjeta, String cPromo, String cCuotas, String cNumTarjeta, String cVenceMes, String cVenceAno, String cCodSeg, String cTipoDNI,String cDNITarjeta, String cTitular){
-	imagen = "134406";
-	detalles = null;
-	detalles = imagen + "-DNI:" + sDNI;
-	SalesBase sale = new SalesBase(driver);
-	BasePage cambioFrameByID = new BasePage();
-	CustomerCare cCC = new CustomerCare(driver);
-	PagePerfilTelefonico pagePTelefo = new PagePerfilTelefonico(driver);
-	driver.switchTo().frame(cambioFrameByID.getFrameForElement(driver, By.id("SearchClientDocumentType")));
-	sleep(8000);
-	sale.BuscarCuenta("DNI", sDNI);
-	sleep(8000);
-	String accid = driver.findElement(By.cssSelector(".searchClient-body.slds-hint-parent.ng-scope")).findElements(By.tagName("td")).get(5).getText();
-	System.out.println("id "+accid);
-	detalles +="-Cuenta:"+accid;
-	driver.findElement(By.cssSelector(".slds-tree__item.ng-scope")).findElement(By.tagName("div")).click();
-	sleep(25000);
-	cCC.seleccionarCardPornumeroLinea(sLinea, driver);
-	sleep(3000);
-	cCC.irAGestion("Cambio de Simcard");
-	sleep(10000);
-	driver.switchTo().frame(cambioFrameByID.getFrameForElement(driver, By.id("SelectAsset0")));
-	driver.findElement(By.id("SelectAsset0")).findElement(By.cssSelector(".slds-radio.ng-scope")).click();
-	driver.findElement(By.id("AssetSelection_nextBtn")).click();
-	sleep(5000);
-	pagePTelefo.mododeEntrega(driver, cEntrega, cProvincia, cLocalidad, cPuntodeVenta);
-	sleep(5000);
-	driver.switchTo().frame(cambioFrameByID.getFrameForElement(driver, By.id("DeliveryMethodSelection")));
-	sleep(15000);
-	Select metodoEntrega = new Select (driver.findElement(By.id("DeliveryMethodSelection")));
-	metodoEntrega.selectByVisibleText("Presencial");
-	cCC.obligarclick(driver.findElement(By.id("DeliveryMethodConfiguration_nextBtn")));
-	sleep(16000);
-	cCC.obligarclick(driver.findElement(By.id("InvoicePreview_nextBtn")));
+		imagen = "134406";
+		detalles = null;
+		detalles = imagen + "-DNI:" + sDNI;
+		SalesBase sale = new SalesBase(driver);
+		BasePage cambioFrameByID = new BasePage();
+		CustomerCare cCC = new CustomerCare(driver);
+		PagePerfilTelefonico pagePTelefo = new PagePerfilTelefonico(driver);
+		driver.switchTo().frame(cambioFrameByID.getFrameForElement(driver, By.id("SearchClientDocumentType")));
+		sleep(8000);
+		sale.BuscarCuenta("DNI", sDNI);
+		sleep(8000);
+		String accid = driver.findElement(By.cssSelector(".searchClient-body.slds-hint-parent.ng-scope")).findElements(By.tagName("td")).get(5).getText();
+		System.out.println("id "+accid);
+		detalles +="-Cuenta:"+accid;
+		driver.findElement(By.cssSelector(".slds-tree__item.ng-scope")).findElement(By.tagName("div")).click();
+		sleep(25000);
+		cCC.seleccionarCardPornumeroLinea(sLinea, driver);
+		sleep(3000);
+		cCC.irAGestion("Cambio de Simcard");
+		sleep(10000);
+		driver.switchTo().frame(cambioFrameByID.getFrameForElement(driver, By.id("SelectAsset0")));
+		driver.findElement(By.id("SelectAsset0")).findElement(By.cssSelector(".slds-radio.ng-scope")).click();
+		driver.findElement(By.id("AssetSelection_nextBtn")).click();
+		sleep(5000);
+		pagePTelefo.mododeEntrega(driver, cEntrega, cProvincia, cLocalidad, cPuntodeVenta);
+		sleep(5000);
+		driver.switchTo().frame(cambioFrameByID.getFrameForElement(driver, By.id("DeliveryMethodSelection")));
+		sleep(15000);
+		Select metodoEntrega = new Select (driver.findElement(By.id("DeliveryMethodSelection")));
+		metodoEntrega.selectByVisibleText("Presencial");
+		cCC.obligarclick(driver.findElement(By.id("DeliveryMethodConfiguration_nextBtn")));
+		sleep(16000);
+		cCC.obligarclick(driver.findElement(By.id("InvoicePreview_nextBtn")));
 	}
 	
 	@Test (groups = {"GestionesPerfilOficina", "Vista360", "Ciclo2"}, dataProvider = "CuentaVista360") 
