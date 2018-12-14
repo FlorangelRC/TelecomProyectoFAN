@@ -514,7 +514,7 @@ public class CBS {
 	
 	public boolean validarActivacionPack(Document Response, String tipo) {
 		boolean esta = false;
-		NodeList ofertas = (NodeList) Response.getElementsByTagName("bcc:OfferingCode");
+		NodeList ofertas = (NodeList) Response.getElementsByTagName("bbs:OfferingCode");
 		switch(tipo.toLowerCase()) {
 			case "pack 50 min y 50 sms x 7 dias":
 				for (int i=0; i<ofertas.getLength();i++) {
