@@ -11,6 +11,7 @@ import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.How;
 import org.openqa.selenium.support.ui.Select;
+import org.testng.Assert;
 
 import Tests.TestBase;
 
@@ -206,6 +207,23 @@ public class ManejoCaja extends BasePage {
 		driver.switchTo().frame(TB.cambioFrame(driver, By.cssSelector(".btn_group.btn_group_aligncenter.bc")));
 		driver.findElement(By.cssSelector(".btn_group.btn_group_aligncenter.bc")).findElement(By.tagName("span")).click();
 		sleep(3000);
+		//cerrarPestanias(driver);
+	}
+	
+	public void imprimirFactura(WebDriver driver,String prefactura, String cuenta) {
+		seleccionarOpcionCatalogo(driver, "Cuentas por cobrar");
+		seleccionarOpcionSubMenu(driver, "Impresi\u00f3n de factura de venta");
+		sleep(2000);
+		driver.switchTo().frame(TB.cambioFrame(driver,By.id("queryBtn")));
+		driver.findElement(By.id("queryConditionPanel_content")).findElement(By.id("acctCode1_input_value")).sendKeys(cuenta);
+		driver.findElement(By.id("queryConditionPanel_content")).findElement(By.id("invoiceNo_input_value")).sendKeys(prefactura);
+		driver.findElement(By.id("queryConditionPanel_content")).findElement(By.id("queryBtn")).click();
+		sleep(3000);
+		Select impresora = new Select(driver.findElement(By.id("queryConditionPanel_content")).findElement(By.id("emissionPointMap_select")));
+		impresora.selectByIndex(0);
+		driver.findElement(By.id("invoiceListArea_content")).findElement(By.id("invoiceIOList_0_12")).findElements(By.tagName("img")).get(1).click();
+		sleep(2000);
+		Assert.assertFalse(true);
 		//cerrarPestanias(driver);
 	}
 	

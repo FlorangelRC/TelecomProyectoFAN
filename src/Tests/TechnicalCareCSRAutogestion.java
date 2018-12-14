@@ -114,7 +114,7 @@ public class TechnicalCareCSRAutogestion extends TestBase {
 		
 	}
 	
-	@AfterMethod(alwaysRun=true) 
+	//@AfterMethod(alwaysRun=true) 
 	 public void afterMethod() {
 		driver.switchTo().defaultContent();
 		List<WebElement> ctas = driver.findElement(By.cssSelector(".x-tab-strip.x-tab-strip-top")).findElements(By.tagName("li"));
@@ -132,7 +132,7 @@ public class TechnicalCareCSRAutogestion extends TestBase {
 		
 		  }
 	
-	@AfterClass(alwaysRun=true) 
+	//@AfterClass(alwaysRun=true) 
 	public void tearDown2() {
 		driver.switchTo().defaultContent();
 		try{ for(WebElement e : driver.findElements(By.className("x-tab-strip-close"))) {

@@ -383,6 +383,21 @@ public class CustomerCare extends BasePage {
 		sleep(5000);
 	}
 	
+	public void irAResumenDeCuentaCorriente() {
+		TestBase tb = new TestBase();
+		driver.switchTo().frame(tb.cambioFrame(driver, By.className("card-top")));
+		List<WebElement> card = driver.findElement(By.cssSelector(".console-card.active")).findElement(By.className("actions")).findElements(By.tagName("li"));
+		for(WebElement x:card) {
+			if (x.findElement(By.tagName("a")).findElement(By.tagName("span")).getText().toLowerCase().contains(("resumen de cuenta corriente"))) {
+				System.out.println(x.getText());
+				sleep(3000);
+            x.click();
+				
+		}
+		sleep(5000);
+	}
+	}
+	
 	public void irAHistoriales() {
 		TestBase tb = new TestBase();
 		driver.switchTo().frame(tb.cambioFrame(driver, By.className("card-top")));

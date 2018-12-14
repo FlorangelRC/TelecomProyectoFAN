@@ -514,7 +514,7 @@ public class CBS {
 	
 	public boolean validarActivacionPack(Document Response, String tipo) {
 		boolean esta = false;
-		NodeList ofertas = (NodeList) Response.getElementsByTagName("bcc:OfferingCode");
+		NodeList ofertas = (NodeList) Response.getElementsByTagName("bbs:OfferingCode");
 		switch(tipo.toLowerCase()) {
 			case "pack 50 min y 50 sms x 7 dias":
 				for (int i=0; i<ofertas.getLength();i++) {
@@ -671,4 +671,190 @@ public class CBS {
 		datos += sResponse.getElementsByTagName("bcc:FirstName").item(0).getTextContent();
 		return datos;
 	}
+	
+	public String sRequestRecharge(String sLinea, String sMessageSeq, String sMonto) {
+		String sRequest = "";
+		sRequest = "<soapenv:Envelope xmlns:soapenv=\"http://schemas.xmlsoap.org/soap/envelope/\" xmlns:ars=\"http://www.huawei.com/bme/cbsinterface/arservices\" xmlns:cbs=\"http://www.huawei.com/bme/cbsinterface/cbscommon\" xmlns:arc=\"http://cbs.huawei.com/ar/wsservice/arcommon\">\r\n"
+				+ "\r\n   <soapenv:Header/>\r\n"
+				+ "\r\n   <soapenv:Body>\r\n"
+				+ "\r\n      <ars:RechargeRequestMsg>\r\n"
+				+ "\r\n                    <RequestHeader>\r\n"
+				+ "\r\n                                               <cbs:Version>5.5</cbs:Version>\r\n"
+				//+ "\r\n                                               <cbs:BusinessCode></cbs:BusinessCode>\r\n"
+				+ "\r\n                                               <cbs:MessageSeq>" + sMessageSeq;
+		
+		sRequest += "</cbs:MessageSeq>\r\n"
+				+ "\r\n                                               <cbs:OwnershipInfo>\r\n"
+				+ "\r\n                                                               <cbs:BEID>10101</cbs:BEID>\r\n"
+				+ "\r\n                                                               <cbs:BRID>101</cbs:BRID>\r\n"
+				+ "\r\n                                               </cbs:OwnershipInfo>\r\n"
+				+ "\r\n                				<cbs:AccessSecurity>\r\n"
+				+ "\r\n                                                               <cbs:LoginSystemCode>101</cbs:LoginSystemCode>\r\n"
+				+ "\r\n                                                               <cbs:Password>yVEy3349bxN6lvViA8yK6Cd1JsRRcKO5QMmml3e7qp0=</cbs:Password>\r\n"
+				+ "\r\n                                                               <cbs:RemoteIP>10.75.193.200</cbs:RemoteIP>\r\n"
+				+ "\r\n                                               </cbs:AccessSecurity>\r\n"
+				+ "\r\n                                               <cbs:OperatorInfo>\r\n"
+				+ "\r\n                                                               <cbs:OperatorID>101</cbs:OperatorID>\r\n"
+				+ "\r\n                                                               <cbs:ChannelID>1</cbs:ChannelID>\r\n"
+				+ "\r\n                                               </cbs:OperatorInfo>\r\n"
+				+ "\r\n                                               <cbs:TimeFormat>\r\n"
+				+ "\r\n                                                               <cbs:TimeType>1</cbs:TimeType>\r\n"
+				+ "\r\n                                                               <cbs:TimeZoneID>8</cbs:TimeZoneID>\r\n"
+				+ "\r\n                                               </cbs:TimeFormat>\r\n"
+				+ "\r\n                                               <cbs:AdditionalProperty>\r\n"
+				+ "\r\n                                                               <cbs:Code>108</cbs:Code>\r\n"
+				+ "\r\n                                                               <cbs:Value>109</cbs:Value>\r\n"
+				+ "\r\n                                               </cbs:AdditionalProperty>\r\n"
+				+ "\r\n                             </RequestHeader> \r\n"
+				+ "\r\n      		<RechargeRequest>\r\n"
+				//+ "\r\n            	  		<!--Optional:-->\r\n"
+				//+ "\r\n            	  		<!--ars:RechargeSerialNo>11120000001600</ars:RechargeSerialNo-->\r\n"
+				//+ "\r\n            	  		<!--Optional:-->\r\n"
+				+ "\r\n            	  		<ars:RechargeType>41</ars:RechargeType>\r\n"
+				//+ "\r\n            	  		<!--Optional:-->\r\n"
+				+ "\r\n            	  		<ars:RechargeChannelID>C</ars:RechargeChannelID>\r\n"
+				+ "\r\n            	  		<ars:RechargeObj>\r\n"
+				+ "\r\n               			<ars:SubAccessCode>\r\n"
+				+ "\r\n                  			<arc:PrimaryIdentity>" + sLinea; 
+		
+		sRequest+= "</arc:PrimaryIdentity>\r\n"
+				+ "\r\n               			</ars:SubAccessCode>\r\n"
+				+ "\r\n            			</ars:RechargeObj>\r\n"
+				+ "\r\n            	  		<ars:RechargeInfo>\r\n"
+				+ "\r\n               			<ars:CashPayment>\r\n"
+				//+ "\r\n            	  		<!--Optional:-->\r\n"
+				+ "\r\n               			<ars:PaymentMethod>1001</ars:PaymentMethod>\r\n"
+				+ "\r\n                  			<ars:Amount>" + sMonto; 
+				
+				sRequest+= "</ars:Amount>\r\n"
+				+ "\r\n               			</ars:CashPayment>\r\n"
+				+ "\r\n            			</ars:RechargeInfo>\r\n"
+				+ "\r\n            			<ars:CurrencyID>1006</ars:CurrencyID>\r\n"
+				//+ "\r\n            			<!--Zero or more repetitions:-->\r\n"
+//				+ "\r\n            			<!--ars:AdditionalProperty>\r\n"
+//				+ "\r\n            			<arc:Code></arc:Code>\r\n"
+//				+ "\r\n            			<arc:Value></arc:Value>\r\n"
+//				+ "\r\n            			</ars:AdditionalProperty-->\r\n"
+				+ "\r\n         	</RechargeRequest>      \r\n"
+				+ "\r\n      </ars:RechargeRequestMsg>\r\n"
+				+ "\r\n   </soapenv:Body>\r\n"
+				+ "\r\n</soapenv:Envelope>";
+		return sRequest;
+	}
+	public boolean sValidacion_ResponseRecharge(Document sResponse) {
+		if (ObtenerValorResponse(sResponse,"cbs:ResultDesc").equalsIgnoreCase("operaci\u00f3n exitosa") ) {
+			return true;
+		}
+		else {
+			return false;
+		}
+	}
+	
+	public String sRequestLoan(String sLinea, String sMessageSeq, String sMonto) {
+		String sRequest = "";
+		sRequest = "<soapenv:Envelope xmlns:soapenv=\"http://schemas.xmlsoap.org/soap/envelope/\" xmlns:ars=\"http://www.huawei.com/bme/cbsinterface/arservices\" xmlns:cbs=\"http://www.huawei.com/bme/cbsinterface/cbscommon\" xmlns:arc=\"http://cbs.huawei.com/ar/wsservice/arcommon\">\r\n"
+				+ "\r\n   <soapenv:Header/>\r\n"
+				+ "\r\n   <soapenv:Body>\r\n"
+				+ "\r\n      <ars:LoanRequestMsg>\r\n"
+				+ "\r\n                    <RequestHeader>\r\n"
+				+ "\r\n                                               <cbs:Version>5.5</cbs:Version>\r\n"
+				+ "\r\n                                               <cbs:BusinessCode/>\r\n"
+				+ "\r\n                                               <cbs:MessageSeq>" + sMessageSeq;
+		
+		sRequest += "</cbs:MessageSeq>\r\n"
+				+ "\r\n                                               <cbs:OwnershipInfo>\r\n"
+				+ "\r\n                                                               <cbs:BEID>10101</cbs:BEID>\r\n"
+				+ "\r\n                                                               <cbs:BRID>101</cbs:BRID>\r\n"
+				+ "\r\n                                               </cbs:OwnershipInfo>\r\n"
+				+ "\r\n                				<cbs:AccessSecurity>\r\n"
+				+ "\r\n                                                               <cbs:LoginSystemCode>101</cbs:LoginSystemCode>\r\n"
+				+ "\r\n                                                               <cbs:Password>yVEy3349bxN6lvViA8yK6Cd1JsRRcKO5QMmml3e7qp0=</cbs:Password>\r\n"
+				+ "\r\n                                                               <cbs:RemoteIP>10.75.193.200</cbs:RemoteIP>\r\n"
+				+ "\r\n                                               </cbs:AccessSecurity>\r\n"
+				+ "\r\n                                               <cbs:OperatorInfo>\r\n"
+				+ "\r\n                                                               <cbs:OperatorID>101</cbs:OperatorID>\r\n"
+				+ "\r\n                                                               <cbs:ChannelID>1</cbs:ChannelID>\r\n"
+				+ "\r\n                                               </cbs:OperatorInfo>\r\n"
+				+ "\r\n                                               <cbs:TimeFormat>\r\n"
+				+ "\r\n                                                               <cbs:TimeType>1</cbs:TimeType>\r\n"
+				+ "\r\n                                                               <cbs:TimeZoneID>8</cbs:TimeZoneID>\r\n"
+				+ "\r\n                                               </cbs:TimeFormat>\r\n"
+				+ "\r\n                                               <cbs:AdditionalProperty>\r\n"
+				+ "\r\n                                                               <cbs:Code>108</cbs:Code>\r\n"
+				+ "\r\n                                                               <cbs:Value>109</cbs:Value>\r\n"
+				+ "\r\n                                               </cbs:AdditionalProperty>\r\n"
+				+ "\r\n                             </RequestHeader> \r\n"
+				+ "\r\n      		<LoanRequest>\r\n"           	  		
+				+ "\r\n               			<ars:SubAccessCode>\r\n"
+				+ "\r\n                  			<arc:PrimaryIdentity>" + sLinea; 
+		
+		sRequest+= "</arc:PrimaryIdentity>\r\n"
+				//+ "\r\n            	  		<!--arc:SubscriberKey></arc:SubscriberKey-->\r\n"
+				+ "\r\n               			</ars:SubAccessCode>\r\n"
+				//+ "\r\n            			<!--You have a CHOICE of the next 2 items at this level-->\r\n"
+				//+ "\r\n            	  		<!--ars:LoanGrade></ars:LoanGrade-->\r\n"
+				+ "\r\n                  		<ars:LoanAmount>" + sMonto; 
+				
+				sRequest+= "</ars:LoanAmount>\r\n"
+//				+ "\r\n               		<!--ars:Remark></ars:Remark>\r\n"
+//				+ "\r\n            			<ars:AdditionalProperty>\r\n"
+//				+ "\r\n            			<arc:Code></arc:Code>\r\n"
+//				+ "\r\n            			<arc:Value></arc:Value>\r\n"
+//				+ "\r\n            			</ars:AdditionalProperty-->\r\n"
+				+ "\r\n         	</LoanRequest>      \r\n"
+				+ "\r\n      </ars:LoanRequestMsg>\r\n"
+				+ "\r\n   </soapenv:Body>\r\n"
+				+ "\r\n</soapenv:Envelope>";
+		return sRequest;
+	}
+	
+	public String sRequestRealizarAltaSuscripcion(String sLinea, String sCodigo) {
+		String sRequest = "";
+		sRequest = "<soapenv:Envelope xmlns:soapenv=\"http://schemas.xmlsoap.org/soap/envelope/\" xmlns:v1=\"http://www.personal.com.ar/Common/RequestMessageHeader/v1.0\" xmlns:v11=\"http://www.personal.com.ar/ESB/RealizarAltaSuscripInfotaiment/v1.0\" xmlns:v12=\"http://www.personal.com.ar/Common/Entities/Producto/Linea/v1.0\" xmlns:v2=\"http://www.personal.com.ar/Common/Entities/Cliente/Suscripcion/v2.0\" xmlns:v21=\"http://www.personal.com.ar/Common/Entities/NegocioComun/InteraccionDelNegocio/v2.0\" xmlns:v13=\"http://www.personal.com.ar/Common/Entities/Recurso/Recurso/v1.0\" xmlns:v14=\"http://www.personal.com.ar/Common/Entities/Ventas/CanalDeAtencion/v1.0\" xmlns:v22=\"http://www.personal.com.ar/Common/Entities/Servicio/Servicio/v2.0\" xmlns:v15=\"http://www.personal.com.ar/Common/Entities/NegocioComun/EstructuraComun/v1.0\">\r\n"
+				+ "\r\n   <soapenv:Header>\r\n"
+				+ "\r\n   <v1:requestHeader>\r\n"
+				+ "\r\n       <v1:consumer code=\"IVR\" channel=\"IVR\" additionalData=\"\">\r\n"
+				+ "\r\n             <v1:userID>x001437</v1:userID>\r\n"
+				+ "\r\n                   <v1:credentials>\r\n"
+//				+ "\r\n                       <!--You have a CHOICE of the next 2 items at this level-->\r\n"
+//				+ "\r\n                   	  <!--<v1:userCertificate>x001437</v1:userCertificate>-->\r\n"
+				+ "\r\n                       <v1:userPassword>Mp8up1v5xH</v1:userPassword>\r\n"
+				+ "\r\n                   </v1:credentials>\r\n"
+				+ "\r\n      </v1:consumer>\r\n"
+				+ "\r\n      <v1:message messageId=\"\" consumerMessageId=\"\">\r\n"
+//				+ "\r\n      	<!--Optional:-->\r\n"
+//				+ "\r\n      	<!--<v1:timestamp>?</v1:timestamp>-->\r\n"
+				+ "\r\n      </v1:message>\r\n"
+				+ "\r\n   </v1:requestHeader>\r\n"
+				+ "\r\n   </soapenv:Header>\r\n"
+				+ "\r\n   <soapenv:Body>\r\n"
+				+ "\r\n       <v11:RealizarAltaSuscripInfotaimentRequest>\r\n"
+				+ "\r\n       <v12:nroLinea>"+sLinea;
+		sRequest+="</v12:nroLinea>\r\n"
+				+ "\r\n        <v2:codSuscripcion>"+sCodigo;
+		sRequest+="</v2:codSuscripcion>\r\n"
+				+ "\r\n        <v21:codInteraccionNegocio>SIEBEL</v21:codInteraccionNegocio>\r\n"
+				+ "\r\n        <v13:codInterfazComunicacion>WS</v13:codInterfazComunicacion>\r\n"
+				+ "\r\n        <v14:codCanal>VENTAS</v14:codCanal>\r\n"
+				+ "\r\n        <v22:palabraClaveSVA>SIEBEL</v22:palabraClaveSVA>\r\n"
+				//+ "\r\n        <!--Zero or more repetitions:-->\r\n"
+				+ "\r\n        <v11:FiltrosExtra>\r\n"
+				+ "\r\n          <v15:nombreParametro/>\r\n"
+				+ "\r\n       	 <v15:valorParametro/>\r\n"
+				+ "\r\n        </v11:FiltrosExtra>\r\n"
+				+ "\r\n     </v11:RealizarAltaSuscripInfotaimentRequest>\r\n"
+				+ "\r\n   </soapenv:Body>\r\n"
+				+ "\r\n</soapenv:Envelope>";
+		return sRequest;
+	}
+	
+	public boolean sValidacion_RealizarAltaSuscripcion(Document sResponse) {
+		if (ObtenerValorResponse(sResponse,"v2.:codInteraccionNegocio").matches("\\w[0-9]+") ) {
+			return true;
+		}
+		else {
+			return false;
+		}
+	}
+	
 }

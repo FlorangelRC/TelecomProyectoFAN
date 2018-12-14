@@ -1131,7 +1131,7 @@ public class TestsXappia extends TestBase {
 	}
 
 	@Test (groups = "UAT")
-	public void TXU0008_Verificar_funcionamiento_del_boton_modificar_dentro_de_la_orden() {
+	public void TXU0009_Verificar_funcionamiento_del_boton_modificar_dentro_del_caso() {
 		irAConsolaFAN();
 		sb.cerrarPestaniaGestion(driver);
 		cc.menu_360_Ir_A("Casos");
@@ -1161,6 +1161,21 @@ public class TestsXappia extends TestBase {
 		}
 		driver.switchTo().defaultContent();
 		System.out.println("No permite Modificar");
+	}
+	
+	@Test (groups = "UAT")
+	public void TXU0008_Verificar_funcionamiento_del_boton_modificar_dentro_de_la_orden() {
+		irAConsolaFAN();
+		sb.cerrarPestaniaGestion(driver);
+		sleep(8000);
+		cc.menu_360_Ir_A("Inicio");
+		sleep(18000);
+		driver.switchTo().defaultContent();
+		List<WebElement> CaseNumber = driver.findElements(By.cssSelector("[class='slds-truncate slds-text-align--center']"));
+		CaseNumber.get(1).click();
+		//sleep(8000);
+		//driver.switchTo().frame(cambioFrame(driver, By.xpath("//*[@id=\"tab-default-1\"]/div/ng-include/div/div/div[3]/table/tbody[1]/tr")));
+		
 	}
 	
 	@Test (groups = "UAT")
@@ -1840,5 +1855,253 @@ public class TestsXappia extends TestBase {
 		driver.findElement(By.id("RefillAmount")).sendKeys("17.50");
 		if ((!driver.findElement(By.id("RefillAmount")).getAttribute("value").equals("17.50")) || (!driver.findElement(By.id("RefillAmount")).getAttribute("value").equals("17,50")))
 			Assert.assertTrue(false);
+	}
+	
+	@Test (groups = {"SIT","UAT"})
+	public void TXSU00026_Modificacion_de_datos_No_Permite_Actualizar_datos_campo_DNI_CUIT_Telefonico() {
+		LoguearTelefonico();
+		irAConsolaFAN();
+		sb.cerrarPestaniaGestion(driver);
+		cc.menu_360_Ir_A("Inicio");
+		irAGestionDeClientes();
+		sleep(5000);
+		driver.switchTo().frame(cambioFrame(driver, By.id("SearchClientDocumentType")));
+		if (driver.getCurrentUrl().contains("sit"))
+			sb.BuscarCuenta("DNI", "10777541");
+		else
+			sb.BuscarCuenta("DNI", "22222070");
+		driver.findElement(By.cssSelector(".slds-tree__item.ng-scope")).click();
+		sleep(15000);
+		driver.switchTo().frame(cambioFrame(driver, By.className("profile-box")));
+		driver.findElements(By.className("profile-edit")).get(0).click();
+		sleep(10000);
+		driver.switchTo().frame(cambioFrame(driver, By.id("DocumentNumber")));
+		Assert.assertTrue(driver.findElement(By.id("DocumentType")).getAttribute("disabled").equals("true"));
+	}
+	
+	@Test (groups = {"SIT","UAT"})
+	public void TXSU00026_Modificacion_de_datos_No_Permite_Actualizar_datos_campo_DNI_CUIT_Agente() {
+		LoguearAgente();
+		irAConsolaFAN();
+		sb.cerrarPestaniaGestion(driver);
+		cc.menu_360_Ir_A("Inicio");
+		irAGestionDeClientes();
+		sleep(5000);
+		driver.switchTo().frame(cambioFrame(driver, By.id("SearchClientDocumentType")));
+		if (driver.getCurrentUrl().contains("sit"))
+			sb.BuscarCuenta("DNI", "10777541");
+		else
+			sb.BuscarCuenta("DNI", "22222070");
+		driver.findElement(By.cssSelector(".slds-tree__item.ng-scope")).click();
+		sleep(15000);
+		driver.switchTo().frame(cambioFrame(driver, By.className("profile-box")));
+		driver.findElements(By.className("profile-edit")).get(0).click();
+		sleep(10000);
+		driver.switchTo().frame(cambioFrame(driver, By.id("DocumentNumber")));
+		Assert.assertTrue(driver.findElement(By.id("DocumentType")).getAttribute("disabled").equals("true"));
+		}
+	
+	@Test (groups = {"SIT","UAT"})
+	public void TXSU00027_Modificacion_de_datos_No_Permitir_actualizar_fecha_de_nacimiento_al_colocar_un_a�o_mayor_a_120_ofcom() {
+		irAConsolaFAN();
+		sb.cerrarPestaniaGestion(driver);
+		cc.menu_360_Ir_A("Inicio");
+		irAGestionDeClientes();
+		sleep(5000);
+		driver.switchTo().frame(cambioFrame(driver, By.id("SearchClientDocumentType")));
+		if (driver.getCurrentUrl().contains("sit"))
+			sb.BuscarCuenta("DNI", "10777541");
+		else
+			sb.BuscarCuenta("DNI", "22222070");
+		driver.findElement(By.cssSelector(".slds-tree__item.ng-scope")).click();
+		sleep(15000);
+		driver.switchTo().frame(cambioFrame(driver, By.className("profile-box")));
+		driver.findElements(By.className("profile-edit")).get(0).click();
+		sleep(10000);
+		driver.switchTo().frame(cambioFrame(driver, By.id("DocumentNumber")));
+		driver.findElement(By.id("Birthdate")).clear();
+		driver.findElement(By.id("Birthdate")).sendKeys("08/08/1898");
+		sleep(5000);
+		driver.findElement(By.id("ClientInformation_nextBtn")).click();
+		sleep(8000);
+		Assert.assertTrue(!(driver.findElement(By.className("ta-care-omniscript-done")).getText().contains("Las modificaciones se realizaron con \u00e9xito")));
+	}
+	
+	@Test (groups = {"SIT","UAT"})
+	public void TXSU00028_Modificacion_de_datos_No_Permitir_actualizar_fecha_de_nacimiento_al_colocar_un_a�o_menor_a_16_Telefonico() {
+		LoguearTelefonico();
+		irAConsolaFAN();
+		sb.cerrarPestaniaGestion(driver);
+		cc.menu_360_Ir_A("Inicio");
+		irAGestionDeClientes();
+		sleep(5000);
+		driver.switchTo().frame(cambioFrame(driver, By.id("SearchClientDocumentType")));
+		if (driver.getCurrentUrl().contains("sit"))
+			sb.BuscarCuenta("DNI", "10777541");
+		else
+			sb.BuscarCuenta("DNI", "22222070");
+		driver.findElement(By.cssSelector(".slds-tree__item.ng-scope")).click();
+		sleep(15000);
+		driver.switchTo().frame(cambioFrame(driver, By.className("profile-box")));
+		driver.findElements(By.className("profile-edit")).get(0).click();
+		sleep(10000);
+		driver.switchTo().frame(cambioFrame(driver, By.id("DocumentNumber")));
+		driver.findElement(By.id("Birthdate")).clear();
+		driver.findElement(By.id("Birthdate")).sendKeys("08/08/2016");
+		sleep(5000);
+		driver.findElement(By.id("ClientInformation_nextBtn")).click();
+		sleep(8000);
+		Assert.assertTrue(!(driver.findElement(By.className("ta-care-omniscript-done")).getText().contains("Las modificaciones se realizaron con \u00e9xito")));
+	}
+	
+	@Test (groups = {"SIT","UAT"})
+	public void TXSU00029_Renovacion_de_cuota_Ofcom_Reseteo_Internet_por_Dia_Lim�trofe_Descuento_de_saldo_sin_Credito(){
+		irAConsolaFAN();
+		sb.cerrarPestaniaGestion(driver);
+		irAGestionDeClientes();
+		sleep(5000);
+		driver.switchTo().frame(cambioFrame(driver, By.id("SearchClientDocumentType")));
+		if (driver.getCurrentUrl().contains("sit"))
+			sb.BuscarCuenta("DNI", "95905674");
+		else
+			sb.BuscarCuenta("DNI", "33332002");
+		driver.findElement(By.cssSelector(".slds-tree__item.ng-scope")).click();
+		sleep(15000);
+		if (driver.getCurrentUrl().contains("sit"))
+			cc.seleccionarCardPornumeroLinea("2932441219", driver); 
+		else
+			cc.seleccionarCardPornumeroLinea("3572409631", driver);
+		sleep(3000);
+		cc.irAGestionEnCard("Renovacion de Datos");
+		sleep(8000);
+		driver.switchTo().frame(cambioFrame(driver, By.id("combosMegas")));
+		List<WebElement> elementos = driver.findElement(By.cssSelector(".table.slds-table.slds-table--bordered.slds-table--cell-buffer")).findElement(By.tagName("tbody")).findElements(By.tagName("tr"));
+		for(WebElement UnE:elementos) {
+			if(UnE.findElement(By.tagName("td")).getText().contains("Reseteo Internet por D\u00eda Lim\u00edtrofe")) {
+				UnE.findElement(By.className("slds-checkbox")).click();
+			}
+		}
+		cc.obligarclick(driver.findElement(By.id("CombosDeMegas_nextBtn")));
+		sleep(3000);
+		List<WebElement> pago = driver.findElement(By.id("PaymentTypeRadio|0")).findElements(By.cssSelector(".slds-radio.ng-scope"));
+		for (WebElement UnP : pago) {
+			System.out.println(UnP.getText());
+			if (UnP.getText().toLowerCase().contains("descuento de saldo")){
+				UnP.click();
+				break;
+			}
+		}
+		cc.obligarclick(driver.findElement(By.id("SetPaymentType_nextBtn")));
+		sleep(12000);
+		WebElement ok = driver.findElement(By.id("alert-container")).findElements(By.tagName("div")).get(2);
+		System.out.println(ok.getText());
+		ok.click();
+		sleep(4000);
+		try {
+			Assert.assertTrue(driver.findElement(By.id("PaymentTypeRadio|0")).findElements(By.tagName("div")).get(1).findElement(By.tagName("div")).findElement(By.tagName("small")).isDisplayed());
+		}
+		catch (Exception e) {
+		}
+	}
+		
+	@Test (groups = {"SIT","UAT"}) 
+	public void TXSU00031_Renovacion_de_cuota_Agente_Reseteo_200_MB_por_Dia_Descuento_de_saldo_sin_Credito(){
+		LoguearAgente();
+		irAConsolaFAN();
+		sb.cerrarPestaniaGestion(driver);
+		cc.menu_360_Ir_A("Inicio");
+		irAGestionDeClientes();
+		sleep(5000);
+		driver.switchTo().frame(cambioFrame(driver, By.id("SearchClientDocumentType")));
+		if (driver.getCurrentUrl().contains("sit"))
+			sb.BuscarCuenta("DNI", "95905674");
+		else
+			sb.BuscarCuenta("DNI", "33332002");
+		driver.findElement(By.cssSelector(".slds-tree__item.ng-scope")).click();
+		sleep(15000);
+		if (driver.getCurrentUrl().contains("sit"))
+			cc.seleccionarCardPornumeroLinea("2932441219", driver);
+		else
+			cc.seleccionarCardPornumeroLinea("3572409631", driver);
+		sleep(3000);
+		cc.irAGestionEnCard("Renovacion de Datos");
+		sleep(8000);
+		driver.switchTo().frame(cambioFrame(driver, By.id("combosMegas")));
+		List<WebElement> elementos = driver.findElement(By.cssSelector(".table.slds-table.slds-table--bordered.slds-table--cell-buffer")).findElement(By.tagName("tbody")).findElements(By.tagName("tr"));
+		for(WebElement UnE:elementos) {
+			System.out.println(UnE);
+			if(UnE.findElement(By.tagName("td")).getText().contains("Reseteo 200 MB")) {
+				UnE.findElement(By.className("slds-checkbox")).click();
+			}
+		}
+		cc.obligarclick(driver.findElement(By.id("CombosDeMegas_nextBtn")));
+		sleep(3000);
+		List<WebElement> pago = driver.findElement(By.id("PaymentTypeRadio|0")).findElements(By.cssSelector(".slds-radio.ng-scope"));
+		for (WebElement UnP : pago) {
+			System.out.println(UnP.getText());
+			if (UnP.getText().toLowerCase().contains("descuento de saldo")){
+				UnP.click();
+				break;
+			}
+		}
+		cc.obligarclick(driver.findElement(By.id("SetPaymentType_nextBtn")));
+		sleep(12000);
+		WebElement ok = driver.findElement(By.id("alert-container")).findElements(By.tagName("div")).get(2);
+		System.out.println(ok.getText());
+		ok.click();
+		sleep(4000);
+		try {
+			Assert.assertTrue(driver.findElement(By.id("PaymentTypeRadio|0")).findElements(By.tagName("div")).get(1).findElement(By.tagName("div")).findElement(By.tagName("small")).isDisplayed());
+		}
+		catch (Exception e) {
+		}
+	}
+	
+	@Test (groups = {"SIT","UAT"})
+	public void TXSU00030_Renovacion_de_cuota_Agente_Reseteo_Internet_por_Dia_Limitrofe_Descuento_de_saldo_con_Credito(){
+		LoguearAgente();
+		irAConsolaFAN();
+		sb.cerrarPestaniaGestion(driver);
+		cc.menu_360_Ir_A("Inicio");
+		irAGestionDeClientes();
+		sleep(5000);
+		driver.switchTo().frame(cambioFrame(driver, By.id("SearchClientDocumentType")));
+		if (driver.getCurrentUrl().contains("sit"))
+			sb.BuscarCuenta("DNI", "22222035");
+		else
+			sb.BuscarCuenta("DNI", "22223002");
+		driver.findElement(By.cssSelector(".slds-tree__item.ng-scope")).click();
+		sleep(15000);
+		if (driver.getCurrentUrl().contains("sit"))
+			cc.seleccionarCardPornumeroLinea("2932443389", driver);
+		else
+			cc.seleccionarCardPornumeroLinea("3572409631", driver);
+		sleep(3000);
+		cc.irAGestionEnCard("Renovacion de Datos");
+		sleep(8000);
+		driver.switchTo().frame(cambioFrame(driver, By.id("combosMegas")));
+		List<WebElement> elementos = driver.findElement(By.cssSelector(".table.slds-table.slds-table--bordered.slds-table--cell-buffer")).findElement(By.tagName("tbody")).findElements(By.tagName("tr"));
+		for(WebElement UnE:elementos) {
+			System.out.println(UnE);
+			if(UnE.findElement(By.tagName("td")).getText().contains("Reseteo Internet por D\u00eda Lim\u00edtrofe")) {
+				UnE.findElement(By.className("slds-checkbox")).click();
+			}
+		}
+		cc.obligarclick(driver.findElement(By.id("CombosDeMegas_nextBtn")));
+		sleep(3000);
+		List<WebElement> pago = driver.findElement(By.id("PaymentTypeRadio|0")).findElements(By.cssSelector(".slds-radio.ng-scope"));
+		for (WebElement UnP : pago) {
+			System.out.println(UnP.getText());
+			if (UnP.getText().toLowerCase().contains("descuento de saldo")){
+				UnP.click();
+				break;
+			}
+		}
+		cc.obligarclick(driver.findElement(By.id("SetPaymentType_nextBtn")));
+		sleep(18000);
+		WebElement ok = driver.findElement(By.id("VlocityBPView")).findElement(By.tagName("div")).findElement(By.tagName("div")).findElement(By.tagName("header")).findElement(By.tagName("h1"));
+		System.out.println(ok.getText());
+		Assert.assertTrue(ok.isDisplayed());
+		Assert.assertTrue(ok.getText().equals("La operaci\u00f3n termino exitosamente"));
 	}
 }
