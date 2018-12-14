@@ -723,7 +723,7 @@ public class GestionesPerfilOficina extends TestBase {
 		//System.out.println(sOrders);
 	}
 	
-	@Test (groups = {"ProblemaRecarga", "GestionesPerfilOficina","E2E","Ciclo3"}, dataProvider="CuentaProblemaRecarga") 
+	@Test (groups = {"ProblemaRecarga", "GestionesPerfilOficina","E2E","Ciclo3"}, dataProvider="CuentaProblemaRecarga")
 	public void problemaRecargaOnline(String sDNI, String sLinea) {
 		imagen= "problemaRecargaOnline";
 		detalles = null;
@@ -2071,13 +2071,10 @@ public class GestionesPerfilOficina extends TestBase {
 		buscarYClick(driver.findElements(By.cssSelector(".imgItemContainer.ng-scope")), "contains", "tarjeta prepaga");
 		driver.findElement(By.id("RefillMethods_nextBtn")).click();
 		sleep(8000);
-		driver.findElement(By.id("BatchNumber")).sendKeys(cSerie);
-		driver.findElement(By.id("PIN")).sendKeys(cPIN);
+		driver.findElement(By.id("BatchNumber")).sendKeys("11120000009313");
+		driver.findElement(By.id("PIN")).sendKeys("0858");
 		driver.findElement(By.id("PrepaidCardData_nextBtn")).click();
 		sleep(15000);
-		buscarYClick(driver.findElements(By.cssSelector(".imgItemContainer.ng-scope")), "contains", "crear un caso nuevo");
-		driver.findElement(By.id("ExistingCase_nextBtn")).click();
-		sleep(10000);
 		driver.findElement(By.id("Summary_nextBtn")).click();
 		sleep(10000);
 		boolean b = false;
@@ -2090,14 +2087,14 @@ public class GestionesPerfilOficina extends TestBase {
 		}
 		Assert.assertTrue(b);
 		String saldo2 = verif.ObtenerValorResponse(verifM.Servicio_queryLiteBySubscriber(sLinea), "bcs:MainBalance");
-		Integer saldo3 = Integer.parseInt(saldo2.substring(0, (saldo2.length()) - 1));
-		if(saldo1+123000 == saldo3) {
+		Integer saldo3 = Integer.parseInt(saldo2.substring(0, 5));
+		if(saldo1+500 == saldo3) {
 			a = true;
 		}
 		Assert.assertTrue(a);
 	}
 	
-	@Test (groups = {"ProblemaRecarga", "GestionesPerfilOficina","E2E","Ciclo3"}, dataProvider="CuentaProblemaRecargaQuemada")//Lote: 11120000001689 PIN: 02776
+	@Test (groups = {"ProblemaRecarga", "GestionesPerfilOficina","E2E","Ciclo3"}, dataProvider="CuentaProblemaRecargaQuemada")
 	public void TS104347_CRM_Movil_REPRO_Problemas_con_Recarga_Presencial_Tarjeta_Scratch_Caso_Nuevo_Quemada(String cDNI,String sLinea, String cSerie, String cPIN){
 		CBS_Mattu verifM = new CBS_Mattu();
 		CBS verif = new CBS();
@@ -2120,30 +2117,18 @@ public class GestionesPerfilOficina extends TestBase {
 		buscarYClick(driver.findElements(By.cssSelector(".imgItemContainer.ng-scope")), "contains", "tarjeta prepaga");
 		driver.findElement(By.id("RefillMethods_nextBtn")).click();
 		sleep(8000);
-		driver.findElement(By.id("BatchNumber")).sendKeys(cSerie);
-		driver.findElement(By.id("PIN")).sendKeys(cPIN);
+		driver.findElement(By.id("BatchNumber")).sendKeys("11120000009301");
+		driver.findElement(By.id("PIN")).sendKeys("0080");
 		driver.findElement(By.id("PrepaidCardData_nextBtn")).click();
 		sleep(15000);
-		buscarYClick(driver.findElements(By.cssSelector(".imgItemContainer.ng-scope")), "contains", "crear un caso nuevo");
-		driver.findElement(By.id("ExistingCase_nextBtn")).click();
-		sleep(8000);
-		driver.findElement(By.id("Summary_nextBtn")).click();
-		sleep(8000);
+		driver.switchTo().frame(cambioFrame(driver, By.cssSelector(".slds-icon.slds-icon--large.ta-care-omniscript-error-icon")));
 		boolean b = false;
-		boolean a  = false;
-		List <WebElement> prob = driver.findElements(By.cssSelector(".slds-box.ng-scope"));
-		for(WebElement x : prob) {
-			if(x.getText().toLowerCase().contains("no se pudo realizar la operaci\u00f3n.")) {
+		for(WebElement x : driver.findElements(By.className("ta-care-omniscript-done"))) {
+			if(x.getText().toLowerCase().contains("la tarjeta ya fue utilizada para una recarga")) {
 				b = true;
 			}
 		}
 		Assert.assertTrue(b);
-		String saldo2 = verif.ObtenerValorResponse(verifM.Servicio_queryLiteBySubscriber(sLinea), "bcs:MainBalance");
-		Integer saldo3 = Integer.parseInt(saldo2.substring(0, (saldo2.length()) - 1));
-		if(saldo1+123000 == saldo3) {
-			a = true;
-		}
-		Assert.assertTrue(a);
 	}
 	
 	@Test (groups = {"GestionesPerfilOficina", "Reintegros", "E2E","Ciclo4"}, dataProvider = "CuentaReintegros")
@@ -2515,7 +2500,7 @@ public class GestionesPerfilOficina extends TestBase {
 		pagePTelefo.comprarPack();
 		pagePTelefo.closerightpanel();
 		sleep(8000);
-		pagePTelefo.agregarPack(sPackOfCom);
+		pagePTelefo.agregarPack("1GB Bienvenida");		
 		pagePTelefo.tipoDePago("en factura de venta");
 		pagePTelefo.getTipodepago().click();
 		sleep(12000);
@@ -4134,8 +4119,9 @@ public class GestionesPerfilOficina extends TestBase {
 		cCC.seleccionarCardPornumeroLinea(sLinea, driver);
 		pagePTelefo.comprarPack();
 		pagePTelefo.closerightpanel();
+		String chargeCode = null;
 		try {
-			pagePTelefo.PackCombinado(sventaPack);
+			chargeCode = pagePTelefo.PackCombinado(sventaPack);
 		}
 		catch (Exception eE) {
 			driver.navigate().refresh();
@@ -4144,7 +4130,7 @@ public class GestionesPerfilOficina extends TestBase {
 			cCC.seleccionarCardPornumeroLinea(sLinea, driver);
 			pagePTelefo.comprarPack("comprar sms");
 			cc.closerightpanel();
-			pagePTelefo.PackCombinado(sventaPack);
+			chargeCode = pagePTelefo.PackCombinado(sventaPack);
 		}
 		pagePTelefo.tipoDePago("en factura de venta");
 		sleep(12000);
@@ -4174,6 +4160,7 @@ public class GestionesPerfilOficina extends TestBase {
 		String datos = tabla.findElements(By.tagName("tr")).get(4).findElements(By.tagName("td")).get(1).getText();
 		Assert.assertTrue(datos.equalsIgnoreCase("activada")||datos.equalsIgnoreCase("activated"));	
 		System.out.println("Operacion: Compra de Pack "+ "Order: " + sOrden + "Cuenta: "+ accid + "Fin");
+		detalles += "-Charge Code: " + chargeCode;
 	}
 	
 	@Test (groups = {"GestionPerfilOficina", "VentaDePack", "Ciclo1"}, dataProvider = "ventaX1Dia" )
@@ -4195,7 +4182,7 @@ public class GestionesPerfilOficina extends TestBase {
 		cCC.seleccionarCardPornumeroLinea(sLinea, driver);
 		//cCC.closerightpanel();
 		pagePTelefo.comprarPack();
-		pagePTelefo.PackCombinado(sVentaPack);
+		String chargeCode = pagePTelefo.PackCombinado(sVentaPack);
 		pagePTelefo.tipoDePago("en factura de venta");
 		sleep(12000);
 		pagePTelefo.getTipodepago().click();
@@ -4226,6 +4213,7 @@ public class GestionesPerfilOficina extends TestBase {
 		String datos = tabla.findElements(By.tagName("tr")).get(4).findElements(By.tagName("td")).get(1).getText();
 		Assert.assertTrue(datos.equalsIgnoreCase("activada")||datos.equalsIgnoreCase("activated"));	
 		System.out.println("Operacion: Compra de Pack "+ "Order: " + sOrden + "Cuenta: "+ accid + "Fin");
+		detalles += "-Charge Code: " + chargeCode;
 		//Blocked
 	}
 	
@@ -5449,6 +5437,11 @@ public class GestionesPerfilOficina extends TestBase {
 		driver.findElement(By.id("ReceiptCode")).sendKeys("111");
 		driver.findElement(By.id("OnlineRefillData_nextBtn")).click();
 		sleep(5000);
+		try {
+			driver.findElement(By.xpath("//*[@id=\"SessionCase|0\"]/div/div[1]/label[2]/span/div/div")).click();
+			driver.findElement(By.id("ExistingCase_nextBtn")).click();
+			sleep(5000);
+		} catch (Exception e) {}
 		buscarYClick(driver.findElements(By.cssSelector(".slds-form-element__label.ng-binding.ng-scope")), "equals", "si");
 		driver.findElement(By.id("FileAttach")).sendKeys("C:\\Users\\Nicolas\\Desktop\\descarga.jpg");
 		driver.findElement(By.id("AttachDocuments_nextBtn")).click();
@@ -5517,8 +5510,8 @@ public class GestionesPerfilOficina extends TestBase {
 		driver.findElements(By.className("borderOverlay")).get(0).click();
 		driver.findElement(By.id("RefillMethods_nextBtn")).click();
 		sleep(5000);
-		driver.findElement(By.id("BatchNumber")).sendKeys("11120000009300");
-		driver.findElement(By.id("PIN")).sendKeys("0101");
+		driver.findElement(By.id("BatchNumber")).sendKeys("11120000009308");
+		driver.findElement(By.id("PIN")).sendKeys("0406");
 		driver.findElement(By.id("PrepaidCardData_nextBtn")).click();
 		sleep(5000);
 		WebElement estado = driver.findElement(By.id("PrepaidCardStatusLabel"));
@@ -5529,7 +5522,7 @@ public class GestionesPerfilOficina extends TestBase {
 		Assert.assertTrue(gestion.getText().contains("Recarga realizada con \u00e9xito"));
 		String datoNuevo = cbs.ObtenerValorResponse(cbsm.Servicio_queryLiteBySubscriber(sLinea), "bcs:MainBalance");
 		Integer datosFinal = Integer.parseInt(datoNuevo.substring(0, 5));
-		Assert.assertTrue(datosInicial + 500 == datosFinal);
+		Assert.assertTrue(datosInicial + 5000000 == datosFinal);
 	}
 	
 	@Test (groups = {"GestionesPerfilTelefonico", "HistorialDeRecargas", "E2E", "Ciclo2"}, dataProvider = "HistoriaRecarga")
@@ -5689,6 +5682,98 @@ public class GestionesPerfilOficina extends TestBase {
 		Assert.assertTrue(driver.findElement(By.className("ta-care-omniscript-done")).findElement(By.className("ng-binding")).getText().equalsIgnoreCase("Las modificaciones se realizaron con \u00e9xito!"));
 		String orden = driver.findElement(By.cssSelector(".vlc-slds-inline-control__label.ng-binding")).getText();
 		orden = orden.substring(orden.length()-9, orden.length()-1);
+		
+	}
+	
+	@Test (groups = {"GestionesPerfilOficina", "ResumenDeCuenta", "Ciclo4"}, dataProvider = "CuentaVista360")
+	public void TS129472_CRM_Movil_Prepago_Resumen_de_Cuenta_Corriente_Columnas_de_informacion_Pagos_FAN_Front_OOCC(String sDNI, String sNombre) {
+		imagen = "TS129472";
+		driver.switchTo().frame(cambioFrame(driver, By.id("SearchClientDocumentType")));
+		sb.BuscarCuenta("DNI", sDNI);
+		driver.findElement(By.cssSelector(".slds-tree__item.ng-scope")).click();
+		sleep(15000);
+		mk.closeActiveTab();
+		cc.irAFacturacion();
+		sleep(5000);
+		driver.switchTo().frame(cambioFrame(driver, By.className("card-top")));
+		buscarYClick(driver.findElements(By.className("slds-text-body_regular")), "contains", "resumen de cuenta corriente");
+		sleep(15000);
+		driver.switchTo().frame(cambioFrame(driver, By.cssSelector(".slds-button.slds-button--brand.filterNegotiations.slds-p-horizontal--x-large.slds-p-vertical--x-small.secondaryFont")));
+		driver.findElement(By.cssSelector(".slds-button.slds-button--brand.filterNegotiations.slds-p-horizontal--x-large.slds-p-vertical--x-small.secondaryFont")).click();
+		sleep(5000);
+		WebElement tabla = driver.findElement(By.cssSelector(".slds-size--1-of-1.slds-medium-size--1-of-1.slds-large-size--1-of-1.slds-m-top--x-large")).findElement(By.className("slds-text-heading--label"));
+		List<String> verificacion = new ArrayList<String>();
+		verificacion.add("FECHA DE EMISI\u00d3N");
+		verificacion.add("FECHA DE VENCIMIENTO");
+		verificacion.add("TIPO");
+		verificacion.add("NRO. DE COMPROBANTE");
+		verificacion.add("MONTO");
+		List<String> columnas = new ArrayList<String>();
+		List<WebElement> datos = tabla.findElements(By.tagName("a"));
+		for (int i=0; i<datos.size(); i++) {
+			columnas.add(datos.get(i).getText());
+		}
+		Assert.assertTrue(verificacion.equals(columnas));
+	}
+	
+	@Test (groups = {"ProblemaRecarga", "GestionesPerfilOficina","E2E","Ciclo3"}, dataProvider="CuentaProblemaRecarga") 
+	public void TS104352_CRM_Movil_REPRO_Problemas_con_Recarga_Presencial_Tarjeta_Scratch_Caso_Nuevo_Pin_Borrado(String sDNI, String sLinea) {
+		imagen = "TS104352";
+		detalles = null;
+		boolean gestion = false;
+		String datoViejo = cbs.ObtenerValorResponse(cbsm.Servicio_queryLiteBySubscriber(sLinea), "bcs:MainBalance");
+		Integer datosInicial = Integer.parseInt(datoViejo.substring(0, 5));
+		System.out.println(datosInicial);
+//		String saldo = cbs.ObtenerValorResponse(cbsm.Servicio_queryLiteBySubscriber(sLinea), "bcs:MainBalance");
+//		Integer saldo1 = Integer.parseInt(saldo.substring(0, (saldo.length()) - 1));
+		driver.switchTo().frame(cambioFrame(driver, By.id("SearchClientDocumentType")));
+		sb.BuscarCuenta("DNI", sDNI);
+		driver.findElement(By.cssSelector(".slds-tree__item.ng-scope")).click();
+		sleep(15000);
+		driver.switchTo().frame(cambioFrame(driver, By.className("card-top")));
+		driver.findElement(By.className("card-top")).click();
+		sleep(8000);
+		cc.irAGestionEnCard("Problemas con Recargas");
+		sleep(8000);
+		driver.switchTo().frame(cambioFrame(driver, By.id("RefillMethods_nextBtn")));
+		buscarYClick(driver.findElements(By.className("borderOverlay")), "equals", "tarjeta prepaga");
+		driver.findElement(By.id("RefillMethods_nextBtn")).click();
+		sleep(5000);
+		driver.findElement(By.id("BatchNumber")).sendKeys("11120000009306");
+		driver.findElement(By.id("PIN")).sendKeys("0102");
+		driver.findElement(By.id("PrepaidCardData_nextBtn")).click();
+		sleep(10000);
+		try {
+			driver.findElement(By.xpath("//*[@id=\"SessionCase|0\"]/div/div[1]/label[2]/span/div/div")).click();
+			driver.findElement(By.id("ExistingCase_nextBtn")).click();
+			sleep(10000);
+		} catch (Exception e) {}
+		driver.findElement(By.id("Summary_nextBtn")).click();
+		sleep(10000);
+		for (WebElement x : driver.findElements(By.className("ta-care-omniscript-done"))) {
+			System.out.println(x.getText());
+			if (x.getText().toLowerCase().contains("recarga realizada con \u00e9xito"))
+				gestion = true;
+		}
+		Assert.assertTrue(gestion);
+		String datoNuevo = cbs.ObtenerValorResponse(cbsm.Servicio_queryLiteBySubscriber(sLinea), "bcs:MainBalance");
+		Integer datosFinal = Integer.parseInt(datoNuevo.substring(0, 5));
+		System.out.println(datosFinal);
+		Assert.assertTrue(datosInicial + 500 == datosFinal);
+		mk.closeActiveTab();
+		driver.switchTo().frame(cambioFrame(driver, By.className("card-top")));
+		driver.findElement(By.className("card-top")).click();
+		sleep(8000);
+		cc.irAGestionEnCard("Problemas con Recargas");
+		sleep(8000);
+		driver.switchTo().frame(cambioFrame(driver, By.id("RefillMethods_nextBtn")));
+		buscarYClick(driver.findElements(By.className("borderOverlay")), "equals", "tarjeta prepaga");
+		driver.findElement(By.id("RefillMethods_nextBtn")).click();
+		sleep(5000);
+		driver.findElement(By.id("BatchNumber")).sendKeys("11120000009301");
+		driver.findElement(By.id("PIN")).sendKeys("0080");
+		driver.findElement(By.id("PrepaidCardData_nextBtn")).click();
+		sleep(7000);
 		
 	}
 }

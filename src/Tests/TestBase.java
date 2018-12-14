@@ -25,6 +25,7 @@ import org.apache.poi.xssf.usermodel.XSSFRow;
 import org.apache.poi.xssf.usermodel.XSSFSheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.openqa.selenium.By;
+import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.OutputType;
 import org.openqa.selenium.TakesScreenshot;
@@ -1793,5 +1794,20 @@ public class TestBase {
 		 Object[][] testObjArray = ExcelUtils.getTableArray(dataProviderE2E(),"E2EsinPago",1,1,2,"Modificacion De DNI");
 
 		 return (testObjArray);
+	}
+	
+	public String obtenerChargeCode() {
+		WebElement box = driver.findElements(By.cssSelector(".slds-button.slds-button_icon-border-filled.cpq-item-actions-dropdown-button")).get(2);
+		box.click();
+		((JavascriptExecutor)driver).executeScript("arguments[0].scrollIntoView();", box);
+		WebElement configure = driver.findElements(By.cssSelector(".slds-dropdown.slds-dropdown_right.cpq-item-actions-dropdown")).get(2);
+		buscarYClick(configure.findElements(By.tagName("a")), "contains", "configure");
+		WebElement chargeCode = null;
+		for (WebElement x : driver.findElements(By.className("slds-form-element"))) {
+			if (x.getText().toLowerCase().contains("charge code"))
+				chargeCode = x;
+		}
+		((JavascriptExecutor)driver).executeScript("arguments[0].scrollIntoView();", chargeCode);
+		return chargeCode.findElement(By.tagName("input")).getAttribute("value");
 	}
 }

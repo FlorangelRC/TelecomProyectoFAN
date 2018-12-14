@@ -731,7 +731,7 @@ public class GestionesPerfilAgente extends TestBase{
 		driver.findElement(By.id("MobilePhone")).clear();
 		driver.findElement(By.id("MobilePhone")).sendKeys(nuevoPhone);
 		driver.findElement(By.id("ClientInformation_nextBtn")).click();
-		sleep(10000);
+		sleep(15000);
 		Assert.assertTrue(driver.findElement(By.className("ta-care-omniscript-done")).findElement(By.className("ng-binding")).getText().equalsIgnoreCase("Las modificaciones se realizaron con \u00e9xito!"));
 		String orden = driver.findElement(By.cssSelector(".vlc-slds-inline-control__label.ng-binding")).getText();
 		orden = orden.substring(orden.length()-9, orden.length()-1);
@@ -789,7 +789,7 @@ public class GestionesPerfilAgente extends TestBase{
 		driver.findElement(By.id("Email")).clear();
 		driver.findElement(By.id("Email")).sendKeys(nuevoMail);
 		driver.findElement(By.id("ClientInformation_nextBtn")).click();
-		sleep(5000);
+		sleep(10000);
 		String orden = driver.findElement(By.cssSelector(".vlc-slds-inline-control__label.ng-binding")).getText();
 		orden = orden.substring(orden.length()-9, orden.length()-1);
 		detalles +="-Orden:"+orden;		
@@ -805,7 +805,7 @@ public class GestionesPerfilAgente extends TestBase{
 		driver.findElement(By.id("Email")).clear();
 		driver.findElement(By.id("Email")).sendKeys(mail);
 		driver.findElement(By.id("ClientInformation_nextBtn")).click();
-		sleep(8000);
+		sleep(15000);
 		Assert.assertTrue(driver.findElement(By.className("ta-care-omniscript-done")).getText().contains("Las modificaciones se realizaron con \u00e9xito"));
 		orden = driver.findElement(By.cssSelector(".vlc-slds-inline-control__label.ng-binding")).getText();
 		orden = orden.substring(orden.length()-9, orden.length()-1);
@@ -869,7 +869,7 @@ public class GestionesPerfilAgente extends TestBase{
 		driver.findElement(By.id("MobilePhone")).clear();
 		driver.findElement(By.id("MobilePhone")).sendKeys(nuevoPhone);
 		driver.findElement(By.id("ClientInformation_nextBtn")).click();
-		sleep(10000);
+		sleep(15000);
 		Assert.assertTrue(driver.findElement(By.className("ta-care-omniscript-done")).findElement(By.className("ng-binding")).getText().equalsIgnoreCase("Las modificaciones se realizaron con \u00e9xito!"));
 		String orden = driver.findElement(By.cssSelector(".vlc-slds-inline-control__label.ng-binding")).getText();
 		orden = orden.substring(orden.length()-9, orden.length()-1);
@@ -935,7 +935,7 @@ public class GestionesPerfilAgente extends TestBase{
 		driver.findElement(By.id("Email")).clear();
 		driver.findElement(By.id("Email")).sendKeys(nuevoMail);
 		driver.findElement(By.id("ClientInformation_nextBtn")).click();
-		sleep(10000);
+		sleep(15000);
 		Assert.assertTrue(driver.findElement(By.className("ta-care-omniscript-done")).findElement(By.className("ng-binding")).getText().equalsIgnoreCase("Las modificaciones se realizaron con \u00e9xito!"));
 		String orden = driver.findElement(By.cssSelector(".vlc-slds-inline-control__label.ng-binding")).getText();
 		orden = orden.substring(orden.length()-9, orden.length()-1);
@@ -1153,7 +1153,7 @@ public class GestionesPerfilAgente extends TestBase{
 		WebElement table = driver.findElement(By.cssSelector(".slds-datepicker.slds-dropdown.slds-dropdown--left"));
 		for (WebElement cell : table.findElements(By.xpath("//tr//td"))) {
 			try {
-				if (cell.getText().equals("13"))
+				if (cell.getText().equals("4"))
 					cell.click();
 			} catch (Exception e) {}
 		}
@@ -1161,7 +1161,7 @@ public class GestionesPerfilAgente extends TestBase{
 		WebElement table2 = driver.findElement(By.cssSelector(".slds-datepicker.slds-dropdown.slds-dropdown--left"));
 		for (WebElement cell : table2.findElements(By.xpath("//tr//td"))) {
 			try {
-				if (cell.getText().equals("15"))
+				if (cell.getText().equals("7"))
 					cell.click();
 			} catch (Exception e) {}
 		}
