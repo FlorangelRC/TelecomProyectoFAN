@@ -114,7 +114,7 @@ public class AltadeLineas extends TestBase {
 		driver.switchTo().frame(accountPage.getFrameForElement(driver, By.id("SearchClientDocumentNumber")));
 	}
 	
-	//@AfterMethod(alwaysRun=true)
+	@AfterMethod(alwaysRun=true)
 	public void deslogin() throws IOException{
 		guardarListaTxt(DatosOrden);
 		DatosOrden.clear();
@@ -186,7 +186,6 @@ public class AltadeLineas extends TestBase {
 		}catch(ArrayIndexOutOfBoundsException iobExcept) {System.out.println("Elemento no encontrado en ningun frame 2.");
 			
 		}
-		
 		sleep(14000);
 		driver.switchTo().frame(accountPage.getFrameForElement(driver, By.cssSelector(".slds-input.ng-pristine.ng-untouched.ng-valid.ng-empty")));
 		sb.elegirplan(sPlan);
@@ -931,6 +930,7 @@ public class AltadeLineas extends TestBase {
 		sb.completarEntrega(orden, driver);
 		CambiarPerfil("ofcom",driver);
 	}
+	
 }
 
 
