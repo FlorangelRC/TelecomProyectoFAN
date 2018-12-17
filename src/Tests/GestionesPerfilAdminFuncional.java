@@ -38,7 +38,7 @@ import Pages.TechCare_Ola1;
 import Pages.TechnicalCareCSRDiagnosticoPage;
 import Pages.setConexion;
 
-public class GestionesAdminFuncional extends TestBase{
+public class GestionesPerfilAdminFuncional extends TestBase{
 
 	private WebDriver driver;
 	private SalesBase sb;
