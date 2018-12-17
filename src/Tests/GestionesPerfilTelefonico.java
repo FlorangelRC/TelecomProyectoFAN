@@ -2078,7 +2078,7 @@ public class GestionesPerfilTelefonico extends TestBase{
 		Assert.assertTrue(bAssert);
 		String uMainBalance = cCBS.ObtenerValorResponse(cCBSM.Servicio_queryLiteBySubscriber(sLinea), "bcs:MainBalance");
 		Integer uiMainBalance = Integer.parseInt(uMainBalance.substring(0, (uMainBalance.length()) - 1));
-		Assert.assertTrue(iMainBalance < uiMainBalance);
+		Assert.assertTrue(iMainBalance > uiMainBalance);
 	}
 	
 	@Test (groups= {"GestionesPerfilOficina", "Historial de Reacargas", "Ciclo2"},  dataProvider = "CuentaModificacionDeDatos")
@@ -2753,10 +2753,6 @@ public class GestionesPerfilTelefonico extends TestBase{
 		Assert.assertTrue(gest.getText().equals("Realizada exitosa"));
 	}
 	
-	
-	
-	
-	
 	@Test (groups = {"GestionesPerfilTelefonico", "BaseDeConocimiento", "Ciclo3"}, dataProvider = "CuentaVista360")
 	public void TS130755_CRM_REPRO_BDC_Customer_Care_Problemas_con_Recargas_PerfilTelefonico_Articulo_de_Medios_de_Recargas(String sDNI, String sNombre) {
 		imagen = "TS125107";
@@ -3212,14 +3208,12 @@ public class GestionesPerfilTelefonico extends TestBase{
 		buscarYClick(driver.findElements(By.id("MotiveIncidentSelect_nextBtn")), "equals", "continuar");
 		page.seleccionarPreguntaFinal("No");
 		buscarYClick(driver.findElements(By.id("DataQuotaQuery_nextBtn")), "equals", "continuar");
-		boolean Caso = false;
-		driver.switchTo().frame(cambioFrame(driver, By.className("slds-form-element__control")));
-		WebElement MediosDispon = driver.findElement(By.className("slds-form-element__control")).findElement(By.tagName("p"));
-		System.out.println(MediosDispon.getText());
+		driver.switchTo().frame(cambioFrame(driver, By.id("UnavailableQuotaMessage")));
+		WebElement MediosDispon = driver.findElement(By.className("ng-binding")).findElement(By.xpath("//*[@id='UnavailableQuotaMessage']/div/p/p[1]/span"));
 		Assert.assertTrue(MediosDispon.getText().equalsIgnoreCase("Prob\u00e1 realizar una recarga o comprar un pack de datos"));
 		String caso = driver.findElement(By.xpath("//*[@id='UnavailableQuotaMessage']/div/p/p[2]/span/strong")).getText();
 		System.out.println(caso);
-		assertTrue(Caso);
+		driver.switchTo().defaultContent();
 		tech.buscarCaso(caso);
 		Assert.assertTrue(tech.cerrarCaso("Informada", "Consulta"));
 				

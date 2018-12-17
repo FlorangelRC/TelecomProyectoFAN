@@ -2527,7 +2527,7 @@ public class GestionesPerfilOficina extends TestBase {
 	}
 	
 	@Test (groups = {"GestionesPerfilOficina","Venta de Packs","E2E","Ciclo1"}, dataProvider="PackOfCom")
-	public void Venta_de_Pack(String sDNI, String sLinea, String sPackOfCom, String cBanco, String cTarjeta, String cPromo, String cCuotas) throws AWTException, KeyManagementException, NoSuchAlgorithmException{
+	public void Venta_de_Pack_1_GB_x_1_dia_whatsapp_gratis_Factura_de_Venta_TC_OffCom(String sDNI, String sLinea, String sPackOfCom, String cBanco, String cTarjeta, String cPromo, String cCuotas) throws AWTException, KeyManagementException, NoSuchAlgorithmException{
 		imagen = "Venta De Pack Oficina";
 		detalles = null;
 		detalles = imagen + "- DNI: "+sDNI+" - Linea: "+sLinea;
@@ -2840,7 +2840,7 @@ public class GestionesPerfilOficina extends TestBase {
 		}
 	}
 	
-	@Test (groups = {"GestionesPerfilOficina", "DetalleDeConsumo", "Ciclo2"}, dataProvider = "CuentaTriviasYSuscripciones")
+	@Test (groups = {"GestionesPerfilOficina", "DetalleDeConsumo", "Ciclo2"}, dataProvider = "CuentaVista360")
 	public void TS134783_CRM_Movil_Prepago_Vista_360_Detalle_de_consumo_Consulta_detalle_de_consumo_Datos_FAN_Front_OOCC_134783(String cDNI, String cLinea) {
 		imagen = "TS134783";
 		detalles = null;
@@ -2854,8 +2854,8 @@ public class GestionesPerfilOficina extends TestBase {
 		driver.findElement(By.className("card-top")).click();
 		sleep(3000);
 		buscarYClick(driver.findElements(By.className("slds-text-body_regular")), "equals", "detalle de consumos");
-		driver.switchTo().frame(cambioFrame(driver, By.className("summary-container")));
-		WebElement ConsumoDatos =  driver.findElement(By.className("summary-container")).findElements(By.tagName("div")).get(0).findElement(By.className("unit-div"));
+	    driver.switchTo().frame(cambioFrame(driver, By.className("slds-align_absolute-center")));
+		WebElement ConsumoDatos =  driver.findElement(By.className("slds-align_absolute-center")).findElements(By.tagName("div")).get(0).findElement(By.className("unit-div"));
 		System.out.println(ConsumoDatos.getText());
 		Assert.assertTrue(ConsumoDatos.isDisplayed());
 		}
@@ -6161,7 +6161,6 @@ public class GestionesPerfilOficina extends TestBase {
 		imagen = "TS134368";
 		detalles = null;
 		detalles = imagen + "-Vista 360 - DNI: "+sDNI+ " - Nombre: "+sNombre;
-		imagen = "TS134783";
 		detalles = null;
 		detalles = imagen + "- Detalle de Consumo - DNI: "+sDNI;
 		driver.switchTo().frame(cambioFrame(driver, By.id("SearchClientDocumentType")));
