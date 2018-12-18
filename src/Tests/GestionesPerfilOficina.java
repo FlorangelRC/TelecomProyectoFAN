@@ -852,7 +852,7 @@ public class GestionesPerfilOficina extends TestBase {
 		String saldo2 = verif.ObtenerValorResponse(verifM.Servicio_queryLiteBySubscriber(sLinea), "bcs:MainBalance");
 		Integer saldo3 = Integer.parseInt(saldo2.substring(0, (saldo2.length()) - 1));
 		System.out.println(saldo3);
-		if((saldo1+1230000 == saldo3)) {
+		if((saldo1+123000 == saldo3)) {
 			b = true;
 		}
 		Assert.assertTrue(b);
@@ -1001,7 +1001,7 @@ public class GestionesPerfilOficina extends TestBase {
 		String saldo2 = verif.ObtenerValorResponse(verifM.Servicio_queryLiteBySubscriber(sLinea), "bcs:MainBalance");
 		Integer saldo3 = Integer.parseInt(saldo2.substring(0, (saldo2.length()) - 1));
 		System.out.println(saldo3);
-		if((saldo1+1230000 == saldo3)) {
+		if((saldo1+50000 == saldo3)) {
 			b = true;
 		}
 		Assert.assertTrue(b);
@@ -2824,12 +2824,12 @@ public class GestionesPerfilOficina extends TestBase {
 	}
 	
 	@Test (groups = {"GestionesPerfilOficina", "DetalleDeConsumo", "Ciclo2"}, dataProvider = "CuentaVista360")
-	public void TS134783_CRM_Movil_Prepago_Vista_360_Detalle_de_consumo_Consulta_detalle_de_consumo_Datos_FAN_Front_OOCC_134783(String cDNI, String cLinea) {
+	public void TS134783_CRM_Movil_Prepago_Vista_360_Detalle_de_consumo_Consulta_detalle_de_consumo_Datos_FAN_Front_OOCC_134783(String sDNI, String sLinea,String sNombre, String sEmail, String sMovil) {
 		imagen = "TS134783";
 		detalles = null;
-		detalles = imagen + "- Detalle de Consumo - DNI: "+cDNI;
+		detalles = imagen + "- Detalle de Consumo - DNI: "+sDNI;
 		driver.switchTo().frame(cambioFrame(driver, By.id("SearchClientDocumentType")));
-		sb.BuscarCuenta("DNI", cDNI);
+		sb.BuscarCuenta("DNI", sDNI);
 		driver.findElement(By.cssSelector(".slds-tree__item.ng-scope")).click();
 		sleep(15000);
 		driver.switchTo().frame(cambioFrame(driver, By.className("card-top")));
@@ -2871,12 +2871,12 @@ public class GestionesPerfilOficina extends TestBase {
 		}
 	
 	@Test (groups = {"GestionesPerfilOficina", "DetalleDeConsumo", "Ciclo2"}, dataProvider = "CuentaVista360")
-	public void TS134784_CRM_Movil_Prepago_Vista_360_Detalle_de_consumo_Consulta_detalle_de_consumo_Voz_FAN_Front_OOCC(String cDNI, String cLinea) {
+	public void TS134784_CRM_Movil_Prepago_Vista_360_Detalle_de_consumo_Consulta_detalle_de_consumo_Voz_FAN_Front_OOCC(String sDNI, String sLinea,String sNombre, String sEmail, String sMovil) {
 		imagen = "TS134784";
 		detalles = null;
-		detalles = imagen + "-Vista 360 - DNI: "+cDNI;
+		detalles = imagen + "-Vista 360 - DNI: "+sDNI;
 		driver.switchTo().frame(cambioFrame(driver, By.id("SearchClientDocumentType")));
-		sb.BuscarCuenta("DNI", cDNI);
+		sb.BuscarCuenta("DNI", sDNI);
 		driver.findElement(By.cssSelector(".slds-tree__item.ng-scope")).click();
 		sleep(15000);
 		driver.switchTo().frame(cambioFrame(driver, By.className("card-top")));
@@ -3638,7 +3638,7 @@ public class GestionesPerfilOficina extends TestBase {
 	}
 	
 	@Test (groups = {"GestionesPerfilOficina", "Vista360", "Ciclo2"}, dataProvider = "CuentaVista360")
-	public void TS134495_CRM_Movil_Prepago_Vista_360_Distribucion_de_paneles_Informacion_del_cliente_FAN_Front_OOCC(String sDNI, String sNombre) {
+	public void TS134495_CRM_Movil_Prepago_Vista_360_Distribucion_de_paneles_Informacion_del_cliente_FAN_Front_OOCC(String sDNI, String sLinea,String sNombre, String sEmail, String sMovil) {
 		imagen = "TS134495";
 		detalles = null;
 		detalles = imagen + "-Vista 360 - DNI: "+sDNI+ " - Nombre: "+sNombre;
@@ -3658,7 +3658,7 @@ public class GestionesPerfilOficina extends TestBase {
 	}
 	
 	@Test (groups = {"GestionesPerfilOficina", "Vista360", "Ciclo2"}, dataProvider = "CuentaVista360")
-	public void TS134745_CRM_Movil_Prepago_Vista_360_Producto_Activo_del_cliente_Datos_FAN_Front_OOCC(String sDNI, String sNombre) {
+	public void TS134745_CRM_Movil_Prepago_Vista_360_Producto_Activo_del_cliente_Datos_FAN_Front_OOCC(String sDNI, String sLinea,String sNombre, String sEmail, String sMovil) {
 		imagen = "TS134745";
 		detalles = null;
 		detalles = imagen + " - Vista 360 - DNI: "+sDNI+" - Nombre: "+sNombre;
@@ -3709,7 +3709,7 @@ public class GestionesPerfilOficina extends TestBase {
 	}
 	
 	@Test (groups = {"GestionesPerfilOficina","Vista360","E2E", "Ciclo2"}, dataProvider = "CuentaVista360")
-	public void TS134496_CRM_Movil_Prepago_Vista_360_Distribucion_de_paneles_Perfil_FAN_Front_OOCC(String sDNI, String sNombre) {
+	public void TS134496_CRM_Movil_Prepago_Vista_360_Distribucion_de_paneles_Perfil_FAN_Front_OOCC(String sDNI, String sLinea,String sNombre, String sEmail, String sMovil) {
 		imagen = "TS134496";
 		detalles = null;
 		detalles = imagen + " - Vista 360 - DNI: "+sDNI+" - Nombre: "+sNombre;
@@ -4625,7 +4625,7 @@ public class GestionesPerfilOficina extends TestBase {
 	}
 	
 	@Test (groups = {"GestionesPerfilOficina", "Vista360", "Ciclo2"}, dataProvider = "CuentaVista360")
-	public void TS134349_CRM_Movil_Prepago_Vista_360_Consulta_por_gestiones_Gestiones_abiertas_Plazo_vencido_Asistencia_registrada_FAN_Front_OOCC(String sDNI, String sNombre) {
+	public void TS134349_CRM_Movil_Prepago_Vista_360_Consulta_por_gestiones_Gestiones_abiertas_Plazo_vencido_Asistencia_registrada_FAN_Front_OOCC(String sDNI, String sLinea,String sNombre, String sEmail, String sMovil) {
 		imagen = "TS134349";
 		detalles = null;
 		detalles = imagen + " - Vista 360 - DNI: "+sDNI+" - Nombre: "+sNombre;
@@ -4918,7 +4918,7 @@ public class GestionesPerfilOficina extends TestBase {
 	}
 	
 	@Test (groups = {"GestionesPerfilOficina", "BaseDeConocimiento", "Ciclo3"}, dataProvider = "CuentaVista360")
-	public void TS100978_CRM_REPRO_BDC_Customer_Care_Suspensiones_y_Rehabilitaciones_Perfil_OOCC_Acceso_a_base_de_conocimiento(String sDNI, String sNombre) {
+	public void TS100978_CRM_REPRO_BDC_Customer_Care_Suspensiones_y_Rehabilitaciones_Perfil_OOCC_Acceso_a_base_de_conocimiento(String sDNI, String sLinea,String sNombre, String sEmail, String sMovil) {
 		imagen = "TS100978";
 		detalles = null;
 		detalles = imagen + "-Base de Conocimiento - DNI: " +sDNI+ " - Nombre: "+sNombre;
@@ -4934,7 +4934,7 @@ public class GestionesPerfilOficina extends TestBase {
 	}
 	
 	@Test (groups = {"GestionesPerfilOficina", "BaseDeConocimiento", "Ciclo3"}, dataProvider = "CuentaVista360")
-	public void TS125107_CRM_REPRO_BDC_Customer_Care_Problemas_con_recargas_Tarjetas_Prepagas_Verificar_acceso_a_BC(String sDNI, String sNombre) {
+	public void TS125107_CRM_REPRO_BDC_Customer_Care_Problemas_con_recargas_Tarjetas_Prepagas_Verificar_acceso_a_BC(String sDNI, String sLinea,String sNombre, String sEmail, String sMovil) {
 		imagen = "TS125107";
 		detalles = null;
 		detalles = imagen + "- Base Conocimiento - DNI: "+sDNI+ " - Nombre: "+sNombre;
@@ -4954,7 +4954,7 @@ public class GestionesPerfilOficina extends TestBase {
 	}
 	
 	@Test (groups = {"GestionesPerfilOficina", "BaseDeConocimiento", "Ciclo3"}, dataProvider = "CuentaVista360")
-	public void TS130755_CRM_REPRO_BDC_Customer_Care_Problemas_con_Recargas_PerfilTelefonico_Articulo_de_Medios_de_Recargas(String sDNI, String sNombre) {
+	public void TS130755_CRM_REPRO_BDC_Customer_Care_Problemas_con_Recargas_PerfilTelefonico_Articulo_de_Medios_de_Recargas(String sDNI, String sLinea,String sNombre, String sEmail, String sMovil) {
 		imagen = "TS125107";
 		detalles = null;
 		detalles = imagen + "- Base de Conocimiento - DNI: "+sDNI+" - Nombre: "+sNombre;
@@ -5294,7 +5294,7 @@ public class GestionesPerfilOficina extends TestBase {
 	}
 		
 	@Test (groups = {"GestionesPerfilOficina", "BaseDeConocimiento", "Ciclo3"}, dataProvider = "CuentaVista360")
-	public void TS125098_CRM_REPRO_BDC_Customer_Care_Problemas_con_recargas_Valoracion_negativa_en_BC(String sDNI, String sNombre) {
+	public void TS125098_CRM_REPRO_BDC_Customer_Care_Problemas_con_recargas_Valoracion_negativa_en_BC(String sDNI, String sLinea,String sNombre, String sEmail, String sMovil) {
 		imagen = "TS125098";
 		detalles = null;
 		detalles = imagen + "-Base de Conocimiento - DNI: "+sDNI+ " - Nombre: "+sNombre;
@@ -5592,9 +5592,9 @@ public class GestionesPerfilOficina extends TestBase {
 		cc.verificacionDeHistorial("Historial de ajustes");
 		cc.verificacionDeHistorial("Historial de recargas");
 		cc.verificacionDeHistorial("Historial de recargas S.O.S");
-		sleep(3000);
+		sleep(8000);
 		cc.seleccionDeHistorial("historial de recargas");
-		sleep(3000);
+		sleep(8000);
 		driver.switchTo().frame(cambioFrame(driver, By.id("text-input-03")));
 		WebElement canal = driver.findElement(By.id("text-input-03"));
 		canal.click();
@@ -5738,7 +5738,7 @@ public class GestionesPerfilOficina extends TestBase {
 	}
 	
 	@Test (groups = {"GestionesPerfilOficina", "ResumenDeCuenta", "Ciclo4"}, dataProvider = "CuentaVista360")
-	public void TS129472_CRM_Movil_Prepago_Resumen_de_Cuenta_Corriente_Columnas_de_informacion_Pagos_FAN_Front_OOCC(String sDNI, String sNombre) {
+	public void TS129472_CRM_Movil_Prepago_Resumen_de_Cuenta_Corriente_Columnas_de_informacion_Pagos_FAN_Front_OOCC(String sDNI, String sLinea,String sNombre, String sEmail, String sMovil) {
 		imagen = "TS129472";
 		driver.switchTo().frame(cambioFrame(driver, By.id("SearchClientDocumentType")));
 		sb.BuscarCuenta("DNI", sDNI);
@@ -5954,7 +5954,7 @@ public class GestionesPerfilOficina extends TestBase {
 	}
 	
 	@Test (groups = {"GestionesPerfilOficina", "ResumenDeCuenta", "E2E", "Ciclo2"}, dataProvider = "CuentaVista360")
-	public void TS129476_CRM_Movil_Prepago_Resumen_de_Cuenta_Corriente_Detalle_ampliado_registro_de_Comprobante_Factura_de_Venta_FAN_Front_OOCC(String sDNI, String sNombre){
+	public void TS129476_CRM_Movil_Prepago_Resumen_de_Cuenta_Corriente_Detalle_ampliado_registro_de_Comprobante_Factura_de_Venta_FAN_Front_OOCC(String sDNI, String sLinea,String sNombre, String sEmail, String sMovil){
 		imagen = "TS129476";
 		detalles = null;
 		detalles = imagen + " -Diagnostico Inconveniente - DNI: " + sDNI;
@@ -6099,10 +6099,9 @@ public class GestionesPerfilOficina extends TestBase {
 		cc.irAGestion("diagn\u00f3stico de autogesti\u00f3n");
 		sleep(15000);
 		tech.listadoDeSeleccion("800", "Otros", "Incov con derivaci\u00f3n a representante");
-		sleep(8000);
+		sleep(4000);
 		tech.verificarNumDeGestion();
-		sleep(5000);
-		tech.cerrarCaso("Resuelta exitosa", "Consulta");
+		Assert.assertTrue(tech.cerrarCaso("Resuelta exitosa", "Consulta"));
 	}
 	
 	@Test(groups = { "GestionesPerfilOficina","CambioSimCard", "E2E","Ciclo3" }, priority = 1, dataProvider = "SimCardSiniestroOfCom") //NO IMPRIME LA FACTURA CBS EN OFCOM
@@ -6242,7 +6241,7 @@ public class GestionesPerfilOficina extends TestBase {
 	}
 	
 	@Test (groups = {"GestionesPerfilOficina", "Vista360", "Ciclo2"}, dataProvider = "CuentaVista360") 
-	public void TS134368_OFCOM_CRM_Movil_Prepago_Vista_360_Detalle_de_consumo_Consulta_visualizacion_y_busqueda_de_los_distintos_consumos_realizados_por_el_cliente_FAN_Front_OOCC(String sDNI, String sNombre) {
+	public void TS134368_OFCOM_CRM_Movil_Prepago_Vista_360_Detalle_de_consumo_Consulta_visualizacion_y_busqueda_de_los_distintos_consumos_realizados_por_el_cliente_FAN_Front_OOCC(String sDNI, String sLinea,String sNombre, String sEmail, String sMovil) {
 		imagen = "TS134368";
 		detalles = null;
 		detalles = imagen + "-Vista 360 - DNI: "+sDNI+ " - Nombre: "+sNombre;
@@ -6456,6 +6455,121 @@ public class GestionesPerfilOficina extends TestBase {
 		driver.switchTo().frame(cambioFrame(driver, By.id("srchErrorDiv_Case")));
 		String estado= driver.findElement(By.xpath("//*[@id='Case_body']/table/tbody/tr[2]/td[3]")).getText();
 		Assert.assertTrue(estado.equalsIgnoreCase("Pendiente evento masivo"));
+	}
+	
+	@Test (groups= {"GestionesPerfilOficina", "HistorialDeRecargas", "Ciclo2"},  dataProvider = "HistoriaRecarga")
+	public void TS134841_CRM_Movil_Prepago_Historial_de_Recargas_Consultar_detalle_de_Recargas_por_Canal_SMS_Fan_FRONT_OOCC(String sDNI, String sLinea) {
+		imagen = "TS134847";
+		detalles = imagen+"-Historial De Recarga-DNI:"+sDNI;
+		driver.switchTo().frame(cambioFrame(driver, By.id("SearchClientDocumentType")));
+		sb.BuscarCuenta("DNI", sDNI);
+		driver.findElement(By.cssSelector(".slds-tree__item.ng-scope")).click();
+		sleep(20000);
+		CustomerCare cc = new CustomerCare(driver);
+		cc.seleccionarCardPornumeroLinea(sLinea, driver);
+		sleep(3000);
+		cc.irAHistoriales();
+		sleep(3000);
+		cc.verificacionDeHistorial("Historial de packs");
+		cc.verificacionDeHistorial("Historial de ajustes");
+		cc.verificacionDeHistorial("Historial de recargas");
+		cc.verificacionDeHistorial("Historial de recargas S.O.S");
+		sleep(3000);
+		cc.seleccionDeHistorial("historial de recargas");
+		sleep(5000);
+		driver.switchTo().frame(cambioFrame(driver, By.id("text-input-03")));
+		WebElement canal = driver.findElement(By.id("text-input-03"));
+		System.out.println(canal.getText());
+		Assert.assertTrue(canal.isDisplayed());
+		sleep(7000);
+		driver.findElement(By.id("text-input-03")).click();
+		driver.findElement(By.xpath("//*[@id=\"j_id0:j_id5\"]/div/div/ng-include/div/div/div[2]/div[3]/div/div[2]/ul/li[3]")).click();
+		if (driver.findElement(By.cssSelector(".slds-button.slds-button--brand.filterNegotiations.slds-p-horizontal--x-large.slds-p-vertical--x-small")).isDisplayed()) {
+			driver.findElement(By.cssSelector(".slds-button.slds-button--brand.filterNegotiations.slds-p-horizontal--x-large.slds-p-vertical--x-small")).click();
+			Assert.assertTrue(true);
+		} else
+			Assert.assertTrue(false);
+	}
+	
+	@Test (groups= {"GestionesPerfilOficina", "HistorialDeRecargas", "Ciclo2"},  dataProvider = "HistoriaRecarga")
+	public void TS134842_CRM_Movil_Prepago_Historial_de_Recargas_Consultar_detalle_de_Recargas_por_Canal_ROL_Fan_FRONT_OOCC(String sDNI, String sLinea) {
+		imagen = "TS134847";
+		detalles = imagen+"-Historial De Recarga-DNI:"+sDNI;
+		driver.switchTo().frame(cambioFrame(driver, By.id("SearchClientDocumentType")));
+		sb.BuscarCuenta("DNI", sDNI);
+		driver.findElement(By.cssSelector(".slds-tree__item.ng-scope")).click();
+		sleep(20000);
+		CustomerCare cc = new CustomerCare(driver);
+		cc.seleccionarCardPornumeroLinea(sLinea, driver);
+		sleep(3000);
+		cc.irAHistoriales();
+		sleep(3000);
+		cc.verificacionDeHistorial("Historial de packs");
+		cc.verificacionDeHistorial("Historial de ajustes");
+		cc.verificacionDeHistorial("Historial de recargas");
+		cc.verificacionDeHistorial("Historial de recargas S.O.S");
+		sleep(3000);
+		cc.seleccionDeHistorial("historial de recargas");
+		sleep(5000);
+		driver.switchTo().frame(cambioFrame(driver, By.id("text-input-03")));
+		WebElement canal = driver.findElement(By.id("text-input-03"));
+		System.out.println(canal.getText());
+		Assert.assertTrue(canal.isDisplayed());
+		sleep(7000);
+		driver.findElement(By.id("text-input-03")).click();
+		driver.findElement(By.xpath("//*[@id=\"j_id0:j_id5\"]/div/div/ng-include/div/div/div[2]/div[3]/div/div[2]/ul/li[5]")).click();
+		if (driver.findElement(By.cssSelector(".slds-button.slds-button--brand.filterNegotiations.slds-p-horizontal--x-large.slds-p-vertical--x-small")).isDisplayed()) {
+			driver.findElement(By.cssSelector(".slds-button.slds-button--brand.filterNegotiations.slds-p-horizontal--x-large.slds-p-vertical--x-small")).click();
+			Assert.assertTrue(true);
+		} else
+			Assert.assertTrue(false);
+	}
+	
+	@Test (groups= {"GestionesPerfilOficina", "HistorialDePacks", "Ciclo2"},  dataProvider = "HistoriaRecarga")
+	public void TS135472_CRM_Movil_Prepago_Historial_de_Packs_Nombre_del_Pack_Plan_Internacional_FAN_Front_OOCC(String sDNI, String sLinea){
+		imagen = "TS135472";
+		detalles = imagen+"-Historial De Packs -DNI:"+sDNI;
+		driver.switchTo().frame(cambioFrame(driver, By.id("SearchClientDocumentType")));
+		sb.BuscarCuenta("DNI", sDNI);
+		driver.findElement(By.cssSelector(".slds-tree__item.ng-scope")).click();
+		sleep(15000);
+		driver.switchTo().frame(cambioFrame(driver, By.className("card-top")));
+		sleep(3000);
+		driver.findElement(By.className("card-top")).click();
+		sleep(3000);
+		cc.irAHistoriales();
+		sleep(3000);
+		cc.seleccionDeHistorial("historial de packs");
+		sleep(5000);
+		driver.switchTo().frame(cambioFrame(driver, By.cssSelector(".slds-button.slds-button--brand.filterNegotiations.slds-p-horizontal--x-large.slds-p-vertical--x-small")));
+		driver.findElement(By.cssSelector(".slds-button.slds-button--brand.filterNegotiations.slds-p-horizontal--x-large.slds-p-vertical--x-small")).click();
+		sleep(5000);
+		driver.findElement(By.id("text-input-03")).click();
+		//Falta la opcion en el Nombre del pack: Plan Internacional 
+	}
+	
+	@Test (groups= {"GestionesPerfilOficina", "HistorialDePacks", "Ciclo2"},  dataProvider = "HistoriaRecarga")
+	public void TS135474_CRM_Movil_Prepago_Historial_de_Packs_Nombre_del_Pack_Plan_Familia_FAN_Front_OOCC(String sDNI, String sLinea){
+		imagen = "TS135474";
+		detalles = imagen+"-Historial De Packs -DNI:"+sDNI;
+		driver.switchTo().frame(cambioFrame(driver, By.id("SearchClientDocumentType")));
+		sb.BuscarCuenta("DNI", sDNI);
+		driver.findElement(By.cssSelector(".slds-tree__item.ng-scope")).click();
+		sleep(15000);
+		driver.switchTo().frame(cambioFrame(driver, By.className("card-top")));
+		sleep(3000);
+		driver.findElement(By.className("card-top")).click();
+		sleep(3000);
+		cc.irAHistoriales();
+		sleep(3000);
+		cc.seleccionDeHistorial("historial de packs");
+		sleep(5000);
+		driver.switchTo().frame(cambioFrame(driver, By.cssSelector(".slds-button.slds-button--brand.filterNegotiations.slds-p-horizontal--x-large.slds-p-vertical--x-small")));
+		driver.findElement(By.cssSelector(".slds-button.slds-button--brand.filterNegotiations.slds-p-horizontal--x-large.slds-p-vertical--x-small")).click();
+		sleep(5000);
+		driver.findElement(By.id("text-input-03")).click();
+		//Falta la opcion en el Nombre del pack: Plan Familia 
+		
 	}
 }
 	
