@@ -1665,7 +1665,7 @@ public class TestBase {
 	@DataProvider
 	public Object[][] CuentaVista360() throws Exception{
 		
-		Object[][] testObjArray = ExcelUtils.getTableArray(dataProviderE2E(),"E2EsinPago",1,1,2,"Vista 360");
+		Object[][] testObjArray = ExcelUtils.getTableArray(dataProviderE2E(),"E2EsinPago",1,1,4,"Vista 360");
 		
 		return (testObjArray);
 		
