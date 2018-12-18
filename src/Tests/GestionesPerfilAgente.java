@@ -687,7 +687,7 @@ public class GestionesPerfilAgente extends TestBase{
 	}
 		
 	@Test (groups = {"GestionesPerfilAgente", "Vista360", "E2E", "Ciclo1"}, dataProvider = "CuentaVista360")
-	public void TS134821_CRM_Movil_Prepago_Vista_360_Distribucion_de_paneles_Visualizacion_e_ingreso_a_las_ultimas_gestiones_FAN_Front_Agentes(String sDNI, String sNombre){
+	public void TS134821_CRM_Movil_Prepago_Vista_360_Distribucion_de_paneles_Visualizacion_e_ingreso_a_las_ultimas_gestiones_FAN_Front_Agentes(String sDNI, String sLinea,String sNombre, String sEmail, String sMovil){
 		imagen = "TS134821";
 		detalles = null;
 		detalles = imagen + "Vista 360 -DNI:" + sDNI;
@@ -1698,7 +1698,7 @@ public class GestionesPerfilAgente extends TestBase{
 	}
 	
 	@Test (groups= {"GestionPerfilTelefonico", "Ciclo2", "Vista360"}, dataProvider = "CuentaVista360")
-	public void TS134819_CRM_Movil_Prepago_Vista_360_Distribucion_de_paneles_Informacion_del_cliente_FAN_Front_Agentes(String sDNI, String sNombre, String sEmail, String sMovil){
+	public void TS134819_CRM_Movil_Prepago_Vista_360_Distribucion_de_paneles_Informacion_del_cliente_FAN_Front_Agentes(String sDNI, String sLinea,String sNombre, String sEmail, String sMovil){
 		imagen = "TS134819";
 		detalles = null;
 		detalles = imagen + "-Vista 360 - DNI: "+ sDNI+ "- Nombre: " + sNombre;
