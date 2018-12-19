@@ -4834,7 +4834,7 @@ public class GestionesPerfilOficina extends TestBase {
 		
 	}
 		
-	@Test (groups = {"GestionesPerfilOficina", "DiagnosticoInconveniente","E2E", "Ciclo3"}, dataProvider = "Diagnostico")
+	@Test (groups = {"GestionesPerfilOficina", "Diagnostico/Inconvenientes","E2E", "Ciclo3"}, dataProvider = "Diagnostico")
 	public void TS111871_CRM_Movil_REPRO_Diagnostico_SVA_Configuracion_Disponible_Presencial_SMS_Saliente_SMS_a_fijo_Geo_No_Ok_Desregistrar_OfCom(String sDNI, String sLinea) throws Exception  {
 		imagen = "TS111871";
 		detalles = null;
@@ -5670,7 +5670,7 @@ public class GestionesPerfilOficina extends TestBase {
 		boolean caso = false;
 		imagen = "TS119262";
 		detalles = null;
-		detalles = imagen + " -ServicioTecnico: " + sDNI;
+		detalles = imagen + " -Diagnostico: " + sDNI;
 		CustomerCare cCC=new CustomerCare(driver);
 		TechCare_Ola1 page=new TechCare_Ola1(driver);
 		TechnicalCareCSRDiagnosticoPage tech = new TechnicalCareCSRDiagnosticoPage(driver);
@@ -6578,7 +6578,7 @@ public class GestionesPerfilOficina extends TestBase {
 	public void TS119201_CRM_Movil_PRE_Diagnostico_de_Voz_Valida_Red_y_Navegacion_Motivo_de_contacto_No_puedo_recibir_llamadas_Sin_Locacion_Envia_configuraciones(String sDNI, String sLinea) throws Exception  {
 		imagen = "TS119201";
 		detalles = null;
-		detalles = imagen + " -ServicioTecnico - DNI: " + sDNI;
+		detalles = imagen + " -Diagnostico - DNI: " + sDNI;
 		CustomerCare cCC=new CustomerCare(driver);
 		TechnicalCareCSRDiagnosticoPage Tech = new TechnicalCareCSRDiagnosticoPage(driver);
 		TechnicalCareCSRAutogestionPage tech = new TechnicalCareCSRAutogestionPage (driver);
@@ -6624,7 +6624,7 @@ public class GestionesPerfilOficina extends TestBase {
 	public void TS119186_CRM_Movil_PRE_Diagnostico_de_Voz_Valida_Red_y_Navegacion_Motivo_de_contacto_No_puedo_realizar_llamadas_Sin_Locacion_NO_recupera_locacion_Geo_rojo(String sDNI, String sLinea) throws Exception  {
 		imagen = "TS119186";
 		detalles = null;
-		detalles = imagen + " -ServicioTecnico - DNI: " + sDNI;
+		detalles = imagen + " -Diagnostico - DNI: " + sDNI;
 		CustomerCare cCC=new CustomerCare(driver);
 		TechnicalCareCSRDiagnosticoPage Tech = new TechnicalCareCSRDiagnosticoPage(driver);
 		TechnicalCareCSRAutogestionPage tech = new TechnicalCareCSRAutogestionPage (driver);
@@ -6785,6 +6785,26 @@ public class GestionesPerfilOficina extends TestBase {
 		driver.findElement(By.id("text-input-03")).click();
 		//Falta la opcion en el Nombre del pack: Plan Familia 
 		
+	}
+	@Test (groups = {"GestionesPerfilOficina","Diagnostico/Inconvenientes"},  dataProvider = "Diagnostico")
+	public void TS105466_CRM_CRM_Movil_Repro_Autogestion_WEB_Incon_con_Compra_de_packs_No_Resuelto(String sDNI, String sLinea) throws InterruptedException {
+		imagen = "TS105466";
+		detalles = null;
+		detalles = imagen + "- Autogestion - DNI: "+sDNI;
+		TechnicalCareCSRAutogestionPage tech = new TechnicalCareCSRAutogestionPage(driver);
+		driver.switchTo().frame(cambioFrame(driver, By.id("SearchClientDocumentType")));
+		sb.BuscarCuenta("DNI", sDNI);
+		driver.findElement(By.cssSelector(".slds-tree__item.ng-scope")).click();
+		sleep(10000);
+		cc.irAGestion("diagn\u00f3stico de autogesti\u00f3n");
+		sleep(15000);
+		tech.listadoDeSeleccion("WEB", "Packs", "Incon.con Compra de packs");
+		sleep(4000);
+		tech.verificarNumDeGestion();
+		driver.switchTo().frame(cambioFrame(driver, By.id("srchErrorDiv_Case")));
+		String estado= driver.findElement(By.xpath("//*[@id='Case_body']/table/tbody/tr[2]/td[3]")).getText();
+		Assert.assertTrue(estado.equalsIgnoreCase("Informada"));
+		//Assert.assertTrue(tech.cerrarCaso("Resuelta exitosa", "Consulta"));
 	}
 }
 	
