@@ -351,6 +351,13 @@ public class TestBase {
 		    page0.ingresarOperativo();
 		}
 		
+		public void loginAdminFuncional(WebDriver driver) {
+			driver.get(urlAmbiente);
+			try {Thread.sleep(6000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		    Login page0 = new Login(driver);
+		    page0.ingresarLautaro();
+		}
+		
 		/**Ingresa con los datos de la cuenta Nicolas.
 		 * Para el Modulo Sales tiene vinculado el perfil de Logistica	 */
 		public void loginNicolas(WebDriver driver) {
@@ -1247,7 +1254,7 @@ public class TestBase {
 	@DataProvider
 	public Object [][] PackAgente() throws Exception{
 		
-		Object[][] testObjArray = ExcelUtils.getTableArray(dataProviderE2E(),"E2EconPago",1,1,14,"packAgente");
+		Object[][] testObjArray = ExcelUtils.getTableArray(dataProviderE2E(),"E2EconPago",1,1,3,"packAgente");
 		
 		return (testObjArray);
 	}
@@ -1666,7 +1673,7 @@ public class TestBase {
 	@DataProvider
 	public Object[][] CuentaVista360() throws Exception{
 		
-		Object[][] testObjArray = ExcelUtils.getTableArray(dataProviderE2E(),"E2EsinPago",1,1,2,"Vista 360");
+		Object[][] testObjArray = ExcelUtils.getTableArray(dataProviderE2E(),"E2EsinPago",1,1,5,"Vista 360");
 		
 		return (testObjArray);
 		
