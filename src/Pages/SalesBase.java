@@ -445,7 +445,7 @@ for(WebElement e: btns){
 		try {Thread.sleep(10000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}*/
 		driver.findElement(By.cssSelector(".slds-input.ng-pristine.ng-untouched.ng-valid")).sendKeys(plan);		
 		try {Thread.sleep(20000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
-		List<WebElement> agregar = driver.findElements(By.cssSelector(".slds-button.slds-button_neutral.cpq-add-button")); 
+		List<WebElement> agregar = driver.findElements(By.cssSelector(".slds-button.slds-button_neutral.add-button"));
 		agregar.get(1).click();
  }
  
@@ -1371,6 +1371,17 @@ try{	driver.findElement(By.id("alert-ok-button")).click();	} catch (NoSuchElemen
 		driver.findElement(By.id("PhoneNumber")).sendKeys(sLinea);
 		btnbuscar.click();
 		try {Thread.sleep(20000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+	}
+	
+	public void irAInboxTecnico() {
+		sleep(3000);
+		WebElement inboxTecnico = null;
+		for (WebElement x : driver.findElement(By.cssSelector(".bPageBlock.brandSecondaryBrd.secondaryPalette")).findElement(By.className("pbBody")).findElements(By.tagName("th"))) {
+			if (x.getText().toLowerCase().contains("inbox tecnico"))
+				inboxTecnico = x;
+		}
+		inboxTecnico.findElement(By.tagName("a")).click();
+		sleep(10000);
 	}
 	
 }

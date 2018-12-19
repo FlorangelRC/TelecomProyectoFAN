@@ -158,51 +158,58 @@ public class PagePerfilTelefonico extends TestBase{
 		}
 	}
 	
-	public void agregarPack(String Pack1) {
+	public String agregarPack(String Pack1) {
 		sleep(5000);		
 		driver.switchTo().frame(cambioFrame(driver, By.cssSelector(".slds-radio_faux")));
 		Pack("Packs Opcionales", "Packs de Datos", Pack1);
+		String chargeCode = obtenerChargeCode();
 		driver.findElement(By.cssSelector(".slds-button.slds-m-left--large.slds-button--brand.ta-button-brand")).click();
 		sleep(15000);
 		try{ 
 		      driver.findElements(By.cssSelector(".slds-button.slds-button--neutral.ng-binding.ng-scope")).get(1).click(); 
 		      sleep(12000); 
 		    }catch(Exception ex1){} 
-		sleep(12000); 
+		sleep(12000);
+		return chargeCode;
 	}
 	
-	public void PackCombinado(String Pack1) {
+	public String PackCombinado(String Pack1) {
 		sleep(5000);		
 		driver.switchTo().frame(cambioFrame(driver, By.cssSelector(".slds-button.cpq-item-has-children")));
 		Pack("Packs Opcionales", "Packs Combinados", Pack1);
 		sleep(10000);
+		String chargeCode = obtenerChargeCode();
 		driver.findElement(By.cssSelector(".slds-button.slds-m-left--large.slds-button--brand.ta-button-brand")).click();
 		sleep(25000);
 		try{ 
 		      driver.findElements(By.cssSelector(".slds-button.slds-button--neutral.ng-binding.ng-scope")).get(1).click(); 
 		      sleep(8000); 
 		    }catch(Exception ex1){} 
-		sleep(12000); 
+		sleep(12000);
+		return chargeCode;
 	}
 	
-	public void PackLDI(String Pack1) {
+	public String PackLDI(String Pack1) {
 		sleep(5000);		
 		driver.switchTo().frame(cambioFrame(driver, By.cssSelector(".slds-button.cpq-item-has-children")));
 		Pack("Packs Opcionales", "Packs LDI", Pack1);
 		sleep(10000);
+		String chargeCode = obtenerChargeCode();
 		driver.findElement(By.cssSelector(".slds-button.slds-m-left--large.slds-button--brand.ta-button-brand")).click();
 		sleep(25000);
 		try{ 
 		      driver.findElements(By.cssSelector(".slds-button.slds-button--neutral.ng-binding.ng-scope")).get(1).click(); 
 		      sleep(8000); 
 		    }catch(Exception ex1){} 
-		sleep(12000); 
+		sleep(12000);
+		return chargeCode;
 	}
 	
-	public void PacksRoaming(String Pack1) {
+	public String PacksRoaming(String Pack1) {
 		sleep(5000);		
 		driver.switchTo().frame(cambioFrame(driver, By.cssSelector(".slds-button.cpq-item-has-children")));
 		Pack("Packs Opcionales", "Packs de Roaming", Pack1);
+		String chargeCode = obtenerChargeCode();
 		sleep(10000);
 		driver.findElement(By.cssSelector(".slds-button.slds-m-left--large.slds-button--brand.ta-button-brand")).click();
 		sleep(25000);
@@ -210,7 +217,8 @@ public class PagePerfilTelefonico extends TestBase{
 		      driver.findElements(By.cssSelector(".slds-button.slds-button--neutral.ng-binding.ng-scope")).get(1).click(); 
 		      sleep(8000); 
 		    }catch(Exception ex1){} 
-		sleep(12000); 
+		sleep(12000);
+		return chargeCode;
 	}
 	
 	public void tipoDePago(String tipodepago) {

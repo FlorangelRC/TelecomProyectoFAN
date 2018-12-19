@@ -343,4 +343,12 @@ public class Login extends BasePage {
 			login.click();
 			try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 		}
+		
+		public void ingresarLautaro() {
+			logininterno.click();
+			username.sendKeys("uat191550");
+			password.sendKeys("Testa10k");
+			login.click();
+			try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		}
 }

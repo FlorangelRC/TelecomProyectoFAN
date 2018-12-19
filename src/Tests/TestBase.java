@@ -25,6 +25,7 @@ import org.apache.poi.xssf.usermodel.XSSFRow;
 import org.apache.poi.xssf.usermodel.XSSFSheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.openqa.selenium.By;
+import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.OutputType;
 import org.openqa.selenium.TakesScreenshot;
@@ -350,6 +351,13 @@ public class TestBase {
 			try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 			Login page0 = new Login(driver);
 		    page0.ingresarOperativo();
+		}
+		
+		public void loginAdminFuncional(WebDriver driver) {
+			driver.get(urlAmbiente);
+			try {Thread.sleep(6000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		    Login page0 = new Login(driver);
+		    page0.ingresarLautaro();
 		}
 		
 		/**Ingresa con los datos de la cuenta Nicolas.
@@ -1248,7 +1256,7 @@ public class TestBase {
 	@DataProvider
 	public Object [][] PackAgente() throws Exception{
 		
-		Object[][] testObjArray = ExcelUtils.getTableArray(dataProviderE2E(),"E2EconPago",1,1,14,"packAgente");
+		Object[][] testObjArray = ExcelUtils.getTableArray(dataProviderE2E(),"E2EconPago",1,1,3,"packAgente");
 		
 		return (testObjArray);
 	}
@@ -1667,7 +1675,7 @@ public class TestBase {
 	@DataProvider
 	public Object[][] CuentaVista360() throws Exception{
 		
-		Object[][] testObjArray = ExcelUtils.getTableArray(dataProviderE2E(),"E2EsinPago",1,1,2,"Vista 360");
+		Object[][] testObjArray = ExcelUtils.getTableArray(dataProviderE2E(),"E2EsinPago",1,1,5,"Vista 360");
 		
 		return (testObjArray);
 		
@@ -1795,6 +1803,21 @@ public class TestBase {
 		 Object[][] testObjArray = ExcelUtils.getTableArray(dataProviderE2E(),"E2EsinPago",1,1,2,"Modificacion De DNI");
 
 		 return (testObjArray);
+	}
+	
+	public String obtenerChargeCode() {
+		WebElement box = driver.findElements(By.cssSelector(".slds-button.slds-button_icon-border-filled.cpq-item-actions-dropdown-button")).get(2);
+		box.click();
+		((JavascriptExecutor)driver).executeScript("arguments[0].scrollIntoView();", box);
+		WebElement configure = driver.findElements(By.cssSelector(".slds-dropdown.slds-dropdown_right.cpq-item-actions-dropdown")).get(2);
+		buscarYClick(configure.findElements(By.tagName("a")), "contains", "configure");
+		WebElement chargeCode = null;
+		for (WebElement x : driver.findElements(By.className("slds-form-element"))) {
+			if (x.getText().toLowerCase().contains("charge code"))
+				chargeCode = x;
+		}
+		((JavascriptExecutor)driver).executeScript("arguments[0].scrollIntoView();", chargeCode);
+		return chargeCode.findElement(By.tagName("input")).getAttribute("value");
 	}
 	
 	@DataProvider
