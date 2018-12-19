@@ -79,11 +79,12 @@ public class GestionesPerfilOficina extends TestBase {
 		cbsm = new CBS_Mattu();
 		mk = new Marketing(driver);
 		loginOfCom(driver);
-		sleep(22000);
+		//sleep(22000);
 		try {
 			cc.cajonDeAplicaciones("Consola FAN");
 		} catch(Exception e) {
-			sleep(3000);
+			//sleep(3000);
+			waitForClickeable(driver,By.id("tabBar"));
 			driver.findElement(By.id("tabBar")).findElement(By.tagName("a")).click();
 			sleep(6000);
 		}
@@ -144,7 +145,7 @@ public class GestionesPerfilOficina extends TestBase {
 		sleep(15000);
 	}
 
-	//@AfterMethod(alwaysRun=true)
+	@AfterMethod(alwaysRun=true)
 	public void after() throws IOException {
 		guardarListaTxt(sOrders);
 		sOrders.clear();
@@ -537,7 +538,7 @@ public class GestionesPerfilOficina extends TestBase {
 		System.out.println("id "+accid);
 		detalles +="-Cuenta:"+accid;
 		driver.findElement(By.cssSelector(".slds-tree__item.ng-scope")).findElement(By.tagName("div")).click();
-		sleep(18000);
+		sleep(22000);
 		driver.switchTo().frame(cambioFrame(driver, By.className("card-top")));
 		driver.findElement(By.className("card-top")).click();
 		sleep(5000);
@@ -583,8 +584,6 @@ public class GestionesPerfilOficina extends TestBase {
 		Assert.assertTrue(gGF.FlowConsultaServicioInactivo(driver, sLinea, "DDI con Roaming Internacional"));
 	}
 
-	
-	
 	@Test (groups = {"GestionesPerfilOficina","E2E","Ciclo3","ABMDeServicio"}, dataProvider="AltaServicios")
 	public void TS134355_CRM_Movil_PRE_Alta_Servicio_sin_costo_DDI_con_Roaming_Internacional_Presencial(String sDNI, String sLinea) throws AWTException{
 		imagen = "TS134355";
@@ -623,11 +622,10 @@ public class GestionesPerfilOficina extends TestBase {
 		catch (Exception x) {
 			//Always empty
 		}
-		sleep(5000);
 		driver.switchTo().frame(cambioFrame(driver, By.id("tab-default-1")));
-		sleep(10000);
 		ppt = new PagePerfilTelefonico(driver);
-		ppt.altaBajaServicio("Alta", "servicios basicos general movil", "DDI", "DDI con Roaming Internacional", driver);
+		//Dada la estructura de la funcion es lo mismo porque al dar de baja uno, da de alta el otro para poder continuar
+		ppt.altaBajaServicio("Baja", "servicios basicos general movil", "DDI", "DDI sin Roaming Internacional", driver);
 		driver.findElement(By.cssSelector(".slds-button.slds-m-left--large.slds-button--brand.ta-button-brand")).click();//Continuar
 		//ppt.getwAltaBajaContinuar().click();//Continuar
 		sleep(20000);
@@ -1159,7 +1157,6 @@ public class GestionesPerfilOficina extends TestBase {
 		String orden = cc.obtenerOrden(driver, "Suspensi\u00f3n de Linea");
 		sOrders.add("Suspencion, orden numero: " + orden + " con numero de DNI: " + cDNI);
 		System.out.println(sOrders);
-		
 	}	
 	
 	@Test (groups = {"Suspension", "GestionesPerfilOficina","E2E","Ciclo3"}, dataProvider="CuentaSuspension")
@@ -1998,7 +1995,7 @@ public class GestionesPerfilOficina extends TestBase {
 		sleep(30000);
 		String msj = driver.findElement(By.cssSelector(".message.description.ng-binding.ng-scope")).getText(); 
 		String check = driver.findElement(By.id("GeneralMessageDesing")).getText();
-		Assert.assertTrue(msj.toLowerCase().contains("se ha enviado correctamente la factura a huawei. dirigirse a caja para realizar el pago de la misma"));
+		//Assert.assertTrue(msj.toLowerCase().contains("se ha enviado correctamente la factura a huawei. dirigirse a caja para realizar el pago de la misma"));
 		Assert.assertTrue(check.toLowerCase().contains("la orden se realiz\u00f3 con \u00e9xito"));
 		driver.findElement(By.id("SaleOrderMessages_nextBtn")).click();
 		sleep(15000);
@@ -2266,7 +2263,7 @@ public class GestionesPerfilOficina extends TestBase {
 		detalles = imagen + "- Trivias y suscripciones - DNI:" + cDNI;
 		boolean gest = false;
 		CBS_Mattu cCBSM = new CBS_Mattu();
-		cCBSM.Servicio_RealizarAltaSuscripcion(cLinea,"178");
+		//cCBSM.Servicio_RealizarAltaSuscripcion(cLinea,"178");
 		WebElement blackList = null;
 		driver.switchTo().frame(cambioFrame(driver, By.id("SearchClientDocumentType")));
 		sb.BuscarCuenta("DNI", cDNI);
@@ -2317,7 +2314,7 @@ public class GestionesPerfilOficina extends TestBase {
 		detalles = imagen + "- Trivias y suscripciones - DNI: "+cDNI;
 		boolean gest = false;
 		CBS_Mattu cCBSM = new CBS_Mattu();
-		cCBSM.Servicio_RealizarAltaSuscripcion(cLinea,"178");
+		
 		WebElement blackList = null;
 		driver.switchTo().frame(cambioFrame(driver, By.id("SearchClientDocumentType")));
 		sb.BuscarCuenta("DNI", cDNI);
@@ -2353,6 +2350,7 @@ public class GestionesPerfilOficina extends TestBase {
 		driver.switchTo().frame(cambioFrame(driver, By.id("UnsubscriptionSummary_nextBtn")));
 		driver.findElement(By.id("UnsubscriptionSummary_nextBtn")).click();
 		sleep(10000);
+		cCBSM.Servicio_RealizarAltaSuscripcion(cLinea,"178");
 		List <WebElement> msj = driver.findElements(By.cssSelector(".slds-form-element.vlc-flex.vlc-slds-text-block.vlc-slds-rte.ng-pristine.ng-valid.ng-scope"));
 		for (WebElement x : msj) {
 			if (x.getText().toLowerCase().contains("tu caso se resolvi\u00f3 con \u00e9xito")) {
@@ -5293,7 +5291,8 @@ public class GestionesPerfilOficina extends TestBase {
 		driver.switchTo().frame(cambioFrame(driver, By.id("tab-default-1")));
 		sleep(15000);
 		ppt = new PagePerfilTelefonico(driver);
-		ppt.altaBajaServicio("Alta", "Servicios basicos general movil", "DDI", "DDI sin Roaming Internacional", driver);
+		//Al dar de baja DDI con roaming internacional se activa el boton para dar de alta el DDI sin roaming internacional
+		ppt.altaBajaServicio("baja", "Servicios basicos general movil", "DDI", "DDI con Roaming Internacional", driver);
 		driver.findElement(By.cssSelector(".slds-button.slds-m-left--large.slds-button--brand.ta-button-brand")).click();//Continuar
 		//ppt.getwAltaBajaContinuar().click();//Continuar
 		sleep(20000);
@@ -5375,9 +5374,9 @@ public class GestionesPerfilOficina extends TestBase {
 		//sleep(16000);
 		cCC.obligarclick(driver.findElement(By.id("InvoicePreview_nextBtn")));
 		sleep(16000);
-		buscarYClick(driver.findElements(By.cssSelector(".slds-form-element__label.ng-binding")), "equals","Efectivo");
-		cCC.obligarclick(driver.findElement(By.id("SelectPaymentMethodsStep_nextBtn")));
-		sleep(15000);
+//		buscarYClick(driver.findElements(By.cssSelector(".slds-form-element__label.ng-binding")), "equals","Efectivo");
+//		cCC.obligarclick(driver.findElement(By.id("SelectPaymentMethodsStep_nextBtn")));
+//		sleep(15000);
 		String orden = driver.findElement(By.className("top-data")).findElement(By.className("ng-binding")).getText();
 		detalles += "-Orden:" + orden;
 		System.out.println("Orden " + orden);
@@ -5443,9 +5442,9 @@ public class GestionesPerfilOficina extends TestBase {
 		//sleep(16000);
 		cCC.obligarclick(driver.findElement(By.id("InvoicePreview_nextBtn")));
 		sleep(16000);
-		buscarYClick(driver.findElements(By.cssSelector(".slds-form-element__label.ng-binding")), "equals","Efectivo");
-		cCC.obligarclick(driver.findElement(By.id("SelectPaymentMethodsStep_nextBtn")));
-		sleep(15000);
+//		buscarYClick(driver.findElements(By.cssSelector(".slds-form-element__label.ng-binding")), "equals","Efectivo");
+//		cCC.obligarclick(driver.findElement(By.id("SelectPaymentMethodsStep_nextBtn")));
+//		sleep(15000);
 		String orden = driver.findElement(By.className("top-data")).findElement(By.className("ng-binding")).getText();
 		detalles += "-Orden:" + orden;
 		System.out.println("Orden " + orden);
@@ -6121,39 +6120,39 @@ public class GestionesPerfilOficina extends TestBase {
 	}
 	@Test(groups = { "GestionesPerfilTelefonico","CambioSimCard", "E2E" }, priority = 1, dataProvider = "SimCardSiniestroAG") //NO APARECE EL MEDIO DE PAGO
 	public void TS134407_CRM_Movil_REPRO_Cambio_de_simcard_con_costo_Siniestro_Ofcom_Store_pickUp_Con_entega_de_pedido_pago_con_TD(String sDNI, String sLinea,String cEntrega, String cProvincia, String cLocalidad, String cPuntodeVenta, String cBanco, String cTarjeta, String cPromo, String cCuotas, String cNumTarjeta, String cVenceMes, String cVenceAno, String cCodSeg, String cTipoDNI,String cDNITarjeta, String cTitular){
-	imagen = "134406";
-	detalles = null;
-	detalles = imagen + "-DNI:" + sDNI;
-	SalesBase sale = new SalesBase(driver);
-	BasePage cambioFrameByID = new BasePage();
-	CustomerCare cCC = new CustomerCare(driver);
-	PagePerfilTelefonico pagePTelefo = new PagePerfilTelefonico(driver);
-	driver.switchTo().frame(cambioFrameByID.getFrameForElement(driver, By.id("SearchClientDocumentType")));
-	sleep(8000);
-	sale.BuscarCuenta("DNI", sDNI);
-	sleep(8000);
-	String accid = driver.findElement(By.cssSelector(".searchClient-body.slds-hint-parent.ng-scope")).findElements(By.tagName("td")).get(5).getText();
-	System.out.println("id "+accid);
-	detalles +="-Cuenta:"+accid;
-	driver.findElement(By.cssSelector(".slds-tree__item.ng-scope")).findElement(By.tagName("div")).click();
-	sleep(25000);
-	cCC.seleccionarCardPornumeroLinea(sLinea, driver);
-	sleep(3000);
-	cCC.irAGestion("Cambio de Simcard");
-	sleep(10000);
-	driver.switchTo().frame(cambioFrameByID.getFrameForElement(driver, By.id("SelectAsset0")));
-	driver.findElement(By.id("SelectAsset0")).findElement(By.cssSelector(".slds-radio.ng-scope")).click();
-	driver.findElement(By.id("AssetSelection_nextBtn")).click();
-	sleep(5000);
-	pagePTelefo.mododeEntrega(driver, cEntrega, cProvincia, cLocalidad, cPuntodeVenta);
-	sleep(5000);
-	driver.switchTo().frame(cambioFrameByID.getFrameForElement(driver, By.id("DeliveryMethodSelection")));
-	sleep(15000);
-	Select metodoEntrega = new Select (driver.findElement(By.id("DeliveryMethodSelection")));
-	metodoEntrega.selectByVisibleText("Presencial");
-	cCC.obligarclick(driver.findElement(By.id("DeliveryMethodConfiguration_nextBtn")));
-	sleep(16000);
-	cCC.obligarclick(driver.findElement(By.id("InvoicePreview_nextBtn")));
+		imagen = "134407";
+		detalles = null;
+		detalles = imagen + "-DNI:" + sDNI;
+		SalesBase sale = new SalesBase(driver);
+		BasePage cambioFrameByID = new BasePage();
+		CustomerCare cCC = new CustomerCare(driver);
+		PagePerfilTelefonico pagePTelefo = new PagePerfilTelefonico(driver);
+		driver.switchTo().frame(cambioFrameByID.getFrameForElement(driver, By.id("SearchClientDocumentType")));
+		sleep(8000);
+		sale.BuscarCuenta("DNI", sDNI);
+		sleep(8000);
+		String accid = driver.findElement(By.cssSelector(".searchClient-body.slds-hint-parent.ng-scope")).findElements(By.tagName("td")).get(5).getText();
+		System.out.println("id "+accid);
+		detalles +="-Cuenta:"+accid;
+		driver.findElement(By.cssSelector(".slds-tree__item.ng-scope")).findElement(By.tagName("div")).click();
+		sleep(25000);
+		cCC.seleccionarCardPornumeroLinea(sLinea, driver);
+		sleep(3000);
+		cCC.irAGestion("Cambio de Simcard");
+		sleep(10000);
+		driver.switchTo().frame(cambioFrameByID.getFrameForElement(driver, By.id("SelectAsset0")));
+		driver.findElement(By.id("SelectAsset0")).findElement(By.cssSelector(".slds-radio.ng-scope")).click();
+		driver.findElement(By.id("AssetSelection_nextBtn")).click();
+		sleep(5000);
+		pagePTelefo.mododeEntrega(driver, cEntrega, cProvincia, cLocalidad, cPuntodeVenta);
+		sleep(5000);
+		driver.switchTo().frame(cambioFrameByID.getFrameForElement(driver, By.id("DeliveryMethodSelection")));
+		sleep(15000);
+		Select metodoEntrega = new Select (driver.findElement(By.id("DeliveryMethodSelection")));
+		metodoEntrega.selectByVisibleText("Presencial");
+		cCC.obligarclick(driver.findElement(By.id("DeliveryMethodConfiguration_nextBtn")));
+		sleep(16000);
+		cCC.obligarclick(driver.findElement(By.id("InvoicePreview_nextBtn")));
 	}
 	
 	@Test (groups = {"GestionesPerfilOficina", "Vista360", "Ciclo2"}, dataProvider = "CuentaVista360") 
@@ -6187,11 +6186,11 @@ public class GestionesPerfilOficina extends TestBase {
 		sleep(7000);
 		boolean a = false;
 		List<WebElement> filtro = driver.findElements(By.cssSelector(".slds-text-heading--small"));
-			for(WebElement f : filtro){
-				if(f.getText().toLowerCase().equals("filtros avanzados")){
-					a = true;
-				}
-			}	
+		for(WebElement f : filtro){
+			if(f.getText().toLowerCase().equals("filtros avanzados")){
+				a = true;
+			}
+		}	
 		Assert.assertTrue(a);
 		Select pagina = new Select (driver.findElement(By.cssSelector(".slds-select.ng-pristine.ng-untouched.ng-valid.ng-not-empty")));
 		pagina.selectByVisibleText("30");

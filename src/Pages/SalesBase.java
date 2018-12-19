@@ -224,12 +224,15 @@ public void validarcamposbusqueda(){
 }
 
 public void BuscarCuenta(String Type, String NDNI){
-	try {Thread.sleep(10000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+	try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+	TestBase TB = new TestBase();
+	//TB.waitFor(driver, By.id("SearchClientDocumentType"));
 	setSimpleDropdown(DNIbuscador, Type);
 	DNI.sendKeys(NDNI);
-	sleep(2000);
+	//sleep(2000);
+	TB.waitForClickeable(driver, By.id("SearchClientsDummy"));
 	btnbuscar.click();
-	try {Thread.sleep(10000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+	try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 }
 
 

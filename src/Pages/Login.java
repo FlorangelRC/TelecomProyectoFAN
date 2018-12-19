@@ -150,6 +150,8 @@ public class Login extends BasePage {
 	   //Para el Modulo Sales tiene vinculado el perfil de Agente y Atenci�n a clientes
 		public void ingresarAndres() {
 			  logininterno.click();
+			  //TestBase TB = new TestBase();
+			  //TB.waitFor(driver,By.id("Ecom_User_ID"));
 			  try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 			  
 			  if (TB.urlAmbiente.contains("sit"))
@@ -158,7 +160,7 @@ public class Login extends BasePage {
 				  Ecom_User_ID.sendKeys("uat195528");//UAT
 			  Ecom_Password.sendKeys("Testa10k");
 			  loginButton2.click();
-			  try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+			  //try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 			 }
 		//*************************Telefonico
 		//Para el Modulo Sales tiene vinculado el perfil de Call center
