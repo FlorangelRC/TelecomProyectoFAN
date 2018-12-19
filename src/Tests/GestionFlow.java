@@ -107,7 +107,12 @@ public class GestionFlow extends TestBase {
 	sleep(5000);
 	ArrayList<String> tabs2 = new ArrayList<String> (driver.getWindowHandles());
 	driver.switchTo().window(tabs2.get(1));
-	loginflow(driver);
+	try {
+		loginflow(driver);
+	}
+	catch(Exception eE) {
+		//Always empty
+	}
 	sleep(5000);
 	WebElement consul = driver.findElement(By.cssSelector(".nav-link.dropdown-toggle.linksMenu"));
 		if(consul.getText().toLowerCase().equals("consultas")){

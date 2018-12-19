@@ -575,4 +575,27 @@ public class PagePerfilTelefonico extends TestBase{
 		}
 	}
 	
+	public boolean forEach(List<WebElement> wWebList, List<String> sTextList) {
+		boolean bAssert = true;
+		
+		for(WebElement wAux : wWebList) {
+			for (int i=0; i<sTextList.size(); i++) {
+				if(!wAux.getText().equalsIgnoreCase(sTextList.get(i))) {
+					if(i == sTextList.size()) {
+						bAssert = false;
+						break;
+					}
+				}
+				else {
+					break;
+				}
+			}
+			if(bAssert == false) {
+				break;
+			}
+		}
+		
+		return bAssert;
+	}
+	
 }
