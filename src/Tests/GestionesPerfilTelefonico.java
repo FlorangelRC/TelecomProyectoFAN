@@ -3665,4 +3665,89 @@ public class GestionesPerfilTelefonico extends TestBase{
 		//Falta la opcion en el Nombre del pack: Plan Familia 
 		
 	}
+	
+	@Test (groups = {"GestionesPerfilTelefonico", "Ajustes", "E2E", "Ciclo3"}, dataProvider = "CuentaAjustesREPRO")
+	public void TS129321_CRM_Movil_REPRO_Escalamiento_segun_RAV_FAN_Front_Telefonico(String sDNI, String sLinea) {
+		imagen = "TS129321";
+		detalles = null;
+		String datoViejo = cbs.ObtenerValorResponse(cbsm.Servicio_queryLiteBySubscriber(sLinea), "bcs:MainBalance");
+		Integer datosInicial = Integer.parseInt(datoViejo.substring(0, 5));
+		boolean gestion = false;
+		driver.switchTo().frame(cambioFrame(driver, By.id("SearchClientDocumentType")));
+		sb.BuscarCuenta("DNI", sDNI);
+		driver.findElement(By.cssSelector(".slds-tree__item.ng-scope")).click();
+		sleep(15000);
+		cc.irAGestion("inconvenientes");
+		sleep(10000);
+		driver.switchTo().frame(cambioFrame(driver, By.id("Step-TipodeAjuste_nextBtn")));
+		selectByText(driver.findElement(By.id("CboConcepto")), "CREDITO PREPAGO");
+		selectByText(driver.findElement(By.id("CboItem")), "Consumos de datos");
+		selectByText(driver.findElement(By.id("CboMotivo")), "Error/omisi\u00f3n/demora gesti\u00f3n");
+		buscarYClick(driver.findElements(By.cssSelector(".slds-form-element__label.ng-binding.ng-scope")), "equals", "si");
+		driver.findElement(By.id("Step-TipodeAjuste_nextBtn")).click();
+		sleep(7000);
+		buscarYClick(driver.findElements(By.cssSelector(".slds-form-element__label.ng-binding")), "contains", "plan con tarjeta");
+		driver.findElement(By.id("Step-AssetSelection_nextBtn")).click();
+		sleep(7000);
+		buscarYClick(driver.findElements(By.cssSelector(".slds-form-element__label.ng-binding.ng-scope")), "equals", "si, ajustar");
+		driver.findElement(By.id("Step-VerifyPreviousAdjustments_nextBtn")).click();
+		sleep(7000);
+		buscarYClick(driver.findElements(By.cssSelector(".slds-form-element__label.ng-binding.ng-scope")), "equals", "si");
+		driver.findElement(By.id("Desde")).sendKeys("01-07-2018");
+		driver.findElement(By.id("Hasta")).sendKeys("30-07-2018");
+		selectByText(driver.findElement(By.id("Unidad")), "Credito");
+		driver.findElement(By.id("CantidadMonto")).sendKeys("200000");
+		driver.findElement(By.id("Step-AjusteNivelLinea_nextBtn")).click();
+		sleep(7000);
+		driver.findElement(By.id("Step-Summary_nextBtn")).click();
+		sleep(10000);
+		WebElement nroCaso = null;
+		driver.switchTo().frame(cambioFrame(driver, By.cssSelector(".slds-icon.slds-icon--large.ta-care-omniscript-pending-icon")));
+		for (WebElement x : driver.findElements(By.className("ta-care-omniscript-done"))) {
+			if (x.getText().toLowerCase().contains("el caso fue derivado para autorizaci\u00f3n")) {
+				gestion = true;
+				nroCaso = x;
+			}
+		}
+		Assert.assertTrue(gestion);
+		String caso = nroCaso.findElement(By.cssSelector(".vlc-slds-inline-control__label.ng-binding")).getText();
+		caso = caso.substring(caso.indexOf("0"), caso.length());
+		CambiarPerfil("backoffice", driver);
+		driver.findElement(By.id("tabBar")).findElement(By.tagName("a")).click();
+		sleep(15000);
+		cc.cerrarTodasLasPestanas();
+		goToLeftPanel2(driver, "Casos");
+		driver.switchTo().frame(cambioFrame(driver, By.cssSelector(".topNav.primaryPalette")));
+		selectByText(driver.findElement(By.cssSelector(".topNav.primaryPalette")).findElement(By.name("fcf")), "BO Centralizado");
+		WebElement filaDelCaso = null;
+		WebElement tabla = driver.findElement(By.className("x-grid3-body"));
+		for (WebElement x : tabla.findElements(By.tagName("tr"))) {
+			if (x.getText().contains(caso))
+				filaDelCaso = x;
+		}
+		filaDelCaso.findElement(By.tagName("input")).click();
+		driver.findElement(By.cssSelector(".linkBar.brandSecondaryBrd")).findElement(By.name("accept")).click();
+		sleep(5000);
+		cc.buscarCaso(caso);
+		driver.switchTo().frame(cambioFrame(driver, By.name("edit")));
+		WebElement aprobar = null;
+		for (WebElement x : driver.findElements(By.className("actionColumn"))) {
+			if (x.getText().contains("Aprobar/rechazar"))
+				aprobar = x;
+		}
+		for (WebElement x : aprobar.findElements(By.tagName("a"))) {
+			if (x.getText().contains("Aprobar/rechazar"))
+				x.click();
+		}
+		sleep(5000);
+		driver.switchTo().frame(cambioFrame(driver, By.name("goNext")));
+		driver.findElement(By.name("goNext")).click();
+		sleep(5000);
+		driver.switchTo().frame(cambioFrame(driver, By.className("extraStatusDiv_A")));
+		Assert.assertTrue(driver.findElement(By.className("extraStatusDiv_A")).getText().equalsIgnoreCase("Aprobado"));
+		String datoNuevo = cbs.ObtenerValorResponse(cbsm.Servicio_queryLiteBySubscriber(sLinea), "bcs:MainBalance");
+		Integer datosFinal = Integer.parseInt(datoNuevo.substring(0, 5));
+		Assert.assertTrue(datosInicial + 2000 == datosFinal);
+		detalles = imagen + " -Ajustes-DNI: " + sDNI + ", Caso numero: " + caso;
+	}
 }
