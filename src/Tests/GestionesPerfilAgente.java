@@ -56,11 +56,12 @@ public class GestionesPerfilAgente extends TestBase{
 		sb = new SalesBase(driver);
 		mk = new Marketing(driver);
 		loginAgente(driver);
-		sleep(22000);
+		//sleep(22000);
 		try {
 			cc.cajonDeAplicaciones("Consola FAN");
 		} catch(Exception e) {
-			sleep(3000);
+			waitForClickeable(driver,By.id("tabBar"));
+			//sleep(3000);
 			driver.findElement(By.id("tabBar")).findElement(By.tagName("a")).click();
 			sleep(6000);
 		}
@@ -254,9 +255,9 @@ public class GestionesPerfilAgente extends TestBase{
 		sleep(16000);
 		cCC.obligarclick(driver.findElement(By.id("InvoicePreview_nextBtn")));
 		sleep(16000);
-		buscarYClick(driver.findElements(By.cssSelector(".slds-form-element__label.ng-binding")), "equals","Efectivo");
-		cCC.obligarclick(driver.findElement(By.id("SelectPaymentMethodsStep_nextBtn")));
-		sleep(15000);
+//		buscarYClick(driver.findElements(By.cssSelector(".slds-form-element__label.ng-binding")), "equals","Efectivo");
+//		cCC.obligarclick(driver.findElement(By.id("SelectPaymentMethodsStep_nextBtn")));
+//		sleep(15000);
 		String orden = driver.findElement(By.className("top-data")).findElement(By.className("ng-binding")).getText();
 		detalles += "-Orden:" + orden;
 		System.out.println("Orden " + orden);
@@ -356,12 +357,10 @@ public class GestionesPerfilAgente extends TestBase{
 		driver.switchTo().frame(cambioFrame(driver, By.cssSelector(".slds-select.ng-pristine.ng-untouched.ng-valid.ng-not-empty")));
 		buscarYClick(driver.findElements(By.cssSelector(".slds-button.slds-button--neutral")), "equals", "anulaci\u00f3n de venta");
 		sleep(10000);
-		if (TestBase.urlAmbiente.contains("sit")) {
-			driver.switchTo().frame(cambioFrame(driver, By.id("AnnulmentReasonSelect")));
-			selectByText(driver.findElement(By.id("AnnulmentReasonSelect")), "Arrepentimiento");
-			driver.findElement(By.id("AnnulmentReason_nextBtn")).click();
-			sleep(20000);
-		}
+		driver.switchTo().frame(cambioFrame(driver, By.id("AnnulmentReasonSelect")));
+		selectByText(driver.findElement(By.id("AnnulmentReasonSelect")), "Arrepentimiento");
+		driver.findElement(By.id("AnnulmentReason_nextBtn")).click();
+		sleep(20000);
 		driver.switchTo().frame(cambioFrame(driver, By.xpath("//*[@id=\"ep\"]/div[2]/div[2]/table")));
 		String gestion = driver.findElement(By.xpath("//*[@id=\"ep\"]/div[2]/div[2]/table")).findElements(By.tagName("tr")).get(4).getText();
 		Assert.assertTrue(gestion.contains("Estado") && (gestion.contains("Cancelada") || gestion.contains("Cancelled")));
@@ -1238,22 +1237,22 @@ public class GestionesPerfilAgente extends TestBase{
 		String sOrden = cCC.obtenerOrden2(driver);
 		detalles += "-Orden:" + sOrden;
 	
-		buscarYClick(driver.findElements(By.cssSelector(".slds-form-element__label.ng-binding")), "equals","tarjeta de credito");
-		selectByText(driver.findElement(By.id("BankingEntity-0")), cBanco);
-		selectByText(driver.findElement(By.id("CardBankingEntity-0")), cTarjeta);
-		selectByText(driver.findElement(By.id("promotionsByCardsBank-0")), cPromo);
-		sleep(5000);
-		selectByText(driver.findElement(By.id("Installment-0")), cCuotas);
-		driver.findElement(By.id("CardNumber-0")).sendKeys(cNumTarjeta);
-		selectByText(driver.findElement(By.id("expirationMonth-0")), cVenceMes);
-		selectByText(driver.findElement(By.id("expirationYear-0")), cVenceAno);
-		driver.findElement(By.id("securityCode-0")).sendKeys(cCodSeg);
-		selectByText(driver.findElement(By.id("documentType-0")), cTipoDNI);
-		driver.findElement(By.id("documentNumber-0")).sendKeys(cDNITarjeta);
-		driver.findElement(By.id("cardHolder-0")).sendKeys(cTitular);
-		
-		cCC.obligarclick(driver.findElement(By.id("SelectPaymentMethodsStep_nextBtn")));
-		sleep(15000);
+//		buscarYClick(driver.findElements(By.cssSelector(".slds-form-element__label.ng-binding")), "equals","tarjeta de credito");
+//		selectByText(driver.findElement(By.id("BankingEntity-0")), cBanco);
+//		selectByText(driver.findElement(By.id("CardBankingEntity-0")), cTarjeta);
+//		selectByText(driver.findElement(By.id("promotionsByCardsBank-0")), cPromo);
+//		sleep(5000);
+//		selectByText(driver.findElement(By.id("Installment-0")), cCuotas);
+//		driver.findElement(By.id("CardNumber-0")).sendKeys(cNumTarjeta);
+//		selectByText(driver.findElement(By.id("expirationMonth-0")), cVenceMes);
+//		selectByText(driver.findElement(By.id("expirationYear-0")), cVenceAno);
+//		driver.findElement(By.id("securityCode-0")).sendKeys(cCodSeg);
+//		selectByText(driver.findElement(By.id("documentType-0")), cTipoDNI);
+//		driver.findElement(By.id("documentNumber-0")).sendKeys(cDNITarjeta);
+//		driver.findElement(By.id("cardHolder-0")).sendKeys(cTitular);
+//		
+//		cCC.obligarclick(driver.findElement(By.id("SelectPaymentMethodsStep_nextBtn")));
+//		sleep(15000);
 		try {
 			driver.findElement(By.id("Step_Error_Huawei_S029_nextBtn")).click();
 			System.out.println("Error en prefactura huawei");
@@ -1662,6 +1661,47 @@ public class GestionesPerfilAgente extends TestBase{
 		}
 		Assert.assertTrue(a);
 	}
+	//98438 ejecutar de nuevo
+	@Test (groups = {"GestionesPerfilAgente", "Nominacion", "Ciclo1"}, dataProvider="DatosNoNominacionExistenteAgente")
+	public void TS134492_CRM_Movil_REPRO_No_Nominatividad_No_Valida_Identidad_Cliente_Existente_Presencial_DOC(String sLinea, String sDni, String sSexo, String sFnac, String sEmail) {
+		imagen = "TS134492";
+		detalles = null;
+		detalles = imagen+"No nominacion Agente- DNI: "+sDni+"-Linea: "+sLinea;
+		sleep(2000);
+		driver.switchTo().frame(cambioFrame(driver, By.id("SearchClientDocumentType")));
+		driver.findElement(By.id("PhoneNumber")).sendKeys(sLinea);
+		driver.findElement(By.id("SearchClientsDummy")).click();
+		sleep(5000);
+		driver.findElement(By.cssSelector(".slds-button.slds-button--icon.slds-m-right--x-small.ng-scope")).click();
+		sleep(2000);
+		WebElement botonNominar = null;
+		for (WebElement x : driver.findElements(By.cssSelector(".slds-hint-parent.ng-scope"))) {
+			if (x.getText().toLowerCase().contains("plan con tarjeta"))
+				botonNominar = x;
+		}
+		for (WebElement x : botonNominar.findElements(By.tagName("td"))) {
+			if (x.getAttribute("data-label").equals("actions"))
+				botonNominar = x;
+		}
+		botonNominar.findElement(By.tagName("a")).click();
+		sleep(10000);
+		ContactSearch contact = new ContactSearch(driver);
+		contact.searchContact2("DNI", sDni, "Masculino");
+		waitForClickeable(driver,By.id("Contact_nextBtn"));
+		driver.findElement(By.id("Contact_nextBtn")).click();
+		//sleep(10000);
+		contact.tipoValidacion("documento");
+		File directory = new File("DniMal.jpg");
+		contact.subirArchivo(new File(directory.getAbsolutePath()).toString(), "no");
+		List<WebElement> errores = driver.findElements(By.cssSelector(".message.description.ng-binding.ng-scope")); 
+		boolean error = false;
+		for (WebElement UnE: errores) {
+			if (UnE.getText().toLowerCase().contains("identidad no superada")) {
+				error = true;
+			}
+		}
+		Assert.assertTrue(error);
+	}
 	
 	@Test (groups= {"GestionPerfilTelefonico", "Ciclo2", "Vista360"}, dataProvider = "documentacionVista360")
 	public void TS134817_CRM_Movil_Prepago_Vista_360_Mis_Servicios_Visualizacion_del_estado_de_los_servicios_activos_FAN_Front_OOCC_Agentes(String sDNI){
@@ -1722,5 +1762,123 @@ public class GestionesPerfilAgente extends TestBase{
 		Assert.assertTrue(tabla3.getText().contains(sEmail) && tabla3.getText().contains(sMovil));
 		Assert.assertTrue(tabla3.getText().toLowerCase().contains("tel\u00e9fono alternativo") && tabla3.getText().toLowerCase().contains("club personal") && tabla3.getText().toLowerCase().contains("categor\u00eda"));
 
+	}
+	
+	@Test (groups = {"GestionesPerfilAgente", "Vista360", "E2E", "Ciclo1"}, dataProvider = "CuentaVista360")
+	public void TS_134824_CRM_Movil_Prepago_Vista_360_Producto_Activo_del_cliente_Desplegable_FAN_Front_Agentes(String sDNI, String sLinea, String sNombre,String sEmail,String sMovil){
+		boolean gest = false;
+		imagen = "TS13824";
+		detalles = null;
+		detalles = imagen + " -ServicioTecnico: " + sDNI;
+		CustomerCare cCC=new CustomerCare(driver);
+		TechCare_Ola1 page=new TechCare_Ola1(driver);
+		TechnicalCareCSRDiagnosticoPage tech = new TechnicalCareCSRDiagnosticoPage(driver);
+		driver.switchTo().frame(cambioFrame(driver, By.id("SearchClientDocumentType")));
+		sb.BuscarCuenta("DNI", sDNI);
+		driver.findElement(By.cssSelector(".slds-tree__item.ng-scope")).click();
+		sleep(12000);
+		driver.switchTo().frame(cambioFrame(driver, By.className("card-top")));
+		driver.findElement(By.className("card-top")).click();
+		sleep(5000);
+		WebElement wFlyOutActionCard = driver.findElement(By.className("community-flyout-actions-card"));
+		List<WebElement> wGestiones = wFlyOutActionCard.findElements(By.tagName("li"));
+		for (WebElement wAux : wGestiones) {
+			if (wAux.isDisplayed()) {
+				System.out.println(wAux.getText());
+				gest= true;
+			}
+		}
+	Assert.assertTrue(gest);
+	}
+	
+	@Test (groups = {"GestionesPerfilAgente", "Vista360", "E2E", "Ciclo1"}, dataProvider = "CuentaVista360")
+	public void TS_134832_CRM_Movil_Prepago_Vista_360_Consulta_por_gestiones_Gestiones_no_registradas_FAN_Front_Agentes(String sDNI, String sLinea, String sNombre,String sEmail,String sMovil){
+		imagen = "TS13832";
+		detalles = null;
+		detalles = imagen + " -ServicioTecnico: " + sDNI;
+		CustomerCare cCC=new CustomerCare(driver);
+		TechCare_Ola1 page=new TechCare_Ola1(driver);
+		TechnicalCareCSRDiagnosticoPage tech = new TechnicalCareCSRDiagnosticoPage(driver);
+		driver.switchTo().frame(cambioFrame(driver, By.id("SearchClientDocumentType")));
+		sb.BuscarCuenta("DNI", sDNI);
+		driver.findElement(By.cssSelector(".slds-tree__item.ng-scope")).click();
+		sleep(15000);
+		driver.switchTo().frame(cambioFrame(driver, By.className("card-top")));
+		driver.findElement(By.className("card-top")).click();
+		sleep(5000);
+		cCC.irAGestiones();
+		driver.switchTo().frame(cambioFrame(driver, By.id("text-input-id-1")));
+		driver.findElement(By.id("text-input-id-1")).click();
+		WebElement table = driver.findElement(By.cssSelector(".slds-datepicker.slds-dropdown.slds-dropdown--left"));
+		sleep(3000);
+		List<WebElement> tableRows = table.findElements(By.xpath("//tr//td"));
+		for (WebElement cell : tableRows) {
+			try {
+				if (cell.getText().equals("03")) {
+					cell.click();
+				}
+			} catch (Exception e) {}
+		}
+		driver.findElement(By.id("text-input-id-2")).click();
+		WebElement table_2 = driver.findElement(By.cssSelector(".slds-datepicker.slds-dropdown.slds-dropdown--left"));
+		sleep(3000);
+		List<WebElement> tableRows_2 = table_2.findElements(By.xpath("//tr//td"));
+		for (WebElement cell : tableRows_2) {
+			try {
+				if (cell.getText().equals("30")) {
+					cell.click();
+					sleep(5000);
+				}
+			} catch (Exception e) {}
+		}
+		sleep(3000);
+		driver.findElement(By.id("text-input-id-2")).click();
+		WebElement table_3 = driver.findElement(By.cssSelector(".slds-datepicker.slds-dropdown.slds-dropdown--left"));
+		sleep(3000);
+		List<WebElement> tableRows_3 = table_3.findElements(By.xpath("//tr//td"));
+		for (WebElement cell : tableRows_3) {
+			try {
+				if (cell.getText().equals("03")) {
+					cell.click();
+				}
+			} catch (Exception e) {}
+		}
+		sleep(3000);
+		List<WebElement> tipo = driver.findElement(By.cssSelector(".slds-dropdown.slds-dropdown--left.resize-dropdowns")).findElements(By.tagName("li"));
+			for(WebElement t : tipo){
+				if(t.getText().toLowerCase().equals("todos")){
+					t.click();
+				}
+			}
+		driver.findElement(By.cssSelector(".slds-button.slds-button--brand.filterNegotiations.slds-p-horizontal--x-large.slds-p-vertical--x-small.secondaryFont")).click();
+		sleep(9000);
+		Boolean asd = true;
+		List <WebElement> cuadro = driver.findElement(By.cssSelector(".slds-table.slds-table--bordered.slds-table--resizable-cols.slds-table--fixed-layout.via-slds-table-pinned-header")).findElement(By.tagName("tbody")).findElements(By.tagName("tr"));
+			for(WebElement c : cuadro){
+				if(c.getText().toLowerCase().contains("Order")){
+					asd = false;
+				}
+			}
+		Assert.assertTrue(asd);
+	}
+	
+	@Test (groups = {"GestionesPerfilAgente", "Vista360", "E2E", "Ciclo1"}, dataProvider = "CuentaVista360")
+	public void TS_134823_CRM_Movil_Prepago_Vista_360_Producto_Activo_del_cliente_Datos_FAN_Front_Agentes(String sDNI, String sLinea, String sNombre,String sEmail,String sMovil){
+		imagen = "TS13823";
+		detalles = null;
+		detalles = imagen + " -ServicioTecnico: " + sDNI;
+		CustomerCare cCC=new CustomerCare(driver);
+		TechCare_Ola1 page=new TechCare_Ola1(driver);
+		TechnicalCareCSRDiagnosticoPage tech = new TechnicalCareCSRDiagnosticoPage(driver);
+		driver.switchTo().frame(cambioFrame(driver, By.id("SearchClientDocumentType")));
+		sb.BuscarCuenta("DNI", sDNI);
+		driver.findElement(By.cssSelector(".slds-tree__item.ng-scope")).click();
+		sleep(15000);
+		driver.switchTo().frame(cambioFrame(driver, By.className("card-top")));
+		driver.findElement(By.className("card-top")).click();
+		sleep(5000);
+		WebElement detalles = driver.findElement(By.cssSelector(".slds-grid.community-flyout-content"));
+		System.out.println(detalles.getText());
+		Assert.assertTrue(detalles.isDisplayed());
 	}
 }
