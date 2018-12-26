@@ -11,6 +11,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.openqa.selenium.By;
+import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -2664,7 +2665,6 @@ public class GestionesPerfilTelefonico extends TestBase{
 		pagePTelefo.getResumenOrdenCompra().click();
 		String sOrden = cCC.obtenerOrden2(driver);
 		detalles += "-Orden:" + sOrden;
-	
 		buscarYClick(driver.findElements(By.cssSelector(".slds-form-element__label.ng-binding")), "equals","tarjeta de credito");
 		selectByText(driver.findElement(By.id("BankingEntity-0")), cBanco);
 		selectByText(driver.findElement(By.id("CardBankingEntity-0")), cTarjeta);
@@ -3673,13 +3673,10 @@ public class GestionesPerfilTelefonico extends TestBase{
 	}
 
 	@Test (groups = {"GestionesPerfilOficina", "Detalle de Consumos", "Ciclo2"}, dataProvider = "CuentaVista360") 
-	public void TS_134802_CRM_Movil_Prepago_Vista_360_Detalle_de_consumo_Consulta_visualizaci�n_y_busqueda_de_los_distintos_consumos_realizados_por_el_cliente_FAN_Front_Telefonico(String sDNI, String sNombre){
-		imagen = "TS134368";
+	public void TS_134802_CRM_Movil_Prepago_Vista_360_Detalle_de_consumo_Consulta_visualizacion_y_busqueda_de_los_distintos_consumos_realizados_por_el_cliente_FAN_Front_Telefonico(String sDNI, String sNombre){
+		imagen = "TS134802";
 		detalles = null;
 		detalles = imagen + "-Vista 360 - DNI: "+sDNI+ " - Nombre: "+sNombre;
-		imagen = "TS134783";
-		detalles = null;
-		detalles = imagen + "- Detalle de Consumo - DNI: "+sDNI;
 		driver.switchTo().frame(cambioFrame(driver, By.id("SearchClientDocumentType")));
 		sb.BuscarCuenta("DNI", sDNI);
 		driver.findElement(By.cssSelector(".slds-tree__item.ng-scope")).click();
@@ -3842,5 +3839,51 @@ public class GestionesPerfilTelefonico extends TestBase{
 				}
 			}
 		Assert.assertTrue(asd);	
+	}
+	
+	@Test (groups = {"GestionesPerfilTelefonico", "Diagnostico/Inconveniente","E2E", "Ciclo3"}, dataProvider = "Diagnostico")
+	public void TS_119170_CRM_Movil_PRE_Diagnostico_de_Voz_Valida_Red_y_Navegacion_Motivo_de_contacto_No_puedo_realizar_llamadas_Fallo_la_CONCILIACION(String sDNI, String sLinea) throws InterruptedException{
+		imagen = "TS119170";
+		detalles = null;
+		detalles = imagen + " -ServicioTecnico - DNI: " + sDNI;
+		CustomerCare cCC=new CustomerCare(driver);
+		TechnicalCareCSRDiagnosticoPage Tech = new TechnicalCareCSRDiagnosticoPage(driver);
+		TechnicalCareCSRAutogestionPage tech = new TechnicalCareCSRAutogestionPage (driver);
+		TechCare_Ola1 page=new TechCare_Ola1(driver);
+		driver.switchTo().frame(cambioFrame(driver, By.id("SearchClientDocumentType")));
+		sb.BuscarCuenta("DNI", sDNI);
+		driver.findElement(By.cssSelector(".slds-tree__item.ng-scope")).click();
+		sleep(10000);
+		driver.switchTo().frame(cambioFrame(driver, By.className("card-top")));
+		driver.findElement(By.className("card-top")).click();
+		sleep(5000);
+		cCC.irAGestionEnCard("Diagn\u00f3stico");
+		driver.switchTo().frame(cambioFrame(driver, By.id("Motive")));
+		driver.findElement(By.name("loopname")).click();
+		selectByText(driver.findElement(By.id("Motive")), "No puedo navegar");
+		buscarYClick(driver.findElements(By.id("MotiveIncidentSelect_nextBtn")), "equals", "continuar");
+		sleep(3000);
+		page.seleccionarPreguntaFinal("S\u00ed");
+		driver.findElement(By.id("DataQuotaQuery_nextBtn")).click();
+		sleep(8000);
+		driver.switchTo().frame(cambioFrame(driver, By.className("borderOverlay")));
+		Tech.categoriaRed("Desregistrar");
+		driver.findElement(By.id("NetworkCategory_nextBtn")).click();
+		sleep(15000);
+		page.seleccionarPreguntaFinal("No");
+		buscarYClick(driver.findElements(By.id("DeregisterSpeech_nextBtn")), "equals", "continuar");
+		((JavascriptExecutor)driver).executeScript("window.scrollTo(0,"+driver.findElement(By.cssSelector(".slds-form-element__label.ng-binding.ng-scope")).getLocation().y+" )");
+		page.seleccionarPreguntaFinal("S\u00ed, funciona correctamente");
+		sleep(8000);
+		buscarYClick(driver.findElements(By.id("HlrDeregister_nextBtn")), "equals", "continuar");
+		sleep(8000);
+		Tech.categoriaRed("Fuera del Area de Cobertura");
+		sleep(8000);
+		buscarYClick(driver.findElements(By.id("AddressSection_nextBtn")), "equals", "continuar");
+		String caso = driver.findElement(By.xpath("//*[@id='OutOfCoverageMessage']/div/p/p[2]/span/strong")).getText();
+		System.out.println(caso);
+		driver.switchTo().defaultContent();
+		tech.buscarCaso(caso);
+		Assert.assertTrue(tech.cerrarCaso("Resuelta exitosa", "Consulta"));
 	}
 }
