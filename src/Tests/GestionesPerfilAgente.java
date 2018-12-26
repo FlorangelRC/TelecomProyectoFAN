@@ -8,10 +8,8 @@ import java.io.IOException;
 import java.security.KeyManagementException;
 import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
-import org.apache.commons.collections4.bag.SynchronizedSortedBag;
 import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.NoSuchElementException;
@@ -1770,9 +1768,6 @@ public class GestionesPerfilAgente extends TestBase{
 		imagen = "TS13824";
 		detalles = null;
 		detalles = imagen + " -ServicioTecnico: " + sDNI;
-		CustomerCare cCC=new CustomerCare(driver);
-		TechCare_Ola1 page=new TechCare_Ola1(driver);
-		TechnicalCareCSRDiagnosticoPage tech = new TechnicalCareCSRDiagnosticoPage(driver);
 		driver.switchTo().frame(cambioFrame(driver, By.id("SearchClientDocumentType")));
 		sb.BuscarCuenta("DNI", sDNI);
 		driver.findElement(By.cssSelector(".slds-tree__item.ng-scope")).click();
@@ -1797,8 +1792,6 @@ public class GestionesPerfilAgente extends TestBase{
 		detalles = null;
 		detalles = imagen + " -ServicioTecnico: " + sDNI;
 		CustomerCare cCC=new CustomerCare(driver);
-		TechCare_Ola1 page=new TechCare_Ola1(driver);
-		TechnicalCareCSRDiagnosticoPage tech = new TechnicalCareCSRDiagnosticoPage(driver);
 		driver.switchTo().frame(cambioFrame(driver, By.id("SearchClientDocumentType")));
 		sb.BuscarCuenta("DNI", sDNI);
 		driver.findElement(By.cssSelector(".slds-tree__item.ng-scope")).click();
@@ -1867,9 +1860,6 @@ public class GestionesPerfilAgente extends TestBase{
 		imagen = "TS13823";
 		detalles = null;
 		detalles = imagen + " -ServicioTecnico: " + sDNI;
-		CustomerCare cCC=new CustomerCare(driver);
-		TechCare_Ola1 page=new TechCare_Ola1(driver);
-		TechnicalCareCSRDiagnosticoPage tech = new TechnicalCareCSRDiagnosticoPage(driver);
 		driver.switchTo().frame(cambioFrame(driver, By.id("SearchClientDocumentType")));
 		sb.BuscarCuenta("DNI", sDNI);
 		driver.findElement(By.cssSelector(".slds-tree__item.ng-scope")).click();
@@ -1880,5 +1870,34 @@ public class GestionesPerfilAgente extends TestBase{
 		WebElement detalles = driver.findElement(By.cssSelector(".slds-grid.community-flyout-content"));
 		System.out.println(detalles.getText());
 		Assert.assertTrue(detalles.isDisplayed());
+	}
+	
+	@Test (groups = {"GestionesPerfilAgente","Sales", "PreparacionNominacion","E2E","Ciclo1"}, dataProvider="DatosSalesNominacionNuevoAgente") 
+	public void TS134493_CRM_Movil_REPRO_No_Nominatividad_No_Valida_Identidad_Cliente_Existente_Presencial_Preguntas_y_Respuestas(String sLinea, String sDni, String sNombre, String sApellido, String sSexo, String sFnac, String sEmail, String sProvincia, String sLocalidad, String sCalle, String sNumCa, String sCP) {
+		driver.switchTo().frame(cambioFrame(driver, By.id("SearchClientDocumentType")));
+		driver.findElement(By.id("PhoneNumber")).sendKeys("2477651359");
+		driver.findElement(By.id("SearchClientsDummy")).click();		
+		sleep(10000);
+		driver.findElement(By.id("tab-scoped-1")).findElement(By.tagName("tbody")).findElement(By.tagName("tr")).click();
+		sleep(3000);
+		for (WebElement x: driver.findElement(By.id("tab-scoped-1")).findElement(By.tagName("tbody")).findElements(By.tagName("tr"))) {
+			if (x.getText().toLowerCase().contains("plan con tarjeta") || x.getText().toLowerCase().contains("plan prepago nacional")) {
+				x.findElements(By.tagName("td")).get(6).findElement(By.tagName("svg")).click();
+				break;
+			}
+		}
+		sleep(10000);
+		ContactSearch contact = new ContactSearch(driver);
+		contact.searchContact2("DNI", sDni, sSexo);
+		sleep(5000);
+		((JavascriptExecutor)driver).executeScript("window.scrollTo(0,"+driver.findElement(By.id("Contact_nextBtn")).getLocation().y+" )");
+		driver.findElement(By.id("Contact_nextBtn")).click();
+		sleep(7000);
+		for (WebElement x : driver.findElements(By.cssSelector(".imgItem.ng-scope"))) {
+			if (x.getAttribute("title").contains("Validaci\u00f3n por Preguntas y Respuestas"))
+				x.click();
+		}
+		driver.findElement(By.id("MethodSelection_nextBtn")).click();
+		
 	}
 }

@@ -63,6 +63,8 @@ public class TestBase {
 		
 		public static String urlFlow	= "https://webgestionmoviltesting/default.aspx";
 		
+		public static String urlBeFAN = "http://snapuat.telecom.com.ar/#/home";
+		
 	public void leftDropdown(WebDriver driver, String selection) {
 		driver.findElement(By.className("x-btn-mc")).click();
 		switch(selection) {
@@ -388,6 +390,13 @@ public class TestBase {
 			try {Thread.sleep(6000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 		    Login page0 = new Login(driver);
 		    page0.ingresarVictor();
+		}
+		
+		public void loginBeFAN(WebDriver driver) {
+			driver.get(urlBeFAN);
+			try {Thread.sleep(6000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		    Login page0 = new Login(driver);
+		    page0.ingresarBeFAN();
 		}
 		
 		public void elegirmodulo(String modulo){
