@@ -6698,7 +6698,12 @@ public class GestionesPerfilOficina extends TestBase {
 		Assert.assertTrue(canal.isDisplayed());
 		sleep(7000);
 		driver.findElement(By.id("text-input-03")).click();
-		driver.findElement(By.xpath("//*[@id=\"j_id0:j_id5\"]/div/div/ng-include/div/div/div[2]/div[3]/div/div[2]/ul/li[3]")).click();
+		List<WebElement> sms = driver.findElement(By.cssSelector(".slds-dropdown__list.slds-dropdown--length-5")).findElements(By.tagName("li"));
+		for(WebElement s : sms){
+			if(s.getText().equals("SMS")){
+				s.click();
+			}	
+		}
 		if (driver.findElement(By.cssSelector(".slds-button.slds-button--brand.filterNegotiations.slds-p-horizontal--x-large.slds-p-vertical--x-small")).isDisplayed()) {
 			driver.findElement(By.cssSelector(".slds-button.slds-button--brand.filterNegotiations.slds-p-horizontal--x-large.slds-p-vertical--x-small")).click();
 			Assert.assertTrue(true);
@@ -6732,7 +6737,12 @@ public class GestionesPerfilOficina extends TestBase {
 		Assert.assertTrue(canal.isDisplayed());
 		sleep(7000);
 		driver.findElement(By.id("text-input-03")).click();
-		driver.findElement(By.xpath("//*[@id=\"j_id0:j_id5\"]/div/div/ng-include/div/div/div[2]/div[3]/div/div[2]/ul/li[5]")).click();
+		List<WebElement> recarga = driver.findElement(By.cssSelector(".slds-dropdown__list.slds-dropdown--length-5")).findElements(By.tagName("li"));
+		for(WebElement r : recarga){
+			if(r.getText().equals("Recarga Online")){
+				r.click();
+			}	
+		}
 		if (driver.findElement(By.cssSelector(".slds-button.slds-button--brand.filterNegotiations.slds-p-horizontal--x-large.slds-p-vertical--x-small")).isDisplayed()) {
 			driver.findElement(By.cssSelector(".slds-button.slds-button--brand.filterNegotiations.slds-p-horizontal--x-large.slds-p-vertical--x-small")).click();
 			Assert.assertTrue(true);
@@ -6763,7 +6773,7 @@ public class GestionesPerfilOficina extends TestBase {
 		//Falta la opcion en el Nombre del pack: Plan Internacional --- Se requiere actualizar cuando exista el Pack Internacional
 		List<WebElement> todos = driver.findElement(By.cssSelector(".slds-dropdown__list.slds-dropdown--length-5")).findElements(By.tagName("li"));
 		for(WebElement t : todos){
-			if(t.getText().equals("Todos")){
+			if(t.getText().equals("Reseteo 200 MB por Dia")){
 				t.click();
 			}	
 		}
@@ -6792,7 +6802,7 @@ public class GestionesPerfilOficina extends TestBase {
 		//Falta la opcion en el Nombre del pack: Plan Familia --- Se requiere actualizar cuando exista el Pack Familia
 		List<WebElement> todos = driver.findElement(By.cssSelector(".slds-dropdown__list.slds-dropdown--length-5")).findElements(By.tagName("li"));
 		for(WebElement t : todos){
-			if(t.getText().equals("Todos")){
+			if(t.getText().equals("Pack 100MB Uruguay")){
 				t.click();
 			}	
 		}

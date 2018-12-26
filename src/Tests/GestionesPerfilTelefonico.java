@@ -2863,16 +2863,15 @@ public class GestionesPerfilTelefonico extends TestBase{
 		cc.verificacionDeHistorial("Historial de recargas S.O.S");
 		sleep(3000);
 		cc.seleccionDeHistorial("historial de recargas");
-		sleep(5000);
-		driver.switchTo().frame(cambioFrame(driver, By.id("text-input-03")));
-		WebElement canal = driver.findElement(By.id("text-input-03"));
-		canal.click();
-		System.out.println(canal.getText());
-		Assert.assertTrue(canal.isDisplayed());
+		sleep(8000);
 		driver.switchTo().frame(cambioFrame(driver, By.id("text-input-03")));
 		driver.findElement(By.id("text-input-03")).click();
-		driver.findElement(By.id("text-input-03")).click();
-		driver.findElement(By.xpath("//*[@id=\"j_id0:j_id5\"]/div/div/ng-include/div/div/div[2]/div[3]/div/div[2]/ul/li[6]")).click();
+		List<WebElement> atencion = driver.findElement(By.cssSelector(".slds-dropdown__list.slds-dropdown--length-5")).findElements(By.tagName("li"));
+		for(WebElement a : atencion){
+			if(a.getText().contains("Atenci\u00f3n al cliente")){
+				a.click();
+			}	
+		}
 		try {
 			driver.findElement(By.cssSelector(".slds-button.slds-button--brand.filterNegotiations.slds-p-horizontal--x-large.slds-p-vertical--x-small")).click();
 			} catch (Exception e) {
@@ -3555,7 +3554,12 @@ public class GestionesPerfilTelefonico extends TestBase{
 		Assert.assertTrue(canal.isDisplayed());
 		sleep(7000);
 		driver.findElement(By.id("text-input-03")).click();
-		driver.findElement(By.xpath("//*[@id=\"j_id0:j_id5\"]/div/div/ng-include/div/div/div[2]/div[3]/div/div[2]/ul/li[3]")).click();
+		List<WebElement> sms = driver.findElement(By.cssSelector(".slds-dropdown__list.slds-dropdown--length-5")).findElements(By.tagName("li"));
+		for(WebElement s : sms){
+			if(s.getText().equals("SMS")){
+				s.click();
+			}	
+		}
 		if (driver.findElement(By.cssSelector(".slds-button.slds-button--brand.filterNegotiations.slds-p-horizontal--x-large.slds-p-vertical--x-small")).isDisplayed()) {
 			driver.findElement(By.cssSelector(".slds-button.slds-button--brand.filterNegotiations.slds-p-horizontal--x-large.slds-p-vertical--x-small")).click();
 			Assert.assertTrue(true);
@@ -3589,7 +3593,12 @@ public class GestionesPerfilTelefonico extends TestBase{
 		Assert.assertTrue(canal.isDisplayed());
 		sleep(7000);
 		driver.findElement(By.id("text-input-03")).click();
-		driver.findElement(By.xpath("//*[@id=\"j_id0:j_id5\"]/div/div/ng-include/div/div/div[2]/div[3]/div/div[2]/ul/li[5]")).click();
+		List<WebElement> recarga = driver.findElement(By.cssSelector(".slds-dropdown__list.slds-dropdown--length-5")).findElements(By.tagName("li"));
+		for(WebElement r : recarga){
+			if(r.getText().equals("Recarga Online")){
+				r.click();
+			}	
+		}
 		if (driver.findElement(By.cssSelector(".slds-button.slds-button--brand.filterNegotiations.slds-p-horizontal--x-large.slds-p-vertical--x-small")).isDisplayed()) {
 			driver.findElement(By.cssSelector(".slds-button.slds-button--brand.filterNegotiations.slds-p-horizontal--x-large.slds-p-vertical--x-small")).click();
 			Assert.assertTrue(true);

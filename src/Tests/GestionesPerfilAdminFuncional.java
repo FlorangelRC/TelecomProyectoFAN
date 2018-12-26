@@ -171,4 +171,38 @@ public class GestionesPerfilAdminFuncional extends TestBase{
 		Assert.assertTrue(tech.cerrarCaso("Resuelta exitosa", "Consulta"));
 	}
 	
+	@Test (groups = {"GestionesPerfilAdminFuncional", "DiagnosticoInconveniente","E2E", "Ciclo3"}, dataProvider = "Diagnostico")
+	public void TS111487_CRM_Movil_REPRO_Diagnostico_SVA_Con_Modificacion_en_el_Equipo_Telefonico_SMS_Entrante_No_Recibe_De_Un_Numero_En_Particular_Geo_No_Ok_Desregistrar(String sDNI, String sLinea) throws Exception  {
+		imagen = "TS111487";
+		detalles = null;
+		detalles = imagen + " -ServicioTecnico - DNI: "+sDNI+" - Linea: "+sLinea;
+		boolean desregistrar = false;
+		CustomerCare cCC=new CustomerCare(driver);
+		TechCare_Ola1 page=new TechCare_Ola1(driver);
+		TechnicalCareCSRDiagnosticoPage tech = new TechnicalCareCSRDiagnosticoPage(driver);
+		driver.switchTo().frame(cambioFrame(driver, By.id("SearchClientDocumentType")));
+		sb.BuscarCuenta("DNI", sDNI);
+		driver.findElement(By.cssSelector(".slds-tree__item.ng-scope")).click();
+		sleep(15000);
+		driver.switchTo().frame(cambioFrame(driver, By.className("card-top")));
+		driver.findElement(By.className("card-top")).click();
+		sleep(5000);
+		cCC.irAProductosyServicios();
+		tech.verDetalles();
+	    tech.clickDiagnosticarServicio("sms", "SMS Entrante", true);
+	    tech.selectionInconvenient("No recibe de un n\u00famero particular");
+	    tech.continuar();
+	    tech.seleccionarRespuesta("no");
+	    buscarYClick(driver.findElements(By.id("KnowledgeBaseResults_nextBtn")), "equals", "continuar");
+	    page.seleccionarPreguntaFinal("S\u00ed");
+	    buscarYClick(driver.findElements(By.id("BalanceValidation_nextBtn")), "equals", "continuar");
+	    tech.categoriaRed("Desregistrar");
+	    driver.findElement(By.id("NetworkCategory_nextBtn")).click();
+	    sleep(4000);
+	    driver.findElement(By.id("DeregisterSpeech_nextBtn")).click();    
+	    sleep(4000);
+	    driver.findElement(By.id("HLR_IFS_S132_Button")).isDisplayed();
+	    buscarYClick(driver.findElements(By.cssSelector(".slds-form-element__label.ng-binding.ng-scope")), "equals", "s\u00ed");
+	    driver.findElement(By.id("Deregister_nextBtn")).click();
+	}
 }
