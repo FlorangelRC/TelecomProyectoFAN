@@ -90,9 +90,7 @@ public class TestBase {
 	}
 	
 	public void goToLeftPanel2(WebDriver driver, String selection) {
-		/*WebElement element = driver.findElement(By.className("x-btn-split"));
-		Actions builder = new Actions(driver);   
-		builder.moveToElement(element, 245, 20).click().build().perform();*/
+		
 		driver.switchTo().defaultContent();
 		try {
 			driver.findElement(By.className("x-btn-split"));
@@ -220,9 +218,12 @@ public class TestBase {
 	}
 	    
 	public void waitFor(WebDriver driver, By element) {
-		(new WebDriverWait(driver, 5)).until(ExpectedConditions.visibilityOfElementLocated(element));
+		(new WebDriverWait(driver, 15)).until(ExpectedConditions.visibilityOfElementLocated(element));
 	}
-
+	
+	public void waitForClickeable(WebDriver driver, By element) {
+		(new WebDriverWait(driver, 20)).until(ExpectedConditions.elementToBeClickable(element));
+	}
 
 	
 	public void clickLeftPanel(WebDriver driver) {
@@ -288,7 +289,8 @@ public class TestBase {
 		 * Para el Modulo Sales tiene vinculado el perfil de Agente y Atenci�n a clientes		 */
 		public void loginAgente(WebDriver driver) {
 			driver.get(urlAmbiente);
-			try {Thread.sleep(6000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+			//try {Thread.sleep(6000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+			waitForClickeable(driver, By.id("idp_section_buttons"));
 		    Login page0 = new Login(driver);
 		    page0.ingresarAndres();
 		}
@@ -1817,4 +1819,22 @@ public class TestBase {
 		((JavascriptExecutor)driver).executeScript("arguments[0].scrollIntoView();", chargeCode);
 		return chargeCode.findElement(By.tagName("input")).getAttribute("value");
 	}
+	
+	@DataProvider
+	public Object[][] DatosNoNominacionNuevoTelefonicoPasaporte() throws Exception{
+		
+		 Object[][] testObjArray = ExcelUtils.getTableArray(dataProviderE2E(),"Altas y Nominacion",1,1,8,"NoNominacionNuevoTelefonicoPasaporte");
+
+		 return (testObjArray);
+	}
+	
+	@DataProvider
+	public Object[][] DatosNoNominacionExistenteAgente() throws Exception{
+		
+		 Object[][] testObjArray = ExcelUtils.getTableArray(dataProviderE2E(),"Altas y Nominacion",1,1,5,"NoNominacionExistenteAgente");
+
+		 return (testObjArray);
+	}
+	
+	
 }

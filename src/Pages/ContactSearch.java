@@ -9,6 +9,8 @@ import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.How;
 import org.openqa.selenium.support.PageFactory;
 
+import Tests.TestBase;
+
 public class ContactSearch extends BasePage {
 
 	final WebDriver driver;
@@ -65,7 +67,9 @@ public class ContactSearch extends BasePage {
 	}
 
 	public void searchContact2(String docType, String docValue, String genero) {
-		try {Thread.sleep(10000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		TestBase TB = new TestBase();
+		TB.waitForClickeable(driver,By.id("DocumentInputSearch"));
+		//try {Thread.sleep(10000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 		setSimpleDropdown(documentType2, docType);
 		driver.findElement(By.id("DocumentInputSearch")).click();
 		driver.findElement(By.id("DocumentInputSearch")).sendKeys(docValue);
@@ -80,7 +84,7 @@ public class ContactSearch extends BasePage {
 		}
 		if(!genero.equals(""))
 		driver.findElement(By.cssSelector(".OSradioButton.ng-scope.only-buttom")).click();
-		try {Thread.sleep(8000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		//try {Thread.sleep(8000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 	}
 	
 	
@@ -115,6 +119,8 @@ public class ContactSearch extends BasePage {
 	}
 	
 	public void tipoValidacion(String tipoValidacion) {
+		TestBase TB = new TestBase();
+		TB.waitForClickeable(driver, By.id("MethodSelection_prevBtn"));
 		switch (tipoValidacion) {
 		case "documento":
 			List<WebElement> valdni = driver.findElements(By.cssSelector(".slds-form-element__label.ng-binding"));
@@ -192,6 +198,8 @@ public class ContactSearch extends BasePage {
 		try {Thread.sleep(7000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 	}
 	public void Llenar_Contacto(String sNom, String sAp, String sFN ) {
+		TestBase TB = new TestBase();
+		TB.waitFor(driver,By.id("FirstName"));
 		nombre.sendKeys(sNom);
 		apellido.sendKeys(sAp);
 		fNac.sendKeys(sFN);
