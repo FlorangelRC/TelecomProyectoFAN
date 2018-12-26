@@ -362,6 +362,7 @@ public class TestBase {
 		    page0.ingresarLautaro();
 		}
 		
+		
 		/**Ingresa con los datos de la cuenta Nicolas.
 		 * Para el Modulo Sales tiene vinculado el perfil de Logistica	 */
 		public void loginNicolas(WebDriver driver) {

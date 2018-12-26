@@ -116,7 +116,7 @@ public class GestionesPerfilTelefonico extends TestBase{
 		sleep(25000);
 	}
 
-	@AfterMethod(alwaysRun=true)
+	//@AfterMethod(alwaysRun=true)
 	public void after() throws IOException {
 		datosOrden.add(detalles);
 		guardarListaTxt(datosOrden);
@@ -312,15 +312,15 @@ public class GestionesPerfilTelefonico extends TestBase{
 	}
 	
 	// no existe Pack, se probo el caso con otro
-	@Test (groups= {"GestionesPerfilTelefonico","E2E","VentadePacks","Ciclo1"},priority=1, dataProvider="VentaPacks")
+	@Test (groups= {"GestionesPerfilTelefonico","E2E","VentaDePacks","Ciclo1"},priority=1, dataProvider="VentaPacks")
 	public void TS123314_CRM_Movil_REPRO_Venta_de_Pack_40_Pesos_Exclusivo_Para_Vos_Descuento_De_Saldo_Telefonico(String sDNI, String sLinea,  String sVentaPack){
 		imagen = "TS123314";
 		detalles = null;
 		detalles = imagen + " -Venta de Pack - DNI: " + sDNI;
 		CBS cCBS = new CBS();
 		CBS_Mattu cCBSM = new CBS_Mattu();
-		String sMainBalance = cCBS.ObtenerValorResponse(cCBSM.Servicio_queryLiteBySubscriber(sLinea), "bcs:MainBalance");
-		Integer iMainBalance = Integer.parseInt(sMainBalance.substring(0, (sMainBalance.length()) - 1));
+		//String sMainBalance = cCBS.ObtenerValorResponse(cCBSM.Servicio_queryLiteBySubscriber(sLinea), "bcs:MainBalance");
+		//Integer iMainBalance = Integer.parseInt(sMainBalance.substring(0, (sMainBalance.length()) - 1));
 		SalesBase sale = new SalesBase(driver);
 		BasePage cambioFrameByID=new BasePage();
 		CustomerCare cCC = new CustomerCare(driver);
@@ -332,9 +332,12 @@ public class GestionesPerfilTelefonico extends TestBase{
 		System.out.println("id "+accid);
 		detalles+="-Cuenta:"+accid;
 		pagePTelefo.buscarAssert();
+		String sMainBalance = cCBS.ObtenerValorResponse(cCBSM.Servicio_queryLiteBySubscriber(sLinea), "bcs:MainBalance");
+		Integer iMainBalance = Integer.parseInt(sMainBalance.substring(0, (sMainBalance.length()) - 1));
 		cCC.seleccionarCardPornumeroLinea(sLinea, driver);
 		pagePTelefo.comprarPack();
-		String chargeCode = pagePTelefo.agregarPack(sVentaPack);
+		//String chargeCode = 
+				pagePTelefo.agregarPack(sVentaPack);
 		pagePTelefo.tipoDePago("descuento de saldo");
 		String orden = cc.obtenerOrdenMontoyTN(driver, "Compra de Pack");
 		System.out.println("orden = "+orden);
@@ -351,7 +354,7 @@ public class GestionesPerfilTelefonico extends TestBase{
 		String uMainBalance = cCBS.ObtenerValorResponse(cCBSM.Servicio_queryLiteBySubscriber(sLinea), "bcs:MainBalance");
 		Integer uiMainBalance = Integer.parseInt(uMainBalance.substring(0, (uMainBalance.length()) - 1));
 		Assert.assertTrue(iMainBalance < uiMainBalance);
-		detalles += "-Charge Code: " + chargeCode;
+		detalles += "-Charge Code: "; //+ chargeCode;
 	}
 	
 	@Test(groups = { "GestionesPerfilTelefonico","Cambio de simcard", "E2E" }, priority = 1, dataProvider = "CambioSimCardTelef")
@@ -421,7 +424,7 @@ public class GestionesPerfilTelefonico extends TestBase{
 	}
 	
 	
-	@Test (groups= {"GestionesPerfilTelefonico","E2E","VentadePacks","Ciclo1"},priority=1, dataProvider="ventaPack50Tele")
+	@Test (groups= {"GestionesPerfilTelefonico","E2E","VentaDePacks","Ciclo1"},priority=1, dataProvider="ventaPack50Tele")
 	public void TS123157_CRM_Movil_REPRO_Venta_De_Pack_50_Min_Y_50_SMS_X_7_Dias_Factura_De_Venta_TC_Telefonico(String sDNI, String sLinea, String sventaPack, String cBanco, String cTarjeta, String cPromo, String cCuotas, String cNumTarjeta, String cVenceMes, String cVenceAno, String cCodSeg, String cTipoDNI, String cDNITarjeta, String cTitular) throws InterruptedException, AWTException{
 		imagen = "TS123157";
 		detalles = null;
@@ -439,7 +442,8 @@ public class GestionesPerfilTelefonico extends TestBase{
 		pagePTelefo.buscarAssert();
 		cCC.seleccionarCardPornumeroLinea(sLinea, driver);
 		pagePTelefo.comprarPack();
-		String chargeCode = pagePTelefo.PackCombinado(sventaPack);
+		//String chargeCode = 
+				pagePTelefo.PackCombinado(sventaPack);
 		//System.out.println(sventaPack);
 		pagePTelefo.tipoDePago("en factura de venta");
 		pagePTelefo.getTipodepago().click();
@@ -465,7 +469,6 @@ public class GestionesPerfilTelefonico extends TestBase{
 		sleep(45000);
 		pagePTelefo.getOrdenSeRealizoConExito().click();
 		sleep(10000);
-		//caso llega hasta aqui... barra de busqueda no se encuentra habilitada
 		String orden = cCC.obtenerTNyMonto2(driver, sOrden);
 		detalles+="-Monto:"+orden.split("-")[1]+"-Prefactura:"+orden.split("-")[0];
 		driver.navigate().refresh();
@@ -477,7 +480,7 @@ public class GestionesPerfilTelefonico extends TestBase{
 		String datos = tabla.findElements(By.tagName("tr")).get(4).findElements(By.tagName("td")).get(1).getText();
 		Assert.assertTrue(datos.equalsIgnoreCase("activada")||datos.equalsIgnoreCase("activated"));	
 		System.out.println("Operacion: Compra de Pack "+ "Order: " + sOrden + "Cuenta: "+ accid + "Fin");
-		detalles += "-Charge Code: " + chargeCode;
+		detalles += "-Charge Code: ";// + chargeCode;
 	}
 	
 	@Test (groups= {"GestionesPerfilTelefonico", "Ajustes", "E2E"},dataProvider = "CuentaAjustesPRE")  //Rompe porque no sale el mensaje de gestion exitosa, sale el perfil no configurado correctamente
@@ -1482,7 +1485,7 @@ public class GestionesPerfilTelefonico extends TestBase{
 		Assert.assertTrue(abandoned.getText().contains("Gestiones Abandonadas") && driver.findElement(By.className("abandoned-section")).isDisplayed());
 	}
 	
-	@Test (groups= {"GestionesPerfilTelefonico","VentadePacks","E2E","Ciclo1"},priority=1, dataProvider="ventaPackInternacional30SMS")
+	@Test (groups= {"GestionesPerfilTelefonico","VentaDePacks","E2E","Ciclo1"},priority=1, dataProvider="ventaPackInternacional30SMS")
 	public void TS123133_CRM_Movil_REPRO_Venta_De_Pack_internacional_30_SMS_al_Resto_del_Mundo_Factura_De_Venta_TC_Telefonico(String sDNI, String sLinea, String sVentaPack, String sBanco, String sTarjeta, String sPromo, String sCuotas, String sNumTarjeta, String sVenceMes, String sVenceAno, String sCodSeg, String sTipoDNI, String sDNITarjeta, String sTitular) throws InterruptedException, AWTException{
 		imagen = "TS123133";
 		detalles = null;
@@ -1501,9 +1504,10 @@ public class GestionesPerfilTelefonico extends TestBase{
 		pagePTelefo.comprarPack("comprar sms");
 		sleep(5000);
 		cCC.closeleftpanel();
-		String chargeCode = null;
+		//String chargeCode = null;
 		try {
-			chargeCode = pagePTelefo.PackLDI(sVentaPack);
+			//chargeCode = 
+					pagePTelefo.PackLDI(sVentaPack);
 		}
 		catch (Exception eE) {
 			driver.navigate().refresh();
@@ -1511,11 +1515,14 @@ public class GestionesPerfilTelefonico extends TestBase{
 			mk.closeTabByName(driver, "Comprar SMS");
 			cCC.seleccionarCardPornumeroLinea(sLinea, driver);
 			pagePTelefo.comprarPack("comprar sms");
-			chargeCode = pagePTelefo.PackLDI(sVentaPack);
+			//chargeCode = 
+					pagePTelefo.PackLDI(sVentaPack);
 		}
 		pagePTelefo.tipoDePago("en factura de venta");
-		buscarYClick(driver.findElements(By.id("SetPaymentType_nextBtn")), "equals", "next");
+		buscarYClick(driver.findElements(By.id("SetPaymentType_nextBtn")), "equals", "continuar");
 		sleep(10000);
+		pagePTelefo.getTipodepago().click();
+		sleep(8000);
 		pagePTelefo.getSimulaciondeFactura().click();
 		sleep(12000);
 		buscarYClick(driver.findElements(By.cssSelector(".slds-form-element__label.ng-binding")), "equals", "tarjeta de credito");
@@ -1549,7 +1556,7 @@ public class GestionesPerfilTelefonico extends TestBase{
 		String datos = tabla.findElements(By.tagName("tr")).get(4).findElements(By.tagName("td")).get(1).getText();
 		Assert.assertTrue(datos.equalsIgnoreCase("activada")||datos.equalsIgnoreCase("activated"));	
 		System.out.println("Operacion: Compra de Pack "+ "Order: " + sOrden + "Cuenta: "+ accid + "Fin");
-		detalles = imagen + "-Venta de pack-DNI: "+ sDNI + "-" + "Charge Code: " + chargeCode;
+		detalles = imagen + "-Venta de pack-DNI: "+ sDNI + "-" + "Charge Code: "; //+ chargeCode;
 		//Blocked
 	}
 	
@@ -2051,7 +2058,7 @@ public class GestionesPerfilTelefonico extends TestBase{
 			Assert.assertTrue(visu.isDisplayed());
 		}
 	
-	@Test (groups= {"GestionesPerfilTelefonico","E2E", "VentadePacks", "Ciclo1"},priority=1, dataProvider="packUruguay")
+	@Test (groups= {"GestionesPerfilTelefonico","E2E", "VentaDePacks", "Ciclo1"},priority=1, dataProvider="packUruguay")
 	public void TS123143_CRM_Movil_REPRO_Venta_de_pack_100MB_Uruguay_Descuento_de_saldo_Telefonico(String sDNI, String sLinea, String packUruguay) throws InterruptedException, AWTException{
 		imagen = "TS123143";
 		detalles = null;
@@ -2072,7 +2079,8 @@ public class GestionesPerfilTelefonico extends TestBase{
 		cCC.seleccionarCardPornumeroLinea(sLinea, driver);
 		pagePTelefo.comprarPack("comprar minutos");
 		sleep(5000);
-		String chargeCode = pagePTelefo.PacksRoaming(packUruguay);
+		//String chargeCode = 
+				pagePTelefo.PacksRoaming(packUruguay);
 		pagePTelefo.tipoDePago("descuento de saldo");
 		driver.findElement(By.id("SetPaymentType_nextBtn")).click();
 		sleep(45000);
@@ -2082,7 +2090,7 @@ public class GestionesPerfilTelefonico extends TestBase{
 		Assert.assertTrue(bAssert);
 		String uMainBalance = cCBS.ObtenerValorResponse(cCBSM.Servicio_queryLiteBySubscriber(sLinea), "bcs:MainBalance");
 		Integer uiMainBalance = Integer.parseInt(uMainBalance.substring(0, (uMainBalance.length()) - 1));
-		detalles = imagen + "-Venta de pack - DNI: " + sDNI + "-" + "Charge Code: " + chargeCode;
+		detalles = imagen + "-Venta de pack - DNI: " + sDNI + "-" + "Charge Code: "; //+ chargeCode;
 		Assert.assertTrue(iMainBalance > uiMainBalance);
 	}
 	

@@ -144,7 +144,7 @@ public class GestionesPerfilOficina extends TestBase {
 		sleep(15000);
 	}
 
-	@AfterMethod(alwaysRun=true)
+	//@AfterMethod(alwaysRun=true)
 	public void after() throws IOException {
 		guardarListaTxt(sOrders);
 		sOrders.clear();
@@ -2498,7 +2498,7 @@ public class GestionesPerfilOficina extends TestBase {
 		
 	}
 	
-	@Test (groups = {"GestionesPerfilOficina","Venta de Packs","E2E","Ciclo1"}, dataProvider="PackOfCom")
+	@Test (groups = {"GestionesPerfilOficina","VentaDePacks","E2E","Ciclo1"}, dataProvider="PackOfCom")
 	public void Venta_de_Pack_1_GB_x_1_dia_whatsapp_gratis_Factura_de_Venta_TC_OffCom(String sDNI, String sLinea, String sPackOfCom, String cBanco, String cTarjeta, String cPromo, String cCuotas) throws AWTException, KeyManagementException, NoSuchAlgorithmException{
 		imagen = "Venta De Pack Oficina";
 		detalles = null;
@@ -2514,7 +2514,7 @@ public class GestionesPerfilOficina extends TestBase {
 		pagePTelefo.comprarPack();
 		pagePTelefo.closerightpanel();
 		sleep(8000);
-		pagePTelefo.agregarPack("1GB Bienvenida");		
+		pagePTelefo.agregarPack(sPackOfCom);		
 		pagePTelefo.tipoDePago("en factura de venta");
 		pagePTelefo.getTipodepago().click();
 		sleep(12000);
@@ -4125,7 +4125,7 @@ public class GestionesPerfilOficina extends TestBase {
 	
 	}
 	
-	@Test (groups = {"GestionesPerfilOficina", "VentaDePack", "Ciclo1"},priority=1, dataProvider = "ventaPack50ofic")
+	@Test (groups = {"GestionesPerfilOficina", "VentaDePacks", "Ciclo1"},priority=1, dataProvider = "ventaPack50ofic")
 	public void TS139727_CRM_Movil_REPRO_Venta_de_pack_50_min_y_50_SMS_x_7_dias_Factura_de_Venta_Efectivo_OOCC(String sDNI, String sLinea, String sventaPack) throws AWTException {
 		imagen = "TS139727";
 		detalles = null;
@@ -4144,19 +4144,25 @@ public class GestionesPerfilOficina extends TestBase {
 		cCC.seleccionarCardPornumeroLinea(sLinea, driver);
 		pagePTelefo.comprarPack();
 		pagePTelefo.closerightpanel();
-		String chargeCode = null;
-		try {
-			chargeCode = pagePTelefo.PackCombinado(sventaPack);
-		}
-		catch (Exception eE) {
-			driver.navigate().refresh();
-			sleep(10000);
-			mk.closeTabByName(driver, "Comprar SMS");
-			cCC.seleccionarCardPornumeroLinea(sLinea, driver);
-			pagePTelefo.comprarPack("comprar sms");
-			cc.closerightpanel();
-			chargeCode = pagePTelefo.PackCombinado(sventaPack);
-		}
+		pagePTelefo.PackCombinado(sventaPack);
+		
+		//String chargeCode = null;
+//		try {
+//			//chargeCode = 
+//					pagePTelefo.PackCombinado(sventaPack);
+//			pagePTelefo.PackCombinado(sventaPack);
+//		}
+//		catch (Exception eE) {
+//			driver.navigate().refresh();
+//			sleep(10000);
+//			mk.closeTabByName(driver, "Comprar SMS");
+//			cCC.seleccionarCardPornumeroLinea(sLinea, driver);
+//			pagePTelefo.comprarPack("comprar sms");
+//			//cc.closerightpanel();
+//			//chargeCode = 
+//					pagePTelefo.PackCombinado(sventaPack);
+//			pagePTelefo.PackCombinado(sventaPack);
+		//}
 		pagePTelefo.tipoDePago("en factura de venta");
 		sleep(12000);
 		pagePTelefo.getTipodepago().click();
@@ -4185,10 +4191,10 @@ public class GestionesPerfilOficina extends TestBase {
 		String datos = tabla.findElements(By.tagName("tr")).get(4).findElements(By.tagName("td")).get(1).getText();
 		Assert.assertTrue(datos.equalsIgnoreCase("activada")||datos.equalsIgnoreCase("activated"));	
 		System.out.println("Operacion: Compra de Pack "+ "Order: " + sOrden + "Cuenta: "+ accid + "Fin");
-		detalles += "-Charge Code: " + chargeCode;
+		detalles += "-Charge Code: ";// + chargeCode;
 	}
 	
-	@Test (groups = {"GestionPerfilOficina", "VentaDePack", "Ciclo1"}, dataProvider = "ventaX1Dia" )
+	@Test (groups = {"GestionPerfilOficina", "VentaDePacks", "Ciclo1"}, dataProvider = "ventaX1Dia" )
 	public void TS123163_CRM_Movil_REPRO_Venta_de_pack_1000_min_a_Personal_y_1000_SMS_x_1_dia_Factura_de_Venta_TC_Presencial(String sDNI, String sLinea, String sVentaPack, String sBanco, String sTarjeta, String sPromo, String sCuotas, String sNumTarjeta, String sVenceMes, String sVenceAno, String sCodSeg, String sTipoDNI, String sDNITarjeta, String sTitular) throws KeyManagementException, NoSuchAlgorithmException{
 		imagen = "TS123163";
 		detalles = null;
@@ -4207,7 +4213,8 @@ public class GestionesPerfilOficina extends TestBase {
 		cCC.seleccionarCardPornumeroLinea(sLinea, driver);
 		//cCC.closerightpanel();
 		pagePTelefo.comprarPack();
-		String chargeCode = pagePTelefo.PackCombinado(sVentaPack);
+		//String chargeCode = 
+				pagePTelefo.PackCombinado(sVentaPack);
 		pagePTelefo.tipoDePago("en factura de venta");
 		sleep(12000);
 		pagePTelefo.getTipodepago().click();
@@ -4238,7 +4245,7 @@ public class GestionesPerfilOficina extends TestBase {
 		String datos = tabla.findElements(By.tagName("tr")).get(4).findElements(By.tagName("td")).get(1).getText();
 		Assert.assertTrue(datos.equalsIgnoreCase("activada")||datos.equalsIgnoreCase("activated"));	
 		System.out.println("Operacion: Compra de Pack "+ "Order: " + sOrden + "Cuenta: "+ accid + "Fin");
-		detalles += "-Charge Code: " + chargeCode;
+		detalles += "-Charge Code: " ;//+ chargeCode;
 		//Blocked
 	}
 	
