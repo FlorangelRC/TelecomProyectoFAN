@@ -3802,7 +3802,7 @@ public class GestionesPerfilTelefonico extends TestBase{
 	}
 
 	@Test (groups = {"GestionesPerfilOficina", "Detalle de Consumos", "Ciclo2"}, dataProvider = "CuentaVista360") 
-	public void TS_134802_CRM_Movil_Prepago_Vista_360_Detalle_de_consumo_Consulta_visualizaci�n_y_busqueda_de_los_distintos_consumos_realizados_por_el_cliente_FAN_Front_Telefonico(String sDNI, String sNombre){
+	public void TS_134802_CRM_Movil_Prepago_Vista_360_Detalle_de_consumo_Consulta_visualizacion_y_busqueda_de_los_distintos_consumos_realizados_por_el_cliente_FAN_Front_Telefonico(String sDNI, String sNombre){
 		imagen = "TS134368";
 		detalles = null;
 		detalles = imagen + "-Vista 360 - DNI: "+sDNI+ " - Nombre: "+sNombre;
@@ -4345,7 +4345,7 @@ public class GestionesPerfilTelefonico extends TestBase{
 	}
 	
 	@Test (groups = {"GestionesPerfilOficina","Vista360","E2E", ""}, dataProvider="CuentaVista360")
-	public void TS134794_CRM_Movil_Prepago_Vista_360_Distribucion_de_paneles_Informaci�n_del_cliente_FAN_Front_Telefonico(String sDNI, String sNombre) {
+	public void TS134794_CRM_Movil_Prepago_Vista_360_Distribucion_de_paneles_Informacion_del_cliente_FAN_Front_Telefonico(String sDNI, String sLinea, String sNombre, String sMail, String sSomething) {
 		imagen = "TS134794";
 		detalles = imagen+" - Vista360 - DNI: "+sDNI;
 		BasePage cambioFrameByID=new BasePage();
@@ -4374,7 +4374,7 @@ public class GestionesPerfilTelefonico extends TestBase{
 		String sNPS = wProfileBoxDetails.findElement(By.xpath("//td[@class='slds-text-body_regular account-detail-label'] //Label[contains(text(),'NPS')] //.. /following-sibling::td //Label")).getText();
 		//Assert.assertTrue(sNPS.matches("[0-9]+"));
 		List<WebElement> wWebList = wProfileBoxDetails.findElements(By.className("profile-edit"));
-		List<String> sTextList = new ArrayList();
+		List<String> sTextList = new ArrayList<String>();
 		sTextList.add("Actualizar datos" + "Reseteo de Clave");
 		ppt = new PagePerfilTelefonico(driver);
 		Assert.assertTrue(ppt.forEach(wWebList, sTextList));
@@ -4388,18 +4388,16 @@ public class GestionesPerfilTelefonico extends TestBase{
 		sleep(5000);
 		//Fix
 		/*WebElement wLeftContainerSection = null; //driver.findElement(By.xpath("//div[@index='3'] //*[@class='left-sidebar-section-container']"));
-		List<WebElement> asd = driver.findElements(By.cssSelector(".ng-not-empty.ng-valid"));
-		for(WebElement a : asd) {
-			if(a.getAttribute("value").equals("4")) {
-				wLeftContainerSection = a;
-			}
-		}*/
 		//System.out.println("Contenido: " + driver.findElement(By.xpath("/html/body/div/div[1]/ng-include/div[4]/ng-include/div/div[2]/table[1]/tbody/tr/td/div[1]")).getText());
 		WebElement wLeftContainerSection = driver.findElement(By.tagName("body")).findElement(By.tagName("div")).findElements(By.tagName("div")).get(0).findElement(By.className("ng-include")).findElements(By.tagName("div")).get(3).findElement(By.className("ng-include")).findElement(By.tagName("div")).findElements(By.tagName("div")).get(1);
 		System.out.println("Text: " + wLeftContainerSection.findElement(By.xpath("//table[1] //tr[1] //div[1]")).getText());
-		/*Assert.assertTrue(wLeftContainerSection.findElement(By.xpath("//table[1] //tr[1] //div[1]")).getText().equalsIgnoreCase("Segmento:"));
+		Assert.assertTrue(wLeftContainerSection.findElement(By.xpath("//table[1] //tr[1] //div[1]")).getText().equalsIgnoreCase("Segmento:"));
 		Assert.assertTrue(wLeftContainerSection.findElement(By.xpath("//table[1] //tr[1] //div[2]")).getText().equalsIgnoreCase("Alta reciente"));
-		Assert.assertTrue(wLeftContainerSection.findElement(By.xpath("//table[2] //tr[1] //div[1]")).getText().equalsIgnoreCase("Atributos:"));
-	*/}
+		Assert.assertTrue(wLeftContainerSection.findElement(By.xpath("//table[2] //tr[1] //div[1]")).getText().equalsIgnoreCase("Atributos:"));*/
+		
+		Assert.assertTrue(driver.findElement(By.xpath("/html/body/div/div[1]/ng-include/div[4]/ng-include/div/div[2]/table[1]/tbody/tr/td/div[1]")).getText().equalsIgnoreCase("Segmento:"));
+		Assert.assertTrue(driver.findElement(By.xpath("/html/body/div/div[1]/ng-include/div[4]/ng-include/div/div[2]/table[1]/tbody/tr/td/div[2]")).getText().equalsIgnoreCase("Alta reciente - Masivo"));
+		Assert.assertTrue(driver.findElement(By.xpath("/html/body/div/div[1]/ng-include/div[4]/ng-include/div/div[2]/table[2]/tbody/tr[1]/td/div")).getText().equalsIgnoreCase("Atributos:"));
+	}
 	
 }
