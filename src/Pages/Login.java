@@ -359,4 +359,13 @@ public class Login extends BasePage {
 		driver.findElement(By.cssSelector(".btn.btn-primary.btn-lg.btn-block.btn-continuar")).click();
 		try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 	}
+	
+	public void ingresarBeFANConfigurador() {
+		driver.findElement(By.cssSelector(".btn.btn-primary.btn-lg.btn-block.btn-continuar")).click();
+		driver.findElement(By.cssSelector(".text.form-control.ng-pristine.ng-empty.ng-invalid.ng-invalid-required.ng-valid-maxlength.ng-touched")).sendKeys("UAT529763");
+		driver.findElement(By.cssSelector(".text.form-control.ng-pristine.ng-untouched.ng-empty.ng-invalid.ng-invalid-required.ng-valid-maxlength")).sendKeys("Testa10k");
+		driver.findElement(By.cssSelector(".btn.btn-primary.btn-lg.btn-block.btn-continuar")).click();
+		try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+	}
+	
 }
