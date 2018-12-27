@@ -1,5 +1,6 @@
 package Tests;
 
+import java.io.File;
 import java.util.List;
 
 import org.openqa.selenium.By;
@@ -124,5 +125,11 @@ public class BeFAN extends TestBase {
 		driver.findElement(By.cssSelector(".btn.btn-primary")).click();
 		sleep(5000);
 		
+	}
+	
+	@Test (groups = "BeFAN")
+	public void TS126592_BeFan_Movil_REPRO_Preactivacion_repro_Cantidad_inexistente() {
+	irA("gestion");
+	File directory = new File("1.txt");
 	}
 }
