@@ -1333,7 +1333,7 @@ public class GestionesPerfilAgente extends TestBase{
 		buscarYClick(driver.findElements(By.id("SymptomExplanation_nextBtn")), "equals", "continuar");
 	}
 
-	@Test (groups = {"GestionesPerfilAgente", "DiagnosticoIncoDiagnosticoInconvenientenveniente","E2E", "Ciclo3"}, dataProvider = "Diagnostico")
+	@Test (groups = {"GestionesPerfilAgente", "DiagnosticoIncoveniente","E2E", "Ciclo3"}, dataProvider = "Diagnostico")
 	public void TS119283_CRM_Movil_REPRO_Diagnostico_de_Datos_Valida_Red_y_Navegacion_Motivo_de_contacto_No_puedo_navegar_Antena_rojo_NO_BAM_Agente(String sDNI, String sLinea) throws Exception  {
 		imagen = "TS119283";
 		detalles = null;

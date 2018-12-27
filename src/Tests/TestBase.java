@@ -400,6 +400,13 @@ public class TestBase {
 		    page0.ingresarBeFAN();
 		}
 		
+		public void loginBeFANConfigurador(WebDriver driver) {
+			driver.get(urlBeFAN);
+			try {Thread.sleep(6000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		    Login page0 = new Login(driver);
+		    page0.ingresarBeFANConfigurador();
+		}
+		
 		public void elegirmodulo(String modulo){
 			try {Thread.sleep(4000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 			String a = driver.findElement(By.id("tsidLabel")).getText();

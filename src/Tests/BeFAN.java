@@ -20,12 +20,13 @@ public class BeFAN extends TestBase {
 	
 	private void irA(String opcion) {
 		WebElement menu = null;
+		sleep(3000);
 		buscarYClick(driver.findElements(By.className("dropdown-toggle")), "contains", "sims");
 		for (WebElement x : driver.findElements(By.className("col-sm-4"))) {
 			if (x.getAttribute("ng-show").equals("headerCtrl.container.hasAccess(['sims_importacion', 'sims_gestion'])"))
 				menu = x;
 		}
-		switch (opcion) {
+		switch(opcion) {
 		case "importacion":
 			try {
 				for (WebElement x : menu.findElements(By.tagName("a"))) {
@@ -34,7 +35,7 @@ public class BeFAN extends TestBase {
 						sleep(3000);
 					}
 				}			
-			} catch (Exception e) {}
+			} catch(Exception e) {}
 		case "gestion":
 			try {
 				for (WebElement x : menu.findElements(By.tagName("a"))) {
@@ -43,7 +44,7 @@ public class BeFAN extends TestBase {
 						sleep(3000);
 					}
 				}
-			} catch (Exception e) {}
+			} catch(Exception e) {}
 		}
 	}
 	
@@ -116,15 +117,40 @@ public class BeFAN extends TestBase {
 		Assert.assertTrue(procesado);
 	}
 	
-	@Test
+	@Test (groups = "BeFAN")
 	public void TS126662_BeFan_Movil_REPRO_Preactivacion_repro_Busqueda_de_archivos_Agente_Visualizacion_de_mas_informacion() {
-		boolean procesado = false;
+		boolean razonSocial = false, linea = false, plan = false, nmu = false, serie = false, preactivacion = false, procesamiento = false, estado = false, descripcion = false;
 		irA("gestion");
 		selectByText(driver.findElement(By.cssSelector(".text.form-control.ng-pristine.ng-untouched.ng-valid.ng-empty")), "Procesado");
 		selectByText(driver.findElements(By.cssSelector(".text.form-control.ng-pristine.ng-untouched.ng-valid.ng-empty")).get(1), "BAS-VJP-BAHIA BLANCA - VJP Punta Alta");
 		driver.findElement(By.cssSelector(".btn.btn-primary")).click();
 		sleep(5000);
-		
+		try {
+			driver.findElement(By.id("exportarTabla")).findElement(By.tagName("tbody")).findElement(By.tagName("tr")).findElements(By.tagName("td")).get(8).click();
+		} catch(Exception e) {}
+		sleep(3000);
+		WebElement columnas = driver.findElement(By.cssSelector(".table.table-top-fixed.table-striped.table-primary")).findElement(By.tagName("tr"));
+		for (WebElement x : columnas.findElements(By.tagName("th"))) {
+			if (x.getText().contains("Raz\u00f3n Social"))
+				razonSocial = true;
+			if (x.getText().contains("L\u00ednea"))
+				linea = true;
+			if (x.getText().contains("Plan"))
+				plan = true;
+			if (x.getText().contains("NMU"))
+				nmu = true;
+			if (x.getText().contains("Serie"))
+				serie = true;
+			if (x.getText().contains("Preactivaci\u00f3n"))
+				preactivacion = true;
+			if (x.getText().contains("Procesamiento"))
+				procesamiento = true;
+			if (x.getText().contains("Estado"))
+				estado = true;
+			if (x.getText().contains("Descripci\u00f3n"))
+				descripcion = true;
+		}
+		Assert.assertTrue(razonSocial && linea && plan && nmu && serie && preactivacion && procesamiento && estado && descripcion);
 	}
 	
 	@Test (groups = "BeFAN")
