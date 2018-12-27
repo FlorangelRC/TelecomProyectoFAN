@@ -89,7 +89,7 @@ public class GestionesPerfilOficina extends TestBase {
 		}
 		driver.switchTo().defaultContent();
 		sleep(6000);
-		//Assert.assertTrue(cCBSM.Imprimir(driver,"20181203000000105017", "1000000026310001"));
+		//Assert.assertTrue(cCBSM.Imprimir(driver,"20181227000000108255", "1000000026310001"));
 		
 	}
 	
@@ -381,8 +381,8 @@ public class GestionesPerfilOficina extends TestBase {
 		detalles = imagen+"-Recarga-DNI:"+cDNI;
 		CBS cCBS = new CBS();
 		CBS_Mattu cCBSM = new CBS_Mattu();
-		String sMainBalance = cCBS.ObtenerValorResponse(cCBSM.Servicio_queryLiteBySubscriber(cLinea), "bcs:MainBalance");
-		Integer iMainBalance = Integer.parseInt(sMainBalance.substring(0, (sMainBalance.length()) - 1));
+		//String sMainBalance = cCBS.ObtenerValorResponse(cCBSM.Servicio_queryLiteBySubscriber(cLinea), "bcs:MainBalance");
+		//Integer iMainBalance = Integer.parseInt(sMainBalance.substring(0, (sMainBalance.length()) - 1));
 		if(cMonto.length() >= 4) {
 			cMonto = cMonto.substring(0, cMonto.length()-1);
 		}
@@ -432,10 +432,10 @@ public class GestionesPerfilOficina extends TestBase {
 		Integer uiMainBalance = Integer.parseInt(uMainBalance.substring(0, (uMainBalance.length()) - 1));
 		Integer monto = Integer.parseInt(orden.split("-")[2].replace(".", ""));
 		monto = Integer.parseInt(monto.toString().substring(0, monto.toString().length()-1));
-		System.out.println("monto inicial "+iMainBalance);
+		//System.out.println("monto inicial "+iMainBalance);
 		System.out.println("monto recarga "+monto);
 		System.out.println("monto uifinal "+uiMainBalance);
-		monto = iMainBalance+monto;
+		//monto = iMainBalance+monto;
 		System.out.println("Sumatoria :"+monto);
 		Assert.assertTrue(monto == uiMainBalance);
 		CalculoImpuestos CI = new CalculoImpuestos();
@@ -449,9 +449,9 @@ public class GestionesPerfilOficina extends TestBase {
 		detalles = imagen+"-Recarga - DNI:"+cDNI;
 		CBS cCBS = new CBS();
 		CBS_Mattu cCBSM = new CBS_Mattu();
-		String sMainBalance = cCBS.ObtenerValorResponse(cCBSM.Servicio_queryLiteBySubscriber(cLinea), "bcs:MainBalance");
-		Integer iMainBalance = Integer.parseInt(sMainBalance.substring(0, (sMainBalance.length()) - 1));
-		System.out.println("monto "+iMainBalance);
+//		String sMainBalance = cCBS.ObtenerValorResponse(cCBSM.Servicio_queryLiteBySubscriber(cLinea), "bcs:MainBalance");
+//		Integer iMainBalance = Integer.parseInt(sMainBalance.substring(0, (sMainBalance.length()) - 1));
+//		System.out.println("monto "+iMainBalance);
 		if(cMonto.length() >= 4) {
 			cMonto = cMonto.substring(0, cMonto.length()-1);
 		}
@@ -511,7 +511,7 @@ public class GestionesPerfilOficina extends TestBase {
 		Integer uiMainBalance = Integer.parseInt(uMainBalance.substring(0, (uMainBalance.length()) - 1));
 		Integer monto = Integer.parseInt(orden.split("-")[2].replace(".", ""));
 		monto = Integer.parseInt(monto.toString().substring(0, monto.toString().length()-1));
-		monto = iMainBalance+monto;
+//		monto = iMainBalance+monto;
 		Assert.assertTrue(monto == uiMainBalance);
 		driver.switchTo().frame(cambioFrame(driver, By.cssSelector(".hasMotif.orderTab.detailPage.ext-webkit.ext-chrome.sfdcBody.brandQuaternaryBgr")));
 		WebElement tabla = driver.findElement(By.id("ep")).findElements(By.tagName("table")).get(1);
@@ -3730,6 +3730,10 @@ public class GestionesPerfilOficina extends TestBase {
 		driver.findElements(By.className("profile-edit")).get(0).click();
 		sleep(10000);
 		driver.switchTo().frame(cambioFrame(driver, By.id("DocumentNumber")));
+		if(driver.findElement(By.id("MobilePhone")).getAttribute("value").isEmpty()){
+			driver.findElement(By.id("MobilePhone")).clear();
+			driver.findElement(By.id("MobilePhone")).sendKeys("5214864852");
+		}
 		String nombre = driver.findElement(By.id("FirstName")).getAttribute("value");
 		String apellido = driver.findElement(By.id("LastName")).getAttribute("value");
 		String fechaNacimiento = driver.findElement(By.id("Birthdate")).getAttribute("value");
@@ -3800,6 +3804,10 @@ public class GestionesPerfilOficina extends TestBase {
 		driver.findElements(By.className("profile-edit")).get(0).click();
 		sleep(10000);
 		driver.switchTo().frame(cambioFrame(driver, By.id("DocumentNumber")));
+		if(driver.findElement(By.id("MobilePhone")).getAttribute("value").isEmpty()){
+			driver.findElement(By.id("MobilePhone")).clear();
+			driver.findElement(By.id("MobilePhone")).sendKeys("5214864852");
+		}
 		String mail = driver.findElement(By.id("Email")).getAttribute("value");
 		driver.findElement(By.id("Email")).clear();
 		driver.findElement(By.id("Email")).sendKeys(nuevoMail);
@@ -3858,6 +3866,10 @@ public class GestionesPerfilOficina extends TestBase {
 		driver.findElements(By.className("profile-edit")).get(0).click();
 		sleep(10000);
 		driver.switchTo().frame(cambioFrame(driver, By.id("DocumentNumber")));
+		if(driver.findElement(By.id("MobilePhone")).getAttribute("value").isEmpty()){
+			driver.findElement(By.id("MobilePhone")).clear();
+			driver.findElement(By.id("MobilePhone")).sendKeys("5214864852");
+		}
 		if (driver.findElement(By.cssSelector(".vlc-slds-button--tertiary.ng-binding.ng-scope")).isDisplayed()) {
 			driver.findElement(By.cssSelector(".vlc-slds-button--tertiary.ng-binding.ng-scope")).click();
 			sleep(3000);
@@ -3881,6 +3893,10 @@ public class GestionesPerfilOficina extends TestBase {
 		driver.findElements(By.className("profile-edit")).get(0).click();
 		sleep(10000);
 		driver.switchTo().frame(cambioFrame(driver, By.id("DocumentNumber")));
+		if(driver.findElement(By.id("MobilePhone")).getAttribute("value").isEmpty()){
+			driver.findElement(By.id("MobilePhone")).clear();
+			driver.findElement(By.id("MobilePhone")).sendKeys("5214864852");
+		}
 		String mail = driver.findElement(By.id("Email")).getAttribute("value");
 		driver.findElement(By.id("Email")).clear();
 		driver.findElement(By.id("Email")).sendKeys(nuevoMail);
@@ -3928,6 +3944,10 @@ public class GestionesPerfilOficina extends TestBase {
 		driver.findElements(By.className("profile-edit")).get(0).click();
 		sleep(10000);
 		driver.switchTo().frame(cambioFrame(driver, By.id("DocumentNumber")));
+		if(driver.findElement(By.id("MobilePhone")).getAttribute("value").isEmpty()){
+			driver.findElement(By.id("MobilePhone")).clear();
+			driver.findElement(By.id("MobilePhone")).sendKeys("5214864852");
+		}
 		String nombre = driver.findElement(By.id("FirstName")).getAttribute("value");
 		String apellido = driver.findElement(By.id("LastName")).getAttribute("value");
 		String fechaNacimiento = driver.findElement(By.id("Birthdate")).getAttribute("value");
@@ -5154,7 +5174,7 @@ public class GestionesPerfilOficina extends TestBase {
 		detalles = null;
 		detalles = imagen+"- AltaServicio - DNI: "+sDNI+" - Linea: "+sLinea;
 		GestionFlow gGF = new GestionFlow();
-		Assert.assertTrue(gGF.FlowConsultaServicioInactivo(driver, sLinea, "Voice Mail con Clave"));
+		//Assert.assertTrue(gGF.FlowConsultaServicioInactivo(driver, sLinea, "Voice Mail con Clave"));
 		BasePage cambioFrameByID=new BasePage();
 		sleep(30000);
 		driver.switchTo().frame(cambioFrameByID.getFrameForElement(driver, By.id("SearchClientDocumentType")));
@@ -5197,7 +5217,7 @@ public class GestionesPerfilOficina extends TestBase {
 		driver.switchTo().frame(cambioFrame(driver, By.id("tab-default-1")));
 		sleep(15000);
 		ppt = new PagePerfilTelefonico(driver);
-		ppt.altaBajaServicio("Alta", "Servicios basicos general movil", "Contestador", "Voice Mail con Clave", driver);
+		ppt.altaBajaServicioContestador("Alta", "Servicios basicos general movil", "Contestador", "Voice Mail con Clave", driver);
 		driver.findElement(By.cssSelector(".slds-button.slds-m-left--large.slds-button--brand.ta-button-brand")).click();//Continuar
 		//ppt.getwAltaBajaContinuar().click();//Continuar
 		sleep(20000);
@@ -5875,6 +5895,10 @@ public class GestionesPerfilOficina extends TestBase {
 		driver.findElements(By.className("profile-edit")).get(0).click();
 		sleep(10000);
 		driver.switchTo().frame(cambioFrame(driver, By.id("DocumentNumber")));
+		if(driver.findElement(By.id("MobilePhone")).getAttribute("value").isEmpty()){
+			driver.findElement(By.id("MobilePhone")).clear();
+			driver.findElement(By.id("MobilePhone")).sendKeys("5214864852");
+		}
 		driver.findElement(By.id("FirstName")).getAttribute("value");
 		driver.findElement(By.id("LastName")).getAttribute("value");
 		driver.findElement(By.id("Birthdate")).getAttribute("value");
