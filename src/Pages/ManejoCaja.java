@@ -223,6 +223,10 @@ public class ManejoCaja extends BasePage {
 		impresora.selectByIndex(0);
 		driver.findElement(By.id("invoiceListArea_content")).findElement(By.id("invoiceIOList_0_12")).findElements(By.tagName("img")).get(1).click();
 		sleep(2000);
+		driver.switchTo().frame(TB.cambioFrame(driver,By.id("confirmBtn2")));
+		Select puntoEmision = new Select(driver.findElement(By.id("emissionPoint_input_select")));
+		puntoEmision.selectByVisibleText("2300");
+		driver.findElement(By.id("confirmBtn2")).click();
 		Assert.assertFalse(true);
 		//cerrarPestanias(driver);
 	}

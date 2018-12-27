@@ -549,6 +549,8 @@ public class PagePerfilTelefonico extends TestBase{
 		sleep(10000);
 		if (sAltaBaja.toLowerCase().equalsIgnoreCase("Baja")) {
 			if(sServicio.toLowerCase().contains("roaming internacional")) {
+				wTable = driver.findElement(By.cssSelector("[class='slds-tabs--default__content slds-show']"));
+				wServicios = wTable.findElements(By.cssSelector("[class='cpq-item-product-child-level-2 ng-not-empty ng-valid'] [class='cpq-item-base-product']"));
 				String sNServ = null;
 				if(sServicio.toLowerCase().contains("con roaming internacional"))
 					sNServ = "ddi sin roaming internacional";
@@ -582,7 +584,7 @@ public class PagePerfilTelefonico extends TestBase{
 				
 				bAssert = false;
 				for(WebElement wAux5 : wServicios){
-					
+					System.out.println("*****Serivicio: "+wAux5.getText());
 					System.out.println("\nService: " + wAux5.findElement(By.className("cpq-item-no-children")).getText().toLowerCase() + " = " + sServicio.toLowerCase());
 					System.out.println("Result: " + wAux5.findElement(By.className("cpq-item-no-children")).getText().toLowerCase().contains(sServicio.toLowerCase()));
 					
@@ -629,5 +631,126 @@ public class PagePerfilTelefonico extends TestBase{
 		
 		return bAssert;
 	}
-	
+	public void altaBajaServicioContestador(String sAltaBaja,String sTipoServicio, String sSubTipoServicio, String sServicio, WebDriver driver) {
+		boolean bAssert= false;
+		boolean hizoGestion = false;
+		/*if(sAltaBaja.equalsIgnoreCase("alta")) {
+			if(sServicio.toLowerCase().equals("voice mail con clave"))
+				altaBajaServicio("Baja", "Servicios basicos general movil", "Contestador", "Contestador Personal", driver);
+			else
+				altaBajaServicio("Baja", "Servicios basicos general movil", "Contestador", "Voice Mail con Clave", driver);
+		}*/
+		if(driver.findElement(By.cssSelector("[class='slds-tabs--default__content slds-show']")).findElements(By.cssSelector("[class='cpq-item-product-child-level-2 ng-not-empty ng-valid'] [class='cpq-item-base-product']")).size()<3){
+			driver.findElement(By.cssSelector(".slds-button.cpq-item-has-children")).click();//Plan con Tarjeta Repro button
+			//getwPlanConTarjetaRepro().click();//Plan con Tarjeta Repro button
+			
+			//Select Servicios Telefonia Movil or Servicios Basicos General Movil
+			List<WebElement> wTipoServicios= driver.findElements(By.xpath("//*[@class='cpq-item-product-child-level-1 cpq-item-child-product-name-wrapper']"));
+			for(WebElement wAux : wTipoServicios){
+				if(wAux.getText().toLowerCase().contains(sTipoServicio.toLowerCase())){
+					System.out.println("\nGet In " + sTipoServicio);
+					wAux.findElement(By.tagName("button")).click();
+					sleep(8000);
+					bAssert = true;
+					break;
+				}
+			}
+			Assert.assertTrue(bAssert);
+			sleep(20000);
+			
+			bAssert = false;
+			List <WebElement> wSubTipoServicio = driver.findElements(By.cssSelector(".cpq-item-product-child-level-2.cpq-item-child-product-name-wrapper"));
+			for(WebElement wAux2 : wSubTipoServicio){
+				if(wAux2.getText().toLowerCase().contains(sSubTipoServicio.toLowerCase())){
+					System.out.println("\nGet In " + sSubTipoServicio);
+					wAux2.findElement(By.cssSelector(".slds-button.slds-button_icon-small")).click();
+					bAssert = true;
+					break;
+				}
+			}
+			Assert.assertTrue(bAssert);
+			sleep(10000);
+			
+			//Select specific service
+		}
+		WebElement wTable = driver.findElement(By.cssSelector("[class='slds-tabs--default__content slds-show']"));
+		List <WebElement> wServicios = wTable.findElements(By.cssSelector("[class='cpq-item-product-child-level-2 ng-not-empty ng-valid'] [class='cpq-item-base-product']"));
+		
+		bAssert = false;
+		String sOtroServ = null;
+		if(sAltaBaja.toLowerCase().contains("alta")){
+			if(sServicio.toLowerCase().contains("voice mail con clave")||sServicio.toLowerCase().contains("contestador personal")) {
+				if(sServicio.toLowerCase().contains("voice mail con clave")) {
+					sOtroServ = "contestador personal";
+				}else {
+					sOtroServ = "voice mail con clave";
+				}
+				for(WebElement wAux3 : wServicios){
+					if(!wAux3.getText().toLowerCase().contains("toggle")) {
+						System.out.println("\nService: " + wAux3.findElement(By.className("cpq-item-no-children")).getText().toLowerCase() + " = " + sServicio.toLowerCase());
+						System.out.println("Result: " + wAux3.findElement(By.className("cpq-item-no-children")).getText().toLowerCase().contains(sServicio.toLowerCase()));
+						
+						if(wAux3.findElement(By.className("cpq-item-no-children")).getText().toLowerCase().contains(sOtroServ)){
+							System.out.println("\nSign Down");
+							sleep(5000);
+							try {
+								System.out.println("Is Displayed? " + wAux3.findElement(By.cssSelector(".slds-button.slds-button_icon-border-filled.cpq-item-actions-dropdown-button")).isDisplayed());
+							}
+							catch(Exception eE) {
+								Assert.assertTrue(false);
+							}
+							wAux3.findElement(By.cssSelector(".slds-button.slds-button_icon-border-filled.cpq-item-actions-dropdown-button")).click();
+							sleep(10000);
+							List<WebElement> wButtons = wAux3.findElements(By.cssSelector(".slds-dropdown__item.cpq-item-actions-dropdown__item"));
+							for(WebElement wAux4 : wButtons) {
+								System.out.println("Option: " + wAux4.getText());
+								if(wAux4.getText().equalsIgnoreCase("Delete")) {
+									System.out.println("Found it");
+									//cCC.obligarclick(wAux2);
+									wAux4.click();
+								}
+							}
+							bAssert = true;
+							sleep(3000);
+							driver.findElement(By.cssSelector("[class='slds-button slds-button--destructive']")).click();
+						}
+					}
+				}
+				sleep(6000);
+			}
+		
+			wTable = driver.findElement(By.cssSelector("[class='slds-tabs--default__content slds-show']"));
+			wServicios = wTable.findElements(By.cssSelector("[class='cpq-item-product-child-level-2 ng-not-empty ng-valid'] [class='cpq-item-base-product']"));
+			for(WebElement wAux3 : wServicios) {
+				if(!wAux3.getText().toLowerCase().contains("toggle")) {
+					if(wAux3.findElement(By.className("cpq-item-no-children")).getText().toLowerCase().contains(sServicio.toLowerCase())){
+						System.out.println("\nSign Up");
+						try {
+							System.out.println("Is Displayed? " + wAux3.findElement(By.cssSelector(".slds-button.slds-button_neutral")).isDisplayed());
+						}
+						catch(Exception eE) {
+							Assert.assertTrue(false);
+						}
+						Assert.assertTrue(wAux3.findElement(By.cssSelector(".slds-button.slds-button_neutral")).isDisplayed());
+						/*System.out.println("size: "+wAux3.findElements(By.tagName("button")).size());
+						wAux3.findElements(By.tagName("button")).get(1).click();*/
+						wAux3.findElement(By.cssSelector(".slds-button.slds-button_neutral")).click();
+						hizoGestion = true;
+						sleep(5000);
+						bAssert = true;
+					}
+				}
+			}
+		}
+		
+		sleep(10000);
+		
+		if(!bAssert) {
+			System.out.println("Here we go again");
+			driver.navigate().refresh();
+			mM.selectMainTabByName("Alta/Baja de Servicios");
+			altaBajaServicio(sAltaBaja, sTipoServicio, sServicio, driver);
+		}
+			
+	}
 }
