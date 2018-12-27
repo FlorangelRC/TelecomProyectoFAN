@@ -210,7 +210,7 @@ public class SCP extends BasePage {
 	    File[] dir_contents = dir.listFiles();
 	  	    
 	    for (int i = 0; i < dir_contents.length; i++) {
-	        if (dir_contents[i].getName().equals(fileName))
+	        if (dir_contents[i].getName().contains(fileName))
 	            return flag=true;
 	            }
 

@@ -63,4 +63,34 @@ public class BeFANConfigurador extends TestBase {
 		driver.findElement(By.xpath("//*[@type='search']")).sendKeys("Bahia");
 		
 	}
+	
+	@Test (groups = "BeFAN")
+	public void TS126661_BeFan_Movil_REPRO_Preactivacion_repro_Busqueda_de_archivos_Usuario_TPA_Archivos_de_otros_agentes() {
+		boolean match = false;
+		irA("sims", "gesti\u00f3n");
+		selectByText(driver.findElement(By.cssSelector(".text.form-control.ng-pristine.ng-untouched.ng-valid.ng-empty")), "Procesado");
+		selectByText(driver.findElements(By.cssSelector(".text.form-control.ng-pristine.ng-untouched.ng-valid.ng-empty")).get(0), "VJP");
+		selectByText(driver.findElement(By.cssSelector(".text.form-control.ng-pristine.ng-untouched.ng-valid.ng-empty")), "BAS-VJP-BAHIA BLANCA - VJP Punta Alta");		
+		driver.findElement(By.cssSelector(".btn.btn-primary")).click();
+		sleep(5000);
+		String agente = driver.findElement(By.id("exportarTabla")).findElement(By.tagName("tbody")).findElement(By.tagName("tr")).findElements(By.tagName("td")).get(4).getText();
+		List<WebElement> tabla = driver.findElement(By.id("exportarTabla")).findElement(By.tagName("tbody")).findElements(By.tagName("tr"));
+		for (int i=0; i<9; i++) {
+			if (!tabla.get(i).findElements(By.tagName("td")).get(4).getText().equals(agente))
+				match = true;
+			i++;
+		}
+		Assert.assertTrue(match);
+	}
+	
+	@Test (groups = "BeFAN")
+	public void TS126618_BeFan_Movil_REPRO_Preactivacion_repro_Gestion_de_agrupadores_Pantalla_de_inicio() {
+		irA("regiones", "gesti\u00f3n");
+		List<WebElement> agrupadores = driver.findElements(By.cssSelector(".panel-group.panel-group-alternative.ng-scope"));
+		Assert.assertTrue(agrupadores.size() >= 1);
+		if (driver.findElements(By.className("collapsed")).size() >= 1)
+			Assert.assertTrue(true);
+		else
+			Assert.assertTrue(false);
+	}
 }
