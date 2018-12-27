@@ -2823,7 +2823,7 @@ public class GestionesPerfilOficina extends TestBase {
 		sb.BuscarCuenta("DNI", sDNI);
 		driver.findElement(By.cssSelector(".slds-tree__item.ng-scope")).click();
 		sleep(15000);
-		cc.seleccionarCardPornumeroLinea(cLinea, driver);
+		cc.seleccionarCardPornumeroLinea(sLinea, driver);
 		sleep(3000);
 		buscarYClick(driver.findElements(By.className("slds-text-body_regular")), "equals", "detalle de consumos");
 	    driver.switchTo().frame(cambioFrame(driver, By.className("slds-align_absolute-center")));
@@ -2866,7 +2866,7 @@ public class GestionesPerfilOficina extends TestBase {
 		sb.BuscarCuenta("DNI", sDNI);
 		driver.findElement(By.cssSelector(".slds-tree__item.ng-scope")).click();
 		sleep(15000);
-		cc.seleccionarCardPornumeroLinea(cLinea, driver);
+		cc.seleccionarCardPornumeroLinea(sLinea, driver);
 		sleep(3000);
 		buscarYClick(driver.findElements(By.className("slds-text-body_regular")), "equals", "detalle de consumos");
 		sleep(5000);
@@ -7315,6 +7315,34 @@ public class GestionesPerfilOficina extends TestBase {
 		System.out.println("El numero de caso es: "+Ncaso);
 		caso = true;
 		assertTrue(caso);
+	}
+	
+	@Test (groups = {"GestionesPerfilTelefonico", "Resumen de Cuenta Corriente", "E2E","Ciclo4"}, dataProvider = "CuentaReintegros")
+	public void TS129461_CRM_Movil_REPRO_Resumen_de_Cuenta_Corriente_Verificacion_de_vista_de_Resumen_de_Cuenta_Corriente_FAN_Front_OOCC(String sDNI){
+		imagen = "TS129461";
+		detalles = null;
+		detalles = imagen + " -Resumen de Cuenta Corriente - DNI: " + sDNI;
+		Marketing mk = new Marketing(driver);
+		driver.switchTo().frame(cambioFrame(driver, By.id("SearchClientDocumentType")));
+		sb.BuscarCuenta("DNI", sDNI);
+		driver.findElement(By.cssSelector(".slds-tree__item.ng-scope")).click();
+		sleep(20000);
+		mk.closeActiveTab();
+		driver.switchTo().frame(cambioFrame(driver, By.className("profile-edit")));
+		buscarYClick(driver.findElements(By.className("left-sidebar-section-header")), "equals", "facturaci\u00f3n");
+		sleep(5000);
+		driver.switchTo().frame(cambioFrame(driver, By.className("card-top")));
+		buscarYClick(driver.findElements(By.className("slds-text-body_regular")), "equals", "resumen de cuenta corriente");
+		sleep(4000);
+		driver.switchTo().frame(cambioFrame(driver, By.cssSelector(".slds-button.slds-button--brand.filterNegotiations.slds-p-horizontal--x-large.slds-p-vertical--x-small.secondaryFont")));
+		WebElement saldo = driver.findElement(By.cssSelector(".slds-text-heading--medium.secondaryFont"));
+		WebElement fechas = driver.findElement(By.cssSelector(".slds-grid.slds-wrap.slds-grid--pull-padded.slds-m-around--medium.slds-p-around--medium.negotationsfilter"));
+		WebElement boton = driver.findElement(By.cssSelector(".slds-button.slds-button--brand.filterNegotiations.slds-p-horizontal--x-large.slds-p-vertical--x-small.secondaryFont"));
+		Assert.assertTrue(saldo.isDisplayed() && fechas.isDisplayed() && boton.isDisplayed());
+		boton.click();
+		sleep(5000);
+		WebElement comprobante = driver.findElement(By.cssSelector(".slds-grid.slds-wrap.slds-card.slds-m-bottom--small.slds-p-around--medium"));
+		Assert.assertTrue(comprobante.getText().toLowerCase().contains("comprobantes"));
 	}
 	
 }
