@@ -260,6 +260,16 @@ public class GestionesPerfilAdminFuncional extends TestBase{
 	    sleep(4000);
 	    driver.findElement(By.id("HLR_IFS_S132_Button")).isDisplayed();
 	    buscarYClick(driver.findElements(By.cssSelector(".slds-form-element__label.ng-binding.ng-scope")), "equals", "s\u00ed");
+	    sleep(6000);
 	    driver.findElement(By.id("Deregister_nextBtn")).click();
+	    buscarYClick(driver.findElements(By.cssSelector(".slds-form-element__label.ng-binding.ng-scope")), "equals", "s\u00ed, funciona correctamente");
+	    sleep(8000);
+	    for(WebElement x : driver.findElements(By.className("slds-form-element__control"))) {
+	    	if(x.getText().toLowerCase().contains("¡tu caso se resolvi\u00f3 con \u00e9xito!")) {
+	    		desregistrar = true;
+	    	}
+	    	
+	    }
+	    Assert.assertTrue(desregistrar);
 	}
 }
