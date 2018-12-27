@@ -2791,21 +2791,25 @@ public class GestionesPerfilOficina extends TestBase {
 		imagen="TS134376";
 		detalles = null;
 		detalles = imagen + "- Consulta de Saldo - DNI:" +sDNI;
+		Marketing mk = new Marketing(driver);
 		driver.switchTo().frame(cambioFrame(driver, By.id("SearchClientDocumentType")));
 		sb.BuscarCuenta("DNI", sDNI);
 		driver.findElement(By.cssSelector(".slds-tree__item.ng-scope")).click();
 		sleep(15000);
 		cc.openleftpanel();
-		cc.irAFacturacion();
+		mk.closeActiveTab();
 		sleep(5000);
+		driver.switchTo().frame(cambioFrame(driver, By.className("profile-edit")));
+		buscarYClick(driver.findElements(By.className("left-sidebar-section-header")), "equals", "facturaci\u00f3n");
+		sleep(20000);
 		driver.switchTo().frame(cambioFrame(driver, By.className("card-top")));
 		boolean a = false;
-		List <WebElement> saldo = driver.findElements(By.cssSelector(".slds-text-heading_medium.expired-date.expired-pink"));
+		List <WebElement> saldo = driver.findElements(By.className("header-right"));
 		for(WebElement x : saldo) {
-			if(x.getText().toLowerCase().equals("balance")) {
+			if(x.getText().toLowerCase().contains("balance")) {
 				a = true;
 			}
-			Assert.assertFalse(a);
+			Assert.assertTrue(a);
 		}
 	}
 	

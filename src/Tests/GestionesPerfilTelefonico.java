@@ -663,26 +663,26 @@ public class GestionesPerfilTelefonico extends TestBase{
 		imagen = "TS134813";
 		detalles = null;
 		detalles = imagen + " -Consulta de saldo - DNI: " + sDNI;
+		Marketing mk = new Marketing(driver);
 		driver.switchTo().frame(cambioFrame(driver, By.id("SearchClientDocumentType")));
 		sb.BuscarCuenta("DNI", sDNI);
 		driver.findElement(By.cssSelector(".slds-tree__item.ng-scope")).click();
 		sleep(15000);
 		cc.openleftpanel();
-		cc.irAFacturacion();
+		mk.closeActiveTab();
 		sleep(5000);
+		driver.switchTo().frame(cambioFrame(driver, By.className("profile-edit")));
+		buscarYClick(driver.findElements(By.className("left-sidebar-section-header")), "equals", "facturaci\u00f3n");
+		sleep(20000);
 		driver.switchTo().frame(cambioFrame(driver, By.className("card-top")));
-		List <WebElement> saldo = driver.findElements(By.cssSelector(".slds-text-heading_medium.expired-date.expired-pink"));
+		boolean a = false;
+		List <WebElement> saldo = driver.findElements(By.className("header-right"));
 		for(WebElement x : saldo) {
-			System.out.println(x.getText());
+			if(x.getText().toLowerCase().contains("balance")) {
+				a = true;
+			}
+			Assert.assertTrue(a);
 		}
-		System.out.println(saldo.get(0).getText());
-		/*List <WebElement> saldo = driver.findElements(By.className("header-right"));
-		for (WebElement c :saldo ) {
-			System.out.println(c.getText());
-		}*/
-		/*List <WebElement> saldo = driver.findElements(By.cssSelector(".slds-text-heading_medium.expired-date.expired-pink"));
-		System.out.println(saldo.get(1).getText());*/
-		Assert.assertTrue(!(saldo.isEmpty()));
 	}
 
 	
