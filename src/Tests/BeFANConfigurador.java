@@ -60,8 +60,20 @@ public class BeFANConfigurador extends TestBase {
 	public void TS126620_BeFan_Movil_REPRO_Preactivacion_repro_Gestion_de_agrupadores_Busqueda_Busqueda_especifica() {
 		irA("Regiones", "Gesti\u00f3n");
 		sleep(3000);
-		driver.findElement(By.xpath("//*[@type='search']")).sendKeys("Bahia");
+		driver.findElement(By.xpath("//*[@type='search']")).sendKeys("Olavarr");
+		sleep(3000);
+		WebElement wBody = driver.findElement(By.className("panel-data"));
+		List<WebElement> wList = wBody.findElements(By.xpath("//*[@class='panel-group'] //*[@class='collapsed'] //*[@class='ng-binding']"));
 		
+		boolean bAssert = true;
+		for (WebElement wAux : wList) {
+			if (!wAux.getText().toLowerCase().contains("Olavarr".toLowerCase())) {
+				bAssert = false;
+				break;
+			}
+		}
+		
+		Assert.assertTrue(bAssert);
 	}
 	
 	@Test (groups = "BeFAN")
@@ -93,4 +105,27 @@ public class BeFANConfigurador extends TestBase {
 		else
 			Assert.assertTrue(false);
 	}
+	
+	@Test (groups = "BeFAN")
+	public void TS126621_BeFan_Movil_REPRO_Preactivacion_repro_Gestion_de_agrupadores_Busqueda_Busqueda_vacia() {
+		irA("Regiones", "Gesti\u00f3n");
+		sleep(3000);
+		driver.findElement(By.xpath("//*[@type='search']")).sendKeys("asd");
+		driver.findElement(By.xpath("//*[@type='search']")).clear();
+		sleep(3000);
+		WebElement wBody = driver.findElement(By.className("panel-data"));
+		List<WebElement> wList = wBody.findElements(By.xpath("//*[@class='panel-group'] //*[@class='collapsed'] //*[@class='ng-binding']"));
+		
+		boolean bAssert = false;
+		String sAgrupador = wList.get(0).getText().toLowerCase();
+		for (WebElement wAux : wList) {
+			if (!wAux.getText().toLowerCase().equalsIgnoreCase(sAgrupador)) {
+				bAssert = true;
+				break;
+			}
+		}
+		
+		Assert.assertTrue(bAssert && wList.size() > 1);
+	}
+	
 }
