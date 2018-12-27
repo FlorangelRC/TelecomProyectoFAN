@@ -16,7 +16,6 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.Keys;
 import org.openqa.selenium.NoSuchElementException;
-import org.openqa.selenium.SearchContext;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.Select;
@@ -57,8 +56,8 @@ public class GestionesPerfilOficina extends TestBase {
 	
 	@BeforeClass(alwaysRun=true)
 	public void init() throws IOException, AWTException {
-		CalculoImpuestos CI = new CalculoImpuestos();
-		CBS_Mattu cCBSM = new CBS_Mattu();
+		//CalculoImpuestos CI = new CalculoImpuestos();
+		//CBS_Mattu cCBSM = new CBS_Mattu();
 		//CI.separarFacturaDeInv("3000000006610001", "Recarga");
 		//cCBSM.Servicio_RealizarAltaSuscripcion("3572408875","178");
 		//Assert.assertTrue("3572408875".matches("\\w[0-9]+"));
@@ -145,7 +144,7 @@ public class GestionesPerfilOficina extends TestBase {
 		sleep(15000);
 	}
 
-	@AfterMethod(alwaysRun=true)
+	//@AfterMethod(alwaysRun=true)
 	public void after() throws IOException {
 		guardarListaTxt(sOrders);
 		sOrders.clear();
@@ -1716,7 +1715,6 @@ public class GestionesPerfilOficina extends TestBase {
 		imagen = "TS112438";
 		detalles = null;
 		detalles = imagen + " -Ajustes-DNI: " + cDNI;
-		boolean gest = false;
 		driver.switchTo().frame(cambioFrame(driver, By.id("SearchClientDocumentType")));
 		sb.BuscarCuenta("DNI", cDNI);
 		driver.findElement(By.cssSelector(".slds-tree__item.ng-scope")).click();
@@ -1990,7 +1988,6 @@ public class GestionesPerfilOficina extends TestBase {
 		sleep(12000);
 		driver.findElement(By.id("SelectPaymentMethodsStep_nextBtn")).click();
 		sleep(30000);
-		String msj = driver.findElement(By.cssSelector(".message.description.ng-binding.ng-scope")).getText(); 
 		String check = driver.findElement(By.id("GeneralMessageDesing")).getText();
 		//Assert.assertTrue(msj.toLowerCase().contains("se ha enviado correctamente la factura a huawei. dirigirse a caja para realizar el pago de la misma"));
 		Assert.assertTrue(check.toLowerCase().contains("la orden se realiz\u00f3 con \u00e9xito"));
@@ -2242,7 +2239,6 @@ public class GestionesPerfilOficina extends TestBase {
 		detalles = null;
 		detalles = imagen + "- Trivias y suscripciones - DNI:" + cDNI;
 		boolean gest = false;
-		CBS_Mattu cCBSM = new CBS_Mattu();
 		//cCBSM.Servicio_RealizarAltaSuscripcion(cLinea,"178");
 		WebElement blackList = null;
 		driver.switchTo().frame(cambioFrame(driver, By.id("SearchClientDocumentType")));
@@ -2502,7 +2498,7 @@ public class GestionesPerfilOficina extends TestBase {
 		
 	}
 	
-	@Test (groups = {"GestionesPerfilOficina","Venta de Packs","E2E","Ciclo1"}, dataProvider="PackOfCom")
+	@Test (groups = {"GestionesPerfilOficina","VentaDePacks","E2E","Ciclo1"}, dataProvider="PackOfCom")
 	public void Venta_de_Pack_1_GB_x_1_dia_whatsapp_gratis_Factura_de_Venta_TC_OffCom(String sDNI, String sLinea, String sPackOfCom, String cBanco, String cTarjeta, String cPromo, String cCuotas) throws AWTException, KeyManagementException, NoSuchAlgorithmException{
 		imagen = "Venta De Pack Oficina";
 		detalles = null;
@@ -2518,7 +2514,7 @@ public class GestionesPerfilOficina extends TestBase {
 		pagePTelefo.comprarPack();
 		pagePTelefo.closerightpanel();
 		sleep(8000);
-		pagePTelefo.agregarPack("1GB Bienvenida");		
+		pagePTelefo.agregarPack(sPackOfCom);		
 		pagePTelefo.tipoDePago("en factura de venta");
 		pagePTelefo.getTipodepago().click();
 		sleep(12000);
@@ -2565,7 +2561,6 @@ public class GestionesPerfilOficina extends TestBase {
 		SalesBase sale = new SalesBase(driver);
 		BasePage cambioFrameByID = new BasePage();
 		CustomerCare cCC = new CustomerCare(driver);
-		PagePerfilTelefonico pagePTelefo = new PagePerfilTelefonico(driver);
 		driver.switchTo().frame(cambioFrameByID.getFrameForElement(driver, By.id("SearchClientDocumentType")));
 		sleep(8000);
 		sale.BuscarCuenta("DNI", sDNI);
@@ -3681,12 +3676,13 @@ public class GestionesPerfilOficina extends TestBase {
 		sleep(8000);
 		boolean a = false;
 		List <WebElement> pp = driver.findElements((By.className("slds-text-heading_mediumtitle")));
-			for(WebElement p : pp){
-				if(p.getText().contains("Plan Prepago")){
-					p.isDisplayed();
-					a = true;
-				}
+		for(WebElement p : pp){
+			if(p.getText().contains("Plan Prepago")){
+				p.isDisplayed();
+				a = true;
 			}
+		}
+		Assert.assertTrue(a);
 	}
 	
 	@Test (groups = {"GestionesPerfilOficina","Vista360","E2E", "Ciclo2"}, dataProvider = "CuentaVista360")
@@ -4129,7 +4125,7 @@ public class GestionesPerfilOficina extends TestBase {
 	
 	}
 	
-	@Test (groups = {"GestionesPerfilOficina", "VentaDePack", "Ciclo1"},priority=1, dataProvider = "ventaPack50ofic")
+	@Test (groups = {"GestionesPerfilOficina", "VentaDePacks", "Ciclo1"},priority=1, dataProvider = "ventaPack50ofic")
 	public void TS139727_CRM_Movil_REPRO_Venta_de_pack_50_min_y_50_SMS_x_7_dias_Factura_de_Venta_Efectivo_OOCC(String sDNI, String sLinea, String sventaPack) throws AWTException {
 		imagen = "TS139727";
 		detalles = null;
@@ -4148,19 +4144,25 @@ public class GestionesPerfilOficina extends TestBase {
 		cCC.seleccionarCardPornumeroLinea(sLinea, driver);
 		pagePTelefo.comprarPack();
 		pagePTelefo.closerightpanel();
-		String chargeCode = null;
-		try {
-			chargeCode = pagePTelefo.PackCombinado(sventaPack);
-		}
-		catch (Exception eE) {
-			driver.navigate().refresh();
-			sleep(10000);
-			mk.closeTabByName(driver, "Comprar SMS");
-			cCC.seleccionarCardPornumeroLinea(sLinea, driver);
-			pagePTelefo.comprarPack("comprar sms");
-			cc.closerightpanel();
-			chargeCode = pagePTelefo.PackCombinado(sventaPack);
-		}
+		pagePTelefo.PackCombinado(sventaPack);
+		
+		//String chargeCode = null;
+//		try {
+//			//chargeCode = 
+//					pagePTelefo.PackCombinado(sventaPack);
+//			pagePTelefo.PackCombinado(sventaPack);
+//		}
+//		catch (Exception eE) {
+//			driver.navigate().refresh();
+//			sleep(10000);
+//			mk.closeTabByName(driver, "Comprar SMS");
+//			cCC.seleccionarCardPornumeroLinea(sLinea, driver);
+//			pagePTelefo.comprarPack("comprar sms");
+//			//cc.closerightpanel();
+//			//chargeCode = 
+//					pagePTelefo.PackCombinado(sventaPack);
+//			pagePTelefo.PackCombinado(sventaPack);
+		//}
 		pagePTelefo.tipoDePago("en factura de venta");
 		sleep(12000);
 		pagePTelefo.getTipodepago().click();
@@ -4189,10 +4191,10 @@ public class GestionesPerfilOficina extends TestBase {
 		String datos = tabla.findElements(By.tagName("tr")).get(4).findElements(By.tagName("td")).get(1).getText();
 		Assert.assertTrue(datos.equalsIgnoreCase("activada")||datos.equalsIgnoreCase("activated"));	
 		System.out.println("Operacion: Compra de Pack "+ "Order: " + sOrden + "Cuenta: "+ accid + "Fin");
-		detalles += "-Charge Code: " + chargeCode;
+		detalles += "-Charge Code: ";// + chargeCode;
 	}
 	
-	@Test (groups = {"GestionPerfilOficina", "VentaDePack", "Ciclo1"}, dataProvider = "ventaX1Dia" )
+	@Test (groups = {"GestionPerfilOficina", "VentaDePacks", "Ciclo1"}, dataProvider = "ventaX1Dia" )
 	public void TS123163_CRM_Movil_REPRO_Venta_de_pack_1000_min_a_Personal_y_1000_SMS_x_1_dia_Factura_de_Venta_TC_Presencial(String sDNI, String sLinea, String sVentaPack, String sBanco, String sTarjeta, String sPromo, String sCuotas, String sNumTarjeta, String sVenceMes, String sVenceAno, String sCodSeg, String sTipoDNI, String sDNITarjeta, String sTitular) throws KeyManagementException, NoSuchAlgorithmException{
 		imagen = "TS123163";
 		detalles = null;
@@ -4211,7 +4213,8 @@ public class GestionesPerfilOficina extends TestBase {
 		cCC.seleccionarCardPornumeroLinea(sLinea, driver);
 		//cCC.closerightpanel();
 		pagePTelefo.comprarPack();
-		String chargeCode = pagePTelefo.PackCombinado(sVentaPack);
+		//String chargeCode = 
+				pagePTelefo.PackCombinado(sVentaPack);
 		pagePTelefo.tipoDePago("en factura de venta");
 		sleep(12000);
 		pagePTelefo.getTipodepago().click();
@@ -4242,7 +4245,7 @@ public class GestionesPerfilOficina extends TestBase {
 		String datos = tabla.findElements(By.tagName("tr")).get(4).findElements(By.tagName("td")).get(1).getText();
 		Assert.assertTrue(datos.equalsIgnoreCase("activada")||datos.equalsIgnoreCase("activated"));	
 		System.out.println("Operacion: Compra de Pack "+ "Order: " + sOrden + "Cuenta: "+ accid + "Fin");
-		detalles += "-Charge Code: " + chargeCode;
+		detalles += "-Charge Code: " ;//+ chargeCode;
 		//Blocked
 	}
 	
@@ -5307,7 +5310,6 @@ public class GestionesPerfilOficina extends TestBase {
 		SalesBase sale = new SalesBase(driver);
 		BasePage cambioFrameByID = new BasePage();
 		CustomerCare cCC = new CustomerCare(driver);
-		PagePerfilTelefonico pagePTelefo = new PagePerfilTelefonico(driver);
 		driver.switchTo().frame(cambioFrameByID.getFrameForElement(driver, By.id("SearchClientDocumentType")));
 		sleep(8000);
 		sale.BuscarCuenta("DNI", sDNI);
@@ -5375,7 +5377,6 @@ public class GestionesPerfilOficina extends TestBase {
 		SalesBase sale = new SalesBase(driver);
 		BasePage cambioFrameByID = new BasePage();
 		CustomerCare cCC = new CustomerCare(driver);
-		PagePerfilTelefonico pagePTelefo = new PagePerfilTelefonico(driver);
 		driver.switchTo().frame(cambioFrameByID.getFrameForElement(driver, By.id("SearchClientDocumentType")));
 		sleep(8000);
 		sale.BuscarCuenta("DNI", sDNI);
@@ -6082,7 +6083,6 @@ public class GestionesPerfilOficina extends TestBase {
 		SalesBase sale = new SalesBase(driver);
 		BasePage cambioFrameByID = new BasePage();
 		CustomerCare cCC = new CustomerCare(driver);
-		PagePerfilTelefonico pagePTelefo = new PagePerfilTelefonico(driver);
 		driver.switchTo().frame(cambioFrameByID.getFrameForElement(driver, By.id("SearchClientDocumentType")));
 		sleep(8000);
 		sale.BuscarCuenta("DNI", sDNI);
@@ -6146,7 +6146,6 @@ public class GestionesPerfilOficina extends TestBase {
 		SalesBase sale = new SalesBase(driver);
 		BasePage cambioFrameByID = new BasePage();
 		CustomerCare cCC = new CustomerCare(driver);
-		PagePerfilTelefonico pagePTelefo = new PagePerfilTelefonico(driver);
 		driver.switchTo().frame(cambioFrameByID.getFrameForElement(driver, By.id("SearchClientDocumentType")));
 		sleep(8000);
 		sale.BuscarCuenta("DNI", sDNI);
@@ -7317,6 +7316,39 @@ public class GestionesPerfilOficina extends TestBase {
 		assertTrue(caso);
 	}
 	
+	@Test (groups = {"GestionesPerfilAdminFuncional", "Diagnostico/Inconvenientes", }, dataProvider = "Diagnostico")
+	public void TS105449_CRM_Movil_Repro_Autogestion_0800_Informa_Sistema_Fuera_de_Servicio_No_Resuelto(String sDNI, String sLinea) throws InterruptedException {
+		imagen = "TS105449";
+		detalles = null;
+		detalles = imagen + "- Autogestion - DNI: " + sDNI;
+		boolean estado = false;
+		TechnicalCareCSRAutogestionPage tech = new TechnicalCareCSRAutogestionPage(driver);
+		driver.switchTo().frame(cambioFrame(driver, By.id("SearchClientDocumentType")));
+		sb.BuscarCuenta("DNI", sDNI);
+		driver.findElement(By.cssSelector(".slds-tree__item.ng-scope")).click();
+		sleep(15000);
+		cc.irAGestion("diagnostico de autogestion");
+		sleep(5000);
+		tech.listadoDeSeleccion("800", "0800-444-0531 (Tienda Planes)", "Informa Sistema Fuera de Servicio");
+		sleep(7000);
+		String caso = driver.findElement(By.cssSelector(".slds-form-element.vlc-flex.vlc-slds-text-block.vlc-slds-rte.ng-pristine.ng-valid.ng-scope")).getText();
+		caso = caso.substring(caso.indexOf("0"), caso.length());
+		System.out.println(caso);
+		cc.buscarCaso(caso);
+		driver.switchTo().frame(cambioFrame(driver, By.name("close")));
+		WebElement tabla = null;
+		for (WebElement x : driver.findElements(By.className("pbSubsection"))) {
+			if (x.getText().contains("Propietario del caso"))
+				tabla = x;
+		}
+		for (WebElement x : tabla.findElements(By.tagName("tr"))) {
+			if (x.getText().contains("Estado"))
+				tabla = x;
+		}
+		if (tabla.findElements(By.tagName("td")).get(3).getText().equalsIgnoreCase("Realizada exitosa"))
+			estado = true;
+		Assert.assertTrue(estado);
+	}
 	@Test (groups = {"GestionesPerfilTelefonico", "Resumen de Cuenta Corriente", "E2E","Ciclo4"}, dataProvider = "CuentaReintegros")
 	public void TS129461_CRM_Movil_REPRO_Resumen_de_Cuenta_Corriente_Verificacion_de_vista_de_Resumen_de_Cuenta_Corriente_FAN_Front_OOCC(String sDNI){
 		imagen = "TS129461";
