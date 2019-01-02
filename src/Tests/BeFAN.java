@@ -152,10 +152,4 @@ public class BeFAN extends TestBase {
 		}
 		Assert.assertTrue(razonSocial && linea && plan && nmu && serie && preactivacion && procesamiento && estado && descripcion);
 	}
-	
-	@Test (groups = "BeFAN")
-	public void TS126592_BeFan_Movil_REPRO_Preactivacion_repro_Cantidad_inexistente() {
-	irA("gestion");
-	File directory = new File("1.txt");
-	}
 }

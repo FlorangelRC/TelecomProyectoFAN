@@ -1,5 +1,10 @@
 package Pages;
 
+
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 
@@ -144,6 +149,26 @@ public class BeFan extends BasePage{
 	    	if(opcion.getText().equalsIgnoreCase(EtiquetaBoton))
 	    		opcion.click();
 	}
+	
+	public  int numeroDiasEntreDosFechas(Date fecha1, Date fecha2){
+	     long startTime = fecha1.getTime();
+	     long endTime = fecha2.getTime();
+	     long diffTime = endTime - startTime;
+	     return (int)TimeUnit.DAYS.convert(diffTime, TimeUnit.MILLISECONDS);
+	}
+	
+	public Date fechaAvanzada() {
+		Date date = new Date();
+		Calendar cal = Calendar.getInstance();
+		cal.setTime(date);
+		cal.add(Calendar.DATE, +1);
+		cal.add(Calendar.MONTH, +1);
+		//cal.add(Calendar.MINUTE, +1);
+		date = cal.getTime();
+		return (date);
+	}
+	
+        
 	
 	/**Estados Predefinidos:
 	 * 
