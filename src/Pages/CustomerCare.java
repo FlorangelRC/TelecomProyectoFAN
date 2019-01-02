@@ -596,18 +596,20 @@ public class CustomerCare extends BasePage {
 	}
 	
 	public void closeleftpanel() {
-		sleep(10000);
+		sleep(5000);
 		driver.switchTo().defaultContent();
 		if(driver.findElements(By.cssSelector(".x-layout-mini.x-layout-mini-west.x-layout-mini-custom-logo")).size() != 0) {
 			driver.findElement(By.cssSelector(".x-layout-mini.x-layout-mini-west.x-layout-mini-custom-logo")).click();
+			System.out.println("Entro pero no hizo click");
 		}
 	}
 	
 	public void closerightpanel() {
-		sleep(10000);
+		sleep(5000);
 		driver.switchTo().defaultContent();
 		if(driver.findElements(By.cssSelector(".x-layout-mini.x-layout-mini-east.x-layout-mini-custom-logo")).size() != 0) {
 			driver.findElement(By.cssSelector(".x-layout-mini.x-layout-mini-east.x-layout-mini-custom-logo")).click();
+			System.out.println("Entro pero no hizo click");
 		}
 	}
 		
@@ -1353,9 +1355,10 @@ public class CustomerCare extends BasePage {
 	
 	public void irAFacturacion() {
 		BasePage cambioFrameByID = new BasePage(driver);
-		driver.switchTo().frame(cambioFrameByID.getFrameForElement(driver, By.cssSelector(".slds-grid.slds-p-around--small.slds-wrap.via-slds-story-cards--header.slds-theme--shade.profile-tags-header")));
-		List <WebElement> fact = driver.findElements(By.cssSelector(".slds-grid.slds-p-around--small.slds-wrap.via-slds-story-cards--header.slds-theme--shade.profile-tags-header"));
-		fact.get(0).click();
+		driver.switchTo().frame(cambioFrameByID.getFrameForElement(driver, By.className("profile-edit")));
+		//List <WebElement> fact = driver.findElements(By.cssSelector(".slds-grid.slds-p-around--small.slds-wrap.via-slds-story-cards--header.slds-theme--shade.profile-tags-header"));
+		//fact.get(0).click();
+		driver.findElement(By.xpath("//span[text()='Facturaci\u00f3n']")).click();
 		sleep(6000);
 		//cambiarAFrameActivo();
 	}

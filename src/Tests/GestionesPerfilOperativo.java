@@ -53,7 +53,7 @@ public class GestionesPerfilOperativo extends TestBase {
 		sleep(3000);
 	}
 	
-	@AfterClass (alwaysRun = true)
+	//@AfterClass (alwaysRun = true)
 	public void quit() {
 		driver.quit();
 		sleep(5000);

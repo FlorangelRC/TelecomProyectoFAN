@@ -14,9 +14,13 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
+import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.Select;
+import org.testng.Assert;
+
+import Tests.TestBase;
 
 public class BeFan extends BasePage{
 
@@ -75,8 +79,6 @@ public class BeFan extends BasePage{
 	//Mensajes
 	@FindBy(xpath="//*[@id='NotUpdatedPhoneMessage']/div/p/p[2]/span/strong")
 	private WebElement NotUpdatedPhoneMessage;
-	
-	
 	
 	
 	//********************************METODOS*******************************************************//
@@ -212,6 +214,83 @@ public class BeFan extends BasePage{
 	
 	public void clickAceptar() {
 		this.aceptar.click();
+	}
+	
+	public boolean verificarMensajeExitoso() {
+		return driver.findElement(By.xpath("//*[@class='alert alert-dismissable alert-success'] //h4")).getText().equalsIgnoreCase("La operaci\u00f3n se ejecut\u00f3 satisfactoriamente.");
+	}
+	
+	public boolean buscarRegion(String sRegion) {
+		driver.findElement(By.xpath("//*[@type='search']")).clear();
+		driver.findElement(By.xpath("//*[@type='search']")).sendKeys(sRegion);
+		sleep(3000);
+		WebElement wBody = driver.findElement(By.className("panel-data"));
+		List<WebElement> wList = wBody.findElements(By.xpath("//*[@class='panel-group'] //*[@class='collapsed'] //*[@class='ng-binding']"));
+		
+		boolean bAssert = true;
+		for (WebElement wAux : wList) {
+			if (!wAux.getText().toLowerCase().contains(sRegion.toLowerCase())) {
+				bAssert = false;
+				break;
+			}
+		}
+		
+		return bAssert;
+	}
+	
+	public List<String> agregarPrefijos(String sRegion) {
+		buscarRegion(sRegion);
+		WebElement wBody = driver.findElement(By.className("panel-data"));
+		List<WebElement> wList = wBody.findElements(By.xpath("//*[@class='panel-group panel-group-alternative ng-scope']"));
+		
+		for (WebElement wAux : wList) {
+			if (wAux.findElement(By.xpath("//*[@class='collapsed'] //*[@class='ng-binding']")).getText().equalsIgnoreCase(sRegion)) {
+				wAux.click();
+				wAux.findElement(By.xpath("//*[@class='row ng-scope'] //*[@class='btn btn-link']")).click();
+				break;
+			}
+		}
+		sleep(5000);
+		List<String> sPrefijos = new ArrayList<String>();
+		//List<WebElement> wPrefijos = driver.findElements(By.id("compatibility"));
+		sPrefijos.add(driver.findElement(By.xpath("//*[@id='compatibility'][1] //label")).getText());
+		System.out.println(driver.findElement(By.xpath("//*[@id='compatibility'][1] //label")).getText());
+		driver.findElement(By.xpath("//*[contains(@class,'check-filter')] [1]")).click();
+		sPrefijos.add(driver.findElement(By.xpath("//*[@id='compatibility'][2] //label")).getText());
+		System.out.println(driver.findElement(By.xpath("//*[@id='compatibility'][2] //label")).getText());
+		driver.findElement(By.xpath("//*[@id='compatibility'][2] //label /.. /input")).click();
+		driver.findElement(By.xpath("//*[@ng-show='mensajeAgregarCtrl.container.showConfirmation'] //*[@class='btn btn-primary']")).click();
+		sleep(3000);
+		verificarMensajeExitoso();
+		driver.findElement(By.xpath("//*[contains(@ng-show, 'container.showSuccess')] //*[@class='btn btn-primary']")).click();
+		driver.navigate().refresh();
+		
+		buscarRegion(sRegion);
+		wBody = driver.findElement(By.className("panel-data"));
+		wList = wBody.findElements(By.xpath("//*[@class='panel-group panel-group-alternative ng-scope']"));
+		
+		for (WebElement wAux2 : wList) {
+			if (wAux2.findElement(By.xpath("//*[@class='collapsed'] //*[@class='ng-binding']")).getText().equalsIgnoreCase(sRegion)) {
+				wAux2.click();
+				break;
+			}
+		}
+		
+		return sPrefijos;
+	}
+	
+	public void buscarYAbrirRegion(String sRegion) {
+		buscarRegion(sRegion);
+		WebElement wBody = driver.findElement(By.className("panel-data"));
+		List<WebElement> wList = wBody.findElements(By.xpath("//*[@class='panel-group panel-group-alternative ng-scope']"));
+		
+		for (WebElement wAux : wList) {
+			if (wAux.findElement(By.xpath("//*[@class='collapsed'] //*[@class='ng-binding']")).getText().equalsIgnoreCase(sRegion)) {
+				wAux.click();
+				wAux.findElement(By.xpath("//*[@class='row ng-scope'] //*[@class='btn btn-link']")).click();
+				break;
+			}
+		}
 	}
 	
 }
