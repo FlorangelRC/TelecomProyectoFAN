@@ -1853,5 +1853,12 @@ public class TestBase {
 		 return (testObjArray);
 	}
 	
+	@DataProvider
+	public Object[][] GestionRegionesCreacion() throws Exception{
+		
+		Object[][] testObjArray =  ExcelUtils.getTableArray(dataProviderE2E(),"BeFAN",1,1,1,"Creacion Regiones");
+		
+		return (testObjArray);
+	}
 	
 }
