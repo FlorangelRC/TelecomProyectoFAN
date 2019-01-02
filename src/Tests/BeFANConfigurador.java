@@ -128,4 +128,67 @@ public class BeFANConfigurador extends TestBase {
 		Assert.assertTrue(bAssert && wList.size() > 1);
 	}
 	
+	@Test (groups = "BeFan")
+	public void TS135605_BeFan_Movil_Repro_Preactivacion_Importacion_de_cupos_Formato_invalido() {
+		String text = "debe importar un archivo .txt";
+		irA("Cupos", "Importaci\u00f3n");
+		sleep(3000);
+		driver.findElement(By.id("fileinput")).sendKeys("C:\\Users\\xappiens\\Documents\\Word\\cupos1.docx");
+		sleep(3000);
+		driver.findElement(By.name("BTN-Importar")).click();
+		boolean a = false;
+		List <WebElement> formato = driver.findElements(By.className("modal-header"));
+		for(WebElement x : formato) {
+			if(x.getText().toLowerCase().contains(text)) {
+				a = true;
+				System.out.println("Se debe seleccionar un archivo con formato .txt");
+			}
+		}
+		Assert.assertTrue(a);
+	}
+	
+	@Test (groups = "BeFan")
+	public void TS135631_BeFan_Movil_Repro_Preactivacion_Gestion_de_cupos_Busqueda_Formato(){
+		irA("Cupos", "Gesti\u00f3n");
+		sleep(3000);
+		selectByText(driver.findElement(By.name("estados")), "No Vigente");
+		driver.findElement(By.name("buscar")).click();
+		sleep(8000);
+		boolean razonS = false , region = false , puntoDeVenta = false, fechaDesde = false, fechaHasta = false, estado = false, cantidadTotal = false, disponibles = false, activados = false, reservados = false;
+		List <WebElement> colum = driver.findElements(By.className("text-center"));
+		for(WebElement x : colum) {
+			if(x.getText().contains("Raz\u00f3n Social")) 
+				razonS = true;
+			if(x.getText().contains("Regi\u00f3n")) 
+				region = true;
+			if(x.getText().contains("Punto de Venta")) 
+				puntoDeVenta = true;
+			if(x.getText().contains("Fecha Desde")) 
+				fechaDesde = true;
+			if(x.getText().contains("Fecha Hasta"))
+				fechaHasta = true;
+			if(x.getText().contains("Estado")) 
+				estado = true;
+			if(x.getText().contains("Cantidad Total"))
+				cantidadTotal= true;
+			if(x.getText().contains("Disponibles"))
+				disponibles = true;
+			if(x.getText().contains("Activados"))
+				activados = true;
+			if(x.getText().contains("Reservados"))
+				reservados = true;
+		}
+		Assert.assertTrue(razonS && region && puntoDeVenta && fechaDesde && fechaHasta && estado && cantidadTotal && disponibles && activados && reservados);
+	}
+	
+	@Test (groups = "BeFan")
+	public void TS135632_BeFan_Movil_Repro_Preactivacion_Gestion_de_cupos_Busqueda_Exportacion(){
+		irA("Cupos", "Gesti\u00f3n");
+		sleep(3000);
+		selectByText(driver.findElement(By.name("estados")), "No Vigente");
+		driver.findElement(By.name("buscar")).click();
+		sleep(8000);
+		driver.findElement(By.name("exportar")).click();
+	}
+
 }
