@@ -20,6 +20,7 @@ import org.testng.annotations.Test;
 
 import Pages.BeFan;
 import Pages.ContactSearch;
+import Pages.Marketing;
 import Pages.setConexion;
 
 public class BeFANConfigurador extends TestBase {
@@ -253,7 +254,7 @@ public class BeFANConfigurador extends TestBase {
 	Assert.assertFalse(driver.findElement(By.className("modal-content")).getText().equalsIgnoreCase("No se encontraron cupos para el filtro aplicado."));
 	//Assert.assertTrue(driver.findElement(By.className("modal-header")).getText().equalsIgnoreCase("El per\u00eddo debe comprender menos de 90 d\u00edas."));
 		
-
+	}
 	
 	@Test (groups = "BeFAN")
 	public void TS126633_BeFan_Movil_REPRO_Preactivacion_repro_Gestion_de_agrupadores_Busqueda_Eliminacion_de_agrupadores_No() {
@@ -372,7 +373,7 @@ public class BeFANConfigurador extends TestBase {
 	}
 	
 	@Test (groups = "BeFAN", dataProvider="GestionRegionesCreacion")
-	public void TS126623_BeFan_Movil_REPRO_Preactivacion_repro_Gestion_de_agrupadores_Busqueda_Modificacion_de_agrupadores_Asignaci�n_de_prefijos_a_agrupador_existente_Guardando(String sRegion) {
+	public void TS126623_BeFan_Movil_REPRO_Preactivacion_repro_Gestion_de_agrupadores_Busqueda_Modificacion_de_agrupadores_Asignacion_de_prefijos_a_agrupador_existente_Guardando(String sRegion) {
 		irA("Regiones", "Gesti\u00f3n");
 		pbf = new Pages.BeFan(driver);
 		List<String> sPrefijos = pbf.agregarPrefijos(sRegion);
@@ -443,13 +444,26 @@ public class BeFANConfigurador extends TestBase {
 	}
 	
 	@Test (groups = "BeFan")
-	public void TS135631_BeFan_Movil_Repro_Preactivacion_Gestion_de_cupos_Busqueda_Formato(){
+	public void TS135631_BeFan_Movil_Repro_Preactivacion_Gestion_de_cupos_Busqueda_Formato() throws ParseException{
+		BeFan fechas= new BeFan (driver);
+		SimpleDateFormat formatoDelTexto = new SimpleDateFormat ("dd/MM/yyyy");
+		String desde ="28/09/2018";
+		String hasta = "25/12/2018";
+		Date fechaDesde = formatoDelTexto.parse(desde);
+		Date fechaHasta =formatoDelTexto.parse(hasta);
 		irA("Cupos", "Gesti\u00f3n");
 		sleep(3000);
 		selectByText(driver.findElement(By.name("estados")), "No Vigente");
+		driver.findElement(By.id("dataPickerDesde"));
+		((JavascriptExecutor) driver).executeScript("document.getElementById('dataPickerDesde').value='"+desde+"'");
+		sleep(3000);
+		driver.findElement(By.id("dataPickerHasta"));
+		((JavascriptExecutor) driver).executeScript("document.getElementById('dataPickerHasta').value='"+hasta+"'");
+		int dias = fechas.numeroDiasEntreDosFechas(fechaDesde, fechaHasta);
+		System.out.println("Hay " + dias + " dias, " +"No supera los 90 dias comprendidos");
 		driver.findElement(By.name("buscar")).click();
 		sleep(8000);
-		boolean razonS = false , region = false , puntoDeVenta = false, fechaDesde = false, fechaHasta = false, estado = false, cantidadTotal = false, disponibles = false, activados = false, reservados = false;
+		boolean razonS = false , region = false , puntoDeVenta = false, fechaD = false, fechaH = false, estado = false, cantidadTotal = false, disponibles = false, activados = false, reservados = false;
 		List <WebElement> colum = driver.findElements(By.className("text-center"));
 		for(WebElement x : colum) {
 			if(x.getText().contains("Raz\u00f3n Social")) 
@@ -459,9 +473,9 @@ public class BeFANConfigurador extends TestBase {
 			if(x.getText().contains("Punto de Venta")) 
 				puntoDeVenta = true;
 			if(x.getText().contains("Fecha Desde")) 
-				fechaDesde = true;
+				fechaD = true;
 			if(x.getText().contains("Fecha Hasta"))
-				fechaHasta = true;
+				fechaH = true;
 			if(x.getText().contains("Estado")) 
 				estado = true;
 			if(x.getText().contains("Cantidad Total"))
@@ -473,18 +487,31 @@ public class BeFANConfigurador extends TestBase {
 			if(x.getText().contains("Reservados"))
 				reservados = true;
 		}
-		Assert.assertTrue(razonS && region && puntoDeVenta && fechaDesde && fechaHasta && estado && cantidadTotal && disponibles && activados && reservados);
+		Assert.assertTrue(razonS && region && puntoDeVenta && fechaD && fechaH && estado && cantidadTotal && disponibles && activados && reservados);
 	}
 	
 	@Test (groups = "BeFan")
-	public void TS135632_BeFan_Movil_Repro_Preactivacion_Gestion_de_cupos_Busqueda_Exportacion(){
+	public void TS135632_BeFan_Movil_Repro_Preactivacion_Gestion_de_cupos_Busqueda_Exportacion() throws ParseException{
+		BeFan fechas= new BeFan (driver);
+		SimpleDateFormat formatoDelTexto = new SimpleDateFormat ("dd/MM/yyyy");
+		String desde ="27/09/2018";
+		String hasta = "25/12/2018";
+		Date fechaDesde = formatoDelTexto.parse(desde);
+		Date fechaHasta =formatoDelTexto.parse(hasta);
 		irA("Cupos", "Gesti\u00f3n");
 		sleep(3000);
 		selectByText(driver.findElement(By.name("estados")), "No Vigente");
+		driver.findElement(By.id("dataPickerDesde"));
+		((JavascriptExecutor) driver).executeScript("document.getElementById('dataPickerDesde').value='"+desde+"'");
+		sleep(3000);
+		driver.findElement(By.id("dataPickerHasta"));
+		((JavascriptExecutor) driver).executeScript("document.getElementById('dataPickerHasta').value='"+hasta+"'");
+		int dias = fechas.numeroDiasEntreDosFechas(fechaDesde, fechaHasta);
+		System.out.println("Hay " + dias + " dias, " +"No supera los 90 dias comprendidos");
 		driver.findElement(By.name("buscar")).click();
 		sleep(8000);
-		driver.findElement(By.name("exportar")).click();
+		WebElement boton = driver.findElement(By.name("exportar"));
+		boton.click();
+		Assert.assertTrue(boton.isDisplayed());
 	}
-
-}
 }

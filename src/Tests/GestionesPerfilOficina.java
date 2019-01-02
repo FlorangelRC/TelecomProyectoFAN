@@ -772,6 +772,9 @@ public class GestionesPerfilOficina extends TestBase {
 		driver.findElement(By.id("ReceiptCode")).sendKeys("123");
 		driver.findElement(By.id("OnlineRefillData_nextBtn")).click();
 		sleep(8000);
+		driver.findElement(By.xpath("//*[@id=\"SessionCase|0\"]/div/div[1]/label[2]/span/div/div")).click();
+		driver.findElement(By.id("ExistingCase_nextBtn")).click();
+		sleep(8000);
 		buscarYClick(driver.findElements(By.cssSelector(".slds-form-element__label.ng-binding.ng-scope")),"contains","si");
 		WebElement img = driver.findElement(By.id("FileAttach"));
 		File directory = new File("Dni.jpg");
@@ -978,9 +981,6 @@ public class GestionesPerfilOficina extends TestBase {
 		driver.findElement(By.id("BatchNumber")).sendKeys(cBatch);
 		driver.findElement(By.id("PIN")).sendKeys(cPin);
 		driver.findElement(By.id("PrepaidCardData_nextBtn")).click();
-		sleep(7000);
-		buscarYClick(driver.findElements(By.className("borderOverlay")), "equals", "crear un caso nuevo");
-		driver.findElement(By.id("ExistingCase_nextBtn")).click();
 		sleep(7000);
 		driver.findElement(By.id("Summary_nextBtn")).click();
 		sleep(10000);
@@ -2082,8 +2082,8 @@ public class GestionesPerfilOficina extends TestBase {
 		buscarYClick(driver.findElements(By.cssSelector(".imgItemContainer.ng-scope")), "contains", "tarjeta prepaga");
 		driver.findElement(By.id("RefillMethods_nextBtn")).click();
 		sleep(8000);
-		driver.findElement(By.id("BatchNumber")).sendKeys("11120000009313");
-		driver.findElement(By.id("PIN")).sendKeys("0858");
+		driver.findElement(By.id("BatchNumber")).sendKeys("11120000009352");
+		driver.findElement(By.id("PIN")).sendKeys("0589");
 		driver.findElement(By.id("PrepaidCardData_nextBtn")).click();
 		sleep(15000);
 		driver.findElement(By.id("Summary_nextBtn")).click();
@@ -2127,8 +2127,8 @@ public class GestionesPerfilOficina extends TestBase {
 		buscarYClick(driver.findElements(By.cssSelector(".imgItemContainer.ng-scope")), "contains", "tarjeta prepaga");
 		driver.findElement(By.id("RefillMethods_nextBtn")).click();
 		sleep(8000);
-		driver.findElement(By.id("BatchNumber")).sendKeys("11120000009301");
-		driver.findElement(By.id("PIN")).sendKeys("0080");
+		driver.findElement(By.id("BatchNumber")).sendKeys("11120000009351");
+		driver.findElement(By.id("PIN")).sendKeys("0183");
 		driver.findElement(By.id("PrepaidCardData_nextBtn")).click();
 		sleep(15000);
 		driver.switchTo().frame(cambioFrame(driver, By.cssSelector(".slds-icon.slds-icon--large.ta-care-omniscript-error-icon")));
@@ -5556,8 +5556,8 @@ public class GestionesPerfilOficina extends TestBase {
 		driver.findElements(By.className("borderOverlay")).get(0).click();
 		driver.findElement(By.id("RefillMethods_nextBtn")).click();
 		sleep(5000);
-		driver.findElement(By.id("BatchNumber")).sendKeys("11120000009308");
-		driver.findElement(By.id("PIN")).sendKeys("0406");
+		driver.findElement(By.id("BatchNumber")).sendKeys("11120000009356");
+		driver.findElement(By.id("PIN")).sendKeys("0804");
 		driver.findElement(By.id("PrepaidCardData_nextBtn")).click();
 		sleep(5000);
 		WebElement estado = driver.findElement(By.id("PrepaidCardStatusLabel"));

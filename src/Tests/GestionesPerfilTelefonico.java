@@ -2825,8 +2825,8 @@ public class GestionesPerfilTelefonico extends TestBase{
 		driver.findElements(By.className("borderOverlay")).get(0).click();
 		driver.findElement(By.id("RefillMethods_nextBtn")).click();
 		sleep(5000);
-		driver.findElement(By.id("BatchNumber")).sendKeys("11120000009309");
-		driver.findElement(By.id("PIN")).sendKeys("0608");
+		driver.findElement(By.id("BatchNumber")).sendKeys("11120000009355");
+		driver.findElement(By.id("PIN")).sendKeys("0907");
 		driver.findElement(By.id("PrepaidCardData_nextBtn")).click();
 		sleep(5000);
 		WebElement estado = driver.findElement(By.id("PrepaidCardStatusLabel"));
