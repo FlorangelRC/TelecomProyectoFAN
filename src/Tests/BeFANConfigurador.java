@@ -128,4 +128,104 @@ public class BeFANConfigurador extends TestBase {
 		Assert.assertTrue(bAssert && wList.size() > 1);
 	}
 	
+	@Test (groups = "BeFAN")
+	public void TS126633_BeFan_Movil_REPRO_Preactivacion_repro_Gestion_de_agrupadores_Busqueda_Eliminacion_de_agrupadores_No() {
+		boolean cancelar = false;
+		irA("regiones", "gesti\u00f3n");
+		driver.findElement(By.cssSelector(".panel-group.panel-group-alternative.ng-scope")).click();
+		driver.findElement(By.cssSelector(".actions.text-center")).findElement(By.cssSelector(".btn.btn-link")).click();
+		sleep(3000);
+		if (driver.findElement(By.className("pull-right")).findElement(By.cssSelector(".btn.btn-link")).getText().equalsIgnoreCase("Cancelar")) {
+			driver.findElement(By.className("pull-right")).findElement(By.cssSelector(".btn.btn-link")).click();
+			cancelar = true;
+		}
+		Assert.assertTrue(cancelar);
+	}
+	
+	@Test (groups = "BeFAN")
+	public void TS126631_BeFan_Movil_REPRO_Preactivacion_repro_Gestion_de_agrupadores_Busqueda_Eliminacion_de_agrupadores_Mensaje() {
+		boolean mensaje = false;
+		irA("regiones", "gesti\u00f3n");
+		driver.findElement(By.cssSelector(".panel-group.panel-group-alternative.ng-scope")).click();
+		driver.findElement(By.cssSelector(".actions.text-center")).findElement(By.cssSelector(".btn.btn-link")).click();
+		sleep(3000);
+		if (driver.findElement(By.cssSelector(".text-center.ng-binding")).getText().contains("¿Esta seguro que desea eliminarlo ?"))
+			mensaje = true;
+		Assert.assertTrue(mensaje);
+	}
+	
+	@Test (groups = "BeFAN")
+	public void TS135644_BeFan_Movil_Repro_Preactivacion_Gestion_de_cupos_Busqueda_Modificacion_de_cupo_Con_total_de_cupos_invalidos() {
+		irA("cupos", "gesti\u00f3n");
+		selectByText(driver.findElement(By.cssSelector(".text.form-control.ng-pristine.ng-untouched.ng-valid.ng-empty")), "VJP");
+		selectByText(driver.findElement(By.cssSelector(".text.form-control.ng-pristine.ng-untouched.ng-valid.ng-empty")), "BAS-VJP-BAHIA BLANCA - VJP Punta Alta");
+		selectByText(driver.findElement(By.cssSelector(".text.form-control.ng-pristine.ng-untouched.ng-valid.ng-empty")), "Vigente");
+		driver.findElement(By.cssSelector(".btn.btn-primary")).click();
+		sleep(3000);
+		driver.findElement(By.name("modificarGuardar")).click();
+		driver.findElement(By.name("cantidadTotal")).clear();
+		driver.findElement(By.name("cantidadTotal")).sendKeys("asd");
+		driver.findElement(By.name("modificarGuardar")).click();
+		sleep(3000);
+		Assert.assertTrue(driver.findElement(By.cssSelector(".text-center.ng-binding")).getText().equalsIgnoreCase("Cantidad de cupo inv\u00e1lida"));
+		driver.findElement(By.className("pull-right")).findElement(By.cssSelector(".btn.btn-link")).click();
+		sleep(3000);
+		driver.findElement(By.name("modificarGuardar")).click();
+		driver.findElement(By.name("cantidadTotal")).clear();
+		driver.findElement(By.name("cantidadTotal")).sendKeys("$");
+		driver.findElement(By.name("modificarGuardar")).click();
+		sleep(3000);
+		Assert.assertTrue(driver.findElement(By.cssSelector(".text-center.ng-binding")).getText().equalsIgnoreCase("Cantidad de cupo inv\u00e1lida"));
+		driver.findElement(By.className("pull-right")).findElement(By.cssSelector(".btn.btn-link")).click();
+		sleep(3000);
+		driver.findElement(By.name("modificarGuardar")).click();
+		driver.findElement(By.name("cantidadTotal")).clear();
+		driver.findElement(By.name("cantidadTotal")).sendKeys("1111111");
+		driver.findElement(By.name("modificarGuardar")).click();
+		sleep(3000);
+		Assert.assertTrue(driver.findElement(By.cssSelector(".text-center.ng-binding")).getText().equalsIgnoreCase("Cantidad de cupo inv\u00e1lida"));
+		driver.findElement(By.className("pull-right")).findElement(By.cssSelector(".btn.btn-link")).click();
+	}
+	
+	@Test (groups = "BeFAN")
+	public void TS135640_BeFan_Movil_Repro_Preactivacion_Gestion_de_cupos_Busqueda_Modificacion_de_cupo_Mensaje() {
+		irA("cupos", "gesti\u00f3n");
+		selectByText(driver.findElement(By.cssSelector(".text.form-control.ng-pristine.ng-untouched.ng-valid.ng-empty")), "VJP");
+		selectByText(driver.findElement(By.cssSelector(".text.form-control.ng-pristine.ng-untouched.ng-valid.ng-empty")), "BAS-VJP-BAHIA BLANCA - VJP Punta Alta");
+		selectByText(driver.findElement(By.cssSelector(".text.form-control.ng-pristine.ng-untouched.ng-valid.ng-empty")), "Vigente");
+		driver.findElement(By.cssSelector(".btn.btn-primary")).click();
+		sleep(3000);
+		driver.findElement(By.name("modificarGuardar")).click();
+		driver.findElement(By.name("cantidadTotal")).clear();
+		driver.findElement(By.name("cantidadTotal")).sendKeys("99998");
+		driver.findElement(By.name("modificarGuardar")).click();
+		sleep(3000);
+		Assert.assertTrue(driver.findElements(By.cssSelector(".text-center.ng-binding")).get(1).getText().equalsIgnoreCase("¿Est\u00e1 seguro que desea modificar el registro seleccionado?"));
+	}
+	
+	@Test (groups = "BeFAN")
+	public void TS135641_BeFan_Movil_Repro_Preactivacion_Gestion_de_cupos_Busqueda_Modificacion_de_cupo_Mensaje_Confirmacion() {
+		irA("cupos", "gesti\u00f3n");
+		selectByText(driver.findElement(By.cssSelector(".text.form-control.ng-pristine.ng-untouched.ng-valid.ng-empty")), "VJP");
+		selectByText(driver.findElement(By.cssSelector(".text.form-control.ng-pristine.ng-untouched.ng-valid.ng-empty")), "BAS-VJP-BAHIA BLANCA - VJP Punta Alta");
+		selectByText(driver.findElement(By.cssSelector(".text.form-control.ng-pristine.ng-untouched.ng-valid.ng-empty")), "Vigente");
+		driver.findElement(By.cssSelector(".btn.btn-primary")).click();
+		sleep(3000);
+		driver.findElement(By.name("modificarGuardar")).click();
+		String cantAnterior = driver.findElement(By.name("cantidadTotal")).getAttribute("value");
+		driver.findElement(By.name("cantidadTotal")).clear();
+		driver.findElement(By.name("cantidadTotal")).sendKeys("99998");
+		driver.findElement(By.name("modificarGuardar")).click();
+		sleep(3000);
+		buscarYClick(driver.findElements(By.cssSelector(".btn.btn-primary")), "equals", "aceptar");
+		buscarYClick(driver.findElements(By.cssSelector(".btn.btn-link")), "equals", "aceptar");
+		driver.findElement(By.name("modificarGuardar")).click();
+		Assert.assertTrue(driver.findElement(By.name("cantidadTotal")).getAttribute("value").equals("99998"));
+		driver.findElement(By.name("cantidadTotal")).clear();
+		driver.findElement(By.name("cantidadTotal")).sendKeys(cantAnterior);
+		driver.findElement(By.name("modificarGuardar")).click();
+		sleep(3000);
+		buscarYClick(driver.findElements(By.cssSelector(".btn.btn-primary")), "equals", "aceptar");
+		buscarYClick(driver.findElements(By.cssSelector(".btn.btn-link")), "equals", "aceptar");
+	}
 }
