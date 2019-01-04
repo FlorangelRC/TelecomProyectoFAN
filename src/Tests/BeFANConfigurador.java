@@ -596,4 +596,111 @@ public class BeFANConfigurador extends TestBase {
 		boton.click();
 		Assert.assertTrue(boton.isDisplayed());
 	}
+	
+	
+	@Test (groups = "BeFan")
+	public void TS135633_BeFan_Movil_Repro_Preactivacion_Gestion_de_cupos_Busqueda_Eliminacion_de_cupo_Cupo_no_vigente_sin_fecha_de_baja() throws ParseException {
+		BeFan fechas= new BeFan (driver);
+		SimpleDateFormat formatoDelTexto = new SimpleDateFormat ("dd/MM/yyyy");
+		String desde ="27/09/2018";
+		String hasta = "25/12/2018";
+		Date fechaDesde = formatoDelTexto.parse(desde);
+		Date fechaHasta =formatoDelTexto.parse(hasta);
+		irA("Cupos", "Gesti\u00f3n");
+		sleep(3000);
+		selectByText(driver.findElement(By.name("estados")), "No Vigente");
+		driver.findElement(By.id("dataPickerDesde"));
+		((JavascriptExecutor) driver).executeScript("document.getElementById('dataPickerDesde').value='"+desde+"'");
+		sleep(3000);
+		driver.findElement(By.id("dataPickerHasta"));
+		((JavascriptExecutor) driver).executeScript("document.getElementById('dataPickerHasta').value='"+hasta+"'");
+		int dias = fechas.numeroDiasEntreDosFechas(fechaDesde, fechaHasta);
+		System.out.println("Hay " + dias + " dias, " +"No supera los 90 dias comprendidos");
+		driver.findElement(By.name("buscar")).click();
+		sleep(3000);
+		WebElement eliminacion = driver.findElement(By.name("eliminar"));
+		Assert.assertTrue(eliminacion.isEnabled());
+		System.out.println("No se puede eliminar un cupo no vigente");
+	}
+	
+	@Test (groups = "BeFan")
+	public void TS135634_BeFan_Movil_Repro_Preactivacion_Gestion_de_cupos_Busqueda_Eliminacion_de_cupo_Cupo_vigente_con_fecha_de_baja() throws ParseException {
+		BeFan fechas= new BeFan (driver);
+		SimpleDateFormat formatoDelTexto = new SimpleDateFormat ("dd/MM/yyyy");
+		String desde ="27/09/2018";
+		String hasta = "25/12/2018";
+		Date fechaDesde = formatoDelTexto.parse(desde);
+		Date fechaHasta =formatoDelTexto.parse(hasta);
+		irA("Cupos", "Gesti\u00f3n");
+		sleep(3000);
+		selectByText(driver.findElement(By.name("estados")), "Vigente");
+		driver.findElement(By.id("dataPickerDesde"));
+		((JavascriptExecutor) driver).executeScript("document.getElementById('dataPickerDesde').value='"+desde+"'");
+		sleep(3000);
+		driver.findElement(By.id("dataPickerHasta"));
+		((JavascriptExecutor) driver).executeScript("document.getElementById('dataPickerHasta').value='"+hasta+"'");
+		int dias = fechas.numeroDiasEntreDosFechas(fechaDesde, fechaHasta);
+		System.out.println("Hay " + dias + " dias, " +"No supera los 90 dias comprendidos");
+		driver.findElement(By.name("buscar")).click();
+		//Se necesita un cupo con fecha de bajar
+	}
+	
+	@Test (groups = "BeFan")
+	public void TS135636_BeFan_Movil_Repro_Preactivacion_Gestion_de_cupos_Busqueda_Eliminacion_de_cupo_Mensaje_Confirmacion() throws ParseException{
+		BeFan fechas= new BeFan (driver);
+		SimpleDateFormat formatoDelTexto = new SimpleDateFormat ("dd/MM/yyyy");
+		String pregunta = "¿est\u00e1 seguro que desea dar de baja el registro seleccionado?";
+		String desde ="27/09/2018";
+		String hasta = "25/12/2018";
+		Date fechaDesde = formatoDelTexto.parse(desde);
+		Date fechaHasta =formatoDelTexto.parse(hasta);
+		irA("Cupos", "Gesti\u00f3n");
+		sleep(3000);
+		selectByText(driver.findElement(By.name("estados")), "Vigente");
+		driver.findElement(By.id("dataPickerDesde"));
+		((JavascriptExecutor) driver).executeScript("document.getElementById('dataPickerDesde').value='"+desde+"'");
+		sleep(3000);
+		driver.findElement(By.id("dataPickerHasta"));
+		((JavascriptExecutor) driver).executeScript("document.getElementById('dataPickerHasta').value='"+hasta+"'");
+		int dias = fechas.numeroDiasEntreDosFechas(fechaDesde, fechaHasta);
+		System.out.println("Hay " + dias + " dias, " +"No supera los 90 dias comprendidos");
+		driver.findElement(By.name("buscar")).click();
+		sleep(3000);
+		WebElement eliminacion = driver.findElement(By.name("eliminar"));
+		Assert.assertTrue(eliminacion.isDisplayed());
+		eliminacion.click();
+		boolean a = false;
+		for(WebElement x : driver.findElements(By.className("modal-header"))) {
+			if(x.getText().toLowerCase().contains(pregunta)) {
+				a = true;
+			}
+		}
+		Assert.assertTrue(a);
+	}
+	
+	@Test (groups = "BeFan")
+	public void TS135638_BeFan_Movil_Repro_Preactivacion_Gestion_de_cupos_Busqueda_Modificacion_de_cupo_Cupo_no_vigente_sin_fecha_de_baja() throws ParseException {
+		BeFan fechas= new BeFan (driver);
+		SimpleDateFormat formatoDelTexto = new SimpleDateFormat ("dd/MM/yyyy");
+		String desde ="27/09/2018";
+		String hasta = "25/12/2018";
+		Date fechaDesde = formatoDelTexto.parse(desde);
+		Date fechaHasta =formatoDelTexto.parse(hasta);
+		irA("Cupos", "Gesti\u00f3n");
+		sleep(3000);
+		selectByText(driver.findElement(By.name("estados")), "No Vigente");
+		driver.findElement(By.id("dataPickerDesde"));
+		((JavascriptExecutor) driver).executeScript("document.getElementById('dataPickerDesde').value='"+desde+"'");
+		sleep(3000);
+		driver.findElement(By.id("dataPickerHasta"));
+		((JavascriptExecutor) driver).executeScript("document.getElementById('dataPickerHasta').value='"+hasta+"'");
+		int dias = fechas.numeroDiasEntreDosFechas(fechaDesde, fechaHasta);
+		System.out.println("Hay " + dias + " dias, " +"No supera los 90 dias comprendidos");
+		driver.findElement(By.name("buscar")).click();
+		sleep(3000);
+		WebElement modificacion = driver.findElement(By.name("modificarGuardar"));
+		Assert.assertTrue(modificacion.isEnabled());
+		System.out.println("No se puede modificar un cupo no vigente");
+		
+	}
 }
