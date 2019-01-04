@@ -3,6 +3,7 @@ package Tests;
 import java.util.List;
 
 import org.openqa.selenium.By;
+import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.testng.Assert;
@@ -235,7 +236,7 @@ public class BeFANConfigurador extends TestBase {
 	}
 	
 	@Test (groups = "BeFAN", dataProvider="GestionRegionesCreacion")
-	public void TS126623_BeFan_Movil_REPRO_Preactivacion_repro_Gestion_de_agrupadores_Busqueda_Modificacion_de_agrupadores_Asignaci�n_de_prefijos_a_agrupador_existente_Guardando(String sRegion) {
+	public void TS126623_BeFan_Movil_REPRO_Preactivacion_repro_Gestion_de_agrupadores_Busqueda_Modificacion_de_agrupadores_Asignacion_de_prefijos_a_agrupador_existente_Guardando(String sRegion) {
 		irA("Regiones", "Gesti\u00f3n");
 		pbf = new Pages.BeFan(driver);
 		List<String> sPrefijos = pbf.agregarPrefijos(sRegion);
@@ -286,4 +287,86 @@ public class BeFANConfigurador extends TestBase {
 		Assert.assertTrue(bAssert);
 	}
 	
+	@Test (groups = "BeFAN")
+	public void TS97663_BeFan_Movil_REPRO_Localidad_inexistente() {
+		irA("regiones", "gesti\u00f3n");
+		buscarYClick(driver.findElements(By.cssSelector(".panel-group.panel-group-alternative.ng-scope")), "contains", "mar del tuy\u00fa");
+		driver.findElement(By.cssSelector(".panel-collapse.in.collapse")).findElement(By.cssSelector(".btn.btn-link")).click();
+		sleep(3000);
+		for (WebElement x : driver.findElements(By.cssSelector(".compatibility.custom-check.ng-scope"))) {
+			if (!(x.getText().equalsIgnoreCase("3275")))
+				Assert.assertTrue(false);
+		}
+	}
+	
+	@Test (groups = "BeFAN")
+	public void TS97660_BeFan_Movil_REPRO_Seriales_con_estado_EN_PROCESO() {
+		boolean enProceso = false;
+		irA("sims", "gesti\u00f3n");
+		selectByText(driver.findElement(By.cssSelector(".text.form-control.ng-pristine.ng-untouched.ng-valid.ng-empty")), "En Proceso");
+		selectByText(driver.findElement(By.cssSelector(".text.form-control.ng-pristine.ng-untouched.ng-valid.ng-empty")), "VJP");
+		selectByText(driver.findElement(By.cssSelector(".text.form-control.ng-pristine.ng-untouched.ng-valid.ng-empty")), "BAS-VJP-BAHIA BLANCA - VJP Punta Alta");
+		driver.findElement(By.cssSelector(".btn.btn-primary")).click();
+		sleep(5000);
+		List<WebElement> tabla = driver.findElement(By.id("exportarTabla")).findElement(By.tagName("tbody")).findElements(By.tagName("tr"));
+		for (int i=0; i<5; i++) {
+			if (tabla.iterator().next().findElements(By.tagName("td")).get(6).getText().equalsIgnoreCase("En Proceso"))
+				enProceso = true;
+			i++;
+		}
+		Assert.assertTrue(enProceso);
+	}
+	
+	@Test (groups = "BeFAN")
+	public void TS97661_BeFan_Movil_REPRO_Seriales_con_estado_VALIDADO() {
+		boolean procesado = false;
+		irA("sims", "gesti\u00f3n");
+		selectByText(driver.findElement(By.cssSelector(".text.form-control.ng-pristine.ng-untouched.ng-valid.ng-empty")), "Procesado");
+		selectByText(driver.findElement(By.cssSelector(".text.form-control.ng-pristine.ng-untouched.ng-valid.ng-empty")), "VJP");
+		selectByText(driver.findElement(By.cssSelector(".text.form-control.ng-pristine.ng-untouched.ng-valid.ng-empty")), "BAS-VJP-BAHIA BLANCA - VJP Punta Alta");
+		driver.findElement(By.cssSelector(".btn.btn-primary")).click();
+		sleep(5000);
+		List<WebElement> tabla = driver.findElement(By.id("exportarTabla")).findElement(By.tagName("tbody")).findElements(By.tagName("tr"));
+		for (int i=0; i<5; i++) {
+			if (tabla.iterator().next().findElements(By.tagName("td")).get(6).getText().equalsIgnoreCase("Procesado"))
+				procesado = true;
+			i++;
+		}
+		Assert.assertTrue(procesado);
+	}
+	
+	@Test (groups = "BeFAN")
+	public void TS112021_BeFan_Movil_REPRO_Preactivacion_repro_Gestion_de_agrupadores_Busqueda_Eliminacion_de_agrupadores_No() {
+		boolean eliminar = false;
+		irA("regiones", "gesti\u00f3n");
+		driver.findElement(By.cssSelector(".btn.btn-primary")).click();
+		driver.findElement(By.cssSelector(".form-control.ng-pristine.ng-untouched.ng-valid.ng-empty")).sendKeys("Pinamar");
+		driver.findElement(By.cssSelector(".btn.btn-primary")).click();
+		buscarYClick(driver.findElements(By.cssSelector(".btn.btn-primary")), "equals", "cerrar");
+		buscarYClick(driver.findElements(By.cssSelector(".panel-group.panel-group-alternative.ng-scope")), "contains", "pinamar");
+		driver.findElement(By.cssSelector(".panel-collapse.in.collapse")).findElement(By.cssSelector(".btn.btn-link")).click();
+		sleep(3000);
+		driver.findElement(By.className("check-filter-on")).click();
+		buscarYClick(driver.findElements(By.cssSelector(".btn.btn-primary")), "equals", "agregar");
+		buscarYClick(driver.findElements(By.cssSelector(".btn.btn-primary")), "equals", "cerrar");
+		sleep(5000);
+		for (WebElement x : driver.findElements(By.cssSelector(".panel-group.panel-group-alternative.ng-scope"))) {
+			if (x.getText().toLowerCase().contains("pinamar"))
+				((JavascriptExecutor) driver).executeScript("window.scrollTo(0," + x.getLocation().y + ")");
+		}
+		buscarYClick(driver.findElements(By.cssSelector(".panel-group.panel-group-alternative.ng-scope")), "contains", "pinamar");
+		for (WebElement x : driver.findElements(By.className("panel-group"))) {
+			if (x.getText().contains("3532"))
+				x.findElement(By.tagName("tbody")).findElement(By.tagName("button")).click();
+		}
+		buscarYClick(driver.findElements(By.cssSelector(".btn.btn-primary")), "equals", "eliminar");
+		buscarYClick(driver.findElements(By.cssSelector(".btn.btn-primary")), "equals", "cerrar");
+		String msj = driver.findElement(By.className("modal-header")).getText();
+		if (msj.contains("Tambien desea eliminar la Region Pinamar")) {
+			buscarYClick(driver.findElements(By.cssSelector(".btn.btn-primary")), "equals", "eliminar");
+			buscarYClick(driver.findElements(By.cssSelector(".btn.btn-primary")), "equals", "cerrar");
+			eliminar = true;
+		}
+		Assert.assertTrue(eliminar);
+	}
 }

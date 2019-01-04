@@ -1469,8 +1469,8 @@ public class GestionesPerfilOficina extends TestBase {
 			sOrders.add("Inconvenientes con cargos tasados y facturados, orden numero: " + orden + " con numero de DNI: " + sDNI);
 			Assert.assertTrue(cc.verificarOrden(orden));		
 		} else {
-			String orden = driver.findElement(By.xpath("//*[@id=\"txtSuccessConfirmation\"]/div")).findElement(By.tagName("strong")).getText();
-			detalles+=" - Orden: "+orden;
+			String orden = driver.findElement(By.cssSelector(".vlc-slds-inline-control__label.ng-binding")).getText();
+			detalles += "-Orden: " + orden;
 			Assert.assertTrue(cc.verificarOrdenYGestion("Inconvenientes con cargos tasados y facturados"));
 		}
 	}
@@ -1930,8 +1930,8 @@ public class GestionesPerfilOficina extends TestBase {
 			sOrders.add("Inconvenientes con cargos tasados y facturados, orden numero: " + orden + " con numero de DNI: " + sDNI);
 			Assert.assertTrue(cc.verificarOrden(orden));		
 		} else {
-			String orden = driver.findElement(By.xpath("//*[@id=\"txtSuccessConfirmation\"]/div")).findElement(By.tagName("strong")).getText();
-			detalles+=" - Orden: "+orden;
+			String orden = driver.findElement(By.cssSelector(".vlc-slds-inline-control__label.ng-binding")).getText();
+			detalles += "-Orden: " + orden;
 			sOrders.add("Inconvenientes con cargos tasados y facturados, numero de orden: " + orden + " de cuenta con DNI: " + sDNI);
 			Assert.assertTrue(cc.verificarOrdenYGestion("Inconvenientes con cargos tasados y facturados"));
 		}
@@ -5985,8 +5985,9 @@ public class GestionesPerfilOficina extends TestBase {
 		imagen = "TS112437";
 		detalles = null;
 		detalles = imagen + " -Ajustes-DNI: " + sDNI;
-		String datoViejo = cbs.ObtenerValorResponse(cbsm.Servicio_queryLiteBySubscriber(sLinea), "bcs:MainBalance");
-		Integer datosInicial = Integer.parseInt(datoViejo.substring(0, 5));
+		String datoViejo = cbs.ObtenerUnidadLibre(cbsm.Servicio_QueryFreeUnit(sLinea), "Datos Libres");
+		Integer datosInicial = Integer.parseInt(datoViejo);
+		System.out.println(datosInicial);
 		boolean gest = false;
 		driver.switchTo().frame(cambioFrame(driver, By.id("SearchClientDocumentType")));
 		sb.BuscarCuenta("DNI", sDNI);
@@ -6007,9 +6008,6 @@ public class GestionesPerfilOficina extends TestBase {
 		buscarYClick(driver.findElements(By.cssSelector(".slds-form-element__label.ng-binding.ng-scope")), "equals", "si, ajustar");
 		driver.findElement(By.id("Step-VerifyPreviousAdjustments_nextBtn")).click();
 		sleep(7000);
-		
-		//*****Invoca al servicio S138 getAdjustments el cual trae el hist�rico de Ajustes por Cuenta de Facturaci�n.******
-		
 		buscarYClick(driver.findElements(By.cssSelector(".slds-form-element__label.ng-binding.ng-scope")), "equals", "si");
 		driver.findElement(By.id("Desde")).sendKeys("01-07-2018");
 		driver.findElement(By.id("Hasta")).sendKeys("30-07-2018");
@@ -6025,13 +6023,10 @@ public class GestionesPerfilOficina extends TestBase {
 				gest = true;
 		}
 		Assert.assertTrue(gest);
-		
-		/////*****Invoca al servicio S031 setAdjustments para efectura ajuste que no vaya contra factura*******
-		///Verificar que se impacta la gestion de ajuste en CBS///
-		
-		String datoNuevo = cbs.ObtenerValorResponse(cbsm.Servicio_queryLiteBySubscriber(sLinea), "bcs:MainBalance");
-		Integer datosFinal = Integer.parseInt(datoNuevo.substring(0, 5));
-		Assert.assertTrue(datosInicial + 500 == datosFinal);		
+		String datoNuevo = cbs.ObtenerUnidadLibre(cbsm.Servicio_QueryFreeUnit(sLinea), "Datos Libres");
+		Integer datosFinal = Integer.parseInt(datoNuevo);
+		System.out.println(datosFinal);
+		Assert.assertTrue(datosInicial + (123 * 1024) == datosFinal);
 	}
 	
 	@Test (groups = {"GestionesPerfilOficina", "Diagnostico/Inconvenientes", }, dataProvider = "Diagnostico")
