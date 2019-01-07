@@ -358,9 +358,9 @@ public class GestionesPerfilTelefonico extends TestBase{
 		detalles += "-Charge Code: "; //+ chargeCode;
 	}
 	
-	@Test(groups = { "GestionesPerfilTelefonico","Cambio de simcard", "E2E" }, priority = 1, dataProvider = "CambioSimCardTelef")
+	@Test(groups = { "GestionesPerfilTelefonico","CambioSimCard", "E2E" }, priority = 1, dataProvider = "CambioSimCardTelef")
 	public void TSCambioSimCardTelef(String sDNI, String sLinea,String cEntrega, String cProvincia, String cLocalidad, String cPuntodeVenta, String cBanco, String cTarjeta, String cPromo, String cCuotas, String cNumTarjeta, String cVenceMes, String cVenceAno, String cCodSeg, String cTipoDNI,String cDNITarjeta, String cTitular) throws AWTException {
-		imagen = "TSCambioSimCard";
+		imagen = "TSCambioSimCardTelef";
 		detalles = null;
 		detalles = imagen+"-Telef-DNI:"+sDNI;
 		SalesBase sale = new SalesBase(driver);
@@ -1478,7 +1478,7 @@ public class GestionesPerfilTelefonico extends TestBase{
 	
 	@Test (groups = {"GestionesPerfilTelefonico", "Vista360", "Ciclo2"}, dataProvider = "CuentaVista360")
 	public void TS134797_CRM_Movil_Prepago_Vista_360_Distribucion_de_paneles_Panel_Derecho_Busqueda_de_gestiones_promociones_y_gestiones_abandonadas_FAN_Front_Telefonico(String sDNI, String sLinea,String sNombre, String sEmail, String sMovil) {
-		imagen = "TS134796";
+		imagen = "TS134797";
 		detalles = null;
 		detalles = imagen+"-Vista 360 - DNI:"+sDNI;
 		driver.switchTo().frame(cambioFrame(driver, By.id("SearchClientDocumentType")));
@@ -2167,7 +2167,7 @@ public class GestionesPerfilTelefonico extends TestBase{
 		cc.obligarclick(nroCaso);
 		sleep(15000);
 		WebElement estado = null;
-		driver.switchTo().frame(cambioFrame(driver, By.id("publishersharebutton")));
+		driver.switchTo().frame(cambioFrame(driver, By.className("pbSubsection")));
 		for (WebElement x : driver.findElements(By.className("pbSubsection"))) {
 			System.out.println(x.getText());
 			if (x.getText().toLowerCase().contains("propietario del caso"))
@@ -2223,7 +2223,7 @@ public class GestionesPerfilTelefonico extends TestBase{
 		Assert.assertTrue(gestion);
 	}
 
-	@Test (groups = {"GestionesPerfilTelefonico", "Vista360", "E2E","ConsultaPorGestion", "Ciclo2"}, dataProvider = "CuentaModificacionDeDatos")
+	@Test (groups = {"GestionesPerfilTelefonico", "Vista360", "E2E","ConsultaPorGestion", "Ciclo2"}, dataProvider = "CuentaVista360")
 	public void TS134808_CRM_Movil_Prepago_Vista_360_Consulta_por_gestiones_Gestiones_Cerradas_Informacion_brindada_FAN_Front_Telefonico(String sDNI, String sLinea) {
 		imagen = "TS134808";
 		detalles = null;
@@ -2667,7 +2667,7 @@ public class GestionesPerfilTelefonico extends TestBase{
 		Assert.assertTrue(gGF.FlowConsultaServicioInactivo(driver, sLinea, "Contestador Personal"));
 	}
 
-	@Test(groups = { "GestionesPerfilTelefonico","Ciclo 3", "E2E" }, priority = 1, dataProvider = "CambioSimCardTelef")
+	@Test(groups = { "GestionesPerfilTelefonico","CambioSimCard","Ciclo 3", "E2E" }, priority = 1, dataProvider = "CambioSimCardTelef")
 	public void TS134427_CRM_Movil_REPRO_Cambio_de_simcard_con_costo_Voluntario_Telefonico_Store_pickUp_Con_entega_de_pedido_pago_con_TC_financiacion(String sDNI, String sLinea,String cEntrega, String cProvincia, String cLocalidad, String cPuntodeVenta, String cBanco, String cTarjeta, String cPromo, String cCuotas, String cNumTarjeta, String cVenceMes, String cVenceAno, String cCodSeg, String cTipoDNI,String cDNITarjeta, String cTitular) throws AWTException {
 		imagen = "99020";
 		detalles = null;
@@ -2805,8 +2805,8 @@ public class GestionesPerfilTelefonico extends TestBase{
 		Assert.assertTrue(knowledge);
 	}
 	
-	@Test (groups = {"ProblemasConRecargas", "GestionesPerfilTelefonico", "E2E", "Ciclo3"}, dataProvider = "CuentaProblemaRecarga") 
-	public void TS104332_CRM_Movil_Repro_Problemas_con_Recarga_Telefonico_Tarjeta_Scratch_Caso_Nuevo_Tarjeta_Activa_y_Disponible(String sDNI, String sLinea) {
+	@Test (groups = {"ProblemasConRecargas", "GestionesPerfilTelefonico", "E2E", "Ciclo3"}, dataProvider = "CuentaProblemaRecargaAYD") 
+	public void TS104332_CRM_Movil_Repro_Problemas_con_Recarga_Telefonico_Tarjeta_Scratch_Caso_Nuevo_Tarjeta_Activa_y_Disponible(String sDNI, String sLinea, String sSerie, String sPIN) {
 		imagen = "TS104332";
 		detalles = null;
 		detalles = imagen + " -Problemas Con Recargas-DNI: " + sDNI;
@@ -2825,8 +2825,8 @@ public class GestionesPerfilTelefonico extends TestBase{
 		driver.findElements(By.className("borderOverlay")).get(0).click();
 		driver.findElement(By.id("RefillMethods_nextBtn")).click();
 		sleep(5000);
-		driver.findElement(By.id("BatchNumber")).sendKeys("11120000009309");
-		driver.findElement(By.id("PIN")).sendKeys("0608");
+		driver.findElement(By.id("BatchNumber")).sendKeys(sSerie);
+		driver.findElement(By.id("PIN")).sendKeys(sPIN);
 		driver.findElement(By.id("PrepaidCardData_nextBtn")).click();
 		sleep(5000);
 		WebElement estado = driver.findElement(By.id("PrepaidCardStatusLabel"));
@@ -3149,7 +3149,7 @@ public class GestionesPerfilTelefonico extends TestBase{
 		Assert.assertTrue(false);
 	}
 	
-	@Test(groups = { "GestionesPerfilTelefonico","CambioSimCard", "E2E" }, priority = 1, dataProvider = "SimCardSiniestroOfCom") //NO APARECE EL METODO DE PAGO
+	@Test(groups = { "GestionesPerfilTelefonico","CambioSimCard", "E2E" }, priority = 1, dataProvider = "SimCardSiniestroOfCom") 
 	public void TS134392_TELEF_CRM_Movil_REPRO_Cambio_de_simcard_sin_costo_Siniestro_Telefonico_Store_pickUp_Con_entega_de_pedido(String sDNI, String sLinea){
 		imagen = "134392";
 		detalles = null;

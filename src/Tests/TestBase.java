@@ -52,8 +52,8 @@ import DataProvider.ExcelUtils;
 public class TestBase {
 	protected static WebDriver driver;
 	
-		//public static String urlAmbiente = "https://telecomcrm--uat.cs53.my.salesforce.com";
-		public static String urlAmbiente = "https://crm--sit.cs14.my.salesforce.com/";
+		public static String urlAmbiente = "https://telecomcrm--uat.cs53.my.salesforce.com";
+		//public static String urlAmbiente = "https://crm--sit.cs14.my.salesforce.com/";
 		
 		// viejo public String urlSCP = "https://telecomcrm--uat.cs8.my.salesforce.com";
 		public static String urlSCP = "https://telecomcrm--uat.cs53.my.salesforce.com";
@@ -405,6 +405,14 @@ public class TestBase {
 			try {Thread.sleep(6000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 		    Login page0 = new Login(driver);
 		    page0.ingresarBeFANConfigurador();
+		}
+		
+		public void loginFraude(WebDriver driver) {
+			driver.get(urlAmbiente);
+			//try {Thread.sleep(6000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+			waitForClickeable(driver, By.id("idp_section_buttons"));
+		    Login page0 = new Login(driver);
+		    page0.ingresarFraude();
 		}
 		
 		public void elegirmodulo(String modulo){
@@ -1339,7 +1347,7 @@ public class TestBase {
 	@DataProvider
 	public Object [][] CuentaHabilitacion() throws Exception {
 		
-		Object[][] testObjArray = ExcelUtils.getTableArray(dataProviderE2E(),"E2EsinPago",1,1,1,"Habilitacion");
+		Object[][] testObjArray = ExcelUtils.getTableArray(dataProviderE2E(),"E2EsinPago",1,1,2,"Habilitacion");
 		
 		return (testObjArray);
 	} 
@@ -1405,6 +1413,9 @@ public class TestBase {
 		 case "backoffice":
 			 login(driver, urlAmbiente, "uat518122", "Testa10k");
 			 break;
+		 case "Fraude":
+			 loginFraude(driver);
+		 	break;
 		 }
 		 sleep(10000);
 	}

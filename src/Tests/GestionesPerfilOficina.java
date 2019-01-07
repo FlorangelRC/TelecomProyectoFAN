@@ -144,7 +144,7 @@ public class GestionesPerfilOficina extends TestBase {
 		sleep(15000);
 	}
 
-	//@AfterMethod(alwaysRun=true)
+	@AfterMethod(alwaysRun=true)
 	public void after() throws IOException {
 		guardarListaTxt(sOrders);
 		sOrders.clear();
@@ -1155,94 +1155,9 @@ public class GestionesPerfilOficina extends TestBase {
 		System.out.println(sOrders);
 	}	
 	
-	@Test (groups = {"Suspension", "GestionesPerfilOficina","E2E","Ciclo3"}, dataProvider="CuentaSuspension")
-	public void TS98477_CRM_Movil_REPRO_Suspension_por_Fraude_Linea_Comercial_Desconocimiento_Administrativo(String cDNI, String cLinea, String cProvincia, String cCiudad, String cPartido) {
-		imagen = "TS98477";
-		detalles = null;
-		detalles = imagen + " -Suspension - DNI: " + cDNI;
-		driver.switchTo().frame(cambioFrame(driver, By.id("SearchClientDocumentType")));
-		sb.BuscarCuenta("DNI", cDNI);
-		driver.findElement(By.cssSelector(".slds-tree__item.ng-scope")).click();
-		cc.irAGestion("suspensiones y reconexion back");
-		sleep(15000);
-		driver.switchTo().frame(cambioFrame(driver, By.id("Step1SelectSuspensionOrReconnection_nextBtn")));
-		buscarYClick(driver.findElements(By.cssSelector(".slds-form-element__label.ng-binding.ng-scope")), "contains", "suspensi\u00f3n");
-		driver.findElement(By.id("Step1SelectSuspensionOrReconnection_nextBtn")).click();
-		sleep(8000);
-		buscarYClick(driver.findElements(By.cssSelector(".slds-form-element__label.ng-binding.ng-scope")), "contains", "linea");
-		driver.findElement(By.id("Step2-SelectAssetOrDocument_nextBtn")).click();
-		sleep(8000);
-		buscarYClick(driver.findElements(By.cssSelector(".slds-form-element__label.ng-binding.ng-scope")),"contains", "nombre: plan con tarjeta repro");
-		driver.findElement(By.id("Step3_nextBtn")).click();
-		sleep(8000);
-		selectByText(driver.findElement(By.id("SelectFraud")),"Comercial");
-		selectByText(driver.findElement(By.id("SelectSubFraud")),"Desconocimiento");
-		driver.findElement(By.id("Step4_nextBtn")).click();
-		sleep(15000);
-		driver.findElement(By.id("StepSummary_nextBtn")).click();
-		sleep(15000);
-		buscarYClick(driver.findElements(By.cssSelector(".slds-button.slds-button--neutral.ng-binding.ng-scope")),"contains", "continue");
-		sleep(40000);
-		boolean b = false;
-		List <WebElement> prov = driver.findElements(By.cssSelector(".slds-box.ng-scope"));
-		for(WebElement x : prov) {
-			if(x.getText().toLowerCase().contains("tu gesti\u00f3n se realiz\u00f3 con \u00e9xito")) {
-				b = true;
-			}			
-		}
-		Assert.assertTrue(b);
-		sleep(10000);
-		CBS_Mattu cCBSM = new CBS_Mattu();
-		Assert.assertTrue(cCBSM.obtenerStatusLinea(cLinea).equals("suspension fraude"));
-		String orden = cc.obtenerOrden(driver, "Suspension administrativa");
-		detalles += " - Orden: "+orden;
-		sOrders.add("Suspencion, orden numero: " + orden + " con numero de DNI: " + cDNI);
-		System.out.println(sOrders);
-	}	
 	
-	@Test (groups = {"Suspension", "GestionesPerfilOficina","E2E","Ciclo3"}, dataProvider="CuentaSuspension")
-	public void TS98487_CRM_Movil_REPRO_Suspension_por_Fraude_DNI_CUIT_Comercial_Irregular_Administrativo(String cDNI, String cLinea, String cProvincia, String cCiudad, String cPartido) {
-		imagen = "TS98487";
-		detalles = null;
-		detalles = imagen + " - Suspension - DNI: " + cDNI;
-		driver.switchTo().frame(cambioFrame(driver, By.id("SearchClientDocumentType")));
-		sb.BuscarCuenta("DNI", cDNI);
-		driver.findElement(By.cssSelector(".slds-tree__item.ng-scope")).click();
-		sleep(5000);
-		cc.irAGestion("suspensiones y reconexion back");
-		sleep(15000);
-		driver.switchTo().frame(cambioFrame(driver, By.id("Step1SelectSuspensionOrReconnection_nextBtn")));
-		buscarYClick(driver.findElements(By.cssSelector(".slds-form-element__label.ng-binding.ng-scope")), "contains", "suspensi\u00f3n");
-		driver.findElement(By.id("Step1SelectSuspensionOrReconnection_nextBtn")).click();
-		sleep(8000);
-		buscarYClick(driver.findElements(By.cssSelector(".slds-form-element__label.ng-binding.ng-scope")), "contains", "dni");
-		driver.findElement(By.id("Step2-SelectAssetOrDocument_nextBtn")).click();
-		sleep(8000);
-		driver.findElement(By.id("Step3_nextBtn")).click();
-		selectByText(driver.findElement(By.id("SelectFraud")),"Comercial");
-		selectByText(driver.findElement(By.id("SelectSubFraud")),"Irregular");
-		driver.findElement(By.id("Step4_nextBtn")).click();
-		sleep(8000);
-		driver.findElement(By.id("StepSummary_nextBtn")).click();
-		sleep(8000);
-		buscarYClick(driver.findElements(By.cssSelector(".slds-button.slds-button--neutral.ng-binding.ng-scope")),"contains", "continue");
-		sleep(40000);
-		boolean b = false;
-		List <WebElement> prov = driver.findElements(By.cssSelector(".slds-box.ng-scope"));
-		for(WebElement x : prov) {
-			if(x.getText().toLowerCase().contains("tu gesti\u00f3n se realiz\u00f3 con \u00e9xito")) {
-				b = true;
-			}			
-		}
-		Assert.assertTrue(b);
-		sleep(10000);
-		CBS_Mattu cCBSM = new CBS_Mattu();
-		Assert.assertTrue(cCBSM.obtenerStatusLinea(cLinea).equals("suspension fraude"));
-		String orden = cc.obtenerOrden(driver, "Suspension administrativa");
-		detalles+= " - Orden: "+orden;
-		sOrders.add("Suspencion, orden numero: " + orden + " con numero de DNI: " + cDNI);
-		System.out.println(sOrders);
-	}
+	
+	
 	
 	@Test (groups = {"GestionesPerfilOficina", "Ajustes","E2E","Ciclo3"}, dataProvider = "CuentaAjustesPRE")
 	public void TS112434_CRM_Movil_PRE_Ajuste_Credito_Minutos_FAN_Front_OOCC(String sDNI, String sLinea) {
@@ -1579,98 +1494,17 @@ public class GestionesPerfilOficina extends TestBase {
 		}
 	}
 	
-	@Test (groups = {"Suspension", "GestionesPerfilOficina","E2E","Ciclo3"}, dataProvider="CuentaSuspension")
-	public void TS98498_CRM_Movil_REPRO_Suspension_por_Fraude_Cuenta_de_facturacion_Comercial_Desconocimiento_Administrativo(String cDNI, String cLinea, String cProvincia, String cCiudad, String cPartido) {
-		imagen = "TS98498";
-		detalles = null;
-		detalles = imagen + " -Suspension - DNI: " + cDNI;
-		driver.switchTo().frame(cambioFrame(driver, By.id("SearchClientDocumentType")));
-		sb.BuscarCuenta("DNI", cDNI);
-		driver.findElement(By.cssSelector(".slds-tree__item.ng-scope")).click();
-		cc.irAGestion("suspensiones y reconexion back");
-		sleep(15000);
-		driver.switchTo().frame(cambioFrame(driver, By.id("Step1SelectSuspensionOrReconnection_nextBtn")));
-		buscarYClick(driver.findElements(By.cssSelector(".slds-form-element__label.ng-binding.ng-scope")), "contains", "suspensi\u00f3n");
-		driver.findElement(By.id("Step1SelectSuspensionOrReconnection_nextBtn")).click();
-		sleep(8000);
-		buscarYClick(driver.findElements(By.cssSelector(".slds-form-element__label.ng-binding.ng-scope")), "contains", "cuenta de facturacion");
-		driver.findElement(By.id("Step2-SelectAssetOrDocument_nextBtn")).click();
-		sleep(8000);
-		driver.findElement(By.xpath("//*[@id=\"BillingAccs0\"]/div/div/ul/li/label/span[1]")).click();
-		driver.findElement(By.id("Step3_nextBtn")).click();
-		sleep(8000);
-		selectByText(driver.findElement(By.id("SelectFraud")), "Comercial");
-		selectByText(driver.findElement(By.id("SelectSubFraud")), "Desconocimiento");
-		driver.findElement(By.id("Step4_nextBtn")).click();
-		sleep(8000);
-		driver.findElement(By.id("StepSummary_nextBtn")).click();
-		sleep(8000);
-		buscarYClick(driver.findElements(By.cssSelector(".slds-button.slds-button--neutral.ng-binding.ng-scope")), "contains", "continue");
-		sleep(15000);
-		boolean b = false;
-		List <WebElement> prov = driver.findElements(By.cssSelector(".slds-box.ng-scope"));
-		for(WebElement x : prov) {
-			if(x.getText().toLowerCase().contains("tu gesti\u00f3n se realiz\u00f3 con \u00e9xito")) {
-				b = true;
-			}			
-		}
-		Assert.assertTrue(b);
-		sleep(8000);
-		CBS_Mattu cCBSM = new CBS_Mattu();
-		Assert.assertTrue(cCBSM.obtenerStatusLinea(cLinea).equals("suspension fraude"));
-		String orden = cc.obtenerOrden(driver, "Suspension administrativa");
-		detalles+=" - orden: "+orden;
-		System.out.println(sOrders);	
-	}
 	
-	@Test (groups = {"Habilitacion", "GestionesPerfilOficina","E2E", "Ciclo3"}, dataProvider="CuentaHabilitacion")
-	public void TS98599_CRM_Movil_REPRO_Rehabilitacion_Administrativo_Fraude_DNI(String cDNI) {
-		imagen = "TS98599";
-		detalles = null;
-		detalles = imagen + " - Rehabilitacion - DNI: " + cDNI;
-		driver.switchTo().frame(cambioFrame(driver, By.id("SearchClientDocumentType")));
-		sb.BuscarCuenta("DNI", cDNI);
-		driver.findElement(By.cssSelector(".slds-tree__item.ng-scope")).click();
-		cc.irAGestion("suspensiones y reconexion back");
-		sleep(40000);
-		driver.switchTo().frame(cambioFrame(driver, By.id("Step1SelectSuspensionOrReconnection_nextBtn")));
-		buscarYClick(driver.findElements(By.cssSelector(".slds-form-element__label.ng-binding.ng-scope")), "contains", "habilitaci\u00f3n");
-		driver.findElement(By.id("Step1SelectSuspensionOrReconnection_nextBtn")).click();
-		sleep(8000);
-		buscarYClick(driver.findElements(By.cssSelector(".slds-form-element__label.ng-binding.ng-scope")), "contains", "linea");
-		driver.findElement(By.id("Step2-SelectAssetOrDocument_nextBtn")).click();
-		sleep(8000);
-		buscarYClick(driver.findElements(By.cssSelector(".slds-form-element__label.ng-binding.ng-scope")), "contains", "nombre: ");
-		driver.findElement(By.id("Step3_nextBtn")).click();
-		sleep(8000);
-		driver.findElement(By.id("TxtComment")).sendKeys("Fraude");
-		driver.findElement(By.id("Step4_nextBtn")).click();
-		sleep(8000);
-		driver.findElement(By.id("StepSummary_nextBtn")).click();
-		sleep(8000);
-		buscarYClick(driver.findElements(By.cssSelector(".slds-button.slds-button--neutral.ng-binding.ng-scope")), "contains", "continue");
-		sleep(15000);
-		boolean b = false;
-		List <WebElement> prov = driver.findElements(By.cssSelector(".slds-box.ng-scope"));
-		for(WebElement x : prov) {
-			if(x.getText().toLowerCase().contains("tu gesti\u00f3n se realiz\u00f3 con \u00e9xito")) {
-				b = true;
-			}			
-		}
-		Assert.assertTrue(b);
-		sleep(8000);
-		String orden = cc.obtenerOrden(driver, "Habilitaci\u00f3n administrativa");
-		detalles+=" - Orden: "+orden;
-		System.out.println(sOrders);
-	}
+	
+	
 	
 	@Test (groups = {"Habilitacion", "GestionesPerfilOficina","E2E","Ciclo3"}, dataProvider="CuentaHabilitacion")
-	public void TS98590_CRM_Movil_REPRO_Rehabilitacion_por_Siniestro_Presencial_Robo_Linea(String cDNI) {
+	public void TS98590_CRM_Movil_REPRO_Rehabilitacion_por_Siniestro_Presencial_Robo_Linea(String sDNI, String sLinea) {
 		imagen = "TS98590";
 		detalles = null;
-		detalles = imagen + " - Rehabilitacion - DNI: " + cDNI;
+		detalles = imagen + " - Rehabilitacion - DNI: " + sDNI;
 		driver.switchTo().frame(cambioFrame(driver, By.id("SearchClientDocumentType")));
-		sb.BuscarCuenta("DNI", cDNI);
+		sb.BuscarCuenta("DNI", sDNI);
 		driver.findElement(By.cssSelector(".slds-tree__item.ng-scope")).click();
 		sleep(8000);
 		cc.irAGestion("suspensiones");
@@ -2127,8 +1961,8 @@ public class GestionesPerfilOficina extends TestBase {
 		buscarYClick(driver.findElements(By.cssSelector(".imgItemContainer.ng-scope")), "contains", "tarjeta prepaga");
 		driver.findElement(By.id("RefillMethods_nextBtn")).click();
 		sleep(8000);
-		driver.findElement(By.id("BatchNumber")).sendKeys("11120000009301");
-		driver.findElement(By.id("PIN")).sendKeys("0080");
+		driver.findElement(By.id("BatchNumber")).sendKeys(cSerie);
+		driver.findElement(By.id("PIN")).sendKeys(cPIN);
 		driver.findElement(By.id("PrepaidCardData_nextBtn")).click();
 		sleep(15000);
 		driver.switchTo().frame(cambioFrame(driver, By.cssSelector(".slds-icon.slds-icon--large.ta-care-omniscript-error-icon")));
@@ -2409,94 +2243,7 @@ public class GestionesPerfilOficina extends TestBase {
 		Assert.assertTrue(datos.equalsIgnoreCase("activada")||datos.equalsIgnoreCase("activated"));
 	}
 	
-	@Test (groups = {"Suspension", "GestionesPerfilOficina","E2E","Ciclo3"}, dataProvider="CuentaSuspension") //No se puede visualizar en el panel izquierdo el numero de orden en UAT y no se suspende la cuenta; y en SIT no existe la opci�n de DNI/CUIT
-	public void TS_98484_CRM_Movil_REPRO_Suspension_por_Fraude_DNI_CUIT_Comercial_Fraude_por_suscripcion_Administrativo(String cDNI, String cLinea, String cProvincia, String cCiudad, String cPartido) {
-		imagen = "TS98484";
-		detalles = null;
-		detalles = imagen + "-Suspension - DNI:" + cDNI;
-		driver.switchTo().frame(cambioFrame(driver, By.id("SearchClientDocumentType")));
-		sb.BuscarCuenta("DNI", cDNI);
-		driver.findElement(By.cssSelector(".slds-tree__item.ng-scope")).click();
-		sleep(5000);
-		cc.irAGestion("suspensiones y reconexion back");
-		sleep(15000);
-		driver.switchTo().frame(cambioFrame(driver, By.id("Step1SelectSuspensionOrReconnection_nextBtn")));
-		buscarYClick(driver.findElements(By.cssSelector(".slds-form-element__label.ng-binding.ng-scope")), "contains", "suspensi\u00f3n");
-		driver.findElement(By.id("Step1SelectSuspensionOrReconnection_nextBtn")).click();
-		sleep(10000);
-		buscarYClick(driver.findElements(By.cssSelector(".slds-form-element__label.ng-binding.ng-scope")), "contains", "dni/cuit");
-		driver.findElement(By.id("Step2-SelectAssetOrDocument_nextBtn")).click();
-		sleep(10000);
-		driver.findElement(By.id("Step3_nextBtn")).click();
-		sleep(8000);
-		selectByText(driver.findElement(By.id("SelectFraud")),"Comercial");
-		selectByText(driver.findElement(By.id("SelectSubFraud")),"Administrativo por suscripci\u00f3n");
-		driver.findElement(By.id("TxtComment")).sendKeys("Fraude");
-		driver.findElement(By.id("Step4_nextBtn")).click();
-		sleep(8000);
-		driver.findElement(By.id("StepSummary_nextBtn")).click();
-		sleep(8000);
-		buscarYClick(driver.findElements(By.cssSelector(".slds-button.slds-button--neutral.ng-binding.ng-scope")),"contains", "continue");
-		boolean a = false;
-		List <WebElement> realiz = driver.findElements(By.cssSelector(".slds-box.ng-scope"));
-		for(WebElement x : realiz) {
-			if(x.getText().toLowerCase().contains("tu gesti\u00f3n se realiz\u00f3 con \u00e9xito")) {
-				a = true;
-			}
-		}
-		Assert.assertTrue(a);
-		sleep(8000);
-		CBS_Mattu cCBSM = new CBS_Mattu();
-		Assert.assertTrue(cCBSM.obtenerStatusLinea(cLinea).equals("suspension fraude"));
-		String orden = cc.obtenerOrden(driver, "Suspension administrativa");
-		detalles+=" - Orden: "+orden;
-	}
 	
-	@Test (groups = {"Suspension", "GestionesPerfilOficina","E2E","Ciclo3"}, dataProvider="CuentaSuspension")//No se puede visualizar en el panel izquierdo el numero de orden en UAT y no se suspende la cuenta
-	public void TS_98491_CRM_Movil_REPRO_Suspension_por_Fraude_Linea_Comercial_Desconocimiento_Administrativo(String cDNI, String cLinea, String cProvincia, String cCiudad, String cPartido) {
-		imagen = "TS98491";
-		detalles = null;
-		detalles = imagen + "- Suspension -DNI:" + cDNI;
-		driver.switchTo().frame(cambioFrame(driver, By.id("SearchClientDocumentType")));
-		sb.BuscarCuenta("DNI", cDNI);
-		driver.findElement(By.cssSelector(".slds-tree__item.ng-scope")).click();
-		sleep(5000);
-		cc.irAGestion("suspensiones y reconexion back");
-		sleep(15000);
-		driver.switchTo().frame(cambioFrame(driver, By.id("Step1SelectSuspensionOrReconnection_nextBtn")));
-		buscarYClick(driver.findElements(By.cssSelector(".slds-form-element__label.ng-binding.ng-scope")), "contains", "suspensi\u00f3n");
-		driver.findElement(By.id("Step1SelectSuspensionOrReconnection_nextBtn")).click();
-		sleep(10000);
-		buscarYClick(driver.findElements(By.cssSelector(".slds-form-element__label.ng-binding.ng-scope")), "contains", "linea");
-		driver.findElement(By.id("Step2-SelectAssetOrDocument_nextBtn")).click();
-		sleep(8000);
-		buscarYClick(driver.findElements(By.cssSelector(".slds-form-element__label.ng-binding.ng-scope")),"contains", "nombre: ");
-		driver.findElement(By.id("Step3_nextBtn")).click();
-		sleep(8000);
-		selectByText(driver.findElement(By.id("SelectFraud")),"Comercial");
-		selectByText(driver.findElement(By.id("SelectSubFraud")),"Desconocimiento");
-		driver.findElement(By.id("TxtComment")).sendKeys("Fraude");
-		driver.findElement(By.id("Step4_nextBtn")).click();
-		sleep(8000);
-		driver.findElement(By.id("StepSummary_nextBtn")).click();
-		sleep(8000);
-		buscarYClick(driver.findElements(By.cssSelector(".slds-button.slds-button--neutral.ng-binding.ng-scope")),"contains", "continue");
-		sleep(15000);
-		boolean a = false;
-		List <WebElement> realiz = driver.findElements(By.cssSelector(".slds-box.ng-scope"));
-		for(WebElement x : realiz) {
-			if(x.getText().toLowerCase().contains("tu gesti\u00f3n se realiz\u00f3 con \u00e9xito")) {
-				a = true;
-			}
-		}
-		Assert.assertTrue(a);
-		sleep(8000);
-		CBS_Mattu cCBSM = new CBS_Mattu();
-		Assert.assertTrue(cCBSM.obtenerStatusLinea(cLinea).equals("suspension fraude"));
-		String orden = cc.obtenerOrden(driver, "Suspension administrativa");
-		detalles+=" - Orden: "+orden;
-		
-	}
 	
 	@Test (groups = {"GestionesPerfilOficina","VentaDePacks","E2E","Ciclo1"}, dataProvider="PackOfCom")
 	public void Venta_de_Pack_1_GB_x_1_dia_whatsapp_gratis_Factura_de_Venta_TC_OffCom(String sDNI, String sLinea, String sPackOfCom, String cBanco, String cTarjeta, String cPromo, String cCuotas) throws AWTException, KeyManagementException, NoSuchAlgorithmException{
@@ -2553,7 +2300,7 @@ public class GestionesPerfilOficina extends TestBase {
 	}
 	
 	
-	@Test(groups = { "GestionesPerfilOficina", "Cambio de simcard","Ciclo3" }, priority = 1, dataProvider = "CambioSimCardOficina")
+	@Test(groups = { "GestionesPerfilOficina", "CambioSimCard","Ciclo3" }, priority = 1, dataProvider = "CambioSimCardOficina")
 	public void TSCambioSimCardOficina(String sDNI, String sLinea) throws AWTException {
 		imagen = "TSCambioSimCardOficina";
 		detalles = null;
@@ -2772,7 +2519,7 @@ public class GestionesPerfilOficina extends TestBase {
 			Assert.assertTrue(false);
 	}
 	
-	@Test (groups = {"GestionesPerfilOficina", "Consulta de Saldo", "Ciclo1"}, dataProvider = "ConsultaSaldo")
+	@Test (groups = {"GestionesPerfilOficina", "ConsultadeSaldo", "Ciclo1"}, dataProvider = "ConsultaSaldo")
 	public void TS_134373_CRM_Movil_Prepago_Vista_360_Consulta_de_Saldo_Verificar_credito_prepago_de_la_linea_FAN_Front_OOCC(String sDNI){
 		imagen ="TS134373";
 		detalles = null;
@@ -2786,7 +2533,7 @@ public class GestionesPerfilOficina extends TestBase {
 		Assert.assertTrue(!(cred.getText().isEmpty()));
 	}
 	
-	@Test (groups = {"GestionesPerfilOficina", "Consulta de Saldo", "Ciclo1"}, dataProvider = "ConsultaSaldo")
+	@Test (groups = {"GestionesPerfilOficina", "ConsultadeSaldo", "Ciclo1"}, dataProvider = "ConsultaSaldo")
 	public void TS_134376_CRM_Movil_Prepago_Vista_360_Consulta_de_Saldo_Verificar_saldo_del_cliente_FAN_Front_OOCC(String sDNI) {
 		imagen="TS134376";
 		detalles = null;
@@ -2813,8 +2560,8 @@ public class GestionesPerfilOficina extends TestBase {
 		}
 	}
 	
-	@Test (groups = {"GestionesPerfilOficina", "DetalleDeConsumo", "Ciclo2"}, dataProvider = "CuentaVista360")
-	public void TS134783_CRM_Movil_Prepago_Vista_360_Detalle_de_consumo_Consulta_detalle_de_consumo_Datos_FAN_Front_OOCC_134783(String sDNI, String sLinea,String sNombre, String sEmail, String sMovil) {
+	@Test (groups = {"GestionesPerfilOficina", "DetalleDeConsumo", "Ciclo2"}, dataProvider = "CuentaProblemaRecarga")
+	public void TS134783_CRM_Movil_Prepago_Vista_360_Detalle_de_consumo_Consulta_detalle_de_consumo_Datos_FAN_Front_OOCC_134783(String sDNI, String sLinea) {
 		imagen = "TS134783";
 		detalles = null;
 		detalles = imagen + "- Detalle de Consumo - DNI: "+sDNI;
@@ -2825,6 +2572,7 @@ public class GestionesPerfilOficina extends TestBase {
 		cc.seleccionarCardPornumeroLinea(sLinea, driver);
 		sleep(3000);
 		buscarYClick(driver.findElements(By.className("slds-text-body_regular")), "equals", "detalle de consumos");
+		sleep(8000);
 	    driver.switchTo().frame(cambioFrame(driver, By.className("slds-align_absolute-center")));
 		WebElement ConsumoDatos =  driver.findElement(By.className("slds-align_absolute-center")).findElements(By.tagName("div")).get(0).findElement(By.className("unit-div"));
 		System.out.println(ConsumoDatos.getText());
@@ -2856,8 +2604,8 @@ public class GestionesPerfilOficina extends TestBase {
 		Assert.assertTrue(a);
 		}
 	
-	@Test (groups = {"GestionesPerfilOficina", "DetalleDeConsumo", "Ciclo2"}, dataProvider = "CuentaVista360")
-	public void TS134784_CRM_Movil_Prepago_Vista_360_Detalle_de_consumo_Consulta_detalle_de_consumo_Voz_FAN_Front_OOCC(String sDNI, String sLinea,String sNombre, String sEmail, String sMovil) {
+	@Test (groups = {"GestionesPerfilOficina", "DetalleDeConsumo", "Ciclo2"}, dataProvider = "CuentaProblemaRecarga")
+	public void TS134784_CRM_Movil_Prepago_Vista_360_Detalle_de_consumo_Consulta_detalle_de_consumo_Voz_FAN_Front_OOCC(String sDNI, String sLinea) {
 		imagen = "TS134784";
 		detalles = null;
 		detalles = imagen + "-Vista 360 - DNI: "+sDNI;
@@ -2881,7 +2629,7 @@ public class GestionesPerfilOficina extends TestBase {
 		Assert.assertTrue(a);
 		}
 	
-	@Test (groups = {"GestionesPerfilOficina", "DetalleDeConsumo", "Ciclo2"}, dataProvider = "CuentaTriviasYSuscripciones")
+	@Test (groups = {"GestionesPerfilOficina", "DetalleDeConsumo", "Ciclo2"}, dataProvider = "CuentaProblemaRecarga")
 	public void TS134785_CRM_Movil_Prepago_Vista_360_Detalle_de_consumo_Consulta_detalle_de_Otros_consumos_FAN_Front_OOCC_134785(String cDNI, String cLinea) {
 		imagen = "TS134785";
 		detalles = null;
@@ -3676,11 +3424,12 @@ public class GestionesPerfilOficina extends TestBase {
 		sleep(25000);
 		driver.switchTo().frame(cambioFrame(driver, By.className("card-top")));
 		cCC.irAProductosyServicios();
-		driver.switchTo().frame(cambioFrame(driver, By.className("ext-strict")));
+		driver.switchTo().frame(cambioFrame(driver, By.cssSelector(".slds-grid.slds-wrap.slds-card.slds-m-bottom--small.slds-p-around--medium")));
 		sleep(8000);
 		boolean a = false;
-		List <WebElement> pp = driver.findElements((By.className("slds-text-heading_mediumtitle")));
+		List <WebElement> pp = driver.findElements((By.cssSelector(".slds-card.slds-m-around--small.ta-fan-slds")));
 		for(WebElement p : pp){
+			System.out.println(p.getText());
 			if(p.getText().contains("Plan Prepago")){
 				p.isDisplayed();
 				a = true;
@@ -3705,7 +3454,7 @@ public class GestionesPerfilOficina extends TestBase {
 		List<WebElement> pestanas = driver.findElements(By.className("x-tab-strip-closable"));
 		pestanas.addAll(driver.findElements(By.cssSelector(".x-tab-strip-closable.x-tab-strip-active")));
 		for (WebElement x : pestanas) {
-			if (x.getText().equalsIgnoreCase(sNombre))
+			if (x.getText().equalsIgnoreCase(sLinea))
 				cuenta = true;
 		}
 		driver.switchTo().frame(cambioFrame(driver, By.cssSelector(".console-card.active")));
@@ -5491,7 +5240,7 @@ public class GestionesPerfilOficina extends TestBase {
 			sleep(5000);
 		} catch (Exception e) {}
 		buscarYClick(driver.findElements(By.cssSelector(".slds-form-element__label.ng-binding.ng-scope")), "equals", "si");
-		driver.findElement(By.id("FileAttach")).sendKeys("C:\\Users\\Nicolas\\Desktop\\descarga.jpg");
+		driver.findElement(By.id("FileAttach")).sendKeys("C:\\Users\\Sofia Chardin\\Desktop\\DNI.jpg");
 		driver.findElement(By.id("AttachDocuments_nextBtn")).click();
 		sleep(5000);
 		driver.findElement(By.id("Summary_nextBtn")).click();
@@ -5537,8 +5286,8 @@ public class GestionesPerfilOficina extends TestBase {
 		Assert.assertTrue(gestion.getText().contains("La gesti\u00f3n fue derivada"));
 	}
 	
-	@Test (groups = {"ProblemasConRecargas", "GestionesPerfilOficina", "E2E", "Ciclo3"}, dataProvider = "CuentaProblemaRecarga") 
-	public void TS104353_CRM_Movil_Repro_Problemas_con_Recarga_Presencial_Tarjeta_Scratch_Caso_Nuevo_Tarjeta_Activa_y_Disponible_Ofcom(String sDNI, String sLinea) {
+	@Test (groups = {"ProblemasConRecargas", "GestionesPerfilOficina", "E2E", "Ciclo3"}, dataProvider = "CuentaProblemaRecargaAYD") 
+	public void TS104353_CRM_Movil_Repro_Problemas_con_Recarga_Presencial_Tarjeta_Scratch_Caso_Nuevo_Tarjeta_Activa_y_Disponible_Ofcom(String sDNI, String sLinea, String sSerie, String sPIN) {
 		imagen = "TS104353";
 		detalles = null;
 		detalles = imagen + " -Problemas Con Recargas-DNI: " + sDNI;
@@ -5556,8 +5305,8 @@ public class GestionesPerfilOficina extends TestBase {
 		driver.findElements(By.className("borderOverlay")).get(0).click();
 		driver.findElement(By.id("RefillMethods_nextBtn")).click();
 		sleep(5000);
-		driver.findElement(By.id("BatchNumber")).sendKeys("11120000009308");
-		driver.findElement(By.id("PIN")).sendKeys("0406");
+		driver.findElement(By.id("BatchNumber")).sendKeys(sSerie);
+		driver.findElement(By.id("PIN")).sendKeys(sPIN);
 		driver.findElement(By.id("PrepaidCardData_nextBtn")).click();
 		sleep(5000);
 		WebElement estado = driver.findElement(By.id("PrepaidCardStatusLabel"));
