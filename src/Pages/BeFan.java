@@ -3,6 +3,7 @@ package Pages;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
@@ -220,6 +221,13 @@ public class BeFan extends BasePage{
 		return driver.findElement(By.xpath("//*[@class='alert alert-dismissable alert-success'] //h4")).getText().equalsIgnoreCase("La operaci\u00f3n se ejecut\u00f3 satisfactoriamente.");
 	}
 	
+	public void cerrar() {
+	driver.findElement(By.xpath("//*[@class='btn btn-primary' and contains(text(), 'CERRAR')]")).click();
+	}
+	public void eliminar() {
+	driver.findElement(By.xpath("//*[@class='btn btn-primary' and contains(text(), 'ELIMINAR')]")).click();
+	}
+	
 	public boolean buscarRegion(String sRegion) {
 		driver.findElement(By.xpath("//*[@type='search']")).clear();
 		driver.findElement(By.xpath("//*[@type='search']")).sendKeys(sRegion);
@@ -292,5 +300,45 @@ public class BeFan extends BasePage{
 			}
 		}
 	}
+	public void buscarR (String Region) {
+	sleep(5000);
+	driver.findElement(By.className("panel-data"));
+	List <WebElement> region = driver.findElements(By.xpath("//*[@class='panel-group'] //*[@class='collapsed'] //*[@class='ng-binding']"));
+	for(WebElement x : region) {
+	if(x.getText().toLowerCase().contains(Region)) {
+		System.out.println(x.getText());
+		x.click();
+		break;
+		}
+	}	
+}
+	
+	public boolean regiontExists(WebElement element) throws InterruptedException {
+	    sleep(2000);
+		    try {
+ 		      boolean isDisplayed = element.getSize().height > 0;
+		       return isDisplayed;
+		    }   catch (Exception ex) {
+		         return false;
+		  }
+	}
+	
+	public void region() throws InterruptedException {
+		//String Region="";
+		if(regiontExists(driver.findElement(By.cssSelector(".alert.alert-dismissable.alert-danger")))) {
+			System.out.println(driver.findElement(By.cssSelector(".alert.alert-dismissable.alert-danger")).getText());
+			driver.findElement(By.className("pull-right")).findElement(By.cssSelector(".btn.btn-link")).getText().equalsIgnoreCase("Cancelar");
+			driver.findElement(By.className("pull-right")).findElement(By.cssSelector(".btn.btn-link")).click();
+			}
+		else {
+			driver.findElement(By.xpath("//*[@class='btn btn-primary' and contains(text(), 'Agregar')]")).click();
+			sleep(5000);
+			
+			Assert.assertTrue(verificarMensajeExitoso());
+			driver.findElement(By.xpath("//*[@ng-show='mensajeAgregarRegionCtrl.container.showSuccess']//*[@class='btn btn-primary']")).click();
+		}
+		//return true;
 	
 }
+}
+

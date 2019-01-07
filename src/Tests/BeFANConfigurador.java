@@ -18,8 +18,10 @@ import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 
+import Pages.BasePage;
 import Pages.BeFan;
 import Pages.ContactSearch;
+import Pages.Marketing;
 import Pages.setConexion;
 
 public class BeFANConfigurador extends TestBase {
@@ -252,8 +254,7 @@ public class BeFANConfigurador extends TestBase {
 	driver.switchTo().defaultContent();
 	Assert.assertFalse(driver.findElement(By.className("modal-content")).getText().equalsIgnoreCase("No se encontraron cupos para el filtro aplicado."));
 	//Assert.assertTrue(driver.findElement(By.className("modal-header")).getText().equalsIgnoreCase("El per\u00eddo debe comprender menos de 90 d\u00edas."));
-		
-
+	}
 	
 	@Test (groups = "BeFAN")
 	public void TS126633_BeFan_Movil_REPRO_Preactivacion_repro_Gestion_de_agrupadores_Busqueda_Eliminacion_de_agrupadores_No() {
@@ -327,7 +328,7 @@ public class BeFANConfigurador extends TestBase {
 		driver.findElement(By.name("cantidadTotal")).sendKeys("99998");
 		driver.findElement(By.name("modificarGuardar")).click();
 		sleep(3000);
-		Assert.assertTrue(driver.findElements(By.cssSelector(".text-center.ng-binding")).get(1).getText().equalsIgnoreCase("ï¿½Est\u00e1 seguro que desea modificar el registro seleccionado?"));
+		Assert.assertTrue(driver.findElements(By.cssSelector(".text-center.ng-binding")).get(1).getText().equalsIgnoreCase("Est\u00e1 seguro que desea modificar el registro seleccionado?"));
 	}
 	
 	@Test (groups = "BeFAN")
@@ -372,7 +373,7 @@ public class BeFANConfigurador extends TestBase {
 	}
 	
 	@Test (groups = "BeFAN", dataProvider="GestionRegionesCreacion")
-	public void TS126623_BeFan_Movil_REPRO_Preactivacion_repro_Gestion_de_agrupadores_Busqueda_Modificacion_de_agrupadores_Asignaciï¿½n_de_prefijos_a_agrupador_existente_Guardando(String sRegion) {
+	public void TS126623_BeFan_Movil_REPRO_Preactivacion_repro_Gestion_de_agrupadores_Busqueda_Modificacion_de_agrupadores_Asignacion_de_prefijos_a_agrupador_existente_Guardando(String sRegion) {
 		irA("Regiones", "Gesti\u00f3n");
 		pbf = new Pages.BeFan(driver);
 		List<String> sPrefijos = pbf.agregarPrefijos(sRegion);
@@ -485,6 +486,54 @@ public class BeFANConfigurador extends TestBase {
 		sleep(8000);
 		driver.findElement(By.name("exportar")).click();
 	}
+	
+	@Test (groups = "BeFan")
+	public void TS126634_BeFan_Movil_REPRO_Preactivacion_repro_Gestion_de_agrupadores_Busqueda_Eliminacion_de_agrupadores_Si_Preactivando() throws InterruptedException {
+		irA("Regiones", "Gesti\u00f3n");
+		sleep(3000);
+		driver.findElement(By.cssSelector(".btn.btn-primary")).click();
+		sleep(3000);
+		String Region="CORDOBA";
+		driver.findElement(By.cssSelector(".form-control.ng-pristine.ng-untouched.ng-valid.ng-empty")).sendKeys(Region);
+		driver.findElement(By.xpath("//*[@class='btn btn-primary' and contains(text(), 'Agregar')]")).click();
+//		String region= "";
+//		if(region=driver.findElement(By.cssSelector(".alert.alert-dismissable.alert-danger")) {
+//			System.out.println(driver.findElement(By.cssSelector(".alert.alert-dismissable.alert-danger")).getText());
+//			driver.findElement(By.className("pull-right")).findElement(By.cssSelector(".btn.btn-link")).getText().equalsIgnoreCase("Cancelar");
+//			driver.findElement(By.className("pull-right")).findElement(By.cssSelector(".btn.btn-link")).click();
+//		//pbf.region();
+//		}
+//		else {
+		sleep(5000);
+		driver.findElement(By.xpath("//*[@class='btn btn-primary' and contains(text(), 'Agregar')]")).click();
+		sleep(5000);
+		pbf = new Pages.BeFan(driver);
+		Assert.assertTrue(pbf.verificarMensajeExitoso());
+		//Ask about confirmation message
+		driver.findElement(By.xpath("//*[@ng-show='mensajeAgregarRegionCtrl.container.showSuccess']//*[@class='btn btn-primary']")).click();
+		pbf.buscarR("cordoba");
+		sleep(3000);
+		driver.findElement(By.className("col-lg-2")).findElement(By.cssSelector(".btn.btn-link")).click();
+		driver.findElement(By.className("modal-content")).findElement(By.className("modal-body")).findElement(By.cssSelector(".col-lg-4.dropdown-filters"));
+		driver.findElement(By.id("compatibility")).findElement(By.tagName("input")).click();
+		driver.findElement(By.xpath("//*[@class='btn btn-primary' and contains(text(), 'CERRAR')]")).click();
+		sleep(5000);
+		pbf = new Pages.BeFan(driver);
+		Assert.assertTrue(pbf.verificarMensajeExitoso());
+		driver.findElement(By.cssSelector(".actions.text-center")).findElement(By.cssSelector(".btn.btn-link")).click();
+		Assert.assertTrue(driver.findElement(By.cssSelector(".text-center.ng-binding")).getText().contains("ï¿½Esta seguro que desea eliminarlo ?"));
+		pbf.eliminar();
+		//driver.findElement(By.xpath("//*[@class='btn btn-primary' and contains(text(), 'ELIMINAR')]")).click();
+		Assert.assertTrue(pbf.verificarMensajeExitoso());
+		//driver.findElement(By.xpath("//*[@class='btn btn-primary' and contains(text(), 'CERRAR')]")).click();
+		pbf.cerrar();
+		driver.findElement(By.cssSelector(".text-center.ng-binding")).getText().contains("¿Tambien desea eliminar la Region CORDOBA ?");
+		//driver.findElement(By.xpath("//*[@class='btn btn-primary' and contains(text(), 'ELIMINAR')]")).click();
+		pbf.eliminar();
+		Assert.assertTrue(pbf.verificarMensajeExitoso());
+		//driver.findElement(By.xpath("//*[@class='btn btn-primary' and contains(text(), 'CERRAR')]")).click();
+		pbf.cerrar();
+	}
+	
 
-}
 }
