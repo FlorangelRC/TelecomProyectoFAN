@@ -851,4 +851,70 @@ public class BeFANConfigurador extends TestBase {
 		System.out.println("No se puede modificar un cupo no vigente");
 		
 	}
+	
+	@Test (groups = "BeFan")
+	public void TS112014_BeFan_Movil_REPRO_Preactivacion_repro_Gestion_de_agrupadores_Busqueda_Modificacion_de_agrupadores_Eliminacion_de_prefijos_en_agrupador_existente_No_guardando() {
+		irA("regiones", "gesti\u00f3n");
+		boolean noEliminar = false;
+		buscarYClick(driver.findElements(By.cssSelector(".panel-group.panel-group-alternative.ng-scope")), "contains", "bas-vjp-bahia blanca");
+		driver.findElement(By.cssSelector(".panel-collapse.in.collapse")).findElement(By.cssSelector(".btn.btn-link")).click();
+		String msj = driver.findElement(By.className("modal-header")).getText();
+		if (msj.contains("Esta seguro que desea eliminarlo")) {
+			if (driver.findElement(By.className("modal-footer")).findElement(By.cssSelector(".btn.btn-link")).getText().equals("Cancelar")) {
+				driver.findElement(By.className("modal-footer")).findElement(By.cssSelector(".btn.btn-link")).click();
+				noEliminar = true;
+			}
+		}
+		Assert.assertTrue(noEliminar);
+	}
+	
+	@Test (groups = "BeFan")
+	public void TS112013_BeFan_Movil_REPRO_Preactivacion_repro_Gestion_de_agrupadores_Busqueda_Modificacion_de_agrupadores_Eliminacion_de_prefijos_en_agrupador_existente_Guardando() {
+		irA("regiones", "gesti\u00f3n");
+		boolean eliminar = false;
+		buscarYClick(driver.findElements(By.cssSelector(".panel-group.panel-group-alternative.ng-scope")), "contains", "la plata");
+		for (WebElement x : driver.findElements(By.className("panel-group"))) {
+			try {
+				if (x.getText().contains("3583")) {
+					x.findElement(By.tagName("tbody")).findElement(By.tagName("button")).click();
+					buscarYClick(driver.findElements(By.cssSelector(".btn.btn-primary")), "equals", "eliminar");
+					buscarYClick(driver.findElements(By.cssSelector(".btn.btn-primary")), "equals", "cerrar");
+					eliminar = true;
+				}
+			} catch(Exception e) {}
+		}
+		for (WebElement x : driver.findElements(By.className("panel-group"))) {
+			try {
+				if (x.getText().toLowerCase().contains("la plata"))
+					x.findElement(By.cssSelector(".glyphicon.glyphicon-plus")).click();
+				sleep(5000);
+				for (WebElement a : driver.findElements(By.id("compatibility"))) {
+					if (a.getText().contains("3583")) {
+						a.findElement(By.tagName("input")).click();
+						buscarYClick(driver.findElements(By.cssSelector(".btn.btn-primary")), "equals", "agregar");
+						buscarYClick(driver.findElements(By.cssSelector(".btn.btn-primary")), "equals", "cerrar");
+					}
+				}
+			} catch(Exception e) {}
+		}
+		Assert.assertTrue(eliminar);
+	}
+	
+	@Test (groups = "BeFan")
+	public void TS112012_BeFan_Movil_REPRO_Preactivacion_repro_Gestion_de_agrupadores_Busqueda_Modificacion_de_agrupadores_Asignacion_de_prefijos_a_agrupador_existente_No_guardando() {
+		irA("regiones", "gesti\u00f3n");
+		boolean btnCancelar = false;
+		buscarYClick(driver.findElements(By.cssSelector(".panel-group.panel-group-alternative.ng-scope")), "contains", "la plata");
+		for (WebElement x : driver.findElements(By.className("panel-group"))) {
+			try {
+				if (x.getText().toLowerCase().contains("la plata"))
+					x.findElement(By.cssSelector(".glyphicon.glyphicon-plus")).click();
+			} catch(Exception e) {}
+		}
+		sleep(3000);
+		driver.findElement(By.id("compatibility")).findElement(By.tagName("input")).click();
+		if (driver.findElement(By.cssSelector(".ng-scope.block-ui.block-ui-anim-fade")).findElement(By.cssSelector(".btn.btn-link")).getText().equals("Cancelar"))
+			btnCancelar = true;
+		Assert.assertTrue(btnCancelar);
+	}
 }
