@@ -2234,18 +2234,19 @@ public class GestionesPerfilOficina extends TestBase {
 	}
 	
 	@Test (groups = {"GestionesPerfilOficina", "TriviasYSuscripciones", "E2E","Ciclo3"}, dataProvider = "CuentaTriviasYSuscripciones")
-	public void TS110893_CRM_Movil_REPRO_Suscripciones_Baja_de_una_suscripcion_con_BlackList_con_ajuste_Presencial(String cDNI, String cLinea) {
+	public void TS110893_CRM_Movil_REPRO_Suscripciones_Baja_de_una_suscripcion_con_BlackList_con_ajuste_Presencial(String sDNI, String sLinea) {
 		imagen="TS110893";
 		detalles = null;
-		detalles = imagen + "- Trivias y suscripciones - DNI:" + cDNI;
+		detalles = imagen + "- Trivias y suscripciones - DNI:" + sDNI;
 		boolean gest = false;
-		//cCBSM.Servicio_RealizarAltaSuscripcion(cLinea,"178");
+		CBS_Mattu cCBSM = new CBS_Mattu();
+		cCBSM.Servicio_RealizarAltaSuscripcion(sLinea, "178");
 		WebElement blackList = null;
 		driver.switchTo().frame(cambioFrame(driver, By.id("SearchClientDocumentType")));
-		sb.BuscarCuenta("DNI", cDNI);
+		sb.BuscarCuenta("DNI", sDNI);
 		driver.findElement(By.cssSelector(".slds-tree__item.ng-scope")).click();
 		sleep(15000);
-		cc.seleccionarCardPornumeroLinea(cLinea, driver);
+		cc.seleccionarCardPornumeroLinea(sLinea, driver);
 		sleep(3000);
 		cc.irAGestionEnCard("Suscripciones");
 		sleep(5000);
@@ -2283,19 +2284,18 @@ public class GestionesPerfilOficina extends TestBase {
 	}
 	
 	@Test (groups = {"GestionesPerfilOficina", "TriviasYSuscripciones", "E2E","Ciclo3"}, dataProvider = "CuentaTriviasYSuscripciones")
-	public void TS110877_CRM_Movil_REPRO_Suscripciones_Baja_de_una_suscripcion_sin_BlackList_con_ajuste_Presencial(String cDNI, String cLinea) {
+	public void TS110877_CRM_Movil_REPRO_Suscripciones_Baja_de_una_suscripcion_sin_BlackList_con_ajuste_Presencial(String sDNI, String sLinea) {
 		imagen = "TS110877";
 		detalles = null;
-		detalles = imagen + "- Trivias y suscripciones - DNI: "+cDNI;
+		detalles = imagen + "- Trivias y suscripciones - DNI: "+sDNI;
 		boolean gest = false;
-		CBS_Mattu cCBSM = new CBS_Mattu();
-		
+		CBS_Mattu cCBSM = new CBS_Mattu();		
 		WebElement blackList = null;
 		driver.switchTo().frame(cambioFrame(driver, By.id("SearchClientDocumentType")));
-		sb.BuscarCuenta("DNI", cDNI);
+		sb.BuscarCuenta("DNI", sDNI);
 		driver.findElement(By.cssSelector(".slds-tree__item.ng-scope")).click();
 		sleep(15000);
-		cc.seleccionarCardPornumeroLinea(cLinea, driver);
+		cc.seleccionarCardPornumeroLinea(sLinea, driver);
 		sleep(3000);
 		cc.irAGestionEnCard("Suscripciones");
 		sleep(5000);
@@ -2324,7 +2324,7 @@ public class GestionesPerfilOficina extends TestBase {
 		driver.switchTo().frame(cambioFrame(driver, By.id("UnsubscriptionSummary_nextBtn")));
 		driver.findElement(By.id("UnsubscriptionSummary_nextBtn")).click();
 		sleep(10000);
-		cCBSM.Servicio_RealizarAltaSuscripcion(cLinea,"178");
+		cCBSM.Servicio_RealizarAltaSuscripcion(sLinea, "178");
 		List <WebElement> msj = driver.findElements(By.cssSelector(".slds-form-element.vlc-flex.vlc-slds-text-block.vlc-slds-rte.ng-pristine.ng-valid.ng-scope"));
 		for (WebElement x : msj) {
 			if (x.getText().toLowerCase().contains("tu caso se resolvi\u00f3 con \u00e9xito")) {
