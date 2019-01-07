@@ -27,7 +27,7 @@ import org.testng.annotations.Test;
 import Pages.BeFan;
 
 
-public class BeFanTest {
+public class BeFanTest extends TestBase {
 	
 	private WebDriver driver;
 	
@@ -37,7 +37,7 @@ public class BeFanTest {
 		driver=BeFan.initDriver();
 		BeFan.irABefan();
 	    BeFan page=new BeFan(driver);
-	    page.loginBefan("BEF585991", "Telecom02!");
+	    page.loginBefan("UAT195528", "Testa10k");
 	    Thread.sleep(3000);
 	//    page.opcionDeSim("Importación");
 	//    page.selectPrefijo("351");
@@ -63,5 +63,6 @@ public class BeFanTest {
 
 	}
 	
-	
 }
+	
+

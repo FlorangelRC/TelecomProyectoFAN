@@ -1721,7 +1721,7 @@ public class GestionesPerfilAgente extends TestBase{
 		Assert.assertTrue(error);
 	}
 	
-	@Test (groups= {"GestionPerfilTelefonico", "Ciclo2", "Vista360"}, dataProvider = "documentacionVista360")
+	@Test (groups= {"GestionesPerfilAgente", "Ciclo2", "Vista360"}, dataProvider = "documentacionVista360")
 	public void TS134817_CRM_Movil_Prepago_Vista_360_Mis_Servicios_Visualizacion_del_estado_de_los_servicios_activos_FAN_Front_OOCC_Agentes(String sDNI){
 		imagen = "TS134379";
 		detalles = null;
@@ -1755,8 +1755,8 @@ public class GestionesPerfilAgente extends TestBase{
 		Assert.assertTrue(b);
 	}
 	
-	@Test (groups= {"GestionPerfilTelefonico", "Ciclo2", "Vista360"}, dataProvider = "CuentaVista360")
-	public void TS134819_CRM_Movil_Prepago_Vista_360_Distribucion_de_paneles_Informacion_del_cliente_FAN_Front_Agentes(String sDNI, String sLinea,String sNombre, String sEmail, String sMovil){
+	@Test (groups= {"GestionesPerfilAgente", "Ciclo2", "Vista360"}, dataProvider = "CuentaVista360")
+	public void TS134819_CRM_Movil_Prepago_Vista_360_Distribucion_de_paneles_Informacion_del_cliente_FAN_Front_Agentes(String sDNI, String sLinea,String sNombre){
 		imagen = "TS134819";
 		detalles = null;
 		detalles = imagen + "-Vista 360 - DNI: "+ sDNI+ "- Nombre: " + sNombre;
