@@ -772,6 +772,9 @@ public class GestionesPerfilOficina extends TestBase {
 		driver.findElement(By.id("ReceiptCode")).sendKeys("123");
 		driver.findElement(By.id("OnlineRefillData_nextBtn")).click();
 		sleep(8000);
+		driver.findElement(By.xpath("//*[@id=\"SessionCase|0\"]/div/div[1]/label[2]/span/div/div")).click();
+		driver.findElement(By.id("ExistingCase_nextBtn")).click();
+		sleep(8000);
 		buscarYClick(driver.findElements(By.cssSelector(".slds-form-element__label.ng-binding.ng-scope")),"contains","si");
 		WebElement img = driver.findElement(By.id("FileAttach"));
 		File directory = new File("Dni.jpg");
@@ -978,9 +981,6 @@ public class GestionesPerfilOficina extends TestBase {
 		driver.findElement(By.id("BatchNumber")).sendKeys(cBatch);
 		driver.findElement(By.id("PIN")).sendKeys(cPin);
 		driver.findElement(By.id("PrepaidCardData_nextBtn")).click();
-		sleep(7000);
-		buscarYClick(driver.findElements(By.className("borderOverlay")), "equals", "crear un caso nuevo");
-		driver.findElement(By.id("ExistingCase_nextBtn")).click();
 		sleep(7000);
 		driver.findElement(By.id("Summary_nextBtn")).click();
 		sleep(10000);
@@ -1384,8 +1384,8 @@ public class GestionesPerfilOficina extends TestBase {
 			sOrders.add("Inconvenientes con cargos tasados y facturados, orden numero: " + orden + " con numero de DNI: " + sDNI);
 			Assert.assertTrue(cc.verificarOrden(orden));		
 		} else {
-			String orden = driver.findElement(By.xpath("//*[@id=\"txtSuccessConfirmation\"]/div")).findElement(By.tagName("strong")).getText();
-			detalles+=" - Orden: "+orden;
+			String orden = driver.findElement(By.cssSelector(".vlc-slds-inline-control__label.ng-binding")).getText();
+			detalles += "-Orden: " + orden;
 			Assert.assertTrue(cc.verificarOrdenYGestion("Inconvenientes con cargos tasados y facturados"));
 		}
 	}
@@ -1764,8 +1764,8 @@ public class GestionesPerfilOficina extends TestBase {
 			sOrders.add("Inconvenientes con cargos tasados y facturados, orden numero: " + orden + " con numero de DNI: " + sDNI);
 			Assert.assertTrue(cc.verificarOrden(orden));		
 		} else {
-			String orden = driver.findElement(By.xpath("//*[@id=\"txtSuccessConfirmation\"]/div")).findElement(By.tagName("strong")).getText();
-			detalles+=" - Orden: "+orden;
+			String orden = driver.findElement(By.cssSelector(".vlc-slds-inline-control__label.ng-binding")).getText();
+			detalles += "-Orden: " + orden;
 			sOrders.add("Inconvenientes con cargos tasados y facturados, numero de orden: " + orden + " de cuenta con DNI: " + sDNI);
 			Assert.assertTrue(cc.verificarOrdenYGestion("Inconvenientes con cargos tasados y facturados"));
 		}
@@ -1916,8 +1916,8 @@ public class GestionesPerfilOficina extends TestBase {
 		buscarYClick(driver.findElements(By.cssSelector(".imgItemContainer.ng-scope")), "contains", "tarjeta prepaga");
 		driver.findElement(By.id("RefillMethods_nextBtn")).click();
 		sleep(8000);
-		driver.findElement(By.id("BatchNumber")).sendKeys("11120000009313");
-		driver.findElement(By.id("PIN")).sendKeys("0858");
+		driver.findElement(By.id("BatchNumber")).sendKeys("11120000009352");
+		driver.findElement(By.id("PIN")).sendKeys("0589");
 		driver.findElement(By.id("PrepaidCardData_nextBtn")).click();
 		sleep(15000);
 		driver.findElement(By.id("Summary_nextBtn")).click();
@@ -2068,18 +2068,19 @@ public class GestionesPerfilOficina extends TestBase {
 	}
 	
 	@Test (groups = {"GestionesPerfilOficina", "TriviasYSuscripciones", "E2E","Ciclo3"}, dataProvider = "CuentaTriviasYSuscripciones")
-	public void TS110893_CRM_Movil_REPRO_Suscripciones_Baja_de_una_suscripcion_con_BlackList_con_ajuste_Presencial(String cDNI, String cLinea) {
+	public void TS110893_CRM_Movil_REPRO_Suscripciones_Baja_de_una_suscripcion_con_BlackList_con_ajuste_Presencial(String sDNI, String sLinea) {
 		imagen="TS110893";
 		detalles = null;
-		detalles = imagen + "- Trivias y suscripciones - DNI:" + cDNI;
+		detalles = imagen + "- Trivias y suscripciones - DNI:" + sDNI;
 		boolean gest = false;
-		//cCBSM.Servicio_RealizarAltaSuscripcion(cLinea,"178");
+		CBS_Mattu cCBSM = new CBS_Mattu();
+		cCBSM.Servicio_RealizarAltaSuscripcion(sLinea, "178");
 		WebElement blackList = null;
 		driver.switchTo().frame(cambioFrame(driver, By.id("SearchClientDocumentType")));
-		sb.BuscarCuenta("DNI", cDNI);
+		sb.BuscarCuenta("DNI", sDNI);
 		driver.findElement(By.cssSelector(".slds-tree__item.ng-scope")).click();
 		sleep(15000);
-		cc.seleccionarCardPornumeroLinea(cLinea, driver);
+		cc.seleccionarCardPornumeroLinea(sLinea, driver);
 		sleep(3000);
 		cc.irAGestionEnCard("Suscripciones");
 		sleep(5000);
@@ -2117,19 +2118,18 @@ public class GestionesPerfilOficina extends TestBase {
 	}
 	
 	@Test (groups = {"GestionesPerfilOficina", "TriviasYSuscripciones", "E2E","Ciclo3"}, dataProvider = "CuentaTriviasYSuscripciones")
-	public void TS110877_CRM_Movil_REPRO_Suscripciones_Baja_de_una_suscripcion_sin_BlackList_con_ajuste_Presencial(String cDNI, String cLinea) {
+	public void TS110877_CRM_Movil_REPRO_Suscripciones_Baja_de_una_suscripcion_sin_BlackList_con_ajuste_Presencial(String sDNI, String sLinea) {
 		imagen = "TS110877";
 		detalles = null;
-		detalles = imagen + "- Trivias y suscripciones - DNI: "+cDNI;
+		detalles = imagen + "- Trivias y suscripciones - DNI: "+sDNI;
 		boolean gest = false;
-		CBS_Mattu cCBSM = new CBS_Mattu();
-		
+		CBS_Mattu cCBSM = new CBS_Mattu();		
 		WebElement blackList = null;
 		driver.switchTo().frame(cambioFrame(driver, By.id("SearchClientDocumentType")));
-		sb.BuscarCuenta("DNI", cDNI);
+		sb.BuscarCuenta("DNI", sDNI);
 		driver.findElement(By.cssSelector(".slds-tree__item.ng-scope")).click();
 		sleep(15000);
-		cc.seleccionarCardPornumeroLinea(cLinea, driver);
+		cc.seleccionarCardPornumeroLinea(sLinea, driver);
 		sleep(3000);
 		cc.irAGestionEnCard("Suscripciones");
 		sleep(5000);
@@ -2158,7 +2158,7 @@ public class GestionesPerfilOficina extends TestBase {
 		driver.switchTo().frame(cambioFrame(driver, By.id("UnsubscriptionSummary_nextBtn")));
 		driver.findElement(By.id("UnsubscriptionSummary_nextBtn")).click();
 		sleep(10000);
-		cCBSM.Servicio_RealizarAltaSuscripcion(cLinea,"178");
+		cCBSM.Servicio_RealizarAltaSuscripcion(sLinea, "178");
 		List <WebElement> msj = driver.findElements(By.cssSelector(".slds-form-element.vlc-flex.vlc-slds-text-block.vlc-slds-rte.ng-pristine.ng-valid.ng-scope"));
 		for (WebElement x : msj) {
 			if (x.getText().toLowerCase().contains("tu caso se resolvi\u00f3 con \u00e9xito")) {
@@ -2491,8 +2491,8 @@ public class GestionesPerfilOficina extends TestBase {
 		Assert.assertFalse(wNumerosAmigos.get(1).findElement(By.tagName("input")).getText().equals("B"));
 	}
 	
-	@Test (groups = {"GestionesPerfilOficina", "Historial de Recargas", "Ciclo2"}, dataProvider = "CuentaProblemaRecarga")
-	public void TS135346_Historial_de_Recargas_Consultar_detalle_de_Recargas_por_Canal_TODOS_Fan_FRONT_OOCC(String sDNI, String sNumTarjeta) {
+	@Test (groups = {"GestionesPerfilOficina", "HistorialDeRecargas", "Ciclo2"}, dataProvider = "RecargasHistorias")
+	public void TS135346_Historial_de_Recargas_Consultar_detalle_de_Recargas_por_Canal_TODOS_Fan_FRONT_OOCC(String sDNI) {
 		imagen = "TS135346";
 		detalles = null;
 		detalles = imagen + " - Historial de recargas - DNI:" + sDNI;
@@ -2519,7 +2519,7 @@ public class GestionesPerfilOficina extends TestBase {
 			Assert.assertTrue(false);
 	}
 	
-	@Test (groups = {"GestionesPerfilOficina", "ConsultadeSaldo", "Ciclo1"}, dataProvider = "ConsultaSaldo")
+	@Test (groups = {"GestionesPerfilOficina", "ConsultaDeSaldo", "Ciclo1"}, dataProvider = "ConsultaSaldo")
 	public void TS_134373_CRM_Movil_Prepago_Vista_360_Consulta_de_Saldo_Verificar_credito_prepago_de_la_linea_FAN_Front_OOCC(String sDNI){
 		imagen ="TS134373";
 		detalles = null;
@@ -2533,7 +2533,7 @@ public class GestionesPerfilOficina extends TestBase {
 		Assert.assertTrue(!(cred.getText().isEmpty()));
 	}
 	
-	@Test (groups = {"GestionesPerfilOficina", "ConsultadeSaldo", "Ciclo1"}, dataProvider = "ConsultaSaldo")
+	@Test (groups = {"GestionesPerfilOficina", "ConsultaDeSaldo", "Ciclo1"}, dataProvider = "ConsultaSaldo")
 	public void TS_134376_CRM_Movil_Prepago_Vista_360_Consulta_de_Saldo_Verificar_saldo_del_cliente_FAN_Front_OOCC(String sDNI) {
 		imagen="TS134376";
 		detalles = null;
@@ -2656,7 +2656,7 @@ public class GestionesPerfilOficina extends TestBase {
 	}
 	
 	
-	@Test (groups= {"GestionesPerfilOficina", "HistorialDeRecargasSOS", "Ciclo2"},  dataProvider = "HistoriaRecarga")
+	@Test (groups= {"GestionesPerfilOficina", "HistorialDeRecargas", "Ciclo2"},  dataProvider = "HistoriaRecarga")
 	public void TS134470_CRM_Movil_Prepago_Historial_De_Recargas_SOS_S440_FAN_Front_OOCC(String cDNI, String cLinea) {
 		imagen = "TS134470";
 		detalles = null;
@@ -2696,8 +2696,8 @@ public class GestionesPerfilOficina extends TestBase {
 		Assert.assertTrue(enc);
 	}
 	
-	@Test (groups= {"GestionesPerfilOficina", "Historial de Recargas", "Ciclo2"},  dataProvider = "CuentaModificacionDeDatos")
-	public void TS134473_CRM_Movil_Prepago_Historial_De_Packs_Fan_Front_OOCC(String cDNI, String sLinea) {
+	@Test (groups= {"GestionesPerfilOficina", "HistorialDeRecargas", "Ciclo2"},  dataProvider = "RecargasHistorias")
+	public void TS134473_CRM_Movil_Prepago_Historial_De_Packs_Fan_Front_OOCC(String cDNI) {
 		imagen = "TS134473";
 		detalles = null;
 		detalles = imagen + "- Historial de packs - DNI: "+cDNI;
@@ -3180,7 +3180,7 @@ public class GestionesPerfilOficina extends TestBase {
 	}
 	
 	@Test (groups={"Sales","GestionDeClientes", "Ciclo1"},dataProvider = "validaDocumentacion")
-	public void TS_135507_CRM_Movil_REPRO_Busqueda_Email(String sDNI, String sNumeroDeCuenta, String sNombre, String sApellido, String sLibreta, String sRazon, String sEmail) {
+	public void TS135507_CRM_Movil_REPRO_Busqueda_Email(String sDNI, String sNumeroDeCuenta, String sNombre, String sApellido, String sLibreta, String sRazon, String sEmail) {
 		imagen = "TS135507";
 		detalles = null;
 		detalles = imagen+" - Gestion de clientes - Email: "+sEmail;
@@ -3408,12 +3408,12 @@ public class GestionesPerfilOficina extends TestBase {
 		}
 		Assert.assertTrue(creditoRecarga && creditoPromocional && estado && internetDisponible);
 	}
-	@Test (groups = {"GestionesPerfilOficina","Vista360","E2E", "Ciclo1"}, dataProvider="RenovacionCuotaConSaldo")
-	public void TS134380_CRM_Movil_Prepago_Vista_360_Mis_Servicios_Visualizacion_del_estado_de_los_Productos_activos_FAN_Front_OOCC(String sDNI, String sLinea){
+	@Test (groups = {"GestionesPerfilOficina","Vista360","E2E", "Ciclo1"}, dataProvider="documentacionVista360")
+	public void TS134380_CRM_Movil_Prepago_Vista_360_Mis_Servicios_Visualizacion_del_estado_de_los_Productos_activos_FAN_Front_OOCC(String sDNI){
 		imagen = "TS134380";
 		//Check all
 		detalles = null;
-		detalles = imagen + " - Vista 360 - DNI: "+sDNI+" - Linea: "+sLinea;
+		detalles = imagen + " - Vista 360 - DNI: "+sDNI;
 		CustomerCare cCC = new CustomerCare(driver);
 		BasePage cambioFrameByID=new BasePage();
 		driver.switchTo().frame(cambioFrameByID.getFrameForElement(driver, By.id("SearchClientDocumentType")));
@@ -3423,17 +3423,15 @@ public class GestionesPerfilOficina extends TestBase {
 		driver.findElement(By.cssSelector(".slds-tree__item.ng-scope")).findElement(By.tagName("div")).click();
 		sleep(25000);
 		driver.switchTo().frame(cambioFrame(driver, By.className("card-top")));
-		cCC.irAProductosyServicios();
-		driver.switchTo().frame(cambioFrame(driver, By.cssSelector(".slds-grid.slds-wrap.slds-card.slds-m-bottom--small.slds-p-around--medium")));
-		sleep(8000);
+		driver.findElement(By.className("card-top")).click();
+		sleep(3000);
+		buscarYClick(driver.findElements(By.className("slds-text-body_regular")), "equals", "productos y servicios");
+		sleep(10000);
 		boolean a = false;
-		List <WebElement> pp = driver.findElements((By.cssSelector(".slds-card.slds-m-around--small.ta-fan-slds")));
-		for(WebElement p : pp){
-			System.out.println(p.getText());
-			if(p.getText().contains("Plan Prepago")){
-				p.isDisplayed();
-				a = true;
-			}
+		driver.switchTo().frame(cambioFrame(driver, By.cssSelector(".slds-grid.slds-wrap.slds-card.slds-m-bottom--small.slds-p-around--medium")));
+		WebElement verif = driver.findElement(By.cssSelector(".via-slds.slds-m-around--small.ng-scope"));
+		if(verif.getText().toLowerCase().contains("servicios incluidos")) {
+			a = true;
 		}
 		Assert.assertTrue(a);
 	}
@@ -3753,7 +3751,7 @@ public class GestionesPerfilOficina extends TestBase {
 		detalles +="-Orden:"+orden;	
 	}
 	
-	@Test (groups = {"GestionesPerfilOficina", "Historial de Recargas", "Ciclo2"}, dataProvider = "RecargasHistorias")
+	@Test (groups = {"GestionesPerfilOficina", "HistorialDeRecargas", "Ciclo2"}, dataProvider = "RecargasHistorias")
 	public void TS_134787_CRM_Movil_Prepago_Historial_de_Recargas_Consultar_detalle_de_Recargas_con_Beneficios_FAN_Front_OOCC(String sDNI) {
 		imagen = "TS134787";
 		detalles = null;
@@ -3783,7 +3781,7 @@ public class GestionesPerfilOficina extends TestBase {
 			Assert.assertTrue(false);
 	}
 	
-	@Test (groups = {"GestionesPerfilOficina", "Historial de Recargas", "Ciclo2"}, dataProvider = "RecargasHistorias")
+	@Test (groups = {"GestionesPerfilOficina", "HistorialDeRecargas", "Ciclo2"}, dataProvider = "RecargasHistorias")
 	public void TS_134788_CRM_Movil_Prepago_Historial_de_Recargas_Consultar_detalle_de_Recargas_Sin_Beneficios_FAN_Front_OOCC(String sDNI){
 		imagen = "TS134788";
 		detalles = null;
@@ -3814,7 +3812,7 @@ public class GestionesPerfilOficina extends TestBase {
 	}
 	
 	
-	@Test (groups = {"GestionesPerfilOficina","Historial de Reacargas","E2E", "Ciclo1"},  dataProvider = "HistoriaRecarga")
+	@Test (groups = {"GestionesPerfilOficina","HistorialDeReacargas","E2E", "Ciclo1"},  dataProvider = "HistoriaRecarga")
 	public void TS135468_CRM_Movil_Prepago_Historial_de_Packs_Nombre_del_Pack_TODOS_FAN_Front_OOCC(String sDNI, String sLinea){
 		imagen = "TS135468";
 		detalles = null;
@@ -3871,8 +3869,8 @@ public class GestionesPerfilOficina extends TestBase {
 		Assert.assertTrue(enc);
 	}
 
-	@Test (groups = {"GestionesPerfilOficina","Historial de Reacargas","E2E", "Ciclo1"},  dataProvider = "HistoriaRecarga")
-	public void TS135361_CRM_Movil_Prepago_Otros_Historiales_Historial_de_ajustes_FAN_Front_OOCC_S138(String sDNI, String sLinea){
+	@Test (groups = {"GestionesPerfilOficina","HistorialDeReacargas","E2E", "Ciclo1"},  dataProvider = "RecargasHistorias")
+	public void TS135361_CRM_Movil_Prepago_Otros_Historiales_Historial_de_ajustes_FAN_Front_OOCC_S138(String sDNI){
 		imagen = "TS135361";
 		detalles = null;
 		detalles = imagen + "- Historial de packs - DNI: " + sDNI;
@@ -4022,8 +4020,8 @@ public class GestionesPerfilOficina extends TestBase {
 		//Blocked
 	}
 	
-	@Test (groups = {"GestionesPerfilOficina","Historial de Recargas","E2E", "Ciclo1"},  dataProvider = "CuentaModificacionDeDatos")
-	public void TS135483_CRM_Movil_Prepago_Historial_de_Packs_Seleccion_de_Fechas_FAN_Front_OOCC(String sDNI, String sLinea){
+	@Test (groups = {"GestionesPerfilOficina","HistorialDeRecargas","E2E", "Ciclo1"},  dataProvider = "RecargasHistorias")
+	public void TS135483_CRM_Movil_Prepago_Historial_de_Packs_Seleccion_de_Fechas_FAN_Front_OOCC(String sDNI){
 		imagen = "TS135483";
 		detalles = null;
 		detalles = imagen + " - Historial de packs - DNI: " + sDNI;
@@ -5570,8 +5568,8 @@ public class GestionesPerfilOficina extends TestBase {
 		Assert.assertTrue(error);
 	}
 	
-	@Test (groups = {"GestionesPerfilOficina","Historial de Recargas","E2E", "Ciclo1"},  dataProvider = "CuentaModificacionDeDatos")
-	public void TS135476_CRM_Movil_Prepago_Historial_de_Packs_Nombre_del_Pack_Plan_Internet_50_Mb_FAN_Front_OOCC(String sDNI, String sLinea){
+	@Test (groups = {"GestionesPerfilOficina","HistorialDeRecargas","E2E", "Ciclo1"},  dataProvider = "RecargasHistorias")
+	public void TS135476_CRM_Movil_Prepago_Historial_de_Packs_Nombre_del_Pack_Plan_Internet_50_Mb_FAN_Front_OOCC(String sDNI){
 		imagen = "TS135476";
 		detalles = null;
 		detalles = imagen+"-HistorialDePacksTelefonico - DNI:"+sDNI;
@@ -5734,8 +5732,9 @@ public class GestionesPerfilOficina extends TestBase {
 		imagen = "TS112437";
 		detalles = null;
 		detalles = imagen + " -Ajustes-DNI: " + sDNI;
-		String datoViejo = cbs.ObtenerValorResponse(cbsm.Servicio_queryLiteBySubscriber(sLinea), "bcs:MainBalance");
-		Integer datosInicial = Integer.parseInt(datoViejo.substring(0, 5));
+		String datoViejo = cbs.ObtenerUnidadLibre(cbsm.Servicio_QueryFreeUnit(sLinea), "Datos Libres");
+		Integer datosInicial = Integer.parseInt(datoViejo);
+		System.out.println(datosInicial);
 		boolean gest = false;
 		driver.switchTo().frame(cambioFrame(driver, By.id("SearchClientDocumentType")));
 		sb.BuscarCuenta("DNI", sDNI);
@@ -5756,9 +5755,6 @@ public class GestionesPerfilOficina extends TestBase {
 		buscarYClick(driver.findElements(By.cssSelector(".slds-form-element__label.ng-binding.ng-scope")), "equals", "si, ajustar");
 		driver.findElement(By.id("Step-VerifyPreviousAdjustments_nextBtn")).click();
 		sleep(7000);
-		
-		//*****Invoca al servicio S138 getAdjustments el cual trae el hist�rico de Ajustes por Cuenta de Facturaci�n.******
-		
 		buscarYClick(driver.findElements(By.cssSelector(".slds-form-element__label.ng-binding.ng-scope")), "equals", "si");
 		driver.findElement(By.id("Desde")).sendKeys("01-07-2018");
 		driver.findElement(By.id("Hasta")).sendKeys("30-07-2018");
@@ -5774,13 +5770,10 @@ public class GestionesPerfilOficina extends TestBase {
 				gest = true;
 		}
 		Assert.assertTrue(gest);
-		
-		/////*****Invoca al servicio S031 setAdjustments para efectura ajuste que no vaya contra factura*******
-		///Verificar que se impacta la gestion de ajuste en CBS///
-		
-		String datoNuevo = cbs.ObtenerValorResponse(cbsm.Servicio_queryLiteBySubscriber(sLinea), "bcs:MainBalance");
-		Integer datosFinal = Integer.parseInt(datoNuevo.substring(0, 5));
-		Assert.assertTrue(datosInicial + 500 == datosFinal);		
+		String datoNuevo = cbs.ObtenerUnidadLibre(cbsm.Servicio_QueryFreeUnit(sLinea), "Datos Libres");
+		Integer datosFinal = Integer.parseInt(datoNuevo);
+		System.out.println(datosFinal);
+		Assert.assertTrue(datosInicial + (123 * 1024) == datosFinal);
 	}
 	
 	@Test (groups = {"GestionesPerfilOficina", "Diagnostico/Inconvenientes", }, dataProvider = "Diagnostico")
@@ -6448,8 +6441,8 @@ public class GestionesPerfilOficina extends TestBase {
 	}
 	
 	
-	@Test (groups = {"GestionesPerfilOficina", "Historial De Recargas", "Ciclo2"}, dataProvider = "CuentaProblemaRecarga")
-	public void TS134838_CRM_Movil_Prepago_Historial_de_Recargas_Consultar_detalle_de_Recargas_por_Canal_IVR_Fan_FRONT_OOCC(String sDNI, String sLinea) {
+	@Test (groups = {"GestionesPerfilOficina", "HistorialDeRecargas", "Ciclo2"}, dataProvider = "RecargasHistorias")
+	public void TS134838_CRM_Movil_Prepago_Historial_de_Recargas_Consultar_detalle_de_Recargas_por_Canal_IVR_Fan_FRONT_OOCC(String sDNI) {
 		imagen = "TS134838";
 		boolean histDeRecargas = false, histDePacks = false, histDeRecargasSOS = false, histDeAjustes = false;
 		driver.switchTo().frame(cambioFrame(driver, By.id("SearchClientDocumentType")));
@@ -6882,8 +6875,8 @@ public class GestionesPerfilOficina extends TestBase {
 			Assert.assertTrue(false);
 	}
 	
-	@Test (groups= {"GestionesPerfilOficina", "HistorialDePacks", "Ciclo2"},  dataProvider = "HistoriaRecarga")
-	public void TS135472_CRM_Movil_Prepago_Historial_de_Packs_Nombre_del_Pack_Plan_Internacional_FAN_Front_OOCC(String sDNI, String sLinea){
+	@Test (groups= {"GestionesPerfilOficina", "HistorialDeRecargas", "Ciclo2"},  dataProvider = "RecargasHistorias")
+	public void TS135472_CRM_Movil_Prepago_Historial_de_Packs_Nombre_del_Pack_Plan_Internacional_FAN_Front_OOCC(String sDNI){
 		imagen = "TS135472";
 		detalles = imagen+"-Historial De Packs -DNI:"+sDNI;
 		driver.switchTo().frame(cambioFrame(driver, By.id("SearchClientDocumentType")));
@@ -6911,8 +6904,8 @@ public class GestionesPerfilOficina extends TestBase {
 		}
 	}
 	
-	@Test (groups= {"GestionesPerfilOficina", "HistorialDePacks", "Ciclo2"},  dataProvider = "HistoriaRecarga")
-	public void TS135474_CRM_Movil_Prepago_Historial_de_Packs_Nombre_del_Pack_Plan_Familia_FAN_Front_OOCC(String sDNI, String sLinea){
+	@Test (groups= {"GestionesPerfilOficina", "HistorialDeRecargas", "Ciclo2"},  dataProvider = "RecargasHistorias")
+	public void TS135474_CRM_Movil_Prepago_Historial_de_Packs_Nombre_del_Pack_Plan_Familia_FAN_Front_OOCC(String sDNI){
 		imagen = "TS135474";
 		detalles = imagen+"-Historial De Packs -DNI:"+sDNI;
 		driver.switchTo().frame(cambioFrame(driver, By.id("SearchClientDocumentType")));

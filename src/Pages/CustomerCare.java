@@ -1706,7 +1706,7 @@ public class CustomerCare extends BasePage {
 			}
 		} catch(Exception e) {
 			String orden = driver.findElement(By.cssSelector(".vlc-slds-inline-control__label.ng-binding")).getText();
-			orden = orden.substring(orden.lastIndexOf(" ")+1, orden.lastIndexOf("."));
+			orden = orden.substring(orden.lastIndexOf(" ")+1, orden.length());
 			buscarCaso(orden);
 			driver.switchTo().frame(tb.cambioFrame(driver, By.name("close")));
 			List <WebElement> asd = driver.findElements(By.cssSelector(".dataCol.col02"));
