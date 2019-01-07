@@ -1,5 +1,10 @@
 package Tests;
 
+import java.io.File;
+import java.io.IOException;
+import java.io.InputStream;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.util.List;
 
 import org.openqa.selenium.By;
@@ -325,7 +330,7 @@ public class BeFANMayorista extends TestBase {
 		sleep(3000);
 		driver.findElement(By.id("botonExportar")).click();
 		sleep(5000);
-		String downloadPath = "C:\\Users\\Nicolas\\Downloads";
+		String downloadPath = "C:\\Users\\Quelys\\Downloads";
 		Assert.assertTrue(scp.isFileDownloaded(downloadPath, "PREACTIVACIONES DIARIAS"), "Failed to download Expected document");
 	}
 	
@@ -543,5 +548,36 @@ public class BeFANMayorista extends TestBase {
 				descripcion = true;		
 		}
 		Assert.assertTrue(descripcion);
+	}
+	@Test (groups = {"BeFAN", "Agente"})
+	public void TS135647_BeFan_Movil_Repro_Preactivacion_Visualizacion_de_datos_del_agente() {
+	sleep(3000);
+	driver.findElement(By.className("tpi-user")).findElement(By.tagName("span")).click();
+	WebElement asd = driver.findElement(By.id("menudatos")).findElement(By.name("salir"));
+	System.out.println(asd.getText());
+	Assert.assertTrue(asd.isDisplayed());
+		
+	}
+	@Test (groups = "BeFAN")
+	public void TS135604_BeFan_Movil_Repro_Preactivacion_Gestion_de_simcards_Exportacion_de_archivo_Detalle() throws IOException {
+		irA("gestion");
+		selectByText(driver.findElement(By.cssSelector(".text.form-control.ng-pristine.ng-untouched.ng-valid.ng-empty")), "Procesado");
+		selectByText(driver.findElements(By.cssSelector(".text.form-control.ng-pristine.ng-untouched.ng-valid.ng-empty")).get(1), "BAS-VJP-BAHIA BLANCA - VJP Punta Alta");
+		driver.findElement(By.cssSelector(".btn.btn-primary")).click();
+		sleep(5000);
+		try {
+			driver.findElement(By.id("exportarTabla")).findElement(By.tagName("tbody")).findElement(By.tagName("tr")).findElements(By.tagName("td")).get(8).click();
+		} catch(Exception e) {}
+		sleep(3000);
+		driver.findElement(By.id("botonExportar")).click();
+		sleep(5000);
+		String downloadPath = "C:\\Users\\Quelys\\Downloads";
+		try {
+			Runtime.getRuntime().exec("rundll32 url.dll,FileProtocolHandler "+downloadPath);
+			System.out.println("Descargo Archivo");
+			} catch (IOException ee) {
+			ee.printStackTrace();
+			}
+		Assert.assertTrue(scp.isFileDownloaded(downloadPath, "PREACTIVACIONES DIARIAS"));
 	}
 }
