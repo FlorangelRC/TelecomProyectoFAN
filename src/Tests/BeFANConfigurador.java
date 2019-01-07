@@ -701,6 +701,13 @@ public class BeFANConfigurador extends TestBase {
 		WebElement modificacion = driver.findElement(By.name("modificarGuardar"));
 		Assert.assertTrue(modificacion.isEnabled());
 		System.out.println("No se puede modificar un cupo no vigente");
-		
+	}
+	
+	@Test (groups = "BeFan")
+	public void TS112006_BeFan_Movil_REPRO_Preactivacion_repro_Gestion_de_agrupadores_Pantalla_de_inicio() {
+		irA("Regiones", "Gesti\u00f3n");
+		WebElement panelDeBusqueda = driver.findElement(By.className("panel-heading"));
+		WebElement boton = driver.findElement(By.cssSelector(".btn.btn-primary"));
+		Assert.assertTrue(panelDeBusqueda.isDisplayed() && boton.isDisplayed());
 	}
 }

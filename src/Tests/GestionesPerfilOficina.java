@@ -3432,7 +3432,7 @@ public class GestionesPerfilOficina extends TestBase {
 	}
 	
 	@Test (groups={"Sales","GestionDeClientes", "Ciclo1"},dataProvider = "validaDocumentacion")
-	public void TS_135507_CRM_Movil_REPRO_Busqueda_Email(String sDNI, String sNumeroDeCuenta, String sNombre, String sApellido, String sLibreta, String sRazon, String sEmail) {
+	public void TS135507_CRM_Movil_REPRO_Busqueda_Email(String sDNI, String sNumeroDeCuenta, String sNombre, String sApellido, String sLibreta, String sRazon, String sEmail) {
 		imagen = "TS135507";
 		detalles = null;
 		detalles = imagen+" - Gestion de clientes - Email: "+sEmail;

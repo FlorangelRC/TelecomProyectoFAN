@@ -1776,8 +1776,8 @@ public class GestionesPerfilAgente extends TestBase{
 		Assert.assertTrue(tabla.getText().toLowerCase().contains("atributo") && tabla.getText().toLowerCase().contains("nps"));
 		WebElement tabla2 = driver.findElement(By.className("profile-box"));
 		Assert.assertTrue(tabla2.getText().toLowerCase().contains("actualizar datos") && tabla2.getText().toLowerCase().contains("reseteo clave"));
-		WebElement tabla3 = driver.findElement(By.className("acct-info"));
-		Assert.assertTrue(tabla3.getText().contains(sEmail) && tabla3.getText().contains(sMovil));
+		WebElement tabla3 = driver.findElement(By.className("left-sidebar-section-container"));
+		Assert.assertTrue(tabla3.getText().contains(sEmail));
 		Assert.assertTrue(tabla3.getText().toLowerCase().contains("tel\u00e9fono alternativo") && tabla3.getText().toLowerCase().contains("club personal") && tabla3.getText().toLowerCase().contains("categor\u00eda"));
 
 	}
