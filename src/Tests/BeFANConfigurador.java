@@ -424,6 +424,111 @@ public class BeFANConfigurador extends TestBase {
 		Assert.assertTrue(bAssert);
 	}
 	
+	@Test (groups = "BeFAN")
+	public void TS97663_BeFan_Movil_REPRO_Localidad_inexistente() {
+		irA("regiones", "gesti\u00f3n");
+		buscarYClick(driver.findElements(By.cssSelector(".panel-group.panel-group-alternative.ng-scope")), "contains", "mar del tuy\u00fa");
+		driver.findElement(By.cssSelector(".panel-collapse.in.collapse")).findElement(By.cssSelector(".btn.btn-link")).click();
+		sleep(3000);
+		for (WebElement x : driver.findElements(By.cssSelector(".compatibility.custom-check.ng-scope"))) {
+			if (!(x.getText().equalsIgnoreCase("3275")))
+				Assert.assertTrue(false);
+		}
+	}
+	
+	@Test (groups = "BeFAN")
+	public void TS97660_BeFan_Movil_REPRO_Seriales_con_estado_EN_PROCESO() {
+		boolean enProceso = false;
+		irA("sims", "gesti\u00f3n");
+		selectByText(driver.findElement(By.cssSelector(".text.form-control.ng-pristine.ng-untouched.ng-valid.ng-empty")), "En Proceso");
+		selectByText(driver.findElement(By.cssSelector(".text.form-control.ng-pristine.ng-untouched.ng-valid.ng-empty")), "VJP");
+		selectByText(driver.findElement(By.cssSelector(".text.form-control.ng-pristine.ng-untouched.ng-valid.ng-empty")), "BAS-VJP-BAHIA BLANCA - VJP Punta Alta");
+		driver.findElement(By.cssSelector(".btn.btn-primary")).click();
+		sleep(5000);
+		List<WebElement> tabla = driver.findElement(By.id("exportarTabla")).findElement(By.tagName("tbody")).findElements(By.tagName("tr"));
+		for (int i=0; i<5; i++) {
+			if (tabla.iterator().next().findElements(By.tagName("td")).get(6).getText().equalsIgnoreCase("En Proceso"))
+				enProceso = true;
+			i++;
+		}
+		Assert.assertTrue(enProceso);
+	}
+	
+	@Test (groups = "BeFAN")
+	public void TS97661_BeFan_Movil_REPRO_Seriales_con_estado_VALIDADO() {
+		boolean procesado = false;
+		irA("sims", "gesti\u00f3n");
+		selectByText(driver.findElement(By.cssSelector(".text.form-control.ng-pristine.ng-untouched.ng-valid.ng-empty")), "Procesado");
+		selectByText(driver.findElement(By.cssSelector(".text.form-control.ng-pristine.ng-untouched.ng-valid.ng-empty")), "VJP");
+		selectByText(driver.findElement(By.cssSelector(".text.form-control.ng-pristine.ng-untouched.ng-valid.ng-empty")), "BAS-VJP-BAHIA BLANCA - VJP Punta Alta");
+		driver.findElement(By.cssSelector(".btn.btn-primary")).click();
+		sleep(5000);
+		List<WebElement> tabla = driver.findElement(By.id("exportarTabla")).findElement(By.tagName("tbody")).findElements(By.tagName("tr"));
+		for (int i=0; i<5; i++) {
+			if (tabla.iterator().next().findElements(By.tagName("td")).get(6).getText().equalsIgnoreCase("Procesado"))
+				procesado = true;
+			i++;
+		}
+		Assert.assertTrue(procesado);
+	}
+	
+	@Test (groups = "BeFAN")
+	public void TS112021_BeFan_Movil_REPRO_Preactivacion_repro_Gestion_de_agrupadores_Busqueda_Eliminacion_de_agrupadores_No() {
+		boolean noEliminar = false;
+		irA("regiones", "gesti\u00f3n");
+		driver.findElement(By.cssSelector(".btn.btn-primary")).click();
+		driver.findElement(By.cssSelector(".form-control.ng-pristine.ng-untouched.ng-valid.ng-empty")).sendKeys("Pinamar");
+		driver.findElement(By.cssSelector(".btn.btn-primary")).click();
+		buscarYClick(driver.findElements(By.cssSelector(".btn.btn-primary")), "equals", "cerrar");
+		buscarYClick(driver.findElements(By.cssSelector(".panel-group.panel-group-alternative.ng-scope")), "contains", "pinamar");
+		driver.findElement(By.cssSelector(".panel-collapse.in.collapse")).findElement(By.cssSelector(".btn.btn-link")).click();
+		sleep(3000);
+		driver.findElement(By.className("check-filter-on")).click();
+		buscarYClick(driver.findElements(By.cssSelector(".btn.btn-primary")), "equals", "agregar");
+		buscarYClick(driver.findElements(By.cssSelector(".btn.btn-primary")), "equals", "cerrar");
+		sleep(5000);
+		for (WebElement x : driver.findElements(By.cssSelector(".panel-group.panel-group-alternative.ng-scope"))) {
+			if (x.getText().toLowerCase().contains("pinamar"))
+				((JavascriptExecutor) driver).executeScript("window.scrollTo(0," + x.getLocation().y + ")");
+		}
+		buscarYClick(driver.findElements(By.cssSelector(".panel-group.panel-group-alternative.ng-scope")), "contains", "pinamar");
+		for (WebElement x : driver.findElements(By.className("panel-group"))) {
+			if (x.getText().contains("3532"))
+				x.findElement(By.tagName("tbody")).findElement(By.tagName("button")).click();
+		}
+		buscarYClick(driver.findElements(By.cssSelector(".btn.btn-primary")), "equals", "eliminar");
+		buscarYClick(driver.findElements(By.cssSelector(".btn.btn-primary")), "equals", "cerrar");
+		String msj = driver.findElement(By.className("modal-header")).getText();
+		if (msj.contains("Tambien desea eliminar la Region Pinamar")) {
+			buscarYClick(driver.findElements(By.cssSelector(".btn.btn-link")), "equals", "cancelar");
+			noEliminar = true;
+		}
+		for (WebElement x : driver.findElements(By.cssSelector(".panel-group.panel-group-alternative.ng-scope"))) {
+			if (x.getText().toLowerCase().contains("pinamar"))
+				((JavascriptExecutor) driver).executeScript("window.scrollTo(0," + x.getLocation().y + ")");
+		}
+		buscarYClick(driver.findElements(By.cssSelector(".panel-group.panel-group-alternative.ng-scope")), "contains", "pinamar");
+		driver.findElement(By.cssSelector(".panel-collapse.in.collapse")).findElement(By.cssSelector(".btn.btn-link")).click();
+		sleep(3000);
+		driver.findElement(By.className("check-filter-on")).click();
+		buscarYClick(driver.findElements(By.cssSelector(".btn.btn-primary")), "equals", "agregar");
+		buscarYClick(driver.findElements(By.cssSelector(".btn.btn-primary")), "equals", "cerrar");
+		sleep(5000);
+		for (WebElement x : driver.findElements(By.cssSelector(".panel-group.panel-group-alternative.ng-scope"))) {
+			if (x.getText().toLowerCase().contains("pinamar"))
+				((JavascriptExecutor) driver).executeScript("window.scrollTo(0," + x.getLocation().y + ")");
+		}
+		buscarYClick(driver.findElements(By.cssSelector(".panel-group.panel-group-alternative.ng-scope")), "contains", "pinamar");
+		for (WebElement x : driver.findElements(By.className("panel-group"))) {
+			if (x.getText().contains("3532"))
+				x.findElement(By.tagName("tbody")).findElement(By.tagName("button")).click();
+		}
+		buscarYClick(driver.findElements(By.cssSelector(".btn.btn-primary")), "equals", "eliminar");
+		buscarYClick(driver.findElements(By.cssSelector(".btn.btn-primary")), "equals", "cerrar");
+		buscarYClick(driver.findElements(By.cssSelector(".btn.btn-primary")), "equals", "eliminar");
+		buscarYClick(driver.findElements(By.cssSelector(".btn.btn-primary")), "equals", "cerrar");
+		Assert.assertTrue(noEliminar);
+	}
 	@Test (groups = "BeFan")
 	public void TS135605_BeFan_Movil_Repro_Preactivacion_Importacion_de_cupos_Formato_invalido() {
 		String text = "debe importar un archivo .txt";
@@ -444,13 +549,26 @@ public class BeFANConfigurador extends TestBase {
 	}
 	
 	@Test (groups = "BeFan")
-	public void TS135631_BeFan_Movil_Repro_Preactivacion_Gestion_de_cupos_Busqueda_Formato(){
+	public void TS135631_BeFan_Movil_Repro_Preactivacion_Gestion_de_cupos_Busqueda_Formato() throws ParseException{
+		BeFan fechas= new BeFan (driver);
+		SimpleDateFormat formatoDelTexto = new SimpleDateFormat ("dd/MM/yyyy");
+		String desde ="28/09/2018";
+		String hasta = "25/12/2018";
+		Date fechaDesde = formatoDelTexto.parse(desde);
+		Date fechaHasta =formatoDelTexto.parse(hasta);
 		irA("Cupos", "Gesti\u00f3n");
 		sleep(3000);
 		selectByText(driver.findElement(By.name("estados")), "No Vigente");
+		driver.findElement(By.id("dataPickerDesde"));
+		((JavascriptExecutor) driver).executeScript("document.getElementById('dataPickerDesde').value='"+desde+"'");
+		sleep(3000);
+		driver.findElement(By.id("dataPickerHasta"));
+		((JavascriptExecutor) driver).executeScript("document.getElementById('dataPickerHasta').value='"+hasta+"'");
+		int dias = fechas.numeroDiasEntreDosFechas(fechaDesde, fechaHasta);
+		System.out.println("Hay " + dias + " dias, " +"No supera los 90 dias comprendidos");
 		driver.findElement(By.name("buscar")).click();
 		sleep(8000);
-		boolean razonS = false , region = false , puntoDeVenta = false, fechaDesde = false, fechaHasta = false, estado = false, cantidadTotal = false, disponibles = false, activados = false, reservados = false;
+		boolean razonS = false , region = false , puntoDeVenta = false, fechaD = false, fechaH = false, estado = false, cantidadTotal = false, disponibles = false, activados = false, reservados = false;
 		List <WebElement> colum = driver.findElements(By.className("text-center"));
 		for(WebElement x : colum) {
 			if(x.getText().contains("Raz\u00f3n Social")) 
@@ -460,9 +578,9 @@ public class BeFANConfigurador extends TestBase {
 			if(x.getText().contains("Punto de Venta")) 
 				puntoDeVenta = true;
 			if(x.getText().contains("Fecha Desde")) 
-				fechaDesde = true;
+				fechaD = true;
 			if(x.getText().contains("Fecha Hasta"))
-				fechaHasta = true;
+				fechaH = true;
 			if(x.getText().contains("Estado")) 
 				estado = true;
 			if(x.getText().contains("Cantidad Total"))
@@ -474,17 +592,32 @@ public class BeFANConfigurador extends TestBase {
 			if(x.getText().contains("Reservados"))
 				reservados = true;
 		}
-		Assert.assertTrue(razonS && region && puntoDeVenta && fechaDesde && fechaHasta && estado && cantidadTotal && disponibles && activados && reservados);
+		Assert.assertTrue(razonS && region && puntoDeVenta && fechaD && fechaH && estado && cantidadTotal && disponibles && activados && reservados);
 	}
 	
 	@Test (groups = "BeFan")
-	public void TS135632_BeFan_Movil_Repro_Preactivacion_Gestion_de_cupos_Busqueda_Exportacion(){
+	public void TS135632_BeFan_Movil_Repro_Preactivacion_Gestion_de_cupos_Busqueda_Exportacion() throws ParseException{
+		BeFan fechas= new BeFan (driver);
+		SimpleDateFormat formatoDelTexto = new SimpleDateFormat ("dd/MM/yyyy");
+		String desde ="27/09/2018";
+		String hasta = "25/12/2018";
+		Date fechaDesde = formatoDelTexto.parse(desde);
+		Date fechaHasta =formatoDelTexto.parse(hasta);
 		irA("Cupos", "Gesti\u00f3n");
 		sleep(3000);
 		selectByText(driver.findElement(By.name("estados")), "No Vigente");
+		driver.findElement(By.id("dataPickerDesde"));
+		((JavascriptExecutor) driver).executeScript("document.getElementById('dataPickerDesde').value='"+desde+"'");
+		sleep(3000);
+		driver.findElement(By.id("dataPickerHasta"));
+		((JavascriptExecutor) driver).executeScript("document.getElementById('dataPickerHasta').value='"+hasta+"'");
+		int dias = fechas.numeroDiasEntreDosFechas(fechaDesde, fechaHasta);
+		System.out.println("Hay " + dias + " dias, " +"No supera los 90 dias comprendidos");
 		driver.findElement(By.name("buscar")).click();
 		sleep(8000);
-		driver.findElement(By.name("exportar")).click();
+		WebElement boton = driver.findElement(By.name("exportar"));
+		boton.click();
+		Assert.assertTrue(boton.isDisplayed());
 	}
 	
 	@Test (groups = "BeFan")
@@ -527,7 +660,7 @@ public class BeFANConfigurador extends TestBase {
 		Assert.assertTrue(pbf.verificarMensajeExitoso());
 		//driver.findElement(By.xpath("//*[@class='btn btn-primary' and contains(text(), 'CERRAR')]")).click();
 		pbf.cerrar();
-		driver.findElement(By.cssSelector(".text-center.ng-binding")).getText().contains("¿Tambien desea eliminar la Region CORDOBA ?");
+		driver.findElement(By.cssSelector(".text-center.ng-binding")).getText().contains("ï¿½Tambien desea eliminar la Region CORDOBA ?");
 		//driver.findElement(By.xpath("//*[@class='btn btn-primary' and contains(text(), 'ELIMINAR')]")).click();
 		pbf.eliminar();
 		Assert.assertTrue(pbf.verificarMensajeExitoso());
@@ -536,4 +669,243 @@ public class BeFANConfigurador extends TestBase {
 	}
 	
 
+	
+	@Test (groups = "BeFan")
+	public void TS112020_BeFan_Movil_REPRO_Preactivacion_repro_Gestion_de_agrupadores_Busqueda_Eliminacion_de_agrupadores_Si_Sin_preactivar() {
+		boolean eliminar = false;
+		irA("regiones", "gesti\u00f3n");
+		driver.findElement(By.cssSelector(".btn.btn-primary")).click();
+		driver.findElement(By.cssSelector(".form-control.ng-pristine.ng-untouched.ng-valid.ng-empty")).sendKeys("Pinamar");
+		driver.findElement(By.cssSelector(".btn.btn-primary")).click();
+		buscarYClick(driver.findElements(By.cssSelector(".btn.btn-primary")), "equals", "cerrar");
+		buscarYClick(driver.findElements(By.cssSelector(".panel-group.panel-group-alternative.ng-scope")), "contains", "pinamar");
+		driver.findElement(By.cssSelector(".panel-collapse.in.collapse")).findElement(By.cssSelector(".btn.btn-link")).click();
+		sleep(3000);
+		driver.findElement(By.className("check-filter-on")).click();
+		buscarYClick(driver.findElements(By.cssSelector(".btn.btn-primary")), "equals", "agregar");
+		buscarYClick(driver.findElements(By.cssSelector(".btn.btn-primary")), "equals", "cerrar");
+		sleep(5000);
+		for (WebElement x : driver.findElements(By.cssSelector(".panel-group.panel-group-alternative.ng-scope"))) {
+			if (x.getText().toLowerCase().contains("pinamar"))
+				((JavascriptExecutor) driver).executeScript("window.scrollTo(0," + x.getLocation().y + ")");
+		}
+		buscarYClick(driver.findElements(By.cssSelector(".panel-group.panel-group-alternative.ng-scope")), "contains", "pinamar");
+		for (WebElement x : driver.findElements(By.className("panel-group"))) {
+			if (x.getText().contains("3532"))
+				x.findElement(By.tagName("tbody")).findElement(By.tagName("button")).click();
+		}
+		buscarYClick(driver.findElements(By.cssSelector(".btn.btn-primary")), "equals", "eliminar");
+		buscarYClick(driver.findElements(By.cssSelector(".btn.btn-primary")), "equals", "cerrar");
+		String msj = driver.findElement(By.className("modal-header")).getText();
+		if (msj.contains("Tambien desea eliminar la Region Pinamar")) {
+			buscarYClick(driver.findElements(By.cssSelector(".btn.btn-primary")), "equals", "eliminar");
+			buscarYClick(driver.findElements(By.cssSelector(".btn.btn-primary")), "equals", "cerrar");
+			eliminar = true;
+		}
+		Assert.assertTrue(eliminar);
+	}
+	
+	@Test (groups = "BeFan")
+	public void TS112019_BeFan_Movil_REPRO_Preactivacion_repro_Gestion_de_agrupadores_Busqueda_Eliminacion_de_agrupadores_Mensaje() {
+		boolean mensaje = false;
+		irA("regiones", "gesti\u00f3n");
+		driver.findElement(By.cssSelector(".btn.btn-primary")).click();
+		driver.findElement(By.cssSelector(".form-control.ng-pristine.ng-untouched.ng-valid.ng-empty")).sendKeys("Tierra Del Fuego");
+		driver.findElement(By.cssSelector(".btn.btn-primary")).click();
+		buscarYClick(driver.findElements(By.cssSelector(".btn.btn-primary")), "equals", "cerrar");
+		buscarYClick(driver.findElements(By.cssSelector(".panel-group.panel-group-alternative.ng-scope")), "contains", "tierra del fuego");
+		driver.findElement(By.cssSelector(".panel-collapse.in.collapse")).findElement(By.cssSelector(".btn.btn-link")).click();
+		sleep(3000);
+		driver.findElement(By.className("check-filter-on")).click();
+		buscarYClick(driver.findElements(By.cssSelector(".btn.btn-primary")), "equals", "agregar");
+		buscarYClick(driver.findElements(By.cssSelector(".btn.btn-primary")), "equals", "cerrar");
+		sleep(5000);
+		for (WebElement x : driver.findElements(By.cssSelector(".panel-group.panel-group-alternative.ng-scope"))) {
+			if (x.getText().toLowerCase().contains("tierra del fuego"))
+				((JavascriptExecutor) driver).executeScript("window.scrollTo(0," + x.getLocation().y + ")");
+		}
+		buscarYClick(driver.findElements(By.cssSelector(".panel-group.panel-group-alternative.ng-scope")), "contains", "tierra del fuego");
+		for (WebElement x : driver.findElements(By.className("panel-group"))) {
+			if (x.getText().contains("3532"))
+				x.findElement(By.tagName("tbody")).findElement(By.tagName("button")).click();
+		}
+		buscarYClick(driver.findElements(By.cssSelector(".btn.btn-primary")), "equals", "eliminar");
+		buscarYClick(driver.findElements(By.cssSelector(".btn.btn-primary")), "equals", "cerrar");
+		String msj = driver.findElement(By.className("modal-header")).getText();
+		if (msj.contains("Tambien desea eliminar la Region Tierra Del Fuego")) {
+			buscarYClick(driver.findElements(By.cssSelector(".btn.btn-link")), "equals", "cancelar");
+			mensaje = true;
+		}
+		for (WebElement x : driver.findElements(By.cssSelector(".panel-group.panel-group-alternative.ng-scope"))) {
+			if (x.getText().toLowerCase().contains("tierra del fuego"))
+				((JavascriptExecutor) driver).executeScript("window.scrollTo(0," + x.getLocation().y + ")");
+		}
+		buscarYClick(driver.findElements(By.cssSelector(".panel-group.panel-group-alternative.ng-scope")), "contains", "tierra del fuego");
+		driver.findElement(By.cssSelector(".panel-collapse.in.collapse")).findElement(By.cssSelector(".btn.btn-link")).click();
+		sleep(3000);
+		driver.findElement(By.className("check-filter-on")).click();
+		buscarYClick(driver.findElements(By.cssSelector(".btn.btn-primary")), "equals", "agregar");
+		buscarYClick(driver.findElements(By.cssSelector(".btn.btn-primary")), "equals", "cerrar");
+		sleep(5000);
+		for (WebElement x : driver.findElements(By.cssSelector(".panel-group.panel-group-alternative.ng-scope"))) {
+			if (x.getText().toLowerCase().contains("tierra del fuego"))
+				((JavascriptExecutor) driver).executeScript("window.scrollTo(0," + x.getLocation().y + ")");
+		}
+		buscarYClick(driver.findElements(By.cssSelector(".panel-group.panel-group-alternative.ng-scope")), "contains", "tierra del fuego");
+		for (WebElement x : driver.findElements(By.className("panel-group"))) {
+			if (x.getText().contains("3532"))
+				x.findElement(By.tagName("tbody")).findElement(By.tagName("button")).click();
+		}
+		buscarYClick(driver.findElements(By.cssSelector(".btn.btn-primary")), "equals", "eliminar");
+		buscarYClick(driver.findElements(By.cssSelector(".btn.btn-primary")), "equals", "cerrar");
+		buscarYClick(driver.findElements(By.cssSelector(".btn.btn-primary")), "equals", "eliminar");
+		buscarYClick(driver.findElements(By.cssSelector(".btn.btn-primary")), "equals", "cerrar");
+		Assert.assertTrue(mensaje);
+	}
+	
+	@Test (groups = "BeFan")
+	public void TS112016_BeFan_Movil_REPRO_Preactivacion_repro_Gestion_de_agrupadores_Busqueda_Modificacion_de_agrupadores_Eliminacion_de_prefijos_en_agrupador_existente_Logeo() {
+		irA("regiones", "gesti\u00f3n");
+		boolean eliminarPrefijo = false;
+		buscarYClick(driver.findElements(By.cssSelector(".panel-group.panel-group-alternative.ng-scope")), "contains", "la plata");
+		for (WebElement x : driver.findElements(By.className("panel-group"))) {
+			try {
+				if (x.getText().toLowerCase().contains("la plata"))
+					x.findElement(By.cssSelector(".glyphicon.glyphicon-plus")).click();
+			} catch(Exception e) {}
+		}
+		sleep(3000);
+		driver.findElement(By.cssSelector(".compatibility.custom-check.ng-scope")).findElement(By.tagName("input")).click();
+		String nroPrefijo = driver.findElement(By.cssSelector(".compatibility.custom-check.ng-scope")).findElement(By.tagName("label")).getText();
+		System.out.println(nroPrefijo);
+		buscarYClick(driver.findElements(By.cssSelector(".btn.btn-primary")), "equals", "agregar");
+		buscarYClick(driver.findElements(By.cssSelector(".btn.btn-primary")), "equals", "cerrar");
+		driver.navigate().refresh();
+		sleep(3000);
+		buscarYClick(driver.findElements(By.cssSelector(".panel-group.panel-group-alternative.ng-scope")), "contains", "la plata");
+		((JavascriptExecutor) driver).executeScript("window.scrollTo(0," + driver.findElement(By.cssSelector(".panel.ng-scope.ng-isolate-scope.panel-default.panel-open")).getLocation().y + ")");
+		for (WebElement x : driver.findElement(By.cssSelector(".panel.ng-scope.ng-isolate-scope.panel-default.panel-open")).findElement(By.tagName("tbody")).findElements(By.tagName("tr"))) {
+			if (x.getText().contains(nroPrefijo)) {
+				x.findElement(By.cssSelector(".btn.btn-link")).click();
+				buscarYClick(driver.findElements(By.cssSelector(".btn.btn-primary")), "equals", "eliminar");
+				buscarYClick(driver.findElements(By.cssSelector(".btn.btn-primary")), "equals", "cerrar");
+				eliminarPrefijo = true;
+			}
+		}
+		Assert.assertTrue(eliminarPrefijo);
+	}
+	
+	
+	@Test (groups = "BeFan")
+	public void TS135633_BeFan_Movil_Repro_Preactivacion_Gestion_de_cupos_Busqueda_Eliminacion_de_cupo_Cupo_no_vigente_sin_fecha_de_baja() throws ParseException {
+		BeFan fechas= new BeFan (driver);
+		SimpleDateFormat formatoDelTexto = new SimpleDateFormat ("dd/MM/yyyy");
+		String desde ="27/09/2018";
+		String hasta = "25/12/2018";
+		Date fechaDesde = formatoDelTexto.parse(desde);
+		Date fechaHasta =formatoDelTexto.parse(hasta);
+		irA("Cupos", "Gesti\u00f3n");
+		sleep(3000);
+		selectByText(driver.findElement(By.name("estados")), "No Vigente");
+		driver.findElement(By.id("dataPickerDesde"));
+		((JavascriptExecutor) driver).executeScript("document.getElementById('dataPickerDesde').value='"+desde+"'");
+		sleep(3000);
+		driver.findElement(By.id("dataPickerHasta"));
+		((JavascriptExecutor) driver).executeScript("document.getElementById('dataPickerHasta').value='"+hasta+"'");
+		int dias = fechas.numeroDiasEntreDosFechas(fechaDesde, fechaHasta);
+		System.out.println("Hay " + dias + " dias, " +"No supera los 90 dias comprendidos");
+		driver.findElement(By.name("buscar")).click();
+		sleep(3000);
+		WebElement eliminacion = driver.findElement(By.name("eliminar"));
+		Assert.assertTrue(eliminacion.isEnabled());
+		System.out.println("No se puede eliminar un cupo no vigente");
+	}
+	
+	@Test (groups = "BeFan")
+	public void TS135634_BeFan_Movil_Repro_Preactivacion_Gestion_de_cupos_Busqueda_Eliminacion_de_cupo_Cupo_vigente_con_fecha_de_baja() throws ParseException {
+		BeFan fechas= new BeFan (driver);
+		SimpleDateFormat formatoDelTexto = new SimpleDateFormat ("dd/MM/yyyy");
+		String desde ="27/09/2018";
+		String hasta = "25/12/2018";
+		Date fechaDesde = formatoDelTexto.parse(desde);
+		Date fechaHasta =formatoDelTexto.parse(hasta);
+		irA("Cupos", "Gesti\u00f3n");
+		sleep(3000);
+		selectByText(driver.findElement(By.name("estados")), "Vigente");
+		driver.findElement(By.id("dataPickerDesde"));
+		((JavascriptExecutor) driver).executeScript("document.getElementById('dataPickerDesde').value='"+desde+"'");
+		sleep(3000);
+		driver.findElement(By.id("dataPickerHasta"));
+		((JavascriptExecutor) driver).executeScript("document.getElementById('dataPickerHasta').value='"+hasta+"'");
+		int dias = fechas.numeroDiasEntreDosFechas(fechaDesde, fechaHasta);
+		System.out.println("Hay " + dias + " dias, " +"No supera los 90 dias comprendidos");
+		driver.findElement(By.name("buscar")).click();
+		//Se necesita un cupo con fecha de bajar
+	}
+	
+	@Test (groups = "BeFan")
+	public void TS135636_BeFan_Movil_Repro_Preactivacion_Gestion_de_cupos_Busqueda_Eliminacion_de_cupo_Mensaje_Confirmacion() throws ParseException{
+		BeFan fechas= new BeFan (driver);
+		SimpleDateFormat formatoDelTexto = new SimpleDateFormat ("dd/MM/yyyy");
+		String pregunta = "ï¿½est\u00e1 seguro que desea dar de baja el registro seleccionado?";
+		String desde ="27/09/2018";
+		String hasta = "25/12/2018";
+		Date fechaDesde = formatoDelTexto.parse(desde);
+		Date fechaHasta =formatoDelTexto.parse(hasta);
+		irA("Cupos", "Gesti\u00f3n");
+		sleep(3000);
+		selectByText(driver.findElement(By.name("estados")), "Vigente");
+		driver.findElement(By.id("dataPickerDesde"));
+		((JavascriptExecutor) driver).executeScript("document.getElementById('dataPickerDesde').value='"+desde+"'");
+		sleep(3000);
+		driver.findElement(By.id("dataPickerHasta"));
+		((JavascriptExecutor) driver).executeScript("document.getElementById('dataPickerHasta').value='"+hasta+"'");
+		int dias = fechas.numeroDiasEntreDosFechas(fechaDesde, fechaHasta);
+		System.out.println("Hay " + dias + " dias, " +"No supera los 90 dias comprendidos");
+		driver.findElement(By.name("buscar")).click();
+		sleep(3000);
+		WebElement eliminacion = driver.findElement(By.name("eliminar"));
+		Assert.assertTrue(eliminacion.isDisplayed());
+		eliminacion.click();
+		boolean a = false;
+		for(WebElement x : driver.findElements(By.className("modal-header"))) {
+			if(x.getText().toLowerCase().contains(pregunta)) {
+				a = true;
+			}
+		}
+		Assert.assertTrue(a);
+	}
+	
+	@Test (groups = "BeFan")
+	public void TS135638_BeFan_Movil_Repro_Preactivacion_Gestion_de_cupos_Busqueda_Modificacion_de_cupo_Cupo_no_vigente_sin_fecha_de_baja() throws ParseException {
+		BeFan fechas= new BeFan (driver);
+		SimpleDateFormat formatoDelTexto = new SimpleDateFormat ("dd/MM/yyyy");
+		String desde ="27/09/2018";
+		String hasta = "25/12/2018";
+		Date fechaDesde = formatoDelTexto.parse(desde);
+		Date fechaHasta =formatoDelTexto.parse(hasta);
+		irA("Cupos", "Gesti\u00f3n");
+		sleep(3000);
+		selectByText(driver.findElement(By.name("estados")), "No Vigente");
+		driver.findElement(By.id("dataPickerDesde"));
+		((JavascriptExecutor) driver).executeScript("document.getElementById('dataPickerDesde').value='"+desde+"'");
+		sleep(3000);
+		driver.findElement(By.id("dataPickerHasta"));
+		((JavascriptExecutor) driver).executeScript("document.getElementById('dataPickerHasta').value='"+hasta+"'");
+		int dias = fechas.numeroDiasEntreDosFechas(fechaDesde, fechaHasta);
+		System.out.println("Hay " + dias + " dias, " +"No supera los 90 dias comprendidos");
+		driver.findElement(By.name("buscar")).click();
+		sleep(3000);
+		WebElement modificacion = driver.findElement(By.name("modificarGuardar"));
+		Assert.assertTrue(modificacion.isEnabled());
+		System.out.println("No se puede modificar un cupo no vigente");
+	}
+	
+	@Test (groups = "BeFan")
+	public void TS112006_BeFan_Movil_REPRO_Preactivacion_repro_Gestion_de_agrupadores_Pantalla_de_inicio() {
+		irA("Regiones", "Gesti\u00f3n");
+		WebElement panelDeBusqueda = driver.findElement(By.className("panel-heading"));
+		WebElement boton = driver.findElement(By.cssSelector(".btn.btn-primary"));
+		Assert.assertTrue(panelDeBusqueda.isDisplayed() && boton.isDisplayed());
+	}
 }

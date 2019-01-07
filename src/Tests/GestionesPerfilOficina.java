@@ -772,6 +772,9 @@ public class GestionesPerfilOficina extends TestBase {
 		driver.findElement(By.id("ReceiptCode")).sendKeys("123");
 		driver.findElement(By.id("OnlineRefillData_nextBtn")).click();
 		sleep(8000);
+		driver.findElement(By.xpath("//*[@id=\"SessionCase|0\"]/div/div[1]/label[2]/span/div/div")).click();
+		driver.findElement(By.id("ExistingCase_nextBtn")).click();
+		sleep(8000);
 		buscarYClick(driver.findElements(By.cssSelector(".slds-form-element__label.ng-binding.ng-scope")),"contains","si");
 		WebElement img = driver.findElement(By.id("FileAttach"));
 		File directory = new File("Dni.jpg");
@@ -978,9 +981,6 @@ public class GestionesPerfilOficina extends TestBase {
 		driver.findElement(By.id("BatchNumber")).sendKeys(cBatch);
 		driver.findElement(By.id("PIN")).sendKeys(cPin);
 		driver.findElement(By.id("PrepaidCardData_nextBtn")).click();
-		sleep(7000);
-		buscarYClick(driver.findElements(By.className("borderOverlay")), "equals", "crear un caso nuevo");
-		driver.findElement(By.id("ExistingCase_nextBtn")).click();
 		sleep(7000);
 		driver.findElement(By.id("Summary_nextBtn")).click();
 		sleep(10000);
@@ -1469,8 +1469,8 @@ public class GestionesPerfilOficina extends TestBase {
 			sOrders.add("Inconvenientes con cargos tasados y facturados, orden numero: " + orden + " con numero de DNI: " + sDNI);
 			Assert.assertTrue(cc.verificarOrden(orden));		
 		} else {
-			String orden = driver.findElement(By.xpath("//*[@id=\"txtSuccessConfirmation\"]/div")).findElement(By.tagName("strong")).getText();
-			detalles+=" - Orden: "+orden;
+			String orden = driver.findElement(By.cssSelector(".vlc-slds-inline-control__label.ng-binding")).getText();
+			detalles += "-Orden: " + orden;
 			Assert.assertTrue(cc.verificarOrdenYGestion("Inconvenientes con cargos tasados y facturados"));
 		}
 	}
@@ -1930,8 +1930,8 @@ public class GestionesPerfilOficina extends TestBase {
 			sOrders.add("Inconvenientes con cargos tasados y facturados, orden numero: " + orden + " con numero de DNI: " + sDNI);
 			Assert.assertTrue(cc.verificarOrden(orden));		
 		} else {
-			String orden = driver.findElement(By.xpath("//*[@id=\"txtSuccessConfirmation\"]/div")).findElement(By.tagName("strong")).getText();
-			detalles+=" - Orden: "+orden;
+			String orden = driver.findElement(By.cssSelector(".vlc-slds-inline-control__label.ng-binding")).getText();
+			detalles += "-Orden: " + orden;
 			sOrders.add("Inconvenientes con cargos tasados y facturados, numero de orden: " + orden + " de cuenta con DNI: " + sDNI);
 			Assert.assertTrue(cc.verificarOrdenYGestion("Inconvenientes con cargos tasados y facturados"));
 		}
@@ -2082,8 +2082,8 @@ public class GestionesPerfilOficina extends TestBase {
 		buscarYClick(driver.findElements(By.cssSelector(".imgItemContainer.ng-scope")), "contains", "tarjeta prepaga");
 		driver.findElement(By.id("RefillMethods_nextBtn")).click();
 		sleep(8000);
-		driver.findElement(By.id("BatchNumber")).sendKeys("11120000009313");
-		driver.findElement(By.id("PIN")).sendKeys("0858");
+		driver.findElement(By.id("BatchNumber")).sendKeys("11120000009352");
+		driver.findElement(By.id("PIN")).sendKeys("0589");
 		driver.findElement(By.id("PrepaidCardData_nextBtn")).click();
 		sleep(15000);
 		driver.findElement(By.id("Summary_nextBtn")).click();
@@ -2127,8 +2127,8 @@ public class GestionesPerfilOficina extends TestBase {
 		buscarYClick(driver.findElements(By.cssSelector(".imgItemContainer.ng-scope")), "contains", "tarjeta prepaga");
 		driver.findElement(By.id("RefillMethods_nextBtn")).click();
 		sleep(8000);
-		driver.findElement(By.id("BatchNumber")).sendKeys("11120000009301");
-		driver.findElement(By.id("PIN")).sendKeys("0080");
+		driver.findElement(By.id("BatchNumber")).sendKeys("11120000009351");
+		driver.findElement(By.id("PIN")).sendKeys("0183");
 		driver.findElement(By.id("PrepaidCardData_nextBtn")).click();
 		sleep(15000);
 		driver.switchTo().frame(cambioFrame(driver, By.cssSelector(".slds-icon.slds-icon--large.ta-care-omniscript-error-icon")));
@@ -2234,18 +2234,19 @@ public class GestionesPerfilOficina extends TestBase {
 	}
 	
 	@Test (groups = {"GestionesPerfilOficina", "TriviasYSuscripciones", "E2E","Ciclo3"}, dataProvider = "CuentaTriviasYSuscripciones")
-	public void TS110893_CRM_Movil_REPRO_Suscripciones_Baja_de_una_suscripcion_con_BlackList_con_ajuste_Presencial(String cDNI, String cLinea) {
+	public void TS110893_CRM_Movil_REPRO_Suscripciones_Baja_de_una_suscripcion_con_BlackList_con_ajuste_Presencial(String sDNI, String sLinea) {
 		imagen="TS110893";
 		detalles = null;
-		detalles = imagen + "- Trivias y suscripciones - DNI:" + cDNI;
+		detalles = imagen + "- Trivias y suscripciones - DNI:" + sDNI;
 		boolean gest = false;
-		//cCBSM.Servicio_RealizarAltaSuscripcion(cLinea,"178");
+		CBS_Mattu cCBSM = new CBS_Mattu();
+		cCBSM.Servicio_RealizarAltaSuscripcion(sLinea, "178");
 		WebElement blackList = null;
 		driver.switchTo().frame(cambioFrame(driver, By.id("SearchClientDocumentType")));
-		sb.BuscarCuenta("DNI", cDNI);
+		sb.BuscarCuenta("DNI", sDNI);
 		driver.findElement(By.cssSelector(".slds-tree__item.ng-scope")).click();
 		sleep(15000);
-		cc.seleccionarCardPornumeroLinea(cLinea, driver);
+		cc.seleccionarCardPornumeroLinea(sLinea, driver);
 		sleep(3000);
 		cc.irAGestionEnCard("Suscripciones");
 		sleep(5000);
@@ -2283,19 +2284,18 @@ public class GestionesPerfilOficina extends TestBase {
 	}
 	
 	@Test (groups = {"GestionesPerfilOficina", "TriviasYSuscripciones", "E2E","Ciclo3"}, dataProvider = "CuentaTriviasYSuscripciones")
-	public void TS110877_CRM_Movil_REPRO_Suscripciones_Baja_de_una_suscripcion_sin_BlackList_con_ajuste_Presencial(String cDNI, String cLinea) {
+	public void TS110877_CRM_Movil_REPRO_Suscripciones_Baja_de_una_suscripcion_sin_BlackList_con_ajuste_Presencial(String sDNI, String sLinea) {
 		imagen = "TS110877";
 		detalles = null;
-		detalles = imagen + "- Trivias y suscripciones - DNI: "+cDNI;
+		detalles = imagen + "- Trivias y suscripciones - DNI: "+sDNI;
 		boolean gest = false;
-		CBS_Mattu cCBSM = new CBS_Mattu();
-		
+		CBS_Mattu cCBSM = new CBS_Mattu();		
 		WebElement blackList = null;
 		driver.switchTo().frame(cambioFrame(driver, By.id("SearchClientDocumentType")));
-		sb.BuscarCuenta("DNI", cDNI);
+		sb.BuscarCuenta("DNI", sDNI);
 		driver.findElement(By.cssSelector(".slds-tree__item.ng-scope")).click();
 		sleep(15000);
-		cc.seleccionarCardPornumeroLinea(cLinea, driver);
+		cc.seleccionarCardPornumeroLinea(sLinea, driver);
 		sleep(3000);
 		cc.irAGestionEnCard("Suscripciones");
 		sleep(5000);
@@ -2324,7 +2324,7 @@ public class GestionesPerfilOficina extends TestBase {
 		driver.switchTo().frame(cambioFrame(driver, By.id("UnsubscriptionSummary_nextBtn")));
 		driver.findElement(By.id("UnsubscriptionSummary_nextBtn")).click();
 		sleep(10000);
-		cCBSM.Servicio_RealizarAltaSuscripcion(cLinea,"178");
+		cCBSM.Servicio_RealizarAltaSuscripcion(sLinea, "178");
 		List <WebElement> msj = driver.findElements(By.cssSelector(".slds-form-element.vlc-flex.vlc-slds-text-block.vlc-slds-rte.ng-pristine.ng-valid.ng-scope"));
 		for (WebElement x : msj) {
 			if (x.getText().toLowerCase().contains("tu caso se resolvi\u00f3 con \u00e9xito")) {
@@ -3432,7 +3432,7 @@ public class GestionesPerfilOficina extends TestBase {
 	}
 	
 	@Test (groups={"Sales","GestionDeClientes", "Ciclo1"},dataProvider = "validaDocumentacion")
-	public void TS_135507_CRM_Movil_REPRO_Busqueda_Email(String sDNI, String sNumeroDeCuenta, String sNombre, String sApellido, String sLibreta, String sRazon, String sEmail) {
+	public void TS135507_CRM_Movil_REPRO_Busqueda_Email(String sDNI, String sNumeroDeCuenta, String sNombre, String sApellido, String sLibreta, String sRazon, String sEmail) {
 		imagen = "TS135507";
 		detalles = null;
 		detalles = imagen+" - Gestion de clientes - Email: "+sEmail;
@@ -5555,8 +5555,8 @@ public class GestionesPerfilOficina extends TestBase {
 		driver.findElements(By.className("borderOverlay")).get(0).click();
 		driver.findElement(By.id("RefillMethods_nextBtn")).click();
 		sleep(5000);
-		driver.findElement(By.id("BatchNumber")).sendKeys("11120000009308");
-		driver.findElement(By.id("PIN")).sendKeys("0406");
+		driver.findElement(By.id("BatchNumber")).sendKeys("11120000009356");
+		driver.findElement(By.id("PIN")).sendKeys("0804");
 		driver.findElement(By.id("PrepaidCardData_nextBtn")).click();
 		sleep(5000);
 		WebElement estado = driver.findElement(By.id("PrepaidCardStatusLabel"));
@@ -5984,8 +5984,9 @@ public class GestionesPerfilOficina extends TestBase {
 		imagen = "TS112437";
 		detalles = null;
 		detalles = imagen + " -Ajustes-DNI: " + sDNI;
-		String datoViejo = cbs.ObtenerValorResponse(cbsm.Servicio_queryLiteBySubscriber(sLinea), "bcs:MainBalance");
-		Integer datosInicial = Integer.parseInt(datoViejo.substring(0, 5));
+		String datoViejo = cbs.ObtenerUnidadLibre(cbsm.Servicio_QueryFreeUnit(sLinea), "Datos Libres");
+		Integer datosInicial = Integer.parseInt(datoViejo);
+		System.out.println(datosInicial);
 		boolean gest = false;
 		driver.switchTo().frame(cambioFrame(driver, By.id("SearchClientDocumentType")));
 		sb.BuscarCuenta("DNI", sDNI);
@@ -6006,9 +6007,6 @@ public class GestionesPerfilOficina extends TestBase {
 		buscarYClick(driver.findElements(By.cssSelector(".slds-form-element__label.ng-binding.ng-scope")), "equals", "si, ajustar");
 		driver.findElement(By.id("Step-VerifyPreviousAdjustments_nextBtn")).click();
 		sleep(7000);
-		
-		//*****Invoca al servicio S138 getAdjustments el cual trae el hist�rico de Ajustes por Cuenta de Facturaci�n.******
-		
 		buscarYClick(driver.findElements(By.cssSelector(".slds-form-element__label.ng-binding.ng-scope")), "equals", "si");
 		driver.findElement(By.id("Desde")).sendKeys("01-07-2018");
 		driver.findElement(By.id("Hasta")).sendKeys("30-07-2018");
@@ -6024,13 +6022,10 @@ public class GestionesPerfilOficina extends TestBase {
 				gest = true;
 		}
 		Assert.assertTrue(gest);
-		
-		/////*****Invoca al servicio S031 setAdjustments para efectura ajuste que no vaya contra factura*******
-		///Verificar que se impacta la gestion de ajuste en CBS///
-		
-		String datoNuevo = cbs.ObtenerValorResponse(cbsm.Servicio_queryLiteBySubscriber(sLinea), "bcs:MainBalance");
-		Integer datosFinal = Integer.parseInt(datoNuevo.substring(0, 5));
-		Assert.assertTrue(datosInicial + 500 == datosFinal);		
+		String datoNuevo = cbs.ObtenerUnidadLibre(cbsm.Servicio_QueryFreeUnit(sLinea), "Datos Libres");
+		Integer datosFinal = Integer.parseInt(datoNuevo);
+		System.out.println(datosFinal);
+		Assert.assertTrue(datosInicial + (123 * 1024) == datosFinal);
 	}
 	
 	@Test (groups = {"GestionesPerfilOficina", "Diagnostico/Inconvenientes", }, dataProvider = "Diagnostico")
