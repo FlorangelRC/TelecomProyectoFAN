@@ -720,7 +720,7 @@ public class GestionesPerfilAgente extends TestBase{
 		driver.findElements(By.className("profile-edit")).get(0).click();
 		sleep(10000);
 		driver.switchTo().frame(cambioFrame(driver, By.id("DocumentNumber")));
-		if(driver.findElement(By.id("MobilePhone")).getAttribute("value").isEmpty()){
+		if (driver.findElement(By.id("MobilePhone")).getAttribute("value").isEmpty()){
 			driver.findElement(By.id("MobilePhone")).clear();
 			driver.findElement(By.id("MobilePhone")).sendKeys("5214864852");
 		}
@@ -773,11 +773,7 @@ public class GestionesPerfilAgente extends TestBase{
 		driver.findElement(By.id("MobilePhone")).clear();
 		driver.findElement(By.id("MobilePhone")).sendKeys(phone);
 		driver.findElement(By.id("ClientInformation_nextBtn")).click();
-		sleep(8000);
-		Assert.assertTrue(driver.findElement(By.className("ta-care-omniscript-done")).getText().contains("Las modificaciones se realizaron con \u00e9xito"));
-		orden = driver.findElement(By.cssSelector(".vlc-slds-inline-control__label.ng-binding")).getText();
-		orden = orden.substring(orden.length()-9, orden.length()-1);
-		detalles +="-Orden:"+orden;	
+		sleep(7000);
 	}
 	
 	@Test (groups = {"GestionesPerfilAgente", "Actualizar Datos", "E2E", "Ciclo3"}, dataProvider = "CuentaModificacionDeDatos")
@@ -794,6 +790,10 @@ public class GestionesPerfilAgente extends TestBase{
 		driver.findElements(By.className("profile-edit")).get(0).click();
 		sleep(10000);
 		driver.switchTo().frame(cambioFrame(driver, By.id("DocumentNumber")));
+		if (driver.findElement(By.id("MobilePhone")).getAttribute("value").isEmpty()){
+			driver.findElement(By.id("MobilePhone")).clear();
+			driver.findElement(By.id("MobilePhone")).sendKeys("5214864852");
+		}
 		String mail = driver.findElement(By.id("Email")).getAttribute("value");
 		driver.findElement(By.id("Email")).clear();
 		driver.findElement(By.id("Email")).sendKeys(nuevoMail);
@@ -814,11 +814,7 @@ public class GestionesPerfilAgente extends TestBase{
 		driver.findElement(By.id("Email")).clear();
 		driver.findElement(By.id("Email")).sendKeys(mail);
 		driver.findElement(By.id("ClientInformation_nextBtn")).click();
-		sleep(15000);
-		Assert.assertTrue(driver.findElement(By.className("ta-care-omniscript-done")).getText().contains("Las modificaciones se realizaron con \u00e9xito"));
-		orden = driver.findElement(By.cssSelector(".vlc-slds-inline-control__label.ng-binding")).getText();
-		orden = orden.substring(orden.length()-9, orden.length()-1);
-		detalles +="-Orden:"+orden;		
+		sleep(7000);
 	}
 	
 	@Test (groups = {"GestionesPerfilAgente", "ActualizarDatos", "E2E", "Ciclo3"}, dataProvider = "CuentaModificacionDeDatos")
@@ -835,7 +831,7 @@ public class GestionesPerfilAgente extends TestBase{
 		driver.findElements(By.className("profile-edit")).get(0).click();
 		sleep(10000);
 		driver.switchTo().frame(cambioFrame(driver, By.id("DocumentNumber")));
-		if(driver.findElement(By.id("MobilePhone")).getAttribute("value").isEmpty()){
+		if (driver.findElement(By.id("MobilePhone")).getAttribute("value").isEmpty()){
 			driver.findElement(By.id("MobilePhone")).clear();
 			driver.findElement(By.id("MobilePhone")).sendKeys("5214864852");
 		}
@@ -866,7 +862,7 @@ public class GestionesPerfilAgente extends TestBase{
 		driver.findElements(By.className("profile-edit")).get(0).click();
 		sleep(10000);
 		driver.switchTo().frame(cambioFrame(driver, By.id("DocumentNumber")));
-		if(driver.findElement(By.id("MobilePhone")).getAttribute("value").isEmpty()){
+		if (driver.findElement(By.id("MobilePhone")).getAttribute("value").isEmpty()){
 			driver.findElement(By.id("MobilePhone")).clear();
 			driver.findElement(By.id("MobilePhone")).sendKeys("5214864852");
 		}
@@ -919,11 +915,7 @@ public class GestionesPerfilAgente extends TestBase{
 		driver.findElement(By.id("MobilePhone")).clear();
 		driver.findElement(By.id("MobilePhone")).sendKeys(phone);
 		driver.findElement(By.id("ClientInformation_nextBtn")).click();
-		sleep(8000);
-		Assert.assertTrue(driver.findElement(By.className("ta-care-omniscript-done")).getText().contains("Las modificaciones se realizaron con \u00e9xito"));
-		orden = driver.findElement(By.cssSelector(".vlc-slds-inline-control__label.ng-binding")).getText();
-		orden = orden.substring(orden.length()-9, orden.length()-1);
-		detalles +="-Orden:"+orden;		
+		sleep(7000);
 	}
 	
 	@Test (groups = {"GestionesPerfilAgente", "Actualizar Datos", "E2E", "Ciclo3"}, dependsOnMethods = "TS121103_CRM_Movil_REPRO_Modificacion_de_datos_No_Actualizar_datos_Cliente_FAN_Front_Agentes")
@@ -948,7 +940,7 @@ public class GestionesPerfilAgente extends TestBase{
 		driver.findElements(By.className("profile-edit")).get(0).click();
 		sleep(10000);
 		driver.switchTo().frame(cambioFrame(driver, By.id("DocumentNumber")));
-		if(driver.findElement(By.id("MobilePhone")).getAttribute("value").isEmpty()){
+		if (driver.findElement(By.id("MobilePhone")).getAttribute("value").isEmpty()){
 			driver.findElement(By.id("MobilePhone")).clear();
 			driver.findElement(By.id("MobilePhone")).sendKeys("5214864852");
 		}
@@ -973,11 +965,7 @@ public class GestionesPerfilAgente extends TestBase{
 		driver.findElement(By.id("Email")).clear();
 		driver.findElement(By.id("Email")).sendKeys(mail);
 		driver.findElement(By.id("ClientInformation_nextBtn")).click();
-		sleep(8000);
-		Assert.assertTrue(driver.findElement(By.className("ta-care-omniscript-done")).getText().contains("Las modificaciones se realizaron con \u00e9xito"));
-		orden = driver.findElement(By.cssSelector(".vlc-slds-inline-control__label.ng-binding")).getText();
-		orden = orden.substring(orden.length()-9, orden.length()-1);
-		detalles +="-Orden:"+orden;	
+		sleep(7000);
 	}
 	
 	@Test (groups = {"GestionesPerfilAgente", "Vista360", "E2E","ConsultaPorGestion", "Ciclo2"}, dataProvider = "CuentaModificacionDeDatos")
