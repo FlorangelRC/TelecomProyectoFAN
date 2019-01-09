@@ -84,7 +84,7 @@ public class ContactSearch extends BasePage {
 		}
 		if(!genero.equals(""))
 		driver.findElement(By.cssSelector(".OSradioButton.ng-scope.only-buttom")).click();
-		//try {Thread.sleep(8000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		try {Thread.sleep(4000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 	}
 	
 	

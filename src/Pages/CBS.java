@@ -534,8 +534,10 @@ public class CBS {
 						esta = true;
 				}
 			break;
-			case "pack 1 dia de sms y minutos a personal  ilimitados":
+			case "pack 1 dia de sms y minutos a personal ilimitados":
+				System.out.println("estoy en el case");
 				for (int i=0; i<ofertas.getLength();i++) {
+					System.out.println("Oferta: "+ofertas.item(i).getTextContent());
 					if(ofertas.item(i).getTextContent().equals("SO_VOICE_SMS_ILIMITADO_1D"))
 						esta = true;
 				}
@@ -857,4 +859,65 @@ public class CBS {
 		}
 	}
 	
+	public String sNotificarPago(String sOrder) {
+		sOrder = "<soapenv:Envelope xmlns:soapenv=\"http://schemas.xmlsoap.org/soap/envelope/\" xmlns:v1=\"http://www.personal.com.ar/Common/RequestMessageHeader/v1.0\" xmlns:v11=\"http://www.personal.com.ar/ESB/NotificarPago/v1.0\">\r\n"
+				+ "\r\n   <soapenv:Header>\r\n"
+				+ "\r\n      <v1:requestHeader>\r\n"
+				+ "\r\n         <v1:consumer code=\"\" channel=\"\" additionalData=\"\">\r\n"
+				+ "\r\n            <v1:userID>x001437</v1:userID>\r\n"
+				+ "\r\n            <v1:credentials>\r\n"
+				+ "\r\n               <!--You have a CHOICE of the next 2 items at this level-->\r\n"
+				+ "\r\n               <!--v1:userCertificate>?</v1:userCertificate-->\r\n"
+				+ "\r\n               <v1:userPassword>Mp8up1v5xH</v1:userPassword>\r\n"
+				+ "\r\n            </v1:credentials>\r\n"
+				+ "\r\n         </v1:consumer>\r\n"
+				+ "\r\n         <v1:message messageId=\"\" consumerMessageId=\"\">\r\n"
+				+ "\r\n         </v1:message>\r\n"
+				+ "\r\n      </v1:requestHeader>\r\n"
+				+ "\r\n   </soapenv:Header>\r\n"
+				+ "\r\n   <soapenv:Body>\r\n"
+				+ "\r\n      <v11:NotificarPagoRequest>\r\n"
+				+ "\r\n         <v11:salesOrderId>" + sOrder;
+		
+		sOrder+= "</v11:salesOrderId>\r\n"
+				+ "\r\n         <v11:status>Payment succeed</v11:status>\r\n"
+				+ "\r\n      </v11:NotificarPagoRequest>\r\n"
+				+ "\r\n   </soapenv:Body>\r\n"
+				+ "\r\n</soapenv:Envelope>";
+		return sOrder;
+	}
+	
+	public String sNotificarEmisionFactura(String sOrder) {
+		sOrder = "<soapenv:Envelope xmlns:soapenv=\"http://schemas.xmlsoap.org/soap/envelope/\" xmlns:v1=\"http://www.personal.com.ar/Common/RequestMessageHeader/v1.0\" xmlns:v11=\"http://www.personal.com.ar/ESB/NotificarPago/v1.0\">\r\n"
+				+ "\r\n   <soapenv:Header>\r\n"
+				+ "\r\n      <v1:requestHeader>\r\n"
+				+ "\r\n         <v1:consumer code=\"\" channel=\"\" additionalData=\"\">\r\n"
+				+ "\r\n            <v1:userID>x001437</v1:userID>\r\n"
+				+ "\r\n            <v1:credentials>\r\n"
+				+ "\r\n               <!--You have a CHOICE of the next 2 items at this level-->\r\n"
+				+ "\r\n               <!--v1:userCertificate>?</v1:userCertificate-->\r\n"
+				+ "\r\n               <v1:userPassword>Mp8up1v5xH</v1:userPassword>\r\n"
+				+ "\r\n            </v1:credentials>\r\n"
+				+ "\r\n         </v1:consumer>\r\n"
+				+ "\r\n         <v1:message messageId=\"\" consumerMessageId=\"\">\r\n"
+				+ "\r\n         </v1:message>\r\n"
+				+ "\r\n      </v1:requestHeader>\r\n"
+				+ "\r\n   </soapenv:Header>\r\n"
+				+ "\r\n   <soapenv:Body>\r\n"
+				+ "\r\n      <v11:NotificarPagoRequest>\r\n"
+				+ "\r\n         <v11:salesOrderId>" + sOrder;
+		
+		sOrder+= "</v11:salesOrderId>\r\n"
+				+ "\r\n         <v11:status>Payment succeed</v11:status>\r\n"
+				//+ "\r\n         <!--Optional:-->"
+				+ "\r\n         <v11:statusInvoice>Invoice succeed</v11:statusInvoice>\r\n"
+				//+ "\r\n         <!--Optional:-->"
+				+ "\r\n         <v11:totalInvoiceAmount>0</v11:totalInvoiceAmount>\r\n"
+				//+ "\r\n         <!--Optional:-->"
+				+ "\r\n         <v11:legalInvoiceNumber>B9311-00000073</v11:legalInvoiceNumber>\r\n"
+				+ "\r\n      </v11:NotificarPagoRequest>\r\n"
+				+ "\r\n   </soapenv:Body>\r\n"
+				+ "\r\n</soapenv:Envelope>";
+		return sOrder;
+	}
 }

@@ -224,7 +224,7 @@ public void validarcamposbusqueda(){
 }
 
 public void BuscarCuenta(String Type, String NDNI){
-	try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+	try {Thread.sleep(4000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 	TestBase TB = new TestBase();
 	//TB.waitFor(driver, By.id("SearchClientDocumentType"));
 	setSimpleDropdown(DNIbuscador, Type);
@@ -936,6 +936,7 @@ try{	driver.findElement(By.id("alert-ok-button")).click();	} catch (NoSuchElemen
 		 }
 		
 		public void cerrarPestaniaGestion(WebDriver driver) {
+			TestBase TB = new TestBase();
 			List<WebElement> pestas = driver.findElements(By.className("x-tab-strip-closable"));
 			//System.out.println(driver.findElement(By.cssSelector(".x-tab-strip-closable.x-tab-strip-active")).getText());
 			pestas.addAll(driver.findElements(By.cssSelector(".x-tab-strip-closable.x-tab-strip-active")));
