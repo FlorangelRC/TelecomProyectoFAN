@@ -1432,7 +1432,7 @@ public class TestBase {
 	@DataProvider
 	public Object[][] CambioSimCardTelef() throws Exception{
 		
-		Object[][] testObjArray =  ExcelUtils.getTableArray(dataProviderE2E(),"E2EconPago",1,1,17,"Cambio SimCard Telef");
+		Object[][] testObjArray =  ExcelUtils.getTableArray(dataProviderE2E(),"E2EconPago",1,1,2,"Cambio SimCard Telef");
 		
 		return (testObjArray);
 	}
@@ -1449,6 +1449,30 @@ public class TestBase {
 	public Object[][] CambioSimCardOficina() throws Exception{
 		
 		Object[][] testObjArray =  ExcelUtils.getTableArray(dataProviderE2E(),"E2EconPago",1,1,2,"Cambio SimCard Oficina");
+		
+		return (testObjArray);
+	}
+	
+	@DataProvider
+	public Object[][] SimCardSiniestroAG() throws Exception{
+		
+		Object[][] testObjArray =  ExcelUtils.getTableArray(dataProviderE2E(),"E2EconPago",1,1,6,"SimCard Siniestro Agente");
+		
+		return (testObjArray);
+	}
+	
+	@DataProvider
+	public Object[][] SimCardSiniestroOfCom() throws Exception{
+		
+		Object[][] testObjArray =  ExcelUtils.getTableArray(dataProviderE2E(),"E2EconPago",1,1,6,"SimCard Siniestro OfCom");
+		
+		return (testObjArray);
+	}
+	
+	@DataProvider
+	public Object[][] SimCardSiniestroTelef() throws Exception{
+		
+		Object[][] testObjArray =  ExcelUtils.getTableArray(dataProviderE2E(),"E2EconPago",1,1,6,"SimCard Siniestro Telef");
 		
 		return (testObjArray);
 	}
@@ -1745,22 +1769,7 @@ public class TestBase {
 
 		 return (testObjArray);
 	}
-	@DataProvider
-	public Object[][] SimCardSiniestroAG() throws Exception{
 		
-		Object[][] testObjArray =  ExcelUtils.getTableArray(dataProviderE2E(),"E2EconPago",1,1,17,"SimCard Siniestro Agente");
-		
-		return (testObjArray);
-	}
-	
-	@DataProvider
-	public Object[][] SimCardSiniestroOfCom() throws Exception{
-		
-		Object[][] testObjArray =  ExcelUtils.getTableArray(dataProviderE2E(),"E2EconPago",1,1,2,"SimCard Siniestro OfCom");
-		
-		return (testObjArray);
-	}
-	
 	@DataProvider
 	public Object[][] DiagnosticoInc() throws Exception{
 		
