@@ -409,6 +409,14 @@ public class TestBase {
 		    page0.ingresarBeFANConfigurador();
 		}
 		
+		public void loginFraude(WebDriver driver) {
+			driver.get(urlAmbiente);
+			//try {Thread.sleep(6000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+			waitForClickeable(driver, By.id("idp_section_buttons"));
+		    Login page0 = new Login(driver);
+		    page0.ingresarFraude();
+		}
+		
 		public void elegirmodulo(String modulo){
 			try {Thread.sleep(4000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 			String a = driver.findElement(By.id("tsidLabel")).getText();
@@ -1341,7 +1349,7 @@ public class TestBase {
 	@DataProvider
 	public Object [][] CuentaHabilitacion() throws Exception {
 		
-		Object[][] testObjArray = ExcelUtils.getTableArray(dataProviderE2E(),"E2EsinPago",1,1,1,"Habilitacion");
+		Object[][] testObjArray = ExcelUtils.getTableArray(dataProviderE2E(),"E2EsinPago",1,1,2,"Habilitacion");
 		
 		return (testObjArray);
 	} 
@@ -1407,6 +1415,9 @@ public class TestBase {
 		 case "backoffice":
 			 login(driver, urlAmbiente, "uat518122", "Testa10k");
 			 break;
+		 case "Fraude":
+			 loginFraude(driver);
+		 	break;
 		 }
 		 sleep(10000);
 	}
@@ -1855,6 +1866,13 @@ public class TestBase {
 		 return (testObjArray);
 	}
 	
+	@DataProvider
+	public Object[][] GestionRegionesCreacion() throws Exception{
+		
+		Object[][] testObjArray =  ExcelUtils.getTableArray(dataProviderE2E(),"BeFAN",1,1,1,"Creacion Regiones");
+		
+		return (testObjArray);
+	}
 	@DataProvider
 	public Object[][] DatosNominacionExistente5Lineas() throws Exception{
 

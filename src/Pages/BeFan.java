@@ -1,5 +1,11 @@
 package Pages;
 
+
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 
@@ -9,9 +15,13 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
+import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.Select;
+import org.testng.Assert;
+
+import Tests.TestBase;
 
 public class BeFan extends BasePage{
 
@@ -70,8 +80,6 @@ public class BeFan extends BasePage{
 	//Mensajes
 	@FindBy(xpath="//*[@id='NotUpdatedPhoneMessage']/div/p/p[2]/span/strong")
 	private WebElement NotUpdatedPhoneMessage;
-	
-	
 	
 	
 	//********************************METODOS*******************************************************//
@@ -145,6 +153,26 @@ public class BeFan extends BasePage{
 	    		opcion.click();
 	}
 	
+	public  int numeroDiasEntreDosFechas(Date fecha1, Date fecha2){
+	     long startTime = fecha1.getTime();
+	     long endTime = fecha2.getTime();
+	     long diffTime = endTime - startTime;
+	     return (int)TimeUnit.DAYS.convert(diffTime, TimeUnit.MILLISECONDS);
+	}
+	
+	public Date fechaAvanzada() {
+		Date date = new Date();
+		Calendar cal = Calendar.getInstance();
+		cal.setTime(date);
+		cal.add(Calendar.DATE, +1);
+		cal.add(Calendar.MONTH, +1);
+		//cal.add(Calendar.MINUTE, +1);
+		date = cal.getTime();
+		return (date);
+	}
+	
+        
+	
 	/**Estados Predefinidos:
 	 * 
 	 * -Pendiente
@@ -189,4 +217,128 @@ public class BeFan extends BasePage{
 		this.aceptar.click();
 	}
 	
+	public boolean verificarMensajeExitoso() {
+		return driver.findElement(By.xpath("//*[@class='alert alert-dismissable alert-success'] //h4")).getText().equalsIgnoreCase("La operaci\u00f3n se ejecut\u00f3 satisfactoriamente.");
+	}
+	
+	public void cerrar() {
+	driver.findElement(By.xpath("//*[@class='btn btn-primary' and contains(text(), 'CERRAR')]")).click();
+	}
+	public void eliminar() {
+	driver.findElement(By.xpath("//*[@class='btn btn-primary' and contains(text(), 'ELIMINAR')]")).click();
+	}
+	
+	public boolean buscarRegion(String sRegion) {
+		driver.findElement(By.xpath("//*[@type='search']")).clear();
+		driver.findElement(By.xpath("//*[@type='search']")).sendKeys(sRegion);
+		sleep(3000);
+		WebElement wBody = driver.findElement(By.className("panel-data"));
+		List<WebElement> wList = wBody.findElements(By.xpath("//*[@class='panel-group'] //*[@class='collapsed'] //*[@class='ng-binding']"));
+		
+		boolean bAssert = true;
+		for (WebElement wAux : wList) {
+			if (!wAux.getText().toLowerCase().contains(sRegion.toLowerCase())) {
+				bAssert = false;
+				break;
+			}
+		}
+		
+		return bAssert;
+	}
+	
+	public List<String> agregarPrefijos(String sRegion) {
+		buscarRegion(sRegion);
+		WebElement wBody = driver.findElement(By.className("panel-data"));
+		List<WebElement> wList = wBody.findElements(By.xpath("//*[@class='panel-group panel-group-alternative ng-scope']"));
+		
+		for (WebElement wAux : wList) {
+			if (wAux.findElement(By.xpath("//*[@class='collapsed'] //*[@class='ng-binding']")).getText().equalsIgnoreCase(sRegion)) {
+				wAux.click();
+				wAux.findElement(By.xpath("//*[@class='row ng-scope'] //*[@class='btn btn-link']")).click();
+				break;
+			}
+		}
+		sleep(5000);
+		List<String> sPrefijos = new ArrayList<String>();
+		//List<WebElement> wPrefijos = driver.findElements(By.id("compatibility"));
+		sPrefijos.add(driver.findElement(By.xpath("//*[@id='compatibility'][1] //label")).getText());
+		System.out.println(driver.findElement(By.xpath("//*[@id='compatibility'][1] //label")).getText());
+		driver.findElement(By.xpath("//*[contains(@class,'check-filter')] [1]")).click();
+		sPrefijos.add(driver.findElement(By.xpath("//*[@id='compatibility'][2] //label")).getText());
+		System.out.println(driver.findElement(By.xpath("//*[@id='compatibility'][2] //label")).getText());
+		driver.findElement(By.xpath("//*[@id='compatibility'][2] //label /.. /input")).click();
+		driver.findElement(By.xpath("//*[@ng-show='mensajeAgregarCtrl.container.showConfirmation'] //*[@class='btn btn-primary']")).click();
+		sleep(3000);
+		verificarMensajeExitoso();
+		driver.findElement(By.xpath("//*[contains(@ng-show, 'container.showSuccess')] //*[@class='btn btn-primary']")).click();
+		driver.navigate().refresh();
+		
+		buscarRegion(sRegion);
+		wBody = driver.findElement(By.className("panel-data"));
+		wList = wBody.findElements(By.xpath("//*[@class='panel-group panel-group-alternative ng-scope']"));
+		
+		for (WebElement wAux2 : wList) {
+			if (wAux2.findElement(By.xpath("//*[@class='collapsed'] //*[@class='ng-binding']")).getText().equalsIgnoreCase(sRegion)) {
+				wAux2.click();
+				break;
+			}
+		}
+		
+		return sPrefijos;
+	}
+	
+	public void buscarYAbrirRegion(String sRegion) {
+		buscarRegion(sRegion);
+		WebElement wBody = driver.findElement(By.className("panel-data"));
+		List<WebElement> wList = wBody.findElements(By.xpath("//*[@class='panel-group panel-group-alternative ng-scope']"));
+		
+		for (WebElement wAux : wList) {
+			if (wAux.findElement(By.xpath("//*[@class='collapsed'] //*[@class='ng-binding']")).getText().equalsIgnoreCase(sRegion)) {
+				wAux.click();
+				wAux.findElement(By.xpath("//*[@class='row ng-scope'] //*[@class='btn btn-link']")).click();
+				break;
+			}
+		}
+	}
+	public void buscarR (String Region) {
+	sleep(5000);
+	driver.findElement(By.className("panel-data"));
+	List <WebElement> region = driver.findElements(By.xpath("//*[@class='panel-group'] //*[@class='collapsed'] //*[@class='ng-binding']"));
+	for(WebElement x : region) {
+	if(x.getText().toLowerCase().contains(Region)) {
+		System.out.println(x.getText());
+		x.click();
+		break;
+		}
+	}	
 }
+	
+	public boolean regiontExists(WebElement element) throws InterruptedException {
+	    sleep(2000);
+		    try {
+ 		      boolean isDisplayed = element.getSize().height > 0;
+		       return isDisplayed;
+		    }   catch (Exception ex) {
+		         return false;
+		  }
+	}
+	
+	public void region() throws InterruptedException {
+		//String Region="";
+		if(regiontExists(driver.findElement(By.cssSelector(".alert.alert-dismissable.alert-danger")))) {
+			System.out.println(driver.findElement(By.cssSelector(".alert.alert-dismissable.alert-danger")).getText());
+			driver.findElement(By.className("pull-right")).findElement(By.cssSelector(".btn.btn-link")).getText().equalsIgnoreCase("Cancelar");
+			driver.findElement(By.className("pull-right")).findElement(By.cssSelector(".btn.btn-link")).click();
+			}
+		else {
+			driver.findElement(By.xpath("//*[@class='btn btn-primary' and contains(text(), 'Agregar')]")).click();
+			sleep(5000);
+			
+			Assert.assertTrue(verificarMensajeExitoso());
+			driver.findElement(By.xpath("//*[@ng-show='mensajeAgregarRegionCtrl.container.showSuccess']//*[@class='btn btn-primary']")).click();
+		}
+		//return true;
+	
+}
+}
+
