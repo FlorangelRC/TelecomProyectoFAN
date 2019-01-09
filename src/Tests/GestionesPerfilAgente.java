@@ -119,7 +119,7 @@ public class GestionesPerfilAgente extends TestBase{
 		sleep(15000);
 	}
 	
-	//@AfterMethod(alwaysRun=true)
+	@AfterMethod(alwaysRun=true)
 	public void after() throws IOException {
 		datosOrden.add(detalles);
 		guardarListaTxt(datosOrden);
@@ -209,6 +209,10 @@ public class GestionesPerfilAgente extends TestBase{
 		CBS_Mattu invoSer = new CBS_Mattu();
 		invoSer.PagarTCPorServicio(sOrden);
 		sleep(5000);
+		if(activarFalsos == true) {
+			cCBSM.Servicio_NotificarPago(sOrden);
+			sleep(20000);
+		}
 		driver.navigate().refresh();
 		sleep(10000);
 		String uMainBalance = cCBS.ObtenerValorResponse(cCBSM.Servicio_queryLiteBySubscriber(sLinea), "bcs:MainBalance");
@@ -222,7 +226,7 @@ public class GestionesPerfilAgente extends TestBase{
 		String datos = tabla.findElements(By.tagName("tr")).get(4).findElements(By.tagName("td")).get(1).getText();
 		Assert.assertTrue(datos.equalsIgnoreCase("activada")||datos.equalsIgnoreCase("activated"));
 	}
-	@Test(groups = { "GestionesPerfilAgente","CambioSimCard", "E2E","Ciclo3" }, priority = 1, dataProvider = "CambioSimCardAgente")
+	@Test(groups = { "GestionesPerfilAgente","CambioDeSimcard", "E2E","Ciclo3" }, priority = 1, dataProvider = "CambioSimCardAgente")
 	public void TSCambioSimCardAgente(String sDNI, String sLinea) throws AWTException {
 		imagen = "TSCambioSimCardAgente";
 		detalles = null;
@@ -507,9 +511,11 @@ public class GestionesPerfilAgente extends TestBase{
 		sleep(15000);
 		cc.openleftpanel();
 		mk.closeActiveTab();
+		//cc.irAFacturacion();
 		sleep(5000);
-		driver.switchTo().frame(cambioFrame(driver, By.className("profile-edit")));
-		buscarYClick(driver.findElements(By.className("left-sidebar-section-header")), "equals", "facturaci\u00f3n");
+		cc.irAFacturacion();
+		/*driver.switchTo().frame(cambioFrame(driver, By.className("profile-edit")));
+		buscarYClick(driver.findElements(By.className("left-sidebar-section-header")), "equals", "facturaci\u00f3n");*/
 		sleep(20000);
 		driver.switchTo().frame(cambioFrame(driver, By.className("card-top")));
 		boolean a = false;
@@ -626,7 +632,7 @@ public class GestionesPerfilAgente extends TestBase{
 		try {contact.ingresarMail(sEmail, "si");}catch (org.openqa.selenium.ElementNotVisibleException ex1) {}
 		contact.tipoValidacion("documento");
 		File directory = new File("DniMal.jpg");
-		contact.subirArchivo(new File(directory.getAbsolutePath()).toString(), "si");
+		contact.subirArchivo(new File(directory.getAbsolutePath()).toString(), "no");
 		List<WebElement> errores = driver.findElements(By.cssSelector(".message.description.ng-binding.ng-scope")); 
 		boolean error = false;
 		for (WebElement UnE: errores) {
@@ -637,7 +643,7 @@ public class GestionesPerfilAgente extends TestBase{
 		Assert.assertTrue(error);
 	}
 	
-	@Test(groups = {"GestionesPerfilAgente", "RenovacionCuota","E2E","Ciclo1"}, dataProvider="RenovacionCuotaConSaldo") 
+	@Test(groups = {"GestionesPerfilAgente", "RenovacionDeCuota","E2E","Ciclo1"}, dataProvider="RenovacionCuotaConSaldo") 
 	public void TS135402_CRM_Movil_REPRO_Renovacion_de_cuota_Presencial_Internet_50_MB_Dia_Descuento_de_saldo_con_Credito(String sDNI, String sLinea){
 		imagen = "TS135402";
 		detalles = "Renovacion de cuota: "+imagen+"DNI: "+sDNI+"Linea: "+sLinea;
@@ -702,7 +708,7 @@ public class GestionesPerfilAgente extends TestBase{
 		Assert.assertTrue(driver.findElement(By.cssSelector(".slds-table.slds-table--bordered.slds-table--resizable-cols.slds-table--fixed-layout.via-slds-table-pinned-header")).isDisplayed());
 	}
 	
-	@Test (groups = {"GestionesPerfilAgente", "Actualizar Datos", "E2E", "Ciclo3"}, dataProvider = "CuentaModificacionDeDatos")
+	@Test (groups = {"GestionesPerfilAgente", "ModificarDatos", "E2E", "Ciclo3"}, dataProvider = "CuentaModificacionDeDatos")
 	public void TS134836_CRM_Movil_REPRO_Modificacion_de_datos_Actualizar_los_datos_del_cliente_completos_FAN_Front_Agentes(String sDNI, String sLinea) {
 		imagen = "TS134836";
 		detalles = null;
@@ -776,7 +782,7 @@ public class GestionesPerfilAgente extends TestBase{
 		sleep(7000);
 	}
 	
-	@Test (groups = {"GestionesPerfilAgente", "Actualizar Datos", "E2E", "Ciclo3"}, dataProvider = "CuentaModificacionDeDatos")
+	@Test (groups = {"GestionesPerfilAgente", "ModificarDatos", "E2E", "Ciclo3"}, dataProvider = "CuentaModificacionDeDatos")
 	public void TS129334_CRM_Movil_REPRO_Modificacion_de_datos_Actualizar_datos_campo_Correo_Electronico_Cliente_FAN_Front_Agentes(String sDNI, String sLinea) {
 		imagen = "TS129334";
 		detalles = null;
@@ -817,7 +823,7 @@ public class GestionesPerfilAgente extends TestBase{
 		sleep(7000);
 	}
 	
-	@Test (groups = {"GestionesPerfilAgente", "ActualizarDatos", "E2E", "Ciclo3"}, dataProvider = "CuentaModificacionDeDatos")
+	@Test (groups = {"GestionesPerfilAgente", "ModificarDatos", "E2E", "Ciclo3"}, dataProvider = "CuentaModificacionDeDatos")
 	public void TS121103_CRM_Movil_REPRO_Modificacion_de_datos_No_Actualizar_datos_Cliente_FAN_Front_Agentes(String sDNI, String sLinea) {
 		imagen = "TS121103";
 		detalles = null;
@@ -844,7 +850,7 @@ public class GestionesPerfilAgente extends TestBase{
 		Assert.assertTrue(cancelar);
 	}
 	
-	@Test (groups = {"GestionesPerfilAgente", "Actualizar Datos", "E2E", "Ciclo3"}, dataProvider = "CuentaModificacionDeDatos")
+	@Test (groups = {"GestionesPerfilAgente", "ModificarDatos", "E2E", "Ciclo3"}, dataProvider = "CuentaModificacionDeDatos")
 	public void TS121102_CRM_Movil_REPRO_Modificacion_de_datos_Cliente_FAN_Front_Agentes(String sDNI, String sLinea) {
 		imagen = "TS121102";
 		detalles = null;
@@ -918,7 +924,7 @@ public class GestionesPerfilAgente extends TestBase{
 		sleep(7000);
 	}
 	
-	@Test (groups = {"GestionesPerfilAgente", "Actualizar Datos", "E2E", "Ciclo3"}, dependsOnMethods = "TS121103_CRM_Movil_REPRO_Modificacion_de_datos_No_Actualizar_datos_Cliente_FAN_Front_Agentes")
+	@Test (groups = {"GestionesPerfilAgente", "ModificarDatos", "E2E", "Ciclo3"}, dependsOnMethods = "TS121103_CRM_Movil_REPRO_Modificacion_de_datos_No_Actualizar_datos_Cliente_FAN_Front_Agentes")
 	public void TS121099_CRM_Movil_REPRO_No_Actualizar_datos_Cliente_Perfil_FAN_Front_Agentes() {
 		imagen = "TS121099";
 		detalles = null;
@@ -926,7 +932,7 @@ public class GestionesPerfilAgente extends TestBase{
 		Assert.assertTrue(true);
 	}
 	
-	@Test (groups = {"GestionesPerfilAgente", "Actualizar Datos", "E2E", "Ciclo3"}, dataProvider = "CuentaModificacionDeDatos")
+	@Test (groups = {"GestionesPerfilAgente", "ModificarDatos", "E2E", "Ciclo3"}, dataProvider = "CuentaModificacionDeDatos")
 	public void TS121098_CRM_Movil_REPRO_Modificacion_de_datos_Actualizar_datos_Cliente_Perfil_FAN_Front_Agentes(String sDNI, String sLinea) {
 		imagen = "TS121098";
 		detalles = null;
@@ -1011,12 +1017,12 @@ public class GestionesPerfilAgente extends TestBase{
 		WebElement tabla = driver.findElement(By.cssSelector(".slds-table.slds-table--bordered.slds-table--resizable-cols.slds-table--fixed-layout.via-slds-table-pinned-header"));
 		Assert.assertTrue(tabla.isDisplayed());
 	}
-	@Test (groups = {"GestionesPerfilAgente", "ABMServicios", "E2E", "Ciclo3"}, dataProvider = "BajaServicios")
+	@Test (groups = {"GestionesPerfilAgente", "ABMDeServicios", "E2E", "Ciclo3"}, dataProvider = "BajaServicios")
 	public void TS135737_CRM_Movil_REPRO_Baja_de_Servicio_sin_costo_Restriccion_Ident_de_Llamadas_Presencial_Agente(String sDNI, String sLinea) throws AWTException{
 		imagen = "TS135737";
 		detalles = imagen+"-BajaServicio-DNI:"+sDNI;
 		GestionFlow gGF = new GestionFlow();
-		Assert.assertTrue(gGF.FlowConsultaServicioActivo(driver, sLinea, "Restricci\u00f3n de la Identificaci\u00f3n de Llamadas"));
+		//Assert.assertTrue(gGF.FlowConsultaServicioActivo(driver, sLinea, "Restricci\u00f3n de la Identificaci\u00f3n de Llamadas"));
 		BasePage cambioFrameByID=new BasePage();
 		sleep(30000);
 		driver.switchTo().frame(cambioFrameByID.getFrameForElement(driver, By.id("SearchClientDocumentType")));
@@ -1075,7 +1081,7 @@ public class GestionesPerfilAgente extends TestBase{
 		Assert.assertTrue(gGF.FlowConsultaServicioInactivo(driver, sLinea, "Restricci\u00f3n de la Identificaci\u00f3n de Llamadas"));
 	}
 	
-	@Test (groups = {"GestionesPerfilAgente","E2E","Ciclo3","ABMServicios"}, dataProvider="AltaServicios")
+	@Test (groups = {"GestionesPerfilAgente","E2E","Ciclo3","ABMDeServicios"}, dataProvider="AltaServicios")
 	public void TS135754_CRM_Movil_REPRO_Alta_Servicio_sin_costo_Transferencia_de_llamadas_Presencial_Agente(String sDNI, String sLinea) throws AWTException{
 		imagen = "TS135754";
 		detalles = null;
@@ -1208,7 +1214,7 @@ public class GestionesPerfilAgente extends TestBase{
 		driver.findElement(By.id("ImeiInput_nextBtn")).click();
 		Assert.assertTrue(false); 
 	}
-	@Test(groups = { "GestionesPerfilAgente","Ciclo 3", "E2E" }, priority = 1, dataProvider = "SimCardSiniestroAG")
+	@Test(groups = { "GestionesPerfilAgente","Ciclo 3", "E2E", "CambioDeSimCard" }, priority = 1, dataProvider = "SimCardSiniestroAG")
 	public void TS99020_CRM_Movil_REPRO_Cambio_de_SimCard_Presencial_Siniestro_DOC_Store_Pick_Up_TC_Agente(String sDNI, String sLinea,String cEntrega, String cProvincia, String cLocalidad, String cPuntodeVenta, String cBanco, String cTarjeta, String cPromo, String cCuotas, String cNumTarjeta, String cVenceMes, String cVenceAno, String cCodSeg, String cTipoDNI,String cDNITarjeta, String cTitular) throws AWTException {
 		imagen = "99020";
 		detalles = null;
@@ -1233,32 +1239,11 @@ public class GestionesPerfilAgente extends TestBase{
 		driver.findElement(By.id("SelectAsset0")).findElement(By.cssSelector(".slds-radio.ng-scope")).click();
 		driver.findElement(By.id("AssetSelection_nextBtn")).click();
 		sleep(5000);
-		pagePTelefo.mododeEntrega(driver, cEntrega, cProvincia, cLocalidad, cPuntodeVenta);
+		pagePTelefo.mododeEntrega(driver, sEntrega, sProvincia, sLocalidad, sPuntodeVenta);
 		sleep(12000);
 		pagePTelefo.getResumenOrdenCompra().click();
 		String sOrden = cCC.obtenerOrden2(driver);
 		detalles += "-Orden:" + sOrden;
-	
-//		buscarYClick(driver.findElements(By.cssSelector(".slds-form-element__label.ng-binding")), "equals","tarjeta de credito");
-//		selectByText(driver.findElement(By.id("BankingEntity-0")), cBanco);
-//		selectByText(driver.findElement(By.id("CardBankingEntity-0")), cTarjeta);
-//		selectByText(driver.findElement(By.id("promotionsByCardsBank-0")), cPromo);
-//		sleep(5000);
-//		selectByText(driver.findElement(By.id("Installment-0")), cCuotas);
-//		driver.findElement(By.id("CardNumber-0")).sendKeys(cNumTarjeta);
-//		selectByText(driver.findElement(By.id("expirationMonth-0")), cVenceMes);
-//		selectByText(driver.findElement(By.id("expirationYear-0")), cVenceAno);
-//		driver.findElement(By.id("securityCode-0")).sendKeys(cCodSeg);
-//		selectByText(driver.findElement(By.id("documentType-0")), cTipoDNI);
-//		driver.findElement(By.id("documentNumber-0")).sendKeys(cDNITarjeta);
-//		driver.findElement(By.id("cardHolder-0")).sendKeys(cTitular);
-//		
-//		cCC.obligarclick(driver.findElement(By.id("SelectPaymentMethodsStep_nextBtn")));
-//		sleep(15000);
-		try {
-			driver.findElement(By.id("Step_Error_Huawei_S029_nextBtn")).click();
-			System.out.println("Error en prefactura huawei");
-		}catch(Exception ex1) {}
 		sleep(5000);
 		driver.navigate().refresh();
 		sleep(10000);
@@ -1268,7 +1253,6 @@ public class GestionesPerfilAgente extends TestBase{
 		detalles+="Monto:"+invoice.split("-")[1]+"-Prefactura:"+invoice.split("-")[0];
 		//datosOrden.add("Cambio sim card Agente- Cuenta: "+accid+"Invoice: "+invoice.split("-")[0]);
 		CBS_Mattu invoSer = new CBS_Mattu();
-		Assert.assertTrue(invoSer.PagaEnCajaTC("1005", accid, "2001", invoice.split("-")[1], invoice.split("-")[0],  cDNITarjeta, cTitular, cVenceAno+cVenceMes, cCodSeg, cTitular, cNumTarjeta));
 		driver.navigate().refresh();
 		sleep(10000);
 		sleep(10000);
@@ -1534,7 +1518,7 @@ public class GestionesPerfilAgente extends TestBase{
 		sleep(5000);
 		//pagePTelefo.PacksRoaming(sVentaPack);
 	}
-	@Test (groups = {"GestionesPerfilAgente", "Actualizar Datos", "E2E", "Ciclo3"},  dataProvider = "CuentaModificacionDeDNI")
+	@Test (groups = {"GestionesPerfilAgente", "Modificar Datos", "E2E", "Ciclo3"},  dataProvider = "CuentaModificacionDeDNI")
 	public void TS129328_CRM_Movil_REPRO_Modificacion_de_datos_Actualizar_datos_campo_DNI_CUIT_Cliente_FAN_Front_Agentes(String sDNI, String sLinea){
 		imagen = "TS129328";
 		detalles = null;
@@ -1566,7 +1550,7 @@ public class GestionesPerfilAgente extends TestBase{
 		orden = orden.substring(orden.length()-9, orden.length()-1);
 	}
 	
-	@Test (groups = {"GestionesPerfilOficina", "ABMServicios", "E2E", "Ciclo3"}, dataProvider = "AltaServicios")
+	@Test (groups = {"GestionesPerfilOficina", "ABMDeServicios", "E2E", "Ciclo3"}, dataProvider = "AltaServicios")
 	public void TS135743_CRM_Movil_REPRO_Alta_Servicio_sin_costo_Restriccion_Ident_de_Llamadas_Presencial_Agente(String sDNI, String sLinea) throws AWTException{
 		imagen = "TS135743";
 		detalles = null;
@@ -1634,7 +1618,7 @@ public class GestionesPerfilAgente extends TestBase{
 	}
 	
 	
-	@Test (groups = {"GestionesPerfilAgente","Modificacion de Datos","E2E", "Ciclo3"},  dataProvider = "CuentaModificacionDeDatos")
+	@Test (groups = {"GestionesPerfilAgente","ModificarDatos","E2E", "Ciclo3"},  dataProvider = "CuentaModificacionDeDatos")
 	public void TS129330_CRM_Movil_REPRO_Modificacion_de_datos_No_Permite_Actualizar_datos_campo_DNI_Cliente_FAN_Front_Agentes(String sDNI, String sLinea) {
 		imagen = "TS129330";
 		detalles = null;
@@ -1711,7 +1695,7 @@ public class GestionesPerfilAgente extends TestBase{
 	
 	@Test (groups= {"GestionesPerfilAgente", "Ciclo2", "Vista360"}, dataProvider = "documentacionVista360")
 	public void TS134817_CRM_Movil_Prepago_Vista_360_Mis_Servicios_Visualizacion_del_estado_de_los_servicios_activos_FAN_Front_OOCC_Agentes(String sDNI){
-		imagen = "TS134379";
+		imagen = "TS134817";
 		detalles = null;
 		detalles = imagen + "-Vista 360 - DNI: "+sDNI;
 		driver.switchTo().frame(cambioFrame(driver, By.id("SearchClientDocumentType")));
