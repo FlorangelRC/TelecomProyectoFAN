@@ -272,4 +272,22 @@ public class GestionesPerfilAdminFuncional extends TestBase{
 	    }
 	    Assert.assertTrue(desregistrar);
 	}
+	
+	@Test (groups = {"GestionesReclamosDeRed", "Diagnostico/Inconvenientes", }, dataProvider = "Diagnostico")
+	public void TS105443_CRM_Movil_Repro_Autogestion_WEB_No_envia_configuracion_Resuelto(String cDNI, String cLinea) throws InterruptedException {
+		imagen = "TS105443";
+		detalles = null;
+		detalles = imagen + "- Autogestion - DNI: "+cDNI;
+		TechnicalCareCSRAutogestionPage tech = new TechnicalCareCSRAutogestionPage(driver);
+		driver.switchTo().frame(cambioFrame(driver, By.id("SearchClientDocumentType")));
+		sb.BuscarCuenta("DNI", cDNI);
+		driver.findElement(By.cssSelector(".slds-tree__item.ng-scope")).click();
+		sleep(15000);
+		searchAndClick(driver, "Diagn\u00f3stico de Autogesti\u00f3n");
+		tech.listadoDeSeleccion("WEB", "Otro", "No env\u00eda configuraci\u00f3n");
+		sleep(4000);
+		System.out.println(tech.verificarNumDeGestion());
+		
+		Assert.assertTrue(tech.cerrarCaso("Resuelta exitosa", "Consulta"));
+	}
 }

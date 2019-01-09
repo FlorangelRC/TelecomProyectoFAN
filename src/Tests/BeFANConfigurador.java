@@ -23,6 +23,7 @@ import Pages.BeFan;
 import Pages.ContactSearch;
 import Pages.Marketing;
 import Pages.setConexion;
+import javafx.scene.web.WebEngineBuilder;
 
 public class BeFANConfigurador extends TestBase {
 	
@@ -623,52 +624,85 @@ public class BeFANConfigurador extends TestBase {
 	@Test (groups = "BeFan")
 	public void TS126634_BeFan_Movil_REPRO_Preactivacion_repro_Gestion_de_agrupadores_Busqueda_Eliminacion_de_agrupadores_Si_Preactivando() throws InterruptedException {
 		irA("Regiones", "Gesti\u00f3n");
-		sleep(3000);
+		BeFan page = new BeFan(driver);
+		boolean eliminar = false;
+		//boolean cancelar = false;
+		irA("regiones", "gesti\u00f3n");
 		driver.findElement(By.cssSelector(".btn.btn-primary")).click();
+		driver.findElement(By.cssSelector(".form-control.ng-pristine.ng-untouched.ng-valid.ng-empty")).sendKeys("cordoba");
+		driver.findElement(By.cssSelector(".btn.btn-primary")).click();
+		for(WebElement x : driver.findElements(By.cssSelector(".alert.alert-dismissable.alert-danger"))) {
+		if(x.getText().contains("error")){
+			//cancelar=(true);
+			buscarYClick(driver.findElements(By.cssSelector(".btn.btn-link")), "equals", "cancelar");
+			break;
+		}
+		else {
+//				driver.findElement(By.cssSelector(".btn.btn-primary")).click();
+				buscarYClick(driver.findElements(By.cssSelector(".btn.btn-primary")), "equals", "cerrar");
+			}
+//		//Assert.assertTrue(cancelar);
+		}
+		//buscarYClick(driver.findElements(By.cssSelector(".btn.btn-primary")), "equals", "cerrar");
+		//page.buscarR("cordoba");
+		buscarYClick(driver.findElements(By.cssSelector(".panel-group.panel-group-alternative.ng-scope")), "contains", "cordoba");
+		driver.findElement(By.cssSelector(".panel-collapse.in.collapse")).findElement(By.cssSelector(".btn.btn-link")).click();
 		sleep(3000);
-		String Region="CORDOBA";
-		driver.findElement(By.cssSelector(".form-control.ng-pristine.ng-untouched.ng-valid.ng-empty")).sendKeys(Region);
-		driver.findElement(By.xpath("//*[@class='btn btn-primary' and contains(text(), 'Agregar')]")).click();
-//		String region= "";
-//		if(region=driver.findElement(By.cssSelector(".alert.alert-dismissable.alert-danger")) {
-//			System.out.println(driver.findElement(By.cssSelector(".alert.alert-dismissable.alert-danger")).getText());
-//			driver.findElement(By.className("pull-right")).findElement(By.cssSelector(".btn.btn-link")).getText().equalsIgnoreCase("Cancelar");
-//			driver.findElement(By.className("pull-right")).findElement(By.cssSelector(".btn.btn-link")).click();
-//		//pbf.region();
-//		}
-//		else {
+		driver.findElement(By.className("check-filter-on")).click();
+		
+		buscarYClick(driver.findElements(By.cssSelector(".btn.btn-primary")), "equals", "agregar");
+		buscarYClick(driver.findElements(By.cssSelector(".btn.btn-primary")), "equals", "cerrar");
 		sleep(5000);
-		driver.findElement(By.xpath("//*[@class='btn btn-primary' and contains(text(), 'Agregar')]")).click();
-		sleep(5000);
-		pbf = new Pages.BeFan(driver);
-		Assert.assertTrue(pbf.verificarMensajeExitoso());
-		//Ask about confirmation message
-		driver.findElement(By.xpath("//*[@ng-show='mensajeAgregarRegionCtrl.container.showSuccess']//*[@class='btn btn-primary']")).click();
-		pbf.buscarR("cordoba");
-		sleep(3000);
-		driver.findElement(By.className("col-lg-2")).findElement(By.cssSelector(".btn.btn-link")).click();
-		driver.findElement(By.className("modal-content")).findElement(By.className("modal-body")).findElement(By.cssSelector(".col-lg-4.dropdown-filters"));
-		driver.findElement(By.id("compatibility")).findElement(By.tagName("input")).click();
-		driver.findElement(By.xpath("//*[@class='btn btn-primary' and contains(text(), 'CERRAR')]")).click();
-		sleep(5000);
-		pbf = new Pages.BeFan(driver);
-		Assert.assertTrue(pbf.verificarMensajeExitoso());
-		driver.findElement(By.cssSelector(".actions.text-center")).findElement(By.cssSelector(".btn.btn-link")).click();
-		Assert.assertTrue(driver.findElement(By.cssSelector(".text-center.ng-binding")).getText().contains("�Esta seguro que desea eliminarlo ?"));
-		pbf.eliminar();
-		//driver.findElement(By.xpath("//*[@class='btn btn-primary' and contains(text(), 'ELIMINAR')]")).click();
-		Assert.assertTrue(pbf.verificarMensajeExitoso());
-		//driver.findElement(By.xpath("//*[@class='btn btn-primary' and contains(text(), 'CERRAR')]")).click();
-		pbf.cerrar();
-		driver.findElement(By.cssSelector(".text-center.ng-binding")).getText().contains("�Tambien desea eliminar la Region CORDOBA ?");
-		//driver.findElement(By.xpath("//*[@class='btn btn-primary' and contains(text(), 'ELIMINAR')]")).click();
-		pbf.eliminar();
-		Assert.assertTrue(pbf.verificarMensajeExitoso());
-		//driver.findElement(By.xpath("//*[@class='btn btn-primary' and contains(text(), 'CERRAR')]")).click();
-		pbf.cerrar();
+		for (WebElement x : driver.findElements(By.cssSelector(".panel-group.panel-group-alternative.ng-scope"))) {
+			if (x.getText().toLowerCase().contains("cordoba"))
+				((JavascriptExecutor) driver).executeScript("window.scrollTo(0," + x.getLocation().y + ")");
+		}
+		buscarYClick(driver.findElements(By.cssSelector(".panel-group.panel-group-alternative.ng-scope")), "contains", "cordoba");
+		for (WebElement x : driver.findElements(By.className("panel-group"))) {
+			if (x.getText().contains("3546"))
+				x.findElement(By.cssSelector(".glyphicon.glyphicon-remove")).click();
+				//x.findElement(By.tagName("tbody")).findElement(By.tagName("button")).click();
+			buscarYClick(driver.findElements(By.cssSelector(".btn.btn-primary")), "equals", "eliminar");
+			Assert.assertTrue(pbf.verificarMensajeExitoso());
+			buscarYClick(driver.findElements(By.cssSelector(".btn.btn-primary")), "equals", "cerrar");
+			eliminar = true;
+		}
+		Assert.assertTrue(eliminar);
 	}
 	
 
+		
+//		page.buscarR("bahia blanca");
+//		sleep(3000);
+//		driver.findElement(By.cssSelector(".panel-collapse.in.collapse")).findElement(By.cssSelector(".btn.btn-link")).click();
+//		sleep(3000);
+//		
+//		driver.findElement(By.cssSelector(".glyphicon.glyphicon-plus")).click();
+//		
+//		String nroPrefijo = driver.findElement(By.cssSelector(".compatibility.custom-check.ng-scope")).findElement(By.tagName("label")).getText();
+//		System.out.println(nroPrefijo);
+//		driver.findElement(By.xpath("//*[@class='btn btn-primary' and contains(text(), 'Agregar')]")).click();
+//		sleep(5000);
+//		Assert.assertTrue(page.verificarMensajeExitoso());	
+//		driver.findElement(By.xpath("//*[@class='btn btn-primary' and contains(text(), 'Cerrar')]")).click();
+//		page.buscarR("bahia blanca");
+//		driver.findElement(By.cssSelector(".glyphicon.glyphicon-remove")).click();
+//		Assert.assertTrue(driver.findElement(By.cssSelector(".text-center.ng-binding")).getText().contains("�Esta seguro que desea eliminarlo ?"));
+//		page.eliminar();
+//		driver.findElement(By.xpath("//*[@class='btn btn-primary' and contains(text(), 'Cerrar')]")).click();
+//		
+//		//driver.findElement(By.xpath("//*[@class='btn btn-primary' and contains(text(), 'ELIMINAR')]")).click();
+//		Assert.assertTrue(page.verificarMensajeExitoso());
+//		//driver.findElement(By.xpath("//*[@class='btn btn-primary' and contains(text(), 'CERRAR')]")).click();
+//		page.cerrar();
+//		driver.findElement(By.cssSelector(".text-center.ng-binding")).getText().contains("�Tambien desea eliminar la Region CORDOBA ?");
+//		//driver.findElement(By.xpath("//*[@class='btn btn-primary' and contains(text(), 'ELIMINAR')]")).click();
+//		page.eliminar();
+//		Assert.assertTrue(pbf.verificarMensajeExitoso());
+//		//driver.findElement(By.xpath("//*[@class='btn btn-primary' and contains(text(), 'CERRAR')]")).click();
+//		page.cerrar();
+	
+	
 	
 	@Test (groups = "BeFan")
 	public void TS112020_BeFan_Movil_REPRO_Preactivacion_repro_Gestion_de_agrupadores_Busqueda_Eliminacion_de_agrupadores_Si_Sin_preactivar() {
