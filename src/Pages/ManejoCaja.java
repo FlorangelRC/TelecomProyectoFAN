@@ -1,5 +1,8 @@
 package Pages;
 
+import java.awt.AWTException;
+import java.awt.Robot;
+import java.awt.event.KeyEvent;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -134,7 +137,7 @@ public class ManejoCaja extends BasePage {
 		}
 	}
 	
-	public void cerrarCajaRegistradora(WebDriver driver) {
+	public void cerrarCajaRegistradora(WebDriver driver) throws AWTException {
 		seleccionarOpcionCatalogo(driver, "Cuentas por cobrar");
 		seleccionarOpcionSubMenu(driver, "Cerrar caja registradora");
 		sleep(2000);
@@ -147,9 +150,10 @@ public class ManejoCaja extends BasePage {
 		//driver.switchTo().frame(TB.cambioFrame(driver,By.id("print-preview")));
 		ArrayList<String> tabs2 = new ArrayList<String> (driver.getWindowHandles());
 	    driver.switchTo().window(tabs2.get(2));
-		driver.findElement(By.className("cancel")).click();
-		driver.switchTo().window(tabs2.get(1));
-		//driver.findElement(By.className("popwin_close")).sendKeys(Keys.ESCAPE);
+	    Robot r = new Robot();
+	    r.keyPress(KeyEvent.VK_ESCAPE); 
+		r.keyRelease(KeyEvent.VK_ESCAPE);
+	   driver.switchTo().window(tabs2.get(1));
 		sleep(1000);
 		driver.findElement(By.id("popwin_close")).click();
 		driver.switchTo().frame(TB.cambioFrame(driver,By.id("closeview")));

@@ -5,6 +5,7 @@ import static org.testng.Assert.assertTrue;
 import java.awt.AWTException;
 import java.awt.Robot;
 import java.awt.event.KeyEvent;
+import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
@@ -117,7 +118,7 @@ public class GestionesPerfilTelefonico extends TestBase{
 		sleep(25000);
 	}
 
-	//@AfterMethod(alwaysRun=true)
+	@AfterMethod(alwaysRun=true)
 	public void after() throws IOException {
 		datosOrden.add(detalles);
 		guardarListaTxt(datosOrden);
@@ -138,9 +139,9 @@ public class GestionesPerfilTelefonico extends TestBase{
 		detalles = imagen+"-Recarga-DNI:"+cDNI;
 		CBS cCBS = new CBS();
 		CBS_Mattu cCBSM = new CBS_Mattu();
-//		String sMainBalance = cCBS.ObtenerValorResponse(cCBSM.Servicio_queryLiteBySubscriber(cLinea), "bcs:MainBalance");
-//		Integer iMainBalance = Integer.parseInt(sMainBalance.substring(0, (sMainBalance.length()) - 1));
-//		System.out.println("monto "+iMainBalance);
+		String sMainBalance = cCBS.ObtenerValorResponse(cCBSM.Servicio_queryLiteBySubscriber(cLinea), "bcs:MainBalance");
+		Integer iMainBalance = Integer.parseInt(sMainBalance.substring(0, (sMainBalance.length()) - 1));
+		System.out.println("monto "+iMainBalance);
 		if(cMonto.length() >= 4) {
 			cMonto = cMonto.substring(0, cMonto.length()-1);
 		}
@@ -162,7 +163,7 @@ public class GestionesPerfilTelefonico extends TestBase{
 		sleep(20000);
 		driver.switchTo().frame(cambioFrame(driver, By.className("card-top")));
 		driver.findElement(By.className("card-top")).click();
-		sleep(3000);
+		sleep(5000);
 		cc.irAGestionEnCard("Recarga de cr\u00e9dito");
 		sleep(15000);
 		driver.switchTo().frame(cambioFrame(driver, By.id("RefillAmount")));
@@ -531,7 +532,7 @@ public class GestionesPerfilTelefonico extends TestBase{
 		}
 	}
 	
-	@Test (groups= {"GestionesPerfilTelefonico", "ActualizarDatos", "E2E"},  dataProvider = "CuentaModificacionDeDatos")
+	@Test (groups= {"GestionesPerfilTelefonico", "ModificarDatos", "E2E"},  dataProvider = "CuentaModificacionDeDatos")
 	public void TS134835_CRM_Movil_PRE_Modificacion_de_datos_Actualizar_los_datos_del_cliente_completos_FAN_Front_Telefonico(String sDNI, String sLinea) {
 		imagen = "TS134835";
 		detalles = null;
@@ -711,7 +712,7 @@ public class GestionesPerfilTelefonico extends TestBase{
 			Assert.assertTrue(false);
 	}
 	
-	@Test (groups = {"GestionesPerfilAgente", "DetalleDeConsumos","Ciclo2"}, dataProvider="CuentaProblemaRecarga")
+	@Test (groups = {"GestionesPerfilAgente", "DetalleDeConsumo","Ciclo2"}, dataProvider="CuentaProblemaRecarga")
 	public void TS134803_CRM_Movil_Prepago_Vista_360_Detalle_de_consumo_Consulta_detalle_de_consumo_SMS_FAN_Front_Telefonico(String cDNI, String cLinea ){
 		imagen = "TS134803";
 		detalles = null;
@@ -786,7 +787,7 @@ public class GestionesPerfilTelefonico extends TestBase{
 	}
 	
 	@Test (groups = {"GestionesPerfilTelefonico", "RenovacionDeCuota","E2E"}, dataProvider="RenovacionCuotaConSaldo")
-	public void TS130068_CRM_Movil_REPRO_Renovacion_de_cuota_Telefonico_Reseteo_200_MB_por_Dia_Descuento_de_saldo_con_Credito(String sDNI, String sLinea) {
+	public void CRM_Movil_REPRO_Renovacion_de_cuota_Telefonico_Reseteo_200_MB_por_Dia_Descuento_de_saldo_con_Credito(String sDNI, String sLinea) {
 		imagen = "TS130068";
 		detalles = null;
 		detalles = "Renocavion de cuota: "+imagen+"DNI: "+sDNI+"Linea: "+sLinea;
@@ -1598,7 +1599,7 @@ public class GestionesPerfilTelefonico extends TestBase{
 		Assert.assertTrue(driver.findElement(By.cssSelector(".console-flyout.active.flyout")).isDisplayed());
 	}
 	
-	@Test (groups = {"GestionesPerfilTelefonico", "Actualizar Datos", "E2E", "Ciclo3"}, dataProvider = "CuentaModificacionDeDatos")
+	@Test (groups = {"GestionesPerfilTelefonico", "ModificarDatos", "E2E", "Ciclo3"}, dataProvider = "CuentaModificacionDeDatos")
 	public void TS129336_CRM_Movil_REPRO_Modificacion_de_datos_Actualizar_datos_campo_Correo_Electronico_Cliente_FAN_Front_Telefonico(String sDNI, String sLinea) {
 		imagen = "TS129336";
 		detalles = null;
@@ -1644,7 +1645,7 @@ public class GestionesPerfilTelefonico extends TestBase{
 		detalles +="-Orden:"+orden;	
 	}
 	
-	@Test (groups = {"GestionesPerfilTelefonico", "Actualizar Datos", "E2E", "Ciclo3"}, dataProvider = "CuentaModificacionDeDatos")
+	@Test (groups = {"GestionesPerfilTelefonico", "ModificarDatos", "E2E", "Ciclo3"}, dataProvider = "CuentaModificacionDeDatos")
 	public void TS121104_CRM_Movil_REPRO_Modificacion_de_datos_No_Actualizar_datos_Cliente_FAN_Front_Telefonico(String sDNI, String sLinea) {
 		imagen = "TS121104";
 		detalles = null;
@@ -1671,7 +1672,7 @@ public class GestionesPerfilTelefonico extends TestBase{
 		Assert.assertTrue(cancelar);
 	}
 	
-	@Test (groups = {"GestionesPerfilTelefonico", "Actualizar Datos", "E2E", "Ciclo3"}, dependsOnMethods = "TS121104_CRM_Movil_REPRO_Modificacion_de_datos_No_Actualizar_datos_Cliente_FAN_Front_Telefonico")
+	@Test (groups = {"GestionesPerfilTelefonico", "ModificarDatos", "E2E", "Ciclo3"}, dependsOnMethods = "TS121104_CRM_Movil_REPRO_Modificacion_de_datos_No_Actualizar_datos_Cliente_FAN_Front_Telefonico")
 	public void TS121113_CRM_Movil_REPRO_No_Actualizar_datos_Cliente_FAN_Front_Telefonico() {
 		imagen = "TS121113";
 		detalles = null;
@@ -1679,7 +1680,7 @@ public class GestionesPerfilTelefonico extends TestBase{
 		Assert.assertTrue(true);
 	}
 	
-	@Test (groups = {"GestionesPerfilTelefonico", "Actualizar Datos", "E2E", "Ciclo3"}, dataProvider = "CuentaModificacionDeDatos")
+	@Test (groups = {"GestionesPerfilTelefonico", "ModificarDatos", "E2E", "Ciclo3"}, dataProvider = "CuentaModificacionDeDatos")
 	public void TS121105_CRM_Movil_REPRO_Modificacion_de_datos_Cliente_FAN_Front_Telefonico(String sDNI, String sLinea) {
 		imagen = "TS121105";
 		detalles = null;
@@ -1757,7 +1758,7 @@ public class GestionesPerfilTelefonico extends TestBase{
 		detalles +="-Orden:"+orden;
 	}
 	
-	@Test (groups = {"GestionesPerfilTelefonico", "Actualizar Datos", "E2E", "Ciclo3"}, dataProvider = "CuentaModificacionDeDatos")
+	@Test (groups = {"GestionesPerfilTelefonico", "ModificarDatos", "E2E", "Ciclo3"}, dataProvider = "CuentaModificacionDeDatos")
 	public void TS121112_CRM_Movil_REPRO_Modificacion_de_datos_Actualizar_datos_Cliente_FAN_Front_Telefonico(String sDNI, String sLinea) {
 		imagen = "TS121112";
 		detalles = null;
@@ -2223,7 +2224,7 @@ public class GestionesPerfilTelefonico extends TestBase{
 		driver.switchTo().frame(cambioFrame(driver, By.id("SearchClientDocumentType")));
 		sb.BuscarCuenta("DNI", sDNI);
 		driver.findElement(By.cssSelector(".slds-tree__item.ng-scope")).click();
-		sleep(15000);
+		sleep(25000);
 		driver.switchTo().frame(cambioFrame(driver, By.className("card-top")));
 		driver.findElement(By.className("card-top")).click();
 		buscarYClick(driver.findElements(By.className("slds-text-body_regular")), "equals", "gestiones");
@@ -2412,10 +2413,13 @@ public class GestionesPerfilTelefonico extends TestBase{
 	}
 	
 	@Test (groups = {"GestionesPerfilTelefonico","NumerosAmigos","E2E", "Ciclo1"}, dataProvider="NumerosAmigosNoPersonalBaja")
-	public void TS100611_CRM_Movil_REPRO_FF_No_Baja_Posventa_Telefonico(String sDNI, String sLinea, String sNumeroVOZ, String sNumeroSMS) {
+	public void TS100611_CRM_Movil_REPRO_FF_No_Baja_Posventa_Telefonico(String sDNI, String sLinea, String sVOZorSMS) throws AWTException {
 		imagen = "TS100611";
 		detalles = null;
 		detalles = imagen+"-Numeros Amigos - DNI:"+sDNI;
+		CBS_Mattu cCBSM = new CBS_Mattu();
+		CBS cCBS = new CBS();
+		String sMainBalance = cCBS.ObtenerValorResponse(cCBSM.Servicio_queryLiteBySubscriber(sLinea), "bcs:MainBalance");
 		BasePage cambioFrame=new BasePage();
 		driver.switchTo().frame(cambioFrame.getFrameForElement(driver, By.id("SearchClientDocumentType")));
 		sleep(1000);
@@ -2436,26 +2440,30 @@ public class GestionesPerfilTelefonico extends TestBase{
 		driver.switchTo().defaultContent();
 		driver.switchTo().frame(cambioFrame(driver, By.cssSelector(".slds-col--padded.slds-size--1-of-2")));
 		List<WebElement> wNumerosAmigos = driver.findElements(By.cssSelector(".slds-col--padded.slds-size--1-of-2"));
-		Marketing mMarketing = new Marketing(driver);
-		int iIndice = mMarketing.numerosAmigos(sNumeroVOZ, sNumeroSMS);
-		switch (iIndice) {
-			case 0:
-				//Delete next line after TS100601 and TS100602 works
-				Assert.assertFalse(wNumerosAmigos.get(0).findElement(By.tagName("input")).getText().isEmpty());
-				wNumerosAmigos.get(0).findElement(By.tagName("input")).clear();
-				break;
-			case 1:
-				//Delete next line after TS100601 and TS100602 works
-				Assert.assertFalse(wNumerosAmigos.get(1).findElement(By.tagName("input")).getText().isEmpty());
-				wNumerosAmigos.get(1).findElement(By.tagName("input")).clear();
-				break;
-			default:
-				Assert.assertTrue(false);
+		wNumerosAmigos.get(Integer.parseInt(sVOZorSMS)).click();
+		Robot r = new Robot();    
+		for(int i = 0; i<10;i++) {
+			r.keyPress(KeyEvent.VK_BACK_SPACE); 
+			r.keyRelease(KeyEvent.VK_BACK_SPACE);
 		}
-		sleep(5000);
-		
-		//Complete when the page works
-		//Verify when the page works
+		//sleep(5000);
+		waitForClickeable(driver,By.cssSelector(".OSradioButton.ng-scope.only-buttom"));
+		driver.findElement(By.cssSelector(".OSradioButton.ng-scope.only-buttom")).click();
+		//sleep(5000);
+		waitForClickeable(driver,By.cssSelector(".slds-radio.ng-scope"));
+		List<WebElement> opcs = driver.findElements(By.cssSelector(".slds-radio.ng-scope"));
+		for(WebElement UnaO: opcs) {
+			if(UnaO.getText().equalsIgnoreCase("no")) {
+				UnaO.click();
+				break;
+			}
+		}
+		cCC.obligarclick(driver.findElement(By.id("ChargeConfirmation_nextBtn")));
+		waitFor(driver,By.id("ErrorTB"));
+		//sleep(20000);
+		Assert.assertTrue(driver.findElement(By.id("ErrorTB")).getText().toLowerCase().contains("no fue posible realizar el cambio"));
+		Assert.assertTrue(driver.findElement(By.id("ErrorTB")).getText().toLowerCase().contains("orden cancelada a pedido del cliente"));
+		Assert.assertTrue(sMainBalance.equals(cCBS.ObtenerValorResponse(cCBSM.Servicio_queryLiteBySubscriber(sLinea), "bcs:MainBalance")));
 	}
 
 	@Test (groups = {"GestionesPerfilTelefonico", "DiagnosticoInconveniente","E2E", "Ciclo3"}, dataProvider = "Diagnostico")
@@ -2526,7 +2534,7 @@ public class GestionesPerfilTelefonico extends TestBase{
 		driver.switchTo().frame(cambioFrame(driver, By.className("vlc-slds-knowledge-list-item")));
 		Assert.assertTrue(driver.findElement(By.className("vlc-slds-knowledge-list-item")).getText().contains("Actualizaci\u00f3n de Datos"));
 	}
-	@Test (groups = {"GestionesPerfilTelefonico", "ABMServicios", "E2E", "Ciclo3"}, dataProvider = "AltaServicios")
+	@Test (groups = {"GestionesPerfilTelefonico", "ABMDeServicios", "E2E", "Ciclo3"}, dataProvider = "AltaServicios")
 	public void TC135753_CRM_Movil_REPRO_Alta_Servicio_sin_costo_Voice_Mail_con_Clave_y_Transferencia_de_Llamada_Telefonico(String sDNI, String sLinea) throws AWTException{
 		imagen = "TS135753";
 		detalles = null;
@@ -2594,7 +2602,7 @@ public class GestionesPerfilTelefonico extends TestBase{
 		Assert.assertTrue(gGF.FlowConsultaServicioActivo(driver, sLinea, "Transferencia de Llamadas"));
 	}
 	
-	@Test (groups = {"GestionesPerfilTelefonico", "ABMServicios", "E2E", "Ciclo3"}, dataProvider = "BajaServicios")
+	@Test (groups = {"GestionesPerfilTelefonico", "ABMDeServicios", "E2E", "Ciclo3"}, dataProvider = "BajaServicios")
 	public void TS135848_CRM_Movil_REPRO_Baja_de_Servicio_sin_costo_Contestador_Personal_Telefonico(String sDNI, String sLinea) throws AWTException{
 		imagen = "TS135848";
 		detalles = null;
@@ -2947,7 +2955,7 @@ public class GestionesPerfilTelefonico extends TestBase{
 		Assert.assertTrue(gest.equals("Realizada exitosa"));
 	    }
 	
-	@Test (groups = {"GestionesPerfilTelefonico", "Actualizar Datos", "E2E", "Ciclo3"},  dataProvider = "CuentaModificacionDeDNI")
+	@Test (groups = {"GestionesPerfilTelefonico", "ModificarDatos", "E2E", "Ciclo3"},  dataProvider = "CuentaModificacionDeDNI")
 	public void TS129327_CRM_Movil_REPRO_Modificacion_de_datos_Actualizar_datos_campo_DNI_CUIT_Cliente_FAN_Front_Telefonico(String sDNI, String sLinea) {
 		imagen = "TS129327";
 		detalles = null;
@@ -3016,7 +3024,7 @@ public class GestionesPerfilTelefonico extends TestBase{
 		}
 	}
 	
-	@Test (groups = {"GestionesPerfilTelefonico","Resumen de Cuenta Corriente","E2E", "Ciclo4"},  dataProvider = "CuentaModificacionDeDatos")
+	@Test (groups = {"GestionesPerfilTelefonico","ResumenDeCuenta","E2E", "Ciclo4"},  dataProvider = "CuentaModificacionDeDatos")
 	public void TS135434_CRM_Movil_Prepago_Resumen_de_Cuenta_Corriente_Columnas_de_informacion_Comprobantes_FAN_Front_Telefonico(String sDNI, String sLinea) {
 		imagen = "TS135434";
 		detalles = null;
@@ -3043,7 +3051,7 @@ public class GestionesPerfilTelefonico extends TestBase{
 		Assert.assertTrue(a);
 	}
 	
-	@Test (groups = {"GestionesPerfilTelefonico","Modificacion de Datos","E2E", "Ciclo3"},  dataProvider = "CuentaModificacionDeDatos")
+	@Test (groups = {"GestionesPerfilTelefonico","ModificarDatos","E2E", "Ciclo3"},  dataProvider = "CuentaModificacionDeDatos")
 	public void TS129333_CRM_Movil_REPRO_Modificacion_de_datos_No_Permite_Actualizar_datos_campo_DNI_Cliente_FAN_Front_Telefonico(String sDNI ,String sLinea) {
 		imagen = "TS129333";
 		detalles = null;
@@ -3126,7 +3134,7 @@ public class GestionesPerfilTelefonico extends TestBase{
 		Assert.assertTrue(false);
 	}
 	
-	@Test(groups = { "GestionesPerfilTelefonico","CambioSimCard", "E2E" }, priority = 1, dataProvider = "SimCardSiniestroOfCom") 
+	@Test(groups = { "GestionesPerfilTelefonico","CambioDeSimcard", "E2E" }, priority = 1, dataProvider = "SimCardSiniestroOfCom") //NO APARECE EL METODO DE PAGO
 	public void TS134392_TELEF_CRM_Movil_REPRO_Cambio_de_simcard_sin_costo_Siniestro_Telefonico_Store_pickUp_Con_entega_de_pedido(String sDNI, String sLinea){
 		imagen = "134392";
 		detalles = null;
@@ -3291,7 +3299,7 @@ public class GestionesPerfilTelefonico extends TestBase{
 		Assert.assertTrue(paginas.getText().contains("Filas"));
 	}
 	
-	@Test (groups = {"ProblemaRecarga", "GestionesPerfilTelefonico", "E2E", "Ciclo3"}, dataProvider = "CuentaProblemaRecarga")
+	@Test (groups = {"ProblemasConRecargas", "GestionesPerfilTelefonico", "E2E", "Ciclo3"}, dataProvider = "CuentaProblemaRecarga")
 	public void TS104344_CRM_Movil_Repro_Problemas_con_Recarga_Telefonico_On_Line(String sDNI, String sLinea) {
 		imagen = "TS104344";
 		boolean gestion = false;
@@ -3331,7 +3339,7 @@ public class GestionesPerfilTelefonico extends TestBase{
 		Assert.assertTrue(gestion);
 	}
 	
-	@Test (groups = {"ProblemaRecarga", "GestionesPerfilTelefonico", "E2E", "Ciclo3"}, dataProvider = "CuentaProblemaRecarga")
+	@Test (groups = {"ProblemasConRecargas", "GestionesPerfilTelefonico", "E2E", "Ciclo3"}, dataProvider = "CuentaProblemaRecarga")
 	public void TS104338_CRM_Movil_REPRO_Problemas_con_Recarga_Telefonico_Tarjeta_Scratch_Caso_Nuevo_Quemada(String sDNI, String sLinea) {
 		imagen = "TS104338";
 		boolean gestion = false, error = false;
@@ -3389,7 +3397,7 @@ public class GestionesPerfilTelefonico extends TestBase{
 		Assert.assertTrue(error);
 	}
 	
-	@Test (groups = {"ProblemaRecarga", "GestionesPerfilTelefonico", "E2E", "Ciclo3"}, dataProvider = "CuentaProblemaRecarga")
+	@Test (groups = {"ProblemasConRecargas", "GestionesPerfilTelefonico", "E2E", "Ciclo3"}, dataProvider = "CuentaProblemaRecarga")
 	public void TS104330_CRM_Movil_REPRO_Problemas_con_Recarga_Telefonico_Tarjeta_Scratch_Caso_Existente(String sDNI, String sLinea) {
 		imagen = "TS104330";
 		boolean gestion = false;
@@ -3592,7 +3600,7 @@ public class GestionesPerfilTelefonico extends TestBase{
 	
 	@Test (groups= {"GestionesPerfilTelefonico", "HistorialDeRecargas", "Ciclo2"},  dataProvider = "HistoriaRecarga")
 	public void TS134846_CRM_Movil_Prepago_Historial_de_Recargas_Consultar_detalle_de_Recargas_por_Canal_ROL_Fan_FRONT_Telefonico(String sDNI, String sLinea) {
-		imagen = "TS134847";
+		imagen = "TS134846";
 		detalles = imagen+"-Historial De Recarga-DNI:"+sDNI;
 		driver.switchTo().frame(cambioFrame(driver, By.id("SearchClientDocumentType")));
 		sb.BuscarCuenta("DNI", sDNI);
@@ -3676,7 +3684,7 @@ public class GestionesPerfilTelefonico extends TestBase{
 	
 	@Test (groups= {"GestionesPerfilTelefonico", "HistorialDeRecargas", "Ciclo2"},  dataProvider = "RecargasHistorias")
 	public void TS135475_CRM_Movil_Prepago_Historial_de_Packs_Nombre_del_Pack_Plan_Familia_FAN_Front_Telefonico(String sDNI){
-		imagen = "TS135474";
+		imagen = "TS135475";
 		detalles = imagen+"-Historial De Packs -DNI:"+sDNI;
 		driver.switchTo().frame(cambioFrame(driver, By.id("SearchClientDocumentType")));
 		sb.BuscarCuenta("DNI", sDNI);
@@ -3810,7 +3818,7 @@ public class GestionesPerfilTelefonico extends TestBase{
 		detalles = imagen + " -Ajustes-DNI: " + sDNI + ", Caso numero: " + caso;
 	}
 
-	@Test (groups = {"GestionesPerfilOficina", "Detalle de Consumos", "Ciclo2"}, dataProvider = "CuentaVista360") 
+	@Test (groups = {"GestionesPerfilOficina", "DetalleDeConsumo", "Ciclo2"}, dataProvider = "CuentaVista360") 
 	public void TS_134802_CRM_Movil_Prepago_Vista_360_Detalle_de_consumo_Consulta_visualizacion_y_busqueda_de_los_distintos_consumos_realizados_por_el_cliente_FAN_Front_Telefonico(String sDNI, String sNombre){
 		imagen = "TS134802";
 		detalles = null;
@@ -3971,7 +3979,7 @@ public class GestionesPerfilTelefonico extends TestBase{
 		Assert.assertTrue(asd);	
 	}
 	
-	@Test (groups = {"GestionesPerfilTelefonico","E2E","Ciclo3","ABMServicios"}, dataProvider="BajaServicios")
+	@Test (groups = {"GestionesPerfilTelefonico","E2E","Ciclo3","ABMDeServicios"}, dataProvider="BajaServicios")
 	public void TS134342_CRM_Movil_PRE_Baja_de_Servicio_sin_costo_Llamadas_WiFi_Telefonico(String sDNI, String sLinea) throws AWTException{
 		imagen = "TS134342";
 		detalles = null;
@@ -4034,7 +4042,7 @@ public class GestionesPerfilTelefonico extends TestBase{
 		Assert.assertTrue(gGF.FlowConsultaServicioInactivo(driver, sLinea, "Servicio de Red Voz sobre WIFI"));
 	}
 	
-	@Test (groups = {"GestionesPerfilTelefonico","E2E","Ciclo3","ABMServicios"}, dataProvider="BajaServicios")
+	@Test (groups = {"GestionesPerfilTelefonico","E2E","Ciclo3","ABMDeServicios"}, dataProvider="BajaServicios")
 	public void TS134345_CRM_Movil_PRE_Baja_de_Servicio_sin_costo_DDI_con_Roaming_Internacional_Telefonico(String sDNI, String sLinea) throws AWTException{
 		imagen = "TS134345";
 		detalles = null;
@@ -4097,7 +4105,7 @@ public class GestionesPerfilTelefonico extends TestBase{
 		Assert.assertTrue(gGF.FlowConsultaServicioInactivo(driver, sLinea, "DDI con Roaming Internacional"));
 	}
 	
-	@Test (groups = {"GestionesPerfilTelefonico","E2E","Ciclo3", "ABMServicios"}, dataProvider="BajaServicios")
+	@Test (groups = {"GestionesPerfilTelefonico","E2E","Ciclo3", "ABMDeServicios"}, dataProvider="BajaServicios")
 	public void TS134346_CRM_Movil_PRE_Baja_de_Servicio_sin_costo_DDI_sin_Roaming_Internacional_Telefonico(String sDNI, String sLinea) throws AWTException{
 		imagen = "TS134346";
 		detalles = null;
@@ -4160,7 +4168,7 @@ public class GestionesPerfilTelefonico extends TestBase{
 		Assert.assertTrue(gGF.FlowConsultaServicioInactivo(driver, sLinea, "DDI sin Roaming Internacional"));
 	}
 	
-	@Test (groups = {"GestionesPerfilTelefonico","E2E","Ciclo3","ABMServicios"}, dataProvider="AltaServicios")
+	@Test (groups = {"GestionesPerfilTelefonico","E2E","Ciclo3","ABMDeServicios"}, dataProvider="AltaServicios")
 	public void TS134359_CRM_Movil_PRE_Alta_Servicio_sin_costo_Llamadas_WiFi_Telefonico(String sDNI, String sLinea) throws AWTException{
 		imagen = "TS134359";
 		detalles = null;
@@ -4223,7 +4231,7 @@ public class GestionesPerfilTelefonico extends TestBase{
 		Assert.assertTrue(gGF.FlowConsultaServicioActivo(driver, sLinea, "Servicio de Red Voz sobre WIFI"));
 	}
 	
-	@Test (groups = {"GestionesPerfilOficina","E2E","Ciclo3","ABMServicios"}, dataProvider="AltaServicios")
+	@Test (groups = {"GestionesPerfilOficina","E2E","Ciclo3","ABMDeServicios"}, dataProvider="AltaServicios")
 	public void TS134362_CRM_Movil_PRE_Alta_Servicio_sin_costo_DDI_con_Roaming_Internacional_Telefonico(String sDNI, String sLinea) throws AWTException{
 		imagen = "TS134362";
 		detalles = null;
@@ -4280,7 +4288,7 @@ public class GestionesPerfilTelefonico extends TestBase{
 		Assert.assertTrue(gGF.FlowConsultaServicioActivo(driver, sLinea, "DDI con Roaming Internacional"));
 	}
 	
-	@Test (groups = {"GestionesPerfilOficina","E2E","Ciclo3", "ABMServicios"}, dataProvider="AltaServicios")
+	@Test (groups = {"GestionesPerfilOficina","E2E","Ciclo3", "ABMDeServicios"}, dataProvider="AltaServicios")
 	public void TS134363_CRM_Movil_PRE_Alta_Servicio_sin_costo_DDI_sin_Roaming_Internacional_Telefonico(String sDNI, String sLinea) throws AWTException{
 		imagen = "TS134363";
 		detalles = imagen+" - AltaServicio - DNI: "+sDNI+" - Linea: "+sLinea;
@@ -4400,7 +4408,7 @@ public class GestionesPerfilTelefonico extends TestBase{
 		Assert.assertTrue(wLeftContainerSection.findElement(By.xpath("//table[2] //tr[1] //div[1]")).getText().equalsIgnoreCase("Atributos:"));
 	*/}
 	
-	@Test (groups = {"GestionesPerfilTelefonico", "Resumen de Cuenta Corriente", "E2E","Ciclo4"}, dataProvider = "CuentaReintegros")
+	@Test (groups = {"GestionesPerfilTelefonico", "ResumenDeCuenta", "E2E","Ciclo4"}, dataProvider = "CuentaReintegros")
 	public void TS135432_CRM_Movil_REPRO_Resumen_de_Cuenta_Corriente_Verificacion_de_vista_de_Resumen_de_Cuenta_Corriente_FAN_Front_Telefonico(String sDNI){
 		imagen = "TS135432";
 		detalles = null;
@@ -4426,5 +4434,35 @@ public class GestionesPerfilTelefonico extends TestBase{
 		sleep(5000);
 		WebElement comprobante = driver.findElement(By.cssSelector(".slds-grid.slds-wrap.slds-card.slds-m-bottom--small.slds-p-around--medium"));
 		Assert.assertTrue(comprobante.getText().toLowerCase().contains("comprobantes"));
+	}
+	
+	@Test (groups = {"GestionesPerfilTelefonico", "Nominacion", "Ciclo1"}, dataProvider = "DatosNominacionExistente5Lineas")
+	public void TS85113_CRM_Movil_REPRO_No_Nominatividad_Numero_Limite_De_Lineas_Cliente_Existente_Telefonico(String sLinea, String sDni) {
+		imagen = "TS85113";
+		detalles = null;
+		detalles = imagen + " -Nominacion: " + sDni+"- Linea: "+sLinea;
+		boolean nominacion = false;
+		driver.switchTo().frame(cambioFrame(driver, By.id("SearchClientDocumentType")));
+		driver.findElement(By.id("PhoneNumber")).sendKeys(sLinea);
+		driver.findElement(By.id("SearchClientsDummy")).click();
+		sleep(5000);
+		driver.findElement(By.cssSelector(".slds-button.slds-button--icon.slds-m-right--x-small.ng-scope")).click();
+		sleep(2000);
+		WebElement botonNominar = null;
+		for (WebElement x : driver.findElements(By.cssSelector(".slds-hint-parent.ng-scope"))) {
+			if (x.getText().toLowerCase().contains("plan con tarjeta"))
+				botonNominar = x;
+		}
+		for (WebElement x : botonNominar.findElements(By.tagName("td"))) {
+			if (x.getAttribute("data-label").equals("actions"))
+				botonNominar = x;
+		}
+		botonNominar.findElement(By.tagName("a")).click();
+		sleep(5000);
+		ContactSearch contact = new ContactSearch(driver);
+		contact.searchContact2("DNI", sDni, "Masculino");
+		driver.findElement(By.id("Contact_nextBtn")).click();
+		sleep(10000);
+		Assert.assertFalse(driver.findElement(By.id("MethodSelection_nextBtn")).isDisplayed());
 	}
 }

@@ -65,6 +65,8 @@ public class TestBase {
 		
 		public static String urlBeFAN = "http://snapuat.telecom.com.ar/#/home";
 		
+		public static boolean activarFalsos = true;
+		
 	public void leftDropdown(WebDriver driver, String selection) {
 		driver.findElement(By.className("x-btn-mc")).click();
 		switch(selection) {
@@ -224,7 +226,7 @@ public class TestBase {
 	}
 	
 	public void waitForClickeable(WebDriver driver, By element) {
-		(new WebDriverWait(driver, 20)).until(ExpectedConditions.elementToBeClickable(element));
+		(new WebDriverWait(driver, 25)).until(ExpectedConditions.elementToBeClickable(element));
 	}
 
 	
@@ -1217,7 +1219,7 @@ public class TestBase {
 	@DataProvider
 	public Object [][] ventaPack50Tele() throws Exception{
 		
-		Object[][] testObjArray = ExcelUtils.getTableArray(dataProviderE2E(),"E2EconPago",1,1,14,"Pack 50 min Tel");
+		Object[][] testObjArray = ExcelUtils.getTableArray(dataProviderE2E(),"E2EconPago",1,1,14,"Pack 50min Tel");
 		
 		return (testObjArray);
 	}
@@ -1879,6 +1881,14 @@ public class TestBase {
 		Object[][] testObjArray =  ExcelUtils.getTableArray(dataProviderE2E(),"BeFAN",1,1,1,"Creacion Regiones");
 		
 		return (testObjArray);
+	}
+	@DataProvider
+	public Object[][] DatosNominacionExistente5Lineas() throws Exception{
+
+	 Object[][] testObjArray = ExcelUtils.getTableArray(dataProviderE2E(),"Altas y Nominacion",1,1,2,"NominacionExistente5Lineas");
+
+	 return (testObjArray);
+
 	}
 	
 }

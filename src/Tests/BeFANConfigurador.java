@@ -847,7 +847,7 @@ public class BeFANConfigurador extends TestBase {
 	public void TS135636_BeFan_Movil_Repro_Preactivacion_Gestion_de_cupos_Busqueda_Eliminacion_de_cupo_Mensaje_Confirmacion() throws ParseException{
 		BeFan fechas= new BeFan (driver);
 		SimpleDateFormat formatoDelTexto = new SimpleDateFormat ("dd/MM/yyyy");
-		String pregunta = "ï¿½est\u00e1 seguro que desea dar de baja el registro seleccionado?";
+		String pregunta = "¿est\u00e1 seguro que desea dar de baja el registro seleccionado?";
 		String desde ="27/09/2018";
 		String hasta = "25/12/2018";
 		Date fechaDesde = formatoDelTexto.parse(desde);
@@ -907,6 +907,160 @@ public class BeFANConfigurador extends TestBase {
 		WebElement panelDeBusqueda = driver.findElement(By.className("panel-heading"));
 		WebElement boton = driver.findElement(By.cssSelector(".btn.btn-primary"));
 		Assert.assertTrue(panelDeBusqueda.isDisplayed() && boton.isDisplayed());
+		WebElement panel = driver.findElement(By.className("panel-data"));
+		Assert.assertTrue(panel.isDisplayed());
+		if(panel.getText().toLowerCase().contains("fort\u00edn olavarr\u00eda") || panel.getText().toLowerCase().contains("la plata")) {
+			driver.findElements(By.className("panel-heading")).get(0).click();
+		}
+		WebElement tabla = driver.findElement(By.cssSelector(".table.table-top-fixed.table-striped.table-primary.ng-scope"));
+		Assert.assertTrue(tabla.getText().toLowerCase().contains("descripci\u00f3n") && tabla.getText().toLowerCase().contains("codigo prefijo") && tabla.getText().toLowerCase().contains("acci\u00f3n"));
+	}
+	
+	@Test (groups = "BeFan")
+	public void TS112007_BeFan_Movil_REPRO_Preactivacion_repro_Gestion_de_agrupadores_Creacion_de_agrupador_exitosa() {
+		irA("Regiones", "Gesti\u00f3n");
+		boolean eliminarPrefijo = false;
+		sleep(2000);
+		driver.findElement(By.cssSelector(".btn.btn-primary")).click();
+		sleep(2000);
+		driver.findElement(By.cssSelector(".form-control.ng-pristine.ng-untouched.ng-valid.ng-empty")).sendKeys("Moreno");
+		driver.findElement(By.xpath("//*[@class='btn btn-primary' and contains(text(), 'Agregar')]")).click();
+		sleep(2000);
+		driver.findElement(By.xpath("//*[@class='btn btn-primary' and contains(text(), 'Cerrar')]")).click();
+		sleep(2000);
+		WebElement panel = driver.findElement(By.className("panel-data"));
+		Assert.assertTrue(panel.getText().toLowerCase().contains("moreno"));
+		//Se borra el agrupador para volver a correr el caso
+		buscarYClick(driver.findElements(By.cssSelector(".panel-group.panel-group-alternative.ng-scope")), "contains", "moreno");
+		for (WebElement x : driver.findElements(By.className("panel-group"))) {
+			try {
+				if (x.getText().toLowerCase().contains("moreno"))
+					x.findElement(By.cssSelector(".glyphicon.glyphicon-plus")).click();
+			} catch(Exception e) {}
+		}
+		sleep(3000);
+		driver.findElement(By.cssSelector(".compatibility.custom-check.ng-scope")).findElement(By.tagName("input")).click();
+		String nroPrefijo = driver.findElement(By.cssSelector(".compatibility.custom-check.ng-scope")).findElement(By.tagName("label")).getText();
+		System.out.println(nroPrefijo);
+		buscarYClick(driver.findElements(By.cssSelector(".btn.btn-primary")), "equals", "agregar");
+		buscarYClick(driver.findElements(By.cssSelector(".btn.btn-primary")), "equals", "cerrar");
+		driver.navigate().refresh();
+		sleep(3000);
+		buscarYClick(driver.findElements(By.cssSelector(".panel-group.panel-group-alternative.ng-scope")), "contains", "moreno");
+		((JavascriptExecutor) driver).executeScript("window.scrollTo(0," + driver.findElement(By.cssSelector(".panel.ng-scope.ng-isolate-scope.panel-default.panel-open")).getLocation().y + ")");
+		for (WebElement x : driver.findElement(By.cssSelector(".panel.ng-scope.ng-isolate-scope.panel-default.panel-open")).findElement(By.tagName("tbody")).findElements(By.tagName("tr"))) {
+			if (x.getText().contains(nroPrefijo)) {
+				x.findElement(By.cssSelector(".btn.btn-link")).click();
+				buscarYClick(driver.findElements(By.cssSelector(".btn.btn-primary")), "equals", "eliminar");
+				buscarYClick(driver.findElements(By.cssSelector(".btn.btn-primary")), "equals", "cerrar");
+				eliminarPrefijo = true;
+			}
+		}
+		Assert.assertTrue(eliminarPrefijo);
+		boolean eliminarRegion = false;
+		String mensaje = driver.findElement(By.className("modal-header")).getText();
+		if (mensaje.contains("Tambien desea eliminar la Region Moreno")) {
+			buscarYClick(driver.findElements(By.cssSelector(".btn.btn-primary")), "equals", "eliminar");
+			buscarYClick(driver.findElements(By.cssSelector(".btn.btn-primary")), "equals", "cerrar");
+			eliminarRegion = true;
+		}
+		Assert.assertTrue(eliminarRegion);
+	}
+	
+	@Test (groups = "BeFan")
+	public void TS112011_BeFan_Movil_REPRO_Preactivacion_repro_Gestion_de_agrupadores_Busqueda_Modificacion_de_agrupadores_Asignacion_de_prefijos_a_agrupador_existente_Guardando(){
+		irA("Regiones", "Gesti\u00f3n");
+		boolean prefijo = false;
+		buscarYClick(driver.findElements(By.cssSelector(".panel-group.panel-group-alternative.ng-scope")), "contains", "cordoba");
+		for (WebElement x : driver.findElements(By.className("panel-group"))) {
+			try {
+				if (x.getText().toLowerCase().contains("cordoba"))
+					x.findElement(By.cssSelector(".glyphicon.glyphicon-plus")).click();
+			} catch(Exception e) {}
+		}
+		sleep(3000);
+		driver.findElement(By.cssSelector(".compatibility.custom-check.ng-scope")).findElement(By.tagName("input")).click();
+		String nroPrefijo = driver.findElement(By.cssSelector(".compatibility.custom-check.ng-scope")).findElement(By.tagName("label")).getText();
+		System.out.println(nroPrefijo);
+		buscarYClick(driver.findElements(By.cssSelector(".btn.btn-primary")), "equals", "agregar");
+		buscarYClick(driver.findElements(By.cssSelector(".btn.btn-primary")), "equals", "cerrar");
+		driver.navigate().refresh();
+		sleep(3000);
+		buscarYClick(driver.findElements(By.cssSelector(".panel-group.panel-group-alternative.ng-scope")), "contains", "cordoba");
+		((JavascriptExecutor) driver).executeScript("window.scrollTo(0," + driver.findElement(By.cssSelector(".panel.ng-scope.ng-isolate-scope.panel-default.panel-open")).getLocation().y + ")");
+		for (WebElement x : driver.findElement(By.cssSelector(".panel.ng-scope.ng-isolate-scope.panel-default.panel-open")).findElement(By.tagName("tbody")).findElements(By.tagName("tr"))) {
+			if (x.getText().contains(nroPrefijo)) {
+				prefijo = true;
+			}
+		}
+		Assert.assertTrue(prefijo);
+		
+	}
+	
+	@Test (groups = "BeFan")
+	public void TS112014_BeFan_Movil_REPRO_Preactivacion_repro_Gestion_de_agrupadores_Busqueda_Modificacion_de_agrupadores_Eliminacion_de_prefijos_en_agrupador_existente_No_guardando() {
+		irA("regiones", "gesti\u00f3n");
+		boolean noEliminar = false;
+		buscarYClick(driver.findElements(By.cssSelector(".panel-group.panel-group-alternative.ng-scope")), "contains", "bas-vjp-bahia blanca");
+		driver.findElement(By.cssSelector(".panel-collapse.in.collapse")).findElement(By.cssSelector(".btn.btn-link")).click();
+		String msj = driver.findElement(By.className("modal-header")).getText();
+		if (msj.contains("Esta seguro que desea eliminarlo")) {
+			if (driver.findElement(By.className("modal-footer")).findElement(By.cssSelector(".btn.btn-link")).getText().equals("Cancelar")) {
+				driver.findElement(By.className("modal-footer")).findElement(By.cssSelector(".btn.btn-link")).click();
+				noEliminar = true;
+			}
+		}
+		Assert.assertTrue(noEliminar);
+	}
+	
+	@Test (groups = "BeFan")
+	public void TS112013_BeFan_Movil_REPRO_Preactivacion_repro_Gestion_de_agrupadores_Busqueda_Modificacion_de_agrupadores_Eliminacion_de_prefijos_en_agrupador_existente_Guardando() {
+		irA("regiones", "gesti\u00f3n");
+		boolean eliminar = false;
+		buscarYClick(driver.findElements(By.cssSelector(".panel-group.panel-group-alternative.ng-scope")), "contains", "la plata");
+		for (WebElement x : driver.findElements(By.className("panel-group"))) {
+			try {
+				if (x.getText().contains("3583")) {
+					x.findElement(By.tagName("tbody")).findElement(By.tagName("button")).click();
+					buscarYClick(driver.findElements(By.cssSelector(".btn.btn-primary")), "equals", "eliminar");
+					buscarYClick(driver.findElements(By.cssSelector(".btn.btn-primary")), "equals", "cerrar");
+					eliminar = true;
+				}
+			} catch(Exception e) {}
+		}
+		for (WebElement x : driver.findElements(By.className("panel-group"))) {
+			try {
+				if (x.getText().toLowerCase().contains("la plata"))
+					x.findElement(By.cssSelector(".glyphicon.glyphicon-plus")).click();
+				sleep(5000);
+				for (WebElement a : driver.findElements(By.id("compatibility"))) {
+					if (a.getText().contains("3583")) {
+						a.findElement(By.tagName("input")).click();
+						buscarYClick(driver.findElements(By.cssSelector(".btn.btn-primary")), "equals", "agregar");
+						buscarYClick(driver.findElements(By.cssSelector(".btn.btn-primary")), "equals", "cerrar");
+					}
+				}
+			} catch(Exception e) {}
+		}
+		Assert.assertTrue(eliminar);
+	}
+	
+	@Test (groups = "BeFan")
+	public void TS112012_BeFan_Movil_REPRO_Preactivacion_repro_Gestion_de_agrupadores_Busqueda_Modificacion_de_agrupadores_Asignacion_de_prefijos_a_agrupador_existente_No_guardando() {
+		irA("regiones", "gesti\u00f3n");
+		boolean btnCancelar = false;
+		buscarYClick(driver.findElements(By.cssSelector(".panel-group.panel-group-alternative.ng-scope")), "contains", "la plata");
+		for (WebElement x : driver.findElements(By.className("panel-group"))) {
+			try {
+				if (x.getText().toLowerCase().contains("la plata"))
+					x.findElement(By.cssSelector(".glyphicon.glyphicon-plus")).click();
+			} catch(Exception e) {}
+		}
+		sleep(3000);
+		driver.findElement(By.id("compatibility")).findElement(By.tagName("input")).click();
+		if (driver.findElement(By.cssSelector(".ng-scope.block-ui.block-ui-anim-fade")).findElement(By.cssSelector(".btn.btn-link")).getText().equals("Cancelar"))
+			btnCancelar = true;
+		Assert.assertTrue(btnCancelar);
 	}
 	
 	@Test (groups = "BeFan")
