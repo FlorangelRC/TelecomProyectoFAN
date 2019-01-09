@@ -21,7 +21,8 @@ public class SOAPClientSAAJ {
 	//UAT
 	static String sPagoEnCajaUAT = "http://10.75.39.146:8080/services/ArServices";
 		
-	static String sPagoSimulado = "extrahttp://mdwtpbust1.telecom.com.ar:8701/notificarPago";
+	static String sPagoSimuladoSIT = "http://mdwtpbust1.telecom.com.ar:8701/notificarPago";
+	static String sPagoSimuladoUAT = "http://mdwtpbusu1.telecom.com.ar:8701/notificarPago";
 	static String sQueryCustomerInfoUAT = "http://10.75.39.146:8080/services/BcServices";
 	static String sQueryCustomerInfoSIT = "http://10.75.197.163:8080/services/BcServices";
 	static String sQueryFreeUnitSIT = "http://10.75.197.163:8080/services/BbServices";
@@ -37,7 +38,7 @@ public class SOAPClientSAAJ {
 		Document doc = null;
 		switch (sEndPoint.toLowerCase()) {
     		case "pago simulado":
-	    		sEndPoint = sPagoSimulado;
+	    		sEndPoint = sPagoSimuladoSIT;
 	    		break;
 	    	case "pago en caja":
 	    		if (TestBase.urlAmbiente.contains("sit"))
@@ -75,6 +76,13 @@ public class SOAPClientSAAJ {
 	    		else
 	    			sEndPoint = sRealizarAltaSuscripUAT;
 	    		break;
+	    	case "notificar pago":
+	    		if (TestBase.urlAmbiente.contains("sit"))
+	    			sEndPoint = sPagoSimuladoSIT;
+	    		else
+	    			sEndPoint = sPagoSimuladoUAT;
+	    		break;
+	    		
     	}
     	
     	try {
@@ -86,10 +94,7 @@ public class SOAPClientSAAJ {
             SOAPMessage soapResponse = soapConnection.call(createSRequest(soapMessageString), sEndPoint);
             
             soapConnection.close();
-            /*System.out.println("*************************************************************");
-            System.out.println(soapResponse.getSOAPBody().getTextContent());
-            System.out.println("*************************************************************");*/
-            doc = soapResponse.getSOAPBody().extractContentAsDocument();
+             doc = soapResponse.getSOAPBody().extractContentAsDocument();
             return doc;
         } catch (Exception e) {
         	System.err.println("\nError occurred while sending SOAP Request to Server!\nMake sure you have the correct endpoint URL and SOAPAction!\n");

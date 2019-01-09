@@ -331,4 +331,53 @@ public class CBS_Mattu extends TestBase {
 		}
 		return(exito);
 	}
+	
+	public void probarCaja(WebDriver driver) throws AWTException {
+		ManejoCaja mn = new ManejoCaja();
+		boolean exito = false;
+		abrirPestaniaNueva(driver);
+		ArrayList<String> tabs2 = new ArrayList<String> (driver.getWindowHandles());
+		sleep(5000);
+		try {
+			driver.switchTo().window(tabs2.get(1));
+			mn.ingresarCaja(driver);
+			exito = true;
+		}catch(Exception ex1) {
+			driver.close();
+		    driver.switchTo().window(tabs2.get(0));
+		}
+		if(exito == true) {
+			mn.configuracionesIniciales(driver);
+			mn.seleccionarOpcionCatalogo(driver, "Cuentas por cobrar");
+			mn.abrirCajaRegistradora(driver);
+			mn.cerrarPestanias(driver);
+			mn.cerrarCajaRegistradora(driver);
+			driver.close();
+		    driver.switchTo().window(tabs2.get(0));
+		}
+	}
+	
+	@Test
+	public void Servicio_NotificarPago(String sOrder) {
+		String sEndPoint = "Notificar Pago";
+		//String sOrder = "00014864";
+		
+		SOAPClientSAAJ sSCS = new SOAPClientSAAJ();
+		CBS cCBS = new CBS();
+		Document sResponse = sSCS.callSoapWebService(cCBS.sNotificarPago(sOrder), sEndPoint);
+		Assert.assertTrue(cCBS.ObtenerValorResponse(sResponse, "ns2:resultDesc").equalsIgnoreCase("ok")&&cCBS.ObtenerValorResponse(sResponse, "ns2:resultCode").equalsIgnoreCase("0"));
+		System.out.println("sResponse: " + sResponse);
+	}
+	
+	@Test
+	public void Servicio_NotificarEmisionFactura(String sOrder) {
+		String sEndPoint = "Notificar Pago";
+		//String sOrder = "00014866";
+		
+		SOAPClientSAAJ sSCS = new SOAPClientSAAJ();
+		CBS cCBS = new CBS();
+		Document sResponse = sSCS.callSoapWebService(cCBS.sNotificarEmisionFactura(sOrder), sEndPoint);
+		Assert.assertTrue(cCBS.ObtenerValorResponse(sResponse, "ns2:resultDesc").equalsIgnoreCase("ok")&&cCBS.ObtenerValorResponse(sResponse, "ns2:resultCode").equalsIgnoreCase("0"));
+		System.out.println("sResponse: " + sResponse);
+	}
 }
