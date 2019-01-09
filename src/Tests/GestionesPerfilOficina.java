@@ -993,9 +993,9 @@ public class GestionesPerfilOficina extends TestBase {
 		}
 		Assert.assertTrue(gest);
 		String saldo2 = verif.ObtenerValorResponse(verifM.Servicio_queryLiteBySubscriber(sLinea), "bcs:MainBalance");
-		Integer saldo3 = Integer.parseInt(saldo2.substring(0, (saldo2.length()) - 1));
+		Integer saldo3 = Integer.parseInt(saldo2.substring(0, 5));
 		System.out.println(saldo3);
-		if((saldo1+50000 == saldo3)) {
+		if((saldo1+500 == saldo3)) {
 			b = true;
 		}
 		Assert.assertTrue(b);
