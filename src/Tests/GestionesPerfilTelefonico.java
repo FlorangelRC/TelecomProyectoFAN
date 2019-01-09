@@ -359,8 +359,8 @@ public class GestionesPerfilTelefonico extends TestBase{
 		detalles += "-Charge Code: "; //+ chargeCode;
 	}
 	
-	@Test(groups = { "GestionesPerfilTelefonico","CambioDeSimcard", "E2E" }, priority = 1, dataProvider = "CambioSimCardTelef")
-	public void TSCambioSimCardTelef(String sDNI, String sLinea,String cEntrega, String cProvincia, String cLocalidad, String cPuntodeVenta, String cBanco, String cTarjeta, String cPromo, String cCuotas, String cNumTarjeta, String cVenceMes, String cVenceAno, String cCodSeg, String cTipoDNI,String cDNITarjeta, String cTitular) throws AWTException {
+	@Test(groups = { "GestionesPerfilTelefonico","CambioSimCard", "E2E" }, priority = 1, dataProvider = "SimCard Telef")
+	public void TS_Cambio_Sim_Card_Store_Pick_up_Telefonico(String sDNI, String sLinea,String sEntrega, String sProvincia, String sLocalidad, String sPuntodeVenta) throws AWTException {
 		imagen = "TSCambioSimCardTelef";
 		detalles = null;
 		detalles = imagen+"-Telef-DNI:"+sDNI;
@@ -379,35 +379,29 @@ public class GestionesPerfilTelefonico extends TestBase{
 		cCC.seleccionarCardPornumeroLinea(sLinea, driver);
 		sleep(12000);
 		cCC.irAGestionEnCard("Cambio SimCard");
-		sleep(10000);
-		pagePTelefo.mododeEntrega(driver, cEntrega, cProvincia, cLocalidad, cPuntodeVenta);//Solo estan configurados stores en rio negro bariloche (Ofcom) y Buenos aires punta alta (Agente)
 		sleep(12000);
 		String sOrden = driver.findElement(By.className("top-data")).findElement(By.className("ng-binding")).getText();
-		System.out.println("Orden " + sOrden);
-		sOrden = sOrden.substring(sOrden.length()-8);
-		pagePTelefo.getResumenOrdenCompra().click();
-		
-//		buscarYClick(driver.findElements(By.cssSelector(".slds-form-element__label.ng-binding")), "equals","tarjeta de credito");
-//		selectByText(driver.findElement(By.id("BankingEntity-0")), cBanco);
-//		selectByText(driver.findElement(By.id("CardBankingEntity-0")), cTarjeta);
-//		selectByText(driver.findElement(By.id("promotionsByCardsBank-0")), cPromo);
-//		sleep(5000);
-//		selectByText(driver.findElement(By.id("Installment-0")), cCuotas);
-//		driver.findElement(By.id("CardNumber-0")).sendKeys(cNumTarjeta);
-//		selectByText(driver.findElement(By.id("expirationMonth-0")), cVenceMes);
-//		selectByText(driver.findElement(By.id("expirationYear-0")), cVenceAno);
-//		driver.findElement(By.id("securityCode-0")).sendKeys(cCodSeg);
-//		selectByText(driver.findElement(By.id("documentType-0")), cTipoDNI);
-//		driver.findElement(By.id("documentNumber-0")).sendKeys(cDNITarjeta);
-//		driver.findElement(By.id("cardHolder-0")).sendKeys(cTitular);
-//		
-//		cCC.obligarclick(driver.findElement(By.id("SaleOrderMessages_nextBtn")));
-//		sleep(15000);
-		/*try {
-			driver.findElement(By.id("Step_Error_Huawei_S029_nextBtn")).click();
-			System.out.println("Error en prefactura huawei");
-		}catch(Exception ex1) {}
-		sleep(5000);*/
+		driver.switchTo().frame(cambioFrameByID.getFrameForElement(driver, By.id("SelectAsset0")));
+		driver.findElement(By.id("SelectAsset0")).findElement(By.cssSelector(".slds-radio.ng-scope")).click();
+		driver.findElement(By.id("AssetSelection_nextBtn")).click();
+		sleep(5000);
+		driver.switchTo().frame(cambioFrameByID.getFrameForElement(driver, By.id("DeliveryMethodSelection")));
+		sleep(15000);
+		pagePTelefo.mododeEntrega(driver, sEntrega, sProvincia, sLocalidad, sPuntodeVenta);
+		cCC.obligarclick(driver.findElement(By.id("DeliveryMethodConfiguration_nextBtn")));
+		sleep(16000);
+		cCC.obligarclick(driver.findElement(By.id("InvoicePreview_nextBtn")));
+		sleep(16000);
+		String orden = driver.findElement(By.className("top-data")).findElement(By.className("ng-binding")).getText();
+		detalles += "-Orden:" + orden;
+		System.out.println("Orden " + orden);
+		orden = orden.substring(orden.length()-8);
+		cCC.obligarclick(driver.findElement(By.id("OrderSumary_nextBtn")));
+		sleep(15000);
+		String check = driver.findElement(By.id("GeneralMessageDesing")).getText();
+		Assert.assertTrue(check.toLowerCase().contains("la orden se realiz\u00f3 con \u00e9xito"));
+		sleep(5000);
+		sleep(8000);
 		driver.navigate().refresh();
 		sleep(10000);
 		String invoice = cCC.obtenerMontoyTNparaAlta(driver, sOrden);
@@ -415,10 +409,9 @@ public class GestionesPerfilTelefonico extends TestBase{
 		sleep(10000);
 		detalles+="Monto:"+invoice.split("-")[1]+"-Prefactura:"+invoice.split("-")[0];
 		//datosOrden.add("Cambio sim card Agente- Cuenta: "+accid+"Invoice: "+invoice.split("-")[0]);
-//		CBS_Mattu invoSer = new CBS_Mattu();
-//		Assert.assertTrue(invoSer.PagaEnCajaTC("1005", accid, "2001", invoice.split("-")[1], invoice.split("-")[0],  cDNITarjeta, cTitular, cVenceAno+cVenceMes, cCodSeg, cTitular, cNumTarjeta));
-//		driver.navigate().refresh();
-//		sleep(10000);
+		CBS_Mattu invoSer = new CBS_Mattu();
+		driver.navigate().refresh();
+		sleep(10000);
 		driver.switchTo().frame(cambioFrame(driver, By.cssSelector(".hasMotif.orderTab.detailPage.ext-webkit.ext-chrome.sfdcBody.brandQuaternaryBgr")));
 		WebElement tabla = driver.findElement(By.id("ep")).findElements(By.tagName("table")).get(1);
 		String datos = tabla.findElements(By.tagName("tr")).get(4).findElements(By.tagName("td")).get(1).getText();
@@ -2674,8 +2667,8 @@ public class GestionesPerfilTelefonico extends TestBase{
 		Assert.assertTrue(gGF.FlowConsultaServicioInactivo(driver, sLinea, "Contestador Personal"));
 	}
 
-	@Test(groups = { "GestionesPerfilTelefonico","Ciclo 3", "E2E", "CambioDeSimcard" }, priority = 1, dataProvider = "CambioSimCardTelef")
-	public void TS134427_CRM_Movil_REPRO_Cambio_de_simcard_con_costo_Voluntario_Telefonico_Store_pickUp_Con_entega_de_pedido_pago_con_TC_financiacion(String sDNI, String sLinea,String cEntrega, String cProvincia, String cLocalidad, String cPuntodeVenta, String cBanco, String cTarjeta, String cPromo, String cCuotas, String cNumTarjeta, String cVenceMes, String cVenceAno, String cCodSeg, String cTipoDNI,String cDNITarjeta, String cTitular) throws AWTException {
+	@Test(groups = { "GestionesPerfilTelefonico","CambioSimCard","Ciclo 3", "E2E" }, priority = 1, dataProvider = "SimCard Telef")
+	public void TS134427_CRM_Movil_REPRO_Cambio_de_simcard_con_costo_Voluntario_Telefonico_Store_pickUp_Con_Siniestro_Telef(String sDNI, String sLinea,String cEntrega, String cProvincia, String cLocalidad, String cPuntodeVenta) throws AWTException {
 		imagen = "99020";
 		detalles = null;
 		detalles = imagen+"-Telef-DNI:"+sDNI;
@@ -2704,19 +2697,6 @@ public class GestionesPerfilTelefonico extends TestBase{
 		pagePTelefo.getResumenOrdenCompra().click();
 		String sOrden = cCC.obtenerOrden2(driver);
 		detalles += "-Orden:" + sOrden;
-		buscarYClick(driver.findElements(By.cssSelector(".slds-form-element__label.ng-binding")), "equals","tarjeta de credito");
-		selectByText(driver.findElement(By.id("BankingEntity-0")), cBanco);
-		selectByText(driver.findElement(By.id("CardBankingEntity-0")), cTarjeta);
-		selectByText(driver.findElement(By.id("promotionsByCardsBank-0")), cPromo);
-		sleep(5000);
-		selectByText(driver.findElement(By.id("Installment-0")), cCuotas);
-		driver.findElement(By.id("CardNumber-0")).sendKeys(cNumTarjeta);
-		selectByText(driver.findElement(By.id("expirationMonth-0")), cVenceMes);
-		selectByText(driver.findElement(By.id("expirationYear-0")), cVenceAno);
-		driver.findElement(By.id("securityCode-0")).sendKeys(cCodSeg);
-		selectByText(driver.findElement(By.id("documentType-0")), cTipoDNI);
-		driver.findElement(By.id("documentNumber-0")).sendKeys(cDNITarjeta);
-		driver.findElement(By.id("cardHolder-0")).sendKeys(cTitular);
 		
 		cCC.obligarclick(driver.findElement(By.id("SelectPaymentMethodsStep_nextBtn")));
 		sleep(15000);
@@ -2733,9 +2713,7 @@ public class GestionesPerfilTelefonico extends TestBase{
 		detalles+="Monto:"+invoice.split("-")[1]+"-Prefactura:"+invoice.split("-")[0];
 		//datosOrden.add("Cambio sim card Agente- Cuenta: "+accid+"Invoice: "+invoice.split("-")[0]);
 		CBS_Mattu invoSer = new CBS_Mattu();
-		Assert.assertTrue(invoSer.PagaEnCajaTC("1005", accid, "2001", invoice.split("-")[1], invoice.split("-")[0],  cDNITarjeta, cTitular, cVenceAno+cVenceMes, cCodSeg, cTitular, cNumTarjeta));
 		driver.navigate().refresh();
-		sleep(10000);
 		sleep(10000);
 		driver.switchTo().frame(cambioFrame(driver, By.cssSelector(".hasMotif.orderTab.detailPage.ext-webkit.ext-chrome.sfdcBody.brandQuaternaryBgr")));
 		WebElement tabla = driver.findElement(By.id("ep")).findElements(By.tagName("table")).get(1);

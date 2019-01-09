@@ -1251,32 +1251,11 @@ public class GestionesPerfilAgente extends TestBase{
 		driver.findElement(By.id("SelectAsset0")).findElement(By.cssSelector(".slds-radio.ng-scope")).click();
 		driver.findElement(By.id("AssetSelection_nextBtn")).click();
 		sleep(5000);
-		pagePTelefo.mododeEntrega(driver, cEntrega, cProvincia, cLocalidad, cPuntodeVenta);
+		pagePTelefo.mododeEntrega(driver, sEntrega, sProvincia, sLocalidad, sPuntodeVenta);
 		sleep(12000);
 		pagePTelefo.getResumenOrdenCompra().click();
 		String sOrden = cCC.obtenerOrden2(driver);
 		detalles += "-Orden:" + sOrden;
-	
-//		buscarYClick(driver.findElements(By.cssSelector(".slds-form-element__label.ng-binding")), "equals","tarjeta de credito");
-//		selectByText(driver.findElement(By.id("BankingEntity-0")), cBanco);
-//		selectByText(driver.findElement(By.id("CardBankingEntity-0")), cTarjeta);
-//		selectByText(driver.findElement(By.id("promotionsByCardsBank-0")), cPromo);
-//		sleep(5000);
-//		selectByText(driver.findElement(By.id("Installment-0")), cCuotas);
-//		driver.findElement(By.id("CardNumber-0")).sendKeys(cNumTarjeta);
-//		selectByText(driver.findElement(By.id("expirationMonth-0")), cVenceMes);
-//		selectByText(driver.findElement(By.id("expirationYear-0")), cVenceAno);
-//		driver.findElement(By.id("securityCode-0")).sendKeys(cCodSeg);
-//		selectByText(driver.findElement(By.id("documentType-0")), cTipoDNI);
-//		driver.findElement(By.id("documentNumber-0")).sendKeys(cDNITarjeta);
-//		driver.findElement(By.id("cardHolder-0")).sendKeys(cTitular);
-//		
-//		cCC.obligarclick(driver.findElement(By.id("SelectPaymentMethodsStep_nextBtn")));
-//		sleep(15000);
-		try {
-			driver.findElement(By.id("Step_Error_Huawei_S029_nextBtn")).click();
-			System.out.println("Error en prefactura huawei");
-		}catch(Exception ex1) {}
 		sleep(5000);
 		driver.navigate().refresh();
 		sleep(10000);
@@ -1286,7 +1265,6 @@ public class GestionesPerfilAgente extends TestBase{
 		detalles+="Monto:"+invoice.split("-")[1]+"-Prefactura:"+invoice.split("-")[0];
 		//datosOrden.add("Cambio sim card Agente- Cuenta: "+accid+"Invoice: "+invoice.split("-")[0]);
 		CBS_Mattu invoSer = new CBS_Mattu();
-		Assert.assertTrue(invoSer.PagaEnCajaTC("1005", accid, "2001", invoice.split("-")[1], invoice.split("-")[0],  cDNITarjeta, cTitular, cVenceAno+cVenceMes, cCodSeg, cTitular, cNumTarjeta));
 		driver.navigate().refresh();
 		sleep(10000);
 		sleep(10000);
