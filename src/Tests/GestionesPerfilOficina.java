@@ -4045,7 +4045,7 @@ public class GestionesPerfilOficina extends TestBase {
 		List<WebElement> tableRows = table.findElements(By.xpath("//tr//td"));
 		for (WebElement cell : tableRows) {
 			try {
-				if (cell.getText().equals("14")) {
+				if (cell.getText().equals("09")) {
 					cell.click();
 				}
 			} catch (Exception e) {}
@@ -4056,7 +4056,7 @@ public class GestionesPerfilOficina extends TestBase {
 		List<WebElement> tableRows_2 = table_2.findElements(By.xpath("//tr//td"));
 		for (WebElement cell : tableRows_2) {
 			try {
-				if (cell.getText().equals("14")) {
+				if (cell.getText().equals("07")) {
 					cell.click();
 				}
 			} catch (Exception e) {}

@@ -1062,4 +1062,110 @@ public class BeFANConfigurador extends TestBase {
 			btnCancelar = true;
 		Assert.assertTrue(btnCancelar);
 	}
+	
+	@Test (groups = "BeFan")
+	public void TS111487_BeFan_Movil_REPRO_Preactivacion_repro_Gestion_de_agrupadores_Busqueda_Eliminacion_de_agrupadores_Si_Sin_preactivar() {
+		irA("Regiones", "Gesti\u00f3n");
+		boolean eliminarPrefijo = false;
+		sleep(2000);
+		driver.findElement(By.cssSelector(".btn.btn-primary")).click();
+		sleep(2000);
+		driver.findElement(By.cssSelector(".form-control.ng-pristine.ng-untouched.ng-valid.ng-empty")).sendKeys("San Cristobal");
+		driver.findElement(By.xpath("//*[@class='btn btn-primary' and contains(text(), 'Agregar')]")).click();
+		sleep(2000);
+		driver.findElement(By.xpath("//*[@class='btn btn-primary' and contains(text(), 'Cerrar')]")).click();
+		sleep(2000);
+		WebElement panel = driver.findElement(By.className("panel-data"));
+		Assert.assertTrue(panel.getText().toLowerCase().contains("san cristobal"));
+		buscarYClick(driver.findElements(By.cssSelector(".panel-group.panel-group-alternative.ng-scope")), "contains", "san cristobal");
+		for (WebElement x : driver.findElements(By.className("panel-group"))) {
+			try {
+				if (x.getText().toLowerCase().contains("san cristobal"))
+					x.findElement(By.cssSelector(".glyphicon.glyphicon-plus")).click();
+			} catch(Exception e) {}
+		}
+		sleep(3000);
+		driver.findElement(By.cssSelector(".compatibility.custom-check.ng-scope")).findElement(By.tagName("input")).click();
+		String nroPrefijo = driver.findElement(By.cssSelector(".compatibility.custom-check.ng-scope")).findElement(By.tagName("label")).getText();
+		System.out.println(nroPrefijo);
+		buscarYClick(driver.findElements(By.cssSelector(".btn.btn-primary")), "equals", "agregar");
+		buscarYClick(driver.findElements(By.cssSelector(".btn.btn-primary")), "equals", "cerrar");
+		driver.navigate().refresh();
+		sleep(3000);
+		buscarYClick(driver.findElements(By.cssSelector(".panel-group.panel-group-alternative.ng-scope")), "contains", "san cristobal");
+		((JavascriptExecutor) driver).executeScript("window.scrollTo(0," + driver.findElement(By.cssSelector(".panel.ng-scope.ng-isolate-scope.panel-default.panel-open")).getLocation().y + ")");
+		for (WebElement x : driver.findElement(By.cssSelector(".panel.ng-scope.ng-isolate-scope.panel-default.panel-open")).findElement(By.tagName("tbody")).findElements(By.tagName("tr"))) {
+			if (x.getText().contains(nroPrefijo)) {
+				x.findElement(By.cssSelector(".btn.btn-link")).click();
+				buscarYClick(driver.findElements(By.cssSelector(".btn.btn-primary")), "equals", "eliminar");
+				buscarYClick(driver.findElements(By.cssSelector(".btn.btn-primary")), "equals", "cerrar");
+				eliminarPrefijo = true;
+			}
+		}
+		Assert.assertTrue(eliminarPrefijo);
+		boolean eliminarRegion = false;
+		String mensaje = driver.findElement(By.className("modal-header")).getText();
+		if (mensaje.contains("Tambien desea eliminar la Region San Cristobal")) {
+			buscarYClick(driver.findElements(By.cssSelector(".btn.btn-primary")), "equals", "eliminar");
+			buscarYClick(driver.findElements(By.cssSelector(".btn.btn-primary")), "equals", "cerrar");
+			eliminarRegion = true;
+		}
+		Assert.assertTrue(eliminarRegion);
+	}
+	
+	@Test (groups = "BeFan")
+	public void TS126649_BeFan_Movil_REPRO_Preactivacion_repro_Importacion_de_cupos_Exitoso(){
+		irA("Cupos", "Importaci\u00f3n");
+		driver.findElement(By.name("INPUT-ArchivoCupos")).sendKeys("C:\\Users\\xappiens\\Documents\\TxT\\CuposPrueba_01.txt");
+		driver.findElement(By.name("BTN-Importar")).click();
+		sleep(3000);
+		boolean confirmacion = false;
+		String mensaje = driver.findElement(By.className("modal-header")).getText();
+		if (mensaje.toLowerCase().contains("el archivo se import\u00f3 correctamente")) {
+			buscarYClick(driver.findElements(By.cssSelector(".btn.btn-link")), "equals", "aceptar");
+			confirmacion = true;
+		}
+		Assert.assertTrue(confirmacion);
+		sleep(8000);
+		boolean razonS = false , puntoDeVenta = false, fechaD = false, fechaH = false, cantidadDeCupos = false, resultado = false;
+		List <WebElement> colum = driver.findElements(By.className("text-center"));
+		for(WebElement x : colum) {
+			if(x.getText().contains("Raz\u00f3n Social")) 
+				razonS = true;
+			if(x.getText().contains("Punto de Venta")) 
+				puntoDeVenta = true;
+			if(x.getText().contains("Fecha Desde")) 
+				fechaD = true;
+			if(x.getText().contains("Fecha Hasta"))
+				fechaH = true;
+			if(x.getText().contains("Cantidad de Cupos")) 
+				cantidadDeCupos = true;
+			if(x.getText().contains("Resultado de Validaci\u00f3n"))
+				resultado= true;
+		}
+		Assert.assertTrue(razonS && puntoDeVenta && fechaD && fechaH && cantidadDeCupos && resultado);
+		WebElement texto = driver.findElements(By.cssSelector(".text-center.ng-scope")).get(1);
+		System.out.println(texto.getText());
+	}
+	
+	@Test (groups = "BeFan")
+	public void TS112004_BeFan_Movil_REPRO_Preactivacion_repro_Importacion_de_agrupadores_Prefijos_inexistentes() {
+		irA("Regiones", "Importaci\u00f3n");
+		driver.findElement(By.id("fileinput")).sendKeys("C:\\Users\\xappiens\\Documents\\TxT\\AgrupadorPrefijoinexistente.txt");
+		driver.findElement(By.cssSelector(".btn.btn-primary.btn-sm.btn-block.btn-continuar")).click();
+		sleep(3000);
+		WebElement tabla = driver.findElement(By.className("ng-scope")).findElement(By.tagName("tbody"));
+		System.out.println(tabla.getText());
+		Assert.assertTrue(tabla.getText().toLowerCase().contains("el prefijo no existe"));
+		driver.findElement(By.id("fileinput")).sendKeys("C:\\Users\\xappiens\\Documents\\TxT\\AgrupadorPrefijoexistente.txt");
+		driver.findElement(By.cssSelector(".btn.btn-primary.btn-sm.btn-block.btn-continuar")).click();
+		sleep(3000);
+		boolean texto = false;
+		String mensaje = driver.findElement(By.className("modal-header")).getText();
+		if (mensaje.contains("Archivo importado correctamente")) {
+			buscarYClick(driver.findElements(By.cssSelector(".btn.btn-link")), "equals", "aceptar");
+			texto = true;
+		}
+		Assert.assertTrue(texto);
+	}
 }
