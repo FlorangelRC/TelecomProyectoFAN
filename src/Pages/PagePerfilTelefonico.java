@@ -137,7 +137,7 @@ public class PagePerfilTelefonico extends TestBase{
 		for (WebElement comp : comprar) {
 			if (comp.getText().toLowerCase().contains("comprar minutos") || comp.getText().toLowerCase().contains("comprar internet") || comp.getText().toLowerCase().contains("comprar sms")) {
 				comp.findElement(By.tagName("button")).click();
-				sleep(45000);
+				sleep(30000);
 				break;
 			}
 		}		
@@ -162,15 +162,15 @@ public class PagePerfilTelefonico extends TestBase{
 		sleep(5000);		
 		driver.switchTo().frame(cambioFrame(driver, By.cssSelector(".slds-radio_faux")));
 		Pack("Packs Opcionales", "Packs de Datos", Pack1);
-		String chargeCode = obtenerChargeCode();
+		//String chargeCode = obtenerChargeCode();
 		driver.findElement(By.cssSelector(".slds-button.slds-m-left--large.slds-button--brand.ta-button-brand")).click();
-		sleep(15000);
+		sleep(10000);
 		try{ 
 		      driver.findElements(By.cssSelector(".slds-button.slds-button--neutral.ng-binding.ng-scope")).get(1).click(); 
-		      sleep(12000); 
+		      sleep(10000); 
 		    }catch(Exception ex1){} 
-		sleep(12000);
-		return chargeCode;
+		sleep(10000);
+		return "nada";
 	}
 	
 	public String PackCombinado(String Pack1) {
@@ -178,7 +178,7 @@ public class PagePerfilTelefonico extends TestBase{
 		driver.switchTo().frame(cambioFrame(driver, By.cssSelector(".slds-button.cpq-item-has-children")));
 		Pack("Packs Opcionales", "Packs Combinados", Pack1);
 		sleep(10000);
-		String chargeCode = obtenerChargeCode();
+		String chargeCode = "nada";//obtenerChargeCode();
 		driver.findElement(By.cssSelector(".slds-button.slds-m-left--large.slds-button--brand.ta-button-brand")).click();
 		sleep(25000);
 		try{ 
@@ -194,7 +194,7 @@ public class PagePerfilTelefonico extends TestBase{
 		driver.switchTo().frame(cambioFrame(driver, By.cssSelector(".slds-button.cpq-item-has-children")));
 		Pack("Packs Opcionales", "Packs LDI", Pack1);
 		sleep(10000);
-		String chargeCode = obtenerChargeCode();
+		String chargeCode = "nada";//obtenerChargeCode();
 		driver.findElement(By.cssSelector(".slds-button.slds-m-left--large.slds-button--brand.ta-button-brand")).click();
 		sleep(25000);
 		try{ 
@@ -307,7 +307,7 @@ public class PagePerfilTelefonico extends TestBase{
 						}
 				    }
 				}
-		
+		boolean estaPack=false;
 		 //subtablas
 		List<String> packs = Arrays.asList(Pack1);
 		 List<WebElement> Pack = driver.findElements( By.xpath("//*[@class='cpq-item-product-child-level-3 ng-not-empty ng-valid']//*[@class='cpq-item-no-children']"));
@@ -319,16 +319,18 @@ public class PagePerfilTelefonico extends TestBase{
 					sleep(8000);
 					System.out.println(Pack.get(i).getText());
 					cCC.obligarclick(Agregar.get(i));
+					estaPack=true;
 							break;	
 						}
 					}	
 				}
 			}
+		 Assert.assertTrue(estaPack);
 		}
 	
 	
 	public void closerightpanel() {
-		sleep(10000);
+		sleep(5000);
 		try {
 		driver.switchTo().defaultContent();
 		if(driver.findElements(By.cssSelector(".x-layout-mini.x-layout-mini-east.x-layout-mini-custom-logo")).size() != 0) {

@@ -545,7 +545,7 @@ public class Marketing extends CustomerCare {
 				iIndice = 1;
 			}
 			else {
-				System.out.println("Ambas celdas est�n vac�as en el DataProvider.");			}
+				System.out.println("Ambas celdas estan vacias en el DataProvider.");			}
 		}
 		return iIndice;
 	}
