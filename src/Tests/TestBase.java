@@ -1579,6 +1579,89 @@ public class TestBase {
 		 return (testObjArray);
 	}
 	
+	@DataProvider(name = "SerialInexistente")
+	public Object[][] SerialInexistente() throws Exception{
+
+	 Object[][] testObjArray = ExcelUtils.getTableArray(dataProviderE2E(),"E2EsinPago",1,1,7,"SerialInexistente");
+
+	 return (testObjArray);
+
+	}
+	
+	@DataProvider(name = "SerialConDepositoErroneo")
+	public Object[][] SerialConDepositoErroneo() throws Exception{
+
+	 Object[][] testObjArray = ExcelUtils.getTableArray(dataProviderE2E(),"E2EsinPago",1,1,7,"SerialConDepositoErroneo");
+
+	 return (testObjArray);
+
+	}
+	
+	@DataProvider(name = "SerialConFormatoInvalido")
+	public Object[][] SerialConFormatoInvalido() throws Exception{
+
+	 Object[][] testObjArray = ExcelUtils.getTableArray(dataProviderE2E(),"E2EsinPago",1,1,7,"SerialConFormatoInvalido");
+
+	 return (testObjArray);
+
+	}
+	
+	@DataProvider(name = "SerialValido")
+	public Object[][] SerialValido() throws Exception{
+
+	 Object[][] testObjArray = ExcelUtils.getTableArray(dataProviderE2E(),"E2EsinPago",1,1,7,"SerialValido");
+
+	 return (testObjArray);
+
+	}
+	
+	@DataProvider(name = "DosSerialesValidos")
+	public Object[][] DosSerialesValidos() throws Exception{
+
+	 Object[][] testObjArray = ExcelUtils.getTableArray(dataProviderE2E(),"E2EsinPago",1,1,7,"DosSerialesValidos");
+
+	 return (testObjArray);
+
+	}
+	
+	@DataProvider(name = "ArchivoVacio")
+	public Object[][] ArchivoVacio() throws Exception{
+
+	 Object[][] testObjArray = ExcelUtils.getTableArray(dataProviderE2E(),"E2EsinPago",1,1,7,"ArchivoVacio");
+
+	 return (testObjArray);
+
+	}
+	
+	@DataProvider(name = "SerialNoMCVM")
+	public Object[][] SerialNoMCVM() throws Exception{
+
+	 Object[][] testObjArray = ExcelUtils.getTableArray(dataProviderE2E(),"E2EsinPago",1,1,7,"SerialNoMCVM");
+
+	 return (testObjArray);
+
+	}
+	
+	@DataProvider(name = "SerialesNoValidos")
+	public Object[][] SerialesNoValidos() throws Exception{
+
+	 Object[][] testObjArray = ExcelUtils.getTableArray(dataProviderE2E(),"E2EsinPago",1,1,7,"SerialesNoValidos");
+
+	 return (testObjArray);
+
+	}
+	
+	@DataProvider(name = "SerialValidoEterno")
+	public Object[][] SerialValidoEterno() throws Exception{
+
+	 Object[][] testObjArray = ExcelUtils.getTableArray(dataProviderE2E(),"E2EsinPago",1,1,7,"SerialValidoEterno");
+
+	 return (testObjArray);
+
+	}
+	
+	
+	
 	public void tomarCaptura(WebDriver driver, String imageName) {
 	      //Directorio donde quedaran las imagenes guardadas
 		File directory;
