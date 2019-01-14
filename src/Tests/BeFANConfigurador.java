@@ -1307,7 +1307,81 @@ public class BeFANConfigurador extends TestBase {
 		Assert.assertTrue(tabla.getText().toLowerCase().contains("ya se encuentra asignado el prefijo"));
 		WebElement texto = driver.findElement(By.cssSelector(".alert.alert-info.alert-inline"));
 		Assert.assertTrue(texto.isDisplayed());
-		
-		
+	}
+	
+	@Test (groups = "BeFan")
+	public void TS135643_BeFan_Movil_Repro_Preactivacion_Gestion_de_cupos_Busqueda_Modificacion_de_cupo_Con_total_de_cupos_vacio() throws ParseException {
+		BeFan fechas= new BeFan (driver);
+		SimpleDateFormat formatoDelTexto = new SimpleDateFormat ("dd/MM/yyyy");
+		String desde ="27/09/2018";
+		String hasta = "25/12/2018";
+		Date fechaDesde = formatoDelTexto.parse(desde);
+		Date fechaHasta =formatoDelTexto.parse(hasta);
+		irA("Cupos", "Gesti\u00f3n");
+		sleep(3000);
+		selectByText(driver.findElement(By.name("estados")), "Vigente");
+		driver.findElement(By.id("dataPickerDesde"));
+		((JavascriptExecutor) driver).executeScript("document.getElementById('dataPickerDesde').value='"+desde+"'");
+		sleep(3000);
+		driver.findElement(By.id("dataPickerHasta"));
+		((JavascriptExecutor) driver).executeScript("document.getElementById('dataPickerHasta').value='"+hasta+"'");
+		int dias = fechas.numeroDiasEntreDosFechas(fechaDesde, fechaHasta);
+		System.out.println("Hay " + dias + " dias, " +"No supera los 90 dias comprendidos");
+		driver.findElement(By.name("buscar")).click();
+		sleep(3000);
+		driver.findElement(By.cssSelector(".glyphicon.glyphicon-edit")).click();
+		driver.findElement(By.name("cantidadTotal")).clear();
+		driver.findElement(By.cssSelector(".glyphicon.glyphicon-floppy-saved")).click();
+		boolean mensaje = false;
+		String msj = driver.findElement(By.className("modal-header")).getText();
+		if (msj.contains("Cantidad de cupo inv\u00e1lida")) {
+			mensaje = true;
+		}
+		Assert.assertTrue(mensaje);
+	}
+	
+	@Test (groups = "BeFan")
+	public void TS135614_BeFan_Movil_Repro_Preactivacion_Importacion_de_cupos_Con_un_registro_erroneo() {
+		ContactSearch contact = new ContactSearch(driver);
+		irA("Cupos", "Importaci\u00f3n");
+		sleep(5000);
+		File directory = new File("C:\\Users\\xappiens\\Documents\\TxT\\CuposErroneos.txt");
+		contact.subir_cupos(new File(directory.getAbsolutePath()).toString(),"si");
+		boolean mensaje = false;
+		String msj = driver.findElement(By.className("modal-body")).getText();
+		if (msj.contains("error")) {
+			mensaje = true;
+		}
+		Assert.assertTrue(mensaje);
+	}
+	
+	@Test (groups = "BeFan")
+	public void TS135623_BeFan_Movil_Repro_Preactivacion_Importacion_de_cupos_Exitoso_Verificacion_Cupo_dado_de_baja() {
+		ContactSearch contact = new ContactSearch(driver);
+		irA("Cupos", "Importaci\u00f3n");
+		sleep(5000);
+		File directory = new File("C:\\Users\\xappiens\\Documents\\TxT\\CupoDadoDeBaja.txt");
+		contact.subir_cupos(new File(directory.getAbsolutePath()).toString(),"si");
+		boolean mensaje = false;
+		String msj = driver.findElement(By.className("modal-header")).getText();
+		if (msj.contains("correctamente")) {
+			mensaje = true;
+		}
+		Assert.assertTrue(mensaje);
+		driver.findElement(By.cssSelector(".btn.btn-link")).click();
+		sleep(3000);
+		irA("Cupos", "Gesti\u00f3n");
+		sleep(3000);
+		driver.findElement(By.name("buscar")).click();
+		sleep(3000);
+		List <WebElement> texto = driver.findElements(By.cssSelector(".text-center.ng-scope"));
+		for(WebElement x : texto) {
+			if(x.getText().contains("14/01/2019") && x.getText().contains("25/01/2019")) {
+				x.findElement(By.cssSelector(".glyphicon.glyphicon-remove")).click();
+			}
+		}
+		buscarYClick(driver.findElements(By.cssSelector(".btn.btn-primary")), "equals", "aceptar");
+		sleep(2000);
+		buscarYClick(driver.findElements(By.cssSelector(".btn.btn-link")), "equals", "aceptar");
 	}
 }
