@@ -1240,4 +1240,30 @@ public class BeFANConfigurador extends TestBase {
 		}
 		Assert.assertTrue(texto);
 	}
+	
+	@Test (groups = "BeFan")
+	public void TS112005_BeFan_Movil_REPRO_Preactivacion_repro_Importacion_de_agrupadores_Prefijos_repetidos_por_agrupador() {
+		irA("Regiones", "Importaci\u00f3n");
+		driver.findElement(By.id("fileinput")).sendKeys("C:\\Users\\xappiens\\Documents\\TxT\\AgrupadorPrefijoRepetido.txt");
+		driver.findElement(By.cssSelector(".btn.btn-primary.btn-sm.btn-block.btn-continuar")).click();
+		sleep(3000);
+		WebElement tabla = driver.findElement(By.className("ng-scope")).findElement(By.tagName("tbody"));
+		System.out.println(tabla.getText());
+		Assert.assertTrue(tabla.getText().toLowerCase().contains("ya se encuentra asignado el prefijo"));
+	}
+	
+	@Test (groups = "BeFan")
+	public void TS126617_BeFan_Movil_REPRO_Preactivacion_repro_Importacion_de_agrupadores_Prefijos_repetidos_por_agrupador() {
+		irA("Regiones", "Importaci\u00f3n");
+		driver.findElement(By.id("fileinput")).sendKeys("C:\\Users\\xappiens\\Documents\\TxT\\AgrupadorPrefijoRepetido2.txt");
+		driver.findElement(By.cssSelector(".btn.btn-primary.btn-sm.btn-block.btn-continuar")).click();
+		sleep(3000);
+		WebElement tabla = driver.findElement(By.className("ng-scope")).findElement(By.tagName("tbody"));
+		System.out.println(tabla.getText());
+		Assert.assertTrue(tabla.getText().toLowerCase().contains("ya se encuentra asignado el prefijo"));
+		WebElement texto = driver.findElement(By.cssSelector(".alert.alert-info.alert-inline"));
+		Assert.assertTrue(texto.isDisplayed());
+		
+		
+	}
 }
