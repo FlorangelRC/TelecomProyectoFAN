@@ -1136,6 +1136,50 @@ public class BeFANConfigurador extends TestBase {
 	}
 	
 	@Test (groups = "BeFan")
+	public void TS112025_BeFan_Movil_REPRO_Preactivacion_repro_Gestion_de_agrupadores_Busqueda_Modificacion_de_agrupadores_Eliminacion_de_prefijos_en_agrupador_existente_Guardando_Verificacion() {
+		irA("regiones", "gesti\u00f3n");
+		boolean nroPrefijo = false;
+		buscarYClick(driver.findElements(By.cssSelector(".panel-group.panel-group-alternative.ng-scope")), "contains", "bas-vjp-bahia blanca");
+		driver.findElement(By.cssSelector(".panel-collapse.in.collapse")).findElement(By.cssSelector(".btn.btn-link")).click();
+		String prefijo = driver.findElement(By.className("modal-header")).getText();
+		prefijo = prefijo.replaceAll("((\\D)*)", "");
+		buscarYClick(driver.findElements(By.cssSelector(".btn.btn-primary")), "equals", "eliminar");
+		buscarYClick(driver.findElements(By.cssSelector(".btn.btn-primary")), "equals", "cerrar");
+		driver.findElement(By.name("menuUsuario")).click();
+		driver.findElement(By.name("salir")).click();
+		driver.findElement(By.name("username")).sendKeys("UAT195528");
+		driver.findElement(By.name("txtPass")).sendKeys("Testa10k");
+		driver.findElement(By.name("btnIngresar")).click();
+		sleep(5000);
+		irA("sims", "importaci\u00f3n");
+		selectByText(driver.findElement(By.cssSelector(".text.form-control.ng-pristine.ng-untouched.ng-valid.ng-empty")), "BAS-VJP-BAHIA BLANCA - VJP Punta Alta");
+		if (!(driver.findElement(By.cssSelector(".text.form-control.ng-pristine.ng-untouched.ng-valid.ng-empty")).getText().contains(prefijo)))
+			nroPrefijo = true;
+		driver.findElement(By.name("menuUsuario")).click();
+		driver.findElement(By.name("salir")).click();
+		driver.findElement(By.name("username")).sendKeys("UAT529763");
+		driver.findElement(By.name("txtPass")).sendKeys("Testa10k");
+		driver.findElement(By.name("btnIngresar")).click();
+		sleep(5000);
+		irA("regiones", "gesti\u00f3n");
+		buscarYClick(driver.findElements(By.cssSelector(".panel-group.panel-group-alternative.ng-scope")), "contains", "bas-vjp-bahia blanca");
+		for (WebElement x : driver.findElements(By.className("panel-group"))) {
+			try {
+				if (x.getText().toLowerCase().contains("bas-vjp-bahia blanca"))
+					x.findElement(By.cssSelector(".glyphicon.glyphicon-plus")).click();
+			} catch(Exception e) {}
+		}
+		sleep(3000);
+		for (WebElement x : driver.findElements(By.id("compatibility"))) {
+			if (x.getText().contains(prefijo))
+				x.findElement(By.tagName("input")).click();
+		}
+		buscarYClick(driver.findElements(By.cssSelector(".btn.btn-primary")), "equals", "agregar");
+		buscarYClick(driver.findElements(By.cssSelector(".btn.btn-primary")), "equals", "cerrar");		
+		Assert.assertTrue(nroPrefijo);
+	}
+	
+	@Test (groups = "BeFan")
 	public void TS111487_BeFan_Movil_REPRO_Preactivacion_repro_Gestion_de_agrupadores_Busqueda_Eliminacion_de_agrupadores_Si_Sin_preactivar() {
 		irA("Regiones", "Gesti\u00f3n");
 		boolean eliminarPrefijo = false;
