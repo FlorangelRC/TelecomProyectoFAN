@@ -17,6 +17,7 @@ import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 
+import Pages.ContactSearch;
 import Pages.SCP;
 import Pages.setConexion;
 
@@ -579,5 +580,30 @@ public class BeFANMayorista extends TestBase {
 			ee.printStackTrace();
 			}
 		Assert.assertTrue(scp.isFileDownloaded(downloadPath, "PREACTIVACIONES DIARIAS"));
+	}
+	
+	@Test (groups = "BeFan")
+	public void TS135619_BeFan_Movil_Repro_Preactivacion_Importacion_de_cupos_Exitoso_Verificacion_Dentro_de_la_fecha() {
+		ContactSearch contact = new ContactSearch(driver);
+		irA("importacion");
+		sleep(7000);
+		selectByText(driver.findElement(By.name("vendedores")), "BAS-VJP-BAHIA BLANCA - VJP Punta Alta");
+		sleep(7000);
+		selectByText(driver.findElement(By.cssSelector(".text.form-control.ng-pristine.ng-untouched.ng-valid.ng-empty")), "2477");
+		driver.findElement(By.cssSelector(".text.form-control.ng-pristine.ng-untouched.ng-valid.ng-empty")).sendKeys("1");
+		driver.findElement(By.cssSelector(".btn.btn-primary")).click();
+		File directory = new File("BeFan135619b.txt");
+		contact.subir_cupos(new File(directory.getAbsolutePath()).toString(),"");
+		sleep(5000);
+		driver.findElements(By.cssSelector(".btn.btn-primary")).get(2).click();
+		Boolean a = false;
+		sleep(5000);
+		List <WebElement> formato = driver.findElements(By.className("modal-content"));
+		for(WebElement x : formato) {
+			if(x.getText().toLowerCase().contains("el archivo se import\u00f3 correctamente")) {
+				a= true;
+			}
+		}
+		Assert.assertTrue(a);
 	}
 }

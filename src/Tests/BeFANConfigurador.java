@@ -1100,4 +1100,196 @@ public class BeFANConfigurador extends TestBase {
 		}
 		Assert.assertTrue(a);
 	}
+	@Test (groups = "BeFan")
+	public void TS135609_BeFan_Movil_Repro_Preactivacion_Importacion_de_cupos_Formato_interno_Fecha_desde_formato_erroneo() {
+		ContactSearch contact = new ContactSearch(driver);
+		irA("Cupos", "Importaci\u00f3n");
+		sleep(7000);
+		File directory = new File("BeFan135609-135610.txt");
+		contact.subir_cupos(new File(directory.getAbsolutePath()).toString(),"si");
+		sleep(5000);
+		boolean a = false;
+		List <WebElement> formato = driver.findElements(By.className("modal-header"));
+		for(WebElement x : formato) {
+			if(x.getText().toLowerCase().contains("verifique el contenido del archivo que desea importar, existen cupos inv\u00e1lidos.")) {
+				a = true;
+				
+			}
+		}
+		Assert.assertTrue(a);
+	}
+	@Test (groups = "BeFan")
+	public void TS135610_BeFan_Movil_Repro_Preactivacion_Importacion_de_cupos_Formato_interno_Fecha_hasta_formato_erroneo() {
+		ContactSearch contact = new ContactSearch(driver);
+		irA("Cupos", "Importaci\u00f3n");
+		sleep(7000);
+		File directory = new File("BeFan135609-135610.txt");
+		contact.subir_cupos(new File(directory.getAbsolutePath()).toString(),"si");
+		sleep(5000);
+		boolean a = false;
+		List <WebElement> formato = driver.findElements(By.className("modal-header"));
+		for(WebElement x : formato) {
+			if(x.getText().toLowerCase().contains("verifique el contenido del archivo que desea importar, existen cupos inv\u00e1lidos.")) {
+				a = true;
+				
+			}
+		}
+		Assert.assertTrue(a);
+	}
+	
+	@Test (groups = "BeFan")
+	public void TS135611_BeFan_Movil_Repro_Preactivacion_Importacion_de_cupos_Formato_interno_Cantidad_de_cupos_formato_erroneo() {
+		ContactSearch contact = new ContactSearch(driver);
+		irA("Cupos", "Importaci\u00f3n");
+		sleep(7000);
+		File directory = new File("BeFan135611.txt");
+		contact.subir_cupos(new File(directory.getAbsolutePath()).toString(),"si");
+		sleep(5000);
+		boolean a = false;
+		List <WebElement> formato = driver.findElements(By.className("modal-header"));
+		for(WebElement x : formato) {
+			if(x.getText().toLowerCase().contains("verifique el contenido del archivo que desea importar, existen cupos inv\u00e1lidos.")) {
+				a = true;
+				
+			}
+		}
+		Assert.assertTrue(a);
+	}
+	
+	
+	@Test (groups = "BeFan")
+	public void TS135615_BeFan_Movil_Repro_Preactivacion_Importacion_de_cupos_Cupo_igual_a_cero() {
+		ContactSearch contact = new ContactSearch(driver);
+		irA("Cupos", "Importaci\u00f3n");
+		sleep(7000);
+		File directory = new File("BeFan135611.txt");
+		contact.subir_cupos(new File(directory.getAbsolutePath()).toString(),"si");
+		sleep(5000);
+		boolean a = false;
+		List <WebElement> formato = driver.findElements(By.className("modal-header"));
+		for(WebElement x : formato) {
+			if(x.getText().toLowerCase().contains("verifique el contenido del archivo que desea importar, existen cupos inv\u00e1lidos.")) {
+				a = true;
+				
+			}
+		}
+		Assert.assertTrue(a);
+	}
+	
+	@Test (groups = "BeFan")
+	public void TS135617_BeFan_Movil_Repro_Preactivacion_Importacion_de_cupos_Exitoso_Grilla() {
+		ContactSearch contact = new ContactSearch(driver);
+		irA("Cupos", "Importaci\u00f3n");
+		sleep(7000);
+		File directory = new File("BeFan135617.txt");
+		contact.subir_cupos(new File(directory.getAbsolutePath()).toString(),"si");
+		sleep(5000);
+		boolean a = false;
+		List <WebElement> formato = driver.findElements(By.className("modal-content"));
+		for(WebElement x : formato) {
+			if(x.getText().toLowerCase().contains("el archivo se import\u00f3 correctamente")) {
+				a = true;
+				
+			}
+		}
+		Assert.assertTrue(a);
+	}
+	
+	@Test (groups = "BeFan")
+	public void TS135618_BeFan_Movil_Repro_Preactivacion_Importacion_de_cupos_Exitoso_Logeo() {
+		ContactSearch contact = new ContactSearch(driver);
+		irA("Cupos", "Importaci\u00f3n");
+		sleep(7000);
+		File directory = new File("BeFan135618.txt");
+		contact.subir_cupos(new File(directory.getAbsolutePath()).toString(),"si");
+		sleep(5000);
+		List <WebElement> formato = driver.findElements(By.className("modal-content"));
+		for(WebElement x : formato) {
+			if(x.getText().toLowerCase().contains("el archivo se import\u00f3 correctamente")) {
+			}
+		}
+		driver.findElement(By.className("modal-content")).findElement(By.className("modal-footer")).findElement(By.cssSelector(".btn.btn-link")).click();
+		WebElement tabla = driver.findElement(By.name("TABLE-CuposExito")).findElement(By.tagName("tbody"));
+		Assert.assertTrue(tabla.isDisplayed());
+	}
+	
+
+	@Test (groups = "BeFan")
+	public void TS135608_BeFan_Movil_Repro_Preactivacion_Importacion_de_cupos_Formato_interno_Agente_inexistente(){
+		ContactSearch contact = new ContactSearch(driver);
+		irA("Cupos", "Importaci\u00f3n");
+		sleep(7000);
+		File directory = new File("BeFan135608.txt");
+		contact.subir_cupos(new File(directory.getAbsolutePath()).toString(),"si");
+		sleep(5000);
+		boolean a = false;
+		List <WebElement> formato = driver.findElements(By.className("modal-content"));
+		for(WebElement x : formato) {
+			System.out.println(x.getText());
+			if(x.getText().toLowerCase().contains("no existe el punto de venta para las regiones activas existentes.")) {
+				a = true;
+				
+			}
+		}
+		Assert.assertTrue(a);
+	}
+	
+	@Test (groups = "BeFan")
+	public void TS135613_BeFan_Movil_Repro_Preactivacion_Importacion_de_cupos_Formato_interno_Agrupador_inexistente(){
+		ContactSearch contact = new ContactSearch(driver);
+		irA("Cupos", "Importaci\u00f3n");
+		sleep(7000);
+		File directory = new File("BeFan135613.txt");
+		contact.subir_cupos(new File(directory.getAbsolutePath()).toString(),"si");
+		sleep(5000);
+		boolean a = false;
+		List <WebElement> formato = driver.findElements(By.className("modal-content"));
+		for(WebElement x : formato) {
+			System.out.println(x.getText());
+			if(x.getText().toLowerCase().contains("no existe el punto de venta para las regiones activas existentes.")) {
+				a = true;
+				
+			}
+		}
+		Assert.assertTrue(a);
+	}
+	
+	@Test (groups = "BeFan")
+	public void TS135616_BeFan_Movil_Repro_Preactivacion_Importacion_de_cupos_Exitoso_Mensaje(){
+		ContactSearch contact = new ContactSearch(driver);
+		irA("Cupos", "Importaci\u00f3n");
+		sleep(7000);
+		File directory = new File("BeFan135616.txt");
+		contact.subir_cupos(new File(directory.getAbsolutePath()).toString(),"si");
+		sleep(5000);
+		boolean a = false;
+		List <WebElement> formato = driver.findElements(By.className("modal-content"));
+		for(WebElement x : formato) {
+			System.out.println(x.getText());
+			if(x.getText().toLowerCase().contains("el archivo se import\u00f3 correctamente")) {
+				a = true;
+				
+			}
+		}
+		Assert.assertTrue(a);
+	}
+	
+	@Test (groups = "BeFan")
+	public void TS135620_BeFan_Movil_Repro_Preactivacion_Importacion_de_cupos_Exitoso_Verificacion_Fuera_de_la_fecha(){
+		ContactSearch contact = new ContactSearch(driver);
+		irA("Cupos", "Importaci\u00f3n");
+		sleep(7000);
+		File directory = new File("BeFan135620.txt");
+		contact.subir_cupos(new File(directory.getAbsolutePath()).toString(),"si");
+		sleep(5000);
+		boolean a = false;
+		List <WebElement> formato = driver.findElements(By.className("modal-header"));
+		for(WebElement x : formato) {
+			if(x.getText().toLowerCase().contains("verifique el contenido del archivo que desea importar, existen cupos inv\u00e1lidos.")) {
+				a = true;
+			}
+		}
+		Assert.assertTrue(a);
+	}
+		
 }
