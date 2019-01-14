@@ -3555,7 +3555,7 @@ public class GestionesPerfilOficina extends TestBase {
 		driver.findElements(By.className("profile-edit")).get(0).click();
 		sleep(10000);
 		driver.switchTo().frame(cambioFrame(driver, By.id("DocumentNumber")));
-		if(driver.findElement(By.id("MobilePhone")).getAttribute("value").isEmpty()){
+		if (driver.findElement(By.id("MobilePhone")).getAttribute("value").isEmpty()){
 			driver.findElement(By.id("MobilePhone")).clear();
 			driver.findElement(By.id("MobilePhone")).sendKeys("5214864852");
 		}
@@ -3608,11 +3608,7 @@ public class GestionesPerfilOficina extends TestBase {
 		driver.findElement(By.id("MobilePhone")).clear();
 		driver.findElement(By.id("MobilePhone")).sendKeys(phone);
 		driver.findElement(By.id("ClientInformation_nextBtn")).click();
-		sleep(8000);
-		Assert.assertTrue(driver.findElement(By.className("ta-care-omniscript-done")).getText().contains("Las modificaciones se realizaron con \u00e9xito"));
-		orden = driver.findElement(By.cssSelector(".vlc-slds-inline-control__label.ng-binding")).getText();
-		orden = orden.substring(orden.length()-9, orden.length()-1);
-		detalles +="-Orden:"+orden;	
+		sleep(7000);
 	}
 	
 	@Test (groups = {"GestionesPerfilOficina", "ModificarDatos", "E2E", "Ciclo3"},  dataProvider = "CuentaModificacionDeDatos")
@@ -3629,7 +3625,7 @@ public class GestionesPerfilOficina extends TestBase {
 		driver.findElements(By.className("profile-edit")).get(0).click();
 		sleep(10000);
 		driver.switchTo().frame(cambioFrame(driver, By.id("DocumentNumber")));
-		if(driver.findElement(By.id("MobilePhone")).getAttribute("value").isEmpty()){
+		if (driver.findElement(By.id("MobilePhone")).getAttribute("value").isEmpty()){
 			driver.findElement(By.id("MobilePhone")).clear();
 			driver.findElement(By.id("MobilePhone")).sendKeys("5214864852");
 		}
@@ -3654,11 +3650,7 @@ public class GestionesPerfilOficina extends TestBase {
 		driver.findElement(By.id("Email")).clear();
 		driver.findElement(By.id("Email")).sendKeys(mail);
 		driver.findElement(By.id("ClientInformation_nextBtn")).click();
-		sleep(8000);
-		Assert.assertTrue(driver.findElement(By.className("ta-care-omniscript-done")).getText().contains("Las modificaciones se realizaron con \u00e9xito"));
-		orden = driver.findElement(By.cssSelector(".vlc-slds-inline-control__label.ng-binding")).getText();
-		orden = orden.substring(orden.length()-9, orden.length()-1);
-		detalles +="-Orden:"+orden;	
+		sleep(7000);
 	}
 	
 	@Test (groups = {"GestionesPerfilOficina", "ModificarDatos", "E2E", "Ciclo3"}, dataProvider = "CuentaModificacionDeDatos")
@@ -3691,7 +3683,7 @@ public class GestionesPerfilOficina extends TestBase {
 		driver.findElements(By.className("profile-edit")).get(0).click();
 		sleep(10000);
 		driver.switchTo().frame(cambioFrame(driver, By.id("DocumentNumber")));
-		if(driver.findElement(By.id("MobilePhone")).getAttribute("value").isEmpty()){
+		if (driver.findElement(By.id("MobilePhone")).getAttribute("value").isEmpty()){
 			driver.findElement(By.id("MobilePhone")).clear();
 			driver.findElement(By.id("MobilePhone")).sendKeys("5214864852");
 		}
@@ -3718,7 +3710,7 @@ public class GestionesPerfilOficina extends TestBase {
 		driver.findElements(By.className("profile-edit")).get(0).click();
 		sleep(10000);
 		driver.switchTo().frame(cambioFrame(driver, By.id("DocumentNumber")));
-		if(driver.findElement(By.id("MobilePhone")).getAttribute("value").isEmpty()){
+		if (driver.findElement(By.id("MobilePhone")).getAttribute("value").isEmpty()){
 			driver.findElement(By.id("MobilePhone")).clear();
 			driver.findElement(By.id("MobilePhone")).sendKeys("5214864852");
 		}
@@ -3743,12 +3735,7 @@ public class GestionesPerfilOficina extends TestBase {
 		driver.findElement(By.id("Email")).clear();
 		driver.findElement(By.id("Email")).sendKeys(mail);
 		driver.findElement(By.id("ClientInformation_nextBtn")).click();
-		sleep(8000);
-		Assert.assertTrue(driver.findElement(By.className("ta-care-omniscript-done")).getText().contains("Las modificaciones se realizaron con \u00e9xito"));
-		orden = driver.findElement(By.cssSelector(".vlc-slds-inline-control__label.ng-binding")).getText();
-		orden = orden.substring(orden.length()-9, orden.length()-1);
-		detalles +="-Orden:"+orden;	
-		
+		sleep(7000);
 	}
 	
 	@Test (groups = {"GestionesPerfilOficina", "ModificarDatos", "E2E", "Ciclo3"}, dataProvider = "CuentaModificacionDeDatos")
@@ -3769,7 +3756,7 @@ public class GestionesPerfilOficina extends TestBase {
 		driver.findElements(By.className("profile-edit")).get(0).click();
 		sleep(10000);
 		driver.switchTo().frame(cambioFrame(driver, By.id("DocumentNumber")));
-		if(driver.findElement(By.id("MobilePhone")).getAttribute("value").isEmpty()){
+		if (driver.findElement(By.id("MobilePhone")).getAttribute("value").isEmpty()){
 			driver.findElement(By.id("MobilePhone")).clear();
 			driver.findElement(By.id("MobilePhone")).sendKeys("5214864852");
 		}
@@ -3822,11 +3809,7 @@ public class GestionesPerfilOficina extends TestBase {
 		driver.findElement(By.id("MobilePhone")).clear();
 		driver.findElement(By.id("MobilePhone")).sendKeys(phone);
 		driver.findElement(By.id("ClientInformation_nextBtn")).click();
-		sleep(8000);
-		Assert.assertTrue(driver.findElement(By.className("ta-care-omniscript-done")).getText().contains("Las modificaciones se realizaron con \u00e9xito"));
-		orden = driver.findElement(By.cssSelector(".vlc-slds-inline-control__label.ng-binding")).getText();
-		orden = orden.substring(orden.length()-9, orden.length()-1);
-		detalles +="-Orden:"+orden;	
+		sleep(7000);
 	}
 	
 	@Test (groups = {"GestionesPerfilOficina", "HistorialDeRecargas", "Ciclo2"}, dataProvider = "RecargasHistorias")
@@ -4127,7 +4110,7 @@ public class GestionesPerfilOficina extends TestBase {
 		List<WebElement> tableRows = table.findElements(By.xpath("//tr//td"));
 		for (WebElement cell : tableRows) {
 			try {
-				if (cell.getText().equals("14")) {
+				if (cell.getText().equals("09")) {
 					cell.click();
 				}
 			} catch (Exception e) {}
@@ -4138,7 +4121,7 @@ public class GestionesPerfilOficina extends TestBase {
 		List<WebElement> tableRows_2 = table_2.findElements(By.xpath("//tr//td"));
 		for (WebElement cell : tableRows_2) {
 			try {
-				if (cell.getText().equals("14")) {
+				if (cell.getText().equals("07")) {
 					cell.click();
 				}
 			} catch (Exception e) {}
@@ -5574,6 +5557,10 @@ public class GestionesPerfilOficina extends TestBase {
 		driver.findElements(By.className("profile-edit")).get(0).click();
 		sleep(10000);
 		driver.switchTo().frame(cambioFrame(driver, By.id("DocumentNumber")));
+		if (driver.findElement(By.id("MobilePhone")).getAttribute("value").isEmpty()){
+			driver.findElement(By.id("MobilePhone")).clear();
+			driver.findElement(By.id("MobilePhone")).sendKeys("5214864852");
+		}
 		driver.findElement(By.id("DocumentNumber")).getAttribute("value");
 		driver.findElement(By.id("Email")).getAttribute("value");
 		driver.findElement(By.id("MobilePhone")).getAttribute("value");
@@ -5587,8 +5574,7 @@ public class GestionesPerfilOficina extends TestBase {
 		sleep(10000);
 		Assert.assertTrue(driver.findElement(By.className("ta-care-omniscript-done")).findElement(By.className("ng-binding")).getText().equalsIgnoreCase("Las modificaciones se realizaron con \u00e9xito!"));
 		String orden = driver.findElement(By.cssSelector(".vlc-slds-inline-control__label.ng-binding")).getText();
-		orden = orden.substring(orden.length()-9, orden.length()-1);
-		
+		orden = orden.substring(orden.length()-9, orden.length()-1);		
 	}
 	
 	@Test (groups = {"GestionesPerfilOficina", "ResumenDeCuenta", "Ciclo4"}, dataProvider = "CuentaVista360")
@@ -5753,7 +5739,7 @@ public class GestionesPerfilOficina extends TestBase {
 		driver.findElements(By.className("profile-edit")).get(0).click();
 		sleep(10000);
 		driver.switchTo().frame(cambioFrame(driver, By.id("DocumentNumber")));
-		if(driver.findElement(By.id("MobilePhone")).getAttribute("value").isEmpty()){
+		if (driver.findElement(By.id("MobilePhone")).getAttribute("value").isEmpty()){
 			driver.findElement(By.id("MobilePhone")).clear();
 			driver.findElement(By.id("MobilePhone")).sendKeys("5214864852");
 		}
@@ -5773,7 +5759,8 @@ public class GestionesPerfilOficina extends TestBase {
 		sleep(5000);
 		driver.switchTo().frame(cambioFrame(driver, By.cssSelector(".slds-modal__content.slds-p-around--medium")));
 		WebElement error = driver.findElement(By.cssSelector(".slds-modal__content.slds-p-around--medium"));
-		Assert.assertTrue(error.getText().toLowerCase().contains("error: "));
+		Assert.assertTrue(error.getText().equalsIgnoreCase("Error: Por favor corrija los campos con errores"));
+		driver.findElement(By.id("alert-ok-button")).click();
 	}
 	
 	@Test (groups = {"GestionesPerfilOficina", "ResumenDeCuenta", "Ciclo4"}, dataProvider = "ConsultaSaldo")
@@ -5950,7 +5937,7 @@ public class GestionesPerfilOficina extends TestBase {
 		sleep(10000);
 		cc.irAGestion("diagn\u00f3stico de autogesti\u00f3n");
 		sleep(15000);
-		tech.listadoDeSeleccion("800", "Otros", "Incov con derivaci\u00f3n a representante");
+		tech.listadoDeSeleccion("0800", "Otros", "Incov con derivaci\u00f3n a representante");
 		sleep(4000);
 		tech.verificarNumDeGestion();
 		Assert.assertTrue(tech.cerrarCaso("Resuelta exitosa", "Consulta"));
@@ -6676,7 +6663,7 @@ public class GestionesPerfilOficina extends TestBase {
 		System.out.println(datosInicial);
 		boolean gestion = false;
 		driver.switchTo().frame(cambioFrame(driver, By.id("SearchClientDocumentType")));
-		sb.BuscarCuenta("DNI", "22222705");
+		sb.BuscarCuenta("DNI", sDNI);
 		driver.findElement(By.cssSelector(".slds-tree__item.ng-scope")).click();
 		sleep(15000);
 		cc.irAGestion("inconvenientes");
@@ -7226,7 +7213,7 @@ public class GestionesPerfilOficina extends TestBase {
 		assertTrue(caso);
 	}
 	
-	@Test (groups = {"GestionesPerfilAdminFuncional", "Diagnostico/Inconvenientes", }, dataProvider = "Diagnostico")
+	@Test (groups = {"GestionesPerfilOficina", "Diagnostico/Inconvenientes", }, dataProvider = "Diagnostico")
 	public void TS105449_CRM_Movil_Repro_Autogestion_0800_Informa_Sistema_Fuera_de_Servicio_No_Resuelto(String sDNI, String sLinea) throws InterruptedException {
 		imagen = "TS105449";
 		detalles = null;
@@ -7239,7 +7226,7 @@ public class GestionesPerfilOficina extends TestBase {
 		sleep(15000);
 		cc.irAGestion("diagnostico de autogestion");
 		sleep(5000);
-		tech.listadoDeSeleccion("800", "0800-444-0531 (Tienda Planes)", "Informa Sistema Fuera de Servicio");
+		tech.listadoDeSeleccion("0800", "0800-444-0531 (Tienda Planes)", "Informa Sistema Fuera de Servicio");
 		sleep(7000);
 		String caso = driver.findElement(By.cssSelector(".slds-form-element.vlc-flex.vlc-slds-text-block.vlc-slds-rte.ng-pristine.ng-valid.ng-scope")).getText();
 		caso = caso.substring(caso.indexOf("0"), caso.length());
@@ -7259,7 +7246,7 @@ public class GestionesPerfilOficina extends TestBase {
 			estado = true;
 		Assert.assertTrue(estado);
 	}
-	@Test (groups = {"GestionesPerfilTelefonico", "ResumenDeCuenta", "E2E","Ciclo4"}, dataProvider = "CuentaReintegros")
+	@Test (groups = {"GestionesPerfilOficina", "Resumen de Cuenta Corriente", "E2E","Ciclo4"}, dataProvider = "CuentaReintegros")
 	public void TS129461_CRM_Movil_REPRO_Resumen_de_Cuenta_Corriente_Verificacion_de_vista_de_Resumen_de_Cuenta_Corriente_FAN_Front_OOCC(String sDNI){
 		imagen = "TS129461";
 		detalles = null;
@@ -7317,4 +7304,48 @@ public class GestionesPerfilOficina extends TestBase {
 		Assert.assertFalse(driver.findElement(By.id("MethodSelection_nextBtn")).isDisplayed());
 	}
 	
+	@Test (groups = {"GestionesPerfilOficina", "Diagnostico/Inconvenientes", }, dataProvider = "Diagnostico")
+	public void TS105453_CRM_Movil_Repro_Autogestion_0800_La_Linea_esta_muda_No_Resuelto(String cDNI, String cLinea) throws InterruptedException {
+		imagen = "TS105453";
+		detalles = null;
+		detalles = imagen + "- Autogestion - DNI: "+cDNI;
+		TechnicalCareCSRAutogestionPage tech = new TechnicalCareCSRAutogestionPage(driver);
+		driver.switchTo().frame(cambioFrame(driver, By.id("SearchClientDocumentType")));
+		sb.BuscarCuenta("DNI", cDNI);
+		driver.findElement(By.cssSelector(".slds-tree__item.ng-scope")).click();
+		sleep(15000);
+		searchAndClick(driver, "Diagn\u00f3stico de Autogesti\u00f3n");
+		tech.listadoDeSeleccion("0800", "0800-444-4100 (Asistencia Tienda Online)", "La l\u00ednea esta muda");
+		sleep(4000);
+		System.out.println(tech.verificarNumDeGestion());
+		//driver.switchTo().frame(cambioFrame(driver, By.id("srchErrorDiv_Case")));
+		String estado= driver.findElement(By.xpath("//*[@id='Case_body']/table/tbody/tr[2]/td[3]")).getText();
+		Assert.assertTrue(estado.equalsIgnoreCase("Informada"));	
+	}
+	@Test (groups = {"GestionesPerfilOficina","ProblemaRecarga","E2E","Ciclo3"}, dataProvider="CuentaProblemaRecarga")
+	public void TS104350_CRM_Movil_REPRO_Problemas_con_Recarga_Presencial_Tarjeta_Scratch_Caso_Nuevo_Inactiva(String sDNI, String sLinea) {
+		imagen = "TS104350";
+		boolean gestion = false, error = false;
+		String datoViejo = cbs.ObtenerValorResponse(cbsm.Servicio_queryLiteBySubscriber(sLinea), "bcs:MainBalance");
+		Integer datosInicial = Integer.parseInt(datoViejo.substring(0, 5));
+		driver.switchTo().frame(cambioFrame(driver, By.id("SearchClientDocumentType")));
+		sb.BuscarCuenta("DNI", sDNI);
+		driver.findElement(By.cssSelector(".slds-tree__item.ng-scope")).click();
+		sleep(15000);
+		cc.seleccionarCardPornumeroLinea(sLinea, driver);
+		sleep(8000);
+		cc.irAGestionEnCard("Problemas con Recargas");
+		sleep(8000);
+		driver.switchTo().frame(cambioFrame(driver, By.id("RefillMethods_nextBtn")));
+		buscarYClick(driver.findElements(By.className("borderOverlay")), "equals", "tarjeta prepaga");
+		driver.findElement(By.id("RefillMethods_nextBtn")).click();
+		sleep(5000);
+		driver.findElement(By.id("BatchNumber")).sendKeys("11120000009527");
+		driver.findElement(By.id("PIN")).sendKeys("0872");
+		driver.findElement(By.id("PrepaidCardData_nextBtn")).click();
+		sleep(5000);
+		WebElement msj =driver.findElement(By.xpath("//*[@class='vlc-slds-inline-control__label' and contains(text(), 'Estado de la tarjeta: ')]"));
+		System.out.println(msj.getText());
+		Assert.assertTrue(msj.findElement(By.xpath("//*[@id='PrepaidCardStatusLabel']//label/strong")).getText().equalsIgnoreCase("Activa")); 
+	}
 }
