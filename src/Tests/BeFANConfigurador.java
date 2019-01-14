@@ -22,6 +22,7 @@ import Pages.BasePage;
 import Pages.BeFan;
 import Pages.ContactSearch;
 import Pages.Marketing;
+import Pages.SCP;
 import Pages.setConexion;
 import javafx.scene.web.WebEngineBuilder;
 
@@ -29,6 +30,7 @@ public class BeFANConfigurador extends TestBase {
 	
 	private WebDriver driver;
 	private Pages.BeFan pbf;
+	private SCP scp;
 	
 	private void irA(String sMenu,String sOpcion) {
 		sleep(3000);
@@ -55,6 +57,7 @@ public class BeFANConfigurador extends TestBase {
 	@BeforeClass (alwaysRun = true)
 	public void init() {
 		driver = setConexion.setupEze();
+		scp = new SCP(driver);
 		loginBeFANConfigurador(driver);
 	}
 	
@@ -1283,5 +1286,35 @@ public class BeFANConfigurador extends TestBase {
 			texto = true;
 		}
 		Assert.assertTrue(texto);
+	}
+	
+	@Test (groups = "BeFAN")
+	public void TS126607_BeFan_Movil_REPRO_Preactivacion_repro_Visualizacion_de_archivos_importados_Nombre_del_archivo_importado() {
+		irA("sims", "gesti\u00f3n");
+		selectByText(driver.findElement(By.cssSelector(".text.form-control.ng-pristine.ng-untouched.ng-valid.ng-empty")), "Procesado");
+		selectByText(driver.findElement(By.cssSelector(".text.form-control.ng-pristine.ng-untouched.ng-valid.ng-empty")), "VJP");
+		selectByText(driver.findElement(By.cssSelector(".text.form-control.ng-pristine.ng-untouched.ng-valid.ng-empty")), "BAS-VJP-BAHIA BLANCA - VJP Punta Alta");		
+		driver.findElement(By.cssSelector(".btn.btn-primary")).click();
+		sleep(5000);
+		driver.findElement(By.id("exportarTabla")).findElement(By.tagName("tbody")).findElement(By.tagName("tr")).findElements(By.tagName("td")).get(8).click();
+		sleep(3000);
+		driver.findElement(By.id("botonExportar")).click();
+		sleep(5000);
+		String downloadPath = "C:\\Users\\Nicolas\\Downloads";
+		Assert.assertTrue(scp.isFileDownloaded(downloadPath, "PREACTIVACIONES DIARIAS"));
+	}
+	
+	@Test (groups = "BeFAN")
+	public void TS126615_BeFan_Movil_REPRO_Preactivacion_repro_Importacion_de_agrupadores_Formato_erroneo() {
+		boolean formato = false;
+		irA("regiones", "importaci\u00f3n");
+		driver.findElement(By.id("fileinput")).sendKeys("C:\\Users\\Nicolas\\Desktop\\ajustes.txt");
+		driver.findElement(By.cssSelector(".btn.btn-primary.btn-sm.btn-block.btn-continuar")).click();
+		WebElement tabla = driver.findElement(By.cssSelector(".table.table-top-fixed.table-striped.table-primary")).findElement(By.tagName("tbody")).findElement(By.tagName("tr"));
+		for (WebElement x : tabla.findElements(By.tagName("td"))) {
+			if (x.getText().equalsIgnoreCase("La region no existe"))
+				formato = true;
+		}
+		Assert.assertTrue(formato);
 	}
 }
