@@ -54,10 +54,11 @@ public class Comunidad extends TestBase {
 		boolean aa = false;
 		for(WebElement g : gest){
 			if(g.getText().toLowerCase().equals("servicios")){
-				g.isDisplayed();
+				Assert.assertTrue(g.isDisplayed());
 				aa = true;
 			}
 		}
+		Assert.assertTrue(aa);
 	}
 	
 	@Test (groups = {"Communities","E2E"})
@@ -79,7 +80,7 @@ public class Comunidad extends TestBase {
 	}
 	
 	@Test (groups = {"Communities", "E2E"})
-	public void T135791_CRM_PRE_Community_Desktop_Mis_gestiones_Filtro_Fecha()  {
+	public void TS135791_CRM_PRE_Community_Desktop_Mis_gestiones_Filtro_Fecha()  {
 		sleep(5000);
 		driver.switchTo().frame(cambioFrame(driver, By.cssSelector(".vlocity.via-slds")));
 		buscarYClick(driver.findElements(By.cssSelector(".slds-col.slds-size--1-of-1")), "equals", "plan con tarjeta repro");
@@ -308,6 +309,7 @@ public class Comunidad extends TestBase {
 				d.findElement(By.cssSelector(".slds-button.btn-cstm.ng-scope")).click();
 			}
 		}*/
+		Assert.assertTrue(false);
 	}
 	
 	@Test (groups = {"Communities","E2E"})                         
@@ -335,6 +337,7 @@ public class Comunidad extends TestBase {
 		driver.findElements(By.cssSelector(".lbl-item.ng-binding")).get(6).click();	
 		sleep(5000);
 		driver.findElement(By.id("PackSelection_nextBtn")).click();
+		Assert.assertTrue(false);
 	}
 	
 	@Test (groups = {"Communities","E2E"})

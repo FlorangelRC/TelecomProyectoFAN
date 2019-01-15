@@ -1281,16 +1281,16 @@ try{	driver.findElement(By.id("alert-ok-button")).click();	} catch (NoSuchElemen
 		
 		public boolean completarEntrega(String sOrder,WebDriver driver) {
 			TestBase TB = new TestBase();
-			try {Thread.sleep(15000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+			/*try {Thread.sleep(15000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 			try {
 				driver.findElement(By.id("tabBar")).findElement(By.tagName("a")).click();
 				sleep(12000);
-			}catch(Exception ex1) {}
+			}catch(Exception ex1) {}*/
 			SalesBase SB = new SalesBase(driver);
 			driver.switchTo().defaultContent();
 			sleep(3000);
 			TB.goToLeftPanel2(driver, "Entregas");
-			sleep(12000);
+			sleep(8000);
 			try{
 				SB.cerrarPestaniaGestion(driver);}
 			catch(Exception ex2) {}

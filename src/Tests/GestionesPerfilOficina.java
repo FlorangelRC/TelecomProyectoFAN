@@ -222,7 +222,6 @@ public class GestionesPerfilOficina extends TestBase {
 		cCC.irAGestionEnCard("N\u00fameros Gratis");
 		Assert.assertTrue(mMarketing.verificarNumerosAmigos(driver, sNumeroVOZ, sNumeroSMS));
 		Assert.assertTrue(cc.corroborarEstadoCaso(orden, "Activated"));
-		sOrders.add("Numeros amigos, orden numero: " + orden + ", DNI: " + sDNI);
 		//Verify when the page works
 	}
 	
@@ -2380,6 +2379,7 @@ public class GestionesPerfilOficina extends TestBase {
 		detalles += "-Orden:" + orden;
 		System.out.println("Orden " + orden);
 		orden = orden.substring(orden.length()-8);
+		System.out.println("Orden " + orden);
 		cCC.obligarclick(driver.findElement(By.id("OrderSumary_nextBtn")));
 		sleep(15000);
 		String check = driver.findElement(By.id("GeneralMessageDesing")).getText();
@@ -2392,7 +2392,7 @@ public class GestionesPerfilOficina extends TestBase {
 		detalles+="-Monto:"+invoice.split("-")[1]+"-Prefactura:"+invoice.split("-")[0];
 		CBS_Mattu invoSer = new CBS_Mattu();
 		if(activarFalsos==true)
-		invoSer.Servicio_NotificarEmisionFactura(orden);
+			invoSer.Servicio_NotificarEmisionFactura(orden);
 		sleep(10000);
 		driver.navigate().refresh();
 		sleep(10000);
@@ -2410,15 +2410,17 @@ public class GestionesPerfilOficina extends TestBase {
 				}
 			}
 			Assert.assertTrue(esta);
+			
 		}
-		sleep(2000);
-		CambiarPerfil("logistica",driver);
+		CambiarPerfil("logisticayentrega",driver);
 		sb.completarLogistica(orden, driver);
+		//CambiarPerfil("entrega",driver);
 		sb.completarEntrega(orden, driver);
 		CambiarPerfil("ofcom",driver);
 		try {
 			cc.cajonDeAplicaciones("Consola FAN");
 		} catch(Exception e) {
+			//sleep(3000);
 			waitForClickeable(driver,By.id("tabBar"));
 			driver.findElement(By.id("tabBar")).findElement(By.tagName("a")).click();
 			sleep(6000);
@@ -2488,7 +2490,7 @@ public class GestionesPerfilOficina extends TestBase {
 		selectByText(driver.findElement(By.id("Installment-0")), sCuota);
 		sleep(5000);
 		driver.findElement(By.id("SelectPaymentMethodsStep_nextBtn")).click();
-		sleep(20000);
+		sleep(25000);
 		String msj = driver.findElement(By.cssSelector(".message.description.ng-binding.ng-scope")).getText(); 
 		String check = driver.findElement(By.id("GeneralMessageDesing")).getText();
 		Assert.assertTrue(msj.toLowerCase().contains("se ha enviado correctamente la factura a huawei. dirigirse a caja para realizar el pago de la misma"));
@@ -5144,7 +5146,7 @@ public class GestionesPerfilOficina extends TestBase {
 		Assert.assertTrue(downVote);
 	}
 		// =========================== ESTE VA 2 ============================
-	@Test(groups = { "GestionesPerfilOficina","CambioSimCard", "E2E","Ciclo3" }, priority = 1, dataProvider = "SimCardSiniestroOfCom")
+	@Test(groups = { "GestionesPerfilOficina","CambioDeSimcard", "E2E","Ciclo3" }, priority = 1, dataProvider = "SimCardSiniestroOfCom")
 	public void TS99030_CRM_Movil_REPRO_Cambio_de_SimCard_Presencial_Siniestro_Ofcom(String sDNI, String sLinea) throws AWTException {
 		imagen = "99030";
 		detalles = null;
@@ -5246,7 +5248,7 @@ public class GestionesPerfilOficina extends TestBase {
 		System.out.println("id "+accid);
 		detalles +="-Cuenta:"+accid;
 		driver.findElement(By.cssSelector(".slds-tree__item.ng-scope")).findElement(By.tagName("div")).click();
-		sleep(25000);
+		sleep(30000);
 		cCC.seleccionarCardPornumeroLinea(sLinea, driver);
 		sleep(3000);
 		cCC.irAGestion("Cambio de Simcard");
@@ -5271,9 +5273,6 @@ public class GestionesPerfilOficina extends TestBase {
 		sleep(15000);
 		String check = driver.findElement(By.id("GeneralMessageDesing")).getText();
 		Assert.assertTrue(check.toLowerCase().contains("la orden se realiz\u00f3 con \u00e9xito"));
-		sleep(5000);
-		driver.navigate().refresh();
-		sleep(10000);
 		String invoice = cCC.obtenerMontoyTNparaAlta(driver, orden);
 		System.out.println(invoice);
 		detalles+="-Monto:"+invoice.split("-")[1]+"-Prefactura:"+invoice.split("-")[0];
@@ -6033,7 +6032,7 @@ public class GestionesPerfilOficina extends TestBase {
 		detalles+="-Monto:"+invoice.split("-")[1]+"-Prefactura:"+invoice.split("-")[0];
 		CBS_Mattu invoSer = new CBS_Mattu();
 		if(activarFalsos==true)
-		invoSer.Servicio_NotificarEmisionFactura(orden);
+			invoSer.Servicio_NotificarEmisionFactura(orden);
 		sleep(10000);
 		driver.navigate().refresh();
 		sleep(10000);
@@ -6104,6 +6103,41 @@ public class GestionesPerfilOficina extends TestBase {
 		cCC.obligarclick(driver.findElement(By.id("DeliveryMethodConfiguration_nextBtn")));
 		sleep(16000);
 		cCC.obligarclick(driver.findElement(By.id("InvoicePreview_nextBtn")));
+		sleep(12000);
+		String orden = driver.findElement(By.className("top-data")).findElement(By.className("ng-binding")).getText();
+		detalles+=" - Orden: "+orden;
+		orden = orden.substring(orden.length()-8);
+		System.out.println("Orden " + orden);
+		cCC.obligarclick(driver.findElement(By.id("OrderSumary_nextBtn")));
+		sleep(15000);		
+		driver.navigate().refresh();
+		sleep(10000);
+		String invoice = cCC.obtenerMontoyTNparaAlta(driver, orden);
+		detalles+=" - Cuenta: "+accid+"Invoice: "+invoice.split("-")[0];
+		System.out.println(invoice);
+		CBS_Mattu invoSer = new CBS_Mattu();
+		if(activarFalsos==true)
+			invoSer.Servicio_NotificarEmisionFactura(orden);
+		sleep(10000);
+		driver.navigate().refresh();
+		sleep(10000);
+		driver.switchTo().frame(cambioFrame(driver, By.cssSelector(".hasMotif.orderTab.detailPage.ext-webkit.ext-chrome.sfdcBody.brandQuaternaryBgr")));
+		WebElement tabla = driver.findElement(By.id("ep")).findElements(By.tagName("table")).get(1);
+		String datos = tabla.findElements(By.tagName("tr")).get(4).findElements(By.tagName("td")).get(1).getText();
+		if(activarFalsos==true) {
+			boolean esta = false;
+			List<WebElement> campos = tabla.findElements(By.tagName("tr"));
+			for(WebElement UnC: campos) {
+				if(UnC.getText().toLowerCase().contains("tracking status")) {
+					Assert.assertTrue(UnC.getText().toLowerCase().contains("preparar pedido"));
+					esta = true;
+					break;
+				}
+			}
+			Assert.assertTrue(esta);
+			
+		}
+		Assert.assertTrue(datos.equalsIgnoreCase("activada")||datos.equalsIgnoreCase("activated"));
 	}
 	
 	//@Test(groups = { "GestionesPerfilTelefonico","CambioSimCardDer", "E2E" }, priority = 1, dataProvider = "SimCardSiniestroAG") //NO APARECE EL MEDIO DE PAGO
@@ -6141,6 +6175,41 @@ public class GestionesPerfilOficina extends TestBase {
 		cCC.obligarclick(driver.findElement(By.id("DeliveryMethodConfiguration_nextBtn")));
 		sleep(16000);
 		cCC.obligarclick(driver.findElement(By.id("InvoicePreview_nextBtn")));
+		sleep(12000);
+		String orden = driver.findElement(By.className("top-data")).findElement(By.className("ng-binding")).getText();
+		detalles+=" - Orden: "+orden;
+		orden = orden.substring(orden.length()-8);
+		System.out.println("Orden " + orden);
+		cCC.obligarclick(driver.findElement(By.id("OrderSumary_nextBtn")));
+		sleep(15000);		
+		driver.navigate().refresh();
+		sleep(10000);
+		String invoice = cCC.obtenerMontoyTNparaAlta(driver, orden);
+		detalles+=" - Cuenta: "+accid+"Invoice: "+invoice.split("-")[0];
+		System.out.println(invoice);
+		CBS_Mattu invoSer = new CBS_Mattu();
+		if(activarFalsos==true)
+			invoSer.Servicio_NotificarEmisionFactura(orden);
+		sleep(10000);
+		driver.navigate().refresh();
+		sleep(10000);
+		driver.switchTo().frame(cambioFrame(driver, By.cssSelector(".hasMotif.orderTab.detailPage.ext-webkit.ext-chrome.sfdcBody.brandQuaternaryBgr")));
+		WebElement tabla = driver.findElement(By.id("ep")).findElements(By.tagName("table")).get(1);
+		String datos = tabla.findElements(By.tagName("tr")).get(4).findElements(By.tagName("td")).get(1).getText();
+		if(activarFalsos==true) {
+			boolean esta = false;
+			List<WebElement> campos = tabla.findElements(By.tagName("tr"));
+			for(WebElement UnC: campos) {
+				if(UnC.getText().toLowerCase().contains("tracking status")) {
+					Assert.assertTrue(UnC.getText().toLowerCase().contains("preparar pedido"));
+					esta = true;
+					break;
+				}
+			}
+			Assert.assertTrue(esta);
+			
+		}
+		Assert.assertTrue(datos.equalsIgnoreCase("activada")||datos.equalsIgnoreCase("activated"));
 	}
 	
 	@Test (groups = {"GestionesPerfilOficina", "Vista360", "Ciclo2"}, dataProvider = "CuentaVista360") 
@@ -7343,6 +7412,35 @@ public class GestionesPerfilOficina extends TestBase {
 		driver.findElement(By.id("Contact_nextBtn")).click();
 		sleep(10000);
 		Assert.assertFalse(driver.findElement(By.id("MethodSelection_nextBtn")).isDisplayed());
+	}
+	
+	@Test (groups = {"GestionesPerfilOficina", "Nominacion", "Ciclo1"}, dataProvider = "DatosNoNominacionExistenteFraudeOfcom")
+	public void TS85105_CRM_Movil_REPRO_No_Nominatividad_Por_Fraude_Cliente_Existente_Presencial(String sLinea, String sDni) {
+		imagen = "TS85105";
+		detalles = null;
+		detalles = imagen + " -Nominacion: " + sDni+"- Linea: "+sLinea;
+		boolean nominacion = false;
+		driver.switchTo().frame(cambioFrame(driver, By.id("SearchClientDocumentType")));
+		driver.findElement(By.id("PhoneNumber")).sendKeys(sLinea);
+		driver.findElement(By.id("SearchClientsDummy")).click();
+		sleep(5000);
+		driver.findElement(By.cssSelector(".slds-button.slds-button--icon.slds-m-right--x-small.ng-scope")).click();
+		sleep(2000);
+		WebElement botonNominar = null;
+		for (WebElement x : driver.findElements(By.cssSelector(".slds-hint-parent.ng-scope"))) {
+			if (x.getText().toLowerCase().contains("plan con tarjeta"))
+				botonNominar = x;
+		}
+		for (WebElement x : botonNominar.findElements(By.tagName("td"))) {
+			if (x.getAttribute("data-label").equals("actions"))
+				botonNominar = x;
+		}
+		botonNominar.findElement(By.tagName("a")).click();
+		sleep(5000);
+		ContactSearch contact = new ContactSearch(driver);
+		contact.searchContact2("DNI", sDni, "Masculino");
+		Assert.assertTrue(driver.findElement(By.cssSelector(".message.description.ng-binding.ng-scope")).getText().toLowerCase().contains("el dni figura en lista de fraude"));
+		
 	}
 	
 	@Test (groups = {"GestionesPerfilOficina", "Diagnostico/Inconvenientes", }, dataProvider = "Diagnostico")

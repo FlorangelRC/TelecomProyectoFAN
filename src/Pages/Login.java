@@ -376,4 +376,16 @@ public class Login extends BasePage {
 		try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 	}
 	
+	public void ingresarLogisticaYEntrega() {
+		  logininterno.click();
+		  try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		  
+		  if (TB.urlAmbiente.contains("sit"))
+			  Ecom_User_ID.sendKeys("UAT178596");//SIT
+		  else
+		  	  Ecom_User_ID.sendKeys("uat577822"); //UAT
+		  Ecom_Password.sendKeys("Testa10k");
+		  loginButton2.click();
+		  try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+	}
 }
