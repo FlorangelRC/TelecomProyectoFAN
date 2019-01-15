@@ -226,9 +226,10 @@ public class GestionesPerfilAgente extends TestBase{
 		String datos = tabla.findElements(By.tagName("tr")).get(4).findElements(By.tagName("td")).get(1).getText();
 		Assert.assertTrue(datos.equalsIgnoreCase("activada")||datos.equalsIgnoreCase("activated"));
 	}
-	@Test(groups = { "GestionesPerfilAgente","CambioDeSimcard", "E2E","Ciclo3" }, priority = 1, dataProvider = "CambioSimCardAgente")
-	public void TSCambioSimCardAgente(String sDNI, String sLinea) throws AWTException {
-		imagen = "TSCambioSimCardAgente";
+	//       ESTE 1
+	@Test(groups = { "GestionesPerfilAgente","CambioSimCard", "E2E","Ciclo3" }, priority = 1, dataProvider = "CambioSimCardAgente")
+	public void TS_Cambio_SimCard_Agente(String sDNI, String sLinea) throws AWTException {
+		imagen = "TS_Cambio_SimCard_Agente";
 		detalles = null;
 		detalles = imagen + "-DNI:" + sDNI;
 		SalesBase sale = new SalesBase(driver);
@@ -246,20 +247,20 @@ public class GestionesPerfilAgente extends TestBase{
 		cCC.seleccionarCardPornumeroLinea(sLinea, driver);
 		sleep(3000);
 		cCC.irAGestionEnCard("Cambio SimCard");
-		sleep(2000);
+		sleep(10000);
 		driver.switchTo().frame(cambioFrameByID.getFrameForElement(driver, By.id("DeliveryMethodSelection")));
 		sleep(15000);
 		Select metodoEntrega = new Select (driver.findElement(By.id("DeliveryMethodSelection")));
 		metodoEntrega.selectByVisibleText("Presencial");
 		cCC.obligarclick(driver.findElement(By.id("DeliveryMethodConfiguration_nextBtn")));
 		sleep(16000);
-		cCC.obligarclick(driver.findElement(By.id("ICCDAssignment_nextBtn")));
-		sleep(16000);
+		WebElement cereal = driver.findElement(By.id("ICCIDConfiguration"));
+		System.out.println(cereal.getText());
+		Assert.assertTrue(cereal.isDisplayed());
+		driver.findElement(By.id("ICCDAssignment_nextBtn")).click();
+		sleep(10000);
 		cCC.obligarclick(driver.findElement(By.id("InvoicePreview_nextBtn")));
 		sleep(16000);
-//		buscarYClick(driver.findElements(By.cssSelector(".slds-form-element__label.ng-binding")), "equals","Efectivo");
-//		cCC.obligarclick(driver.findElement(By.id("SelectPaymentMethodsStep_nextBtn")));
-//		sleep(15000);
 		String orden = driver.findElement(By.className("top-data")).findElement(By.className("ng-binding")).getText();
 		detalles += "-Orden:" + orden;
 		System.out.println("Orden " + orden);
@@ -273,23 +274,48 @@ public class GestionesPerfilAgente extends TestBase{
 		sleep(10000);
 		String invoice = cCC.obtenerMontoyTNparaAlta(driver, orden);
 		System.out.println(invoice);
-		detalles+="-Monto:"+invoice.split("-")[2]+"-Prefactura:"+invoice.split("-")[1];
-		sleep(10000);
-		//datosOrden.add("Cambio sim card Agente- Cuenta: "+accid+"Invoice: "+invoice.split("-")[0]);
+		detalles+="-Monto:"+invoice.split("-")[1]+"-Prefactura:"+invoice.split("-")[0];
 		CBS_Mattu invoSer = new CBS_Mattu();
-		Assert.assertTrue(invoSer.PagoEnCaja("1006", accid, "1001", invoice.split("-")[2], invoice.split("-")[1],driver));
-		sleep(5000);
+		if(activarFalsos==true)
+		invoSer.Servicio_NotificarEmisionFactura(orden);
+		sleep(10000);
 		driver.navigate().refresh();
 		sleep(10000);
-		//cc.obtenerTNyMonto2(driver, sOrden);
-		//sleep(10000);
 		driver.switchTo().frame(cambioFrame(driver, By.cssSelector(".hasMotif.orderTab.detailPage.ext-webkit.ext-chrome.sfdcBody.brandQuaternaryBgr")));
 		WebElement tabla = driver.findElement(By.id("ep")).findElements(By.tagName("table")).get(1);
 		String datos = tabla.findElements(By.tagName("tr")).get(4).findElements(By.tagName("td")).get(1).getText();
-		Assert.assertTrue(datos.equalsIgnoreCase("activada")||datos.equalsIgnoreCase("activated"));
+		if(activarFalsos==true) {
+			boolean esta = false;
+			List<WebElement> campos = tabla.findElements(By.tagName("tr"));
+			for(WebElement UnC: campos) {
+				if(UnC.getText().toLowerCase().contains("tracking status")) {
+					Assert.assertTrue(UnC.getText().toLowerCase().contains("entregado"));
+					esta = true;
+					break;
+				}
+			}
+			Assert.assertTrue(esta);
+		}
+		sleep(2000);
+		CambiarPerfil("logistica",driver);
+		//cCC.obtenerMontoyTNparaAlta(driver, orden);
+		sb.completarLogistica(orden, driver);
+		sb.completarEntrega(orden, driver);
+		CambiarPerfil("ofcom",driver);
+		try {
+			cc.cajonDeAplicaciones("Consola FAN");
+		} catch(Exception e) {
+			waitForClickeable(driver,By.id("tabBar"));
+			driver.findElement(By.id("tabBar")).findElement(By.tagName("a")).click();
+			sleep(6000);
+		}
 		
+		driver.switchTo().defaultContent();
+		sleep(6000);
+		cCC.obtenerMontoyTNparaAlta(driver, orden);
+		Assert.assertTrue(datos.equalsIgnoreCase("activada")||datos.equalsIgnoreCase("activated"));
 	}
-	
+		
 	@Test (groups = {"GestionesPerfilAgente","VentaDePacks","E2E","Ciclo1"}, dataProvider="PackAgente")
 	public void Venta_de_Pack_1_GB_x_1_dia_whatsapp_gratis_Factura_de_Venta_efectivo_Agente(String sDNI, String sLinea, String sPackAgente) throws AWTException{
 		imagen = "Venta_de_Pack";
@@ -726,7 +752,7 @@ public class GestionesPerfilAgente extends TestBase{
 		driver.findElements(By.className("profile-edit")).get(0).click();
 		sleep(10000);
 		driver.switchTo().frame(cambioFrame(driver, By.id("DocumentNumber")));
-		if(driver.findElement(By.id("MobilePhone")).getAttribute("value").isEmpty()){
+		if (driver.findElement(By.id("MobilePhone")).getAttribute("value").isEmpty()){
 			driver.findElement(By.id("MobilePhone")).clear();
 			driver.findElement(By.id("MobilePhone")).sendKeys("5214864852");
 		}
@@ -779,11 +805,7 @@ public class GestionesPerfilAgente extends TestBase{
 		driver.findElement(By.id("MobilePhone")).clear();
 		driver.findElement(By.id("MobilePhone")).sendKeys(phone);
 		driver.findElement(By.id("ClientInformation_nextBtn")).click();
-		sleep(8000);
-		Assert.assertTrue(driver.findElement(By.className("ta-care-omniscript-done")).getText().contains("Las modificaciones se realizaron con \u00e9xito"));
-		orden = driver.findElement(By.cssSelector(".vlc-slds-inline-control__label.ng-binding")).getText();
-		orden = orden.substring(orden.length()-9, orden.length()-1);
-		detalles +="-Orden:"+orden;	
+		sleep(7000);
 	}
 	
 	@Test (groups = {"GestionesPerfilAgente", "ModificarDatos", "E2E", "Ciclo3"}, dataProvider = "CuentaModificacionDeDatos")
@@ -800,6 +822,10 @@ public class GestionesPerfilAgente extends TestBase{
 		driver.findElements(By.className("profile-edit")).get(0).click();
 		sleep(10000);
 		driver.switchTo().frame(cambioFrame(driver, By.id("DocumentNumber")));
+		if (driver.findElement(By.id("MobilePhone")).getAttribute("value").isEmpty()){
+			driver.findElement(By.id("MobilePhone")).clear();
+			driver.findElement(By.id("MobilePhone")).sendKeys("5214864852");
+		}
 		String mail = driver.findElement(By.id("Email")).getAttribute("value");
 		driver.findElement(By.id("Email")).clear();
 		driver.findElement(By.id("Email")).sendKeys(nuevoMail);
@@ -820,11 +846,7 @@ public class GestionesPerfilAgente extends TestBase{
 		driver.findElement(By.id("Email")).clear();
 		driver.findElement(By.id("Email")).sendKeys(mail);
 		driver.findElement(By.id("ClientInformation_nextBtn")).click();
-		sleep(15000);
-		Assert.assertTrue(driver.findElement(By.className("ta-care-omniscript-done")).getText().contains("Las modificaciones se realizaron con \u00e9xito"));
-		orden = driver.findElement(By.cssSelector(".vlc-slds-inline-control__label.ng-binding")).getText();
-		orden = orden.substring(orden.length()-9, orden.length()-1);
-		detalles +="-Orden:"+orden;		
+		sleep(7000);
 	}
 	
 	@Test (groups = {"GestionesPerfilAgente", "ModificarDatos", "E2E", "Ciclo3"}, dataProvider = "CuentaModificacionDeDatos")
@@ -841,7 +863,7 @@ public class GestionesPerfilAgente extends TestBase{
 		driver.findElements(By.className("profile-edit")).get(0).click();
 		sleep(10000);
 		driver.switchTo().frame(cambioFrame(driver, By.id("DocumentNumber")));
-		if(driver.findElement(By.id("MobilePhone")).getAttribute("value").isEmpty()){
+		if (driver.findElement(By.id("MobilePhone")).getAttribute("value").isEmpty()){
 			driver.findElement(By.id("MobilePhone")).clear();
 			driver.findElement(By.id("MobilePhone")).sendKeys("5214864852");
 		}
@@ -872,7 +894,7 @@ public class GestionesPerfilAgente extends TestBase{
 		driver.findElements(By.className("profile-edit")).get(0).click();
 		sleep(10000);
 		driver.switchTo().frame(cambioFrame(driver, By.id("DocumentNumber")));
-		if(driver.findElement(By.id("MobilePhone")).getAttribute("value").isEmpty()){
+		if (driver.findElement(By.id("MobilePhone")).getAttribute("value").isEmpty()){
 			driver.findElement(By.id("MobilePhone")).clear();
 			driver.findElement(By.id("MobilePhone")).sendKeys("5214864852");
 		}
@@ -925,11 +947,7 @@ public class GestionesPerfilAgente extends TestBase{
 		driver.findElement(By.id("MobilePhone")).clear();
 		driver.findElement(By.id("MobilePhone")).sendKeys(phone);
 		driver.findElement(By.id("ClientInformation_nextBtn")).click();
-		sleep(8000);
-		Assert.assertTrue(driver.findElement(By.className("ta-care-omniscript-done")).getText().contains("Las modificaciones se realizaron con \u00e9xito"));
-		orden = driver.findElement(By.cssSelector(".vlc-slds-inline-control__label.ng-binding")).getText();
-		orden = orden.substring(orden.length()-9, orden.length()-1);
-		detalles +="-Orden:"+orden;		
+		sleep(7000);
 	}
 	
 	@Test (groups = {"GestionesPerfilAgente", "ModificarDatos", "E2E", "Ciclo3"}, dependsOnMethods = "TS121103_CRM_Movil_REPRO_Modificacion_de_datos_No_Actualizar_datos_Cliente_FAN_Front_Agentes")
@@ -954,7 +972,7 @@ public class GestionesPerfilAgente extends TestBase{
 		driver.findElements(By.className("profile-edit")).get(0).click();
 		sleep(10000);
 		driver.switchTo().frame(cambioFrame(driver, By.id("DocumentNumber")));
-		if(driver.findElement(By.id("MobilePhone")).getAttribute("value").isEmpty()){
+		if (driver.findElement(By.id("MobilePhone")).getAttribute("value").isEmpty()){
 			driver.findElement(By.id("MobilePhone")).clear();
 			driver.findElement(By.id("MobilePhone")).sendKeys("5214864852");
 		}
@@ -979,11 +997,7 @@ public class GestionesPerfilAgente extends TestBase{
 		driver.findElement(By.id("Email")).clear();
 		driver.findElement(By.id("Email")).sendKeys(mail);
 		driver.findElement(By.id("ClientInformation_nextBtn")).click();
-		sleep(8000);
-		Assert.assertTrue(driver.findElement(By.className("ta-care-omniscript-done")).getText().contains("Las modificaciones se realizaron con \u00e9xito"));
-		orden = driver.findElement(By.cssSelector(".vlc-slds-inline-control__label.ng-binding")).getText();
-		orden = orden.substring(orden.length()-9, orden.length()-1);
-		detalles +="-Orden:"+orden;	
+		sleep(7000);
 	}
 	
 	@Test (groups = {"GestionesPerfilAgente", "Vista360", "E2E","ConsultaPorGestion", "Ciclo2"}, dataProvider = "CuentaModificacionDeDatos")
@@ -1227,7 +1241,7 @@ public class GestionesPerfilAgente extends TestBase{
 		Assert.assertTrue(false); 
 	}
 	@Test(groups = { "GestionesPerfilAgente","Ciclo 3", "E2E", "CambioDeSimCard" }, priority = 1, dataProvider = "SimCardSiniestroAG")
-	public void TS99020_CRM_Movil_REPRO_Cambio_de_SimCard_Presencial_Siniestro_DOC_Store_Pick_Up_TC_Agente(String sDNI, String sLinea,String sEntrega, String sProvincia, String sLocalidad, String sPuntodeVenta, String sBanco, String cTarjeta, String cPromo, String cCuotas, String cNumTarjeta, String cVenceMes, String cVenceAno, String cCodSeg, String cTipoDNI,String cDNITarjeta, String cTitular) throws AWTException {
+	public void TS99020_CRM_Movil_REPRO_Cambio_de_SimCard_Presencial_Siniestro_DOC_Store_Pick_Up_TC_Agente(String sDNI, String sLinea,String sEntrega, String sProvincia, String sLocalidad, String sPuntodeVenta) throws AWTException {
 		imagen = "99020";
 		detalles = null;
 		detalles = imagen+"-Telef-DNI:"+sDNI;
@@ -1259,18 +1273,37 @@ public class GestionesPerfilAgente extends TestBase{
 		sleep(5000);
 		driver.navigate().refresh();
 		sleep(10000);
-		String invoice = cCC.obtenerMontoyTNparaAlta(driver, sOrden);
-		System.out.println(invoice);
-		sleep(10000);
-		detalles+="Monto:"+invoice.split("-")[1]+"-Prefactura:"+invoice.split("-")[0];
-		//datosOrden.add("Cambio sim card Agente- Cuenta: "+accid+"Invoice: "+invoice.split("-")[0]);
-		CBS_Mattu invoSer = new CBS_Mattu();
-		driver.navigate().refresh();
-		sleep(10000);
-		sleep(10000);
 		driver.switchTo().frame(cambioFrame(driver, By.cssSelector(".hasMotif.orderTab.detailPage.ext-webkit.ext-chrome.sfdcBody.brandQuaternaryBgr")));
 		WebElement tabla = driver.findElement(By.id("ep")).findElements(By.tagName("table")).get(1);
 		String datos = tabla.findElements(By.tagName("tr")).get(4).findElements(By.tagName("td")).get(1).getText();
+		if(activarFalsos==true) {
+			boolean esta = false;
+			List<WebElement> campos = tabla.findElements(By.tagName("tr"));
+			for(WebElement UnC: campos) {
+				if(UnC.getText().toLowerCase().contains("tracking status")) {
+					Assert.assertTrue(UnC.getText().toLowerCase().contains("preparar pedido"));
+					esta = true;
+					break;
+				}
+			}
+			Assert.assertTrue(esta);
+		}
+		sleep(2000);
+		CambiarPerfil("logistica",driver);
+		sb.completarLogistica(sOrden, driver);
+		sb.completarEntrega(sOrden, driver);
+		CambiarPerfil("ofcom",driver);
+		try {
+			cc.cajonDeAplicaciones("Consola FAN");
+		} catch(Exception e) {
+			waitForClickeable(driver,By.id("tabBar"));
+			driver.findElement(By.id("tabBar")).findElement(By.tagName("a")).click();
+			sleep(6000);
+		}
+		
+		driver.switchTo().defaultContent();
+		sleep(6000);
+		cCC.obtenerMontoyTNparaAlta(driver, sOrden);
 		Assert.assertTrue(datos.equalsIgnoreCase("activada")||datos.equalsIgnoreCase("activated"));
 	}
 	
@@ -1720,13 +1753,13 @@ public class GestionesPerfilAgente extends TestBase{
 		sleep(3000);
 		buscarYClick(driver.findElements(By.className("slds-text-body_regular")), "equals", "productos y servicios");
 		sleep(15000);
-		boolean a = false;
+		//boolean a = false;
 		driver.switchTo().frame(cambioFrame(driver, By.cssSelector(".slds-grid.slds-wrap.slds-card.slds-m-bottom--small.slds-p-around--medium")));
 		WebElement verif = driver.findElement(By.cssSelector(".via-slds.slds-m-around--small.ng-scope"));
 		if(verif.getText().toLowerCase().contains("servicios incluidos")) {
-			a = true;
+			//a = true;
 		}
-		Assert.assertTrue(a);
+		//Assert.assertTrue(a);
 		buscarYClick(driver.findElements(By.cssSelector(".slds-button.slds-button--brand")), "equals", "ver detalle");
 		sleep(5000);
 		driver.switchTo().frame(cambioFrame(driver, By.cssSelector(".via-slds-card__header.slds-card__header.headerList")));

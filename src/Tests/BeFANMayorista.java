@@ -5,7 +5,9 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.nio.file.Files;
 import java.nio.file.Paths;
+import java.util.ArrayList;
 import java.util.List;
+
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
@@ -17,6 +19,8 @@ import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 
+import Pages.BeFan;
+import Pages.ContactSearch;
 import Pages.SCP;
 import Pages.setConexion;
 
@@ -38,7 +42,7 @@ public class BeFANMayorista extends TestBase {
 			try {
 				for (WebElement x : menu.findElements(By.tagName("a"))) {
 					if (x.getText().toLowerCase().contains("importaci\u00f3n")) {
-						x.click();
+						x.click(); 
 						sleep(3000);
 					}
 				}			
@@ -549,6 +553,7 @@ public class BeFANMayorista extends TestBase {
 		}
 		Assert.assertTrue(descripcion);
 	}
+
 	@Test (groups = {"BeFAN", "Agente"})
 	public void TS135647_BeFan_Movil_Repro_Preactivacion_Visualizacion_de_datos_del_agente() {
 	sleep(3000);
@@ -579,5 +584,565 @@ public class BeFANMayorista extends TestBase {
 			ee.printStackTrace();
 			}
 		Assert.assertTrue(scp.isFileDownloaded(downloadPath, "PREACTIVACIONES DIARIAS"));
+	}
+
+	
+	@Test (groups = "BeFan", dataProvider="SerialConDepositoErroneo")
+	public void TS97651_BeFan_Movil_REPRO_PreaActivacion_Linea_Repro_SIMCARD_en_deposito_inexistente(String path, String nombreArch, String deposito, String prefijo, String serial1, String serial2, String prefijo2) throws IOException {
+		BeFan Botones = new BeFan(driver);
+		String[] resultadoEstado = {""};
+		String[] resultadoTexto = {""};
+		String estado = "Procesado";
+		resultadoEstado[0] = "Error";
+		resultadoTexto[0] = "El dep�sito de la SIM, VICLIE001, no corresponde con el dep�sito del punto de venta del agente, SG31185001.";
+		
+		Botones.BefanProceso();
+		irA("importacion");
+		sleep(500);
+		Botones.SISeleccionDeDeposito(deposito);
+		sleep(500);
+		Botones.SISeleccionDePrefijo(prefijo);
+		sleep(500);
+		Botones.SISeleccionCantidadDePrefijo("1");
+		sleep(500);
+		Botones.SIClickAgregar();
+		Botones.SIImportarArchivo(nombreArch = Botones.SICreacionArchivo(nombreArch, path, serial1, ""));
+		sleep(500);
+		Botones.SIClickImportar();
+		sleep(500);
+		Botones.SIClickAceptarImportar();
+		sleep(500);
+//		Botones.BefanProceso();
+//		sleep(118000);
+		irA("gestion");
+		sleep(500);
+		Botones.SGSeleccionEstado(estado);
+		sleep(500);
+		Botones.SGSeleccionDeposito(deposito);
+		sleep(500);
+		Botones.SGFechaDesdeAhora();
+		sleep(500);
+		Botones.SGClickBuscar();
+		sleep(500);
+		Assert.assertTrue(Botones.SGLeerCampoYValidar(nombreArch, resultadoEstado, resultadoTexto));
+	}
+
+	@Test (groups = "BeFan", dataProvider="SerialInexistente")
+	public void TS112002_BeFan_Movil_REPRO_Preactivacion_repro__Importacion_de_SIM_repro__Mensaje_de_error_ante_volver_a_agregar_otro_prefijo(String path, String nombreArch, String deposito, String prefijo, String serial1, String serial2, String prefijo2) {
+		BeFan Botones = new BeFan(driver);
+		irA("importacion");
+		String mensaje;
+		sleep(500);
+		Botones.SISeleccionDeDeposito(deposito);
+		sleep(500);
+		Botones.SISeleccionDePrefijo(prefijo);
+		sleep(500);
+		Botones.SISeleccionCantidadDePrefijo("1");
+		sleep(500);
+		Botones.SIClickAgregar();
+		sleep(700);
+		Botones.SISeleccionDePrefijo(prefijo);
+		sleep(500);
+		Botones.SISeleccionCantidadDePrefijo("1");
+		sleep(500);
+		Botones.SIClickAgregar();
+		sleep(1000);
+		mensaje = Botones.SIMensajeModal();
+		if (mensaje.contentEquals("El prefijo seleccionado ya se encuentra ingresado.")) {
+			Assert.assertTrue(true);
+		} else {
+			Assert.assertTrue(false);
+		}
+	}
+	
+	@Test (groups = "BeFan", dataProvider="SerialInexistente")
+	public void TS112029_BeFan_Movil_REPRO_Preactivacion_repro__Importacion_de_SIM_repro__S105__Simcard_inexistente(String path, String nombreArch, String deposito, String prefijo, String serial1, String serial2, String prefijo2) throws IOException {
+		
+		BeFan Botones = new BeFan(driver);
+		String[] resultadoEstado = {""};
+		String[] resultadoTexto = {""};
+		String estado = "Procesado";
+		resultadoEstado[0] = "Error";
+		resultadoTexto[0] = "Error al consumir un proveedor - Provider ID: VMI.INVENTARIO.INVENTARIO - Provider Error Code: 1200 - Provider Error Description: Serial No encontrado";
+
+
+		irA("importacion");
+		sleep(500);
+		Botones.SISeleccionDeDeposito(deposito);
+		sleep(500);
+		Botones.SISeleccionDePrefijo(prefijo);
+		sleep(500);
+		Botones.SISeleccionCantidadDePrefijo("1");
+		sleep(500);
+		Botones.SIClickAgregar();
+		Botones.SIImportarArchivo(nombreArch = Botones.SICreacionArchivo(nombreArch, path, serial1, ""));
+		sleep(500);
+		Botones.SIClickImportar();
+		sleep(500);
+		Botones.SIClickAceptarImportar();
+		sleep(500);
+//		Botones.BefanProceso();
+//		sleep(118000);
+		irA("gestion");
+		sleep(500);
+		Botones.SGSeleccionEstado(estado);
+		sleep(500);
+		Botones.SGSeleccionDeposito(deposito);
+		sleep(500);
+		Botones.SGFechaDesdeAhora();
+		sleep(500);
+		Botones.SGClickBuscar();
+		sleep(500);
+		Assert.assertTrue(Botones.SGLeerCampoYValidar(nombreArch, resultadoEstado, resultadoTexto));
+
+	}	
+	
+	@Test (groups = "BeFan", dataProvider="SerialConFormatoInvalido")
+	public void TS126615_BeFan_Movil_REPRO_Preactivacion_repro__Importacion_de_agrupadores__Formato_erroneo(String path, String nombreArch, String deposito, String prefijo, String serial1, String serial2, String prefijo2) throws IOException {
+		BeFan Botones = new BeFan(driver);
+		String mensaje;
+		
+		Botones.BefanProceso();
+		irA("importacion");
+		sleep(500);
+		Botones.SISeleccionDeDeposito(deposito);
+		sleep(500);
+		Botones.SISeleccionDePrefijo(prefijo);
+		sleep(500);
+		Botones.SISeleccionCantidadDePrefijo("1");
+		sleep(500);
+		Botones.SIClickAgregar();
+		Botones.SIImportarArchivo(nombreArch = Botones.SICreacionArchivo(nombreArch, path, serial1, ""));
+		sleep(500);
+		Botones.SIClickImportar();
+		sleep(500);
+		Botones.SIClickAceptarImportar();
+		sleep(1000);
+		mensaje = Botones.SIMensajeModalMasDeUnMensaje();
+		if (mensaje.contentEquals("Las sims deben tener 20 caracteres num�ricos sin espacios")) {
+			Assert.assertTrue(true);
+		} else {
+			Assert.assertTrue(false);
+		}
+	}
+
+	@Test (groups = "BeFan", dataProvider="SerialConDepositoErroneo")
+	public void TS126640_BeFan_Movil_REPRO_Preactivacion_repro__Importacion_de_SIM_repro__S105__Deposito_erroneo(String path, String nombreArch, String deposito, String prefijo, String serial1, String serial2, String prefijo2) throws IOException {
+		BeFan Botones = new BeFan(driver);
+		String[] resultadoEstado = {""};
+		String[] resultadoTexto = {""};
+		String estado = "Procesado";
+		resultadoEstado[0] = "Error";
+		resultadoTexto[0] = "El dep�sito de la SIM, VICLIE001, no corresponde con el dep�sito del punto de venta del agente, SG31185001.";
+
+		Botones.BefanProceso();
+		irA("importacion");
+		sleep(500);
+		Botones.SISeleccionDeDeposito(deposito);
+		sleep(500);
+		Botones.SISeleccionDePrefijo(prefijo);
+		sleep(500);
+		Botones.SISeleccionCantidadDePrefijo("1");
+		sleep(500);
+		Botones.SIClickAgregar();
+		Botones.SIImportarArchivo(nombreArch = Botones.SICreacionArchivo(nombreArch, path, serial1, ""));
+		sleep(500);
+		Botones.SIClickImportar();
+		sleep(500);
+		Botones.SIClickAceptarImportar();
+		sleep(500);
+//		Botones.BefanProceso();
+//		sleep(118000);
+		irA("gestion");
+		sleep(500);
+		Botones.SGSeleccionEstado(estado);
+		sleep(500);
+		Botones.SGSeleccionDeposito(deposito);
+		sleep(500);
+		Botones.SGFechaDesdeAhora();
+		sleep(500);
+		Botones.SGClickBuscar();
+		sleep(500);
+		Assert.assertTrue(Botones.SGLeerCampoYValidar(nombreArch, resultadoEstado, resultadoTexto));
+	}
+	
+	@Test (groups = "BeFan", dataProvider="SerialValido")
+	public void TS126648_BeFan_Movil_REPRO_Preactivacion_repro__Importacion_de_SIM_repro__S436__Envio_de_lote(String path, String nombreArch, String deposito, String prefijo, String serial1, String serial2, String prefijo2) throws IOException {
+		BeFan Botones = new BeFan(driver);
+		String[] resultadoEstado = {""};
+		String[] resultadoTexto = {""};
+		String estado = "En Proceso";
+		resultadoEstado[0] = "PendientePreactivar";
+		resultadoTexto[0] = "Reserva realizada";
+		
+		Botones.BefanProceso();
+		irA("importacion");
+		sleep(500);
+		Botones.SISeleccionDeDeposito(deposito);
+		sleep(500);
+		Botones.SISeleccionDePrefijo(prefijo);
+		sleep(500);
+		Botones.SISeleccionCantidadDePrefijo("1");
+		sleep(500);
+		Botones.SIClickAgregar();
+		Botones.SIImportarArchivo(nombreArch = Botones.SICreacionArchivo(nombreArch, path, serial1, ""));
+		sleep(500);
+		Botones.SIClickImportar();
+		sleep(500);
+		Botones.SIClickAceptarImportar();
+		sleep(500);
+//		Botones.BefanProceso();
+//		sleep(118000);
+		irA("gestion");
+		sleep(500);
+		Botones.SGSeleccionEstado(estado);
+		sleep(500);
+		Botones.SGSeleccionDeposito(deposito);
+		sleep(500);
+		Botones.SGFechaDesdeAhora();
+		sleep(500);
+		Botones.SGClickBuscar();
+		sleep(500);
+		Assert.assertTrue(Botones.SGLeerCampoYValidar(nombreArch, resultadoEstado, resultadoTexto));
+		
+	}
+	
+	@Test (groups = "BeFan", dataProvider="DosSerialesValidos")
+	public void TS97657_BeFan_Movil_REPRO_Asociaci�n_de_diferentes_seriales_a_diferentes_prefijos(String path, String nombreArch, String deposito, String prefijo, String serial1, String serial2, String prefijo2) throws IOException {
+		BeFan Botones = new BeFan(driver);
+		String[] resultadoEstado = {""};
+		String[] resultadoTexto = {""};
+		String estado = "Procesado";
+		resultadoEstado[0] = "Activado";
+		resultadoTexto[0] = "Activaci�n confirmada";
+		
+		Botones.BefanProceso();
+		irA("importacion");
+		sleep(500);
+		Botones.SISeleccionDeDeposito(deposito);
+		sleep(500);
+		Botones.SISeleccionDePrefijo(prefijo);
+		sleep(500);
+		Botones.SISeleccionCantidadDePrefijo("1");
+		sleep(500);
+		Botones.SISeleccionDePrefijo(prefijo2);
+		sleep(500);
+		Botones.SISeleccionCantidadDePrefijo("1");
+		sleep(500);
+		Botones.SIClickAgregar();
+		Botones.SIImportarArchivo(nombreArch = Botones.SICreacionArchivo(nombreArch, path, serial1, serial2));
+		sleep(500);
+		Botones.SIClickImportar();
+		sleep(500);
+		Botones.SIClickAceptarImportar();
+		sleep(500);
+//		Botones.BefanProceso();
+//		sleep(1198000);
+		irA("gestion");
+		sleep(500);
+		Botones.SGSeleccionEstado(estado);
+		sleep(500);
+		Botones.SGSeleccionDeposito(deposito);
+		sleep(500);
+		Botones.SGFechaDesdeAhora();
+		sleep(500);
+		Botones.SGClickBuscar();
+		sleep(500);
+		Assert.assertTrue(Botones.SGLeerCampoYValidar(nombreArch, resultadoEstado, resultadoTexto));
+		
+	}
+	
+	@Test (groups = "BeFan", dataProvider="ArchivoVacio")
+	public void TS97664_BeFan_Movil_REPRO_Cantidad_inexistente(String path, String nombreArch, String deposito, String prefijo, String serial1, String serial2, String prefijo2) throws IOException {
+		BeFan Botones = new BeFan(driver);
+		String mensaje;
+		
+		Botones.BefanProceso();
+		irA("importacion");
+		sleep(500);
+		Botones.SISeleccionDeDeposito(deposito);
+		sleep(500);
+		Botones.SIImportarArchivo(nombreArch = Botones.SICreacionArchivo(nombreArch, path, "", ""));
+		sleep(500);
+		Botones.SIClickImportar();
+		sleep(500);
+		Botones.SIClickAceptarImportar();
+		sleep(1000);
+		mensaje = Botones.SIMensajeModal();
+		if (mensaje.contentEquals("El archivo no contiene datos")) {
+			Assert.assertTrue(true);
+		} else {
+			Assert.assertTrue(false);
+		}
+	
+	}
+	
+	@Test (groups = "BeFan", dataProvider="SerialNoMCVM")
+	public void TS97653_BeFan_Movil_REPRO_PreaActivacion_Linea_Repro_SIMCARD_en_estado_distinto_a_MCVM(String path, String nombreArch, String deposito, String prefijo, String serial1, String serial2, String prefijo2) throws IOException {
+		BeFan Botones = new BeFan(driver);
+		String[] resultadoEstado = {""};
+		String[] resultadoTexto = {""};
+		String estado = "Procesado";
+		resultadoEstado[0] = "Error";
+		resultadoTexto[0] = "No esta disponible para la venta.";
+		
+		Botones.BefanProceso();
+		irA("importacion");
+		sleep(500);
+		Botones.SISeleccionDeDeposito(deposito);
+		sleep(500);
+		Botones.SISeleccionDePrefijo(prefijo);
+		sleep(500);
+		Botones.SISeleccionCantidadDePrefijo("1");
+		sleep(500);
+		Botones.SIClickAgregar();
+		Botones.SIImportarArchivo(nombreArch = Botones.SICreacionArchivo(nombreArch, path, serial1, ""));
+		sleep(500);
+		Botones.SIClickImportar();
+		sleep(500);
+		Botones.SIClickAceptarImportar();
+		sleep(500);
+		Botones.BefanProceso();
+		sleep(3600000);
+//		Botones.BefanProceso();
+//		sleep(3600000);
+		irA("gestion");
+		sleep(500);
+		Botones.SGSeleccionEstado(estado);
+		sleep(500);
+		Botones.SGSeleccionDeposito(deposito);
+		sleep(500);
+		Botones.SGFechaDesdeAhora();
+		sleep(500);
+		Botones.SGClickBuscar();
+		sleep(500);
+		Assert.assertTrue(Botones.SGLeerCampoYValidar(nombreArch, resultadoEstado, resultadoTexto));
+	}
+	
+	@Test (groups = "BeFan", dataProvider="SerialesNoValidos")
+	public void TS97658_BeFan_Movil_REPRO_Serial_no_asociado_a_ningun_prefijo(String path, String nombreArch, String deposito, String prefijo, String serial1, String serial2, String prefijo2) throws IOException {
+		BeFan Botones = new BeFan(driver);
+		String mensaje;
+		Botones.BefanProceso();
+		irA("importacion");
+		sleep(500);
+		Botones.SISeleccionDeDeposito(deposito);
+		sleep(500);
+		Botones.SISeleccionDePrefijo(prefijo);
+		sleep(500);
+		Botones.SISeleccionCantidadDePrefijo("1");
+		sleep(500);
+		Botones.SIClickAgregar();
+		Botones.SIImportarArchivo(nombreArch = Botones.SICreacionArchivo(nombreArch, path, serial1, serial2));
+		sleep(500);
+		Botones.SIClickImportar();
+		sleep(500);
+		Botones.SIClickAceptarImportar();
+		sleep(1000);
+		mensaje = Botones.SIMensajeModal();
+		if (mensaje.contentEquals("La sumatoria de la cantidad de prefijos es menor a la cantidad total de lineas del archivo.")) {
+			Assert.assertTrue(true);
+		} else {
+			Assert.assertTrue(false);
+		}
+
+	}
+
+	@Test (groups = "BeFan")
+	public void TS111958_BeFan_Movil_REPRO_Preactivacion_repro__PreActivacion_Linea_Repro(String path, String nombreArch, String deposito, String prefijo, String serial1, String serial2, String prefijo2) throws IOException {
+		BeFan Botones = new BeFan(driver);
+		String[] resultadoEstado = {""};
+		String[] resultadoTexto = {""};
+		String estado = "Procesado";
+		resultadoEstado[0] = "Activado";
+		resultadoTexto[0] = "Activaci�n confirmada";
+		
+		Botones.BefanProceso();
+		irA("importacion");
+		sleep(500);
+		Botones.SISeleccionDeDeposito(deposito);
+		sleep(500);
+		Botones.SISeleccionDePrefijo(prefijo);
+		sleep(500);
+		Botones.SISeleccionCantidadDePrefijo("1");
+		sleep(500);
+		Botones.SIClickAgregar();
+		Botones.SIImportarArchivo(nombreArch = Botones.SICreacionArchivo(nombreArch, path, serial1, ""));
+		sleep(500);
+		Botones.SIClickImportar();
+		sleep(500);
+		Botones.SIClickAceptarImportar();
+		sleep(500);
+		Botones.BefanProceso();
+		sleep(3600000);
+//		Botones.BefanProceso();
+//		sleep(3600000);
+		irA("gestion");
+		sleep(500);
+		Botones.SGSeleccionEstado(estado);
+		sleep(500);
+		Botones.SGSeleccionDeposito(deposito);
+		sleep(500);
+		Botones.SGFechaDesdeAhora();
+		sleep(500);
+		Botones.SGClickBuscar();
+		sleep(500);
+		Assert.assertTrue(Botones.SGLeerCampoYValidar(nombreArch, resultadoEstado, resultadoTexto));
+		//Falta verificacion en CRM de lineas preactivadas
+	}
+
+	@Test (groups = "BeFan", dataProvider="SerialValido")
+	public void TS97656_BeFan_Movil_REPRO_Cantidad_de_seriales_ingresados_mayor_al_habilitado_por_agente(String path, String nombreArch, String deposito, String prefijo, String serial1, String serial2, String prefijo2) throws IOException {
+		BeFan Botones = new BeFan(driver);
+		String mensaje;
+		
+		//FALTA BORRAR CUPOS
+		Botones.BefanProceso();
+		irA("importacion");
+		sleep(500);
+		Botones.SISeleccionDeDeposito(deposito);
+		sleep(500);
+		Botones.SISeleccionDePrefijo(prefijo);
+		sleep(500);
+		Botones.SISeleccionCantidadDePrefijo("1");
+		sleep(500);
+		Botones.SIClickAgregar();
+		Botones.SIImportarArchivo(nombreArch = Botones.SICreacionArchivo(nombreArch, path, serial1, ""));
+		sleep(500);
+		Botones.SIClickImportar();
+		sleep(500);
+		Botones.SIClickAceptarImportar();
+		sleep(1000);
+		mensaje = Botones.SIMensajeModal();
+		//FALTA PONER MENSAJE
+		if (mensaje.contentEquals("La sumatoria de la cantidad de prefijos es menor a la cantidad total de lineas del archivo.")) {
+			Assert.assertTrue(true);
+		} else {
+			Assert.assertTrue(false);
+		}
+		//FALTA REPONER CUPOS
+		
+	}
+	
+	@Test (groups = "BeFan", dataProvider="SerialValidoEterno")
+	public void TS97654_BeFan_Movil_REPRO_PreaActivacion_Linea_Repro_Localidad_inexistente_para_numeracion_movil(String path, String nombreArch, String deposito, String prefijo, String serial1, String serial2, String prefijo2) throws IOException {
+		BeFan Botones = new BeFan(driver);
+		String[] resultadoEstado = {""};
+		String[] resultadoTexto = {""};
+		String estado = "Procesado";
+		resultadoEstado[0] = "Error";
+		resultadoTexto[0] = "Desreserva realizada";
+		
+		irA("importacion");
+		sleep(500);
+		Botones.SISeleccionDeDeposito(deposito);
+		sleep(500);
+		Botones.SISeleccionDePrefijo(prefijo);
+		sleep(500);
+		Botones.SISeleccionCantidadDePrefijo("1");
+		sleep(500);
+		Botones.SIClickAgregar();
+		Botones.SIImportarArchivo(nombreArch = Botones.SICreacionArchivo(nombreArch, path, serial1, ""));
+		sleep(500);
+		Botones.SIClickImportar();
+		sleep(500);
+		Botones.SIClickAceptarImportar();
+		sleep(500);
+//		Botones.BefanProceso();
+//		sleep(118000);
+		irA("gestion");
+		sleep(500);
+		Botones.SGSeleccionEstado(estado);
+		sleep(500);
+		Botones.SGSeleccionDeposito(deposito);
+		sleep(500);
+		Botones.SGFechaDesdeAhora();
+		sleep(500);
+		Botones.SGClickBuscar();
+		sleep(500);
+		Assert.assertTrue(Botones.SGLeerCampoYValidar(nombreArch, resultadoEstado, resultadoTexto));
+		
+	}
+	
+	@Test (groups = "BeFan", dataProvider="SerialValidoEternov2")
+	public void TS111990_BeFan_Movil_REPRO_PreaActivacion_Linea_Repro_Localidad_inexistente_para_numeracion_movil(String path, String nombreArch, String deposito, String prefijo, String serial1, String serial2, String prefijo2) throws IOException {
+		BeFan Botones = new BeFan(driver);
+		String[] resultadoEstado = {""};
+		String[] resultadoTexto = {""};
+		String estado = "Procesado";
+		resultadoEstado[0] = "Error";
+		resultadoTexto[0] = "Desreserva realizada";
+		
+		irA("importacion");
+		sleep(500);
+		Botones.SISeleccionDeDeposito(deposito);
+		sleep(500);
+		Botones.SISeleccionDePrefijo(prefijo);
+		sleep(500);
+		Botones.SISeleccionCantidadDePrefijo("1");
+		sleep(500);
+		Botones.SIClickAgregar();
+		Botones.SIImportarArchivo(nombreArch = Botones.SICreacionArchivo(nombreArch, path, serial1, ""));
+		sleep(500);
+		Botones.SIClickImportar();
+		sleep(500);
+		Botones.SIClickAceptarImportar();
+		sleep(500);
+//		Botones.BefanProceso();
+//		sleep(118000);
+		irA("gestion");
+		sleep(500);
+		Botones.SGSeleccionEstado(estado);
+		sleep(500);
+		Botones.SGSeleccionDeposito(deposito);
+		sleep(500);
+		Botones.SGFechaDesdeAhora();
+		sleep(500);
+		Botones.SGClickBuscar();
+		sleep(500);
+		Assert.assertTrue(Botones.SGLeerCampoYValidar(nombreArch, resultadoEstado, resultadoTexto));
+		
+	}
+	
+	
+	
+	@Test (groups = "BeFAN")
+	public void TS112052_BeFan_Movil_REPRO_Preactivacion_repro_Busqueda_de_archivos_Usuario_TPA_Visualizacion_de_mas_informacion_Exportacion_Nombre() {
+		irA("gestion");
+		selectByText(driver.findElement(By.cssSelector(".text.form-control.ng-pristine.ng-untouched.ng-valid.ng-empty")), "Procesado");
+		selectByText(driver.findElements(By.cssSelector(".text.form-control.ng-pristine.ng-untouched.ng-valid.ng-empty")).get(1), "BAS-VJP-BAHIA BLANCA - VJP Punta Alta");
+		driver.findElement(By.cssSelector(".btn.btn-primary")).click();
+		sleep(5000);
+		driver.findElement(By.id("exportarTabla")).findElement(By.tagName("tbody")).findElement(By.tagName("tr")).findElements(By.tagName("td")).get(8).click();
+		sleep(3000);
+		driver.findElement(By.id("botonExportar")).click();
+		sleep(5000);
+		String downloadPath = "C:\\Users\\Nicolas\\Downloads";
+		Assert.assertTrue(scp.isFileDownloaded(downloadPath, "PREACTIVACIONES DIARIAS"));
+	}
+	
+	@Test (groups = "BeFan")
+	public void TS135619_BeFan_Movil_Repro_Preactivacion_Importacion_de_cupos_Exitoso_Verificacion_Dentro_de_la_fecha() {
+		ContactSearch contact = new ContactSearch(driver);
+		irA("importacion");
+		sleep(7000);
+		selectByText(driver.findElement(By.name("vendedores")), "BAS-VJP-BAHIA BLANCA - VJP Punta Alta");
+		sleep(7000);
+		selectByText(driver.findElement(By.cssSelector(".text.form-control.ng-pristine.ng-untouched.ng-valid.ng-empty")), "2477");
+		driver.findElement(By.cssSelector(".text.form-control.ng-pristine.ng-untouched.ng-valid.ng-empty")).sendKeys("1");
+		driver.findElement(By.cssSelector(".btn.btn-primary")).click();
+		File directory = new File("BeFan135619b.txt");
+		contact.subir_cupos(new File(directory.getAbsolutePath()).toString(),"");
+		sleep(5000);
+		driver.findElements(By.cssSelector(".btn.btn-primary")).get(2).click();
+		Boolean a = false;
+		sleep(5000);
+		List <WebElement> formato = driver.findElements(By.className("modal-content"));
+		for(WebElement x : formato) {
+			if(x.getText().toLowerCase().contains("el archivo se import\u00f3 correctamente")) {
+				a= true;
+			}
+		}
+		Assert.assertTrue(a);
 	}
 }
