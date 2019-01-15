@@ -22,12 +22,15 @@ import Pages.BasePage;
 import Pages.BeFan;
 import Pages.ContactSearch;
 import Pages.Marketing;
+import Pages.SCP;
 import Pages.setConexion;
+import javafx.scene.web.WebEngineBuilder;
 
 public class BeFANConfigurador extends TestBase {
 	
 	private WebDriver driver;
 	private Pages.BeFan pbf;
+	private SCP scp;
 	
 	private void irA(String sMenu,String sOpcion) {
 		sleep(3000);
@@ -54,6 +57,7 @@ public class BeFANConfigurador extends TestBase {
 	@BeforeClass (alwaysRun = true)
 	public void init() {
 		driver = setConexion.setupEze();
+		scp = new SCP(driver);
 		loginBeFANConfigurador(driver);
 	}
 	
@@ -623,52 +627,85 @@ public class BeFANConfigurador extends TestBase {
 	@Test (groups = "BeFan")
 	public void TS126634_BeFan_Movil_REPRO_Preactivacion_repro_Gestion_de_agrupadores_Busqueda_Eliminacion_de_agrupadores_Si_Preactivando() throws InterruptedException {
 		irA("Regiones", "Gesti\u00f3n");
-		sleep(3000);
+		BeFan page = new BeFan(driver);
+		boolean eliminar = false;
+		//boolean cancelar = false;
+		irA("regiones", "gesti\u00f3n");
 		driver.findElement(By.cssSelector(".btn.btn-primary")).click();
+		driver.findElement(By.cssSelector(".form-control.ng-pristine.ng-untouched.ng-valid.ng-empty")).sendKeys("cordoba");
+		driver.findElement(By.cssSelector(".btn.btn-primary")).click();
+		for(WebElement x : driver.findElements(By.cssSelector(".alert.alert-dismissable.alert-danger"))) {
+		if(x.getText().contains("error")){
+			//cancelar=(true);
+			buscarYClick(driver.findElements(By.cssSelector(".btn.btn-link")), "equals", "cancelar");
+			break;
+		}
+		else {
+//				driver.findElement(By.cssSelector(".btn.btn-primary")).click();
+				buscarYClick(driver.findElements(By.cssSelector(".btn.btn-primary")), "equals", "cerrar");
+			}
+//		//Assert.assertTrue(cancelar);
+		}
+		//buscarYClick(driver.findElements(By.cssSelector(".btn.btn-primary")), "equals", "cerrar");
+		//page.buscarR("cordoba");
+		buscarYClick(driver.findElements(By.cssSelector(".panel-group.panel-group-alternative.ng-scope")), "contains", "cordoba");
+		driver.findElement(By.cssSelector(".panel-collapse.in.collapse")).findElement(By.cssSelector(".btn.btn-link")).click();
 		sleep(3000);
-		String Region="CORDOBA";
-		driver.findElement(By.cssSelector(".form-control.ng-pristine.ng-untouched.ng-valid.ng-empty")).sendKeys(Region);
-		driver.findElement(By.xpath("//*[@class='btn btn-primary' and contains(text(), 'Agregar')]")).click();
-//		String region= "";
-//		if(region=driver.findElement(By.cssSelector(".alert.alert-dismissable.alert-danger")) {
-//			System.out.println(driver.findElement(By.cssSelector(".alert.alert-dismissable.alert-danger")).getText());
-//			driver.findElement(By.className("pull-right")).findElement(By.cssSelector(".btn.btn-link")).getText().equalsIgnoreCase("Cancelar");
-//			driver.findElement(By.className("pull-right")).findElement(By.cssSelector(".btn.btn-link")).click();
-//		//pbf.region();
-//		}
-//		else {
+		driver.findElement(By.className("check-filter-on")).click();
+		
+		buscarYClick(driver.findElements(By.cssSelector(".btn.btn-primary")), "equals", "agregar");
+		buscarYClick(driver.findElements(By.cssSelector(".btn.btn-primary")), "equals", "cerrar");
 		sleep(5000);
-		driver.findElement(By.xpath("//*[@class='btn btn-primary' and contains(text(), 'Agregar')]")).click();
-		sleep(5000);
-		pbf = new Pages.BeFan(driver);
-		Assert.assertTrue(pbf.verificarMensajeExitoso());
-		//Ask about confirmation message
-		driver.findElement(By.xpath("//*[@ng-show='mensajeAgregarRegionCtrl.container.showSuccess']//*[@class='btn btn-primary']")).click();
-		pbf.buscarR("cordoba");
-		sleep(3000);
-		driver.findElement(By.className("col-lg-2")).findElement(By.cssSelector(".btn.btn-link")).click();
-		driver.findElement(By.className("modal-content")).findElement(By.className("modal-body")).findElement(By.cssSelector(".col-lg-4.dropdown-filters"));
-		driver.findElement(By.id("compatibility")).findElement(By.tagName("input")).click();
-		driver.findElement(By.xpath("//*[@class='btn btn-primary' and contains(text(), 'CERRAR')]")).click();
-		sleep(5000);
-		pbf = new Pages.BeFan(driver);
-		Assert.assertTrue(pbf.verificarMensajeExitoso());
-		driver.findElement(By.cssSelector(".actions.text-center")).findElement(By.cssSelector(".btn.btn-link")).click();
-		Assert.assertTrue(driver.findElement(By.cssSelector(".text-center.ng-binding")).getText().contains("ï¿½Esta seguro que desea eliminarlo ?"));
-		pbf.eliminar();
-		//driver.findElement(By.xpath("//*[@class='btn btn-primary' and contains(text(), 'ELIMINAR')]")).click();
-		Assert.assertTrue(pbf.verificarMensajeExitoso());
-		//driver.findElement(By.xpath("//*[@class='btn btn-primary' and contains(text(), 'CERRAR')]")).click();
-		pbf.cerrar();
-		driver.findElement(By.cssSelector(".text-center.ng-binding")).getText().contains("ï¿½Tambien desea eliminar la Region CORDOBA ?");
-		//driver.findElement(By.xpath("//*[@class='btn btn-primary' and contains(text(), 'ELIMINAR')]")).click();
-		pbf.eliminar();
-		Assert.assertTrue(pbf.verificarMensajeExitoso());
-		//driver.findElement(By.xpath("//*[@class='btn btn-primary' and contains(text(), 'CERRAR')]")).click();
-		pbf.cerrar();
+		for (WebElement x : driver.findElements(By.cssSelector(".panel-group.panel-group-alternative.ng-scope"))) {
+			if (x.getText().toLowerCase().contains("cordoba"))
+				((JavascriptExecutor) driver).executeScript("window.scrollTo(0," + x.getLocation().y + ")");
+		}
+		buscarYClick(driver.findElements(By.cssSelector(".panel-group.panel-group-alternative.ng-scope")), "contains", "cordoba");
+		for (WebElement x : driver.findElements(By.className("panel-group"))) {
+			if (x.getText().contains("3546"))
+				x.findElement(By.cssSelector(".glyphicon.glyphicon-remove")).click();
+				//x.findElement(By.tagName("tbody")).findElement(By.tagName("button")).click();
+			buscarYClick(driver.findElements(By.cssSelector(".btn.btn-primary")), "equals", "eliminar");
+			Assert.assertTrue(pbf.verificarMensajeExitoso());
+			buscarYClick(driver.findElements(By.cssSelector(".btn.btn-primary")), "equals", "cerrar");
+			eliminar = true;
+		}
+		Assert.assertTrue(eliminar);
 	}
 	
 
+		
+//		page.buscarR("bahia blanca");
+//		sleep(3000);
+//		driver.findElement(By.cssSelector(".panel-collapse.in.collapse")).findElement(By.cssSelector(".btn.btn-link")).click();
+//		sleep(3000);
+//		
+//		driver.findElement(By.cssSelector(".glyphicon.glyphicon-plus")).click();
+//		
+//		String nroPrefijo = driver.findElement(By.cssSelector(".compatibility.custom-check.ng-scope")).findElement(By.tagName("label")).getText();
+//		System.out.println(nroPrefijo);
+//		driver.findElement(By.xpath("//*[@class='btn btn-primary' and contains(text(), 'Agregar')]")).click();
+//		sleep(5000);
+//		Assert.assertTrue(page.verificarMensajeExitoso());	
+//		driver.findElement(By.xpath("//*[@class='btn btn-primary' and contains(text(), 'Cerrar')]")).click();
+//		page.buscarR("bahia blanca");
+//		driver.findElement(By.cssSelector(".glyphicon.glyphicon-remove")).click();
+//		Assert.assertTrue(driver.findElement(By.cssSelector(".text-center.ng-binding")).getText().contains("ï¿½Esta seguro que desea eliminarlo ?"));
+//		page.eliminar();
+//		driver.findElement(By.xpath("//*[@class='btn btn-primary' and contains(text(), 'Cerrar')]")).click();
+//		
+//		//driver.findElement(By.xpath("//*[@class='btn btn-primary' and contains(text(), 'ELIMINAR')]")).click();
+//		Assert.assertTrue(page.verificarMensajeExitoso());
+//		//driver.findElement(By.xpath("//*[@class='btn btn-primary' and contains(text(), 'CERRAR')]")).click();
+//		page.cerrar();
+//		driver.findElement(By.cssSelector(".text-center.ng-binding")).getText().contains("ï¿½Tambien desea eliminar la Region CORDOBA ?");
+//		//driver.findElement(By.xpath("//*[@class='btn btn-primary' and contains(text(), 'ELIMINAR')]")).click();
+//		page.eliminar();
+//		Assert.assertTrue(pbf.verificarMensajeExitoso());
+//		//driver.findElement(By.xpath("//*[@class='btn btn-primary' and contains(text(), 'CERRAR')]")).click();
+//		page.cerrar();
+	
+	
 	
 	@Test (groups = "BeFan")
 	public void TS112020_BeFan_Movil_REPRO_Preactivacion_repro_Gestion_de_agrupadores_Busqueda_Eliminacion_de_agrupadores_Si_Sin_preactivar() {
@@ -847,7 +884,7 @@ public class BeFANConfigurador extends TestBase {
 	public void TS135636_BeFan_Movil_Repro_Preactivacion_Gestion_de_cupos_Busqueda_Eliminacion_de_cupo_Mensaje_Confirmacion() throws ParseException{
 		BeFan fechas= new BeFan (driver);
 		SimpleDateFormat formatoDelTexto = new SimpleDateFormat ("dd/MM/yyyy");
-		String pregunta = "¿est\u00e1 seguro que desea dar de baja el registro seleccionado?";
+		String pregunta = "ï¿½est\u00e1 seguro que desea dar de baja el registro seleccionado?";
 		String desde ="27/09/2018";
 		String hasta = "25/12/2018";
 		Date fechaDesde = formatoDelTexto.parse(desde);
@@ -1062,4 +1099,514 @@ public class BeFANConfigurador extends TestBase {
 			btnCancelar = true;
 		Assert.assertTrue(btnCancelar);
 	}
+	
+	@Test (groups = "BeFan")
+	public void TS135606_BeFan_Movil_Repro_Preactivacion_Importacion_de_cupos_Formato_interno_Mas_valores_en_una_linea() {
+		ContactSearch contact = new ContactSearch(driver);
+		irA("Cupos", "Importaci\u00f3n");
+		sleep(5000);
+		File directory = new File("BeFan135606.txt");
+		contact.subir_cupos(new File(directory.getAbsolutePath()).toString(),"si");
+		sleep(5000);
+		boolean a = false;
+		List <WebElement> formato = driver.findElements(By.className("modal-header"));
+		for(WebElement x : formato) {
+			if(x.getText().toLowerCase().contains("verifique el contenido del archivo que desea importar, existen cupos inv\u00e1lidos.")) {
+				a = true;
+				
+			}
+		}
+		Assert.assertTrue(a);
+	}
+	
+	@Test (groups = "BeFan")
+	public void TS135607_BeFan_Movil_Repro_Preactivacion_Importacion_de_cupos_Formato_interno_Menos_valores_en_una_linea() {
+		ContactSearch contact = new ContactSearch(driver);
+		irA("Cupos", "Importaci\u00f3n");
+		sleep(7000);
+		File directory = new File("BeFan135606-135607.txt");
+		contact.subir_cupos(new File(directory.getAbsolutePath()).toString(),"si");
+		sleep(5000);
+		boolean a = false;
+		List <WebElement> formato = driver.findElements(By.className("modal-header"));
+		for(WebElement x : formato) {
+			if(x.getText().toLowerCase().contains("verifique el contenido del archivo que desea importar, existen cupos inv\u00e1lidos.")) {
+				a = true;
+				
+			}
+		}
+		Assert.assertTrue(a);
+	}
+	
+	@Test (groups = "BeFan")
+	public void TS112025_BeFan_Movil_REPRO_Preactivacion_repro_Gestion_de_agrupadores_Busqueda_Modificacion_de_agrupadores_Eliminacion_de_prefijos_en_agrupador_existente_Guardando_Verificacion() {
+		irA("regiones", "gesti\u00f3n");
+		boolean nroPrefijo = false;
+		buscarYClick(driver.findElements(By.cssSelector(".panel-group.panel-group-alternative.ng-scope")), "contains", "bas-vjp-bahia blanca");
+		driver.findElement(By.cssSelector(".panel-collapse.in.collapse")).findElement(By.cssSelector(".btn.btn-link")).click();
+		String prefijo = driver.findElement(By.className("modal-header")).getText();
+		prefijo = prefijo.replaceAll("((\\D)*)", "");
+		buscarYClick(driver.findElements(By.cssSelector(".btn.btn-primary")), "equals", "eliminar");
+		buscarYClick(driver.findElements(By.cssSelector(".btn.btn-primary")), "equals", "cerrar");
+		driver.findElement(By.name("menuUsuario")).click();
+		driver.findElement(By.name("salir")).click();
+		driver.findElement(By.name("username")).sendKeys("UAT195528");
+		driver.findElement(By.name("txtPass")).sendKeys("Testa10k");
+		driver.findElement(By.name("btnIngresar")).click();
+		sleep(5000);
+		irA("sims", "importaci\u00f3n");
+		selectByText(driver.findElement(By.cssSelector(".text.form-control.ng-pristine.ng-untouched.ng-valid.ng-empty")), "BAS-VJP-BAHIA BLANCA - VJP Punta Alta");
+		if (!(driver.findElement(By.cssSelector(".text.form-control.ng-pristine.ng-untouched.ng-valid.ng-empty")).getText().contains(prefijo)))
+			nroPrefijo = true;
+		driver.findElement(By.name("menuUsuario")).click();
+		driver.findElement(By.name("salir")).click();
+		driver.findElement(By.name("username")).sendKeys("UAT529763");
+		driver.findElement(By.name("txtPass")).sendKeys("Testa10k");
+		driver.findElement(By.name("btnIngresar")).click();
+		sleep(5000);
+		irA("regiones", "gesti\u00f3n");
+		buscarYClick(driver.findElements(By.cssSelector(".panel-group.panel-group-alternative.ng-scope")), "contains", "bas-vjp-bahia blanca");
+		for (WebElement x : driver.findElements(By.className("panel-group"))) {
+			try {
+				if (x.getText().toLowerCase().contains("bas-vjp-bahia blanca"))
+					x.findElement(By.cssSelector(".glyphicon.glyphicon-plus")).click();
+			} catch(Exception e) {}
+		}
+		sleep(3000);
+		for (WebElement x : driver.findElements(By.id("compatibility"))) {
+			if (x.getText().contains(prefijo))
+				x.findElement(By.tagName("input")).click();
+		}
+		buscarYClick(driver.findElements(By.cssSelector(".btn.btn-primary")), "equals", "agregar");
+		buscarYClick(driver.findElements(By.cssSelector(".btn.btn-primary")), "equals", "cerrar");		
+		Assert.assertTrue(nroPrefijo);
+	}
+	
+	@Test (groups = "BeFan")
+	public void TS111487_BeFan_Movil_REPRO_Preactivacion_repro_Gestion_de_agrupadores_Busqueda_Eliminacion_de_agrupadores_Si_Sin_preactivar() {
+		irA("Regiones", "Gesti\u00f3n");
+		boolean eliminarPrefijo = false;
+		sleep(2000);
+		driver.findElement(By.cssSelector(".btn.btn-primary")).click();
+		sleep(2000);
+		driver.findElement(By.cssSelector(".form-control.ng-pristine.ng-untouched.ng-valid.ng-empty")).sendKeys("San Cristobal");
+		driver.findElement(By.xpath("//*[@class='btn btn-primary' and contains(text(), 'Agregar')]")).click();
+		sleep(2000);
+		driver.findElement(By.xpath("//*[@class='btn btn-primary' and contains(text(), 'Cerrar')]")).click();
+		sleep(2000);
+		WebElement panel = driver.findElement(By.className("panel-data"));
+		Assert.assertTrue(panel.getText().toLowerCase().contains("san cristobal"));
+		buscarYClick(driver.findElements(By.cssSelector(".panel-group.panel-group-alternative.ng-scope")), "contains", "san cristobal");
+		for (WebElement x : driver.findElements(By.className("panel-group"))) {
+			try {
+				if (x.getText().toLowerCase().contains("san cristobal"))
+					x.findElement(By.cssSelector(".glyphicon.glyphicon-plus")).click();
+			} catch(Exception e) {}
+		}
+		sleep(3000);
+		driver.findElement(By.cssSelector(".compatibility.custom-check.ng-scope")).findElement(By.tagName("input")).click();
+		String nroPrefijo = driver.findElement(By.cssSelector(".compatibility.custom-check.ng-scope")).findElement(By.tagName("label")).getText();
+		System.out.println(nroPrefijo);
+		buscarYClick(driver.findElements(By.cssSelector(".btn.btn-primary")), "equals", "agregar");
+		buscarYClick(driver.findElements(By.cssSelector(".btn.btn-primary")), "equals", "cerrar");
+		driver.navigate().refresh();
+		sleep(3000);
+		buscarYClick(driver.findElements(By.cssSelector(".panel-group.panel-group-alternative.ng-scope")), "contains", "san cristobal");
+		((JavascriptExecutor) driver).executeScript("window.scrollTo(0," + driver.findElement(By.cssSelector(".panel.ng-scope.ng-isolate-scope.panel-default.panel-open")).getLocation().y + ")");
+		for (WebElement x : driver.findElement(By.cssSelector(".panel.ng-scope.ng-isolate-scope.panel-default.panel-open")).findElement(By.tagName("tbody")).findElements(By.tagName("tr"))) {
+			if (x.getText().contains(nroPrefijo)) {
+				x.findElement(By.cssSelector(".btn.btn-link")).click();
+				buscarYClick(driver.findElements(By.cssSelector(".btn.btn-primary")), "equals", "eliminar");
+				buscarYClick(driver.findElements(By.cssSelector(".btn.btn-primary")), "equals", "cerrar");
+				eliminarPrefijo = true;
+			}
+		}
+		Assert.assertTrue(eliminarPrefijo);
+		boolean eliminarRegion = false;
+		String mensaje = driver.findElement(By.className("modal-header")).getText();
+		if (mensaje.contains("Tambien desea eliminar la Region San Cristobal")) {
+			buscarYClick(driver.findElements(By.cssSelector(".btn.btn-primary")), "equals", "eliminar");
+			buscarYClick(driver.findElements(By.cssSelector(".btn.btn-primary")), "equals", "cerrar");
+			eliminarRegion = true;
+		}
+		Assert.assertTrue(eliminarRegion);
+	}
+	
+	@Test (groups = "BeFan")
+	public void TS126649_BeFan_Movil_REPRO_Preactivacion_repro_Importacion_de_cupos_Exitoso(){
+		irA("Cupos", "Importaci\u00f3n");
+		driver.findElement(By.name("INPUT-ArchivoCupos")).sendKeys("C:\\Users\\xappiens\\Documents\\TxT\\CuposPrueba_01.txt");
+		driver.findElement(By.name("BTN-Importar")).click();
+		sleep(3000);
+		boolean confirmacion = false;
+		String mensaje = driver.findElement(By.className("modal-header")).getText();
+		if (mensaje.toLowerCase().contains("el archivo se import\u00f3 correctamente")) {
+			buscarYClick(driver.findElements(By.cssSelector(".btn.btn-link")), "equals", "aceptar");
+			confirmacion = true;
+		}
+		Assert.assertTrue(confirmacion);
+		sleep(8000);
+		boolean razonS = false , puntoDeVenta = false, fechaD = false, fechaH = false, cantidadDeCupos = false, resultado = false;
+		List <WebElement> colum = driver.findElements(By.className("text-center"));
+		for(WebElement x : colum) {
+			if(x.getText().contains("Raz\u00f3n Social")) 
+				razonS = true;
+			if(x.getText().contains("Punto de Venta")) 
+				puntoDeVenta = true;
+			if(x.getText().contains("Fecha Desde")) 
+				fechaD = true;
+			if(x.getText().contains("Fecha Hasta"))
+				fechaH = true;
+			if(x.getText().contains("Cantidad de Cupos")) 
+				cantidadDeCupos = true;
+			if(x.getText().contains("Resultado de Validaci\u00f3n"))
+				resultado= true;
+		}
+		Assert.assertTrue(razonS && puntoDeVenta && fechaD && fechaH && cantidadDeCupos && resultado);
+		WebElement texto = driver.findElements(By.cssSelector(".text-center.ng-scope")).get(1);
+		System.out.println(texto.getText());
+	}
+	
+	@Test (groups = "BeFan")
+	public void TS112004_BeFan_Movil_REPRO_Preactivacion_repro_Importacion_de_agrupadores_Prefijos_inexistentes() {
+		irA("Regiones", "Importaci\u00f3n");
+		driver.findElement(By.id("fileinput")).sendKeys("C:\\Users\\xappiens\\Documents\\TxT\\AgrupadorPrefijoinexistente.txt");
+		driver.findElement(By.cssSelector(".btn.btn-primary.btn-sm.btn-block.btn-continuar")).click();
+		sleep(3000);
+		WebElement tabla = driver.findElement(By.className("ng-scope")).findElement(By.tagName("tbody"));
+		System.out.println(tabla.getText());
+		Assert.assertTrue(tabla.getText().toLowerCase().contains("el prefijo no existe"));
+		driver.findElement(By.id("fileinput")).sendKeys("C:\\Users\\xappiens\\Documents\\TxT\\AgrupadorPrefijoexistente.txt");
+		driver.findElement(By.cssSelector(".btn.btn-primary.btn-sm.btn-block.btn-continuar")).click();
+		sleep(3000);
+		boolean texto = false;
+		String mensaje = driver.findElement(By.className("modal-header")).getText();
+		if (mensaje.contains("Archivo importado correctamente")) {
+			buscarYClick(driver.findElements(By.cssSelector(".btn.btn-link")), "equals", "aceptar");
+			texto = true;
+		}
+		Assert.assertTrue(texto);
+	}
+	
+	@Test (groups = "BeFAN")
+	public void TS126607_BeFan_Movil_REPRO_Preactivacion_repro_Visualizacion_de_archivos_importados_Nombre_del_archivo_importado() {
+		irA("sims", "gesti\u00f3n");
+		selectByText(driver.findElement(By.cssSelector(".text.form-control.ng-pristine.ng-untouched.ng-valid.ng-empty")), "Procesado");
+		selectByText(driver.findElement(By.cssSelector(".text.form-control.ng-pristine.ng-untouched.ng-valid.ng-empty")), "VJP");
+		selectByText(driver.findElement(By.cssSelector(".text.form-control.ng-pristine.ng-untouched.ng-valid.ng-empty")), "BAS-VJP-BAHIA BLANCA - VJP Punta Alta");		
+		driver.findElement(By.cssSelector(".btn.btn-primary")).click();
+		sleep(5000);
+		driver.findElement(By.id("exportarTabla")).findElement(By.tagName("tbody")).findElement(By.tagName("tr")).findElements(By.tagName("td")).get(8).click();
+		sleep(3000);
+		driver.findElement(By.id("botonExportar")).click();
+		sleep(5000);
+		String downloadPath = "C:\\Users\\Nicolas\\Downloads";
+		Assert.assertTrue(scp.isFileDownloaded(downloadPath, "PREACTIVACIONES DIARIAS"));
+	}
+	
+	@Test (groups = "BeFAN")
+	public void TS126615_BeFan_Movil_REPRO_Preactivacion_repro_Importacion_de_agrupadores_Formato_erroneo() {
+		boolean formato = false;
+		irA("regiones", "importaci\u00f3n");
+		driver.findElement(By.id("fileinput")).sendKeys("C:\\Users\\Nicolas\\Desktop\\ajustes.txt");
+		driver.findElement(By.cssSelector(".btn.btn-primary.btn-sm.btn-block.btn-continuar")).click();
+		WebElement tabla = driver.findElement(By.cssSelector(".table.table-top-fixed.table-striped.table-primary")).findElement(By.tagName("tbody")).findElement(By.tagName("tr"));
+		for (WebElement x : tabla.findElements(By.tagName("td"))) {
+			if (x.getText().equalsIgnoreCase("La region no existe"))
+				formato = true;
+		}
+		Assert.assertTrue(formato);
+	}
+	
+	@Test (groups = "BeFan")
+	public void TS112005_BeFan_Movil_REPRO_Preactivacion_repro_Importacion_de_agrupadores_Prefijos_repetidos_por_agrupador() {
+		irA("Regiones", "Importaci\u00f3n");
+		driver.findElement(By.id("fileinput")).sendKeys("C:\\Users\\xappiens\\Documents\\TxT\\AgrupadorPrefijoRepetido.txt");
+		driver.findElement(By.cssSelector(".btn.btn-primary.btn-sm.btn-block.btn-continuar")).click();
+		sleep(3000);
+		WebElement tabla = driver.findElement(By.className("ng-scope")).findElement(By.tagName("tbody"));
+		System.out.println(tabla.getText());
+		Assert.assertTrue(tabla.getText().toLowerCase().contains("ya se encuentra asignado el prefijo"));
+	}
+	
+	@Test (groups = "BeFan")
+	public void TS126617_BeFan_Movil_REPRO_Preactivacion_repro_Importacion_de_agrupadores_Prefijos_repetidos_por_agrupador() {
+		irA("Regiones", "Importaci\u00f3n");
+		driver.findElement(By.id("fileinput")).sendKeys("C:\\Users\\xappiens\\Documents\\TxT\\AgrupadorPrefijoRepetido2.txt");
+		driver.findElement(By.cssSelector(".btn.btn-primary.btn-sm.btn-block.btn-continuar")).click();
+		sleep(3000);
+		WebElement tabla = driver.findElement(By.className("ng-scope")).findElement(By.tagName("tbody"));
+		System.out.println(tabla.getText());
+		Assert.assertTrue(tabla.getText().toLowerCase().contains("ya se encuentra asignado el prefijo"));
+		WebElement texto = driver.findElement(By.cssSelector(".alert.alert-info.alert-inline"));
+		Assert.assertTrue(texto.isDisplayed());
+	}
+	
+	@Test (groups = "BeFan")
+	public void TS135643_BeFan_Movil_Repro_Preactivacion_Gestion_de_cupos_Busqueda_Modificacion_de_cupo_Con_total_de_cupos_vacio() throws ParseException {
+		BeFan fechas= new BeFan (driver);
+		SimpleDateFormat formatoDelTexto = new SimpleDateFormat ("dd/MM/yyyy");
+		String desde ="27/09/2018";
+		String hasta = "25/12/2018";
+		Date fechaDesde = formatoDelTexto.parse(desde);
+		Date fechaHasta =formatoDelTexto.parse(hasta);
+		irA("Cupos", "Gesti\u00f3n");
+		sleep(3000);
+		selectByText(driver.findElement(By.name("estados")), "Vigente");
+		driver.findElement(By.id("dataPickerDesde"));
+		((JavascriptExecutor) driver).executeScript("document.getElementById('dataPickerDesde').value='"+desde+"'");
+		sleep(3000);
+		driver.findElement(By.id("dataPickerHasta"));
+		((JavascriptExecutor) driver).executeScript("document.getElementById('dataPickerHasta').value='"+hasta+"'");
+		int dias = fechas.numeroDiasEntreDosFechas(fechaDesde, fechaHasta);
+		System.out.println("Hay " + dias + " dias, " +"No supera los 90 dias comprendidos");
+		driver.findElement(By.name("buscar")).click();
+		sleep(3000);
+		driver.findElement(By.cssSelector(".glyphicon.glyphicon-edit")).click();
+		driver.findElement(By.name("cantidadTotal")).clear();
+		driver.findElement(By.cssSelector(".glyphicon.glyphicon-floppy-saved")).click();
+		boolean mensaje = false;
+		String msj = driver.findElement(By.className("modal-header")).getText();
+		if (msj.contains("Cantidad de cupo inv\u00e1lida")) {
+			mensaje = true;
+		}
+		Assert.assertTrue(mensaje);
+	}
+	
+	@Test (groups = "BeFan")
+	public void TS135614_BeFan_Movil_Repro_Preactivacion_Importacion_de_cupos_Con_un_registro_erroneo() {
+		ContactSearch contact = new ContactSearch(driver);
+		irA("Cupos", "Importaci\u00f3n");
+		sleep(5000);
+		File directory = new File("C:\\Users\\xappiens\\Documents\\TxT\\CuposErroneos.txt");
+		contact.subir_cupos(new File(directory.getAbsolutePath()).toString(),"si");
+		boolean mensaje = false;
+		String msj = driver.findElement(By.className("modal-body")).getText();
+		if (msj.contains("error")) {
+			mensaje = true;
+		}
+		Assert.assertTrue(mensaje);
+	}
+	
+	@Test (groups = "BeFan")
+	public void TS135623_BeFan_Movil_Repro_Preactivacion_Importacion_de_cupos_Exitoso_Verificacion_Cupo_dado_de_baja() {
+		ContactSearch contact = new ContactSearch(driver);
+		irA("Cupos", "Importaci\u00f3n");
+		sleep(5000);
+		File directory = new File("C:\\Users\\xappiens\\Documents\\TxT\\CupoDadoDeBaja.txt");
+		contact.subir_cupos(new File(directory.getAbsolutePath()).toString(),"si");
+		boolean mensaje = false;
+		String msj = driver.findElement(By.className("modal-header")).getText();
+		if (msj.contains("correctamente")) {
+			mensaje = true;
+		}
+		Assert.assertTrue(mensaje);
+		driver.findElement(By.cssSelector(".btn.btn-link")).click();
+		sleep(3000);
+		irA("Cupos", "Gesti\u00f3n");
+		sleep(3000);
+		driver.findElement(By.name("buscar")).click();
+		sleep(3000);
+		List <WebElement> texto = driver.findElements(By.cssSelector(".text-center.ng-scope"));
+		for(WebElement x : texto) {
+			if(x.getText().contains("14/01/2019") && x.getText().contains("25/01/2019")) {
+				x.findElement(By.cssSelector(".glyphicon.glyphicon-remove")).click();
+			}
+		}
+		buscarYClick(driver.findElements(By.cssSelector(".btn.btn-primary")), "equals", "aceptar");
+		sleep(2000);
+		buscarYClick(driver.findElements(By.cssSelector(".btn.btn-link")), "equals", "aceptar");
+	}
+	@Test (groups = "BeFan")
+	public void TS135609_BeFan_Movil_Repro_Preactivacion_Importacion_de_cupos_Formato_interno_Fecha_desde_formato_erroneo() {
+		ContactSearch contact = new ContactSearch(driver);
+		irA("Cupos", "Importaci\u00f3n");
+		sleep(7000);
+		File directory = new File("BeFan135609-135610.txt");
+		contact.subir_cupos(new File(directory.getAbsolutePath()).toString(),"si");
+		sleep(5000);
+		boolean a = false;
+		List <WebElement> formato = driver.findElements(By.className("modal-header"));
+		for(WebElement x : formato) {
+			if(x.getText().toLowerCase().contains("verifique el contenido del archivo que desea importar, existen cupos inv\u00e1lidos.")) {
+				a = true;
+				
+			}
+		}
+		Assert.assertTrue(a);
+	}
+	@Test (groups = "BeFan")
+	public void TS135610_BeFan_Movil_Repro_Preactivacion_Importacion_de_cupos_Formato_interno_Fecha_hasta_formato_erroneo() {
+		ContactSearch contact = new ContactSearch(driver);
+		irA("Cupos", "Importaci\u00f3n");
+		sleep(7000);
+		File directory = new File("BeFan135609-135610.txt");
+		contact.subir_cupos(new File(directory.getAbsolutePath()).toString(),"si");
+		sleep(5000);
+		boolean a = false;
+		List <WebElement> formato = driver.findElements(By.className("modal-header"));
+		for(WebElement x : formato) {
+			if(x.getText().toLowerCase().contains("verifique el contenido del archivo que desea importar, existen cupos inv\u00e1lidos.")) {
+				a = true;
+				
+			}
+		}
+		Assert.assertTrue(a);
+	}
+	
+	@Test (groups = "BeFan")
+	public void TS135611_BeFan_Movil_Repro_Preactivacion_Importacion_de_cupos_Formato_interno_Cantidad_de_cupos_formato_erroneo() {
+		ContactSearch contact = new ContactSearch(driver);
+		irA("Cupos", "Importaci\u00f3n");
+		sleep(7000);
+		File directory = new File("BeFan135611.txt");
+		contact.subir_cupos(new File(directory.getAbsolutePath()).toString(),"si");
+		sleep(5000);
+		boolean a = false;
+		List <WebElement> formato = driver.findElements(By.className("modal-header"));
+		for(WebElement x : formato) {
+			if(x.getText().toLowerCase().contains("verifique el contenido del archivo que desea importar, existen cupos inv\u00e1lidos.")) {
+				a = true;
+				
+			}
+		}
+		Assert.assertTrue(a);
+	}
+	
+	
+	@Test (groups = "BeFan")
+	public void TS135615_BeFan_Movil_Repro_Preactivacion_Importacion_de_cupos_Cupo_igual_a_cero() {
+		ContactSearch contact = new ContactSearch(driver);
+		irA("Cupos", "Importaci\u00f3n");
+		sleep(7000);
+		File directory = new File("BeFan135611.txt");
+		contact.subir_cupos(new File(directory.getAbsolutePath()).toString(),"si");
+		sleep(5000);
+		boolean a = false;
+		List <WebElement> formato = driver.findElements(By.className("modal-header"));
+		for(WebElement x : formato) {
+			if(x.getText().toLowerCase().contains("verifique el contenido del archivo que desea importar, existen cupos inv\u00e1lidos.")) {
+				a = true;
+				
+			}
+		}
+		Assert.assertTrue(a);
+	}
+	
+	@Test (groups = "BeFan")
+	public void TS135617_BeFan_Movil_Repro_Preactivacion_Importacion_de_cupos_Exitoso_Grilla() {
+		ContactSearch contact = new ContactSearch(driver);
+		irA("Cupos", "Importaci\u00f3n");
+		sleep(7000);
+		File directory = new File("BeFan135617.txt");
+		contact.subir_cupos(new File(directory.getAbsolutePath()).toString(),"si");
+		sleep(5000);
+		boolean a = false;
+		List <WebElement> formato = driver.findElements(By.className("modal-content"));
+		for(WebElement x : formato) {
+			if(x.getText().toLowerCase().contains("el archivo se import\u00f3 correctamente")) {
+				a = true;
+				
+			}
+		}
+		Assert.assertTrue(a);
+	}
+	
+	@Test (groups = "BeFan")
+	public void TS135618_BeFan_Movil_Repro_Preactivacion_Importacion_de_cupos_Exitoso_Logeo() {
+		ContactSearch contact = new ContactSearch(driver);
+		irA("Cupos", "Importaci\u00f3n");
+		sleep(7000);
+		File directory = new File("BeFan135618.txt");
+		contact.subir_cupos(new File(directory.getAbsolutePath()).toString(),"si");
+		sleep(5000);
+		List <WebElement> formato = driver.findElements(By.className("modal-content"));
+		for(WebElement x : formato) {
+			if(x.getText().toLowerCase().contains("el archivo se import\u00f3 correctamente")) {
+			}
+		}
+		driver.findElement(By.className("modal-content")).findElement(By.className("modal-footer")).findElement(By.cssSelector(".btn.btn-link")).click();
+		WebElement tabla = driver.findElement(By.name("TABLE-CuposExito")).findElement(By.tagName("tbody"));
+		Assert.assertTrue(tabla.isDisplayed());
+	}
+	
+
+	@Test (groups = "BeFan")
+	public void TS135608_BeFan_Movil_Repro_Preactivacion_Importacion_de_cupos_Formato_interno_Agente_inexistente(){
+		ContactSearch contact = new ContactSearch(driver);
+		irA("Cupos", "Importaci\u00f3n");
+		sleep(7000);
+		File directory = new File("BeFan135608.txt");
+		contact.subir_cupos(new File(directory.getAbsolutePath()).toString(),"si");
+		sleep(5000);
+		boolean a = false;
+		List <WebElement> formato = driver.findElements(By.className("modal-content"));
+		for(WebElement x : formato) {
+			System.out.println(x.getText());
+			if(x.getText().toLowerCase().contains("no existe el punto de venta para las regiones activas existentes.")) {
+				a = true;
+				
+			}
+		}
+		Assert.assertTrue(a);
+	}
+	
+	@Test (groups = "BeFan")
+	public void TS135613_BeFan_Movil_Repro_Preactivacion_Importacion_de_cupos_Formato_interno_Agrupador_inexistente(){
+		ContactSearch contact = new ContactSearch(driver);
+		irA("Cupos", "Importaci\u00f3n");
+		sleep(7000);
+		File directory = new File("BeFan135613.txt");
+		contact.subir_cupos(new File(directory.getAbsolutePath()).toString(),"si");
+		sleep(5000);
+		boolean a = false;
+		List <WebElement> formato = driver.findElements(By.className("modal-content"));
+		for(WebElement x : formato) {
+			System.out.println(x.getText());
+			if(x.getText().toLowerCase().contains("no existe el punto de venta para las regiones activas existentes.")) {
+				a = true;
+				
+			}
+		}
+		Assert.assertTrue(a);
+	}
+	
+	@Test (groups = "BeFan")
+	public void TS135616_BeFan_Movil_Repro_Preactivacion_Importacion_de_cupos_Exitoso_Mensaje(){
+		ContactSearch contact = new ContactSearch(driver);
+		irA("Cupos", "Importaci\u00f3n");
+		sleep(7000);
+		File directory = new File("BeFan135616.txt");
+		contact.subir_cupos(new File(directory.getAbsolutePath()).toString(),"si");
+		sleep(5000);
+		boolean a = false;
+		List <WebElement> formato = driver.findElements(By.className("modal-content"));
+		for(WebElement x : formato) {
+			System.out.println(x.getText());
+			if(x.getText().toLowerCase().contains("el archivo se import\u00f3 correctamente")) {
+				a = true;
+				
+			}
+		}
+		Assert.assertTrue(a);
+	}
+	
+	@Test (groups = "BeFan")
+	public void TS135620_BeFan_Movil_Repro_Preactivacion_Importacion_de_cupos_Exitoso_Verificacion_Fuera_de_la_fecha(){
+		ContactSearch contact = new ContactSearch(driver);
+		irA("Cupos", "Importaci\u00f3n");
+		sleep(7000);
+		File directory = new File("BeFan135620.txt");
+		contact.subir_cupos(new File(directory.getAbsolutePath()).toString(),"si");
+		sleep(5000);
+		boolean a = false;
+		List <WebElement> formato = driver.findElements(By.className("modal-header"));
+		for(WebElement x : formato) {
+			if(x.getText().toLowerCase().contains("verifique el contenido del archivo que desea importar, existen cupos inv\u00e1lidos.")) {
+				a = true;
+			}
+		}
+		Assert.assertTrue(a);
+	}
+		
 }

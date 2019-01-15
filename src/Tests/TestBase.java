@@ -65,6 +65,8 @@ public class TestBase {
 		
 		public static String urlBeFAN = "http://snapuat.telecom.com.ar/#/home";
 		
+		public static boolean activarFalsos = true;
+		
 	public void leftDropdown(WebDriver driver, String selection) {
 		driver.findElement(By.className("x-btn-mc")).click();
 		switch(selection) {
@@ -224,7 +226,7 @@ public class TestBase {
 	}
 	
 	public void waitForClickeable(WebDriver driver, By element) {
-		(new WebDriverWait(driver, 20)).until(ExpectedConditions.elementToBeClickable(element));
+		(new WebDriverWait(driver, 25)).until(ExpectedConditions.elementToBeClickable(element));
 	}
 
 	
@@ -1217,7 +1219,7 @@ public class TestBase {
 	@DataProvider
 	public Object [][] ventaPack50Tele() throws Exception{
 		
-		Object[][] testObjArray = ExcelUtils.getTableArray(dataProviderE2E(),"E2EconPago",1,1,14,"Pack 50 min Tel");
+		Object[][] testObjArray = ExcelUtils.getTableArray(dataProviderE2E(),"E2EconPago",1,1,14,"Pack 50min Tel");
 		
 		return (testObjArray);
 	}
@@ -1432,7 +1434,7 @@ public class TestBase {
 	@DataProvider
 	public Object[][] CambioSimCardTelef() throws Exception{
 		
-		Object[][] testObjArray =  ExcelUtils.getTableArray(dataProviderE2E(),"E2EconPago",1,1,17,"Cambio SimCard Telef");
+		Object[][] testObjArray =  ExcelUtils.getTableArray(dataProviderE2E(),"E2EconPago",1,1,6,"SimCard Telef");
 		
 		return (testObjArray);
 	}
@@ -1449,6 +1451,30 @@ public class TestBase {
 	public Object[][] CambioSimCardOficina() throws Exception{
 		
 		Object[][] testObjArray =  ExcelUtils.getTableArray(dataProviderE2E(),"E2EconPago",1,1,2,"Cambio SimCard Oficina");
+		
+		return (testObjArray);
+	}
+	
+	@DataProvider
+	public Object[][] SimCardSiniestroAG() throws Exception{
+		
+		Object[][] testObjArray =  ExcelUtils.getTableArray(dataProviderE2E(),"E2EconPago",1,1,6,"SimCard Siniestro Agente");
+		
+		return (testObjArray);
+	}
+	
+	@DataProvider
+	public Object[][] SimCardSiniestroOfCom() throws Exception{
+		
+		Object[][] testObjArray =  ExcelUtils.getTableArray(dataProviderE2E(),"E2EconPago",1,1,2,"SimCard Siniestro OfCom");
+		
+		return (testObjArray);
+	}
+	
+	@DataProvider
+	public Object[][] SimCardSiniestroTelef() throws Exception{
+		
+		Object[][] testObjArray =  ExcelUtils.getTableArray(dataProviderE2E(),"E2EconPago",1,1,6,"SimCard Siniestro Telef");
 		
 		return (testObjArray);
 	}
@@ -1552,6 +1578,89 @@ public class TestBase {
 
 		 return (testObjArray);
 	}
+	
+	@DataProvider(name = "SerialInexistente")
+	public Object[][] SerialInexistente() throws Exception{
+
+	 Object[][] testObjArray = ExcelUtils.getTableArray(dataProviderE2E(),"E2EsinPago",1,1,7,"SerialInexistente");
+
+	 return (testObjArray);
+
+	}
+	
+	@DataProvider(name = "SerialConDepositoErroneo")
+	public Object[][] SerialConDepositoErroneo() throws Exception{
+
+	 Object[][] testObjArray = ExcelUtils.getTableArray(dataProviderE2E(),"E2EsinPago",1,1,7,"SerialConDepositoErroneo");
+
+	 return (testObjArray);
+
+	}
+	
+	@DataProvider(name = "SerialConFormatoInvalido")
+	public Object[][] SerialConFormatoInvalido() throws Exception{
+
+	 Object[][] testObjArray = ExcelUtils.getTableArray(dataProviderE2E(),"E2EsinPago",1,1,7,"SerialConFormatoInvalido");
+
+	 return (testObjArray);
+
+	}
+	
+	@DataProvider(name = "SerialValido")
+	public Object[][] SerialValido() throws Exception{
+
+	 Object[][] testObjArray = ExcelUtils.getTableArray(dataProviderE2E(),"E2EsinPago",1,1,7,"SerialValido");
+
+	 return (testObjArray);
+
+	}
+	
+	@DataProvider(name = "DosSerialesValidos")
+	public Object[][] DosSerialesValidos() throws Exception{
+
+	 Object[][] testObjArray = ExcelUtils.getTableArray(dataProviderE2E(),"E2EsinPago",1,1,7,"DosSerialesValidos");
+
+	 return (testObjArray);
+
+	}
+	
+	@DataProvider(name = "ArchivoVacio")
+	public Object[][] ArchivoVacio() throws Exception{
+
+	 Object[][] testObjArray = ExcelUtils.getTableArray(dataProviderE2E(),"E2EsinPago",1,1,7,"ArchivoVacio");
+
+	 return (testObjArray);
+
+	}
+	
+	@DataProvider(name = "SerialNoMCVM")
+	public Object[][] SerialNoMCVM() throws Exception{
+
+	 Object[][] testObjArray = ExcelUtils.getTableArray(dataProviderE2E(),"E2EsinPago",1,1,7,"SerialNoMCVM");
+
+	 return (testObjArray);
+
+	}
+	
+	@DataProvider(name = "SerialesNoValidos")
+	public Object[][] SerialesNoValidos() throws Exception{
+
+	 Object[][] testObjArray = ExcelUtils.getTableArray(dataProviderE2E(),"E2EsinPago",1,1,7,"SerialesNoValidos");
+
+	 return (testObjArray);
+
+	}
+	
+	@DataProvider(name = "SerialValidoEterno")
+	public Object[][] SerialValidoEterno() throws Exception{
+
+	 Object[][] testObjArray = ExcelUtils.getTableArray(dataProviderE2E(),"E2EsinPago",1,1,7,"SerialValidoEterno");
+
+	 return (testObjArray);
+
+	}
+	
+	
 	
 	public void tomarCaptura(WebDriver driver, String imageName) {
 	      //Directorio donde quedaran las imagenes guardadas
@@ -1745,22 +1854,7 @@ public class TestBase {
 
 		 return (testObjArray);
 	}
-	@DataProvider
-	public Object[][] SimCardSiniestroAG() throws Exception{
 		
-		Object[][] testObjArray =  ExcelUtils.getTableArray(dataProviderE2E(),"E2EconPago",1,1,17,"SimCard Siniestro Agente");
-		
-		return (testObjArray);
-	}
-	
-	@DataProvider
-	public Object[][] SimCardSiniestroOfCom() throws Exception{
-		
-		Object[][] testObjArray =  ExcelUtils.getTableArray(dataProviderE2E(),"E2EconPago",1,1,2,"SimCard Siniestro OfCom");
-		
-		return (testObjArray);
-	}
-	
 	@DataProvider
 	public Object[][] DiagnosticoInc() throws Exception{
 		
@@ -1870,6 +1964,14 @@ public class TestBase {
 		Object[][] testObjArray =  ExcelUtils.getTableArray(dataProviderE2E(),"BeFAN",1,1,1,"Creacion Regiones");
 		
 		return (testObjArray);
+	}
+	@DataProvider
+	public Object[][] DatosNominacionExistente5Lineas() throws Exception{
+
+	 Object[][] testObjArray = ExcelUtils.getTableArray(dataProviderE2E(),"Altas y Nominacion",1,1,2,"NominacionExistente5Lineas");
+
+	 return (testObjArray);
+
 	}
 	
 }

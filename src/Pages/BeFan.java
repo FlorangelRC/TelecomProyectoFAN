@@ -4,10 +4,19 @@ package Pages;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.BufferedReader;
+import java.io.InputStreamReader;
+import java.net.HttpURLConnection;
+import java.net.URL;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.Keys;
@@ -21,6 +30,7 @@ import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.Select;
 import org.testng.Assert;
 
+//import Tests.File;
 import Tests.TestBase;
 
 public class BeFan extends BasePage{
@@ -139,7 +149,198 @@ public class BeFan extends BasePage{
 
 		this.cantidad.sendKeys(cantidad);
 	}
+
+	//Victor
+	//Menu Simcard-Importacion
+	public void SISeleccionDeDeposito(String deposito) {
+		selectByText(driver.findElements(By.cssSelector(".text.form-control.ng-pristine.ng-untouched.ng-valid.ng-empty")).get(0), deposito);
+	}
 	
+	public void SISeleccionDePrefijo (String prefijo) {
+	
+		if (driver.findElements(By.cssSelector(".text.form-control.ng-pristine.ng-untouched.ng-valid.ng-empty")).isEmpty()) {
+			selectByText(driver.findElements(By.cssSelector(".text.form-control.ng-valid.ng-dirty.ng-touched.ng-empty")).get(0), prefijo);
+		} else {
+		selectByText(driver.findElements(By.cssSelector(".text.form-control.ng-pristine.ng-untouched.ng-valid.ng-empty")).get(0), prefijo);
+		}
+	}
+	
+	public void SISeleccionCantidadDePrefijo (String cantidadPrefijo) {
+		
+		if (driver.findElements(By.cssSelector(".text.form-control.ng-pristine.ng-untouched.ng-valid.ng-empty")).isEmpty()) {
+			driver.findElement(By.cssSelector(".text.form-control.ng-valid.ng-dirty.ng-touched.ng-empty")).sendKeys(cantidadPrefijo);
+		} else {
+			driver.findElement(By.cssSelector(".text.form-control.ng-pristine.ng-untouched.ng-valid.ng-empty")).sendKeys(cantidadPrefijo);
+		}
+	}
+	
+	public void SIClickAgregar() {
+	driver.findElement(By.name("btnAgregar")).click();
+	}
+	
+	public String SIMensajeModal() {
+		String mensaje;
+		mensaje = driver.findElement(By.xpath("/html/body/div[1]/div/div/div/div[1]/div[1]/h3")).getText();
+		return mensaje;
+	}
+	
+	public String SIMensajeModalMasDeUnMensaje() {
+		String mensaje;
+		mensaje = driver.findElement(By.xpath("/html/body/div[1]/div/div/div/div[1]/div[1]/h3/h2")).getText();
+		return mensaje;
+	}
+	
+	public void SIImportarArchivo(String path) {
+	WebElement uploadElement = driver.findElement(By.id("fileinput"));
+	uploadElement.sendKeys(path);
+	}
+	
+	public void SIClickImportar() {
+	driver.findElements(By.cssSelector(".btn.btn-primary")).get(2).click();
+	}
+	
+	public String SICreacionArchivo(String nombreArch, String path, String serial1, String serial2) throws IOException {
+	DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyyMMddHHmmss");  
+	LocalDateTime now = LocalDateTime.now(); 
+	String time = dtf.format(now);
+	path = path + "\\" + nombreArch + time + ".txt";
+	File archivo = new File(path);
+	archivo.createNewFile();
+	if (serial2 == "") {
+	FileOutputStream outputStream = new FileOutputStream(path);
+    byte[] strToBytes = serial1.getBytes();
+    outputStream.write(strToBytes);
+    outputStream.close();
+	}
+	else
+	{
+	 String serialF = serial1 + "\n" + serial2;
+		FileOutputStream outputStream = new FileOutputStream(path);
+	    byte[] strToBytes = serialF.getBytes();
+	    outputStream.write(strToBytes);
+	    outputStream.close();
+	}
+	return path;
+	}
+	
+	public void SIDesRenombreDeArchivo(String nombreArch, String path) {
+	String[] parts = nombreArch.split("\\\\");
+	String[] partes = parts[2].split("2");
+	File archivo = new File(nombreArch);
+	String path2 = path + "\\" + partes[0] + ".txt";
+	File archivo2 = new File(path2);
+	Boolean faio = archivo.renameTo(archivo2);
+	}
+	
+	public void SIClickAceptarImportar() {
+	driver.findElement(By.cssSelector(".btn.btn-link")).click();	
+	}
+	
+	//Api BEFAN
+	
+	public void BefanProceso() {
+        try {
+
+            URL url = new URL("http://apiu.personal.com.ar/catalogo/api/ProcesoMasivo/IniciarProceso");
+            HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+            conn.getInputStream();
+            conn.setRequestMethod("POST");
+            conn.setRequestProperty("Content-Type", "application/json");
+            System.out.println("HOLA1");
+            if (conn.getResponseCode() != 200) {
+                System.out.println("FALLO1");
+            }
+            System.out.println("HOLA2");
+            InputStreamReader in = new InputStreamReader(conn.getInputStream());
+            BufferedReader br = new BufferedReader(in);
+            System.out.println("HOLA3");
+            String output;
+            while ((output = br.readLine()) != null) {
+                System.out.println(output);
+            }
+            System.out.println("HOLA4");
+            conn.disconnect();
+
+        } catch (Exception e) {
+            System.out.println("Exception in NetClientGet:- " + e);
+        }
+    }
+	
+	//Menu Simcard-Gestion
+	
+	//Estados Procesado, En Proceso, Eliminado y Pendiente
+	public void SGSeleccionEstado(String estado){
+	selectByText(driver.findElement(By.cssSelector(".text.form-control.ng-pristine.ng-untouched.ng-valid.ng-empty")), estado);
+	}
+	
+	public void SGSeleccionDeposito(String deposito) {
+	selectByText(driver.findElements(By.cssSelector(".text.form-control.ng-pristine.ng-untouched.ng-valid.ng-empty")).get(1), deposito);
+	}
+	
+	public void SGClickBuscar() {
+	driver.findElement(By.cssSelector(".btn.btn-primary")).click();
+	}
+	
+	public void SGFechaDesdeAhora() {
+		DateTimeFormatter dtf = DateTimeFormatter.ofPattern("dd/MM/yyyy");  
+		LocalDateTime now = LocalDateTime.now(); 
+		String time = dtf.format(now);
+		String[] fecha = time.split("/");
+		String izquierda = Keys.chord(Keys.ARROW_LEFT);
+		String borrar = Keys.chord(Keys.BACK_SPACE);
+		driver.findElement(By.id("dataPickerDesde")).click();
+		driver.findElement(By.id("dataPickerDesde")).sendKeys(borrar + borrar + borrar + borrar + fecha[2] + izquierda + izquierda + izquierda + izquierda + izquierda + borrar + borrar + fecha[1] + izquierda + izquierda + izquierda + borrar + borrar + fecha[0]);
+		sleep(500);		
+	}
+	
+	public boolean SGLeerCampoYValidar(String nombreArch, String[] listaEstados, String[] listaResultados) {
+	boolean resultado = false;
+	int cont = 0;
+	int cont2 = 4;
+	int cont3 = 0;
+	ArrayList<String> estados = new ArrayList<String>();
+	ArrayList<String> resultados = new ArrayList<String>();
+	
+	List<WebElement> tabla = driver.findElements(By.cssSelector(".ng-binding"));
+	String[] parts = nombreArch.split("\\\\");
+	String[] partes = parts[2].split("\\.");
+	for (WebElement x : tabla) {
+		cont = cont + 1;
+		if (x.getText().contains(partes[0]) && (listaEstados[0] != "" || listaResultados[0] != "")) {
+		driver.findElements(By.cssSelector(".btn.btn-primary.btn-xs")).get((cont - 14) / 8).click();
+		sleep(500);
+		List<WebElement> tabla2 = driver.findElements(By.cssSelector(".padding-left-15.ng-binding"));
+		for (cont2 = 7;cont2 < tabla2.size();cont2 = cont2 + 8) {
+			estados.add(driver.findElements(By.cssSelector(".padding-left-15.ng-binding")).get(cont2).getText());
+			resultados.add(driver.findElements(By.cssSelector(".padding-left-15")).get(cont2+1).getText());
+			
+			if (listaEstados[cont2/4-1].equals(estados.get(cont2/4-1))) {
+			} else
+			{
+				cont3 = 1;
+			}
+			if (listaResultados[cont2/4-1].equals(resultados.get(cont2/4-1))) {
+			} else {
+				cont3 = 1;
+			}
+		}
+		sleep(1000);
+		driver.findElements(By.cssSelector(".btn.btn-link")).get(0).click();
+		if (cont3 == 1) {
+			resultado = false;
+		} else {
+			resultado = true;			
+		}
+		} else {
+			if (x.getText().contains(partes[0])) {
+				resultado = true;
+			}
+		}
+		}
+	return resultado;
+	}
+	
+
 	
 	/**
 	 * Hace click en un boton segun el Etiqueta del boton.
@@ -154,6 +355,7 @@ public class BeFan extends BasePage{
 	}
 	
 	public  int numeroDiasEntreDosFechas(Date fecha1, Date fecha2){
+		
 	     long startTime = fecha1.getTime();
 	     long endTime = fecha2.getTime();
 	     long diffTime = endTime - startTime;

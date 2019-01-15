@@ -84,7 +84,7 @@ public class ContactSearch extends BasePage {
 		}
 		if(!genero.equals(""))
 		driver.findElement(By.cssSelector(".OSradioButton.ng-scope.only-buttom")).click();
-		//try {Thread.sleep(8000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		try {Thread.sleep(4000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 	}
 	
 	
@@ -205,4 +205,18 @@ public class ContactSearch extends BasePage {
 		fNac.sendKeys(sFN);
 		sleep(2000);
 	}
+	public void subir_cupos(String uploadPath, String continuar){
+		driver.findElement(By.id("fileinput")).sendKeys(uploadPath);
+		try {Thread.sleep(3000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		switch (continuar) {
+		case "si":
+			try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+			driver.findElement(By.name("BTN-Importar")).click();
+			break;
+		case "no":
+			//Nada
+		}
+		try {Thread.sleep(7000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+	}
+	
 }
