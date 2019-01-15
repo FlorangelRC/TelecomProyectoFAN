@@ -5797,23 +5797,59 @@ public class GestionesPerfilOficina extends TestBase {
 		Assert.assertTrue(driver.findElement(By.cssSelector(".slds-p-horizontal--small.slds-size--1-of-2.slds-medium-size--1-of-4.slds-large-size--1-of-4")).isDisplayed());
 	}
 	
-	@Test (groups = {"GestionesPerfilOficina", "ResumenDeCuenta", "E2E", "Ciclo2"}, dataProvider = "CuentaVista360")
+	@Test (groups = {"GestionesPerfilOficina", "ResumenDeCuenta", "E2E", "Ciclo2"}, dataProvider = "CuentaReintegros")
 	public void TS129476_CRM_Movil_Prepago_Resumen_de_Cuenta_Corriente_Detalle_ampliado_registro_de_Comprobante_Factura_de_Venta_FAN_Front_OOCC(String sDNI, String sLinea,String sNombre, String sEmail, String sMovil){
 		imagen = "TS129476";
 		detalles = null;
-		detalles = imagen + " -Diagnostico Inconveniente - DNI: " + sDNI;
+		detalles = imagen + " -Resumen de Cuenta Corriente - DNI: " + sDNI;
+		Marketing mk = new Marketing(driver);
 		TestBase tb = new TestBase ();
 		driver.switchTo().frame(cambioFrame(driver, By.id("SearchClientDocumentType")));
 		sb.BuscarCuenta("DNI", sDNI);
 		driver.findElement(By.cssSelector(".slds-tree__item.ng-scope")).click();
-		sleep(10000);
+		sleep(20000);
 		mk.closeActiveTab();
-		cc.irAFacturacion();
+		driver.switchTo().frame(cambioFrame(driver, By.className("profile-edit")));
+		buscarYClick(driver.findElements(By.className("left-sidebar-section-header")), "equals", "facturaci\u00f3n");
 		sleep(5000);
 		cc.irAResumenDeCuentaCorriente();
 		driver.switchTo().frame(tb.cambioFrame(driver, By.cssSelector(".slds-button.slds-button--brand.filterNegotiations.slds-p-horizontal--x-large.slds-p-vertical--x-small.secondaryFont")));
+		WebElement saldo = driver.findElement(By.cssSelector(".slds-text-heading--medium.secondaryFont"));
+		saldo.findElement(By.tagName("b"));
+		System.out.println(saldo.getText());
+		sleep(3000);
+		driver.findElement(By.id("text-input-id-1")).click();
+		WebElement table = driver.findElement(By.cssSelector(".slds-datepicker.slds-dropdown.slds-dropdown--left"));
+		sleep(3000);
+			List<WebElement> tableRows = table.findElements(By.xpath("//tr//td"));
+				for (WebElement cell : tableRows) {
+					try {
+						if (cell.getText().equals("01")) {
+							cell.click();
+						}
+					}catch(Exception e) {}
+				}
+				driver.findElement(By.id("text-input-id-2")).click();
+				WebElement table_2 = driver.findElement(By.cssSelector(".slds-datepicker.slds-dropdown.slds-dropdown--left"));
+				sleep(3000);
+				List<WebElement> tableRows_2 = table_2.findElements(By.xpath("//tr//td"));
+				for (WebElement cell : tableRows_2) {
+					try {
+						if (cell.getText().equals("01")) {
+						cell.click();
+						}
+					}catch(Exception e) {}
+				}
 		driver.findElement(By.cssSelector(".slds-button.slds-button--brand.filterNegotiations.slds-p-horizontal--x-large.slds-p-vertical--x-small.secondaryFont")).click();
 		sleep(10000);
+		boolean conf = false;
+		List <WebElement> tablas = driver.findElements(By.cssSelector(".slds-grid.slds-wrap.slds-card.slds-m-bottom--small.slds-p-around--medium"));
+		for (WebElement x : tablas) {
+			if(x.getText().toLowerCase().contains("comprobantes")) {
+				conf = true;
+			}
+		}
+		Assert.assertTrue(conf);
 		List<WebElement> Tabla = driver.findElement(By.className("slds-p-bottom--small")).findElement(By.tagName("table")).findElement(By.tagName("tbody")).findElements(By.tagName("tr"));
 		for(WebElement x:Tabla) {
 			if (x.findElements(By.tagName("td")).get(2).getText().toLowerCase().contains("fv")) {
@@ -5822,7 +5858,12 @@ public class GestionesPerfilOficina extends TestBase {
 				break;
 			}
 		}
-		// no se muestra el detalle de factura de venta
+		sleep(10000);
+		driver.switchTo().frame(tb.cambioFrame(driver, By.className("boton")));
+		WebElement comprobante = driver.findElement(By.cssSelector(".slds-wrap.slds-card.slds-m-bottom--small.slds-p-around--medium"));
+		comprobante.findElement(By.tagName("object"));
+		System.out.println(comprobante.getText());
+		Assert.assertTrue(comprobante.isDisplayed());
 	}
 	
 	@Test (groups = {"GestionesPerfilOficina", "Ajustes","E2E", "Ciclo3"}, dataProvider = "CuentaAjustesREPRO")

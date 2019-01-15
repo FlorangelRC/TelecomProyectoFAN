@@ -4485,4 +4485,73 @@ public class GestionesPerfilTelefonico extends TestBase{
 		sleep(10000);
 		Assert.assertFalse(driver.findElement(By.id("MethodSelection_nextBtn")).isDisplayed());
 	}
+	
+	@Test (groups = {"GestionesPerfilTelefonico" , "ResumenDeCuenta" , "E2E" , "Ciclo4"}, dataProvider= "CuentaReintegros")
+	public void TS135439_CRM_Movil_REPRO_Resumen_de_Cuenta_Corriente_Detalle_ampliado_registro_de_Comprobante_Factura_de_Venta_FAN_Front_Telefonico(String sDNI) {
+		imagen = "TS135439";
+		detalles = null;
+		detalles = imagen + " -Resumen de Cuenta Corriente - DNI: " + sDNI;
+		Marketing mk = new Marketing(driver);
+		TestBase tb = new TestBase ();
+		driver.switchTo().frame(cambioFrame(driver, By.id("SearchClientDocumentType")));
+		sb.BuscarCuenta("DNI", sDNI);
+		driver.findElement(By.cssSelector(".slds-tree__item.ng-scope")).click();
+		sleep(20000);
+		mk.closeActiveTab();
+		driver.switchTo().frame(cambioFrame(driver, By.className("profile-edit")));
+		buscarYClick(driver.findElements(By.className("left-sidebar-section-header")), "equals", "facturaci\u00f3n");
+		sleep(5000);
+		cc.irAResumenDeCuentaCorriente();
+		driver.switchTo().frame(tb.cambioFrame(driver, By.cssSelector(".slds-button.slds-button--brand.filterNegotiations.slds-p-horizontal--x-large.slds-p-vertical--x-small.secondaryFont")));
+		WebElement saldo = driver.findElement(By.cssSelector(".slds-text-heading--medium.secondaryFont"));
+		saldo.findElement(By.tagName("b"));
+		System.out.println(saldo.getText());
+		sleep(3000);
+		driver.findElement(By.id("text-input-id-1")).click();
+		WebElement table = driver.findElement(By.cssSelector(".slds-datepicker.slds-dropdown.slds-dropdown--left"));
+		sleep(3000);
+			List<WebElement> tableRows = table.findElements(By.xpath("//tr//td"));
+				for (WebElement cell : tableRows) {
+					try {
+						if (cell.getText().equals("01")) {
+							cell.click();
+						}
+					}catch(Exception e) {}
+				}
+				driver.findElement(By.id("text-input-id-2")).click();
+				WebElement table_2 = driver.findElement(By.cssSelector(".slds-datepicker.slds-dropdown.slds-dropdown--left"));
+				sleep(3000);
+				List<WebElement> tableRows_2 = table_2.findElements(By.xpath("//tr//td"));
+				for (WebElement cell : tableRows_2) {
+					try {
+						if (cell.getText().equals("01")) {
+						cell.click();
+						}
+					}catch(Exception e) {}
+				}
+		driver.findElement(By.cssSelector(".slds-button.slds-button--brand.filterNegotiations.slds-p-horizontal--x-large.slds-p-vertical--x-small.secondaryFont")).click();
+		sleep(10000);
+		boolean conf = false;
+		List <WebElement> tablas = driver.findElements(By.cssSelector(".slds-grid.slds-wrap.slds-card.slds-m-bottom--small.slds-p-around--medium"));
+		for (WebElement x : tablas) {
+			if(x.getText().toLowerCase().contains("comprobantes")) {
+				conf = true;
+			}
+		}
+		Assert.assertTrue(conf);
+		List<WebElement> Tabla = driver.findElement(By.className("slds-p-bottom--small")).findElement(By.tagName("table")).findElement(By.tagName("tbody")).findElements(By.tagName("tr"));
+		for(WebElement x:Tabla) {
+			if (x.findElements(By.tagName("td")).get(2).getText().toLowerCase().contains("fv")) {
+				sleep(10000);
+				x.findElements(By.tagName("td")).get(5).click();
+				break;
+			}
+		}
+		sleep(10000);
+		driver.switchTo().frame(tb.cambioFrame(driver, By.className("boton")));
+		WebElement comprobante = driver.findElement(By.cssSelector(".slds-wrap.slds-card.slds-m-bottom--small.slds-p-around--medium"));
+		comprobante.findElement(By.tagName("object"));
+		System.out.println(comprobante.getText());
+		Assert.assertTrue(comprobante.isDisplayed());
+	}
 }
