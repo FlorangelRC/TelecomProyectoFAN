@@ -35,6 +35,7 @@ import Pages.CustomerCare;
 import Pages.Marketing;
 import Pages.OM;
 import Pages.PagePerfilTelefonico;
+import Pages.SCP;
 import Pages.SalesBase;
 import Pages.TechCare_Ola1;
 import Pages.TechnicalCareCSRAutogestionPage;
@@ -50,6 +51,7 @@ public class GestionesPerfilOficina extends TestBase {
 	private CBS_Mattu cbsm;
 	private Marketing mk;
 	private PagePerfilTelefonico ppt;
+	private SCP scp;
 	List<String> sOrders = new ArrayList<String>();
 	String imagen;
 	String detalles;
@@ -7285,5 +7287,195 @@ public class GestionesPerfilOficina extends TestBase {
 		WebElement msj =driver.findElement(By.xpath("//*[@class='vlc-slds-inline-control__label' and contains(text(), 'Estado de la tarjeta: ')]"));
 		System.out.println(msj.getText());
 		Assert.assertTrue(msj.findElement(By.xpath("//*[@id='PrepaidCardStatusLabel']//label/strong")).getText().equalsIgnoreCase("Activa")); 
+	}
+	
+	@Test (groups = {"GestionesPerfilOficina", "ResumenDeCuenta", "Ciclo4"}, dataProvider = "CuentaVista360")
+	public void TS124406_CRM_Movil_REPRO_Resumen_de_Cuenta_Corriente_Visualizacion_del_Resumen_de_Cuenta_Corriente_a_nivel_de_cuenta_de_Facturacion_FAN_Front_OOCC(String sDNI, String sLinea,String sNombre, String sCuenta, String sMovil) {
+		imagen = "TS124406";
+		String cuenta = null;
+		driver.switchTo().frame(cambioFrame(driver, By.id("SearchClientDocumentType")));
+		sb.BuscarCuenta("DNI", sDNI);
+		driver.findElement(By.cssSelector(".slds-tree__item.ng-scope")).click();
+		sleep(15000);
+		mk.closeActiveTab();
+		cc.irAFacturacion();
+		sleep(5000);
+		driver.switchTo().frame(cambioFrame(driver, By.className("card-top")));
+		cuenta = driver.findElement(By.className("header-left")).getText();
+		System.out.println(cuenta);
+		buscarYClick(driver.findElements(By.className("slds-text-body_regular")), "contains", "resumen de cuenta corriente");
+		sleep(15000);
+		driver.switchTo().frame(cambioFrame(driver, By.cssSelector(".slds-button.slds-button--brand.filterNegotiations.slds-p-horizontal--x-large.slds-p-vertical--x-small.secondaryFont")));
+		driver.findElement(By.cssSelector(".slds-button.slds-button--brand.filterNegotiations.slds-p-horizontal--x-large.slds-p-vertical--x-small.secondaryFont")).click();
+		sleep(5000);
+		boolean saldo = false, comprobantes = false, pagos= false;
+		WebElement sald = driver.findElement(By.cssSelector(".slds-text-heading--medium.secondaryFont")).findElement(By.tagName("b"));
+		sald.isDisplayed();
+		saldo=true;
+		WebElement comprobante = driver.findElement(By.cssSelector(".slds-size--1-of-1.slds-medium-size--1-of-1.slds-large-size--1-of-1.slds-m-top--x-large"));
+		comprobante.isDisplayed();
+		comprobantes= true;
+		WebElement pago = driver.findElement(By.className("slds-p-bottom--small")).findElement(By.tagName("table"));
+		pago.isDisplayed();
+		pagos= true;
+		Assert.assertTrue(saldo && comprobantes && pagos);
+		String resuCuenta = driver.findElement(By.className("secondaryFont")).getText();
+		cuenta = resuCuenta.substring(0, 16);
+		System.out.println("El Resumen de Cuenta Corresponde a la cuenta: " + cuenta);	
+		Assert.assertTrue(cuenta.equalsIgnoreCase(sCuenta));
+	}
+	
+	@Test (groups = {"GestionesPerfilOficina", "ResumenDeCuenta", "Ciclo4"}, dataProvider = "CuentaVista360")
+	public void TS124411_CRM_MovilREPRO_Resumen_de_Cuenta_Corriente_Visualizacion_del_Resumen_de_Cuenta_Corriente_a_nivel_de_cuenta_de_Facturacion_Detalle_ampliado_FAN_Front_OOCC(String sDNI, String sLinea,String sNombre, String sCuenta, String sMovil) {
+		imagen = "TS124411";
+		String cuenta = null;
+		driver.switchTo().frame(cambioFrame(driver, By.id("SearchClientDocumentType")));
+		sb.BuscarCuenta("DNI", sDNI);
+		driver.findElement(By.cssSelector(".slds-tree__item.ng-scope")).click();
+		sleep(15000);
+		mk.closeActiveTab();
+		cc.irAFacturacion();
+		sleep(5000);
+		driver.switchTo().frame(cambioFrame(driver, By.className("card-top")));
+		buscarYClick(driver.findElements(By.className("slds-text-body_regular")), "contains", "resumen de cuenta corriente");
+		sleep(15000);
+		driver.switchTo().frame(cambioFrame(driver, By.cssSelector(".slds-button.slds-button--brand.filterNegotiations.slds-p-horizontal--x-large.slds-p-vertical--x-small.secondaryFont")));
+		driver.findElement(By.cssSelector(".slds-button.slds-button--brand.filterNegotiations.slds-p-horizontal--x-large.slds-p-vertical--x-small.secondaryFont")).click();
+		sleep(5000);
+		String resuCuenta = driver.findElement(By.className("secondaryFont")).getText();
+		cuenta = resuCuenta.substring(0, 16);
+		System.out.println("El Resumen de Cuenta Corresponde a la cuenta: " + cuenta);	
+		Assert.assertTrue(cuenta.equalsIgnoreCase(sCuenta));
+		WebElement detaFactu = driver.findElement(By.xpath("//*[@class='slds-p-bottom--small']/table/tbody/tr/td/div/a/i"));
+		detaFactu.click();
+		sleep(5000);
+		driver.switchTo().frame(cambioFrame(driver, By.cssSelector(".slds-wrap.slds-card.slds-m-bottom--small.slds-p-around--medium")));
+		Assert.assertTrue(driver.findElements(By.cssSelector(".slds-wrap.slds-card.slds-m-bottom--small.slds-p-around--medium")).get(0).isDisplayed());
+		
+	}
+	
+	@Test (groups = {"GestionesPerfilOficina", "ResumenDeCuenta", "Ciclo4"}, dataProvider = "CuentaVista360")
+	public void TS124414_CRM_Movil_REPRO_Resumen_de_Cuenta_Corriente_Visualizacion_del_Resumen_de_Cuenta_Corriente_a_nivel_de_cuenta_de_Facturacion_Descarga_FAN_Front_OOCC(String sDNI, String sLinea,String sNombre, String sCuenta, String sMovil) {
+		imagen = "TS124414";
+		String cuenta = null;
+		driver.switchTo().frame(cambioFrame(driver, By.id("SearchClientDocumentType")));
+		sb.BuscarCuenta("DNI", sDNI);
+		driver.findElement(By.cssSelector(".slds-tree__item.ng-scope")).click();
+		sleep(15000);
+		mk.closeActiveTab();
+		cc.irAFacturacion();
+		sleep(5000);
+		driver.switchTo().frame(cambioFrame(driver, By.className("card-top")));
+		buscarYClick(driver.findElements(By.className("slds-text-body_regular")), "contains", "resumen de cuenta corriente");
+		sleep(15000);
+		driver.switchTo().frame(cambioFrame(driver, By.cssSelector(".slds-button.slds-button--brand.filterNegotiations.slds-p-horizontal--x-large.slds-p-vertical--x-small.secondaryFont")));
+		driver.findElement(By.cssSelector(".slds-button.slds-button--brand.filterNegotiations.slds-p-horizontal--x-large.slds-p-vertical--x-small.secondaryFont")).click();
+		sleep(5000);
+		String resuCuenta = driver.findElement(By.className("secondaryFont")).getText();
+		cuenta = resuCuenta.substring(0, 16);
+		System.out.println("El Resumen de Cuenta Corresponde a la cuenta: " + cuenta);	
+		Assert.assertTrue(cuenta.equalsIgnoreCase(sCuenta));
+		WebElement detaFactu = driver.findElement(By.xpath("//*[@class='slds-p-bottom--small']/table/tbody/tr/td/div/a/i"));
+		detaFactu.click();
+		sleep(5000);
+		driver.switchTo().frame(cambioFrame(driver, By.className("slds-float--right")));
+		WebElement imprimir = driver.findElement(By.className("slds-float--right")).findElement(By.className("boton"));
+		WebElement descargar = driver.findElement(By.className("slds-float--right")).findElement(By.className("boton2"));
+		Assert.assertTrue(imprimir.isDisplayed() && descargar.isDisplayed());
+		sleep(5000);
+		descargar.click();
+		sleep(5000);
+		String downloadPath = "C:\\Users\\Quelys\\Downloads";
+		Assert.assertTrue(scp.isFileDownloaded(downloadPath,"B00785"), "Failed to download Expected document");
+	}
+	
+	@Test (groups = {"GestionesPerfilOficina", "ResumenDeCuenta", "Ciclo4"}, dataProvider = "CuentaVista360")
+	public void TS124415_CRM_Movil_REPRO_Resumen_de_Cuenta_Corriente_Visualizacion_del_Resumen_de_Cuenta_Corriente_a_nivel_de_cuenta_de_Facturacion_Impresion_FAN_Front_OOCC(String sDNI, String sLinea,String sNombre, String sCuenta, String sMovil) {
+		imagen = "TS124415";
+		String cuenta = null;
+		driver.switchTo().frame(cambioFrame(driver, By.id("SearchClientDocumentType")));
+		sb.BuscarCuenta("DNI", sDNI);
+		driver.findElement(By.cssSelector(".slds-tree__item.ng-scope")).click();
+		sleep(15000);
+		mk.closeActiveTab();
+		cc.irAFacturacion();
+		sleep(5000);
+		driver.switchTo().frame(cambioFrame(driver, By.className("card-top")));
+		buscarYClick(driver.findElements(By.className("slds-text-body_regular")), "contains", "resumen de cuenta corriente");
+		sleep(15000);
+		driver.switchTo().frame(cambioFrame(driver, By.cssSelector(".slds-button.slds-button--brand.filterNegotiations.slds-p-horizontal--x-large.slds-p-vertical--x-small.secondaryFont")));
+		driver.findElement(By.cssSelector(".slds-button.slds-button--brand.filterNegotiations.slds-p-horizontal--x-large.slds-p-vertical--x-small.secondaryFont")).click();
+		sleep(5000);
+		String resuCuenta = driver.findElement(By.className("secondaryFont")).getText();
+		cuenta = resuCuenta.substring(0, 16);
+		System.out.println("El Resumen de Cuenta Corresponde a la cuenta: " + cuenta);	
+		Assert.assertTrue(cuenta.equalsIgnoreCase(sCuenta));
+		WebElement detaFactu = driver.findElement(By.xpath("//*[@class='slds-p-bottom--small']/table/tbody/tr/td/div/a/i"));
+		detaFactu.click();
+		sleep(5000);
+		driver.switchTo().frame(cambioFrame(driver, By.className("slds-float--right")));
+		WebElement imprimir = driver.findElement(By.className("slds-float--right")).findElement(By.className("boton"));
+		WebElement descargar = driver.findElement(By.className("slds-float--right")).findElement(By.className("boton2"));
+		Assert.assertTrue(imprimir.isDisplayed() && descargar.isDisplayed());
+		imprimir.click();
+		ArrayList<String> tabs2 = new ArrayList<String> (driver.getWindowHandles());
+		Assert.assertTrue(tabs2.size()>1);
+	}
+	
+	@Test (groups = {"GestionesPerfilOficina", "ResumenDeCuenta", "Ciclo4"}, dataProvider = "CuentaVista360")
+	public void TS129473_CRM_Movil_REPRO_Resumen_de_Cuenta_Corriente_Detalle_ampliado_registro_de_Pago_FAN_Front_OOCC(String sDNI, String sLinea,String sNombre, String sCuenta, String sMovil) {
+		imagen = "TS129473";
+		String cuenta = null;
+		driver.switchTo().frame(cambioFrame(driver, By.id("SearchClientDocumentType")));
+		sb.BuscarCuenta("DNI", sDNI);
+		driver.findElement(By.cssSelector(".slds-tree__item.ng-scope")).click();
+		sleep(15000);
+		mk.closeActiveTab();
+		cc.irAFacturacion();
+		sleep(5000);
+		driver.switchTo().frame(cambioFrame(driver, By.className("card-top")));
+		buscarYClick(driver.findElements(By.className("slds-text-body_regular")), "contains", "resumen de cuenta corriente");
+		sleep(15000);
+		driver.switchTo().frame(cambioFrame(driver, By.cssSelector(".slds-button.slds-button--brand.filterNegotiations.slds-p-horizontal--x-large.slds-p-vertical--x-small.secondaryFont")));
+		driver.findElement(By.cssSelector(".slds-button.slds-button--brand.filterNegotiations.slds-p-horizontal--x-large.slds-p-vertical--x-small.secondaryFont")).click();
+		sleep(5000);
+		String resuCuenta = driver.findElement(By.className("secondaryFont")).getText();
+		cuenta = resuCuenta.substring(0, 16);
+		System.out.println("El Resumen de Cuenta Corresponde a la cuenta: " + cuenta);	
+		Assert.assertTrue(cuenta.equalsIgnoreCase(sCuenta));
+		((JavascriptExecutor)driver).executeScript("window.scrollTo(0,"+driver.findElements(By.cssSelector(".slds-size--1-of-1.slds-medium-size--1-of-1.slds-large-size--1-of-1.slds-m-top--x-large")).get(1).getLocation().y+" )");
+		sleep(5000);
+		WebElement detapagos = driver.findElement(By.xpath("//*[@class='slds-text-heading--large slds-size--1-of-1 slds-medium-size--1-of-1 slds-large-size--1-of-1 slds-m-bottom--small'] //b[contains(text(), 'Pagos')] /.. /.. /.. //*[@class='slds-p-bottom--small'] //tr[3] //td[5] //a"));
+		detapagos.click();
+		sleep(15000);
+		Assert.assertTrue(driver.findElement(By.className("secondaryFont")).getText().contains(cuenta));
+		
+	}
+	
+	@Test (groups = {"GestionesPerfilOficina", "ResumenDeCuenta", "Ciclo4"}, dataProvider = "CuentaVista360")
+	public void TS129475_CRM_Movil_REPRO_Resumen_de_Cuenta_Corriente_Detalle_ampliado_registro_de_Comprobante_Nota_de_Credito_Debito_FAN_Front_OOCC(String sDNI, String sLinea,String sNombre, String sCuenta, String sMovil) {
+		imagen = "TS129475";
+		String cuenta = null;
+		driver.switchTo().frame(cambioFrame(driver, By.id("SearchClientDocumentType")));
+		sb.BuscarCuenta("DNI", sDNI);
+		driver.findElement(By.cssSelector(".slds-tree__item.ng-scope")).click();
+		sleep(15000);
+		mk.closeActiveTab();
+		cc.irAFacturacion();
+		sleep(5000);
+		driver.switchTo().frame(cambioFrame(driver, By.className("card-top")));
+		buscarYClick(driver.findElements(By.className("slds-text-body_regular")), "contains", "resumen de cuenta corriente");
+		sleep(15000);
+		driver.switchTo().frame(cambioFrame(driver, By.cssSelector(".slds-button.slds-button--brand.filterNegotiations.slds-p-horizontal--x-large.slds-p-vertical--x-small.secondaryFont")));
+		driver.findElement(By.cssSelector(".slds-button.slds-button--brand.filterNegotiations.slds-p-horizontal--x-large.slds-p-vertical--x-small.secondaryFont")).click();
+		sleep(5000);
+		String resuCuenta = driver.findElement(By.className("secondaryFont")).getText();
+		cuenta = resuCuenta.substring(0, 16);
+		System.out.println("El Resumen de Cuenta Corresponde a la cuenta: " + cuenta);	
+		Assert.assertTrue(cuenta.equalsIgnoreCase(sCuenta));
+		WebElement detaFactu = driver.findElement(By.xpath("//*[contains(text(),'NCBR')]/../following-sibling::*//div/a"));
+		detaFactu.click();
+		sleep(5000);
+		//Assert.assertTrue(///Bug... no muestra la informacion de la Nota de Credito);
 	}
 }
