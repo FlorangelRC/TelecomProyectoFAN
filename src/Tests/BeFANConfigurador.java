@@ -427,13 +427,15 @@ public class BeFANConfigurador extends TestBase {
 	@Test (groups = "BeFAN")
 	public void TS97663_BeFan_Movil_REPRO_Localidad_inexistente() {
 		irA("regiones", "gesti\u00f3n");
+		boolean codigo = true;
 		buscarYClick(driver.findElements(By.cssSelector(".panel-group.panel-group-alternative.ng-scope")), "contains", "mar del tuy\u00fa");
 		driver.findElement(By.cssSelector(".panel-collapse.in.collapse")).findElement(By.cssSelector(".btn.btn-link")).click();
 		sleep(3000);
 		for (WebElement x : driver.findElements(By.cssSelector(".compatibility.custom-check.ng-scope"))) {
 			if (!(x.getText().equalsIgnoreCase("3275")))
-				Assert.assertTrue(false);
+				codigo=false;
 		}
+		Assert.assertTrue(codigo);
 	}
 	
 	@Test (groups = "BeFAN")
