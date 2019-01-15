@@ -1131,7 +1131,7 @@ public class TestBase {
 	@DataProvider
 	public Object[][] AltaLineaExistenteOfComPresencial() throws Exception{//verificado
 
-	 Object[][] testObjArray = ExcelUtils.getTableArray(dataProviderE2E(),"Altas y Nominacion",1,1,2,"Alta Linea Existente OfCom Presencial");
+	 Object[][] testObjArray = ExcelUtils.getTableArray(dataProviderE2E(),"Altas y Nominacion",1,1,4,"Alta Linea Existente OfCom Presencial");
 
 	 return (testObjArray);
 
@@ -1415,8 +1415,11 @@ public class TestBase {
 		 case "backoffice":
 			 login(driver, urlAmbiente, "uat518122", "Testa10k");
 			 break;
-		 case "Fraude":
+		 case "fraude":
 			 loginFraude(driver);
+		 	break;
+		 case "logisticayentrega":
+		 	loginLogisticaYEntrega(driver);
 		 	break;
 		 }
 		 sleep(10000);
@@ -1434,7 +1437,7 @@ public class TestBase {
 	@DataProvider
 	public Object[][] CambioSimCardTelef() throws Exception{
 		
-		Object[][] testObjArray =  ExcelUtils.getTableArray(dataProviderE2E(),"E2EconPago",1,1,2,"Cambio SimCard Telef");
+		Object[][] testObjArray =  ExcelUtils.getTableArray(dataProviderE2E(),"E2EconPago",1,1,6,"SimCard Telef");
 		
 		return (testObjArray);
 	}
@@ -1466,7 +1469,7 @@ public class TestBase {
 	@DataProvider
 	public Object[][] SimCardSiniestroOfCom() throws Exception{
 		
-		Object[][] testObjArray =  ExcelUtils.getTableArray(dataProviderE2E(),"E2EconPago",1,1,6,"SimCard Siniestro OfCom");
+		Object[][] testObjArray =  ExcelUtils.getTableArray(dataProviderE2E(),"E2EconPago",1,1,2,"SimCard Siniestro OfCom");
 		
 		return (testObjArray);
 	}
@@ -1482,7 +1485,7 @@ public class TestBase {
 	@DataProvider
 	public Object[][] DatosAltaEquipoExiste() throws Exception{
 
-	 Object[][] testObjArray = ExcelUtils.getTableArray(dataProviderE2E(),"Altas y Nominacion",1,1,3,"Alta Linea Equipo Existe");
+	 Object[][] testObjArray = ExcelUtils.getTableArray(dataProviderE2E(),"Altas y Nominacion",1,1,5,"Alta Linea Equipo Existe");
 
 	 return (testObjArray);
 	}
@@ -1525,7 +1528,7 @@ public class TestBase {
 	@DataProvider
 	public Object[][] AltaLineaExistenteOfComTD() throws Exception{//verificado
 
-	 Object[][] testObjArray = ExcelUtils.getTableArray(dataProviderE2E(),"Altas y Nominacion",1,1,7,"Alta Linea Existe OfCom Debito");
+	 Object[][] testObjArray = ExcelUtils.getTableArray(dataProviderE2E(),"Altas y Nominacion",1,1,9,"Alta Linea Existe OfCom Debito");
 
 	 return (testObjArray);
 
@@ -1534,7 +1537,7 @@ public class TestBase {
 	@DataProvider
 	public Object[][] AltaEquipoExisteSPU() throws Exception{//verificado
 		
-		 Object[][] testObjArray = ExcelUtils.getTableArray(dataProviderE2E(),"Altas y Nominacion",1,1,6,"Linea Equipo Existe SPU");
+		 Object[][] testObjArray = ExcelUtils.getTableArray(dataProviderE2E(),"Altas y Nominacion",1,1,8,"Linea Equipo Existe SPU");
 
 		 return (testObjArray);
 	}
@@ -1578,6 +1581,89 @@ public class TestBase {
 
 		 return (testObjArray);
 	}
+	
+	@DataProvider(name = "SerialInexistente")
+	public Object[][] SerialInexistente() throws Exception{
+
+	 Object[][] testObjArray = ExcelUtils.getTableArray(dataProviderE2E(),"E2EsinPago",1,1,7,"SerialInexistente");
+
+	 return (testObjArray);
+
+	}
+	
+	@DataProvider(name = "SerialConDepositoErroneo")
+	public Object[][] SerialConDepositoErroneo() throws Exception{
+
+	 Object[][] testObjArray = ExcelUtils.getTableArray(dataProviderE2E(),"E2EsinPago",1,1,7,"SerialConDepositoErroneo");
+
+	 return (testObjArray);
+
+	}
+	
+	@DataProvider(name = "SerialConFormatoInvalido")
+	public Object[][] SerialConFormatoInvalido() throws Exception{
+
+	 Object[][] testObjArray = ExcelUtils.getTableArray(dataProviderE2E(),"E2EsinPago",1,1,7,"SerialConFormatoInvalido");
+
+	 return (testObjArray);
+
+	}
+	
+	@DataProvider(name = "SerialValido")
+	public Object[][] SerialValido() throws Exception{
+
+	 Object[][] testObjArray = ExcelUtils.getTableArray(dataProviderE2E(),"E2EsinPago",1,1,7,"SerialValido");
+
+	 return (testObjArray);
+
+	}
+	
+	@DataProvider(name = "DosSerialesValidos")
+	public Object[][] DosSerialesValidos() throws Exception{
+
+	 Object[][] testObjArray = ExcelUtils.getTableArray(dataProviderE2E(),"E2EsinPago",1,1,7,"DosSerialesValidos");
+
+	 return (testObjArray);
+
+	}
+	
+	@DataProvider(name = "ArchivoVacio")
+	public Object[][] ArchivoVacio() throws Exception{
+
+	 Object[][] testObjArray = ExcelUtils.getTableArray(dataProviderE2E(),"E2EsinPago",1,1,7,"ArchivoVacio");
+
+	 return (testObjArray);
+
+	}
+	
+	@DataProvider(name = "SerialNoMCVM")
+	public Object[][] SerialNoMCVM() throws Exception{
+
+	 Object[][] testObjArray = ExcelUtils.getTableArray(dataProviderE2E(),"E2EsinPago",1,1,7,"SerialNoMCVM");
+
+	 return (testObjArray);
+
+	}
+	
+	@DataProvider(name = "SerialesNoValidos")
+	public Object[][] SerialesNoValidos() throws Exception{
+
+	 Object[][] testObjArray = ExcelUtils.getTableArray(dataProviderE2E(),"E2EsinPago",1,1,7,"SerialesNoValidos");
+
+	 return (testObjArray);
+
+	}
+	
+	@DataProvider(name = "SerialValidoEterno")
+	public Object[][] SerialValidoEterno() throws Exception{
+
+	 Object[][] testObjArray = ExcelUtils.getTableArray(dataProviderE2E(),"E2EsinPago",1,1,7,"SerialValidoEterno");
+
+	 return (testObjArray);
+
+	}
+	
+	
 	
 	public void tomarCaptura(WebDriver driver, String imageName) {
 	      //Directorio donde quedaran las imagenes guardadas
@@ -1890,5 +1976,34 @@ public class TestBase {
 	 return (testObjArray);
 
 	}
+	@DataProvider
+	public Object[][] DatosNoNominacionNuevoFraudeTelef() throws Exception{
+		
+		 Object[][] testObjArray = ExcelUtils.getTableArray(dataProviderE2E(),"Altas y Nominacion",1,1,2,"NoNominacionNuevoFraudeTelef");
+
+		 return (testObjArray);
+	}
+	@DataProvider
+	public Object[][] DatosNoNominacionExistenteFraudeOfcom() throws Exception{
+
+	 Object[][] testObjArray = ExcelUtils.getTableArray(dataProviderE2E(),"Altas y Nominacion",1,1,2,"NoNominacionExistenteFraudeOfcom");
+
+	 return (testObjArray);
+
+	}
+	@DataProvider
+	public Object[][] DatosNoNominacionExistenteTelefonico() throws Exception{
+
+	 Object[][] testObjArray = ExcelUtils.getTableArray(dataProviderE2E(),"Altas y Nominacion",1,1,3,"NoNominacionExistenteTelefonico");
+
+	 return (testObjArray);
+
+	}
 	
+	public void loginLogisticaYEntrega(WebDriver driver) {
+		driver.get(urlAmbiente);
+		try {Thread.sleep(6000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+	    Login page0 = new Login(driver);
+	    page0.ingresarLogisticaYEntrega();
+	}
 }

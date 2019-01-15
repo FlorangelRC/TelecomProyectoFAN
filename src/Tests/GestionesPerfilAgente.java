@@ -226,9 +226,10 @@ public class GestionesPerfilAgente extends TestBase{
 		String datos = tabla.findElements(By.tagName("tr")).get(4).findElements(By.tagName("td")).get(1).getText();
 		Assert.assertTrue(datos.equalsIgnoreCase("activada")||datos.equalsIgnoreCase("activated"));
 	}
-	@Test(groups = { "GestionesPerfilAgente","CambioDeSimcard", "E2E","Ciclo3" }, priority = 1, dataProvider = "CambioSimCardAgente")
-	public void TSCambioSimCardAgente(String sDNI, String sLinea) throws AWTException {
-		imagen = "TSCambioSimCardAgente";
+	//       ESTE 1
+	@Test(groups = { "GestionesPerfilAgente","CambioSimCard", "E2E","Ciclo3" }, priority = 1, dataProvider = "CambioSimCardAgente")
+	public void TS_Cambio_SimCard_Agente(String sDNI, String sLinea) throws AWTException {
+		imagen = "TS_Cambio_SimCard_Agente";
 		detalles = null;
 		detalles = imagen + "-DNI:" + sDNI;
 		SalesBase sale = new SalesBase(driver);
@@ -246,20 +247,20 @@ public class GestionesPerfilAgente extends TestBase{
 		cCC.seleccionarCardPornumeroLinea(sLinea, driver);
 		sleep(3000);
 		cCC.irAGestionEnCard("Cambio SimCard");
-		sleep(2000);
+		sleep(10000);
 		driver.switchTo().frame(cambioFrameByID.getFrameForElement(driver, By.id("DeliveryMethodSelection")));
 		sleep(15000);
 		Select metodoEntrega = new Select (driver.findElement(By.id("DeliveryMethodSelection")));
 		metodoEntrega.selectByVisibleText("Presencial");
 		cCC.obligarclick(driver.findElement(By.id("DeliveryMethodConfiguration_nextBtn")));
 		sleep(16000);
-		cCC.obligarclick(driver.findElement(By.id("ICCDAssignment_nextBtn")));
-		sleep(16000);
+		WebElement cereal = driver.findElement(By.id("ICCIDConfiguration"));
+		System.out.println(cereal.getText());
+		Assert.assertTrue(cereal.isDisplayed());
+		driver.findElement(By.id("ICCDAssignment_nextBtn")).click();
+		sleep(10000);
 		cCC.obligarclick(driver.findElement(By.id("InvoicePreview_nextBtn")));
 		sleep(16000);
-//		buscarYClick(driver.findElements(By.cssSelector(".slds-form-element__label.ng-binding")), "equals","Efectivo");
-//		cCC.obligarclick(driver.findElement(By.id("SelectPaymentMethodsStep_nextBtn")));
-//		sleep(15000);
 		String orden = driver.findElement(By.className("top-data")).findElement(By.className("ng-binding")).getText();
 		detalles += "-Orden:" + orden;
 		System.out.println("Orden " + orden);
@@ -273,23 +274,48 @@ public class GestionesPerfilAgente extends TestBase{
 		sleep(10000);
 		String invoice = cCC.obtenerMontoyTNparaAlta(driver, orden);
 		System.out.println(invoice);
-		detalles+="-Monto:"+invoice.split("-")[2]+"-Prefactura:"+invoice.split("-")[1];
-		sleep(10000);
-		//datosOrden.add("Cambio sim card Agente- Cuenta: "+accid+"Invoice: "+invoice.split("-")[0]);
+		detalles+="-Monto:"+invoice.split("-")[1]+"-Prefactura:"+invoice.split("-")[0];
 		CBS_Mattu invoSer = new CBS_Mattu();
-		Assert.assertTrue(invoSer.PagoEnCaja("1006", accid, "1001", invoice.split("-")[2], invoice.split("-")[1],driver));
-		sleep(5000);
+		if(activarFalsos==true)
+		invoSer.Servicio_NotificarEmisionFactura(orden);
+		sleep(10000);
 		driver.navigate().refresh();
 		sleep(10000);
-		//cc.obtenerTNyMonto2(driver, sOrden);
-		//sleep(10000);
 		driver.switchTo().frame(cambioFrame(driver, By.cssSelector(".hasMotif.orderTab.detailPage.ext-webkit.ext-chrome.sfdcBody.brandQuaternaryBgr")));
 		WebElement tabla = driver.findElement(By.id("ep")).findElements(By.tagName("table")).get(1);
 		String datos = tabla.findElements(By.tagName("tr")).get(4).findElements(By.tagName("td")).get(1).getText();
-		Assert.assertTrue(datos.equalsIgnoreCase("activada")||datos.equalsIgnoreCase("activated"));
+		if(activarFalsos==true) {
+			boolean esta = false;
+			List<WebElement> campos = tabla.findElements(By.tagName("tr"));
+			for(WebElement UnC: campos) {
+				if(UnC.getText().toLowerCase().contains("tracking status")) {
+					Assert.assertTrue(UnC.getText().toLowerCase().contains("entregado"));
+					esta = true;
+					break;
+				}
+			}
+			Assert.assertTrue(esta);
+		}
+		sleep(2000);
+		CambiarPerfil("logistica",driver);
+		//cCC.obtenerMontoyTNparaAlta(driver, orden);
+		sb.completarLogistica(orden, driver);
+		sb.completarEntrega(orden, driver);
+		CambiarPerfil("ofcom",driver);
+		try {
+			cc.cajonDeAplicaciones("Consola FAN");
+		} catch(Exception e) {
+			waitForClickeable(driver,By.id("tabBar"));
+			driver.findElement(By.id("tabBar")).findElement(By.tagName("a")).click();
+			sleep(6000);
+		}
 		
+		driver.switchTo().defaultContent();
+		sleep(6000);
+		cCC.obtenerMontoyTNparaAlta(driver, orden);
+		Assert.assertTrue(datos.equalsIgnoreCase("activada")||datos.equalsIgnoreCase("activated"));
 	}
-	
+		
 	@Test (groups = {"GestionesPerfilAgente","VentaDePacks","E2E","Ciclo1"}, dataProvider="PackAgente")
 	public void Venta_de_Pack_1_GB_x_1_dia_whatsapp_gratis_Factura_de_Venta_efectivo_Agente(String sDNI, String sLinea, String sPackAgente) throws AWTException{
 		imagen = "Venta_de_Pack";
@@ -1212,7 +1238,7 @@ public class GestionesPerfilAgente extends TestBase{
 		Assert.assertTrue(false); 
 	}
 	@Test(groups = { "GestionesPerfilAgente","Ciclo 3", "E2E", "CambioDeSimCard" }, priority = 1, dataProvider = "SimCardSiniestroAG")
-	public void TS99020_CRM_Movil_REPRO_Cambio_de_SimCard_Presencial_Siniestro_DOC_Store_Pick_Up_TC_Agente(String sDNI, String sLinea,String cEntrega, String cProvincia, String cLocalidad, String cPuntodeVenta, String cBanco, String cTarjeta, String cPromo, String cCuotas, String cNumTarjeta, String cVenceMes, String cVenceAno, String cCodSeg, String cTipoDNI,String cDNITarjeta, String cTitular) throws AWTException {
+	public void TS99020_CRM_Movil_REPRO_Cambio_de_SimCard_Presencial_Siniestro_DOC_Store_Pick_Up_TC_Agente(String sDNI, String sLinea,String sEntrega, String sProvincia, String sLocalidad, String sPuntodeVenta) throws AWTException {
 		imagen = "99020";
 		detalles = null;
 		detalles = imagen+"-Telef-DNI:"+sDNI;
@@ -1244,18 +1270,37 @@ public class GestionesPerfilAgente extends TestBase{
 		sleep(5000);
 		driver.navigate().refresh();
 		sleep(10000);
-		String invoice = cCC.obtenerMontoyTNparaAlta(driver, sOrden);
-		System.out.println(invoice);
-		sleep(10000);
-		detalles+="Monto:"+invoice.split("-")[1]+"-Prefactura:"+invoice.split("-")[0];
-		//datosOrden.add("Cambio sim card Agente- Cuenta: "+accid+"Invoice: "+invoice.split("-")[0]);
-		CBS_Mattu invoSer = new CBS_Mattu();
-		driver.navigate().refresh();
-		sleep(10000);
-		sleep(10000);
 		driver.switchTo().frame(cambioFrame(driver, By.cssSelector(".hasMotif.orderTab.detailPage.ext-webkit.ext-chrome.sfdcBody.brandQuaternaryBgr")));
 		WebElement tabla = driver.findElement(By.id("ep")).findElements(By.tagName("table")).get(1);
 		String datos = tabla.findElements(By.tagName("tr")).get(4).findElements(By.tagName("td")).get(1).getText();
+		if(activarFalsos==true) {
+			boolean esta = false;
+			List<WebElement> campos = tabla.findElements(By.tagName("tr"));
+			for(WebElement UnC: campos) {
+				if(UnC.getText().toLowerCase().contains("tracking status")) {
+					Assert.assertTrue(UnC.getText().toLowerCase().contains("preparar pedido"));
+					esta = true;
+					break;
+				}
+			}
+			Assert.assertTrue(esta);
+		}
+		sleep(2000);
+		CambiarPerfil("logistica",driver);
+		sb.completarLogistica(sOrden, driver);
+		sb.completarEntrega(sOrden, driver);
+		CambiarPerfil("ofcom",driver);
+		try {
+			cc.cajonDeAplicaciones("Consola FAN");
+		} catch(Exception e) {
+			waitForClickeable(driver,By.id("tabBar"));
+			driver.findElement(By.id("tabBar")).findElement(By.tagName("a")).click();
+			sleep(6000);
+		}
+		
+		driver.switchTo().defaultContent();
+		sleep(6000);
+		cCC.obtenerMontoyTNparaAlta(driver, sOrden);
 		Assert.assertTrue(datos.equalsIgnoreCase("activada")||datos.equalsIgnoreCase("activated"));
 	}
 	
@@ -1860,10 +1905,10 @@ public class GestionesPerfilAgente extends TestBase{
 		Assert.assertTrue(detalles.isDisplayed());
 	}
 	
-	@Test (groups = {"GestionesPerfilAgente","Sales", "PreparacionNominacion","E2E","Ciclo1"}, dataProvider="DatosSalesNominacionNuevoAgente") 
-	public void TS134493_CRM_Movil_REPRO_No_Nominatividad_No_Valida_Identidad_Cliente_Existente_Presencial_Preguntas_y_Respuestas(String sLinea, String sDni, String sNombre, String sApellido, String sSexo, String sFnac, String sEmail, String sProvincia, String sLocalidad, String sCalle, String sNumCa, String sCP) {
+	@Test (groups = {"GestionesPerfilAgente","Sales", "PreparacionNominacion","E2E","Ciclo1"}, dataProvider="DatosNoNominacionExistenteTelefonico") 
+	public void TS134493_CRM_Movil_REPRO_No_Nominatividad_No_Valida_Identidad_Cliente_Existente_Presencial_Preguntas_y_Respuestas(String sLinea, String sDni, String sSexo) {
 		driver.switchTo().frame(cambioFrame(driver, By.id("SearchClientDocumentType")));
-		driver.findElement(By.id("PhoneNumber")).sendKeys("2477651359");
+		driver.findElement(By.id("PhoneNumber")).sendKeys(sLinea);
 		driver.findElement(By.id("SearchClientsDummy")).click();		
 		sleep(10000);
 		driver.findElement(By.id("tab-scoped-1")).findElement(By.tagName("tbody")).findElement(By.tagName("tr")).click();
@@ -1880,12 +1925,29 @@ public class GestionesPerfilAgente extends TestBase{
 		sleep(5000);
 		((JavascriptExecutor)driver).executeScript("window.scrollTo(0,"+driver.findElement(By.id("Contact_nextBtn")).getLocation().y+" )");
 		driver.findElement(By.id("Contact_nextBtn")).click();
-		sleep(7000);
-		for (WebElement x : driver.findElements(By.cssSelector(".imgItem.ng-scope"))) {
-			if (x.getAttribute("title").contains("Validaci\u00f3n por Preguntas y Respuestas"))
+		contact.tipoValidacion("preguntas y respuestas");
+		sleep(8000);
+		CustomerCare cCC = new CustomerCare(driver);
+		cCC.obligarclick(driver.findElement(By.id("QAContactData_nextBtn"))); 
+		sleep(5000);
+		List<WebElement> valdni = driver.findElements(By.className("slds-radio__label"));
+		for (WebElement x : valdni) {
+			System.out.println(x.getText());
+			if (x.getText().toLowerCase().contains("ninguno de los anteriores")) {
 				x.click();
+			}
 		}
-		driver.findElement(By.id("MethodSelection_nextBtn")).click();
+		cCC.obligarclick(driver.findElement(By.id("QAQuestions_nextBtn")));      
+		sleep(5000);
+		List<WebElement> errores = driver.findElements(By.cssSelector(".message.description.ng-binding.ng-scope")); 
+		boolean error = false;
+		for (WebElement UnE: errores) {
+			if (UnE.getText().toLowerCase().contains("no superada")) {
+				error = true;
+			}
+		}
+		
+		Assert.assertTrue(error);
 		
 	}
 }
