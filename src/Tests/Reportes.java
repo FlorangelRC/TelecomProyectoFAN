@@ -34,14 +34,7 @@ public class Reportes {
 		System.out.println("Download completed.");
 	}
 	
-	//@AfterMethod(alwaysRun=true)
-	public void cleanUp() {
-		for(String sAux : sListOfFiles) {
-			rsePage.deleteFile(sAux);
-		}
-	}
-	
-	@AfterClass(alwaysRun=true)
+	//@AfterClass(alwaysRun=true)
 	public void quit() throws IOException {
 		rsePage.deleteAllFiles();
 	}
@@ -677,10 +670,10 @@ public class Reportes {
 			String sNumeroLinea = lsAux.get(14);
 			Assert.assertTrue(rsePage.verifyTextMaxSize(sNumeroLinea, 10));
 			
-			String sFechaActivación = lsAux.get(15);
-			if (!sFechaActivación.isEmpty()) {
+			String sFechaActivaciï¿½n = lsAux.get(15);
+			if (!sFechaActivaciï¿½n.isEmpty()) {
 				sdfDateFormat = new SimpleDateFormat(sDateFormat);
-				sdfDateFormat.parse(sFechaActivación);
+				sdfDateFormat.parse(sFechaActivaciï¿½n);
 			}
 			
 			String sEstadoProvisionamiento = lsAux.get(16);
@@ -827,10 +820,10 @@ public class Reportes {
 				sdfDateFormat.parse(sFechaEntrega);
 			}
 			
-			String sFechaModificación = lsAux.get(12);
-			if (!sFechaModificación.isEmpty()) {
+			String sFechaModificaciï¿½n = lsAux.get(12);
+			if (!sFechaModificaciï¿½n.isEmpty()) {
 				sdfDateFormat = new SimpleDateFormat(sDateFormat);
-				sdfDateFormat.parse(sFechaModificación);
+				sdfDateFormat.parse(sFechaModificaciï¿½n);
 			}
 			
 			String sCodUsuarioMod = lsAux.get(13);
@@ -901,6 +894,190 @@ public class Reportes {
 		}
 		
 		sListOfFiles = sFiles;
+	}
+	
+	//Test #7
+	@Test
+	public void TS125405_CRM_Interfaz_LCRM_OrdenItem() throws ParseException, IOException {
+		String sName = "_ORDENITEM_";
+		
+		rsePage.checkName(sName);
+		
+		List<List<String>> sList = new ArrayList<List<String>>();
+		
+		List<String> sFiles = rsePage.findFiles(sName);
+		
+		for (String sAux : sFiles) {
+			sList.add(rsePage.readTxt(sAux));
+		}
+		
+		for (List<String> lsAux : sList) {
+			String sIdOrdenItem = lsAux.get(0);
+			Assert.assertTrue(rsePage.verifyTextMaxSize(sIdOrdenItem, 18));
+			Assert.assertFalse(sIdOrdenItem.isEmpty());
+			
+			String sNumeroOrdenItem = lsAux.get(1);
+			Assert.assertTrue(rsePage.verifyTextMaxSize(sNumeroOrdenItem, 30));
+			Assert.assertFalse(sNumeroOrdenItem.isEmpty());
+			
+			String IdOrden = lsAux.get(2);
+			Assert.assertTrue(rsePage.verifyTextMaxSize(IdOrden, 30));
+			Assert.assertFalse(IdOrden.isEmpty());
+			
+			String sPrecioEfectivoUnicaVez = lsAux.get(3);
+			if (!sPrecioEfectivoUnicaVez.isEmpty()) {
+				Double.parseDouble(sPrecioEfectivoUnicaVez);
+			}
+			
+			String sPrecioRecurrente = lsAux.get(4);
+			if (!sPrecioRecurrente.isEmpty()) {
+				Double.parseDouble(sPrecioRecurrente);				
+			}
+			
+			String sMRC = lsAux.get(5);
+			if (!sMRC.isEmpty()) {
+				Double.parseDouble(sMRC);
+			}
+			
+			String sPrecioDctoUnicaVez = lsAux.get(6);
+			if (!sPrecioDctoUnicaVez.isEmpty()) {
+				Double.parseDouble(sPrecioDctoUnicaVez);
+			}
+			
+			String sCargoUnicaVez = lsAux.get(7);
+			if (!sCargoUnicaVez.isEmpty()) {
+				Double.parseDouble(sCargoUnicaVez);
+			}
+			
+			String sPrecioTotalUnicaVez = lsAux.get(8);
+			if (!sPrecioTotalUnicaVez.isEmpty()) {
+				Double.parseDouble(sPrecioTotalUnicaVez);
+			}
+			
+			String sPrecioCalculadoRecurrente = lsAux.get(9);
+			if (!sPrecioCalculadoRecurrente.isEmpty()) {
+				Double.parseDouble(sPrecioCalculadoRecurrente);
+			}
+			
+			String sCargoRecurrente = lsAux.get(10);
+			if (!sCargoRecurrente.isEmpty()) {
+				Double.parseDouble(sCargoRecurrente);
+			}
+			
+			String sTotalRecurrente = lsAux.get(11);
+			if (!sTotalRecurrente.isEmpty()) {
+				Double.parseDouble(sTotalRecurrente);
+			}
+			
+			String sNumeroSecuencia = lsAux.get(12);
+			Assert.assertTrue(rsePage.verifyTextMaxSize(sNumeroSecuencia, 255));
+			
+			String sCantidadItem = lsAux.get(13);
+			if (!sCantidadItem.isEmpty()) {
+				Double.parseDouble(sCantidadItem);
+			}
+			
+			String sPrecioUnitario = lsAux.get(14);
+			if (!sPrecioUnitario.isEmpty()) {
+				Double.parseDouble(sPrecioUnitario);
+			}
+			
+			String sAccion = lsAux.get(15);
+			Assert.assertTrue(rsePage.verifyTextMaxSize(sAccion, 255));
+			
+			String sFechaCreaAudit = lsAux.get(16);
+			if (!sFechaCreaAudit.isEmpty()) {
+				sdfDateFormat = new SimpleDateFormat(sDateFormat);
+				sdfDateFormat.parse(sFechaCreaAudit);
+			}
+			
+			String sFechaModAudit = lsAux.get(17);
+			if (!sFechaModAudit.isEmpty()) {
+				sdfDateFormat = new SimpleDateFormat(sDateFormat);
+				sdfDateFormat.parse(sFechaModAudit);
+			}
+			
+			String sEstadoProvisionamientoItem = lsAux.get(18);
+			Assert.assertTrue(rsePage.verifyTextMaxSize(sEstadoProvisionamientoItem, 255));
+			
+			String sSubaccion = lsAux.get(19);
+			Assert.assertTrue(rsePage.verifyTextMaxSize(sSubaccion, 255));
+			
+			String sEstadoOrdenItem = lsAux.get(20);
+			Assert.assertTrue(rsePage.verifyTextMaxSize(sEstadoOrdenItem, 255));
+			
+			String sPrecioLista = lsAux.get(21);
+			if (!sPrecioLista.isEmpty()) {
+				Double.parseDouble(sPrecioLista);
+			}
+			
+			String sIdProducto = lsAux.get(22);
+			Assert.assertTrue(rsePage.verifyTextMaxSize(sIdProducto, 18));
+			
+			String sMarcaFacturable = lsAux.get(23);
+			if (!sMarcaFacturable.isEmpty()) {
+				Integer.parseInt(sMarcaFacturable);
+				Assert.assertTrue(sMarcaFacturable.equals("1") || sMarcaFacturable.equals("0"));
+			}
+			
+			String sCodDeposito = lsAux.get(24);
+			Assert.assertTrue(rsePage.verifyTextMaxSize(sCodDeposito, 10));
+			
+			String sCodOperacion = lsAux.get(25);
+			Assert.assertTrue(rsePage.verifyTextMaxSize(sCodOperacion, 10));
+			
+			String sFechaCreacion = lsAux.get(26);
+			if (!sFechaCreacion.isEmpty()) {
+				sdfDateFormat = new SimpleDateFormat(sDateFormat);
+				sdfDateFormat.parse(sFechaCreacion);
+			}
+			
+			String sCodUsuarioAlta = lsAux.get(27);
+			Assert.assertTrue(rsePage.verifyTextMaxSize(sCodUsuarioAlta, 18));
+			
+			String sCodUsuarioMod = lsAux.get(28);
+			Assert.assertTrue(rsePage.verifyTextMaxSize(sCodUsuarioMod, 18));
+			
+			String sFechaMod = lsAux.get(29);
+			if (!sFechaMod.isEmpty()) {
+				sdfDateFormat = new SimpleDateFormat(sDateFormat);
+				sdfDateFormat.parse(sFechaMod);
+			}
+			
+			String sCodProductoRaiz = lsAux.get(30);
+			Assert.assertTrue(rsePage.verifyTextMaxSize(sCodProductoRaiz, 255));
+			
+			String sCodProductoPadre = lsAux.get(31);
+			Assert.assertTrue(rsePage.verifyTextMaxSize(sCodProductoPadre, 255));
+			
+			String sIdProductoAdquiridoReferente = lsAux.get(32);
+			Assert.assertTrue(rsePage.verifyTextMaxSize(sIdProductoAdquiridoReferente, 255));
+			
+			String sTipoAjuste = lsAux.get(33);
+			Assert.assertTrue(rsePage.verifyTextMaxSize(sTipoAjuste, 255));
+			
+			String sMonto = lsAux.get(34);
+			if (!sMonto.isEmpty()) {
+				Double.parseDouble(sMonto);
+			}
+			
+			String sValorAjuste = lsAux.get(35);
+			if (!sMonto.isEmpty()) {
+				Double.parseDouble(sValorAjuste);
+			}
+			
+			String sValorBase = lsAux.get(36);
+			if (!sValorBase.isEmpty()) {
+				Double.parseDouble(sValorBase);
+			}
+			
+			String sEstadoStock = lsAux.get(37);
+			Assert.assertTrue(rsePage.verifyTextMaxSize(sEstadoStock, 20));
+			
+			String sMarcaNoProvisionable = lsAux.get(38);
+			Integer.parseInt(sMarcaNoProvisionable);
+			Assert.assertTrue(sMarcaNoProvisionable.equals("1") || sMarcaNoProvisionable.equals("0"));
+		}
 	}
 
 }
