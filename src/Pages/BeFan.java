@@ -17,7 +17,17 @@ import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.util.ArrayList;
+import java.util.List;
 
+import org.apache.http.HttpEntity;
+import org.apache.http.NameValuePair;
+import org.apache.http.client.entity.UrlEncodedFormEntity;
+import org.apache.http.client.methods.CloseableHttpResponse;
+import org.apache.http.client.methods.HttpPost;
+import org.apache.http.impl.client.CloseableHttpClient;
+import org.apache.http.impl.client.HttpClients;
+import org.apache.http.util.EntityUtils;
 import org.openqa.selenium.By;
 import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebDriver;
@@ -29,6 +39,16 @@ import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.Select;
 import org.testng.Assert;
+import org.apache.http.HttpEntity;
+import org.apache.http.NameValuePair;
+import org.apache.http.client.entity.UrlEncodedFormEntity;
+import org.apache.http.client.methods.CloseableHttpResponse;
+import org.apache.http.client.methods.HttpGet;
+import org.apache.http.client.methods.HttpPost;
+import org.apache.http.impl.client.CloseableHttpClient;
+import org.apache.http.impl.client.HttpClients;
+import org.apache.http.message.BasicNameValuePair;
+import org.apache.http.util.EntityUtils;
 
 //import Tests.File;
 import Tests.TestBase;
@@ -238,33 +258,51 @@ public class BeFan extends BasePage{
 	
 	//Api BEFAN
 	
-	public void BefanProceso() {
-        try {
+	public void BefanProceso() throws Exception {
 
-            URL url = new URL("http://apiu.personal.com.ar/catalogo/api/ProcesoMasivo/IniciarProceso");
-            HttpURLConnection conn = (HttpURLConnection) url.openConnection();
-            conn.getInputStream();
-            conn.setRequestMethod("POST");
-            conn.setRequestProperty("Content-Type", "application/json");
-            System.out.println("HOLA1");
-            if (conn.getResponseCode() != 200) {
-                System.out.println("FALLO1");
-            }
-            System.out.println("HOLA2");
-            InputStreamReader in = new InputStreamReader(conn.getInputStream());
-            BufferedReader br = new BufferedReader(in);
-            System.out.println("HOLA3");
-            String output;
-            while ((output = br.readLine()) != null) {
-                System.out.println(output);
-            }
-            System.out.println("HOLA4");
-            conn.disconnect();
-
-        } catch (Exception e) {
-            System.out.println("Exception in NetClientGet:- " + e);
-        }
-    }
+	        CloseableHttpClient httpclient = HttpClients.createDefault();
+	/*        try {
+	            HttpGet httpGet = new HttpGet("http://httpbin.org/get");
+	            CloseableHttpResponse response1 = httpclient.execute(httpGet);
+	            // The underlying HTTP connection is still held by the response object
+	            // to allow the response content to be streamed directly from the network socket.
+	            // In order to ensure correct deallocation of system resources
+	            // the user MUST call CloseableHttpResponse#close() from a finally clause.
+	            // Please note that if response content is not fully consumed the underlying
+	            // connection cannot be safely re-used and will be shut down and discarded
+	            // by the connection manager.
+	            try {
+	                System.out.println(response1.getStatusLine());
+	                HttpEntity entity1 = response1.getEntity();
+	                // do something useful with the response body
+	                // and ensure it is fully consumed
+	                EntityUtils.consume(entity1);
+	            } finally {
+	                response1.close();
+	            }
+	*/
+	        try {
+	            HttpPost httpPost = new HttpPost("https://apiu.telecom.com.ar/catalogo/api/ProcesoMasivo/IniciarProceso");
+	            List <NameValuePair> nvps = new ArrayList <NameValuePair>();
+	            httpPost.addHeader("Content-Type", "application/json");
+	            httpPost.addHeader("Authorization", "Basic d2VidmFzOndlYnZhcw==");
+	            httpPost.setEntity(new UrlEncodedFormEntity(nvps));
+	            CloseableHttpResponse response2 = httpclient.execute(httpPost);
+	            System.out.println(response2);
+	            
+	            try {
+	                System.out.println(response2.getStatusLine());
+	                HttpEntity entity2 = response2.getEntity();
+	                // do something useful with the response body
+	                // and ensure it is fully consumed
+	                EntityUtils.consume(entity2);
+	            } finally {
+	                response2.close();
+	            }
+	        } finally {
+	            httpclient.close();
+	        }
+	    }
 	
 	//Menu Simcard-Gestion
 	
@@ -340,7 +378,13 @@ public class BeFan extends BasePage{
 	return resultado;
 	}
 	
-
+// Log out de befan
+	
+	public void LogOutBefan(WebDriver driver) {
+		driver.findElements(By.cssSelector(".caret")).get(0).click();
+		sleep(500);
+		driver.findElement(By.name("salir")).click();
+	}
 	
 	/**
 	 * Hace click en un boton segun el Etiqueta del boton.

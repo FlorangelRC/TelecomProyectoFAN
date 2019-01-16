@@ -1262,7 +1262,7 @@ public class GestionesPerfilAgente extends TestBase{
 		driver.findElement(By.id("SelectAsset0")).findElement(By.cssSelector(".slds-radio.ng-scope")).click();
 		driver.findElement(By.id("AssetSelection_nextBtn")).click();
 		sleep(5000);
-		pagePTelefo.mododeEntrega(driver, cEntrega, cProvincia, cLocalidad, cPuntodeVenta);
+		pagePTelefo.mododeEntrega(driver, sEntrega, sProvincia, sLocalidad, sPuntodeVenta);
 		sleep(12000);
 		pagePTelefo.getResumenOrdenCompra().click();
 		String sOrden = cCC.obtenerOrden2(driver);

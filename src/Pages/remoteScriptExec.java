@@ -204,7 +204,8 @@ public class remoteScriptExec {
 				sContent.add(sSplit[i]);
 			}
 		}
-		
+		frFileReader.close();
+		brBufferedReader.close();
 		return sContent;
 	}
 	
