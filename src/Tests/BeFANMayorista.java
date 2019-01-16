@@ -808,7 +808,7 @@ public class BeFANMayorista extends TestBase {
 	}
 	
 	@Test (groups = "BeFan", dataProvider="DosSerialesValidos")
-	public void TS97657_BeFan_Movil_REPRO_Asociaci�n_de_diferentes_seriales_a_diferentes_prefijos(String path, String nombreArch, String deposito, String prefijo, String serial1, String serial2, String prefijo2) throws IOException {
+	public void TS97657_BeFan_Movil_REPRO_Asociacion_de_diferentes_seriales_a_diferentes_prefijos(String path, String nombreArch, String deposito, String prefijo, String serial1, String serial2, String prefijo2) throws IOException {
 		BeFan Botones = new BeFan(driver);
 		String[] resultadoEstado = {""};
 		String[] resultadoTexto = {""};
