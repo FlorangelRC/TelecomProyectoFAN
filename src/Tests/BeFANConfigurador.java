@@ -1346,7 +1346,7 @@ public class BeFANConfigurador extends TestBase {
 		ContactSearch contact = new ContactSearch(driver);
 		irA("Cupos", "Importaci\u00f3n");
 		sleep(5000);
-		File directory = new File("C:\\Users\\xappiens\\Documents\\TxT\\CuposErroneos.txt");
+		File directory = new File("BeFan135614.txt");
 		contact.subir_cupos(new File(directory.getAbsolutePath()).toString(),"si");
 		boolean mensaje = false;
 		String msj = driver.findElement(By.className("modal-body")).getText();
@@ -1361,7 +1361,7 @@ public class BeFANConfigurador extends TestBase {
 		ContactSearch contact = new ContactSearch(driver);
 		irA("Cupos", "Importaci\u00f3n");
 		sleep(5000);
-		File directory = new File("C:\\Users\\xappiens\\Documents\\TxT\\CupoDadoDeBaja.txt");
+		File directory = new File("BeFan135623.txt");
 		contact.subir_cupos(new File(directory.getAbsolutePath()).toString(),"si");
 		boolean mensaje = false;
 		String msj = driver.findElement(By.className("modal-header")).getText();
@@ -1625,5 +1625,46 @@ public class BeFANConfigurador extends TestBase {
 		buscarYClick(driver.findElements(By.cssSelector(".btn.btn-primary")), "equals", "cerrar");
 		eliminar = true;
 		Assert.assertTrue(eliminar);
+	}
+	
+	@Test (groups = "BeFan")
+	public void TS135639_BeFan_Movil_Repro_Preactivacion_Gestion_de_cupos_Busqueda_Modificacion_de_cupo_Cupo_vigente_con_fecha_de_baja() throws ParseException {
+		ContactSearch contact = new ContactSearch(driver);
+		irA("Cupos", "Importaci\u00f3n");
+		sleep(7000);
+		File directory = new File("BeFan135639.txt");
+		contact.subir_cupos(new File(directory.getAbsolutePath()).toString(),"si");
+		sleep(5000);
+		boolean confirmacion = false;
+		String mensaje = driver.findElement(By.className("modal-header")).getText();
+		if (mensaje.toLowerCase().contains("el archivo se import\u00f3 correctamente")) {
+			buscarYClick(driver.findElements(By.cssSelector(".btn.btn-link")), "equals", "aceptar");
+			confirmacion = true;
+		}
+		Assert.assertTrue(confirmacion);
+		BeFan fechas= new BeFan (driver);
+		SimpleDateFormat formatoDelTexto = new SimpleDateFormat ("dd/MM/yyyy");
+		String desde ="14/11/2001";
+		String hasta = "14/12/2001";
+		Date fechaDesde = formatoDelTexto.parse(desde);
+		Date fechaHasta =formatoDelTexto.parse(hasta);
+		irA("Cupos", "Gesti\u00f3n");
+		sleep(3000);
+		selectByText(driver.findElement(By.name("estados")), "No Vigente");
+		driver.findElement(By.id("dataPickerDesde"));
+		((JavascriptExecutor) driver).executeScript("document.getElementById('dataPickerDesde').value='"+desde+"'");
+		sleep(3000);
+		driver.findElement(By.id("dataPickerHasta"));
+		((JavascriptExecutor) driver).executeScript("document.getElementById('dataPickerHasta').value='"+hasta+"'");
+		int dias = fechas.numeroDiasEntreDosFechas(fechaDesde, fechaHasta);
+		System.out.println("Hay " + dias + " dias, " +"No supera los 90 dias comprendidos");
+		driver.findElement(By.name("buscar")).click();
+		sleep(3000);
+		List <WebElement> texto = driver.findElements(By.cssSelector(".text-center.ng-scope"));
+		for(WebElement x : texto) {
+			if(x.getText().contains("14/11/2001") && x.getText().contains("14/12/2001")) {
+				x.findElement(By.cssSelector(".glyphicon.glyphicon-remove")).isEnabled();
+			}
+		}
 	}
 }
