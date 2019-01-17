@@ -198,7 +198,12 @@ public class remoteScriptExec {
 				sSplit = sLine.split("\\|");
 			}
 			else {
-				sSplit = sLine.split(" ");
+				if (sLine.toString().contains(",")) {
+					sSplit = sLine.split(",");
+				}
+				else {
+					sSplit = sLine.split(" ");
+				}
 			}
 			for (int i = 0; i < sSplit.length; i++) {
 				sContent.add(sSplit[i]);
