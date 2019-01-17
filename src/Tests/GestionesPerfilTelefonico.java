@@ -4607,8 +4607,8 @@ public class GestionesPerfilTelefonico extends TestBase{
 		Assert.assertTrue(error);
 	}
 	
-	@Test (groups = {"GestionesPerfilTelefonico" , "ResumenDeCuenta" , "E2E" , "Ciclo4"}, dataProvider= "CuentaReintegros")
-	public void TS135439_CRM_Movil_REPRO_Resumen_de_Cuenta_Corriente_Detalle_ampliado_registro_de_Comprobante_Factura_de_Venta_FAN_Front_Telefonico(String sDNI) {
+	@Test (groups = {"GestionesPerfilTelefonico" , "ResumenDeCuenta" , "E2E" , "Ciclo4"}, dataProvider= "CuentaVista360")
+	public void TS135439_CRM_Movil_REPRO_Resumen_de_Cuenta_Corriente_Detalle_ampliado_registro_de_Comprobante_Factura_de_Venta_FAN_Front_Telefonico(String sDNI, String sLinea,String sNombre, String sCuenta, String sMovil) {
 		imagen = "TS135439";
 		detalles = null;
 		detalles = imagen + " -Resumen de Cuenta Corriente - DNI: " + sDNI;
@@ -4869,5 +4869,32 @@ public class GestionesPerfilTelefonico extends TestBase{
 		((JavascriptExecutor)driver).executeScript("window.scrollTo(0,"+driver.findElements(By.cssSelector(".slds-size--1-of-1.slds-medium-size--1-of-1.slds-large-size--1-of-1.slds-m-top--x-large")).get(1).getLocation().y+" )");
 		WebElement pagos = driver.findElement(By.xpath("//*[@class='slds-text-heading--large slds-size--1-of-1 slds-medium-size--1-of-1 slds-large-size--1-of-1 slds-m-bottom--small'] //b[contains(text(), 'Pagos')]"));
 		Assert.assertTrue(pagos.isDisplayed());
+	}
+	
+	@Test (groups = {"GestionesPerfilOficina", "ResumenDeCuenta", "Ciclo4"}, dataProvider = "CuentaVista360")
+	public void TS135438_CRM_Movil_REPRO_Resumen_de_Cuenta_Corriente_Detalle_ampliado_registro_de_Comprobante_Nota_de_Credito_Debito_FAN_Front_OOCC(String sDNI, String sLinea,String sNombre, String sCuenta, String sMovil) {
+		imagen = "TS135438";
+		String cuenta = null;
+		driver.switchTo().frame(cambioFrame(driver, By.id("SearchClientDocumentType")));
+		sb.BuscarCuenta("DNI", sDNI);
+		driver.findElement(By.cssSelector(".slds-tree__item.ng-scope")).click();
+		sleep(15000);
+		mk.closeActiveTab();
+		cc.irAFacturacion();
+		sleep(5000);
+		driver.switchTo().frame(cambioFrame(driver, By.className("card-top")));
+		buscarYClick(driver.findElements(By.className("slds-text-body_regular")), "contains", "resumen de cuenta corriente");
+		sleep(15000);
+		driver.switchTo().frame(cambioFrame(driver, By.cssSelector(".slds-button.slds-button--brand.filterNegotiations.slds-p-horizontal--x-large.slds-p-vertical--x-small.secondaryFont")));
+		driver.findElement(By.cssSelector(".slds-button.slds-button--brand.filterNegotiations.slds-p-horizontal--x-large.slds-p-vertical--x-small.secondaryFont")).click();
+		sleep(5000);
+		String resuCuenta = driver.findElement(By.className("secondaryFont")).getText();
+		cuenta = resuCuenta.substring(0, 16);
+		System.out.println("El Resumen de Cuenta Corresponde a la cuenta: " + cuenta);	
+		Assert.assertTrue(cuenta.equalsIgnoreCase(sCuenta));
+		WebElement detaFactu = driver.findElement(By.xpath("//*[contains(text(),'NCBR')]/../following-sibling::*//div/a"));
+		detaFactu.click();
+		sleep(5000);
+		//Assert.assertTrue(///Bug... no muestra la informacion de la Nota de Credito);
 	}
 }

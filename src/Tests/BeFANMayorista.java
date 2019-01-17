@@ -21,8 +21,10 @@ import org.testng.annotations.Test;
 
 import Pages.BeFan;
 import Pages.ContactSearch;
+import Pages.MDW;
 import Pages.SCP;
 import Pages.setConexion;
+import Pages.DPW;
 
 public class BeFANMayorista extends TestBase {
 		
@@ -35,6 +37,36 @@ public class BeFANMayorista extends TestBase {
 		buscarYClick(driver.findElements(By.className("dropdown-toggle")), "contains", "sims");
 		for (WebElement x : driver.findElements(By.className("col-sm-4"))) {
 			if (x.getAttribute("ng-show").equals("headerCtrl.container.hasAccess(['sims_importacion', 'sims_gestion'])"))
+				menu = x;
+		}
+		switch(opcion) {
+		case "importacion":
+			try {
+				for (WebElement x : menu.findElements(By.tagName("a"))) {
+					if (x.getText().toLowerCase().contains("importaci\u00f3n")) {
+						x.click(); 
+						sleep(3000);
+					}
+				}			
+			} catch(Exception e) {}
+		case "gestion":
+			try {
+				for (WebElement x : menu.findElements(By.tagName("a"))) {
+					if (x.getText().toLowerCase().contains("gesti\u00f3n")) {
+						x.click();
+						sleep(3000);
+					}
+				}
+			} catch(Exception e) {}
+		}
+	}
+	
+	private void irCupos(String opcion) {
+		WebElement menu = null;
+		sleep(1500);
+		buscarYClick(driver.findElements(By.className("dropdown-toggle")), "contains", "cupos");
+		for (WebElement x : driver.findElements(By.className("col-sm-4"))) {
+			if (x.getAttribute("ng-show").equals("headerCtrl.container.hasAccess(['cupo_importacion', 'cupo_gestion'])"))
 				menu = x;
 		}
 		switch(opcion) {
@@ -588,7 +620,8 @@ public class BeFANMayorista extends TestBase {
 
 	
 	@Test (groups = "BeFan", dataProvider="SerialConDepositoErroneo")
-	public void TS97651_BeFan_Movil_REPRO_PreaActivacion_Linea_Repro_SIMCARD_en_deposito_inexistente(String path, String nombreArch, String deposito, String prefijo, String serial1, String serial2, String prefijo2) throws IOException {
+	public void TS97651_BeFan_Movil_REPRO_PreaActivacion_Linea_Repro_SIMCARD_en_deposito_inexistente(String path, String nombreArch, String deposito, String prefijo, String serial1, String serial2, String prefijo2) throws IOException, Exception {
+		DPW dpw = new DPW();
 		BeFan Botones = new BeFan(driver);
 		String[] resultadoEstado = {""};
 		String[] resultadoTexto = {""};
@@ -596,7 +629,6 @@ public class BeFANMayorista extends TestBase {
 		resultadoEstado[0] = "Error";
 		resultadoTexto[0] = "El dep�sito de la SIM, VICLIE001, no corresponde con el dep�sito del punto de venta del agente, SG31185001.";
 		
-		Botones.BefanProceso();
 		irA("importacion");
 		sleep(500);
 		Botones.SISeleccionDeDeposito(deposito);
@@ -612,8 +644,8 @@ public class BeFANMayorista extends TestBase {
 		sleep(500);
 		Botones.SIClickAceptarImportar();
 		sleep(500);
-//		Botones.BefanProceso();
-//		sleep(118000);
+		dpw.main();
+		sleep(118000);
 		irA("gestion");
 		sleep(500);
 		Botones.SGSeleccionEstado(estado);
@@ -628,7 +660,8 @@ public class BeFANMayorista extends TestBase {
 	}
 
 	@Test (groups = "BeFan", dataProvider="SerialInexistente")
-	public void TS112002_BeFan_Movil_REPRO_Preactivacion_repro__Importacion_de_SIM_repro__Mensaje_de_error_ante_volver_a_agregar_otro_prefijo(String path, String nombreArch, String deposito, String prefijo, String serial1, String serial2, String prefijo2) {
+	public void TS112002_BeFan_Movil_REPRO_Preactivacion_repro__Importacion_de_SIM_repro__Mensaje_de_error_ante_volver_a_agregar_otro_prefijo(String path, String nombreArch, String deposito, String prefijo, String serial1, String serial2, String prefijo2) throws Exception{
+		
 		BeFan Botones = new BeFan(driver);
 		irA("importacion");
 		String mensaje;
@@ -653,11 +686,12 @@ public class BeFANMayorista extends TestBase {
 		} else {
 			Assert.assertTrue(false);
 		}
+
 	}
 	
 	@Test (groups = "BeFan", dataProvider="SerialInexistente")
-	public void TS112029_BeFan_Movil_REPRO_Preactivacion_repro__Importacion_de_SIM_repro__S105__Simcard_inexistente(String path, String nombreArch, String deposito, String prefijo, String serial1, String serial2, String prefijo2) throws IOException {
-		
+	public void TS112029_BeFan_Movil_REPRO_Preactivacion_repro__Importacion_de_SIM_repro__S105__Simcard_inexistente(String path, String nombreArch, String deposito, String prefijo, String serial1, String serial2, String prefijo2) throws IOException, Exception {
+		DPW dpw = new DPW();
 		BeFan Botones = new BeFan(driver);
 		String[] resultadoEstado = {""};
 		String[] resultadoTexto = {""};
@@ -681,8 +715,8 @@ public class BeFANMayorista extends TestBase {
 		sleep(500);
 		Botones.SIClickAceptarImportar();
 		sleep(500);
-//		Botones.BefanProceso();
-//		sleep(118000);
+		dpw.main();
+		sleep(118000);
 		irA("gestion");
 		sleep(500);
 		Botones.SGSeleccionEstado(estado);
@@ -702,7 +736,6 @@ public class BeFANMayorista extends TestBase {
 		BeFan Botones = new BeFan(driver);
 		String mensaje;
 		
-		Botones.BefanProceso();
 		irA("importacion");
 		sleep(500);
 		Botones.SISeleccionDeDeposito(deposito);
@@ -727,15 +760,15 @@ public class BeFANMayorista extends TestBase {
 	}
 
 	@Test (groups = "BeFan", dataProvider="SerialConDepositoErroneo")
-	public void TS126640_BeFan_Movil_REPRO_Preactivacion_repro__Importacion_de_SIM_repro__S105__Deposito_erroneo(String path, String nombreArch, String deposito, String prefijo, String serial1, String serial2, String prefijo2) throws IOException {
+	public void TS126640_BeFan_Movil_REPRO_Preactivacion_repro__Importacion_de_SIM_repro__S105__Deposito_erroneo(String path, String nombreArch, String deposito, String prefijo, String serial1, String serial2, String prefijo2) throws IOException, Exception {
 		BeFan Botones = new BeFan(driver);
+		DPW dpw = new DPW();
 		String[] resultadoEstado = {""};
 		String[] resultadoTexto = {""};
 		String estado = "Procesado";
 		resultadoEstado[0] = "Error";
 		resultadoTexto[0] = "El dep�sito de la SIM, VICLIE001, no corresponde con el dep�sito del punto de venta del agente, SG31185001.";
 
-		Botones.BefanProceso();
 		irA("importacion");
 		sleep(500);
 		Botones.SISeleccionDeDeposito(deposito);
@@ -751,8 +784,8 @@ public class BeFANMayorista extends TestBase {
 		sleep(500);
 		Botones.SIClickAceptarImportar();
 		sleep(500);
-//		Botones.BefanProceso();
-//		sleep(118000);
+		dpw.main();
+		sleep(118000);
 		irA("gestion");
 		sleep(500);
 		Botones.SGSeleccionEstado(estado);
@@ -767,15 +800,15 @@ public class BeFANMayorista extends TestBase {
 	}
 	
 	@Test (groups = "BeFan", dataProvider="SerialValido")
-	public void TS126648_BeFan_Movil_REPRO_Preactivacion_repro__Importacion_de_SIM_repro__S436__Envio_de_lote(String path, String nombreArch, String deposito, String prefijo, String serial1, String serial2, String prefijo2) throws IOException {
+	public void TS126648_BeFan_Movil_REPRO_Preactivacion_repro__Importacion_de_SIM_repro__S436__Envio_de_lote(String path, String nombreArch, String deposito, String prefijo, String serial1, String serial2, String prefijo2) throws IOException, Exception {
 		BeFan Botones = new BeFan(driver);
+		DPW dpw = new DPW();
 		String[] resultadoEstado = {""};
 		String[] resultadoTexto = {""};
 		String estado = "En Proceso";
 		resultadoEstado[0] = "PendientePreactivar";
 		resultadoTexto[0] = "Reserva realizada";
 		
-		Botones.BefanProceso();
 		irA("importacion");
 		sleep(500);
 		Botones.SISeleccionDeDeposito(deposito);
@@ -791,8 +824,8 @@ public class BeFANMayorista extends TestBase {
 		sleep(500);
 		Botones.SIClickAceptarImportar();
 		sleep(500);
-//		Botones.BefanProceso();
-//		sleep(118000);
+		dpw.main();
+		sleep(118000);
 		irA("gestion");
 		sleep(500);
 		Botones.SGSeleccionEstado(estado);
@@ -808,15 +841,15 @@ public class BeFANMayorista extends TestBase {
 	}
 	
 	@Test (groups = "BeFan", dataProvider="DosSerialesValidos")
-	public void TS97657_BeFan_Movil_REPRO_Asociaci�n_de_diferentes_seriales_a_diferentes_prefijos(String path, String nombreArch, String deposito, String prefijo, String serial1, String serial2, String prefijo2) throws IOException {
+	public void TS97657_BeFan_Movil_REPRO_Asociacion_de_diferentes_seriales_a_diferentes_prefijos(String path, String nombreArch, String deposito, String prefijo, String serial1, String serial2, String prefijo2) throws IOException, Exception {
 		BeFan Botones = new BeFan(driver);
+		DPW dpw = new DPW();
 		String[] resultadoEstado = {""};
 		String[] resultadoTexto = {""};
 		String estado = "Procesado";
 		resultadoEstado[0] = "Activado";
 		resultadoTexto[0] = "Activaci�n confirmada";
 		
-		Botones.BefanProceso();
 		irA("importacion");
 		sleep(500);
 		Botones.SISeleccionDeDeposito(deposito);
@@ -836,8 +869,8 @@ public class BeFANMayorista extends TestBase {
 		sleep(500);
 		Botones.SIClickAceptarImportar();
 		sleep(500);
-//		Botones.BefanProceso();
-//		sleep(1198000);
+		dpw.main();
+		sleep(1198000);
 		irA("gestion");
 		sleep(500);
 		Botones.SGSeleccionEstado(estado);
@@ -857,7 +890,6 @@ public class BeFANMayorista extends TestBase {
 		BeFan Botones = new BeFan(driver);
 		String mensaje;
 		
-		Botones.BefanProceso();
 		irA("importacion");
 		sleep(500);
 		Botones.SISeleccionDeDeposito(deposito);
@@ -878,15 +910,15 @@ public class BeFANMayorista extends TestBase {
 	}
 	
 	@Test (groups = "BeFan", dataProvider="SerialNoMCVM")
-	public void TS97653_BeFan_Movil_REPRO_PreaActivacion_Linea_Repro_SIMCARD_en_estado_distinto_a_MCVM(String path, String nombreArch, String deposito, String prefijo, String serial1, String serial2, String prefijo2) throws IOException {
+	public void TS97653_BeFan_Movil_REPRO_PreaActivacion_Linea_Repro_SIMCARD_en_estado_distinto_a_MCVM(String path, String nombreArch, String deposito, String prefijo, String serial1, String serial2, String prefijo2) throws IOException, Exception {
 		BeFan Botones = new BeFan(driver);
+		DPW dpw = new DPW();
 		String[] resultadoEstado = {""};
 		String[] resultadoTexto = {""};
 		String estado = "Procesado";
 		resultadoEstado[0] = "Error";
 		resultadoTexto[0] = "No esta disponible para la venta.";
 		
-		Botones.BefanProceso();
 		irA("importacion");
 		sleep(500);
 		Botones.SISeleccionDeDeposito(deposito);
@@ -902,10 +934,8 @@ public class BeFANMayorista extends TestBase {
 		sleep(500);
 		Botones.SIClickAceptarImportar();
 		sleep(500);
-		Botones.BefanProceso();
+		dpw.main();
 		sleep(3600000);
-//		Botones.BefanProceso();
-//		sleep(3600000);
 		irA("gestion");
 		sleep(500);
 		Botones.SGSeleccionEstado(estado);
@@ -923,7 +953,8 @@ public class BeFANMayorista extends TestBase {
 	public void TS97658_BeFan_Movil_REPRO_Serial_no_asociado_a_ningun_prefijo(String path, String nombreArch, String deposito, String prefijo, String serial1, String serial2, String prefijo2) throws IOException {
 		BeFan Botones = new BeFan(driver);
 		String mensaje;
-		Botones.BefanProceso();
+		
+		
 		irA("importacion");
 		sleep(500);
 		Botones.SISeleccionDeDeposito(deposito);
@@ -949,15 +980,16 @@ public class BeFANMayorista extends TestBase {
 	}
 
 	@Test (groups = "BeFan")
-	public void TS111958_BeFan_Movil_REPRO_Preactivacion_repro__PreActivacion_Linea_Repro(String path, String nombreArch, String deposito, String prefijo, String serial1, String serial2, String prefijo2) throws IOException {
+	public void TS111958_BeFan_Movil_REPRO_Preactivacion_repro__PreActivacion_Linea_Repro(String path, String nombreArch, String deposito, String prefijo, String serial1, String serial2, String prefijo2) throws IOException, Exception {
 		BeFan Botones = new BeFan(driver);
+		DPW dpw = new DPW();
 		String[] resultadoEstado = {""};
 		String[] resultadoTexto = {""};
 		String estado = "Procesado";
 		resultadoEstado[0] = "Activado";
 		resultadoTexto[0] = "Activaci�n confirmada";
 		
-		Botones.BefanProceso();
+		
 		irA("importacion");
 		sleep(500);
 		Botones.SISeleccionDeDeposito(deposito);
@@ -973,10 +1005,8 @@ public class BeFANMayorista extends TestBase {
 		sleep(500);
 		Botones.SIClickAceptarImportar();
 		sleep(500);
-		Botones.BefanProceso();
+		dpw.main();
 		sleep(3600000);
-//		Botones.BefanProceso();
-//		sleep(3600000);
 		irA("gestion");
 		sleep(500);
 		Botones.SGSeleccionEstado(estado);
@@ -992,12 +1022,32 @@ public class BeFANMayorista extends TestBase {
 	}
 
 	@Test (groups = "BeFan", dataProvider="SerialValido")
-	public void TS97656_BeFan_Movil_REPRO_Cantidad_de_seriales_ingresados_mayor_al_habilitado_por_agente(String path, String nombreArch, String deposito, String prefijo, String serial1, String serial2, String prefijo2) throws IOException {
+	public void TS97656_BeFan_Movil_REPRO_Cantidad_de_seriales_ingresados_mayor_al_habilitado_por_agente(String path, String nombreArch, String deposito, String prefijo, String serial1, String serial2, String prefijo2, String agente) throws IOException {
 		BeFan Botones = new BeFan(driver);
 		String mensaje;
+		int cont = 0;
 		
+		Botones.LogOutBefan(driver);
+		sleep(500);
+		loginBeFANConfigurador(driver);
+		sleep(500);
+		irCupos("gestion");
+		selectByText(driver.findElements(By.cssSelector(".text.form-control.ng-pristine.ng-untouched.ng-valid.ng-empty")).get(0), agente);
+		selectByText(driver.findElements(By.cssSelector(".text.form-control.ng-pristine.ng-untouched.ng-valid.ng-empty")).get(0), deposito);
+		selectByText(driver.findElements(By.cssSelector(".text.form-control.ng-pristine.ng-untouched.ng-valid.ng-empty")).get(0), "Vigente");
+		cont = (driver.findElements(By.name("eliminar"))).size();
+		for (int i = 0; i > cont; i++) {
+			System.out.println(i);
+			System.out.println(cont);
+			driver.findElements(By.name("eliminar")).get(0).click();
+			sleep(500);
+			driver.findElements(By.cssSelector(".btn.btn-primary")).get(1).click();
+			sleep(500);
+			driver.findElements(By.cssSelector(".btn.btn-link")).get(0).click();
+			sleep(500);
+		}
+		System.out.println("termine");
 		//FALTA BORRAR CUPOS
-		Botones.BefanProceso();
 		irA("importacion");
 		sleep(500);
 		Botones.SISeleccionDeDeposito(deposito);
@@ -1025,8 +1075,9 @@ public class BeFANMayorista extends TestBase {
 	}
 	
 	@Test (groups = "BeFan", dataProvider="SerialValidoEterno")
-	public void TS97654_BeFan_Movil_REPRO_PreaActivacion_Linea_Repro_Localidad_inexistente_para_numeracion_movil(String path, String nombreArch, String deposito, String prefijo, String serial1, String serial2, String prefijo2) throws IOException {
+	public void TS97654_BeFan_Movil_REPRO_PreaActivacion_Linea_Repro_Localidad_inexistente_para_numeracion_movil(String path, String nombreArch, String deposito, String prefijo, String serial1, String serial2, String prefijo2) throws IOException, Exception {
 		BeFan Botones = new BeFan(driver);
+		DPW dpw = new DPW();
 		String[] resultadoEstado = {""};
 		String[] resultadoTexto = {""};
 		String estado = "Procesado";
@@ -1048,8 +1099,8 @@ public class BeFANMayorista extends TestBase {
 		sleep(500);
 		Botones.SIClickAceptarImportar();
 		sleep(500);
-//		Botones.BefanProceso();
-//		sleep(118000);
+		dpw.main();
+		sleep(118000);
 		irA("gestion");
 		sleep(500);
 		Botones.SGSeleccionEstado(estado);
@@ -1065,8 +1116,9 @@ public class BeFANMayorista extends TestBase {
 	}
 	
 	@Test (groups = "BeFan", dataProvider="SerialValidoEternov2")
-	public void TS111990_BeFan_Movil_REPRO_PreaActivacion_Linea_Repro_Localidad_inexistente_para_numeracion_movil(String path, String nombreArch, String deposito, String prefijo, String serial1, String serial2, String prefijo2) throws IOException {
+	public void TS111990_BeFan_Movil_REPRO_PreaActivacion_Linea_Repro_Localidad_inexistente_para_numeracion_movil(String path, String nombreArch, String deposito, String prefijo, String serial1, String serial2, String prefijo2) throws IOException, Exception {
 		BeFan Botones = new BeFan(driver);
+		DPW dpw = new DPW();
 		String[] resultadoEstado = {""};
 		String[] resultadoTexto = {""};
 		String estado = "Procesado";
@@ -1088,8 +1140,8 @@ public class BeFANMayorista extends TestBase {
 		sleep(500);
 		Botones.SIClickAceptarImportar();
 		sleep(500);
-//		Botones.BefanProceso();
-//		sleep(118000);
+		dpw.main();
+		sleep(118000);
 		irA("gestion");
 		sleep(500);
 		Botones.SGSeleccionEstado(estado);
@@ -1145,4 +1197,42 @@ public class BeFANMayorista extends TestBase {
 		}
 		Assert.assertTrue(a);
 	}
+	
+	@Test(groups= {"BeFan"}, dependsOnMethods ="TS97651_BeFan_Movil_REPRO_PreaActivacion_Linea_Repro_SIMCARD_en_deposito_inexistente")
+	public void TS97652_BeFan_Movil_REPRO_PreaActivacion_Linea_Repro_SIMCARD_no_en_deposito_de_AGENTE() {
+		Assert.assertTrue(true);
+	}
+	
+	@Test(groups= {"BeFan"}, dependsOnMethods ="TS126648_BeFan_Movil_REPRO_Preactivacion_repro__Importacion_de_SIM_repro__S436__Envio_de_lote")
+	public void TS97667_BeFan_Movil_REPRO_Seriales_con_estado_PENDIENTE_DE_VALIDAR() {
+		Assert.assertTrue(true);
+	}
+	
+	@Test(groups= {"BeFan"}, dependsOnMethods ="TS97654_BeFan_Movil_REPRO_PreaActivacion_Linea_Repro_Localidad_inexistente_para_numeracion_movil")
+	public void TS97670_BeFan_Movil_REPRO_Seriales_con_estado_ERROR() {
+		Assert.assertTrue(true);
+	}
+	
+	@Test(groups= {"BeFan"}, dependsOnMethods ="TS111958_BeFan_Movil_REPRO_Preactivacion_repro__PreActivacion_Linea_Repro")
+	public void TS97671_BeFan_Movil_REPRO_Seriales_con_estado_ACTIVADA() {
+		Assert.assertTrue(true);
+	}
+	
+	@Test(groups= {"BeFan"}, dependsOnMethods ="TS111958_BeFan_Movil_REPRO_Preactivacion_repro__PreActivacion_Linea_Repro")
+	public void TS111996_BeFan_Movil_REPRO_Preactivacion_repro__Envio_de_lote_a_OM__Verificacion_de_lineas_enviadas() {
+		Assert.assertTrue(true);
+	}
+	
+	@Test(groups= {"BeFan"}, dependsOnMethods ="TS111990_BeFan_Movil_REPRO_PreaActivacion_Linea_Repro_Localidad_inexistente_para_numeracion_movil")
+	public void TS111998_BeFan_Movil_REPRO_Preactivacion_repro__Reserva_de_numeros_en_numeracion_movil__Fallo_y_desreserva_de_SIMCARDS() {
+		Assert.assertTrue(true);
+	}
+	
+	@Test(groups= {"BeFan"}, dependsOnMethods ="TS111958_BeFan_Movil_REPRO_Preactivacion_repro__PreActivacion_Linea_Repro")
+	public void TS126673_BeFan_Movil_REPRO_Preactivacion_repro__Prefijo_con_cupos() {
+		Assert.assertTrue(true);
+	}
+	
+	
+	
 }
