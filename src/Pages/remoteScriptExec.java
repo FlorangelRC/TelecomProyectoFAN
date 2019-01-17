@@ -293,4 +293,14 @@ public class remoteScriptExec {
 		Assert.assertTrue(iVerifyDigit2 == iVerifyDigit);
 	}
 	
+	public boolean documentType(String sDT) {
+		boolean bAssert = false;
+		
+		if (sDT.equalsIgnoreCase("DNI") || sDT.equalsIgnoreCase("LE") || sDT.equalsIgnoreCase("LC") || sDT.equalsIgnoreCase("Pasaporte")) {
+			bAssert = true;
+		}
+		
+		return bAssert;
+	}
+	
 }
