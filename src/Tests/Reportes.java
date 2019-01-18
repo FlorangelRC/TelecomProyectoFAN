@@ -383,7 +383,7 @@ public class Reportes {
 			Assert.assertTrue(rsePage.verifyTextMaxSize(sCodCuentaOrigen, 18));
 			
 			String sFechaCreaAudit = lsAux.get(26);
-			Assert.assertFalse(sIdCuentaCliente.isEmpty());
+			Assert.assertFalse(sFechaCreaAudit.isEmpty());
 			sdfDateFormat = new SimpleDateFormat(sDateFormat);
 			sdfDateFormat.parse(sFechaCreaAudit);
 			
@@ -865,8 +865,6 @@ public class Reportes {
 			
 			String sFechaModificacion = lsAux.get(13);
 			if (!sFechaModificacion.isEmpty()) {
-			String sFechaModificacion = lsAux.get(12);
-			if (!sFechaModificacion.isEmpty()) {
 				sdfDateFormat = new SimpleDateFormat(sDateFormat);
 				sdfDateFormat.parse(sFechaModificacion);
 			}
@@ -939,8 +937,6 @@ public class Reportes {
 			String sTipoSubgestion = lsAux.get(30);
 			Assert.assertTrue(rsePage.verifyTextMaxSize(sTipoSubgestion, 255));
 		}
-		
-		sListOfFiles = sFiles;
 	}
 	
 	//Test #8
@@ -3301,7 +3297,61 @@ public class Reportes {
 			
 			String sTipoCuenta = lsAux.get(22); 
 			Assert.assertTrue(rsePage.verifyTextMaxSize(sTipoCuenta, 160));
-		
+		}
+	}
+	
+	//Test #35
+	@Test
+	public void TS125435_CRM_Interfaz_LCRM_CuentaFacturacionHistoria() throws ParseException, IOException {
+		String sName = "_CUENTAFACTURACIONHISTORIA_";
+						
+		rsePage.checkName(sName);
+						
+		List<List<String>> sList = new ArrayList<List<String>>();
+							
+		List<String> sFiles = rsePage.findFiles(sName);
+							
+		for (String sAux : sFiles) {
+			sList.add(rsePage.readTxt(sAux));
+		}
+							
+		for (List<String> lsAux : sList) { 
+			String sIDCuentaFacturacionHistoria = lsAux.get(0);
+			Assert.assertTrue(rsePage.verifyTextMaxSize(sIDCuentaFacturacionHistoria, 18));
+			
+			String sIDCuentaFacturacion = lsAux.get(1);
+			Assert.assertTrue(rsePage.verifyTextMaxSize(sIDCuentaFacturacion, 18));
+			
+			String sCodUsuarioMod = lsAux.get(2);
+			Assert.assertTrue(rsePage.verifyTextMaxSize(sCodUsuarioMod, 18));
+			
+			String sFechaCreacion = lsAux.get(3);
+			if (!sFechaCreacion.isEmpty()) { 
+				sdfDateFormat = new SimpleDateFormat(sDateFormat); 
+				sdfDateFormat.parse(sFechaCreacion); 
+			}
+			
+			String sCampoCuentaFacturacion = lsAux.get(4);
+			Assert.assertTrue(rsePage.verifyTextMaxSize(sCampoCuentaFacturacion, 255));
+			
+			String sAntiguoValor = lsAux.get(5);
+			Assert.assertTrue(rsePage.verifyTextMaxSize(sAntiguoValor, 255));
+			
+			String sNuevoValor = lsAux.get(6);
+			Assert.assertTrue(rsePage.verifyTextMaxSize(sNuevoValor, 255));
+			
+			String sFechaCreaAudit = lsAux.get(7);
+			if (!sFechaCreaAudit.isEmpty()) { 
+				sdfDateFormat = new SimpleDateFormat(sDateFormat); 
+				sdfDateFormat.parse(sFechaCreaAudit); 
+			}
+			
+			String sFechaModAudit = lsAux.get(8);
+			if (!sFechaModAudit.isEmpty()) { 
+				sdfDateFormat = new SimpleDateFormat(sDateFormat); 
+				sdfDateFormat.parse(sFechaModAudit); 
 			}
 		}
+	}
+	
 }
