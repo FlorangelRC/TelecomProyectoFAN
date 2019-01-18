@@ -454,7 +454,7 @@ public class Reportes {
 			
 			String sRol = lsAux.get(4);
 			Assert.assertTrue(rsePage.verifyTextMaxSize(sRol, 18));
-			Assert.assertTrue(sRol.equalsIgnoreCase("Referente de Pago")); //Ask. It says 'Campo Fijo'
+			Assert.assertTrue(sRol.equalsIgnoreCase("Referente de Pago"));
 		}
 	}
 	
