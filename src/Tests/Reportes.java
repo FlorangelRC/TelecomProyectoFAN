@@ -35,7 +35,7 @@ public class Reportes {
 		System.out.println("Download completed.");
 	}
 	
-	@AfterClass(alwaysRun=true)
+	//@AfterClass(alwaysRun=true)
 	public void quit() throws IOException {
 		rsePage.deleteAllFiles();
 	}
@@ -2828,6 +2828,598 @@ public class Reportes {
 		}
 	}
 	
+	//Test #42
+		@Test	
+		public void TS125437_CRM_Interfaz_LCRM_IndividuoHistoria() throws ParseException, IOException {
+			String sName = "_INDIVIDUOHISTORIA_";
+										
+			rsePage.checkName(sName);
+										
+			List<List<String>> sList = new ArrayList<List<String>>();
+											
+			List<String> sFiles = rsePage.findFiles(sName);
+											
+			for (String sAux : sFiles) {
+				sList.add(rsePage.readTxt(sAux));
+			}
+											
+			for (List<String> lsAux : sList) { 
+				String sIdIndividuoHistoria = lsAux.get(0);
+				Assert.assertTrue(rsePage.verifyTextMaxSize(sIdIndividuoHistoria, 18));
+					
+				String sIdIndividuo = lsAux.get(1);
+				Assert.assertTrue(rsePage.verifyTextMaxSize(sIdIndividuo, 18));
+						
+				String sCodUsuarioMod = lsAux.get(2);
+				Assert.assertTrue(rsePage.verifyTextMaxSize(sCodUsuarioMod, 18));
+						
+				String sFechaCreacion = lsAux.get(3); 
+				if (!sFechaCreacion.isEmpty()) { 
+					sdfDateFormat = new SimpleDateFormat(sDateFormat); 
+					sdfDateFormat.parse(sFechaCreacion); 
+				}
+						
+				String sCampoContacto = lsAux.get(4);
+				Assert.assertTrue(rsePage.verifyTextMaxSize(sCampoContacto, 255));
+						
+				String sAntiguoValor = lsAux.get(5);
+				Assert.assertTrue(rsePage.verifyTextMaxSize(sAntiguoValor, 255));
+						
+				String sNuevoValor = lsAux.get(6);
+				Assert.assertTrue(rsePage.verifyTextMaxSize(sNuevoValor, 255));
+						
+				String sFechaCreaAudit = lsAux.get(7); 
+				if (!sFechaCreaAudit.isEmpty()) { 
+					sdfDateFormat = new SimpleDateFormat(sDateFormat); 
+					sdfDateFormat.parse(sFechaCreaAudit); 
+				}
+						
+				String sFechaModAudit = lsAux.get(8); 
+				if (!sFechaModAudit.isEmpty()) { 
+					sdfDateFormat = new SimpleDateFormat(sDateFormat); 
+					sdfDateFormat.parse(sFechaModAudit); 
+					}
+				}	
+			}
+		
+		//Test #43
+		@Test	
+		public void TS125438_CRM_Interfaz_LCRM_ProductoHistoria() throws ParseException, IOException {
+			String sName = "_PRODUCTOHISTORIA_";
+									
+			rsePage.checkName(sName);
+									
+			List<List<String>> sList = new ArrayList<List<String>>();
+										
+			List<String> sFiles = rsePage.findFiles(sName);
+										
+			for (String sAux : sFiles) {
+				sList.add(rsePage.readTxt(sAux));
+			}
+										
+			for (List<String> lsAux : sList) { 
+				String sIdProductoHistoria = lsAux.get(0);
+				Assert.assertTrue(rsePage.verifyTextMaxSize(sIdProductoHistoria, 18));
+				
+				String sIdProducto = lsAux.get(1);
+				Assert.assertTrue(rsePage.verifyTextMaxSize(sIdProducto, 18));
+					
+				String sCodUsuarioMod = lsAux.get(2);
+				Assert.assertTrue(rsePage.verifyTextMaxSize(sCodUsuarioMod, 18));
+					
+				String sFechaCreacion = lsAux.get(3); 
+				if (!sFechaCreacion.isEmpty()) { 
+					sdfDateFormat = new SimpleDateFormat(sDateFormat); 
+					sdfDateFormat.parse(sFechaCreacion); 
+				}
+					
+				String sCampoProducto = lsAux.get(4);
+				Assert.assertTrue(rsePage.verifyTextMaxSize(sCampoProducto, 255));
+					
+				String sAntiguoValor = lsAux.get(5);
+				Assert.assertTrue(rsePage.verifyTextMaxSize(sAntiguoValor, 255));
+					
+				String sNuevoValor = lsAux.get(6);
+				Assert.assertTrue(rsePage.verifyTextMaxSize(sNuevoValor, 255));
+					
+				String sFechaCreaAudit = lsAux.get(7); 
+				if (!sFechaCreaAudit.isEmpty()) { 
+					sdfDateFormat = new SimpleDateFormat(sDateFormat); 
+					sdfDateFormat.parse(sFechaCreaAudit); 
+				}
+					
+				String sFechaModAudit = lsAux.get(8); 
+				if (!sFechaModAudit.isEmpty()) { 
+					sdfDateFormat = new SimpleDateFormat(sDateFormat); 
+					sdfDateFormat.parse(sFechaModAudit); 
+				   }
+				}	
+			}
+		
+		//Test #44
+		@Test	
+		public void TS125440_CRM_Interfaz_LCRM_CasoHistoria() throws ParseException, IOException {
+			String sName = "_CASOHISTORIA_";
+								
+			rsePage.checkName(sName);
+								
+			List<List<String>> sList = new ArrayList<List<String>>();
+									
+			List<String> sFiles = rsePage.findFiles(sName);
+									
+			for (String sAux : sFiles) {
+				sList.add(rsePage.readTxt(sAux));
+			}
+									
+			for (List<String> lsAux : sList) { 
+				String sIdCasoHistoria = lsAux.get(0);
+				Assert.assertTrue(rsePage.verifyTextMaxSize(sIdCasoHistoria, 18));
+				
+				String sIdCaso = lsAux.get(1);
+				Assert.assertTrue(rsePage.verifyTextMaxSize(sIdCaso, 18));
+				
+				String sCodUsuarioMod = lsAux.get(2);
+				Assert.assertTrue(rsePage.verifyTextMaxSize(sCodUsuarioMod, 18));
+				
+				String sFechaCreacion = lsAux.get(3); 
+				if (!sFechaCreacion.isEmpty()) { 
+					sdfDateFormat = new SimpleDateFormat(sDateFormat); 
+					sdfDateFormat.parse(sFechaCreacion); 
+				}
+				
+				String sCampoCaso = lsAux.get(4);
+				Assert.assertTrue(rsePage.verifyTextMaxSize(sCampoCaso, 255));
+				
+				String sAntiguoValor = lsAux.get(5);
+				Assert.assertTrue(rsePage.verifyTextMaxSize(sAntiguoValor, 255));
+				
+				String sNuevoValor = lsAux.get(6);
+				Assert.assertTrue(rsePage.verifyTextMaxSize(sNuevoValor, 255));
+				
+				String sFechaCreaAudit = lsAux.get(7); 
+				if (!sFechaCreaAudit.isEmpty()) { 
+					sdfDateFormat = new SimpleDateFormat(sDateFormat); 
+					sdfDateFormat.parse(sFechaCreaAudit); 
+				}
+				
+				String sFechaModAudit = lsAux.get(8); 
+				if (!sFechaModAudit.isEmpty()) { 
+					sdfDateFormat = new SimpleDateFormat(sDateFormat); 
+					sdfDateFormat.parse(sFechaModAudit); 
+				}
+			}	
+		}
+		
+		//Test #45
+		@Test
+		public void TS125441_CRM_Interfaz_LCRM_CuentaPartner() throws ParseException, IOException {
+			String sName = "_CUENTAPARTNER_";
+							
+			rsePage.checkName(sName);
+							
+			List<List<String>> sList = new ArrayList<List<String>>();
+								
+			List<String> sFiles = rsePage.findFiles(sName);
+								
+			for (String sAux : sFiles) {
+				sList.add(rsePage.readTxt(sAux));
+			}
+								
+			for (List<String> lsAux : sList) { 
+				String sIdCuentaPartner = lsAux.get(0); 
+				Assert.assertTrue(rsePage.verifyTextMaxSize(sIdCuentaPartner, 18)); 
+				Assert.assertFalse(sIdCuentaPartner.isEmpty());
+			
+				
+				String sCodcuenta = lsAux.get(1); 
+				Assert.assertTrue(rsePage.verifyTextMaxSize(sCodcuenta, 255)); 
+				Assert.assertFalse(sCodcuenta.isEmpty());
+			
+			
+				String sFechaFundacion = lsAux.get(2); 
+				if (!sFechaFundacion.isEmpty()) { 
+					sdfDateFormat = new SimpleDateFormat(sDateFormat); 
+					sdfDateFormat.parse(sFechaFundacion); 
+				}
+				
+				String sNumeroFax = lsAux.get(3); 
+				Assert.assertTrue(rsePage.verifyTextMaxSize(sNumeroFax, 40));
+				
+				String sRazonSocial = lsAux.get(4); 
+				Assert.assertTrue(rsePage.verifyTextMaxSize(sRazonSocial, 0)); 
+				Assert.assertFalse(sRazonSocial.isEmpty());
+				
+				String sNumeroTelefonoPpal = lsAux.get(5); 
+				Assert.assertTrue(rsePage.verifyTextMaxSize(sNumeroTelefonoPpal, 40)); 
+				
+				String sNumeroTelefonoAlternativo = lsAux.get(6); 
+				Assert.assertTrue(rsePage.verifyTextMaxSize(sNumeroTelefonoAlternativo, 40));
+				
+				String sEstado = lsAux.get(7); 
+				Assert.assertTrue(rsePage.verifyTextMaxSize(sEstado, 255));
+				
+				String sCUIT = lsAux.get(8); 
+				Integer.parseInt(sCUIT); 
+				
+				String sFechaModEmail = lsAux.get(9); 
+				if (!sFechaModEmail.isEmpty()) { 
+					sdfDateFormat = new SimpleDateFormat(sDateFormat); 
+					sdfDateFormat.parse(sFechaModEmail); 
+				}
+				
+				String sIndustria = lsAux.get(10); 
+				Assert.assertTrue(rsePage.verifyTextMaxSize(sIndustria, 40));
+				
+				String sEmail = lsAux.get(11);
+				if (!sEmail.isEmpty()) sEmail.contains("@");
+					Assert.assertTrue(rsePage.verifyTextMaxSize(sEmail, 255));
+						
+				String sCodPersonaContacto = lsAux.get(12); 
+				Assert.assertTrue(rsePage.verifyTextMaxSize(sCodPersonaContacto, 18));
+				
+				String sCodCuentaOrigen = lsAux.get(13); 
+				Assert.assertTrue(rsePage.verifyTextMaxSize(sCodCuentaOrigen, 18));
+				
+				String sFechaCreaAudit = lsAux.get(14);
+				Assert.assertFalse(sFechaCreaAudit.isEmpty());
+				sdfDateFormat = new SimpleDateFormat(sDateFormat);
+				sdfDateFormat.parse(sFechaCreaAudit);
+				
+				String sCodUsuarioAlta = lsAux.get(15); 
+				Assert.assertTrue(rsePage.verifyTextMaxSize(sCodUsuarioAlta, 18));
+				
+				String sFechaModAudit = lsAux.get(16);
+				Assert.assertFalse(sFechaModAudit.isEmpty());
+				sdfDateFormat = new SimpleDateFormat(sDateFormat);
+				sdfDateFormat.parse(sFechaModAudit);
+				
+				String sCodCuentaPadre = lsAux.get(17); 
+				Assert.assertTrue(rsePage.verifyTextMaxSize(sCodCuentaPadre, 18));
+				
+				String sCodCliente = lsAux.get(18);
+				Integer.parseInt(sCodCliente);
+				
+				String sFechaMod = lsAux.get(19); 
+				if (!sFechaMod.isEmpty()) { 
+					sdfDateFormat = new SimpleDateFormat(sDateFormat); 
+					sdfDateFormat.parse(sFechaMod); 
+				}
+				
+				String sCodUsuarioMod = lsAux.get(20); 
+				Assert.assertTrue(rsePage.verifyTextMaxSize(sCodUsuarioMod, 18));
+				
+				String sFechaCreacion = lsAux.get(21); 
+				if (!sFechaCreacion.isEmpty()) { 
+					sdfDateFormat = new SimpleDateFormat(sDateFormat); 
+					sdfDateFormat.parse(sFechaCreacion); 
+				}
+				
+				String sTipoCuenta = lsAux.get(22); 
+				Assert.assertTrue(rsePage.verifyTextMaxSize(sTipoCuenta, 160));
+			
+				}
+			}
+		
+		//Test #46
+		@Test
+		public void TS125442_CRM_Interfaz_LCRM_CasoHito() throws ParseException, IOException {
+			String sName = "_CASOHITO_";
+						
+			rsePage.checkName(sName);
+						
+			List<List<String>> sList = new ArrayList<List<String>>();
+							
+			List<String> sFiles = rsePage.findFiles(sName);
+							
+			for (String sAux : sFiles) {
+				sList.add(rsePage.readTxt(sAux));
+			}
+							
+			for (List<String> lsAux : sList) {
+				String sIdCasoHito = lsAux.get(0);
+				Assert.assertTrue(rsePage.verifyTextMaxSize(sIdCasoHito, 18));
+				
+				String sIdCaso = lsAux.get(1);
+				Assert.assertTrue(rsePage.verifyTextMaxSize(sIdCaso, 18));
+				
+				String sFechaInicio = lsAux.get(2);
+				if(!sFechaInicio.isEmpty()) {
+					sdfDateFormat = new SimpleDateFormat(sDateFormat);
+					sdfDateFormat.parse(sFechaInicio);		
+				}
+				
+				String sTipoCasoHito = lsAux.get(3);
+				Assert.assertTrue(rsePage.verifyTextMaxSize(sTipoCasoHito, 18));
+				
+				String sMarcaCompletado = lsAux.get(4);
+				Integer.parseInt(sMarcaCompletado);
+				Assert.assertTrue(sMarcaCompletado.equals("1") || sMarcaCompletado.equals("0"));
+				
+				String sFechaCreacion = lsAux.get(5);
+				if(!sFechaCreacion.isEmpty()) {
+					sdfDateFormat = new SimpleDateFormat(sDateFormat);
+					sdfDateFormat.parse(sFechaCreacion);		
+				}
+				
+				String sCodUsuarioAlta = lsAux.get(6);
+				Assert.assertTrue(rsePage.verifyTextMaxSize(sCodUsuarioAlta, 18));
+				
+				String sFechaMod = lsAux.get(7);
+				if (!sFechaMod.isEmpty()) {
+					sdfDateFormat = new SimpleDateFormat(sDateFormat);
+					sdfDateFormat.parse(sFechaMod);
+				}
+				
+				String sCodUsuarioMod = lsAux.get(8);
+				Assert.assertTrue(rsePage.verifyTextMaxSize(sCodUsuarioMod, 18));
+				
+				String sFechaCreaAudit = lsAux.get(9);
+				if (!sFechaCreaAudit.isEmpty()) {
+					sdfDateFormat = new SimpleDateFormat(sDateFormat);
+					sdfDateFormat.parse(sFechaCreaAudit);
+				}
+				
+				String sFechaModAudit = lsAux.get(10);
+				if (!sFechaModAudit.isEmpty()) {
+					sdfDateFormat = new SimpleDateFormat(sDateFormat);
+					sdfDateFormat.parse(sFechaModAudit);
+				}
+				
+				String sFechaObjetivo = lsAux.get(11);
+				if (!sFechaObjetivo.isEmpty()) {
+					sdfDateFormat = new SimpleDateFormat(sDateFormat);
+					sdfDateFormat.parse(sFechaObjetivo);
+				}
+				
+				String sTiempoObjetivoHoras = lsAux.get(12);
+				Double.parseDouble(sTiempoObjetivoHoras);
+				
+				String sTiempoObjetivoDias = lsAux.get(13);
+				Double.parseDouble(sTiempoObjetivoDias);
+				
+				String sTiempoObjetivoMinutos = lsAux.get(14);
+				Integer.parseInt(sTiempoObjetivoMinutos);
+				
+				String sTiempoRestanteMinutos = lsAux.get(15);
+				Integer.parseInt(sTiempoRestanteMinutos);
+				
+				String sTiempoRestanteHoras = lsAux.get(16);
+				Double.parseDouble(sTiempoRestanteHoras);
+				
+				String sTiempoRestanteDias = lsAux.get(17);
+				Double.parseDouble(sTiempoRestanteDias);
+				
+				String sTiempoExcedidoMinutos = lsAux.get(18);
+				Assert.assertTrue(rsePage.verifyTextMaxSize(sTiempoExcedidoMinutos, 10));
+				
+				String sFechaHitoCumplido = lsAux.get(19);
+				if (!sFechaHitoCumplido.isEmpty()) {
+					sdfDateFormat = new SimpleDateFormat(sDateFormat);
+					sdfDateFormat.parse(sFechaHitoCumplido);
+				}
+				
+				String sMarcaHitoNoCumplido = lsAux.get(20);
+				Integer.parseInt(sMarcaHitoNoCumplido);
+			}
+		}
+		
+		//Test #47
+		@Test
+		public void TS125443_CRM_Interfaz_LCRM_UsuarioGrupoDeTrabajoHistoria() throws ParseException, IOException {
+			String sName = "_USUARIOGRUPODETRABAJOHISTORIA_";
+					
+			rsePage.checkName(sName);
+					
+			List<List<String>> sList = new ArrayList<List<String>>();
+						
+			List<String> sFiles = rsePage.findFiles(sName);
+						
+			for (String sAux : sFiles) {
+				sList.add(rsePage.readTxt(sAux));
+			}
+						
+			for (List<String> lsAux : sList) {
+				String sIdUsuarioGrupoDeTrabajoHistoria = lsAux.get(0);
+				Assert.assertTrue(rsePage.verifyTextMaxSize(sIdUsuarioGrupoDeTrabajoHistoria, 18));
+				
+				String sIdUsuarioGrupoDeTrabajo = lsAux.get(1);
+				Assert.assertTrue(rsePage.verifyTextMaxSize(sIdUsuarioGrupoDeTrabajo, 18));
+				
+				String sCodUsuarioMod = lsAux.get(2);
+				Assert.assertTrue(rsePage.verifyTextMaxSize(sCodUsuarioMod, 18));
+				
+				String sFechaCreacion = lsAux.get(3);
+				if(!sFechaCreacion.isEmpty()) {
+					sdfDateFormat = new SimpleDateFormat(sDateFormat);
+					sdfDateFormat.parse(sFechaCreacion);		
+				}
+				
+				String sCampoUsuarioGrupoDeTrabajo = lsAux.get(4);
+				Assert.assertTrue(rsePage.verifyTextMaxSize(sCampoUsuarioGrupoDeTrabajo, 255));
+				
+				String sAntiguoValor = lsAux.get(5);
+				Assert.assertTrue(rsePage.verifyTextMaxSize(sAntiguoValor, 255));
+				
+				String sNuevoValor = lsAux.get(6);
+				Assert.assertTrue(rsePage.verifyTextMaxSize(sNuevoValor, 255));
+				
+				String sFechaCreaAudit = lsAux.get(7);
+				if(!sFechaCreaAudit.isEmpty()) {
+					sdfDateFormat = new SimpleDateFormat(sDateFormat);
+					sdfDateFormat.parse(sFechaCreaAudit);		
+				}
+				
+				String sFechaModAudit = lsAux.get(8);
+				if(!sFechaModAudit.isEmpty()) {
+					sdfDateFormat = new SimpleDateFormat(sDateFormat);
+					sdfDateFormat.parse(sFechaModAudit);		
+				}
+			}	
+		}
+		
+		//Test #48
+		@Test
+		public void TS125444_CRM_Interfaz_LCRM_UsuarioRol() throws ParseException, IOException {
+			String sName = "_USUARIOROL_";
+					
+			rsePage.checkName(sName);
+					
+			List<List<String>> sList = new ArrayList<List<String>>();
+						
+			List<String> sFiles = rsePage.findFiles(sName);
+						
+			for (String sAux : sFiles) {
+				sList.add(rsePage.readTxt(sAux));
+			}
+						
+			for (List<String> lsAux : sList) {
+				String sIdUsuarioRol = lsAux.get(0);
+				Assert.assertTrue(rsePage.verifyTextMaxSize(sIdUsuarioRol, 18));
+				
+				String sNombreRol = lsAux.get(1);
+				Assert.assertTrue(rsePage.verifyTextMaxSize(sNombreRol, 80));
+				
+				String sRolPariente = lsAux.get(2);
+				Assert.assertTrue(rsePage.verifyTextMaxSize(sRolPariente, 18));
+				
+				String sFechaCreaAudit = lsAux.get(3);
+				if(!sFechaCreaAudit.isEmpty()) {
+					sdfDateFormat = new SimpleDateFormat(sDateFormat);
+					sdfDateFormat.parse(sFechaCreaAudit);
+				}
+				
+				String sFechaModAudit = lsAux.get(4);
+				if(!sFechaModAudit.isEmpty()) {
+					sdfDateFormat = new SimpleDateFormat(sDateFormat);
+					sdfDateFormat.parse(sFechaModAudit);
+				}
+				
+				String sCodUsuarioMod = lsAux.get(5);
+				Assert.assertTrue(rsePage.verifyTextMaxSize(sCodUsuarioMod, 18));
+				
+				String sFechaMod = lsAux.get(6);
+				if(!sFechaMod.isEmpty()) {
+					sdfDateFormat = new SimpleDateFormat(sDateFormat);
+					sdfDateFormat.parse(sFechaMod);			
+				}
+			}
+		}
+		
+		//Test #49
+		@Test
+		public void TS125445_CRM_Interfaz_LCRM_Tarea() throws ParseException, IOException {
+			String sName = "_TAREA_";
+				
+			rsePage.checkName(sName);
+				
+			List<List<String>> sList = new ArrayList<List<String>>();
+					
+			List<String> sFiles = rsePage.findFiles(sName);
+					
+			for (String sAux : sFiles) {
+				sList.add(rsePage.readTxt(sAux));
+			}
+					
+			for (List<String> lsAux : sList) {
+				String sIdTarea = lsAux.get(0);
+				Assert.assertTrue(rsePage.verifyTextMaxSize(sIdTarea, 18));
+				
+				String sIdcaso = lsAux.get(1);
+				Assert.assertTrue(rsePage.verifyTextMaxSize(sIdcaso, 18));
+				
+				String stipoRegistroTarea = lsAux.get(2);
+				Assert.assertTrue(rsePage.verifyTextMaxSize(stipoRegistroTarea, 18));
+				
+				String sTema = lsAux.get(3);
+				Assert.assertTrue(rsePage.verifyTextMaxSize(sTema, 255));
+				
+				String sfechaTareaPactada = lsAux.get(4);
+				if (!sfechaTareaPactada.isEmpty()) {
+					sdfDateFormat = new SimpleDateFormat(sDateFormat);
+					sdfDateFormat.parse(sfechaTareaPactada);
+				}
+				
+				String sEstadoTarea = lsAux.get(5);
+				Assert.assertTrue(rsePage.verifyTextMaxSize(sEstadoTarea, 40));
+				
+				String sPrioridadTarea = lsAux.get(6);
+				Assert.assertTrue(rsePage.verifyTextMaxSize(sPrioridadTarea, 40));
+				
+				String sMarcaPrioridadAlta = lsAux.get(7);
+				Integer.parseInt(sMarcaPrioridadAlta);
+				Assert.assertTrue(sMarcaPrioridadAlta.equals("1") || sMarcaPrioridadAlta.equals("0"));
+				
+				String sIdPropietario = lsAux.get(8);
+				Assert.assertTrue(rsePage.verifyTextMaxSize(sIdPropietario, 18));
+				
+				String sDescripcionTarea = lsAux.get(9);
+				Assert.assertTrue(rsePage.verifyTextMaxSize(sDescripcionTarea, 1300));
+				
+				String sTipoTarea = lsAux.get(10);
+				Assert.assertTrue(rsePage.verifyTextMaxSize(sTipoTarea, 40));
+				
+				String sIdCuentaCliente = lsAux.get(11);
+				Assert.assertTrue(rsePage.verifyTextMaxSize(sIdCuentaCliente, 18));
+				
+				String sMarcaTareaCerrada = lsAux.get(12);
+				Integer.parseInt(sMarcaTareaCerrada);
+				Assert.assertTrue(sMarcaTareaCerrada.equals("1") || sMarcaTareaCerrada.equals("0"));
+				
+				String sFechaCreacion = lsAux.get(13);
+				if(!sFechaCreacion.isEmpty()) {
+					sdfDateFormat = new SimpleDateFormat(sDateFormat);
+					sdfDateFormat.parse(sFechaCreacion);
+				}
+				
+				String sCodUsuarioAlta = lsAux.get(14);
+				Assert.assertTrue(rsePage.verifyTextMaxSize(sCodUsuarioAlta, 18));
+				
+				String sFechaMod = lsAux.get(15);
+				if(!sFechaMod.isEmpty()) {
+					sdfDateFormat = new SimpleDateFormat(sDateFormat);
+					sdfDateFormat.parse(sFechaMod);
+				}
+				
+				String sCodUsuarioMod = lsAux.get(16);
+				Assert.assertTrue(rsePage.verifyTextMaxSize(sCodUsuarioMod, 18));
+				
+				String sSubtipoTarea = lsAux.get(17);
+				Assert.assertTrue(rsePage.verifyTextMaxSize(sSubtipoTarea, 40));
+				
+				String sFechaCierreTarea = lsAux.get(18);
+				if(!sFechaCierreTarea.isEmpty()) {
+					sdfDateFormat = new SimpleDateFormat(sDateFormat);
+					sdfDateFormat.parse(sFechaCierreTarea);
+				}
+				
+				String sDuracionTarea = lsAux.get(19);
+				if(!sDuracionTarea.isEmpty()) {
+					Integer.parseInt(sDuracionTarea);
+					Assert.assertTrue(sDuracionTarea.equals("1") || sDuracionTarea.equals("0"));
+				}
+				String sEstadoEvento = lsAux.get(20);
+				Assert.assertTrue(rsePage.verifyTextMaxSize(sEstadoEvento, 255));
+				
+				String sCodUsuarioSeguimiento = lsAux.get(21);
+				Assert.assertTrue(rsePage.verifyTextMaxSize(sCodUsuarioSeguimiento, 255));
+				
+				String sNivelAlarma = lsAux.get(22);
+				Assert.assertTrue(rsePage.verifyTextMaxSize(sNivelAlarma, 255));
+				
+				String sFechaCreaAudit = lsAux.get(23);
+				if(!sFechaCreaAudit.isEmpty()) {
+					sdfDateFormat = new SimpleDateFormat(sDateFormat);
+					sdfDateFormat.parse(sFechaCreaAudit);
+				}
+				
+				String sFechaModAudit = lsAux.get(24);
+				if(!sFechaModAudit.isEmpty()) {
+					sdfDateFormat = new SimpleDateFormat(sDateFormat);
+					sdfDateFormat.parse(sFechaModAudit);
+				}
+			}
+						
+		}
 	
 	//Test #50
 	@Test
@@ -2867,327 +3459,6 @@ public class Reportes {
 				sdfDateFormat = new SimpleDateFormat(sDateFormat);
 				sdfDateFormat.parse(sFechaCreaMod);
 			}
-		}
-	}
-	
-	//Test #49
-	@Test
-	public void TS125445_CRM_Interfaz_LCRM_Tarea() throws ParseException, IOException {
-		String sName = "_TAREA_";
-			
-		rsePage.checkName(sName);
-			
-		List<List<String>> sList = new ArrayList<List<String>>();
-				
-		List<String> sFiles = rsePage.findFiles(sName);
-				
-		for (String sAux : sFiles) {
-			sList.add(rsePage.readTxt(sAux));
-		}
-				
-		for (List<String> lsAux : sList) {
-			String sIdTarea = lsAux.get(0);
-			Assert.assertTrue(rsePage.verifyTextMaxSize(sIdTarea, 18));
-			
-			String sIdcaso = lsAux.get(1);
-			Assert.assertTrue(rsePage.verifyTextMaxSize(sIdcaso, 18));
-			
-			String stipoRegistroTarea = lsAux.get(2);
-			Assert.assertTrue(rsePage.verifyTextMaxSize(stipoRegistroTarea, 18));
-			
-			String sTema = lsAux.get(3);
-			Assert.assertTrue(rsePage.verifyTextMaxSize(sTema, 255));
-			
-			String sfechaTareaPactada = lsAux.get(4);
-			if (!sfechaTareaPactada.isEmpty()) {
-				sdfDateFormat = new SimpleDateFormat(sDateFormat);
-				sdfDateFormat.parse(sfechaTareaPactada);
-			}
-			
-			String sEstadoTarea = lsAux.get(5);
-			Assert.assertTrue(rsePage.verifyTextMaxSize(sEstadoTarea, 40));
-			
-			String sPrioridadTarea = lsAux.get(6);
-			Assert.assertTrue(rsePage.verifyTextMaxSize(sPrioridadTarea, 40));
-			
-			String sMarcaPrioridadAlta = lsAux.get(7);
-			Integer.parseInt(sMarcaPrioridadAlta);
-			Assert.assertTrue(sMarcaPrioridadAlta.equals("1") || sMarcaPrioridadAlta.equals("0"));
-			
-			String sIdPropietario = lsAux.get(8);
-			Assert.assertTrue(rsePage.verifyTextMaxSize(sIdPropietario, 18));
-			
-			String sDescripcionTarea = lsAux.get(9);
-			Assert.assertTrue(rsePage.verifyTextMaxSize(sDescripcionTarea, 1300));
-			
-			String sTipoTarea = lsAux.get(10);
-			Assert.assertTrue(rsePage.verifyTextMaxSize(sTipoTarea, 40));
-			
-			String sIdCuentaCliente = lsAux.get(11);
-			Assert.assertTrue(rsePage.verifyTextMaxSize(sIdCuentaCliente, 18));
-			
-			String sMarcaTareaCerrada = lsAux.get(12);
-			Integer.parseInt(sMarcaTareaCerrada);
-			Assert.assertTrue(sMarcaTareaCerrada.equals("1") || sMarcaTareaCerrada.equals("0"));
-			
-			String sFechaCreacion = lsAux.get(13);
-			if(!sFechaCreacion.isEmpty()) {
-				sdfDateFormat = new SimpleDateFormat(sDateFormat);
-				sdfDateFormat.parse(sFechaCreacion);
-			}
-			
-			String sCodUsuarioAlta = lsAux.get(14);
-			Assert.assertTrue(rsePage.verifyTextMaxSize(sCodUsuarioAlta, 18));
-			
-			String sFechaMod = lsAux.get(15);
-			if(!sFechaMod.isEmpty()) {
-				sdfDateFormat = new SimpleDateFormat(sDateFormat);
-				sdfDateFormat.parse(sFechaMod);
-			}
-			
-			String sCodUsuarioMod = lsAux.get(16);
-			Assert.assertTrue(rsePage.verifyTextMaxSize(sCodUsuarioMod, 18));
-			
-			String sSubtipoTarea = lsAux.get(17);
-			Assert.assertTrue(rsePage.verifyTextMaxSize(sSubtipoTarea, 40));
-			
-			String sFechaCierreTarea = lsAux.get(18);
-			if(!sFechaCierreTarea.isEmpty()) {
-				sdfDateFormat = new SimpleDateFormat(sDateFormat);
-				sdfDateFormat.parse(sFechaCierreTarea);
-			}
-			
-			String sDuracionTarea = lsAux.get(19);
-			if(!sDuracionTarea.isEmpty()) {
-				Integer.parseInt(sDuracionTarea);
-				Assert.assertTrue(sDuracionTarea.equals("1") || sDuracionTarea.equals("0"));
-			}
-			String sEstadoEvento = lsAux.get(20);
-			Assert.assertTrue(rsePage.verifyTextMaxSize(sEstadoEvento, 255));
-			
-			String sCodUsuarioSeguimiento = lsAux.get(21);
-			Assert.assertTrue(rsePage.verifyTextMaxSize(sCodUsuarioSeguimiento, 255));
-			
-			String sNivelAlarma = lsAux.get(22);
-			Assert.assertTrue(rsePage.verifyTextMaxSize(sNivelAlarma, 255));
-			
-			String sFechaCreaAudit = lsAux.get(23);
-			if(!sFechaCreaAudit.isEmpty()) {
-				sdfDateFormat = new SimpleDateFormat(sDateFormat);
-				sdfDateFormat.parse(sFechaCreaAudit);
-			}
-			
-			String sFechaModAudit = lsAux.get(24);
-			if(!sFechaModAudit.isEmpty()) {
-				sdfDateFormat = new SimpleDateFormat(sDateFormat);
-				sdfDateFormat.parse(sFechaModAudit);
-			}
-		}
-					
-	}
-	
-	//Test #48
-	@Test
-	public void TS125444_CRM_Interfaz_LCRM_UsuarioRol() throws ParseException, IOException {
-		String sName = "_USUARIOROL_";
-				
-		rsePage.checkName(sName);
-				
-		List<List<String>> sList = new ArrayList<List<String>>();
-					
-		List<String> sFiles = rsePage.findFiles(sName);
-					
-		for (String sAux : sFiles) {
-			sList.add(rsePage.readTxt(sAux));
-		}
-					
-		for (List<String> lsAux : sList) {
-			String sIdUsuarioRol = lsAux.get(0);
-			Assert.assertTrue(rsePage.verifyTextMaxSize(sIdUsuarioRol, 18));
-			
-			String sNombreRol = lsAux.get(1);
-			Assert.assertTrue(rsePage.verifyTextMaxSize(sNombreRol, 80));
-			
-			String sRolPariente = lsAux.get(2);
-			Assert.assertTrue(rsePage.verifyTextMaxSize(sRolPariente, 18));
-			
-			String sFechaCreaAudit = lsAux.get(3);
-			if(!sFechaCreaAudit.isEmpty()) {
-				sdfDateFormat = new SimpleDateFormat(sDateFormat);
-				sdfDateFormat.parse(sFechaCreaAudit);
-			}
-			
-			String sFechaModAudit = lsAux.get(4);
-			if(!sFechaModAudit.isEmpty()) {
-				sdfDateFormat = new SimpleDateFormat(sDateFormat);
-				sdfDateFormat.parse(sFechaModAudit);
-			}
-			
-			String sCodUsuarioMod = lsAux.get(5);
-			Assert.assertTrue(rsePage.verifyTextMaxSize(sCodUsuarioMod, 18));
-			
-			String sFechaMod = lsAux.get(6);
-			if(!sFechaMod.isEmpty()) {
-				sdfDateFormat = new SimpleDateFormat(sDateFormat);
-				sdfDateFormat.parse(sFechaMod);			
-			}
-		}
-	}
-	
-	//Test #47
-	@Test
-	public void TS125443_CRM_Interfaz_LCRM_UsuarioGrupoDeTrabajoHistoria() throws ParseException, IOException {
-		String sName = "_USUARIOGRUPODETRABAJOHISTORIA_";
-				
-		rsePage.checkName(sName);
-				
-		List<List<String>> sList = new ArrayList<List<String>>();
-					
-		List<String> sFiles = rsePage.findFiles(sName);
-					
-		for (String sAux : sFiles) {
-			sList.add(rsePage.readTxt(sAux));
-		}
-					
-		for (List<String> lsAux : sList) {
-			String sIdUsuarioGrupoDeTrabajoHistoria = lsAux.get(0);
-			Assert.assertTrue(rsePage.verifyTextMaxSize(sIdUsuarioGrupoDeTrabajoHistoria, 18));
-			
-			String sIdUsuarioGrupoDeTrabajo = lsAux.get(1);
-			Assert.assertTrue(rsePage.verifyTextMaxSize(sIdUsuarioGrupoDeTrabajo, 18));
-			
-			String sCodUsuarioMod = lsAux.get(2);
-			Assert.assertTrue(rsePage.verifyTextMaxSize(sCodUsuarioMod, 18));
-			
-			String sFechaCreacion = lsAux.get(3);
-			if(!sFechaCreacion.isEmpty()) {
-				sdfDateFormat = new SimpleDateFormat(sDateFormat);
-				sdfDateFormat.parse(sFechaCreacion);		
-			}
-			
-			String sCampoUsuarioGrupoDeTrabajo = lsAux.get(4);
-			Assert.assertTrue(rsePage.verifyTextMaxSize(sCampoUsuarioGrupoDeTrabajo, 255));
-			
-			String sAntiguoValor = lsAux.get(5);
-			Assert.assertTrue(rsePage.verifyTextMaxSize(sAntiguoValor, 255));
-			
-			String sNuevoValor = lsAux.get(6);
-			Assert.assertTrue(rsePage.verifyTextMaxSize(sNuevoValor, 255));
-			
-			String sFechaCreaAudit = lsAux.get(7);
-			if(!sFechaCreaAudit.isEmpty()) {
-				sdfDateFormat = new SimpleDateFormat(sDateFormat);
-				sdfDateFormat.parse(sFechaCreaAudit);		
-			}
-			
-			String sFechaModAudit = lsAux.get(8);
-			if(!sFechaModAudit.isEmpty()) {
-				sdfDateFormat = new SimpleDateFormat(sDateFormat);
-				sdfDateFormat.parse(sFechaModAudit);		
-			}
-		}	
-	}
-	
-	//Test #46
-	@Test
-	public void TS125442_CRM_Interfaz_LCRM_CasoHito() throws ParseException, IOException {
-		String sName = "_CASOHITO_";
-					
-		rsePage.checkName(sName);
-					
-		List<List<String>> sList = new ArrayList<List<String>>();
-						
-		List<String> sFiles = rsePage.findFiles(sName);
-						
-		for (String sAux : sFiles) {
-			sList.add(rsePage.readTxt(sAux));
-		}
-						
-		for (List<String> lsAux : sList) {
-			String sIdCasoHito = lsAux.get(0);
-			Assert.assertTrue(rsePage.verifyTextMaxSize(sIdCasoHito, 18));
-			
-			String sIdCaso = lsAux.get(1);
-			Assert.assertTrue(rsePage.verifyTextMaxSize(sIdCaso, 18));
-			
-			String sFechaInicio = lsAux.get(2);
-			if(!sFechaInicio.isEmpty()) {
-				sdfDateFormat = new SimpleDateFormat(sDateFormat);
-				sdfDateFormat.parse(sFechaInicio);		
-			}
-			
-			String sTipoCasoHito = lsAux.get(3);
-			Assert.assertTrue(rsePage.verifyTextMaxSize(sTipoCasoHito, 18));
-			
-			String sMarcaCompletado = lsAux.get(4);
-			Integer.parseInt(sMarcaCompletado);
-			Assert.assertTrue(sMarcaCompletado.equals("1") || sMarcaCompletado.equals("0"));
-			
-			String sFechaCreacion = lsAux.get(5);
-			if(!sFechaCreacion.isEmpty()) {
-				sdfDateFormat = new SimpleDateFormat(sDateFormat);
-				sdfDateFormat.parse(sFechaCreacion);		
-			}
-			
-			String sCodUsuarioAlta = lsAux.get(6);
-			Assert.assertTrue(rsePage.verifyTextMaxSize(sCodUsuarioAlta, 18));
-			
-			String sFechaMod = lsAux.get(7);
-			if (!sFechaMod.isEmpty()) {
-				sdfDateFormat = new SimpleDateFormat(sDateFormat);
-				sdfDateFormat.parse(sFechaMod);
-			}
-			
-			String sCodUsuarioMod = lsAux.get(8);
-			Assert.assertTrue(rsePage.verifyTextMaxSize(sCodUsuarioMod, 18));
-			
-			String sFechaCreaAudit = lsAux.get(9);
-			if (!sFechaCreaAudit.isEmpty()) {
-				sdfDateFormat = new SimpleDateFormat(sDateFormat);
-				sdfDateFormat.parse(sFechaCreaAudit);
-			}
-			
-			String sFechaModAudit = lsAux.get(10);
-			if (!sFechaModAudit.isEmpty()) {
-				sdfDateFormat = new SimpleDateFormat(sDateFormat);
-				sdfDateFormat.parse(sFechaModAudit);
-			}
-			
-			String sFechaObjetivo = lsAux.get(11);
-			if (!sFechaObjetivo.isEmpty()) {
-				sdfDateFormat = new SimpleDateFormat(sDateFormat);
-				sdfDateFormat.parse(sFechaObjetivo);
-			}
-			
-			String sTiempoObjetivoHoras = lsAux.get(12);
-			Double.parseDouble(sTiempoObjetivoHoras);
-			
-			String sTiempoObjetivoDias = lsAux.get(13);
-			Double.parseDouble(sTiempoObjetivoDias);
-			
-			String sTiempoObjetivoMinutos = lsAux.get(14);
-			Integer.parseInt(sTiempoObjetivoMinutos);
-			
-			String sTiempoRestanteMinutos = lsAux.get(15);
-			Integer.parseInt(sTiempoRestanteMinutos);
-			
-			String sTiempoRestanteHoras = lsAux.get(16);
-			Double.parseDouble(sTiempoRestanteHoras);
-			
-			String sTiempoRestanteDias = lsAux.get(17);
-			Double.parseDouble(sTiempoRestanteDias);
-			
-			String sTiempoExcedidoMinutos = lsAux.get(18);
-			Assert.assertTrue(rsePage.verifyTextMaxSize(sTiempoExcedidoMinutos, 10));
-			
-			String sFechaHitoCumplido = lsAux.get(19);
-			if (!sFechaHitoCumplido.isEmpty()) {
-				sdfDateFormat = new SimpleDateFormat(sDateFormat);
-				sdfDateFormat.parse(sFechaHitoCumplido);
-			}
-			
-			String sMarcaHitoNoCumplido = lsAux.get(20);
-			Integer.parseInt(sMarcaHitoNoCumplido);
 		}
 	}
 	
