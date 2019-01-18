@@ -2831,109 +2831,109 @@ public class Reportes {
 	}
 	
 	//Test #42
-		@Test	
-		public void TS125437_CRM_Interfaz_LCRM_IndividuoHistoria() throws ParseException, IOException {
-			String sName = "_INDIVIDUOHISTORIA_";
+	@Test	
+	public void TS125437_CRM_Interfaz_LCRM_IndividuoHistoria() throws ParseException, IOException {
+		String sName = "_INDIVIDUOHISTORIA_";
 										
-			rsePage.checkName(sName);
+		rsePage.checkName(sName);
 										
-			List<List<String>> sList = new ArrayList<List<String>>();
+		List<List<String>> sList = new ArrayList<List<String>>();
 											
-			List<String> sFiles = rsePage.findFiles(sName);
+		List<String> sFiles = rsePage.findFiles(sName);
 											
-			for (String sAux : sFiles) {
-				sList.add(rsePage.readTxt(sAux));
-			}
+		for (String sAux : sFiles) {
+			sList.add(rsePage.readTxt(sAux));
+		}
 											
-			for (List<String> lsAux : sList) { 
-				String sIdIndividuoHistoria = lsAux.get(0);
-				Assert.assertTrue(rsePage.verifyTextMaxSize(sIdIndividuoHistoria, 18));
+		for (List<String> lsAux : sList) { 
+			String sIdIndividuoHistoria = lsAux.get(0);
+			Assert.assertTrue(rsePage.verifyTextMaxSize(sIdIndividuoHistoria, 18));
 					
-				String sIdIndividuo = lsAux.get(1);
-				Assert.assertTrue(rsePage.verifyTextMaxSize(sIdIndividuo, 18));
+			String sIdIndividuo = lsAux.get(1);
+			Assert.assertTrue(rsePage.verifyTextMaxSize(sIdIndividuo, 18));
 						
-				String sCodUsuarioMod = lsAux.get(2);
-				Assert.assertTrue(rsePage.verifyTextMaxSize(sCodUsuarioMod, 18));
+			String sCodUsuarioMod = lsAux.get(2);
+			Assert.assertTrue(rsePage.verifyTextMaxSize(sCodUsuarioMod, 18));
 						
-				String sFechaCreacion = lsAux.get(3); 
-				if (!sFechaCreacion.isEmpty()) { 
-					sdfDateFormat = new SimpleDateFormat(sDateFormat); 
-					sdfDateFormat.parse(sFechaCreacion); 
-				}
+			String sFechaCreacion = lsAux.get(3); 
+			if (!sFechaCreacion.isEmpty()) { 
+				sdfDateFormat = new SimpleDateFormat(sDateFormat); 
+				sdfDateFormat.parse(sFechaCreacion); 
+			}
 						
-				String sCampoContacto = lsAux.get(4);
-				Assert.assertTrue(rsePage.verifyTextMaxSize(sCampoContacto, 255));
+			String sCampoContacto = lsAux.get(4);
+			Assert.assertTrue(rsePage.verifyTextMaxSize(sCampoContacto, 255));
 						
-				String sAntiguoValor = lsAux.get(5);
-				Assert.assertTrue(rsePage.verifyTextMaxSize(sAntiguoValor, 255));
+			String sAntiguoValor = lsAux.get(5);
+			Assert.assertTrue(rsePage.verifyTextMaxSize(sAntiguoValor, 255));
 						
-				String sNuevoValor = lsAux.get(6);
-				Assert.assertTrue(rsePage.verifyTextMaxSize(sNuevoValor, 255));
+			String sNuevoValor = lsAux.get(6);
+			Assert.assertTrue(rsePage.verifyTextMaxSize(sNuevoValor, 255));
 						
-				String sFechaCreaAudit = lsAux.get(7); 
-				if (!sFechaCreaAudit.isEmpty()) { 
-					sdfDateFormat = new SimpleDateFormat(sDateFormat); 
-					sdfDateFormat.parse(sFechaCreaAudit); 
-				}
+			String sFechaCreaAudit = lsAux.get(7); 
+			if (!sFechaCreaAudit.isEmpty()) { 
+				sdfDateFormat = new SimpleDateFormat(sDateFormat); 
+				sdfDateFormat.parse(sFechaCreaAudit); 
+			}
 						
-				String sFechaModAudit = lsAux.get(8); 
-				if (!sFechaModAudit.isEmpty()) { 
-					sdfDateFormat = new SimpleDateFormat(sDateFormat); 
-					sdfDateFormat.parse(sFechaModAudit); 
+			String sFechaModAudit = lsAux.get(8); 
+			if (!sFechaModAudit.isEmpty()) { 
+				sdfDateFormat = new SimpleDateFormat(sDateFormat); 
+				sdfDateFormat.parse(sFechaModAudit); 
 					}
 				}	
 			}
 		
-		//Test #43
-		@Test	
-		public void TS125438_CRM_Interfaz_LCRM_ProductoHistoria() throws ParseException, IOException {
-			String sName = "_PRODUCTOHISTORIA_";
+	//Test #43
+	@Test	
+	public void TS125438_CRM_Interfaz_LCRM_ProductoHistoria() throws ParseException, IOException {
+		String sName = "_PRODUCTOHISTORIA_";
 									
-			rsePage.checkName(sName);
+		rsePage.checkName(sName);
 									
-			List<List<String>> sList = new ArrayList<List<String>>();
+		List<List<String>> sList = new ArrayList<List<String>>();
 										
-			List<String> sFiles = rsePage.findFiles(sName);
+		List<String> sFiles = rsePage.findFiles(sName);
+									
+		for (String sAux : sFiles) {
+			sList.add(rsePage.readTxt(sAux));
+		}
 										
-			for (String sAux : sFiles) {
-				sList.add(rsePage.readTxt(sAux));
-			}
-										
-			for (List<String> lsAux : sList) { 
-				String sIdProductoHistoria = lsAux.get(0);
-				Assert.assertTrue(rsePage.verifyTextMaxSize(sIdProductoHistoria, 18));
+		for (List<String> lsAux : sList) { 
+			String sIdProductoHistoria = lsAux.get(0);
+			Assert.assertTrue(rsePage.verifyTextMaxSize(sIdProductoHistoria, 18));
 				
-				String sIdProducto = lsAux.get(1);
-				Assert.assertTrue(rsePage.verifyTextMaxSize(sIdProducto, 18));
+			String sIdProducto = lsAux.get(1);
+			Assert.assertTrue(rsePage.verifyTextMaxSize(sIdProducto, 18));
 					
-				String sCodUsuarioMod = lsAux.get(2);
-				Assert.assertTrue(rsePage.verifyTextMaxSize(sCodUsuarioMod, 18));
+			String sCodUsuarioMod = lsAux.get(2);
+			Assert.assertTrue(rsePage.verifyTextMaxSize(sCodUsuarioMod, 18));
 					
-				String sFechaCreacion = lsAux.get(3); 
-				if (!sFechaCreacion.isEmpty()) { 
-					sdfDateFormat = new SimpleDateFormat(sDateFormat); 
-					sdfDateFormat.parse(sFechaCreacion); 
-				}
+			String sFechaCreacion = lsAux.get(3); 
+			if (!sFechaCreacion.isEmpty()) { 
+				sdfDateFormat = new SimpleDateFormat(sDateFormat); 
+				sdfDateFormat.parse(sFechaCreacion); 
+			}
 					
-				String sCampoProducto = lsAux.get(4);
-				Assert.assertTrue(rsePage.verifyTextMaxSize(sCampoProducto, 255));
+			String sCampoProducto = lsAux.get(4);
+			Assert.assertTrue(rsePage.verifyTextMaxSize(sCampoProducto, 255));
 					
-				String sAntiguoValor = lsAux.get(5);
-				Assert.assertTrue(rsePage.verifyTextMaxSize(sAntiguoValor, 255));
+			String sAntiguoValor = lsAux.get(5);
+			Assert.assertTrue(rsePage.verifyTextMaxSize(sAntiguoValor, 255));
 					
-				String sNuevoValor = lsAux.get(6);
-				Assert.assertTrue(rsePage.verifyTextMaxSize(sNuevoValor, 255));
+			String sNuevoValor = lsAux.get(6);
+			Assert.assertTrue(rsePage.verifyTextMaxSize(sNuevoValor, 255));
 					
-				String sFechaCreaAudit = lsAux.get(7); 
-				if (!sFechaCreaAudit.isEmpty()) { 
-					sdfDateFormat = new SimpleDateFormat(sDateFormat); 
-					sdfDateFormat.parse(sFechaCreaAudit); 
-				}
+			String sFechaCreaAudit = lsAux.get(7); 
+			if (!sFechaCreaAudit.isEmpty()) { 
+				sdfDateFormat = new SimpleDateFormat(sDateFormat); 
+				sdfDateFormat.parse(sFechaCreaAudit); 
+			}
 					
-				String sFechaModAudit = lsAux.get(8); 
-				if (!sFechaModAudit.isEmpty()) { 
-					sdfDateFormat = new SimpleDateFormat(sDateFormat); 
-					sdfDateFormat.parse(sFechaModAudit); 
+			String sFechaModAudit = lsAux.get(8); 
+			if (!sFechaModAudit.isEmpty()) { 
+				sdfDateFormat = new SimpleDateFormat(sDateFormat); 
+				sdfDateFormat.parse(sFechaModAudit); 
 				   }
 				}	
 			}
