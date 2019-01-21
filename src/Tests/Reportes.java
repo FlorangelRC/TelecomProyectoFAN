@@ -9,6 +9,8 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
+import java.util.jar.JarException;
+
 import org.junit.Assert;
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;
@@ -16,6 +18,7 @@ import org.testng.annotations.Test;
 import com.jcraft.jsch.JSchException;
 import com.jcraft.jsch.SftpException;
 import Pages.remoteScriptExec;
+import jdk.internal.org.xml.sax.SAXException;
 
 public class Reportes {
 	
@@ -27,14 +30,14 @@ public class Reportes {
 	//Before & AfterClass
 	
 	@BeforeClass(alwaysRun=true)
-	public void download() throws MalformedURLException, UnknownHostException, FileNotFoundException, IOException, JSchException, SftpException {
+	public void download() throws MalformedURLException, UnknownHostException, FileNotFoundException, IOException, JarException, SAXException, JSchException, SftpException {
 		rsePage.FTPConnection();
 		System.out.println("Connection stablished.");
 		rsePage.FTPDownload();
 		System.out.println("Download completed.");
 	}
 	
-	//@AfterClass(alwaysRun=true)
+	@AfterClass(alwaysRun=true)
 	public void cleanUp() throws IOException {
 		rsePage.deleteAllFiles();
 	}
@@ -2822,7 +2825,7 @@ public class Reportes {
 	
 	//Test #27
 	@Test
-	public void TS125425_CRM_Interfaz_LCRM_Legacy_Actions() throws ParseException, IOException {
+	public void TS125410_CRM_Interfaz_LCRM_Legacy_Actions() throws ParseException, IOException {
 		String sName = "_LEGACY_ACTIONS_";
 		
 		rsePage.checkName(sName);
@@ -2846,27 +2849,33 @@ public class Reportes {
 			Assert.assertTrue(rsePage.verifyTextMaxSize(sIdioma, 2));
 		}
 	}
-	
 	//Test #28
-	/*@Test
-	public void TS125426_CRM_Interfaz_LCRM_ExportEpcEcomm() throws ParseException, IOException {
-		String sName = "__";
-		
-		rsePage.checkName(sName);
-		
-		List<List<String>> sList = new ArrayList<List<String>>();
-		
-		List<String> sFiles = rsePage.findFiles(sName);
-		
-		for (String sAux : sFiles) {
-			sList.add(rsePage.readTxt(sAux));
-		}
-		
-		for (List<String> lsAux : sList) {
+		@Test
+		public void TS125426_CRM_Interfaz_LCRM_ExportEpcEcomm() throws ParseException, IOException {
+			String sName = "_EXPORTEPCECOMM_";
 			
+			rsePage.checkName(sName);
+			
+			List<List<String>> sList = new ArrayList<List<String>>();
+			
+			List<String> sFiles = rsePage.findFiles(sName);
+			
+			for (String sAux : sFiles) {
+				sList.add(rsePage.readTxt(sAux));
+			}
+			
+			for (List<String> lsAux : sList) {
+				String sIdPricebookEntry = lsAux.get(0); 
+				Assert.assertTrue(rsePage.verifyTextMaxSize(sIdPricebookEntry, 18)); 
+				 
+				String sNMU = lsAux.get(1); 
+				Assert.assertTrue(rsePage.verifyTextMaxSize(sNMU, 200)); 
+				 
+				String sSHDESPlan = lsAux.get(2); 
+				Assert.assertTrue(rsePage.verifyTextMaxSize(sSHDESPlan, 5));
+			}
 		}
-	}*/
-	
+		
 	//Test #29
 	@Test
 	public void TS125427_CRM_Interfaz_LCRM_Direccion() throws ParseException, IOException {
