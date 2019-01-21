@@ -2822,7 +2822,7 @@ public class Reportes {
 	
 	//Test #27
 	@Test
-	public void TS125410_CRM_Interfaz_LCRM_Legacy_Actions() throws ParseException, IOException {
+	public void TS125425_CRM_Interfaz_LCRM_Legacy_Actions() throws ParseException, IOException {
 		String sName = "_LEGACY_ACTIONS_";
 		
 		rsePage.checkName(sName);
