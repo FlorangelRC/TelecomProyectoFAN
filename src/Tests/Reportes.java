@@ -26,7 +26,7 @@ public class Reportes {
 	
 	//Before & AfterClass
 	
-	//@BeforeClass(alwaysRun=true)
+	@BeforeClass(alwaysRun=true)
 	public void download() throws MalformedURLException, UnknownHostException, FileNotFoundException, IOException, JSchException, SftpException {
 		rsePage.FTPConnection();
 		System.out.println("Connection stablished.");
@@ -34,7 +34,7 @@ public class Reportes {
 		System.out.println("Download completed.");
 	}
 	
-	@AfterClass(alwaysRun=true)
+	//@AfterClass(alwaysRun=true)
 	public void cleanUp() throws IOException {
 		rsePage.deleteAllFiles();
 	}
@@ -1190,8 +1190,8 @@ public class Reportes {
 			String sTipoDePlan = lsAux.get(17);
 			Assert.assertTrue(rsePage.verifyTextMaxSize(sTipoDePlan, 0));//preguntar no tiene cantidad de caracteres
 			
-			String sCompa�iaPortIN = lsAux.get(18);
-			Assert.assertTrue(rsePage.verifyTextMaxSize(sCompa�iaPortIN, 0));//preguntar no tiene cantidad de caracteres
+			String sCompaniaPortIN = lsAux.get(18);
+			Assert.assertTrue(rsePage.verifyTextMaxSize(sCompaniaPortIN, 0));//preguntar no tiene cantidad de caracteres
 			
 			String sIDContacto = lsAux.get(19);
 			Assert.assertTrue(rsePage.verifyTextMaxSize(sIDContacto, 0));//preguntar no tiene cantidad de caracteres
