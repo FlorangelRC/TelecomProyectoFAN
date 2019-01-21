@@ -3015,15 +3015,13 @@ public class Reportes {
 				sdfDateFormat = new SimpleDateFormat(sDateFormat); 
 				sdfDateFormat.parse(sFechaCreaAudit); 
 			}
-					
-				String sFechaModAudit = lsAux.get(8); 
-				if (!sFechaModAudit.isEmpty()) { 
-					sdfDateFormat = new SimpleDateFormat(sDateFormat); 
-					sdfDateFormat.parse(sFechaModAudit); 
-				   }
-				}	
+			
+			String sFechaModAudit = lsAux.get(8); 
+			if (!sFechaModAudit.isEmpty()) { 
+				sdfDateFormat = new SimpleDateFormat(sDateFormat); 
+				sdfDateFormat.parse(sFechaModAudit); 
 			}
-		}	
+		}
 	}
 		
 	//Test #40
