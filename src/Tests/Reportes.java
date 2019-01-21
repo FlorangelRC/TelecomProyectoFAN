@@ -454,7 +454,7 @@ public class Reportes {
 			
 			String sRol = lsAux.get(4);
 			Assert.assertTrue(rsePage.verifyTextMaxSize(sRol, 18));
-			Assert.assertTrue(sRol.equalsIgnoreCase("Referente de Pago")); //Ask. It says 'Campo Fijo'
+			Assert.assertTrue(sRol.equalsIgnoreCase("Referente de Pago"));
 		}
 	}
 	
@@ -3393,16 +3393,14 @@ public class Reportes {
 				sdfDateFormat = new SimpleDateFormat(sDateFormat); 
 				sdfDateFormat.parse(sFechaCreaAudit); 
 			}
-					
-				String sFechaModAudit = lsAux.get(8); 
-				if (!sFechaModAudit.isEmpty()) { 
-					sdfDateFormat = new SimpleDateFormat(sDateFormat); 
-					sdfDateFormat.parse(sFechaModAudit); 
-			   }
-			}	
-		}
 			
-	
+			String sFechaModAudit = lsAux.get(8); 
+			if (!sFechaModAudit.isEmpty()) { 
+				sdfDateFormat = new SimpleDateFormat(sDateFormat); 
+				sdfDateFormat.parse(sFechaModAudit); 
+			}
+		}
+	}
 		
 	//Test #40
 	@Test	
