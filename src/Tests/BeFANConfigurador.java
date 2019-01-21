@@ -673,41 +673,7 @@ public class BeFANConfigurador extends TestBase {
 			eliminar = true;
 		}
 		Assert.assertTrue(eliminar);
-	}
-	
-
-		
-//		page.buscarR("bahia blanca");
-//		sleep(3000);
-//		driver.findElement(By.cssSelector(".panel-collapse.in.collapse")).findElement(By.cssSelector(".btn.btn-link")).click();
-//		sleep(3000);
-//		
-//		driver.findElement(By.cssSelector(".glyphicon.glyphicon-plus")).click();
-//		
-//		String nroPrefijo = driver.findElement(By.cssSelector(".compatibility.custom-check.ng-scope")).findElement(By.tagName("label")).getText();
-//		System.out.println(nroPrefijo);
-//		driver.findElement(By.xpath("//*[@class='btn btn-primary' and contains(text(), 'Agregar')]")).click();
-//		sleep(5000);
-//		Assert.assertTrue(page.verificarMensajeExitoso());	
-//		driver.findElement(By.xpath("//*[@class='btn btn-primary' and contains(text(), 'Cerrar')]")).click();
-//		page.buscarR("bahia blanca");
-//		driver.findElement(By.cssSelector(".glyphicon.glyphicon-remove")).click();
-//		Assert.assertTrue(driver.findElement(By.cssSelector(".text-center.ng-binding")).getText().contains("�Esta seguro que desea eliminarlo ?"));
-//		page.eliminar();
-//		driver.findElement(By.xpath("//*[@class='btn btn-primary' and contains(text(), 'Cerrar')]")).click();
-//		
-//		//driver.findElement(By.xpath("//*[@class='btn btn-primary' and contains(text(), 'ELIMINAR')]")).click();
-//		Assert.assertTrue(page.verificarMensajeExitoso());
-//		//driver.findElement(By.xpath("//*[@class='btn btn-primary' and contains(text(), 'CERRAR')]")).click();
-//		page.cerrar();
-//		driver.findElement(By.cssSelector(".text-center.ng-binding")).getText().contains("�Tambien desea eliminar la Region CORDOBA ?");
-//		//driver.findElement(By.xpath("//*[@class='btn btn-primary' and contains(text(), 'ELIMINAR')]")).click();
-//		page.eliminar();
-//		Assert.assertTrue(pbf.verificarMensajeExitoso());
-//		//driver.findElement(By.xpath("//*[@class='btn btn-primary' and contains(text(), 'CERRAR')]")).click();
-//		page.cerrar();
-	
-	
+	}	
 	
 	@Test (groups = "BeFan")
 	public void TS112020_BeFan_Movil_REPRO_Preactivacion_repro_Gestion_de_agrupadores_Busqueda_Eliminacion_de_agrupadores_Si_Sin_preactivar() {
@@ -1113,7 +1079,7 @@ public class BeFANConfigurador extends TestBase {
 		boolean a = false;
 		List <WebElement> formato = driver.findElements(By.className("modal-header"));
 		for(WebElement x : formato) {
-			if(x.getText().toLowerCase().contains("verifique el contenido del archivo que desea importar, existen cupos inv\u00e1lidos.")) {
+			if(x.getText().toLowerCase().contains("verifique el contenido del archivo que desea impdepenortar, existen cupos inv\u00e1lidos.")) {
 				a = true;
 				
 			}
@@ -1380,7 +1346,7 @@ public class BeFANConfigurador extends TestBase {
 		ContactSearch contact = new ContactSearch(driver);
 		irA("Cupos", "Importaci\u00f3n");
 		sleep(5000);
-		File directory = new File("C:\\Users\\xappiens\\Documents\\TxT\\CuposErroneos.txt");
+		File directory = new File("BeFan135614.txt");
 		contact.subir_cupos(new File(directory.getAbsolutePath()).toString(),"si");
 		boolean mensaje = false;
 		String msj = driver.findElement(By.className("modal-body")).getText();
@@ -1395,7 +1361,7 @@ public class BeFANConfigurador extends TestBase {
 		ContactSearch contact = new ContactSearch(driver);
 		irA("Cupos", "Importaci\u00f3n");
 		sleep(5000);
-		File directory = new File("C:\\Users\\xappiens\\Documents\\TxT\\CupoDadoDeBaja.txt");
+		File directory = new File("BeFan135623.txt");
 		contact.subir_cupos(new File(directory.getAbsolutePath()).toString(),"si");
 		boolean mensaje = false;
 		String msj = driver.findElement(By.className("modal-header")).getText();
@@ -1611,4 +1577,94 @@ public class BeFANConfigurador extends TestBase {
 		Assert.assertTrue(a);
 	}
 		
+	
+	@Test (groups = "BeFan")
+	public void TS112022_BeFan_Movil_REPRO_Preactivacion_repro_Gestion_de_agrupadores_Busqueda_Eliminacion_de_agrupadores_Si_Preactivando() throws InterruptedException {
+		irA("Regiones", "Gesti\u00f3n");
+		BeFan page = new BeFan(driver);
+		boolean eliminar = false;
+		boolean cancelar = false;
+		irA("regiones", "gesti\u00f3n");
+		driver.findElement(By.cssSelector(".btn.btn-primary")).click();
+		driver.findElement(By.cssSelector(".form-control.ng-pristine.ng-untouched.ng-valid.ng-empty")).sendKeys("cordoba");
+		driver.findElement(By.cssSelector(".btn.btn-primary")).click();
+		
+		for(WebElement x : driver.findElements(By.cssSelector(".alert.alert-dismissable.alert-danger"))){
+			if(x.getText().toLowerCase().contains("region existente")) {
+				System.out.println(x.getText());
+				buscarYClick(driver.findElements(By.cssSelector(".btn.btn-link")), "equals", "cancelar");
+					cancelar = true;
+					Assert.assertTrue(cancelar);
+					break;
+				}else {
+				buscarYClick(driver.findElements(By.cssSelector(".btn.btn-primary")), "equals", "cerrar");
+				buscarYClick(driver.findElements(By.cssSelector(".panel-group.panel-group-alternative.ng-scope")), "contains", "cordoba");
+				driver.findElement(By.cssSelector(".panel-collapse.in.collapse")).findElement(By.cssSelector(".btn.btn-link")).click();
+				sleep(3000);
+				driver.findElement(By.className("check-filter-on")).click();
+				
+				buscarYClick(driver.findElements(By.cssSelector(".btn.btn-primary")), "equals", "agregar");
+				buscarYClick(driver.findElements(By.cssSelector(".btn.btn-primary")), "equals", "cerrar");
+				sleep(5000);
+				break;
+		}
+			}
+			
+		for (WebElement x : driver.findElements(By.cssSelector(".panel-group.panel-group-alternative.ng-scope"))) {
+			if (x.getText().toLowerCase().contains("cordoba"))
+				((JavascriptExecutor) driver).executeScript("window.scrollTo(0," + x.getLocation().y + ")");
+		}
+		
+		buscarYClick(driver.findElements(By.cssSelector(".panel-group.panel-group-alternative.ng-scope")), "contains", "cordoba");
+		for (WebElement x : driver.findElements(By.className("panel-group"))) {
+			if (x.getText().contains("3546"))
+				x.findElement(By.tagName("tbody")).findElement(By.tagName("button")).click();
+			}
+		buscarYClick(driver.findElements(By.cssSelector(".btn.btn-primary")), "equals", "eliminar");
+		Assert.assertTrue(pbf.verificarMensajeExitoso());
+		buscarYClick(driver.findElements(By.cssSelector(".btn.btn-primary")), "equals", "cerrar");
+		eliminar = true;
+		Assert.assertTrue(eliminar);
+	}
+	
+	@Test (groups = "BeFan")
+	public void TS135639_BeFan_Movil_Repro_Preactivacion_Gestion_de_cupos_Busqueda_Modificacion_de_cupo_Cupo_vigente_con_fecha_de_baja() throws ParseException {
+		ContactSearch contact = new ContactSearch(driver);
+		irA("Cupos", "Importaci\u00f3n");
+		sleep(7000);
+		File directory = new File("BeFan135639.txt");
+		contact.subir_cupos(new File(directory.getAbsolutePath()).toString(),"si");
+		sleep(5000);
+		boolean confirmacion = false;
+		String mensaje = driver.findElement(By.className("modal-header")).getText();
+		if (mensaje.toLowerCase().contains("el archivo se import\u00f3 correctamente")) {
+			buscarYClick(driver.findElements(By.cssSelector(".btn.btn-link")), "equals", "aceptar");
+			confirmacion = true;
+		}
+		Assert.assertTrue(confirmacion);
+		BeFan fechas= new BeFan (driver);
+		SimpleDateFormat formatoDelTexto = new SimpleDateFormat ("dd/MM/yyyy");
+		String desde ="14/11/2001";
+		String hasta = "14/12/2001";
+		Date fechaDesde = formatoDelTexto.parse(desde);
+		Date fechaHasta =formatoDelTexto.parse(hasta);
+		irA("Cupos", "Gesti\u00f3n");
+		sleep(3000);
+		selectByText(driver.findElement(By.name("estados")), "No Vigente");
+		driver.findElement(By.id("dataPickerDesde"));
+		((JavascriptExecutor) driver).executeScript("document.getElementById('dataPickerDesde').value='"+desde+"'");
+		sleep(3000);
+		driver.findElement(By.id("dataPickerHasta"));
+		((JavascriptExecutor) driver).executeScript("document.getElementById('dataPickerHasta').value='"+hasta+"'");
+		int dias = fechas.numeroDiasEntreDosFechas(fechaDesde, fechaHasta);
+		System.out.println("Hay " + dias + " dias, " +"No supera los 90 dias comprendidos");
+		driver.findElement(By.name("buscar")).click();
+		sleep(3000);
+		List <WebElement> texto = driver.findElements(By.cssSelector(".text-center.ng-scope"));
+		for(WebElement x : texto) {
+			if(x.getText().contains("14/11/2001") && x.getText().contains("14/12/2001")) {
+				x.findElement(By.cssSelector(".glyphicon.glyphicon-remove")).isEnabled();
+			}
+		}
+	}
 }

@@ -436,10 +436,6 @@ public class GestionesPerfilAgente extends TestBase{
 		System.out.println(plan.getText());
 		System.out.println(plan.getAttribute("value"));
 		Assert.assertTrue(plan.isDisplayed());
-		/*driver.switchTo().frame(cambioFrame(driver, By.id("divConsumptionDetailhead")));
-		WebElement dmso = driver.findElements(By.xpath("//*[@id='j_id0:j_id5']/div//div[2]/ng-include/div/div[2]/div[*]")).get(0).findElement(By.className("unit-div"));
-		System.out.println(dmso.getText());
-		Assert.assertTrue(dmso.isDisplayed());*/
 		}
 	
 	@Test (groups = {"GestionesPerfilAgente", "DetalleDeConsumo","Ciclo2"}, dataProvider="CuentaProblemaRecarga")
@@ -1043,6 +1039,7 @@ public class GestionesPerfilAgente extends TestBase{
 		WebElement tabla = driver.findElement(By.cssSelector(".slds-table.slds-table--bordered.slds-table--resizable-cols.slds-table--fixed-layout.via-slds-table-pinned-header"));
 		Assert.assertTrue(tabla.isDisplayed());
 	}
+	
 	@Test (groups = {"GestionesPerfilAgente", "ABMDeServicios", "E2E", "Ciclo3"}, dataProvider = "BajaServicios")
 	public void TS135737_CRM_Movil_REPRO_Baja_de_Servicio_sin_costo_Restriccion_Ident_de_Llamadas_Presencial_Agente(String sDNI, String sLinea) throws AWTException{
 		imagen = "TS135737";
