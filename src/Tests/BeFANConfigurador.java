@@ -1621,7 +1621,7 @@ public class BeFANConfigurador extends TestBase {
 				x.findElement(By.tagName("tbody")).findElement(By.tagName("button")).click();
 			}
 		buscarYClick(driver.findElements(By.cssSelector(".btn.btn-primary")), "equals", "eliminar");
-		Assert.assertTrue(pbf.verificarMensajeExitoso());
+		Assert.assertTrue(page.verificarMensajeExitoso());
 		buscarYClick(driver.findElements(By.cssSelector(".btn.btn-primary")), "equals", "cerrar");
 		eliminar = true;
 		Assert.assertTrue(eliminar);

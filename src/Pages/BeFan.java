@@ -464,7 +464,13 @@ public class BeFan extends BasePage{
 	}
 	
 	public boolean verificarMensajeExitoso() {
-		return driver.findElement(By.xpath("//*[@class='alert alert-dismissable alert-success'] //h4")).getText().equalsIgnoreCase("La operaci\u00f3n se ejecut\u00f3 satisfactoriamente.");
+		boolean confirmacion = false;
+		for(WebElement x : driver.findElements(By.className("modal-body"))) {
+			if(x.getText().toLowerCase().contains("satisfactoriamente")) {
+				confirmacion = true;
+			}
+		}
+		return confirmacion;
 	}
 	
 	public void cerrar() {
