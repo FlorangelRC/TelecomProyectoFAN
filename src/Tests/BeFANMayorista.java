@@ -869,7 +869,7 @@ public class BeFANMayorista extends TestBase {
 		sleep(500);
 		Botones.SIClickAceptarImportar();
 		sleep(500);
-		dpw.main();
+		//dpw.main();
 		sleep(1198000);
 		irA("gestion");
 		sleep(500);
