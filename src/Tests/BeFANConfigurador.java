@@ -401,7 +401,7 @@ public class BeFANConfigurador extends TestBase {
 	}
 	
 	@Test (groups = "BeFAN", dataProvider="GestionRegionesCreacion")
-	public void TS126623_BeFan_Movil_REPRO_Preactivacion_repro_Gestion_de_agrupadores_Busqueda_Modificacion_de_agrupadores_Eliminacion_de_prefijos_en_agrupador_existente_Guardando(String sRegion) {
+	public void TS126625_BeFan_Movil_REPRO_Preactivacion_repro_Gestion_de_agrupadores_Busqueda_Modificacion_de_agrupadores_Eliminacion_de_prefijos_en_agrupador_existente_Guardando(String sRegion) {
 		irA("Regiones", "Gesti\u00f3n");
 		pbf = new Pages.BeFan(driver);
 		pbf.buscarYAbrirRegion(sRegion);
@@ -1589,7 +1589,7 @@ public class BeFANConfigurador extends TestBase {
 		driver.findElement(By.cssSelector(".form-control.ng-pristine.ng-untouched.ng-valid.ng-empty")).sendKeys("cordoba");
 		driver.findElement(By.cssSelector(".btn.btn-primary")).click();
 		
-		for(WebElement x : driver.findElements(By.className("modal-body"))){
+		for(WebElement x : driver.findElements(By.cssSelector(".alert.alert-dismissable.alert-danger"))){
 			if(x.getText().toLowerCase().contains("region existente")) {
 				System.out.println(x.getText());
 				buscarYClick(driver.findElements(By.cssSelector(".btn.btn-link")), "equals", "cancelar");
