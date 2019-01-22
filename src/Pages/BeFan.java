@@ -14,6 +14,9 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.FileReader;
+import java.io.FileWriter;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
@@ -234,7 +237,7 @@ public class BeFan extends BasePage{
 	}
 	else
 	{
-	 String serialF = serial1 + "\n" + serial2;
+	 String serialF = serial1 + System.lineSeparator() + serial2;
 		FileOutputStream outputStream = new FileOutputStream(path);
 	    byte[] strToBytes = serialF.getBytes();
 	    outputStream.write(strToBytes);
@@ -242,6 +245,43 @@ public class BeFan extends BasePage{
 	}
 	return path;
 	}
+	
+	//Solo funciona con Cantidad <= 50 dado problemas de performance de OM
+	public String LecturaDeDatosTxt(String path, int Cantidad) throws IOException {
+		int cont = 1;
+		File archivo = new File(path);
+		File archivo2 = new File(path.substring(0,path.length()-4) + "temp.txt");
+		DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyyMMddHHmmss");  
+		LocalDateTime now = LocalDateTime.now(); 
+		String time = dtf.format(now);
+		File archivo3 = new File(path.substring(0,path.length()-4) + time + ".txt");
+		if (archivo.exists()) {
+			BufferedReader b = new BufferedReader(new FileReader(archivo));
+			BufferedWriter c = new BufferedWriter(new FileWriter(archivo2));
+			BufferedWriter d = new BufferedWriter(new FileWriter(archivo3));
+			String readLine = "";
+			while ((readLine = b.readLine()) != null) {
+				if (cont <= Cantidad) {
+					d.write(readLine + System.lineSeparator());
+				} else {
+					c.write(readLine + System.lineSeparator());
+				}
+				cont = cont + 1;
+			}
+			
+			b.close();
+			c.close();
+			d.close();
+			archivo.delete();
+			boolean ok = archivo2.renameTo(archivo);
+			return path.substring(0,path.length()-4) + time + ".txt";
+		} else {
+			System.out.println("No existe el archivo");
+			return "No existe el archivo";
+		}
+	}
+	
+	
 	
 	public void SIDesRenombreDeArchivo(String nombreArch, String path) {
 	String[] parts = nombreArch.split("\\\\");
@@ -341,7 +381,7 @@ public class BeFan extends BasePage{
 	
 	List<WebElement> tabla = driver.findElements(By.cssSelector(".ng-binding"));
 	String[] parts = nombreArch.split("\\\\");
-	String[] partes = parts[2].split("\\.");
+	String[] partes = parts[3].split("\\.");
 	for (WebElement x : tabla) {
 		cont = cont + 1;
 		if (x.getText().contains(partes[0]) && (listaEstados[0] != "" || listaResultados[0] != "")) {
@@ -464,7 +504,13 @@ public class BeFan extends BasePage{
 	}
 	
 	public boolean verificarMensajeExitoso() {
-		return driver.findElement(By.xpath("//*[@class='alert alert-dismissable alert-success'] //h4")).getText().equalsIgnoreCase("La operaci\u00f3n se ejecut\u00f3 satisfactoriamente.");
+		boolean confirmacion = false;
+		for(WebElement x : driver.findElements(By.className("modal-body"))) {
+			if(x.getText().toLowerCase().contains("satisfactoriamente")) {
+				confirmacion = true;
+			}
+		}
+		return confirmacion;
 	}
 	
 	public void cerrar() {

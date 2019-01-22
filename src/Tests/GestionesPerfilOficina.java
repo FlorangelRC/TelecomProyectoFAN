@@ -5798,7 +5798,7 @@ public class GestionesPerfilOficina extends TestBase {
 		Assert.assertTrue(driver.findElement(By.cssSelector(".slds-p-horizontal--small.slds-size--1-of-2.slds-medium-size--1-of-4.slds-large-size--1-of-4")).isDisplayed());
 	}
 	
-	@Test (groups = {"GestionesPerfilOficina", "ResumenDeCuenta", "E2E", "Ciclo2"}, dataProvider = "CuentaReintegros")
+	@Test (groups = {"GestionesPerfilOficina", "ResumenDeCuenta", "E2E", "Ciclo2"}, dataProvider = "CuentaVista360")
 	public void TS129476_CRM_Movil_Prepago_Resumen_de_Cuenta_Corriente_Detalle_ampliado_registro_de_Comprobante_Factura_de_Venta_FAN_Front_OOCC(String sDNI, String sLinea,String sNombre, String sEmail, String sMovil){
 		imagen = "TS129476";
 		detalles = null;

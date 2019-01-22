@@ -9,7 +9,6 @@ import java.net.UnknownHostException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.List;
 import org.junit.Assert;
 import org.testng.annotations.AfterClass;
@@ -26,6 +25,7 @@ public class Reportes {
 	String sDateFormatDMY = "dd/MM/yyyy";
 	String sDateFormatYMD = "yyyy/MM/dd";
 	SimpleDateFormat sdfDateFormat;
+	List<String> sListOfFiles = null;
 	
 	//Before & AfterClass
 	
@@ -37,8 +37,8 @@ public class Reportes {
 		System.out.println("Download completed.");
 	}
 	
-	@AfterClass(alwaysRun=true)
-	public void cleanUp() throws IOException {
+	//@AfterClass(alwaysRun=true)
+	public void quit() throws IOException {
 		rsePage.deleteAllFiles();
 	}
 	
@@ -73,26 +73,20 @@ public class Reportes {
 			Assert.assertTrue(rsePage.verifyTextMaxSize(sDepartamentoEmpresa, 80));
 			
 			String sMarcaNoLlamar = lsAux.get(4);
-			if (!sMarcaNoLlamar.isEmpty()) {
-				Integer.parseInt(sMarcaNoLlamar);
-				Assert.assertTrue(sMarcaNoLlamar.equals("1") || sMarcaNoLlamar.equals("0"));
-			}
+			Integer.parseInt(sMarcaNoLlamar);
+			Assert.assertTrue(sMarcaNoLlamar.equals("1") || sMarcaNoLlamar.equals("0"));
 			
 			String sEmail = lsAux.get(5);
 			if (!sEmail.isEmpty()) sEmail.contains("@");
 			Assert.assertTrue(rsePage.verifyTextMaxSize(sEmail, 80));
 			
 			String sMarcaEnviarMail = lsAux.get(6);
-			if (!sMarcaEnviarMail.isEmpty()) {
-				Integer.parseInt(sMarcaEnviarMail);
-				Assert.assertTrue(sMarcaEnviarMail.equals("1") || sMarcaEnviarMail.equals("0"));
-			}
+			Integer.parseInt(sMarcaEnviarMail);
+			Assert.assertTrue(sMarcaEnviarMail.equals("1") || sMarcaEnviarMail.equals("0"));
 			
 			String sMarcaEnviarFax = lsAux.get(7);
-			if (!sMarcaEnviarFax.isEmpty()) {
-				Integer.parseInt(sMarcaEnviarFax);
-				Assert.assertTrue(sMarcaEnviarFax.equals("1") || sMarcaEnviarFax.equals("0"));
-			}
+			Integer.parseInt(sMarcaEnviarFax);
+			Assert.assertTrue(sMarcaEnviarFax.equals("1") || sMarcaEnviarFax.equals("0"));
 			
 			String sNumeroTelefonoCasa = lsAux.get(8);
 			Assert.assertTrue(rsePage.verifyTextMaxSize(sNumeroTelefonoCasa, 40));
@@ -153,10 +147,8 @@ public class Reportes {
 			Assert.assertTrue(rsePage.verifyTextMaxSize(sCodPersonaContacto, 18));
 			
 			String sMarcaFraude = lsAux.get(24);
-			if (!sMarcaFraude.isEmpty()) {
-				Integer.parseInt(sMarcaFraude);
-				Assert.assertTrue(sMarcaFraude.equals("1") || sMarcaFraude.equals("0"));
-			}
+			Integer.parseInt(sMarcaFraude);
+			Assert.assertTrue(sMarcaFraude.equals("1") || sMarcaFraude.equals("0"));
 			
 			String sGenero = lsAux.get(25);
 			Assert.assertTrue(rsePage.verifyTextMaxSize(sGenero, 255));
@@ -166,7 +158,7 @@ public class Reportes {
 			
 			String sFechaNacimiento = lsAux.get(27);
 			if (!sFechaNacimiento.isEmpty()) {
-				sdfDateFormat = new SimpleDateFormat(sDateFormatDMY);
+				sdfDateFormat = new SimpleDateFormat(sDateFormatBorn);
 				sdfDateFormat.parse(sFechaNacimiento);
 			}
 			
@@ -206,6 +198,8 @@ public class Reportes {
 			String sOrigenContacto = lsAux.get(35);
 			Assert.assertTrue(rsePage.verifyTextMaxSize(sOrigenContacto, 40));
 		}
+		
+		sListOfFiles = sFiles;
 	}
 	
 	//Test #2
@@ -246,6 +240,8 @@ public class Reportes {
 			String sRol = lsAux.get(4);
 			Assert.assertTrue(rsePage.verifyTextMaxSize(sRol, 18));
 		}
+		
+		sListOfFiles = sFiles;
 	}
 	
 	//Test #3
@@ -273,34 +269,24 @@ public class Reportes {
 			Assert.assertFalse(sCodCuenta.isEmpty());
 			
 			String sMarcaFraude = lsAux.get(2);
-			if (!sMarcaFraude.isEmpty()) {
-				Integer.parseInt(sMarcaFraude);
-				Assert.assertTrue(sMarcaFraude.equals("1") || sMarcaFraude.equals("0"));
-			}
+			Integer.parseInt(sMarcaFraude);
+			Assert.assertTrue(sMarcaFraude.equals("1") || sMarcaFraude.equals("0"));
 			
 			String sMarcaPartner = lsAux.get(3);
-			if (!sMarcaPartner.isEmpty()) {
-				Integer.parseInt(sMarcaPartner);
-				Assert.assertTrue(sMarcaPartner.equals("1") || sMarcaPartner.equals("0"));
-			}
+			Integer.parseInt(sMarcaPartner);
+			Assert.assertTrue(sMarcaPartner.equals("1") || sMarcaPartner.equals("0"));
 			
 			String sMarcaPrensa = lsAux.get(4);
-			if (!sMarcaPrensa.isEmpty()) {
-				Integer.parseInt(sMarcaPrensa);
-				Assert.assertTrue(sMarcaPrensa.equals("1") || sMarcaPrensa.equals("0"));
-			}
+			Integer.parseInt(sMarcaPrensa);
+			Assert.assertTrue(sMarcaPrensa.equals("1") || sMarcaPrensa.equals("0"));
 			
 			String sMarcaNoNominado = lsAux.get(5);
-			if (!sMarcaNoNominado.isEmpty()) {
-				Integer.parseInt(sMarcaNoNominado);
-				Assert.assertTrue(sMarcaNoNominado.equals("1") || sMarcaNoNominado.equals("0"));
-			}
+			Integer.parseInt(sMarcaNoNominado);
+			Assert.assertTrue(sMarcaNoNominado.equals("1") || sMarcaNoNominado.equals("0"));
 			
 			String sMarcaVIP = lsAux.get(6);
-			if (!sMarcaVIP.isEmpty()) {
-				Integer.parseInt(sMarcaVIP);
-				Assert.assertTrue(sMarcaVIP.equals("1") || sMarcaVIP.equals("0"));
-			}
+			Integer.parseInt(sMarcaVIP);
+			Assert.assertTrue(sMarcaVIP.equals("1") || sMarcaVIP.equals("0"));
 			
 			String sValorCuenta = lsAux.get(7);
 			if (!sValorCuenta.isEmpty()) {
@@ -345,10 +331,8 @@ public class Reportes {
 			}
 			
 			String sMarcaJubilado = lsAux.get(17);
-			if (!sMarcaJubilado.isEmpty()) {
-				Integer.parseInt(sMarcaJubilado);
-				Assert.assertTrue(sMarcaJubilado.equals("1") || sMarcaJubilado.equals("0"));
-			}
+			Integer.parseInt(sMarcaJubilado);
+			Assert.assertTrue(sMarcaJubilado.equals("1") || sMarcaJubilado.equals("0"));
 			
 			String sFechaModEmail = lsAux.get(18);
 			if (!sFechaModEmail.isEmpty()) {
@@ -381,7 +365,7 @@ public class Reportes {
 			Assert.assertTrue(rsePage.verifyTextMaxSize(sCodCuentaOrigen, 18));
 			
 			String sFechaCreaAudit = lsAux.get(26);
-			Assert.assertFalse(sFechaCreaAudit.isEmpty());
+			Assert.assertFalse(sIdCuentaCliente.isEmpty());
 			sdfDateFormat = new SimpleDateFormat(sDateFormat);
 			sdfDateFormat.parse(sFechaCreaAudit);
 			
@@ -420,6 +404,8 @@ public class Reportes {
 			String sTipoCuenta = lsAux.get(35);
 			Assert.assertTrue(rsePage.verifyTextMaxSize(sTipoCuenta, 80));
 		}
+		
+		sListOfFiles = sFiles;
 	}
 	
 	//Test #4
@@ -457,8 +443,10 @@ public class Reportes {
 			
 			String sRol = lsAux.get(4);
 			Assert.assertTrue(rsePage.verifyTextMaxSize(sRol, 18));
-			Assert.assertTrue(sRol.equalsIgnoreCase("Referente de Pago"));
+			Assert.assertTrue(sRol.equalsIgnoreCase("Referente de Pago")); //Ask. It says 'Campo Fijo'
 		}
+		
+		sListOfFiles = sFiles;
 	}
 	
 	//Test #5
@@ -549,16 +537,12 @@ public class Reportes {
 			Assert.assertTrue(rsePage.verifyTextMaxSize(sIDDireccionEnvio, 255));
 			
 			String sMarcaSocio = lsAux.get(19);
-			if (!sMarcaSocio.isEmpty()) {
-				Integer.parseInt(sMarcaSocio);
-				Assert.assertTrue(sMarcaSocio.equals("1") || sMarcaSocio.equals("0"));
-			}
+			Integer.parseInt(sMarcaSocio);
+			Assert.assertTrue(sMarcaSocio.equals("1") || sMarcaSocio.equals("0"));
 			
 			String sMarcaMorosidad = lsAux.get(20);
-			if (!sMarcaMorosidad.isEmpty()) {
-				Integer.parseInt(sMarcaMorosidad);
-				Assert.assertTrue(sMarcaMorosidad.equals("1") || sMarcaMorosidad.equals("0"));
-			}
+			Integer.parseInt(sMarcaMorosidad);
+			Assert.assertTrue(sMarcaMorosidad.equals("1") || sMarcaMorosidad.equals("0"));
 			
 			String sFechaModEmail = lsAux.get(21);
 			if (!sFechaModEmail.isEmpty()) {
@@ -626,6 +610,8 @@ public class Reportes {
 			String sPreferenciasContacto = lsAux.get(37);
 			Assert.assertTrue(rsePage.verifyTextMaxSize(sPreferenciasContacto, 255));
 		}
+		
+		sListOfFiles = sFiles;
 	}
 	
 	//Test #6
@@ -633,7 +619,7 @@ public class Reportes {
 	public void TS125403_CRM_Interfaz_LCRM_ProductoAquirido() throws ParseException, IOException {
 		String sName = "_PRODUCTOADQUIRIDO_";
 		
-		rsePage.checkName(sName);
+		//rsePage.checkName(sName);
 		
 		List<List<String>> sList = new ArrayList<List<String>>();
 		
@@ -657,10 +643,7 @@ public class Reportes {
 			Assert.assertFalse(sIDProducto.isEmpty());
 			
 			String sMarcaProdCompetencia = lsAux.get(3);
-			if (!sMarcaProdCompetencia.isEmpty()) {
-				Integer.parseInt(sMarcaProdCompetencia);
-				Assert.assertTrue(sMarcaProdCompetencia.equals("1") || sMarcaProdCompetencia.equals("0"));
-			}
+			Integer.parseInt(sMarcaProdCompetencia);
 			
 			String sFechaInstalacion = lsAux.get(4);
 			if (!sFechaInstalacion.isEmpty()) {
@@ -675,9 +658,7 @@ public class Reportes {
 			Assert.assertTrue(rsePage.verifyTextMaxSize(sCodUsuarioMod, 18));
 			
 			String sCantUnidadesProdAdquiridas = lsAux.get(7);
-			if (!sCantUnidadesProdAdquiridas.isEmpty()) {
-				Double.parseDouble(sCantUnidadesProdAdquiridas);
-			}
+			Double.parseDouble(sCantUnidadesProdAdquiridas);
 			
 			String sTipoProducto = lsAux.get(8);
 			Assert.assertTrue(rsePage.verifyTextMaxSize(sTipoProducto, 255));
@@ -779,6 +760,8 @@ public class Reportes {
 			String sNivelJerarquia = lsAux.get(34);
 			Assert.assertTrue(rsePage.verifyTextMaxSize(sNivelJerarquia, 255));
 		}
+		
+		sListOfFiles = sFiles;
 	}
 	
 	//Test #7
@@ -825,9 +808,7 @@ public class Reportes {
 			Assert.assertTrue(rsePage.verifyTextMaxSize(sMetodoEntrega, 255));
 			
 			String sPrecioTotalOrden = lsAux.get(8);
-			if (!sPrecioTotalOrden.isEmpty()) {
-				Double.parseDouble(sPrecioTotalOrden);				
-			}
+			Double.parseDouble(sPrecioTotalOrden);
 			
 			String sFechaInicioOrden = lsAux.get(9);
 			if (!sFechaInicioOrden.isEmpty()) {
@@ -927,9 +908,11 @@ public class Reportes {
 			String sTipoSubgestion = lsAux.get(30);
 			Assert.assertTrue(rsePage.verifyTextMaxSize(sTipoSubgestion, 255));
 		}
+		
+		sListOfFiles = sFiles;
 	}
 	
-	//Test #8
+	//Test #7
 	@Test
 	public void TS125405_CRM_Interfaz_LCRM_OrdenItem() throws ParseException, IOException {
 		String sName = "_ORDENITEM_";
@@ -1108,15 +1091,13 @@ public class Reportes {
 			Assert.assertTrue(rsePage.verifyTextMaxSize(sEstadoStock, 20));
 			
 			String sMarcaNoProvisionable = lsAux.get(38);
-			if (!sMarcaNoProvisionable.isEmpty()) {
-				Integer.parseInt(sMarcaNoProvisionable);
-				Assert.assertTrue(sMarcaNoProvisionable.equals("1") || sMarcaNoProvisionable.equals("0"));
-			}
+			Integer.parseInt(sMarcaNoProvisionable);
+			Assert.assertTrue(sMarcaNoProvisionable.equals("1") || sMarcaNoProvisionable.equals("0"));
 		}
 	}
 	
-	//Test #9
-	@Test
+	//Test #8
+	//@Test
 	public void TS125406_CRM_Interfaz_LCRM_CustomerANI() throws ParseException, IOException {
 		String sName = "_CUSTOMERANY_";
 		
@@ -1131,87 +1112,12 @@ public class Reportes {
 		}
 		
 		for (List<String> lsAux : sList) {
-			String sIDcuenta = lsAux.get(0); 
-			Assert.assertTrue(rsePage.verifyTextMaxSize(sIDcuenta, 18)); 
-			Assert.assertFalse(sIDcuenta.isEmpty()); 
-			 
-			String sIDDeIntegracionDeLaCuenta = lsAux.get(1); 
-			Integer.parseInt(sIDDeIntegracionDeLaCuenta); 
-			 
-			String sTipoDocumentoTitular = lsAux.get(2); 
-			Assert.assertTrue(rsePage.verifyTextMaxSize(sTipoDocumentoTitular, 255)); 
-			 
-			String sNroDocumentoTitular = lsAux.get(3); 
-			Assert.assertTrue(rsePage.verifyTextMaxSize(sNroDocumentoTitular, 30)); 
-			 
-			String sCUIL =	lsAux.get(4); 
-			if (!sCUIL.isEmpty()) { 
-				rsePage.verifyCUITCUIT(sCUIL, sNroDocumentoTitular); 
-			} 
-			 
-			String sRazonSocial = lsAux.get(5); 
-			Assert.assertTrue(rsePage.verifyTextMaxSize(sRazonSocial, 0));//preguntar no tiene cantidad de caracteres 
-			 
-			String sCUIT = lsAux.get(6); 
-			Assert.assertTrue(rsePage.verifyTextMaxSize(sCUIT, 0));//preguntar no tiene cantidad de caracteres 
-			 
-			String sSegmentoDelCliente = lsAux.get(7); 
-			Assert.assertTrue(rsePage.verifyTextMaxSize(sSegmentoDelCliente, 100)); 
-			 
-			String sSubsegmentoDelCliente = lsAux.get(8); 
-			Assert.assertTrue(rsePage.verifyTextMaxSize(sSubsegmentoDelCliente, 100)); 
-			 
-			String sTipoDeSuscripcion = lsAux.get(9); 
-			Assert.assertTrue(rsePage.verifyTextMaxSize(sTipoDeSuscripcion, 255)); 
-			 
-			String sCiclo = lsAux.get(10); 
-			Assert.assertTrue(rsePage.verifyTextMaxSize(sCiclo, 0));//preguntar no tiene cantidad de caracteres 
 			
-			String sNombreTitular = lsAux.get(11); 
-			Assert.assertTrue(rsePage.verifyTextMaxSize(sNombreTitular, 121)); 
-			 
-			String sApellidoTitular = lsAux.get(12); 
-			Assert.assertTrue(rsePage.verifyTextMaxSize(sApellidoTitular, 121)); 
-			 
-			String sFechaDeCcreacionDelProductoAdquirido = lsAux.get(13); 
-			if (!sFechaDeCcreacionDelProductoAdquirido.isEmpty()) { 
-				sdfDateFormat = new SimpleDateFormat(sDateFormat); 
-				sdfDateFormat.parse(sFechaDeCcreacionDelProductoAdquirido); 
-			}
-			
-			String sLinea = lsAux.get(14); 
-			Assert.assertTrue(rsePage.verifyTextMaxSize(sLinea, 20)); 
-			Assert.assertFalse(sLinea.isEmpty()); 
-			 
-			String sFamiliaDelProducto = lsAux.get(15); 
-			Assert.assertTrue(rsePage.verifyTextMaxSize(sFamiliaDelProducto, 1300)); 
-			 
-			String sIdDelProducto = lsAux.get(16); 
-			Assert.assertTrue(rsePage.verifyTextMaxSize(sIdDelProducto, 18)); 
-			Assert.assertFalse(sIdDelProducto.isEmpty()); 
-			 
-			String sTipoDePlan = lsAux.get(17); 
-			Assert.assertTrue(rsePage.verifyTextMaxSize(sTipoDePlan, 0));//preguntar no tiene cantidad de caracteres 
-			 
-			String sCompaniaPortIN = lsAux.get(18); 
-			Assert.assertTrue(rsePage.verifyTextMaxSize(sCompaniaPortIN, 0));//preguntar no tiene cantidad de caracteres 
-			 
-			String sIDContacto = lsAux.get(19); 
-			Assert.assertTrue(rsePage.verifyTextMaxSize(sIDContacto, 0));//preguntar no tiene cantidad de caracteres 
-			 
-			String sMarcaFOL = lsAux.get(20); 
-			if (!sMarcaFOL.isEmpty()) { 
-				Integer.parseInt(sMarcaFOL); 
-				Assert.assertTrue(sMarcaFOL.equals("1") || sMarcaFOL.equals("0")); 
-			} 
-			 
-			String sTelefono = lsAux.get(21); 
-			Assert.assertTrue(rsePage.verifyTextMaxSize(sTelefono, 0));//preguntar no tiene cantidad de caracteres 
 		}
 	}
 	
-	//Test #10
-	/*@Test
+	//Test #9
+	//@Test
 	public void TS125407_CRM_Interfaz_LCRM_Lineas_pre_activadas() throws ParseException, IOException {
 		String sName = "_LINEASPREACTIVADAS_";
 		
@@ -1228,12 +1134,12 @@ public class Reportes {
 		for (List<String> lsAux : sList) {
 			
 		}
-	}*/
+	}
 	
-	//Test #11
-	@Test
+	//Test #10
+	//@Test
 	public void TS125408_CRM_Interfaz_LCRM_CuentaFacturacionInsercion() throws ParseException, IOException {
-		String sName = "_CUENTAFACTURACIONINSERCION_";
+		String sName = "__";
 		
 		rsePage.checkName(sName);
 		
@@ -1246,68 +1152,11 @@ public class Reportes {
 		}
 		
 		for (List<String> lsAux : sList) {
-			String sIdCuentaFacturacion = lsAux.get(0); 
-			Assert.assertTrue(rsePage.verifyTextMaxSize(sIdCuentaFacturacion, 255)); 
-			 
-			String sFechaDeAltaCuentaFacturacion = lsAux.get(1); 
-			if (!sFechaDeAltaCuentaFacturacion.isEmpty()) { 
-				sdfDateFormat = new SimpleDateFormat(sDateFormat); 
-				sdfDateFormat.parse(sFechaDeAltaCuentaFacturacion);
-			}
 			
-			String sRazonSocial = lsAux.get(2); 
-			Assert.assertTrue(rsePage.verifyTextMaxSize(sRazonSocial, 0));//preguntar no tiene cantidad de caracteres 
-			 
-			String sDireccionlinea = lsAux.get(3); 
-			Assert.assertTrue(rsePage.verifyTextMaxSize(sDireccionlinea, 0));//preguntar mensaje "Pendiente Vlovity" 
-			 
-			String sProvincia_Linea = lsAux.get(4); 
-			Assert.assertTrue(rsePage.verifyTextMaxSize(sProvincia_Linea, 0));//preguntar mensaje "Pendiente Vlovity" 
-			 
-			String sCiudad_Linea = lsAux.get(5); 
-			Assert.assertTrue(rsePage.verifyTextMaxSize(sCiudad_Linea, 0));//preguntar mensaje "Pendiente Vlovity" 
-			 
-			String sNumeroDeTelefonoDelIndividuo = lsAux.get(6); 
-			Assert.assertTrue(rsePage.verifyTextMaxSize(sNumeroDeTelefonoDelIndividuo, 40)); 
-			 
-			String sNumeroDeCelularDeContactoDelIndividuo = lsAux.get(7); 
-			Assert.assertTrue(rsePage.verifyTextMaxSize(sNumeroDeCelularDeContactoDelIndividuo, 40)); 
-			 
-			String sLimiteDeCredito = lsAux.get(8); 
-			if (!sLimiteDeCredito.isEmpty()) { 
-				Double.parseDouble(sLimiteDeCredito); 
-			} 
-			 
-			String sMedioDePagoDeLaCuentaDeFacturacion = lsAux.get(9); 
-			Assert.assertTrue(rsePage.verifyTextMaxSize(sMedioDePagoDeLaCuentaDeFacturacion, 255)); 
-			 
-			String sNumeroDetarjeta_CBU_AsociadoAlMedioDePago = lsAux.get(10); 
-			Assert.assertTrue(rsePage.verifyTextMaxSize(sNumeroDetarjeta_CBU_AsociadoAlMedioDePago, 22)); 
-			 
-			String sN_A = lsAux.get(11); 
-			Assert.assertTrue(rsePage.verifyTextMaxSize(sN_A, 3)); 
-			 
-			String sCicloDeFacturacion = lsAux.get(12); 
-			Assert.assertTrue(rsePage.verifyTextMaxSize(sCicloDeFacturacion, 255)); 
-			 
-			String sRiesgoCrediticio = lsAux.get(13); 
-			Assert.assertTrue(rsePage.verifyTextMaxSize(sRiesgoCrediticio, 18)); 
-			 
-			String sTipoDeDocumento = lsAux.get(14); 
-			Assert.assertTrue(rsePage.verifyTextMaxSize(sTipoDeDocumento, 255)); 
-			 
-			String sNumeroDeDocumento = lsAux.get(15); 
-			Assert.assertTrue(rsePage.verifyTextMaxSize(sNumeroDeDocumento, 30)); 
-			 
-			String sFechaDeNacimiento = lsAux.get(16); 
-			if (!sFechaDeNacimiento.isEmpty()) { 
-				sdfDateFormat = new SimpleDateFormat(sDateFormatDMY); 
-				sdfDateFormat.parse(sFechaDeNacimiento); 
-			}
 		}
 	}
 	
-	//Test #12
+	//Test #11
 	@Test
 	public void TS125409_CRM_Interfaz_LCRM_Acuerdoservicio() throws ParseException, IOException {
 		String sName = "_ACUERDOSERVICIO_";
@@ -1391,8 +1240,8 @@ public class Reportes {
 		}
 	}
 	
-	//Test #13
-	/*@Test
+	//Test #12
+	//@Test
 	public void TS125410_CRM_Interfaz_LCRM_Contactos() throws ParseException, IOException {
 		String sName = "_CONTACTOS_";
 		
@@ -1409,10 +1258,10 @@ public class Reportes {
 		for (List<String> lsAux : sList) {
 			
 		}
-	}*/
+	}
 	
-	//Test #14
-	@Test
+	//Test #13
+	//@Test
 	public void TS125412_CRM_Interfaz_LCRM_ProductoAdquiridoLinea() throws ParseException, IOException {
 		String sName = "_PRODUCTOADQUIRIDOLINEA_";
 		
@@ -1427,100 +1276,11 @@ public class Reportes {
 		}
 		
 		for (List<String> lsAux : sList) {
-			String sIntegrationId = lsAux.get(0); 
-			Assert.assertTrue(rsePage.verifyTextMaxSize(sIntegrationId, 255)); 
-			 
-			String sStatusDelAsset = lsAux.get(1); 
-			Assert.assertTrue(rsePage.verifyTextMaxSize(sStatusDelAsset, 255)); 
-			 
-			String sNumeroDeLinea = lsAux.get(2); 
-			if (!sNumeroDeLinea.isEmpty()) { 
-				Integer.parseInt(sNumeroDeLinea); 
-			} 
-			 
-			String sIDRed = lsAux.get(3); 
-			Assert.assertTrue(rsePage.verifyTextMaxSize(sIDRed, 200)); 
-			 
-			String sIMEI = lsAux.get(4); 
-			Assert.assertTrue(rsePage.verifyTextMaxSize(sIMEI, 0));//preguntar no tiene cantidad de caracteres 
-			 
-			String sMercado = lsAux.get(5); 
-			Assert.assertTrue(rsePage.verifyTextMaxSize(sMercado, 255)); 
-			 
-			String sSegmento = lsAux.get(6); 
-			Assert.assertTrue(rsePage.verifyTextMaxSize(sSegmento, 255)); 
-			 
-			String sFechaActivacion = lsAux.get(7); 
-			if (!sFechaActivacion.isEmpty()) { 
-				sdfDateFormat = new SimpleDateFormat(sDateFormat); 
-				sdfDateFormat.parse(sFechaActivacion); 
-			} 
-			 
-			String sFamiliaDelProducto = lsAux.get(8); 
-			Assert.assertTrue(rsePage.verifyTextMaxSize(sFamiliaDelProducto, 255)); 
-			 
-			String sValorConstante = lsAux.get(9); 
-			if (!sValorConstante.isEmpty()) { 
-				Integer.parseInt(sValorConstante); 
-			} 
-			 
-			String sCicloFactura = lsAux.get(10); 
-			Assert.assertTrue(rsePage.verifyTextMaxSize(sCicloFactura, 255)); 
-			 
-			String sIDDelProductoAdquirido = lsAux.get(11); 
-			Assert.assertTrue(rsePage.verifyTextMaxSize(sIDDelProductoAdquirido, 18)); 
-			 
-			String sEstadoDelProductoAdquirido = lsAux.get(12); 
-			Assert.assertTrue(rsePage.verifyTextMaxSize(sEstadoDelProductoAdquirido, 255)); 
-			 
-			String sDireccion = lsAux.get(13); 
-			Assert.assertTrue(rsePage.verifyTextMaxSize(sDireccion, 0));//preguntar no tiene cantidad de caracteres 
-			 
-			String sProvincia = lsAux.get(14); 
-			Assert.assertTrue(rsePage.verifyTextMaxSize(sProvincia, 0));//preguntar no tiene cantidad de caracteres 
-			 
-			String sCiudad = lsAux.get(15); 
-			Assert.assertTrue(rsePage.verifyTextMaxSize(sCiudad, 0));//preguntar no tiene cantidad de caracteres 
-			 
-			String sTelefonoContacto = lsAux.get(16); 
-			Assert.assertTrue(rsePage.verifyTextMaxSize(sTelefonoContacto, 40)); 
-			 
-			String sTelefonoCelularDelContacto = lsAux.get(17); 
-			Assert.assertTrue(rsePage.verifyTextMaxSize(sTelefonoCelularDelContacto, 40)); 
-			 
-			String sTelefonoFijoDelContacto = lsAux.get(18); 
-			Assert.assertTrue(rsePage.verifyTextMaxSize(sTelefonoFijoDelContacto, 40)); 
-			 
-			String sTipoDocumento = lsAux.get(19); 
-			Assert.assertTrue(rsePage.verifyTextMaxSize(sTipoDocumento, 255)); 
-			 
-			String sNumeroDocumento = lsAux.get(20); 
-			Assert.assertTrue(rsePage.verifyTextMaxSize(sNumeroDocumento, 40)); 
-			 
-			String sPlanTarifario = lsAux.get(21); 
-			Assert.assertTrue(rsePage.verifyTextMaxSize(sPlanTarifario, 18)); 
-			 
-			String sCodigoVendedor = lsAux.get(22); 
-			Assert.assertTrue(rsePage.verifyTextMaxSize(sCodigoVendedor, 18)); 
-			 
-			String sNombreVendedor = lsAux.get(23); 
-			Assert.assertTrue(rsePage.verifyTextMaxSize(sNombreVendedor, 0));//preguntar no tiene cantidad de caracteres 
-			 
-			String sCodigoPuntoVenta = lsAux.get(24); 
-			Assert.assertTrue(rsePage.verifyTextMaxSize(sCodigoPuntoVenta, 0));//preguntar no tiene cantidad de caracteres 
-			 
-			String sNombrePuntoVenta = lsAux.get(25); 
-			Assert.assertTrue(rsePage.verifyTextMaxSize(sNombrePuntoVenta, 0));//preguntar no tiene cantidad de caracteres 
-			 
-			String sEstadoLineaSusp = lsAux.get(26); 
-			Assert.assertTrue(rsePage.verifyTextMaxSize(sEstadoLineaSusp, 0));//preguntar no tiene cantidad de caracteres 
-			 
-			String sProcedencia_portabilidad = lsAux.get(27); 
-			Assert.assertTrue(rsePage.verifyTextMaxSize(sProcedencia_portabilidad, 0));//preguntar no tiene cantidad de caracteres 
+			
 		}
 	}
 	
-	//Test #15
+	//Test #14
 	@Test
 	public void TS125413_CRM_Interfaz_LCRM_ProductoAdquiridoEquipos() throws ParseException, IOException {
 		String sName = "_PRODUCTOADQUIRIDOEQUIPOS_";
@@ -1536,158 +1296,11 @@ public class Reportes {
 		}
 		
 		for (List<String> lsAux : sList) {
-			String sPTVTA = lsAux.get(0); 
-			Assert.assertTrue(rsePage.verifyTextMaxSize(sPTVTA, 0));//preguntar no tiene cantidad de caracteres 
-			 
-			String sPTVTADescripcionSeparadosPorUnEspacio = lsAux.get(1); 
-			Assert.assertTrue(rsePage.verifyTextMaxSize(sPTVTADescripcionSeparadosPorUnEspacio, 0));//preguntar no tiene cantidad de caracteres 
-			 
-			String sVENDEDOR = lsAux.get(2); 
-			Assert.assertTrue(rsePage.verifyTextMaxSize(sVENDEDOR, 18)); 
-			Assert.assertTrue(rsePage.verifyTextMaxSize(sVENDEDOR, 242)); 
-			 
-			String sNombreDelVvendedor = lsAux.get(3); 
-			Assert.assertTrue(rsePage.verifyTextMaxSize(sNombreDelVvendedor, 18)); 
-			Assert.assertTrue(rsePage.verifyTextMaxSize(sNombreDelVvendedor, 242)); 
-			 
-			String sMERCADO = lsAux.get(4); 
-			Assert.assertTrue(rsePage.verifyTextMaxSize(sMERCADO, 255)); 
-			 
-			String sFECHA_OPER = lsAux.get(5); 
-			if (!sFECHA_OPER.isEmpty()) { 
-				sdfDateFormat = new SimpleDateFormat(sDateFormat); 
-				sdfDateFormat.parse(sFECHA_OPER);
-			}
 			
-			String sFECHA_MODIF = lsAux.get(6); 
-			if (!sFECHA_MODIF.isEmpty()) { 
-				sdfDateFormat = new SimpleDateFormat(sDateFormat); 
-				sdfDateFormat.parse(sFECHA_MODIF); 
-			} 
-			 
-			String sIMEI = lsAux.get(7); 
-			Assert.assertTrue(rsePage.verifyTextMaxSize(sIMEI, 15)); 
-			 
-			String sNMU = lsAux.get(8); 
-			Assert.assertTrue(rsePage.verifyTextMaxSize(sNMU, 256)); 
-			 
-			String sNMU_DESCRIPCION = lsAux.get(9); 
-			Assert.assertTrue(rsePage.verifyTextMaxSize(sNMU_DESCRIPCION, 200)); 
-			 
-			String sDNNUM = lsAux.get(10); 
-			Assert.assertTrue(rsePage.verifyTextMaxSize(sDNNUM, 20)); 
-			 
-			String sTIPO_VENTA = lsAux.get(11); 
-			Assert.assertTrue(rsePage.verifyTextMaxSize(sTIPO_VENTA, 255)); 
-			 
-			String sNumeroDeOrden = lsAux.get(12); 
-			Assert.assertTrue(rsePage.verifyTextMaxSize(sNumeroDeOrden, 30)); 
-			 
-			String sEstadoDeLaOrden = lsAux.get(13); 
-			Assert.assertTrue(rsePage.verifyTextMaxSize(sEstadoDeLaOrden, 255)); 
-			 
-			String sTipoDeDocumentoDeLaCuentaDeFacturacion = lsAux.get(14); 
-			Assert.assertTrue(rsePage.verifyTextMaxSize(sTipoDeDocumentoDeLaCuentaDeFacturacion, 30)); 
-			Assert.assertTrue(rsePage.verifyTextMaxSize(sTipoDeDocumentoDeLaCuentaDeFacturacion, 255)); 
-			 
-			String sNumeroDeDocumentoDeLaCuentaDeFacturacion = lsAux.get(15); 
-			Assert.assertTrue(rsePage.verifyTextMaxSize(sNumeroDeDocumentoDeLaCuentaDeFacturacion, 30)); 
-			Assert.assertTrue(rsePage.verifyTextMaxSize(sNumeroDeDocumentoDeLaCuentaDeFacturacion, 255)); 
-			 
-			String sID_PROMO = lsAux.get(16); 
-			Assert.assertTrue(rsePage.verifyTextMaxSize(sID_PROMO, 18)); 
-			 
-			String sDescripcionDeLaPromo = lsAux.get(17); 
-			Assert.assertTrue(rsePage.verifyTextMaxSize(sDescripcionDeLaPromo, 80)); 
-			 
-			String sProductoAdquirido_asset = lsAux.get(18); 
-			Assert.assertTrue(rsePage.verifyTextMaxSize(sProductoAdquirido_asset, 18)); 
-			 
-			String sProdcuto = lsAux.get(19); 
-			Assert.assertTrue(rsePage.verifyTextMaxSize(sProdcuto, 255)); 
-			 
-			String sDescripcionDelProducto = lsAux.get(20); 
-			Assert.assertTrue(rsePage.verifyTextMaxSize(sDescripcionDelProducto, 255)); 
-			 
-			String sIdInternoDeAccount = lsAux.get(21); 
-			Assert.assertTrue(rsePage.verifyTextMaxSize(sIdInternoDeAccount, 18)); 
-			 
-			String sTipoDeDocumentoDelContacto = lsAux.get(22); 
-			Assert.assertTrue(rsePage.verifyTextMaxSize(sTipoDeDocumentoDelContacto, 255)); 
-			Assert.assertTrue(rsePage.verifyTextMaxSize(sTipoDeDocumentoDelContacto, 30)); 
-			 
-			String sNumeroDeDocumentoDelContacto = lsAux.get(23); 
-			Assert.assertTrue(rsePage.verifyTextMaxSize(sNumeroDeDocumentoDelContacto, 255)); 
-			Assert.assertTrue(rsePage.verifyTextMaxSize(sNumeroDeDocumentoDelContacto, 30)); 
-			 
-			String sPRECIO_LISTA = lsAux.get(24); 
-			if (!sPRECIO_LISTA.isEmpty()) { 
-				Double.parseDouble(sPRECIO_LISTA); 
-			} 
-			 
-			String sPRECIO_VENTA = lsAux.get(25); 
-			if (!sPRECIO_VENTA.isEmpty()) { 
-				Double.parseDouble(sPRECIO_VENTA); 
-			} 
-			 
-			String sSUBSIDIO = lsAux.get(26); 
-			if (!sSUBSIDIO.isEmpty()) { 
-				Double.parseDouble(sSUBSIDIO); 
-			} 
-			 
-			String sIMPUESTO = lsAux.get(27); 
-			if (!sIMPUESTO.isEmpty()) { 
-				Double.parseDouble(sIMPUESTO); 
-			} 
-			 
-			String sCOD_TIPIFICACION = lsAux.get(28); 
-			Assert.assertTrue(rsePage.verifyTextMaxSize(sCOD_TIPIFICACION, 0));//preguntar no tiene cantidad de caracteres 
-			 
-			String sGAMA = lsAux.get(29); 
-			Assert.assertTrue(rsePage.verifyTextMaxSize(sGAMA, 0));//preguntar no tiene cantidad de caracteres 
-			 
-			String sBODEGA = lsAux.get(30); 
-			Assert.assertTrue(rsePage.verifyTextMaxSize(sBODEGA, 0));//preguntar no tiene cantidad de caracteres 
-			 
-			String sIMSI = lsAux.get(31); 
-			Assert.assertTrue(rsePage.verifyTextMaxSize(sIMSI, 256)); 
-			 
-			String sDESCR_CANAL = lsAux.get(32); 
-			Assert.assertTrue(rsePage.verifyTextMaxSize(sDESCR_CANAL, 0));//preguntar no tiene cantidad de caracteres 
-			 
-			String sREF_PREF = lsAux.get(33); 
-			Assert.assertTrue(rsePage.verifyTextMaxSize(sREF_PREF, 30)); 
-			 
-			String sDESC_PROCEDENCIA = lsAux.get(34); 
-			Assert.assertTrue(rsePage.verifyTextMaxSize(sDESC_PROCEDENCIA, 3)); 
-			 
-			String sSEGMENTO = lsAux.get(35); 
-			Assert.assertTrue(rsePage.verifyTextMaxSize(sSEGMENTO, 255)); 
-			 
-			String sBONIFICACION = lsAux.get(36); 
-			if (!sBONIFICACION.isEmpty()) { 
-				Double.parseDouble(sBONIFICACION); 
-			} 
-			 
-			String sSIN_IMPUESTO = lsAux.get(37); 
-			Assert.assertTrue(rsePage.verifyTextMaxSize(sSIN_IMPUESTO, 0));//preguntar no tiene cantidad de caracteres 
-			 
-			String sId_Procedencia = lsAux.get(38); 
-			Assert.assertTrue(rsePage.verifyTextMaxSize(sId_Procedencia, 0));//preguntar no tiene cantidad de caracteres 
-			 
-			 
-			String sCanal = lsAux.get(39); 
-			Assert.assertTrue(rsePage.verifyTextMaxSize(sCanal, 510)); 
-			 
-			String sCanal2 = lsAux.get(40); 
-			Assert.assertTrue(rsePage.verifyTextMaxSize(sCanal2, 510)); 
-			 
-			String sCanal3 = lsAux.get(41); 
-			Assert.assertTrue(rsePage.verifyTextMaxSize(sCanal3, 510));
 		}
 	}
 	
-	//Test #16
+	//Test #15
 	@Test
 	public void TS125414_CRM_Interfaz_LCRM_Ajuste() throws ParseException, IOException {
 		String sName = "_AJUSTE_";
@@ -1731,9 +1344,7 @@ public class Reportes {
 			Assert.assertTrue(rsePage.verifyTextMaxSize(sIDCuentaFacturacion, 18));
 			
 			String sMonto = lsAux.get(7);
-			if (!sMonto.isEmpty()) {
-				Double.parseDouble(sMonto);
-			}
+			Double.parseDouble(sMonto);
 			
 			String sIDMetodoDePago = lsAux.get(8);
 			Assert.assertTrue(rsePage.verifyTextMaxSize(sIDMetodoDePago, 18));
@@ -1764,7 +1375,7 @@ public class Reportes {
 		}
 	}
 	
-	//Test #17
+	//Test #16
 	@Test
 	public void TS125415_CRM_Interfaz_LCRM_ItemProducto2() throws ParseException, IOException {
 		String sName = "_ITEMPRODUCTO2_";
@@ -1797,7 +1408,7 @@ public class Reportes {
 		}
 	}
 	
-	//Test #18
+	//Test #17
 	@Test
 	public void TS125416_CRM_Interfaz_LCRM_Producto() throws ParseException, IOException {
 		String sName = "_PRODUCTO_";
@@ -1833,10 +1444,8 @@ public class Reportes {
 			Assert.assertTrue(rsePage.verifyTextMaxSize(sFamiliaProducto, 40));
 			
 			String sMarcaBorrar = lsAux.get(5);
-			if (!sMarcaBorrar.isEmpty()) {
-				Integer.parseInt(sMarcaBorrar);
-				Assert.assertTrue(sMarcaBorrar.equals("1") || sMarcaBorrar.equals("0"));
-			}
+			Integer.parseInt(sMarcaBorrar);
+			Assert.assertTrue(sMarcaBorrar.equals("1") || sMarcaBorrar.equals("0"));
 			
 			String sCodUsuarioMod = lsAux.get(6);
 			Assert.assertTrue(rsePage.verifyTextMaxSize(sCodUsuarioMod, 18));
@@ -1857,16 +1466,12 @@ public class Reportes {
 			Assert.assertTrue(rsePage.verifyTextMaxSize(sTipoSim, 255));
 			
 			String sMarcaNoAssetisable = lsAux.get(11);
-			if (!sMarcaNoAssetisable.isEmpty()) {
-				Integer.parseInt(sMarcaNoAssetisable);
-				Assert.assertTrue(sMarcaNoAssetisable.equals("1") || sMarcaNoAssetisable.equals("0"));
-			}
+			Integer.parseInt(sMarcaNoAssetisable);
+			Assert.assertTrue(sMarcaNoAssetisable.equals("1") || sMarcaNoAssetisable.equals("0"));
 			
 			String sMarcaOrderable = lsAux.get(12);
-			if (!sMarcaNoAssetisable.isEmpty()) {
-				Integer.parseInt(sMarcaOrderable);
-				Assert.assertTrue(sMarcaOrderable.equals("1") || sMarcaOrderable.equals("0"));
-			}
+			Integer.parseInt(sMarcaOrderable);
+			Assert.assertTrue(sMarcaOrderable.equals("1") || sMarcaOrderable.equals("0"));
 			
 			String sTipoEspecificacion = lsAux.get(13);
 			Assert.assertTrue(rsePage.verifyTextMaxSize(sTipoEspecificacion, 255));
@@ -4128,11 +3733,11 @@ public class Reportes {
 		}
 		
 		for (List<String> lsAux : sList) {
-			String sObjetoDeAutorización = lsAux.get(0);
-			Assert.assertTrue(rsePage.verifyTextMaxSize(sObjetoDeAutorización, 50));
+			String sObjetoDeAutorizaciï¿½n = lsAux.get(0);
+			Assert.assertTrue(rsePage.verifyTextMaxSize(sObjetoDeAutorizaciï¿½n, 50));
 			
-			String sDescripciónDeObjeto = lsAux.get(1);
-			Assert.assertTrue(rsePage.verifyTextMaxSize(sDescripciónDeObjeto, 50));
+			String sDescripciï¿½nDeObjeto = lsAux.get(1);
+			Assert.assertTrue(rsePage.verifyTextMaxSize(sDescripciï¿½nDeObjeto, 50));
 			
 			String sIdioma = lsAux.get(2);
 			Assert.assertTrue(rsePage.verifyTextMaxSize(sIdioma, 2));
