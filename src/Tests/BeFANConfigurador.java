@@ -1589,7 +1589,7 @@ public class BeFANConfigurador extends TestBase {
 		driver.findElement(By.cssSelector(".form-control.ng-pristine.ng-untouched.ng-valid.ng-empty")).sendKeys("cordoba");
 		driver.findElement(By.cssSelector(".btn.btn-primary")).click();
 		
-		for(WebElement x : driver.findElements(By.cssSelector(".alert.alert-dismissable.alert-danger"))){
+		for(WebElement x : driver.findElements(By.className("modal-body"))){
 			if(x.getText().toLowerCase().contains("region existente")) {
 				System.out.println(x.getText());
 				buscarYClick(driver.findElements(By.cssSelector(".btn.btn-link")), "equals", "cancelar");
