@@ -275,9 +275,9 @@ public class remoteScriptExec {
 		for (int i = 0; i < fListFiles.length; i++) {
 			
 			if (fListFiles[i].isFile()) {
-				String fileName = fListFiles[i].getName();
-				if (fileName.contains(sName)) {
-					sFiles.add(fileName);
+				String sFileName = fListFiles[i].getName();
+				if (sFileName.matches("IB" + sName + "(?<date>\\d{14})[\\.]txt(?:(\\.gz))")) {
+					sFiles.add(sFileName);
 				}
 			}
 		}
@@ -426,6 +426,34 @@ public class remoteScriptExec {
 		}
 		
 		return bAssert;
+	}
+	
+	public void checkNameLegacyRole(String sName) throws ParseException, IOException {
+		List<String> sFiles = findFiles(sName);
+		
+		for(String sAux : sFiles) {
+			if (sAux.contains(".gz")) {
+				decompressGzip(sAux);
+				deleteFile(sAux);
+			}
+		}
+		System.out.println("Decompression finished.");
+		
+		sFiles = findFiles("sName");
+		Pattern pRegularExpressionName = Pattern.compile("^" + sName);
+		String sDateFormat = "yyyyMMddHHmmss";
+		Pattern pRegularExpressionFormat = Pattern.compile(".txt$");
+		for(String sAux : sFiles) {
+			Matcher mMatch = pRegularExpressionName.matcher(sAux);
+			Assert.assertTrue(mMatch.find());
+			
+			mMatch = pRegularExpressionFormat.matcher(sAux);
+			Assert.assertTrue(mMatch.find());
+			
+			dateFormat(sAux, sDateFormat);
+		}
+		
+		System.out.println("All titles date format are correct.");
 	}
 	
 }

@@ -1,5 +1,7 @@
 package Tests;
 
+import static org.junit.Assert.assertArrayEquals;
+
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.net.MalformedURLException;
@@ -22,11 +24,12 @@ public class Reportes {
 	remoteScriptExec rsePage = new remoteScriptExec();
 	String sDateFormat = "dd/MM/yyyy HH:mm:ss";
 	String sDateFormatDMY = "dd/MM/yyyy";
+	String sDateFormatYMD = "yyyy/MM/dd";
 	SimpleDateFormat sdfDateFormat;
 	
 	//Before & AfterClass
 	
-	//@BeforeClass(alwaysRun=true)
+	@BeforeClass(alwaysRun=true)
 	public void download() throws MalformedURLException, UnknownHostException, FileNotFoundException, IOException, JSchException, SftpException {
 		rsePage.FTPConnection();
 		System.out.println("Connection stablished.");
@@ -2822,7 +2825,7 @@ public class Reportes {
 	
 	//Test #27
 	@Test
-	public void TS125410_CRM_Interfaz_LCRM_Legacy_Actions() throws ParseException, IOException {
+	public void TS125425_CRM_Interfaz_LCRM_Legacy_Actions() throws ParseException, IOException {
 		String sName = "_LEGACY_ACTIONS_";
 		
 		rsePage.checkName(sName);
@@ -2935,9 +2938,9 @@ public class Reportes {
 	}
 	
 	//Test #30
-	/*@Test
+	@Test
 	public void TS125428_CRM_Interfaz_LCRM_LegacyDefaultUser() throws ParseException, IOException {
-		String sName = "__";
+		String sName = "_LEGACY_DEFAULT_USER_";
 		
 		rsePage.checkName(sName);
 		
@@ -2950,9 +2953,61 @@ public class Reportes {
 		}
 		
 		for (List<String> lsAux : sList) {
+			String sIDDeUsuario = lsAux.get(0);
+			Assert.assertTrue(rsePage.verifyTextMaxSize(sIDDeUsuario, 50));
 			
+			String sNombre = lsAux.get(1);
+			Assert.assertTrue(rsePage.verifyTextMaxSize(sNombre, 50));
+			
+			String sApellido = lsAux.get(2);
+			Assert.assertTrue(rsePage.verifyTextMaxSize(sApellido, 50));
+			
+			String sEmail =lsAux.get(3);
+			if (!sEmail.isEmpty()) {
+				sEmail.contains("@");
+				Assert.assertTrue(rsePage.verifyTextMaxSize(sEmail, 241));
+			}
+			
+			String sTelefono =lsAux.get(4);
+			Assert.assertTrue(rsePage.verifyTextMaxSize(sTelefono, 20));
+			
+			String sDepartamento = lsAux.get(5);
+			Assert.assertTrue(rsePage.verifyTextMaxSize(sDepartamento, 100));
+			
+			String sGrupoDeUsuario = lsAux.get(6);
+			Assert.assertTrue(rsePage.verifyTextMaxSize(sGrupoDeUsuario, 50));
+			
+			String sGerenteACargoDelusuario = lsAux.get(7);
+			Assert.assertTrue(rsePage.verifyTextMaxSize(sGerenteACargoDelusuario, 50));
+			
+			String sMarcaDeBorrado = lsAux.get(8);
+			if (!sMarcaDeBorrado.isEmpty()) {
+				Integer.parseInt(sMarcaDeBorrado);
+				Assert.assertTrue(sMarcaDeBorrado.equals("1") || sMarcaDeBorrado.equals("0"));
+			}
+			
+			String sMarcaDeInactivo = lsAux.get(9);
+			if (!sMarcaDeInactivo.isEmpty()) {
+				Integer.parseInt(sMarcaDeInactivo);
+				Assert.assertTrue(sMarcaDeInactivo.equals("1") || sMarcaDeInactivo.equals("0"));
+			}
+			
+			String sTipoDeUsuario = lsAux.get(10);
+			Integer.parseInt(sTipoDeUsuario);
+			
+			String sValidoDesde = lsAux.get(11);
+			if (!sValidoDesde.isEmpty()) {
+				sdfDateFormat = new SimpleDateFormat(sDateFormatYMD);
+				sdfDateFormat.parse(sValidoDesde);
+			}
+			
+			String sValidoHasta = lsAux.get(12);
+			if (!sValidoHasta.isEmpty()) {
+				sdfDateFormat = new SimpleDateFormat(sDateFormatYMD);
+				sdfDateFormat.parse(sValidoHasta);
+			}
 		}
-	}*/
+	}
 	
 	//Test #31
 	@Test
@@ -3251,9 +3306,9 @@ public class Reportes {
 	}
 	
 	//Test #36
-	/*@Test
-	public void TS125428_CRM_Interfaz_LCRM_VENDEDORSP() throws ParseException, IOException {
-		String sName = "__";
+	@Test
+	public void TS125434_CRM_Interfaz_LCRM_VENDEDORSP() throws ParseException, IOException {
+		String sName = "_VENDEDORSP_";
 		
 		rsePage.checkName(sName);
 		
@@ -3266,9 +3321,82 @@ public class Reportes {
 		}
 		
 		for (List<String> lsAux : sList) {
+			String sSMDE_ICC_ID = lsAux.get(0);
+			Assert.assertFalse(sSMDE_ICC_ID.isEmpty());
+			Assert.assertTrue(rsePage.verifyTextMaxSize(sSMDE_ICC_ID, 50));
 			
+			String sSMDE_IMSI = lsAux.get(1);
+			Assert.assertTrue(rsePage.verifyTextMaxSize(sSMDE_IMSI, 50));
+			
+			String sSMDE_KI = lsAux.get(2);
+			Assert.assertTrue(rsePage.verifyTextMaxSize(sSMDE_KI, 50));
+			
+			String sSMDE_NUMERO_LINEA = lsAux.get(3);
+			Assert.assertFalse(sSMDE_NUMERO_LINEA.isEmpty());
+			Assert.assertTrue(rsePage.verifyTextMaxSize(sSMDE_NUMERO_LINEA, 50));
+			
+			String sSMDE_PLAN_REPRO = lsAux.get(4);
+			Assert.assertFalse(sSMDE_PLAN_REPRO.isEmpty());
+			Assert.assertTrue(rsePage.verifyTextMaxSize(sSMDE_PLAN_REPRO, 20));
+			
+			String sSMDE_NMU = lsAux.get(5);
+			Assert.assertTrue(rsePage.verifyTextMaxSize(sSMDE_NMU, 20));
+			
+			String sSMCA_FECHA_CARGA = lsAux.get(6);
+			sdfDateFormat = new SimpleDateFormat(sDateFormat);
+			sdfDateFormat.parse(sSMCA_FECHA_CARGA);
+			
+			String sSMCA_FECHA_PROCESADO = lsAux.get(7);
+			sdfDateFormat = new SimpleDateFormat(sDateFormat);
+			sdfDateFormat.parse(sSMCA_FECHA_PROCESADO);
+			
+			String sAGEN_VENDEDOR = lsAux.get(8);
+			Assert.assertFalse(sAGEN_VENDEDOR.isEmpty());
+			Assert.assertTrue(rsePage.verifyTextMaxSize(sAGEN_VENDEDOR, 50));
+			
+			String sAGEN_ACCOUNT_ID = lsAux.get(9);
+			Assert.assertFalse(sAGEN_ACCOUNT_ID.isEmpty());
+			Assert.assertTrue(rsePage.verifyTextMaxSize(sAGEN_ACCOUNT_ID, 50));
+			
+			String sAGEN_CODIGO_PUNTO_VENTA = lsAux.get(10);
+			if(!sAGEN_CODIGO_PUNTO_VENTA.isEmpty()) {
+				Integer.parseInt(sAGEN_CODIGO_PUNTO_VENTA);
+			}
+			
+			String sAGEN_DESCRIPCION_PUNTO_VENTA = lsAux.get(11);
+			Assert.assertFalse(sAGEN_DESCRIPCION_PUNTO_VENTA.isEmpty());
+			Assert.assertTrue(rsePage.verifyTextMaxSize(sAGEN_DESCRIPCION_PUNTO_VENTA, 20));
+			
+			String sAGEN_CODIGO_CANAL = lsAux.get(12);
+			Assert.assertTrue(rsePage.verifyTextMaxSize(sAGEN_CODIGO_CANAL, 10));
+			
+			String sAGEN_CANAL = lsAux.get(13);
+			Assert.assertTrue(rsePage.verifyTextMaxSize(sAGEN_CANAL, 50));
+			
+			String sAGEN_RAZON_SOCIAL = lsAux.get(14);
+			Assert.assertFalse(sAGEN_RAZON_SOCIAL.isEmpty());
+			Assert.assertTrue(rsePage.verifyTextMaxSize(sAGEN_RAZON_SOCIAL, 50));
+			
+			String sAGEN_TIPO_PUNTO_VENTA = lsAux.get(15);
+			Assert.assertFalse(sAGEN_TIPO_PUNTO_VENTA.isEmpty());
+			Assert.assertTrue(rsePage.verifyTextMaxSize(sAGEN_TIPO_PUNTO_VENTA, 50));
+			
+			String sAGEN_CODIGO_DEPOSITO = lsAux.get(16);
+			Assert.assertTrue(rsePage.verifyTextMaxSize(sAGEN_CODIGO_DEPOSITO, 50));
+			
+			String sAGEN_DOMICILIO_LOCALIDAD = lsAux.get(17);
+			Assert.assertTrue(rsePage.verifyTextMaxSize(sAGEN_DOMICILIO_LOCALIDAD, 50));
+			
+			String sAGEN_DOMICILIO_PROVINCIA = lsAux.get(18);
+			Assert.assertTrue(rsePage.verifyTextMaxSize(sAGEN_DOMICILIO_PROVINCIA, 50));
+			
+			String sFECHA_ACTUALIZACION = lsAux.get(19);
+			if (!sFECHA_ACTUALIZACION.isEmpty()) {
+				sdfDateFormat = new SimpleDateFormat(sDateFormat);
+				sdfDateFormat.parse(sFECHA_ACTUALIZACION);
+			}
 		}
-	}*/
+	}
 	
 	
 	//Test #37
@@ -3326,9 +3454,9 @@ public class Reportes {
 	}
 	
 	//Test #38
-	/*@Test
-	public void TS125428_CRM_Interfaz_LCRM_LEGACY ROLE PERMISSION() throws ParseException, IOException {
-		String sName = "__";
+	@Test
+	public void TS125436_CRM_Interfaz_LCRM_LEGACY_ROLE_PERMISSION() throws ParseException, IOException {
+		String sName = "_LEGACY_ROLE_PERMISSION_";
 		
 		rsePage.checkName(sName);
 		
@@ -3341,9 +3469,22 @@ public class Reportes {
 		}
 		
 		for (List<String> lsAux : sList) {
+			String sPerfil = lsAux.get(0);
+			Assert.assertTrue(rsePage.verifyTextMaxSize(sPerfil, 100));
 			
+			String sPermisos = lsAux.get(1);
+			Assert.assertTrue(rsePage.verifyTextMaxSize(sPermisos, 100));
+			
+			String sGrupoDePermisos = lsAux.get(2);
+			Assert.assertTrue(rsePage.verifyTextMaxSize(sGrupoDePermisos, 20));
+			
+			String sValorDesde = lsAux.get(3);
+			Assert.assertTrue(rsePage.verifyTextMaxSize(sValorDesde, 50));
+			
+			String sValorHasta = lsAux.get(4);
+			Assert.assertTrue(rsePage.verifyTextMaxSize(sValorHasta, 50));
 		}
-	}*/
+	}
 	
 	//Test #39
 	@Test	
@@ -3454,9 +3595,9 @@ public class Reportes {
 	}
 		
 	//Test #41
-	/*@Test
-	public void TS125428_CRM_Interfaz_LCRM_Legacy_Role() throws ParseException, IOException {
-		String sName = "__";
+	@Test
+	public void TS125439_CRM_Interfaz_LCRM_Legacy_Role() throws ParseException, IOException {
+		String sName = "_Q_LEGACY_ROLE_";
 		
 		rsePage.checkName(sName);
 		
@@ -3469,9 +3610,22 @@ public class Reportes {
 		}
 		
 		for (List<String> lsAux : sList) {
+			String sPerfil = lsAux.get(0);
+			Assert.assertTrue(rsePage.verifyTextMaxSize(sPerfil, 100));
 			
+			String sDescripcionDelPerfil = lsAux.get(1);
+			Assert.assertTrue(rsePage.verifyTextMaxSize(sDescripcionDelPerfil, 132));
+			
+			String sIdioma = lsAux.get(2);
+			Assert.assertTrue(rsePage.verifyTextMaxSize(sIdioma, 2));
+			
+			String sMarcaDeBorrado = lsAux.get(3);
+			if (!sMarcaDeBorrado.isEmpty()) {
+				Integer.parseInt(sMarcaDeBorrado);
+				Assert.assertTrue(sMarcaDeBorrado.equals("1") || sMarcaDeBorrado.equals("0"));
+			}
 		}
-	}*/
+	}
 	
 	//Test #42
 	@Test	
@@ -3959,9 +4113,9 @@ public class Reportes {
 	}
 	
 	//Test #48
-	/*@Test
+	@Test
 	public void TS125446_CRM_Interfaz_LCRM_LegacyPermissions() throws ParseException, IOException {
-		String sName = "__";
+		String sName = "_LEGACY_PERMISSIONS_";
 		
 		rsePage.checkName(sName);
 		
@@ -3974,9 +4128,16 @@ public class Reportes {
 		}
 		
 		for (List<String> lsAux : sList) {
+			String sObjetoDeAutorización = lsAux.get(0);
+			Assert.assertTrue(rsePage.verifyTextMaxSize(sObjetoDeAutorización, 50));
 			
+			String sDescripciónDeObjeto = lsAux.get(1);
+			Assert.assertTrue(rsePage.verifyTextMaxSize(sDescripciónDeObjeto, 50));
+			
+			String sIdioma = lsAux.get(2);
+			Assert.assertTrue(rsePage.verifyTextMaxSize(sIdioma, 2));
 		}
-	}*/
+	}
 	
 	//Test #49
 	@Test
