@@ -1588,9 +1588,9 @@ public class BeFANConfigurador extends TestBase {
 		driver.findElement(By.cssSelector(".btn.btn-primary")).click();
 		driver.findElement(By.cssSelector(".form-control.ng-pristine.ng-untouched.ng-valid.ng-empty")).sendKeys("cordoba");
 		driver.findElement(By.cssSelector(".btn.btn-primary")).click();
-		
-		for(WebElement x : driver.findElements(By.cssSelector(".alert.alert-dismissable.alert-danger"))){
-			if(x.getText().toLowerCase().contains("region existente")) {
+		sleep(3000);
+		for(WebElement x : driver.findElements(By.className("modal-body"))){
+			if(x.getText().toLowerCase().contains("existente")) {
 				System.out.println(x.getText());
 				buscarYClick(driver.findElements(By.cssSelector(".btn.btn-link")), "equals", "cancelar");
 					cancelar = true;
@@ -1610,12 +1610,12 @@ public class BeFANConfigurador extends TestBase {
 		}
 			}
 			
-		for (WebElement x : driver.findElements(By.cssSelector(".panel-group.panel-group-alternative.ng-scope"))) {
+		/*for (WebElement x : driver.findElements(By.className("panel-heading"))) {
 			if (x.getText().toLowerCase().contains("cordoba"))
 				((JavascriptExecutor) driver).executeScript("window.scrollTo(0," + x.getLocation().y + ")");
-		}
+		}*/
 		
-		buscarYClick(driver.findElements(By.cssSelector(".panel-group.panel-group-alternative.ng-scope")), "contains", "cordoba");
+		buscarYClick(driver.findElements(By.cssSelector(".panel-group.panel-group-alternative.ng-scope")), "equals", "cordoba");
 		for (WebElement x : driver.findElements(By.className("panel-group"))) {
 			if (x.getText().contains("3546"))
 				x.findElement(By.tagName("tbody")).findElement(By.tagName("button")).click();
