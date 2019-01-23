@@ -9,6 +9,7 @@ import java.net.UnknownHostException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 import org.junit.Assert;
 import org.testng.annotations.AfterClass;
@@ -24,6 +25,7 @@ public class Reportes {
 	String sDateFormat = "dd/MM/yyyy HH:mm:ss";
 	String sDateFormatDMY = "dd/MM/yyyy";
 	String sDateFormatYMD = "yyyy/MM/dd";
+	
 	SimpleDateFormat sdfDateFormat;
 	List<String> sListOfFiles = null;
 	
@@ -158,7 +160,7 @@ public class Reportes {
 			
 			String sFechaNacimiento = lsAux.get(27);
 			if (!sFechaNacimiento.isEmpty()) {
-				sdfDateFormat = new SimpleDateFormat(sDateFormatBorn);
+				sdfDateFormat = new SimpleDateFormat(sDateFormatDMY);
 				sdfDateFormat.parse(sFechaNacimiento);
 			}
 			
@@ -2456,25 +2458,32 @@ public class Reportes {
 	}
 	
 	//Test #28
-	/*@Test
-	public void TS125426_CRM_Interfaz_LCRM_ExportEpcEcomm() throws ParseException, IOException {
-		String sName = "__";
-		
-		rsePage.checkName(sName);
-		
-		List<List<String>> sList = new ArrayList<List<String>>();
-		
-		List<String> sFiles = rsePage.findFiles(sName);
-		
-		for (String sAux : sFiles) {
-			sList.add(rsePage.readTxt(sAux));
-		}
-		
-		for (List<String> lsAux : sList) {
+			@Test
+			public void TS125426_CRM_Interfaz_LCRM_ExportEpcEcomm() throws ParseException, IOException {
+				String sName = "_EXPORTEPCECOMM_";
+				
+				rsePage.checkName(sName);
+				
+				List<List<String>> sList = new ArrayList<List<String>>();
+				
+				List<String> sFiles = rsePage.findFiles(sName);
+				
+				for (String sAux : sFiles) {
+					sList.add(rsePage.readTxt(sAux));
+				}
+				
+				for (List<String> lsAux : sList) {
+					String sIdPricebookEntry = lsAux.get(0); 
+					Assert.assertTrue(rsePage.verifyTextMaxSize(sIdPricebookEntry, 18)); 
+					 
+					String sNMU = lsAux.get(1); 
+					Assert.assertTrue(rsePage.verifyTextMaxSize(sNMU, 200)); 
+					 
+					String sSHDESPlan = lsAux.get(2); 
+					Assert.assertTrue(rsePage.verifyTextMaxSize(sSHDESPlan, 5));
+				}
+			}
 			
-		}
-	}*/
-	
 	//Test #29
 	@Test
 	public void TS125427_CRM_Interfaz_LCRM_Direccion() throws ParseException, IOException {
@@ -3733,11 +3742,11 @@ public class Reportes {
 		}
 		
 		for (List<String> lsAux : sList) {
-			String sObjetoDeAutorizaci�n = lsAux.get(0);
-			Assert.assertTrue(rsePage.verifyTextMaxSize(sObjetoDeAutorizaci�n, 50));
+			String sObjetoDeAutorizacion = lsAux.get(0);
+			Assert.assertTrue(rsePage.verifyTextMaxSize(sObjetoDeAutorizacion, 50));
 			
-			String sDescripci�nDeObjeto = lsAux.get(1);
-			Assert.assertTrue(rsePage.verifyTextMaxSize(sDescripci�nDeObjeto, 50));
+			String sDescripcionDeObjeto = lsAux.get(1);
+			Assert.assertTrue(rsePage.verifyTextMaxSize(sDescripcionDeObjeto, 50));
 			
 			String sIdioma = lsAux.get(2);
 			Assert.assertTrue(rsePage.verifyTextMaxSize(sIdioma, 2));
