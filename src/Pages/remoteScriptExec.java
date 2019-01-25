@@ -276,7 +276,7 @@ public class remoteScriptExec {
 			
 			if (fListFiles[i].isFile()) {
 				String sFileName = fListFiles[i].getName();
-				if (sFileName.matches("IB" + sName + "(?<date>\\d{14})[\\.]txt(?:(\\.gz))")) {
+				if (sFileName.matches("IB" + sName + "(?<date>\\d{14})[\\.]txt(?:(\\.gz)){0,1}")) {
 					sFiles.add(sFileName);
 				}
 			}
@@ -302,8 +302,9 @@ public class remoteScriptExec {
 	}
 	
 	@SuppressWarnings("resource")
-	public List<String> readTxt(String sName) throws IOException {
-		List<String> sContent = new ArrayList<String>();
+	public List<List<String>> readTxt(String sName) throws IOException {
+		List<List<String>> sContentLine = new ArrayList<List<String>>();
+		List<String> sContent;
 		String[] sSplit;
 		File fFile = null;
 		FileReader frFileReader = null;
@@ -311,7 +312,6 @@ public class remoteScriptExec {
 		fFile = new File ("FTPFiles/" + sName);
 		frFileReader = new FileReader (fFile);
 		brBufferedReader = new BufferedReader(frFileReader);
-		
 		String sLine;
 		while((sLine=brBufferedReader.readLine())!=null) {
 			if (sLine.toString().contains("|")) {
@@ -325,13 +325,16 @@ public class remoteScriptExec {
 					sSplit = sLine.split(" ");
 				}
 			}
+			sContent = new ArrayList<String>();
+			sContent.clear();
 			for (int i = 0; i < sSplit.length; i++) {
 				sContent.add(sSplit[i]);
 			}
+			sContentLine.add(sContent);
 		}
 		frFileReader.close();
 		brBufferedReader.close();
-		return sContent;
+		return sContentLine;
 	}
 	
 	public void checkName(String sName) throws ParseException, IOException {
@@ -364,8 +367,8 @@ public class remoteScriptExec {
 	
 	public boolean verifyTextMaxSize(String sCell, int iSize) {
 		boolean bAssert = false;
-		
 		int iSizeOfContent = sCell.length();
+		
 		bAssert = iSizeOfContent <= iSize;
 		
 		return bAssert;
