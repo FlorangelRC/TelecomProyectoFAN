@@ -1587,44 +1587,53 @@ public class BeFANConfigurador extends TestBase {
 		irA("regiones", "gesti\u00f3n");
 		driver.findElement(By.cssSelector(".btn.btn-primary")).click();
 		driver.findElement(By.cssSelector(".form-control.ng-pristine.ng-untouched.ng-valid.ng-empty")).sendKeys("cordoba");
-		driver.findElement(By.cssSelector(".btn.btn-primary")).click();
+		buscarYClick(driver.findElements(By.cssSelector(".btn.btn-primary")), "equals", "agregar");	
 		sleep(3000);
 		for(WebElement x : driver.findElements(By.className("modal-body"))){
+			if(x.getText().toLowerCase().contains("satisfactoriamente")){
+				System.out.println(x.getText());
+				buscarYClick(driver.findElements(By.cssSelector(".btn.btn-primary")), "equals", "cerrar");
+				break;
+			}
+			
 			if(x.getText().toLowerCase().contains("existente")) {
 				System.out.println(x.getText());
 				buscarYClick(driver.findElements(By.cssSelector(".btn.btn-link")), "equals", "cancelar");
 					cancelar = true;
 					Assert.assertTrue(cancelar);
 					break;
-				}else {
+					}
+		
+		else {
 				buscarYClick(driver.findElements(By.cssSelector(".btn.btn-primary")), "equals", "cerrar");
 				buscarYClick(driver.findElements(By.cssSelector(".panel-group.panel-group-alternative.ng-scope")), "contains", "cordoba");
+				sleep(3000);
 				driver.findElement(By.cssSelector(".panel-collapse.in.collapse")).findElement(By.cssSelector(".btn.btn-link")).click();
 				sleep(3000);
 				driver.findElement(By.className("check-filter-on")).click();
-				
 				buscarYClick(driver.findElements(By.cssSelector(".btn.btn-primary")), "equals", "agregar");
 				buscarYClick(driver.findElements(By.cssSelector(".btn.btn-primary")), "equals", "cerrar");
 				sleep(5000);
 				break;
 		}
-			}
-			
-		/*for (WebElement x : driver.findElements(By.className("panel-heading"))) {
-			if (x.getText().toLowerCase().contains("cordoba"))
-				((JavascriptExecutor) driver).executeScript("window.scrollTo(0," + x.getLocation().y + ")");
-		}*/
-		
+			}	
+		sleep(3000);
 		buscarYClick(driver.findElements(By.cssSelector(".panel-group.panel-group-alternative.ng-scope")), "equals", "cordoba");
-		for (WebElement x : driver.findElements(By.className("panel-group"))) {
-			if (x.getText().contains("3546"))
-				x.findElement(By.tagName("tbody")).findElement(By.tagName("button")).click();
+		for (WebElement x : driver.findElement(By.cssSelector(".panel.ng-scope.ng-isolate-scope.panel-default.panel-open")).findElement(By.tagName("tbody")).findElements(By.tagName("tr"))) {
+			if (x.getText().contains("3546"));
+				x.findElement(By.cssSelector(".actions.text-center")).findElement(By.cssSelector(".btn.btn-link")).click();
 			}
+		driver.findElement(By.className("modal-footer")).findElement(By.className("pull-right"));
 		buscarYClick(driver.findElements(By.cssSelector(".btn.btn-primary")), "equals", "eliminar");
 		Assert.assertTrue(page.verificarMensajeExitoso());
 		buscarYClick(driver.findElements(By.cssSelector(".btn.btn-primary")), "equals", "cerrar");
 		eliminar = true;
 		Assert.assertTrue(eliminar);
+		driver.findElement(By.className("modal-footer")).findElement(By.className("pull-right"));
+		buscarYClick(driver.findElements(By.cssSelector(".btn.btn-primary")), "equals", "eliminar");
+		Assert.assertTrue(page.verificarMensajeExitoso());
+		buscarYClick(driver.findElements(By.cssSelector(".btn.btn-primary")), "equals", "cerrar");
+		driver.findElement(By.cssSelector(".btn.btn-primary")).click();
 	}
 	
 	@Test (groups = "BeFan")

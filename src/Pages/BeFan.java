@@ -507,6 +507,7 @@ public class BeFan extends BasePage{
 		boolean confirmacion = false;
 		for(WebElement x : driver.findElements(By.className("modal-body"))) {
 			if(x.getText().toLowerCase().contains("satisfactoriamente")) {
+				System.out.println(x.getText());
 				confirmacion = true;
 			}
 		}

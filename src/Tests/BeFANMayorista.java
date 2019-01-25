@@ -882,7 +882,7 @@ public class BeFANMayorista extends TestBase {
 		resultadoTexto[1] = "Activaci\u00f3n confirmada";
 		String mensaje = "";
 		int cant = 0;
-		cant = Integer.parseInt(Cantidad);
+		//cant = Integer.parseInt(Cantidad);
 		irA("importacion");
 		sleep(500);
 		Botones.SISeleccionDeDeposito(deposito);
