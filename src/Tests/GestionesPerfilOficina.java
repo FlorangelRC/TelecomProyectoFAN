@@ -7587,6 +7587,12 @@ public class GestionesPerfilOficina extends TestBase {
 		descargar.click();
 		sleep(5000);
 		String downloadPath = "C:\\Users\\Quelys\\Downloads";
+		try {
+			Runtime.getRuntime().exec("rundll32 url.dll,FileProtocolHandler "+downloadPath);
+			System.out.println("Descargo Archivo");
+			} catch (IOException ee) {
+			ee.printStackTrace();
+			}
 		Assert.assertTrue(scp.isFileDownloaded(downloadPath,"B00785"), "Failed to download Expected document");
 	}
 	
