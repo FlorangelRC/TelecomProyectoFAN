@@ -31,7 +31,7 @@ public class Reportes {
 	
 	//Before & AfterClass
 	
-	//@BeforeClass(alwaysRun=true)
+	@BeforeClass(alwaysRun=true)
 	public void download() throws MalformedURLException, UnknownHostException, FileNotFoundException, IOException, JSchException, SftpException {
 		rsePage.FTPConnection();
 		System.out.println("Connection stablished.");
@@ -39,7 +39,7 @@ public class Reportes {
 		System.out.println("Download completed.");
 	}
 	
-	//@AfterClass(alwaysRun=true)
+	@AfterClass(alwaysRun=true)
 	public void quit() throws IOException {
 		rsePage.deleteAllFiles();
 	}
