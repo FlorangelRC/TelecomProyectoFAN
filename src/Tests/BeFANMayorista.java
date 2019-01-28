@@ -5,11 +5,15 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.nio.file.Files;
 import java.nio.file.Paths;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 
 import org.openqa.selenium.By;
+import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 
@@ -284,14 +288,32 @@ public class BeFANMayorista extends TestBase {
 	}
 	
 	@Test (groups = "BeFAN")
-	public void TS112042_BeFan_Movil_REPRO_Preactivacion_repro_Busqueda_de_archivos_Agente_Por_fecha_Exitosa() {
+	public void TS112042_BeFan_Movil_REPRO_Preactivacion_repro_Busqueda_de_archivos_Agente_Por_fecha_Exitosa() throws ParseException {
+		BeFan fechas= new BeFan (driver);
+		SimpleDateFormat formatoDelTexto = new SimpleDateFormat ("dd/MM/yyyy");
+		String desde ="27/11/2018";
+		String hasta = "27/12/2018";
+		Date fechaDesde = formatoDelTexto.parse(desde);
+		Date fechaHasta =formatoDelTexto.parse(hasta);
 		boolean cantidad = false;
 		irA("gestion");
 		selectByText(driver.findElement(By.cssSelector(".text.form-control.ng-pristine.ng-untouched.ng-valid.ng-empty")), "Procesado");
 		selectByText(driver.findElements(By.cssSelector(".text.form-control.ng-pristine.ng-untouched.ng-valid.ng-empty")).get(1), "BAS-VJP-BAHIA BLANCA - VJP Punta Alta");
-		driver.findElement(By.id("dataPickerDesde")).clear();
-		driver.findElement(By.id("dataPickerDesde")).sendKeys("27/11/2018");
-		driver.findElement(By.id("dataPickerHasta")).sendKeys("27/12/2018");
+		driver.findElement(By.id("dataPickerDesde"));
+		((JavascriptExecutor) driver).executeScript("document.getElementById('dataPickerDesde').value='"+desde+"'");
+		sleep(3000);
+		driver.findElement(By.id("dataPickerHasta"));
+		((JavascriptExecutor) driver).executeScript("document.getElementById('dataPickerHasta').value='"+hasta+"'");
+		int dias = fechas.numeroDiasEntreDosFechas(fechaDesde, fechaHasta);
+		boolean confirmacion = false;
+		if(dias <= 90) {
+			confirmacion = true;
+			System.out.println("Hay " + dias + " dias, " +"No supera los 90 dias comprendidos");
+		}else {
+			System.out.println("Se debe ingresar fechas las cuales no superen los 90 dias comprendidos");
+		}
+		
+		Assert.assertTrue(confirmacion);
 		driver.findElement(By.cssSelector(".btn.btn-primary")).click();
 		sleep(5000);
 		List<WebElement> tabla = driver.findElement(By.id("exportarTabla")).findElement(By.tagName("tbody")).findElements(By.tagName("tr"));
@@ -848,7 +870,7 @@ public class BeFANMayorista extends TestBase {
 	}
 	//Falta probar, deberia funcionar :(
 	@Test (groups = "BeFan", dataProvider="DosSerialesValidos")
-	public void TS97657_BeFan_Movil_REPRO_Asociacion_de_diferentes_seriales_a_diferentes_prefijos(String path, String nombreArch, String deposito, String prefijo, String serial1, String serial2, String prefijo2) throws IOException {
+	public void TS97657_BeFan_Movil_REPRO_Asociacion_de_diferentes_seriales_a_diferentes_prefijos(String path, String nombreArch, String deposito, String prefijo, String serial1, String serial2, String prefijo2) throws Exception {
 		BeFan Botones = new BeFan(driver);
 		DPW dpw = new DPW();
 		String[] resultadoEstado = {""};

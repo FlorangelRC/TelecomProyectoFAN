@@ -1587,44 +1587,53 @@ public class BeFANConfigurador extends TestBase {
 		irA("regiones", "gesti\u00f3n");
 		driver.findElement(By.cssSelector(".btn.btn-primary")).click();
 		driver.findElement(By.cssSelector(".form-control.ng-pristine.ng-untouched.ng-valid.ng-empty")).sendKeys("cordoba");
-		driver.findElement(By.cssSelector(".btn.btn-primary")).click();
-		
-		for(WebElement x : driver.findElements(By.cssSelector(".alert.alert-dismissable.alert-danger"))){
-			if(x.getText().toLowerCase().contains("region existente")) {
+		buscarYClick(driver.findElements(By.cssSelector(".btn.btn-primary")), "equals", "agregar");	
+		sleep(3000);
+		for(WebElement x : driver.findElements(By.className("modal-body"))){
+			if(x.getText().toLowerCase().contains("satisfactoriamente")){
+				System.out.println(x.getText());
+				buscarYClick(driver.findElements(By.cssSelector(".btn.btn-primary")), "equals", "cerrar");
+				break;
+			}
+			
+			if(x.getText().toLowerCase().contains("existente")) {
 				System.out.println(x.getText());
 				buscarYClick(driver.findElements(By.cssSelector(".btn.btn-link")), "equals", "cancelar");
 					cancelar = true;
 					Assert.assertTrue(cancelar);
 					break;
-				}else {
+					}
+		
+		else {
 				buscarYClick(driver.findElements(By.cssSelector(".btn.btn-primary")), "equals", "cerrar");
 				buscarYClick(driver.findElements(By.cssSelector(".panel-group.panel-group-alternative.ng-scope")), "contains", "cordoba");
+				sleep(3000);
 				driver.findElement(By.cssSelector(".panel-collapse.in.collapse")).findElement(By.cssSelector(".btn.btn-link")).click();
 				sleep(3000);
 				driver.findElement(By.className("check-filter-on")).click();
-				
 				buscarYClick(driver.findElements(By.cssSelector(".btn.btn-primary")), "equals", "agregar");
 				buscarYClick(driver.findElements(By.cssSelector(".btn.btn-primary")), "equals", "cerrar");
 				sleep(5000);
 				break;
 		}
+			}	
+		sleep(3000);
+		buscarYClick(driver.findElements(By.cssSelector(".panel-group.panel-group-alternative.ng-scope")), "equals", "cordoba");
+		for (WebElement x : driver.findElement(By.cssSelector(".panel.ng-scope.ng-isolate-scope.panel-default.panel-open")).findElement(By.tagName("tbody")).findElements(By.tagName("tr"))) {
+			if (x.getText().contains("3546"));
+				x.findElement(By.cssSelector(".actions.text-center")).findElement(By.cssSelector(".btn.btn-link")).click();
 			}
-			
-		for (WebElement x : driver.findElements(By.cssSelector(".panel-group.panel-group-alternative.ng-scope"))) {
-			if (x.getText().toLowerCase().contains("cordoba"))
-				((JavascriptExecutor) driver).executeScript("window.scrollTo(0," + x.getLocation().y + ")");
-		}
-		
-		buscarYClick(driver.findElements(By.cssSelector(".panel-group.panel-group-alternative.ng-scope")), "contains", "cordoba");
-		for (WebElement x : driver.findElements(By.className("panel-group"))) {
-			if (x.getText().contains("3546"))
-				x.findElement(By.tagName("tbody")).findElement(By.tagName("button")).click();
-			}
+		driver.findElement(By.className("modal-footer")).findElement(By.className("pull-right"));
 		buscarYClick(driver.findElements(By.cssSelector(".btn.btn-primary")), "equals", "eliminar");
-		Assert.assertTrue(pbf.verificarMensajeExitoso());
+		Assert.assertTrue(page.verificarMensajeExitoso());
 		buscarYClick(driver.findElements(By.cssSelector(".btn.btn-primary")), "equals", "cerrar");
 		eliminar = true;
 		Assert.assertTrue(eliminar);
+		driver.findElement(By.className("modal-footer")).findElement(By.className("pull-right"));
+		buscarYClick(driver.findElements(By.cssSelector(".btn.btn-primary")), "equals", "eliminar");
+		Assert.assertTrue(page.verificarMensajeExitoso());
+		buscarYClick(driver.findElements(By.cssSelector(".btn.btn-primary")), "equals", "cerrar");
+		driver.findElement(By.cssSelector(".btn.btn-primary")).click();
 	}
 	
 	@Test (groups = "BeFan")
@@ -1666,5 +1675,58 @@ public class BeFANConfigurador extends TestBase {
 				x.findElement(By.cssSelector(".glyphicon.glyphicon-remove")).isEnabled();
 			}
 		}
+	}
+	
+	@Test (groups = "BeFan")
+	public void TS126624_BeFan_Movil_REPRO_Preactivacion_repro_Gestion_de_agrupadores_Busqueda_Modificacion_de_agrupadores_Asignacion_de_prefijos_a_agrupador_existente_No_guardando() {
+		irA("regiones", "gesti\u00f3n");
+		boolean btnCancelar = false;
+		buscarYClick(driver.findElements(By.cssSelector(".panel-group.panel-group-alternative.ng-scope")), "contains", "cordoba");
+		for (WebElement x : driver.findElements(By.className("panel-group"))) {
+			try {
+				if (x.getText().toLowerCase().contains("cordoba"))
+					x.findElement(By.cssSelector(".glyphicon.glyphicon-plus")).click();
+			} catch(Exception e) {}
+		}
+		sleep(3000);
+		driver.findElement(By.id("compatibility")).findElement(By.tagName("input")).click();
+		if (driver.findElement(By.cssSelector(".ng-scope.block-ui.block-ui-anim-fade")).findElement(By.cssSelector(".btn.btn-link")).getText().equals("Cancelar"))
+			btnCancelar = true;
+		Assert.assertTrue(btnCancelar);
+	}
+	
+	@Test (groups = "BeFan")
+	public void TS126628_BeFan_Movil_REPRO_Preactivacion_repro_Gestion_de_agrupadores_Busqueda_Modificacion_de_agrupadores_Eliminacion_de_prefijos_en_agrupador_existente_Logeo(){
+		irA("regiones", "gesti\u00f3n");
+		boolean eliminarPrefijo = false;
+		buscarYClick(driver.findElements(By.cssSelector(".panel-group.panel-group-alternative.ng-scope")), "contains", "cordoba");
+		for (WebElement x : driver.findElements(By.className("panel-group"))) {
+			try {
+				if (x.getText().toLowerCase().contains("cordoba"))
+					x.findElement(By.cssSelector(".glyphicon.glyphicon-plus")).click();
+			} catch(Exception e) {}
+		}
+		sleep(3000);
+		driver.findElement(By.cssSelector(".compatibility.custom-check.ng-scope")).findElement(By.tagName("input")).click();
+		String nroPrefijo = driver.findElement(By.cssSelector(".compatibility.custom-check.ng-scope")).findElement(By.tagName("label")).getText();
+		System.out.println(nroPrefijo);
+		buscarYClick(driver.findElements(By.cssSelector(".btn.btn-primary")), "equals", "agregar");
+		buscarYClick(driver.findElements(By.cssSelector(".btn.btn-primary")), "equals", "cerrar");
+		driver.navigate().refresh();
+		sleep(3000);
+		buscarYClick(driver.findElements(By.cssSelector(".panel-group.panel-group-alternative.ng-scope")), "contains", "cordoba");
+		((JavascriptExecutor) driver).executeScript("window.scrollTo(0," + driver.findElement(By.cssSelector(".panel.ng-scope.ng-isolate-scope.panel-default.panel-open")).getLocation().y + ")");
+		for (WebElement x : driver.findElement(By.cssSelector(".panel.ng-scope.ng-isolate-scope.panel-default.panel-open")).findElement(By.tagName("tbody")).findElements(By.tagName("tr"))) {
+			if (x.getText().contains(nroPrefijo)) {
+				x.findElement(By.cssSelector(".btn.btn-link")).click();
+				buscarYClick(driver.findElements(By.cssSelector(".btn.btn-primary")), "equals", "eliminar");
+				buscarYClick(driver.findElements(By.cssSelector(".btn.btn-primary")), "equals", "cerrar");
+				eliminarPrefijo = true;
+			}
+		}
+		Assert.assertTrue(eliminarPrefijo);
+		sleep(3000);
+		buscarYClick(driver.findElements(By.cssSelector(".btn.btn-link")), "equals", "cancelar");
+		//No se visualiza el identificador del usuario y la fecha de baja. 
 	}
 }
