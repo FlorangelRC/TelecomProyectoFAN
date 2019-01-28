@@ -29,7 +29,7 @@ public class altaDeCuentas extends TestBase{
 	
 	private WebDriver driver;
 
-	@BeforeClass(groups= {"Wave1"})
+	//@BeforeClass(groups= {"Wave1"})
 	public void init() throws Exception
 	{
 		this.driver = setConexion.setupEze();
@@ -57,12 +57,15 @@ public class altaDeCuentas extends TestBase{
 		 String FechaNacimiento="01/02/1990";
 		 Random rnd = new Random();
 		 int opcionGenero=rnd.nextInt(1);
-	     archivo = new File ("C:\\Users\\Florangel\\Downloads\\AltaMasivaCuentas.txt");
+	     archivo = new File ("C:\\Users\\Florangel\\Downloads\\LineasListadas.txt");
 	     fr = new FileReader (archivo);
 	     br = new BufferedReader(fr);
-
-	      // Lectura del fichero
 	     String linea;
+	     while((linea=br.readLine())!=null) {
+	    	 System.out.println("Linea: "+linea);
+	     }
+	      // Lectura del fichero
+	     /*String linea;
 	     while((linea=br.readLine())!=null) {
 		      separado = linea.split(",");  
 		      Documento = separado[1];
@@ -98,6 +101,6 @@ public class altaDeCuentas extends TestBase{
 			  //CLick Continuar
 			  driver.findElement(By.id("Contact_nextBtn")).click();
 			  sleep(10000);
-	        }
+	        }*/
 	}
 }

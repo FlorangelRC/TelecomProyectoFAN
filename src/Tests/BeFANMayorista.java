@@ -289,6 +289,7 @@ public class BeFANMayorista extends TestBase {
 		irA("gestion");
 		selectByText(driver.findElement(By.cssSelector(".text.form-control.ng-pristine.ng-untouched.ng-valid.ng-empty")), "Procesado");
 		selectByText(driver.findElements(By.cssSelector(".text.form-control.ng-pristine.ng-untouched.ng-valid.ng-empty")).get(1), "BAS-VJP-BAHIA BLANCA - VJP Punta Alta");
+		driver.findElement(By.id("dataPickerDesde")).clear();
 		driver.findElement(By.id("dataPickerDesde")).sendKeys("27/11/2018");
 		driver.findElement(By.id("dataPickerHasta")).sendKeys("27/12/2018");
 		driver.findElement(By.cssSelector(".btn.btn-primary")).click();
@@ -859,7 +860,7 @@ public class BeFANMayorista extends TestBase {
 		resultadoTexto[1] = "Activaci\u00f3n confirmada";
 		String mensaje = "";
 		int cant = 0;
-		cant = Integer.parseInt(Cantidad);
+		//cant = Integer.parseInt(Cantidad);
 		irA("importacion");
 		sleep(500);
 		Botones.SISeleccionDeDeposito(deposito);
