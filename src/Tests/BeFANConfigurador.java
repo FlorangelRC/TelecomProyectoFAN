@@ -1731,6 +1731,62 @@ public class BeFANConfigurador extends TestBase {
 	}
 	
 	@Test (groups = "BeFan")
+	public void TS126626_BeFan_Movil_REPRO_Preactivacion_repro_Gestion_de_agrupadores_Busqueda_Modificacion_de_agrupadores_Eliminacion_de_prefijos_en_agrupador_existente_No_guardando(){
+		irA("regiones", "gesti\u00f3n");
+		boolean noEliminar = false;
+		buscarYClick(driver.findElements(By.cssSelector(".panel-group.panel-group-alternative.ng-scope")), "contains", "la plata");
+		driver.findElement(By.cssSelector(".panel-collapse.in.collapse")).findElement(By.cssSelector(".btn.btn-link")).click();
+		String msj = driver.findElement(By.className("modal-header")).getText();
+		if (msj.contains("Esta seguro que desea eliminarlo")) {
+			if (driver.findElement(By.className("modal-footer")).findElement(By.cssSelector(".btn.btn-link")).getText().equals("Cancelar")) {
+				driver.findElement(By.className("modal-footer")).findElement(By.cssSelector(".btn.btn-link")).click();
+				noEliminar = true;
+			}
+		}
+		Assert.assertTrue(noEliminar);
+	}
+	
+	@Test (groups = "BeFan")
+	public void TS126627_BeFan_Movil_REPRO_Preactivacion_repro_Gestion_de_agrupadores_Busqueda_Modificacion_de_agrupadores_Asignacion_de_prefijos_a_agrupador_existente_Logeo(){
+		irA("regiones", "gesti\u00f3n");
+		pbf = new Pages.BeFan(driver);
+		pbf.buscarRegion("la plata");
+		List <WebElement> region = driver.findElements(By.xpath("//*[@class='panel-group'] //*[@class='collapsed'] //*[@class='ng-binding']"));
+		for(WebElement x : region) {
+		if(x.getText().toLowerCase().contains("la plata")) {
+			System.out.println("La region es : " +x.getText());
+			x.click();
+			break;
+			}
+		}	
+		WebElement tabla = driver.findElement(By.cssSelector(".table.table-top-fixed.table-striped.table-primary.ng-scope"));
+		for(WebElement x : tabla.findElements(By.tagName("td"))) {
+			System.out.println(x.getText());
+			Assert.assertTrue(x.isDisplayed());
+		}
+		WebElement usuario = driver.findElement(By.className("tpi-user"));
+		System.out.println(usuario.getText());
+		Assert.assertTrue(usuario.isDisplayed());
+	}
+	
+	@Test (groups = "BeFan")
+	public void TS126630_BeFan_Movil_REPRO_Preactivacion_repro_Gestion_de_agrupadores_Busqueda_Modificacion_de_agrupadores_Nombre(){
+		irA("regiones", "gesti\u00f3n");
+		pbf = new Pages.BeFan(driver);
+		pbf.buscarRegion("la plata");
+		List <WebElement> region = driver.findElements(By.xpath("//*[@class='panel-group'] //*[@class='collapsed'] //*[@class='ng-binding']"));
+		for(WebElement x : region) {
+		if(x.getText().toLowerCase().contains("la plata")) {
+			System.out.println("La region es : " +x.getText());
+			x.click();
+			break;
+			}
+		WebElement editar = driver.findElement(By.cssSelector(".glyphicon.glyphicon-edit"));
+		Assert.assertTrue(editar.isEnabled());
+		}	
+	}
+	
+	@Test (groups = "BeFan")
 	public void TS112027_BeFan_Movil_REPRO_Preactivacion_repro_Gestion_de_agrupadores_Verificacion_de_prefijos() {
 	irA("regiones", "gesti\u00f3n");
 	buscarYClick(driver.findElements(By.cssSelector(".panel-group.panel-group-alternative.ng-scope")), "contains", "bas-vjp-bahia blanca");
