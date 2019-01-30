@@ -25,9 +25,12 @@ import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 
+import com.sun.org.apache.xalan.internal.xsltc.compiler.sym;
+
 import Pages.BeFan;
 import Pages.ContactSearch;
 import Pages.MDW;
+import Pages.Marketing;
 import Pages.SCP;
 import Pages.setConexion;
 import Pages.DPW;
@@ -1320,6 +1323,30 @@ public class BeFANMayorista extends TestBase {
 		Assert.assertTrue(true);
 	}
 	
+	@Test (groups = "BeFAN")
+	public void TS126680_BeFan_Movil_REPRO_Preactivacion_repro_Visualizacion_de_archivos_importados_Fecha_de_carga() {
+	boolean fechaDeCarga = false;
+	String sDateFormat = "dd/MM/yyyy HH:mm:ss";
+	//SimpleDateFormat sdfDateFormat;
+	irA("gestion");
+	selectByText(driver.findElement(By.cssSelector(".text.form-control.ng-pristine.ng-untouched.ng-valid.ng-empty")), "En Proceso");
+	selectByText(driver.findElements(By.cssSelector(".text.form-control.ng-pristine.ng-untouched.ng-valid.ng-empty")).get(1), "BAS-VJP-BAHIA BLANCA - VJP Punta Alta");
+	driver.findElement(By.cssSelector(".btn.btn-primary")).click();
+	sleep(5000);
+	WebElement tabla = driver.findElement(By.id("exportarTabla")).findElement(By.tagName("thead"));
+	for (WebElement x : tabla.findElements(By.tagName("th"))) {
+		if (x.getText().contains("Fecha de Carga"))
+			fechaDeCarga = true;
+	}
+	WebElement cont = driver.findElement(By.id("exportarTabla"));
+	Marketing colu = new Marketing(driver);
+	List<WebElement> x = colu.traerColumnaElement(cont, 8, 1);	
+	for(WebElement a : x) {
+		a.getText().contains(sDateFormat);
+		//System.out.println(a.getText());
+		}
+	Assert.assertTrue(fechaDeCarga);
+	}	
 	@Test (groups = "BeFan", dataProvider="GestionRegionesCreacion", dependsOnGroups="EliminacionDeAgrupador")
 	public void TS126636_BeFan_Movil_REPRO_Preactivacion_repro_Gestion_de_agrupadores_Busqueda_Eliminacion_de_agrupadores_Si_Sin_preactivar_Verificacion(String sRegion) {
 		irA("Sims", "Importaci\u00f3n");
@@ -1336,6 +1363,28 @@ public class BeFANMayorista extends TestBase {
 		Assert.assertTrue(bAssert);
 	}
 	
+	@Test (groups = "BeFAN")
+	public void TS126682_BeFan_Movil_REPRO_Preactivacion_repro_Visualizacion_de_archivos_importados_Fecha_de_procesamiento_Sin_fecha() {
+	boolean fechaProcesado = false;
+	irA("gestion");
+	selectByText(driver.findElement(By.cssSelector(".text.form-control.ng-pristine.ng-untouched.ng-valid.ng-empty")), "En Proceso");
+	selectByText(driver.findElements(By.cssSelector(".text.form-control.ng-pristine.ng-untouched.ng-valid.ng-empty")).get(1), "BAS-VJP-BAHIA BLANCA - VJP Punta Alta");
+	driver.findElement(By.cssSelector(".btn.btn-primary")).click();
+	sleep(5000);
+	WebElement tabla = driver.findElement(By.id("exportarTabla")).findElement(By.tagName("thead"));
+	for (WebElement x : tabla.findElements(By.tagName("th"))) {
+		if (x.getText().contains("Fecha Procesado"))
+			fechaProcesado = true;
+	}
+	WebElement cont = driver.findElement(By.id("exportarTabla"));
+	Marketing colu = new Marketing(driver);
+	List<WebElement> x = colu.traerColumnaElement(cont, 8, 7);	
+	for(WebElement a : x) {
+			a.getText().isEmpty();
+			
+		}
+	Assert.assertTrue(fechaProcesado);
+	}	
 	@Test (groups = "BeFan", dataProvider="GestionRegionesCreacion", dependsOnGroups="EliminacionDePrefijo")
 	public void TS126637_BeFan_Movil_REPRO_Preactivacion_repro_Gestion_de_agrupadores_Busqueda_Modificacion_de_agrupadores_Eliminacion_de_prefijos_en_agrupador_existente_Guardando_Verificacion(String sRegion) throws IOException {
 		irA("Sims", "Importaci\u00f3n");
