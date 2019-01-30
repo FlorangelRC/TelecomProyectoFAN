@@ -37,7 +37,7 @@ public class Reportes {
 		System.out.println("Download completed.");
 	}
 	
-	//@AfterClass(alwaysRun=true)
+	@AfterClass(alwaysRun=true)
 	public void quit() throws IOException {
 		rsePage.deleteAllFiles();
 	}

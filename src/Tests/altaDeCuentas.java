@@ -29,7 +29,7 @@ public class altaDeCuentas extends TestBase{
 	
 	private WebDriver driver;
 
-	//@BeforeClass(groups= {"Wave1"})
+	@BeforeClass(groups= {"Wave1"})
 	public void init() throws Exception
 	{
 		this.driver = setConexion.setupEze();
