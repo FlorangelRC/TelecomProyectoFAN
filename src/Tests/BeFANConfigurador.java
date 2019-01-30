@@ -1790,5 +1790,42 @@ public class BeFANConfigurador extends TestBase {
 		}	
 	}
 	
+	@Test (groups = "BeFan")
+	public void TS112027_BeFan_Movil_REPRO_Preactivacion_repro_Gestion_de_agrupadores_Verificacion_de_prefijos() {
+	irA("regiones", "gesti\u00f3n");
+	buscarYClick(driver.findElements(By.cssSelector(".panel-group.panel-group-alternative.ng-scope")), "contains", "bas-vjp-bahia blanca");
+	for (WebElement x : driver.findElements(By.className("panel-group"))) {
+		try {
+			if (x.getText().toLowerCase().contains("bas-vjp-bahia blanca"))
+				x.findElement(By.cssSelector(".glyphicon.glyphicon-plus")).click();
+		} catch(Exception e) {}
+	}
+	sleep(3000);
+	boolean prefijos = false;
+	for (WebElement x : driver.findElements(By.id("compatibility"))) {
+		if (!x.getText().isEmpty());
+		prefijos=true;
+	}
+	Assert.assertTrue(prefijos);
+	}
 	
+	
+	@Test (groups = "BeFan")
+	public void TS126639_BeFan_Movil_REPRO_Preactivacion_repro_Gestion_de_agrupadores_Verificacion_de_prefijos() {
+	irA("regiones", "gesti\u00f3n");
+	buscarYClick(driver.findElements(By.cssSelector(".panel-group.panel-group-alternative.ng-scope")), "contains", "bas-vjp-bahia blanca");
+	for (WebElement x : driver.findElements(By.className("panel-group"))) {
+		try {
+			if (x.getText().toLowerCase().contains("bas-vjp-bahia blanca"))
+				x.findElement(By.cssSelector(".glyphicon.glyphicon-plus")).click();
+		} catch(Exception e) {}
+	}
+	sleep(3000);
+	boolean prefijos = false;
+	for (WebElement x : driver.findElements(By.id("compatibility"))) {
+		if (!x.getText().isEmpty());
+		prefijos=true;
+	}
+	Assert.assertTrue(prefijos);
+	}
 }
