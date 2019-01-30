@@ -1765,7 +1765,10 @@ public class BeFANConfigurador extends TestBase {
 			Assert.assertTrue(x.isDisplayed());
 		}
 		WebElement usuario = driver.findElement(By.className("tpi-user"));
-		System.out.println(usuario.getText());
+		System.out.println("Se visualiza el usuario determinado: ");
+		System.out.println(usuario.findElement(By.className("ng-binding")).getText());
+		System.out.println("Se visualiza el nombre: ");
+		System.out.println(usuario.findElement(By.cssSelector(".tpt-dropdown.dropdown")));
 		Assert.assertTrue(usuario.isDisplayed());
 	}
 	
@@ -1777,12 +1780,15 @@ public class BeFANConfigurador extends TestBase {
 		List <WebElement> region = driver.findElements(By.xpath("//*[@class='panel-group'] //*[@class='collapsed'] //*[@class='ng-binding']"));
 		for(WebElement x : region) {
 		if(x.getText().toLowerCase().contains("la plata")) {
-			System.out.println("La region es : " +x.getText());
+			System.out.println("La region seleccionada es : " +x.getText());
 			x.click();
 			break;
 			}
 		WebElement editar = driver.findElement(By.cssSelector(".glyphicon.glyphicon-edit"));
+		System.out.println("No se puede editar la region del agrupador");
 		Assert.assertTrue(editar.isEnabled());
 		}	
 	}
+	
+	
 }
