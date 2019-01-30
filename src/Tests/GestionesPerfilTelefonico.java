@@ -4897,4 +4897,50 @@ public class GestionesPerfilTelefonico extends TestBase{
 		sleep(5000);
 		//Assert.assertTrue(///Bug... no muestra la informacion de la Nota de Credito);
 	}
+	
+	@Test (groups = {"GestionesPerfilTelefonico","Diagnostico/Inconvenientes"}, dataProvider = "Diagnostico")
+	public void TS119271_CRM_Movil_PRE_Diagnostico_de_Datos_Valida_Red_y_Navegacion_Motivo_de_contacto_No_puedo_Navegar_SIN_SEÑAL_NO_BAM(String sDNI, String sLinea) throws InterruptedException {
+		imagen = "TS119271";
+		detalles = null;
+		detalles = imagen + " -Diagnostico - DNI: " + sDNI;
+		CustomerCare cCC=new CustomerCare(driver);
+		TechnicalCareCSRDiagnosticoPage Tech = new TechnicalCareCSRDiagnosticoPage(driver);
+		TechnicalCareCSRAutogestionPage tech = new TechnicalCareCSRAutogestionPage (driver);
+		TechCare_Ola1 page=new TechCare_Ola1(driver);
+		driver.switchTo().frame(cambioFrame(driver, By.id("SearchClientDocumentType")));
+		sb.BuscarCuenta("DNI", sDNI);
+		driver.findElement(By.cssSelector(".slds-tree__item.ng-scope")).click();
+		sleep(15000);
+		driver.switchTo().frame(cambioFrame(driver, By.className("card-top")));
+		sleep(3000);
+		driver.findElement(By.className("card-top")).click();
+		sleep(5000);
+		cCC.irAGestionEnCard("Diagn\u00f3stico");
+		driver.switchTo().frame(cambioFrame(driver, By.id("Motive")));
+		driver.findElement(By.name("loopname")).click();
+		selectByText(driver.findElement(By.id("Motive")), "No puedo navegar");
+		buscarYClick(driver.findElements(By.id("MotiveIncidentSelect_nextBtn")), "equals", "continuar");
+		sleep(8000);
+		driver.switchTo().frame(cambioFrame(driver, By.id("DataQuotaQuery_nextBtn")));
+		buscarYClick(driver.findElements(By.cssSelector(".slds-form-element__label.ng-binding.ng-scope")), "equals", "s\u00ed");
+		driver.findElement(By.id("DataQuotaQuery_nextBtn")).click();
+		sleep(8000);
+		buscarYClick(driver.findElements(By.id("NetworkCategory_nextBtn")), "equals", "continuar");
+		driver.switchTo().frame(cambioFrame(driver, By.id("BlackListValidationOk_nextBtn")));
+		buscarYClick(driver.findElements(By.cssSelector(".slds-radio--faux.ng-scope")), "equals", "si");
+		driver.findElement(By.id("BlackListValidationOk_nextBtn")).click();
+		sleep(8000);
+		driver.switchTo().frame(cambioFrame(driver, By.id("RecentConfiguration_nextBtn")));
+		buscarYClick(driver.findElements(By.cssSelector(".slds-form-element__label.ng-binding.ng-scope")), "equals", "no");
+		driver.findElement(By.id("RecentConfiguration_nextBtn")).click();
+		sleep(8000);
+		driver.switchTo().frame(cambioFrame(driver, By.className("borderOverlay")));
+		Tech.categoriaRed("Fuera del Area de Cobertura");
+		sleep(8000);
+		String caso_1 = driver.findElement(By.xpath("//*[@id=\"OutOfCoverageMessage\"]/div/p/p[2]/span/strong")).getText();
+		System.out.println(caso_1);
+		driver.switchTo().defaultContent();
+		tech.buscarCaso(caso_1);
+		Assert.assertTrue(tech.cerrarCaso("Resuelta exitosa", "Consulta"));
+	}
 }
