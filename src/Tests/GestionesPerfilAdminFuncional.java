@@ -304,7 +304,7 @@ public class GestionesPerfilAdminFuncional extends TestBase{
 		driver.findElement(By.cssSelector(".slds-tree__item.ng-scope")).click();
 		sleep(15000);
 		driver.switchTo().frame(cambioFrame(driver, By.className("card-top")));
-		sleep(3000);
+		sleep(8000);
 		driver.findElement(By.className("card-top")).click();
 		sleep(5000);
 		cCC.irAGestionEnCard("Diagn\u00f3stico");
