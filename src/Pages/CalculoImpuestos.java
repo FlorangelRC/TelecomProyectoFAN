@@ -40,7 +40,7 @@ class item {
 }
 
 public class CalculoImpuestos extends BasePage {
-	private CustomerCare cc;
+	//private CustomerCare cc;
 	private List<item> productos;
 	private String totalFactura;
 	private String totalImpuestosInv;
@@ -114,7 +114,7 @@ public class CalculoImpuestos extends BasePage {
 			if(TaxGroup!=null)
 				break;
 		}
-	    
+	    System.out.println("TaxGroup "+TaxGroup);
 		return TaxGroup;
 	}
 	
@@ -137,6 +137,7 @@ public class CalculoImpuestos extends BasePage {
 			    		categoria = false;
 			    	if(fila.getCell(1,Row.MissingCellPolicy.CREATE_NULL_AS_BLANK).getStringCellValue().equals(taxGroup)&&categoria==true) {
 			    		Iterator<Cell> celdas = fila.cellIterator();
+			    		System.out.println("Llegue aca");
 			    		Cell celda;
 			    		celdas.next();
 			    		celdas.next();
@@ -152,6 +153,8 @@ public class CalculoImpuestos extends BasePage {
 			    }
 		    }catch(java.lang.IllegalStateException ex1) {}
 		}
+		System.out.println("Impuestos: "+impuestos);
+		
 		return impuestos;
 	}
 	
@@ -268,7 +271,7 @@ public class CalculoImpuestos extends BasePage {
 			System.out.println("*-*-*-*-*ITEM "+i+"*-*-*-*-*");
 			i++;
 			mostrarProducto(UnI);
-			Assert.assertTrue(calculadoraInversaDat(obtenerImpuestos(categoriaIva, obtenerTaxGroup("C_SVA_MB_PACK_SMS"/*UnI.chargeCode*/)),UnI.totalC,UnI.ivaBase,UnI.ivaC));
+			Assert.assertTrue(calculadoraInversaDat(obtenerImpuestos(categoriaIva, obtenerTaxGroup(ObtenerChargeCode(UnI.nombre))),UnI.totalC,UnI.ivaBase,UnI.ivaC));
 			sumaUnitarios+=Double.parseDouble(UnI.totalC);
 		}
 		Assert.assertTrue(sumaUnitarios-0.1<Double.parseDouble(totalFactura)&&Double.parseDouble(totalFactura)<sumaUnitarios+0.1);
@@ -278,7 +281,6 @@ public class CalculoImpuestos extends BasePage {
 		File archivo=new File("facturacion//inv//ultimaFactura.txt");
 		if (archivo.exists())
 			archivo.delete();
-		//Crear objeto FileWriter que sera el que nos ayude a escribir sobre archivo
 		FileWriter ArchiSa=new FileWriter(archivo.getAbsoluteFile(),true);
 		BufferedWriter bw = new BufferedWriter(ArchiSa);
 		PrintWriter wr = new PrintWriter(bw); 
@@ -369,9 +371,11 @@ public class CalculoImpuestos extends BasePage {
         		}
         	}
         	if(cadena.startsWith("22300")) {
-        		totalImpuestosInv = cadena.split("\\|")[1].replace(",", ".");
+        		if(cadena.split("\\|").length>1)
+        			totalImpuestosInv = cadena.split("\\|")[1].replace(",", ".");
         	}
         	if(cadena.startsWith("22311")){
+        		if(cadena.split("\\|").length>1)
         		impuestosInv.add(cadena.split("\\|")[2].replace(",", "."));
         	}
         	if(cadena.startsWith("35800")){
@@ -381,6 +385,9 @@ public class CalculoImpuestos extends BasePage {
         b.close();  
         productos.addAll(items);
         System.out.println(impuestosInv);
+        if(totalImpuestosInv==null) {
+        	totalImpuestosInv="0.0";
+        }
         return items;
 	}
 	//La lista retornada poseera solo 4 elementos en estricto orden, monto de iva, monto de otros impuestos, monto total, monto con descuento.
@@ -393,7 +400,7 @@ public class CalculoImpuestos extends BasePage {
 		for(String UnI: impuestos) {
 			otrosImpuestos += Double.parseDouble(UnI);
 		}
-		Assert.assertTrue(Double.parseDouble(cargo.totalC)==Double.parseDouble(cargo.precioUni)*Integer.parseInt(cargo.cantidad));
+		Assert.assertTrue(Double.parseDouble(cargo.totalC)==(Double.parseDouble(cargo.precioUni)*Integer.parseInt(cargo.cantidad))+(Double.parseDouble(cargo.descuento)));
 		montos.add(Double.parseDouble(cargo.totalC)*Iva);
 		montos.add(Double.parseDouble(cargo.totalC)*otrosImpuestos);
 		montos.add(Double.parseDouble(cargo.totalC)+montos.get(0)+montos.get(1));
@@ -412,7 +419,7 @@ public class CalculoImpuestos extends BasePage {
 			System.out.println("*-*-*-*-*ITEM "+i+"*-*-*-*-*");
 			i++;
 			mostrarProducto(UnI);
-			montos = (calculadoraInvTxt(obtenerImpuestos(categoriaIva, obtenerTaxGroup("C_OT_MB_RECHARGE_OTHER"/*UnI.chargeCode*/)),UnI));
+			montos = (calculadoraInvTxt(obtenerImpuestos(categoriaIva, obtenerTaxGroup(ObtenerChargeCode(UnI.nombre))),UnI));
 			sumaIva+=montos.get(0);
 			sumaOtrosImpuestos+=montos.get(1);
 			sumaTotales+=montos.get(2);
@@ -423,7 +430,36 @@ public class CalculoImpuestos extends BasePage {
 		System.out.println("sumaTotales "+sumaTotales);
 		System.out.println("TotalconDescuentos "+TotalconDescuentos);
 		Assert.assertTrue(Double.parseDouble(totalImpuestosInv)-0.1<=(sumaIva+sumaOtrosImpuestos)&&(sumaIva+sumaOtrosImpuestos)<=Double.parseDouble(totalImpuestosInv)+0.1);
+		if(impuestosInv.size()>0)
 		Assert.assertTrue(Double.parseDouble(impuestosInv.get(0))-0.1<=sumaIva&&sumaIva<=Double.parseDouble(impuestosInv.get(0))+0.1);
 		Assert.assertTrue(Double.parseDouble(totalFactura)-0.1<=TotalconDescuentos&&TotalconDescuentos<=Double.parseDouble(totalFactura)+0.1);
+	}
+	
+	public String ObtenerChargeCode(String cargo) throws IOException {
+		String chargeCode = null;
+		File directory = new File("facturacion//FAN- Productos y chargecodes asociados- v1.0.xlsx");
+		FileInputStream file = new FileInputStream(new File(directory.getAbsolutePath()));
+		// Crear el objeto que tendra el libro de Excel
+		XSSFWorkbook libro = new XSSFWorkbook(file);
+		int cantHojas = libro.getNumberOfSheets();
+		for (int i = 1; i<cantHojas; i++) {
+			XSSFSheet hoja = libro.getSheetAt(i);
+			Iterator<Row> filas = hoja.iterator();
+			Row fila;
+			// Recorremos todas las filas para mostrar el contenido de cada celda
+			while (filas.hasNext()){
+			    fila = filas.next();
+			    if(fila.getCell(1,Row.MissingCellPolicy.CREATE_NULL_AS_BLANK).getStringCellValue().equalsIgnoreCase(cargo)) {
+			    	chargeCode=fila.getCell(0).getStringCellValue();
+			    	break;
+			    }
+			}
+			if(chargeCode!=null)
+				break;
+		}
+		if(chargeCode.charAt(chargeCode.length()-1)==' ') {
+			chargeCode = chargeCode.substring(0, chargeCode.length()-1);
+		}
+		return chargeCode;
 	}
 }
