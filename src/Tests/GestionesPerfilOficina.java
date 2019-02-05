@@ -7930,7 +7930,7 @@ public class GestionesPerfilOficina extends TestBase {
 	
 	@Test (groups = {"GestionesPerfilOficina","DiagnosticoInconvenientes"}, dataProvider = "Diagnostico")
 	public void TS119183_CRM_Movil_PRE_Diagnostico_de_Voz_Valida_Red_y_Navegacion_Motivo_de_contacto_No_puedo_realizar_llamadas_Sin_Locacion_Servicio_con_suspencion(String sDNI, String sLinea) throws Exception  {
-		imagen = "TS119201";
+		imagen = "TS119183";
 		detalles = null;
 		detalles = imagen + " -Diagnostico - DNI: " + sDNI;
 		CustomerCare cCC=new CustomerCare(driver);
@@ -7973,7 +7973,7 @@ public class GestionesPerfilOficina extends TestBase {
 	
 	@Test (groups = {"GestionesPerfilOficina","DiagnosticoInconvenientes"}, dataProvider = "Diagnostico")
 	public void TS119178_CRM_Movil_PRE_Diagnostico_de_Voz_Valida_Red_y_Navegacion_Motivo_de_contacto_No_puedo_realizar_llamadas_Sin_Locacion_Evento_Masivo(String sDNI, String sLinea) throws Exception  {
-		imagen = "TS119201";
+		imagen = "TS119178";
 		detalles = null;
 		detalles = imagen + " -Diagnostico - DNI: " + sDNI;
 		CustomerCare cCC=new CustomerCare(driver);

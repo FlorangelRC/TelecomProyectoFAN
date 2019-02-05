@@ -4969,7 +4969,7 @@ public class GestionesPerfilTelefonico extends TestBase{
 	
 	
 	@Test(groups = { "GestionesPerfilTelefonico","DiagnosticoInconvenientes","Ciclo 3", "E2E" }, priority = 1, dataProvider = "Diagnostico") 
-	public void TS119231_CRM_Movil_PRE_Diagnostico_de_Voz_Valida_Red_y_Navegacion_Motivo_de_contacto_No_puedo_realizar_ni_recibir_llamadas_Sin_Locacion_Equipo_sin_se�al(String sDNI, String sLinea){
+	public void TS119231_CRM_Movil_PRE_Diagnostico_de_Voz_Valida_Red_y_Navegacion_Motivo_de_contacto_No_puedo_realizar_ni_recibir_llamadas_Sin_Locacion_Equipo_sin_senal(String sDNI, String sLinea){
 		imagen = "TS119231";
 		detalles = null;
 		detalles = imagen + " -Diagnostico Inconveniente - DNI: " + sDNI;
@@ -5044,7 +5044,7 @@ public class GestionesPerfilTelefonico extends TestBase{
 	}
 	
 	@Test (groups = {"GestionesPerfilTelefonico","Diagnostico/Inconvenientes"}, dataProvider = "Diagnostico")
-	public void TS119271_CRM_Movil_PRE_Diagnostico_de_Datos_Valida_Red_y_Navegacion_Motivo_de_contacto_No_puedo_Navegar_SIN_SE�AL_NO_BAM(String sDNI, String sLinea) throws InterruptedException {
+	public void TS119271_CRM_Movil_PRE_Diagnostico_de_Datos_Valida_Red_y_Navegacion_Motivo_de_contacto_No_puedo_Navegar_SIN_SEnAL_NO_BAM(String sDNI, String sLinea) throws InterruptedException {
 		imagen = "TS119271";
 		detalles = null;
 		detalles = imagen + " -Diagnostico - DNI: " + sDNI;
