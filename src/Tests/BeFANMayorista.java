@@ -2,7 +2,9 @@ package Tests;
 
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
+import java.io.BufferedReader;
 import java.io.File;
+import java.io.FileReader;
 import java.io.FileOutputStream;
 import java.io.FileReader;
 import java.io.FileWriter;
@@ -10,13 +12,17 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.nio.file.Files;
 import java.nio.file.Paths;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 
 import org.openqa.selenium.By;
+import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 
@@ -26,10 +32,13 @@ import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 
+import com.sun.org.apache.xalan.internal.xsltc.compiler.sym;
+
 import DataProvider.ExcelUtils;
 import Pages.BeFan;
 import Pages.ContactSearch;
-import Tests.MDW;
+import Pages.MDW;
+import Pages.Marketing;
 import Pages.SCP;
 import Pages.setConexion;
 import Pages.DPW;
@@ -99,7 +108,47 @@ public class BeFANMayorista extends TestBase {
 		}
 	}
 	
-
+	private void irA(String sMenu,String sOpcion) {
+		sleep(5000);
+		List<WebElement> wMenu = driver.findElement(By.className("tpt-nav")).findElements(By.className("dropdown"));
+		for (WebElement wAux : wMenu) {
+			if (wAux.findElement(By.className("dropdown-toggle")).getText().toLowerCase().contains(sMenu.toLowerCase())) {
+				wAux.click();
+			}
+		}
+		
+		
+		
+		List<WebElement> wOptions = driver.findElement(By.cssSelector(".dropdown.open")).findElement(By.className("multi-column-dropdown")).findElements(By.tagName("li"));
+		for (WebElement wAux2 : wOptions) {
+			if (wAux2.findElement(By.tagName("a")).getText().toLowerCase().contains(sOpcion.toLowerCase())) {
+				wAux2.click();
+				sleep(3000);
+				break;
+			}
+		}
+	}
+	
+	public String readTxt(String sName) throws IOException {
+		String sPrefijo;
+		File fFile = null;
+		FileReader frFileReader = null;
+		BufferedReader brBufferedReader = null;
+		fFile = new File (sName);
+		frFileReader = new FileReader (fFile);
+		brBufferedReader = new BufferedReader(frFileReader);
+		sPrefijo = brBufferedReader.readLine();
+		
+		frFileReader.close();
+		brBufferedReader.close();
+		return sPrefijo;
+	}
+	
+	public void deleteFile(String sFile) {
+		File fFile = new File(sFile);
+		fFile.delete();
+	}
+	
 	@BeforeClass (alwaysRun = true)
 	public void init() {
 		driver = setConexion.setupEze();
@@ -292,13 +341,32 @@ public class BeFANMayorista extends TestBase {
 	}
 	
 	@Test (groups = "BeFAN")
-	public void TS112042_BeFan_Movil_REPRO_Preactivacion_repro_Busqueda_de_archivos_Agente_Por_fecha_Exitosa() {
+	public void TS112042_BeFan_Movil_REPRO_Preactivacion_repro_Busqueda_de_archivos_Agente_Por_fecha_Exitosa() throws ParseException {
+		BeFan fechas= new BeFan (driver);
+		SimpleDateFormat formatoDelTexto = new SimpleDateFormat ("dd/MM/yyyy");
+		String desde ="27/11/2018";
+		String hasta = "27/12/2018";
+		Date fechaDesde = formatoDelTexto.parse(desde);
+		Date fechaHasta =formatoDelTexto.parse(hasta);
 		boolean cantidad = false;
 		irA("gestion");
 		selectByText(driver.findElement(By.cssSelector(".text.form-control.ng-pristine.ng-untouched.ng-valid.ng-empty")), "Procesado");
 		selectByText(driver.findElements(By.cssSelector(".text.form-control.ng-pristine.ng-untouched.ng-valid.ng-empty")).get(1), "BAS-VJP-BAHIA BLANCA - VJP Punta Alta");
-		driver.findElement(By.id("dataPickerDesde")).sendKeys("27/11/2018");
-		driver.findElement(By.id("dataPickerHasta")).sendKeys("27/12/2018");
+		driver.findElement(By.id("dataPickerDesde"));
+		((JavascriptExecutor) driver).executeScript("document.getElementById('dataPickerDesde').value='"+desde+"'");
+		sleep(3000);
+		driver.findElement(By.id("dataPickerHasta"));
+		((JavascriptExecutor) driver).executeScript("document.getElementById('dataPickerHasta').value='"+hasta+"'");
+		int dias = fechas.numeroDiasEntreDosFechas(fechaDesde, fechaHasta);
+		boolean confirmacion = false;
+		if(dias <= 90) {
+			confirmacion = true;
+			System.out.println("Hay " + dias + " dias, " +"No supera los 90 dias comprendidos");
+		}else {
+			System.out.println("Se debe ingresar fechas las cuales no superen los 90 dias comprendidos");
+		}
+		
+		Assert.assertTrue(confirmacion);
 		driver.findElement(By.cssSelector(".btn.btn-primary")).click();
 		sleep(5000);
 		List<WebElement> tabla = driver.findElement(By.id("exportarTabla")).findElement(By.tagName("tbody")).findElements(By.tagName("tr"));
@@ -1349,11 +1417,9 @@ public class BeFANMayorista extends TestBase {
 		sleep(500);
 		Assert.assertTrue(Botones.SGLeerCampoYValidar(nombreArch, resultadoEstado, resultadoTexto));
 	}
-
-	
-	//DE 10 CON PREP
-	@Test (groups = "BeFan")
-	public void TS97657_BeFan_Movil_REPRO_Asociacion_de_diferentes_seriales_a_diferentes_prefijos() throws IOException, Exception {
+	//Falta probar, deberia funcionar :(
+	@Test (groups = "BeFan", dataProvider="DosSerialesValidos")
+	public void TS97657_BeFan_Movil_REPRO_Asociacion_de_diferentes_seriales_a_diferentes_prefijos(String path, String nombreArch, String deposito, String prefijo, String serial1, String serial2, String prefijo2) throws Exception {
 		BeFan Botones = new BeFan(driver);
 		String[] resultadoEstado = {""};
 		String[] resultadoTexto = {""};
@@ -1362,16 +1428,37 @@ public class BeFANMayorista extends TestBase {
 		resultadoTexto[0] = "Activaci\u00f3n confirmada";
 		resultadoEstado[1] = "Activado";
 		resultadoTexto[1] = "Activaci\u00f3n confirmada";
-
-		//traigo resultado de preparacion
-		String[] lasNoches = Botones.soyEzpesial("TS97657").split(",");
-		if (lasNoches[0].equals("false")) {
+		String mensaje = "";
+		int cant = 0;
+		//cant = Integer.parseInt(Cantidad);
+		irA("importacion");
+		sleep(500);
+		Botones.SISeleccionDeDeposito(deposito);
+		sleep(500);
+		Botones.SISeleccionDePrefijo(prefijo);
+		sleep(500);
+		Botones.SISeleccionCantidadDePrefijo(Integer.toString(cant-1));
+		sleep(500);
+		Botones.SIClickAgregar();
+		sleep(500);
+		Botones.SISeleccionDePrefijo(prefijo2);
+		sleep(500);
+		Botones.SISeleccionCantidadDePrefijo("1");
+		Botones.SIClickAgregar();
+		sleep(500);
+		Botones.SIImportarArchivo(nombreArch = Botones.LecturaDeDatosTxt(path + "\\"+ nombreArch + ".txt", cant));
+		sleep(500);
+		Botones.SIClickImportar();
+		sleep(500);
+		mensaje = Botones.SIMensajeModal();
+		if (mensaje.contentEquals("El archivo se import\u00f3 correctamente.")) {
+		} else {
 			Assert.assertTrue(false);
 		}
-		String nombreArch = lasNoches[1];
-		String deposito = lasNoches[2];
-		
-		//ejecuto
+		Botones.SIClickAceptarImportar();		
+		sleep(500);
+		//dpw.main();
+		sleep(1198000);
 		irA("gestion");
 		sleep(500);
 		Botones.SGSeleccionEstado(estado);
@@ -1753,6 +1840,94 @@ public class BeFANMayorista extends TestBase {
 		Assert.assertTrue(true);
 	}
 	
+	@Test (groups = "BeFAN")
+	public void TS126680_BeFan_Movil_REPRO_Preactivacion_repro_Visualizacion_de_archivos_importados_Fecha_de_carga() {
+	boolean fechaDeCarga = false;
+	String sDateFormat = "dd/MM/yyyy HH:mm:ss";
+	//SimpleDateFormat sdfDateFormat;
+	irA("gestion");
+	selectByText(driver.findElement(By.cssSelector(".text.form-control.ng-pristine.ng-untouched.ng-valid.ng-empty")), "En Proceso");
+	selectByText(driver.findElements(By.cssSelector(".text.form-control.ng-pristine.ng-untouched.ng-valid.ng-empty")).get(1), "BAS-VJP-BAHIA BLANCA - VJP Punta Alta");
+	driver.findElement(By.cssSelector(".btn.btn-primary")).click();
+	sleep(5000);
+	WebElement tabla = driver.findElement(By.id("exportarTabla")).findElement(By.tagName("thead"));
+	for (WebElement x : tabla.findElements(By.tagName("th"))) {
+		if (x.getText().contains("Fecha de Carga"))
+			fechaDeCarga = true;
+	}
+	WebElement cont = driver.findElement(By.id("exportarTabla"));
+	Marketing colu = new Marketing(driver);
+	List<WebElement> x = colu.traerColumnaElement(cont, 8, 1);	
+	for(WebElement a : x) {
+		a.getText().contains(sDateFormat);
+		//System.out.println(a.getText());
+		}
+	Assert.assertTrue(fechaDeCarga);
+	}	
+	@Test (groups = "BeFan", dataProvider="GestionRegionesCreacion", dependsOnGroups="EliminacionDeAgrupador")
+	public void TS126636_BeFan_Movil_REPRO_Preactivacion_repro_Gestion_de_agrupadores_Busqueda_Eliminacion_de_agrupadores_Si_Sin_preactivar_Verificacion(String sRegion) {
+		irA("Sims", "Importaci\u00f3n");
+		
+		WebElement wSelect = driver.findElement(By.name("vendedores"));
+		List<WebElement> wOptions = wSelect.findElements(By.tagName("option"));
+		boolean bAssert = true;
+		for(WebElement wAux : wOptions) {
+			if(wAux.getText().contains(sRegion)) {
+				bAssert = false;
+			}
+		}
+		
+		Assert.assertTrue(bAssert);
+	}
 	
+	@Test (groups = "BeFAN")
+	public void TS126682_BeFan_Movil_REPRO_Preactivacion_repro_Visualizacion_de_archivos_importados_Fecha_de_procesamiento_Sin_fecha() {
+	boolean fechaProcesado = false;
+	irA("gestion");
+	selectByText(driver.findElement(By.cssSelector(".text.form-control.ng-pristine.ng-untouched.ng-valid.ng-empty")), "En Proceso");
+	selectByText(driver.findElements(By.cssSelector(".text.form-control.ng-pristine.ng-untouched.ng-valid.ng-empty")).get(1), "BAS-VJP-BAHIA BLANCA - VJP Punta Alta");
+	driver.findElement(By.cssSelector(".btn.btn-primary")).click();
+	sleep(5000);
+	WebElement tabla = driver.findElement(By.id("exportarTabla")).findElement(By.tagName("thead"));
+	for (WebElement x : tabla.findElements(By.tagName("th"))) {
+		if (x.getText().contains("Fecha Procesado"))
+			fechaProcesado = true;
+	}
+	WebElement cont = driver.findElement(By.id("exportarTabla"));
+	Marketing colu = new Marketing(driver);
+	List<WebElement> x = colu.traerColumnaElement(cont, 8, 7);	
+	for(WebElement a : x) {
+			a.getText().isEmpty();
+			
+		}
+	Assert.assertTrue(fechaProcesado);
+	}	
+	@Test (groups = "BeFan", dataProvider="GestionRegionesCreacion", dependsOnGroups="EliminacionDePrefijo")
+	public void TS126637_BeFan_Movil_REPRO_Preactivacion_repro_Gestion_de_agrupadores_Busqueda_Modificacion_de_agrupadores_Eliminacion_de_prefijos_en_agrupador_existente_Guardando_Verificacion(String sRegion) throws IOException {
+		irA("Sims", "Importaci\u00f3n");
+		
+		String sPrefijo = readTxt("Prefijo.txt");
+		System.out.println("sPrefijo: " + sPrefijo);
+		
+		WebElement wSelect = driver.findElement(By.name("vendedores"));
+		List<WebElement> wOptions = wSelect.findElements(By.tagName("option"));
+		boolean bAssert = false;
+		for(WebElement wAux : wOptions) {
+			if(wAux.getText().contains(sRegion)) {
+				bAssert = true;
+				wAux.click();
+			}
+		}
+		Assert.assertTrue(bAssert);
+		
+		wSelect = driver.findElement(By.cssSelector(".text.form-control.ng-pristine.ng-valid.ng-empty.ng-touched"));
+		wOptions = wSelect.findElements(By.tagName("option"));
+		for(WebElement wAux : wOptions) {
+			if(wAux.getText().equals(sPrefijo)) {
+				bAssert = false;
+			}
+		}
+		Assert.assertTrue(bAssert);
+	}
 	
 }
