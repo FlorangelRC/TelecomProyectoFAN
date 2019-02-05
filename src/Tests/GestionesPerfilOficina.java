@@ -58,15 +58,17 @@ public class GestionesPerfilOficina extends TestBase {
 	
 	@BeforeClass(alwaysRun=true)
 	public void init() throws IOException, AWTException {
-		//CalculoImpuestos CI = new CalculoImpuestos();
+		CalculoImpuestos CI = new CalculoImpuestos();
 		CBS_Mattu cCBSM = new CBS_Mattu();
-		//CI.separarFacturaDeInv("3000000006610001", "Recarga");
+		//System.out.println("charge code: "+CI.ObtenerChargeCode("Recarga"));
+		//CI.separarFacturaDeInv("1000000147310001", "Simcard");
 		//cCBSM.Servicio_RealizarAltaSuscripcion("3572408875","178");
 		//Assert.assertTrue("3572408875".matches("\\w[0-9]+"));
 		/*cCBSM.Servicio_Recharge("3572408875","35000000");
 		cCBSM.Servicio_Loan("3572408875","15000000");
 		cCBSM.Servicio_Recharge("3572408875","35000000");*/
 		//CI.mostrarProductos(CI.obtenerProductosFacturaInvTxt());
+		CI.validarMontoProductosDat("Consumidor Final");
 		//CI.validarMontoProductosInvTxt("Consumidor Final");
 		/*System.out.println(CI.obtenerDatoFacturaDat("<FLD>IVA_C"));
 		CI.mostrarImpuestos(CI.obtenerImpuestos("Consumidor Final", CI.obtenerTaxGroup("C_SVA_MB_PACK_SMS")));
