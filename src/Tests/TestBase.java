@@ -1585,7 +1585,7 @@ public class TestBase {
 	@DataProvider(name = "SerialInexistente")
 	public Object[][] SerialInexistente() throws Exception{
 
-	 Object[][] testObjArray = ExcelUtils.getTableArray(dataProviderE2E(),"E2EsinPago",1,1,7,"SerialInexistente");
+	 Object[][] testObjArray = ExcelUtils.getTableArray(dataProviderE2E(),"E2EsinPago",1,1,10,"SerialInexistente");
 
 	 return (testObjArray);
 
@@ -1613,6 +1613,15 @@ public class TestBase {
 	public Object[][] SerialBalido() throws Exception{
 
 	 Object[][] testObjArray = ExcelUtils.getTableArray(dataProviderE2E(),"E2EsinPago",1,1,8,"SerialBalido");
+
+	 return (testObjArray);
+
+	}
+	
+	@DataProvider(name = "DosSerialesValidos")
+	public Object[][] DosSerialesValidos() throws Exception{
+
+	 Object[][] testObjArray = ExcelUtils.getTableArray(dataProviderE2E(),"E2EsinPago",1,1,8,"DosSerialesValidos");
 
 	 return (testObjArray);
 

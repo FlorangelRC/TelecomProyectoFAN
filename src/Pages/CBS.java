@@ -187,17 +187,18 @@ public class CBS {
 	
 	public boolean sCBS_Request_Validador_Alta_Linea(Document sResponse, String sLinea, String sImsi, String sICCD, String sNombre, String sApellido, String sPlan) {
 		System.out.println("nombre: "+sResponse.getElementsByTagName("bcc:FirstName").item(0).getTextContent());
+		boolean resultado = false;
 		if (sResponse.getElementsByTagName("bcc:FirstName").item(0).getTextContent().contains(sNombre) && sResponse.getElementsByTagName("bcc:LastName").item(0).getTextContent().contains(sApellido)) {
 			if(sResponse.getElementsByTagName("bcc:OfferingName").item(0).getTextContent().contains(sPlan)) {
 				System.out.println("Correcto");
-			
+				resultado = true;
 			}
 			else {
 				System.out.println(sResponse.getElementsByTagName("bcc:FirstName").item(0).getTextContent());
 				Assert.assertTrue(false);
 			}
 		}
-		return true;
+		return resultado;
 	}
 	
 	public String sRequestByTC(String sMessageSeq, String sPaymentChannelID, String sAccountKey, String sPaymentMethod, String sAmount, String sAccountNumber, String sAccountName, String sExpirationDate, String sCVV, String sInvoiceno, String sCardHolderName, String sCardHolderNumber) {

@@ -63,13 +63,13 @@ public class BeFANConfigurador extends TestBase {
 		loginBeFANConfigurador(driver);
 	}
 	
-	//@AfterMethod (alwaysRun = true)
+	@AfterMethod (alwaysRun = true)
 	public void after() {
 		driver.get(TestBase.urlBeFAN);
 		sleep(3000);
 	}
 	
-	//@AfterClass (alwaysRun = true)
+	@AfterClass (alwaysRun = true)
 	public void quit() {
 		driver.quit();
 	}
@@ -1601,10 +1601,10 @@ public class BeFANConfigurador extends TestBase {
 		irA("regiones", "gesti\u00f3n");
 		driver.findElement(By.cssSelector(".btn.btn-primary")).click();
 		driver.findElement(By.cssSelector(".form-control.ng-pristine.ng-untouched.ng-valid.ng-empty")).sendKeys("cordoba");
-		buscarYClick(driver.findElements(By.cssSelector(".btn.btn-primary")), "equals", "agregar");	
-		sleep(3000);
+		driver.findElement(By.cssSelector(".btn.btn-primary")).click();
+		
 		for(WebElement x : driver.findElements(By.className("modal-body"))){
-			if(x.getText().toLowerCase().contains("satisfactoriamente")){
+			if(x.getText().toLowerCase().contains("region existente")) {
 				System.out.println(x.getText());
 				buscarYClick(driver.findElements(By.cssSelector(".btn.btn-primary")), "equals", "cerrar");
 				break;
@@ -1649,6 +1649,131 @@ public class BeFANConfigurador extends TestBase {
 		buscarYClick(driver.findElements(By.cssSelector(".btn.btn-primary")), "equals", "cerrar");
 		driver.findElement(By.cssSelector(".btn.btn-primary")).click();
 	}
+	
+	@Test (groups = "BeFan", dataProvider="SerialInexistente", priority = 2)
+	public void TS135637_BeFan_Movil_Repro_Preactivacion___Gestion_de_cupos__Busqueda__Eliminacion_de_cupo__Mensaje__Confirmacion__Verificacion(String path, String nombreArch, String deposito, String prefijo, String serial1, String serial2, String prefijo2, String Cantidad, String agente, String depositoLogico) throws Exception, IOException {
+		BeFan Botones = new BeFan(driver);
+		
+		String mensaje = "";
+		irA("Cupos", "Gesti\u00f3n");
+		sleep(500);
+		Botones.CGeliminar(agente, deposito);
+		sleep(500);
+		Botones.LogOutBefan(driver);
+		sleep(500);
+		loginBeFAN(driver);
+		sleep(500);
+		irA("Sims", "Importaci\u00f3n");
+		sleep(500);
+		Botones.SISeleccionDeDeposito(deposito);
+		sleep(500);
+		Botones.SISeleccionDePrefijo(prefijo);
+		sleep(500);
+		Botones.SISeleccionCantidadDePrefijo("1");
+		sleep(500);
+		Botones.SIClickAgregar();
+		Botones.SIImportarArchivo(nombreArch = Botones.SICreacionArchivo(nombreArch, path, serial1, ""));
+		sleep(500);
+		Botones.SIClickImportar();
+		sleep(500);
+		mensaje = Botones.SIMensajeModal();
+		if (mensaje.contentEquals("Error al intentar validar cantidad de cupos.")) {
+			Botones.SIClickAceptarImportar();
+			sleep(500);
+			try {
+				Botones.LogOutBefan(driver);
+				sleep(500);
+				loginBeFANConfigurador(driver);
+				sleep(500);
+				irA("Cupos", "Importaci\u00f3n");
+				sleep(500);
+				Botones.CIImportarArchivo(agente, depositoLogico);
+				Assert.assertTrue(true);
+			} catch (Exception e) {
+				Assert.assertTrue(true);
+					}
+			
+		} else {
+			Botones.SIClickAceptarImportar();
+			sleep(500);
+			try {
+				Botones.LogOutBefan(driver);
+				sleep(500);
+				loginBeFANConfigurador(driver);
+				sleep(500);
+				irA("Cupos", "Importaci\u00f3n");
+				sleep(500);
+				Botones.CIImportarArchivo(agente, depositoLogico);
+				Assert.assertTrue(false);
+			} catch (Exception e) {
+				Assert.assertTrue(false);
+					}
+		}
+
+	}
+	
+	@Test (groups = "BeFan", dataProvider="SerialInexistente")
+	public void TS135642_BeFan_Movil_Repro_Preactivacion___Gestion_de_cupos__Busqueda__Modificacion_de_cupo__Mensaje__Confirmacion__Verificacion(String path, String nombreArch, String deposito, String prefijo, String serial1, String serial2, String prefijo2, String Cantidad, String agente, String depositoLogico) throws Exception, IOException {
+		BeFan Botones = new BeFan(driver);
+		
+		String mensaje = "";
+		irA("Cupos", "Gesti\u00f3n");
+		sleep(500);
+		Botones.modificarCupos(agente, deposito);
+		sleep(500);
+		Botones.LogOutBefan(driver);
+		sleep(500);
+		loginBeFAN(driver);
+		sleep(500);
+		irA("Sims", "Importaci\u00f3n");
+		sleep(500);
+		Botones.SISeleccionDeDeposito(deposito);
+		sleep(500);
+		Botones.SISeleccionDePrefijo(prefijo);
+		sleep(500);
+		Botones.SISeleccionCantidadDePrefijo("1");
+		sleep(500);
+		Botones.SIClickAgregar();
+		Botones.SIImportarArchivo(nombreArch = Botones.SICreacionArchivo(nombreArch, path, serial1, ""));
+		sleep(500);
+		Botones.SIClickImportar();
+		sleep(500);
+		mensaje = Botones.SIMensajeModal();
+		if (mensaje.contentEquals("No tienen cupos suficientes en el prefijo " + prefijo)) {
+			Botones.SIClickAceptarImportar();
+			sleep(500);
+			try {
+				Botones.LogOutBefan(driver);
+				sleep(500);
+				loginBeFANConfigurador(driver);
+				sleep(500);
+				irA("Cupos", "Importaci\u00f3n");
+				sleep(500);
+				Botones.CIImportarArchivo(agente, depositoLogico);
+				Assert.assertTrue(true);
+			} catch (Exception e) {
+				Assert.assertTrue(true);
+					}
+			
+		} else {
+			Botones.SIClickAceptarImportar();
+			sleep(500);
+			try {
+				Botones.LogOutBefan(driver);
+				sleep(500);
+				loginBeFANConfigurador(driver);
+				sleep(500);
+				irA("Cupos", "Importaci\u00f3n");
+				sleep(500);
+				Botones.CIImportarArchivo(agente, depositoLogico);
+				Assert.assertTrue(false);
+			} catch (Exception e) {
+				Assert.assertTrue(false);
+					}
+		}
+
+	}
+	
 	
 	@Test (groups = "BeFan")
 	public void TS135639_BeFan_Movil_Repro_Preactivacion_Gestion_de_cupos_Busqueda_Modificacion_de_cupo_Cupo_vigente_con_fecha_de_baja() throws ParseException {

@@ -4,6 +4,7 @@ package Pages;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.Calendar;
@@ -42,6 +43,9 @@ import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.Select;
 import org.testng.Assert;
+
+import DataProvider.ExcelUtils;
+
 import org.apache.http.HttpEntity;
 import org.apache.http.NameValuePair;
 import org.apache.http.client.entity.UrlEncodedFormEntity;
@@ -174,9 +178,65 @@ public class BeFan extends BasePage{
 	}
 
 	//Victor
+	
+	//Metodos locos
+	
+	public String soyEzpesial(String caso) throws Exception{
+		
+		File folder = new File("C:\\BefanArchivos\\salida");
+		File[] listOfFiles = folder.listFiles();
+		DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyyMMdd");  
+		LocalDateTime now = LocalDateTime.now(); 
+		String time = dtf.format(now);
+		int elMejor = 0;
+		String finalmente = "false";
+		ArrayList<String> estados = new ArrayList<String>();
+		int cont = 0;
+		for (File x : listOfFiles) {
+			String[] part1 = x.getAbsolutePath().split("\\\\");
+			cont = part1.length;
+			String[] part2 = part1[cont-1].split("\\.");
+			String[] parts3 = part2[0].split(time);
+			if (parts3.length == 1) {
+			} else {
+				estados.add(parts3[1]);
+			}
+			
+		}
+		
+		for (String x : estados) {
+			if (elMejor == 0) {
+					elMejor = Integer.parseInt(x);
+			} else {
+				if (Integer.parseInt(x)>elMejor) {
+					elMejor = Integer.parseInt(x);
+				}
+			}	
+		}
+		File archivo = new File("C:\\BefanArchivos\\salida\\" + "Resultado" + time + Integer.toString(elMejor) + ".txt");
+		String readLine = "";
+		BufferedReader b = new BufferedReader(new FileReader(archivo));
+		while ((readLine = b.readLine()) != null) {
+			String[] lasNoches = readLine.split(",");
+			if (lasNoches[0].equals(caso)) {
+				finalmente = "true," + lasNoches[1] + "," + lasNoches[2];
+			}
+		}
+		return finalmente;		
+	}
+	
+
+	
+	
 	//Menu Simcard-Importacion
 	public void SISeleccionDeDeposito(String deposito) {
-		selectByText(driver.findElements(By.cssSelector(".text.form-control.ng-pristine.ng-untouched.ng-valid.ng-empty")).get(0), deposito);
+		if (driver.findElements(By.cssSelector(".text.form-control.ng-pristine.ng-untouched.ng-valid.ng-empty")).isEmpty()) {
+			selectByText(driver.findElements(By.cssSelector(".text.form-control.ng-untouched.ng-valid.ng-not-empty.ng-dirty.ng-valid-parse")).get(0), deposito);
+		} else {
+			
+			selectByText(driver.findElements(By.cssSelector(".text.form-control.ng-pristine.ng-untouched.ng-valid.ng-empty")).get(0), deposito);
+		}
+		
 	}
 	
 	public void SISeleccionDePrefijo (String prefijo) {
@@ -219,7 +279,8 @@ public class BeFan extends BasePage{
 	}
 	
 	public void SIClickImportar() {
-	driver.findElements(By.cssSelector(".btn.btn-primary")).get(2).click();
+	int cont = driver.findElements(By.cssSelector(".btn.btn-primary")).size();
+	driver.findElements(By.cssSelector(".btn.btn-primary")).get(cont-1).click();
 	}
 	
 	public String SICreacionArchivo(String nombreArch, String path, String serial1, String serial2) throws IOException {
@@ -279,6 +340,25 @@ public class BeFan extends BasePage{
 			System.out.println("No existe el archivo");
 			return "No existe el archivo";
 		}
+	}
+	
+	public String TraemeLosSeriales(String path) throws Exception, IOException {
+		File archivo = new File(path);
+		String seriales = "";
+		if(archivo.exists()) {
+			BufferedReader b = new BufferedReader(new FileReader(archivo));
+			String readLine = "";
+			while ((readLine = b.readLine()) != null) {
+				seriales = seriales + readLine +  "|";
+			}
+			b.close();
+			return seriales.substring(0, seriales.length()-1);
+		} else {
+			System.out.println("No existe el archivo");
+			return "No existe el archivo";
+		}
+		
+		
 	}
 	
 	
@@ -418,6 +498,183 @@ public class BeFan extends BasePage{
 	return resultado;
 	}
 	
+	//Menu Cupos-Importacion
+	
+	public void CIImportarArchivo(String agente, String depositoLogico) throws Exception{
+		DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyyMMddhhmmss");  
+		LocalDateTime now = LocalDateTime.now(); 
+		String time = dtf.format(now);
+	String path = "C:\\BefanArchivos\\ImpCupos" + time + ".txt";
+		File cupos = new File(path);
+		BufferedWriter c = new BufferedWriter(new FileWriter(cupos));
+		DateTimeFormatter dft2 = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+		String time2 = dft2.format(now);
+		
+		String[] fecha = time2.split("/");
+		if (Integer.parseInt(fecha[1])>=8) {
+			fecha[2] = Integer.toString((Integer.parseInt(fecha[2])+1));
+			fecha[1] = "01";
+		} else
+		{
+			fecha[1] = Integer.toString((Integer.parseInt(fecha[1])+5));
+			fecha[0] = "20";
+		}
+		
+		c.write(agente + ";" + depositoLogico + ";" + time2 + ";" + fecha[0] + "/" + fecha[1] + "/" + fecha[2] + ";30000");
+		c.close();
+	WebElement uploadElement = driver.findElement(By.id("fileinput"));
+	uploadElement.sendKeys(path);
+	driver.findElement(By.cssSelector(".btn.btn-primary.btn-sm.btn-block.btn-continuar")).click();
+	}
+	
+	//Menu Cupos-Gestion
+	//Eliminar todos los cupos
+	
+	public void CGeliminar(String agente, String deposito) {
+	int cont = 0;
+	selectByText(driver.findElements(By.cssSelector(".text.form-control.ng-pristine.ng-untouched.ng-valid.ng-empty")).get(0), agente);
+	sleep(500);
+	selectByText(driver.findElements(By.cssSelector(".text.form-control.ng-pristine.ng-untouched.ng-valid.ng-empty")).get(0), deposito);
+	sleep(500);
+	selectByText(driver.findElements(By.cssSelector(".text.form-control.ng-pristine.ng-untouched.ng-valid.ng-empty")).get(0), "Vigente");
+	sleep(500);
+	driver.findElements(By.cssSelector(".btn.btn-primary")).get(0).click();
+	sleep(500);
+	cont = (driver.findElements(By.name("eliminar"))).size();
+	for (int i = 1; i <= cont; i++) {
+		System.out.println(i);
+		driver.findElements(By.name("eliminar")).get(0).click();
+		sleep(500);
+		driver.findElements(By.cssSelector(".btn.btn-primary")).get(1).click();
+		sleep(500);
+		driver.findElements(By.cssSelector(".btn.btn-link")).get(0).click();
+		sleep(500);
+	}
+	driver.findElements(By.cssSelector(".btn.btn-link")).get(0).click();
+	}
+	
+	public String cantidadCuposAgente(String agente, String deposito) {
+		String cupos = "";
+		ArrayList<String> resultados = new ArrayList<String>();
+		int cont = 0;
+		selectByText(driver.findElements(By.cssSelector(".text.form-control.ng-pristine.ng-untouched.ng-valid.ng-empty")).get(0), agente);
+		sleep(500);
+		selectByText(driver.findElements(By.cssSelector(".text.form-control.ng-pristine.ng-untouched.ng-valid.ng-empty")).get(0), deposito);
+		sleep(500);
+		selectByText(driver.findElements(By.cssSelector(".text.form-control.ng-pristine.ng-untouched.ng-valid.ng-empty")).get(0), "Vigente");
+		sleep(500);
+		driver.findElements(By.cssSelector(".btn.btn-primary")).get(0).click();
+		sleep(500);
+		cont = driver.findElements(By.cssSelector(".ng-binding")).size();
+		cont = cont -24;
+		int cont2 = 22;
+		
+		while (cont2<=cont) {
+			resultados.add(driver.findElements(By.cssSelector(".ng-binding")).get(cont2).getText());
+			cont2 = cont2+1;
+			resultados.add(driver.findElements(By.cssSelector(".ng-binding")).get(cont2).getText());
+			cont2 = cont2+1;
+			resultados.add(driver.findElements(By.cssSelector(".ng-binding")).get(cont2).getText());
+			cont2 = cont2+8;
+		}
+		
+		for (String x : resultados) {
+			cupos = cupos + x + ",";
+		}
+		return cupos.substring(0, cupos.length()-1);
+	}
+	
+	
+	public void modificarCupos(String agente, String deposito) {
+		int i = 0;
+		int cuposTotales = 1;
+		int cont2 = 0;
+		int k = 0;
+		int j = 0;
+		boolean ricardo = false;
+		String cupos = "";
+		ArrayList<String> resultados = new ArrayList<String>();
+		int cont = 0;
+		selectByText(driver.findElements(By.cssSelector(".text.form-control.ng-pristine.ng-untouched.ng-valid.ng-empty")).get(0), agente);
+		sleep(500);
+		selectByText(driver.findElements(By.cssSelector(".text.form-control.ng-pristine.ng-untouched.ng-valid.ng-empty")).get(0), deposito);
+		sleep(500);
+		selectByText(driver.findElements(By.cssSelector(".text.form-control.ng-pristine.ng-untouched.ng-valid.ng-empty")).get(0), "Vigente");
+		sleep(500);
+		driver.findElements(By.cssSelector(".btn.btn-primary")).get(0).click();
+		sleep(500);
+		
+		
+		while (cuposTotales != 0) {
+		i = 0;
+		resultados.clear();
+		cont = driver.findElements(By.cssSelector(".ng-binding")).size();
+		cont = cont -24;
+		cont2 = 22;
+		j = 0;
+		cupos = "";
+		ricardo=false;
+		k = 0;
+		
+		while (cont2<=cont) {
+			resultados.add(driver.findElements(By.cssSelector(".ng-binding")).get(cont2).getText());
+			cont2 = cont2+1;
+			resultados.add(driver.findElements(By.cssSelector(".ng-binding")).get(cont2).getText());
+			cont2 = cont2+1;
+			resultados.add(driver.findElements(By.cssSelector(".ng-binding")).get(cont2).getText());
+			cont2 = cont2+8;
+		}
+		
+		for (String x : resultados) {
+			cupos = cupos + x + ",";
+		}
+		
+		cupos = cupos.substring(0, cupos.length()-1);
+		
+		String[] holaQueTalTuComoEsta = cupos.split(",");
+		
+		cuposTotales = 0;
+		while(j<holaQueTalTuComoEsta.length) {
+			cuposTotales = cuposTotales + Integer.parseInt(holaQueTalTuComoEsta[j]);
+			j = j + 3;
+		}
+		
+		if (holaQueTalTuComoEsta.length==0) {
+			
+		} else {
+			while (ricardo==false) {
+				if (Integer.parseInt(holaQueTalTuComoEsta[i]) == 0) {
+
+				} else {
+				driver.findElements(By.name("modificarGuardar")).get(k).click();
+				sleep(3500);
+				driver.findElement(By.name("cantidadTotal")).click();
+				sleep(3500);
+				driver.findElement(By.name("cantidadTotal")).clear();
+				sleep(3500);
+				driver.findElement(By.name("cantidadTotal")).sendKeys(Integer.toString(Integer.parseInt(holaQueTalTuComoEsta[i+1])+Integer.parseInt(holaQueTalTuComoEsta[i+2])));
+				sleep(3500);
+				driver.findElements(By.name("modificarGuardar")).get(k).click();
+				sleep(3500);
+				driver.findElements(By.cssSelector(".btn.btn-primary")).get(1).click();
+				sleep(3500);
+				driver.findElements(By.cssSelector(".btn.btn-link")).get(0).click();
+				sleep(3500);
+				ricardo=true;
+				}
+				if (cuposTotales==0) {
+					ricardo=true;
+				} else {
+					i = i + 3;
+					k = k + 1;
+				}
+
+			}
+		}
+		
+		}
+	}
+	
 // Log out de befan
 	
 	public void LogOutBefan(WebDriver driver) {
@@ -504,14 +761,7 @@ public class BeFan extends BasePage{
 	}
 	
 	public boolean verificarMensajeExitoso() {
-		boolean confirmacion = false;
-		for(WebElement x : driver.findElements(By.className("modal-body"))) {
-			if(x.getText().toLowerCase().contains("satisfactoriamente")) {
-				System.out.println(x.getText());
-				confirmacion = true;
-			}
-		}
-		return confirmacion;
+		return driver.findElement(By.xpath("//*[@class='alert alert-dismissable alert-success'] //h4")).getText().equalsIgnoreCase("La operaci\u00f3n se ejecut\u00f3 satisfactoriamente.");
 	}
 	
 	public void cerrar() {
@@ -528,13 +778,10 @@ public class BeFan extends BasePage{
 		WebElement wBody = driver.findElement(By.className("panel-data"));
 		List<WebElement> wList = wBody.findElements(By.xpath("//*[@class='panel-group'] //*[@class='collapsed'] //*[@class='ng-binding']"));
 		
-		boolean bAssert = false;
-		
+		boolean bAssert = true;
 		for (WebElement wAux : wList) {
-			if (wAux.getText().toLowerCase().contains(sRegion.toLowerCase())) {
-				bAssert = true;
-			}
-			else {
+			if (!wAux.getText().toLowerCase().contains(sRegion.toLowerCase())) {
+				bAssert = false;
 				break;
 			}
 		}
@@ -591,6 +838,7 @@ public class BeFan extends BasePage{
 		for (WebElement wAux : wList) {
 			if (wAux.findElement(By.xpath("//*[@class='collapsed'] //*[@class='ng-binding']")).getText().equalsIgnoreCase(sRegion)) {
 				wAux.click();
+				wAux.findElement(By.xpath("//*[@class='row ng-scope'] //*[@class='btn btn-link']")).click();
 				break;
 			}
 		}
@@ -634,36 +882,6 @@ public class BeFan extends BasePage{
 		}
 		//return true;
 	
-	}
-	
-	public boolean buscarRegionInexistente(String sRegion) {
-		driver.findElement(By.xpath("//*[@type='search']")).clear();
-		driver.findElement(By.xpath("//*[@type='search']")).sendKeys(sRegion);
-		sleep(3000);
-		WebElement wBody = driver.findElement(By.className("panel-data"));
-		
-		boolean bAssert = false;
-		List<WebElement> wList = new ArrayList<WebElement>();
-		try {
-			wList = wBody.findElements(By.xpath("//*[@class='panel-group'] //*[@class='collapsed'] //*[@class='ng-binding']"));
-		}
-		catch(Exception eE) {
-			bAssert = true;
-		}
-		
-		if (bAssert) {
-			Assert.assertTrue(bAssert);
-		}
-		else {
-			bAssert = true;
-			for (WebElement wAux : wList) {
-				if (wAux.getText().equalsIgnoreCase(sRegion)) {
-					bAssert = false;
-				}
-			}
-		}
-		
-		return bAssert;
-	}
-	
 }
+}
+
