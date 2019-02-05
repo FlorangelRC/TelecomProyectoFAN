@@ -5114,58 +5114,51 @@ public class GestionesPerfilTelefonico extends TestBase{
 		Assert.assertTrue(tech.cerrarCaso("Resuelta exitosa", "Consulta"));
 	}
 	
-	@Test (groups = {"GestionesPerfilTelefonico", "DiagnosticoInconvenientes","E2E", "Ciclo3"}, dataProvider = "Diagnostico")
-	public void TS111299_CRM_Movil_REPRO_Diagnostico_SVA_Telefonico_SMS_Entrante_No_Recibe_De_Un_Numero_En_Particular_Geo_No_Ok_Desregistrar(String sDNI, String sLinea) throws Exception  {
-		imagen = "TS111299";
+	@Test (groups = {"GestionesPerfilTelefonico", "Solicitud De Reintegro", "E2E","Ciclo4"}, dataProvider = "ConsultaSaldo")
+	public void TS112598_CRM_Movil_PRE_Pago_con_Tarjeta_de_debito_Reintegro_con_Efectivo_1000(String sDNI){
+		imagen = "TS112598";
 		detalles = null;
-		detalles = imagen + " -Diagnostico Inconveniente - DNI: " + sDNI;
-		CustomerCare cCC=new CustomerCare(driver);
-		TechCare_Ola1 page=new TechCare_Ola1(driver);
-		TechnicalCareCSRDiagnosticoPage tech = new TechnicalCareCSRDiagnosticoPage(driver);
+		detalles = imagen + " -Reintegros - DNI: " + sDNI;
+		String reintegro = "1,000.00";
+		Marketing mk = new Marketing(driver);
+		boolean a = false;
 		driver.switchTo().frame(cambioFrame(driver, By.id("SearchClientDocumentType")));
 		sb.BuscarCuenta("DNI", sDNI);
 		driver.findElement(By.cssSelector(".slds-tree__item.ng-scope")).click();
-		sleep(10000);
-		driver.switchTo().frame(cambioFrame(driver, By.className("card-top")));
-		driver.findElement(By.className("card-top")).click();
-		sleep(5000);
-		cCC.irAProductosyServicios();
-		tech.verDetalles();
-	    tech.clickDiagnosticarServicio("sms", "SMS Entrante", true);
-	    tech.selectionInconvenient("No recibe de un n\u00famero particular");
-	    tech.continuar();
-	    tech.seleccionarRespuesta("no");
-	    buscarYClick(driver.findElements(By.id("KnowledgeBaseResults_nextBtn")), "equals", "continuar");
-	    page.seleccionarPreguntaFinal("S\u00ed");
-	    buscarYClick(driver.findElements(By.id("BalanceValidation_nextBtn")), "equals", "continuar");
-	    sleep(8000);
-		tech.categoriaRed("Desregistrar");
-		buscarYClick(driver.findElements(By.id("NetworkCategory_nextBtn")), "equals", "continuar");
-		buscarYClick(driver.findElements(By.id("DeregisterSpeech_nextBtn")), "equals", "continuar");
 		sleep(15000);
-		page.seleccionarPreguntaFinal("S\u00ed");
-		buscarYClick(driver.findElements(By.id("Deregister_nextBtn")), "equals", "continuar");
-		page.seleccionarPreguntaFinal("S\u00ed, funciona correctamente");
+		cc.irAGestion("solicitud de reintegros");
+		sleep(15000);
+		driver.switchTo().frame(cambioFrame(driver, By.id("SelectBillingAccount_nextBtn")));
+		buscarYClick(driver.findElements(By.cssSelector(".slds-form-element__label.ng-binding")), "contains", "cuenta: ");
+		driver.findElement(By.id("SelectBillingAccount_nextBtn")).click();
 		sleep(8000);
-		buscarYClick(driver.findElements(By.id("SmsServiceDiagnosis_nextBtn")), "equals", "continuar");
-		driver.switchTo().frame(cambioFrame(driver, By.id("CaseConfirmationBlock")));
-		WebElement caso = driver.findElement(By.id("CaseConfirmationBlock")).findElement(By.tagName("div")).findElement(By.tagName("p")).findElement(By.tagName("p")).findElement(By.tagName("span")).findElement(By.tagName("strong"));
-		System.out.println(caso.getText());		
-		String Ncaso = caso.getText();
-		WebElement Buscador = driver.findElement(By.id("phSearchInput"));
-		Buscador.sendKeys(Ncaso);
-		Buscador.submit();
-		sleep(14000);
-		driver.switchTo().frame(cambioFrame(driver, By.id("Case_body")));
-		WebElement gest = driver.findElement(By.id("Case_body")).findElement(By.tagName("table")).findElement(By.tagName("tbody")).findElement(By.cssSelector(".dataRow.even.last.first")).findElements(By.tagName("td")).get(1);
-		System.out.println(gest.getText());
-		gest = driver.findElement(By.id("Case_body"));	
-		List<WebElement> x = mk.traerColumnaElement(gest, 5, 3);
-		for (WebElement a :x) {
-		System.out.println(a.getText());
-			if (a.getText().toLowerCase().equals("Resuelta exitosa")){
-			}
-		Assert.assertTrue(a.getText().equals("Resuelta exitosa"));
+		driver.switchTo().frame(cambioFrame(driver, By.id("stepRefundData_nextBtn")));
+		buscarYClick(driver.findElements(By.cssSelector(".slds-form-element__label.ng-binding.ng-scope")), "equals", "tarjeta de d\u00e9bito");
+		selectByText(driver.findElement(By.id("selectReason")), "Otros");
+		driver.findElement(By.id("inputCurrencyAmount")).sendKeys(reintegro);
+		driver.findElement(By.id("stepRefundData_nextBtn")).click();
+		sleep(8000);
+		driver.switchTo().frame(cambioFrame(driver, By.id("stepRefundMethod_nextBtn")));
+		String monto = driver.findElement(By.xpath("//*[@id=\"AmountToRefund\"]/div[2]/div/p")).getText();
+		if(monto.contains(reintegro)) {
+			System.out.println(monto);
 		}
+		buscarYClick(driver.findElements(By.cssSelector(".slds-form-element__label.ng-binding")), "equals", "efectivo");
+		driver.findElement(By.id("stepRefundMethod_nextBtn")).click();
+		sleep(8000);
+		driver.switchTo().frame(cambioFrame(driver, By.id("Summary_nextBtn")));
+		List <WebElement> tabla = driver.findElements(By.cssSelector("slds-card__header slds-grid"));
+		for(WebElement x : tabla) {
+			if(x.getText().toLowerCase().contains("tarjeta de d\u00e9bito") && x.getText().toLowerCase().contains("1000")) {
+				System.out.println(tabla);
+			}
+		}
+		driver.findElement(By.id("Summary_nextBtn")).click();
+		sleep(8000);
+		WebElement verificacion = driver.findElement(By.cssSelector(".slds-box.ng-scope"));
+		if(verificacion.getText().toLowerCase().contains("correctamente")) {
+			a = true;
+		}
+		Assert.assertTrue(a);
 	}
 }
