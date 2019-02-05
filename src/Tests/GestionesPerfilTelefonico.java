@@ -4981,4 +4981,52 @@ public class GestionesPerfilTelefonico extends TestBase{
 		tech.buscarCaso(caso_1);
 		Assert.assertTrue(tech.cerrarCaso("Resuelta exitosa", "Consulta"));
 	}
+	
+	@Test (groups = {"GestionesPerfilTelefonico", "Solicitud De Reintegro", "E2E","Ciclo4"}, dataProvider = "ConsultaSaldo")
+	public void TS112598_CRM_Movil_PRE_Pago_con_Tarjeta_de_debito_Reintegro_con_Efectivo_1000(String sDNI){
+		imagen = "TS112598";
+		detalles = null;
+		detalles = imagen + " -Reintegros - DNI: " + sDNI;
+		String reintegro = "1,000.00";
+		Marketing mk = new Marketing(driver);
+		boolean a = false;
+		driver.switchTo().frame(cambioFrame(driver, By.id("SearchClientDocumentType")));
+		sb.BuscarCuenta("DNI", sDNI);
+		driver.findElement(By.cssSelector(".slds-tree__item.ng-scope")).click();
+		sleep(15000);
+		cc.irAGestion("solicitud de reintegros");
+		sleep(15000);
+		driver.switchTo().frame(cambioFrame(driver, By.id("SelectBillingAccount_nextBtn")));
+		buscarYClick(driver.findElements(By.cssSelector(".slds-form-element__label.ng-binding")), "contains", "cuenta: ");
+		driver.findElement(By.id("SelectBillingAccount_nextBtn")).click();
+		sleep(8000);
+		driver.switchTo().frame(cambioFrame(driver, By.id("stepRefundData_nextBtn")));
+		buscarYClick(driver.findElements(By.cssSelector(".slds-form-element__label.ng-binding.ng-scope")), "equals", "tarjeta de d\u00e9bito");
+		selectByText(driver.findElement(By.id("selectReason")), "Otros");
+		driver.findElement(By.id("inputCurrencyAmount")).sendKeys(reintegro);
+		driver.findElement(By.id("stepRefundData_nextBtn")).click();
+		sleep(8000);
+		driver.switchTo().frame(cambioFrame(driver, By.id("stepRefundMethod_nextBtn")));
+		String monto = driver.findElement(By.xpath("//*[@id=\"AmountToRefund\"]/div[2]/div/p")).getText();
+		if(monto.contains(reintegro)) {
+			System.out.println(monto);
+		}
+		buscarYClick(driver.findElements(By.cssSelector(".slds-form-element__label.ng-binding")), "equals", "efectivo");
+		driver.findElement(By.id("stepRefundMethod_nextBtn")).click();
+		sleep(8000);
+		driver.switchTo().frame(cambioFrame(driver, By.id("Summary_nextBtn")));
+		List <WebElement> tabla = driver.findElements(By.cssSelector("slds-card__header slds-grid"));
+		for(WebElement x : tabla) {
+			if(x.getText().toLowerCase().contains("tarjeta de d\u00e9bito") && x.getText().toLowerCase().contains("1000")) {
+				System.out.println(tabla);
+			}
+		}
+		driver.findElement(By.id("Summary_nextBtn")).click();
+		sleep(8000);
+		WebElement verificacion = driver.findElement(By.cssSelector(".slds-box.ng-scope"));
+		if(verificacion.getText().toLowerCase().contains("correctamente")) {
+			a = true;
+		}
+		Assert.assertTrue(a);
+	}
 }
