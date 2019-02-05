@@ -3,6 +3,8 @@ package Tests;
 import static org.testng.Assert.assertTrue;
 
 import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -33,7 +35,7 @@ public class BeFANConfigurador extends TestBase {
 	private SCP scp;
 	
 	private void irA(String sMenu,String sOpcion) {
-		sleep(3000);
+		sleep(5000);
 		List<WebElement> wMenu = driver.findElement(By.className("tpt-nav")).findElements(By.className("dropdown"));
 		for (WebElement wAux : wMenu) {
 			if (wAux.findElement(By.className("dropdown-toggle")).getText().toLowerCase().contains(sMenu.toLowerCase())) {
@@ -376,7 +378,7 @@ public class BeFANConfigurador extends TestBase {
 		TS126620_BeFan_Movil_REPRO_Preactivacion_repro_Gestion_de_agrupadores_Busqueda_Busqueda_especifica(sRegion);
 	}
 	
-	@Test (groups = "BeFAN", dataProvider="GestionRegionesCreacion")
+	@Test (groups = "BeFAN", dataProvider="GestionRegionesCreacion", dependsOnMethods="TS126619_BeFan_Movil_REPRO_Preactivacion_repro_Gestion_de_agrupadores_Creacion_de_agrupador_exitosa")
 	public void TS126623_BeFan_Movil_REPRO_Preactivacion_repro_Gestion_de_agrupadores_Busqueda_Modificacion_de_agrupadores_Asignacion_de_prefijos_a_agrupador_existente_Guardando(String sRegion) {
 		irA("Regiones", "Gesti\u00f3n");
 		pbf = new Pages.BeFan(driver);
@@ -400,32 +402,44 @@ public class BeFANConfigurador extends TestBase {
 		Assert.assertTrue(bAssert);
 	}
 	
-	@Test (groups = "BeFAN", dataProvider="GestionRegionesCreacion")
-	public void TS126625_BeFan_Movil_REPRO_Preactivacion_repro_Gestion_de_agrupadores_Busqueda_Modificacion_de_agrupadores_Eliminacion_de_prefijos_en_agrupador_existente_Guardando(String sRegion) {
+	@Test (groups = {"BeFAN", "EliminacionDePrefijo"}, dataProvider="GestionRegionesCreacion", dependsOnMethods="TS126623_BeFan_Movil_REPRO_Preactivacion_repro_Gestion_de_agrupadores_Busqueda_Modificacion_de_agrupadores_Asignacion_de_prefijos_a_agrupador_existente_Guardando")
+	public void TS126625_BeFan_Movil_REPRO_Preactivacion_repro_Gestion_de_agrupadores_Busqueda_Modificacion_de_agrupadores_Eliminacion_de_prefijos_en_agrupador_existente_Guardando(String sRegion) throws IOException {
+		String sPrefijo;
 		irA("Regiones", "Gesti\u00f3n");
 		pbf = new Pages.BeFan(driver);
+		driver.navigate().refresh();
 		pbf.buscarYAbrirRegion(sRegion);
 		
 		WebElement wBody = driver.findElement(By.xpath("//*[@class='panel-collapse in collapse'] //table[@class='table table-top-fixed table-striped table-primary ng-scope']"));
 		Marketing mM = new Marketing(driver);
 		List<WebElement> wRegiones = mM.traerColumnaElement(wBody, 3, 1);
+		String sRegionBorrada = wRegiones.get(0).getText();
 		driver.findElement(By.xpath("//*[@ng-repeat='prefijo in displayedCollection'] [1] //button")).click();
+		sPrefijo = driver.findElement(By.xpath("//*[@ng-repeat='prefijo in displayedCollection'] [1] //td [2]")).getText();
 		driver.findElement(By.xpath("//*[@ng-show='mensajeEliminarCtrl.container.showConfirmation'] //button[@class='btn btn-primary']")).click();
 		sleep(3000);
 		driver.findElement(By.xpath("//*[@ng-show='mensajeEliminarCtrl.container.showSuccess'] //button[@class='btn btn-primary']")).click();
 		driver.navigate().refresh();
 		
 		pbf.buscarYAbrirRegion(sRegion);
+		sleep(3000);
+		wBody = driver.findElement(By.xpath("//*[@class='panel-collapse in collapse'] //table[@class='table table-top-fixed table-striped table-primary ng-scope']"));
 		List<WebElement> wRegionesActualizadas = mM.traerColumnaElement(wBody, 3, 1);
 		boolean bAssert= true;
 		for (WebElement wAux : wRegionesActualizadas) {
-			if (wAux.getText().equalsIgnoreCase(wRegiones.get(0).getText())) {
+			if (wAux.getText().equalsIgnoreCase(sRegionBorrada)) {
 				bAssert = false;
 				break;
 			}
 		}
 		
 		Assert.assertTrue(bAssert);
+		
+		File file = new File("Prefijo.txt");
+		file.createNewFile();
+		FileWriter writer = new FileWriter(file);
+		writer.write(sPrefijo);
+		writer.close();
 	}
 	
 	@Test (groups = "BeFAN")
@@ -1729,4 +1743,135 @@ public class BeFANConfigurador extends TestBase {
 		buscarYClick(driver.findElements(By.cssSelector(".btn.btn-link")), "equals", "cancelar");
 		//No se visualiza el identificador del usuario y la fecha de baja. 
 	}
+	
+	@Test (groups = "BeFan")
+	public void TS126626_BeFan_Movil_REPRO_Preactivacion_repro_Gestion_de_agrupadores_Busqueda_Modificacion_de_agrupadores_Eliminacion_de_prefijos_en_agrupador_existente_No_guardando(){
+		irA("regiones", "gesti\u00f3n");
+		boolean noEliminar = false;
+		buscarYClick(driver.findElements(By.cssSelector(".panel-group.panel-group-alternative.ng-scope")), "contains", "la plata");
+		driver.findElement(By.cssSelector(".panel-collapse.in.collapse")).findElement(By.cssSelector(".btn.btn-link")).click();
+		String msj = driver.findElement(By.className("modal-header")).getText();
+		if (msj.contains("Esta seguro que desea eliminarlo")) {
+			if (driver.findElement(By.className("modal-footer")).findElement(By.cssSelector(".btn.btn-link")).getText().equals("Cancelar")) {
+				driver.findElement(By.className("modal-footer")).findElement(By.cssSelector(".btn.btn-link")).click();
+				noEliminar = true;
+			}
+		}
+		Assert.assertTrue(noEliminar);
+	}
+	
+	@Test (groups = "BeFan")
+	public void TS126627_BeFan_Movil_REPRO_Preactivacion_repro_Gestion_de_agrupadores_Busqueda_Modificacion_de_agrupadores_Asignacion_de_prefijos_a_agrupador_existente_Logeo(){
+		irA("regiones", "gesti\u00f3n");
+		pbf = new Pages.BeFan(driver);
+		pbf.buscarRegion("la plata");
+		List <WebElement> region = driver.findElements(By.xpath("//*[@class='panel-group'] //*[@class='collapsed'] //*[@class='ng-binding']"));
+		for(WebElement x : region) {
+		if(x.getText().toLowerCase().contains("la plata")) {
+			System.out.println("La region es : " +x.getText());
+			x.click();
+			break;
+			}
+		}	
+		WebElement tabla = driver.findElement(By.cssSelector(".table.table-top-fixed.table-striped.table-primary.ng-scope"));
+		for(WebElement x : tabla.findElements(By.tagName("td"))) {
+			System.out.println(x.getText());
+			Assert.assertTrue(x.isDisplayed());
+		}
+		WebElement usuario = driver.findElement(By.className("tpi-user"));
+		System.out.println("Se visualiza el usuario determinado: ");
+		System.out.println(usuario.findElement(By.className("ng-binding")).getText());
+		System.out.println("Se visualiza el nombre: ");
+		System.out.println(usuario.findElement(By.cssSelector(".tpt-dropdown.dropdown")));
+		Assert.assertTrue(usuario.isDisplayed());
+	}
+	
+	@Test (groups = "BeFan")
+	public void TS126630_BeFan_Movil_REPRO_Preactivacion_repro_Gestion_de_agrupadores_Busqueda_Modificacion_de_agrupadores_Nombre(){
+		irA("regiones", "gesti\u00f3n");
+		pbf = new Pages.BeFan(driver);
+		pbf.buscarRegion("la plata");
+		List <WebElement> region = driver.findElements(By.xpath("//*[@class='panel-group'] //*[@class='collapsed'] //*[@class='ng-binding']"));
+		for(WebElement x : region) {
+		if(x.getText().toLowerCase().contains("la plata")) {
+			System.out.println("La region seleccionada es : " +x.getText());
+			x.click();
+			break;
+			}
+		WebElement editar = driver.findElement(By.cssSelector(".glyphicon.glyphicon-edit"));
+		System.out.println("No se puede editar la region del agrupador");
+		Assert.assertTrue(editar.isEnabled());
+		}	
+	}
+	
+	@Test (groups = "BeFan")
+	public void TS112027_BeFan_Movil_REPRO_Preactivacion_repro_Gestion_de_agrupadores_Verificacion_de_prefijos() {
+	irA("regiones", "gesti\u00f3n");
+	buscarYClick(driver.findElements(By.cssSelector(".panel-group.panel-group-alternative.ng-scope")), "contains", "bas-vjp-bahia blanca");
+	for (WebElement x : driver.findElements(By.className("panel-group"))) {
+		try {
+			if (x.getText().toLowerCase().contains("bas-vjp-bahia blanca"))
+				x.findElement(By.cssSelector(".glyphicon.glyphicon-plus")).click();
+		} catch(Exception e) {}
+	}
+	sleep(3000);
+	boolean prefijos = false;
+	for (WebElement x : driver.findElements(By.id("compatibility"))) {
+		if (!x.getText().isEmpty());
+		prefijos=true;
+	}
+	Assert.assertTrue(prefijos);
+	}
+	
+	
+	@Test (groups = "BeFan")
+	public void TS126639_BeFan_Movil_REPRO_Preactivacion_repro_Gestion_de_agrupadores_Verificacion_de_prefijos() {
+	irA("regiones", "gesti\u00f3n");
+	buscarYClick(driver.findElements(By.cssSelector(".panel-group.panel-group-alternative.ng-scope")), "contains", "bas-vjp-bahia blanca");
+	for (WebElement x : driver.findElements(By.className("panel-group"))) {
+		try {
+			if (x.getText().toLowerCase().contains("bas-vjp-bahia blanca"))
+				x.findElement(By.cssSelector(".glyphicon.glyphicon-plus")).click();
+		} catch(Exception e) {}
+	}
+	sleep(3000);
+	boolean prefijos = false;
+	for (WebElement x : driver.findElements(By.id("compatibility"))) {
+		if (!x.getText().isEmpty());
+		prefijos=true;
+	}
+	Assert.assertTrue(prefijos);
+	}
+	
+	@Test (groups = {"BeFAN","EliminacionDeAgrupador"}, dataProvider="GestionRegionesCreacion", dependsOnMethods="TS126623_BeFan_Movil_REPRO_Preactivacion_repro_Gestion_de_agrupadores_Busqueda_Modificacion_de_agrupadores_Asignacion_de_prefijos_a_agrupador_existente_Guardando")
+	public void TS126635_BeFan_Movil_REPRO_Preactivacion_repro_Gestion_de_agrupadores_Busqueda_Eliminacion_de_agrupadores_Logeo(String sRegion) {
+		irA("Regiones", "Gesti\u00f3n");
+		pbf = new Pages.BeFan(driver);
+		driver.navigate().refresh();
+		pbf.buscarYAbrirRegion(sRegion);
+		
+		WebElement wBody = driver.findElement(By.xpath("//*[@class='panel-collapse in collapse'] //table[@class='table table-top-fixed table-striped table-primary ng-scope']"));
+		Marketing mM = new Marketing(driver);
+		List<WebElement> wRegiones = mM.traerColumnaElement(wBody, 3, 1);
+		int iContador = 1;
+		for (WebElement wAux : wRegiones) {
+			driver.findElement(By.xpath("//*[@ng-repeat='prefijo in displayedCollection'] [" + iContador + "] //button")).click();
+			driver.findElement(By.xpath("//*[@ng-show='mensajeEliminarCtrl.container.showConfirmation'] //button[@class='btn btn-primary']")).click();
+			sleep(5000);
+			driver.findElement(By.xpath("//*[@ng-show='mensajeEliminarCtrl.container.showSuccess'] //button[@class='btn btn-primary']")).click();
+			iContador++;
+		}
+		sleep(3000);
+		Assert.assertTrue(driver.findElement(By.cssSelector(".text-center.ng-binding")).getText().toLowerCase().contains(sRegion.toLowerCase()));
+		driver.findElement(By.xpath("//*[@ng-show='mensajeEliminarCtrl.container.showConfirmation'] //button[@class='btn btn-primary']")).click();
+		sleep(5000);
+		driver.findElement(By.xpath("//*[@ng-show='mensajeEliminarCtrl.container.showSuccess'] //button[@class='btn btn-primary']")).click();
+		driver.navigate().refresh();
+		
+		boolean bAssert = pbf.buscarRegionInexistente(sRegion);
+		sleep(3000);
+		
+		Assert.assertTrue(bAssert);
+	}
+	
 }

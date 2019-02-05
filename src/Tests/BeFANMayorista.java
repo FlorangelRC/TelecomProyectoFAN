@@ -1,6 +1,8 @@
 package Tests;
 
+import java.io.BufferedReader;
 import java.io.File;
+import java.io.FileReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.nio.file.Files;
@@ -23,9 +25,12 @@ import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 
+import com.sun.org.apache.xalan.internal.xsltc.compiler.sym;
+
 import Pages.BeFan;
 import Pages.ContactSearch;
 import Pages.MDW;
+import Pages.Marketing;
 import Pages.SCP;
 import Pages.setConexion;
 import Pages.DPW;
@@ -95,7 +100,47 @@ public class BeFANMayorista extends TestBase {
 		}
 	}
 	
-
+	private void irA(String sMenu,String sOpcion) {
+		sleep(5000);
+		List<WebElement> wMenu = driver.findElement(By.className("tpt-nav")).findElements(By.className("dropdown"));
+		for (WebElement wAux : wMenu) {
+			if (wAux.findElement(By.className("dropdown-toggle")).getText().toLowerCase().contains(sMenu.toLowerCase())) {
+				wAux.click();
+			}
+		}
+		
+		
+		
+		List<WebElement> wOptions = driver.findElement(By.cssSelector(".dropdown.open")).findElement(By.className("multi-column-dropdown")).findElements(By.tagName("li"));
+		for (WebElement wAux2 : wOptions) {
+			if (wAux2.findElement(By.tagName("a")).getText().toLowerCase().contains(sOpcion.toLowerCase())) {
+				wAux2.click();
+				sleep(3000);
+				break;
+			}
+		}
+	}
+	
+	public String readTxt(String sName) throws IOException {
+		String sPrefijo;
+		File fFile = null;
+		FileReader frFileReader = null;
+		BufferedReader brBufferedReader = null;
+		fFile = new File (sName);
+		frFileReader = new FileReader (fFile);
+		brBufferedReader = new BufferedReader(frFileReader);
+		sPrefijo = brBufferedReader.readLine();
+		
+		frFileReader.close();
+		brBufferedReader.close();
+		return sPrefijo;
+	}
+	
+	public void deleteFile(String sFile) {
+		File fFile = new File(sFile);
+		fFile.delete();
+	}
+	
 	@BeforeClass (alwaysRun = true)
 	public void init() {
 		driver = setConexion.setupEze();
@@ -1278,6 +1323,94 @@ public class BeFANMayorista extends TestBase {
 		Assert.assertTrue(true);
 	}
 	
+	@Test (groups = "BeFAN")
+	public void TS126680_BeFan_Movil_REPRO_Preactivacion_repro_Visualizacion_de_archivos_importados_Fecha_de_carga() {
+	boolean fechaDeCarga = false;
+	String sDateFormat = "dd/MM/yyyy HH:mm:ss";
+	//SimpleDateFormat sdfDateFormat;
+	irA("gestion");
+	selectByText(driver.findElement(By.cssSelector(".text.form-control.ng-pristine.ng-untouched.ng-valid.ng-empty")), "En Proceso");
+	selectByText(driver.findElements(By.cssSelector(".text.form-control.ng-pristine.ng-untouched.ng-valid.ng-empty")).get(1), "BAS-VJP-BAHIA BLANCA - VJP Punta Alta");
+	driver.findElement(By.cssSelector(".btn.btn-primary")).click();
+	sleep(5000);
+	WebElement tabla = driver.findElement(By.id("exportarTabla")).findElement(By.tagName("thead"));
+	for (WebElement x : tabla.findElements(By.tagName("th"))) {
+		if (x.getText().contains("Fecha de Carga"))
+			fechaDeCarga = true;
+	}
+	WebElement cont = driver.findElement(By.id("exportarTabla"));
+	Marketing colu = new Marketing(driver);
+	List<WebElement> x = colu.traerColumnaElement(cont, 8, 1);	
+	for(WebElement a : x) {
+		a.getText().contains(sDateFormat);
+		//System.out.println(a.getText());
+		}
+	Assert.assertTrue(fechaDeCarga);
+	}	
+	@Test (groups = "BeFan", dataProvider="GestionRegionesCreacion", dependsOnGroups="EliminacionDeAgrupador")
+	public void TS126636_BeFan_Movil_REPRO_Preactivacion_repro_Gestion_de_agrupadores_Busqueda_Eliminacion_de_agrupadores_Si_Sin_preactivar_Verificacion(String sRegion) {
+		irA("Sims", "Importaci\u00f3n");
+		
+		WebElement wSelect = driver.findElement(By.name("vendedores"));
+		List<WebElement> wOptions = wSelect.findElements(By.tagName("option"));
+		boolean bAssert = true;
+		for(WebElement wAux : wOptions) {
+			if(wAux.getText().contains(sRegion)) {
+				bAssert = false;
+			}
+		}
+		
+		Assert.assertTrue(bAssert);
+	}
 	
+	@Test (groups = "BeFAN")
+	public void TS126682_BeFan_Movil_REPRO_Preactivacion_repro_Visualizacion_de_archivos_importados_Fecha_de_procesamiento_Sin_fecha() {
+	boolean fechaProcesado = false;
+	irA("gestion");
+	selectByText(driver.findElement(By.cssSelector(".text.form-control.ng-pristine.ng-untouched.ng-valid.ng-empty")), "En Proceso");
+	selectByText(driver.findElements(By.cssSelector(".text.form-control.ng-pristine.ng-untouched.ng-valid.ng-empty")).get(1), "BAS-VJP-BAHIA BLANCA - VJP Punta Alta");
+	driver.findElement(By.cssSelector(".btn.btn-primary")).click();
+	sleep(5000);
+	WebElement tabla = driver.findElement(By.id("exportarTabla")).findElement(By.tagName("thead"));
+	for (WebElement x : tabla.findElements(By.tagName("th"))) {
+		if (x.getText().contains("Fecha Procesado"))
+			fechaProcesado = true;
+	}
+	WebElement cont = driver.findElement(By.id("exportarTabla"));
+	Marketing colu = new Marketing(driver);
+	List<WebElement> x = colu.traerColumnaElement(cont, 8, 7);	
+	for(WebElement a : x) {
+			a.getText().isEmpty();
+			
+		}
+	Assert.assertTrue(fechaProcesado);
+	}	
+	@Test (groups = "BeFan", dataProvider="GestionRegionesCreacion", dependsOnGroups="EliminacionDePrefijo")
+	public void TS126637_BeFan_Movil_REPRO_Preactivacion_repro_Gestion_de_agrupadores_Busqueda_Modificacion_de_agrupadores_Eliminacion_de_prefijos_en_agrupador_existente_Guardando_Verificacion(String sRegion) throws IOException {
+		irA("Sims", "Importaci\u00f3n");
+		
+		String sPrefijo = readTxt("Prefijo.txt");
+		System.out.println("sPrefijo: " + sPrefijo);
+		
+		WebElement wSelect = driver.findElement(By.name("vendedores"));
+		List<WebElement> wOptions = wSelect.findElements(By.tagName("option"));
+		boolean bAssert = false;
+		for(WebElement wAux : wOptions) {
+			if(wAux.getText().contains(sRegion)) {
+				bAssert = true;
+				wAux.click();
+			}
+		}
+		Assert.assertTrue(bAssert);
+		
+		wSelect = driver.findElement(By.cssSelector(".text.form-control.ng-pristine.ng-valid.ng-empty.ng-touched"));
+		wOptions = wSelect.findElements(By.tagName("option"));
+		for(WebElement wAux : wOptions) {
+			if(wAux.getText().equals(sPrefijo)) {
+				bAssert = false;
+			}
+		}
+		Assert.assertTrue(bAssert);
+	}
 	
 }
