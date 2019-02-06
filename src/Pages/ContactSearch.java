@@ -219,4 +219,17 @@ public class ContactSearch extends BasePage {
 		try {Thread.sleep(7000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 	}
 	
+	public void subir_regiones(String uploadPath, String continuar){
+		driver.findElement(By.id("fileinput")).sendKeys(uploadPath);
+		try {Thread.sleep(3000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+		switch (continuar) {
+		case "si":
+			try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+			driver.findElement(By.cssSelector(".btn.btn-primary.btn-sm.btn-block.btn-continuar")).click();
+			break;
+		case "no":
+			//Nada
+		}
+		try {Thread.sleep(7000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+	}
 }
