@@ -57,15 +57,12 @@ public class altaDeCuentas extends TestBase{
 		 String FechaNacimiento="01/02/1990";
 		 Random rnd = new Random();
 		 int opcionGenero=rnd.nextInt(1);
-	     archivo = new File ("C:\\Users\\Florangel\\Downloads\\LineasListadas.txt");
+	     archivo = new File ("C:\\Users\\Florangel\\Downloads\\AltaMasivaCuentas.txt");
 	     fr = new FileReader (archivo);
 	     br = new BufferedReader(fr);
-	     String linea;
-	     while((linea=br.readLine())!=null) {
-	    	 System.out.println("Linea: "+linea);
-	     }
+
 	      // Lectura del fichero
-	     /*String linea;
+	     String linea;
 	     while((linea=br.readLine())!=null) {
 		      separado = linea.split(",");  
 		      Documento = separado[1];
@@ -101,6 +98,6 @@ public class altaDeCuentas extends TestBase{
 			  //CLick Continuar
 			  driver.findElement(By.id("Contact_nextBtn")).click();
 			  sleep(10000);
-	        }*/
+	        }
 	}
 }

@@ -265,7 +265,7 @@ public class GestionesPerfilAdminFuncional extends TestBase{
 	    buscarYClick(driver.findElements(By.cssSelector(".slds-form-element__label.ng-binding.ng-scope")), "equals", "s\u00ed, funciona correctamente");
 	    sleep(8000);
 	    for(WebElement x : driver.findElements(By.className("slds-form-element__control"))) {
-	    	if(x.getText().toLowerCase().contains("¡tu caso se resolvi\u00f3 con \u00e9xito!")) {
+	    	if(x.getText().toLowerCase().contains("ï¿½tu caso se resolvi\u00f3 con \u00e9xito!")) {
 	    		desregistrar = true;
 	    	}
 	    	

@@ -551,12 +551,13 @@ public class BeFANConfigurador extends TestBase {
 	}
 	@Test (groups = "BeFan")
 	public void TS135605_BeFan_Movil_Repro_Preactivacion_Importacion_de_cupos_Formato_invalido() {
+		ContactSearch contact = new ContactSearch(driver);
 		String text = "debe importar un archivo .txt";
 		irA("Cupos", "Importaci\u00f3n");
-		sleep(3000);
-		driver.findElement(By.id("fileinput")).sendKeys("C:\\Users\\xappiens\\Documents\\Word\\cupos1.docx");
-		sleep(3000);
-		driver.findElement(By.name("BTN-Importar")).click();
+		sleep(7000);
+		File directory = new File("BeFan135605.docx");
+		contact.subir_cupos(new File(directory.getAbsolutePath()).toString(),"si");
+		sleep(5000);
 		boolean a = false;
 		List <WebElement> formato = driver.findElements(By.className("modal-header"));
 		for(WebElement x : formato) {
@@ -1217,10 +1218,12 @@ public class BeFANConfigurador extends TestBase {
 	
 	@Test (groups = "BeFan")
 	public void TS126649_BeFan_Movil_REPRO_Preactivacion_repro_Importacion_de_cupos_Exitoso(){
+		ContactSearch contact = new ContactSearch(driver);
 		irA("Cupos", "Importaci\u00f3n");
-		driver.findElement(By.name("INPUT-ArchivoCupos")).sendKeys("C:\\Users\\xappiens\\Documents\\TxT\\CuposPrueba_01.txt");
-		driver.findElement(By.name("BTN-Importar")).click();
-		sleep(3000);
+		sleep(7000);
+		File directory = new File("BeFan126649.txt");
+		contact.subir_cupos(new File(directory.getAbsolutePath()).toString(),"si");
+		sleep(5000);
 		boolean confirmacion = false;
 		String mensaje = driver.findElement(By.className("modal-header")).getText();
 		if (mensaje.toLowerCase().contains("el archivo se import\u00f3 correctamente")) {
@@ -1252,16 +1255,18 @@ public class BeFANConfigurador extends TestBase {
 	
 	@Test (groups = "BeFan")
 	public void TS112004_BeFan_Movil_REPRO_Preactivacion_repro_Importacion_de_agrupadores_Prefijos_inexistentes() {
+		ContactSearch contact = new ContactSearch(driver);
 		irA("Regiones", "Importaci\u00f3n");
-		driver.findElement(By.id("fileinput")).sendKeys("C:\\Users\\xappiens\\Documents\\TxT\\AgrupadorPrefijoinexistente.txt");
-		driver.findElement(By.cssSelector(".btn.btn-primary.btn-sm.btn-block.btn-continuar")).click();
-		sleep(3000);
+		sleep(7000);
+		File directory = new File("BeFan112004_1.txt");
+		contact.subir_regiones(new File(directory.getAbsolutePath()).toString(),"si");
+		sleep(5000);
 		WebElement tabla = driver.findElement(By.className("ng-scope")).findElement(By.tagName("tbody"));
 		System.out.println(tabla.getText());
 		Assert.assertTrue(tabla.getText().toLowerCase().contains("el prefijo no existe"));
-		driver.findElement(By.id("fileinput")).sendKeys("C:\\Users\\xappiens\\Documents\\TxT\\AgrupadorPrefijoexistente.txt");
-		driver.findElement(By.cssSelector(".btn.btn-primary.btn-sm.btn-block.btn-continuar")).click();
-		sleep(3000);
+		File directory_1 = new File("BeFan112004_2.txt");
+		contact.subir_regiones(new File(directory_1.getAbsolutePath()).toString(),"si");
+		sleep(5000);
 		boolean texto = false;
 		String mensaje = driver.findElement(By.className("modal-header")).getText();
 		if (mensaje.contains("Archivo importado correctamente")) {
@@ -1290,9 +1295,12 @@ public class BeFANConfigurador extends TestBase {
 	@Test (groups = "BeFAN")
 	public void TS126615_BeFan_Movil_REPRO_Preactivacion_repro_Importacion_de_agrupadores_Formato_erroneo() {
 		boolean formato = false;
-		irA("regiones", "importaci\u00f3n");
-		driver.findElement(By.id("fileinput")).sendKeys("C:\\Users\\Nicolas\\Desktop\\ajustes.txt");
-		driver.findElement(By.cssSelector(".btn.btn-primary.btn-sm.btn-block.btn-continuar")).click();
+		ContactSearch contact = new ContactSearch(driver);
+		irA("Regiones", "Importaci\u00f3n");
+		sleep(7000);
+		File directory = new File("BeFan126615.txt");
+		contact.subir_regiones(new File(directory.getAbsolutePath()).toString(),"si");
+		sleep(5000);
 		WebElement tabla = driver.findElement(By.cssSelector(".table.table-top-fixed.table-striped.table-primary")).findElement(By.tagName("tbody")).findElement(By.tagName("tr"));
 		for (WebElement x : tabla.findElements(By.tagName("td"))) {
 			if (x.getText().equalsIgnoreCase("La region no existe"))
@@ -1303,10 +1311,12 @@ public class BeFANConfigurador extends TestBase {
 	
 	@Test (groups = "BeFan")
 	public void TS112005_BeFan_Movil_REPRO_Preactivacion_repro_Importacion_de_agrupadores_Prefijos_repetidos_por_agrupador() {
+		ContactSearch contact = new ContactSearch(driver);
 		irA("Regiones", "Importaci\u00f3n");
-		driver.findElement(By.id("fileinput")).sendKeys("C:\\Users\\xappiens\\Documents\\TxT\\AgrupadorPrefijoRepetido.txt");
-		driver.findElement(By.cssSelector(".btn.btn-primary.btn-sm.btn-block.btn-continuar")).click();
-		sleep(3000);
+		sleep(7000);
+		File directory = new File("BeFan112005.txt");
+		contact.subir_regiones(new File(directory.getAbsolutePath()).toString(),"si");
+		sleep(5000);
 		WebElement tabla = driver.findElement(By.className("ng-scope")).findElement(By.tagName("tbody"));
 		System.out.println(tabla.getText());
 		Assert.assertTrue(tabla.getText().toLowerCase().contains("ya se encuentra asignado el prefijo"));
@@ -1314,10 +1324,12 @@ public class BeFANConfigurador extends TestBase {
 	
 	@Test (groups = "BeFan")
 	public void TS126617_BeFan_Movil_REPRO_Preactivacion_repro_Importacion_de_agrupadores_Prefijos_repetidos_por_agrupador() {
+		ContactSearch contact = new ContactSearch(driver);
 		irA("Regiones", "Importaci\u00f3n");
-		driver.findElement(By.id("fileinput")).sendKeys("C:\\Users\\xappiens\\Documents\\TxT\\AgrupadorPrefijoRepetido2.txt");
-		driver.findElement(By.cssSelector(".btn.btn-primary.btn-sm.btn-block.btn-continuar")).click();
-		sleep(3000);
+		sleep(7000);
+		File directory = new File("BeFan126617.txt");
+		contact.subir_regiones(new File(directory.getAbsolutePath()).toString(),"si");
+		sleep(5000);
 		WebElement tabla = driver.findElement(By.className("ng-scope")).findElement(By.tagName("tbody"));
 		System.out.println(tabla.getText());
 		Assert.assertTrue(tabla.getText().toLowerCase().contains("ya se encuentra asignado el prefijo"));
@@ -1400,6 +1412,7 @@ public class BeFANConfigurador extends TestBase {
 		sleep(2000);
 		buscarYClick(driver.findElements(By.cssSelector(".btn.btn-link")), "equals", "aceptar");
 	}
+	
 	@Test (groups = "BeFan")
 	public void TS135609_BeFan_Movil_Repro_Preactivacion_Importacion_de_cupos_Formato_interno_Fecha_desde_formato_erroneo() {
 		ContactSearch contact = new ContactSearch(driver);
@@ -1603,10 +1616,10 @@ public class BeFANConfigurador extends TestBase {
 		irA("regiones", "gesti\u00f3n");
 		driver.findElement(By.cssSelector(".btn.btn-primary")).click();
 		driver.findElement(By.cssSelector(".form-control.ng-pristine.ng-untouched.ng-valid.ng-empty")).sendKeys("cordoba");
-		buscarYClick(driver.findElements(By.cssSelector(".btn.btn-primary")), "equals", "agregar");	
-		sleep(3000);
+		driver.findElement(By.cssSelector(".btn.btn-primary")).click();
+		
 		for(WebElement x : driver.findElements(By.className("modal-body"))){
-			if(x.getText().toLowerCase().contains("satisfactoriamente")){
+			if(x.getText().toLowerCase().contains("region existente")) {
 				System.out.println(x.getText());
 				buscarYClick(driver.findElements(By.cssSelector(".btn.btn-primary")), "equals", "cerrar");
 				break;
@@ -1662,6 +1675,131 @@ public class BeFANConfigurador extends TestBase {
 		buscarYClick(driver.findElements(By.cssSelector(".btn.btn-primary")), "equals", "cerrar");
 		Assert.assertFalse((driver.findElement(By.cssSelector(".panel-group.panel-group-alternative.ng-scope")).getText().equals("cordoba")));
 	}
+	
+	@Test (groups = "BeFan", dataProvider="SerialInexistente", priority = 2)
+	public void TS135637_BeFan_Movil_Repro_Preactivacion___Gestion_de_cupos__Busqueda__Eliminacion_de_cupo__Mensaje__Confirmacion__Verificacion(String path, String nombreArch, String deposito, String prefijo, String serial1, String serial2, String prefijo2, String Cantidad, String agente, String depositoLogico) throws Exception, IOException {
+		BeFan Botones = new BeFan(driver);
+		
+		String mensaje = "";
+		irA("Cupos", "Gesti\u00f3n");
+		sleep(500);
+		Botones.CGeliminar(agente, deposito);
+		sleep(500);
+		Botones.LogOutBefan(driver);
+		sleep(500);
+		loginBeFAN(driver);
+		sleep(500);
+		irA("Sims", "Importaci\u00f3n");
+		sleep(500);
+		Botones.SISeleccionDeDeposito(deposito);
+		sleep(500);
+		Botones.SISeleccionDePrefijo(prefijo);
+		sleep(500);
+		Botones.SISeleccionCantidadDePrefijo("1");
+		sleep(500);
+		Botones.SIClickAgregar();
+		Botones.SIImportarArchivo(nombreArch = Botones.SICreacionArchivo(nombreArch, path, serial1, ""));
+		sleep(500);
+		Botones.SIClickImportar();
+		sleep(500);
+		mensaje = Botones.SIMensajeModal();
+		if (mensaje.contentEquals("Error al intentar validar cantidad de cupos.")) {
+			Botones.SIClickAceptarImportar();
+			sleep(500);
+			try {
+				Botones.LogOutBefan(driver);
+				sleep(500);
+				loginBeFANConfigurador(driver);
+				sleep(500);
+				irA("Cupos", "Importaci\u00f3n");
+				sleep(500);
+				Botones.CIImportarArchivo(agente, depositoLogico);
+				Assert.assertTrue(true);
+			} catch (Exception e) {
+				Assert.assertTrue(true);
+					}
+			
+		} else {
+			Botones.SIClickAceptarImportar();
+			sleep(500);
+			try {
+				Botones.LogOutBefan(driver);
+				sleep(500);
+				loginBeFANConfigurador(driver);
+				sleep(500);
+				irA("Cupos", "Importaci\u00f3n");
+				sleep(500);
+				Botones.CIImportarArchivo(agente, depositoLogico);
+				Assert.assertTrue(false);
+			} catch (Exception e) {
+				Assert.assertTrue(false);
+					}
+		}
+
+	}
+	
+	@Test (groups = "BeFan", dataProvider="SerialInexistente")
+	public void TS135642_BeFan_Movil_Repro_Preactivacion___Gestion_de_cupos__Busqueda__Modificacion_de_cupo__Mensaje__Confirmacion__Verificacion(String path, String nombreArch, String deposito, String prefijo, String serial1, String serial2, String prefijo2, String Cantidad, String agente, String depositoLogico) throws Exception, IOException {
+		BeFan Botones = new BeFan(driver);
+		
+		String mensaje = "";
+		irA("Cupos", "Gesti\u00f3n");
+		sleep(500);
+		Botones.modificarCupos(agente, deposito);
+		sleep(500);
+		Botones.LogOutBefan(driver);
+		sleep(500);
+		loginBeFAN(driver);
+		sleep(500);
+		irA("Sims", "Importaci\u00f3n");
+		sleep(500);
+		Botones.SISeleccionDeDeposito(deposito);
+		sleep(500);
+		Botones.SISeleccionDePrefijo(prefijo);
+		sleep(500);
+		Botones.SISeleccionCantidadDePrefijo("1");
+		sleep(500);
+		Botones.SIClickAgregar();
+		Botones.SIImportarArchivo(nombreArch = Botones.SICreacionArchivo(nombreArch, path, serial1, ""));
+		sleep(500);
+		Botones.SIClickImportar();
+		sleep(500);
+		mensaje = Botones.SIMensajeModal();
+		if (mensaje.contentEquals("No tienen cupos suficientes en el prefijo " + prefijo)) {
+			Botones.SIClickAceptarImportar();
+			sleep(500);
+			try {
+				Botones.LogOutBefan(driver);
+				sleep(500);
+				loginBeFANConfigurador(driver);
+				sleep(500);
+				irA("Cupos", "Importaci\u00f3n");
+				sleep(500);
+				Botones.CIImportarArchivo(agente, depositoLogico);
+				Assert.assertTrue(true);
+			} catch (Exception e) {
+				Assert.assertTrue(true);
+					}
+			
+		} else {
+			Botones.SIClickAceptarImportar();
+			sleep(500);
+			try {
+				Botones.LogOutBefan(driver);
+				sleep(500);
+				loginBeFANConfigurador(driver);
+				sleep(500);
+				irA("Cupos", "Importaci\u00f3n");
+				sleep(500);
+				Botones.CIImportarArchivo(agente, depositoLogico);
+				Assert.assertTrue(false);
+			} catch (Exception e) {
+				Assert.assertTrue(false);
+					}
+		}
+
+	}
+	
 	
 	@Test (groups = "BeFan")
 	public void TS135639_BeFan_Movil_Repro_Preactivacion_Gestion_de_cupos_Busqueda_Modificacion_de_cupo_Cupo_vigente_con_fecha_de_baja() throws ParseException {
