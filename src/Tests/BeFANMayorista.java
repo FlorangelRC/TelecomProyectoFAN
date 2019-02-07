@@ -687,7 +687,7 @@ public class BeFANMayorista extends TestBase {
 	}
 
 	
-	@Test (groups = "BeFan", dataProvider="SerialConDepositoErroneo")
+	@Test (groups = {"BeFan"}, dataProvider="SerialConDepositoErroneo")
 	public void TS97651_BeFan_Movil_REPRO_PreaActivacion_Linea_Repro_SIMCARD_en_deposito_inexistente(String path, String nombreArch, String deposito, String prefijo, String serial1, String serial2, String prefijo2) throws IOException, Exception {
 		DPW dpw = new DPW();
 		BeFan Botones = new BeFan(driver);
@@ -727,7 +727,7 @@ public class BeFANMayorista extends TestBase {
 		Assert.assertTrue(Botones.SGLeerCampoYValidar(nombreArch, resultadoEstado, resultadoTexto));
 	}
 
-	@Test (groups = "BeFan", dataProvider="SerialInexistente")
+	@Test (groups = {"BeFan"}, dataProvider="SerialInexistente")
 	public void TS112002_BeFan_Movil_REPRO_Preactivacion_repro__Importacion_de_SIM_repro__Mensaje_de_error_ante_volver_a_agregar_otro_prefijo(String path, String nombreArch, String deposito, String prefijo, String serial1, String serial2, String prefijo2) throws Exception{
 		
 		BeFan Botones = new BeFan(driver);
@@ -757,7 +757,7 @@ public class BeFANMayorista extends TestBase {
 
 	}
 	
-	@Test (groups = "BeFan", dataProvider="SerialInexistente")
+	@Test (groups = {"BeFan"}, dataProvider="SerialInexistente")
 	public void TS112029_BeFan_Movil_REPRO_Preactivacion_repro__Importacion_de_SIM_repro__S105__Simcard_inexistente(String path, String nombreArch, String deposito, String prefijo, String serial1, String serial2, String prefijo2) throws IOException, Exception {
 		DPW dpw = new DPW();
 		BeFan Botones = new BeFan(driver);
@@ -799,7 +799,7 @@ public class BeFANMayorista extends TestBase {
 
 	}	
 	
-	@Test (groups = "BeFan", dataProvider="SerialConFormatoInvalido")
+	@Test (groups = {"BeFan"}, dataProvider="SerialConFormatoInvalido")
 	public void TS126615_BeFan_Movil_REPRO_Preactivacion_repro__Importacion_de_agrupadores__Formato_erroneo(String path, String nombreArch, String deposito, String prefijo, String serial1, String serial2, String prefijo2) throws IOException {
 		BeFan Botones = new BeFan(driver);
 		String mensaje;
@@ -827,7 +827,7 @@ public class BeFANMayorista extends TestBase {
 		}
 	}
 // Revisar, faltaria consumir un servicio S105 en el medio para reservarlo
-	@Test (groups = "BeFan", dataProvider="SerialConDepositoErroneo")
+	@Test (groups = {"BeFan"}, dataProvider="SerialConDepositoErroneo")
 	public void TS126640_BeFan_Movil_REPRO_Preactivacion_repro__Importacion_de_SIM_repro__S105__Deposito_erroneo(String path, String nombreArch, String deposito, String prefijo, String serial1, String serial2, String prefijo2) throws IOException, Exception {
 		BeFan Botones = new BeFan(driver);
 		DPW dpw = new DPW();
@@ -867,7 +867,7 @@ public class BeFANMayorista extends TestBase {
 		Assert.assertTrue(Botones.SGLeerCampoYValidar(nombreArch, resultadoEstado, resultadoTexto));
 	}
 // DE 10
-	@Test (groups = "BeFan", dataProvider="SerialBalido")
+	@Test (groups = {"BeFan"}, dataProvider="SerialBalido")
 	public void TS126648_BeFan_Movil_REPRO_Preactivacion_repro__Importacion_de_SIM_repro__S436__Envio_de_lote(String path, String nombreArch, String deposito, String prefijo, String serial1, String serial2, String prefijo2, String Cantidad) throws IOException, Exception {
 		BeFan Botones = new BeFan(driver);
 		DPW dpw = new DPW();
@@ -914,7 +914,7 @@ public class BeFANMayorista extends TestBase {
 		Assert.assertTrue(Botones.SGLeerCampoYValidar(nombreArch, resultadoEstado, resultadoTexto));
 	}
 	//Falta probar, deberia funcionar :(
-	@Test (groups = "BeFan", dataProvider="DosSerialesValidos")
+	@Test (groups = {"BeFan"}, dataProvider="DosSerialesValidos")
 	public void TS97657_BeFan_Movil_REPRO_Asociacion_de_diferentes_seriales_a_diferentes_prefijos(String path, String nombreArch, String deposito, String prefijo, String serial1, String serial2, String prefijo2) throws Exception {
 		BeFan Botones = new BeFan(driver);
 		DPW dpw = new DPW();
@@ -971,7 +971,7 @@ public class BeFANMayorista extends TestBase {
 	
 	
 // DE 10
-	@Test (groups = "BeFan", dataProvider="ArchivoVacio")
+	@Test (groups = {"BeFan"}, dataProvider="ArchivoVacio")
 	public void TS97664_BeFan_Movil_REPRO_Cantidad_inexistente(String path, String nombreArch, String deposito, String prefijo, String serial1, String serial2, String prefijo2) throws IOException {
 		BeFan Botones = new BeFan(driver);
 		String mensaje;
@@ -999,7 +999,7 @@ public class BeFANMayorista extends TestBase {
 	}
 	
 // DE 10
-	@Test (groups = "BeFan", dataProvider="SerialNoMCVM")
+	@Test (groups = {"BeFan"}, dataProvider="SerialNoMCVM")
 	public void TS97653_BeFan_Movil_REPRO_PreaActivacion_Linea_Repro_SIMCARD_en_estado_distinto_a_MCVM(String path, String nombreArch, String deposito, String prefijo, String serial1, String serial2, String prefijo2) throws IOException, Exception {
 		BeFan Botones = new BeFan(driver);
 		DPW dpw = new DPW();
@@ -1041,7 +1041,7 @@ public class BeFANMayorista extends TestBase {
 	}
 	
 // DE 10
-	@Test (groups = "BeFan", dataProvider="SerialesNoValidos")
+	@Test (groups = {"BeFan"}, dataProvider="SerialesNoValidos")
 	public void TS97658_BeFan_Movil_REPRO_Serial_no_asociado_a_ningun_prefijo(String path, String nombreArch, String deposito, String prefijo, String serial1, String serial2, String prefijo2) throws IOException {
 		BeFan Botones = new BeFan(driver);
 		String mensaje;
@@ -1068,7 +1068,7 @@ public class BeFANMayorista extends TestBase {
 
 	}
 
-	@Test (groups = "BeFan", dataProvider="SerialBalido")
+	@Test (groups = {"BeFan"}, dataProvider="SerialBalido")
 	public void TS111958_BeFan_Movil_REPRO_Preactivacion_repro__PreActivacion_Linea_Repro(String path, String nombreArch, String deposito, String prefijo, String serial1, String serial2, String prefijo2, String Cantidad) throws IOException, Exception {
 		BeFan Botones = new BeFan(driver);
 		DPW dpw = new DPW();
@@ -1110,7 +1110,7 @@ public class BeFANMayorista extends TestBase {
 		//Falta verificacion en CRM de lineas preactivadas
 	}
 
-	@Test (groups = "BeFan", dataProvider="SerialValido")
+	@Test (groups = {"BeFan"}, dataProvider="SerialValido")
 	public void TS97656_BeFan_Movil_REPRO_Cantidad_de_seriales_ingresados_mayor_al_habilitado_por_agente(String path, String nombreArch, String deposito, String prefijo, String serial1, String serial2, String prefijo2, String agente) throws IOException {
 		BeFan Botones = new BeFan(driver);
 		String mensaje;
@@ -1164,7 +1164,7 @@ public class BeFANMayorista extends TestBase {
 		
 	}
 	
-	@Test (groups = "BeFan", dataProvider="SerialValidoEterno")
+	@Test (groups = {"BeFan"}, dataProvider="SerialValidoEterno")
 	public void TS97654_BeFan_Movil_REPRO_PreaActivacion_Linea_Repro_Localidad_inexistente_para_numeracion_movil(String path, String nombreArch, String deposito, String prefijo, String serial1, String serial2, String prefijo2) throws IOException, Exception {
 		BeFan Botones = new BeFan(driver);
 		DPW dpw = new DPW();
@@ -1205,7 +1205,7 @@ public class BeFANMayorista extends TestBase {
 		
 	}
 	
-	@Test (groups = "BeFan", dataProvider="SerialValidoEternov2")
+	@Test (groups = {"BeFan"}, dataProvider="SerialValidoEternov2")
 	public void TS111990_BeFan_Movil_REPRO_PreaActivacion_Linea_Repro_Localidad_inexistente_para_numeracion_movil(String path, String nombreArch, String deposito, String prefijo, String serial1, String serial2, String prefijo2) throws IOException, Exception {
 		BeFan Botones = new BeFan(driver);
 		DPW dpw = new DPW();
@@ -1347,7 +1347,8 @@ public class BeFANMayorista extends TestBase {
 		}
 	Assert.assertTrue(fechaDeCarga);
 	}	
-	@Test (groups = "BeFan", dataProvider="GestionRegionesCreacion", dependsOnGroups="EliminacionDeAgrupador")
+	
+	@Test (groups = {"BeFan"}, dataProvider="GestionRegionesCreacion", dependsOnGroups="EliminacionDeAgrupador")
 	public void TS126636_BeFan_Movil_REPRO_Preactivacion_repro_Gestion_de_agrupadores_Busqueda_Eliminacion_de_agrupadores_Si_Sin_preactivar_Verificacion(String sRegion) {
 		irA("Sims", "Importaci\u00f3n");
 		
@@ -1385,7 +1386,8 @@ public class BeFANMayorista extends TestBase {
 		}
 	Assert.assertTrue(fechaProcesado);
 	}	
-	@Test (groups = "BeFan", dataProvider="GestionRegionesCreacion", dependsOnGroups="EliminacionDePrefijo")
+	
+	@Test (groups = {"BeFan"}, dataProvider="GestionRegionesCreacion", dependsOnGroups="EliminacionDePrefijo")
 	public void TS126637_BeFan_Movil_REPRO_Preactivacion_repro_Gestion_de_agrupadores_Busqueda_Modificacion_de_agrupadores_Eliminacion_de_prefijos_en_agrupador_existente_Guardando_Verificacion(String sRegion) throws IOException {
 		irA("Sims", "Importaci\u00f3n");
 		
