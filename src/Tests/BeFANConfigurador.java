@@ -867,7 +867,7 @@ public class BeFANConfigurador extends TestBase {
 	public void TS135636_BeFan_Movil_Repro_Preactivacion_Gestion_de_cupos_Busqueda_Eliminacion_de_cupo_Mensaje_Confirmacion() throws ParseException{
 		BeFan fechas= new BeFan (driver);
 		SimpleDateFormat formatoDelTexto = new SimpleDateFormat ("dd/MM/yyyy");
-		String pregunta = "ï¿½est\u00e1 seguro que desea dar de baja el registro seleccionado?";
+		String pregunta = "¿est\u00e1 seguro que desea dar de baja el registro seleccionado?";
 		String desde ="27/09/2018";
 		String hasta = "25/12/2018";
 		Date fechaDesde = formatoDelTexto.parse(desde);

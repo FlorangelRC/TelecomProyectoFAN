@@ -1790,7 +1790,7 @@ public class BeFANMayorista extends TestBase {
 		selectByText(driver.findElement(By.cssSelector(".text.form-control.ng-pristine.ng-untouched.ng-valid.ng-empty")), "2477");
 		driver.findElement(By.cssSelector(".text.form-control.ng-pristine.ng-untouched.ng-valid.ng-empty")).sendKeys("1");
 		driver.findElement(By.cssSelector(".btn.btn-primary")).click();
-		File directory = new File("BeFan135619b.txt");
+		File directory = new File("BeFan135619d.txt");
 		contact.subir_cupos(new File(directory.getAbsolutePath()).toString(),"");
 		sleep(5000);
 		driver.findElements(By.cssSelector(".btn.btn-primary")).get(2).click();
