@@ -24,8 +24,6 @@ import org.testng.annotations.BeforeClass;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
-import com.sun.imageio.stream.CloseableDisposerRecord;
-
 import Pages.Accounts;
 import Pages.BasePage;
 import Pages.CBS;
@@ -47,12 +45,7 @@ public class GestionesPerfilTelefonico extends TestBase{
 	private CustomerCare cc;
 	private Marketing mk;
 	private CBS cbs;
-	private CBS_Mattu cbsm;;	
-	private TechnicalCareCSRDiagnosticoPage tech;
-	private TechnicalCareCSRAutogestionPage Tech;
-	private TechnicalCareCSRAutogestionF4 estado;
-	TechCare_Ola1 page=new TechCare_Ola1(driver);
-	BasePage closed = new BasePage(driver);
+	private CBS_Mattu cbsm;
 	List <String> datosOrden =new ArrayList<String>();
 	PagePerfilTelefonico ppt;
 	String imagen;
@@ -2477,7 +2470,7 @@ public class GestionesPerfilTelefonico extends TestBase{
 		Assert.assertTrue(sMainBalance.equals(cCBS.ObtenerValorResponse(cCBSM.Servicio_queryLiteBySubscriber(sLinea), "bcs:MainBalance")));
 	}
 
-	@Test (groups = {"GestionesPerfilTelefonico", "DiagnosticoInconvenientes","E2E", "Ciclo3"}, dataProvider = "Diagnostico")
+	@Test (groups = {"GestionesPerfilTelefonico", "DiagnosticoInconveniente","E2E", "Ciclo3"}, dataProvider = "Diagnostico")
 	public void TS111300_CRM_Movil_REPRO_Diagnostico_SVA_Telefonico_SMS_Saliente_SMS_a_fijo_Geo_No_Ok_Desregistrar(String sDNI, String sLinea) throws Exception  {
 		imagen = "TS111300";
 		detalles = null;
@@ -2505,7 +2498,7 @@ public class GestionesPerfilTelefonico extends TestBase{
 	    Assert.assertTrue(driver.findElement(By.cssSelector(".imgItemContainer.ng-scope")).getText().equalsIgnoreCase("Desregistrar"));
 	}
 	
-	@Test (groups = {"GestionesPerfilTelefonico", "DiagnosticoInconvenientes","E2E", "Ciclo3"}, dataProvider = "Diagnostico")
+	@Test (groups = {"GestionesPerfilTelefonico", "DiagnosticoInconveniente","E2E", "Ciclo3"}, dataProvider = "Diagnostico")
 	public void TS112441_CRM_Movil_REPRO_Diagnostico_SVA_Telefonico_SMS_Entrante_No_Recibe_De_Un_Numero_En_Particular_Geo_Ok_Rojo(String sDNI, String sLinea) throws Exception  {
 		imagen = "TS112441";
 		detalles = null;
@@ -2762,7 +2755,7 @@ public class GestionesPerfilTelefonico extends TestBase{
 	
 	}
 	
-	@Test(groups = { "GestionesPerfilTelefonico","DiagnosticoInconvenientes","Ciclo 3", "E2E" }, priority = 1, dataProvider = "Diagnostico") 
+	@Test(groups = { "GestionesPerfilTelefonico","Ciclo 3", "E2E" }, priority = 1, dataProvider = "Diagnostico") 
 	public void TS119281_CRM_Movil_REPRO_Diagnostico_de_Datos_Valida_Red_y_Navegacion_Motivo_de_contacto_No_puedo_Navegar_CONCILIACION_EXITOSA_NO_BAM_Telefonico(String sDNI, String sLinea){
 		imagen = "TS119281";
 		detalles = null;
@@ -3149,7 +3142,7 @@ public class GestionesPerfilTelefonico extends TestBase{
 	}
 
 	@Test (groups = {"GestionesPerfilTelefonico", "ResumenDeCuenta", "E2E", "Ciclo2"}, dataProvider = "CuentaVista360")
-	public void TS135436_CRM_Movil_Prepago_Resumen_de_Cuenta_Corriente_Detalle_ampliado_registro_de_Pago_FAN_Front_Telefonico(String sDNI, String sLinea,String sNombre, String sEmail, String sMovil){
+	public void TS_135436_CRM_Movil_Prepago_Resumen_de_Cuenta_Corriente_Detalle_ampliado_registro_de_Pago_FAN_Front_Telefonico(String sDNI, String sLinea,String sNombre, String sEmail, String sMovil){
 		imagen = "TS135436";
 		detalles = null;
 		detalles = imagen + " -Diagnostico Inconveniente - DNI: " + sDNI;
@@ -3158,7 +3151,7 @@ public class GestionesPerfilTelefonico extends TestBase{
 		sb.BuscarCuenta("DNI", sDNI);
 		driver.findElement(By.cssSelector(".slds-tree__item.ng-scope")).click();
 		sleep(10000);
-		mk.closeActiveTab();
+		//mk.closeActiveTab();
 		cc.irAFacturacion();
 		sleep(8000);
 		driver.switchTo().frame(tb.cambioFrame(driver, By.className("card-top")));
@@ -3170,7 +3163,7 @@ public class GestionesPerfilTelefonico extends TestBase{
 		WebElement Tabla = driver.findElement(By.className("slds-p-bottom--small")).findElement(By.tagName("table")).findElement(By.tagName("tbody")).findElement(By.tagName("tr")).findElements(By.tagName("td")).get(5);
 		Tabla.click();
 		sleep(7000);
-		Assert.assertTrue(true);
+		Assert.assertTrue(false);
 	}
 	
 	@Test(groups = { "GestionesPerfilTelefonico","CambioSimcardDer", "E2E" }, priority = 1, dataProvider = "SimCardSiniestroOfCom") 
@@ -4969,7 +4962,7 @@ public class GestionesPerfilTelefonico extends TestBase{
 	
 	
 	@Test(groups = { "GestionesPerfilTelefonico","DiagnosticoInconvenientes","Ciclo 3", "E2E" }, priority = 1, dataProvider = "Diagnostico") 
-	public void TS119231_CRM_Movil_PRE_Diagnostico_de_Voz_Valida_Red_y_Navegacion_Motivo_de_contacto_No_puedo_realizar_ni_recibir_llamadas_Sin_Locacion_Equipo_sin_se�al(String sDNI, String sLinea){
+	public void TS119231_CRM_Movil_PRE_Diagnostico_de_Voz_Valida_Red_y_Navegacion_Motivo_de_contacto_No_puedo_realizar_ni_recibir_llamadas_Sin_Locacion_Equipo_sin_senal(String sDNI, String sLinea){
 		imagen = "TS119231";
 		detalles = null;
 		detalles = imagen + " -Diagnostico Inconveniente - DNI: " + sDNI;
@@ -5044,7 +5037,7 @@ public class GestionesPerfilTelefonico extends TestBase{
 	}
 	
 	@Test (groups = {"GestionesPerfilTelefonico","Diagnostico/Inconvenientes"}, dataProvider = "Diagnostico")
-	public void TS119271_CRM_Movil_PRE_Diagnostico_de_Datos_Valida_Red_y_Navegacion_Motivo_de_contacto_No_puedo_Navegar_SIN_SE�AL_NO_BAM(String sDNI, String sLinea) throws InterruptedException {
+	public void TS119271_CRM_Movil_PRE_Diagnostico_de_Datos_Valida_Red_y_Navegacion_Motivo_de_contacto_No_puedo_Navegar_SIN_SEnAL_NO_BAM(String sDNI, String sLinea) throws InterruptedException {
 		imagen = "TS119271";
 		detalles = null;
 		detalles = imagen + " -Diagnostico - DNI: " + sDNI;
@@ -5125,5 +5118,53 @@ public class GestionesPerfilTelefonico extends TestBase{
 		driver.switchTo().defaultContent();
 		tech.buscarCaso(caso_1);
 		Assert.assertTrue(tech.cerrarCaso("Resuelta exitosa", "Consulta"));
+	}
+	
+	@Test (groups = {"GestionesPerfilTelefonico", "Solicitud De Reintegro", "E2E","Ciclo4"}, dataProvider = "ConsultaSaldo")
+	public void TS112598_CRM_Movil_PRE_Pago_con_Tarjeta_de_debito_Reintegro_con_Efectivo_1000(String sDNI){
+		imagen = "TS112598";
+		detalles = null;
+		detalles = imagen + " -Reintegros - DNI: " + sDNI;
+		String reintegro = "1,000.00";
+		Marketing mk = new Marketing(driver);
+		boolean a = false;
+		driver.switchTo().frame(cambioFrame(driver, By.id("SearchClientDocumentType")));
+		sb.BuscarCuenta("DNI", sDNI);
+		driver.findElement(By.cssSelector(".slds-tree__item.ng-scope")).click();
+		sleep(15000);
+		cc.irAGestion("solicitud de reintegros");
+		sleep(15000);
+		driver.switchTo().frame(cambioFrame(driver, By.id("SelectBillingAccount_nextBtn")));
+		buscarYClick(driver.findElements(By.cssSelector(".slds-form-element__label.ng-binding")), "contains", "cuenta: ");
+		driver.findElement(By.id("SelectBillingAccount_nextBtn")).click();
+		sleep(8000);
+		driver.switchTo().frame(cambioFrame(driver, By.id("stepRefundData_nextBtn")));
+		buscarYClick(driver.findElements(By.cssSelector(".slds-form-element__label.ng-binding.ng-scope")), "equals", "tarjeta de d\u00e9bito");
+		selectByText(driver.findElement(By.id("selectReason")), "Otros");
+		driver.findElement(By.id("inputCurrencyAmount")).sendKeys(reintegro);
+		driver.findElement(By.id("stepRefundData_nextBtn")).click();
+		sleep(8000);
+		driver.switchTo().frame(cambioFrame(driver, By.id("stepRefundMethod_nextBtn")));
+		String monto = driver.findElement(By.xpath("//*[@id=\"AmountToRefund\"]/div[2]/div/p")).getText();
+		if(monto.contains(reintegro)) {
+			System.out.println(monto);
+		}
+		buscarYClick(driver.findElements(By.cssSelector(".slds-form-element__label.ng-binding")), "equals", "efectivo");
+		driver.findElement(By.id("stepRefundMethod_nextBtn")).click();
+		sleep(8000);
+		driver.switchTo().frame(cambioFrame(driver, By.id("Summary_nextBtn")));
+		List <WebElement> tabla = driver.findElements(By.cssSelector("slds-card__header slds-grid"));
+		for(WebElement x : tabla) {
+			if(x.getText().toLowerCase().contains("tarjeta de d\u00e9bito") && x.getText().toLowerCase().contains("1000")) {
+				System.out.println(tabla);
+			}
+		}
+		driver.findElement(By.id("Summary_nextBtn")).click();
+		sleep(8000);
+		WebElement verificacion = driver.findElement(By.cssSelector(".slds-box.ng-scope"));
+		if(verificacion.getText().toLowerCase().contains("correctamente")) {
+			a = true;
+		}
+		Assert.assertTrue(a);
 	}
 }
