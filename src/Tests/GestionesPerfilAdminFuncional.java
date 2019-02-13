@@ -265,7 +265,7 @@ public class GestionesPerfilAdminFuncional extends TestBase{
 	    buscarYClick(driver.findElements(By.cssSelector(".slds-form-element__label.ng-binding.ng-scope")), "equals", "s\u00ed, funciona correctamente");
 	    sleep(8000);
 	    for(WebElement x : driver.findElements(By.className("slds-form-element__control"))) {
-	    	if(x.getText().toLowerCase().contains("¡tu caso se resolvi\u00f3 con \u00e9xito!")) {
+	    	if(x.getText().toLowerCase().contains("ï¿½tu caso se resolvi\u00f3 con \u00e9xito!")) {
 	    		desregistrar = true;
 	    	}
 	    	
@@ -288,6 +288,83 @@ public class GestionesPerfilAdminFuncional extends TestBase{
 		sleep(4000);
 		System.out.println(tech.verificarNumDeGestion());
 		
+		Assert.assertTrue(tech.cerrarCaso("Resuelta exitosa", "Consulta"));
+	}
+	
+	@Test (groups = {"GestionesReclamosDeRed", "Diagnostico/Inconvenientes", }, dataProvider = "Diagnostico")
+	public void TS119277_CRM_Movil_PRE_Diagnostico_de_Datos_Valida_Red_y_Navegacion_Motivo_de_contacto_No_puedo_Navegar_SIN_LOCACION_MISMA_LINEA_NO_BAM(String sDNI, String sLinea) throws InterruptedException {
+		imagen = "TS119277";
+		detalles = null;
+		detalles = imagen + " -Diagnostico - DNI: " + sDNI;
+		CustomerCare cCC=new CustomerCare(driver);
+		TechnicalCareCSRDiagnosticoPage Tech = new TechnicalCareCSRDiagnosticoPage(driver);
+		TechnicalCareCSRAutogestionPage tech = new TechnicalCareCSRAutogestionPage (driver);
+		TechCare_Ola1 page=new TechCare_Ola1(driver);
+		driver.switchTo().frame(cambioFrame(driver, By.id("SearchClientDocumentType")));
+		sb.BuscarCuenta("DNI", sDNI);
+		driver.findElement(By.cssSelector(".slds-tree__item.ng-scope")).click();
+		sleep(15000);
+		driver.switchTo().frame(cambioFrame(driver, By.className("card-top")));
+		sleep(8000);
+		driver.findElement(By.className("card-top")).click();
+		sleep(5000);
+		cCC.irAGestionEnCard("Diagn\u00f3stico");
+		driver.switchTo().frame(cambioFrame(driver, By.id("Motive")));
+		driver.findElement(By.name("loopname")).click();
+		selectByText(driver.findElement(By.id("Motive")), "No puedo navegar");
+		buscarYClick(driver.findElements(By.id("MotiveIncidentSelect_nextBtn")), "equals", "continuar");
+		sleep(8000);
+		driver.switchTo().frame(cambioFrame(driver, By.id("DataQuotaQuery_nextBtn")));
+		buscarYClick(driver.findElements(By.cssSelector(".slds-form-element__label.ng-binding.ng-scope")), "equals", "no");
+		driver.findElement(By.id("DataQuotaQuery_nextBtn")).click();
+		sleep(8000);
+		String caso_1 = driver.findElement(By.xpath("//*[@id=\"UnavailableQuotaMessage\"]/div/p/p[2]/span/strong")).getText();
+		System.out.println(caso_1);
+		driver.switchTo().defaultContent();
+		tech.buscarCaso(caso_1);
+		Assert.assertTrue(tech.cerrarCaso("Resuelta exitosa", "Consulta"));
+	}
+	
+	@Test (groups = {"GestionesReclamosDeRed","Diagnostico/Inconvenientes"}, dataProvider = "Diagnostico")
+	public void TS119239_CRM_Movil_PRE_Diagnostico_de_Voz_Valida_Red_y_Navegacion_Motivo_de_contacto_No_puedo_Llamar_desde_otro_pais_Servicio_Inactivo(String sDNI, String sLinea) throws InterruptedException {
+		imagen = "TS119239";
+		detalles = null;
+		detalles = imagen + " -Diagnostico - DNI: " + sDNI;
+		CustomerCare cCC=new CustomerCare(driver);
+		TechnicalCareCSRDiagnosticoPage Tech = new TechnicalCareCSRDiagnosticoPage(driver);
+		TechnicalCareCSRAutogestionPage tech = new TechnicalCareCSRAutogestionPage (driver);
+		TechCare_Ola1 page=new TechCare_Ola1(driver);
+		driver.switchTo().frame(cambioFrame(driver, By.id("SearchClientDocumentType")));
+		sb.BuscarCuenta("DNI", sDNI);
+		driver.findElement(By.cssSelector(".slds-tree__item.ng-scope")).click();
+		sleep(15000);
+		driver.switchTo().frame(cambioFrame(driver, By.className("card-top")));
+		sleep(8000);
+		driver.findElement(By.className("card-top")).click();
+		sleep(5000);
+		cCC.irAGestionEnCard("Diagn\u00f3stico");
+		driver.switchTo().frame(cambioFrame(driver, By.id("Motive")));
+		driver.findElement(By.name("loopname")).click();
+		selectByText(driver.findElement(By.id("Motive")), "No puedo llamar desde otro pa\u00eds");
+		buscarYClick(driver.findElements(By.id("MotiveIncidentSelect_nextBtn")), "equals", "continuar");
+		sleep(8000);
+		driver.switchTo().frame(cambioFrame(driver, By.id("BalanceValidation_nextBtn")));
+		buscarYClick(driver.findElements(By.cssSelector(".slds-form-element__label.ng-binding.ng-scope")), "equals", "s\u00ed");
+		driver.findElement(By.id("BalanceValidation_nextBtn")).click();
+		sleep(8000);
+		driver.switchTo().frame(cambioFrame(driver, By.id("NetworkCategory_nextBtn")));
+		driver.findElement(By.id("NetworkCategory_nextBtn")).click();
+		sleep(8000);
+		buscarYClick(driver.findElements(By.cssSelector(".slds-radio--faux.ng-scope")), "equals", "si");
+		driver.findElement(By.id("BlackListValidationOk_nextBtn")).click();
+		sleep(8000);
+		driver.switchTo().frame(cambioFrame(driver, By.className("borderOverlay")));
+		Tech.categoriaRed("Fuera del Area de Cobertura");
+		sleep(8000);
+		String caso_1 = driver.findElement(By.xpath("//*[@id=\"OutOfCoverageMessage\"]/div/p/p[2]/span/strong")).getText();
+		System.out.println(caso_1);
+		driver.switchTo().defaultContent();
+		tech.buscarCaso(caso_1);
 		Assert.assertTrue(tech.cerrarCaso("Resuelta exitosa", "Consulta"));
 	}
 }

@@ -55,13 +55,13 @@ public class BeFAN extends TestBase {
 		loginBeFAN(driver);
 	}
 	
-	//@AfterMethod (alwaysRun = true)
+	@AfterMethod (alwaysRun = true)
 	public void after() {
 		driver.get(TestBase.urlBeFAN);
 		sleep(3000);
 	}
 	
-	//@AfterClass (alwaysRun = true)
+	@AfterClass (alwaysRun = true)
 	public void quit() {
 		driver.quit();
 	}

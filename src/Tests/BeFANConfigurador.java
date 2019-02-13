@@ -63,13 +63,13 @@ public class BeFANConfigurador extends TestBase {
 		loginBeFANConfigurador(driver);
 	}
 	
-	@AfterMethod (alwaysRun = true)
+//	@AfterMethod (alwaysRun = true)
 	public void after() {
 		driver.get(TestBase.urlBeFAN);
 		sleep(3000);
 	}
 	
-	@AfterClass (alwaysRun = true)
+	//@AfterClass (alwaysRun = true)
 	public void quit() {
 		driver.quit();
 	}
@@ -551,12 +551,13 @@ public class BeFANConfigurador extends TestBase {
 	}
 	@Test (groups = "BeFan")
 	public void TS135605_BeFan_Movil_Repro_Preactivacion_Importacion_de_cupos_Formato_invalido() {
+		ContactSearch contact = new ContactSearch(driver);
 		String text = "debe importar un archivo .txt";
 		irA("Cupos", "Importaci\u00f3n");
-		sleep(3000);
-		driver.findElement(By.id("fileinput")).sendKeys("C:\\Users\\xappiens\\Documents\\Word\\cupos1.docx");
-		sleep(3000);
-		driver.findElement(By.name("BTN-Importar")).click();
+		sleep(7000);
+		File directory = new File("BeFan135605.docx");
+		contact.subir_cupos(new File(directory.getAbsolutePath()).toString(),"si");
+		sleep(5000);
 		boolean a = false;
 		List <WebElement> formato = driver.findElements(By.className("modal-header"));
 		for(WebElement x : formato) {
@@ -732,21 +733,22 @@ public class BeFANConfigurador extends TestBase {
 		driver.findElement(By.cssSelector(".form-control.ng-pristine.ng-untouched.ng-valid.ng-empty")).sendKeys("Tierra Del Fuego");
 		driver.findElement(By.cssSelector(".btn.btn-primary")).click();
 		buscarYClick(driver.findElements(By.cssSelector(".btn.btn-primary")), "equals", "cerrar");
+		
 		buscarYClick(driver.findElements(By.cssSelector(".panel-group.panel-group-alternative.ng-scope")), "contains", "tierra del fuego");
 		driver.findElement(By.cssSelector(".panel-collapse.in.collapse")).findElement(By.cssSelector(".btn.btn-link")).click();
 		sleep(3000);
+		String nroPrefijo = driver.findElement(By.cssSelector(".compatibility.custom-check.ng-scope")).findElement(By.tagName("label")).getText();
+		System.out.println(nroPrefijo);
 		driver.findElement(By.className("check-filter-on")).click();
 		buscarYClick(driver.findElements(By.cssSelector(".btn.btn-primary")), "equals", "agregar");
 		buscarYClick(driver.findElements(By.cssSelector(".btn.btn-primary")), "equals", "cerrar");
 		sleep(5000);
-		for (WebElement x : driver.findElements(By.cssSelector(".panel-group.panel-group-alternative.ng-scope"))) {
-			if (x.getText().toLowerCase().contains("tierra del fuego"))
-				((JavascriptExecutor) driver).executeScript("window.scrollTo(0," + x.getLocation().y + ")");
-		}
+
 		buscarYClick(driver.findElements(By.cssSelector(".panel-group.panel-group-alternative.ng-scope")), "contains", "tierra del fuego");
-		for (WebElement x : driver.findElements(By.className("panel-group"))) {
-			if (x.getText().contains("3532"))
-				x.findElement(By.tagName("tbody")).findElement(By.tagName("button")).click();
+		((JavascriptExecutor) driver).executeScript("window.scrollTo(0," + driver.findElement(By.cssSelector(".panel.ng-scope.ng-isolate-scope.panel-default.panel-open")).getLocation().y + ")");
+		for (WebElement x : driver.findElement(By.cssSelector(".panel.ng-scope.ng-isolate-scope.panel-default.panel-open")).findElement(By.tagName("tbody")).findElements(By.tagName("tr"))) {
+			if (x.getText().contains(nroPrefijo)) 
+				x.findElement(By.cssSelector(".btn.btn-link")).click();
 		}
 		buscarYClick(driver.findElements(By.cssSelector(".btn.btn-primary")), "equals", "eliminar");
 		buscarYClick(driver.findElements(By.cssSelector(".btn.btn-primary")), "equals", "cerrar");
@@ -1216,10 +1218,12 @@ public class BeFANConfigurador extends TestBase {
 	
 	@Test (groups = "BeFan")
 	public void TS126649_BeFan_Movil_REPRO_Preactivacion_repro_Importacion_de_cupos_Exitoso(){
+		ContactSearch contact = new ContactSearch(driver);
 		irA("Cupos", "Importaci\u00f3n");
-		driver.findElement(By.name("INPUT-ArchivoCupos")).sendKeys("C:\\Users\\xappiens\\Documents\\TxT\\CuposPrueba_01.txt");
-		driver.findElement(By.name("BTN-Importar")).click();
-		sleep(3000);
+		sleep(7000);
+		File directory = new File("BeFan126649.txt");
+		contact.subir_cupos(new File(directory.getAbsolutePath()).toString(),"si");
+		sleep(5000);
 		boolean confirmacion = false;
 		String mensaje = driver.findElement(By.className("modal-header")).getText();
 		if (mensaje.toLowerCase().contains("el archivo se import\u00f3 correctamente")) {
@@ -1251,16 +1255,18 @@ public class BeFANConfigurador extends TestBase {
 	
 	@Test (groups = "BeFan")
 	public void TS112004_BeFan_Movil_REPRO_Preactivacion_repro_Importacion_de_agrupadores_Prefijos_inexistentes() {
+		ContactSearch contact = new ContactSearch(driver);
 		irA("Regiones", "Importaci\u00f3n");
-		driver.findElement(By.id("fileinput")).sendKeys("C:\\Users\\xappiens\\Documents\\TxT\\AgrupadorPrefijoinexistente.txt");
-		driver.findElement(By.cssSelector(".btn.btn-primary.btn-sm.btn-block.btn-continuar")).click();
-		sleep(3000);
+		sleep(7000);
+		File directory = new File("BeFan112004_1.txt");
+		contact.subir_regiones(new File(directory.getAbsolutePath()).toString(),"si");
+		sleep(5000);
 		WebElement tabla = driver.findElement(By.className("ng-scope")).findElement(By.tagName("tbody"));
 		System.out.println(tabla.getText());
 		Assert.assertTrue(tabla.getText().toLowerCase().contains("el prefijo no existe"));
-		driver.findElement(By.id("fileinput")).sendKeys("C:\\Users\\xappiens\\Documents\\TxT\\AgrupadorPrefijoexistente.txt");
-		driver.findElement(By.cssSelector(".btn.btn-primary.btn-sm.btn-block.btn-continuar")).click();
-		sleep(3000);
+		File directory_1 = new File("BeFan112004_2.txt");
+		contact.subir_regiones(new File(directory_1.getAbsolutePath()).toString(),"si");
+		sleep(5000);
 		boolean texto = false;
 		String mensaje = driver.findElement(By.className("modal-header")).getText();
 		if (mensaje.contains("Archivo importado correctamente")) {
@@ -1289,9 +1295,12 @@ public class BeFANConfigurador extends TestBase {
 	@Test (groups = "BeFAN")
 	public void TS126615_BeFan_Movil_REPRO_Preactivacion_repro_Importacion_de_agrupadores_Formato_erroneo() {
 		boolean formato = false;
-		irA("regiones", "importaci\u00f3n");
-		driver.findElement(By.id("fileinput")).sendKeys("C:\\Users\\Nicolas\\Desktop\\ajustes.txt");
-		driver.findElement(By.cssSelector(".btn.btn-primary.btn-sm.btn-block.btn-continuar")).click();
+		ContactSearch contact = new ContactSearch(driver);
+		irA("Regiones", "Importaci\u00f3n");
+		sleep(7000);
+		File directory = new File("BeFan126615.txt");
+		contact.subir_regiones(new File(directory.getAbsolutePath()).toString(),"si");
+		sleep(5000);
 		WebElement tabla = driver.findElement(By.cssSelector(".table.table-top-fixed.table-striped.table-primary")).findElement(By.tagName("tbody")).findElement(By.tagName("tr"));
 		for (WebElement x : tabla.findElements(By.tagName("td"))) {
 			if (x.getText().equalsIgnoreCase("La region no existe"))
@@ -1302,10 +1311,12 @@ public class BeFANConfigurador extends TestBase {
 	
 	@Test (groups = "BeFan")
 	public void TS112005_BeFan_Movil_REPRO_Preactivacion_repro_Importacion_de_agrupadores_Prefijos_repetidos_por_agrupador() {
+		ContactSearch contact = new ContactSearch(driver);
 		irA("Regiones", "Importaci\u00f3n");
-		driver.findElement(By.id("fileinput")).sendKeys("C:\\Users\\xappiens\\Documents\\TxT\\AgrupadorPrefijoRepetido.txt");
-		driver.findElement(By.cssSelector(".btn.btn-primary.btn-sm.btn-block.btn-continuar")).click();
-		sleep(3000);
+		sleep(7000);
+		File directory = new File("BeFan112005.txt");
+		contact.subir_regiones(new File(directory.getAbsolutePath()).toString(),"si");
+		sleep(5000);
 		WebElement tabla = driver.findElement(By.className("ng-scope")).findElement(By.tagName("tbody"));
 		System.out.println(tabla.getText());
 		Assert.assertTrue(tabla.getText().toLowerCase().contains("ya se encuentra asignado el prefijo"));
@@ -1313,10 +1324,12 @@ public class BeFANConfigurador extends TestBase {
 	
 	@Test (groups = "BeFan")
 	public void TS126617_BeFan_Movil_REPRO_Preactivacion_repro_Importacion_de_agrupadores_Prefijos_repetidos_por_agrupador() {
+		ContactSearch contact = new ContactSearch(driver);
 		irA("Regiones", "Importaci\u00f3n");
-		driver.findElement(By.id("fileinput")).sendKeys("C:\\Users\\xappiens\\Documents\\TxT\\AgrupadorPrefijoRepetido2.txt");
-		driver.findElement(By.cssSelector(".btn.btn-primary.btn-sm.btn-block.btn-continuar")).click();
-		sleep(3000);
+		sleep(7000);
+		File directory = new File("BeFan126617.txt");
+		contact.subir_regiones(new File(directory.getAbsolutePath()).toString(),"si");
+		sleep(5000);
 		WebElement tabla = driver.findElement(By.className("ng-scope")).findElement(By.tagName("tbody"));
 		System.out.println(tabla.getText());
 		Assert.assertTrue(tabla.getText().toLowerCase().contains("ya se encuentra asignado el prefijo"));
@@ -1399,6 +1412,7 @@ public class BeFANConfigurador extends TestBase {
 		sleep(2000);
 		buscarYClick(driver.findElements(By.cssSelector(".btn.btn-link")), "equals", "aceptar");
 	}
+	
 	@Test (groups = "BeFan")
 	public void TS135609_BeFan_Movil_Repro_Preactivacion_Importacion_de_cupos_Formato_interno_Fecha_desde_formato_erroneo() {
 		ContactSearch contact = new ContactSearch(driver);
@@ -1598,6 +1612,7 @@ public class BeFANConfigurador extends TestBase {
 		BeFan page = new BeFan(driver);
 		boolean eliminar = false;
 		boolean cancelar = false;
+		String nroPrefijo = null;
 		irA("regiones", "gesti\u00f3n");
 		driver.findElement(By.cssSelector(".btn.btn-primary")).click();
 		driver.findElement(By.cssSelector(".form-control.ng-pristine.ng-untouched.ng-valid.ng-empty")).sendKeys("cordoba");
@@ -1622,19 +1637,30 @@ public class BeFANConfigurador extends TestBase {
 				buscarYClick(driver.findElements(By.cssSelector(".btn.btn-primary")), "equals", "cerrar");
 				buscarYClick(driver.findElements(By.cssSelector(".panel-group.panel-group-alternative.ng-scope")), "contains", "cordoba");
 				sleep(3000);
-				driver.findElement(By.cssSelector(".panel-collapse.in.collapse")).findElement(By.cssSelector(".btn.btn-link")).click();
+				for (WebElement a : driver.findElements(By.className("panel-group"))) {
+					try {
+						if (a.getText().toLowerCase().contains("cordoba"))
+							a.findElement(By.cssSelector(".glyphicon.glyphicon-plus")).click();
+					} catch(Exception e) {}
+				}
 				sleep(3000);
-				driver.findElement(By.className("check-filter-on")).click();
+				driver.findElement(By.cssSelector(".compatibility.custom-check.ng-scope")).findElement(By.tagName("input")).click();
+				nroPrefijo = driver.findElement(By.cssSelector(".compatibility.custom-check.ng-scope")).findElement(By.tagName("label")).getText();
+				System.out.println(nroPrefijo);
+				//driver.findElement(By.cssSelector(".panel-collapse.in.collapse")).findElement(By.cssSelector(".btn.btn-link")).click();
+				sleep(3000);
+				//driver.findElement(By.className("check-filter-on")).click();
 				buscarYClick(driver.findElements(By.cssSelector(".btn.btn-primary")), "equals", "agregar");
 				buscarYClick(driver.findElements(By.cssSelector(".btn.btn-primary")), "equals", "cerrar");
 				sleep(5000);
 				break;
-		}
-			}	
+			}
+		}	
 		sleep(3000);
 		buscarYClick(driver.findElements(By.cssSelector(".panel-group.panel-group-alternative.ng-scope")), "equals", "cordoba");
+		
 		for (WebElement x : driver.findElement(By.cssSelector(".panel.ng-scope.ng-isolate-scope.panel-default.panel-open")).findElement(By.tagName("tbody")).findElements(By.tagName("tr"))) {
-			if (x.getText().contains("3546"));
+			//if (x.getText().contains(nroPrefijo));
 				x.findElement(By.cssSelector(".actions.text-center")).findElement(By.cssSelector(".btn.btn-link")).click();
 			}
 		driver.findElement(By.className("modal-footer")).findElement(By.className("pull-right"));
@@ -1647,7 +1673,7 @@ public class BeFANConfigurador extends TestBase {
 		buscarYClick(driver.findElements(By.cssSelector(".btn.btn-primary")), "equals", "eliminar");
 		Assert.assertTrue(page.verificarMensajeExitoso());
 		buscarYClick(driver.findElements(By.cssSelector(".btn.btn-primary")), "equals", "cerrar");
-		driver.findElement(By.cssSelector(".btn.btn-primary")).click();
+		Assert.assertFalse((driver.findElement(By.cssSelector(".panel-group.panel-group-alternative.ng-scope")).getText().equals("cordoba")));
 	}
 	
 	@Test (groups = "BeFan", dataProvider="SerialInexistente", priority = 2)
@@ -1856,13 +1882,13 @@ public class BeFANConfigurador extends TestBase {
 		buscarYClick(driver.findElements(By.cssSelector(".panel-group.panel-group-alternative.ng-scope")), "contains", "cordoba");
 		((JavascriptExecutor) driver).executeScript("window.scrollTo(0," + driver.findElement(By.cssSelector(".panel.ng-scope.ng-isolate-scope.panel-default.panel-open")).getLocation().y + ")");
 		for (WebElement x : driver.findElement(By.cssSelector(".panel.ng-scope.ng-isolate-scope.panel-default.panel-open")).findElement(By.tagName("tbody")).findElements(By.tagName("tr"))) {
-			if (x.getText().contains(nroPrefijo)) {
+			//if (x.getText().contains(nroPrefijo)) {
 				x.findElement(By.cssSelector(".btn.btn-link")).click();
 				buscarYClick(driver.findElements(By.cssSelector(".btn.btn-primary")), "equals", "eliminar");
 				buscarYClick(driver.findElements(By.cssSelector(".btn.btn-primary")), "equals", "cerrar");
 				eliminarPrefijo = true;
 			}
-		}
+		
 		Assert.assertTrue(eliminarPrefijo);
 		sleep(3000);
 		buscarYClick(driver.findElements(By.cssSelector(".btn.btn-link")), "equals", "cancelar");

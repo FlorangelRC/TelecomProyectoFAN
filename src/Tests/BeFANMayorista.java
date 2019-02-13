@@ -1279,9 +1279,10 @@ public class BeFANMayorista extends TestBase {
 		}
 
 	}
-	// DE 10 CON PREP
-	@Test (groups = "BeFan")
-	public void TS112029_BeFan_Movil_REPRO_Preactivacion_repro__Importacion_de_SIM_repro__S105__Simcard_inexistente() throws IOException, Exception {
+	
+	@Test (groups = {"BeFan"}, dataProvider="SerialInexistente")
+	public void TS112029_BeFan_Movil_REPRO_Preactivacion_repro__Importacion_de_SIM_repro__S105__Simcard_inexistente(String path, String nombreArch, String deposito, String prefijo, String serial1, String serial2, String prefijo2) throws IOException, Exception {
+		DPW dpw = new DPW();
 		BeFan Botones = new BeFan(driver);
 		String[] resultadoEstado = {""};
 		String[] resultadoTexto = {""};
@@ -1338,10 +1339,9 @@ public class BeFANMayorista extends TestBase {
 		Botones.SIClickAceptarImportar();
 		sleep(1000);
 	}
-	
-// DE 10 CON PREP
-	@Test (groups = "BeFan")
-	public void TS126640_BeFan_Movil_REPRO_Preactivacion_repro__Importacion_de_SIM_repro__S105__Deposito_erroneo() throws IOException, Exception {
+// Revisar, faltaria consumir un servicio S105 en el medio para reservarlo
+	@Test (groups = {"BeFan"}, dataProvider="SerialConDepositoErroneo")
+	public void TS126640_BeFan_Movil_REPRO_Preactivacion_repro__Importacion_de_SIM_repro__S105__Deposito_erroneo(String path, String nombreArch, String deposito, String prefijo, String serial1, String serial2, String prefijo2) throws IOException, Exception {
 		BeFan Botones = new BeFan(driver);
 		String[] resultadoEstado = {""};
 		String[] resultadoTexto = {""};
@@ -1370,9 +1370,8 @@ public class BeFANMayorista extends TestBase {
 		sleep(500);
 		Assert.assertTrue(Botones.SGLeerCampoYValidar(nombreArch, resultadoEstado, resultadoTexto));
 	}
-	
-// DE 10 SIN PREP
-	@Test (groups = "BeFan", dataProvider="SerialBalido")
+// DE 10
+	@Test (groups = {"BeFan"}, dataProvider="SerialBalido")
 	public void TS126648_BeFan_Movil_REPRO_Preactivacion_repro__Importacion_de_SIM_repro__S436__Envio_de_lote(String path, String nombreArch, String deposito, String prefijo, String serial1, String serial2, String prefijo2, String Cantidad) throws IOException, Exception {
 		BeFan Botones = new BeFan(driver);
 		DPW dpw = new DPW();
@@ -1419,7 +1418,7 @@ public class BeFANMayorista extends TestBase {
 		Assert.assertTrue(Botones.SGLeerCampoYValidar(nombreArch, resultadoEstado, resultadoTexto));
 	}
 	//Falta probar, deberia funcionar :(
-	@Test (groups = "BeFan", dataProvider="DosSerialesValidos")
+	@Test (groups = {"BeFan"}, dataProvider="DosSerialesValidos")
 	public void TS97657_BeFan_Movil_REPRO_Asociacion_de_diferentes_seriales_a_diferentes_prefijos(String path, String nombreArch, String deposito, String prefijo, String serial1, String serial2, String prefijo2) throws Exception {
 		BeFan Botones = new BeFan(driver);
 		String[] resultadoEstado = {""};
@@ -1664,11 +1663,8 @@ public class BeFANMayorista extends TestBase {
 
 	}
 	
-
-	
-	// DE 10 CON PREP
-	@Test (groups = "BeFan")
-	public void TS97654_BeFan_Movil_REPRO_PreaActivacion_Linea_Repro_Localidad_inexistente_para_numeracion_movil() throws IOException, Exception {
+	@Test (groups = {"BeFan"}, dataProvider="SerialValidoEterno")
+	public void TS97654_BeFan_Movil_REPRO_PreaActivacion_Linea_Repro_Localidad_inexistente_para_numeracion_movil(String path, String nombreArch, String deposito, String prefijo, String serial1, String serial2, String prefijo2) throws IOException, Exception {
 		BeFan Botones = new BeFan(driver);
 		DPW dpw = new DPW();
 		String[] resultadoEstado = {""};
@@ -1700,9 +1696,8 @@ public class BeFANMayorista extends TestBase {
 		
 	}
 	
-	// DE 10 CON PREP
-	@Test (groups = "BeFan")
-	public void TS111990_BeFan_Movil_REPRO_PreaActivacion_Linea_Repro_Localidad_inexistente_para_numeracion_movil() throws IOException, Exception {
+	@Test (groups = {"BeFan"}, dataProvider="SerialValidoEternov2")
+	public void TS111990_BeFan_Movil_REPRO_PreaActivacion_Linea_Repro_Localidad_inexistente_para_numeracion_movil(String path, String nombreArch, String deposito, String prefijo, String serial1, String serial2, String prefijo2) throws IOException, Exception {
 		BeFan Botones = new BeFan(driver);
 		String[] resultadoEstado = {""};
 		String[] resultadoTexto = {""};
@@ -1792,7 +1787,7 @@ public class BeFANMayorista extends TestBase {
 		selectByText(driver.findElement(By.cssSelector(".text.form-control.ng-pristine.ng-untouched.ng-valid.ng-empty")), "2477");
 		driver.findElement(By.cssSelector(".text.form-control.ng-pristine.ng-untouched.ng-valid.ng-empty")).sendKeys("1");
 		driver.findElement(By.cssSelector(".btn.btn-primary")).click();
-		File directory = new File("BeFan135619b.txt");
+		File directory = new File("BeFan135619d.txt");
 		contact.subir_cupos(new File(directory.getAbsolutePath()).toString(),"");
 		sleep(5000);
 		driver.findElements(By.cssSelector(".btn.btn-primary")).get(2).click();
@@ -1861,7 +1856,8 @@ public class BeFANMayorista extends TestBase {
 		}
 	Assert.assertTrue(fechaDeCarga);
 	}	
-	@Test (groups = "BeFan", dataProvider="GestionRegionesCreacion", dependsOnGroups="EliminacionDeAgrupador")
+	
+	@Test (groups = {"BeFan"}, dataProvider="GestionRegionesCreacion", dependsOnGroups="EliminacionDeAgrupador")
 	public void TS126636_BeFan_Movil_REPRO_Preactivacion_repro_Gestion_de_agrupadores_Busqueda_Eliminacion_de_agrupadores_Si_Sin_preactivar_Verificacion(String sRegion) {
 		irA("Sims", "Importaci\u00f3n");
 		
@@ -1879,27 +1875,27 @@ public class BeFANMayorista extends TestBase {
 	
 	@Test (groups = "BeFAN")
 	public void TS126682_BeFan_Movil_REPRO_Preactivacion_repro_Visualizacion_de_archivos_importados_Fecha_de_procesamiento_Sin_fecha() {
-	boolean fechaProcesado = false;
-	irA("gestion");
-	selectByText(driver.findElement(By.cssSelector(".text.form-control.ng-pristine.ng-untouched.ng-valid.ng-empty")), "En Proceso");
-	selectByText(driver.findElements(By.cssSelector(".text.form-control.ng-pristine.ng-untouched.ng-valid.ng-empty")).get(1), "BAS-VJP-BAHIA BLANCA - VJP Punta Alta");
-	driver.findElement(By.cssSelector(".btn.btn-primary")).click();
-	sleep(5000);
-	WebElement tabla = driver.findElement(By.id("exportarTabla")).findElement(By.tagName("thead"));
-	for (WebElement x : tabla.findElements(By.tagName("th"))) {
-		if (x.getText().contains("Fecha Procesado"))
-			fechaProcesado = true;
-	}
-	WebElement cont = driver.findElement(By.id("exportarTabla"));
-	Marketing colu = new Marketing(driver);
-	List<WebElement> x = colu.traerColumnaElement(cont, 8, 7);	
-	for(WebElement a : x) {
-			a.getText().isEmpty();
-			
+		boolean fechaProcesado = false;
+		irA("gestion");
+		selectByText(driver.findElement(By.cssSelector(".text.form-control.ng-pristine.ng-untouched.ng-valid.ng-empty")), "En Proceso");
+		selectByText(driver.findElements(By.cssSelector(".text.form-control.ng-pristine.ng-untouched.ng-valid.ng-empty")).get(1), "BAS-VJP-BAHIA BLANCA - VJP Punta Alta");
+		driver.findElement(By.cssSelector(".btn.btn-primary")).click();
+		sleep(5000);
+		WebElement tabla = driver.findElement(By.id("exportarTabla")).findElement(By.tagName("thead"));
+		for (WebElement x : tabla.findElements(By.tagName("th"))) {
+			if (x.getText().contains("Fecha Procesado"))
+				fechaProcesado = true;
 		}
-	Assert.assertTrue(fechaProcesado);
+		WebElement cont = driver.findElement(By.id("exportarTabla"));
+		Marketing colu = new Marketing(driver);
+		List<WebElement> x = colu.traerColumnaElement(cont, 8, 7);	
+		for(WebElement a : x) {
+				a.getText().isEmpty();
+				
+			}
+		Assert.assertTrue(fechaProcesado);
 	}	
-	@Test (groups = "BeFan", dataProvider="GestionRegionesCreacion", dependsOnGroups="EliminacionDePrefijo")
+	@Test (groups = {"BeFan"}, dataProvider="GestionRegionesCreacion", dependsOnGroups="EliminacionDePrefijo")
 	public void TS126637_BeFan_Movil_REPRO_Preactivacion_repro_Gestion_de_agrupadores_Busqueda_Modificacion_de_agrupadores_Eliminacion_de_prefijos_en_agrupador_existente_Guardando_Verificacion(String sRegion) throws IOException {
 		irA("Sims", "Importaci\u00f3n");
 		
