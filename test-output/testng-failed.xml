@@ -3,15 +3,13 @@
 <suite guice-stage="DEVELOPMENT" name="Failed suite [Default suite]">
   <test thread-count="5" name="Default test(failed)">
     <classes>
-      <class name="Tests.GestionesPerfilTelefonico">
+      <class name="Tests.BeFANMayorista">
         <methods>
-          <include name="quit"/>
+          <include name="TS97654_BeFan_Movil_REPRO_PreaActivacion_Linea_Repro_Localidad_inexistente_para_numeracion_movil"/>
+          <include name="TS97670_BeFan_Movil_REPRO_Seriales_con_estado_ERROR"/>
           <include name="init"/>
-          <include name="after"/>
-          <include name="TSCambioSimCardTelef" invocation-numbers="0"/>
-          <include name="setup"/>
         </methods>
-      </class> <!-- Tests.GestionesPerfilTelefonico -->
+      </class> <!-- Tests.BeFANMayorista -->
     </classes>
   </test> <!-- Default test(failed) -->
 </suite> <!-- Failed suite [Default suite] -->

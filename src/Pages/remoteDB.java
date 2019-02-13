@@ -1,17 +1,27 @@
 package Pages;
 
 import java.sql.*;
+<<<<<<< Updated upstream
 import java.util.*;
+=======
+import java.util.ResourceBundle;
+>>>>>>> Stashed changes
 
 
 public class remoteDB {
 	
 	/*static {
 		try {
+<<<<<<< Updated upstream
 			Class.forName("com.mysql.cj.jdbc.Driver");
 			System.out.println("Correctly loaded");
 		} catch (ClassNotFoundException e) {
 			e.printStackTrace();
+=======
+			Class.forName("com.mysql.jdbc.Driver");
+		} catch (ClassNotFoundException cnfe) {
+			cnfe.printStackTrace();
+>>>>>>> Stashed changes
 			System.err.println("Unable to load MySQL Driver");
 		}
 	}
@@ -19,6 +29,7 @@ public class remoteDB {
 	public static void main(String[] args) throws SQLException, ClassNotFoundException {
 		Connection cSession;
 		
+<<<<<<< Updated upstream
 		System.out.println("1");
 		
 		try {
@@ -38,6 +49,17 @@ public class remoteDB {
 			System.out.println(rs.getInt(1) + " " + rs.getString(2) + " " + rs.getString(3));
 			
 			cSession.close();
+=======
+		try {
+			String sHost = "jdbc:mysql://10.78.100.41:1740/FAB_CAC_FACT_DIGITAL_DOCUMENT";
+			String sUser = "A000132";
+			String sPass = "dskore154_";
+			
+			
+			cSession = DriverManager.getConnection(sHost, sUser, sPass);
+			
+			Statement stmt=cSession.createStatement();
+>>>>>>> Stashed changes
 		}
 		catch (SQLException sqleError) {
 			System.out.println("SQL Connection error with the following message: " + sqleError.getMessage());
@@ -46,6 +68,7 @@ public class remoteDB {
 		
 	}*/
 	
+<<<<<<< Updated upstream
 	/*private static Connection con=null;
 	private static Connection cnx;
 	private static String bd = "FAB_CAC_FACT_DIGITAL_DOCUMENT";
@@ -54,6 +77,16 @@ public class remoteDB {
 	private static String password = "dskore154_";
 	//private static String host = "localhost:3306";
 	private static String host = "10.78.100.41:1740";
+=======
+	private static Connection con=null;
+	private static Connection cnx;
+	private static String bd = "login";
+	private static String user = "root";
+	//private static String password = "admin";
+	private static String password = "adrian";
+	//private static String host = "localhost:3306";
+	private static String host = "127.0.0.1:3306";
+>>>>>>> Stashed changes
 	private static String server = "jdbc:mysql://"+host+"/"+bd;
 	
 	public static Connection getConnection() {
@@ -92,6 +125,7 @@ public class remoteDB {
 				throw new RuntimeException(ex);
 			}
 		}
+<<<<<<< Updated upstream
 	}*/
 	
 	private static final String DEFAULT_DRIVER = "com.mysql.cj.jdbc.Driver";
@@ -245,5 +279,8 @@ public class remoteDB {
         }
         return numRowsUpdated;
     }
+=======
+	}
+>>>>>>> Stashed changes
 
 }
