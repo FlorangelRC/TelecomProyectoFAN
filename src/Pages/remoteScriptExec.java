@@ -202,7 +202,12 @@ public class remoteScriptExec {
 					sSplit = sLine.split(",");
 				}
 				else {
-					sSplit = sLine.split(" ");
+					if(sLine.toString().contains("\t")) {
+						sSplit = sLine.split("\t");
+					}
+					else {
+						sSplit = sLine.split(" ");
+					}
 				}
 			}
 			for (int i = 0; i < sSplit.length; i++) {
