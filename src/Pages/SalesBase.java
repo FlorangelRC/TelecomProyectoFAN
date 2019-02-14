@@ -1263,9 +1263,13 @@ try{	driver.findElement(By.id("alert-ok-button")).click();	} catch (NoSuchElemen
 			sleep(12000);
 			driver.switchTo().frame(TB.cambioFrame(driver, By.cssSelector(".slds-truncate.ng-binding")));
 			
-			String serial = driver.findElement(By.cssSelector(".slds-table.slds-table--bordered.slds-table--cell-buffer.vlc-slds-table")).findElements(By.cssSelector(".slds-truncate.ng-binding")).get(2).getText();
+			String serial = driver.findElement(By.cssSelector(".slds-table.slds-table--bordered.slds-table--cell-buffer.vlc-slds-table")).findElements(By.cssSelector(".slds-truncate.ng-binding")).get(1).getText();
 			System.out.println("S="+serial);
-			driver.findElement(By.cssSelector(".slds-input.ng-pristine.ng-untouched.ng-empty.ng-invalid.ng-invalid-required.ng-valid-pattern")).sendKeys(serial);
+			wBody = driver.findElement(By.xpath("//*[@class='slds-table slds-table--bordered slds-table--cell-buffer vlc-slds-table']"));
+			Marketing mk = new Marketing(driver);
+			List<WebElement> wReingresoSerial = mk.traerColumnaElement(wBody, 5, 4);
+			wReingresoSerial.get(0).findElement(By.tagName("input")).click();
+			wReingresoSerial.get(0).findElement(By.tagName("input")).sendKeys(serial);
 			driver.findElement(By.id("SerialNumberValidation_nextBtn")).click();
 			sleep(8000);
 			boolean bAssert = false;

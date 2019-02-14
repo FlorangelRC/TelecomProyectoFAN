@@ -1302,6 +1302,10 @@ public class GestionesPerfilAgente extends TestBase{
 		sleep(6000);
 		cCC.obtenerMontoyTNparaAlta(driver, sOrden);
 		Assert.assertTrue(datos.equalsIgnoreCase("activada")||datos.equalsIgnoreCase("activated"));
+		
+		GestionFlow gf = new GestionFlow();
+		String sIMSIFlow = gf.FlowIMSI(driver,sLinea);
+		System.out.println("sIMSIFlow: " + sIMSIFlow);
 	}
 	
 	@Test (groups = {"GestionesPerfilAgente", "ServicioTecnico","E2E", "Ciclo4"}, dataProvider = "serviciotecnico")

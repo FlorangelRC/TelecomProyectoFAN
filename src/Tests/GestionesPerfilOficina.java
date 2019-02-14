@@ -5233,6 +5233,10 @@ public class GestionesPerfilOficina extends TestBase {
 		sleep(6000);
 		cCC.obtenerMontoyTNparaAlta(driver, orden);
 		Assert.assertTrue(datos.equalsIgnoreCase("activada")||datos.equalsIgnoreCase("activated"));
+		
+		GestionFlow gf = new GestionFlow();
+		String sIMSIFlow = gf.FlowIMSI(driver,sLinea);
+		System.out.println("sIMSIFlow: " + sIMSIFlow);
 	}
 	
 	
@@ -6073,6 +6077,8 @@ public class GestionesPerfilOficina extends TestBase {
 		cCC.obtenerMontoyTNparaAlta(driver, orden);
 		Assert.assertTrue(datos.equalsIgnoreCase("activada")||datos.equalsIgnoreCase("activated"));
 		
+		GestionFlow gf = new GestionFlow();
+		String sIMSIFlow = gf.FlowIMSI(driver,sLinea);
 	}
 	
 	//@Test(groups = { "GestionesPerfilTelefonico","CambioDeSimcardDer", "E2E" }, priority = 1, dataProvider = "SimCardSiniestroOfCom") 
