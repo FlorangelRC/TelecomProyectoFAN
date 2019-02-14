@@ -60,20 +60,11 @@ public class GestionesPerfilOficina extends TestBase {
 	public void init() throws IOException, AWTException {
 		CalculoImpuestos CI = new CalculoImpuestos();
 		CBS_Mattu cCBSM = new CBS_Mattu();
-		//System.out.println("charge code: "+CI.ObtenerChargeCode("Recarga"));
-		//CI.separarFacturaDeInv("1000000147310001", "Simcard");
-		//cCBSM.Servicio_RealizarAltaSuscripcion("3572408875","178");
-		//Assert.assertTrue("3572408875".matches("\\w[0-9]+"));
-		/*cCBSM.Servicio_Recharge("3572408875","35000000");
-		cCBSM.Servicio_Loan("3572408875","15000000");
-		cCBSM.Servicio_Recharge("3572408875","35000000");*/
-		//CI.mostrarProductos(CI.obtenerProductosFacturaInvTxt());
-		CI.validarMontoProductosDat("Consumidor Final");
-		//CI.validarMontoProductosInvTxt("Consumidor Final");
-		/*System.out.println(CI.obtenerDatoFacturaDat("<FLD>IVA_C"));
-		CI.mostrarImpuestos(CI.obtenerImpuestos("Consumidor Final", CI.obtenerTaxGroup("C_SVA_MB_PACK_SMS")));
-		CI.calculadoraInversa(CI.obtenerImpuestos("Consumidor Final", CI.obtenerTaxGroup("C_SVA_MB_PACK_SMS")), "100.00", "16.63", "21.00");*/
-		//System.out.println(CI.obtenerTaxGroup("C_SVA_MB_PACK_SMS"));
+		GestionFlow gGF = new GestionFlow();
+		driver = setConexion.setupEze();
+		//System.out.println(gGF.FlowIMSI(driver, "2932449333"));
+		
+		
 		driver = setConexion.setupEze();
 		sleep(5000);
 		sb = new SalesBase(driver);
@@ -4662,7 +4653,7 @@ public class GestionesPerfilOficina extends TestBase {
 		
 	}
 		
-	@Test (groups = {"GestionesPerfilOficina", "Diagnostico/Inconvenientes","E2E", "Ciclo3"}, dataProvider = "Diagnostico")
+	@Test (groups = {"GestionesPerfilOficina", "DiagnosticoInconvenientes","E2E", "Ciclo3"}, dataProvider = "Diagnostico")
 	public void TS111871_CRM_Movil_REPRO_Diagnostico_SVA_Configuracion_Disponible_Presencial_SMS_Saliente_SMS_a_fijo_Geo_No_Ok_Desregistrar_OfCom(String sDNI, String sLinea) throws Exception  {
 		imagen = "TS111871";
 		detalles = null;
@@ -5510,7 +5501,7 @@ public class GestionesPerfilOficina extends TestBase {
 		Assert.assertTrue(paginas.getText().contains("Filas"));
 	}
 	
-	@Test (groups = {"GestionesPerfilOficina", "DiagnosticoInconveniente","E2E", "Ciclo3"}, dataProvider = "Diagnostico")
+	@Test (groups = {"GestionesPerfilOficina", "DiagnosticoInconvenientes","E2E", "Ciclo3"}, dataProvider = "Diagnostico")
 	public void TS119262_CRM_Movil_REPRO_Diagnostico_de_Voz_Valida_Red_y_Navegacion_Motivo_de_contacto_No_puedo_Llamar_desde_otro_pais_Sin_Locacion_NO_recupera_locacion_Geo_Fuera_de_area_de_cobertura_OfCom(String sDNI, String sLinea) throws Exception  {
 		boolean caso = false;
 		imagen = "TS119262";
@@ -5804,7 +5795,7 @@ public class GestionesPerfilOficina extends TestBase {
 		Assert.assertTrue(driver.findElement(By.cssSelector(".slds-p-horizontal--small.slds-size--1-of-2.slds-medium-size--1-of-4.slds-large-size--1-of-4")).isDisplayed());
 	}
 	
-	@Test (groups = {"GestionesPerfilOficina", "ResumenDeCuenta", "E2E", "Ciclo2"}, dataProvider = "CuentaReintegros")
+	@Test (groups = {"GestionesPerfilOficina", "ResumenDeCuenta", "E2E", "Ciclo2"}, dataProvider = "CuentaVista360")
 	public void TS129476_CRM_Movil_Prepago_Resumen_de_Cuenta_Corriente_Detalle_ampliado_registro_de_Comprobante_Factura_de_Venta_FAN_Front_OOCC(String sDNI, String sLinea,String sNombre, String sEmail, String sMovil){
 		imagen = "TS129476";
 		detalles = null;
@@ -5922,7 +5913,7 @@ public class GestionesPerfilOficina extends TestBase {
 		Assert.assertTrue(datosInicial + (123 * 1024) == datosFinal);
 	}
 	
-	@Test (groups = {"GestionesPerfilOficina", "Diagnostico/Inconvenientes", }, dataProvider = "Diagnostico")
+	@Test (groups = {"GestionesPerfilOficina", "DiagnosticoInconvenientes", }, dataProvider = "Diagnostico")
 	public void TS105428_CRM_Movil_Repro_Autogestion_USSD_No_Interactua_Resuelto(String cDNI, String cLinea) throws InterruptedException {
 		imagen = "TS105428";
 		detalles = null;
@@ -5939,7 +5930,7 @@ public class GestionesPerfilOficina extends TestBase {
 		Assert.assertTrue(tech.cerrarCaso("Resuelta exitosa", "Consulta"));
 	}
 	
-	@Test (groups = {"GestionesPerfilOficina", "Diagnostico/Inconvenientes", }, dataProvider = "Diagnostico")
+	@Test (groups = {"GestionesPerfilOficina", "DiagnosticoInconvenientes", }, dataProvider = "Diagnostico")
 	public void TS105431_CRM_Movil_Repro_Autogestion_WAP_Sitio_Caido_No_carga_informacion_Resuelto(String cDNI, String cLinea) throws InterruptedException {
 		imagen = "TS105431";
 		detalles = null;
@@ -5956,7 +5947,7 @@ public class GestionesPerfilOficina extends TestBase {
 		Assert.assertTrue(tech.cerrarCaso("Resuelta exitosa", "Consulta"));
 	}
 	
-	@Test (groups = {"GestionesPerfilOficina", "Diagnostico/Inconvenientes", }, dataProvider = "Diagnostico")
+	@Test (groups = {"GestionesPerfilOficina", "DiagnosticoInconvenientes", }, dataProvider = "Diagnostico")
 	public void TS105831_Nros_Emergencia_Informa_Sistema_Fuera_de_Servicio_Resuelto(String cDNI, String cLinea) throws InterruptedException {
 		imagen = "TS105831";
 		detalles = null;
@@ -6903,7 +6894,7 @@ public class GestionesPerfilOficina extends TestBase {
 		Assert.assertTrue(gestion);
 	}
 	
-	@Test (groups = {"GestionesPerfilOficina","Diagnostico/Inconvenientes"}, dataProvider = "Diagnostico")
+	@Test (groups = {"GestionesPerfilOficina","DiagnosticoInconvenientes"}, dataProvider = "Diagnostico")
 	public void TS119210_CRM_Movil_PRE_Diagnostico_de_Voz_Valida_Red_y_Navegacion_Motivo_de_contacto_No_puedo_realizar_ni_recibir_llamadas(String sDNI, String sLinea) throws Exception  {
 		imagen = "TS119210";
 		detalles = null;
@@ -6945,7 +6936,7 @@ public class GestionesPerfilOficina extends TestBase {
 		assertTrue(caso);
 	}
 	
-	@Test (groups = {"GestionesPerfilOficina","Diagnostico/Inconvenientes"}, dataProvider = "Diagnostico")
+	@Test (groups = {"GestionesPerfilOficina","DiagnosticoInconvenientes"}, dataProvider = "Diagnostico")
 	public void TS119201_CRM_Movil_PRE_Diagnostico_de_Voz_Valida_Red_y_Navegacion_Motivo_de_contacto_No_puedo_recibir_llamadas_Sin_Locacion_Envia_configuraciones(String sDNI, String sLinea) throws Exception  {
 		imagen = "TS119201";
 		detalles = null;
@@ -6992,7 +6983,7 @@ public class GestionesPerfilOficina extends TestBase {
 		
 	}
 	
-	@Test (groups = {"GestionesPerfilOficina","Diagnostico/Inconvenientes"}, dataProvider = "Diagnostico")
+	@Test (groups = {"GestionesPerfilOficina","DiagnosticoInconvenientes"}, dataProvider = "Diagnostico")
 	public void TS119186_CRM_Movil_PRE_Diagnostico_de_Voz_Valida_Red_y_Navegacion_Motivo_de_contacto_No_puedo_realizar_llamadas_Sin_Locacion_NO_recupera_locacion_Geo_rojo(String sDNI, String sLinea) throws Exception  {
 		imagen = "TS119186";
 		detalles = null;
@@ -7180,7 +7171,7 @@ public class GestionesPerfilOficina extends TestBase {
 		}
 		
 	}
-	@Test (groups = {"GestionesPerfilOficina","Diagnostico/Inconvenientes"},  dataProvider = "Diagnostico")
+	@Test (groups = {"GestionesPerfilOficina","DiagnosticoInconvenientes"},  dataProvider = "Diagnostico")
 	public void TS105466_CRM_CRM_Movil_Repro_Autogestion_WEB_Incon_con_Compra_de_packs_No_Resuelto(String sDNI, String sLinea) throws InterruptedException {
 		imagen = "TS105466";
 		detalles = null;
@@ -7289,7 +7280,7 @@ public class GestionesPerfilOficina extends TestBase {
 		detalles = imagen + " -Ajustes-DNI: " + sDNI + ", Caso numero: " + caso;
 	}
 	
-	@Test (groups = {"GestionesPerfilOficina", "DiagnosticoInconveniente","E2E", "Ciclo3"}, dataProvider = "Diagnostico")
+	@Test (groups = {"GestionesPerfilOficina", "DiagnosticoInconvenientes","E2E", "Ciclo3"}, dataProvider = "Diagnostico")
 	public void TS_119162_CRM_Movil_PRE_Diagnostico_de_Voz_Valida_Red_y_Navegacion_Motivo_de_contacto_No_puedo_realizar_llamadas(String sDNI, String sLinea){
 		boolean caso = false;
 		imagen = "TS119262";
@@ -7333,7 +7324,7 @@ public class GestionesPerfilOficina extends TestBase {
 		assertTrue(caso);
 	}
 	
-	@Test (groups = {"GestionesPerfilOficina", "Diagnostico/Inconvenientes", }, dataProvider = "Diagnostico")
+	@Test (groups = {"GestionesPerfilOficina", "DiagnosticoInconvenientes", }, dataProvider = "Diagnostico")
 	public void TS105449_CRM_Movil_Repro_Autogestion_0800_Informa_Sistema_Fuera_de_Servicio_No_Resuelto(String sDNI, String sLinea) throws InterruptedException {
 		imagen = "TS105449";
 		detalles = null;
@@ -7453,7 +7444,7 @@ public class GestionesPerfilOficina extends TestBase {
 		
 	}
 	
-	@Test (groups = {"GestionesPerfilOficina", "Diagnostico/Inconvenientes", }, dataProvider = "Diagnostico")
+	@Test (groups = {"GestionesPerfilOficina", "DiagnosticoInconvenientes", }, dataProvider = "Diagnostico")
 	public void TS105453_CRM_Movil_Repro_Autogestion_0800_La_Linea_esta_muda_No_Resuelto(String cDNI, String cLinea) throws InterruptedException {
 		imagen = "TS105453";
 		detalles = null;
@@ -7595,6 +7586,12 @@ public class GestionesPerfilOficina extends TestBase {
 		descargar.click();
 		sleep(5000);
 		String downloadPath = "C:\\Users\\Quelys\\Downloads";
+		try {
+			Runtime.getRuntime().exec("rundll32 url.dll,FileProtocolHandler "+downloadPath);
+			System.out.println("Descargo Archivo");
+			} catch (IOException ee) {
+			ee.printStackTrace();
+			}
 		Assert.assertTrue(scp.isFileDownloaded(downloadPath,"B00785"), "Failed to download Expected document");
 	}
 	
@@ -8078,6 +8075,58 @@ public class GestionesPerfilOficina extends TestBase {
 		System.out.println(caso_1);
 		driver.switchTo().defaultContent();
 		tech.buscarCaso(caso_1);
+		Assert.assertTrue(tech.cerrarCaso("Resuelta exitosa", "Consulta"));
+	}
+	
+	@Test (groups = {"GestionesPerfilOficina","Diagnostico/Inconvenientes"}, dataProvider = "Diagnostico")
+	public void TS119221_CRM_Movil_PRE_Diagnostico_de_Voz_Valida_Red_y_Navegacion_Motivo_de_contacto_No_puedo_realizar_ni_recibir_llamadas_Sin_Locacion_Evento_Masivo(String sDNI, String sLinea) throws InterruptedException {
+		imagen = "TS119221";
+		detalles = null;
+		detalles = imagen + " -Diagnostico - DNI: " + sDNI;
+		CustomerCare cCC=new CustomerCare(driver);
+		TechnicalCareCSRDiagnosticoPage Tech = new TechnicalCareCSRDiagnosticoPage(driver);
+		TechnicalCareCSRAutogestionPage tech = new TechnicalCareCSRAutogestionPage (driver);
+		driver.switchTo().frame(cambioFrame(driver, By.id("SearchClientDocumentType")));
+		sb.BuscarCuenta("DNI", sDNI);
+		driver.findElement(By.cssSelector(".slds-tree__item.ng-scope")).click();
+		sleep(15000);
+		driver.switchTo().frame(cambioFrame(driver, By.className("card-top")));
+		driver.findElement(By.className("card-top")).click();
+		sleep(5000);
+		cCC.irAGestionEnCard("Diagn\u00f3stico");
+		sleep(8000);
+		driver.switchTo().frame(cambioFrame(driver, By.id("Motive")));
+		Select motiv = new Select(driver.findElement(By.id("Motive")));
+		motiv.selectByVisibleText("No puedo realizar ni recibir llamadas");
+		//selectByText(driver.findElement(By.id("Motive")), "No puedo realizar ni recibir llamadas");
+		buscarYClick(driver.findElements(By.id("MotiveIncidentSelect_nextBtn")), "equals", "continuar");
+		sleep(3000);
+		driver.switchTo().frame(cambioFrame(driver, By.id("BalanceValidation_nextBtn")));
+		String saldo = driver.findElement(By.xpath("//*[@id=\"AvailableVoiceBalanceDisplay\"]/div/p/div/p[2]/span")).getText();
+		System.out.println("El saldo es: " +saldo);
+		buscarYClick(driver.findElements(By.cssSelector(".slds-form-element__label.ng-binding.ng-scope")), "equals", "s\u00ed");
+		driver.findElement(By.id("BalanceValidation_nextBtn")).click();
+		sleep(30000);
+		driver.switchTo().frame(cambioFrame(driver, By.id("NetworkCategory_nextBtn")));
+		String informacion = driver.findElement(By.xpath("//*[@id=\"CommercialInfo\"]/div/p/div")).getText();
+		System.out.println(informacion);
+		driver.findElement(By.id("NetworkCategory_nextBtn")).click();
+		sleep(15000);
+		driver.switchTo().frame(cambioFrame(driver, By.id("BlackListValidationOk_nextBtn")));
+		buscarYClick(driver.findElements(By.cssSelector(".slds-form-element__label.ng-binding.ng-scope")), "equals", "si");
+		driver.findElement(By.id("BlackListValidationOk_nextBtn")).click();
+		sleep(8000);
+		driver.switchTo().frame(cambioFrame(driver, By.id("AddressSection_nextBtn")));
+		Tech.categoriaRed("Encontr\u00e9 un problema (Rojo)");
+		WebElement evento = driver.findElement(By.id("MassiveIncidentLookUp"));
+		evento.click();
+		evento.sendKeys("Evento Masivo");
+		driver.findElement(By.id("AddressSection_nextBtn")).click();
+		sleep(8000);
+		String caso = driver.findElement(By.xpath("//*[@id=\"MassiveIncidentMessage\"]/div/p/p[2]/span/strong")).getText();
+		System.out.println(caso);
+		driver.switchTo().defaultContent();
+		tech.buscarCaso(caso);
 		Assert.assertTrue(tech.cerrarCaso("Resuelta exitosa", "Consulta"));
 	}
 }
