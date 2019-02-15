@@ -1245,7 +1245,7 @@ try{	driver.findElement(By.id("alert-ok-button")).click();	} catch (NoSuchElemen
 			SalesBase SB = new SalesBase(driver);
 			driver.switchTo().defaultContent();
 			sleep(3000);
-			TB.goToLeftPanel2(driver, "Logistica");
+			TB.goToLeftPanel3(driver, "Logistica");
 			sleep(12000);
 			try{
 				SB.cerrarPestaniaGestion(driver);}
@@ -1268,7 +1268,6 @@ try{	driver.findElement(By.id("alert-ok-button")).click();	} catch (NoSuchElemen
 			wBody = driver.findElement(By.xpath("//*[@class='slds-table slds-table--bordered slds-table--cell-buffer vlc-slds-table']"));
 			Marketing mk = new Marketing(driver);
 			List<WebElement> wReingresoSerial = mk.traerColumnaElement(wBody, 5, 4);
-			wReingresoSerial.get(0).findElement(By.tagName("input")).click();
 			wReingresoSerial.get(0).findElement(By.tagName("input")).sendKeys(serial);
 			driver.findElement(By.id("SerialNumberValidation_nextBtn")).click();
 			sleep(8000);
@@ -1293,7 +1292,15 @@ try{	driver.findElement(By.id("alert-ok-button")).click();	} catch (NoSuchElemen
 			SalesBase SB = new SalesBase(driver);
 			driver.switchTo().defaultContent();
 			sleep(3000);
-			TB.goToLeftPanel2(driver, "Entregas");
+			TB.goToLeftPanel3(driver, "Entregas");
+			
+			if(!driver.findElement(By.xpath("//*[@class='x-btn-small x-btn-icon-small-left'] //tr[2] //td[2] //button //span")).getText().equalsIgnoreCase("Entregas") ) {
+				TB.goToLeftPanel3(driver, "Casos");
+			}
+			System.out.println("I've click on Entregas");
+			sleep(10000);
+			
+			
 			sleep(8000);
 			try{
 				SB.cerrarPestaniaGestion(driver);}

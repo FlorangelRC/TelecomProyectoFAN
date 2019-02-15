@@ -93,7 +93,7 @@ public class GestionesPerfilOficina extends TestBase {
 	@BeforeMethod(alwaysRun=true)
 	public void setup() throws Exception {
 		sleep(3000);
-		goToLeftPanel2(driver, "Inicio");
+		goToLeftPanel3(driver, "Inicio");
 		sleep(10000);
 		try {
 			sb.cerrarPestaniaGestion(driver);
