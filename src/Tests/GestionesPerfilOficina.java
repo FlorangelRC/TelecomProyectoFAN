@@ -58,13 +58,10 @@ public class GestionesPerfilOficina extends TestBase {
 	
 	@BeforeClass(alwaysRun=true)
 	public void init() throws IOException, AWTException {
-		CalculoImpuestos CI = new CalculoImpuestos();
+		/*CalculoImpuestos CI = new CalculoImpuestos();
 		CBS_Mattu cCBSM = new CBS_Mattu();
-		GestionFlow gGF = new GestionFlow();
-		driver = setConexion.setupEze();
+		GestionFlow gGF = new GestionFlow();*/
 		//System.out.println(gGF.FlowIMSI(driver, "2932449333"));
-		
-		
 		driver = setConexion.setupEze();
 		sleep(5000);
 		sb = new SalesBase(driver);
@@ -5913,7 +5910,7 @@ public class GestionesPerfilOficina extends TestBase {
 		Assert.assertTrue(datosInicial + (123 * 1024) == datosFinal);
 	}
 	
-	@Test (groups = {"GestionesPerfilOficina", "DiagnosticoInconvenientes", }, dataProvider = "Diagnostico")
+	@Test (groups = {"GestionesPerfilOficina", "Diagnostico/Inconvenientes" }, dataProvider = "Diagnostico")
 	public void TS105428_CRM_Movil_Repro_Autogestion_USSD_No_Interactua_Resuelto(String cDNI, String cLinea) throws InterruptedException {
 		imagen = "TS105428";
 		detalles = null;

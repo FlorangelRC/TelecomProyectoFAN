@@ -1,0 +1,1410 @@
+<html>
+<head>
+<title>TestNG:  Renovacion de cuota</title>
+<link href="../testng.css" rel="stylesheet" type="text/css" />
+<link href="../my-testng.css" rel="stylesheet" type="text/css" />
+
+<style type="text/css">
+.log { display: none;} 
+.stack-trace { display: none;} 
+</style>
+<script type="text/javascript">
+<!--
+function flip(e) {
+  current = e.style.display;
+  if (current == 'block') {
+    e.style.display = 'none';
+    return 0;
+  }
+  else {
+    e.style.display = 'block';
+    return 1;
+  }
+}
+
+function toggleBox(szDivId, elem, msg1, msg2)
+{
+  var res = -1;  if (document.getElementById) {
+    res = flip(document.getElementById(szDivId));
+  }
+  else if (document.all) {
+    // this is the way old msie versions work
+    res = flip(document.all[szDivId]);
+  }
+  if(elem) {
+    if(res == 0) elem.innerHTML = msg1; else elem.innerHTML = msg2;
+  }
+
+}
+
+function toggleAllBoxes() {
+  if (document.getElementsByTagName) {
+    d = document.getElementsByTagName('div');
+    for (i = 0; i < d.length; i++) {
+      if (d[i].className == 'log') {
+        flip(d[i]);
+      }
+    }
+  }
+}
+
+// -->
+</script>
+
+</head>
+<body>
+<h2 align='center'>Renovacion de cuota</h2><table border='1' align="center">
+<tr>
+<td>Tests passed/Failed/Skipped:</td><td>0/3/12</td>
+</tr><tr>
+<td>Started on:</td><td>Sat Feb 16 03:59:37 ART 2019</td>
+</tr>
+<tr><td>Total time:</td><td>1323 seconds (1323329 ms)</td>
+</tr><tr>
+<td>Included groups:</td><td>RenovacionDeCuota </td>
+</tr><tr>
+<td>Excluded groups:</td><td></td>
+</tr>
+</table><p/>
+<small><i>(Hover the method name to see the test class name)</i></small><p/>
+<table width='100%' border='1' class='invocation-failed'>
+<tr><td colspan='4' align='center'><b>FAILED CONFIGURATIONS</b></td></tr>
+<tr><td><b>Test method</b></td>
+<td width="30%"><b>Exception</b></td>
+<td width="10%"><b>Time (seconds)</b></td>
+<td><b>Instance</b></td>
+</tr>
+<tr>
+<td title='Tests.GestionesPerfilOficina.setup()'><b>setup</b><br>Test class: Tests.GestionesPerfilOficina</td>
+<td><div><pre>org.openqa.selenium.WebDriverException: unknown error: Element &lt;iframe id=&quot;ext-comp-1005&quot; name=&quot;ext-comp-1005&quot; frameborder=&quot;0&quot; allow=&quot;camera *; geolocation *; microphone *&quot; src=&quot;/home/home.jsp?isdtp=nv&amp;amp;nonce=98550e27455d02430f838cace20fc2400df6dd520b1aac5c46bc9d5bbfb73922&amp;amp;sfdcIFrameOrigin=https%3A%2F%2Ftelecomcrm--uat.cs53.my.salesforce.com&quot; style=&quot;width: 1366px; height: 461px;&quot; cd_frame_id_=&quot;d93508fcf06b35118ae85a45bd0221f1&quot;&gt;&lt;/iframe&gt; is not clickable at point (97, 256). Other element would receive the click: &lt;span class=&quot;x-menu-item-text&quot; id=&quot;ext-gen99&quot;&gt;...&lt;/span&gt;
+  (Session info: chrome=72.0.3626.96)
+  (Driver info: chromedriver=2.43.600210 (68dcf5eebde37173d4027fa8635e332711d2874a),platform=Windows NT 10.0.17134 x86_64) (WARNING: The server did not provide any stacktrace information)
+Command duration or timeout: 139 milliseconds
+Build info: version: &apos;unknown&apos;, revision: &apos;unknown&apos;, time: &apos;unknown&apos;
+System info: host: &apos;LAPTOP-JB3M8V7H&apos;, ip: &apos;10.112.6.32&apos;, os.name: &apos;Windows 10&apos;, os.arch: &apos;amd64&apos;, os.version: &apos;10.0&apos;, java.version: &apos;1.8.0_141&apos;
+Driver info: org.openqa.selenium.chrome.ChromeDriver
+Capabilities [{mobileEmulationEnabled=false, hasTouchScreen=false, platform=XP, acceptSslCerts=false, goog:chromeOptions={debuggerAddress=localhost:56286}, acceptInsecureCerts=false, webStorageEnabled=true, browserName=chrome, takesScreenshot=true, javascriptEnabled=true, setWindowRect=true, unexpectedAlertBehaviour=, applicationCacheEnabled=false, rotatable=false, networkConnectionEnabled=false, chrome={chromedriverVersion=2.43.600210 (68dcf5eebde37173d4027fa8635e332711d2874a), userDataDir=C:\Users\FLORAN~1\AppData\Local\Temp\scoped_dir26504_28286}, takesHeapSnapshot=true, pageLoadStrategy=normal, databaseEnabled=false, handlesAlerts=true, version=72.0.3626.96, browserConnectionEnabled=false, nativeEvents=true, locationContextEnabled=true, cssSelectorsEnabled=true}]
+Session ID: d91c6dff32a8031634104fc4b1ed54ba
+	at org.openqa.selenium.remote.ErrorHandler.createThrowable(ErrorHandler.java:215)
+	at org.openqa.selenium.remote.ErrorHandler.throwIfResponseFailed(ErrorHandler.java:167)
+	at org.openqa.selenium.remote.RemoteWebDriver.execute(RemoteWebDriver.java:671)
+	at org.openqa.selenium.remote.RemoteWebElement.execute(RemoteWebElement.java:272)
+	at org.openqa.selenium.remote.RemoteWebElement.click(RemoteWebElement.java:82)
+	at Tests.GestionesPerfilOficina.setup(GestionesPerfilOficina.java:136)
+	at java.util.concurrent.FutureTask.run(Unknown Source)
+	at java.util.concurrent.ThreadPoolExecutor.runWorker(Unknown Source)
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(Unknown Source)
+	at java.lang.Thread.run(Unknown Source)
+... Removed 21 stack frames</pre></div><a href='#' onClick='toggleBox("stack-trace361691832", this, "Click to show all stack frames", "Click to hide stack frames")'>Click to show all stack frames</a>
+<div class='stack-trace' id='stack-trace361691832'><pre>org.openqa.selenium.WebDriverException: unknown error: Element &lt;iframe id=&quot;ext-comp-1005&quot; name=&quot;ext-comp-1005&quot; frameborder=&quot;0&quot; allow=&quot;camera *; geolocation *; microphone *&quot; src=&quot;/home/home.jsp?isdtp=nv&amp;amp;nonce=98550e27455d02430f838cace20fc2400df6dd520b1aac5c46bc9d5bbfb73922&amp;amp;sfdcIFrameOrigin=https%3A%2F%2Ftelecomcrm--uat.cs53.my.salesforce.com&quot; style=&quot;width: 1366px; height: 461px;&quot; cd_frame_id_=&quot;d93508fcf06b35118ae85a45bd0221f1&quot;&gt;&lt;/iframe&gt; is not clickable at point (97, 256). Other element would receive the click: &lt;span class=&quot;x-menu-item-text&quot; id=&quot;ext-gen99&quot;&gt;...&lt;/span&gt;
+  (Session info: chrome=72.0.3626.96)
+  (Driver info: chromedriver=2.43.600210 (68dcf5eebde37173d4027fa8635e332711d2874a),platform=Windows NT 10.0.17134 x86_64) (WARNING: The server did not provide any stacktrace information)
+Command duration or timeout: 139 milliseconds
+Build info: version: &apos;unknown&apos;, revision: &apos;unknown&apos;, time: &apos;unknown&apos;
+System info: host: &apos;LAPTOP-JB3M8V7H&apos;, ip: &apos;10.112.6.32&apos;, os.name: &apos;Windows 10&apos;, os.arch: &apos;amd64&apos;, os.version: &apos;10.0&apos;, java.version: &apos;1.8.0_141&apos;
+Driver info: org.openqa.selenium.chrome.ChromeDriver
+Capabilities [{mobileEmulationEnabled=false, hasTouchScreen=false, platform=XP, acceptSslCerts=false, goog:chromeOptions={debuggerAddress=localhost:56286}, acceptInsecureCerts=false, webStorageEnabled=true, browserName=chrome, takesScreenshot=true, javascriptEnabled=true, setWindowRect=true, unexpectedAlertBehaviour=, applicationCacheEnabled=false, rotatable=false, networkConnectionEnabled=false, chrome={chromedriverVersion=2.43.600210 (68dcf5eebde37173d4027fa8635e332711d2874a), userDataDir=C:\Users\FLORAN~1\AppData\Local\Temp\scoped_dir26504_28286}, takesHeapSnapshot=true, pageLoadStrategy=normal, databaseEnabled=false, handlesAlerts=true, version=72.0.3626.96, browserConnectionEnabled=false, nativeEvents=true, locationContextEnabled=true, cssSelectorsEnabled=true}]
+Session ID: d91c6dff32a8031634104fc4b1ed54ba
+	at sun.reflect.GeneratedConstructorAccessor65.newInstance(Unknown Source)
+	at sun.reflect.DelegatingConstructorAccessorImpl.newInstance(Unknown Source)
+	at java.lang.reflect.Constructor.newInstance(Unknown Source)
+	at org.openqa.selenium.remote.ErrorHandler.createThrowable(ErrorHandler.java:215)
+	at org.openqa.selenium.remote.ErrorHandler.throwIfResponseFailed(ErrorHandler.java:167)
+	at org.openqa.selenium.remote.RemoteWebDriver.execute(RemoteWebDriver.java:671)
+	at org.openqa.selenium.remote.RemoteWebElement.execute(RemoteWebElement.java:272)
+	at org.openqa.selenium.remote.RemoteWebElement.click(RemoteWebElement.java:82)
+	at Tests.GestionesPerfilOficina.setup(GestionesPerfilOficina.java:136)
+	at sun.reflect.GeneratedMethodAccessor1.invoke(Unknown Source)
+	at sun.reflect.DelegatingMethodAccessorImpl.invoke(Unknown Source)
+	at java.lang.reflect.Method.invoke(Unknown Source)
+	at org.testng.internal.MethodInvocationHelper.invokeMethod(MethodInvocationHelper.java:124)
+	at org.testng.internal.MethodInvocationHelper.invokeMethodConsideringTimeout(MethodInvocationHelper.java:59)
+	at org.testng.internal.Invoker.invokeConfigurationMethod(Invoker.java:458)
+	at org.testng.internal.Invoker.invokeConfigurations(Invoker.java:222)
+	at org.testng.internal.Invoker.invokeMethod(Invoker.java:523)
+	at org.testng.internal.Invoker.invokeTestMethod(Invoker.java:719)
+	at org.testng.internal.Invoker.invokeTestMethods(Invoker.java:989)
+	at org.testng.internal.TestMethodWorker.invokeTestMethods(TestMethodWorker.java:125)
+	at org.testng.internal.TestMethodWorker.run(TestMethodWorker.java:109)
+	at org.testng.TestRunner.privateRun(TestRunner.java:648)
+	at org.testng.TestRunner.run(TestRunner.java:505)
+	at org.testng.SuiteRunner.runTest(SuiteRunner.java:455)
+	at org.testng.SuiteRunner.access$000(SuiteRunner.java:40)
+	at org.testng.SuiteRunner$SuiteWorker.run(SuiteRunner.java:489)
+	at org.testng.internal.thread.ThreadUtil$1.call(ThreadUtil.java:52)
+	at java.util.concurrent.FutureTask.run(Unknown Source)
+	at java.util.concurrent.ThreadPoolExecutor.runWorker(Unknown Source)
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(Unknown Source)
+	at java.lang.Thread.run(Unknown Source)
+</pre></div></td>
+<td>21</td>
+<td>Tests.GestionesPerfilOficina@6c9f5c0d</td></tr>
+<tr>
+<td title='Tests.GestionesPerfilOficina.setup()'><b>setup</b><br>Test class: Tests.GestionesPerfilOficina</td>
+<td><div><pre>org.openqa.selenium.WebDriverException: unknown error: Element &lt;iframe id=&quot;ext-comp-1005&quot; name=&quot;ext-comp-1005&quot; frameborder=&quot;0&quot; allow=&quot;camera *; geolocation *; microphone *&quot; src=&quot;/home/home.jsp?isdtp=nv&amp;amp;nonce=98550e27455d02430f838cace20fc2400df6dd520b1aac5c46bc9d5bbfb73922&amp;amp;sfdcIFrameOrigin=https%3A%2F%2Ftelecomcrm--uat.cs53.my.salesforce.com&quot; style=&quot;width: 1366px; height: 461px;&quot; cd_frame_id_=&quot;72a4fae24a416c0885020a652193a976&quot;&gt;&lt;/iframe&gt; is not clickable at point (97, 256). Other element would receive the click: &lt;span class=&quot;x-menu-item-text&quot; id=&quot;ext-gen99&quot;&gt;...&lt;/span&gt;
+  (Session info: chrome=72.0.3626.96)
+  (Driver info: chromedriver=2.43.600210 (68dcf5eebde37173d4027fa8635e332711d2874a),platform=Windows NT 10.0.17134 x86_64) (WARNING: The server did not provide any stacktrace information)
+Command duration or timeout: 93 milliseconds
+Build info: version: &apos;unknown&apos;, revision: &apos;unknown&apos;, time: &apos;unknown&apos;
+System info: host: &apos;LAPTOP-JB3M8V7H&apos;, ip: &apos;10.112.6.32&apos;, os.name: &apos;Windows 10&apos;, os.arch: &apos;amd64&apos;, os.version: &apos;10.0&apos;, java.version: &apos;1.8.0_141&apos;
+Driver info: org.openqa.selenium.chrome.ChromeDriver
+Capabilities [{mobileEmulationEnabled=false, hasTouchScreen=false, platform=XP, acceptSslCerts=false, goog:chromeOptions={debuggerAddress=localhost:56286}, acceptInsecureCerts=false, webStorageEnabled=true, browserName=chrome, takesScreenshot=true, javascriptEnabled=true, setWindowRect=true, unexpectedAlertBehaviour=, applicationCacheEnabled=false, rotatable=false, networkConnectionEnabled=false, chrome={chromedriverVersion=2.43.600210 (68dcf5eebde37173d4027fa8635e332711d2874a), userDataDir=C:\Users\FLORAN~1\AppData\Local\Temp\scoped_dir26504_28286}, takesHeapSnapshot=true, pageLoadStrategy=normal, databaseEnabled=false, handlesAlerts=true, version=72.0.3626.96, browserConnectionEnabled=false, nativeEvents=true, locationContextEnabled=true, cssSelectorsEnabled=true}]
+Session ID: d91c6dff32a8031634104fc4b1ed54ba
+	at org.openqa.selenium.remote.ErrorHandler.createThrowable(ErrorHandler.java:215)
+	at org.openqa.selenium.remote.ErrorHandler.throwIfResponseFailed(ErrorHandler.java:167)
+	at org.openqa.selenium.remote.RemoteWebDriver.execute(RemoteWebDriver.java:671)
+	at org.openqa.selenium.remote.RemoteWebElement.execute(RemoteWebElement.java:272)
+	at org.openqa.selenium.remote.RemoteWebElement.click(RemoteWebElement.java:82)
+	at Tests.GestionesPerfilOficina.setup(GestionesPerfilOficina.java:136)
+	at java.util.concurrent.FutureTask.run(Unknown Source)
+	at java.util.concurrent.ThreadPoolExecutor.runWorker(Unknown Source)
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(Unknown Source)
+	at java.lang.Thread.run(Unknown Source)
+... Removed 21 stack frames</pre></div><a href='#' onClick='toggleBox("stack-trace1222996097", this, "Click to show all stack frames", "Click to hide stack frames")'>Click to show all stack frames</a>
+<div class='stack-trace' id='stack-trace1222996097'><pre>org.openqa.selenium.WebDriverException: unknown error: Element &lt;iframe id=&quot;ext-comp-1005&quot; name=&quot;ext-comp-1005&quot; frameborder=&quot;0&quot; allow=&quot;camera *; geolocation *; microphone *&quot; src=&quot;/home/home.jsp?isdtp=nv&amp;amp;nonce=98550e27455d02430f838cace20fc2400df6dd520b1aac5c46bc9d5bbfb73922&amp;amp;sfdcIFrameOrigin=https%3A%2F%2Ftelecomcrm--uat.cs53.my.salesforce.com&quot; style=&quot;width: 1366px; height: 461px;&quot; cd_frame_id_=&quot;72a4fae24a416c0885020a652193a976&quot;&gt;&lt;/iframe&gt; is not clickable at point (97, 256). Other element would receive the click: &lt;span class=&quot;x-menu-item-text&quot; id=&quot;ext-gen99&quot;&gt;...&lt;/span&gt;
+  (Session info: chrome=72.0.3626.96)
+  (Driver info: chromedriver=2.43.600210 (68dcf5eebde37173d4027fa8635e332711d2874a),platform=Windows NT 10.0.17134 x86_64) (WARNING: The server did not provide any stacktrace information)
+Command duration or timeout: 93 milliseconds
+Build info: version: &apos;unknown&apos;, revision: &apos;unknown&apos;, time: &apos;unknown&apos;
+System info: host: &apos;LAPTOP-JB3M8V7H&apos;, ip: &apos;10.112.6.32&apos;, os.name: &apos;Windows 10&apos;, os.arch: &apos;amd64&apos;, os.version: &apos;10.0&apos;, java.version: &apos;1.8.0_141&apos;
+Driver info: org.openqa.selenium.chrome.ChromeDriver
+Capabilities [{mobileEmulationEnabled=false, hasTouchScreen=false, platform=XP, acceptSslCerts=false, goog:chromeOptions={debuggerAddress=localhost:56286}, acceptInsecureCerts=false, webStorageEnabled=true, browserName=chrome, takesScreenshot=true, javascriptEnabled=true, setWindowRect=true, unexpectedAlertBehaviour=, applicationCacheEnabled=false, rotatable=false, networkConnectionEnabled=false, chrome={chromedriverVersion=2.43.600210 (68dcf5eebde37173d4027fa8635e332711d2874a), userDataDir=C:\Users\FLORAN~1\AppData\Local\Temp\scoped_dir26504_28286}, takesHeapSnapshot=true, pageLoadStrategy=normal, databaseEnabled=false, handlesAlerts=true, version=72.0.3626.96, browserConnectionEnabled=false, nativeEvents=true, locationContextEnabled=true, cssSelectorsEnabled=true}]
+Session ID: d91c6dff32a8031634104fc4b1ed54ba
+	at sun.reflect.GeneratedConstructorAccessor65.newInstance(Unknown Source)
+	at sun.reflect.DelegatingConstructorAccessorImpl.newInstance(Unknown Source)
+	at java.lang.reflect.Constructor.newInstance(Unknown Source)
+	at org.openqa.selenium.remote.ErrorHandler.createThrowable(ErrorHandler.java:215)
+	at org.openqa.selenium.remote.ErrorHandler.throwIfResponseFailed(ErrorHandler.java:167)
+	at org.openqa.selenium.remote.RemoteWebDriver.execute(RemoteWebDriver.java:671)
+	at org.openqa.selenium.remote.RemoteWebElement.execute(RemoteWebElement.java:272)
+	at org.openqa.selenium.remote.RemoteWebElement.click(RemoteWebElement.java:82)
+	at Tests.GestionesPerfilOficina.setup(GestionesPerfilOficina.java:136)
+	at sun.reflect.GeneratedMethodAccessor1.invoke(Unknown Source)
+	at sun.reflect.DelegatingMethodAccessorImpl.invoke(Unknown Source)
+	at java.lang.reflect.Method.invoke(Unknown Source)
+	at org.testng.internal.MethodInvocationHelper.invokeMethod(MethodInvocationHelper.java:124)
+	at org.testng.internal.MethodInvocationHelper.invokeMethodConsideringTimeout(MethodInvocationHelper.java:59)
+	at org.testng.internal.Invoker.invokeConfigurationMethod(Invoker.java:458)
+	at org.testng.internal.Invoker.invokeConfigurations(Invoker.java:222)
+	at org.testng.internal.Invoker.invokeMethod(Invoker.java:523)
+	at org.testng.internal.Invoker.invokeTestMethod(Invoker.java:719)
+	at org.testng.internal.Invoker.invokeTestMethods(Invoker.java:989)
+	at org.testng.internal.TestMethodWorker.invokeTestMethods(TestMethodWorker.java:125)
+	at org.testng.internal.TestMethodWorker.run(TestMethodWorker.java:109)
+	at org.testng.TestRunner.privateRun(TestRunner.java:648)
+	at org.testng.TestRunner.run(TestRunner.java:505)
+	at org.testng.SuiteRunner.runTest(SuiteRunner.java:455)
+	at org.testng.SuiteRunner.access$000(SuiteRunner.java:40)
+	at org.testng.SuiteRunner$SuiteWorker.run(SuiteRunner.java:489)
+	at org.testng.internal.thread.ThreadUtil$1.call(ThreadUtil.java:52)
+	at java.util.concurrent.FutureTask.run(Unknown Source)
+	at java.util.concurrent.ThreadPoolExecutor.runWorker(Unknown Source)
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(Unknown Source)
+	at java.lang.Thread.run(Unknown Source)
+</pre></div></td>
+<td>19</td>
+<td>Tests.GestionesPerfilOficina@6c9f5c0d</td></tr>
+<tr>
+<td title='Tests.GestionesPerfilTelefonico.setup()'><b>setup</b><br>Test class: Tests.GestionesPerfilTelefonico</td>
+<td><div><pre>org.openqa.selenium.WebDriverException: unknown error: Element &lt;iframe id=&quot;ext-comp-1005&quot; name=&quot;ext-comp-1005&quot; frameborder=&quot;0&quot; allow=&quot;camera *; geolocation *; microphone *&quot; src=&quot;/home/home.jsp?isdtp=nv&amp;amp;nonce=3931cbc33cdf32d11aa8c3852426d77e46a657373135ce1bd9b687d0587f0943&amp;amp;sfdcIFrameOrigin=https%3A%2F%2Ftelecomcrm--uat.cs53.my.salesforce.com&quot; style=&quot;width: 1366px; height: 461px;&quot; cd_frame_id_=&quot;e80df8eecee1d6fd7a71b6270a5b19f8&quot;&gt;&lt;/iframe&gt; is not clickable at point (97, 256). Other element would receive the click: &lt;a id=&quot;nav-tab-4&quot; class=&quot;x-menu-item assetMru standardObject sd-nav-menu-item&quot; hidefocus=&quot;true&quot; unselectable=&quot;on&quot; href=&quot;#&quot;&gt;...&lt;/a&gt;
+  (Session info: chrome=72.0.3626.96)
+  (Driver info: chromedriver=2.43.600210 (68dcf5eebde37173d4027fa8635e332711d2874a),platform=Windows NT 10.0.17134 x86_64) (WARNING: The server did not provide any stacktrace information)
+Command duration or timeout: 174 milliseconds
+Build info: version: &apos;unknown&apos;, revision: &apos;unknown&apos;, time: &apos;unknown&apos;
+System info: host: &apos;LAPTOP-JB3M8V7H&apos;, ip: &apos;10.112.6.32&apos;, os.name: &apos;Windows 10&apos;, os.arch: &apos;amd64&apos;, os.version: &apos;10.0&apos;, java.version: &apos;1.8.0_141&apos;
+Driver info: org.openqa.selenium.chrome.ChromeDriver
+Capabilities [{mobileEmulationEnabled=false, hasTouchScreen=false, platform=XP, acceptSslCerts=false, goog:chromeOptions={debuggerAddress=localhost:56999}, acceptInsecureCerts=false, webStorageEnabled=true, browserName=chrome, takesScreenshot=true, javascriptEnabled=true, setWindowRect=true, unexpectedAlertBehaviour=, applicationCacheEnabled=false, rotatable=false, networkConnectionEnabled=false, chrome={chromedriverVersion=2.43.600210 (68dcf5eebde37173d4027fa8635e332711d2874a), userDataDir=C:\Users\FLORAN~1\AppData\Local\Temp\scoped_dir26424_25692}, takesHeapSnapshot=true, pageLoadStrategy=normal, databaseEnabled=false, handlesAlerts=true, version=72.0.3626.96, browserConnectionEnabled=false, nativeEvents=true, locationContextEnabled=true, cssSelectorsEnabled=true}]
+Session ID: a03871ae7a2498bc03af8fcddce61b92
+	at org.openqa.selenium.remote.ErrorHandler.createThrowable(ErrorHandler.java:215)
+	at org.openqa.selenium.remote.ErrorHandler.throwIfResponseFailed(ErrorHandler.java:167)
+	at org.openqa.selenium.remote.RemoteWebDriver.execute(RemoteWebDriver.java:671)
+	at org.openqa.selenium.remote.RemoteWebElement.execute(RemoteWebElement.java:272)
+	at org.openqa.selenium.remote.RemoteWebElement.click(RemoteWebElement.java:82)
+	at Tests.GestionesPerfilTelefonico.setup(GestionesPerfilTelefonico.java:115)
+	at java.util.concurrent.FutureTask.run(Unknown Source)
+	at java.util.concurrent.ThreadPoolExecutor.runWorker(Unknown Source)
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(Unknown Source)
+	at java.lang.Thread.run(Unknown Source)
+... Removed 21 stack frames</pre></div><a href='#' onClick='toggleBox("stack-trace756474338", this, "Click to show all stack frames", "Click to hide stack frames")'>Click to show all stack frames</a>
+<div class='stack-trace' id='stack-trace756474338'><pre>org.openqa.selenium.WebDriverException: unknown error: Element &lt;iframe id=&quot;ext-comp-1005&quot; name=&quot;ext-comp-1005&quot; frameborder=&quot;0&quot; allow=&quot;camera *; geolocation *; microphone *&quot; src=&quot;/home/home.jsp?isdtp=nv&amp;amp;nonce=3931cbc33cdf32d11aa8c3852426d77e46a657373135ce1bd9b687d0587f0943&amp;amp;sfdcIFrameOrigin=https%3A%2F%2Ftelecomcrm--uat.cs53.my.salesforce.com&quot; style=&quot;width: 1366px; height: 461px;&quot; cd_frame_id_=&quot;e80df8eecee1d6fd7a71b6270a5b19f8&quot;&gt;&lt;/iframe&gt; is not clickable at point (97, 256). Other element would receive the click: &lt;a id=&quot;nav-tab-4&quot; class=&quot;x-menu-item assetMru standardObject sd-nav-menu-item&quot; hidefocus=&quot;true&quot; unselectable=&quot;on&quot; href=&quot;#&quot;&gt;...&lt;/a&gt;
+  (Session info: chrome=72.0.3626.96)
+  (Driver info: chromedriver=2.43.600210 (68dcf5eebde37173d4027fa8635e332711d2874a),platform=Windows NT 10.0.17134 x86_64) (WARNING: The server did not provide any stacktrace information)
+Command duration or timeout: 174 milliseconds
+Build info: version: &apos;unknown&apos;, revision: &apos;unknown&apos;, time: &apos;unknown&apos;
+System info: host: &apos;LAPTOP-JB3M8V7H&apos;, ip: &apos;10.112.6.32&apos;, os.name: &apos;Windows 10&apos;, os.arch: &apos;amd64&apos;, os.version: &apos;10.0&apos;, java.version: &apos;1.8.0_141&apos;
+Driver info: org.openqa.selenium.chrome.ChromeDriver
+Capabilities [{mobileEmulationEnabled=false, hasTouchScreen=false, platform=XP, acceptSslCerts=false, goog:chromeOptions={debuggerAddress=localhost:56999}, acceptInsecureCerts=false, webStorageEnabled=true, browserName=chrome, takesScreenshot=true, javascriptEnabled=true, setWindowRect=true, unexpectedAlertBehaviour=, applicationCacheEnabled=false, rotatable=false, networkConnectionEnabled=false, chrome={chromedriverVersion=2.43.600210 (68dcf5eebde37173d4027fa8635e332711d2874a), userDataDir=C:\Users\FLORAN~1\AppData\Local\Temp\scoped_dir26424_25692}, takesHeapSnapshot=true, pageLoadStrategy=normal, databaseEnabled=false, handlesAlerts=true, version=72.0.3626.96, browserConnectionEnabled=false, nativeEvents=true, locationContextEnabled=true, cssSelectorsEnabled=true}]
+Session ID: a03871ae7a2498bc03af8fcddce61b92
+	at sun.reflect.GeneratedConstructorAccessor65.newInstance(Unknown Source)
+	at sun.reflect.DelegatingConstructorAccessorImpl.newInstance(Unknown Source)
+	at java.lang.reflect.Constructor.newInstance(Unknown Source)
+	at org.openqa.selenium.remote.ErrorHandler.createThrowable(ErrorHandler.java:215)
+	at org.openqa.selenium.remote.ErrorHandler.throwIfResponseFailed(ErrorHandler.java:167)
+	at org.openqa.selenium.remote.RemoteWebDriver.execute(RemoteWebDriver.java:671)
+	at org.openqa.selenium.remote.RemoteWebElement.execute(RemoteWebElement.java:272)
+	at org.openqa.selenium.remote.RemoteWebElement.click(RemoteWebElement.java:82)
+	at Tests.GestionesPerfilTelefonico.setup(GestionesPerfilTelefonico.java:115)
+	at sun.reflect.GeneratedMethodAccessor8.invoke(Unknown Source)
+	at sun.reflect.DelegatingMethodAccessorImpl.invoke(Unknown Source)
+	at java.lang.reflect.Method.invoke(Unknown Source)
+	at org.testng.internal.MethodInvocationHelper.invokeMethod(MethodInvocationHelper.java:124)
+	at org.testng.internal.MethodInvocationHelper.invokeMethodConsideringTimeout(MethodInvocationHelper.java:59)
+	at org.testng.internal.Invoker.invokeConfigurationMethod(Invoker.java:458)
+	at org.testng.internal.Invoker.invokeConfigurations(Invoker.java:222)
+	at org.testng.internal.Invoker.invokeMethod(Invoker.java:523)
+	at org.testng.internal.Invoker.invokeTestMethod(Invoker.java:719)
+	at org.testng.internal.Invoker.invokeTestMethods(Invoker.java:989)
+	at org.testng.internal.TestMethodWorker.invokeTestMethods(TestMethodWorker.java:125)
+	at org.testng.internal.TestMethodWorker.run(TestMethodWorker.java:109)
+	at org.testng.TestRunner.privateRun(TestRunner.java:648)
+	at org.testng.TestRunner.run(TestRunner.java:505)
+	at org.testng.SuiteRunner.runTest(SuiteRunner.java:455)
+	at org.testng.SuiteRunner.access$000(SuiteRunner.java:40)
+	at org.testng.SuiteRunner$SuiteWorker.run(SuiteRunner.java:489)
+	at org.testng.internal.thread.ThreadUtil$1.call(ThreadUtil.java:52)
+	at java.util.concurrent.FutureTask.run(Unknown Source)
+	at java.util.concurrent.ThreadPoolExecutor.runWorker(Unknown Source)
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(Unknown Source)
+	at java.lang.Thread.run(Unknown Source)
+</pre></div></td>
+<td>32</td>
+<td>Tests.GestionesPerfilTelefonico@76b10754</td></tr>
+<tr>
+<td title='Tests.GestionesPerfilTelefonico.setup()'><b>setup</b><br>Test class: Tests.GestionesPerfilTelefonico</td>
+<td><div><pre>org.openqa.selenium.WebDriverException: unknown error: Element &lt;iframe id=&quot;ext-comp-1005&quot; name=&quot;ext-comp-1005&quot; frameborder=&quot;0&quot; allow=&quot;camera *; geolocation *; microphone *&quot; src=&quot;/home/home.jsp?isdtp=nv&amp;amp;nonce=3931cbc33cdf32d11aa8c3852426d77e46a657373135ce1bd9b687d0587f0943&amp;amp;sfdcIFrameOrigin=https%3A%2F%2Ftelecomcrm--uat.cs53.my.salesforce.com&quot; style=&quot;width: 1366px; height: 461px;&quot; cd_frame_id_=&quot;d825eabd826f93b3bbbaa410818cee52&quot;&gt;&lt;/iframe&gt; is not clickable at point (97, 256). Other element would receive the click: &lt;a id=&quot;nav-tab-4&quot; class=&quot;x-menu-item assetMru standardObject sd-nav-menu-item&quot; hidefocus=&quot;true&quot; unselectable=&quot;on&quot; href=&quot;#&quot;&gt;...&lt;/a&gt;
+  (Session info: chrome=72.0.3626.96)
+  (Driver info: chromedriver=2.43.600210 (68dcf5eebde37173d4027fa8635e332711d2874a),platform=Windows NT 10.0.17134 x86_64) (WARNING: The server did not provide any stacktrace information)
+Command duration or timeout: 135 milliseconds
+Build info: version: &apos;unknown&apos;, revision: &apos;unknown&apos;, time: &apos;unknown&apos;
+System info: host: &apos;LAPTOP-JB3M8V7H&apos;, ip: &apos;10.112.6.32&apos;, os.name: &apos;Windows 10&apos;, os.arch: &apos;amd64&apos;, os.version: &apos;10.0&apos;, java.version: &apos;1.8.0_141&apos;
+Driver info: org.openqa.selenium.chrome.ChromeDriver
+Capabilities [{mobileEmulationEnabled=false, hasTouchScreen=false, platform=XP, acceptSslCerts=false, goog:chromeOptions={debuggerAddress=localhost:56999}, acceptInsecureCerts=false, webStorageEnabled=true, browserName=chrome, takesScreenshot=true, javascriptEnabled=true, setWindowRect=true, unexpectedAlertBehaviour=, applicationCacheEnabled=false, rotatable=false, networkConnectionEnabled=false, chrome={chromedriverVersion=2.43.600210 (68dcf5eebde37173d4027fa8635e332711d2874a), userDataDir=C:\Users\FLORAN~1\AppData\Local\Temp\scoped_dir26424_25692}, takesHeapSnapshot=true, pageLoadStrategy=normal, databaseEnabled=false, handlesAlerts=true, version=72.0.3626.96, browserConnectionEnabled=false, nativeEvents=true, locationContextEnabled=true, cssSelectorsEnabled=true}]
+Session ID: a03871ae7a2498bc03af8fcddce61b92
+	at org.openqa.selenium.remote.ErrorHandler.createThrowable(ErrorHandler.java:215)
+	at org.openqa.selenium.remote.ErrorHandler.throwIfResponseFailed(ErrorHandler.java:167)
+	at org.openqa.selenium.remote.RemoteWebDriver.execute(RemoteWebDriver.java:671)
+	at org.openqa.selenium.remote.RemoteWebElement.execute(RemoteWebElement.java:272)
+	at org.openqa.selenium.remote.RemoteWebElement.click(RemoteWebElement.java:82)
+	at Tests.GestionesPerfilTelefonico.setup(GestionesPerfilTelefonico.java:115)
+	at java.util.concurrent.FutureTask.run(Unknown Source)
+	at java.util.concurrent.ThreadPoolExecutor.runWorker(Unknown Source)
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(Unknown Source)
+	at java.lang.Thread.run(Unknown Source)
+... Removed 21 stack frames</pre></div><a href='#' onClick='toggleBox("stack-trace68959241", this, "Click to show all stack frames", "Click to hide stack frames")'>Click to show all stack frames</a>
+<div class='stack-trace' id='stack-trace68959241'><pre>org.openqa.selenium.WebDriverException: unknown error: Element &lt;iframe id=&quot;ext-comp-1005&quot; name=&quot;ext-comp-1005&quot; frameborder=&quot;0&quot; allow=&quot;camera *; geolocation *; microphone *&quot; src=&quot;/home/home.jsp?isdtp=nv&amp;amp;nonce=3931cbc33cdf32d11aa8c3852426d77e46a657373135ce1bd9b687d0587f0943&amp;amp;sfdcIFrameOrigin=https%3A%2F%2Ftelecomcrm--uat.cs53.my.salesforce.com&quot; style=&quot;width: 1366px; height: 461px;&quot; cd_frame_id_=&quot;d825eabd826f93b3bbbaa410818cee52&quot;&gt;&lt;/iframe&gt; is not clickable at point (97, 256). Other element would receive the click: &lt;a id=&quot;nav-tab-4&quot; class=&quot;x-menu-item assetMru standardObject sd-nav-menu-item&quot; hidefocus=&quot;true&quot; unselectable=&quot;on&quot; href=&quot;#&quot;&gt;...&lt;/a&gt;
+  (Session info: chrome=72.0.3626.96)
+  (Driver info: chromedriver=2.43.600210 (68dcf5eebde37173d4027fa8635e332711d2874a),platform=Windows NT 10.0.17134 x86_64) (WARNING: The server did not provide any stacktrace information)
+Command duration or timeout: 135 milliseconds
+Build info: version: &apos;unknown&apos;, revision: &apos;unknown&apos;, time: &apos;unknown&apos;
+System info: host: &apos;LAPTOP-JB3M8V7H&apos;, ip: &apos;10.112.6.32&apos;, os.name: &apos;Windows 10&apos;, os.arch: &apos;amd64&apos;, os.version: &apos;10.0&apos;, java.version: &apos;1.8.0_141&apos;
+Driver info: org.openqa.selenium.chrome.ChromeDriver
+Capabilities [{mobileEmulationEnabled=false, hasTouchScreen=false, platform=XP, acceptSslCerts=false, goog:chromeOptions={debuggerAddress=localhost:56999}, acceptInsecureCerts=false, webStorageEnabled=true, browserName=chrome, takesScreenshot=true, javascriptEnabled=true, setWindowRect=true, unexpectedAlertBehaviour=, applicationCacheEnabled=false, rotatable=false, networkConnectionEnabled=false, chrome={chromedriverVersion=2.43.600210 (68dcf5eebde37173d4027fa8635e332711d2874a), userDataDir=C:\Users\FLORAN~1\AppData\Local\Temp\scoped_dir26424_25692}, takesHeapSnapshot=true, pageLoadStrategy=normal, databaseEnabled=false, handlesAlerts=true, version=72.0.3626.96, browserConnectionEnabled=false, nativeEvents=true, locationContextEnabled=true, cssSelectorsEnabled=true}]
+Session ID: a03871ae7a2498bc03af8fcddce61b92
+	at sun.reflect.GeneratedConstructorAccessor65.newInstance(Unknown Source)
+	at sun.reflect.DelegatingConstructorAccessorImpl.newInstance(Unknown Source)
+	at java.lang.reflect.Constructor.newInstance(Unknown Source)
+	at org.openqa.selenium.remote.ErrorHandler.createThrowable(ErrorHandler.java:215)
+	at org.openqa.selenium.remote.ErrorHandler.throwIfResponseFailed(ErrorHandler.java:167)
+	at org.openqa.selenium.remote.RemoteWebDriver.execute(RemoteWebDriver.java:671)
+	at org.openqa.selenium.remote.RemoteWebElement.execute(RemoteWebElement.java:272)
+	at org.openqa.selenium.remote.RemoteWebElement.click(RemoteWebElement.java:82)
+	at Tests.GestionesPerfilTelefonico.setup(GestionesPerfilTelefonico.java:115)
+	at sun.reflect.GeneratedMethodAccessor8.invoke(Unknown Source)
+	at sun.reflect.DelegatingMethodAccessorImpl.invoke(Unknown Source)
+	at java.lang.reflect.Method.invoke(Unknown Source)
+	at org.testng.internal.MethodInvocationHelper.invokeMethod(MethodInvocationHelper.java:124)
+	at org.testng.internal.MethodInvocationHelper.invokeMethodConsideringTimeout(MethodInvocationHelper.java:59)
+	at org.testng.internal.Invoker.invokeConfigurationMethod(Invoker.java:458)
+	at org.testng.internal.Invoker.invokeConfigurations(Invoker.java:222)
+	at org.testng.internal.Invoker.invokeMethod(Invoker.java:523)
+	at org.testng.internal.Invoker.invokeTestMethod(Invoker.java:719)
+	at org.testng.internal.Invoker.invokeTestMethods(Invoker.java:989)
+	at org.testng.internal.TestMethodWorker.invokeTestMethods(TestMethodWorker.java:125)
+	at org.testng.internal.TestMethodWorker.run(TestMethodWorker.java:109)
+	at org.testng.TestRunner.privateRun(TestRunner.java:648)
+	at org.testng.TestRunner.run(TestRunner.java:505)
+	at org.testng.SuiteRunner.runTest(SuiteRunner.java:455)
+	at org.testng.SuiteRunner.access$000(SuiteRunner.java:40)
+	at org.testng.SuiteRunner$SuiteWorker.run(SuiteRunner.java:489)
+	at org.testng.internal.thread.ThreadUtil$1.call(ThreadUtil.java:52)
+	at java.util.concurrent.FutureTask.run(Unknown Source)
+	at java.util.concurrent.ThreadPoolExecutor.runWorker(Unknown Source)
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(Unknown Source)
+	at java.lang.Thread.run(Unknown Source)
+</pre></div></td>
+<td>31</td>
+<td>Tests.GestionesPerfilTelefonico@76b10754</td></tr>
+<tr>
+<td title='Tests.GestionesPerfilTelefonico.setup()'><b>setup</b><br>Test class: Tests.GestionesPerfilTelefonico</td>
+<td><div><pre>org.openqa.selenium.WebDriverException: unknown error: Element &lt;iframe id=&quot;ext-comp-1005&quot; name=&quot;ext-comp-1005&quot; frameborder=&quot;0&quot; allow=&quot;camera *; geolocation *; microphone *&quot; src=&quot;/home/home.jsp?isdtp=nv&amp;amp;nonce=3931cbc33cdf32d11aa8c3852426d77e46a657373135ce1bd9b687d0587f0943&amp;amp;sfdcIFrameOrigin=https%3A%2F%2Ftelecomcrm--uat.cs53.my.salesforce.com&quot; style=&quot;width: 1366px; height: 461px;&quot; cd_frame_id_=&quot;47edcbe0c1114712eff245bf09f34833&quot;&gt;&lt;/iframe&gt; is not clickable at point (97, 256). Other element would receive the click: &lt;a id=&quot;nav-tab-4&quot; class=&quot;x-menu-item assetMru standardObject sd-nav-menu-item&quot; hidefocus=&quot;true&quot; unselectable=&quot;on&quot; href=&quot;#&quot;&gt;...&lt;/a&gt;
+  (Session info: chrome=72.0.3626.96)
+  (Driver info: chromedriver=2.43.600210 (68dcf5eebde37173d4027fa8635e332711d2874a),platform=Windows NT 10.0.17134 x86_64) (WARNING: The server did not provide any stacktrace information)
+Command duration or timeout: 129 milliseconds
+Build info: version: &apos;unknown&apos;, revision: &apos;unknown&apos;, time: &apos;unknown&apos;
+System info: host: &apos;LAPTOP-JB3M8V7H&apos;, ip: &apos;10.112.6.32&apos;, os.name: &apos;Windows 10&apos;, os.arch: &apos;amd64&apos;, os.version: &apos;10.0&apos;, java.version: &apos;1.8.0_141&apos;
+Driver info: org.openqa.selenium.chrome.ChromeDriver
+Capabilities [{mobileEmulationEnabled=false, hasTouchScreen=false, platform=XP, acceptSslCerts=false, goog:chromeOptions={debuggerAddress=localhost:56999}, acceptInsecureCerts=false, webStorageEnabled=true, browserName=chrome, takesScreenshot=true, javascriptEnabled=true, setWindowRect=true, unexpectedAlertBehaviour=, applicationCacheEnabled=false, rotatable=false, networkConnectionEnabled=false, chrome={chromedriverVersion=2.43.600210 (68dcf5eebde37173d4027fa8635e332711d2874a), userDataDir=C:\Users\FLORAN~1\AppData\Local\Temp\scoped_dir26424_25692}, takesHeapSnapshot=true, pageLoadStrategy=normal, databaseEnabled=false, handlesAlerts=true, version=72.0.3626.96, browserConnectionEnabled=false, nativeEvents=true, locationContextEnabled=true, cssSelectorsEnabled=true}]
+Session ID: a03871ae7a2498bc03af8fcddce61b92
+	at org.openqa.selenium.remote.ErrorHandler.createThrowable(ErrorHandler.java:215)
+	at org.openqa.selenium.remote.ErrorHandler.throwIfResponseFailed(ErrorHandler.java:167)
+	at org.openqa.selenium.remote.RemoteWebDriver.execute(RemoteWebDriver.java:671)
+	at org.openqa.selenium.remote.RemoteWebElement.execute(RemoteWebElement.java:272)
+	at org.openqa.selenium.remote.RemoteWebElement.click(RemoteWebElement.java:82)
+	at Tests.GestionesPerfilTelefonico.setup(GestionesPerfilTelefonico.java:115)
+	at java.util.concurrent.FutureTask.run(Unknown Source)
+	at java.util.concurrent.ThreadPoolExecutor.runWorker(Unknown Source)
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(Unknown Source)
+	at java.lang.Thread.run(Unknown Source)
+... Removed 21 stack frames</pre></div><a href='#' onClick='toggleBox("stack-trace210782928", this, "Click to show all stack frames", "Click to hide stack frames")'>Click to show all stack frames</a>
+<div class='stack-trace' id='stack-trace210782928'><pre>org.openqa.selenium.WebDriverException: unknown error: Element &lt;iframe id=&quot;ext-comp-1005&quot; name=&quot;ext-comp-1005&quot; frameborder=&quot;0&quot; allow=&quot;camera *; geolocation *; microphone *&quot; src=&quot;/home/home.jsp?isdtp=nv&amp;amp;nonce=3931cbc33cdf32d11aa8c3852426d77e46a657373135ce1bd9b687d0587f0943&amp;amp;sfdcIFrameOrigin=https%3A%2F%2Ftelecomcrm--uat.cs53.my.salesforce.com&quot; style=&quot;width: 1366px; height: 461px;&quot; cd_frame_id_=&quot;47edcbe0c1114712eff245bf09f34833&quot;&gt;&lt;/iframe&gt; is not clickable at point (97, 256). Other element would receive the click: &lt;a id=&quot;nav-tab-4&quot; class=&quot;x-menu-item assetMru standardObject sd-nav-menu-item&quot; hidefocus=&quot;true&quot; unselectable=&quot;on&quot; href=&quot;#&quot;&gt;...&lt;/a&gt;
+  (Session info: chrome=72.0.3626.96)
+  (Driver info: chromedriver=2.43.600210 (68dcf5eebde37173d4027fa8635e332711d2874a),platform=Windows NT 10.0.17134 x86_64) (WARNING: The server did not provide any stacktrace information)
+Command duration or timeout: 129 milliseconds
+Build info: version: &apos;unknown&apos;, revision: &apos;unknown&apos;, time: &apos;unknown&apos;
+System info: host: &apos;LAPTOP-JB3M8V7H&apos;, ip: &apos;10.112.6.32&apos;, os.name: &apos;Windows 10&apos;, os.arch: &apos;amd64&apos;, os.version: &apos;10.0&apos;, java.version: &apos;1.8.0_141&apos;
+Driver info: org.openqa.selenium.chrome.ChromeDriver
+Capabilities [{mobileEmulationEnabled=false, hasTouchScreen=false, platform=XP, acceptSslCerts=false, goog:chromeOptions={debuggerAddress=localhost:56999}, acceptInsecureCerts=false, webStorageEnabled=true, browserName=chrome, takesScreenshot=true, javascriptEnabled=true, setWindowRect=true, unexpectedAlertBehaviour=, applicationCacheEnabled=false, rotatable=false, networkConnectionEnabled=false, chrome={chromedriverVersion=2.43.600210 (68dcf5eebde37173d4027fa8635e332711d2874a), userDataDir=C:\Users\FLORAN~1\AppData\Local\Temp\scoped_dir26424_25692}, takesHeapSnapshot=true, pageLoadStrategy=normal, databaseEnabled=false, handlesAlerts=true, version=72.0.3626.96, browserConnectionEnabled=false, nativeEvents=true, locationContextEnabled=true, cssSelectorsEnabled=true}]
+Session ID: a03871ae7a2498bc03af8fcddce61b92
+	at sun.reflect.GeneratedConstructorAccessor65.newInstance(Unknown Source)
+	at sun.reflect.DelegatingConstructorAccessorImpl.newInstance(Unknown Source)
+	at java.lang.reflect.Constructor.newInstance(Unknown Source)
+	at org.openqa.selenium.remote.ErrorHandler.createThrowable(ErrorHandler.java:215)
+	at org.openqa.selenium.remote.ErrorHandler.throwIfResponseFailed(ErrorHandler.java:167)
+	at org.openqa.selenium.remote.RemoteWebDriver.execute(RemoteWebDriver.java:671)
+	at org.openqa.selenium.remote.RemoteWebElement.execute(RemoteWebElement.java:272)
+	at org.openqa.selenium.remote.RemoteWebElement.click(RemoteWebElement.java:82)
+	at Tests.GestionesPerfilTelefonico.setup(GestionesPerfilTelefonico.java:115)
+	at sun.reflect.GeneratedMethodAccessor8.invoke(Unknown Source)
+	at sun.reflect.DelegatingMethodAccessorImpl.invoke(Unknown Source)
+	at java.lang.reflect.Method.invoke(Unknown Source)
+	at org.testng.internal.MethodInvocationHelper.invokeMethod(MethodInvocationHelper.java:124)
+	at org.testng.internal.MethodInvocationHelper.invokeMethodConsideringTimeout(MethodInvocationHelper.java:59)
+	at org.testng.internal.Invoker.invokeConfigurationMethod(Invoker.java:458)
+	at org.testng.internal.Invoker.invokeConfigurations(Invoker.java:222)
+	at org.testng.internal.Invoker.invokeMethod(Invoker.java:523)
+	at org.testng.internal.Invoker.invokeTestMethod(Invoker.java:719)
+	at org.testng.internal.Invoker.invokeTestMethods(Invoker.java:989)
+	at org.testng.internal.TestMethodWorker.invokeTestMethods(TestMethodWorker.java:125)
+	at org.testng.internal.TestMethodWorker.run(TestMethodWorker.java:109)
+	at org.testng.TestRunner.privateRun(TestRunner.java:648)
+	at org.testng.TestRunner.run(TestRunner.java:505)
+	at org.testng.SuiteRunner.runTest(SuiteRunner.java:455)
+	at org.testng.SuiteRunner.access$000(SuiteRunner.java:40)
+	at org.testng.SuiteRunner$SuiteWorker.run(SuiteRunner.java:489)
+	at org.testng.internal.thread.ThreadUtil$1.call(ThreadUtil.java:52)
+	at java.util.concurrent.FutureTask.run(Unknown Source)
+	at java.util.concurrent.ThreadPoolExecutor.runWorker(Unknown Source)
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(Unknown Source)
+	at java.lang.Thread.run(Unknown Source)
+</pre></div></td>
+<td>31</td>
+<td>Tests.GestionesPerfilTelefonico@76b10754</td></tr>
+<tr>
+<td title='Tests.GestionesPerfilTelefonico.setup()'><b>setup</b><br>Test class: Tests.GestionesPerfilTelefonico</td>
+<td><div><pre>org.openqa.selenium.WebDriverException: unknown error: Element &lt;iframe id=&quot;ext-comp-1005&quot; name=&quot;ext-comp-1005&quot; frameborder=&quot;0&quot; allow=&quot;camera *; geolocation *; microphone *&quot; src=&quot;/home/home.jsp?isdtp=nv&amp;amp;nonce=3931cbc33cdf32d11aa8c3852426d77e46a657373135ce1bd9b687d0587f0943&amp;amp;sfdcIFrameOrigin=https%3A%2F%2Ftelecomcrm--uat.cs53.my.salesforce.com&quot; style=&quot;width: 1366px; height: 461px;&quot; cd_frame_id_=&quot;cdf454ae5cd977e246db007cfd580003&quot;&gt;&lt;/iframe&gt; is not clickable at point (97, 256). Other element would receive the click: &lt;a id=&quot;nav-tab-4&quot; class=&quot;x-menu-item assetMru standardObject sd-nav-menu-item&quot; hidefocus=&quot;true&quot; unselectable=&quot;on&quot; href=&quot;#&quot;&gt;...&lt;/a&gt;
+  (Session info: chrome=72.0.3626.96)
+  (Driver info: chromedriver=2.43.600210 (68dcf5eebde37173d4027fa8635e332711d2874a),platform=Windows NT 10.0.17134 x86_64) (WARNING: The server did not provide any stacktrace information)
+Command duration or timeout: 130 milliseconds
+Build info: version: &apos;unknown&apos;, revision: &apos;unknown&apos;, time: &apos;unknown&apos;
+System info: host: &apos;LAPTOP-JB3M8V7H&apos;, ip: &apos;10.112.6.32&apos;, os.name: &apos;Windows 10&apos;, os.arch: &apos;amd64&apos;, os.version: &apos;10.0&apos;, java.version: &apos;1.8.0_141&apos;
+Driver info: org.openqa.selenium.chrome.ChromeDriver
+Capabilities [{mobileEmulationEnabled=false, hasTouchScreen=false, platform=XP, acceptSslCerts=false, goog:chromeOptions={debuggerAddress=localhost:56999}, acceptInsecureCerts=false, webStorageEnabled=true, browserName=chrome, takesScreenshot=true, javascriptEnabled=true, setWindowRect=true, unexpectedAlertBehaviour=, applicationCacheEnabled=false, rotatable=false, networkConnectionEnabled=false, chrome={chromedriverVersion=2.43.600210 (68dcf5eebde37173d4027fa8635e332711d2874a), userDataDir=C:\Users\FLORAN~1\AppData\Local\Temp\scoped_dir26424_25692}, takesHeapSnapshot=true, pageLoadStrategy=normal, databaseEnabled=false, handlesAlerts=true, version=72.0.3626.96, browserConnectionEnabled=false, nativeEvents=true, locationContextEnabled=true, cssSelectorsEnabled=true}]
+Session ID: a03871ae7a2498bc03af8fcddce61b92
+	at org.openqa.selenium.remote.ErrorHandler.createThrowable(ErrorHandler.java:215)
+	at org.openqa.selenium.remote.ErrorHandler.throwIfResponseFailed(ErrorHandler.java:167)
+	at org.openqa.selenium.remote.RemoteWebDriver.execute(RemoteWebDriver.java:671)
+	at org.openqa.selenium.remote.RemoteWebElement.execute(RemoteWebElement.java:272)
+	at org.openqa.selenium.remote.RemoteWebElement.click(RemoteWebElement.java:82)
+	at Tests.GestionesPerfilTelefonico.setup(GestionesPerfilTelefonico.java:115)
+	at java.util.concurrent.FutureTask.run(Unknown Source)
+	at java.util.concurrent.ThreadPoolExecutor.runWorker(Unknown Source)
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(Unknown Source)
+	at java.lang.Thread.run(Unknown Source)
+... Removed 21 stack frames</pre></div><a href='#' onClick='toggleBox("stack-trace1899711212", this, "Click to show all stack frames", "Click to hide stack frames")'>Click to show all stack frames</a>
+<div class='stack-trace' id='stack-trace1899711212'><pre>org.openqa.selenium.WebDriverException: unknown error: Element &lt;iframe id=&quot;ext-comp-1005&quot; name=&quot;ext-comp-1005&quot; frameborder=&quot;0&quot; allow=&quot;camera *; geolocation *; microphone *&quot; src=&quot;/home/home.jsp?isdtp=nv&amp;amp;nonce=3931cbc33cdf32d11aa8c3852426d77e46a657373135ce1bd9b687d0587f0943&amp;amp;sfdcIFrameOrigin=https%3A%2F%2Ftelecomcrm--uat.cs53.my.salesforce.com&quot; style=&quot;width: 1366px; height: 461px;&quot; cd_frame_id_=&quot;cdf454ae5cd977e246db007cfd580003&quot;&gt;&lt;/iframe&gt; is not clickable at point (97, 256). Other element would receive the click: &lt;a id=&quot;nav-tab-4&quot; class=&quot;x-menu-item assetMru standardObject sd-nav-menu-item&quot; hidefocus=&quot;true&quot; unselectable=&quot;on&quot; href=&quot;#&quot;&gt;...&lt;/a&gt;
+  (Session info: chrome=72.0.3626.96)
+  (Driver info: chromedriver=2.43.600210 (68dcf5eebde37173d4027fa8635e332711d2874a),platform=Windows NT 10.0.17134 x86_64) (WARNING: The server did not provide any stacktrace information)
+Command duration or timeout: 130 milliseconds
+Build info: version: &apos;unknown&apos;, revision: &apos;unknown&apos;, time: &apos;unknown&apos;
+System info: host: &apos;LAPTOP-JB3M8V7H&apos;, ip: &apos;10.112.6.32&apos;, os.name: &apos;Windows 10&apos;, os.arch: &apos;amd64&apos;, os.version: &apos;10.0&apos;, java.version: &apos;1.8.0_141&apos;
+Driver info: org.openqa.selenium.chrome.ChromeDriver
+Capabilities [{mobileEmulationEnabled=false, hasTouchScreen=false, platform=XP, acceptSslCerts=false, goog:chromeOptions={debuggerAddress=localhost:56999}, acceptInsecureCerts=false, webStorageEnabled=true, browserName=chrome, takesScreenshot=true, javascriptEnabled=true, setWindowRect=true, unexpectedAlertBehaviour=, applicationCacheEnabled=false, rotatable=false, networkConnectionEnabled=false, chrome={chromedriverVersion=2.43.600210 (68dcf5eebde37173d4027fa8635e332711d2874a), userDataDir=C:\Users\FLORAN~1\AppData\Local\Temp\scoped_dir26424_25692}, takesHeapSnapshot=true, pageLoadStrategy=normal, databaseEnabled=false, handlesAlerts=true, version=72.0.3626.96, browserConnectionEnabled=false, nativeEvents=true, locationContextEnabled=true, cssSelectorsEnabled=true}]
+Session ID: a03871ae7a2498bc03af8fcddce61b92
+	at sun.reflect.GeneratedConstructorAccessor65.newInstance(Unknown Source)
+	at sun.reflect.DelegatingConstructorAccessorImpl.newInstance(Unknown Source)
+	at java.lang.reflect.Constructor.newInstance(Unknown Source)
+	at org.openqa.selenium.remote.ErrorHandler.createThrowable(ErrorHandler.java:215)
+	at org.openqa.selenium.remote.ErrorHandler.throwIfResponseFailed(ErrorHandler.java:167)
+	at org.openqa.selenium.remote.RemoteWebDriver.execute(RemoteWebDriver.java:671)
+	at org.openqa.selenium.remote.RemoteWebElement.execute(RemoteWebElement.java:272)
+	at org.openqa.selenium.remote.RemoteWebElement.click(RemoteWebElement.java:82)
+	at Tests.GestionesPerfilTelefonico.setup(GestionesPerfilTelefonico.java:115)
+	at sun.reflect.GeneratedMethodAccessor8.invoke(Unknown Source)
+	at sun.reflect.DelegatingMethodAccessorImpl.invoke(Unknown Source)
+	at java.lang.reflect.Method.invoke(Unknown Source)
+	at org.testng.internal.MethodInvocationHelper.invokeMethod(MethodInvocationHelper.java:124)
+	at org.testng.internal.MethodInvocationHelper.invokeMethodConsideringTimeout(MethodInvocationHelper.java:59)
+	at org.testng.internal.Invoker.invokeConfigurationMethod(Invoker.java:458)
+	at org.testng.internal.Invoker.invokeConfigurations(Invoker.java:222)
+	at org.testng.internal.Invoker.invokeMethod(Invoker.java:523)
+	at org.testng.internal.Invoker.invokeTestMethod(Invoker.java:719)
+	at org.testng.internal.Invoker.invokeTestMethods(Invoker.java:989)
+	at org.testng.internal.TestMethodWorker.invokeTestMethods(TestMethodWorker.java:125)
+	at org.testng.internal.TestMethodWorker.run(TestMethodWorker.java:109)
+	at org.testng.TestRunner.privateRun(TestRunner.java:648)
+	at org.testng.TestRunner.run(TestRunner.java:505)
+	at org.testng.SuiteRunner.runTest(SuiteRunner.java:455)
+	at org.testng.SuiteRunner.access$000(SuiteRunner.java:40)
+	at org.testng.SuiteRunner$SuiteWorker.run(SuiteRunner.java:489)
+	at org.testng.internal.thread.ThreadUtil$1.call(ThreadUtil.java:52)
+	at java.util.concurrent.FutureTask.run(Unknown Source)
+	at java.util.concurrent.ThreadPoolExecutor.runWorker(Unknown Source)
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(Unknown Source)
+	at java.lang.Thread.run(Unknown Source)
+</pre></div></td>
+<td>31</td>
+<td>Tests.GestionesPerfilTelefonico@76b10754</td></tr>
+</table><p>
+<table width='100%' border='1' class='invocation-failed'>
+<tr><td colspan='4' align='center'><b>FAILED TESTS</b></td></tr>
+<tr><td><b>Test method</b></td>
+<td width="30%"><b>Exception</b></td>
+<td width="10%"><b>Time (seconds)</b></td>
+<td><b>Instance</b></td>
+</tr>
+<tr>
+<td title='Tests.GestionesPerfilOficina.TS130056_CRM_Movil_REPRO_Renovacion_de_cuota_Presencial_Reseteo_200_MB_por_Dia_Efectivo_con_Credito()'><b>TS130056_CRM_Movil_REPRO_Renovacion_de_cuota_Presencial_Reseteo_200_MB_por_Dia_Efectivo_con_Credito</b><br>Test class: Tests.GestionesPerfilOficina<br>Parameters: 6797008, 2932477217</td>
+<td><div><pre>java.lang.ArrayIndexOutOfBoundsException: 2
+	at Pages.CustomerCare.obtenerTNyMonto2(CustomerCare.java:1769)
+	at Tests.GestionesPerfilOficina.TS130056_CRM_Movil_REPRO_Renovacion_de_cuota_Presencial_Reseteo_200_MB_por_Dia_Efectivo_con_Credito(GestionesPerfilOficina.java:2978)
+	at java.util.concurrent.FutureTask.run(Unknown Source)
+	at java.util.concurrent.ThreadPoolExecutor.runWorker(Unknown Source)
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(Unknown Source)
+	at java.lang.Thread.run(Unknown Source)
+... Removed 16 stack frames</pre></div><a href='#' onClick='toggleBox("stack-trace1342292987", this, "Click to show all stack frames", "Click to hide stack frames")'>Click to show all stack frames</a>
+<div class='stack-trace' id='stack-trace1342292987'><pre>java.lang.ArrayIndexOutOfBoundsException: 2
+	at Pages.CustomerCare.obtenerTNyMonto2(CustomerCare.java:1769)
+	at Tests.GestionesPerfilOficina.TS130056_CRM_Movil_REPRO_Renovacion_de_cuota_Presencial_Reseteo_200_MB_por_Dia_Efectivo_con_Credito(GestionesPerfilOficina.java:2978)
+	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at sun.reflect.NativeMethodAccessorImpl.invoke(Unknown Source)
+	at sun.reflect.DelegatingMethodAccessorImpl.invoke(Unknown Source)
+	at java.lang.reflect.Method.invoke(Unknown Source)
+	at org.testng.internal.MethodInvocationHelper.invokeMethod(MethodInvocationHelper.java:124)
+	at org.testng.internal.Invoker.invokeMethod(Invoker.java:583)
+	at org.testng.internal.Invoker.invokeTestMethod(Invoker.java:719)
+	at org.testng.internal.Invoker.invokeTestMethods(Invoker.java:989)
+	at org.testng.internal.TestMethodWorker.invokeTestMethods(TestMethodWorker.java:125)
+	at org.testng.internal.TestMethodWorker.run(TestMethodWorker.java:109)
+	at org.testng.TestRunner.privateRun(TestRunner.java:648)
+	at org.testng.TestRunner.run(TestRunner.java:505)
+	at org.testng.SuiteRunner.runTest(SuiteRunner.java:455)
+	at org.testng.SuiteRunner.access$000(SuiteRunner.java:40)
+	at org.testng.SuiteRunner$SuiteWorker.run(SuiteRunner.java:489)
+	at org.testng.internal.thread.ThreadUtil$1.call(ThreadUtil.java:52)
+	at java.util.concurrent.FutureTask.run(Unknown Source)
+	at java.util.concurrent.ThreadPoolExecutor.runWorker(Unknown Source)
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(Unknown Source)
+	at java.lang.Thread.run(Unknown Source)
+</pre></div></td>
+<td>209</td>
+<td>Tests.GestionesPerfilOficina@6c9f5c0d</td></tr>
+<tr>
+<td title='Tests.GestionesPerfilOficina.TS130069_CRM_Movil_REPRO_Renovacion_de_cuota_Presencial_Reseteo_200_MB_por_Dia_Descuento_de_saldo_con_Credito()'><b>TS130069_CRM_Movil_REPRO_Renovacion_de_cuota_Presencial_Reseteo_200_MB_por_Dia_Descuento_de_saldo_con_Credito</b><br>Test class: Tests.GestionesPerfilOficina<br>Parameters: 6797008, 2932477217</td>
+<td><div><pre>java.lang.AssertionError: expected [true] but found [false]
+	at Tests.GestionesPerfilOficina.TS130069_CRM_Movil_REPRO_Renovacion_de_cuota_Presencial_Reseteo_200_MB_por_Dia_Descuento_de_saldo_con_Credito(GestionesPerfilOficina.java:3051)
+	at java.util.concurrent.FutureTask.run(Unknown Source)
+	at java.util.concurrent.ThreadPoolExecutor.runWorker(Unknown Source)
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(Unknown Source)
+	at java.lang.Thread.run(Unknown Source)
+... Removed 20 stack frames</pre></div><a href='#' onClick='toggleBox("stack-trace438887499", this, "Click to show all stack frames", "Click to hide stack frames")'>Click to show all stack frames</a>
+<div class='stack-trace' id='stack-trace438887499'><pre>java.lang.AssertionError: expected [true] but found [false]
+	at org.testng.Assert.fail(Assert.java:96)
+	at org.testng.Assert.failNotEquals(Assert.java:776)
+	at org.testng.Assert.assertTrue(Assert.java:44)
+	at org.testng.Assert.assertTrue(Assert.java:54)
+	at Tests.GestionesPerfilOficina.TS130069_CRM_Movil_REPRO_Renovacion_de_cuota_Presencial_Reseteo_200_MB_por_Dia_Descuento_de_saldo_con_Credito(GestionesPerfilOficina.java:3051)
+	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at sun.reflect.NativeMethodAccessorImpl.invoke(Unknown Source)
+	at sun.reflect.DelegatingMethodAccessorImpl.invoke(Unknown Source)
+	at java.lang.reflect.Method.invoke(Unknown Source)
+	at org.testng.internal.MethodInvocationHelper.invokeMethod(MethodInvocationHelper.java:124)
+	at org.testng.internal.Invoker.invokeMethod(Invoker.java:583)
+	at org.testng.internal.Invoker.invokeTestMethod(Invoker.java:719)
+	at org.testng.internal.Invoker.invokeTestMethods(Invoker.java:989)
+	at org.testng.internal.TestMethodWorker.invokeTestMethods(TestMethodWorker.java:125)
+	at org.testng.internal.TestMethodWorker.run(TestMethodWorker.java:109)
+	at org.testng.TestRunner.privateRun(TestRunner.java:648)
+	at org.testng.TestRunner.run(TestRunner.java:505)
+	at org.testng.SuiteRunner.runTest(SuiteRunner.java:455)
+	at org.testng.SuiteRunner.access$000(SuiteRunner.java:40)
+	at org.testng.SuiteRunner$SuiteWorker.run(SuiteRunner.java:489)
+	at org.testng.internal.thread.ThreadUtil$1.call(ThreadUtil.java:52)
+	at java.util.concurrent.FutureTask.run(Unknown Source)
+	at java.util.concurrent.ThreadPoolExecutor.runWorker(Unknown Source)
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(Unknown Source)
+	at java.lang.Thread.run(Unknown Source)
+</pre></div></td>
+<td>115</td>
+<td>Tests.GestionesPerfilOficina@6c9f5c0d</td></tr>
+<tr>
+<td title='Tests.GestionesPerfilAgente.TS135402_CRM_Movil_REPRO_Renovacion_de_cuota_Presencial_Internet_50_MB_Dia_Descuento_de_saldo_con_Credito()'><b>TS135402_CRM_Movil_REPRO_Renovacion_de_cuota_Presencial_Internet_50_MB_Dia_Descuento_de_saldo_con_Credito</b><br>Test class: Tests.GestionesPerfilAgente<br>Parameters: 6797008, 2932477217</td>
+<td><div><pre>org.openqa.selenium.NoSuchElementException: no such element: Unable to locate element: {&quot;method&quot;:&quot;css selector&quot;,&quot;selector&quot;:&quot;.slds-box.ng-scope&quot;}
+  (Session info: chrome=72.0.3626.96)
+  (Driver info: chromedriver=2.43.600210 (68dcf5eebde37173d4027fa8635e332711d2874a),platform=Windows NT 10.0.17134 x86_64) (WARNING: The server did not provide any stacktrace information)
+Command duration or timeout: 26 milliseconds
+For documentation on this error, please visit: http://seleniumhq.org/exceptions/no_such_element.html
+Build info: version: &apos;unknown&apos;, revision: &apos;unknown&apos;, time: &apos;unknown&apos;
+System info: host: &apos;LAPTOP-JB3M8V7H&apos;, ip: &apos;10.112.6.32&apos;, os.name: &apos;Windows 10&apos;, os.arch: &apos;amd64&apos;, os.version: &apos;10.0&apos;, java.version: &apos;1.8.0_141&apos;
+Driver info: org.openqa.selenium.chrome.ChromeDriver
+Capabilities [{mobileEmulationEnabled=false, hasTouchScreen=false, platform=XP, acceptSslCerts=false, goog:chromeOptions={debuggerAddress=localhost:56767}, acceptInsecureCerts=false, webStorageEnabled=true, browserName=chrome, takesScreenshot=true, javascriptEnabled=true, setWindowRect=true, unexpectedAlertBehaviour=, applicationCacheEnabled=false, rotatable=false, networkConnectionEnabled=false, chrome={chromedriverVersion=2.43.600210 (68dcf5eebde37173d4027fa8635e332711d2874a), userDataDir=C:\Users\FLORAN~1\AppData\Local\Temp\scoped_dir15440_24517}, takesHeapSnapshot=true, pageLoadStrategy=normal, databaseEnabled=false, handlesAlerts=true, version=72.0.3626.96, browserConnectionEnabled=false, nativeEvents=true, locationContextEnabled=true, cssSelectorsEnabled=true}]
+Session ID: a15d48f48967aa090f768b6a3703b1c8
+*** Element info: {Using=css selector, value=.slds-box.ng-scope}
+	at org.openqa.selenium.remote.ErrorHandler.createThrowable(ErrorHandler.java:215)
+	at org.openqa.selenium.remote.ErrorHandler.throwIfResponseFailed(ErrorHandler.java:167)
+	at org.openqa.selenium.remote.RemoteWebDriver.execute(RemoteWebDriver.java:671)
+	at org.openqa.selenium.remote.RemoteWebDriver.findElement(RemoteWebDriver.java:410)
+	at org.openqa.selenium.remote.RemoteWebDriver.findElementByCssSelector(RemoteWebDriver.java:501)
+	at org.openqa.selenium.By$ByCssSelector.findElement(By.java:430)
+	at org.openqa.selenium.remote.RemoteWebDriver.findElement(RemoteWebDriver.java:402)
+	at Tests.GestionesPerfilAgente.TS135402_CRM_Movil_REPRO_Renovacion_de_cuota_Presencial_Internet_50_MB_Dia_Descuento_de_saldo_con_Credito(GestionesPerfilAgente.java:704)
+	at java.util.concurrent.FutureTask.run(Unknown Source)
+	at java.util.concurrent.ThreadPoolExecutor.runWorker(Unknown Source)
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(Unknown Source)
+	at java.lang.Thread.run(Unknown Source)
+... Removed 19 stack frames</pre></div><a href='#' onClick='toggleBox("stack-trace376645156", this, "Click to show all stack frames", "Click to hide stack frames")'>Click to show all stack frames</a>
+<div class='stack-trace' id='stack-trace376645156'><pre>org.openqa.selenium.NoSuchElementException: no such element: Unable to locate element: {&quot;method&quot;:&quot;css selector&quot;,&quot;selector&quot;:&quot;.slds-box.ng-scope&quot;}
+  (Session info: chrome=72.0.3626.96)
+  (Driver info: chromedriver=2.43.600210 (68dcf5eebde37173d4027fa8635e332711d2874a),platform=Windows NT 10.0.17134 x86_64) (WARNING: The server did not provide any stacktrace information)
+Command duration or timeout: 26 milliseconds
+For documentation on this error, please visit: http://seleniumhq.org/exceptions/no_such_element.html
+Build info: version: &apos;unknown&apos;, revision: &apos;unknown&apos;, time: &apos;unknown&apos;
+System info: host: &apos;LAPTOP-JB3M8V7H&apos;, ip: &apos;10.112.6.32&apos;, os.name: &apos;Windows 10&apos;, os.arch: &apos;amd64&apos;, os.version: &apos;10.0&apos;, java.version: &apos;1.8.0_141&apos;
+Driver info: org.openqa.selenium.chrome.ChromeDriver
+Capabilities [{mobileEmulationEnabled=false, hasTouchScreen=false, platform=XP, acceptSslCerts=false, goog:chromeOptions={debuggerAddress=localhost:56767}, acceptInsecureCerts=false, webStorageEnabled=true, browserName=chrome, takesScreenshot=true, javascriptEnabled=true, setWindowRect=true, unexpectedAlertBehaviour=, applicationCacheEnabled=false, rotatable=false, networkConnectionEnabled=false, chrome={chromedriverVersion=2.43.600210 (68dcf5eebde37173d4027fa8635e332711d2874a), userDataDir=C:\Users\FLORAN~1\AppData\Local\Temp\scoped_dir15440_24517}, takesHeapSnapshot=true, pageLoadStrategy=normal, databaseEnabled=false, handlesAlerts=true, version=72.0.3626.96, browserConnectionEnabled=false, nativeEvents=true, locationContextEnabled=true, cssSelectorsEnabled=true}]
+Session ID: a15d48f48967aa090f768b6a3703b1c8
+*** Element info: {Using=css selector, value=.slds-box.ng-scope}
+	at sun.reflect.GeneratedConstructorAccessor63.newInstance(Unknown Source)
+	at sun.reflect.DelegatingConstructorAccessorImpl.newInstance(Unknown Source)
+	at java.lang.reflect.Constructor.newInstance(Unknown Source)
+	at org.openqa.selenium.remote.ErrorHandler.createThrowable(ErrorHandler.java:215)
+	at org.openqa.selenium.remote.ErrorHandler.throwIfResponseFailed(ErrorHandler.java:167)
+	at org.openqa.selenium.remote.RemoteWebDriver.execute(RemoteWebDriver.java:671)
+	at org.openqa.selenium.remote.RemoteWebDriver.findElement(RemoteWebDriver.java:410)
+	at org.openqa.selenium.remote.RemoteWebDriver.findElementByCssSelector(RemoteWebDriver.java:501)
+	at org.openqa.selenium.By$ByCssSelector.findElement(By.java:430)
+	at org.openqa.selenium.remote.RemoteWebDriver.findElement(RemoteWebDriver.java:402)
+	at Tests.GestionesPerfilAgente.TS135402_CRM_Movil_REPRO_Renovacion_de_cuota_Presencial_Internet_50_MB_Dia_Descuento_de_saldo_con_Credito(GestionesPerfilAgente.java:704)
+	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at sun.reflect.NativeMethodAccessorImpl.invoke(Unknown Source)
+	at sun.reflect.DelegatingMethodAccessorImpl.invoke(Unknown Source)
+	at java.lang.reflect.Method.invoke(Unknown Source)
+	at org.testng.internal.MethodInvocationHelper.invokeMethod(MethodInvocationHelper.java:124)
+	at org.testng.internal.Invoker.invokeMethod(Invoker.java:583)
+	at org.testng.internal.Invoker.invokeTestMethod(Invoker.java:719)
+	at org.testng.internal.Invoker.invokeTestMethods(Invoker.java:989)
+	at org.testng.internal.TestMethodWorker.invokeTestMethods(TestMethodWorker.java:125)
+	at org.testng.internal.TestMethodWorker.run(TestMethodWorker.java:109)
+	at org.testng.TestRunner.privateRun(TestRunner.java:648)
+	at org.testng.TestRunner.run(TestRunner.java:505)
+	at org.testng.SuiteRunner.runTest(SuiteRunner.java:455)
+	at org.testng.SuiteRunner.access$000(SuiteRunner.java:40)
+	at org.testng.SuiteRunner$SuiteWorker.run(SuiteRunner.java:489)
+	at org.testng.internal.thread.ThreadUtil$1.call(ThreadUtil.java:52)
+	at java.util.concurrent.FutureTask.run(Unknown Source)
+	at java.util.concurrent.ThreadPoolExecutor.runWorker(Unknown Source)
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(Unknown Source)
+	at java.lang.Thread.run(Unknown Source)
+</pre></div></td>
+<td>109</td>
+<td>Tests.GestionesPerfilAgente@de3a06f</td></tr>
+</table><p>
+<table width='100%' border='1' class='invocation-skipped'>
+<tr><td colspan='4' align='center'><b>SKIPPED TESTS</b></td></tr>
+<tr><td><b>Test method</b></td>
+<td width="30%"><b>Exception</b></td>
+<td width="10%"><b>Time (seconds)</b></td>
+<td><b>Instance</b></td>
+</tr>
+<tr>
+<td title='Tests.GestionesPerfilTelefonico.TS130065_CRM_Movil_REPRO_Renovacion_de_cuota_Telefonico_Reseteo_200_MB_por_Dia_TC_con_Credito()'><b>TS130065_CRM_Movil_REPRO_Renovacion_de_cuota_Telefonico_Reseteo_200_MB_por_Dia_TC_con_Credito</b><br>Test class: Tests.GestionesPerfilTelefonico</td>
+<td><div><pre>org.openqa.selenium.WebDriverException: unknown error: Element &lt;iframe id=&quot;ext-comp-1005&quot; name=&quot;ext-comp-1005&quot; frameborder=&quot;0&quot; allow=&quot;camera *; geolocation *; microphone *&quot; src=&quot;/home/home.jsp?isdtp=nv&amp;amp;nonce=3931cbc33cdf32d11aa8c3852426d77e46a657373135ce1bd9b687d0587f0943&amp;amp;sfdcIFrameOrigin=https%3A%2F%2Ftelecomcrm--uat.cs53.my.salesforce.com&quot; style=&quot;width: 1366px; height: 461px;&quot; cd_frame_id_=&quot;e80df8eecee1d6fd7a71b6270a5b19f8&quot;&gt;&lt;/iframe&gt; is not clickable at point (97, 256). Other element would receive the click: &lt;a id=&quot;nav-tab-4&quot; class=&quot;x-menu-item assetMru standardObject sd-nav-menu-item&quot; hidefocus=&quot;true&quot; unselectable=&quot;on&quot; href=&quot;#&quot;&gt;...&lt;/a&gt;
+  (Session info: chrome=72.0.3626.96)
+  (Driver info: chromedriver=2.43.600210 (68dcf5eebde37173d4027fa8635e332711d2874a),platform=Windows NT 10.0.17134 x86_64) (WARNING: The server did not provide any stacktrace information)
+Command duration or timeout: 174 milliseconds
+Build info: version: &apos;unknown&apos;, revision: &apos;unknown&apos;, time: &apos;unknown&apos;
+System info: host: &apos;LAPTOP-JB3M8V7H&apos;, ip: &apos;10.112.6.32&apos;, os.name: &apos;Windows 10&apos;, os.arch: &apos;amd64&apos;, os.version: &apos;10.0&apos;, java.version: &apos;1.8.0_141&apos;
+Driver info: org.openqa.selenium.chrome.ChromeDriver
+Capabilities [{mobileEmulationEnabled=false, hasTouchScreen=false, platform=XP, acceptSslCerts=false, goog:chromeOptions={debuggerAddress=localhost:56999}, acceptInsecureCerts=false, webStorageEnabled=true, browserName=chrome, takesScreenshot=true, javascriptEnabled=true, setWindowRect=true, unexpectedAlertBehaviour=, applicationCacheEnabled=false, rotatable=false, networkConnectionEnabled=false, chrome={chromedriverVersion=2.43.600210 (68dcf5eebde37173d4027fa8635e332711d2874a), userDataDir=C:\Users\FLORAN~1\AppData\Local\Temp\scoped_dir26424_25692}, takesHeapSnapshot=true, pageLoadStrategy=normal, databaseEnabled=false, handlesAlerts=true, version=72.0.3626.96, browserConnectionEnabled=false, nativeEvents=true, locationContextEnabled=true, cssSelectorsEnabled=true}]
+Session ID: a03871ae7a2498bc03af8fcddce61b92
+	at org.openqa.selenium.remote.ErrorHandler.createThrowable(ErrorHandler.java:215)
+	at org.openqa.selenium.remote.ErrorHandler.throwIfResponseFailed(ErrorHandler.java:167)
+	at org.openqa.selenium.remote.RemoteWebDriver.execute(RemoteWebDriver.java:671)
+	at org.openqa.selenium.remote.RemoteWebElement.execute(RemoteWebElement.java:272)
+	at org.openqa.selenium.remote.RemoteWebElement.click(RemoteWebElement.java:82)
+	at Tests.GestionesPerfilTelefonico.setup(GestionesPerfilTelefonico.java:115)
+	at java.util.concurrent.FutureTask.run(Unknown Source)
+	at java.util.concurrent.ThreadPoolExecutor.runWorker(Unknown Source)
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(Unknown Source)
+	at java.lang.Thread.run(Unknown Source)
+... Removed 21 stack frames</pre></div><a href='#' onClick='toggleBox("stack-trace197818997", this, "Click to show all stack frames", "Click to hide stack frames")'>Click to show all stack frames</a>
+<div class='stack-trace' id='stack-trace197818997'><pre>org.openqa.selenium.WebDriverException: unknown error: Element &lt;iframe id=&quot;ext-comp-1005&quot; name=&quot;ext-comp-1005&quot; frameborder=&quot;0&quot; allow=&quot;camera *; geolocation *; microphone *&quot; src=&quot;/home/home.jsp?isdtp=nv&amp;amp;nonce=3931cbc33cdf32d11aa8c3852426d77e46a657373135ce1bd9b687d0587f0943&amp;amp;sfdcIFrameOrigin=https%3A%2F%2Ftelecomcrm--uat.cs53.my.salesforce.com&quot; style=&quot;width: 1366px; height: 461px;&quot; cd_frame_id_=&quot;e80df8eecee1d6fd7a71b6270a5b19f8&quot;&gt;&lt;/iframe&gt; is not clickable at point (97, 256). Other element would receive the click: &lt;a id=&quot;nav-tab-4&quot; class=&quot;x-menu-item assetMru standardObject sd-nav-menu-item&quot; hidefocus=&quot;true&quot; unselectable=&quot;on&quot; href=&quot;#&quot;&gt;...&lt;/a&gt;
+  (Session info: chrome=72.0.3626.96)
+  (Driver info: chromedriver=2.43.600210 (68dcf5eebde37173d4027fa8635e332711d2874a),platform=Windows NT 10.0.17134 x86_64) (WARNING: The server did not provide any stacktrace information)
+Command duration or timeout: 174 milliseconds
+Build info: version: &apos;unknown&apos;, revision: &apos;unknown&apos;, time: &apos;unknown&apos;
+System info: host: &apos;LAPTOP-JB3M8V7H&apos;, ip: &apos;10.112.6.32&apos;, os.name: &apos;Windows 10&apos;, os.arch: &apos;amd64&apos;, os.version: &apos;10.0&apos;, java.version: &apos;1.8.0_141&apos;
+Driver info: org.openqa.selenium.chrome.ChromeDriver
+Capabilities [{mobileEmulationEnabled=false, hasTouchScreen=false, platform=XP, acceptSslCerts=false, goog:chromeOptions={debuggerAddress=localhost:56999}, acceptInsecureCerts=false, webStorageEnabled=true, browserName=chrome, takesScreenshot=true, javascriptEnabled=true, setWindowRect=true, unexpectedAlertBehaviour=, applicationCacheEnabled=false, rotatable=false, networkConnectionEnabled=false, chrome={chromedriverVersion=2.43.600210 (68dcf5eebde37173d4027fa8635e332711d2874a), userDataDir=C:\Users\FLORAN~1\AppData\Local\Temp\scoped_dir26424_25692}, takesHeapSnapshot=true, pageLoadStrategy=normal, databaseEnabled=false, handlesAlerts=true, version=72.0.3626.96, browserConnectionEnabled=false, nativeEvents=true, locationContextEnabled=true, cssSelectorsEnabled=true}]
+Session ID: a03871ae7a2498bc03af8fcddce61b92
+	at sun.reflect.GeneratedConstructorAccessor65.newInstance(Unknown Source)
+	at sun.reflect.DelegatingConstructorAccessorImpl.newInstance(Unknown Source)
+	at java.lang.reflect.Constructor.newInstance(Unknown Source)
+	at org.openqa.selenium.remote.ErrorHandler.createThrowable(ErrorHandler.java:215)
+	at org.openqa.selenium.remote.ErrorHandler.throwIfResponseFailed(ErrorHandler.java:167)
+	at org.openqa.selenium.remote.RemoteWebDriver.execute(RemoteWebDriver.java:671)
+	at org.openqa.selenium.remote.RemoteWebElement.execute(RemoteWebElement.java:272)
+	at org.openqa.selenium.remote.RemoteWebElement.click(RemoteWebElement.java:82)
+	at Tests.GestionesPerfilTelefonico.setup(GestionesPerfilTelefonico.java:115)
+	at sun.reflect.GeneratedMethodAccessor8.invoke(Unknown Source)
+	at sun.reflect.DelegatingMethodAccessorImpl.invoke(Unknown Source)
+	at java.lang.reflect.Method.invoke(Unknown Source)
+	at org.testng.internal.MethodInvocationHelper.invokeMethod(MethodInvocationHelper.java:124)
+	at org.testng.internal.MethodInvocationHelper.invokeMethodConsideringTimeout(MethodInvocationHelper.java:59)
+	at org.testng.internal.Invoker.invokeConfigurationMethod(Invoker.java:458)
+	at org.testng.internal.Invoker.invokeConfigurations(Invoker.java:222)
+	at org.testng.internal.Invoker.invokeMethod(Invoker.java:523)
+	at org.testng.internal.Invoker.invokeTestMethod(Invoker.java:719)
+	at org.testng.internal.Invoker.invokeTestMethods(Invoker.java:989)
+	at org.testng.internal.TestMethodWorker.invokeTestMethods(TestMethodWorker.java:125)
+	at org.testng.internal.TestMethodWorker.run(TestMethodWorker.java:109)
+	at org.testng.TestRunner.privateRun(TestRunner.java:648)
+	at org.testng.TestRunner.run(TestRunner.java:505)
+	at org.testng.SuiteRunner.runTest(SuiteRunner.java:455)
+	at org.testng.SuiteRunner.access$000(SuiteRunner.java:40)
+	at org.testng.SuiteRunner$SuiteWorker.run(SuiteRunner.java:489)
+	at org.testng.internal.thread.ThreadUtil$1.call(ThreadUtil.java:52)
+	at java.util.concurrent.FutureTask.run(Unknown Source)
+	at java.util.concurrent.ThreadPoolExecutor.runWorker(Unknown Source)
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(Unknown Source)
+	at java.lang.Thread.run(Unknown Source)
+</pre></div></td>
+<td>0</td>
+<td>Tests.GestionesPerfilTelefonico@76b10754</td></tr>
+<tr>
+<td title='Tests.GestionesPerfilTelefonico.TS130067_CRM_Movil_REPRO_Renovacion_De_Cuota_Telefonico_Descuento_De_Saldo_Sin_Credito()'><b>TS130067_CRM_Movil_REPRO_Renovacion_De_Cuota_Telefonico_Descuento_De_Saldo_Sin_Credito</b><br>Test class: Tests.GestionesPerfilTelefonico</td>
+<td><div><pre>org.openqa.selenium.WebDriverException: unknown error: Element &lt;iframe id=&quot;ext-comp-1005&quot; name=&quot;ext-comp-1005&quot; frameborder=&quot;0&quot; allow=&quot;camera *; geolocation *; microphone *&quot; src=&quot;/home/home.jsp?isdtp=nv&amp;amp;nonce=3931cbc33cdf32d11aa8c3852426d77e46a657373135ce1bd9b687d0587f0943&amp;amp;sfdcIFrameOrigin=https%3A%2F%2Ftelecomcrm--uat.cs53.my.salesforce.com&quot; style=&quot;width: 1366px; height: 461px;&quot; cd_frame_id_=&quot;e80df8eecee1d6fd7a71b6270a5b19f8&quot;&gt;&lt;/iframe&gt; is not clickable at point (97, 256). Other element would receive the click: &lt;a id=&quot;nav-tab-4&quot; class=&quot;x-menu-item assetMru standardObject sd-nav-menu-item&quot; hidefocus=&quot;true&quot; unselectable=&quot;on&quot; href=&quot;#&quot;&gt;...&lt;/a&gt;
+  (Session info: chrome=72.0.3626.96)
+  (Driver info: chromedriver=2.43.600210 (68dcf5eebde37173d4027fa8635e332711d2874a),platform=Windows NT 10.0.17134 x86_64) (WARNING: The server did not provide any stacktrace information)
+Command duration or timeout: 174 milliseconds
+Build info: version: &apos;unknown&apos;, revision: &apos;unknown&apos;, time: &apos;unknown&apos;
+System info: host: &apos;LAPTOP-JB3M8V7H&apos;, ip: &apos;10.112.6.32&apos;, os.name: &apos;Windows 10&apos;, os.arch: &apos;amd64&apos;, os.version: &apos;10.0&apos;, java.version: &apos;1.8.0_141&apos;
+Driver info: org.openqa.selenium.chrome.ChromeDriver
+Capabilities [{mobileEmulationEnabled=false, hasTouchScreen=false, platform=XP, acceptSslCerts=false, goog:chromeOptions={debuggerAddress=localhost:56999}, acceptInsecureCerts=false, webStorageEnabled=true, browserName=chrome, takesScreenshot=true, javascriptEnabled=true, setWindowRect=true, unexpectedAlertBehaviour=, applicationCacheEnabled=false, rotatable=false, networkConnectionEnabled=false, chrome={chromedriverVersion=2.43.600210 (68dcf5eebde37173d4027fa8635e332711d2874a), userDataDir=C:\Users\FLORAN~1\AppData\Local\Temp\scoped_dir26424_25692}, takesHeapSnapshot=true, pageLoadStrategy=normal, databaseEnabled=false, handlesAlerts=true, version=72.0.3626.96, browserConnectionEnabled=false, nativeEvents=true, locationContextEnabled=true, cssSelectorsEnabled=true}]
+Session ID: a03871ae7a2498bc03af8fcddce61b92
+	at org.openqa.selenium.remote.ErrorHandler.createThrowable(ErrorHandler.java:215)
+	at org.openqa.selenium.remote.ErrorHandler.throwIfResponseFailed(ErrorHandler.java:167)
+	at org.openqa.selenium.remote.RemoteWebDriver.execute(RemoteWebDriver.java:671)
+	at org.openqa.selenium.remote.RemoteWebElement.execute(RemoteWebElement.java:272)
+	at org.openqa.selenium.remote.RemoteWebElement.click(RemoteWebElement.java:82)
+	at Tests.GestionesPerfilTelefonico.setup(GestionesPerfilTelefonico.java:115)
+	at java.util.concurrent.FutureTask.run(Unknown Source)
+	at java.util.concurrent.ThreadPoolExecutor.runWorker(Unknown Source)
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(Unknown Source)
+	at java.lang.Thread.run(Unknown Source)
+... Removed 21 stack frames</pre></div><a href='#' onClick='toggleBox("stack-trace1973015214", this, "Click to show all stack frames", "Click to hide stack frames")'>Click to show all stack frames</a>
+<div class='stack-trace' id='stack-trace1973015214'><pre>org.openqa.selenium.WebDriverException: unknown error: Element &lt;iframe id=&quot;ext-comp-1005&quot; name=&quot;ext-comp-1005&quot; frameborder=&quot;0&quot; allow=&quot;camera *; geolocation *; microphone *&quot; src=&quot;/home/home.jsp?isdtp=nv&amp;amp;nonce=3931cbc33cdf32d11aa8c3852426d77e46a657373135ce1bd9b687d0587f0943&amp;amp;sfdcIFrameOrigin=https%3A%2F%2Ftelecomcrm--uat.cs53.my.salesforce.com&quot; style=&quot;width: 1366px; height: 461px;&quot; cd_frame_id_=&quot;e80df8eecee1d6fd7a71b6270a5b19f8&quot;&gt;&lt;/iframe&gt; is not clickable at point (97, 256). Other element would receive the click: &lt;a id=&quot;nav-tab-4&quot; class=&quot;x-menu-item assetMru standardObject sd-nav-menu-item&quot; hidefocus=&quot;true&quot; unselectable=&quot;on&quot; href=&quot;#&quot;&gt;...&lt;/a&gt;
+  (Session info: chrome=72.0.3626.96)
+  (Driver info: chromedriver=2.43.600210 (68dcf5eebde37173d4027fa8635e332711d2874a),platform=Windows NT 10.0.17134 x86_64) (WARNING: The server did not provide any stacktrace information)
+Command duration or timeout: 174 milliseconds
+Build info: version: &apos;unknown&apos;, revision: &apos;unknown&apos;, time: &apos;unknown&apos;
+System info: host: &apos;LAPTOP-JB3M8V7H&apos;, ip: &apos;10.112.6.32&apos;, os.name: &apos;Windows 10&apos;, os.arch: &apos;amd64&apos;, os.version: &apos;10.0&apos;, java.version: &apos;1.8.0_141&apos;
+Driver info: org.openqa.selenium.chrome.ChromeDriver
+Capabilities [{mobileEmulationEnabled=false, hasTouchScreen=false, platform=XP, acceptSslCerts=false, goog:chromeOptions={debuggerAddress=localhost:56999}, acceptInsecureCerts=false, webStorageEnabled=true, browserName=chrome, takesScreenshot=true, javascriptEnabled=true, setWindowRect=true, unexpectedAlertBehaviour=, applicationCacheEnabled=false, rotatable=false, networkConnectionEnabled=false, chrome={chromedriverVersion=2.43.600210 (68dcf5eebde37173d4027fa8635e332711d2874a), userDataDir=C:\Users\FLORAN~1\AppData\Local\Temp\scoped_dir26424_25692}, takesHeapSnapshot=true, pageLoadStrategy=normal, databaseEnabled=false, handlesAlerts=true, version=72.0.3626.96, browserConnectionEnabled=false, nativeEvents=true, locationContextEnabled=true, cssSelectorsEnabled=true}]
+Session ID: a03871ae7a2498bc03af8fcddce61b92
+	at sun.reflect.GeneratedConstructorAccessor65.newInstance(Unknown Source)
+	at sun.reflect.DelegatingConstructorAccessorImpl.newInstance(Unknown Source)
+	at java.lang.reflect.Constructor.newInstance(Unknown Source)
+	at org.openqa.selenium.remote.ErrorHandler.createThrowable(ErrorHandler.java:215)
+	at org.openqa.selenium.remote.ErrorHandler.throwIfResponseFailed(ErrorHandler.java:167)
+	at org.openqa.selenium.remote.RemoteWebDriver.execute(RemoteWebDriver.java:671)
+	at org.openqa.selenium.remote.RemoteWebElement.execute(RemoteWebElement.java:272)
+	at org.openqa.selenium.remote.RemoteWebElement.click(RemoteWebElement.java:82)
+	at Tests.GestionesPerfilTelefonico.setup(GestionesPerfilTelefonico.java:115)
+	at sun.reflect.GeneratedMethodAccessor8.invoke(Unknown Source)
+	at sun.reflect.DelegatingMethodAccessorImpl.invoke(Unknown Source)
+	at java.lang.reflect.Method.invoke(Unknown Source)
+	at org.testng.internal.MethodInvocationHelper.invokeMethod(MethodInvocationHelper.java:124)
+	at org.testng.internal.MethodInvocationHelper.invokeMethodConsideringTimeout(MethodInvocationHelper.java:59)
+	at org.testng.internal.Invoker.invokeConfigurationMethod(Invoker.java:458)
+	at org.testng.internal.Invoker.invokeConfigurations(Invoker.java:222)
+	at org.testng.internal.Invoker.invokeMethod(Invoker.java:523)
+	at org.testng.internal.Invoker.invokeTestMethod(Invoker.java:719)
+	at org.testng.internal.Invoker.invokeTestMethods(Invoker.java:989)
+	at org.testng.internal.TestMethodWorker.invokeTestMethods(TestMethodWorker.java:125)
+	at org.testng.internal.TestMethodWorker.run(TestMethodWorker.java:109)
+	at org.testng.TestRunner.privateRun(TestRunner.java:648)
+	at org.testng.TestRunner.run(TestRunner.java:505)
+	at org.testng.SuiteRunner.runTest(SuiteRunner.java:455)
+	at org.testng.SuiteRunner.access$000(SuiteRunner.java:40)
+	at org.testng.SuiteRunner$SuiteWorker.run(SuiteRunner.java:489)
+	at org.testng.internal.thread.ThreadUtil$1.call(ThreadUtil.java:52)
+	at java.util.concurrent.FutureTask.run(Unknown Source)
+	at java.util.concurrent.ThreadPoolExecutor.runWorker(Unknown Source)
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(Unknown Source)
+	at java.lang.Thread.run(Unknown Source)
+</pre></div></td>
+<td>0</td>
+<td>Tests.GestionesPerfilTelefonico@76b10754</td></tr>
+<tr>
+<td title='Tests.GestionesPerfilTelefonico.TS130068_CRM_Movil_REPRO_Renovacion_de_cuota_Telefonico_Reseteo_200_MB_por_Dia_Descuento_de_saldo_con_Credito()'><b>TS130068_CRM_Movil_REPRO_Renovacion_de_cuota_Telefonico_Reseteo_200_MB_por_Dia_Descuento_de_saldo_con_Credito</b><br>Test class: Tests.GestionesPerfilTelefonico</td>
+<td><div><pre>org.openqa.selenium.WebDriverException: unknown error: Element &lt;iframe id=&quot;ext-comp-1005&quot; name=&quot;ext-comp-1005&quot; frameborder=&quot;0&quot; allow=&quot;camera *; geolocation *; microphone *&quot; src=&quot;/home/home.jsp?isdtp=nv&amp;amp;nonce=3931cbc33cdf32d11aa8c3852426d77e46a657373135ce1bd9b687d0587f0943&amp;amp;sfdcIFrameOrigin=https%3A%2F%2Ftelecomcrm--uat.cs53.my.salesforce.com&quot; style=&quot;width: 1366px; height: 461px;&quot; cd_frame_id_=&quot;e80df8eecee1d6fd7a71b6270a5b19f8&quot;&gt;&lt;/iframe&gt; is not clickable at point (97, 256). Other element would receive the click: &lt;a id=&quot;nav-tab-4&quot; class=&quot;x-menu-item assetMru standardObject sd-nav-menu-item&quot; hidefocus=&quot;true&quot; unselectable=&quot;on&quot; href=&quot;#&quot;&gt;...&lt;/a&gt;
+  (Session info: chrome=72.0.3626.96)
+  (Driver info: chromedriver=2.43.600210 (68dcf5eebde37173d4027fa8635e332711d2874a),platform=Windows NT 10.0.17134 x86_64) (WARNING: The server did not provide any stacktrace information)
+Command duration or timeout: 174 milliseconds
+Build info: version: &apos;unknown&apos;, revision: &apos;unknown&apos;, time: &apos;unknown&apos;
+System info: host: &apos;LAPTOP-JB3M8V7H&apos;, ip: &apos;10.112.6.32&apos;, os.name: &apos;Windows 10&apos;, os.arch: &apos;amd64&apos;, os.version: &apos;10.0&apos;, java.version: &apos;1.8.0_141&apos;
+Driver info: org.openqa.selenium.chrome.ChromeDriver
+Capabilities [{mobileEmulationEnabled=false, hasTouchScreen=false, platform=XP, acceptSslCerts=false, goog:chromeOptions={debuggerAddress=localhost:56999}, acceptInsecureCerts=false, webStorageEnabled=true, browserName=chrome, takesScreenshot=true, javascriptEnabled=true, setWindowRect=true, unexpectedAlertBehaviour=, applicationCacheEnabled=false, rotatable=false, networkConnectionEnabled=false, chrome={chromedriverVersion=2.43.600210 (68dcf5eebde37173d4027fa8635e332711d2874a), userDataDir=C:\Users\FLORAN~1\AppData\Local\Temp\scoped_dir26424_25692}, takesHeapSnapshot=true, pageLoadStrategy=normal, databaseEnabled=false, handlesAlerts=true, version=72.0.3626.96, browserConnectionEnabled=false, nativeEvents=true, locationContextEnabled=true, cssSelectorsEnabled=true}]
+Session ID: a03871ae7a2498bc03af8fcddce61b92
+	at org.openqa.selenium.remote.ErrorHandler.createThrowable(ErrorHandler.java:215)
+	at org.openqa.selenium.remote.ErrorHandler.throwIfResponseFailed(ErrorHandler.java:167)
+	at org.openqa.selenium.remote.RemoteWebDriver.execute(RemoteWebDriver.java:671)
+	at org.openqa.selenium.remote.RemoteWebElement.execute(RemoteWebElement.java:272)
+	at org.openqa.selenium.remote.RemoteWebElement.click(RemoteWebElement.java:82)
+	at Tests.GestionesPerfilTelefonico.setup(GestionesPerfilTelefonico.java:115)
+	at java.util.concurrent.FutureTask.run(Unknown Source)
+	at java.util.concurrent.ThreadPoolExecutor.runWorker(Unknown Source)
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(Unknown Source)
+	at java.lang.Thread.run(Unknown Source)
+... Removed 21 stack frames</pre></div><a href='#' onClick='toggleBox("stack-trace948094555", this, "Click to show all stack frames", "Click to hide stack frames")'>Click to show all stack frames</a>
+<div class='stack-trace' id='stack-trace948094555'><pre>org.openqa.selenium.WebDriverException: unknown error: Element &lt;iframe id=&quot;ext-comp-1005&quot; name=&quot;ext-comp-1005&quot; frameborder=&quot;0&quot; allow=&quot;camera *; geolocation *; microphone *&quot; src=&quot;/home/home.jsp?isdtp=nv&amp;amp;nonce=3931cbc33cdf32d11aa8c3852426d77e46a657373135ce1bd9b687d0587f0943&amp;amp;sfdcIFrameOrigin=https%3A%2F%2Ftelecomcrm--uat.cs53.my.salesforce.com&quot; style=&quot;width: 1366px; height: 461px;&quot; cd_frame_id_=&quot;e80df8eecee1d6fd7a71b6270a5b19f8&quot;&gt;&lt;/iframe&gt; is not clickable at point (97, 256). Other element would receive the click: &lt;a id=&quot;nav-tab-4&quot; class=&quot;x-menu-item assetMru standardObject sd-nav-menu-item&quot; hidefocus=&quot;true&quot; unselectable=&quot;on&quot; href=&quot;#&quot;&gt;...&lt;/a&gt;
+  (Session info: chrome=72.0.3626.96)
+  (Driver info: chromedriver=2.43.600210 (68dcf5eebde37173d4027fa8635e332711d2874a),platform=Windows NT 10.0.17134 x86_64) (WARNING: The server did not provide any stacktrace information)
+Command duration or timeout: 174 milliseconds
+Build info: version: &apos;unknown&apos;, revision: &apos;unknown&apos;, time: &apos;unknown&apos;
+System info: host: &apos;LAPTOP-JB3M8V7H&apos;, ip: &apos;10.112.6.32&apos;, os.name: &apos;Windows 10&apos;, os.arch: &apos;amd64&apos;, os.version: &apos;10.0&apos;, java.version: &apos;1.8.0_141&apos;
+Driver info: org.openqa.selenium.chrome.ChromeDriver
+Capabilities [{mobileEmulationEnabled=false, hasTouchScreen=false, platform=XP, acceptSslCerts=false, goog:chromeOptions={debuggerAddress=localhost:56999}, acceptInsecureCerts=false, webStorageEnabled=true, browserName=chrome, takesScreenshot=true, javascriptEnabled=true, setWindowRect=true, unexpectedAlertBehaviour=, applicationCacheEnabled=false, rotatable=false, networkConnectionEnabled=false, chrome={chromedriverVersion=2.43.600210 (68dcf5eebde37173d4027fa8635e332711d2874a), userDataDir=C:\Users\FLORAN~1\AppData\Local\Temp\scoped_dir26424_25692}, takesHeapSnapshot=true, pageLoadStrategy=normal, databaseEnabled=false, handlesAlerts=true, version=72.0.3626.96, browserConnectionEnabled=false, nativeEvents=true, locationContextEnabled=true, cssSelectorsEnabled=true}]
+Session ID: a03871ae7a2498bc03af8fcddce61b92
+	at sun.reflect.GeneratedConstructorAccessor65.newInstance(Unknown Source)
+	at sun.reflect.DelegatingConstructorAccessorImpl.newInstance(Unknown Source)
+	at java.lang.reflect.Constructor.newInstance(Unknown Source)
+	at org.openqa.selenium.remote.ErrorHandler.createThrowable(ErrorHandler.java:215)
+	at org.openqa.selenium.remote.ErrorHandler.throwIfResponseFailed(ErrorHandler.java:167)
+	at org.openqa.selenium.remote.RemoteWebDriver.execute(RemoteWebDriver.java:671)
+	at org.openqa.selenium.remote.RemoteWebElement.execute(RemoteWebElement.java:272)
+	at org.openqa.selenium.remote.RemoteWebElement.click(RemoteWebElement.java:82)
+	at Tests.GestionesPerfilTelefonico.setup(GestionesPerfilTelefonico.java:115)
+	at sun.reflect.GeneratedMethodAccessor8.invoke(Unknown Source)
+	at sun.reflect.DelegatingMethodAccessorImpl.invoke(Unknown Source)
+	at java.lang.reflect.Method.invoke(Unknown Source)
+	at org.testng.internal.MethodInvocationHelper.invokeMethod(MethodInvocationHelper.java:124)
+	at org.testng.internal.MethodInvocationHelper.invokeMethodConsideringTimeout(MethodInvocationHelper.java:59)
+	at org.testng.internal.Invoker.invokeConfigurationMethod(Invoker.java:458)
+	at org.testng.internal.Invoker.invokeConfigurations(Invoker.java:222)
+	at org.testng.internal.Invoker.invokeMethod(Invoker.java:523)
+	at org.testng.internal.Invoker.invokeTestMethod(Invoker.java:719)
+	at org.testng.internal.Invoker.invokeTestMethods(Invoker.java:989)
+	at org.testng.internal.TestMethodWorker.invokeTestMethods(TestMethodWorker.java:125)
+	at org.testng.internal.TestMethodWorker.run(TestMethodWorker.java:109)
+	at org.testng.TestRunner.privateRun(TestRunner.java:648)
+	at org.testng.TestRunner.run(TestRunner.java:505)
+	at org.testng.SuiteRunner.runTest(SuiteRunner.java:455)
+	at org.testng.SuiteRunner.access$000(SuiteRunner.java:40)
+	at org.testng.SuiteRunner$SuiteWorker.run(SuiteRunner.java:489)
+	at org.testng.internal.thread.ThreadUtil$1.call(ThreadUtil.java:52)
+	at java.util.concurrent.FutureTask.run(Unknown Source)
+	at java.util.concurrent.ThreadPoolExecutor.runWorker(Unknown Source)
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(Unknown Source)
+	at java.lang.Thread.run(Unknown Source)
+</pre></div></td>
+<td>0</td>
+<td>Tests.GestionesPerfilTelefonico@76b10754</td></tr>
+<tr>
+<td title='Tests.GestionesPerfilOficina.TS135395_CRM_Movil_REPRO_Renovacion_de_cuota_Presencial_Internet_50_MB_Dia_Efectivo_con_Credito()'><b>TS135395_CRM_Movil_REPRO_Renovacion_de_cuota_Presencial_Internet_50_MB_Dia_Efectivo_con_Credito</b><br>Test class: Tests.GestionesPerfilOficina</td>
+<td><div><pre>org.openqa.selenium.WebDriverException: unknown error: Element &lt;iframe id=&quot;ext-comp-1005&quot; name=&quot;ext-comp-1005&quot; frameborder=&quot;0&quot; allow=&quot;camera *; geolocation *; microphone *&quot; src=&quot;/home/home.jsp?isdtp=nv&amp;amp;nonce=98550e27455d02430f838cace20fc2400df6dd520b1aac5c46bc9d5bbfb73922&amp;amp;sfdcIFrameOrigin=https%3A%2F%2Ftelecomcrm--uat.cs53.my.salesforce.com&quot; style=&quot;width: 1366px; height: 461px;&quot; cd_frame_id_=&quot;d93508fcf06b35118ae85a45bd0221f1&quot;&gt;&lt;/iframe&gt; is not clickable at point (97, 256). Other element would receive the click: &lt;span class=&quot;x-menu-item-text&quot; id=&quot;ext-gen99&quot;&gt;...&lt;/span&gt;
+  (Session info: chrome=72.0.3626.96)
+  (Driver info: chromedriver=2.43.600210 (68dcf5eebde37173d4027fa8635e332711d2874a),platform=Windows NT 10.0.17134 x86_64) (WARNING: The server did not provide any stacktrace information)
+Command duration or timeout: 139 milliseconds
+Build info: version: &apos;unknown&apos;, revision: &apos;unknown&apos;, time: &apos;unknown&apos;
+System info: host: &apos;LAPTOP-JB3M8V7H&apos;, ip: &apos;10.112.6.32&apos;, os.name: &apos;Windows 10&apos;, os.arch: &apos;amd64&apos;, os.version: &apos;10.0&apos;, java.version: &apos;1.8.0_141&apos;
+Driver info: org.openqa.selenium.chrome.ChromeDriver
+Capabilities [{mobileEmulationEnabled=false, hasTouchScreen=false, platform=XP, acceptSslCerts=false, goog:chromeOptions={debuggerAddress=localhost:56286}, acceptInsecureCerts=false, webStorageEnabled=true, browserName=chrome, takesScreenshot=true, javascriptEnabled=true, setWindowRect=true, unexpectedAlertBehaviour=, applicationCacheEnabled=false, rotatable=false, networkConnectionEnabled=false, chrome={chromedriverVersion=2.43.600210 (68dcf5eebde37173d4027fa8635e332711d2874a), userDataDir=C:\Users\FLORAN~1\AppData\Local\Temp\scoped_dir26504_28286}, takesHeapSnapshot=true, pageLoadStrategy=normal, databaseEnabled=false, handlesAlerts=true, version=72.0.3626.96, browserConnectionEnabled=false, nativeEvents=true, locationContextEnabled=true, cssSelectorsEnabled=true}]
+Session ID: d91c6dff32a8031634104fc4b1ed54ba
+	at org.openqa.selenium.remote.ErrorHandler.createThrowable(ErrorHandler.java:215)
+	at org.openqa.selenium.remote.ErrorHandler.throwIfResponseFailed(ErrorHandler.java:167)
+	at org.openqa.selenium.remote.RemoteWebDriver.execute(RemoteWebDriver.java:671)
+	at org.openqa.selenium.remote.RemoteWebElement.execute(RemoteWebElement.java:272)
+	at org.openqa.selenium.remote.RemoteWebElement.click(RemoteWebElement.java:82)
+	at Tests.GestionesPerfilOficina.setup(GestionesPerfilOficina.java:136)
+	at java.util.concurrent.FutureTask.run(Unknown Source)
+	at java.util.concurrent.ThreadPoolExecutor.runWorker(Unknown Source)
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(Unknown Source)
+	at java.lang.Thread.run(Unknown Source)
+... Removed 21 stack frames</pre></div><a href='#' onClick='toggleBox("stack-trace201854700", this, "Click to show all stack frames", "Click to hide stack frames")'>Click to show all stack frames</a>
+<div class='stack-trace' id='stack-trace201854700'><pre>org.openqa.selenium.WebDriverException: unknown error: Element &lt;iframe id=&quot;ext-comp-1005&quot; name=&quot;ext-comp-1005&quot; frameborder=&quot;0&quot; allow=&quot;camera *; geolocation *; microphone *&quot; src=&quot;/home/home.jsp?isdtp=nv&amp;amp;nonce=98550e27455d02430f838cace20fc2400df6dd520b1aac5c46bc9d5bbfb73922&amp;amp;sfdcIFrameOrigin=https%3A%2F%2Ftelecomcrm--uat.cs53.my.salesforce.com&quot; style=&quot;width: 1366px; height: 461px;&quot; cd_frame_id_=&quot;d93508fcf06b35118ae85a45bd0221f1&quot;&gt;&lt;/iframe&gt; is not clickable at point (97, 256). Other element would receive the click: &lt;span class=&quot;x-menu-item-text&quot; id=&quot;ext-gen99&quot;&gt;...&lt;/span&gt;
+  (Session info: chrome=72.0.3626.96)
+  (Driver info: chromedriver=2.43.600210 (68dcf5eebde37173d4027fa8635e332711d2874a),platform=Windows NT 10.0.17134 x86_64) (WARNING: The server did not provide any stacktrace information)
+Command duration or timeout: 139 milliseconds
+Build info: version: &apos;unknown&apos;, revision: &apos;unknown&apos;, time: &apos;unknown&apos;
+System info: host: &apos;LAPTOP-JB3M8V7H&apos;, ip: &apos;10.112.6.32&apos;, os.name: &apos;Windows 10&apos;, os.arch: &apos;amd64&apos;, os.version: &apos;10.0&apos;, java.version: &apos;1.8.0_141&apos;
+Driver info: org.openqa.selenium.chrome.ChromeDriver
+Capabilities [{mobileEmulationEnabled=false, hasTouchScreen=false, platform=XP, acceptSslCerts=false, goog:chromeOptions={debuggerAddress=localhost:56286}, acceptInsecureCerts=false, webStorageEnabled=true, browserName=chrome, takesScreenshot=true, javascriptEnabled=true, setWindowRect=true, unexpectedAlertBehaviour=, applicationCacheEnabled=false, rotatable=false, networkConnectionEnabled=false, chrome={chromedriverVersion=2.43.600210 (68dcf5eebde37173d4027fa8635e332711d2874a), userDataDir=C:\Users\FLORAN~1\AppData\Local\Temp\scoped_dir26504_28286}, takesHeapSnapshot=true, pageLoadStrategy=normal, databaseEnabled=false, handlesAlerts=true, version=72.0.3626.96, browserConnectionEnabled=false, nativeEvents=true, locationContextEnabled=true, cssSelectorsEnabled=true}]
+Session ID: d91c6dff32a8031634104fc4b1ed54ba
+	at sun.reflect.GeneratedConstructorAccessor65.newInstance(Unknown Source)
+	at sun.reflect.DelegatingConstructorAccessorImpl.newInstance(Unknown Source)
+	at java.lang.reflect.Constructor.newInstance(Unknown Source)
+	at org.openqa.selenium.remote.ErrorHandler.createThrowable(ErrorHandler.java:215)
+	at org.openqa.selenium.remote.ErrorHandler.throwIfResponseFailed(ErrorHandler.java:167)
+	at org.openqa.selenium.remote.RemoteWebDriver.execute(RemoteWebDriver.java:671)
+	at org.openqa.selenium.remote.RemoteWebElement.execute(RemoteWebElement.java:272)
+	at org.openqa.selenium.remote.RemoteWebElement.click(RemoteWebElement.java:82)
+	at Tests.GestionesPerfilOficina.setup(GestionesPerfilOficina.java:136)
+	at sun.reflect.GeneratedMethodAccessor1.invoke(Unknown Source)
+	at sun.reflect.DelegatingMethodAccessorImpl.invoke(Unknown Source)
+	at java.lang.reflect.Method.invoke(Unknown Source)
+	at org.testng.internal.MethodInvocationHelper.invokeMethod(MethodInvocationHelper.java:124)
+	at org.testng.internal.MethodInvocationHelper.invokeMethodConsideringTimeout(MethodInvocationHelper.java:59)
+	at org.testng.internal.Invoker.invokeConfigurationMethod(Invoker.java:458)
+	at org.testng.internal.Invoker.invokeConfigurations(Invoker.java:222)
+	at org.testng.internal.Invoker.invokeMethod(Invoker.java:523)
+	at org.testng.internal.Invoker.invokeTestMethod(Invoker.java:719)
+	at org.testng.internal.Invoker.invokeTestMethods(Invoker.java:989)
+	at org.testng.internal.TestMethodWorker.invokeTestMethods(TestMethodWorker.java:125)
+	at org.testng.internal.TestMethodWorker.run(TestMethodWorker.java:109)
+	at org.testng.TestRunner.privateRun(TestRunner.java:648)
+	at org.testng.TestRunner.run(TestRunner.java:505)
+	at org.testng.SuiteRunner.runTest(SuiteRunner.java:455)
+	at org.testng.SuiteRunner.access$000(SuiteRunner.java:40)
+	at org.testng.SuiteRunner$SuiteWorker.run(SuiteRunner.java:489)
+	at org.testng.internal.thread.ThreadUtil$1.call(ThreadUtil.java:52)
+	at java.util.concurrent.FutureTask.run(Unknown Source)
+	at java.util.concurrent.ThreadPoolExecutor.runWorker(Unknown Source)
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(Unknown Source)
+	at java.lang.Thread.run(Unknown Source)
+</pre></div></td>
+<td>0</td>
+<td>Tests.GestionesPerfilOficina@6c9f5c0d</td></tr>
+<tr>
+<td title='Tests.GestionesPerfilOficina.TS135396_CRM_Movil_REPRO_Renovacion_de_cuota_Presencial_Internet_50_MB_Dia_Efectivo_sin_Credito()'><b>TS135396_CRM_Movil_REPRO_Renovacion_de_cuota_Presencial_Internet_50_MB_Dia_Efectivo_sin_Credito</b><br>Test class: Tests.GestionesPerfilOficina</td>
+<td><div><pre>org.openqa.selenium.WebDriverException: unknown error: Element &lt;iframe id=&quot;ext-comp-1005&quot; name=&quot;ext-comp-1005&quot; frameborder=&quot;0&quot; allow=&quot;camera *; geolocation *; microphone *&quot; src=&quot;/home/home.jsp?isdtp=nv&amp;amp;nonce=98550e27455d02430f838cace20fc2400df6dd520b1aac5c46bc9d5bbfb73922&amp;amp;sfdcIFrameOrigin=https%3A%2F%2Ftelecomcrm--uat.cs53.my.salesforce.com&quot; style=&quot;width: 1366px; height: 461px;&quot; cd_frame_id_=&quot;d93508fcf06b35118ae85a45bd0221f1&quot;&gt;&lt;/iframe&gt; is not clickable at point (97, 256). Other element would receive the click: &lt;span class=&quot;x-menu-item-text&quot; id=&quot;ext-gen99&quot;&gt;...&lt;/span&gt;
+  (Session info: chrome=72.0.3626.96)
+  (Driver info: chromedriver=2.43.600210 (68dcf5eebde37173d4027fa8635e332711d2874a),platform=Windows NT 10.0.17134 x86_64) (WARNING: The server did not provide any stacktrace information)
+Command duration or timeout: 139 milliseconds
+Build info: version: &apos;unknown&apos;, revision: &apos;unknown&apos;, time: &apos;unknown&apos;
+System info: host: &apos;LAPTOP-JB3M8V7H&apos;, ip: &apos;10.112.6.32&apos;, os.name: &apos;Windows 10&apos;, os.arch: &apos;amd64&apos;, os.version: &apos;10.0&apos;, java.version: &apos;1.8.0_141&apos;
+Driver info: org.openqa.selenium.chrome.ChromeDriver
+Capabilities [{mobileEmulationEnabled=false, hasTouchScreen=false, platform=XP, acceptSslCerts=false, goog:chromeOptions={debuggerAddress=localhost:56286}, acceptInsecureCerts=false, webStorageEnabled=true, browserName=chrome, takesScreenshot=true, javascriptEnabled=true, setWindowRect=true, unexpectedAlertBehaviour=, applicationCacheEnabled=false, rotatable=false, networkConnectionEnabled=false, chrome={chromedriverVersion=2.43.600210 (68dcf5eebde37173d4027fa8635e332711d2874a), userDataDir=C:\Users\FLORAN~1\AppData\Local\Temp\scoped_dir26504_28286}, takesHeapSnapshot=true, pageLoadStrategy=normal, databaseEnabled=false, handlesAlerts=true, version=72.0.3626.96, browserConnectionEnabled=false, nativeEvents=true, locationContextEnabled=true, cssSelectorsEnabled=true}]
+Session ID: d91c6dff32a8031634104fc4b1ed54ba
+	at org.openqa.selenium.remote.ErrorHandler.createThrowable(ErrorHandler.java:215)
+	at org.openqa.selenium.remote.ErrorHandler.throwIfResponseFailed(ErrorHandler.java:167)
+	at org.openqa.selenium.remote.RemoteWebDriver.execute(RemoteWebDriver.java:671)
+	at org.openqa.selenium.remote.RemoteWebElement.execute(RemoteWebElement.java:272)
+	at org.openqa.selenium.remote.RemoteWebElement.click(RemoteWebElement.java:82)
+	at Tests.GestionesPerfilOficina.setup(GestionesPerfilOficina.java:136)
+	at java.util.concurrent.FutureTask.run(Unknown Source)
+	at java.util.concurrent.ThreadPoolExecutor.runWorker(Unknown Source)
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(Unknown Source)
+	at java.lang.Thread.run(Unknown Source)
+... Removed 21 stack frames</pre></div><a href='#' onClick='toggleBox("stack-trace1373274924", this, "Click to show all stack frames", "Click to hide stack frames")'>Click to show all stack frames</a>
+<div class='stack-trace' id='stack-trace1373274924'><pre>org.openqa.selenium.WebDriverException: unknown error: Element &lt;iframe id=&quot;ext-comp-1005&quot; name=&quot;ext-comp-1005&quot; frameborder=&quot;0&quot; allow=&quot;camera *; geolocation *; microphone *&quot; src=&quot;/home/home.jsp?isdtp=nv&amp;amp;nonce=98550e27455d02430f838cace20fc2400df6dd520b1aac5c46bc9d5bbfb73922&amp;amp;sfdcIFrameOrigin=https%3A%2F%2Ftelecomcrm--uat.cs53.my.salesforce.com&quot; style=&quot;width: 1366px; height: 461px;&quot; cd_frame_id_=&quot;d93508fcf06b35118ae85a45bd0221f1&quot;&gt;&lt;/iframe&gt; is not clickable at point (97, 256). Other element would receive the click: &lt;span class=&quot;x-menu-item-text&quot; id=&quot;ext-gen99&quot;&gt;...&lt;/span&gt;
+  (Session info: chrome=72.0.3626.96)
+  (Driver info: chromedriver=2.43.600210 (68dcf5eebde37173d4027fa8635e332711d2874a),platform=Windows NT 10.0.17134 x86_64) (WARNING: The server did not provide any stacktrace information)
+Command duration or timeout: 139 milliseconds
+Build info: version: &apos;unknown&apos;, revision: &apos;unknown&apos;, time: &apos;unknown&apos;
+System info: host: &apos;LAPTOP-JB3M8V7H&apos;, ip: &apos;10.112.6.32&apos;, os.name: &apos;Windows 10&apos;, os.arch: &apos;amd64&apos;, os.version: &apos;10.0&apos;, java.version: &apos;1.8.0_141&apos;
+Driver info: org.openqa.selenium.chrome.ChromeDriver
+Capabilities [{mobileEmulationEnabled=false, hasTouchScreen=false, platform=XP, acceptSslCerts=false, goog:chromeOptions={debuggerAddress=localhost:56286}, acceptInsecureCerts=false, webStorageEnabled=true, browserName=chrome, takesScreenshot=true, javascriptEnabled=true, setWindowRect=true, unexpectedAlertBehaviour=, applicationCacheEnabled=false, rotatable=false, networkConnectionEnabled=false, chrome={chromedriverVersion=2.43.600210 (68dcf5eebde37173d4027fa8635e332711d2874a), userDataDir=C:\Users\FLORAN~1\AppData\Local\Temp\scoped_dir26504_28286}, takesHeapSnapshot=true, pageLoadStrategy=normal, databaseEnabled=false, handlesAlerts=true, version=72.0.3626.96, browserConnectionEnabled=false, nativeEvents=true, locationContextEnabled=true, cssSelectorsEnabled=true}]
+Session ID: d91c6dff32a8031634104fc4b1ed54ba
+	at sun.reflect.GeneratedConstructorAccessor65.newInstance(Unknown Source)
+	at sun.reflect.DelegatingConstructorAccessorImpl.newInstance(Unknown Source)
+	at java.lang.reflect.Constructor.newInstance(Unknown Source)
+	at org.openqa.selenium.remote.ErrorHandler.createThrowable(ErrorHandler.java:215)
+	at org.openqa.selenium.remote.ErrorHandler.throwIfResponseFailed(ErrorHandler.java:167)
+	at org.openqa.selenium.remote.RemoteWebDriver.execute(RemoteWebDriver.java:671)
+	at org.openqa.selenium.remote.RemoteWebElement.execute(RemoteWebElement.java:272)
+	at org.openqa.selenium.remote.RemoteWebElement.click(RemoteWebElement.java:82)
+	at Tests.GestionesPerfilOficina.setup(GestionesPerfilOficina.java:136)
+	at sun.reflect.GeneratedMethodAccessor1.invoke(Unknown Source)
+	at sun.reflect.DelegatingMethodAccessorImpl.invoke(Unknown Source)
+	at java.lang.reflect.Method.invoke(Unknown Source)
+	at org.testng.internal.MethodInvocationHelper.invokeMethod(MethodInvocationHelper.java:124)
+	at org.testng.internal.MethodInvocationHelper.invokeMethodConsideringTimeout(MethodInvocationHelper.java:59)
+	at org.testng.internal.Invoker.invokeConfigurationMethod(Invoker.java:458)
+	at org.testng.internal.Invoker.invokeConfigurations(Invoker.java:222)
+	at org.testng.internal.Invoker.invokeMethod(Invoker.java:523)
+	at org.testng.internal.Invoker.invokeTestMethod(Invoker.java:719)
+	at org.testng.internal.Invoker.invokeTestMethods(Invoker.java:989)
+	at org.testng.internal.TestMethodWorker.invokeTestMethods(TestMethodWorker.java:125)
+	at org.testng.internal.TestMethodWorker.run(TestMethodWorker.java:109)
+	at org.testng.TestRunner.privateRun(TestRunner.java:648)
+	at org.testng.TestRunner.run(TestRunner.java:505)
+	at org.testng.SuiteRunner.runTest(SuiteRunner.java:455)
+	at org.testng.SuiteRunner.access$000(SuiteRunner.java:40)
+	at org.testng.SuiteRunner$SuiteWorker.run(SuiteRunner.java:489)
+	at org.testng.internal.thread.ThreadUtil$1.call(ThreadUtil.java:52)
+	at java.util.concurrent.FutureTask.run(Unknown Source)
+	at java.util.concurrent.ThreadPoolExecutor.runWorker(Unknown Source)
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(Unknown Source)
+	at java.lang.Thread.run(Unknown Source)
+</pre></div></td>
+<td>0</td>
+<td>Tests.GestionesPerfilOficina@6c9f5c0d</td></tr>
+<tr>
+<td title='Tests.GestionesPerfilOficina.TS135397_CRM_Movil_REPRO_Renovacion_de_cuota_Presencial_Internet_50_MB_Dia_TC_sin_Credito()'><b>TS135397_CRM_Movil_REPRO_Renovacion_de_cuota_Presencial_Internet_50_MB_Dia_TC_sin_Credito</b><br>Test class: Tests.GestionesPerfilOficina</td>
+<td><div><pre>org.openqa.selenium.WebDriverException: unknown error: Element &lt;iframe id=&quot;ext-comp-1005&quot; name=&quot;ext-comp-1005&quot; frameborder=&quot;0&quot; allow=&quot;camera *; geolocation *; microphone *&quot; src=&quot;/home/home.jsp?isdtp=nv&amp;amp;nonce=98550e27455d02430f838cace20fc2400df6dd520b1aac5c46bc9d5bbfb73922&amp;amp;sfdcIFrameOrigin=https%3A%2F%2Ftelecomcrm--uat.cs53.my.salesforce.com&quot; style=&quot;width: 1366px; height: 461px;&quot; cd_frame_id_=&quot;72a4fae24a416c0885020a652193a976&quot;&gt;&lt;/iframe&gt; is not clickable at point (97, 256). Other element would receive the click: &lt;span class=&quot;x-menu-item-text&quot; id=&quot;ext-gen99&quot;&gt;...&lt;/span&gt;
+  (Session info: chrome=72.0.3626.96)
+  (Driver info: chromedriver=2.43.600210 (68dcf5eebde37173d4027fa8635e332711d2874a),platform=Windows NT 10.0.17134 x86_64) (WARNING: The server did not provide any stacktrace information)
+Command duration or timeout: 93 milliseconds
+Build info: version: &apos;unknown&apos;, revision: &apos;unknown&apos;, time: &apos;unknown&apos;
+System info: host: &apos;LAPTOP-JB3M8V7H&apos;, ip: &apos;10.112.6.32&apos;, os.name: &apos;Windows 10&apos;, os.arch: &apos;amd64&apos;, os.version: &apos;10.0&apos;, java.version: &apos;1.8.0_141&apos;
+Driver info: org.openqa.selenium.chrome.ChromeDriver
+Capabilities [{mobileEmulationEnabled=false, hasTouchScreen=false, platform=XP, acceptSslCerts=false, goog:chromeOptions={debuggerAddress=localhost:56286}, acceptInsecureCerts=false, webStorageEnabled=true, browserName=chrome, takesScreenshot=true, javascriptEnabled=true, setWindowRect=true, unexpectedAlertBehaviour=, applicationCacheEnabled=false, rotatable=false, networkConnectionEnabled=false, chrome={chromedriverVersion=2.43.600210 (68dcf5eebde37173d4027fa8635e332711d2874a), userDataDir=C:\Users\FLORAN~1\AppData\Local\Temp\scoped_dir26504_28286}, takesHeapSnapshot=true, pageLoadStrategy=normal, databaseEnabled=false, handlesAlerts=true, version=72.0.3626.96, browserConnectionEnabled=false, nativeEvents=true, locationContextEnabled=true, cssSelectorsEnabled=true}]
+Session ID: d91c6dff32a8031634104fc4b1ed54ba
+	at org.openqa.selenium.remote.ErrorHandler.createThrowable(ErrorHandler.java:215)
+	at org.openqa.selenium.remote.ErrorHandler.throwIfResponseFailed(ErrorHandler.java:167)
+	at org.openqa.selenium.remote.RemoteWebDriver.execute(RemoteWebDriver.java:671)
+	at org.openqa.selenium.remote.RemoteWebElement.execute(RemoteWebElement.java:272)
+	at org.openqa.selenium.remote.RemoteWebElement.click(RemoteWebElement.java:82)
+	at Tests.GestionesPerfilOficina.setup(GestionesPerfilOficina.java:136)
+	at java.util.concurrent.FutureTask.run(Unknown Source)
+	at java.util.concurrent.ThreadPoolExecutor.runWorker(Unknown Source)
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(Unknown Source)
+	at java.lang.Thread.run(Unknown Source)
+... Removed 21 stack frames</pre></div><a href='#' onClick='toggleBox("stack-trace1844448544", this, "Click to show all stack frames", "Click to hide stack frames")'>Click to show all stack frames</a>
+<div class='stack-trace' id='stack-trace1844448544'><pre>org.openqa.selenium.WebDriverException: unknown error: Element &lt;iframe id=&quot;ext-comp-1005&quot; name=&quot;ext-comp-1005&quot; frameborder=&quot;0&quot; allow=&quot;camera *; geolocation *; microphone *&quot; src=&quot;/home/home.jsp?isdtp=nv&amp;amp;nonce=98550e27455d02430f838cace20fc2400df6dd520b1aac5c46bc9d5bbfb73922&amp;amp;sfdcIFrameOrigin=https%3A%2F%2Ftelecomcrm--uat.cs53.my.salesforce.com&quot; style=&quot;width: 1366px; height: 461px;&quot; cd_frame_id_=&quot;72a4fae24a416c0885020a652193a976&quot;&gt;&lt;/iframe&gt; is not clickable at point (97, 256). Other element would receive the click: &lt;span class=&quot;x-menu-item-text&quot; id=&quot;ext-gen99&quot;&gt;...&lt;/span&gt;
+  (Session info: chrome=72.0.3626.96)
+  (Driver info: chromedriver=2.43.600210 (68dcf5eebde37173d4027fa8635e332711d2874a),platform=Windows NT 10.0.17134 x86_64) (WARNING: The server did not provide any stacktrace information)
+Command duration or timeout: 93 milliseconds
+Build info: version: &apos;unknown&apos;, revision: &apos;unknown&apos;, time: &apos;unknown&apos;
+System info: host: &apos;LAPTOP-JB3M8V7H&apos;, ip: &apos;10.112.6.32&apos;, os.name: &apos;Windows 10&apos;, os.arch: &apos;amd64&apos;, os.version: &apos;10.0&apos;, java.version: &apos;1.8.0_141&apos;
+Driver info: org.openqa.selenium.chrome.ChromeDriver
+Capabilities [{mobileEmulationEnabled=false, hasTouchScreen=false, platform=XP, acceptSslCerts=false, goog:chromeOptions={debuggerAddress=localhost:56286}, acceptInsecureCerts=false, webStorageEnabled=true, browserName=chrome, takesScreenshot=true, javascriptEnabled=true, setWindowRect=true, unexpectedAlertBehaviour=, applicationCacheEnabled=false, rotatable=false, networkConnectionEnabled=false, chrome={chromedriverVersion=2.43.600210 (68dcf5eebde37173d4027fa8635e332711d2874a), userDataDir=C:\Users\FLORAN~1\AppData\Local\Temp\scoped_dir26504_28286}, takesHeapSnapshot=true, pageLoadStrategy=normal, databaseEnabled=false, handlesAlerts=true, version=72.0.3626.96, browserConnectionEnabled=false, nativeEvents=true, locationContextEnabled=true, cssSelectorsEnabled=true}]
+Session ID: d91c6dff32a8031634104fc4b1ed54ba
+	at sun.reflect.GeneratedConstructorAccessor65.newInstance(Unknown Source)
+	at sun.reflect.DelegatingConstructorAccessorImpl.newInstance(Unknown Source)
+	at java.lang.reflect.Constructor.newInstance(Unknown Source)
+	at org.openqa.selenium.remote.ErrorHandler.createThrowable(ErrorHandler.java:215)
+	at org.openqa.selenium.remote.ErrorHandler.throwIfResponseFailed(ErrorHandler.java:167)
+	at org.openqa.selenium.remote.RemoteWebDriver.execute(RemoteWebDriver.java:671)
+	at org.openqa.selenium.remote.RemoteWebElement.execute(RemoteWebElement.java:272)
+	at org.openqa.selenium.remote.RemoteWebElement.click(RemoteWebElement.java:82)
+	at Tests.GestionesPerfilOficina.setup(GestionesPerfilOficina.java:136)
+	at sun.reflect.GeneratedMethodAccessor1.invoke(Unknown Source)
+	at sun.reflect.DelegatingMethodAccessorImpl.invoke(Unknown Source)
+	at java.lang.reflect.Method.invoke(Unknown Source)
+	at org.testng.internal.MethodInvocationHelper.invokeMethod(MethodInvocationHelper.java:124)
+	at org.testng.internal.MethodInvocationHelper.invokeMethodConsideringTimeout(MethodInvocationHelper.java:59)
+	at org.testng.internal.Invoker.invokeConfigurationMethod(Invoker.java:458)
+	at org.testng.internal.Invoker.invokeConfigurations(Invoker.java:222)
+	at org.testng.internal.Invoker.invokeMethod(Invoker.java:523)
+	at org.testng.internal.Invoker.invokeTestMethod(Invoker.java:719)
+	at org.testng.internal.Invoker.invokeTestMethods(Invoker.java:989)
+	at org.testng.internal.TestMethodWorker.invokeTestMethods(TestMethodWorker.java:125)
+	at org.testng.internal.TestMethodWorker.run(TestMethodWorker.java:109)
+	at org.testng.TestRunner.privateRun(TestRunner.java:648)
+	at org.testng.TestRunner.run(TestRunner.java:505)
+	at org.testng.SuiteRunner.runTest(SuiteRunner.java:455)
+	at org.testng.SuiteRunner.access$000(SuiteRunner.java:40)
+	at org.testng.SuiteRunner$SuiteWorker.run(SuiteRunner.java:489)
+	at org.testng.internal.thread.ThreadUtil$1.call(ThreadUtil.java:52)
+	at java.util.concurrent.FutureTask.run(Unknown Source)
+	at java.util.concurrent.ThreadPoolExecutor.runWorker(Unknown Source)
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(Unknown Source)
+	at java.lang.Thread.run(Unknown Source)
+</pre></div></td>
+<td>0</td>
+<td>Tests.GestionesPerfilOficina@6c9f5c0d</td></tr>
+<tr>
+<td title='Tests.GestionesPerfilTelefonico.TS135399_CRM_Movil_REPRO_Renovacion_de_cuota_Telefonico_Internet_50_MB_Dia_TC_con_Credito()'><b>TS135399_CRM_Movil_REPRO_Renovacion_de_cuota_Telefonico_Internet_50_MB_Dia_TC_con_Credito</b><br>Test class: Tests.GestionesPerfilTelefonico</td>
+<td><div><pre>org.openqa.selenium.WebDriverException: unknown error: Element &lt;iframe id=&quot;ext-comp-1005&quot; name=&quot;ext-comp-1005&quot; frameborder=&quot;0&quot; allow=&quot;camera *; geolocation *; microphone *&quot; src=&quot;/home/home.jsp?isdtp=nv&amp;amp;nonce=3931cbc33cdf32d11aa8c3852426d77e46a657373135ce1bd9b687d0587f0943&amp;amp;sfdcIFrameOrigin=https%3A%2F%2Ftelecomcrm--uat.cs53.my.salesforce.com&quot; style=&quot;width: 1366px; height: 461px;&quot; cd_frame_id_=&quot;e80df8eecee1d6fd7a71b6270a5b19f8&quot;&gt;&lt;/iframe&gt; is not clickable at point (97, 256). Other element would receive the click: &lt;a id=&quot;nav-tab-4&quot; class=&quot;x-menu-item assetMru standardObject sd-nav-menu-item&quot; hidefocus=&quot;true&quot; unselectable=&quot;on&quot; href=&quot;#&quot;&gt;...&lt;/a&gt;
+  (Session info: chrome=72.0.3626.96)
+  (Driver info: chromedriver=2.43.600210 (68dcf5eebde37173d4027fa8635e332711d2874a),platform=Windows NT 10.0.17134 x86_64) (WARNING: The server did not provide any stacktrace information)
+Command duration or timeout: 174 milliseconds
+Build info: version: &apos;unknown&apos;, revision: &apos;unknown&apos;, time: &apos;unknown&apos;
+System info: host: &apos;LAPTOP-JB3M8V7H&apos;, ip: &apos;10.112.6.32&apos;, os.name: &apos;Windows 10&apos;, os.arch: &apos;amd64&apos;, os.version: &apos;10.0&apos;, java.version: &apos;1.8.0_141&apos;
+Driver info: org.openqa.selenium.chrome.ChromeDriver
+Capabilities [{mobileEmulationEnabled=false, hasTouchScreen=false, platform=XP, acceptSslCerts=false, goog:chromeOptions={debuggerAddress=localhost:56999}, acceptInsecureCerts=false, webStorageEnabled=true, browserName=chrome, takesScreenshot=true, javascriptEnabled=true, setWindowRect=true, unexpectedAlertBehaviour=, applicationCacheEnabled=false, rotatable=false, networkConnectionEnabled=false, chrome={chromedriverVersion=2.43.600210 (68dcf5eebde37173d4027fa8635e332711d2874a), userDataDir=C:\Users\FLORAN~1\AppData\Local\Temp\scoped_dir26424_25692}, takesHeapSnapshot=true, pageLoadStrategy=normal, databaseEnabled=false, handlesAlerts=true, version=72.0.3626.96, browserConnectionEnabled=false, nativeEvents=true, locationContextEnabled=true, cssSelectorsEnabled=true}]
+Session ID: a03871ae7a2498bc03af8fcddce61b92
+	at org.openqa.selenium.remote.ErrorHandler.createThrowable(ErrorHandler.java:215)
+	at org.openqa.selenium.remote.ErrorHandler.throwIfResponseFailed(ErrorHandler.java:167)
+	at org.openqa.selenium.remote.RemoteWebDriver.execute(RemoteWebDriver.java:671)
+	at org.openqa.selenium.remote.RemoteWebElement.execute(RemoteWebElement.java:272)
+	at org.openqa.selenium.remote.RemoteWebElement.click(RemoteWebElement.java:82)
+	at Tests.GestionesPerfilTelefonico.setup(GestionesPerfilTelefonico.java:115)
+	at java.util.concurrent.FutureTask.run(Unknown Source)
+	at java.util.concurrent.ThreadPoolExecutor.runWorker(Unknown Source)
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(Unknown Source)
+	at java.lang.Thread.run(Unknown Source)
+... Removed 21 stack frames</pre></div><a href='#' onClick='toggleBox("stack-trace1239340536", this, "Click to show all stack frames", "Click to hide stack frames")'>Click to show all stack frames</a>
+<div class='stack-trace' id='stack-trace1239340536'><pre>org.openqa.selenium.WebDriverException: unknown error: Element &lt;iframe id=&quot;ext-comp-1005&quot; name=&quot;ext-comp-1005&quot; frameborder=&quot;0&quot; allow=&quot;camera *; geolocation *; microphone *&quot; src=&quot;/home/home.jsp?isdtp=nv&amp;amp;nonce=3931cbc33cdf32d11aa8c3852426d77e46a657373135ce1bd9b687d0587f0943&amp;amp;sfdcIFrameOrigin=https%3A%2F%2Ftelecomcrm--uat.cs53.my.salesforce.com&quot; style=&quot;width: 1366px; height: 461px;&quot; cd_frame_id_=&quot;e80df8eecee1d6fd7a71b6270a5b19f8&quot;&gt;&lt;/iframe&gt; is not clickable at point (97, 256). Other element would receive the click: &lt;a id=&quot;nav-tab-4&quot; class=&quot;x-menu-item assetMru standardObject sd-nav-menu-item&quot; hidefocus=&quot;true&quot; unselectable=&quot;on&quot; href=&quot;#&quot;&gt;...&lt;/a&gt;
+  (Session info: chrome=72.0.3626.96)
+  (Driver info: chromedriver=2.43.600210 (68dcf5eebde37173d4027fa8635e332711d2874a),platform=Windows NT 10.0.17134 x86_64) (WARNING: The server did not provide any stacktrace information)
+Command duration or timeout: 174 milliseconds
+Build info: version: &apos;unknown&apos;, revision: &apos;unknown&apos;, time: &apos;unknown&apos;
+System info: host: &apos;LAPTOP-JB3M8V7H&apos;, ip: &apos;10.112.6.32&apos;, os.name: &apos;Windows 10&apos;, os.arch: &apos;amd64&apos;, os.version: &apos;10.0&apos;, java.version: &apos;1.8.0_141&apos;
+Driver info: org.openqa.selenium.chrome.ChromeDriver
+Capabilities [{mobileEmulationEnabled=false, hasTouchScreen=false, platform=XP, acceptSslCerts=false, goog:chromeOptions={debuggerAddress=localhost:56999}, acceptInsecureCerts=false, webStorageEnabled=true, browserName=chrome, takesScreenshot=true, javascriptEnabled=true, setWindowRect=true, unexpectedAlertBehaviour=, applicationCacheEnabled=false, rotatable=false, networkConnectionEnabled=false, chrome={chromedriverVersion=2.43.600210 (68dcf5eebde37173d4027fa8635e332711d2874a), userDataDir=C:\Users\FLORAN~1\AppData\Local\Temp\scoped_dir26424_25692}, takesHeapSnapshot=true, pageLoadStrategy=normal, databaseEnabled=false, handlesAlerts=true, version=72.0.3626.96, browserConnectionEnabled=false, nativeEvents=true, locationContextEnabled=true, cssSelectorsEnabled=true}]
+Session ID: a03871ae7a2498bc03af8fcddce61b92
+	at sun.reflect.GeneratedConstructorAccessor65.newInstance(Unknown Source)
+	at sun.reflect.DelegatingConstructorAccessorImpl.newInstance(Unknown Source)
+	at java.lang.reflect.Constructor.newInstance(Unknown Source)
+	at org.openqa.selenium.remote.ErrorHandler.createThrowable(ErrorHandler.java:215)
+	at org.openqa.selenium.remote.ErrorHandler.throwIfResponseFailed(ErrorHandler.java:167)
+	at org.openqa.selenium.remote.RemoteWebDriver.execute(RemoteWebDriver.java:671)
+	at org.openqa.selenium.remote.RemoteWebElement.execute(RemoteWebElement.java:272)
+	at org.openqa.selenium.remote.RemoteWebElement.click(RemoteWebElement.java:82)
+	at Tests.GestionesPerfilTelefonico.setup(GestionesPerfilTelefonico.java:115)
+	at sun.reflect.GeneratedMethodAccessor8.invoke(Unknown Source)
+	at sun.reflect.DelegatingMethodAccessorImpl.invoke(Unknown Source)
+	at java.lang.reflect.Method.invoke(Unknown Source)
+	at org.testng.internal.MethodInvocationHelper.invokeMethod(MethodInvocationHelper.java:124)
+	at org.testng.internal.MethodInvocationHelper.invokeMethodConsideringTimeout(MethodInvocationHelper.java:59)
+	at org.testng.internal.Invoker.invokeConfigurationMethod(Invoker.java:458)
+	at org.testng.internal.Invoker.invokeConfigurations(Invoker.java:222)
+	at org.testng.internal.Invoker.invokeMethod(Invoker.java:523)
+	at org.testng.internal.Invoker.invokeTestMethod(Invoker.java:719)
+	at org.testng.internal.Invoker.invokeTestMethods(Invoker.java:989)
+	at org.testng.internal.TestMethodWorker.invokeTestMethods(TestMethodWorker.java:125)
+	at org.testng.internal.TestMethodWorker.run(TestMethodWorker.java:109)
+	at org.testng.TestRunner.privateRun(TestRunner.java:648)
+	at org.testng.TestRunner.run(TestRunner.java:505)
+	at org.testng.SuiteRunner.runTest(SuiteRunner.java:455)
+	at org.testng.SuiteRunner.access$000(SuiteRunner.java:40)
+	at org.testng.SuiteRunner$SuiteWorker.run(SuiteRunner.java:489)
+	at org.testng.internal.thread.ThreadUtil$1.call(ThreadUtil.java:52)
+	at java.util.concurrent.FutureTask.run(Unknown Source)
+	at java.util.concurrent.ThreadPoolExecutor.runWorker(Unknown Source)
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(Unknown Source)
+	at java.lang.Thread.run(Unknown Source)
+</pre></div></td>
+<td>0</td>
+<td>Tests.GestionesPerfilTelefonico@76b10754</td></tr>
+<tr>
+<td title='Tests.GestionesPerfilTelefonico.TS135400_CRM_Movil_REPRO_Renovacion_de_cuota_Telefonico_Internet_50_MB_Dia_TC_sin_Credito()'><b>TS135400_CRM_Movil_REPRO_Renovacion_de_cuota_Telefonico_Internet_50_MB_Dia_TC_sin_Credito</b><br>Test class: Tests.GestionesPerfilTelefonico</td>
+<td><div><pre>org.openqa.selenium.WebDriverException: unknown error: Element &lt;iframe id=&quot;ext-comp-1005&quot; name=&quot;ext-comp-1005&quot; frameborder=&quot;0&quot; allow=&quot;camera *; geolocation *; microphone *&quot; src=&quot;/home/home.jsp?isdtp=nv&amp;amp;nonce=3931cbc33cdf32d11aa8c3852426d77e46a657373135ce1bd9b687d0587f0943&amp;amp;sfdcIFrameOrigin=https%3A%2F%2Ftelecomcrm--uat.cs53.my.salesforce.com&quot; style=&quot;width: 1366px; height: 461px;&quot; cd_frame_id_=&quot;47edcbe0c1114712eff245bf09f34833&quot;&gt;&lt;/iframe&gt; is not clickable at point (97, 256). Other element would receive the click: &lt;a id=&quot;nav-tab-4&quot; class=&quot;x-menu-item assetMru standardObject sd-nav-menu-item&quot; hidefocus=&quot;true&quot; unselectable=&quot;on&quot; href=&quot;#&quot;&gt;...&lt;/a&gt;
+  (Session info: chrome=72.0.3626.96)
+  (Driver info: chromedriver=2.43.600210 (68dcf5eebde37173d4027fa8635e332711d2874a),platform=Windows NT 10.0.17134 x86_64) (WARNING: The server did not provide any stacktrace information)
+Command duration or timeout: 129 milliseconds
+Build info: version: &apos;unknown&apos;, revision: &apos;unknown&apos;, time: &apos;unknown&apos;
+System info: host: &apos;LAPTOP-JB3M8V7H&apos;, ip: &apos;10.112.6.32&apos;, os.name: &apos;Windows 10&apos;, os.arch: &apos;amd64&apos;, os.version: &apos;10.0&apos;, java.version: &apos;1.8.0_141&apos;
+Driver info: org.openqa.selenium.chrome.ChromeDriver
+Capabilities [{mobileEmulationEnabled=false, hasTouchScreen=false, platform=XP, acceptSslCerts=false, goog:chromeOptions={debuggerAddress=localhost:56999}, acceptInsecureCerts=false, webStorageEnabled=true, browserName=chrome, takesScreenshot=true, javascriptEnabled=true, setWindowRect=true, unexpectedAlertBehaviour=, applicationCacheEnabled=false, rotatable=false, networkConnectionEnabled=false, chrome={chromedriverVersion=2.43.600210 (68dcf5eebde37173d4027fa8635e332711d2874a), userDataDir=C:\Users\FLORAN~1\AppData\Local\Temp\scoped_dir26424_25692}, takesHeapSnapshot=true, pageLoadStrategy=normal, databaseEnabled=false, handlesAlerts=true, version=72.0.3626.96, browserConnectionEnabled=false, nativeEvents=true, locationContextEnabled=true, cssSelectorsEnabled=true}]
+Session ID: a03871ae7a2498bc03af8fcddce61b92
+	at org.openqa.selenium.remote.ErrorHandler.createThrowable(ErrorHandler.java:215)
+	at org.openqa.selenium.remote.ErrorHandler.throwIfResponseFailed(ErrorHandler.java:167)
+	at org.openqa.selenium.remote.RemoteWebDriver.execute(RemoteWebDriver.java:671)
+	at org.openqa.selenium.remote.RemoteWebElement.execute(RemoteWebElement.java:272)
+	at org.openqa.selenium.remote.RemoteWebElement.click(RemoteWebElement.java:82)
+	at Tests.GestionesPerfilTelefonico.setup(GestionesPerfilTelefonico.java:115)
+	at java.util.concurrent.FutureTask.run(Unknown Source)
+	at java.util.concurrent.ThreadPoolExecutor.runWorker(Unknown Source)
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(Unknown Source)
+	at java.lang.Thread.run(Unknown Source)
+... Removed 21 stack frames</pre></div><a href='#' onClick='toggleBox("stack-trace2046242227", this, "Click to show all stack frames", "Click to hide stack frames")'>Click to show all stack frames</a>
+<div class='stack-trace' id='stack-trace2046242227'><pre>org.openqa.selenium.WebDriverException: unknown error: Element &lt;iframe id=&quot;ext-comp-1005&quot; name=&quot;ext-comp-1005&quot; frameborder=&quot;0&quot; allow=&quot;camera *; geolocation *; microphone *&quot; src=&quot;/home/home.jsp?isdtp=nv&amp;amp;nonce=3931cbc33cdf32d11aa8c3852426d77e46a657373135ce1bd9b687d0587f0943&amp;amp;sfdcIFrameOrigin=https%3A%2F%2Ftelecomcrm--uat.cs53.my.salesforce.com&quot; style=&quot;width: 1366px; height: 461px;&quot; cd_frame_id_=&quot;47edcbe0c1114712eff245bf09f34833&quot;&gt;&lt;/iframe&gt; is not clickable at point (97, 256). Other element would receive the click: &lt;a id=&quot;nav-tab-4&quot; class=&quot;x-menu-item assetMru standardObject sd-nav-menu-item&quot; hidefocus=&quot;true&quot; unselectable=&quot;on&quot; href=&quot;#&quot;&gt;...&lt;/a&gt;
+  (Session info: chrome=72.0.3626.96)
+  (Driver info: chromedriver=2.43.600210 (68dcf5eebde37173d4027fa8635e332711d2874a),platform=Windows NT 10.0.17134 x86_64) (WARNING: The server did not provide any stacktrace information)
+Command duration or timeout: 129 milliseconds
+Build info: version: &apos;unknown&apos;, revision: &apos;unknown&apos;, time: &apos;unknown&apos;
+System info: host: &apos;LAPTOP-JB3M8V7H&apos;, ip: &apos;10.112.6.32&apos;, os.name: &apos;Windows 10&apos;, os.arch: &apos;amd64&apos;, os.version: &apos;10.0&apos;, java.version: &apos;1.8.0_141&apos;
+Driver info: org.openqa.selenium.chrome.ChromeDriver
+Capabilities [{mobileEmulationEnabled=false, hasTouchScreen=false, platform=XP, acceptSslCerts=false, goog:chromeOptions={debuggerAddress=localhost:56999}, acceptInsecureCerts=false, webStorageEnabled=true, browserName=chrome, takesScreenshot=true, javascriptEnabled=true, setWindowRect=true, unexpectedAlertBehaviour=, applicationCacheEnabled=false, rotatable=false, networkConnectionEnabled=false, chrome={chromedriverVersion=2.43.600210 (68dcf5eebde37173d4027fa8635e332711d2874a), userDataDir=C:\Users\FLORAN~1\AppData\Local\Temp\scoped_dir26424_25692}, takesHeapSnapshot=true, pageLoadStrategy=normal, databaseEnabled=false, handlesAlerts=true, version=72.0.3626.96, browserConnectionEnabled=false, nativeEvents=true, locationContextEnabled=true, cssSelectorsEnabled=true}]
+Session ID: a03871ae7a2498bc03af8fcddce61b92
+	at sun.reflect.GeneratedConstructorAccessor65.newInstance(Unknown Source)
+	at sun.reflect.DelegatingConstructorAccessorImpl.newInstance(Unknown Source)
+	at java.lang.reflect.Constructor.newInstance(Unknown Source)
+	at org.openqa.selenium.remote.ErrorHandler.createThrowable(ErrorHandler.java:215)
+	at org.openqa.selenium.remote.ErrorHandler.throwIfResponseFailed(ErrorHandler.java:167)
+	at org.openqa.selenium.remote.RemoteWebDriver.execute(RemoteWebDriver.java:671)
+	at org.openqa.selenium.remote.RemoteWebElement.execute(RemoteWebElement.java:272)
+	at org.openqa.selenium.remote.RemoteWebElement.click(RemoteWebElement.java:82)
+	at Tests.GestionesPerfilTelefonico.setup(GestionesPerfilTelefonico.java:115)
+	at sun.reflect.GeneratedMethodAccessor8.invoke(Unknown Source)
+	at sun.reflect.DelegatingMethodAccessorImpl.invoke(Unknown Source)
+	at java.lang.reflect.Method.invoke(Unknown Source)
+	at org.testng.internal.MethodInvocationHelper.invokeMethod(MethodInvocationHelper.java:124)
+	at org.testng.internal.MethodInvocationHelper.invokeMethodConsideringTimeout(MethodInvocationHelper.java:59)
+	at org.testng.internal.Invoker.invokeConfigurationMethod(Invoker.java:458)
+	at org.testng.internal.Invoker.invokeConfigurations(Invoker.java:222)
+	at org.testng.internal.Invoker.invokeMethod(Invoker.java:523)
+	at org.testng.internal.Invoker.invokeTestMethod(Invoker.java:719)
+	at org.testng.internal.Invoker.invokeTestMethods(Invoker.java:989)
+	at org.testng.internal.TestMethodWorker.invokeTestMethods(TestMethodWorker.java:125)
+	at org.testng.internal.TestMethodWorker.run(TestMethodWorker.java:109)
+	at org.testng.TestRunner.privateRun(TestRunner.java:648)
+	at org.testng.TestRunner.run(TestRunner.java:505)
+	at org.testng.SuiteRunner.runTest(SuiteRunner.java:455)
+	at org.testng.SuiteRunner.access$000(SuiteRunner.java:40)
+	at org.testng.SuiteRunner$SuiteWorker.run(SuiteRunner.java:489)
+	at org.testng.internal.thread.ThreadUtil$1.call(ThreadUtil.java:52)
+	at java.util.concurrent.FutureTask.run(Unknown Source)
+	at java.util.concurrent.ThreadPoolExecutor.runWorker(Unknown Source)
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(Unknown Source)
+	at java.lang.Thread.run(Unknown Source)
+</pre></div></td>
+<td>0</td>
+<td>Tests.GestionesPerfilTelefonico@76b10754</td></tr>
+<tr>
+<td title='Tests.GestionesPerfilTelefonico.TS135401_CRM_Movil_REPRO_Renovacion_de_cuota_Telefonico_Internet_50_MB_Dia_Descuento_de_saldo_con_Credito()'><b>TS135401_CRM_Movil_REPRO_Renovacion_de_cuota_Telefonico_Internet_50_MB_Dia_Descuento_de_saldo_con_Credito</b><br>Test class: Tests.GestionesPerfilTelefonico</td>
+<td><div><pre>org.openqa.selenium.WebDriverException: unknown error: Element &lt;iframe id=&quot;ext-comp-1005&quot; name=&quot;ext-comp-1005&quot; frameborder=&quot;0&quot; allow=&quot;camera *; geolocation *; microphone *&quot; src=&quot;/home/home.jsp?isdtp=nv&amp;amp;nonce=3931cbc33cdf32d11aa8c3852426d77e46a657373135ce1bd9b687d0587f0943&amp;amp;sfdcIFrameOrigin=https%3A%2F%2Ftelecomcrm--uat.cs53.my.salesforce.com&quot; style=&quot;width: 1366px; height: 461px;&quot; cd_frame_id_=&quot;47edcbe0c1114712eff245bf09f34833&quot;&gt;&lt;/iframe&gt; is not clickable at point (97, 256). Other element would receive the click: &lt;a id=&quot;nav-tab-4&quot; class=&quot;x-menu-item assetMru standardObject sd-nav-menu-item&quot; hidefocus=&quot;true&quot; unselectable=&quot;on&quot; href=&quot;#&quot;&gt;...&lt;/a&gt;
+  (Session info: chrome=72.0.3626.96)
+  (Driver info: chromedriver=2.43.600210 (68dcf5eebde37173d4027fa8635e332711d2874a),platform=Windows NT 10.0.17134 x86_64) (WARNING: The server did not provide any stacktrace information)
+Command duration or timeout: 129 milliseconds
+Build info: version: &apos;unknown&apos;, revision: &apos;unknown&apos;, time: &apos;unknown&apos;
+System info: host: &apos;LAPTOP-JB3M8V7H&apos;, ip: &apos;10.112.6.32&apos;, os.name: &apos;Windows 10&apos;, os.arch: &apos;amd64&apos;, os.version: &apos;10.0&apos;, java.version: &apos;1.8.0_141&apos;
+Driver info: org.openqa.selenium.chrome.ChromeDriver
+Capabilities [{mobileEmulationEnabled=false, hasTouchScreen=false, platform=XP, acceptSslCerts=false, goog:chromeOptions={debuggerAddress=localhost:56999}, acceptInsecureCerts=false, webStorageEnabled=true, browserName=chrome, takesScreenshot=true, javascriptEnabled=true, setWindowRect=true, unexpectedAlertBehaviour=, applicationCacheEnabled=false, rotatable=false, networkConnectionEnabled=false, chrome={chromedriverVersion=2.43.600210 (68dcf5eebde37173d4027fa8635e332711d2874a), userDataDir=C:\Users\FLORAN~1\AppData\Local\Temp\scoped_dir26424_25692}, takesHeapSnapshot=true, pageLoadStrategy=normal, databaseEnabled=false, handlesAlerts=true, version=72.0.3626.96, browserConnectionEnabled=false, nativeEvents=true, locationContextEnabled=true, cssSelectorsEnabled=true}]
+Session ID: a03871ae7a2498bc03af8fcddce61b92
+	at org.openqa.selenium.remote.ErrorHandler.createThrowable(ErrorHandler.java:215)
+	at org.openqa.selenium.remote.ErrorHandler.throwIfResponseFailed(ErrorHandler.java:167)
+	at org.openqa.selenium.remote.RemoteWebDriver.execute(RemoteWebDriver.java:671)
+	at org.openqa.selenium.remote.RemoteWebElement.execute(RemoteWebElement.java:272)
+	at org.openqa.selenium.remote.RemoteWebElement.click(RemoteWebElement.java:82)
+	at Tests.GestionesPerfilTelefonico.setup(GestionesPerfilTelefonico.java:115)
+	at java.util.concurrent.FutureTask.run(Unknown Source)
+	at java.util.concurrent.ThreadPoolExecutor.runWorker(Unknown Source)
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(Unknown Source)
+	at java.lang.Thread.run(Unknown Source)
+... Removed 21 stack frames</pre></div><a href='#' onClick='toggleBox("stack-trace1617874155", this, "Click to show all stack frames", "Click to hide stack frames")'>Click to show all stack frames</a>
+<div class='stack-trace' id='stack-trace1617874155'><pre>org.openqa.selenium.WebDriverException: unknown error: Element &lt;iframe id=&quot;ext-comp-1005&quot; name=&quot;ext-comp-1005&quot; frameborder=&quot;0&quot; allow=&quot;camera *; geolocation *; microphone *&quot; src=&quot;/home/home.jsp?isdtp=nv&amp;amp;nonce=3931cbc33cdf32d11aa8c3852426d77e46a657373135ce1bd9b687d0587f0943&amp;amp;sfdcIFrameOrigin=https%3A%2F%2Ftelecomcrm--uat.cs53.my.salesforce.com&quot; style=&quot;width: 1366px; height: 461px;&quot; cd_frame_id_=&quot;47edcbe0c1114712eff245bf09f34833&quot;&gt;&lt;/iframe&gt; is not clickable at point (97, 256). Other element would receive the click: &lt;a id=&quot;nav-tab-4&quot; class=&quot;x-menu-item assetMru standardObject sd-nav-menu-item&quot; hidefocus=&quot;true&quot; unselectable=&quot;on&quot; href=&quot;#&quot;&gt;...&lt;/a&gt;
+  (Session info: chrome=72.0.3626.96)
+  (Driver info: chromedriver=2.43.600210 (68dcf5eebde37173d4027fa8635e332711d2874a),platform=Windows NT 10.0.17134 x86_64) (WARNING: The server did not provide any stacktrace information)
+Command duration or timeout: 129 milliseconds
+Build info: version: &apos;unknown&apos;, revision: &apos;unknown&apos;, time: &apos;unknown&apos;
+System info: host: &apos;LAPTOP-JB3M8V7H&apos;, ip: &apos;10.112.6.32&apos;, os.name: &apos;Windows 10&apos;, os.arch: &apos;amd64&apos;, os.version: &apos;10.0&apos;, java.version: &apos;1.8.0_141&apos;
+Driver info: org.openqa.selenium.chrome.ChromeDriver
+Capabilities [{mobileEmulationEnabled=false, hasTouchScreen=false, platform=XP, acceptSslCerts=false, goog:chromeOptions={debuggerAddress=localhost:56999}, acceptInsecureCerts=false, webStorageEnabled=true, browserName=chrome, takesScreenshot=true, javascriptEnabled=true, setWindowRect=true, unexpectedAlertBehaviour=, applicationCacheEnabled=false, rotatable=false, networkConnectionEnabled=false, chrome={chromedriverVersion=2.43.600210 (68dcf5eebde37173d4027fa8635e332711d2874a), userDataDir=C:\Users\FLORAN~1\AppData\Local\Temp\scoped_dir26424_25692}, takesHeapSnapshot=true, pageLoadStrategy=normal, databaseEnabled=false, handlesAlerts=true, version=72.0.3626.96, browserConnectionEnabled=false, nativeEvents=true, locationContextEnabled=true, cssSelectorsEnabled=true}]
+Session ID: a03871ae7a2498bc03af8fcddce61b92
+	at sun.reflect.GeneratedConstructorAccessor65.newInstance(Unknown Source)
+	at sun.reflect.DelegatingConstructorAccessorImpl.newInstance(Unknown Source)
+	at java.lang.reflect.Constructor.newInstance(Unknown Source)
+	at org.openqa.selenium.remote.ErrorHandler.createThrowable(ErrorHandler.java:215)
+	at org.openqa.selenium.remote.ErrorHandler.throwIfResponseFailed(ErrorHandler.java:167)
+	at org.openqa.selenium.remote.RemoteWebDriver.execute(RemoteWebDriver.java:671)
+	at org.openqa.selenium.remote.RemoteWebElement.execute(RemoteWebElement.java:272)
+	at org.openqa.selenium.remote.RemoteWebElement.click(RemoteWebElement.java:82)
+	at Tests.GestionesPerfilTelefonico.setup(GestionesPerfilTelefonico.java:115)
+	at sun.reflect.GeneratedMethodAccessor8.invoke(Unknown Source)
+	at sun.reflect.DelegatingMethodAccessorImpl.invoke(Unknown Source)
+	at java.lang.reflect.Method.invoke(Unknown Source)
+	at org.testng.internal.MethodInvocationHelper.invokeMethod(MethodInvocationHelper.java:124)
+	at org.testng.internal.MethodInvocationHelper.invokeMethodConsideringTimeout(MethodInvocationHelper.java:59)
+	at org.testng.internal.Invoker.invokeConfigurationMethod(Invoker.java:458)
+	at org.testng.internal.Invoker.invokeConfigurations(Invoker.java:222)
+	at org.testng.internal.Invoker.invokeMethod(Invoker.java:523)
+	at org.testng.internal.Invoker.invokeTestMethod(Invoker.java:719)
+	at org.testng.internal.Invoker.invokeTestMethods(Invoker.java:989)
+	at org.testng.internal.TestMethodWorker.invokeTestMethods(TestMethodWorker.java:125)
+	at org.testng.internal.TestMethodWorker.run(TestMethodWorker.java:109)
+	at org.testng.TestRunner.privateRun(TestRunner.java:648)
+	at org.testng.TestRunner.run(TestRunner.java:505)
+	at org.testng.SuiteRunner.runTest(SuiteRunner.java:455)
+	at org.testng.SuiteRunner.access$000(SuiteRunner.java:40)
+	at org.testng.SuiteRunner$SuiteWorker.run(SuiteRunner.java:489)
+	at org.testng.internal.thread.ThreadUtil$1.call(ThreadUtil.java:52)
+	at java.util.concurrent.FutureTask.run(Unknown Source)
+	at java.util.concurrent.ThreadPoolExecutor.runWorker(Unknown Source)
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(Unknown Source)
+	at java.lang.Thread.run(Unknown Source)
+</pre></div></td>
+<td>0</td>
+<td>Tests.GestionesPerfilTelefonico@76b10754</td></tr>
+<tr>
+<td title='Tests.GestionesPerfilTelefonico.TS135407_CRM_Movil_REPRO_Renovacion_de_cuota_Telefonico_Rastreo_Internet_por_Dia_Limitrofe_TC_con_Credito()'><b>TS135407_CRM_Movil_REPRO_Renovacion_de_cuota_Telefonico_Rastreo_Internet_por_Dia_Limitrofe_TC_con_Credito</b><br>Test class: Tests.GestionesPerfilTelefonico</td>
+<td><div><pre>org.openqa.selenium.WebDriverException: unknown error: Element &lt;iframe id=&quot;ext-comp-1005&quot; name=&quot;ext-comp-1005&quot; frameborder=&quot;0&quot; allow=&quot;camera *; geolocation *; microphone *&quot; src=&quot;/home/home.jsp?isdtp=nv&amp;amp;nonce=3931cbc33cdf32d11aa8c3852426d77e46a657373135ce1bd9b687d0587f0943&amp;amp;sfdcIFrameOrigin=https%3A%2F%2Ftelecomcrm--uat.cs53.my.salesforce.com&quot; style=&quot;width: 1366px; height: 461px;&quot; cd_frame_id_=&quot;47edcbe0c1114712eff245bf09f34833&quot;&gt;&lt;/iframe&gt; is not clickable at point (97, 256). Other element would receive the click: &lt;a id=&quot;nav-tab-4&quot; class=&quot;x-menu-item assetMru standardObject sd-nav-menu-item&quot; hidefocus=&quot;true&quot; unselectable=&quot;on&quot; href=&quot;#&quot;&gt;...&lt;/a&gt;
+  (Session info: chrome=72.0.3626.96)
+  (Driver info: chromedriver=2.43.600210 (68dcf5eebde37173d4027fa8635e332711d2874a),platform=Windows NT 10.0.17134 x86_64) (WARNING: The server did not provide any stacktrace information)
+Command duration or timeout: 129 milliseconds
+Build info: version: &apos;unknown&apos;, revision: &apos;unknown&apos;, time: &apos;unknown&apos;
+System info: host: &apos;LAPTOP-JB3M8V7H&apos;, ip: &apos;10.112.6.32&apos;, os.name: &apos;Windows 10&apos;, os.arch: &apos;amd64&apos;, os.version: &apos;10.0&apos;, java.version: &apos;1.8.0_141&apos;
+Driver info: org.openqa.selenium.chrome.ChromeDriver
+Capabilities [{mobileEmulationEnabled=false, hasTouchScreen=false, platform=XP, acceptSslCerts=false, goog:chromeOptions={debuggerAddress=localhost:56999}, acceptInsecureCerts=false, webStorageEnabled=true, browserName=chrome, takesScreenshot=true, javascriptEnabled=true, setWindowRect=true, unexpectedAlertBehaviour=, applicationCacheEnabled=false, rotatable=false, networkConnectionEnabled=false, chrome={chromedriverVersion=2.43.600210 (68dcf5eebde37173d4027fa8635e332711d2874a), userDataDir=C:\Users\FLORAN~1\AppData\Local\Temp\scoped_dir26424_25692}, takesHeapSnapshot=true, pageLoadStrategy=normal, databaseEnabled=false, handlesAlerts=true, version=72.0.3626.96, browserConnectionEnabled=false, nativeEvents=true, locationContextEnabled=true, cssSelectorsEnabled=true}]
+Session ID: a03871ae7a2498bc03af8fcddce61b92
+	at org.openqa.selenium.remote.ErrorHandler.createThrowable(ErrorHandler.java:215)
+	at org.openqa.selenium.remote.ErrorHandler.throwIfResponseFailed(ErrorHandler.java:167)
+	at org.openqa.selenium.remote.RemoteWebDriver.execute(RemoteWebDriver.java:671)
+	at org.openqa.selenium.remote.RemoteWebElement.execute(RemoteWebElement.java:272)
+	at org.openqa.selenium.remote.RemoteWebElement.click(RemoteWebElement.java:82)
+	at Tests.GestionesPerfilTelefonico.setup(GestionesPerfilTelefonico.java:115)
+	at java.util.concurrent.FutureTask.run(Unknown Source)
+	at java.util.concurrent.ThreadPoolExecutor.runWorker(Unknown Source)
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(Unknown Source)
+	at java.lang.Thread.run(Unknown Source)
+... Removed 21 stack frames</pre></div><a href='#' onClick='toggleBox("stack-trace813251910", this, "Click to show all stack frames", "Click to hide stack frames")'>Click to show all stack frames</a>
+<div class='stack-trace' id='stack-trace813251910'><pre>org.openqa.selenium.WebDriverException: unknown error: Element &lt;iframe id=&quot;ext-comp-1005&quot; name=&quot;ext-comp-1005&quot; frameborder=&quot;0&quot; allow=&quot;camera *; geolocation *; microphone *&quot; src=&quot;/home/home.jsp?isdtp=nv&amp;amp;nonce=3931cbc33cdf32d11aa8c3852426d77e46a657373135ce1bd9b687d0587f0943&amp;amp;sfdcIFrameOrigin=https%3A%2F%2Ftelecomcrm--uat.cs53.my.salesforce.com&quot; style=&quot;width: 1366px; height: 461px;&quot; cd_frame_id_=&quot;47edcbe0c1114712eff245bf09f34833&quot;&gt;&lt;/iframe&gt; is not clickable at point (97, 256). Other element would receive the click: &lt;a id=&quot;nav-tab-4&quot; class=&quot;x-menu-item assetMru standardObject sd-nav-menu-item&quot; hidefocus=&quot;true&quot; unselectable=&quot;on&quot; href=&quot;#&quot;&gt;...&lt;/a&gt;
+  (Session info: chrome=72.0.3626.96)
+  (Driver info: chromedriver=2.43.600210 (68dcf5eebde37173d4027fa8635e332711d2874a),platform=Windows NT 10.0.17134 x86_64) (WARNING: The server did not provide any stacktrace information)
+Command duration or timeout: 129 milliseconds
+Build info: version: &apos;unknown&apos;, revision: &apos;unknown&apos;, time: &apos;unknown&apos;
+System info: host: &apos;LAPTOP-JB3M8V7H&apos;, ip: &apos;10.112.6.32&apos;, os.name: &apos;Windows 10&apos;, os.arch: &apos;amd64&apos;, os.version: &apos;10.0&apos;, java.version: &apos;1.8.0_141&apos;
+Driver info: org.openqa.selenium.chrome.ChromeDriver
+Capabilities [{mobileEmulationEnabled=false, hasTouchScreen=false, platform=XP, acceptSslCerts=false, goog:chromeOptions={debuggerAddress=localhost:56999}, acceptInsecureCerts=false, webStorageEnabled=true, browserName=chrome, takesScreenshot=true, javascriptEnabled=true, setWindowRect=true, unexpectedAlertBehaviour=, applicationCacheEnabled=false, rotatable=false, networkConnectionEnabled=false, chrome={chromedriverVersion=2.43.600210 (68dcf5eebde37173d4027fa8635e332711d2874a), userDataDir=C:\Users\FLORAN~1\AppData\Local\Temp\scoped_dir26424_25692}, takesHeapSnapshot=true, pageLoadStrategy=normal, databaseEnabled=false, handlesAlerts=true, version=72.0.3626.96, browserConnectionEnabled=false, nativeEvents=true, locationContextEnabled=true, cssSelectorsEnabled=true}]
+Session ID: a03871ae7a2498bc03af8fcddce61b92
+	at sun.reflect.GeneratedConstructorAccessor65.newInstance(Unknown Source)
+	at sun.reflect.DelegatingConstructorAccessorImpl.newInstance(Unknown Source)
+	at java.lang.reflect.Constructor.newInstance(Unknown Source)
+	at org.openqa.selenium.remote.ErrorHandler.createThrowable(ErrorHandler.java:215)
+	at org.openqa.selenium.remote.ErrorHandler.throwIfResponseFailed(ErrorHandler.java:167)
+	at org.openqa.selenium.remote.RemoteWebDriver.execute(RemoteWebDriver.java:671)
+	at org.openqa.selenium.remote.RemoteWebElement.execute(RemoteWebElement.java:272)
+	at org.openqa.selenium.remote.RemoteWebElement.click(RemoteWebElement.java:82)
+	at Tests.GestionesPerfilTelefonico.setup(GestionesPerfilTelefonico.java:115)
+	at sun.reflect.GeneratedMethodAccessor8.invoke(Unknown Source)
+	at sun.reflect.DelegatingMethodAccessorImpl.invoke(Unknown Source)
+	at java.lang.reflect.Method.invoke(Unknown Source)
+	at org.testng.internal.MethodInvocationHelper.invokeMethod(MethodInvocationHelper.java:124)
+	at org.testng.internal.MethodInvocationHelper.invokeMethodConsideringTimeout(MethodInvocationHelper.java:59)
+	at org.testng.internal.Invoker.invokeConfigurationMethod(Invoker.java:458)
+	at org.testng.internal.Invoker.invokeConfigurations(Invoker.java:222)
+	at org.testng.internal.Invoker.invokeMethod(Invoker.java:523)
+	at org.testng.internal.Invoker.invokeTestMethod(Invoker.java:719)
+	at org.testng.internal.Invoker.invokeTestMethods(Invoker.java:989)
+	at org.testng.internal.TestMethodWorker.invokeTestMethods(TestMethodWorker.java:125)
+	at org.testng.internal.TestMethodWorker.run(TestMethodWorker.java:109)
+	at org.testng.TestRunner.privateRun(TestRunner.java:648)
+	at org.testng.TestRunner.run(TestRunner.java:505)
+	at org.testng.SuiteRunner.runTest(SuiteRunner.java:455)
+	at org.testng.SuiteRunner.access$000(SuiteRunner.java:40)
+	at org.testng.SuiteRunner$SuiteWorker.run(SuiteRunner.java:489)
+	at org.testng.internal.thread.ThreadUtil$1.call(ThreadUtil.java:52)
+	at java.util.concurrent.FutureTask.run(Unknown Source)
+	at java.util.concurrent.ThreadPoolExecutor.runWorker(Unknown Source)
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(Unknown Source)
+	at java.lang.Thread.run(Unknown Source)
+</pre></div></td>
+<td>0</td>
+<td>Tests.GestionesPerfilTelefonico@76b10754</td></tr>
+<tr>
+<td title='Tests.GestionesPerfilOficina.TS135512_CRM_Movil_REPRO_No_Renovacion_de_cuota_Pack_de_datos_Activo_Presencial()'><b>TS135512_CRM_Movil_REPRO_No_Renovacion_de_cuota_Pack_de_datos_Activo_Presencial</b><br>Test class: Tests.GestionesPerfilOficina</td>
+<td><div><pre>org.openqa.selenium.WebDriverException: unknown error: Element &lt;iframe id=&quot;ext-comp-1005&quot; name=&quot;ext-comp-1005&quot; frameborder=&quot;0&quot; allow=&quot;camera *; geolocation *; microphone *&quot; src=&quot;/home/home.jsp?isdtp=nv&amp;amp;nonce=98550e27455d02430f838cace20fc2400df6dd520b1aac5c46bc9d5bbfb73922&amp;amp;sfdcIFrameOrigin=https%3A%2F%2Ftelecomcrm--uat.cs53.my.salesforce.com&quot; style=&quot;width: 1366px; height: 461px;&quot; cd_frame_id_=&quot;72a4fae24a416c0885020a652193a976&quot;&gt;&lt;/iframe&gt; is not clickable at point (97, 256). Other element would receive the click: &lt;span class=&quot;x-menu-item-text&quot; id=&quot;ext-gen99&quot;&gt;...&lt;/span&gt;
+  (Session info: chrome=72.0.3626.96)
+  (Driver info: chromedriver=2.43.600210 (68dcf5eebde37173d4027fa8635e332711d2874a),platform=Windows NT 10.0.17134 x86_64) (WARNING: The server did not provide any stacktrace information)
+Command duration or timeout: 93 milliseconds
+Build info: version: &apos;unknown&apos;, revision: &apos;unknown&apos;, time: &apos;unknown&apos;
+System info: host: &apos;LAPTOP-JB3M8V7H&apos;, ip: &apos;10.112.6.32&apos;, os.name: &apos;Windows 10&apos;, os.arch: &apos;amd64&apos;, os.version: &apos;10.0&apos;, java.version: &apos;1.8.0_141&apos;
+Driver info: org.openqa.selenium.chrome.ChromeDriver
+Capabilities [{mobileEmulationEnabled=false, hasTouchScreen=false, platform=XP, acceptSslCerts=false, goog:chromeOptions={debuggerAddress=localhost:56286}, acceptInsecureCerts=false, webStorageEnabled=true, browserName=chrome, takesScreenshot=true, javascriptEnabled=true, setWindowRect=true, unexpectedAlertBehaviour=, applicationCacheEnabled=false, rotatable=false, networkConnectionEnabled=false, chrome={chromedriverVersion=2.43.600210 (68dcf5eebde37173d4027fa8635e332711d2874a), userDataDir=C:\Users\FLORAN~1\AppData\Local\Temp\scoped_dir26504_28286}, takesHeapSnapshot=true, pageLoadStrategy=normal, databaseEnabled=false, handlesAlerts=true, version=72.0.3626.96, browserConnectionEnabled=false, nativeEvents=true, locationContextEnabled=true, cssSelectorsEnabled=true}]
+Session ID: d91c6dff32a8031634104fc4b1ed54ba
+	at org.openqa.selenium.remote.ErrorHandler.createThrowable(ErrorHandler.java:215)
+	at org.openqa.selenium.remote.ErrorHandler.throwIfResponseFailed(ErrorHandler.java:167)
+	at org.openqa.selenium.remote.RemoteWebDriver.execute(RemoteWebDriver.java:671)
+	at org.openqa.selenium.remote.RemoteWebElement.execute(RemoteWebElement.java:272)
+	at org.openqa.selenium.remote.RemoteWebElement.click(RemoteWebElement.java:82)
+	at Tests.GestionesPerfilOficina.setup(GestionesPerfilOficina.java:136)
+	at java.util.concurrent.FutureTask.run(Unknown Source)
+	at java.util.concurrent.ThreadPoolExecutor.runWorker(Unknown Source)
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(Unknown Source)
+	at java.lang.Thread.run(Unknown Source)
+... Removed 21 stack frames</pre></div><a href='#' onClick='toggleBox("stack-trace798372876", this, "Click to show all stack frames", "Click to hide stack frames")'>Click to show all stack frames</a>
+<div class='stack-trace' id='stack-trace798372876'><pre>org.openqa.selenium.WebDriverException: unknown error: Element &lt;iframe id=&quot;ext-comp-1005&quot; name=&quot;ext-comp-1005&quot; frameborder=&quot;0&quot; allow=&quot;camera *; geolocation *; microphone *&quot; src=&quot;/home/home.jsp?isdtp=nv&amp;amp;nonce=98550e27455d02430f838cace20fc2400df6dd520b1aac5c46bc9d5bbfb73922&amp;amp;sfdcIFrameOrigin=https%3A%2F%2Ftelecomcrm--uat.cs53.my.salesforce.com&quot; style=&quot;width: 1366px; height: 461px;&quot; cd_frame_id_=&quot;72a4fae24a416c0885020a652193a976&quot;&gt;&lt;/iframe&gt; is not clickable at point (97, 256). Other element would receive the click: &lt;span class=&quot;x-menu-item-text&quot; id=&quot;ext-gen99&quot;&gt;...&lt;/span&gt;
+  (Session info: chrome=72.0.3626.96)
+  (Driver info: chromedriver=2.43.600210 (68dcf5eebde37173d4027fa8635e332711d2874a),platform=Windows NT 10.0.17134 x86_64) (WARNING: The server did not provide any stacktrace information)
+Command duration or timeout: 93 milliseconds
+Build info: version: &apos;unknown&apos;, revision: &apos;unknown&apos;, time: &apos;unknown&apos;
+System info: host: &apos;LAPTOP-JB3M8V7H&apos;, ip: &apos;10.112.6.32&apos;, os.name: &apos;Windows 10&apos;, os.arch: &apos;amd64&apos;, os.version: &apos;10.0&apos;, java.version: &apos;1.8.0_141&apos;
+Driver info: org.openqa.selenium.chrome.ChromeDriver
+Capabilities [{mobileEmulationEnabled=false, hasTouchScreen=false, platform=XP, acceptSslCerts=false, goog:chromeOptions={debuggerAddress=localhost:56286}, acceptInsecureCerts=false, webStorageEnabled=true, browserName=chrome, takesScreenshot=true, javascriptEnabled=true, setWindowRect=true, unexpectedAlertBehaviour=, applicationCacheEnabled=false, rotatable=false, networkConnectionEnabled=false, chrome={chromedriverVersion=2.43.600210 (68dcf5eebde37173d4027fa8635e332711d2874a), userDataDir=C:\Users\FLORAN~1\AppData\Local\Temp\scoped_dir26504_28286}, takesHeapSnapshot=true, pageLoadStrategy=normal, databaseEnabled=false, handlesAlerts=true, version=72.0.3626.96, browserConnectionEnabled=false, nativeEvents=true, locationContextEnabled=true, cssSelectorsEnabled=true}]
+Session ID: d91c6dff32a8031634104fc4b1ed54ba
+	at sun.reflect.GeneratedConstructorAccessor65.newInstance(Unknown Source)
+	at sun.reflect.DelegatingConstructorAccessorImpl.newInstance(Unknown Source)
+	at java.lang.reflect.Constructor.newInstance(Unknown Source)
+	at org.openqa.selenium.remote.ErrorHandler.createThrowable(ErrorHandler.java:215)
+	at org.openqa.selenium.remote.ErrorHandler.throwIfResponseFailed(ErrorHandler.java:167)
+	at org.openqa.selenium.remote.RemoteWebDriver.execute(RemoteWebDriver.java:671)
+	at org.openqa.selenium.remote.RemoteWebElement.execute(RemoteWebElement.java:272)
+	at org.openqa.selenium.remote.RemoteWebElement.click(RemoteWebElement.java:82)
+	at Tests.GestionesPerfilOficina.setup(GestionesPerfilOficina.java:136)
+	at sun.reflect.GeneratedMethodAccessor1.invoke(Unknown Source)
+	at sun.reflect.DelegatingMethodAccessorImpl.invoke(Unknown Source)
+	at java.lang.reflect.Method.invoke(Unknown Source)
+	at org.testng.internal.MethodInvocationHelper.invokeMethod(MethodInvocationHelper.java:124)
+	at org.testng.internal.MethodInvocationHelper.invokeMethodConsideringTimeout(MethodInvocationHelper.java:59)
+	at org.testng.internal.Invoker.invokeConfigurationMethod(Invoker.java:458)
+	at org.testng.internal.Invoker.invokeConfigurations(Invoker.java:222)
+	at org.testng.internal.Invoker.invokeMethod(Invoker.java:523)
+	at org.testng.internal.Invoker.invokeTestMethod(Invoker.java:719)
+	at org.testng.internal.Invoker.invokeTestMethods(Invoker.java:989)
+	at org.testng.internal.TestMethodWorker.invokeTestMethods(TestMethodWorker.java:125)
+	at org.testng.internal.TestMethodWorker.run(TestMethodWorker.java:109)
+	at org.testng.TestRunner.privateRun(TestRunner.java:648)
+	at org.testng.TestRunner.run(TestRunner.java:505)
+	at org.testng.SuiteRunner.runTest(SuiteRunner.java:455)
+	at org.testng.SuiteRunner.access$000(SuiteRunner.java:40)
+	at org.testng.SuiteRunner$SuiteWorker.run(SuiteRunner.java:489)
+	at org.testng.internal.thread.ThreadUtil$1.call(ThreadUtil.java:52)
+	at java.util.concurrent.FutureTask.run(Unknown Source)
+	at java.util.concurrent.ThreadPoolExecutor.runWorker(Unknown Source)
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(Unknown Source)
+	at java.lang.Thread.run(Unknown Source)
+</pre></div></td>
+<td>0</td>
+<td>Tests.GestionesPerfilOficina@6c9f5c0d</td></tr>
+<tr>
+<td title='Tests.GestionesPerfilTelefonico.TS_CRM_Movil_REPRO_Renovacion_De_Cuota_Telefonico_Descuento_De_Saldo_Con_Credito()'><b>TS_CRM_Movil_REPRO_Renovacion_De_Cuota_Telefonico_Descuento_De_Saldo_Con_Credito</b><br>Test class: Tests.GestionesPerfilTelefonico</td>
+<td><div><pre>org.openqa.selenium.WebDriverException: unknown error: Element &lt;iframe id=&quot;ext-comp-1005&quot; name=&quot;ext-comp-1005&quot; frameborder=&quot;0&quot; allow=&quot;camera *; geolocation *; microphone *&quot; src=&quot;/home/home.jsp?isdtp=nv&amp;amp;nonce=3931cbc33cdf32d11aa8c3852426d77e46a657373135ce1bd9b687d0587f0943&amp;amp;sfdcIFrameOrigin=https%3A%2F%2Ftelecomcrm--uat.cs53.my.salesforce.com&quot; style=&quot;width: 1366px; height: 461px;&quot; cd_frame_id_=&quot;47edcbe0c1114712eff245bf09f34833&quot;&gt;&lt;/iframe&gt; is not clickable at point (97, 256). Other element would receive the click: &lt;a id=&quot;nav-tab-4&quot; class=&quot;x-menu-item assetMru standardObject sd-nav-menu-item&quot; hidefocus=&quot;true&quot; unselectable=&quot;on&quot; href=&quot;#&quot;&gt;...&lt;/a&gt;
+  (Session info: chrome=72.0.3626.96)
+  (Driver info: chromedriver=2.43.600210 (68dcf5eebde37173d4027fa8635e332711d2874a),platform=Windows NT 10.0.17134 x86_64) (WARNING: The server did not provide any stacktrace information)
+Command duration or timeout: 129 milliseconds
+Build info: version: &apos;unknown&apos;, revision: &apos;unknown&apos;, time: &apos;unknown&apos;
+System info: host: &apos;LAPTOP-JB3M8V7H&apos;, ip: &apos;10.112.6.32&apos;, os.name: &apos;Windows 10&apos;, os.arch: &apos;amd64&apos;, os.version: &apos;10.0&apos;, java.version: &apos;1.8.0_141&apos;
+Driver info: org.openqa.selenium.chrome.ChromeDriver
+Capabilities [{mobileEmulationEnabled=false, hasTouchScreen=false, platform=XP, acceptSslCerts=false, goog:chromeOptions={debuggerAddress=localhost:56999}, acceptInsecureCerts=false, webStorageEnabled=true, browserName=chrome, takesScreenshot=true, javascriptEnabled=true, setWindowRect=true, unexpectedAlertBehaviour=, applicationCacheEnabled=false, rotatable=false, networkConnectionEnabled=false, chrome={chromedriverVersion=2.43.600210 (68dcf5eebde37173d4027fa8635e332711d2874a), userDataDir=C:\Users\FLORAN~1\AppData\Local\Temp\scoped_dir26424_25692}, takesHeapSnapshot=true, pageLoadStrategy=normal, databaseEnabled=false, handlesAlerts=true, version=72.0.3626.96, browserConnectionEnabled=false, nativeEvents=true, locationContextEnabled=true, cssSelectorsEnabled=true}]
+Session ID: a03871ae7a2498bc03af8fcddce61b92
+	at org.openqa.selenium.remote.ErrorHandler.createThrowable(ErrorHandler.java:215)
+	at org.openqa.selenium.remote.ErrorHandler.throwIfResponseFailed(ErrorHandler.java:167)
+	at org.openqa.selenium.remote.RemoteWebDriver.execute(RemoteWebDriver.java:671)
+	at org.openqa.selenium.remote.RemoteWebElement.execute(RemoteWebElement.java:272)
+	at org.openqa.selenium.remote.RemoteWebElement.click(RemoteWebElement.java:82)
+	at Tests.GestionesPerfilTelefonico.setup(GestionesPerfilTelefonico.java:115)
+	at java.util.concurrent.FutureTask.run(Unknown Source)
+	at java.util.concurrent.ThreadPoolExecutor.runWorker(Unknown Source)
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(Unknown Source)
+	at java.lang.Thread.run(Unknown Source)
+... Removed 21 stack frames</pre></div><a href='#' onClick='toggleBox("stack-trace1374180092", this, "Click to show all stack frames", "Click to hide stack frames")'>Click to show all stack frames</a>
+<div class='stack-trace' id='stack-trace1374180092'><pre>org.openqa.selenium.WebDriverException: unknown error: Element &lt;iframe id=&quot;ext-comp-1005&quot; name=&quot;ext-comp-1005&quot; frameborder=&quot;0&quot; allow=&quot;camera *; geolocation *; microphone *&quot; src=&quot;/home/home.jsp?isdtp=nv&amp;amp;nonce=3931cbc33cdf32d11aa8c3852426d77e46a657373135ce1bd9b687d0587f0943&amp;amp;sfdcIFrameOrigin=https%3A%2F%2Ftelecomcrm--uat.cs53.my.salesforce.com&quot; style=&quot;width: 1366px; height: 461px;&quot; cd_frame_id_=&quot;47edcbe0c1114712eff245bf09f34833&quot;&gt;&lt;/iframe&gt; is not clickable at point (97, 256). Other element would receive the click: &lt;a id=&quot;nav-tab-4&quot; class=&quot;x-menu-item assetMru standardObject sd-nav-menu-item&quot; hidefocus=&quot;true&quot; unselectable=&quot;on&quot; href=&quot;#&quot;&gt;...&lt;/a&gt;
+  (Session info: chrome=72.0.3626.96)
+  (Driver info: chromedriver=2.43.600210 (68dcf5eebde37173d4027fa8635e332711d2874a),platform=Windows NT 10.0.17134 x86_64) (WARNING: The server did not provide any stacktrace information)
+Command duration or timeout: 129 milliseconds
+Build info: version: &apos;unknown&apos;, revision: &apos;unknown&apos;, time: &apos;unknown&apos;
+System info: host: &apos;LAPTOP-JB3M8V7H&apos;, ip: &apos;10.112.6.32&apos;, os.name: &apos;Windows 10&apos;, os.arch: &apos;amd64&apos;, os.version: &apos;10.0&apos;, java.version: &apos;1.8.0_141&apos;
+Driver info: org.openqa.selenium.chrome.ChromeDriver
+Capabilities [{mobileEmulationEnabled=false, hasTouchScreen=false, platform=XP, acceptSslCerts=false, goog:chromeOptions={debuggerAddress=localhost:56999}, acceptInsecureCerts=false, webStorageEnabled=true, browserName=chrome, takesScreenshot=true, javascriptEnabled=true, setWindowRect=true, unexpectedAlertBehaviour=, applicationCacheEnabled=false, rotatable=false, networkConnectionEnabled=false, chrome={chromedriverVersion=2.43.600210 (68dcf5eebde37173d4027fa8635e332711d2874a), userDataDir=C:\Users\FLORAN~1\AppData\Local\Temp\scoped_dir26424_25692}, takesHeapSnapshot=true, pageLoadStrategy=normal, databaseEnabled=false, handlesAlerts=true, version=72.0.3626.96, browserConnectionEnabled=false, nativeEvents=true, locationContextEnabled=true, cssSelectorsEnabled=true}]
+Session ID: a03871ae7a2498bc03af8fcddce61b92
+	at sun.reflect.GeneratedConstructorAccessor65.newInstance(Unknown Source)
+	at sun.reflect.DelegatingConstructorAccessorImpl.newInstance(Unknown Source)
+	at java.lang.reflect.Constructor.newInstance(Unknown Source)
+	at org.openqa.selenium.remote.ErrorHandler.createThrowable(ErrorHandler.java:215)
+	at org.openqa.selenium.remote.ErrorHandler.throwIfResponseFailed(ErrorHandler.java:167)
+	at org.openqa.selenium.remote.RemoteWebDriver.execute(RemoteWebDriver.java:671)
+	at org.openqa.selenium.remote.RemoteWebElement.execute(RemoteWebElement.java:272)
+	at org.openqa.selenium.remote.RemoteWebElement.click(RemoteWebElement.java:82)
+	at Tests.GestionesPerfilTelefonico.setup(GestionesPerfilTelefonico.java:115)
+	at sun.reflect.GeneratedMethodAccessor8.invoke(Unknown Source)
+	at sun.reflect.DelegatingMethodAccessorImpl.invoke(Unknown Source)
+	at java.lang.reflect.Method.invoke(Unknown Source)
+	at org.testng.internal.MethodInvocationHelper.invokeMethod(MethodInvocationHelper.java:124)
+	at org.testng.internal.MethodInvocationHelper.invokeMethodConsideringTimeout(MethodInvocationHelper.java:59)
+	at org.testng.internal.Invoker.invokeConfigurationMethod(Invoker.java:458)
+	at org.testng.internal.Invoker.invokeConfigurations(Invoker.java:222)
+	at org.testng.internal.Invoker.invokeMethod(Invoker.java:523)
+	at org.testng.internal.Invoker.invokeTestMethod(Invoker.java:719)
+	at org.testng.internal.Invoker.invokeTestMethods(Invoker.java:989)
+	at org.testng.internal.TestMethodWorker.invokeTestMethods(TestMethodWorker.java:125)
+	at org.testng.internal.TestMethodWorker.run(TestMethodWorker.java:109)
+	at org.testng.TestRunner.privateRun(TestRunner.java:648)
+	at org.testng.TestRunner.run(TestRunner.java:505)
+	at org.testng.SuiteRunner.runTest(SuiteRunner.java:455)
+	at org.testng.SuiteRunner.access$000(SuiteRunner.java:40)
+	at org.testng.SuiteRunner$SuiteWorker.run(SuiteRunner.java:489)
+	at org.testng.internal.thread.ThreadUtil$1.call(ThreadUtil.java:52)
+	at java.util.concurrent.FutureTask.run(Unknown Source)
+	at java.util.concurrent.ThreadPoolExecutor.runWorker(Unknown Source)
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(Unknown Source)
+	at java.lang.Thread.run(Unknown Source)
+</pre></div></td>
+<td>0</td>
+<td>Tests.GestionesPerfilTelefonico@76b10754</td></tr>
+</table><p>
+</body>
+</html>
