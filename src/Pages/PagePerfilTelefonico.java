@@ -263,6 +263,7 @@ public class PagePerfilTelefonico extends TestBase{
 		sleep(15000);
 		Select metodoEntrega = new Select (driver.findElement(By.id("DeliveryMethodSelection")));
 		metodoEntrega.selectByVisibleText(entrega);
+		Delivery.click();
 		Select State = new Select (driver.findElement(By.id("PickState")));
 		State.selectByVisibleText(provincia);
 		Select City = new Select (driver.findElement(By.id("PickCity")));

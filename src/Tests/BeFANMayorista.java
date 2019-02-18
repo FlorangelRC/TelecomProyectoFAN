@@ -21,10 +21,12 @@ import java.util.Date;
 import java.util.List;
 
 
+
 import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
+import org.testng.annotations.AfterTest;
 
 import org.testng.Assert;
 import org.testng.annotations.AfterClass;
@@ -37,7 +39,6 @@ import com.sun.org.apache.xalan.internal.xsltc.compiler.sym;
 import DataProvider.ExcelUtils;
 import Pages.BeFan;
 import Pages.ContactSearch;
-import Pages.MDW;
 import Pages.Marketing;
 import Pages.SCP;
 import Pages.setConexion;
@@ -1532,6 +1533,7 @@ public class BeFANMayorista extends TestBase {
 		Assert.assertTrue(Botones.SGLeerCampoYValidar(nombreArch, resultadoEstado, resultadoTexto));
 	}
 	
+	
 // DE 10 SIN PREP
 	@Test (groups = "BeFan", dataProvider="SerialesNoValidos")
 	public void TS97658_BeFan_Movil_REPRO_Serial_no_asociado_a_ningun_prefijo(String path, String nombreArch, String deposito, String prefijo, String serial1, String serial2, String prefijo2) throws IOException {
@@ -1810,11 +1812,6 @@ public class BeFANMayorista extends TestBase {
 		Assert.assertTrue(true);
 	}
 	
-	@Test(groups= {"BeFan"}, dependsOnMethods ="TS97654_BeFan_Movil_REPRO_PreaActivacion_Linea_Repro_Localidad_inexistente_para_numeracion_movil")
-	public void TS97670_BeFan_Movil_REPRO_Seriales_con_estado_ERROR() {
-		Assert.assertTrue(true);
-	}
-	
 	@Test(groups= {"BeFan"}, dependsOnMethods ="TS111958_BeFan_Movil_REPRO_Preactivacion_repro__PreActivacion_Linea_Repro")
 	public void TS97671_BeFan_Movil_REPRO_Seriales_con_estado_ACTIVADA() {
 		Assert.assertTrue(true);
@@ -1926,4 +1923,11 @@ public class BeFANMayorista extends TestBase {
 		Assert.assertTrue(bAssert);
 	}
 	
+	
+	@Test(groups={"BeFan"}, dependsOnMethods= {"TS97654_BeFan_Movil_REPRO_PreaActivacion_Linea_Repro_Localidad_inexistente_para_numeracion_movil"})
+	public void TS97670_BeFan_Movil_REPRO_Seriales_con_estado_ERROR() {
+		Assert.assertTrue(true);
+	}
+	
+
 }

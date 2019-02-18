@@ -274,4 +274,46 @@ public class GestionFlow extends TestBase {
 	driver.switchTo().window(tabs2.get(0));
 	return(nimsi);
 	}
+	
+	
+	public String miraComoTeTraigoElEstadoPapa(WebDriver driver, String numeroLinea) throws AWTException {
+		String EstadoTemporal = "No se pudo obtener un estado";
+		TestBase ts = new TestBase();
+		ts.abrirPestaniaNueva(driver);
+		sleep(5000);
+		ArrayList<String> tabs2 = new ArrayList<String> (driver.getWindowHandles());
+		driver.switchTo().window(tabs2.get(1));
+		loginflow(driver);
+		WebElement consul = driver.findElement(By.cssSelector(".nav-link.dropdown-toggle.linksMenu"));
+			if(consul.getText().toLowerCase().equals("consultas")){
+				consul.click();
+			}
+		sleep(500);
+		driver.findElements(By.cssSelector(".dropdown-item.navbarItemPersonalizado.itemClick")).get(0).click();
+		sleep(5000);
+		driver.findElement(By.id("txtCampo")).sendKeys(numeroLinea);
+		driver.findElement(By.name("btnConsultar")).click();
+		sleep(15000);
+		driver.switchTo().frame(cambioFrame(driver, By.id("framederecho"))); 
+		EstadoTemporal = driver.findElements(By.cssSelector(".box.efecto3")).get(0).getText();
+		
+		switch(EstadoTemporal) {
+		case "Estado":
+			EstadoTemporal = "Preactiva";
+		case "L\u00ednea Tarjeta FAN / Abono Fijo Activa (Llamadas Entrantes y Salientes)":
+			EstadoTemporal = "Activa";
+		case "L\u00ednea Tarjeta FAN / Abono Fijo Bloqueada x Siniestro / Mora2":
+			EstadoTemporal = "Suspendida";
+		}
+		
+		if (EstadoTemporal.equals("Preactiva") || EstadoTemporal.equals("Activa") || EstadoTemporal.equals("Suspendida")) {
+			
+		} else {
+			EstadoTemporal = "No se pudo obtener un estado";
+		}
+		driver.close();
+		driver.switchTo().window(tabs2.get(0));
+		return EstadoTemporal;
+	}
+	
 }

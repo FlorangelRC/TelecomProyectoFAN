@@ -40,6 +40,7 @@ import Pages.OM;
 import Pages.OMQPage;
 import Pages.RegistroEventoMasivo;
 import Pages.SCP;
+import Pages.OM;
 import Pages.setConexion;
 
 
@@ -55,7 +56,7 @@ private WebDriver driver;
 		this.driver = setConexion.setupEze();
 		sleep(5000);
 		//Usuario Victor OM
-		login(driver, "https://crm--sit.cs14.my.salesforce.com/", "U585991", "Testa10k");
+		login(driver, "https://telecomcrm--uat.cs53.my.salesforce.com/", "uat198427", "Bulls96");
 		sleep(5000);	
 	}
 
@@ -73,7 +74,7 @@ private WebDriver driver;
 		sleep(3000);
 		
 		//click en Ordenes
-		pageOm.clickOnListTabs("Orders");
+		pageOm.clickOnListTabs("Pedidos");
 	}
 	
 	//@AfterClass(alwaysRun=true)
@@ -251,6 +252,59 @@ private WebDriver driver;
 		Assert.assertTrue(true);
 			}
 	
+	
+	//VEEEEEEEEEEEEEEEEEEEEEEEEEECCCCCCCCCTOOOOOOOOOOOOOOOORRRRR
+	@Test(groups= {"OM","agregarPack"}, retryAnalyzer = retry.class)
+	public void TSXXX_HOLA() throws InterruptedException, MalformedURLException {
+	String Url;
+	OM pageOm=new OM(driver);
+	OMQPage OM=new OMQPage (driver);
+	
+	
+	pageOm.Gestion_Alta_De_Linea("QuelysOM", "Plan con tarjeta");
+	
+	sleep(5000);
+	pageOm.irAChangeToOrder();
+	sleep(12000);
+	driver.switchTo().defaultContent();
+	
+	
+	//fecha avanzada
+	DateFormat dateFormat = new SimpleDateFormat("MM-dd-yyyy");
+	driver.findElement(By.id("RequestDate")).sendKeys(dateFormat.format(pageOm.fechaAvanzada()));
+	driver.findElement(By.cssSelector(".form-control.btn.btn-primary.ng-binding")).click();
+	sleep(12000);
+	
+	//agregar Pack
+	pageOm.agregarPack("Packs Opcionales","Packs de Datos", "Pack 200Mb + WhasApp x 1 día","Pack 1GB de dia + 3GB de Noche","Pack 500Mb + WhasApp x 3 días");
+		
+	//Click ViewRecord
+	sleep(8000);	
+	driver.findElement(By.id("-import-btn")).click();
+	sleep(7000);
+	
+	//agregar gestion
+	pageOm.agregarGestion("Alta producto gen\u00e9rico");
+	
+	//sincronizar producto
+	Url = driver.getCurrentUrl();
+	pageOm.clickTab("Product2_Tab");
+	OM.sincroProducto ();//("Samsung Cargador - Negro");
+	OM.clickSincronizar();
+	driver.get(Url);
+	
+	//Orquestacion
+	driver.findElement(By.name("ta_submit_order")).click();
+	sleep(35000);
+	pageOm.completarFlujoOrquestacion();
+	sleep(8000);	
+	WebElement status = driver.findElement(By.id("Status_ilecell")); 
+	Assert.assertTrue(status.getText().equalsIgnoreCase("Activated")); 
+	
+	 
+	}
+	
+	
 	@Test(groups= {"OM","altaconPack","Verificacionderequest"}, retryAnalyzer = retry.class)
 	 public void TS102309_CRM_OM_Ola_2_Interfaces_Alta_de_linea_con_1_pack_Plan_prepago_nacional_Sin_delivery_Sin_VAS_Numeracion_Movil_S326_updateNumberStatus_Verificacion_de_parametros_enviados() throws Exception {    
 	 OM pageOm=new OM(driver);
@@ -276,4 +330,8 @@ private WebDriver driver;
 	public void TS102308_CRM_OM_Ola_2_Interfaces_Alta_de_linea_con_1_pack_Plan_prepago_nacional_Sin_delivery_Sin_VAS_Numeracion_Movil_S326_updateNumberStatus_Verificacion_de_campos_enviados_en_el_request() {
 		Assert.assertTrue(true);
 			}
+	
+	
+	
 }
+

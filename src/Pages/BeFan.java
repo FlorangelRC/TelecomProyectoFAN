@@ -761,7 +761,14 @@ public class BeFan extends BasePage{
 	}
 	
 	public boolean verificarMensajeExitoso() {
-		return driver.findElement(By.xpath("//*[@class='alert alert-dismissable alert-success'] //h4")).getText().equalsIgnoreCase("La operaci\u00f3n se ejecut\u00f3 satisfactoriamente.");
+		boolean confirmacion = false;
+		for(WebElement x : driver.findElements(By.className("modal-body"))) {
+			if(x.getText().toLowerCase().contains("satisfactoriamente")) {
+				System.out.println(x.getText());
+				confirmacion = true;
+			}
+		}
+		return confirmacion;
 	}
 	
 	public void cerrar() {
@@ -778,10 +785,13 @@ public class BeFan extends BasePage{
 		WebElement wBody = driver.findElement(By.className("panel-data"));
 		List<WebElement> wList = wBody.findElements(By.xpath("//*[@class='panel-group'] //*[@class='collapsed'] //*[@class='ng-binding']"));
 		
-		boolean bAssert = true;
+		boolean bAssert = false;
+		
 		for (WebElement wAux : wList) {
-			if (!wAux.getText().toLowerCase().contains(sRegion.toLowerCase())) {
-				bAssert = false;
+			if (wAux.getText().toLowerCase().contains(sRegion.toLowerCase())) {
+				bAssert = true;
+			}
+			else {
 				break;
 			}
 		}
@@ -838,7 +848,6 @@ public class BeFan extends BasePage{
 		for (WebElement wAux : wList) {
 			if (wAux.findElement(By.xpath("//*[@class='collapsed'] //*[@class='ng-binding']")).getText().equalsIgnoreCase(sRegion)) {
 				wAux.click();
-				wAux.findElement(By.xpath("//*[@class='row ng-scope'] //*[@class='btn btn-link']")).click();
 				break;
 			}
 		}
@@ -882,6 +891,36 @@ public class BeFan extends BasePage{
 		}
 		//return true;
 	
+	}
+	
+	public boolean buscarRegionInexistente(String sRegion) {
+		driver.findElement(By.xpath("//*[@type='search']")).clear();
+		driver.findElement(By.xpath("//*[@type='search']")).sendKeys(sRegion);
+		sleep(3000);
+		WebElement wBody = driver.findElement(By.className("panel-data"));
+		
+		boolean bAssert = false;
+		List<WebElement> wList = new ArrayList<WebElement>();
+		try {
+			wList = wBody.findElements(By.xpath("//*[@class='panel-group'] //*[@class='collapsed'] //*[@class='ng-binding']"));
+		}
+		catch(Exception eE) {
+			bAssert = true;
+		}
+		
+		if (bAssert) {
+			Assert.assertTrue(bAssert);
+		}
+		else {
+			bAssert = true;
+			for (WebElement wAux : wList) {
+				if (wAux.getText().equalsIgnoreCase(sRegion)) {
+					bAssert = false;
+				}
+			}
+		}
+		
+		return bAssert;
+	}
+	
 }
-}
-
