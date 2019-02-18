@@ -65,9 +65,6 @@ public class GestionesPerfilTelefonico extends TestBase{
 		cbs = new CBS();
 		cbsm = new CBS_Mattu();
 		loginTelefonico(driver);
-//		WebElement dynamicElement = (new WebDriverWait(driver, 10))
-//				  .until(ExpectedConditions.elementToBeClickable(By.id("tabBar")));//.presenceOfElementLocated(By.id("dynamicElement")));
-//		//sleep(22000);
 		waitForClickeable(driver,By.id("tabBar"));
 		driver.findElement(By.id("tabBar")).findElement(By.tagName("a")).click();
 		sleep(21000);
@@ -117,7 +114,7 @@ public class GestionesPerfilTelefonico extends TestBase{
 			}
 		}
 		
-		sleep(25000);
+		sleep(15000);
 	}
 
 	@AfterMethod(alwaysRun=true)
@@ -128,7 +125,7 @@ public class GestionesPerfilTelefonico extends TestBase{
 		tomarCaptura(driver,imagen);
 	}
 
-	//@AfterClass(alwaysRun=true)
+	@AfterClass(alwaysRun=true)
 	public void quit() throws IOException {
 		driver.quit();
 		sleep(5000);
