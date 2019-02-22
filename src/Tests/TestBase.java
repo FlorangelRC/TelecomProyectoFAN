@@ -95,7 +95,6 @@ public class TestBase {
 	}
 	
 	public void goToLeftPanel2(WebDriver driver, String selection) {
-		
 		driver.switchTo().defaultContent();
 		try {
 			driver.findElement(By.className("x-btn-split"));
@@ -114,10 +113,11 @@ public class TestBase {
 		WebElement dropDown = driver.findElement(By.className("x-btn-split"));
 		Actions builder = new Actions(driver);   
 		builder.moveToElement(dropDown, 245, 20).click().build().perform();
-		List<WebElement> options = driver.findElements(By.tagName("li"));
+		sleep(2000);
+		List<WebElement> options = driver.findElement(By.id("navigator-sbmenu")).findElements(By.tagName("li"));
 		for(WebElement option : options) {
 			if(option.findElement(By.tagName("span")).getText().toLowerCase().equals(selection.toLowerCase())) {
-				option.findElement(By.tagName("a")).click();
+				option.click();
 				//System.out.println("Seleccionado"); //13/09/2017 working.
 				break;
 			}
