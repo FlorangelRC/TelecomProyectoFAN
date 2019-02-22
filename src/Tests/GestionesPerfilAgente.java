@@ -71,7 +71,7 @@ public class GestionesPerfilAgente extends TestBase{
 	@BeforeMethod(alwaysRun=true)
 	public void setup() throws Exception {
 		sleep(10000);
-		goToLeftPanel2(driver, "Inicio");
+		goToLeftPanel3(driver, "Inicio");
 		sleep(15000);
 		try {
 			sb.cerrarPestaniaGestion(driver);
@@ -1377,7 +1377,7 @@ public class GestionesPerfilAgente extends TestBase{
 		driver.switchTo().frame(cambioFrame(driver, By.id("SearchClientDocumentType")));
 		sb.BuscarCuenta("DNI", sDNI);
 		driver.findElement(By.cssSelector(".slds-tree__item.ng-scope")).click();
-		sleep(10000);
+		sleep(20000);
 		driver.switchTo().frame(cambioFrame(driver, By.className("card-top")));
 		driver.findElement(By.className("card-top")).click();
 		sleep(5000);
@@ -1774,7 +1774,7 @@ public class GestionesPerfilAgente extends TestBase{
 	}
 	
 	@Test (groups= {"GestionesPerfilAgente", "Ciclo2", "Vista360"}, dataProvider = "CuentaVista360")
-	public void TS134819_CRM_Movil_Prepago_Vista_360_Distribucion_de_paneles_Informacion_del_cliente_FAN_Front_Agentes(String sDNI, String sLinea,String sNombre){
+	public void TS134819_CRM_Movil_Prepago_Vista_360_Distribucion_de_paneles_Informacion_del_cliente_FAN_Front_Agentes(String sDNI, String sNombre,String sLinea, String sEmail, String sMovil){
 		imagen = "TS134819";
 		detalles = null;
 		detalles = imagen + "-Vista 360 - DNI: "+ sDNI+ "- Nombre: " + sNombre;

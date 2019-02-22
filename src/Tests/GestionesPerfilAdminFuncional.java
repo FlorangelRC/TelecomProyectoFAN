@@ -74,7 +74,7 @@ public class GestionesPerfilAdminFuncional extends TestBase{
 	@BeforeMethod(alwaysRun=true)
 	public void setup() throws Exception {
 		sleep(10000);
-		goToLeftPanel2(driver, "Inicio");
+		goToLeftPanel3(driver, "Inicio");
 		sleep(15000);
 		try {
 			sb.cerrarPestaniaGestion(driver);
@@ -228,7 +228,7 @@ public class GestionesPerfilAdminFuncional extends TestBase{
 	    buscarYClick(driver.findElements(By.id("NetworkCategory_nextBtn")), "equals", "continuar");
 	    //pendiente por terminar// error "createFDOAutoReqDate"// preguntar cual es el final del flujo
 	}
-	@Test (groups = {"GestionesPerfilAdminFuncional", "DiagnosticoInconveniente","E2E", "Ciclo3"}, dataProvider = "Diagnostico")
+	@Test (groups = {"GestionesPerfilAdminFuncional", "Diagnostico/Inconvenientes","E2E", "Ciclo3"}, dataProvider = "Diagnostico")
 	public void TS111487_CRM_Movil_REPRO_Diagnostico_SVA_Con_Modificacion_en_el_Equipo_Telefonico_SMS_Entrante_No_Recibe_De_Un_Numero_En_Particular_Geo_No_Ok_Desregistrar(String sDNI, String sLinea) throws Exception  {
 		imagen = "TS111487";
 		detalles = null;
@@ -257,7 +257,7 @@ public class GestionesPerfilAdminFuncional extends TestBase{
 	    driver.findElement(By.id("NetworkCategory_nextBtn")).click();
 	    sleep(4000);
 	    driver.findElement(By.id("DeregisterSpeech_nextBtn")).click();    
-	    sleep(4000);
+	    sleep(8000);
 	    driver.findElement(By.id("HLR_IFS_S132_Button")).isDisplayed();
 	    buscarYClick(driver.findElements(By.cssSelector(".slds-form-element__label.ng-binding.ng-scope")), "equals", "s\u00ed");
 	    sleep(6000);
@@ -265,7 +265,7 @@ public class GestionesPerfilAdminFuncional extends TestBase{
 	    buscarYClick(driver.findElements(By.cssSelector(".slds-form-element__label.ng-binding.ng-scope")), "equals", "s\u00ed, funciona correctamente");
 	    sleep(8000);
 	    for(WebElement x : driver.findElements(By.className("slds-form-element__control"))) {
-	    	if(x.getText().toLowerCase().contains("ï¿½tu caso se resolvi\u00f3 con \u00e9xito!")) {
+	    	if(x.getText().toLowerCase().contains("¡tu caso se resolvi\u00f3 con \u00e9xito!")) {
 	    		desregistrar = true;
 	    	}
 	    	

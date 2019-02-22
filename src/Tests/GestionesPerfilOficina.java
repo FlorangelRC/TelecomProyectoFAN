@@ -3441,7 +3441,7 @@ public class GestionesPerfilOficina extends TestBase {
 	}
 	
 	@Test (groups = {"GestionesPerfilOficina", "Vista360", "Ciclo2"}, dataProvider = "CuentaVista360")
-	public void TS134495_CRM_Movil_Prepago_Vista_360_Distribucion_de_paneles_Informacion_del_cliente_FAN_Front_OOCC(String sDNI, String sLinea,String sNombre, String sEmail, String sMovil) {
+	public void TS134495_CRM_Movil_Prepago_Vista_360_Distribucion_de_paneles_Informacion_del_cliente_FAN_Front_OOCC(String sDNI, String sNombre,String sLinea, String sEmail, String sMovil) {
 		imagen = "TS134495";
 		detalles = null;
 		detalles = imagen + "-Vista 360 - DNI: "+sDNI+ " - Nombre: "+sNombre;
@@ -4293,7 +4293,7 @@ public class GestionesPerfilOficina extends TestBase {
 	}
 
 	@Test (groups = {"GestionesPerfilOficina","Vista360","E2E", "Ciclo 1"}, dataProvider="CuentaModificacionDeDatos")
-	public void TS134371_CRM_Movil_Prepago_Vista_360_Consulta_por_gestiones_Gestiones_abiertas_Plazo_No_vencido_Consulta_registrada_FAN_Front_OOCC(String sDNI){
+	public void TS134371_CRM_Movil_Prepago_Vista_360_Consulta_por_gestiones_Gestiones_abiertas_Plazo_No_vencido_Consulta_registrada_FAN_Front_OOCC(String sDNI, String sLinea){
 		imagen = "TS134371";
 		detalles = null;
 		detalles = imagen+"- Vista 360 - DNI: "+sDNI;
@@ -4315,7 +4315,7 @@ public class GestionesPerfilOficina extends TestBase {
 		List<WebElement> tableRows = table.findElements(By.xpath("//tr//td"));
 		for (WebElement cell : tableRows) {
 			try {
-				if (cell.getText().equals("26")) {
+				if (cell.getText().equals("18")) {
 					cell.click();
 				}
 			} catch (Exception e) {}
@@ -4326,7 +4326,7 @@ public class GestionesPerfilOficina extends TestBase {
 		List<WebElement> tableRows_2 = table_2.findElements(By.xpath("//tr//td"));
 		for (WebElement cell : tableRows_2) {
 			try {
-				if (cell.getText().equals("01")) {
+				if (cell.getText().equals("18")) {
 					cell.click();
 				}
 			} catch (Exception e) {}
@@ -4665,7 +4665,7 @@ public class GestionesPerfilOficina extends TestBase {
 		driver.switchTo().frame(cambioFrame(driver, By.id("SearchClientDocumentType")));
 		sb.BuscarCuenta("DNI", sDNI);
 		driver.findElement(By.cssSelector(".slds-tree__item.ng-scope")).click();
-		sleep(10000);
+		sleep(15000);
 		cc.seleccionarCardPornumeroLinea(sLinea, driver);
 		sleep(5000);
 		cCC.irAProductosyServicios();
@@ -4799,7 +4799,7 @@ public class GestionesPerfilOficina extends TestBase {
 		driver.switchTo().frame(cambioFrame(driver, By.id("SearchClientDocumentType")));
 		sb.BuscarCuenta("DNI", sDNI);
 		driver.findElement(By.cssSelector(".slds-tree__item.ng-scope")).click();
-		sleep(15000);
+		sleep(20000);
 		cc.seleccionarCardPornumeroLinea(sLinea, driver);
 		sleep(3000);
 		driver.switchTo().frame(cambioFrame(driver, By.className("community-flyout-actions-card")));
@@ -4826,10 +4826,11 @@ public class GestionesPerfilOficina extends TestBase {
 		driver.findElement(By.id("scc_widget_knowledgeOne_button")).click();
 		driver.switchTo().frame(cambioFrame(driver, By.cssSelector(".zen-unit.zen-lastUnit.kb-center")));
 		driver.findElement(By.id("knowledgeSearchInput_kbOneTab")).sendKeys("Suspensiones y Reconexiones - Requisitos");
-		driver.findElement(By.cssSelector(".knowledgeSearchBoxButton.knowledgeSearchButton.leftColumn")).click();
+		driver.findElement(By.id("knowledgeSearchInput_kbOneTab")).sendKeys(Keys.ENTER);
+		//driver.findElement(By.cssSelector(".knowledgeSearchBoxButton.knowledgeSearchButton.leftColumn")).click();
 		sleep(3000);
-		driver.switchTo().frame(cambioFrame(driver, By.id("articleList_kbOneTab")));
-		driver.findElement(By.xpath("//*[@id=\"kA0c0000000DD1B_kbOneTab\"]/div/p[1]/a")).click();
+		driver.switchTo().frame(cambioFrame(driver, By.cssSelector(".articleListContainer.loaded")));
+		driver.findElement(By.xpath("//*[@id=\"kA10j00000003Mo_kbOneTab\"]/div/p[1]")).click();
 		sleep(3000);
 		driver.switchTo().frame(cambioFrame(driver, By.cssSelector(".ptBody.secondaryPalette.brandSecondaryBrd")));
 		boolean a = false;
@@ -5118,7 +5119,7 @@ public class GestionesPerfilOficina extends TestBase {
 		driver.switchTo().frame(cambioFrame(driver, By.id("SearchClientDocumentType")));
 		sb.BuscarCuenta("DNI", sDNI);
 		driver.findElement(By.cssSelector(".slds-tree__item.ng-scope")).click();
-		sleep(15000);
+		sleep(20000);
 		driver.switchTo().frame(cambioFrame(driver, By.className("card-top")));
 		sleep(3000);
 		driver.findElement(By.className("card-top")).click();
@@ -5513,7 +5514,7 @@ public class GestionesPerfilOficina extends TestBase {
 		driver.switchTo().frame(cambioFrame(driver, By.id("SearchClientDocumentType")));
 		sb.BuscarCuenta("DNI", sDNI);
 		driver.findElement(By.cssSelector(".slds-tree__item.ng-scope")).click();
-		sleep(10000);
+		sleep(20000);
 		cc.seleccionarCardPornumeroLinea(sLinea, driver);
 		sleep(5000);
 		cCC.irAGestionEnCard("Diagn\u00f3stico");
@@ -5521,6 +5522,7 @@ public class GestionesPerfilOficina extends TestBase {
 		driver.findElement(By.name("loopname")).click();
 		selectByText(driver.findElement(By.id("Motive")), "No puedo llamar desde otro pa\u00eds");
 		buscarYClick(driver.findElements(By.id("MotiveIncidentSelect_nextBtn")), "equals", "continuar");
+		sleep(8000);
 		page.seleccionarPreguntaFinal("S\u00ed");
 		buscarYClick(driver.findElements(By.id("BalanceValidation_nextBtn")), "equals", "continuar");
 		tech.categoriaRed("Desregistrar");
@@ -5531,7 +5533,7 @@ public class GestionesPerfilOficina extends TestBase {
 		buscarYClick(driver.findElements(By.id("BlackListValidationOk_nextBtn")), "equals", "continuar");
 		tech.categoriaRed("Fuera del Area de Cobertura");
 		sleep(10000);
-		WebElement gesti = driver.findElement(By.xpath("//*[@id='OutOfCoverageMessage']/div/p/p[2]/span/strong"));
+		WebElement gesti = driver.findElement(By.xpath("//*[@id=\"CallingFromLineWithProblemMessage\"]/div/p/p[2]/span/strong"));
 		String Ncaso = gesti.getText();
 		System.out.println("El numero de caso es: "+Ncaso);
 		caso = true;
@@ -6948,7 +6950,7 @@ public class GestionesPerfilOficina extends TestBase {
 		driver.switchTo().frame(cambioFrame(driver, By.id("SearchClientDocumentType")));
 		sb.BuscarCuenta("DNI", sDNI);
 		driver.findElement(By.cssSelector(".slds-tree__item.ng-scope")).click();
-		sleep(10000);
+		sleep(15000);
 		driver.switchTo().frame(cambioFrame(driver, By.className("card-top")));
 		driver.findElement(By.className("card-top")).click();
 		sleep(5000);
@@ -6967,6 +6969,7 @@ public class GestionesPerfilOficina extends TestBase {
 		sleep(15000);
 		page.seleccionarPreguntaFinal("No");
 		buscarYClick(driver.findElements(By.id("DeregisterSpeech_nextBtn")), "equals", "continuar");
+		sleep(8000);
 		((JavascriptExecutor)driver).executeScript("window.scrollTo(0,"+driver.findElement(By.cssSelector(".slds-form-element__label.ng-binding.ng-scope")).getLocation().y+" )");
 		page.seleccionarPreguntaFinal("S\u00ed, funciona correctamente");
 		sleep(8000);
@@ -6995,7 +6998,7 @@ public class GestionesPerfilOficina extends TestBase {
 		driver.switchTo().frame(cambioFrame(driver, By.id("SearchClientDocumentType")));
 		sb.BuscarCuenta("DNI", sDNI);
 		driver.findElement(By.cssSelector(".slds-tree__item.ng-scope")).click();
-		sleep(10000);
+		sleep(15000);
 		driver.switchTo().frame(cambioFrame(driver, By.className("card-top")));
 		driver.findElement(By.className("card-top")).click();
 		sleep(5000);
@@ -7014,6 +7017,7 @@ public class GestionesPerfilOficina extends TestBase {
 		sleep(15000);
 		page.seleccionarPreguntaFinal("No");
 		buscarYClick(driver.findElements(By.id("DeregisterSpeech_nextBtn")), "equals", "continuar");
+		sleep(8000);
 		((JavascriptExecutor)driver).executeScript("window.scrollTo(0,"+driver.findElement(By.cssSelector(".slds-form-element__label.ng-binding.ng-scope")).getLocation().y+" )");
 		page.seleccionarPreguntaFinal("S\u00ed, funciona correctamente");
 		sleep(8000);
@@ -7292,7 +7296,7 @@ public class GestionesPerfilOficina extends TestBase {
 		driver.switchTo().frame(cambioFrame(driver, By.id("SearchClientDocumentType")));
 		sb.BuscarCuenta("DNI", sDNI);
 		driver.findElement(By.cssSelector(".slds-tree__item.ng-scope")).click();
-		sleep(12000);
+		sleep(15000);
 		driver.switchTo().frame(cambioFrame(driver, By.className("card-top")));
 		driver.findElement(By.className("card-top")).click();
 		sleep(5000);
@@ -7353,7 +7357,7 @@ public class GestionesPerfilOficina extends TestBase {
 			if (x.getText().contains("Estado"))
 				tabla = x;
 		}
-		if (tabla.findElements(By.tagName("td")).get(3).getText().equalsIgnoreCase("Realizada exitosa"))
+		if (tabla.findElements(By.tagName("td")).get(3).getText().equalsIgnoreCase("Informada"))
 			estado = true;
 		Assert.assertTrue(estado);
 	}
@@ -7490,7 +7494,7 @@ public class GestionesPerfilOficina extends TestBase {
 	}
 	
 	@Test (groups = {"GestionesPerfilOficina", "ResumenDeCuenta", "Ciclo4"}, dataProvider = "CuentaVista360")
-	public void TS124406_CRM_Movil_REPRO_Resumen_de_Cuenta_Corriente_Visualizacion_del_Resumen_de_Cuenta_Corriente_a_nivel_de_cuenta_de_Facturacion_FAN_Front_OOCC(String sDNI, String sLinea,String sNombre, String sCuenta, String sMovil) {
+	public void TS124406_CRM_Movil_REPRO_Resumen_de_Cuenta_Corriente_Visualizacion_del_Resumen_de_Cuenta_Corriente_a_nivel_de_cuenta_de_Facturacion_FAN_Front_OOCC(String sDNI, String sNombre,String sLinea, String sCuenta, String sMovil) {
 		imagen = "TS124406";
 		String cuenta = null;
 		driver.switchTo().frame(cambioFrame(driver, By.id("SearchClientDocumentType")));
@@ -7526,7 +7530,7 @@ public class GestionesPerfilOficina extends TestBase {
 	}
 	
 	@Test (groups = {"GestionesPerfilOficina", "ResumenDeCuenta", "Ciclo4"}, dataProvider = "CuentaVista360")
-	public void TS124411_CRM_MovilREPRO_Resumen_de_Cuenta_Corriente_Visualizacion_del_Resumen_de_Cuenta_Corriente_a_nivel_de_cuenta_de_Facturacion_Detalle_ampliado_FAN_Front_OOCC(String sDNI, String sLinea,String sNombre, String sCuenta, String sMovil) {
+	public void TS124411_CRM_MovilREPRO_Resumen_de_Cuenta_Corriente_Visualizacion_del_Resumen_de_Cuenta_Corriente_a_nivel_de_cuenta_de_Facturacion_Detalle_ampliado_FAN_Front_OOCC(String sDNI, String sNombre,String sLinea, String sCuenta, String sMovil) {
 		imagen = "TS124411";
 		String cuenta = null;
 		driver.switchTo().frame(cambioFrame(driver, By.id("SearchClientDocumentType")));
@@ -7541,7 +7545,7 @@ public class GestionesPerfilOficina extends TestBase {
 		sleep(15000);
 		driver.switchTo().frame(cambioFrame(driver, By.cssSelector(".slds-button.slds-button--brand.filterNegotiations.slds-p-horizontal--x-large.slds-p-vertical--x-small.secondaryFont")));
 		driver.findElement(By.cssSelector(".slds-button.slds-button--brand.filterNegotiations.slds-p-horizontal--x-large.slds-p-vertical--x-small.secondaryFont")).click();
-		sleep(5000);
+		sleep(10000);
 		String resuCuenta = driver.findElement(By.className("secondaryFont")).getText();
 		cuenta = resuCuenta.substring(0, 16);
 		System.out.println("El Resumen de Cuenta Corresponde a la cuenta: " + cuenta);	
@@ -7555,7 +7559,7 @@ public class GestionesPerfilOficina extends TestBase {
 	}
 	
 	@Test (groups = {"GestionesPerfilOficina", "ResumenDeCuenta", "Ciclo4"}, dataProvider = "CuentaVista360")
-	public void TS124414_CRM_Movil_REPRO_Resumen_de_Cuenta_Corriente_Visualizacion_del_Resumen_de_Cuenta_Corriente_a_nivel_de_cuenta_de_Facturacion_Descarga_FAN_Front_OOCC(String sDNI, String sLinea,String sNombre, String sCuenta, String sMovil) {
+	public void TS124414_CRM_Movil_REPRO_Resumen_de_Cuenta_Corriente_Visualizacion_del_Resumen_de_Cuenta_Corriente_a_nivel_de_cuenta_de_Facturacion_Descarga_FAN_Front_OOCC(String sDNI, String sNombre,String sLinea, String sCuenta, String sMovil) {
 		imagen = "TS124414";
 		String cuenta = null;
 		driver.switchTo().frame(cambioFrame(driver, By.id("SearchClientDocumentType")));
@@ -7659,7 +7663,7 @@ public class GestionesPerfilOficina extends TestBase {
 	}
 	
 	@Test (groups = {"GestionesPerfilOficina", "ResumenDeCuenta", "Ciclo4"}, dataProvider = "CuentaVista360")
-	public void TS129475_CRM_Movil_REPRO_Resumen_de_Cuenta_Corriente_Detalle_ampliado_registro_de_Comprobante_Nota_de_Credito_Debito_FAN_Front_OOCC(String sDNI, String sLinea,String sNombre, String sCuenta, String sMovil) {
+	public void TS129475_CRM_Movil_REPRO_Resumen_de_Cuenta_Corriente_Detalle_ampliado_registro_de_Comprobante_Nota_de_Credito_Debito_FAN_Front_OOCC(String sDNI, String sNombre,String sLinea, String sCuenta, String sMovil) {
 		imagen = "TS129475";
 		String cuenta = null;
 		driver.switchTo().frame(cambioFrame(driver, By.id("SearchClientDocumentType")));
@@ -7674,7 +7678,7 @@ public class GestionesPerfilOficina extends TestBase {
 		sleep(15000);
 		driver.switchTo().frame(cambioFrame(driver, By.cssSelector(".slds-button.slds-button--brand.filterNegotiations.slds-p-horizontal--x-large.slds-p-vertical--x-small.secondaryFont")));
 		driver.findElement(By.cssSelector(".slds-button.slds-button--brand.filterNegotiations.slds-p-horizontal--x-large.slds-p-vertical--x-small.secondaryFont")).click();
-		sleep(5000);
+		sleep(10000);
 		String resuCuenta = driver.findElement(By.className("secondaryFont")).getText();
 		cuenta = resuCuenta.substring(0, 16);
 		System.out.println("El Resumen de Cuenta Corresponde a la cuenta: " + cuenta);	
