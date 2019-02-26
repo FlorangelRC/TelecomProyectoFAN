@@ -127,7 +127,7 @@ public class GestionesPerfilAgente extends TestBase{
 		tomarCaptura(driver,imagen);
 	}
 	
-	@AfterClass(alwaysRun=true)
+	//@AfterClass(alwaysRun=true)
 	public void quit() throws IOException {
 		//guardarListaTxt(datosOrden);
 		driver.quit();

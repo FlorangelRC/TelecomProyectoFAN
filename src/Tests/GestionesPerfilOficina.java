@@ -646,7 +646,7 @@ public class GestionesPerfilOficina extends TestBase {
 		driver.switchTo().frame(cambioFrame(driver, By.id("SearchClientDocumentType")));
 		SalesBase SB = new SalesBase(driver);
 		driver.findElement(By.id("PhoneNumber")).sendKeys(sLinea);
-		sleep(1500);
+		sleep(15000);
 		driver.findElement(By.id("SearchClientsDummy")).click();
 		sleep(10000);
 		WebElement cli = driver.findElement(By.id("tab-scoped-1")); 	
@@ -4096,7 +4096,7 @@ public class GestionesPerfilOficina extends TestBase {
 		System.out.println(driver.findElement(By.cssSelector(".slds-card__header.slds-grid")).getText());
 		driver.findElement(By.cssSelector(".slds-card__header.slds-grid")).getText().equals("Historial de packs");
 		driver.findElement(By.cssSelector(".slds-button.slds-button_brand")).click();
-		sleep(2000);
+		sleep(8000);
 		driver.switchTo().frame(cambioFrame(driver, By.cssSelector(".slds-grid.slds-wrap.slds-grid--pull-padded.slds-m-around--medium.slds-p-around--medium.negotationsfilter")));
 		driver.findElement(By.id("text-input-id-1")).click();
 		WebElement table = driver.findElement(By.cssSelector(".slds-datepicker.slds-dropdown.slds-dropdown--left"));
@@ -4104,7 +4104,7 @@ public class GestionesPerfilOficina extends TestBase {
 		List<WebElement> tableRows = table.findElements(By.xpath("//tr//td"));
 		for (WebElement cell : tableRows) {
 			try {
-				if (cell.getText().equals("09")) {
+				if (cell.getText().equals("01")) {
 					cell.click();
 				}
 			} catch (Exception e) {}
@@ -4115,7 +4115,7 @@ public class GestionesPerfilOficina extends TestBase {
 		List<WebElement> tableRows_2 = table_2.findElements(By.xpath("//tr//td"));
 		for (WebElement cell : tableRows_2) {
 			try {
-				if (cell.getText().equals("07")) {
+				if (cell.getText().equals("25")) {
 					cell.click();
 				}
 			} catch (Exception e) {}
@@ -4479,7 +4479,7 @@ public class GestionesPerfilOficina extends TestBase {
 	}
 	
 	@Test (groups = {"GestionesPerfilOficina", "ServicioTecnico","E2E", "Ciclo4"}, dataProvider = "serviciotecnicoC")
-	public void TS121362_CRM_Movil_REPRO_Servicio_Tecnico_Realiza_configuraciones_de_equipos_Validacion_de_IMEI_Ok_Sin_Garantia_Sin_Muleto_Reparar_ahora_No_acepta_presupuesto_ofCom(String sDNI, String sIMEI, String sEmail, String sLinea, String sOpcion, String sOperacion, String sSintoma) throws InterruptedException {
+	public void TS121362_CRM_Movil_REPRO_Servicio_Tecnico_Realiza_configuraciones_de_equipos_Validacion_de_IMEI_Ok_Sin_Garantia_Sin_Muleto_Reparar_ahora_No_acepta_presupuesto_ofCom(String sDNI, String sLinea, String sIMEI, String sEmail, String sOpcion, String sOperacion, String sSintoma) throws InterruptedException {
 		imagen = "TS121362";
 		detalles = null;
 		detalles = imagen + " -ServicioTecnico - DNI: " + sDNI;
@@ -4487,7 +4487,7 @@ public class GestionesPerfilOficina extends TestBase {
 		driver.switchTo().frame(cambioFrame(driver, By.id("SearchClientDocumentType")));
 		sb.BuscarCuenta("DNI", sDNI);
 		driver.findElement(By.cssSelector(".slds-tree__item.ng-scope")).click();
-		sleep(10000);
+		sleep(20000);
 		cc.seleccionarCardPornumeroLinea(sLinea, driver);
 		sleep(10000);
 		searchAndClick(driver, "Servicio T\u00e9cnico");
@@ -5328,7 +5328,7 @@ public class GestionesPerfilOficina extends TestBase {
 			sleep(5000);
 		} catch (Exception e) {}
 		buscarYClick(driver.findElements(By.cssSelector(".slds-form-element__label.ng-binding.ng-scope")), "equals", "si");
-		driver.findElement(By.id("FileAttach")).sendKeys("C:\\Users\\Sofia Chardin\\Desktop\\DNI.jpg");
+		driver.findElement(By.id("FileAttach")).sendKeys("C:\\Users\\xappiens\\flowerengel\\TelecomProyectoFAN\\DNI.jpg");
 		driver.findElement(By.id("AttachDocuments_nextBtn")).click();
 		sleep(5000);
 		driver.findElement(By.id("Summary_nextBtn")).click();
@@ -5821,7 +5821,7 @@ public class GestionesPerfilOficina extends TestBase {
 			List<WebElement> tableRows = table.findElements(By.xpath("//tr//td"));
 				for (WebElement cell : tableRows) {
 					try {
-						if (cell.getText().equals("01")) {
+						if (cell.getText().equals("25")) {
 							cell.click();
 						}
 					}catch(Exception e) {}
@@ -5832,7 +5832,7 @@ public class GestionesPerfilOficina extends TestBase {
 				List<WebElement> tableRows_2 = table_2.findElements(By.xpath("//tr//td"));
 				for (WebElement cell : tableRows_2) {
 					try {
-						if (cell.getText().equals("01")) {
+						if (cell.getText().equals("25")) {
 						cell.click();
 						}
 					}catch(Exception e) {}
@@ -6720,6 +6720,7 @@ public class GestionesPerfilOficina extends TestBase {
 	@Test (groups = {"ProblemasConRecargas", "GestionesPerfilTelefonico", "E2E", "Ciclo3"}, dataProvider = "CuentaProblemaRecarga")
 	public void TS125372_CRM_Movil_Repro_Problemas_con_Recarga_Presencial_TC(String sDNI, String sLinea) {
 		imagen = "TS125372";
+		ContactSearch contact = new ContactSearch(driver);
 		boolean gestion = false;
 		String datoViejo = cbs.ObtenerValorResponse(cbsm.Servicio_queryLiteBySubscriber(sLinea), "bcs:MainBalance");
 		Integer datosInicial = Integer.parseInt(datoViejo.substring(0, 5));
@@ -6747,8 +6748,8 @@ public class GestionesPerfilOficina extends TestBase {
 			sleep(10000);
 		} catch (Exception e) {}
 		buscarYClick(driver.findElements(By.cssSelector(".slds-form-element__label.ng-binding.ng-scope")), "equals", "si");
-		driver.findElement(By.id("FileAttach")).sendKeys("C:\\Users\\Nicolas\\Desktop\\descarga.jpg");
-		driver.findElement(By.id("AttachDocuments_nextBtn")).click();
+		File directory = new File("Dni.jpg");
+		contact.subir_imagen(new File(directory.getAbsolutePath()).toString(),"si");
 		sleep(5000);
 		driver.findElement(By.id("Summary_nextBtn")).click();
 		sleep(7000);

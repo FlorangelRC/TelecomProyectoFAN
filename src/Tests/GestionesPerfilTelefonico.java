@@ -132,7 +132,7 @@ public class GestionesPerfilTelefonico extends TestBase{
 		tomarCaptura(driver,imagen);
 	}
 
-	@AfterClass(alwaysRun=true)
+	//@AfterClass(alwaysRun=true)
 	public void quit() throws IOException {
 		driver.quit();
 		sleep(5000);
@@ -1097,7 +1097,7 @@ public class GestionesPerfilTelefonico extends TestBase{
 		String datosInicial = cCBS.ObtenerUnidadLibre(cCBSM.Servicio_QueryFreeUnit(sLinea), "Datos Libres");
 		BasePage cambioFrameByID=new BasePage();
 		driver.switchTo().frame(cambioFrameByID.getFrameForElement(driver, By.id("SearchClientDocumentType")));
-		sleep(1000);
+		sleep(20000);
 		SalesBase sSB = new SalesBase(driver);
 		sSB.BuscarCuenta("DNI", sDNI);
 		String accid = driver.findElement(By.cssSelector(".searchClient-body.slds-hint-parent.ng-scope")).findElements(By.tagName("td")).get(5).getText();

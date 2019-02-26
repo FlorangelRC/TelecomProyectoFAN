@@ -263,7 +263,7 @@ public class PagePerfilTelefonico extends TestBase{
 		sleep(15000);
 		Select metodoEntrega = new Select (driver.findElement(By.id("DeliveryMethodSelection")));
 		metodoEntrega.selectByVisibleText(entrega);
-		Delivery.click();
+		//Delivery.click();
 		Select State = new Select (driver.findElement(By.id("PickState")));
 		State.selectByVisibleText(provincia);
 		Select City = new Select (driver.findElement(By.id("PickCity")));
@@ -271,6 +271,7 @@ public class PagePerfilTelefonico extends TestBase{
 		//driver.findElement(By.id("Store")).click();
 		Select Store = new Select (driver.findElement(By.id("Store")));
 		Store.selectByVisibleText(puntodeventa);
+		sleep(5000);
 		Delivery.click();
 		sleep(25000);
 		//SimulaciondeFactura.click();
