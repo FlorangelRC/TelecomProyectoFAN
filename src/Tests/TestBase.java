@@ -226,9 +226,41 @@ public class TestBase {
 	}
 	
 	public void waitForClickeable(WebDriver driver, By element) {
-		(new WebDriverWait(driver, 25)).until(ExpectedConditions.elementToBeClickable(element));
+		(new WebDriverWait(driver, 15)).until(ExpectedConditions.elementToBeClickable(element));
 	}
 
+	public Boolean waitForQuantityMoreThan(WebDriver driver, By element, int number, int timeout) {
+		Boolean resultado = false;
+		WebDriverWait wait = new WebDriverWait(driver, timeout);
+		try {
+		wait.until(ExpectedConditions.numberOfElementsToBeMoreThan(element, number));
+		resultado = true;
+		System.out.println("Encontro el elemento " + element.toString());
+		}
+		catch (TimeoutException ex) {
+			resultado = false;
+			System.out.println("No encontro el elemento " + element.toString());
+		}
+		
+		return resultado;
+	}
+	
+	public Boolean waitForVisible(WebDriver driver, By element, int timeout) {
+		Boolean resultado = false;
+		WebDriverWait wait = new WebDriverWait(driver, timeout);
+		
+		try {
+		wait.until(ExpectedConditions.visibilityOfElementLocated(element));
+		resultado = true;
+		System.out.println("Encontro el elemento " + element.toString());
+		}
+		catch (TimeoutException ex) {
+			resultado = false;
+			System.out.println("No encontro el elemento " + element.toString());
+		}
+		
+		return resultado;
+	}
 	
 	public void clickLeftPanel(WebDriver driver) {
 		List<WebElement> buttons = driver.findElements(By.tagName("button"));
