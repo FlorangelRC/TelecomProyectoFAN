@@ -72,9 +72,6 @@ public class GestionesPerfilTelefonico extends TestBase{
 		cbs = new CBS();
 		cbsm = new CBS_Mattu();
 		loginTelefonico(driver);
-//		WebElement dynamicElement = (new WebDriverWait(driver, 10))
-//				  .until(ExpectedConditions.elementToBeClickable(By.id("tabBar")));//.presenceOfElementLocated(By.id("dynamicElement")));
-//		//sleep(22000);
 		waitForClickeable(driver,By.id("tabBar"));
 		driver.findElement(By.id("tabBar")).findElement(By.tagName("a")).click();
 		sleep(21000);
@@ -84,7 +81,7 @@ public class GestionesPerfilTelefonico extends TestBase{
 	@BeforeMethod(alwaysRun=true)
 	public void setup() throws Exception {
 		sleep(10000);
-		goToLeftPanel2(driver, "Inicio");
+		goToLeftPanel3(driver, "Inicio");
 		sleep(15000);
 		try {
 			sb.cerrarPestaniaGestion(driver);
@@ -124,7 +121,7 @@ public class GestionesPerfilTelefonico extends TestBase{
 			}
 		}
 		
-		sleep(25000);
+		sleep(15000);
 	}
 
 	@AfterMethod(alwaysRun=true)
@@ -1100,7 +1097,7 @@ public class GestionesPerfilTelefonico extends TestBase{
 		String datosInicial = cCBS.ObtenerUnidadLibre(cCBSM.Servicio_QueryFreeUnit(sLinea), "Datos Libres");
 		BasePage cambioFrameByID=new BasePage();
 		driver.switchTo().frame(cambioFrameByID.getFrameForElement(driver, By.id("SearchClientDocumentType")));
-		sleep(1000);
+		sleep(20000);
 		SalesBase sSB = new SalesBase(driver);
 		sSB.BuscarCuenta("DNI", sDNI);
 		String accid = driver.findElement(By.cssSelector(".searchClient-body.slds-hint-parent.ng-scope")).findElements(By.tagName("td")).get(5).getText();
@@ -1484,7 +1481,7 @@ public class GestionesPerfilTelefonico extends TestBase{
 	}
 	
 	@Test (groups = {"GestionesPerfilTelefonico", "Vista360", "Ciclo2"}, dataProvider = "CuentaVista360")
-	public void TS134797_CRM_Movil_Prepago_Vista_360_Distribucion_de_paneles_Panel_Derecho_Busqueda_de_gestiones_promociones_y_gestiones_abandonadas_FAN_Front_Telefonico(String sDNI, String sLinea,String sNombre, String sEmail, String sMovil) {
+	public void TS134797_CRM_Movil_Prepago_Vista_360_Distribucion_de_paneles_Panel_Derecho_Busqueda_de_gestiones_promociones_y_gestiones_abandonadas_FAN_Front_Telefonico(String sDNI, String sNombre,String sLinea, String sEmail, String sMovil) {
 		imagen = "TS134797";
 		detalles = null;
 		detalles = imagen+"-Vista 360 - DNI:"+sDNI;
@@ -2168,6 +2165,7 @@ public class GestionesPerfilTelefonico extends TestBase{
 				estado = x;
 			}
 		System.out.println(estado);
+		sleep(10000);
 		for (WebElement x : estado.findElement(By.className("detailList")).findElements(By.tagName("tr"))) {
 			System.out.println(x.getText());
 			if (x.getText().toLowerCase().contains("estado"))
@@ -2218,7 +2216,7 @@ public class GestionesPerfilTelefonico extends TestBase{
 	}
 
 	@Test (groups = {"GestionesPerfilTelefonico", "Vista360", "E2E","ConsultaPorGestion", "Ciclo2"}, dataProvider = "CuentaVista360")
-	public void TS134808_CRM_Movil_Prepago_Vista_360_Consulta_por_gestiones_Gestiones_Cerradas_Informacion_brindada_FAN_Front_Telefonico(String sDNI, String sLinea) {
+	public void TS134808_CRM_Movil_Prepago_Vista_360_Consulta_por_gestiones_Gestiones_Cerradas_Informacion_brindada_FAN_Front_Telefonico(String sDNI, String sNombre,String sLinea, String sEmail, String sMovil) {
 		imagen = "TS134808";
 		detalles = null;
 		detalles = imagen+"-Vista 360 - DNI:"+sDNI;
@@ -2488,7 +2486,7 @@ public class GestionesPerfilTelefonico extends TestBase{
 		driver.switchTo().frame(cambioFrame(driver, By.id("SearchClientDocumentType")));
 		sb.BuscarCuenta("DNI", sDNI);
 		driver.findElement(By.cssSelector(".slds-tree__item.ng-scope")).click();
-		sleep(10000);
+		sleep(20000);
 		driver.switchTo().frame(cambioFrame(driver, By.className("card-top")));
 		driver.findElement(By.className("card-top")).click();
 		sleep(5000);
@@ -2502,6 +2500,7 @@ public class GestionesPerfilTelefonico extends TestBase{
 	    page.seleccionarPreguntaFinal("S\u00ed");
 	    buscarYClick(driver.findElements(By.id("BalanceValidation_nextBtn")), "equals", "continuar");
 	    tech.categoriaRed("Desregistrar");
+	    sleep(4000);
 	    Assert.assertTrue(driver.findElement(By.cssSelector(".imgItemContainer.ng-scope")).getText().equalsIgnoreCase("Desregistrar"));
 	}
 	
@@ -2516,7 +2515,7 @@ public class GestionesPerfilTelefonico extends TestBase{
 		driver.switchTo().frame(cambioFrame(driver, By.id("SearchClientDocumentType")));
 		sb.BuscarCuenta("DNI", sDNI);
 		driver.findElement(By.cssSelector(".slds-tree__item.ng-scope")).click();
-		sleep(10000);
+		sleep(20000);
 		driver.switchTo().frame(cambioFrame(driver, By.className("card-top")));
 		driver.findElement(By.className("card-top")).click();
 		sleep(5000);
@@ -2770,6 +2769,7 @@ public class GestionesPerfilTelefonico extends TestBase{
 		CustomerCare cCC=new CustomerCare(driver);
 		TechCare_Ola1 page=new TechCare_Ola1(driver);
 		TechnicalCareCSRDiagnosticoPage tech = new TechnicalCareCSRDiagnosticoPage(driver);
+		TechnicalCareCSRAutogestionPage Tech = new TechnicalCareCSRAutogestionPage (driver);
 		driver.switchTo().frame(cambioFrame(driver, By.id("SearchClientDocumentType")));
 		sb.BuscarCuenta("DNI", sDNI);
 		driver.findElement(By.cssSelector(".slds-tree__item.ng-scope")).click();
@@ -2807,7 +2807,8 @@ public class GestionesPerfilTelefonico extends TestBase{
 		driver.switchTo().frame(cambioFrame(driver, By.id("Case_body")));
 		WebElement gest = driver.findElement(By.id("Case_body")).findElement(By.tagName("table")).findElement(By.tagName("tbody")).findElement(By.cssSelector(".dataRow.even.last.first")).findElements(By.tagName("td")).get(2);
 		System.out.println(gest.getText());
-		Assert.assertTrue(gest.getText().equals("Realizada exitosa"));
+		Assert.assertTrue(gest.getText().equals("En Proceso de Ejecuci\u00f3n"));
+		Assert.assertTrue(Tech.cerrarCaso("Resuelta exitosa", "Consulta"));
 	}
 	
 	@Test (groups = {"GestionesPerfilTelefonico", "BaseDeConocimiento", "Ciclo3"}, dataProvider = "CuentaVista360")
@@ -4390,7 +4391,7 @@ public class GestionesPerfilTelefonico extends TestBase{
 	}
 	
 	@Test (groups = {"GestionesPerfilOficina","Vista360","E2E", ""}, dataProvider="CuentaVista360")
-	public void TS134794_CRM_Movil_Prepago_Vista_360_Distribucion_de_paneles_Informacion_del_cliente_FAN_Front_Telefonico(String sDNI, String sNombre) {
+	public void TS134794_CRM_Movil_Prepago_Vista_360_Distribucion_de_paneles_Informacion_del_cliente_FAN_Front_Telefonico(String sDNI, String sNombre,String sLinea, String sEmail, String sMovil) {
 		imagen = "TS134794";
 		detalles = imagen+" - Vista360 - DNI: "+sDNI;
 		BasePage cambioFrameByID=new BasePage();
@@ -4615,7 +4616,7 @@ public class GestionesPerfilTelefonico extends TestBase{
 	}
 	
 	@Test (groups = {"GestionesPerfilTelefonico" , "ResumenDeCuenta" , "E2E" , "Ciclo4"}, dataProvider= "CuentaVista360")
-	public void TS135439_CRM_Movil_REPRO_Resumen_de_Cuenta_Corriente_Detalle_ampliado_registro_de_Comprobante_Factura_de_Venta_FAN_Front_Telefonico(String sDNI, String sLinea,String sNombre, String sCuenta, String sMovil) {
+	public void TS135439_CRM_Movil_REPRO_Resumen_de_Cuenta_Corriente_Detalle_ampliado_registro_de_Comprobante_Factura_de_Venta_FAN_Front_Telefonico(String sDNI, String sNombre,String sLinea, String sCuenta, String sMovil) {
 		imagen = "TS135439";
 		detalles = null;
 		detalles = imagen + " -Resumen de Cuenta Corriente - DNI: " + sDNI;
@@ -4628,7 +4629,7 @@ public class GestionesPerfilTelefonico extends TestBase{
 		mk.closeActiveTab();
 		driver.switchTo().frame(cambioFrame(driver, By.className("profile-edit")));
 		buscarYClick(driver.findElements(By.className("left-sidebar-section-header")), "equals", "facturaci\u00f3n");
-		sleep(5000);
+		sleep(10000);
 		cc.irAResumenDeCuentaCorriente();
 		driver.switchTo().frame(tb.cambioFrame(driver, By.cssSelector(".slds-button.slds-button--brand.filterNegotiations.slds-p-horizontal--x-large.slds-p-vertical--x-small.secondaryFont")));
 		WebElement saldo = driver.findElement(By.cssSelector(".slds-text-heading--medium.secondaryFont"));

@@ -1245,7 +1245,7 @@ try{	driver.findElement(By.id("alert-ok-button")).click();	} catch (NoSuchElemen
 			SalesBase SB = new SalesBase(driver);
 			driver.switchTo().defaultContent();
 			sleep(3000);
-			TB.goToLeftPanel2(driver, "Logistica");
+			TB.goToLeftPanel3(driver, "Logistica");
 			sleep(12000);
 			try{
 				SB.cerrarPestaniaGestion(driver);}
@@ -1263,9 +1263,12 @@ try{	driver.findElement(By.id("alert-ok-button")).click();	} catch (NoSuchElemen
 			sleep(12000);
 			driver.switchTo().frame(TB.cambioFrame(driver, By.cssSelector(".slds-truncate.ng-binding")));
 			
-			String serial = driver.findElement(By.cssSelector(".slds-table.slds-table--bordered.slds-table--cell-buffer.vlc-slds-table")).findElements(By.cssSelector(".slds-truncate.ng-binding")).get(2).getText();
+			String serial = driver.findElement(By.cssSelector(".slds-table.slds-table--bordered.slds-table--cell-buffer.vlc-slds-table")).findElements(By.cssSelector(".slds-truncate.ng-binding")).get(1).getText();
 			System.out.println("S="+serial);
-			driver.findElement(By.cssSelector(".slds-input.ng-pristine.ng-untouched.ng-empty.ng-invalid.ng-invalid-required.ng-valid-pattern")).sendKeys(serial);
+			wBody = driver.findElement(By.xpath("//*[@class='slds-table slds-table--bordered slds-table--cell-buffer vlc-slds-table']"));
+			Marketing mk = new Marketing(driver);
+			List<WebElement> wReingresoSerial = mk.traerColumnaElement(wBody, 5, 4);
+			wReingresoSerial.get(0).findElement(By.tagName("input")).sendKeys(serial);
 			driver.findElement(By.id("SerialNumberValidation_nextBtn")).click();
 			sleep(8000);
 			boolean bAssert = false;
@@ -1289,7 +1292,15 @@ try{	driver.findElement(By.id("alert-ok-button")).click();	} catch (NoSuchElemen
 			SalesBase SB = new SalesBase(driver);
 			driver.switchTo().defaultContent();
 			sleep(3000);
-			TB.goToLeftPanel2(driver, "Entregas");
+			TB.goToLeftPanel3(driver, "Entregas");
+			
+			if(!driver.findElement(By.xpath("//*[@class='x-btn-small x-btn-icon-small-left'] //tr[2] //td[2] //button //span")).getText().equalsIgnoreCase("Entregas") ) {
+				TB.goToLeftPanel3(driver, "Casos");
+			}
+			System.out.println("I've click on Entregas");
+			sleep(10000);
+			
+			
 			sleep(8000);
 			try{
 				SB.cerrarPestaniaGestion(driver);}

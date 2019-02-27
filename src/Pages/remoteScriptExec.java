@@ -48,9 +48,129 @@ public class remoteScriptExec {
 			
 			//Create the execution channel over the session
 			ChannelExec ceChannelExec = (ChannelExec) sSession.openChannel("exec");
+			
 			// Set the command to execute on the channel and execute the command
+			//Create files			
 			ceChannelExec.setCommand("/infra_shared/ScriptsExe/S_REPL00/IC_REPLICA/referencia2valor.sh");
+			ceChannelExec.setCommand("cd /infra_shared/ib/programas/ocs");
+			ceChannelExec.connect();
+			ceChannelExec.setCommand("/infra_shared/ScriptsExe/S_REPL00/IC_REPLICA/acuerdoservicio.sh");
+			ceChannelExec.setCommand("/infra_shared/ScriptsExe/S_REPL00/IC_REPLICA/ajuste.sh");
+			ceChannelExec.setCommand("/infra_shared/ScriptsExe/S_REPL00/IC_REPLICA/caracteristica.sh");
+			ceChannelExec.setCommand("/infra_shared/ScriptsExe/S_REPL00/IC_REPLICA/caracteristicavalor.sh");
+			ceChannelExec.setCommand("/infra_shared/ScriptsExe/S_REPL00/IC_REPLICA/caso.sh");
+			ceChannelExec.setCommand("/infra_shared/ScriptsExe/S_REPL00/IC_REPLICA/casohistoria.sh");
+			ceChannelExec.setCommand("/infra_shared/ScriptsExe/S_REPL00/IC_REPLICA/casohito.sh");
+			ceChannelExec.setCommand("/infra_shared/ScriptsExe/S_REPL00/IC_REPLICA/categoria.sh");
+			ceChannelExec.setCommand("/infra_shared/ScriptsExe/S_REPL00/IC_REPLICA/cuentacliente.sh");
+			ceChannelExec.setCommand("/infra_shared/ScriptsExe/S_REPL00/IC_REPLICA/cuentafacturacion.sh");
+			ceChannelExec.setCommand("/infra_shared/ScriptsExe/S_REPL00/IC_REPLICA/cuentafacturacionhistoria.sh");
+			ceChannelExec.setCommand("/infra_shared/ScriptsExe/S_REPL00/IC_REPLICA/cuentapartner.sh");
+			ceChannelExec.setCommand("/infra_shared/ScriptsExe/S_REPL00/IC_REPLICA/direccion.sh");
+			ceChannelExec.setCommand("/infra_shared/ScriptsExe/S_REPL00/IC_REPLICA/grupodetrabajo.sh");
+			ceChannelExec.setCommand("/infra_shared/ScriptsExe/S_REPL00/IC_REPLICA/grupodetrabajohistoria.sh");
+			ceChannelExec.setCommand("/infra_shared/ScriptsExe/S_REPL00/IC_REPLICA/historiatransaccion.sh");
+			ceChannelExec.setCommand("/infra_shared/ScriptsExe/S_REPL00/IC_REPLICA/individuo.sh");
+			ceChannelExec.setCommand("/infra_shared/ScriptsExe/S_REPL00/IC_REPLICA/individuocuentacliente.sh");
+			ceChannelExec.setCommand("/infra_shared/ScriptsExe/S_REPL00/IC_REPLICA/individuocuentafacturacion.sh");
+			ceChannelExec.setCommand("/infra_shared/ScriptsExe/S_REPL00/IC_REPLICA/individuohistoria.sh");
+			ceChannelExec.setCommand("/infra_shared/ScriptsExe/S_REPL00/IC_REPLICA/itemproducto.sh");
+			ceChannelExec.setCommand("/infra_shared/ScriptsExe/S_REPL00/IC_REPLICA/mediodepago.sh");
+			ceChannelExec.setCommand("/infra_shared/ScriptsExe/S_REPL00/IC_REPLICA/motivocontacto.sh");
+			ceChannelExec.setCommand("/infra_shared/ScriptsExe/S_REPL00/IC_REPLICA/orden.sh");
+			ceChannelExec.setCommand("/infra_shared/ScriptsExe/S_REPL00/IC_REPLICA/ordenhistoria.sh");
+			ceChannelExec.setCommand("/infra_shared/ScriptsExe/S_REPL00/IC_REPLICA/ordenitem.sh");
+			ceChannelExec.setCommand("/infra_shared/ScriptsExe/S_REPL00/IC_REPLICA/ordenitemhistoria.sh");
+			ceChannelExec.setCommand("/infra_shared/ScriptsExe/S_REPL00/IC_REPLICA/ordenprecio.sh");
+			ceChannelExec.setCommand("/infra_shared/ScriptsExe/S_REPL00/IC_REPLICA/precioelemento.sh");
+			ceChannelExec.setCommand("/infra_shared/ScriptsExe/S_REPL00/IC_REPLICA/preciovariable.sh");
+			ceChannelExec.setCommand("/infra_shared/ScriptsExe/S_REPL00/IC_REPLICA/prodadquiridocaracteristica.sh");
+			ceChannelExec.setCommand("/infra_shared/ScriptsExe/S_REPL00/IC_REPLICA/producto.sh");
+			ceChannelExec.setCommand("/infra_shared/ScriptsExe/S_REPL00/IC_REPLICA/productoadquirido.sh");
+			ceChannelExec.setCommand("/infra_shared/ScriptsExe/S_REPL00/IC_REPLICA/productocaracteristica.sh");
+			ceChannelExec.setCommand("/infra_shared/ScriptsExe/S_REPL00/IC_REPLICA/productohistoria.sh");
+			ceChannelExec.setCommand("/infra_shared/ScriptsExe/S_REPL00/IC_REPLICA/productopreciolista.sh");
+			ceChannelExec.setCommand("/infra_shared/ScriptsExe/S_REPL00/IC_REPLICA/puntodeventa.sh");
+			ceChannelExec.setCommand("/infra_shared/ScriptsExe/S_REPL00/IC_REPLICA/puntodeventahistoria.sh");
+			ceChannelExec.setCommand("/infra_shared/ScriptsExe/S_REPL00/IC_REPLICA/tarea.sh");
+			ceChannelExec.setCommand("/infra_shared/ScriptsExe/S_REPL00/IC_REPLICA/usuario.sh");
+			ceChannelExec.setCommand("/infra_shared/ScriptsExe/S_REPL00/IC_REPLICA/usuariogrupodetrabajo.sh");
+			ceChannelExec.setCommand("/infra_shared/ScriptsExe/S_REPL00/IC_REPLICA/usuariogrupodetrabajohistoria.sh");
+			ceChannelExec.setCommand("/infra_shared/ScriptsExe/S_REPL00/IC_REPLICA/usuariorol.sh");
+			ceChannelExec.setCommand("/infra_shared/ScriptsExe/S_REPL00/IC_REPLICA/catalogo.sh");
+			ceChannelExec.setCommand("/infra_shared/ScriptsExe/S_REPL00/IC_REPLICA/catalogoproducto.sh");
+			ceChannelExec.setCommand("/infra_shared/ScriptsExe/S_REPL00/IC_REPLICA/catalogoproductolista.sh");
+			ceChannelExec.setCommand("/infra_shared/ScriptsExe/S_REPL00/IC_REPLICA/catalogoproductoprecio.sh");
+			ceChannelExec.setCommand("/infra_shared/ScriptsExe/S_REPL00/IC_REPLICA/productoadquiridohistoria.sh");
+			ceChannelExec.connect();
+			
+			//Move files
 			ceChannelExec.setCommand("cd /infra_shared/ScriptsExe/S_INTE00/IB_CRM/");
+			ceChannelExec.connect();
+			ceChannelExec.setCommand("Wkf_AcuerdoServicio.sh");
+			ceChannelExec.setCommand("Wkf_Ajuste.sh");
+			ceChannelExec.setCommand("Wkf_Caracteristica.sh");
+			ceChannelExec.setCommand("Wkf_CaracteristicaValor.sh");
+			ceChannelExec.setCommand("Wkf_Caso.sh");
+			ceChannelExec.setCommand("Wkf_CasoHistoria.sh");
+			ceChannelExec.setCommand("Wkf_CasoHito.sh");
+			ceChannelExec.setCommand("Wkf_Categoria.sh");
+			ceChannelExec.setCommand("Wkf_Contactos.sh");
+			ceChannelExec.setCommand("Wkf_CuentaAgente.sh");
+			ceChannelExec.setCommand("Wkf_CuentaCliente.sh");
+			ceChannelExec.setCommand("Wkf_Cuentafacturacion.sh");
+			ceChannelExec.setCommand("Wkf_CuentaFacturacionHistoria.sh");
+			ceChannelExec.setCommand("Wkf_CuentaFacturacionInsercion.sh");
+			ceChannelExec.setCommand("Wkf_CuentaPartner.sh");
+			//ceChannelExec.setCommand("Wkf_CustomerAny.sh");
+			ceChannelExec.setCommand("Wkf_Direccion.sh");
+			ceChannelExec.setCommand("Wkf_ExportEpcEcomm.sh");
+			ceChannelExec.setCommand("Wkf_GrupoDeTrabajo.sh");
+			ceChannelExec.setCommand("Wkf_GrupoDeTrabajoHistoria.sh");
+			ceChannelExec.setCommand("Wkf_HistoriaTransaccion.sh");
+			ceChannelExec.setCommand("Wkf_Individuo.sh");
+			ceChannelExec.setCommand("Wkf_IndividuoCuentaCliente.sh");
+			ceChannelExec.setCommand("Wkf_IndividuoCuentaFacturacion.sh");
+			ceChannelExec.setCommand("Wkf_IndividuoHistoria.sh");
+			ceChannelExec.setCommand("Wkf_ItemProducto.sh");
+			ceChannelExec.setCommand("Wkf_ItemProducto2.sh");
+			ceChannelExec.setCommand("Wkf_q_Legacy_Actions.sh");
+			ceChannelExec.setCommand("Wkf_q_Legacy_Default_User.sh");
+			ceChannelExec.setCommand("Wkf_q_Legacy_Permissions.sh");
+			ceChannelExec.setCommand("Wkf_q_Legacy_Role.sh");
+			ceChannelExec.setCommand("Wkf_q_Legacy_Role_Action.sh");
+			ceChannelExec.setCommand("Wkf_q_Legacy_Role_Permission.sh");
+			ceChannelExec.setCommand("Wkf_q_Legacy_User_Action.sh");
+			//ceChannelExec.setCommand("Wkf_q_Legacy_User_Permission.sh");
+			ceChannelExec.setCommand("Wkf_LineasPreactivadas.sh");
+			//ceChannelExec.setCommand("Wkf_MedioDePago.sh");
+			ceChannelExec.setCommand("Wkf_MotivoContacto.sh");
+			ceChannelExec.setCommand("Wkf_Orden.sh");
+			ceChannelExec.setCommand("Wkf_OrdenHistoria.sh");
+			ceChannelExec.setCommand("Wkf_OrdenItem.sh");
+			ceChannelExec.setCommand("Wkf_OrdenItemHistoria.sh");
+			ceChannelExec.setCommand("Wkf_OrdenPrecio.sh");
+			ceChannelExec.setCommand("Wkf_PrecioElemento.sh");
+			ceChannelExec.setCommand("Wkf_PrecioVariable.sh");
+			ceChannelExec.setCommand("Wkf_ProdAdquiridoCaracteristica.sh");
+			ceChannelExec.setCommand("Wkf_Producto.sh");
+			ceChannelExec.setCommand("Wkf_ProductoAdquirido.sh");
+			//ceChannelExec.setCommand("Wkf_ProductoAdquiridoCuenta.sh");
+			ceChannelExec.setCommand("Wkf_ProductoAdquiridoEquipos.sh");
+			ceChannelExec.setCommand("Wkf_ProductoAdquiridoHistoria.sh");
+			//ceChannelExec.setCommand("Wkf_ProductoAdquiridoLinea.sh");
+			ceChannelExec.setCommand("Wkf_ProductoCaracteristica.sh");
+			ceChannelExec.setCommand("Wkf_ProductoHistoria.sh");
+			ceChannelExec.setCommand("Wkf_ProductoPrecioLista.sh");
+			//ceChannelExec.setCommand("Wkf_PuntoDeVenta.sh");
+			ceChannelExec.setCommand("Wkf_PuntoDeVentaHistoria.sh");
+			//ceChannelExec.setCommand("Wkf_ReferenciaEntidadValor.sh");
+			ceChannelExec.setCommand("Wkf_Tarea.sh");
+			ceChannelExec.setCommand("Wkf_Usuario.sh");
+			ceChannelExec.setCommand("Wkf_UsuarioGrupoDeTrabajo.sh");
+			ceChannelExec.setCommand("Wkf_UsuarioGrupoDeTrabajoHistoria.sh");
+			ceChannelExec.setCommand("Wkf_UsuarioRol.sh");
+			ceChannelExec.setCommand("Wkf_VendedorSP.sh");
 			ceChannelExec.connect();
 			
 			// Get an InputStream from this channel and read messages, generated 
@@ -155,9 +275,9 @@ public class remoteScriptExec {
 		for (int i = 0; i < fListFiles.length; i++) {
 			
 			if (fListFiles[i].isFile()) {
-				String fileName = fListFiles[i].getName();
-				if (fileName.contains(sName)) {
-					sFiles.add(fileName);
+				String sFileName = fListFiles[i].getName();
+				if (sFileName.matches("IB" + sName + "(?<date>\\d{14})[\\.]txt(?:(\\.gz)){0,1}")) {
+					sFiles.add(sFileName);
 				}
 			}
 		}
@@ -182,8 +302,9 @@ public class remoteScriptExec {
 	}
 	
 	@SuppressWarnings("resource")
-	public List<String> readTxt(String sName) throws IOException {
-		List<String> sContent = new ArrayList<String>();
+	public List<List<String>> readTxt(String sName) throws IOException {
+		List<List<String>> sContentLine = new ArrayList<List<String>>();
+		List<String> sContent;
 		String[] sSplit;
 		File fFile = null;
 		FileReader frFileReader = null;
@@ -191,7 +312,6 @@ public class remoteScriptExec {
 		fFile = new File ("FTPFiles/" + sName);
 		frFileReader = new FileReader (fFile);
 		brBufferedReader = new BufferedReader(frFileReader);
-		
 		String sLine;
 		while((sLine=brBufferedReader.readLine())!=null) {
 			if (sLine.toString().contains("|")) {
@@ -210,13 +330,16 @@ public class remoteScriptExec {
 					}
 				}
 			}
+			sContent = new ArrayList<String>();
+			sContent.clear();
 			for (int i = 0; i < sSplit.length; i++) {
 				sContent.add(sSplit[i]);
 			}
+			sContentLine.add(sContent);
 		}
 		frFileReader.close();
 		brBufferedReader.close();
-		return sContent;
+		return sContentLine;
 	}
 	
 	public void checkName(String sName) throws ParseException, IOException {
@@ -249,8 +372,8 @@ public class remoteScriptExec {
 	
 	public boolean verifyTextMaxSize(String sCell, int iSize) {
 		boolean bAssert = false;
-		
 		int iSizeOfContent = sCell.length();
+		
 		bAssert = iSizeOfContent <= iSize;
 		
 		return bAssert;
@@ -296,6 +419,44 @@ public class remoteScriptExec {
 		}
 		
 		Assert.assertTrue(iVerifyDigit2 == iVerifyDigit);
+	}
+	
+	public boolean documentType(String sDT) {
+		boolean bAssert = false;
+		
+		if (sDT.equalsIgnoreCase("DNI") || sDT.equalsIgnoreCase("LE") || sDT.equalsIgnoreCase("LC") || sDT.equalsIgnoreCase("Pasaporte")) {
+			bAssert = true;
+		}
+		
+		return bAssert;
+	}
+	
+	public void checkNameLegacyRole(String sName) throws ParseException, IOException {
+		List<String> sFiles = findFiles(sName);
+		
+		for(String sAux : sFiles) {
+			if (sAux.contains(".gz")) {
+				decompressGzip(sAux);
+				deleteFile(sAux);
+			}
+		}
+		System.out.println("Decompression finished.");
+		
+		sFiles = findFiles("sName");
+		Pattern pRegularExpressionName = Pattern.compile("^" + sName);
+		String sDateFormat = "yyyyMMddHHmmss";
+		Pattern pRegularExpressionFormat = Pattern.compile(".txt$");
+		for(String sAux : sFiles) {
+			Matcher mMatch = pRegularExpressionName.matcher(sAux);
+			Assert.assertTrue(mMatch.find());
+			
+			mMatch = pRegularExpressionFormat.matcher(sAux);
+			Assert.assertTrue(mMatch.find());
+			
+			dateFormat(sAux, sDateFormat);
+		}
+		
+		System.out.println("All titles date format are correct.");
 	}
 	
 }
