@@ -41,7 +41,7 @@ public class GestionesPerfilBackOffice extends TestBase {
 		driver.findElement(By.id("tabBar")).findElement(By.tagName("a")).click();
 		sleep(18000);
 		driver.switchTo().defaultContent();
-		goToLeftPanel2(driver, "Inicio");
+		goToLeftPanel3(driver, "Inicio");
 		sleep(18000);
 		try {
 			sb.cerrarPestaniaGestion(driver);

@@ -1294,8 +1294,8 @@ public class BeFANMayorista extends TestBase {
 		if (lasNoches[0].equals("false")) {
 			Assert.assertTrue(false);
 		}
-		String nombreArch = lasNoches[1];
-		String deposito = lasNoches[2];
+		nombreArch = lasNoches[1];
+		deposito = lasNoches[2];
 		
 		//ejecuto
 		irA("gestion");
@@ -1354,8 +1354,8 @@ public class BeFANMayorista extends TestBase {
 		if (lasNoches[0].equals("false")) {
 			Assert.assertTrue(false);
 		}
-		String nombreArch = lasNoches[1];
-		String deposito = lasNoches[2];
+		nombreArch = lasNoches[1];
+		deposito = lasNoches[2];
 		
 		//ejecuto
 		irA("gestion");
@@ -1541,18 +1541,12 @@ public class BeFANMayorista extends TestBase {
 		String mensaje;
 		
 		irA("importacion");
-		sleep(500);
 		Botones.SISeleccionDeDeposito(deposito);
-		sleep(500);
 		Botones.SISeleccionDePrefijo(prefijo);
-		sleep(500);
 		Botones.SISeleccionCantidadDePrefijo("1");
-		sleep(500);
 		Botones.SIClickAgregar();
 		Botones.SIImportarArchivo(nombreArch = Botones.SICreacionArchivo(nombreArch, path, serial1, serial2));
-		sleep(500);
 		Botones.SIClickImportar();
-		sleep(1000);
 		mensaje = Botones.SIMensajeModal();
 		if (mensaje.contentEquals("La sumatoria de la cantidad de prefijos es menor a la cantidad total de lineas del archivo.")) {
 			Assert.assertTrue(true);
@@ -1663,8 +1657,8 @@ public class BeFANMayorista extends TestBase {
 
 	}
 	
-	@Test (groups = {"BeFan"}, dataProvider="SerialValidoEterno")
-	public void TS97654_BeFan_Movil_REPRO_PreaActivacion_Linea_Repro_Localidad_inexistente_para_numeracion_movil(String path, String nombreArch, String deposito, String prefijo, String serial1, String serial2, String prefijo2) throws IOException, Exception {
+	@Test (groups = {"BeFan"})
+	public void TS97654_BeFan_Movil_REPRO_PreaActivacion_Linea_Repro_Localidad_inexistente_para_numeracion_movil() throws IOException, Exception {
 		BeFan Botones = new BeFan(driver);
 		DPW dpw = new DPW();
 		String[] resultadoEstado = {""};
@@ -1710,8 +1704,8 @@ public class BeFANMayorista extends TestBase {
 		if (lasNoches[0].equals("false")) {
 			Assert.assertTrue(false);
 		}
-		String nombreArch = lasNoches[1];
-		String deposito = lasNoches[2];
+		nombreArch = lasNoches[1];
+		deposito = lasNoches[2];
 		
 		//ejecuto
 		irA("gestion");
