@@ -1766,7 +1766,7 @@ public class CustomerCare extends BasePage {
 				esta = true;
 			}
 		}
-		texto = texto.split(",")[0].split(":")[2];
+		texto = texto.split(",")[1].split(":")[2];
 		texto = texto.substring(1, texto.length()-1);
 		texto = texto.replace(",", "");
 		texto = texto.replace(".", "").concat("00");

@@ -1245,7 +1245,7 @@ try{	driver.findElement(By.id("alert-ok-button")).click();	} catch (NoSuchElemen
 			SalesBase SB = new SalesBase(driver);
 			driver.switchTo().defaultContent();
 			sleep(3000);
-			TB.goToLeftPanel3(driver, "Logistica");
+			TB.goToLeftPanel2(driver, "Logistica");
 			sleep(12000);
 			try{
 				SB.cerrarPestaniaGestion(driver);}
