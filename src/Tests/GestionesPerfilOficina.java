@@ -63,7 +63,7 @@ public class GestionesPerfilOficina extends TestBase {
 		GestionFlow gGF = new GestionFlow();*/
 		//System.out.println(gGF.FlowIMSI(driver, "2932449333"));
 		
-		
+		driver = setConexion.setupEze();
 		sleep(5000);
 		sb = new SalesBase(driver);
 		cc = new CustomerCare(driver);
