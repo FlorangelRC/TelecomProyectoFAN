@@ -65,7 +65,6 @@ public class GestionesPerfilOficina extends TestBase {
 		//System.out.println(gGF.FlowIMSI(driver, "2932449333"));
 		
 		
-		driver = setConexion.setupEze();
 		sleep(5000);
 		sb = new SalesBase(driver);
 		cc = new CustomerCare(driver);
@@ -530,21 +529,29 @@ public class GestionesPerfilOficina extends TestBase {
 		//Assert.assertTrue(gGF.FlowConsultaServicioActivo(driver, sLinea, "Discado Directo Internacional con Roaming Int."));
 		BasePage cambioFrameByID=new BasePage();
 		sleep(30000);
+		
 		driver.switchTo().frame(cambioFrameByID.getFrameForElement(driver, By.id("SearchClientDocumentType")));
 		sleep(1000);
+		
 		SalesBase sSB = new SalesBase(driver);
 		sSB.BuscarCuenta("DNI",sDNI);
 		String accid = driver.findElement(By.cssSelector(".searchClient-body.slds-hint-parent.ng-scope")).findElements(By.tagName("td")).get(5).getText();
 		System.out.println("id "+accid);
 		detalles +="-Cuenta:"+accid;
 		driver.findElement(By.cssSelector(".slds-tree__item.ng-scope")).findElement(By.tagName("div")).click();
-		sleep(18000);
+		sleep(23000);
+		
 		cc.seleccionarCardPornumeroLinea(sLinea, driver);
 		sleep(5000);
+		
 		cc.irAGestionEnCard("Alta/Baja de Servicios");
 		sleep(35000);
+		
 		cc.openrightpanel();
-		cc.closerightpanel();
+		//cc.closerightpanel();
+		sleep(5000);
+		cc.cerarPanelDerecho();			//PARA QUE CIERRE NO SE PUEDE USAR EL MOUSE YA QUE USA UN ROBOT QUE LO CONTROLA
+		
 		driver.switchTo().defaultContent();
 		driver.switchTo().frame(cambioFrameByID.getFrameForElement(driver, By.cssSelector(".slds-text-body--small.slds-page-header__info.taDevider")));
 		String sOrder = driver.findElement(By.cssSelector(".slds-text-body--small.slds-page-header__info.taDevider")).getText();
@@ -565,20 +572,25 @@ public class GestionesPerfilOficina extends TestBase {
 			//Always empty
 		}
 		sleep(5000);
+		
 		driver.switchTo().frame(cambioFrame(driver, By.id("tab-default-1")));
 		sleep(15000);
+		
 		ppt = new PagePerfilTelefonico(driver);
 		ppt.altaBajaServicio("Baja", "servicios basicos general movil", "DDI", "DDI con Roaming Internacional", driver);
 		driver.findElement(By.cssSelector(".slds-button.slds-m-left--large.slds-button--brand.ta-button-brand")).click();//Continuar
 		//ppt.getwAltaBajaContinuar().click();//Continuar
 		sleep(20000);
+		
 		WebElement wMessageBox = driver.findElement(By.xpath("//*[@id='TextBlock1']/div/p/p[2]"));
 		System.out.println("wMessage.getText: " + wMessageBox.getText().toLowerCase());
 		Assert.assertTrue(wMessageBox.getText().toLowerCase().contains("la orden " + sOrder + " se realiz\u00f3 con \u00e9xito!".toLowerCase()));
+		
 		sleep(15000);
 		sOrders.add("Baja de Servicio, orden numero: " + sOrder + ", DNI: " + sDNI);
 		driver.navigate().refresh();
 		Assert.assertTrue(cc.corroborarEstadoCaso(sOrder, "Activada"));
+		
 		sleep(20000);
 		Assert.assertTrue(gGF.FlowConsultaServicioInactivo(driver, sLinea, "DDI con Roaming Internacional"));
 	}
@@ -8128,5 +8140,135 @@ public class GestionesPerfilOficina extends TestBase {
 		driver.switchTo().defaultContent();
 		tech.buscarCaso(caso);
 		Assert.assertTrue(tech.cerrarCaso("Resuelta exitosa", "Consulta"));
+	}
+	
+	@Test
+	public void prueba () throws InterruptedException {
+	CustomerCare cCC=new CustomerCare(driver);
+	sleep(10000);
+	driver.switchTo().frame(cambioFrame(driver, By.id("SearchClientDocumentType")));
+	sb.BuscarCuenta("DNI", "22222752");
+	driver.findElement(By.cssSelector(".slds-tree__item.ng-scope")).click();
+	sleep(20000);
+	
+	driver.switchTo().frame(cambioFrame(driver, By.className("card-top")));
+	driver.findElement(By.className("card-top")).click();
+	sleep(15000);
+	List <WebElement> opciones = driver.findElements(By.cssSelector("li a"));
+	System.out.println("cant de opciones -> "+ opciones.size());
+	for(WebElement x : opciones) {
+		if(x.getText().indexOf("Diag")>-1) {
+			System.out.println("Cambio de frame");				
+			x.click();
+		}
+	}
+	sleep(15000);
+	
+	driver.switchTo().frame(cambioFrame(driver,By.id("MotiveIncidentSelect_nextBtn")));
+	System.out.println("cambio  bien de frame");
+	Select seleccion = new Select(driver.findElement(By.id("Motive")));
+	seleccion.selectByIndex(1);
+	driver.findElement(By.id("MotiveIncidentSelect_nextBtn")).click();
+	sleep(15000);
+
+	driver.switchTo().frame(cambioFrame(driver,By.id("DataQuotaQuery_nextBtn"))); 
+	opciones= driver.findElements(By.cssSelector(".slds-radio.ng-scope"));
+	for(WebElement x : opciones) {
+		if(x.getText().indexOf("S")>-1) {
+			x.click();
+		}
+	}
+	driver.findElement(By.id("DataQuotaQuery_nextBtn")).click();// hasta aca bien
+	sleep(15000);
+	
+	driver.switchTo().frame(cambioFrame(driver, By.id("NetworkCategory_nextBtn")));
+	driver.findElement(By.id("NetworkCategory_nextBtn")).click();
+	sleep(15000);
+	
+	driver.switchTo().frame(cambioFrame(driver, By.id("BlackListValidationOk_nextBtn")));
+	opciones = driver.findElements(By.className(".slds-radio--faux.ng-scope"));
+	for(WebElement x : opciones) {
+		if(x.getText().indexOf("S")>-1) {
+			x.click();
+		}
+	}
+	driver.findElement(By.id("BlackListValidationOk_nextBtn")).click();
+	sleep(8000);
+	
+	driver.switchTo().frame(cambioFrame(driver, By.id("RecentConfiguration_nextBtn")));
+	opciones = driver.findElements(By.cssSelector(".slds-form-element__label.ng-binding.ng-scope"));
+	for(WebElement x : opciones) {
+		if(x.getText().indexOf("S")>-1) {
+			x.click();
+		}
+	}
+	driver.findElement(By.id("RecentConfiguration_nextBtn")).click();// hasta aca bien
+	sleep(8000);
+	
+	driver.switchTo().frame(cambioFrame(driver, By.id("MobileConfigurationSending_nextBtn")));
+	opciones =driver.findElements(By.cssSelector(".imgItemContainer.ng-scope"));
+	for(WebElement x : opciones) {
+		if(x.getText().indexOf("S")>-1) {
+			x.click();
+		}
+	}
+	driver.findElement(By.id("MobileConfigurationSending_nextBtn"));
+	sleep(8000);
+	driver.switchTo().frame(cambioFrame(driver, By.id("NetworkCategory_nextBtn")));
+	driver.findElement(By.id("MobileConfigurationSending_nextBtn")).click();
+	sleep(8000);
+	
+	opciones =driver.findElements(By.cssSelector("strong"));
+	boolean corte = true;
+	String  numero="";
+	for(WebElement x : opciones) {
+		if(x.getText().indexOf("00")>-1 && corte) {
+			
+			corte=false;
+			numero = x.getText();
+		}
+	}
+	System.out.print(numero);
+	cc.cerrarTodasLasPestanas();
+	sleep(5000);
+	cCC.buscarCaso(numero);	//hasta aca bien
+	sleep(8000);
+	
+	driver.switchTo().frame(cambioFrame(driver, By.id("topButtonRow")));
+	opciones = driver.findElement(By.id("topButtonRow")).findElements(By.tagName("input"));
+	WebElement close=null;
+	System.out.println("/nTopButtonRow size: "+opciones.size());
+	for(WebElement x : opciones) {
+		if (x.getAttribute("value").equalsIgnoreCase("Cerrar caso")){
+			System.out.println("entro al if");
+			close = x;
+		}
+
+	}
+	if(close!=null) {
+	close.click();
+	
+	}
+	sleep(8000);
+	
+	driver.switchTo().frame(cambioFrame(driver,By.id("cas7")));
+	seleccion = new Select(driver.findElement(By.id("cas7")));
+	seleccion.selectByIndex(3);
+	seleccion = new Select(driver.findElement(By.id("cas6")));
+	seleccion.selectByIndex(1);
+	
+	driver.switchTo().frame(cambioFrame(driver,By.id("bottomButtonRow")));
+	opciones = driver.findElement(By.id("topButtonRow")).findElements(By.tagName("input"));
+	System.out.println("elementos "+opciones.size());
+	for(WebElement x : opciones) {
+		String name =x.getAttribute("name");
+		System.out.println(name);
+		if(name.contentEquals("save")) {
+			System.out.println("adentro");
+			close=x;
+		}
+	}
+	close.click();
+	
 	}
 }

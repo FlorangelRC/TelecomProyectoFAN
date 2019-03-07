@@ -2,12 +2,15 @@ package Pages;
 
 import static org.testng.Assert.assertTrue;
 
+import java.awt.AWTException;
+import java.awt.Robot;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
+import java.awt.event.InputEvent;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
@@ -23,6 +26,10 @@ import org.openqa.selenium.ElementNotVisibleException;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.NoSuchElementException;
 import org.testng.Assert;
+//import com.gargoylesoftware.htmlunit.javascript.host.event.InputEvent;
+import com.google.common.collect.ImmutableBiMap.Builder;
+import com.sun.corba.se.spi.orbutil.fsm.Action;
+import java.awt.Robot;
 
 import Tests.TestBase;
 
@@ -612,6 +619,21 @@ public class CustomerCare extends BasePage {
 			System.out.println("Entro pero no hizo click");
 		}
 	}
+	public void cerarPanelDerecho() throws AWTException {		
+		sleep(5000);																							
+		driver.switchTo().defaultContent();
+		Robot robot = new Robot();																									
+		WebElement boton  = driver.findElement(By.cssSelector(".x-layout-split.x-layout-split-east.x-splitbar-h"));		//SELECCIONA LA BARRA PARA HACERLA VISIBLE
+		robot.mouseMove((int) (boton.getLocation().getX()*1.01),(int) (boton.getLocation().getY()*4));					// SE MUEVE A LA POSICION 
+		sleep(5000);
+		if(boton.getAttribute("class").compareTo("x-layout-split x-layout-split-east x-splitbar-h x-layout-split-over")==0) {//VERIFICA QUE ESTE SELECCIONADO Y VISIBLE
+			robot.mousePress(InputEvent.BUTTON1_MASK);
+			robot.mouseRelease(InputEvent.BUTTON1_MASK);																	//HACE CLICK PARA COLAPSAR EL PANEL
+			sleep(5000);
+		}
+	}
+	
+
 		
 	public void leftpanel() {
 		List <WebElement> btns = driver.findElements(By.className("ext-webkit ext-chrome"));
