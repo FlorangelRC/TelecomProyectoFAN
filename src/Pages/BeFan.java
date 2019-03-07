@@ -60,6 +60,7 @@ import org.apache.http.util.EntityUtils;
 //import Tests.File;
 import Tests.TestBase;
 
+
 public class BeFan extends BasePage{
 
 	//*********************************CONSTRUCTOR******************************************************//
@@ -72,7 +73,7 @@ public class BeFan extends BasePage{
 	
 	
 	//*********************************ELEMENTOS******************************************************//
-	
+	TestBase tst = new TestBase();
 	//Login
 	@FindBy(name="username")
 	private WebElement user;
@@ -230,57 +231,64 @@ public class BeFan extends BasePage{
 	
 	//Menu Simcard-Importacion
 	public void SISeleccionDeDeposito(String deposito) {
-		if (driver.findElements(By.cssSelector(".text.form-control.ng-pristine.ng-untouched.ng-valid.ng-empty")).isEmpty()) {
-			selectByText(driver.findElements(By.cssSelector(".text.form-control.ng-untouched.ng-valid.ng-not-empty.ng-dirty.ng-valid-parse")).get(0), deposito);
-		} else {
-			
-			selectByText(driver.findElements(By.cssSelector(".text.form-control.ng-pristine.ng-untouched.ng-valid.ng-empty")).get(0), deposito);
-		}
-		
+		tst.waitForClickeable(driver, By.name("vendedores"));
+			selectByText(driver.findElement(By.name("vendedores")), deposito);		
 	}
 	
 	public void SISeleccionDePrefijo (String prefijo) {
-	
-		if (driver.findElements(By.cssSelector(".text.form-control.ng-pristine.ng-untouched.ng-valid.ng-empty")).isEmpty()) {
-			selectByText(driver.findElements(By.cssSelector(".text.form-control.ng-valid.ng-dirty.ng-touched.ng-empty")).get(0), prefijo);
+		if (tst.waitForQuantityMoreThan(driver, By.cssSelector(".text.form-control.ng-pristine.ng-untouched.ng-valid.ng-empty"), 0, 15)) {
+			tst.waitForClickeable(driver, By.cssSelector(".text.form-control.ng-pristine.ng-untouched.ng-valid.ng-empty"));
+			selectByText(driver.findElements(By.cssSelector(".text.form-control.ng-pristine.ng-untouched.ng-valid.ng-empty")).get(0), prefijo);
 		} else {
-		selectByText(driver.findElements(By.cssSelector(".text.form-control.ng-pristine.ng-untouched.ng-valid.ng-empty")).get(0), prefijo);
+			tst.waitForClickeable(driver, By.cssSelector(".text.form-control.ng-valid.ng-dirty.ng-touched.ng-empty"));
+		selectByText(driver.findElements(By.cssSelector(".text.form-control.ng-valid.ng-dirty.ng-touched.ng-empty")).get(0), prefijo);
 		}
 	}
 	
 	public void SISeleccionCantidadDePrefijo (String cantidadPrefijo) {
-		
-		if (driver.findElements(By.cssSelector(".text.form-control.ng-pristine.ng-untouched.ng-valid.ng-empty")).isEmpty()) {
-			driver.findElement(By.cssSelector(".text.form-control.ng-valid.ng-dirty.ng-touched.ng-empty")).sendKeys(cantidadPrefijo);
-		} else {
+			
+		if (tst.waitForQuantityMoreThan(driver, By.cssSelector(".text.form-control.ng-pristine.ng-untouched.ng-valid.ng-empty"), 0, 15)) {
+			tst.waitForClickeable(driver, By.cssSelector(".text.form-control.ng-pristine.ng-untouched.ng-valid.ng-empty"));
 			driver.findElement(By.cssSelector(".text.form-control.ng-pristine.ng-untouched.ng-valid.ng-empty")).sendKeys(cantidadPrefijo);
+		} else {
+			tst.waitForClickeable(driver, By.cssSelector(".text.form-control.ng-valid.ng-dirty.ng-touched.ng-empty"));
+			driver.findElement(By.cssSelector(".text.form-control.ng-valid.ng-dirty.ng-touched.ng-empty")).sendKeys(cantidadPrefijo);
 		}
+		
 	}
 	
 	public void SIClickAgregar() {
+		tst.waitForClickeable(driver, By.name("btnAgregar"));
 	driver.findElement(By.name("btnAgregar")).click();
 	}
 	
 	public String SIMensajeModal() {
 		String mensaje;
+		tst.waitForVisible(driver, By.xpath("/html/body/div[1]/div/div/div/div[1]/div[1]/h3"), 15);
 		mensaje = driver.findElement(By.xpath("/html/body/div[1]/div/div/div/div[1]/div[1]/h3")).getText();
 		return mensaje;
 	}
 	
 	public String SIMensajeModalMasDeUnMensaje() {
 		String mensaje;
+		tst.waitForVisible(driver, By.xpath("/html/body/div[1]/div/div/div/div[1]/div[1]/h3/h2"), 15);
 		mensaje = driver.findElement(By.xpath("/html/body/div[1]/div/div/div/div[1]/div[1]/h3/h2")).getText();
 		return mensaje;
 	}
 	
 	public void SIImportarArchivo(String path) {
+	tst.waitForClickeable(driver, By.id("fileinput"));
 	WebElement uploadElement = driver.findElement(By.id("fileinput"));
 	uploadElement.sendKeys(path);
 	}
 	
 	public void SIClickImportar() {
 	int cont = driver.findElements(By.cssSelector(".btn.btn-primary")).size();
-	driver.findElements(By.cssSelector(".btn.btn-primary")).get(cont-1).click();
+	if (tst.waitForQuantityMoreThan(driver, By.cssSelector(".btn.btn-primary"), 2, 15) == true) {
+		driver.findElements(By.cssSelector(".btn.btn-primary")).get(cont-1).click();
+	} else {
+		Assert.assertTrue(false);
+	}
 	}
 	
 	public String SICreacionArchivo(String nombreArch, String path, String serial1, String serial2) throws IOException {
@@ -362,17 +370,8 @@ public class BeFan extends BasePage{
 	}
 	
 	
-	
-	public void SIDesRenombreDeArchivo(String nombreArch, String path) {
-	String[] parts = nombreArch.split("\\\\");
-	String[] partes = parts[2].split("2");
-	File archivo = new File(nombreArch);
-	String path2 = path + "\\" + partes[0] + ".txt";
-	File archivo2 = new File(path2);
-	Boolean faio = archivo.renameTo(archivo2);
-	}
-	
 	public void SIClickAceptarImportar() {
+	tst.waitForClickeable(driver, By.cssSelector(".btn.btn-link"));
 	driver.findElement(By.cssSelector(".btn.btn-link")).click();	
 	}
 	
@@ -427,28 +426,33 @@ public class BeFan extends BasePage{
 	//Menu Simcard-Gestion
 	
 	//Estados Procesado, En Proceso, Eliminado y Pendiente
+	//QUEDE ACA, REVISAR AMBOS
 	public void SGSeleccionEstado(String estado){
+	tst.waitForClickeable(driver, By.cssSelector(".text.form-control.ng-pristine.ng-untouched.ng-valid.ng-empty"));
 	selectByText(driver.findElement(By.cssSelector(".text.form-control.ng-pristine.ng-untouched.ng-valid.ng-empty")), estado);
 	}
 	
 	public void SGSeleccionDeposito(String deposito) {
+	tst.waitForClickeable(driver, By.cssSelector(".text.form-control.ng-pristine.ng-untouched.ng-valid.ng-empty"));
 	selectByText(driver.findElements(By.cssSelector(".text.form-control.ng-pristine.ng-untouched.ng-valid.ng-empty")).get(1), deposito);
 	}
 	
 	public void SGClickBuscar() {
+	tst.waitForClickeable(driver, By.cssSelector(".btn.btn-primary"));
 	driver.findElement(By.cssSelector(".btn.btn-primary")).click();
 	}
 	
 	public void SGFechaDesdeAhora() {
+		
 		DateTimeFormatter dtf = DateTimeFormatter.ofPattern("dd/MM/yyyy");  
 		LocalDateTime now = LocalDateTime.now(); 
 		String time = dtf.format(now);
 		String[] fecha = time.split("/");
 		String izquierda = Keys.chord(Keys.ARROW_LEFT);
 		String borrar = Keys.chord(Keys.BACK_SPACE);
+		tst.waitForClickeable(driver, By.id("dataPickerDesde"));
 		driver.findElement(By.id("dataPickerDesde")).click();
-		driver.findElement(By.id("dataPickerDesde")).sendKeys(borrar + borrar + borrar + borrar + fecha[2] + izquierda + izquierda + izquierda + izquierda + izquierda + borrar + borrar + fecha[1] + izquierda + izquierda + izquierda + borrar + borrar + fecha[0]);
-		sleep(500);		
+		driver.findElement(By.id("dataPickerDesde")).sendKeys(borrar + borrar + borrar + borrar + fecha[2] + izquierda + izquierda + izquierda + izquierda + izquierda + borrar + borrar + fecha[1] + izquierda + izquierda + izquierda + borrar + borrar + fecha[0]);		
 	}
 	
 	public boolean SGLeerCampoYValidar(String nombreArch, String[] listaEstados, String[] listaResultados) {
@@ -459,6 +463,7 @@ public class BeFan extends BasePage{
 	ArrayList<String> estados = new ArrayList<String>();
 	ArrayList<String> resultados = new ArrayList<String>();
 	
+	tst.waitForClickeable(driver, By.cssSelector(".ng-binding"));
 	List<WebElement> tabla = driver.findElements(By.cssSelector(".ng-binding"));
 	String[] parts = nombreArch.split("\\\\");
 	String[] partes = parts[3].split("\\.");
@@ -466,7 +471,8 @@ public class BeFan extends BasePage{
 		cont = cont + 1;
 		if (x.getText().contains(partes[0]) && (listaEstados[0] != "" || listaResultados[0] != "")) {
 		driver.findElements(By.cssSelector(".btn.btn-primary.btn-xs")).get((cont - 14) / 8).click();
-		sleep(500);
+		//sleep(500);
+		tst.waitForClickeable(driver, By.cssSelector(".padding-left-15.ng-binding"));
 		List<WebElement> tabla2 = driver.findElements(By.cssSelector(".padding-left-15.ng-binding"));
 		for (cont2 = 7;cont2 < tabla2.size();cont2 = cont2 + 8) {
 			estados.add(driver.findElements(By.cssSelector(".padding-left-15.ng-binding")).get(cont2).getText());
@@ -482,7 +488,8 @@ public class BeFan extends BasePage{
 				cont3 = 1;
 			}
 		}
-		sleep(1000);
+		//sleep(1000);
+		tst.waitForClickeable(driver, By.cssSelector(".btn.btn-link"));
 		driver.findElements(By.cssSelector(".btn.btn-link")).get(0).click();
 		if (cont3 == 1) {
 			resultado = false;

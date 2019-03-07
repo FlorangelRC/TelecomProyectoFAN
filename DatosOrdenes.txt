@@ -1,1 +1,164 @@
-Suspension, orden numero: 00052216 - En espera de ejecución con numero de DNI: 15907314
+TS134817-Vista 360 - DNI: 6797008
+TS134817-Vista 360 - DNI: 6797008
+TS134817-Vista 360 - DNI: 6797008
+TS134817-Vista 360 - DNI: 6797008
+TS134817-Vista 360 - DNI: 6797008
+TS134817-Vista 360 - DNI: 6797008
+TS134817-Vista 360 - DNI: 6797008
+null
+null
+null
+null
+null
+null
+null
+null
+null
+TS134322-Recarga-DNI:6797008-Cuenta:3000000082410001-Orden:00018483
+null
+null
+null
+null
+null
+null
+null
+null
+null
+null
+null
+null
+null
+null
+null
+null
+null
+null
+null
+null
+null
+null
+null
+null
+null
+null
+null
+null
+null
+null
+null
+null
+null
+null
+null
+null
+null
+null
+TS135380-Ajuste-DNI:5868840
+null
+null
+null
+null
+TS121098 -ActualizarDatos: 6797008
+TS121098 -ActualizarDatos: 6797008
+TS121098 -ActualizarDatos: 6797008
+TS121098 -ActualizarDatos: 6797008
+TS121098 -ActualizarDatos: 6797008
+TS121098 -ActualizarDatos: 6797008
+null
+null
+null
+null
+null
+null
+null
+null
+null
+TS134825 -DetalleDeConsumos: 6797008
+TS134825 -DetalleDeConsumos: 6797008
+TS134825 -DetalleDeConsumos: 6797008
+TS134825 -DetalleDeConsumos: 6797008
+TS134825 -DetalleDeConsumos: 6797008
+null
+TS123148-Venta de pack-DNI:6797008-Cuenta:3000000082410001
+TS123148-Venta de pack-DNI:6797008-Cuenta:3000000082410001
+TS123148-Venta de pack-DNI:6797008-Cuenta:3000000082410001
+Renovacion de cuota: TS135402DNI: 6797008Linea: 2932477217
+null
+null
+null
+null
+null
+null
+null
+null
+null
+null
+null
+null
+null
+null
+null
+null
+TS135737-BajaServicio-DNI:5868840-Cuenta:3000000082510001
+TS135737-BajaServicio-DNI:5868840-Cuenta:3000000082510001
+TS135737-BajaServicio-DNI:5868840-Cuenta:3000000082510001
+null
+null
+null
+null
+null
+null
+null
+null
+null
+null
+null
+null
+null
+null
+null
+null
+null
+null
+null
+null
+null
+null
+null
+null
+null
+null
+null
+null
+null
+null
+null
+null
+null
+null
+null
+null
+null
+null
+null
+null
+null
+null
+null
+null
+null
+null
+null
+null
+null
+null
+null
+null
+null
+TS134825 -DetalleDeConsumos: 6797008
+TS134825 -DetalleDeConsumos: 6797008
+TS134825 -DetalleDeConsumos: 6797008
+TS134825 -DetalleDeConsumos: 6797008
+TS134825 -DetalleDeConsumos: 6797008
+null
+TS134332-Recarga-DNI:6797008-Cuenta:3000000082410001

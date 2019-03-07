@@ -182,7 +182,7 @@ public class AltadeLineas extends TestBase {
 		sb.continuar();
 		sleep(20000);
 		sb.Crear_DomicilioLegal(sProvincia, sLocalidad, "falsa", "", "1000", "", "", "1549");
-		sleep(12000);
+		sleep(25000);
 		WebElement sig = driver.findElement(By.id("LineAssignment_nextBtn"));
 		cc.obligarclick(sig);
 		sleep(25000);
@@ -193,10 +193,10 @@ public class AltadeLineas extends TestBase {
 			sleep(12000);
 		}catch(Exception ex1) {}
 		contact.tipoValidacion("documento");
-		sleep(8000);
+		sleep(10000);
 		File directory = new File("Dni.jpg");
 		driver.findElement(By.id("FileDocumentImage")).sendKeys(new File(directory.getAbsolutePath()).toString());
-		sleep(3000);
+		sleep(8000);
 		cc.obligarclick(driver.findElement(By.id("DocumentMethod_nextBtn")));
 		sleep(15000);
 		try {

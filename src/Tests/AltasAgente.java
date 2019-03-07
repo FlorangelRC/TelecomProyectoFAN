@@ -14,6 +14,7 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.Select;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.annotations.AfterClass;
@@ -39,6 +40,7 @@ public class AltasAgente extends TestBase{
 	protected  WebDriverWait wait;
 	List <String> DatosOrden =new ArrayList<String>();
 	String imagen;
+	
 	
 	@BeforeClass(alwaysRun=true)
 	public void Init2() {
@@ -137,16 +139,16 @@ public class AltasAgente extends TestBase{
 		SalesBase sb = new SalesBase(driver);
 		sb.BtnCrearNuevoCliente();
 		sDni = driver.findElement(By.id("SearchClientDocumentNumber")).getAttribute("value");
-		
 		//sb.Crear_Cliente(sDni);
 		ContactSearch contact = new ContactSearch(driver);
 		contact.sex(sSexo);
 		contact.Llenar_Contacto(sNombre, sApellido, sFNac);
 		driver.findElement(By.id("EmailSelectableItems")).findElement(By.tagName("input")).sendKeys(sEmail);
 		driver.findElement(By.id("Contact_nextBtn")).click();
-		sleep(28000);
+		waitForClickeable(driver, By.cssSelector(".slds-button.slds-button_neutral.add-button"));
+		//sleep(20000);
 		sb.ResolverEntrega(driver, sEntrega,sStoreProv,sStoreLoc);
-		sleep(7000);
+		sleep(3500);
 		driver.switchTo().defaultContent();
 		Accounts accountPage = new Accounts(driver);
 		driver.switchTo().frame(accountPage.getFrameForElement(driver, By.cssSelector(".hasMotif.homeTab.homepage.ext-webkit.ext-chrome.sfdcBody.brandQuaternaryBgr")));
@@ -180,22 +182,22 @@ public class AltasAgente extends TestBase{
 			
 		}
 		
-		sleep(14000);
+		sleep(7000);
 		driver.switchTo().frame(accountPage.getFrameForElement(driver, By.cssSelector(".slds-input.ng-pristine.ng-untouched.ng-valid.ng-empty")));
 		sb.elegirplan(sPlan);
 		sb.continuar();
-		sleep(22000);
+		sleep(11000);
 		sb.Crear_DomicilioLegal(sProvincia, sLocalidad, sCalle, "", sNumCa, "", "", sCP);
-		sleep(24000);
+		sleep(12000);
 		WebElement sig = driver.findElement(By.id("LineAssignment_nextBtn"));
 		cc.obligarclick(sig);
-		sleep(20000);
+		sleep(10000);
 		if (sEntrega.equalsIgnoreCase("Delivery")) {
 			
 		}
 		if (sEntrega.equalsIgnoreCase("Store pick up")) {
 			cc.obligarclick(driver.findElement(By.id("DeliveryMethodConfiguration_nextBtn")));
-			sleep(20000);
+			sleep(10000);
 		}
 		if (sEntrega.equalsIgnoreCase("Presencial")) {
 			String ICCID = driver.findElement(By.cssSelector(".ng-pristine.ng-untouched.ng-valid.ng-scope.ng-not-empty")).getText();
@@ -203,10 +205,10 @@ public class AltasAgente extends TestBase{
 			sleep(30000);
 		}
 		cc.obligarclick(driver.findElement(By.id("InvoicePreview_nextBtn")));
-		sleep(20000);
+		sleep(30000);
 		try {
 			cc.obligarclick(driver.findElement(By.id("SelectPaymentMethodsStep_nextBtn")));
-			sleep(20000);
+			sleep(30000);
 		}catch(Exception ex1) {}
 		
 		contact.tipoValidacion("documento");
@@ -215,12 +217,12 @@ public class AltasAgente extends TestBase{
 		driver.findElement(By.id("FileDocumentImage")).sendKeys(new File(directory.getAbsolutePath()).toString());
 		sleep(3000);
 		cc.obligarclick(driver.findElement(By.id("DocumentMethod_nextBtn")));
-		sleep(15000);
+		sleep(7000);
 		try {
 			driver.findElements(By.cssSelector(".slds-button.slds-button--neutral.ng-binding.ng-scope")).get(1).click();
-			sleep(10000);
+			sleep(5000);
 		}catch(Exception ex1) {}
-		String orden = driver.findElement(By.className("top-data")).findElement(By.className("ng-binding")).getText();
+		String orden = driver.findElements(By.className("top-data")).get(0).findElements(By.className("ng-binding")).get(0).getText();
 		String NCuenta = driver.findElements(By.className("top-data")).get(1).findElements(By.className("ng-binding")).get(3).getText();
 		String Linea = driver.findElement(By.cssSelector(".top-data.ng-scope")).findElements(By.className("ng-binding")).get(1).getText();
 		System.out.println("Orden "+orden);
@@ -229,6 +231,9 @@ public class AltasAgente extends TestBase{
 		orden = orden.substring(orden.length()-8);
 		NCuenta = NCuenta.substring(NCuenta.length()-16);
 		Linea = Linea.substring(Linea.length()-10);
+		System.out.println("Orden "+orden);
+		System.out.println("cuenta "+NCuenta);
+		System.out.println("Linea "+Linea);
 		cc.obligarclick(driver.findElement(By.id("OrderSumary_nextBtn")));
 		sleep(30000);
 		driver.findElement(By.id("SaleOrderMessages_nextBtn")).click();

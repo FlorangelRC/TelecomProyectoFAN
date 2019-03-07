@@ -95,7 +95,6 @@ public class TestBase {
 	}
 	
 	public void goToLeftPanel2(WebDriver driver, String selection) {
-		
 		driver.switchTo().defaultContent();
 		try {
 			driver.findElement(By.className("x-btn-split"));
@@ -114,10 +113,11 @@ public class TestBase {
 		WebElement dropDown = driver.findElement(By.className("x-btn-split"));
 		Actions builder = new Actions(driver);   
 		builder.moveToElement(dropDown, 245, 20).click().build().perform();
-		List<WebElement> options = driver.findElements(By.tagName("li"));
+		sleep(2000);
+		List<WebElement> options = driver.findElement(By.id("navigator-sbmenu")).findElements(By.tagName("li"));
 		for(WebElement option : options) {
 			if(option.findElement(By.tagName("span")).getText().toLowerCase().equals(selection.toLowerCase())) {
-				option.findElement(By.tagName("a")).click();
+				option.click();
 				//System.out.println("Seleccionado"); //13/09/2017 working.
 				break;
 			}
@@ -263,9 +263,41 @@ public class TestBase {
 	}
 	
 	public void waitForClickeable(WebDriver driver, By element) {
-		(new WebDriverWait(driver, 25)).until(ExpectedConditions.elementToBeClickable(element));
+		(new WebDriverWait(driver, 15)).until(ExpectedConditions.elementToBeClickable(element));
 	}
 
+	public Boolean waitForQuantityMoreThan(WebDriver driver, By element, int number, int timeout) {
+		Boolean resultado = false;
+		WebDriverWait wait = new WebDriverWait(driver, timeout);
+		try {
+		wait.until(ExpectedConditions.numberOfElementsToBeMoreThan(element, number));
+		resultado = true;
+		System.out.println("Encontro el elemento " + element.toString());
+		}
+		catch (TimeoutException ex) {
+			resultado = false;
+			System.out.println("No encontro el elemento " + element.toString());
+		}
+		
+		return resultado;
+	}
+	
+	public Boolean waitForVisible(WebDriver driver, By element, int timeout) {
+		Boolean resultado = false;
+		WebDriverWait wait = new WebDriverWait(driver, timeout);
+		
+		try {
+		wait.until(ExpectedConditions.visibilityOfElementLocated(element));
+		resultado = true;
+		System.out.println("Encontro el elemento " + element.toString());
+		}
+		catch (TimeoutException ex) {
+			resultado = false;
+			System.out.println("No encontro el elemento " + element.toString());
+		}
+		
+		return resultado;
+	}
 	
 	public void clickLeftPanel(WebDriver driver) {
 		List<WebElement> buttons = driver.findElements(By.tagName("button"));
