@@ -62,6 +62,7 @@ public class GestionesPerfilOficina extends TestBase {
 		CBS_Mattu cCBSM = new CBS_Mattu();
 		GestionFlow gGF = new GestionFlow();*/
 		//System.out.println(gGF.FlowIMSI(driver, "2932449333"));
+		
 		driver = setConexion.setupEze();
 		sleep(5000);
 		sb = new SalesBase(driver);
@@ -375,8 +376,8 @@ public class GestionesPerfilOficina extends TestBase {
 		detalles = imagen+"-Recarga-DNI:"+cDNI;
 		CBS cCBS = new CBS();
 		CBS_Mattu cCBSM = new CBS_Mattu();
-		//String sMainBalance = cCBS.ObtenerValorResponse(cCBSM.Servicio_queryLiteBySubscriber(cLinea), "bcs:MainBalance");
-		//Integer iMainBalance = Integer.parseInt(sMainBalance.substring(0, (sMainBalance.length()) - 1));
+		String sMainBalance = cCBS.ObtenerValorResponse(cCBSM.Servicio_queryLiteBySubscriber(cLinea), "bcs:MainBalance");
+		Integer iMainBalance = Integer.parseInt(sMainBalance.substring(0, (sMainBalance.length()) - 1));
 		if(cMonto.length() >= 4) {
 			cMonto = cMonto.substring(0, cMonto.length()-1);
 		}
@@ -411,8 +412,6 @@ public class GestionesPerfilOficina extends TestBase {
 		//String orden = cc.obtenerOrdenMontoyTN(driver, "Recarga");
 		System.out.println("orden = "+orden);
 		sOrders.add("Recargas" + orden + ", cuenta:"+accid+", DNI: " + cDNI +", Monto:"+orden.split("-")[2]);
-		
-		
 		Assert.assertTrue(invoSer.PagoEnCaja("1006", accid, "1001", orden.split("-")[2], orden.split("-")[1],driver));
 		sleep(5000);
 		driver.navigate().refresh();
@@ -429,11 +428,11 @@ public class GestionesPerfilOficina extends TestBase {
 		//System.out.println("monto inicial "+iMainBalance);
 		System.out.println("monto recarga "+monto);
 		System.out.println("monto uifinal "+uiMainBalance);
-		//monto = iMainBalance+monto;
+		monto = iMainBalance+monto;
 		System.out.println("Sumatoria :"+monto);
 		Assert.assertTrue(monto == uiMainBalance);
-		CalculoImpuestos CI = new CalculoImpuestos();
-		System.out.println(CI.determinarCategoriaIVA(driver));
+		/*CalculoImpuestos CI = new CalculoImpuestos();
+		System.out.println(CI.determinarCategoriaIVA(driver));*/
 	}
 	
 	@Test (groups = {"GestionesPerfilOficina", "Recargas","E2E","Ciclo1"}, dataProvider = "RecargaTC")
@@ -444,7 +443,7 @@ public class GestionesPerfilOficina extends TestBase {
 		CBS cCBS = new CBS();
 		CBS_Mattu cCBSM = new CBS_Mattu();
 		String sMainBalance = cCBS.ObtenerValorResponse(cCBSM.Servicio_queryLiteBySubscriber(cLinea), "bcs:MainBalance");
-		Integer iMainBalance = Integer.parseInt(sMainBalance.substring(0, (sMainBalance.length()) - 1));
+		Integer iMainBalance = Integer.parseInt(sMainBalance);
 		System.out.println("monto "+iMainBalance);
 		if(cMonto.length() >= 4) {
 			cMonto = cMonto.substring(0, cMonto.length()-1);
@@ -506,9 +505,8 @@ public class GestionesPerfilOficina extends TestBase {
 		sleep(10000);
 		String uMainBalance = cCBS.ObtenerValorResponse(cCBSM.Servicio_queryLiteBySubscriber(cLinea), "bcs:MainBalance");
 		System.out.println("saldo nuevo "+uMainBalance);
-		Integer uiMainBalance = Integer.parseInt(uMainBalance.substring(0, (uMainBalance.length()) - 1));
+		Integer uiMainBalance = Integer.parseInt(uMainBalance);
 		Integer monto = Integer.parseInt(orden.split("-")[2].replace(".", ""));
-		monto = Integer.parseInt(monto.toString().substring(0, monto.toString().length()-1));
 		monto = iMainBalance+monto;
 		Assert.assertTrue(monto == uiMainBalance);
 		driver.switchTo().frame(cambioFrame(driver, By.cssSelector(".hasMotif.orderTab.detailPage.ext-webkit.ext-chrome.sfdcBody.brandQuaternaryBgr")));
@@ -523,25 +521,33 @@ public class GestionesPerfilOficina extends TestBase {
 		imagen = "TS134338";
 		detalles = null;
 		detalles = imagen+"-BajaServicio-DNI:"+sDNI;
-		GestionFlow gGF = new GestionFlow();
+		//GestionFlow gGF = new GestionFlow();
 		//Assert.assertTrue(gGF.FlowConsultaServicioActivo(driver, sLinea, "Discado Directo Internacional con Roaming Int."));
 		BasePage cambioFrameByID=new BasePage();
 		sleep(30000);
+		
 		driver.switchTo().frame(cambioFrameByID.getFrameForElement(driver, By.id("SearchClientDocumentType")));
 		sleep(1000);
+		
 		SalesBase sSB = new SalesBase(driver);
 		sSB.BuscarCuenta("DNI",sDNI);
 		String accid = driver.findElement(By.cssSelector(".searchClient-body.slds-hint-parent.ng-scope")).findElements(By.tagName("td")).get(5).getText();
 		System.out.println("id "+accid);
 		detalles +="-Cuenta:"+accid;
 		driver.findElement(By.cssSelector(".slds-tree__item.ng-scope")).findElement(By.tagName("div")).click();
-		sleep(18000);
+		sleep(23000);
+		
 		cc.seleccionarCardPornumeroLinea(sLinea, driver);
 		sleep(5000);
+		
 		cc.irAGestionEnCard("Alta/Baja de Servicios");
 		sleep(35000);
+		
 		cc.openrightpanel();
-		cc.closerightpanel();
+		//cc.closerightpanel();
+		sleep(5000);
+		cc.cerarPanelDerecho();			//PARA QUE CIERRE NO SE PUEDE USAR EL MOUSE YA QUE USA UN ROBOT QUE LO CONTROLA
+		
 		driver.switchTo().defaultContent();
 		driver.switchTo().frame(cambioFrameByID.getFrameForElement(driver, By.cssSelector(".slds-text-body--small.slds-page-header__info.taDevider")));
 		String sOrder = driver.findElement(By.cssSelector(".slds-text-body--small.slds-page-header__info.taDevider")).getText();
@@ -562,22 +568,27 @@ public class GestionesPerfilOficina extends TestBase {
 			//Always empty
 		}
 		sleep(5000);
+		
 		driver.switchTo().frame(cambioFrame(driver, By.id("tab-default-1")));
 		sleep(15000);
+		
 		ppt = new PagePerfilTelefonico(driver);
 		ppt.altaBajaServicio("Baja", "servicios basicos general movil", "DDI", "DDI con Roaming Internacional", driver);
 		driver.findElement(By.cssSelector(".slds-button.slds-m-left--large.slds-button--brand.ta-button-brand")).click();//Continuar
 		//ppt.getwAltaBajaContinuar().click();//Continuar
 		sleep(20000);
+		
 		WebElement wMessageBox = driver.findElement(By.xpath("//*[@id='TextBlock1']/div/p/p[2]"));
 		System.out.println("wMessage.getText: " + wMessageBox.getText().toLowerCase());
 		Assert.assertTrue(wMessageBox.getText().toLowerCase().contains("la orden " + sOrder + " se realiz\u00f3 con \u00e9xito!".toLowerCase()));
+		
 		sleep(15000);
 		sOrders.add("Baja de Servicio, orden numero: " + sOrder + ", DNI: " + sDNI);
 		driver.navigate().refresh();
 		Assert.assertTrue(cc.corroborarEstadoCaso(sOrder, "Activada"));
+		
 		sleep(20000);
-		Assert.assertTrue(gGF.FlowConsultaServicioInactivo(driver, sLinea, "DDI con Roaming Internacional"));
+		//Assert.assertTrue(gGF.FlowConsultaServicioInactivo(driver, sLinea, "DDI con Roaming Internacional"));
 	}
 
 	
@@ -587,8 +598,8 @@ public class GestionesPerfilOficina extends TestBase {
 		imagen = "TS134355";
 		detalles = null;
 		detalles = imagen+"-AltaServicio-DNI:"+sDNI;
-		GestionFlow gGF = new GestionFlow();
-		Assert.assertTrue(gGF.FlowConsultaServicioInactivo(driver, sLinea, "Discado Directo Internacional con Roaming Int."));
+//		GestionFlow gGF = new GestionFlow();
+//		Assert.assertTrue(gGF.FlowConsultaServicioInactivo(driver, sLinea, "Discado Directo Internacional con Roaming Int."));
 		BasePage cambioFrameByID=new BasePage();
 		sleep(30000);
 		driver.switchTo().frame(cambioFrameByID.getFrameForElement(driver, By.id("SearchClientDocumentType")));
@@ -634,11 +645,11 @@ public class GestionesPerfilOficina extends TestBase {
 		driver.navigate().refresh();
 		Assert.assertTrue(cc.corroborarEstadoCaso(sOrder, "Activada"));
 		sleep(20000);
-		Assert.assertTrue(gGF.FlowConsultaServicioActivo(driver, sLinea, "DDI con Roaming Internacional"));
+		//Assert.assertTrue(gGF.FlowConsultaServicioActivo(driver, sLinea, "DDI con Roaming Internacional"));
 	}
 	
 	@Test(groups = {"Sales", "Nominacion","E2E","Ciclo1"}, dataProvider="DatosSalesNominacionNuevoOfCom") 
-	public void TS_85094_CRM_Movil_REPRO_Nominatividad_Cliente_Nuevo_Presencial_DOC_OfCom(String sLinea, String sDni, String sNombre, String sApellido, String sSexo, String sFnac, String sEmail, String sProvincia, String sLocalidad, String sCalle, String sNumCa, String sCP) { 
+	public void TS85094_CRM_Movil_REPRO_Nominatividad_Cliente_Nuevo_Presencial_DOC_OfCom(String sLinea, String sDni, String sNombre, String sApellido, String sSexo, String sFnac, String sEmail, String sProvincia, String sLocalidad, String sCalle, String sNumCa, String sCP) { 
 		imagen = "85094-Nominacion"+sDni;
 		detalles = null;
 		detalles = imagen +"-Linea: "+sLinea;
@@ -740,7 +751,7 @@ public class GestionesPerfilOficina extends TestBase {
 	}
 	
 	@Test (groups = {"ProblemasConRecargas", "GestionesPerfilOficina","E2E","Ciclo3"}, dataProvider="CuentaProblemaRecarga")
-	public void problemaRecargaOnline(String sDNI, String sLinea) {
+	public void TS_problemaRecargaOnline(String sDNI, String sLinea) {
 		imagen= "problemaRecargaOnline";
 		detalles = null;
 		detalles = imagen+" - DNI:"+sDNI+" - Linea: "+sLinea;
@@ -805,7 +816,7 @@ public class GestionesPerfilOficina extends TestBase {
 	}
 	
 	@Test (groups = {"ProblemasConRecargas", "GestionesPerfilOficina","E2E","Ciclo3"}, dataProvider="CuentaProblemaRecarga") //Error al intentar impactar la recarga
-	public void poblemaRecargaCredito(String cDNI, String sLinea) {
+	public void TS_problemaRecargaCredito(String cDNI, String sLinea) {
 		imagen = "problemaRecargaCredito";
 		detalles = null;
 		detalles = imagen+" - DNI: "+cDNI+" - Linea: "+sLinea;
@@ -954,7 +965,8 @@ public class GestionesPerfilOficina extends TestBase {
 	}
 	
 	@Test (groups = {"GestionesPerfilOficina", "ProblemasConRecargas","E2E","Ciclo3"}, dataProvider = "ProblemaRecargaPrepaga")  //Se necesitan nuevos numeros de tarjeta, solo se pueden usar 1 vez
-	public void GestionProblemasConRecargasTarjetaPrepaga(String cDNI,String sLinea, String cBatch, String cPin) {
+	public void TS_GestionProblemasConRecargasTarjetaPrepaga(String cDNI,String sLinea, String cBatch, String cPin) {
+		imagen = "GestionProblemasConRecargasTarjetaPrepaga";
 		CBS_Mattu verifM = new CBS_Mattu();
 		CBS verif = new CBS();
 		String saldo = verif.ObtenerValorResponse(verifM.Servicio_queryLiteBySubscriber(sLinea), "bcs:MainBalance");
@@ -2110,12 +2122,14 @@ public class GestionesPerfilOficina extends TestBase {
 		detalles = imagen + "- Trivias y suscripciones - DNI:" + sDNI;
 		boolean gest = false;
 		CBS_Mattu cCBSM = new CBS_Mattu();
-		cCBSM.Servicio_RealizarAltaSuscripcion(sLinea, "178");
+		try {
+			cCBSM.Servicio_RealizarAltaSuscripcion(sLinea, "178");
+		}catch(Exception ex) {	}
 		WebElement blackList = null;
 		driver.switchTo().frame(cambioFrame(driver, By.id("SearchClientDocumentType")));
 		sb.BuscarCuenta("DNI", sDNI);
 		driver.findElement(By.cssSelector(".slds-tree__item.ng-scope")).click();
-		sleep(15000);
+		sleep(20000);
 		cc.seleccionarCardPornumeroLinea(sLinea, driver);
 		sleep(3000);
 		cc.irAGestionEnCard("Suscripciones");
@@ -2164,7 +2178,7 @@ public class GestionesPerfilOficina extends TestBase {
 		driver.switchTo().frame(cambioFrame(driver, By.id("SearchClientDocumentType")));
 		sb.BuscarCuenta("DNI", sDNI);
 		driver.findElement(By.cssSelector(".slds-tree__item.ng-scope")).click();
-		sleep(15000);
+		sleep(20000);
 		cc.seleccionarCardPornumeroLinea(sLinea, driver);
 		sleep(3000);
 		cc.irAGestionEnCard("Suscripciones");
@@ -2282,8 +2296,8 @@ public class GestionesPerfilOficina extends TestBase {
 	
 	
 	@Test (groups = {"GestionesPerfilOficina","VentaDePacks","E2E","Ciclo1"}, dataProvider="PackOfCom")
-	public void Venta_de_Pack_1_GB_x_1_dia_whatsapp_gratis_Factura_de_Venta_TC_OffCom(String sDNI, String sLinea, String sPackOfCom, String cBanco, String cTarjeta, String cPromo, String cCuotas) throws AWTException, KeyManagementException, NoSuchAlgorithmException{
-		imagen = "Venta De Pack Oficina";
+	public void TS_Venta_de_Pack_1_GB_x_1_dia_whatsapp_gratis_Factura_de_Venta_TC_OffCom(String sDNI, String sLinea, String sPackOfCom, String cBanco, String cTarjeta, String cPromo, String cCuotas) throws AWTException, KeyManagementException, NoSuchAlgorithmException{
+		imagen = "TS_Venta_de_Pack_1_GB_x_1_dia_whatsapp_gratis_Factura_de_Venta_TC_OffCom";
 		detalles = null;
 		detalles = imagen + "- DNI: "+sDNI+" - Linea: "+sLinea;
 		PagePerfilTelefonico pagePTelefo = new PagePerfilTelefonico(driver);
@@ -2340,8 +2354,8 @@ public class GestionesPerfilOficina extends TestBase {
 	}
 	
 		// ================ ESTE VA  1 ============
-	@Test(groups = { "GestionesPerfilOficina", "CambioSimCard","Ciclo3" }, priority = 1, dataProvider = "CambioSimCardOficina")
-	public void TSCambioSimCardOficina(String sDNI, String sLinea) throws AWTException {
+	@Test(groups = { "GestionesPerfilOficina", "CambioDeSimcard","Ciclo3" }, priority = 1, dataProvider = "CambioSimCardOficina")
+	public void TS_CambioSimCardOficina(String sDNI, String sLinea) throws AWTException {
 		imagen = "TSCambioSimCardOficina";
 		detalles = null;
 		detalles = imagen + "- DNI: " + sDNI+ "- Linea: "+sLinea;
@@ -2483,7 +2497,7 @@ public class GestionesPerfilOficina extends TestBase {
 		sleep(5000);
 		driver.findElement(By.id("SelectPaymentMethodsStep_nextBtn")).click();
 		sleep(25000);
-		String msj = driver.findElement(By.cssSelector(".message.description.ng-binding.ng-scope")).getText(); 
+		String msj = driver.findElements(By.cssSelector(".message.description.ng-binding.ng-scope")).get(1).getText(); 
 		String check = driver.findElement(By.id("GeneralMessageDesing")).getText();
 		Assert.assertTrue(msj.toLowerCase().contains("se ha enviado correctamente la factura a huawei. dirigirse a caja para realizar el pago de la misma"));
 		Assert.assertTrue(check.toLowerCase().contains("la orden se realiz\u00f3 con \u00e9xito"));
@@ -2509,7 +2523,7 @@ public class GestionesPerfilOficina extends TestBase {
 	}
 	
 	@Test (groups = {"GestionesPerfilOficina", "AnulacionDeVenta", "E2E","Ciclo4"}, dataProvider = "CuentaAnulacionDeVenta")
-	public void Anulacion_De_Venta(String sDNI) {
+	public void TS_Anulacion_De_Venta(String sDNI) {
 		imagen = "Anulacion_De_Venta";
 		detalles = null;
 		detalles = imagen + " - DNI: " + sDNI;
@@ -2589,7 +2603,7 @@ public class GestionesPerfilOficina extends TestBase {
 	}
 	
 	@Test (groups = {"GestionesPerfilOficina", "ConsultaDeSaldo", "Ciclo1"}, dataProvider = "ConsultaSaldo")
-	public void TS_134373_CRM_Movil_Prepago_Vista_360_Consulta_de_Saldo_Verificar_credito_prepago_de_la_linea_FAN_Front_OOCC(String sDNI){
+	public void TS134373_CRM_Movil_Prepago_Vista_360_Consulta_de_Saldo_Verificar_credito_prepago_de_la_linea_FAN_Front_OOCC(String sDNI){
 		imagen ="TS134373";
 		detalles = null;
 		detalles = imagen + "- Consulta de Saldo - DNI:"+sDNI;
@@ -2603,7 +2617,7 @@ public class GestionesPerfilOficina extends TestBase {
 	}
 	
 	@Test (groups = {"GestionesPerfilOficina", "ConsultaDeSaldo", "Ciclo1"}, dataProvider = "ConsultaSaldo")
-	public void TS_134376_CRM_Movil_Prepago_Vista_360_Consulta_de_Saldo_Verificar_saldo_del_cliente_FAN_Front_OOCC(String sDNI) {
+	public void TS134376_CRM_Movil_Prepago_Vista_360_Consulta_de_Saldo_Verificar_saldo_del_cliente_FAN_Front_OOCC(String sDNI) {
 		imagen="TS134376";
 		detalles = null;
 		detalles = imagen + "- Consulta de Saldo - DNI:" +sDNI;
@@ -2629,7 +2643,7 @@ public class GestionesPerfilOficina extends TestBase {
 		}
 	}
 	
-	@Test (groups = {"GestionesPerfilOficina", "DetalleDeConsumo", "Ciclo2"}, dataProvider = "CuentaProblemaRecarga")
+	@Test (groups = {"GestionesPerfilOficina", "DetalleDeConsumos", "Ciclo2"}, dataProvider = "CuentaProblemaRecarga")
 	public void TS134783_CRM_Movil_Prepago_Vista_360_Detalle_de_consumo_Consulta_detalle_de_consumo_Datos_FAN_Front_OOCC_134783(String sDNI, String sLinea) {
 		imagen = "TS134783";
 		detalles = null;
@@ -2648,7 +2662,7 @@ public class GestionesPerfilOficina extends TestBase {
 		Assert.assertTrue(ConsumoDatos.isDisplayed());
 		}
 	
-	@Test (groups = {"GestionesPerfilOficina", "DetalleDeConsumo", "Ciclo2"}, dataProvider = "CuentaTriviasYSuscripciones")
+	@Test (groups = {"GestionesPerfilOficina", "DetalleDeConsumos", "Ciclo2"}, dataProvider = "CuentaTriviasYSuscripciones")
 	public void TS134782_CRM_Movil_Prepago_Vista_360_Detalle_de_consumo_Consulta_detalle_de_consumo_SMS_FAN_Front_OOCC_134782(String cDNI, String cLinea) {
 		imagen = "TS134782";
 		detalles = null;
@@ -2673,7 +2687,7 @@ public class GestionesPerfilOficina extends TestBase {
 		Assert.assertTrue(a);
 		}
 	
-	@Test (groups = {"GestionesPerfilOficina", "DetalleDeConsumo", "Ciclo2"}, dataProvider = "CuentaProblemaRecarga")
+	@Test (groups = {"GestionesPerfilOficina", "DetalleDeConsumos", "Ciclo2"}, dataProvider = "CuentaProblemaRecarga")
 	public void TS134784_CRM_Movil_Prepago_Vista_360_Detalle_de_consumo_Consulta_detalle_de_consumo_Voz_FAN_Front_OOCC(String sDNI, String sLinea) {
 		imagen = "TS134784";
 		detalles = null;
@@ -2698,7 +2712,7 @@ public class GestionesPerfilOficina extends TestBase {
 		Assert.assertTrue(a);
 		}
 	
-	@Test (groups = {"GestionesPerfilOficina", "DetalleDeConsumo", "Ciclo2"}, dataProvider = "CuentaProblemaRecarga")
+	@Test (groups = {"GestionesPerfilOficina", "DetalleDeConsumos", "Ciclo2"}, dataProvider = "CuentaProblemaRecarga")
 	public void TS134785_CRM_Movil_Prepago_Vista_360_Detalle_de_consumo_Consulta_detalle_de_Otros_consumos_FAN_Front_OOCC_134785(String cDNI, String cLinea) {
 		imagen = "TS134785";
 		detalles = null;
@@ -3328,7 +3342,7 @@ public class GestionesPerfilOficina extends TestBase {
 	}
 	
 	@Test (groups= {"GestionPerfilOficina", "Ciclo2", "Vista360"}, dataProvider = "documentacionVista360")
-	public void TS_134379_CRM_Movil_Prepago_Vista_360_Mis_Servicios_Visualizacion_del_estado_de_los_servicios_activos_FAN_Front_OOCC(String sDNI) {
+	public void TS134379_CRM_Movil_Prepago_Vista_360_Mis_Servicios_Visualizacion_del_estado_de_los_servicios_activos_FAN_Front_OOCC(String sDNI) {
 		imagen = "TS134379";
 		detalles = null;
 		detalles = imagen + "-Vista 360 - DNI: "+sDNI;
@@ -3807,7 +3821,7 @@ public class GestionesPerfilOficina extends TestBase {
 	}
 	
 	@Test (groups = {"GestionesPerfilOficina", "HistorialDeRecargas", "Ciclo2"}, dataProvider = "RecargasHistorias")
-	public void TS_134787_CRM_Movil_Prepago_Historial_de_Recargas_Consultar_detalle_de_Recargas_con_Beneficios_FAN_Front_OOCC(String sDNI) {
+	public void TS134787_CRM_Movil_Prepago_Historial_de_Recargas_Consultar_detalle_de_Recargas_con_Beneficios_FAN_Front_OOCC(String sDNI) {
 		imagen = "TS134787";
 		detalles = null;
 		detalles = imagen + " - Historial de recargas - DNI:" + sDNI;
@@ -3837,7 +3851,7 @@ public class GestionesPerfilOficina extends TestBase {
 	}
 	
 	@Test (groups = {"GestionesPerfilOficina", "HistorialDeRecargas", "Ciclo2"}, dataProvider = "RecargasHistorias")
-	public void TS_134788_CRM_Movil_Prepago_Historial_de_Recargas_Consultar_detalle_de_Recargas_Sin_Beneficios_FAN_Front_OOCC(String sDNI){
+	public void TS134788_CRM_Movil_Prepago_Historial_de_Recargas_Consultar_detalle_de_Recargas_Sin_Beneficios_FAN_Front_OOCC(String sDNI){
 		imagen = "TS134788";
 		detalles = null;
 		detalles = imagen + "- Historial de recargas - DNI: "+sDNI;
@@ -3867,7 +3881,7 @@ public class GestionesPerfilOficina extends TestBase {
 	}
 	
 	
-	@Test (groups = {"GestionesPerfilOficina","HistorialDeReacargas","E2E", "Ciclo1"},  dataProvider = "HistoriaRecarga")
+	@Test (groups = {"GestionesPerfilOficina","HistorialDeRecargas","E2E", "Ciclo1"},  dataProvider = "HistoriaRecarga")
 	public void TS135468_CRM_Movil_Prepago_Historial_de_Packs_Nombre_del_Pack_TODOS_FAN_Front_OOCC(String sDNI, String sLinea){
 		imagen = "TS135468";
 		detalles = null;
@@ -3924,7 +3938,7 @@ public class GestionesPerfilOficina extends TestBase {
 		Assert.assertTrue(enc);
 	}
 
-	@Test (groups = {"GestionesPerfilOficina","HistorialDeReacargas","E2E", "Ciclo1"},  dataProvider = "RecargasHistorias")
+	@Test (groups = {"GestionesPerfilOficina","HistorialDeRecargas","E2E", "Ciclo1"},  dataProvider = "RecargasHistorias")
 	public void TS135361_CRM_Movil_Prepago_Otros_Historiales_Historial_de_ajustes_FAN_Front_OOCC_S138(String sDNI){
 		imagen = "TS135361";
 		detalles = null;
@@ -4650,7 +4664,7 @@ public class GestionesPerfilOficina extends TestBase {
 		
 	}
 		
-	@Test (groups = {"GestionesPerfilOficina", "DiagnosticoInconvenientes","E2E", "Ciclo3"}, dataProvider = "Diagnostico")
+	@Test (groups = {"GestionesPerfilOficina", "DiagnosticoEInconvenientes","E2E", "Ciclo3"}, dataProvider = "Diagnostico")
 	public void TS111871_CRM_Movil_REPRO_Diagnostico_SVA_Configuracion_Disponible_Presencial_SMS_Saliente_SMS_a_fijo_Geo_No_Ok_Desregistrar_OfCom(String sDNI, String sLinea) throws Exception  {
 		imagen = "TS111871";
 		detalles = null;
@@ -4771,7 +4785,7 @@ public class GestionesPerfilOficina extends TestBase {
 	
 	@Test (groups = {"GestionesPerfilOficina", "BaseDeConocimiento", "Ciclo3"}, dataProvider = "CuentaVista360")
 	public void TS130755_CRM_REPRO_BDC_Customer_Care_Problemas_con_Recargas_PerfilTelefonico_Articulo_de_Medios_de_Recargas(String sDNI, String sLinea,String sNombre, String sEmail, String sMovil) {
-		imagen = "TS125107";
+		imagen = "TS130755";
 		detalles = null;
 		detalles = imagen + "- Base de Conocimiento - DNI: "+sDNI+" - Nombre: "+sNombre;
 		driver.switchTo().frame(cambioFrame(driver, By.id("SearchClientDocumentType")));
@@ -4788,7 +4802,7 @@ public class GestionesPerfilOficina extends TestBase {
 		Assert.assertTrue(driver.findElement(By.className("vlc-slds-knowledge-list-item")).getText().contains("Problemas con recargas Online"));
 	}
 	
-	@Test (groups = {"GestionPerfilOficina", "BasedeConocimiento", "Ciclo3"}, dataProvider = "BaseDeConocimiento")
+	@Test (groups = {"GestionPerfilOficina", "BaseDeConocimiento", "Ciclo3"}, dataProvider = "BaseDeConocimiento")
 	public void TS124899_CRM_REPRO_BDC_Technical_Care_CSR_Suscripciones_Base_de_Conocimiento(String sDNI, String sLinea) {
 		imagen = "TS124899";
 		detalles = null;
@@ -4810,7 +4824,7 @@ public class GestionesPerfilOficina extends TestBase {
 		Assert.assertTrue(driver.findElement(By.cssSelector(".zen-unit.zen-lastUnit.kb-center")).isDisplayed());	
 	}
 	
-	@Test (groups = {"GestionPerfilOficina", "BasedeConocimiento", "Ciclo3"}, dataProvider = "BaseDeConocimiento")
+	@Test (groups = {"GestionPerfilOficina", "BaseDeConocimiento", "Ciclo3"}, dataProvider = "BaseDeConocimiento")
 	public void TS125103_CRM_REPRO_BDC_Customer_Care_Suspensiones_y_Rehabilitaciones_Valoracion_positiva_de_un_articulo(String sDNI, String sLinea) {
 		imagen = "TS125103";
 		detalles = null;
@@ -4839,7 +4853,7 @@ public class GestionesPerfilOficina extends TestBase {
 		Assert.assertTrue(a);
 	}
 	
-	@Test (groups = {"GestionPerfilOficina", "BasedeConocimiento", "Ciclo3"}, dataProvider = "BaseDeConocimiento")
+	@Test (groups = {"GestionPerfilOficina", "BaseDeConocimiento", "Ciclo3"}, dataProvider = "BaseDeConocimiento")
 	public void TS124900_CRM_REPRO_BDC_Technical_Care_CSR_Inconvenientes_con_Servicios_Varios_Base_de_Conocimiento(String sDNI, String sLinea) {
 		imagen = "TS124900";
 		detalles = null;
@@ -4860,8 +4874,8 @@ public class GestionesPerfilOficina extends TestBase {
 		imagen = "TS135738";
 		detalles = null;
 		detalles = imagen+" - BajaServicio - DNI: "+sDNI+" -Linea: "+sLinea;
-		GestionFlow gGF = new GestionFlow();
-		Assert.assertTrue(gGF.FlowConsultaServicioActivo(driver, sLinea, "Voice Mail con Clave"));
+//		GestionFlow gGF = new GestionFlow();
+//		Assert.assertTrue(gGF.FlowConsultaServicioActivo(driver, sLinea, "Voice Mail con Clave"));
 		BasePage cambioFrameByID=new BasePage();
 		sleep(30000);
 		driver.switchTo().frame(cambioFrameByID.getFrameForElement(driver, By.id("SearchClientDocumentType")));
@@ -4916,7 +4930,7 @@ public class GestionesPerfilOficina extends TestBase {
 		driver.navigate().refresh();
 		Assert.assertTrue(cc.corroborarEstadoCaso(sOrder, "Activada"));
 		sleep(20000);
-		Assert.assertTrue(gGF.FlowConsultaServicioInactivo(driver, sLinea, "Voice Mail con Clave"));
+		//Assert.assertTrue(gGF.FlowConsultaServicioInactivo(driver, sLinea, "Voice Mail con Clave"));
 	}
 	
 	@Test (groups = {"GestionesPerfilOficina","E2E","Ciclo3", "ABMDeServicios"}, dataProvider="BajaServicios")
@@ -4924,8 +4938,8 @@ public class GestionesPerfilOficina extends TestBase {
 		imagen = "TS135739";
 		detalles = null;
 		detalles = imagen+"- BajaServicio - DNI: "+sDNI+" - Linea: "+sLinea;
-		GestionFlow gGF = new GestionFlow();
-		Assert.assertTrue(gGF.FlowConsultaServicioActivo(driver, sLinea, "Discado Directo Internacional sin Roaming Int."));
+//		GestionFlow gGF = new GestionFlow();
+//		Assert.assertTrue(gGF.FlowConsultaServicioActivo(driver, sLinea, "Discado Directo Internacional sin Roaming Int."));
 		BasePage cambioFrameByID=new BasePage();
 		sleep(30000);
 		driver.switchTo().frame(cambioFrameByID.getFrameForElement(driver, By.id("SearchClientDocumentType")));
@@ -4978,7 +4992,7 @@ public class GestionesPerfilOficina extends TestBase {
 		driver.navigate().refresh();
 		Assert.assertTrue(cc.corroborarEstadoCaso(sOrder, "Activada"));
 		sleep(20000);
-		Assert.assertTrue(gGF.FlowConsultaServicioInactivo(driver, sLinea, "DDI sin Roaming Internacional"));
+		//Assert.assertTrue(gGF.FlowConsultaServicioInactivo(driver, sLinea, "DDI sin Roaming Internacional"));
 	}
 	
 	@Test (groups = {"GestionesPerfilOficina", "ABMDeServicios", "E2E", "Ciclo3"}, dataProvider = "AltaServicios")
@@ -4986,7 +5000,7 @@ public class GestionesPerfilOficina extends TestBase {
 		imagen = "TS135744";
 		detalles = null;
 		detalles = imagen+"- AltaServicio - DNI: "+sDNI+" - Linea: "+sLinea;
-		GestionFlow gGF = new GestionFlow();
+		//GestionFlow gGF = new GestionFlow();
 		//Assert.assertTrue(gGF.FlowConsultaServicioInactivo(driver, sLinea, "Voice Mail con Clave"));
 		BasePage cambioFrameByID=new BasePage();
 		sleep(30000);
@@ -5042,15 +5056,15 @@ public class GestionesPerfilOficina extends TestBase {
 		driver.navigate().refresh();
 		Assert.assertTrue(cc.corroborarEstadoCaso(sOrder, "Activada"));
 		sleep(20000);
-		Assert.assertTrue(gGF.FlowConsultaServicioActivo(driver, sLinea, "Voice Mail con Clave"));
+		//Assert.assertTrue(gGF.FlowConsultaServicioActivo(driver, sLinea, "Voice Mail con Clave"));
 	}
 	
 	@Test (groups = {"GestionesPerfilOficina","E2E","Ciclo3", "ABMDeServicios"}, dataProvider="AltaServicios")
 	public void TS135745_CRM_Movil_REPRO_Alta_Servicio_sin_costo_DDI_sin_Roaming_Internacional_Presencial_OfCom(String sDNI, String sLinea) throws AWTException{
 		imagen = "TS135745";
 		detalles = imagen+" - AltaServicio - DNI: "+sDNI+" - Linea: "+sLinea;
-		GestionFlow gGF = new GestionFlow();
-		Assert.assertTrue(gGF.FlowConsultaServicioInactivo(driver, sLinea, "Discado Directo Internacional sin Roaming Int."));
+//		GestionFlow gGF = new GestionFlow();
+//		Assert.assertTrue(gGF.FlowConsultaServicioInactivo(driver, sLinea, "Discado Directo Internacional sin Roaming Int."));
 		BasePage cambioFrameByID=new BasePage();
 		sleep(30000);
 		driver.switchTo().frame(cambioFrameByID.getFrameForElement(driver, By.id("SearchClientDocumentType")));
@@ -5104,7 +5118,7 @@ public class GestionesPerfilOficina extends TestBase {
 		driver.navigate().refresh();
 		Assert.assertTrue(cc.corroborarEstadoCaso(sOrder, "Activada"));
 		sleep(20000);
-		Assert.assertTrue(gGF.FlowConsultaServicioActivo(driver, sLinea, "DDI sin Roaming Internacional"));
+		//Assert.assertTrue(gGF.FlowConsultaServicioActivo(driver, sLinea, "DDI sin Roaming Internacional"));
 	}
 		
 	@Test (groups = {"GestionesPerfilOficina", "BaseDeConocimiento", "Ciclo3"}, dataProvider = "CuentaVista360")
@@ -5229,7 +5243,7 @@ public class GestionesPerfilOficina extends TestBase {
 	}
 	
 	
-	//@Test(groups = { "GestionesPerfilOficina","CambioSimcardDer", "E2E","Ciclo3" }, priority = 1, dataProvider = "CambioSimCardOficina")
+	//@Test(groups = { "GestionesPerfilOficina","CambioDeSimcard", "E2E","Ciclo3" }, priority = 1, dataProvider = "CambioSimCardOficina")
 	public void TS134381_CRM_Movil_REPRO_Cambio_de_simcard_sin_costo_Voluntario_Ofcom_Presencial_Con_entega_de_pedido(String sDNI, String sLinea) throws AWTException	{
 		imagen = "134381";
 		detalles = null;
@@ -5308,7 +5322,7 @@ public class GestionesPerfilOficina extends TestBase {
 		driver.switchTo().frame(cambioFrame(driver, By.id("SearchClientDocumentType")));
 		sb.BuscarCuenta("DNI", sDNI);
 		driver.findElement(By.cssSelector(".slds-tree__item.ng-scope")).click();
-		sleep(15000);
+		sleep(20000);
 		cc.seleccionarCardPornumeroLinea(sLinea, driver);
 		sleep(3000);
 		cc.irAGestionEnCard("Problemas con Recargas");
@@ -5501,7 +5515,7 @@ public class GestionesPerfilOficina extends TestBase {
 		Assert.assertTrue(paginas.getText().contains("Filas"));
 	}
 	
-	@Test (groups = {"GestionesPerfilOficina", "DiagnosticoInconvenientes","E2E", "Ciclo3"}, dataProvider = "Diagnostico")
+	@Test (groups = {"GestionesPerfilOficina", "DiagnosticoEInconvenientes","E2E", "Ciclo3"}, dataProvider = "Diagnostico")
 	public void TS119262_CRM_Movil_REPRO_Diagnostico_de_Voz_Valida_Red_y_Navegacion_Motivo_de_contacto_No_puedo_Llamar_desde_otro_pais_Sin_Locacion_NO_recupera_locacion_Geo_Fuera_de_area_de_cobertura_OfCom(String sDNI, String sLinea) throws Exception  {
 		boolean caso = false;
 		imagen = "TS119262";
@@ -5914,7 +5928,7 @@ public class GestionesPerfilOficina extends TestBase {
 		Assert.assertTrue(datosInicial + (123 * 1024) == datosFinal);
 	}
 	
-	@Test (groups = {"GestionesPerfilOficina", "Diagnostico/Inconvenientes" }, dataProvider = "Diagnostico")
+	@Test (groups = {"GestionesPerfilOficina", "DiagnosticoEInconvenientes" }, dataProvider = "Diagnostico")
 	public void TS105428_CRM_Movil_Repro_Autogestion_USSD_No_Interactua_Resuelto(String cDNI, String cLinea) throws InterruptedException {
 		imagen = "TS105428";
 		detalles = null;
@@ -5931,7 +5945,7 @@ public class GestionesPerfilOficina extends TestBase {
 		Assert.assertTrue(tech.cerrarCaso("Resuelta exitosa", "Consulta"));
 	}
 	
-	@Test (groups = {"GestionesPerfilOficina", "DiagnosticoInconvenientes", }, dataProvider = "Diagnostico")
+	@Test (groups = {"GestionesPerfilOficina", "DiagnosticoEInconvenientes", }, dataProvider = "Diagnostico")
 	public void TS105431_CRM_Movil_Repro_Autogestion_WAP_Sitio_Caido_No_carga_informacion_Resuelto(String cDNI, String cLinea) throws InterruptedException {
 		imagen = "TS105431";
 		detalles = null;
@@ -5948,7 +5962,7 @@ public class GestionesPerfilOficina extends TestBase {
 		Assert.assertTrue(tech.cerrarCaso("Resuelta exitosa", "Consulta"));
 	}
 	
-	@Test (groups = {"GestionesPerfilOficina", "DiagnosticoInconvenientes", }, dataProvider = "Diagnostico")
+	@Test (groups = {"GestionesPerfilOficina", "DiagnosticoEInconvenientes", }, dataProvider = "Diagnostico")
 	public void TS105831_Nros_Emergencia_Informa_Sistema_Fuera_de_Servicio_Resuelto(String cDNI, String cLinea) throws InterruptedException {
 		imagen = "TS105831";
 		detalles = null;
@@ -5965,7 +5979,7 @@ public class GestionesPerfilOficina extends TestBase {
 		Assert.assertTrue(tech.cerrarCaso("Resuelta exitosa", "Consulta"));
 	}
 
-	@Test (groups = {"GestionesPerfilOficina","Autogestion","E2E", "Ciclo3"},  dataProvider = "CuentaModificacionDeDatos")
+	@Test (groups = {"GestionesPerfilOficina","DiagnosticoEInconvenientes","E2E", "Ciclo3"},  dataProvider = "CuentaModificacionDeDatos")
 	public void TS105418_CRM_Movil_Repro_Autogestion_0800_Inconv_con_derivacion_a_representante_Resuelto(String sDNI, String sLinea) throws InterruptedException {
 		imagen = "TS105418";
 		detalles = null;
@@ -6073,7 +6087,7 @@ public class GestionesPerfilOficina extends TestBase {
 		String sIMSIFlow = gf.FlowIMSI(driver,sLinea);
 	}
 	
-	//@Test(groups = { "GestionesPerfilTelefonico","CambioDeSimcardDer", "E2E" }, priority = 1, dataProvider = "SimCardSiniestroOfCom") 
+	//@Test(groups = { "GestionesPerfilTelefonico","CambioDeSimcard", "E2E" }, priority = 1, dataProvider = "SimCardSiniestroOfCom") 
 	public void TS134406_OF_COM_CRM_Movil_REPRO_Cambio_de_simcard_con_costo_Siniestro_Ofcom_Store_pickUp_Con_entega_de_pedido_pago_en_Efectivo(String sDNI, String sLinea){
 		imagen = "134406";
 		detalles = null;
@@ -6142,7 +6156,7 @@ public class GestionesPerfilOficina extends TestBase {
 		Assert.assertTrue(datos.equalsIgnoreCase("activada")||datos.equalsIgnoreCase("activated"));
 	}
 	
-	//@Test(groups = { "GestionesPerfilTelefonico","CambioSimCardDer", "E2E" }, priority = 1, dataProvider = "SimCardSiniestroAG") //NO APARECE EL MEDIO DE PAGO
+	//@Test(groups = { "GestionesPerfilTelefonico","CambioDeSimcard", "E2E" }, priority = 1, dataProvider = "SimCardSiniestroAG") //NO APARECE EL MEDIO DE PAGO
 	public void TS134407_CRM_Movil_REPRO_Cambio_de_simcard_con_costo_Siniestro_Ofcom_Store_pickUp_Con_entega_de_pedido_pago_con_TD(String sDNI, String sLinea,String cEntrega, String cProvincia, String cLocalidad, String cPuntodeVenta, String cBanco, String cTarjeta, String cPromo, String cCuotas, String cNumTarjeta, String cVenceMes, String cVenceAno, String cCodSeg, String cTipoDNI,String cDNITarjeta, String cTitular){
 		imagen = "134407";
 		detalles = null;
@@ -6297,8 +6311,8 @@ public class GestionesPerfilOficina extends TestBase {
 		imagen = "TS134335";
 		detalles = null;
 		detalles = imagen+"-BajaServicio-DNI:"+sDNI;
-		GestionFlow gGF = new GestionFlow();
-		Assert.assertTrue(gGF.FlowConsultaServicioActivo(driver, sLinea, "Servicio de Red Voz sobre WIFI"));
+//		GestionFlow gGF = new GestionFlow();
+//		Assert.assertTrue(gGF.FlowConsultaServicioActivo(driver, sLinea, "Servicio de Red Voz sobre WIFI"));
 		BasePage cambioFrameByID=new BasePage();
 		sleep(30000);
 		driver.switchTo().frame(cambioFrameByID.getFrameForElement(driver, By.id("SearchClientDocumentType")));
@@ -6351,7 +6365,7 @@ public class GestionesPerfilOficina extends TestBase {
 		driver.navigate().refresh();
 		Assert.assertTrue(cc.corroborarEstadoCaso(sOrder, "Activada"));
 		sleep(20000);
-		Assert.assertTrue(gGF.FlowConsultaServicioInactivo(driver, sLinea, "Servicio de Red Voz sobre WIFI"));
+		//Assert.assertTrue(gGF.FlowConsultaServicioInactivo(driver, sLinea, "Servicio de Red Voz sobre WIFI"));
 	}
 	
 	@Test (groups = {"GestionesPerfilOficina","E2E","Ciclo3", "ABMDeServicios"}, dataProvider="BajaServicios")
@@ -6359,8 +6373,8 @@ public class GestionesPerfilOficina extends TestBase {
 		imagen = "TS134339";
 		detalles = null;
 		detalles = imagen+"- BajaServicio - DNI: "+sDNI+" - Linea: "+sLinea;
-		GestionFlow gGF = new GestionFlow();
-		Assert.assertTrue(gGF.FlowConsultaServicioActivo(driver, sLinea, "Discado Directo Internacional sin Roaming Int."));
+//		GestionFlow gGF = new GestionFlow();
+//		Assert.assertTrue(gGF.FlowConsultaServicioActivo(driver, sLinea, "Discado Directo Internacional sin Roaming Int."));
 		BasePage cambioFrameByID=new BasePage();
 		sleep(30000);
 		driver.switchTo().frame(cambioFrameByID.getFrameForElement(driver, By.id("SearchClientDocumentType")));
@@ -6413,7 +6427,7 @@ public class GestionesPerfilOficina extends TestBase {
 		driver.navigate().refresh();
 		Assert.assertTrue(cc.corroborarEstadoCaso(sOrder, "Activada"));
 		sleep(20000);
-		Assert.assertTrue(gGF.FlowConsultaServicioInactivo(driver, sLinea, "DDI sin Roaming Internacional"));
+		//Assert.assertTrue(gGF.FlowConsultaServicioInactivo(driver, sLinea, "DDI sin Roaming Internacional"));
 	}
 	
 	@Test (groups = {"GestionesPerfilOficina","E2E","Ciclo3","ABMDeServicios"}, dataProvider="AltaServicios")
@@ -6421,8 +6435,8 @@ public class GestionesPerfilOficina extends TestBase {
 		imagen = "TS134352";
 		detalles = null;
 		detalles = imagen+"-AltaServicio-DNI:"+sDNI;
-		GestionFlow gGF = new GestionFlow();
-		Assert.assertTrue(gGF.FlowConsultaServicioInactivo(driver, sLinea, "Servicio de Red Voz sobre WIFI"));
+//		GestionFlow gGF = new GestionFlow();
+//		Assert.assertTrue(gGF.FlowConsultaServicioInactivo(driver, sLinea, "Servicio de Red Voz sobre WIFI"));
 		BasePage cambioFrameByID=new BasePage();
 		sleep(30000);
 		driver.switchTo().frame(cambioFrameByID.getFrameForElement(driver, By.id("SearchClientDocumentType")));
@@ -6475,15 +6489,15 @@ public class GestionesPerfilOficina extends TestBase {
 		driver.navigate().refresh();
 		Assert.assertTrue(cc.corroborarEstadoCaso(sOrder, "Activada"));
 		sleep(20000);
-		Assert.assertTrue(gGF.FlowConsultaServicioActivo(driver, sLinea, "Servicio de Red Voz sobre WIFI"));
+		//Assert.assertTrue(gGF.FlowConsultaServicioActivo(driver, sLinea, "Servicio de Red Voz sobre WIFI"));
 	}
 	
 	@Test (groups = {"GestionesPerfilOficina","E2E","Ciclo3", "ABMDeServicios"}, dataProvider="AltaServicios")
 	public void TS134356_CRM_Movil_PRE_Alta_Servicio_sin_costo_DDI_sin_Roaming_Internacional_Presencial(String sDNI, String sLinea) throws AWTException{
 		imagen = "TS134356";
 		detalles = imagen+" - AltaServicio - DNI: "+sDNI+" - Linea: "+sLinea;
-		GestionFlow gGF = new GestionFlow();
-		Assert.assertTrue(gGF.FlowConsultaServicioInactivo(driver, sLinea, "Discado Directo Internacional sin Roaming Int."));
+//		GestionFlow gGF = new GestionFlow();
+//		Assert.assertTrue(gGF.FlowConsultaServicioInactivo(driver, sLinea, "Discado Directo Internacional sin Roaming Int."));
 		BasePage cambioFrameByID=new BasePage();
 		sleep(30000);
 		driver.switchTo().frame(cambioFrameByID.getFrameForElement(driver, By.id("SearchClientDocumentType")));
@@ -6536,7 +6550,7 @@ public class GestionesPerfilOficina extends TestBase {
 		driver.navigate().refresh();
 		Assert.assertTrue(cc.corroborarEstadoCaso(sOrder, "Activada"));
 		sleep(20000);
-		Assert.assertTrue(gGF.FlowConsultaServicioActivo(driver, sLinea, "DDI sin Roaming Internacional"));
+		//Assert.assertTrue(gGF.FlowConsultaServicioActivo(driver, sLinea, "DDI sin Roaming Internacional"));
 	}
 	
 	@Test (groups = {"GestionesPerfilOficina","Recargas","E2E", "Ciclo1"}, dataProvider="RecargaTC")
@@ -6561,7 +6575,7 @@ public class GestionesPerfilOficina extends TestBase {
 		CBS cCBS = new CBS();
 		CBS_Mattu cCBSM = new CBS_Mattu();
 		String sMainBalance = cCBS.ObtenerValorResponse(cCBSM.Servicio_queryLiteBySubscriber(sLinea), "bcs:MainBalance");
-		Integer iMainBalance = Integer.parseInt(sMainBalance.substring(0, (sMainBalance.length()) - 1));
+		Integer iMainBalance = Integer.parseInt(sMainBalance);
 		//System.out.println("Saldo original: " + iMainBalance);
 		
 		BasePage cambioFrame=new BasePage();
@@ -6624,7 +6638,10 @@ public class GestionesPerfilOficina extends TestBase {
 		System.out.println("saldo nuevo "+uMainBalance);
 		Integer uiMainBalance = Integer.parseInt(uMainBalance.substring(0, (uMainBalance.length()) - 1));
 		Integer monto = Integer.parseInt(orden.split("-")[2].replace(".", ""));
-		monto = Integer.parseInt(monto.toString().substring(0, monto.toString().length()-2));
+		//monto = Integer.parseInt(monto.toString().substring(0, monto.toString().length()-2));
+		System.out.println("Monto: "+monto);
+		System.out.println("Saldo inicial: "+iMainBalance);
+		System.out.println("monto sumado: "+(monto+iMainBalance));
 		Assert.assertTrue(iMainBalance+monto == uiMainBalance);
 		driver.switchTo().frame(cambioFrame(driver, By.cssSelector(".hasMotif.orderTab.detailPage.ext-webkit.ext-chrome.sfdcBody.brandQuaternaryBgr")));
 		WebElement tabla = driver.findElement(By.id("ep")).findElements(By.tagName("table")).get(1);
@@ -6896,7 +6913,7 @@ public class GestionesPerfilOficina extends TestBase {
 		Assert.assertTrue(gestion);
 	}
 	
-	@Test (groups = {"GestionesPerfilOficina","DiagnosticoInconvenientes"}, dataProvider = "Diagnostico")
+	@Test (groups = {"GestionesPerfilOficina","DiagnosticoEInconvenientes"}, dataProvider = "Diagnostico")
 	public void TS119210_CRM_Movil_PRE_Diagnostico_de_Voz_Valida_Red_y_Navegacion_Motivo_de_contacto_No_puedo_realizar_ni_recibir_llamadas(String sDNI, String sLinea) throws Exception  {
 		imagen = "TS119210";
 		detalles = null;
@@ -6938,7 +6955,7 @@ public class GestionesPerfilOficina extends TestBase {
 		assertTrue(caso);
 	}
 	
-	@Test (groups = {"GestionesPerfilOficina","DiagnosticoInconvenientes"}, dataProvider = "Diagnostico")
+	@Test (groups = {"GestionesPerfilOficina","DiagnosticoEInconvenientes"}, dataProvider = "Diagnostico")
 	public void TS119201_CRM_Movil_PRE_Diagnostico_de_Voz_Valida_Red_y_Navegacion_Motivo_de_contacto_No_puedo_recibir_llamadas_Sin_Locacion_Envia_configuraciones(String sDNI, String sLinea) throws Exception  {
 		imagen = "TS119201";
 		detalles = null;
@@ -6986,7 +7003,7 @@ public class GestionesPerfilOficina extends TestBase {
 		
 	}
 	
-	@Test (groups = {"GestionesPerfilOficina","DiagnosticoInconvenientes"}, dataProvider = "Diagnostico")
+	@Test (groups = {"GestionesPerfilOficina","DiagnosticoEInconvenientes"}, dataProvider = "Diagnostico")
 	public void TS119186_CRM_Movil_PRE_Diagnostico_de_Voz_Valida_Red_y_Navegacion_Motivo_de_contacto_No_puedo_realizar_llamadas_Sin_Locacion_NO_recupera_locacion_Geo_rojo(String sDNI, String sLinea) throws Exception  {
 		imagen = "TS119186";
 		detalles = null;
@@ -7041,7 +7058,7 @@ public class GestionesPerfilOficina extends TestBase {
 	
 	@Test (groups= {"GestionesPerfilOficina", "HistorialDeRecargas", "Ciclo2"},  dataProvider = "HistoriaRecarga")
 	public void TS134841_CRM_Movil_Prepago_Historial_de_Recargas_Consultar_detalle_de_Recargas_por_Canal_SMS_Fan_FRONT_OOCC(String sDNI, String sLinea) {
-		imagen = "TS134847";
+		imagen = "TS134841";
 		detalles = imagen+"-Historial De Recarga-DNI:"+sDNI;
 		driver.switchTo().frame(cambioFrame(driver, By.id("SearchClientDocumentType")));
 		sb.BuscarCuenta("DNI", sDNI);
@@ -7175,7 +7192,7 @@ public class GestionesPerfilOficina extends TestBase {
 		}
 		
 	}
-	@Test (groups = {"GestionesPerfilOficina","DiagnosticoInconvenientes"},  dataProvider = "Diagnostico")
+	@Test (groups = {"GestionesPerfilOficina","DiagnosticoEInconvenientes"},  dataProvider = "Diagnostico")
 	public void TS105466_CRM_CRM_Movil_Repro_Autogestion_WEB_Incon_con_Compra_de_packs_No_Resuelto(String sDNI, String sLinea) throws InterruptedException {
 		imagen = "TS105466";
 		detalles = null;
@@ -7284,8 +7301,8 @@ public class GestionesPerfilOficina extends TestBase {
 		detalles = imagen + " -Ajustes-DNI: " + sDNI + ", Caso numero: " + caso;
 	}
 	
-	@Test (groups = {"GestionesPerfilOficina", "DiagnosticoInconvenientes","E2E", "Ciclo3"}, dataProvider = "Diagnostico")
-	public void TS_119162_CRM_Movil_PRE_Diagnostico_de_Voz_Valida_Red_y_Navegacion_Motivo_de_contacto_No_puedo_realizar_llamadas(String sDNI, String sLinea){
+	@Test (groups = {"GestionesPerfilOficina", "DiagnosticoEInconvenientes","E2E", "Ciclo3"}, dataProvider = "Diagnostico")
+	public void TS119162_CRM_Movil_PRE_Diagnostico_de_Voz_Valida_Red_y_Navegacion_Motivo_de_contacto_No_puedo_realizar_llamadas(String sDNI, String sLinea){
 		boolean caso = false;
 		imagen = "TS119262";
 		detalles = null;
@@ -7328,7 +7345,7 @@ public class GestionesPerfilOficina extends TestBase {
 		assertTrue(caso);
 	}
 	
-	@Test (groups = {"GestionesPerfilOficina", "DiagnosticoInconvenientes", }, dataProvider = "Diagnostico")
+	@Test (groups = {"GestionesPerfilOficina", "DiagnosticoEInconvenientes", }, dataProvider = "Diagnostico")
 	public void TS105449_CRM_Movil_Repro_Autogestion_0800_Informa_Sistema_Fuera_de_Servicio_No_Resuelto(String sDNI, String sLinea) throws InterruptedException {
 		imagen = "TS105449";
 		detalles = null;
@@ -7361,7 +7378,7 @@ public class GestionesPerfilOficina extends TestBase {
 			estado = true;
 		Assert.assertTrue(estado);
 	}
-	@Test (groups = {"GestionesPerfilOficina", "Resumen de Cuenta Corriente", "E2E","Ciclo4"}, dataProvider = "CuentaReintegros")
+	@Test (groups = {"GestionesPerfilOficina", "ResumenDeCuenta", "E2E","Ciclo4"}, dataProvider = "CuentaReintegros")
 	public void TS129461_CRM_Movil_REPRO_Resumen_de_Cuenta_Corriente_Verificacion_de_vista_de_Resumen_de_Cuenta_Corriente_FAN_Front_OOCC(String sDNI){
 		imagen = "TS129461";
 		detalles = null;
@@ -7448,7 +7465,7 @@ public class GestionesPerfilOficina extends TestBase {
 		
 	}
 	
-	@Test (groups = {"GestionesPerfilOficina", "DiagnosticoInconvenientes", }, dataProvider = "Diagnostico")
+	@Test (groups = {"GestionesPerfilOficina", "DiagnosticoEInconvenientes", }, dataProvider = "Diagnostico")
 	public void TS105453_CRM_Movil_Repro_Autogestion_0800_La_Linea_esta_muda_No_Resuelto(String cDNI, String cLinea) throws InterruptedException {
 		imagen = "TS105453";
 		detalles = null;
@@ -7689,7 +7706,7 @@ public class GestionesPerfilOficina extends TestBase {
 		//Assert.assertTrue(///Bug... no muestra la informacion de la Nota de Credito);
 	}
 	
-	@Test (groups = {"GestionesPerfilOficina","Diagnostico/Inconvenientes"}, dataProvider = "Diagnostico")
+	@Test (groups = {"GestionesPerfilOficina","DiagnosticoEInconvenientes"}, dataProvider = "Diagnostico")
 	public void TS119275_CRM_Movil_PRE_Diagnostico_de_Datos_Valida_Red_y_Navegacion_Motivo_de_contacto_No_puedo_Navegar_ANTENA_ROJO_Evento_Masivo_NO_BAM(String sDNI, String sLinea) throws InterruptedException {
 		imagen = "TS119275";
 		detalles = null;
@@ -7741,7 +7758,7 @@ public class GestionesPerfilOficina extends TestBase {
 		Assert.assertTrue(tech.cerrarCaso("Resuelta exitosa", "Consulta"));
 	}
 	
-	@Test (groups = {"GestionesPerfilOficina","Diagnostico/Inconvenientes"}, dataProvider = "Diagnostico")
+	@Test (groups = {"GestionesPerfilOficina","DiagnosticoEInconvenientes"}, dataProvider = "Diagnostico")
 	public void TS119279_CRM_Movil_PRE_Diagnostico_de_Datos_Valida_Red_y_Navegacion_Motivo_de_contacto_No_puedo_Navegar_CONCILIAR_NO_BAM(String sDNI, String sLinea) throws InterruptedException {
 		imagen = "TS119279";
 		detalles = null;
@@ -7789,7 +7806,7 @@ public class GestionesPerfilOficina extends TestBase {
 		Assert.assertTrue(a);
 	}
 	
-	@Test (groups = {"GestionesPerfilOficina","Diagnostico/Inconvenientes"}, dataProvider = "Diagnostico")
+	@Test (groups = {"GestionesPerfilOficina","DiagnosticoEInconvenientes"}, dataProvider = "Diagnostico")
 	public void TS119283_CRM_Movil_REPRO_Diagnostico_de_Datos_Valida_Red_y_Navegacion_Motivo_de_contacto_No_puedo_navegar_Antena_rojo_NO_BAM(String sDNI, String sLinea) throws InterruptedException {
 		imagen = "TS119283";
 		detalles = null;
@@ -7841,7 +7858,7 @@ public class GestionesPerfilOficina extends TestBase {
 		Assert.assertTrue(tech.cerrarCaso("Resuelta exitosa", "Consulta"));
 	}
 	
-	@Test (groups = {"GestionesPerfilOficina","Diagnostico/Inconvenientes"}, dataProvider = "Diagnostico")
+	@Test (groups = {"GestionesPerfilOficina","DiagnosticoEInconvenientes"}, dataProvider = "Diagnostico")
 	public void TS119267_CRM_Movil_PRE_Diagnostico_de_Datos_Valida_Red_y_Navegacion_Motivo_de_contacto_No_puedo_Navegar_Sin_conciliar_ni_desregistrar_Envio_de_configuracion(String sDNI, String sLinea) throws InterruptedException {
 		imagen = "TS119267";
 		detalles = null;
@@ -7888,7 +7905,7 @@ public class GestionesPerfilOficina extends TestBase {
 		Assert.assertTrue(tech.cerrarCaso("Resuelta exitosa", "Consulta"));
 	}
 	
-	@Test (groups = {"GestionesPerfilOficina","Diagnostico/Inconvenientes"}, dataProvider = "Diagnostico")
+	@Test (groups = {"GestionesPerfilOficina","DiagnosticoEInconvenientes"}, dataProvider = "Diagnostico")
 	public void TS119286_CRM_Movil_PRE_Diagnostico_de_Datos_Valida_Red_y_Navegacion_Motivo_de_contacto_Navega_con_lentitud_Fuera_del_area_de_cobertura_NO_BAM(String sDNI, String sLinea) throws InterruptedException {
 		imagen = "TS119286";
 		detalles = null;
@@ -7929,7 +7946,7 @@ public class GestionesPerfilOficina extends TestBase {
 		Assert.assertTrue(tech.cerrarCaso("Resuelta exitosa", "Consulta"));
 	}
 	
-	@Test (groups = {"GestionesPerfilOficina","DiagnosticoInconvenientes"}, dataProvider = "Diagnostico")
+	@Test (groups = {"GestionesPerfilOficina","DiagnosticoEInconvenientes"}, dataProvider = "Diagnostico")
 	public void TS119183_CRM_Movil_PRE_Diagnostico_de_Voz_Valida_Red_y_Navegacion_Motivo_de_contacto_No_puedo_realizar_llamadas_Sin_Locacion_Servicio_con_suspencion(String sDNI, String sLinea) throws Exception  {
 		imagen = "TS119183";
 		detalles = null;
@@ -7972,7 +7989,7 @@ public class GestionesPerfilOficina extends TestBase {
 		Assert.assertTrue(tech.cerrarCaso("Resuelta exitosa", "Consulta"));
 	}
 	
-	@Test (groups = {"GestionesPerfilOficina","DiagnosticoInconvenientes"}, dataProvider = "Diagnostico")
+	@Test (groups = {"GestionesPerfilOficina","DiagnosticoEInconvenientes"}, dataProvider = "Diagnostico")
 	public void TS119178_CRM_Movil_PRE_Diagnostico_de_Voz_Valida_Red_y_Navegacion_Motivo_de_contacto_No_puedo_realizar_llamadas_Sin_Locacion_Evento_Masivo(String sDNI, String sLinea) throws Exception  {
 		imagen = "TS119178";
 		detalles = null;
@@ -8015,7 +8032,7 @@ public class GestionesPerfilOficina extends TestBase {
 		Assert.assertTrue(tech.cerrarCaso("Resuelta Masiva", "Consulta"));
 	}
 	
-	@Test (groups = {"GestionesPerfilOficina","Diagnostico/Inconvenientes"}, dataProvider = "Diagnostico")
+	@Test (groups = {"GestionesPerfilOficina","DiagnosticoEInconvenientes"}, dataProvider = "Diagnostico")
 	public void TS119266_CRM_Movil_PRE_Diagnostico_de_Datos_Valida_Red_y_Navegacion_Motivo_de_contacto_No_puedo_Navegar_sin_rellamado_NO_BAM(String sDNI, String sLinea) throws InterruptedException {
 		imagen = "TS119266";
 		detalles = null;
@@ -8082,7 +8099,7 @@ public class GestionesPerfilOficina extends TestBase {
 		Assert.assertTrue(tech.cerrarCaso("Resuelta exitosa", "Consulta"));
 	}
 	
-	@Test (groups = {"GestionesPerfilOficina","Diagnostico/Inconvenientes"}, dataProvider = "Diagnostico")
+	@Test (groups = {"GestionesPerfilOficina","DiagnosticoEInconvenientes"}, dataProvider = "Diagnostico")
 	public void TS119221_CRM_Movil_PRE_Diagnostico_de_Voz_Valida_Red_y_Navegacion_Motivo_de_contacto_No_puedo_realizar_ni_recibir_llamadas_Sin_Locacion_Evento_Masivo(String sDNI, String sLinea) throws InterruptedException {
 		imagen = "TS119221";
 		detalles = null;
@@ -8132,5 +8149,135 @@ public class GestionesPerfilOficina extends TestBase {
 		driver.switchTo().defaultContent();
 		tech.buscarCaso(caso);
 		Assert.assertTrue(tech.cerrarCaso("Resuelta exitosa", "Consulta"));
+	}
+	
+	@Test
+	public void prueba () throws InterruptedException {
+	CustomerCare cCC=new CustomerCare(driver);
+	sleep(10000);
+	driver.switchTo().frame(cambioFrame(driver, By.id("SearchClientDocumentType")));
+	sb.BuscarCuenta("DNI", "22222752");
+	driver.findElement(By.cssSelector(".slds-tree__item.ng-scope")).click();
+	sleep(20000);
+	
+	driver.switchTo().frame(cambioFrame(driver, By.className("card-top")));
+	driver.findElement(By.className("card-top")).click();
+	sleep(15000);
+	List <WebElement> opciones = driver.findElements(By.cssSelector("li a"));
+	System.out.println("cant de opciones -> "+ opciones.size());
+	for(WebElement x : opciones) {
+		if(x.getText().indexOf("Diag")>-1) {
+			System.out.println("Cambio de frame");				
+			x.click();
+		}
+	}
+	sleep(15000);
+	
+	driver.switchTo().frame(cambioFrame(driver,By.id("MotiveIncidentSelect_nextBtn")));
+	System.out.println("cambio  bien de frame");
+	Select seleccion = new Select(driver.findElement(By.id("Motive")));
+	seleccion.selectByIndex(1);
+	driver.findElement(By.id("MotiveIncidentSelect_nextBtn")).click();
+	sleep(15000);
+
+	driver.switchTo().frame(cambioFrame(driver,By.id("DataQuotaQuery_nextBtn"))); 
+	opciones= driver.findElements(By.cssSelector(".slds-radio.ng-scope"));
+	for(WebElement x : opciones) {
+		if(x.getText().indexOf("S")>-1) {
+			x.click();
+		}
+	}
+	driver.findElement(By.id("DataQuotaQuery_nextBtn")).click();// hasta aca bien
+	sleep(15000);
+	
+	driver.switchTo().frame(cambioFrame(driver, By.id("NetworkCategory_nextBtn")));
+	driver.findElement(By.id("NetworkCategory_nextBtn")).click();
+	sleep(15000);
+	
+	driver.switchTo().frame(cambioFrame(driver, By.id("BlackListValidationOk_nextBtn")));
+	opciones = driver.findElements(By.className(".slds-radio--faux.ng-scope"));
+	for(WebElement x : opciones) {
+		if(x.getText().indexOf("S")>-1) {
+			x.click();
+		}
+	}
+	driver.findElement(By.id("BlackListValidationOk_nextBtn")).click();
+	sleep(8000);
+	
+	driver.switchTo().frame(cambioFrame(driver, By.id("RecentConfiguration_nextBtn")));
+	opciones = driver.findElements(By.cssSelector(".slds-form-element__label.ng-binding.ng-scope"));
+	for(WebElement x : opciones) {
+		if(x.getText().indexOf("S")>-1) {
+			x.click();
+		}
+	}
+	driver.findElement(By.id("RecentConfiguration_nextBtn")).click();// hasta aca bien
+	sleep(8000);
+	
+	driver.switchTo().frame(cambioFrame(driver, By.id("MobileConfigurationSending_nextBtn")));
+	opciones =driver.findElements(By.cssSelector(".imgItemContainer.ng-scope"));
+	for(WebElement x : opciones) {
+		if(x.getText().indexOf("S")>-1) {
+			x.click();
+		}
+	}
+	driver.findElement(By.id("MobileConfigurationSending_nextBtn"));
+	sleep(8000);
+	driver.switchTo().frame(cambioFrame(driver, By.id("NetworkCategory_nextBtn")));
+	driver.findElement(By.id("MobileConfigurationSending_nextBtn")).click();
+	sleep(8000);
+	
+	opciones =driver.findElements(By.cssSelector("strong"));
+	boolean corte = true;
+	String  numero="";
+	for(WebElement x : opciones) {
+		if(x.getText().indexOf("00")>-1 && corte) {
+			
+			corte=false;
+			numero = x.getText();
+		}
+	}
+	System.out.print(numero);
+	cc.cerrarTodasLasPestanas();
+	sleep(5000);
+	cCC.buscarCaso(numero);	//hasta aca bien
+	sleep(8000);
+	
+	driver.switchTo().frame(cambioFrame(driver, By.id("topButtonRow")));
+	opciones = driver.findElement(By.id("topButtonRow")).findElements(By.tagName("input"));
+	WebElement close=null;
+	System.out.println("/nTopButtonRow size: "+opciones.size());
+	for(WebElement x : opciones) {
+		if (x.getAttribute("value").equalsIgnoreCase("Cerrar caso")){
+			System.out.println("entro al if");
+			close = x;
+		}
+
+	}
+	if(close!=null) {
+	close.click();
+	
+	}
+	sleep(8000);
+	
+	driver.switchTo().frame(cambioFrame(driver,By.id("cas7")));
+	seleccion = new Select(driver.findElement(By.id("cas7")));
+	seleccion.selectByIndex(3);
+	seleccion = new Select(driver.findElement(By.id("cas6")));
+	seleccion.selectByIndex(1);
+	
+	driver.switchTo().frame(cambioFrame(driver,By.id("bottomButtonRow")));
+	opciones = driver.findElement(By.id("topButtonRow")).findElements(By.tagName("input"));
+	System.out.println("elementos "+opciones.size());
+	for(WebElement x : opciones) {
+		String name =x.getAttribute("name");
+		System.out.println(name);
+		if(name.contentEquals("save")) {
+			System.out.println("adentro");
+			close=x;
+		}
+	}
+	close.click();
+	
 	}
 }

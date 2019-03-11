@@ -317,13 +317,13 @@ public class Login extends BasePage {
 	
 	public void ingresarComunidad() {
 		try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
-		if (TB.urlCommunity.contains("sit")) {
+		if (TB.urlComunidad.contains("uat")) {
 			wLoginCommunity.sendKeys("alan.rodriguez@xappia.com");//SIT
-			wPasswordCommunity.sendKeys("Telecom*77");
+			wPasswordCommunity.sendKeys("Telecom*67");
 		}
 		else {
-			wLoginCommunity.sendKeys("rabal@yopmail.com");//UAT 
-			wPasswordCommunity.sendKeys("Salesforce1");
+			wLoginCommunity.sendKeys("alan.rodriguez@xappia.com");//UAT 
+			wPasswordCommunity.sendKeys("Telecom*67");
 		}
 		wIngresarCommunity.click();
 		try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}

@@ -720,7 +720,7 @@ public class PagePerfilTelefonico extends TestBase{
 						}
 					}
 				}
-				sleep(6000);
+				sleep(9000);
 			}
 		
 			wTable = driver.findElement(By.cssSelector("[class='slds-tabs--default__content slds-show']"));
