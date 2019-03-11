@@ -2284,7 +2284,7 @@ public class GestionesPerfilTelefonico extends TestBase{
 		sleep(10000);
 		ContactSearch contact = new ContactSearch(driver);
 		contact.searchContact2("DNI", sDni, sSexo);
-		sleep(2000);
+		sleep(5000);
 		contact.Llenar_Contacto(sNombre, sApellido, sFnac);
 		try {contact.ingresarMail(sEmail, "si");}catch (org.openqa.selenium.ElementNotVisibleException ex1) {}
 		contact.tipoValidacion("preguntas y respuestas");
@@ -4502,7 +4502,7 @@ public class GestionesPerfilTelefonico extends TestBase{
 		ContactSearch contact = new ContactSearch(driver);
 		contact.searchContact2("DNI", sDni, "Masculino");
 		driver.findElement(By.id("Contact_nextBtn")).click();
-		sleep(10000);
+		sleep(15000);
 		Assert.assertFalse(driver.findElement(By.id("MethodSelection_nextBtn")).isDisplayed());
 	}
 	

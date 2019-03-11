@@ -1237,16 +1237,16 @@ try{	driver.findElement(By.id("alert-ok-button")).click();	} catch (NoSuchElemen
 		
 		public boolean completarLogistica(String sOrder, WebDriver driver) {
 			TestBase TB = new TestBase();
-			try {Thread.sleep(15000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
+			try {Thread.sleep(20000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 			try {
 				driver.findElement(By.id("tabBar")).findElement(By.tagName("a")).click();
-				sleep(12000);
+				sleep(20000);
 			}catch(Exception ex1) {}
 			SalesBase SB = new SalesBase(driver);
 			driver.switchTo().defaultContent();
-			sleep(3000);
-			TB.goToLeftPanel2(driver, "Logistica");
-			sleep(12000);
+			sleep(8000);
+			TB.goToLeftPanel3(driver, "Logistica");
+			sleep(15000);
 			try{
 				SB.cerrarPestaniaGestion(driver);}
 			catch(Exception ex2) {}
@@ -1273,7 +1273,7 @@ try{	driver.findElement(By.id("alert-ok-button")).click();	} catch (NoSuchElemen
 			sleep(8000);
 			boolean bAssert = false;
 			List<WebElement> wMessage = driver.findElement(By.cssSelector(".slds-form-element.vlc-flex.vlc-slds-text-block.vlc-slds-rte.ng-pristine.ng-valid.ng-scope")).findElement(By.className("slds-form-element__control")).findElement(By.className("ng-binding")).findElements(By.tagName("p"));
-			if (wMessage.get(1).getText().equals("¡La orden se realizó con \u00e9xito!")) {
+			if (wMessage.get(1).getText().equals("ï¿½La orden se realizï¿½ con \u00e9xito!")) {
 				bAssert = true;
 			}
 			driver.findElement(By.id("Confirmation_nextBtn")).click();
@@ -1327,7 +1327,7 @@ try{	driver.findElement(By.id("alert-ok-button")).click();	} catch (NoSuchElemen
 			//Check Verification - There's no message shown by now
 			try {
 				List<WebElement> wMessage = driver.findElement(By.cssSelector(".slds-form-element.vlc-flex.vlc-slds-text-block.vlc-slds-rte.ng-pristine.ng-valid.ng-scope")).findElement(By.className("slds-form-element__control")).findElement(By.className("ng-binding")).findElements(By.tagName("p"));
-				if (wMessage.get(1).getText().equals("¡La orden se realizó con \u00e9xito!")) {
+				if (wMessage.get(1).getText().equals("ï¿½La orden se realizï¿½ con \u00e9xito!")) {
 					bAssert = true;
 				}
 				driver.findElement(By.id("Confirmation_nextBtn")).click();
@@ -1370,7 +1370,7 @@ try{	driver.findElement(By.id("alert-ok-button")).click();	} catch (NoSuchElemen
 			sleep(8000);
 			boolean bAssert = false;
 			List<WebElement> wMessage = driver.findElement(By.cssSelector(".slds-form-element.vlc-flex.vlc-slds-text-block.vlc-slds-rte.ng-pristine.ng-valid.ng-scope")).findElement(By.className("slds-form-element__control")).findElement(By.className("ng-binding")).findElements(By.tagName("p"));
-			if (wMessage.get(1).getText().equals("¡La orden se realizó con \u00e9xito!")) {
+			if (wMessage.get(1).getText().equals("ï¿½La orden se realizï¿½ con \u00e9xito!")) {
 				bAssert = true;
 			}
 			driver.findElement(By.id("Confirmation_nextBtn")).click();

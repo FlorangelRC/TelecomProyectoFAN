@@ -1949,6 +1949,13 @@ public class TestBase {
 	}
 	
 	@DataProvider
+	public Object[][] servicioTecnico() throws Exception {
+		Object[][] testObjArray = ExcelUtils.getTableArray(dataProviderE2E(),"E2EsinPago",1,1,3,"Serv Tecn");
+
+		 return (testObjArray);
+	}
+	
+	@DataProvider
 	public Object[][] Diagnostico() throws Exception {
 		Object[][] testObjArray = ExcelUtils.getTableArray(dataProviderE2E(),"E2EsinPago",1,1,2,"DiagnInconveniente");
 
