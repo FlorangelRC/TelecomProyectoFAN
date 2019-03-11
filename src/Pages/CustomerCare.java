@@ -619,7 +619,7 @@ public class CustomerCare extends BasePage {
 			System.out.println("Entro pero no hizo click");
 		}
 	}
-	public void cerarPanelDerecho() throws AWTException {		
+	public void cerrarPanelDerecho() throws AWTException {		
 		sleep(5000);																							
 		driver.switchTo().defaultContent();
 		Robot robot = new Robot();																									
