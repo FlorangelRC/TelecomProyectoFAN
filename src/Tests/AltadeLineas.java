@@ -63,7 +63,7 @@ public class AltadeLineas extends TestBase {
 	@BeforeMethod(alwaysRun=true)
 	public void setup() throws Exception {
 		Accounts accountPage = new Accounts(driver);
-		goToLeftPanel2(driver, "Inicio");
+		goToLeftPanel3(driver, "Inicio");
 		sleep(5000);
 		SalesBase SB = new SalesBase(driver);
 		driver.switchTo().defaultContent();
@@ -198,10 +198,10 @@ public class AltadeLineas extends TestBase {
 		driver.findElement(By.id("FileDocumentImage")).sendKeys(new File(directory.getAbsolutePath()).toString());
 		sleep(8000);
 		cc.obligarclick(driver.findElement(By.id("DocumentMethod_nextBtn")));
-		sleep(15000);
+		sleep(25000);
 		try {
 			driver.findElements(By.cssSelector(".slds-button.slds-button--neutral.ng-binding.ng-scope")).get(1).click();
-			sleep(15000);
+			sleep(25000);
 		}catch(Exception ex1) {}
 		String orden = driver.findElement(By.className("top-data")).findElement(By.className("ng-binding")).getText();
 		String NCuenta = driver.findElements(By.className("top-data")).get(1).findElements(By.className("ng-binding")).get(3).getText();
@@ -213,18 +213,18 @@ public class AltadeLineas extends TestBase {
 		NCuenta = NCuenta.substring(NCuenta.length()-16);
 		Linea = Linea.substring(Linea.length()-10);
 		cc.obligarclick(driver.findElement(By.id("OrderSumary_nextBtn")));
-		sleep(20000);
-		driver.findElement(By.id("SaleOrderMessages_nextBtn")).click();
+		sleep(30000);
+		cc.obligarclick(driver.findElement(By.id("SaleOrderMessages_nextBtn")));
 		DatosOrden.add("Orden:"+orden+"-DNI:"+sDni+"-Cuenta:"+NCuenta+"-Linea"+Linea);
-		sleep(15000);
+		sleep(30000);
 		System.out.println(cc.obtenerMontoyTNparaAlta(driver, orden));
 		CBS_Mattu invoSer = new CBS_Mattu();
 		if(activarFalsos==true) {
 			invoSer.Servicio_NotificarEmisionFactura(orden);
-			sleep(10000);
+			sleep(15000);
 		}
 		driver.navigate().refresh();
-		sleep(10000);
+		sleep(15000);
 		driver.switchTo().frame(cambioFrame(driver, By.cssSelector(".hasMotif.orderTab.detailPage.ext-webkit.ext-chrome.sfdcBody.brandQuaternaryBgr")));
 		WebElement tabla = driver.findElement(By.id("ep")).findElements(By.tagName("table")).get(1);
 		String datos = tabla.findElements(By.tagName("tr")).get(4).findElements(By.tagName("td")).get(1).getText();
@@ -1122,12 +1122,12 @@ public class AltadeLineas extends TestBase {
 		sleep(8000);
 		File directory = new File("Dni.jpg");
 		driver.findElement(By.id("FileDocumentImage")).sendKeys(new File(directory.getAbsolutePath()).toString());
-		sleep(3000);
+		sleep(8000);
 		cc.obligarclick(driver.findElement(By.id("DocumentMethod_nextBtn")));
-		sleep(15000);
+		sleep(35000);
 		try {
 			driver.findElements(By.cssSelector(".slds-button.slds-button--neutral.ng-binding.ng-scope")).get(1).click();
-			sleep(15000);
+			sleep(35000);
 		}catch(Exception ex1) {}
 		String orden = driver.findElement(By.className("top-data")).findElement(By.className("ng-binding")).getText();
 		String NCuenta = driver.findElements(By.className("top-data")).get(1).findElements(By.className("ng-binding")).get(3).getText();
@@ -1139,18 +1139,18 @@ public class AltadeLineas extends TestBase {
 		NCuenta = NCuenta.substring(NCuenta.length()-16);
 		Linea = Linea.substring(Linea.length()-10);
 		cc.obligarclick(driver.findElement(By.id("OrderSumary_nextBtn")));
-		sleep(20000);
-		driver.findElement(By.id("SaleOrderMessages_nextBtn")).click();
+		sleep(30000);
+		cc.obligarclick(driver.findElement(By.id("SaleOrderMessages_nextBtn")));
 		DatosOrden.add("Orden:"+orden+"-DNI:"+sDni+"-Cuenta:"+NCuenta+"-Linea"+Linea);
-		sleep(15000);
+		sleep(30000);
 		System.out.println(cc.obtenerMontoyTNparaAlta(driver, orden));
 		CBS_Mattu invoSer = new CBS_Mattu();
 		if(activarFalsos==true) {
 			invoSer.Servicio_NotificarEmisionFactura(orden);
-			sleep(10000);
+			sleep(15000);
 		}
 		driver.navigate().refresh();
-		sleep(10000);
+		sleep(15000);
 		driver.switchTo().frame(cambioFrame(driver, By.cssSelector(".hasMotif.orderTab.detailPage.ext-webkit.ext-chrome.sfdcBody.brandQuaternaryBgr")));
 		WebElement tabla = driver.findElement(By.id("ep")).findElements(By.tagName("table")).get(1);
 		String datos = tabla.findElements(By.tagName("tr")).get(4).findElements(By.tagName("td")).get(1).getText();

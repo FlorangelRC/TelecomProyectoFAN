@@ -5302,6 +5302,7 @@ public class GestionesPerfilOficina extends TestBase {
 		imagen = "TS104346";
 		detalles = null;
 		detalles = imagen + " -Problemas Con Recargas-DNI: " + sDNI;
+		ContactSearch contact = new ContactSearch(driver);
 		String datoViejo = cbs.ObtenerValorResponse(cbsm.Servicio_queryLiteBySubscriber(sLinea), "bcs:MainBalance");
 		Integer datosInicial = Integer.parseInt(datoViejo.substring(0, 5));
 		driver.switchTo().frame(cambioFrame(driver, By.id("SearchClientDocumentType")));
@@ -5328,9 +5329,10 @@ public class GestionesPerfilOficina extends TestBase {
 			sleep(5000);
 		} catch (Exception e) {}
 		buscarYClick(driver.findElements(By.cssSelector(".slds-form-element__label.ng-binding.ng-scope")), "equals", "si");
-		driver.findElement(By.id("FileAttach")).sendKeys("C:\\Users\\xappiens\\flowerengel\\TelecomProyectoFAN\\DNI.jpg");
-		driver.findElement(By.id("AttachDocuments_nextBtn")).click();
+		File directory = new File("Dni.jpg");
+		contact.subir_imagen(new File(directory.getAbsolutePath()).toString(),"si");
 		sleep(5000);
+		
 		driver.findElement(By.id("Summary_nextBtn")).click();
 		sleep(5000);
 		WebElement gestion = driver.findElement(By.className("ta-care-omniscript-done")).findElement(By.tagName("header")).findElement(By.tagName("h1"));
