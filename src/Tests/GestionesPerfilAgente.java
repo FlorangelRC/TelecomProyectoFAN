@@ -1062,10 +1062,10 @@ public class GestionesPerfilAgente extends TestBase{
 		sleep(5000);
 		cc.irAGestionEnCard("Alta/Baja de Servicios");
 		sleep(35000);
-		//cc.openrightpanel();
+		cc.openrightpanel();
 		//cc.closerightpanel();
 		//cc.openleftpanel();
-		//cc.closeleftpanel();
+		cc.cerrarPanelDerecho();
 		driver.switchTo().defaultContent();
 		driver.switchTo().frame(cambioFrameByID.getFrameForElement(driver, By.cssSelector(".slds-text-body--small.slds-page-header__info.taDevider")));
 		String sOrder = driver.findElement(By.cssSelector(".slds-text-body--small.slds-page-header__info.taDevider")).getText();
@@ -1127,8 +1127,8 @@ public class GestionesPerfilAgente extends TestBase{
 		sleep(5000);
 		cc.irAGestionEnCard("Alta/Baja de Servicios");
 		sleep(35000);
-		//cc.openrightpanel();
-		//cc.closerightpanel();
+		cc.openrightpanel();
+		cc.cerrarPanelDerecho();
 		driver.switchTo().defaultContent();
 		driver.switchTo().frame(cambioFrameByID.getFrameForElement(driver, By.cssSelector(".slds-text-body--small.slds-page-header__info.taDevider")));
 		String sOrder = driver.findElement(By.cssSelector(".slds-text-body--small.slds-page-header__info.taDevider")).getText();
@@ -1620,10 +1620,10 @@ public class GestionesPerfilAgente extends TestBase{
 		sleep(5000);
 		cc.irAGestionEnCard("Alta/Baja de Servicios");
 		sleep(35000);
-		//cc.openrightpanel();
+		cc.openrightpanel();
 		//cc.closerightpanel();
 		//cc.openleftpanel();
-		//cc.closeleftpanel();
+		cc.cerrarPanelDerecho();
 		driver.switchTo().defaultContent();
 		driver.switchTo().frame(cambioFrameByID.getFrameForElement(driver, By.cssSelector(".slds-text-body--small.slds-page-header__info.taDevider")));
 		String sOrder = driver.findElement(By.cssSelector(".slds-text-body--small.slds-page-header__info.taDevider")).getText();
