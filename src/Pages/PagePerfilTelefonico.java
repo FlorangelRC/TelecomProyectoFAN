@@ -286,8 +286,9 @@ public class PagePerfilTelefonico extends TestBase{
 		sleep(5000);
 		List<WebElement> NomPack = driver.findElements(By.xpath("//*[@class='cpq-item-product-child-level-1 cpq-item-child-product-name-wrapper']"));
 		for(WebElement a: NomPack) {
-			//System.out.print(a.getText().toLowerCase());
-			//System.out.println(" : "+servicio1.toLowerCase());
+			
+			System.out.print(a.getText().toLowerCase());
+			System.out.println(" : "+servicio1.toLowerCase());
 				if (a.getText().toLowerCase().contains(servicio1.toLowerCase())) {
 					System.out.println(servicio1);
 						a.findElement(By.tagName("button")).click();
@@ -316,10 +317,12 @@ public class PagePerfilTelefonico extends TestBase{
 		 List<WebElement> Agregar= driver.findElements(By.xpath("//*[@class='cpq-item-product-child-level-3 ng-not-empty ng-valid']//*[@class='slds-button slds-button_neutral']"));
 		 if (Pack.size() == Agregar.size()) {
 			 for (int i = 0; i < Pack.size(); i++) {
+				 
 				 for (int j = 0; j < packs.size(); j++) {
-				 if (Pack.get(i).getText().equals(packs.get(j))) {
+					 System.out.println(Pack.get(i).getText()+" <-pack || packs -> "+packs.get(j));//mofificando
+					 if (Pack.get(i).getText().equals(packs.get(j))) {
 					sleep(8000);
-					System.out.println(Pack.get(i).getText());
+					//System.out.println(Pack.get(i).getText()+" pack i/n agregar i ="+ Agregar.get(i).getText());
 					cCC.obligarclick(Agregar.get(i));
 					estaPack=true;
 							break;	

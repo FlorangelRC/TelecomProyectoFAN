@@ -1587,6 +1587,7 @@ public class CustomerCare extends BasePage {
 		driver.switchTo().frame(tTB.cambioFrame(driver, By.className("card-top")));		
 		List<WebElement> wCard = driver.findElements(By.className("card-top"));		
 		for (WebElement wAux : wCard) {
+			//System.out.println(wAux.getText()+" <--valor wAux........sLinea--> "+sLinea);
 			if (wAux.getText().contains(sLinea)) {
 				wAux.click();
 				esta = true;
