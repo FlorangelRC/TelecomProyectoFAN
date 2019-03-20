@@ -316,7 +316,7 @@ public class GestionesPerfilAgente extends TestBase{
 		Assert.assertTrue(datos.equalsIgnoreCase("activada")||datos.equalsIgnoreCase("activated"));
 	}
 		
-	@Test (groups = {"GestionesPerfilAgente","VentaDePacks","E2E","Ciclo1"}, dataProvider="PackAgente")
+	@Test (groups = {"GestionesPerfilAgente","VentaDePacks","E2E","Ciclo1"}, dataProvider="PackAgente")//Verificado- Solicitud Bloqueada "PagoEnCaja"
 	public void TS_Venta_de_Pack_1_GB_x_1_dia_whatsapp_gratis_Factura_de_Venta_efectivo_Agente(String sDNI, String sLinea, String sPackAgente) throws AWTException{
 		imagen = "Venta_de_Pack";
 		detalles = null;
@@ -331,6 +331,11 @@ public class GestionesPerfilAgente extends TestBase{
 		detalles +="-Cuenta:"+accid;
 		sleep(5000);
 		pagePTelefo.buscarAssert();
+		try {
+		cCC.cerrarPanelDerecho();
+		}catch(Exception e){
+			//nada
+		}
 		cCC.seleccionarCardPornumeroLinea(sLinea, driver);
 		pagePTelefo.comprarPack();
 		sleep(8000);
@@ -1500,7 +1505,7 @@ public class GestionesPerfilAgente extends TestBase{
 		//Verify when the page works
 	}
 	
-	@Test (groups= {"GestionesPerfilAgente","VentadePacks","E2E","Ciclo1"},priority=1, dataProvider="ventaPack500min")
+	@Test (groups= {"GestionesPerfilAgente","VentadePacks","E2E","Ciclo1"},priority=1, dataProvider="ventaPack500min")//verificado no existe ventaPack500min
 	public void TS123148_CRM_Movil_REPRO_Venta_de_pack_500_Min_todo_destino_Factura_de_Venta_TD_Presencial(String sDNI, String sLinea, String sVentaPack) throws InterruptedException, AWTException{
 		imagen = "TS123148";
 		detalles = null;
@@ -1517,12 +1522,18 @@ public class GestionesPerfilAgente extends TestBase{
 		detalles +="-Cuenta:"+accid;
 		pagePTelefo.buscarAssert();
 		cCC.seleccionarCardPornumeroLinea(sLinea, driver);
+		try{
+			cCC.cerrarPanelDerecho();
+		
+		}catch(Exception e){
+			
+		}
 		pagePTelefo.comprarPack();
 		pagePTelefo.PacksRoaming(sVentaPack);
 
 	}
 	
-	@Test (groups= {"GestionesPerfilAgente","VentadePacks","E2E","Ciclo1"},priority=1, dataProvider="ventaPackA40")
+	@Test (groups= {"GestionesPerfilAgente","VentadePacks","E2E","Ciclo1"},priority=1, dataProvider="ventaPackA40")//verificado- No se encuentra el pack Roaming
 	public void TS123166_CRM_Movil_REPRO_Venta_de_pack_Adelanto_Personal_40_Descuento_de_saldo_Presencial(String sDNI, String sLinea, String sVentaPack) throws InterruptedException, AWTException{
 		imagen = "TS123166";
 		detalles = null;
@@ -1539,12 +1550,18 @@ public class GestionesPerfilAgente extends TestBase{
 		detalles +="-Cuenta:"+accid;
 		pagePTelefo.buscarAssert();
 		cCC.seleccionarCardPornumeroLinea(sLinea, driver);
+		try{
+			cCC.cerrarPanelDerecho();
+		
+		}catch(Exception e){
+			
+		}
 		pagePTelefo.comprarPack();
 		sleep(5000);
 		//pagePTelefo.PacksRoaming(sVentaPack);
 	}
 	
-	@Test (groups= {"GestionesPerfilAgente","VentadePacks","E2E","Ciclo1"},priority=1, dataProvider="ventaPackM2M")
+	@Test (groups= {"GestionesPerfilAgente","VentadePacks","E2E","Ciclo1"},priority=1, dataProvider="ventaPackM2M")//verificada- no existe Pack Paquete M2M 10 MB 
 	public void TS135801_CRM_Movil_PREVenta_de_pack_Paquete_M2M_10_MB_Factura_de_Venta_Efectivo_Presencial_PuntMa_Alta_Agente(String sDNI, String sLinea, String sVentaPack) throws InterruptedException, AWTException{
 		imagen = "TS135801";
 		detalles = null;
@@ -1561,6 +1578,12 @@ public class GestionesPerfilAgente extends TestBase{
 		detalles +="-Cuenta:"+accid;
 		pagePTelefo.buscarAssert();
 		cCC.seleccionarCardPornumeroLinea(sLinea, driver);
+		try{
+			cCC.cerrarPanelDerecho();
+		
+		}catch(Exception e){
+			
+		}
 		pagePTelefo.comprarPack();
 		sleep(5000);
 		//pagePTelefo.PacksRoaming(sVentaPack);

@@ -319,7 +319,7 @@ public class PagePerfilTelefonico extends TestBase{
 			 for (int i = 0; i < Pack.size(); i++) {
 				 
 				 for (int j = 0; j < packs.size(); j++) {
-					 System.out.println(Pack.get(i).getText()+" <-pack || packs -> "+packs.get(j));//mofificando
+					 //System.out.println(Pack.get(i).getText()+" <-pack || packs -> "+packs.get(j));
 					 if (Pack.get(i).getText().equals(packs.get(j))) {
 					sleep(8000);
 					//System.out.println(Pack.get(i).getText()+" pack i/n agregar i ="+ Agregar.get(i).getText());
