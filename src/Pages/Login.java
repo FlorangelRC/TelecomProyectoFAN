@@ -360,6 +360,20 @@ public class Login extends BasePage {
 		try {Thread.sleep(5000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 	}
 	
+	public void ingresarBeFANVictor(String perfil) {
+		switch (perfil) {
+		case "mayorista":
+			driver.findElement(By.name("username")).sendKeys("UAT195528");
+			driver.findElement(By.name("txtPass")).sendKeys("Testa10k");
+			break;
+		case "configurador":
+			driver.findElement(By.name("username")).sendKeys("UAT529763");
+			driver.findElement(By.name("txtPass")).sendKeys("Testa10k");
+			break;
+		}
+		driver.findElement(By.name("btnIngresar")).click();
+	}
+	
 	public void ingresarBeFANConfigurador() {
 		driver.findElement(By.cssSelector(".btn.btn-primary.btn-lg.btn-block.btn-continuar")).click();
 		driver.findElement(By.cssSelector(".text.form-control.ng-pristine.ng-empty.ng-invalid.ng-invalid-required.ng-valid-maxlength.ng-touched")).sendKeys("UAT529763");

@@ -7,6 +7,8 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.Date;
 import java.util.List;
 
@@ -495,60 +497,48 @@ public class BeFANConfigurador extends TestBase {
 	@Test (groups = "BeFAN")
 	public void TS112021_BeFan_Movil_REPRO_Preactivacion_repro_Gestion_de_agrupadores_Busqueda_Eliminacion_de_agrupadores_No() {
 		boolean noEliminar = false;
+		TestBase tst = new TestBase();
 		irA("regiones", "gesti\u00f3n");
+		
+		String sRegion = tst.teTraigoRandomStrings(tst.teTraigoLaFecha());
 		driver.findElement(By.cssSelector(".btn.btn-primary")).click();
-		driver.findElement(By.cssSelector(".form-control.ng-pristine.ng-untouched.ng-valid.ng-empty")).sendKeys("Pinamar");
-		driver.findElement(By.cssSelector(".btn.btn-primary")).click();
-		buscarYClick(driver.findElements(By.cssSelector(".btn.btn-primary")), "equals", "cerrar");
-		buscarYClick(driver.findElements(By.cssSelector(".panel-group.panel-group-alternative.ng-scope")), "contains", "pinamar");
-		driver.findElement(By.cssSelector(".panel-collapse.in.collapse")).findElement(By.cssSelector(".btn.btn-link")).click();
-		sleep(3000);
-		driver.findElement(By.className("check-filter-on")).click();
-		buscarYClick(driver.findElements(By.cssSelector(".btn.btn-primary")), "equals", "agregar");
-		buscarYClick(driver.findElements(By.cssSelector(".btn.btn-primary")), "equals", "cerrar");
-		sleep(5000);
-		for (WebElement x : driver.findElements(By.cssSelector(".panel-group.panel-group-alternative.ng-scope"))) {
-			if (x.getText().toLowerCase().contains("pinamar"))
-				((JavascriptExecutor) driver).executeScript("window.scrollTo(0," + x.getLocation().y + ")");
-		}
-		buscarYClick(driver.findElements(By.cssSelector(".panel-group.panel-group-alternative.ng-scope")), "contains", "pinamar");
-		for (WebElement x : driver.findElements(By.className("panel-group"))) {
-			if (x.getText().contains("3532"))
-				x.findElement(By.tagName("tbody")).findElement(By.tagName("button")).click();
-		}
-		buscarYClick(driver.findElements(By.cssSelector(".btn.btn-primary")), "equals", "eliminar");
-		buscarYClick(driver.findElements(By.cssSelector(".btn.btn-primary")), "equals", "cerrar");
-		String msj = driver.findElement(By.className("modal-header")).getText();
-		if (msj.contains("Tambien desea eliminar la Region Pinamar")) {
-			buscarYClick(driver.findElements(By.cssSelector(".btn.btn-link")), "equals", "cancelar");
+		tst.waitForClickeable(driver, By.cssSelector(".form-control.ng-pristine.ng-untouched.ng-valid.ng-empty"));
+		driver.findElement(By.cssSelector(".form-control.ng-pristine.ng-untouched.ng-valid.ng-empty")).sendKeys(sRegion);
+		driver.findElements(By.cssSelector(".btn.btn-primary")).get(0).click();
+		sleep(2000);
+		driver.findElements(By.cssSelector(".btn.btn-primary")).get(1).click();
+		tst.waitForClickeable(driver, By.xpath("/html/body/div[1]/div[2]/div[2]/div[1]/div/input"));
+		driver.findElement(By.xpath("/html/body/div[1]/div[2]/div[2]/div[1]/div/input")).sendKeys(sRegion);
+		tst.waitForClickeable(driver, By.className("collapsed"));
+		driver.findElement(By.className("collapsed")).click();
+		sleep(2000);
+		driver.findElements(By.cssSelector(".btn.btn-link")).get(1).click();
+		tst.waitForClickeable(driver, By.cssSelector(".check-filter-on"));
+		driver.findElements(By.cssSelector(".check-filter-on")).get(0).click();
+		driver.findElements(By.cssSelector(".btn.btn-primary")).get(0).click();
+		sleep(2000);
+		driver.findElements(By.cssSelector(".btn.btn-primary")).get(1).click();
+		sleep(2000);
+		driver.findElement(By.className("collapsed")).click();
+		sleep(2000);
+		driver.findElements(By.cssSelector(".btn.btn-link")).get(1).click();
+		sleep(2000);
+		driver.findElements(By.cssSelector(".btn.btn-primary")).get(0).click();
+		sleep(2000);
+		driver.findElements(By.cssSelector(".btn.btn-primary")).get(1).click();
+		sleep(2000);
+		driver.findElements(By.cssSelector(".btn.btn-link")).get(0).click();
+		sleep(2000);
+		if (driver.findElements(By.cssSelector(".ng-binding")).get(10).getText().toLowerCase().equals(sRegion)) {
 			noEliminar = true;
+		} else {
+			noEliminar = false;
+			System.out.println(driver.findElements(By.cssSelector(".ng-binding")).get(10).getText().toLowerCase());
 		}
-		for (WebElement x : driver.findElements(By.cssSelector(".panel-group.panel-group-alternative.ng-scope"))) {
-			if (x.getText().toLowerCase().contains("pinamar"))
-				((JavascriptExecutor) driver).executeScript("window.scrollTo(0," + x.getLocation().y + ")");
-		}
-		buscarYClick(driver.findElements(By.cssSelector(".panel-group.panel-group-alternative.ng-scope")), "contains", "pinamar");
-		driver.findElement(By.cssSelector(".panel-collapse.in.collapse")).findElement(By.cssSelector(".btn.btn-link")).click();
-		sleep(3000);
-		driver.findElement(By.className("check-filter-on")).click();
-		buscarYClick(driver.findElements(By.cssSelector(".btn.btn-primary")), "equals", "agregar");
-		buscarYClick(driver.findElements(By.cssSelector(".btn.btn-primary")), "equals", "cerrar");
-		sleep(5000);
-		for (WebElement x : driver.findElements(By.cssSelector(".panel-group.panel-group-alternative.ng-scope"))) {
-			if (x.getText().toLowerCase().contains("pinamar"))
-				((JavascriptExecutor) driver).executeScript("window.scrollTo(0," + x.getLocation().y + ")");
-		}
-		buscarYClick(driver.findElements(By.cssSelector(".panel-group.panel-group-alternative.ng-scope")), "contains", "pinamar");
-		for (WebElement x : driver.findElements(By.className("panel-group"))) {
-			if (x.getText().contains("3532"))
-				x.findElement(By.tagName("tbody")).findElement(By.tagName("button")).click();
-		}
-		buscarYClick(driver.findElements(By.cssSelector(".btn.btn-primary")), "equals", "eliminar");
-		buscarYClick(driver.findElements(By.cssSelector(".btn.btn-primary")), "equals", "cerrar");
-		buscarYClick(driver.findElements(By.cssSelector(".btn.btn-primary")), "equals", "eliminar");
-		buscarYClick(driver.findElements(By.cssSelector(".btn.btn-primary")), "equals", "cerrar");
 		Assert.assertTrue(noEliminar);
 	}
+	
+	
 	@Test (groups = "BeFan")
 	public void TS135605_BeFan_Movil_Repro_Preactivacion_Importacion_de_cupos_Formato_invalido() {
 		ContactSearch contact = new ContactSearch(driver);
@@ -646,141 +636,100 @@ public class BeFANConfigurador extends TestBase {
 		irA("Regiones", "Gesti\u00f3n");
 		BeFan page = new BeFan(driver);
 		boolean eliminar = false;
-		//boolean cancelar = false;
-		irA("regiones", "gesti\u00f3n");
-		driver.findElement(By.cssSelector(".btn.btn-primary")).click();
-		driver.findElement(By.cssSelector(".form-control.ng-pristine.ng-untouched.ng-valid.ng-empty")).sendKeys("cordoba");
-		driver.findElement(By.cssSelector(".btn.btn-primary")).click();
-		for(WebElement x : driver.findElements(By.cssSelector(".alert.alert-dismissable.alert-danger"))) {
-		if(x.getText().contains("error")){
-			//cancelar=(true);
-			buscarYClick(driver.findElements(By.cssSelector(".btn.btn-link")), "equals", "cancelar");
-			break;
-		}
-		else {
-//				driver.findElement(By.cssSelector(".btn.btn-primary")).click();
-				buscarYClick(driver.findElements(By.cssSelector(".btn.btn-primary")), "equals", "cerrar");
-			}
-//		//Assert.assertTrue(cancelar);
-		}
-		//buscarYClick(driver.findElements(By.cssSelector(".btn.btn-primary")), "equals", "cerrar");
-		//page.buscarR("cordoba");
-		buscarYClick(driver.findElements(By.cssSelector(".panel-group.panel-group-alternative.ng-scope")), "contains", "cordoba");
-		driver.findElement(By.cssSelector(".panel-collapse.in.collapse")).findElement(By.cssSelector(".btn.btn-link")).click();
-		sleep(3000);
-		driver.findElement(By.className("check-filter-on")).click();
 		
-		buscarYClick(driver.findElements(By.cssSelector(".btn.btn-primary")), "equals", "agregar");
-		buscarYClick(driver.findElements(By.cssSelector(".btn.btn-primary")), "equals", "cerrar");
-		sleep(5000);
-		for (WebElement x : driver.findElements(By.cssSelector(".panel-group.panel-group-alternative.ng-scope"))) {
-			if (x.getText().toLowerCase().contains("cordoba"))
-				((JavascriptExecutor) driver).executeScript("window.scrollTo(0," + x.getLocation().y + ")");
-		}
-		buscarYClick(driver.findElements(By.cssSelector(".panel-group.panel-group-alternative.ng-scope")), "contains", "cordoba");
-		for (WebElement x : driver.findElements(By.className("panel-group"))) {
-			if (x.getText().contains("3546"))
-				x.findElement(By.cssSelector(".glyphicon.glyphicon-remove")).click();
-				//x.findElement(By.tagName("tbody")).findElement(By.tagName("button")).click();
-			buscarYClick(driver.findElements(By.cssSelector(".btn.btn-primary")), "equals", "eliminar");
-			Assert.assertTrue(pbf.verificarMensajeExitoso());
-			buscarYClick(driver.findElements(By.cssSelector(".btn.btn-primary")), "equals", "cerrar");
-			eliminar = true;
-		}
+		
+		
+		
+		
 		Assert.assertTrue(eliminar);
 	}	
 	
 	@Test (groups = "BeFan")
 	public void TS112020_BeFan_Movil_REPRO_Preactivacion_repro_Gestion_de_agrupadores_Busqueda_Eliminacion_de_agrupadores_Si_Sin_preactivar() {
 		boolean eliminar = false;
+		TestBase tst = new TestBase();
 		irA("regiones", "gesti\u00f3n");
+		
+		String sRegion = tst.teTraigoRandomStrings(tst.teTraigoLaFecha());
 		driver.findElement(By.cssSelector(".btn.btn-primary")).click();
-		driver.findElement(By.cssSelector(".form-control.ng-pristine.ng-untouched.ng-valid.ng-empty")).sendKeys("Pinamar");
-		driver.findElement(By.cssSelector(".btn.btn-primary")).click();
-		buscarYClick(driver.findElements(By.cssSelector(".btn.btn-primary")), "equals", "cerrar");
-		buscarYClick(driver.findElements(By.cssSelector(".panel-group.panel-group-alternative.ng-scope")), "contains", "pinamar");
-		driver.findElement(By.cssSelector(".panel-collapse.in.collapse")).findElement(By.cssSelector(".btn.btn-link")).click();
-		sleep(3000);
-		driver.findElement(By.className("check-filter-on")).click();
-		buscarYClick(driver.findElements(By.cssSelector(".btn.btn-primary")), "equals", "agregar");
-		buscarYClick(driver.findElements(By.cssSelector(".btn.btn-primary")), "equals", "cerrar");
-		sleep(5000);
-		for (WebElement x : driver.findElements(By.cssSelector(".panel-group.panel-group-alternative.ng-scope"))) {
-			if (x.getText().toLowerCase().contains("pinamar"))
-				((JavascriptExecutor) driver).executeScript("window.scrollTo(0," + x.getLocation().y + ")");
-		}
-		buscarYClick(driver.findElements(By.cssSelector(".panel-group.panel-group-alternative.ng-scope")), "contains", "pinamar");
-		for (WebElement x : driver.findElements(By.className("panel-group"))) {
-			if (x.getText().contains("3532"))
-				x.findElement(By.tagName("tbody")).findElement(By.tagName("button")).click();
-		}
-		buscarYClick(driver.findElements(By.cssSelector(".btn.btn-primary")), "equals", "eliminar");
-		buscarYClick(driver.findElements(By.cssSelector(".btn.btn-primary")), "equals", "cerrar");
-		String msj = driver.findElement(By.className("modal-header")).getText();
-		if (msj.contains("Tambien desea eliminar la Region Pinamar")) {
-			buscarYClick(driver.findElements(By.cssSelector(".btn.btn-primary")), "equals", "eliminar");
-			buscarYClick(driver.findElements(By.cssSelector(".btn.btn-primary")), "equals", "cerrar");
+		tst.waitForClickeable(driver, By.cssSelector(".form-control.ng-pristine.ng-untouched.ng-valid.ng-empty"));
+		driver.findElement(By.cssSelector(".form-control.ng-pristine.ng-untouched.ng-valid.ng-empty")).sendKeys(sRegion);
+		driver.findElements(By.cssSelector(".btn.btn-primary")).get(0).click();
+		sleep(2000);
+		driver.findElements(By.cssSelector(".btn.btn-primary")).get(1).click();
+		tst.waitForClickeable(driver, By.xpath("/html/body/div[1]/div[2]/div[2]/div[1]/div/input"));
+		driver.findElement(By.xpath("/html/body/div[1]/div[2]/div[2]/div[1]/div/input")).sendKeys(sRegion);
+		tst.waitForClickeable(driver, By.className("collapsed"));
+		driver.findElement(By.className("collapsed")).click();
+		sleep(2000);
+		driver.findElements(By.cssSelector(".btn.btn-link")).get(1).click();
+		tst.waitForClickeable(driver, By.cssSelector(".check-filter-on"));
+		driver.findElements(By.cssSelector(".check-filter-on")).get(0).click();
+		driver.findElements(By.cssSelector(".btn.btn-primary")).get(0).click();
+		sleep(2000);
+		driver.findElements(By.cssSelector(".btn.btn-primary")).get(1).click();
+		sleep(2000);
+		driver.findElement(By.className("collapsed")).click();
+		sleep(2000);
+		driver.findElements(By.cssSelector(".btn.btn-link")).get(1).click();
+		sleep(2000);
+		driver.findElements(By.cssSelector(".btn.btn-primary")).get(0).click();
+		sleep(2000);
+		driver.findElements(By.cssSelector(".btn.btn-primary")).get(1).click();
+		sleep(2000);
+		driver.findElements(By.cssSelector(".btn.btn-primary")).get(0).click();
+		sleep(2000);
+		driver.findElements(By.cssSelector(".btn.btn-primary")).get(1).click();
+		sleep(2000);
+		
+		if (driver.findElements(By.className("collapsed")).size()==0) {
 			eliminar = true;
-		}
+		} else {
+			eliminar = false;
+		}		
 		Assert.assertTrue(eliminar);
+
 	}
 	
 	@Test (groups = "BeFan")
 	public void TS112019_BeFan_Movil_REPRO_Preactivacion_repro_Gestion_de_agrupadores_Busqueda_Eliminacion_de_agrupadores_Mensaje() {
 		boolean mensaje = false;
+		TestBase tst = new TestBase();
 		irA("regiones", "gesti\u00f3n");
-		driver.findElement(By.cssSelector(".btn.btn-primary")).click();
-		driver.findElement(By.cssSelector(".form-control.ng-pristine.ng-untouched.ng-valid.ng-empty")).sendKeys("Tierra Del Fuego");
-		driver.findElement(By.cssSelector(".btn.btn-primary")).click();
-		buscarYClick(driver.findElements(By.cssSelector(".btn.btn-primary")), "equals", "cerrar");
 		
-		buscarYClick(driver.findElements(By.cssSelector(".panel-group.panel-group-alternative.ng-scope")), "contains", "tierra del fuego");
-		driver.findElement(By.cssSelector(".panel-collapse.in.collapse")).findElement(By.cssSelector(".btn.btn-link")).click();
-		sleep(3000);
-		String nroPrefijo = driver.findElement(By.cssSelector(".compatibility.custom-check.ng-scope")).findElement(By.tagName("label")).getText();
-		System.out.println(nroPrefijo);
-		driver.findElement(By.className("check-filter-on")).click();
-		buscarYClick(driver.findElements(By.cssSelector(".btn.btn-primary")), "equals", "agregar");
-		buscarYClick(driver.findElements(By.cssSelector(".btn.btn-primary")), "equals", "cerrar");
-		sleep(5000);
-
-		buscarYClick(driver.findElements(By.cssSelector(".panel-group.panel-group-alternative.ng-scope")), "contains", "tierra del fuego");
-		((JavascriptExecutor) driver).executeScript("window.scrollTo(0," + driver.findElement(By.cssSelector(".panel.ng-scope.ng-isolate-scope.panel-default.panel-open")).getLocation().y + ")");
-		for (WebElement x : driver.findElement(By.cssSelector(".panel.ng-scope.ng-isolate-scope.panel-default.panel-open")).findElement(By.tagName("tbody")).findElements(By.tagName("tr"))) {
-			if (x.getText().contains(nroPrefijo)) 
-				x.findElement(By.cssSelector(".btn.btn-link")).click();
-		}
-		buscarYClick(driver.findElements(By.cssSelector(".btn.btn-primary")), "equals", "eliminar");
-		buscarYClick(driver.findElements(By.cssSelector(".btn.btn-primary")), "equals", "cerrar");
-		String msj = driver.findElement(By.className("modal-header")).getText();
-		if (msj.contains("Tambien desea eliminar la Region Tierra Del Fuego")) {
-			buscarYClick(driver.findElements(By.cssSelector(".btn.btn-link")), "equals", "cancelar");
+		String sRegion = tst.teTraigoRandomStrings(tst.teTraigoLaFecha());
+		driver.findElement(By.cssSelector(".btn.btn-primary")).click();
+		tst.waitForClickeable(driver, By.cssSelector(".form-control.ng-pristine.ng-untouched.ng-valid.ng-empty"));
+		driver.findElement(By.cssSelector(".form-control.ng-pristine.ng-untouched.ng-valid.ng-empty")).sendKeys(sRegion);
+		driver.findElements(By.cssSelector(".btn.btn-primary")).get(0).click();
+		sleep(2000);
+		driver.findElements(By.cssSelector(".btn.btn-primary")).get(1).click();
+		tst.waitForClickeable(driver, By.xpath("/html/body/div[1]/div[2]/div[2]/div[1]/div/input"));
+		driver.findElement(By.xpath("/html/body/div[1]/div[2]/div[2]/div[1]/div/input")).sendKeys(sRegion);
+		tst.waitForClickeable(driver, By.className("collapsed"));
+		driver.findElement(By.className("collapsed")).click();
+		sleep(2000);
+		driver.findElements(By.cssSelector(".btn.btn-link")).get(1).click();
+		tst.waitForClickeable(driver, By.cssSelector(".check-filter-on"));
+		driver.findElements(By.cssSelector(".check-filter-on")).get(0).click();
+		driver.findElements(By.cssSelector(".btn.btn-primary")).get(0).click();
+		sleep(2000);
+		driver.findElements(By.cssSelector(".btn.btn-primary")).get(1).click();
+		sleep(2000);
+		driver.findElement(By.className("collapsed")).click();
+		sleep(2000);
+		driver.findElements(By.cssSelector(".btn.btn-link")).get(1).click();
+		sleep(2000);
+		driver.findElements(By.cssSelector(".btn.btn-primary")).get(0).click();
+		sleep(2000);
+		driver.findElements(By.cssSelector(".btn.btn-primary")).get(1).click();
+		sleep(2000);
+		
+		if (driver.findElement(By.xpath("/html/body/div[1]/div/div/div[1]/div[1]/div[1]/h3")).getText().equals("¿Tambien desea eliminar la Region " + sRegion + " ?")) {
 			mensaje = true;
+		} else {
+			mensaje = false;
 		}
-		for (WebElement x : driver.findElements(By.cssSelector(".panel-group.panel-group-alternative.ng-scope"))) {
-			if (x.getText().toLowerCase().contains("tierra del fuego"))
-				((JavascriptExecutor) driver).executeScript("window.scrollTo(0," + x.getLocation().y + ")");
-		}
-		buscarYClick(driver.findElements(By.cssSelector(".panel-group.panel-group-alternative.ng-scope")), "contains", "tierra del fuego");
-		driver.findElement(By.cssSelector(".panel-collapse.in.collapse")).findElement(By.cssSelector(".btn.btn-link")).click();
-		sleep(3000);
-		driver.findElement(By.className("check-filter-on")).click();
-		buscarYClick(driver.findElements(By.cssSelector(".btn.btn-primary")), "equals", "agregar");
-		buscarYClick(driver.findElements(By.cssSelector(".btn.btn-primary")), "equals", "cerrar");
-		sleep(5000);
-		for (WebElement x : driver.findElements(By.cssSelector(".panel-group.panel-group-alternative.ng-scope"))) {
-			if (x.getText().toLowerCase().contains("tierra del fuego"))
-				((JavascriptExecutor) driver).executeScript("window.scrollTo(0," + x.getLocation().y + ")");
-		}
-		buscarYClick(driver.findElements(By.cssSelector(".panel-group.panel-group-alternative.ng-scope")), "contains", "tierra del fuego");
-		for (WebElement x : driver.findElements(By.className("panel-group"))) {
-			if (x.getText().contains("3532"))
-				x.findElement(By.tagName("tbody")).findElement(By.tagName("button")).click();
-		}
-		buscarYClick(driver.findElements(By.cssSelector(".btn.btn-primary")), "equals", "eliminar");
-		buscarYClick(driver.findElements(By.cssSelector(".btn.btn-primary")), "equals", "cerrar");
-		buscarYClick(driver.findElements(By.cssSelector(".btn.btn-primary")), "equals", "eliminar");
-		buscarYClick(driver.findElements(By.cssSelector(".btn.btn-primary")), "equals", "cerrar");
 		Assert.assertTrue(mensaje);
 	}
 	

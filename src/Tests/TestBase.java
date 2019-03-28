@@ -13,6 +13,8 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.Iterator;
@@ -262,8 +264,34 @@ public class TestBase {
 		(new WebDriverWait(driver, 15)).until(ExpectedConditions.visibilityOfElementLocated(element));
 	}
 	
+	public void waitForTextAndClickeable(WebDriver driver, By element, String texto, int timeout) {
+		(new WebDriverWait(driver, timeout)).until(ExpectedConditions.and(ExpectedConditions.elementToBeClickable(element),ExpectedConditions.attributeContains(element, "ng-repeat", texto)));
+	}
+	
 	public void waitForClickeable(WebDriver driver, By element) {
 		(new WebDriverWait(driver, 15)).until(ExpectedConditions.elementToBeClickable(element));
+	}
+	
+	public void waitForClickeableWithTextAndThenClick(WebDriver driver, By element, String texto, int timeout) {
+		List <WebElement> tigesito = driver.findElements(element);
+		for(WebElement x : tigesito) {
+			if (x.getText().toLowerCase().equals(texto.toLowerCase())) {
+				
+				(new WebDriverWait(driver, timeout)).until(ExpectedConditions.elementToBeClickable(x));
+				x.click();
+			}
+		}
+		
+	}
+	
+	public void waitForVisibleWithText(WebDriver driver, By element, String texto, int timeout) {
+		List <WebElement> tigesito = driver.findElements(element);
+		for(WebElement x : tigesito) {
+			if (x.getText().toLowerCase().equals(texto.toLowerCase())) {
+					new WebDriverWait(driver, timeout).until(ExpectedConditions.visibilityOfElementLocated(element));
+			}
+		}
+		
 	}
 
 	public Boolean waitForQuantityMoreThan(WebDriver driver, By element, int number, int timeout) {
@@ -469,6 +497,13 @@ public class TestBase {
 			try {Thread.sleep(6000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
 		    Login page0 = new Login(driver);
 		    page0.ingresarBeFAN();
+		}
+		
+		public void loginBeFANVictor(WebDriver driver, String perfil) {
+			driver.get(urlBeFAN);
+		    Login page0 = new Login(driver);
+			waitForClickeable(driver, By.id("containerTxtMail"));
+		    page0.ingresarBeFANVictor(perfil);
 		}
 		
 		public void loginBeFANConfigurador(WebDriver driver) {
@@ -1050,6 +1085,7 @@ public class TestBase {
 		}
 		sleep(2000);
 	}
+	
 	
 	public void cambiarListaLightningAVistaClasica(WebDriver driver) {
 		try {
@@ -2075,4 +2111,60 @@ public class TestBase {
 	    Login page0 = new Login(driver);
 	    page0.ingresarLogisticaYEntrega();
 	}
+	
+	public String teTraigoLaFecha() {
+		DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyyMMddHHmmss");  
+		LocalDateTime now = LocalDateTime.now(); 
+		String time = dtf.format(now);
+		return time;
+	}
+	public String teTraigoRandomStrings(String NumeroAleatorio) {
+		
+		//Inicializo variables
+		String papito = "";
+		char[] papito3 = {'a', 'a', 'a', 'a', 'a', 'a', 'a', 'a', 'a', 'a', 'a', 'a', 'a', 'a'};
+		int i = 0;
+		
+		//Guardo cada caracter del string recibido (NumeroAleatorio) y lo guardo en un array de chars llamado papito3
+		NumeroAleatorio.getChars(0, 13, papito3, 0);
+		
+		//Genero en el array de chars de strings (papito4) los valores alterados del array de chars de numeros (papito3)
+		for(i=0;i<14;i++) {
+			switch(papito3[i]) {
+			case '0':
+					papito = papito + 'a';
+					break;
+			case '1':
+				papito = papito + 'b';
+				break;
+			case '2':
+				papito = papito + 'c';
+				break;
+			case '3':
+				papito = papito + 'd';
+				break;
+			case '4':
+				papito = papito + 'e';
+				break;
+			case '5':
+				papito = papito + 'f';
+				break;
+			case '6':
+				papito = papito + 'g';
+				break;
+			case '7':
+				papito = papito + 'h';
+				break;
+			case '8':
+				papito = papito + 'i';
+				break;
+			case '9':
+				papito = papito + 'j';
+				break;
+			}
+		}
+		System.out.println(papito);
+		return papito;
+	}
+	
 }
