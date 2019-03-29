@@ -468,8 +468,8 @@ public class BeFANMayorista extends TestBase {
 		
 	}
 	
-	@Test (groups = "BeFAN", dataProvider="DatoDelPlan")
-	public void TS135594_BeFan_Movil_Repro_Preactivacion_Gestion_de_simcards_Busqueda_de_archivos_Ver_detalle_Plan(String sPlan){
+	@Test (groups = "BeFAN")
+	public void TS135594_BeFan_Movil_Repro_Preactivacion_Gestion_de_simcards_Busqueda_de_archivos_Ver_detalle_Plan(){
 		irA("gestion");
 		selectByText(driver.findElement(By.cssSelector(".text.form-control.ng-pristine.ng-untouched.ng-valid.ng-empty")), "En Proceso");
 		selectByText(driver.findElements(By.cssSelector(".text.form-control.ng-pristine.ng-untouched.ng-valid.ng-empty")).get(1), "BAS-VJP-BAHIA BLANCA - VJP Punta Alta");
@@ -480,8 +480,10 @@ public class BeFANMayorista extends TestBase {
 		} catch(Exception e) {}
 		sleep(3000);
 		boolean planVisible = false;
+		WebElement plan = driver.findElement(By.cssSelector(".table.table-top-fixed.table-striped.table-primary")).findElement(By.tagName("tbody"));
+		System.out.println(plan.findElements(By.tagName("tr")).get(0).findElements(By.tagName("td")).get(2).getText());
 		WebElement tabla = driver.findElement(By.cssSelector(".table.table-top-fixed.table-striped.table-primary")).findElement(By.tagName("tbody"));
-		if (tabla.findElements(By.tagName("tr")).get(0).findElements(By.tagName("td")).get(2).getText().equalsIgnoreCase(sPlan)) {
+		if (tabla.findElements(By.tagName("tr")).get(0).findElements(By.tagName("td")).get(2).getText().equals(plan.findElements(By.tagName("tr")).get(0).findElements(By.tagName("td")).get(2).getText())) {
 			planVisible = true;
 		}
 		Assert.assertTrue(planVisible);

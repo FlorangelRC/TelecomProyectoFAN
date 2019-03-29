@@ -2112,15 +2112,6 @@ public class TestBase {
 
 	}
 	
-	@DataProvider
-	public Object[][] DatoDelPlan() throws Exception{
-
-	 Object[][] testObjArray = ExcelUtils.getTableArray(dataProviderE2E(),"BeFan",1,1,1,"Plan Visible");
-
-	 return (testObjArray);
-
-	}
-	
 	public void loginLogisticaYEntrega(WebDriver driver) {
 		driver.get(urlAmbiente);
 		try {Thread.sleep(6000);} catch (InterruptedException ex) {Thread.currentThread().interrupt();}
