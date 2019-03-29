@@ -467,10 +467,10 @@ public class BeFANMayorista extends TestBase {
 		Assert.assertTrue(linea);
 	}
 	
-	@Test (groups = "BeFAN")
-	public void TS135594_BeFan_Movil_Repro_Preactivacion_Gestion_de_simcards_Busqueda_de_archivos_Ver_detalle_Plan(){
+	@Test (groups = "BeFAN", dataProvider="DatoDelPlan")
+	public void TS135594_BeFan_Movil_Repro_Preactivacion_Gestion_de_simcards_Busqueda_de_archivos_Ver_detalle_Plan(String sPlan){
 		irA("gestion");
-		selectByText(driver.findElement(By.cssSelector(".text.form-control.ng-pristine.ng-untouched.ng-valid.ng-empty")), "Procesado");
+		selectByText(driver.findElement(By.cssSelector(".text.form-control.ng-pristine.ng-untouched.ng-valid.ng-empty")), "En Proceso");
 		selectByText(driver.findElements(By.cssSelector(".text.form-control.ng-pristine.ng-untouched.ng-valid.ng-empty")).get(1), "BAS-VJP-BAHIA BLANCA - VJP Punta Alta");
 		driver.findElement(By.cssSelector(".btn.btn-primary")).click();
 		sleep(5000);
@@ -478,33 +478,37 @@ public class BeFANMayorista extends TestBase {
 			driver.findElement(By.id("exportarTabla")).findElement(By.tagName("tbody")).findElement(By.tagName("tr")).findElements(By.tagName("td")).get(8).click();
 		} catch(Exception e) {}
 		sleep(3000);
-		boolean plan = false;
-		WebElement columnas = driver.findElement(By.cssSelector(".table.table-top-fixed.table-striped.table-primary")).findElement(By.tagName("tr"));
-		for (WebElement x : columnas.findElements(By.tagName("th"))) {
-			if (x.getText().contains("Plan"))
-				plan = true;
+		boolean planVisible = false;
+		WebElement tabla = driver.findElement(By.cssSelector(".table.table-top-fixed.table-striped.table-primary")).findElement(By.tagName("tbody"));
+		if (tabla.findElements(By.tagName("tr")).get(0).findElements(By.tagName("td")).get(2).getText().equalsIgnoreCase(sPlan)) {
+			planVisible = true;
 		}
-		Assert.assertTrue(plan);
+		Assert.assertTrue(planVisible);
 	}
 	
 	@Test (groups = "BeFan")
 	public void TS135595_BeFan_Movil_Repro_Preactivacion_Gestion_de_simcards_Busqueda_de_archivos_Ver_detalle_NMU_Simcard() {
+		BeFan btn = new BeFan(driver);
+		String fecha = "01/02/2019";
+		System.out.println(fecha);
 		irA("gestion");
 		selectByText(driver.findElement(By.cssSelector(".text.form-control.ng-pristine.ng-untouched.ng-valid.ng-empty")), "Procesado");
 		selectByText(driver.findElements(By.cssSelector(".text.form-control.ng-pristine.ng-untouched.ng-valid.ng-empty")).get(1), "BAS-VJP-BAHIA BLANCA - VJP Punta Alta");
+		btn.SGFechaDesde("20190201");
+		btn.SGFechaHasta("20190201");
 		driver.findElement(By.cssSelector(".btn.btn-primary")).click();
 		sleep(5000);
 		try {
 			driver.findElement(By.id("exportarTabla")).findElement(By.tagName("tbody")).findElement(By.tagName("tr")).findElements(By.tagName("td")).get(8).click();
 		} catch(Exception e) {}
 		sleep(3000);
-		boolean preactivacion = false;
-		WebElement columnas = driver.findElement(By.cssSelector(".table.table-top-fixed.table-striped.table-primary")).findElement(By.tagName("tr"));
-		for (WebElement x : columnas.findElements(By.tagName("th"))) {
-			if (x.getText().contains("Preactivaci\u00f3n"))
-				preactivacion = true;
+		boolean preactivacionVisible = false;
+		WebElement tabla = driver.findElement(By.cssSelector(".table.table-top-fixed.table-striped.table-primary")).findElement(By.tagName("tbody"));
+		System.out.println(tabla.findElements(By.tagName("tr")).get(0).findElements(By.tagName("td")).get(6).getText());
+		if (tabla.findElements(By.tagName("tr")).get(0).findElements(By.tagName("td")).get(6).getText().contains(fecha)) {
+			preactivacionVisible = true;
 		}
-		Assert.assertTrue(preactivacion);
+		Assert.assertTrue(preactivacionVisible);
 	}
 	
 	@Test (groups = "BeFan")
