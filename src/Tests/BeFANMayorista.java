@@ -25,6 +25,7 @@ import java.util.Map;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
+import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.testng.annotations.AfterTest;
@@ -547,7 +548,7 @@ public class BeFANMayorista extends TestBase {
 		Assert.assertTrue(preactivacion);
 	}
 	
-	@Test (groups = "BeFan")
+	@Test (groups = "BeFan")//verificado- comprueba que haya una fecha de procesamiento
 	public void TS135598_BeFan_Movil_Repro_Preactivacion_Gestion_de_simcards_Busqueda_de_archivos_Ver_detalle_Fecha_de_procesamiento_del_registro() {
 		irA("gestion");
 		selectByText(driver.findElement(By.cssSelector(".text.form-control.ng-pristine.ng-untouched.ng-valid.ng-empty")), "Procesado");
@@ -559,15 +560,16 @@ public class BeFANMayorista extends TestBase {
 		} catch(Exception e) {}
 		sleep(3000);
 		boolean procesamiento = false;
-		WebElement columnas = driver.findElement(By.cssSelector(".table.table-top-fixed.table-striped.table-primary")).findElement(By.tagName("tr"));
-		for (WebElement x : columnas.findElements(By.tagName("th"))) {
-			if (x.getText().contains("Procesamiento"))
+		List<WebElement> columnas = driver.findElements(By.cssSelector(".padding-left-15.ng-binding"));
+		for (WebElement x : columnas) {
+			if (x.getText().matches("\\d{2}/\\d{2}/\\d{4}\\s\\d{1,2}:\\d{2}:\\d{2}")) {//verifica que tenga fecha de precesamiento
 				procesamiento = true;
+			}
 		}
 		Assert.assertTrue(procesamiento);
 	}
 	
-	@Test (groups = "BeFan")
+	@Test (groups = "BeFan")//verificado- comprueba  que tenga un estado valido
 	public void TS135599_BeFan_Movil_Repro_Preactivacion_Gestion_de_simcards_Busqueda_de_archivos_Ver_detalle_Estado_del_registro() {
 		irA("gestion");
 		selectByText(driver.findElement(By.cssSelector(".text.form-control.ng-pristine.ng-untouched.ng-valid.ng-empty")), "Procesado");
@@ -579,9 +581,11 @@ public class BeFANMayorista extends TestBase {
 		} catch(Exception e) {}
 		sleep(3000);
 		boolean estado = false;
-		WebElement columnas = driver.findElement(By.cssSelector(".table.table-top-fixed.table-striped.table-primary")).findElement(By.tagName("tr"));
-		for (WebElement x : columnas.findElements(By.tagName("th"))) {
-			if (x.getText().contains("Estado"))
+		List<WebElement> columnas = driver.findElements(By.cssSelector(".padding-left-15.ng-binding"));
+		for (WebElement x : columnas) {
+			
+		System.out.println(x.getText().matches("Error|Activado|PendientePreactivar"));
+			if (x.getText().matches("Error|Activado|PendientePreactivar"))
 				estado = true;		
 		}
 		Assert.assertTrue(estado);

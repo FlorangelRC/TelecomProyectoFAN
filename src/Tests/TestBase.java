@@ -55,8 +55,8 @@ import DataProvider.ExcelUtils;
 public class TestBase {
 	protected static WebDriver driver;
 	
-		//public static String urlAmbiente = "https://telecomcrm--uat.cs53.my.salesforce.com";
-		public static String urlAmbiente = "https://crm--sit.cs14.my.salesforce.com/";
+		public static String urlAmbiente = "https://telecomcrm--uat.cs53.my.salesforce.com";
+		//public static String urlAmbiente = "https://crm--sit.cs14.my.salesforce.com/";
 		
 		// viejo public String urlSCP = "https://telecomcrm--uat.cs8.my.salesforce.com";
 		public static String urlSCP = "https://telecomcrm--uat.cs53.my.salesforce.com";
@@ -2111,6 +2111,16 @@ public class TestBase {
 	 return (testObjArray);
 
 	}
+	
+	@DataProvider
+	public Object[][] FechaDeProcesamiento() throws Exception{//viendo
+
+	 Object[][] testObjArray = ExcelUtils.getTableArray(dataProviderE2E(),"BeFan",1,1,1,"Fecha Procesamiento");
+
+	 return (testObjArray);
+
+	}
+	
 	
 	public void loginLogisticaYEntrega(WebDriver driver) {
 		driver.get(urlAmbiente);
