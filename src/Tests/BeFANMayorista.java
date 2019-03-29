@@ -519,18 +519,16 @@ public class BeFANMayorista extends TestBase {
 		} catch(Exception e) {}
 		sleep(3000);
 		boolean serie = false;
-		WebElement columnas = driver.findElement(By.cssSelector(".table.table-top-fixed.table-striped.table-primary")).findElement(By.tagName("tr"));
-		for (WebElement x : columnas.findElements(By.tagName("th"))) {
-			if (x.getText().contains("Serie"))
-				serie = true;
-		}
+		WebElement columnas = driver.findElement(By.cssSelector(".table.table-top-fixed.table-striped.table-primary")).findElement(By.tagName("tbody")).findElement(By.tagName("tr"));
+		if (columnas.findElements(By.tagName("td")).get(4).getText().matches("\\d{20}"))
+			serie = true;
 		Assert.assertTrue(serie);
 	}
 	
 	@Test (groups = "BeFan")
 	public void TS135597_BeFan_Movil_Repro_Preactivacion_Gestion_de_simcards_Busqueda_de_archivos_Ver_detalle_Fecha_de_preactivacion_de_la_linea() {
 		irA("gestion");
-		selectByText(driver.findElement(By.cssSelector(".text.form-control.ng-pristine.ng-untouched.ng-valid.ng-empty")), "Procesado");
+		selectByText(driver.findElement(By.cssSelector(".text.form-control.ng-pristine.ng-untouched.ng-valid.ng-empty")), "En Proceso");
 		selectByText(driver.findElements(By.cssSelector(".text.form-control.ng-pristine.ng-untouched.ng-valid.ng-empty")).get(1), "BAS-VJP-BAHIA BLANCA - VJP Punta Alta");
 		driver.findElement(By.cssSelector(".btn.btn-primary")).click();
 		sleep(5000);
@@ -539,11 +537,9 @@ public class BeFANMayorista extends TestBase {
 		} catch(Exception e) {}
 		sleep(3000);
 		boolean preactivacion = false;
-		WebElement columnas = driver.findElement(By.cssSelector(".table.table-top-fixed.table-striped.table-primary")).findElement(By.tagName("tr"));
-		for (WebElement x : columnas.findElements(By.tagName("th"))) {
-			if (x.getText().contains("Preactivaci\u00f3n"))
-				preactivacion = true;
-		}
+		WebElement columnas = driver.findElement(By.cssSelector(".table.table-top-fixed.table-striped.table-primary")).findElement(By.tagName("tbody")).findElement(By.tagName("tr"));
+		if (columnas.findElements(By.tagName("td")).get(5).getText().matches("\\d{2}/\\d{2}/\\d{4} \\d{1,2}:\\d{2}:\\d{2}"))
+			preactivacion = true;
 		Assert.assertTrue(preactivacion);
 	}
 	
@@ -609,11 +605,10 @@ public class BeFANMayorista extends TestBase {
 
 	@Test (groups = {"BeFAN", "Agente"})
 	public void TS135647_BeFan_Movil_Repro_Preactivacion_Visualizacion_de_datos_del_agente() {
-	sleep(3000);
-	driver.findElement(By.className("tpi-user")).findElement(By.tagName("span")).click();
-	WebElement asd = driver.findElement(By.id("menudatos")).findElement(By.name("salir"));
-	System.out.println(asd.getText());
-	Assert.assertTrue(asd.isDisplayed());
+		sleep(3000);
+		driver.findElement(By.className("tpi-user")).findElement(By.tagName("span")).click();
+		Assert.assertTrue(driver.findElement(By.name("menuUsuario")).getText().contains("Gaston Auricchio"));
+		Assert.assertTrue(driver.findElement(By.name("razonSocial")).getText().equalsIgnoreCase("VJP"));
 		
 	}
 	@Test (groups = "BeFAN")
